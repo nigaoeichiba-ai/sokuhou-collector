@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><title>kosodate logic tests</title></head>
+<body>
+<pre id="out">running…</pre>
+<script src="logic.js"></script>
+<script src="data.js"></script>
+<script>
+(function () {
+  const K = window.Kosodate;
+  const iso = (d) => d.toISOString().slice(0, 10);
+  const results = [];
+  function eq(name, actual, expected) {
+    const ok = JSON.stringify(actual) === JSON.stringify(expected);
+    results.push({ name, ok, actual, expected });
+  }
+  const find = (items, id) => items.find((i) => i.id === id);
+  const D = K.parseDate;
+
+  eq('addMonths clamps to month end', iso(K.addMonths(D('2026-01-31'), 1)), '2026-02-28');
+  eq('addMonths crosses year', iso(K.addMonths(D('2026-11-15'), 3)), '2027-02-15');
+  eq('parseDate rejects 2026-02-30', K.parseDate('2026-02-30'), null);
+  eq('parseDate rejects garbage', K.parseDate('abc'), null);
+
+  eq('entry year: 4/1 born is early cohort', K.schoolEntryYear(D('2020-04-01')), 2026);
+  eq('entry year: 4/2 born is next cohort', K.schoolEntryYear(D('2020-04-02')), 2027);
+  eq('entry year: Dec born', K.schoolEntryYear(D('2020-12-31')), 2027);
+  eq('entry year: Jan born', K.schoolEntryYear(D('2021-01-01')), 2027);
+
+  const birth = D('2026-10-01');
+  const byId = (id) => K.resolve(find(window.KOSODATE_ITEMS, id), birth);
+  eq('birth report: day 1 = birth day, deadline = +13d', iso(byId('birth-report').end), '2026-10-14');
+  eq('child allowance: 15 days counted from next day', iso(byId('child-allowance').end), '2026-10-16');
+  eq('rota window 8-14 weeks', [iso(byId('rota').start), iso(byId('rota').end)], ['2026-11-26', '2027-01-07']);
+  eq('2-month vaccines start', iso(byId('vaccines-2m').start), '2026-12-01');
+  eq('1-year vaccines start', iso(byId('vaccines-1y').start), '2027-10-01');
+
+  const b2 = D('2020-04-02');  // enters April 2027
+  const s = (id) => K.resolve(find(window.KOSODATE_ITEMS, id), b2);
+  eq('school check window', [iso(s('school-health-check').start), iso(s('school-health-check').end)], ['2026-11-01', '2026-12-01']);
+  eq('entry notice deadline', iso(s('entry-notice').end), '2027-02-01');
+  eq('entry notice shown from', iso(s('entry-notice').showFrom), '2026-11-01');
+
+  // timeline classification, fixed "today"
+  const tl = K.timeline(window.KOSODATE_ITEMS, birth, D('2026-10-05'));
+  const ids = (a) => a.map((e) => e.item.id);
+  eq('newborn now', ids(tl.now), ['birth-report', 'child-allowance']);
+  eq('newborn upcoming order', ids(tl.upcoming), ['rota', 'vaccines-2m', 'vaccines-1y', 'school-health-check', 'entry-notice']);
+  eq('newborn past', ids(tl.past), []);
+
+  const old = K.timeline(window.KOSODATE_ITEMS, birth, D('2027-03-01'));
+  eq('5-month-old: birth/allowance/rota are past', ids(old.past).sort(), ['birth-report', 'child-allowance', 'rota']);
+  eq('5-month-old: 2-month vaccines still now', ids(old.now), ['vaccines-2m']);
+
+  const sch = K.timeline(window.KOSODATE_ITEMS, b2, D('2026-11-10'));
+  eq('pre-school: check + notice are now', ids(sch.now), ['school-health-check', 'entry-notice']);
+
+  // quality gate: an item without source / basis / verification date never shows
+  const bad = [
+    { id: 'x1', title: 'no source', rule: { type: 'days', start: 0, end: 5 }, basis: 'b', verifiedAt: '2026-10-05' },
+    { id: 'x2', title: 'no basis', rule: { type: 'days', start: 0, end: 5 }, source: { url: 'u' }, verifiedAt: '2026-10-05' },
+    { id: 'x3', title: 'not verified', rule: { type: 'days', start: 0, end: 5 }, source: { url: 'u' }, basis: 'b' },
+  ];
+  eq('unverified items are excluded', ids(K.timeline(bad, birth, D('2026-10-02')).now), []);
+  eq('every shipped item is publishable', window.KOSODATE_ITEMS.every(K.publishable), true);
+
+  const failed = results.filter((r) => !r.ok);
+  document.getElementById('out').textContent =
+    (failed.length ? 'FAIL ' + failed.length + ' / ' : 'PASS ') + results.length + '\n' +
+    failed.map((f) => '✗ ' + f.name + '\n  actual:   ' + JSON.stringify(f.actual) + '\n  expected: ' + JSON.stringify(f.expected)).join('\n');
+  window.__result = { total: results.length, failed: failed.length };
+})();
+</script>
+</body></html>

@@ -25,6 +25,14 @@ class OtsuFireTest(unittest.TestCase):
         self.assertEqual(first["result"], "非火災と判明")
         self.assertEqual(first["status"], "resolved")
 
+    def test_snapshot_has_no_unparsed_messages(self):
+        d = otsu_fire.parse(_load(), now=datetime(2026, 10, 5, 16, 0, tzinfo=JST))
+        self.assertEqual(d["unparsed"], [])
+
+    def test_unknown_message_format_is_surfaced(self):
+        d = otsu_fire.parse("<ul><li>10月05日 15時30分 新しい形式の文章です</li></ul>", now=datetime(2026, 10, 5, 16, 0, tzinfo=JST))
+        self.assertEqual(len(d["unparsed"]), 1)
+
     def test_every_incident_has_a_resolution_in_snapshot(self):
         d = otsu_fire.parse(_load(), now=datetime(2026, 10, 5, 16, 0, tzinfo=JST))
         self.assertTrue(all(e["status"] == "resolved" for e in d["incidents"]))

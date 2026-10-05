@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>子育てのやることカレンダー</title>
+<meta name="description" content="お子さんの生年月日を入れると、出生届・児童手当・予防接種・就学前の手続きの時期を、公的な出典つきで一覧にします。入力した内容は送信されません。">
+<style>
+  :root { --bg:#fafaf7; --fg:#1f2328; --muted:#5c6570; --card:#fff; --line:#e3e1d8; --accent:#2f6f5e; --warn:#a15c00; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg:#16181a; --fg:#e8e6e1; --muted:#a3a8ad; --card:#1f2225; --line:#33373b; --accent:#6fc2a8; --warn:#f0b35a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.7 system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 1.5rem; margin: 0 0 8px; }
+  h2 { font-size: 1.15rem; margin: 32px 0 12px; }
+  .lead { color: var(--muted); margin: 0 0 20px; }
+  form { display:flex; flex-wrap:wrap; gap:12px; align-items:end; padding:16px; background:var(--card); border:1px solid var(--line); border-radius:12px; }
+  label { display:flex; flex-direction:column; font-size:.9rem; color:var(--muted); gap:4px; }
+  input[type=date] { font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--fg); }
+  button { font:inherit; padding:9px 18px; border:0; border-radius:8px; background:var(--accent); color:#fff; cursor:pointer; }
+  .privacy { font-size:.85rem; color:var(--muted); margin:8px 0 0; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin:10px 0; }
+  .card h3 { margin:0 0 4px; font-size:1.02rem; }
+  .tag { display:inline-block; font-size:.75rem; padding:1px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); margin-right:6px; }
+  .when { margin:2px 0; font-weight:600; color:var(--accent); }
+  .date { margin:2px 0; font-size:.9rem; color:var(--muted); }
+  .body { margin:6px 0; }
+  .src { font-size:.8rem; color:var(--muted); margin:6px 0 0; }
+  .src a { color:inherit; }
+  .past { opacity:.85; }
+  .notice { font-size:.85rem; color:var(--warn); margin:24px 0 0; }
+  .empty { color:var(--muted); }
+  [hidden] { display:none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>子育てのやることカレンダー</h1>
+  <p class="lead">お子さんの生年月日を入れると、出生届・児童手当・予防接種・就学前の手続きの時期を、出典つきで一覧にします。</p>
+
+  <form id="form">
+    <label>お子さんの生年月日(出産予定日でも可)
+      <input type="date" id="birth" required min="2010-01-01" max="2040-12-31">
+    </label>
+    <button type="submit">やることを見る</button>
+  </form>
+  <p class="privacy">入力した内容は、この端末の中だけで計算し、送信・保存しません。</p>
+
+  <section id="result" hidden>
+    <h2 id="h-now">いま確認したいこと</h2>
+    <div id="now"></div>
+    <h2 id="h-upcoming">これから</h2>
+    <div id="upcoming"></div>
+    <h2 id="h-past">時期を過ぎた項目(念のため確認)</h2>
+    <div id="past" class="past"></div>
+  </section>
+
+  <p class="notice">制度は改正されることがあり、日程や手続きは市区町村によって異なります。ここに示すのは国の制度などに基づく目安です。最新の内容と、お住まいの地域の案内は、各項目の出典と市区町村の窓口でご確認ください。この内容は医療・法律上の助言ではありません。</p>
+</main>
+<script src="logic.js"></script>
+<script src="data.js"></script>
+<script>
+(function () {
+  'use strict';
+  const K = window.Kosodate;
+  const el = (id) => document.getElementById(id);
+
+  function rangeText(range) {
+    const { start, end } = range;
+    if (start && end) return K.fmt(start) + ' 〜 ' + K.fmt(end);
+    if (end) return K.fmt(end) + ' まで';
+    if (start) return K.fmt(start) + ' から';
+    return '';
+  }
+
+  function card(entry) {
+    const { item, range } = entry;
+    const div = document.createElement('div');
+    div.className = 'card';
+    const h = document.createElement('h3');
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.textContent = item.category;
+    h.append(tag, item.title);
+    const when = document.createElement('p'); when.className = 'when'; when.textContent = item.when;
+    const date = document.createElement('p'); date.className = 'date'; date.textContent = '目安: ' + rangeText(range);
+    const body = document.createElement('p'); body.className = 'body'; body.textContent = item.body;
+    const src = document.createElement('p'); src.className = 'src';
+    const a = document.createElement('a');
+    a.href = item.source.url; a.textContent = item.source.label; a.rel = 'noopener'; a.target = '_blank';
+    src.append('根拠: ' + item.basis + '(出典: ', a, '、確認日 ' + item.verifiedAt + ')');
+    div.append(h, when, date, body, src);
+    return div;
+  }
+
+  function fill(id, entries, emptyText) {
+    const box = el(id);
+    box.replaceChildren();
+    if (!entries.length) {
+      const p = document.createElement('p'); p.className = 'empty'; p.textContent = emptyText;
+      box.append(p);
+      return;
+    }
+    entries.forEach((e) => box.append(card(e)));
+  }
+
+  el('form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    const birth = K.parseDate(el('birth').value);
+    if (!birth) return;
+    const now = new Date();
+    const today = K.utc(now.getFullYear(), now.getMonth() + 1, now.getDate());
+    const t = K.timeline(window.KOSODATE_ITEMS, birth, today);
+    fill('now', t.now, '現在、期限や時期が重なっている項目はありません。');
+    fill('upcoming', t.upcoming, 'この先の項目はありません。');
+    fill('past', t.past, '時期を過ぎた項目はありません。');
+    el('result').hidden = false;
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+{
+ "fetched_at": "2026-10-05T17:33:25.569742+09:00",
+ "incidents": [
+  {
+   "kind": "特殊災害",
+   "place": "大津市園山一丁目付近",
+   "started_at": "2026-10-05T16:44:00+09:00",
+   "status": "reported"
+  },
+  {
+   "kind": "自火報作動",
+   "place": "大津市松が丘六丁目付近",
+   "resolved_at": "2026-10-05T00:10:00+09:00",
+   "result": "非火災と判明",
+   "started_at": "2026-10-04T23:41:00+09:00",
+   "status": "resolved"
+  },
+  {
+   "kind": "建物火災",
+   "place": "大津市平津二丁目付近",
+   "resolved_at": "2026-10-04T10:44:00+09:00",
+   "result": "非火災と判明",
+   "started_at": "2026-10-04T10:26:00+09:00",
+   "status": "resolved"
+  },
+  {
+   "kind": "救助事故",
+   "place": "大津市今堅田三丁目付近",
+   "resolved_at": "2026-10-03T16:51:00+09:00",
+   "result": "救助活動を完了",
+   "started_at": "2026-10-03T16:16:00+09:00",
+   "status": "resolved"
+  },
+  {
+   "kind": "救助事故",
+   "place": "大津市大萱一丁目付近",
+   "resolved_at": "2026-10-02T12:58:00+09:00",
+   "result": "救助不要と判明",
+   "started_at": "2026-10-02T12:34:00+09:00",
+   "status": "resolved"
+  },
+  {
+   "kind": "怪煙偵察",
+   "place": "大津市千野二丁目付近",
+   "resolved_at": "2026-10-01T22:41:00+09:00",
+   "result": "非火災と判明",
+   "started_at": "2026-10-01T21:58:00+09:00",
+   "status": "resolved"
+  },
+  {
+   "kind": "自火報作動",
+   "place": "大津市大萱七丁目付近",
+   "resolved_at": "2026-09-30T21:35:00+09:00",
+   "result": "非火災と判明",
+   "started_at": "2026-09-30T21:18:00+09:00",
+   "status": "resolved"
+  },
+  {
+   "kind": "油漏れ警戒",
+   "place": "大津市山上町付近",
+   "resolved_at": "2026-09-30T20:27:00+09:00",
+   "result": "活動を完了",
+   "started_at": "2026-09-30T18:47:00+09:00",
+   "status": "resolved"
+  },
+  {
+   "kind": "自火報作動",
+   "place": "大津市唐崎三丁目付近",
+   "resolved_at": "2026-09-30T18:02:00+09:00",
+   "result": "非火災と判明",
+   "started_at": "2026-09-30T17:34:00+09:00",
+   "status": "resolved"
+  },
+  {
+   "kind": "自火報作動",
+   "place": "大津市稲津二丁目付近",
+   "resolved_at": "2026-09-30T16:15:00+09:00",
+   "result": "非火災と判明",
+   "started_at": "2026-09-30T15:46:00+09:00",
+   "status": "resolved"
+  },
+  {
+   "kind": "自火報作動",
+   "place": "大津市萱野浦付近",
+   "resolved_at": "2026-09-30T15:16:00+09:00",
+   "result": "非火災と判明",
+   "started_at": "2026-09-30T15:02:00+09:00",
+   "status": "resolved"
+  }
+ ],
+ "no_active_incident": false,
+ "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
+ "unparsed": []
+}

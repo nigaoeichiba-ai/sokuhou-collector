@@ -52,8 +52,11 @@ def _when(now: datetime, m: re.Match, prefix: str) -> datetime:
 def parse(html: str, now: datetime | None = None) -> dict:
     now = now or datetime.now(JST)
     incidents: dict[tuple[str, str, str], dict] = {}
+    unparsed: list[str] = []  # messages that match neither pattern: the page layout may have changed
     for li in _LI.findall(html):
         text = _text(li)
+        if not (_START.match(text) or _RESOLVED.match(text)) and _NO_INCIDENT not in text:
+            unparsed.append(text)
         m = _START.match(text)
         if m:
             started = _when(now, m, "s")
@@ -75,6 +78,7 @@ def parse(html: str, now: datetime | None = None) -> dict:
         "source": URL,
         "fetched_at": now.isoformat(),
         "no_active_incident": _NO_INCIDENT in html_text_of(html),
+        "unparsed": unparsed,
         "incidents": events,
     }
 
