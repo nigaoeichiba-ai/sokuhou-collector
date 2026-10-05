@@ -173,6 +173,28 @@ class FatalAndEmergencyTest(unittest.TestCase):
         self.assertNotIn("emergency", files[2025])
 
 
+class NoticesTest(unittest.TestCase):
+    """Parsed from a saved copy of the ministry's page (no PDF reader needed)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.n = bear.parse_notices((FIX / "env_kuma_effort12.html").read_text(encoding="utf-8"))
+
+    def test_newest_first_with_absolute_urls_and_iso_dates(self):
+        self.assertEqual(len(self.n), 12)
+        self.assertEqual(self.n[0]["date"], "2026-08-28")
+        self.assertEqual(self.n[0]["url"], bear.BASE + "kuma-oshirase-r080828.pdf")  # a trailing space in the href is dropped
+        self.assertEqual([x["date"] for x in self.n], sorted((x["date"] for x in self.n), reverse=True))
+        self.assertTrue(all(x["url"].startswith("https://www.env.go.jp/") for x in self.n))
+
+    def test_title_keeps_the_ministry_wording_without_the_issuer_tail(self):
+        t = next(x for x in self.n if x["date"] == "2026-07-03")
+        self.assertEqual(t["title"], "集落支援員が行う集落点検におけるクマに関する情報共有について")
+
+    def test_links_without_a_reiwa_date_are_ignored(self):
+        self.assertEqual(bear.parse_notices('<a href="x.html">クマの出没情報(速報値)</a>'), [])
+
+
 @unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
 class CollectTest(unittest.TestCase):
     def test_collect_without_network(self):

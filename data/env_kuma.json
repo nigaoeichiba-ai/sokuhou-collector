@@ -818,7 +818,7 @@
    ]
   }
  },
- "fetched_at": "2026-10-06T05:42:11.047756+09:00",
+ "fetched_at": "2026-10-06T05:52:53.038217+09:00",
  "injuries": {
   "as_of": "R08年8月末",
   "national": {
@@ -4844,6 +4844,68 @@
   ]
  },
  "injuries_pdf": "https://www.env.go.jp/nature/choju/effort/effort12/injury-qe.pdf",
+ "notices": [
+  {
+   "date": "2026-08-28",
+   "title": "クマ被害対策等関係情報のお知らせ(令和8年8月28日追加)",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r080828.pdf"
+  },
+  {
+   "date": "2026-08-05",
+   "title": "令和8年度夜間銃猟安全管理講習会の開催及び射撃技能の確認等の参加申し込みの受付を開始します(令和8年8月5日~)",
+   "url": "https://www.env.go.jp/nature/choju/capture/event.html"
+  },
+  {
+   "date": "2026-07-03",
+   "title": "集落支援員が行う集落点検におけるクマに関する情報共有について",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r080703.html"
+  },
+  {
+   "date": "2026-05-25",
+   "title": "クマ被害対策等関係情報のお知らせ(令和8年5月25日追加)",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r080525.html"
+  },
+  {
+   "date": "2026-05-12",
+   "title": "クマによる人身被害の防止に向けた石原宏高環境大臣の閣議後会見(令和8年5月12日)",
+   "url": "https://www.env.go.jp/annai/kaiken/kaiken_00387.html"
+  },
+  {
+   "date": "2026-02-12",
+   "title": "鳥獣の捕獲等に従事する者に係る猟銃等の購入に関する財政支援及び猟銃等の取扱い等について(通知)",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r080212.html"
+  },
+  {
+   "date": "2025-12-23",
+   "title": "クマ被害対策等関係情報のお知らせ(12月23日追加)",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r071223.html"
+  },
+  {
+   "date": "2025-12-19",
+   "title": "警察職員及び自衛官の退職予定者及び退職者への鳥獣保護管理への協力依頼について",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r071219.html"
+  },
+  {
+   "date": "2025-11-28",
+   "title": "「緊急銃猟への協力のお願いについて(R7.11)」の作成について",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r071128.html"
+  },
+  {
+   "date": "2025-11-17",
+   "title": "クマ対策専門家緊急派遣事業(鳥獣プロデータバンク関連)の受付を開始します(令和7年11月17日~)",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort1/effort1.html"
+  },
+  {
+   "date": "2025-11-14",
+   "title": "クマ被害対策等関係情報のお知らせ(11月14日追加)",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r071114.html"
+  },
+  {
+   "date": "2025-10-31",
+   "title": "クマ被害対策等関係情報のお知らせ",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r071031.html"
+  }
+ ],
  "sightings": {
   "latest_month": 7,
   "months": [

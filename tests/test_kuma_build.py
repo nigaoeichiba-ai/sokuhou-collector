@@ -43,6 +43,7 @@ class KumaSiteTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.raw = raw_data()
+        cls.raw["notices"] = env_kuma.parse_notices((FIX / "env_kuma_effort12.html").read_text(encoding="utf-8"))
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name) / "site"
         cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, links=LINKS)
@@ -156,13 +157,21 @@ class KumaSiteTest(unittest.TestCase):
         root = ET.fromstring(self.read("feed.xml"))
         ns = "{http://www.w3.org/2005/Atom}"
         entries = root.findall(f"{ns}entry")
-        self.assertEqual(len(entries), 3)
-        self.assertEqual(len({e.findtext(f"{ns}id") for e in entries}), 3)
+        self.assertEqual(len(entries), 6)  # three data updates and the three newest ministry notices
+        self.assertEqual(len({e.findtext(f"{ns}id") for e in entries}), 6)
         days = [e.findtext(f"{ns}updated")[:10] for e in entries]
-        self.assertEqual(days, ["2026-10-02", "2026-10-01", "2026-09-09"])  # the ministry's dates, not the build date
+        self.assertEqual(days, ["2026-10-02", "2026-10-01", "2026-09-09", "2026-08-28", "2026-08-05", "2026-07-03"])  # the ministry's dates, not the build date
         links = [e.find(f"{ns}link").get("href") for e in entries]
-        self.assertEqual(len(set(links)), 3)  # the Bluesky poster tells entries apart by link
-        self.assertTrue(all(link.startswith("https://kuma-sokuho.com/") and "#u-" in link for link in links))
+        self.assertEqual(len(set(links)), 6)  # the Bluesky poster tells entries apart by link
+        self.assertTrue(all(link.startswith("https://kuma-sokuho.com/") and link.count("#") == 1 for link in links))
+
+    def test_news_page_lists_the_ministry_notices_with_their_links(self):
+        html = self.read("news/index.html")
+        self.assertIn("クマ被害対策等関係情報のお知らせ(令和8年8月28日追加)", html)
+        self.assertIn("https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r080828.pdf", html)
+        self.assertEqual(html.count('rel="noopener" target="_blank">'), 12 + 2)  # twelve notices, the credit line and the footer credit
+        self.assertIn("環境省の最近のお知らせ", self.read("index.html"))
+        self.assertLess(html.index("2026年8月28日"), html.index("2026年7月3日"))  # newest first
 
     def test_release_is_indexable_and_preview_is_not(self):
         self.assertNotIn("noindex", self.read("index.html"))

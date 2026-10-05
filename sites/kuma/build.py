@@ -28,7 +28,7 @@ SOURCE_HTML = (f'出典: <a href="{MINISTRY_PAGE}" rel="noopener" target="_blank
                "環境省が作成したものではありません。")
 SITE = {
     "nav": [("全国", "/", "/"), ("ランキング", "/ranking/sightings/", "/ranking/"), ("推移", "/trend/", "/trend/"),
-            ("緊急銃猟", "/emergency/", "/emergency/"), ("対処法", "/guide/", "/guide/"), ("通知", "/notify/", "/notify/")],
+            ("緊急銃猟", "/emergency/", "/emergency/"), ("お知らせ", "/news/", "/news/"), ("対処法", "/guide/", "/guide/"), ("通知", "/notify/", "/notify/")],
     "glyph": "&#128059;",
     "assets": HERE / "assets",
     "source_html": SOURCE_HTML,
@@ -121,7 +121,7 @@ def prepare(raw: dict) -> dict:
         "raw": raw, "years": years, "cur": cur, "done": done, "months": months, "li": li, "latest_month": s["latest_month"],
         "rows": rows, "by_slug": {r["slug"]: r for r in rows}, "national": nat, "nat_ytd": nat_ytd,
         "peak_month": months[peak], "base_floor": base_floor,
-        "inj": inj, "fatal": raw["fatal"], "emergency": raw["emergency"],
+        "inj": inj, "fatal": raw["fatal"], "emergency": raw["emergency"], "notices": raw.get("notices", []),
         "sight_updated": s["updated"], "inj_updated": inj["updated"], "inj_as_of": inj["as_of"],
         "fetched_date": raw["fetched_at"][:10], "fetched_at": raw["fetched_at"],
         "unlisted": [pf.full(x) for x in pf.SHORT[39:]],
@@ -182,6 +182,11 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
     emg_rows = "".join(f'<li>{md(c["date"])} {esc(c["prefecture"])}{esc(c["place"])}<b>{esc(c["species"])}</b></li>' for c in latest)
     guides = "".join(f'<a class="guide-card" href="/guide/{g["slug"]}/"><b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>'
                      for g in content.GUIDES)
+    news_block = ""
+    if d["notices"]:
+        items = "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
+        news_block = (f'<h2>環境省の最近のお知らせ</h2>\n<ul class="link-list">{items}</ul>\n'
+                      '<p><a href="/news/">お知らせの一覧</a></p>\n')
     body = f"""<section class="hero">
 <p class="eyebrow">環境省の速報値(都道府県からの聞き取り)</p>
 <h1>クマ出没速報</h1>
@@ -206,7 +211,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <h2>最近の緊急銃猟({fy_label(cur)})</h2>
 <ul class="mini-list">{emg_rows}</ul>
 <p><a href="/emergency/">緊急銃猟と死亡事故の一覧</a></p>
-<h2>クマに出会わないために</h2>
+{news_block}<h2>クマに出会わないために</h2>
 <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">{guides}</div>
 <p class="notice">人身被害は、{fy_label(inj_max)}が、{n(inj[inj_max][1])}人で、表にある平成20年度以降で最も多くなっています。{CAUTION}</p>"""
     return page(cfg, preview, path="/", title=f"クマ出没速報 | 都道府県別の出没件数・人身被害・緊急銃猟(環境省の速報値)",
@@ -326,6 +331,20 @@ def emergency_page(d: dict, cfg: dict, preview: bool) -> str:
                 description=f"{fy_label(cur)}のクマの緊急銃猟{n(len(emg['cases']))}件と、死亡事故の日付・場所を、環境省の資料から一覧にしています。", body=body)
 
 
+def news_page(d: dict, cfg: dict, preview: bool) -> str:
+    rows = "".join(
+        f'<li id="n-{x["date"]}-{i}"><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a>'
+        f'<span>{jp_date(x["date"])}</span></li>' for i, x in enumerate(d["notices"]))
+    body = f"""{crumbs([("全国", "/"), ("環境省のお知らせ", None)])}
+<h1>環境省の、クマに関するお知らせ</h1>
+<p class="lead">環境省の「クマに関する各種情報・取組」のページに載っている、日付つきのお知らせ(大臣の談話・会見、自治体への事務連絡、講習会の案内など)を、新しい順に並べています。リンク先は、環境省のページです。</p>
+<ul class="link-list news-list">{rows}</ul>
+<p class="notice">題名は、環境省のページの表記のままです(日付の後ろにある発信元の記載は省いています)。このサイトでは、報道各社の記事は載せていません。お住まいの地域の最新の情報は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。</p>
+<p class="notice">出典: <a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">環境省「クマに関する各種情報・取組」</a>を加工して作成。環境省が作成したものではありません。取得日: {jp_date(d['fetched_date'])}。</p>"""
+    return page(cfg, preview, path="/news/", title="環境省のクマに関するお知らせ(新着)",
+                description="環境省が公表している、クマに関する大臣の談話・会見、自治体への事務連絡などの新着を、日付順に一覧にしています。", body=body)
+
+
 def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
     done, cur, prev = d["done"], d["cur"], d["years"][-3]
     emg = [c for c in d["emergency"][cur]["cases"] if c["prefecture"] == r["name"]]
@@ -426,9 +445,12 @@ def feed_xml(d: dict, cfg: dict) -> str:
         (emg["updated"], f"emergency-{emg['updated']}", f"クマの緊急銃猟の実施状況を更新しました({fy_label(cur)}は{n(len(emg['cases']))}件)",
          f"最新は、{md(emg['cases'][-1]['date'])}の{emg['cases'][-1]['prefecture']}{emg['cases'][-1]['place']}です。", "/emergency/"),
     ]
+    for i, x in enumerate(d["notices"][:3]):
+        entries.append((x["date"], f"notice-{x['date']}-{i}", f"環境省が、クマに関するお知らせを掲載しました: {x['title']}",
+                        "環境省のページに載っている、日付つきのお知らせです。", f"/news/#n-{x['date']}-{i}"))
     entries.sort(reverse=True)
     body = "".join(
-        f"<entry><id>tag:{host},{day}:{eid}</id><title>{esc(t)}</title><link href=\"{esc(base + path)}#u-{day}\"/>"
+        f"<entry><id>tag:{host},{day}:{eid}</id><title>{esc(t)}</title><link href=\"{esc(base + path + ('' if '#' in path else '#u-' + day))}\"/>"
         f"<updated>{day}T00:00:00+09:00</updated><summary>{esc(s)}</summary></entry>\n" for day, eid, t, s, path in entries)
     return ('<?xml version="1.0" encoding="UTF-8"?>\n<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ja">\n'
             f"<id>tag:{host},2026:updates</id><title>{esc(cfg['site_name'])} 更新のお知らせ</title>"
@@ -450,6 +472,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         pages[f"ranking/{kind}/index.html"] = ranking_page(d, kind, cfg, preview)
     pages["trend/index.html"] = trend_page(d, cfg, preview)
     pages["emergency/index.html"] = emergency_page(d, cfg, preview)
+    pages["news/index.html"] = news_page(d, cfg, preview)
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview, links)
     pages["guide/index.html"] = guide_hub(cfg, preview)

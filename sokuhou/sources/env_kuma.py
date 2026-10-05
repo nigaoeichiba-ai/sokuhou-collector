@@ -290,10 +290,36 @@ def _fiscal_files(page_html: str) -> dict[int, dict[str, str]]:
     return found
 
 
+def parse_notices(page_html: str, limit: int = 12) -> list[dict]:
+    """The ministry's dated notices (ministerial statements, notices to local governments...) linked from its page.
+
+    Only entries whose link text carries a Reiwa date are taken; the date is the first one in the text. The title is
+    the link text as the ministry wrote it, minus a trailing "(date, issuing office)" part.
+    """
+    base_url = PAGE
+    from urllib.parse import urljoin
+
+    out, seen = [], set()
+    for m in re.finditer(r'<a[^>]+href="([^"]+)"[^>]*>(.*?)</a>', page_html, flags=re.S):
+        label = re.sub(r"\s+", "", _nfkc(re.sub(r"<[^>]+>", "", m.group(2))))
+        d = re.search(r"令和(\d+)年(\d+)月(\d+)日", label)
+        if not d:
+            continue
+        url = urljoin(base_url, m.group(1).strip())
+        title = re.sub(r"\(令和\d+年\d+月\d+日、[^)]*\)$", "", label)
+        if url in seen:
+            continue
+        seen.add(url)
+        out.append({"date": f"{2018 + int(d.group(1)):04d}-{int(d.group(2)):02d}-{int(d.group(3)):02d}", "title": title, "url": url})
+    out.sort(key=lambda x: (x["date"], x["url"]), reverse=True)
+    return out[:limit]
+
+
 def collect() -> dict:
     sight = parse_sightings(fetch(SIGHTINGS_PDF).body)
     injur = parse_injuries(fetch(INJURIES_PDF).body)
     page = fetch(PAGE).body.decode("utf-8", errors="replace")
+    notices = parse_notices(page)
     files = _fiscal_files(page)
     latest_two = sorted(files)[-2:]
     fatal, emergency = {}, {}
@@ -305,7 +331,7 @@ def collect() -> dict:
             emergency[label] = parse_emergency(fetch(files[fy]["emergency"]).body, fy)
     return {"source_page": PAGE, "sightings_pdf": SIGHTINGS_PDF, "injuries_pdf": INJURIES_PDF,
             "fetched_at": datetime.now(timezone(timedelta(hours=9))).isoformat(),
-            "sightings": sight, "injuries": injur, "fatal": fatal, "emergency": emergency}
+            "sightings": sight, "injuries": injur, "fatal": fatal, "emergency": emergency, "notices": notices}
 
 
 if __name__ == "__main__":
