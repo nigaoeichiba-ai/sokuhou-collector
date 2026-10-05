@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import charts, content, ogimage  # noqa: E402
+from sites.saichin import charts, content, ogimage, wage as wagelib  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
 SLUGS = dict(zip(
@@ -131,6 +131,25 @@ def earnings_table(r: dict) -> str:
 
 # ---------------------------------------------------------------- data
 
+def plausible_effective(name: str, fy: int, iso: str) -> tuple[str, str | None]:
+    """Effective date of a revision made in fiscal year `fy`, and the original if it had to be corrected.
+
+    A revision is decided from summer onwards and takes effect between October of that year and March of the next.
+    MHLW's workbook has, for revisions that took effect in January to March, the year of the decision instead of
+    the next year (Akita, Reiwa 7: the workbook says 2025-03-31; the Akita labour bureau says 31 March 2026).
+    A date before April of the fiscal year is therefore moved one year on; anything still outside the window is refused.
+    """
+    lo, hi = date(fy, 4, 1), date(fy + 1, 3, 31)
+    dt = date.fromisoformat(iso)
+    if lo <= dt <= hi:
+        return iso, None
+    if dt.month <= 3 and dt.year == fy:
+        shifted = date(dt.year + 1, dt.month, dt.day)
+        if lo <= shifted <= hi:
+            return shifted.isoformat(), iso
+    raise BuildError(f"{name}: effective date {iso} of fiscal year {fy} is outside {lo}..{hi} and cannot be corrected")
+
+
 def prepare(raw: dict) -> dict:
     fy = raw["latest_fiscal_year"]
     labels = raw["fiscal_year_labels"]
@@ -152,9 +171,13 @@ def prepare(raw: dict) -> dict:
         for y in range(max(2002, fy - 10), fy + 1):
             cur, before = h.get(str(y)), h.get(str(y - 1))
             if cur:
+                eff_y = cur["effective_date"]
+                fixed_from = None
+                if eff_y and before and cur["amount"] != before["amount"]:
+                    eff_y, fixed_from = plausible_effective(p["name"], y, eff_y)
                 history.append({
-                    "label": labels[str(y)], "amount": cur["amount"], "effective_date": cur["effective_date"],
-                    "raise": cur["amount"] - before["amount"] if before else None,
+                    "fy": y, "label": labels[str(y)], "amount": cur["amount"], "effective_date": eff_y,
+                    "raise": cur["amount"] - before["amount"] if before else None, "date_fixed_from": fixed_from,
                 })
         slug, region = region_of[p["name"]]
         rows.append({
@@ -409,8 +432,14 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
     diff_text = "全国加重平均と同じ額です" if diff_avg == 0 else f"全国加重平均より{abs(diff_avg)}円{'高い' if diff_avg > 0 else '低い'}額です"
     hist = "".join(
         f'<tr><td>{esc(h["label"])}</td><td>{yen(h["amount"])}</td><td>{"+" + str(h["raise"]) + "円" if h["raise"] is not None else "-"}</td>'
-        f'<td>{h["rank"]}位</td><td>{jp_date(h["effective_date"]) if h["effective_date"] else "-"}</td></tr>'
+        f'<td>{h["rank"]}位</td><td>{jp_date(h["effective_date"]) if h["effective_date"] else "-"}{"※" if h.get("date_fixed_from") else ""}</td></tr>'
         for h in reversed(r["history"])
+    )
+    fixed = [h for h in r["history"] if h.get("date_fixed_from")]
+    fixed_note = "".join(
+        f'<p class="notice">※ 厚生労働省の一覧表では、{esc(h["label"])}の発効日が{jp_date(h["date_fixed_from"])}となっています。'
+        f'改定は夏以降に決まるため、この日付より前に発効することはなく、1年後の{jp_date(h["effective_date"])}として表示しています。</p>'
+        for h in fixed
     )
     chart = charts.line(
         [(h["label"].replace("年度", "").replace("令和", "R").replace("平成", "H"), h["amount"]) for h in r["history"]],
@@ -433,9 +462,11 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <h2>最低賃金の推移</h2>
 {chart}
 <div class="tablewrap"><table><thead><tr><th>年度</th><th>最低賃金</th><th>前年度からの引上げ</th><th>全国順位</th><th>発効日</th></tr></thead><tbody>{hist}</tbody></table></div>
+{fixed_note}
 <h2>最低賃金で働いた場合の月収・年収の目安</h2>
 <p>最低賃金ちょうどで働いた場合の目安です。1年を52週、月収は年収を12で割った額として計算しています。税・社会保険料・手当・賞与・祝日などは含みません。実際の給料と比べるときは、<a href="/guide/calculate/">時間額への換算</a>をご覧ください。</p>
 {earnings_table(r)}
+{wage_section(d, r) if d.get("wage") else ""}
 <h2>同じ地方({esc(r['region'])})の最低賃金</h2>
 <ul class="mini-list">{mate_html}</ul>
 <p><a href="/area/{r['region_slug']}/">{esc(r['region'])}のまとめを見る</a></p>
@@ -500,12 +531,93 @@ def area_page(d: dict, slug: str, rname: str, shorts: list[str], cfg: dict, prev
                          description=f"{rname}の最低賃金を一覧にします。最高は{hi['name']}の{yen(hi['amount'])}、最低は{lo['name']}の{yen(lo['amount'])}。発効日も掲載しています。", body=body), d)
 
 
+WAGE_RANKINGS = {
+    "wage": ("平均賃金の高い順", "平均賃金(時給換算)が高い順"),
+    "ratio": ("最低賃金の比率順", "最低賃金が平均賃金に近い順"),
+}
+
+
+def ranking_tabs(d: dict, current: str) -> str:
+    kinds = {k: v[0] for k, v in RANKINGS.items()}
+    if d.get("wage"):
+        kinds.update({k: v[0] for k, v in WAGE_RANKINGS.items()})
+    return "".join(f'<a href="/ranking/{k}/"{" class=\"on\"" if k == current else ""}>{label}</a>' for k, label in kinds.items())
+
+
+def pct(x: float) -> str:
+    return f"{x * 100:.1f}%"
+
+
+def wage_notes(d: dict) -> str:
+    """How to read the wage figures; every statement is taken from the cited MHLW pages (checked 2026-10-05)."""
+    w = d["wage"]
+    return f"""<h2>この数字の見方</h2>
+<ul class="prose-list">
+<li><strong>賃金統計の対象:</strong> {esc(w['year_label'])}賃金構造基本統計調査の、一般労働者(短時間労働者以外の常用労働者)の賃金です。調査は、毎年6月分の賃金について行われます。</li>
+<li><strong>所定内給与:</strong> 6月に支払われた現金給与額から、残業代などの超過労働給与額を除いた額です。税や社会保険料を引く前の額で、手取りではありません。</li>
+<li><strong>時給換算:</strong> このサイトで、月の所定内給与を、月の所定内実労働時間数で割って求めた目安です。厚生労働省が公表している「1時間当たり所定内給与額」(労働者ごとに計算した値)とは、計算の方法が違います。</li>
+<li><strong>年収相当:</strong> 6月のきまって支給する現金給与額を12倍し、昨年1年間の賞与などの特別給与額を足した額です。実際の年収とは異なります。</li>
+<li><strong>最低賃金との比較:</strong> 賃金の調査時点(調査年の6月)に有効だった最低賃金({esc(w['min_then_label'])}の額)と比べています。最新の{esc(d['label'])}の額とは比べていません。比べる相手は、賃金の<strong>平均</strong>です。平均は高い賃金の影響を受けやすいため、中央値と比べた場合とは、比率が違います。</li>
+<li><strong>誤差:</strong> 調査は標本調査で、集計の区分によっては標本誤差が大きくなることがあります。都道府県どうしの小さな差は、順位を比べるときに注意してください。</li>
+</ul>
+<p class="notice">出典: <a href="{esc(w['source_page'])}" rel="noopener" target="_blank">{esc(wagelib.SOURCE_LABEL)}</a>、<a href="{wagelib.SURVEY_PAGE}" rel="noopener" target="_blank">賃金構造基本統計調査の概要</a>を加工して作成。厚生労働省が作成したものではありません。最低賃金は、<a href="{{source}}" rel="noopener" target="_blank">{SOURCE_LABEL}</a>です。</p>"""
+
+
+def wage_ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
+    w = d["wage"]
+    short, long_ = WAGE_RANKINGS[kind]
+    field = {"wage": "hourly", "ratio": "ratio"}[kind]
+    rank_key = {"wage": "hourly_rank", "ratio": "ratio_rank"}[kind]
+    by_slug = {r["name"]: r for r in d["rows"]}
+    ordered = sorted(w["rows"].items(), key=lambda kv: (-kv[1][field], kv[0]))
+    if kind == "wage":
+        head = "<th>順位</th><th>都道府県</th><th>平均賃金(時給換算)</th><th>所定内給与(月)</th><th>年収相当</th>"
+        lines = "".join(
+            f'<tr><td class="rk">{v[rank_key]}</td><td><a href="/{by_slug[n]["slug"]}/">{esc(n)}</a></td><td>{yen(v["hourly"])}</td>'
+            f'<td>{v["pay_k"] / 10:.1f}万円</td><td>{man(v["annual"])}</td></tr>' for n, v in ordered)
+        lead = (f"{w['year_label']}の賃金統計から、47都道府県を、平均賃金(月の所定内給与を所定内実労働時間で割った時給換算)が高い順に並べています。"
+                f"全国は{yen(w['national']['hourly'])}です。")
+    else:
+        head = (f"<th>順位</th><th>都道府県</th><th>最低賃金÷平均賃金</th><th>最低賃金({esc(w['min_then_label'])})</th><th>平均賃金(時給換算)</th>")
+        lines = "".join(
+            f'<tr><td class="rk">{v[rank_key]}</td><td><a href="/{by_slug[n]["slug"]}/">{esc(n)}</a></td><td>{pct(v["ratio"])}</td>'
+            f'<td>{yen(v["min_then"])}</td><td>{yen(v["hourly"])}</td></tr>' for n, v in ordered)
+        lead = (f"賃金の調査時点(調査年の6月)に有効だった最低賃金が、平均賃金(時給換算)の何%にあたるかを、高い順に並べています。"
+                f"全国は{pct(w['national']['ratio'])}です。比率が高い都道府県ほど、平均的な賃金に対して最低賃金が近い水準です。")
+    body = f"""{crumbs([("全国", "/"), ("ランキング", None)])}
+<h1>{short}({esc(w['year_label'])}賃金統計)</h1>
+<p class="lead">{lead}</p>
+<div class="tabs" role="tablist">{ranking_tabs(d, kind)}</div>
+<div class="tablewrap"><table><thead><tr>{head}</tr></thead><tbody>{lines}</tbody></table></div>
+{wage_notes(d)}"""
+    return finish(layout(cfg, preview, path=f"/ranking/{kind}/", title=f"{short} 47都道府県({w['year_label']}賃金統計)",
+                         description=f"{w['year_label']}賃金構造基本統計調査をもとに、{long_}に47都道府県を並べました。定義と読み方も説明します。", body=body), d)
+
+
+def wage_section(d: dict, r: dict) -> str:
+    """Block for a prefecture page: how its pay compares with the nation, and where the minimum wage sits."""
+    w = d["wage"]
+    v, n = w["rows"][r["name"]], w["national"]
+    ratio_gap = "高い" if v["ratio"] > n["ratio"] else "低い"
+    return f"""<h2>賃金の実態との比較({esc(w['year_label'])}賃金統計)</h2>
+<p>{esc(r['name'])}の一般労働者の平均賃金(時給換算)は{yen(v['hourly'])}で、47都道府県中{v['hourly_rank']}位です(全国は{yen(n['hourly'])})。{esc(w['min_then_label'])}の最低賃金({yen(v['min_then'])})は、その{pct(v['ratio'])}にあたり、全国の{pct(n['ratio'])}より{ratio_gap}比率です。</p>
+<div class="tablewrap"><table><thead><tr><th>項目</th><th>{esc(r['name'])}</th><th>全国</th></tr></thead><tbody>
+<tr><td>所定内給与(月・男女計)</td><td>{v['pay_k'] / 10:.1f}万円</td><td>{n['pay_k'] / 10:.1f}万円</td></tr>
+<tr><td>うち男性</td><td>{v['male_k'] / 10:.1f}万円</td><td>{n['male_k'] / 10:.1f}万円</td></tr>
+<tr><td>うち女性</td><td>{v['female_k'] / 10:.1f}万円</td><td>{n['female_k'] / 10:.1f}万円</td></tr>
+<tr><td>所定内実労働時間(月)</td><td>{v['hours']}時間</td><td>{n['hours']}時間</td></tr>
+<tr><td>平均賃金(時給換算)</td><td>{yen(v['hourly'])}</td><td>{yen(n['hourly'])}</td></tr>
+<tr><td>年収相当</td><td>{man(v['annual'])}</td><td>{man(n['annual'])}</td></tr>
+<tr><td>最低賃金({esc(w['min_then_label'])})</td><td>{yen(v['min_then'])}</td><td>{yen(n['min_then'])}(全国加重平均)</td></tr>
+<tr><td>最低賃金÷平均賃金</td><td>{pct(v['ratio'])}(全国{v['ratio_rank']}位)</td><td>{pct(n['ratio'])}</td></tr>
+</tbody></table></div>
+<p class="notice">一般労働者の6月分の賃金です。時給換算と年収相当は、このサイトでの計算です。定義と読み方は<a href="/ranking/wage/">平均賃金のランキング</a>のページをご覧ください。</p>"""
+
+
 def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
     short, long_, key = RANKINGS[kind]
     rows = sorted(d["rows"], key=key)
-    tabs = "".join(
-        f'<a href="/ranking/{k}/"{" class=\"on\"" if k == kind else ""}>{v[0]}</a>' for k, v in RANKINGS.items()
-    )
+    tabs = ranking_tabs(d, kind)
     ascending = sorted(r["amount"] for r in d["rows"])
     rank_of = {
         "high": lambda r: r["rank"],
@@ -847,12 +959,17 @@ def og_cards(d: dict) -> dict[str, bytes]:
 
 # ---------------------------------------------------------------- site
 
-def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[str]:
+def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, wage: dict | None = None) -> list[str]:
     missing = missing_config(cfg)
     if release and missing:
         raise BuildError(f"release build refused: set {', '.join(missing)} in config.json")
     preview = bool(missing)
     d = prepare(raw)
+    if wage:
+        try:
+            d["wage"] = wagelib.view(wage, d)
+        except wagelib.WageError as e:
+            raise BuildError(f"wage survey does not fit the minimum-wage data: {e}")
     base = cfg["site_url"].rstrip("/")
     use_og = ogimage.available() and not os.environ.get("SOKUHOU_NO_OG")
     cfg = {**cfg, "_og": {"enabled": use_og, "slugs": {r["slug"] for r in d["rows"]}}}
@@ -865,6 +982,9 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[
         pages[f"area/{slug}/index.html"] = area_page(d, slug, rname, shorts, cfg, preview)
     for kind in RANKINGS:
         pages[f"ranking/{kind}/index.html"] = ranking_page(d, kind, cfg, preview)
+    if d.get("wage"):
+        for kind in WAGE_RANKINGS:
+            pages[f"ranking/{kind}/index.html"] = wage_ranking_page(d, kind, cfg, preview)
     pages["calendar/index.html"] = calendar_page(d, cfg, preview)
     pages["history/index.html"] = history_page(d, cfg, preview)
     pages["notify/index.html"] = notify_page(d, cfg, preview)
@@ -926,7 +1046,9 @@ def main() -> None:
     args = ap.parse_args()
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
     try:
-        files = render_site(mhlw_minwage.collect(), cfg, Path(args.out), release=args.release)
+        wage_file = HERE.parents[1] / "data" / "estat_wage.json"
+        wage = json.loads(wage_file.read_text(encoding="utf-8")) if wage_file.exists() else None
+        files = render_site(mhlw_minwage.collect(), cfg, Path(args.out), release=args.release, wage=wage)
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {args.out}")
