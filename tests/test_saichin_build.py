@@ -37,7 +37,7 @@ class PreviewBuildTest(BuildTestBase):
         self.out, self.files = self.render(BASE_CFG)
 
     def test_file_set(self):
-        self.assertEqual(len(self.files), 54)  # index + 47 prefectures + 3 legal + 404 + sitemap + robots
+        self.assertEqual(len(self.files), 56)  # index + 47 prefectures + 3 legal + 404 + sitemap + robots + 2 assets
         for rel in ("index.html", "shiga/index.html", "okinawa/index.html", "about/index.html",
                     "privacy/index.html", "contact/index.html", "404.html", "sitemap.xml", "robots.txt"):
             self.assertIn(rel, self.files)
@@ -106,6 +106,33 @@ class PreviewBuildTest(BuildTestBase):
         text = self.read(self.out, "privacy/index.html")
         for needle in ("Google AdSense", "adssettings.google.com", "aboutads.info", "policies.google.com/technologies/partner-sites"):
             self.assertIn(needle, text)
+
+
+class RebuildTest(BuildTestBase):
+    def test_rebuilding_into_the_same_folder_removes_only_stale_files(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        out = Path(tmp.name) / "site"
+        first = build.render_site(_raw(), BASE_CFG, out)
+        (out / "stale.html").write_text("old", encoding="utf-8")
+        (out / "old-dir").mkdir()
+        (out / "old-dir" / "x.html").write_text("old", encoding="utf-8")
+        second = build.render_site(_raw(), BASE_CFG, out)
+        self.assertEqual(first, second)
+        self.assertFalse((out / "stale.html").exists())
+        self.assertFalse((out / "old-dir" / "x.html").exists())
+        on_disk = sorted(p.relative_to(out).as_posix() for p in out.rglob("*") if p.is_file())
+        self.assertEqual(on_disk, second)
+
+    def test_switching_from_preview_to_release_replaces_ads_and_robots(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        out = Path(tmp.name) / "site"
+        build.render_site(_raw(), {**BASE_CFG, "adsense_pub_id": "pub-1"}, out)
+        self.assertTrue((out / "ads.txt").exists())
+        build.render_site(_raw(), FULL_CFG, out, release=True)
+        self.assertFalse((out / "ads.txt").exists())  # a stale ads.txt must not survive
+        self.assertIn("Allow: /", (out / "robots.txt").read_text(encoding="utf-8"))
 
 
 class ReleaseBuildTest(BuildTestBase):

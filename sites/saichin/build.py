@@ -8,7 +8,6 @@ from __future__ import annotations
 import argparse
 import html
 import json
-import shutil
 import sys
 from datetime import date
 from pathlib import Path
@@ -259,7 +258,7 @@ def about_page(d: dict, cfg: dict, preview: bool) -> str:
 <dt>連絡先</dt><dd>{contact_summary(cfg)}</dd>
 <dt>目的</dt><dd>最低賃金の改定内容を、働く方・雇う方が確認しやすい形で整理してお伝えすること。</dd>
 <dt>情報の出典</dt><dd>{esc(SOURCE_LABEL)}(<a href="{{source}}" rel="noopener" target="_blank">公表ページ</a>)</dd>
-<dt>更新</dt><dd>公表データを定期的に取得して更新します。各ページに、データの取得日を表示しています。</dd>
+<dt>更新</dt><dd>厚生労働省の公表データをもとに作成し、内容を更新したときは、各ページに表示するデータの取得日も更新します。</dd>
 </dl>
 <h2>免責事項</h2>
 <p>掲載内容は、正確を期して作成していますが、その正確性・完全性・最新性を保証するものではありません。実際に適用される最低賃金は、都道府県労働局・厚生労働省の発表をご確認ください。当サイトの情報を利用して生じた損害について、運営者は責任を負いません。</p>
@@ -323,8 +322,6 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[
     d = prepare(raw)
     base = cfg["site_url"].rstrip("/")
 
-    if out.exists():
-        shutil.rmtree(out)
     pages: dict[str, str] = {"index.html": index_page(d, cfg, preview)}
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview)
@@ -346,11 +343,19 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[
         pub = cfg["adsense_pub_id"].replace("ca-", "")
         pages["ads.txt"] = f"google.com, {pub}, DIRECT, f08c47fec0942fa0\n"
 
+    for asset in sorted((HERE / "assets").iterdir()):
+        pages[f"assets/{asset.name}"] = asset.read_text(encoding="utf-8")
+
+    # Overwrite in place and delete only stale files. Removing the whole folder fails on Windows when
+    # Dropbox or the indexer briefly holds a directory open.
     for rel, content in pages.items():
         p = out / rel
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(content, encoding="utf-8", newline="\n")
-    shutil.copytree(HERE / "assets", out / "assets")
+    if out.exists():
+        for f in out.rglob("*"):
+            if f.is_file() and f.relative_to(out).as_posix() not in pages:
+                f.unlink()
     return sorted(pages)
 
 

@@ -4,3 +4,5 @@ out/
 .env
 .claude/
 dist/
+release/
+*.zip
