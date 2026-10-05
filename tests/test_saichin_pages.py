@@ -134,7 +134,7 @@ class SiteTest(SiteFixture):
     # ---- calendar
     def test_calendar_has_every_prefecture_once_and_dates_in_order(self):
         text = self.read("calendar/index.html")
-        days = re.findall(r'<section class="cal-day" data-date="(\d{4}-\d{2}-\d{2})"', text)
+        days = re.findall(r'<section class="cal-day" id="d-[\d-]+" data-date="(\d{4}-\d{2}-\d{2})"', text)
         self.assertEqual(days, sorted(days))
         self.assertEqual(len(days), len({r["effective_date"] for r in self.d["rows"]}))
         links = re.findall(r'<li><a href="/([a-z]+)/">', text)

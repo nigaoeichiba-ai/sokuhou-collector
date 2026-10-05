@@ -1,0 +1,53 @@
+name: notify-bluesky
+
+# Posts new entries of a site's dated Atom feed to Bluesky. Needs two repository secrets,
+# both created by the owner (never by Claude): BLUESKY_HANDLE and BLUESKY_APP_PASSWORD (an app password).
+# The feed is read from the live site, so a post can only go out after the site itself has been updated.
+
+on:
+  schedule:
+    - cron: "30 0 * * *"   # 09:30 JST
+  workflow_dispatch:
+    inputs:
+      post:
+        description: "Really post (otherwise dry run)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notify-bluesky
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Check secrets
+        id: secrets
+        env:
+          HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+        run: |
+          if [ -z "$HANDLE" ] || [ -z "$PASSWORD" ]; then
+            echo "BLUESKY_HANDLE / BLUESKY_APP_PASSWORD are not set; nothing to do"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Post
+        if: steps.secrets.outputs.ready == 'true'
+        env:
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          POST: ${{ github.event_name == 'schedule' || inputs.post }}
+        run: |
+          flag=""
+          if [ "$POST" = "true" ]; then flag="--post"; fi
+          python -m sokuhou.notify.bluesky --feed https://saichin-sokuho.com/feed/dates.xml $flag

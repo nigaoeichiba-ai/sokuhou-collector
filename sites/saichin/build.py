@@ -12,7 +12,7 @@ import json
 import os
 import re
 import sys
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from urllib.parse import urlparse
 from pathlib import Path
 
@@ -54,6 +54,7 @@ RANKINGS = {
 HTACCESS = (
     'SetEnvIf Request_URI ".*" Ngx_Cache_NoCacheMode=off\n'
     'SetEnvIf Request_URI ".*" Ngx_Cache_AllCacheMode\n'
+    "AddType text/calendar .ics\n"
     "RewriteEngine on\n"
     "RewriteCond %{HTTPS} !on\n"
     "RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]\n"
@@ -190,7 +191,7 @@ def prepare(raw: dict) -> dict:
     return {
         "fy": fy, "label": labels[str(fy)], "rows": rows,
         "avg": avg[str(fy)], "avg_prev": avg[str(fy - 1)], "years": years,
-        "source_page": raw["source_page"], "fetched_date": raw["fetched_at"][:10],
+        "source_page": raw["source_page"], "fetched_date": raw["fetched_at"][:10], "fetched_at": raw["fetched_at"],
     }
 
 
@@ -198,7 +199,8 @@ def prepare(raw: dict) -> dict:
 
 # (label, link, section prefix used to mark the current section)
 NAV = [("全国一覧", "/", "/"), ("地方別", "/area/", "/area/"), ("ランキング", "/ranking/high/", "/ranking/"),
-       ("発効日", "/calendar/", "/calendar/"), ("推移", "/history/", "/history/"), ("解説", "/guide/", "/guide/")]
+       ("発効日", "/calendar/", "/calendar/"), ("推移", "/history/", "/history/"), ("解説", "/guide/", "/guide/"),
+       ("通知", "/notify/", "/notify/")]
 
 
 def nav_html(path: str) -> str:
@@ -437,6 +439,8 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <h2>同じ地方({esc(r['region'])})の最低賃金</h2>
 <ul class="mini-list">{mate_html}</ul>
 <p><a href="/area/{r['region_slug']}/">{esc(r['region'])}のまとめを見る</a></p>
+<h2>発効日を通知で受け取る</h2>
+<p><a href="/calendar/{r['slug']}.ics">{esc(r['name'])}の発効日を、カレンダーに入れる</a>(前日の朝9時に通知。登録不要)。ほかの方法は、<a href="/notify/">通知を受け取る</a>をご覧ください。</p>
 <h2>あわせて読む</h2>
 <ul class="link-list"><li><a href="/guide/excluded/">最低賃金に含まれない賃金は?</a></li><li><a href="/guide/below/">最低賃金を下回っていたら?</a></li><li><a href="/calendar/">発効日カレンダー</a></li></ul>
 <h2>ほかの都道府県</h2>
@@ -536,12 +540,12 @@ def calendar_page(d: dict, cfg: dict, preview: bool) -> str:
             for r in sorted(days[iso], key=lambda r: (-r["amount"], r["name"]))
         )
         sections += (
-            f'<section class="cal-day" data-date="{iso}"><h2>{m}月{dd}日({wd}) <span class="chip state" data-date="{iso}"></span>'
+            f'<section class="cal-day" id="d-{iso}" data-date="{iso}"><h2>{m}月{dd}日({wd}) <span class="chip state" data-date="{iso}"></span>'
             f'<small>{len(days[iso])}都道府県</small></h2><ul class="cal-list">{chips}</ul></section>'
         )
     body = f"""{crumbs([("全国", "/"), ("発効日カレンダー", None)])}
 <h1>最低賃金の発効日カレンダー({esc(d['label'])})</h1>
-<p class="lead">新しい最低賃金が、いつ、どの都道府県で効力を持つかを、日付順にまとめています。発効日は都道府県ごとに異なります。</p>
+<p class="lead">新しい最低賃金が、いつ、どの都道府県で効力を持つかを、日付順にまとめています。発効日は都道府県ごとに異なります。<a href="/notify/">発効日をカレンダーや通知で受け取る方法</a>もあります。</p>
 {sections}
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。発効日が決まる仕組みは、<a href="/guide/how-decided/">最低賃金はどう決まる?</a>をご覧ください。</p>"""
     return finish(layout(cfg, preview, path="/calendar/", title=f"最低賃金の発効日カレンダー({d['label']}) 日付順の一覧",
@@ -706,6 +710,129 @@ def feed_xml(d: dict, cfg: dict) -> str:
     )
 
 
+def dates_feed_xml(d: dict, cfg: dict) -> str:
+    """Atom feed with one entry per effective date that has already passed (what the social posts are made from)."""
+    base = cfg["site_url"].rstrip("/")
+    host = urlparse(base).hostname or "localhost"
+    days: dict[str, list[dict]] = {}
+    for r in d["rows"]:
+        if r["effective_date"] <= d["fetched_date"]:
+            days.setdefault(r["effective_date"], []).append(r)
+    entries = ""
+    for iso in sorted(days, reverse=True):
+        rows = sorted(days[iso], key=lambda r: (-r["amount"], r["name"]))
+        _, m, dd = (int(x) for x in iso.split("-"))
+        listing = "、".join(f"{r['name']} {yen(r['amount'])}" for r in rows)
+        entries += (
+            f"<entry><id>tag:{host},{d['fy']}:minwage-date-{iso}</id>"
+            f"<title>{m}月{dd}日、{len(rows)}都道府県で最低賃金の新しい額が発効しました</title>"
+            f'<link href="{esc(base)}/calendar/#d-{iso}"/><updated>{iso}T00:00:00+09:00</updated>'
+            f"<summary>{esc(listing)}</summary></entry>\n"
+        )
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ja">\n'
+        f"<id>tag:{host},{d['fy']}:minwage-dates</id><title>{esc(cfg['site_name'])} 発効日ごとのお知らせ</title>"
+        f'<link href="{esc(base)}/feed/dates.xml" rel="self"/><link href="{esc(base)}/calendar/"/>'
+        f"<updated>{d['fetched_date']}T00:00:00+09:00</updated>\n{entries}</feed>\n"
+    )
+
+
+def ics_escape(text: str) -> str:
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+    return text.replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,").replace("\n", "\\n")
+
+
+def ics_fold(line: str) -> str:
+    """RFC 5545 line folding: at most 75 octets per line, never splitting a multi-byte character."""
+    out, cur, size = [], "", 0
+    for ch in line:
+        n = len(ch.encode("utf-8"))
+        if size + n > (75 if not out else 74):
+            out.append(cur)
+            cur, size = "", 0
+        cur += ch
+        size += n
+    out.append(cur)
+    return "\r\n ".join(out)
+
+
+def ics_calendar(d: dict, cfg: dict, name: str, events: list[dict]) -> str:
+    """A subscribable calendar of all-day events, each with a reminder at 9:00 the day before."""
+    base = cfg["site_url"].rstrip("/")
+    host = urlparse(base).hostname or "localhost"
+    # The full fetch time (UTC): a correction made on the same day still looks newer to calendar apps.
+    stamp = datetime.fromisoformat(d["fetched_at"]).astimezone(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", f"PRODID:-//{host}//minwage//JA", "CALSCALE:GREGORIAN",
+             f"X-WR-CALNAME:{ics_escape(name)}", "X-WR-TIMEZONE:Asia/Tokyo"]
+    for ev in events:
+        start = date.fromisoformat(ev["date"])
+        lines += [
+            "BEGIN:VEVENT", f"UID:{ev['uid']}@{host}", f"DTSTAMP:{stamp}", f"LAST-MODIFIED:{stamp}",
+            f"DTSTART;VALUE=DATE:{start:%Y%m%d}", f"DTEND;VALUE=DATE:{start + timedelta(days=1):%Y%m%d}",
+            f"SUMMARY:{ics_escape(ev['summary'])}", f"DESCRIPTION:{ics_escape(ev['description'])}",
+            f"URL:{ev['url']}", "TRANSP:TRANSPARENT",
+            "BEGIN:VALARM", "ACTION:DISPLAY", f"DESCRIPTION:{ics_escape(ev['summary'])}", "TRIGGER:-PT15H", "END:VALARM",
+            "END:VEVENT",
+        ]
+    lines.append("END:VCALENDAR")
+    return "\r\n".join(ics_fold(x) for x in lines) + "\r\n"
+
+
+def ics_files(d: dict, cfg: dict) -> dict[str, str]:
+    """calendar/<slug>.ics for each prefecture, and calendar/all.ics with one event per effective date."""
+    base = cfg["site_url"].rstrip("/")
+    files: dict[str, str] = {}
+    for r in d["rows"]:
+        files[f"calendar/{r['slug']}.ics"] = ics_calendar(d, cfg, f"{r['name']}の最低賃金", [{
+            "uid": f"minwage-{d['fy']}-{r['slug']}", "date": r["effective_date"],
+            "summary": f"{r['name']}の最低賃金が{yen(r['amount'])}に(発効日)",
+            "description": f"{d['label']}の{r['name']}の最低賃金は、{yen(r['prev_amount'])}から{yen(r['amount'])}(+{r['raise']}円)に改定されます。",
+            "url": f"{base}/{r['slug']}/"}])
+    days: dict[str, list[dict]] = {}
+    for r in d["rows"]:
+        days.setdefault(r["effective_date"], []).append(r)
+    events = []
+    for iso in sorted(days):
+        rows = sorted(days[iso], key=lambda r: (-r["amount"], r["name"]))
+        events.append({
+            "uid": f"minwage-{d['fy']}-date-{iso}", "date": iso,
+            "summary": f"{len(rows)}都道府県で最低賃金の新しい額が発効",
+            "description": "、".join(f"{r['name']} {yen(r['amount'])}" for r in rows),
+            "url": f"{base}/calendar/#d-{iso}"})
+    files["calendar/all.ics"] = ics_calendar(d, cfg, f"{cfg['site_name']} 発効日", events)
+    return files
+
+
+def notify_page(d: dict, cfg: dict, preview: bool) -> str:
+    base = cfg["site_url"].rstrip("/")
+    host = urlparse(base).hostname or "localhost"
+    rows = "".join(
+        f'<li><a href="/{r["slug"]}/">{esc(r["name"])}</a>'
+        f'<span><a href="/calendar/{r["slug"]}.ics">カレンダー(.ics)</a></span></li>' for r in d["rows"])
+    social = ""
+    if cfg.get("bluesky_handle"):
+        social += f'<li><a href="https://bsky.app/profile/{esc(cfg["bluesky_handle"])}" rel="noopener" target="_blank">Bluesky(@{esc(cfg["bluesky_handle"])})</a>をフォローすると、発効日ごとのお知らせが届きます。</li>'
+    if cfg.get("x_handle"):
+        social += f'<li><a href="https://x.com/{esc(cfg["x_handle"])}" rel="noopener" target="_blank">X(@{esc(cfg["x_handle"])})</a>でも、同じお知らせを載せます。</li>'
+    body = f"""{crumbs([("全国", "/"), ("通知を受け取る", None)])}
+<h1>最低賃金の更新を、通知で受け取る</h1>
+<p class="lead">サイトを開かなくても、新しい最低賃金の発効日や更新が届くようにできます。登録は不要で、メールアドレスなどの個人情報も預かりません。</p>
+<h2>1. 発効日をカレンダーに入れる</h2>
+<p>お住まいの都道府県の発効日が、カレンダーアプリの予定として入ります。前日の朝9時に通知が出ます。Google カレンダーや iPhone の「カレンダー」などで、このページのファイルを購読(URL で追加)してください。下の一覧の「カレンダー(.ics)」を、ファイルとして開く方法もあります。</p>
+<p><a href="https://calendar.google.com/calendar/r?cid=webcal://{esc(host)}/calendar/all.ics">全国の発効日を、Google カレンダーに追加</a>(発効日ごとに1件の予定になります)</p>
+<ul class="mini-list notify-list">{rows}</ul>
+<h2>2. フィード(RSS)で受け取る</h2>
+<ul class="link-list">
+<li><a href="/feed/dates.xml">発効日ごとのお知らせ(フィード)</a>: 日付ごとに、発効した都道府県と新しい額をまとめます。</li>
+<li><a href="/feed.xml">都道府県ごとのお知らせ(フィード)</a>: 発効した県ごとに1件ずつ載ります。</li>
+</ul>
+<p>フィードリーダーに、上のアドレスを登録してください。</p>
+{"<h2>3. SNS で受け取る</h2><ul class='link-list'>" + social + "</ul>" if social else ""}
+<p class="notice">カレンダーとフィードは、このサイトのデータから自動で作っています。発効日などは、厚生労働省の公表をもとにしています。内容が変わったときは、次の更新で自動的に反映されます。</p>"""
+    return finish(layout(cfg, preview, path="/notify/", title=f"最低賃金の更新を通知で受け取る方法 | {cfg['site_name']}",
+                         description="新しい最低賃金の発効日を、カレンダーやフィード(RSS)で受け取る方法です。登録や個人情報は不要です。", body=body, scripts=False), d)
+
+
 def og_cards(d: dict) -> dict[str, bytes]:
     """Share cards: one default plus one per prefecture."""
     cards = {"og/default.png": ogimage.card(
@@ -740,6 +867,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[
         pages[f"ranking/{kind}/index.html"] = ranking_page(d, kind, cfg, preview)
     pages["calendar/index.html"] = calendar_page(d, cfg, preview)
     pages["history/index.html"] = history_page(d, cfg, preview)
+    pages["notify/index.html"] = notify_page(d, cfg, preview)
     pages["guide/index.html"] = guide_hub_page(d, cfg, preview)
     for g in content.GUIDES:
         pages[f"guide/{g['slug']}/index.html"] = guide_page(d, g, cfg, preview)
@@ -762,6 +890,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[
         pub = cfg["adsense_pub_id"].replace("ca-", "")
         pages["ads.txt"] = f"google.com, {pub}, DIRECT, f08c47fec0942fa0\n"
     pages["feed.xml"] = feed_xml(d, cfg)
+    pages["feed/dates.xml"] = dates_feed_xml(d, cfg)
+    pages.update(ics_files(d, cfg))
     if use_og:
         pages.update(og_cards(d))
     pages[".htaccess"] = HTACCESS

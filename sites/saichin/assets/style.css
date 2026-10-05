@@ -134,6 +134,7 @@ td.state.soon { color:var(--warn); font-weight:700; }
 /* lists, calendar, charts */
 .mini-list, .link-list, .cal-list, .pref-nav { list-style:none; margin:0; padding:0; }
 .mini-list li { display:flex; justify-content:space-between; max-width:340px; padding:4px 0; border-bottom:1px dashed var(--line); }
+.notify-list li { max-width:440px; }
 .link-list li { padding:3px 0; }
 .pref-nav { display:flex; flex-wrap:wrap; gap:6px 14px; font-size:.92rem; }
 .cal-day { background:var(--card); border:1px solid var(--line); border-left:6px solid var(--warn); border-radius:14px; padding:6px 16px 14px; margin:14px 0; box-shadow:var(--shadow); }

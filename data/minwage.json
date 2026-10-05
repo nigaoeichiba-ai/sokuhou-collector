@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-05T17:33:23.630699+09:00",
+ "fetched_at": "2026-10-05T20:12:18.653826+09:00",
  "fiscal_year_labels": {
   "2002": "平成14年度",
   "2003": "平成15年度",
@@ -572,7 +572,7 @@
     },
     "2025": {
      "amount": 1031,
-     "effective_date": "2025-03-31"
+     "effective_date": "2026-03-31"
     },
     "2026": {
      "amount": 1090,
@@ -782,7 +782,7 @@
     },
     "2025": {
      "amount": 1033,
-     "effective_date": "2025-01-01"
+     "effective_date": "2026-01-01"
     },
     "2026": {
      "amount": 1094,
@@ -1097,7 +1097,7 @@
     },
     "2025": {
      "amount": 1063,
-     "effective_date": "2025-03-01"
+     "effective_date": "2026-03-01"
     },
     "2026": {
      "amount": 1120,
@@ -3827,7 +3827,7 @@
     },
     "2025": {
      "amount": 1046,
-     "effective_date": "2025-01-01"
+     "effective_date": "2026-01-01"
     },
     "2026": {
      "amount": 1103,
@@ -4562,7 +4562,7 @@
     },
     "2025": {
      "amount": 1034,
-     "effective_date": "2025-01-01"
+     "effective_date": "2026-01-01"
     },
     "2026": {
      "amount": 1092,
@@ -4667,7 +4667,7 @@
     },
     "2025": {
      "amount": 1035,
-     "effective_date": "2025-01-01"
+     "effective_date": "2026-01-01"
     },
     "2026": {
      "amount": 1096,
@@ -4992,6 +4992,6 @@
    "name": "沖縄"
   }
  ],
- "source_file": "https://www.mhlw.go.jp/content/11200000/001753407.xlsx",
+ "source_file": "https://www.mhlw.go.jp/content/11200000/001756130.xlsx",
  "source_page": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/minimumichiran/index.html"
 }
