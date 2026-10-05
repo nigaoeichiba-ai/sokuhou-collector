@@ -26,9 +26,11 @@ from sokuhou.sitekit import BuildError, crumbs, esc, layout, legal_pages, missin
 MINISTRY_PAGE = "https://www.env.go.jp/nature/choju/effort/effort12/effort12.html"
 SOURCE_HTML = (f'出典: <a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">環境省「クマに関する各種情報・取組」</a>の公表資料(速報値)を加工して作成。'
                "環境省が作成したものではありません。")
+BASE_NAV = [("全国", "/", "/"), ("最新の目撃", "/live/", "/live/"), ("ランキング", "/ranking/sightings/", "/ranking/"),
+            ("推移", "/trend/", "/trend/"), ("緊急銃猟", "/emergency/", "/emergency/"), ("お知らせ", "/news/", "/news/"),
+            ("対処法", "/guide/", "/guide/")]
 SITE = {
-    "nav": [("全国", "/", "/"), ("ランキング", "/ranking/sightings/", "/ranking/"), ("推移", "/trend/", "/trend/"),
-            ("緊急銃猟", "/emergency/", "/emergency/"), ("お知らせ", "/news/", "/news/"), ("対処法", "/guide/", "/guide/"), ("通知", "/notify/", "/notify/")],
+    "nav": BASE_NAV,
     "glyph": "&#128059;",
     "assets": HERE / "assets",
     "source_html": SOURCE_HTML,
@@ -182,6 +184,12 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
     emg_rows = "".join(f'<li>{md(c["date"])} {esc(c["prefecture"])}{esc(c["place"])}<b>{esc(c["species"])}</b></li>' for c in latest)
     guides = "".join(f'<a class="guide-card" href="/guide/{g["slug"]}/"><b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>'
                      for g in content.GUIDES)
+    live_home = ""
+    if d.get("live"):
+        lv = d["live"]
+        last = lv["items"][0]
+        live_home = (f'<p class="alert">最新の目撃(滋賀県大津市・市の公式): {md(last["observed_at"][:10])} {esc(last["place"])}。'
+                     '<a href="/live/">目撃情報の一覧</a></p>\n')
     news_block = ""
     if d["notices"]:
         items = "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
@@ -200,7 +208,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <a class="btn" href="/ranking/sightings/">都道府県別のランキングを見る</a>
 </section>
 <p class="notice" style="margin-top:12px">{freshness(d)}</p>
-<h2>お住まいの地域の、最新の出没情報は</h2>
+{live_home}<h2>お住まいの地域の、最新の出没情報は</h2>
 <p>環境省の数字は、公表までに時間がかかります。<strong>いま近くで出ているかどうかは、お住まいの都道府県・市町村の公式ページで確認してください。</strong>各道府県のページから、公式の出没情報へ案内します。</p>
 <h2>{fy_label(done)}に出没が多かった道府県</h2>
 <ul class="mini-list">{top_rows}</ul>
@@ -213,6 +221,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <p><a href="/emergency/">緊急銃猟と死亡事故の一覧</a></p>
 {news_block}<h2>クマに出会わないために</h2>
 <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">{guides}</div>
+<p><a href="/notify/">更新を通知で受け取る方法</a></p>
 <p class="notice">人身被害は、{fy_label(inj_max)}が、{n(inj[inj_max][1])}人で、表にある平成20年度以降で最も多くなっています。{CAUTION}</p>"""
     return page(cfg, preview, path="/", title=f"クマ出没速報 | 都道府県別の出没件数・人身被害・緊急銃猟(環境省の速報値)",
                 description=f"{fy_label(done)}の全国のクマ出没は{n(total_done)}件。都道府県別のランキング、月別の推移、人身被害、緊急銃猟の一覧を、環境省の速報値からまとめています。",
@@ -331,6 +340,61 @@ def emergency_page(d: dict, cfg: dict, preview: bool) -> str:
                 description=f"{fy_label(cur)}のクマの緊急銃猟{n(len(emg['cases']))}件と、死亡事故の日付・場所を、環境省の資料から一覧にしています。", body=body)
 
 
+OTSU_PAGE = "https://www.city.otsu.lg.jp/soshiki/025/1605/g/t/74581.html"
+OTSU_MAP = "https://www.google.com/maps/d/viewer?mid=1rE5HcSdJnm2gX3iT1FMt0aCVuQ9ArDs"
+
+
+def prepare_live(otsu: dict | None) -> dict | None:
+    """Otsu City's own sighting list (from the city's published map), newest first. None when there is no data."""
+    if not otsu or not otsu.get("sightings"):
+        return None
+    items = sorted((s for s in otsu["sightings"] if s.get("observed_at")), key=lambda s: s["observed_at"], reverse=True)
+    if not items:
+        return None
+    by_fy: dict[str, list] = {}
+    for s in items:
+        by_fy.setdefault(s["fiscal_year"], []).append(s)
+    return {"items": items, "by_fy": by_fy, "official": otsu.get("official_counts", {}), "fetched_date": otsu["fetched_at"][:10],
+            "latest_fy": items[0]["fiscal_year"]}
+
+
+def day_text(iso_ts: str, year: bool = False) -> str:
+    """'2026-10-03T08:30:00+09:00' -> '10月3日 8時30分ごろ' (with the year: '2026年10月3日 ...')."""
+    day, clock = iso_ts[:10], iso_ts[11:16]
+    h, m = (int(x) for x in clock.split(":"))
+    head = jp_date(day) if year else md(day)
+    return f"{head} {h}時{m:02d}分ごろ" if (h, m) != (0, 0) else head
+
+
+def live_page(d: dict, live: dict, cfg: dict, preview: bool) -> str:
+    items, fy = live["items"], live["latest_fy"]
+    cur_items = live["by_fy"][fy]
+    official = live["official"].get(fy)
+    last = items[0]
+    days_ago = (date.fromisoformat(live["fetched_date"]) - date.fromisoformat(last["observed_at"][:10])).days
+    ago = "きょう" if days_ago <= 0 else f"{days_ago}日前"
+    months: dict[int, int] = {}
+    for s in cur_items:
+        months[int(s["observed_at"][5:7])] = months.get(int(s["observed_at"][5:7]), 0) + 1
+    month_table = table(["月", "件数"], [[f"{m}月", n(months[m])] for m in d["months"] if months.get(m)])
+    official_text = (f"大津市は、{fy}の目撃情報を{n(official)}件と公表しています。" if official is not None else "")
+    body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", None)])}
+<h1>最新のクマの目撃情報(自治体の公式)</h1>
+<p class="lead">環境省の数字は、公表まで1〜2か月かかります。ここでは、自治体が公式に公表している目撃情報を、取得できるところから順に載せています。いまは、滋賀県大津市です。</p>
+<p class="alert">最新の目撃: {md(last['observed_at'][:10])}({ago}) {esc(last['place'])}</p>
+<h2>滋賀県大津市</h2>
+<p>{official_text}このサイトが、大津市の公開地図から読み取った{fy}の件数は、{n(len(cur_items))}件です(市の表記と、数え方が少し違うことがあります)。直近25件を、新しい順に並べています。</p>
+{table(["日時", "場所"], [[day_text(s['observed_at'], year=True), esc(s['place'])] for s in items[:25]])}
+<h2>{fy}の月別</h2>
+{month_table}
+<p>大津市の公式ページ(目撃の内容、地図、メール配信の案内)は、<a href="{OTSU_PAGE}" rel="noopener" target="_blank">大津市「熊の目撃情報」</a>です。地図は、<a href="{OTSU_MAP}" rel="noopener" target="_blank">大津市のクマ出没マップ</a>で見られます。市の更新には、数日かかることがあります。</p>
+<p class="notice">出典: 大津市が公開している、クマ出没マップ(ツキノワグマ目撃情報)を加工して作成。大津市が作成したものではありません。取得日: {jp_date(live['fetched_date'])}。「ツキノワグマらしき動物」や「錯誤捕獲」などの区別は、市のページに載っています。</p>
+<h2>ほかの地域は</h2>
+<p>ほかの道府県・市町村の公式の目撃情報も、取得できる形で公開されているものから、順に加えていきます。それまでは、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。</p>"""
+    return page(cfg, preview, path="/live/", title="クマの最新の目撃情報(自治体の公式・大津市)",
+                description=f"滋賀県大津市が公表しているクマの目撃情報を、新しい順に一覧にしています。最新は{md(last['observed_at'][:10])}の{last['place']}です。", body=body)
+
+
 def news_page(d: dict, cfg: dict, preview: bool) -> str:
     rows = "".join(
         f'<li id="n-{x["date"]}-{i}"><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a>'
@@ -365,11 +429,17 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
         sight = f"<p>環境省の出没件数の表には、{esc(r['name'])}の数値がありません(「-」)。人身被害の件数は、下に載せています。</p>"
     emg_html = ("<ul class='mini-list'>" + "".join(f'<li>{md(c["date"])} {esc(c["place"])}<b>{esc(c["species"])}</b></li>' for c in emg) + "</ul>") if emg else f"<p>環境省の{fy_label(cur)}の一覧には、{esc(r['name'])}の事例はありません(環境省が把握する事例に限ります)。</p>"
     fat_html = ("<ul class='mini-list'>" + "".join(f'<li>{jp_date(i["date"])} {esc(i["place"])}<b>{i["victims"]}人</b></li>' for i in sorted(fat, key=lambda i: i["date"], reverse=True)) + "</ul>") if fat else f"<p>環境省の資料(令和7・8年度)には、{esc(r['name'])}の死亡事故はありません。</p>"
+    live_block = ""
+    if d.get("live") and r["slug"] == "shiga":
+        lv = d["live"]
+        recent = "".join(f'<li>{day_text(x["observed_at"])} {esc(x["place"])}</li>' for x in lv["items"][:5])
+        live_block = (f'<h2>大津市の最新の目撃情報(市の公式)</h2>\n<ul class="mini-list">{recent}</ul>\n'
+                      '<p><a href="/live/">大津市の目撃情報の一覧</a></p>\n')
     nav = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in d["rows"] if x is not r)
     body = f"""{crumbs([("全国", "/"), ("ランキング", "/ranking/sightings/"), (r["name"], None)])}
 <h1>{esc(r['name'])}のクマ出没({fy_label(done)}・環境省の速報値)</h1>
 {sight}
-<h2>人身被害</h2>
+{live_block}<h2>人身被害</h2>
 <p>{fy_label(done)}は、{n(i_done[0])}件・{n(i_done[1])}人(うち死亡{n(i_done[2])}人)で、39道府県中{r['rank']['injured']}位(人数)でした。令和元年度から{fy_label(done)}までの7年間の合計は、{n(r['injured7'])}人です。</p>
 {charts.bars([y for y in d['inj']['years']], [r['inj'][y][1] for y in d['inj']['years']], title="人身被害の人数", desc=f"{r['name']}の人身被害の人数と死亡者数(平成20年度から)", uid="pi", marks=[r['inj'][y][2] for y in d['inj']['years']], marks_label="うち死亡者数")}
 {injuries_table(d, r)}
@@ -460,19 +530,27 @@ def feed_xml(d: dict, cfg: dict) -> str:
 
 # ---------------------------------------------------------------- site
 
-def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None) -> list[str]:
+def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None,
+                otsu: dict | None = None) -> list[str]:
+    global SITE
     missing = missing_config(cfg)
     if release and missing:
         raise BuildError(f"release build refused: set {', '.join(missing)} in config.json")
     preview = bool(missing)
     d = prepare(raw)
     links = links or {}
+    live = prepare_live(otsu)
+    d["live"] = live
+    nav = [x for x in BASE_NAV if x[1] != "/live/" or live]
+    SITE = {**SITE, "nav": nav}
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
     for kind in ("sightings", "change", "injuries"):
         pages[f"ranking/{kind}/index.html"] = ranking_page(d, kind, cfg, preview)
     pages["trend/index.html"] = trend_page(d, cfg, preview)
     pages["emergency/index.html"] = emergency_page(d, cfg, preview)
     pages["news/index.html"] = news_page(d, cfg, preview)
+    if live:
+        pages["live/index.html"] = live_page(d, live, cfg, preview)
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview, links)
     pages["guide/index.html"] = guide_hub(cfg, preview)
@@ -505,10 +583,12 @@ def main() -> None:
     args = ap.parse_args()
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
     raw = json.loads((ROOT / "data" / "env_kuma.json").read_text(encoding="utf-8"))
+    otsu_file = ROOT / "data" / "otsu_bear.json"
+    otsu = json.loads(otsu_file.read_text(encoding="utf-8")) if otsu_file.exists() else None
     links_file = HERE / "links.json"
     links = json.loads(links_file.read_text(encoding="utf-8")) if links_file.exists() else {}
     try:
-        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links)
+        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, otsu=otsu)
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {args.out}")
