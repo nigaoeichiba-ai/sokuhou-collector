@@ -37,7 +37,9 @@ class PreviewBuildTest(BuildTestBase):
         self.out, self.files = self.render(BASE_CFG)
 
     def test_file_set(self):
-        self.assertEqual(len(self.files), 76)  # 71 html pages + sitemap + robots + .htaccess + 2 assets
+        from sites.saichin import ogimage
+        expected = 76 + 1 + (48 if ogimage.available() else 0)  # + feed.xml + share cards (default + 47 prefectures)
+        self.assertEqual(len(self.files), expected)
         html_pages = [f for f in self.files if f.endswith('.html')]
         self.assertEqual(len(html_pages), 1 + 47 + 8 + 3 + 2 + 6 + 3 + 1)  # home, prefectures, areas, rankings, calendar+history, guides, legal, 404
         for rel in ("index.html", "shiga/index.html", "okinawa/index.html", "about/index.html",

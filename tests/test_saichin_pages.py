@@ -1,10 +1,14 @@
 """Tests for the redesigned site: new page types, link integrity, guide sources and chart output."""
+import os
 import re
+import struct
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
+from unittest import mock
 
-from sites.saichin import build, charts, content
+from sites.saichin import build, charts, content, ogimage
 from sokuhou.sources import mhlw_minwage
 
 FIXTURE = Path(__file__).parent / "fixtures" / "mhlw_minwage_history.xlsx"
@@ -18,7 +22,8 @@ def _raw():
     return raw
 
 
-class SiteTest(unittest.TestCase):
+class SiteFixture(unittest.TestCase):
+    """Renders the release site once per class; holds helpers only."""
     @classmethod
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()
@@ -36,6 +41,9 @@ class SiteTest(unittest.TestCase):
     def amounts(self):
         return {r["short"]: r for r in self.d["rows"]}
 
+
+
+class SiteTest(SiteFixture):
     # ---- integrity
     def test_every_internal_link_resolves(self):
         broken = []
@@ -193,6 +201,95 @@ class SiteTest(unittest.TestCase):
         self.assertEqual(text.count('<section class="region"'), 7)
         self.assertIn("全国加重平均", text)
         self.assertNotIn("発効済み</span>", text)  # state labels are filled by script, never baked in
+
+
+class PrefecturePageExtrasTest(SiteFixture):
+    def test_earnings_table_values(self):
+        text = self.read("shiga/index.html")
+        self.assertIn("最低賃金で働いた場合の月収・年収の目安", text)
+        row = re.search(r"<tr><td>フルタイム\(週40時間\)</td>(.*?)</tr>", text).group(1)
+        cells = re.findall(r"<td>(.*?)</td>", row)
+        self.assertEqual(cells, ["196,900円", "236.3万円", "224.6万円", "+11.6万円"])  # 1136*40*52 / 1080*40*52
+        row10 = re.search(r"<tr><td>週10時間</td>(.*?)</tr>", text).group(1)
+        self.assertEqual(re.findall(r"<td>(.*?)</td>", row10)[0], "49,200円")  # 1136*10*52/12 = 49,226.7
+
+    def test_year_by_year_rank_is_computed_against_all_47(self):
+        raw = _raw()
+        shiga = next(p for p in raw["prefectures"] if p["name"] == "滋賀")
+        for fy, label in ((2025, "令和7年度"), (2020, "令和2年度")):
+            mine = shiga["history"][str(fy)]["amount"]
+            expected = 1 + sum(1 for p in raw["prefectures"] if p["history"][str(fy)]["amount"] > mine)
+            row = re.search(rf"<tr><td>{label}</td>(.*?)</tr>", self.read("shiga/index.html")).group(1)
+            self.assertIn(f"<td>{expected}位</td>", row, label)
+
+    def test_every_page_advertises_the_feed(self):
+        for rel in self.files:
+            if rel.endswith(".html"):
+                self.assertIn('href="/feed.xml"', self.read(rel), rel)
+
+
+class FeedTest(SiteFixture):
+    def test_feed_is_valid_atom_with_one_entry_per_effective_prefecture(self):
+        root = ET.fromstring(self.read("feed.xml"))
+        ns = {"a": "http://www.w3.org/2005/Atom"}
+        entries = root.findall("a:entry", ns)
+        due = [r for r in self.d["rows"] if r["effective_date"] <= "2026-10-05"]
+        self.assertEqual(len(entries), len(due))
+        self.assertEqual(len(entries), 25)
+        dates = [e.find("a:updated", ns).text[:10] for e in entries]
+        self.assertEqual(dates, sorted(dates, reverse=True))
+        ids = [e.find("a:id", ns).text for e in entries]
+        self.assertEqual(len(ids), len(set(ids)))
+        first = entries[0]
+        self.assertTrue(first.find("a:link", ns).attrib["href"].startswith("https://saichin-sokuho.com/"))
+        self.assertIn("最低賃金が", first.find("a:title", ns).text)
+
+    def test_future_dates_are_not_in_the_feed(self):
+        text = self.read("feed.xml")
+        self.assertNotIn("2026-12-02", text)  # Okinawa takes effect later than the build date
+        self.assertNotIn("沖縄県", text)
+
+
+@unittest.skipUnless(ogimage.available(), "Pillow or a Japanese font is not available")
+class ShareCardTest(SiteFixture):
+    def _png_size(self, rel):
+        data = (self.out / rel).read_bytes()
+        self.assertEqual(data[:8], bytes([137, 80, 78, 71, 13, 10, 26, 10]))  # PNG signature
+        return struct.unpack(">II", data[16:24])
+
+    def test_cards_exist_and_have_the_standard_size(self):
+        for rel in ("og/default.png", "og/shiga.png", "og/okinawa.png"):
+            self.assertEqual(self._png_size(rel), (1200, 630), rel)
+        cards = [f for f in self.files if f.startswith("og/")]
+        self.assertEqual(len(cards), 48)
+
+    def test_pages_point_at_the_right_card(self):
+        self.assertIn('property="og:image" content="https://saichin-sokuho.com/og/shiga.png"', self.read("shiga/index.html"))
+        self.assertIn('property="og:image" content="https://saichin-sokuho.com/og/default.png"', self.read("index.html"))
+        self.assertIn('property="og:image" content="https://saichin-sokuho.com/og/default.png"', self.read("guide/what-is/index.html"))
+        self.assertIn('name="twitter:card" content="summary_large_image"', self.read("shiga/index.html"))
+
+    def test_card_rendering_is_deterministic(self):
+        a = ogimage.card(title="t", big="1,136円", sub="s", foot="f")
+        b = ogimage.card(title="t", big="1,136円", sub="s", foot="f")
+        self.assertEqual(a, b)
+
+    def test_long_text_is_shrunk_to_fit(self):
+        data = ogimage.card(title="とても長いタイトル" * 12, big="1,136円", sub="長い説明" * 20, foot="f")
+        self.assertEqual(struct.unpack(">II", data[16:24]), (1200, 630))
+
+
+class NoShareCardTest(unittest.TestCase):
+    def test_without_images_there_are_no_broken_og_image_tags(self):
+        with mock.patch.dict(os.environ, {"SOKUHOU_NO_OG": "1"}):
+            tmp = tempfile.TemporaryDirectory()
+            self.addCleanup(tmp.cleanup)
+            out = Path(tmp.name) / "s"
+            files = build.render_site(_raw(), CFG, out, release=True)
+        self.assertFalse([f for f in files if f.startswith("og/")])
+        text = (out / "index.html").read_text(encoding="utf-8")
+        self.assertNotIn("og:image", text)
+        self.assertIn('name="twitter:card" content="summary"', text)
 
 
 class VerificationFileTest(unittest.TestCase):

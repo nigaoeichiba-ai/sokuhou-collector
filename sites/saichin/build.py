@@ -9,15 +9,17 @@ import argparse
 import hashlib
 import html
 import json
+import os
 import re
 import sys
 from datetime import date
+from urllib.parse import urlparse
 from pathlib import Path
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import charts, content  # noqa: E402
+from sites.saichin import charts, content, ogimage  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
 SLUGS = dict(zip(
@@ -96,9 +98,34 @@ def md(iso: str) -> str:
     return f"{m}月{d}日"
 
 
+def monthly_for(hourly: int, weekly_hours: int) -> int:
+    """Hourly wage x weekly hours x 52 weeks / 12 months, rounded to 100 yen."""
+    return round(hourly * weekly_hours * WEEKS_PER_YEAR / 12 / 100) * 100
+
+
 def monthly_estimate(hourly: int) -> int:
-    """Hourly wage x 40h x 52 weeks / 12 months, rounded to 100 yen."""
-    return round(hourly * WEEKLY_HOURS * WEEKS_PER_YEAR / 12 / 100) * 100
+    return monthly_for(hourly, WEEKLY_HOURS)
+
+
+def man(yen_amount: int) -> str:
+    return f"{yen_amount / 10000:.1f}万円"
+
+
+WORK_PATTERNS = [("フルタイム(週40時間)", 40), ("週30時間", 30), ("週20時間", 20), ("週10時間", 10)]
+
+
+def earnings_table(r: dict) -> str:
+    rows = ""
+    for label, hours in WORK_PATTERNS:
+        new_y, old_y = r["amount"] * hours * WEEKS_PER_YEAR, r["prev_amount"] * hours * WEEKS_PER_YEAR
+        rows += (
+            f"<tr><td>{label}</td><td>{yen(monthly_for(r['amount'], hours))}</td><td>{man(new_y)}</td>"
+            f"<td>{man(old_y)}</td><td>+{man(new_y - old_y)}</td></tr>"
+        )
+    return (
+        '<div class="tablewrap"><table><thead><tr><th>働き方</th><th>月収の目安(改定後)</th><th>年収の目安(改定後)</th>'
+        f"<th>年収の目安(改定前)</th><th>年収の差</th></tr></thead><tbody>{rows}</tbody></table></div>"
+    )
 
 
 # ---------------------------------------------------------------- data
@@ -134,6 +161,14 @@ def prepare(raw: dict) -> dict:
             "amount": new["amount"], "prev_amount": prev["amount"], "raise": new["amount"] - prev["amount"],
             "effective_date": eff, "history": history, "region_slug": slug, "region": region,
         })
+    # Rank among the 47 prefectures in every year shown (ties share a rank).
+    by_year: dict[str, list[int]] = {}
+    for p in raw["prefectures"]:
+        for y, v in p["history"].items():
+            by_year.setdefault(y, []).append(v["amount"])
+    for r, p in zip(rows, raw["prefectures"]):
+        for h, y in zip(r["history"], [str(y) for y in range(max(2002, fy - 10), fy + 1) if str(y) in p["history"]]):
+            h["rank"] = 1 + sum(1 for a in by_year[y] if a > h["amount"])
     amounts = [r["amount"] for r in rows]
     lo, hi = min(amounts), max(amounts)
     ranked = sorted(amounts, reverse=True)
@@ -190,6 +225,21 @@ def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str,
             f'?client=ca-{esc(pub)}" crossorigin="anonymous"></script>\n'
         )
     ver = asset_version()
+    og = cfg.get("_og") or {}
+    if og.get("enabled"):
+        key = path.strip("/")
+        url = f"{base}/og/{key if key in og.get('slugs', ()) else 'default'}.png"
+        og_tags = "".join(
+            f"{line}\n" for line in (
+                f'<meta property="og:image" content="{esc(url)}">',
+                '<meta property="og:image:width" content="1200">',
+                '<meta property="og:image:height" content="630">',
+                '<meta name="twitter:card" content="summary_large_image">',
+                f'<meta name="twitter:image" content="{esc(url)}">',
+            )
+        )
+    else:
+        og_tags = '<meta name="twitter:card" content="summary">\n'
     script = f'<script src="/assets/app.js?v={ver}" defer></script>\n' if scripts else ""
     nav = nav_html(path)
     return f"""<!doctype html>
@@ -204,6 +254,7 @@ def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str,
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(description)}">
 <meta property="og:url" content="{esc(base + path)}">
+{og_tags}<link rel="alternate" type="application/atom+xml" title="発効のお知らせ" href="/feed.xml">
 <link rel="stylesheet" href="/assets/style.css?v={ver}">
 {adsense}</head>
 <body>
@@ -356,7 +407,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
     diff_text = "全国加重平均と同じ額です" if diff_avg == 0 else f"全国加重平均より{abs(diff_avg)}円{'高い' if diff_avg > 0 else '低い'}額です"
     hist = "".join(
         f'<tr><td>{esc(h["label"])}</td><td>{yen(h["amount"])}</td><td>{"+" + str(h["raise"]) + "円" if h["raise"] is not None else "-"}</td>'
-        f'<td>{jp_date(h["effective_date"]) if h["effective_date"] else "-"}</td></tr>'
+        f'<td>{h["rank"]}位</td><td>{jp_date(h["effective_date"]) if h["effective_date"] else "-"}</td></tr>'
         for h in reversed(r["history"])
     )
     chart = charts.line(
@@ -379,9 +430,10 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <p>{esc(r['name'])}の{esc(d['label'])}の最低賃金は{yen(r['amount'])}で、{diff_text}(全国加重平均 {yen(round(d['avg']))})。引上げ額の+{r['raise']}円は、47都道府県中{r['raise_rank']}位です。</p>
 <h2>最低賃金の推移</h2>
 {chart}
-<div class="tablewrap"><table><thead><tr><th>年度</th><th>最低賃金</th><th>前年度からの引上げ</th><th>発効日</th></tr></thead><tbody>{hist}</tbody></table></div>
-<h2>月給にすると(目安)</h2>
-<p>週{WEEKLY_HOURS}時間・年{WEEKS_PER_YEAR}週で働くと、1か月あたり約{WEEKLY_HOURS * WEEKS_PER_YEAR / 12:.1f}時間です。最低賃金で働いた場合の月給の目安は、改定前が約{yen(monthly_estimate(r['prev_amount']))}、改定後が約{yen(monthly_estimate(r['amount']))}です。実際の月給は、勤務時間・手当・控除などで変わります。自分の給料と比べるときは、<a href="/guide/calculate/">時間額への換算</a>をご覧ください。</p>
+<div class="tablewrap"><table><thead><tr><th>年度</th><th>最低賃金</th><th>前年度からの引上げ</th><th>全国順位</th><th>発効日</th></tr></thead><tbody>{hist}</tbody></table></div>
+<h2>最低賃金で働いた場合の月収・年収の目安</h2>
+<p>最低賃金ちょうどで働いた場合の目安です。1年を52週、月収は年収を12で割った額として計算しています。税・社会保険料・手当・賞与・祝日などは含みません。実際の給料と比べるときは、<a href="/guide/calculate/">時間額への換算</a>をご覧ください。</p>
+{earnings_table(r)}
 <h2>同じ地方({esc(r['region'])})の最低賃金</h2>
 <ul class="mini-list">{mate_html}</ul>
 <p><a href="/area/{r['region_slug']}/">{esc(r['region'])}のまとめを見る</a></p>
@@ -631,6 +683,41 @@ def not_found_page(d: dict, cfg: dict, preview: bool) -> str:
                          description="ページが見つかりません。", body=body, scripts=False), d)
 
 
+def feed_xml(d: dict, cfg: dict) -> str:
+    """Atom feed: one entry per prefecture whose new minimum wage has already taken effect (dated by its effective date)."""
+    base = cfg["site_url"].rstrip("/")
+    host = urlparse(base).hostname or "localhost"
+    done = sorted((r for r in d["rows"] if r["effective_date"] <= d["fetched_date"]),
+                  key=lambda r: (r["effective_date"], r["name"]), reverse=True)
+    entries = "".join(
+        f"<entry><id>tag:{host},{d['fy']}:minwage-{r['slug']}</id>"
+        f"<title>{esc(r['name'])}の最低賃金が{esc(yen(r['amount']))}になりました(+{r['raise']}円)</title>"
+        f'<link href="{esc(base)}/{r["slug"]}/"/>'
+        f"<updated>{r['effective_date']}T00:00:00+09:00</updated>"
+        f"<summary>{esc(d['label'])}の最低賃金は、{esc(yen(r['prev_amount']))}から{esc(yen(r['amount']))}(+{r['raise']}円)に"
+        f"改定され、{esc(jp_date(r['effective_date']))}に発効しました。</summary></entry>\n"
+        for r in done
+    )
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ja">\n'
+        f"<id>tag:{host},{d['fy']}:minwage</id><title>{esc(cfg['site_name'])} 発効のお知らせ</title>"
+        f'<link href="{esc(base)}/feed.xml" rel="self"/><link href="{esc(base)}/"/>'
+        f"<updated>{d['fetched_date']}T00:00:00+09:00</updated>\n{entries}</feed>\n"
+    )
+
+
+def og_cards(d: dict) -> dict[str, bytes]:
+    """Share cards: one default plus one per prefecture."""
+    cards = {"og/default.png": ogimage.card(
+        title=f"{d['label']} 最低賃金 改定速報", big=f"{round(d['avg']):,}円",
+        sub=f"全国加重平均  昨年度から +{round(d['avg'] - d['avg_prev'])}円", foot="全国47都道府県の新額と発効日  |  saichin-sokuho.com")}
+    for r in d["rows"]:
+        cards[f"og/{r['slug']}.png"] = ogimage.card(
+            title=f"{r['name']}の最低賃金({d['label']})", big=yen(r["amount"]),
+            sub=f"+{r['raise']}円  /  {jp_date(r['effective_date'])} 発効", foot=f"全国{r['rank']}位  |  saichin-sokuho.com")
+    return cards
+
+
 # ---------------------------------------------------------------- site
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[str]:
@@ -640,8 +727,10 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[
     preview = bool(missing)
     d = prepare(raw)
     base = cfg["site_url"].rstrip("/")
+    use_og = ogimage.available() and not os.environ.get("SOKUHOU_NO_OG")
+    cfg = {**cfg, "_og": {"enabled": use_og, "slugs": {r["slug"] for r in d["rows"]}}}
 
-    pages: dict[str, str] = {"index.html": index_page(d, cfg, preview)}
+    pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview)
     pages["area/index.html"] = area_hub_page(d, cfg, preview)
@@ -672,6 +761,9 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[
     if cfg.get("adsense_pub_id"):
         pub = cfg["adsense_pub_id"].replace("ca-", "")
         pages["ads.txt"] = f"google.com, {pub}, DIRECT, f08c47fec0942fa0\n"
+    pages["feed.xml"] = feed_xml(d, cfg)
+    if use_og:
+        pages.update(og_cards(d))
     pages[".htaccess"] = HTACCESS
     verification = cfg.get("google_site_verification")
     if verification:
@@ -686,7 +778,10 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[
     for rel, text in pages.items():
         p = out / rel
         p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(text, encoding="utf-8", newline="\n")
+        if isinstance(text, bytes):
+            p.write_bytes(text)
+        else:
+            p.write_text(text, encoding="utf-8", newline="\n")
     if out.exists():
         for f in out.rglob("*"):
             if f.is_file() and f.relative_to(out).as_posix() not in pages:
