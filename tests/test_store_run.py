@@ -75,6 +75,8 @@ class SanityChecksTest(unittest.TestCase):
         run.check_fire(None, {"unparsed": []})
         with self.assertRaises(run.SanityError):
             run.check_minwage({"latest_fiscal_year": 2026}, {"latest_fiscal_year": 2025})
+        with self.assertRaises(run.SanityError):
+            run.check_estat_wage({"year_label": "令和7年"}, {"year_label": "令和6年"})
 
 
 class RunGroupTest(unittest.TestCase):
@@ -126,7 +128,7 @@ class CliTest(unittest.TestCase):
 
     def test_groups_cover_every_collector(self):
         names = {s.name for group in run.GROUPS.values() for s in group}
-        self.assertEqual(names, {"minwage", "jgrants", "otsu_bear", "otsu_fire"})
+        self.assertEqual(names, {"minwage", "estat_wage", "jgrants", "otsu_bear", "otsu_fire"})
 
 
 def store_total(path):

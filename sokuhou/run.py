@@ -5,13 +5,14 @@ check is NOT stored (the previous good file stays). Exit code is 1 if any source
 """
 from __future__ import annotations
 
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
 from sokuhou import store
-from sokuhou.sources import jgrants, mhlw_minwage, otsu_bear, otsu_fire
+from sokuhou.sources import estat_wage, jgrants, mhlw_minwage, otsu_bear, otsu_fire
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
@@ -31,6 +32,15 @@ class Source:
 def check_minwage(old, new):
     if old and new["latest_fiscal_year"] < old["latest_fiscal_year"]:
         raise SanityError("latest fiscal year went backwards")
+
+
+def check_estat_wage(old, new):
+    def reiwa(label):
+        m = re.fullmatch(r"令和(\d+)年", label)
+        return int(m.group(1)) if m else -1
+
+    if old and reiwa(new["year_label"]) < reiwa(old["year_label"]):
+        raise SanityError("year label went backwards")
 
 
 def check_jgrants(old, new):
@@ -55,6 +65,7 @@ def check_fire(old, new):
 GROUPS: dict[str, list[Source]] = {
     "daily": [
         Source("minwage", mhlw_minwage.collect, check_minwage),
+        Source("estat_wage", estat_wage.collect, check_estat_wage),
         Source("jgrants", jgrants.collect, check_jgrants),
         Source("otsu_bear", otsu_bear.collect, check_bear),
     ],
