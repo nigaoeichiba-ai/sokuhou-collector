@@ -99,6 +99,9 @@ def _read_rows(data: bytes) -> tuple[list[str], list[dict[str, str]], int]:
     return header, rows, duplicates_removed
 
 
+STORED_SIGHTINGS = 400
+
+
 def parse_csv(data: bytes) -> dict:
     header, rows, duplicates_removed = _read_rows(data)
     if header != HEADER:
@@ -178,6 +181,9 @@ def parse_csv(data: bytes) -> dict:
 
 def collect() -> dict:
     out = parse_csv(fetch(SOURCE_FILE).body)
+    # The monthly counts already cover the whole window; keep only the newest entries so the stored file stays small.
+    out["sightings_in_window"] = len(out["sightings"])
+    out["sightings"] = out["sightings"][:STORED_SIGHTINGS]
     out.update({
         "source_page": DATASET_PAGE,
         "source_file": SOURCE_FILE,
