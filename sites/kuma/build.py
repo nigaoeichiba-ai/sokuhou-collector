@@ -185,11 +185,15 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
     guides = "".join(f'<a class="guide-card" href="/guide/{g["slug"]}/"><b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>'
                      for g in content.GUIDES)
     live_home = ""
+    alerts = []
     if d.get("live"):
-        lv = d["live"]
-        last = lv["items"][0]
-        live_home = (f'<p class="alert">最新の目撃(滋賀県大津市・市の公式): {md(last["observed_at"][:10])} {esc(last["place"])}。'
-                     '<a href="/live/">目撃情報の一覧</a></p>\n')
+        last = d["live"]["items"][0]
+        alerts.append(f'最新の目撃(滋賀県大津市・市の公式): {md(last["observed_at"][:10])} {esc(last["place"])}。')
+    for src in d["live_prefs"]:
+        last = src["sights"][0]
+        alerts.append(f'最新の目撃({src["label"]}): {md(last["observed_at"][:10])} {esc(place_text(last))}。')
+    if alerts:
+        live_home = "".join(f'<p class="alert">{a}</p>\n' for a in alerts) + '<p><a href="/live/">自治体の目撃情報の一覧</a></p>\n'
     news_block = ""
     if d["notices"]:
         items = "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
@@ -358,6 +362,56 @@ def prepare_live(otsu: dict | None) -> dict | None:
             "latest_fy": items[0]["fiscal_year"]}
 
 
+PREF_LIVE = {
+    "miyagi": {"name": "宮城県", "label": "宮城県・県の公式", "monthly_label": "目撃のほか、痕跡などを含む",
+               "as_of_text": "データは{d}時点です"},
+    "akita": {"name": "秋田県", "label": "秋田県・県の公式。更新は月1回ほど", "monthly_label": "目撃のみ。痕跡・人身被害の記録は含まない",
+              "as_of_text": "最新の記録は{d}の分までです"},
+}
+FY_MONTHS = (4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3)
+
+
+def prepare_prefs(prefs: dict | None) -> list[dict]:
+    """Prefecture-published sighting lists (Miyagi, Akita): newest first, nothing dated after the prefecture's own as-of date."""
+    out = []
+    for key, meta in PREF_LIVE.items():
+        raw = (prefs or {}).get(key)
+        if not raw or not raw.get("sightings"):
+            continue
+        as_of = raw["as_of"]
+        items = sorted((x for x in raw["sightings"] if x.get("observed_at") and x["observed_at"][:10] <= as_of),
+                       key=lambda x: x["observed_at"], reverse=True)
+        if not items:
+            continue
+        fy = raw["fy_current"]
+        out.append({"key": key, **meta, "items": items, "sights": [x for x in items if x["kind"] == "目撃"] or items,
+                    "fy": fy, "monthly": raw.get("monthly", {}).get(fy, {}), "as_of": as_of, "credit": raw["credit"],
+                    "page": raw["source_page"], "update_note": raw["update_note"],
+                    "after": raw.get("dates_after_as_of", 0), "fetched_date": raw["fetched_at"][:10]})
+    return out
+
+
+def place_text(x: dict) -> str:
+    place = x["place"]
+    return place if x["city"] in place else f"{x['city']}{place}"
+
+
+def pref_live_section(src: dict) -> str:
+    fy, items = src["fy"], src["items"]
+    total = sum(src["monthly"].values())
+    month_table = table(["月", "件数"], [[f"{m}月", n(src["monthly"][str(m)])] for m in FY_MONTHS if src["monthly"].get(str(m))])
+    after = (f'<p class="notice">県の表には、日付が公表時点より後になっている記録が{src["after"]}件あります(入力の誤りの可能性があります)。一覧からは除き、月別の件数には、県の公表どおり含めています。</p>\n'
+             if src["after"] else "")
+    return f"""<h2>{src['name']}</h2>
+<p>{src['name']}が公表している{fy_label(fy)}の記録は、{n(total)}件です({src['monthly_label']})。{src['as_of_text'].format(d=jp_date(src['as_of']))}。直近25件を、新しい順に並べています。{esc(src['update_note'])}。</p>
+{table(["日時", "場所", "種別"], [[day_text(x['observed_at'], year=True), esc(place_text(x)), esc(x['kind'])] for x in items[:25]])}
+<h2>{src['name']}の{fy_label(fy)}の月別</h2>
+{month_table}
+{after}<p>{src['name']}の公式ページは、<a href="{esc(src['page'])}" rel="noopener" target="_blank">こちら</a>です。</p>
+<p class="notice">{esc(src['credit'])}。{src['name']}が作成したものではありません。位置の座標は、載せていません。取得日: {jp_date(src['fetched_date'])}。</p>
+"""
+
+
 def day_text(iso_ts: str, year: bool = False) -> str:
     """'2026-10-03T08:30:00+09:00' -> '10月3日 8時30分ごろ' (with the year: '2026年10月3日 ...')."""
     day, clock = iso_ts[:10], iso_ts[11:16]
@@ -366,33 +420,45 @@ def day_text(iso_ts: str, year: bool = False) -> str:
     return f"{head} {h}時{m:02d}分ごろ" if (h, m) != (0, 0) else head
 
 
-def live_page(d: dict, live: dict, cfg: dict, preview: bool) -> str:
-    items, fy = live["items"], live["latest_fy"]
-    cur_items = live["by_fy"][fy]
-    official = live["official"].get(fy)
-    last = items[0]
-    days_ago = (date.fromisoformat(live["fetched_date"]) - date.fromisoformat(last["observed_at"][:10])).days
-    ago = "きょう" if days_ago <= 0 else f"{days_ago}日前"
-    months: dict[int, int] = {}
-    for s in cur_items:
-        months[int(s["observed_at"][5:7])] = months.get(int(s["observed_at"][5:7]), 0) + 1
-    month_table = table(["月", "件数"], [[f"{m}月", n(months[m])] for m in d["months"] if months.get(m)])
-    official_text = (f"大津市は、{fy}の目撃情報を{n(official)}件と公表しています。" if official is not None else "")
-    body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", None)])}
-<h1>最新のクマの目撃情報(自治体の公式)</h1>
-<p class="lead">環境省の数字は、公表まで1〜2か月かかります。ここでは、自治体が公式に公表している目撃情報を、取得できるところから順に載せています。いまは、滋賀県大津市です。</p>
+def live_page(d: dict, live: dict | None, cfg: dict, preview: bool) -> str:
+    prefs = d["live_prefs"]
+    sections = ""
+    names = []
+    if live:
+        names.append("滋賀県大津市")
+        items, fy = live["items"], live["latest_fy"]
+        cur_items = live["by_fy"][fy]
+        official = live["official"].get(fy)
+        last = items[0]
+        days_ago = (date.fromisoformat(live["fetched_date"]) - date.fromisoformat(last["observed_at"][:10])).days
+        ago = "きょう" if days_ago <= 0 else f"{days_ago}日前"
+        months: dict[int, int] = {}
+        for s in cur_items:
+            months[int(s["observed_at"][5:7])] = months.get(int(s["observed_at"][5:7]), 0) + 1
+        month_table = table(["月", "件数"], [[f"{m}月", n(months[m])] for m in d["months"] if months.get(m)])
+        official_text = (f"大津市は、{fy}の目撃情報を{n(official)}件と公表しています。" if official is not None else "")
+        sections += f"""<h2>滋賀県大津市</h2>
 <p class="alert">最新の目撃: {md(last['observed_at'][:10])}({ago}) {esc(last['place'])}</p>
-<h2>滋賀県大津市</h2>
 <p>{official_text}このサイトが、大津市の公開地図から読み取った{fy}の件数は、{n(len(cur_items))}件です(市の表記と、数え方が少し違うことがあります)。直近25件を、新しい順に並べています。</p>
 {table(["日時", "場所"], [[day_text(s['observed_at'], year=True), esc(s['place'])] for s in items[:25]])}
 <h2>{fy}の月別</h2>
 {month_table}
 <p>大津市の公式ページ(目撃の内容、地図、メール配信の案内)は、<a href="{OTSU_PAGE}" rel="noopener" target="_blank">大津市「熊の目撃情報」</a>です。地図は、<a href="{OTSU_MAP}" rel="noopener" target="_blank">大津市のクマ出没マップ</a>で見られます。市の更新には、数日かかることがあります。</p>
 <p class="notice">出典: 大津市が公開している、クマ出没マップ(ツキノワグマ目撃情報)を加工して作成。大津市が作成したものではありません。取得日: {jp_date(live['fetched_date'])}。「ツキノワグマらしき動物」や「錯誤捕獲」などの区別は、市のページに載っています。</p>
-<h2>ほかの地域は</h2>
+"""
+    for src in prefs:
+        names.append(src["name"])
+        sections += pref_live_section(src)
+    where = "・".join(names)
+    body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", None)])}
+<h1>最新のクマの目撃情報(自治体の公式)</h1>
+<p class="lead">環境省の数字は、公表まで1〜2か月かかります。ここでは、自治体が公式に公表している目撃情報を、取得できるところから順に載せています。いまは、{where}です。</p>
+{sections}<h2>ほかの地域は</h2>
 <p>ほかの道府県・市町村の公式の目撃情報も、取得できる形で公開されているものから、順に加えていきます。それまでは、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。</p>"""
-    return page(cfg, preview, path="/live/", title="クマの最新の目撃情報(自治体の公式・大津市)",
-                description=f"滋賀県大津市が公表しているクマの目撃情報を、新しい順に一覧にしています。最新は{md(last['observed_at'][:10])}の{last['place']}です。", body=body)
+    desc = f"{where}が公表しているクマの目撃情報を、新しい順に一覧にしています。"
+    if live:
+        desc += f"大津市の最新は{md(live['items'][0]['observed_at'][:10])}の{live['items'][0]['place']}です。"
+    return page(cfg, preview, path="/live/", title=f"クマの最新の目撃情報(自治体の公式・{where})", description=desc, body=body)
 
 
 def news_page(d: dict, cfg: dict, preview: bool) -> str:
@@ -435,6 +501,12 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
         recent = "".join(f'<li>{day_text(x["observed_at"])} {esc(x["place"])}</li>' for x in lv["items"][:5])
         live_block = (f'<h2>大津市の最新の目撃情報(市の公式)</h2>\n<ul class="mini-list">{recent}</ul>\n'
                       '<p><a href="/live/">大津市の目撃情報の一覧</a></p>\n')
+    for src in d["live_prefs"]:
+        if src["key"] == r["slug"]:
+            recent = "".join(f'<li>{day_text(x["observed_at"])} {esc(place_text(x))}</li>' for x in src["sights"][:5])
+            live_block = (f'<h2>{src["name"]}が公表している最新の目撃情報</h2>\n'
+                          f'<p>{src["as_of_text"].format(d=jp_date(src["as_of"]))}。</p>\n<ul class="mini-list">{recent}</ul>\n'
+                          '<p><a href="/live/">目撃情報の一覧</a></p>\n')
     nav = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in d["rows"] if x is not r)
     body = f"""{crumbs([("全国", "/"), ("ランキング", "/ranking/sightings/"), (r["name"], None)])}
 <h1>{esc(r['name'])}のクマ出没({fy_label(done)}・環境省の速報値)</h1>
@@ -531,7 +603,7 @@ def feed_xml(d: dict, cfg: dict) -> str:
 # ---------------------------------------------------------------- site
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None,
-                otsu: dict | None = None) -> list[str]:
+                otsu: dict | None = None, prefs: dict | None = None) -> list[str]:
     global SITE
     missing = missing_config(cfg)
     if release and missing:
@@ -541,7 +613,9 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     links = links or {}
     live = prepare_live(otsu)
     d["live"] = live
-    nav = [x for x in BASE_NAV if x[1] != "/live/" or live]
+    d["live_prefs"] = prepare_prefs(prefs)
+    any_live = bool(live or d["live_prefs"])
+    nav = [x for x in BASE_NAV if x[1] != "/live/" or any_live]
     SITE = {**SITE, "nav": nav}
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
     for kind in ("sightings", "change", "injuries"):
@@ -549,7 +623,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages["trend/index.html"] = trend_page(d, cfg, preview)
     pages["emergency/index.html"] = emergency_page(d, cfg, preview)
     pages["news/index.html"] = news_page(d, cfg, preview)
-    if live:
+    if any_live:
         pages["live/index.html"] = live_page(d, live, cfg, preview)
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview, links)
@@ -561,7 +635,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages.update(legal_pages(
         SITE, cfg, preview,
         purpose="クマの出没や人身被害に関する、環境省の公表データを、都道府県別・月別に整理して、暮らしの安全の判断に役立てていただくこと。",
-        sources_html=f'環境省「クマに関する各種情報・取組」(<a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">公表ページ</a>)の、出没情報・人身被害件数・緊急銃猟の実施状況・死亡事故の資料(いずれも速報値)',
+        sources_html=f'環境省「クマに関する各種情報・取組」(<a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">公表ページ</a>)の、出没情報・人身被害件数・緊急銃猟の実施状況・死亡事故の資料(いずれも速報値)。「最新の目撃」のページは、大津市・宮城県・秋田県が公開している目撃情報(各ページに出典と取得日を表示)',
         update_text="環境省の公表にあわせて、自動で更新します。各ページに、公表された日付と、どの月までのデータかを表示します。",
         disclaimer_html=("<p>掲載内容は、環境省が都道府県から聞き取った速報値を加工したもので、後から修正されることがあります。出没数は、都道府県ごとに異なる方法で取りまとめられています。"
                          "正確性・完全性・最新性を保証するものではありません。身近な出没情報は、お住まいの都道府県・市町村の公式の情報をご確認ください。</p>"
@@ -585,10 +659,12 @@ def main() -> None:
     raw = json.loads((ROOT / "data" / "env_kuma.json").read_text(encoding="utf-8"))
     otsu_file = ROOT / "data" / "otsu_bear.json"
     otsu = json.loads(otsu_file.read_text(encoding="utf-8")) if otsu_file.exists() else None
+    prefs = {k: json.loads((ROOT / "data" / f"{k}_kuma.json").read_text(encoding="utf-8"))
+             for k in ("miyagi", "akita") if (ROOT / "data" / f"{k}_kuma.json").exists()}
     links_file = HERE / "links.json"
     links = json.loads(links_file.read_text(encoding="utf-8")) if links_file.exists() else {}
     try:
-        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, otsu=otsu)
+        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, otsu=otsu, prefs=prefs)
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {args.out}")

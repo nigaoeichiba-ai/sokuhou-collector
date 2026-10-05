@@ -278,3 +278,82 @@ class ChartTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+MIYAGI = {
+    "source": "miyagi", "source_page": "https://www.pref.miyagi.jp/x.html", "as_of": "2026-10-05", "fy_current": "R08",
+    "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成", "update_note": "宮城県が更新します", "fetched_at": "2026-10-06T06:20:00+09:00",
+    "dates_after_as_of": 1,
+    "sightings": [
+        {"observed_at": "2026-10-29T15:20:00+09:00", "city": "大衡村", "place": "駒場字上五仏", "count": 1, "kind": "目撃", "species": "クマ"},
+        {"observed_at": "2026-10-05T07:40:00+09:00", "city": "大和町", "place": "松坂字銅山", "count": 1, "kind": "目撃", "species": "クマ"},
+        {"observed_at": "2026-10-04T08:45:00+09:00", "city": "富谷市", "place": "石積字森", "count": 1, "kind": "痕跡", "species": "クマ"},
+    ],
+    "monthly": {"R08": {"9": 2, "10": 2}},
+}
+AKITA = {
+    "source": "akita", "source_page": "https://ckan.pref.akita.lg.jp/dataset/x", "as_of": "2026-08-31", "fy_current": "R08",
+    "credit": "出典:秋田県「クマダス」(秋田県オープンデータ、CC BY 4.0)を加工して作成", "update_note": "更新は月に1回ほどです",
+    "fetched_at": "2026-10-06T06:20:00+09:00",
+    "sightings": [
+        {"observed_at": "2026-08-31T14:53:00+09:00", "city": "秋田市", "place": "秋田県秋田市寺内児桜２丁目１５", "count": 1, "kind": "痕跡(その他)", "species": "ツキノワグマ"},
+        {"observed_at": "2026-08-31T13:30:00+09:00", "city": "鹿角市", "place": "秋田県鹿角市十和田大湯下川原", "count": 1, "kind": "目撃", "species": "ツキノワグマ"},
+    ],
+    "monthly": {"R08": {"7": 882, "8": 235}},
+}
+
+
+@unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
+class PrefLiveTest(unittest.TestCase):
+    """Miyagi's and Akita's own published lists on the live page: credited, dated, and nothing after the prefecture's as-of date."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.raw = raw_data()
+        cls.raw["notices"] = []
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.out = Path(cls.tmp.name) / "site"
+        build.render_site(cls.raw, CFG, cls.out, release=True, otsu=None, prefs={"miyagi": MIYAGI, "akita": AKITA})
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def read(self, rel):
+        return (self.out / rel).read_text(encoding="utf-8")
+
+    def test_live_page_exists_without_otsu_and_lists_both_prefectures(self):
+        html = self.read("live/index.html")
+        self.assertIn("いまは、宮城県・秋田県です", html)
+        self.assertIn('href="/live/"', self.read("index.html"))
+
+    def test_a_row_dated_after_the_as_of_date_is_not_listed_but_the_monthly_total_keeps_the_prefectures_figure(self):
+        html = self.read("live/index.html")
+        self.assertNotIn("駒場字上五仏", html)
+        self.assertIn("日付が公表時点より後になっている記録が1件あります", html)
+        self.assertIn("宮城県が公表している令和8年度の記録は、4件です", html)  # 2 + 2 from the monthly table, as published
+        self.assertLess(html.index("松坂字銅山"), html.index("石積字森"))
+
+    def test_credits_as_of_and_links(self):
+        html = self.read("live/index.html")
+        self.assertIn("出典:宮城県「令和8年度クマ目撃等情報」を加工して作成。宮城県が作成したものではありません", html)
+        self.assertIn("CC BY 4.0", html)
+        self.assertIn("データは2026年10月5日時点です", html)
+        self.assertIn("最新の記録は2026年8月31日の分までです", html)
+        self.assertIn("https://www.pref.miyagi.jp/x.html", html)
+
+    def test_akita_counts_are_sightings_only_and_the_address_is_not_doubled(self):
+        html = self.read("live/index.html")
+        self.assertIn("秋田県が公表している令和8年度の記録は、1,117件です(目撃のみ", html)  # 882 + 235
+        self.assertNotIn("秋田市秋田県秋田市", html)
+        self.assertNotIn("lat", html.split("秋田県</h2>")[1].lower().split("</table>")[0])  # no coordinates
+
+    def test_home_alert_uses_the_latest_sighting_not_a_trace(self):
+        home = self.read("index.html")
+        self.assertIn("最新の目撃(宮城県・県の公式): 10月5日 大和町松坂字銅山", home)
+        self.assertIn("最新の目撃(秋田県・県の公式。更新は月1回ほど): 8月31日 秋田県鹿角市十和田大湯下川原", home)  # the 14:53 row is a trace
+
+    def test_prefecture_pages_carry_their_block(self):
+        self.assertIn("宮城県が公表している最新の目撃情報", self.read("miyagi/index.html"))
+        self.assertIn("秋田県が公表している最新の目撃情報", self.read("akita/index.html"))
+        self.assertNotIn("が公表している最新の目撃情報", self.read("iwate/index.html"))
