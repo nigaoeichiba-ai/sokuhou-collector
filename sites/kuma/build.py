@@ -159,8 +159,53 @@ def caution_box() -> str:
     return f'<p class="notice">{CAUTION}</p>'
 
 
-def stat(label: str, big: str, sub: str, strong: bool = False) -> str:
-    return f'<div class="stat{" strong" if strong else ""}"><span>{label}</span><b>{big}</b><span>{sub}</span></div>'
+def icon(name: str) -> str:
+    return f'<svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#{name}"/></svg>'
+
+
+GUIDE_ICONS = {"prepare": "guide", "encounter": "paw", "spray": "emergency", "home": "location", "data": "chart"}
+TILE_COLORS = ("#e9dfd1", "#f2c791", "#e39a4a", "#c4631c", "#8b3f12", "#4f1f08")
+
+
+def stat(label: str, big: str, sub: str, strong: bool = False, ico: str = "") -> str:
+    return (f'<div class="stat{" strong" if strong else ""}">{icon(ico) if ico else ""}<span>{label}</span><b>{big}</b>'
+            f'<span>{sub}</span></div>')
+
+
+def tile_map(d: dict) -> str:
+    """47 square tiles (a Japan tile-grid map); shade = the latest full year's sightings, in five quantile steps."""
+    from sokuhou import tilegrid
+    done = d["done"]
+    by_short = {r["slug"]: r for r in d["rows"]}
+    values = sorted(r["total"][done] for r in d["rows"] if r["has"])
+    cell, pad = 46, 2
+    parts = []
+    for slug, col, row in tilegrid.tiles():
+        short = next(k for k, v in pf.SLUG.items() if v == slug)
+        x, y = pad + col * cell, pad + row * cell
+        label = short[:2]
+        r = by_short.get(slug)
+        if r and r["has"]:
+            v = r["total"][done]
+            below = sum(1 for x_ in values if x_ < v)
+            cls = "t0" if v == 0 else f"t{1 + min(4, int(5 * below / len(values)))}"
+            line = f"{fy_label(done)}の出没 {n(v)}件(39道府県中{r['rank']['done']}位)"
+            parts.append(f'<a href="/{slug}/" data-slug="{slug}" data-name="{esc(r["name"])}" data-line="{esc(line)}" '
+                         f'aria-label="{esc(r["name"])} {n(v)}件"><rect class="tile {cls}" x="{x}" y="{y}" width="{cell - 4}" height="{cell - 4}" rx="7"/>'
+                         f'<text x="{x + (cell - 4) / 2}" y="{y + (cell - 4) / 2}">{esc(label)}</text></a>')
+        else:
+            parts.append(f'<g><title>{esc(pf.full(short))}: 環境省の表に数値がありません</title><rect class="tile na" x="{x}" y="{y}" width="{cell - 4}" height="{cell - 4}" rx="7"/>'
+                         f'<text x="{x + (cell - 4) / 2}" y="{y + (cell - 4) / 2}">{esc(label)}</text></g>')
+    w, h = tilegrid.GRID_COLS * cell + pad * 2, tilegrid.GRID_ROWS * cell + pad * 2
+    legend = "".join(f'<i style="background:{c}"></i>' for c in TILE_COLORS)
+    return (f'<div class="tilemap-box"><svg class="tilemap" viewBox="0 0 {w} {h}" role="group" aria-label="都道府県別の出没件数({fy_label(done)})">'
+            f'{"".join(parts)}</svg><div class="tile-legend"><b>{fy_label(done)}の出没件数</b><span class="lg">少ない {legend} 多い</span><span>(破線の枠は、環境省の表に数値がない県)</span></div></div>')
+
+
+def bar_list(rows: list[tuple[str, str, int]], top: int) -> str:
+    """rows: (link html, value text, value); bars are relative to the largest."""
+    mx = max(v for _, _, v in rows) or 1
+    return '<ol class="bar-list">' + "".join(f'<li style="--v:{round(v / mx * 100)}">{a}<b>{t}</b><i></i></li>' for a, t, v in rows[:top]) + "</ol>"
 
 
 def page(cfg, preview, **kw):
@@ -180,9 +225,9 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
     latest = emg["cases"][-3:][::-1]
     fatal = d["fatal"][cur]
     ytd_cur, ytd_prev = d["nat_ytd"][cur], d["nat_ytd"][done]
-    top_rows = "".join(f'<li>{pref_link(r)}<b>{n(r["total"][done])}件</b></li>' for r in top)
+    top_rows = bar_list([(pref_link(r), f'{n(r["total"][done])}件', r["total"][done]) for r in top], 5)
     emg_rows = "".join(f'<li>{md(c["date"])} {esc(c["prefecture"])}{esc(c["place"])}<b>{esc(c["species"])}</b></li>' for c in latest)
-    guides = "".join(f'<a class="guide-card" href="/guide/{g["slug"]}/"><b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>'
+    guides = "".join(f'<a class="guide-card" href="/guide/{g["slug"]}/">{icon(GUIDE_ICONS.get(g["slug"], "guide"))}<b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>'
                      for g in content.GUIDES)
     live_home = ""
     alerts = []
@@ -193,29 +238,35 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
         last = src["sights"][0]
         alerts.append(f'最新の目撃({src["label"]}): {md(last["observed_at"][:10])} {esc(place_text(last))}。')
     if alerts:
-        live_home = "".join(f'<p class="alert">{a}</p>\n' for a in alerts) + '<p><a href="/live/">自治体の目撃情報の一覧</a></p>\n'
+        live_home = ('<div class="latest">' + "".join(f'<p class="alert">{a}</p>' for a in alerts) + '</div>\n'
+                     '<p><a href="/live/">自治体の目撃情報の一覧</a></p>\n')
     news_block = ""
     if d["notices"]:
         items = "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
         news_block = (f'<h2>環境省の最近のお知らせ</h2>\n<ul class="link-list">{items}</ul>\n'
                       '<p><a href="/news/">お知らせの一覧</a></p>\n')
-    body = f"""<section class="hero">
+    body = f"""<section class="hero hero--kuma">
+<div class="hero-copy">
 <p class="eyebrow">環境省の速報値(都道府県からの聞き取り)</p>
 <h1>クマ出没速報</h1>
-<div class="hero-main"><div><span class="hero-sub">{fy_label(done)}の出没件数(全国)</span><b style="font-size:3rem;line-height:1.2">{n(total_done)}件</b></div>
+<div class="hero-main"><div><span class="hero-sub">{fy_label(done)}の出没件数(全国)</span><b class="big">{n(total_done)}件</b></div>
 <span class="hero-sub"><em>{fy_label(d['years'][-3])}({n(total_prev)}件)の{ratio_text(total_done, total_prev)}</em></span></div>
+</div>
+<img class="hero-art" src="/assets/hero-kuma-mountains.svg" alt="" width="360" height="220">
 <ul class="hero-facts">
-<li><span>{fy_label(done)}の人身被害</span><b>{n(i_done[0])}件・{n(i_done[1])}人(うち死亡{n(i_done[2])}人)</b></li>
-<li><span>{fy_label(cur)}の出没({month_range(d)})</span><b>{n(ytd_cur)}件(前年度の同じ期間は{n(ytd_prev)}件・{ratio_text(ytd_cur, ytd_prev)})</b></li>
-<li><span>{fy_label(cur)}の緊急銃猟</span><b>{n(len(emg['cases']))}件(死亡事故は{n(fatal['deaths'])}人、{jp_date(fatal['as_of'])}現在)</b></li>
+<li><span>{icon("injury")}{fy_label(done)}の人身被害</span><b>{n(i_done[0])}件・{n(i_done[1])}人(うち死亡{n(i_done[2])}人)</b></li>
+<li><span>{icon("sightings")}{fy_label(cur)}の出没({month_range(d)})</span><b>{n(ytd_cur)}件(前年度の同じ期間は{n(ytd_prev)}件・{ratio_text(ytd_cur, ytd_prev)})</b></li>
+<li><span>{icon("emergency")}{fy_label(cur)}の緊急銃猟</span><b>{n(len(emg['cases']))}件(死亡事故は{n(fatal['deaths'])}人、{jp_date(fatal['as_of'])}現在)</b></li>
 </ul>
 <a class="btn" href="/ranking/sightings/">都道府県別のランキングを見る</a>
 </section>
 <p class="notice" style="margin-top:12px">{freshness(d)}</p>
 {live_home}<h2>お住まいの地域の、最新の出没情報は</h2>
 <p>環境省の数字は、公表までに時間がかかります。<strong>いま近くで出ているかどうかは、お住まいの都道府県・市町村の公式ページで確認してください。</strong>各道府県のページから、公式の出没情報へ案内します。</p>
+<section id="mypref" class="mypref" hidden><h3>{icon("location")}マイ都道府県</h3><div class="mp-body"></div><label>都道府県を選ぶ <select><option value="">選んでください</option></select></label></section>
+{tile_map(d)}
 <h2>{fy_label(done)}に出没が多かった道府県</h2>
-<ul class="mini-list">{top_rows}</ul>
+{top_rows}
 <p><a href="/ranking/sightings/">全国のランキング</a> / <a href="/ranking/change/">前年度の同じ期間との比較</a> / <a href="/ranking/injuries/">人身被害のランキング</a></p>
 <h2>{fy_label(done)}は、出没が秋に集中しました</h2>
 <p>全国の月別では、{d['peak_month']}月が最も多く({n(nat['monthly'][done][d['months'].index(d['peak_month'])])}件)でした。{fy_label(cur)}の月別も、公表が進み次第、追加します。</p>
@@ -227,7 +278,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">{guides}</div>
 <p><a href="/notify/">更新を通知で受け取る方法</a></p>
 <p class="notice">人身被害は、{fy_label(inj_max)}が、{n(inj[inj_max][1])}人で、表にある平成20年度以降で最も多くなっています。{CAUTION}</p>"""
-    return page(cfg, preview, path="/", title=f"クマ出没速報 | 都道府県別の出没件数・人身被害・緊急銃猟(環境省の速報値)",
+    return page(cfg, preview, scripts=True, path="/", title=f"クマ出没速報 | 都道府県別の出没件数・人身被害・緊急銃猟(環境省の速報値)",
                 description=f"{fy_label(done)}の全国のクマ出没は{n(total_done)}件。都道府県別のランキング、月別の推移、人身被害、緊急銃猟の一覧を、環境省の速報値からまとめています。",
                 body=body)
 
@@ -246,9 +297,10 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
         lines = [[str(r["rank"]["done"]), pref_link(r), n(r["total"][done]), n(r["total"][prev]), ratio_text(r["total"][done], r["total"][prev]),
                   f'{n(r["ytd"][cur])}'] for r in rows]
         head = ["順位", "道府県", f"{fy_label(done)}", f"{fy_label(prev)}", "前年度との比", f"{fy_label(cur)}({month_range(d)})"]
+        extra = bar_list([(pref_link(r), f'{n(r["total"][done])}件', r["total"][done]) for r in rows], 10)
         h1, lead = "クマの出没件数ランキング", f"{fy_label(done)}の出没件数が多い順に、並べています。{'と'.join(r['name'] for r in d['rows'] if not r['has'])}は、環境省の表に数値がありません(「-」)ので、載せていません。"
-        extra = ""
     elif kind == "change":
+        extra = ""
         rows = sorted((r for r in d["rows"] if r["rank"]["change"]), key=lambda r: (r["rank"]["change"], r["name"]))
         lines = [[str(r["rank"]["change"]), pref_link(r), n(r["ytd"][cur]), n(r["ytd"][done]),
                   f'{r["ytd"][cur] / r["ytd"][done] * 100:.0f}%'] for r in rows]
@@ -270,8 +322,8 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
 <h1>{h1}</h1>
 <p class="lead">{lead}</p>
 {ranking_tabs(kind)}
-{table(head, lines)}
-{extra}{note}
+{extra if kind == "sightings" else ""}{table(head, lines)}
+{extra if kind == "injuries" else ""}{note}
 <p class="notice">{freshness(d)}</p>"""
     return page(cfg, preview, path=f"/ranking/{kind}/", title=f"{h1}({fy_label(done)}・環境省の速報値)",
                 description=f"{lead[:110]}", body=body)
@@ -486,7 +538,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
         f'<p>{esc(r["name"])}の公式サイトで、「クマ 出没」で検索してください。市町村が、独自に出没情報を公開していることもあります。</p>')
     if r["has"]:
         peak_i = max(range(12), key=lambda i: r["monthly"][done][i] or 0)
-        sight = f"""<div class="stats">{stat(f"{fy_label(done)}の出没件数", f"{n(r['total'][done])}件", f"39道府県中{r['rank']['done']}位", True)}{stat(f"{fy_label(prev)}", f"{n(r['total'][prev])}件", f"前年度との比: {ratio_text(r['total'][done], r['total'][prev])}")}{stat(f"{fy_label(cur)}({month_range(d)})", f"{n(r['ytd'][cur])}件", f"前年度の同じ期間: {n(r['ytd'][done])}件")}</div>
+        sight = f"""<div class="stats">{stat(f"{fy_label(done)}の出没件数", f"{n(r['total'][done])}件", f"39道府県中{r['rank']['done']}位", True, "sightings")}{stat(f"{fy_label(prev)}", f"{n(r['total'][prev])}件", f"前年度との比: {ratio_text(r['total'][done], r['total'][prev])}")}{stat(f"{fy_label(cur)}({month_range(d)})", f"{n(r['ytd'][cur])}件", f"前年度の同じ期間: {n(r['ytd'][done])}件")}</div>
 <p>{fy_label(done)}は、{d['months'][peak_i]}月が最も多く({n(r['monthly'][done][peak_i])}件)でした。</p>
 <h2>月別の出没件数</h2>
 {charts.lines([{"label": fy_label(y), "values": r["monthly"][y], "cls": c, "strong": y == cur} for y, c in zip((prev, done, cur), ("c1", "c3", "c4"))], [f"{m}月" for m in d["months"]], title=f"{r['name']}の月別の出没件数", desc=f"{r['name']}の月別の出没件数", uid="p")}
@@ -508,8 +560,14 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
                           f'<p>{src["as_of_text"].format(d=jp_date(src["as_of"]))}。</p>\n<ul class="mini-list">{recent}</ul>\n'
                           '<p><a href="/live/">目撃情報の一覧</a></p>\n')
     nav = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in d["rows"] if x is not r)
+    mates = [x for x in d["rows"] if x is not r and x["region_slug"] == r["region_slug"]]
+    rel = ""
+    if mates:
+        rel = (f'<h2>{esc(r["region"])}のほかの道府県</h2>\n<div class="rel-grid">' + "".join(
+            f'<a href="/{x["slug"]}/">{esc(x["name"])}<span>{n(x["total"][done]) + "件" if x["has"] else "-"}</span></a>' for x in mates) + "</div>\n")
     body = f"""{crumbs([("全国", "/"), ("ランキング", "/ranking/sightings/"), (r["name"], None)])}
 <h1>{esc(r['name'])}のクマ出没({fy_label(done)}・環境省の速報値)</h1>
+<button class="btn-ghost" type="button" data-mypref-toggle data-slug="{r['slug']}" data-name="{esc(r['name'])}" aria-pressed="false" hidden>この県を「マイ都道府県」にする</button>
 {sight}
 {live_block}<h2>人身被害</h2>
 <p>{fy_label(done)}は、{n(i_done[0])}件・{n(i_done[1])}人(うち死亡{n(i_done[2])}人)で、39道府県中{r['rank']['injured']}位(人数)でした。令和元年度から{fy_label(done)}までの7年間の合計は、{n(r['injured7'])}人です。</p>
@@ -523,15 +581,16 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
 <p>いま近くで出ているかは、公式の情報で確認してください。</p>
 {off_html}
 {caution_box()}
-<h2>ほかの道府県</h2>
+{rel}<h2>ほかの道府県</h2>
 <ul class="pref-nav">{nav}</ul>
+<div class="next-box"><h2>次に見る</h2><ul><li><a href="/ranking/sightings/">{icon("chart")}出没件数ランキング</a></li><li><a href="/trend/">{icon("calendar")}月別の推移</a></li><li><a href="/emergency/">{icon("emergency")}緊急銃猟</a></li><li><a href="/guide/">{icon("guide")}クマへの対処法</a></li></ul></div>
 <p class="notice">{freshness(d)}</p>"""
-    return page(cfg, preview, path=f"/{r['slug']}/", title=f"{r['name']}のクマ出没・人身被害({fy_label(done)}・環境省の速報値)",
+    return page(cfg, preview, scripts=True, path=f"/{r['slug']}/", title=f"{r['name']}のクマ出没・人身被害({fy_label(done)}・環境省の速報値)",
                 description=f"{r['name']}のクマの出没件数(月別)、人身被害、緊急銃猟、公式の出没情報への案内。環境省の速報値をもとにしています。", body=body)
 
 
 def guide_hub(cfg: dict, preview: bool) -> str:
-    cards = "".join(f'<a class="guide-card" href="/guide/{g["slug"]}/"><b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>' for g in content.GUIDES)
+    cards = "".join(f'<a class="guide-card" href="/guide/{g["slug"]}/">{icon(GUIDE_ICONS.get(g["slug"], "guide"))}<b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>' for g in content.GUIDES)
     body = f"""{crumbs([("全国", "/"), ("対処法・解説", None)])}
 <h1>クマへの対処法と、データの見方</h1>
 <p class="lead">公的機関の資料にもとづいて、クマに出会わないための備えと、出会ったときの行動、数字の読み方をまとめています。</p>
