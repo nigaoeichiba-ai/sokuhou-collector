@@ -1,11 +1,13 @@
 {
- "fetched_at": "2026-10-05T17:33:25.569742+09:00",
+ "fetched_at": "2026-10-06T02:25:41.988361+09:00",
  "incidents": [
   {
    "kind": "特殊災害",
    "place": "大津市園山一丁目付近",
+   "resolved_at": "2026-10-05T23:57:00+09:00",
+   "result": "活動を完了",
    "started_at": "2026-10-05T16:44:00+09:00",
-   "status": "reported"
+   "status": "resolved"
   },
   {
    "kind": "自火報作動",
@@ -88,7 +90,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": false,
+ "no_active_incident": true,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
