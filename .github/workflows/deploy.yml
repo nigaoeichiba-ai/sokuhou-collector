@@ -1,10 +1,12 @@
-name: deploy-saichin-sokuho
+name: deploy-sites
 
-# Builds saichin-sokuho.com and uploads it to Xserver over SSH.
+# Builds each site and uploads it to Xserver over SSH (one job per site).
 # Needs three repository secrets, all created by the owner (never by Claude):
 #   XSERVER_SSH_KEY   the private key file from Xserver's SSH settings (whole file, passphrase-free)
 #   XSERVER_HOST      e.g. sv8477.xserver.jp
 #   XSERVER_USER      the Xserver server ID (the SSH user name)
+# The kuma site is built and uploaded only when the repository variable DEPLOY_KUMA is "true" (set after the
+# owner has added kuma-sokuho.com to the Xserver server).
 #
 # Manual runs are a check only unless "Really deploy" is ticked: they build, run the tests and prove that the
 # SSH login and the target folder work, but change nothing on the server.
@@ -24,55 +26,83 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: deploy-saichin-sokuho
-  cancel-in-progress: false
-
 env:
-  SITE_DIR: saichin-sokuho.com
   SSH_PORT: "10022"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - site: saichin
+            dir: saichin-sokuho.com
+            url: https://saichin-sokuho.com
+            build: python sites/saichin/build.py --release --out release
+            min_pages: 70
+            min_cards: 48
+            marker: 最低賃金速報
+            probe: /calendar/all.ics
+          - site: kuma
+            dir: kuma-sokuho.com
+            url: https://kuma-sokuho.com
+            build: python sites/kuma/build.py --release --out release
+            min_pages: 55
+            min_cards: 0
+            marker: クマ出没速報
+            probe: /feed.xml
+    concurrency:
+      group: deploy-${{ matrix.site }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
-      - name: Check secrets
-        id: secrets
+      - name: Gate (secrets, and the kuma switch)
+        id: gate
         env:
           KEY: ${{ secrets.XSERVER_SSH_KEY }}
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
+          KUMA: ${{ vars.DEPLOY_KUMA }}
+          SITE: ${{ matrix.site }}
         run: |
+          go=true
           if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then
             echo "XSERVER_SSH_KEY / XSERVER_HOST / XSERVER_USER are not all set; nothing to do"
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "ready=true" >> "$GITHUB_OUTPUT"
+            go=false
           fi
-      - name: Fonts and Pillow for the share cards
-        if: steps.secrets.outputs.ready == 'true'
+          if [ "$SITE" = "kuma" ] && [ "$KUMA" != "true" ]; then
+            echo "DEPLOY_KUMA is not true; the kuma site is skipped"
+            go=false
+          fi
+          echo "go=$go" >> "$GITHUB_OUTPUT"
+      - name: Fonts and Pillow for the share cards, and the PDF reader
+        if: steps.gate.outputs.go == 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk
           python -m pip install --quiet pillow -r requirements.txt
       - name: Unit tests
-        if: steps.secrets.outputs.ready == 'true'
+        if: steps.gate.outputs.go == 'true'
         run: python -m unittest discover -s tests -t .
       - name: Build (release)
-        if: steps.secrets.outputs.ready == 'true'
+        if: steps.gate.outputs.go == 'true'
+        env:
+          BUILD: ${{ matrix.build }}
+          MIN_PAGES: ${{ matrix.min_pages }}
+          MIN_CARDS: ${{ matrix.min_cards }}
         run: |
-          python sites/saichin/build.py --release --out release
+          $BUILD
           test -f release/index.html
           test -f release/.htaccess
-          test "$(find release -name '*.html' | wc -l)" -ge 70
-          test "$(ls release/og | wc -l)" -ge 48   # share cards were drawn (the CJK font was found)
+          test "$(find release -name '*.html' | wc -l)" -ge "$MIN_PAGES"
+          if [ "$MIN_CARDS" -gt 0 ]; then test "$(ls release/og | wc -l)" -ge "$MIN_CARDS"; fi   # share cards were drawn (the CJK font was found)
           du -sh release
       - name: SSH setup
-        if: steps.secrets.outputs.ready == 'true'
+        if: steps.gate.outputs.go == 'true'
         env:
           KEY: ${{ secrets.XSERVER_SSH_KEY }}
           HOST: ${{ secrets.XSERVER_HOST }}
@@ -83,18 +113,20 @@ jobs:
           ssh-keyscan -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
           test -s ~/.ssh/known_hosts
       - name: Check the server (read only)
-        if: steps.secrets.outputs.ready == 'true'
+        if: steps.gate.outputs.go == 'true'
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
+          SITE_DIR: ${{ matrix.dir }}
         run: |
           ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
-            "set -e; cd \"\$HOME/$SITE_DIR\"; pwd; test -d public_html; test -f public_html/index.html; command -v tar >/dev/null; ls -d public_html*"
+            "set -e; cd \"\$HOME/$SITE_DIR\"; pwd; test -d public_html; command -v tar >/dev/null; ls -d public_html*"
       - name: Upload and switch
-        if: steps.secrets.outputs.ready == 'true' && (github.event_name == 'schedule' || inputs.deploy)
+        if: steps.gate.outputs.go == 'true' && (github.event_name == 'schedule' || inputs.deploy)
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
+          SITE_DIR: ${{ matrix.dir }}
         run: |
           set -euo pipefail
           tar -C release -czf - . | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" "
@@ -110,19 +142,24 @@ jobs:
             mv .deploy_next public_html
           "
       - name: Verify the live site, roll back if it is wrong
-        if: steps.secrets.outputs.ready == 'true' && (github.event_name == 'schedule' || inputs.deploy)
+        if: steps.gate.outputs.go == 'true' && (github.event_name == 'schedule' || inputs.deploy)
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
+          SITE_DIR: ${{ matrix.dir }}
+          URL: ${{ matrix.url }}
+          MARKER: ${{ matrix.marker }}
+          MIN_PAGES: ${{ matrix.min_pages }}
+          PROBE: ${{ matrix.probe }}
         run: |
           set -u
           ok=1
-          code=$(curl -s -o /tmp/index.html -w '%{http_code}' https://saichin-sokuho.com/) || ok=0
+          code=$(curl -s -o /tmp/index.html -w '%{http_code}' "$URL/") || ok=0
           [ "$code" = "200" ] || ok=0
-          grep -q "最低賃金速報" /tmp/index.html || ok=0
-          urls=$(curl -s https://saichin-sokuho.com/sitemap.xml | grep -c '<loc>') || ok=0
-          [ "${urls:-0}" -ge 70 ] || ok=0
-          [ "$(curl -s -o /dev/null -w '%{http_code}' https://saichin-sokuho.com/calendar/all.ics)" = "200" ] || ok=0
+          grep -q "$MARKER" /tmp/index.html || ok=0
+          urls=$(curl -s "$URL/sitemap.xml" | grep -c '<loc>') || ok=0
+          [ "${urls:-0}" -ge "$((MIN_PAGES - 5))" ] || ok=0
+          [ "$(curl -s -o /dev/null -w '%{http_code}' "$URL$PROBE")" = "200" ] || ok=0
           echo "index=$code sitemap_urls=${urls:-0} ok=$ok"
           if [ "$ok" != "1" ]; then
             echo "verification failed, rolling back"
