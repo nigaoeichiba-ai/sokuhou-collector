@@ -8,9 +8,12 @@ name: deploy-saichin-sokuho
 #
 # Manual runs are a check only unless "Really deploy" is ticked: they build, run the tests and prove that the
 # SSH login and the target folder work, but change nothing on the server.
-# Add a `schedule:` trigger only after one real run has been checked by the owner.
+# The daily run (07:00 JST, after the 06:10 data collection) deploys for real. A failed check rolls the site back
+# and fails the run, which GitHub reports to the owner by e-mail. First real run checked by the owner: 2026-10-05.
 
 on:
+  schedule:
+    - cron: "0 22 * * *"   # 07:00 JST
   workflow_dispatch:
     inputs:
       deploy:
@@ -88,7 +91,7 @@ jobs:
           ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
             "set -e; cd \"\$HOME/$SITE_DIR\"; pwd; test -d public_html; test -f public_html/index.html; command -v tar >/dev/null; ls -d public_html*"
       - name: Upload and switch
-        if: steps.secrets.outputs.ready == 'true' && inputs.deploy
+        if: steps.secrets.outputs.ready == 'true' && (github.event_name == 'schedule' || inputs.deploy)
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
@@ -107,7 +110,7 @@ jobs:
             mv .deploy_next public_html
           "
       - name: Verify the live site, roll back if it is wrong
-        if: steps.secrets.outputs.ready == 'true' && inputs.deploy
+        if: steps.secrets.outputs.ready == 'true' && (github.event_name == 'schedule' || inputs.deploy)
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
