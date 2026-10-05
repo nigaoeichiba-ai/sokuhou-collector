@@ -226,6 +226,13 @@ NAV = [("全国一覧", "/", "/"), ("地方別", "/area/", "/area/"), ("ラン�
        ("通知", "/notify/", "/notify/")]
 
 
+def icon(name: str) -> str:
+    return f'<svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#{name}"/></svg>'
+
+
+GUIDE_ICONS = {"what-is": "guide", "how-decided": "chart", "excluded": "compare", "calculate": "yen", "below": "emergency"}
+
+
 def nav_html(path: str) -> str:
     out = []
     for label, href, prefix in NAV:
@@ -359,20 +366,23 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
         for r in sorted(rows, key=lambda r: (r["effective_date"], r["name"]))
     )
     guides = "".join(
-        f'<a class="guide-card" href="/guide/{g["slug"]}/"><b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>'
+        f'<a class="guide-card" href="/guide/{g["slug"]}/">{icon(GUIDE_ICONS.get(g["slug"], "guide"))}<b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>'
         for g in content.GUIDES
     )
-    body = f"""<section class="hero">
+    body = f"""<section class="hero hero--saichin">
+<div class="hero-copy">
 <p class="eyebrow">{esc(d['label'])} 地域別最低賃金</p>
 <h1>最低賃金 改定速報</h1>
 <div class="hero-main">
 <div class="big" aria-label="全国加重平均 {round(d['avg']):,}円">{round(d['avg']):,}<small>円</small></div>
 <div class="hero-sub"><b>全国加重平均</b><span>昨年度 {round(d['avg_prev']):,}円から <em>+{diff}円</em></span></div>
 </div>
+</div>
+<img class="hero-art" src="/assets/hero-saichin-note-clock.svg" alt="" width="360" height="220">
 <ul class="hero-facts">
-<li><span>最も高い</span><b>{esc(hi['name'])} {yen(hi['amount'])}</b></li>
-<li><span>最も低い</span><b>{esc(lo['name'])} {yen(lo['amount'])}</b></li>
-<li><span>発効日</span><b>{md(first)} 〜 {md(last)}</b></li>
+<li><span>{icon("up")}最も高い</span><b>{esc(hi['name'])} {yen(hi['amount'])}</b></li>
+<li><span>{icon("down")}最も低い</span><b>{esc(lo['name'])} {yen(lo['amount'])}</b></li>
+<li><span>{icon("calendar")}発効日</span><b>{md(first)} 〜 {md(last)}</b></li>
 </ul>
 <div class="progress js-only" hidden><div class="progress-text">発効済み <b id="done-count">0</b> / {len(rows)} 都道府県</div><div class="progress-bar"><i id="done-bar" style="width:0"></i></div></div>
 <a class="btn" href="#check">自分の時給をチェック</a>

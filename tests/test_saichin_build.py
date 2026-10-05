@@ -38,7 +38,7 @@ class PreviewBuildTest(BuildTestBase):
 
     def test_file_set(self):
         from sites.saichin import ogimage
-        expected = 76 + 1 + 1 + 1 + 48 + (48 if ogimage.available() else 0)  # + feed.xml, feed/dates.xml, notify page, 48 calendars, share cards (default + 47 prefectures)
+        expected = 76 + 3 + 1 + 1 + 1 + 48 + (48 if ogimage.available() else 0)  # + 3 svg assets (hero art, icons, divider), feed.xml, feed/dates.xml, notify page, 48 calendars, share cards (default + 47 prefectures)
         self.assertEqual(len(self.files), expected)
         html_pages = [f for f in self.files if f.endswith('.html')]
         self.assertEqual(len(html_pages), 1 + 47 + 8 + 3 + 2 + 1 + 6 + 3 + 1)  # home, prefectures, areas, rankings, calendar+history, notify, guides, legal, 404
