@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Callable
 
 from sokuhou import store
-from sokuhou.sources import estat_wage, jgrants, mhlw_minwage, otsu_bear, otsu_fire
+from sokuhou.sources import env_kuma, estat_wage, jgrants, mhlw_minwage, otsu_bear, otsu_fire
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
@@ -43,6 +43,15 @@ def check_estat_wage(old, new):
         raise SanityError("year label went backwards")
 
 
+def check_env_kuma(old, new):
+    """The ministry revises provisional figures, so values may move; the update dates may not go backwards."""
+    for key in ("sightings", "injuries"):
+        if old and new[key]["updated"] < old[key]["updated"]:
+            raise SanityError(f"{key}: update date went backwards")
+    if old and len(new["injuries"]["years"]) < len(old["injuries"]["years"]):
+        raise SanityError("injury table lost fiscal years")
+
+
 def check_jgrants(old, new):
     if new["total"] == 0:
         raise SanityError("jGrants returned no subsidies")
@@ -66,6 +75,7 @@ GROUPS: dict[str, list[Source]] = {
     "daily": [
         Source("minwage", mhlw_minwage.collect, check_minwage),
         Source("estat_wage", estat_wage.collect, check_estat_wage),
+        Source("env_kuma", env_kuma.collect, check_env_kuma),
         Source("jgrants", jgrants.collect, check_jgrants),
         Source("otsu_bear", otsu_bear.collect, check_bear),
     ],

@@ -1,0 +1,366 @@
+{
+ "北海道": [
+  {
+   "label": "ヒグマの警報・注意報(県の公式ページ)",
+   "url": "https://www.pref.hokkaido.lg.jp/ks/skn/108365.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://www.pref.hokkaido.lg.jp/ks/skn/higuma/joho.html",
+   "source": "moe"
+  }
+ ],
+ "青森": [
+  {
+   "label": "くまログあおもり(県の案内)(県の公式ページ)",
+   "url": "https://www.pref.aomori.lg.jp/soshiki/kankyo/shizen/kumalog_aomori.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://kumalog-aomori.info/",
+   "source": "moe"
+  }
+ ],
+ "岩手": [
+  {
+   "label": "人身被害・出没状況(県の公式ページ)",
+   "url": "https://www.pref.iwate.jp/kurashikankyou/shizen/yasei/1049881/1056087.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://www.pref.iwate.jp/kurashikankyou/shizen/yasei/1049881/1096154.html",
+   "source": "moe"
+  }
+ ],
+ "宮城": [
+  {
+   "label": "クマ出没情報(県の公式ページ)",
+   "url": "https://www.pref.miyagi.jp/soshiki/nh-khsgsin-r/kumajoho1.html",
+   "source": "pref"
+  },
+  {
+   "label": "クマ出没注意報の発令状況(県の公式ページ)",
+   "url": "https://www.pref.miyagi.jp/soshiki/sizenhogo/tyuuihoutouzyoukyou.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://www.google.com/maps/d/viewer?mid=12_b92SRipXWwvkUfNCsDdEUWhEOmzUc&ll=38.38369647205532%2C140.85414165708124&z=8/",
+   "source": "moe"
+  }
+ ],
+ "秋田": [
+  {
+   "label": "クマ対策(「クマダス」への案内)(県の公式ページ)",
+   "url": "https://www.pref.akita.lg.jp/pages/archive/23295",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://kumadas.net/",
+   "source": "moe"
+  }
+ ],
+ "山形": [
+  {
+   "label": "クマ目撃情報(県の公式ページ)",
+   "url": "https://www.pref.yamagata.jp/050011/kurashi/shizen/seibutsu/about_kuma/kuma_yamagata_top.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://www.pref.yamagata.jp/050011/kurashi/shizen/seibutsu/about_kuma/kuma/index.html",
+   "source": "moe"
+  }
+ ],
+ "福島": [
+  {
+   "label": "ツキノワグマ目撃情報(県の公式ページ)",
+   "url": "https://www.pref.fukushima.lg.jp/sec/16035b/tukinowaguma-mokugeki.html",
+   "source": "pref"
+  }
+ ],
+ "茨城": [
+  {
+   "label": "クマ・イノシシ等の管理(出没一覧はありません)(県の公式ページ)",
+   "url": "https://www.pref.ibaraki.jp/seikatsukankyo/kansei/chojyuhogo/kaku-inoshishi.html",
+   "source": "pref"
+  }
+ ],
+ "栃木": [
+  {
+   "label": "クマの出没件数(県の公式ページ)",
+   "url": "https://www.pref.tochigi.lg.jp/d04/choujyuu/r4_kuma_shutubotu.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://map.police.tochigi.dsvc.jp/",
+   "source": "moe"
+  }
+ ],
+ "群馬": [
+  {
+   "label": "クマ出没情報(県の公式ページ)",
+   "url": "https://www.pref.gunma.jp/page/7141.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://pref-gunma.maps.arcgis.com/apps/dashboards/5276d2ebf02a42da8595ed2a51a334c8",
+   "source": "moe"
+  }
+ ],
+ "埼玉": [
+  {
+   "label": "クマ出没マップ(県の公式ページ)",
+   "url": "https://www.pref.saitama.lg.jp/dx-portal/info/kumashutsubotsu.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://atlas-eco-saitama-pref-saitama.hub.arcgis.com/apps/6851a59c5a76496e9c9e3b54b2e67ff9/explore",
+   "source": "moe"
+  }
+ ],
+ "東京": [
+  {
+   "label": "TOKYOくまっぷ・クマ対策(県の公式ページ)",
+   "url": "https://www.kankyo.metro.tokyo.lg.jp/nature/animals_plants/bear/tokyos/",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://app.powerbi.com/view?r=eyJrIjoiMTI3ZWMwMzktODJkZS00NzMxLWI0MTctOTVlODBhMjEzMGY0IiwidCI6ImQwMzAyZmNjLTNlODEtNDljMy04MjM1LWQzMTFhMzY4NGNmYyJ9",
+   "source": "moe"
+  }
+ ],
+ "神奈川": [
+  {
+   "label": "クマの目撃情報(県の公式ページ)",
+   "url": "https://www.pref.kanagawa.jp/docs/t4i/cnt/f3813/",
+   "source": "pref"
+  }
+ ],
+ "新潟": [
+  {
+   "label": "クマ出没マップ(県の公式ページ)",
+   "url": "https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://www.arcgis.com/apps/dashboards/20b4d06fb3b34776959a4e69c7a8511a",
+   "source": "moe"
+  }
+ ],
+ "富山": [
+  {
+   "label": "クマの目撃・痕跡の件数(県の公式ページ)",
+   "url": "https://www.pref.toyama.jp/1709/r8mokugekikonseki.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://pref-toyama-1709.maps.arcgis.com/apps/dashboards/daffbc92f82342339aa6bf3c83ab4742",
+   "source": "moe"
+  }
+ ],
+ "石川": [
+  {
+   "label": "クマの目撃・痕跡情報(県の公式ページ)",
+   "url": "https://www.pref.ishikawa.lg.jp/sizen/kuma/r7mokugeki.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://www.google.com/maps/d/viewer?hl=ja&mid=17x-ZQxVWesZ3iJdObP0BXeS_R7e0vxw&ll=36.76870454850604%2C136.69632606484376&z=10",
+   "source": "moe"
+  }
+ ],
+ "福井": [
+  {
+   "label": "福井クマ情報(県の公式ページ)",
+   "url": "https://tsukinowaguma.pref.fukui.lg.jp/",
+   "source": "pref"
+  }
+ ],
+ "山梨": [
+  {
+   "label": "クマ出没マップ(県の公式ページ)",
+   "url": "https://www.pref.yamanashi.jp/shizen/kuma2.html",
+   "source": "pref"
+  }
+ ],
+ "長野": [
+  {
+   "label": "クマ出没情報マップ(県の公式ページ)",
+   "url": "https://www.pref.nagano.lg.jp/shinrin/sangyo/ringyo/choju/joho/kuma-map.html",
+   "source": "pref"
+  }
+ ],
+ "岐阜": [
+  {
+   "label": "クマの出没情報(県の公式ページ)",
+   "url": "https://www.pref.gifu.lg.jp/page/4964.html",
+   "source": "pref"
+  }
+ ],
+ "静岡": [
+  {
+   "label": "クマの出没情報(県の公式ページ)",
+   "url": "https://www.pref.shizuoka.jp/kurashikankyo/shizenkankyo/wild/1017680.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://www.google.com/maps/d/viewer?mid=1o_iXJ5z-tA9bTd8k2DMFPLO9BS4LRDI&ll=35.158258550403445%2C138.04095424442957&z=8",
+   "source": "moe"
+  }
+ ],
+ "愛知": [
+  {
+   "label": "ツキノワグマの目撃情報(県の公式ページ)",
+   "url": "https://www.pref.aichi.jp/soshiki/shizen/tsukinowaguma.html",
+   "source": "pref"
+  }
+ ],
+ "三重": [
+  {
+   "label": "クマ出没マップ(県の公式ページ)",
+   "url": "https://www.pref.mie.lg.jp/TOPICS/m0026100200.htm",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://www.pref.mie.lg.jp/JTAISAKU/HP/m0114900048.htm",
+   "source": "moe"
+  }
+ ],
+ "滋賀": [
+  {
+   "label": "クマ対策・出没の件数(県の公式ページ)",
+   "url": "https://www.pref.shiga.lg.jp/ippan/kankyoshizen/shizen/322859.html",
+   "source": "pref"
+  }
+ ],
+ "京都": [
+  {
+   "label": "クマについて・出没情報(県の公式ページ)",
+   "url": "https://www.pref.kyoto.jp/choujyu/kumanitsuite.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://g-kyoto.gis.pref.kyoto.lg.jp/g-kyoto/Agreement?IsPost=False&MapId=676&RequestPage=%2fg-kyoto%2fPositionSelect%3fmid%3d676%26mtp%3dpfm",
+   "source": "moe"
+  }
+ ],
+ "大阪": [
+  {
+   "label": "クマ等の出没情報(県の公式ページ)",
+   "url": "https://www.pref.osaka.lg.jp/o120140/doubutu/yaseidoubutu/shutsubotsu_r8.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://www.pref.osaka.lg.jp/kurashi/pet/yaseichoujuu/shutsubotsujouhou/index.html",
+   "source": "moe"
+  }
+ ],
+ "兵庫": [
+  {
+   "label": "ツキノワグマ対策(県の公式ページ)",
+   "url": "http://web.pref.hyogo.lg.jp/nk27/hw24_000000018.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://map.police.hyogo.dsvc.jp/",
+   "source": "moe"
+  }
+ ],
+ "奈良": [
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://www.pref.nara.lg.jp/n118/p043003.html",
+   "source": "moe"
+  }
+ ],
+ "和歌山": [
+  {
+   "label": "クマの出没情報(県の公式ページ)",
+   "url": "https://www.pref.wakayama.lg.jp/prefg/032600/yasei/kuma.html",
+   "source": "pref"
+  }
+ ],
+ "鳥取": [
+  {
+   "label": "クマ出没マップ・件数(県の公式ページ)",
+   "url": "https://www.pref.tottori.lg.jp/280334.htm",
+   "source": "pref"
+  }
+ ],
+ "島根": [
+  {
+   "label": "クマの出没・被害状況(年次)(県の公式ページ)",
+   "url": "https://www.pref.shimane.lg.jp/life/region/kikan/chusankan/choju/kuma_.html",
+   "source": "pref"
+  }
+ ],
+ "岡山": [
+  {
+   "label": "クマ出没マップ(県の公式ページ)",
+   "url": "https://www.pref.okayama.jp/page/1006862.html",
+   "source": "pref"
+  }
+ ],
+ "広島": [
+  {
+   "label": "クマの目撃情報(県の公式ページ)",
+   "url": "https://www.pref.hiroshima.lg.jp/site/wildlife-management/wm-bear-main.html",
+   "source": "pref"
+  }
+ ],
+ "山口": [
+  {
+   "label": "クマの目撃情報(県の公式ページ)",
+   "url": "https://www.pref.yamaguchi.lg.jp/soshiki/41/20698.html",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://yamaguchi-opendata.jp/dashboard?org=35000&res=b257b81d-4acd-4067-ba53-fe8c5235081b",
+   "source": "moe"
+  }
+ ],
+ "徳島": [
+  {
+   "label": "クマの目撃・痕跡情報(県の公式ページ)",
+   "url": "https://www.pref.tokushima.lg.jp/ippannokata/kurashi/shizen/7314177/",
+   "source": "pref"
+  },
+  {
+   "label": "環境省が案内している出没情報",
+   "url": "https://www.pref.tokushima.lg.jp/ippannokata/kurashi/shizen/7241461/",
+   "source": "moe"
+  }
+ ],
+ "愛媛": [
+  {
+   "label": "クマに遭遇したときの対応(出没情報の掲載はありません)(県の公式ページ)",
+   "url": "https://www.pref.ehime.jp/page/17979.html",
+   "source": "pref"
+  }
+ ],
+ "高知": [
+  {
+   "label": "クマの注意喚起(出没情報は限られます)(県の公式ページ)",
+   "url": "https://www.pref.kochi.lg.jp/doc/kuma-1/",
+   "source": "pref"
+  }
+ ]
+}

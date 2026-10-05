@@ -1,8 +1,9 @@
 name: notify-bluesky
 
-# Posts new entries of a site's dated Atom feed to Bluesky. Needs two repository secrets,
-# both created by the owner (never by Claude): BLUESKY_HANDLE and BLUESKY_APP_PASSWORD (an app password).
-# The feed is read from the live site, so a post can only go out after the site itself has been updated.
+# Posts new entries of the sites' Atom feeds to Bluesky (one account for all sites).
+# Needs two repository secrets, both created by the owner (never by Claude): BLUESKY_HANDLE and
+# BLUESKY_APP_PASSWORD (an app password).  Each feed is read from the live site, so a post can only go out
+# after the site itself has been updated.  The kuma feed is skipped until the repository variable DEPLOY_KUMA is "true".
 
 on:
   schedule:
@@ -47,7 +48,13 @@ jobs:
           BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
           POST: ${{ github.event_name == 'schedule' || inputs.post }}
+          KUMA: ${{ vars.DEPLOY_KUMA }}
         run: |
           flag=""
           if [ "$POST" = "true" ]; then flag="--post"; fi
-          python -m sokuhou.notify.bluesky --feed https://saichin-sokuho.com/feed/dates.xml $flag
+          status=0
+          python -m sokuhou.notify.bluesky --feed https://saichin-sokuho.com/feed/dates.xml $flag || status=1
+          if [ "$KUMA" = "true" ]; then
+            python -m sokuhou.notify.bluesky --feed https://kuma-sokuho.com/feed.xml $flag || status=1
+          fi
+          exit $status
