@@ -37,12 +37,20 @@ class PreviewBuildTest(BuildTestBase):
         self.out, self.files = self.render(BASE_CFG)
 
     def test_file_set(self):
-        self.assertEqual(len(self.files), 56)  # index + 47 prefectures + 3 legal + 404 + sitemap + robots + 2 assets
+        self.assertEqual(len(self.files), 76)  # 71 html pages + sitemap + robots + .htaccess + 2 assets
+        html_pages = [f for f in self.files if f.endswith('.html')]
+        self.assertEqual(len(html_pages), 1 + 47 + 8 + 3 + 2 + 6 + 3 + 1)  # home, prefectures, areas, rankings, calendar+history, guides, legal, 404
         for rel in ("index.html", "shiga/index.html", "okinawa/index.html", "about/index.html",
                     "privacy/index.html", "contact/index.html", "404.html", "sitemap.xml", "robots.txt"):
             self.assertIn(rel, self.files)
         self.assertTrue((self.out / "assets" / "app.js").exists())
         self.assertFalse((self.out / "ads.txt").exists())
+
+    def test_htaccess_keeps_the_https_redirect(self):
+        text = self.read(self.out, ".htaccess")
+        self.assertIn("RewriteCond %{HTTPS} !on", text)
+        self.assertIn("RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]", text)
+        self.assertNotIn(chr(13), text)  # LF only, as Apache expects
 
     def test_preview_is_not_indexable(self):
         self.assertIn("Disallow: /", self.read(self.out, "robots.txt"))
@@ -99,7 +107,7 @@ class PreviewBuildTest(BuildTestBase):
 
     def test_sitemap_lists_every_page(self):
         locs = re.findall(r"<loc>(.*?)</loc>", self.read(self.out, "sitemap.xml"))
-        self.assertEqual(len(locs), 51)
+        self.assertEqual(len(locs), 70)  # every html page except 404
         self.assertIn("https://saichin-sokuho.com/shiga/", locs)
 
     def test_privacy_page_has_the_ad_disclosures(self):
