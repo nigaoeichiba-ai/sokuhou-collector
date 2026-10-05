@@ -1,0 +1,135 @@
+name: deploy-saichin-sokuho
+
+# Builds saichin-sokuho.com and uploads it to Xserver over SSH.
+# Needs three repository secrets, all created by the owner (never by Claude):
+#   XSERVER_SSH_KEY   the private key file from Xserver's SSH settings (whole file, passphrase-free)
+#   XSERVER_HOST      e.g. sv8477.xserver.jp
+#   XSERVER_USER      the Xserver server ID (the SSH user name)
+#
+# Manual runs are a check only unless "Really deploy" is ticked: they build, run the tests and prove that the
+# SSH login and the target folder work, but change nothing on the server.
+# Add a `schedule:` trigger only after one real run has been checked by the owner.
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: "Really deploy (otherwise check only)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-saichin-sokuho
+  cancel-in-progress: false
+
+env:
+  SITE_DIR: saichin-sokuho.com
+  SSH_PORT: "10022"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Check secrets
+        id: secrets
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then
+            echo "XSERVER_SSH_KEY / XSERVER_HOST / XSERVER_USER are not all set; nothing to do"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Fonts and Pillow for the share cards
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
+          python -m pip install --quiet pillow
+      - name: Unit tests
+        if: steps.secrets.outputs.ready == 'true'
+        run: python -m unittest discover -s tests -t .
+      - name: Build (release)
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          python sites/saichin/build.py --release --out release
+          test -f release/index.html
+          test -f release/.htaccess
+          test "$(find release -name '*.html' | wc -l)" -ge 70
+          test "$(ls release/og | wc -l)" -ge 48   # share cards were drawn (the CJK font was found)
+          du -sh release
+      - name: SSH setup
+        if: steps.secrets.outputs.ready == 'true'
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver
+          chmod 600 ~/.ssh/id_xserver
+          ssh-keyscan -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          test -s ~/.ssh/known_hosts
+      - name: Check the server (read only)
+        if: steps.secrets.outputs.ready == 'true'
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+            "set -e; cd \"\$HOME/$SITE_DIR\"; pwd; test -d public_html; test -f public_html/index.html; command -v tar >/dev/null; ls -d public_html*"
+      - name: Upload and switch
+        if: steps.secrets.outputs.ready == 'true' && inputs.deploy
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -euo pipefail
+          tar -C release -czf - . | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" "
+            set -e
+            cd \"\$HOME/$SITE_DIR\"
+            rm -rf .deploy_next
+            mkdir .deploy_next
+            tar -xzf - -C .deploy_next
+            test -f .deploy_next/index.html
+            test -f .deploy_next/.htaccess
+            rm -rf .deploy_prev
+            mv public_html .deploy_prev
+            mv .deploy_next public_html
+          "
+      - name: Verify the live site, roll back if it is wrong
+        if: steps.secrets.outputs.ready == 'true' && inputs.deploy
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -u
+          ok=1
+          code=$(curl -s -o /tmp/index.html -w '%{http_code}' https://saichin-sokuho.com/) || ok=0
+          [ "$code" = "200" ] || ok=0
+          grep -q "最低賃金速報" /tmp/index.html || ok=0
+          urls=$(curl -s https://saichin-sokuho.com/sitemap.xml | grep -c '<loc>') || ok=0
+          [ "${urls:-0}" -ge 70 ] || ok=0
+          [ "$(curl -s -o /dev/null -w '%{http_code}' https://saichin-sokuho.com/calendar/all.ics)" = "200" ] || ok=0
+          echo "index=$code sitemap_urls=${urls:-0} ok=$ok"
+          if [ "$ok" != "1" ]; then
+            echo "verification failed, rolling back"
+            ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" "
+              set -e
+              cd \"\$HOME/$SITE_DIR\"
+              test -d .deploy_prev
+              mv public_html .deploy_failed
+              mv .deploy_prev public_html
+              rm -rf .deploy_failed
+            "
+            exit 1
+          fi
