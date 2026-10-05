@@ -129,6 +129,31 @@ class ReleaseBuildTest(BuildTestBase):
         self.assertNotIn("(未設定)", self.read(out, "about/index.html"))
         self.assertIn("mailto:info@example.com", self.read(out, "contact/index.html"))
 
+    def test_form_only_release_publishes_no_email_address(self):
+        cfg = {**BASE_CFG, "operator_name": "テスト運営", "contact_form_url": "https://forms.example.com/abc"}
+        out, files = self.render(cfg, release=True)
+        self.assertEqual(build.missing_config(cfg), [])
+        contact = self.read(out, "contact/index.html")
+        self.assertIn('href="https://forms.example.com/abc"', contact)
+        self.assertNotIn("mailto:", contact)
+        for rel in files:
+            if rel.endswith(".html"):
+                text = self.read(out, rel)
+                self.assertNotIn("(未設定)", text, rel)
+                self.assertNotIn("@", text, rel)
+        self.assertIn('href="/contact/">お問い合わせフォーム', self.read(out, "about/index.html"))
+        self.assertIn("お問い合わせフォーム</a>からお願いします", self.read(out, "privacy/index.html"))
+
+    def test_insecure_form_url_is_rejected(self):
+        cfg = {**BASE_CFG, "operator_name": "x", "contact_form_url": "http://forms.example.com/abc"}
+        self.assertEqual(len(build.missing_config(cfg)), 1)
+        with self.assertRaises(build.BuildError):
+            self.render(cfg, release=True)
+
+    def test_missing_config_names_the_fields(self):
+        self.assertEqual(build.missing_config(BASE_CFG), ["operator_name", "contact_form_url or contact_email"])
+        self.assertEqual(build.missing_config({**BASE_CFG, "operator_name": "x"}), ["contact_form_url or contact_email"])
+
     def test_adsense_snippet_and_ads_txt_only_when_configured(self):
         out, _ = self.render({**FULL_CFG, "adsense_pub_id": "ca-pub-1234567890123456"}, release=True)
         self.assertIn("client=ca-pub-1234567890123456", self.read(out, "index.html"))

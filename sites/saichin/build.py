@@ -26,7 +26,15 @@ SLUGS = dict(zip(
     "miyazaki kagoshima okinawa".split(),
 ))
 SUFFIX = {"北海道": "", "東京": "都", "大阪": "府", "京都": "府"}
-REQUIRED_FOR_RELEASE = ("operator_name", "contact_email")
+def missing_config(cfg: dict) -> list[str]:
+    """Release needs an operator name and at least one way to be contacted (a form URL and/or an email)."""
+    missing = [] if cfg.get("operator_name") else ["operator_name"]
+    form = cfg.get("contact_form_url")
+    if form and not form.startswith("https://"):
+        missing.append("contact_form_url (must start with https://)")
+    elif not form and not cfg.get("contact_email"):
+        missing.append("contact_form_url or contact_email")
+    return missing
 SOURCE_LABEL = "厚生労働省「地域別最低賃金の全国一覧」"
 WEEKLY_HOURS, WEEKS_PER_YEAR = 40, 52
 
@@ -232,14 +240,23 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
     ), d)
 
 
+def contact_summary(cfg: dict) -> str:
+    """How to reach the operator, in the order of preference: the form, then the address (if one is published)."""
+    parts = []
+    if cfg.get("contact_form_url"):
+        parts.append('<a href="/contact/">お問い合わせフォーム</a>')
+    if cfg.get("contact_email"):
+        parts.append(esc(cfg["contact_email"]))
+    return " / ".join(parts) or "(未設定)"
+
+
 def about_page(d: dict, cfg: dict, preview: bool) -> str:
     op = esc(cfg["operator_name"] or "(未設定)")
-    mail = esc(cfg["contact_email"] or "(未設定)")
     body = f"""<h1>運営者情報</h1>
 <dl class="info">
 <dt>サイト名</dt><dd>{esc(cfg['site_name'])}</dd>
 <dt>運営者</dt><dd>{op}</dd>
-<dt>連絡先</dt><dd>{mail}</dd>
+<dt>連絡先</dt><dd>{contact_summary(cfg)}</dd>
 <dt>目的</dt><dd>最低賃金の改定内容を、働く方・雇う方が確認しやすい形で整理してお伝えすること。</dd>
 <dt>情報の出典</dt><dd>{esc(SOURCE_LABEL)}(<a href="{{source}}" rel="noopener" target="_blank">公表ページ</a>)</dd>
 <dt>更新</dt><dd>公表データを定期的に取得して更新します。各ページに、データの取得日を表示しています。</dd>
@@ -252,7 +269,6 @@ def about_page(d: dict, cfg: dict, preview: bool) -> str:
 
 
 def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
-    mail = esc(cfg["contact_email"] or "(未設定)")
     body = f"""<h1>プライバシーポリシー</h1>
 <h2>取得する情報</h2>
 <p>当サイトは、会員登録などの機能を持ちません。お問い合わせの際にいただいたお名前・メールアドレスなどは、返信のためだけに使い、法令に基づく場合を除いて、第三者へ提供しません。</p>
@@ -267,7 +283,7 @@ def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
 <h2>免責事項・著作権</h2>
 <p>免責事項と情報の出典は、<a href="/about/">運営者情報</a>に記載しています。</p>
 <h2>お問い合わせ</h2>
-<p>このポリシーに関するお問い合わせは、{mail}までお願いします。</p>
+<p>このポリシーに関するお問い合わせは、{contact_summary(cfg)}からお願いします。</p>
 <h2>改定</h2>
 <p>このポリシーは、必要に応じて見直し、変更する場合があります。変更後の内容は、このページに掲載した時点から効力を持ちます。</p>"""
     return finish(layout(cfg, preview, path="/privacy/", title=f"プライバシーポリシー | {cfg['site_name']}",
@@ -276,11 +292,16 @@ def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
 
 
 def contact_page(d: dict, cfg: dict, preview: bool) -> str:
-    mail = cfg["contact_email"]
-    link = f'<a href="mailto:{esc(mail)}">{esc(mail)}</a>' if mail else "(未設定)"
+    form, mail = cfg.get("contact_form_url"), cfg.get("contact_email")
+    links = []
+    if form:
+        links.append(f'<p><a href="{esc(form)}" rel="noopener" target="_blank">お問い合わせフォームを開く</a></p>')
+    if mail:
+        links.append(f'<p>メール: <a href="mailto:{esc(mail)}">{esc(mail)}</a></p>')
+    link = "\n".join(links) or "<p>(未設定)</p>"
     body = f"""<h1>お問い合わせ</h1>
-<p>データの誤りのご指摘、ご意見・ご要望は、次のメールアドレスへお送りください。内容によっては、お返事に日数がかかることや、お返事できないことがあります。</p>
-<p>{link}</p>
+<p>データの誤りのご指摘、ご意見・ご要望は、次からお送りください。内容によっては、お返事に日数がかかることや、お返事できないことがあります。</p>
+{link}
 <p class="notice">個別の労働条件や、賃金に関する法律相談にはお答えできません。お近くの都道府県労働局や労働基準監督署へご相談ください。</p>"""
     return finish(layout(cfg, preview, path="/contact/", title=f"お問い合わせ | {cfg['site_name']}",
                          description="最低賃金速報へのお問い合わせ先です。", body=body, scripts=False), d)
@@ -295,7 +316,7 @@ def not_found_page(d: dict, cfg: dict, preview: bool) -> str:
 # ---------------------------------------------------------------- site
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[str]:
-    missing = [k for k in REQUIRED_FOR_RELEASE if not cfg.get(k)]
+    missing = missing_config(cfg)
     if release and missing:
         raise BuildError(f"release build refused: set {', '.join(missing)} in config.json")
     preview = bool(missing)
