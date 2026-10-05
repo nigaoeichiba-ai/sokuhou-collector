@@ -1,0 +1,1755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>大津市ツキノワグマ出没マップ</name>
+    <description><![CDATA[目撃、痕跡情報に基づき作製しています。<br>令和８年度　10月3日現在　31件<br>令和７年度　45件<br>令和６年度　52件<br>令和５年度　１０件<br>令和４年度　０件<br>令和３年度　７件<br>令和２年度　３件<br>]]></description>
+    <Style id="icon-1759-795548-normal">
+      <IconStyle>
+        <color>ff485579</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1759-795548-highlight">
+      <IconStyle>
+        <color>ff485579</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1759-795548">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1759-795548-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1759-795548-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1759-795548-nodesc-normal">
+      <IconStyle>
+        <color>ff485579</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1759-795548-nodesc-highlight">
+      <IconStyle>
+        <color>ff485579</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1759-795548-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1759-795548-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1759-795548-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1759-7CB342-normal">
+      <IconStyle>
+        <color>ff42b37c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1759-7CB342-highlight">
+      <IconStyle>
+        <color>ff42b37c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1759-7CB342">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1759-7CB342-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1759-7CB342-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1759-7CB342-nodesc-normal">
+      <IconStyle>
+        <color>ff42b37c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1759-7CB342-nodesc-highlight">
+      <IconStyle>
+        <color>ff42b37c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1759-7CB342-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1759-7CB342-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1759-7CB342-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1759-9C27B0-normal">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1759-9C27B0-highlight">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1759-9C27B0">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1759-9C27B0-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1759-9C27B0-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1759-9C27B0-nodesc-normal">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1759-9C27B0-nodesc-highlight">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1759-9C27B0-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1759-9C27B0-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1759-9C27B0-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1759-E65100-normal">
+      <IconStyle>
+        <color>ff0051e6</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1759-E65100-highlight">
+      <IconStyle>
+        <color>ff0051e6</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1759-E65100">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1759-E65100-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1759-E65100-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1759-E65100-nodesc-normal">
+      <IconStyle>
+        <color>ff0051e6</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1759-E65100-nodesc-highlight">
+      <IconStyle>
+        <color>ff0051e6</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1759-E65100-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1759-E65100-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1759-E65100-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-FFEA00-nodesc-normal">
+      <IconStyle>
+        <color>ff00eaff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-FFEA00-nodesc-highlight">
+      <IconStyle>
+        <color>ff00eaff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1899-FFEA00-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-FFEA00-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-FFEA00-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>令和８年度ツキノワグマ目撃情報</name>
+      <Placemark>
+        <name>10/3　8:30頃　北比良</name>
+        <styleUrl>#icon-1899-FFEA00-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9309192,35.2520291,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/3　6:00頃　伊香立下龍華町</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8867719,35.1524236,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/11　7：30頃　南小松
+</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9468125,35.2326957,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/5　14:00頃　伊香立上龍華町</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.880971,35.1613999,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/24　19:00頃　大石東三丁目
+</name>
+        <description>親子グマ　２頭</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.9239955,34.9132902,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/8　2:50頃　関津三丁目</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9195166,34.9226701,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/4　22:20頃　山百合の丘</name>
+        <description>東側に移動</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.8874531,35.1369506,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/30　7:00頃　仰木町
+</name>
+        <description>錯誤捕獲</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.8560278,35.1066026,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/18  8:40頃　北比良</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9552095,35.2267837,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/3　16:20頃　南小松</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9457619,35.2421606,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/19  16:00頃　真野佐川町
+</name>
+        <description>痕跡を発見</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.8976806,35.1460843,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/19　7:20頃　葛川坊村町
+</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8441943,35.2518034,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/17　21:00頃　大谷町
+</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8557911,34.994295,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/17　10:00頃　栗原
+</name>
+        <description>錯誤捕獲</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.8884951,35.1746599,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/15　3:10頃　若葉台</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8802659,34.9734771,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/1　8:00頃　伊香立生津町</name>
+        <description>錯誤捕獲</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.851472,35.1403293,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/31　22:50頃　坂本一丁目</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8666156,35.0618718,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/30　19:50頃　坂本本町、京都市左京区境</name>
+        <description>親子2頭目撃</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.8338968,35.0647141,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/29　9:00頃　伊香立下龍華町</name>
+        <description>錯誤捕獲</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.8910404,35.1547962,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/27　19:00頃　伊香立下在地町</name>
+        <description>国道４７７号を西から東に横断</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.8795239,35.1444269,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/27　14:30頃　伊香立下在地町</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8801727,35.143999,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/25　19:50頃　和邇中</name>
+        <description>西側に移動</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.9017859,35.1587261,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/23　20:30頃　伊香立向在地町</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8852963,35.135045,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/22　16:45頃　山百合の丘
+</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8853155,35.1382236,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/20　10:50頃　仰木町
+</name>
+        <description>錯誤捕獲</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.8611399,35.1071655,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/18　6:30真野大野二丁目</name>
+        <description>錯誤捕獲</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.8964413,35.1308929,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/16　14:30頃　伊香立南庄町</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8800259,35.1222621,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/15　6:00頃　仰木町
+</name>
+        <description>錯誤捕獲</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.868472,35.1074079,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/10　21:30頃　仰木町
+</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.880081,35.1195203,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/30　7:00頃　伊香立下在地町
+</name>
+        <description>国道477号　東から西へ移動</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.8783998,35.147673,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/16　23:40頃　伊香立生津町
+</name>
+        <styleUrl>#icon-1759-795548-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.869194,35.1401995,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/14　14:00頃　伊香立生津町
+</name>
+        <description>錯誤捕獲</description>
+        <styleUrl>#icon-1759-795548</styleUrl>
+        <Point>
+          <coordinates>
+            135.8506592,35.1400721,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>令和７年度ツキノワグマ目撃情報</name>
+      <Placemark>
+        <name>1/23　6：00頃　坂本五丁目
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8664381,35.0750967,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>12/14　0：10頃　小野
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9174039,35.1538227,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>12/11　12：30頃　和邇春日二丁目　
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9137575,35.1582343,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>12/8　17：30頃　桐生三丁目
+</name>
+        <description>東側へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9730938,34.9856749,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/22　15：00頃　和邇今宿</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9306318,35.15313,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/15　19：40頃　坂本五丁目
+</name>
+        <description>県道を東から西へ横切り山林へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8673195,35.0760742,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/15　6：20頃　日吉台二丁目
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8738985,35.0819358,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/15　6：20頃　日吉台三丁目
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8747547,35.0837594,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/13　18：20頃　坂本本町
+</name>
+        <description>南方向に移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8378847,35.0648427,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/13　6：30頃　緑町
+</name>
+        <description>北側へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9079173,35.1413593,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/13　7：00頃　日吉台三丁目
+</name>
+        <description>山側（西側）へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8745583,35.0838305,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/11　3：10頃　伊香立北在地町
+</name>
+        <description>北西へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.87213,35.1477944,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/9　21:00頃　雄琴二丁目
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8934581,35.0917553,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/8　9：50頃　葛川梅ノ木町
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.890879,35.2586517,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/7　5：40頃　仰木一丁目
+</name>
+        <description>東側へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8777373,35.0975879,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/4　17：00頃　千野三丁目
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8770191,35.0870452,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/3　18：10頃　八屋戸
+</name>
+        <description>北方向に移動。</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.908846,35.1914475,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/29　16：00頃　坂本本町
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8440982,35.0769848,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/29　19：00頃　八屋戸</name>
+        <description>山側に移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9139286,35.1841908,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/28　20：00頃　千野三丁目
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8774459,35.085866,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/27　22：30頃　比叡平三丁目
+</name>
+        <description>北側の山へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.828816,35.036297,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/23　16：30頃　若葉台
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8769698,34.9735819,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/8　18：20頃　北大路三丁目
+</name>
+        <description>東側へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8810163,34.9731875,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/15　18：00頃　南比良
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9321711,35.2345813,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/29　20:00頃　秋葉台
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8835623,34.988892,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/24　14：30頃　葛川坊村町
+</name>
+        <description>牛コバと夫婦滝の間で2頭を目撃</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8866113,35.2372379,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/26　19：00頃　南小松
+</name>
+        <description>湖西道路方向へ移動。</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9474213,35.2422715,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/20　15：20頃　関津二丁目
+</name>
+        <description>南方向へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9182608,34.9218669,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/16　13：00頃　関津三丁目
+</name>
+        <description>熊らしき動物の足跡発見</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9197272,34.9212578,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/3　18:20頃　石山千町
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8931291,34.9382054,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/30  22；00頃　葛川梅ノ木町
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8768057,35.2686369,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/29　17：20頃　関津二丁目
+</name>
+        <styleUrl>#icon-1759-7CB342-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9187287,34.9220038,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/26　22：00頃　葛川梅ノ木町
+</name>
+        <description>東側山林へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8775519,35.2686256,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/24　21:30頃　北比良</name>
+        <description>北方面に移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9404309,35.2364964,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/9　9：00頃　牧一丁目
+</name>
+        <description>戸塚池A付近で目撃</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9654896,34.9597207,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/8　13：10頃　伊香立下在地町
+</name>
+        <description>山側へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8764883,35.1510829,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/7　21：00頃　葛川梅ノ木町
+</name>
+        <description>南東方向に移動。</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8766292,35.2684583,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/6　12：30頃　桐生三丁目</name>
+        <description>東方面へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9847609,34.9809143,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/6　6：30頃　青山三丁目</name>
+        <description>東方面へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9753792,34.9813423,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/4　21:50頃　北比良</name>
+        <description>北側へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.94237,35.236401,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/4　11：05頃　大石富川一丁目
+</name>
+        <description>東側へ移動。</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9492192,34.9031172,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/28　7：10頃　和邇北浜
+</name>
+        <description>ホッケ山と権現山の間の山道</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8775155,35.1949129,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/20　11：00頃　北比良
+</name>
+        <description>北側森林へ逃走</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.9394621,35.2333179,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/16　 20:10頃　比叡平二丁目
+</name>
+        <description>移動先不明</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8284461,35.0284178,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/2　7：10頃　北大路3丁目
+</name>
+        <description>西側山林へ移動</description>
+        <styleUrl>#icon-1759-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            135.8812189,34.9729816,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>令和６年度ツキノワグマ目撃情報</name>
+      <Placemark>
+        <name>3/13　18時頃　大物</name>
+        <description>熊の足跡らしき痕跡</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.9295264,35.2182027,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>3/13　北比良　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9394997,35.2374579,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>2/19　膳所池ノ内町</name>
+        <description>熊らしき動物の痕跡</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8724363,34.9840151,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>1/12　10：00頃　南志賀時</name>
+        <description>熊らしき動物の痕跡</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8535189,35.0400779,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>12/6　10：30頃　膳所平尾町
+</name>
+        <description>熊らしき動物の痕跡</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8735871,34.9835167,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/29　15：20頃　北比良
+</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.94798,35.2213537,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/28　6：20頃　大物</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9298178,35.2172768,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/15　20：50頃　大物
+</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9293558,35.2121689,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/30　和邇北浜　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9097717,35.1698466,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/28　栗原　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9046458,35.1661814,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/27　21：10頃　伊香立途中町</name>
+        <description>西方向へ道路横断</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8605912,35.1691277,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/25　19：30頃　伊香立途中町</name>
+        <description>西方向へ道路横断</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8600106,35.1655524,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/24　8：30頃　和邇北浜</name>
+        <description>親子目撃　南方向山林へ移動</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.9058199,35.1698335,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/24　栗原　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9019916,35.1666361,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/23　7：10頃　南船路
+</name>
+        <description>目撃後　北方向へ移動移動</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.9093236,35.1763314,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/22　伊香立南庄町　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.892833,35.1232169,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/21　和邇北浜　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9054043,35.1656138,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/21　真野普門三丁目　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9019644,35.1481552,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/20　18:20頃　真野普門三丁目</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.9025734,35.1477544,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/18　18:30頃　真野大野一丁目</name>
+        <description>目撃後、北方向へ移動</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8937472,35.133838,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/18　和邇北浜　錯誤　捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9004008,35.1740358,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/17　9：15頃　八屋戸</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.908302,35.1917167,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/17　6：00頃　八屋戸
+</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.9079158,35.1918833,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/16　15:20頃　八屋戸
+</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.9073865,35.19212,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/16　栗原　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.883934,35.1738105,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/16　8：40頃　八屋戸</name>
+        <description>車両走行中目撃。南方向へ立ち去った。</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.9064679,35.1943877,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/14　13：50頃　八屋戸
+</name>
+        <description>木を登っているところを目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.9054545,35.1942842,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/12　6：00頃　葛川木戸口町</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8856071,35.213118,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/11　17：30頃　葛川木戸口町</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8852996,35.2125106,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/8　17：25頃　上田上大鳥居町
+</name>
+        <description>熊らしき動物が東方向へ道路横断</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            136.0401758,34.9559461,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/8　伊香立上龍華町　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8830943,35.1636653,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/26　6：10頃　葛川坊村町</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8830013,35.2423058,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/26　5：45頃　葛川坊村町</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8691771,35.2459875,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/26　3：00頃　伊香立下在地町</name>
+        <description>目撃　北方向山中へ立ち去った</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8852855,35.14502,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/12　伊香立上龍華町　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8768855,35.1646958,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/8　11：50頃　葛川坊村町</name>
+        <description>登山中、三の滝と夫婦滝の中間あたりで目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8865085,35.2370006,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/22　21：30頃　葛川坂下町
+</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8576663,35.213784,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/14　23：00頃　北比良</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.9392567,35.2325884,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/7　木戸　錯誤捕獲
+</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9122542,35.1976177,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/5　和邇北浜　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8999623,35.1734181,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/29　葛川坂下町　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8596567,35.2031453,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/24　17：45頃　葛川梅ノ木町
+</name>
+        <description>南方向へ道路を横断</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8711605,35.2650386,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/23　6：50頃　富士見台</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8800212,34.9838186,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/18　22：30頃　北小松</name>
+        <description>目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.9534306,35.2475896,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/15　17：30頃　伊香立下在地町</name>
+        <description>車走行中に目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8763612,35.1534932,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/13　栗原　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8892135,35.1715962,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/13　2：30頃　北小松</name>
+        <description>熊らしき動物を目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.955174,35.2495281,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/12　6：00頃　膳所池ノ内町</name>
+        <description>熊の足跡らしき痕跡</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8711241,34.9812916,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/3　15：20頃　北比良　</name>
+        <description>草むらに熊らしき動物を目撃</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.9495401,35.224032,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/31　9：30頃　和邇北浜</name>
+        <description>１頭　登山道霊仙山口付近で山頂方向から下ってきたのち、山頂方向へ逃げた。</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8808667,35.1786848,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/25　15：30頃　山百合の丘</name>
+        <description>１頭　雑木林の歩行中、倒木でできた穴に熊らしき動物を目視</description>
+        <styleUrl>#icon-1759-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            135.8915486,35.1422705,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/6　伊香立上龍華町　錯誤捕獲</name>
+        <styleUrl>#icon-1759-E65100-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8757484,35.1626864,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>令和５年度ツキノワグマ目撃情報</name>
+      <Placemark>
+        <name>2/22　伊香立下在地町
+</name>
+        <styleUrl>#icon-1759-9C27B0-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8859714,35.1427895,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>11/1　比叡平
+</name>
+        <styleUrl>#icon-1759-9C27B0-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8271864,35.0234707,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/30　北小松
+</name>
+        <styleUrl>#icon-1759-9C27B0-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9557252,35.2479553,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/18　南小松</name>
+        <styleUrl>#icon-1759-9C27B0-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9460016,35.2415702,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/4　伊香立途中町
+</name>
+        <styleUrl>#icon-1759-9C27B0-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8604304,35.1704594,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/9　北小松</name>
+        <description>20：00頃</description>
+        <styleUrl>#icon-1759-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            135.965354,35.2523191,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/8　北比良
+</name>
+        <styleUrl>#icon-1759-9C27B0-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9439937,35.2299516,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/31　南小松</name>
+        <styleUrl>#icon-1759-9C27B0-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.9466232,35.2403138,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/28　栗原
+</name>
+        <styleUrl>#icon-1759-9C27B0-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8860368,35.1694801,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/12　葛川坊村町</name>
+        <styleUrl>#icon-1759-9C27B0-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            135.8715698,35.2464783,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

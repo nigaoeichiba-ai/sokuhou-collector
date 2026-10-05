@@ -6,6 +6,7 @@ Each source is one module under `sokuhou/sources/` that exposes `parse()` (pure,
 | Source | Module | Notes |
 |---|---|---|
 | Otsu City fire dispatch | `sokuhou.sources.otsu_fire` | The page lists only the latest ~10 incidents, so history must be accumulated by the caller. |
+| Otsu City black-bear sightings | `sokuhou.sources.otsu_bear` | Google My Maps KML published by the city. Cross-checked against the city's own per-year counts. Terms of programmatic access to the KML endpoint are not yet confirmed. |
 | jGrants subsidies open for application | `sokuhou.sources.jgrants` | Official public API, no authentication. |
 
 ```
