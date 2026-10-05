@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Callable
 
 from sokuhou import store
-from sokuhou.sources import env_kuma, estat_wage, jgrants, mhlw_minwage, otsu_bear, otsu_fire
+from sokuhou.sources import akita_kuma, env_kuma, estat_wage, jgrants, mhlw_minwage, miyagi_kuma, otsu_bear, otsu_fire
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
@@ -66,6 +66,30 @@ def check_bear(old, new):
         raise SanityError(f"sightings dropped {len(old['sightings'])} -> {len(new['sightings'])}")
 
 
+def _sighting_fy(observed_at: str) -> str:
+    year, month = int(observed_at[:4]), int(observed_at[5:7])
+    fy_start = year if month >= 4 else year - 1
+    return f"R{fy_start - 2018:02d}"
+
+
+def _sightings_by_fy(data: dict) -> dict[str, int]:
+    out: dict[str, int] = {}
+    for sighting in data.get("sightings", []):
+        fy = _sighting_fy(sighting["observed_at"])
+        out[fy] = out.get(fy, 0) + 1
+    return out
+
+
+def check_pref_bear(old, new):
+    if not old:
+        return
+    old_counts = _sightings_by_fy(old)
+    new_counts = _sightings_by_fy(new)
+    for fy in sorted(set(old_counts) & set(new_counts)):
+        if new_counts[fy] < old_counts[fy] * 0.7:
+            raise SanityError(f"{new['source']} {fy} sightings dropped {old_counts[fy]} -> {new_counts[fy]}")
+
+
 def check_fire(old, new):
     if new["unparsed"]:
         raise SanityError(f"{len(new['unparsed'])} messages in an unknown format (page layout changed?)")
@@ -76,6 +100,8 @@ GROUPS: dict[str, list[Source]] = {
         Source("minwage", mhlw_minwage.collect, check_minwage),
         Source("estat_wage", estat_wage.collect, check_estat_wage),
         Source("env_kuma", env_kuma.collect, check_env_kuma),
+        Source("miyagi_kuma", miyagi_kuma.collect, check_pref_bear),
+        Source("akita_kuma", akita_kuma.collect, check_pref_bear),
         Source("jgrants", jgrants.collect, check_jgrants),
         Source("otsu_bear", otsu_bear.collect, check_bear),
     ],

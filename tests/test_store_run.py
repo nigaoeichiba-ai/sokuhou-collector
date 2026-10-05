@@ -69,6 +69,12 @@ class SanityChecksTest(unittest.TestCase):
         with self.assertRaises(run.SanityError):
             run.check_bear({"sightings": [1] * 139}, {"unparsed": [], "sightings": [1] * 10})
 
+    def test_prefecture_bear_sighting_drop_is_checked_by_fiscal_year(self):
+        old = {"sightings": [{"observed_at": "2026-04-01"}] * 100 + [{"observed_at": "2025-04-01"}] * 5}
+        run.check_pref_bear(old, {"source": "miyagi", "sightings": [{"observed_at": "2026-04-01"}] * 70})
+        with self.assertRaises(run.SanityError):
+            run.check_pref_bear(old, {"source": "miyagi", "sightings": [{"observed_at": "2026-04-01"}] * 69})
+
     def test_fire_and_minwage(self):
         with self.assertRaises(run.SanityError):
             run.check_fire(None, {"unparsed": ["x"]})
@@ -128,7 +134,7 @@ class CliTest(unittest.TestCase):
 
     def test_groups_cover_every_collector(self):
         names = {s.name for group in run.GROUPS.values() for s in group}
-        self.assertEqual(names, {"minwage", "estat_wage", "env_kuma", "jgrants", "otsu_bear", "otsu_fire"})
+        self.assertEqual(names, {"minwage", "estat_wage", "env_kuma", "miyagi_kuma", "akita_kuma", "jgrants", "otsu_bear", "otsu_fire"})
 
 
 def store_total(path):
