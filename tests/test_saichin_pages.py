@@ -195,6 +195,34 @@ class SiteTest(unittest.TestCase):
         self.assertNotIn("発効済み</span>", text)  # state labels are filled by script, never baked in
 
 
+class VerificationFileTest(unittest.TestCase):
+    def _render(self, value):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        out = Path(tmp.name) / "s"
+        files = build.render_site(_raw(), {**CFG, "google_site_verification": value}, out, release=True)
+        return out, files
+
+    def test_verification_file_is_written_with_google_content(self):
+        out, files = self._render("googleabcac004d8b7d556.html")
+        self.assertIn("googleabcac004d8b7d556.html", files)
+        self.assertEqual((out / "googleabcac004d8b7d556.html").read_text(encoding="utf-8"),
+                         "google-site-verification: googleabcac004d8b7d556.html\n")
+
+    def test_no_file_when_not_configured(self):
+        _, files = self._render(None)
+        self.assertFalse([f for f in files if f.startswith("google")])
+
+    def test_a_malformed_name_is_refused(self):
+        for bad in ("../evil.html", "google123.html", "googleabcac004d8b7d556.php"):
+            with self.assertRaises(build.BuildError):
+                self._render(bad)
+
+    def test_the_verification_file_is_not_in_the_sitemap(self):
+        out, _ = self._render("googleabcac004d8b7d556.html")
+        self.assertNotIn("googleabcac", (out / "sitemap.xml").read_text(encoding="utf-8"))
+
+
 class ChartTest(unittest.TestCase):
     def test_line_chart_is_accessible_and_scaled(self):
         svg = charts.line([("A", 100), ("B", 120), ("C", 150)], title="T<>", desc="D")

@@ -9,6 +9,7 @@ import argparse
 import hashlib
 import html
 import json
+import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -672,6 +673,11 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False) -> list[
         pub = cfg["adsense_pub_id"].replace("ca-", "")
         pages["ads.txt"] = f"google.com, {pub}, DIRECT, f08c47fec0942fa0\n"
     pages[".htaccess"] = HTACCESS
+    verification = cfg.get("google_site_verification")
+    if verification:
+        if not re.fullmatch(r"google[0-9a-f]{16}\.html", verification):
+            raise BuildError(f"google_site_verification must look like google<16 hex>.html, got {verification!r}")
+        pages[verification] = f"google-site-verification: {verification}\n"
     for asset in sorted((HERE / "assets").iterdir()):
         pages[f"assets/{asset.name}"] = asset.read_text(encoding="utf-8")
 
