@@ -20,6 +20,7 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
 from sites.saichin import charts, content, ogimage, wage as wagelib  # noqa: E402
+from sokuhou.sitekit import asset_files, asset_pages  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
 SLUGS = dict(zip(
@@ -64,8 +65,8 @@ HTACCESS = (
 def asset_version() -> str:
     """Short content hash of the assets; part of their URLs so browsers and server caches never serve stale ones."""
     h = hashlib.sha1()
-    for a in sorted((HERE / "assets").iterdir()):
-        h.update(a.name.encode("utf-8"))
+    for a in asset_files(HERE / "assets"):
+        h.update(a.relative_to(HERE / "assets").as_posix().encode("utf-8"))
         h.update(a.read_bytes())
     return h.hexdigest()[:8]
 
@@ -1030,8 +1031,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, wage: di
         if not re.fullmatch(r"google[0-9a-f]{16}\.html", verification):
             raise BuildError(f"google_site_verification must look like google<16 hex>.html, got {verification!r}")
         pages[verification] = f"google-site-verification: {verification}\n"
-    for asset in sorted((HERE / "assets").iterdir()):
-        pages[f"assets/{asset.name}"] = asset.read_text(encoding="utf-8")
+    pages.update(asset_pages(HERE / "assets"))
 
     # Overwrite in place and delete only stale files. Removing the whole folder fails on Windows when
     # Dropbox or the indexer briefly holds a directory open.

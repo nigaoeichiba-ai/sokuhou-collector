@@ -283,3 +283,48 @@ svg.tilemap .na { fill:transparent; stroke:var(--line); stroke-dasharray:3 3; }
 .next-box ul { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
 .next-box li a { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:99px; background:var(--soft); color:var(--brand); font-weight:700; text-decoration:none; font-size:.9rem; }
 @media (max-width:560px) { .tilemap-box { padding:8px 4px; } svg.tilemap text { font-size:12px; } }
+
+/* ===== v3 (2026-10-06): colour overhaul "Alert Atlas" (forest / sky / signal orange), after Codex round 2 ===== */
+:root {
+  --bg:#f4faf6; --card:#fff; --ink:#15221a; --muted:#5b6e61; --line:#d6e6da;
+  --brand:#0f6b3f; --brand-d:#0a4a2c; --brand-l:#e1f5e8; --brand-2:#2563eb; --accent:#f97316; --soft:#e9f7ee;
+  --warn:#c2410c; --warn-l:#ffedd5;
+  --shadow:0 1px 2px rgba(10,60,30,.07), 0 8px 24px rgba(10,60,30,.08);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#08120d; --card:#101d16; --ink:#edf7ef; --muted:#9bb3a2; --line:#244433;
+    --brand:#4ade80; --brand-d:#22c55e; --brand-l:#14281d; --brand-2:#60a5fa; --accent:#fb923c; --soft:#14281d;
+    --warn:#fdba74; --warn-l:#3a1f0c; --shadow:none;
+  }
+}
+body { background:radial-gradient(900px 380px at 85% -100px, color-mix(in srgb, var(--brand-2) 16%, transparent), transparent 70%),
+  radial-gradient(800px 360px at 0% 0, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%), var(--bg); }
+.logo { background:linear-gradient(135deg,#0f6b3f,#2563eb); box-shadow:0 2px 8px rgba(37,99,235,.35); }
+h2::before { background:linear-gradient(var(--accent),var(--brand-2)); }
+a { color:var(--brand); }
+.hero { background:linear-gradient(135deg,#0b3d2a 0%,#0f6b3f 38%,#2563eb 100%); box-shadow:0 16px 44px rgba(15,80,70,.32); }
+.hero::after { content:""; position:absolute; z-index:0; right:-60px; bottom:-90px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(249,115,22,.55),rgba(249,115,22,0) 70%); }
+.hero .btn { color:#0b3d2a; }
+.stat.strong { background:linear-gradient(135deg,#0f6b3f,#2563eb); }
+.bar-list i { background:linear-gradient(90deg,#22c55e,#f97316 calc(var(--v) * 1%), var(--line) calc(var(--v) * 1%)); }
+.bar-list li::before { background:var(--soft); color:var(--brand-d); }
+.tabs a.on, .btn:not(.hero .btn) { background:linear-gradient(135deg,#0f6b3f,#2563eb); border-color:transparent; }
+.latest .alert { border-left-color:var(--accent); }
+.latest .alert::before { background:var(--accent); box-shadow:0 0 0 0 rgba(249,115,22,.5); animation-name:pulse2; }
+@keyframes pulse2 { 70% { box-shadow:0 0 0 9px rgba(249,115,22,0); } 100% { box-shadow:0 0 0 0 rgba(249,115,22,0); } }
+.next-box li a, .rel-grid a:hover { background:var(--soft); }
+.chart .stroke { stroke:var(--brand-2); } .chart .area { fill:rgba(37,99,235,.12); }
+
+/* tile map: green (few) -> orange -> red (many); text colours chosen for contrast */
+svg.tilemap .t0 { fill:#e5ede7; } svg.tilemap .t0 + text, svg.tilemap .na + text { fill:#6b7c70; }
+svg.tilemap .t1 { fill:#d9f99d; } svg.tilemap .t1 + text { fill:#1a3b0f; }
+svg.tilemap .t2 { fill:#86efac; } svg.tilemap .t2 + text { fill:#0b3a1d; }
+svg.tilemap .t3 { fill:#22c55e; } svg.tilemap .t3 + text { fill:#052e16; }
+svg.tilemap .t4 { fill:#f97316; } svg.tilemap .t4 + text { fill:#2b1100; }
+svg.tilemap .t5 { fill:#dc2626; } svg.tilemap .t5 + text { fill:#fff; }
+
+/* delight: reveal on scroll (only when JS has added .js to <html>) */
+.js .rv { opacity:0; transform:translateY(14px); transition:opacity .5s ease-out, transform .5s ease-out; }
+.js .rv.is-in { opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce) { .js .rv { opacity:1; transform:none; transition:none; } }

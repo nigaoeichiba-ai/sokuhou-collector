@@ -49,3 +49,44 @@
     render();
   }
 })();
+
+/* motion: count-up for the headline number and reveal-on-scroll for cards below the fold. Never hides anything without JS,
+   skips everything under prefers-reduced-motion. */
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) return;
+  var root = document.documentElement;
+  root.classList.add("js");
+
+  var big = document.querySelector(".big");
+  if (big) {
+    var node = null;
+    for (var i = 0; i < big.childNodes.length; i++) {
+      if (big.childNodes[i].nodeType === 3 && /\d/.test(big.childNodes[i].textContent)) { node = big.childNodes[i]; break; }
+    }
+    var m = node && node.textContent.match(/^(\D*)([\d,]+)(.*)$/);
+    if (m) {
+      var target = parseInt(m[2].replace(/,/g, ""), 10), start = null, dur = 900;
+      var step = function (t) {
+        if (start === null) start = t;
+        var p = Math.min(1, (t - start) / dur), e = 1 - Math.pow(1 - p, 3);
+        node.textContent = m[1] + Math.round(target * e).toLocaleString("ja-JP") + m[3];
+        if (p < 1) requestAnimationFrame(step); else node.textContent = m[0];
+      };
+      node.textContent = m[1] + "0" + m[3];
+      requestAnimationFrame(step);
+    }
+  }
+
+  if (!("IntersectionObserver" in window)) return;
+  var targets = document.querySelectorAll(".stat, .box, .bar-list li, .guide-card, .rel-grid a, .tilemap-box, .mypref, .next-box, .chart-box, .pref-card");
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  Array.prototype.forEach.call(targets, function (el) {
+    var r = el.getBoundingClientRect();
+    if (r.top > window.innerHeight) { el.classList.add("rv"); io.observe(el); }
+  });
+})();

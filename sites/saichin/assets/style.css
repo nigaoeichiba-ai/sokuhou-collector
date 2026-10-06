@@ -209,3 +209,35 @@ h2::before { content:""; width:6px; height:1.15em; border-radius:3px; background
 .next-box ul { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
 .next-box li a { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:99px; background:var(--soft); color:var(--brand-d); font-weight:700; text-decoration:none; font-size:.9rem; }
 @media (prefers-reduced-motion: reduce) { .guide-card { transition:none !important; } }
+
+/* ===== v3 (2026-10-06): colour overhaul "Wage Pulse" (mint / cyan / indigo / gold), after Codex round 2 ===== */
+:root {
+  --bg:#f3fbf8; --card:#fff; --ink:#14201c; --muted:#5a6f68; --line:#d3e9df;
+  --brand:#007a5a; --brand-d:#005c44; --brand-l:#dcfbef; --brand-2:#4f46e5; --accent:#f59e0b; --soft:#e4faf1;
+  --warn:#c2410c; --warn-l:#ffedd5;
+  --shadow:0 1px 2px rgba(0,70,50,.07), 0 8px 24px rgba(0,70,50,.08);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#071411; --card:#0f1f1a; --ink:#eafff6; --muted:#9db8ae; --line:#24483d;
+    --brand:#34d399; --brand-d:#10b981; --brand-l:#123228; --brand-2:#a5b4fc; --accent:#fbbf24; --soft:#123228;
+    --warn:#fdba74; --warn-l:#3a1f0c; --shadow:none;
+  }
+}
+body { background:radial-gradient(900px 380px at 88% -100px, color-mix(in srgb, var(--brand-2) 16%, transparent), transparent 70%),
+  radial-gradient(800px 360px at 0% 0, color-mix(in srgb, #06b6d4 14%, transparent), transparent 70%), var(--bg); }
+.logo { background:linear-gradient(135deg,#007a5a,#4f46e5); box-shadow:0 2px 8px rgba(79,70,229,.35); }
+h2::before { background:linear-gradient(var(--accent),var(--brand-2)); }
+.hero { background:linear-gradient(135deg,#064e3b 0%,#007a5a 36%,#06b6d4 72%,#4f46e5 118%); box-shadow:0 16px 44px rgba(0,100,110,.32); }
+.hero::after { content:""; position:absolute; z-index:0; right:-60px; bottom:-90px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(245,158,11,.5),rgba(245,158,11,0) 70%); }
+.hero .btn { color:#064e3b; }
+.progress-bar i { background:linear-gradient(90deg,#fbbf24,#fff); }
+.tabs a.on, .btn:not(.hero .btn) { background:linear-gradient(135deg,#007a5a,#4f46e5); border-color:transparent; }
+.chip.done { background:var(--brand-l); color:var(--brand-d); }
+.pref-card:hover { border-color:var(--brand-2); }
+.meter i { background:linear-gradient(90deg,#10b981,#06b6d4,#4f46e5); }
+.next-box li a { background:var(--soft); }
+
+.js .rv { opacity:0; transform:translateY(14px); transition:opacity .5s ease-out, transform .5s ease-out; }
+.js .rv.is-in { opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce) { .js .rv { opacity:1; transform:none; transition:none; } }

@@ -34,11 +34,28 @@ def esc(s) -> str:
     return html.escape(str(s), quote=True)
 
 
+TEXT_ASSETS = {".css", ".js", ".svg", ".json", ".txt", ".html"}
+
+
+def asset_files(assets: Path) -> list[Path]:
+    """Every file under the assets folder (sub-folders such as img/ included), in a stable order."""
+    return sorted(p for p in assets.rglob("*") if p.is_file())
+
+
+def asset_pages(assets: Path) -> dict:
+    """Published path -> content: text for css/js/svg, bytes for images and everything else."""
+    out = {}
+    for p in asset_files(assets):
+        rel = f"assets/{p.relative_to(assets).as_posix()}"
+        out[rel] = p.read_text(encoding="utf-8") if p.suffix.lower() in TEXT_ASSETS else p.read_bytes()
+    return out
+
+
 def asset_version(assets: Path) -> str:
     """Short content hash of the assets; part of their URLs so browsers and server caches never serve stale ones."""
     h = hashlib.sha1()
-    for a in sorted(assets.iterdir()):
-        h.update(a.name.encode("utf-8"))
+    for a in asset_files(assets):
+        h.update(a.relative_to(assets).as_posix().encode("utf-8"))
         h.update(a.read_bytes())
     return h.hexdigest()[:8]
 

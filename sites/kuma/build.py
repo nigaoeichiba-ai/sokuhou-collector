@@ -21,7 +21,7 @@ sys.path.insert(0, str(ROOT))
 
 from sites.kuma import charts, content  # noqa: E402
 from sokuhou import prefectures as pf  # noqa: E402
-from sokuhou.sitekit import BuildError, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
+from sokuhou.sitekit import BuildError, asset_pages, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 MINISTRY_PAGE = "https://www.env.go.jp/nature/choju/effort/effort12/effort12.html"
 SOURCE_HTML = (f'出典: <a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">環境省「クマに関する各種情報・取組」</a>の公表資料(速報値)を加工して作成。'
@@ -164,7 +164,7 @@ def icon(name: str) -> str:
 
 
 GUIDE_ICONS = {"prepare": "guide", "encounter": "paw", "spray": "emergency", "home": "location", "data": "chart"}
-TILE_COLORS = ("#e9dfd1", "#f2c791", "#e39a4a", "#c4631c", "#8b3f12", "#4f1f08")
+TILE_COLORS = ("#e5ede7", "#d9f99d", "#86efac", "#22c55e", "#f97316", "#dc2626")
 
 
 def stat(label: str, big: str, sub: str, strong: bool = False, ico: str = "") -> str:
@@ -709,8 +709,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         input_note="",
         finish=lambda s: s))
     pages.update(standard_files(pages, cfg, preview, d["fetched_date"]))
-    for asset in sorted((HERE / "assets").iterdir()):
-        pages[f"assets/{asset.name}"] = asset.read_text(encoding="utf-8")
+    pages.update(asset_pages(HERE / "assets"))
     write_pages(pages, out)
     return sorted(pages)
 
