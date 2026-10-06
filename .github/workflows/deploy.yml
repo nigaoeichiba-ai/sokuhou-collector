@@ -128,7 +128,12 @@ jobs:
         env:
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
           RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
-        run: python -m sites.yorokobu.fetch --out out/yorokobu_items.json
+        run: |
+          if [ -f sites/yorokobu/content/picks.json ]; then
+            python -m sites.yorokobu.refresh --out out/yorokobu_items.json
+          else
+            python -m sites.yorokobu.fetch --out out/yorokobu_items.json
+          fi
       - name: Build (release)
         if: steps.gate.outputs.go == 'true'
         env:
