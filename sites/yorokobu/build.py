@@ -24,8 +24,8 @@ from sokuhou import rakuten  # noqa: E402
 from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages,  # noqa: E402
                              missing_config, standard_files, write_pages)
 
-SOURCE_HTML = ('商品の情報は<a href="https://webservice.rakuten.co.jp/" rel="noopener" target="_blank">楽天ウェブサービス</a>を利用して取得しています。'
-               ' <a href="https://developers.rakuten.com/" rel="noopener" target="_blank">Supported by Rakuten Developers</a>')
+SOURCE_HTML = ('商品の情報は楽天ウェブサービスを利用して取得しています。 '
+               '<a href="https://webservice.rakuten.co.jp/" target="_blank">Supported by Rakuten Developers</a>')  # the credit HTML is prescribed: use as is
 NAV = [("イベントから", "/occasion/", "/occasion/"), ("相手から", "/for/", "/for/"), ("季節の贈り物", "/#season", "/season-none/")]
 SITE = {"nav": NAV[:2], "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">', "assets": HERE / "assets",
         "source_html": SOURCE_HTML}
