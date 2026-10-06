@@ -134,6 +134,19 @@ class BuildTest(unittest.TestCase):
             self.assertTrue((self.out / "og/gift/birthday-boyfriend.png").read_bytes().startswith(b"\x89PNG"))
             self.assertIn("/og/default.png", self.read("index.html"))
 
+    def test_memo_and_calendar_pages_and_the_feed(self):
+        for rel in ("memo/index.html", "calendar/index.html", "calendar/yorokobu-gift-days.ics"):
+            self.assertIn(rel, self.files)
+        memo = self.read("memo/index.html")
+        for needle in ('id="memo-app"', 'name="rec"', 'name="occ"', 'name="date"', "この端末のブラウザだけに保存され、送信されません"):
+            self.assertIn(needle, memo)
+        cal = self.read("calendar/index.html")
+        self.assertIn("webcal://yorokobu-present.com/calendar/yorokobu-gift-days.ics", cal)
+        self.assertIn("2026年", cal)
+        self.assertIn("BEGIN:VCALENDAR", self.read("calendar/yorokobu-gift-days.ics"))
+        self.assertIn("/memo/?o=birthday&amp;r=boyfriend", self.read("gift/birthday-boyfriend/index.html"))
+        self.assertIn('id="memo-strip"', self.read("index.html"))
+
     def test_site_files(self):
         self.assertIn("Sitemap: https://yorokobu-present.com/sitemap.xml", self.read("robots.txt"))
         self.assertIn("楽天ウェブサービス", self.read("about/index.html"))

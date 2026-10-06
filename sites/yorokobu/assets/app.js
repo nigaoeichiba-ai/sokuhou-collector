@@ -181,10 +181,151 @@
     });
   }
 
+
+  // ---------------------------------------------------------------- たいせつな日メモ: saved only in this browser, shown as countdowns, exported as calendar files
+  var MEMO_KEY = "yorokobu.memo";
+  function memoLoad() { try { return JSON.parse(localStorage.getItem(MEMO_KEY) || "[]"); } catch (e) { return []; } }
+  function memoSave(list) { try { localStorage.setItem(MEMO_KEY, JSON.stringify(list)); } catch (e) {} }
+  function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function today0() { var t = new Date(); return new Date(t.getFullYear(), t.getMonth(), t.getDate()); }
+  function parseIso(s) { var p = s.split("-"); return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2])); }
+  function addDays(d, n) { var x = new Date(d.getTime()); x.setDate(x.getDate() + n); return x; }
+  // the next date of an entry: a fixed-date occasion from the build's table, a personal one from its month and day
+  function nextDate(e, fixed, now) {
+    now = now || today0();
+    if (fixed[e.occ]) {
+      for (var i = 0; i < fixed[e.occ].length; i++) { var f = parseIso(fixed[e.occ][i]); if (f >= now) return f; }
+      return null;
+    }
+    for (var y = now.getFullYear(); y <= now.getFullYear() + 1; y++) {
+      var day = e.d; if (e.m === 2 && e.d === 29 && !(y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0))) day = 28;
+      var c = new Date(y, e.m - 1, day);
+      if (c >= now) return c;
+    }
+    return null;
+  }
+  function daysUntil(date, now) { return Math.round((date.getTime() - (now || today0()).getTime()) / 86400000); }
+  function label(e, names) { return (e.name || names.rec[e.rec] || "") + "の" + (names.occ[e.occ] || ""); }
+  function giftHref(e, pairs) { return pairs.indexOf(e.occ + "-" + e.rec) >= 0 ? "/gift/" + e.occ + "-" + e.rec + "/" : "/occasion/" + e.occ + "/"; }
+  function icsEscape(t) { return String(t).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n"); }
+  function icsFold(line) {
+    var out = [], cur = "", enc = new TextEncoder();
+    Array.from(line).forEach(function (ch) {
+      var limit = out.length ? 74 : 75;
+      if (enc.encode(cur + ch).length > limit) { out.push(cur); cur = ch; } else cur += ch;
+    });
+    out.push(cur);
+    return out.join("\r\n ");
+  }
+  function ymd(d) { return iso(d).replace(/-/g, ""); }
+  function buildIcs(entries, data, now) {
+    var lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//yorokobu-present.com//memo//JA", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:たいせつな日(よろこぶプレゼント)"];
+    var stamp = ymd(now || today0()) + "T000000Z";
+    entries.forEach(function (e) {
+      var nd = nextDate(e, data.fixed, now); if (!nd) return;
+      var url = data.base + giftHref(e, data.pairs);
+      var title = label(e, data.names);
+      lines.push("BEGIN:VEVENT", "UID:" + e.id + "@yorokobu-present.com", "DTSTAMP:" + stamp, "DTSTART;VALUE=DATE:" + ymd(nd), "DTEND;VALUE=DATE:" + ymd(addDays(nd, 1)));
+      if (!data.fixed[e.occ]) lines.push("RRULE:FREQ=YEARLY");
+      lines.push("SUMMARY:" + icsEscape(title), "DESCRIPTION:" + icsEscape(title + "。贈り物の候補を見る: " + url), "URL:" + url, "TRANSP:TRANSPARENT");
+      [21, 7].forEach(function (n) {
+        lines.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsEscape(title + "まで" + (n === 21 ? "3週間" : "1週間") + "。贈り物を選びませんか?"), "TRIGGER:-P" + n + "D", "END:VALARM");
+      });
+      lines.push("END:VEVENT");
+    });
+    lines.push("END:VCALENDAR");
+    return lines.map(icsFold).join("\r\n") + "\r\n";
+  }
+  function googleHref(e, data, now) {
+    var nd = nextDate(e, data.fixed, now); if (!nd) return "#";
+    var start = addDays(nd, -21), url = data.base + giftHref(e, data.pairs), title = label(e, data.names);
+    var q = "action=TEMPLATE&text=" + encodeURIComponent(title + "まで3週間。贈り物を選ぼう") + "&dates=" + ymd(start) + "/" + ymd(addDays(start, 1)) +
+      "&details=" + encodeURIComponent(title + "(" + (nd.getMonth() + 1) + "月" + nd.getDate() + "日)の贈り物を、そろそろ考えませんか?\n" + url) + (data.fixed[e.occ] ? "" : "&recur=" + encodeURIComponent("RRULE:FREQ=YEARLY"));
+    return "https://calendar.google.com/calendar/render?" + q;
+  }
+  function download(name, text) {
+    var blob = new Blob([text], { type: "text/calendar;charset=utf-8" }), a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+  window.YorokobuMemo = { nextDate: nextDate, daysUntil: daysUntil, buildIcs: buildIcs, googleHref: googleHref, label: label };
+
+  function initMemo() {
+    var app = $("#memo-app");
+    if (!app) return;
+    var data = JSON.parse(app.getAttribute("data-json")), form = $(".memo-add", app), list = $(".memo-list", app), empty = $(".memo-empty", app), all = $(".memo-all", app);
+    var fixedNote = $(".memo-fixed", app), when = $(".when", app);
+    function onOcc() {
+      var occ = form.elements.occ.value, fx = data.fixed[occ];
+      when.hidden = !!fx; form.elements.date.required = !fx;
+      if (fx) { var nd = nextDate({ occ: occ }, data.fixed); fixedNote.textContent = "この日は、毎年、日にちが決まっています。次は " + (nd.getMonth() + 1) + "月" + nd.getDate() + "日です。"; fixedNote.hidden = false; }
+      else fixedNote.hidden = true;
+    }
+    form.elements.occ.addEventListener("change", onOcc);
+    var q = new URLSearchParams(location.search);
+    if (q.get("o") && form.elements.occ.querySelector('option[value="' + q.get("o") + '"]')) form.elements.occ.value = q.get("o");
+    if (q.get("r") && form.elements.rec.querySelector('option[value="' + q.get("r") + '"]')) form.elements.rec.value = q.get("r");
+    onOcc();
+    function render() {
+      var entries = memoLoad(), now = today0();
+      var rows = entries.map(function (e) { var nd = nextDate(e, data.fixed, now); return { e: e, nd: nd, n: nd ? daysUntil(nd, now) : 9999 }; }).sort(function (a, b) { return a.n - b.n; });
+      list.innerHTML = "";
+      rows.forEach(function (r) {
+        var li = document.createElement("li"); li.className = "memo-card" + (r.n <= 21 ? " soon" : "");
+        var nd = r.nd;
+        li.innerHTML = '<div class="row1"><b></b><span class="cd"></span></div><small></small><div class="acts"></div>';
+        $("b", li).textContent = label(r.e, data.names);
+        $(".cd", li).textContent = r.n === 0 ? "きょう!" : "あと" + r.n + "日";
+        $("small", li).textContent = nd ? (nd.getMonth() + 1) + "月" + nd.getDate() + "日" + (r.n <= 21 ? "(そろそろ選びはじめましょう)" : "") : "";
+        var acts = $(".acts", li);
+        var go = document.createElement("a"); go.className = "go"; go.href = giftHref(r.e, data.pairs); go.textContent = "おすすめを見る"; acts.appendChild(go);
+        var g = document.createElement("a"); g.href = googleHref(r.e, data, now); g.target = "_blank"; g.rel = "noopener"; g.textContent = "Googleカレンダー"; acts.appendChild(g);
+        var ic = document.createElement("button"); ic.type = "button"; ic.textContent = ".ics(iPhoneなど)"; ic.addEventListener("click", function () { download("tasetsunahi.ics", buildIcs([r.e], data, now)); }); acts.appendChild(ic);
+        var line = document.createElement("a"); line.target = "_blank"; line.rel = "noopener"; line.textContent = "LINEで相談";
+        line.href = "https://line.me/R/share?text=" + encodeURIComponent(label(r.e, data.names) + "まで" + (r.n === 0 ? "きょう" : "あと" + r.n + "日") + "。そろそろ一緒に考えない?\n" + data.base + giftHref(r.e, data.pairs)); acts.appendChild(line);
+        var del = document.createElement("button"); del.type = "button"; del.textContent = "削除";
+        del.addEventListener("click", function () { memoSave(memoLoad().filter(function (x) { return x.id !== r.e.id; })); render(); }); acts.appendChild(del);
+        list.appendChild(li);
+      });
+      empty.hidden = entries.length > 0; all.hidden = entries.length === 0;
+    }
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var f = form.elements, occ = f.occ.value, e = { id: "m" + Date.now().toString(36) + Math.floor(Math.random() * 1000), name: f.name.value.trim(), rec: f.rec.value, occ: occ };
+      if (!data.fixed[occ]) {
+        if (!f.date.value) return;
+        var dt = parseIso(f.date.value); e.m = dt.getMonth() + 1; e.d = dt.getDate();
+      }
+      var entries = memoLoad(); if (entries.length >= 40) entries.shift();
+      entries.push(e); memoSave(entries); form.reset(); onOcc(); render();
+    });
+    $("[data-all-ics]", app).addEventListener("click", function () { download("tasetsunahi.ics", buildIcs(memoLoad(), data, today0())); });
+    render();
+  }
+
+  // the top page strip: with something saved, the nearest days as countdown cards
+  function initMemoStrip() {
+    var strip = $("#memo-strip");
+    if (!strip) return;
+    var entries = memoLoad();
+    if (!entries.length) return;
+    var meta = document.querySelector("form.finder"), data = null;
+    try { data = JSON.parse(strip.getAttribute("data-json") || "null"); } catch (e) {}
+    if (!data) return;
+    var now = today0();
+    var rows = entries.map(function (e) { var nd = nextDate(e, data.fixed, now); return { e: e, n: nd ? daysUntil(nd, now) : 9999 }; }).sort(function (a, b) { return a.n - b.n; }).slice(0, 3);
+    var inner = $(".memo-strip-in > div", strip);
+    var html = '<h2>大切な日まで</h2><div class="cards">';
+    rows.forEach(function (r) {
+      html += '<a class="memo-card' + (r.n <= 21 ? " soon" : "") + '" href="' + giftHref(r.e, data.pairs) + '"><div class="row1"><b>' + label(r.e, data.names).replace(/[<>&]/g, "") + '</b><span class="cd">' + (r.n === 0 ? "きょう!" : "あと" + r.n + "日") + '</span></div><small>おすすめを見る</small></a>';
+    });
+    inner.innerHTML = html + '</div><p style="margin-top:8px"><a class="btn btn-sub" href="/memo/">たいせつな日メモ</a></p>';
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initShare();
     var f = $("form.finder");
     if (f) window.YorokobuFinder(f);
-    initBrowse(); initConcierge(); initFavorites();
+    initBrowse(); initConcierge(); initFavorites(); initMemo(); initMemoStrip();
   });
 })();
