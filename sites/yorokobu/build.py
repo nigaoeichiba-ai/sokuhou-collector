@@ -651,7 +651,7 @@ def calendar_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <a class="btn btn-sub" href="/calendar/yorokobu-gift-days.ics" download>.icsを保存</a></p>
 <p class="memo-note">どれも無料で、登録は不要です。カレンダーの更新の反映には、時間がかかる場合があります。</p></section>
 <section style="margin-top:36px"><h2><span class="scribble">日にちの一覧</span></h2>{blocks}
-<p class="memo-note">誕生日や結婚記念日など、人によって違う日は、<a href="/memo/">たいせつな日メモ</a>で、登録できます。</p></section>"""
+<p class="memo-note">誕生日や結婚記念日など、人によって違う日は、<a href="/memo/">たいせつな日メモ</a>で、登録できます。月ごとに見るなら、<a href="/month/">月ごとの贈りどき</a>へ。</p></section>"""
     return page(cfg, preview, path="/calendar/", title=f"贈りどきカレンダー {today.year}・{today.year + 1} 母の日・父の日・クリスマスの日にち | {cfg['site_name']}",
                 description="母の日・父の日・敬老の日・クリスマス・お歳暮などの贈りどきの日にちと、選びはじめの目安(3週間前)の一覧。GoogleカレンダーやiPhoneに、まとめて追加できます。",
                 body=body, og_image=og_for("default"))
@@ -775,6 +775,8 @@ def finder(d: dict) -> str:
 def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
     c = d["c"]
     season = "".join(tile(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"], o["timing"][:30] + "…", wide=True) for o in season_occasions(c, today)[:6])
+    month_more = (f'<p class="more"><a class="btn btn-sub" href="/month/{today.month}/">{today.month}月の贈りどきを、ぜんぶ見る</a></p>'
+                  if today.month in month_pages(c, today) else "")
     occ = "".join(round_chip(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"]) for o in c["occasions"])
     rec = "".join(round_chip(f'/for/{r["slug"]}/', "recipient", r["slug"], r["name"]) for r in c["recipients"])
     popular = [p for p in c["pairs"] if p["occasion"] in ("birthday", "year-end-gathering", "mothers-day", "christmas")][:12]
@@ -801,7 +803,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <div><h2>大切な日を、忘れない</h2><p>誕生日や記念日を登録すると、3週間前に、カレンダーで、お知らせします。</p>
 <p><a class="btn" href="/memo/">たいせつな日メモをつくる</a> <a class="btn btn-sub" href="/calendar/">贈りどきカレンダー</a></p></div></div></section>
 <section style="margin-top:56px"><div class="sec-head"><span class="sticker">NOW</span><h2>いまが<span class="scribble">贈りどき</span></h2><p>これから迎えるイベントのプレゼントを、先取りで。</p></div>
-<ul class="tiles wide">{season}</ul></section>
+<ul class="tiles wide">{season}</ul>{month_more}</section>
 <section class="band sky scallop" style="margin-top:70px"><div class="in"><div class="sec-head"><img class="step-mascot hop" src="/assets/img/navi-scope.webp" alt="望遠鏡をのぞくシマエナガと、道を指さすシマエナガ" width="380" height="193" loading="lazy"><h2>選び方は、かんたん<span class="scribble">3ステップ</span></h2></div>
 <ol class="steps"><li><img src="/assets/img/occasion/birthday.webp" alt="" width="84" height="84" loading="lazy"><b>イベントを選ぶ</b><p>誕生日、母の日、クリスマスなど、贈るきっかけを選びます。</p></li>
 <li><img src="/assets/img/recipient/mother.webp" alt="" width="84" height="84" loading="lazy"><b>相手を選ぶ</b><p>彼氏、母、同僚など、贈る相手に合わせた選び方が見つかります。</p></li>
@@ -821,6 +823,74 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <p>商品は、楽天市場の情報を、毎日、自動で更新して表示しています。シマエナガのふたりが、あなたの「贈りたい気持ち」を、応援します。</p></div></div></section>"""
     return page(cfg, preview, path="/", title=f"{cfg['site_name']} イベントと相手から、喜ばれるプレゼントを探す",
                 description="誕生日・母の日・クリスマスなど、イベントと贈る相手から、喜ばれやすいプレゼントの選び方と、おすすめの商品が見つかります。", body=body,
+                og_image=og_for("default"))
+
+
+# ---------------------------------------------------------------- 今月の贈りどき (one page per calendar month, from SEASON and giftcal)
+
+def month_year(m: int, today: date) -> int:
+    """The year in which month m is next (or currently) coming up."""
+    return today.year if m >= today.month else today.year + 1
+
+
+def month_content(c: dict, m: int, today: date) -> dict:
+    y = month_year(m, today)
+    days = [g for g in giftcal.gift_days(y) if g["date"].month == m]
+    starts = [g for g in giftcal.gift_days(y) if g["start"].month == m and g["date"].month != m]
+    occ = [o for o in c["occasions"] if m in SEASON.get(o["slug"], ())]
+    return {"m": m, "y": y, "days": days, "starts": starts, "occ": occ}
+
+
+def month_pages(c: dict, today: date) -> list[int]:
+    return [m for m in range(1, 13) if (lambda x: x["days"] or x["starts"] or x["occ"])(month_content(c, m, today))]
+
+
+def month_page(d: dict, cfg: dict, preview: bool, m: int, today: date, months: list[int]) -> str:
+    c = d["c"]
+    mc = month_content(c, m, today)
+    tiles = "".join(tile(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"], o["timing"][:30] + "…", wide=True) for o in mc["occ"])
+    rows = "".join(f'<tr><td>{g["date"].month}月{g["date"].day}日</td><td>{esc(g["label"])}<small>({esc(g["when"])})</small></td>'
+                   f'<td>{g["start"].month}月{g["start"].day}日</td></tr>' for g in mc["days"])
+    srows = "".join(f'<tr><td>{g["date"].month}月{g["date"].day}日</td><td>{esc(g["label"])}<small>({esc(g["when"])})</small></td>'
+                    f'<td>{g["start"].month}月{g["start"].day}日</td></tr>' for g in mc["starts"])
+    head_row = "<thead><tr><th>日にち</th><th>贈りどき</th><th>選びはじめ(3週間前)</th></tr></thead>"
+    sec = ""
+    if tiles:
+        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月に、準備したいイベント</span></h2><ul class="tiles wide">{tiles}</ul></section>'
+    if rows:
+        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月にある、日にちの決まった贈りどき</span></h2><table class="gift-days">{head_row}<tbody>{rows}</tbody></table></section>'
+    if srows:
+        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月に、選びはじめたい贈りどき</span></h2><p>翌月以降の贈りどきで、選びはじめの目安(3週間前)が、{m}月に入るものです。</p><table class="gift-days">{head_row}<tbody>{srows}</tbody></table></section>'
+    i = months.index(m)
+    prev_m, next_m = months[i - 1], months[(i + 1) % len(months)]
+    nav = (f'<p class="more"><a class="btn btn-sub" href="/month/{prev_m}/">{prev_m}月</a> <a class="btn btn-sub" href="/month/">月ごとの一覧</a> '
+           f'<a class="btn btn-sub" href="/month/{next_m}/">{next_m}月</a></p>')
+    lead = f"{m}月に準備したい、プレゼントのイベントと、日にちの決まった贈りどき、選びはじめの目安を、まとめています。"
+    head = head_band(COLORS[m % 4], ic_wrap("occasion", mc["occ"][0]["slug"]) if mc["occ"] else "", f"{m}月の<wbr>贈りどき", lead, single=True, mascot="b-sparkle")
+    body = f"""{head}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("月ごとの贈りどき", "/month/"), (f"{m}月", None)])}</div>
+{sec}
+<p class="memo-note" style="margin-top:36px">日にちは、{mc["y"]}年のものです(毎年、自動で更新します)。誕生日や記念日など、人によって違う日は、<a href="/memo/">たいせつな日メモ</a>に登録できます。カレンダーに入れるなら、<a href="/calendar/">贈りどきカレンダー</a>へ。</p>
+{nav}"""
+    return page(cfg, preview, path=f"/month/{m}/", title=f"{m}月の贈りどき 準備したいプレゼントのイベント | {cfg['site_name']}", description=lead, body=body,
+                og_image=og_for("default"))
+
+
+def month_hub_page(d: dict, cfg: dict, preview: bool, today: date, months: list[int]) -> str:
+    c = d["c"]
+    tiles = ""
+    for m in months:
+        mc = month_content(c, m, today)
+        names = "・".join([o["name"] for o in mc["occ"]][:3] or [g["label"] for g in mc["days"]][:3])
+        tiles += (f'<li><a class="tile wide" href="/month/{m}/"><span><b>{m}月{"(いま)" if m == today.month else ""}</b>'
+                  f'<small>{esc(names)}</small></span></a></li>')
+    lead = "1年を月ごとに見て、いつ、何のプレゼントを準備すればよいかが分かります。"
+    head = head_band("yellow", "", "月ごとの<wbr>贈りどき", lead, single=True, mascot="b-wink")
+    body = f"""{head}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("月ごとの贈りどき", None)])}</div>
+<section style="margin-top:40px"><h2><span class="scribble">いまは{today.month}月</span></h2><p><a href="/month/{today.month}/">{today.month}月の贈りどきを見る</a></p>
+<ul class="tiles wide">{tiles}</ul></section>"""
+    return page(cfg, preview, path="/month/", title=f"月ごとの贈りどき 1年のプレゼントの準備カレンダー | {cfg['site_name']}", description=lead, body=body,
                 og_image=og_for("default"))
 
 
@@ -889,6 +959,11 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
                                      "for/index.html": hub_page(d, cfg, preview, "for")}
     pages["memo/index.html"] = memo_page(d, cfg, preview, today)
     pages["calendar/index.html"] = calendar_page(d, cfg, preview, today)
+    months = month_pages(c, today)
+    if months:
+        pages["month/index.html"] = month_hub_page(d, cfg, preview, today, months)
+        for m in months:
+            pages[f"month/{m}/index.html"] = month_page(d, cfg, preview, m, today, months)
     pages["calendar/yorokobu-gift-days.ics"] = giftcal.ics(cfg["site_url"], [today.year, today.year + 1, today.year + 2],
                                                              f"{today:%Y%m%d}T000000Z")
     for o in c["occasions"]:
