@@ -390,3 +390,6 @@ main.wrap > h1:first-child { margin-top: 36px; }
   .ctl > b { width: auto; }
   .bird-say img { width: 64px; }
 }
+
+.pick-note { margin: 2px 0 0; padding: .35em .6em; background: #fff8e2; border-radius: 8px; font-size: .74rem; line-height: 1.55; color: #5a463b; }
+.items.mini .pick-note { display: none; }

@@ -114,8 +114,33 @@ def collect(c: dict, client: rakuten.Client, limit_pairs: int | None = None, now
             "stats": {"requests": client.calls, "pages": len(pairs), "pages_with_products": nonempty, "thin_pages": len(thin), "errors": state["errors"]}}
 
 
+CANDIDATES_PER_IDEA = 15
+
+
+def candidates(c: dict, client: rakuten.Client, limit_pairs: int | None = None, now: datetime | None = None) -> dict:
+    """The shortlist the editors (Claude and Codex) choose the real picks from: per page and idea, the best fitting products of a keyword search.
+    Written by hand-triggered runs (data/yorokobu_candidates.json); the daily job only refreshes the products that were picked."""
+    pairs = c["pairs"][:limit_pairs] if limit_pairs else c["pairs"]
+    total = sum(len(p["ideas"]) for p in pairs)
+    state = {"errors": 0}
+    out = {}
+    for p in pairs:
+        key = ct.pair_key(p)
+        used: set = set()
+        lists = []
+        for i, idea in enumerate(p["ideas"]):
+            found = _search(client, f"{key} idea {i}", state, total, keyword=idea["query"], hits=HITS)
+            top = pick(found, None, c["filters"], limit=CANDIDATES_PER_IDEA, per_shop=3, recipient=p["recipient"], exclude=used)
+            used |= {it["code"] for it in top}
+            lists.append(top)
+        out[key] = lists
+    now = now or datetime.now(JST)
+    return {"version": 1, "fetched_at": now.isoformat(timespec="seconds"), "pairs": out, "stats": {"requests": client.calls, "errors": state["errors"]}}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--candidates", action="store_true", help="write the editors shortlist instead of the page data")
     ap.add_argument("--out", default="out/yorokobu_items.json")
     ap.add_argument("--limit-pairs", type=int)
     ap.add_argument("--plan", action="store_true", help="count the first-pass requests and exit")
@@ -130,7 +155,7 @@ def main() -> None:
         sys.exit("RAKUTEN_APP_ID / RAKUTEN_ACCESS_KEY are not set")
     cfg = json.loads((ROOT / "sites" / "yorokobu" / "config.json").read_text(encoding="utf-8"))
     client = rakuten.Client(app_id, key, referer=cfg["site_url"].rstrip("/") + "/", affiliate_id=cfg.get("rakuten_affiliate_id"))
-    data = collect(c, client, a.limit_pairs)
+    data = candidates(c, client, a.limit_pairs) if a.candidates else collect(c, client, a.limit_pairs)
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
