@@ -1,0 +1,42 @@
+name: yorokobu-candidates
+
+# Collects the shortlist of products per page and idea for the editors (Claude and Codex) to choose real picks from.
+# Manual only; it commits data/yorokobu_candidates.json (about 3 MB) and changes nothing on the live site.
+# Needs the repository secrets RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY (already set for the deploy job).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-commit
+  cancel-in-progress: false
+
+jobs:
+  candidates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Collect the shortlist
+        env:
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+        run: python -m sites.yorokobu.fetch --candidates --out data/yorokobu_candidates.json
+      - name: Commit
+        run: |
+          git config user.name "sokuhou-bot"
+          git config user.email "sokuhou-bot@users.noreply.github.com"
+          git add data/yorokobu_candidates.json
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "data: yorokobu candidate shortlist"
+            git pull --rebase origin main
+            git push
+          fi
