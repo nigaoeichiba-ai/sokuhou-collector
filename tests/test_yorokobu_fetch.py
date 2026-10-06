@@ -148,6 +148,13 @@ class PickingTest(unittest.TestCase):
         out = picking.pick(self.items(), TIERS[0], FILTERS)
         self.assertEqual([i["code"] for i in out], ["a", "b", "g"])
 
+    def test_option_listings_and_trinkets_are_dropped(self):
+        f = {**FILTERS, "min_price": 700, "ng_words": FILTERS["ng_words"] + ["別売"]}
+        cheap = rakuten.normalize(raw_item("c1", 540, "s9"))
+        option = rakuten.normalize(raw_item("c2", 1500, "s8", name="名入れ専用ページ ※商品は別売りです"))
+        good = rakuten.normalize(raw_item("c3", 1500, "s7"))
+        self.assertEqual([i["code"] for i in picking.pick([cheap, option, good], TIERS[0], f)], ["c3"])
+
     def test_tier_boundaries(self):
         self.assertTrue(picking.in_tier(3000, TIERS[0]))
         self.assertFalse(picking.in_tier(3000, TIERS[1]))

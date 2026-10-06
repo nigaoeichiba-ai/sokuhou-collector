@@ -9,6 +9,8 @@ def usable(item: dict, filters: dict) -> bool:
         return False
     if item["reviews"] < filters["min_review_count"] or item["rating"] < filters["min_review_average"]:
         return False
+    if item["price"] < filters.get("min_price", 0):  # engraving/option listings and trinkets are not gifts
+        return False
     name = item["name"]
     return not any(w and w in name for w in filters["ng_words"])
 

@@ -305,3 +305,5 @@ main.wrap > h1:first-child { margin-top: 36px; }
 .tier-head { flex-wrap: wrap; }
 @media (max-width: 760px) { .finder .peek { width: 64px; top: -42px; } .tier-mascot { margin-left: 0; width: 100%; } .tier-mascot img { width: 100px; } .tier-mascot .say { margin-bottom: 20px; } }
 @media (prefers-reduced-motion: reduce) { .hop { animation: none; } }
+.hero .finder { margin-top: 70px; }
+@media (max-width: 760px) { .hero .finder { margin-top: 52px; } }
