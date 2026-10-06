@@ -40,6 +40,14 @@ async function load(url) {
     const box = d.querySelector('#bgbox'); d.querySelector('.bgsw button[data-bg="#2b1b14"]').click();
     out.bg_dark = box.style.backgroundColor; out.solid = box.classList.contains('solid');
     d.querySelector('.bgsw button[data-bg=""]').click(); out.bg_reset = box.style.backgroundColor === '' && !box.classList.contains('solid');
+
+    // phone width: the header links must stay readable (not squeezed into one-character-wide columns)
+    {
+      const f2 = document.createElement('iframe'); f2.style.width = '300px'; f2.style.height = '800px'; document.body.appendChild(f2);
+      await new Promise(r => { f2.onload = r; f2.src = '/'; }); await wait(300);
+      out.nav = [...f2.contentDocument.querySelectorAll('header.site nav a')].map(a => { const r = a.getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height)]; });
+      out.scroll300 = f2.contentDocument.documentElement.scrollWidth;
+    }
   } catch (e) { out.error = String(e); }
   document.getElementById('out').textContent = JSON.stringify(out);
 })();
@@ -79,6 +87,13 @@ class MinnaBrowserTest(unittest.TestCase):
         self.assertEqual(o["size"], [1080, 1350])
         self.assertTrue(o["saved_visible"])
         self.assertEqual(o["saved_src"], "data:image/png;base64,")
+
+    def test_header_links_stay_readable_on_a_phone(self):
+        self.assertTrue(self.out["nav"])
+        for w, h in self.out["nav"]:
+            self.assertGreaterEqual(w, 50)
+            self.assertLessEqual(h, 60)
+        self.assertLessEqual(self.out["scroll300"], 301)
 
     def test_background_switcher(self):
         self.assertEqual(self.out["bg_dark"], "rgb(43, 27, 20)")
