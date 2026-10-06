@@ -79,7 +79,8 @@ jobs:
             marker: みんなのイラスト
             probe: /sitemap-images.xml
     concurrency:
-      group: deploy-${{ matrix.site }}
+      # sites that call the Rakuten API share one queue (one application ID, about one request per second), so two such jobs never run at once
+      group: ${{ matrix.site == 'yorokobu' && 'rakuten-api' || format('deploy-{0}', matrix.site) }}
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v5
