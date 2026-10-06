@@ -90,3 +90,29 @@ class ContentQualityTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class GuideQualityTest(unittest.TestCase):
+    """The reading guides under /guide/: calm, factual, and complete (skipped until content/guides.json exists)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.c = ct.load()
+
+    def test_every_guide_is_complete_and_clean(self):
+        if not self.c["guides"]:
+            self.skipTest("no guides yet")
+        bad = []
+        for slug, g in self.c["guides"].items():
+            blob = " ".join([g["title"], g["intro"], *[s["h"] + s["body"] for s in g["sections"]], *g["checklist"], *[f["q"] + f["a"] for f in g["faq"]]])
+            bad += [(slug, w) for w in FORBIDDEN_WORDS + TEMPLATE_PHRASES if w in blob]
+            if not 100 <= len(g["intro"]) <= 220:
+                bad.append((slug, "intro", len(g["intro"])))
+            if len(g["sections"]) != 4 or len(g["checklist"]) != 5 or len(g["faq"]) != 3:
+                bad.append((slug, "counts"))
+            bad += [(slug, "section", len(s["body"])) for s in g["sections"] if not 170 <= len(s["body"]) <= 300]
+        self.assertEqual(bad, [])
+
+    def test_guides_do_not_repeat_each_other(self):
+        sents = Counter(s for g in self.c["guides"].values() for sec in g["sections"] for s in sentences(sec["body"]))
+        self.assertEqual([s for s, n in sents.items() if n > 1], [])
