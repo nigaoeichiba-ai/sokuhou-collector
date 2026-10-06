@@ -463,3 +463,8 @@ p, li { overflow-wrap: anywhere; }
 .guide-link img { width: 70px; height: auto; flex: none; }
 .guide-link b { display: block; font-size: .72rem; letter-spacing: .1em; color: #2a7fb5; }
 .guide-link a { font-weight: 900; font-size: 1rem; color: var(--ink); }
+/* PR label at the top, full notice in the footer */
+.pr-quiet { display: flex; align-items: center; gap: .6em; margin: 14px 0 0; font-size: .74rem; color: #6b5d55; }
+.pr-chip { display: inline-block; padding: 0 .6em; border: 2px solid var(--ink); border-radius: 6px; background: #fff; color: var(--ink); font-weight: 900; font-size: .68rem; letter-spacing: .06em; line-height: 1.5; }
+.pr-foot { margin: 44px 0 0; padding: .9em 1.1em; border-top: 2px dashed rgba(43,27,20,.35); font-size: .78rem; line-height: 1.8; color: #6b5d55; }
+.pr-foot b { display: block; margin-bottom: .2em; color: var(--ink); }

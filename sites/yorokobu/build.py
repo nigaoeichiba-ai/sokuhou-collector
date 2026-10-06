@@ -65,6 +65,8 @@ def pr_lead(cfg: dict) -> str:
 
 def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
+    if "pr-quiet" in kw.get("body", ""):
+        kw["body"] += pr_foot(cfg)
     return layout(SITE, cfg, preview, scripts=True, head_extra=FONTS, **kw)
 
 
@@ -229,7 +231,14 @@ def freshness(d: dict) -> str:
 
 
 def pr_quiet(cfg: dict) -> str:
-    return '<p class="pr-quiet">PR:本ページには広告(アフィリエイトリンク)が含まれます。掲載する商品は、編集方針にもとづいて選んでいます。</p>'
+    """A one-line label at the top of the page (the full text sits in the footer of every page)."""
+    return '<p class="pr-quiet"><span class="pr-chip">PR</span>広告を含みます(くわしくはページ下部)</p>'
+
+
+def pr_foot(cfg: dict) -> str:
+    return ('<aside class="pr-foot"><b>広告について</b>このページには、広告(楽天アフィリエイト'
+            + ('・Amazonアソシエイト' if cfg.get("amazon_tracking_id") else "")
+            + ')のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。商品は、編集方針にもとづいて運営者が選んでいます。</aside>')
 
 
 def auto_note(it: dict, ctx: dict) -> str:
