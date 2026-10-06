@@ -41,36 +41,59 @@ class BuildTest(unittest.TestCase):
         html = self.read("gift/birthday-boyfriend/index.html")
         self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/yorokobu?pc=", html)
         self.assertIn('rel="sponsored nofollow noopener"', html)
-        self.assertIn('<span class="pr-note">PR</span>楽天市場で見る', html)
-        self.assertIn("このページには、広告", html)
+        self.assertIn("楽天市場で見る", html)
+        self.assertIn("PR:本ページには広告", html)          # quiet, but before any product link
+        self.assertLess(html.index("PR:本ページには広告"), html.index('class="item"'))
         self.assertIn("amazon.co.jp/s?k=", html)
         self.assertIn("Amazonのアソシエイトとして", html)
-        self.assertIn("3,000円以内のおすすめ", html)
-        self.assertIn("2026年10月7日に取得した情報", html)
 
-    def test_each_budget_block_has_an_amazon_search_in_its_price_range(self):
+    def test_rakuten_rules_for_displaying_prices(self):
         html = self.read("gift/birthday-boyfriend/index.html")
-        self.assertIn("low-price=3000&amp;high-price=5000&amp;tag=amazonmacs-22", html)
-        self.assertIn("3,000〜5,000円のAmazonの商品もさがす", html)
-        self.assertIn("high-price=3000&amp;tag=amazonmacs-22", html)  # the lowest tier has no lower bound
+        self.assertIn("価格・在庫は2026年10月7日 7:00時点の情報です", html)
+        self.assertIn("このサイトで掲載されている情報は、よろこぶプレゼントの作成者により運営されています。", html)
+        self.assertIn("購入時に楽天市場店舗(www.rakuten.co.jp)に表示されている価格が、その商品の販売に適用されます。", html)
+        self.assertIn("Supported by Rakuten Developers", self.read("index.html"))
 
-    def test_products_keep_the_order_chosen_by_the_fetch(self):
+    def test_the_sommelier_proposes_kinds_of_gift_with_a_reason_and_a_search_link(self):
         html = self.read("gift/birthday-boyfriend/index.html")
-        self.assertLess(html.index("テスト商品a1"), html.index("テスト商品a2"))  # the fetch ranks; the build does not reorder
+        self.assertIn("ソムリエの提案", html)
+        for text in ("毎日使う財布", "名入れの小物", "毎日使う小物は、使うたびに思い出してもらえます。"):
+            self.assertIn(text, html)
+        self.assertIn("楽天市場で「誕生日 彼氏 財布」をもっと見る", html)
+        self.assertIn("search.rakuten.co.jp%2Fsearch%2Fmall%2F", html)
 
-    def test_own_shop_items_link_directly_with_a_disclosure_and_only_where_noted(self):
+    def test_filters_sorting_and_the_concierge_are_on_the_page(self):
+        html = self.read("gift/birthday-boyfriend/index.html")
+        for needle in ('id="browse"', "data-sort", "data-ship", 'data-filter="tier"', 'data-filter="type"', 'class="kw-form"', 'data-trk="yorokobu"'):
+            self.assertIn(needle, html)
+        self.assertIn('data-tier="under3000"', html)
+        self.assertIn('data-tier="3000-5000"', html)
+
+    def test_products_for_the_wrong_person_are_not_shown(self):
         mother = self.read("gift/birthday-mother/index.html")
+        self.assertIn("テスト商品b1", mother)
+        self.assertNotIn("メンズ", mother.split('<ul class="items grid-all">')[1])   # a men's wallet never appears on a mother's page
+        self.assertNotIn("本革 メンズ 長財布", mother)
+
+    def test_own_shop_appears_only_as_a_plain_labelled_card_where_it_fits(self):
+        bf = self.read("gift/birthday-boyfriend/index.html")
+        self.assertNotIn("運営者のショップ", bf)                       # birthday x boyfriend has no portrait_note
+        mother = self.read("gift/birthday-mother/index.html")
+        self.assertIn("運営者のショップ", mother)
         self.assertIn("https://item.rakuten.co.jp/2gaoe/p1/", mother)
         self.assertNotIn("hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/yorokobu?pc=https%3A%2F%2Fitem.rakuten.co.jp%2F2gaoe", mother)
-        self.assertIn("当サイト運営者のショップの商品です", mother)
-        self.assertNotIn("当サイト運営者のショップの商品です", self.read("gift/birthday-boyfriend/index.html"))
-        self.assertIn("思い出を形に残す", self.read("occasion/birthday/index.html"))
-        self.assertNotIn("思い出を形に残す", self.read("occasion/mothers-day/index.html"))
+        self.assertIn("手描きの似顔絵ギフト(誕生日に)", mother)
+        self.assertNotIn("運営者のショップ", self.read("gift/mothers-day-mother/index.html"))   # no portrait_note there
 
-    def test_empty_tiers_are_skipped(self):
-        html = self.read("gift/birthday-mother/index.html")
-        self.assertIn('id="t-under3000"', html)
-        self.assertNotIn('id="t-3000-5000"', html)
+    def test_the_top_page_finder_has_no_pre_selection_and_knows_which_pages_exist(self):
+        html = self.read("index.html")
+        self.assertIn('<option value="">イベント</option>', html)
+        self.assertIn('<option value="">贈る相手</option>', html)
+        self.assertNotIn("selected", html.split('class="finder"')[1].split("</form>")[0])
+        m = re.search(r'data-map="([^"]+)"', html)
+        fmap = json.loads(m.group(1).replace("&quot;", '"'))
+        self.assertEqual(sorted(fmap["birthday"]), ["boyfriend", "mother"])
+        self.assertEqual(fmap["birthday"]["boyfriend"], ["under3000", "3000-5000"])  # only budgets that have products
 
     def test_season_block_follows_the_build_date(self):
         self.assertIn("母の日", self.read("index.html").split('class="tiles wide">')[1].split("</ul>")[0])
@@ -101,7 +124,6 @@ class BuildTest(unittest.TestCase):
     def test_site_files(self):
         self.assertIn("Sitemap: https://yorokobu-present.com/sitemap.xml", self.read("robots.txt"))
         self.assertIn("楽天ウェブサービス", self.read("about/index.html"))
-        self.assertIn("Supported by Rakuten Developers", self.read("index.html"))
         self.assertIn("運営者は、楽天市場で、似顔絵のショップも運営", self.read("about/index.html"))
 
 

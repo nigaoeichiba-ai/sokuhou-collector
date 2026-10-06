@@ -157,7 +157,13 @@ def normalize(item: dict) -> dict | None:
         "available": int(_num(item.get("availability"), 1)) == 1,
         "free_shipping": int(_num(item.get("postageFlag"), 1)) == 0,
         "gift": int(_num(item.get("giftFlag"))) == 1,
+        "appoint": int(_num(item.get("appointDeliveryDateFlag"))) == 1,
     }
+
+
+def search_url(keyword: str) -> str:
+    """Rakuten Ichiba keyword search results page."""
+    return "https://search.rakuten.co.jp/search/mall/" + urllib.parse.quote(keyword, safe="") + "/"
 
 
 def affiliate_link(affiliate_id: str, tracking_id: str | None, target: str) -> str:

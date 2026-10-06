@@ -39,6 +39,19 @@ def _need(entry: dict, fields: tuple, where: str) -> None:
         raise BuildError(f"{where}: missing {', '.join(missing)}")
 
 
+STOP = ("プレゼント", "ギフト", "贈り物", "祝い", "誕生日", "母の日", "父の日")
+
+
+def _fallback_ideas(p: dict) -> list[dict]:
+    """Until ideas.json has this page: one idea per search query, labelled with the query's last word, reasoned by the page's own reasons."""
+    out = []
+    for i, q in enumerate(p["queries"]):
+        words = [w for w in q.split() if w not in STOP]
+        label = words[-1] if words else q
+        out.append({"label": label[:12], "type": "実用品", "query": q, "why": p["reasons"][min(i, len(p["reasons"]) - 1)]})
+    return out
+
+
 def load(content_dir: Path = CONTENT_DIR) -> dict:
     occasions = _read(content_dir, "occasions.json")["occasions"]
     recipients = _read(content_dir, "recipients.json")["recipients"]
@@ -68,5 +81,11 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
         for t in p["tiers"]:
             if t not in tiers:
                 raise BuildError(f"pair {key}: unknown tier {t}")
+    ideas_file = content_dir / "ideas.json"
+    ideas = json.loads(ideas_file.read_text(encoding="utf-8")) if ideas_file.exists() else {}
+    for p in pairs:
+        extra = ideas.get(pair_key(p))
+        p["ideas"] = extra["ideas"] if extra and extra.get("ideas") else _fallback_ideas(p)
+        p["keywords"] = extra["keywords"] if extra and extra.get("keywords") else [w for q in p["queries"] for w in [" ".join(x for x in q.split() if x not in STOP)] if w]
     return {"occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
             "occ": occ, "rec": rec, "tiers": tiers}
