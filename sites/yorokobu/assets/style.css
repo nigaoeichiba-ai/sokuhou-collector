@@ -446,3 +446,20 @@ p, li { overflow-wrap: anywhere; }
 .pick-note { font-size: .8rem; }
 .memo-note, .fresh { line-height: 1.8; }
 @media (max-width: 760px) { body { font-size: 16px; } .panel-grid li { font-size: .96rem; } }
+
+/* reading section */
+.guide { max-width: 760px; margin: 28px auto 0; }
+.g-sec { margin: 0 0 34px; }
+.g-sec h2 { font-size: 1.3rem; }
+.g-sec p { font-size: 1.02rem; line-height: 2; }
+.checklist { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+.checklist li { padding: .55em .9em; background: #fff; border: var(--line2); border-radius: 14px; }
+.checklist label { cursor: pointer; font-weight: 700; }
+.checklist input { margin-right: .5em; transform: scale(1.2); }
+.faq { margin: 0 0 10px; padding: .6em 1em; background: #fff; border: var(--line2); border-radius: 14px; }
+.faq summary { cursor: pointer; font-weight: 900; }
+.faq p { margin: .6em 0 .2em; font-size: .95rem; }
+.guide-link { display: flex; align-items: center; gap: 14px; margin: 38px 0 0; padding: 12px 18px; background: #e3f4ff; border: var(--line2); border-radius: 18px; }
+.guide-link img { width: 70px; height: auto; flex: none; }
+.guide-link b { display: block; font-size: .72rem; letter-spacing: .1em; color: #2a7fb5; }
+.guide-link a { font-weight: 900; font-size: 1rem; color: var(--ink); }

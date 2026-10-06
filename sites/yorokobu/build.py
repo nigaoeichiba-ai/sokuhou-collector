@@ -430,6 +430,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 {browse}
 {concierge(cfg, d, p)}
 <section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(avoid, "warn")}</section>
+{guide_link(c, p["occasion"])}
 <p style="margin-top:40px">{amazon}</p>
 <section class="related" style="margin-top:40px"><h2><span class="scribble">あわせて読みたい</span></h2>
 <div class="cols"><div><h3>{esc(occ["name"])}の、ほかの相手</h3><ul class="plain">{links(related_occ)}</ul></div>
@@ -453,7 +454,8 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
 <div><h2><span class="scribble">選ぶポイント</span></h2><ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in o["tips"])}</ol></div></section>
 <section style="margin-top:50px"><h2><span class="scribble">相手を選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}
-<section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>"""
+<section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>
+{guide_link(c, o["slug"])}"""
     return page(cfg, preview, path=f"/occasion/{o['slug']}/", title=f"{o['name']}のプレゼント 選び方と相手別のおすすめ | {cfg['site_name']}",
                 description=o["blurb"][:110], body=body, og_image=og_for(f"occasion/{o['slug']}"))
 
@@ -572,6 +574,38 @@ def calendar_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
     return page(cfg, preview, path="/calendar/", title=f"贈りどきカレンダー {today.year}・{today.year + 1} 母の日・父の日・クリスマスの日にち | {cfg['site_name']}",
                 description="母の日・父の日・敬老の日・クリスマス・お歳暮などの贈りどきの日にちと、選びはじめの目安(3週間前)の一覧。GoogleカレンダーやiPhoneに、まとめて追加できます。",
                 body=body, og_image=og_for("default"))
+
+
+def guide_link(c: dict, occasion: str, cls: str = "guide-link") -> str:
+    g = c["guides"].get(occasion)
+    if not g:
+        return ""
+    return (f'<aside class="{cls}"><img src="/assets/img/concierge-note.webp" alt="" width="90" height="68" loading="lazy">'
+            f'<div><b>読みもの</b><a href="/guide/{occasion}/">{esc(g["title"])}</a></div></aside>')
+
+
+def guide_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
+    c = d["c"]
+    g, o = c["guides"][slug], c["occ"][slug]
+    secs = "".join(f'<section class="g-sec"><h2><span class="scribble">{esc(s["h"])}</span></h2><p>{esc(s["body"])}</p></section>' for s in g["sections"])
+    checks = "".join(f'<li><label><input type="checkbox"> {esc(x)}</label></li>' for x in g["checklist"])
+    faq = "".join(f'<details class="faq"><summary>{esc(f["q"])}</summary><p>{esc(f["a"])}</p></details>' for f in g["faq"])
+    pairs = [p for p in c["pairs"] if p["occasion"] == slug][:8]
+    links = "".join(f'<li><a href="/gift/{ct.pair_key(p)}/">{esc(p["title"].split(" ")[0])}</a></li>' for p in pairs)
+    ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage",
+                     "mainEntity": [{"@type": "Question", "name": f["q"], "acceptedAnswer": {"@type": "Answer", "text": f["a"]}} for f in g["faq"]]},
+                    ensure_ascii=False)
+    head = head_band("sky", ic_wrap("occasion", slug), esc(g["title"]), g["intro"], single=True, mascot=OCC_MASCOT.get(slug, "r-wink"))
+    body = f"""{head}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), (o["name"], f"/occasion/{slug}/"), ("読みもの", None)])}</div>
+<article class="guide">{secs}
+<section class="g-sec"><h2><span class="scribble">贈る前の、チェックリスト</span></h2><ul class="checklist">{checks}</ul></section>
+<section class="g-sec"><h2><span class="scribble">よくある質問</span></h2>{faq}</section></article>
+{share_bar(cfg, f"/guide/{slug}/", f"{g['title']}", "この記事を、だれかに送る")}
+<section class="related" style="margin-top:44px"><h2><span class="scribble">{esc(o["name"])}の贈り物を、選ぶ</span></h2>
+<ul class="plain">{links}</ul><p style="margin-top:14px"><a class="btn btn-sub" href="/occasion/{slug}/">{esc(o["name"])}のおすすめを見る</a></p></section>
+<script type="application/ld+json">{ld}</script>"""
+    return page(cfg, preview, path=f"/guide/{slug}/", title=f"{g['title']} | {cfg['site_name']}", description=g["intro"][:110], body=body, og_image=og_for(f"occasion/{slug}"))
 
 
 def season_occasions(c: dict, today: date) -> list[dict]:
@@ -699,6 +733,8 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages[f"occasion/{o['slug']}/index.html"] = occasion_page(d, cfg, preview, o)
     for r in c["recipients"]:
         pages[f"for/{r['slug']}/index.html"] = recipient_page(d, cfg, preview, r)
+    for slug in c["guides"]:
+        pages[f"guide/{slug}/index.html"] = guide_page(d, cfg, preview, slug)
     for p in c["pairs"]:
         pages[f"gift/{ct.pair_key(p)}/index.html"] = pair_page(d, cfg, preview, p)
     pages.update(legal_pages(

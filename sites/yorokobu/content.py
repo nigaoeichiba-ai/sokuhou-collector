@@ -87,5 +87,10 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
         extra = ideas.get(pair_key(p))
         p["ideas"] = extra["ideas"] if extra and extra.get("ideas") else _fallback_ideas(p)
         p["keywords"] = extra["keywords"] if extra and extra.get("keywords") else [w for q in p["queries"] for w in [" ".join(x for x in q.split() if x not in STOP)] if w]
+    guides_file = content_dir / "guides.json"
+    guides = {g["occasion"]: g for g in json.loads(guides_file.read_text(encoding="utf-8"))["guides"]} if guides_file.exists() else {}
+    for slug, g in guides.items():
+        if slug not in occ:
+            raise BuildError(f"guide for unknown occasion {slug}")
     return {"occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
-            "occ": occ, "rec": rec, "tiers": tiers}
+            "occ": occ, "rec": rec, "tiers": tiers, "guides": guides}

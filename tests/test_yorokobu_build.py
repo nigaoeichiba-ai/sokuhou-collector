@@ -161,6 +161,15 @@ class BuildTest(unittest.TestCase):
         self.assertIn('rel="manifest" href="/manifest.webmanifest"', self.read("index.html"))
         self.assertIn('name="theme-color"', self.read("memo/index.html"))
 
+    def test_reading_guides_are_calm_extras_with_a_faq_and_links_from_the_pages(self):
+        self.assertIn("guide/birthday/index.html", self.files)
+        g = self.read("guide/birthday/index.html")
+        for needle in ("届く日から逆算する", 'class="checklist"', '"@type": "FAQPage"', "/occasion/birthday/", "/gift/birthday-boyfriend/"):
+            self.assertIn(needle, g)
+        self.assertIn("/guide/birthday/", self.read("occasion/birthday/index.html"))
+        self.assertIn("/guide/birthday/", self.read("gift/birthday-boyfriend/index.html"))
+        self.assertNotIn("/guide/", self.read("gift/mothers-day-mother/index.html"))      # no guide for that occasion in the fixture
+
     def test_site_files(self):
         self.assertIn("Sitemap: https://yorokobu-present.com/sitemap.xml", self.read("robots.txt"))
         self.assertIn("楽天ウェブサービス", self.read("about/index.html"))
