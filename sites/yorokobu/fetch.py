@@ -115,27 +115,50 @@ def collect(c: dict, client: rakuten.Client, limit_pairs: int | None = None, now
 
 
 CANDIDATES_PER_IDEA = 15
+CANDIDATES_MIN = 12       # an idea with fewer clean products than this gets more searches
+CANDIDATES_EXTRA = 3      # at most this many extra keyword searches per idea
 
 
 def candidates(c: dict, client: rakuten.Client, limit_pairs: int | None = None, now: datetime | None = None) -> dict:
-    """The shortlist the editors (Claude and Codex) choose the real picks from: per page and idea, the best fitting products of a keyword search.
-    Written by hand-triggered runs (data/yorokobu_candidates.json); the daily job only refreshes the products that were picked."""
+    """The shortlist the editors (Claude and Codex) choose the real picks from: per page and idea, the best fitting products of keyword searches.
+    Each idea is searched twice (default order and most reviews first); an idea that still has too few clean products is topped up with the
+    page's other keywords.  Written by hand-triggered runs (data/yorokobu_candidates.json); the daily job only refreshes the products that were picked."""
     pairs = c["pairs"][:limit_pairs] if limit_pairs else c["pairs"]
-    total = sum(len(p["ideas"]) for p in pairs)
+    total = sum(len(p["ideas"]) for p in pairs) * 3
     state = {"errors": 0}
-    out = {}
+    out, thin = {}, []
     for p in pairs:
         key = ct.pair_key(p)
         used: set = set()
         lists = []
         for i, idea in enumerate(p["ideas"]):
-            found = _search(client, f"{key} idea {i}", state, total, keyword=idea["query"], hits=HITS)
-            top = pick(found, None, c["filters"], limit=CANDIDATES_PER_IDEA, per_shop=3, recipient=p["recipient"], exclude=used)
+            found: dict[str, dict] = {}
+
+            def add(keyword: str, **extra) -> None:
+                for it in _search(client, f"{key} idea {i}", state, total, keyword=keyword, hits=HITS, **extra):
+                    found.setdefault(it["code"], it)
+
+            add(idea["query"])
+            add(idea["query"], sort="-reviewCount")
+            top = pick(list(found.values()), None, c["filters"], limit=CANDIDATES_PER_IDEA, per_shop=3, recipient=p["recipient"], exclude=used)
+            tried = {idea["query"]}
+            for kw in [*p.get("keywords", []), idea["label"]]:
+                if len(top) >= CANDIDATES_MIN or len(tried) > CANDIDATES_EXTRA:
+                    break
+                if kw not in tried:
+                    tried.add(kw)
+                    add(kw)
+                    top = pick(list(found.values()), None, c["filters"], limit=CANDIDATES_PER_IDEA, per_shop=3, recipient=p["recipient"], exclude=used)
+            if len(top) < CANDIDATES_MIN:
+                thin.append((key, i, len(top)))
             used |= {it["code"] for it in top}
             lists.append(top)
         out[key] = lists
     now = now or datetime.now(JST)
-    return {"version": 1, "fetched_at": now.isoformat(timespec="seconds"), "pairs": out, "stats": {"requests": client.calls, "errors": state["errors"]}}
+    if thin:
+        print(f"ideas with fewer than {CANDIDATES_MIN} candidates: {len(thin)}", file=sys.stderr)
+    return {"version": 1, "fetched_at": now.isoformat(timespec="seconds"), "pairs": out,
+            "stats": {"requests": client.calls, "errors": state["errors"], "thin_ideas": len(thin), "thin": [f"{k}#{i}={n}" for k, i, n in thin]}}
 
 
 def main() -> None:
