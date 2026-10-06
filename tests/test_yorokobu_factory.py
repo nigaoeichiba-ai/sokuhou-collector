@@ -94,6 +94,29 @@ class FactoryTest(unittest.TestCase):
         factory.brief("articles", 3, out, Path("x/a2.json"))
         self.assertIn("ask-without-asking", out.read_text(encoding="utf-8"))
 
+    def test_map_dots_of_a_new_theme_are_kept_and_bad_ones_ignored(self):
+        t = good_theme(map=[[1, 0], [-2, -1], [1.5, 1], [0, 2]])
+        n, probs = factory.merge_themes({"themes": [t]}, date(2026, 10, 8))
+        self.assertEqual((n, probs), (1, []))
+        tags = json.loads((self.dir / "map_tags.json").read_text(encoding="utf-8")) if (self.dir / "map_tags.json").exists() else {}
+        self.assertEqual(tags["theme-rainy-day"][1], [-2, -1])
+        t2 = good_theme(slug="rainy-day-two", map=[[9, 9]] * 4)
+        t2["ideas"] = [{**i, "query": i["query"] + " 二"} for i in t2["ideas"]]
+        n, probs = factory.merge_themes({"themes": [t2]}, date(2026, 10, 9))
+        tags = json.loads((self.dir / "map_tags.json").read_text(encoding="utf-8"))
+        self.assertNotIn("theme-rainy-day-two", tags)
+
+    def test_retry_brief_carries_the_problems(self):
+        ans = self.dir / "answer.json"
+        ans.write_text(json.dumps({"themes": [good_theme(lead="短い")]}, ensure_ascii=False), encoding="utf-8")
+        n, probs = factory.merge_themes(json.loads(ans.read_text(encoding="utf-8")), date(2026, 10, 8))
+        ans.with_suffix(".problems.txt").write_text("\n".join(probs), encoding="utf-8")
+        out = self.dir / "retry.md"
+        factory.retry_brief("themes", ans, out)
+        text = out.read_text(encoding="utf-8")
+        self.assertIn("lead length", text)
+        self.assertIn("answer_fixed.json", text)
+
 
 class QualityTest(unittest.TestCase):
     def test_repeated_sentences(self):
