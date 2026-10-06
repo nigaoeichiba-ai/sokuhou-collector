@@ -393,3 +393,10 @@ main.wrap > h1:first-child { margin-top: 36px; }
 
 .pick-note { margin: 2px 0 0; padding: .35em .6em; background: #fff8e2; border-radius: 8px; font-size: .74rem; line-height: 1.55; color: #5a463b; }
 .items.mini .pick-note { display: none; }
+
+.share { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; }
+.share-label { font-size: .82rem; font-weight: 900; margin-right: 4px; }
+.share-btn { display: inline-block; padding: .3em .95em; border: 2px solid var(--ink); border-radius: 999px; background: #fff; color: var(--ink); font: 900 .8rem var(--body); text-decoration: none; cursor: pointer; }
+.share-btn.line { background: #06c755; color: #fff; border-color: #048a3b; }
+.share-btn.x { background: #111; color: #fff; }
+.share-btn:hover { transform: translateY(-1px); }

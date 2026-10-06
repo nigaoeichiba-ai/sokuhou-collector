@@ -121,6 +121,19 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(build.short("x" * 100, 10), "x" * 9 + "…")
         self.assertEqual(build.short("  a   b  "), "a b")
 
+    def test_every_page_has_its_own_share_card_and_share_buttons(self):
+        from sites.yorokobu import ogimage
+        html = self.read("gift/birthday-boyfriend/index.html")
+        self.assertIn("https://line.me/R/share?text=", html)
+        self.assertIn("https://twitter.com/intent/tweet?text=", html)
+        self.assertIn("yorokobu-present.com%2Fgift%2Fbirthday-boyfriend%2F", html)       # our page URL, never an affiliate link
+        self.assertNotIn("hb.afl.rakuten", html.split('class="share"')[1].split("</div>")[0])
+        if ogimage.available():
+            self.assertIn("og/gift/birthday-boyfriend.png", self.files)
+            self.assertIn("https://yorokobu-present.com/og/gift/birthday-boyfriend.png", html)
+            self.assertTrue((self.out / "og/gift/birthday-boyfriend.png").read_bytes().startswith(b"\x89PNG"))
+            self.assertIn("/og/default.png", self.read("index.html"))
+
     def test_site_files(self):
         self.assertIn("Sitemap: https://yorokobu-present.com/sitemap.xml", self.read("robots.txt"))
         self.assertIn("楽天ウェブサービス", self.read("about/index.html"))

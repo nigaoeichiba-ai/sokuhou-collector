@@ -170,7 +170,19 @@
     paint(); render();
   }
 
+  function initShare() {
+    $$(".share-btn.copy").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var u = b.getAttribute("data-url");
+        if (navigator.clipboard) navigator.clipboard.writeText(u);
+        b.textContent = "コピーしました";
+        setTimeout(function () { b.textContent = "リンクをコピー"; }, 2000);
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    initShare();
     var f = $("form.finder");
     if (f) window.YorokobuFinder(f);
     initBrowse(); initConcierge(); initFavorites();
