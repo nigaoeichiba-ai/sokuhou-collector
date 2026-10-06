@@ -1,45 +1,263 @@
 {
- "birthday-wife": [
+ "birthday-boyfriend": [
   {
    "picks": [
     {
-     "code": "oneself:10000115",
-     "note": "定期入れ付きスマホポシェット"
+     "code": "kinoco:10293032",
+     "note": "本革の薄型二つ折り財布"
     },
     {
-     "code": "morevalue:10000355",
-     "note": "軽量の財布付きスマホショルダー"
+     "code": "kinoco:10293116",
+     "note": "イタリアンレザーの本革財布"
     },
     {
-     "code": "moon-x-shop:10000435",
-     "note": "本革でお財布機能付き"
+     "code": "auc-esound:10000892",
+     "note": "栃木レザーの日本製財布"
     }
    ],
    "backups": [
-    "oneself:10000179",
-    "moltofelice:10000012",
-    "kiitos-web:10031167"
+    "glencheck:10000686",
+    "freespirits:10061536",
+    "woodwest:10000009"
    ]
   },
   {
    "picks": [
     {
-     "code": "stravel:10008017",
-     "note": "本革三つ折りで箱型小銭入れ"
+     "code": "nextore:10014028",
+     "note": "名入れ対応の340mlボトル"
     },
     {
-     "code": "kinoco:10293145",
-     "note": "イタリアンレザーの三つ折り"
+     "code": "leun:10010250",
+     "note": "美濃焼とタンブラーのセット"
     },
     {
-     "code": "kyoden:10000006",
-     "note": "本革でお札を折らない形"
+     "code": "shoppress:10001379",
+     "note": "似顔絵入りビアジョッキ"
     }
    ],
    "backups": [
-    "blue-sincere:10000378",
+    "nextore:10014022",
+    "shoppress:10003817",
+    "ra-imu:10002744"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "mujina:10000055",
+     "note": "鍵とカードが入るマルチケース"
+    },
+    {
+     "code": "nm-element:10000001",
+     "note": "大容量のレザーキーポーチ"
+    },
+    {
+     "code": "nm-element:10000034",
+     "note": "ヴィンテージ加工の本革ケース"
+    }
+   ],
+   "backups": [
+    "blanc-couture:10000045",
+    "freaks-and-co:10000040",
+    "adelphos:10000018"
+   ]
+  }
+ ],
+ "birthday-girlfriend": [
+  {
+   "picks": [
+    {
+     "code": "auc-risecreation:10003186",
+     "note": "三つ折りの小さめ財布"
+    },
+    {
+     "code": "kinoco:10293145",
+     "note": "手のひらサイズの本革財布"
+    },
+    {
+     "code": "kyoden:10000006",
+     "note": "お札を折らないミニ財布"
+    }
+   ],
+   "backups": [
     "annekor:10000082",
-    "kyoden:10000121"
+    "blue-sincere:10000378",
+    "exception5251:10000552"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "nextore:10014555",
+     "note": "丸型グリッターの名入れミラー"
+    },
+    {
+     "code": "isuke:10003223",
+     "note": "蒔絵の誕生花ミラー"
+    },
+    {
+     "code": "bagray:10012207",
+     "note": "刻印できるコンパクトミラー"
+    }
+   ],
+   "backups": [
+    "nextore:10014404",
+    "88eight88:10000264",
+    "cavatina:10016209"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "shibuya-k2009:10028652",
+     "note": "ステンレスの華奢チェーン"
+    },
+    {
+     "code": "rei-shop:10000007",
+     "note": "シルバー925の細めネックレス"
+    },
+    {
+     "code": "jewelrycastle:10000982",
+     "note": "一粒石の両吊りネックレス"
+    }
+   ],
+   "backups": [
+    "votrecouture:10000003",
+    "sheil-store:10020451",
+    "clementiadecor:10000087"
+   ]
+  }
+ ],
+ "birthday-husband": [
+  {
+   "picks": [
+    {
+     "code": "goodgoods-center:10000215",
+     "note": "牛革のビジネス名刺入れ"
+    },
+    {
+     "code": "sapporo-kawa:10000019",
+     "note": "日本製レザーの名刺ケース"
+    },
+    {
+     "code": "kawa-ee:10000010",
+     "note": "日本製本革の名入れ名刺入れ"
+    }
+   ],
+   "backups": [
+    "loof-shop:10000780",
+    "craft-you:10007752",
+    "mokko-ya:10000427"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "takuminowaza:10001385",
+     "note": "ブライドルレザー名刺入れ"
+    },
+    {
+     "code": "sacs-bar:10004831",
+     "note": ""
+    },
+    {
+     "code": "sapporo-kawa:10000271",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "cosmekitchen:10001138",
+     "note": "ジュニパーのバスエッセンス"
+    },
+    {
+     "code": "spalabo:10000204",
+     "note": "薬草湯入りの入浴剤ギフト"
+    },
+    {
+     "code": "sexystyle:10028673",
+     "note": "ピローミストと入浴剤のセット"
+    }
+   ],
+   "backups": [
+    "n-raffine:10010730"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "e-c-lab:10000048",
+     "note": "名入れできる木製ボールペン"
+    },
+    {
+     "code": "shoppress:10000549",
+     "note": "ボールペンとハンカチのセット"
+    },
+    {
+     "code": "sapporo-kawa:10000568",
+     "note": "名刺入れ付きパーカーペン"
+    }
+   ],
+   "backups": [
+    "pellepenna:10012116",
+    "pellepenna:10012121",
+    "alevel:10030140"
+   ]
+  }
+ ],
+ "birthday-wife": [
+  {
+   "picks": [
+    {
+     "code": "yuzupachishop:10000223",
+     "note": "ナイロンの軽量スマホポーチ"
+    },
+    {
+     "code": "moon-x-shop:10000435",
+     "note": "本革のお財布機能付きポーチ"
+    },
+    {
+     "code": "jacajaca:10000842",
+     "note": "栃木レザーのスマートサイフ"
+    }
+   ],
+   "backups": [
+    "oneself:10000115",
+    "annekor:10000072",
+    "annekor:10000093"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "moon-x-shop:10000407",
+     "note": "じゃばら型の本革ミニ財布"
+    },
+    {
+     "code": "kinoco:10293145",
+     "note": "イタリアンレザー三つ折り財布"
+    },
+    {
+     "code": "kyoden:10000006",
+     "note": "ゴールド本革のミニ財布"
+    }
+   ],
+   "backups": [
+    "annekor:10000082",
+    "blue-sincere:10000378",
+    "rareleak:10004427"
    ]
   },
   {
@@ -50,38 +268,122 @@
     },
     {
      "code": "treeoflife-official:10000532",
-     "note": "十個入を三個選べるセット"
+     "note": "ハーブティー三個セット"
     },
     {
      "code": "natsumeiro:10000173",
-     "note": "なつめ茶六種各五個入り"
+     "note": "なつめ茶六種アソート"
     }
    ],
    "backups": [
     "treeoflife-official:10000533",
-    "smc-shop:10000041",
-    "wray:10000053"
+    "smc-shop:10000005",
+    "natsumeiro:10000279"
    ]
   },
   {
    "picks": [
     {
-     "code": "sea-gull2:16248584",
-     "note": "くすみカラーのミニポーチ"
+     "code": "businessleather:10000143",
+     "note": "撥水本革のフラットポーチ"
     },
     {
-     "code": "sea-gull2:16225148",
-     "note": "ミラー付きのリップポーチ"
+     "code": "tees-factory:10033044",
+     "note": "名入れ対応ティッシュケース"
     },
     {
-     "code": "porco-rosso:10011229",
-     "note": "栃木レザーの名入れポーチ"
+     "code": "ronron:10000027",
+     "note": "写真で作れるオリジナルポーチ"
     }
    ],
    "backups": [
-    "shisyu:10006179",
-    "tees-factory:10032998",
-    "businessleather:10000311"
+    "tees-factory:10032404",
+    "exrevo:10001219",
+    "businessleather:10000181"
+   ]
+  }
+ ],
+ "birthday-father": [
+  {
+   "picks": [
+    {
+     "code": "yms-osk:10009506",
+     "note": "牛革の紳士二つ折り財布"
+    },
+    {
+     "code": "woodwest:10000000",
+     "note": "カード十八枚収納の本革財布"
+    },
+    {
+     "code": "asamu:10000016",
+     "note": "栃木レザーの二つ折り財布"
+    }
+   ],
+   "backups": [
+    "woodwest:10000009",
+    "asamu:10000509",
+    "melody:10000142"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "shop-adex:10002532",
+     "note": "名入れ有田焼の青い湯のみ"
+    },
+    {
+     "code": "happy-gift:10001330",
+     "note": "サーモスの保温湯呑み"
+    },
+    {
+     "code": "naire-arttech:10000317",
+     "note": "名入れ彫刻の湯飲み"
+    }
+   ],
+   "backups": [
+    "shop-adex:10002531",
+    "art-kirameki:10000171"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "atex-net:10001603",
+     "note": "小型軽量のマッサージクッション"
+    },
+    {
+     "code": "atex-net:10001420",
+     "note": "ヒーター付きクッション型マッサージ器"
+    },
+    {
+     "code": "bodyplus:10001660",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "auc-et-style:10001570",
+    "hatalabo:10001188"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "echigo:10002693",
+     "note": "名入れ酒入りの五本セット"
+    },
+    {
+     "code": "echigo:10002642",
+     "note": "新潟地酒五本の飲み比べ"
+    },
+    {
+     "code": "izumise:10002021",
+     "note": "大吟醸七二〇ml五本セット"
+    }
+   ],
+   "backups": [
+    "shunsake:10000206",
+    "shunsake:10000370",
+    "sake-kadoya:10001341"
    ]
   }
  ],
@@ -90,84 +392,166 @@
    "picks": [
     {
      "code": "kinoco:10293035",
-     "note": "本革サフィアーノの薄型長財布"
+     "note": "薄型サフィアーノレザー長財布"
     },
     {
      "code": "blue-sincere:10000354",
-     "note": "本革L字で磁気防止付き"
+     "note": "L字ファスナーの薄型長財布"
     },
     {
-     "code": "sentire:10005032",
-     "note": "小銭入れ付きのL字長財布"
+     "code": "sentire:10004823",
+     "note": "Dakotaの軽量長財布"
     }
    ],
    "backups": [
-    "annekor:10000129",
-    "morevalue:10000271",
-    "allrightleather:10002590"
+    "grav-online:10000001",
+    "allrightleather:10002590",
+    "annekor:10000129"
    ]
   },
   {
    "picks": [
     {
-     "code": "karin-e:10002432",
-     "note": "名前入りのミニポーチ"
+     "code": "glamworx:10010243",
+     "note": "帆前掛け生地の名入れポーチ"
     },
     {
      "code": "nafuda-factory:10007035",
      "note": "花柄ポーチとハンカチのセット"
     },
     {
-     "code": "porco-rosso:10008121",
-     "note": "本革の小さめ小物入れポーチ"
+     "code": "ronron:10000027",
+     "note": "写真で作れるオリジナルポーチ"
     }
    ],
    "backups": [
-    "104-tenfour:10000062",
-    "roughly:10000668",
-    "porco-rosso:10011229"
+    "bristle-grass:10000310",
+    "giftmoreplus:10001766",
+    "giftmoreplus:10001801"
    ]
   },
   {
    "picks": [
     {
-     "code": "friend-gift:10011114",
-     "note": "ひととえの焼き菓子セット"
+     "code": "sucreyshop:10000030",
+     "note": "個包装のメープル菓子詰め合わせ"
     },
     {
-     "code": "henri-charpentier:10001037",
-     "note": "個包装の焼き菓子詰め合わせ"
+     "code": "maisondumiel:10000009",
+     "note": "マカダミアキャラメルサンド"
     },
     {
-     "code": "leblanc:10000037",
-     "note": "焼菓子十四種十八個入り"
+     "code": "henri-charpentier:10001755",
+     "note": "五種入り焼き菓子詰め合わせ"
     }
    ],
    "backups": [
-    "1894ginza-sembikiya:10001378",
-    "factory-shin:10000027",
-    "henri-charpentier:10001038"
+    "henri-charpentier:10002080",
+    "maisondumiel:10000000"
    ]
   },
   {
    "picks": [
     {
-     "code": "hayashiguchi:10003705",
-     "note": "ウール百パーセントのチェック柄"
+     "code": "bathroom:10001938",
+     "note": "二十色の今治タオルストール"
     },
     {
-     "code": "islandstyle-kawabe:10023756",
-     "note": "カシミヤ百パーセントの無地"
+     "code": "toucher-home:10000665",
+     "note": "三重ガーゼのチェック柄ストール"
     },
     {
-     "code": "islandstyle-kawabe:10019312",
-     "note": "カシミヤ大判のチェック柄"
+     "code": "macocca:10000490",
+     "note": "カシミヤ大判チェックストール"
     }
    ],
    "backups": [
-    "macocca:10000490",
-    "macocca:10000634",
-    "clozest:10013106"
+    "islandstyle-kawabe:10019314",
+    "islandstyle-kawabe:10019312"
+   ]
+  }
+ ],
+ "birthday-grandfather": [
+  {
+   "picks": [
+    {
+     "code": "favras:10000521",
+     "note": "日本製の白い湯呑み"
+    },
+    {
+     "code": "dentouhonpo:10006188",
+     "note": "九谷焼の金花詰湯呑"
+    },
+    {
+     "code": "naire-arttech:10000318",
+     "note": "名入れ彫刻の湯飲み"
+    }
+   ],
+   "backups": [
+    "favras:10000336",
+    "collagenkirei:10002419",
+    "auc-sikkiya:10001233"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hohoayumu:10000037",
+     "note": "綿百のしじら織り甚平"
+    },
+    {
+     "code": "kuwanoshinken:10000621",
+     "note": "久留米織の日本製甚平"
+    },
+    {
+     "code": "auc-wasuian:10000117",
+     "note": "綿麻楊柳の日本製甚平"
+    }
+   ],
+   "backups": [
+    "kimonomachi:10066733",
+    "kuwanoshinken:10000531",
+    "spu:10011040"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "aionline-japan:10002428",
+     "note": "個包装どら焼き五個入り"
+    },
+    {
+     "code": "enakuri:10000876",
+     "note": "国産和栗の栗きんとん十五個"
+    },
+    {
+     "code": "rakutenken:10000039",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "mase:10000688"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "inkoukoku:10001129",
+     "note": "干支箸一膳の名入れ対応"
+    },
+    {
+     "code": "youkoso-sapporo:10000366",
+     "note": "桐箱入り一膳名入れ箸"
+    },
+    {
+     "code": "leun:10008601",
+     "note": "飯碗マグ箸セット"
+    }
+   ],
+   "backups": [
+    "kizamu:10006784",
+    "miyoshi-ya:10001079",
+    "leun:10002151"
    ]
   }
  ],
@@ -175,63 +559,62 @@
   {
    "picks": [
     {
-     "code": "eehana:10001244",
-     "note": "誕生日専用のギフトフラワー"
+     "code": "shuei-hana:10000857",
+     "note": "バラのミニアレンジメント"
     },
     {
-     "code": "nier:10000004",
-     "note": "季節の花のお任せアレンジ"
+     "code": "bon-sense:10000185",
+     "note": "季節の花のおまかせアレンジ"
     },
     {
-     "code": "flowerkitchen:10000515",
-     "note": "バラ入りのフラワーギフト"
+     "code": "shuei-hana:10000092",
+     "note": "選べる五色のバラアレンジ"
     }
    ],
    "backups": [
-    "bon-sense:10000185",
     "hanakikyo:10000235",
-    "kuri878:10000032"
+    "eehana:10001244",
+    "nier:10000004"
    ]
   },
   {
    "picks": [
     {
-     "code": "mase:10000688",
-     "note": "逢初と山づとの二種セット"
+     "code": "aionline-japan:10002447",
+     "note": "ネコどら三個入り"
     },
     {
-     "code": "okashidokorohirose:10000042",
-     "note": "花だんごと栗きんとん入り"
+     "code": "oimoya:10003376",
+     "note": "冷凍焼き芋の和菓子ギフト"
     },
     {
-     "code": "enakuri:10000877",
-     "note": "国産和栗の栗きんとん二十個入"
+     "code": "enakuri:10000876",
+     "note": "国産和栗の栗きんとん十五個"
     }
    ],
    "backups": [
-    "aionline-japan:10002428",
-    "aionline-japan:10001849",
-    "mase:10000786"
+    "rakutenken:10000039",
+    "okashidokorohirose:10000000"
    ]
   },
   {
    "picks": [
     {
-     "code": "tc-mart:10029024",
-     "note": "シルク百パーセントのネックカバー"
+     "code": "cocowaku:10000580",
+     "note": "シルク百のネックカバー"
     },
     {
      "code": "aikobo:10000213",
-     "note": "綿百パーセントのガーゼストール"
+     "note": "綿百のダブルガーゼストール"
     },
     {
-     "code": "dencho:10000255",
-     "note": "シルク百パーセントのロング無地"
+     "code": "ippnaturefuzz:10000044",
+     "note": "カシミヤ百の差し込みマフラー"
     }
    ],
    "backups": [
     "aikobo:10000134",
-    "aikobo:10000146"
+    "dencho:10000255"
    ]
   },
   {
@@ -241,18 +624,16 @@
      "note": "手書き名入れの湯呑み"
     },
     {
-     "code": "kizamu:10006834",
-     "note": "名前入りの湯呑み"
+     "code": "nafuda-factory:10006803",
+     "note": "サーモス湯のみの名入れギフト"
     },
     {
-     "code": "yudachigama:10012747",
-     "note": "感謝一杯湯呑みのペア"
+     "code": "oyatanuki:10000720",
+     "note": ""
     }
    ],
    "backups": [
-    "yudachigama:10012748",
-    "yudachigama:10004726",
-    "hon-waka:10000418"
+    "leun:10003565"
    ]
   }
  ],
@@ -260,85 +641,1149 @@
   {
    "picks": [
     {
-     "code": "r-days:10001035",
-     "note": "ミニバッグに入るアクセポーチ"
+     "code": "annekor:10000006",
+     "note": "フェルト製のバッグインバッグ"
     },
     {
-     "code": "brilliantcolors:10000683",
-     "note": "日本製のイニシャルポーチ"
+     "code": "annekor:10000055",
+     "note": "撥水ナイロンのバッグインバッグ"
     },
     {
-     "code": "cyalelyahata:10001917",
-     "note": "ミラー付きのがま口ポーチ"
+     "code": "oneself:10000115",
+     "note": ""
     }
    ],
    "backups": [
-    "fashiongoods-stores:10000491",
-    "nesleaf:10003986",
-    "liviewstore:10004026"
+    "tees-factory:10032404"
    ]
   },
   {
    "picks": [
     {
-     "code": "bridgehappy:10000701",
-     "note": "ミニサイズ二本セット"
+     "code": "ya-man:10002226",
+     "note": "天然保湿成分入りハンドクリーム"
     },
     {
      "code": "hillslife:10000040",
-     "note": "ホワイトフローラル三十グラム"
+     "note": "ホワイトフローラルの三十g"
     },
     {
      "code": "yslbeauty:10000296",
-     "note": "リブレの三十ミリチューブ"
+     "note": "リブレの三十mlハンドクリーム"
     }
    ],
    "backups": [
     "trefle:10011756",
-    "trefle:10008995",
-    "rush-mall:10017276"
+    "baumjapan:10000010",
+    "rush-mall:10012650"
    ]
   },
   {
    "picks": [
     {
      "code": "sucreyshop:10000030",
-     "note": "個包装クッキーの詰め合わせ"
+     "note": "個包装メープル菓子の詰め合わせ"
     },
     {
-     "code": "henri-charpentier:10001037",
-     "note": "個包装の焼き菓子ギフト"
+     "code": "maisondumiel:10000009",
+     "note": "マカダミアキャラメルサンド"
     },
     {
      "code": "gregory-collet:10000018",
-     "note": "焼き菓子十五個入りセット"
+     "note": "十五個入りガトーセレクション"
     }
    ],
    "backups": [
-    "fuubian:10000441",
-    "henri-charpentier:10002080",
-    "henri-charpentier:10001755"
+    "super-foods-japan:10001200",
+    "henri-charpentier:10001037",
+    "henri-charpentier:10002080"
    ]
   },
   {
    "picks": [
     {
      "code": "cyberl2010:10000316",
-     "note": "今治タオルのイニシャル一枚"
+     "note": "今治イニシャルタオルハンカチ"
     },
     {
-     "code": "yumeyuhu:10000325",
-     "note": "コットンリネンの刺繍ハンカチ"
+     "code": "cyberl2010:10001401",
+     "note": "今治タオルの名入れハンカチ"
     },
     {
-     "code": "linenhouse:10002072",
-     "note": "リネンのマーガレット柄一枚"
+     "code": "b-plaid:10000146",
+     "note": "三枚セットのイニシャルハンカチ"
     }
    ],
    "backups": [
-    "nihonnomaturiya:10002212",
-    "cyberl2010:10001401",
-    "good-select:10017894"
+    "1ban-otoku:10018019",
+    "matsudacraft:10000269"
+   ]
+  }
+ ],
+ "birthday-friend-male": [
+  {
+   "picks": [
+    {
+     "code": "carro:10013806",
+     "note": "蓋付きステンレスサーモマグ"
+    },
+    {
+     "code": "the-charme:10000200",
+     "note": "四百mlカバー付き水筒"
+    },
+    {
+     "code": "favras:10000389",
+     "note": "五百mlトラベルタンブラー"
+    }
+   ],
+   "backups": [
+    "favras:10000390",
+    "nextore:10014028"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "auc-moriokoubou:10000223",
+     "note": "手のひらサイズのコインケース"
+    },
+    {
+     "code": "stmeister:10000003",
+     "note": "六ポケットの本革小銭入れ"
+    },
+    {
+     "code": "leather-g:10000243",
+     "note": "イタリア革の極小財布"
+    }
+   ],
+   "backups": [
+    "auc-moriokoubou:10000225",
+    "style-on-bag:10002013",
+    "beltlab:10000638"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "yukinosizuku:10010750",
+     "note": "シルク百の遮光アイマスク"
+    },
+    {
+     "code": "salua-eyemaskstore:10000000",
+     "note": "充電式ホットアイマスク"
+    },
+    {
+     "code": "t-pro:10000053",
+     "note": "コードレスのエアーアイマスク"
+    }
+   ],
+   "backups": [
+    "cocofashop:10000031",
+    "venex-j:10000051",
+    "salua-eyemaskstore:10000010"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "auc-tokutoku:10074773",
+     "note": "二つ折り収納のリバーシ"
+    },
+    {
+     "code": "uni-stage358:10010779",
+     "note": "磁石を使うアクションゲーム"
+    },
+    {
+     "code": "fuushikaden:10000153",
+     "note": "八歳から使えるカタミノ"
+    }
+   ],
+   "backups": [
+    "angels810:10000337",
+    "glv:10092977",
+    "hotch-potch:10014735"
+   ]
+  }
+ ],
+ "birthday-child": [
+  {
+   "picks": [
+    {
+     "code": "motte-ecobag:10005637",
+     "note": "小学生向け文房具セット"
+    },
+    {
+     "code": "izumiya-ty:10087294",
+     "note": "ポケモン文具七点セット"
+    },
+    {
+     "code": "tigercat:10003867",
+     "note": "ポーチ付き四点文具セット"
+    }
+   ],
+   "backups": [
+    "motte-ecobag:10001739",
+    "andmart:10000192"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "e-tech-rshop:10000133",
+     "note": "恐竜の立体仕掛け絵本"
+    },
+    {
+     "code": "colorata:10000023",
+     "note": ""
+    },
+    {
+     "code": "colorata:10000007",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "akaiyane:10000003",
+     "note": "低学年向きデジタル腕時計"
+    },
+    {
+     "code": "all-for-you:10000182",
+     "note": "五歳六歳向け知育時計"
+    },
+    {
+     "code": "p-select:10093162",
+     "note": "ソーラー式キッズ腕時計"
+    }
+   ],
+   "backups": [
+    "gryps-:10014738",
+    "p-select:10065633",
+    "akaiyane:10000559"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "toyo-kyozai:10000964",
+     "note": "作れるペンカップキット"
+    },
+    {
+     "code": "wakka:10000003",
+     "note": "グラスデコ十四色セット"
+    },
+    {
+     "code": "rinstore:10000000",
+     "note": "3Dペンのアートペン"
+    }
+   ],
+   "backups": [
+    "bakaure-onlineshop:10000970",
+    "sayakobo-plus:10011191",
+    "robotplaza:10000123"
+   ]
+  }
+ ],
+ "birthday-teen": [
+  {
+   "picks": [
+    {
+     "code": "smile-picotto:10000907",
+     "note": "パステルのスリム筆箱"
+    },
+    {
+     "code": "freespirits:10061548",
+     "note": "名入れ対応の革ペンケース"
+    },
+    {
+     "code": "sapporo-kawa:10000064",
+     "note": "日本製本革の三角筆箱"
+    }
+   ],
+   "backups": [
+    "toraberu888:10000496",
+    "allrightleather:10002261",
+    "favoritestyle:10002635"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "qandq-official:10000057",
+     "note": "軽い十気圧防水アナログ"
+    },
+    {
+     "code": "blessyou:10047585",
+     "note": "試験用の静音ソーラー時計"
+    },
+    {
+     "code": "p-select:10105206",
+     "note": "受験用ソーラー腕時計"
+    }
+   ],
+   "backups": [
+    "tokeiten:10000466",
+    "wide02:10014615",
+    "follow2016:10000073"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "entresquare:10008631",
+     "note": "巾着型のフェイスポーチ"
+    },
+    {
+     "code": "store-marufuku:10022144",
+     "note": "温泉柄スパポーチとタオル"
+    },
+    {
+     "code": "devin:10019188",
+     "note": "ファスナーぬいぐるみ小物入れ"
+    }
+   ],
+   "backups": [
+    "allrightleather:10002700",
+    "entresquare:10000513"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hankoya-shop:10029457",
+     "note": "黒赤ペンとシャープの多機能"
+    }
+   ],
+   "backups": []
+  }
+ ],
+ "mothers-day-mother": [
+  {
+   "picks": [
+    {
+     "code": "087gift:10000104",
+     "note": "花鉢とお菓子のセット"
+    },
+    {
+     "code": "087gift:10000139",
+     "note": "ベゴニア鉢植えとスイーツ"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "nikonikowu:10000259",
+     "note": "軽量コンパクトな晴雨兼用"
+    },
+    {
+     "code": "okbasket:10000144",
+     "note": "遮熱仕様の折りたたみ日傘"
+    },
+    {
+     "code": "nakatani-umbrella:10000100",
+     "note": "撥水つき完全遮光の長傘"
+    }
+   ],
+   "backups": [
+    "kawapettii:10000005",
+    "nekobadostore:10000617",
+    "macocca:10001034"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bathroom:10002501",
+     "note": "別注マフラータオル"
+    },
+    {
+     "code": "dencho:10000490",
+     "note": "差し込み式ミニマフラー"
+    },
+    {
+     "code": "bathroom:10001938",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "marle-tokyo:10000084",
+    "belta:10000251"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "pomaison:10000617",
+     "note": "ミニサブレ三十枚入り"
+    },
+    {
+     "code": "giontsujiri:10000002",
+     "note": "抹茶菓子つじりの里二十一本"
+    },
+    {
+     "code": "f412082-ogi:10000015",
+     "note": "選べる小城羊羹セット"
+    }
+   ],
+   "backups": [
+    "yamadarouho:10000213",
+    "bjdesigns:10001061",
+    "minamitei:10000731"
+   ]
+  }
+ ],
+ "mothers-day-grandmother": [
+  {
+   "picks": [
+    {
+     "code": "auc-87navi:10000042",
+     "note": "季節の寄せカゴ入り花"
+    },
+    {
+     "code": "hanayoshi:10002658",
+     "note": "名入れ対応ボックスフラワー"
+    },
+    {
+     "code": "ruplan:10000669",
+     "note": "写真立て付きプリザーブド"
+    }
+   ],
+   "backups": [
+    "ruplan:10000512",
+    "nier:10000014",
+    "joujou:10000132"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "tango-polaris:10000291",
+     "note": "三種きんつば十五個入り"
+    },
+    {
+     "code": "sosuke:10000275",
+     "note": ""
+    },
+    {
+     "code": "otoshuclub:10003086",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "yumekaboutakara:10000000"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "aikobo:10000213",
+     "note": "綿百パーセントのガーゼストール"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "bellevie-shop:10001357",
+     "note": "名入れ湯呑み花物語"
+    },
+    {
+     "code": "shop-adex:10002532",
+     "note": "有田焼の青い菊池紋湯のみ"
+    },
+    {
+     "code": "nekomaya:10000564",
+     "note": "九谷焼の夫婦湯呑み"
+    }
+   ],
+   "backups": [
+    "shop-adex:10002531",
+    "nekomaya:10000623"
+   ]
+  }
+ ],
+ "mothers-day-wife": [
+  {
+   "picks": [
+    {
+     "code": "oimoya:10002366",
+     "note": "花とどら焼きのセット"
+    },
+    {
+     "code": "flowerkitchen:10005668",
+     "note": "ブーケとフィナンシェのセット"
+    },
+    {
+     "code": "flowerkitchen:10004680",
+     "note": "十本バラと選べるスイーツ"
+    }
+   ],
+   "backups": [
+    "flowerkitchen:10004685",
+    "hanaki-web:10002450",
+    "flowershoptrancess:10003771"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "okbasket:10000144",
+     "note": "軽量の晴雨兼用折りたたみ傘"
+    },
+    {
+     "code": "kawapettii:10000005",
+     "note": "百八十九グラムの折りたたみ日傘"
+    },
+    {
+     "code": "shopmarna:10006633",
+     "note": "ベルトなしで畳める傘"
+    }
+   ],
+   "backups": [
+    "nakatani-umbrella:10000100",
+    "nissin-llc:10000020",
+    "nekobadostore:10000617"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "toucher-home:10000349",
+     "note": "日本製コットンガーゼマフラー"
+    },
+    {
+     "code": "instylejapan:10000546",
+     "note": "シルク百パーセントのスカーフ"
+    },
+    {
+     "code": "macocca:10000634",
+     "note": "生カシミヤ百パーセント大判"
+    }
+   ],
+   "backups": [
+    "toucher-home:10000665",
+    "instylejapan:10000886",
+    "diana:10004521"
+   ]
+  }
+ ],
+ "mothers-day-in-laws": [
+  {
+   "picks": [
+    {
+     "code": "373shinsyu-tsuguya:10000132",
+     "note": "個包装ミニどら焼き十四個入り"
+    },
+    {
+     "code": "plus-quality:10004101",
+     "note": "個包装の六方焼一キロ"
+    },
+    {
+     "code": "matsuyaseika:10000004",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "onestep0104:10000000",
+     "note": "フルーツゼリー十二個セット"
+    },
+    {
+     "code": "kita-nou:10000164",
+     "note": "信州産りんご六から十二玉"
+    },
+    {
+     "code": "fruits-bomber:10000196",
+     "note": "六角形箱の季節フルーツ"
+    }
+   ],
+   "backups": [
+    "fruits-bomber:10000299",
+    "okayama-koubou:10000878",
+    "jelly83:10000323"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "cyberl2010:10000121",
+     "note": "和風柄ガーゼハンド二枚"
+    },
+    {
+     "code": "imabaritowel-center:10000005",
+     "note": "フェイスタオル二枚セット"
+    },
+    {
+     "code": "amife-oz:10000792",
+     "note": "今治バスタオル二枚セット"
+    }
+   ],
+   "backups": [
+    "sofuwa:10000008",
+    "amife-oz:10000808",
+    "cyberl2010:10000008"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "suezakien:10000057",
+     "note": "九州茶二本と羊羹セット"
+    },
+    {
+     "code": "ujichaen:10003018",
+     "note": "玉露と煎茶の棗缶セット"
+    },
+    {
+     "code": "suezakien:10000188",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "uji-en:10000061",
+    "f462012-kagoshima:10001614"
+   ]
+  }
+ ],
+ "fathers-day-father": [
+  {
+   "picks": [
+    {
+     "code": "choukokudou:10000174",
+     "note": "保温保冷のステンレスタンブラー"
+    },
+    {
+     "code": "garandou:10001190",
+     "note": "錫製のビールタンブラー"
+    },
+    {
+     "code": "kizamu:10008065",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "ogawa-kinseido:10000081"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "kyoetsu-orosiya:10001266",
+     "note": "上下セットのメンズ甚平"
+    },
+    {
+     "code": "kuwanoshinken:10000621",
+     "note": "久留米織ちぢみ織甚平"
+    },
+    {
+     "code": "kuwanoshinken:10000531",
+     "note": "日本製ちぢみ織甚平"
+    }
+   ],
+   "backups": [
+    "ohkini:10016060",
+    "hesaka:10020974",
+    "kinkashop:10001347"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "1129saisonb:10000483",
+     "note": "黒毛和牛サーロイン百五十グラム"
+    },
+    {
+     "code": "nikunoito:10000025",
+     "note": "仙台牛ランプ三枚入り"
+    },
+    {
+     "code": "meatshop-tanaka:10000032",
+     "note": "長崎和牛六種類食べ比べ"
+    }
+   ],
+   "backups": [
+    "ikinaristeak:10000060",
+    "nikunoito:10000016",
+    "kwgchi:10001976"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "takano-shuzo:10000058",
+     "note": "三百ミリの日本酒飲み比べ"
+    },
+    {
+     "code": "echigo:10004492",
+     "note": "新潟地酒五本セット"
+    },
+    {
+     "code": "sakenofukuya:10000059",
+     "note": "名入れ日本酒二本飲み比べ"
+    }
+   ],
+   "backups": [
+    "belluna-gourmet:10023388",
+    "echigo:10005374",
+    "echigo:10004263"
+   ]
+  }
+ ],
+ "fathers-day-grandfather": [
+  {
+   "picks": [
+    {
+     "code": "happy-gift:10000435",
+     "note": "美濃焼の三百六十ミリ湯呑み"
+    },
+    {
+     "code": "kizamu:10007012",
+     "note": "父向け名入れ湯呑み"
+    },
+    {
+     "code": "leun:10003565",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "miyabi-factory:10003502",
+    "kizamu:10007380"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ohkini:10016060",
+     "note": "綿麻の夏用メンズ甚平"
+    },
+    {
+     "code": "kuwanoshinken:10000621",
+     "note": "久留米織ちぢみ織甚平"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "matsuyaseika:10000162",
+     "note": "最中と饅頭十八個詰め"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [],
+   "backups": []
+  }
+ ],
+ "fathers-day-husband": [
+  {
+   "picks": [
+    {
+     "code": "nextore:10014654",
+     "note": "三百九十ミリのステンレスタンブラー"
+    },
+    {
+     "code": "hon-waka:10000377",
+     "note": "名入れ焼酎グラスとビアグラス"
+    },
+    {
+     "code": "horie-titanium:10000032",
+     "note": "純チタン製二重タンブラー"
+    }
+   ],
+   "backups": [
+    "art-kirameki:10000258",
+    "kizamu:10006196"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ohkini:10016060",
+     "note": "綿麻の夏用メンズ甚平"
+    },
+    {
+     "code": "woody-house:10003967",
+     "note": "綿百パーセントの上下甚平"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "mujina:10000055",
+     "note": "大容量のマルチキーケース"
+    },
+    {
+     "code": "nm-element:10000034",
+     "note": "ヴィンテージ加工の本革キーケース"
+    },
+    {
+     "code": "sapporo-kawa:10000017",
+     "note": "名入れ無料の革キーケース"
+    }
+   ],
+   "backups": [
+    "pit-life:10003487",
+    "blanc-couture:10000045",
+    "belmani:10000192"
+   ]
+  }
+ ],
+ "fathers-day-in-laws": [
+  {
+   "picks": [
+    {
+     "code": "373shinsyu-tsuguya:10000132",
+     "note": "個包装ミニどら焼き十四個入り"
+    },
+    {
+     "code": "1894ginza-sembikiya:10000240",
+     "note": "銀座ゼリー九個入り"
+    },
+    {
+     "code": "plus-quality:10004101",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "toyo-f:10000458",
+     "note": "おまかせフルーツセット"
+    },
+    {
+     "code": "fruits-bomber:10000299",
+     "note": "中身おまかせフルーツセット"
+    },
+    {
+     "code": "fruits-bomber:10000196",
+     "note": "六角形箱の季節フルーツ"
+    }
+   ],
+   "backups": [
+    "niigata-kashikoubou:10000005",
+    "ito-noen:10000468",
+    "sugi:10000269"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "auc-trinityworks:10001840",
+     "note": "綿百パーセントハンカチ五枚"
+    },
+    {
+     "code": "homeycozy:10000874",
+     "note": "五十かける百センチ六枚セット"
+    },
+    {
+     "code": "amife-oz:10000792",
+     "note": "今治バスタオル二枚セット"
+    }
+   ],
+   "backups": [
+    "homeycozy:10000747",
+    "b-plaid:10000146",
+    "cyberl2010:10000008"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "tukudanotukudani:10000281",
+     "note": "佃煮十六個入り小分けセット"
+    },
+    {
+     "code": "c-net:10001434",
+     "note": ""
+    },
+    {
+     "code": "shigure:10000047",
+     "note": ""
+    }
+   ],
+   "backups": []
+  }
+ ],
+ "respect-for-aged-day-grandfather": [
+  {
+   "picks": [
+    {
+     "code": "happy-gift:10000435",
+     "note": "美濃焼の360ml寿司湯呑み"
+    },
+    {
+     "code": "nafuda-factory:10006803",
+     "note": "保温できるサーモス湯呑み"
+    },
+    {
+     "code": "hon-waka:10001171",
+     "note": "祖父向け名入れ湯呑み"
+    }
+   ],
+   "backups": [
+    "hosi-r:10000007",
+    "kizamu:10006829"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ohkini:10016060",
+     "note": "綿麻の男性用甚平"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "matsuyaseika:10000132",
+     "note": "くるみ饅頭2種10個入り"
+    },
+    {
+     "code": "matsuyaseika:10000162",
+     "note": "最中と饅頭の18個詰め"
+    },
+    {
+     "code": "muku-mekiki:10011130",
+     "note": "羊羹6種と菓子皿セット"
+    }
+   ],
+   "backups": [
+    "oimoya:10003379"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  }
+ ],
+ "respect-for-aged-day-grandmother": [
+  {
+   "picks": [
+    {
+     "code": "auc-gifuryokuen:10001471",
+     "note": "寄せ植えのアレンジバスケット"
+    },
+    {
+     "code": "f-jane-and-katy:10000054",
+     "note": "ケース入りプリザーブドフラワー"
+    },
+    {
+     "code": "vitabal:10000889",
+     "note": "置き型の長寿祝いバルーン"
+    }
+   ],
+   "backups": [
+    "fine-flower:10000465",
+    "snowball:10000760",
+    "fleur-de-macaron:10000007"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "cocowaku:10000580",
+     "note": "シルク100のネックカバー"
+    },
+    {
+     "code": "aikobo:10000213",
+     "note": "綿100のダブルガーゼストール"
+    },
+    {
+     "code": "ippnaturefuzz:10000044",
+     "note": "カシミヤ100の短めマフラー"
+    }
+   ],
+   "backups": [
+    "aikobo:10000134",
+    "aikobo:10000146"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  }
+ ],
+ "respect-for-aged-day-father": [
+  {
+   "picks": [
+    {
+     "code": "matsuyaseika:10000004",
+     "note": "最中を個数で選べる栗菓子"
+    },
+    {
+     "code": "hondaya:10000057",
+     "note": "ういろうと栗三笠の詰合せ"
+    },
+    {
+     "code": "f412082-ogi:10000015",
+     "note": "小城羊羹2本から5本セット"
+    }
+   ],
+   "backups": [
+    "hondaya:10000097"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "shop-adex:10002532",
+     "note": "青の有田焼名入れ湯のみ"
+    },
+    {
+     "code": "art-kirameki:10000171",
+     "note": "なかよしペア湯呑み"
+    },
+    {
+     "code": "nekomaya:10000564",
+     "note": "九谷焼の色十草夫婦湯呑み"
+    }
+   ],
+   "backups": [
+    "shop-adex:10002531",
+    "kizamu:10007668"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "belldine:10000722",
+     "note": "北欧風チェックの薄手フリース"
+    },
+    {
+     "code": "n-takara:10000220",
+     "note": "春夏向けのダウンひざ掛け"
+    },
+    {
+     "code": "oklife:10000580",
+     "note": "日本製ハーフケット140×100cm"
+    }
+   ],
+   "backups": [
+    "oruta:10005090",
+    "tavarat:10001520",
+    "angels810:10000394"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ricordo:10001235",
+     "note": "鉄木箸の名入れ単品"
+    },
+    {
+     "code": "karinhonpo2951:10003078",
+     "note": "23.5cmのおやじ箸"
+    },
+    {
+     "code": "youkoso-sapporo:10000366",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "kizamu:10007816",
+    "fukuraikan:10026393"
+   ]
+  }
+ ],
+ "respect-for-aged-day-mother": [
+  {
+   "picks": [
+    {
+     "code": "kyoto-itofu:10000029",
+     "note": "ごまと抹茶の麩まんじゅう"
+    },
+    {
+     "code": "yumekaboutakara:10000005",
+     "note": "みかさの化粧箱と熨斗対応"
+    },
+    {
+     "code": "f412082-ogi:10000015",
+     "note": "小城羊羹を本数で選べる"
+    }
+   ],
+   "backups": [
+    "yumekaboutakara:10000000",
+    "hondaya:10000057"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bellevie-shop:10001357",
+     "note": "花物語の名入れ湯呑み"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "oruta:10001590",
+     "note": "厚手のSENTOSENひざ掛け"
+    },
+    {
+     "code": "cyberl2010:10000708",
+     "note": "約70×140cmの名入れフリース"
+    },
+    {
+     "code": "cyberl2010:10001235",
+     "note": "今治ひざ掛けの名入れギフト"
+    }
+   ],
+   "backups": [
+    "you-life-code:10003598",
+    "cyberl2010:10001232",
+    "belldine:10000722"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "yuyanotemiyage:10000854",
+     "note": "ご当地ハンドクリーム3本箱入り"
+    },
+    {
+     "code": "ps-sports:10008667",
+     "note": "ハンドクリームを2本選べる"
+    },
+    {
+     "code": "loccitane:10001147",
+     "note": "ローズのハンドクリームトリオ"
+    }
+   ],
+   "backups": [
+    "shinobiya:10011585",
+    "rush-mall:10017292",
+    "takeuchi-labo:10000385"
    ]
   }
  ],
@@ -351,80 +1796,80 @@
     },
     {
      "code": "buyer:10000041",
-     "note": "カシミヤ素材の無地マフラー"
+     "note": "カシミヤ100の男女兼用マフラー"
     },
     {
-     "code": "cashmee:10000109",
-     "note": "二フェイスのストライプ柄"
+     "code": "off-price:10018183",
+     "note": "ウールシルク混のGG柄ストール"
     }
    ],
    "backups": [
-    "allegretto:10002185",
-    "allegretto:10004815",
-    "off-price:10018183"
+    "cashmee:10000109",
+    "sankyo:10069152",
+    "allegretto:10002185"
    ]
   },
   {
    "picks": [
     {
      "code": "petitecloset:10002192",
-     "note": "ノルディック柄のニット手袋"
+     "note": "ノルディック柄のスマホ手袋"
     },
     {
-     "code": "freeeasy:10003338",
-     "note": "羊革のスマホ対応手袋"
+     "code": "beneru:10000016",
+     "note": "撥水加工の裏起毛グローブ"
     },
     {
      "code": "ginyanma:10000292",
-     "note": "名入れ対応の革手袋"
+     "note": "名入れできる革手袋"
     }
    ],
    "backups": [
     "petitecloset:10002357",
-    "allegretto:10003308",
-    "viajero1984:10024089"
+    "harison-okiyama:10000057",
+    "allegretto:10003308"
    ]
   },
   {
    "picks": [
     {
-     "code": "charalove:10017234",
-     "note": "冬用フリースの前開き"
+     "code": "rack-kan:10029994",
+     "note": "丈を選べる着る毛布"
     },
     {
-     "code": "aroma-room:10002333",
-     "note": "もこもこ上下セット"
+     "code": "fuwari:10000298",
+     "note": "日本製の久留米半纏"
     },
     {
-     "code": "pajamakobo-lovely:10000883",
-     "note": "日本製フリースの上下"
+     "code": "pegasus-store:10000093",
+     "note": "長袖半袖を選べるリカバリーウェア"
     }
    ],
    "backups": [
-    "elmundofoods:10001275",
-    "pyajyamadepo:10001017",
-    "living-mahoroba:10002899"
+    "r-aoki:10000565",
+    "pajamakobo-lovely:10000883",
+    "wakuwaku-zaiko:10000065"
    ]
   },
   {
    "picks": [
     {
-     "code": "belmani:10000192",
-     "note": "栃木レザーのコンパクト型"
+     "code": "adelphos:10000018",
+     "note": "6連の本革スマートキーケース"
     },
     {
      "code": "sapporo-kawa:10000017",
-     "note": "名入れ無料の革キーケース"
+     "note": "名入れ無料のレザーキーケース"
     },
     {
      "code": "porco-rosso:10009002",
-     "note": "本革栃木レザーで名入れ可"
+     "note": "栃木レザーの名入れキーケース"
     }
    ],
    "backups": [
+    "freaks-and-co:10000040",
     "nm-element:10000034",
-    "nm-element:10000117",
-    "auc-esound:10000978"
+    "belmani:10000192"
    ]
   }
  ],
@@ -432,85 +1877,6695 @@
   {
    "picks": [
     {
-     "code": "moonbat:10007507",
-     "note": "ギフト箱入りのファーマフラー"
+     "code": "jiggys-shop:10013437",
+     "note": "チェック柄の大判ストール"
     },
     {
-     "code": "buyer:10000041",
-     "note": "カシミヤ素材のマフラー"
+     "code": "moonbat:10007423",
+     "note": "フェイクファーのティペット"
     },
     {
      "code": "cashmee:10000008",
-     "note": "十八色展開のチェック柄"
+     "note": "18色展開のカシミヤストール"
     }
    ],
    "backups": [
-    "buyer:10000123",
-    "moonbat:10007855",
-    "off-price:10018183"
+    "moonbat:10007507",
+    "hayashiguchi:10006998",
+    "buyer:10000030"
    ]
   },
   {
    "picks": [
     {
      "code": "hayaritsushin:10003784",
-     "note": "スマホ対応の裏起毛手袋"
+     "note": "裏起毛のスマホ対応手袋"
     },
     {
-     "code": "hayashiguchi:10006970",
-     "note": "ハリスツイードと本革仕様"
+     "code": "petitecloset:10002318",
+     "note": "日本製の裏起毛手袋"
     },
     {
      "code": "petitecloset:10000598",
-     "note": "日本縫製のカシミヤ手袋"
+     "note": "カシミヤ100の刺繍手袋"
     }
    ],
    "backups": [
-    "cetalio:10001154",
+    "teddyshop:10016254",
     "allegretto:10004574",
-    "ginyanma:10001379"
+    "hayashiguchi:10006970"
    ]
   },
   {
    "picks": [
     {
-     "code": "nissen-r:11052831",
-     "note": "裏ボアのワンピース型"
+     "code": "rack-kan:10029994",
+     "note": "ショート丈とロング丈を選べる"
     },
     {
-     "code": "aroma-room:10000997",
-     "note": "ふわもこワンピースのガウン"
+     "code": "aroma-room:10001933",
+     "note": "もこもこ上下セットの冬パジャマ"
     },
     {
-     "code": "sockkobe:10014431",
-     "note": "腹巻付きの上下セット"
+     "code": "pegasus-store:10000093",
+     "note": "長袖半袖を選べるリカバリーウェア"
     }
    ],
    "backups": [
-    "aroma-room:10001933",
+    "aroma-room:10000997",
     "elmundofoods:10001289",
-    "tu-hacci:10004986"
+    "kuwanoshinken:10000030"
    ]
   },
   {
    "picks": [
     {
      "code": "yuyanotemiyage:10000854",
-     "note": "三県の香りのハンドクリーム"
+     "note": "ご当地ハンドクリーム3本箱入り"
     },
     {
-     "code": "sexystyle:10028867",
-     "note": "ハンドクリームとハンカチ"
+     "code": "ps-sports:10008667",
+     "note": "2本選べるフレグランスクリーム"
     },
     {
-     "code": "rush-mall:10017292",
-     "note": "ハンドクリームとボディミルク"
+     "code": "loccitane:10001147",
+     "note": "ローズのハンドクリームトリオ"
     }
    ],
    "backups": [
-    "celebuta:10003068",
-    "loccitane:10000761",
-    "hillslife:10000313"
+    "shinobiya:10011585",
+    "rush-mall:10017292",
+    "moton-store:10000020"
+   ]
+  }
+ ],
+ "christmas-husband": [
+  {
+   "picks": [
+    {
+     "code": "elmundofoods:10000559",
+     "note": "前ボタン付きネックウォーマー"
+    },
+    {
+     "code": "tavarat:10000031",
+     "note": "日本製の薄手ミニマフラー"
+    },
+    {
+     "code": "mattitotti:10000045",
+     "note": "180cm×30cmのカシミヤマフラー"
+    }
+   ],
+   "backups": [
+    "rush-mall:10012798",
+    "hayashiguchi:10004152",
+    "hayashiguchi:10006816"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "vanilla-vague:10522368",
+     "note": "スマホ対応の防寒手袋"
+    },
+    {
+     "code": "rainbowshoji:10002224",
+     "note": "撥水加工の裏起毛グローブ"
+    },
+    {
+     "code": "prodigal:10000267",
+     "note": "カシミヤ100の指なし手袋"
+    }
+   ],
+   "backups": [
+    "petitecloset:10001580",
+    "petitecloset:10002357",
+    "841t:10000243"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "rack-kan:10092387",
+     "note": "ロング丈の着る毛布"
+    },
+    {
+     "code": "fuwari:10000298",
+     "note": "久留米の綿入り男性用半纏"
+    },
+    {
+     "code": "pajamakobo-lovely:10000090",
+     "note": "日本製フリースの上下パジャマ"
+    }
+   ],
+   "backups": [
+    "aroma-room:10002333",
+    "kuwanoshinken:10000090",
+    "pajamakobo-lovely:10000995"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "shirohato:10188450",
+     "note": "23から27cm対応のこたつソックス"
+    },
+    {
+     "code": "good-item-shop:10000028",
+     "note": "ウールパイルのメンズ靴下"
+    },
+    {
+     "code": "naeshop:10000283",
+     "note": "日本製のあったか足湯ソックス"
+    }
+   ],
+   "backups": [
+    "shirohato:10179995",
+    "belmani:10000471",
+    "futonyadandan:10000376"
+   ]
+  }
+ ],
+ "christmas-wife": [
+  {
+   "picks": [
+    {
+     "code": "toucher-home:10000665",
+     "note": "日本製3重ガーゼストール"
+    },
+    {
+     "code": "dencho:10000490",
+     "note": "差し込み式のミニマフラー"
+    },
+    {
+     "code": "islandstyle-kawabe:10023756",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "allegretto:10003329",
+    "queenhead:10000937"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "teddyshop:10016254",
+     "note": "裏起毛のスマホ対応手袋"
+    },
+    {
+     "code": "841t:10000955",
+     "note": "シルクの指なしハンドウォーマー"
+    },
+    {
+     "code": "prodigal:10000169",
+     "note": "カシミヤ100のアームウォーマー"
+    }
+   ],
+   "backups": [
+    "petitecloset:10002352",
+    "prodigal:10000267",
+    "okbasket:10000176"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "rack-kan:10092387",
+     "note": "ロング丈の着る毛布"
+    },
+    {
+     "code": "aroma-room:10001933",
+     "note": "もこもこ上下セットの冬パジャマ"
+    },
+    {
+     "code": "kuwanoshinken:10000030",
+     "note": "日本製の久留米半纏"
+    }
+   ],
+   "backups": [
+    "aroma-room:10000997",
+    "elmundofoods:10001289",
+    "kuwanoshinken:10000553"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  }
+ ],
+ "christmas-child": [
+  {
+   "picks": [
+    {
+     "code": "bunbougu-shibuya:10012176",
+     "note": "ポケモン文具の6点セット"
+    },
+    {
+     "code": "bunguo-no-osk:10016409",
+     "note": ""
+    },
+    {
+     "code": "auc-youstyle:10066009",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "bakaure-onlineshop:10000252",
+     "note": "つかめる水の触れる図鑑"
+    },
+    {
+     "code": "bakaure-onlineshop:10000406",
+     "note": "クリスタル育成の触れる図鑑"
+    },
+    {
+     "code": "ehon888:10000908",
+     "note": "小学館の図鑑セット"
+    }
+   ],
+   "backups": [
+    "bakaure-onlineshop:10000304",
+    "colorata:10000019",
+    "manabi-mono:10000700"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "qandq-official:10000124",
+     "note": "10気圧防水のアナログ時計"
+    },
+    {
+     "code": "all-for-you:10000182",
+     "note": "5歳6歳向けの知育腕時計"
+    },
+    {
+     "code": "p-select:10093158",
+     "note": "カシオのデジタル腕時計"
+    }
+   ],
+   "backups": [
+    "full-house:10000497",
+    "p-select:10093161",
+    "p-select:10065633"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "wakka:10003144",
+     "note": "グラスデコ12色と下絵集"
+    },
+    {
+     "code": "wakka:10000003",
+     "note": "グラスデコ14色セット"
+    },
+    {
+     "code": "kamitokinomise:10000004",
+     "note": "国産ヒノキのウッドランタン"
+    }
+   ],
+   "backups": [
+    "wakka:10003410",
+    "kamitokinomise:10000026",
+    "nenohoshi:10000078"
+   ]
+  }
+ ],
+ "christmas-toddler": [
+  {
+   "picks": [
+    {
+     "code": "kidsmio:10005309",
+     "note": "歯がため付きのガラガラ"
+    },
+    {
+     "code": "edute:10000348",
+     "note": "1歳半向けシロフォン"
+    },
+    {
+     "code": "gajumarunoki:10000964",
+     "note": "木琴と鉄琴とピアノのおもちゃ"
+    }
+   ],
+   "backups": [
+    "toy-daiwa:10003996",
+    "csc-online-store:10002605",
+    "cybermall:10000890"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "gajumarunoki:10000485",
+     "note": "名入れ無料のあそびのおうち"
+    },
+    {
+     "code": "soopsori:10000002",
+     "note": ""
+    },
+    {
+     "code": "gajumarunoki:10001111",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "familystone:10006625",
+     "note": "幼児用ベビーリュック"
+    },
+    {
+     "code": "nesleaf:10004272",
+     "note": "8Lと10Lを選べる通園バッグ"
+    },
+    {
+     "code": "pro-shop:10091083",
+     "note": "キッズ用リュックサック"
+    }
+   ],
+   "backups": [
+    "cherie-box:10000484",
+    "viaggio:10059519",
+    "ccstyle:10038325"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "tanzoo-factory:10019196",
+     "note": "2層パズルのフィッシング"
+    },
+    {
+     "code": "woodypuddy:10000296",
+     "note": "木箱入りのサラダセット"
+    },
+    {
+     "code": "edute:10000087",
+     "note": "指先レッスンボックス"
+    }
+   ],
+   "backups": [
+    "mamimamihome:10000283",
+    "karakaratsumiki:10000002",
+    "edute:10000244"
+   ]
+  }
+ ],
+ "christmas-teen": [
+  {
+   "picks": [
+    {
+     "code": "hanko-otobe:10007400",
+     "note": "0.5ミリと0.7ミリの製図用"
+    },
+    {
+     "code": "hanko-otobe:10005237",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "smile-picotto:10000907",
+     "note": "パステルのスリムペンケース"
+    },
+    {
+     "code": "0101marui:11098179",
+     "note": "デイジー柄スクエア型"
+    },
+    {
+     "code": "zakka-haru:10000812",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "favoritestyle:10002635",
+    "e-desho:10000362"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "allrightleather:10002700",
+     "note": "本革ツートンでタッセル付き"
+    },
+    {
+     "code": "entresquare:10000513",
+     "note": "ひつじのショーンのポーチ"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [],
+   "backups": []
+  }
+ ],
+ "christmas-friend-female": [
+  {
+   "picks": [
+    {
+     "code": "bathroom:10001938",
+     "note": "今治タオルの綿ガーゼ素材"
+    },
+    {
+     "code": "curvys:10025027",
+     "note": "イニシャル刺繍に対応"
+    },
+    {
+     "code": "islandstyle-kawabe:10022319",
+     "note": "カシミヤ100のチェック柄"
+    }
+   ],
+   "backups": [
+    "toucher-home:10000665",
+    "macocca:10000490"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hobbyone:10108013",
+     "note": "防風撥水でスマホ対応"
+    },
+    {
+     "code": "lifelivecmz:10000107",
+     "note": "脱がずに使えるスマホ手袋"
+    },
+    {
+     "code": "tebukuroichiba:10000471",
+     "note": "日本製シルク100手袋"
+    }
+   ],
+   "backups": [
+    "teddyshop:10016254",
+    "srf-aint:10000104",
+    "okbasket:10000176"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "haramaki:10000001",
+     "note": "シルク入りコットン腹巻"
+    },
+    {
+     "code": "aroma-room:10000997",
+     "note": "ふわもこワンピース型"
+    },
+    {
+     "code": "aroma-room:10001933",
+     "note": "上下セットの冬パジャマ"
+    }
+   ],
+   "backups": [
+    "low-ya:10008396",
+    "tu-hacci:10004986",
+    "sockkobe:10014431"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  }
+ ],
+ "valentine-boyfriend": [
+  {
+   "picks": [
+    {
+     "code": "hokkaido-omiyage:10002184",
+     "note": "生チョコの味を選べる"
+    },
+    {
+     "code": "zaiho:10000745",
+     "note": "トリュフショコラ9個入"
+    },
+    {
+     "code": "gran-kaju:10000033",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "bcc:10000375",
+    "royce:10000076"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "konomimi:10000196",
+     "note": "塩トリュフ味のナッツ菓子"
+    },
+    {
+     "code": "royce:10000417",
+     "note": "プチトリフチョコ"
+    },
+    {
+     "code": "gran-kaju:10000045",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "okkru:10002840",
+     "note": "ドリップコーヒー入りセット"
+    },
+    {
+     "code": "favras:10000390",
+     "note": "350mlの蓋付きタンブラー"
+    },
+    {
+     "code": "favras:10000389",
+     "note": "500mlのトラベルタンブラー"
+    }
+   ],
+   "backups": [
+    "nonsence:10000413",
+    "toffy:10008683"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "r-e-zakkaya:10552871",
+     "note": "名入れ対応の400mlマグ"
+    },
+    {
+     "code": "r-e-zakkaya:10621426",
+     "note": "名入れ対応の320mlタンブラー"
+    },
+    {
+     "code": "lighterya:10169805",
+     "note": ""
+    }
+   ],
+   "backups": []
+  }
+ ],
+ "valentine-husband": [
+  {
+   "picks": [
+    {
+     "code": "bokunotamatebakoya:10003228",
+     "note": "選べるアーモンドチョコ750g"
+    },
+    {
+     "code": "rakuten24:10802665",
+     "note": "カカオ72の1kgボックス"
+    },
+    {
+     "code": "rakuten24:11003537",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "f212130-kakamigahara:10000223"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "konomimi:10000084",
+     "note": "無塩ミックスナッツの個包装"
+    },
+    {
+     "code": "henri-charpentier:10001037",
+     "note": "焼き菓子の個包装詰め合わせ"
+    },
+    {
+     "code": "r-food:10000252",
+     "note": "かきたねアソート20袋入"
+    }
+   ],
+   "backups": [
+    "konomimi:10000163",
+    "inaba-peanuts:10000046",
+    "auc-tete:10002144"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "collagenkirei:10002391",
+     "note": "美濃焼の350ccマグ"
+    },
+    {
+     "code": "favras:10000503",
+     "note": "スタックマグ2個セット"
+    },
+    {
+     "code": "favras:10001805",
+     "note": "グラスマグとプレートのセット"
+    }
+   ],
+   "backups": [
+    "favras:10000502",
+    "zakkastore:10018935",
+    "greatstarofficial:10000149"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "higasa:10000599",
+     "note": "65cmの16本骨長傘"
+    },
+    {
+     "code": "marsquestjapan:10000000",
+     "note": ""
+    },
+    {
+     "code": "trade-abc:10012378",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "higasa:10000014"
+   ]
+  }
+ ],
+ "valentine-colleague": [
+  {
+   "picks": [
+    {
+     "code": "super-foods-japan:10001200",
+     "note": "18個入りのごまクッキー"
+    },
+    {
+     "code": "henri-charpentier:10001037",
+     "note": "焼き菓子の個包装詰め合わせ"
+    },
+    {
+     "code": "maisondumiel:10000009",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "henri-charpentier:10001755",
+    "bellevie-harima:10037552"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "handkerchief-gallery:10006910",
+     "note": "ガーゼ地裏タオルハンカチ"
+    },
+    {
+     "code": "enya-2510:10003873",
+     "note": "日本製タオルハンカチ2枚セット"
+    },
+    {
+     "code": "aromage:10004877",
+     "note": "リネンハンカチ全色展開"
+    }
+   ],
+   "backups": [
+    "handkerchief-gallery:10000483",
+    "gardens-1:10000431",
+    "handkerchief-gallery:10009830"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bruno-official:10000887",
+     "note": "蓋つき320mlステンレスマグ"
+    },
+    {
+     "code": "bruno-official:10000889",
+     "note": "蓋つき460mlステンレスマグ"
+    },
+    {
+     "code": "the-charme:10000281",
+     "note": "食洗機対応の600ml水筒"
+    }
+   ],
+   "backups": [
+    "k-kitchen:10120737",
+    "hotch-potch:10015578",
+    "morihan:10000604"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "gourmetcoffee:10007510",
+     "note": "5種類で合計15杯分"
+    },
+    {
+     "code": "coffee-dripbag:10000125",
+     "note": "ドリップバッグの袋数を選べる"
+    },
+    {
+     "code": "yabucoffee:10000466",
+     "note": "10gが24袋入ったセット"
+    }
+   ],
+   "backups": [
+    "nattokushop:10006752",
+    "hawaiian-koa:10000567",
+    "gourmetcoffee:10005374"
+   ]
+  }
+ ],
+ "valentine-boss": [
+  {
+   "picks": [
+    {
+     "code": "odakyu-dept-store:10016595",
+     "note": "小形羊羹7本入り"
+    },
+    {
+     "code": "odakyu-dept-store:10016597",
+     "note": "小形羊羹10本入り"
+    },
+    {
+     "code": "yamadarouho:10000041",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "f412082-ogi:10000015"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "auc-youstyle:10065401",
+     "note": "ジョッター名入れボールペン"
+    },
+    {
+     "code": "auc-youstyle:10014418",
+     "note": "IM油性ボールペン全14色"
+    },
+    {
+     "code": "sapporo-kawa:10000568",
+     "note": "ボールペンと名刺入れのセット"
+    }
+   ],
+   "backups": [
+    "kizamu:10006843",
+    "fsapo:10037529",
+    "patie:10114151"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "karinhonpo2951:10008454",
+     "note": "ギフト箱付きの切子グラス"
+    },
+    {
+     "code": "auc-taketomo-kobo:10001520",
+     "note": ""
+    },
+    {
+     "code": "hon-waka:10001207",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "dadaca-onlinestore:10000207",
+     "note": "6種のブレンドコーヒー"
+    },
+    {
+     "code": "mfcoffee:10000427",
+     "note": "深煎りアイスコーヒーセット"
+    },
+    {
+     "code": "sawaicoffee-tea:10005348",
+     "note": "瓶入り4種コーヒーギフト"
+    }
+   ],
+   "backups": [
+    "mfcoffee:10000143",
+    "mfcoffee:10000142"
+   ]
+  }
+ ],
+ "white-day-girlfriend": [
+  {
+   "picks": [
+    {
+     "code": "cherie-brin:10000156",
+     "note": "缶入りクッキー約130g"
+    },
+    {
+     "code": "maisondumiel:10000000",
+     "note": "赤いクッキー缶の詰め合わせ"
+    },
+    {
+     "code": "ginga-kojo:10000041",
+     "note": "ネコとリス缶のクッキー"
+    }
+   ],
+   "backups": [
+    "maisondumiel:10000036",
+    "un2eme:10000106",
+    "kyoto-fukunaga:10000240"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hillslife:10000040",
+     "note": "ホワイトフローラル30g"
+    },
+    {
+     "code": "trefle:10008995",
+     "note": "30mlハンドクリーム入りギフト"
+    },
+    {
+     "code": "hillslife:10000138",
+     "note": "リップマスクとハンドクリームのセット"
+    }
+   ],
+   "backups": [
+    "hillslife:10000299",
+    "cavatina:10033182",
+    "partytime-tokyo:10025271"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "trefle:10011651",
+     "note": "フラワーティーとマグカップ入り"
+    },
+    {
+     "code": "mesney:10000007",
+     "note": "茶こし付き400mlガラスマグ"
+    },
+    {
+     "code": "iwailoft:10001170",
+     "note": "ティーポットとガラスマグのセット"
+    }
+   ],
+   "backups": [
+    "iwailoft:10000007",
+    "leun:10010474",
+    "iwailoft:10002998"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "craife:10000096",
+     "note": "イヤリングとピアスを選べる"
+    },
+    {
+     "code": "craife:10000001",
+     "note": "イヤーカフ4点セット"
+    },
+    {
+     "code": "matthewmark:10000031",
+     "note": "ネックレスと耳飾りのセット"
+    }
+   ],
+   "backups": [
+    "matthewmark:10000025",
+    "toku-corporation:10000104",
+    "cream-dot:10027993"
+   ]
+  }
+ ],
+ "white-day-wife": [
+  {
+   "picks": [
+    {
+     "code": "sucreyshop:10000025",
+     "note": "個包装のフィナンシェ"
+    },
+    {
+     "code": "1894ginza-sembikiya:10001008",
+     "note": "フルーツフィナンシェ12個入"
+    },
+    {
+     "code": "sucreyshop:10000036",
+     "note": "クッキーとフィナンシェ入り"
+    }
+   ],
+   "backups": [
+    "henri-charpentier:10001037",
+    "henri-charpentier:10001038"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "zeldis-japan:10000118",
+     "note": "ハンドクリームと石鹸のセット"
+    },
+    {
+     "code": "trefle:10009429",
+     "note": "10mlハンドクリームを選べる"
+    },
+    {
+     "code": "sexystyle:10028003",
+     "note": "ハンドバームとタオル入り"
+    }
+   ],
+   "backups": [
+    "sexystyle:10027134",
+    "sexystyle:10027036",
+    "hakuichi:10000763"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "trefle:10011651",
+     "note": "フラワーティーとマグカップ入り"
+    },
+    {
+     "code": "dogtag:10003321",
+     "note": "ミニブーケと紅茶2種"
+    },
+    {
+     "code": "trefle:10008840",
+     "note": "マグカップと紅茶コーヒー入り"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "zeldis-japan:10000136",
+     "note": "50gバスソルト3個入り"
+    },
+    {
+     "code": "zeldis-japan:10000139",
+     "note": "50gのバスソルト3個セット"
+    },
+    {
+     "code": "sexystyle:10027762",
+     "note": "ソープとシャンプーの詰め合わせ"
+    }
+   ],
+   "backups": [
+    "elplus:10000800",
+    "shoppress:10001529",
+    "bridgehappy:10000736"
+   ]
+  }
+ ],
+ "white-day-colleague": [
+  {
+   "picks": [
+    {
+     "code": "anelo-shop:10000326",
+     "note": "今治タオルの15柄ハンカチ"
+    },
+    {
+     "code": "top-imabari:10000014",
+     "note": "無地ハンカチを2枚選べる"
+    },
+    {
+     "code": "cyberl2010:10001322",
+     "note": "今治タオルハンカチ6枚セット"
+    }
+   ],
+   "backups": [
+    "top-imabari:10000089",
+    "prairiedog:10006613",
+    "inner-owl:10000000"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hokkaido-omiyage:10001918",
+     "note": "白い恋人ホワイト12枚入"
+    },
+    {
+     "code": "tanabe645:10000087",
+     "note": "レモンタルト個包装12個入"
+    },
+    {
+     "code": "moonheart:10000010",
+     "note": "洋菓子6種の詰め合わせ"
+    }
+   ],
+   "backups": [
+    "hokkaido-omiyage:10001920",
+    "kogetsu:10000084",
+    "cherie-brin:10000174"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "strade-web:10057509",
+     "note": "360mlの真空断熱カップ"
+    },
+    {
+     "code": "sportsmario2:10215110",
+     "note": "16オンスのタンブラー"
+    },
+    {
+     "code": "sportsmario2:10225302",
+     "note": "800mlのタンブラー"
+    }
+   ],
+   "backups": [
+    "sportsmario2:10215111",
+    "tokeiband:10015626",
+    "lakota:10005545"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "okkru:10001563",
+     "note": "ドライフルーツティー3個セット"
+    },
+    {
+     "code": "karelcapek:10001996",
+     "note": "ティーバッグ12pのお試しセット"
+    },
+    {
+     "code": "morihan:10000687",
+     "note": "はちみつ紅茶20袋入"
+    }
+   ],
+   "backups": [
+    "granjapon:10000001",
+    "torisetsu:10000012",
+    "hftea:10000326"
+   ]
+  }
+ ],
+ "white-day-friend-female": [
+  {
+   "picks": [
+    {
+     "code": "sucreyshop:10000030",
+     "note": "メープル菓子の個包装詰め合わせ"
+    },
+    {
+     "code": "henri-charpentier:10002080",
+     "note": "5種18個入の焼き菓子"
+    },
+    {
+     "code": "un2eme:10000106",
+     "note": "6種のクッキー缶"
+    }
+   ],
+   "backups": [
+    "henri-charpentier:10001038",
+    "piitikupaatiku:10000413",
+    "f252077-moriyama:10000811"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bridgehappy:10000701",
+     "note": "ミニサイズ2本セット"
+    },
+    {
+     "code": "trefle:10008995",
+     "note": "30mlハンドクリーム入りギフト"
+    },
+    {
+     "code": "cavatina:10033182",
+     "note": "ハンドクリームとリップマスク入り"
+    }
+   ],
+   "backups": [
+    "kos-plus:10000006",
+    "trefle:10009429",
+    "myfaproducts:10000168"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "basilurtea:10000061",
+     "note": "ミニチュアBOOK缶紅茶"
+    },
+    {
+     "code": "auc-giftshoptwins:10000601",
+     "note": "紅茶コーヒー24本入"
+    },
+    {
+     "code": "auc-giftshoptwins:10000699",
+     "note": "紅茶とコーヒー10本入"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "annekor:10000006",
+     "note": "底板付きフェルトバッグインバッグ"
+    },
+    {
+     "code": "annekor:10000055",
+     "note": "撥水ナイロンのバッグインバッグ"
+    },
+    {
+     "code": "oneself:10000115",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "tees-factory:10032404"
+   ]
+  }
+ ],
+ "wedding-gift-friend-female": [
+  {
+   "picks": [
+    {
+     "code": "favras:10000113",
+     "note": "夫婦箸のBOXセット"
+    },
+    {
+     "code": "favras:10000691",
+     "note": "マグとプレートのペア"
+    },
+    {
+     "code": "leun:10000070",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "collagenkirei:10002408",
+    "shoppress:10000319"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "imabaritowel-center:10000005",
+     "note": "フェイスタオル二枚組"
+    },
+    {
+     "code": "maxmateria:10000063",
+     "note": "花束型フェイスタオル"
+    },
+    {
+     "code": "amife-oz:10000792",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "cyberl2010:10001206",
+    "prairiedog:10006294"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "antina:10005932",
+     "note": "グルメのカタログギフト"
+    },
+    {
+     "code": "bellevie-harima:10013197",
+     "note": "一万円コースのカタログ"
+    },
+    {
+     "code": "sowxp:10000007",
+     "note": "FOR2シリーズの体験型"
+    }
+   ],
+   "backups": [
+    "antina:10004973",
+    "shoppress:10001015",
+    "jyoei:10000608"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "miyoshi-ya:10001078",
+     "note": "彫刻名入れの夫婦箸"
+    },
+    {
+     "code": "sajikame:10004632",
+     "note": "名入れ可の夫婦箸"
+    },
+    {
+     "code": "miyoshi-ya:10000261",
+     "note": "お椀と箸のペアセット"
+    }
+   ],
+   "backups": [
+    "karinhonpo2951:10003079",
+    "kizamu:10006786",
+    "sajibe:10002780"
+   ]
+  }
+ ],
+ "wedding-gift-friend-male": [
+  {
+   "picks": [
+    {
+     "code": "kubagasaya:10001935",
+     "note": "琉球グラスのペアセット"
+    },
+    {
+     "code": "miyoshi-ya:10083886",
+     "note": "桐箱入りのお猪口ペア"
+    },
+    {
+     "code": "hon-waka:10000844",
+     "note": "真空断熱のペアカップ"
+    }
+   ],
+   "backups": [
+    "dogtag:10001370",
+    "rayes-glass:10000022",
+    "karinhonpo2951:10008577"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "imabaritowel-center:10000005",
+     "note": "フェイスタオル二枚組"
+    },
+    {
+     "code": "maxmateria:10000063",
+     "note": "花束型バスタオル"
+    },
+    {
+     "code": "you-life-code:10001940",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "balloon-cube:10000520",
+    "jsy-ma:10000472"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "antina:10004973",
+     "note": "ACTUSのカタログギフト"
+    },
+    {
+     "code": "bellevie-harima:10013197",
+     "note": "一万円コースのカタログ"
+    },
+    {
+     "code": "sowxp:10000007",
+     "note": "FOR2シリーズの体験型"
+    }
+   ],
+   "backups": [
+    "antina:10005932",
+    "jyoei:10000608",
+    "shoppress:10001015"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "rayes-glass:10000038",
+     "note": "二層グラス二百ml"
+    },
+    {
+     "code": "denshitabaco:10001736",
+     "note": "フタ付き名入れタンブラー"
+    },
+    {
+     "code": "choukokudou:10000205",
+     "note": "サーモスのペアタンブラー"
+    }
+   ],
+   "backups": [
+    "art-kirameki:10000224",
+    "choukokudou:10000294",
+    "shoppress:10000508"
+   ]
+  }
+ ],
+ "wedding-gift-colleague": [
+  {
+   "picks": [
+    {
+     "code": "marry-gift:10003627",
+     "note": "二重構造のペアグラス"
+    },
+    {
+     "code": "dogtag:10001370",
+     "note": "五百五十mlタンブラー"
+    },
+    {
+     "code": "dentouhonpo:10000077",
+     "note": "九谷焼のペアカップ"
+    }
+   ],
+   "backups": [
+    "z-mall:10030341",
+    "rayes-glass:10000022",
+    "choukokudou:10000205"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "henri-charpentier:10001037",
+     "note": "焼き菓子の詰め合わせ"
+    },
+    {
+     "code": "gregory-collet:10000018",
+     "note": "十五個入りガトーセレクション"
+    },
+    {
+     "code": "maisondumiel:10000009",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "henri-charpentier:10002080",
+    "henri-charpentier:10001755"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "imabaritowel-center:10000005",
+     "note": "フェイスタオル二枚組"
+    },
+    {
+     "code": "amife-oz:10000792",
+     "note": "バスタオル二枚セット"
+    },
+    {
+     "code": "maxmateria:10000063",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "cyberl2010:10001206"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "le-noble:10012802",
+     "note": "三百五十mlマグのペア"
+    },
+    {
+     "code": "favras:10000502",
+     "note": "KINTOマグ二個セット"
+    },
+    {
+     "code": "dentouhonpo:10000099",
+     "note": "九谷焼マグカップのペア"
+    }
+   ],
+   "backups": [
+    "sajibe:10000101",
+    "leun:10000035",
+    "le-noble:10011408"
+   ]
+  }
+ ],
+ "wedding-gift-boss": [
+  {
+   "picks": [
+    {
+     "code": "sucreyshop:10000024",
+     "note": "個包装のフィナンシェ"
+    },
+    {
+     "code": "sucreyshop:10000054",
+     "note": "焼き菓子のギフト箱"
+    },
+    {
+     "code": "wabaruminato:10000091",
+     "note": "個包装の焼き菓子"
+    }
+   ],
+   "backups": [
+    "sucreyshop:10000026",
+    "kasyou-morin:10000042",
+    "maochan:10000040"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bugyo:10006450",
+     "note": "ジェットストリーム四＆一"
+    },
+    {
+     "code": "naireya:10000098",
+     "note": "パイロット多機能ペン"
+    },
+    {
+     "code": "fsapo:10016948",
+     "note": "パーカーIMの名入れペン"
+    }
+   ],
+   "backups": [
+    "naireya:10000000",
+    "penroom:10016658",
+    "bellevie-shop:10001210"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "leun:10000108",
+     "note": "飯碗と湯呑のペア"
+    },
+    {
+     "code": "toulife:10001302",
+     "note": "九谷焼の茶碗湯呑セット"
+    },
+    {
+     "code": "toulife:10001218",
+     "note": "九谷焼夫婦湯呑のペア"
+    }
+   ],
+   "backups": [
+    "favras:10000694",
+    "leun:10006974",
+    "favras:10000235"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "shopishizuka:10003690",
+     "note": "津軽びいどろのお猪口"
+    },
+    {
+     "code": "garandou:10000964",
+     "note": "錫製ぐい呑み二個セット"
+    },
+    {
+     "code": "garandou:10000769",
+     "note": "錫製ビアカップのペア"
+    }
+   ],
+   "backups": [
+    "garandou:10000966",
+    "karinhonpo2951:10008577",
+    "bizenyaki-nana:10001082"
+   ]
+  }
+ ],
+ "wedding-anniversary-husband": [
+  {
+   "picks": [
+    {
+     "code": "glass-acqua:10000045",
+     "note": "彫刻入りのペアグラス"
+    },
+    {
+     "code": "dogtag:10001370",
+     "note": "五百五十mlタンブラー"
+    },
+    {
+     "code": "hon-waka:10000844",
+     "note": "真空断熱のペアカップ"
+    }
+   ],
+   "backups": [
+    "faithpeach:10000001",
+    "dentouhonpo:10000834",
+    "kizamu:10008151"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "marika:10005970",
+     "note": "バラの花電報ギフト"
+    },
+    {
+     "code": "flowerkitchen:10003812",
+     "note": "二十本バラのスタンドブーケ"
+    },
+    {
+     "code": "anniverrose:10000011",
+     "note": "赤バラ二十本の花束"
+    }
+   ],
+   "backups": [
+    "flowersora:10000004",
+    "flowersora:10000007",
+    "ohanakakumei:10001649"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ohkini:10016060",
+     "note": "綿麻のメンズ甚平"
+    },
+    {
+     "code": "red-jpn:10000026",
+     "note": "半袖半ズボン上下セット"
+    },
+    {
+     "code": "pajamakobo-lovely:10000070",
+     "note": "綿百のダブルガーゼ"
+    }
+   ],
+   "backups": [
+    "red-jpn:10000027",
+    "tential:10000290",
+    "kuwanoshinken:10000621"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "sowxp:10000041",
+     "note": "全国版カフェチケット"
+    },
+    {
+     "code": "shoppress:10001453",
+     "note": "全六コースのペア券"
+    },
+    {
+     "code": "sowxp:10000013",
+     "note": "レストランの体験ギフト"
+    }
+   ],
+   "backups": [
+    "shoppress:10001289",
+    "f141003-yokohama:10000157",
+    "shoppress:10001291"
+   ]
+  }
+ ],
+ "wedding-anniversary-wife": [
+  {
+   "picks": [
+    {
+     "code": "flowerkitchen:10000516",
+     "note": "選べる花束ギフト"
+    },
+    {
+     "code": "shuei-hana:10000120",
+     "note": "色が選べるバラの花束"
+    },
+    {
+     "code": "ohanakakumei:10001528",
+     "note": "ピンク百合の花束"
+    }
+   ],
+   "backups": [
+    "hanaclub-shop:10000052",
+    "hana-rug:10000849"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "leun:10000035",
+     "note": "ちりめん木箱入りペアマグ"
+    },
+    {
+     "code": "momoyama:10000533",
+     "note": "名入れペアマグカップ"
+    },
+    {
+     "code": "dentouhonpo:10001450",
+     "note": "九谷焼ビアカップのペア"
+    }
+   ],
+   "backups": [
+    "sachi-style:10000556",
+    "dogtag:10001370",
+    "plywood:10007428"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "n-raffine:10010730",
+     "note": "バスソルト詰替え用"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "r-e-zakkaya:10576184",
+     "note": "美濃焼の金彩ペアカップ"
+    },
+    {
+     "code": "cavatina:10031040",
+     "note": "ウェッジウッドのペアマグ"
+    },
+    {
+     "code": "dentouhonpo:10011827",
+     "note": "木箱付き九谷焼ペアグラス"
+    }
+   ],
+   "backups": [
+    "z-mall:10030341",
+    "sajibe:10000308",
+    "sajibe:10002062"
+   ]
+  }
+ ],
+ "wedding-anniversary-father": [
+  {
+   "picks": [
+    {
+     "code": "chickennanban:10000075",
+     "note": "ロックグラスのペア"
+    },
+    {
+     "code": "collagenkirei:10002936",
+     "note": "サーモスの名入れペア"
+    },
+    {
+     "code": "faithpeach:10000001",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "collagenkirei:10002993",
+    "favras:10001805"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "087gift:10000483",
+     "note": "五号鉢の鉢花ギフト"
+    },
+    {
+     "code": "hanayoshi:10001339",
+     "note": ""
+    },
+    {
+     "code": "tsukaguchi:10009046",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "kawasui:10000321",
+     "note": "国産きざみうなぎ"
+    },
+    {
+     "code": "e-ichi:10000883",
+     "note": "浜名湖産うなぎ二百g"
+    },
+    {
+     "code": "f452017-miyazaki:10000645",
+     "note": "九州産うなぎ蒲焼四尾"
+    }
+   ],
+   "backups": [
+    "f452017-miyazaki:10001013",
+    "unagi-kanemitsu:10000025"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "myprecious-gift:10000950",
+     "note": "おうちレストランのカタログ"
+    },
+    {
+     "code": "shoppress:10001453",
+     "note": "レストランチケット全六コース"
+    },
+    {
+     "code": "sowxp:10000013",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "shoppress:10001289",
+    "f292010-nara:10000083"
+   ]
+  }
+ ],
+ "wedding-anniversary-mother": [
+  {
+   "picks": [
+    {
+     "code": "hanakikyo:10000235",
+     "note": "季節の花のアレンジ"
+    },
+    {
+     "code": "nier:10000004",
+     "note": "お任せアレンジメント"
+    },
+    {
+     "code": "shuei-hana:10000092",
+     "note": "バラのアレンジメント"
+    }
+   ],
+   "backups": [
+    "bon-sense:10000185",
+    "eehana:10001244",
+    "kuri878:10000032"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "favras:10000503",
+     "note": "スタックマグ二個セット"
+    },
+    {
+     "code": "favras:10000502",
+     "note": "KINTOマグ二個セット"
+    },
+    {
+     "code": "sajibe:10000101",
+     "note": "木製漆塗りのペアマグ"
+    }
+   ],
+   "backups": [
+    "le-noble:10011408",
+    "leun:10000035",
+    "sajibe:10000471"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "373shinsyu-tsuguya:10000132",
+     "note": "ミニどら焼き個包装"
+    },
+    {
+     "code": "sanintoretatehonpo:10001122",
+     "note": "十二撰の上生菓子"
+    },
+    {
+     "code": "itohkyuemon:10000162",
+     "note": "抹茶あんみつの詰め合わせ"
+    }
+   ],
+   "backups": [
+    "itohkyuemon:10005850"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  }
+ ],
+ "birth-gift-friend-female": [
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "okkru:10003076",
+     "note": "ルイボスティーと焼き菓子"
+    },
+    {
+     "code": "okkru:10002650",
+     "note": "ドライフルーツティー入り"
+    },
+    {
+     "code": "bundybeans:10000040",
+     "note": "ノンカフェインコーヒー入り"
+    }
+   ],
+   "backups": [
+    "bjdesigns:10001061",
+    "bjdesigns:10001111"
+   ]
+  }
+ ],
+ "birth-gift-colleague": [
+  {
+   "picks": [
+    {
+     "code": "hukumimi:10000008",
+     "note": "ガーゼハンカチ五枚セット"
+    },
+    {
+     "code": "cyberl2010:10000616",
+     "note": "ガーゼフェイスタオル四枚"
+    },
+    {
+     "code": "toucher-home:10000315",
+     "note": "日本製ガーゼバスタオル"
+    }
+   ],
+   "backups": [
+    "bellevie-harima:10037552",
+    "oruta:10000515"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "sucreyshop:10000024",
+     "note": "個包装フィナンシェ"
+    },
+    {
+     "code": "sucreyshop:10000026",
+     "note": "焼き菓子のギフト箱"
+    },
+    {
+     "code": "srr-cake:10000234",
+     "note": "マカロン十八個入り"
+    }
+   ],
+   "backups": [
+    "sucreyshop:10000054",
+    "shaddy:10321408",
+    "auc-concent:10013111"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bruno-official:10000887",
+     "note": "蓋つき三百二十mlマグ"
+    },
+    {
+     "code": "ra-imu:10002861",
+     "note": "取っ手付き五百ml"
+    },
+    {
+     "code": "irodorikukan:10001696",
+     "note": "象印五百mlタンブラー"
+    }
+   ],
+   "backups": [
+    "bruno-official:10000889",
+    "hotcrafts:10001328",
+    "denshitabaco:10001736"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "book:10607375",
+     "note": "松谷みよ子の三冊セット"
+    },
+    {
+     "code": "book:18821815",
+     "note": "Sassyの絵本ギフト"
+    }
+   ],
+   "backups": []
+  }
+ ],
+ "birth-gift-baby": [
+  {
+   "picks": [
+    {
+     "code": "omutsufactory:10006123",
+     "note": "今治タオル入り二段おむつケーキ"
+    },
+    {
+     "code": "baby-arte:10000083",
+     "note": "サッシー玩具とタオルの三段仕様"
+    },
+    {
+     "code": "baby-arte:10000040",
+     "note": "名入れ刺繍無料の三段タイプ"
+    }
+   ],
+   "backups": [
+    "airim-baby:10000003",
+    "baby-arte:10000008",
+    "hatty-narku:10000072"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "llic:10000973",
+     "note": "二重コットンの冬用スリーパー"
+    },
+    {
+     "code": "babygiftshop:10000996",
+     "note": "白いくまのツーウェイオール"
+    },
+    {
+     "code": "sweet-mommy:10002058",
+     "note": "もこもこキルティングのジャンプスーツ"
+    }
+   ],
+   "backups": [
+    "erikaland:10000002",
+    "marine-blue:10000238",
+    "monkey-pants:10000405"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "becera:10000250",
+     "note": "手首足首用のリストガラガラ"
+    },
+    {
+     "code": "name-babykids:10000203",
+     "note": "しかけ付きのふんわり布絵本"
+    },
+    {
+     "code": "memorial-koubou-ayumi:10000150",
+     "note": "もちふわ布ブロックの積み木"
+    }
+   ],
+   "backups": [
+    "gajumarunoki:10001124",
+    "baby-smile:10011708",
+    "mamimamihome:10000367"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "namekoubou-shin:10000029",
+     "note": "ワッフル生地の名前入りスタイ"
+    },
+    {
+     "code": "marietetie:10000034",
+     "note": "日本製の刺繍名入れスタイ"
+    },
+    {
+     "code": "estyler:10006070",
+     "note": "マールマールの刺繍スタイ"
+    }
+   ],
+   "backups": [
+    "lien-de-famille:10000207",
+    "babygoose:10000872",
+    "lien-de-famille:10000122"
+   ]
+  }
+ ],
+ "birth-gift-in-laws": [
+  {
+   "picks": [
+    {
+     "code": "shaddy:10329054",
+     "note": "シュガーバターサンド十四個入"
+    },
+    {
+     "code": "kogetsu:10001011",
+     "note": "京都の千寿せんべい詰め合わせ"
+    },
+    {
+     "code": "sucreyshop:10000054",
+     "note": "個包装フィナンシェの焼き菓子"
+    }
+   ],
+   "backups": [
+    "kasyou-morin:10000394",
+    "kasyou-morin:10000042"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ito-noen:10000740",
+     "note": "みかんジュースとゼリーの詰め合わせ"
+    },
+    {
+     "code": "bundara:10001675",
+     "note": "和歌山県産果実のフルーツゼリー"
+    },
+    {
+     "code": "aokifruits:10000033",
+     "note": "旬の果物を詰めたフルーツギフト"
+    }
+   ],
+   "backups": [
+    "1894ginza-sembikiya:10000240",
+    "niigata-kashikoubou:10000005"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "imabaritowel-center:10000005",
+     "note": "フェイスタオル二枚のギフトセット"
+    },
+    {
+     "code": "balloon-cube:10000526",
+     "note": "バス二枚入り今治タオル五枚セット"
+    },
+    {
+     "code": "balloon-cube:10000521",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "amife-oz:10000792",
+    "toucher-home:10002804"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "nextore:10014400",
+     "note": "時計付きの名入れフォトフレーム"
+    },
+    {
+     "code": "giftyshop:10000016",
+     "note": "写真をプリントできるオリジナルパネル"
+    },
+    {
+     "code": "fukuraikan:10026179",
+     "note": "竹のフォトフレームクロック"
+    }
+   ],
+   "backups": [
+    "hanayayoka:10000103",
+    "schaft:10000036",
+    "schaft:10000000"
+   ]
+  }
+ ],
+ "school-entrance-child": [
+  {
+   "picks": [
+    {
+     "code": "naireseisakusho:10000019",
+     "note": "赤青鉛筆入り十二本の名入れ鉛筆"
+    },
+    {
+     "code": "bugyo:10006159",
+     "note": "ケース付き十二本入り名前入り鉛筆"
+    },
+    {
+     "code": "bunbougu-shibuya:10012176",
+     "note": "ポケモン文具六点セット"
+    }
+   ],
+   "backups": [
+    "lapiz:10004602",
+    "bunbougu-shibuya:10035612"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bakaure-onlineshop:10000252",
+     "note": "つかめる水の実験工作セット"
+    },
+    {
+     "code": "houjou-kyouzai:10013112",
+     "note": "示準化石六種の標本セット"
+    },
+    {
+     "code": "colorata:10000019",
+     "note": "白亜紀恐竜の立体図鑑セット"
+    }
+   ],
+   "backups": [
+    "henkaq:10015489"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "akaiyane:10000794",
+     "note": "五気圧防水の低学年向き腕時計"
+    },
+    {
+     "code": "all-for-you:10000182",
+     "note": "五歳六歳用の知育腕時計"
+    },
+    {
+     "code": "p-select:10093161",
+     "note": "ソーラー式のキッズカシオ"
+    }
+   ],
+   "backups": [
+    "p-select:10065633",
+    "p-select:10093158",
+    "akaiyane:10000003"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "stellashop:10004644",
+     "note": "通園遠足用の軽量キッズリュック"
+    },
+    {
+     "code": "kaimonotengoku:10000101",
+     "note": "A四教科書対応の大容量リュック"
+    },
+    {
+     "code": "newbag:10027663",
+     "note": "ノースフェイスの二十二リットルリュック"
+    }
+   ],
+   "backups": [
+    "floro:10074674",
+    "lien-shop:10041370",
+    "tsukiusagi:10000008"
+   ]
+  }
+ ],
+ "school-entrance-toddler": [
+  {
+   "picks": [
+    {
+     "code": "kiraku2017:10002081",
+     "note": "お着替え練習用のビジーボード"
+    },
+    {
+     "code": "dotpps:10000022",
+     "note": "百ピース入りの知育ブロック"
+    },
+    {
+     "code": "gajumarunoki:10000964",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "kiraku2017:10002208"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "babybus:10000184",
+     "note": "トイレや歯みがきの生活習慣えほん"
+    },
+    {
+     "code": "book:15788459",
+     "note": "とけいのほん二冊セット"
+    },
+    {
+     "code": "book:16465028",
+     "note": "くだものと野菜の絵本三冊セット"
+    }
+   ],
+   "backups": [
+    "ehon888:10000892",
+    "ehon888:10000851",
+    "chaoone:10000000"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "sinsaia:10000418",
+     "note": "洗えるコンパクトな園児リュック"
+    },
+    {
+     "code": "nesleaf:10004272",
+     "note": "八から十リットルの通園リュック"
+    },
+    {
+     "code": "pro-shop:10091083",
+     "note": "アウトドアプロダクツのキッズリュック"
+    }
+   ],
+   "backups": [
+    "familystone:10006627",
+    "cherie-box:10000484",
+    "dadcco:10000001"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "r-station-2013:10000262",
+     "note": "刺しゅう名入れタオルハンカチ三枚"
+    },
+    {
+     "code": "qualif-shop:10000084",
+     "note": "名入れフード付きバスタオル"
+    },
+    {
+     "code": "litakarababy:10000684",
+     "note": "今治タオルの名入れポンチョ"
+    }
+   ],
+   "backups": [
+    "lien-de-famille:10000530",
+    "litakarababy:10000686",
+    "oldnew1123:10001574"
+   ]
+  }
+ ],
+ "school-entrance-teen": [
+  {
+   "picks": [
+    {
+     "code": "auc-youstyle:10069122",
+     "note": "木軸のパイロットシャープペンシル"
+    },
+    {
+     "code": "maejimu:10013054",
+     "note": "岡山デニムの大容量ペンケース"
+    },
+    {
+     "code": "allrightleather:10002229",
+     "note": "本革イタリアンレザーのペンケース"
+    }
+   ],
+   "backups": [
+    "hanko-otobe:10005237",
+    "luna-regalo:10000372"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "blessyou:10047585",
+     "note": "試験用の軽量ソーラー腕時計"
+    },
+    {
+     "code": "p-select:10105206",
+     "note": "シチズンのシンプルなソーラー時計"
+    },
+    {
+     "code": "tokeiten:10020985",
+     "note": "セイコーのクロノグラフ腕時計"
+    }
+   ],
+   "backups": [
+    "tokeiten:10000248",
+    "tokeiten:10020009",
+    "follow2016:10000256"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "pariskids:10064793",
+     "note": "猫とうさぎ柄の小さめポーチ"
+    },
+    {
+     "code": "somibeya:10000116",
+     "note": "自立する大きめメイクポーチ"
+    },
+    {
+     "code": "cyalelyahata:10001916",
+     "note": "ブラシ収納付きバニティポーチ"
+    }
+   ],
+   "backups": [
+    "cyalelyahata:10000252",
+    "fullout:10047832"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "b-town:10000005",
+     "note": "しおり紐付き布製文庫カバー"
+    },
+    {
+     "code": "veol:10000025",
+     "note": "しおり付き本革文庫ブックカバー"
+    },
+    {
+     "code": "marivox:10000044",
+     "note": "国産牛ヌメ革の名入れブックカバー"
+    }
+   ],
+   "backups": [
+    "blue-sincere:10000421",
+    "cl-tradescope:10000059"
+   ]
+  }
+ ],
+ "graduation-child": [
+  {
+   "picks": [
+    {
+     "code": "books-sanseido:10358029",
+     "note": "タッチペンで音が聞ける図鑑"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "bakaure-onlineshop:10000406",
+     "note": "クリスタル育成の研究キット"
+    },
+    {
+     "code": "houjou-kyouzai:10013112",
+     "note": "示準化石六種の標本セット"
+    },
+    {
+     "code": "ehon888:10000908",
+     "note": "分解する図鑑とくらべる図鑑のセット"
+    }
+   ],
+   "backups": [
+    "bakaure-onlineshop:10000252",
+    "bakaure-onlineshop:10000304",
+    "colorata:10000019"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "change8:10269516",
+     "note": "カシオの海外モデル腕時計"
+    },
+    {
+     "code": "p-select:10092764",
+     "note": "カクタスのキッズ腕時計"
+    },
+    {
+     "code": "change8:10267119",
+     "note": "カシオのスタンダード腕時計"
+    }
+   ],
+   "backups": [
+    "p-select:10066575",
+    "p-select:10097868",
+    "change8:10266472"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hankos:10034525",
+     "note": "ポケモン柄の名入れボールペン"
+    }
+   ],
+   "backups": []
+  }
+ ],
+ "graduation-teen": [
+  {
+   "picks": [
+    {
+     "code": "bugyo:10006126",
+     "note": "名入れドクターグリップシャープペン"
+    },
+    {
+     "code": "hankoya-shop:10029457",
+     "note": "ピュアモルトの多機能ボールペン"
+    },
+    {
+     "code": "parkerofficial:10000737",
+     "note": "名入れパーカージョッターシャープペン"
+    }
+   ],
+   "backups": [
+    "bugyo:10006221",
+    "bugyo:10006682",
+    "mita-club:10009650"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "arasawa-shop:10000019",
+     "note": "ペンホルダー付き軽量ペンケース"
+    },
+    {
+     "code": "allrightleather:10002700",
+     "note": "タッセル付き本革丸型ペンケース"
+    },
+    {
+     "code": "jacajaca:10001303",
+     "note": "栃木レザーのスリムペンケース"
+    }
+   ],
+   "backups": [
+    "scramble:10000082",
+    "sentire:10015148",
+    "pellepenna:10012149"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "entresquare:10008631",
+     "note": "ラブベアのフェイスポーチ"
+    },
+    {
+     "code": "store-marufuku:10022144",
+     "note": "温泉柄のスパポーチとタオルセット"
+    },
+    {
+     "code": "devin:10019188",
+     "note": "おさるのジョージのペンポーチ"
+    }
+   ],
+   "backups": []
+  }
+ ],
+ "graduation-colleague": [
+  {
+   "picks": [
+    {
+     "code": "handkerchief-gallery:10006910",
+     "note": "表ガーゼ地裏タオルの白ハンカチ"
+    },
+    {
+     "code": "aromage:10004877",
+     "note": "リネン素材の無地ハンカチ"
+    },
+    {
+     "code": "19inch:10000255",
+     "note": "厚手の今治タオルハンカチ三枚"
+    }
+   ],
+   "backups": [
+    "handkerchief-gallery:10000483",
+    "enya-2510:10003873",
+    "cadeauya:10000768"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "henri-charpentier:10001037",
+     "note": "焼き菓子フィナンシェの詰め合わせ"
+    },
+    {
+     "code": "gregory-collet:10000018",
+     "note": "十五個入りガトーセレクション"
+    },
+    {
+     "code": "rl-waffle:10000033",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "maisondumiel:10000009",
+    "henri-charpentier:10001755"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bruno-official:10000887",
+     "note": "三百二十ミリの蓋付きステンレスマグ"
+    },
+    {
+     "code": "ra-imu:10002861",
+     "note": "五百ミリの取っ手付き真空タンブラー"
+    },
+    {
+     "code": "juntakushop:10000045",
+     "note": "蓋付き真空断熱タンブラー"
+    }
+   ],
+   "backups": [
+    "bruno-official:10000889",
+    "hotcrafts:10001328",
+    "irodorikukan:10001696"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "gourmetcoffee:10007510",
+     "note": "五種類十五杯分のドリップバッグ"
+    },
+    {
+     "code": "yabucoffee:10000060",
+     "note": "八種セットの自家焙煎ドリップ"
+    },
+    {
+     "code": "rokumei-coffee:10000006",
+     "note": "四種ブレンド十袋のドリップコーヒー"
+    }
+   ],
+   "backups": [
+    "gourmetcoffee:10005374",
+    "sawaicoffee-tea:10002844"
+   ]
+  }
+ ],
+ "coming-of-age-child": [
+  {
+   "picks": [
+    {
+     "code": "hanahana-01:10014515",
+     "note": "鉛筆と消しゴム入り六点文具セット"
+    },
+    {
+     "code": "izumiya-ty:10087294",
+     "note": "ポケモンの文具七点セット"
+    },
+    {
+     "code": "bungunomori:10003352",
+     "note": "プーマの名入れ文具セット"
+    }
+   ],
+   "backups": [
+    "tigercat:10003867",
+    "tigercat:10003602",
+    "izumiya-ty:10087292"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "books-sanseido:10358029",
+     "note": "英語付きはじめてずかん千項目"
+    },
+    {
+     "code": "e-tech-rshop:10000133",
+     "note": ""
+    },
+    {
+     "code": "colorata:10000023",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "nanaple:10097651",
+     "note": "チープカシオのアナログ腕時計"
+    },
+    {
+     "code": "all-for-you:10000182",
+     "note": "五歳六歳用の知育腕時計"
+    },
+    {
+     "code": "p-select:10093162",
+     "note": "ソーラー式のキッズカシオ腕時計"
+    }
+   ],
+   "backups": [
+    "gryps-:10014738",
+    "gryps-:10018025",
+    "p-select:10065633"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bugyo:10006522",
+     "note": "赤青鉛筆十二本入りの名入れセット"
+    },
+    {
+     "code": "hankoya-shop:10024495",
+     "note": "二Bと赤青鉛筆入りの名前入り鉛筆"
+    },
+    {
+     "code": "crapitsu:10000014",
+     "note": "名入れくれぴつ十二色セット"
+    }
+   ],
+   "backups": [
+    "crapitsu:10000004",
+    "crapitsu:10000007"
+   ]
+  }
+ ],
+ "coming-of-age-teen": [
+  {
+   "picks": [
+    {
+     "code": "cocomo-s:10000016",
+     "note": "ジェットストリーム多機能ペン"
+    },
+    {
+     "code": "naireya:10000000",
+     "note": "名入れパーカーIMボールペン"
+    },
+    {
+     "code": "parkerofficial:10000462",
+     "note": "名入れソネットのボールペン"
+    }
+   ],
+   "backups": [
+    "bellevie-harima:10162930",
+    "auc-youstyle:10052837",
+    "penroom:10017851"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "wide02:10014094",
+     "note": "カシオの電波ソーラー腕時計"
+    },
+    {
+     "code": "theclockhouse:10008805",
+     "note": "セイコースピリットのクロノグラフ"
+    },
+    {
+     "code": "theclockhouse:10009419",
+     "note": "チタン製のセイコーソーラー電波時計"
+    }
+   ],
+   "backups": [
+    "hstyle:10035017",
+    "nanaple:10121548",
+    "nanaple:10129098"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "f112011-kawagoe:10001119",
+     "note": "一本文具三役の多機能ペン"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "sapporo-kawa:10000021",
+     "note": "名入れできる本革パスケース"
+    }
+   ],
+   "backups": []
+  }
+ ],
+ "coming-of-age-friend-female": [
+  {
+   "picks": [
+    {
+     "code": "hanko-otobe:10003339",
+     "note": "4in1の0.5mm仕様"
+    },
+    {
+     "code": "naireya:10000098",
+     "note": "黒赤シャープの3機能"
+    },
+    {
+     "code": "auc-youstyle:10065338",
+     "note": "14色選択の9点セット"
+    }
+   ],
+   "backups": [
+    "naireya:10000000",
+    "fukuraikan:10020599",
+    "fukuraikan:10021047"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "gryps-:10014737",
+     "note": "レディース向け腕時計"
+    },
+    {
+     "code": "gryps-:10015697",
+     "note": "カシオのメタル腕時計"
+    },
+    {
+     "code": "livelylife:10003184",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "smahoservice:10003822"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "moon-x-shop:10000407",
+     "note": "本革ジャバラ型ミニ財布"
+    },
+    {
+     "code": "stravel:10008017",
+     "note": "本革三つ折り財布"
+    },
+    {
+     "code": "kyoden:10000006",
+     "note": "お札を折らない本革財布"
+    }
+   ],
+   "backups": [
+    "kinoco:10293145",
+    "blue-sincere:10000378",
+    "annekor:10000082"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bridgehappy:10000701",
+     "note": "ミニサイズ2本セット"
+    },
+    {
+     "code": "trefle:10008995",
+     "note": "タオルと入浴剤付き"
+    },
+    {
+     "code": "yslbeauty:10000296",
+     "note": "リブレの30mLクリーム"
+    }
+   ],
+   "backups": [
+    "hillslife:10000040",
+    "trefle:10011756",
+    "baumjapan:10000010"
+   ]
+  }
+ ],
+ "new-job-boyfriend": [
+  {
+   "picks": [
+    {
+     "code": "freespirits:10061547",
+     "note": "本革で名入れ対応"
+    },
+    {
+     "code": "freespirits:10059235",
+     "note": "プエブロ革の名刺入れ"
+    },
+    {
+     "code": "sacs-bar:10004831",
+     "note": "牛革クロムレザー仕様"
+    }
+   ],
+   "backups": [
+    "sapporo-kawa:10000019",
+    "craft-you:10007752",
+    "auc-kingmobile:10004376"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "e-c-lab:10000048",
+     "note": "木製の名入れボールペン"
+    },
+    {
+     "code": "shoppress:10000549",
+     "note": "パーカーとハンカチのセット"
+    },
+    {
+     "code": "pellepenna:10012116",
+     "note": "リボンが選べる名入れペン"
+    }
+   ],
+   "backups": [
+    "fukuraikan:10024497",
+    "dogtag:10001196",
+    "nipinter:10000022"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "nanaple:10035560",
+     "note": "電池式のシンプル腕時計"
+    },
+    {
+     "code": "wide02:10014094",
+     "note": "日付曜日付き電波ソーラー"
+    },
+    {
+     "code": "nanaple:10118660",
+     "note": "革ベルトのセイコー腕時計"
+    }
+   ],
+   "backups": [
+    "hstyle:10035017",
+    "p-select:10079209",
+    "nanaple:10043215"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bizmo:10012528",
+     "note": "8cm幅の洗えるネクタイ"
+    },
+    {
+     "code": "hworks:10081555",
+     "note": "シルクのネクタイセット"
+    },
+    {
+     "code": "flying-blue:10008067",
+     "note": "日本製ネクタイセット"
+    }
+   ],
+   "backups": [
+    "bizmo:10012278",
+    "style-equal:10008304",
+    "auc-cravat-ueda:10000056"
+   ]
+  }
+ ],
+ "new-job-girlfriend": [
+  {
+   "picks": [
+    {
+     "code": "annekor:10000079",
+     "note": "女性用の本革名刺入れ"
+    },
+    {
+     "code": "gobangai:10001833",
+     "note": "働く女性向け牛革ケース"
+    },
+    {
+     "code": "sapporo-kawa:10000019",
+     "note": "日本製の本革名刺入れ"
+    }
+   ],
+   "backups": [
+    "kizamu:10006807",
+    "loof-shop:10000780",
+    "nico-web:10002707"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "kamikaze:10001786",
+     "note": "日本製の本革ペンケース"
+    },
+    {
+     "code": "allrightleather:10002229",
+     "note": "小さめの本革ファスナー型"
+    },
+    {
+     "code": "slip-on:10000508",
+     "note": "本革ファスナーペンケース"
+    }
+   ],
+   "backups": [
+    "tees-factory:10032404",
+    "sentire:10000100",
+    "blue-sincere:10000006"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "gryps-:10017007",
+     "note": "レディース向けカシオ時計"
+    },
+    {
+     "code": "gryps-:10014737",
+     "note": "革ベルトのカシオ腕時計"
+    },
+    {
+     "code": "shop-cross9:10003244",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "nanaple:10035560",
+    "nanaple:10107761"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "sleepdays:10000011",
+     "note": "9錠入りの重炭酸入浴剤"
+    },
+    {
+     "code": "suisosum-shop:10000176",
+     "note": "ラベンダーなど香り付き"
+    },
+    {
+     "code": "suisosum-shop:10000144",
+     "note": "750gが2個入った入浴剤"
+    }
+   ],
+   "backups": [
+    "suisosum-shop:10000001",
+    "bathlier:10008745",
+    "flemo:10000000"
+   ]
+  }
+ ],
+ "new-job-friend-female": [
+  {
+   "picks": [
+    {
+     "code": "goodgoods-center:10000215",
+     "note": "牛革のスリム名刺入れ"
+    },
+    {
+     "code": "annekor:10000079",
+     "note": "50枚収納の薄型ケース"
+    },
+    {
+     "code": "blanc-couture:10000066",
+     "note": "薄型アンティークレザー"
+    }
+   ],
+   "backups": [
+    "loof-shop:10000780",
+    "kizamu:10006807",
+    "auc-kingmobile:10004376"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "reireishop:10000045",
+     "note": "抗菌レザーのフラット型"
+    },
+    {
+     "code": "tees-factory:10032404",
+     "note": "日本製PVCレザーケース"
+    },
+    {
+     "code": "blue-sincere:10000006",
+     "note": "10本収納のロール型"
+    }
+   ],
+   "backups": [
+    "kamikaze:10001786",
+    "allrightleather:10002229",
+    "slip-on:10000508"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "cyberl2010:10000316",
+     "note": "イニシャル入り今治タオル"
+    },
+    {
+     "code": "top-imabari:10000089",
+     "note": "個包装の今治ハンカチ2枚"
+    },
+    {
+     "code": "top-imabari:10000090",
+     "note": "個包装の5枚セット"
+    }
+   ],
+   "backups": [
+    "top-imabari:10000093",
+    "prairiedog:10005708",
+    "prairiedog:10005961"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "happy-gift:10000657",
+     "note": "350mlの真空断熱タンブラー"
+    },
+    {
+     "code": "juntakushop:10000045",
+     "note": "蓋付き真空断熱タンブラー"
+    },
+    {
+     "code": "sidagar:10000011",
+     "note": "710mlストロー付き水筒"
+    }
+   ],
+   "backups": [
+    "mg-rocket:10000504",
+    "choukokudou:10000174",
+    "kizamu:10008065"
+   ]
+  }
+ ],
+ "new-job-friend-male": [
+  {
+   "picks": [
+    {
+     "code": "goodgoods-center:10000215",
+     "note": "牛革のスリム名刺入れ"
+    },
+    {
+     "code": "veol:10000006",
+     "note": "コンパクトな本革ケース"
+    },
+    {
+     "code": "auc-kingmobile:10004378",
+     "note": "高級本革の二つ折り型"
+    }
+   ],
+   "backups": [
+    "loof-shop:10000780",
+    "freespirits:10061547",
+    "blanc-couture:10000066"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "nipinter:10000022",
+     "note": "油性ボールペンのギフト"
+    },
+    {
+     "code": "kizamu:10007182",
+     "note": "名刺入れとボールペン入り"
+    },
+    {
+     "code": "kyogoku:10000031",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "carro:10013806",
+     "note": "蓋付き真空二重マグ"
+    },
+    {
+     "code": "favras:10000389",
+     "note": "500mlトラベルタンブラー"
+    },
+    {
+     "code": "the-charme:10000200",
+     "note": "400mlのカバー付き水筒"
+    }
+   ],
+   "backups": [
+    "favras:10000390",
+    "the-charme:10000136"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "centuryshop:10044386",
+     "note": "黒無地の抗菌防臭ソックス"
+    },
+    {
+     "code": "apple1013:10000350",
+     "note": "日本製ビジネス靴下セット"
+    },
+    {
+     "code": "pax-asian:10000735",
+     "note": "34cm丈のロングホーズ"
+    }
+   ],
+   "backups": [
+    "apple1013:10000351",
+    "chiyoji:10000329",
+    "savileman:10000033"
+   ]
+  }
+ ],
+ "promotion-husband": [
+  {
+   "picks": [
+    {
+     "code": "e-c-lab:10000048",
+     "note": "木製の名入れボールペン"
+    },
+    {
+     "code": "shoppress:10000549",
+     "note": "パーカーとハンカチのセット"
+    },
+    {
+     "code": "sapporo-kawa:10000568",
+     "note": "名刺入れとパーカーIMセット"
+    }
+   ],
+   "backups": [
+    "pellepenna:10012121",
+    "alevel:10030140",
+    "pellepenna:10012116"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "pit-life:10003487",
+     "note": "本革で2個収納のキーケース"
+    },
+    {
+     "code": "nm-element:10000034",
+     "note": "肉厚本革のキーケース"
+    },
+    {
+     "code": "sapporo-kawa:10000017",
+     "note": "名入れ無料の革キーケース"
+    }
+   ],
+   "backups": [
+    "nm-element:10000001",
+    "blanc-couture:10000045",
+    "adelphos:10000018"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "shopishizuka:10003690",
+     "note": "津軽びいどろのお猪口ペア"
+    },
+    {
+     "code": "syokunin-soul:10001169",
+     "note": "錫製タンブラーのペア"
+    },
+    {
+     "code": "auc-designshop:10000962",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "shoppress:10000710"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "tmartr:10000024",
+     "note": "EMSと温感の首ケア器"
+    },
+    {
+     "code": "t-pro:10000079",
+     "note": "コードレス軽量ネックケア"
+    },
+    {
+     "code": "bodyplus:10001661",
+     "note": "首肩腰に使えるコードレス型"
+    }
+   ],
+   "backups": [
+    "souda-1959:10000009",
+    "naipocare:10000038",
+    "leapgrow:10000352"
+   ]
+  }
+ ],
+ "promotion-wife": [
+  {
+   "picks": [
+    {
+     "code": "hanko-otobe:10003339",
+     "note": "ライトピンクの4in1ペン"
+    },
+    {
+     "code": "naireya:10000098",
+     "note": "黒赤シャープの3機能ペン"
+    },
+    {
+     "code": "fsapo:10016948",
+     "note": "名入れパーカーIMペン"
+    }
+   ],
+   "backups": [
+    "bugyo:10006340",
+    "auc-youstyle:10065401",
+    "fukuraikan:10020695"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "kiitos-web:10028186",
+     "note": "三層仕切りの小物ポーチ"
+    },
+    {
+     "code": "allrightleather:10002382",
+     "note": "リップも入る本革ミニポーチ"
+    },
+    {
+     "code": "moon-x-shop:10000435",
+     "note": "本革スマホポーチ"
+    }
+   ],
+   "backups": [
+    "auc-kingmobile:10004340",
+    "sentire:10003230",
+    "annekor:10000072"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "favras:10002128",
+     "note": "丸いステムグラス2個セット"
+    },
+    {
+     "code": "ideale:10016527",
+     "note": "350mlグラスのペア"
+    },
+    {
+     "code": "garandou:10001136",
+     "note": "木箱入りうすはりペア"
+    }
+   ],
+   "backups": [
+    "j-moka:10000262",
+    "koubounagomi:10000023",
+    "ddtrd:10001087"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "kiitos-web:10011902",
+     "note": "25gが7種入ったバスソルト"
+    },
+    {
+     "code": "flemo:10000000",
+     "note": "白檀とネロリ香る入浴剤"
+    },
+    {
+     "code": "mayunashop:10000087",
+     "note": "バスソルトとタオルのセット"
+    }
+   ],
+   "backups": [
+    "mayunashop:10000005",
+    "bowerbird-by-charley:10000603",
+    "spalabo:10000268"
+   ]
+  }
+ ],
+ "promotion-colleague": [
+  {
+   "picks": [
+    {
+     "code": "handkerchief-gallery:10006910",
+     "note": "表ガーゼ裏タオル地"
+    },
+    {
+     "code": "handkerchief-gallery:10000483",
+     "note": "白のコットンハンカチ"
+    },
+    {
+     "code": "aromage:10004877",
+     "note": "リネンハンカチ全色展開"
+    }
+   ],
+   "backups": [
+    "enya-2510:10003873",
+    "handkerchief-gallery:10009830",
+    "b-plaid:10000266"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "super-foods-japan:10001200",
+     "note": "18個入り個包装ごまクッキー"
+    },
+    {
+     "code": "henri-charpentier:10001755",
+     "note": "焼き菓子の個包装詰め合わせ"
+    },
+    {
+     "code": "gregory-collet:10000018",
+     "note": "15個入りガトー詰め合わせ"
+    }
+   ],
+   "backups": [
+    "henri-charpentier:10001037",
+    "henri-charpentier:10002080",
+    "sucreyshop:10000030"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bruno-official:10000887",
+     "note": "320mlの蓋付きステンレスマグ"
+    },
+    {
+     "code": "hotcrafts:10001328",
+     "note": "500mlの真空二重タンブラー"
+    },
+    {
+     "code": "irodorikukan:10001696",
+     "note": "500mlか650mlを選べる水筒"
+    }
+   ],
+   "backups": [
+    "ra-imu:10002861",
+    "happy-gift:10001277",
+    "juntakushop:10000045"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "gourmetcoffee:10007510",
+     "note": "5種類15杯分のドリップ"
+    },
+    {
+     "code": "gourmetcoffee:10005374",
+     "note": "5種類80杯分のドリップ"
+    },
+    {
+     "code": "maruheart:10102048",
+     "note": "コーヒーとケーキのセット"
+    }
+   ],
+   "backups": [
+    "coffee-dripbag:10000125",
+    "gourmetcoffee:10005824",
+    "kobebayside:10001258"
+   ]
+  }
+ ],
+ "promotion-boss": [
+  {
+   "picks": [
+    {
+     "code": "shaddy:10367957",
+     "note": "18個入りサンド菓子"
+    },
+    {
+     "code": "shaddy:10321408",
+     "note": "24個入りサンド菓子"
+    },
+    {
+     "code": "kasyou-morin:10000042",
+     "note": "8種入り個包装マカロン"
+    }
+   ],
+   "backups": [
+    "paqtomogsweetsshop:10000009"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "auc-youstyle:10065401",
+     "note": "14色選択のジョッター"
+    },
+    {
+     "code": "kizamu:10006843",
+     "note": "名入れパーカーのペン"
+    },
+    {
+     "code": "sapporo-kawa:10000568",
+     "note": "パーカーIMと名刺入れのセット"
+    }
+   ],
+   "backups": [
+    "auc-youstyle:10014418",
+    "fsapo:10037529",
+    "patie:10114151"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "shoppress:10000710",
+     "note": "有田焼の焼酎サーバーセット"
+    },
+    {
+     "code": "kokoshock:10001996",
+     "note": "木箱入り純銅ペアマグ"
+    },
+    {
+     "code": "tazimi:10004736",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "kokoshock:10001734"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "liviewstore:10001267",
+     "note": "本革の薄型カードケース"
+    },
+    {
+     "code": "loof-shop:10000780",
+     "note": "本革と天然木の名刺ケース"
+    },
+    {
+     "code": "sapporo-kawa:10000019",
+     "note": "日本製の本革名刺入れ"
+    }
+   ],
+   "backups": [
+    "morevalue:10000197",
+    "stmeister:10000001",
+    "veol:10000006"
+   ]
+  }
+ ],
+ "retirement-father": [
+  {
+   "picks": [
+    {
+     "code": "natural-e:10000658",
+     "note": "おまかせのミニブーケ"
+    },
+    {
+     "code": "natural-e:10000060",
+     "note": "ボリュームの花束"
+    },
+    {
+     "code": "shuei-hana:10000784",
+     "note": "4色から選べる花束"
+    }
+   ],
+   "backups": [
+    "flowerfarm:10000814",
+    "pajamaya:10001688",
+    "brian:10001003"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "auc-taketomo-kobo:10000457",
+     "note": "竹製フォトフレーム時計"
+    },
+    {
+     "code": "auc-taketomo-kobo:10000452",
+     "note": "竹製の日めくり電波時計"
+    },
+    {
+     "code": "enaldy:10006649",
+     "note": "名入れ可能な花時計"
+    }
+   ],
+   "backups": [
+    "enaldy:10042842",
+    "nafuda-factory:10006786",
+    "good-lifeplus:10000345"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "echigo:10002693",
+     "note": "300mlまたは720mlの5本入り"
+    },
+    {
+     "code": "izumise:10002021",
+     "note": "720ml大吟醸5本セット"
+    },
+    {
+     "code": "izumise:10000399",
+     "note": "1.8Lの6本飲み比べ"
+    }
+   ],
+   "backups": [
+    "echigo:10002642",
+    "shunsake:10000206",
+    "sake-kadoya:10001341"
+   ]
+  }
+ ],
+ "retirement-mother": [
+  {
+   "picks": [
+    {
+     "code": "bloomeestore:10000204",
+     "note": "退職向け花束スイーツ付き"
+    },
+    {
+     "code": "shuei-hana:10000120",
+     "note": "選べる四色のバラブーケ"
+    },
+    {
+     "code": "bon-sense:10000890",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "ishi0424:10003405"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "enaldy:10006649",
+     "note": "名入れ可能な花時計"
+    },
+    {
+     "code": "enaldy:10042842",
+     "note": "彫刻名入れの置き時計"
+    },
+    {
+     "code": "friend-art:10000033",
+     "note": "写真立て付き名入れ花"
+    }
+   ],
+   "backups": [
+    "enaldy:10024367",
+    "friend-art-next:10000039",
+    "mokko-ya:10001228"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "bellevie-harima:10136855",
+     "note": "二万円の旅行券カタログ"
+    },
+    {
+     "code": "marry-gift:10091908",
+     "note": "三万円の旅行カタログ"
+    },
+    {
+     "code": "giftroom:10025833",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "suzuto:10000209",
+    "marry-gift:10091907"
+   ]
+  }
+ ],
+ "retirement-boss": [
+  {
+   "picks": [
+    {
+     "code": "shaddy:10329054",
+     "note": "十四個入りの個包装菓子"
+    },
+    {
+     "code": "sucreyshop:10000037",
+     "note": "個包装の焼き菓子ギフト"
+    },
+    {
+     "code": "kasyou-morin:10000394",
+     "note": "五種素材の凛菓詰め合わせ"
+    }
+   ],
+   "backups": [
+    "kogetsu:10001011",
+    "omoinokatatigift:10000001"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "maruheart:10099592",
+     "note": "黒の油性ボールペン"
+    },
+    {
+     "code": "fukuraikan:10020594",
+     "note": "木製ペンとケースのセット"
+    },
+    {
+     "code": "bunbougu-shibuya:10012856",
+     "note": "複合ボールペン名入れ対応"
+    }
+   ],
+   "backups": [
+    "naireya:10000000",
+    "fsapo:10016948",
+    "shoppress:10000549"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hombo:10000458",
+     "note": "色が変わるロックグラス"
+    },
+    {
+     "code": "chickennanban:10000072",
+     "note": "真空断熱のハイボールグラス"
+    },
+    {
+     "code": "garandou:10002616",
+     "note": "木箱入り富士山ロックグラス"
+    }
+   ],
+   "backups": [
+    "kubagasaya:10001794",
+    "chickennanban:10000071",
+    "shikki-chokubai:10004289"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "gourmetcoffee:10007510",
+     "note": "五種類十五杯のドリップバッグ"
+    },
+    {
+     "code": "gourmetcoffee:10005374",
+     "note": "五種類八十杯分の個包装"
+    },
+    {
+     "code": "mellowcoffee:10000012",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "coffee-dripbag:10000125",
+    "goodlifeshop:10001859"
+   ]
+  }
+ ],
+ "retirement-colleague": [
+  {
+   "picks": [
+    {
+     "code": "anelo-shop:10000326",
+     "note": "十五柄から選べる今治ハンカチ"
+    },
+    {
+     "code": "top-imabari:10000014",
+     "note": "薄手ガーゼの二枚セット"
+    },
+    {
+     "code": "cyberl2010:10001322",
+     "note": "今治ハンカチ六枚セット"
+    }
+   ],
+   "backups": [
+    "top-imabari:10000089",
+    "cyberl2010:10001448",
+    "merci-p:10022675"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "sucreyshop:10000030",
+     "note": "個包装クッキーの詰め合わせ"
+    },
+    {
+     "code": "omoinokatatigift:10000001",
+     "note": "退職用の個包装菓子ギフト"
+    },
+    {
+     "code": "henri-charpentier:10001755",
+     "note": "五種入り焼き菓子ギフト"
+    }
+   ],
+   "backups": [
+    "super-foods-japan:10001200",
+    "henri-charpentier:10001037",
+    "oimoya:10003619"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bruno-official:10000887",
+     "note": "三百二十ミリの蓋付きマグ"
+    },
+    {
+     "code": "ra-imu:10002861",
+     "note": "五百ミリの車載対応タンブラー"
+    },
+    {
+     "code": "irodorikukan:10001696",
+     "note": "五百ミリのキャリータンブラー"
+    }
+   ],
+   "backups": [
+    "hotcrafts:10001328",
+    "sidagar:10000011",
+    "bruno-official:10000889"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "natural-e:10000658",
+     "note": "おまかせ花束のミニブーケ"
+    },
+    {
+     "code": "hanayoshi:10003437",
+     "note": "キュートシャボンブーケ"
+    },
+    {
+     "code": "fleur-de-macaron:10000127",
+     "note": "そのまま飾れるミニブーケ"
+    }
+   ],
+   "backups": [
+    "hana-meets:10000026",
+    "anniverrose:10000055",
+    "hanaenn:10000022"
+   ]
+  }
+ ],
+ "retirement-teacher": [
+  {
+   "picks": [
+    {
+     "code": "ishi0424:10004250",
+     "note": "ソープフラワーの花束"
+    },
+    {
+     "code": "ishi0424:10004256",
+     "note": "送別会向けソープ花束"
+    },
+    {
+     "code": "shuei-hana:10000789",
+     "note": "ピンク系の生花花束"
+    }
+   ],
+   "backups": [
+    "ishi0424:10003405",
+    "glass-sunr:10000478",
+    "hanayoshi:10003103"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "tanabe645:10000087",
+     "note": "レモンタルトの個包装菓子"
+    },
+    {
+     "code": "kogetsu:10001011",
+     "note": "千寿せんべいの菓子折り"
+    },
+    {
+     "code": "sucreyshop:10000054",
+     "note": "個包装フィナンシェギフト"
+    }
+   ],
+   "backups": [
+    "omoinokatatigift:10000001",
+    "shaddy:10321408"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "auc-youstyle:10065401",
+     "note": "十四色から選べる名入れペン"
+    },
+    {
+     "code": "naireya:10001509",
+     "note": "先生向け名入れボールペン"
+    },
+    {
+     "code": "shoppress:10000213",
+     "note": "箱付きクリスタルボールペン"
+    }
+   ],
+   "backups": [
+    "auc-youstyle:10014418",
+    "kizamu:10006542",
+    "hankonoikkokudo:10041582"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  }
+ ],
+ "farewell-colleague": [
+  {
+   "picks": [
+    {
+     "code": "top-imabari:10000014",
+     "note": "個包装の今治ハンカチ二枚"
+    },
+    {
+     "code": "cyberl2010:10001448",
+     "note": "二十センチ角の三枚セット"
+    },
+    {
+     "code": "ace-web:10014594",
+     "note": "ラルフローレンのギフトセット"
+    }
+   ],
+   "backups": [
+    "anelo-shop:10000326",
+    "cyberl2010:10001322",
+    "hotta-benkyodo:10005236"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "shaddy:10321408",
+     "note": "二十四個入りサンド菓子"
+    },
+    {
+     "code": "oimoya:10003737",
+     "note": "個包装ゴーフレット入り"
+    },
+    {
+     "code": "nagasaki-kasutera:10002619",
+     "note": "個包装カステラ二十個"
+    }
+   ],
+   "backups": [
+    "srr-cake:10000261",
+    "okkru:10002766",
+    "omoinokatatigift:10000031"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bruno-official:10000887",
+     "note": "三百二十ミリの蓋付きマグ"
+    },
+    {
+     "code": "ra-imu:10002861",
+     "note": "五百ミリの車載対応タンブラー"
+    },
+    {
+     "code": "irodorikukan:10001696",
+     "note": "食洗機対応キャリータンブラー"
+    }
+   ],
+   "backups": [
+    "hotcrafts:10001328",
+    "sidagar:10000011",
+    "bruno-official:10000889"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ogawahan:10007697",
+     "note": "四色ボールペンとシャープペン"
+    },
+    {
+     "code": "fukuraikan:10020594",
+     "note": "木製ペンとケースのセット"
+    },
+    {
+     "code": "fsapo:10016948",
+     "note": "名入れ対応のボールペン"
+    }
+   ],
+   "backups": [
+    "bugyo:10001556",
+    "bugyo:10006340",
+    "bunguya:10000542"
+   ]
+  }
+ ],
+ "farewell-boss": [
+  {
+   "picks": [
+    {
+     "code": "shaddy:10329054",
+     "note": "十四個入りの個包装菓子"
+    },
+    {
+     "code": "kogetsu:10001011",
+     "note": "千寿せんべいの菓子折り"
+    },
+    {
+     "code": "kasyou-morin:10000394",
+     "note": "凛菓のスイーツ詰め合わせ"
+    }
+   ],
+   "backups": [
+    "sucreyshop:10000037",
+    "omoinokatatigift:10000001"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "auc-youstyle:10065401",
+     "note": "十四色選択の名入れペン"
+    },
+    {
+     "code": "kizamu:10006843",
+     "note": "名入りパーカーボールペン"
+    },
+    {
+     "code": "sapporo-kawa:10000568",
+     "note": "名刺入れとペンのセット"
+    }
+   ],
+   "backups": [
+    "auc-youstyle:10014418",
+    "kizamu:10006542",
+    "patie:10107398"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hombo:10000458",
+     "note": "文字入りロックグラス"
+    },
+    {
+     "code": "kubagasaya:10001794",
+     "note": "琉球ガラスのロックグラス"
+    },
+    {
+     "code": "glass-acqua:10000021",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "wayukan:10000000",
+    "le-noble:10047200"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "coffee-dripbag:10000197",
+     "note": "八袋入りドリップバッグ"
+    },
+    {
+     "code": "sawaicoffee-tea:10002844",
+     "note": "ドリップバッグの珈琲物語"
+    },
+    {
+     "code": "aikuru:10153507",
+     "note": "オリガミドリップコーヒー"
+    }
+   ],
+   "backups": [
+    "gourmetcoffee:10005374",
+    "coffee-dripbag:10000125",
+    "rokumei-coffee:10000006"
+   ]
+  }
+ ],
+ "farewell-teacher": [
+  {
+   "picks": [
+    {
+     "code": "little-party:10001808",
+     "note": "名前入り小さめバルーン花束"
+    },
+    {
+     "code": "ishi0424:10004256",
+     "note": "送別会向けソープ花束"
+    },
+    {
+     "code": "shuei-hana:10000789",
+     "note": "ピンク系の生花花束"
+    }
+   ],
+   "backups": [
+    "glass-sunr:10000478",
+    "baby-arte:10001331",
+    "hanayoshi:10003103"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "ogawahan:10007697",
+     "note": "四色とシャープペンの名入れ"
+    },
+    {
+     "code": "fukuraikan:10020594",
+     "note": "木製ペンとケースのセット"
+    },
+    {
+     "code": "fsapo:10016948",
+     "note": "名入れ対応のボールペン"
+    }
+   ],
+   "backups": [
+    "bugyo:10001556",
+    "bugyo:10006340",
+    "bugyo:10004355"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "labclip:10000523",
+     "note": "手作り用スクラップブック"
+    },
+    {
+     "code": "labclip:10003308",
+     "note": "スクエアアルバムタイプ"
+    },
+    {
+     "code": "bestee1:10000535",
+     "note": "集合写真向け二Ｌ判アルバム"
+    }
+   ],
+   "backups": [
+    "zakkashop:10012962",
+    "smile-picotto:10000729"
+   ]
+  }
+ ],
+ "farewell-friend-female": [
+  {
+   "picks": [
+    {
+     "code": "nafuda-factory:10007233",
+     "note": "単品のソープフラワーブーケ"
+    },
+    {
+     "code": "flowermariee:10000992",
+     "note": "枯れないミニブーケ"
+    },
+    {
+     "code": "baby-petitefee:10001155",
+     "note": "今治タオルのミニブーケ"
+    }
+   ],
+   "backups": [
+    "little-party:10001448",
+    "anniverrose:10000055",
+    "wakui-shop:10009876"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "anelo-shop:10000326",
+     "note": "十五柄から選べる今治ハンカチ"
+    },
+    {
+     "code": "top-imabari:10000089",
+     "note": "花いろはハンカチ二枚"
+    },
+    {
+     "code": "top-imabari:10000090",
+     "note": "花いろはハンカチ五枚"
+    }
+   ],
+   "backups": [
+    "top-imabari:10000093",
+    "sofuwa:10000008",
+    "prairiedog:10005961"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bugyo:10001556",
+     "note": "多機能のエボルト名入れペン"
+    },
+    {
+     "code": "naireya:10000098",
+     "note": "黒赤シャープペンの三機能"
+    },
+    {
+     "code": "fukuraikan:10020695",
+     "note": "名前入りシャープペン"
+    }
+   ],
+   "backups": [
+    "naireya:10000000",
+    "fukuraikan:10020594",
+    "bugyo:10006340"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "annekor:10000006",
+     "note": "底板付きバッグインバッグ"
+    },
+    {
+     "code": "annekor:10000055",
+     "note": "撥水ナイロンの自立ポーチ"
+    },
+    {
+     "code": "imaibag:10000138",
+     "note": "本革のお財布ショルダー"
+    }
+   ],
+   "backups": [
+    "oneself:10000115",
+    "annekor:10000072",
+    "allecore:10002129"
+   ]
+  }
+ ],
+ "farewell-friend-male": [
+  {
+   "picks": [
+    {
+     "code": "glanage-leg:10006462",
+     "note": "綿百のミニタオルハンカチ"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "goldpearl:10000087",
+     "note": "刺繍対応の今治ハンカチ"
+    },
+    {
+     "code": "top-imabari:10000009",
+     "note": "個包装の今治ハンカチ二枚"
+    },
+    {
+     "code": "ace-web:10020810",
+     "note": "選べるタオルハンカチセット"
+    }
+   ],
+   "backups": [
+    "top-imabari:10000004",
+    "yumeyuhu:10000307",
+    "asoboze:10000805"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bugyo:10001556",
+     "note": "エボルト多機能ボールペン"
+    },
+    {
+     "code": "fukuraikan:10020594",
+     "note": "木製ペンとケースのセット"
+    },
+    {
+     "code": "kizamu:10006843",
+     "note": "名入りパーカーボールペン"
+    }
+   ],
+   "backups": [
+    "naireya:10000000",
+    "fsapo:10016948",
+    "bugyo:10006340"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "carro:10013806",
+     "note": "真空二重構造の蓋付きマグ"
+    },
+    {
+     "code": "favras:10000389",
+     "note": "五百ミリのトラベルタンブラー"
+    },
+    {
+     "code": "leun:10010250",
+     "note": "美濃焼とタンブラーのセット"
+    }
+   ],
+   "backups": [
+    "nextore:10014028",
+    "the-charme:10000136",
+    "favras:10000390"
+   ]
+  }
+ ],
+ "housewarming-friend-female": [
+  {
+   "picks": [
+    {
+     "code": "patie:10022168",
+     "note": "木箱入り今治タオルセット"
+    },
+    {
+     "code": "sodaterutowel:10000007",
+     "note": "フェイスタオルのペアセット"
+    },
+    {
+     "code": "amife-oz:10000792",
+     "note": "バスタオル二枚とミニブーケ"
+    }
+   ],
+   "backups": [
+    "bellevie-harima:10102167",
+    "bellevie-harima:10146826",
+    "top-imabari:10000031"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bloomeestore:10000311",
+     "note": "水耕栽培のミニ観葉植物"
+    },
+    {
+     "code": "saboten-s:10000173",
+     "note": "五種のミニサボテン寄せ植え"
+    },
+    {
+     "code": "e-8783:10002487",
+     "note": "陶器鉢入りベンジャミン"
+    }
+   ],
+   "backups": [
+    "miipas:10001010",
+    "tokyoplants:10000108"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "sasayama-bee:10000023",
+     "note": "三十ミリのアロマスプレー"
+    },
+    {
+     "code": "yamayuu:10012392",
+     "note": "四百三十ミリの芳香ディフューザー"
+    },
+    {
+     "code": "richcandle:10004557",
+     "note": "百五十ミリのリードディフューザー"
+    }
+   ],
+   "backups": [
+    "kaguzaku:10002434",
+    "thann-natural:10000000",
+    "yamayuu:10018163"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "kaguzaku:10007922",
+     "note": "冷凍ご飯容器の各セット"
+    },
+    {
+     "code": "amelion:10000115",
+     "note": "耐熱ガラス容器の各種セット"
+    },
+    {
+     "code": "shopmarna:10006515",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "amelion:10000150"
+   ]
+  }
+ ],
+ "housewarming-friend-male": [
+  {
+   "picks": [
+    {
+     "code": "yasukichi:10000440",
+     "note": "泉州フェイスタオル五枚"
+    },
+    {
+     "code": "cyberl2010:10001050",
+     "note": "ミニバスタオル四枚セット"
+    },
+    {
+     "code": "f382027-imabari:10000839",
+     "note": "今治フェイスタオル同色可"
+    }
+   ],
+   "backups": [
+    "cyberl2010:10001141",
+    "cyberl2010:10001139",
+    "oruta:10001311"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "saboten-s:10000173",
+     "note": "ガラス鉢のミニサボテン"
+    },
+    {
+     "code": "saboten-s:10000411",
+     "note": "緋牡丹入り寄せ植え"
+    },
+    {
+     "code": "miipas:10001010",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "tokyoplants:10000108",
+    "e-8783:10002487"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "auc-tokutoku:10066373",
+     "note": "キャベツ用ピーラー"
+    },
+    {
+     "code": "kaguzaku:10009497",
+     "note": "まな板S・Mセット"
+    },
+    {
+     "code": "kuwahara-shop:10000362",
+     "note": "竹二段せいろ鍋セット"
+    }
+   ],
+   "backups": [
+    "shimoyama-onlineshop:10002317",
+    "ignis:10000705",
+    "kaguzaku:10007637"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "tiger-online:10003897",
+     "note": "タイガーの〇八リットル"
+    },
+    {
+     "code": "toplus:10000386",
+     "note": "一度単位で温度調節"
+    },
+    {
+     "code": "plywood:10013837",
+     "note": "バルミューダの電気ケトル"
+    }
+   ],
+   "backups": [
+    "tiger-online:10004174",
+    "kaguzaku:10007613",
+    "bruno-official:10000373"
+   ]
+  }
+ ],
+ "housewarming-colleague": [
+  {
+   "picks": [
+    {
+     "code": "anelo-shop:10000326",
+     "note": "今治タオルハンカチ"
+    },
+    {
+     "code": "cyberl2010:10001322",
+     "note": "今治ハンカチ六枚セット"
+    },
+    {
+     "code": "glanage-leg:10014717",
+     "note": "綿百の紳士ハンカチ"
+    }
+   ],
+   "backups": [
+    "top-imabari:10000089",
+    "cyberl2010:10001448",
+    "hotta-benkyodo:10005236"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "sucreyshop:10000030",
+     "note": "メープル菓子詰め合わせ"
+    },
+    {
+     "code": "henri-charpentier:10001037",
+     "note": "焼き菓子の詰め合わせ"
+    },
+    {
+     "code": "gregory-collet:10000018",
+     "note": "十五個入り洋菓子"
+    }
+   ],
+   "backups": [
+    "super-foods-japan:10001200",
+    "maisondumiel:10000009"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bruno-official:10000889",
+     "note": "蓋付きステンレスマグ"
+    },
+    {
+     "code": "hotcrafts:10001328",
+     "note": "五百ミリタンブラー"
+    },
+    {
+     "code": "irodorikukan:10001696",
+     "note": "象印のシームレスせん"
+    }
+   ],
+   "backups": [
+    "sidagar:10000011",
+    "eclity:10027358",
+    "auc-risecreation:10005026"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "coffee-dripbag:10000197",
+     "note": "ドリップバッグ八袋"
+    },
+    {
+     "code": "coffee-dripbag:10000125",
+     "note": "ドリップバッグ十袋から選択"
+    },
+    {
+     "code": "sawaicoffee-tea:10002844",
+     "note": "澤井珈琲ドリップギフト"
+    }
+   ],
+   "backups": [
+    "yabucoffee:10000060",
+    "rokumei-coffee:10000006",
+    "gourmetcoffee:10005374"
+   ]
+  }
+ ],
+ "housewarming-in-laws": [
+  {
+   "picks": [
+    {
+     "code": "kogetsu:10000084",
+     "note": "鼓月千寿せんべい"
+    },
+    {
+     "code": "nishikihorin-shop:10000135",
+     "note": "小袋かりんとう二十袋"
+    },
+    {
+     "code": "kogetsu:10000085",
+     "note": "京都鼓月の二十四枚入り"
+    }
+   ],
+   "backups": [
+    "maochan:10000040",
+    "matsukazeya-ec:10000071"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "aokifruits:10000033",
+     "note": "旬の果物詰め合わせ"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "imamura-towel:10000001",
+     "note": "今治バスタオル二枚"
+    },
+    {
+     "code": "makasetaro:10000459",
+     "note": "綿百の今治タオル"
+    },
+    {
+     "code": "friend-gift:10001647",
+     "note": "今治タオルセット"
+    }
+   ],
+   "backups": [
+    "f382027-imabari:10001553",
+    "friend-gift:10007840"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "gottsuobin:10002628",
+     "note": "グルメ用カタログギフト"
+    },
+    {
+     "code": "ringbellshop:10002120",
+     "note": "四七クラブのカタログ"
+    },
+    {
+     "code": "antina:10005932",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "ringbellshop:10000329"
+   ]
+  }
+ ],
+ "longevity-grandfather": [
+  {
+   "picks": [
+    {
+     "code": "hon-waka:10000775",
+     "note": "美濃焼の名入れ湯のみ"
+    },
+    {
+     "code": "sajibe:10000101",
+     "note": "木製漆塗りペア湯呑み"
+    },
+    {
+     "code": "naire-arttech:10000317",
+     "note": "長寿祝い名入れ湯飲み"
+    }
+   ],
+   "backups": [
+    "yudachigama:10012748",
+    "hon-waka:10000447"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ohkini:10016060",
+     "note": "紳士用の綿麻甚平"
+    },
+    {
+     "code": "kuwanoshinken:10000621",
+     "note": "近江ちぢみの甚平"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "373shinsyu-tsuguya:10000132",
+     "note": "ミニどら焼き個包装"
+    },
+    {
+     "code": "itohkyuemon:10000162",
+     "note": ""
+    },
+    {
+     "code": "kasyou-morin:10000394",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "sora87:10000079",
+     "note": "名前ポエムSサイズ"
+    },
+    {
+     "code": "auc-worldstore:10054288",
+     "note": "名入れフォトフレーム"
+    },
+    {
+     "code": "giftyshop:10000108",
+     "note": "写真入りフォトフレーム"
+    }
+   ],
+   "backups": [
+    "enaldy:10024779"
+   ]
+  }
+ ],
+ "longevity-grandmother": [
+  {
+   "picks": [
+    {
+     "code": "hanamoyou:10035391",
+     "note": "折り鶴付き長寿花"
+    },
+    {
+     "code": "arnekamoe:10000679",
+     "note": "紫の生花アレンジ"
+    },
+    {
+     "code": "smilemarket:10013818",
+     "note": "米寿や喜寿向けの花"
+    }
+   ],
+   "backups": [
+    "hanayoshi:10003303",
+    "balloon-tino:10000177"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "cocowaku:10000580",
+     "note": "シルク百ネックカバー"
+    },
+    {
+     "code": "aikobo:10000213",
+     "note": "綿百ダブルガーゼストール"
+    },
+    {
+     "code": "ippnaturefuzz:10000044",
+     "note": "カシミヤ百ミニマフラー"
+    }
+   ],
+   "backups": [
+    "aikobo:10000134",
+    "dencho:10000255"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hon-waka:10000775",
+     "note": "美濃焼の名入れ湯のみ"
+    },
+    {
+     "code": "naire-arttech:10000318",
+     "note": "長寿祝い名入れ湯飲み"
+    },
+    {
+     "code": "sajibe:10000101",
+     "note": "木製漆塗りペア湯呑み"
+    }
+   ],
+   "backups": [
+    "yudachigama:10012748",
+    "hon-waka:10000447"
+   ]
+  }
+ ],
+ "longevity-father": [
+  {
+   "picks": [
+    {
+     "code": "hon-waka:10000775",
+     "note": "美濃焼の名入れ湯のみ"
+    },
+    {
+     "code": "naire-arttech:10000317",
+     "note": "名前入り湯呑み木箱入り"
+    },
+    {
+     "code": "yudachigama:10012748",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "kyoetsu-orosiya:10001008",
+     "note": "長寿祝いのちゃんちゃんこ"
+    },
+    {
+     "code": "kyoetsu-orosiya:10001838",
+     "note": "綸子単衣の祝い着"
+    },
+    {
+     "code": "touwashop:10000147",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "niigata:10002331",
+    "presentnets:10000794"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "karin-e:10002516",
+     "note": "信楽焼の名入れタンブラー"
+    },
+    {
+     "code": "garandou:10001190",
+     "note": "錫製ビールグラス"
+    },
+    {
+     "code": "naire-arttech:10000292",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "kizamu:10008065",
+    "nafuda-factory:10006796"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "kuri878:10000248",
+     "note": "バルーン付き花アレンジ"
+    },
+    {
+     "code": "s-arrange:10000322",
+     "note": "ガラスケース入り花"
+    },
+    {
+     "code": "paravoce:10000104",
+     "note": "三十六本入りの花束"
+    }
+   ],
+   "backups": [
+    "fujipac:10000262",
+    "myanela:10000717"
+   ]
+  }
+ ],
+ "longevity-mother": [
+  {
+   "picks": [
+    {
+     "code": "flowerkitchen:10000587",
+     "note": "六十本入りの赤バラ"
+    },
+    {
+     "code": "snowball:10001058",
+     "note": "古希喜寿向けの花"
+    },
+    {
+     "code": "fine-flower:10000118",
+     "note": "プリンセスローズ"
+    }
+   ],
+   "backups": [
+    "fujipac:10000255",
+    "kuri878:10000248"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "kyoetsu-orosiya:10001008",
+     "note": "無地のちゃんちゃんこ"
+    },
+    {
+     "code": "kyoetsu-orosiya:10001838",
+     "note": "綸子単衣の祝い着"
+    },
+    {
+     "code": "niigata:10002331",
+     "note": "国産鶴亀柄フリーサイズ"
+    }
+   ],
+   "backups": [
+    "touwashop:10000029",
+    "touwashop:10000147"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "lala-boutique:10002140",
+     "note": "花柄シフォンスカーフ"
+    },
+    {
+     "code": "lala-boutique:10008909",
+     "note": "シルク百の大判スカーフ"
+    },
+    {
+     "code": "grancreer:10000355",
+     "note": "花柄シルク百スカーフ"
+    }
+   ],
+   "backups": [
+    "instylejapan:10000073",
+    "grancreer:10000221"
+   ]
+  }
+ ],
+ "longevity-in-laws": [
+  {
+   "picks": [
+    {
+     "code": "kogetsu:10001011",
+     "note": "千寿せんべい個包装"
+    },
+    {
+     "code": "odakyu-dept-store:10016597",
+     "note": "とらや小形羊羹十本"
+    },
+    {
+     "code": "sucreyshop:10000014",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "sucreyshop:10000124",
+    "enakuri:10000549"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ito-noen:10000740",
+     "note": "みかんジュースとゼリー"
+    },
+    {
+     "code": "aokifruits:10000033",
+     "note": "旬の果物詰め合わせ"
+    },
+    {
+     "code": "yamato-takumi:10000039",
+     "note": "果物店のフルーツギフト"
+    }
+   ],
+   "backups": [
+    "1894ginza-sembikiya:10000240",
+    "bundara:10001675"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "aokifruits:10000283",
+     "note": "旬のフルーツボックス"
+    },
+    {
+     "code": "sosuke:10000697",
+     "note": "秀品ぶどう約一キロ"
+    },
+    {
+     "code": "sosuke:10000619",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "f192040-tsuru:10002744"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "kizamu:10007668",
+     "note": "名入れ夫婦湯呑みペア"
+    }
+   ],
+   "backups": []
+  }
+ ],
+ "oseibo-father": [
+  {
+   "picks": [
+    {
+     "code": "nagoyakoutin:10000033",
+     "note": "名古屋コーチン燻製三種"
+    },
+    {
+     "code": "sandaya:10000339",
+     "note": "三田屋ハム詰め合わせ"
+    },
+    {
+     "code": "matsuyoshi:10002431",
+     "note": "松阪牛ハンバーグ入り"
+    }
+   ],
+   "backups": [
+    "nagoyakoutin:10000040",
+    "auc-charcuteriekoide:10005872"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "mikado-honpo:10000018",
+     "note": "長崎カステラ一号"
+    },
+    {
+     "code": "itohkyuemon:10000681",
+     "note": "抹茶カプチーノ十八本"
+    },
+    {
+     "code": "yamada-heiando:10000314",
+     "note": "漆重箱入り和菓子"
+    }
+   ],
+   "backups": [
+    "yumekaboutakara:10000000",
+    "gyokkado:10000222"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "gourmetcoffee:10007510",
+     "note": "ドリップコーヒー五杯分"
+    },
+    {
+     "code": "gourmetcoffee:10005374",
+     "note": "五種のドリップコーヒー"
+    },
+    {
+     "code": "cafekobo:10000688",
+     "note": "十種七十杯ドリップ"
+    }
+   ],
+   "backups": [
+    "gourmetcoffee:10005824",
+    "bellevie-harima:10098328"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "sasuigeta:10000235",
+     "note": "焼津つくだ煮二三品"
+    },
+    {
+     "code": "kyo-nomura:10000022",
+     "note": "京佃煮九品詰め合わせ"
+    },
+    {
+     "code": "kakuiti:10000332",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "kobucha-fuji:10000260"
+   ]
+  }
+ ],
+ "oseibo-mother": [
+  {
+   "picks": [
+    {
+     "code": "syokoku-umaimonomeguri:10000830",
+     "note": "ハムとベーコンのセット"
+    },
+    {
+     "code": "sandaya:10000339",
+     "note": "三田屋ハム詰め合わせ"
+    },
+    {
+     "code": "nissin-ham:10000133",
+     "note": "日進ハム詰め合わせ"
+    }
+   ],
+   "backups": [
+    "auc-charcuteriekoide:10005872",
+    "matsuyoshi:10002435"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "373shinsyu-tsuguya:10000121",
+     "note": "甘夏どら焼き十二個"
+    },
+    {
+     "code": "kyoueidou-tamana:10000012",
+     "note": "個包装いきなり団子十個"
+    },
+    {
+     "code": "akebono:10000112",
+     "note": "味の民藝四十個入り"
+    }
+   ],
+   "backups": [
+    "kyoueidou-tamana:10000000",
+    "hokkaido-gourmation:10159737"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hokkoukan:10000064",
+     "note": "デカフェコロンビア百グラム"
+    },
+    {
+     "code": "gardenbar-coffeejapan:10000086",
+     "note": "カフェインレス二種セット"
+    },
+    {
+     "code": "green-morning:10002824",
+     "note": "有機カフェインレス二百グラム"
+    }
+   ],
+   "backups": [
+    "gabainouen:10000059",
+    "fin-coffee:10000001",
+    "gardenbar-coffeejapan:10000027"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "asuzacfoods:10000302",
+     "note": "野菜スープ六食セット"
+    },
+    {
+     "code": "asuzacfoods:10001853",
+     "note": "フリーズドライ三十二食"
+    },
+    {
+     "code": "soup-stock-tokyo:10000919",
+     "note": "八種のスープセット"
+    }
+   ],
+   "backups": [
+    "e-mon-p:10002690",
+    "hikarimiso:10000541"
+   ]
+  }
+ ],
+ "oseibo-boss": [
+  {
+   "picks": [
+    {
+     "code": "jyoei:10162908",
+     "note": "11個入のキュートセレクション"
+    },
+    {
+     "code": "boulmich:10000067",
+     "note": "個包装の菓子詰め合わせ"
+    },
+    {
+     "code": "hokkaido-omiyage:10003929",
+     "note": "全10種類78個入りの詰合せ"
+    }
+   ],
+   "backups": [
+    "jyoei:10162909",
+    "niigata-kashikoubou:10000098",
+    "omoinokatatigift:10000004"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "tsubakiya:10000413",
+     "note": "レターパック便のドリップバッグ"
+    },
+    {
+     "code": "gourmetcoffee:10005374",
+     "note": "5種類80杯分の個包装コーヒー"
+    },
+    {
+     "code": "maedacoffee:10000414",
+     "note": "ドリップバッグ24袋のギフト"
+    }
+   ],
+   "backups": [
+    "gourmetcoffee:10005824",
+    "tsubakiya:10000263",
+    "coffee-dripbag:10000258"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bugyo:10004467",
+     "note": "0.38から0.7mmを選べる"
+    },
+    {
+     "code": "naireya:10000098",
+     "note": "黒赤シャープの3機能ペン"
+    },
+    {
+     "code": "fsapo:10016948",
+     "note": "パーカーIMの名入れボールペン"
+    }
+   ],
+   "backups": [
+    "naireya:10000000",
+    "penroom:10016658",
+    "auc-youstyle:10014418"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "yamamotonoriten:10000348",
+     "note": "2缶入りのおつまみ海苔"
+    },
+    {
+     "code": "hokkaido-gourmation:10020945",
+     "note": "白子のりと佃煮の詰合せ"
+    },
+    {
+     "code": "yamamotonoriten:10000011",
+     "note": "5缶入りのおつまみ海苔"
+    }
+   ],
+   "backups": [
+    "anythingshop-roi:10000710",
+    "hokkaido-gourmation:10056063",
+    "ichijyo:10003552"
+   ]
+  }
+ ],
+ "oseibo-in-laws": [
+  {
+   "picks": [
+    {
+     "code": "jyoei:10162909",
+     "note": "23個入のキュートセレクション"
+    },
+    {
+     "code": "boulmich:10000067",
+     "note": "個包装の菓子詰め合わせ"
+    },
+    {
+     "code": "hokkaido-omiyage:10003929",
+     "note": "全10種類78個入りの詰合せ"
+    }
+   ],
+   "backups": [
+    "niigata-kashikoubou:10000098",
+    "omoinokatatigift:10000004",
+    "chibaya-umai:10002816"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bunza:10000118",
+     "note": "有田みかん5kg入り"
+    },
+    {
+     "code": "okayama-koubou:10000617",
+     "note": "紅まどんな6玉から10玉入り"
+    },
+    {
+     "code": "tsukiji-chokusoubin:10001766",
+     "note": "愛媛産みかん約9kg"
+    }
+   ],
+   "backups": [
+    "takeore:10000031",
+    "fruits-senba:10000857",
+    "bunza:10000243"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bellevie-harima:10003029",
+     "note": "木箱入りの今治タオルセット"
+    },
+    {
+     "code": "hartwell-towel:10001533",
+     "note": "バスタオル3点アソート"
+    },
+    {
+     "code": "cyberl2010:10000008",
+     "note": "今治バスタオル2枚セット"
+    }
+   ],
+   "backups": [
+    "bellevie-harima:10003030",
+    "bellevie-harima:10003031"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "tarunoaji:10000090",
+     "note": "無添加のほうじ茶"
+    },
+    {
+     "code": "chakumi:10000002",
+     "note": "国産煎茶と玉露の茶葉"
+    },
+    {
+     "code": "shizuokahagiri:10000512",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "suezakien:10000188",
+    "uji-en:10000061"
+   ]
+  }
+ ],
+ "ochugen-father": [
+  {
+   "picks": [
+    {
+     "code": "syokoku-umaimonomeguri:10001565",
+     "note": "食塩不使用のそうめん3袋"
+    },
+    {
+     "code": "mugendo:10000621",
+     "note": "稲庭うどんとそうめん6人前"
+    },
+    {
+     "code": "mugendo:10000116",
+     "note": "比内地鶏つゆ付き12人前"
+    }
+   ],
+   "backups": [
+    "1st-olive:10000071",
+    "mentatsu:10000046",
+    "oomoriya-m:10000234"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "fruits-senba:10002517",
+     "note": "天然果汁使用の4種ゼリー"
+    },
+    {
+     "code": "miwayama:10000013",
+     "note": "白龍50gが20本入り"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "onakaegg:10001102",
+     "note": "横濱馬車道あいすもなか8個"
+    },
+    {
+     "code": "onakaegg:10001085",
+     "note": "ミニカップ12個の詰め合わせ"
+    },
+    {
+     "code": "sembikiya:10000130",
+     "note": "アイスクリーム12個入り"
+    }
+   ],
+   "backups": [
+    "sosuke:10000635",
+    "onakaegg:10000884",
+    "noto-fureai:10000158"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ehm-aikobo:10000003",
+     "note": "みかんジュース125mlが12本"
+    },
+    {
+     "code": "auc-concent:10013317",
+     "note": "りんごジュース15本セット"
+    },
+    {
+     "code": "sosuke:10000018",
+     "note": "信州産果汁ジュース5本"
+    }
+   ],
+   "backups": [
+    "kikuya2535:10054419",
+    "onakaegg:10001220",
+    "takano-eshop:10001487"
+   ]
+  }
+ ],
+ "ochugen-mother": [
+  {
+   "picks": [
+    {
+     "code": "syokoku-umaimonomeguri:10001565",
+     "note": "食塩不使用のそうめん3袋"
+    },
+    {
+     "code": "ikeri:10000430",
+     "note": "彩野菜そうめんとつゆ付き"
+    },
+    {
+     "code": "okome-kuriya:10000123",
+     "note": "島の光黒帯3kg入り"
+    }
+   ],
+   "backups": [
+    "syokoku-umaimonomeguri:10001162",
+    "okome-kuriya:10000124",
+    "mentatsu:10000046"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "saegusa-factory:10000003",
+     "note": "さくらんぼゼリー8粒入り"
+    },
+    {
+     "code": "sowakajuen:10000041",
+     "note": "瓶入りのみかんジュレ"
+    },
+    {
+     "code": "takano-eshop:10001656",
+     "note": "果実ピュアゼリー8個入り"
+    }
+   ],
+   "backups": [
+    "onestep0104:10000000",
+    "jelly83:10000323",
+    "ga-shin-en:10000000"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "sosuke:10000635",
+     "note": "国産果実6種のソルベ"
+    },
+    {
+     "code": "onakaegg:10001085",
+     "note": "ミニカップ12個の詰め合わせ"
+    },
+    {
+     "code": "sembikiya:10000130",
+     "note": "シャーベットとアイス12個"
+    }
+   ],
+   "backups": [
+    "bunza:10004049",
+    "g-elm:10000120",
+    "onakaegg:10000884"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "nishikiya-kitchen:10000000",
+     "note": "冷製スープ3食入り"
+    },
+    {
+     "code": "hybridjapan:10002773",
+     "note": "冷製スープ5種セット"
+    },
+    {
+     "code": "shopkagome:10000049",
+     "note": "冷製ポタージュ16袋入り"
+    }
+   ],
+   "backups": [
+    "friend-gift:10007502",
+    "aduma:10000011",
+    "totteokiya:10000098"
+   ]
+  }
+ ],
+ "ochugen-boss": [
+  {
+   "picks": [
+    {
+     "code": "syugetsu:10000281",
+     "note": "嵯峨野詰合せ17袋入り"
+    },
+    {
+     "code": "hokkaido-omiyage:10003929",
+     "note": "全10種類78個入りの詰合せ"
+    },
+    {
+     "code": "sucreyshop:10000014",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "maruheart:10102742",
+    "sucreyshop:10000026"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "kikuya2535:10054419",
+     "note": "果汁入り缶ジュース詰合せ"
+    },
+    {
+     "code": "auc-concent:10013317",
+     "note": "品種別りんごジュース15本"
+    },
+    {
+     "code": "sosuke:10000018",
+     "note": "信州産果汁ジュース5本"
+    }
+   ],
+   "backups": [
+    "onakaegg:10001220",
+    "ehm-aikobo:10000003",
+    "takano-eshop:10001487"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "auc-youstyle:10065401",
+     "note": "パーカージョッターの名入れ"
+    },
+    {
+     "code": "auc-youstyle:10014418",
+     "note": "パーカーIMの油性ボールペン"
+    },
+    {
+     "code": "sapporo-kawa:10000568",
+     "note": "名刺入れとペンのセット"
+    }
+   ],
+   "backups": [
+    "patie:10107398",
+    "shoppress:10000549",
+    "kizamu:10006843"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hartwell-towel:10001088",
+     "note": "短め今治タオルのセット"
+    },
+    {
+     "code": "jsy-ma:10000093",
+     "note": "薄手速乾のバスタオル2枚"
+    },
+    {
+     "code": "jsy-ma:10000094",
+     "note": "綿素材フェイスタオル4枚"
+    }
+   ],
+   "backups": [
+    "imabaritowel:10000880",
+    "cyberl2010:10000008",
+    "hartwell-towel:10001087"
+   ]
+  }
+ ],
+ "ochugen-in-laws": [
+  {
+   "picks": [
+    {
+     "code": "fruits-senba:10001997",
+     "note": "天然果汁使用の5種ゼリー"
+    },
+    {
+     "code": "turuya-mitunobu:10000100",
+     "note": "羊羹と葛まんじゅう10個"
+    },
+    {
+     "code": "fruit-garden:10000130",
+     "note": "生フルーツ手作りゼリー"
+    }
+   ],
+   "backups": [
+    "fuubian:10000237",
+    "fuubian:10000239",
+    "auc-marutaya:10000001"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "okayamahasida:10000169",
+     "note": "桃太郎ぶどう1房入り"
+    },
+    {
+     "code": "rqm2016:10005721",
+     "note": "岡山ぶどうの宝石箱"
+    },
+    {
+     "code": "okayama-koubou:10000131",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "okayamahasida:10000110",
+    "rqm2016:10005717"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "top-imabari:10000031",
+     "note": "薄手速乾の今治タオルセット"
+    },
+    {
+     "code": "jsy-ma:10000093",
+     "note": "薄手速乾の今治バスタオル2枚"
+    },
+    {
+     "code": "toucher-home:10000053",
+     "note": "今治タオル5点セット"
+    }
+   ],
+   "backups": [
+    "jsy-ma:10000091",
+    "flower-olive:10000067",
+    "bridgehappy:10000395"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "furuichiseicha:10000086",
+     "note": "水出し知覧茶15袋が2本"
+    },
+    {
+     "code": "guricha-ichikawa:10000009",
+     "note": "深蒸し茶の水出し茶葉"
+    }
+   ],
+   "backups": []
+  }
+ ],
+ "year-end-gathering-grandfather": [
+  {
+   "picks": [
+    {
+     "code": "chashoan:10002052",
+     "note": "一口サイズのフルーツ羊羹"
+    },
+    {
+     "code": "kashi:10000958",
+     "note": "和菓子7種の詰合せ"
+    },
+    {
+     "code": "turuya-mitunobu:10000065",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "hondaya:10000097",
+    "odakyu-dept-store:10016595"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "favras:10000336",
+     "note": "日本製の白い湯呑み"
+    },
+    {
+     "code": "dentouhonpo:10010258",
+     "note": "九谷焼の夫婦湯呑ペア"
+    },
+    {
+     "code": "dentouhonpo:10006188",
+     "note": "桐箱付きの九谷焼湯呑"
+    }
+   ],
+   "backups": [
+    "collagenkirei:10002419",
+    "le-noble:10095493",
+    "naire-arttech:10000318"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ohkini:10016060",
+     "note": "綿麻の甚平上下セット"
+    },
+    {
+     "code": "kuwanoshinken:10000621",
+     "note": "久留米織の甚平ルームウェア"
+    },
+    {
+     "code": "lohaslife:10002392",
+     "note": "しじら織りの甚平上下セット"
+    }
+   ],
+   "backups": [
+    "hashbaby:10000338"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  }
+ ],
+ "year-end-gathering-grandmother": [
+  {
+   "picks": [
+    {
+     "code": "hanawara:10000050",
+     "note": "花のフラワーアレンジメント"
+    },
+    {
+     "code": "lafrance:10000100",
+     "note": ""
+    },
+    {
+     "code": "lafrance:10000090",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "hanawara:10000079"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "minamitei:10000387",
+     "note": "黒糖まんじゅう6個入り"
+    },
+    {
+     "code": "s-hokkaido-shop:10000064",
+     "note": ""
+    },
+    {
+     "code": "izubaigetsuen:10000055",
+     "note": ""
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "toucher-home:10000859",
+     "note": "コットンガーゼストール"
+    },
+    {
+     "code": "toucher-home:10000665",
+     "note": "3重ガーゼのチェック柄"
+    },
+    {
+     "code": "macocca:10000490",
+     "note": "カシミヤ素材の大判チェック"
+    }
+   ],
+   "backups": [
+    "islandstyle-kawabe:10019314",
+    "curvys:10025027",
+    "toucher-home:10000422"
+   ]
+  },
+  {
+   "picks": [],
+   "backups": []
+  }
+ ],
+ "year-end-gathering-child": [
+  {
+   "picks": [
+    {
+     "code": "icb-annex:10015130",
+     "note": "2B鉛筆と赤鉛筆の紙箱"
+    },
+    {
+     "code": "bunbougu-shibuya:10012176",
+     "note": "文具6点のギフトセット"
+    },
+    {
+     "code": "bunguo-no-osk:10017409",
+     "note": "ポケモン文具10点セット"
+    }
+   ],
+   "backups": [
+    "bunguo-no-osk:10016409",
+    "bunguo-no-osk:10016414",
+    "office31:10034300"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "kagu-cocoro:10009813",
+     "note": "幅89cmの透明デスクマット"
+    }
+   ],
+   "backups": []
+  },
+  {
+   "picks": [
+    {
+     "code": "akaiyane:10000003",
+     "note": "5気圧防水のデジタル腕時計"
+    },
+    {
+     "code": "all-for-you:10000182",
+     "note": "5歳6歳向けの知育腕時計"
+    },
+    {
+     "code": "p-select:10093162",
+     "note": "ソーラー式のキッズカシオ"
+    }
+   ],
+   "backups": [
+    "gryps-:10014738",
+    "gryps-:10018025",
+    "p-select:10065633"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "wakka:10003144",
+     "note": "グラスデコ12色と下絵集"
+    },
+    {
+     "code": "wakka:10000003",
+     "note": "グラスデコ14色とフィルム5枚"
+    },
+    {
+     "code": "kamitokinomise:10000026",
+     "note": "国産ヒノキのウッドランタン"
+    }
+   ],
+   "backups": [
+    "kamitokinomise:10000004",
+    "nenohoshi:10000078",
+    "sayakobo-plus:10011191"
+   ]
+  }
+ ],
+ "year-end-gathering-toddler": [
+  {
+   "picks": [
+    {
+     "code": "blue-topazs41:10000364",
+     "note": "木製の立体型はめパズル"
+    },
+    {
+     "code": "mamimamihome:10000283",
+     "note": "木製パズルボックス"
+    },
+    {
+     "code": "gajumarunoki:10001123",
+     "note": "2層の木製フィッシングパズル"
+    }
+   ],
+   "backups": [
+    "rs-zakka:10001543",
+    "mamimamihome:10000046",
+    "edute:10000086"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ehon888:10000892",
+     "note": "2冊のおふろえほんセット"
+    },
+    {
+     "code": "eigo:10001800",
+     "note": "ノンタン絵本全9巻セット"
+    },
+    {
+     "code": "gajumarunoki:10000485",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "gajumarunoki:10001111"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "familystone:10006625",
+     "note": "ベビー用リュックサック"
+    },
+    {
+     "code": "nesleaf:10004272",
+     "note": "8Lと10Lのキッズリュック"
+    },
+    {
+     "code": "pro-shop:10091083",
+     "note": "OUTDOORのキッズリュック"
+    }
+   ],
+   "backups": [
+    "cherie-box:10000484",
+    "viaggio:10059519",
+    "familystone:10006627"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "viewgarden:10010398",
+     "note": "みつろう8色のクレヨン"
+    },
+    {
+     "code": "takara-jiang:10034958",
+     "note": "色鉛筆とクレヨンのアートセット"
+    },
+    {
+     "code": "mumchan:10000009",
+     "note": "ホワイトボード付きイーゼル"
+    }
+   ],
+   "backups": [
+    "kiraku2017:10002062",
+    "hayaritsushin:10001572",
+    "takara-jiang:10035159"
+   ]
+  }
+ ],
+ "year-end-gathering-baby": [
+  {
+   "picks": [
+    {
+     "code": "baby-arte:10000083",
+     "note": "Sassy知育玩具付き3段"
+    },
+    {
+     "code": "baby-arte:10000040",
+     "note": "名入れ刺繍対応の3段タイプ"
+    },
+    {
+     "code": "aleppo-souq:10000200",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "giftland:13473832"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "marine-blue:10000990",
+     "note": "秋冬向け長袖カバーオール"
+    },
+    {
+     "code": "fujiya-kids:10000228",
+     "note": "日本製50cm60cm対応"
+    },
+    {
+     "code": "sweet-mommy:10002058",
+     "note": "もこもこくまさんジャンプスーツ"
+    }
+   ],
+   "backups": [
+    "babygiftshop:10000996",
+    "flyshop:10001067",
+    "sweet-mommy:10005953"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "coconetco:10000287",
+     "note": "洗える仕掛け布絵本"
+    },
+    {
+     "code": "gekiyasu-kagu:10009864",
+     "note": "6ヶ月から使える音付き布絵本"
+    },
+    {
+     "code": "gekiyasu-kagu:10009865",
+     "note": "洗える仕掛け絵本タイプ"
+    }
+   ],
+   "backups": [
+    "mamimamihome:10000354",
+    "cybermall:10000890",
+    "flaner-baby:10011129"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "namekoubou-shin:10000053",
+     "note": "防水仕様の360度スタイ"
+    },
+    {
+     "code": "marietetie:10000034",
+     "note": "日本製の名入れ刺繍スタイ"
+    },
+    {
+     "code": "estyler:10006070",
+     "note": "MARLMARLの名入れ刺繍スタイ"
+    }
+   ],
+   "backups": [
+    "lien-de-famille:10000122",
+    "cheermam:10001198",
+    "babygoose:10000872"
+   ]
+  }
+ ],
+ "year-end-gathering-in-laws": [
+  {
+   "picks": [
+    {
+     "code": "rl-waffle:10000033",
+     "note": "10個入りワッフルケーキ"
+    },
+    {
+     "code": "henri-charpentier:10001037",
+     "note": "個包装の焼き菓子詰め合わせ"
+    },
+    {
+     "code": "maisondumiel:10000009",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "kasyou-morin:10000341"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ito-noen:10000740",
+     "note": "みかんジュースとゼリー入り"
+    },
+    {
+     "code": "aokifruits:10000033",
+     "note": "旬の果物詰め合わせ"
+    },
+    {
+     "code": "1894ginza-sembikiya:10000880",
+     "note": "12個入りフルーツジュレ"
+    }
+   ],
+   "backups": [
+    "yamato-takumi:10000039",
+    "1894ginza-sembikiya:10000240",
+    "bundara:10001675"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "maxmateria:10000075",
+     "note": "花束型のハンドタオル"
+    },
+    {
+     "code": "jsy-ma:10000287",
+     "note": "今治フェイスタオル4枚セット"
+    },
+    {
+     "code": "maxmateria:10000063",
+     "note": "花束タオルのギフトセット"
+    }
+   ],
+   "backups": [
+    "f382027-imabari:10000839",
+    "oruta:10001233",
+    "jsy-ma:10000472"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "libertylife:10000500",
+     "note": "選べる香り6個のバスソルト"
+    },
+    {
+     "code": "chapon:10000000",
+     "note": "Chaponバスソルト2本セット"
+    },
+    {
+     "code": "chapon:10000001",
+     "note": "Chaponバスソルト4本セット"
+    }
+   ],
+   "backups": [
+    "kiitos-web:10011902",
+    "akol:10000748",
+    "akol:10000749"
+   ]
+  }
+ ],
+ "homecoming-father": [
+  {
+   "picks": [
+    {
+     "code": "373shinsyu-tsuguya:10000132",
+     "note": "個包装ミニどら焼き14個入り"
+    },
+    {
+     "code": "itohkyuemon:10000162",
+     "note": ""
+    },
+    {
+     "code": "kasyou-morin:10000394",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "oimoya:10000067"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "e-cruz:10000055",
+     "note": "長崎銘菓クルス12枚入り"
+    },
+    {
+     "code": "oishii-hiroshima:10001388",
+     "note": "広島もみじ饅頭12個入り"
+    },
+    {
+     "code": "hokkaido-omiyage:10006584",
+     "note": "六花亭21個入り詰め合わせ"
+    }
+   ],
+   "backups": [
+    "oishii-hiroshima:10001385",
+    "oishii-hiroshima:10001389",
+    "izubaigetsuen:10000118"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ito-noen:10000740",
+     "note": "みかんジュースとゼリー入り"
+    },
+    {
+     "code": "aokifruits:10000033",
+     "note": "旬の果物詰め合わせ"
+    },
+    {
+     "code": "1894ginza-sembikiya:10000240",
+     "note": "銀座ゼリー9個入り"
+    }
+   ],
+   "backups": [
+    "bundara:10001675",
+    "kasyou-morin:10000341"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "shop-adex:10002532",
+     "note": "名入れ対応の有田焼湯呑み"
+    },
+    {
+     "code": "bugyo:10006350",
+     "note": "サーモス280ml湯呑タンブラー"
+    },
+    {
+     "code": "kutani:10002586",
+     "note": "九谷焼の大きめ湯呑み"
+    }
+   ],
+   "backups": [
+    "kizamu:10007529",
+    "naire-arttech:10000317",
+    "leun:10001205"
+   ]
+  }
+ ],
+ "homecoming-mother": [
+  {
+   "picks": [
+    {
+     "code": "sucreyshop:10000030",
+     "note": "個包装メープル菓子詰め合わせ"
+    },
+    {
+     "code": "henri-charpentier:10001755",
+     "note": "個包装焼き菓子セット"
+    },
+    {
+     "code": "maisondumiel:10000009",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "henri-charpentier:10002080",
+    "gregory-collet:10000018"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "e-cruz:10000055",
+     "note": "長崎銘菓クルス12枚入り"
+    },
+    {
+     "code": "oishii-hiroshima:10001388",
+     "note": "広島もみじ饅頭12個入り"
+    },
+    {
+     "code": "f342050-onomichi:10000245",
+     "note": "瀬戸田素材のジェラート12個"
+    }
+   ],
+   "backups": [
+    "wagamachi-tokusan:10013854",
+    "bokuseisya:10000075"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ito-noen:10000740",
+     "note": "みかんジュースとゼリー入り"
+    },
+    {
+     "code": "1894ginza-sembikiya:10000240",
+     "note": "銀座ゼリー9個入り"
+    },
+    {
+     "code": "aokifruits:10000033",
+     "note": "旬の果物詰め合わせ"
+    }
+   ],
+   "backups": [
+    "bundara:10001675",
+    "kasyou-morin:10000341"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "tenman-kosho-yakubo:10000039",
+     "note": "携帯しやすい40gチューブ"
+    },
+    {
+     "code": "baumjapan:10000010",
+     "note": "アロマティックハンドクリーム"
+    },
+    {
+     "code": "rush-mall:10012650",
+     "note": "CHANELの50mlハンドクリーム"
+    }
+   ],
+   "backups": [
+    "hillslife:10000040",
+    "trefle:10011756",
+    "tenman-kosho-yakubo:10000948"
+   ]
+  }
+ ],
+ "homecoming-grandfather": [
+  {
+   "picks": [
+    {
+     "code": "favras:10000521",
+     "note": "日本製SALIUの湯呑み"
+    },
+    {
+     "code": "dentouhonpo:10006188",
+     "note": "桐箱付き九谷焼湯呑み"
+    },
+    {
+     "code": "kizamu:10007012",
+     "note": "九谷焼の大きめ湯呑み"
+    }
+   ],
+   "backups": [
+    "favras:10000336",
+    "aritayakiyakimono:10010094",
+    "tachikichi-aeru:10001268"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "woody-house:10003967",
+     "note": "無地の綿素材甚平上下"
+    },
+    {
+     "code": "kuwanoshinken:10000621",
+     "note": "日本製久留米織の甚平"
+    },
+    {
+     "code": "kuwanoshinken:10000531",
+     "note": "日本製ちぢみ織甚平"
+    }
+   ],
+   "backups": [
+    "kimonomachi:10066733",
+    "ohkini:10016060",
+    "hohoayumu:10000037"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "usukawa:10000329",
+     "note": "柏屋薄皮饅頭の詰め合わせ"
+    },
+    {
+     "code": "373shinsyu-tsuguya:10000132",
+     "note": "個包装ミニどら焼き14個入り"
+    },
+    {
+     "code": "oimoya:10001959",
+     "note": "国産干し芋入り個包装ギフト"
+    }
+   ],
+   "backups": [
+    "oimoya:10000067",
+    "oimoya:10000033"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "keishichirou:10000016",
+     "note": "日本製の五角箸一膳"
+    },
+    {
+     "code": "youkoso-sapporo:10000366",
+     "note": "桐箱入り名入れ箸一膳"
+    },
+    {
+     "code": "youkoso-sapporo:10000225",
+     "note": "黒赤から選ぶ桐箱入り箸"
+    }
+   ],
+   "backups": [
+    "kizamu:10006784",
+    "fukuraikan:10026393",
+    "leun:10001678"
+   ]
+  }
+ ],
+ "homecoming-grandmother": [
+  {
+   "picks": [
+    {
+     "code": "shuei-hana:10000857",
+     "note": "小さいバラのミニアレンジ"
+    },
+    {
+     "code": "nier:10000004",
+     "note": "季節の花のお任せアレンジ"
+    },
+    {
+     "code": "shuei-hana:10000092",
+     "note": "5色から選べるバラアレンジ"
+    }
+   ],
+   "backups": [
+    "hanakikyo:10000235",
+    "bloomeestore:10000204",
+    "ohanakakumei:10001777"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "itohkyuemon:10000162",
+     "note": "抹茶あんみつ4個か6個入り"
+    },
+    {
+     "code": "373shinsyu-tsuguya:10000132",
+     "note": ""
+    },
+    {
+     "code": "kasyou-morin:10000394",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "oimoya:10000067"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "toucher-home:10000349",
+     "note": "日本製コットンガーゼマフラー"
+    },
+    {
+     "code": "toucher-home:10000665",
+     "note": "3重ガーゼのチェック柄ストール"
+    },
+    {
+     "code": "islandstyle-kawabe:10019312",
+     "note": "カシミヤ素材の大判ストール"
+    }
+   ],
+   "backups": [
+    "bathroom:10001938",
+    "islandstyle-kawabe:10019314"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "tenman-kosho-yakubo:10000039",
+     "note": "携帯しやすい40gチューブ"
+    },
+    {
+     "code": "baumjapan:10000010",
+     "note": "アロマティックハンドクリーム"
+    },
+    {
+     "code": "rush-mall:10012650",
+     "note": "CHANELの50mlハンドクリーム"
+    }
+   ],
+   "backups": [
+    "hillslife:10000040",
+    "hillslife:10000299",
+    "tenman-kosho-yakubo:10000948"
+   ]
+  }
+ ],
+ "thanks-colleague": [
+  {
+   "picks": [
+    {
+     "code": "enya-2510:10003873",
+     "note": "MOKUハンドタオル2枚セット"
+    },
+    {
+     "code": "handkerchief-gallery:10006910",
+     "note": "ガーゼ地のタオルハンカチ"
+    },
+    {
+     "code": "aromage:10004877",
+     "note": "リネンハンカチ全色展開"
+    }
+   ],
+   "backups": [
+    "handkerchief-gallery:10000483",
+    "handkerchief-gallery:10009830",
+    "19inch:10000255"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "sucreyshop:10000030",
+     "note": "個包装メープル菓子詰め合わせ"
+    },
+    {
+     "code": "henri-charpentier:10001755",
+     "note": "個包装焼き菓子セット"
+    },
+    {
+     "code": "maisondumiel:10000009",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "henri-charpentier:10002080",
+    "gregory-collet:10000018"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bruno-official:10000887",
+     "note": "蓋付きステンレスマグ320ml"
+    },
+    {
+     "code": "ra-imu:10002861",
+     "note": "取っ手付き500mlタンブラー"
+    },
+    {
+     "code": "juntakushop:10000045",
+     "note": "蓋付き真空断熱タンブラー"
+    }
+   ],
+   "backups": [
+    "bruno-official:10000889",
+    "irodorikukan:10001696",
+    "hotcrafts:10001328"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "garden-beauty:10000296",
+     "note": "金木犀とさくらのハンドクリーム"
+    },
+    {
+     "code": "garden-beauty:10000325",
+     "note": "選べる4本セットのクリーム"
+    },
+    {
+     "code": "neesa:10003479",
+     "note": "30mlハンドクリーム2本セット"
+    }
+   ],
+   "backups": [
+    "meettree:10000001",
+    "steamcream:10000653",
+    "trefle:10011756"
+   ]
+  }
+ ],
+ "thanks-boss": [
+  {
+   "picks": [
+    {
+     "code": "tanabe645:10000087",
+     "note": "個包装レモンタルト12個か21個"
+    },
+    {
+     "code": "kogetsu:10001011",
+     "note": "千寿せんべいPREMIUM"
+    },
+    {
+     "code": "sucreyshop:10000026",
+     "note": "個包装フィナンシェの菓子折"
+    }
+   ],
+   "backups": [
+    "shaddy:10321408",
+    "rl-waffle:10002225"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "yabucoffee:10000060",
+     "note": "8種入り自家焙煎ドリップ"
+    },
+    {
+     "code": "sawaicoffee-tea:10002844",
+     "note": "ドリップバッグ珈琲物語"
+    },
+    {
+     "code": "rokumei-coffee:10000006",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "gourmetcoffee:10005374",
+    "gourmetcoffee:10007510"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bugyo:10004467",
+     "note": "名入れジェットストリーム4&1"
+    },
+    {
+     "code": "fukuraikan:10020599",
+     "note": "名入れ対応の木製ボールペン"
+    },
+    {
+     "code": "naireya:10000000",
+     "note": "名入れPARKER IMボールペン"
+    }
+   ],
+   "backups": [
+    "fsapo:10016948",
+    "naireya:10000098",
+    "bugyo:10006450"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "shopishizuka:10003690",
+     "note": "津軽びいどろのペアおちょこ"
+    },
+    {
+     "code": "shopishizuka:10004007",
+     "note": "片口と盃の日本製酒器セット"
+    },
+    {
+     "code": "garandou:10000964",
+     "note": "錫製ぐい呑み2個ペア"
+    }
+   ],
+   "backups": [
+    "ksrainbow:10002791",
+    "miyoshi-ya:10083883"
+   ]
+  }
+ ],
+ "thanks-teacher": [
+  {
+   "picks": [
+    {
+     "code": "natural-e:10000658",
+     "note": "おまかせミニブーケ花束"
+    },
+    {
+     "code": "hanayoshi:10003437",
+     "note": "ソープフラワーの小さな花束"
+    },
+    {
+     "code": "flowermariee:10000992",
+     "note": "プリザーブドフラワーミニブーケ"
+    }
+   ],
+   "backups": [
+    "lemusee:10006020",
+    "f-style1187:10000116",
+    "sweet-mommy:10010463"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "tanabe645:10000087",
+     "note": "個包装レモンタルト12個か21個"
+    },
+    {
+     "code": "kogetsu:10001011",
+     "note": "千寿せんべいPREMIUM"
+    },
+    {
+     "code": "sucreyshop:10000026",
+     "note": "個包装フィナンシェの菓子折"
+    }
+   ],
+   "backups": [
+    "shaddy:10321408",
+    "rl-waffle:10002225"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "bugyo:10004467",
+     "note": "名入れジェットストリーム4&1"
+    },
+    {
+     "code": "fukuraikan:10020599",
+     "note": "名入れ対応の木製ボールペン"
+    },
+    {
+     "code": "naireya:10000000",
+     "note": "名入れPARKER IMボールペン"
+    }
+   ],
+   "backups": [
+    "fsapo:10016948",
+    "naireya:10000098",
+    "bugyo:10006450"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "hftea:10000326",
+     "note": "個包装ルイボスティー10包"
+    },
+    {
+     "code": "treeoflife-official:10000532",
+     "note": "ハーブティー10個入3個セット"
+    },
+    {
+     "code": "treeoflife-official:10000533",
+     "note": "ハーブティー10個入5個セット"
+    }
+   ],
+   "backups": [
+    "smc-shop:10000041",
+    "ceylon-market:10000301",
+    "hftea:10000332"
+   ]
+  }
+ ],
+ "thanks-in-laws": [
+  {
+   "picks": [
+    {
+     "code": "373shinsyu-tsuguya:10000132",
+     "note": "個包装ミニどら焼き14個入り"
+    },
+    {
+     "code": "itohkyuemon:10000162",
+     "note": ""
+    },
+    {
+     "code": "kasyou-morin:10000394",
+     "note": ""
+    }
+   ],
+   "backups": [
+    "oimoya:10000067"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "ito-noen:10000740",
+     "note": "みかんジュースとゼリー入り"
+    },
+    {
+     "code": "1894ginza-sembikiya:10000240",
+     "note": "銀座ゼリー9個入り"
+    },
+    {
+     "code": "aokifruits:10000033",
+     "note": "旬の果物詰め合わせ"
+    }
+   ],
+   "backups": [
+    "bundara:10001675",
+    "kasyou-morin:10000341"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "prairiedog:10005708",
+     "note": "今治ガーゼハンカチ2枚セット"
+    },
+    {
+     "code": "uchino-towelandbath:10020298",
+     "note": "フェイスタオル4枚セット"
+    },
+    {
+     "code": "maxmateria:10000063",
+     "note": "花束型フェイスタオルギフト"
+    }
+   ],
+   "backups": [
+    "cocopla:10001283",
+    "f382027-imabari:10000839"
+   ]
+  },
+  {
+   "picks": [
+    {
+     "code": "libertylife:10000500",
+     "note": "選べる香り6個のバスソルト"
+    },
+    {
+     "code": "chapon:10000000",
+     "note": "Chaponバスソルト2本セット"
+    },
+    {
+     "code": "chapon:10000001",
+     "note": "Chaponバスソルト4本セット"
+    }
+   ],
+   "backups": [
+    "kiitos-web:10011902",
+    "akol:10000748",
+    "akol:10000749"
    ]
   }
  ]
