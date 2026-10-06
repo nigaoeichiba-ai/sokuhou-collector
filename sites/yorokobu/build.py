@@ -51,6 +51,8 @@ def yen(v: int) -> str:
 
 KEEP_OCCASIONS: set[str] = set()   # the occasion words that belong on the page being built (set by the page functions)
 DECOR = re.compile(r"[＼／\\/♪★☆◆■●▼▲♡♥]+")
+EXTRA_OCCASIONS = ("卒業記念品", "卒業", "卒園", "入園祝い", "昇進祝い", "転職祝い", "成人祝い", "七五三", "古希", "喜寿", "米寿", "傘寿", "開店祝い", "開業祝い")
+PROMO = re.compile(r"楽天ランキング\d*位(?:獲得)?[!！]?|楽天1位(?!ギフト)|ランキング\d+位(?:獲得)?[!！]?|ジャンル祭対象|マラソン期間中|\S*で紹介[!！]?|最強配送")
 
 
 def set_keep(*words: str) -> None:
@@ -61,10 +63,14 @@ def set_keep(*words: str) -> None:
 def strip_occasions(name: str) -> str:
     """Product titles are stuffed with every occasion ("敬老の日 父の日 ハロウィン"); show only the page's own occasion, never an unrelated one.
     The title is kept as it is when stripping would leave too little."""
-    out = DECOR.sub(" ", name)
-    for w in sorted(relevance.OCCASION_WORDS, key=len, reverse=True):
-        if w not in KEEP_OCCASIONS:
-            out = out.replace(w, " ")
+    out = PROMO.sub(" ", DECOR.sub(" ", name))
+    kept = sorted(KEEP_OCCASIONS, key=len, reverse=True)
+    for i, w in enumerate(kept):          # the page's own words are masked first, so a shorter word inside one ("卒業" in "卒業祝い") cannot cut it
+        out = out.replace(w, f"¤{i}¤")
+    for w in sorted(set(relevance.OCCASION_WORDS) | set(EXTRA_OCCASIONS), key=len, reverse=True):
+        out = out.replace(w, " ")
+    for i, w in enumerate(kept):
+        out = out.replace(f"¤{i}¤", w)
     out = " ".join(out.split())
     return out if len(out) >= 10 else " ".join(name.split())
 
@@ -912,11 +918,13 @@ def month_hub_page(d: dict, cfg: dict, preview: bool, today: date, months: list[
         names = "・".join([o["name"] for o in mc["occ"]][:3] or [g["label"] for g in mc["days"]][:3])
         tiles += (f'<li><a class="tile wide" href="/month/{m}/"><span><b>{m}月{"(いま)" if m == today.month else ""}</b>'
                   f'<small>{esc(names)}</small></span></a></li>')
+    now_link = (f'<p><a href="/month/{today.month}/">{today.month}月の贈りどきを見る</a></p>'
+                if today.month in months else "")   # a month with nothing to show has no page
     lead = "1年を月ごとに見て、いつ、何のプレゼントを準備すればよいかが分かります。"
     head = head_band("yellow", "", "月ごとの<wbr>贈りどき", lead, single=True, mascot="b-wink")
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("月ごとの贈りどき", None)])}</div>
-<section style="margin-top:40px"><h2><span class="scribble">いまは{today.month}月</span></h2><p><a href="/month/{today.month}/">{today.month}月の贈りどきを見る</a></p>
+<section style="margin-top:40px"><h2><span class="scribble">いまは{today.month}月</span></h2>{now_link}
 <ul class="tiles wide">{tiles}</ul></section>"""
     return page(cfg, preview, path="/month/", title=f"月ごとの贈りどき 1年のプレゼントの準備カレンダー | {cfg['site_name']}", description=lead, body=body,
                 og_image=og_for("default"))
