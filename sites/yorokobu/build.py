@@ -160,6 +160,8 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
     if it.get("appoint"):
         bits.append('<span class="tagx">日付指定可</span>')
     note = '<p class="own">運営者のショップ</p>' if own else ""
+    if it.get("note"):  # the editors' one-line reason for picking this product
+        note += f'<p class="pick-note">{esc(it["note"])}</p>'
     label = "ショップで見る" if own else "楽天市場で見る"
     badge = f'<span class="rank r{rank}">{rank}</span>' if rank and rank <= 3 and not own else ""
     attrs = (f'data-code="{esc(it["code"])}" data-price="{it["price"]}" data-reviews="{it["reviews"]}" data-rating="{it["rating"]}" '
