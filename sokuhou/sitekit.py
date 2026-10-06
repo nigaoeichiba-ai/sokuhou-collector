@@ -146,7 +146,8 @@ def amazon_disclosure(cfg: dict) -> str:
     """Amazon Associates requires this sentence on a site that carries Amazon links."""
     if not cfg.get("amazon_tracking_id"):
         return ""
-    return f"<p>Amazonのアソシエイトとして、{esc(cfg['operator_name'])}は適格販売により収入を得ています。</p>"
+    name = cfg.get("amazon_disclosure_name") or cfg["site_name"]  # the site name, as on most sites (the account holder may be a person)
+    return f"<p>Amazonのアソシエイトとして、{esc(name)}は適格販売により収入を得ています。</p>"
 
 
 def contact_summary(cfg: dict) -> str:

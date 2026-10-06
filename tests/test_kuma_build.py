@@ -416,8 +416,8 @@ class GoodsTest(unittest.TestCase):
         self.assertEqual(html.count("Amazonで探す"), 6)
 
     def test_disclosures(self):
-        self.assertIn("Amazonのアソシエイトとして、テスト運営は適格販売により収入を得ています。", self.read("goods/index.html"))
-        self.assertIn("Amazonのアソシエイトとして、テスト運営は適格販売により収入を得ています。", self.read("privacy/index.html"))
+        self.assertIn("Amazonのアソシエイトとして、クマ出没速報は適格販売により収入を得ています。", self.read("goods/index.html"))
+        self.assertIn("Amazonのアソシエイトとして、クマ出没速報は適格販売により収入を得ています。", self.read("privacy/index.html"))
         self.assertIn("効果も保証しません", self.read("goods/index.html"))
 
     def test_nav_has_the_goods_link_and_a_site_without_ids_has_no_goods_page(self):
