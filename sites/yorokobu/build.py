@@ -238,10 +238,8 @@ def auto_note(it: dict, ctx: dict) -> str:
     n, r = it["reviews"], it["rating"]
     if n and n >= ctx["max_reviews"] and n >= 30:
         facts.append(f"このページの商品の中で、レビューがいちばん多い一品です(平均{r:.1f}・{n:,}件)。")
-    elif n >= 100 and r >= 4.5:
-        facts.append(f"レビューは{n:,}件で、平均{r:.1f}。多くの人が評価しています。")
     elif n >= 20 and r >= 4.3:
-        facts.append(f"レビュー平均{r:.1f}(全{n:,}件)と、評価が安定しています。")
+        facts.append(f"レビューは{n:,}件、平均{r:.1f}です。")
     elif n and r >= 4.0:
         facts.append(f"レビュー平均{r:.1f}({n:,}件)です。")
     if it["price"] == ctx["min_price"] and ctx["count"] > 3:
@@ -249,9 +247,6 @@ def auto_note(it: dict, ctx: dict) -> str:
     perks = [x for x, ok in (("送料無料", it["free_shipping"]), ("ギフト包装などのギフト対応", it.get("gift")), ("お届け日の指定", it.get("appoint"))) if ok]
     if perks:
         facts.append("・".join(perks) + "に対応しています。")
-    same = ctx["shops"].get(it["shop_code"], 0)
-    if same >= 2 and it["shop"]:
-        facts.append(f"{it['shop']}の商品が、このページに{same}点あります。")
     return "".join(facts[:2])
 
 
