@@ -148,14 +148,21 @@ async function load(url) {
 """
 
 
-def run_chrome(url: str) -> str:
-    profile = tempfile.mkdtemp(prefix="yorokobu_e2e_")
-    try:
-        r = subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={profile}", "--virtual-time-budget=30000",
-                            "--dump-dom", url], capture_output=True, timeout=180)
-        return r.stdout.decode("utf-8", "replace")
-    finally:
-        shutil.rmtree(profile, ignore_errors=True)
+def run_chrome(url: str, attempts: int = 4) -> str:
+    """The DOM of the page after its scripts ran.  A headless Chrome occasionally stalls right after another run on this machine, so a stalled
+    run is killed after 30 s and tried again instead of blocking the whole suite for minutes."""
+    for attempt in range(attempts):
+        profile = tempfile.mkdtemp(prefix="yorokobu_e2e_")
+        try:
+            r = subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={profile}",
+                                "--virtual-time-budget=30000", "--dump-dom", url], capture_output=True, timeout=30)
+            return r.stdout.decode("utf-8", "replace")
+        except subprocess.TimeoutExpired:
+            if attempt == attempts - 1:
+                raise
+        finally:
+            shutil.rmtree(profile, ignore_errors=True)
+    return ""
 
 
 @unittest.skipUnless(CHROME, "Chrome is not installed")

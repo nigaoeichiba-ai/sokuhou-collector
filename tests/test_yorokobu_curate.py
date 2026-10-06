@@ -9,7 +9,7 @@ def item(n: int, shop: str = "a", name: str = "ハンドタオル ギフト 今�
 
 PAIR = {"occasion": "birthday", "recipient": "mother", "title": "母への誕生日プレゼント",
         "ideas": [{"label": f"案{i}", "type": "t", "query": "q", "why": "w"} for i in range(2)]}
-C = {"pairs": [PAIR]}
+C = {"pairs": [PAIR], "occ": {"birthday": {"name": "誕生日"}}}
 
 
 def cands(shops=("a", "b", "c", "d", "e", "f")):
