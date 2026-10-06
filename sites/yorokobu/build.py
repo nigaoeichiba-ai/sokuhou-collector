@@ -19,6 +19,7 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
 from sites.yorokobu import content as ct  # noqa: E402
+from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
 from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages,  # noqa: E402
@@ -64,6 +65,24 @@ def pr_lead(cfg: dict) -> str:
 def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
     return layout(SITE, cfg, preview, scripts=True, head_extra=FONTS, **kw)
+
+
+OG: set = set()   # the share-card images drawn in this build ("gift/<key>", "occasion/<slug>", "for/<slug>", "default")
+
+
+def og_for(name: str) -> str:
+    return f"/og/{name}.png" if name in OG else "/assets/img/og.webp"
+
+
+def share_bar(cfg: dict, path: str, text: str, label: str = "この候補、誰かに相談する") -> str:
+    """LINE / X / copy-link buttons.  The shared text carries our page URL only, never an affiliate link."""
+    url = cfg["site_url"].rstrip("/") + path
+    line = "https://line.me/R/share?text=" + quote(f"{text}\n{url}", safe="")
+    x = "https://twitter.com/intent/tweet?text=" + quote(text, safe="") + "&url=" + quote(url, safe="")
+    return (f'<div class="share"><span class="share-label">{esc(label)}</span>'
+            f'<a class="share-btn line" href="{esc(line)}" target="_blank" rel="noopener">LINEで送る</a>'
+            f'<a class="share-btn x" href="{esc(x)}" target="_blank" rel="noopener">Xで共有</a>'
+            f'<button type="button" class="share-btn copy" data-url="{esc(url)}">リンクをコピー</button></div>')
 
 
 def icon_img(kind: str, slug: str, size: int = 64) -> str:
@@ -359,6 +378,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (occ["name"], f"/occasion/{occ['slug']}/"), (p["title"].split(" ")[0], None)])}</div>
 {pr_quiet(cfg)}
+{share_bar(cfg, f"/gift/{key}/", f"{p['title'].split(' ')[0]}の候補を見つけたよ。どれがよさそう?")}
 <section class="why-how"><div class="cols"><div><h2><span class="scribble">喜ばれやすい理由</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["reasons"])}</ol></div>
 <div class="how"><h2><span class="scribble">選び方のポイント</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["how_to_choose"])}</ol></div></div></section>
 {proposals}
@@ -370,7 +390,8 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 <section class="related" style="margin-top:40px"><h2><span class="scribble">あわせて読みたい</span></h2>
 <div class="cols"><div><h3>{esc(occ["name"])}の、ほかの相手</h3><ul class="plain">{links(related_occ)}</ul></div>
 <div><h3>{esc(rec["name"])}への、ほかのイベント</h3><ul class="plain">{links(related_rec)}</ul></div></div></section>"""
-    return page(cfg, preview, path=f"/gift/{key}/", title=f"{p['title']} | {cfg['site_name']}", description=p["lead"][:110], body=body)
+    return page(cfg, preview, path=f"/gift/{key}/", title=f"{p['title']} | {cfg['site_name']}", description=p["lead"][:110], body=body,
+                og_image=og_for(f"gift/{key}"))
 
 
 def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
@@ -390,7 +411,7 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
 {shown}
 <section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>"""
     return page(cfg, preview, path=f"/occasion/{o['slug']}/", title=f"{o['name']}のプレゼント 選び方と相手別のおすすめ | {cfg['site_name']}",
-                description=o["blurb"][:110], body=body)
+                description=o["blurb"][:110], body=body, og_image=og_for(f"occasion/{o['slug']}"))
 
 
 def recipient_page(d: dict, cfg: dict, preview: bool, r: dict) -> str:
@@ -409,7 +430,7 @@ def recipient_page(d: dict, cfg: dict, preview: bool, r: dict) -> str:
 <section style="margin-top:50px"><h2><span class="scribble">イベントを選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}"""
     return page(cfg, preview, path=f"/for/{r['slug']}/", title=f"{r['name']}へのプレゼント イベント別のおすすめ | {cfg['site_name']}",
-                description=r["blurb"][:110], body=body)
+                description=r["blurb"][:110], body=body, og_image=og_for(f"for/{r['slug']}"))
 
 
 def hub_page(d: dict, cfg: dict, preview: bool, kind: str) -> str:
@@ -485,7 +506,8 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <p>「何を贈ればいいか分からない」というときに、<strong>イベント</strong>と<strong>贈る相手</strong>から、選び方のポイントと、商品の例を探せるサイトです。</p>
 <p>商品は、楽天市場の情報を、毎日、自動で更新して表示しています。シマエナガのふたりが、あなたの「贈りたい気持ち」を、応援します。</p></div></div></section>"""
     return page(cfg, preview, path="/", title=f"{cfg['site_name']} イベントと相手から、喜ばれるプレゼントを探す",
-                description="誕生日・母の日・クリスマスなど、イベントと贈る相手から、喜ばれやすいプレゼントの選び方と、おすすめの商品が見つかります。", body=body)
+                description="誕生日・母の日・クリスマスなど、イベントと贈る相手から、喜ばれやすいプレゼントの選び方と、おすすめの商品が見つかります。", body=body,
+                og_image=og_for("default"))
 
 
 # ---------------------------------------------------------------- site
@@ -521,6 +543,21 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     preview = bool(missing)
     today = today or date.today()
     d = prepare(c, items, cfg)
+    cards: dict[str, bytes] = {}
+    OG.clear()
+    if ogimage.available():
+        site = cfg["site_name"]
+        birds = ("r-joy", "b-sparkle", "r-wink", "b-joy")
+        cards["og/default.png"] = ogimage.card(title="プレゼント選びを、わくわくに!", tag="イベントと相手から", bird="mascot-pair", site=site)
+        for o in c["occasions"]:
+            cards[f"og/occasion/{o['slug']}.png"] = ogimage.card(title=f"{o['name']}のプレゼント", tag="選び方と相手別", bird=OCC_MASCOT.get(o["slug"], "b-wink"), site=site)
+        for r in c["recipients"]:
+            cards[f"og/for/{r['slug']}.png"] = ogimage.card(title=f"{r['name']}へのプレゼント", tag="イベント別", bird="r-sparkle", site=site)
+        for p in c["pairs"]:
+            cards[f"og/gift/{ct.pair_key(p)}.png"] = ogimage.card(
+                title=p["title"].split(" ")[0], tag=f"{c['rec'][p['recipient']]['name']} × {c['occ'][p['occasion']]['name']}",
+                bird=OCC_MASCOT.get(p["occasion"], birds[list(c["occ"]).index(p["occasion"]) % 4]), site=site)
+        OG.update(k[len("og/"):-len(".png")] for k in cards)
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview, today),
                                      "occasion/index.html": hub_page(d, cfg, preview, "occasion"),
                                      "for/index.html": hub_page(d, cfg, preview, "for")}
@@ -541,6 +578,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
                          "<p>当サイトは、楽天グループ株式会社が運営するものではありません。</p>"),
         contact_notice="商品の購入・配送・返品などのお問い合わせは、各販売店へお願いします。当サイトでは、商品の販売を行っていません。",
         input_note="", finish=lambda s: s))
+    pages.update(cards)
     pages.update(standard_files(pages, cfg, preview, d["fetched_date"]))
     pages.update(asset_pages(HERE / "assets"))
     write_pages(pages, out)
