@@ -179,6 +179,9 @@ def portrait_block(d: dict, cfg: dict, note: str | None) -> str:
 # ---------------------------------------------------------------- pages
 
 COLORS = ["yellow", "pink", "sky", "mint"]
+# the costume that fits an occasion (head of its pages); the others use the expression set
+OCC_MASCOT = {"christmas": "season-christmas", "year-end-gathering": "season-party", "birthday": "season-birthday",
+              "valentine": "season-valentine", "mothers-day": "season-mothers", "fathers-day": "season-fathers", "ochugen": "season-summer"}
 
 
 def tile(href: str, kind: str, slug: str, name: str, small: str = "", wide: bool = False) -> str:
@@ -216,9 +219,14 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
         return (f'<p class="tier-more"><a class="btn btn-sub" href="{esc(amazon_url(cfg, p["queries"][0], tr.get("min"), tr.get("max")))}" '
                 f'rel="sponsored nofollow noopener" target="_blank"><span class="pr-note">PR</span>{esc(tr["label"])}のAmazonの商品もさがす</a></p>')
 
+    def tier_head(i: int, t: str) -> str:
+        sommelier = ('<span class="tier-mascot"><span class="say">おすすめを、お持ちしました!</span>'
+                     '<img class="hop" src="/assets/img/sommelier-tray.webp" alt="" width="160" height="108" loading="lazy"></span>') if i == 0 else ""
+        return (f'<div class="tier-head"><span class="tag">予算</span><h2>{esc(c["tiers"][t]["label"])}のおすすめ</h2>{sommelier}</div>')
+
     sections = "".join(
-        f'<section id="t-{t}" class="tier"><div class="tier-head"><span class="tag">予算</span><h2>{esc(c["tiers"][t]["label"])}のおすすめ</h2></div>'
-        f'{item_grid(cfg, lists[t], ranked=True)}{amazon_tier(t)}</section>' for t in tiers)
+        f'<section id="t-{t}" class="tier">{tier_head(i, t)}'
+        f'{item_grid(cfg, lists[t], ranked=True)}{amazon_tier(t)}</section>' for i, t in enumerate(tiers))
     if not sections:
         sections = '<p class="notice">いま表示できる商品が、見つかりませんでした。しばらくしてから、もう一度ご覧ください。</p>'
     avoid = occ["avoid"][:1] + rec["avoid"][:1]
@@ -233,7 +241,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
         amazon = (f'<p class="more"><a class="btn btn-sub" href="{esc(amazon_url(cfg, p["queries"][0]))}" rel="sponsored nofollow noopener" target="_blank">'
                   f'<span class="pr-note">PR</span>Amazonでも探す</a></p>{amazon_disclosure(cfg)}')
     color = COLORS[list(c["occ"]).index(p["occasion"]) % 4]
-    head = head_band(color, f'{ic_wrap("occasion", occ["slug"])}<span class="x">×</span>{ic_wrap("recipient", rec["slug"])}', esc(p["title"]), p["lead"], mascot=("r-joy", "b-sparkle", "r-wink", "b-joy")[list(c["occ"]).index(p["occasion"]) % 4])
+    head = head_band(color, f'{ic_wrap("occasion", occ["slug"])}<span class="x">×</span>{ic_wrap("recipient", rec["slug"])}', esc(p["title"]), p["lead"], mascot=OCC_MASCOT.get(p["occasion"], ("r-joy", "b-sparkle", "r-wink", "b-joy")[list(c["occ"]).index(p["occasion"]) % 4]))
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (occ["name"], f"/occasion/{occ['slug']}/"), (p["title"].split(" ")[0], None)])}</div>
 {pr_lead(cfg)}
@@ -259,7 +267,7 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
     featured = top_items(lists)
     shown = (f'<section style="margin-top:50px"><h2><span class="scribble">選ばれている贈り物の例</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
     color = COLORS[list(c["occ"]).index(o["slug"]) % 4]
-    head = head_band(color, ic_wrap("occasion", o["slug"]), f'{esc(o["name"])}の<wbr>プレゼント', o["blurb"], single=True, mascot="b-wink")
+    head = head_band(color, ic_wrap("occasion", o["slug"]), f'{esc(o["name"])}の<wbr>プレゼント', o["blurb"], single=True, mascot=OCC_MASCOT.get(o["slug"], "b-wink"))
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("イベント", "/occasion/"), (o["name"], None)])}</div>
 {pr_lead(cfg)}
@@ -319,7 +327,7 @@ def finder(c: dict) -> str:
     rec = "".join(f'<option value="{r["slug"]}">{esc(r["name"])}</option>' for r in c["recipients"])
     bud = "".join(f'<option value="{t["slug"]}">{esc(t["label"])}</option>' for t in c["filters"]["tiers"])
     pairs = esc(json.dumps([ct.pair_key(p) for p in c["pairs"]]))
-    return (f'<form class="finder" action="/occasion/" method="get" data-pairs="{pairs}"><p class="finder-title">贈り物をさがす</p>'
+    return (f'<form class="finder" action="/occasion/" method="get" data-pairs="{pairs}"><img class="peek hop" src="/assets/img/concierge-bell.webp" alt="" width="96" height="73"><p class="finder-title">贈り物をさがす</p>'
             f'<div class="finder-row"><select name="o" aria-label="イベント">{occ}</select><select name="r" aria-label="贈る相手">{rec}</select>'
             f'<select name="b" aria-label="予算"><option value="">予算</option>{bud}</select><button type="submit">さがす</button></div></form>')
 
@@ -345,7 +353,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 {pr_lead(cfg)}
 <section style="margin-top:56px"><div class="sec-head"><span class="sticker">NOW</span><h2>いまが<span class="scribble">贈りどき</span></h2><p>これから迎えるイベントのプレゼントを、先取りで。</p></div>
 <ul class="tiles wide">{season}</ul></section>
-<section class="band sky scallop" style="margin-top:70px"><div class="in"><div class="sec-head"><h2>選び方は、かんたん<span class="scribble">3ステップ</span></h2></div>
+<section class="band sky scallop" style="margin-top:70px"><div class="in"><div class="sec-head"><img class="step-mascot hop" src="/assets/img/navi-scope.webp" alt="望遠鏡をのぞくシマエナガと、道を指さすシマエナガ" width="380" height="193" loading="lazy"><h2>選び方は、かんたん<span class="scribble">3ステップ</span></h2></div>
 <ol class="steps"><li><img src="/assets/img/occasion/birthday.webp" alt="" width="84" height="84" loading="lazy"><b>イベントを選ぶ</b><p>誕生日、母の日、クリスマスなど、贈るきっかけを選びます。</p></li>
 <li><img src="/assets/img/recipient/mother.webp" alt="" width="84" height="84" loading="lazy"><b>相手を選ぶ</b><p>彼氏、母、同僚など、贈る相手に合わせた選び方が見つかります。</p></li>
 <li><img src="/assets/img/occasion/thanks.webp" alt="" width="84" height="84" loading="lazy"><b>予算でえらぶ</b><p>3,000円以内から、2万円以上まで。予算に合う商品を比べられます。</p></li></ol></div></section>

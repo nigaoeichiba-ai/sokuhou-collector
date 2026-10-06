@@ -291,3 +291,17 @@ main.wrap > h1:first-child { margin-top: 36px; }
 .pagehead-band .pagehead { padding-right: 190px; }
 @media (max-width: 760px) { .head-mascot { width: 96px; right: 6px; bottom: 0; } .pagehead-band .pagehead { padding-right: 0; padding-bottom: 70px; } }
 @media (prefers-reduced-motion: reduce) { .head-mascot { animation: none; } }
+
+/* costumes: sommelier at the products, concierge at the finder, navigators above the steps */
+@keyframes hop { 0%, 100% { transform: translateY(0) rotate(0); } 40% { transform: translateY(-10px) rotate(-2deg); } 60% { transform: translateY(-10px) rotate(2deg); } 80% { transform: translateY(0) rotate(0); } }
+.hop { animation: hop 2.6s ease-in-out infinite; transform-origin: 50% 100%; }
+.finder { position: relative; }
+.finder .peek { position: absolute; right: 16px; top: -78px; width: 118px; height: auto; pointer-events: none; }
+.step-mascot { display: block; margin: 0 auto 12px; width: min(380px, 70%); height: auto; }
+.tier-mascot { margin-left: auto; display: flex; align-items: flex-end; gap: 6px; }
+.tier-mascot img { width: 130px; height: auto; display: block; }
+.tier-mascot .say { position: relative; margin-bottom: 38px; padding: .35em .9em; background: #fff; border: var(--line2); border-radius: 14px; font-size: .8rem; font-weight: 900; white-space: nowrap; }
+.tier-mascot .say::after { content: ""; position: absolute; right: -8px; bottom: 8px; width: 12px; height: 12px; background: #fff; border-right: 2px solid var(--ink); border-top: 2px solid var(--ink); transform: rotate(45deg); }
+.tier-head { flex-wrap: wrap; }
+@media (max-width: 760px) { .finder .peek { width: 64px; top: -42px; } .tier-mascot { margin-left: 0; width: 100%; } .tier-mascot img { width: 100px; } .tier-mascot .say { margin-bottom: 20px; } }
+@media (prefers-reduced-motion: reduce) { .hop { animation: none; } }
