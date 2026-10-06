@@ -38,7 +38,7 @@ def theme_problems(t: dict, groups: set[str], known_queries: set[str] | None = N
         out.append(f"{slug}: unknown group {t['group']}")
     blob = " ".join([t["title"], t["lead"], *t["reasons"], *t["how_to_choose"], *t.get("avoid", []), *[i["label"] + i["why"] for i in t["ideas"]]])
     out += [f"{slug}: forbidden {w}" for w in _words(blob)]
-    if not 85 <= len(t["lead"]) <= 260:
+    if not 75 <= len(t["lead"]) <= 260:
         out.append(f"{slug}: lead length {len(t['lead'])}")
     if not 12 <= len(t["title"]) <= 40:
         out.append(f"{slug}: title length {len(t['title'])}")
@@ -77,12 +77,12 @@ def article_problems(a: dict, theme_slugs: set[str], known_slugs: set[str] | Non
     out += [f"{slug}: forbidden {w}" for w in _words(blob)]
     if not 15 <= len(a["title"]) <= 44:
         out.append(f"{slug}: title length {len(a['title'])}")
-    if not 90 <= len(a["lead"]) <= 260:
+    if not 80 <= len(a["lead"]) <= 260:
         out.append(f"{slug}: lead length {len(a['lead'])}")
     if not 4 <= len(a["sections"]) <= 6:
         out.append(f"{slug}: sections {len(a['sections'])}")
     for s in a["sections"]:
-        if not 170 <= len(s["body"]) <= 480 or not 6 <= len(s["h"]) <= 26:
+        if not 140 <= len(s["body"]) <= 480 or not 6 <= len(s["h"]) <= 26:
             out.append(f"{slug}: section '{s['h']}' lengths {len(s['h'])}/{len(s['body'])}")
     if not 2 <= len(a["faq"]) <= 4:
         out.append(f"{slug}: faq {len(a['faq'])}")

@@ -38,8 +38,9 @@ Angles to draw from (these are only seeds; invent new ones, combine them, go bey
 - kinds of gifts: 手作りキット, 長く使える道具, 一生モノ, 日用品の上質版, 地域の名産, 家族で分けられる物, 写真や名前が入る物
 """
 THEME_SPEC = """
-{"themes":[{"slug":"ascii-lowercase-hyphens","group":"<an existing group slug, or a NEW one you also describe in "new_groups">","name":"short name 4-12 chars","title":"page title 14-34 chars","lead":"110-220 chars, concrete, calm editorial voice","reasons":["3 items, 38-120 chars"],"how_to_choose":["3 items, 28-110 chars"],"avoid":["2 items 20-70 chars"],"recipient":null,"ideas":[{"label":"2-12 chars","type":"one of: 実用品|食べもの・飲みもの|ファッション小物|癒し・リラックス|思い出・名入れ|体験・お出かけ|趣味・ホビー|おもしろ・サプライズ|子ども向け","query":"Rakuten keyword search, 2-5 words, concrete product nouns plus a gift word","why":"40-90 chars"}],"keywords":["8 short search words"],"tiers":["choose 3-5 of: under3000, 3000-5000, 5000-10000, 10000-20000, over20000"]}],
+{"themes":[{"slug":"ascii-lowercase-hyphens","group":"<an existing group slug, or a NEW one you also describe in "new_groups">","name":"short name 4-12 chars","title":"page title 14-34 chars","lead":"110-220 chars, concrete, calm editorial voice","reasons":["3 items, 38-120 chars"],"how_to_choose":["3 items, 28-110 chars"],"avoid":["2 items 20-70 chars"],"recipient":null,"ideas":[{"label":"2-12 chars","type":"one of: 実用品|食べもの・飲みもの|ファッション小物|癒し・リラックス|思い出・名入れ|体験・お出かけ|趣味・ホビー|おもしろ・サプライズ|子ども向け","query":"Rakuten keyword search, 2-5 words, concrete product nouns plus a gift word","why":"40-90 chars"}],"keywords":["8 short search words"],"tiers":["choose 3-5 of: under3000, 3000-5000, 5000-10000, 10000-20000, over20000"],"map":[[x,y],[x,y],[x,y],[x,y]]}],
  "new_groups":[{"slug":"ascii","name":"group name","blurb":"one sentence, 30-70 chars"}]}
+"map" places each of the 4 ideas (same order) on the gift map: x from -2 (used up at once: food, drink, consumable) to 2 (lasts for years), y from -2 (classic, safe) to 2 (unusual, characterful); halves allowed; use the full range and do not put all four at one place.
 Exactly 4 ideas per theme (4 DIFFERENT product kinds across price levels), 3 reasons, 3 how_to_choose, 8 keywords. "recipient" is null unless the theme clearly implies one of boyfriend|girlfriend|husband|wife|father|mother|grandfather|grandmother|friend-female|friend-male|colleague|boss|teacher|baby|toddler|child|teen|in-laws. "new_groups" may be empty.
 """
 ARTICLE_SPEC = """
@@ -47,6 +48,7 @@ ARTICLE_SPEC = """
 Do not write a "date" field (it is added automatically).
 """
 RULES = """
+LENGTH CALIBRATION: past answers were consistently about 30% SHORTER than requested because characters are hard to count. Aim for the upper half of every range (write about 40% more than feels necessary), then check a few fields by counting.
 HARD RULES: polite です・ます Japanese with varied sentence length; no statistics, surveys, rankings, "調査", "人気", "売れ筋"; no guarantees ("必ず", "絶対", "最高"); no brand or shop names; never mention Rakuten, Amazon, affiliates or AI; no medical or cosmetic-effect claims; no emojis; no stacked abstract nouns; each item reads differently, and nothing may repeat sentences of the existing pages. Products must be physical things you can find on a Japanese shopping site (no tickets, bookings or services). There is no python in your sandbox that you can rely on: count characters yourself while writing.
 """
 
@@ -92,6 +94,17 @@ def brief(kind: str, n: int, out: Path, answer: Path) -> None:
     print(f"brief written to {out}; Codex must write {answer}")
 
 
+def retry_brief(kind: str, answer: Path, out: Path) -> None:
+    """A brief that hands the refused answer back with the validator's problems; Codex writes the corrected, complete file next to it."""
+    probs = answer.with_suffix(".problems.txt").read_text(encoding="utf-8")
+    fixed = answer.with_name(answer.stem + "_fixed.json")
+    text = (f"Content task (workspace-write). Reply in English with a very short report. Read {answer.as_posix()} (your earlier answer) and write the CORRECTED, COMPLETE file to "
+            f"{fixed.as_posix()} (UTF-8 JSON, ensure_ascii false, same format). Do not edit anything else.\n\nThe validator refused it for these reasons:\n{probs}\n\n"
+            f"Fix every problem: lengths below the minimum mean you must write MORE (add concrete detail, not filler); keep what was fine; keep slugs. Do not shorten anything else.\n{RULES}")
+    out.write_text(text, encoding="utf-8", newline="\n")
+    print(f"retry brief written to {out}; Codex must write {fixed}")
+
+
 def problems_themes(c: dict, items: list[dict], extra_groups: list[dict]) -> list[str]:
     groups = {g["slug"] for g in c["theme_groups"]} | {g["slug"] for g in extra_groups}
     known_q = {i["query"] for t in c["themes"] for i in t["ideas"]}
@@ -122,11 +135,17 @@ def merge_themes(answer: dict, today: date) -> tuple[int, list[str]]:
         path.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     path = CONTENT / "themes.json"
     data = json.loads(path.read_text(encoding="utf-8"))
+    tags_path = CONTENT / "map_tags.json"
+    tags = json.loads(tags_path.read_text(encoding="utf-8")) if tags_path.exists() else {}
     for t in items:
         t.setdefault("avoid", [])
         t["recipient"] = t.get("recipient") or None
         t["added"] = today.isoformat()
+        dots = t.pop("map", None)
+        if dots and len(dots) == 4 and all(len(d) == 2 and all(-2 <= float(v) <= 2 for v in d) for d in dots):
+            tags[f"theme-{t['slug']}"] = dots
         data["themes"].append(t)
+    tags_path.write_text(json.dumps(tags, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     path.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     _load()   # the loader's own cross-reference checks
     return len(items), []
@@ -167,14 +186,25 @@ def main() -> None:
     m.add_argument("kind", choices=["themes", "articles"])
     m.add_argument("file", type=Path)
     m.add_argument("--today", default=date.today().isoformat())
+    r = sub.add_parser("retry", help="write a brief that sends a refused answer back to Codex with the problems")
+    r.add_argument("kind", choices=["themes", "articles"])
+    r.add_argument("file", type=Path)
+    r.add_argument("--out", type=Path, required=True)
     a = ap.parse_args()
     if a.cmd == "status":
         status()
     elif a.cmd == "brief":
         brief(a.kind, a.n, a.out, a.answer)
+    elif a.cmd == "retry":
+        retry_brief(a.kind, a.file, a.out)
     else:
         answer = json.loads(a.file.read_text(encoding="utf-8"))
         n, probs = (merge_themes if a.kind == "themes" else merge_articles)(answer, date.fromisoformat(a.today))
+        problems_file = a.file.with_suffix(".problems.txt")
+        if probs:
+            problems_file.write_text("\n".join(probs), encoding="utf-8")
+        else:
+            problems_file.unlink(missing_ok=True)
         for p in probs:
             print(p)
         print(f"merged {n} {a.kind}" if not probs else f"REFUSED: {len(probs)} problems")
