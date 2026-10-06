@@ -23,7 +23,7 @@ MEMORIAL = ("香典", "お供え", "仏壇", "線香", "法事", "法要", "供�
 ADULT_ONLY = ("アダルト", "大人のおもちゃ", "セクシー", "ランジェリー", "下着")
 
 
-def fits(name: str, recipient: str) -> bool:
+def fits(name: str, recipient: str | None) -> bool:
     gender, age = PROFILE.get(recipient, (None, "adult"))
     if any(w in name for w in MEMORIAL + ADULT_ONLY):
         return False

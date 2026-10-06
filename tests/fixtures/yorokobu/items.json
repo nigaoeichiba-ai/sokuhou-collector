@@ -272,6 +272,238 @@
      }
     ]
    }
+  },
+  "theme-thanks-daily": {
+   "ideas": [
+    {
+     "label": "ハンドタオル",
+     "type": "実用品",
+     "query": "今治 ハンドタオル ギフト",
+     "why": "毎日使え、受け取る側が負担に感じにくい実用品です。",
+     "items": [
+      {
+       "code": "a1",
+       "name": "テスト商品a1 贈り物にぴったりのギフトセット",
+       "price": 2500,
+       "url": "https://item.rakuten.co.jp/s1/a1/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s1/a1.jpg?_ex=300x300",
+       "shop": "店s1",
+       "shop_code": "s1",
+       "reviews": 50,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      },
+      {
+       "code": "a2",
+       "name": "テスト商品a2 贈り物にぴったりのギフトセット",
+       "price": 1980,
+       "url": "https://item.rakuten.co.jp/s2/a2/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s2/a2.jpg?_ex=300x300",
+       "shop": "店s2",
+       "shop_code": "s2",
+       "reviews": 200,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      }
+     ]
+    },
+    {
+     "label": "個包装の焼き菓子",
+     "type": "食べもの・飲みもの",
+     "query": "焼き菓子 詰め合わせ 個包装",
+     "why": "分けやすく、感謝の気持ちを気軽に伝えられます。",
+     "items": [
+      {
+       "code": "a3",
+       "name": "テスト商品a3 贈り物にぴったりのギフトセット",
+       "price": 4200,
+       "url": "https://item.rakuten.co.jp/s3/a3/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s3/a3.jpg?_ex=300x300",
+       "shop": "店s3",
+       "shop_code": "s3",
+       "reviews": 50,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      }
+     ]
+    }
+   ],
+   "tiers": {
+    "under3000": [
+     {
+      "code": "a1",
+      "name": "テスト商品a1 贈り物にぴったりのギフトセット",
+      "price": 2500,
+      "url": "https://item.rakuten.co.jp/s1/a1/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s1/a1.jpg?_ex=300x300",
+      "shop": "店s1",
+      "shop_code": "s1",
+      "reviews": 50,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     },
+     {
+      "code": "a2",
+      "name": "テスト商品a2 贈り物にぴったりのギフトセット",
+      "price": 1980,
+      "url": "https://item.rakuten.co.jp/s2/a2/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s2/a2.jpg?_ex=300x300",
+      "shop": "店s2",
+      "shop_code": "s2",
+      "reviews": 200,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     }
+    ],
+    "3000-5000": [
+     {
+      "code": "a3",
+      "name": "テスト商品a3 贈り物にぴったりのギフトセット",
+      "price": 4200,
+      "url": "https://item.rakuten.co.jp/s3/a3/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s3/a3.jpg?_ex=300x300",
+      "shop": "店s3",
+      "shop_code": "s3",
+      "reviews": 50,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     }
+    ]
+   }
+  },
+  "theme-beauty": {
+   "ideas": [
+    {
+     "label": "フェイスローラー",
+     "type": "癒し・リラックス",
+     "query": "フェイスローラー ギフト",
+     "why": "夜のケア時間に使える、手軽な美容グッズです。",
+     "items": [
+      {
+       "code": "a1",
+       "name": "テスト商品a1 贈り物にぴったりのギフトセット",
+       "price": 2500,
+       "url": "https://item.rakuten.co.jp/s1/a1/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s1/a1.jpg?_ex=300x300",
+       "shop": "店s1",
+       "shop_code": "s1",
+       "reviews": 50,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      },
+      {
+       "code": "a2",
+       "name": "テスト商品a2 贈り物にぴったりのギフトセット",
+       "price": 1980,
+       "url": "https://item.rakuten.co.jp/s2/a2/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s2/a2.jpg?_ex=300x300",
+       "shop": "店s2",
+       "shop_code": "s2",
+       "reviews": 200,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      }
+     ]
+    },
+    {
+     "label": "ヘアオイル",
+     "type": "実用品",
+     "query": "ヘアオイル ギフト",
+     "why": "毎日のヘアケアで使い切りやすく、贈りやすい品です。",
+     "items": [
+      {
+       "code": "a3",
+       "name": "テスト商品a3 贈り物にぴったりのギフトセット",
+       "price": 4200,
+       "url": "https://item.rakuten.co.jp/s3/a3/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s3/a3.jpg?_ex=300x300",
+       "shop": "店s3",
+       "shop_code": "s3",
+       "reviews": 50,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      }
+     ]
+    }
+   ],
+   "tiers": {
+    "under3000": [
+     {
+      "code": "a1",
+      "name": "テスト商品a1 贈り物にぴったりのギフトセット",
+      "price": 2500,
+      "url": "https://item.rakuten.co.jp/s1/a1/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s1/a1.jpg?_ex=300x300",
+      "shop": "店s1",
+      "shop_code": "s1",
+      "reviews": 50,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     },
+     {
+      "code": "a2",
+      "name": "テスト商品a2 贈り物にぴったりのギフトセット",
+      "price": 1980,
+      "url": "https://item.rakuten.co.jp/s2/a2/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s2/a2.jpg?_ex=300x300",
+      "shop": "店s2",
+      "shop_code": "s2",
+      "reviews": 200,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     }
+    ],
+    "3000-5000": [
+     {
+      "code": "a3",
+      "name": "テスト商品a3 贈り物にぴったりのギフトセット",
+      "price": 4200,
+      "url": "https://item.rakuten.co.jp/s3/a3/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s3/a3.jpg?_ex=300x300",
+      "shop": "店s3",
+      "shop_code": "s3",
+      "reviews": 50,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     }
+    ]
+   }
   }
  },
  "portrait": [

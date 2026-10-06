@@ -29,7 +29,7 @@ from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs,
 SOURCE_HTML = ('商品の情報は楽天ウェブサービスを利用して取得しています。 '
                '<a href="https://webservice.rakuten.co.jp/" target="_blank">Supported by Rakuten Developers</a>')  # the credit HTML is prescribed: use as is
 NAV = [("イベントから", "/occasion/", "/occasion/"), ("相手から", "/for/", "/for/"), ("季節の贈り物", "/#season", "/season-none/")]
-SITE = {"nav": NAV[:2] + [("たいせつな日メモ", "/memo/", "/memo/")], "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">', "assets": HERE / "assets",
+SITE = {"nav": NAV[:2] + [("切り口から", "/theme/", "/theme/"), ("たいせつな日メモ", "/memo/", "/memo/")], "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">', "assets": HERE / "assets",
         "source_html": SOURCE_HTML}
 # months (1-12) in which an occasion is worth showing as "いまが贈りどき"; the rest are evergreen
 SEASON = {
@@ -357,9 +357,9 @@ def concierge(cfg: dict, d: dict, p: dict | None, heading: str = "コンシェ�
 <ul class="kw-chips">{chips}</ul></div></div></section>"""
 
 
-def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
+def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict | None]:
+    """The product part shared by every page that has ideas: (sommelier proposals, filterable navigator, the operator's own listing or None)."""
     c = d["c"]
-    occ, rec = c["occ"][p["occasion"]], c["rec"][p["recipient"]]
     key = ct.pair_key(p)
     ideas, tiers_map, union = pair_items(d, key)
     tier_defs = [c["tiers"][t] for t in p["tiers"]]
@@ -378,8 +378,8 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     # the proposals (sommelier)
     proposals = "".join(idea_card(cfg, idea, i, c["filters"]["tiers"]) for i, idea in enumerate(ideas) if idea["items"])
     if proposals:
-        proposals = (f'<section class="proposals"><div class="sec-title"><span class="tag">ソムリエの提案</span><h2>{esc(rec["name"])}への{esc(occ["name"])}、'
-                     f'こんな贈り方はどうでしょう</h2></div><div class="idea-grid">{proposals}</div></section>')
+        proposals = (f'<section class="proposals"><div class="sec-title"><span class="tag">ソムリエの提案</span><h2>{esc(heading)}</h2></div>'
+                     f'<div class="idea-grid">{proposals}</div></section>')
     # the filterable list
     all_types = [t for t in TYPE_ORDER if any(idea["type"] == t and idea["items"] for idea in ideas)]
     idea_type = {it["code"]: idea["type"] for idea in ideas for it in idea["items"]}
@@ -405,6 +405,14 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 {freshness(d)}</section>"""
     else:
         browse = '<section class="browse"><p class="notice">いま表示できる商品が、見つかりませんでした。下のコンシェルジュから、楽天市場で、探してみてください。</p></section>'
+    return proposals, browse, own
+
+
+def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
+    c = d["c"]
+    occ, rec = c["occ"][p["occasion"]], c["rec"][p["recipient"]]
+    key = ct.pair_key(p)
+    proposals, browse, own = listing(d, cfg, p, f'{rec["name"]}への{occ["name"]}、こんな贈り方はどうでしょう')
     own_note = ""
     if own:
         own_note = (f'<aside class="own-slim"><b>長く残る贈りものなら</b><span>手描きの似顔絵という選び方もあります。店主が制作しています(一覧のなかの「運営者のショップ」の商品です)。</span></aside>')
@@ -441,6 +449,66 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 <div><h3>{esc(rec["name"])}への、ほかのイベント</h3><ul class="plain">{links(related_rec)}</ul></div></div></section>"""
     return page(cfg, preview, path=f"/gift/{key}/", title=f"{p['title']} | {cfg['site_name']}", description=p["lead"][:110], body=body,
                 og_image=og_for(f"gift/{key}"))
+
+
+# ---------------------------------------------------------------- theme pages (start from a feeling or an interest, not from an occasion)
+
+GROUP_STYLE = {"feeling": ("pink", "r-joy", "dot"), "giver": ("sky", "b-wink", "star"), "interest": ("mint", "b-sparkle", "sparkle")}
+
+
+def theme_mark(t: dict, size: int = 64) -> str:
+    """A round sticker for a theme: the group's decoration shape on its colour (themes have no photo icons)."""
+    color, _, shape = GROUP_STYLE[t["group"]]
+    return f'<span class="theme-mark {color}" aria-hidden="true">{SHAPES[shape].format(c=PALETTE["white"], ink=INK)}</span>'
+
+
+def theme_tile(t: dict) -> str:
+    return (f'<li><a class="tile theme-tile" href="/theme/{t["slug"]}/">{theme_mark(t)}'
+            f'<span><b>{esc(t["name"])}</b><small>{esc(t["title"])}</small></span></a></li>')
+
+
+def theme_page(d: dict, cfg: dict, preview: bool, t: dict) -> str:
+    c = d["c"]
+    color, mascot, _ = GROUP_STYLE[t["group"]]
+    group = next(g for g in c["theme_groups"] if g["slug"] == t["group"])
+    proposals, browse, _ = listing(d, cfg, t, f'{t["name"]}、こんな贈り方はどうでしょう')
+    same = [x for x in c["themes"] if x["group"] == t["group"] and x["slug"] != t["slug"]][:10]
+    other = "".join(f'<li><a href="/theme/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in same)
+    avoid = f'<section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(t["avoid"], "warn")}</section>' if t["avoid"] else ""
+    amazon = ""
+    if cfg.get("amazon_tracking_id"):
+        amazon = (f'<p class="more"><a class="btn btn-sub" href="{esc(amazon_url(cfg, t["ideas"][0]["query"]))}" rel="sponsored nofollow noopener" target="_blank">'
+                  f'Amazonでも探す</a></p>{amazon_disclosure(cfg)}')
+    head = head_band(color, theme_mark(t, 96), esc(t["title"]), t["lead"], single=True, mascot=mascot)
+    body = f"""{head}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("切り口から探す", "/theme/"), (t["name"], None)])}</div>
+{pr_quiet(cfg)}
+{share_bar(cfg, f"/theme/{t['slug']}/", f"{t['title']}、いろいろ見つけたよ。どれがよさそう?")}
+<section class="why-how"><div class="cols"><div><h2><span class="scribble">喜ばれやすい理由</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in t["reasons"])}</ol></div>
+<div class="how"><h2><span class="scribble">選び方のポイント</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in t["how_to_choose"])}</ol></div></div></section>
+{proposals}
+{browse}
+{concierge(cfg, d, t)}
+{avoid}
+<p style="margin-top:40px">{amazon}</p>
+<section class="related" style="margin-top:40px"><h2><span class="scribble">{esc(group["name"])}、ほかの切り口</span></h2><ul class="plain cols2 chips">{other}</ul></section>"""
+    return page(cfg, preview, path=f"/theme/{t['slug']}/", title=f"{t['title']} | {cfg['site_name']}", description=t["lead"][:110], body=body,
+                og_image=og_for(f"theme/{t['slug']}"))
+
+
+def theme_hub_page(d: dict, cfg: dict, preview: bool) -> str:
+    c = d["c"]
+    sections = ""
+    for g in c["theme_groups"]:
+        ts = [t for t in c["themes"] if t["group"] == g["slug"]]
+        if ts:
+            sections += (f'<section style="margin-top:44px"><h2><span class="scribble">{esc(g["name"])}</span></h2><p class="sec-lead">{esc(g["blurb"])}</p>'
+                         f'<ul class="tiles">{"".join(theme_tile(t) for t in ts)}</ul></section>')
+    lead = "贈りたい気持ちや、相手の好きなことから、プレゼントを探します。イベントや相手が決まっていなくても、ここから始められます。"
+    body = f"""{head_band("lilac", '<img class="pair-mini" src="/assets/img/b-sparkle.webp" alt="" width="170" height="155">', "切り口から、<wbr>プレゼントを探す", lead, single=True)}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("切り口から探す", None)])}</div>
+{pr_quiet(cfg)}{sections}"""
+    return page(cfg, preview, path="/theme/", title=f"切り口から、プレゼントを探す | {cfg['site_name']}", description=lead, body=body)
 
 
 def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
@@ -641,6 +709,12 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
     rec = "".join(round_chip(f'/for/{r["slug"]}/', "recipient", r["slug"], r["name"]) for r in c["recipients"])
     popular = [p for p in c["pairs"] if p["occasion"] in ("birthday", "year-end-gathering", "mothers-day", "christmas")][:12]
     pop = "".join(f'<li><a href="/gift/{ct.pair_key(p)}/">{esc(p["title"].split(" ")[0])}</a></li>' for p in popular)
+    theme_band = ""
+    if c["themes"]:
+        picks = [x for g in c["theme_groups"] for x in [t for t in c["themes"] if t["group"] == g["slug"]][:4]]
+        theme_band = (f'<section class="band lilac scallop"><div class="in"><div class="sec-head"><h2>気持ち・興味から<span class="scribble">探す</span></h2>'
+                      f'<p>イベントが決まっていなくても大丈夫。贈りたい気持ちや、相手の好きなことから。</p></div>'
+                      f'<ul class="tiles">{"".join(theme_tile(x) for x in picks)}</ul><p class="more"><a class="btn" href="/theme/">切り口を、ぜんぶ見る</a></p></div></section>')
     ticker = "".join(f"<span>{esc(o['name'])}</span>" for o in c["occasions"])
     ticker = ticker + ticker
     body = f"""<section class="band yellow dots hero scallop-b"><div class="in">
@@ -668,6 +742,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <ul class="chip-grid round">{rec}</ul></div></section>
 <section class="band mint flat"><div class="in"><div class="sec-head"><h2>よく読まれている、<span class="scribble">おすすめページ</span></h2></div>
 <ul class="plain cols2 chips">{pop}</ul></div></section>
+{theme_band}
 <section class="band yellow dots scallop about-home"><div class="in">
 <div><img src="/assets/img/pair-gift.webp" alt="" width="600" height="239" loading="lazy" style="width:100%;max-width:460px;display:block;margin:0 auto"></div>
 <div class="bubble"><h2 style="font-size:1.3rem">このサイトについて</h2>
@@ -688,7 +763,7 @@ def prepare(c: dict, items: dict | None, cfg: dict) -> dict:
         t = datetime.fromisoformat(f)
         label = f"{t.year}年{t.month}月{t.day}日 {t.hour}:{t.minute:02d}"
     # the stored lists were chosen at fetch time; apply today's rules again (relaxed superset) so a rule change shows without refetching
-    owner = {ct.pair_key(p): p["recipient"] for p in c["pairs"]}
+    owner = {ct.pair_key(p): p.get("recipient") for p in ct.pages(c)}
     pairs = {}
     for k, v in items.get("pairs", {}).items():
         def ok(i, k=k):
@@ -725,6 +800,9 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
             cards[f"og/gift/{ct.pair_key(p)}.png"] = ogimage.card(
                 title=p["title"].split(" ")[0], tag=f"{c['rec'][p['recipient']]['name']} × {c['occ'][p['occasion']]['name']}",
                 bird=OCC_MASCOT.get(p["occasion"], birds[list(c["occ"]).index(p["occasion"]) % 4]), site=site)
+        for th in c["themes"]:
+            cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]),
+                                                               bird=GROUP_STYLE[th["group"]][1], site=site)
         OG.update(k[len("og/"):-len(".png")] for k in cards)
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview, today),
                                      "occasion/index.html": hub_page(d, cfg, preview, "occasion"),
@@ -737,6 +815,10 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages[f"occasion/{o['slug']}/index.html"] = occasion_page(d, cfg, preview, o)
     for r in c["recipients"]:
         pages[f"for/{r['slug']}/index.html"] = recipient_page(d, cfg, preview, r)
+    if c["themes"]:
+        pages["theme/index.html"] = theme_hub_page(d, cfg, preview)
+        for th in c["themes"]:
+            pages[f"theme/{th['slug']}/index.html"] = theme_page(d, cfg, preview, th)
     for slug in c["guides"]:
         pages[f"guide/{slug}/index.html"] = guide_page(d, cfg, preview, slug)
     for p in c["pairs"]:

@@ -53,7 +53,7 @@ def _queue(sel: dict) -> list[tuple[str, str]]:
 
 
 def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | None = None, now: datetime | None = None) -> dict:
-    pairs = c["pairs"][:limit_pairs] if limit_pairs else c["pairs"]
+    pairs = ct.pages(c)[:limit_pairs] if limit_pairs else ct.pages(c)
     filters = c["filters"]
     total = sum(len(i.get("picks", [])) for p in pairs for i in picks.get(ct.pair_key(p), [])) or 1
     state = {"errors": 0}
@@ -80,7 +80,7 @@ def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | Non
                     if len(items) >= wanted:
                         break
                     it = get(code)
-                    if it and code not in used and usable(it, filters, p["recipient"], relaxed=True):
+                    if it and code not in used and usable(it, filters, p.get("recipient"), relaxed=True):
                         items.append({**it, "note": note} if note else it)
                         used.add(code)
                         if n >= wanted:
@@ -90,12 +90,12 @@ def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | Non
             if len(items) < 2:  # nothing curated survives (or this idea was never curated): the keyword search fills in
                 searched += 1
                 found = fetch._search(client, f"{key} idea {i} fallback", fallback_state, 1000, keyword=idea["query"], hits=fetch.HITS)
-                more = pick(found, None, filters, limit=4 - len(items), recipient=p["recipient"], exclude=used)
+                more = pick(found, None, filters, limit=4 - len(items), recipient=p.get("recipient"), exclude=used)
                 items += more
                 used |= {x["code"] for x in more}
             ideas_out.append({k: idea[k] for k in ("label", "type", "query", "why")} | {"items": items})
         union = [it for idea in ideas_out for it in idea["items"]]
-        tiers = {t: pick(union, c["tiers"][t], filters, recipient=p["recipient"]) for t in p["tiers"]}
+        tiers = {t: pick(union, c["tiers"][t], filters, recipient=p.get("recipient")) for t in p["tiers"]}
         out_pairs[key] = {"ideas": ideas_out, "tiers": tiers}
         nonempty += bool(union)
     if pairs and nonempty < fetch.MIN_PAIR_SHARE * len(pairs):
