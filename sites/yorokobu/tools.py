@@ -129,7 +129,6 @@ def persona_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     others = "".join(f'<li><a href="/diagnosis/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in c["persona"]["personas"] if x["slug"] != p["slug"])
     body = f"""{B.head_band("pink", '<img class="pair-mini" src="/assets/img/r-joy.webp" alt="" width="170" height="155">', esc(p["name"]), p["tagline"], single=True, mascot="b-joy")}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("プレゼント診断", "/diagnosis/"), (p["name"], None)])}</div>
-{B.pr_quiet(cfg)}
 {B.share_bar(cfg, f"/diagnosis/{p['slug']}/", f"うちのあの人は『{p['name']}』だった! あなたの周りの人は?", "この結果を、だれかに送る")}
 <section style="margin-top:30px"><p class="persona-about">{esc(p["about"])}</p></section>
 <section class="cols"><div><h2><span class="scribble">よろこびやすいもの</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["likes"])}</ol></div>
