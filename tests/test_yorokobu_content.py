@@ -64,6 +64,23 @@ class ContentQualityTest(unittest.TestCase):
                 seen[s] += 1
         self.assertEqual([s for s, n in seen.items() if n > 2], [])
 
+    def test_every_page_has_four_distinct_ideas_with_a_search_phrase_and_a_reason(self):
+        types = {"実用品", "食べもの・飲みもの", "体験・お出かけ", "思い出・名入れ", "癒し・リラックス", "おもしろ・サプライズ", "ファッション小物", "趣味・ホビー", "子ども向け"}
+        bad = []
+        for p in self.c["pairs"]:
+            k = ct.pair_key(p)
+            ideas = p["ideas"]
+            if len(ideas) != 4 or len({i["label"] for i in ideas}) != 4 or len({i["query"] for i in ideas}) != 4:
+                bad.append((k, "ideas"))
+            for i in ideas:
+                if i["type"] not in types or not 6 <= len(i["query"]) <= 30 or not 30 <= len(i["why"]) <= 95:
+                    bad.append((k, i["label"]))
+                if any(w in i["why"] + i["label"] for w in FORBIDDEN_WORDS):
+                    bad.append((k, "forbidden", i["label"]))
+            if len(p["keywords"]) < 6:
+                bad.append((k, "keywords"))
+        self.assertEqual(bad, [])
+
     def test_portrait_notes_are_limited(self):
         self.assertLessEqual(sum(1 for p in self.c["pairs"] if p.get("portrait_note")), 32)
         for where, parts in self.texts():
