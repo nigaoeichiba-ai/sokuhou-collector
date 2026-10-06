@@ -42,8 +42,10 @@ class BuildTest(unittest.TestCase):
         self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/yorokobu?pc=", html)
         self.assertIn('rel="sponsored nofollow noopener"', html)
         self.assertIn("楽天市場で見る", html)
-        self.assertIn("PR:本ページには広告", html)          # quiet, but before any product link
-        self.assertLess(html.index("PR:本ページには広告"), html.index('class="item"'))
+        self.assertIn('<span class="pr-chip">PR</span>広告を含みます', html)          # a short label before any product link ...
+        self.assertLess(html.index('class="pr-chip"'), html.index('class="item"'))
+        self.assertIn("リンク先で購入されると、運営者に報酬が支払われることがあります", html)    # ... and the full notice in the footer
+        self.assertGreater(html.index('class="pr-foot"'), html.index('class="item"'))
         self.assertIn("amazon.co.jp/s?k=", html)
         self.assertIn("Amazonのアソシエイトとして", html)
 
