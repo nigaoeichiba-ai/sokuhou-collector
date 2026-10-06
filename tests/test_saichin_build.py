@@ -40,7 +40,7 @@ class PreviewBuildTest(BuildTestBase):
         from sites.saichin import ogimage
         from sokuhou.sitekit import asset_files
         n_assets = len(asset_files(Path(__file__).parent.parent / 'sites' / 'saichin' / 'assets'))
-        expected = 74 + n_assets + 1 + 1 + 1 + 48 + (48 if ogimage.available() else 0)  # 74 + the asset files (css, js, svg, images), feed.xml, feed/dates.xml, notify page, 48 calendars, share cards (default + 47 prefectures)
+        expected = 74 + n_assets + 2 + 1 + 1 + 1 + 48 + (48 if ogimage.available() else 0)  # 74 + the asset files (css, js, svg, images) + 2 root copies (favicon.ico, apple-touch-icon.png), feed.xml, feed/dates.xml, notify page, 48 calendars, share cards (default + 47 prefectures)
         self.assertEqual(len(self.files), expected)
         html_pages = [f for f in self.files if f.endswith('.html')]
         self.assertEqual(len(html_pages), 1 + 47 + 8 + 3 + 2 + 1 + 6 + 3 + 1)  # home, prefectures, areas, rankings, calendar+history, notify, guides, legal, 404

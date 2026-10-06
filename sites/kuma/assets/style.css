@@ -407,3 +407,4 @@ svg.tilemap .t5 { fill:#7f1d1d; } svg.tilemap .t5 + text { fill:#fff; }
 .goods-card ul { margin:0; padding-left:1.2em; font-size:.92rem; color:var(--muted); }
 .goods-card .btn { align-self:flex-start; margin-top:auto; }
 @media (min-width:641px) { .hero-facts, .hero .progress { max-width:62%; } .hero-facts { grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); } }
+.goods-card .btn-amazon { margin-top:0; background:#fff; color:#111827; border:2px solid #111827; }

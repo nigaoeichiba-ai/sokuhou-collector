@@ -293,6 +293,9 @@ def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str,
 <meta property="og:description" content="{esc(description)}">
 <meta property="og:url" content="{esc(base + path)}">
 {og_tags}<link rel="alternate" type="application/atom+xml" title="発効のお知らせ" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/style.css?v={ver}">
 {adsense}</head>
 <body>

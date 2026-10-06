@@ -383,3 +383,46 @@ class DateOnlyTest(unittest.TestCase):
             self.assertIn("岡山県が公表している令和8年度の記録は、3件です", html)
             home = (Path(tmp) / "s" / "index.html").read_text(encoding="utf-8")
             self.assertIn("最新の目撃(岡山県・県の公式。更新は不定期): 9月6日 新見市哲西町大野部", home)
+
+
+@unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
+class GoodsTest(unittest.TestCase):
+    """Affiliate goods page: PR-labelled, sponsored links, the disclosure sentences, absent without IDs."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.raw = raw_data()
+        cls.raw["notices"] = []
+        cls.tmp = tempfile.TemporaryDirectory()
+        cfg = {**CFG, "rakuten_affiliate_id": "aaaa1111.bbbb2222.cccc3333.dddd4444", "rakuten_tracking_id": "kuma-top",
+               "amazon_tracking_id": "amazonmacs-22"}
+        cls.out = Path(cls.tmp.name) / "site"
+        build.render_site(cls.raw, cfg, cls.out, release=True)
+        cls.cfg = cfg
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def read(self, rel):
+        return (self.out / rel).read_text(encoding="utf-8")
+
+    def test_links_carry_the_ids_and_are_marked_sponsored(self):
+        html = self.read("goods/index.html")
+        self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/kuma-top?pc=", html)
+        self.assertIn("https://www.amazon.co.jp/s?k=%E3%82%AF%E3%83%9E%E9%88%B4&amp;tag=amazonmacs-22", html)
+        self.assertEqual(html.count('rel="sponsored nofollow noopener"'), 12)  # six goods x two shops
+        self.assertEqual(html.count("楽天市場で探す"), 6)
+        self.assertEqual(html.count("Amazonで探す"), 6)
+
+    def test_disclosures(self):
+        self.assertIn("Amazonのアソシエイトとして、テスト運営は適格販売により収入を得ています。", self.read("goods/index.html"))
+        self.assertIn("Amazonのアソシエイトとして、テスト運営は適格販売により収入を得ています。", self.read("privacy/index.html"))
+        self.assertIn("効果も保証しません", self.read("goods/index.html"))
+
+    def test_nav_has_the_goods_link_and_a_site_without_ids_has_no_goods_page(self):
+        self.assertIn('href="/goods/"', self.read("index.html"))
+        with tempfile.TemporaryDirectory() as tmp:
+            files = build.render_site(self.raw, CFG, Path(tmp) / "n", release=True)
+            self.assertNotIn("goods/index.html", files)
+            self.assertNotIn("Amazonのアソシエイト", (Path(tmp) / "n" / "privacy" / "index.html").read_text(encoding="utf-8"))

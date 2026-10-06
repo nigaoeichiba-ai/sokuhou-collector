@@ -35,6 +35,7 @@ def esc(s) -> str:
 
 
 TEXT_ASSETS = {".css", ".js", ".svg", ".json", ".txt", ".html"}
+ROOT_COPIES = {"favicon.ico", "apple-touch-icon.png"}
 
 
 def asset_files(assets: Path) -> list[Path]:
@@ -48,6 +49,8 @@ def asset_pages(assets: Path) -> dict:
     for p in asset_files(assets):
         rel = f"assets/{p.relative_to(assets).as_posix()}"
         out[rel] = p.read_text(encoding="utf-8") if p.suffix.lower() in TEXT_ASSETS else p.read_bytes()
+        if p.parent == assets and p.name in ROOT_COPIES:  # browsers ask for these at the site root
+            out[p.name] = out[rel]
     return out
 
 
@@ -117,7 +120,10 @@ def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, descr
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(description)}">
 <meta property="og:url" content="{esc(base + path)}">
-{og_tags}{links}<link rel="stylesheet" href="/assets/style.css?v={ver}">
+{og_tags}{links}<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/style.css?v={ver}">
 {adsense}</head>
 <body>
 {banner}<header class="site"><div class="wrap">
@@ -134,6 +140,13 @@ def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, descr
 {script}</body>
 </html>
 """
+
+
+def amazon_disclosure(cfg: dict) -> str:
+    """Amazon Associates requires this sentence on a site that carries Amazon links."""
+    if not cfg.get("amazon_tracking_id"):
+        return ""
+    return f"<p>Amazonのアソシエイトとして、{esc(cfg['operator_name'])}は適格販売により収入を得ています。</p>"
 
 
 def contact_summary(cfg: dict) -> str:
@@ -175,7 +188,7 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
 <p>Cookie を無効にする、または、パーソナライズ広告を無効にするには、<a href="https://adssettings.google.com/" rel="noopener" target="_blank">Google の広告設定</a>をご利用ください。第三者配信事業者による Cookie の使用を無効にするには、<a href="https://www.aboutads.info/choices/" rel="noopener" target="_blank">aboutads.info</a> もご利用いただけます。</p>
 <p>広告の配信にあたり、お使いのブラウザから広告配信事業者へ、閲覧に関する情報が送信されることがあります。</p>
 <h2>アフィリエイトについて</h2>
-<p>当サイトには、商品やサービスの紹介リンク(アフィリエイトリンク)が含まれる場合があります。該当するページには、広告であることを明示します。リンク先で商品が購入されると、当サイトの運営者に報酬が支払われることがあります。</p>
+<p>当サイトには、商品やサービスの紹介リンク(アフィリエイトリンク)が含まれる場合があります。該当するページには、広告であることを明示します。リンク先で商品が購入されると、当サイトの運営者に報酬が支払われることがあります。</p>{amazon_disclosure(cfg)}
 <h2>免責事項・著作権</h2>
 <p>免責事項と情報の出典は、<a href="/about/">運営者情報</a>に記載しています。</p>
 <h2>お問い合わせ</h2>

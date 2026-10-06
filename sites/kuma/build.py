@@ -22,7 +22,7 @@ sys.path.insert(0, str(ROOT))
 
 from sites.kuma import charts, content  # noqa: E402
 from sokuhou import prefectures as pf  # noqa: E402
-from sokuhou.sitekit import BuildError, asset_pages, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
+from sokuhou.sitekit import BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 MINISTRY_PAGE = "https://www.env.go.jp/nature/choju/effort/effort12/effort12.html"
 SOURCE_HTML = (f'出典: <a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">環境省「クマに関する各種情報・取組」</a>の公表資料(速報値)を加工して作成。'
@@ -707,6 +707,11 @@ def rakuten_url(cfg: dict, target: str) -> str:
     return f"https://hb.afl.rakuten.co.jp/hgc/{path}?pc={enc}&m={enc}"
 
 
+def amazon_url(cfg: dict, query: str) -> str:
+    """Amazon.co.jp search results for a keyword, with the Associates tracking ID."""
+    return f"https://www.amazon.co.jp/s?k={quote(query, safe='')}&tag={quote(cfg['amazon_tracking_id'], safe='')}"
+
+
 def goods_page(d: dict, cfg: dict, preview: bool) -> str:
     cards = ""
     for g in GOODS:
@@ -715,11 +720,15 @@ def goods_page(d: dict, cfg: dict, preview: bool) -> str:
         cards += (f'<div class="goods-card"><h3>{esc(g["title"])}</h3><ul>{pts}</ul>'
                   f'<p style="margin:0;font-size:.88rem"><a href="/guide/{g["guide"][0]}/">{esc(g["guide"][1])}</a>を読む</p>'
                   f'<a class="btn" href="{esc(rakuten_url(cfg, target))}" rel="sponsored nofollow noopener" target="_blank">'
-                  f'<span class="pr-note">PR</span>楽天市場で探す</a></div>')
+                  f'<span class="pr-note">PR</span>楽天市場で探す</a>'
+                  + (f'<a class="btn btn-amazon" href="{esc(amazon_url(cfg, g["query"]))}" rel="sponsored nofollow noopener" target="_blank">'
+                     f'<span class="pr-note">PR</span>Amazonで探す</a>' if cfg.get("amazon_tracking_id") else "")
+                  + '</div>')
     body = f"""{crumbs([("全国", "/"), ("クマ対策グッズ", None)])}
 <h1>クマ対策のグッズ</h1>
-<p class="lead"><span class="pr-note">PR</span>このページは、広告(楽天アフィリエイト)のリンクを含みます。リンク先で購入されると、運営者に報酬が支払われることがあります。</p>
-<p>グッズは、<strong>クマに出会わないための対策の、補助</strong>です。まず、<a href="/guide/prepare/">山に入る前の備え</a>と、<a href="/guide/home/">家の周りの対策</a>を、お読みください。以下は、公的機関の資料に出てくる対策に関連する、商品の種類です。個々の商品を推奨するものではなく、効果も保証しません。各リンクは、楽天市場の検索結果のページです。商品の仕様・価格・在庫は、販売ページでご確認ください。</p>
+<p class="lead"><span class="pr-note">PR</span>このページは、広告(楽天アフィリエイト・Amazonアソシエイト)のリンクを含みます。リンク先で購入されると、運営者に報酬が支払われることがあります。</p>
+{amazon_disclosure(cfg)}
+<p>グッズは、<strong>クマに出会わないための対策の、補助</strong>です。まず、<a href="/guide/prepare/">山に入る前の備え</a>と、<a href="/guide/home/">家の周りの対策</a>を、お読みください。以下は、公的機関の資料に出てくる対策に関連する、商品の種類です。個々の商品を推奨するものではなく、効果も保証しません。各リンクは、楽天市場・Amazonの検索結果のページです。商品の仕様・価格・在庫は、販売ページでご確認ください。</p>
 <div class="goods-grid">{cards}</div>
 <p class="notice">クマの目撃や被害の通報は、お住まいの市町村、または警察(110番)へお願いします。製品の安全な使い方は、各製品の取扱説明書に従ってください。</p>"""
     return page(cfg, preview, path="/goods/", title="クマ対策のグッズ(PR) 音の出る道具・ライト・撃退スプレーの選び方",
