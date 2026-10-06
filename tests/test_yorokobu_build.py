@@ -147,6 +147,20 @@ class BuildTest(unittest.TestCase):
         self.assertIn("/memo/?o=birthday&amp;r=boyfriend", self.read("gift/birthday-boyfriend/index.html"))
         self.assertIn('id="memo-strip"', self.read("index.html"))
 
+    def test_every_product_gets_a_facts_only_note(self):
+        html = self.read("gift/birthday-boyfriend/index.html")
+        self.assertIn('class="pick-note"', html)
+        self.assertIn("レビューがいちばん多い一品です(平均4.5・200件)", html)       # a2 has the most reviews on this page
+        self.assertNotIn("売れ筋", html)
+        self.assertNotIn("人気No", html)
+
+    def test_the_site_can_be_added_to_the_home_screen(self):
+        m = json.loads(self.read("manifest.webmanifest"))
+        self.assertEqual((m["display"], m["scope"], m["lang"]), ("standalone", "/", "ja"))
+        self.assertTrue(all((self.out / i["src"].lstrip("/")).exists() for i in m["icons"]))
+        self.assertIn('rel="manifest" href="/manifest.webmanifest"', self.read("index.html"))
+        self.assertIn('name="theme-color"', self.read("memo/index.html"))
+
     def test_site_files(self):
         self.assertIn("Sitemap: https://yorokobu-present.com/sitemap.xml", self.read("robots.txt"))
         self.assertIn("楽天ウェブサービス", self.read("about/index.html"))

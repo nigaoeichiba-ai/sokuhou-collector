@@ -98,9 +98,18 @@ def ul(items: list[str], cls: str = "") -> str:
 
 INK = "#2b1b14"
 PALETTE = {"pink": "#ff4d6d", "yellow": "#ffc93c", "sky": "#38bdf8", "mint": "#2fd09b", "lilac": "#a78bfa", "orange": "#ff8a3d", "white": "#ffffff"}
+MANIFEST = {
+    "name": "よろこぶプレゼント", "short_name": "よろこぶ", "description": "イベントと贈る相手から、喜ばれるプレゼントを選べるサイト。大切な日のメモ・カレンダーつき。",
+    "start_url": "/?from=home", "scope": "/", "display": "standalone", "lang": "ja", "background_color": "#fffdf7", "theme_color": "#ffc93c",
+    "icons": [{"src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png"},
+              {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}],
+    "shortcuts": [{"name": "たいせつな日メモ", "url": "/memo/"}, {"name": "イベントから探す", "url": "/occasion/"}, {"name": "相手から探す", "url": "/for/"}],
+}
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Mochiy+Pop+One'
-         '&family=Zen+Maru+Gothic:wght@500;700;900&display=swap">\n')
+         '&family=Zen+Maru+Gothic:wght@500;700;900&display=swap">\n'
+         '<link rel="manifest" href="/manifest.webmanifest">\n<meta name="theme-color" content="#ffc93c">\n'
+         '<meta name="apple-mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-title" content="よろこぶ">\n')
 SHAPES = {
     "balloon": ('<svg viewBox="0 0 60 96"><path d="M30 64c-8 12 6 18-2 30" fill="none" stroke="{ink}" stroke-width="2.5" stroke-linecap="round"/>'
                 '<path d="M30 4C14 4 5 17 5 32c0 17 13 29 25 29s25-12 25-29C55 17 46 4 30 4z" fill="{c}" stroke="{ink}" stroke-width="3"/>'
@@ -181,7 +190,7 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
         bits.append('<span class="tagx">日付指定可</span>')
     note = '<p class="own">運営者のショップ</p>' if own else ""
     if it.get("note"):  # the editors' one-line reason for picking this product
-        note += f'<p class="pick-note">{esc(it["note"])}</p>'
+        note += f'<p class="pick-note"><b>{"ソムリエのひとこと" if it.get("curated") else "見立て"}</b>{esc(it["note"])}</p>'
     label = "ショップで見る" if own else "楽天市場で見る"
     badge = f'<span class="rank r{rank}">{rank}</span>' if rank and rank <= 3 and not own else ""
     attrs = (f'data-code="{esc(it["code"])}" data-price="{it["price"]}" data-reviews="{it["reviews"]}" data-rating="{it["rating"]}" '
@@ -221,6 +230,29 @@ def freshness(d: dict) -> str:
 
 def pr_quiet(cfg: dict) -> str:
     return '<p class="pr-quiet">PR:本ページには広告(アフィリエイトリンク)が含まれます。掲載する商品は、編集方針にもとづいて選んでいます。</p>'
+
+
+def auto_note(it: dict, ctx: dict) -> str:
+    """One or two true sentences about a product, from its own numbers and the page it appears on (no invented claims)."""
+    facts = []
+    n, r = it["reviews"], it["rating"]
+    if n and n >= ctx["max_reviews"] and n >= 30:
+        facts.append(f"このページの商品の中で、レビューがいちばん多い一品です(平均{r:.1f}・{n:,}件)。")
+    elif n >= 100 and r >= 4.5:
+        facts.append(f"レビューは{n:,}件で、平均{r:.1f}。多くの人が評価しています。")
+    elif n >= 20 and r >= 4.3:
+        facts.append(f"レビュー平均{r:.1f}(全{n:,}件)と、評価が安定しています。")
+    elif n and r >= 4.0:
+        facts.append(f"レビュー平均{r:.1f}({n:,}件)です。")
+    if it["price"] == ctx["min_price"] and ctx["count"] > 3:
+        facts.append("このページでは、いちばん手ごろな価格です。")
+    perks = [x for x, ok in (("送料無料", it["free_shipping"]), ("ギフト包装などのギフト対応", it.get("gift")), ("お届け日の指定", it.get("appoint"))) if ok]
+    if perks:
+        facts.append("・".join(perks) + "に対応しています。")
+    same = ctx["shops"].get(it["shop_code"], 0)
+    if same >= 2 and it["shop"]:
+        facts.append(f"{it['shop']}の商品が、このページに{same}点あります。")
+    return "".join(facts[:2])
 
 
 def pair_items(d: dict, key: str) -> tuple[list[dict], dict, list[dict]]:
@@ -328,6 +360,16 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     ideas, tiers_map, union = pair_items(d, key)
     tier_defs = [c["tiers"][t] for t in p["tiers"]]
     own = own_item(d, p["occasion"]) if p.get("portrait_note") else None
+    ctx = {"max_reviews": max((i["reviews"] for i in union), default=0), "min_price": min((i["price"] for i in union), default=0), "count": len(union),
+           "shops": {sc: sum(1 for i in union if i["shop_code"] == sc) for sc in {i["shop_code"] for i in union}}}
+
+    def noted(it: dict) -> dict:
+        if it.get("note"):
+            return {**it, "curated": True}
+        note = auto_note(it, ctx)
+        return {**it, "note": note} if note else it
+    union = [noted(i) for i in union]
+    ideas = [{**idea, "items": [noted(i) for i in idea["items"]]} for idea in ideas]
     grid_items = list(union)
     # the proposals (sommelier)
     proposals = "".join(idea_card(cfg, idea, i, c["filters"]["tiers"]) for i, idea in enumerate(ideas) if idea["items"])
@@ -670,6 +712,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
                          "<p>当サイトは、楽天グループ株式会社が運営するものではありません。</p>"),
         contact_notice="商品の購入・配送・返品などのお問い合わせは、各販売店へお願いします。当サイトでは、商品の販売を行っていません。",
         input_note="", finish=lambda s: s))
+    pages["manifest.webmanifest"] = json.dumps(MANIFEST, ensure_ascii=False, indent=1)
     pages.update(cards)
     pages.update(standard_files(pages, cfg, preview, d["fetched_date"]))
     pages.update(asset_pages(HERE / "assets"))
