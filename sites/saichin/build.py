@@ -234,6 +234,11 @@ def icon(name: str) -> str:
 GUIDE_ICONS = {"what-is": "guide", "how-decided": "chart", "excluded": "compare", "calculate": "yen", "below": "emergency"}
 
 
+def guide_card(g: dict) -> str:
+    return (f'<a class="guide-card" href="/guide/{g["slug"]}/"><img class="gc-img" src="/assets/img/guide-{g["slug"]}.webp" alt="" '
+            f'width="800" height="450" loading="lazy"><div class="gc-body"><b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></div></a>')
+
+
 def nav_html(path: str) -> str:
     out = []
     for label, href, prefix in NAV:
@@ -366,10 +371,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
         f'<td>+{r["raise"]}円</td><td>{jp_date(r["effective_date"])}</td><td class="state" data-date="{r["effective_date"]}"></td></tr>'
         for r in sorted(rows, key=lambda r: (r["effective_date"], r["name"]))
     )
-    guides = "".join(
-        f'<a class="guide-card" href="/guide/{g["slug"]}/">{icon(GUIDE_ICONS.get(g["slug"], "guide"))}<b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>'
-        for g in content.GUIDES
-    )
+    guides = "".join(guide_card(g) for g in content.GUIDES)
     body = f"""<section class="hero hero--saichin">
 <div class="hero-copy">
 <p class="eyebrow">{esc(d['label'])} 地域別最低賃金</p>
@@ -379,7 +381,6 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <div class="hero-sub"><b>全国加重平均</b><span>昨年度 {round(d['avg_prev']):,}円から <em>+{diff}円</em></span></div>
 </div>
 </div>
-<img class="hero-art" src="/assets/hero-saichin-note-clock.svg" alt="" width="360" height="220">
 <ul class="hero-facts">
 <li><span>{icon("up")}最も高い</span><b>{esc(hi['name'])} {yen(hi['amount'])}</b></li>
 <li><span>{icon("down")}最も低い</span><b>{esc(lo['name'])} {yen(lo['amount'])}</b></li>
@@ -404,6 +405,8 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <p class="section-lead">地方ごとに並べています。都道府県名を押すと、過去の推移や月給の目安を見られます。</p>
 {regions}
 </section>
+
+<img class="page-banner" src="/assets/img/section-work.webp" alt="いろいろな仕事で働く人たちのイラスト" width="1200" height="500" loading="lazy">
 
 <section>
 <h2>ランキング</h2>
@@ -702,9 +705,7 @@ def history_page(d: dict, cfg: dict, preview: bool) -> str:
 
 
 def guide_hub_page(d: dict, cfg: dict, preview: bool) -> str:
-    cards = "".join(
-        f'<a class="guide-card" href="/guide/{g["slug"]}/"><b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>' for g in content.GUIDES
-    )
+    cards = "".join(guide_card(g) for g in content.GUIDES)
     body = f"""{crumbs([("全国", "/"), ("最低賃金のきほん", None)])}
 <h1>最低賃金のきほん</h1>
 <p class="lead">仕組み、決まり方、計算の方法、下回っていたときの扱いを、厚生労働省の公表情報と最低賃金法にもとづいて説明します。</p>
@@ -726,6 +727,7 @@ def guide_page(d: dict, g: dict, cfg: dict, preview: bool) -> str:
     body = f"""{crumbs([("全国", "/"), ("最低賃金のきほん", "/guide/"), (g["title"], None)])}
 <h1>{esc(g['title'])}</h1>
 <p class="lead">{esc(g['lead'])}</p>
+<img class="page-banner guide" src="/assets/img/guide-{g['slug']}.webp" alt="" width="800" height="450">
 <article class="prose">{g['body']}</article>
 <h2>出典</h2>
 <ul class="link-list">{sources}</ul>

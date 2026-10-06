@@ -9,6 +9,7 @@ months are in) are printed on every page that shows a comparison.
 from __future__ import annotations
 
 import argparse
+from urllib.parse import quote
 import json
 import sys
 from datetime import date
@@ -167,6 +168,11 @@ GUIDE_ICONS = {"prepare": "guide", "encounter": "paw", "spray": "emergency", "ho
 TILE_COLORS = ("#e5ede7", "#d9f99d", "#86efac", "#22c55e", "#f97316", "#dc2626")
 
 
+def guide_card(g: dict) -> str:
+    return (f'<a class="guide-card" href="/guide/{g["slug"]}/"><img class="gc-img" src="/assets/img/guide-{g["slug"]}.webp" alt="" '
+            f'width="800" height="450" loading="lazy"><div class="gc-body"><b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></div></a>')
+
+
 def stat(label: str, big: str, sub: str, strong: bool = False, ico: str = "") -> str:
     return (f'<div class="stat{" strong" if strong else ""}">{icon(ico) if ico else ""}<span>{label}</span><b>{big}</b>'
             f'<span>{sub}</span></div>')
@@ -209,6 +215,7 @@ def bar_list(rows: list[tuple[str, str, int]], top: int) -> str:
 
 
 def page(cfg, preview, **kw):
+    kw.setdefault("og_image", "/assets/img/og-kuma-alert.webp")
     return layout(SITE, cfg, preview, alternates=(("更新のお知らせ", "/feed.xml"),), **kw)
 
 
@@ -227,7 +234,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
     ytd_cur, ytd_prev = d["nat_ytd"][cur], d["nat_ytd"][done]
     top_rows = bar_list([(pref_link(r), f'{n(r["total"][done])}件', r["total"][done]) for r in top], 5)
     emg_rows = "".join(f'<li>{md(c["date"])} {esc(c["prefecture"])}{esc(c["place"])}<b>{esc(c["species"])}</b></li>' for c in latest)
-    guides = "".join(f'<a class="guide-card" href="/guide/{g["slug"]}/">{icon(GUIDE_ICONS.get(g["slug"], "guide"))}<b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>'
+    guides = "".join(guide_card(g)
                      for g in content.GUIDES)
     live_home = ""
     alerts = []
@@ -252,7 +259,6 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <div class="hero-main"><div><span class="hero-sub">{fy_label(done)}の出没件数(全国)</span><b class="big">{n(total_done)}件</b></div>
 <span class="hero-sub"><em>{fy_label(d['years'][-3])}({n(total_prev)}件)の{ratio_text(total_done, total_prev)}</em></span></div>
 </div>
-<img class="hero-art" src="/assets/hero-kuma-mountains.svg" alt="" width="360" height="220">
 <ul class="hero-facts">
 <li><span>{icon("injury")}{fy_label(done)}の人身被害</span><b>{n(i_done[0])}件・{n(i_done[1])}人(うち死亡{n(i_done[2])}人)</b></li>
 <li><span>{icon("sightings")}{fy_label(cur)}の出没({month_range(d)})</span><b>{n(ytd_cur)}件(前年度の同じ期間は{n(ytd_prev)}件・{ratio_text(ytd_cur, ytd_prev)})</b></li>
@@ -276,6 +282,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <p><a href="/emergency/">緊急銃猟と死亡事故の一覧</a></p>
 {news_block}<h2>クマに出会わないために</h2>
 <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">{guides}</div>
+<div class="pictos"><img src="/assets/img/pictogram-bell-radio-spray.webp" alt="音の出るもの、ラジオ、クマ撃退スプレーを携帯する、という対策のイラスト" width="800" height="450" loading="lazy"><img src="/assets/img/pictogram-slow-retreat.webp" alt="クマに出会ったときは、慌てず、ゆっくり後退する、というイラスト" width="800" height="450" loading="lazy"></div>
 <p><a href="/notify/">更新を通知で受け取る方法</a></p>
 <p class="notice">人身被害は、{fy_label(inj_max)}が、{n(inj[inj_max][1])}人で、表にある平成20年度以降で最も多くなっています。{CAUTION}</p>"""
     return page(cfg, preview, scripts=True, path="/", title=f"クマ出没速報 | 都道府県別の出没件数・人身被害・緊急銃猟(環境省の速報値)",
@@ -596,7 +603,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
 
 
 def guide_hub(cfg: dict, preview: bool) -> str:
-    cards = "".join(f'<a class="guide-card" href="/guide/{g["slug"]}/">{icon(GUIDE_ICONS.get(g["slug"], "guide"))}<b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></a>' for g in content.GUIDES)
+    cards = "".join(guide_card(g) for g in content.GUIDES)
     body = f"""{crumbs([("全国", "/"), ("対処法・解説", None)])}
 <h1>クマへの対処法と、データの見方</h1>
 <p class="lead">公的機関の資料にもとづいて、クマに出会わないための備えと、出会ったときの行動、数字の読み方をまとめています。</p>
@@ -610,6 +617,7 @@ def guide_page(g: dict, cfg: dict, preview: bool) -> str:
     body = f"""{crumbs([("全国", "/"), ("対処法・解説", "/guide/"), (g["title"], None)])}
 <h1>{esc(g['title'])}</h1>
 <p class="lead">{esc(g['lead'])}</p>
+<img class="page-banner" src="/assets/img/guide-{g['slug']}.webp" alt="" width="800" height="450">
 <article class="prose">{g['body']}</article>
 <h2>出典</h2>
 <ul class="link-list">{sources}</ul>
@@ -665,6 +673,59 @@ def feed_xml(d: dict, cfg: dict) -> str:
             f"<updated>{entries[0][0]}T00:00:00+09:00</updated>\n{body}</feed>\n")
 
 
+
+# ---------------------------------------------------------------- goods (affiliate; every link is marked PR)
+
+GOODS = [
+    {"title": "クマ鈴・ベル", "query": "クマ鈴", "guide": ("prepare", "山に入る前の備え"),
+     "points": ["音で、人がいることを知らせるための道具です(環境省・自治体は、音の出るものの携帯を呼びかけています)。",
+                "登山・農作業・散歩など、使う場面に合うか、音の大きさ・重さ・取り付け方を、商品ページで確認します。"]},
+    {"title": "携帯ラジオ", "query": "携帯ラジオ 防災", "guide": ("prepare", "山に入る前の備え"),
+     "points": ["音を出して人の存在を知らせるほか、天気や災害の情報を得る手段にもなります。",
+                "電池の種類・持ち運びやすさ・受信できる放送(AM/FM)を、商品ページで確認します。"]},
+    {"title": "ヘッドライト・小型ライト", "query": "ヘッドライト 防災", "guide": ("prepare", "山に入る前の備え"),
+     "points": ["クマは、早朝や夕方に注意が必要とされています(自治体の啓発資料)。薄暗い時間の作業・行動に、明るさの確保が役立ちます。",
+                "明るさ(ルーメン)・点灯時間・防水を、商品ページで確認します。"]},
+    {"title": "ホイッスル(笛)", "query": "ホイッスル 登山", "guide": ("prepare", "山に入る前の備え"),
+     "points": ["音で存在を知らせる、軽い道具です。ザックに付けておけます。",
+                "音の大きさ・紐の長さ・水に濡れても鳴るかを、商品ページで確認します。"]},
+    {"title": "クマ撃退スプレー", "query": "クマ撃退スプレー", "guide": ("spray", "選び方と使い方(消費者庁・環境省)"),
+     "points": ["出会ってしまったときの「最終手段」です。まず、出会わないための対策が第一です。",
+                "クマ用で、撃退用のものを選びます。噴射距離・噴射時間などの性能表示を確認します(消費者庁)。環境省は、令和8年8月に、性能に係る推奨要件を公表しています。",
+                "このサイトは、製品の効果を保証しません。保管・持ち運び・航空機への持ち込み不可などの注意は、解説のページで確認してください。"]},
+    {"title": "ごみ・食べ物を、外に置かないための容器", "query": "密閉 ごみ容器 屋外", "guide": ("home", "家の周りに、クマを寄せつけない"),
+     "points": ["生ごみ・果樹・農作物などが、クマを人里に引き寄せる要因になります(秋田県の資料)。",
+                "ふたが閉まり、においが漏れにくいか・固定できるかを、商品ページで確認します。"]},
+]
+
+
+def rakuten_url(cfg: dict, target: str) -> str:
+    """Rakuten Affiliate link to a Rakuten Ichiba page (here: a search results page, so it never goes stale)."""
+    aid, tid = cfg["rakuten_affiliate_id"], cfg.get("rakuten_tracking_id")
+    enc = quote(target, safe="")
+    path = f"{aid}/{tid}" if tid else f"{aid}/"
+    return f"https://hb.afl.rakuten.co.jp/hgc/{path}?pc={enc}&m={enc}"
+
+
+def goods_page(d: dict, cfg: dict, preview: bool) -> str:
+    cards = ""
+    for g in GOODS:
+        target = "https://search.rakuten.co.jp/search/mall/" + quote(g["query"], safe="") + "/"
+        pts = "".join(f"<li>{esc(p)}</li>" for p in g["points"])
+        cards += (f'<div class="goods-card"><h3>{esc(g["title"])}</h3><ul>{pts}</ul>'
+                  f'<p style="margin:0;font-size:.88rem"><a href="/guide/{g["guide"][0]}/">{esc(g["guide"][1])}</a>を読む</p>'
+                  f'<a class="btn" href="{esc(rakuten_url(cfg, target))}" rel="sponsored nofollow noopener" target="_blank">'
+                  f'<span class="pr-note">PR</span>楽天市場で探す</a></div>')
+    body = f"""{crumbs([("全国", "/"), ("クマ対策グッズ", None)])}
+<h1>クマ対策のグッズ</h1>
+<p class="lead"><span class="pr-note">PR</span>このページは、広告(楽天アフィリエイト)のリンクを含みます。リンク先で購入されると、運営者に報酬が支払われることがあります。</p>
+<p>グッズは、<strong>クマに出会わないための対策の、補助</strong>です。まず、<a href="/guide/prepare/">山に入る前の備え</a>と、<a href="/guide/home/">家の周りの対策</a>を、お読みください。以下は、公的機関の資料に出てくる対策に関連する、商品の種類です。個々の商品を推奨するものではなく、効果も保証しません。各リンクは、楽天市場の検索結果のページです。商品の仕様・価格・在庫は、販売ページでご確認ください。</p>
+<div class="goods-grid">{cards}</div>
+<p class="notice">クマの目撃や被害の通報は、お住まいの市町村、または警察(110番)へお願いします。製品の安全な使い方は、各製品の取扱説明書に従ってください。</p>"""
+    return page(cfg, preview, path="/goods/", title="クマ対策のグッズ(PR) 音の出る道具・ライト・撃退スプレーの選び方",
+                description="クマに出会わないための備えに関連する、グッズの種類と、確認するポイントを、公的機関の資料にもとづいてまとめています。広告(PR)を含みます。", body=body)
+
+
 # ---------------------------------------------------------------- site
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None,
@@ -681,6 +742,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     d["live_prefs"] = prepare_prefs(prefs)
     any_live = bool(live or d["live_prefs"])
     nav = [x for x in BASE_NAV if x[1] != "/live/" or any_live]
+    if cfg.get("rakuten_affiliate_id"):
+        nav = nav[:-1] + [("グッズ(PR)", "/goods/", "/goods/")] + nav[-1:]
     SITE = {**SITE, "nav": nav}
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
     for kind in ("sightings", "change", "injuries"):
@@ -696,6 +759,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     for g in content.GUIDES:
         pages[f"guide/{g['slug']}/index.html"] = guide_page(g, cfg, preview)
     pages["notify/index.html"] = notify_page(d, cfg, preview)
+    if cfg.get("rakuten_affiliate_id"):
+        pages["goods/index.html"] = goods_page(d, cfg, preview)
     pages["feed.xml"] = feed_xml(d, cfg)
     pages.update(legal_pages(
         SITE, cfg, preview,
