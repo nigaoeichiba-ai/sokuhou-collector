@@ -92,6 +92,62 @@ const vis = (d) => [...d.querySelectorAll('.grid-all li.item')].filter(li => !li
 """
 
 
+MEMO_SCENARIO = r"""
+const out = {};
+const wait = (ms) => new Promise(r => setTimeout(r, ms));
+async function load(url) {
+  const f = document.createElement('iframe'); f.style.width = '1200px'; f.style.height = '900px'; document.body.appendChild(f);
+  await new Promise(r => { f.onload = r; f.src = url; }); await wait(300); return f;
+}
+(async () => {
+  try {
+    let f = await load('/memo/?o=birthday&r=mother'); let d = f.contentDocument, w = f.contentWindow;
+    w.localStorage.clear();
+    const form = d.querySelector('.memo-add');
+    out.prefill = [form.elements.occ.value, form.elements.rec.value];
+    out.date_hidden_for_fixed = (() => { form.elements.occ.value = 'mothers-day'; form.elements.occ.dispatchEvent(new w.Event('change')); return d.querySelector('.when').hidden; })();
+    out.fixed_note = d.querySelector('.memo-fixed').textContent;
+    form.elements.occ.value = 'birthday'; form.elements.occ.dispatchEvent(new w.Event('change'));
+    out.date_visible_for_birthday = !d.querySelector('.when').hidden;
+    // a birthday on a fixed month/day: the countdown is checked against an independent calculation
+    const now = new Date(); const t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const target = new Date(t0.getTime() + 30 * 86400000);
+    const iso = target.getFullYear() + '-' + String(target.getMonth() + 1).padStart(2, '0') + '-' + String(target.getDate()).padStart(2, '0');
+    form.elements.rec.value = 'mother'; form.elements.name.value = 'ハナコ'; form.elements.date.value = iso;
+    form.dispatchEvent(new w.Event('submit', {cancelable: true})); await wait(200);
+    const card = d.querySelector('.memo-card');
+    out.card_title = card.querySelector('b').textContent;
+    out.card_count = card.querySelector('.cd').textContent;
+    out.soon_class = card.classList.contains('soon');
+    out.go_href = card.querySelector('a.go').getAttribute('href');
+    out.google = card.querySelector('.acts a:nth-of-type(2)').href;
+    // a fixed-date occasion needs no date
+    form.elements.rec.value = 'mother'; form.elements.occ.value = 'mothers-day'; form.elements.occ.dispatchEvent(new w.Event('change'));
+    form.dispatchEvent(new w.Event('submit', {cancelable: true})); await wait(200);
+    out.cards_after_two = [...d.querySelectorAll('.memo-card b')].map(b => b.textContent);
+    out.stored = JSON.parse(w.localStorage.getItem('yorokobu.memo')).length;
+    // the calendar file
+    const data = JSON.parse(d.querySelector('#memo-app').getAttribute('data-json'));
+    const ics = w.YorokobuMemo.buildIcs(JSON.parse(w.localStorage.getItem('yorokobu.memo')), data);
+    out.ics_has = { calendar: ics.startsWith('BEGIN:VCALENDAR\r\n'), yearly: ics.includes('RRULE:FREQ=YEARLY'), alarm21: ics.includes('TRIGGER:-P21D'), alarm7: ics.includes('TRIGGER:-P7D'),
+                    events: (ics.match(/BEGIN:VEVENT/g) || []).length, rrules: (ics.match(/RRULE/g) || []).length };
+    out.ics_max_line = Math.max(...ics.split('\r\n').map(l => new TextEncoder().encode(l).length));
+    out.ics_link = ics.includes('/gift/birthday-mother/');
+    // the top page shows the nearest days once something is saved
+    f = await load('/'); d = f.contentDocument;
+    out.home_cards = [...d.querySelectorAll('#memo-strip .memo-card')].length;
+    out.home_first = (d.querySelector('#memo-strip .memo-card .cd') || {}).textContent;
+    // deleting
+    f = await load('/memo/'); d = f.contentDocument;
+    [...d.querySelectorAll('.memo-card .acts button')].filter(b => b.textContent === '削除')[0].click(); await wait(100);
+    out.after_delete = d.querySelectorAll('.memo-card').length;
+    out.expected_30 = 'あと30日';
+  } catch (e) { out.error = String(e); }
+  document.getElementById('out').textContent = JSON.stringify(out);
+})();
+"""
+
+
 def run_chrome(url: str) -> str:
     profile = tempfile.mkdtemp(prefix="yorokobu_e2e_")
     try:
@@ -127,6 +183,14 @@ class BrowserTest(unittest.TestCase):
     def tearDownClass(cls):
         cls.server.shutdown()
         cls.tmp.cleanup()
+
+    @classmethod
+    def run_scenario(cls, script: str) -> dict:
+        (cls.root / "e2e2.html").write_text(f'<!doctype html><meta charset="utf-8"><pre id="out"></pre><script>{script}</script>', encoding="utf-8")
+        dom = run_chrome(f"http://127.0.0.1:{cls.server.server_address[1]}/e2e2.html")
+        m = re.search(r'<pre id="out">(.*?)</pre>', dom, re.S)
+        import html as _h
+        return json.loads(_h.unescape(m.group(1)))
 
     def test_no_script_error(self):
         self.assertNotIn("error", self.out)
@@ -170,6 +234,29 @@ class BrowserTest(unittest.TestCase):
         self.assertTrue(o["fav_line"].startswith("https://line.me/R/msg/text/?"))
         self.assertIn('"code"', o["fav_stored"])
         self.assertEqual(o["fav_after_remove"], "0")
+
+    def test_memo_registration_countdown_calendar_files_and_the_home_strip(self):
+        o = self.run_scenario(MEMO_SCENARIO)
+        self.assertNotIn("error", o)
+        self.assertEqual(o["prefill"], ["birthday", "mother"])                  # ?o=&r= from a gift page
+        self.assertTrue(o["date_hidden_for_fixed"])                              # Mother's Day needs no date
+        self.assertIn("毎年、日にちが決まっています", o["fixed_note"])
+        self.assertTrue(o["date_visible_for_birthday"])
+        self.assertEqual(o["card_title"], "ハナコの誕生日")
+        self.assertEqual(o["card_count"], "あと30日")
+        self.assertFalse(o["soon_class"])                                        # 30 days: not "soon" (21 or fewer)
+        self.assertEqual(o["go_href"], "/gift/birthday-mother/")
+        self.assertIn("calendar.google.com/calendar/render?action=TEMPLATE", o["google"])
+        self.assertIn("recur=RRULE%3AFREQ%3DYEARLY", o["google"])
+        self.assertEqual(o["stored"], 2)
+        self.assertEqual(sorted(o["cards_after_two"]), sorted(["ハナコの誕生日", "母の母の日"]))
+        ics = o["ics_has"]
+        self.assertTrue(ics["calendar"] and ics["yearly"] and ics["alarm21"] and ics["alarm7"])
+        self.assertEqual((ics["events"], ics["rrules"]), (2, 1))                  # the birthday repeats yearly, Mother's Day is listed by its dates
+        self.assertLessEqual(o["ics_max_line"], 75)
+        self.assertTrue(o["ics_link"])
+        self.assertEqual(o["home_cards"], 2)
+        self.assertEqual(o["after_delete"], 1)
 
 
 if __name__ == "__main__":

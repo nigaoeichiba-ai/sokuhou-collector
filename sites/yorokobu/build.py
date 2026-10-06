@@ -19,6 +19,7 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
 from sites.yorokobu import content as ct  # noqa: E402
+from sites.yorokobu import giftcal  # noqa: E402
 from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
@@ -28,7 +29,7 @@ from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs,
 SOURCE_HTML = ('商品の情報は楽天ウェブサービスを利用して取得しています。 '
                '<a href="https://webservice.rakuten.co.jp/" target="_blank">Supported by Rakuten Developers</a>')  # the credit HTML is prescribed: use as is
 NAV = [("イベントから", "/occasion/", "/occasion/"), ("相手から", "/for/", "/for/"), ("季節の贈り物", "/#season", "/season-none/")]
-SITE = {"nav": NAV[:2], "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">', "assets": HERE / "assets",
+SITE = {"nav": NAV[:2] + [("たいせつな日メモ", "/memo/", "/memo/")], "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">', "assets": HERE / "assets",
         "source_html": SOURCE_HTML}
 # months (1-12) in which an occasion is worth showing as "いまが贈りどき"; the rest are evergreen
 SEASON = {
@@ -379,6 +380,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (occ["name"], f"/occasion/{occ['slug']}/"), (p["title"].split(" ")[0], None)])}</div>
 {pr_quiet(cfg)}
 {share_bar(cfg, f"/gift/{key}/", f"{p['title'].split(' ')[0]}の候補を見つけたよ。どれがよさそう?")}
+<p class="memo-link"><a href="/memo/?o={p['occasion']}&amp;r={p['recipient']}">この日を忘れない(たいせつな日メモに登録)</a></p>
 <section class="why-how"><div class="cols"><div><h2><span class="scribble">喜ばれやすい理由</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["reasons"])}</ol></div>
 <div class="how"><h2><span class="scribble">選び方のポイント</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["how_to_choose"])}</ol></div></div></section>
 {proposals}
@@ -447,6 +449,89 @@ def hub_page(d: dict, cfg: dict, preview: bool, kind: str) -> str:
     return page(cfg, preview, path=path, title=f"{title} | {cfg['site_name']}", description=lead, body=body)
 
 
+
+# ---------------------------------------------------------------- 贈りどきカレンダー and たいせつな日メモ (reminders kept in the browser)
+
+def fixed_dates(today: date) -> dict:
+    """{occasion: [ISO dates of its next three years]} for the occasions whose day is the same for everybody."""
+    out: dict = {}
+    for y in (today.year, today.year + 1, today.year + 2):
+        for g in giftcal.gift_days(y):
+            out.setdefault(g["slug"], []).append(g["date"].isoformat())
+    return out
+
+
+def memo_data(d: dict, cfg: dict, today: date) -> dict:
+    c = d["c"]
+    return {"fixed": fixed_dates(today), "names": {"occ": {o["slug"]: o["name"] for o in c["occasions"]}, "rec": {r["slug"]: r["name"] for r in c["recipients"]}},
+            "pairs": [ct.pair_key(p) for p in c["pairs"]], "base": cfg["site_url"].rstrip("/")}
+
+
+def memo_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
+    c = d["c"]
+    occ_opts = "".join(f'<option value="{o["slug"]}">{esc(o["name"])}</option>' for o in c["occasions"])
+    rec_opts = "".join(f'<option value="{r["slug"]}">{esc(r["name"])}</option>' for r in c["recipients"])
+    data = memo_data(d, cfg, today)
+    head = head_band("mint", f'{ic_wrap("occasion", "thanks")}', "たいせつな日メモ", "大切な人の誕生日や記念日を、登録しておくと、3週間前と1週間前に、シマエナガが、そっと教えます(カレンダーの通知)。", single=True, mascot="r-wink")
+    body = f"""{head}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("たいせつな日メモ", None)])}</div>
+<section id="memo-app" class="memo" data-json="{esc(json.dumps(data, ensure_ascii=False, separators=(",", ":")))}">
+<div class="memo-form"><h2><span class="scribble">日を登録する</span></h2>
+<form class="memo-add">
+<label>だれの<select name="rec" required><option value="">贈る相手</option>{rec_opts}</select></label>
+<label>名前(自由・なくてもOK)<input type="text" name="name" maxlength="12" placeholder="例: ハナコ"></label>
+<label>どの日<select name="occ" required><option value="">イベント</option>{occ_opts}</select></label>
+<label class="when">日にち<input type="date" name="date"></label>
+<p class="memo-fixed" hidden></p>
+<button type="submit" class="btn">この日を登録</button>
+</form>
+<p class="memo-note">入力した内容は、<b>この端末のブラウザだけに保存され、送信されません</b>。端末やブラウザを変えると、見られなくなります。</p>
+</div>
+<div class="memo-list-wrap"><h2><span class="scribble">登録した日</span></h2>
+<ul class="memo-list" aria-live="polite"></ul>
+<p class="memo-empty">まだ登録がありません。左のフォームから、大切な日を、登録してみましょう。</p>
+<p class="memo-all" hidden><button type="button" class="btn btn-sub" data-all-ics>すべてカレンダーに追加(.ics)</button></p>
+</div>
+</section>
+<section class="calendar-teaser" style="margin-top:50px"><h2><span class="scribble">みんなの贈りどき</span></h2>
+<p>母の日、父の日、クリスマスなど、日にちが決まっている贈りどきは、<a href="/calendar/">贈りどきカレンダー</a>から、まとめて、カレンダーに入れられます。</p></section>"""
+    return page(cfg, preview, path="/memo/", title=f"たいせつな日メモ 贈り忘れを防ぐリマインダー | {cfg['site_name']}",
+                description="大切な人の誕生日や記念日を登録して、3週間前と1週間前に、カレンダーの通知で、贈り物の準備をお知らせ。登録は不要、入力した内容は端末の中だけに保存されます。",
+                body=body, og_image=og_for("default"))
+
+
+def calendar_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
+    c = d["c"]
+    blocks = ""
+    for y in (today.year, today.year + 1):
+        rows = ""
+        for g in giftcal.gift_days(y):
+            if g["date"] < today:
+                continue
+            link = f'<a href="/occasion/{g["slug"]}/">{esc(g["label"])}</a>' if g["slug"] in c["occ"] else esc(g["label"])
+            rows += (f'<tr><td>{g["date"].month}月{g["date"].day}日</td><td>{link}<small>({esc(g["when"])})</small></td>'
+                     f'<td>{g["start"].month}月{g["start"].day}日</td></tr>')
+        if rows:
+            blocks += (f'<h3>{y}年</h3><table class="gift-days"><thead><tr><th>日にち</th><th>贈りどき</th><th>選びはじめ(3週間前)</th></tr></thead>'
+                       f'<tbody>{rows}</tbody></table>')
+    feed = cfg["site_url"].rstrip("/") + "/calendar/yorokobu-gift-days.ics"
+    webcal = "webcal://" + feed.split("://", 1)[1]
+    google = "https://calendar.google.com/calendar/r?cid=" + quote(webcal, safe="")
+    head = head_band("pink", f'{ic_wrap("occasion", "oseibo")}', "贈りどきカレンダー", "母の日、父の日、クリスマスなど、日にちが決まっている贈りどきを、カレンダーに入れておけます。3週間前に、選びはじめの合図も、入ります。", single=True, mascot="b-sparkle")
+    body = f"""{head}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("贈りどきカレンダー", None)])}</div>
+<section><h2><span class="scribble">カレンダーに入れる</span></h2>
+<p class="cal-actions"><a class="btn" href="{esc(google)}" target="_blank" rel="noopener">Googleカレンダーに追加</a>
+<a class="btn btn-sub" href="{esc(webcal)}">iPhone・Macに追加</a>
+<a class="btn btn-sub" href="/calendar/yorokobu-gift-days.ics" download>.icsを保存</a></p>
+<p class="memo-note">どれも無料で、登録は不要です。カレンダーの更新の反映には、時間がかかる場合があります。</p></section>
+<section style="margin-top:36px"><h2><span class="scribble">日にちの一覧</span></h2>{blocks}
+<p class="memo-note">誕生日や結婚記念日など、人によって違う日は、<a href="/memo/">たいせつな日メモ</a>で、登録できます。</p></section>"""
+    return page(cfg, preview, path="/calendar/", title=f"贈りどきカレンダー {today.year}・{today.year + 1} 母の日・父の日・クリスマスの日にち | {cfg['site_name']}",
+                description="母の日・父の日・敬老の日・クリスマス・お歳暮などの贈りどきの日にちと、選びはじめの目安(3週間前)の一覧。GoogleカレンダーやiPhoneに、まとめて追加できます。",
+                body=body, og_image=og_for("default"))
+
+
 def season_occasions(c: dict, today: date) -> list[dict]:
     months = {today.month, today.month % 12 + 1}
     out = [o for o in c["occasions"] if o["slug"] in SEASON and months & set(SEASON[o["slug"]])]
@@ -488,6 +573,9 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 </div></section>
 <div class="marquee" aria-hidden="true"><div class="track">{ticker}</div></div>
 {pr_quiet(cfg)}
+<section id="memo-strip" class="memo-strip" data-json="{esc(json.dumps(memo_data(d, cfg, today), ensure_ascii=False, separators=(",", ":")))}"><div class="memo-strip-in"><img class="hop" src="/assets/img/concierge-note.webp" alt="" width="150" height="114" loading="lazy">
+<div><h2>大切な日を、忘れない</h2><p>誕生日や記念日を登録すると、3週間前に、カレンダーで、お知らせします。</p>
+<p><a class="btn" href="/memo/">たいせつな日メモをつくる</a> <a class="btn btn-sub" href="/calendar/">贈りどきカレンダー</a></p></div></div></section>
 <section style="margin-top:56px"><div class="sec-head"><span class="sticker">NOW</span><h2>いまが<span class="scribble">贈りどき</span></h2><p>これから迎えるイベントのプレゼントを、先取りで。</p></div>
 <ul class="tiles wide">{season}</ul></section>
 <section class="band sky scallop" style="margin-top:70px"><div class="in"><div class="sec-head"><img class="step-mascot hop" src="/assets/img/navi-scope.webp" alt="望遠鏡をのぞくシマエナガと、道を指さすシマエナガ" width="380" height="193" loading="lazy"><h2>選び方は、かんたん<span class="scribble">3ステップ</span></h2></div>
@@ -561,6 +649,10 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview, today),
                                      "occasion/index.html": hub_page(d, cfg, preview, "occasion"),
                                      "for/index.html": hub_page(d, cfg, preview, "for")}
+    pages["memo/index.html"] = memo_page(d, cfg, preview, today)
+    pages["calendar/index.html"] = calendar_page(d, cfg, preview, today)
+    pages["calendar/yorokobu-gift-days.ics"] = giftcal.ics(cfg["site_url"], [today.year, today.year + 1, today.year + 2],
+                                                             f"{today:%Y%m%d}T000000Z")
     for o in c["occasions"]:
         pages[f"occasion/{o['slug']}/index.html"] = occasion_page(d, cfg, preview, o)
     for r in c["recipients"]:

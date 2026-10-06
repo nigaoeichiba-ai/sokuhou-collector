@@ -400,3 +400,35 @@ main.wrap > h1:first-child { margin-top: 36px; }
 .share-btn.line { background: #06c755; color: #fff; border-color: #048a3b; }
 .share-btn.x { background: #111; color: #fff; }
 .share-btn:hover { transform: translateY(-1px); }
+
+/* reminders and the gift calendar */
+.memo { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; margin-top: 26px; align-items: start; }
+.memo-form, .memo-list-wrap { padding: 20px 22px; background: #fff; border: var(--line2); border-radius: 22px; box-shadow: var(--shadow-c); }
+.memo-add { display: grid; gap: 12px; }
+.memo-add label { display: grid; gap: 4px; font-size: .84rem; font-weight: 900; }
+.memo-add select, .memo-add input { padding: .55em .7em; border: var(--line2); border-radius: 12px; background: #fff7e0; font: 700 .95rem var(--body); color: var(--ink); }
+.memo-fixed { margin: 0; padding: .5em .8em; background: var(--butter, #fff1b8); border-radius: 10px; font-size: .84rem; font-weight: 700; }
+.memo-note { font-size: .78rem; color: var(--muted); }
+.memo-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.memo-card { padding: 12px 14px; background: #fff8e2; border: var(--line2); border-radius: 16px; }
+.memo-card .row1 { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.memo-card b { font-size: 1rem; }
+.memo-card .cd { font-family: var(--num); font-weight: 700; font-size: 1.35rem; color: var(--pink-d); }
+.memo-card small { display: block; color: var(--muted); }
+.memo-card .acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.memo-card .acts a, .memo-card .acts button { padding: .2em .8em; border: 2px solid var(--ink); border-radius: 999px; background: #fff; color: var(--ink); font: 700 .76rem var(--body); text-decoration: none; cursor: pointer; }
+.memo-card .acts .go { background: var(--pink); color: #fff; }
+.memo-card.soon { background: #ffe0e8; }
+.memo-link { margin: 6px 0 0; font-size: .82rem; }
+.memo-strip { margin: 26px 0 0; }
+.memo-strip-in { display: flex; align-items: center; gap: 18px; padding: 16px 22px; background: linear-gradient(135deg, #e3f4ff, #fff1b8); border: var(--line2); border-radius: 22px; box-shadow: var(--shadow-c); }
+.memo-strip-in img { width: 120px; height: auto; flex: none; }
+.memo-strip-in h2 { margin: 0 0 4px; background: none; padding: 0; display: block; font-size: 1.2rem; }
+.memo-strip-in p { margin: 0 0 8px; font-size: .88rem; }
+.memo-strip .cards { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); margin-top: 8px; }
+.cal-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.gift-days { width: 100%; border-collapse: collapse; margin: 6px 0 18px; background: #fff; border: var(--line2); border-radius: 14px; overflow: hidden; }
+.gift-days th, .gift-days td { padding: .55em .8em; text-align: left; border-bottom: 1px solid #ecdcbc; font-size: .9rem; }
+.gift-days th { background: var(--butter, #fff1b8); font-size: .78rem; }
+.gift-days small { margin-left: .4em; color: var(--muted); }
+@media (max-width: 860px) { .memo { grid-template-columns: 1fr; } .memo-strip-in { flex-direction: column; text-align: center; } }
