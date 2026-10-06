@@ -88,6 +88,26 @@ class CandidatesTest(unittest.TestCase):
         bf = data["pairs"]["birthday-boyfriend"]
         self.assertFalse({i["code"] for i in bf[0]} & {i["code"] for i in bf[1]})
 
+    def test_a_thin_idea_is_topped_up_with_the_pages_other_keywords(self):
+        import urllib.parse
+        import copy
+        content = copy.deepcopy(CONTENT)
+        pair = next(p for p in content["pairs"] if p["occasion"] == "mothers-day")
+        kw = "上質 ハンカチ 母"
+        pair["keywords"] = [kw]
+        few = [raw_item(f"f{i}", 2000 + i, f"s{i}") for i in range(3)]
+        many = [raw_item(f"k{i}", 2000 + i, f"t{i}") for i in range(20)]
+        asked = []
+
+        def transport(url):
+            asked.append(url)
+            return many if urllib.parse.quote_plus(kw) in url else few
+        data = fetch.candidates(content, client(FakeTransport(transport)), limit_pairs=None, now=datetime(2026, 10, 7, 7, 0))
+        codes = [i["code"] for i in data["pairs"]["mothers-day-mother"][0]]
+        self.assertGreaterEqual(len(codes), fetch.CANDIDATES_MIN)
+        self.assertTrue(any(c.startswith("k") for c in codes))
+        self.assertTrue(any("sort=-reviewCount" in u for u in asked))
+
 
 if __name__ == "__main__":
     unittest.main()

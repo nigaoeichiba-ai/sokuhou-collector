@@ -49,9 +49,10 @@ OCCASION_ONLY = {
 OCCASION_ONLY_ALL = tuple(w for ws in OCCASION_ONLY.values() for w in ws) + ("ハロウィン", "お年賀")
 
 
-def fits_occasion(name: str, occasion: str) -> bool:
-    """False when the title is made for a different, narrower occasion than the page's."""
-    own = OCCASION_ONLY.get(occasion, ())
-    if occasion == "halloween":
+def fits_occasion(name: str, occasion: str, occasion_name: str = "") -> bool:
+    """False when the title is made for a different, narrower occasion than the page's.  Titles stuffed with several occasions
+    ("誕生日 出産祝い 内祝い") are fine as long as they also name this page's own occasion."""
+    if occasion_name and occasion_name in name:
         return True
+    own = OCCASION_ONLY.get(occasion, ())
     return not any(w in name and w not in own for w in OCCASION_ONLY_ALL)
