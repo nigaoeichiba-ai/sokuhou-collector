@@ -62,3 +62,11 @@ class MonthTest(unittest.TestCase):
             for href in re.findall(r'href="(/[^"#?]*)', t):
                 target = href.lstrip("/") + ("index.html" if href.endswith("/") else "")
                 self.assertTrue(target in self.files or (self.out / target).exists(), (m, href))
+
+    def test_the_hub_never_links_to_a_month_without_a_page(self):
+        import re
+        months = build.month_pages(self.c, TODAY)
+        for today in (date(2026, 5, 3), date(2026, 10, 7)):
+            hub = build.month_hub_page({"c": self.c}, CFG, False, today, months)
+            for m in re.findall(r'href="/month/(\d+)/"', hub):
+                self.assertIn(int(m), months, (today, m))
