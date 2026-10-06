@@ -108,11 +108,38 @@ def _num(v, default=0.0) -> float:
         return default
 
 
+def clean_item_url(url: str) -> str:
+    """The API may return its own affiliate redirect (hb.afl.rakuten.co.jp ... ?pc=<item page>) instead of the item page.
+    Linking through it would hand the commission to Rakuten's ID, so unwrap it to the plain Ichiba item page."""
+    parts = urllib.parse.urlsplit(url)
+    if parts.netloc == "hb.afl.rakuten.co.jp":
+        target = urllib.parse.parse_qs(parts.query).get("pc", [""])[0]
+        if target.startswith("https://"):
+            return clean_item_url(target)
+    return url
+
+
+_PROMO = [
+    r"【[^】]*】", r"≪[^≫]*≫", r"《[^》]*》", r"★[^★]*★", r"◆[^◆]*◆", r"■[^■]*■", r"［[^］]*］", r"\[[^\]]*\]",
+    r"\S*クーポン\S*", r"\S*\d+/\d+\S*", r"\S*ポイント\d*倍\S*", r"\S*\d+%OFF\S*", r"\S*OFF\S*", r"送料無料", r"あす楽\S*",
+]
+
+
+def clean_title(name: str) -> str:
+    """Rakuten shop titles carry promotions (coupons, dates, point multiples) that go stale; drop them, keep the product words."""
+    import re
+    out = name
+    for pat in _PROMO:
+        out = re.sub(pat, " ", out)
+    out = " ".join(out.split())
+    return out if len(out) >= 8 else " ".join(name.split())
+
+
 def normalize(item: dict) -> dict | None:
     """The few fields the site needs; None when the item cannot be shown (no price, link or image)."""
     item = item.get("Item", item)  # formatVersion 1 wraps each item
-    name = (item.get("itemName") or "").strip()
-    url = item.get("itemUrl") or ""
+    name = clean_title((item.get("itemName") or "").strip())
+    url = clean_item_url(item.get("itemUrl") or "")
     price = int(_num(item.get("itemPrice")))
     image = _first_image(item)
     if not (name and url.startswith("https://") and price > 0 and image):
