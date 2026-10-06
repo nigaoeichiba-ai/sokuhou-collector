@@ -19,8 +19,22 @@ PAIR_FIELDS = ("occasion", "recipient", "title", "lead", "reasons", "how_to_choo
 FILTER_FIELDS = ("min_review_count", "min_review_average", "ng_words", "max_per_list", "tiers")
 
 
+THEME_GROUPS = [
+    {"slug": "feeling", "name": "気持ちから選ぶ", "blurb": "感謝を伝えたい、外したくない、記憶に残したい。贈りたい気持ちから、プレゼントを探します。", "icon": "heart"},
+    {"slug": "giver", "name": "贈る側から選ぶ", "blurb": "男性から、女性から。もらってうれしいものを、贈る側の立場から探します。", "icon": "gift"},
+    {"slug": "interest", "name": "相手の興味から選ぶ", "blurb": "美容、料理、アウトドア、推し活。相手の好きなことや気になることから、プレゼントを探します。", "icon": "star"},
+]
+THEME_FIELDS = ("slug", "group", "name", "title", "lead", "reasons", "how_to_choose", "ideas", "keywords", "tiers")
+
+
 def pair_key(p: dict) -> str:
-    return f"{p['occasion']}-{p['recipient']}"
+    """The page key: occasion-recipient for a pair page, theme-<slug> for a theme page (which carries its own key)."""
+    return p.get("key") or f"{p['occasion']}-{p['recipient']}"
+
+
+def pages(c: dict) -> list[dict]:
+    """Every page that shows products: the occasion x recipient pairs, then the theme pages."""
+    return c["pairs"] + c.get("themes", [])
 
 
 def _read(content_dir: Path, name: str) -> dict:
@@ -92,5 +106,33 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     for slug, g in guides.items():
         if slug not in occ:
             raise BuildError(f"guide for unknown occasion {slug}")
+    themes = _load_themes(content_dir, rec, tiers)
     return {"occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
-            "occ": occ, "rec": rec, "tiers": tiers, "guides": guides}
+            "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "themes": themes,
+            "theme": {t["slug"]: t for t in themes}, "theme_groups": THEME_GROUPS}
+
+
+def _load_themes(content_dir: Path, rec: dict, tiers: dict) -> list[dict]:
+    """The theme pages (themes.json, optional): a page that starts from a feeling or an interest instead of an occasion x recipient."""
+    path = content_dir / "themes.json"
+    if not path.exists():
+        return []
+    themes = _read(content_dir, "themes.json")["themes"]
+    groups = {g["slug"] for g in THEME_GROUPS}
+    seen = set()
+    for t in themes:
+        _need(t, THEME_FIELDS, f"theme {t.get('slug')}")
+        if t["slug"] in seen:
+            raise BuildError(f"duplicate theme {t['slug']}")
+        seen.add(t["slug"])
+        if t["group"] not in groups:
+            raise BuildError(f"theme {t['slug']}: unknown group {t['group']}")
+        if t.get("recipient") and t["recipient"] not in rec:
+            raise BuildError(f"theme {t['slug']}: unknown recipient")
+        for x in t["tiers"]:
+            if x not in tiers:
+                raise BuildError(f"theme {t['slug']}: unknown tier {x}")
+        t["key"] = f"theme-{t['slug']}"
+        t["recipient"] = t.get("recipient") or None
+        t.setdefault("avoid", [])
+    return themes
