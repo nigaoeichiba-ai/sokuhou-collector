@@ -45,6 +45,14 @@ async function load(url) {
     out.kushi = d.querySelectorAll('.tb:not([hidden])').length;
     q.value = 'zzzzqq'; q.dispatchEvent(new w.Event('input', { bubbles: true }));
     out.none = d.querySelectorAll('.tb:not([hidden])').length; out.msg = d.querySelector('.tb-msg').textContent;
+
+    // phone width: the header links must stay readable (not squeezed into one-character-wide columns)
+    {
+      const f2 = document.createElement('iframe'); f2.style.width = '300px'; f2.style.height = '800px'; document.body.appendChild(f2);
+      await new Promise(r => { f2.onload = r; f2.src = '/'; }); await wait(300);
+      out.nav = [...f2.contentDocument.querySelectorAll('header.site nav a')].map(a => { const r = a.getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height)]; });
+      out.scroll300 = f2.contentDocument.documentElement.scrollWidth;
+    }
   } catch (e) { out.error = String(e); }
   document.getElementById('out').textContent = JSON.stringify(out);
 })();
@@ -84,6 +92,13 @@ class ToolsBrowserTest(unittest.TestCase):
         slugs = [p["slug"] for p in self.c["persona"]["personas"]]
         self.assertIn(self.out["result"].strip("/").split("/")[-1], slugs)
         self.assertTrue(self.out["result"].startswith("/diagnosis/"))
+
+    def test_header_links_stay_readable_on_a_phone(self):
+        self.assertTrue(self.out["nav"])
+        for w, h in self.out["nav"]:
+            self.assertGreaterEqual(w, 50)
+            self.assertLessEqual(h, 60)
+        self.assertLessEqual(self.out["scroll300"], 301)
 
     def test_checker_filters(self):
         if not self.c["taboo"]:
