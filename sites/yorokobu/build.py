@@ -456,11 +456,18 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 # ---------------------------------------------------------------- theme pages (start from a feeling or an interest, not from an occasion)
 
 GROUP_STYLE = {"feeling": ("pink", "r-joy", "dot"), "giver": ("sky", "b-wink", "star"), "interest": ("mint", "b-sparkle", "sparkle")}
+_EXTRA_STYLES = [("yellow", "r-wink", "bar"), ("lilac", "b-joy", "tri"), ("orange", "r-sparkle", "dot")]
+MIN_THEME_ITEMS = 3   # a theme page with fewer products than this is not published (a bad search query must never produce an empty page)
+
+
+def group_style(slug: str) -> tuple[str, str, str]:
+    """A group the content factory added later gets one of the spare styles, stable by its name."""
+    return GROUP_STYLE.get(slug) or _EXTRA_STYLES[sum(map(ord, slug)) % len(_EXTRA_STYLES)]
 
 
 def theme_mark(t: dict, size: int = 64) -> str:
     """A round sticker for a theme: the group's decoration shape on its colour (themes have no photo icons)."""
-    color, _, shape = GROUP_STYLE[t["group"]]
+    color, _, shape = group_style(t["group"])
     return f'<span class="theme-mark {color}" aria-hidden="true">{SHAPES[shape].format(c=PALETTE["white"], ink=INK)}</span>'
 
 
@@ -471,10 +478,10 @@ def theme_tile(t: dict) -> str:
 
 def theme_page(d: dict, cfg: dict, preview: bool, t: dict) -> str:
     c = d["c"]
-    color, mascot, _ = GROUP_STYLE[t["group"]]
+    color, mascot, _ = group_style(t["group"])
     group = next(g for g in c["theme_groups"] if g["slug"] == t["group"])
     proposals, browse, _ = listing(d, cfg, t, f'{t["name"]}、こんな贈り方はどうでしょう')
-    same = [x for x in c["themes"] if x["group"] == t["group"] and x["slug"] != t["slug"]][:10]
+    same = [x for x in d["live_themes"] if x["group"] == t["group"] and x["slug"] != t["slug"]][:10]
     other = "".join(f'<li><a href="/theme/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in same)
     avoid = f'<section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(t["avoid"], "warn")}</section>' if t["avoid"] else ""
     amazon = ""
@@ -502,7 +509,7 @@ def theme_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     c = d["c"]
     sections = ""
     for g in c["theme_groups"]:
-        ts = [t for t in c["themes"] if t["group"] == g["slug"]]
+        ts = [t for t in d["live_themes"] if t["group"] == g["slug"]]
         if ts:
             sections += (f'<section style="margin-top:44px"><h2><span class="scribble">{esc(g["name"])}</span></h2><p class="sec-lead">{esc(g["blurb"])}</p>'
                          f'<ul class="tiles">{"".join(theme_tile(t) for t in ts)}</ul></section>')
@@ -682,6 +689,67 @@ def guide_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
     return page(cfg, preview, path=f"/guide/{slug}/", title=f"{g['title']} | {cfg['site_name']}", description=g["intro"][:110], body=body, og_image=og_for(f"occasion/{slug}"))
 
 
+# ---------------------------------------------------------------- reading articles (free-form, added by the content factory)
+
+def article_page(d: dict, cfg: dict, preview: bool, a: dict) -> str:
+    c = d["c"]
+    secs = "".join(f'<section class="g-sec"><h2><span class="scribble">{esc(s["h"])}</span></h2><p>{esc(s["body"])}</p></section>' for s in a["sections"])
+    checks = ""
+    if a["checklist"]:
+        checks = ('<section class="g-sec"><h2><span class="scribble">チェックリスト</span></h2><ul class="checklist">'
+                  + "".join(f'<li><label><input type="checkbox"> {esc(x)}</label></li>' for x in a["checklist"]) + "</ul></section>")
+    faq = "".join(f'<details class="faq"><summary>{esc(f["q"])}</summary><p>{esc(f["a"])}</p></details>' for f in a["faq"])
+    live = {t["slug"] for t in d["live_themes"]}
+    rel = "".join(f'<li><a href="/theme/{s}/">{esc(c["theme"][s]["title"])}</a></li>' for s in a["themes"] if s in live)
+    ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": a["title"], "datePublished": a["date"],
+                     "inLanguage": "ja", "author": {"@type": "Organization", "name": cfg["operator_name"]}}, ensure_ascii=False)
+    faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage",
+                         "mainEntity": [{"@type": "Question", "name": f["q"], "acceptedAnswer": {"@type": "Answer", "text": f["a"]}} for f in a["faq"]]}, ensure_ascii=False)
+    head = head_band("lilac", '<img class="pair-mini" src="/assets/img/concierge-note.webp" alt="" width="170" height="130">', esc(a["title"]), a["lead"], single=True, mascot="r-wink")
+    body = f"""{head}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("読みもの", "/read/"), (a["title"], None)])}</div>
+<p class="meta-date">{esc(a["date"])} 公開</p>
+<article class="guide">{secs}{checks}<section class="g-sec"><h2><span class="scribble">よくある質問</span></h2>{faq}</section></article>
+{share_bar(cfg, f"/read/{a['slug']}/", a["title"], "この記事を、だれかに送る")}
+{f'<section class="related" style="margin-top:44px"><h2><span class="scribble">贈り物を、探してみる</span></h2><ul class="plain cols2 chips">{rel}</ul></section>' if rel else ""}
+<script type="application/ld+json">{ld}</script><script type="application/ld+json">{faq_ld}</script>"""
+    return page(cfg, preview, path=f"/read/{a['slug']}/", title=f"{a['title']} | {cfg['site_name']}", description=a["lead"][:110], body=body, og_image=og_for(f"read/{a['slug']}"))
+
+
+def read_hub_page(d: dict, cfg: dict, preview: bool) -> str:
+    arts = d["c"]["articles"]
+    lead = "プレゼント選びの前に読んでおくと役立つ、読みものです。新しい記事を、どんどん追加しています。"
+    rows = "".join(f'<li><a class="tile wide read-tile" href="/read/{a["slug"]}/"><span><b>{esc(a["title"])}</b><small>{esc(a["date"])} ・ {esc(a["lead"][:60])}…</small></span></a></li>' for a in arts)
+    body = f"""{head_band("lilac", '<img class="pair-mini" src="/assets/img/concierge-note.webp" alt="" width="170" height="130">', "プレゼントの読みもの", lead, single=True)}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("読みもの", None)])}</div>
+<section style="margin-top:34px"><ul class="tiles wide">{rows}</ul></section>"""
+    return page(cfg, preview, path="/read/", title=f"プレゼントの読みもの | {cfg['site_name']}", description=lead, body=body)
+
+
+def feed_xml(d: dict, cfg: dict) -> str:
+    """Atom feed of the newest articles and themes (so readers, aggregators and search engines see that the site keeps growing)."""
+    base = cfg["site_url"].rstrip("/")
+    items = [(a["date"], a["title"], f"{base}/read/{a['slug']}/", a["lead"]) for a in d["c"]["articles"]]
+    items += [(t.get("added") or d["fetched_date"], t["title"], f"{base}/theme/{t['slug']}/", t["lead"]) for t in d["live_themes"] if t.get("added")]
+    items = sorted(items, reverse=True)[:40]
+    entries = "".join(f"<entry><title>{esc(t)}</title><link href=\"{esc(u)}\"/><id>{esc(u)}</id><updated>{day}T00:00:00+09:00</updated><summary>{esc(s[:140])}</summary></entry>\n"
+                      for day, t, u, s in items)
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<feed xmlns="http://www.w3.org/2005/Atom"><title>' + esc(cfg["site_name"]) + '</title>'
+            f'<link href="{base}/"/><id>{base}/</id><updated>{d["fetched_date"]}T00:00:00+09:00</updated>\n' + entries + "</feed>\n")
+
+
+def whats_new(d: dict, n: int = 6) -> str:
+    """The home page strip with the newest pages (articles and themes the factory added), newest first; empty until there are some."""
+    c = d["c"]
+    rows = [(a["date"], f'/read/{a["slug"]}/', a["title"], "読みもの") for a in c["articles"]]
+    rows += [(t["added"], f'/theme/{t["slug"]}/', t["title"], "切り口") for t in d["live_themes"] if t.get("added")]
+    rows = sorted(rows, reverse=True)[:n]
+    if not rows:
+        return ""
+    lis = "".join(f'<li><a href="{u}"><span class="new-kind">{k}</span><b>{esc(t)}</b><small>{esc(day)}</small></a></li>' for day, u, t, k in rows)
+    return f'<section class="whatsnew"><div class="sec-head"><span class="sticker">NEW</span><h2>新しく追加した<span class="scribble">ページ</span></h2></div><ul class="newlist">{lis}</ul><p class="more"><a class="btn btn-sub" href="/read/">読みものを、ぜんぶ見る</a></p></section>'
+
+
 def season_occasions(c: dict, today: date) -> list[dict]:
     months = {today.month, today.month % 12 + 1}
     out = [o for o in c["occasions"] if o["slug"] in SEASON and months & set(SEASON[o["slug"]])]
@@ -712,8 +780,8 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
     popular = [p for p in c["pairs"] if p["occasion"] in ("birthday", "year-end-gathering", "mothers-day", "christmas")][:12]
     pop = "".join(f'<li><a href="/gift/{ct.pair_key(p)}/">{esc(p["title"].split(" ")[0])}</a></li>' for p in popular)
     theme_band = ""
-    if c["themes"]:
-        picks = [x for g in c["theme_groups"] for x in [t for t in c["themes"] if t["group"] == g["slug"]][:4]]
+    if d["live_themes"]:
+        picks = [x for g in c["theme_groups"] for x in [t for t in d["live_themes"] if t["group"] == g["slug"]][:4]]
         theme_band = (f'<section class="band lilac scallop"><div class="in"><div class="sec-head"><h2>気持ち・興味から<span class="scribble">探す</span></h2>'
                       f'<p>イベントが決まっていなくても大丈夫。贈りたい気持ちや、相手の好きなことから。</p></div>'
                       f'<ul class="tiles">{"".join(theme_tile(x) for x in picks)}</ul><p class="more"><a class="btn" href="/theme/">切り口を、ぜんぶ見る</a></p></div></section>')
@@ -744,6 +812,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <ul class="chip-grid round">{rec}</ul></div></section>
 <section class="band mint flat"><div class="in"><div class="sec-head"><h2>よく読まれている、<span class="scribble">おすすめページ</span></h2></div>
 <ul class="plain cols2 chips">{pop}</ul></div></section>
+{whats_new(d)}
 {theme_band}
 <section class="band yellow dots scallop about-home"><div class="in">
 <div><img src="/assets/img/pair-gift.webp" alt="" width="600" height="239" loading="lazy" style="width:100%;max-width:460px;display:block;margin:0 auto"></div>
@@ -775,8 +844,13 @@ def prepare(c: dict, items: dict | None, cfg: dict) -> dict:
                         "tiers": {t: [i for i in lst if ok(i)] for t, lst in v["tiers"].items()}}
         else:  # data fetched before ideas existed: budget lists only
             pairs[k] = {t: [i for i in lst if ok(i)] for t, lst in v.items() if isinstance(lst, list)}
-    return {"c": c, "pairs": pairs, "portrait": items.get("portrait", []), "fetched_label": label, "site_name": cfg["site_name"],
-            "fetched_date": (f or date.today().isoformat())[:10]}
+    d = {"c": c, "pairs": pairs, "portrait": items.get("portrait", []), "fetched_label": label, "site_name": cfg["site_name"],
+         "fetched_date": (f or date.today().isoformat())[:10]}
+    if items.get("pairs"):
+        d["live_themes"] = [t for t in c["themes"] if len(pair_items(d, t["key"])[2]) >= MIN_THEME_ITEMS]
+    else:                       # a preview build without any product data shows every theme
+        d["live_themes"] = list(c["themes"])
+    return d
 
 
 def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool = False, today: date | None = None) -> list[str]:
@@ -804,9 +878,11 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
                 bird=OCC_MASCOT.get(p["occasion"], birds[list(c["occ"]).index(p["occasion"]) % 4]), site=site)
         for ps in (c["persona"] or {}).get("personas", []):
             cards[f"og/diagnosis/{ps['slug']}.png"] = ogimage.card(title=ps["name"], tag="プレゼント診断", bird="b-sparkle", site=site)
+        for a in c["articles"]:
+            cards[f"og/read/{a['slug']}.png"] = ogimage.card(title=a["title"], tag="読みもの", bird="r-wink", site=site)
         for th in c["themes"]:
             cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]),
-                                                               bird=GROUP_STYLE[th["group"]][1], site=site)
+                                                               bird=group_style(th["group"])[1], site=site)
         OG.update(k[len("og/"):-len(".png")] for k in cards)
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview, today),
                                      "occasion/index.html": hub_page(d, cfg, preview, "occasion"),
@@ -827,9 +903,14 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages["diagnosis/index.html"] = quiz_page(d, cfg, preview)
         for ps in c["persona"]["personas"]:
             pages[f"diagnosis/{ps['slug']}/index.html"] = persona_page(d, cfg, preview, ps)
-    if c["themes"]:
+    if c["articles"]:
+        pages["read/index.html"] = read_hub_page(d, cfg, preview)
+        for a in c["articles"]:
+            pages[f"read/{a['slug']}/index.html"] = article_page(d, cfg, preview, a)
+    pages["feed.xml"] = feed_xml(d, cfg)
+    if d["live_themes"]:
         pages["theme/index.html"] = theme_hub_page(d, cfg, preview)
-        for th in c["themes"]:
+        for th in d["live_themes"]:
             pages[f"theme/{th['slug']}/index.html"] = theme_page(d, cfg, preview, th)
     for slug in c["guides"]:
         pages[f"guide/{slug}/index.html"] = guide_page(d, cfg, preview, slug)

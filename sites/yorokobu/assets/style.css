@@ -513,3 +513,12 @@ p, li { overflow-wrap: anywhere; }
 .persona-line { margin-top: 18px; padding: .8em 1.1em; background: var(--yellow-s); border: var(--line2); border-radius: 16px; font-weight: 800; }
 .tool-tile small { display: block; font-weight: 500; }
 @media (max-width: 640px) { .tb-form { grid-template-columns: 1fr; } }
+
+/* what's new, reading articles */
+.whatsnew { margin-top: 48px; }
+.newlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.newlist a { display: grid; gap: 2px; padding: 12px 14px; background: #fff; border: var(--line2); border-radius: 16px; box-shadow: 3px 3px 0 var(--ink); color: var(--ink); text-decoration: none; }
+.newlist small { color: var(--muted); }
+.new-kind { justify-self: start; padding: 0 .7em; border: 2px solid var(--ink); border-radius: 999px; background: var(--lilac-s); font-size: .7rem; font-weight: 900; }
+.read-tile small { display: block; font-weight: 500; }
+.meta-date { margin: 14px 2px 0; color: var(--muted); font-size: .82rem; }

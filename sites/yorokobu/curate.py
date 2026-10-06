@@ -42,10 +42,11 @@ def render_pair(p: dict, lists: list[list[dict]]) -> str:
     return "\n".join(lines)
 
 
-def batches(size: int) -> list[str]:
+def batches(size: int, missing: bool = False) -> list[str]:
     c = ct.load()
     cand = _load_candidates()
-    pairs = [p for p in ct.pages(c) if ct.pair_key(p) in cand]
+    have = json.loads(PICKS.read_text(encoding="utf-8")) if missing and PICKS.exists() else {}
+    pairs = [p for p in ct.pages(c) if ct.pair_key(p) in cand and ct.pair_key(p) not in have]
     out = []
     for i in range(0, len(pairs), size):
         out.append("\n\n".join(render_pair(p, cand[ct.pair_key(p)]) for p in pairs[i:i + size]))
@@ -190,6 +191,7 @@ def main() -> None:
     b = sub.add_parser("batch")
     b.add_argument("--size", type=int, default=10)
     b.add_argument("--out", required=True)
+    b.add_argument("--missing", action="store_true", help="only pages that have no picks yet")
     m = sub.add_parser("merge")
     m.add_argument("--dry", action="store_true", help="only check the answers")
     m.add_argument("files", nargs="+")
@@ -198,7 +200,7 @@ def main() -> None:
     if a.cmd == "batch":
         out = Path(a.out)
         out.mkdir(parents=True, exist_ok=True)
-        texts = batches(a.size)
+        texts = batches(a.size, a.missing)
         for n, t in enumerate(texts, 1):
             (out / f"batch_{n}.txt").write_text(t, encoding="utf-8", newline="\n")
         print(f"{len(texts)} batches in {out}")

@@ -1,4 +1,5 @@
 import json
+import shutil
 import tempfile
 import unittest
 from datetime import date
@@ -85,6 +86,68 @@ class SiteToolsTest(unittest.TestCase):
     def test_theme_and_pair_pages_carry_the_gift_map_when_items_exist(self):
         # no products in this build: the proposals are empty, so no map either
         self.assertNotIn("gmap-svg", self.read("theme/beauty/index.html"))
+
+
+class ArticleTest(unittest.TestCase):
+    """Articles and extra theme groups, as the content factory adds them."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        root = Path(cls.tmp.name)
+        fix = Path(__file__).parent / "fixtures" / "yorokobu"
+        for f in fix.glob("*.json"):
+            shutil.copy(f, root / f.name)
+        (root / "articles.json").write_text(json.dumps({"articles": [{
+            "slug": "casual-listening", "title": "さりげなく好みを聞く会話のコツ", "date": "2026-10-07",
+            "lead": "贈り物の前に、相手の好みをさりげなく知っておくと、選ぶ時間が楽になります。会話の中で自然に聞き出す方法を紹介します。",
+            "sections": [{"h": "最近の買い物から聞く", "body": "最近買ったものや気に入っているものを尋ねると、好みが自然に見えてきます。" * 3}],
+            "checklist": ["聞きすぎない"], "faq": [{"q": "尋ねるのは失礼ですか", "a": "軽い雑談の形なら失礼にはなりません。"}], "themes": ["beauty", "thanks-daily"]}]}, ensure_ascii=False), encoding="utf-8")
+        (root / "theme_groups.json").write_text(json.dumps({"groups": [{"slug": "situation", "name": "場面から選ぶ", "blurb": "手土産や持ち寄りなど、渡す場面から探します。"}]}, ensure_ascii=False), encoding="utf-8")
+        data = json.loads((root / "themes.json").read_text(encoding="utf-8"))
+        data["themes"][1]["group"] = "situation"
+        data["themes"][1]["added"] = "2026-10-06"
+        (root / "themes.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        cls.c = ct.load(root)
+        cls.items = json.loads((fix / "items.json").read_text(encoding="utf-8"))
+        cls.out = Path(cls.tmp.name) / "out"
+        build.render_site(cls.c, cls.items, CFG, cls.out, release=True, today=date(2026, 10, 7))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def read(self, rel):
+        return (self.out / rel).read_text(encoding="utf-8")
+
+    def test_article_page_hub_feed_and_home_strip(self):
+        page = self.read("read/casual-listening/index.html")
+        self.assertIn("さりげなく好みを聞く会話のコツ", page)
+        self.assertIn('"@type": "Article"', page)
+        self.assertIn('href="/theme/beauty/"', page)
+        self.assertIn("/read/casual-listening/", self.read("read/index.html"))
+        self.assertIn("/read/casual-listening/", self.read("sitemap.xml"))
+        feed = self.read("feed.xml")
+        self.assertIn("<entry>", feed)
+        self.assertIn("/read/casual-listening/", feed)
+        home = self.read("index.html")
+        self.assertIn("新しく追加した", home)
+        self.assertIn("/read/casual-listening/", home)
+
+    def test_a_group_added_by_the_factory_gets_its_tiles(self):
+        hub = self.read("theme/index.html")
+        self.assertIn("場面から選ぶ", hub)
+        self.assertIn("/theme/beauty/", hub)
+
+    def test_a_theme_with_too_few_products_is_not_published(self):
+        items = json.loads(json.dumps(self.items))
+        items["pairs"]["theme-beauty"] = {"ideas": [{**i, "items": []} for i in items["pairs"]["theme-beauty"]["ideas"]], "tiers": {}}
+        out = Path(self.tmp.name) / "out2"
+        build.render_site(self.c, items, CFG, out, release=True, today=date(2026, 10, 7))
+        self.assertFalse((out / "theme" / "beauty" / "index.html").exists())
+        self.assertNotIn("/theme/beauty/", (out / "theme" / "index.html").read_text(encoding="utf-8"))
+        self.assertNotIn("/theme/beauty/", (out / "sitemap.xml").read_text(encoding="utf-8"))
+        self.assertTrue((out / "theme" / "thanks-daily" / "index.html").exists())
 
 
 if __name__ == "__main__":
