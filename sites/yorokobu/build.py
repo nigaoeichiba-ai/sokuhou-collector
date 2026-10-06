@@ -191,9 +191,10 @@ def round_chip(href: str, kind: str, slug: str, name: str) -> str:
     return f'<li><a class="chip-ic" href="{href}"><span class="ic-wrap">{icon_img(kind, slug, 80)}</span><span>{esc(name)}</span></a></li>'
 
 
-def head_band(color: str, icons: str, h1: str, lead: str, single: bool = False) -> str:
+def head_band(color: str, icons: str, h1: str, lead: str, single: bool = False, mascot: str = "b-wink") -> str:
     return (f'<div class="{scallop_class(color)} pagehead-band dots"><div class="in"><div class="pagehead">'
-            f'<div class="pagehead-ic{" single" if single else ""}">{icons}</div><div><h1>{h1}</h1><p class="lead">{esc(lead)}</p></div></div></div>'
+            f'<div class="pagehead-ic{" single" if single else ""}">{icons}</div><div><h1>{h1}</h1><p class="lead">{esc(lead)}</p></div></div>'
+            f'<img class="head-mascot" src="/assets/img/{mascot}.webp" alt="" width="190" height="150" loading="lazy"></div>'
             f'{party("page")}</div>')
 
 
@@ -232,7 +233,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
         amazon = (f'<p class="more"><a class="btn btn-sub" href="{esc(amazon_url(cfg, p["queries"][0]))}" rel="sponsored nofollow noopener" target="_blank">'
                   f'<span class="pr-note">PR</span>Amazonでも探す</a></p>{amazon_disclosure(cfg)}')
     color = COLORS[list(c["occ"]).index(p["occasion"]) % 4]
-    head = head_band(color, f'{ic_wrap("occasion", occ["slug"])}<span class="x">×</span>{ic_wrap("recipient", rec["slug"])}', esc(p["title"]), p["lead"])
+    head = head_band(color, f'{ic_wrap("occasion", occ["slug"])}<span class="x">×</span>{ic_wrap("recipient", rec["slug"])}', esc(p["title"]), p["lead"], mascot=("r-joy", "b-sparkle", "r-wink", "b-joy")[list(c["occ"]).index(p["occasion"]) % 4])
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (occ["name"], f"/occasion/{occ['slug']}/"), (p["title"].split(" ")[0], None)])}</div>
 {pr_lead(cfg)}
@@ -258,7 +259,7 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
     featured = top_items(lists)
     shown = (f'<section style="margin-top:50px"><h2><span class="scribble">選ばれている贈り物の例</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
     color = COLORS[list(c["occ"]).index(o["slug"]) % 4]
-    head = head_band(color, ic_wrap("occasion", o["slug"]), f'{esc(o["name"])}の<wbr>プレゼント', o["blurb"], single=True)
+    head = head_band(color, ic_wrap("occasion", o["slug"]), f'{esc(o["name"])}の<wbr>プレゼント', o["blurb"], single=True, mascot="b-wink")
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("イベント", "/occasion/"), (o["name"], None)])}</div>
 {pr_lead(cfg)}
@@ -280,7 +281,7 @@ def recipient_page(d: dict, cfg: dict, preview: bool, r: dict) -> str:
     featured = top_items(lists)
     shown = (f'<section style="margin-top:50px"><h2><span class="scribble">選ばれている贈り物の例</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
     color = COLORS[list(c["rec"]).index(r["slug"]) % 4]
-    head = head_band(color, ic_wrap("recipient", r["slug"]), f'{esc(r["name"])}への<wbr>プレゼント', r["blurb"], single=True)
+    head = head_band(color, ic_wrap("recipient", r["slug"]), f'{esc(r["name"])}への<wbr>プレゼント', r["blurb"], single=True, mascot="r-sparkle")
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("相手から", "/for/"), (r["name"], None)])}</div>
 {pr_lead(cfg)}
@@ -300,7 +301,7 @@ def hub_page(d: dict, cfg: dict, preview: bool, kind: str) -> str:
     else:
         rows = "".join(tile(f'/for/{r["slug"]}/', "recipient", r["slug"], r["name"]) for r in c["recipients"])
         title, h1, lead, path, color = "贈る相手から探す", "贈る相手から、<wbr>プレゼントを探す", "贈る相手を選ぶと、イベントごとのおすすめが見つかります。", "/for/", "sky"
-    body = f"""{head_band(color, f'<img class="pair-mini" src="/assets/img/mascot-red.webp" alt="" width="150" height="112">', h1, lead, single=True)}
+    body = f"""{head_band(color, f'<img class="pair-mini" src="/assets/img/r-joy.webp" alt="" width="170" height="155">', h1, lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (title, None)])}</div>
 <section style="margin-top:34px"><ul class="tiles">{rows}</ul></section>"""
     return page(cfg, preview, path=path, title=f"{title} | {cfg['site_name']}", description=lead, body=body)
@@ -338,7 +339,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <p class="lead">イベントと贈る相手から、喜ばれやすい選び方と、おすすめの商品が見つかります。</p>
 {finder(c)}
 <p class="hero-cta"><a class="btn big" href="/occasion/">イベントから探す</a><a class="btn big btn-sub" href="/for/">相手から探す</a></p></div>
-<div class="hero-art">{party("hero")}<img class="pair" src="/assets/img/mascot-pair.webp" alt="赤と青のマフラーをしたシマエナガのふたり" width="1674" height="628"></div>
+<div class="hero-art">{party("hero")}<img class="pair" src="/assets/img/mascot-pair.webp" alt="赤と青のマフラーをしたシマエナガのふたりが、プレゼントを持って喜んでいる" width="1400" height="579"></div>
 </div></section>
 <div class="marquee" aria-hidden="true"><div class="track">{ticker}</div></div>
 {pr_lead(cfg)}
@@ -355,7 +356,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <section class="band mint flat"><div class="in"><div class="sec-head"><h2>よく読まれている、<span class="scribble">おすすめページ</span></h2></div>
 <ul class="plain cols2 chips">{pop}</ul></div></section>
 <section class="band yellow dots scallop about-home"><div class="in">
-<div><img src="/assets/img/mascot-pair.webp" alt="" width="1674" height="628" loading="lazy" style="width:100%;max-width:460px;display:block;margin:0 auto"></div>
+<div><img src="/assets/img/pair-gift.webp" alt="" width="600" height="239" loading="lazy" style="width:100%;max-width:460px;display:block;margin:0 auto"></div>
 <div class="bubble"><h2 style="font-size:1.3rem">このサイトについて</h2>
 <p>「何を贈ればいいか分からない」というときに、<strong>イベント</strong>と<strong>贈る相手</strong>から、選び方のポイントと、商品の例を探せるサイトです。</p>
 <p>商品は、楽天市場の情報を、毎日、自動で更新して表示しています。シマエナガのふたりが、あなたの「贈りたい気持ち」を、応援します。</p></div></div></section>"""

@@ -285,3 +285,9 @@ main.wrap > h1:first-child { margin-top: 36px; }
 
 .tier-more { margin: 22px 0 0; text-align: center; }
 .tier-more .btn { font-size: .9rem; padding: .55em 1.3em; }
+
+.head-mascot { position: absolute; right: 12px; bottom: -4px; width: 190px; height: auto; pointer-events: none; animation: bob 4.2s ease-in-out infinite; transform-origin: 50% 100%; }
+.pagehead-band .in { position: relative; }
+.pagehead-band .pagehead { padding-right: 190px; }
+@media (max-width: 760px) { .head-mascot { width: 96px; right: 6px; bottom: 0; } .pagehead-band .pagehead { padding-right: 0; padding-bottom: 70px; } }
+@media (prefers-reduced-motion: reduce) { .head-mascot { animation: none; } }
