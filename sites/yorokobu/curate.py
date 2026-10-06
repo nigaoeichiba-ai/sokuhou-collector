@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from sites.yorokobu import content as ct  # noqa: E402
-from sites.yorokobu.relevance import fits  # noqa: E402
+from sites.yorokobu.relevance import fits, fits_occasion  # noqa: E402
 
 CANDIDATES = ROOT / "data" / "yorokobu_candidates.json"
 PICKS = ct.CONTENT_DIR / "picks.json"
@@ -87,8 +87,8 @@ def validate(answer: dict, c: dict, cand: dict) -> tuple[dict, list[str]]:
                 note = (x.get("note") or "").strip()
                 if it["code"] in used:
                     errors.append(f"{where}: {it['code']} already used on this page")
-                if not fits(it["name"], p["recipient"]):
-                    errors.append(f"{where}: {it['code']} does not fit the recipient")
+                if not fits(it["name"], p["recipient"]) or not fits_occasion(it["name"], p["occasion"]):
+                    errors.append(f"{where}: {it['code']} does not fit the recipient or the occasion")
                 if not NOTE_MIN <= len(note) <= NOTE_MAX:
                     errors.append(f"{where}: note length {len(note)}: {note}")
                 bad = [w for w in NOTE_FORBIDDEN if w in note]
@@ -99,7 +99,7 @@ def validate(answer: dict, c: dict, cand: dict) -> tuple[dict, list[str]]:
             row_backups = []
             for i in backups:
                 it = items[i]
-                if it["code"] in used or not fits(it["name"], p["recipient"]):
+                if it["code"] in used or not fits(it["name"], p["recipient"]) or not fits_occasion(it["name"], p["occasion"]):
                     errors.append(f"{where}: backup {it['code']} is used or does not fit")
                 row_backups.append(it["code"])
             sel_out.append({"picks": row_picks, "backups": row_backups})

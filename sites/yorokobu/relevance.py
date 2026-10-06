@@ -39,3 +39,19 @@ def fits(name: str, recipient: str) -> bool:
     if age == "teen" and any(w in name for w in FOR_SENIOR):
         return False
     return True
+
+
+# Titles that name another, narrower occasion (a winter-gift listing on a birthday page, a baby-shower pouch for a mother's birthday)
+OCCASION_ONLY = {
+    "oseibo": ("お歳暮", "御歳暮"), "ochugen": ("お中元", "御中元"), "birth-gift": ("出産祝い", "母子手帳", "ベビー"),
+    "homecoming": (), "new-year": ("お年賀",),
+}
+OCCASION_ONLY_ALL = tuple(w for ws in OCCASION_ONLY.values() for w in ws) + ("ハロウィン", "お年賀")
+
+
+def fits_occasion(name: str, occasion: str) -> bool:
+    """False when the title is made for a different, narrower occasion than the page's."""
+    own = OCCASION_ONLY.get(occasion, ())
+    if occasion == "halloween":
+        return True
+    return not any(w in name and w not in own for w in OCCASION_ONLY_ALL)
