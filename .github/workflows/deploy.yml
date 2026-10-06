@@ -10,12 +10,22 @@ name: deploy-sites
 #
 # Manual runs are a check only unless "Really deploy" is ticked: they build, run the tests and prove that the
 # SSH login and the target folder work, but change nothing on the server.
-# The daily run (07:00 JST, after the 06:10 data collection) deploys for real. A failed check rolls the site back
+# The daily run (07:00 JST, after the 06:10 data collection) and every push to main that touches the site or collector
+# code deploy for real (the unit tests are the gate). A failed check rolls the site back
 # and fails the run, which GitHub reports to the owner by e-mail. First real run checked by the owner: 2026-10-05.
 
 on:
   schedule:
     - cron: "0 22 * * *"   # 07:00 JST
+  push:                      # a push of site or collector code deploys for real (no manual click needed)
+    branches: [main]
+    paths:
+      - "sites/**"
+      - "sokuhou/**"
+      - "data/**"
+      - "tests/**"
+      - "requirements.txt"
+      - ".github/workflows/deploy.yml"
   workflow_dispatch:
     inputs:
       deploy:
@@ -122,7 +132,7 @@ jobs:
           ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
             "set -e; cd \"\$HOME/$SITE_DIR\"; pwd; test -d public_html; command -v tar >/dev/null; ls -d public_html*"
       - name: Upload and switch
-        if: steps.gate.outputs.go == 'true' && (github.event_name == 'schedule' || inputs.deploy)
+        if: steps.gate.outputs.go == 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
@@ -142,7 +152,7 @@ jobs:
             mv .deploy_next public_html
           "
       - name: Verify the live site, roll back if it is wrong
-        if: steps.gate.outputs.go == 'true' && (github.event_name == 'schedule' || inputs.deploy)
+        if: steps.gate.outputs.go == 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
