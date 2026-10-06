@@ -61,5 +61,28 @@ class CurateTest(unittest.TestCase):
         self.assertTrue(fits_occasion("名入れ ポーチ 誕生日 クリスマス ギフト", "birthday"))
 
 
+class RepairTest(unittest.TestCase):
+    IDEA = {"label": "入浴剤", "query": "メンズ 入浴剤 ギフトセット"}
+
+    def test_on_topic_ignores_generic_gift_words(self):
+        self.assertTrue(curate.on_topic("バスソルト 入浴剤 ギフトセット", self.IDEA))
+        self.assertFalse(curate.on_topic("本革 二つ折り財布 メンズ ギフト", self.IDEA))
+
+    def test_a_bad_pick_is_replaced_by_the_next_good_backup_without_a_note(self):
+        items = [item(i, shop=f"s{i}", name="入浴剤 ギフトセット") for i in range(6)]
+        items[1]["name"] = "メンズ 財布"                          # off topic
+        sel = {"picks": [{"i": 0, "note": "香りの違う入浴剤四種"}, {"i": 1, "note": "本革の二つ折り財布です"}, {"i": 2, "note": "炭酸入りの入浴剤"}], "backups": [3, 4, 5]}
+        row, errs = curate._repaired(sel, items, PAIR, "誕生日", set(), "k", self.IDEA)
+        self.assertEqual(errs, [])
+        self.assertEqual([x["code"] for x in row["picks"]], ["s0:0", "s2:2", "s3:3"])
+        self.assertEqual(row["picks"][2]["note"], "")
+        self.assertEqual(row["backups"], ["s4:4", "s5:5"])
+
+    def test_an_idea_with_nothing_on_topic_is_left_empty_for_the_search_fallback(self):
+        items = [item(i, shop=f"s{i}", name="メンズ 財布") for i in range(4)]
+        row, errs = curate._repaired({"picks": [{"i": 0, "note": "二つ折りの財布です"}], "backups": [1, 2]}, items, PAIR, "誕生日", set(), "k", self.IDEA)
+        self.assertEqual((row["picks"], errs), ([], []))
+
+
 if __name__ == "__main__":
     unittest.main()

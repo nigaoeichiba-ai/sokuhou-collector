@@ -149,7 +149,7 @@ jobs:
           python -m pip install --quiet pillow -r requirements.txt
       - name: Unit tests
         if: steps.gate.outputs.go == 'true'
-        run: python -m unittest discover -s tests -t .
+        run: python tests/run_tests.py --site ${{ matrix.site }}   # the shared tests and this site's own; another project's failing tests cannot block this deploy
       - name: Today's date (the products are fetched once a day and cached, so a code push does not refetch)
         if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu'
         run: echo "DAY=$(TZ=Asia/Tokyo date +%F)" >> "$GITHUB_ENV"

@@ -43,16 +43,22 @@ def fits(name: str, recipient: str | None) -> bool:
 
 # Titles that name another, narrower occasion (a winter-gift listing on a birthday page, a baby-shower pouch for a mother's birthday)
 OCCASION_ONLY = {
-    "oseibo": ("お歳暮", "御歳暮"), "ochugen": ("お中元", "御中元"), "birth-gift": ("出産祝い", "母子手帳", "ベビー"),
+    "oseibo": ("お歳暮", "御歳暮"), "ochugen": ("お中元", "御中元"), "birth-gift": ("母子手帳",),
     "homecoming": (), "new-year": ("お年賀",),
 }
 OCCASION_ONLY_ALL = tuple(w for ws in OCCASION_ONLY.values() for w in ws) + ("ハロウィン", "お年賀")
 
 
+OCCASION_WORDS = ("誕生日", "母の日", "父の日", "敬老の日", "クリスマス", "バレンタイン", "ホワイトデー", "結婚祝い", "出産祝い", "退職祝い", "内祝い", "お歳暮", "御歳暮",
+                  "お中元", "御中元", "ハロウィン", "お年賀", "入学祝い", "卒業祝い", "就職祝い", "新築祝い", "長寿祝い", "還暦祝い", "引越し祝い", "快気祝い", "お見舞い")
+
+
 def fits_occasion(name: str, occasion: str, occasion_name: str = "") -> bool:
-    """False when the title is made for a different, narrower occasion than the page's.  Titles stuffed with several occasions
-    ("誕生日 出産祝い 内祝い") are fine as long as they also name this page's own occasion."""
+    """False when the title is made for a different, narrower occasion than the page's.  A title that names this page's own occasion, or that
+    lists three or more occasions (keyword stuffing: a generic gift), is fine; one that names only another narrow occasion is not."""
     if occasion_name and occasion_name in name:
         return True
     own = OCCASION_ONLY.get(occasion, ())
-    return not any(w in name and w not in own for w in OCCASION_ONLY_ALL)
+    if not any(w in name and w not in own for w in OCCASION_ONLY_ALL):
+        return True
+    return sum(1 for w in OCCASION_WORDS if w in name) >= 3
