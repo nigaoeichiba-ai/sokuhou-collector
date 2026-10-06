@@ -207,6 +207,25 @@ if __name__ == "__main__":
     unittest.main()
 
 
+class NameCleanupTest(unittest.TestCase):
+    def tearDown(self):
+        build.set_keep()
+
+    def test_other_occasions_are_dropped_and_the_pages_own_is_kept(self):
+        raw = "＼楽天スーパーSALE／ 敬老の日 ミニブーケ 誕生日 プレゼント 花 父の日 ハロウィン"
+        build.set_keep("誕生日")
+        shown = build.short(raw)
+        self.assertIn("誕生日", shown)
+        self.assertNotIn("敬老の日", shown)
+        self.assertNotIn("ハロウィン", shown)
+        self.assertNotIn("＼", shown)
+        build.set_keep()
+        self.assertNotIn("誕生日", build.short(raw))
+
+    def test_a_title_that_would_shrink_to_nothing_stays_as_it_is(self):
+        self.assertEqual(build.short("敬老の日 画像送信サービス"), "敬老の日 画像送信サービス")
+
+
 class ThemeTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
