@@ -12,7 +12,7 @@ import argparse
 from urllib.parse import quote
 import json
 import sys
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -20,7 +20,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.kuma import charts, content  # noqa: E402
+from sites.kuma import charts, content, digest  # noqa: E402
 from sokuhou import prefectures as pf  # noqa: E402
 from sokuhou.sitekit import BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
@@ -735,6 +735,80 @@ def goods_page(d: dict, cfg: dict, preview: bool) -> str:
                 description="クマに出会わないための備えに関連する、グッズの種類と、確認するポイントを、公的機関の資料にもとづいてまとめています。広告(PR)を含みます。", body=body)
 
 
+# ---------------------------------------------------------------- weekly digest
+
+def digest_sources(otsu: dict | None, prefs: dict | None) -> list[dict]:
+    out = [digest.pref_source(k, meta["name"], (prefs or {})[k]) for k, meta in PREF_LIVE.items() if (prefs or {}).get(k)]
+    if otsu:
+        out.append(digest.otsu_source(otsu))
+    return [x for x in out if x]
+
+
+def week_range(key: str) -> str:
+    a = digest.week_start(key)
+    b = a + timedelta(days=6)
+    return f"{a.year}年{a.month}月{a.day}日から{b.month}月{b.day}日" if a.year == b.year else f"{a.year}年{a.month}月{a.day}日から{b.year}年{b.month}月{b.day}日"
+
+
+DIGEST_NOTE = ("各自治体が公表している目撃情報の一覧を、月曜から日曜までの週ごとに数えたものです。自治体ごとに、数える対象(目撃のみか、痕跡などを含むか)と、更新の時期が違うため、"
+               "<strong>自治体どうしの件数の大小は、そのまま比べられません</strong>。自治体が後から記録を追加・修正すると、件数が変わることがあります。"
+               "一覧の件数が、その自治体の月の合計と合わない月は、対象から外しています。")
+
+
+def digest_hub(dig: dict, cfg: dict, preview: bool) -> str:
+    rows = []
+    for k in dig["weeks"]:
+        tot, prev, both = digest.common_total(dig, k)
+        rows.append([f'<a href="/digest/{k}/">{week_range(k)}</a>', n(sum(dig["by_week"][k].values())),
+                     f"{len(dig['by_week'][k])}か所", ratio_text(tot, prev) if prev is not None else "-"])
+    names = "・".join(s["name"] for s in dig["sources"].values())
+    body = f"""{crumbs([("全国", "/"), ("週ごとのまとめ", None)])}
+<h1>クマの目撃情報 週ごとのまとめ</h1>
+<p class="lead">自治体が公式に公表しているクマの目撃情報を、週ごとに数えて、前の週と比べています。いまは、{esc(names)}の公表分です。</p>
+{table(["週", "件数(取得できた自治体の合計)", "対象", "前の週との比較"], rows)}
+<p class="notice">{DIGEST_NOTE}「前の週との比較」は、両方の週で数えられた自治体だけの合計どうしです。</p>"""
+    return page(cfg, preview, path="/digest/", title="クマの目撃情報 週ごとのまとめ(自治体の公式)",
+                description="自治体が公表しているクマの目撃情報を、週ごとに数えて、前の週と比べています。", body=body)
+
+
+def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
+    cur, prev = dig["by_week"][key], dig["by_week"].get(digest.prev_key(key), {})
+    tot, ptot, both = digest.common_total(dig, key)
+    rows, notes = [], ""
+    for sk, c in cur.items():
+        src = dig["sources"][sk]
+        rows.append([esc(src["name"]), n(c), n(prev[sk]) if sk in prev else "-", ratio_text(c, prev[sk]) if sk in prev else "-"])
+        if src["note"]:
+            notes += f'<p class="notice">{esc(src["name"])}: {esc(src["note"])}</p>\n'
+    if both:
+        rows.append(["<strong>合計(両週で数えた自治体)</strong>", n(tot), n(ptot), ratio_text(tot, ptot)])
+    ws = digest.week_start(key)
+    places = ""
+    for sk in cur:
+        src = dig["sources"][sk]
+        days = [x for x in src["days"] if ws <= x <= ws + timedelta(days=6)]
+        places += (f"<li>{esc(src['name'])}: {md(min(days).isoformat())}から{md(max(days).isoformat())}まで({n(len(days))}件)</li>" if days
+                   else f"<li>{esc(src['name'])}: 記録なし</li>")
+    ks = dig["weeks"]
+    i = ks.index(key)
+    links = ([f'<a href="/digest/{ks[i + 1]}/">前の週</a>'] if i + 1 < len(ks) else []) + ([f'<a href="/digest/{ks[i - 1]}/">次の週</a>'] if i > 0 else [])
+    head = f"{week_range(key)}の週に、自治体が公表したクマの目撃は、取得できた{len(cur)}か所で、合計{n(sum(cur.values()))}件です。"
+    if both:
+        head += (f"前の週と同じ{len(both)}か所で比べると、{n(tot)}件で、前の週({n(ptot)}件)と同じです。" if tot == ptot
+                 else f"前の週と同じ{len(both)}か所で比べると、{n(tot)}件で、前の週({n(ptot)}件)の{ratio_text(tot, ptot)}です。")
+    body = f"""{crumbs([("全国", "/"), ("週ごとのまとめ", "/digest/"), (week_range(key), None)])}
+<h1>{week_range(key)}の、クマの目撃情報</h1>
+<p class="lead">{head}</p>
+{table(["自治体", "この週の件数", "前の週", "前の週との比較"], rows)}
+<h2>記録のあった日</h2>
+<ul>{places}</ul>
+<p>{" ・ ".join(links)} ・ <a href="/digest/">週ごとのまとめの一覧</a></p>
+<p class="notice">{DIGEST_NOTE}</p>
+{notes}<p class="notice">出典: 各自治体が公開している目撃情報(<a href="/live/">最新の目撃情報</a>に、出典と取得日を載せています)を加工して作成。各自治体が作成したものではありません。取得日: {jp_date(dig['fetched_date'])}。</p>"""
+    return page(cfg, preview, path=f"/digest/{key}/", title=f"{week_range(key)}のクマの目撃情報(週ごとのまとめ)",
+                description=head, body=body)
+
+
 # ---------------------------------------------------------------- site
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None,
@@ -751,6 +825,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     d["live_prefs"] = prepare_prefs(prefs)
     any_live = bool(live or d["live_prefs"])
     nav = [x for x in BASE_NAV if x[1] != "/live/" or any_live]
+    if any_live:
+        nav = nav[:-1] + [("週ごとのまとめ", "/digest/", "/digest/")] + nav[-1:]
     if cfg.get("rakuten_affiliate_id"):
         nav = nav[:-1] + [("グッズ(PR)", "/goods/", "/goods/")] + nav[-1:]
     SITE = {**SITE, "nav": nav}
@@ -770,6 +846,12 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages["notify/index.html"] = notify_page(d, cfg, preview)
     if cfg.get("rakuten_affiliate_id"):
         pages["goods/index.html"] = goods_page(d, cfg, preview)
+    dig = digest.build(digest_sources(otsu, prefs))
+    if dig["weeks"]:
+        dig["fetched_date"] = d["fetched_date"]
+        pages["digest/index.html"] = digest_hub(dig, cfg, preview)
+        for k in dig["weeks"]:
+            pages[f"digest/{k}/index.html"] = digest_page(dig, k, cfg, preview)
     pages["feed.xml"] = feed_xml(d, cfg)
     pages.update(legal_pages(
         SITE, cfg, preview,
