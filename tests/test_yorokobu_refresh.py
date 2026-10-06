@@ -108,6 +108,19 @@ class CandidatesTest(unittest.TestCase):
         self.assertTrue(any(c.startswith("k") for c in codes))
         self.assertTrue(any("sort=-reviewCount" in u for u in asked))
 
+    def test_new_only_keeps_existing_shortlists_and_searches_the_rest(self):
+        asked = []
+
+        def transport(url):
+            asked.append(url)
+            return [raw_item(f"n{i}", 2000 + i, f"s{i}") for i in range(20)]
+        keep = [{"code": "old1", "name": "古い候補"}]
+        existing = {"pairs": {"mothers-day-mother": [keep]}}
+        data = fetch.candidates(CONTENT, client(FakeTransport(transport)), existing=existing, now=datetime(2026, 10, 7, 7, 0))
+        self.assertEqual(data["pairs"]["mothers-day-mother"], [keep])
+        self.assertIn("birthday-boyfriend", data["pairs"])
+        self.assertTrue(asked)
+
 
 if __name__ == "__main__":
     unittest.main()

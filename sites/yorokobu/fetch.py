@@ -119,7 +119,7 @@ CANDIDATES_MIN = 12       # an idea with fewer clean products than this gets mor
 CANDIDATES_EXTRA = 3      # at most this many extra keyword searches per idea
 
 
-def candidates(c: dict, client: rakuten.Client, limit_pairs: int | None = None, now: datetime | None = None) -> dict:
+def candidates(c: dict, client: rakuten.Client, limit_pairs: int | None = None, now: datetime | None = None, existing: dict | None = None) -> dict:
     """The shortlist the editors (Claude and Codex) choose the real picks from: per page and idea, the best fitting products of keyword searches.
     Each idea is searched twice (default order and most reviews first); an idea that still has too few clean products is topped up with the
     page's other keywords.  Written by hand-triggered runs (data/yorokobu_candidates.json); the daily job only refreshes the products that were picked."""
@@ -127,8 +127,12 @@ def candidates(c: dict, client: rakuten.Client, limit_pairs: int | None = None, 
     total = sum(len(p["ideas"]) for p in pairs) * 3
     state = {"errors": 0}
     out, thin = {}, []
+    done = (existing or {}).get("pairs", {})
     for p in pairs:
         key = ct.pair_key(p)
+        if key in done:          # new-only run: pages that already have a shortlist keep it
+            out[key] = done[key]
+            continue
         used: set = set()
         lists = []
         for i, idea in enumerate(p["ideas"]):
@@ -167,6 +171,7 @@ def main() -> None:
     ap.add_argument("--out", default="out/yorokobu_items.json")
     ap.add_argument("--limit-pairs", type=int)
     ap.add_argument("--plan", action="store_true", help="count the first-pass requests and exit")
+    ap.add_argument("--new-only", action="store_true", help="with --candidates: keep the shortlist of pages that already have one (--out is read first)")
     a = ap.parse_args()
     c = ct.load()
     if a.plan:
@@ -178,7 +183,10 @@ def main() -> None:
         sys.exit("RAKUTEN_APP_ID / RAKUTEN_ACCESS_KEY are not set")
     cfg = json.loads((ROOT / "sites" / "yorokobu" / "config.json").read_text(encoding="utf-8"))
     client = rakuten.Client(app_id, key, referer=cfg["site_url"].rstrip("/") + "/", affiliate_id=cfg.get("rakuten_affiliate_id"))
-    data = candidates(c, client, a.limit_pairs) if a.candidates else collect(c, client, a.limit_pairs)
+    existing = None
+    if a.candidates and a.new_only and Path(a.out).exists():
+        existing = json.loads(Path(a.out).read_text(encoding="utf-8"))
+    data = candidates(c, client, a.limit_pairs, existing=existing) if a.candidates else collect(c, client, a.limit_pairs)
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
