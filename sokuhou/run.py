@@ -12,7 +12,18 @@ from pathlib import Path
 from typing import Callable
 
 from sokuhou import store
-from sokuhou.sources import akita_kuma, env_kuma, estat_wage, jgrants, mhlw_minwage, miyagi_kuma, otsu_bear, otsu_fire
+from sokuhou.sources import (
+    akita_kuma,
+    env_kuma,
+    estat_wage,
+    jgrants,
+    mhlw_minwage,
+    miyagi_kuma,
+    okayama_kuma,
+    otsu_bear,
+    otsu_fire,
+    yamaguchi_kuma,
+)
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
@@ -102,6 +113,8 @@ GROUPS: dict[str, list[Source]] = {
         Source("env_kuma", env_kuma.collect, check_env_kuma),
         Source("miyagi_kuma", miyagi_kuma.collect, check_pref_bear),
         Source("akita_kuma", akita_kuma.collect, check_pref_bear),
+        Source("yamaguchi_kuma", yamaguchi_kuma.collect, check_pref_bear),
+        Source("okayama_kuma", okayama_kuma.collect, check_pref_bear),
         Source("jgrants", jgrants.collect, check_jgrants),
         Source("otsu_bear", otsu_bear.collect, check_bear),
     ],

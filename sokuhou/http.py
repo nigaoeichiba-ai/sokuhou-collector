@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import urllib.request
 from dataclasses import dataclass
+import ssl
 
 USER_AGENT = "sokuhou-collector/0.1 (+https://github.com/nigaoeichiba-ai/sokuhou-collector)"
 
@@ -16,10 +17,17 @@ class Fetched:
     etag: str | None
 
 
-def fetch(url: str, timeout: float = 20.0) -> Fetched:
+def _legacy_tls_context() -> ssl.SSLContext:
+    ctx = ssl.create_default_context()
+    ctx.set_ciphers("DEFAULT:@SECLEVEL=1")
+    return ctx
+
+
+def fetch(url: str, timeout: float = 20.0, legacy_tls: bool = False) -> Fetched:
     """One GET request. No retries: callers decide when to try again."""
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=timeout) as res:
+    context = _legacy_tls_context() if legacy_tls else None
+    with urllib.request.urlopen(req, timeout=timeout, context=context) as res:
         return Fetched(
             url=url,
             status=res.status,

@@ -417,6 +417,10 @@ def prepare_live(otsu: dict | None) -> dict | None:
 PREF_LIVE = {
     "miyagi": {"name": "宮城県", "label": "宮城県・県の公式", "monthly_label": "目撃のほか、痕跡などを含む",
                "as_of_text": "データは{d}時点です"},
+    "yamaguchi": {"name": "山口県", "label": "山口県・県警の公式", "monthly_label": "山口県警察が認知した目撃のほか、痕跡などを含む",
+                  "as_of_text": "データは{d}の分までです"},
+    "okayama": {"name": "岡山県", "label": "岡山県・県の公式。更新は不定期", "monthly_label": "種別の区別がなく、すべてを目撃として数えています",
+                "as_of_text": "最新の記録は{d}の分までです(県の更新は不定期で、遅れて載ります)"},
     "akita": {"name": "秋田県", "label": "秋田県・県の公式。更新は月1回ほど", "monthly_label": "目撃のみ。痕跡・人身被害の記録は含まない",
               "as_of_text": "最新の記録は{d}の分までです"},
 }
@@ -467,8 +471,10 @@ def pref_live_section(src: dict) -> str:
 def day_text(iso_ts: str, year: bool = False) -> str:
     """'2026-10-03T08:30:00+09:00' -> '10月3日 8時30分ごろ' (with the year: '2026年10月3日 ...')."""
     day, clock = iso_ts[:10], iso_ts[11:16]
-    h, m = (int(x) for x in clock.split(":"))
     head = jp_date(day) if year else md(day)
+    if not clock:  # a source that publishes only the date (Okayama)
+        return head
+    h, m = (int(x) for x in clock.split(":"))
     return f"{head} {h}時{m:02d}分ごろ" if (h, m) != (0, 0) else head
 
 
@@ -719,7 +725,7 @@ def main() -> None:
     otsu_file = ROOT / "data" / "otsu_bear.json"
     otsu = json.loads(otsu_file.read_text(encoding="utf-8")) if otsu_file.exists() else None
     prefs = {k: json.loads((ROOT / "data" / f"{k}_kuma.json").read_text(encoding="utf-8"))
-             for k in ("miyagi", "akita") if (ROOT / "data" / f"{k}_kuma.json").exists()}
+             for k in ("miyagi", "akita", "yamaguchi", "okayama") if (ROOT / "data" / f"{k}_kuma.json").exists()}
     links_file = HERE / "links.json"
     links = json.loads(links_file.read_text(encoding="utf-8")) if links_file.exists() else {}
     try:

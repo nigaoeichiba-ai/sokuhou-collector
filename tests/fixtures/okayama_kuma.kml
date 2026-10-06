@@ -1,0 +1,3052 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>岡山県ツキノワグマ出没情報</name>
+    <description/>
+    <Style id="icon-1507-FFEA00-labelson">
+      <IconStyle>
+        <color>ff00eaff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="icon-1759-9C27B0-labelson">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Folder>
+      <name>岡山県ツキノワグマ出没情報公開 .xlsx</name>
+      <Placemark>
+        <name>4/24/2025</name>
+        <description><![CDATA[緯度: 35.01777222<br>経度: 133.4651861<br>和暦: R7<br>市町村: 新見市<br>大字: 高尾]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.01777222</value>
+          </Data>
+          <Data name="経度">
+            <value>133.4651861</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>新見市</value>
+          </Data>
+          <Data name="大字">
+            <value>高尾</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.4651861,35.01777222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/21/2025</name>
+        <description><![CDATA[緯度: 35.15867333<br>経度: 134.10538<br>和暦: R7<br>市町村: 津山市<br>大字: 奥津川]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.15867333</value>
+          </Data>
+          <Data name="経度">
+            <value>134.10538</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>奥津川</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.10538,35.15867333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/25/2025</name>
+        <description><![CDATA[緯度: 35.20516333<br>経度: 134.09287<br>和暦: R7<br>市町村: 津山市<br>大字: 加茂町知和]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.20516333</value>
+          </Data>
+          <Data name="経度">
+            <value>134.09287</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>加茂町知和</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.09287,35.20516333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/26/2025</name>
+        <description><![CDATA[緯度: 35.08008333<br>経度: 134.2371667<br>和暦: R7<br>市町村: 美作市<br>大字: 粟井中]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.08008333</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2371667</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>粟井中</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2371667,35.08008333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/27/2025</name>
+        <description><![CDATA[緯度: 35.253673<br>経度: 133.807013<br>和暦: R7<br>市町村: 真庭市<br>大字: 蒜山]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.253673</value>
+          </Data>
+          <Data name="経度">
+            <value>133.807013</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>真庭市</value>
+          </Data>
+          <Data name="大字">
+            <value>蒜山</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.807013,35.253673,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/29/2025</name>
+        <description><![CDATA[緯度: 35.14919444<br>経度: 134.1978056<br>和暦: R7<br>市町村: 奈義町<br>大字: 高円]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14919444</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1978056</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>奈義町</value>
+          </Data>
+          <Data name="大字">
+            <value>高円</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1978056,35.14919444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/31/2025</name>
+        <description><![CDATA[緯度: 35.136985<br>経度: 134.0778483<br>和暦: R7<br>市町村: 津山市<br>大字: 三浦]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.136985</value>
+          </Data>
+          <Data name="経度">
+            <value>134.0778483</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>三浦</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.0778483,35.136985,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/12/2025</name>
+        <description><![CDATA[緯度: 35.14230556<br>経度: 134.3248167<br>和暦: R7<br>市町村: 美作市<br>大字: 江ノ原]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14230556</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3248167</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>江ノ原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3248167,35.14230556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/18/2025</name>
+        <description><![CDATA[緯度: 35.04<br>経度: 133.5761111<br>和暦: R7<br>市町村: 新見市<br>大字: 大佐布瀬]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.04</value>
+          </Data>
+          <Data name="経度">
+            <value>133.5761111</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>新見市</value>
+          </Data>
+          <Data name="大字">
+            <value>大佐布瀬</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.5761111,35.04,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/26/2025</name>
+        <description><![CDATA[緯度: 35.21607833<br>経度: 133.9250717<br>和暦: R7<br>市町村: 鏡野町<br>大字: 奥津]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.21607833</value>
+          </Data>
+          <Data name="経度">
+            <value>133.9250717</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>奥津</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.9250717,35.21607833,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/27/2025</name>
+        <description><![CDATA[緯度: 35.21875167<br>経度: 134.0358833<br>和暦: R7<br>市町村: 津山市<br>大字: 加茂町黒木]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.21875167</value>
+          </Data>
+          <Data name="経度">
+            <value>134.0358833</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>加茂町黒木</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.0358833,35.21875167,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/29/2025</name>
+        <description><![CDATA[緯度: 35.09632222<br>経度: 133.2954889<br>和暦: R7<br>市町村: 新見市<br>大字: 神郷高瀬]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.09632222</value>
+          </Data>
+          <Data name="経度">
+            <value>133.2954889</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>新見市</value>
+          </Data>
+          <Data name="大字">
+            <value>神郷高瀬</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.2954889,35.09632222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/8/2025</name>
+        <description><![CDATA[緯度: 35.21436167<br>経度: 134.0596117<br>和暦: R7<br>市町村: 津山市<br>大字: 加茂町青柳]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.21436167</value>
+          </Data>
+          <Data name="経度">
+            <value>134.0596117</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>加茂町青柳</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.0596117,35.21436167,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/12/2025</name>
+        <description><![CDATA[緯度: 35.14929833<br>経度: 134.114315<br>和暦: R7<br>市町村: 津山市<br>大字: 奥津川]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14929833</value>
+          </Data>
+          <Data name="経度">
+            <value>134.114315</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>奥津川</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.114315,35.14929833,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/13/2025</name>
+        <description><![CDATA[緯度: 35.16975<br>経度: 134.35875<br>和暦: R7<br>市町村: 美作市<br>大字: 中谷]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.16975</value>
+          </Data>
+          <Data name="経度">
+            <value>134.35875</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>中谷</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.35875,35.16975,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/16/2025</name>
+        <description><![CDATA[緯度: 35.14897222<br>経度: 134.1541667<br>和暦: R7<br>市町村: 奈義町<br>大字: 滝本]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14897222</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1541667</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>奈義町</value>
+          </Data>
+          <Data name="大字">
+            <value>滝本</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1541667,35.14897222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/16/2025</name>
+        <description><![CDATA[緯度: 35.16845556<br>経度: 134.3865<br>和暦: R7<br>市町村: 美作市<br>大字: 後山]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.16845556</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3865</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>後山</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3865,35.16845556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/29/2025</name>
+        <description><![CDATA[緯度: 35.11944444<br>経度: 133.46<br>和暦: R7<br>市町村: 新見市<br>大字: 千屋実]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.11944444</value>
+          </Data>
+          <Data name="経度">
+            <value>133.46</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>新見市</value>
+          </Data>
+          <Data name="大字">
+            <value>千屋実</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.46,35.11944444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/26/2025</name>
+        <description><![CDATA[緯度: 35.11<br>経度: 134.3438611<br>和暦: R7<br>市町村: 美作市<br>大字: 西町]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.11</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3438611</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>西町</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3438611,35.11,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/26/2025</name>
+        <description><![CDATA[緯度: 35.12043333<br>経度: 134.3366944<br>和暦: R7<br>市町村: 美作市<br>大字: 川東]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.12043333</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3366944</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>川東</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3366944,35.12043333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/30/2025</name>
+        <description><![CDATA[緯度: 35.1357<br>経度: 134.3486056<br>和暦: R7<br>市町村: 美作市<br>大字: 東吉田]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.1357</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3486056</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>東吉田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3486056,35.1357,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/5/2025</name>
+        <description><![CDATA[緯度: 35.23848167<br>経度: 134.0486017<br>和暦: R7<br>市町村: 津山市<br>大字: 加茂町黒木]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.23848167</value>
+          </Data>
+          <Data name="経度">
+            <value>134.0486017</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>加茂町黒木</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.0486017,35.23848167,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/11/2025</name>
+        <description><![CDATA[緯度: 35.13083333<br>経度: 133.5391667<br>和暦: R7<br>市町村: 新見市<br>大字: 大佐大井野]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.13083333</value>
+          </Data>
+          <Data name="経度">
+            <value>133.5391667</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>新見市</value>
+          </Data>
+          <Data name="大字">
+            <value>大佐大井野</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.5391667,35.13083333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/17/2025</name>
+        <description><![CDATA[緯度: 35.03417778<br>経度: 134.2353056<br>和暦: R7<br>市町村: 美作市<br>大字: 鯰]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.03417778</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2353056</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>鯰</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2353056,35.03417778,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/18/2025</name>
+        <description><![CDATA[緯度: 35.18003833<br>経度: 133.98838<br>和暦: R7<br>市町村: 鏡野町<br>大字: 岩屋]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.18003833</value>
+          </Data>
+          <Data name="経度">
+            <value>133.98838</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>岩屋</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.98838,35.18003833,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/29/2025</name>
+        <description><![CDATA[緯度: 35.01519444<br>経度: 134.26375<br>和暦: R7<br>市町村: 美作市<br>大字: 田原]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.01519444</value>
+          </Data>
+          <Data name="経度">
+            <value>134.26375</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>田原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.26375,35.01519444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/3/2025</name>
+        <description><![CDATA[緯度: 34.91505556<br>経度: 133.7435278<br>和暦: R7<br>市町村: 吉備中央町<br>大字: 笹目]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>34.91505556</value>
+          </Data>
+          <Data name="経度">
+            <value>133.7435278</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>吉備中央町</value>
+          </Data>
+          <Data name="大字">
+            <value>笹目</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.7435278,34.91505556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/9/2025</name>
+        <description><![CDATA[緯度: 35.06819444<br>経度: 134.3016944<br>和暦: R7<br>市町村: 美作市<br>大字: 宮原]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.06819444</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3016944</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>宮原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3016944,35.06819444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/9/2025</name>
+        <description><![CDATA[緯度: 35.05958333<br>経度: 134.3012222<br>和暦: R7<br>市町村: 美作市<br>大字: 宮原]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.05958333</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3012222</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>宮原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3012222,35.05958333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/24/2025</name>
+        <description><![CDATA[緯度: 35.04647778<br>経度: 134.1998889<br>和暦: R7<br>市町村: 美作市<br>大字: 田殿]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.04647778</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1998889</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>田殿</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1998889,35.04647778,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/21/2025</name>
+        <description><![CDATA[緯度: 35.20246333<br>経度: 134.09287<br>和暦: R7<br>市町村: 津山市<br>大字: 加茂町知和]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.20246333</value>
+          </Data>
+          <Data name="経度">
+            <value>134.09287</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>加茂町知和</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.09287,35.20246333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>10/27/2025</name>
+        <description><![CDATA[緯度: 35.14398889<br>経度: 134.3559444<br>和暦: R7<br>市町村: 美作市<br>大字: 太田]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14398889</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3559444</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>太田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3559444,35.14398889,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>12/28/2025</name>
+        <description><![CDATA[緯度: 35.09327222<br>経度: 134.2601111<br>和暦: R7<br>市町村: 美作市<br>大字: 梶原]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.09327222</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2601111</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>梶原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2601111,35.09327222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>1/4/2026</name>
+        <description><![CDATA[緯度: 35.1351111<br>経度: 134.3186667<br>和暦: R7<br>市町村: 美作市<br>大字: 古町]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.1351111</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3186667</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>古町</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3186667,35.1351111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>1/14/2026</name>
+        <description><![CDATA[緯度: 35.13025<br>経度: 134.3058333<br>和暦: R7<br>市町村: 美作市<br>大字: 川上]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.13025</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3058333</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>川上</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3058333,35.13025,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>1/25/2026</name>
+        <description><![CDATA[緯度: 35.14586111<br>経度: 134.3529056<br>和暦: R7<br>市町村: 美作市<br>大字: 野原]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14586111</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3529056</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>野原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3529056,35.14586111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>1/24/2026</name>
+        <description><![CDATA[緯度: 35.14958333<br>経度: 134.3258167<br>和暦: R7<br>市町村: 西粟倉村<br>大字: 筏津]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14958333</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3258167</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>西粟倉村</value>
+          </Data>
+          <Data name="大字">
+            <value>筏津</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3258167,35.14958333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>1/24/2026</name>
+        <description><![CDATA[緯度: 35.1485<br>経度: 134.3224611<br>和暦: R7<br>市町村: 西粟倉村<br>大字: 筏津]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.1485</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3224611</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>西粟倉村</value>
+          </Data>
+          <Data name="大字">
+            <value>筏津</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3224611,35.1485,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>2/2/2026</name>
+        <description><![CDATA[緯度: 35.14425<br>経度: 134.2824167<br>和暦: R7<br>市町村: 美作市<br>大字: 東谷上]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14425</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2824167</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>東谷上</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2824167,35.14425,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>2/2/2026</name>
+        <description><![CDATA[緯度: 35.13436111<br>経度: 134.2980556<br>和暦: R7<br>市町村: 美作市<br>大字: 川上]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.13436111</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2980556</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>川上</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2980556,35.13436111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>2/15/2026</name>
+        <description><![CDATA[緯度: 35.14977778<br>経度: 134.35185<br>和暦: R7<br>市町村: 美作市<br>大字: 野原]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14977778</value>
+          </Data>
+          <Data name="経度">
+            <value>134.35185</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>野原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.35185,35.14977778,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>3/21/2026</name>
+        <description><![CDATA[緯度: 35.10583333<br>経度: 133.6477778<br>和暦: R7<br>市町村: 真庭市<br>大字: 神代]]></description>
+        <styleUrl>#icon-1759-9C27B0-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.10583333</value>
+          </Data>
+          <Data name="経度">
+            <value>133.6477778</value>
+          </Data>
+          <Data name="和暦">
+            <value>R7</value>
+          </Data>
+          <Data name="市町村">
+            <value>真庭市</value>
+          </Data>
+          <Data name="大字">
+            <value>神代</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.6477778,35.10583333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/1/2026</name>
+        <description><![CDATA[緯度: 35.02763889<br>経度: 134.2687222<br>和暦: R8<br>市町村: 美作市<br>大字: 大内谷]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.02763889</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2687222</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>大内谷</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2687222,35.02763889,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/2/2026</name>
+        <description><![CDATA[緯度: 35.243325<br>経度: 134.0566183<br>和暦: R8<br>市町村: 津山市<br>大字: 加茂町倉見]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.243325</value>
+          </Data>
+          <Data name="経度">
+            <value>134.0566183</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>加茂町倉見</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.0566183,35.243325,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/8/2026</name>
+        <description><![CDATA[緯度: 35.07913889<br>経度: 134.2876389<br>和暦: R8<br>市町村: 美作市<br>大字: 壬生]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.07913889</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2876389</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>壬生</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2876389,35.07913889,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/8/2026</name>
+        <description><![CDATA[緯度: 35.09280556<br>経度: 134.2861111<br>和暦: R8<br>市町村: 美作市<br>大字: 滝]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.09280556</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2861111</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>滝</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2861111,35.09280556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/12/2026</name>
+        <description><![CDATA[緯度: 35.12602833<br>経度: 134.1142733<br>和暦: R8<br>市町村: 津山市<br>大字: 西上]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.12602833</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1142733</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>西上</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1142733,35.12602833,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/14/2026</name>
+        <description><![CDATA[緯度: 35.13496111<br>経度: 133.955825<br>和暦: R8<br>市町村: 鏡野町<br>大字: 圓通寺]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.13496111</value>
+          </Data>
+          <Data name="経度">
+            <value>133.955825</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>圓通寺</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.955825,35.13496111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/14/2026</name>
+        <description><![CDATA[緯度: 35.12021944<br>経度: 134.0042472<br>和暦: R8<br>市町村: 津山市<br>大字: 上横野]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.12021944</value>
+          </Data>
+          <Data name="経度">
+            <value>134.0042472</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>上横野</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.0042472,35.12021944,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/10/2026</name>
+        <description><![CDATA[緯度: 35.07794444<br>経度: 134.1973056<br>和暦: R8<br>市町村: 美作市<br>大字: 大町]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.07794444</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1973056</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>大町</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1973056,35.07794444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/11/2026</name>
+        <description><![CDATA[緯度: 35.09913889<br>経度: 134.1311111<br>和暦: R8<br>市町村: 勝央町<br>大字: 植月東]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.09913889</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1311111</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>勝央町</value>
+          </Data>
+          <Data name="大字">
+            <value>植月東</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1311111,35.09913889,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/11/2026</name>
+        <description><![CDATA[緯度: 35.0975<br>経度: 134.17425<br>和暦: R8<br>市町村: 奈義町<br>大字: 中島東]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.0975</value>
+          </Data>
+          <Data name="経度">
+            <value>134.17425</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>奈義町</value>
+          </Data>
+          <Data name="大字">
+            <value>中島東</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.17425,35.0975,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/11/2026</name>
+        <description><![CDATA[緯度: 34.98188889<br>経度: 134.2710278<br>和暦: R8<br>市町村: 美作市<br>大字: 白水]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>34.98188889</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2710278</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>白水</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2710278,34.98188889,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/16/2026</name>
+        <description><![CDATA[緯度: 35.13794722<br>経度: 133.8011028<br>和暦: R8<br>市町村: 鏡野町<br>大字: 橘]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.13794722</value>
+          </Data>
+          <Data name="経度">
+            <value>133.8011028</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>橘</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.8011028,35.13794722,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/17/2026</name>
+        <description><![CDATA[緯度: 35.05116667<br>経度: 134.3031944<br>和暦: R8<br>市町村: 美作市<br>大字: 宮原]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.05116667</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3031944</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>宮原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3031944,35.05116667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/18/2026</name>
+        <description><![CDATA[緯度: 35.05786111<br>経度: 134.2922778<br>和暦: R8<br>市町村: 美作市<br>大字: 宮原]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.05786111</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2922778</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>宮原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2922778,35.05786111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/29/2026</name>
+        <description><![CDATA[緯度: 35.13540944<br>経度: 134.114315<br>和暦: R8<br>市町村: 津山市<br>大字: 奥津川]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.13540944</value>
+          </Data>
+          <Data name="経度">
+            <value>134.114315</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>奥津川</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.114315,35.13540944,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/28/2026</name>
+        <description><![CDATA[緯度: 35.15413889<br>経度: 134.3637222<br>和暦: R8<br>市町村: 美作市<br>大字: 東青野]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.15413889</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3637222</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>東青野</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3637222,35.15413889,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/7/2026</name>
+        <description><![CDATA[緯度: 34.90033333<br>経度: 134.1289444<br>和暦: R8<br>市町村: 美作市<br>大字: 上山]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>34.90033333</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1289444</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>上山</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1289444,34.90033333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/22/2026</name>
+        <description><![CDATA[緯度: 35.080572<br>経度: 133.454189<br>和暦: R8<br>市町村: 新見市<br>大字: 菅生]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.080572</value>
+          </Data>
+          <Data name="経度">
+            <value>133.454189</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>新見市</value>
+          </Data>
+          <Data name="大字">
+            <value>菅生</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.454189,35.080572,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4/27/2026</name>
+        <description><![CDATA[緯度: 34.97972222<br>経度: 133.3788889<br>和暦: R8<br>市町村: 新見市<br>大字: 神郷下神代]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>34.97972222</value>
+          </Data>
+          <Data name="経度">
+            <value>133.3788889</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>新見市</value>
+          </Data>
+          <Data name="大字">
+            <value>神郷下神代</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.3788889,34.97972222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/10/2026</name>
+        <description><![CDATA[緯度: 35.1465369<br>経度: 134.1480546<br>和暦: R8<br>市町村: 奈義町<br>大字: 滝本]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.1465369</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1480546</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>奈義町</value>
+          </Data>
+          <Data name="大字">
+            <value>滝本</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1480546,35.1465369,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/5/2026</name>
+        <description><![CDATA[緯度: 35.029608<br>経度: 133.58488<br>和暦: R8<br>市町村: 新見市<br>大字: 大佐布瀬]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.029608</value>
+          </Data>
+          <Data name="経度">
+            <value>133.58488</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>新見市</value>
+          </Data>
+          <Data name="大字">
+            <value>大佐布瀬</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.58488,35.029608,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/12/2026</name>
+        <description><![CDATA[緯度: 35.13686111<br>経度: 134.3459722<br>和暦: R8<br>市町村: 美作市<br>大字: 東吉田]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.13686111</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3459722</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>東吉田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3459722,35.13686111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/10/2026</name>
+        <description><![CDATA[緯度: 34.90527778<br>経度: 133.53<br>和暦: R8<br>市町村: 新見市<br>大字: 法曽]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>34.90527778</value>
+          </Data>
+          <Data name="経度">
+            <value>133.53</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>新見市</value>
+          </Data>
+          <Data name="大字">
+            <value>法曽</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.53,34.90527778,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/15/2026</name>
+        <description><![CDATA[緯度: 34.7975<br>経度: 133.5886111<br>和暦: R8<br>市町村: 高梁市<br>大字: 落合町原田]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>34.7975</value>
+          </Data>
+          <Data name="経度">
+            <value>133.5886111</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>高梁市</value>
+          </Data>
+          <Data name="大字">
+            <value>落合町原田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.5886111,34.7975,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/18/2026</name>
+        <description><![CDATA[緯度: 35.142708<br>経度: 134.344219<br>和暦: R8<br>市町村: 美作市<br>大字: 東吉田]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.142708</value>
+          </Data>
+          <Data name="経度">
+            <value>134.344219</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>東吉田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.344219,35.142708,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/21/2026</name>
+        <description><![CDATA[緯度: 35.18991667<br>経度: 134.06275<br>和暦: R8<br>市町村: 津山市<br>大字: 加茂町青やぎ]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.18991667</value>
+          </Data>
+          <Data name="経度">
+            <value>134.06275</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>加茂町青やぎ</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.06275,35.18991667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/20/2026</name>
+        <description><![CDATA[緯度: 35.097075<br>経度: 133.308069<br>和暦: R8<br>市町村: 新見市<br>大字: 神郷高瀬]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.097075</value>
+          </Data>
+          <Data name="経度">
+            <value>133.308069</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>新見市</value>
+          </Data>
+          <Data name="大字">
+            <value>神郷高瀬</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.308069,35.097075,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/24/2026</name>
+        <description><![CDATA[緯度: 35.20355556<br>経度: 134.3329167<br>和暦: R8<br>市町村: 西粟倉村<br>大字: 坂根]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.20355556</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3329167</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>西粟倉村</value>
+          </Data>
+          <Data name="大字">
+            <value>坂根</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3329167,35.20355556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/27/2026</name>
+        <description><![CDATA[緯度: 35.14286111<br>経度: 133.9480278<br>和暦: R8<br>市町村: 鏡野町<br>大字: 寺和田]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14286111</value>
+          </Data>
+          <Data name="経度">
+            <value>133.9480278</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>寺和田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.9480278,35.14286111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>5/30/2026</name>
+        <description><![CDATA[緯度: 35.02261111<br>経度: 134.2373333<br>和暦: R8<br>市町村: 美作市<br>大字: 江見]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.02261111</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2373333</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>江見</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2373333,35.02261111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/2/2026</name>
+        <description><![CDATA[緯度: 35.25366667<br>経度: 133.9364722<br>和暦: R8<br>市町村: 鏡野町<br>大字: 下斎原]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.25366667</value>
+          </Data>
+          <Data name="経度">
+            <value>133.9364722</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>下斎原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.9364722,35.25366667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/3/2026</name>
+        <description><![CDATA[緯度: 35.03269444<br>経度: 134.2275278<br>和暦: R8<br>市町村: 美作市<br>大字: 鯰]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.03269444</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2275278</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>鯰</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2275278,35.03269444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/5/2026</name>
+        <description><![CDATA[緯度: 34.988<br>経度: 134.2774167<br>和暦: R8<br>市町村: 美作市<br>大字: 土居]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>34.988</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2774167</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>土居</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2774167,34.988,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/7/2026</name>
+        <description><![CDATA[緯度: 35.11622222<br>経度: 133.93875<br>和暦: R8<br>市町村: 鏡野町<br>大字: 和田]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.11622222</value>
+          </Data>
+          <Data name="経度">
+            <value>133.93875</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>和田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.93875,35.11622222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/11/2026</name>
+        <description><![CDATA[緯度: 35.116<br>経度: 134.1775278<br>和暦: R8<br>市町村: 奈義町<br>大字: 柿]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.116</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1775278</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>奈義町</value>
+          </Data>
+          <Data name="大字">
+            <value>柿</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1775278,35.116,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/12/2026</name>
+        <description><![CDATA[緯度: 35.10322222<br>経度: 134.3181389<br>和暦: R8<br>市町村: 美作市<br>大字: 笹岡]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.10322222</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3181389</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>笹岡</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3181389,35.10322222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/15/2026</name>
+        <description><![CDATA[緯度: 35.17275<br>経度: 134.3845833<br>和暦: R8<br>市町村: 美作市<br>大字: 後山]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.17275</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3845833</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>後山</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3845833,35.17275,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/19/2026</name>
+        <description><![CDATA[緯度: 35.044<br>経度: 134.2445278<br>和暦: R8<br>市町村: 美作市<br>大字: 岩辺]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.044</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2445278</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>岩辺</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2445278,35.044,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/20/2026</name>
+        <description><![CDATA[緯度: 35.28594444<br>経度: 133.9181667<br>和暦: R8<br>市町村: 鏡野町<br>大字: 上齋原]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.28594444</value>
+          </Data>
+          <Data name="経度">
+            <value>133.9181667</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>上齋原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.9181667,35.28594444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/21/2026</name>
+        <description><![CDATA[緯度: 35.22772222<br>経度: 133.8872778<br>和暦: R8<br>市町村: 鏡野町<br>大字: 羽出]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.22772222</value>
+          </Data>
+          <Data name="経度">
+            <value>133.8872778</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>羽出</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.8872778,35.22772222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/22/2026</name>
+        <description><![CDATA[緯度: 35.21872222<br>経度: 134.3575556<br>和暦: R8<br>市町村: 西粟倉村<br>大字: 長尾]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.21872222</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3575556</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>西粟倉村</value>
+          </Data>
+          <Data name="大字">
+            <value>長尾</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3575556,35.21872222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>6/27/2026</name>
+        <description><![CDATA[緯度: 35.13511778<br>経度: 134.1143083<br>和暦: R8<br>市町村: 津山市<br>大字: 奥津川]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.13511778</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1143083</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>奥津川</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1143083,35.13511778,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/1/2026</name>
+        <description><![CDATA[緯度: 35.04119444<br>経度: 134.2576389<br>和暦: R8<br>市町村: 美作市<br>大字: 小ノ谷]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.04119444</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2576389</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>小ノ谷</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2576389,35.04119444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/1/2026</name>
+        <description><![CDATA[緯度: 35.10213889<br>経度: 133.9501111<br>和暦: R8<br>市町村: 鏡野町<br>大字: 沢田]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.10213889</value>
+          </Data>
+          <Data name="経度">
+            <value>133.9501111</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>沢田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.9501111,35.10213889,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/2/2026</name>
+        <description><![CDATA[緯度: 35.01922222<br>経度: 134.2563611<br>和暦: R8<br>市町村: 美作市<br>大字: 田原]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.01922222</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2563611</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>田原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2563611,35.01922222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/3/2026</name>
+        <description><![CDATA[緯度: 35.19402778<br>経度: 134.0662222<br>和暦: R8<br>市町村: 津山市<br>大字: 加茂町青柳]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.19402778</value>
+          </Data>
+          <Data name="経度">
+            <value>134.0662222</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>加茂町青柳</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.0662222,35.19402778,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/5/2026</name>
+        <description><![CDATA[緯度: 35.05019444<br>経度: 134.1428056<br>和暦: R8<br>市町村: 勝央町<br>大字: 田井]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.05019444</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1428056</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>勝央町</value>
+          </Data>
+          <Data name="大字">
+            <value>田井</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1428056,35.05019444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/6/2026</name>
+        <description><![CDATA[緯度: 35.31261111<br>経度: 133.9548611<br>和暦: R8<br>市町村: 鏡野町<br>大字: 上齋原]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.31261111</value>
+          </Data>
+          <Data name="経度">
+            <value>133.9548611</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>上齋原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.9548611,35.31261111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/7/2026</name>
+        <description><![CDATA[緯度: 35.05069444<br>経度: 134.1763333<br>和暦: R8<br>市町村: 勝央町<br>大字: 上香山]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.05069444</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1763333</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>勝央町</value>
+          </Data>
+          <Data name="大字">
+            <value>上香山</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1763333,35.05069444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/8/2026</name>
+        <description><![CDATA[緯度: 35.15097222<br>経度: 134.362<br>和暦: R8<br>市町村: 美作市<br>大字: 東横野]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.15097222</value>
+          </Data>
+          <Data name="経度">
+            <value>134.362</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>東横野</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.362,35.15097222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/13/2026</name>
+        <description><![CDATA[緯度: 35.27896666<br>経度: 133.9253528<br>和暦: R8<br>市町村: 鏡野町<br>大字: 上齋原]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.27896666</value>
+          </Data>
+          <Data name="経度">
+            <value>133.9253528</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>上齋原</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.9253528,35.27896666,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/16/2026</name>
+        <description><![CDATA[緯度: 35.20440305<br>経度: 133.7537589<br>和暦: R8<br>市町村: 真庭市<br>大字: 湯原町田羽根]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.20440305</value>
+          </Data>
+          <Data name="経度">
+            <value>133.7537589</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>真庭市</value>
+          </Data>
+          <Data name="大字">
+            <value>湯原町田羽根</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.7537589,35.20440305,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/18/2026</name>
+        <description><![CDATA[緯度: 35.14725<br>経度: 134.1970833<br>和暦: R8<br>市町村: 奈義町<br>大字: 高円]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14725</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1970833</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>奈義町</value>
+          </Data>
+          <Data name="大字">
+            <value>高円</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1970833,35.14725,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/19/2026</name>
+        <description><![CDATA[緯度: 35.16219444<br>経度: 134.2784444<br>和暦: R8<br>市町村: 美作市<br>大字: 東谷上]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.16219444</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2784444</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>東谷上</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2784444,35.16219444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/30/2026</name>
+        <description><![CDATA[緯度: 35.14425<br>経度: 134.3541111<br>和暦: R8<br>市町村: 美作市<br>大字: 太田]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14425</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3541111</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>太田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3541111,35.14425,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>7/31/2026</name>
+        <description><![CDATA[緯度: 35.154049<br>経度: 134.354543<br>和暦: R8<br>市町村: 美作市<br>大字: 東吉田]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.154049</value>
+          </Data>
+          <Data name="経度">
+            <value>134.354543</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>東吉田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.354543,35.154049,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/2/2026</name>
+        <description><![CDATA[緯度: 35.13378833<br>経度: 134.1162367<br>和暦: R8<br>市町村: 津山市<br>大字: 市場]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.13378833</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1162367</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>市場</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1162367,35.13378833,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/4/2026</name>
+        <description><![CDATA[緯度: 35.16375<br>経度: 134.2359444<br>和暦: R8<br>市町村: 美作市<br>大字: 右手]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.16375</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2359444</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>右手</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2359444,35.16375,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/4/2026</name>
+        <description><![CDATA[緯度: 35.10066667<br>経度: 134.2855278<br>和暦: R8<br>市町村: 美作市<br>大字: 滝]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.10066667</value>
+          </Data>
+          <Data name="経度">
+            <value>134.2855278</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>滝</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.2855278,35.10066667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/9/2026</name>
+        <description><![CDATA[緯度: 35.16005556<br>経度: 134.3673611<br>和暦: R8<br>市町村: 美作市<br>大字: 東青野]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.16005556</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3673611</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>東青野</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3673611,35.16005556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/9/2026</name>
+        <description><![CDATA[緯度: 35.19061111<br>経度: 134.0103056<br>和暦: R8<br>市町村: 津山市<br>大字: 加茂原口]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.19061111</value>
+          </Data>
+          <Data name="経度">
+            <value>134.0103056</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>加茂原口</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.0103056,35.19061111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/10/2026</name>
+        <description><![CDATA[緯度: 35.13136833<br>経度: 134.1167083<br>和暦: R8<br>市町村: 津山市<br>大字: 市場]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.13136833</value>
+          </Data>
+          <Data name="経度">
+            <value>134.1167083</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>津山市</value>
+          </Data>
+          <Data name="大字">
+            <value>市場</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.1167083,35.13136833,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/13/2026</name>
+        <description><![CDATA[緯度: 35.13388889<br>経度: 133.7086111<br>和暦: R8<br>市町村: 真庭市<br>大字: 見尾]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.13388889</value>
+          </Data>
+          <Data name="経度">
+            <value>133.7086111</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>真庭市</value>
+          </Data>
+          <Data name="大字">
+            <value>見尾</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.7086111,35.13388889,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/17/2026</name>
+        <description><![CDATA[緯度: 35.16005556<br>経度: 134.3673611<br>和暦: R8<br>市町村: 美作市<br>大字: 東青野]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.16005556</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3673611</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>東青野</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3673611,35.16005556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/20/2026</name>
+        <description><![CDATA[緯度: 35.14541666<br>経度: 134.3574444<br>和暦: R8<br>市町村: 美作市<br>大字: 太田]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14541666</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3574444</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>太田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3574444,35.14541666,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/21/2026</name>
+        <description><![CDATA[緯度: 35.15627777<br>経度: 134.3599167<br>和暦: R8<br>市町村: 美作市<br>大字: 東青野]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.15627777</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3599167</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>東青野</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3599167,35.15627777,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>8/26/2026</name>
+        <description><![CDATA[緯度: 35.14508333<br>経度: 134.3555<br>和暦: R8<br>市町村: 美作市<br>大字: 太田]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.14508333</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3555</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>美作市</value>
+          </Data>
+          <Data name="大字">
+            <value>太田</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3555,35.14508333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/1/2026</name>
+        <description><![CDATA[緯度: 35.20861111<br>経度: 133.92775<br>和暦: R8<br>市町村: 鏡野町<br>大字: 奥津]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.20861111</value>
+          </Data>
+          <Data name="経度">
+            <value>133.92775</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>鏡野町</value>
+          </Data>
+          <Data name="大字">
+            <value>奥津</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.92775,35.20861111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/1/2026</name>
+        <description><![CDATA[緯度: 35.19319444<br>経度: 134.3372778<br>和暦: R8<br>市町村: 西粟倉村<br>大字: 影石]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>35.19319444</value>
+          </Data>
+          <Data name="経度">
+            <value>134.3372778</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>西粟倉村</value>
+          </Data>
+          <Data name="大字">
+            <value>影石</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            134.3372778,35.19319444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>9/6/2026</name>
+        <description><![CDATA[緯度: 34.913827<br>経度: 133.356982<br>和暦: R8<br>市町村: 新見市<br>大字: 哲西町大野部]]></description>
+        <styleUrl>#icon-1507-FFEA00-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="緯度">
+            <value>34.913827</value>
+          </Data>
+          <Data name="経度">
+            <value>133.356982</value>
+          </Data>
+          <Data name="和暦">
+            <value>R8</value>
+          </Data>
+          <Data name="市町村">
+            <value>新見市</value>
+          </Data>
+          <Data name="大字">
+            <value>哲西町大野部</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            133.356982,34.913827,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

@@ -357,3 +357,29 @@ class PrefLiveTest(unittest.TestCase):
         self.assertIn("宮城県が公表している最新の目撃情報", self.read("miyagi/index.html"))
         self.assertIn("秋田県が公表している最新の目撃情報", self.read("akita/index.html"))
         self.assertNotIn("が公表している最新の目撃情報", self.read("iwate/index.html"))
+
+
+@unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
+class DateOnlyTest(unittest.TestCase):
+    """Okayama publishes dates without a time of day: the list must show the date alone."""
+
+    def test_day_text_without_a_time(self):
+        self.assertEqual(build.day_text("2026-09-06"), "9月6日")
+        self.assertEqual(build.day_text("2026-09-06", year=True), "2026年9月6日")
+        self.assertEqual(build.day_text("2026-09-06T07:05:00+09:00"), "9月6日 7時05分ごろ")
+
+    def test_okayama_section_renders(self):
+        okayama = {"source": "okayama", "source_page": "https://www.pref.okayama.jp/page/1006862.html", "as_of": "2026-09-06",
+                   "fy_current": "R08", "credit": "出典:岡山県「岡山県ツキノワグマ出没情報」を加工して作成", "update_note": "岡山県が適宜更新します",
+                   "fetched_at": "2026-10-06T06:20:00+09:00",
+                   "sightings": [{"observed_at": "2026-09-06", "city": "新見市", "place": "哲西町大野部", "count": None, "kind": "目撃", "species": "ツキノワグマ"}],
+                   "monthly": {"R08": {"9": 3}}}
+        raw = raw_data()
+        raw["notices"] = []
+        with tempfile.TemporaryDirectory() as tmp:
+            build.render_site(raw, CFG, Path(tmp) / "s", release=True, otsu=None, prefs={"okayama": okayama})
+            html = (Path(tmp) / "s" / "live" / "index.html").read_text(encoding="utf-8")
+            self.assertIn("<td>2026年9月6日</td><td>新見市哲西町大野部</td><td>目撃</td>", html)
+            self.assertIn("岡山県が公表している令和8年度の記録は、3件です", html)
+            home = (Path(tmp) / "s" / "index.html").read_text(encoding="utf-8")
+            self.assertIn("最新の目撃(岡山県・県の公式。更新は不定期): 9月6日 新見市哲西町大野部", home)

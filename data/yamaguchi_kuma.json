@@ -1,0 +1,1871 @@
+{
+ "as_of": "2026-10-03",
+ "bad_coords": 1,
+ "credit": "出典:山口県警察本部地域企画課「山口県内のクマ出没情報(YPくまっぷ)」(山口県オープンデータ、CC BY)を加工して作成",
+ "fetched_at": "2026-10-06T09:49:28.593276+09:00",
+ "fy_current": "R08",
+ "monthly": {
+  "R07": {
+   "1": 5,
+   "2": 2,
+   "3": 1
+  },
+  "R08": {
+   "10": 4,
+   "4": 21,
+   "5": 55,
+   "6": 51,
+   "7": 35,
+   "8": 20,
+   "9": 36
+  }
+ },
+ "sightings": [
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-03T22:30:00+09:00",
+   "place": "美和町北中山 敷地内",
+   "species": "クマ"
+  },
+  {
+   "city": "下松市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-10-03T13:00:00+09:00",
+   "place": "大字山田 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-03T06:15:00+09:00",
+   "place": "美川町根笠 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "宇部市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-10-02T09:00:00+09:00",
+   "place": "大字西吉部 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 3,
+   "kind": "目撃",
+   "observed_at": "2026-09-30T22:30:00+09:00",
+   "place": "大字上村 道路上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-30T09:07:00+09:00",
+   "place": "錦町広瀬 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-30T08:50:00+09:00",
+   "place": "美和町生見 市道沿いの法面",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-29T06:48:00+09:00",
+   "place": "大字高瀬 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-27T17:45:00+09:00",
+   "place": "大字椿東 資材置場",
+   "species": "クマ"
+  },
+  {
+   "city": "宇部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-27T11:25:00+09:00",
+   "place": "大字善和 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-27T04:20:00+09:00",
+   "place": "東豊井 公園内",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-26T11:00:00+09:00",
+   "place": "大字明木 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-25T10:50:00+09:00",
+   "place": "東豊井 道路上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-09-24T09:25:00+09:00",
+   "place": "周東町祖生 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-23T09:00:00+09:00",
+   "place": "大字夏切 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-20T17:40:00+09:00",
+   "place": "徳地柚木 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-20T13:20:00+09:00",
+   "place": "大字下田万 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-20T13:00:00+09:00",
+   "place": "湯野 柿の木畑",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-20T05:45:00+09:00",
+   "place": "柳井 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-19T11:39:00+09:00",
+   "place": "阿東生雲中 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "光市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-18T17:30:00+09:00",
+   "place": "岩狩 道路上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-18T16:30:00+09:00",
+   "place": "徳地野谷 敷地内",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-18T13:10:00+09:00",
+   "place": "徳地野谷 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下関市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-17T09:50:00+09:00",
+   "place": "豊北町大字滝部 農地",
+   "species": "クマ"
+  },
+  {
+   "city": "阿武郡阿武町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-15T18:00:00+09:00",
+   "place": "大字奈古 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-15T14:35:00+09:00",
+   "place": "大字須々万奥 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-13T10:18:00+09:00",
+   "place": "大字佐々並 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-13T04:15:00+09:00",
+   "place": "徳地柚木 道路上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-11T19:47:00+09:00",
+   "place": "大字須々万本郷 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-11T07:00:00+09:00",
+   "place": "徳地柚木 倉庫内",
+   "species": "クマ"
+  },
+  {
+   "city": "山陽小野田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-09T18:34:00+09:00",
+   "place": "大字厚狭 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-08T06:00:00+09:00",
+   "place": "柱野 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "長門市",
+   "count": 3,
+   "kind": "目撃",
+   "observed_at": "2026-09-08T04:42:00+09:00",
+   "place": "深川湯本 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-07T06:05:00+09:00",
+   "place": "大字鹿野下 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-06T21:48:00+09:00",
+   "place": "阿東篠目 線路上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-06T16:50:00+09:00",
+   "place": "阿東生雲中 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-03T20:50:00+09:00",
+   "place": "川上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-03T17:30:00+09:00",
+   "place": "美川町南桑 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-02T13:00:00+09:00",
+   "place": "大字大潮 雑草地",
+   "species": "クマ"
+  },
+  {
+   "city": "熊毛郡田布施町",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-09-01T15:20:00+09:00",
+   "place": "大字波野 道路上",
+   "species": "クマ"
+  },
+  {
+   "city": "宇部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-31T23:15:00+09:00",
+   "place": "大字東須恵 空き地",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-31T05:45:00+09:00",
+   "place": "徳地柚木 田んぼ",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-31T01:00:00+09:00",
+   "place": "徳地野谷 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-21T16:45:00+09:00",
+   "place": "大字上田万 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-21T10:30:00+09:00",
+   "place": "大字椿東 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-17T10:30:00+09:00",
+   "place": "徳地船路 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-17T08:20:00+09:00",
+   "place": "大字須佐 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-16T05:41:00+09:00",
+   "place": "柱野 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-13T08:30:00+09:00",
+   "place": "大字大潮 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-12T19:30:00+09:00",
+   "place": "大字徳山 草むら",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-12T00:55:00+09:00",
+   "place": "大字椿東 民家敷地内",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-08-11T07:00:00+09:00",
+   "place": "川上 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-07T07:10:00+09:00",
+   "place": "大字須々万奥 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-07T07:00:00+09:00",
+   "place": "徳地柚木 倉庫内",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-07T06:15:00+09:00",
+   "place": "美和町北中山 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-08-06T09:20:00+09:00",
+   "place": "大字高佐上 山林",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-04T16:30:00+09:00",
+   "place": "大字紫福 市道沿い",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-04T10:30:00+09:00",
+   "place": "青木町 市道沿い",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-04T06:30:00+09:00",
+   "place": "大字八代 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-02T06:30:00+09:00",
+   "place": "大字八代 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "阿武町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-31T20:30:00+09:00",
+   "place": "大字奈古 町道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-31T06:20:00+09:00",
+   "place": "大字椿東 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-30T06:30:00+09:00",
+   "place": "美和町阿賀 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-28T15:30:00+09:00",
+   "place": "徳地柚木 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-28T06:00:00+09:00",
+   "place": "伊陸 畑",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-27T05:00:00+09:00",
+   "place": "伊陸 畑",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-26T06:00:00+09:00",
+   "place": "伊陸 畑",
+   "species": "クマ"
+  },
+  {
+   "city": "長門市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-25T22:20:00+09:00",
+   "place": "三隅上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-25T09:43:00+09:00",
+   "place": "小郡上郷 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-25T05:30:00+09:00",
+   "place": "伊陸 畑",
+   "species": "クマ"
+  },
+  {
+   "city": "阿武郡阿武町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-24T16:20:00+09:00",
+   "place": "大字奈古 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-24T14:24:00+09:00",
+   "place": "徳地柚木 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-24T14:00:00+09:00",
+   "place": "大字鹿野上 石船橋上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-24T07:43:00+09:00",
+   "place": "阿東地福上 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-23T05:00:00+09:00",
+   "place": "伊陸 畑",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-19T11:30:00+09:00",
+   "place": "大字明木 石ノ巷山登山道",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-18T07:40:00+09:00",
+   "place": "大字八代 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-18T07:18:00+09:00",
+   "place": "徳地岸見 山麓",
+   "species": "クマ"
+  },
+  {
+   "city": "宇部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-16T22:25:00+09:00",
+   "place": "大字善和 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-15T18:00:00+09:00",
+   "place": "本郷町本谷 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-15T13:00:00+09:00",
+   "place": "大字下田万 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-13T17:00:00+09:00",
+   "place": "美和町生見 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-13T15:30:00+09:00",
+   "place": "大字中須北 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-12T10:25:00+09:00",
+   "place": "大字八代 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-12T08:15:00+09:00",
+   "place": "大字鹿野上 河川内",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-09T17:20:00+09:00",
+   "place": "美和町生見 休耕田",
+   "species": "クマ"
+  },
+  {
+   "city": "阿武郡阿武町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-07T16:43:00+09:00",
+   "place": "大字福田上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-07T11:30:00+09:00",
+   "place": "大字福井下 竹藪",
+   "species": "クマ"
+  },
+  {
+   "city": "宇部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-07T08:00:00+09:00",
+   "place": "大字東岐波 田畑",
+   "species": "クマ"
+  },
+  {
+   "city": "美祢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-06T18:55:00+09:00",
+   "place": "美東町大田 山裾",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-06T16:45:00+09:00",
+   "place": "神代 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-06T07:00:00+09:00",
+   "place": "大字椿東 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "宇部市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-05T19:02:00+09:00",
+   "place": "大字東岐波 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 4,
+   "kind": "痕跡",
+   "observed_at": "2026-07-03T16:20:00+09:00",
+   "place": "美和町生見 市道上及び山中",
+   "species": "クマ"
+  },
+  {
+   "city": "美祢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-01T18:10:00+09:00",
+   "place": "伊佐町伊佐 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-06-30T18:20:00+09:00",
+   "place": "阿東嘉年下 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-30T17:04:00+09:00",
+   "place": "大字須々万奥 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-29T08:25:00+09:00",
+   "place": "阿東地福上 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-27T19:22:00+09:00",
+   "place": "大字中小川 県道沿いの藪",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-27T16:40:00+09:00",
+   "place": "玖珂町 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-25T15:10:00+09:00",
+   "place": "徳地掘 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "宇部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24T17:30:00+09:00",
+   "place": "大字川上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24T13:03:00+09:00",
+   "place": "大字上小川西分 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24T05:30:00+09:00",
+   "place": "川上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-22T13:00:00+09:00",
+   "place": "錦町宇佐郷 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-21T08:00:00+09:00",
+   "place": "柳井 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-21T07:00:00+09:00",
+   "place": "阿東地福 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山陽小野田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-20T15:00:00+09:00",
+   "place": "大字山野井 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下関市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-19T14:44:00+09:00",
+   "place": "大字吉田 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下関市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-19T09:46:00+09:00",
+   "place": "大字吉田 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下関市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18T20:31:00+09:00",
+   "place": "菊川町大字久野 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17T19:30:00+09:00",
+   "place": "徳地野谷 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17T19:10:00+09:00",
+   "place": "徳地三谷 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "山陽小野田市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-17T11:00:00+09:00",
+   "place": "大字福田 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-17T10:00:00+09:00",
+   "place": "大字八代 田んぼ",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15T21:00:00+09:00",
+   "place": "大字呼坂 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15T16:50:00+09:00",
+   "place": "大字吉部上 田んぼ",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-06-15T06:10:00+09:00",
+   "place": "大字高佐下 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "玖珂郡和木町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-14T21:15:00+09:00",
+   "place": "草むら",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-14T19:33:00+09:00",
+   "place": "川上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山陽小野田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-14T18:00:00+09:00",
+   "place": "大字山野井 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-14T05:20:00+09:00",
+   "place": "美和町 田んぼ",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-13T11:10:00+09:00",
+   "place": "大字八代 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-13T06:30:00+09:00",
+   "place": "嘉川 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下関市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12T19:30:00+09:00",
+   "place": "大字吉田 民家敷地内",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12T08:00:00+09:00",
+   "place": "阿東嘉年上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11T15:20:00+09:00",
+   "place": "大字八代 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11T13:30:00+09:00",
+   "place": "阿東地福上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11T13:00:00+09:00",
+   "place": "阿東地福上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-06-11T09:45:00+09:00",
+   "place": "大字高佐上 陸上自衛隊むつみ演習場内",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10T17:32:00+09:00",
+   "place": "阿東町地福 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "阿武郡阿武町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10T17:20:00+09:00",
+   "place": "大字福田上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "阿武郡阿武町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-09T20:00:00+09:00",
+   "place": "大字奈古 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-06-09T15:00:00+09:00",
+   "place": "秋穂二島 田んぼ",
+   "species": "クマ"
+  },
+  {
+   "city": "山陽小野田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08T08:36:00+09:00",
+   "place": "大字埴生 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-07T18:30:00+09:00",
+   "place": "大字温見 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山陽小野田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-06T13:20:00+09:00",
+   "place": "大字山野井 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04T18:00:00+09:00",
+   "place": "大字中須南 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04T17:02:00+09:00",
+   "place": "大字椿 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04T13:05:00+09:00",
+   "place": "大字河内 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04T08:06:00+09:00",
+   "place": "大字下小川 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-03T10:05:00+09:00",
+   "place": "阿東篠目 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-03T07:15:00+09:00",
+   "place": "徳地野谷 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "阿武郡阿武町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01T18:51:00+09:00",
+   "place": "大字惣郷 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01T18:20:00+09:00",
+   "place": "大字下小川 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01T13:55:00+09:00",
+   "place": "大字高佐上 陸上自衛隊むつみ演習場内",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-30T19:33:00+09:00",
+   "place": "大字大向 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-30T18:21:00+09:00",
+   "place": "江崎 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "宇部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-30T16:58:00+09:00",
+   "place": "大字山中 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-29T19:00:00+09:00",
+   "place": "大字佐々並 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "防府市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-29T14:45:00+09:00",
+   "place": "大字牟礼 道路上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-28T07:20:00+09:00",
+   "place": "大字佐々並 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-27T07:30:00+09:00",
+   "place": "川上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26T18:50:00+09:00",
+   "place": "大字下谷 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26T18:00:00+09:00",
+   "place": "周東町中山 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26T16:30:00+09:00",
+   "place": "大字椿東 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26T10:00:00+09:00",
+   "place": "大字椿東 登山道",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26T08:40:00+09:00",
+   "place": "大字中須南 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下関市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-25T06:04:00+09:00",
+   "place": "菊川町 農道上",
+   "species": "クマ"
+  },
+  {
+   "city": "宇部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-24T09:10:00+09:00",
+   "place": "大字船木 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "阿武郡阿武町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-24T07:00:00+09:00",
+   "place": "町道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23T18:00:00+09:00",
+   "place": "徳地野谷 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "熊毛郡田布施町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23T15:25:00+09:00",
+   "place": "県道脇の竹藪",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-22T18:30:00+09:00",
+   "place": "六呂師 市道沿いの山中",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-22T13:50:00+09:00",
+   "place": "阿東地福上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-05-21T11:30:00+09:00",
+   "place": "美和町生見 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-05-20T14:30:00+09:00",
+   "place": "美和町北中山 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20T13:10:00+09:00",
+   "place": "大字安田 山林",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20T11:26:00+09:00",
+   "place": "余田 田んぼ内",
+   "species": "クマ"
+  },
+  {
+   "city": "宇部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20T08:15:00+09:00",
+   "place": "大字小野 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "美祢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20T07:00:00+09:00",
+   "place": "美東町綾木 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20T06:23:00+09:00",
+   "place": "余田 田んぼ",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20T04:52:00+09:00",
+   "place": "余田 農道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-19T07:40:00+09:00",
+   "place": "三見 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "下松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-18T14:00:00+09:00",
+   "place": "生野屋 恋路トンネル先",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-18T09:55:00+09:00",
+   "place": "三見 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-17T17:30:00+09:00",
+   "place": "吉敷 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "美祢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-17T16:47:00+09:00",
+   "place": "美東町絵堂 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 3,
+   "kind": "目撃",
+   "observed_at": "2026-05-17T05:34:00+09:00",
+   "place": "伊陸 民家敷地内",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-16T20:20:00+09:00",
+   "place": "余田 市道沿いの竹藪",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-16T11:10:00+09:00",
+   "place": "日積 敷地内",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-16T08:00:00+09:00",
+   "place": "本郷町 道路上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-15T23:00:00+09:00",
+   "place": "大字吉部下 集合住宅敷地内",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-15T08:00:00+09:00",
+   "place": "大字吉部下 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-15T06:18:00+09:00",
+   "place": "大字明木 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-14T19:03:00+09:00",
+   "place": "大字米光 道路上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-14T07:50:00+09:00",
+   "place": "阿東生雲中 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "美祢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-14T06:14:00+09:00",
+   "place": "美東町綾木 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-13T18:50:00+09:00",
+   "place": "阿東篠目 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-13T18:00:00+09:00",
+   "place": "余田 農道法面",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-12T19:48:00+09:00",
+   "place": "大字須々万本郷 道路上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-12T12:01:00+09:00",
+   "place": "大字徳山 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-11T18:00:00+09:00",
+   "place": "大字米光 畑",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-05-10T13:42:00+09:00",
+   "place": "柳井 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-08T08:00:00+09:00",
+   "place": "三見 事業所敷地内",
+   "species": "クマ"
+  },
+  {
+   "city": "下関市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-06T02:56:00+09:00",
+   "place": "菊川町 国道上沿いの歩道",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-05-05T19:00:00+09:00",
+   "place": "三見 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-02T17:50:00+09:00",
+   "place": "阿東篠目 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-02T13:44:00+09:00",
+   "place": "大字弥富下 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-01T12:30:00+09:00",
+   "place": "美和町 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "玖珂郡和木町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-01T10:23:00+09:00",
+   "place": "山中",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-29T16:10:00+09:00",
+   "place": "本郷町 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-28T21:30:00+09:00",
+   "place": "大字大島 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-28T05:45:00+09:00",
+   "place": "大字中須南 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "防府市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-27T20:32:00+09:00",
+   "place": "大字大崎 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-04-27T09:00:00+09:00",
+   "place": "美和町阿賀 休耕田",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-26T22:15:00+09:00",
+   "place": "鋳銭司 県道沿いの法面",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-26T06:22:00+09:00",
+   "place": "大字椿東 会社敷地内",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-24T15:20:00+09:00",
+   "place": "大字須佐 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-21T19:30:00+09:00",
+   "place": "三見 市道沿いの法面",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-21T17:20:00+09:00",
+   "place": "川上 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-20T07:30:00+09:00",
+   "place": "三見 新石丸橋付近",
+   "species": "クマ"
+  },
+  {
+   "city": "長門市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-18T21:30:00+09:00",
+   "place": "三隅上 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-18T14:30:00+09:00",
+   "place": "大字富田 永源山公園山中",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-12T18:55:00+09:00",
+   "place": "御庄 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-07T14:25:00+09:00",
+   "place": "大字八代 雑木林",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-07T10:10:00+09:00",
+   "place": "周東町川上 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-06T08:10:00+09:00",
+   "place": "美和町北中山 休耕田",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-06T03:40:00+09:00",
+   "place": "美和町北中山 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "萩市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-04T07:15:00+09:00",
+   "place": "大字佐々並 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-03T08:00:00+09:00",
+   "place": "美川町南桑 河川敷",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-03T02:41:00+09:00",
+   "place": "阿東嘉年下 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-03-30T02:48:00+09:00",
+   "place": "阿東篠目 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-02-25T17:10:00+09:00",
+   "place": "徳地船路 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-02-22T11:34:00+09:00",
+   "place": "大字徳山 国道付近",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-01-25T20:30:00+09:00",
+   "place": "阿東生雲西分 空き地",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-01-18T20:04:00+09:00",
+   "place": "大字夜市 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "柳井市",
+   "count": 3,
+   "kind": "目撃",
+   "observed_at": "2026-01-09T11:00:00+09:00",
+   "place": "伊陸 県道上",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-01-04T13:35:00+09:00",
+   "place": "大字須々万奥 国道上",
+   "species": "クマ"
+  },
+  {
+   "city": "山口市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-01-04T10:00:00+09:00",
+   "place": "阿東地福上",
+   "species": "クマ"
+  }
+ ],
+ "sightings_in_window": 230,
+ "source": "yamaguchi",
+ "source_file": "https://yamaguchi-opendata.jp/ckan/dataset/928b40db-0a74-4ad7-b70e-019045860fd4/resource/b257b81d-4acd-4067-ba53-fe8c5235081b/download/r8-01011005.csv",
+ "source_page": "https://yamaguchi-opendata.jp/ckan/dataset/yp-2026",
+ "unparsed": 0,
+ "update_note": "山口県警察が認知した目撃・痕跡の情報です。随時更新されます"
+}

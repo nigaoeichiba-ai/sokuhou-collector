@@ -134,7 +134,18 @@ class CliTest(unittest.TestCase):
 
     def test_groups_cover_every_collector(self):
         names = {s.name for group in run.GROUPS.values() for s in group}
-        self.assertEqual(names, {"minwage", "estat_wage", "env_kuma", "miyagi_kuma", "akita_kuma", "jgrants", "otsu_bear", "otsu_fire"})
+        self.assertEqual(names, {
+            "minwage",
+            "estat_wage",
+            "env_kuma",
+            "miyagi_kuma",
+            "akita_kuma",
+            "yamaguchi_kuma",
+            "okayama_kuma",
+            "jgrants",
+            "otsu_bear",
+            "otsu_fire",
+        })
 
 
 def store_total(path):
