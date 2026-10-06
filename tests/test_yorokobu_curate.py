@@ -53,6 +53,13 @@ class CurateTest(unittest.TestCase):
         errors = curate.validate({"birthday-mother": [good_idea(), good_idea()]}, C, c)[1]
         self.assertTrue(any("already used" in e for e in errors))
 
+    def test_titles_for_another_narrow_occasion_are_refused(self):
+        from sites.yorokobu.relevance import fits_occasion
+        self.assertFalse(fits_occasion("お歳暮 2026 スイーツ ギフト", "birthday"))
+        self.assertFalse(fits_occasion("名入れ刺繍 ポーチ 母子手帳 ケース 出産祝い", "birthday"))
+        self.assertTrue(fits_occasion("お歳暮 2026 スイーツ ギフト", "oseibo"))
+        self.assertTrue(fits_occasion("名入れ ポーチ 誕生日 クリスマス ギフト", "birthday"))
+
 
 if __name__ == "__main__":
     unittest.main()
