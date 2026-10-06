@@ -19,7 +19,7 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
 from sites.yorokobu import content as ct  # noqa: E402
-from sites.yorokobu.picking import score  # noqa: E402
+from sites.yorokobu.picking import score, usable  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
 from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages,  # noqa: E402
                              missing_config, standard_files, write_pages)
@@ -383,7 +383,9 @@ def prepare(c: dict, items: dict | None) -> dict:
     if f:
         t = datetime.fromisoformat(f)
         label = f"{t.year}年{t.month}月{t.day}日"
-    return {"c": c, "pairs": items.get("pairs", {}), "portrait": items.get("portrait", []), "fetched_label": label,
+    # the stored lists were chosen at fetch time; apply today's filters again so a rule change shows without refetching
+    pairs = {k: {t: [i for i in lst if usable(i, c["filters"])] for t, lst in tiers.items()} for k, tiers in items.get("pairs", {}).items()}
+    return {"c": c, "pairs": pairs, "portrait": items.get("portrait", []), "fetched_label": label,
             "fetched_date": (f or date.today().isoformat())[:10]}
 
 
