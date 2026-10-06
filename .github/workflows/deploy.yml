@@ -62,6 +62,14 @@ jobs:
             min_cards: 0
             marker: クマ出没速報
             probe: /feed.xml
+          - site: yorokobu
+            dir: yorokobu-present.com
+            url: https://yorokobu-present.com
+            build: python sites/yorokobu/build.py --release --out release --items out/yorokobu_items.json
+            min_pages: 120
+            min_cards: 0
+            marker: よろこぶプレゼント
+            probe: /sitemap.xml
     concurrency:
       group: deploy-${{ matrix.site }}
       cancel-in-progress: false
@@ -77,6 +85,9 @@ jobs:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
           KUMA: ${{ vars.DEPLOY_KUMA }}
+          YOROKOBU: ${{ vars.DEPLOY_YOROKOBU }}
+          RK_APP: ${{ secrets.RAKUTEN_APP_ID }}
+          RK_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           SITE: ${{ matrix.site }}
         run: |
           go=true
@@ -86,6 +97,10 @@ jobs:
           fi
           if [ "$SITE" = "kuma" ] && [ "$KUMA" != "true" ]; then
             echo "DEPLOY_KUMA is not true; the kuma site is skipped"
+            go=false
+          fi
+          if [ "$SITE" = "yorokobu" ] && { [ "$YOROKOBU" != "true" ] || [ -z "$RK_APP" ] || [ -z "$RK_KEY" ]; }; then
+            echo "DEPLOY_YOROKOBU is not true, or the Rakuten secrets are missing; the yorokobu site is skipped"
             go=false
           fi
           echo "go=$go" >> "$GITHUB_OUTPUT"
@@ -98,6 +113,22 @@ jobs:
       - name: Unit tests
         if: steps.gate.outputs.go == 'true'
         run: python -m unittest discover -s tests -t .
+      - name: Today's date (the products are fetched once a day and cached, so a code push does not refetch)
+        if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu'
+        run: echo "DAY=$(TZ=Asia/Tokyo date +%F)" >> "$GITHUB_ENV"
+      - name: Restore today's products
+        if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu'
+        id: items-cache
+        uses: actions/cache@v4
+        with:
+          path: out/yorokobu_items.json
+          key: yorokobu-items-${{ env.DAY }}
+      - name: Fetch products
+        if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu' && steps.items-cache.outputs.cache-hit != 'true'
+        env:
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+        run: python -m sites.yorokobu.fetch --out out/yorokobu_items.json
       - name: Build (release)
         if: steps.gate.outputs.go == 'true'
         env:

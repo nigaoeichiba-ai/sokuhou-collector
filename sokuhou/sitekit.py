@@ -85,7 +85,8 @@ def nav_html(site: dict, path: str) -> str:
 
 
 def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, description: str, body: str,
-           scripts: bool = False, og_image: str | None = None, alternates: tuple[tuple[str, str], ...] = ()) -> str:
+           scripts: bool = False, og_image: str | None = None, alternates: tuple[tuple[str, str], ...] = (),
+           head_extra: str = "") -> str:
     base = cfg["site_url"].rstrip("/")
     name = esc(cfg["site_name"])
     robots = '<meta name="robots" content="noindex,nofollow">\n' if preview else ""
@@ -123,7 +124,7 @@ def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, descr
 {og_tags}{links}<link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/style.css?v={ver}">
+{head_extra}<link rel="stylesheet" href="/assets/style.css?v={ver}">
 {adsense}</head>
 <body>
 {banner}<header class="site"><div class="wrap">

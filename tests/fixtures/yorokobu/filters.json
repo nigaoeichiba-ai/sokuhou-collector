@@ -1,0 +1,23 @@
+{
+  "min_review_count": 10,
+  "min_review_average": 4.0,
+  "ng_words": [
+    "訳あり",
+    "中古"
+  ],
+  "max_per_list": 12,
+  "tiers": [
+    {
+      "slug": "under3000",
+      "label": "3,000円以内",
+      "min": 0,
+      "max": 3000
+    },
+    {
+      "slug": "3000-5000",
+      "label": "3,000〜5,000円",
+      "min": 3000,
+      "max": 5000
+    }
+  ]
+}

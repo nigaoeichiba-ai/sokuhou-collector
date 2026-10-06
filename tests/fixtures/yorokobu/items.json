@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "fetched_at": "2026-10-07T07:00:00+09:00",
+  "pairs": {
+    "birthday-boyfriend": {
+      "under3000": [
+        {
+          "code": "a1",
+          "name": "テスト商品a1 贈り物にぴったりのギフトセット",
+          "price": 2500,
+          "url": "https://item.rakuten.co.jp/s1/a1/",
+          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s1/a1.jpg?_ex=300x300",
+          "shop": "店s1",
+          "shop_code": "s1",
+          "reviews": 50,
+          "rating": 4.5,
+          "available": true,
+          "free_shipping": true,
+          "gift": true
+        },
+        {
+          "code": "a2",
+          "name": "テスト商品a2 贈り物にぴったりのギフトセット",
+          "price": 1980,
+          "url": "https://item.rakuten.co.jp/s2/a2/",
+          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s2/a2.jpg?_ex=300x300",
+          "shop": "店s2",
+          "shop_code": "s2",
+          "reviews": 200,
+          "rating": 4.5,
+          "available": true,
+          "free_shipping": true,
+          "gift": true
+        }
+      ],
+      "3000-5000": [
+        {
+          "code": "a3",
+          "name": "テスト商品a3 贈り物にぴったりのギフトセット",
+          "price": 4200,
+          "url": "https://item.rakuten.co.jp/s3/a3/",
+          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s3/a3.jpg?_ex=300x300",
+          "shop": "店s3",
+          "shop_code": "s3",
+          "reviews": 50,
+          "rating": 4.5,
+          "available": true,
+          "free_shipping": true,
+          "gift": true
+        }
+      ]
+    },
+    "birthday-mother": {
+      "under3000": [
+        {
+          "code": "b1",
+          "name": "テスト商品b1 贈り物にぴったりのギフトセット",
+          "price": 2800,
+          "url": "https://item.rakuten.co.jp/s4/b1/",
+          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s4/b1.jpg?_ex=300x300",
+          "shop": "店s4",
+          "shop_code": "s4",
+          "reviews": 50,
+          "rating": 4.5,
+          "available": true,
+          "free_shipping": true,
+          "gift": true
+        }
+      ],
+      "3000-5000": []
+    },
+    "mothers-day-mother": {
+      "under3000": [
+        {
+          "code": "c1",
+          "name": "テスト商品c1 贈り物にぴったりのギフトセット",
+          "price": 2200,
+          "url": "https://item.rakuten.co.jp/s5/c1/",
+          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s5/c1.jpg?_ex=300x300",
+          "shop": "店s5",
+          "shop_code": "s5",
+          "reviews": 50,
+          "rating": 4.5,
+          "available": true,
+          "free_shipping": true,
+          "gift": true
+        }
+      ],
+      "3000-5000": [
+        {
+          "code": "c2",
+          "name": "テスト商品c2 贈り物にぴったりのギフトセット",
+          "price": 3800,
+          "url": "https://item.rakuten.co.jp/s6/c2/",
+          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s6/c2.jpg?_ex=300x300",
+          "shop": "店s6",
+          "shop_code": "s6",
+          "reviews": 50,
+          "rating": 4.5,
+          "available": true,
+          "free_shipping": true,
+          "gift": true
+        }
+      ]
+    }
+  },
+  "portrait": [
+    {
+      "code": "p1",
+      "name": "手描き似顔絵(テスト)",
+      "price": 9800,
+      "url": "https://item.rakuten.co.jp/2gaoe/p1/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/2gaoe/p1.jpg?_ex=300x300",
+      "shop": "店2gaoe",
+      "shop_code": "2gaoe",
+      "reviews": 0,
+      "rating": 0,
+      "available": true,
+      "free_shipping": true,
+      "gift": true
+    }
+  ],
+  "stats": {}
+}
