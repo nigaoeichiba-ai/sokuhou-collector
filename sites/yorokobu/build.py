@@ -49,8 +49,10 @@ def short(name: str, limit: int = NAME_LIMIT) -> str:
     return name if len(name) <= limit else name[: limit - 1].rstrip() + "…"
 
 
-def amazon_url(cfg: dict, query: str) -> str:
-    return f"https://www.amazon.co.jp/s?k={quote(query, safe='')}&tag={quote(cfg['amazon_tracking_id'], safe='')}"
+def amazon_url(cfg: dict, query: str, low: int | None = None, high: int | None = None) -> str:
+    """Amazon.co.jp search results for a keyword (optionally within a price range), with the Associates tracking ID."""
+    price = (f"&low-price={low}" if low else "") + (f"&high-price={high}" if high else "")
+    return f"https://www.amazon.co.jp/s?k={quote(query, safe='')}{price}&tag={quote(cfg['amazon_tracking_id'], safe='')}"
 
 
 def pr_lead(cfg: dict) -> str:
@@ -206,9 +208,16 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     lists = d["pairs"].get(key, {})
     tiers = [t for t in p["tiers"] if lists.get(t)]
     chips = "".join(f'<a href="#t-{t}">{esc(c["tiers"][t]["label"])}</a>' for t in tiers)
+    def amazon_tier(t: str) -> str:
+        if not cfg.get("amazon_tracking_id"):
+            return ""
+        tr = c["tiers"][t]
+        return (f'<p class="tier-more"><a class="btn btn-sub" href="{esc(amazon_url(cfg, p["queries"][0], tr.get("min"), tr.get("max")))}" '
+                f'rel="sponsored nofollow noopener" target="_blank"><span class="pr-note">PR</span>{esc(tr["label"])}のAmazonの商品もさがす</a></p>')
+
     sections = "".join(
         f'<section id="t-{t}" class="tier"><div class="tier-head"><span class="tag">予算</span><h2>{esc(c["tiers"][t]["label"])}のおすすめ</h2></div>'
-        f'{item_grid(cfg, lists[t], ranked=True)}</section>' for t in tiers)
+        f'{item_grid(cfg, lists[t], ranked=True)}{amazon_tier(t)}</section>' for t in tiers)
     if not sections:
         sections = '<p class="notice">いま表示できる商品が、見つかりませんでした。しばらくしてから、もう一度ご覧ください。</p>'
     avoid = occ["avoid"][:1] + rec["avoid"][:1]

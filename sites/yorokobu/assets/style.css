@@ -282,3 +282,6 @@ main.wrap > h1:first-child { margin-top: 36px; }
 .pr-strip { background: var(--ink); color: #ffe9a8; font-size: .74rem; text-align: center; padding: .35em 12px; line-height: 1.5; }
 .pr-strip .pr-note { background: var(--yellow); color: var(--ink); }
 .pr-strip a { color: #ffe9a8; }
+
+.tier-more { margin: 22px 0 0; text-align: center; }
+.tier-more .btn { font-size: .9rem; padding: .55em 1.3em; }

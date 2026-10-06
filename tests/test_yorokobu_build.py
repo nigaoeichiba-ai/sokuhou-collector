@@ -48,6 +48,12 @@ class BuildTest(unittest.TestCase):
         self.assertIn("3,000円以内のおすすめ", html)
         self.assertIn("2026年10月7日に取得した情報", html)
 
+    def test_each_budget_block_has_an_amazon_search_in_its_price_range(self):
+        html = self.read("gift/birthday-boyfriend/index.html")
+        self.assertIn("low-price=3000&amp;high-price=5000&amp;tag=amazonmacs-22", html)
+        self.assertIn("3,000〜5,000円のAmazonの商品もさがす", html)
+        self.assertIn("high-price=3000&amp;tag=amazonmacs-22", html)  # the lowest tier has no lower bound
+
     def test_products_keep_the_order_chosen_by_the_fetch(self):
         html = self.read("gift/birthday-boyfriend/index.html")
         self.assertLess(html.index("テスト商品a1"), html.index("テスト商品a2"))  # the fetch ranks; the build does not reorder
