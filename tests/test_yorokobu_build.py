@@ -222,6 +222,21 @@ class NameCleanupTest(unittest.TestCase):
         build.set_keep()
         self.assertNotIn("誕生日", build.short(raw))
 
+    def test_extra_occasion_words_and_shop_promotions_are_dropped(self):
+        build.set_keep("昇進祝い")
+        shown = build.short("卒業記念品 名入れ 1個から 父 プレゼント 昇進祝い 夫 メンズ ボールペン")
+        self.assertIn("昇進祝い", shown)
+        self.assertNotIn("卒業記念品", shown)
+        build.set_keep()
+        shown = build.short("楽天ランキング1位獲得！ マラソン期間中 ジャンル祭対象 ごまクッキー 18個入 詰め合わせ")
+        for w in ("楽天ランキング", "マラソン", "ジャンル祭"):
+            self.assertNotIn(w, shown)
+        self.assertIn("ごまクッキー", shown)
+
+    def test_a_shorter_word_does_not_cut_the_pages_own_word(self):
+        build.set_keep("卒業祝い")
+        self.assertIn("卒業祝い", build.short("卒業祝い 名入れ ボールペン 卒業記念品 ギフト 男性 女性"))
+
     def test_a_title_that_would_shrink_to_nothing_stays_as_it_is(self):
         self.assertEqual(build.short("敬老の日 画像送信サービス"), "敬老の日 画像送信サービス")
 
