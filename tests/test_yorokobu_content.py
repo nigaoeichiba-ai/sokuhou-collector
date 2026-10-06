@@ -146,3 +146,45 @@ class ThemeQualityTest(unittest.TestCase):
     def test_themes_do_not_repeat_long_sentences(self):
         sents = Counter(s for t in self.c["themes"] for s in sentences(" ".join([t["lead"], *t["reasons"], *t["how_to_choose"]])))
         self.assertEqual([s for s, n in sents.items() if n > 1], [])
+
+
+class ExtrasQualityTest(unittest.TestCase):
+    """Persona quiz, gift-map tags and the etiquette entries."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.c = ct.load()
+
+    def test_every_page_has_four_map_dots(self):
+        tags = self.c["map_tags"]
+        if not tags:
+            self.skipTest("no map tags yet")
+        keys = [ct.pair_key(p) for p in ct.pages(self.c)]
+        self.assertEqual([k for k in keys if k not in tags], [])
+        self.assertEqual([k for k in keys if len(tags[k]) != len(next(p for p in ct.pages(self.c) if ct.pair_key(p) == k)["ideas"])], [])
+
+    def test_persona_text_is_clean_and_every_persona_can_win(self):
+        persona = self.c["persona"]
+        if not persona:
+            self.skipTest("no persona yet")
+        bad = []
+        for p in persona["personas"]:
+            blob = " ".join([p["name"], p["tagline"], p["about"], *p["likes"], *p["avoid"], p["line"]])
+            bad += [(p["slug"], w) for w in FORBIDDEN_WORDS if w in blob]
+            if not 90 <= len(p["about"]) <= 220 or len(p["themes"]) != 3:
+                bad.append((p["slug"], "shape"))
+        self.assertEqual(bad, [])
+        self.assertEqual(len(persona["questions"]), 6)
+
+    def test_etiquette_entries_are_calm_and_complete(self):
+        entries = self.c["taboo"]
+        if not entries:
+            self.skipTest("no etiquette entries yet")
+        bad = []
+        for e in entries:
+            blob = " ".join([e["title"], e["why"], e["tip"], *e["alternatives"]])
+            bad += [(e["id"], w) for w in ("調査", "人気", "楽天", "Amazon", "AI", "必ず", "絶対", "%") if w in blob]
+            if not 40 <= len(e["why"]) <= 170 or not 40 <= len(e["tip"]) <= 170:
+                bad.append((e["id"], "length", len(e["why"]), len(e["tip"])))
+        self.assertEqual(bad, [])
+        self.assertGreaterEqual(len(entries), 40)
