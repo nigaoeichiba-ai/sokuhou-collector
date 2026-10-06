@@ -1,0 +1,383 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "text": "休日のあの人はどんな過ごし方が多い?",
+      "options": [
+        {
+          "label": "静かに充電する",
+          "w": {
+            "alone-time": 3,
+            "taste-curator": 1
+          }
+        },
+        {
+          "label": "家の用事を整える",
+          "w": {
+            "practical-steady": 2,
+            "modest-caregiver": 2
+          }
+        },
+        {
+          "label": "誰かと楽しく話す",
+          "w": {
+            "conversation-spark": 3,
+            "memory-keeper": 1
+          }
+        },
+        {
+          "label": "知らない場所へ出る",
+          "w": {
+            "new-adventurer": 2,
+            "food-explorer": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": "もらうなら何がいちばん笑顔になりそう?",
+      "options": [
+        {
+          "label": "毎日使えるもの",
+          "w": {
+            "practical-steady": 3,
+            "modest-caregiver": 1
+          }
+        },
+        {
+          "label": "味わって消えるもの",
+          "w": {
+            "food-explorer": 3,
+            "alone-time": 1
+          }
+        },
+        {
+          "label": "話の種になるもの",
+          "w": {
+            "conversation-spark": 3,
+            "new-adventurer": 1
+          }
+        },
+        {
+          "label": "気持ちが残るもの",
+          "w": {
+            "memory-keeper": 3,
+            "taste-curator": 1,
+            "modest-caregiver": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": "物を選ぶ時のあの人らしさは?",
+      "options": [
+        {
+          "label": "長く使えるか見る",
+          "w": {
+            "practical-steady": 3,
+            "taste-curator": 1
+          }
+        },
+        {
+          "label": "手ざわりまで見る",
+          "w": {
+            "taste-curator": 3,
+            "alone-time": 1
+          }
+        },
+        {
+          "label": "軽さや置き場を見る",
+          "w": {
+            "modest-caregiver": 3,
+            "practical-steady": 1
+          }
+        },
+        {
+          "label": "少し珍しい物を見る",
+          "w": {
+            "new-adventurer": 3,
+            "conversation-spark": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "text": "新しいことへの反応はどれに近い?",
+      "options": [
+        {
+          "label": "まず試してみたい",
+          "w": {
+            "new-adventurer": 3,
+            "conversation-spark": 1
+          }
+        },
+        {
+          "label": "理由があれば試す",
+          "w": {
+            "practical-steady": 2,
+            "taste-curator": 2
+          }
+        },
+        {
+          "label": "誰かと一緒なら",
+          "w": {
+            "conversation-spark": 2,
+            "food-explorer": 2,
+            "memory-keeper": 1
+          }
+        },
+        {
+          "label": "慣れた安心がいい",
+          "w": {
+            "alone-time": 2,
+            "modest-caregiver": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "人づきあいでよく見える一面は?",
+      "options": [
+        {
+          "label": "さりげなく助ける",
+          "w": {
+            "modest-caregiver": 3,
+            "practical-steady": 1
+          }
+        },
+        {
+          "label": "少人数で深く話す",
+          "w": {
+            "alone-time": 2,
+            "memory-keeper": 2
+          }
+        },
+        {
+          "label": "場を明るくする",
+          "w": {
+            "conversation-spark": 3,
+            "food-explorer": 1
+          }
+        },
+        {
+          "label": "相手の好みを覚える",
+          "w": {
+            "taste-curator": 2,
+            "memory-keeper": 2,
+            "modest-caregiver": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "text": "お金の使い方はどんな考えに近い?",
+      "options": [
+        {
+          "label": "必要な物にしっかり",
+          "w": {
+            "practical-steady": 3,
+            "modest-caregiver": 1
+          }
+        },
+        {
+          "label": "体験や外出に使う",
+          "w": {
+            "food-explorer": 2,
+            "new-adventurer": 2,
+            "memory-keeper": 1
+          }
+        },
+        {
+          "label": "好きな世界を深める",
+          "w": {
+            "alone-time": 2,
+            "taste-curator": 2
+          }
+        },
+        {
+          "label": "特別感には使う",
+          "w": {
+            "memory-keeper": 2,
+            "conversation-spark": 1,
+            "taste-curator": 1
+          }
+        }
+      ]
+    }
+  ],
+  "personas": [
+    {
+      "slug": "practical-steady",
+      "name": "実用主義のしっかり者",
+      "tagline": "毎日に役立つと心がほどける人",
+      "about": "この人は、使うたびに便利さを感じられる贈り物に安心します。見た目の華やかさより、手に取りやすさや手入れのしやすさが大事。暮らしの中で「これ助かる」と思えるものほど、じわじわ愛着が育ちます。贈った後の使い道まで浮かぶと、受け取る前から少しうれしくなれるタイプです。",
+      "likes": [
+        "上質な日用品",
+        "整理しやすい道具",
+        "長く使える小物"
+      ],
+      "avoid": [
+        "置き場所に困る大物",
+        "手入れが面倒な品"
+      ],
+      "themes": [
+        "handy-useful",
+        "safe-choice",
+        "cooking"
+      ],
+      "line": "毎日のどこかで少し役に立ったらうれしいです"
+    },
+    {
+      "slug": "alone-time",
+      "name": "ひとり時間が宝物タイプ",
+      "tagline": "静かな時間をそっと大切にする人",
+      "about": "この人は、自分のペースを取り戻せる時間をとても大切にします。にぎやかすぎる物より、部屋で静かに使えたり、ひと息つけたりする贈り物が似合います。気配りがそっと伝わる控えめな特別感に弱いタイプです。予定を急かさないものだと、受け取りやすさもぐっと増します。",
+      "likes": [
+        "香りのよいお茶",
+        "静かに読める本",
+        "肌ざわりの布小物"
+      ],
+      "avoid": [
+        "予定を増やす体験",
+        "大きな音が出る物"
+      ],
+      "themes": [
+        "sleep-relax",
+        "coffee-tea",
+        "reading-stationery"
+      ],
+      "line": "ゆっくりできる時間にそっと使ってください"
+    },
+    {
+      "slug": "conversation-spark",
+      "name": "話題づくりの達人タイプ",
+      "tagline": "ひとことから場を明るくする人",
+      "about": "この人は、贈り物そのものに加えて、そこから生まれる会話も楽しめます。開けた瞬間に笑えたり、誰かに話したくなったりする小さな意外性が好相性。場を明るくしながら、ちゃんと相手の気持ちも受け取れる人です。気軽に分け合えるものだと、喜びが周りにも広がります。",
+      "likes": [
+        "遊び心の小物",
+        "会話が弾む菓子",
+        "みんなで使う品"
+      ],
+      "avoid": [
+        "説明が長すぎる物",
+        "ひとりで完結する品"
+      ],
+      "themes": [
+        "unique-fun",
+        "games-hobby",
+        "consumables"
+      ],
+      "line": "これをきっかけにまた楽しく話せたらうれしいです"
+    },
+    {
+      "slug": "food-explorer",
+      "name": "食いしん坊の探検家",
+      "tagline": "おいしい発見にすぐ目が輝く人",
+      "about": "この人は、おいしいものや季節の味に出会うと気分がふっと上がります。量や豪華さだけでなく、少し珍しい風味や食べ比べの楽しさが響きやすい人。食卓で話が広がる贈り物なら、受け取った後まで楽しい余韻が続きます。無理なく味わえるサイズだとさらに親切です。",
+      "likes": [
+        "季節の焼き菓子",
+        "飲み比べセット",
+        "食卓の調味料"
+      ],
+      "avoid": [
+        "好みが強すぎる味",
+        "量だけで選んだ品"
+      ],
+      "themes": [
+        "consumables",
+        "coffee-tea",
+        "sake-drinks"
+      ],
+      "line": "今日は気軽においしい寄り道を楽しんでください"
+    },
+    {
+      "slug": "memory-keeper",
+      "name": "思い出を残したい情の人",
+      "tagline": "気持ちの余韻を長く大事にする人",
+      "about": "この人は、贈り物に込められた気持ちや一緒に過ごした時間をよく覚えています。形に残るもの、後で見返せるもの、言葉を添えたものに心が動きやすいタイプ。派手さより「自分のことを思って選んでくれた」がいちばん響きます。",
+      "likes": [
+        "写真を飾る小物",
+        "手紙を添えた品",
+        "記念になる雑貨"
+      ],
+      "avoid": [
+        "誰にでも同じ感じの品",
+        "意味が伝わりにくい物"
+      ],
+      "themes": [
+        "memorable",
+        "noshi-ready",
+        "interior"
+      ],
+      "line": "この日のことも一緒に残ったらうれしいです"
+    },
+    {
+      "slug": "taste-curator",
+      "name": "こだわりの目利きさん",
+      "tagline": "細かな良さを見つけて深く喜ぶ人",
+      "about": "この人は、素材や使い心地など細かな違いを楽しめる目を持っています。ありきたりに見えても質がよいもの、作りの理由が感じられるものに惹かれます。選ぶ側の本気が伝わると、静かに深く喜んでくれるタイプです。包装や色味まで整っていると、開ける前から期待が高まります。",
+      "likes": [
+        "手仕事を感じる品",
+        "質のよい定番",
+        "整った文具小物"
+      ],
+      "avoid": [
+        "安さだけが目立つ品",
+        "質感がちぐはぐな物"
+      ],
+      "themes": [
+        "brand-items",
+        "fashion",
+        "interior"
+      ],
+      "line": "細かなところまで楽しんでもらえたらうれしいです"
+    },
+    {
+      "slug": "new-adventurer",
+      "name": "新しもの好きの冒険家",
+      "tagline": "まだ知らない楽しさへ軽やかに進む人",
+      "about": "この人は、まだ知らない世界に触れるきっかけを面白がれます。定番でも少し使い方が新しいもの、開けた瞬間に試したくなるものが好相性。失敗を避けるより、軽やかな発見がある贈り物にわくわくしやすい人です。小さく始められる形なら、気負わず楽しめます。",
+      "likes": [
+        "体験できる小物",
+        "初めての味セット",
+        "すぐ遊べる道具"
+      ],
+      "avoid": [
+        "変化のない定番だけ",
+        "使い方が不明な品"
+      ],
+      "themes": [
+        "unique-fun",
+        "travel-goods",
+        "outdoor"
+      ],
+      "line": "新しい楽しみをひとつ試してもらえたらうれしいです"
+    },
+    {
+      "slug": "modest-caregiver",
+      "name": "気づかい名人で遠慮がち",
+      "tagline": "相手を思ってそっと控えめに喜ぶ人",
+      "about": "この人は、相手を先に考えて自分の希望を控えめに伝えがちです。高価さを前面に出すより、負担なく受け取れて、暮らしの中でそっと役立つものが安心。小さな気づかいが伝わると、あとから何度も温かく思い出してくれます。",
+      "likes": [
+        "分けやすい菓子",
+        "軽く持てる品",
+        "すぐ使える消耗品"
+      ],
+      "avoid": [
+        "お返しを悩ませる品",
+        "好みを決めつける物"
+      ],
+      "themes": [
+        "safe-choice",
+        "consumables",
+        "thanks-daily"
+      ],
+      "line": "気をつかわずに、よかったら使ってください"
+    }
+  ]
+}
