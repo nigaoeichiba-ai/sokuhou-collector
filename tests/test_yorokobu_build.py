@@ -205,3 +205,53 @@ class ContentValidationTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ThemeTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.c = content.load(FIX)
+        cls.items = json.loads((FIX / "items.json").read_text(encoding="utf-8"))
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.out = Path(cls.tmp.name)
+        build.render_site(cls.c, cls.items, CFG, cls.out, release=True, today=date(2026, 5, 3))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def test_theme_pages_and_hub_are_built(self):
+        self.assertEqual([t["key"] for t in self.c["themes"]], ["theme-thanks-daily", "theme-beauty"])
+        hub = (self.out / "theme" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('href="/theme/beauty/"', hub)
+        self.assertIn("気持ちから選ぶ", hub)
+        page = (self.out / "theme" / "beauty" / "index.html").read_text(encoding="utf-8")
+        self.assertIn("美容に興味がある人へのプレゼント", page)
+        self.assertIn("ソムリエの提案", page)
+        self.assertIn('class="item"', page)
+        self.assertIn("楽天市場で「フェイスローラー ギフト」をもっと見る", page)
+        sitemap = (self.out / "sitemap.xml").read_text(encoding="utf-8")
+        self.assertIn("/theme/thanks-daily/", sitemap)
+
+    def test_home_and_nav_lead_to_the_themes(self):
+        home = (self.out / "index.html").read_text(encoding="utf-8")
+        self.assertIn('href="/theme/"', home)
+        self.assertIn("気持ち・興味から", home)
+
+    def test_a_theme_without_a_recipient_still_filters_memorial_and_adult_goods(self):
+        from sites.yorokobu.picking import usable
+        it = {"available": True, "reviews": 50, "rating": 4.5, "price": 2000, "name": "お供え 線香 ギフト"}
+        self.assertFalse(usable(it, self.c["filters"], None))
+        self.assertTrue(usable({**it, "name": "ハンドタオル ギフト"}, self.c["filters"], None))
+
+    def test_bad_theme_references_fail_the_build(self):
+        import copy
+        import shutil
+        with tempfile.TemporaryDirectory() as tmp:
+            for f in FIX.glob("*.json"):
+                shutil.copy(f, Path(tmp) / f.name)
+            data = json.loads((Path(tmp) / "themes.json").read_text(encoding="utf-8"))
+            data["themes"][0]["group"] = "nope"
+            (Path(tmp) / "themes.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            with self.assertRaises(BuildError):
+                content.load(Path(tmp))

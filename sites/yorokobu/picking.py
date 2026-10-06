@@ -21,7 +21,7 @@ def usable(item: dict, filters: dict, recipient: str | None = None, relaxed: boo
     name = item["name"]
     if any(w and w in name for w in filters["ng_words"]):
         return False
-    return relevance.fits(name, recipient) if recipient else True
+    return relevance.fits(name, recipient)   # recipient None (a theme page): only the memorial / adult-only rules and the adult default apply
 
 
 def score(item: dict) -> float:

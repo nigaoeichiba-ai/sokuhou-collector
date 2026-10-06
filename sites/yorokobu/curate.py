@@ -45,7 +45,7 @@ def render_pair(p: dict, lists: list[list[dict]]) -> str:
 def batches(size: int) -> list[str]:
     c = ct.load()
     cand = _load_candidates()
-    pairs = [p for p in c["pairs"] if ct.pair_key(p) in cand]
+    pairs = [p for p in ct.pages(c) if ct.pair_key(p) in cand]
     out = []
     for i in range(0, len(pairs), size):
         out.append("\n\n".join(render_pair(p, cand[ct.pair_key(p)]) for p in pairs[i:i + size]))
@@ -56,7 +56,7 @@ def validate(answer: dict, c: dict, cand: dict) -> tuple[dict, list[str]]:
     """The answer with indices turned into codes, plus every rule it breaks."""
     errors: list[str] = []
     out: dict = {}
-    by_key = {ct.pair_key(p): p for p in c["pairs"]}
+    by_key = {ct.pair_key(p): p for p in ct.pages(c)}
     for key, ideas in answer.items():
         if key not in by_key or key not in cand:
             errors.append(f"{key}: unknown page")
@@ -87,7 +87,7 @@ def validate(answer: dict, c: dict, cand: dict) -> tuple[dict, list[str]]:
                 note = (x.get("note") or "").strip()
                 if it["code"] in used:
                     errors.append(f"{where}: {it['code']} already used on this page")
-                if not fits(it["name"], p["recipient"]) or not fits_occasion(it["name"], p["occasion"], c["occ"][p["occasion"]]["name"]):
+                if not fits(it["name"], p.get("recipient")) or not fits_occasion(it["name"], p.get("occasion", ""), c["occ"].get(p.get("occasion", ""), {}).get("name", "")):
                     errors.append(f"{where}: {it['code']} does not fit the recipient or the occasion")
                 if not NOTE_MIN <= len(note) <= NOTE_MAX:
                     errors.append(f"{where}: note length {len(note)}: {note}")
@@ -99,7 +99,7 @@ def validate(answer: dict, c: dict, cand: dict) -> tuple[dict, list[str]]:
             row_backups = []
             for i in backups:
                 it = items[i]
-                if it["code"] in used or not fits(it["name"], p["recipient"]) or not fits_occasion(it["name"], p["occasion"], c["occ"][p["occasion"]]["name"]):
+                if it["code"] in used or not fits(it["name"], p.get("recipient")) or not fits_occasion(it["name"], p.get("occasion", ""), c["occ"].get(p.get("occasion", ""), {}).get("name", "")):
                     errors.append(f"{where}: backup {it['code']} is used or does not fit")
                 row_backups.append(it["code"])
             sel_out.append({"picks": row_picks, "backups": row_backups})
@@ -131,7 +131,7 @@ def merge(files: list[str], dry: bool = False) -> int:
 def report() -> None:
     c = ct.load()
     picks = json.loads(PICKS.read_text(encoding="utf-8")) if PICKS.exists() else {}
-    keys = [ct.pair_key(p) for p in c["pairs"]]
+    keys = [ct.pair_key(p) for p in ct.pages(c)]
     done = [k for k in keys if k in picks]
     print(f"{len(done)} of {len(keys)} pages curated; missing: {', '.join(k for k in keys if k not in picks)[:600]}")
 

@@ -37,7 +37,7 @@ TIER_EXTRA_REQUESTS = 2
 def plan(c: dict) -> list[dict]:
     """The first-pass requests: one keyword search per idea of every page."""
     return [{"pair": ct.pair_key(p), "idea": i, "params": {"keyword": idea["query"], "hits": HITS}}
-            for p in c["pairs"] for i, idea in enumerate(p["ideas"])]
+            for p in ct.pages(c) for i, idea in enumerate(p["ideas"])]
 
 
 def _tier_params(query: str, tier: dict) -> dict:
@@ -62,7 +62,7 @@ def _search(client: rakuten.Client, label: str, state: dict, total: int, **param
 
 
 def collect(c: dict, client: rakuten.Client, limit_pairs: int | None = None, now: datetime | None = None) -> dict:
-    pairs = c["pairs"][:limit_pairs] if limit_pairs else c["pairs"]
+    pairs = ct.pages(c)[:limit_pairs] if limit_pairs else ct.pages(c)
     filters = c["filters"]
     total = sum(len(p["ideas"]) for p in pairs)
     state = {"errors": 0}
@@ -77,19 +77,19 @@ def collect(c: dict, client: rakuten.Client, limit_pairs: int | None = None, now
         tiers = {}
         for t in p["tiers"]:
             tier = c["tiers"][t]
-            items = pick(everything, tier, filters, recipient=p["recipient"])
+            items = pick(everything, tier, filters, recipient=p.get("recipient"))
             extra = 0
             for idea in p["ideas"]:
                 if len(items) >= TIER_MIN or extra >= TIER_EXTRA_REQUESTS:
                     break
                 everything += _search(client, f"{key} tier {t}", state, total, **_tier_params(idea["query"], tier))
                 extra += 1
-                items = pick(everything, tier, filters, recipient=p["recipient"])
+                items = pick(everything, tier, filters, recipient=p.get("recipient"))
             tiers[t] = items
         used: set = set()
         ideas_out = []
         for i, idea in enumerate(p["ideas"]):
-            items = pick(pool[i], None, filters, limit=IDEA_ITEMS, recipient=p["recipient"], exclude=used)
+            items = pick(pool[i], None, filters, limit=IDEA_ITEMS, recipient=p.get("recipient"), exclude=used)
             used |= {it["code"] for it in items}
             ideas_out.append({k: idea[k] for k in ("label", "type", "query", "why")} | {"items": items})
         out_pairs[key] = {"ideas": ideas_out, "tiers": tiers}
@@ -123,7 +123,7 @@ def candidates(c: dict, client: rakuten.Client, limit_pairs: int | None = None, 
     """The shortlist the editors (Claude and Codex) choose the real picks from: per page and idea, the best fitting products of keyword searches.
     Each idea is searched twice (default order and most reviews first); an idea that still has too few clean products is topped up with the
     page's other keywords.  Written by hand-triggered runs (data/yorokobu_candidates.json); the daily job only refreshes the products that were picked."""
-    pairs = c["pairs"][:limit_pairs] if limit_pairs else c["pairs"]
+    pairs = ct.pages(c)[:limit_pairs] if limit_pairs else ct.pages(c)
     total = sum(len(p["ideas"]) for p in pairs) * 3
     state = {"errors": 0}
     out, thin = {}, []
@@ -140,7 +140,7 @@ def candidates(c: dict, client: rakuten.Client, limit_pairs: int | None = None, 
 
             add(idea["query"])
             add(idea["query"], sort="-reviewCount")
-            top = pick(list(found.values()), None, c["filters"], limit=CANDIDATES_PER_IDEA, per_shop=3, recipient=p["recipient"], exclude=used)
+            top = pick(list(found.values()), None, c["filters"], limit=CANDIDATES_PER_IDEA, per_shop=3, recipient=p.get("recipient"), exclude=used)
             tried = {idea["query"]}
             for kw in [*p.get("keywords", []), idea["label"]]:
                 if len(top) >= CANDIDATES_MIN or len(tried) > CANDIDATES_EXTRA:
@@ -148,7 +148,7 @@ def candidates(c: dict, client: rakuten.Client, limit_pairs: int | None = None, 
                 if kw not in tried:
                     tried.add(kw)
                     add(kw)
-                    top = pick(list(found.values()), None, c["filters"], limit=CANDIDATES_PER_IDEA, per_shop=3, recipient=p["recipient"], exclude=used)
+                    top = pick(list(found.values()), None, c["filters"], limit=CANDIDATES_PER_IDEA, per_shop=3, recipient=p.get("recipient"), exclude=used)
             if len(top) < CANDIDATES_MIN:
                 thin.append((key, i, len(top)))
             used |= {it["code"] for it in top}
