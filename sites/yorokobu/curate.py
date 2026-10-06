@@ -23,7 +23,7 @@ from sites.yorokobu.relevance import fits, fits_occasion  # noqa: E402
 CANDIDATES = ROOT / "data" / "yorokobu_candidates.json"
 PICKS = ct.CONTENT_DIR / "picks.json"
 PICKS_PER_IDEA = 3
-BACKUPS_MIN, BACKUPS_MAX = 2, 3
+BACKUPS_MIN, BACKUPS_MAX = 1, 3
 NOTE_MIN, NOTE_MAX = 8, 40
 NOTE_FORBIDDEN = ["人気", "おすすめ", "オススメ", "最高", "ランキング", "No.1", "必ず", "絶対", "レビュー", "口コミ", "売れ", "話題", "楽天", "AI", "%", "％"]
 
@@ -52,12 +52,13 @@ def batches(size: int) -> list[str]:
     return out
 
 
-def validate(answer: dict, c: dict, cand: dict) -> tuple[dict, list[str]]:
-    """The answer with indices turned into codes, plus every rule it breaks."""
+def validate(answer: dict, c: dict, cand: dict, repair: bool = False) -> tuple[dict, list[str]]:
+    """The answer with indices turned into codes, plus every rule it breaks.  With repair=True a pick or backup that breaks a rule is replaced by the next
+    good one from the editor's own list (a promoted backup has no hand-written note, the page then shows the fact note), and only an idea that cannot be filled is an error."""
     errors: list[str] = []
     out: dict = {}
     by_key = {ct.pair_key(p): p for p in ct.pages(c)}
-    for key, ideas in answer.items():
+    for key, ideas in ((k.split(" | ")[0].strip(), v) for k, v in answer.items()):   # a header copied from the batch file ("key | title") is fine
         if key not in by_key or key not in cand:
             errors.append(f"{key}: unknown page")
             continue
@@ -67,8 +68,14 @@ def validate(answer: dict, c: dict, cand: dict) -> tuple[dict, list[str]]:
             continue
         used: set[str] = set()
         sel_out = []
+        occ_name = c["occ"].get(p.get("occasion", ""), {}).get("name", "")
         for n, (sel, items) in enumerate(zip(ideas, lists)):
             where = f"{key} idea {n}"
+            if repair:
+                row, errs = _repaired(sel, items, p, occ_name, used, where, p["ideas"][n])
+                errors += errs
+                sel_out.append(row)
+                continue
             picks, backups = sel.get("picks", []), sel.get("backups", [])
             if len(picks) != PICKS_PER_IDEA:
                 errors.append(f"{where}: {len(picks)} picks")
@@ -107,6 +114,47 @@ def validate(answer: dict, c: dict, cand: dict) -> tuple[dict, list[str]]:
     return out, errors
 
 
+GENERIC = set("プレゼント 贈り物 祝い 誕生日 母の日 父の日 敬老の日 レディース メンズ 女性 男性 名入れ 母 父 祖母 祖父 夫 妻 彼氏 彼女 上司 同僚 義父母 子ども 子供 おしゃれ 人気 セット 長寿祝い 退職祝い".split())
+
+
+def on_topic(name: str, idea: dict) -> bool:
+    """The title shares at least a two-character piece with the idea's own search words (generic gift words do not count), so an idea about
+    bath goods is not filled with wallets just because the search pool for it was thin."""
+    grams = set()
+    for tok in idea["query"].split():
+        if tok in GENERIC or "ギフト" in tok:
+            continue
+        grams |= {tok[i:i + 2] for i in range(max(1, len(tok) - 1))}
+    return not grams or any(g in name for g in grams)
+
+
+def _repaired(sel: dict, items: list[dict], p: dict, occ_name: str, used: set, where: str, idea: dict | None = None) -> tuple[dict, list[str]]:
+    """Fill 3 picks and 2-3 backups from the editor's ordered list (picks first, then backups), skipping what breaks a rule."""
+    order = [(x.get("i"), (x.get("note") or "").strip()) for x in sel.get("picks", [])] + [(i, "") for i in sel.get("backups", [])]
+    picks, backups, shops, seen = [], [], {}, set()
+    for i, note in order:
+        if not isinstance(i, int) or not 0 <= i < len(items) or i in seen:
+            continue
+        seen.add(i)
+        it = items[i]
+        if it["code"] in used or not fits(it["name"], p.get("recipient")) or not fits_occasion(it["name"], p.get("occasion", ""), occ_name):
+            continue
+        if idea and not on_topic(it["name"], idea):
+            continue
+        if len(picks) < PICKS_PER_IDEA:
+            if shops.get(it["shop_code"], 0) >= 2:
+                continue
+            if not NOTE_MIN <= len(note) <= NOTE_MAX or any(w in note for w in NOTE_FORBIDDEN):
+                note = ""
+            shops[it["shop_code"]] = shops.get(it["shop_code"], 0) + 1
+            picks.append({"code": it["code"], "note": note})
+        elif len(backups) < BACKUPS_MAX:
+            backups.append(it["code"])
+    errs = []   # an idea with fewer than three on-topic products is kept as it is; with none, the daily refresh fills it from the keyword search
+    used |= {x["code"] for x in picks}
+    return {"picks": picks, "backups": backups}, errs
+
+
 def merge(files: list[str], dry: bool = False) -> int:
     c = ct.load()
     cand = _load_candidates()
@@ -114,7 +162,7 @@ def merge(files: list[str], dry: bool = False) -> int:
     bad = 0
     for f in files:
         answer = json.loads(Path(f).read_text(encoding="utf-8"))
-        merged, errors = validate(answer, c, cand)
+        merged, errors = validate(answer, c, cand, repair=True)
         for e in errors:
             print(f"{Path(f).name}: {e}", file=sys.stderr)
         # a page is taken only when all of its ideas passed
