@@ -1,5 +1,5 @@
 {
-  "min_review_count": 10,
+  "min_review_count": 8,
   "min_review_average": 4.0,
   "ng_words": [
     "中古",
@@ -86,7 +86,15 @@
     "のみの販売",
     "工賃",
     "追加料金",
-    "お見積"
+    "お見積",
+    "香典",
+    "お供え",
+    "仏壇",
+    "線香",
+    "法要",
+    "お悔やみ",
+    "出品者",
+    "ご注文前に"
   ],
   "max_per_list": 12,
   "tiers": [
@@ -121,5 +129,9 @@
       "max": null
     }
   ],
-  "min_price": 700
+  "min_price": 700,
+  "relaxed": {
+    "min_review_count": 3,
+    "min_review_average": 3.8
+  }
 }

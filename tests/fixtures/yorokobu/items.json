@@ -1,124 +1,295 @@
 {
-  "version": 1,
-  "fetched_at": "2026-10-07T07:00:00+09:00",
-  "pairs": {
-    "birthday-boyfriend": {
-      "under3000": [
-        {
-          "code": "a1",
-          "name": "テスト商品a1 贈り物にぴったりのギフトセット",
-          "price": 2500,
-          "url": "https://item.rakuten.co.jp/s1/a1/",
-          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s1/a1.jpg?_ex=300x300",
-          "shop": "店s1",
-          "shop_code": "s1",
-          "reviews": 50,
-          "rating": 4.5,
-          "available": true,
-          "free_shipping": true,
-          "gift": true
-        },
-        {
-          "code": "a2",
-          "name": "テスト商品a2 贈り物にぴったりのギフトセット",
-          "price": 1980,
-          "url": "https://item.rakuten.co.jp/s2/a2/",
-          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s2/a2.jpg?_ex=300x300",
-          "shop": "店s2",
-          "shop_code": "s2",
-          "reviews": 200,
-          "rating": 4.5,
-          "available": true,
-          "free_shipping": true,
-          "gift": true
-        }
-      ],
-      "3000-5000": [
-        {
-          "code": "a3",
-          "name": "テスト商品a3 贈り物にぴったりのギフトセット",
-          "price": 4200,
-          "url": "https://item.rakuten.co.jp/s3/a3/",
-          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s3/a3.jpg?_ex=300x300",
-          "shop": "店s3",
-          "shop_code": "s3",
-          "reviews": 50,
-          "rating": 4.5,
-          "available": true,
-          "free_shipping": true,
-          "gift": true
-        }
-      ]
-    },
-    "birthday-mother": {
-      "under3000": [
-        {
-          "code": "b1",
-          "name": "テスト商品b1 贈り物にぴったりのギフトセット",
-          "price": 2800,
-          "url": "https://item.rakuten.co.jp/s4/b1/",
-          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s4/b1.jpg?_ex=300x300",
-          "shop": "店s4",
-          "shop_code": "s4",
-          "reviews": 50,
-          "rating": 4.5,
-          "available": true,
-          "free_shipping": true,
-          "gift": true
-        }
-      ],
-      "3000-5000": []
-    },
-    "mothers-day-mother": {
-      "under3000": [
-        {
-          "code": "c1",
-          "name": "テスト商品c1 贈り物にぴったりのギフトセット",
-          "price": 2200,
-          "url": "https://item.rakuten.co.jp/s5/c1/",
-          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s5/c1.jpg?_ex=300x300",
-          "shop": "店s5",
-          "shop_code": "s5",
-          "reviews": 50,
-          "rating": 4.5,
-          "available": true,
-          "free_shipping": true,
-          "gift": true
-        }
-      ],
-      "3000-5000": [
-        {
-          "code": "c2",
-          "name": "テスト商品c2 贈り物にぴったりのギフトセット",
-          "price": 3800,
-          "url": "https://item.rakuten.co.jp/s6/c2/",
-          "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s6/c2.jpg?_ex=300x300",
-          "shop": "店s6",
-          "shop_code": "s6",
-          "reviews": 50,
-          "rating": 4.5,
-          "available": true,
-          "free_shipping": true,
-          "gift": true
-        }
-      ]
-    }
-  },
-  "portrait": [
+ "version": 2,
+ "fetched_at": "2026-10-07T07:00:00+09:00",
+ "pairs": {
+  "birthday-boyfriend": {
+   "ideas": [
     {
-      "code": "p1",
-      "name": "手描き似顔絵(テスト)",
-      "price": 9800,
-      "url": "https://item.rakuten.co.jp/2gaoe/p1/",
-      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/2gaoe/p1.jpg?_ex=300x300",
-      "shop": "店2gaoe",
-      "shop_code": "2gaoe",
-      "reviews": 0,
-      "rating": 0,
+     "label": "毎日使う財布",
+     "type": "実用品",
+     "query": "誕生日 彼氏 財布",
+     "why": "毎日使う小物は、使うたびに思い出してもらえます。",
+     "items": [
+      {
+       "code": "a1",
+       "name": "テスト商品a1 贈り物にぴったりのギフトセット",
+       "price": 2500,
+       "url": "https://item.rakuten.co.jp/s1/a1/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s1/a1.jpg?_ex=300x300",
+       "shop": "店s1",
+       "shop_code": "s1",
+       "reviews": 50,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      },
+      {
+       "code": "a2",
+       "name": "テスト商品a2 贈り物にぴったりのギフトセット",
+       "price": 1980,
+       "url": "https://item.rakuten.co.jp/s2/a2/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s2/a2.jpg?_ex=300x300",
+       "shop": "店s2",
+       "shop_code": "s2",
+       "reviews": 200,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      }
+     ]
+    },
+    {
+     "label": "名入れの小物",
+     "type": "思い出・名入れ",
+     "query": "彼氏 名入れ",
+     "why": "名前入りは、世界にひとつの贈り物になります。",
+     "items": [
+      {
+       "code": "a3",
+       "name": "テスト商品a3 贈り物にぴったりのギフトセット",
+       "price": 4200,
+       "url": "https://item.rakuten.co.jp/s3/a3/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s3/a3.jpg?_ex=300x300",
+       "shop": "店s3",
+       "shop_code": "s3",
+       "reviews": 50,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      }
+     ]
+    }
+   ],
+   "tiers": {
+    "under3000": [
+     {
+      "code": "a1",
+      "name": "テスト商品a1 贈り物にぴったりのギフトセット",
+      "price": 2500,
+      "url": "https://item.rakuten.co.jp/s1/a1/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s1/a1.jpg?_ex=300x300",
+      "shop": "店s1",
+      "shop_code": "s1",
+      "reviews": 50,
+      "rating": 4.5,
       "available": true,
       "free_shipping": true,
-      "gift": true
+      "gift": true,
+      "appoint": true
+     },
+     {
+      "code": "a2",
+      "name": "テスト商品a2 贈り物にぴったりのギフトセット",
+      "price": 1980,
+      "url": "https://item.rakuten.co.jp/s2/a2/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s2/a2.jpg?_ex=300x300",
+      "shop": "店s2",
+      "shop_code": "s2",
+      "reviews": 200,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     }
+    ],
+    "3000-5000": [
+     {
+      "code": "a3",
+      "name": "テスト商品a3 贈り物にぴったりのギフトセット",
+      "price": 4200,
+      "url": "https://item.rakuten.co.jp/s3/a3/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s3/a3.jpg?_ex=300x300",
+      "shop": "店s3",
+      "shop_code": "s3",
+      "reviews": 50,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     }
+    ]
+   }
+  },
+  "birthday-mother": {
+   "ideas": [
+    {
+     "label": "いたわる財布",
+     "type": "実用品",
+     "query": "母 誕生日 財布",
+     "why": "毎日使うものは、気づかいが伝わります。",
+     "items": [
+      {
+       "code": "b1",
+       "name": "テスト商品b1 贈り物にぴったりのギフトセット",
+       "price": 2800,
+       "url": "https://item.rakuten.co.jp/s4/b1/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s4/b1.jpg?_ex=300x300",
+       "shop": "店s4",
+       "shop_code": "s4",
+       "reviews": 50,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      },
+      {
+       "code": "bm",
+       "name": "本革 メンズ 長財布 ビジネス",
+       "price": 2600,
+       "url": "https://item.rakuten.co.jp/s5/bm/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s5/bm.jpg?_ex=300x300",
+       "shop": "店s5",
+       "shop_code": "s5",
+       "reviews": 50,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      }
+     ]
     }
-  ],
-  "stats": {}
+   ],
+   "tiers": {
+    "under3000": [
+     {
+      "code": "b1",
+      "name": "テスト商品b1 贈り物にぴったりのギフトセット",
+      "price": 2800,
+      "url": "https://item.rakuten.co.jp/s4/b1/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s4/b1.jpg?_ex=300x300",
+      "shop": "店s4",
+      "shop_code": "s4",
+      "reviews": 50,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     },
+     {
+      "code": "bm",
+      "name": "本革 メンズ 長財布 ビジネス",
+      "price": 2600,
+      "url": "https://item.rakuten.co.jp/s5/bm/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s5/bm.jpg?_ex=300x300",
+      "shop": "店s5",
+      "shop_code": "s5",
+      "reviews": 50,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     }
+    ],
+    "3000-5000": []
+   }
+  },
+  "mothers-day-mother": {
+   "ideas": [
+    {
+     "label": "花とお菓子",
+     "type": "食べもの・飲みもの",
+     "query": "母の日 花 お菓子",
+     "why": "受け取った日に、ほっとできます。",
+     "items": [
+      {
+       "code": "c1",
+       "name": "テスト商品c1 贈り物にぴったりのギフトセット",
+       "price": 2200,
+       "url": "https://item.rakuten.co.jp/s6/c1/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s6/c1.jpg?_ex=300x300",
+       "shop": "店s6",
+       "shop_code": "s6",
+       "reviews": 50,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      },
+      {
+       "code": "c2",
+       "name": "テスト商品c2 贈り物にぴったりのギフトセット",
+       "price": 3800,
+       "url": "https://item.rakuten.co.jp/s7/c2/",
+       "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s7/c2.jpg?_ex=300x300",
+       "shop": "店s7",
+       "shop_code": "s7",
+       "reviews": 50,
+       "rating": 4.5,
+       "available": true,
+       "free_shipping": true,
+       "gift": true,
+       "appoint": true
+      }
+     ]
+    }
+   ],
+   "tiers": {
+    "under3000": [
+     {
+      "code": "c1",
+      "name": "テスト商品c1 贈り物にぴったりのギフトセット",
+      "price": 2200,
+      "url": "https://item.rakuten.co.jp/s6/c1/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s6/c1.jpg?_ex=300x300",
+      "shop": "店s6",
+      "shop_code": "s6",
+      "reviews": 50,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     }
+    ],
+    "3000-5000": [
+     {
+      "code": "c2",
+      "name": "テスト商品c2 贈り物にぴったりのギフトセット",
+      "price": 3800,
+      "url": "https://item.rakuten.co.jp/s7/c2/",
+      "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/s7/c2.jpg?_ex=300x300",
+      "shop": "店s7",
+      "shop_code": "s7",
+      "reviews": 50,
+      "rating": 4.5,
+      "available": true,
+      "free_shipping": true,
+      "gift": true,
+      "appoint": true
+     }
+    ]
+   }
+  }
+ },
+ "portrait": [
+  {
+   "code": "p1",
+   "name": "似顔絵 ギフト 誕生日 手描き 名入れ",
+   "price": 9800,
+   "url": "https://item.rakuten.co.jp/2gaoe/p1/",
+   "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/2gaoe/p1.jpg?_ex=300x300",
+   "shop": "店2gaoe",
+   "shop_code": "2gaoe",
+   "reviews": 0,
+   "rating": 0,
+   "available": true,
+   "free_shipping": true,
+   "gift": true,
+   "appoint": true
+  }
+ ],
+ "stats": {}
 }

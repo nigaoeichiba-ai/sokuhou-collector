@@ -19,7 +19,7 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
 from sites.yorokobu import content as ct  # noqa: E402
-from sites.yorokobu.picking import score, usable  # noqa: E402
+from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
 from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages,  # noqa: E402
                              missing_config, standard_files, write_pages)
@@ -124,33 +124,58 @@ def scallop_class(color: str) -> str:
 
 # ---------------------------------------------------------------- products
 
-def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None) -> str:
+TYPE_ORDER = ["実用品", "食べもの・飲みもの", "ファッション小物", "癒し・リラックス", "思い出・名入れ", "体験・お出かけ", "趣味・ホビー", "おもしろ・サプライズ", "子ども向け"]
+SOMMELIER_IMGS = ["sommelier-gift", "sommelier-taste", "sommelier-tray", "sommelier-spin"]
+# words in the operator's own caricature-shop listings that tie a listing to an occasion (the shop is shown only where it truly fits)
+PORTRAIT_KEYS = {
+    "retirement": ("退職", "定年"), "longevity": ("還暦", "古希", "喜寿", "傘寿", "米寿", "長寿"), "wedding-gift": ("結婚祝", "結婚式", "ウェルカム"),
+    "wedding-anniversary": ("結婚記念", "金婚", "銀婚"), "birth-gift": ("出産", "命名"), "birthday": ("誕生日",), "mothers-day": ("母の日", "お母さん"),
+    "fathers-day": ("父の日", "お父さん"), "respect-for-aged-day": ("敬老",), "farewell": ("送別", "異動"), "thanks": ("感謝",),
+    "year-end-gathering": ("両親", "祖父母", "家族"),
+}
+
+
+def rakuten_link(cfg: dict, target: str) -> str:
+    return rakuten.affiliate_link(cfg["rakuten_affiliate_id"], cfg.get("rakuten_tracking_id"), target)
+
+
+def search_link(cfg: dict, keyword: str) -> str:
+    return rakuten_link(cfg, rakuten.search_url(keyword))
+
+
+def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, tier: str = "", kind: str = "") -> str:
     url = rakuten.clean_item_url(it["url"])  # also unwraps data fetched before the API's redirect links were handled
-    it = {**it, "name": rakuten.clean_title(it["name"])}
+    name = it.get("display") or rakuten.clean_title(it["name"])
     if own:
         href, rel = url, "noopener"
     else:
-        href = rakuten.affiliate_link(cfg["rakuten_affiliate_id"], cfg.get("rakuten_tracking_id"), url)
-        rel = "sponsored nofollow noopener"
+        href, rel = rakuten_link(cfg, url), "sponsored nofollow noopener"
     bits = []
     if it["reviews"]:
-        bits.append(f'<span class="stars" aria-label="レビュー平均 {it["rating"]:.2f}">★{it["rating"]:.1f}</span>'
-                    f'<span>({it["reviews"]:,}件)</span>')
+        bits.append(f'<span class="stars" aria-label="レビュー平均 {it["rating"]:.2f}">★{it["rating"]:.1f}</span><span>({it["reviews"]:,}件)</span>')
     if it["free_shipping"]:
         bits.append('<span class="ship">送料無料</span>')
-    note = '<p class="own">当サイト運営者のショップの商品です</p>' if own else ""
+    if it.get("gift"):
+        bits.append('<span class="tagx">ギフト対応</span>')
+    if it.get("appoint"):
+        bits.append('<span class="tagx">日付指定可</span>')
+    note = '<p class="own">運営者のショップ</p>' if own else ""
     label = "ショップで見る" if own else "楽天市場で見る"
-    pr = "" if own else '<span class="pr-note">PR</span>'
-    badge = f'<span class="rank r{rank}">おすすめ{rank}</span>' if rank and rank <= 3 and not own else ""
-    return (f'<li class="item">{badge}<a class="item-img" href="{esc(href)}" rel="{rel}" target="_blank">'
-            f'<img src="{esc(it["image"])}" alt="{esc(short(it["name"], 40))}" width="300" height="300" loading="lazy"></a>'
-            f'<div class="item-body"><h3><a href="{esc(href)}" rel="{rel}" target="_blank">{esc(short(it["name"]))}</a></h3>'
+    badge = f'<span class="rank r{rank}">{rank}</span>' if rank and rank <= 3 and not own else ""
+    attrs = (f'data-code="{esc(it["code"])}" data-price="{it["price"]}" data-reviews="{it["reviews"]}" data-rating="{it["rating"]}" '
+             f'data-ship="{1 if it["free_shipping"] else 0}" data-gift="{1 if it.get("gift") else 0}" data-tier="{esc(tier)}" data-type="{esc(kind)}" '
+             f'data-rank="{rank or 0}"')
+    fav = (f'<button type="button" class="fav" aria-label="気になるリストに入れる" aria-pressed="false" data-name="{esc(short(name, 40))}" '
+           f'data-price="{it["price"]}" data-url="{esc(url)}">♡</button>')
+    return (f'<li class="item" {attrs}>{badge}{fav}<a class="item-img" href="{esc(href)}" rel="{rel}" target="_blank">'
+            f'<img src="{esc(it["image"])}" alt="{esc(short(name, 40))}" width="300" height="300" loading="lazy"></a>'
+            f'<div class="item-body"><h3><a href="{esc(href)}" rel="{rel}" target="_blank">{esc(short(name))}</a></h3>'
             f'<p class="price">{yen(it["price"])}</p><p class="meta">{"".join(bits)}</p>{note}'
-            f'<a class="btn" href="{esc(href)}" rel="{rel}" target="_blank">{pr}{label}</a></div></li>')
+            f'<a class="btn" href="{esc(href)}" rel="{rel}" target="_blank">{label}</a></div></li>')
 
 
-def item_grid(cfg: dict, items: list[dict], own: bool = False, ranked: bool = False) -> str:
-    return '<ul class="items">' + "".join(item_card(cfg, it, own, i + 1 if ranked else None) for i, it in enumerate(items)) + "</ul>"
+def item_grid(cfg: dict, items: list[dict], cls: str = "items") -> str:
+    return f'<ul class="{cls}">' + "".join(item_card(cfg, it, rank=i + 1 if i < 3 else None) for i, it in enumerate(items)) + "</ul>"
 
 
 def top_items(lists: list[list[dict]], n: int = 6) -> list[dict]:
@@ -166,16 +191,45 @@ def top_items(lists: list[list[dict]], n: int = 6) -> list[dict]:
 
 
 def freshness(d: dict) -> str:
-    return (f'<p class="fresh">商品の価格・在庫・レビューは、{d["fetched_label"]}に取得した情報です。'
-            "実際の内容は、販売ページでご確認ください。</p>")
+    """Rakuten's rule: if data is not refreshed hourly, show the fetch time next to the prices and its prescribed disclaimer."""
+    name = esc(d["site_name"])
+    return (f'<p class="fresh">価格・在庫は{d["fetched_label"]}時点の情報です。このサイトで掲載されている情報は、{name}の作成者により運営されています。'
+            "価格、販売可能情報は、変更される場合があります。購入時に楽天市場店舗(www.rakuten.co.jp)に表示されている価格が、その商品の販売に適用されます。</p>")
 
 
-def portrait_block(d: dict, cfg: dict, note: str | None) -> str:
-    if not note or not d["portrait"]:
-        return ""
-    items = d["portrait"][:PORTRAIT_SHOWN]
-    return (f'<section class="keepsake rv"><h2>思い出を形に残す、もうひとつの選択肢</h2><p>{esc(note)}</p>'
-            f'{item_grid(cfg, items, own=True)}</section>')
+def pr_quiet(cfg: dict) -> str:
+    return '<p class="pr-quiet">PR:本ページには広告(アフィリエイトリンク)が含まれます。掲載する商品は、編集方針にもとづいて選んでいます。</p>'
+
+
+def pair_items(d: dict, key: str) -> tuple[list[dict], dict, list[dict]]:
+    """(ideas, tiers, union of every product on the page, best first) for one page; copes with data fetched before ideas existed."""
+    v = d["pairs"].get(key) or {}
+    ideas = v.get("ideas", []) if "ideas" in v else []
+    tiers = v.get("tiers", {}) if "tiers" in v else {t: lst for t, lst in v.items() if isinstance(lst, list)}
+    seen, union = set(), []
+    for it in [i for idea in ideas for i in idea["items"]] + [i for lst in tiers.values() for i in lst]:
+        if it["code"] not in seen:
+            seen.add(it["code"])
+            union.append(it)
+    union.sort(key=lambda i: -score(i))
+    return ideas, tiers, union
+
+
+def own_item(d: dict, occasion: str) -> dict | None:
+    """The operator's own caricature listing that matches this occasion by its title words, shown as a plain card; None when none fits."""
+    keys = PORTRAIT_KEYS.get(occasion, ())
+    for it in d["portrait"]:
+        hit = next((k for k in keys if k in it["name"]), None)
+        if hit:
+            return {**it, "display": f"手描きの似顔絵ギフト({hit}に)"}
+    return None
+
+
+def tier_of(price: int, tiers: list[dict]) -> str:
+    for t in tiers:
+        if in_tier(price, t):
+            return t["slug"]
+    return ""
 
 
 # ---------------------------------------------------------------- pages
@@ -207,30 +261,85 @@ def ic_wrap(kind: str, slug: str) -> str:
     return f'<span class="ic-wrap">{icon_img(kind, slug, 96)}</span>'
 
 
+def bird_say(img: str, text: str, cls: str = "") -> str:
+    """A bird speaking: the avatar and a speech bubble."""
+    return f'<div class="bird-say {cls}"><img src="/assets/img/{img}.webp" alt="" width="120" height="90" loading="lazy"><p>{text}</p></div>'
+
+
+def idea_card(cfg: dict, idea: dict, i: int, tiers: list[dict]) -> str:
+    cards = "".join(item_card(cfg, it, tier=tier_of(it["price"], tiers), kind=idea["type"]) for it in idea["items"][:4])
+    body = f'<ul class="items mini">{cards}</ul>' if cards else '<p class="notice">この種類の商品は、いま、見つかりませんでした。下のリンクから、楽天市場で、探せます。</p>'
+    return (f'<article class="idea"><header><span class="type">{esc(idea["type"])}</span><h3>{esc(idea["label"])}</h3></header>'
+            f'{bird_say(SOMMELIER_IMGS[i % 4], esc(idea["why"]), "sommelier")}{body}'
+            f'<p class="idea-more"><a href="{esc(search_link(cfg, idea["query"]))}" rel="sponsored nofollow noopener" target="_blank">'
+            f'楽天市場で「{esc(idea["query"])}」をもっと見る</a></p></article>')
+
+
+def finder_map(d: dict) -> dict:
+    """{occasion: {recipient: [budget tiers that have products]}} for the picker on the top page."""
+    out: dict = {}
+    for p in d["c"]["pairs"]:
+        _, tiers, union = pair_items(d, ct.pair_key(p))
+        have = [t["slug"] for t in d["c"]["filters"]["tiers"] if any(in_tier(i["price"], t) for i in union)]
+        out.setdefault(p["occasion"], {})[p["recipient"]] = have if d["pairs"] else [t["slug"] for t in d["c"]["filters"]["tiers"]]
+    return out
+
+
+def concierge(cfg: dict, d: dict, p: dict | None, heading: str = "コンシェルジュに相談する") -> str:
+    kws = (p or {}).get("keywords", [])[:8]
+    chips = "".join(f'<li><a href="{esc(search_link(cfg, k))}" rel="sponsored nofollow noopener" target="_blank">{esc(k)}</a></li>' for k in kws)
+    ctx = esc(" ".join(x for x in [(p or {}).get("recipient_keyword", "")] if x))
+    return f"""<section class="concierge band-soft" id="concierge"><div class="concierge-in">
+<img class="concierge-bird hop" src="/assets/img/concierge-note.webp" alt="" width="190" height="150" loading="lazy">
+<div class="concierge-body"><h2>{heading}</h2>
+<p>その人のことを、ひとこと教えてください(好きなもの、趣味、年齢など)。楽天市場で、近い商品を探すお手伝いをします。</p>
+<form class="kw-form" data-aff="{esc(cfg['rakuten_affiliate_id'])}" data-trk="{esc(cfg.get('rakuten_tracking_id') or '')}" data-ctx="{ctx}">
+<input type="search" name="q" placeholder="例: ガーデニングが好きな60代" aria-label="その人のこと、ほしいもの">
+<button type="submit" class="btn">楽天市場でさがす</button></form>
+<ul class="kw-chips">{chips}</ul></div></div></section>"""
+
+
 def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     c = d["c"]
     occ, rec = c["occ"][p["occasion"]], c["rec"][p["recipient"]]
     key = ct.pair_key(p)
-    lists = d["pairs"].get(key, {})
-    tiers = [t for t in p["tiers"] if lists.get(t)]
-    chips = "".join(f'<a href="#t-{t}">{esc(c["tiers"][t]["label"])}</a>' for t in tiers)
-    def amazon_tier(t: str) -> str:
-        if not cfg.get("amazon_tracking_id"):
-            return ""
-        tr = c["tiers"][t]
-        return (f'<p class="tier-more"><a class="btn btn-sub" href="{esc(amazon_url(cfg, p["queries"][0], tr.get("min"), tr.get("max")))}" '
-                f'rel="sponsored nofollow noopener" target="_blank"><span class="pr-note">PR</span>{esc(tr["label"])}のAmazonの商品もさがす</a></p>')
-
-    def tier_head(i: int, t: str) -> str:
-        sommelier = ('<span class="tier-mascot"><span class="say">おすすめを、お持ちしました!</span>'
-                     '<img class="hop" src="/assets/img/sommelier-tray.webp" alt="" width="160" height="108" loading="lazy"></span>') if i == 0 else ""
-        return (f'<div class="tier-head"><span class="tag">予算</span><h2>{esc(c["tiers"][t]["label"])}のおすすめ</h2>{sommelier}</div>')
-
-    sections = "".join(
-        f'<section id="t-{t}" class="tier">{tier_head(i, t)}'
-        f'{item_grid(cfg, lists[t], ranked=True)}{amazon_tier(t)}</section>' for i, t in enumerate(tiers))
-    if not sections:
-        sections = '<p class="notice">いま表示できる商品が、見つかりませんでした。しばらくしてから、もう一度ご覧ください。</p>'
+    ideas, tiers_map, union = pair_items(d, key)
+    tier_defs = [c["tiers"][t] for t in p["tiers"]]
+    own = own_item(d, p["occasion"]) if p.get("portrait_note") else None
+    grid_items = list(union)
+    # the proposals (sommelier)
+    proposals = "".join(idea_card(cfg, idea, i, c["filters"]["tiers"]) for i, idea in enumerate(ideas) if idea["items"])
+    if proposals:
+        proposals = (f'<section class="proposals"><div class="sec-title"><span class="tag">ソムリエの提案</span><h2>{esc(rec["name"])}への{esc(occ["name"])}、'
+                     f'こんな贈り方はどうでしょう</h2></div><div class="idea-grid">{proposals}</div></section>')
+    # the filterable list
+    all_types = [t for t in TYPE_ORDER if any(idea["type"] == t and idea["items"] for idea in ideas)]
+    idea_type = {it["code"]: idea["type"] for idea in ideas for it in idea["items"]}
+    li = "".join(item_card(cfg, it, rank=None, tier=tier_of(it["price"], c["filters"]["tiers"]), kind=idea_type.get(it["code"], "")) for it in grid_items)
+    if own:
+        li += item_card(cfg, own, own=True, tier=tier_of(own["price"], c["filters"]["tiers"]), kind="思い出・名入れ")
+    tier_btns = "".join(f'<button type="button" class="chipbtn" data-v="{t["slug"]}">{esc(t["label"])}</button>'
+                        for t in c["filters"]["tiers"] if any(in_tier(i["price"], t) for i in grid_items))
+    type_btns = "".join(f'<button type="button" class="chipbtn" data-v="{esc(t)}">{esc(t)}</button>' for t in all_types)
+    browse = ""
+    if grid_items:
+        browse = f"""<section class="browse" id="browse"><div class="sec-title"><span class="tag">ナビゲーター</span><h2>条件でしぼって、くらべる</h2></div>
+{bird_say("navi-map", "予算や種類を選ぶと、ぴったりのものだけを表示します。並べかえもできます。", "navigator")}
+<div class="controls">
+<div class="ctl"><b>予算</b><div class="chipset" data-filter="tier"><button type="button" class="chipbtn on" data-v="">すべて</button>{tier_btns}</div></div>
+{f'<div class="ctl"><b>種類</b><div class="chipset" data-filter="type"><button type="button" class="chipbtn on" data-v="">すべて</button>{type_btns}</div></div>' if type_btns else ''}
+<div class="ctl row"><label>並べかえ <select data-sort><option value="rank">おすすめ順</option><option value="reviews">レビュー件数が多い順</option>
+<option value="rating">評価が高い順</option><option value="price-asc">価格が安い順</option><option value="price-desc">価格が高い順</option></select></label>
+<label class="chk"><input type="checkbox" data-ship> 送料無料</label><label class="chk"><input type="checkbox" data-gift> ギフト対応</label></div></div>
+<p class="count" aria-live="polite"></p>
+<ul class="items grid-all">{li}</ul>
+<p class="empty" hidden>この条件に合う商品は、見つかりませんでした。条件をゆるめるか、下の「コンシェルジュ」で、楽天市場を直接さがしてみましょう。</p>
+{freshness(d)}</section>"""
+    else:
+        browse = '<section class="browse"><p class="notice">いま表示できる商品が、見つかりませんでした。下のコンシェルジュから、楽天市場で、探してみてください。</p></section>'
+    own_note = ""
+    if own:
+        own_note = (f'<aside class="own-slim"><b>長く残る贈りものなら</b><span>手描きの似顔絵という選び方もあります。店主が制作しています(一覧のなかの「運営者のショップ」の商品です)。</span></aside>')
     avoid = occ["avoid"][:1] + rec["avoid"][:1]
     related_occ = [q for q in c["pairs"] if q["occasion"] == p["occasion"] and ct.pair_key(q) != key][:8]
     related_rec = [q for q in c["pairs"] if q["recipient"] == p["recipient"] and ct.pair_key(q) != key][:8]
@@ -241,18 +350,19 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     amazon = ""
     if cfg.get("amazon_tracking_id"):
         amazon = (f'<p class="more"><a class="btn btn-sub" href="{esc(amazon_url(cfg, p["queries"][0]))}" rel="sponsored nofollow noopener" target="_blank">'
-                  f'<span class="pr-note">PR</span>Amazonでも探す</a></p>{amazon_disclosure(cfg)}')
+                  f'Amazonでも探す</a></p>{amazon_disclosure(cfg)}')
     color = COLORS[list(c["occ"]).index(p["occasion"]) % 4]
-    head = head_band(color, f'{ic_wrap("occasion", occ["slug"])}<span class="x">×</span>{ic_wrap("recipient", rec["slug"])}', esc(p["title"]), p["lead"], mascot=OCC_MASCOT.get(p["occasion"], ("r-joy", "b-sparkle", "r-wink", "b-joy")[list(c["occ"]).index(p["occasion"]) % 4]))
+    head = head_band(color, f'{ic_wrap("occasion", occ["slug"])}<span class="x">×</span>{ic_wrap("recipient", rec["slug"])}', esc(p["title"]), p["lead"],
+                     mascot=OCC_MASCOT.get(p["occasion"], ("r-joy", "b-sparkle", "r-wink", "b-joy")[list(c["occ"]).index(p["occasion"]) % 4]))
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (occ["name"], f"/occasion/{occ['slug']}/"), (p["title"].split(" ")[0], None)])}</div>
-{pr_lead(cfg)}
-<section class="why" style="margin-top:44px"><h2><span class="scribble">喜ばれやすい理由</span></h2><ol class="panel-grid">{"".join(f"<li>{esc(x)}</li>" for x in p["reasons"])}</ol></section>
-<section class="how" style="margin-top:50px"><h2><span class="scribble">選び方のポイント</span></h2><ol class="panel-grid">{"".join(f"<li>{esc(x)}</li>" for x in p["how_to_choose"])}</ol></section>
-<nav class="chips" aria-label="予算" style="margin-top:46px">{chips}</nav>
-{sections}
-{freshness(d)}
-{portrait_block(d, cfg, p.get("portrait_note"))}
+{pr_quiet(cfg)}
+<section class="why-how"><div class="cols"><div><h2><span class="scribble">喜ばれやすい理由</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["reasons"])}</ol></div>
+<div class="how"><h2><span class="scribble">選び方のポイント</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["how_to_choose"])}</ol></div></div></section>
+{proposals}
+{own_note}
+{browse}
+{concierge(cfg, d, p)}
 <section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(avoid, "warn")}</section>
 <p style="margin-top:40px">{amazon}</p>
 <section class="related" style="margin-top:40px"><h2><span class="scribble">あわせて読みたい</span></h2>
@@ -265,19 +375,17 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
     c = d["c"]
     pairs = [p for p in c["pairs"] if p["occasion"] == o["slug"]]
     cards = "".join(tile(f'/gift/{ct.pair_key(p)}/', "recipient", p["recipient"], f'{c["rec"][p["recipient"]]["name"]}へ', p["title"].split(" ")[0]) for p in pairs)
-    lists = [t for p in pairs for t in d["pairs"].get(ct.pair_key(p), {}).values()]
-    featured = top_items(lists)
+    featured = top_items([pair_items(d, ct.pair_key(p))[2] for p in pairs])
     shown = (f'<section style="margin-top:50px"><h2><span class="scribble">選ばれている贈り物の例</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
     color = COLORS[list(c["occ"]).index(o["slug"]) % 4]
     head = head_band(color, ic_wrap("occasion", o["slug"]), f'{esc(o["name"])}の<wbr>プレゼント', o["blurb"], single=True, mascot=OCC_MASCOT.get(o["slug"], "b-wink"))
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("イベント", "/occasion/"), (o["name"], None)])}</div>
-{pr_lead(cfg)}
+{pr_quiet(cfg)}
 <section style="margin-top:40px" class="cols"><div><h2><span class="scribble">贈る時期の目安</span></h2><p>{esc(o["timing"])}</p></div>
 <div><h2><span class="scribble">選ぶポイント</span></h2><ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in o["tips"])}</ol></div></section>
 <section style="margin-top:50px"><h2><span class="scribble">相手を選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}
-{portrait_block(d, cfg, o.get("portrait_note"))}
 <section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>"""
     return page(cfg, preview, path=f"/occasion/{o['slug']}/", title=f"{o['name']}のプレゼント 選び方と相手別のおすすめ | {cfg['site_name']}",
                 description=o["blurb"][:110], body=body)
@@ -287,14 +395,13 @@ def recipient_page(d: dict, cfg: dict, preview: bool, r: dict) -> str:
     c = d["c"]
     pairs = [p for p in c["pairs"] if p["recipient"] == r["slug"]]
     cards = "".join(tile(f'/gift/{ct.pair_key(p)}/', "occasion", p["occasion"], c["occ"][p["occasion"]]["name"], p["title"].split(" ")[0]) for p in pairs)
-    lists = [t for p in pairs for t in d["pairs"].get(ct.pair_key(p), {}).values()]
-    featured = top_items(lists)
+    featured = top_items([pair_items(d, ct.pair_key(p))[2] for p in pairs])
     shown = (f'<section style="margin-top:50px"><h2><span class="scribble">選ばれている贈り物の例</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
     color = COLORS[list(c["rec"]).index(r["slug"]) % 4]
     head = head_band(color, ic_wrap("recipient", r["slug"]), f'{esc(r["name"])}への<wbr>プレゼント', r["blurb"], single=True, mascot="r-sparkle")
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("相手から", "/for/"), (r["name"], None)])}</div>
-{pr_lead(cfg)}
+{pr_quiet(cfg)}
 <section style="margin-top:40px" class="cols"><div><h2><span class="scribble">喜ばれやすいもの</span></h2><ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in r["likes"])}</ol></div>
 <div class="avoid"><h2><span class="scribble">避けたいもの</span></h2>{ul(r["avoid"], "warn")}</div></section>
 <section style="margin-top:50px"><h2><span class="scribble">イベントを選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
@@ -323,15 +430,20 @@ def season_occasions(c: dict, today: date) -> list[dict]:
     return out or [o for o in c["occasions"] if o["slug"] not in SEASON][:4]
 
 
-def finder(c: dict) -> str:
-    """Event + recipient + budget picker; without JavaScript it links to the event list, with JavaScript it jumps to the page."""
+def finder(d: dict) -> str:
+    """Event + recipient + budget picker. Nothing is pre-selected; the options that cannot lead to a page are disabled by the script
+    (data-map: event -> recipient -> budgets that have products)."""
+    c = d["c"]
     occ = "".join(f'<option value="{o["slug"]}">{esc(o["name"])}</option>' for o in c["occasions"])
     rec = "".join(f'<option value="{r["slug"]}">{esc(r["name"])}</option>' for r in c["recipients"])
     bud = "".join(f'<option value="{t["slug"]}">{esc(t["label"])}</option>' for t in c["filters"]["tiers"])
-    pairs = esc(json.dumps([ct.pair_key(p) for p in c["pairs"]]))
-    return (f'<form class="finder" action="/occasion/" method="get" data-pairs="{pairs}"><img class="peek hop" src="/assets/img/concierge-bell.webp" alt="" width="96" height="73"><p class="finder-title">贈り物をさがす</p>'
-            f'<div class="finder-row"><select name="o" aria-label="イベント">{occ}</select><select name="r" aria-label="贈る相手">{rec}</select>'
-            f'<select name="b" aria-label="予算"><option value="">予算</option>{bud}</select><button type="submit">さがす</button></div></form>')
+    fmap = esc(json.dumps(finder_map(d), separators=(",", ":")))
+    return (f'<form class="finder" action="/occasion/" method="get" data-map="{fmap}"><img class="peek hop" src="/assets/img/concierge-bell.webp" alt="" width="96" height="73">'
+            f'<p class="finder-title">贈り物をさがす</p>'
+            f'<div class="finder-row"><select name="o" aria-label="イベント"><option value="">イベント</option>{occ}</select>'
+            f'<select name="r" aria-label="贈る相手"><option value="">贈る相手</option>{rec}</select>'
+            f'<select name="b" aria-label="予算"><option value="">予算(指定なし)</option>{bud}</select><button type="submit">さがす</button></div>'
+            f'<p class="finder-msg" role="status" hidden></p></form>')
 
 
 def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
@@ -347,12 +459,12 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <div class="hero-text"><span class="sticker">プレゼント選びを、わくわくに!</span>
 <h1><span class="nb">相手が<em>よろこぶ</em></span><br><span class="nb">プレゼント、</span><br><span class="nb">いっしょに見つけよう</span></h1>
 <p class="lead">イベントと贈る相手から、喜ばれやすい選び方と、おすすめの商品が見つかります。</p>
-{finder(c)}
+{finder(d)}
 <p class="hero-cta"><a class="btn big" href="/occasion/">イベントから探す</a><a class="btn big btn-sub" href="/for/">相手から探す</a></p></div>
 <div class="hero-art">{party("hero")}<img class="pair" src="/assets/img/mascot-pair.webp" alt="赤と青のマフラーをしたシマエナガのふたりが、プレゼントを持って喜んでいる" width="1400" height="579"></div>
 </div></section>
 <div class="marquee" aria-hidden="true"><div class="track">{ticker}</div></div>
-{pr_lead(cfg)}
+{pr_quiet(cfg)}
 <section style="margin-top:56px"><div class="sec-head"><span class="sticker">NOW</span><h2>いまが<span class="scribble">贈りどき</span></h2><p>これから迎えるイベントのプレゼントを、先取りで。</p></div>
 <ul class="tiles wide">{season}</ul></section>
 <section class="band sky scallop" style="margin-top:70px"><div class="in"><div class="sec-head"><img class="step-mascot hop" src="/assets/img/navi-scope.webp" alt="望遠鏡をのぞくシマエナガと、道を指さすシマエナガ" width="380" height="193" loading="lazy"><h2>選び方は、かんたん<span class="scribble">3ステップ</span></h2></div>
@@ -376,16 +488,25 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 
 # ---------------------------------------------------------------- site
 
-def prepare(c: dict, items: dict | None) -> dict:
+def prepare(c: dict, items: dict | None, cfg: dict) -> dict:
     items = items or {"pairs": {}, "portrait": [], "fetched_at": None}
     f = items.get("fetched_at")
-    label = "取得日不明"
+    label = "取得日時不明"
     if f:
         t = datetime.fromisoformat(f)
-        label = f"{t.year}年{t.month}月{t.day}日"
-    # the stored lists were chosen at fetch time; apply today's filters again so a rule change shows without refetching
-    pairs = {k: {t: [i for i in lst if usable(i, c["filters"])] for t, lst in tiers.items()} for k, tiers in items.get("pairs", {}).items()}
-    return {"c": c, "pairs": pairs, "portrait": items.get("portrait", []), "fetched_label": label,
+        label = f"{t.year}年{t.month}月{t.day}日 {t.hour}:{t.minute:02d}"
+    # the stored lists were chosen at fetch time; apply today's rules again (relaxed superset) so a rule change shows without refetching
+    owner = {ct.pair_key(p): p["recipient"] for p in c["pairs"]}
+    pairs = {}
+    for k, v in items.get("pairs", {}).items():
+        def ok(i, k=k):
+            return usable(i, c["filters"], owner.get(k), relaxed=True)
+        if "ideas" in v:
+            pairs[k] = {"ideas": [{**idea, "items": [i for i in idea["items"] if ok(i)]} for idea in v["ideas"]],
+                        "tiers": {t: [i for i in lst if ok(i)] for t, lst in v["tiers"].items()}}
+        else:  # data fetched before ideas existed: budget lists only
+            pairs[k] = {t: [i for i in lst if ok(i)] for t, lst in v.items() if isinstance(lst, list)}
+    return {"c": c, "pairs": pairs, "portrait": items.get("portrait", []), "fetched_label": label, "site_name": cfg["site_name"],
             "fetched_date": (f or date.today().isoformat())[:10]}
 
 
@@ -397,7 +518,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         raise BuildError("release build refused: no fetched products (run sites/yorokobu/fetch.py first)")
     preview = bool(missing)
     today = today or date.today()
-    d = prepare(c, items)
+    d = prepare(c, items, cfg)
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview, today),
                                      "occasion/index.html": hub_page(d, cfg, preview, "occasion"),
                                      "for/index.html": hub_page(d, cfg, preview, "for")}

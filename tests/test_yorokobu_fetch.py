@@ -16,9 +16,11 @@ FILTERS = {"min_review_count": 10, "min_review_average": 4.0, "ng_words": ["訳�
            "tiers": TIERS}
 CONTENT = {
     "pairs": [
-        {"occasion": "birthday", "recipient": "boyfriend", "queries": ["誕生日 彼氏", "彼氏 ギフト", "彼氏 財布"],
-         "tiers": ["under3000", "3000-5000"]},
-        {"occasion": "mothers-day", "recipient": "mother", "queries": ["母の日 花"], "tiers": ["over20000"]},
+        {"occasion": "birthday", "recipient": "boyfriend", "queries": ["誕生日 彼氏", "彼氏 ギフト"], "tiers": ["under3000", "3000-5000"],
+         "ideas": [{"label": "財布", "type": "実用品", "query": "メンズ 財布 ギフト", "why": "毎日使います。"},
+                   {"label": "名入れ", "type": "思い出・名入れ", "query": "名入れ ペン", "why": "世界にひとつです。"}]},
+        {"occasion": "mothers-day", "recipient": "mother", "queries": ["母の日 花"], "tiers": ["over20000"],
+         "ideas": [{"label": "花", "type": "実用品", "query": "母の日 花", "why": "華やかです。"}]},
     ],
     "tiers": {t["slug"]: t for t in TIERS},
     "filters": FILTERS,
@@ -167,30 +169,49 @@ class PickingTest(unittest.TestCase):
 
 
 class FetchTest(unittest.TestCase):
-    def test_plan_counts_requests(self):
+    def test_plan_is_one_search_per_idea(self):
         reqs = fetch.plan(CONTENT)
-        self.assertEqual(len(reqs), 2 + 2 + 1)  # pair 1: two extra queries + two tiers; pair 2: one tier
-        tiered = [r for r in reqs if r["tier"] == "3000-5000"][0]
-        self.assertEqual((tiered["params"]["minPrice"], tiered["params"]["maxPrice"]), (3001, 5000))
-        self.assertNotIn("minPrice", [r for r in reqs if r["tier"] == "under3000"][0]["params"])
-        open_ended = [r for r in reqs if r["tier"] == "over20000"][0]["params"]
-        self.assertEqual(open_ended["minPrice"], 20001)
-        self.assertNotIn("maxPrice", open_ended)
+        self.assertEqual([(r["pair"], r["idea"]) for r in reqs], [("birthday-boyfriend", 0), ("birthday-boyfriend", 1), ("mothers-day-mother", 0)])
+        self.assertEqual(reqs[0]["params"]["keyword"], "メンズ 財布 ギフト")
 
-    def test_collect_builds_lists_per_page_and_tier(self):
+    def test_collect_builds_ideas_and_budget_lists_per_page(self):
         def items_for(url):
             if "shopCode=2gaoe" in url:
                 return [raw_item("p1", 9800, "2gaoe", reviews=0, rating=0)]
             return [raw_item("x1", 2000, "s1"), raw_item("x2", 4000, "s2"), raw_item("x3", 25000, "s3")]
-        t = FakeTransport(items_for)
-        data = fetch.collect(CONTENT, client(t), now=datetime(2026, 10, 7, 7, 0))
-        self.assertEqual(data["fetched_at"], "2026-10-07T07:00:00")
-        bd = data["pairs"][pair_key(CONTENT["pairs"][0])]
-        self.assertEqual([i["code"] for i in bd["under3000"]], ["x1"])
-        self.assertEqual([i["code"] for i in bd["3000-5000"]], ["x2"])
-        self.assertEqual([i["code"] for i in data["pairs"]["mothers-day-mother"]["over20000"]], ["x3"])
-        self.assertEqual(len(data["portrait"]), 1)  # the operator's shop, not filtered by reviews
-        self.assertEqual(data["stats"]["errors"], 0)
+        data = fetch.collect(CONTENT, client(FakeTransport(items_for)), now=datetime(2026, 10, 7, 7, 0))
+        self.assertEqual((data["version"], data["fetched_at"]), (2, "2026-10-07T07:00:00"))
+        bd = data["pairs"]["birthday-boyfriend"]
+        self.assertEqual([i["label"] for i in bd["ideas"]], ["財布", "名入れ"])
+        # an item is shown under one idea only
+        all_codes = [i["code"] for idea in bd["ideas"] for i in idea["items"]]
+        self.assertEqual(len(all_codes), len(set(all_codes)))
+        self.assertEqual([i["code"] for i in bd["tiers"]["under3000"]], ["x1"])
+        self.assertEqual([i["code"] for i in bd["tiers"]["3000-5000"]], ["x2"])
+        self.assertEqual([i["code"] for i in data["pairs"]["mothers-day-mother"]["tiers"]["over20000"]], ["x3"])
+        self.assertEqual(len(data["portrait"]), 1)
+
+    def test_a_short_budget_tier_gets_price_bounded_searches(self):
+        calls = []
+
+        def items_for(url):
+            calls.append(url)
+            return [raw_item("x1", 2000, "s1")]
+        fetch.collect(CONTENT, client(FakeTransport(items_for)), now=datetime(2026, 10, 7, 7, 0))
+        self.assertTrue(any("minPrice=3001" in u and "maxPrice=5000" in u for u in calls))      # tier 3,000-5,000 stayed empty
+        self.assertTrue(any("minPrice=20001" in u for u in calls))
+
+    def test_products_for_the_wrong_person_never_reach_the_page(self):
+        def items_for(url):
+            return [raw_item("m1", 2000, "s1", name="本革 メンズ 長財布"), raw_item("w1", 2100, "s2", name="レディース 長財布"),
+                    raw_item("u1", 2200, "s3", name="メンズ レディース 兼用 財布")]
+        data = fetch.collect(CONTENT, client(FakeTransport(items_for)), now=datetime(2026, 10, 7, 7, 0))
+        mom = [i["code"] for t in data["pairs"]["mothers-day-mother"]["tiers"].values() for i in t] +               [i["code"] for idea in data["pairs"]["mothers-day-mother"]["ideas"] for i in idea["items"]]
+        self.assertNotIn("m1", mom)
+        self.assertIn("w1", mom)
+        bf = [i["code"] for idea in data["pairs"]["birthday-boyfriend"]["ideas"] for i in idea["items"]]
+        self.assertIn("m1", bf)
+        self.assertNotIn("w1", bf)
 
     def test_collect_refuses_a_fetch_where_most_pages_are_empty(self):
         with self.assertRaises(rakuten.RakutenError):

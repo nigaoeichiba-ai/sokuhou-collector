@@ -122,7 +122,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: out/yorokobu_items.json
-          key: yorokobu-items-${{ env.DAY }}
+          key: yorokobu-items-v2-${{ env.DAY }}
       - name: Fetch products
         if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu' && steps.items-cache.outputs.cache-hit != 'true'
         env:
