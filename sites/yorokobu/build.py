@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from datetime import date, datetime
 from pathlib import Path
@@ -20,6 +21,7 @@ sys.path.insert(0, str(ROOT))
 
 from sites.yorokobu import content as ct  # noqa: E402
 from sites.yorokobu import giftcal  # noqa: E402
+from sites.yorokobu import relevance  # noqa: E402
 from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
 from sites.yorokobu.tools import (calc_page, gift_map, persona_page, quiz_page, taboo_page, tools_hub_page)  # noqa: E402
@@ -47,8 +49,28 @@ def yen(v: int) -> str:
     return f"¥{v:,}"
 
 
+KEEP_OCCASIONS: set[str] = set()   # the occasion words that belong on the page being built (set by the page functions)
+DECOR = re.compile(r"[＼／\\/♪★☆◆■●▼▲♡♥]+")
+
+
+def set_keep(*words: str) -> None:
+    KEEP_OCCASIONS.clear()
+    KEEP_OCCASIONS.update(w for w in words if w)
+
+
+def strip_occasions(name: str) -> str:
+    """Product titles are stuffed with every occasion ("敬老の日 父の日 ハロウィン"); show only the page's own occasion, never an unrelated one.
+    The title is kept as it is when stripping would leave too little."""
+    out = DECOR.sub(" ", name)
+    for w in sorted(relevance.OCCASION_WORDS, key=len, reverse=True):
+        if w not in KEEP_OCCASIONS:
+            out = out.replace(w, " ")
+    out = " ".join(out.split())
+    return out if len(out) >= 10 else " ".join(name.split())
+
+
 def short(name: str, limit: int = NAME_LIMIT) -> str:
-    name = " ".join(name.split())
+    name = strip_occasions(name)
     return name if len(name) <= limit else name[: limit - 1].rstrip() + "…"
 
 
@@ -411,6 +433,7 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
 
 
 def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
+    set_keep(d["c"]["occ"][p["occasion"]]["name"])
     c = d["c"]
     occ, rec = c["occ"][p["occasion"]], c["rec"][p["recipient"]]
     key = ct.pair_key(p)
@@ -477,6 +500,7 @@ def theme_tile(t: dict) -> str:
 
 
 def theme_page(d: dict, cfg: dict, preview: bool, t: dict) -> str:
+    set_keep()
     c = d["c"]
     color, mascot, _ = group_style(t["group"])
     group = next(g for g in c["theme_groups"] if g["slug"] == t["group"])
@@ -521,6 +545,7 @@ def theme_hub_page(d: dict, cfg: dict, preview: bool) -> str:
 
 
 def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
+    set_keep(o["name"])
     c = d["c"]
     pairs = [p for p in c["pairs"] if p["occasion"] == o["slug"]]
     cards = "".join(tile(f'/gift/{ct.pair_key(p)}/', "recipient", p["recipient"], f'{c["rec"][p["recipient"]]["name"]}へ', p["title"].split(" ")[0]) for p in pairs)
@@ -542,6 +567,7 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
 
 
 def recipient_page(d: dict, cfg: dict, preview: bool, r: dict) -> str:
+    set_keep()
     c = d["c"]
     pairs = [p for p in c["pairs"] if p["recipient"] == r["slug"]]
     cards = "".join(tile(f'/gift/{ct.pair_key(p)}/', "occasion", p["occasion"], c["occ"][p["occasion"]]["name"], p["title"].split(" ")[0]) for p in pairs)
@@ -773,6 +799,7 @@ def finder(d: dict) -> str:
 
 
 def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
+    set_keep()
     c = d["c"]
     season = "".join(tile(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"], o["timing"][:30] + "…", wide=True) for o in season_occasions(c, today)[:6])
     month_more = (f'<p class="more"><a class="btn btn-sub" href="/month/{today.month}/">{today.month}月の贈りどきを、ぜんぶ見る</a></p>'
@@ -846,6 +873,7 @@ def month_pages(c: dict, today: date) -> list[int]:
 
 
 def month_page(d: dict, cfg: dict, preview: bool, m: int, today: date, months: list[int]) -> str:
+    set_keep()
     c = d["c"]
     mc = month_content(c, m, today)
     tiles = "".join(tile(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"], o["timing"][:30] + "…", wide=True) for o in mc["occ"])
