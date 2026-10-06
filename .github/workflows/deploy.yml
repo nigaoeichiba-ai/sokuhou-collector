@@ -6,7 +6,7 @@ name: deploy-sites
 #   XSERVER_HOST      e.g. sv8477.xserver.jp
 #   XSERVER_USER      the Xserver server ID (the SSH user name)
 # The kuma site is built and uploaded only when the repository variable DEPLOY_KUMA is "true" (set after the
-# owner has added kuma-sokuho.com to the Xserver server).
+# owner has added kuma-sokuho.com to the Xserver server); the same switch for minna-no-illust.com is DEPLOY_MINNA.
 #
 # Manual runs are a check only unless "Really deploy" is ticked: they build, run the tests and prove that the
 # SSH login and the target folder work, but change nothing on the server.
@@ -70,6 +70,14 @@ jobs:
             min_cards: 0
             marker: よろこぶプレゼント
             probe: /sitemap.xml
+          - site: minna
+            dir: minna-no-illust.com
+            url: https://minna-no-illust.com
+            build: python sites/minna/build.py --release --out release
+            min_pages: 90
+            min_cards: 0
+            marker: みんなのイラスト
+            probe: /sitemap-images.xml
     concurrency:
       group: deploy-${{ matrix.site }}
       cancel-in-progress: false
@@ -86,6 +94,7 @@ jobs:
           USER_ID: ${{ secrets.XSERVER_USER }}
           KUMA: ${{ vars.DEPLOY_KUMA }}
           YOROKOBU: ${{ vars.DEPLOY_YOROKOBU }}
+          MINNA: ${{ vars.DEPLOY_MINNA }}
           RK_APP: ${{ secrets.RAKUTEN_APP_ID }}
           RK_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           SITE: ${{ matrix.site }}
@@ -101,6 +110,10 @@ jobs:
           fi
           if [ "$SITE" = "yorokobu" ] && { [ "$YOROKOBU" != "true" ] || [ -z "$RK_APP" ] || [ -z "$RK_KEY" ]; }; then
             echo "DEPLOY_YOROKOBU is not true, or the Rakuten secrets are missing; the yorokobu site is skipped"
+            go=false
+          fi
+          if [ "$SITE" = "minna" ] && [ "$MINNA" != "true" ]; then
+            echo "DEPLOY_MINNA is not true; the minna site is skipped"
             go=false
           fi
           echo "go=$go" >> "$GITHUB_OUTPUT"
