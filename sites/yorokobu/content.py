@@ -106,11 +106,13 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     for slug, g in guides.items():
         if slug not in occ:
             raise BuildError(f"guide for unknown occasion {slug}")
-    themes = _load_themes(content_dir, rec, tiers)
+    groups = _load_groups(content_dir)
+    themes = _load_themes(content_dir, rec, tiers, {g["slug"] for g in groups})
     theme = {t["slug"]: t for t in themes}
+    articles = _load_articles(content_dir, theme)
     return {"occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
             "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "themes": themes,
-            "theme": theme, "theme_groups": THEME_GROUPS,
+            "theme": theme, "theme_groups": groups, "articles": articles,
             "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
 
 
@@ -161,13 +163,42 @@ def _load_map_tags(content_dir: Path) -> dict:
     return data
 
 
-def _load_themes(content_dir: Path, rec: dict, tiers: dict) -> list[dict]:
+def _load_groups(content_dir: Path) -> list[dict]:
+    """The theme groups: THEME_GROUPS plus any the content factory added in content/theme_groups.json."""
+    extra = _optional(content_dir, "theme_groups.json")
+    groups = list(THEME_GROUPS)
+    for g in (extra or {}).get("groups", []):
+        _need(g, ("slug", "name", "blurb"), f"theme group {g.get('slug')}")
+        if g["slug"] in {x["slug"] for x in groups}:
+            raise BuildError(f"duplicate theme group {g['slug']}")
+        groups.append(g)
+    return groups
+
+
+def _load_articles(content_dir: Path, theme: dict) -> list[dict]:
+    """Free-form reading articles (articles.json, optional), newest first."""
+    data = _optional(content_dir, "articles.json")
+    arts = (data or {}).get("articles", [])
+    seen = set()
+    for a in arts:
+        _need(a, ("slug", "title", "lead", "sections", "faq", "themes", "date"), f"article {a.get('slug')}")
+        if a["slug"] in seen:
+            raise BuildError(f"duplicate article {a['slug']}")
+        seen.add(a["slug"])
+        bad = [s for s in a["themes"] if theme and s not in theme]
+        if bad:
+            raise BuildError(f"article {a['slug']}: unknown theme {bad}")
+        a.setdefault("checklist", [])
+    return sorted(arts, key=lambda a: (a["date"], a["slug"]), reverse=True)
+
+
+def _load_themes(content_dir: Path, rec: dict, tiers: dict, group_slugs: set[str] | None = None) -> list[dict]:
     """The theme pages (themes.json, optional): a page that starts from a feeling or an interest instead of an occasion x recipient."""
     path = content_dir / "themes.json"
     if not path.exists():
         return []
     themes = _read(content_dir, "themes.json")["themes"]
-    groups = {g["slug"] for g in THEME_GROUPS}
+    groups = group_slugs or {g["slug"] for g in THEME_GROUPS}
     seen = set()
     for t in themes:
         _need(t, THEME_FIELDS, f"theme {t.get('slug')}")

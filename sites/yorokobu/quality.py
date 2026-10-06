@@ -1,0 +1,101 @@
+"""Quality gates for editorial content, shared by the unit tests and the content factory (sites/yorokobu/factory.py).
+
+Each function returns a list of problems (empty = fine).  The factory merges new themes and articles only when this list is empty, so nobody has
+to read them before they go live: calm copy, no claims we cannot back up, no repeats of what the site already says.
+"""
+from __future__ import annotations
+
+import re
+
+FORBIDDEN_WORDS = ["調査", "%", "％", "人気", "ランキング", "No.1", "必ず", "絶対", "最高", "楽天", "アフィリ", "AI", "1位"]
+TEMPLATE_PHRASES = ["視点を合わせると", "生活の中で出番がある", "節目に、相手をよく見て", "迷ったら普段の使い方に近いもの",
+                    "好みが分からないときは高価さより", "使う場面が浮かぶ品なら", "候補を絞りやすくなります"]
+TYPES = ["実用品", "食べもの・飲みもの", "ファッション小物", "癒し・リラックス", "思い出・名入れ", "体験・お出かけ", "趣味・ホビー", "おもしろ・サプライズ", "子ども向け"]
+EMOJI = re.compile("[\U0001F300-\U0001FAFF☀-➿]")
+
+
+def sentences(text: str) -> list[str]:
+    return [s for s in re.split(r"[。!?!?]", text) if len(s) >= 25]
+
+
+def _words(blob: str) -> list[str]:
+    return [w for w in FORBIDDEN_WORDS + TEMPLATE_PHRASES if w in blob] + (["emoji"] if EMOJI.search(blob) else [])
+
+
+def theme_problems(t: dict, groups: set[str], known_queries: set[str] | None = None, known_slugs: set[str] | None = None) -> list[str]:
+    out = []
+    slug = t.get("slug", "?")
+    for f in ("slug", "group", "name", "title", "lead", "reasons", "how_to_choose", "ideas", "keywords", "tiers"):
+        if not t.get(f):
+            out.append(f"{slug}: missing {f}")
+    if out:
+        return out
+    if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", slug):
+        out.append(f"{slug}: slug must be lowercase ascii with hyphens")
+    if known_slugs and slug in known_slugs:
+        out.append(f"{slug}: slug exists")
+    if t["group"] not in groups:
+        out.append(f"{slug}: unknown group {t['group']}")
+    blob = " ".join([t["title"], t["lead"], *t["reasons"], *t["how_to_choose"], *t.get("avoid", []), *[i["label"] + i["why"] for i in t["ideas"]]])
+    out += [f"{slug}: forbidden {w}" for w in _words(blob)]
+    if not 85 <= len(t["lead"]) <= 260:
+        out.append(f"{slug}: lead length {len(t['lead'])}")
+    if not 12 <= len(t["title"]) <= 40:
+        out.append(f"{slug}: title length {len(t['title'])}")
+    if len(t["reasons"]) != 3 or len(t["how_to_choose"]) != 3 or len(t["ideas"]) != 4 or len(t["keywords"]) != 8:
+        out.append(f"{slug}: counts (reasons 3, how_to_choose 3, ideas 4, keywords 8)")
+    queries = [i["query"] for i in t["ideas"]]
+    if len(set(queries)) != 4:
+        out.append(f"{slug}: repeated query")
+    if known_queries:
+        out += [f"{slug}: query already used elsewhere: {q}" for q in queries if q in known_queries]
+    for i in t["ideas"]:
+        if i["type"] not in TYPES:
+            out.append(f"{slug}: bad type {i['type']}")
+        if not 24 <= len(i["why"]) <= 110:
+            out.append(f"{slug}: idea why length {len(i['why'])}")
+        if not 2 <= len(i["label"]) <= 14:
+            out.append(f"{slug}: idea label length {len(i['label'])}")
+        if not 2 <= len(i["query"].split()) <= 5:
+            out.append(f"{slug}: query should be 2-5 words: {i['query']}")
+    return out
+
+
+def article_problems(a: dict, theme_slugs: set[str], known_slugs: set[str] | None = None) -> list[str]:
+    out = []
+    slug = a.get("slug", "?")
+    for f in ("slug", "title", "lead", "sections", "faq", "themes", "date"):
+        if not a.get(f):
+            out.append(f"{slug}: missing {f}")
+    if out:
+        return out
+    if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", slug):
+        out.append(f"{slug}: slug must be lowercase ascii with hyphens")
+    if known_slugs and slug in known_slugs:
+        out.append(f"{slug}: slug exists")
+    blob = " ".join([a["title"], a["lead"], *[s["h"] + s["body"] for s in a["sections"]], *a.get("checklist", []), *[f["q"] + f["a"] for f in a["faq"]]])
+    out += [f"{slug}: forbidden {w}" for w in _words(blob)]
+    if not 15 <= len(a["title"]) <= 44:
+        out.append(f"{slug}: title length {len(a['title'])}")
+    if not 90 <= len(a["lead"]) <= 260:
+        out.append(f"{slug}: lead length {len(a['lead'])}")
+    if not 4 <= len(a["sections"]) <= 6:
+        out.append(f"{slug}: sections {len(a['sections'])}")
+    for s in a["sections"]:
+        if not 170 <= len(s["body"]) <= 480 or not 6 <= len(s["h"]) <= 26:
+            out.append(f"{slug}: section '{s['h']}' lengths {len(s['h'])}/{len(s['body'])}")
+    if not 2 <= len(a["faq"]) <= 4:
+        out.append(f"{slug}: faq {len(a['faq'])}")
+    bad = [s for s in a["themes"] if s not in theme_slugs]
+    if bad or not 2 <= len(a["themes"]) <= 4:
+        out.append(f"{slug}: related themes {a['themes']} (need 2-4 existing ones)")
+    return out
+
+
+def repeated_sentences(texts: list[str]) -> list[str]:
+    """Long sentences that occur more than once in the given texts (a new text must not copy the site's older ones)."""
+    seen: dict[str, int] = {}
+    for t in texts:
+        for s in set(sentences(t)):
+            seen[s] = seen.get(s, 0) + 1
+    return [s for s, n in seen.items() if n > 1]

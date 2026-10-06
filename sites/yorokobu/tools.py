@@ -124,7 +124,8 @@ def quiz_page(d: dict, cfg: dict, preview: bool) -> str:
 def persona_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     B = _b()
     c = d["c"]
-    themes = [c["theme"][s] for s in p["themes"] if s in c["theme"]]
+    live = {t["slug"] for t in d["live_themes"]}
+    themes = [c["theme"][s] for s in p["themes"] if s in live]
     links = "".join(f'<li><a href="/theme/{t["slug"]}/">{esc(t["title"])}</a></li>' for t in themes)
     others = "".join(f'<li><a href="/diagnosis/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in c["persona"]["personas"] if x["slug"] != p["slug"])
     body = f"""{B.head_band("pink", '<img class="pair-mini" src="/assets/img/r-joy.webp" alt="" width="170" height="155">', esc(p["name"]), p["tagline"], single=True, mascot="b-joy")}
