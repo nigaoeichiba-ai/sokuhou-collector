@@ -125,10 +125,12 @@ def scallop_class(color: str) -> str:
 # ---------------------------------------------------------------- products
 
 def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None) -> str:
+    url = rakuten.clean_item_url(it["url"])  # also unwraps data fetched before the API's redirect links were handled
+    it = {**it, "name": rakuten.clean_title(it["name"])}
     if own:
-        href, rel = it["url"], "noopener"
+        href, rel = url, "noopener"
     else:
-        href = rakuten.affiliate_link(cfg["rakuten_affiliate_id"], cfg.get("rakuten_tracking_id"), it["url"])
+        href = rakuten.affiliate_link(cfg["rakuten_affiliate_id"], cfg.get("rakuten_tracking_id"), url)
         rel = "sponsored nofollow noopener"
     bits = []
     if it["reviews"]:

@@ -71,6 +71,29 @@ class NormalizeTest(unittest.TestCase):
         self.assertTrue(rakuten.affiliate_link("A.B", None, "https://x").startswith("https://hb.afl.rakuten.co.jp/hgc/A.B/?pc="))
 
 
+class UrlAndTitleTest(unittest.TestCase):
+    WRAPPED = ("https://hb.afl.rakuten.co.jp/hgc/g00qk1uo.hgz7e6c9.g00qk1uo.hgz7f5ea/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fakuse-one%2Fsai109-a%2F"
+               "&m=http%3A%2F%2Fm.rakuten.co.jp%2Fakuse-one%2Fi%2F10014842%2F&rafcid=wsc_i_is_APP")
+
+    def test_the_apis_own_affiliate_redirect_is_unwrapped(self):
+        self.assertEqual(rakuten.clean_item_url(self.WRAPPED), "https://item.rakuten.co.jp/akuse-one/sai109-a/")
+        self.assertEqual(rakuten.clean_item_url("https://item.rakuten.co.jp/s/x/"), "https://item.rakuten.co.jp/s/x/")
+        n = rakuten.normalize({**raw_item("a1", 2000), "itemUrl": self.WRAPPED})
+        self.assertEqual(n["url"], "https://item.rakuten.co.jp/akuse-one/sai109-a/")
+
+    def test_promotions_are_dropped_from_titles(self):
+        raw = "クーポン有10/4/20時〜10/9/1:59 名入れ ギフト 財布 ベルト 【送料無料】 ≪540円で世界に一つ≫ 刻印"
+        self.assertEqual(rakuten.clean_title(raw), "名入れ ギフト 財布 ベルト 刻印")
+        self.assertEqual(rakuten.clean_title("【ポイント10倍】短い"), "【ポイント10倍】短い")  # nothing meaningful left: keep the original
+
+    def test_the_build_links_through_our_id_to_the_plain_item_page(self):
+        from sites.yorokobu import build
+        cfg = {"rakuten_affiliate_id": "OUR.ID", "rakuten_tracking_id": "trk"}
+        card = build.item_card(cfg, {**rakuten.normalize(raw_item("a1", 2000)), "url": self.WRAPPED})
+        self.assertIn("https://hb.afl.rakuten.co.jp/hgc/OUR.ID/trk?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fakuse-one%2Fsai109-a%2F", card)
+        self.assertNotIn("g00qk1uo", card)
+
+
 class ClientTest(unittest.TestCase):
     def test_sends_credentials_affiliate_id_and_referer(self):
         t = FakeTransport(lambda u: [raw_item("a", 100)])
