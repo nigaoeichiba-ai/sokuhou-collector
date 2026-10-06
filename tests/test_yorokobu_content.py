@@ -116,3 +116,33 @@ class GuideQualityTest(unittest.TestCase):
     def test_guides_do_not_repeat_each_other(self):
         sents = Counter(s for g in self.c["guides"].values() for sec in g["sections"] for s in sentences(sec["body"]))
         self.assertEqual([s for s, n in sents.items() if n > 1], [])
+
+
+class ThemeQualityTest(unittest.TestCase):
+    """Theme pages (feelings, giver, interests): complete, calm, no claims."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.c = ct.load()
+
+    def test_every_theme_is_complete_and_clean(self):
+        from sites.yorokobu.build import TYPE_ORDER
+        if not self.c["themes"]:
+            self.skipTest("no themes yet")
+        bad = []
+        for t in self.c["themes"]:
+            blob = " ".join([t["title"], t["lead"], *t["reasons"], *t["how_to_choose"], *t["avoid"], *[i["label"] + i["why"] for i in t["ideas"]]])
+            bad += [(t["slug"], w) for w in FORBIDDEN_WORDS + TEMPLATE_PHRASES if w in blob]
+            if not 85 <= len(t["lead"]) <= 260:
+                bad.append((t["slug"], "lead", len(t["lead"])))
+            if len(t["reasons"]) != 3 or len(t["how_to_choose"]) != 3 or len(t["ideas"]) != 4 or len(t["keywords"]) != 8:
+                bad.append((t["slug"], "counts"))
+            if len({i["query"] for i in t["ideas"]}) != 4:
+                bad.append((t["slug"], "repeated query"))
+            bad += [(t["slug"], "type", i["type"]) for i in t["ideas"] if i["type"] not in TYPE_ORDER]
+            bad += [(t["slug"], "why", len(i["why"])) for i in t["ideas"] if not 24 <= len(i["why"]) <= 110]
+        self.assertEqual(bad, [])
+
+    def test_themes_do_not_repeat_long_sentences(self):
+        sents = Counter(s for t in self.c["themes"] for s in sentences(" ".join([t["lead"], *t["reasons"], *t["how_to_choose"]])))
+        self.assertEqual([s for s, n in sents.items() if n > 1], [])
