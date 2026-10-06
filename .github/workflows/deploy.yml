@@ -83,6 +83,8 @@ jobs:
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0   # the gate below looks at which files a push changed
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
@@ -98,8 +100,30 @@ jobs:
           RK_APP: ${{ secrets.RAKUTEN_APP_ID }}
           RK_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           SITE: ${{ matrix.site }}
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
         run: |
           go=true
+          # A push that only touches another site's own files (sites/yorokobu, sites/minna and their tests) does not redeploy this site.
+          # Anything shared (the collector, kit, workflows, data, other tests) redeploys every site; on any doubt the site is deployed.
+          if [ "$EVENT" = "push" ] && [ -n "$BEFORE" ] && ! echo "$BEFORE" | grep -qE '^0+$'; then
+            if files=$(git diff --name-only "$BEFORE" "$AFTER" 2>/dev/null) && [ -n "$files" ]; then
+              relevant=0
+              while IFS= read -r f; do
+                case "$f" in
+                  sites/yorokobu/*|tests/test_yorokobu*|tests/fixtures/yorokobu/*|data/yorokobu*) owner=yorokobu ;;
+                  sites/minna/*|tests/test_minna*) owner=minna ;;
+                  *) owner=shared ;;
+                esac
+                if [ "$owner" = "shared" ] || [ "$owner" = "$SITE" ]; then relevant=1; fi
+              done <<< "$files"
+              if [ "$relevant" = "0" ]; then
+                echo "this push only changed other sites' files; $SITE is skipped"
+                go=false
+              fi
+            fi
+          fi
           if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then
             echo "XSERVER_SSH_KEY / XSERVER_HOST / XSERVER_USER are not all set; nothing to do"
             go=false
