@@ -241,6 +241,23 @@ class NameCleanupTest(unittest.TestCase):
         self.assertEqual(build.short("敬老の日 画像送信サービス"), "敬老の日 画像送信サービス")
 
 
+class FooterNoticeTest(unittest.TestCase):
+    def test_amazon_is_named_only_where_a_page_has_an_amazon_link(self):
+        cfg = {**CFG, "amazon_tracking_id": "amazonmacs-22"}
+        self.assertNotIn("Amazon", build.pr_foot(cfg))
+        self.assertIn("Amazonアソシエイト", build.pr_foot(cfg, amazon=True))
+        page = build.page(cfg, False, path="/x/", title="t", description="d", body='<p class="pr-quiet">PR</p><a href="https://www.amazon.co.jp/s?k=a&tag=amazonmacs-22">a</a>')
+        self.assertIn("Amazonアソシエイト", page)
+        page = build.page(cfg, False, path="/y/", title="t", description="d", body='<p class="pr-quiet">PR</p>')
+        self.assertNotIn("Amazonアソシエイト", page)
+
+    def test_no_coming_of_age_page_for_children(self):
+        from sites.yorokobu import content as real
+        keys = {real.pair_key(p) for p in real.load()["pairs"]}
+        self.assertNotIn("coming-of-age-child", keys)
+        self.assertNotIn("coming-of-age-teen", keys)
+
+
 class ThemeTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

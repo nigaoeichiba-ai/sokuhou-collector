@@ -95,7 +95,7 @@ def pr_lead(cfg: dict) -> str:
 def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
     if "pr-quiet" in kw.get("body", ""):
-        kw["body"] += pr_foot(cfg)
+        kw["body"] += pr_foot(cfg, "amazon.co.jp/" in kw["body"])
     return layout(SITE, cfg, preview, scripts=True, head_extra=FONTS, **kw)
 
 
@@ -264,9 +264,10 @@ def pr_quiet(cfg: dict) -> str:
     return '<p class="pr-quiet"><span class="pr-chip">PR</span>広告を含みます(くわしくはページ下部)</p>'
 
 
-def pr_foot(cfg: dict) -> str:
+def pr_foot(cfg: dict, amazon: bool = False) -> str:
+    """The full notice at the bottom of a page; it names Amazon only when the page really has an Amazon link."""
     return ('<aside class="pr-foot"><b>広告について</b>このページには、広告(楽天アフィリエイト'
-            + ('・Amazonアソシエイト' if cfg.get("amazon_tracking_id") else "")
+            + ('・Amazonアソシエイト' if amazon and cfg.get("amazon_tracking_id") else "")
             + ')のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。商品は、編集方針にもとづいて運営者が選んでいます。</aside>')
 
 
