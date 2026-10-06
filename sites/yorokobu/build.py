@@ -22,6 +22,7 @@ from sites.yorokobu import content as ct  # noqa: E402
 from sites.yorokobu import giftcal  # noqa: E402
 from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
+from sites.yorokobu.tools import (calc_page, gift_map, persona_page, quiz_page, taboo_page, tools_hub_page)  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
 from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages,  # noqa: E402
                              missing_config, standard_files, write_pages)
@@ -29,7 +30,7 @@ from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs,
 SOURCE_HTML = ('商品の情報は楽天ウェブサービスを利用して取得しています。 '
                '<a href="https://webservice.rakuten.co.jp/" target="_blank">Supported by Rakuten Developers</a>')  # the credit HTML is prescribed: use as is
 NAV = [("イベントから", "/occasion/", "/occasion/"), ("相手から", "/for/", "/for/"), ("季節の贈り物", "/#season", "/season-none/")]
-SITE = {"nav": NAV[:2] + [("切り口から", "/theme/", "/theme/"), ("たいせつな日メモ", "/memo/", "/memo/")], "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">', "assets": HERE / "assets",
+SITE = {"nav": NAV[:2] + [("切り口から", "/theme/", "/theme/"), ("診断・ツール", "/tool/", "/tool/")], "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">', "assets": HERE / "assets",
         "source_html": SOURCE_HTML}
 # months (1-12) in which an occasion is worth showing as "いまが贈りどき"; the rest are evergreen
 SEASON = {
@@ -327,7 +328,7 @@ def bird_say(img: str, text: str, cls: str = "") -> str:
 def idea_card(cfg: dict, idea: dict, i: int, tiers: list[dict]) -> str:
     cards = "".join(item_card(cfg, it, tier=tier_of(it["price"], tiers), kind=idea["type"]) for it in idea["items"][:4])
     body = f'<ul class="items mini">{cards}</ul>' if cards else '<p class="notice">この種類の商品は、いま、見つかりませんでした。下のリンクから、楽天市場で、探せます。</p>'
-    return (f'<article class="idea"><header><span class="type">{esc(idea["type"])}</span><h3>{esc(idea["label"])}</h3></header>'
+    return (f'<article class="idea" id="idea-{i}"><header><span class="type">{esc(idea["type"])}</span><h3>{esc(idea["label"])}</h3></header>'
             f'{bird_say(SOMMELIER_IMGS[i % 4], esc(idea["why"]), "sommelier")}{body}'
             f'<p class="idea-more"><a href="{esc(search_link(cfg, idea["query"]))}" rel="sponsored nofollow noopener" target="_blank">'
             f'楽天市場で「{esc(idea["query"])}」をもっと見る</a></p></article>')
@@ -405,7 +406,8 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
 {freshness(d)}</section>"""
     else:
         browse = '<section class="browse"><p class="notice">いま表示できる商品が、見つかりませんでした。下のコンシェルジュから、楽天市場で、探してみてください。</p></section>'
-    return proposals, browse, own
+    gm = gift_map(key, ideas, d["c"]["map_tags"], {i for i, idea in enumerate(ideas) if idea["items"]})
+    return proposals + gm, browse, own
 
 
 def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
@@ -800,6 +802,8 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
             cards[f"og/gift/{ct.pair_key(p)}.png"] = ogimage.card(
                 title=p["title"].split(" ")[0], tag=f"{c['rec'][p['recipient']]['name']} × {c['occ'][p['occasion']]['name']}",
                 bird=OCC_MASCOT.get(p["occasion"], birds[list(c["occ"]).index(p["occasion"]) % 4]), site=site)
+        for ps in (c["persona"] or {}).get("personas", []):
+            cards[f"og/diagnosis/{ps['slug']}.png"] = ogimage.card(title=ps["name"], tag="プレゼント診断", bird="b-sparkle", site=site)
         for th in c["themes"]:
             cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]),
                                                                bird=GROUP_STYLE[th["group"]][1], site=site)
@@ -815,6 +819,14 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages[f"occasion/{o['slug']}/index.html"] = occasion_page(d, cfg, preview, o)
     for r in c["recipients"]:
         pages[f"for/{r['slug']}/index.html"] = recipient_page(d, cfg, preview, r)
+    pages["tool/index.html"] = tools_hub_page(d, cfg, preview)
+    pages["tool/calc/index.html"] = calc_page(d, cfg, preview)
+    if c["taboo"]:
+        pages["tool/taboo/index.html"] = taboo_page(d, cfg, preview)
+    if c["persona"]:
+        pages["diagnosis/index.html"] = quiz_page(d, cfg, preview)
+        for ps in c["persona"]["personas"]:
+            pages[f"diagnosis/{ps['slug']}/index.html"] = persona_page(d, cfg, preview, ps)
     if c["themes"]:
         pages["theme/index.html"] = theme_hub_page(d, cfg, preview)
         for th in c["themes"]:

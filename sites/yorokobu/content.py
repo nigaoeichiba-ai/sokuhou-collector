@@ -107,9 +107,58 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
         if slug not in occ:
             raise BuildError(f"guide for unknown occasion {slug}")
     themes = _load_themes(content_dir, rec, tiers)
+    theme = {t["slug"]: t for t in themes}
     return {"occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
             "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "themes": themes,
-            "theme": {t["slug"]: t for t in themes}, "theme_groups": THEME_GROUPS}
+            "theme": theme, "theme_groups": THEME_GROUPS,
+            "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
+
+
+def _optional(content_dir: Path, name: str):
+    return _read(content_dir, name) if (content_dir / name).exists() else None
+
+
+def _load_taboo(content_dir: Path) -> list[dict]:
+    data = _optional(content_dir, "taboo.json")
+    entries = data["entries"] if data else []
+    ids = set()
+    for e in entries:
+        _need(e, ("id", "names", "level", "title", "why", "tip"), f"taboo {e.get('id')}")
+        if e["level"] not in ("care", "note", "ok"):
+            raise BuildError(f"taboo {e['id']}: unknown level {e['level']}")
+        if e["id"] in ids:
+            raise BuildError(f"duplicate taboo {e['id']}")
+        ids.add(e["id"])
+        e.setdefault("avoid_for", [])
+        e.setdefault("alternatives", [])
+    return entries
+
+
+def _load_persona(content_dir: Path, theme: dict) -> dict | None:
+    data = _optional(content_dir, "persona.json")
+    if not data:
+        return None
+    slugs = {p["slug"] for p in data["personas"]}
+    for p in data["personas"]:
+        _need(p, ("slug", "name", "tagline", "about", "likes", "avoid", "themes", "line"), f"persona {p.get('slug')}")
+        bad = [s for s in p["themes"] if theme and s not in theme]
+        if bad:
+            raise BuildError(f"persona {p['slug']}: unknown theme {bad}")
+    for q in data["questions"]:
+        for o in q["options"]:
+            if any(s not in slugs for s in o["w"]):
+                raise BuildError(f"question {q['id']}: weight for an unknown persona")
+    return data
+
+
+def _load_map_tags(content_dir: Path) -> dict:
+    data = _optional(content_dir, "map_tags.json")
+    if not data:
+        return {}
+    for k, dots in data.items():
+        if any(len(d) != 2 or not all(-2 <= float(v) <= 2 for v in d) for d in dots):
+            raise BuildError(f"map_tags {k}: dots must be [x, y] within -2..2")
+    return data
 
 
 def _load_themes(content_dir: Path, rec: dict, tiers: dict) -> list[dict]:

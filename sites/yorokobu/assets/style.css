@@ -475,3 +475,41 @@ p, li { overflow-wrap: anywhere; }
 .theme-tile small { display: block; font-weight: 500; }
 .sec-lead { margin: -4px 0 14px; color: var(--muted); font-size: .92rem; }
 .band.lilac { background-color: var(--lilac-s); }
+
+/* gift map, etiquette checker, calculators, quiz */
+.gmap { margin-top: 44px; }
+.gmap-svg { display: block; width: 100%; max-width: 640px; height: auto; margin: 6px auto 0; }
+.gm-bg { fill: #fff; stroke: var(--ink); stroke-width: 3; }
+.gm-axis { stroke: rgba(43,27,20,.35); stroke-width: 2; stroke-dasharray: 6 6; }
+.gm-end { font: 700 13px var(--body); fill: #6b5d55; }
+.gm-c { stroke: var(--ink); stroke-width: 3; }
+.gm-n { font: 900 14px var(--body); fill: var(--ink); pointer-events: none; }
+.gm-l { font: 900 15px var(--body); fill: var(--ink); paint-order: stroke; stroke: #fff; stroke-width: 4px; stroke-linejoin: round; }
+.gm-dot { cursor: pointer; } .gm-dot:hover .gm-c, .gm-dot:focus .gm-c { stroke-width: 5; }
+.tb-form { display: grid; gap: 12px; grid-template-columns: 2fr 1fr; padding: 18px; background: #fff; border: var(--line2); border-radius: 20px; box-shadow: var(--shadow-c); }
+.tb-form label { display: grid; gap: 4px; font-weight: 900; font-size: .85rem; }
+.tb-form input, .tb-form select { padding: .6em .8em; border: var(--line2); border-radius: 12px; font: 700 1rem var(--body); background: #fff7e0; }
+.tb-msg { margin: 14px 2px; font-weight: 700; }
+.tb-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+.tb { padding: 16px 18px; background: #fff; border: var(--line2); border-radius: 18px; box-shadow: 3px 3px 0 var(--ink); }
+.tb[hidden] { display: none; }
+.tb h3 { margin: 6px 0 4px; font-size: 1.05rem; } .tb p { margin: .4em 0; font-size: .9rem; }
+.tb-level { display: inline-block; padding: 0 .8em; border: 2px solid var(--ink); border-radius: 999px; font-size: .72rem; font-weight: 900; background: var(--yellow-s); }
+.tb.care .tb-level { background: var(--pink-s); } .tb.ok .tb-level { background: var(--mint-s); }
+.tb-tip b, .tb-alt b { display: inline-block; margin-right: .6em; padding: 0 .6em; border-radius: 6px; background: var(--sky-s); font-size: .74rem; }
+.calc-cols { align-items: start; }
+.calc-card { display: grid; gap: 12px; padding: 20px; background: #fff; border: var(--line2); border-radius: 22px; box-shadow: var(--shadow-c); }
+.calc-card label { display: grid; gap: 4px; font-weight: 900; font-size: .85rem; }
+.calc-card input { padding: .6em .8em; border: var(--line2); border-radius: 12px; font: 800 1.1rem var(--body); background: #fff7e0; }
+.calc-out { margin: 0; display: grid; gap: 4px; } .calc-out b { font-size: 1.5rem; font-family: var(--display); } .calc-out small { color: var(--muted); }
+.quiz { margin-top: 30px; text-align: center; }
+.quiz-card { max-width: 640px; margin: 0 auto; padding: 22px; background: #fff; border: var(--line); border-radius: 26px; box-shadow: var(--shadow); text-align: left; }
+.quiz-card[hidden], .quiz-start[hidden] { display: none; }
+.quiz-step { margin: 0; color: var(--muted); font-weight: 900; font-size: .85rem; } .quiz-q { margin: .3em 0 .8em; font-size: 1.25rem; }
+.quiz-opts { display: grid; gap: 10px; }
+.quiz-opt { padding: .8em 1em; text-align: left; border: var(--line2); border-radius: 16px; background: #fff7e0; font: 800 1rem var(--body); color: var(--ink); cursor: pointer; box-shadow: 3px 3px 0 var(--ink); }
+.quiz-opt:hover, .quiz-opt:focus-visible { background: var(--yellow); }
+.persona-about { max-width: 720px; font-size: 1.05rem; line-height: 2; }
+.persona-line { margin-top: 18px; padding: .8em 1.1em; background: var(--yellow-s); border: var(--line2); border-radius: 16px; font-weight: 800; }
+.tool-tile small { display: block; font-weight: 500; }
+@media (max-width: 640px) { .tb-form { grid-template-columns: 1fr; } }

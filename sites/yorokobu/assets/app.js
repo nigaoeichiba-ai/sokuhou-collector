@@ -322,10 +322,77 @@
     inner.innerHTML = html + '</div><p style="margin-top:8px"><a class="btn btn-sub" href="/memo/">たいせつな日メモ</a></p>';
   }
 
+  // ---------------------------------------------------------------- tools: etiquette checker, calculators, persona quiz
+  function norm(s) {
+    // katakana -> hiragana, full-width -> half-width, lower case, no spaces: "クシ" and "くし" match the same entry
+    return (s || "").toLowerCase().replace(/[ァ-ヶ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 96); })
+      .replace(/[！-～]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 65248); }).replace(/\s+/g, "");
+  }
+  function initTaboo() {
+    var box = $("#tbcheck"); if (!box) return;
+    var q = $('[name="q"]', box), o = $('[name="o"]', box), msg = $(".tb-msg", box), items = $$(".tb", box);
+    function run() {
+      var term = norm(q.value), occ = o.value, shown = 0;
+      items.forEach(function (li) {
+        var names = (li.getAttribute("data-names") || "").split(" ").map(norm).filter(Boolean), occs = (li.getAttribute("data-occ") || "").split(",");
+        var okName = !term || names.some(function (n) { return n.indexOf(term) >= 0 || (n.length >= 2 && term.indexOf(n) >= 0); });
+        var okOcc = !occ || !li.getAttribute("data-occ") || occs.indexOf(occ) >= 0;
+        li.hidden = !(okName && okOcc); if (!li.hidden) shown++;
+      });
+      msg.textContent = (term || occ) ? (shown ? shown + "件、見つかりました。" : "とくに知られている注意は、見つかりませんでした。ふつうに贈って大丈夫なことが多いです。") : "下のリストから、品の名前でしぼりこめます。";
+    }
+    q.addEventListener("input", run); o.addEventListener("change", run);
+    var pre = new URLSearchParams(location.search).get("q"); if (pre) { q.value = pre; run(); }
+  }
+
+  function yen(n) { return Math.round(n).toLocaleString("ja-JP") + "円"; }
+  function initCalc() {
+    var back = $('[data-calc="return"]'), split = $('[data-calc="split"]');
+    if (back) {
+      var a = $('[name="amount"]', back), range = $('[data-out="range"]', back);
+      var run = function () { var v = parseFloat(a.value) || 0; range.textContent = v > 0 ? yen(v / 3) + " 〜 " + yen(v / 2) : "金額を入れてください"; };
+      a.addEventListener("input", run); run();
+    }
+    if (split) {
+      var tot = $('[name="total"]', split), ppl = $('[name="people"]', split), each = $('[data-out="each"]', split), note = $('[data-out="note"]', split);
+      var run2 = function () {
+        var t = parseFloat(tot.value) || 0, p = Math.max(1, parseInt(ppl.value, 10) || 1), e = Math.ceil(t / p / 10) * 10;
+        each.textContent = "一人 " + yen(e);
+        note.textContent = p + "人で、合計 " + yen(e * p) + " になります(10円単位に切り上げ)。";
+      };
+      tot.addEventListener("input", run2); ppl.addEventListener("input", run2); run2();
+    }
+  }
+
+  function initQuiz() {
+    var root = $("#quiz"); if (!root) return;
+    var data = JSON.parse(root.getAttribute("data-json")), card = $(".quiz-card", root), start = $("[data-start]", root), i = 0, score = {};
+    data.slugs.forEach(function (s) { score[s] = 0; });
+    function show() {
+      var q = data.questions[i];
+      $(".quiz-step", card).textContent = "質問 " + (i + 1) + " / " + data.questions.length;
+      $(".quiz-q", card).textContent = q.text;
+      var box = $(".quiz-opts", card); box.innerHTML = "";
+      q.options.forEach(function (op) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "quiz-opt"; b.textContent = op.label;
+        b.addEventListener("click", function () {
+          Object.keys(op.w).forEach(function (s) { score[s] += op.w[s]; });
+          i++;
+          if (i < data.questions.length) { show(); return; }
+          var best = data.slugs.slice().sort(function (x, y) { return score[y] - score[x]; })[0];
+          location.href = "/diagnosis/" + best + "/";
+        });
+        box.appendChild(b);
+      });
+    }
+    start.addEventListener("click", function () { start.parentNode.hidden = true; card.hidden = false; show(); });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initShare();
     var f = $("form.finder");
     if (f) window.YorokobuFinder(f);
     initBrowse(); initConcierge(); initFavorites(); initMemo(); initMemoStrip();
+    initTaboo(); initCalc(); initQuiz();
   });
 })();
