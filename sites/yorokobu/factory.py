@@ -236,7 +236,7 @@ def main() -> None:
         retry_brief(a.kind, a.file, a.out)
     else:
         answer = json.loads(a.file.read_text(encoding="utf-8"))
-        n, probs = (merge_themes if a.kind == "themes" else merge_articles)(answer, date.fromisoformat(a.today))
+        n, probs = {"themes": merge_themes, "articles": merge_articles, "messages": merge_messages}[a.kind](answer, date.fromisoformat(a.today))
         problems_file = a.file.with_suffix(".problems.txt")
         if probs:
             problems_file.write_text("\n".join(probs), encoding="utf-8")

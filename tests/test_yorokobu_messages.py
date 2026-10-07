@@ -112,6 +112,25 @@ class FactoryTest(unittest.TestCase):
         self.assertEqual(n, 0)
         self.assertTrue(any("repeats an existing" in p for p in probs), probs)
 
+    def test_the_command_line_merges_messages_and_does_not_mistake_them_for_articles(self):
+        import contextlib
+        import io
+        import sys
+        answer = self.dir / "answer.json"
+        answer.write_text(json.dumps({"messages": [good_entry()]}, ensure_ascii=False), encoding="utf-8")
+        argv, sys.argv = sys.argv, ["factory", "merge", "messages", str(answer), "--today", "2026-10-08"]
+        buf = io.StringIO()
+        try:
+            with contextlib.redirect_stdout(buf):
+                try:
+                    factory.main()
+                except SystemExit as e:
+                    self.assertEqual(e.code, 0)
+        finally:
+            sys.argv = argv
+        self.assertIn("merged 1 messages", buf.getvalue())
+        self.assertIn("birthday", json.loads((self.dir / "messages.json").read_text(encoding="utf-8"))["messages"][0]["occasion"])
+
     def test_the_brief_asks_only_for_occasions_without_messages(self):
         factory.merge_messages({"messages": [good_entry("birthday")]}, date(2026, 10, 8))
         out = self.dir / "brief.md"
