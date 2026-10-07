@@ -66,8 +66,8 @@ def asset_version(assets: Path) -> str:
 def missing_config(cfg: dict) -> list[str]:
     """Release needs an operator name and at least one way to be contacted (a form URL and/or an email)."""
     missing = [] if cfg.get("operator_name") else ["operator_name"]
-    if not (cfg.get("contact_form_url") or cfg.get("contact_email")):
-        missing.append("contact_form_url or contact_email")
+    if not (cfg.get("contact_own") or cfg.get("contact_form_url") or cfg.get("contact_email")):
+        missing.append("contact_own, contact_form_url or contact_email")
     return missing
 
 
@@ -153,11 +153,51 @@ def amazon_disclosure(cfg: dict) -> str:
 
 def contact_summary(cfg: dict) -> str:
     parts = []
-    if cfg.get("contact_form_url"):
+    if cfg.get("contact_own") or cfg.get("contact_form_url"):
         parts.append('<a href="/contact/">お問い合わせフォーム</a>')
     if cfg.get("contact_email"):
         parts.append(esc(cfg["contact_email"]))
     return " / ".join(parts) or "(未設定)"
+
+
+def form_privacy(cfg: dict) -> str:
+    """The privacy-policy paragraph about the contact form (only for sites that use their own form)."""
+    if not cfg.get("contact_own"):
+        return ""
+    return ("<h2>お問い合わせフォームで取得する情報</h2>"
+            "<p>お問い合わせフォームでは、ご用件の内容と、(任意で)該当ページのアドレス、メールアドレスをお預かりします。あわせて、迷惑メッセージを防ぐため、"
+            "送信元のIPアドレスを、毎日変わる値で変換した記号(元のIPアドレスには戻せません)と、ブラウザの種類を記録します。"
+            "これらは、サイトの改善と、お返事のためだけに使い、法令に基づく場合を除いて、第三者へ提供しません。"
+            "メールアドレスをいただいても、お返事できないことがあります。</p>")
+
+
+def contact_body(cfg: dict, notice: str, *, intro: str = "", default_kind: str = "", message_hint: str = "") -> str:
+    """The contact page content: the own form when the site uses it, otherwise the old Google Form button and/or e-mail address."""
+    intro = intro or "データの誤りのご指摘、ご意見・ご要望は、次からお送りください。内容によっては、お返事に日数がかかることや、お返事できないことがあります。"
+    if cfg.get("contact_own"):
+        from sokuhou import contactform
+        return f"""<h1>お問い合わせ</h1>
+<p>{intro}</p>
+{contactform.form_html(cfg, default_kind=default_kind, message_hint=message_hint)}
+<p class="notice">{notice}</p>"""
+    form, mail = cfg.get("contact_form_url"), cfg.get("contact_email")
+    links = []
+    if form:
+        links.append(f'<p><a class="btn" href="{esc(form)}" rel="noopener" target="_blank">お問い合わせフォームを開く</a></p>')
+    if mail:
+        links.append(f'<p>メール: <a href="mailto:{esc(mail)}">{esc(mail)}</a></p>')
+    return f"""<h1>お問い合わせ</h1>
+<p>{intro}</p>
+{chr(10).join(links) or "<p>(未設定)</p>"}
+<p class="notice">{notice}</p>"""
+
+
+def contact_files(cfg: dict, page) -> dict:
+    """The receiver and the thank-you page; `page(path, title, description, body)` is the caller's page builder (the thank-you page is not indexed)."""
+    from sokuhou import contactform
+    thanks = page("/contact/thanks.html", "送信しました", "お問い合わせを受け付けました。", contactform.thanks_body(cfg))
+    thanks = thanks.replace("<head>", '<head>\n<meta name="robots" content="noindex,nofollow">', 1)
+    return {"contact/send.php": contactform.send_php(cfg), "contact/thanks.html": thanks}
 
 
 def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_html: str, update_text: str,
@@ -183,7 +223,7 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
     privacy = f"""<h1>プライバシーポリシー</h1>
 <h2>取得する情報</h2>
 <p>当サイトは、会員登録などの機能を持ちません。お問い合わせの際にいただいたお名前・メールアドレスなどは、返信のためだけに使い、法令に基づく場合を除いて、第三者へ提供しません。</p>
-{input_note}<h2>アクセス解析</h2>
+{input_note}{form_privacy(cfg)}<h2>アクセス解析</h2>
 <p>現時点では、Google アナリティクスなどのアクセス解析ツールを使用していません。使用を始める場合は、このページでお知らせします。</p>
 <h2>広告について</h2>
 <p>当サイトは、第三者配信の広告サービス「Google AdSense」を利用する場合があります。広告配信事業者は、利用者の興味に応じた広告を表示するために、Cookie(クッキー)を使用することがあります。</p>
@@ -197,18 +237,11 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
 <p>このポリシーに関するお問い合わせは、{contact_summary(cfg)}からお願いします。</p>
 <h2>改定</h2>
 <p>このポリシーは、必要に応じて見直し、変更する場合があります。変更後の内容は、このページに掲載した時点から効力を持ちます。</p>"""
-    form, mail = cfg.get("contact_form_url"), cfg.get("contact_email")
-    links = []
-    if form:
-        links.append(f'<p><a class="btn" href="{esc(form)}" rel="noopener" target="_blank">お問い合わせフォームを開く</a></p>')
-    if mail:
-        links.append(f'<p>メール: <a href="mailto:{esc(mail)}">{esc(mail)}</a></p>')
-    contact = f"""<h1>お問い合わせ</h1>
-<p>データの誤りのご指摘、ご意見・ご要望は、次からお送りください。内容によっては、お返事に日数がかかることや、お返事できないことがあります。</p>
-{chr(10).join(links) or "<p>(未設定)</p>"}
-<p class="notice">{contact_notice}</p>"""
+    contact = contact_body(cfg, contact_notice)
     nf = '<h1>ページが見つかりません</h1>\n<p><a href="/">トップページへ</a></p>'
+    extra = contact_files(cfg, page) if cfg.get("contact_own") else {}
     return {
+        **extra,
         "about/index.html": page("/about/", "運営者情報", f"{name}の運営者情報、情報の出典、免責事項です。", about),
         "privacy/index.html": page("/privacy/", "プライバシーポリシー", f"{name}のプライバシーポリシーです。取得する情報、広告、Cookie の扱いについて説明します。", privacy),
         "contact/index.html": page("/contact/", "お問い合わせ", f"{name}へのお問い合わせ先です。", contact),
