@@ -439,6 +439,12 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
     return proposals + gm, browse, own
 
 
+def related_section(cols: list[tuple[str, str]]) -> str:
+    """The 'read together' block; a column with no links, and the whole block when no column has any, is left out (never a bare heading)."""
+    inner = "".join(f'<div><h3>{esc(h)}</h3><ul class="plain">{lis}</ul></div>' for h, lis in cols if lis)
+    return f'<section class="related" style="margin-top:40px"><h2><span class="scribble">あわせて読みたい</span></h2><div class="cols">{inner}</div></section>' if inner else ""
+
+
 def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     set_keep(d["c"]["occ"][p["occasion"]]["name"])
     c = d["c"]
@@ -476,9 +482,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 <section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(avoid, "warn")}</section>
 {guide_link(c, p["occasion"])}
 <p style="margin-top:40px">{amazon}</p>
-<section class="related" style="margin-top:40px"><h2><span class="scribble">あわせて読みたい</span></h2>
-<div class="cols"><div><h3>{esc(occ["name"])}の、ほかの相手</h3><ul class="plain">{links(related_occ)}</ul></div>
-<div><h3>{esc(rec["name"])}への、ほかのイベント</h3><ul class="plain">{links(related_rec)}</ul></div></div></section>"""
+{related_section([(f"{occ['name']}の、ほかの相手", links(related_occ)), (f"{rec['name']}への、ほかのイベント", links(related_rec))])}"""
     return page(cfg, preview, path=f"/gift/{key}/", title=f"{p['title']} | {cfg['site_name']}", description=p["lead"][:110], body=body,
                 og_image=og_for(f"gift/{key}"))
 
@@ -531,7 +535,7 @@ def theme_page(d: dict, cfg: dict, preview: bool, t: dict) -> str:
 {concierge(cfg, d, t)}
 {avoid}
 <p style="margin-top:40px">{amazon}</p>
-<section class="related" style="margin-top:40px"><h2><span class="scribble">{esc(group["name"])}、ほかの切り口</span></h2><ul class="plain cols2 chips">{other}</ul></section>"""
+{f'<section class="related" style="margin-top:40px"><h2><span class="scribble">{esc(group["name"])}、ほかの切り口</span></h2><ul class="plain cols2 chips">{other}</ul></section>' if other else ""}"""
     return page(cfg, preview, path=f"/theme/{t['slug']}/", title=f"{t['title']} | {cfg['site_name']}", description=t["lead"][:110], body=body,
                 og_image=og_for(f"theme/{t['slug']}"))
 
@@ -670,8 +674,8 @@ def calendar_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
             rows += (f'<tr><td>{g["date"].month}月{g["date"].day}日</td><td>{link}<small>({esc(g["when"])})</small></td>'
                      f'<td>{g["start"].month}月{g["start"].day}日</td></tr>')
         if rows:
-            blocks += (f'<h3>{y}年</h3><table class="gift-days"><thead><tr><th>日にち</th><th>贈りどき</th><th>選びはじめ(3週間前)</th></tr></thead>'
-                       f'<tbody>{rows}</tbody></table>')
+            blocks += (f'<h3>{y}年</h3><div class="tablewrap"><table class="gift-days"><thead><tr><th>日にち</th><th>贈りどき</th><th>選びはじめ(3週間前)</th></tr></thead>'
+                       f'<tbody>{rows}</tbody></table></div>')
     feed = cfg["site_url"].rstrip("/") + "/calendar/yorokobu-gift-days.ics"
     webcal = "webcal://" + feed.split("://", 1)[1]
     google = "https://calendar.google.com/calendar/r?cid=" + quote(webcal, safe="")
@@ -893,9 +897,9 @@ def month_page(d: dict, cfg: dict, preview: bool, m: int, today: date, months: l
     if tiles:
         sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月に、準備したいイベント</span></h2><ul class="tiles wide">{tiles}</ul></section>'
     if rows:
-        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月にある、日にちの決まった贈りどき</span></h2><table class="gift-days">{head_row}<tbody>{rows}</tbody></table></section>'
+        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月にある、日にちの決まった贈りどき</span></h2><div class="tablewrap"><table class="gift-days">{head_row}<tbody>{rows}</tbody></table></div></section>'
     if srows:
-        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月に、選びはじめたい贈りどき</span></h2><p>翌月以降の贈りどきで、選びはじめの目安(3週間前)が、{m}月に入るものです。</p><table class="gift-days">{head_row}<tbody>{srows}</tbody></table></section>'
+        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月に、選びはじめたい贈りどき</span></h2><p>翌月以降の贈りどきで、選びはじめの目安(3週間前)が、{m}月に入るものです。</p><div class="tablewrap"><table class="gift-days">{head_row}<tbody>{srows}</tbody></table></div></section>'
     i = months.index(m)
     prev_m, next_m = months[i - 1], months[(i + 1) % len(months)]
     nav = (f'<p class="more"><a class="btn btn-sub" href="/month/{prev_m}/">{prev_m}月</a> <a class="btn btn-sub" href="/month/">月ごとの一覧</a> '
