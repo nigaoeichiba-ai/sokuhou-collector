@@ -21,6 +21,7 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
 from sites.kuma import charts, content, digest  # noqa: E402
+from sites.kuma import captures as captures_mod  # noqa: E402
 from sites.kuma import live as live_mod  # noqa: E402
 from sites.kuma.fmt import day_text, fy_label, fy_start, jp_date, md, n, ratio_text, table  # noqa: E402
 from sokuhou import prefectures as pf  # noqa: E402
@@ -236,7 +237,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 {tile_map(d)}
 <h2>{fy_label(done)}に出没が多かった道府県</h2>
 {top_rows}
-<p><a href="/ranking/sightings/">全国のランキング</a> / <a href="/ranking/change/">前年度の同じ期間との比較</a> / <a href="/ranking/injuries/">人身被害のランキング</a></p>
+<p><a href="/ranking/sightings/">全国のランキング</a> / <a href="/ranking/change/">前年度の同じ期間との比較</a> / <a href="/ranking/injuries/">人身被害のランキング</a>{' / <a href="/ranking/captures/">許可捕獲数のランキング</a>' if d.get('captures') else ''}</p>
 <h2>{fy_label(done)}は、出没が秋に集中しました</h2>
 <p>全国の月別では、{d['peak_month']}月が最も多く({n(nat['monthly'][done][d['months'].index(d['peak_month'])])}件)でした。{fy_label(cur)}の月別も、公表が進み次第、追加します。</p>
 {charts.lines([{"label": fy_label(y), "values": nat["monthly"][y], "cls": c, "strong": y == cur} for y, c in zip(d["years"], ("c0", "c1", "c2", "c3", "c4"))], [f"{m}月" for m in d["months"]], title="全国の月別の出没件数", desc="令和4年度から令和8年度までの、全国の月別の出没件数(件)", uid="home")}
@@ -253,8 +254,8 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
                 body=body)
 
 
-def ranking_tabs(kind: str) -> str:
-    tabs = [("sightings", "出没件数"), ("change", "前年度との比較"), ("injuries", "人身被害")]
+def ranking_tabs(kind: str, captures: bool = False) -> str:
+    tabs = [("sightings", "出没件数"), ("change", "前年度との比較"), ("injuries", "人身被害")] + ([("captures", "許可捕獲数")] if captures else [])
     return '<div class="tabs" role="tablist">' + "".join(
         f'<a href="/ranking/{k}/"{" class=\"on\"" if k == kind else ""}>{label}</a>' for k, label in tabs) + "</div>"
 
@@ -291,7 +292,7 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
     body = f"""{crumbs([("全国", "/"), ("ランキング", None)])}
 <h1>{h1}</h1>
 <p class="lead">{lead}</p>
-{ranking_tabs(kind)}
+{ranking_tabs(kind, bool(d.get('captures')))}
 {extra if kind == "sightings" else ""}{table(head, lines)}
 {extra if kind == "injuries" else ""}{note}
 <p class="notice">{freshness(d)}</p>"""
@@ -461,6 +462,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
             live_block = (f'<h2>{src["name"]}が公表している最新の目撃情報</h2>\n'
                           f'<p>{src["as_of_text"].format(d=jp_date(src["as_of"]))}。</p>\n<ul class="mini-list">{recent}</ul>\n'
                           f'<p><a href="/live/{r["slug"]}/">{src["name"]}の目撃情報の一覧(市町村別・地図)</a></p>\n')
+    cap_html = captures_mod.pref_block(d["captures"], r["short"], r["name"])
     nav = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in d["rows"] if x is not r)
     mates = [x for x in d["rows"] if x is not r and x["region_slug"] == r["region_slug"]]
     rel = ""
@@ -479,7 +481,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
 {emg_html}
 <h2>クマによる死亡事故({fy_label(done)}・{fy_label(cur)})</h2>
 {fat_html}
-<h2>{esc(r['name'])}の公式の出没情報</h2>
+{cap_html}<h2>{esc(r['name'])}の公式の出没情報</h2>
 <p>いま近くで出ているかは、公式の情報で確認してください。</p>
 {off_html}
 {caution_box()}
@@ -552,6 +554,10 @@ def feed_xml(d: dict, cfg: dict) -> str:
     for i, x in enumerate(d["notices"][:3]):
         entries.append((x["date"], f"notice-{x['date']}-{i}", f"環境省が、クマに関するお知らせを掲載しました: {x['title']}",
                         "環境省のページに載っている、日付つきのお知らせです。", f"/news/#n-{x['date']}-{i}"))
+    c = d.get("captures")
+    if c:
+        entries.append((c["updated"], f"captures-{c['updated']}", f"クマの許可捕獲数を、{c['as_of_text']}まで更新しました(環境省)",
+                        f"{fy_label(c['cur'])}は、{c['as_of_text']}までで全国{n(c['national'][c['cur']][0])}頭です(暫定値)。", "/ranking/captures/"))
     entries.sort(reverse=True)
     body = "".join(
         f"<entry><id>tag:{host},{day}:{eid}</id><title>{esc(t)}</title><link href=\"{esc(base + path + ('' if '#' in path else '#u-' + day))}\"/>"
@@ -701,13 +707,15 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
 # ---------------------------------------------------------------- site
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None,
-                otsu: dict | None = None, prefs: dict | None = None, today: date | None = None) -> list[str]:
+                otsu: dict | None = None, prefs: dict | None = None, today: date | None = None,
+                captures: dict | None = None) -> list[str]:
     global SITE
     missing = missing_config(cfg)
     if release and missing:
         raise BuildError(f"release build refused: set {', '.join(missing)} in config.json")
     preview = bool(missing)
     d = prepare(raw)
+    d["captures"] = captures_mod.prepare(captures)
     links = links or {}
     live = prepare_live(otsu)
     d["live"] = live
@@ -722,6 +730,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
     for kind in ("sightings", "change", "injuries"):
         pages[f"ranking/{kind}/index.html"] = ranking_page(d, kind, cfg, preview)
+    if d["captures"]:
+        pages["ranking/captures/index.html"] = captures_mod.ranking_page(lambda **kw: page(cfg, preview, **kw), d["captures"], lambda kind: ranking_tabs(kind, True))
     pages["trend/index.html"] = trend_page(d, cfg, preview)
     pages["emergency/index.html"] = emergency_page(d, cfg, preview)
     pages["news/index.html"] = news_page(d, cfg, preview)
@@ -784,10 +794,12 @@ def main() -> None:
     otsu = json.loads(otsu_file.read_text(encoding="utf-8")) if otsu_file.exists() else None
     prefs = {k: json.loads((data / f"{k}_kuma.json").read_text(encoding="utf-8"))
              for k in live_mod.LIVE_SOURCES if (data / f"{k}_kuma.json").exists()}
+    cap_file = data / "env_capture_kuma.json"
+    captures = json.loads(cap_file.read_text(encoding="utf-8")) if cap_file.exists() else None
     links_file = HERE / "links.json"
     links = json.loads(links_file.read_text(encoding="utf-8")) if links_file.exists() else {}
     try:
-        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, otsu=otsu, prefs=prefs)
+        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, otsu=otsu, prefs=prefs, captures=captures)
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {args.out}")

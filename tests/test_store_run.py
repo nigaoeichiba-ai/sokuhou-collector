@@ -138,6 +138,7 @@ class CliTest(unittest.TestCase):
             "minwage",
             "estat_wage",
             "env_kuma",
+            "env_capture_kuma",
             "miyagi_kuma",
             "akita_kuma",
             "yamaguchi_kuma",
