@@ -76,11 +76,47 @@ class HistoryTest(unittest.TestCase):
     def test_update_adds_today_trims_old_days_and_keeps_a_segment_that_failed_today(self):
         s1 = ranking.update(None, {"f20": day(["a", "b"]), "m20": day(["x"])}, date(2026, 10, 1))
         s2 = ranking.update(s1, {"f20": day(["b", "a"])}, date(2026, 10, 2))                # m20 failed today
-        self.assertEqual(s2["segments"]["f20"]["history"], {"2026-10-01": ["a", "b"], "2026-10-02": ["b", "a"]})
+        self.assertEqual(s2["segments"]["f20"]["history"], {"2026-10-01": [["a", 1], ["b", 2]], "2026-10-02": [["b", 1], ["a", 2]]})
         self.assertEqual(s2["segments"]["m20"]["date"], "2026-10-01")                       # untouched
         later = date(2026, 10, 1) + timedelta(days=ranking.HISTORY_DAYS + 5)
         s3 = ranking.update(s2, {"f20": day(["a"])}, later)
         self.assertEqual(list(s3["segments"]["f20"]["history"]), [later.isoformat()])         # the two October days are older than the kept window
+
+    def test_only_kept_products_are_stored_and_the_history_keeps_their_real_places(self):
+        items = [ranked("a", 7), ranked("b", 31), ranked("junk", 12, name="ソーラーライト 屋外")]
+        s = ranking.update(None, {"g-sweets": items}, date(2026, 10, 1), keep=lambda i: i["code"] != "junk")
+        seg = s["segments"]["g-sweets"]
+        self.assertEqual([i["code"] for i in seg["items"]], ["a", "b"])
+        self.assertEqual(seg["history"]["2026-10-01"], [["a", 7], ["b", 31]])
+        self.assertEqual(seg["depth"], ranking.PAGES * ranking.PLACES)
+
+    def test_risers_use_the_real_rakuten_places_not_the_position_in_our_short_list(self):
+        s = ranking.update(None, {"g-sweets": [ranked("a", 50), ranked("b", 60), ranked("c", 70)]}, date(2026, 10, 1))
+        s = ranking.update(s, {"g-sweets": [ranked("b", 40), ranked("a", 55), ranked("d", 90)]}, date(2026, 10, 2))
+        mv = ranking.movers(s["segments"]["g-sweets"])
+        self.assertEqual(mv["risers"], [("b", 20)])                 # 60 -> 40; a fell from 50 to 55
+        self.assertEqual(mv["entered"], ["d"])
+        self.assertEqual(mv["stay"], {"b": 2, "a": 2, "d": 1})
+
+    def test_history_written_by_the_first_version_still_works(self):
+        old = {"segments": {"f20": {"label": "20代女性", "kind": "people", "date": "2026-10-02", "items": [],
+                                    "history": {"2026-10-01": ["a", "b", "c"], "2026-10-02": ["b", "a", "c"]}}}}
+        mv = ranking.movers(old["segments"]["f20"])
+        self.assertEqual(mv["risers"], [("b", 1)])
+        self.assertEqual(mv["stay"], {"b": 2, "a": 2, "c": 2})
+
+    def test_several_pages_are_fetched_with_continuing_places_and_stop_when_the_ranking_ends(self):
+        pages = {1: 30, 2: 30, 3: 12}
+
+        def reply(url):
+            n = int(url.split("page=")[1].split("&")[0])
+            return [raw_item(f"p{n}-{i}", 1000 + i, name=f"ギフト商品 p{n}-{i} 詰め合わせ") for i in range(pages.get(n, 0))]
+        t = FakeTransport(reply)
+        c = rakuten.Client("A", "K", "https://x/", transport=t, sleep=lambda s: None)
+        snap = ranking.snapshot_segment(c, ranking.SEGMENTS["g-sweets"])
+        self.assertEqual(len(t.urls), 3)                                # the third page was short: no fourth request
+        self.assertEqual(len(snap), 72)
+        self.assertEqual([i["rank"] for i in snap][:3] + [snap[-1]["rank"]], [1, 2, 3, 72])
 
     def test_an_empty_fetch_does_not_wipe_the_stored_segment(self):
         s1 = ranking.update(None, {"f20": day(["a", "b"])}, date(2026, 10, 1))
@@ -141,6 +177,18 @@ class ViewTest(unittest.TestCase):
         for n in names:
             self.assertFalse(ranking.shown(ranked("x", 1, name=n), FILTERS), n)
         self.assertTrue(ranking.shown(ranked("y", 1, name="国産素材の焼き菓子 詰め合わせ 12個入り"), FILTERS))
+
+    def test_only_products_whose_title_says_they_are_a_gift_are_shown(self):
+        yes = ["誕生日 プレゼント 花束 おまかせSサイズ", "リンツ アソート ギフト 36個", "日本酒 飲み比べセット 父の日 ギフト 720ml 3本", "ペア マグカップ 名入れ"]
+        no = ["ソーラーライト 屋外 防水 ガーデンライト", "ワイシャツ 長袖 メンズ ノーアイロン", "黒霧島 芋焼酎 25度 1800ml パック 6本 1ケース", "リビング ラグ 洗える 3畳",
+              "焼酎 ギフト プレゼント 父の日 1.8L パック × 6本 1ケース"]
+        for n in yes:
+            self.assertTrue(ranking.shown(ranked("y", 1, name=n), FILTERS), n)
+        for n in no:
+            self.assertFalse(ranking.shown(ranked("y", 1, name=n), FILTERS), n)
+
+    def test_a_very_expensive_product_is_not_shown_even_if_it_says_gift(self):
+        self.assertFalse(ranking.shown(ranked("z", 1, price=120000, name="ギフト プレゼント 高級 腕時計"), FILTERS))
 
     def test_real_committed_data_if_present_always_produces_a_valid_view(self):
         store = ranking.load()

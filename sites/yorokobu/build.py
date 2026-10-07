@@ -975,11 +975,11 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
                    f'{ranking_grid(cfg, [(it, f"前日より{g}つ順位アップ(現在{it["rank"]}位)", "急上昇") for it, g in sg["risers"]])}</section>')
     if sg["entered"]:
         blocks += (f'<section style="margin-top:40px"><h2><span class="scribble">はじめてのランクイン</span></h2>'
-                   f'<p class="sec-lead">前日のランキング上位30位には、なかった商品です。</p>'
+                   f'<p class="sec-lead">前日のランキング上位{sg["depth"]}位の、贈り物向きの商品には、なかった商品です。</p>'
                    f'{ranking_grid(cfg, [(it, f"前日は圏外。現在{it["rank"]}位", "新顔") for it in sg["entered"]])}</section>')
     if sg["stay"]:
         blocks += (f'<section style="margin-top:40px"><h2><span class="scribble">ランクインし続けている</span></h2>'
-                   f'<p class="sec-lead">毎日のランキング上位30位に、3日以上、続けて入っている商品です(記録は{sg["days"]}日分)。</p>'
+                   f'<p class="sec-lead">毎日のランキング上位{sg["depth"]}位に、3日以上、続けて入っている商品です(記録は{sg["days"]}日分)。</p>'
                    f'{ranking_grid(cfg, [(it, f"{n}日連続でランクイン(現在{it["rank"]}位)", "ロングヒット") for it, n in sg["stay"]])}</section>')
     others = "".join(f'<li><a href="/ranking/{o}/">{esc(rv["segments"][o]["label"])}</a></li>' for o in rv["order"] if o != slug)
     body = f"""{head_band("yellow", '<img class="pair-mini" src="/assets/img/b-joy.webp" alt="" width="170" height="155">', f"{esc(sg['label'])}{part}、<wbr>いま売れている商品", f"楽天市場で、{sg['label']}{'に' if part == 'に' else 'で'}売れている商品の上位です({day}のランキング)。", single=True)}
@@ -988,7 +988,7 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 {facts}
 {blocks}
 <section style="margin-top:40px"><h2><span class="scribble">ランキング(上位)</span></h2>
-<p class="sec-lead">順位は、楽天市場のランキングの順位です。ふだんの買い物の商品などを除いているため、順位に欠けがあります。</p>
+<p class="sec-lead">順位は、楽天市場のランキングの順位です(上位{sg["depth"]}位のなかから、商品名で贈り物向きと分かるものだけを、載せています。ふだんの買い物の商品などは、除いているため、順位に欠けがあります)。</p>
 {ranking_grid(cfg, [(it, f"現在{it['rank']}位", "順位") for it in sg["items"]])}</section>
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの世代・性別</span></h2><ul class="plain cols2 chips">{others}</ul></section>' if others else ""}
 {freshness({**d, "fetched_label": day})}"""
