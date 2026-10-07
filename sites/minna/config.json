@@ -3,7 +3,7 @@
   "site_name": "みんなのイラスト",
   "operator_name": "株式会社MACS",
   "contact_email": null,
-  "adsense_pub_id": null,
+  "adsense_pub_id": "pub-2036800018741459",
   "google_site_verification": "googleabcac004d8b7d556.html",
   "contact_own": true,
   "contact_kinds": [
@@ -12,5 +12,8 @@
     "権利・取り下げのご連絡",
     "その他"
   ],
-  "indexnow_key": "eff1ddfeb966d8ebbc3d4ff2ba008287"
+  "indexnow_key": "eff1ddfeb966d8ebbc3d4ff2ba008287",
+  "rakuten_affiliate_id": "583f273a.77c989b6.583f273b.0a6a5fff",
+  "rakuten_tracking_id": "minna",
+  "amazon_tracking_id": "amazonmacs-22"
 }
