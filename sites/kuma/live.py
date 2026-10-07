@@ -45,7 +45,7 @@ LIVE_SOURCES = {
                   "as_of_text": "最新の記録は{d}の分までです"},
     "sorachi": {"pref": "北海道", "scope": "空知管内の24市町のみ", "license": "CC-BY(北海道のサイトポリシー)", "name": "北海道空知総合振興局", "label": "北海道・空知総合振興局の公式(空知管内の24市町)", "monthly_label": "目撃のほか、痕跡などを含む(ヒグマの記録)",
                 "as_of_text": "データは{d}時点です"},
-    "akita": {"pref": "秋田", "license": "CC BY 4.0", "name": "秋田県", "label": "秋田県・県の公式(オープンデータと公開API)", "monthly_label": "目撃のほか、痕跡などを含む(クマの記録のみ)",
+    "akita": {"pref": "秋田", "license": "CC BY 4.0", "name": "秋田県", "label": "秋田県・県の公式。オープンデータは月1回ほど更新", "monthly_label": "目撃のほか、痕跡などを含む(クマの記録のみ)",
               "as_of_text": "最新の記録は{d}の分までです"},
 }
 # Sources without an explicit licence: counts only (mode "counts" in the stored file); no "license" key, so they never reach the CSV.

@@ -9,6 +9,7 @@ from __future__ import annotations
 import csv
 import io
 import json
+import os
 import re
 import sys
 from datetime import date, datetime, timedelta, timezone
@@ -233,12 +234,16 @@ def add_api_records(out: dict, extra: list[dict]) -> None:
 def collect() -> dict:
     out = parse_csv(fetch(SOURCE_FILE).body)
     ids = out.pop("_ids")
-    try:   # the open data alone is already a complete answer: a failing API only means the newest weeks are missing
-        today = datetime.now(JST).date()
-        url = f"{API}?filter[startdate]={out['as_of']}&filter[enddate]={today.isoformat()}&filter[animal_species_ids][]=1"
-        add_api_records(out, parse_api(polite_fetch(url), ids, date.fromisoformat(out["as_of"]), today))
-    except Exception as e:  # noqa: BLE001
-        out["api_error"] = f"{type(e).__name__}: {e}"[:200]
+    if os.environ.get("KUMA_AKITA_API") == "1":
+        # Opt-in: the prefecture's API answers HTTP 403 to GitHub's servers (checked 2026-10-07), so the scheduled run does not call it
+        # (a refusal is not worked around).  Where it answers, the open data alone is still a complete answer: a failing API only means
+        # the newest weeks are missing.
+        try:
+            today = datetime.now(JST).date()
+            url = f"{API}?filter[startdate]={out['as_of']}&filter[enddate]={today.isoformat()}&filter[animal_species_ids][]=1"
+            add_api_records(out, parse_api(polite_fetch(url), ids, date.fromisoformat(out["as_of"]), today))
+        except Exception as e:  # noqa: BLE001
+            out["api_error"] = f"{type(e).__name__}: {e}"[:200]
     # The monthly counts already cover the whole window; keep the current fiscal year so the stored file stays small.
     out["sightings_in_window"] = len(out["sightings"])
     out["sightings"] = trim_for_store(out["sightings"], date.fromisoformat(out["as_of"]))
