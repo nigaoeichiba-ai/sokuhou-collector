@@ -13,7 +13,7 @@ import os
 import re
 import sys
 from datetime import date, datetime, timedelta, timezone
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 from pathlib import Path
 
 HERE = Path(__file__).parent
@@ -222,9 +222,8 @@ def prepare(raw: dict) -> dict:
 # ---------------------------------------------------------------- layout
 
 # (label, link, section prefix used to mark the current section)
-NAV = [("全国一覧", "/", "/"), ("地方別", "/area/", "/area/"), ("ランキング", "/ranking/high/", "/ranking/"),
-       ("発効日", "/calendar/", "/calendar/"), ("推移", "/history/", "/history/"), ("解説", "/guide/", "/guide/"),
-       ("通知", "/notify/", "/notify/")]
+NAV = [("全国一覧", "/", "/"), ("差額チェック", "/check/", "/check/"), ("地方別", "/area/", "/area/"), ("ランキング", "/ranking/high/", "/ranking/"),
+       ("発効日", "/calendar/", "/calendar/"), ("推移", "/history/", "/history/"), ("解説", "/guide/", "/guide/"), ("通知", "/notify/", "/notify/")]
 
 
 def icon(name: str) -> str:
@@ -399,6 +398,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <div class="controls"><select id="pref" aria-label="都道府県"><option value="">都道府県を選ぶ</option>{options}</select>
 <input id="wage" type="number" inputmode="numeric" min="0" step="1" placeholder="時給(円)" aria-label="時給(円)"></div>
 <p class="result" id="check-out">都道府県と時給を入れると、現在の最低賃金と比べます。</p>
+<p class="hint-link">月給・日給や、手当があるときは、<a href="/check/">差額チェッカー</a>で、足りない額まで計算できます。</p>
 </div>
 <noscript><p class="notice">この機能にはJavaScriptが必要です。下の一覧で、お住まいの都道府県の額をご確認ください。月給の場合は、<a href="/guide/calculate/">時間額への換算</a>をご覧ください。</p></noscript>
 </section>
@@ -487,6 +487,8 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <h2>同じ地方({esc(r['region'])})の最低賃金</h2>
 <ul class="mini-list">{mate_html}</ul>
 <p><a href="/area/{r['region_slug']}/">{esc(r['region'])}のまとめを見る</a></p>
+<h2>あなたの給料は大丈夫?</h2>
+<p>月給・日給・時給から、{esc(r['name'])}の最低賃金を下回っていないかと、足りない額を計算できます。<a href="/check/?pref={quote(r['name'])}">{esc(r['name'])}で差額をチェックする</a></p>
 <h2>発効日を通知で受け取る</h2>
 <p><a href="/calendar/{r['slug']}.ics">{esc(r['name'])}の発効日を、カレンダーに入れる</a>(前日の朝9時に通知。登録不要)。ほかの方法は、<a href="/notify/">通知を受け取る</a>をご覧ください。</p>
 <h2>あわせて読む</h2>
@@ -679,6 +681,78 @@ def calendar_page(d: dict, cfg: dict, preview: bool) -> str:
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。発効日が決まる仕組みは、<a href="/guide/how-decided/">最低賃金はどう決まる?</a>をご覧ください。</p>"""
     return finish(layout(cfg, preview, path="/calendar/", title=f"最低賃金の発効日カレンダー({d['label']}) 日付順の一覧",
                          description=f"{d['label']}の最低賃金の発効日を、日付順に一覧にします。{len(days)}日に分かれて、都道府県ごとに順次発効します。", body=body), d)
+
+
+CHECK_EXCLUDED = [
+    ("通勤手当", "commute"), ("家族手当", "family"), ("精皆勤手当", "attend"), ("時間外労働の手当(残業代・固定残業代など)", "overtime"),
+    ("休日出勤の手当", "holiday"), ("深夜割増の割増分(午後10時〜午前5時)", "night"), ("臨時に支払われる賃金・その他の除外分", "other"),
+]
+
+
+def check_page(d: dict, cfg: dict, preview: bool) -> str:
+    """The shortfall checker: pay type, amount, excluded allowances, hours and prefecture in; hourly equivalent, verdict and shortfall out.
+    The arithmetic lives in assets/app.js (evaluateCheck); this page is the form, the explanation and the sources."""
+    data = json.dumps(
+        [{"name": r["name"], "amount": r["amount"], "prev": r["prev_amount"], "date": r["effective_date"]} for r in d["rows"]],
+        ensure_ascii=False,
+    ).replace("<", "\\u003c")
+    excl = "".join(
+        f'<label>{label}<input data-excl id="chk-x-{key}" type="number" inputmode="numeric" min="0" step="1" placeholder="例: 5000"></label>'
+        for label, key in CHECK_EXCLUDED
+    )
+    body = f"""{crumbs([("全国", "/"), ("差額チェッカー", None)])}
+<h1>最低賃金の差額チェッカー</h1>
+<p class="lead">時給・日給・月給から、最低賃金を下回っていないかを確かめ、下回っているときは、1か月・1年でいくら足りないかを計算します。手当の除外と、新しい額への改定(発効日)も反映します。</p>
+<form id="chk-form" class="box js-only" hidden onsubmit="return false">
+<div class="form-grid"><label>勤務地の都道府県<select id="chk-pref" aria-label="勤務地の都道府県"></select></label></div>
+<fieldset><legend>賃金の形</legend>
+<div class="chk-kinds">
+<label><input type="radio" name="chk-kind" value="hourly">時給</label>
+<label><input type="radio" name="chk-kind" value="daily">日給</label>
+<label><input type="radio" name="chk-kind" value="monthly" checked>月給</label>
+</div></fieldset>
+<div class="form-grid" style="margin-top:14px">
+<label id="chk-pay-label">月給(円)<input id="chk-pay" type="number" inputmode="numeric" min="0" step="1" placeholder="例: 180000"></label>
+<label>1日の所定労働時間<input id="chk-hours" type="number" inputmode="decimal" min="0" max="24" step="0.25" value="8"></label>
+<label id="chk-days-label">年間の所定労働日数<input id="chk-days" type="number" inputmode="numeric" min="1" max="366" value="250"></label>
+</div>
+<p class="hint">年間の所定労働日数は、就業規則や労働条件通知書の「年間休日」がわかれば、365 − 年間休日で求められます。週の勤務日数がわかっているときは、週の日数 × 52 でも、おおよその値になります。</p>
+<fieldset id="chk-excl"><legend id="chk-excl-legend">最低賃金の対象にならない手当</legend>
+<div class="form-grid">{excl}</div>
+<p class="hint">賞与(ボーナス)は、金額に含めないでください。毎月の給与明細にある項目だけを入れます。</p></fieldset>
+</form>
+<div id="chk-out" class="chk-out js-only" hidden aria-live="polite">都道府県と賃金を入れると、最低賃金との差額を計算します。</div>
+<p class="chk-actions js-only" hidden><button type="button" id="chk-print">この結果を印刷する(PDFに保存もできます)</button></p>
+<noscript><p class="notice">この計算ツールには、JavaScript が必要です。JavaScript を使わない場合は、<a href="/guide/calculate/">時間額への換算</a>の式で計算してください。</p></noscript>
+
+<h2>使い方</h2>
+<ol>
+<li>勤務地の都道府県と、賃金の形(時給・日給・月給)を選びます。</li>
+<li>給与明細の金額と、1日の所定労働時間、年間の所定労働日数を入れます。</li>
+<li>月給・日給の場合は、<a href="/guide/excluded/">最低賃金の対象にならない手当</a>(通勤手当、残業代など)を、それぞれの欄に入れます。対象にならない分は、計算から除かれます。</li>
+<li>結果の表で、最低賃金との差と、足りない場合の月額・年額を確かめます。改定前の額と、改定後の額(発効日以降)を、並べて表示します。</li>
+</ol>
+
+<h2>計算の考え方</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>賃金の形</th><th>最低賃金(時間額)と比べる式</th></tr></thead>
+<tbody>
+<tr><td>時給</td><td>時給 ≧ 最低賃金額</td></tr>
+<tr><td>日給</td><td>(日給 − 対象にならない手当) ÷ 1日の所定労働時間 ≧ 最低賃金額</td></tr>
+<tr><td>月給</td><td>(月給 − 対象にならない手当) ÷ 1か月平均所定労働時間 ≧ 最低賃金額</td></tr>
+</tbody></table></div>
+<p>1か月平均所定労働時間は、「1日の所定労働時間 × 年間の所定労働日数 ÷ 12」で求めます。判定は、厚生労働省の「あなたの賃金を比較チェック」の方法にもとづきます。くわしい説明は、<a href="/guide/calculate/">月給・日給を時給に換算する方法</a>と、<a href="/guide/below/">下回っていたときの扱い</a>をご覧ください。</p>
+
+{content.CHECK_NOTES}
+<h2>出典</h2>
+<ul class="link-list">{"".join(f'<li><a href="{esc(u)}" rel="noopener" target="_blank">{esc(n)}</a></li>' for n, u in content.CHECK_SOURCES)}</ul>
+<p class="notice">内容の確認日: {jp_date(content.CHECK_VERIFIED_AT)}。この計算は目安です。実際に最低賃金を下回っているかどうかは、個別の事情によって変わります。気になる場合は、お近くの都道府県労働局や労働基準監督署に、ご相談ください。このサイトは、個別の相談には対応していません。</p>
+<script type="application/json" id="data">{data}</script>"""
+    return finish(layout(
+        cfg, preview, path="/check/", title=f"最低賃金の差額チェッカー 時給・日給・月給から不足額を計算 | {cfg['site_name']}",
+        description="時給・日給・月給から、最低賃金を下回っていないかを確かめ、足りない額を1か月・1年で計算します。手当の除外と、新しい額への改定にも対応。入力は送信されません。",
+        body=body,
+    ), d)
 
 
 def history_page(d: dict, cfg: dict, preview: bool) -> str:
@@ -995,6 +1069,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, wage: di
     pages["calendar/index.html"] = calendar_page(d, cfg, preview)
     pages["history/index.html"] = history_page(d, cfg, preview)
     pages["notify/index.html"] = notify_page(d, cfg, preview)
+    pages["check/index.html"] = check_page(d, cfg, preview)
     pages["guide/index.html"] = guide_hub_page(d, cfg, preview)
     for g in content.GUIDES:
         pages[f"guide/{g['slug']}/index.html"] = guide_page(d, g, cfg, preview)
