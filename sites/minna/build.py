@@ -356,6 +356,68 @@ CAL_THEMES = [
 ]
 
 
+def fill_with_animals(picks: list[dict], items: list[dict], n: int = 12) -> list[dict]:
+    """Animals not drawn yet: other animal sets fill the gaps, one picture per set."""
+    picks = list(picks)
+    used = {i["series"] for i in picks}
+    for it in items:
+        if len(picks) >= n:
+            break
+        if it["series"].endswith("-pose") and it["series"] not in used and it["id"].rsplit("-", 1)[-1] in ("wave", "heart", "jump", "thanks"):
+            picks.append(it)
+            used.add(it["series"])
+    return picks
+
+
+PRINT_COPY = {
+    "shojo": ("賞状テンプレート かわいい動物 無料・A4印刷", "どうぶつの賞状", "子どもに渡す賞状を、A4に印刷して使えるテンプレートです。名前・日づけ・おくる人を、手で書き入れます。",
+              [("文字を入れられますか?", "手書きで書き入れる形です。名前の線、日づけ、「より」の線が空いています。"), ("どの大きさで印刷しますか?", "A4(横)です。プリンターの設定は「実際のサイズ」で、厚めの紙だと立派に仕上がります。")]),
+    "nafuda": ("名札テンプレート かわいい動物 無料・A4印刷", "どうぶつの名札", "切りとって使える名札です。1ページに10枚。名前を手書きして、ラミネートしたり、安全ピンやクリップをつけたりして使えます。",
+               [("何枚つくれますか?", "1ページに10枚です。同じ絵が10枚並びます。"), ("名前は書けますか?", "各名札に、名前を書く線があります。ペンで書き入れてください。")]),
+    "jikanwari": ("時間割テンプレート かわいい動物 無料・A4印刷", "どうぶつの時間割", "月曜から金曜、1〜6時間目の時間割表です。教科を手書きして、机にはったり、ファイルに入れたりして使えます。",
+                  [("6時間目までですか?", "はい。1〜6時間目の表です。使わない時間は空らんのままで使えます。"), ("どの大きさで印刷しますか?", "A4(横)です。プリンターの設定で「実際のサイズ」を選んでください。")]),
+}
+
+
+def build_printables(items: list[dict]) -> tuple[dict, dict]:
+    """({file: bytes}, {kind: [{slug, name, pdf, img}]}) for certificates, name tags and timetables; empty without a Japanese font."""
+    font = printables.find_font()
+    if not font:
+        return {}, {}
+    by = {i["id"]: i for i in items}
+    ids = next(t[3] for t in CAL_THEMES if t[0] == "dobutsu")
+    picks = fill_with_animals([by[i] for i in ids if i in by], items)
+    if len(picks) < 6:
+        return {}, {}
+    fkey = hashlib.sha1(Path(font).name.encode()).hexdigest()[:6]
+    files, kinds = {}, {}
+    for kind in printables.PRINTABLE_KINDS:
+        rows = []
+        for it in picks:
+            slug = it["series"].replace("-pose", "")
+            rel = f"printables/{kind}-{slug}"
+            files[f"files/{rel}.pdf"] = _cached(it["path"], f"{kind}-{fkey}.pdf", lambda it=it, kind=kind: printables.printable_pdf(kind, it["path"], font))
+            files[f"files/{rel}.webp"] = _cached(it["path"], f"{kind}-{fkey}.webp", lambda it=it, kind=kind: printables.printable_preview(kind, it["path"], font))
+            rows.append({"slug": slug, "name": it["title"].replace("(", " ").split(" ")[0] if False else it["series"], "title": it["title"], "pdf": f"/files/{rel}.pdf", "img": f"/files/{rel}.webp", "item": it})
+        kinds[kind] = rows
+    return files, kinds
+
+
+def printable_page(cfg, preview, kind: str, rows: list[dict]) -> str:
+    title, h1, intro, faq = PRINT_COPY[kind]
+    landscape = kind != "nafuda"
+    w, h = (480, 340) if landscape else (480, 679)
+    cards = "".join(f'<li><a class="cal-card" href="{r["pdf"]}" download><img src="{r["img"]}" alt="{esc(h1)}({esc(r["title"])})" width="{w}" height="{h}" loading="lazy"><b>{esc(r["title"])}</b><small>A4・PDF</small></a></li>' for r in rows)
+    ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}, ensure_ascii=False)
+    body = f"""{crumbs([("トップ", "/"), ("印刷", "/printables/"), (h1, None)])}
+<h1>{esc(title)}</h1><p class="lead">{esc(intro)}</p>{licence_box()}
+<ul class="cal-grid wide">{cards}</ul>
+<section style="margin-top:44px"><h2><span class="scribble">よくある、しつもん</span></h2><div class="faq">{''.join(f'<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faq)}</div></section>
+{share(cfg, f"/printables/{kind}/", title)}
+<script type="application/ld+json">{ld}</script>"""
+    return page(cfg, preview, path=f"/printables/{kind}/", title=f"{title} | {cfg['site_name']}", description=intro[:120] + "無料・商用OK・登録不要。", body=body, og_image=rows[0]["img"])
+
+
 def calendar_year(today: date) -> int:
     """The year people are looking for: next year from September on, this year before."""
     return today.year + 1 if today.month >= 9 else today.year
@@ -373,14 +435,8 @@ def build_calendars(items: list[dict], today: date) -> tuple[dict, list[dict]]:
     fkey = hashlib.sha1(Path(font).name.encode()).hexdigest()[:6]
     for slug, name, desc, ids in CAL_THEMES:
         picks = [by[i] for i in ids if i in by]
-        if slug == "dobutsu" and len(picks) < 12:          # animals not drawn yet: other animal sets fill the gaps, one picture per set
-            used = {i["series"] for i in picks}
-            for it in items:
-                if len(picks) >= 12:
-                    break
-                if it["series"].endswith("-pose") and it["series"] not in used and it["id"].rsplit("-", 1)[-1] in ("wave", "heart", "jump", "thanks"):
-                    picks.append(it)
-                    used.add(it["series"])
+        if slug == "dobutsu":
+            picks = fill_with_animals(picks, items)
         if len(picks) < 12:
             continue
         months = []
@@ -433,7 +489,7 @@ def calendar_page(cfg, preview, themes: list[dict], year: int, guides) -> str:
                 og_image=f"/files/calendar/{year}-{themes[0]['slug']}-01.webp")
 
 
-def printables_hub(cfg, preview, year: int, themes: list[dict], items: list[dict]) -> str:
+def printables_hub(cfg, preview, year: int, themes: list[dict], items: list[dict], kinds: dict | None = None) -> str:
     nurie = [i for i in items if i["touch"] == "lineart"]
     cards = (f'<li><a class="special-card" href="/printables/calendar-{year}/"><span class="set-thumbs checker">'
              + "".join(f'<img src="{m["img"]}" alt="" width="120" height="170" loading="lazy">' for m in themes[0]["months"][:3])
@@ -442,6 +498,10 @@ def printables_hub(cfg, preview, year: int, themes: list[dict], items: list[dict
         cards += (f'<li><a class="special-card" href="/special/nurie/"><span class="set-thumbs checker">'
                   + "".join(f'<img src="/thumbs/{i["id"]}.webp" alt="" width="120" height="{round(i["h"] * 120 / i["w"])}" loading="lazy">' for i in nurie[:3])
                   + f'</span><b>ぬりえ(A4で印刷)</b><small>{len(nurie)}点・どうぶつ・お正月</small></a></li>')
+    for kind, rows in (kinds or {}).items():
+        cards += (f'<li><a class="special-card" href="/printables/{kind}/"><span class="set-thumbs checker">'
+                  + "".join(f'<img src="{r["img"]}" alt="" width="120" height="85" loading="lazy">' for r in rows[:3])
+                  + f'</span><b>{esc(PRINT_COPY[kind][1])}</b><small>A4・{len(rows)}種類</small></a></li>')
     body = f"""{crumbs([("トップ", "/"), ("印刷", None)])}
 <h1>印刷できるもの</h1><p class="lead">カレンダー、ぬりえ、はがきサイズの年賀状イラストなど、印刷して使えるものを集めました。すべて無料・商用OK・登録不要です。</p>
 <ul class="special-grid">{cards}</ul>
@@ -790,6 +850,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
             built.append((sp, sers, its))
     guides = load_guides()
     cal_files, cal_themes = build_calendars(items, today)
+    pr_files, pr_kinds = build_printables(items)
     SITE["nav"] = [n for n in BASE_NAV if (built or n[1] != "/special/") and (guides or n[1] != "/guide/") and (cal_themes or n[1] != "/printables/")]
     pages: dict[str, str | bytes] = {"index.html": index_page(cfg, preview, items, series, today)}
     pages.update(illust_hub(cfg, preview, items, series))
@@ -814,7 +875,10 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         pages["special/index.html"] = specials_hub(cfg, preview, built)
     if cal_themes:
         pages.update(cal_files)
-        pages["printables/index.html"] = printables_hub(cfg, preview, calendar_year(today), cal_themes, items)
+        pages.update(pr_files)
+        pages["printables/index.html"] = printables_hub(cfg, preview, calendar_year(today), cal_themes, items, pr_kinds)
+        for kind, rows in pr_kinds.items():
+            pages[f"printables/{kind}/index.html"] = printable_page(cfg, preview, kind, rows)
         pages[f"printables/calendar-{calendar_year(today)}/index.html"] = calendar_page(cfg, preview, cal_themes, calendar_year(today), guides)
     if guides:
         pages["guide/index.html"] = guides_hub(cfg, preview, guides)

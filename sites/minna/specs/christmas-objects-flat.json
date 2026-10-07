@@ -83,5 +83,6 @@
    "a big golden shining star"
   ]
  ],
- "holes": true
+ "holes": true,
+ "exclude": []
 }

@@ -243,7 +243,7 @@ def cmd_ingest(a) -> None:
         for sh in sheets_of(s):
             ids = [item_id(s, it[0]) for it in sh["items"]]
             png = sheets_dir / f"{sh['file']}.png"
-            if all((lib / f"{i}.webp").exists() for i in ids) or not png.exists():
+            if not png.exists() or (all((lib / f"{i}.webp").exists() for i in ids) and not a.force):
                 continue
             cols, rows = s["grid"]
             pieces, info = sheetkit.slice_sheet(png, cols, rows, s["key"], max_side=1024, holes=bool(s["holes"]))
@@ -319,8 +319,7 @@ def cmd_review_prep(a) -> None:
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     only = a.series.split(",") if a.series else None
-    lines = []
-    made = []
+    blocks: list[tuple[str, list[str]]] = []
     for s in load_specs(only):
         lib = LIBRARY / s["slug"]
         if not (lib / "series.json").exists():
@@ -328,7 +327,9 @@ def cmd_review_prep(a) -> None:
         reviewed = out / f"{s['slug']}.done"
         if reviewed.exists() and not a.force:
             continue
-        have = [(n, it) for n, it in enumerate(s["items"], 1) if (lib / f"{item_id(s, it[0])}.webp").exists()]
+        have = [(n, it) for n, it in enumerate(s["items"], 1) if (lib / f"{item_id(s, it[0])}.webp").exists() and it[0] not in s["exclude"]]
+        if not have:
+            continue
         cell, cols = 260, 4
         rows = -(-len(have) // cols)
         sheet = Image.new("RGB", (cols * cell, rows * cell), (255, 0, 255))
@@ -341,15 +342,17 @@ def cmd_review_prep(a) -> None:
             d.rectangle([cx + 2, cy + 2, cx + 40, cy + 26], fill=(0, 0, 0))
             d.text((cx + 8, cy + 8), str(n), fill=(255, 255, 255))
         sheet.save(out / f"{s['slug']}.png")
-        made.append(s["slug"])
-        lines.append(f"## {s['slug']}  ({s['title']}; touch {s['touch']}; image: {s['slug']}.png)")
-        lines.append(f"Intended character: {(s.get('sheet_subjects') or [s['subject_en']])[0][:400]}")
-        for n, it in have:
-            lines.append(f"  {n}. {it[1]} -- {it[2]}")
+        lines = [f"## {s['slug']}  ({s['title']}; touch {s['touch']}; image: {s['slug']}.png)",
+                 f"Intended character: {(s.get('sheet_subjects') or [s['subject_en']])[0][:400]}"]
+        lines += [f"  {n}. {it[1]} -- {it[2]}" for n, it in have]
         lines.append("")
-    (out / "review_brief.md").write_text(REVIEW_HEADER + "\n".join(lines), encoding="utf-8")
-    print(f"review sheets for {len(made)} series in {out}")
-    print(" ".join(f"-i {Path(out) / (m + '.png')}" for m in made))
+        blocks.append((s["slug"], lines))
+    for k in range(0, len(blocks), a.chunk):
+        chunk = blocks[k:k + a.chunk]
+        no = k // a.chunk + 1
+        (out / f"review_brief_{no}.md").write_text(REVIEW_HEADER.replace("result.json", f"result_{no}.json") + "\n".join(l for _, ls in chunk for l in ls), encoding="utf-8")
+        print(f"review_brief_{no}.md: " + ", ".join(sl for sl, _ in chunk))
+    print(f"{len(blocks)} series to review in {-(-len(blocks) // a.chunk)} briefs")
 
 
 REVIEW_HEADER = """# Review task: look at the attached contact sheets and report defects (you may NOT edit any picture or file except the one result file below)
@@ -415,9 +418,12 @@ def main() -> None:
         p = sub.add_parser(name)
         p.add_argument("--series")
         p.add_argument("--sheets-dir", default=str(DEFAULT_SHEETS / "inbox"))
+        if name == "ingest":
+            p.add_argument("--force", action="store_true", help="cut again every sheet that is in the inbox, even when its items exist")
         if name == "review-prep":
             p.add_argument("--out", required=True)
             p.add_argument("--force", action="store_true")
+            p.add_argument("--chunk", type=int, default=10)
         if name == "review-apply":
             p.add_argument("--out", required=True)
             p.add_argument("--result", required=True)

@@ -82,5 +82,6 @@
    "The delivery worker stands with a small satisfied pose beside an empty cart, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": []
 }
