@@ -462,6 +462,10 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
                           f'<p>{src["as_of_text"].format(d=jp_date(src["as_of"]))}。</p>\n<ul class="mini-list">{recent}</ul>\n'
                           f'<p><a href="/live/{r["slug"]}/">{src["name"]}の目撃情報の一覧(市町村別・地図)</a></p>\n')
     cap_html = captures_mod.pref_block(d["captures"], r["short"], r["name"])
+    for c in d["live_counts"]:
+        if c["pref"] == r["short"]:
+            live_block = (f'<h2>{c["name"]}が公表している件数</h2>\n<p>{fy_label(c["fy"])}は{n(c["total"])}件で、最新は{md(c["latest"])}の分です。件数だけを載せています。</p>\n'
+                          f'<p><a href="/live/{r["slug"]}/">市町村別・月別の件数</a></p>\n')
     nav = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in d["rows"] if x is not r)
     mates = [x for x in d["rows"] if x is not r and x["region_slug"] == r["region_slug"]]
     rel = ""
@@ -719,7 +723,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     live = prepare_live(otsu)
     d["live"] = live
     d["live_prefs"] = prepare_prefs(prefs)
-    any_live = bool(live or d["live_prefs"])
+    d["live_counts"] = live_mod.prepare_counts(prefs)
+    any_live = bool(live or d["live_prefs"] or d["live_counts"])
     nav = [x for x in BASE_NAV if x[1] != "/live/" or any_live]
     if any_live:
         nav = nav[:-1] + [("地図", "/map/", "/map/"), ("週ごとのまとめ", "/digest/", "/digest/")] + nav[-1:]
@@ -744,6 +749,10 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
             for city, rows in lv["by_pref"][slug].items():
                 if live_mod.city_has_page(rows):
                     pages[f"live/{slug}/{live_mod.city_slug(slug, city)}/index.html"] = live_mod.city_page(page_fn, d, lv, slug, city, links)
+        for c in lv["counts"]:
+            if c["slug"] in lv["by_pref"]:
+                raise BuildError(f"{c['slug']} has both a record source and a counts-only source")
+            pages[f"live/{c['slug']}/index.html"] = live_mod.counts_page(page_fn, d, c, lv["today"], links)
         pages["live/feed.xml"] = live_mod.feed_xml(lv, cfg)
         for slug in lv["by_pref"]:
             pages[f"live/{slug}/feed.xml"] = live_mod.feed_xml(lv, cfg, slug)

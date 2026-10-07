@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Callable
 
 from sokuhou import store
+from sokuhou.sources import kumalib
 from sokuhou.sources import (
     akita_kuma,
     env_capture_kuma,
@@ -115,6 +116,17 @@ def check_pref_bear(old, new):
         raise SanityError(f"{new['source']} {fy} sightings dropped {old_counts[fy]} -> {new_counts[fy]}")
 
 
+def check_counts_bear(old, new):
+    """A source without an explicit licence is stored as counts only: refuse anything that looks like a row list, and a shrinking year."""
+    if new.get("mode") != "counts" or {"sightings", "places", "lat", "lon"} & set(new):
+        raise SanityError("a counts-only source must not store rows, places or coordinates")
+    for city, m in new["municipalities"].items():
+        if set(m) != {"monthly", "latest"}:
+            raise SanityError(f"{city}: unexpected fields {sorted(m)}")
+    if old and old.get("fy_current") == new["fy_current"] and new["total_fy"] < old["total_fy"] * 0.7:
+        raise SanityError(f"{new['source']} {new['fy_current']} count dropped {old['total_fy']} -> {new['total_fy']}")
+
+
 def check_fire(old, new):
     if new["unparsed"]:
         raise SanityError(f"{len(new['unparsed'])} messages in an unknown format (page layout changed?)")
@@ -147,6 +159,8 @@ GROUPS: dict[str, list[Source]] = {
 def run_group(sources: list[Source], data_dir: Path) -> tuple[list[str], dict[str, str]]:
     changed, errors = [], {}
     for src in sources:
+        if src.name in kumalib.STOPPED:      # the publisher asked us to stop: not collected (and the site ignores its stored file)
+            continue
         path = data_dir / f"{src.name}.json"
         try:
             new = src.collect()

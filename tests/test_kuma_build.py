@@ -667,5 +667,104 @@ class CapturesPagesTest(unittest.TestCase):
         self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
 
 
+COUNTS_META = {"pref": "福島", "name": "福島県", "label": "福島県の公開ページ(件数のみ)", "monthly_label": "", "as_of_text": "データは{d}時点です"}
+
+
+def _counts_raw():
+    from sokuhou.sources import kumalib
+    rows = [{"observed_at": "2026-10-03T08:00:00+09:00", "city": "福島市", "place": "ひみつの場所1丁目", "lat": 37.7, "lon": 140.4},
+            {"observed_at": "2026-09-20", "city": "福島市", "place": "ひみつの場所2丁目"},
+            {"observed_at": "2026-09-02", "city": "会津若松市", "place": "ひみつの場所3丁目"},
+            {"observed_at": "2026-08-15", "city": "福島市", "place": "ひみつの場所4丁目"}]
+    return kumalib.package_counts(source="fukushima", credit="出典:福島県の公開ページ", update_note="県が更新します", as_of=date(2026, 10, 5), rows=rows,
+                                  page="https://www.pref.fukushima.lg.jp/x.html", files=["https://www.pref.fukushima.lg.jp/x.html"])
+
+
+@unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
+class CountsOnlyTest(unittest.TestCase):
+    """A source without an explicit licence shows counts and the latest date only, and appears nowhere else (not in the list, map, feed or CSV)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        raw = raw_data()
+        raw["notices"] = env_kuma.parse_notices((FIX / "env_kuma_effort12.html").read_text(encoding="utf-8"))
+        cls.raw = raw
+        cls.counts = _counts_raw()
+        with mock.patch.dict(live_mod.LIVE_SOURCES, {"fukushima": COUNTS_META}):
+            cls.out = Path(cls.tmp.name) / "site"
+            cls.files = build.render_site(raw, CFG, cls.out, release=True, prefs={"fukushima": cls.counts, "yamaguchi": _yamaguchi()}, today=date(2026, 10, 7))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def read(self, rel):
+        return (self.out / rel).read_text(encoding="utf-8")
+
+    def test_the_stored_data_holds_counts_and_dates_and_nothing_else(self):
+        text = json.dumps(self.counts, ensure_ascii=False)
+        for secret in ("ひみつの場所", "37.7", "140.4"):
+            self.assertNotIn(secret, text)
+        keys = set()
+
+        def walk(x):
+            if isinstance(x, dict):
+                keys.update(x)
+                for v in x.values():
+                    walk(v)
+        walk(self.counts)
+        self.assertEqual(keys & {"lat", "lon", "place", "sightings", "address"}, set())
+        self.assertEqual(self.counts["total_fy"], 4)
+        self.assertEqual(self.counts["municipalities"]["福島市"], {"monthly": {"R08": {"10": 1, "9": 1, "8": 1}}, "latest": "2026-10-03"})
+        from sokuhou import run
+        run.check_counts_bear(None, self.counts)
+        for bad in ({**self.counts, "sightings": []}, {**self.counts, "mode": "rows"}):
+            with self.assertRaises(run.SanityError):
+                run.check_counts_bear(None, bad)
+        with self.assertRaises(run.SanityError):
+            run.check_counts_bear(self.counts, {**self.counts, "total_fy": 2})  # 4 -> 2 is a drop of more than 30 %
+
+    def test_the_page_shows_counts_latest_date_and_the_link_but_no_place(self):
+        html = self.read("live/fukushima/index.html")
+        self.assertIn("福島県が公表している令和8年度の記録は、4件です", html)
+        self.assertIn("最新は10月3日(4日前)の分です", html)
+        self.assertIn("<tr><td>福島市</td><td>3</td><td>10月3日</td></tr>", html)
+        self.assertIn("https://www.pref.fukushima.lg.jp/x.html", html)
+        self.assertIn("福島県が作成・保証したものではありません", html)
+        self.assertIn('href="/contact/"', html)
+        self.assertNotIn("ひみつの場所", html)
+        self.assertNotIn('href="/live/fukushima/m-', html)  # no municipality pages (those would list rows)
+
+    def test_it_is_not_in_the_list_the_map_the_feed_the_csv_or_the_digest(self):
+        self.assertNotIn("福島", self.read("live/feed.xml"))
+        self.assertNotIn("fukushima", self.read("map/points.json"))
+        self.assertNotIn("福島", self.read("data/kuma-sightings.csv"))
+        self.assertNotIn("福島県", self.read("live/index.html").split("新しい順の記録(全国)")[1].split("</table>")[0])
+        self.assertNotIn("live/fukushima/feed.xml", self.files)
+        self.assertNotIn("福島", self.read("index.html").split("最新の目撃情報(自治体の公式)")[1].split("お住まいの地域")[0])
+
+    def test_the_hub_and_the_prefecture_page_mention_it(self):
+        self.assertIn("件数だけを載せている取得元", self.read("live/index.html"))
+        self.assertIn('<a href="/live/fukushima/">福島県</a>', self.read("live/index.html"))
+        self.assertIn("福島県が公表している件数", self.read("fukushima/index.html"))
+
+    def test_a_stopped_source_is_neither_collected_nor_shown(self):
+        from sokuhou.sources import kumalib
+        with mock.patch.dict(live_mod.LIVE_SOURCES, {"fukushima": COUNTS_META}), mock.patch.object(kumalib, "STOPPED", {"fukushima"}):
+            with tempfile.TemporaryDirectory() as tmp:
+                files = build.render_site(self.raw, CFG, Path(tmp) / "s", release=True, prefs={"fukushima": self.counts, "yamaguchi": _yamaguchi()}, today=date(2026, 10, 7))
+            self.assertNotIn("live/fukushima/index.html", files)
+            from sokuhou import run
+            seen = []
+            src = run.Source("fukushima", lambda: seen.append(1) or self.counts)
+            with tempfile.TemporaryDirectory() as tmp:
+                changed, errors = run.run_group([src], Path(tmp))
+            self.assertEqual((seen, changed, errors), ([], [], {}))
+
+    def test_the_site_checker_passes(self):
+        self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
+
+
 if __name__ == "__main__":
     unittest.main()
