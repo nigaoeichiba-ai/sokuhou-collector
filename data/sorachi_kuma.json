@@ -1,0 +1,1189 @@
+{
+ "as_of": "2026-10-06",
+ "bad_coords": 0,
+ "credit": "出典:空知総合振興局「そらち・ヒグマ情報」(北海道、CC-BY)を加工して作成",
+ "fetched_at": "2026-10-07T13:10:09.655458+09:00",
+ "fy_current": "R08",
+ "monthly": {
+  "R07": {
+   "3": 2
+  },
+  "R08": {
+   "10": 3,
+   "4": 8,
+   "5": 23,
+   "6": 25,
+   "7": 26,
+   "8": 36,
+   "9": 22
+  }
+ },
+ "sightings": [
+  {
+   "city": "赤平市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-10-04",
+   "place": "字赤平",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃(クマらしき)",
+   "observed_at": "2026-10-03",
+   "place": "市道東一線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "栗山町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-10-02",
+   "place": "御園",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-29",
+   "place": "市道焼山一の沢線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "由仁町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-29",
+   "place": "川端",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "深川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-28",
+   "place": "鷹泊",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "岩見沢市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-28",
+   "place": "毛陽町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "新十津川町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-18",
+   "place": "総進",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-14",
+   "place": "市道焼山一の沢線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-13",
+   "place": "一の沢耕作線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-11",
+   "place": "頼城町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "月形町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-09",
+   "place": "北郷",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "滝川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-07",
+   "place": "東町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "滝川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-06",
+   "place": "東滝川",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-05",
+   "place": "芦別砂川線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "岩見沢市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-04",
+   "place": "毛陽町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-04",
+   "place": "市道北５号線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "岩見沢市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-03",
+   "place": "毛陽町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-03",
+   "place": "東５条南３丁目",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-02",
+   "place": "東２条南４丁目",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-02",
+   "place": "東２条南４丁目",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "歌志内市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-01",
+   "place": "文殊峠",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-01",
+   "place": "市道東１線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-01",
+   "place": "市道南５線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-01",
+   "place": "パンケ歌志内川河川敷",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-31",
+   "place": "東豊沼",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "奈井江町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-30",
+   "place": "共和橋付近",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "美唄市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-26",
+   "place": "東明町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "栗山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-25",
+   "place": "緑丘",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "岩見沢市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-25",
+   "place": "毛陽町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "月形町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-25",
+   "place": "北郷",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "栗山町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-24",
+   "place": "緑丘",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "岩見沢市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-24",
+   "place": "毛陽町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "美唄市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-23",
+   "place": "茶志内町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "月形町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-23",
+   "place": "札比内",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "歌志内市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-20",
+   "place": "神威",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-20",
+   "place": "楓",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "沼田町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-20",
+   "place": "更新",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "由仁町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-20",
+   "place": "川端",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "上砂川町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-19",
+   "place": "鶉",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-19",
+   "place": "旭町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "岩見沢市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-17",
+   "place": "毛陽町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "三笠市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-17",
+   "place": "柏町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": 2,
+   "kind": "目撃(クマらしき)",
+   "observed_at": "2026-08-17",
+   "place": "北光公園内",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "美唄市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-16",
+   "place": "茶志内町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "美唄市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-16",
+   "place": "茶志内町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-16",
+   "place": "市道焼山一の沢線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-15",
+   "place": "滝里町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-15",
+   "place": "泉",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "新十津川町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-14",
+   "place": "吉野",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "雨竜町",
+   "count": null,
+   "kind": "目撃(クマらしき)",
+   "observed_at": "2026-08-12",
+   "place": "雨竜沼湿原展望台付近",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "美唄市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-12",
+   "place": "癸巳町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-11",
+   "place": "旭町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "雨竜町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-11",
+   "place": "南暑寒岳",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "深川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "湯内",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "雨竜町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "南暑寒岳",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "岩見沢市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-08",
+   "place": "緑が丘大正池付近",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "岩見沢市",
+   "count": null,
+   "kind": "目撃(クマらしき)",
+   "observed_at": "2026-08-08",
+   "place": "志文町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "上砂川町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-07",
+   "place": "鶉本町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "美唄市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-06",
+   "place": "癸巳町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "月形町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-01",
+   "place": "札比内",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-30",
+   "place": "沼の沢",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-28",
+   "place": "道道芦別砂川線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-28",
+   "place": "富野",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-25",
+   "place": "市道越前谷線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "栗山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-23",
+   "place": "桜山",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "沼田町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-22",
+   "place": "北竜",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "沼田町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-22",
+   "place": "北竜",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-21",
+   "place": "市道焼山鶉線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "奈井江町",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "町道東11号線踏切付近",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-18",
+   "place": "市道パイロット１号線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-18",
+   "place": "南清水沢",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "赤平市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-16",
+   "place": "幌岡町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "美唄市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-13",
+   "place": "盤の沢町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-13",
+   "place": "市道宮城の沢線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "上砂川町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-11",
+   "place": "中央",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-10",
+   "place": "市道焼山鶉線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-07",
+   "place": "市道焼山一の沢線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "歌志内市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-06",
+   "place": "神威",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "三笠市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-06",
+   "place": "清住町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-05",
+   "place": "新城町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "新十津川町",
+   "count": null,
+   "kind": "目撃(クマらしき)",
+   "observed_at": "2026-07-05",
+   "place": "中央",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-04",
+   "place": "黄金町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 4,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "黄金町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "沼ノ沢",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "中の丘町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "奈井江町",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "にわやま森林自然公園",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "雨竜町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "南暑寒岳",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "上砂川町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-26",
+   "place": "鶉",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-26",
+   "place": "市道焼山鶉線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-26",
+   "place": "市道宮城の沢線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "美唄市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "東美唄町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "奈井江町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "東奈井江",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "上砂川町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "鶉",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃(クマらしき)",
+   "observed_at": "2026-06-24",
+   "place": "子どもの国付近",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "上砂川町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-23",
+   "place": "緑が丘",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "雨竜町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-23",
+   "place": "川上",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-22",
+   "place": "黄金町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-21",
+   "place": "市道焼山一の沢線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-18",
+   "place": "市道焼山鶉線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "美唄市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "盤の沢町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "美唄市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "盤の沢町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "上砂川町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-15",
+   "place": "中央",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "道道芦別砂川線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "歌志内市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "神威",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "南清水沢",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "三笠市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-05",
+   "place": "美園町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "沼ノ沢",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-03",
+   "place": "千代田",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "旭町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "三笠市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "美園町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "紅葉山",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-28",
+   "place": "滝里町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-27",
+   "place": "西４条南１０丁目",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "岩見沢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-27",
+   "place": "栗沢町最上",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-24",
+   "place": "清水沢",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-23",
+   "place": "市道焼山一の沢線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "南清水沢",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "美唄市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "日東町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "常磐町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "赤平市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-21",
+   "place": "平岸仲町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-21",
+   "place": "市道パイロット１号線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-20",
+   "place": "北吉野町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "滝川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "江部乙町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "上砂川町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-19",
+   "place": "字上砂川",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "沼田町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-18",
+   "place": "浅野",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": 3,
+   "kind": "目撃",
+   "observed_at": "2026-05-16",
+   "place": "宮城の沢",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "新十津川町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-15",
+   "place": "吉野",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-14",
+   "place": "沼ノ沢",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "上砂川町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-11",
+   "place": "本町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "新十津川町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-11",
+   "place": "吉野",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-09",
+   "place": "道道芦別砂川線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-07",
+   "place": "沼ノ沢",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-07",
+   "place": "市道パイロット１号線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "栗山町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-06",
+   "place": "御園",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "上砂川町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-30",
+   "place": "字上砂川",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-24",
+   "place": "西１条北１９丁目",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "岩見沢市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-04-23",
+   "place": "栗沢町最上",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-04-23",
+   "place": "一の沢耕作線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "深川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-16",
+   "place": "湯内",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "砂川市",
+   "count": 1,
+   "kind": "目撃(クマらしき)",
+   "observed_at": "2026-04-16",
+   "place": "北光公園",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "歌志内市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-13",
+   "place": "神威",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-04-11",
+   "place": "常磐町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-03-27",
+   "place": "旭町",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "芦別市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-03-23",
+   "place": "旭町",
+   "species": "ヒグマ"
+  }
+ ],
+ "sightings_in_window": 145,
+ "source": "sorachi",
+ "source_file": "https://www.sorachi.pref.hokkaido.lg.jp/hk/kks/245135.html",
+ "source_page": "https://www.sorachi.pref.hokkaido.lg.jp/hk/kks/245135.html",
+ "unparsed": 0,
+ "update_note": "空知総合振興局が、管内の市町の情報を集めて、随時更新します。日付だけで、時刻・座標は公表されていません"
+}

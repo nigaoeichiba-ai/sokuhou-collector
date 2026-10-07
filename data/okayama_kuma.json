@@ -2,7 +2,7 @@
  "as_of": "2026-09-06",
  "bad_coords": 0,
  "credit": "出典:岡山県「岡山県ツキノワグマ出没情報」を加工して作成(公共データ利用規約(第1.0版)に基づく)",
- "fetched_at": "2026-10-06T09:49:30.142204+09:00",
+ "fetched_at": "2026-10-07T13:10:04.757715+09:00",
  "fy_current": "R08",
  "monthly": {
   "R07": {
@@ -33,6 +33,8 @@
    "city": "新見市",
    "count": null,
    "kind": "目撃",
+   "lat": 34.9138,
+   "lon": 133.357,
    "observed_at": "2026-09-06",
    "place": "哲西町大野部",
    "species": "ツキノワグマ"
@@ -41,6 +43,8 @@
    "city": "鏡野町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.2086,
+   "lon": 133.9278,
    "observed_at": "2026-09-01",
    "place": "奥津",
    "species": "ツキノワグマ"
@@ -49,6 +53,8 @@
    "city": "西粟倉村",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1932,
+   "lon": 134.3373,
    "observed_at": "2026-09-01",
    "place": "影石",
    "species": "ツキノワグマ"
@@ -57,6 +63,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1451,
+   "lon": 134.3555,
    "observed_at": "2026-08-26",
    "place": "太田",
    "species": "ツキノワグマ"
@@ -65,6 +73,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1563,
+   "lon": 134.3599,
    "observed_at": "2026-08-21",
    "place": "東青野",
    "species": "ツキノワグマ"
@@ -73,6 +83,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1454,
+   "lon": 134.3574,
    "observed_at": "2026-08-20",
    "place": "太田",
    "species": "ツキノワグマ"
@@ -81,6 +93,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1601,
+   "lon": 134.3674,
    "observed_at": "2026-08-17",
    "place": "東青野",
    "species": "ツキノワグマ"
@@ -89,6 +103,8 @@
    "city": "真庭市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1339,
+   "lon": 133.7086,
    "observed_at": "2026-08-13",
    "place": "見尾",
    "species": "ツキノワグマ"
@@ -97,6 +113,8 @@
    "city": "津山市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1314,
+   "lon": 134.1167,
    "observed_at": "2026-08-10",
    "place": "市場",
    "species": "ツキノワグマ"
@@ -105,6 +123,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1601,
+   "lon": 134.3674,
    "observed_at": "2026-08-09",
    "place": "東青野",
    "species": "ツキノワグマ"
@@ -113,6 +133,8 @@
    "city": "津山市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1906,
+   "lon": 134.0103,
    "observed_at": "2026-08-09",
    "place": "加茂原口",
    "species": "ツキノワグマ"
@@ -121,6 +143,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1638,
+   "lon": 134.2359,
    "observed_at": "2026-08-04",
    "place": "右手",
    "species": "ツキノワグマ"
@@ -129,6 +153,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1007,
+   "lon": 134.2855,
    "observed_at": "2026-08-04",
    "place": "滝",
    "species": "ツキノワグマ"
@@ -137,6 +163,8 @@
    "city": "津山市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1338,
+   "lon": 134.1162,
    "observed_at": "2026-08-02",
    "place": "市場",
    "species": "ツキノワグマ"
@@ -145,6 +173,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.154,
+   "lon": 134.3545,
    "observed_at": "2026-07-31",
    "place": "東吉田",
    "species": "ツキノワグマ"
@@ -153,6 +183,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1442,
+   "lon": 134.3541,
    "observed_at": "2026-07-30",
    "place": "太田",
    "species": "ツキノワグマ"
@@ -161,6 +193,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1622,
+   "lon": 134.2784,
    "observed_at": "2026-07-19",
    "place": "東谷上",
    "species": "ツキノワグマ"
@@ -169,6 +203,8 @@
    "city": "奈義町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1472,
+   "lon": 134.1971,
    "observed_at": "2026-07-18",
    "place": "高円",
    "species": "ツキノワグマ"
@@ -177,6 +213,8 @@
    "city": "真庭市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.2044,
+   "lon": 133.7538,
    "observed_at": "2026-07-16",
    "place": "湯原町田羽根",
    "species": "ツキノワグマ"
@@ -185,6 +223,8 @@
    "city": "鏡野町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.279,
+   "lon": 133.9254,
    "observed_at": "2026-07-13",
    "place": "上齋原",
    "species": "ツキノワグマ"
@@ -193,6 +233,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.151,
+   "lon": 134.362,
    "observed_at": "2026-07-08",
    "place": "東横野",
    "species": "ツキノワグマ"
@@ -201,6 +243,8 @@
    "city": "勝央町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0507,
+   "lon": 134.1763,
    "observed_at": "2026-07-07",
    "place": "上香山",
    "species": "ツキノワグマ"
@@ -209,6 +253,8 @@
    "city": "鏡野町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.3126,
+   "lon": 133.9549,
    "observed_at": "2026-07-06",
    "place": "上齋原",
    "species": "ツキノワグマ"
@@ -217,6 +263,8 @@
    "city": "勝央町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0502,
+   "lon": 134.1428,
    "observed_at": "2026-07-05",
    "place": "田井",
    "species": "ツキノワグマ"
@@ -225,6 +273,8 @@
    "city": "津山市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.194,
+   "lon": 134.0662,
    "observed_at": "2026-07-03",
    "place": "加茂町青柳",
    "species": "ツキノワグマ"
@@ -233,6 +283,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0192,
+   "lon": 134.2564,
    "observed_at": "2026-07-02",
    "place": "田原",
    "species": "ツキノワグマ"
@@ -241,6 +293,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0412,
+   "lon": 134.2576,
    "observed_at": "2026-07-01",
    "place": "小ノ谷",
    "species": "ツキノワグマ"
@@ -249,6 +303,8 @@
    "city": "鏡野町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1021,
+   "lon": 133.9501,
    "observed_at": "2026-07-01",
    "place": "沢田",
    "species": "ツキノワグマ"
@@ -257,6 +313,8 @@
    "city": "津山市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1351,
+   "lon": 134.1143,
    "observed_at": "2026-06-27",
    "place": "奥津川",
    "species": "ツキノワグマ"
@@ -265,6 +323,8 @@
    "city": "西粟倉村",
    "count": null,
    "kind": "目撃",
+   "lat": 35.2187,
+   "lon": 134.3576,
    "observed_at": "2026-06-22",
    "place": "長尾",
    "species": "ツキノワグマ"
@@ -273,6 +333,8 @@
    "city": "鏡野町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.2277,
+   "lon": 133.8873,
    "observed_at": "2026-06-21",
    "place": "羽出",
    "species": "ツキノワグマ"
@@ -281,6 +343,8 @@
    "city": "鏡野町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.2859,
+   "lon": 133.9182,
    "observed_at": "2026-06-20",
    "place": "上齋原",
    "species": "ツキノワグマ"
@@ -289,6 +353,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.044,
+   "lon": 134.2445,
    "observed_at": "2026-06-19",
    "place": "岩辺",
    "species": "ツキノワグマ"
@@ -297,6 +363,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1728,
+   "lon": 134.3846,
    "observed_at": "2026-06-15",
    "place": "後山",
    "species": "ツキノワグマ"
@@ -305,6 +373,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1032,
+   "lon": 134.3181,
    "observed_at": "2026-06-12",
    "place": "笹岡",
    "species": "ツキノワグマ"
@@ -313,6 +383,8 @@
    "city": "奈義町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.116,
+   "lon": 134.1775,
    "observed_at": "2026-06-11",
    "place": "柿",
    "species": "ツキノワグマ"
@@ -321,6 +393,8 @@
    "city": "鏡野町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1162,
+   "lon": 133.9387,
    "observed_at": "2026-06-07",
    "place": "和田",
    "species": "ツキノワグマ"
@@ -329,6 +403,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 34.988,
+   "lon": 134.2774,
    "observed_at": "2026-06-05",
    "place": "土居",
    "species": "ツキノワグマ"
@@ -337,6 +413,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0327,
+   "lon": 134.2275,
    "observed_at": "2026-06-03",
    "place": "鯰",
    "species": "ツキノワグマ"
@@ -345,6 +423,8 @@
    "city": "鏡野町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.2537,
+   "lon": 133.9365,
    "observed_at": "2026-06-02",
    "place": "下斎原",
    "species": "ツキノワグマ"
@@ -353,6 +433,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0226,
+   "lon": 134.2373,
    "observed_at": "2026-05-30",
    "place": "江見",
    "species": "ツキノワグマ"
@@ -361,6 +443,8 @@
    "city": "鏡野町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1429,
+   "lon": 133.948,
    "observed_at": "2026-05-27",
    "place": "寺和田",
    "species": "ツキノワグマ"
@@ -369,6 +453,8 @@
    "city": "西粟倉村",
    "count": null,
    "kind": "目撃",
+   "lat": 35.2036,
+   "lon": 134.3329,
    "observed_at": "2026-05-24",
    "place": "坂根",
    "species": "ツキノワグマ"
@@ -377,6 +463,8 @@
    "city": "津山市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1899,
+   "lon": 134.0627,
    "observed_at": "2026-05-21",
    "place": "加茂町青やぎ",
    "species": "ツキノワグマ"
@@ -385,6 +473,8 @@
    "city": "新見市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0971,
+   "lon": 133.3081,
    "observed_at": "2026-05-20",
    "place": "神郷高瀬",
    "species": "ツキノワグマ"
@@ -393,6 +483,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1427,
+   "lon": 134.3442,
    "observed_at": "2026-05-18",
    "place": "東吉田",
    "species": "ツキノワグマ"
@@ -401,6 +493,8 @@
    "city": "高梁市",
    "count": null,
    "kind": "目撃",
+   "lat": 34.7975,
+   "lon": 133.5886,
    "observed_at": "2026-05-15",
    "place": "落合町原田",
    "species": "ツキノワグマ"
@@ -409,6 +503,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1369,
+   "lon": 134.346,
    "observed_at": "2026-05-12",
    "place": "東吉田",
    "species": "ツキノワグマ"
@@ -417,6 +513,8 @@
    "city": "奈義町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1465,
+   "lon": 134.1481,
    "observed_at": "2026-05-10",
    "place": "滝本",
    "species": "ツキノワグマ"
@@ -425,6 +523,8 @@
    "city": "新見市",
    "count": null,
    "kind": "目撃",
+   "lat": 34.9053,
+   "lon": 133.53,
    "observed_at": "2026-05-10",
    "place": "法曽",
    "species": "ツキノワグマ"
@@ -433,6 +533,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 34.9003,
+   "lon": 134.1289,
    "observed_at": "2026-05-07",
    "place": "上山",
    "species": "ツキノワグマ"
@@ -441,6 +543,8 @@
    "city": "新見市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0296,
+   "lon": 133.5849,
    "observed_at": "2026-05-05",
    "place": "大佐布瀬",
    "species": "ツキノワグマ"
@@ -449,6 +553,8 @@
    "city": "津山市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1354,
+   "lon": 134.1143,
    "observed_at": "2026-04-29",
    "place": "奥津川",
    "species": "ツキノワグマ"
@@ -457,6 +563,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1541,
+   "lon": 134.3637,
    "observed_at": "2026-04-28",
    "place": "東青野",
    "species": "ツキノワグマ"
@@ -465,6 +573,8 @@
    "city": "新見市",
    "count": null,
    "kind": "目撃",
+   "lat": 34.9797,
+   "lon": 133.3789,
    "observed_at": "2026-04-27",
    "place": "神郷下神代",
    "species": "ツキノワグマ"
@@ -473,6 +583,8 @@
    "city": "新見市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0806,
+   "lon": 133.4542,
    "observed_at": "2026-04-22",
    "place": "菅生",
    "species": "ツキノワグマ"
@@ -481,6 +593,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0579,
+   "lon": 134.2923,
    "observed_at": "2026-04-18",
    "place": "宮原",
    "species": "ツキノワグマ"
@@ -489,6 +603,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0512,
+   "lon": 134.3032,
    "observed_at": "2026-04-17",
    "place": "宮原",
    "species": "ツキノワグマ"
@@ -497,6 +613,8 @@
    "city": "鏡野町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1379,
+   "lon": 133.8011,
    "observed_at": "2026-04-16",
    "place": "橘",
    "species": "ツキノワグマ"
@@ -505,6 +623,8 @@
    "city": "鏡野町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.135,
+   "lon": 133.9558,
    "observed_at": "2026-04-14",
    "place": "圓通寺",
    "species": "ツキノワグマ"
@@ -513,6 +633,8 @@
    "city": "津山市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1202,
+   "lon": 134.0042,
    "observed_at": "2026-04-14",
    "place": "上横野",
    "species": "ツキノワグマ"
@@ -521,6 +643,8 @@
    "city": "津山市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.126,
+   "lon": 134.1143,
    "observed_at": "2026-04-12",
    "place": "西上",
    "species": "ツキノワグマ"
@@ -529,6 +653,8 @@
    "city": "勝央町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0991,
+   "lon": 134.1311,
    "observed_at": "2026-04-11",
    "place": "植月東",
    "species": "ツキノワグマ"
@@ -537,6 +663,8 @@
    "city": "奈義町",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0975,
+   "lon": 134.1743,
    "observed_at": "2026-04-11",
    "place": "中島東",
    "species": "ツキノワグマ"
@@ -545,6 +673,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 34.9819,
+   "lon": 134.271,
    "observed_at": "2026-04-11",
    "place": "白水",
    "species": "ツキノワグマ"
@@ -553,6 +683,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0779,
+   "lon": 134.1973,
    "observed_at": "2026-04-10",
    "place": "大町",
    "species": "ツキノワグマ"
@@ -561,6 +693,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0791,
+   "lon": 134.2876,
    "observed_at": "2026-04-08",
    "place": "壬生",
    "species": "ツキノワグマ"
@@ -569,6 +703,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0928,
+   "lon": 134.2861,
    "observed_at": "2026-04-08",
    "place": "滝",
    "species": "ツキノワグマ"
@@ -577,6 +713,8 @@
    "city": "津山市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.2433,
+   "lon": 134.0566,
    "observed_at": "2026-04-02",
    "place": "加茂町倉見",
    "species": "ツキノワグマ"
@@ -585,6 +723,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0276,
+   "lon": 134.2687,
    "observed_at": "2026-04-01",
    "place": "大内谷",
    "species": "ツキノワグマ"
@@ -593,6 +733,8 @@
    "city": "真庭市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1058,
+   "lon": 133.6478,
    "observed_at": "2026-03-21",
    "place": "神代",
    "species": "ツキノワグマ"
@@ -601,6 +743,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1498,
+   "lon": 134.3519,
    "observed_at": "2026-02-15",
    "place": "野原",
    "species": "ツキノワグマ"
@@ -609,6 +753,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1442,
+   "lon": 134.2824,
    "observed_at": "2026-02-02",
    "place": "東谷上",
    "species": "ツキノワグマ"
@@ -617,6 +763,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1344,
+   "lon": 134.2981,
    "observed_at": "2026-02-02",
    "place": "川上",
    "species": "ツキノワグマ"
@@ -625,6 +773,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1459,
+   "lon": 134.3529,
    "observed_at": "2026-01-25",
    "place": "野原",
    "species": "ツキノワグマ"
@@ -633,6 +783,8 @@
    "city": "西粟倉村",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1496,
+   "lon": 134.3258,
    "observed_at": "2026-01-24",
    "place": "筏津",
    "species": "ツキノワグマ"
@@ -641,6 +793,8 @@
    "city": "西粟倉村",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1485,
+   "lon": 134.3225,
    "observed_at": "2026-01-24",
    "place": "筏津",
    "species": "ツキノワグマ"
@@ -649,6 +803,8 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1302,
+   "lon": 134.3058,
    "observed_at": "2026-01-14",
    "place": "川上",
    "species": "ツキノワグマ"
@@ -657,272 +813,10 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.1351,
+   "lon": 134.3187,
    "observed_at": "2026-01-04",
    "place": "古町",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-12-28",
-   "place": "梶原",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-10-27",
-   "place": "太田",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "津山市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-10-21",
-   "place": "加茂町知和",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-09-24",
-   "place": "田殿",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-09-09",
-   "place": "宮原",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-09-09",
-   "place": "宮原",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "吉備中央町",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-09-03",
-   "place": "笹目",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-08-29",
-   "place": "田原",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "鏡野町",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-08-18",
-   "place": "岩屋",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-08-17",
-   "place": "鯰",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "新見市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-08-11",
-   "place": "大佐大井野",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "津山市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-08-05",
-   "place": "加茂町黒木",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-07-30",
-   "place": "東吉田",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "新見市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-07-29",
-   "place": "千屋実",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-07-26",
-   "place": "西町",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-07-26",
-   "place": "川東",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "奈義町",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-07-16",
-   "place": "滝本",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-07-16",
-   "place": "後山",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-07-13",
-   "place": "中谷",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "津山市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-07-12",
-   "place": "奥津川",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "津山市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-07-08",
-   "place": "加茂町青柳",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "新見市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-06-29",
-   "place": "神郷高瀬",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "津山市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-06-27",
-   "place": "加茂町黒木",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "鏡野町",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-06-26",
-   "place": "奥津",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "新見市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-06-18",
-   "place": "大佐布瀬",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-06-12",
-   "place": "江ノ原",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "津山市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-05-31",
-   "place": "三浦",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "奈義町",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-05-29",
-   "place": "高円",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "真庭市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-05-27",
-   "place": "蒜山",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "美作市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-05-26",
-   "place": "粟井中",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "津山市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-05-25",
-   "place": "加茂町知和",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "津山市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-05-21",
-   "place": "奥津川",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "新見市",
-   "count": null,
-   "kind": "目撃",
-   "observed_at": "2025-04-24",
-   "place": "高尾",
    "species": "ツキノワグマ"
   }
  ],
