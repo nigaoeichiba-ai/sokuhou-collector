@@ -27,7 +27,7 @@ class RealContentSiteCheckTest(unittest.TestCase):
             with self.subTest(day=day.isoformat()), tempfile.TemporaryDirectory() as tmp:
                 out = Path(tmp) / "site"
                 build.render_site(c, items, cfg, out, release=True, today=day)
-                problems = sitecheck.check_dir(out, cfg["site_url"], skip=("lists",))   # product lists are empty here: the products are a fixture
+                problems = sitecheck.check_dir(out, cfg["site_url"])
                 self.assertEqual(problems, [], f"{day}: " + "\n".join(problems[:15]))
                 self.assertGreaterEqual(len(list((out / "month").glob("*/index.html"))), 6)   # a month with nothing to show has no page, and nothing links to it
 

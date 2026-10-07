@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from typing import Callable
 
 API_URL = "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701"
+RANKING_URL = "https://openapi.rakuten.co.jp/ichibaranking/api/IchibaItem/Ranking/20220601"
 USER_AGENT = "sokuhou-collector/0.1 (+https://github.com/nigaoeichiba-ai/sokuhou-collector)"
 IMAGE_SIZE = "300x300"
 
@@ -55,11 +56,18 @@ class Client:
 
     def search(self, **params) -> list[dict]:
         """One search.  Returns the raw item dicts (formatVersion 2: flat objects), [] when nothing matches."""
+        return self._call(API_URL, params)
+
+    def ranking(self, **params) -> list[dict]:
+        """One page (30 places) of the Ichiba ranking: age=10..50 with sex=0/1 (together), or genreId alone, plus page=1..34.  Items carry `rank`."""
+        return self._call(RANKING_URL, params)
+
+    def _call(self, api_url: str, params: dict) -> list[dict]:
         query = {"applicationId": self.app_id, "accessKey": self.access_key, "format": "json", "formatVersion": 2,
                  **{k: v for k, v in params.items() if v is not None}}
         if self.affiliate_id:
             query.setdefault("affiliateId", self.affiliate_id)
-        url = API_URL + "?" + urllib.parse.urlencode(query)
+        url = api_url + "?" + urllib.parse.urlencode(query)
         headers = {"Referer": self.referer, "Origin": self.referer.rstrip("/"), "User-Agent": USER_AGENT}
         last_error: Exception | None = None
         for attempt in range(self.retries):
