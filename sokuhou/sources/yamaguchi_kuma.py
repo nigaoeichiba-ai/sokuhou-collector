@@ -10,6 +10,7 @@ from datetime import date, datetime, time, timedelta, timezone
 from urllib.parse import urlparse
 
 from sokuhou.http import fetch
+from sokuhou.sources.kumalib import coord, trim_for_store
 
 DATASET_PAGE = "https://yamaguchi-opendata.jp/ckan/dataset/yp-2026"
 PACKAGE_SHOW = "https://yamaguchi-opendata.jp/ckan/api/3/action/package_show?id=yp-2026"
@@ -31,7 +32,6 @@ TRACE_KEYWORDS = ("足跡", "痕跡", "糞", "爪痕", "食害", "樹皮")
 MIN_ROWS = 100
 BAD_COORD_LIMIT = 0.01
 UNPARSED_LIMIT = 0.01
-STORED_SIGHTINGS = 400
 JST = timezone(timedelta(hours=9))
 
 
@@ -162,9 +162,12 @@ def parse_csv(data: bytes) -> dict:
             lon = float(row["経度"].strip())
         except ValueError:
             bad_coords += 1
+            lat = lon = None
         else:
             if not (33.7 <= lat <= 34.8 and 130.7 <= lon <= 132.5):
                 bad_coords += 1
+                lat = lon = None
+        row["_lat"], row["_lon"] = lat, lon
 
     total = len(rows)
     if unparsed / total > UNPARSED_LIMIT:
@@ -197,6 +200,7 @@ def parse_csv(data: bytes) -> dict:
             "count": _count(row["頭数"]),
             "kind": kind_from_status(row["状況"]),
             "species": "クマ",
+            **(coord(row["_lat"], row["_lon"]) if row["_lat"] is not None else {}),
         })
     sightings.sort(key=lambda rec: rec["_sort"], reverse=True)
     for rec in sightings:
@@ -219,7 +223,7 @@ def collect() -> dict:
     csv_url = csv_url_from_package_show(_fetch_yamaguchi(PACKAGE_SHOW).body)
     out = parse_csv(_fetch_yamaguchi(csv_url).body)
     out["sightings_in_window"] = len(out["sightings"])
-    out["sightings"] = out["sightings"][:STORED_SIGHTINGS]
+    out["sightings"] = trim_for_store(out["sightings"], date.fromisoformat(out["as_of"]))
     out.update({
         "source_page": DATASET_PAGE,
         "source_file": csv_url,

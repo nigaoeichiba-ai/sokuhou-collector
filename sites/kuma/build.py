@@ -12,7 +12,7 @@ import argparse
 from urllib.parse import quote
 import json
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -21,9 +21,12 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
 from sites.kuma import charts, content, digest  # noqa: E402
+from sites.kuma import live as live_mod  # noqa: E402
+from sites.kuma.fmt import day_text, fy_label, fy_start, jp_date, md, n, ratio_text, table  # noqa: E402
 from sokuhou import prefectures as pf  # noqa: E402
 from sokuhou.sitekit import BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
+JST = timezone(timedelta(hours=9))
 MINISTRY_PAGE = "https://www.env.go.jp/nature/choju/effort/effort12/effort12.html"
 SOURCE_HTML = (f'出典: <a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">環境省「クマに関する各種情報・取組」</a>の公表資料(速報値)を加工して作成。'
                "環境省が作成したものではありません。")
@@ -39,41 +42,6 @@ SITE = {
 WEEKDAY_SKIP = None
 CAUTION = ("環境省が都道府県から聞き取った<strong>速報値</strong>で、後から修正されることがあります。"
            "出没数は、<strong>都道府県ごとに異なる方法</strong>で取りまとめられているため、都道府県どうしの数の大小は、そのまま比べられません。")
-
-
-def n(v) -> str:
-    return "-" if v is None else f"{v:,}"
-
-
-def fy_label(y: str) -> str:
-    """'R07' -> '令和7年度'."""
-    return f"令和{int(y[1:])}年度"
-
-
-def fy_start(y: str) -> int:
-    return 2018 + int(y[1:])
-
-
-def jp_date(iso: str) -> str:
-    y, m, d = (int(x) for x in iso.split("-"))
-    return f"{y}年{m}月{d}日"
-
-
-def md(iso: str) -> str:
-    _, m, d = (int(x) for x in iso.split("-"))
-    return f"{m}月{d}日"
-
-
-def ratio_text(new: int, old: int) -> str:
-    """'約2.5倍', '38%減', '同じ' -- from two counts, never typed by hand."""
-    if not old:
-        return "比べられません"
-    if new == old:
-        return "同じ"
-    if new > old * 1.5:
-        return f"約{new / old:.1f}倍"
-    pct = round(abs(new - old) / old * 100)
-    return f"{pct}%{'増' if new > old else '減'}"
 
 
 def rank_of(values: dict) -> dict:
@@ -146,12 +114,6 @@ def freshness(d: dict) -> str:
 
 # ---------------------------------------------------------------- small html helpers
 
-def table(head: list[str], rows: list[list[str]], cls: str = "") -> str:
-    th = "".join(f"<th>{h}</th>" for h in head)
-    body = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in rows)
-    return f'<div class="tablewrap"><table{" class=" + cls if cls else ""}><thead><tr>{th}</tr></thead><tbody>{body}</tbody></table></div>'
-
-
 def pref_link(r: dict) -> str:
     return f'<a href="/{r["slug"]}/">{esc(r["name"])}</a>'
 
@@ -216,7 +178,8 @@ def bar_list(rows: list[tuple[str, str, int]], top: int) -> str:
 
 def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og-kuma-alert.webp")
-    return layout(SITE, cfg, preview, alternates=(("更新のお知らせ", "/feed.xml"),), **kw)
+    alternates = (("更新のお知らせ", "/feed.xml"),) + tuple(kw.pop("alternates", ()))
+    return layout(SITE, cfg, preview, alternates=alternates, **kw)
 
 
 # ---------------------------------------------------------------- pages
@@ -421,16 +384,7 @@ def prepare_live(otsu: dict | None) -> dict | None:
             "latest_fy": items[0]["fiscal_year"]}
 
 
-PREF_LIVE = {
-    "miyagi": {"name": "宮城県", "label": "宮城県・県の公式", "monthly_label": "目撃のほか、痕跡などを含む",
-               "as_of_text": "データは{d}時点です"},
-    "yamaguchi": {"name": "山口県", "label": "山口県・県警の公式", "monthly_label": "山口県警察が認知した目撃のほか、痕跡などを含む",
-                  "as_of_text": "データは{d}の分までです"},
-    "okayama": {"name": "岡山県", "label": "岡山県・県の公式。更新は不定期", "monthly_label": "種別の区別がなく、すべてを目撃として数えています",
-                "as_of_text": "最新の記録は{d}の分までです(県の更新は不定期で、遅れて載ります)"},
-    "akita": {"name": "秋田県", "label": "秋田県・県の公式。更新は月1回ほど", "monthly_label": "目撃のみ。痕跡・人身被害の記録は含まない",
-              "as_of_text": "最新の記録は{d}の分までです"},
-}
+PREF_LIVE = live_mod.LIVE_SOURCES
 FY_MONTHS = (4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3)
 
 
@@ -459,71 +413,6 @@ def place_text(x: dict) -> str:
     return place if x["city"] in place else f"{x['city']}{place}"
 
 
-def pref_live_section(src: dict) -> str:
-    fy, items = src["fy"], src["items"]
-    total = sum(src["monthly"].values())
-    month_table = table(["月", "件数"], [[f"{m}月", n(src["monthly"][str(m)])] for m in FY_MONTHS if src["monthly"].get(str(m))])
-    after = (f'<p class="notice">県の表には、日付が公表時点より後になっている記録が{src["after"]}件あります(入力の誤りの可能性があります)。一覧からは除き、月別の件数には、県の公表どおり含めています。</p>\n'
-             if src["after"] else "")
-    return f"""<h2>{src['name']}</h2>
-<p>{src['name']}が公表している{fy_label(fy)}の記録は、{n(total)}件です({src['monthly_label']})。{src['as_of_text'].format(d=jp_date(src['as_of']))}。直近25件を、新しい順に並べています。{esc(src['update_note'])}。</p>
-{table(["日時", "場所", "種別"], [[day_text(x['observed_at'], year=True), esc(place_text(x)), esc(x['kind'])] for x in items[:25]])}
-<h2>{src['name']}の{fy_label(fy)}の月別</h2>
-{month_table}
-{after}<p>{src['name']}の公式ページは、<a href="{esc(src['page'])}" rel="noopener" target="_blank">こちら</a>です。</p>
-<p class="notice">{esc(src['credit'])}。{src['name']}が作成したものではありません。位置の座標は、載せていません。取得日: {jp_date(src['fetched_date'])}。</p>
-"""
-
-
-def day_text(iso_ts: str, year: bool = False) -> str:
-    """'2026-10-03T08:30:00+09:00' -> '10月3日 8時30分ごろ' (with the year: '2026年10月3日 ...')."""
-    day, clock = iso_ts[:10], iso_ts[11:16]
-    head = jp_date(day) if year else md(day)
-    if not clock:  # a source that publishes only the date (Okayama)
-        return head
-    h, m = (int(x) for x in clock.split(":"))
-    return f"{head} {h}時{m:02d}分ごろ" if (h, m) != (0, 0) else head
-
-
-def live_page(d: dict, live: dict | None, cfg: dict, preview: bool) -> str:
-    prefs = d["live_prefs"]
-    sections = ""
-    names = []
-    if live:
-        names.append("滋賀県大津市")
-        items, fy = live["items"], live["latest_fy"]
-        cur_items = live["by_fy"][fy]
-        official = live["official"].get(fy)
-        last = items[0]
-        days_ago = (date.fromisoformat(live["fetched_date"]) - date.fromisoformat(last["observed_at"][:10])).days
-        ago = "きょう" if days_ago <= 0 else f"{days_ago}日前"
-        months: dict[int, int] = {}
-        for s in cur_items:
-            months[int(s["observed_at"][5:7])] = months.get(int(s["observed_at"][5:7]), 0) + 1
-        month_table = table(["月", "件数"], [[f"{m}月", n(months[m])] for m in d["months"] if months.get(m)])
-        official_text = (f"大津市は、{fy}の目撃情報を{n(official)}件と公表しています。" if official is not None else "")
-        sections += f"""<h2>滋賀県大津市</h2>
-<p class="alert">最新の目撃: {md(last['observed_at'][:10])}({ago}) {esc(last['place'])}</p>
-<p>{official_text}このサイトが、大津市の公開地図から読み取った{fy}の件数は、{n(len(cur_items))}件です(市の表記と、数え方が少し違うことがあります)。直近25件を、新しい順に並べています。</p>
-{table(["日時", "場所"], [[day_text(s['observed_at'], year=True), esc(s['place'])] for s in items[:25]])}
-<h2>{fy}の月別</h2>
-{month_table}
-<p>大津市の公式ページ(目撃の内容、地図、メール配信の案内)は、<a href="{OTSU_PAGE}" rel="noopener" target="_blank">大津市「熊の目撃情報」</a>です。地図は、<a href="{OTSU_MAP}" rel="noopener" target="_blank">大津市のクマ出没マップ</a>で見られます。市の更新には、数日かかることがあります。</p>
-<p class="notice">出典: 大津市が公開している、クマ出没マップ(ツキノワグマ目撃情報)を加工して作成。大津市が作成したものではありません。取得日: {jp_date(live['fetched_date'])}。「ツキノワグマらしき動物」や「錯誤捕獲」などの区別は、市のページに載っています。</p>
-"""
-    for src in prefs:
-        names.append(src["name"])
-        sections += pref_live_section(src)
-    where = "・".join(names)
-    body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", None)])}
-<h1>最新のクマの目撃情報(自治体の公式)</h1>
-<p class="lead">環境省の数字は、公表まで1〜2か月かかります。ここでは、自治体が公式に公表している目撃情報を、取得できるところから順に載せています。いまは、{where}です。</p>
-{sections}<h2>ほかの地域は</h2>
-<p>ほかの道府県・市町村の公式の目撃情報も、取得できる形で公開されているものから、順に加えていきます。それまでは、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。</p>"""
-    desc = f"{where}が公表しているクマの目撃情報を、新しい順に一覧にしています。"
-    if live:
-        desc += f"大津市の最新は{md(live['items'][0]['observed_at'][:10])}の{live['items'][0]['place']}です。"
-    return page(cfg, preview, path="/live/", title=f"クマの最新の目撃情報(自治体の公式・{where})", description=desc, body=body)
 
 
 def news_page(d: dict, cfg: dict, preview: bool) -> str:
@@ -565,13 +454,13 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
         lv = d["live"]
         recent = "".join(f'<li>{day_text(x["observed_at"])} {esc(x["place"])}</li>' for x in lv["items"][:5])
         live_block = (f'<h2>大津市の最新の目撃情報(市の公式)</h2>\n<ul class="mini-list">{recent}</ul>\n'
-                      '<p><a href="/live/">大津市の目撃情報の一覧</a></p>\n')
+                      '<p><a href="/live/shiga/">大津市の目撃情報の一覧(市町村別・地図)</a></p>\n')
     for src in d["live_prefs"]:
         if src["key"] == r["slug"]:
             recent = "".join(f'<li>{day_text(x["observed_at"])} {esc(place_text(x))}</li>' for x in src["sights"][:5])
             live_block = (f'<h2>{src["name"]}が公表している最新の目撃情報</h2>\n'
                           f'<p>{src["as_of_text"].format(d=jp_date(src["as_of"]))}。</p>\n<ul class="mini-list">{recent}</ul>\n'
-                          '<p><a href="/live/">目撃情報の一覧</a></p>\n')
+                          f'<p><a href="/live/{src["key"]}/">{src["name"]}の目撃情報の一覧(市町村別・地図)</a></p>\n')
     nav = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in d["rows"] if x is not r)
     mates = [x for x in d["rows"] if x is not r and x["region_slug"] == r["region_slug"]]
     rel = ""
@@ -812,7 +701,7 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
 # ---------------------------------------------------------------- site
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None,
-                otsu: dict | None = None, prefs: dict | None = None) -> list[str]:
+                otsu: dict | None = None, prefs: dict | None = None, today: date | None = None) -> list[str]:
     global SITE
     missing = missing_config(cfg)
     if release and missing:
@@ -837,7 +726,19 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages["emergency/index.html"] = emergency_page(d, cfg, preview)
     pages["news/index.html"] = news_page(d, cfg, preview)
     if any_live:
-        pages["live/index.html"] = live_page(d, live, cfg, preview)
+        lv = live_mod.prepare_live(d, today or datetime.now(JST).date())
+        page_fn = lambda **kw: page(cfg, preview, **kw)  # noqa: E731
+        pages["live/index.html"] = live_mod.hub_page(page_fn, d, lv)
+        for slug in lv["by_pref"]:
+            pages[f"live/{slug}/index.html"] = live_mod.pref_live_page(page_fn, d, lv, slug, links)
+            for city, rows in lv["by_pref"][slug].items():
+                if live_mod.city_has_page(rows):
+                    pages[f"live/{slug}/{live_mod.city_slug(slug, city)}/index.html"] = live_mod.city_page(page_fn, d, lv, slug, city, links)
+        pages["live/feed.xml"] = live_mod.feed_xml(lv, cfg)
+        for slug in lv["by_pref"]:
+            pages[f"live/{slug}/feed.xml"] = live_mod.feed_xml(lv, cfg, slug)
+        pages["map/index.html"] = live_mod.map_page(page_fn, d, lv)
+        pages["map/points.json"] = live_mod.points_json(lv)
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview, links)
     pages["guide/index.html"] = guide_hub(cfg, preview)
@@ -874,13 +775,15 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--release", action="store_true")
     ap.add_argument("--out", default=str(HERE / "dist"))
+    ap.add_argument("--data", default=str(ROOT / "data"), help="folder with the collected data/*.json (default: the repository's data/)")
     args = ap.parse_args()
+    data = Path(args.data)
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
-    raw = json.loads((ROOT / "data" / "env_kuma.json").read_text(encoding="utf-8"))
-    otsu_file = ROOT / "data" / "otsu_bear.json"
+    raw = json.loads((data / "env_kuma.json").read_text(encoding="utf-8"))
+    otsu_file = data / "otsu_bear.json"
     otsu = json.loads(otsu_file.read_text(encoding="utf-8")) if otsu_file.exists() else None
-    prefs = {k: json.loads((ROOT / "data" / f"{k}_kuma.json").read_text(encoding="utf-8"))
-             for k in ("miyagi", "akita", "yamaguchi", "okayama") if (ROOT / "data" / f"{k}_kuma.json").exists()}
+    prefs = {k: json.loads((data / f"{k}_kuma.json").read_text(encoding="utf-8"))
+             for k in live_mod.LIVE_SOURCES if (data / f"{k}_kuma.json").exists()}
     links_file = HERE / "links.json"
     links = json.loads(links_file.read_text(encoding="utf-8")) if links_file.exists() else {}
     try:

@@ -1,8 +1,10 @@
 """The bear site: built from the ministry's PDFs (the test fixtures), checked against numbers from outside the code."""
+import json
 import re
 import tempfile
 import unittest
 import xml.etree.ElementTree as ET
+from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
 from unittest import mock
@@ -14,6 +16,8 @@ except ImportError:
     HAVE_PYPDF = False
 
 from sites.kuma import build, charts, content
+from sites.kuma import live as live_mod
+from sokuhou import sitecheck
 from sokuhou.sitekit import BuildError
 from sokuhou.sources import env_kuma
 
@@ -210,7 +214,7 @@ OTSU = {
 
 @unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
 class LiveTest(unittest.TestCase):
-    """Otsu City's own sighting list, shown newest first, with the city's page and map credited."""
+    """Otsu City's own sighting list: newest first, with the city's page credited, on its own municipality page."""
 
     @classmethod
     def setUpClass(cls):
@@ -218,7 +222,8 @@ class LiveTest(unittest.TestCase):
         cls.raw["notices"] = []
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name) / "site"
-        cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, otsu=OTSU)
+        cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, otsu=OTSU, today=date(2026, 10, 5))
+        cls.city = f"live/shiga/{live_mod.city_slug('shiga', '大津市')}/index.html"
 
     @classmethod
     def tearDownClass(cls):
@@ -228,29 +233,29 @@ class LiveTest(unittest.TestCase):
         return (self.out / rel).read_text(encoding="utf-8")
 
     def test_newest_first_and_the_latest_is_on_the_home_page(self):
-        html = self.read("live/index.html")
+        html = self.read("live/shiga/index.html")
         self.assertLess(html.index("北比良"), html.index("伊香立下龍華町"))
         self.assertLess(html.index("伊香立下龍華町"), html.index("南小松"))
-        self.assertIn("最新の目撃: 10月3日(2日前) 北比良", html)  # fetched 2026-10-05, seen 2026-10-03
+        self.assertIn("最新の記録: 10月3日(2日前) 大津市北比良", self.read(self.city))  # fetched 2026-10-05, seen 2026-10-03
         self.assertIn("最新の目撃(滋賀県大津市・市の公式): 10月3日 北比良", self.read("index.html"))
 
-    def test_the_city_page_and_map_are_linked_and_credited(self):
-        html = self.read("live/index.html")
+    def test_the_city_page_is_linked_and_credited(self):
+        html = self.read("live/shiga/index.html")
         self.assertIn("https://www.city.otsu.lg.jp/soshiki/025/1605/g/t/74581.html", html)
-        self.assertIn("https://www.google.com/maps/d/viewer?mid=1rE5HcSdJnm2gX3iT1FMt0aCVuQ9ArDs", html)
         self.assertIn("大津市が作成したものではありません", html)
+        self.assertIn('href="/live/shiga/"', self.read("live/index.html"))
 
-    def test_counts_are_the_citys_and_ours_and_older_years_are_not_mixed_in(self):
-        html = self.read("live/index.html")
-        self.assertIn("大津市は、令和8年度の目撃情報を3件と公表しています", html)
-        self.assertIn("読み取った令和8年度の件数は、3件です", html)
-        self.assertIn("<td>2025年10月20日</td><td>仰木町</td>", html)  # last year's sighting carries its year in the list
+    def test_counts_are_ours_and_older_years_are_not_mixed_in(self):
+        html = self.read(self.city)
+        self.assertIn("令和8年度の記録は3件で、直近30日は3件", html)
+        self.assertNotIn("仰木町", html)  # last fiscal year's sighting
         self.assertIn("<tr><td>2026年10月3日 8時30分ごろ</td>", html)
-        month_table = html.split("令和8年度の月別</h2>")[1].split("</table>")[0]
-        self.assertEqual(re.findall(r"<td>(\d+)月</td><td>(\d+)</td>", month_table), [("9", "1"), ("10", "2")])  # this year only
+        month_table = html.split("大津市の月別の記録</h2>")[1].split("</table>")[0]
+        self.assertEqual(re.findall(r"<td>(\d+)月</td><td>(\d+)</td>", month_table), [("9", "1"), ("10", "2")])
 
     def test_shiga_page_carries_the_live_block_and_other_prefectures_do_not(self):
         self.assertIn("大津市の最新の目撃情報(市の公式)", self.read("shiga/index.html"))
+        self.assertIn('href="/live/shiga/"', self.read("shiga/index.html"))
         self.assertNotIn("大津市の最新の目撃情報", self.read("akita/index.html"))
 
     def test_nav_has_the_live_link_only_when_there_is_data(self):
@@ -258,6 +263,7 @@ class LiveTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             files = build.render_site(self.raw, CFG, Path(tmp) / "n", release=True, otsu=None)
             self.assertNotIn("live/index.html", files)
+            self.assertNotIn("map/index.html", files)
             self.assertNotIn('href="/live/"', (Path(tmp) / "n" / "index.html").read_text(encoding="utf-8"))
 
 
@@ -274,10 +280,6 @@ class ChartTest(unittest.TestCase):
         self.assertIn("a&lt;b", svg)
         self.assertIn("t&amp;t", svg)
         self.assertIn(">0<", svg)
-
-
-if __name__ == "__main__":
-    unittest.main()
 
 
 MIYAGI = {
@@ -305,7 +307,7 @@ AKITA = {
 
 @unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
 class PrefLiveTest(unittest.TestCase):
-    """Miyagi's and Akita's own published lists on the live page: credited, dated, and nothing after the prefecture's as-of date."""
+    """Miyagi's and Akita's own published lists: credited, dated, and nothing after the prefecture's as-of date."""
 
     @classmethod
     def setUpClass(cls):
@@ -313,7 +315,7 @@ class PrefLiveTest(unittest.TestCase):
         cls.raw["notices"] = []
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name) / "site"
-        build.render_site(cls.raw, CFG, cls.out, release=True, otsu=None, prefs={"miyagi": MIYAGI, "akita": AKITA})
+        build.render_site(cls.raw, CFG, cls.out, release=True, otsu=None, prefs={"miyagi": MIYAGI, "akita": AKITA}, today=date(2026, 10, 6))
 
     @classmethod
     def tearDownClass(cls):
@@ -324,29 +326,33 @@ class PrefLiveTest(unittest.TestCase):
 
     def test_live_page_exists_without_otsu_and_lists_both_prefectures(self):
         html = self.read("live/index.html")
-        self.assertIn("いまは、宮城県・秋田県です", html)
+        self.assertIn("いまは、2か所(宮城県・秋田県)です", html)
+        self.assertIn('href="/live/miyagi/"', html)
+        self.assertIn('href="/live/akita/"', html)
         self.assertIn('href="/live/"', self.read("index.html"))
 
-    def test_a_row_dated_after_the_as_of_date_is_not_listed_but_the_monthly_total_keeps_the_prefectures_figure(self):
-        html = self.read("live/index.html")
-        self.assertNotIn("駒場字上五仏", html)
+    def test_a_row_dated_after_the_as_of_date_is_not_listed_or_counted(self):
+        for rel in ("live/index.html", "live/miyagi/index.html"):
+            self.assertNotIn("駒場字上五仏", self.read(rel))
+        html = self.read("live/miyagi/index.html")
         self.assertIn("日付が公表時点より後になっている記録が1件あります", html)
-        self.assertIn("宮城県が公表している令和8年度の記録は、4件です", html)  # 2 + 2 from the monthly table, as published
+        self.assertIn("宮城県が公表している令和8年度の記録は、2件です", html)
         self.assertLess(html.index("松坂字銅山"), html.index("石積字森"))
 
     def test_credits_as_of_and_links(self):
-        html = self.read("live/index.html")
-        self.assertIn("出典:宮城県「令和8年度クマ目撃等情報」を加工して作成。宮城県が作成したものではありません", html)
-        self.assertIn("CC BY 4.0", html)
+        html = self.read("live/miyagi/index.html")
+        self.assertIn("出典:宮城県「令和8年度クマ目撃等情報」を加工して作成。位置の座標は", html)
         self.assertIn("データは2026年10月5日時点です", html)
-        self.assertIn("最新の記録は2026年8月31日の分までです", html)
         self.assertIn("https://www.pref.miyagi.jp/x.html", html)
+        akita = self.read("live/akita/index.html")
+        self.assertIn("CC BY 4.0", akita)
+        self.assertIn("最新の記録は2026年8月31日の分までです", akita)
 
-    def test_akita_counts_are_sightings_only_and_the_address_is_not_doubled(self):
-        html = self.read("live/index.html")
-        self.assertIn("秋田県が公表している令和8年度の記録は、1,117件です(目撃のみ", html)  # 882 + 235
+    def test_akita_address_is_not_doubled_and_no_coordinates_are_printed(self):
+        html = self.read("live/akita/index.html")
+        self.assertIn("秋田県が公表している令和8年度の記録は、2件です", html)
         self.assertNotIn("秋田市秋田県秋田市", html)
-        self.assertNotIn("lat", html.split("秋田県</h2>")[1].lower().split("</table>")[0])  # no coordinates
+        self.assertNotIn("lat", html.lower().split("<main")[1].split("</main>")[0])
 
     def test_home_alert_uses_the_latest_sighting_not_a_trace(self):
         home = self.read("index.html")
@@ -355,7 +361,7 @@ class PrefLiveTest(unittest.TestCase):
 
     def test_prefecture_pages_carry_their_block(self):
         self.assertIn("宮城県が公表している最新の目撃情報", self.read("miyagi/index.html"))
-        self.assertIn("秋田県が公表している最新の目撃情報", self.read("akita/index.html"))
+        self.assertIn('href="/live/akita/"', self.read("akita/index.html"))
         self.assertNotIn("が公表している最新の目撃情報", self.read("iwate/index.html"))
 
 
@@ -377,12 +383,119 @@ class DateOnlyTest(unittest.TestCase):
         raw = raw_data()
         raw["notices"] = []
         with tempfile.TemporaryDirectory() as tmp:
-            build.render_site(raw, CFG, Path(tmp) / "s", release=True, otsu=None, prefs={"okayama": okayama})
-            html = (Path(tmp) / "s" / "live" / "index.html").read_text(encoding="utf-8")
+            build.render_site(raw, CFG, Path(tmp) / "s", release=True, otsu=None, prefs={"okayama": okayama}, today=date(2026, 10, 6))
+            html = (Path(tmp) / "s" / "live" / "okayama" / "index.html").read_text(encoding="utf-8")
             self.assertIn("<td>2026年9月6日</td><td>新見市哲西町大野部</td><td>目撃</td>", html)
-            self.assertIn("岡山県が公表している令和8年度の記録は、3件です", html)
+            self.assertIn("岡山県が公表している令和8年度の記録は、1件です", html)
             home = (Path(tmp) / "s" / "index.html").read_text(encoding="utf-8")
             self.assertIn("最新の目撃(岡山県・県の公式。更新は不定期): 9月6日 新見市哲西町大野部", home)
+
+
+def _yamaguchi():
+    """Rows with coordinates in three municipalities (a county prefix on one), one of them with fewer than MIN_CITY_ROWS rows."""
+    def row(day, city, place, kind="目撃", lat=34.2, lon=131.6):
+        return {"observed_at": day, "city": city, "place": place, "count": 1, "kind": kind, "species": "クマ", "lat": lat, "lon": lon}
+    rows = [
+        row("2026-10-06T09:30:00+09:00", "萩市", "大井 門前橋", lat=34.4, lon=131.4),
+        row("2026-10-03T06:15:00+09:00", "岩国市", "美川町根笠", lat=34.2, lon=132.0),
+        row("2026-09-30T09:07:00+09:00", "岩国市", "錦町広瀬", "痕跡", lat=34.3, lon=132.0),
+        row("2026-09-20T17:40:00+09:00", "岩国市", "柱野", lat=34.1, lon=132.2),
+        row("2026-09-15T18:00:00+09:00", "阿武郡阿武町", "大字奈古"),
+        row("2026-06-01T08:00:00+09:00", "岩国市", "日付が古い(90日より前)"),
+        row("2026-02-01T08:00:00+09:00", "岩国市", "前の年度の1月(別の年度)"),
+    ]
+    return {"source": "yamaguchi", "source_page": "https://yamaguchi-opendata.jp/x", "as_of": "2026-10-06", "fy_current": "R08",
+            "credit": "出典:山口県警察のオープンデータ(CC BY)を加工して作成", "update_note": "県警が更新します",
+            "fetched_at": "2026-10-07T06:20:00+09:00", "sightings": rows, "monthly": {"R08": {"6": 1, "9": 3, "10": 2}}}
+
+
+@unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
+class LiveSectionTest(unittest.TestCase):
+    """Prefecture and municipality pages, the feed and the map, built from one record list."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.raw = raw_data()
+        cls.raw["notices"] = env_kuma.parse_notices((FIX / "env_kuma_effort12.html").read_text(encoding="utf-8"))
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.out = Path(cls.tmp.name) / "site"
+        cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, otsu=None, prefs={"yamaguchi": _yamaguchi()}, today=date(2026, 10, 7))
+        cls.iwakuni = f"live/yamaguchi/{live_mod.city_slug('yamaguchi', '岩国市')}/index.html"
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def read(self, rel):
+        return (self.out / rel).read_text(encoding="utf-8")
+
+    def test_city_slug_is_stable_ascii_and_never_collides_within_a_prefecture(self):
+        self.assertEqual(live_mod.city_slug("yamaguchi", "岩国市"), live_mod.city_slug("yamaguchi", "岩国市"))
+        self.assertRegex(live_mod.city_slug("yamaguchi", "岩国市"), r"^m-[0-9a-f]{6}$")
+        self.assertNotEqual(live_mod.city_slug("yamaguchi", "岩国市"), live_mod.city_slug("yamaguchi", "萩市"))
+        self.assertNotEqual(live_mod.city_slug("yamaguchi", "岩国市"), live_mod.city_slug("okayama", "岩国市"))
+        self.assertEqual(live_mod.city_slug("yamaguchi", "岩国市"), "m-" + __import__("hashlib").sha1("yamaguchi/岩国市".encode()).hexdigest()[:6])  # fixed: URLs must not change
+
+    def test_only_cities_with_enough_rows_get_a_page_and_the_county_prefix_is_dropped(self):
+        self.assertIn(self.iwakuni, self.files)
+        self.assertNotIn(f"live/yamaguchi/{live_mod.city_slug('yamaguchi', '萩市')}/index.html", self.files)  # 1 row
+        self.assertEqual(live_mod.norm_city("阿武郡阿武町"), "阿武町")
+        pref = self.read("live/yamaguchi/index.html")
+        self.assertIn("<td>阿武町</td>", pref)
+        self.assertNotIn("阿武郡阿武町</td>", pref)
+        self.assertNotIn(f'href="{live_mod.city_url("yamaguchi", "萩市")}"', pref)
+        self.assertIn(f'href="{live_mod.city_url("yamaguchi", "岩国市")}"', pref)
+
+    def test_city_page_counts_only_this_fiscal_year_and_lists_newest_first(self):
+        html = self.read(self.iwakuni)
+        self.assertIn("令和8年度の記録は4件で", html)  # the January row of the previous fiscal year is not counted
+        self.assertNotIn("前の年度の1月", html)
+        self.assertLess(html.index("美川町根笠"), html.index("錦町広瀬"))
+        self.assertLess(html.index("錦町広瀬"), html.index("柱野"))
+        self.assertIn("<h1>岩国市のクマの目撃情報(山口県・令和8年度)</h1>", html)
+        self.assertIn("<title>岩国市のクマ出没・目撃情報(山口県・令和8年度・4件)</title>", html)
+
+    def test_pages_state_what_the_numbers_are_not(self):
+        html = self.read(self.iwakuni)
+        self.assertIn("そのまま比べられません", html)
+        self.assertIn("出典:山口県警察のオープンデータ(CC BY)を加工して作成", html)
+
+    def test_feed_has_one_entry_per_row_newest_first_with_stable_ids(self):
+        feed = ET.fromstring(self.read("live/feed.xml"))
+        ns = {"a": "http://www.w3.org/2005/Atom"}
+        entries = feed.findall("a:entry", ns)
+        self.assertEqual(len(entries), 6)  # this fiscal year only
+        self.assertIn("萩市大井 門前橋", entries[0].find("a:title", ns).text)
+        ids = [e.find("a:id", ns).text for e in entries]
+        self.assertEqual(len(set(ids)), len(ids))
+        self.assertEqual(feed.find("a:updated", ns).text, "2026-10-06T00:00:00+09:00")  # the newest record, so a rebuild does not re-announce
+
+    def test_map_points_are_the_last_90_days_with_coordinates_and_prefectures_are_named(self):
+        data = json.loads(self.read("map/points.json"))
+        self.assertEqual(data["prefs"], {"yamaguchi": "山口県"})
+        days = [p[2] for p in data["points"]]
+        self.assertEqual(days, sorted(days, reverse=True))
+        self.assertNotIn("2026-06-01", days)  # older than 90 days from the fetch date
+        self.assertEqual(len(data["points"]), 5)
+        lat, lon = data["points"][0][:2]
+        self.assertEqual((lat, lon), (34.4, 131.4))
+        self.assertIn("/assets/map.js", self.read("map/index.html"))
+
+    def test_the_built_site_passes_the_site_checker(self):
+        self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
+
+
+class LiveHelpersTest(unittest.TestCase):
+    def test_fiscal_year_boundaries(self):
+        self.assertEqual(live_mod.fy_of("2026-04-01"), "R08")
+        self.assertEqual(live_mod.fy_of("2026-03-31T23:00:00+09:00"), "R07")
+        self.assertEqual(live_mod.fy_of("2027-01-15"), "R08")
+
+    def test_county_prefix_is_dropped_only_for_towns_and_villages(self):
+        self.assertEqual(live_mod.norm_city("上北郡七戸町"), "七戸町")
+        self.assertEqual(live_mod.norm_city("郡山市"), "郡山市")
+        self.assertEqual(live_mod.norm_city("仙台市青葉区"), "仙台市青葉区")
+        self.assertEqual(live_mod.norm_city("北秋田市"), "北秋田市")
 
 
 @unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
@@ -426,3 +539,7 @@ class GoodsTest(unittest.TestCase):
             files = build.render_site(self.raw, CFG, Path(tmp) / "n", release=True)
             self.assertNotIn("goods/index.html", files)
             self.assertNotIn("Amazonのアソシエイト", (Path(tmp) / "n" / "privacy" / "index.html").read_text(encoding="utf-8"))
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -14,6 +14,7 @@ import sys
 from datetime import date, datetime, timedelta, timezone
 
 from sokuhou.http import fetch
+from sokuhou.sources.kumalib import coord, trim_for_store
 
 DATASET_PAGE = "https://ckan.pref.akita.lg.jp/dataset/f801a10f-f076-47e4-b5a6-0bb5569639e0"
 SOURCE_FILE = (
@@ -99,8 +100,6 @@ def _read_rows(data: bytes) -> tuple[list[str], list[dict[str, str]], int]:
     return header, rows, duplicates_removed
 
 
-STORED_SIGHTINGS = 400
-
 
 def parse_csv(data: bytes) -> dict:
     header, rows, duplicates_removed = _read_rows(data)
@@ -125,9 +124,12 @@ def parse_csv(data: bytes) -> dict:
             lat, lon = float(row["x(緯度)"]), float(row["y(経度)"])
         except ValueError:
             bad_coords += 1
+            lat = lon = None
         else:
             if not (38.8 <= lat <= 40.6 and 139.6 <= lon <= 141.1):
                 bad_coords += 1
+                lat = lon = None
+        row["_lat"], row["_lon"] = lat, lon
 
     total = len(rows)
     if unparsed / total > UNPARSED_LIMIT:
@@ -158,6 +160,7 @@ def parse_csv(data: bytes) -> dict:
             "count": _int_or_none(row["頭数"]),
             "kind": row["情報種別"],
             "species": row["獣種"],
+            **(coord(row["_lat"], row["_lon"]) if row["_lat"] is not None else {}),
         })
     sightings.sort(key=lambda rec: rec["_sort"], reverse=True)
     for rec in sightings:
@@ -181,9 +184,9 @@ def parse_csv(data: bytes) -> dict:
 
 def collect() -> dict:
     out = parse_csv(fetch(SOURCE_FILE).body)
-    # The monthly counts already cover the whole window; keep only the newest entries so the stored file stays small.
+    # The monthly counts already cover the whole window; keep the current fiscal year so the stored file stays small.
     out["sightings_in_window"] = len(out["sightings"])
-    out["sightings"] = out["sightings"][:STORED_SIGHTINGS]
+    out["sightings"] = trim_for_store(out["sightings"], date.fromisoformat(out["as_of"]))
     out.update({
         "source_page": DATASET_PAGE,
         "source_file": SOURCE_FILE,
