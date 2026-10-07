@@ -1,0 +1,81 @@
+{
+ "slug": "sheep-pose",
+ "title": "ひつじのポーズいろいろ",
+ "subject": "ひつじ",
+ "genre": "animals",
+ "touch": "kawaii",
+ "subject_en": "the SAME sheep character (kawaii mascot): a super-fluffy cloud-like cream-white wool body made of big scallops, a small round face in soft peach-beige, tiny curled tan horns and little dark-brown hooves",
+ "lead": "雲のようにふわふわの毛と、くるんと巻いた角が目じるしのひつじ。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "tags": [
+  "ひつじ",
+  "羊",
+  "ヒツジ",
+  "未年",
+  "干支",
+  "動物",
+  "かわいい",
+  "キャラクター"
+ ],
+ "items": [
+  [
+   "wave",
+   "手をふる",
+   "standing and waving"
+  ],
+  [
+   "jump",
+   "とびはねる",
+   "jumping with joy"
+  ],
+  [
+   "sleep",
+   "ねむる",
+   "sleeping curled up"
+  ],
+  [
+   "thanks",
+   "ありがとうと言う",
+   "bowing politely (thank you)"
+  ],
+  [
+   "eat",
+   "はっぱを食べる",
+   "eating a green leaf with sparkling eyes"
+  ],
+  [
+   "heart",
+   "ハートをもつ",
+   "holding a small red heart"
+  ],
+  [
+   "run",
+   "はしる",
+   "running fast with motion, determined happy face"
+  ],
+  [
+   "surprised",
+   "おどろく",
+   "surprised, wide round eyes, small round mouth, both hands raised"
+  ],
+  [
+   "wink",
+   "ウインクする",
+   "winking and giving a thumbs-up"
+  ],
+  [
+   "sad",
+   "しょんぼりする",
+   "sitting sadly with teary eyes and drooping posture, still cute"
+  ],
+  [
+   "angry",
+   "ぷんぷんおこる",
+   "puffed-cheek angry pout with clenched fists, cute and not scary"
+  ],
+  [
+   "cheer",
+   "ガッツポーズする",
+   "fist-pump cheering pose with sparkling eyes"
+  ]
+ ]
+}

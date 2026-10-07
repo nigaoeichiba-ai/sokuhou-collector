@@ -1,0 +1,83 @@
+{
+ "slug": "transport-kawaii",
+ "title": "のりもの ゆるかわ",
+ "subject": "",
+ "genre": "life",
+ "touch": "kawaii",
+ "subject_en": "vehicles, each separate, cute with simple friendly faces",
+ "lead": "電車、バス、くるま、ひこうき、自転車など、かわいいのりもの12点。旅行や交通安全のお知らせ、子ども向けの資料に。",
+ "tags": [
+  "のりもの",
+  "乗り物",
+  "電車",
+  "バス",
+  "くるま",
+  "飛行機",
+  "自転車",
+  "子ども",
+  "交通安全"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "train",
+   "でんしゃ",
+   "a cute commuter train with a friendly face"
+  ],
+  [
+   "bus",
+   "バス",
+   "a cute city bus with a friendly face"
+  ],
+  [
+   "car",
+   "くるま",
+   "a cute small car"
+  ],
+  [
+   "plane",
+   "ひこうき",
+   "a cute passenger airplane"
+  ],
+  [
+   "bicycle",
+   "じてんしゃ",
+   "a cute bicycle with a basket"
+  ],
+  [
+   "ship",
+   "ふね",
+   "a cute ferry boat"
+  ],
+  [
+   "shinkansen",
+   "しんかんせん",
+   "a cute white bullet train with a blue stripe"
+  ],
+  [
+   "taxi",
+   "タクシー",
+   "a cute taxi with a roof lamp"
+  ],
+  [
+   "ambulance",
+   "きゅうきゅうしゃ",
+   "a cute ambulance"
+  ],
+  [
+   "firetruck",
+   "しょうぼうしゃ",
+   "a cute fire truck"
+  ],
+  [
+   "balloon",
+   "ききゅう",
+   "a hot-air balloon"
+  ],
+  [
+   "rocket",
+   "ロケット",
+   "a cute rocket"
+  ]
+ ]
+}

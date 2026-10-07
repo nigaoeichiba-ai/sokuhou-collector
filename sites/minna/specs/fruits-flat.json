@@ -1,0 +1,82 @@
+{
+ "slug": "fruits-flat",
+ "title": "くだもの シンプル",
+ "subject": "",
+ "genre": "food",
+ "touch": "flat",
+ "subject_en": "fruits, each a separate item",
+ "lead": "りんご、いちご、みかん、ぶどうなど、くだもの12点を、すっきりしたフラットなタッチで。レシピ、給食だより、ジュースのメニューに。",
+ "tags": [
+  "くだもの",
+  "フルーツ",
+  "りんご",
+  "いちご",
+  "ぶどう",
+  "もも",
+  "果物",
+  "シンプル"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "apple",
+   "りんご",
+   "a red apple with a leaf"
+  ],
+  [
+   "strawberry",
+   "いちご",
+   "two strawberries"
+  ],
+  [
+   "orange",
+   "みかん",
+   "an orange with a leaf and a half slice"
+  ],
+  [
+   "grape",
+   "ぶどう",
+   "a bunch of purple grapes"
+  ],
+  [
+   "peach",
+   "もも",
+   "a pink peach with a leaf"
+  ],
+  [
+   "banana",
+   "バナナ",
+   "a bunch of bananas"
+  ],
+  [
+   "watermelon",
+   "すいか",
+   "a watermelon slice with seeds"
+  ],
+  [
+   "pear",
+   "なし",
+   "a golden pear"
+  ],
+  [
+   "cherry",
+   "さくらんぼ",
+   "two cherries joined by stems"
+  ],
+  [
+   "lemon",
+   "レモン",
+   "a lemon with a half slice"
+  ],
+  [
+   "kiwi",
+   "キウイ",
+   "a kiwi cut in half"
+  ],
+  [
+   "persimmon",
+   "かき",
+   "an orange persimmon with a green calyx"
+  ]
+ ]
+}

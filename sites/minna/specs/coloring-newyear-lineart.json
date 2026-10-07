@@ -1,0 +1,87 @@
+{
+ "slug": "coloring-newyear-lineart",
+ "title": "ぬりえ お正月・年賀状",
+ "subject": "",
+ "genre": "eto",
+ "touch": "lineart",
+ "subject_en": "New Year coloring pages, each separate",
+ "lead": "未年のひつじ、鏡もち、凧、だるまなど、お正月のぬりえ12点。ぬった絵を、そのまま年賀状に。子どもと一緒に作る年賀状づくりに。",
+ "tags": [
+  "ぬりえ",
+  "塗り絵",
+  "年賀状",
+  "お正月",
+  "未年",
+  "ひつじ",
+  "線画",
+  "子ども",
+  "印刷"
+ ],
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "title_fmt": "{ja}のぬりえ",
+ "items": [
+  [
+   "sheep1",
+   "ひつじ(手をふる)",
+   "a cute sheep waving, in a haori"
+  ],
+  [
+   "sheep2",
+   "ひつじ(凧あげ)",
+   "a cute sheep flying a kite"
+  ],
+  [
+   "kagami",
+   "鏡もち",
+   "a kagami-mochi"
+  ],
+  [
+   "daruma",
+   "だるま",
+   "a daruma doll"
+  ],
+  [
+   "kadomatsu",
+   "門松",
+   "a kadomatsu"
+  ],
+  [
+   "hatsuhinode",
+   "初日の出",
+   "the sunrise over Mt. Fuji"
+  ],
+  [
+   "hagoita",
+   "羽子板",
+   "a hagoita paddle with a decoration"
+  ],
+  [
+   "tako",
+   "凧",
+   "a kite with a tail"
+  ],
+  [
+   "osechi",
+   "おせち",
+   "a tiered osechi box"
+  ],
+  [
+   "crane",
+   "鶴",
+   "a crane"
+  ],
+  [
+   "shishimai",
+   "獅子舞",
+   "a friendly lion dance head"
+  ],
+  [
+   "fukubukuro",
+   "福袋",
+   "a lucky bag"
+  ]
+ ]
+}

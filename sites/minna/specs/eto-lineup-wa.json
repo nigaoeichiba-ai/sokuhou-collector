@@ -1,0 +1,90 @@
+{
+ "slug": "eto-lineup-wa",
+ "title": "十二支のどうぶつ 和風",
+ "subject": "",
+ "genre": "eto",
+ "touch": "wa",
+ "subject_en": "the 12 Chinese-zodiac animals in elegant wa style, each in a simple vermilion-and-gold design with fine traditional patterns, each sitting or standing calmly with a small auspicious accent; one consistent style across all 12",
+ "lead": "十二支のどうぶつを、和柄と伝統色で、上品にえがきました。会社の年賀状や、おせち・お店の新春ポスターに。",
+ "tags": [
+  "十二支",
+  "干支",
+  "和風",
+  "和柄",
+  "年賀状",
+  "お正月",
+  "上品",
+  "辰年",
+  "巳年",
+  "午年",
+  "未年",
+  "申年"
+ ],
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "title_fmt": "{ja}(和風)",
+ "items": [
+  [
+   "rat",
+   "ねずみ(子年)",
+   "a cute mouse with big round ears, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ],
+  [
+   "ox",
+   "うし(丑年)",
+   "a cute calf with small horns, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ],
+  [
+   "tiger",
+   "とら(寅年)",
+   "a cute tiger cub with simple stripes, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ],
+  [
+   "rabbit",
+   "うさぎ(卯年)",
+   "a cute white rabbit with long ears, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ],
+  [
+   "dragon",
+   "たつ(辰年)",
+   "a cute friendly dragon with small horns and a curling tail, no fire, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ],
+  [
+   "snake",
+   "へび(巳年)",
+   "a cute round-faced coiled snake with a friendly smile, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ],
+  [
+   "horse",
+   "うま(午年)",
+   "a cute pony with a flowing mane, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ],
+  [
+   "sheep",
+   "ひつじ(未年)",
+   "a cute fluffy sheep with curled horns, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ],
+  [
+   "monkey",
+   "さる(申年)",
+   "a cute small monkey with a long curly tail, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ],
+  [
+   "rooster",
+   "にわとり(酉年)",
+   "a cute rooster with a red comb and tail feathers, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ],
+  [
+   "dog",
+   "いぬ(戌年)",
+   "a cute shiba-like puppy, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ],
+  [
+   "boar",
+   "いのしし(亥年)",
+   "a cute round wild-boar piglet with tiny tusks, calm formal pose, small auspicious accent such as a pine sprig or plum blossom"
+  ]
+ ]
+}

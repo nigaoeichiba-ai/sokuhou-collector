@@ -1,0 +1,98 @@
+{
+ "slug": "eto-lineup-kawaii",
+ "title": "十二支のどうぶつ ゆるかわ",
+ "subject": "",
+ "genre": "eto",
+ "touch": "kawaii",
+ "subject_en": "the 12 Chinese-zodiac animals, each one a distinct original kawaii mascot, each standing and wearing a small red-and-gold haori jacket, bowing slightly in a New Year greeting; keep one consistent face style across all 12",
+ "lead": "子・丑・寅・卯・辰・巳・午・未・申・酉・戌・亥。十二支のどうぶつ12ひきを、おそろいの羽織すがたでそろえました。毎年の年賀状に使えます。",
+ "tags": [
+  "十二支",
+  "干支",
+  "年賀状",
+  "お正月",
+  "ねずみ",
+  "うし",
+  "とら",
+  "うさぎ",
+  "たつ",
+  "へび",
+  "うま",
+  "ひつじ",
+  "さる",
+  "とり",
+  "いぬ",
+  "いのしし",
+  "辰年",
+  "巳年",
+  "午年",
+  "未年"
+ ],
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "rat",
+   "ねずみ(子年)",
+   "a cute mouse with big round ears, standing in a small haori, bowing slightly in a New Year greeting"
+  ],
+  [
+   "ox",
+   "うし(丑年)",
+   "a cute calf with small horns, standing in a small haori, bowing slightly in a New Year greeting"
+  ],
+  [
+   "tiger",
+   "とら(寅年)",
+   "a cute tiger cub with simple stripes, standing in a small haori, bowing slightly in a New Year greeting"
+  ],
+  [
+   "rabbit",
+   "うさぎ(卯年)",
+   "a cute white rabbit with long ears, standing in a small haori, bowing slightly in a New Year greeting"
+  ],
+  [
+   "dragon",
+   "たつ(辰年)",
+   "a cute friendly dragon with small horns and a curling tail, no fire, standing in a small haori, bowing slightly in a New Year greeting"
+  ],
+  [
+   "snake",
+   "へび(巳年)",
+   "a cute round-faced coiled snake with a friendly smile, standing in a small haori, bowing slightly in a New Year greeting"
+  ],
+  [
+   "horse",
+   "うま(午年)",
+   "a cute pony with a flowing mane, standing in a small haori, bowing slightly in a New Year greeting"
+  ],
+  [
+   "sheep",
+   "ひつじ(未年)",
+   "a cute fluffy sheep with curled horns, standing in a small haori, bowing slightly in a New Year greeting"
+  ],
+  [
+   "monkey",
+   "さる(申年)",
+   "a cute small monkey with a long curly tail, standing in a small haori, bowing slightly in a New Year greeting"
+  ],
+  [
+   "rooster",
+   "にわとり(酉年)",
+   "a cute rooster with a red comb and tail feathers, standing in a small haori, bowing slightly in a New Year greeting"
+  ],
+  [
+   "dog",
+   "いぬ(戌年)",
+   "a cute shiba-like puppy, standing in a small haori, bowing slightly in a New Year greeting"
+  ],
+  [
+   "boar",
+   "いのしし(亥年)",
+   "a cute round wild-boar piglet with tiny tusks, standing in a small haori, bowing slightly in a New Year greeting"
+  ]
+ ]
+}

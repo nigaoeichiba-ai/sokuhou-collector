@@ -1,0 +1,83 @@
+{
+ "slug": "marks-flat",
+ "title": "マーク・矢印のアイコン",
+ "subject": "",
+ "genre": "icon",
+ "touch": "flat",
+ "subject_en": "marks and symbols, each separate, bold simple shapes",
+ "lead": "ハート、星、矢印、チェック、ビックリマークなど、資料やチラシ、SNS画像に使いやすい、わかりやすいマーク12点。",
+ "tags": [
+  "マーク",
+  "矢印",
+  "ハート",
+  "星",
+  "チェック",
+  "アイコン",
+  "シンプル",
+  "資料",
+  "ピクトグラム"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "heart",
+   "ハート",
+   "a red heart"
+  ],
+  [
+   "star",
+   "星",
+   "a yellow five-point star"
+  ],
+  [
+   "arrow",
+   "右向きの矢印",
+   "a bold curved arrow pointing right"
+  ],
+  [
+   "check",
+   "チェックマーク",
+   "a green check mark in a circle"
+  ],
+  [
+   "exclam",
+   "ビックリマーク",
+   "a red exclamation mark in a rounded badge (shape only)"
+  ],
+  [
+   "question",
+   "ハテナ",
+   "a blue question mark shape in a badge"
+  ],
+  [
+   "cross",
+   "バツ印",
+   "a red X mark in a circle"
+  ],
+  [
+   "circle",
+   "まるマーク",
+   "a red hollow circle (maru) mark"
+  ],
+  [
+   "sparkle",
+   "キラキラ",
+   "three four-point sparkles in yellow"
+  ],
+  [
+   "crown",
+   "王冠",
+   "a golden crown"
+  ],
+  [
+   "new",
+   "ニューマーク",
+   "a starburst badge, blank inside"
+  ],
+  [
+   "ribbon",
+   "リボン",
+   "a red ribbon bow"
+  ]
+ ]
+}

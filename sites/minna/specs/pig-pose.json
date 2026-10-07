@@ -1,0 +1,80 @@
+{
+ "slug": "pig-pose",
+ "title": "ぶたのポーズいろいろ",
+ "subject": "ぶた",
+ "genre": "animals",
+ "touch": "kawaii",
+ "subject_en": "the SAME pig character (kawaii mascot): a round pink piglet with a big oval snout with two nostrils, small floppy ears, a curly tail and a tiny cream bib",
+ "lead": "ちょこんとカールしたしっぽと、大きなはなが目じるしのピンクの子ぶた。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "tags": [
+  "ぶた",
+  "豚",
+  "ブタ",
+  "子豚",
+  "動物",
+  "かわいい",
+  "キャラクター"
+ ],
+ "items": [
+  [
+   "wave",
+   "手をふる",
+   "standing and waving one hand cheerfully"
+  ],
+  [
+   "jump",
+   "とびはねる",
+   "jumping with joy, arms up, big smile"
+  ],
+  [
+   "sleep",
+   "ねむる",
+   "sleeping curled up peacefully with a tiny smile"
+  ],
+  [
+   "thanks",
+   "ありがとうと言う",
+   "bowing politely with eyes closed and a grateful smile"
+  ],
+  [
+   "eat",
+   "もぐもぐ食べる",
+   "happily eating an apple"
+  ],
+  [
+   "heart",
+   "ハートをもつ",
+   "holding a red heart with a happy smile"
+  ],
+  [
+   "run",
+   "はしる",
+   "running fast with motion, determined happy face"
+  ],
+  [
+   "surprised",
+   "おどろく",
+   "surprised, wide round eyes, small round mouth, both hands raised"
+  ],
+  [
+   "wink",
+   "ウインクする",
+   "winking and giving a thumbs-up"
+  ],
+  [
+   "sad",
+   "しょんぼりする",
+   "sitting sadly with teary eyes and drooping posture, still cute"
+  ],
+  [
+   "angry",
+   "ぷんぷんおこる",
+   "puffed-cheek angry pout with clenched fists, cute and not scary"
+  ],
+  [
+   "cheer",
+   "ガッツポーズする",
+   "fist-pump cheering pose with sparkling eyes"
+  ]
+ ]
+}

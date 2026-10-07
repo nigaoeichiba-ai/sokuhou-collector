@@ -1,0 +1,86 @@
+{
+ "slug": "halloween-objects-kawaii",
+ "title": "ハロウィンのイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "subject_en": "Halloween items, cute and not scary, each a separate item",
+ "lead": "かぼちゃ、おばけ、コウモリ、まほうの帽子など、こわくない、かわいいハロウィンのイラスト12点。パーティーの案内やお店の飾りに。",
+ "tags": [
+  "ハロウィン",
+  "かぼちゃ",
+  "おばけ",
+  "コウモリ",
+  "魔女",
+  "10月",
+  "パーティー",
+  "イベント"
+ ],
+ "season": {
+  "from": "09-15",
+  "to": "10-31"
+ },
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "pumpkin",
+   "ジャック・オ・ランタン",
+   "a cute orange jack-o-lantern pumpkin with a smiling carved face"
+  ],
+  [
+   "ghost",
+   "おばけ",
+   "a cute friendly white ghost with a happy face"
+  ],
+  [
+   "bat",
+   "コウモリ",
+   "a cute smiling purple bat with tiny fangs"
+  ],
+  [
+   "witchhat",
+   "魔女の帽子",
+   "a purple witch hat with a gold buckle"
+  ],
+  [
+   "candy",
+   "キャンディ",
+   "wrapped candies and a lollipop"
+  ],
+  [
+   "cauldron",
+   "まほうのおなべ",
+   "a bubbling green potion cauldron"
+  ],
+  [
+   "spider",
+   "くも",
+   "a cute smiling spider hanging from a thread"
+  ],
+  [
+   "cat",
+   "黒ねこ",
+   "a cute black cat with yellow eyes wearing a tiny witch hat"
+  ],
+  [
+   "moon",
+   "三日月",
+   "a smiling crescent moon with stars"
+  ],
+  [
+   "castle",
+   "おばけやしき",
+   "a small cute haunted house with bats"
+  ],
+  [
+   "broom",
+   "ほうき",
+   "a witch broom with a purple ribbon"
+  ],
+  [
+   "trick",
+   "お菓子のバケツ",
+   "a pumpkin-shaped bucket full of candy"
+  ]
+ ]
+}

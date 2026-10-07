@@ -1,0 +1,88 @@
+{
+ "slug": "newyear-objects-flat",
+ "title": "お正月のアイコン シンプル",
+ "subject": "",
+ "genre": "eto",
+ "touch": "flat",
+ "subject_en": "New Year icons, each one a separate simple object (no characters)",
+ "lead": "お正月のモチーフを、すっきりしたフラットなタッチで12点。年賀状のワンポイント、あけおめのLINE画像、お知らせのバナーに使いやすい、シンプルなアイコンです。",
+ "tags": [
+  "お正月",
+  "年賀状",
+  "アイコン",
+  "シンプル",
+  "フラット",
+  "あけおめ",
+  "門松",
+  "鏡餅",
+  "初日の出",
+  "おせち"
+ ],
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "kadomatsu",
+   "門松",
+   "kadomatsu bamboo and pine"
+  ],
+  [
+   "kagami",
+   "鏡もち",
+   "kagami-mochi with an orange on top"
+  ],
+  [
+   "sunrise",
+   "初日の出",
+   "a rising sun over Mt. Fuji"
+  ],
+  [
+   "daruma",
+   "だるま",
+   "a red daruma doll"
+  ],
+  [
+   "hamaya",
+   "破魔矢",
+   "a hamaya arrow"
+  ],
+  [
+   "osechi",
+   "おせち",
+   "a tiered osechi box"
+  ],
+  [
+   "kite",
+   "凧",
+   "a kite with tails"
+  ],
+  [
+   "fan",
+   "扇",
+   "an open folding fan"
+  ],
+  [
+   "envelope",
+   "お年玉袋",
+   "a decorative red envelope"
+  ],
+  [
+   "ume",
+   "梅の花",
+   "a plum blossom branch"
+  ],
+  [
+   "crane",
+   "鶴",
+   "a crane"
+  ],
+  [
+   "bell",
+   "除夜の鐘",
+   "a temple bell with a wooden striker"
+  ]
+ ]
+}

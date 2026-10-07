@@ -1,0 +1,82 @@
+{
+ "slug": "coloring-animals-lineart",
+ "title": "ぬりえ どうぶつ",
+ "subject": "",
+ "genre": "animals",
+ "touch": "lineart",
+ "subject_en": "coloring-page animals, each separate, big and simple",
+ "lead": "印刷して、そのままぬれる、どうぶつのぬりえ12点。線がはっきりしていて、小さな子どもでもぬりやすい、やさしい絵です。",
+ "tags": [
+  "ぬりえ",
+  "塗り絵",
+  "どうぶつ",
+  "線画",
+  "子ども",
+  "印刷",
+  "無料",
+  "知育"
+ ],
+ "title_fmt": "{ja}のぬりえ",
+ "items": [
+  [
+   "cat",
+   "ねこ",
+   "a sitting cat"
+  ],
+  [
+   "dog",
+   "いぬ",
+   "a sitting puppy"
+  ],
+  [
+   "rabbit",
+   "うさぎ",
+   "a rabbit with long ears"
+  ],
+  [
+   "bear",
+   "くま",
+   "a standing bear"
+  ],
+  [
+   "elephant",
+   "ぞう",
+   "a baby elephant"
+  ],
+  [
+   "giraffe",
+   "きりん",
+   "a giraffe"
+  ],
+  [
+   "penguin",
+   "ペンギン",
+   "a penguin"
+  ],
+  [
+   "panda",
+   "パンダ",
+   "a panda holding bamboo"
+  ],
+  [
+   "lion",
+   "ライオン",
+   "a lion cub"
+  ],
+  [
+   "whale",
+   "くじら",
+   "a whale with a water spout"
+  ],
+  [
+   "sheep",
+   "ひつじ",
+   "a fluffy sheep"
+  ],
+  [
+   "owl",
+   "ふくろう",
+   "an owl on a branch"
+  ]
+ ]
+}

@@ -1,0 +1,82 @@
+{
+ "slug": "speech-bubbles-kawaii",
+ "title": "ふきだし かわいい",
+ "subject": "",
+ "genre": "deco",
+ "touch": "kawaii",
+ "subject_en": "blank speech bubbles of different shapes, white fill with a brown outline and a pop colour accent, text area EMPTY (no letters)",
+ "lead": "LINE風の会話や、スライド・漫画・説明画像に使える、中が空の吹き出し12点。丸い、ギザギザ、ハート型、雲型など、気持ちに合わせて選べます。",
+ "tags": [
+  "ふきだし",
+  "吹き出し",
+  "会話",
+  "チャット",
+  "テキスト枠",
+  "メッセージ",
+  "説明",
+  "漫画"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "round",
+   "まるい吹き出し",
+   "a round speech bubble with a small tail"
+  ],
+  [
+   "square",
+   "角丸の吹き出し",
+   "a rounded rectangle speech bubble"
+  ],
+  [
+   "cloud",
+   "もこもこ吹き出し(考え中)",
+   "a cloud-shaped thought bubble with small circles"
+  ],
+  [
+   "spiky",
+   "ギザギザ吹き出し(さけぶ)",
+   "a spiky starburst speech bubble"
+  ],
+  [
+   "heart",
+   "ハートの吹き出し",
+   "a heart-shaped speech bubble"
+  ],
+  [
+   "drip",
+   "ふるえる吹き出し",
+   "a wavy-edged shaky speech bubble"
+  ],
+  [
+   "star",
+   "星の吹き出し",
+   "a star-shaped speech bubble"
+  ],
+  [
+   "oval",
+   "たまごの吹き出し",
+   "an oval speech bubble with a double outline"
+  ],
+  [
+   "double",
+   "ふたつの吹き出し",
+   "two overlapping speech bubbles, one white and one yellow"
+  ],
+  [
+   "ribbon",
+   "リボンの吹き出し",
+   "a speech bubble with a small ribbon on the corner"
+  ],
+  [
+   "note",
+   "メモの吹き出し",
+   "a note-paper style speech bubble with a pushpin"
+  ],
+  [
+   "pop",
+   "ぽわんと吹き出し",
+   "a soft blobby speech bubble with tiny sparkles"
+  ]
+ ]
+}
