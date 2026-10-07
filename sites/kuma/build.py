@@ -456,11 +456,11 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
         live_block = (f'<h2>大津市の最新の目撃情報(市の公式)</h2>\n<ul class="mini-list">{recent}</ul>\n'
                       '<p><a href="/live/shiga/">大津市の目撃情報の一覧(市町村別・地図)</a></p>\n')
     for src in d["live_prefs"]:
-        if src["key"] == r["slug"]:
+        if live_mod.LIVE_SOURCES[src["key"]]["pref"] == r["short"]:
             recent = "".join(f'<li>{day_text(x["observed_at"])} {esc(place_text(x))}</li>' for x in src["sights"][:5])
             live_block = (f'<h2>{src["name"]}が公表している最新の目撃情報</h2>\n'
                           f'<p>{src["as_of_text"].format(d=jp_date(src["as_of"]))}。</p>\n<ul class="mini-list">{recent}</ul>\n'
-                          f'<p><a href="/live/{src["key"]}/">{src["name"]}の目撃情報の一覧(市町村別・地図)</a></p>\n')
+                          f'<p><a href="/live/{r["slug"]}/">{src["name"]}の目撃情報の一覧(市町村別・地図)</a></p>\n')
     nav = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in d["rows"] if x is not r)
     mates = [x for x in d["rows"] if x is not r and x["region_slug"] == r["region_slug"]]
     rel = ""

@@ -22,7 +22,9 @@ from sokuhou.sources import (
     okayama_kuma,
     otsu_bear,
     otsu_fire,
+    sorachi_kuma,
     yamaguchi_kuma,
+    yamanashi_kuma,
 )
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -122,6 +124,8 @@ GROUPS: dict[str, list[Source]] = {
         Source("akita_kuma", akita_kuma.collect, check_pref_bear),
         Source("yamaguchi_kuma", yamaguchi_kuma.collect, check_pref_bear),
         Source("okayama_kuma", okayama_kuma.collect, check_pref_bear),
+        Source("yamanashi_kuma", yamanashi_kuma.collect, check_pref_bear),
+        Source("sorachi_kuma", sorachi_kuma.collect, check_pref_bear),
         Source("otsu_bear", otsu_bear.collect, check_bear),
     ],
     "frequent": [
