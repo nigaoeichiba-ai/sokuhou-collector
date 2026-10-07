@@ -53,6 +53,23 @@ TOUCHES = [
     ("retro", "昭和レトロ", "昭和の広告やパッケージのような、レトロなタッチ。",
      "Showa-era retro Japanese illustration: slightly muted warm colours (mustard, tomato red, teal, cream), simple shapes with thick off-register-style outlines, "
      "nostalgic poster and packaging feel, no halftone background, no shadow."),
+    ("loose", "ゆるい手書き", "手書きのような、ゆるくて、やさしい線のタッチ。",
+     "loose hand-drawn Japanese free-illustration style: slightly wobbly thin dark-grey outline, simplified shapes, dot eyes and a tiny mouth, only 3 to 5 soft muted colours, about 3.5-head proportion, "
+     "the friendly look of a casual notebook doodle coloured in; no shading, no texture, no shadow."),
+    ("faceless", "顔なしミニマル", "顔を描かない、すっきりしたミニマルなタッチ。",
+     "minimal faceless flat vector people: rounded simple body shapes, NO eyes, nose or mouth on the face (plain smooth head with hair only), no outline, a restrained muted palette of 4 to 6 colours, "
+     "readable posture and props, about 4.5-head proportion, no gradients, no shadow."),
+    ("linecolor", "線画カラー", "細い線に、やさしい色をのせた、すっきりしたタッチ。",
+     "clean line-and-color style: one thin even dark-navy outline and light flat colour fills, simple friendly faces, about 4.5-head proportion, tidy and professional, no gradients, no texture, no shadow."),
+    ("chibi", "ちびキャラ", "2頭身ほどの、ころんとした、ちびキャラのタッチ。",
+     "chibi mini-character style: about 2.5-head proportion, large round head, tiny body, big simple eyes with highlights, rosy cheeks, thick smooth dark-brown outline, flat colours, cute and friendly, safe for all ages, no shadow."),
+    ("picturebook", "絵本風", "やわらかい色とまるい線の、絵本のようなタッチ。",
+     "children's picture-book style: soft rounded outlines in a warm brown-grey, gentle pastel colours with a faint crayon grain, round friendly faces, calm cosy mood, about 3.5-head proportion, no heavy shading, no shadow."),
+    ("pictogram", "ピクトグラム", "太い線とはっきりした色の、わかりやすいピクトグラム風のタッチ。",
+     "bold pictogram-inspired flat illustration: thick simple shapes, very high readability at thumbnail size, limited bold colours (navy, orange, green, white), simplified faces (dots only) or none, "
+     "no gradients, no texture, no shadow."),
+    ("stick", "棒人間", "棒と丸でできた、かんたんな棒人間のタッチ。",
+     "stick-figure style: round head, single-line limbs of equal thickness, black strokes with one accent colour per picture, expressive gestures, very simple, no shading, no shadow."),
     ("silhouette", "シルエット", "ひとつの色でつくった、シルエットのタッチ。",
      "solid single-colour silhouette illustration (deep navy #24304A) with crisp edges and a clearly readable outline shape; "
      "only tiny cut-out white details allowed (eyes, small patterns); no gradients, no shadow."),
