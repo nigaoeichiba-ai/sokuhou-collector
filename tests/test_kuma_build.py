@@ -762,6 +762,20 @@ class CountsOnlyTest(unittest.TestCase):
                 changed, errors = run.run_group([src], Path(tmp))
             self.assertEqual((seen, changed, errors), ([], [], {}))
 
+    def test_about_and_contact_name_the_counts_only_sources_and_offer_a_way_to_ask_for_removal(self):
+        about = self.read("about/index.html")
+        self.assertIn("福島県は、再利用の許可が明示されていないため、公開されている情報から件数と最新の日付だけを集計して載せています", about)
+        self.assertIn("山口県", about)  # the sources with details are named too
+        self.assertIn("掲載の中止のご依頼", about)
+        self.assertIn('href="/contact/"', about)
+        real = json.loads((Path(build.__file__).parent / "config.json").read_text(encoding="utf-8"))   # the site's own contact form, as configured
+        self.assertIn("掲載内容に関するご連絡(掲載の中止のご依頼など)", real["contact_kinds"])
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.dict(live_mod.LIVE_SOURCES, {"fukushima": COUNTS_META}):
+            build.render_site(self.raw, {**CFG, "contact_own": True, "contact_kinds": real["contact_kinds"]}, Path(tmp) / "c", release=True,
+                              prefs={"fukushima": self.counts, "yamaguchi": _yamaguchi()}, today=date(2026, 10, 7))
+            self.assertIn("掲載内容に関するご連絡(掲載の中止のご依頼など)", (Path(tmp) / "c" / "contact" / "index.html").read_text(encoding="utf-8"))
+            self.assertIn("掲載内容に関するご連絡(掲載の中止のご依頼など)", (Path(tmp) / "c" / "contact" / "send.php").read_text(encoding="utf-8"))  # the receiver accepts that kind
+
     def test_the_site_checker_passes(self):
         self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
 
