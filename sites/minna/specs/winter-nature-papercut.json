@@ -1,0 +1,86 @@
+{
+ "slug": "winter-nature-papercut",
+ "title": "冬の自然の切り絵イラスト",
+ "subject": "",
+ "genre": "nature",
+ "touch": "papercut",
+ "title_fmt": "{ja}",
+ "subject_en": "Winter nature items, each a separate object, layered cut-paper craft style with flat colour shapes and soft paper edges, blues and whites with warm accents Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "雪の結晶、冬の木、ひいらぎ、こおりの花。切り絵ふうに描いた、冬の自然12点。",
+ "tags": [
+  "冬",
+  "雪",
+  "雪の結晶",
+  "切り絵",
+  "ひいらぎ",
+  "自然"
+ ],
+ "season": {
+  "from": "11-20",
+  "to": "02-20"
+ },
+ "holes": false,
+ "items": [
+  [
+   "crystal",
+   "雪の結晶",
+   "a large six-pointed snowflake in pale blue"
+  ],
+  [
+   "tree",
+   "雪をかぶった木",
+   "a pine tree with snow on its branches"
+  ],
+  [
+   "holly",
+   "ひいらぎ",
+   "a holly sprig with red berries"
+  ],
+  [
+   "camellia",
+   "つばき",
+   "a red camellia flower with snow on the leaves"
+  ],
+  [
+   "nanten",
+   "なんてん",
+   "a nandina branch with red berries"
+  ],
+  [
+   "icicle",
+   "つらら",
+   "three hanging icicles from a small eave"
+  ],
+  [
+   "snowman",
+   "雪だるま",
+   "a small snowman with a scarf and branch arms"
+  ],
+  [
+   "mountain",
+   "雪山",
+   "a snowy mountain peak with a pale sun"
+  ],
+  [
+   "moon",
+   "冬の月",
+   "a crescent moon with two stars"
+  ],
+  [
+   "bird",
+   "ふゆのことり",
+   "a small bird on a snowy branch"
+  ],
+  [
+   "mitten",
+   "てぶくろ",
+   "a pair of knitted mittens"
+  ],
+  [
+   "cloud",
+   "雪雲",
+   "a snow cloud with falling flakes"
+  ]
+ ],
+ "exclude": []
+}

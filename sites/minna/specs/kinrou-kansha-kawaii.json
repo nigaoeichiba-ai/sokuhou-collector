@@ -1,0 +1,83 @@
+{
+ "slug": "kinrou-kansha-kawaii",
+ "title": "ありがとうの贈りもの",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Thank-you gifts and gestures, each a separate object, kawaii soft style with warm pastel colours Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "花束、肩たたき、手紙、お茶。勤労感謝の日や敬老の日、日ごろの「ありがとう」を伝える12点。",
+ "tags": [
+  "ありがとう",
+  "感謝",
+  "勤労感謝の日",
+  "プレゼント",
+  "手紙",
+  "花束"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "bouquet",
+   "ありがとうの花束",
+   "a hand-tied bouquet with a ribbon"
+  ],
+  [
+   "letter",
+   "感謝の手紙",
+   "a letter with a heart seal on a blank envelope"
+  ],
+  [
+   "tea",
+   "お茶ときんつば",
+   "a tea cup with a small sweet on a plate"
+  ],
+  [
+   "katatataki",
+   "肩たたき",
+   "a small bear tapping the shoulder of a larger bear"
+  ],
+  [
+   "gift",
+   "ギフト",
+   "a gift box tied with a ribbon"
+  ],
+  [
+   "heart",
+   "ありがとうのハート",
+   "a large pink heart wrapped in a ribbon"
+  ],
+  [
+   "card",
+   "メッセージカード",
+   "a blank card with a flower and a small heart"
+  ],
+  [
+   "sweets",
+   "お菓子の詰め合わせ",
+   "a basket of assorted cookies and candies"
+  ],
+  [
+   "hands",
+   "ありがとうの手",
+   "two hands holding a small heart"
+  ],
+  [
+   "cake",
+   "ケーキ",
+   "a round cake with a single strawberry"
+  ],
+  [
+   "cat",
+   "おじぎするねこ",
+   "a cat bowing politely with a flower"
+  ],
+  [
+   "bear",
+   "お礼をするくま",
+   "a bear holding a flower bouquet and smiling"
+  ]
+ ],
+ "exclude": []
+}

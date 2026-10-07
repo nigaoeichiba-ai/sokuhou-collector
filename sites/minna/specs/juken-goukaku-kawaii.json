@@ -1,0 +1,86 @@
+{
+ "slug": "juken-goukaku-kawaii",
+ "title": "受験・合格祈願のイラスト",
+ "subject": "",
+ "genre": "school",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Exam-season and good-luck items, each a separate object, kawaii soft style, friendly and encouraging, no text Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "鉛筆、絵馬、お守り、桜。受験生をはげますカードやお知らせに使える12点。",
+ "tags": [
+  "受験",
+  "合格",
+  "合格祈願",
+  "絵馬",
+  "お守り",
+  "勉強"
+ ],
+ "season": {
+  "from": "12-15",
+  "to": "03-31"
+ },
+ "holes": false,
+ "items": [
+  [
+   "pencil",
+   "えんぴつ",
+   "a sharpened pencil with a small star on it"
+  ],
+  [
+   "ema",
+   "絵馬",
+   "a blank wooden ema plaque with a string"
+  ],
+  [
+   "omamori",
+   "合格のお守り",
+   "a small red-and-gold omamori charm (blank, no characters)"
+  ],
+  [
+   "sakura",
+   "咲いた桜",
+   "a branch of cherry blossoms in full bloom"
+  ],
+  [
+   "desk",
+   "勉強机",
+   "a study desk with a lamp, books and a mug"
+  ],
+  [
+   "book",
+   "参考書",
+   "a stack of three blank-cover workbooks"
+  ],
+  [
+   "clock",
+   "目ざまし時計",
+   "a round alarm clock with bells"
+  ],
+  [
+   "hachimaki",
+   "はちまき",
+   "a white headband with a red circle"
+  ],
+  [
+   "daruma",
+   "だるま",
+   "a red daruma doll with one eye painted"
+  ],
+  [
+   "eraser",
+   "消しゴム",
+   "an eraser with a paper sleeve and crumbs"
+  ],
+  [
+   "student",
+   "がんばる子",
+   "a cute child studying at a desk with a determined face"
+  ],
+  [
+   "flag",
+   "合格のはた",
+   "a pennant flag on a pole, blank, with confetti"
+  ]
+ ],
+ "exclude": []
+}

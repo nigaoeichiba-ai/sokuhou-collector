@@ -1,0 +1,86 @@
+{
+ "slug": "seijin-wa",
+ "title": "成人の日のイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "subject_en": "Coming-of-age day items, each a separate item, refined Japanese illustration style, rich reds, golds and purples, faces shown simply as in a gentle Japanese picture style Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "振袖、袴、扇子、花飾り。成人式のお祝いカードや案内に使える和のイラスト12点。",
+ "tags": [
+  "成人式",
+  "成人の日",
+  "振袖",
+  "袴",
+  "1月",
+  "お祝い"
+ ],
+ "season": {
+  "from": "12-20",
+  "to": "01-20"
+ },
+ "holes": false,
+ "items": [
+  [
+   "furisode",
+   "振袖",
+   "a long-sleeved red furisode kimono with floral pattern, displayed alone on a stand"
+  ],
+  [
+   "hakama",
+   "袴",
+   "a dark navy hakama with a crest-free haori displayed alone"
+  ],
+  [
+   "sensu",
+   "扇子",
+   "an open gold folding fan with a crane pattern"
+  ],
+  [
+   "kanzashi",
+   "花のかんざし",
+   "a hair ornament of silk flowers with dangling beads"
+  ],
+  [
+   "zouri",
+   "草履とバッグ",
+   "a pair of gold zori sandals and a small matching bag"
+  ],
+  [
+   "obi",
+   "帯",
+   "a rolled ornate obi sash with a decorative cord"
+  ],
+  [
+   "fukuro",
+   "ふわふわのショール",
+   "a white fluffy fur-style shawl"
+  ],
+  [
+   "flower",
+   "お祝いの花",
+   "a large bouquet of chrysanthemum and ranunculus in red and white"
+  ],
+  [
+   "tsuru",
+   "つる",
+   "a white crane with spread wings"
+  ],
+  [
+   "ribbon",
+   "水引",
+   "a red and white mizuhiki knot"
+  ],
+  [
+   "girl",
+   "振袖の女の子",
+   "a smiling young woman in a red furisode, full body, no real person"
+  ],
+  [
+   "boy",
+   "袴の男の子",
+   "a smiling young man in a navy hakama, full body, no real person"
+  ]
+ ],
+ "exclude": []
+}
