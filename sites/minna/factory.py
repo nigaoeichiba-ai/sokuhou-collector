@@ -45,6 +45,7 @@ def load_spec(path: Path) -> dict:
     s.setdefault("key", "#FFFFFF")
     s.setdefault("holes", False)
     s.setdefault("sheet_subjects", [])
+    s.setdefault("exclude", [])
     s.setdefault("title_fmt", "{ja}{subject}")
     s.setdefault("tags", [])
     s.setdefault("season", None)
@@ -218,7 +219,7 @@ def write_series_json(spec: dict) -> int:
     items = []
     for it in spec["items"]:
         f = lib / f"{item_id(spec, it[0])}.webp"
-        if f.exists():
+        if f.exists() and it[0] not in spec["exclude"]:
             with Image.open(f) as im:
                 items.append(item_record(spec, it, im.width, im.height))
     if not items:
@@ -310,6 +311,86 @@ def cmd_recover(a) -> None:
     print(f"recovered {done} originals; the post-processed copies are in {keep}")
 
 
+# ---------------------------------------------------------------- review: a second pair of eyes (Codex looks at numbered contact sheets)
+def cmd_review_prep(a) -> None:
+    """For every series that has drawn items: a numbered contact sheet (review/<slug>.png, 4 x 3, number in the corner, magenta behind so that
+    transparent parts show) and one brief that lists, per sheet, number -> title and the English phrase the generator was given."""
+    from PIL import Image, ImageDraw
+    out = Path(a.out)
+    out.mkdir(parents=True, exist_ok=True)
+    only = a.series.split(",") if a.series else None
+    lines = []
+    made = []
+    for s in load_specs(only):
+        lib = LIBRARY / s["slug"]
+        if not (lib / "series.json").exists():
+            continue
+        reviewed = out / f"{s['slug']}.done"
+        if reviewed.exists() and not a.force:
+            continue
+        have = [(n, it) for n, it in enumerate(s["items"], 1) if (lib / f"{item_id(s, it[0])}.webp").exists()]
+        cell, cols = 260, 4
+        rows = -(-len(have) // cols)
+        sheet = Image.new("RGB", (cols * cell, rows * cell), (255, 0, 255))
+        d = ImageDraw.Draw(sheet)
+        for k, (n, it) in enumerate(have):
+            im = Image.open(lib / f"{item_id(s, it[0])}.webp").convert("RGBA")
+            im.thumbnail((cell - 24, cell - 24))
+            cx, cy = (k % cols) * cell, (k // cols) * cell
+            sheet.paste(im, (cx + (cell - im.width) // 2, cy + (cell - im.height) // 2), im)
+            d.rectangle([cx + 2, cy + 2, cx + 40, cy + 26], fill=(0, 0, 0))
+            d.text((cx + 8, cy + 8), str(n), fill=(255, 255, 255))
+        sheet.save(out / f"{s['slug']}.png")
+        made.append(s["slug"])
+        lines.append(f"## {s['slug']}  ({s['title']}; touch {s['touch']}; image: {s['slug']}.png)")
+        lines.append(f"Intended character: {(s.get('sheet_subjects') or [s['subject_en']])[0][:400]}")
+        for n, it in have:
+            lines.append(f"  {n}. {it[1]} -- {it[2]}")
+        lines.append("")
+    (out / "review_brief.md").write_text(REVIEW_HEADER + "\n".join(lines), encoding="utf-8")
+    print(f"review sheets for {len(made)} series in {out}")
+    print(" ".join(f"-i {Path(out) / (m + '.png')}" for m in made))
+
+
+REVIEW_HEADER = """# Review task: look at the attached contact sheets and report defects (you may NOT edit any picture or file except the one result file below)
+
+Each attached image is one illustration series on a MAGENTA background (the magenta is only there so that transparent parts show; it is not part of the art). Items are numbered in the top-left corner. The list below says, per series, what each number was supposed to show.
+For EVERY item judge:
+ - match: does the drawing show the described pose/scene? (a wrong or different pose = mismatch)
+ - defects: missing body parts or clothes that became transparent (pale/white clothes 'eaten' by the background), ghost-like faded drawing, extra or merged people, cut-off limbs, strange hands or too many fingers, wrong face (blank face where a face is expected, or a face where 'faceless' is expected), text/letters in the picture, a different character than the rest of the series, a plain blob instead of an illustration, anything that would embarrass a free-illustration site.
+Write the result as JSON to `sokuhou-sites/docs/minna_sheets/review/result.json`:
+{"series": {"<slug>": {"bad": [{"n": 6, "why": "short reason", "kind": "defect|mismatch|ghost|blob|overlap"}], "ok_count": 10, "notes": "one line"}}}
+List only items that should be removed or redrawn (clear problems). Do not nitpick style. A pose that is slightly different from the English phrase but a good picture is NOT bad; a picture that cannot be used with its Japanese title IS a mismatch.
+Be strict about ghosting (see-through or faded bodies) and white-on-white losses, and about blobs.
+Reply in English with a one-line summary per series.
+
+"""
+
+
+def cmd_review_apply(a) -> None:
+    """Take the review result (json) and hide the bad items: their suffixes go into the spec's "exclude" list and series.json is rewritten.  Reviewed series get a
+    marker so review-prep does not offer them again."""
+    res = json.loads(Path(a.result).read_text(encoding="utf-8"))["series"]
+    out = Path(a.out)
+    total = 0
+    for slug, r in res.items():
+        path = SPECS / f"{slug}.json"
+        if not path.exists():
+            continue
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        ex = set(spec.get("exclude", []))
+        for b in r.get("bad", []):
+            n = int(b["n"])
+            if 1 <= n <= len(spec["items"]):
+                ex.add(spec["items"][n - 1][0])
+                total += 1
+        spec["exclude"] = sorted(ex)
+        path.write_text(json.dumps(spec, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        write_series_json(load_spec(path))
+        (out / f"{slug}.done").write_text("reviewed", encoding="utf-8")
+    print(f"hid {total} items in {len(res)} series")
+
+
 def cmd_status(a) -> None:
     specs = load_specs()
     total_items = made = 0
@@ -330,10 +411,16 @@ def cmd_status(a) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name, fn in (("status", cmd_status), ("brief", cmd_brief), ("ingest", cmd_ingest), ("recover", cmd_recover), ("batches", cmd_batches)):
+    for name, fn in (("status", cmd_status), ("brief", cmd_brief), ("ingest", cmd_ingest), ("recover", cmd_recover), ("batches", cmd_batches), ("review-prep", cmd_review_prep), ("review-apply", cmd_review_apply)):
         p = sub.add_parser(name)
         p.add_argument("--series")
         p.add_argument("--sheets-dir", default=str(DEFAULT_SHEETS / "inbox"))
+        if name == "review-prep":
+            p.add_argument("--out", required=True)
+            p.add_argument("--force", action="store_true")
+        if name == "review-apply":
+            p.add_argument("--out", required=True)
+            p.add_argument("--result", required=True)
         if name == "batches":
             p.add_argument("--out", required=True)
             p.add_argument("--workers", type=int, default=5)

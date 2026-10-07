@@ -82,5 +82,13 @@
    "One child walks toward a clearly separated adult at pickup time, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": [
+  "drawing",
+  "hand-washing",
+  "morning-welcome",
+  "nap-time",
+  "outdoor-play",
+  "reading-aloud"
+ ]
 }

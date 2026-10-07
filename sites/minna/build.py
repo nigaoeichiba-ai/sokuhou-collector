@@ -23,7 +23,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.minna import model  # noqa: E402
+from sites.minna import model, printables  # noqa: E402
 from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
 from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
 from sites.minna.taxonomy import GENRE_BY_SLUG, GENRES, TOUCH_BY_SLUG, TOUCHES  # noqa: E402
@@ -33,7 +33,7 @@ from sokuhou.sitekit import BuildError, asset_pages, crumbs, esc, layout, legal_
 
 PER_PAGE = 60
 MIN_CROSS = 12          # a genre x touch page exists only with at least this many items
-BASE_NAV = [("イラスト", "/illust/", "/illust/"), ("特集", "/special/", "/special/"), ("読みもの", "/guide/", "/guide/"), ("カードをつくる", "/tool/card/", "/tool/"), ("リクエスト", "/request/", "/request/")]
+BASE_NAV = [("イラスト", "/illust/", "/illust/"), ("特集", "/special/", "/special/"), ("読みもの", "/guide/", "/guide/"), ("印刷", "/printables/", "/printables/"), ("カードをつくる", "/tool/card/", "/tool/"), ("リクエスト", "/request/", "/request/")]
 SITE = {
     "nav": list(BASE_NAV),
     "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">',
@@ -343,6 +343,111 @@ def paged(cfg, preview, base: str, items: list[dict], head_html: str, title: str
         kw = {"og_image": og_image} if og_image else {}
         out[f"{path.strip('/')}/index.html" if path != "/" else "index.html"] = page(cfg, preview, path=path, title=t, description=description, body=body, **kw)
     return out
+
+
+# ------------------------------------------------------------------ printable calendars
+CAL_THEMES = [
+    ("hitsuji", "ひつじ", "ふわふわのひつじと、1年を。2027年の干支(未年)にちなんだ、ひつじのカレンダー。",
+     ["eto-sheep-kawaii-kagami", "sheep-pose-heart", "sheep-pose-thanks", "sheep-pose-wave", "sheep-pose-eat", "sheep-pose-sad", "sheep-pose-cheer", "sheep-pose-run",
+      "sheep-pose-surprised", "sheep-pose-wink", "sheep-pose-sleep", "christmas-animals-kawaii-sheep"]),
+    ("dobutsu", "どうぶつ", "毎月ちがう、かわいいどうぶつが出てくる、12か月のカレンダー。",
+     ["eto-lineup-kawaii-sheep", "cat-pose-heart", "rabbit-pose-wave", "bear-pose-wave", "dog-pose-jump", "frog-pose-wave", "penguin-pose-wave", "hamster-pose-eat",
+      "panda-pose-wave", "fox-pose-proud", "koala-pose-wave", "christmas-animals-kawaii-bear"]),
+]
+
+
+def calendar_year(today: date) -> int:
+    """The year people are looking for: next year from September on, this year before."""
+    return today.year + 1 if today.month >= 9 else today.year
+
+
+def build_calendars(items: list[dict], today: date) -> tuple[dict, list[dict]]:
+    """({file: bytes}, [theme dict]) - empty when no Japanese font is installed (the page is then not built, nothing half-made is shipped)."""
+    font = printables.find_font()
+    if not font:
+        return {}, []
+    by = {i["id"]: i for i in items}
+    year = calendar_year(today)
+    files: dict = {}
+    themes = []
+    fkey = hashlib.sha1(Path(font).name.encode()).hexdigest()[:6]
+    for slug, name, desc, ids in CAL_THEMES:
+        picks = [by[i] for i in ids if i in by]
+        if slug == "dobutsu" and len(picks) < 12:          # animals not drawn yet: other animal sets fill the gaps, one picture per set
+            used = {i["series"] for i in picks}
+            for it in items:
+                if len(picks) >= 12:
+                    break
+                if it["series"].endswith("-pose") and it["series"] not in used and it["id"].rsplit("-", 1)[-1] in ("wave", "heart", "jump", "thanks"):
+                    picks.append(it)
+                    used.add(it["series"])
+        if len(picks) < 12:
+            continue
+        months = []
+        pdfs = []
+        for m, it in enumerate(picks, 1):
+            rel = f"calendar/{year}-{slug}-{m:02d}"
+            pdf = _cached(it["path"], f"cal{year}-{m:02d}-{fkey}.pdf", lambda it=it, m=m: printables.month_pdf(it["path"], year, m, font))
+            prev = _cached(it["path"], f"cal{year}-{m:02d}-{fkey}.webp", lambda it=it, m=m: _small_webp(printables.month_page(it["path"], year, m, font)))
+            files[f"files/{rel}.pdf"] = pdf
+            files[f"files/{rel}.webp"] = prev
+            months.append({"m": m, "pdf": f"/files/{rel}.pdf", "img": f"/files/{rel}.webp", "title": it["title"]})
+            pdfs.append(it["path"])
+        allkey = hashlib.sha1(("".join(hashlib.sha1(x.read_bytes()).hexdigest() for x in pdfs) + f"{year}{fkey}").encode()).hexdigest()
+        allf = cache_dir() / f"{allkey}.calpack.pdf"
+        if not allf.exists():
+            allf.write_bytes(printables.year_pdf(pdfs, year, font))
+        files[f"files/calendar/{year}-{slug}-all.pdf"] = allf.read_bytes()
+        themes.append({"slug": slug, "name": name, "desc": desc, "months": months, "all": f"/files/calendar/{year}-{slug}-all.pdf"})
+    return files, themes
+
+
+def _small_webp(page) -> bytes:
+    im = page.resize((360, round(page.height * 360 / page.width)))
+    buf = io.BytesIO()
+    im.save(buf, format="WEBP", quality=82)
+    return buf.getvalue()
+
+
+def calendar_page(cfg, preview, themes: list[dict], year: int, guides) -> str:
+    base = cfg["site_url"].rstrip("/")
+    secs = ""
+    for t in themes:
+        cards = "".join(f'<li><a class="cal-card" href="{m["pdf"]}" download><img src="{m["img"]}" alt="{year}年{m["m"]}月のカレンダー({esc(t["name"])})" width="360" height="509" loading="lazy">'
+                        f'<b>{m["m"]}月</b><small>A4・PDF</small></a></li>' for m in t["months"])
+        secs += (f'<section style="margin-top:36px"><h2><span class="scribble">{esc(t["name"])}のカレンダー</span></h2><p class="lead">{esc(t["desc"])}</p>'
+                 f'<p class="dl"><a class="btn big" href="{t["all"]}" download>12か月まとめてPDF</a></p><ul class="cal-grid">{cards}</ul></section>')
+    faq = [("祝日は入っていますか?", f"はい。{year}年の祝日(振替休日を含む)を、赤い字で名前つきで入れています。"),
+           ("どの大きさで印刷しますか?", "A4(縦)で作っています。プリンターの設定で「実際のサイズ」または「拡大縮小なし」を選ぶと、きれいに印刷できます。"),
+           ("商用で使えますか?", "はい。無料・商用OKです。お店や会社で配るカレンダーにもお使いいただけます(PDFそのものの再配布や販売はご遠慮ください)。")]
+    ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}, ensure_ascii=False)
+    body = f"""{crumbs([("トップ", "/"), ("印刷", "/printables/"), (f"{year}年カレンダー", None)])}
+<h1>{year}年(令和{year - 2018}年)イラストカレンダー 無料・A4で印刷できるPDF</h1>
+<p class="lead">かわいいイラストつきの、{year}年のカレンダーです。1か月ずつ、または12か月まとめて、無料でダウンロードできます。祝日つき・A4縦・登録不要。</p>{licence_box()}
+{secs}
+<section style="margin-top:44px"><h2><span class="scribble">よくある、しつもん</span></h2><div class="faq">{''.join(f'<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faq)}</div></section>
+{share(cfg, f"/printables/calendar-{year}/", f"{year}年イラストカレンダー(無料・印刷用PDF)")}
+<script type="application/ld+json">{ld}</script>"""
+    return page(cfg, preview, path=f"/printables/calendar-{year}/", title=f"{year}年 イラストカレンダー 無料・印刷用PDF(A4・祝日つき) | {cfg['site_name']}",
+                description=f"{year}年(令和{year - 2018}年)のかわいいイラストカレンダー。A4・祝日つき・登録不要で無料ダウンロード。ひつじ、どうぶつの2種類。商用OK。", body=body,
+                og_image=f"/files/calendar/{year}-{themes[0]['slug']}-01.webp")
+
+
+def printables_hub(cfg, preview, year: int, themes: list[dict], items: list[dict]) -> str:
+    nurie = [i for i in items if i["touch"] == "lineart"]
+    cards = (f'<li><a class="special-card" href="/printables/calendar-{year}/"><span class="set-thumbs checker">'
+             + "".join(f'<img src="{m["img"]}" alt="" width="120" height="170" loading="lazy">' for m in themes[0]["months"][:3])
+             + f'</span><b>{year}年 イラストカレンダー</b><small>A4・祝日つき・{len(themes)}種類</small></a></li>')
+    if nurie:
+        cards += (f'<li><a class="special-card" href="/special/nurie/"><span class="set-thumbs checker">'
+                  + "".join(f'<img src="/thumbs/{i["id"]}.webp" alt="" width="120" height="{round(i["h"] * 120 / i["w"])}" loading="lazy">' for i in nurie[:3])
+                  + f'</span><b>ぬりえ(A4で印刷)</b><small>{len(nurie)}点・どうぶつ・お正月</small></a></li>')
+    body = f"""{crumbs([("トップ", "/"), ("印刷", None)])}
+<h1>印刷できるもの</h1><p class="lead">カレンダー、ぬりえ、はがきサイズの年賀状イラストなど、印刷して使えるものを集めました。すべて無料・商用OK・登録不要です。</p>
+<ul class="special-grid">{cards}</ul>
+<p>イラストのページには、「A4で印刷(PDF)」「はがきサイズで印刷(PDF)」のボタンがあるものもあります。</p>"""
+    return page(cfg, preview, path="/printables/", title=f"印刷できる素材(カレンダー・ぬりえ・はがき) | {cfg['site_name']}",
+                description="2027年イラストカレンダー、ぬりえ、はがきサイズの年賀状イラストなど、印刷して使える素材。無料・商用OK・登録不要。", body=body)
 
 
 # ------------------------------------------------------------------ pages
@@ -684,7 +789,8 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         if len(its) >= MIN_ITEMS:
             built.append((sp, sers, its))
     guides = load_guides()
-    SITE["nav"] = [n for n in BASE_NAV if (built or n[1] != "/special/") and (guides or n[1] != "/guide/")]
+    cal_files, cal_themes = build_calendars(items, today)
+    SITE["nav"] = [n for n in BASE_NAV if (built or n[1] != "/special/") and (guides or n[1] != "/guide/") and (cal_themes or n[1] != "/printables/")]
     pages: dict[str, str | bytes] = {"index.html": index_page(cfg, preview, items, series, today)}
     pages.update(illust_hub(cfg, preview, items, series))
     pages.update(genre_pages(cfg, preview, items, series))
@@ -706,6 +812,10 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         pages[f"og/special-{sp['slug']}.webp"] = og_bytes(its[::max(1, len(its) // 4)], (255, 201, 60))
     if built:
         pages["special/index.html"] = specials_hub(cfg, preview, built)
+    if cal_themes:
+        pages.update(cal_files)
+        pages["printables/index.html"] = printables_hub(cfg, preview, calendar_year(today), cal_themes, items)
+        pages[f"printables/calendar-{calendar_year(today)}/index.html"] = calendar_page(cfg, preview, cal_themes, calendar_year(today), guides)
     if guides:
         pages["guide/index.html"] = guides_hub(cfg, preview, guides)
         for g in guides:

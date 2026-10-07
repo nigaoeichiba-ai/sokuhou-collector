@@ -606,3 +606,9 @@ header.site .wrap { gap: 10px; flex-wrap: wrap; }
 
 @media (max-width: 760px) { .hero-art { order: 2; } .collage { min-height: 250px; margin-top: 8px; } .collage .hc { width: 38%; } .collage .c { width: 40%; } }
 @media (max-width: 560px) { header.site { position: static; } header.site .wrap { padding-top: 6px; padding-bottom: 8px; gap: 6px; } header.site nav { gap: 6px; } header.site nav a { padding: .2em .75em; font-size: .78rem; box-shadow: 2px 2px 0 var(--ink); } .brand { font-size: 1.05rem; } .hsearch input { padding: .3em .8em; } }
+.cal-grid { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr)); }
+.cal-card { display: flex; flex-direction: column; gap: 4px; align-items: center; padding: 8px; background: #fff; border: var(--line2); border-radius: 16px; color: var(--ink); text-decoration: none; transition: transform .15s; }
+.cal-card:hover { transform: translate(-2px, -2px); background: var(--yellow-s); }
+.cal-card img { width: 100%; height: auto; border: 1px solid #e8dcc0; border-radius: 6px; }
+.cal-card b { font-weight: 900; }
+.cal-card small { color: var(--muted); }
