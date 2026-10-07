@@ -40,6 +40,24 @@ class ClientTest(unittest.TestCase):
         self.assertEqual(headers["Referer"], "https://yorokobu-present.com/")
         self.assertEqual(items[0]["rank"], 1)
 
+    def test_a_genre_is_asked_for_alone_without_age_or_sex(self):
+        seg = ranking.SEGMENTS["g-sweets"]
+        t = FakeTransport(lambda u: [{**raw_item("a", 2000), "rank": 1}])
+        c = rakuten.Client("APP", "KEY", "https://x/", transport=t, sleep=lambda s: None)
+        ranking.snapshot_segment(c, seg)
+        url = t.urls[0][0]
+        self.assertIn("genreId=551167", url)
+        self.assertNotIn("&age=", url)
+        self.assertNotIn("&sex=", url)
+        self.assertEqual(seg["kind"], "genre")
+
+    def test_every_genre_has_a_unique_slug_and_id_and_comes_before_the_people_lists(self):
+        segs = ranking.all_segments()
+        self.assertEqual(len({s["slug"] for s in segs}), len(segs))
+        self.assertEqual(len({s["genre"] for s in segs if s["kind"] == "genre"}), len(ranking.GENRES))
+        kinds = [s["kind"] for s in segs]
+        self.assertEqual(kinds, sorted(kinds, key=lambda k: k != "genre"))          # all genres first
+
     def test_segments_are_age_by_sex_and_the_oldest_group_says_and_over(self):
         segs = ranking.segments()
         self.assertEqual(len(segs), 10)
@@ -117,6 +135,23 @@ class ViewTest(unittest.TestCase):
         self.assertEqual(sg["risers"][0][0]["code"], "p5")                          # 6th -> 1st
         self.assertEqual(sg["risers"][0][1], 5)
 
+    def test_lenses_discs_diapers_and_bulk_staples_are_left_out(self):
+        names = ["カラコン ワンデー 30枚", "コンタクトレンズ 2week", "Moonlit (初回盤1(Blu-ray)＋通常盤セット)", "メリーズ エアスルー パンツ", "白米 無洗米 10kg",
+                 "福袋おせち 2027", "ブレンド米 5kg", "プロテイン 3kg"]
+        for n in names:
+            self.assertFalse(ranking.shown(ranked("x", 1, name=n), FILTERS), n)
+        self.assertTrue(ranking.shown(ranked("y", 1, name="国産素材の焼き菓子 詰め合わせ 12個入り"), FILTERS))
+
+    def test_real_committed_data_if_present_always_produces_a_valid_view(self):
+        store = ranking.load()
+        if store is None:
+            self.skipTest("no committed ranking data yet")
+        v = ranking.view(store, content.load()["filters"])
+        for slug in (v or {"order": []})["order"]:
+            sg = v["segments"][slug]
+            self.assertGreaterEqual(len(sg["items"]), 8)
+            self.assertTrue(all(i["price"] > 0 and i["url"].startswith("https://") for i in sg["items"]))
+
     def test_a_segment_with_too_few_products_has_no_page_and_no_data_means_no_ranking(self):
         s = ranking.update(None, {"f20": day(codes(5))}, date(2026, 10, 1))
         self.assertIsNone(ranking.view(s, FILTERS))
@@ -183,6 +218,23 @@ class BuildTest(unittest.TestCase):
             self.assertTrue((out / "ranking/f20/index.html").exists())
             self.assertEqual([p for p in sitecheck.check_dir(out, CFG["site_url"], skip=("lists",)) if "ranking" in p], [])
             self.assertEqual([p for p in sitecheck.check_dir(out, CFG["site_url"]) if "ranking" in p and "empty" in p], [])
+        build.RANKING_ON = False
+
+    def test_genre_pages_use_the_genre_wording_and_the_hub_groups_genres_and_people(self):
+        names = {}
+        s = ranking.update(None, {"g-sweets": day(codes(16, "s")), "f20": day(codes(16))}, date(2026, 10, 6))
+        s = ranking.update(s, {"g-sweets": day(codes(16, "s")), "f20": day(codes(16))}, date(2026, 10, 7))
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "s"
+            build.render_site(self.c, self.items, CFG, out, release=True, today=date(2026, 10, 7), ranking=s)
+            g = (out / "ranking/g-sweets/index.html").read_text(encoding="utf-8")
+            self.assertIn("スイーツ・お菓子の、<wbr>いま売れている商品", g)
+            f = (out / "ranking/f20/index.html").read_text(encoding="utf-8")
+            self.assertIn("20代女性に、<wbr>いま売れている商品", f)
+            hub = (out / "ranking/index.html").read_text(encoding="utf-8")
+            self.assertIn("ジャンルから選ぶ", hub)
+            self.assertIn("世代と性別から選ぶ", hub)
+            self.assertEqual([p for p in sitecheck.check_dir(out, CFG["site_url"], skip=("lists",)) if "ranking" in p], [])
         build.RANKING_ON = False
 
     def test_without_ranking_data_there_are_no_ranking_pages_and_no_links(self):
