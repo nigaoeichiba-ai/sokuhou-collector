@@ -1,0 +1,83 @@
+{
+ "slug": "washoku-retro",
+ "title": "和食・ごはん レトロ",
+ "subject": "",
+ "genre": "food",
+ "touch": "retro",
+ "subject_en": "Japanese meals, each a separate dish",
+ "lead": "おにぎり、ラーメン、お寿司、天ぷらなど、昭和レトロなタッチのごはん12点。食堂のメニューやチラシ、レトロ風のデザインに。",
+ "tags": [
+  "和食",
+  "ごはん",
+  "おにぎり",
+  "ラーメン",
+  "寿司",
+  "定食",
+  "レトロ",
+  "昭和",
+  "食堂"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "onigiri",
+   "おにぎり",
+   "two rice balls with nori"
+  ],
+  [
+   "ramen",
+   "ラーメン",
+   "a bowl of ramen with egg and naruto"
+  ],
+  [
+   "sushi",
+   "お寿司",
+   "assorted nigiri sushi on a plate"
+  ],
+  [
+   "tempura",
+   "天ぷら",
+   "shrimp tempura on paper"
+  ],
+  [
+   "curry",
+   "カレーライス",
+   "curry rice with a spoon"
+  ],
+  [
+   "omurice",
+   "オムライス",
+   "omurice with ketchup"
+  ],
+  [
+   "teishoku",
+   "焼き魚定食",
+   "grilled fish set meal with rice and miso soup on a tray"
+  ],
+  [
+   "udon",
+   "うどん",
+   "a bowl of udon with kamaboko"
+  ],
+  [
+   "tonkatsu",
+   "とんかつ",
+   "tonkatsu with cabbage"
+  ],
+  [
+   "bento",
+   "お弁当",
+   "an open bento box"
+  ],
+  [
+   "oden",
+   "おでん",
+   "oden skewers in broth"
+  ],
+  [
+   "tamagoyaki",
+   "玉子焼き",
+   "tamagoyaki slices"
+  ]
+ ]
+}

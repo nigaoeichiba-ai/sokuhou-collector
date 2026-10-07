@@ -1,0 +1,80 @@
+{
+ "slug": "bear-pose",
+ "title": "くまのポーズいろいろ",
+ "subject": "くま",
+ "genre": "animals",
+ "touch": "kawaii",
+ "subject_en": "the SAME bear character (kawaii mascot): a round chestnut-brown bear with small round ears, a cream heart-shaped patch on its belly and a stubby tail",
+ "lead": "おなかのハートがらが目じるしの、ぽってりしたこげ茶のくま。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "tags": [
+  "くま",
+  "熊",
+  "クマ",
+  "ぬいぐるみ",
+  "動物",
+  "かわいい",
+  "キャラクター"
+ ],
+ "items": [
+  [
+   "wave",
+   "手をふる",
+   "standing and waving one hand cheerfully"
+  ],
+  [
+   "jump",
+   "とびはねる",
+   "jumping with joy, arms up, big smile"
+  ],
+  [
+   "sleep",
+   "ねむる",
+   "sleeping curled up peacefully with a tiny smile"
+  ],
+  [
+   "thanks",
+   "ありがとうと言う",
+   "bowing politely with eyes closed and a grateful smile"
+  ],
+  [
+   "eat",
+   "もぐもぐ食べる",
+   "happily eating a spoonful of honey"
+  ],
+  [
+   "heart",
+   "ハートをもつ",
+   "holding a red heart with a happy smile"
+  ],
+  [
+   "run",
+   "はしる",
+   "running fast with motion, determined happy face"
+  ],
+  [
+   "surprised",
+   "おどろく",
+   "surprised, wide round eyes, small round mouth, both hands raised"
+  ],
+  [
+   "wink",
+   "ウインクする",
+   "winking and giving a thumbs-up"
+  ],
+  [
+   "sad",
+   "しょんぼりする",
+   "sitting sadly with teary eyes and drooping posture, still cute"
+  ],
+  [
+   "angry",
+   "ぷんぷんおこる",
+   "puffed-cheek angry pout with clenched fists, cute and not scary"
+  ],
+  [
+   "cheer",
+   "ガッツポーズする",
+   "fist-pump cheering pose with sparkling eyes"
+  ]
+ ]
+}

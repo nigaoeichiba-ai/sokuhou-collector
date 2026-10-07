@@ -1,0 +1,59 @@
+{
+ "slug": "christmas-animals-kawaii",
+ "title": "サンタのどうぶつ",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "subject_en": "six different original kawaii animals, each wearing a red Santa hat or Santa outfit",
+ "lead": "ねこ、いぬ、うさぎ、くま、ペンギン、ひつじが、サンタの衣装でクリスマスをお祝い。カードやお店のポップに。",
+ "tags": [
+  "クリスマス",
+  "サンタ",
+  "どうぶつ",
+  "かわいい",
+  "冬",
+  "ねこ",
+  "いぬ",
+  "うさぎ",
+  "くま",
+  "ペンギン",
+  "ひつじ"
+ ],
+ "season": {
+  "from": "11-01",
+  "to": "12-28"
+ },
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "cat",
+   "サンタのねこ",
+   "a chubby cream cat with brown face patches in a Santa hat, holding a small gift"
+  ],
+  [
+   "dog",
+   "サンタのいぬ",
+   "a round tan puppy with cream face mask in a Santa hat, carrying a gift sack"
+  ],
+  [
+   "rabbit",
+   "サンタのうさぎ",
+   "a white lop-eared rabbit in a Santa outfit with a pom-pom hat, ringing a bell"
+  ],
+  [
+   "bear",
+   "サンタのくま",
+   "a chestnut-brown bear with a cream heart belly patch in a Santa suit holding a big gift"
+  ],
+  [
+   "penguin",
+   "サンタのペンギン",
+   "a blue-grey penguin with yellow cheek patches in a Santa hat, holding a candy cane"
+  ],
+  [
+   "sheep",
+   "サンタのひつじ",
+   "a fluffy cream sheep in a Santa hat and red scarf with a small gift"
+  ]
+ ]
+}

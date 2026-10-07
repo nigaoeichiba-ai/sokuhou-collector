@@ -1,0 +1,87 @@
+{
+ "slug": "setsubun-spring-kawaii",
+ "title": "節分・春のイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "subject_en": "Setsubun and early-spring items, cute and friendly",
+ "lead": "節分の鬼、豆、恵方巻き、ひなまつり、桜まで。2月・3月の行事にそのまま使えるかわいいイラスト12点です。",
+ "tags": [
+  "節分",
+  "鬼",
+  "豆まき",
+  "恵方巻",
+  "ひなまつり",
+  "桜",
+  "春",
+  "2月",
+  "3月"
+ ],
+ "season": {
+  "from": "01-10",
+  "to": "03-31"
+ },
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "oni",
+   "かわいい赤鬼",
+   "a cute friendly red oni with small horns and a tiger-print loincloth, holding a club"
+  ],
+  [
+   "aooni",
+   "かわいい青鬼",
+   "a cute friendly blue oni with small horns, smiling"
+  ],
+  [
+   "mame",
+   "豆まきの豆",
+   "a wooden masu box of roasted soybeans with scattering beans"
+  ],
+  [
+   "ehomaki",
+   "恵方巻き",
+   "a cut ehomaki sushi roll showing colourful ingredients"
+  ],
+  [
+   "hiiragi",
+   "ひいらぎいわし",
+   "a holly branch with a sardine head (cute)"
+  ],
+  [
+   "hina",
+   "おひなさま",
+   "a pair of hina dolls (odairi-sama and ohina-sama) on red cloth"
+  ],
+  [
+   "peach",
+   "桃の花",
+   "a branch of pink peach blossoms"
+  ],
+  [
+   "hishimochi",
+   "ひしもち",
+   "diamond-shaped pink, white and green rice cakes"
+  ],
+  [
+   "sakura",
+   "桜",
+   "a branch of cherry blossoms with a few falling petals"
+  ],
+  [
+   "dango",
+   "花見だんご",
+   "tricolour hanami dango on a skewer"
+  ],
+  [
+   "tulip",
+   "チューリップ",
+   "three colourful tulips"
+  ],
+  [
+   "uguisu",
+   "うぐいす",
+   "a cute green-brown bush warbler singing on a plum branch"
+  ]
+ ]
+}

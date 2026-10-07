@@ -1,0 +1,83 @@
+{
+ "slug": "office-flat",
+ "title": "仕事・オフィスのアイコン",
+ "subject": "",
+ "genre": "work",
+ "touch": "flat",
+ "subject_en": "office and work icons, each separate",
+ "lead": "パソコン、書類、グラフ、電話、会議など、仕事まわりのアイコン12点。資料やサイト、チラシ、社内だよりにすぐ使えます。",
+ "tags": [
+  "ビジネス",
+  "仕事",
+  "オフィス",
+  "パソコン",
+  "資料",
+  "グラフ",
+  "会議",
+  "アイコン",
+  "シンプル"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "laptop",
+   "ノートパソコン",
+   "a laptop with a blank screen"
+  ],
+  [
+   "document",
+   "書類",
+   "a stack of papers with a paper clip"
+  ],
+  [
+   "chart",
+   "棒グラフ",
+   "a bar chart with an up arrow"
+  ],
+  [
+   "phone",
+   "電話",
+   "a desk phone handset"
+  ],
+  [
+   "meeting",
+   "会議",
+   "a meeting table with four abstract seat shapes and a presentation screen"
+  ],
+  [
+   "mail",
+   "メール",
+   "an envelope with an @-like heart sign (no letters)"
+  ],
+  [
+   "calendar",
+   "カレンダー",
+   "a wall calendar with blank grid"
+  ],
+  [
+   "idea",
+   "アイデア",
+   "a light bulb with sparkles"
+  ],
+  [
+   "target",
+   "目標",
+   "a bullseye target with an arrow"
+  ],
+  [
+   "handshake",
+   "握手",
+   "two hands shaking"
+  ],
+  [
+   "clipboard",
+   "チェックリスト",
+   "a clipboard with check marks (no text)"
+  ],
+  [
+   "coffee",
+   "コーヒーブレイク",
+   "a coffee cup with steam"
+  ]
+ ]
+}

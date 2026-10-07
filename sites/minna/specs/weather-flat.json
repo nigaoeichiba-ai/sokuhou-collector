@@ -1,0 +1,83 @@
+{
+ "slug": "weather-flat",
+ "title": "天気のアイコン",
+ "subject": "",
+ "genre": "nature",
+ "touch": "flat",
+ "subject_en": "weather icons, each separate",
+ "lead": "晴れ、くもり、雨、雪、かみなり、虹など、天気のアイコン12点。天気予報、お知らせ、イベントの雨天案内に。",
+ "tags": [
+  "天気",
+  "晴れ",
+  "雨",
+  "雪",
+  "くもり",
+  "虹",
+  "かみなり",
+  "アイコン",
+  "天気予報"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "sunny",
+   "晴れ",
+   "a smiling sun"
+  ],
+  [
+   "cloudy",
+   "くもり",
+   "a fluffy cloud"
+  ],
+  [
+   "rain",
+   "雨",
+   "a cloud with raindrops"
+  ],
+  [
+   "snow",
+   "雪",
+   "a cloud with snowflakes"
+  ],
+  [
+   "thunder",
+   "かみなり",
+   "a dark cloud with a lightning bolt"
+  ],
+  [
+   "rainbow",
+   "虹",
+   "a rainbow with two clouds"
+  ],
+  [
+   "sunnycloud",
+   "晴れのちくもり",
+   "a sun partially behind a cloud"
+  ],
+  [
+   "wind",
+   "風",
+   "swirling wind lines with falling leaves"
+  ],
+  [
+   "fog",
+   "きり",
+   "layers of fog lines with a cloud"
+  ],
+  [
+   "typhoon",
+   "たいふう",
+   "a spiral typhoon symbol"
+  ],
+  [
+   "moon",
+   "夜空と月",
+   "a crescent moon with stars"
+  ],
+  [
+   "umbrella",
+   "傘マーク",
+   "an umbrella with raindrops"
+  ]
+ ]
+}

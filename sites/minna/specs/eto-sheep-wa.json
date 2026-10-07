@@ -1,0 +1,89 @@
+{
+ "slug": "eto-sheep-wa",
+ "title": "未年のひつじ 和風",
+ "subject": "ひつじ",
+ "genre": "eto",
+ "touch": "wa",
+ "subject_en": "a sheep with a cloud-like wool body drawn in elegant wa style: ivory wool with gold swirl accents, tiny curled gold horns, soft vermilion cheeks, kind eyes, wearing nothing or a simple haori, the same elegant design on every sheet",
+ "lead": "和柄と伝統色でえがいた、上品な未年のひつじ。格式のある年賀状、会社のごあいさつ、お店の新春ポスターにぴったりの12点です。",
+ "tags": [
+  "未年",
+  "ひつじ",
+  "羊",
+  "和風",
+  "和柄",
+  "年賀状",
+  "お正月",
+  "2027",
+  "令和9年",
+  "干支",
+  "上品"
+ ],
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "portrait",
+   "新春をむかえるひつじ(和風)",
+   "sitting formally and calmly, hands on knees, gentle smile, with a few small seigaiha-pattern accents on the wool"
+  ],
+  [
+   "pine",
+   "松とひつじ(和風)",
+   "standing next to a small stylised pine branch (matsu), looking up"
+  ],
+  [
+   "plum",
+   "梅の花とひつじ(和風)",
+   "holding a branch of red plum blossoms, eyes closed in a happy smile"
+  ],
+  [
+   "crane",
+   "鶴とひつじ(和風)",
+   "a sheep and a small elegant white crane facing each other, auspicious mood"
+  ],
+  [
+   "fan",
+   "扇をもつひつじ(和風)",
+   "holding an open folding fan with a simple sun motif, dancing pose"
+  ],
+  [
+   "sun",
+   "朝日とひつじ(和風)",
+   "sitting in front of a large stylised rising sun with gold rays and seigaiha waves, calm happy face"
+  ],
+  [
+   "mallet",
+   "打ち出の小づちをもつひつじ(和風)",
+   "holding a lucky mallet (uchide no kozuchi) with sparkles, cheerful"
+  ],
+  [
+   "bamboo",
+   "竹とひつじ(和風)",
+   "standing beside tall stylised bamboo, a small sparrow on its shoulder"
+  ],
+  [
+   "sakazuki",
+   "おせちとひつじ(和風)",
+   "sitting behind a small tiered osechi box (jubako) with colourful food, proud smile"
+  ],
+  [
+   "koto",
+   "琴をひくひつじ(和風)",
+   "playing a koto with eyes closed, gentle melody notes"
+  ],
+  [
+   "lantern",
+   "ちょうちんとひつじ(和風)",
+   "holding a round paper lantern with a warm glow, festive"
+  ],
+  [
+   "bow",
+   "ふかぶかとおじぎするひつじ(和風)",
+   "a deep formal bow in greeting, hands on knees"
+  ]
+ ]
+}

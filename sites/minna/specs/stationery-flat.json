@@ -1,0 +1,81 @@
+{
+ "slug": "stationery-flat",
+ "title": "文房具 シンプル",
+ "subject": "",
+ "genre": "school",
+ "touch": "flat",
+ "subject_en": "stationery items, each separate",
+ "lead": "えんぴつ、消しゴム、はさみ、のりなど、文房具12点。新学期のおたよりや、学習プリント、掲示物に。",
+ "tags": [
+  "文房具",
+  "えんぴつ",
+  "はさみ",
+  "学校",
+  "新学期",
+  "プリント",
+  "シンプル"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "pencil",
+   "えんぴつ",
+   "a yellow pencil"
+  ],
+  [
+   "eraser",
+   "消しゴム",
+   "a white eraser with a blue sleeve"
+  ],
+  [
+   "ruler",
+   "じょうぎ",
+   "a ruler (blank ticks)"
+  ],
+  [
+   "scissors",
+   "はさみ",
+   "a pair of scissors with red handles"
+  ],
+  [
+   "glue",
+   "のり",
+   "a glue stick"
+  ],
+  [
+   "notebook",
+   "ノート",
+   "a spiral notebook"
+  ],
+  [
+   "colorpencils",
+   "色えんぴつ",
+   "a fan of coloured pencils"
+  ],
+  [
+   "crayons",
+   "クレヨン",
+   "a box of crayons"
+  ],
+  [
+   "pencilcase",
+   "ふでばこ",
+   "a pencil case"
+  ],
+  [
+   "randoseru",
+   "ランドセル",
+   "a red school backpack (randoseru)"
+  ],
+  [
+   "globe",
+   "地球儀",
+   "a globe on a stand"
+  ],
+  [
+   "clock",
+   "とけい",
+   "a round wall clock"
+  ]
+ ]
+}

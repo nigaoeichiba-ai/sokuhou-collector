@@ -1,0 +1,80 @@
+{
+ "slug": "rabbit-pose",
+ "title": "うさぎのポーズいろいろ",
+ "subject": "うさぎ",
+ "genre": "animals",
+ "touch": "kawaii",
+ "subject_en": "the SAME rabbit character (kawaii mascot): a soft white rabbit with very long floppy lop ears that have pink tips, one ear folded over, round cotton-ball tail, tiny pink nose",
+ "lead": "ふにゃっと折れた長い耳と、ふわふわのしっぽが特ちょうの白いうさぎ。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "tags": [
+  "うさぎ",
+  "兎",
+  "ウサギ",
+  "ペット",
+  "動物",
+  "かわいい",
+  "キャラクター"
+ ],
+ "items": [
+  [
+   "wave",
+   "手をふる",
+   "standing and waving one hand cheerfully"
+  ],
+  [
+   "jump",
+   "とびはねる",
+   "jumping with joy, arms up, big smile"
+  ],
+  [
+   "sleep",
+   "ねむる",
+   "sleeping curled up peacefully with a tiny smile"
+  ],
+  [
+   "thanks",
+   "ありがとうと言う",
+   "bowing politely with eyes closed and a grateful smile"
+  ],
+  [
+   "eat",
+   "もぐもぐ食べる",
+   "happily eating a carrot"
+  ],
+  [
+   "heart",
+   "ハートをもつ",
+   "holding a red heart with a happy smile"
+  ],
+  [
+   "run",
+   "はしる",
+   "running fast with motion, determined happy face"
+  ],
+  [
+   "surprised",
+   "おどろく",
+   "surprised, wide round eyes, small round mouth, both hands raised"
+  ],
+  [
+   "wink",
+   "ウインクする",
+   "winking and giving a thumbs-up"
+  ],
+  [
+   "sad",
+   "しょんぼりする",
+   "sitting sadly with teary eyes and drooping posture, still cute"
+  ],
+  [
+   "angry",
+   "ぷんぷんおこる",
+   "puffed-cheek angry pout with clenched fists, cute and not scary"
+  ],
+  [
+   "cheer",
+   "ガッツポーズする",
+   "fist-pump cheering pose with sparkling eyes"
+  ]
+ ]
+}

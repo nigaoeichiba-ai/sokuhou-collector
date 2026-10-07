@@ -91,7 +91,7 @@ class MinnaBrowserTest(unittest.TestCase):
     def test_header_links_stay_readable_on_a_phone(self):
         self.assertTrue(self.out["nav"])
         for w, h in self.out["nav"]:
-            self.assertGreaterEqual(w, 50)
+            self.assertGreaterEqual(w, 40)      # a two-character label such as 特集 is about 48 px; vertical text would be far narrower and taller
             self.assertLessEqual(h, 60)
         self.assertLessEqual(self.out["scroll300"], 301)
 
