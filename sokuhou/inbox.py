@@ -66,21 +66,6 @@ def cmd_new(a: argparse.Namespace) -> int:
     return 0
 
 
-def summarize(site: str, records: list[dict]) -> str:
-    """One line for the owner's notice: the site, how many messages, and how many of each KIND (a fixed menu).  Never the message, the e-mail address or the page."""
-    kinds: dict[str, int] = {}
-    for r in records:
-        kinds[str(r.get("kind") or "(種類なし)")[:60]] = kinds.get(str(r.get("kind") or "(種類なし)")[:60], 0) + 1
-    return f"{site}: {len(records)}件(" + "、".join(f"{k} {n}件" for k, n in sorted(kinds.items())) + ")"
-
-
-def cmd_summary(a: argparse.Namespace) -> int:
-    recs = [json.loads(x) for x in Path(a.file).read_text(encoding="utf-8").splitlines() if x.strip()]
-    if recs:
-        print(summarize(a.site, recs))
-    return 0
-
-
 def decrypt(path: Path, key: Path = KEY) -> list[dict]:
     r = subprocess.run(["openssl", "smime", "-decrypt", "-inform", "DER", "-in", str(path), "-inkey", str(key)], capture_output=True)
     if r.returncode != 0:
@@ -115,15 +100,12 @@ def main() -> int:
     n.add_argument("--raw", required=True)
     n.add_argument("--state", required=True)
     n.add_argument("--out", required=True)
-    m = sub.add_parser("summary", help="one line per site for the owner's notice (no message text)")
-    m.add_argument("--site", required=True)
-    m.add_argument("--file", required=True)
     r = sub.add_parser("read")
     r.add_argument("--key", default=str(KEY))
     r.add_argument("--mark", action="store_true", help="remember that these messages were read")
     r.add_argument("--all", action="store_true", help="ignore what was read before")
     a = ap.parse_args()
-    return {"new": cmd_new, "summary": cmd_summary, "read": cmd_read}[a.cmd](a)
+    return cmd_new(a) if a.cmd == "new" else cmd_read(a)
 
 
 if __name__ == "__main__":
