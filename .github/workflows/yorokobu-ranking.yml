@@ -2,11 +2,11 @@ name: yorokobu-ranking
 
 # Every day: today's Rakuten Ichiba sales ranking of the gift genres and of the age/sex groups (about 40 lists x 4 pages), merged into data/yorokobu_ranking.json
 # together with a 45-day history of the places, so the site can show what rose, what is new and what stays (sites/yorokobu/ranking.py).
-# The commit touches only data/yorokobu_ranking.json, which redeploys the gift site only.  Needs RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY.
+# The commit touches only data/yorokobu_ranking.json; a commit made with the workflow token starts no other workflow, so the pages change at the next deploy (the daily one at 07:00 JST, or any push).  Needs RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY.
 
 on:
   schedule:
-    - cron: "20 21 * * *"   # 06:20 JST, before the 07:00 deploy
+    - cron: "50 20 * * *"   # 05:50 JST: the run takes about 30 minutes and must be on main before the 07:00 deploy (a commit made with the workflow token does not start a deploy by itself)
   workflow_dispatch:
 
 permissions:
