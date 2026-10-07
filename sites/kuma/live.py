@@ -11,7 +11,9 @@ Every number on these pages is counted from the stored rows, so a page cannot di
 """
 from __future__ import annotations
 
+import csv
 import hashlib
+import io
 import json
 import re
 from collections import Counter, defaultdict
@@ -33,17 +35,17 @@ FY_MONTHS = (4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3)
 
 # One entry per published source.  key = the data file (data/<key>_kuma.json); "pref" = the prefecture's short name.
 LIVE_SOURCES = {
-    "miyagi": {"pref": "宮城", "name": "宮城県", "label": "宮城県・県の公式", "monthly_label": "目撃のほか、痕跡などを含む",
+    "miyagi": {"pref": "宮城", "license": "宮城県の規約(自由に二次利用可)", "name": "宮城県", "label": "宮城県・県の公式", "monthly_label": "目撃のほか、痕跡などを含む",
                "as_of_text": "データは{d}時点です"},
-    "yamaguchi": {"pref": "山口", "name": "山口県", "label": "山口県・県警の公式", "monthly_label": "山口県警察が認知した目撃のほか、痕跡などを含む",
+    "yamaguchi": {"pref": "山口", "license": "CC BY", "name": "山口県", "label": "山口県・県警の公式", "monthly_label": "山口県警察が認知した目撃のほか、痕跡などを含む",
                   "as_of_text": "データは{d}の分までです"},
-    "okayama": {"pref": "岡山", "name": "岡山県", "label": "岡山県・県の公式。更新は不定期", "monthly_label": "種別の区別がなく、すべてを目撃として数えています",
+    "okayama": {"pref": "岡山", "license": "公共データ利用規約(第1.0版)", "name": "岡山県", "label": "岡山県・県の公式。更新は不定期", "monthly_label": "種別の区別がなく、すべてを目撃として数えています",
                 "as_of_text": "最新の記録は{d}の分までです(県の更新は不定期で、遅れて載ります)"},
-    "yamanashi": {"pref": "山梨", "name": "山梨県", "label": "山梨県・県の公式。ほぼ毎週更新", "monthly_label": "目撃の記録のみ",
+    "yamanashi": {"pref": "山梨", "license": "山梨県オープンデータ利用規約(商用利用可・出典明記)", "name": "山梨県", "label": "山梨県・県の公式。ほぼ毎週更新", "monthly_label": "目撃の記録のみ",
                   "as_of_text": "最新の記録は{d}の分までです"},
-    "sorachi": {"pref": "北海道", "name": "北海道空知総合振興局", "label": "北海道・空知総合振興局の公式(空知管内の24市町)", "monthly_label": "目撃のほか、痕跡などを含む(ヒグマの記録)",
+    "sorachi": {"pref": "北海道", "license": "CC-BY(北海道のサイトポリシー)", "name": "北海道空知総合振興局", "label": "北海道・空知総合振興局の公式(空知管内の24市町)", "monthly_label": "目撃のほか、痕跡などを含む(ヒグマの記録)",
                 "as_of_text": "データは{d}時点です"},
-    "akita": {"pref": "秋田", "name": "秋田県", "label": "秋田県・県の公式。更新は月1回ほど", "monthly_label": "目撃のほか、痕跡などを含む(クマの記録のみ)",
+    "akita": {"pref": "秋田", "license": "CC BY 4.0", "name": "秋田県", "label": "秋田県・県の公式。更新は月1回ほど", "monthly_label": "目撃のほか、痕跡などを含む(クマの記録のみ)",
               "as_of_text": "最新の記録は{d}の分までです"},
 }
 OTSU_PAGE = "https://www.city.otsu.lg.jp/soshiki/025/1605/g/t/74581.html"
@@ -207,7 +209,7 @@ def hub_page(page, d: dict, lv: dict) -> str:
 <h1>最新のクマの目撃情報(自治体の公式)</h1>
 <p class="lead">環境省の数字は、公表まで1〜2か月かかります。ここでは、自治体が公式に公表している目撃情報を、取得できるところから順に載せています。いまは、{len(infos)}か所({'・'.join(i['name'] for i in infos.values())})です。</p>
 {stats_html(len(recs), last30(recs, today), latest, today, cur)}
-<p><a class="btn" href="/map/">地図で見る(現在地の近くを探す)</a></p>
+<p><a class="btn" href="/map/">地図で見る(現在地の近くを探す)</a>{' <a href="/data/">データ(CSV)をダウンロード</a>' if licensed_sources(lv) else ''}</p>
 <h2>新しい順の記録(全国)</h2>
 {record_rows(recs[:HUB_ROWS], with_pref=True, with_city_link=True, by_slug_cities=by_pref)}
 <p class="notice">直近{HUB_ROWS}件です。道府県ごとの全件と、月別・市町村別は、下の道府県のページにあります。{CAUTION}</p>
@@ -366,3 +368,53 @@ def map_page(page, d: dict, lv: dict) -> str:
     return page(path="/map/", title=f"クマの目撃マップ(自治体の公式・直近{MAP_DAYS}日・{n(len(pts))}か所)",
                 description=f"自治体が公表したクマの目撃の位置を、地図に載せています。現在地の近くの記録も探せます(位置は端末の中だけで使います)。", body=body,
                 scripts=True, head_extra='<link rel="stylesheet" href="/assets/leaflet.css">\n')
+
+
+# ---------------------------------------------------------------- open data download
+
+CSV_NAME = "kuma-sightings.csv"
+CSV_HEAD = ["取得元", "ライセンス・利用条件", "都道府県", "市町村", "場所", "日時", "種別", "頭数", "緯度", "経度"]
+
+
+def licensed_sources(lv: dict) -> list[str]:
+    """Sources whose own terms allow re-use with a credit (the city of Otsu publishes none, so its records are not offered for download)."""
+    return [k for k in lv["infos"] if LIVE_SOURCES.get(k, {}).get("license")]
+
+
+def csv_text(lv: dict) -> str:
+    keys = set(licensed_sources(lv))
+    buf = io.StringIO()
+    w = csv.writer(buf, lineterminator="\r\n")
+    w.writerow(CSV_HEAD)
+    for r in lv["records"]:
+        if r["src"] not in keys:
+            continue
+        i = lv["infos"][r["src"]]
+        w.writerow([i["name"], LIVE_SOURCES[r["src"]]["license"], pf.full(r["pref"]), r["city"], r["place"], r["at"], r["kind"],
+                    "" if r["count"] is None else r["count"], "" if r["lat"] is None else r["lat"], "" if r["lon"] is None else r["lon"]])
+    return "\ufeff" + buf.getvalue()
+
+
+def data_page(page, d: dict, lv: dict) -> str:
+    cur = d["cur"]
+    keys = licensed_sources(lv)
+    rows_by = Counter(r["src"] for r in lv["records"])
+    src_rows = [[esc(lv["infos"][k]["name"]), esc(LIVE_SOURCES[k]["license"]), n(rows_by[k]), esc(lv["infos"][k]["credit"])] for k in keys]
+    skipped = [lv["infos"][k]["name"] for k in lv["infos"] if k not in keys]
+    total = sum(rows_by[k] for k in keys)
+    body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", "/live/"), ("データのダウンロード", None)])}
+<h1>クマの目撃情報のデータ(CSV・{fy_label(cur)})</h1>
+<p class="lead">自治体が公表しているクマの目撃情報のうち、<strong>再利用の条件が明示されている{len(keys)}か所</strong>の{fy_label(cur)}の記録{n(total)}件を、1つのCSVにまとめました。取得元・ライセンス・市町村名を、そろえてあります。</p>
+<p><a class="btn" href="/data/{CSV_NAME}" download>CSVをダウンロード({n(total)}件)</a></p>
+<h2>収録している取得元</h2>
+{table(["取得元", "ライセンス・利用条件", f"{fy_label(cur)}の記録", "出典の表記"], src_rows)}
+{('<p class="notice">次の取得元は、再利用の条件を確認できていないため、収録していません: ' + esc("・".join(skipped)) + '。</p>') if skipped else ''}
+<h2>列の意味</h2>
+<ul>
+<li><strong>取得元・ライセンス</strong>: 各行の出どころと、その取得元が示している利用条件です。再利用するときは、その条件(多くは出典の表示)に従ってください。</li>
+<li><strong>市町村</strong>: 郡の名前を除いて、そろえています(「阿武郡阿武町」は「阿武町」)。<strong>種別</strong>: 目撃・痕跡など、取得元の区分のままです。</li>
+<li><strong>日時</strong>: 取得元が公表している日付(と、あれば時刻)です。<strong>緯度・経度</strong>: 取得元が公表している場合だけです(小数点以下4桁に丸めています)。</li>
+</ul>
+<p class="notice">{CAUTION}このCSVは、このサイトが各自治体の公開データを加工して作成したもので、各自治体が作成したものではありません。引用するときは、「出典:各自治体の公開データを加工して作成(クマ出没速報)」のように、元の取得元と、加工したことを書いてください。ファイルは、データが更新されるたびに作り直しています(取得日: {jp_date(lv['today'].isoformat())})。</p>"""
+    return page(path="/data/", title=f"クマの目撃情報のデータ(CSV・{fy_label(cur)}・{len(keys)}か所・{n(total)}件)",
+                description=f"自治体が公表しているクマの目撃情報(再利用の条件が明示されている{len(keys)}か所・{n(total)}件)を、取得元とライセンスつきのCSVにまとめています。", body=body)
