@@ -91,6 +91,46 @@ def flood_alpha(rgb: np.ndarray, step: int = 7, lo: float = 4.0, hi: float = 30.
     return np.dstack([fg, a * 255.0]), info
 
 
+def punch_centre_holes(rgb: np.ndarray, alpha: np.ndarray, boxes: list[tuple[int, int, int, int]], min_frac: float = 0.03) -> int:
+    """Frames: the generator rarely leaves the middle plain white - it paints a soft smudge, a vignette or stray white shards there.  The drawn frame is
+    made of dark outlines and saturated colours, the middle is only light or grey.  So the region of 'not drawn' pixels that contains the middle of each
+    picture and does not reach the picture's edge is the inside of the frame; it becomes transparent.  Returns how many holes were punched."""
+    f = rgb.astype(np.int32)
+    lum = (f @ np.array([299, 587, 114])) // 1000
+    chroma = f.max(axis=2) - f.min(axis=2)
+    drawn = (lum < 170) | (chroma > 55)
+    import cv2
+    n = 0
+    big = np.ascontiguousarray(rgb).copy()                    # OpenCV needs a writable array
+    for x0, y0, x1, y1 in boxes:
+        cx, cy = (x0 + x1) // 2, (y0 + y1) // 2
+        crop = big[y0:y1, x0:x1].copy()
+        regions = []
+        # (1) not-drawn pixels (light or grey) connected to the middle: catches stray white shards
+        labels, _ = ndimage.label(~drawn[y0:y1, x0:x1])
+        lab = labels[cy - y0, cx - x0]
+        if lab:
+            regions.append(labels == lab)
+        # (2) a growth over gentle colour steps from the middle: catches a smooth dark smudge
+        mask = np.zeros((crop.shape[0] + 2, crop.shape[1] + 2), np.uint8)
+        cv2.floodFill(crop, mask, (cx - x0, cy - y0), (0, 0, 0), (8,) * 3, (8,) * 3, 4 | cv2.FLOODFILL_MASK_ONLY | (255 << 8))
+        regions.append(mask[1:-1, 1:-1] > 0)
+        union = np.zeros((y1 - y0, x1 - x0), bool)
+        for k, r in enumerate(regions):
+            touches = r[0, :].any() or r[-1, :].any() or r[:, 0].any() or r[:, -1].any()
+            # a frame with gaps (flowers, clouds) lets the light middle run out to the picture's edge: fine for the light-pixel region as long as it is not nearly the whole picture
+            ok = (r.sum() < 0.9 * r.size) if k == 0 else not touches
+            if ok and r.sum() >= min_frac * r.size:
+                union |= r
+        if not union.any():
+            continue
+        # also take the pale anti-aliasing fringe next to the hole, but never a thin drawn part (a dotted line) that sits right beside it
+        union = union | (ndimage.binary_dilation(union, iterations=3) & ~drawn[y0:y1, x0:x1])
+        alpha[y0:y1, x0:x1][union] = 0
+        n += 1
+    return n
+
+
 def clean_alpha(alpha: np.ndarray) -> np.ndarray:
     """Remove isolated alpha specks, fill pinholes inside solid regions."""
     solid = alpha > 200
@@ -192,6 +232,8 @@ def slice_sheet(path: Path, cols: int | None = None, rows: int | None = None, ke
             boxes = grid_boxes
             info["grouped_by_grid"] = True
     info["found"] = len(boxes)
+    if holes and boxes:
+        info["holes_punched"] = punch_centre_holes(rgb, rgba[..., 3], boxes)
     pieces: list[Piece] = []
     for i, (x0, y0, x1, y1) in enumerate(boxes):
         crop = rgba[y0:y1, x0:x1]

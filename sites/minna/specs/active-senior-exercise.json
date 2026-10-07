@@ -1,0 +1,86 @@
+{
+ "slug": "active-senior-exercise",
+ "title": "アクティブシニア運動",
+ "subject": "アクティブシニア運動",
+ "genre": "people",
+ "touch": "watercolor",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "An active Japanese senior woman around 68, short silver bob hair, coral exercise top, navy pants, soft watercolor fills with gentle loose outline, cheerful healthy posture, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "元気なシニア女性の運動場面を、水彩風のやわらかな線で描く素材です。健康づくり、介護予防、地域活動、体操教室の案内に自然になじみます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "シニア",
+  "健康",
+  "イラスト",
+  "運動",
+  "体操",
+  "散歩",
+  "ヨガ",
+  "水分補給",
+  "血圧",
+  "介護予防"
+ ],
+ "items": [
+  [
+   "radio-calisthenics",
+   "ラジオ体操する",
+   "The senior woman does a simple standing calisthenics pose, no text or letters in the picture."
+  ],
+  [
+   "walking",
+   "ウォーキングする",
+   "The senior woman walks briskly in side view with arms relaxed, no text or letters in the picture."
+  ],
+  [
+   "yoga",
+   "ヨガで座る",
+   "The senior woman sits in a simple yoga pose on a plain mat, no text or letters in the picture."
+  ],
+  [
+   "stretching",
+   "ストレッチする",
+   "The senior woman stretches one arm across the body while standing, no text or letters in the picture."
+  ],
+  [
+   "hydration",
+   "水分補給する",
+   "The senior woman drinks from a plain bottle after exercise, no text or letters in the picture."
+  ],
+  [
+   "blood-pressure",
+   "血圧を確認する",
+   "The senior woman sits with a simple blood pressure cuff, no text or letters in the picture."
+  ],
+  [
+   "walk-with-friend",
+   "友人と散歩する",
+   "The senior woman walks beside one friend with a clear gap between them, no text or letters in the picture."
+  ],
+  [
+   "light-training",
+   "軽い筋トレする",
+   "The senior woman lifts small plain dumbbells safely, no text or letters in the picture."
+  ],
+  [
+   "knee-care",
+   "膝を気にする",
+   "The senior woman sits and gently touches one knee with calm expression, no text or letters in the picture."
+  ],
+  [
+   "deep-breathing",
+   "深呼吸をする",
+   "The senior woman stands with hands near the chest and breathes deeply, no text or letters in the picture."
+  ],
+  [
+   "towel-exercise",
+   "タオル体操する",
+   "The senior woman stretches a plain towel between both hands, no text or letters in the picture."
+  ],
+  [
+   "accomplished",
+   "達成感を出す",
+   "The senior woman stands with a satisfied small victory pose, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

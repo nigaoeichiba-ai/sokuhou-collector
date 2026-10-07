@@ -1,0 +1,86 @@
+{
+ "slug": "store-staff-hospitality",
+ "title": "接客スタッフ基本素材",
+ "subject": "接客スタッフ基本素材",
+ "genre": "work",
+ "touch": "kawaii",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A polite Japanese woman shop staff member in her 30s, black hair tied back, white shirt, dark apron, small blank name tag, kawaii thick brown outline with flat round shapes, 4.5-head proportion, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "接客スタッフの基本動作を、ゆるかわな太線タッチでそろえた素材です。店舗案内、サービス説明、求人ページ、接遇研修に使いやすい内容です。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "接客",
+  "店舗",
+  "イラスト",
+  "スタッフ",
+  "レジ",
+  "案内",
+  "予約",
+  "清掃",
+  "在庫",
+  "お辞儀"
+ ],
+ "items": [
+  [
+   "welcome",
+   "迎えて挨拶する",
+   "The shop staff stands at an entrance and welcomes with a soft gesture, no text or letters in the picture."
+  ],
+  [
+   "cashier",
+   "レジで対応する",
+   "The shop staff stands behind a simple blank cash register, no text or letters in the picture."
+  ],
+  [
+   "product-guide",
+   "商品を案内する",
+   "The shop staff points toward a plain product shelf with blank packages, no text or letters in the picture."
+  ],
+  [
+   "bowing",
+   "丁寧にお辞儀",
+   "The shop staff makes a neat bow from the front, no text or letters in the picture."
+  ],
+  [
+   "phone-reservation",
+   "電話予約を聞く",
+   "The shop staff speaks on a phone while holding a blank memo pad, no text or letters in the picture."
+  ],
+  [
+   "complaint-support",
+   "困りごと対応",
+   "The shop staff listens calmly with open hands near a blank counter, no text or letters in the picture."
+  ],
+  [
+   "cleaning",
+   "店内を清掃する",
+   "The shop staff wipes a plain table with a cloth, no text or letters in the picture."
+  ],
+  [
+   "stock-check",
+   "在庫を確認する",
+   "The shop staff checks blank boxes on a shelf, no text or letters in the picture."
+  ],
+  [
+   "gift-wrapping",
+   "包装を整える",
+   "The shop staff wraps a plain gift box on a counter, no text or letters in the picture."
+  ],
+  [
+   "multilingual-guide",
+   "案内板を示す",
+   "The shop staff points to a blank signboard meant for guidance, no text or letters in the picture."
+  ],
+  [
+   "tablet-order",
+   "注文端末を使う",
+   "The shop staff holds a tablet with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "seeing-off",
+   "笑顔で見送る",
+   "The shop staff stands and waves gently toward the exit, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

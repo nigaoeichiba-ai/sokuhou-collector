@@ -1,0 +1,86 @@
+{
+ "slug": "disaster-prevention-family",
+ "title": "家族の防災行動素材",
+ "subject": "家族の防災行動素材",
+ "genre": "life",
+ "touch": "pictogram",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A simple Japanese family cast of three: father with short black hair, mother with medium brown hair, and child with yellow backpack, bold outline pictogram-like flat style, high readability at small size, consistent colors, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "家族の防災行動を、太線ピクトグラム風に読みやすく描く素材です。避難案内、防災訓練、備蓄リスト、地域広報の説明に役立ちます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "家族",
+  "防災",
+  "イラスト",
+  "避難",
+  "備蓄",
+  "地震",
+  "安全",
+  "給水",
+  "連絡",
+  "非常食"
+ ],
+ "items": [
+  [
+   "emergency-bag",
+   "防災袋を確認",
+   "One adult kneels beside an emergency bag with plain contents, no text or letters in the picture."
+  ],
+  [
+   "evacuating",
+   "避難して歩く",
+   "One adult walks with a plain backpack in side view, no text or letters in the picture."
+  ],
+  [
+   "helmet",
+   "ヘルメット着用",
+   "One child stands wearing a helmet and backpack, no text or letters in the picture."
+  ],
+  [
+   "under-desk",
+   "机の下で守る",
+   "One child crouches under a simple desk during an earthquake symbol, no text or letters in the picture."
+  ],
+  [
+   "flashlight",
+   "ライトを持つ",
+   "One adult holds a flashlight casting a plain beam, no text or letters in the picture."
+  ],
+  [
+   "water-supply",
+   "給水を受ける",
+   "One adult holds a water container near a plain tap, no text or letters in the picture."
+  ],
+  [
+   "contact-check",
+   "連絡を確認する",
+   "One adult checks a phone with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "help-senior",
+   "高齢者を支える",
+   "One adult walks beside a clearly separated senior figure with open space, no text or letters in the picture."
+  ],
+  [
+   "family-evacuation",
+   "家族で避難する",
+   "Three family members walk in a row with clear gaps between bodies, no text or letters in the picture."
+  ],
+  [
+   "hazard-map",
+   "地図を確認する",
+   "One adult looks at a blank folded map, no text or letters in the picture."
+  ],
+  [
+   "emergency-food",
+   "非常食を用意",
+   "One adult places plain cans and packets on a table, no text or letters in the picture."
+  ],
+  [
+   "safety-check",
+   "安否を確認する",
+   "One adult holds a phone with a blank screen and a calm check symbol, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

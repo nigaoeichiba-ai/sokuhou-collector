@@ -1,0 +1,86 @@
+{
+ "slug": "loose-parent-child",
+ "title": "ゆるい親子の日常素材",
+ "subject": "ゆるい親子の日常素材",
+ "genre": "people",
+ "touch": "loose",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A warm Japanese mother and small child pair, mother in her mid 30s with shoulder-length dark brown hair, cream sweater and blue jeans, child with short black hair and yellow hoodie, loose hand-drawn style, soft outlines, 3.8-head proportion, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "親子の日常場面を、ゆるい手書きタッチでやさしく描く素材です。育児、保育、暮らし、地域のお知らせ、家庭向け案内に使いやすいシリーズです。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "親子",
+  "家族",
+  "イラスト",
+  "育児",
+  "子ども",
+  "保育",
+  "日常",
+  "買い物",
+  "絵本",
+  "登園"
+ ],
+ "items": [
+  [
+   "walking-together",
+   "並んで歩く",
+   "The mother and child walk side by side with a small gap between them, no text or letters in the picture."
+  ],
+  [
+   "carrying-child",
+   "子どもを抱っこ",
+   "The mother holds the child in a simple carrying pose with clear silhouettes, no text or letters in the picture."
+  ],
+  [
+   "reading-book",
+   "絵本を読む",
+   "The mother and child sit separated on a mat looking at a blank picture book, no text or letters in the picture."
+  ],
+  [
+   "pushing-stroller",
+   "ベビーカーを押す",
+   "The mother pushes a simple stroller in side view, no text or letters in the picture."
+  ],
+  [
+   "daycare-walk",
+   "登園へ向かう",
+   "The mother walks behind the child who carries a plain small bag, no text or letters in the picture."
+  ],
+  [
+   "eating-meal",
+   "ごはんを食べる",
+   "The mother and child sit apart at a table with simple bowls, no text or letters in the picture."
+  ],
+  [
+   "comforting-child",
+   "泣く子をなだめる",
+   "The mother kneels beside the child and offers calm comfort without overlapping bodies, no text or letters in the picture."
+  ],
+  [
+   "playing-blocks",
+   "積み木で遊ぶ",
+   "The child plays with simple blank blocks while the mother watches nearby, no text or letters in the picture."
+  ],
+  [
+   "clinic-visit",
+   "予防接種へ行く",
+   "The mother and child stand in a calm clinic waiting pose with plain chairs, no text or letters in the picture."
+  ],
+  [
+   "shopping-together",
+   "買い物に行く",
+   "The mother pushes a cart while the child stands clearly beside it, no text or letters in the picture."
+  ],
+  [
+   "homework-help",
+   "宿題を見守る",
+   "The mother sits beside the child working on a blank notebook, no text or letters in the picture."
+  ],
+  [
+   "bedtime-routine",
+   "寝かしつける",
+   "The mother sits beside a small bed while the child lies under a plain blanket, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

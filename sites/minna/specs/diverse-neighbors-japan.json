@@ -1,0 +1,86 @@
+{
+ "slug": "diverse-neighbors-japan",
+ "title": "日本で暮らす多様な人々",
+ "subject": "日本で暮らす多様な人々",
+ "genre": "people",
+ "touch": "faceless",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A diverse faceless resident cast living in Japan, varied skin tones, varied hair textures, modest everyday clothing in muted blue, green, beige and gray, rounded flat shapes, no facial features, no stereotypes, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "日本で暮らす多様な住民の場面を、顔なしフラットで穏やかに表す素材です。地域、行政、多文化共生、生活案内の記事に使えます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "地域",
+  "暮らし",
+  "イラスト",
+  "多様性",
+  "住民",
+  "役所",
+  "日本語",
+  "病院",
+  "防災",
+  "交流"
+ ],
+ "items": [
+  [
+   "greeting",
+   "あいさつをする",
+   "One resident stands and gives a friendly greeting gesture, no text or letters in the picture."
+  ],
+  [
+   "trash-out",
+   "ごみ出しをする",
+   "One resident carries a plain trash bag to a simple collection spot, no text or letters in the picture."
+  ],
+  [
+   "city-office",
+   "役所で相談する",
+   "One resident sits at a blank consultation counter, no text or letters in the picture."
+  ],
+  [
+   "japanese-class",
+   "日本語を学ぶ",
+   "One resident sits with a blank notebook and pencil, no text or letters in the picture."
+  ],
+  [
+   "shopping",
+   "買い物をする",
+   "One resident carries a reusable shopping bag in side view, no text or letters in the picture."
+  ],
+  [
+   "hospital-reception",
+   "病院受付に行く",
+   "One resident stands at a blank hospital reception counter, no text or letters in the picture."
+  ],
+  [
+   "directions",
+   "道をたずねる",
+   "One resident points toward an empty direction space with a small question symbol, no text or letters in the picture."
+  ],
+  [
+   "disaster-drill",
+   "防災訓練に参加",
+   "One resident wears a helmet and holds a plain emergency bag, no text or letters in the picture."
+  ],
+  [
+   "neighbor-chat",
+   "近所で会話する",
+   "Two residents stand clearly separated and chat calmly, no text or letters in the picture."
+  ],
+  [
+   "school-contact",
+   "学校連絡を見る",
+   "One resident checks a phone with a blank screen beside a school bag, no text or letters in the picture."
+  ],
+  [
+   "notice-reading",
+   "チラシを読む",
+   "One resident looks at a blank multilingual-style flyer shape, no text or letters in the picture."
+  ],
+  [
+   "friendly-exchange",
+   "笑顔風に交流",
+   "Two residents wave to each other with a clear gap between them, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

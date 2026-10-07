@@ -1,0 +1,86 @@
+{
+ "slug": "gender-free-workers",
+ "title": "ジェンダーフリー職業素材",
+ "subject": "ジェンダーフリー職業素材",
+ "genre": "work",
+ "touch": "linecolor",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A gender-neutral Japanese worker cast with varied short and medium hairstyles, practical uniforms in blue, gray, white and green, no exaggerated gender traits, clean line-and-color style with thin navy outline and light fills, inclusive public-information posture, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "性別の固定観念に寄せず、さまざまな職業を線画カラーで示す素材です。採用、教育、公共資料、啓発コンテンツ、職業紹介に向きます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "職業",
+  "仕事",
+  "イラスト",
+  "多様性",
+  "技術者",
+  "保育士",
+  "介護士",
+  "科学者",
+  "ガイド",
+  "ボランティア"
+ ],
+ "items": [
+  [
+   "civil-engineer",
+   "土木技術者",
+   "One worker stands with a helmet and a blank clipboard, no text or letters in the picture."
+  ],
+  [
+   "pilot",
+   "パイロット姿",
+   "One worker stands in a simple pilot uniform beside a plain suitcase, no text or letters in the picture."
+  ],
+  [
+   "childcare-worker",
+   "保育士の見守り",
+   "One worker kneels near a clearly separated toy block area, no text or letters in the picture."
+  ],
+  [
+   "care-worker",
+   "介護士の支援",
+   "One worker stands beside an empty wheelchair with open posture, no text or letters in the picture."
+  ],
+  [
+   "scientist",
+   "科学者の観察",
+   "One worker in a lab coat observes a simple flask on a table, no text or letters in the picture."
+  ],
+  [
+   "cooking-person",
+   "料理をする人",
+   "One worker stirs a pot at a plain kitchen counter, no text or letters in the picture."
+  ],
+  [
+   "home-childcare",
+   "育児をする人",
+   "One worker sits near a baby blanket with clear spacing, no text or letters in the picture."
+  ],
+  [
+   "cleaning-person",
+   "掃除をする人",
+   "One worker mops a simple floor area, no text or letters in the picture."
+  ],
+  [
+   "candidate-speaker",
+   "候補者が話す",
+   "One worker speaks at a blank podium with one hand raised, no text or letters in the picture."
+  ],
+  [
+   "tour-guide",
+   "観光案内する",
+   "One worker gestures toward a blank map board, no text or letters in the picture."
+  ],
+  [
+   "disaster-volunteer",
+   "防災支援する",
+   "One worker carries a plain supply box with a vest, no text or letters in the picture."
+  ],
+  [
+   "diy-person",
+   "DIYをする人",
+   "One worker uses a simple screwdriver on a plain board, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

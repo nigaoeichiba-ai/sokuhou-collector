@@ -1,0 +1,86 @@
+{
+ "slug": "simple-senior-digital",
+ "title": "シニアのデジタル生活",
+ "subject": "シニアのデジタル生活",
+ "genre": "people",
+ "touch": "linecolor",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "An active Japanese senior man around 70, short silver hair, round glasses, light blue cardigan, beige slacks, simple line-and-color style with thin navy outline and light fills, friendly posture, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "シニア男性のデジタル利用場面を、線画カラーで見やすくまとめた素材です。スマホ講座、行政案内、生活支援、防犯記事に便利です。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "シニア",
+  "高齢者",
+  "イラスト",
+  "スマホ",
+  "タブレット",
+  "相談",
+  "診療",
+  "メール",
+  "防犯",
+  "健康"
+ ],
+ "items": [
+  [
+   "using-smartphone",
+   "スマホを見る",
+   "The senior man stands and looks at a phone with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "using-tablet",
+   "タブレット操作",
+   "The senior man sits and taps a tablet with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "scan-code",
+   "コードを読み取る",
+   "The senior man points a phone at a plain square code-like symbol with no readable detail, no text or letters in the picture."
+  ],
+  [
+   "telemedicine",
+   "オンライン診療",
+   "The senior man sits facing a tablet with a blank medical call screen, no text or letters in the picture."
+  ],
+  [
+   "family-video-call",
+   "家族と通話する",
+   "The senior man smiles at a tablet with a blank screen and small abstract face circles, no text or letters in the picture."
+  ],
+  [
+   "asking-help",
+   "困って相談する",
+   "The senior man stands beside a blank phone and raises one hand in a help-seeking pose, no text or letters in the picture."
+  ],
+  [
+   "step-counter",
+   "歩数計を確認",
+   "The senior man checks a wrist device with a blank face, no text or letters in the picture."
+  ],
+  [
+   "light-exercise",
+   "体操をする",
+   "The senior man does a simple standing stretch, no text or letters in the picture."
+  ],
+  [
+   "shopping-app",
+   "買い物アプリ",
+   "The senior man holds a phone with a blank shop-like screen and a plain bag nearby, no text or letters in the picture."
+  ],
+  [
+   "scam-call",
+   "怪しい電話に驚く",
+   "The senior man reacts to a ringing phone with a warning symbol nearby, no text or letters in the picture."
+  ],
+  [
+   "writing-email",
+   "メールを書く",
+   "The senior man sits at a laptop with a blank message screen, no text or letters in the picture."
+  ],
+  [
+   "peace-smile",
+   "笑顔でピース",
+   "The senior man stands making a simple peace sign and smiling, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}
