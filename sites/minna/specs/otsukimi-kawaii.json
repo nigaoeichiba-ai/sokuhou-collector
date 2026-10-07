@@ -1,0 +1,87 @@
+{
+ "slug": "otsukimi-kawaii",
+ "title": "お月見のイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "moon-viewing items and cute white rabbits, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "お月見だんご、ススキ、満月、月を見るうさぎ。十五夜のお知らせや、秋の飾りにぴったりのイラスト12点です。",
+ "tags": [
+  "お月見",
+  "十五夜",
+  "月",
+  "うさぎ",
+  "だんご",
+  "ススキ",
+  "9月",
+  "秋"
+ ],
+ "season": {
+  "from": "08-25",
+  "to": "10-10"
+ },
+ "holes": false,
+ "items": [
+  [
+   "moon",
+   "まんまるの月",
+   "a big full moon with a few small stars"
+  ],
+  [
+   "dango",
+   "お月見だんご",
+   "a pyramid of round white dumplings on a stand"
+  ],
+  [
+   "susuki",
+   "ススキと花びん",
+   "pampas grass in a vase"
+  ],
+  [
+   "rabbit-look",
+   "月を見るうさぎ",
+   "a cute white rabbit sitting and looking up at the moon, seen from behind-three-quarter"
+  ],
+  [
+   "rabbit-mochi",
+   "もちをつくうさぎ",
+   "a cute rabbit pounding rice with a mallet"
+  ],
+  [
+   "rabbit-dango",
+   "だんごを食べるうさぎ",
+   "a cute rabbit happily eating a dumpling"
+  ],
+  [
+   "crescent",
+   "三日月",
+   "a smiling crescent moon"
+  ],
+  [
+   "tea",
+   "おだんごとお茶",
+   "a plate of dumplings with a cup of tea"
+  ],
+  [
+   "cloud",
+   "月と雲",
+   "the moon behind a soft cloud"
+  ],
+  [
+   "lantern",
+   "ちょうちん",
+   "a round paper lantern"
+  ],
+  [
+   "sweets",
+   "栗と芋のおかし",
+   "chestnut and sweet potato sweets on a plate"
+  ],
+  [
+   "rabbits-two",
+   "月見をするうさぎ",
+   "two cute rabbits sitting side by side with a dumpling between them, clearly separated"
+  ]
+ ]
+}

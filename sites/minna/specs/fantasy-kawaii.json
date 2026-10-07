@@ -1,0 +1,84 @@
+{
+ "slug": "fantasy-kawaii",
+ "title": "ファンタジーのイラスト",
+ "subject": "",
+ "genre": "animals",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "original cute fantasy characters, kawaii, one per picture, wholesome Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "ユニコーン、人魚、妖精、ドラゴン、魔法使いなど、おとぎ話のかわいいキャラクター12点。",
+ "tags": [
+  "ファンタジー",
+  "ユニコーン",
+  "人魚",
+  "妖精",
+  "ドラゴン",
+  "魔法",
+  "お城",
+  "ゆめかわ"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "unicorn",
+   "ユニコーン",
+   "a white unicorn with a rainbow mane"
+  ],
+  [
+   "mermaid",
+   "人魚",
+   "a cute mermaid with a pink tail"
+  ],
+  [
+   "fairy",
+   "妖精",
+   "a small fairy with wings and a wand"
+  ],
+  [
+   "dragon",
+   "ドラゴン",
+   "a friendly baby dragon"
+  ],
+  [
+   "wizard",
+   "魔法使い",
+   "a cute wizard child with a pointed hat"
+  ],
+  [
+   "castle",
+   "お城",
+   "a small fairy-tale castle"
+  ],
+  [
+   "crown",
+   "王冠とまほうの杖",
+   "a crown and a star wand"
+  ],
+  [
+   "potion",
+   "魔法のびん",
+   "a sparkling potion bottle"
+  ],
+  [
+   "prince",
+   "王子さま",
+   "a cute prince in a blue cape"
+  ],
+  [
+   "princess",
+   "お姫さま",
+   "a cute princess in a pink dress"
+  ],
+  [
+   "pegasus",
+   "ペガサス",
+   "a winged white horse"
+  ],
+  [
+   "star-moon",
+   "星と月の魔法",
+   "a moon and stars with sparkles"
+  ]
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "slug": "hanami-spring-kawaii",
+ "title": "お花見・春のイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "spring and cherry-blossom picnic items and animals, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "桜、花見だんご、お弁当、桜の下のどうぶつ。お花見や春のイベントのお知らせに使える12点。",
+ "tags": [
+  "お花見",
+  "桜",
+  "春",
+  "お弁当",
+  "ピクニック",
+  "3月",
+  "4月",
+  "新学期"
+ ],
+ "season": {
+  "from": "02-20",
+  "to": "04-30"
+ },
+ "holes": false,
+ "items": [
+  [
+   "sakura-branch",
+   "桜の枝",
+   "a cherry blossom branch"
+  ],
+  [
+   "petals",
+   "桜の花びら",
+   "falling cherry petals in a small swirl"
+  ],
+  [
+   "bento",
+   "お花見のお弁当",
+   "an open picnic lunch box"
+  ],
+  [
+   "sheet",
+   "レジャーシート",
+   "a picnic blanket with a basket"
+  ],
+  [
+   "dango",
+   "花見だんご",
+   "tricolour dumplings"
+  ],
+  [
+   "tea",
+   "お茶とおにぎり",
+   "a thermos cup and rice balls"
+  ],
+  [
+   "cat",
+   "桜とねこ",
+   "a cat sitting under a blossom branch"
+  ],
+  [
+   "rabbit",
+   "桜とうさぎ",
+   "a rabbit holding a petal"
+  ],
+  [
+   "bear",
+   "お花見のくま",
+   "a bear eating a rice ball"
+  ],
+  [
+   "bird",
+   "桜と小鳥",
+   "a small bird on a blossom branch"
+  ],
+  [
+   "tulip",
+   "春の花",
+   "tulips and a daffodil"
+  ],
+  [
+   "butterfly",
+   "ちょうちょう",
+   "a butterfly over a flower"
+  ]
+ ]
+}

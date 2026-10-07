@@ -82,5 +82,8 @@
    "The wheelchair user moves forward with an upbeat posture, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": [
+  "watching-sports"
+ ]
 }

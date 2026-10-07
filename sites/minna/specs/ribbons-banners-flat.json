@@ -1,0 +1,83 @@
+{
+ "slug": "ribbons-banners-flat",
+ "title": "リボン・見出しかざり",
+ "subject": "",
+ "genre": "deco",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "blank ribbons, banners and labels with an empty centre for text, each a separate item, flat colours Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "リボン、バナー、ラベル、ふきだし風の見出しかざり12点。文字を入れて、見出しやタイトルに。中は空です。",
+ "tags": [
+  "リボン",
+  "見出し",
+  "バナー",
+  "かざり",
+  "タイトル",
+  "吹き出し",
+  "ラベル"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "ribbon-red",
+   "赤いリボン",
+   "a red ribbon banner"
+  ],
+  [
+   "ribbon-blue",
+   "青いリボン",
+   "a blue ribbon banner"
+  ],
+  [
+   "label",
+   "ラベル",
+   "a rounded rectangle label with a small bow"
+  ],
+  [
+   "banner",
+   "旗のバナー",
+   "a hanging banner with two pennant ends"
+  ],
+  [
+   "scroll",
+   "巻物",
+   "an unrolled scroll"
+  ],
+  [
+   "tag",
+   "値札",
+   "a hanging tag with a string"
+  ],
+  [
+   "badge",
+   "バッジ",
+   "a round badge with a ribbon tail"
+  ],
+  [
+   "stamp",
+   "スタンプ枠",
+   "a scalloped round stamp frame"
+  ],
+  [
+   "heading",
+   "見出しのリボン",
+   "a long heading ribbon with folded ends"
+  ],
+  [
+   "bunting",
+   "ガーランド",
+   "a string of triangle flags"
+  ],
+  [
+   "cloud",
+   "雲のラベル",
+   "a cloud-shaped label"
+  ],
+  [
+   "star",
+   "星のバッジ",
+   "a star-shaped badge"
+  ]
+ ]
+}

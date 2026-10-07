@@ -82,5 +82,6 @@
    "One student walks with a school bag in side view, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": []
 }

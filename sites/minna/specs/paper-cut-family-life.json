@@ -82,5 +82,11 @@
    "The family member opens a simple blank window in side view, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": [
+  "carrying-box",
+  "neighbor-greeting",
+  "phone-call",
+  "sorting-trash"
+ ]
 }

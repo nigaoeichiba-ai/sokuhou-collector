@@ -1,0 +1,83 @@
+{
+ "slug": "kitchen-tools-flat",
+ "title": "調理器具のイラスト",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "kitchen tools, each a separate object, flat Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "フライパン、鍋、包丁、まな板、菜箸など、料理のレシピやキッチン用品の紹介に使える12点。",
+ "tags": [
+  "料理",
+  "調理器具",
+  "フライパン",
+  "鍋",
+  "包丁",
+  "キッチン",
+  "レシピ"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "pan",
+   "フライパン",
+   "a frying pan"
+  ],
+  [
+   "pot",
+   "なべ",
+   "a cooking pot with a lid"
+  ],
+  [
+   "knife",
+   "包丁とまな板",
+   "a kitchen knife and a cutting board"
+  ],
+  [
+   "chopsticks",
+   "菜箸",
+   "cooking chopsticks"
+  ],
+  [
+   "ladle",
+   "おたま",
+   "a ladle"
+  ],
+  [
+   "kettle",
+   "やかん",
+   "a kettle"
+  ],
+  [
+   "bowl",
+   "ボウルとあわだて器",
+   "a bowl and a whisk"
+  ],
+  [
+   "peeler",
+   "ピーラー",
+   "a vegetable peeler"
+  ],
+  [
+   "scale",
+   "はかり",
+   "a kitchen scale"
+  ],
+  [
+   "rice",
+   "炊飯器",
+   "a rice cooker"
+  ],
+  [
+   "mitt",
+   "ミトン",
+   "oven mitts"
+  ],
+  [
+   "apron",
+   "エプロン",
+   "an apron"
+  ]
+ ]
+}

@@ -1,0 +1,84 @@
+{
+ "slug": "birds-kawaii",
+ "title": "ことりのイラスト",
+ "subject": "",
+ "genre": "animals",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "cute birds, one species per picture, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "すずめ、うぐいす、つばめ、インコ、はくちょうなど、かわいい鳥12種類。",
+ "tags": [
+  "鳥",
+  "ことり",
+  "すずめ",
+  "うぐいす",
+  "つばめ",
+  "インコ",
+  "はくちょう",
+  "ハト"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "sparrow",
+   "すずめ",
+   "a round sparrow"
+  ],
+  [
+   "uguisu",
+   "うぐいす",
+   "a green-brown bush warbler"
+  ],
+  [
+   "swallow",
+   "つばめ",
+   "a swallow with a forked tail"
+  ],
+  [
+   "parakeet",
+   "インコ",
+   "a blue and green parakeet"
+  ],
+  [
+   "swan",
+   "はくちょう",
+   "a white swan"
+  ],
+  [
+   "pigeon",
+   "はと",
+   "a grey pigeon"
+  ],
+  [
+   "crane",
+   "つる",
+   "a red-crowned crane"
+  ],
+  [
+   "duck",
+   "かも",
+   "a mallard duck"
+  ],
+  [
+   "robin",
+   "こまどり",
+   "a small robin with an orange chest"
+  ],
+  [
+   "kingfisher",
+   "かわせみ",
+   "a blue kingfisher"
+  ],
+  [
+   "chicken",
+   "にわとり",
+   "a rooster"
+  ],
+  [
+   "flamingo",
+   "フラミンゴ",
+   "a pink flamingo standing on one leg"
+  ]
+ ]
+}

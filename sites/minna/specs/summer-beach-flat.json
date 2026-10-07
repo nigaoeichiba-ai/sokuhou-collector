@@ -1,0 +1,88 @@
+{
+ "slug": "summer-beach-flat",
+ "title": "海・夏休みのイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "summer beach icons, each a separate object, flat Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "浮き輪、ビーチボール、ヤシの木、貝がらなど、海と夏休みのイラスト12点。",
+ "tags": [
+  "夏",
+  "海",
+  "夏休み",
+  "浮き輪",
+  "ビーチ",
+  "ひまわり",
+  "麦わら帽子",
+  "7月",
+  "8月"
+ ],
+ "season": {
+  "from": "06-01",
+  "to": "08-31"
+ },
+ "holes": false,
+ "items": [
+  [
+   "floatring",
+   "浮き輪",
+   "a striped swim ring"
+  ],
+  [
+   "beachball",
+   "ビーチボール",
+   "a colourful beach ball"
+  ],
+  [
+   "palm",
+   "ヤシの木",
+   "a palm tree"
+  ],
+  [
+   "shell",
+   "貝がら",
+   "two seashells"
+  ],
+  [
+   "starfish",
+   "ひとで",
+   "a starfish"
+  ],
+  [
+   "sunglass",
+   "サングラス",
+   "sunglasses"
+  ],
+  [
+   "strawhat",
+   "麦わら帽子",
+   "a straw hat with a ribbon"
+  ],
+  [
+   "sunflower",
+   "ひまわり",
+   "a sunflower"
+  ],
+  [
+   "icecream",
+   "アイスクリーム",
+   "two ice-cream cones"
+  ],
+  [
+   "sandcastle",
+   "砂のお城",
+   "a sand castle with a flag"
+  ],
+  [
+   "umbrella",
+   "ビーチパラソル",
+   "a beach umbrella and a chair"
+  ],
+  [
+   "ship",
+   "ヨット",
+   "a small sailing boat"
+  ]
+ ]
+}

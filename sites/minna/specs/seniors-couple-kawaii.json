@@ -83,5 +83,6 @@
  "sheet_subjects": [
   "Japanese grandmother about 70, short gray permed hair, small round glasses, light skin with subtle smile lines, lilac cardigan over a white blouse, long beige skirt, brown walking shoes, 3-head-tall, dot eyes, rosy cheeks",
   "Japanese grandfather about 72, bald on top with white hair at the sides, thick white eyebrows, round glasses, light skin, green cardigan over a checkered shirt, brown trousers, brown walking shoes, slightly bent back, 3-head-tall, dot eyes"
- ]
+ ],
+ "exclude": []
 }

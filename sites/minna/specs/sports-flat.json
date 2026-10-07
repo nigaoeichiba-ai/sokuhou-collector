@@ -1,0 +1,83 @@
+{
+ "slug": "sports-flat",
+ "title": "スポーツのイラスト",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "sports equipment, each a separate object, flat Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "野球、サッカー、テニス、水泳など、スポーツ用品のイラスト12点。運動会や部活のお知らせに。",
+ "tags": [
+  "スポーツ",
+  "野球",
+  "サッカー",
+  "テニス",
+  "水泳",
+  "運動会",
+  "部活"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "baseball",
+   "野球のバットとボール",
+   "a baseball bat and ball"
+  ],
+  [
+   "soccer",
+   "サッカーボール",
+   "a soccer ball"
+  ],
+  [
+   "tennis",
+   "テニスラケット",
+   "a tennis racket and ball"
+  ],
+  [
+   "swim",
+   "水泳ゴーグル",
+   "swimming goggles and a cap"
+  ],
+  [
+   "basket",
+   "バスケットボール",
+   "a basketball"
+  ],
+  [
+   "volley",
+   "バレーボール",
+   "a volleyball"
+  ],
+  [
+   "shoes",
+   "ランニングシューズ",
+   "running shoes"
+  ],
+  [
+   "medal",
+   "メダル",
+   "a medal with a ribbon"
+  ],
+  [
+   "trophy",
+   "トロフィー",
+   "a trophy cup"
+  ],
+  [
+   "badminton",
+   "バドミントン",
+   "a badminton racket and shuttlecock"
+  ],
+  [
+   "golf",
+   "ゴルフ",
+   "a golf club and ball"
+  ],
+  [
+   "flag",
+   "運動会のはた",
+   "a string of sports-day flags"
+  ]
+ ]
+}

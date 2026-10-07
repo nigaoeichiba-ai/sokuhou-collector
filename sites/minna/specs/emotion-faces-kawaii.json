@@ -1,0 +1,84 @@
+{
+ "slug": "emotion-faces-kawaii",
+ "title": "表情アイコン",
+ "subject": "",
+ "genre": "icon",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "round yellow cartoon faces with simple expressions, no body, each a separate item, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "笑顔、泣き顔、おどろき、ねむい…。気持ちを伝える、まるい顔のアイコン12種類。LINEやSNS、アンケートに。",
+ "tags": [
+  "表情",
+  "顔",
+  "アイコン",
+  "感情",
+  "絵文字",
+  "笑顔",
+  "泣き顔",
+  "怒り顔"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "smile",
+   "にっこり",
+   "a big smile with closed happy eyes"
+  ],
+  [
+   "laugh",
+   "大わらい",
+   "laughing with tears of joy"
+  ],
+  [
+   "wink",
+   "ウインク",
+   "a wink with a tongue"
+  ],
+  [
+   "love",
+   "ハートの目",
+   "heart eyes and blushing cheeks"
+  ],
+  [
+   "surprise",
+   "びっくり",
+   "wide eyes and an open mouth"
+  ],
+  [
+   "cry",
+   "なきがお",
+   "crying with big tears"
+  ],
+  [
+   "angry",
+   "おこった顔",
+   "puffed cheeks angry face"
+  ],
+  [
+   "sleepy",
+   "ねむい",
+   "a sleepy face with a bubble"
+  ],
+  [
+   "think",
+   "かんがえ中",
+   "a thinking face with a hand on the chin"
+  ],
+  [
+   "cool",
+   "かっこいい",
+   "a face with sunglasses"
+  ],
+  [
+   "sick",
+   "ぐあいがわるい",
+   "a face with a thermometer"
+  ],
+  [
+   "thanks",
+   "ありがとう",
+   "a bowing grateful face"
+  ]
+ ]
+}

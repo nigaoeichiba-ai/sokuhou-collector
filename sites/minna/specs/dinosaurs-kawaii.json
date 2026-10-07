@@ -1,0 +1,82 @@
+{
+ "slug": "dinosaurs-kawaii",
+ "title": "きょうりゅうのイラスト",
+ "subject": "",
+ "genre": "animals",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "cute original dinosaurs inspired by famous species, friendly smiles, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "ティラノサウルスふう、トリケラトプスふうなど、かわいい恐竜12種類。子ども向けの掲示に。",
+ "tags": [
+  "恐竜",
+  "きょうりゅう",
+  "ティラノ",
+  "トリケラ",
+  "子ども",
+  "化石"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "trex",
+   "ティラノサウルスふう",
+   "a cute tyrannosaur-like dinosaur"
+  ],
+  [
+   "tricera",
+   "トリケラトプスふう",
+   "a cute three-horned dinosaur"
+  ],
+  [
+   "stego",
+   "ステゴサウルスふう",
+   "a cute plated dinosaur"
+  ],
+  [
+   "bronto",
+   "ブラキオサウルスふう",
+   "a cute long-necked dinosaur"
+  ],
+  [
+   "ptera",
+   "プテラノドンふう",
+   "a cute flying reptile with wings"
+  ],
+  [
+   "ankylo",
+   "アンキロサウルスふう",
+   "a cute armoured dinosaur"
+  ],
+  [
+   "raptor",
+   "ラプトルふう",
+   "a cute small feathered dinosaur"
+  ],
+  [
+   "egg",
+   "たまごから生まれる",
+   "a baby dinosaur hatching from an egg"
+  ],
+  [
+   "fossil",
+   "化石",
+   "a dinosaur skeleton fossil in a rock"
+  ],
+  [
+   "footprint",
+   "あしあと",
+   "dinosaur footprints"
+  ],
+  [
+   "volcano",
+   "火山と恐竜",
+   "a small volcano with a cute dinosaur"
+  ],
+  [
+   "plesio",
+   "海のきょうりゅうふう",
+   "a cute long-necked sea reptile"
+  ]
+ ]
+}
