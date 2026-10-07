@@ -636,6 +636,24 @@ def fixed_dates(today: date) -> dict:
     return out
 
 
+def countdown(target: date, today: date) -> str:
+    """「あと12日」 for a day that has not passed yet (the build runs every day, so the number is always today's); empty for a past day."""
+    n = (target - today).days
+    return "" if n < 0 else ("今日" if n == 0 else f"あと{n}日")
+
+
+def next_fixed(slug: str, today: date) -> date | None:
+    """The next date of an occasion whose day is the same for everybody (母の日, 父の日, 敬老の日, クリスマス ...), or None."""
+    days = sorted(date.fromisoformat(x) for x in fixed_dates(today).get(slug, []))
+    return next((x for x in days if x >= today), None)
+
+
+def season_tile(o: dict, today: date) -> str:
+    when = next_fixed(o["slug"], today)
+    lead = f"{countdown(when, today)}({when.month}月{when.day}日)・" if when else ""
+    return tile(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"], lead + o["timing"][:30] + "…", wide=True)
+
+
 def memo_data(d: dict, cfg: dict, today: date) -> dict:
     c = d["c"]
     return {"fixed": fixed_dates(today), "names": {"occ": {o["slug"]: o["name"] for o in c["occasions"]}, "rec": {r["slug"]: r["name"] for r in c["recipients"]}},
@@ -836,7 +854,7 @@ def ranking_band(d: dict) -> str:
 def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
     set_keep()
     c = d["c"]
-    season = "".join(tile(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"], o["timing"][:30] + "…", wide=True) for o in season_occasions(c, today)[:6])
+    season = "".join(season_tile(o, today) for o in season_occasions(c, today)[:6])
     month_more = (f'<p class="more"><a class="btn btn-sub" href="/month/{today.month}/">{today.month}月の贈りどきを、ぜんぶ見る</a></p>'
                   if today.month in month_pages(c, today) else "")
     occ = "".join(round_chip(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"]) for o in c["occasions"])
@@ -1089,7 +1107,10 @@ def month_page(d: dict, cfg: dict, preview: bool, m: int, today: date, months: l
     c = d["c"]
     mc = month_content(c, m, today)
     tiles = "".join(tile(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"], o["timing"][:30] + "…", wide=True) for o in mc["occ"])
-    rows = "".join(f'<tr><td>{g["date"].month}月{g["date"].day}日</td><td>{esc(g["label"])}<small>({esc(g["when"])})</small></td>'
+    def left(g: dict) -> str:
+        t = countdown(g["date"], today)
+        return f"<small>({t})</small>" if t else ""
+    rows = "".join(f'<tr><td>{g["date"].month}月{g["date"].day}日{left(g)}</td><td>{esc(g["label"])}<small>({esc(g["when"])})</small></td>'
                    f'<td>{g["start"].month}月{g["start"].day}日</td></tr>' for g in mc["days"])
     srows = "".join(f'<tr><td>{g["date"].month}月{g["date"].day}日</td><td>{esc(g["label"])}<small>({esc(g["when"])})</small></td>'
                     f'<td>{g["start"].month}月{g["start"].day}日</td></tr>' for g in mc["starts"])
