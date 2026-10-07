@@ -531,3 +531,6 @@ p, li { overflow-wrap: anywhere; }
 /* narrow phones (300px): form controls never set the width of their card */
 .tb-form > *, .calc-card > * { min-width: 0; }
 .tb-form input, .tb-form select, .calc-card input, .calc-card select { box-sizing: border-box; width: 100%; min-width: 0; }
+.memo > *, .memo-form > *, .memo-list-wrap > * { min-width: 0; }
+.memo-form input, .memo-form select, .memo-form textarea { box-sizing: border-box; width: 100%; max-width: 100%; }
+@media (max-width: 400px) { .memo-form, .memo-list-wrap { padding: 16px 14px; } }
