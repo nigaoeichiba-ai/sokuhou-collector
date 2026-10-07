@@ -1,0 +1,227 @@
+{
+ "added": "2026-10-08",
+ "slug": "family-winter-faceless",
+ "title": "冬のくらしの人物イラスト",
+ "genre": "people",
+ "touch": "faceless",
+ "lead": "マフラー、コート、雪遊び。顔を描かない人物イラストで、冬の生活シーンを12点。",
+ "tags": [
+  "冬",
+  "人物",
+  "顔なし",
+  "コート",
+  "マフラー",
+  "雪遊び"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "family-winter-faceless-coat",
+   "file": "family-winter-faceless-coat.webp",
+   "title": "コートを着る人",
+   "desc": "コートを着る人のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "冬のくらしの人物イラスト",
+    "コートを着る人",
+    "顔なしミニマル"
+   ],
+   "w": 330,
+   "h": 504
+  },
+  {
+   "id": "family-winter-faceless-scarf",
+   "file": "family-winter-faceless-scarf.webp",
+   "title": "マフラーを巻く人",
+   "desc": "マフラーを巻く人のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "マフラー",
+    "冬のくらしの人物イラスト",
+    "マフラーを巻く人",
+    "顔なしミニマル"
+   ],
+   "w": 208,
+   "h": 498
+  },
+  {
+   "id": "family-winter-faceless-walk",
+   "file": "family-winter-faceless-walk.webp",
+   "title": "雪道を歩く人",
+   "desc": "雪道を歩く人のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "冬のくらしの人物イラスト",
+    "雪道を歩く人",
+    "顔なしミニマル"
+   ],
+   "w": 314,
+   "h": 517
+  },
+  {
+   "id": "family-winter-faceless-snowplay",
+   "file": "family-winter-faceless-snowplay.webp",
+   "title": "雪遊びの子ども",
+   "desc": "雪遊びの子どものイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "雪遊び",
+    "冬のくらしの人物イラスト",
+    "雪遊びの子ども",
+    "顔なしミニマル"
+   ],
+   "w": 399,
+   "h": 420
+  },
+  {
+   "id": "family-winter-faceless-kotatsu",
+   "file": "family-winter-faceless-kotatsu.webp",
+   "title": "こたつでくつろぐ人",
+   "desc": "こたつでくつろぐ人のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "冬のくらしの人物イラスト",
+    "こたつでくつろぐ人",
+    "顔なしミニマル"
+   ],
+   "w": 506,
+   "h": 427
+  },
+  {
+   "id": "family-winter-faceless-shovel",
+   "file": "family-winter-faceless-shovel.webp",
+   "title": "雪かきをする人",
+   "desc": "雪かきをする人のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "冬のくらしの人物イラスト",
+    "雪かきをする人",
+    "顔なしミニマル"
+   ],
+   "w": 413,
+   "h": 475
+  },
+  {
+   "id": "family-winter-faceless-coffee",
+   "file": "family-winter-faceless-coffee.webp",
+   "title": "あたたかい飲みものの人",
+   "desc": "あたたかい飲みものの人のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "冬のくらしの人物イラスト",
+    "あたたかい飲みものの人",
+    "顔なしミニマル"
+   ],
+   "w": 193,
+   "h": 482
+  },
+  {
+   "id": "family-winter-faceless-family",
+   "file": "family-winter-faceless-family.webp",
+   "title": "手をつなぐ親子",
+   "desc": "手をつなぐ親子のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "冬のくらしの人物イラスト",
+    "手をつなぐ親子",
+    "顔なしミニマル"
+   ],
+   "w": 376,
+   "h": 487
+  },
+  {
+   "id": "family-winter-faceless-senior",
+   "file": "family-winter-faceless-senior.webp",
+   "title": "ひなたぼっこのお年寄り",
+   "desc": "ひなたぼっこのお年寄りのイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "冬のくらしの人物イラスト",
+    "ひなたぼっこのお年寄り",
+    "顔なしミニマル"
+   ],
+   "w": 441,
+   "h": 451
+  },
+  {
+   "id": "family-winter-faceless-mask",
+   "file": "family-winter-faceless-mask.webp",
+   "title": "マスクをする人",
+   "desc": "マスクをする人のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "冬のくらしの人物イラスト",
+    "マスクをする人",
+    "顔なしミニマル"
+   ],
+   "w": 232,
+   "h": 498
+  },
+  {
+   "id": "family-winter-faceless-shopping",
+   "file": "family-winter-faceless-shopping.webp",
+   "title": "買い物帰りの人",
+   "desc": "買い物帰りの人のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "冬のくらしの人物イラスト",
+    "買い物帰りの人",
+    "顔なしミニマル"
+   ],
+   "w": 319,
+   "h": 497
+  },
+  {
+   "id": "family-winter-faceless-skate",
+   "file": "family-winter-faceless-skate.webp",
+   "title": "スケートをする人",
+   "desc": "スケートをする人のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "冬",
+    "人物",
+    "顔なし",
+    "コート",
+    "冬のくらしの人物イラスト",
+    "スケートをする人",
+    "顔なしミニマル"
+   ],
+   "w": 426,
+   "h": 474
+  }
+ ]
+}

@@ -1,0 +1,239 @@
+{
+ "added": "2026-10-08",
+ "slug": "winter-nature-papercut",
+ "title": "冬の自然の切り絵イラスト",
+ "genre": "nature",
+ "touch": "papercut",
+ "lead": "雪の結晶、冬の木、ひいらぎ、こおりの花。切り絵ふうに描いた、冬の自然12点。",
+ "tags": [
+  "冬",
+  "雪",
+  "雪の結晶",
+  "切り絵",
+  "ひいらぎ",
+  "自然"
+ ],
+ "subject": "",
+ "season": {
+  "from": "11-20",
+  "to": "02-20"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "winter-nature-papercut-crystal",
+   "file": "winter-nature-papercut-crystal.webp",
+   "title": "雪の結晶",
+   "desc": "雪の結晶のイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "冬の自然の切り絵イラスト",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 441,
+   "h": 494
+  },
+  {
+   "id": "winter-nature-papercut-tree",
+   "file": "winter-nature-papercut-tree.webp",
+   "title": "雪をかぶった木",
+   "desc": "雪をかぶった木のイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "冬の自然の切り絵イラスト",
+    "雪をかぶった木",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 423,
+   "h": 497
+  },
+  {
+   "id": "winter-nature-papercut-holly",
+   "file": "winter-nature-papercut-holly.webp",
+   "title": "ひいらぎ",
+   "desc": "ひいらぎのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "ひいらぎ",
+    "冬の自然の切り絵イラスト",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 488,
+   "h": 464
+  },
+  {
+   "id": "winter-nature-papercut-camellia",
+   "file": "winter-nature-papercut-camellia.webp",
+   "title": "つばき",
+   "desc": "つばきのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "冬の自然の切り絵イラスト",
+    "つばき",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 487,
+   "h": 506
+  },
+  {
+   "id": "winter-nature-papercut-nanten",
+   "file": "winter-nature-papercut-nanten.webp",
+   "title": "なんてん",
+   "desc": "なんてんのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "冬の自然の切り絵イラスト",
+    "なんてん",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 452,
+   "h": 498
+  },
+  {
+   "id": "winter-nature-papercut-icicle",
+   "file": "winter-nature-papercut-icicle.webp",
+   "title": "つらら",
+   "desc": "つららのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "冬の自然の切り絵イラスト",
+    "つらら",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 487,
+   "h": 489
+  },
+  {
+   "id": "winter-nature-papercut-snowman",
+   "file": "winter-nature-papercut-snowman.webp",
+   "title": "雪だるま",
+   "desc": "雪だるまのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "冬の自然の切り絵イラスト",
+    "雪だるま",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 448,
+   "h": 520
+  },
+  {
+   "id": "winter-nature-papercut-mountain",
+   "file": "winter-nature-papercut-mountain.webp",
+   "title": "雪山",
+   "desc": "雪山のイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "冬の自然の切り絵イラスト",
+    "雪山",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 495,
+   "h": 448
+  },
+  {
+   "id": "winter-nature-papercut-moon",
+   "file": "winter-nature-papercut-moon.webp",
+   "title": "冬の月",
+   "desc": "冬の月のイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "冬の自然の切り絵イラスト",
+    "冬の月",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 433,
+   "h": 448
+  },
+  {
+   "id": "winter-nature-papercut-bird",
+   "file": "winter-nature-papercut-bird.webp",
+   "title": "ふゆのことり",
+   "desc": "ふゆのことりのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "冬の自然の切り絵イラスト",
+    "ふゆのことり",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 491,
+   "h": 480
+  },
+  {
+   "id": "winter-nature-papercut-mitten",
+   "file": "winter-nature-papercut-mitten.webp",
+   "title": "てぶくろ",
+   "desc": "てぶくろのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "冬の自然の切り絵イラスト",
+    "てぶくろ",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 462,
+   "h": 424
+  },
+  {
+   "id": "winter-nature-papercut-cloud",
+   "file": "winter-nature-papercut-cloud.webp",
+   "title": "雪雲",
+   "desc": "雪雲のイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "冬",
+    "雪",
+    "雪の結晶",
+    "切り絵",
+    "冬の自然の切り絵イラスト",
+    "雪雲",
+    "切り絵・ペーパークラフト",
+    "花・自然"
+   ],
+   "w": 472,
+   "h": 487
+  }
+ ]
+}
