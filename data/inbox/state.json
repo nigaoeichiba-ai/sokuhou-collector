@@ -2,9 +2,13 @@
  "kuma": {
   "2026-10.jsonl": 1
  },
- "minna": {},
+ "minna": {
+  "2026-10.jsonl": 1
+ },
  "saichin": {
   "2026-10.jsonl": 1
  },
- "yorokobu": {}
+ "yorokobu": {
+  "2026-10.jsonl": 1
+ }
 }
