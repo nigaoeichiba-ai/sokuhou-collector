@@ -110,10 +110,27 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     themes = _load_themes(content_dir, rec, tiers, {g["slug"] for g in groups})
     theme = {t["slug"]: t for t in themes}
     articles = _load_articles(content_dir, theme)
-    return {"occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
+    messages = _load_messages(content_dir, occ)
+    return {"messages": messages, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
             "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "themes": themes,
             "theme": theme, "theme_groups": groups, "articles": articles,
             "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
+
+
+def _load_messages(content_dir: Path, occ: dict) -> dict:
+    """Message examples per occasion (messages.json, optional): {occasion slug: entry}."""
+    data = _optional(content_dir, "messages.json")
+    out: dict = {}
+    for m in (data or {}).get("messages", []):
+        _need(m, ("occasion", "intro", "sets", "manners", "closing"), f"messages {m.get('occasion')}")
+        if m["occasion"] not in occ:
+            raise BuildError(f"messages for unknown occasion {m['occasion']}")
+        if m["occasion"] in out:
+            raise BuildError(f"duplicate messages for {m['occasion']}")
+        for s in m["sets"]:
+            _need(s, ("to", "style", "lines"), f"messages {m['occasion']} set")
+        out[m["occasion"]] = m
+    return out
 
 
 def _optional(content_dir: Path, name: str):

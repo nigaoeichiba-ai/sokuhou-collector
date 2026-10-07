@@ -561,6 +561,13 @@ def theme_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     return page(cfg, preview, path="/theme/", title=f"切り口から、プレゼントを探す | {cfg['site_name']}", description=lead, body=body)
 
 
+def msg_link(c: dict, occasion: str) -> str:
+    if occasion not in c["messages"]:
+        return ""
+    return (f'<section style="margin-top:44px"><h2><span class="scribble">添えるメッセージに、迷ったら</span></h2>'
+            f'<p><a class="btn btn-sub" href="/message/{occasion}/">{esc(c["occ"][occasion]["name"])}のメッセージ例文を見る</a></p></section>')
+
+
 def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
     set_keep(o["name"])
     c = d["c"]
@@ -577,7 +584,7 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
 <div><h2><span class="scribble">選ぶポイント</span></h2><ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in o["tips"])}</ol></div></section>
 <section style="margin-top:50px"><h2><span class="scribble">相手を選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}
-<section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>
+{msg_link(c, o["slug"])}<section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>
 {guide_link(c, o["slug"])}"""
     return page(cfg, preview, path=f"/occasion/{o['slug']}/", title=f"{o['name']}のプレゼント 選び方と相手別のおすすめ | {cfg['site_name']}",
                 description=o["blurb"][:110], body=body, og_image=og_for(f"occasion/{o['slug']}"))
@@ -871,6 +878,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <ul class="plain cols2 chips">{pop}</ul></div></section>
 {whats_new(d)}
 {ranking_band(d)}
+{message_band(d)}
 {theme_band}
 <section class="band yellow dots scallop about-home"><div class="in">
 <div><img src="/assets/img/pair-gift.webp" alt="" width="600" height="239" loading="lazy" style="width:100%;max-width:460px;display:block;margin:0 auto"></div>
@@ -958,6 +966,57 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
     return page(cfg, preview, path=f"/ranking/{slug}/", title=f"{sg['label']}に、いま売れている商品 | {cfg['site_name']}",
                 description=f"楽天市場で{sg['label']}に売れている商品の上位。きのうより順位を上げた商品、はじめてランクインした商品も。{day}のランキングです。", body=body)
 
+
+
+
+# ---------------------------------------------------------------- メッセージ例文集 (ready-to-copy card messages per occasion; from messages.json)
+
+STYLE_LABEL = {"丁寧": "ていねい", "やわらかい": "やわらかく", "ひとこと": "ひとこと"}
+
+
+def message_hub_page(d: dict, cfg: dict, preview: bool) -> str:
+    c = d["c"]
+    tiles = "".join(tile(f'/message/{o["slug"]}/', "occasion", o["slug"], f'{o["name"]}のメッセージ', f'{len(c["messages"][o["slug"]]["sets"])}人分の例文')
+                    for o in c["occasions"] if o["slug"] in c["messages"])
+    lead = "プレゼントに添える一言や、カードに書くメッセージを、イベントと贈る相手ごとに集めました。気に入った文を、そのままコピーして使えます。"
+    body = f"""{head_band("pink", '<img class="pair-mini" src="/assets/img/r-joy.webp" alt="" width="170" height="155">', "プレゼントに添える、<wbr>メッセージ例文集", lead, single=True)}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("メッセージ例文集", None)])}</div>
+<section style="margin-top:34px"><h2><span class="scribble">イベントをえらぶ</span></h2><ul class="tiles">{tiles}</ul></section>"""
+    return page(cfg, preview, path="/message/", title=f"プレゼントに添える、メッセージ例文集 | {cfg['site_name']}", description=lead, body=body)
+
+
+def message_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
+    c = d["c"]
+    o, m = c["occ"][slug], c["messages"][slug]
+    sets = ""
+    for s in m["sets"]:
+        lines = "".join(f'<li><p class="msg-text">{esc(ln)}</p><button type="button" class="copy" data-copy hidden>コピー</button></li>' for ln in s["lines"])
+        sets += (f'<section style="margin-top:34px"><h2><span class="scribble">{esc(s["to"])}</span> <span class="tagx">{esc(STYLE_LABEL.get(s["style"], s["style"]))}</span></h2>'
+                 f'<ul class="msg-list">{lines}</ul></section>')
+    closing = "".join(f'<li><p class="msg-text">{esc(x)}</p><button type="button" class="copy" data-copy hidden>コピー</button></li>' for x in m["closing"])
+    others = "".join(f'<li><a href="/message/{x["slug"]}/">{esc(x["name"])}のメッセージ</a></li>' for x in c["occasions"] if x["slug"] in c["messages"] and x["slug"] != slug)
+    related = (f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかのイベントのメッセージ</span></h2>'
+               f'<ul class="plain cols2 chips">{others}</ul></section>') if others else ""
+    lead = m["intro"]
+    body = f"""{head_band("pink", ic_wrap("occasion", slug), f'{esc(o["name"])}の<wbr>メッセージ例文集', lead, single=True, mascot=OCC_MASCOT.get(slug, "b-wink"))}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("メッセージ例文集", "/message/"), (o["name"], None)])}</div>
+<p class="sec-lead">気に入った文の「コピー」を押すと、そのまま貼りつけられます。相手との関係に合わせて、言葉を少し変えると、さらに気持ちが伝わります。</p>
+{sets}
+<section style="margin-top:44px"><h2><span class="scribble">最後に添える、ひとこと</span></h2><ul class="msg-list">{closing}</ul></section>
+<section class="avoid" style="margin-top:44px"><h2><span class="scribble">言葉を選ぶときの、気をつけたいこと</span></h2>{ul(m["manners"], "warn")}</section>
+<section style="margin-top:44px"><h2><span class="scribble">贈るものを、探す</span></h2>
+<p><a class="btn" href="/occasion/{slug}/">{esc(o["name"])}のプレゼントを探す</a></p>{guide_link(c, slug)}</section>
+{related}"""
+    return page(cfg, preview, path=f"/message/{slug}/", title=f"{o['name']}のメッセージ例文集 | {cfg['site_name']}", description=lead[:110], body=body,
+                og_image=og_for(f"occasion/{slug}"))
+
+
+def message_band(d: dict) -> str:
+    if not d["c"]["messages"]:
+        return ""
+    return ('<section class="band pink flat"><div class="in"><div class="sec-head"><h2>添える言葉に、<span class="scribble">迷ったら</span></h2>'
+            '<p>誕生日、母の日、クリスマスなど、プレゼントに添えるメッセージの例文を、相手ごとにまとめました。コピーして、そのまま使えます。</p></div>'
+            '<p class="more"><a class="btn" href="/message/">メッセージ例文集を見る</a></p></div></section>')
 
 
 # ---------------------------------------------------------------- 数字で選ぶ (lists made by rules on review count, rating and price)
@@ -1159,6 +1218,10 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         for a in c["articles"]:
             pages[f"read/{a['slug']}/index.html"] = article_page(d, cfg, preview, a)
     pages["feed.xml"] = feed_xml(d, cfg)
+    if c["messages"]:
+        pages["message/index.html"] = message_hub_page(d, cfg, preview)
+        for slug in c["messages"]:
+            pages[f"message/{slug}/index.html"] = message_page(d, cfg, preview, slug)
     if d["numbers"]:
         pages["numbers/index.html"] = numbers_hub_page(d, cfg, preview)
         for L in d["numbers"]["lists"]:
