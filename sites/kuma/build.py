@@ -776,15 +776,24 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         for k in dig["weeks"]:
             pages[f"digest/{k}/index.html"] = digest_page(dig, k, cfg, preview)
     pages["feed.xml"] = feed_xml(d, cfg)
+    lv_ = d.get("lv")
+    detail_names = [i["name"] for i in lv_["infos"].values()] if lv_ else []
+    count_names = [c["name"] for c in d["live_counts"]]
+    live_sources_text = ""
+    if detail_names:
+        live_sources_text += f"。「最新の目撃」のページは、{'・'.join(detail_names)}が公開している目撃情報(各ページに出典と取得日を表示)"
+    if count_names:
+        live_sources_text += f"。{'・'.join(count_names)}は、再利用の許可が明示されていないため、公開されている情報から件数と最新の日付だけを集計して載せています"
     pages.update(legal_pages(
         SITE, cfg, preview,
         purpose="クマの出没や人身被害に関する、環境省の公表データを、都道府県別・月別に整理して、暮らしの安全の判断に役立てていただくこと。",
-        sources_html=f'環境省「クマに関する各種情報・取組」(<a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">公表ページ</a>)の、出没情報・人身被害件数・緊急銃猟の実施状況・死亡事故の資料(いずれも速報値)。「最新の目撃」のページは、大津市・宮城県・秋田県が公開している目撃情報(各ページに出典と取得日を表示)',
+        sources_html=f'環境省「クマに関する各種情報・取組」(<a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">公表ページ</a>)の、出没情報・人身被害件数・緊急銃猟の実施状況・死亡事故の資料(いずれも速報値)' + live_sources_text,
         update_text="環境省の公表にあわせて、自動で更新します。各ページに、公表された日付と、どの月までのデータかを表示します。",
         disclaimer_html=("<p>掲載内容は、環境省が都道府県から聞き取った速報値を加工したもので、後から修正されることがあります。出没数は、都道府県ごとに異なる方法で取りまとめられています。"
                          "正確性・完全性・最新性を保証するものではありません。身近な出没情報は、お住まいの都道府県・市町村の公式の情報をご確認ください。</p>"
-                         "<p>このサイトは、環境省が公表している情報を加工して作成したもので、環境省が作成したものではありません。クマ撃退スプレーなどの商品の効果を保証するものでもありません。</p>"),
-        contact_notice="クマの目撃や被害の通報は、お住まいの市町村、または警察(110番)へお願いします。このサイトでは、通報や個別の相談を受け付けていません。",
+                         "<p>このサイトは、環境省や自治体が公表している情報を加工して作成したもので、環境省・自治体が作成したものではありません。クマ撃退スプレーなどの商品の効果を保証するものでもありません。</p>"
+                         '<p>掲載の中止のご依頼(自治体・運営者の方を含む)は、<a href="/contact/">お問い合わせ</a>の「掲載内容に関するご連絡」からお願いします。該当の掲載を、速やかに取りやめます。</p>'),
+        contact_notice="クマの目撃や被害の通報は、お住まいの市町村、または警察(110番)へお願いします。このサイトでは、通報や個別の相談を受け付けていません。掲載内容(データの誤り、掲載の中止のご依頼など)は、種類を選んで、ご連絡ください。",
         input_note="",
         finish=lambda s: s))
     pages.update(standard_files(pages, cfg, preview, d["fetched_date"]))
