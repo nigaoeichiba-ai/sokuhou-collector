@@ -346,6 +346,43 @@
   }
 
   function yen(n) { return Math.round(n).toLocaleString("ja-JP") + "円"; }
+  // ---------------------------------------------------------------- おまかせガチャ: one product at random (data is fetched when the page opens)
+  function initGacha() {
+    var root = $("#gacha"); if (!root) return;
+    var form = $(".gacha-form", root), msg = $(".gacha-msg", root), out = $(".gacha-out", root), data = null, last = "";
+    function pool() { var r = form.elements.r.value, t = form.elements.t.value; return (data && data.rec[r] && data.rec[r].tiers[t]) || []; }
+    function link(url) {
+      var aff = root.getAttribute("data-aff"), trk = root.getAttribute("data-trk"), e = encodeURIComponent(url);
+      return "https://hb.afl.rakuten.co.jp/hgc/" + aff + "/" + (trk || "") + "?pc=" + e + "&m=" + e;
+    }
+    function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; }
+    function show(it) {
+      out.textContent = "";
+      var card = el("div", "gacha-card"), a = el("a", "gacha-img"), img = document.createElement("img");
+      a.href = link(it[3]); a.rel = "sponsored nofollow noopener"; a.target = "_blank";
+      img.src = it[2]; img.alt = it[0]; img.width = 300; img.height = 300; a.appendChild(img);
+      var body = el("div", "gacha-body");
+      body.appendChild(el("h2", "", it[0]));
+      body.appendChild(el("p", "price", yen(it[1])));
+      if (it[4]) body.appendChild(el("p", "meta", "★" + (it[5] / 10).toFixed(1) + "(" + it[4].toLocaleString("ja-JP") + "件)"));
+      var buy = el("a", "btn", "楽天市場で見る"); buy.href = a.href; buy.rel = a.rel; buy.target = "_blank";
+      var again = el("button", "btn btn-sub", "もういちど回す"); again.type = "button"; again.addEventListener("click", spin);
+      var row = el("p", "gacha-actions"); row.appendChild(buy); row.appendChild(document.createTextNode(" ")); row.appendChild(again);
+      body.appendChild(row); card.appendChild(a); card.appendChild(body); out.appendChild(card);
+    }
+    function spin() {
+      var p = pool();
+      if (!p.length) { msg.textContent = "その組み合わせの商品は、まだありません。ほかの予算を選んでみてください。"; out.textContent = ""; return; }
+      var pick = p[Math.floor(Math.random() * p.length)], guard = 0;
+      while (p.length > 1 && pick[3] === last && guard++ < 8) pick = p[Math.floor(Math.random() * p.length)];
+      last = pick[3]; msg.textContent = "ソムリエの、おすすめです。"; show(pick);
+    }
+    function ready() { form.addEventListener("submit", function (e) { e.preventDefault(); spin(); }); }
+    msg.textContent = "準備しています…";
+    fetch(root.getAttribute("data-src")).then(function (r) { return r.json(); }).then(function (j) { data = j; msg.textContent = ""; ready(); },
+      function () { msg.textContent = "うまく読み込めませんでした。時間をおいて、もう一度お試しください。"; });
+  }
+
   function initCalc() {
     var back = $('[data-calc="return"]'), split = $('[data-calc="split"]');
     if (back) {
@@ -393,7 +430,7 @@
     var f = $("form.finder");
     if (f) window.YorokobuFinder(f);
     initBrowse(); initConcierge(); initFavorites(); initMemo(); initMemoStrip();
-    initTaboo(); initCalc(); initQuiz();
+    initTaboo(); initCalc(); initGacha(); initQuiz();
   });
   // ---------------------------------------------------------------- copy buttons (message examples): shown only when copying works
   (function () {

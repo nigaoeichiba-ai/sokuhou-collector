@@ -543,3 +543,15 @@ p, li { overflow-wrap: anywhere; }
 .msg-list .copy.done { background: var(--mint-s, #d7f7ea); }
 @media (max-width: 480px) { .msg-list li { flex-direction: column; } .msg-list .copy { align-self: flex-end; } }
 
+/* gacha */
+.gacha { margin-top: 28px; }
+.gacha-form { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; padding: 18px; background: #fff; border: var(--line2); border-radius: 20px; box-shadow: var(--shadow-c); }
+.gacha-form label { display: grid; gap: 4px; font-weight: 900; font-size: .85rem; flex: 1 1 180px; min-width: 0; }
+.gacha-form select { box-sizing: border-box; width: 100%; padding: .6em .8em; border: var(--line2); border-radius: 12px; background: #fff7e0; font: 700 1rem var(--body); }
+.gacha-msg { margin: 14px 2px; font-weight: 700; min-height: 1.6em; }
+.gacha-card { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 20px; padding: 18px; background: #fff; border: var(--line2); border-radius: 22px; box-shadow: var(--shadow-c); }
+.gacha-card img { width: 100%; height: auto; border-radius: 14px; display: block; }
+.gacha-body h2 { margin: 0 0 6px; font-size: 1.1rem; overflow-wrap: anywhere; }
+.gacha-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 560px) { .gacha-card { grid-template-columns: minmax(0, 1fr); } }
+

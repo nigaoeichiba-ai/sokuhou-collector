@@ -104,6 +104,70 @@ def calc_page(d: dict, cfg: dict, preview: bool) -> str:
     return B.page(cfg, preview, path="/tool/calc/", title=f"お返し・割り勘の計算 | {cfg['site_name']}", description=lead, body=body)
 
 
+# ---------------------------------------------------------------- おまかせガチャ: one product at random for a recipient and a budget
+
+GACHA_PER_COMBO = 12
+
+
+def gacha_pool(d: dict) -> dict:
+    """{recipient slug: {"name", "tiers": {tier slug: [[name, price, image, item url, reviews, rating x10], ...]}}} from the products already on the pages;
+    only recipient/budget combinations with products are kept, best-scored first, each product once per combination."""
+    B = _b()
+    c = d["c"]
+    B.set_keep()
+    out: dict = {}
+    for r in c["recipients"]:
+        union: list[dict] = []
+        seen: set[str] = set()
+        for p in c["pairs"]:
+            if p["recipient"] != r["slug"]:
+                continue
+            for it in B.pair_items(d, B.ct.pair_key(p))[2]:
+                if it["code"] not in seen and it.get("available", True):
+                    seen.add(it["code"])
+                    union.append(it)
+        union.sort(key=lambda i: -B.score(i))
+        tiers = {}
+        for t in c["filters"]["tiers"]:
+            rows = [[B.short(i["name"], 44), i["price"], i["image"], B.rakuten.clean_item_url(i["url"]), i["reviews"], int(round(i["rating"] * 10))]
+                    for i in union if B.in_tier(i["price"], t)][:GACHA_PER_COMBO]
+            if rows:
+                tiers[t["slug"]] = rows
+        if tiers:
+            out[r["slug"]] = {"name": r["name"], "tiers": tiers}
+    return out
+
+
+def gacha_data(d: dict, cfg: dict) -> str | None:
+    pool = gacha_pool(d)
+    if len(pool) < 2:
+        return None
+    c = d["c"]
+    tiers = [{"slug": t["slug"], "label": t["label"]} for t in c["filters"]["tiers"] if any(t["slug"] in v["tiers"] for v in pool.values())]
+    return json.dumps({"rec": pool, "tiers": tiers}, ensure_ascii=False, separators=(",", ":"))
+
+
+def gacha_page(d: dict, cfg: dict, preview: bool, pool: dict, tiers: list[dict]) -> str:
+    B = _b()
+    lead = "贈る相手と予算を選んで、ボタンをひとつ押すと、ソムリエが、商品をひとつ、えらんで見せます。迷ったときの、きっかけにしてください。"
+    rec = "".join(f'<option value="{esc(s)}">{esc(v["name"])}</option>' for s, v in pool.items())
+    bud = "".join(f'<option value="{esc(t["slug"])}">{esc(t["label"])}</option>' for t in tiers)
+    body = f"""{B.head_band("sky", '<img class="pair-mini" src="/assets/img/concierge-bell.webp" alt="" width="170" height="130">', "ソムリエの、<wbr>おまかせガチャ", lead, single=True, mascot="b-joy")}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("おまかせガチャ", None)])}</div>
+{B.pr_quiet(cfg)}
+<section id="gacha" class="gacha" data-src="/tool/gacha/items.json" data-aff="{esc(cfg["rakuten_affiliate_id"])}" data-trk="{esc(cfg.get("rakuten_tracking_id") or "")}">
+<form class="gacha-form" onsubmit="return false"><label>贈る相手<select name="r">{rec}</select></label>
+<label>予算<select name="t">{bud}</select></label>
+<button type="submit" class="btn big">ガチャを回す</button></form>
+<p class="gacha-msg" role="status" aria-live="polite"></p>
+<div class="gacha-out" aria-live="polite"></div>
+<noscript><p class="notice">このページは、JavaScript が使える環境でお使いください。使えない場合は、<a href="/for/">相手から探す</a>ページでも、おすすめを探せます。</p></noscript>
+</section>
+<p class="notice">表示される商品は、このサイトで紹介している商品から、ランダムに選んでいます。価格・在庫・レビューは、取得した時点の情報です。</p>
+{B.freshness(d)}"""
+    return B.page(cfg, preview, path="/tool/gacha/", title=f"ソムリエのおまかせガチャ | {cfg['site_name']}", description=lead, body=body)
+
+
 # ---------------------------------------------------------------- quiz and persona pages
 
 def quiz_page(d: dict, cfg: dict, preview: bool) -> str:
@@ -147,6 +211,7 @@ def tools_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     c = d["c"]
     cards = [("/diagnosis/", "あの人はどんなタイプ?", "6つの質問で、贈る相手の「タイプ」と、合う贈り方が分かります。", c["persona"]),
              ("/tool/taboo/", "縁起・マナーチェック", "贈る前に、気をつけたい言い伝えやマナーが、あるかどうか確かめます。", c["taboo"]),
+             ("/tool/gacha/", "ソムリエのおまかせガチャ", "贈る相手と予算を選ぶと、商品をひとつ、ランダムに見せてくれます。", d.get("gacha")),
              ("/tool/calc/", "お返し・割り勘の計算", "お返しの金額の目安と、連名で贈るときの一人あたりの金額を計算します。", True),
              ("/memo/", "たいせつな日メモ", "誕生日や記念日を登録して、贈りどきを逃さないようにします。", True),
              ("/calendar/", "贈りどきカレンダー", "母の日、お歳暮など、一年の贈りどきを、カレンダーに入れられます。", True)]
