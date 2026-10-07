@@ -1,9 +1,10 @@
 {
+ "api_error": "HTTPError: HTTP Error 403: Forbidden",
  "as_of": "2026-08-31",
  "bad_coords": 0,
  "credit": "出典:秋田県「クマダス」(秋田県オープンデータ、CC BY 4.0)を加工して作成",
  "duplicate_rows_removed": 0,
- "fetched_at": "2026-10-07T13:10:01.783350+09:00",
+ "fetched_at": "2026-10-07T15:34:40.827241+09:00",
  "fy_current": "R08",
  "monthly": {
   "R07": {
