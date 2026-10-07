@@ -14,10 +14,23 @@ def _parse_fixture():
         return kuma.parse_kml(KML.read_bytes())
 
 
+def _bare(rows):
+    """The rows without their coordinates (the coordinates are checked in the coordinate tests)."""
+    return [{k: v for k, v in r.items() if k not in ("lat", "lon")} for r in rows]
+
+
 class OkayamaKumaSnapshotTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.d = _parse_fixture()
+
+    def test_coordinates_are_kept_rounded_and_inside_the_prefecture(self):
+        with_coords = [r for r in self.d["sightings"] if "lat" in r]
+        self.assertGreater(len(with_coords), len(self.d["sightings"]) * 0.9)
+        for r in with_coords:
+            self.assertTrue(34.4 <= r["lat"] <= 35.4 and 133.2 <= r["lon"] <= 134.5, r)
+            self.assertEqual(r["lat"], round(r["lat"], 4))
+            self.assertEqual(r["lon"], round(r["lon"], 4))
 
     def test_first_placemark(self):
         self.assertIn({
@@ -27,7 +40,7 @@ class OkayamaKumaSnapshotTest(unittest.TestCase):
             "count": None,
             "kind": "目撃",
             "species": "ツキノワグマ",
-        }, self.d["sightings"])
+        }, _bare(self.d["sightings"]))
 
     def test_fiscal_wareki_and_monthly_counts(self):
         self.assertEqual(self.d["as_of"], "2026-09-06")

@@ -8,6 +8,7 @@ from datetime import date, datetime, timedelta, timezone
 from xml.etree import ElementTree as ET
 
 from sokuhou.http import fetch
+from sokuhou.sources.kumalib import coord, trim_for_store
 
 PAGE = "https://www.pref.okayama.jp/page/1006862.html"
 SOURCE_FILE = "https://www.google.com/maps/d/kml?mid=1y64vgpv0Yc6srgFeVC5ZkJf37kNuuKI&forcekml=1"
@@ -23,7 +24,6 @@ DATA_PLACE = "大字"
 MIN_PLACEMARKS = 50
 BAD_COORD_LIMIT = 0.01
 UNPARSED_LIMIT = 0.01
-STORED_SIGHTINGS = 400
 JST = timezone(timedelta(hours=9))
 
 
@@ -79,6 +79,7 @@ def parse_kml(data: bytes) -> dict:
     unparsed = 0
     bad_coords = 0
     wareki_mismatches = 0
+    coords: dict[int, dict | None] = {}
     for placemark in placemarks:
         day = _parse_date(placemark.findtext("k:name", default="", namespaces=KML_NS))
         if day is None:
@@ -92,9 +93,13 @@ def parse_kml(data: bytes) -> dict:
             lon = float(_data_value(placemark, DATA_LON))
         except ValueError:
             bad_coords += 1
+            coords[id(placemark)] = None
         else:
             if not (34.4 <= lat <= 35.4 and 133.2 <= lon <= 134.5):
                 bad_coords += 1
+                coords[id(placemark)] = None
+            else:
+                coords[id(placemark)] = coord(lat, lon)
 
     total = len(placemarks)
     if unparsed / total > UNPARSED_LIMIT:
@@ -125,6 +130,7 @@ def parse_kml(data: bytes) -> dict:
             "count": None,
             "kind": "目撃",
             "species": "ツキノワグマ",
+            **(coords.get(id(placemark)) or {}),
         })
     sightings.sort(key=lambda rec: (rec["_sort"], -rec["_order"]), reverse=True)
     for rec in sightings:
@@ -150,7 +156,7 @@ def parse_kml(data: bytes) -> dict:
 def collect() -> dict:
     out = parse_kml(fetch(SOURCE_FILE).body)
     out["sightings_in_window"] = len(out["sightings"])
-    out["sightings"] = out["sightings"][:STORED_SIGHTINGS]
+    out["sightings"] = trim_for_store(out["sightings"], date.fromisoformat(out["as_of"]))
     out.update({
         "source_page": PAGE,
         "source_file": SOURCE_FILE,
