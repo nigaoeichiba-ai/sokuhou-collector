@@ -1,0 +1,221 @@
+{
+ "added": "2026-10-08",
+ "slug": "kinrou-kansha-kawaii",
+ "title": "ありがとうの贈りもの",
+ "genre": "season",
+ "touch": "kawaii",
+ "lead": "花束、肩たたき、手紙、お茶。勤労感謝の日や敬老の日、日ごろの「ありがとう」を伝える12点。",
+ "tags": [
+  "ありがとう",
+  "感謝",
+  "勤労感謝の日",
+  "プレゼント",
+  "手紙",
+  "花束"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "kinrou-kansha-kawaii-bouquet",
+   "file": "kinrou-kansha-kawaii-bouquet.webp",
+   "title": "ありがとうの花束",
+   "desc": "ありがとうの花束のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "ありがとう",
+    "感謝",
+    "勤労感謝の日",
+    "プレゼント",
+    "花束",
+    "ありがとうの贈りもの",
+    "ありがとうの花束",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 442,
+   "h": 483
+  },
+  {
+   "id": "kinrou-kansha-kawaii-letter",
+   "file": "kinrou-kansha-kawaii-letter.webp",
+   "title": "感謝の手紙",
+   "desc": "感謝の手紙のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "ありがとう",
+    "感謝",
+    "勤労感謝の日",
+    "プレゼント",
+    "手紙",
+    "ありがとうの贈りもの",
+    "感謝の手紙",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 440,
+   "h": 322
+  },
+  {
+   "id": "kinrou-kansha-kawaii-tea",
+   "file": "kinrou-kansha-kawaii-tea.webp",
+   "title": "お茶ときんつば",
+   "desc": "お茶ときんつばのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "ありがとう",
+    "感謝",
+    "勤労感謝の日",
+    "プレゼント",
+    "ありがとうの贈りもの",
+    "お茶ときんつば",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 504,
+   "h": 384
+  },
+  {
+   "id": "kinrou-kansha-kawaii-katatataki",
+   "file": "kinrou-kansha-kawaii-katatataki.webp",
+   "title": "肩たたき",
+   "desc": "肩たたきのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "ありがとう",
+    "感謝",
+    "勤労感謝の日",
+    "プレゼント",
+    "ありがとうの贈りもの",
+    "肩たたき",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 501,
+   "h": 445
+  },
+  {
+   "id": "kinrou-kansha-kawaii-gift",
+   "file": "kinrou-kansha-kawaii-gift.webp",
+   "title": "ギフト",
+   "desc": "ギフトのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "ありがとう",
+    "感謝",
+    "勤労感謝の日",
+    "プレゼント",
+    "ありがとうの贈りもの",
+    "ギフト",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 416,
+   "h": 436
+  },
+  {
+   "id": "kinrou-kansha-kawaii-heart",
+   "file": "kinrou-kansha-kawaii-heart.webp",
+   "title": "ありがとうのハート",
+   "desc": "ありがとうのハートのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "ありがとう",
+    "感謝",
+    "勤労感謝の日",
+    "プレゼント",
+    "ありがとうの贈りもの",
+    "ありがとうのハート",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 466,
+   "h": 403
+  },
+  {
+   "id": "kinrou-kansha-kawaii-card",
+   "file": "kinrou-kansha-kawaii-card.webp",
+   "title": "メッセージカード",
+   "desc": "メッセージカードのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "ありがとう",
+    "感謝",
+    "勤労感謝の日",
+    "プレゼント",
+    "ありがとうの贈りもの",
+    "メッセージカード",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 479,
+   "h": 372
+  },
+  {
+   "id": "kinrou-kansha-kawaii-sweets",
+   "file": "kinrou-kansha-kawaii-sweets.webp",
+   "title": "お菓子の詰め合わせ",
+   "desc": "お菓子の詰め合わせのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "ありがとう",
+    "感謝",
+    "勤労感謝の日",
+    "プレゼント",
+    "ありがとうの贈りもの",
+    "お菓子の詰め合わせ",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 479,
+   "h": 468
+  },
+  {
+   "id": "kinrou-kansha-kawaii-hands",
+   "file": "kinrou-kansha-kawaii-hands.webp",
+   "title": "ありがとうの手",
+   "desc": "ありがとうの手のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "ありがとう",
+    "感謝",
+    "勤労感謝の日",
+    "プレゼント",
+    "ありがとうの贈りもの",
+    "ありがとうの手",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 409,
+   "h": 382
+  },
+  {
+   "id": "kinrou-kansha-kawaii-cake",
+   "file": "kinrou-kansha-kawaii-cake.webp",
+   "title": "ケーキ",
+   "desc": "ケーキのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "ありがとう",
+    "感謝",
+    "勤労感謝の日",
+    "プレゼント",
+    "ありがとうの贈りもの",
+    "ケーキ",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 486,
+   "h": 451
+  },
+  {
+   "id": "kinrou-kansha-kawaii-bear",
+   "file": "kinrou-kansha-kawaii-bear.webp",
+   "title": "お礼をするくま",
+   "desc": "お礼をするくまのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "ありがとう",
+    "感謝",
+    "勤労感謝の日",
+    "プレゼント",
+    "ありがとうの贈りもの",
+    "お礼をするくま",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 413,
+   "h": 497
+  }
+ ]
+}

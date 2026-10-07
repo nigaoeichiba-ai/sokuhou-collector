@@ -79,5 +79,7 @@
    "a bear holding a flower bouquet and smiling"
   ]
  ],
- "exclude": []
+ "exclude": [
+  "cat"
+ ]
 }
