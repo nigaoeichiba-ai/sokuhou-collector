@@ -1,0 +1,83 @@
+{
+ "slug": "mama-kawaii",
+ "title": "子育てママのポーズ集",
+ "subject": "子育てママ",
+ "genre": "life",
+ "touch": "kawaii",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "子育てママ",
+  "子育て",
+  "ママ",
+  "育児",
+  "お母さん",
+  "赤ちゃん",
+  "かわいい"
+ ],
+ "lead": "子育てママのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-standing-smiling-front",
+   "笑顔で立つ",
+   "standing and smiling, hands in front"
+  ],
+  [
+   "02-cradling-simple-swaddled",
+   "赤ちゃんを抱っこ",
+   "cradling a simple swaddled baby in her arms, baby's face minimal"
+  ],
+  [
+   "03-pushing-simple-stroller",
+   "ベビーカーを押す",
+   "pushing a simple stroller, side view"
+  ],
+  [
+   "04-holding-ladle-smiling",
+   "料理する",
+   "holding a ladle, smiling"
+  ],
+  [
+   "05-carrying-plain-laundry",
+   "洗濯物を持つ",
+   "carrying a plain laundry basket with both arms"
+  ],
+  [
+   "06-sweeping-broom",
+   "ほうきで掃除",
+   "sweeping with a broom"
+  ],
+  [
+   "07-holding-shopping-bag",
+   "買い物バッグを持つ",
+   "holding a shopping bag in each hand"
+  ],
+  [
+   "08-sleepy-heavy-eyelids",
+   "寝不足でふらふら",
+   "sleepy, heavy eyelids, swaying, hand on forehead"
+  ],
+  [
+   "09-looking-smartphone-curious",
+   "スマホで調べる",
+   "looking at a smartphone, curious"
+  ],
+  [
+   "10-fist-pump-determined",
+   "頑張るガッツポーズ",
+   "fist pump, determined"
+  ],
+  [
+   "11-waving-warm-smile",
+   "手を振る",
+   "waving with a warm smile"
+  ],
+  [
+   "12-pregnant-version-round",
+   "妊娠中でお腹をさする",
+   "pregnant version with a round belly, gently stroking her belly, smiling"
+  ]
+ ],
+ "subject_en": "Japanese mother, early 30s, shoulder-length chestnut brown hair in a half-up bun, light skin, cream knit sweater, light blue jeans, white sneakers, small gentle smile, 3.5-head-tall, dot eyes, rosy cheeks"
+}

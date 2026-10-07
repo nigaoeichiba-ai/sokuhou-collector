@@ -44,6 +44,7 @@ def load_spec(path: Path) -> dict:
     s.setdefault("grid", [3, 2])
     s.setdefault("key", "#FFFFFF")
     s.setdefault("holes", False)
+    s.setdefault("sheet_subjects", [])
     s.setdefault("title_fmt", "{ja}{subject}")
     s.setdefault("tags", [])
     s.setdefault("season", None)
@@ -93,7 +94,7 @@ def item_id(spec: dict, suffix: str) -> str:
 def sheets_of(spec: dict) -> list[dict]:
     cols, rows = spec["grid"]
     per = cols * rows
-    return [{"file": f"{spec['slug']}__{k + 1:02d}", "items": spec["items"][k * per:(k + 1) * per]} for k in range(len(spec["items"]) // per)]
+    return [{"file": f"{spec['slug']}__{k + 1:02d}", "idx": k, "items": spec["items"][k * per:(k + 1) * per]} for k in range(len(spec["items"]) // per)]
 
 
 def item_title(spec: dict, it: list[str]) -> str:
@@ -139,14 +140,14 @@ def sheet_prompt(spec: dict, sheet: dict) -> str:
     touch = TOUCH_BY_SLUG[spec["touch"]]
     n = len(sheet["items"])
     lines = [f"## Sheet `{sheet['file']}.png`  ({cols} columns x {rows} rows = {n} illustrations; plain white background)",
-             f"Series: {spec['title']} ({spec['genre']}). Subject: {spec['subject_en'] or spec['title']}",
+             f"Series: {spec['title']} ({spec['genre']}). Subject: {(spec.get('sheet_subjects') or [spec['subject_en'] or spec['title']] * 99)[sheet.get('idx', 0)]}",
              f"Art touch ({spec['touch']}): {touch[3]}", "Illustrations in order:"]
     for i, it in enumerate(sheet["items"], 1):
         lines.append(f"  {i}. {it[2]}")
     return "\n".join(lines) + "\n"
 
 
-PRIORITY = (("eto", 10), ("nenga", 10), ("newyear", 10), ("coloring-newyear", 10), ("christmas", 15), ("winter", 15), ("setsubun", 22), ("halloween", 30))
+PRIORITY = (("shichigosan", 9), ("eto", 10), ("nenga", 10), ("newyear", 10), ("coloring-newyear", 10), ("christmas", 15), ("winter", 15), ("setsubun", 22), ("halloween", 30))
 
 
 def priority_of(spec: dict) -> int:
@@ -156,6 +157,8 @@ def priority_of(spec: dict) -> int:
     for prefix, n in PRIORITY:
         if spec["slug"].startswith(prefix):
             return n
+    if spec["genre"] in ("people", "work", "school", "life"):      # people series: after the New Year and Christmas sets and the first animals
+        return 25
     return 40
 
 

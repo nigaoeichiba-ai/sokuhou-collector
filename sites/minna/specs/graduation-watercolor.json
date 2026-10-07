@@ -1,0 +1,89 @@
+{
+ "slug": "graduation-watercolor",
+ "title": "卒業・入学（桜と制服）のポーズ集",
+ "subject": "卒業・入学",
+ "genre": "season",
+ "touch": "watercolor",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "卒業・入学",
+  "卒業",
+  "入学",
+  "桜",
+  "制服",
+  "水彩",
+  "春",
+  "3月",
+  "4月"
+ ],
+ "lead": "卒業・入学のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-holding-rolled-diploma",
+   "卒業証書を持つ",
+   "holding a rolled diploma in a tube with both hands"
+  ],
+  [
+   "02-holding-simple-bouquet",
+   "花束を持つ",
+   "holding a simple bouquet, smiling"
+  ],
+  [
+   "03-bowing-politely",
+   "お辞儀",
+   "bowing politely"
+  ],
+  [
+   "04-looking-back-over",
+   "振り返る",
+   "looking back over her shoulder, gentle smile"
+  ],
+  [
+   "05-looking-up-face",
+   "桜を見上げる",
+   "looking up, face lifted, small smile"
+  ],
+  [
+   "06-waving-warm-smile",
+   "手を振る",
+   "waving with a warm smile"
+  ],
+  [
+   "07-crying-laughing-cheek",
+   "泣き笑い",
+   "crying and laughing, hand on cheek"
+  ],
+  [
+   "08-jumping-arms-up",
+   "ジャンプ",
+   "jumping with arms up"
+  ],
+  [
+   "09-standing-stiffly-nervous",
+   "緊張して入学式",
+   "standing stiffly, nervous face, hands at sides"
+  ],
+  [
+   "10-fist-pump",
+   "合格のガッツポーズ",
+   "fist pump"
+  ],
+  [
+   "11-looking-smartphone-waiting",
+   "友達を待つ",
+   "looking at a smartphone, waiting"
+  ],
+  [
+   "12-pressed-together-eyes",
+   "手を合わせて祈る",
+   "hands pressed together, eyes closed"
+  ]
+ ],
+ "subject_en": "Japanese girl, 18, long black hair with a small half-up ribbon, light skin, navy blazer school uniform with a red ribbon tie, navy pleated skirt, white socks, brown loafers, 5.5-head-tall, gentle smile",
+ "season": {
+  "from": "02-15",
+  "to": "04-20"
+ }
+}

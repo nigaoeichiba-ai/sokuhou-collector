@@ -1,0 +1,82 @@
+{
+ "slug": "barber-retro",
+ "title": "昭和の理容師のポーズ集",
+ "subject": "昭和の理容師",
+ "genre": "people",
+ "touch": "retro",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "昭和の理容師",
+  "理容師",
+  "床屋",
+  "昭和",
+  "レトロ",
+  "商店街"
+ ],
+ "lead": "昭和の理容師のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-holding-scissors-up",
+   "はさみで切る",
+   "holding scissors up as if cutting"
+  ],
+  [
+   "02-holding-comb-up",
+   "くしでとかす",
+   "holding a comb up"
+  ],
+  [
+   "03-holding-hair-dryer",
+   "ドライヤー",
+   "holding a hair dryer pointed forward"
+  ],
+  [
+   "04-smiling-arms-open",
+   "笑顔で迎える",
+   "smiling with both arms open"
+  ],
+  [
+   "05-bowing-politely",
+   "お辞儀",
+   "bowing politely"
+  ],
+  [
+   "06-holding-mirror",
+   "手鏡を持つ",
+   "holding a hand mirror"
+  ],
+  [
+   "07-hips-proud-pose",
+   "ポーズを決める",
+   "hands on hips, proud pose"
+  ],
+  [
+   "08-holding-out-folded",
+   "タオルを渡す",
+   "holding out a folded hot towel with both hands"
+  ],
+  [
+   "09-sweeping-broom",
+   "ほうきで掃除",
+   "sweeping with a broom"
+  ],
+  [
+   "10-thinking-finger-chin",
+   "考える",
+   "thinking, finger on chin"
+  ],
+  [
+   "11-talking-black-rotary",
+   "電話",
+   "talking on a black rotary phone held at the ear"
+  ],
+  [
+   "12-arms-crossed-smug",
+   "腕組みでドヤ顔",
+   "arms crossed, smug face"
+  ]
+ ],
+ "subject_en": "Showa-era Japanese barber about 35, black pompadour hair, thin mustache, light skin, white short-sleeve barber jacket, black bow tie, black trousers, black shoes, 5-head-tall, dot eyes, confident grin"
+}

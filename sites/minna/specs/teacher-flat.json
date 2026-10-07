@@ -1,0 +1,82 @@
+{
+ "slug": "teacher-flat",
+ "title": "先生（女性）のポーズ集",
+ "subject": "先生",
+ "genre": "school",
+ "touch": "flat",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "先生",
+  "先生",
+  "教師",
+  "学校",
+  "授業",
+  "女性"
+ ],
+ "lead": "先生のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-three-quarter-back",
+   "黒板に書く（斜め後ろ）",
+   "three-quarter back view, one arm raised as if writing on a board off-frame"
+  ],
+  [
+   "02-pointing-side-index",
+   "指さし",
+   "pointing to the side with one index finger extended"
+  ],
+  [
+   "03-holding-thick-book",
+   "教科書を持つ",
+   "holding a thick book with both hands, smiling"
+  ],
+  [
+   "04-raised-greeting-big",
+   "笑顔で挨拶",
+   "hand raised, greeting with a big smile"
+  ],
+  [
+   "05-cupped-behind-ear",
+   "質問を促す",
+   "hand cupped behind her ear, leaning slightly"
+  ],
+  [
+   "06-clapping-happily",
+   "拍手でほめる",
+   "clapping happily"
+  ],
+  [
+   "07-thinking-chin",
+   "考える",
+   "thinking, hand on chin"
+  ],
+  [
+   "08-cheek-troubled-sweat",
+   "困る",
+   "hand on cheek, troubled, sweat drop"
+  ],
+  [
+   "09-bowing-politely",
+   "保護者にお辞儀",
+   "bowing politely"
+  ],
+  [
+   "10-holding-whistle-cord",
+   "ホイッスルを持つ",
+   "holding a whistle on a cord, smiling"
+  ],
+  [
+   "11-sitting-writing-paper",
+   "採点する",
+   "sitting and writing on a paper with a red pen, side view"
+  ],
+  [
+   "12-fist-pump",
+   "ガッツポーズ",
+   "fist pump"
+  ]
+ ],
+ "subject_en": "Japanese female teacher, early 30s, medium-length brown hair clipped back, light skin, light gray cardigan over a white blouse, navy skirt, neck strap ID card with blank face, flat shoes, 5-head-tall, dot eyes, warm smile"
+}

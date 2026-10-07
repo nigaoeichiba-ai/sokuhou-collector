@@ -1,0 +1,83 @@
+{
+ "slug": "student-chibi",
+ "title": "受験生・高校生（2頭身）のポーズ集",
+ "subject": "受験生・高校生",
+ "genre": "school",
+ "touch": "chibi",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "受験生・高校生",
+  "高校生",
+  "受験",
+  "受験生",
+  "ちびキャラ",
+  "学生",
+  "勉強"
+ ],
+ "lead": "受験生・高校生のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-walking-happily-side",
+   "登校する",
+   "walking happily, side view"
+  ],
+  [
+   "02-holding-notebook-pencil",
+   "勉強する",
+   "holding a notebook and pencil, studying with a focused face"
+  ],
+  [
+   "03-jumping-arms-up",
+   "合格でジャンプ",
+   "jumping with both arms up, big smile"
+  ],
+  [
+   "04-crouching-head-down",
+   "落ち込む",
+   "crouching with head down, dejected"
+  ],
+  [
+   "05-running-hurry",
+   "走る",
+   "running in a hurry"
+  ],
+  [
+   "06-waving-friend",
+   "手を振る",
+   "waving to a friend"
+  ],
+  [
+   "07-looking-smartphone-smiling",
+   "スマホを見る",
+   "looking at a smartphone, smiling"
+  ],
+  [
+   "08-thinking-finger-chin",
+   "考える",
+   "thinking, finger on chin"
+  ],
+  [
+   "09-standing-asleep-closed",
+   "居眠り",
+   "standing asleep with closed eyes and drooping head"
+  ],
+  [
+   "10-raising-high",
+   "発表で手を挙げる",
+   "raising one hand high"
+  ],
+  [
+   "11-pressed-together-eyes",
+   "神頼み",
+   "hands pressed together, eyes closed, praying"
+  ],
+  [
+   "12-cheering-fists-raised",
+   "応援する",
+   "cheering with both fists raised"
+  ]
+ ],
+ "subject_en": "Japanese high school girl, 16, 2-head-tall chibi proportions, black medium bob with a small hair clip, big sparkly dot eyes, white sailor-style uniform with navy collar and red ribbon, navy pleated skirt, white socks, brown loafers"
+}

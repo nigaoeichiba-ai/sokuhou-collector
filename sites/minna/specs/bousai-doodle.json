@@ -1,0 +1,83 @@
+{
+ "slug": "bousai-doodle",
+ "title": "防災・避難のポーズ集",
+ "subject": "防災・避難",
+ "genre": "life",
+ "touch": "loose",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "防災・避難",
+  "防災",
+  "避難",
+  "災害",
+  "地震",
+  "備蓄",
+  "手書き"
+ ],
+ "lead": "防災・避難のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-putting-hard-hat",
+   "ヘルメットをかぶる",
+   "putting on the hard hat with both hands"
+  ],
+  [
+   "02-wearing-plain-orange",
+   "非常持ち出し袋を背負う",
+   "wearing a plain orange emergency backpack, standing"
+  ],
+  [
+   "03-running-evacuate-side",
+   "避難して走る",
+   "running to evacuate, side view"
+  ],
+  [
+   "04-crouching-covering-head",
+   "頭を守ってしゃがむ",
+   "crouching with both hands covering the head"
+  ],
+  [
+   "05-pointing-forward-index",
+   "避難口を指さす",
+   "pointing forward with one index finger extended, shouting"
+  ],
+  [
+   "06-wearing-mask-rubbing",
+   "マスクと手洗い",
+   "wearing a mask and rubbing hands together"
+  ],
+  [
+   "07-drinking-water-from",
+   "水を飲む（熱中症対策）",
+   "drinking water from a simple plastic bottle"
+  ],
+  [
+   "08-holding-small-plain",
+   "ラジオを聞く",
+   "holding a small plain radio near his ear"
+  ],
+  [
+   "09-holding-simple-flashlight",
+   "懐中電灯を持つ",
+   "holding a simple flashlight pointing forward"
+  ],
+  [
+   "10-talking-smartphone-relieved",
+   "家族に電話",
+   "talking on a smartphone, relieved face"
+  ],
+  [
+   "11-palms-open-relieved",
+   "安心して笑う",
+   "both palms open, relieved smile"
+  ],
+  [
+   "12-bowing-politely",
+   "声かけのお辞儀",
+   "bowing politely"
+  ]
+ ],
+ "subject_en": "Japanese man about 40, short black hair, light skin, olive-green jacket, gray pants, yellow disaster hard hat, black boots, 3-head-tall, dot eyes, serious but kind face"
+}

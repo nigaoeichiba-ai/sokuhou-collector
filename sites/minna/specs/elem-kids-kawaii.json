@@ -1,0 +1,87 @@
+{
+ "slug": "elem-kids-kawaii",
+ "title": "小学生ふたりのポーズ集",
+ "subject": "小学生ふたり",
+ "genre": "school",
+ "touch": "kawaii",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "小学生ふたり",
+  "小学生",
+  "子ども",
+  "男の子",
+  "女の子",
+  "学校",
+  "ランドセル"
+ ],
+ "lead": "小学生ふたりのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-walking-backpack-happy",
+   "登校する",
+   "walking with backpack, happy, side view"
+  ],
+  [
+   "02-raising-high-answer",
+   "手を挙げる",
+   "raising one hand high to answer"
+  ],
+  [
+   "03-waving-shouting-hello",
+   "元気に挨拶",
+   "waving and shouting hello"
+  ],
+  [
+   "04-holding-spoon-smiling",
+   "給食を食べる",
+   "holding a spoon and smiling with cheeks full"
+  ],
+  [
+   "05-running-arms-pumping",
+   "徒競走で走る",
+   "running with arms pumping"
+  ],
+  [
+   "06-holding-open-book",
+   "本を読む",
+   "holding an open book and reading"
+  ],
+  [
+   "07-walking-backpack-side",
+   "登校する",
+   "walking with backpack, side view"
+  ],
+  [
+   "08-standing-holding-paper",
+   "発表する",
+   "standing holding a paper, speaking"
+  ],
+  [
+   "09-sweeping-broom",
+   "掃除する",
+   "sweeping with a broom"
+  ],
+  [
+   "10-sitting-holding-crayon",
+   "お絵かき",
+   "sitting holding a crayon, drawing"
+  ],
+  [
+   "11-jumping-arms-up",
+   "ジャンプで喜ぶ",
+   "jumping with both arms up"
+  ],
+  [
+   "12-bowing-politely",
+   "お辞儀",
+   "bowing politely"
+  ]
+ ],
+ "subject_en": "Japanese elementary school boy, 8 years old, short spiky black hair, light skin, white short-sleeve shirt, navy shorts, white socks, blue sneakers, blue school backpack, 3-head-tall, dot eyes, big smile",
+ "sheet_subjects": [
+  "Japanese elementary school boy, 8 years old, short spiky black hair, light skin, white short-sleeve shirt, navy shorts, white socks, blue sneakers, blue school backpack, 3-head-tall, dot eyes, big smile",
+  "Japanese elementary school girl, 8 years old, black hair in two low pigtails with red ribbons, light skin, white blouse, red plaid skirt, white socks, brown shoes, red school backpack, 3-head-tall, dot eyes, big smile"
+ ]
+}

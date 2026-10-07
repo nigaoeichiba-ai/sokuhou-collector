@@ -1,0 +1,83 @@
+{
+ "slug": "omotenashi-wa",
+ "title": "旅館の女将（おもてなし）のポーズ集",
+ "subject": "旅館の女将",
+ "genre": "people",
+ "touch": "wa",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "旅館の女将",
+  "女将",
+  "旅館",
+  "おもてなし",
+  "着物",
+  "観光",
+  "和風"
+ ],
+ "lead": "旅館の女将のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-standing-bow-joined",
+   "立ってお辞儀",
+   "standing bow with hands joined in front"
+  ],
+  [
+   "02-welcoming-open",
+   "両手でお出迎え",
+   "welcoming with both hands open"
+  ],
+  [
+   "03-gesturing-open-guide",
+   "手で案内",
+   "gesturing with an open hand to guide"
+  ],
+  [
+   "04-holding-simple-tray",
+   "お盆にお茶を載せる",
+   "holding a simple tray with one teacup"
+  ],
+  [
+   "05-kneeling-seiza-bowing",
+   "正座で三つ指の礼",
+   "kneeling in seiza, bowing with fingertips on the floor"
+  ],
+  [
+   "06-kneeling-seiza-smiling",
+   "笑顔で正座",
+   "kneeling in seiza, smiling"
+  ],
+  [
+   "07-holding-folded-fan",
+   "扇子を持つ",
+   "holding a folded fan, elegant pose"
+  ],
+  [
+   "08-waving-goodbye-raised",
+   "手を振ってお見送り",
+   "waving goodbye with a hand raised"
+  ],
+  [
+   "09-walking-holding-simple",
+   "傘をさして歩く",
+   "walking holding a simple paper umbrella"
+  ],
+  [
+   "10-beckoning-smiling",
+   "手招き",
+   "beckoning with a hand, smiling"
+  ],
+  [
+   "11-pointing-side-extended",
+   "指さしで説明",
+   "pointing to the side with an extended hand, explaining"
+  ],
+  [
+   "12-cheek-troubled",
+   "困り顔",
+   "hand on cheek, troubled"
+  ]
+ ],
+ "subject_en": "Japanese ryokan hostess about 45, black hair in a neat low chignon with a small kanzashi, light skin, light indigo kimono with a white obi, white tabi socks, zori sandals, 5-head-tall, gentle smile, dot eyes"
+}
