@@ -4,6 +4,8 @@ from pathlib import Path
 
 from sokuhou import contactform, sitekit
 
+ROOT = Path(__file__).resolve().parents[1]
+
 CFG = {"site_url": "https://example.test", "site_name": "テストサイト", "operator_name": "テスト運営", "contact_own": True,
        "contact_kinds": ["データの誤りのご指摘", "ご意見・ご要望", "その他"], "adsense_pub_id": None}
 _ASSETS = tempfile.TemporaryDirectory()
@@ -41,6 +43,31 @@ class FormTest(unittest.TestCase):
     def test_a_kind_with_a_quote_cannot_break_the_php_string(self):
         php = contactform.send_php({**CFG, "contact_kinds": ["it's", "b"]})
         self.assertIn(r"it\'s", php)
+
+    def test_the_message_is_mailed_to_info_at_the_sites_domain_built_at_run_time(self):
+        php = contactform.send_php(CFG)
+        self.assertIn("$to = 'info@' . $domain;", php)
+        self.assertIn("$domain = basename($site);", php)
+        self.assertIn("@mail($to,", php)
+        self.assertLess(php.index("file_put_contents($inbox"), php.index("@mail($to,"))     # the saved line is the record; the mail comes after it
+        self.assertLess(php.index("@mail($to,"), php.rindex("header('Location: /contact/thanks.html'"))
+        self.assertLess(php.index("$_POST['website']"), php.index("@mail($to,"))              # a honeypot hit sends nothing
+        self.assertIn("'-f' . $to", php)
+        self.assertIn("Reply-To", php)
+        self.assertIn("FILTER_VALIDATE_EMAIL", php)                                           # the only visitor text that reaches a header is validated
+        self.assertNotIn("__SITE__", php)
+        self.assertIn("[テストサイト] お問い合わせ", php)
+        self.assertNotRegex(php, r"[\w.-]+@[\w-]+\.(com|jp|net)")                              # no literal address in the generated file
+
+    def test_a_site_name_cannot_break_the_php_string(self):
+        php = contactform.send_php({**CFG, "site_name": "a'b\"c$d{e}" + chr(92) + "f" + chr(10) + "g"})
+        self.assertIn("[abcdefg] お問い合わせ", php)
+
+    def test_no_file_of_the_repository_contains_a_real_info_address(self):
+        import subprocess
+        out = subprocess.run(["git", "grep", "-nI", "-E", r"info@(yorokobu-present|minna-no-illust|kuma-sokuho|saichin-sokuho)\.com"], cwd=ROOT,
+                             capture_output=True).stdout.decode("utf-8", "replace")
+        self.assertEqual([x for x in out.splitlines() if "test_contactform.py" not in x], [])
 
 
 class PagesTest(unittest.TestCase):

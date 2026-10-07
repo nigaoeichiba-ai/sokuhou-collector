@@ -62,39 +62,5 @@ class EncryptionTest(unittest.TestCase):
         self.assertNotIn("PRIVATE KEY", wf)
 
 
-class OwnerNoticeTest(unittest.TestCase):
-    """The owner is told by a GitHub issue (e-mailed by GitHub) that something came; the issue lives in a PUBLIC repository, so it carries no message text."""
-
-    def test_the_summary_has_site_count_and_kinds_only(self):
-        recs = [json.loads(line(1, msg="ひみつの本文", email="a@example.com", page="/x/", kind="データの誤りのご指摘")),
-                json.loads(line(2, msg="もうひとつの本文", kind="掲載内容に関するご連絡(掲載の中止のご依頼など)")),
-                json.loads(line(3, msg="三つ目", kind="データの誤りのご指摘"))]
-        out = inbox.summarize("kuma", recs)
-        self.assertEqual(out, "kuma: 3件(データの誤りのご指摘 2件、掲載内容に関するご連絡(掲載の中止のご依頼など) 1件)")
-        for secret in ("ひみつ", "本文", "a@example.com", "/x/", "secret-hash"):
-            self.assertNotIn(secret, out)
-
-    def test_the_command_prints_nothing_when_there_is_nothing_new(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            f = Path(tmp) / "new.jsonl"
-            f.write_text("", encoding="utf-8")
-            r = subprocess.run(["python", "-m", "sokuhou.inbox", "summary", "--site", "kuma", "--file", str(f)], capture_output=True, cwd=ROOT)
-            self.assertEqual((r.returncode, r.stdout), (0, b""))
-            f.write_text(line(1) + chr(10), encoding="utf-8")
-            r = subprocess.run(["python", "-m", "sokuhou.inbox", "summary", "--site", "kuma", "--file", str(f)], capture_output=True, cwd=ROOT)
-            self.assertIn("kuma: 1件(その他 1件)", r.stdout.decode("utf-8"))
-
-    def test_the_workflow_runs_hourly_opens_an_issue_from_the_summary_and_never_puts_message_text_in_it(self):
-        wf = (ROOT / ".github" / "workflows" / "inbox.yml").read_text(encoding="utf-8")
-        self.assertIn('cron: "50 * * * *"', wf)
-        self.assertIn("issues: write", wf)
-        self.assertIn("gh issue create", wf)
-        self.assertIn("sokuhou.inbox summary", wf)
-        step = wf.split("gh issue create")[0].split("run: |")[-1]   # the shell of the notice step only (not its name)
-        for forbidden in ("new_$site.jsonl", "raw_", "message", "email", ".p7m"):
-            self.assertNotIn(forbidden, step)   # the issue body is built from notice.txt only
-        self.assertIn("notice.txt", step)
-
-
 if __name__ == "__main__":
     unittest.main()
