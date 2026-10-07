@@ -43,11 +43,11 @@ def segments() -> list[dict]:
 # A genre is asked for alone (the API does not allow genreId together with age or sex).
 GENRES = [
     ("sweets", 551167, "スイーツ・お菓子"), ("flower", 100005, "花・ガーデン・DIY"), ("jewelry", 216129, "ジュエリー・アクセサリー"),
-    ("bag", 216131, "バッグ・小物・ブランド雑貨"), ("watch", 558929, "腕時計"), ("beer", 510915, "ビール・洋酒"), ("sake", 510901, "日本酒・焼酎"),
+    ("bag", 216131, "バッグ・小物・ブランド雑貨"), ("watch", 558929, "腕時計"), ("sake", 510901, "日本酒・焼酎"),
     ("wine", 100317, "ワイン"), ("interior", 100804, "インテリア・寝具・収納"), ("kitchen", 558944, "キッチン用品・食器・調理器具"),
     ("beauty", 100939, "美容・コスメ・香水"),
 ]
-# Left out after the first real snapshot (2026-10-07): fashion, hobby, toys and baby goods. Their sales rankings are everyday clothes, seasonal decorations
+# Left out after the first real snapshot (2026-10-07): beer & spirits (its gift-like places are the same wines as in ワイン), fashion, hobby, toys and baby goods. Their sales rankings are everyday clothes, seasonal decorations
 # and nappies whose titles merely contain the word プレゼント; nothing in them reads as a present.
 
 
@@ -103,7 +103,7 @@ def update(store: dict | None, fresh: dict[str, list[dict]], today: date, keep=N
     gift-like products (shown()), so only those are kept, each with its real Rakuten place, and the history holds [code, place] pairs of them.
     A segment that failed to fetch today (absent from `fresh`) keeps its previous data untouched."""
     store = dict(store or {})
-    segs = dict(store.get("segments") or {})
+    segs = {k: v for k, v in (store.get("segments") or {}).items() if k in SEGMENTS}      # a segment that is no longer fetched is dropped
     for slug, raw_items in fresh.items():
         if not raw_items:                       # the fetch failed or came back empty: keep what we had
             continue

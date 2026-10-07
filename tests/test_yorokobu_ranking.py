@@ -137,6 +137,12 @@ class HistoryTest(unittest.TestCase):
         for gone in ("レディースファッション", "メンズファッション", "ホビー", "おもちゃ", "キッズ・ベビー・マタニティ"):
             self.assertNotIn(gone, labels)
         self.assertIn("ワイン", labels)
+        self.assertNotIn("ビール・洋酒", labels)
+
+    def test_segments_that_are_no_longer_fetched_are_dropped_from_the_store(self):
+        old = {"segments": {"g-mens": {"label": "x", "kind": "genre", "items": [], "history": {}}, "g-wine": {"label": "ワイン", "kind": "genre", "date": "2026-10-01", "items": [], "history": {}}}}
+        s = ranking.update(old, {"g-wine": day(codes(3))}, date(2026, 10, 2))
+        self.assertEqual(sorted(s["segments"]), ["g-wine"])
 
     def test_an_empty_fetch_does_not_wipe_the_stored_segment(self):
         s1 = ranking.update(None, {"f20": day(["a", "b"])}, date(2026, 10, 1))
