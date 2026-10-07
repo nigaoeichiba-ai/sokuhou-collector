@@ -82,5 +82,6 @@
    "The pixel character jumps upward with both feet off the ground, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": []
 }
