@@ -82,5 +82,12 @@
    "The adult holds a plain warm cup and shows a gentle happy posture, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": [
+  "helpline-call",
+  "reduce-work",
+  "relief",
+  "small-joy",
+  "talking-friend"
+ ]
 }

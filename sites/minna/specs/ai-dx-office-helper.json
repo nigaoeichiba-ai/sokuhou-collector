@@ -83,5 +83,9 @@
   ]
  ],
  "holes": false,
- "exclude": []
+ "exclude": [
+  "data-analysis",
+  "dx-meeting",
+  "security-check"
+ ]
 }

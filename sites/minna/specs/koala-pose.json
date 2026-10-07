@@ -75,5 +75,8 @@
    "ガッツポーズする",
    "fist-pump cheering pose with sparkling eyes"
   ]
+ ],
+ "exclude": [
+  "jump"
  ]
 }
