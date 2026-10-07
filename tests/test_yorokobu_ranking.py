@@ -171,6 +171,12 @@ class HistoryTest(unittest.TestCase):
         self.assertEqual(seg["items"][-1]["rank"], ranking.KEEP)
         self.assertEqual(len(seg["history"]["2026-10-01"]), ranking.KEEP)
 
+    def test_the_view_shows_at_most_the_best_keep_products_even_from_older_larger_data(self):
+        items = [ranked(f"g{i}", i + 1, name=f"ギフト 詰め合わせ {i}") for i in range(100)]
+        store = {"segments": {"g-wine": {"label": "ワイン", "kind": "genre", "date": "2026-10-01", "items": items, "history": {"2026-10-01": [[i["code"], i["rank"]] for i in items]}}}}
+        v = ranking.view(store, FILTERS)
+        self.assertEqual(len(v["segments"]["g-wine"]["items"]), ranking.KEEP)
+
     def test_an_empty_fetch_does_not_wipe_the_stored_segment(self):
         s1 = ranking.update(None, {"f20": day(["a", "b"])}, date(2026, 10, 1))
         s2 = ranking.update(s1, {"f20": []}, date(2026, 10, 2))
