@@ -5,6 +5,8 @@ without knowing which prefecture they came from.
 """
 from __future__ import annotations
 
+import re
+import unicodedata
 from datetime import date, datetime, timedelta, timezone
 
 JST = timezone(timedelta(hours=9))
@@ -36,3 +38,32 @@ def trim_for_store(sightings: list[dict], newest: date) -> list[dict]:
 
 def now_jst_iso() -> str:
     return datetime.now(JST).isoformat()
+
+
+def package(*, source: str, credit: str, update_note: str, as_of: date, sightings: list[dict], page: str, files: list[str],
+            unparsed: int = 0, bad_coords: int = 0, extra: dict | None = None) -> dict:
+    """The stored shape every prefecture / city source shares (see build.prepare_prefs).
+
+    sightings: dicts with observed_at (ISO date or datetime), city, place, count, kind, species and optionally lat / lon, in any order.
+    monthly is counted from ALL the rows (per fiscal year), then only the current fiscal year (plus the previous January-March) is stored.
+    """
+    rows = sorted((s for s in sightings if s.get("observed_at")), key=lambda s: (s["observed_at"], s["place"]), reverse=True)
+    monthly: dict[str, dict[str, int]] = {}
+    for s in rows:
+        d = date.fromisoformat(s["observed_at"][:10])
+        months = monthly.setdefault(fy_label(fiscal_start(d)), {})
+        months[str(d.month)] = months.get(str(d.month), 0) + 1
+    out = {
+        "source": source, "credit": credit, "as_of": as_of.isoformat(), "update_note": update_note,
+        "fy_current": fy_label(fiscal_start(as_of)), "sightings": trim_for_store(rows, as_of), "sightings_in_window": len(rows),
+        "monthly": monthly, "unparsed": unparsed, "bad_coords": bad_coords,
+        "source_page": page, "source_file": files[0] if len(files) == 1 else files, "fetched_at": now_jst_iso(),
+    }
+    out.update(extra or {})
+    return out
+
+
+def fullwidth_to_int(text: str) -> int | None:
+    """'親子グマ２頭' -> 2, 'ヒグマ１頭' -> 1, nothing numeric -> None."""
+    m = re.search(r"(\d+)\s*頭", unicodedata.normalize("NFKC", text or ""))
+    return int(m.group(1)) if m else None

@@ -541,5 +541,42 @@ class GoodsTest(unittest.TestCase):
             self.assertNotIn("Amazonのアソシエイト", (Path(tmp) / "n" / "privacy" / "index.html").read_text(encoding="utf-8"))
 
 
+@unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
+class SourceKeyIsNotThePrefectureTest(unittest.TestCase):
+    """A source named after its region (the Sorachi bureau) shows up under its prefecture (Hokkaido) everywhere."""
+
+    @classmethod
+    def setUpClass(cls):
+        from sokuhou.sources import sorachi_kuma
+        cls.tmp = tempfile.TemporaryDirectory()
+        raw = raw_data()
+        raw["notices"] = env_kuma.parse_notices((FIX / "env_kuma_effort12.html").read_text(encoding="utf-8"))
+        sorachi = sorachi_kuma.parse_page((FIX / "sorachi_kuma.html").read_bytes())
+        cls.out = Path(cls.tmp.name) / "site"
+        cls.files = build.render_site(raw, CFG, cls.out, release=True, prefs={"sorachi": sorachi}, today=date(2026, 10, 7))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def read(self, rel):
+        return (self.out / rel).read_text(encoding="utf-8")
+
+    def test_pages_are_under_the_prefecture_slug(self):
+        self.assertIn("live/hokkaido/index.html", self.files)
+        self.assertNotIn("live/sorachi/index.html", self.files)
+        self.assertIn("live/hokkaido/feed.xml", self.files)
+
+    def test_the_prefecture_page_of_the_ministry_links_to_it(self):
+        html = self.read("hokkaido/index.html")
+        self.assertIn('href="/live/hokkaido/"', html)
+        self.assertIn("北海道空知総合振興局が公表している最新の目撃情報", html)
+
+    def test_the_municipality_pages_exist_and_the_site_checker_passes(self):
+        self.assertIn(f"live/hokkaido/{live_mod.city_slug('hokkaido', '砂川市')}/index.html", self.files)
+        self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
+        self.assertIn("空知総合振興局", self.read("live/hokkaido/index.html"))
+
+
 if __name__ == "__main__":
     unittest.main()
