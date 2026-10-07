@@ -1,0 +1,159 @@
+{
+ "status": 200,
+ "count": 9,
+ "result": [
+  {
+   "id": 27880,
+   "sighting_datetime": "2026-08-31 14:53:00",
+   "municipality_name": "秋田市",
+   "address": "〒011-0909 秋田県秋田市寺内児桜２丁目１５",
+   "headcount": 1,
+   "latitude": 39.73767533359745,
+   "longitude": 140.08383750907345,
+   "verified": 1,
+   "verified_name": "確認済",
+   "info_type_masters": {
+    "info_type_name": "痕跡(その他)"
+   },
+   "animal_species_masters": {
+    "animal_species_name": "ツキノワグマ"
+   }
+  },
+  {
+   "id": 27872,
+   "sighting_datetime": "2026-08-31 06:05:00",
+   "municipality_name": "秋田市",
+   "address": "〒011-0937 秋田県秋田市寺内高野４地域",
+   "headcount": 1,
+   "latitude": 39.740295470197,
+   "longitude": 140.08768111415,
+   "verified": 1,
+   "verified_name": "確認済",
+   "info_type_masters": {
+    "info_type_name": "目撃"
+   },
+   "animal_species_masters": {
+    "animal_species_name": "ツキノワグマ"
+   }
+  },
+  {
+   "id": 28107,
+   "sighting_datetime": "2026-10-06 21:30:00",
+   "municipality_name": "秋田市",
+   "address": "〒010-0877 秋田県秋田市千秋矢留町４−２３",
+   "headcount": 1,
+   "latitude": 39.7218787788,
+   "longitude": 140.12213332901,
+   "verified": 1,
+   "verified_name": "確認済",
+   "info_type_masters": {
+    "info_type_name": "目撃"
+   },
+   "animal_species_masters": {
+    "animal_species_name": "ツキノワグマ"
+   }
+  },
+  {
+   "id": 28104,
+   "sighting_datetime": "2026-10-06 12:40:00",
+   "municipality_name": "由利本荘市",
+   "address": "秋田県由利本荘市岩城内道川八幡前　地内",
+   "headcount": 1,
+   "latitude": 39.55107751072799,
+   "longitude": 140.08248561544087,
+   "verified": 1,
+   "verified_name": "確認済",
+   "info_type_masters": {
+    "info_type_name": "目撃"
+   },
+   "animal_species_masters": {
+    "animal_species_name": "ツキノワグマ"
+   }
+  },
+  {
+   "id": 28101,
+   "sighting_datetime": "2026-10-06 05:30:00",
+   "municipality_name": "秋田市",
+   "address": "〒010-0876 秋田県秋田市千秋公園１−１",
+   "headcount": 1,
+   "latitude": 39.721452387647,
+   "longitude": 140.12403964845,
+   "verified": 1,
+   "verified_name": "確認済",
+   "info_type_masters": {
+    "info_type_name": "目撃"
+   },
+   "animal_species_masters": {
+    "animal_species_name": "ツキノワグマ"
+   }
+  },
+  {
+   "id": 28084,
+   "sighting_datetime": "2026-10-04 14:30:00",
+   "municipality_name": "由利本荘市",
+   "address": "〒018-1302 秋田県由利本荘市岩城勝手横山",
+   "headcount": 1,
+   "latitude": 39.573726045797116,
+   "longitude": 140.06513750261723,
+   "verified": 1,
+   "verified_name": "確認済",
+   "info_type_masters": {
+    "info_type_name": "目撃"
+   },
+   "animal_species_masters": {
+    "animal_species_name": "ツキノワグマ"
+   }
+  },
+  {
+   "id": 28074,
+   "sighting_datetime": "2026-10-01 21:00:00",
+   "municipality_name": "秋田市",
+   "address": "〒010-1421 秋田県秋田市仁井田本町３丁目２−１２付近",
+   "headcount": 1,
+   "latitude": 39.680065279861,
+   "longitude": 140.13456449563,
+   "verified": 1,
+   "verified_name": "確認済",
+   "info_type_masters": {
+    "info_type_name": "目撃"
+   },
+   "animal_species_masters": {
+    "animal_species_name": "ツキノワグマ"
+   }
+  },
+  {
+   "id": 28072,
+   "sighting_datetime": "2026-10-01 15:35:00",
+   "municipality_name": "秋田市",
+   "address": "秋田県秋田市下北手宝川潤ケ崎",
+   "headcount": 1,
+   "latitude": 39.710130485741,
+   "longitude": 140.20081400871,
+   "verified": 1,
+   "verified_name": "確認済",
+   "info_type_masters": {
+    "info_type_name": "目撃"
+   },
+   "animal_species_masters": {
+    "animal_species_name": "ツキノワグマ"
+   }
+  },
+  {
+   "id": 99999999,
+   "sighting_datetime": "2026-10-06 12:00:00",
+   "municipality_name": "秋田市",
+   "address": "秋田県秋田市下北手宝川潤ケ崎",
+   "headcount": 1,
+   "latitude": 39.710130485741,
+   "longitude": 140.20081400871,
+   "verified": 0,
+   "verified_name": "未確認",
+   "info_type_masters": {
+    "info_type_name": "目撃"
+   },
+   "animal_species_masters": {
+    "animal_species_name": "ツキノワグマ"
+   }
+  }
+ ]
+}
