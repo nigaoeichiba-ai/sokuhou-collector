@@ -26,7 +26,7 @@ from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu import numberlists as nm  # noqa: E402
 from sites.yorokobu import ranking as rk  # noqa: E402
 from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
-from sites.yorokobu.tools import (calc_page, gift_map, persona_page, quiz_page, taboo_page, tools_hub_page)  # noqa: E402
+from sites.yorokobu.tools import (calc_page, gacha_data, gacha_page, gacha_pool, gift_map, persona_page, quiz_page, taboo_page, tools_hub_page)  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
 from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages,  # noqa: E402
                              missing_config, standard_files, write_pages)
@@ -1199,6 +1199,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     global RANKING_ON
     RANKING_ON = bool(d["ranking"])
     d["numbers"] = nm.view(d["pairs"], c["filters"])
+    d["gacha"] = gacha_data(d, cfg)
     cards: dict[str, bytes] = {}
     OG.clear()
     if ogimage.available():
@@ -1239,6 +1240,10 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages[f"for/{r['slug']}/index.html"] = recipient_page(d, cfg, preview, r)
     pages["tool/index.html"] = tools_hub_page(d, cfg, preview)
     pages["tool/calc/index.html"] = calc_page(d, cfg, preview)
+    if d["gacha"]:
+        gp = json.loads(d["gacha"])
+        pages["tool/gacha/index.html"] = gacha_page(d, cfg, preview, gp["rec"], gp["tiers"])
+        pages["tool/gacha/items.json"] = d["gacha"]
     if c["taboo"]:
         pages["tool/taboo/index.html"] = taboo_page(d, cfg, preview)
     if c["persona"]:
