@@ -1,6 +1,7 @@
 import csv
 import io
 import unittest
+from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
 from unittest import mock
@@ -9,6 +10,7 @@ from sokuhou.sources import akita_kuma as kuma
 
 FIX = Path(__file__).parent / "fixtures"
 CSV = FIX / "akita_kumadas_sample.csv"
+API = FIX / "akita_kumadas_api.json"
 
 
 def _parse_sample():
@@ -83,12 +85,68 @@ class AkitaKumaSnapshotTest(unittest.TestCase):
         self.assertEqual(self.d["monthly"]["R07"], {"10": 25, "12": 1, "6": 10, "8": 5, "7": 5, "11": 11, "9": 4, "5": 1, "2": 1})
 
     def test_collect_without_network(self):
-        with mock.patch.object(kuma, "MIN_ROWS", 1), mock.patch.object(kuma, "fetch", lambda url: SimpleNamespace(body=CSV.read_bytes())):
+        with mock.patch.object(kuma, "MIN_ROWS", 1), mock.patch.object(kuma, "fetch", lambda url: SimpleNamespace(body=CSV.read_bytes())),                 mock.patch.object(kuma, "polite_fetch", lambda url: API.read_bytes()):
             out = kuma.collect()
         self.assertEqual(out["source"], "akita")
         self.assertEqual(out["source_page"], kuma.DATASET_PAGE)
         self.assertEqual(out["source_file"], kuma.SOURCE_FILE)
         self.assertRegex(out["fetched_at"], r"\+09:00$")
+
+
+class AkitaApiTest(unittest.TestCase):
+    """The prefecture's public API adds the newest records of the same system (same record numbers) that the monthly open data does not have yet."""
+
+    @classmethod
+    def setUpClass(cls):
+        with mock.patch.object(kuma, "MIN_ROWS", 1):
+            cls.parsed = kuma.parse_csv(CSV.read_bytes())
+        cls.ids = cls.parsed["_ids"]
+
+    def api_rows(self, **kw):
+        args = dict(known_ids=self.ids, after=date(2026, 8, 31), today=date(2026, 10, 7))
+        args.update(kw)
+        return kuma.parse_api(API.read_bytes(), **args)
+
+    def test_only_new_confirmed_bear_records_after_the_open_data_are_taken(self):
+        rows = self.api_rows()
+        self.assertEqual(len(rows), 6)  # 9 in the file: 2 already in the open data, 1 not confirmed by the prefecture
+        self.assertTrue(all(r["observed_at"] >= "2026-09-01" for r in rows))
+        self.assertNotIn("99999999", str(rows))
+        self.assertEqual(rows[0]["observed_at"], "2026-10-06T21:30:00+09:00")
+        self.assertEqual(rows[0]["city"], "秋田市")
+        self.assertEqual(rows[0]["place"], "秋田県秋田市千秋矢留町４−２３")  # the postal code is cleaned like the CSV's addresses
+        self.assertEqual(rows[0]["kind"], "目撃")
+        self.assertTrue(38.8 <= rows[0]["lat"] <= 40.6)
+        self.assertEqual(len(self.api_rows(known_ids=set())), 8)  # without the record numbers the two rows already in the open data would be doubled
+        self.assertEqual([r["observed_at"][:10] for r in self.api_rows(today=date(2026, 10, 3))], ["2026-10-04", "2026-10-01", "2026-10-01"])  # nothing after today + 2 days: a date typed in the future is dropped
+
+    def test_merge_updates_as_of_monthly_credit_and_note(self):
+        out = {k: v for k, v in self.parsed.items() if k != "_ids"}
+        before = dict(out["monthly"]["R08"])
+        kuma.add_api_records(out, self.api_rows())
+        self.assertEqual(out["as_of"], "2026-10-06")
+        self.assertEqual(out["newest_observed_at"], "2026-10-06T21:30:00+09:00")
+        self.assertEqual(out["monthly"]["R08"], {**before, "10": 6})
+        self.assertTrue(out["credit"].startswith(kuma.CREDIT) and "公開API" in out["credit"])
+        self.assertIn("確認済み", out["update_note"])
+        self.assertEqual(out["api_records_added"], 6)
+        self.assertEqual(out["sightings"][0]["observed_at"], "2026-10-06T21:30:00+09:00")
+
+    def test_a_failing_api_leaves_the_open_data_alone(self):
+        def boom(url):
+            raise OSError("down")
+        with mock.patch.object(kuma, "MIN_ROWS", 1), mock.patch.object(kuma, "fetch", lambda url: SimpleNamespace(body=CSV.read_bytes())),                 mock.patch.object(kuma, "polite_fetch", boom):
+            out = kuma.collect()
+        self.assertEqual(out["as_of"], "2026-08-31")
+        self.assertIn("OSError", out["api_error"])
+        self.assertNotIn("_ids", out)
+
+    def test_collect_with_the_api_and_no_known_ids_stored(self):
+        with mock.patch.object(kuma, "MIN_ROWS", 1), mock.patch.object(kuma, "fetch", lambda url: SimpleNamespace(body=CSV.read_bytes())),                 mock.patch.object(kuma, "polite_fetch", lambda url: API.read_bytes()):
+            out = kuma.collect()
+        self.assertEqual(out["as_of"], "2026-10-06")
+        self.assertNotIn("_ids", out)
+        self.assertNotIn("api_error", out)
 
 
 class AkitaKumaFailureTest(unittest.TestCase):
