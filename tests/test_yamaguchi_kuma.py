@@ -32,10 +32,23 @@ def _csv_bytes(header, rows):
     return buf.getvalue().encode("cp932")
 
 
+def _bare(rows):
+    """The rows without their coordinates (the coordinates are checked in the coordinate tests)."""
+    return [{k: v for k, v in r.items() if k not in ("lat", "lon")} for r in rows]
+
+
 class YamaguchiKumaSnapshotTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.d = _parse_fixture()
+
+    def test_coordinates_are_kept_rounded_and_inside_the_prefecture(self):
+        with_coords = [r for r in self.d["sightings"] if "lat" in r]
+        self.assertGreater(len(with_coords), len(self.d["sightings"]) * 0.9)
+        for r in with_coords:
+            self.assertTrue(33.7 <= r["lat"] <= 34.8 and 130.7 <= r["lon"] <= 132.5, r)
+            self.assertEqual(r["lat"], round(r["lat"], 4))
+            self.assertEqual(r["lon"], round(r["lon"], 4))
 
     def test_first_rows_and_city_split(self):
         self.assertIn({
@@ -45,7 +58,7 @@ class YamaguchiKumaSnapshotTest(unittest.TestCase):
             "count": 1,
             "kind": "目撃",
             "species": "クマ",
-        }, self.d["sightings"])
+        }, _bare(self.d["sightings"]))
         self.assertIn({
             "observed_at": "2026-01-04T10:00:00+09:00",
             "city": "山口市",
@@ -53,13 +66,13 @@ class YamaguchiKumaSnapshotTest(unittest.TestCase):
             "count": None,
             "kind": "痕跡",
             "species": "クマ",
-        }, self.d["sightings"])
+        }, _bare(self.d["sightings"]))
 
     def test_reiwa_dates_multiline_places_and_trace_rule(self):
         self.assertEqual(kuma._parse_reiwa_date("令和8年1月4日").isoformat(), "2026-01-04")
         self.assertEqual(kuma.kind_from_status("熊の足跡を発見したもの"), "痕跡")
         self.assertEqual(kuma.kind_from_status("国道を横断する熊を目撃したもの"), "目撃")
-        self.assertEqual(self.d["sightings"][0], {
+        self.assertEqual(_bare(self.d["sightings"])[0], {
             "observed_at": "2026-10-03T22:30:00+09:00",
             "city": "岩国市",
             "place": "美和町北中山 敷地内",

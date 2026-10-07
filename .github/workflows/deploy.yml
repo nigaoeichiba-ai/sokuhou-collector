@@ -32,6 +32,10 @@ on:
         description: "Really deploy (otherwise check only)"
         type: boolean
         default: false
+      only:
+        description: "Only this site (saichin, kuma, yorokobu, minna); empty = every site (kuma-live.yml uses it after each data collection)"
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -58,7 +62,7 @@ jobs:
             dir: kuma-sokuho.com
             url: https://kuma-sokuho.com
             build: python sites/kuma/build.py --release --out release
-            min_pages: 55
+            min_pages: 100
             min_cards: 0
             marker: クマ出没速報
             probe: /feed.xml
@@ -102,10 +106,15 @@ jobs:
           RK_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           SITE: ${{ matrix.site }}
           EVENT: ${{ github.event_name }}
+          ONLY: ${{ github.event.inputs.only }}
           BEFORE: ${{ github.event.before }}
           AFTER: ${{ github.sha }}
         run: |
           go=true
+          if [ -n "$ONLY" ] && [ "$ONLY" != "$SITE" ]; then
+            echo "this run is for $ONLY only; $SITE is skipped"
+            go=false
+          fi
           # A push that only touches another site's own files (sites/yorokobu, sites/minna and their tests) does not redeploy this site.
           # Anything shared (the collector, kit, workflows, data, other tests) redeploys every site; on any doubt the site is deployed.
           if [ "$EVENT" = "push" ] && [ -n "$BEFORE" ] && ! echo "$BEFORE" | grep -qE '^0+$'; then
@@ -115,6 +124,7 @@ jobs:
                 case "$f" in
                   sites/yorokobu/*|tests/test_yorokobu*|tests/fixtures/yorokobu/*|data/yorokobu*) owner=yorokobu ;;
                   sites/minna/*|tests/test_minna*) owner=minna ;;
+                  sites/kuma/*|tests/test_kuma*|tests/test_*_kuma.py|tests/test_otsu_bear.py|tests/fixtures/*kuma*|tests/fixtures/otsu_bear*|data/*_kuma.json|data/otsu_bear.json|sokuhou/sources/*_kuma.py|sokuhou/sources/otsu_bear.py) owner=kuma ;;
                   *) owner=shared ;;
                 esac
                 if [ "$owner" = "shared" ] || [ "$owner" = "$SITE" ]; then relevant=1; fi

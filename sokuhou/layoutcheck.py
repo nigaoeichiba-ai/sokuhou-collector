@@ -68,7 +68,8 @@ function measure(d, w) {
     if (r.width < Math.min(36, 9 * len) || r.height > 90) { res.nav.push((a.textContent || '').trim().slice(0, 10) + ' ' + Math.round(r.width) + 'x' + Math.round(r.height)); if (res.nav.length >= 3) break; }
   }
   for (const i of d.images) {
-    if (i.complete && i.naturalWidth === 0 && i.getAttribute('src') && !i.hidden && i.loading !== 'lazy') { res.images.push(i.getAttribute('src').slice(0, 60)); if (res.images.length >= 3) break; }
+    // a picture from another site (a map tile) is blocked on purpose while measuring, so only the site's own pictures can be "broken"
+    if (i.complete && i.naturalWidth === 0 && i.getAttribute('src') && !i.hidden && i.loading !== 'lazy' && new URL(i.src, location.href).origin === location.origin) { res.images.push(i.getAttribute('src').slice(0, 60)); if (res.images.length >= 3) break; }
   }
   return res;
 }

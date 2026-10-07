@@ -14,6 +14,8 @@ PAGES = {
     "wide": '<h1>幅の広いページ</h1><div style="width:520px;background:#ccc">この枠が画面より広い</div>',
     "vertical": '<header><nav style="display:flex"><a href="/" style="width:8px;display:block;overflow-wrap:anywhere">トップページ</a></nav></header><p>x</p>',
     "squeezed": '<div style="display:flex"><p style="width:12px;overflow-wrap:anywhere">縦に潰れた長い文章</p><div style="width:200px">横</div></div>',
+    "brokenimg": '<h1>画像</h1><img src="/missing.png" width="40" height="40" alt="">',
+    "externalimg": '<h1>外部の画像</h1><img src="https://tiles.example.org/1.png" width="40" height="40" alt="">',
     "framed": '<h1>表</h1><div style="overflow-x:auto"><table style="width:900px"><tr><td>広い表</td></tr></table></div>',
 }
 
@@ -66,6 +68,11 @@ class MeasureTest(unittest.TestCase):
         p = self.run_pages(["vertical", "squeezed"])
         self.assertTrue(any(x.startswith("[nav]") and "/vertical/" in x for x in p), p)
         self.assertTrue(any(x.startswith("[squeezed]") and "/squeezed/" in x for x in p), p)
+
+    def test_a_broken_picture_of_the_site_is_reported_but_a_blocked_third_party_picture_is_not(self):
+        p = self.run_pages(["brokenimg"])
+        self.assertTrue(any(x.startswith("[images]") and "/brokenimg/" in x for x in p), p)
+        self.assertEqual(self.run_pages(["externalimg"]), [])
 
 
 class MissingChromeTest(unittest.TestCase):

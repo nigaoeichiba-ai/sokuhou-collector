@@ -30,10 +30,23 @@ def _csv_bytes(header, rows):
     return ("\ufeff" + buf.getvalue()).encode("utf-8")
 
 
+def _bare(rows):
+    """The rows without their coordinates (the coordinates are checked in the coordinate tests)."""
+    return [{k: v for k, v in r.items() if k not in ("lat", "lon")} for r in rows]
+
+
 class AkitaKumaSnapshotTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.d = _parse_sample()
+
+    def test_coordinates_are_kept_rounded_and_inside_the_prefecture(self):
+        with_coords = [r for r in self.d["sightings"] if "lat" in r]
+        self.assertGreater(len(with_coords), len(self.d["sightings"]) * 0.9)
+        for r in with_coords:
+            self.assertTrue(38.8 <= r["lat"] <= 40.6 and 139.6 <= r["lon"] <= 141.1, r)
+            self.assertEqual(r["lat"], round(r["lat"], 4))
+            self.assertEqual(r["lon"], round(r["lon"], 4))
 
     def test_two_date_formats_parse(self):
         dt, has_time = kuma._parse_observed("2026/8/31 14:53")
@@ -53,7 +66,7 @@ class AkitaKumaSnapshotTest(unittest.TestCase):
             "count": 1,
             "kind": "痕跡(食害)",
             "species": "ツキノワグマ",
-        }, self.d["sightings"])
+        }, _bare(self.d["sightings"]))
         self.assertEqual(self.d["sightings"][0]["place"], "秋田県秋田市寺内児桜２丁目１５")
 
     def test_non_bear_rows_are_excluded_from_sightings(self):

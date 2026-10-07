@@ -92,13 +92,16 @@ def _sightings_by_fy(data: dict) -> dict[str, int]:
 
 
 def check_pref_bear(old, new):
+    """A source's current fiscal year must not lose rows (older years are stored only in part, so they are not compared)."""
     if not old:
         return
     old_counts = _sightings_by_fy(old)
     new_counts = _sightings_by_fy(new)
-    for fy in sorted(set(old_counts) & set(new_counts)):
-        if new_counts[fy] < old_counts[fy] * 0.7:
-            raise SanityError(f"{new['source']} {fy} sightings dropped {old_counts[fy]} -> {new_counts[fy]}")
+    if not new_counts:
+        raise SanityError(f"{new['source']} has no sightings")
+    fy = max(new_counts)
+    if fy in old_counts and new_counts[fy] < old_counts[fy] * 0.7:
+        raise SanityError(f"{new['source']} {fy} sightings dropped {old_counts[fy]} -> {new_counts[fy]}")
 
 
 def check_fire(old, new):
@@ -111,11 +114,14 @@ GROUPS: dict[str, list[Source]] = {
         Source("minwage", mhlw_minwage.collect, check_minwage),
         Source("estat_wage", estat_wage.collect, check_estat_wage),
         Source("env_kuma", env_kuma.collect, check_env_kuma),
+        Source("jgrants", jgrants.collect, check_jgrants),
+    ],
+    # kuma-sokuho.com's municipal sightings: collected several times a day by kuma-live.yml, which then deploys only that site
+    "kuma": [
         Source("miyagi_kuma", miyagi_kuma.collect, check_pref_bear),
         Source("akita_kuma", akita_kuma.collect, check_pref_bear),
         Source("yamaguchi_kuma", yamaguchi_kuma.collect, check_pref_bear),
         Source("okayama_kuma", okayama_kuma.collect, check_pref_bear),
-        Source("jgrants", jgrants.collect, check_jgrants),
         Source("otsu_bear", otsu_bear.collect, check_bear),
     ],
     "frequent": [
