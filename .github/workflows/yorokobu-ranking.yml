@@ -1,6 +1,6 @@
 name: yorokobu-ranking
 
-# Every day: today's Rakuten Ichiba sales ranking per age group and sex (10 lists, 10 API calls), merged into data/yorokobu_ranking.json
+# Every day: today's Rakuten Ichiba sales ranking of the gift genres and of the age/sex groups (about 40 lists x 4 pages), merged into data/yorokobu_ranking.json
 # together with a 45-day history of the places, so the site can show what rose, what is new and what stays (sites/yorokobu/ranking.py).
 # The commit touches only data/yorokobu_ranking.json, which redeploys the gift site only.  Needs RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY.
 
@@ -11,20 +11,36 @@ on:
 
 permissions:
   contents: write
+  actions: read   # to see whether a deploy is running
 
+# Own group: GitHub keeps only ONE waiting run per group and cancels an older waiting run when a newer one arrives, so sharing the deploy's
+# `rakuten-api` group let a push cancel this run (seen on 2026-10-07).  The Rakuten limit (one application ID, about one request a second) is kept by
+# waiting here until no deploy is running (the deploy fetches products from the same API).
 concurrency:
-  group: rakuten-api   # shared with the yorokobu deploy job and the candidate shortlist: one application ID, one request per second
+  group: yorokobu-ranking
   cancel-in-progress: false
 
 jobs:
   ranking:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 90   # up to 60 minutes of waiting for a deploy, then about 3 minutes of API calls
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
+      - name: Wait until no deploy is running (it uses the same Rakuten application ID)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 60); do
+            n=$(gh run list --workflow deploy-sites.yml --status in_progress --json databaseId --jq 'length' 2>/dev/null || echo 0)
+            q=$(gh run list --workflow deploy-sites.yml --status queued --json databaseId --jq 'length' 2>/dev/null || echo 0)
+            if [ "${n:-0}" = "0" ] && [ "${q:-0}" = "0" ]; then echo "no deploy running"; exit 0; fi
+            echo "a deploy is running or queued (in progress $n, queued $q); waiting ($i/60)"
+            sleep 60
+          done
+          echo "waited 60 minutes; going on anyway"
       - name: Fetch today's ranking
         env:
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
