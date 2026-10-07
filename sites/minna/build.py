@@ -910,6 +910,8 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         input_note="<p>カードをつくる機能や、お気に入りに入力・保存した内容は、この端末のブラウザの中だけで使われ、当サイトには、送信されません。</p>"))
     pages.update(standard_files(pages, cfg, preview, today.isoformat()))
     pages["sitemap-images.xml"] = sitemap_images(cfg, items)
+    if cfg.get("indexnow_key"):
+        pages[f"{cfg['indexnow_key']}.txt"] = cfg["indexnow_key"]     # IndexNow (Bing and others): proves we own the site, see indexnow.py
     if not preview:
         pages["robots.txt"] = pages["robots.txt"] + f"Sitemap: {cfg['site_url'].rstrip('/')}/sitemap-images.xml\n"
     pages.update(asset_pages(HERE / "assets"))

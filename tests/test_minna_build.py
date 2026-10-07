@@ -9,7 +9,7 @@ from sites.minna import build
 from sites.minna.catalog import CATEGORIES
 
 CFG = {"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト", "operator_name": "テスト運営", "contact_form_url": "https://example.com/form",
-       "adsense_pub_id": None}
+       "adsense_pub_id": None, "indexnow_key": "0123456789abcdef0123456789abcdef"}
 
 
 class MinnaBuildTest(unittest.TestCase):
@@ -52,6 +52,10 @@ class MinnaBuildTest(unittest.TestCase):
         for needle in ('download="season-christmas.png"', "ずっと無料・商用OK・クレジット不要", "AIで生成し、人が選んで、整えたもの", '"@type": "ImageObject"',
                        '"license": "https://minna-no-illust.com/license/"', "/files/season-christmas.png", 'class="bgsw"'):
             self.assertIn(needle, html)
+
+    def test_the_indexnow_key_file_is_published_at_the_site_root(self):
+        self.assertIn("0123456789abcdef0123456789abcdef.txt", self.files)
+        self.assertEqual(self.read("0123456789abcdef0123456789abcdef.txt"), "0123456789abcdef0123456789abcdef")
 
     def test_licence_page_is_a_permission_not_a_copyright_claim(self):
         html = self.read("license/index.html")

@@ -82,5 +82,6 @@
    "One medical worker gestures toward a blank reception counter, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": []
 }
