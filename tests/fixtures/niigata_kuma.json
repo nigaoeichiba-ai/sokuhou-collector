@@ -1,0 +1,1299 @@
+{
+"webmap": {
+"operationalLayers": [
+{
+"title": "にいがたクマ出没マップの入力フォーム_results　1-3",
+"url": "https://services6.arcgis.com/SKz58fvdFlaEB35q/arcgis/rest/services/survey123_08d14b98657b47309b868f49602375c8_results/FeatureServer/0"
+}
+]
+},
+"layer": {
+"fields": [
+{
+"name": "objectid",
+"type": "esriFieldTypeOID",
+"alias": "ObjectID",
+"domain": null
+},
+{
+"name": "field_7",
+"type": "esriFieldTypeString",
+"alias": "出没市町村",
+"domain": {
+"type": "codedValue",
+"name": "cvd_field_7",
+"codedValues": [
+{
+"name": "新潟市",
+"code": "新潟市"
+},
+{
+"name": "長岡市",
+"code": "長岡市"
+},
+{
+"name": "三条市",
+"code": "三条市"
+},
+{
+"name": "柏崎市",
+"code": "柏崎市"
+},
+{
+"name": "新発田市",
+"code": "新発田市"
+},
+{
+"name": "小千谷市",
+"code": "小千谷市"
+},
+{
+"name": "加茂市",
+"code": "加茂市"
+},
+{
+"name": "十日町市",
+"code": "十日町市"
+},
+{
+"name": "見附市",
+"code": "見附市"
+},
+{
+"name": "村上市",
+"code": "村上市"
+},
+{
+"name": "燕市",
+"code": "燕市"
+},
+{
+"name": "糸魚川市",
+"code": "糸魚川市"
+},
+{
+"name": "妙高市",
+"code": "妙高市"
+},
+{
+"name": "五泉市",
+"code": "五泉市"
+},
+{
+"name": "上越市",
+"code": "上越市"
+},
+{
+"name": "阿賀野市",
+"code": "阿賀野市"
+},
+{
+"name": "佐渡市",
+"code": "佐渡市"
+},
+{
+"name": "魚沼市",
+"code": "魚沼市"
+},
+{
+"name": "南魚沼市",
+"code": "南魚沼市"
+},
+{
+"name": "胎内市",
+"code": "胎内市"
+},
+{
+"name": "聖籠町",
+"code": "聖籠町"
+},
+{
+"name": "弥彦村",
+"code": "弥彦村"
+},
+{
+"name": "田上町",
+"code": "田上町"
+},
+{
+"name": "阿賀町",
+"code": "阿賀町"
+},
+{
+"name": "出雲崎町",
+"code": "出雲崎町"
+},
+{
+"name": "湯沢町",
+"code": "湯沢町"
+},
+{
+"name": "津南町",
+"code": "津南町"
+},
+{
+"name": "刈羽村",
+"code": "刈羽村"
+},
+{
+"name": "関川村",
+"code": "関川村"
+},
+{
+"name": "粟島浦村",
+"code": "粟島浦村"
+}
+]
+}
+},
+{
+"name": "field_20",
+"type": "esriFieldTypeDate",
+"alias": "出没日",
+"domain": null
+}
+]
+},
+"rows": [
+{
+"attributes": {
+"field_20": 1767409200000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1768446000000,
+"field_7": "小千谷市"
+}
+},
+{
+"attributes": {
+"field_20": 1768964400000,
+"field_7": "新発田市"
+}
+},
+{
+"attributes": {
+"field_20": 1771383600000,
+"field_7": "阿賀野市"
+}
+},
+{
+"attributes": {
+"field_20": 1773284400000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1775444400000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1775962800000,
+"field_7": "胎内市"
+}
+},
+{
+"attributes": {
+"field_20": 1776654000000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1776913200000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1777431600000,
+"field_7": "柏崎市"
+}
+},
+{
+"attributes": {
+"field_20": 1777690800000,
+"field_7": "阿賀町"
+}
+},
+{
+"attributes": {
+"field_20": 1777950000000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1778468400000,
+"field_7": "湯沢町"
+}
+},
+{
+"attributes": {
+"field_20": 1778641200000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1778986800000,
+"field_7": "南魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1779159600000,
+"field_7": "加茂市"
+}
+},
+{
+"attributes": {
+"field_20": 1779332400000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1779505200000,
+"field_7": "三条市"
+}
+},
+{
+"attributes": {
+"field_20": 1779764400000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1779850800000,
+"field_7": "胎内市"
+}
+},
+{
+"attributes": {
+"field_20": 1780110000000,
+"field_7": "阿賀町"
+}
+},
+{
+"attributes": {
+"field_20": 1780282800000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1780455600000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1780628400000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1780801200000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1780974000000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1781060400000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1781146800000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1781233200000,
+"field_7": "関川村"
+}
+},
+{
+"attributes": {
+"field_20": 1781406000000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1781578800000,
+"field_7": "見附市"
+}
+},
+{
+"attributes": {
+"field_20": 1781751600000,
+"field_7": "南魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1781924400000,
+"field_7": "南魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1782097200000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1782270000000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1782442800000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1782702000000,
+"field_7": "三条市"
+}
+},
+{
+"attributes": {
+"field_20": 1782874800000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1783047600000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1783220400000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1783911600000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1783911600000,
+"field_7": "津南町"
+}
+},
+{
+"attributes": {
+"field_20": 1783911600000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1783998000000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1784084400000,
+"field_7": "湯沢町"
+}
+},
+{
+"attributes": {
+"field_20": 1784084400000,
+"field_7": "湯沢町"
+}
+},
+{
+"attributes": {
+"field_20": 1784084400000,
+"field_7": "津南町"
+}
+},
+{
+"attributes": {
+"field_20": 1784084400000,
+"field_7": "湯沢町"
+}
+},
+{
+"attributes": {
+"field_20": 1784084400000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1784170800000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1784170800000,
+"field_7": "津南町"
+}
+},
+{
+"attributes": {
+"field_20": 1784170800000,
+"field_7": "津南町"
+}
+},
+{
+"attributes": {
+"field_20": 1784170800000,
+"field_7": "津南町"
+}
+},
+{
+"attributes": {
+"field_20": 1784170800000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1784170800000,
+"field_7": "南魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1784257200000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1784257200000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1784257200000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1784257200000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1784343600000,
+"field_7": "三条市"
+}
+},
+{
+"attributes": {
+"field_20": 1784343600000,
+"field_7": "関川村"
+}
+},
+{
+"attributes": {
+"field_20": 1784430000000,
+"field_7": "阿賀町"
+}
+},
+{
+"attributes": {
+"field_20": 1784516400000,
+"field_7": "湯沢町"
+}
+},
+{
+"attributes": {
+"field_20": 1784516400000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1784516400000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "胎内市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "関川村"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1784602800000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1784689200000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1784689200000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1784689200000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1784689200000,
+"field_7": "見附市"
+}
+},
+{
+"attributes": {
+"field_20": 1784689200000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1784775600000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1784775600000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1784862000000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1784862000000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1784862000000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1785034800000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1785034800000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1785121200000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1785121200000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1785207600000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1785207600000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1785207600000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1785294000000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1785294000000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1785294000000,
+"field_7": "妙高市"
+}
+},
+{
+"attributes": {
+"field_20": 1785294000000,
+"field_7": "南魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1785380400000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1785380400000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1785380400000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1785466800000,
+"field_7": "加茂市"
+}
+},
+{
+"attributes": {
+"field_20": 1785466800000,
+"field_7": "胎内市"
+}
+},
+{
+"attributes": {
+"field_20": 1785466800000,
+"field_7": "新潟市"
+}
+},
+{
+"attributes": {
+"field_20": 1785466800000,
+"field_7": "新潟市"
+}
+},
+{
+"attributes": {
+"field_20": 1785466800000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1785466800000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1785553200000,
+"field_7": "湯沢町"
+}
+},
+{
+"attributes": {
+"field_20": 1785639600000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1785726000000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1785726000000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1785812400000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1785812400000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1785898800000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1785898800000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1785985200000,
+"field_7": "津南町"
+}
+},
+{
+"attributes": {
+"field_20": 1785985200000,
+"field_7": "津南町"
+}
+},
+{
+"attributes": {
+"field_20": 1786071600000,
+"field_7": "新発田市"
+}
+},
+{
+"attributes": {
+"field_20": 1786158000000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1786244400000,
+"field_7": "小千谷市"
+}
+},
+{
+"attributes": {
+"field_20": 1786503600000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1786503600000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1786503600000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1786503600000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1786503600000,
+"field_7": "津南町"
+}
+},
+{
+"attributes": {
+"field_20": 1786503600000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1786590000000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1786590000000,
+"field_7": "津南町"
+}
+},
+{
+"attributes": {
+"field_20": 1786676400000,
+"field_7": "阿賀町"
+}
+},
+{
+"attributes": {
+"field_20": 1786676400000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1786849200000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1786849200000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1786849200000,
+"field_7": "南魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1786935600000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1786935600000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1787022000000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1787022000000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1787022000000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1787108400000,
+"field_7": "湯沢町"
+}
+},
+{
+"attributes": {
+"field_20": 1787108400000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1787108400000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1787108400000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1787194800000,
+"field_7": "新潟市"
+}
+},
+{
+"attributes": {
+"field_20": 1787194800000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1787281200000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1787281200000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1787540400000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1787540400000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1787626800000,
+"field_7": "南魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1787626800000,
+"field_7": "小千谷市"
+}
+},
+{
+"attributes": {
+"field_20": 1787713200000,
+"field_7": "加茂市"
+}
+},
+{
+"attributes": {
+"field_20": 1787713200000,
+"field_7": "南魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1787713200000,
+"field_7": "村上市"
+}
+},
+{
+"attributes": {
+"field_20": 1787886000000,
+"field_7": "見附市"
+}
+},
+{
+"attributes": {
+"field_20": 1788231600000,
+"field_7": "小千谷市"
+}
+},
+{
+"attributes": {
+"field_20": 1788404400000,
+"field_7": "見附市"
+}
+},
+{
+"attributes": {
+"field_20": 1788404400000,
+"field_7": "津南町"
+}
+},
+{
+"attributes": {
+"field_20": 1788490800000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1788577200000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1788750000000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1789009200000,
+"field_7": "見附市"
+}
+},
+{
+"attributes": {
+"field_20": 1789009200000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1789095600000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1789095600000,
+"field_7": "南魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1789095600000,
+"field_7": "新発田市"
+}
+},
+{
+"attributes": {
+"field_20": 1789095600000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1789268400000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1789268400000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1789354800000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1789441200000,
+"field_7": "三条市"
+}
+},
+{
+"attributes": {
+"field_20": 1789614000000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1789614000000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1789614000000,
+"field_7": "三条市"
+}
+},
+{
+"attributes": {
+"field_20": 1789614000000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1789614000000,
+"field_7": "阿賀野市"
+}
+},
+{
+"attributes": {
+"field_20": 1789700400000,
+"field_7": "南魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1789959600000,
+"field_7": "加茂市"
+}
+},
+{
+"attributes": {
+"field_20": 1790046000000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1790478000000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1790564400000,
+"field_7": "三条市"
+}
+},
+{
+"attributes": {
+"field_20": 1790737200000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1790737200000,
+"field_7": "長岡市"
+}
+},
+{
+"attributes": {
+"field_20": 1790823600000,
+"field_7": "魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1790996400000,
+"field_7": "南魚沼市"
+}
+},
+{
+"attributes": {
+"field_20": 1791082800000,
+"field_7": "十日町市"
+}
+},
+{
+"attributes": {
+"field_20": 1791082800000,
+"field_7": "糸魚川市"
+}
+},
+{
+"attributes": {
+"field_20": 1791169200000,
+"field_7": "上越市"
+}
+},
+{
+"attributes": {
+"field_20": 1791169200000,
+"field_7": "新発田市"
+}
+},
+{
+"attributes": {
+"field_20": 1791342000000,
+"field_7": "上越市"
+}
+}
+]
+}
