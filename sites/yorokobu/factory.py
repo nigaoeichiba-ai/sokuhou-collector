@@ -74,7 +74,7 @@ def status() -> None:
           f"groups {len(c['theme_groups'])}, curated pages {len(picks)}")
 
 
-def brief(kind: str, n: int, out: Path, answer: Path) -> None:
+def brief(kind: str, n: int, out: Path, answer: Path, offset: int = 0) -> None:
     c = _load()
     if kind == "themes":
         covered = "\n".join(f"- {t['slug']} | {t['name']} | queries: {', '.join(i['query'] for i in t['ideas'])}" for t in c["themes"])
@@ -85,7 +85,7 @@ def brief(kind: str, n: int, out: Path, answer: Path) -> None:
                 f"WRITE {n} NEW theme pages that are clearly different from every covered one below (different angle, different products, different queries).\n"
                 f"Existing groups:\n{_groups_text(c)}\n{INSPIRATION}\nFORMAT:{THEME_SPEC}\nCOVERED THEMES (do not repeat; do not reuse these queries):\n{covered}\n{RULES}")
     elif kind == "messages":
-        todo = [o for o in c["occasions"] if o["slug"] not in c["messages"]][:n]
+        todo = [o for o in c["occasions"] if o["slug"] not in c["messages"]][offset:offset + n]
         listing = "\n".join(f"- {o['slug']} | {o['name']} | {o['timing']}" for o in todo)
         text = (f"Content task (workspace-write). Reply in English with a very short report. Write exactly ONE file: {answer.as_posix()} (UTF-8 JSON, ensure_ascii false). "
                 f"Do not edit anything else.\n\nSITE: \"よろこぶプレゼント\", a Japanese gift site. For each occasion below write the message examples people copy onto a card or send "
@@ -218,6 +218,7 @@ def main() -> None:
     b.add_argument("--n", type=int, default=5)
     b.add_argument("--out", type=Path, required=True)
     b.add_argument("--answer", type=Path, required=True)
+    b.add_argument("--offset", type=int, default=0, help="messages only: skip this many of the occasions still without messages (to run several Codex batches in parallel)")
     m = sub.add_parser("merge")
     m.add_argument("kind", choices=["themes", "articles", "messages"])
     m.add_argument("file", type=Path)
@@ -230,7 +231,7 @@ def main() -> None:
     if a.cmd == "status":
         status()
     elif a.cmd == "brief":
-        brief(a.kind, a.n, a.out, a.answer)
+        brief(a.kind, a.n, a.out, a.answer, a.offset)
     elif a.cmd == "retry":
         retry_brief(a.kind, a.file, a.out)
     else:
