@@ -28,7 +28,7 @@ from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
 from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
 from sites.minna.taxonomy import GENRE_BY_SLUG, GENRES, TOUCH_BY_SLUG, TOUCHES  # noqa: E402
 from sites.yorokobu import content as gift_content  # noqa: E402
-from sokuhou import contactform  # noqa: E402
+from sokuhou import contactform, rakuten  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 PER_PAGE = 60
@@ -125,7 +125,7 @@ def guide_page(cfg, preview, g: dict, series: list[dict]) -> str:
 <h1>{esc(g['title'])}</h1><p class="lead">{esc(g['lead'])}</p>{licence_box()}
 {secs}{illust}
 {faq_html}
-{src}{share(cfg, f"/guide/{g['slug']}/", g['title'])}
+{src}{pr_box(cfg, *GUIDE_PR[g['slug']]) if g['slug'] in GUIDE_PR else ""}{share(cfg, f"/guide/{g['slug']}/", g['title'])}
 <script type="application/ld+json">{ld}</script>{faq_ld}"""
     return page(cfg, preview, path=f"/guide/{g['slug']}/", title=f"{g['title']} | {cfg['site_name']}", description=g["description"][:150], body=body)
 
@@ -413,6 +413,7 @@ def printable_page(cfg, preview, kind: str, rows: list[dict]) -> str:
 <h1>{esc(title)}</h1><p class="lead">{esc(intro)}</p>{licence_box()}
 <ul class="cal-grid wide">{cards}</ul>
 <section style="margin-top:44px"><h2><span class="scribble">よくある、しつもん</span></h2><div class="faq">{''.join(f'<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faq)}</div></section>
+{pr_box(cfg, *PRINTABLE_PR[kind])}
 {share(cfg, f"/printables/{kind}/", title)}
 <script type="application/ld+json">{ld}</script>"""
     return page(cfg, preview, path=f"/printables/{kind}/", title=f"{title} | {cfg['site_name']}", description=intro[:120] + "無料・商用OK・登録不要。", body=body, og_image=rows[0]["img"])
@@ -482,6 +483,7 @@ def calendar_page(cfg, preview, themes: list[dict], year: int, guides) -> str:
 <p class="lead">かわいいイラストつきの、{year}年のカレンダーです。1か月ずつ、または12か月まとめて、無料でダウンロードできます。祝日つき・A4縦・登録不要。</p>{licence_box()}
 {secs}
 <section style="margin-top:44px"><h2><span class="scribble">よくある、しつもん</span></h2><div class="faq">{''.join(f'<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faq)}</div></section>
+{pr_box(cfg, *PRINTABLE_PR["calendar"])}
 {share(cfg, f"/printables/calendar-{year}/", f"{year}年イラストカレンダー(無料・印刷用PDF)")}
 <script type="application/ld+json">{ld}</script>"""
     return page(cfg, preview, path=f"/printables/calendar-{year}/", title=f"{year}年 イラストカレンダー 無料・印刷用PDF(A4・祝日つき) | {cfg['site_name']}",
@@ -508,6 +510,56 @@ def printables_hub(cfg, preview, year: int, themes: list[dict], items: list[dict
 <p>イラストのページには、「A4で印刷(PDF)」「はがきサイズで印刷(PDF)」のボタンがあるものもあります。</p>"""
     return page(cfg, preview, path="/printables/", title=f"印刷できる素材(カレンダー・ぬりえ・はがき) | {cfg['site_name']}",
                 description="2027年イラストカレンダー、ぬりえ、はがきサイズの年賀状イラストなど、印刷して使える素材。無料・商用OK・登録不要。", body=body)
+
+
+# ------------------------------------------------------------------ affiliate boxes (only when the owner's ids are in config.json; always marked as advertising)
+GUIDE_PR = {
+    "nenga-tsukurikata": ("年賀状づくりに、あると便利なもの", [("年賀状の印刷サービス", "年賀状 印刷 2027"), ("年賀状向けのプリンター用紙", "年賀状 プリンター用紙"), ("プリンターのインク", "プリンター インク 純正")]),
+    "nenga-2027-schedule": ("年賀状の準備に", [("年賀状の印刷サービス", "年賀状 印刷 2027"), ("宛名ラベル", "年賀状 宛名 ラベル"), ("スタンプ・はんこ", "年賀状 スタンプ 干支")]),
+    "nenga-bunrei": ("年賀状に、ひとこと添えるなら", [("年賀状用のペン", "年賀状 ペン 筆ペン"), ("スタンプ・はんこ", "年賀状 スタンプ 干支")]),
+    "kantyu-mimai": ("寒中見舞いの準備に", [("寒中見舞いはがき", "寒中見舞い はがき 印刷"), ("筆ペン", "筆ペン 薄墨")]),
+    "nenga-jimai": ("あいさつ状の準備に", [("あいさつ状の印刷", "年賀状じまい 印刷"), ("ペン・万年筆", "万年筆 はがき")]),
+    "nurie-insatsu": ("ぬりえを楽しむ道具", [("色えんぴつ", "色えんぴつ 24色"), ("クレヨン", "クレヨン 幼児 安全"), ("ぬりえの本", "ぬりえ 本")]),
+    "hoiku-otayori": ("おたよりづくりに", [("ラミネートフィルム", "ラミネートフィルム A4"), ("カラーペン", "カラーペン 水性 12色"), ("A4の厚手用紙", "A4 用紙 厚手 カラー")]),
+    "tomei-png": ("イラストを印刷して使うなら", [("A4の厚手用紙", "A4 用紙 厚手"), ("ラミネートフィルム", "ラミネートフィルム A4"), ("写真用紙", "写真用紙 A4 光沢")]),
+    "christmas-card": ("クリスマスカードづくりに", [("カード用の厚紙", "メッセージカード 用紙 A4"), ("封筒", "封筒 カード用"), ("シール・スタンプ", "クリスマス シール")]),
+    "eto-ichiran": ("干支のグッズ", [("干支の置物", "干支 置物 2027 未"), ("来年の手帳", "手帳 2027")]),
+}
+SPECIAL_PR = {
+    "nenga-2027": ("年賀状づくりに、あると便利なもの", [("年賀状の印刷サービス", "年賀状 印刷 2027"), ("プリンターのインク", "プリンター インク 純正"), ("年賀状向けのプリンター用紙", "年賀状 プリンター用紙")]),
+    "nurie": ("ぬりえを楽しむ道具", [("色えんぴつ", "色えんぴつ 24色"), ("クレヨン", "クレヨン 幼児 安全"), ("ぬりえの本", "ぬりえ 本")]),
+    "christmas": ("クリスマスの準備に", [("クリスマスカード用紙", "メッセージカード 用紙 A4"), ("ラッピング用品", "ラッピング 袋 クリスマス")]),
+}
+PRINTABLE_PR = {
+    "calendar": ("カレンダーを、きれいに使うために", [("A4の厚手用紙", "A4 用紙 厚手 カラー"), ("ラミネートフィルム", "ラミネートフィルム A4"), ("カレンダー用フレーム", "A4 フォトフレーム 壁掛け")]),
+    "shojo": ("賞状を、きれいに仕上げるために", [("賞状用紙", "賞状用紙 A4"), ("賞状ホルダー・額", "賞状 額縁 A4"), ("A4の厚手用紙", "A4 用紙 厚手 カラー")]),
+    "nafuda": ("名札を、じょうぶにするために", [("名札ケース", "名札ケース 安全ピン"), ("ラミネートフィルム", "ラミネートフィルム 名刺サイズ"), ("ストラップ", "ネームホルダー ストラップ")]),
+    "jikanwari": ("時間割を、長く使うために", [("ラミネートフィルム", "ラミネートフィルム A4"), ("下じき", "下敷き 学習"), ("クリアファイル", "クリアファイル A4")]),
+}
+
+
+def affiliates_on(cfg: dict) -> bool:
+    return bool(cfg.get("rakuten_affiliate_id") or cfg.get("amazon_tracking_id"))
+
+
+def pr_box(cfg: dict, heading: str, rows: list[tuple[str, str]]) -> str:
+    """A small 'things that help' box with search links to Rakuten Ichiba and Amazon; empty when no affiliate id is configured."""
+    if not affiliates_on(cfg) or not rows:
+        return ""
+    items = ""
+    for label, kw in rows:
+        links = ""
+        if cfg.get("rakuten_affiliate_id"):
+            url = rakuten.affiliate_link(cfg["rakuten_affiliate_id"], cfg.get("rakuten_tracking_id"), rakuten.search_url(kw))
+            links += f'<a class="btn btn-sub" href="{esc(url)}" rel="sponsored noopener nofollow" target="_blank">楽天市場で見る</a>'
+        if cfg.get("amazon_tracking_id"):
+            url = f"https://www.amazon.co.jp/s?k={quote(kw, safe='')}&tag={quote(cfg['amazon_tracking_id'], safe='')}"
+            links += f'<a class="btn btn-sub" href="{esc(url)}" rel="sponsored noopener nofollow" target="_blank">Amazonで見る</a>'
+        items += f'<li><b>{esc(label)}</b><span>{links}</span></li>'
+    note = ("このボックスには、広告(" + "・".join(x for x in ("楽天アフィリエイト" if cfg.get("rakuten_affiliate_id") else "", "Amazonアソシエイト" if cfg.get("amazon_tracking_id") else "") if x)
+            + ")のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。")
+    amazon = f"<br>Amazonのアソシエイトとして、{esc(cfg['site_name'])}は適格販売により収入を得ています。" if cfg.get("amazon_tracking_id") else ""
+    return (f'<aside class="pr-box"><h2><span class="pr-note">PR</span>{esc(heading)}</h2><ul>{items}</ul><p class="pr-small">{esc(note)}{amazon}</p></aside>')
 
 
 # ------------------------------------------------------------------ pages
@@ -719,7 +771,7 @@ def special_page(cfg, preview, sp: dict, sers: list[dict], its: list[dict], toda
 {sections}
 {guide_box(guides_for('eto' if sp['slug'] == 'nenga-2027' else 'season', 'kawaii', list(guides), 3))}
 <section style="margin-top:44px"><h2><span class="scribble">よくある、しつもん</span></h2><div class="faq">{faq}</div></section>
-{share(cfg, f"/special/{sp['slug']}/", sp['title'])}
+{pr_box(cfg, *SPECIAL_PR[sp['slug']]) if sp['slug'] in SPECIAL_PR else ""}{share(cfg, f"/special/{sp['slug']}/", sp['title'])}
 <script type="application/ld+json">{ld}</script>"""
     return page(cfg, preview, path=f"/special/{sp['slug']}/", title=f"{sp['title']} | {cfg['site_name']}", description=sp["description"][:150], body=body, og_image=f"/og/special-{sp['slug']}.webp")
 
