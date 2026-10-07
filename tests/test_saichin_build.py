@@ -40,10 +40,10 @@ class PreviewBuildTest(BuildTestBase):
         from sites.saichin import ogimage
         from sokuhou.sitekit import asset_files
         n_assets = len(asset_files(Path(__file__).parent.parent / 'sites' / 'saichin' / 'assets'))
-        expected = 74 + n_assets + 2 + 1 + 1 + 1 + 48 + (48 if ogimage.available() else 0)  # 74 + the asset files (css, js, svg, images) + 2 root copies (favicon.ico, apple-touch-icon.png), feed.xml, feed/dates.xml, notify page, 48 calendars, share cards (default + 47 prefectures)
+        expected = 75 + n_assets + 2 + 1 + 1 + 1 + 48 + (48 if ogimage.available() else 0)  # 74 + the asset files (css, js, svg, images) + 2 root copies (favicon.ico, apple-touch-icon.png), feed.xml, feed/dates.xml, notify page, 48 calendars, share cards (default + 47 prefectures)
         self.assertEqual(len(self.files), expected)
         html_pages = [f for f in self.files if f.endswith('.html')]
-        self.assertEqual(len(html_pages), 1 + 47 + 8 + 3 + 2 + 1 + 6 + 3 + 1)  # home, prefectures, areas, rankings, calendar+history, notify, guides, legal, 404
+        self.assertEqual(len(html_pages), 1 + 47 + 8 + 3 + 2 + 1 + 1 + 6 + 3 + 1)  # home, prefectures, areas, rankings, calendar+history, notify, shortfall checker, guides, legal, 404
         for rel in ("index.html", "shiga/index.html", "okinawa/index.html", "about/index.html",
                     "privacy/index.html", "contact/index.html", "404.html", "sitemap.xml", "robots.txt"):
             self.assertIn(rel, self.files)
@@ -111,7 +111,7 @@ class PreviewBuildTest(BuildTestBase):
 
     def test_sitemap_lists_every_page(self):
         locs = re.findall(r"<loc>(.*?)</loc>", self.read(self.out, "sitemap.xml"))
-        self.assertEqual(len(locs), 71)  # every html page except 404
+        self.assertEqual(len(locs), 72)  # every html page except 404
         self.assertIn("https://saichin-sokuho.com/shiga/", locs)
 
     def test_privacy_page_has_the_ad_disclosures(self):

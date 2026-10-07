@@ -111,6 +111,115 @@
     };
     [sel, pay, hours, days].forEach((el) => el.addEventListener('input', run));
   }
+
+  // Shortfall checker (/check/). The arithmetic is a pure function (exposed as window.saichinCheck) so the browser tests can call it
+  // with a fixed date; the DOM part below only reads the form and prints the result. Nothing typed here is sent or stored anywhere.
+  const fmt = (n) => Math.round(n).toLocaleString('ja-JP');
+  const floor1 = (x) => Math.floor(x * 10 + 1e-9) / 10;
+  const num1 = (x) => floor1(x).toLocaleString('ja-JP', { minimumFractionDigits: Number.isInteger(floor1(x)) ? 0 : 1, maximumFractionDigits: 1 });
+  const KIND_TEXT = { hourly: '時給', daily: '日給', monthly: '月給' };
+
+  function evaluateCheck(inp, row, todayIso) {
+    if (!row) return { error: '都道府県を選んでください。' };
+    const kind = inp.kind, pay = Number(inp.pay), hours = Number(inp.hours), days = Number(inp.days);
+    const excluded = kind === 'hourly' ? 0 : Math.max(0, Number(inp.excluded) || 0);
+    if (!KIND_TEXT[kind]) return { error: '賃金の形を選んでください。' };
+    if (!(pay > 0)) return { error: KIND_TEXT[kind] + 'の金額を入れてください。' };
+    if (!(hours > 0 && hours <= 24)) return { error: '1日の所定労働時間は、0より大きく24以下の数で入れてください。' };
+    if (!(days > 0 && days <= 366)) return { error: '年間の所定労働日数は、1〜366の数で入れてください。' };
+    if (kind !== 'hourly' && excluded >= pay) return { error: '除外する手当が、' + KIND_TEXT[kind] + 'の金額以上になっています。入力を確かめてください。' };
+    const effective = pay - excluded;
+    const monthlyHours = (hours * days) / 12;
+    const hourly = kind === 'hourly' ? pay : kind === 'daily' ? effective / hours : effective / monthlyHours;
+    const done = daysBetween(todayIso, row.date) <= 0;
+    const rates = done
+      ? [{ key: 'now', min: row.amount, since: row.date }]
+      : [{ key: 'now', min: row.prev, until: row.date }, { key: 'new', min: row.amount, since: row.date }];
+    const periods = rates.map((r) => {
+      const gap = r.min - hourly, short = gap > 1e-9;
+      const base = kind === 'hourly' ? r.min : kind === 'daily' ? Math.ceil(r.min * hours - 1e-9) : Math.ceil(r.min * monthlyHours - 1e-9);
+      return Object.assign({}, r, {
+        gap, ok: !short, perMonth: short ? gap * monthlyHours : 0, perYear: short ? gap * hours * days : 0, required: base + excluded,
+      });
+    });
+    const steps = [];
+    if (kind === 'hourly') {
+      steps.push('時給 ' + yen(pay) + ' をそのまま、最低賃金(時間額)と比べます。');
+    } else {
+      steps.push(KIND_TEXT[kind] + ' ' + yen(pay) + ' − 最低賃金の対象にならない手当 ' + yen(excluded) + ' = 対象になる賃金 ' + yen(effective));
+      if (kind === 'monthly') {
+        steps.push('1か月平均所定労働時間 = ' + hours + '時間 × ' + days + '日 ÷ 12か月 = ' + num1(monthlyHours) + '時間');
+        steps.push('時間額 = ' + yen(effective) + ' ÷ ' + num1(monthlyHours) + '時間 = 約' + num1(hourly) + '円');
+      } else {
+        steps.push('時間額 = ' + yen(effective) + ' ÷ 1日の所定労働時間 ' + hours + '時間 = 約' + num1(hourly) + '円');
+      }
+    }
+    return { kind, pay, excluded, effective, hours, days, monthlyHours, hourly, done, periods, steps, row };
+  }
+  window.saichinCheck = { evaluate: evaluateCheck };
+
+  const chk = $('chk-form');
+  if (chk && prefs.length) {
+    const sel = $('chk-pref'), out = $('chk-out'), pay = $('chk-pay'), hours = $('chk-hours'), days = $('chk-days');
+    const kinds = [...chk.querySelectorAll('input[name="chk-kind"]')];
+    const exclFields = [...chk.querySelectorAll('[data-excl]')];
+    sel.replaceChildren(new Option('都道府県を選ぶ', ''), ...prefs.map((r) => new Option(r.name, r.name)));
+    const fromUrl = new URLSearchParams(location.search).get('pref');
+    if (fromUrl && prefs.some((r) => r.name === fromUrl)) sel.value = fromUrl;
+    const kind = () => (kinds.find((k) => k.checked) || {}).value || 'monthly';
+    const syncKind = () => {
+      const k = kind();
+      $('chk-pay-label').firstChild.textContent = KIND_TEXT[k] + '(円)';
+      $('chk-excl').hidden = k === 'hourly';
+      $('chk-excl-legend').textContent = '最低賃金の対象にならない手当(' + (k === 'daily' ? '1日あたり' : '1か月あたり') + 'の額。ないものは空欄)';
+      $('chk-days-label').firstChild.textContent = k === 'hourly' ? '年間の所定労働日数(月・年の不足額を出すための入力)' : '年間の所定労働日数';
+    };
+    const render = () => {
+      const r = prefs.find((p) => p.name === sel.value);
+      const excluded = exclFields.reduce((s, f) => s + (Number(f.value) || 0), 0);
+      const res = evaluateCheck({ kind: kind(), pay: pay.value, excluded, hours: hours.value, days: days.value }, r, today);
+      out.classList.remove('ok', 'ng');
+      if (res.error) { out.textContent = pay.value ? res.error : '都道府県と賃金を入れると、最低賃金との差額を計算します。'; return; }
+      const [a, b] = res.periods;
+      const last = res.periods[res.periods.length - 1];
+      let head, cls;
+      if (res.done || (a.ok && b.ok)) {
+        cls = last.ok ? 'ok' : 'ng';
+        head = last.ok
+          ? (res.done ? '最低賃金以上です。' : '現在も、' + jp(r.date) + '以降の新しい額でも、最低賃金以上です。')
+          : '最低賃金を下回っています。';
+      } else if (a.ok) {
+        cls = 'ng'; head = '現在は最低賃金以上ですが、' + jp(r.date) + '以降は下回ります。';
+      } else {
+        cls = 'ng'; head = '現在の最低賃金を下回っています。';
+      }
+      const title = (p) => (res.done ? jp(p.since) + 'から(現在の額)' : p.key === 'new' ? jp(p.since) + 'から(新しい額)' : '今(' + jp(p.until) + 'の前日まで)');
+      const fmtGap = (p) => (p.ok ? '余裕 ' + num1(-p.gap) + '円' : '不足 ' + num1(p.gap) + '円');
+      const need = { hourly: '時給', daily: '日給', monthly: '月給' }[res.kind];
+      const line = (k, v) => '<dt>' + k + '</dt><dd>' + v + '</dd>';
+      const table = '<div class="chk-periods">' + res.periods.map((p) => {
+        const c = p.ok ? 'ok' : 'ng';
+        return '<section class="chk-period ' + c + '"><h3>' + title(p) + '</h3><dl>' +
+          line(r.name + 'の最低賃金', '<b>' + yen(p.min) + '</b>') +
+          line('あなたの時間額(換算後)', '約' + num1(res.hourly) + '円') +
+          line('判定', '<b class="' + c + '">' + (p.ok ? '最低賃金以上' : '下回っています') + '</b>') +
+          line('1時間あたりの差', '<b class="' + c + '">' + fmtGap(p) + '</b>') +
+          (p.ok ? '' : line('1か月あたりの不足額', '約' + fmt(p.perMonth) + '円') + line('1年あたりの不足額', '約' + fmt(p.perYear) + '円')) +
+          line('最低賃金を満たす' + need + 'の目安' + (res.kind === 'hourly' ? '' : '(手当を含む)'), yen(p.required)) +
+          '</dl></section>';
+      }).join('') + '</div>';
+      const summary = r.name + ' / ' + KIND_TEXT[res.kind] + ' ' + yen(res.pay) + (res.excluded ? '(うち除外する手当 ' + yen(res.excluded) + ')' : '') +
+        ' / 1日 ' + res.hours + '時間・年 ' + res.days + '日';
+      out.classList.add(cls);
+      out.innerHTML = '<p class="chk-head ' + cls + '">' + head + '</p><p class="chk-sum">' + summary + '</p>' + table +
+        '<details class="chk-steps"><summary>計算の内訳</summary><ol>' + res.steps.map((s) => '<li>' + s + '</li>').join('') + '</ol></details>' +
+        '<p class="chk-date">計算した日: ' + jp(today) + '(あなたの端末の中だけで計算しています。入力した内容は送信も保存もしません)</p>';
+    };
+    syncKind(); render();
+    chk.addEventListener('input', (e) => { if (e.target.name === 'chk-kind') syncKind(); render(); });
+    const printBtn = $('chk-print');
+    if (printBtn) printBtn.addEventListener('click', () => window.print());
+  }
 })();
 
 /* motion: count-up for the headline number and reveal-on-scroll for cards below the fold. Never hides anything without JS,
