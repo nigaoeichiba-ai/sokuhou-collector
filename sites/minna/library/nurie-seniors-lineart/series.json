@@ -1,0 +1,276 @@
+{
+ "added": "2026-10-07",
+ "slug": "nurie-seniors-lineart",
+ "title": "高齢者向けぬりえ（おばあちゃんの暮らし）のポーズ集",
+ "genre": "people",
+ "touch": "lineart",
+ "lead": "高齢者向けぬりえのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "tags": [
+  "人物",
+  "イラスト",
+  "高齢者向けぬりえ",
+  "ぬりえ",
+  "塗り絵",
+  "高齢者",
+  "シニア",
+  "介護施設",
+  "デイサービス"
+ ],
+ "subject": "高齢者向けぬりえ",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "nurie-seniors-lineart-01-holding-ladle-cooking",
+   "file": "nurie-seniors-lineart-01-holding-ladle-cooking.webp",
+   "title": "料理(高齢者向けぬりえ)",
+   "desc": "料理(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "料理",
+    "ぬりえ・線画"
+   ],
+   "w": 346,
+   "h": 507
+  },
+  {
+   "id": "nurie-seniors-lineart-02-holding-watering-can",
+   "file": "nurie-seniors-lineart-02-holding-watering-can.webp",
+   "title": "庭の水やり(高齢者向けぬりえ)",
+   "desc": "庭の水やり(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "庭の水やり",
+    "ぬりえ・線画"
+   ],
+   "w": 377,
+   "h": 507
+  },
+  {
+   "id": "nurie-seniors-lineart-03-walking-side-view",
+   "file": "nurie-seniors-lineart-03-walking-side-view.webp",
+   "title": "散歩(高齢者向けぬりえ)",
+   "desc": "散歩(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "散歩",
+    "ぬりえ・線画"
+   ],
+   "w": 266,
+   "h": 506
+  },
+  {
+   "id": "nurie-seniors-lineart-04-holding-teacup",
+   "file": "nurie-seniors-lineart-04-holding-teacup.webp",
+   "title": "お茶(高齢者向けぬりえ)",
+   "desc": "お茶(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "お茶",
+    "ぬりえ・線画"
+   ],
+   "w": 256,
+   "h": 513
+  },
+  {
+   "id": "nurie-seniors-lineart-05-hanging-towel-arms",
+   "file": "nurie-seniors-lineart-05-hanging-towel-arms.webp",
+   "title": "洗濯物を干す(高齢者向けぬりえ)",
+   "desc": "洗濯物を干す(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "洗濯物を干す",
+    "ぬりえ・線画"
+   ],
+   "w": 383,
+   "h": 494
+  },
+  {
+   "id": "nurie-seniors-lineart-06-holding-shopping-bag",
+   "file": "nurie-seniors-lineart-06-holding-shopping-bag.webp",
+   "title": "買い物(高齢者向けぬりえ)",
+   "desc": "買い物(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "買い物",
+    "ぬりえ・線画"
+   ],
+   "w": 309,
+   "h": 514
+  },
+  {
+   "id": "nurie-seniors-lineart-07-holding-open-book",
+   "file": "nurie-seniors-lineart-07-holding-open-book.webp",
+   "title": "読書(高齢者向けぬりえ)",
+   "desc": "読書(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "読書",
+    "ぬりえ・線画"
+   ],
+   "w": 249,
+   "h": 496
+  },
+  {
+   "id": "nurie-seniors-lineart-08-holding-ball-yarn",
+   "file": "nurie-seniors-lineart-08-holding-ball-yarn.webp",
+   "title": "毛糸玉(高齢者向けぬりえ)",
+   "desc": "毛糸玉(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "毛糸玉",
+    "ぬりえ・線画"
+   ],
+   "w": 247,
+   "h": 497
+  },
+  {
+   "id": "nurie-seniors-lineart-09-raising-arms-exercising",
+   "file": "nurie-seniors-lineart-09-raising-arms-exercising.webp",
+   "title": "体操(高齢者向けぬりえ)",
+   "desc": "体操(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "体操",
+    "ぬりえ・線画"
+   ],
+   "w": 333,
+   "h": 502
+  },
+  {
+   "id": "nurie-seniors-lineart-10-talking-phone-ear",
+   "file": "nurie-seniors-lineart-10-talking-phone-ear.webp",
+   "title": "電話(高齢者向けぬりえ)",
+   "desc": "電話(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "電話",
+    "ぬりえ・線画"
+   ],
+   "w": 286,
+   "h": 500
+  },
+  {
+   "id": "nurie-seniors-lineart-11-waving",
+   "file": "nurie-seniors-lineart-11-waving.webp",
+   "title": "手を振る(高齢者向けぬりえ)",
+   "desc": "手を振る(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "手を振る",
+    "ぬりえ・線画"
+   ],
+   "w": 313,
+   "h": 495
+  },
+  {
+   "id": "nurie-seniors-lineart-12-sitting-dozing-closed",
+   "file": "nurie-seniors-lineart-12-sitting-dozing-closed.webp",
+   "title": "昼寝(高齢者向けぬりえ)",
+   "desc": "昼寝(高齢者向けぬりえ)のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "高齢者向けぬりえ",
+    "ぬりえ",
+    "塗り絵",
+    "高齢者",
+    "シニア",
+    "介護施設",
+    "デイサービス",
+    "昼寝",
+    "ぬりえ・線画"
+   ],
+   "w": 287,
+   "h": 493
+  }
+ ]
+}

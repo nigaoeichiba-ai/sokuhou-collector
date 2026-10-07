@@ -1,0 +1,236 @@
+{
+ "added": "2026-10-07",
+ "slug": "stationery-flat",
+ "title": "文房具 シンプル",
+ "genre": "school",
+ "touch": "flat",
+ "lead": "えんぴつ、消しゴム、はさみ、のりなど、文房具12点。新学期のおたよりや、学習プリント、掲示物に。",
+ "tags": [
+  "文房具",
+  "えんぴつ",
+  "はさみ",
+  "学校",
+  "新学期",
+  "プリント",
+  "シンプル"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "stationery-flat-pencil",
+   "file": "stationery-flat-pencil.webp",
+   "title": "えんぴつ",
+   "desc": "えんぴつのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 410,
+   "h": 411
+  },
+  {
+   "id": "stationery-flat-eraser",
+   "file": "stationery-flat-eraser.webp",
+   "title": "消しゴム",
+   "desc": "消しゴムのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "消しゴム",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 417,
+   "h": 335
+  },
+  {
+   "id": "stationery-flat-ruler",
+   "file": "stationery-flat-ruler.webp",
+   "title": "じょうぎ",
+   "desc": "じょうぎのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "じょうぎ",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 473,
+   "h": 417
+  },
+  {
+   "id": "stationery-flat-scissors",
+   "file": "stationery-flat-scissors.webp",
+   "title": "はさみ",
+   "desc": "はさみのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 454,
+   "h": 451
+  },
+  {
+   "id": "stationery-flat-glue",
+   "file": "stationery-flat-glue.webp",
+   "title": "のり",
+   "desc": "のりのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "のり",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 166,
+   "h": 459
+  },
+  {
+   "id": "stationery-flat-notebook",
+   "file": "stationery-flat-notebook.webp",
+   "title": "ノート",
+   "desc": "ノートのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "ノート",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 400,
+   "h": 448
+  },
+  {
+   "id": "stationery-flat-colorpencils",
+   "file": "stationery-flat-colorpencils.webp",
+   "title": "色えんぴつ",
+   "desc": "色えんぴつのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "色えんぴつ",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 414,
+   "h": 368
+  },
+  {
+   "id": "stationery-flat-crayons",
+   "file": "stationery-flat-crayons.webp",
+   "title": "クレヨン",
+   "desc": "クレヨンのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "クレヨン",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 467,
+   "h": 350
+  },
+  {
+   "id": "stationery-flat-pencilcase",
+   "file": "stationery-flat-pencilcase.webp",
+   "title": "ふでばこ",
+   "desc": "ふでばこのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "ふでばこ",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 489,
+   "h": 255
+  },
+  {
+   "id": "stationery-flat-randoseru",
+   "file": "stationery-flat-randoseru.webp",
+   "title": "ランドセル",
+   "desc": "ランドセルのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "ランドセル",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 440,
+   "h": 427
+  },
+  {
+   "id": "stationery-flat-globe",
+   "file": "stationery-flat-globe.webp",
+   "title": "地球儀",
+   "desc": "地球儀のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "地球儀",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 363,
+   "h": 459
+  },
+  {
+   "id": "stationery-flat-clock",
+   "file": "stationery-flat-clock.webp",
+   "title": "とけい",
+   "desc": "とけいのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "文房具",
+    "えんぴつ",
+    "はさみ",
+    "学校",
+    "文房具 シンプル",
+    "とけい",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 424,
+   "h": 422
+  }
+ ]
+}

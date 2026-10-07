@@ -23,6 +23,156 @@
  "planned": 12,
  "items": [
   {
+   "id": "ai-dx-office-helper-asking-ai",
+   "file": "ai-dx-office-helper-asking-ai.webp",
+   "title": "AIに質問する(AI・DXを使う仕事の人)",
+   "desc": "AIに質問する(AI・DXを使う仕事の人)のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "人物",
+    "仕事",
+    "IT",
+    "イラスト",
+    "AI",
+    "DX",
+    "自動化",
+    "データ",
+    "会議",
+    "セキュリティ",
+    "学習",
+    "AI・DXを使う仕事の人",
+    "AIに質問する",
+    "シンプルフラット",
+    "仕事・ビジネス"
+   ],
+   "w": 466,
+   "h": 408
+  },
+  {
+   "id": "ai-dx-office-helper-data-analysis",
+   "file": "ai-dx-office-helper-data-analysis.webp",
+   "title": "データを分析する(AI・DXを使う仕事の人)",
+   "desc": "データを分析する(AI・DXを使う仕事の人)のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "人物",
+    "仕事",
+    "IT",
+    "イラスト",
+    "AI",
+    "DX",
+    "自動化",
+    "データ",
+    "会議",
+    "セキュリティ",
+    "学習",
+    "AI・DXを使う仕事の人",
+    "データを分析する",
+    "シンプルフラット",
+    "仕事・ビジネス"
+   ],
+   "w": 423,
+   "h": 441
+  },
+  {
+   "id": "ai-dx-office-helper-automation",
+   "file": "ai-dx-office-helper-automation.webp",
+   "title": "自動化を設定する(AI・DXを使う仕事の人)",
+   "desc": "自動化を設定する(AI・DXを使う仕事の人)のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "人物",
+    "仕事",
+    "IT",
+    "イラスト",
+    "AI",
+    "DX",
+    "自動化",
+    "データ",
+    "会議",
+    "セキュリティ",
+    "学習",
+    "AI・DXを使う仕事の人",
+    "自動化を設定する",
+    "シンプルフラット",
+    "仕事・ビジネス"
+   ],
+   "w": 502,
+   "h": 377
+  },
+  {
+   "id": "ai-dx-office-helper-chat-screen",
+   "file": "ai-dx-office-helper-chat-screen.webp",
+   "title": "チャット画面を見る(AI・DXを使う仕事の人)",
+   "desc": "チャット画面を見る(AI・DXを使う仕事の人)のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "人物",
+    "仕事",
+    "IT",
+    "イラスト",
+    "AI",
+    "DX",
+    "自動化",
+    "データ",
+    "会議",
+    "セキュリティ",
+    "学習",
+    "AI・DXを使う仕事の人",
+    "チャット画面を見る",
+    "シンプルフラット",
+    "仕事・ビジネス"
+   ],
+   "w": 486,
+   "h": 418
+  },
+  {
+   "id": "ai-dx-office-helper-security-check",
+   "file": "ai-dx-office-helper-security-check.webp",
+   "title": "安全確認をする(AI・DXを使う仕事の人)",
+   "desc": "安全確認をする(AI・DXを使う仕事の人)のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "人物",
+    "仕事",
+    "IT",
+    "イラスト",
+    "AI",
+    "DX",
+    "自動化",
+    "データ",
+    "会議",
+    "セキュリティ",
+    "学習",
+    "AI・DXを使う仕事の人",
+    "安全確認をする",
+    "シンプルフラット",
+    "仕事・ビジネス"
+   ],
+   "w": 440,
+   "h": 433
+  },
+  {
+   "id": "ai-dx-office-helper-dx-meeting",
+   "file": "ai-dx-office-helper-dx-meeting.webp",
+   "title": "DX会議で話す(AI・DXを使う仕事の人)",
+   "desc": "DX会議で話す(AI・DXを使う仕事の人)のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "人物",
+    "仕事",
+    "IT",
+    "イラスト",
+    "AI",
+    "DX",
+    "自動化",
+    "データ",
+    "会議",
+    "セキュリティ",
+    "学習",
+    "AI・DXを使う仕事の人",
+    "DX会議で話す",
+    "シンプルフラット",
+    "仕事・ビジネス"
+   ],
+   "w": 479,
+   "h": 448
+  },
+  {
    "id": "ai-dx-office-helper-tablet-use",
    "file": "ai-dx-office-helper-tablet-use.webp",
    "title": "タブレット操作(AI・DXを使う仕事の人)",
@@ -94,8 +244,8 @@
     "シンプルフラット",
     "仕事・ビジネス"
    ],
-   "w": 364,
-   "h": 405
+   "w": 441,
+   "h": 407
   },
   {
    "id": "ai-dx-office-helper-success",
@@ -144,8 +294,8 @@
     "シンプルフラット",
     "仕事・ビジネス"
    ],
-   "w": 435,
-   "h": 430
+   "w": 482,
+   "h": 435
   },
   {
    "id": "ai-dx-office-helper-team-sharing",

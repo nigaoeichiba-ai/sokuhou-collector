@@ -60,7 +60,13 @@ def flood_alpha(rgb: np.ndarray, step: int = 7, lo: float = 4.0, hi: float = 30.
     h, w = rgb.shape[:2]
     padded = cv2.copyMakeBorder(np.ascontiguousarray(rgb), 1, 1, 1, 1, cv2.BORDER_REPLICATE)
     mask = np.zeros((h + 4, w + 4), np.uint8)
-    cv2.floodFill(padded, mask, (0, 0), (0, 0, 0), (step,) * 3, (step,) * 3, 4 | cv2.FLOODFILL_MASK_ONLY | (255 << 8))
+    light = float(np.median(rgb[:6].reshape(-1, 3))) > 235
+    if light:
+        # plain light paper: only pixels close to the paper colour itself count as background (a soft gradient on a pale skin tone or a white shirt must not
+        # lead the growth into the picture, which a step-by-step comparison allows)
+        cv2.floodFill(padded, mask, (0, 0), (0, 0, 0), (14,) * 3, (14,) * 3, 4 | cv2.FLOODFILL_FIXED_RANGE | cv2.FLOODFILL_MASK_ONLY | (255 << 8))
+    else:
+        cv2.floodFill(padded, mask, (0, 0), (0, 0, 0), (step,) * 3, (step,) * 3, 4 | cv2.FLOODFILL_MASK_ONLY | (255 << 8))
     bg = mask[2:-2, 2:-2] > 0                      # the part of the background reachable from the frame
     info = {"bg_fraction": float(bg.mean())}
     if bg.sum() < 50:

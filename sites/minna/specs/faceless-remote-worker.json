@@ -83,10 +83,5 @@
   ]
  ],
  "holes": false,
- "exclude": [
-  "focused-work",
-  "sharing-document",
-  "taking-notes",
-  "wifi-trouble"
- ]
+ "exclude": []
 }

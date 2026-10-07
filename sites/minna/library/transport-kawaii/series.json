@@ -1,0 +1,239 @@
+{
+ "added": "2026-10-07",
+ "slug": "transport-kawaii",
+ "title": "のりもの ゆるかわ",
+ "genre": "life",
+ "touch": "kawaii",
+ "lead": "電車、バス、くるま、ひこうき、自転車など、かわいいのりもの12点。旅行や交通安全のお知らせ、子ども向けの資料に。",
+ "tags": [
+  "のりもの",
+  "乗り物",
+  "電車",
+  "バス",
+  "くるま",
+  "飛行機",
+  "自転車",
+  "子ども",
+  "交通安全"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "transport-kawaii-train",
+   "file": "transport-kawaii-train.webp",
+   "title": "でんしゃ",
+   "desc": "でんしゃのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "のりもの ゆるかわ",
+    "でんしゃ",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 483,
+   "h": 411
+  },
+  {
+   "id": "transport-kawaii-bus",
+   "file": "transport-kawaii-bus.webp",
+   "title": "バス",
+   "desc": "バスのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "のりもの ゆるかわ",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 508,
+   "h": 391
+  },
+  {
+   "id": "transport-kawaii-car",
+   "file": "transport-kawaii-car.webp",
+   "title": "くるま",
+   "desc": "くるまのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "くるま",
+    "のりもの ゆるかわ",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 481,
+   "h": 370
+  },
+  {
+   "id": "transport-kawaii-plane",
+   "file": "transport-kawaii-plane.webp",
+   "title": "ひこうき",
+   "desc": "ひこうきのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "のりもの ゆるかわ",
+    "ひこうき",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 508,
+   "h": 352
+  },
+  {
+   "id": "transport-kawaii-bicycle",
+   "file": "transport-kawaii-bicycle.webp",
+   "title": "じてんしゃ",
+   "desc": "じてんしゃのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "のりもの ゆるかわ",
+    "じてんしゃ",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 491,
+   "h": 425
+  },
+  {
+   "id": "transport-kawaii-ship",
+   "file": "transport-kawaii-ship.webp",
+   "title": "ふね",
+   "desc": "ふねのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "のりもの ゆるかわ",
+    "ふね",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 504,
+   "h": 383
+  },
+  {
+   "id": "transport-kawaii-shinkansen",
+   "file": "transport-kawaii-shinkansen.webp",
+   "title": "しんかんせん",
+   "desc": "しんかんせんのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "のりもの ゆるかわ",
+    "しんかんせん",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 528,
+   "h": 370
+  },
+  {
+   "id": "transport-kawaii-taxi",
+   "file": "transport-kawaii-taxi.webp",
+   "title": "タクシー",
+   "desc": "タクシーのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "のりもの ゆるかわ",
+    "タクシー",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 501,
+   "h": 423
+  },
+  {
+   "id": "transport-kawaii-ambulance",
+   "file": "transport-kawaii-ambulance.webp",
+   "title": "きゅうきゅうしゃ",
+   "desc": "きゅうきゅうしゃのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "のりもの ゆるかわ",
+    "きゅうきゅうしゃ",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 529,
+   "h": 419
+  },
+  {
+   "id": "transport-kawaii-firetruck",
+   "file": "transport-kawaii-firetruck.webp",
+   "title": "しょうぼうしゃ",
+   "desc": "しょうぼうしゃのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "のりもの ゆるかわ",
+    "しょうぼうしゃ",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 552,
+   "h": 446
+  },
+  {
+   "id": "transport-kawaii-balloon",
+   "file": "transport-kawaii-balloon.webp",
+   "title": "ききゅう",
+   "desc": "ききゅうのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "のりもの ゆるかわ",
+    "ききゅう",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 386,
+   "h": 524
+  },
+  {
+   "id": "transport-kawaii-rocket",
+   "file": "transport-kawaii-rocket.webp",
+   "title": "ロケット",
+   "desc": "ロケットのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "のりもの",
+    "乗り物",
+    "電車",
+    "バス",
+    "のりもの ゆるかわ",
+    "ロケット",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 415,
+   "h": 495
+  }
+ ]
+}

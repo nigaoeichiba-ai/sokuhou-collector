@@ -82,5 +82,6 @@
    "The office worker presents a blank tablet to a clearly separated colleague silhouette, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": []
 }

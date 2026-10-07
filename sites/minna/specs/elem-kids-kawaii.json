@@ -83,5 +83,6 @@
  "sheet_subjects": [
   "Japanese elementary school boy, 8 years old, short spiky black hair, light skin, white short-sleeve shirt, navy shorts, white socks, blue sneakers, blue school backpack, 3-head-tall, dot eyes, big smile",
   "Japanese elementary school girl, 8 years old, black hair in two low pigtails with red ribbons, light skin, white blouse, red plaid skirt, white socks, brown shoes, red school backpack, 3-head-tall, dot eyes, big smile"
- ]
+ ],
+ "exclude": []
 }
