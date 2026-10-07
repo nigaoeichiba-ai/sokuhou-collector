@@ -48,6 +48,15 @@ LIVE_SOURCES = {
     "akita": {"pref": "秋田", "license": "CC BY 4.0", "name": "秋田県", "label": "秋田県・県の公式(オープンデータと公開API)", "monthly_label": "目撃のほか、痕跡などを含む(クマの記録のみ)",
               "as_of_text": "最新の記録は{d}の分までです"},
 }
+# Sources without an explicit licence: counts only (mode "counts" in the stored file); no "license" key, so they never reach the CSV.
+LIVE_SOURCES.update({
+    "fukushima": {"pref": "福島", "name": "福島県", "label": "福島県・県の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や被害の報告を含む",
+                  "as_of_text": "最新の記録は{d}の分までです"},
+    "niigata": {"pref": "新潟", "name": "新潟県", "label": "新潟県・県の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や人身被害の報告を含む",
+                "as_of_text": "最新の記録は{d}の分までです"},
+    "toyama": {"pref": "富山", "name": "富山県", "label": "富山県・県の公式(クマっぷ・件数のみ)", "monthly_label": "目撃のほか、痕跡や人身被害の報告を含む",
+               "as_of_text": "最新の記録は{d}の分までです"},
+})
 OTSU_PAGE = "https://www.city.otsu.lg.jp/soshiki/025/1605/g/t/74581.html"
 OTSU_MAP = "https://www.google.com/maps/d/viewer?mid=1rE5HcSdJnm2gX3iT1FMt0aCVuQ9ArDs"
 OTSU_CREDIT = "出典: 大津市が公開している、クマ出没マップ(ツキノワグマ目撃情報)を加工して作成。大津市が作成したものではありません"
