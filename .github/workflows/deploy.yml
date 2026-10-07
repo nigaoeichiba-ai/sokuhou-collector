@@ -150,7 +150,7 @@ jobs:
           python -m pip install --quiet pillow -r requirements.txt
       - name: Unit tests
         if: steps.gate.outputs.go == 'true'
-        run: python tests/run_tests.py --site ${{ matrix.site }}   # the shared tests and this site's own; another project's failing tests cannot block this deploy
+        run: CI=true python tests/run_tests.py --strict --site ${{ matrix.site }}   # the shared tests and this site's own; another project's failing tests cannot block this deploy
       - name: Today's date (the products are fetched once a day and cached, so a code push does not refetch)
         if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu'
         run: echo "DAY=$(TZ=Asia/Tokyo date +%F)" >> "$GITHUB_ENV"
@@ -189,6 +189,9 @@ jobs:
       - name: Site check (every link, the sitemap, headings, tables, empty sections of the REAL build; a problem stops the deploy)
         if: steps.gate.outputs.go == 'true'
         run: python -m sokuhou.sitecheck release --base ${{ matrix.url }}
+      - name: Phone-width layout check (Chrome measures sample pages of every kind at 300 / 375 / 768 px; sideways overflow or squeezed text stops the deploy)
+        if: steps.gate.outputs.go == 'true'
+        run: python -m sokuhou.layoutcheck release
       - name: SSH setup
         if: steps.gate.outputs.go == 'true'
         env:
@@ -249,6 +252,12 @@ jobs:
           [ "${urls:-0}" -ge "$((MIN_PAGES - 5))" ] || ok=0
           [ "$(curl -s -o /dev/null -w '%{http_code}' "$URL$PROBE")" = "200" ] || ok=0
           echo "index=$code sitemap_urls=${urls:-0} ok=$ok"
+          # every sitemap URL answers 200 and obeys the page rules, and every internal link on them answers 200 (checked twice before the site is rolled back, so a network blip does not undo a good deploy)
+          if [ "$ok" = "1" ] && ! python -m sokuhou.sitecheck --live --base "$URL" --probe "$PROBE"; then
+            echo "live check failed; trying once more in 30 s"
+            sleep 30
+            python -m sokuhou.sitecheck --live --base "$URL" --probe "$PROBE" || ok=0
+          fi
           if [ "$ok" != "1" ]; then
             echo "verification failed, rolling back"
             ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" "
