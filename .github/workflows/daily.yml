@@ -22,6 +22,10 @@ jobs:
           python-version: "3.13"
       - name: Install dependencies
         run: python -m pip install --quiet -r requirements.txt
+      - name: Japanese font (the saichin share-card tests need it; without it they are skipped and --strict fails the run)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
       - name: Unit tests
         run: python tests/run_tests.py --strict --site core   # shared tests only: a new project's tests cannot stop the daily data run
       - name: Collect
