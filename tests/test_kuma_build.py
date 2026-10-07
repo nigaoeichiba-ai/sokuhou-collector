@@ -1,4 +1,6 @@
 """The bear site: built from the ministry's PDFs (the test fixtures), checked against numbers from outside the code."""
+import csv
+import io
 import json
 import re
 import tempfile
@@ -237,7 +239,7 @@ class LiveTest(unittest.TestCase):
         self.assertLess(html.index("北比良"), html.index("伊香立下龍華町"))
         self.assertLess(html.index("伊香立下龍華町"), html.index("南小松"))
         self.assertIn("最新の記録: 10月3日(2日前) 大津市北比良", self.read(self.city))  # fetched 2026-10-05, seen 2026-10-03
-        self.assertIn("最新の目撃(滋賀県大津市・市の公式): 10月3日 北比良", self.read("index.html"))
+        self.assertIn("<li>10月3日 滋賀県大津市北比良<b>目撃</b></li>", self.read("index.html"))
 
     def test_the_city_page_is_linked_and_credited(self):
         html = self.read("live/shiga/index.html")
@@ -356,8 +358,9 @@ class PrefLiveTest(unittest.TestCase):
 
     def test_home_alert_uses_the_latest_sighting_not_a_trace(self):
         home = self.read("index.html")
-        self.assertIn("最新の目撃(宮城県・県の公式): 10月5日 大和町松坂字銅山", home)
-        self.assertIn("最新の目撃(秋田県・県の公式。更新は月1回ほど): 8月31日 秋田県鹿角市十和田大湯下川原", home)  # the 14:53 row is a trace
+        self.assertIn("<li>10月5日 宮城県大和町松坂字銅山<b>目撃</b></li>", home)
+        self.assertNotIn("石積字森", home)  # a trace is not a sighting
+        self.assertNotIn("寺内児桜", home)  # Akita's newest row is a trace
 
     def test_prefecture_pages_carry_their_block(self):
         self.assertIn("宮城県が公表している最新の目撃情報", self.read("miyagi/index.html"))
@@ -388,7 +391,7 @@ class DateOnlyTest(unittest.TestCase):
             self.assertIn("<td>2026年9月6日</td><td>新見市哲西町大野部</td><td>目撃</td>", html)
             self.assertIn("岡山県が公表している令和8年度の記録は、1件です", html)
             home = (Path(tmp) / "s" / "index.html").read_text(encoding="utf-8")
-            self.assertIn("最新の目撃(岡山県・県の公式。更新は不定期): 9月6日 新見市哲西町大野部", home)
+            self.assertIn("<li>9月6日 岡山県新見市哲西町大野部<b>目撃</b></li>", home)
 
 
 def _yamaguchi():
@@ -480,6 +483,25 @@ class LiveSectionTest(unittest.TestCase):
         lat, lon = data["points"][0][:2]
         self.assertEqual((lat, lon), (34.4, 131.4))
         self.assertIn("/assets/map.js", self.read("map/index.html"))
+
+    def test_the_csv_holds_the_licensed_rows_with_their_terms_and_the_data_page_describes_it(self):
+        raw = self.read("data/kuma-sightings.csv")
+        self.assertTrue(raw.startswith(chr(0xFEFF) + "取得元,ライセンス・利用条件,都道府県,市町村,場所,日時,種別,頭数,緯度,経度"))
+        rows = list(csv.reader(io.StringIO(raw.lstrip(chr(0xFEFF)))))
+        self.assertEqual(len(rows), 1 + 6)  # the six rows of this fiscal year; the previous January is not in it
+        self.assertEqual(rows[1][:7], ["山口県", "CC BY", "山口県", "萩市", "大井 門前橋", "2026-10-06T09:30:00+09:00", "目撃"])
+        self.assertIn("阿武町", {r[3] for r in rows[1:]})  # the county prefix is dropped
+        page = self.read("data/index.html")
+        self.assertIn("6件", page)
+        self.assertIn(">CSVをダウンロード(6件)<", page)
+        self.assertIn('href="/data/kuma-sightings.csv"', page)
+
+    def test_a_source_without_stated_terms_is_not_offered_for_download(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            files = build.render_site(self.raw, CFG, Path(tmp) / "o", release=True, otsu=OTSU, today=date(2026, 10, 5))
+            self.assertNotIn("data/index.html", files)
+            self.assertNotIn("data/kuma-sightings.csv", files)
+        self.assertEqual(live_mod.LIVE_SOURCES["yamaguchi"]["license"], "CC BY")
 
     def test_the_built_site_passes_the_site_checker(self):
         self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
