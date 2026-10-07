@@ -39,7 +39,27 @@ def segments() -> list[dict]:
     return out
 
 
-SEGMENTS = {s["slug"]: s for s in segments()}
+# Genres whose sales ranking is a good place to look for a gift (genre ids checked against ranking.rakuten.co.jp/daily/<id>/ on 2026-10-07).
+# A genre is asked for alone (the API does not allow genreId together with age or sex).
+GENRES = [
+    ("sweets", 551167, "スイーツ・お菓子"), ("flower", 100005, "花・ガーデン・DIY"), ("jewelry", 216129, "ジュエリー・アクセサリー"),
+    ("bag", 216131, "バッグ・小物・ブランド雑貨"), ("watch", 558929, "腕時計"), ("beer", 510915, "ビール・洋酒"), ("sake", 510901, "日本酒・焼酎"),
+    ("wine", 100317, "ワイン"), ("interior", 100804, "インテリア・寝具・収納"), ("kitchen", 558944, "キッチン用品・食器・調理器具"),
+    ("beauty", 100939, "美容・コスメ・香水"), ("ladies", 100371, "レディースファッション"), ("mens", 551177, "メンズファッション"),
+    ("hobby", 101164, "ホビー"), ("toy", 566382, "おもちゃ"), ("baby", 100533, "キッズ・ベビー・マタニティ"),
+]
+
+
+def genre_segments() -> list[dict]:
+    return [{"slug": f"g-{slug}", "genre": gid, "label": label, "kind": "genre"} for slug, gid, label in GENRES]
+
+
+def all_segments() -> list[dict]:
+    """Genres first (the better source of gifts), then the ten age x sex lists."""
+    return genre_segments() + [{**s, "kind": "people"} for s in segments()]
+
+
+SEGMENTS = {s["slug"]: s for s in all_segments()}
 
 
 def _item(raw: dict, place: int) -> dict | None:
@@ -52,7 +72,7 @@ def _item(raw: dict, place: int) -> dict | None:
 
 
 def snapshot_segment(client: rakuten.Client, seg: dict) -> list[dict]:
-    raw = client.ranking(age=seg["age"], sex=seg["sex"], page=1)
+    raw = client.ranking(genreId=seg["genre"], page=1) if seg.get("kind") == "genre" else client.ranking(age=seg["age"], sex=seg["sex"], page=1)
     out = []
     for i, r in enumerate(raw[:PLACES]):
         it = _item(r, i + 1)
@@ -74,7 +94,7 @@ def update(store: dict | None, fresh: dict[str, list[dict]], today: date) -> dic
         history[today.isoformat()] = [it["code"] for it in sorted(items, key=lambda i: i["rank"])][:KEEP]
         cutoff = (today - timedelta(days=HISTORY_DAYS)).isoformat()
         history = {d: codes for d, codes in sorted(history.items()) if d >= cutoff}
-        segs[slug] = {"label": SEGMENTS[slug]["label"], "date": today.isoformat(), "items": sorted(items, key=lambda i: i["rank"])[:KEEP], "history": history}
+        segs[slug] = {"label": SEGMENTS[slug]["label"], "kind": SEGMENTS[slug]["kind"], "date": today.isoformat(), "items": sorted(items, key=lambda i: i["rank"])[:KEEP], "history": history}
     return {"version": 1, "updated": today.isoformat(), "segments": segs}
 
 
@@ -122,7 +142,13 @@ def price_facts(items: list[dict]) -> dict | None:
 # Daily necessities and consumables sell the most but are not what this site is about; the page says they are left out.
 DAILY = ("トイレットペーパー", "ティッシュ", "ボックスティッシュ", "洗剤", "柔軟剤", "詰め替え", "詰替", "おむつ", "オムツ", "マスク", "ミネラルウォーター", "天然水",
          "炭酸水", "お米", "無洗米", "ペットボトル", "ゴミ袋", "ごみ袋", "キッチンペーパー", "生理用品", "ナプキン", "歯ブラシ", "電池", "サプリ", "プロテイン",
-         "ペットフード", "ドッグフード", "キャットフード", "猫砂", "目薬", "湿布", "カイロ", "乾電池", "水 2L", "水2L", "2L×", "ケース販売")
+         "ペットフード", "ドッグフード", "キャットフード", "猫砂", "目薬", "湿布", "カイロ", "乾電池", "水 2L", "水2L", "2L×", "ケース販売",
+         # contact lenses and medical supplies, discs and concert editions, diapers, staples and bulk food, supplements, shop-lottery and office goods
+         "コンタクト", "カラコン", "ワンデー", "2week", "ツーウィーク", "1day", "Blu-ray", "DVD", "初回盤", "初回限定盤", "通常盤", "初回生産", "初回仕様",
+         "メリーズ", "ムーニー", "パンパース", "グーン", "マミーポコ", "オムツ", "白米", "無洗米", "ブレンド米", "玄米", "雑穀米", "ミックスナッツ", "アーモンド 1kg",
+         "福袋", "おせち", "業務用", "冷凍食品", "骨取り", "切り身", "切身", "クレアチン", "ペットシーツ", "ロイヤルカナン", "浄水", "カートリッジ", "洗濯洗剤",
+         "ガチャ", "パーティション", "AED", "ゴミ収集", "コピー用紙", "コーヒー豆", "ドライフルーツ", "スーパードライ", "ミルクティー", "お茶 500ml",
+         "牛丼の具", "牛めしの具", "ハイボール", "エクオール", "ピックアップ", "予約", "再販", "お一人様", "1人1点", "一人様")
 
 
 def shown(item: dict, filters: dict) -> bool:
@@ -151,7 +177,7 @@ def view(store: dict | None, filters: dict, min_items: int = 8) -> dict | None:
         mv = movers(s)
         ok = {it["code"]: it for it in items}
         segs[slug] = {
-            "slug": slug, "label": SEGMENTS[slug]["label"], "date": s.get("date") or store.get("updated"), "items": items, "facts": price_facts(items),
+            "slug": slug, "label": SEGMENTS[slug]["label"], "kind": SEGMENTS[slug]["kind"], "date": s.get("date") or store.get("updated"), "items": items, "facts": price_facts(items),
             "days": mv["days"],
             "risers": [(ok[c], g) for c, g in mv["risers"] if c in ok][:6],
             "entered": [ok[c] for c in mv["entered"] if c in ok][:6] if mv["days"] >= 2 else [],
@@ -166,7 +192,7 @@ def view(store: dict | None, filters: dict, min_items: int = 8) -> dict | None:
             seen.add(it["code"])
             top.append((lab, slug, it, g))
     date_ = max(sg["date"] for sg in segs.values())
-    return {"date": date_, "segments": segs, "risers": top[:8], "order": [sg["slug"] for sg in segments() if sg["slug"] in segs]}
+    return {"date": date_, "segments": segs, "risers": top[:8], "order": [sg["slug"] for sg in all_segments() if sg["slug"] in segs]}
 
 
 def date_label(iso: str) -> str:
@@ -187,7 +213,7 @@ def load(path: Path | None = None) -> dict | None:
 
 def collect(client: rakuten.Client, now: datetime | None = None) -> dict[str, list[dict]]:
     fresh: dict[str, list[dict]] = {}
-    for seg in segments():
+    for seg in all_segments():
         try:
             fresh[seg["slug"]] = snapshot_segment(client, seg)
         except rakuten.RakutenError as e:

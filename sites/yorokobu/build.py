@@ -829,7 +829,7 @@ def ranking_band(d: dict) -> str:
         return ""
     btns = ('<a class="btn" href="/ranking/">いま売れている商品</a>' if rv else "") + ('<a class="btn btn-sub" href="/numbers/">数字で選ぶ</a>' if nv else "")
     return ('<section class="band yellow flat"><div class="in"><div class="sec-head"><h2>数字から、<span class="scribble">選ぶ</span></h2>'
-            '<p>楽天市場で、世代・性別ごとに、いま売れている商品(毎日更新)。レビュー件数や評価など、数字の条件で集めた商品の一覧も、あります。</p></div>'
+            '<p>楽天市場で、ジャンル別・世代別に、いま売れている商品(毎日更新)。レビュー件数や評価など、数字の条件で集めた商品の一覧も、あります。</p></div>'
             f'<p class="more">{btns}</p></div></section>')
 
 
@@ -904,12 +904,21 @@ def ranking_grid(cfg: dict, rows: list[tuple[dict, str, str]]) -> str:
 def ranking_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     rv = d["ranking"]
     day = rk.date_label(rv["date"])
-    tiles = ""
-    for slug in rv["order"]:
-        sg = rv["segments"][slug]
-        first = sg["items"][0]
-        tiles += (f'<li><a class="tile wide" href="/ranking/{slug}/"><span><b>{esc(sg["label"])}</b>'
-                  f'<small>{sg["items"][0]["rank"]}位: {esc(short(first.get("display") or first["name"], 24))}</small></span></a></li>')
+    def tiles_of(kind: str) -> str:
+        out = ""
+        for slug in rv["order"]:
+            sg = rv["segments"][slug]
+            if sg["kind"] != kind:
+                continue
+            first = sg["items"][0]
+            out += (f'<li><a class="tile wide" href="/ranking/{slug}/"><span><b>{esc(sg["label"])}</b>'
+                    f'<small>{first["rank"]}位: {esc(short(first.get("display") or first["name"], 24))}</small></span></a></li>')
+        return out
+    genre_tiles, people_tiles = tiles_of("genre"), tiles_of("people")
+    genre_block = (f'<section style="margin-top:34px"><h2><span class="scribble">ジャンルから選ぶ</span></h2>'
+                   f'<p class="sec-lead">贈り物の定番ジャンルごとに、いま売れている商品です。</p><ul class="tiles wide">{genre_tiles}</ul></section>') if genre_tiles else ""
+    people_block = (f'<section style="margin-top:34px"><h2><span class="scribble">世代と性別から選ぶ</span></h2>'
+                    f'<p class="sec-lead">その世代・性別に、よく売れている商品です(日用品や、贈り物に向かない商品は、除いています)。</p><ul class="tiles wide">{people_tiles}</ul></section>') if people_tiles else ""
     rise = ""
     if rv["risers"]:
         rows = [(it, f'{lab}で、前日より{g}つ順位アップ', "急上昇") for lab, slug, it, g in rv["risers"]]
@@ -919,13 +928,14 @@ def ranking_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     else:
         rise = ('<section style="margin-top:44px"><h2><span class="scribble">きのうより、順位を上げた商品</span></h2>'
                 '<p class="sec-lead">順位の変化は、毎日のランキングを2日分ためてから、表示します。</p></section>')
-    lead = "楽天市場で、いま売れている商品を、年代と性別ごとに。きのうより順位が上がった商品や、はじめてランクインした商品も、毎日、更新します。"
-    body = f"""{head_band("yellow", '<img class="pair-mini" src="/assets/img/b-joy.webp" alt="" width="170" height="155">', "いま売れている、<wbr>世代別ランキング", lead, single=True)}
+    lead = "楽天市場で、いま売れている商品を、ジャンル別と、年代・性別ごとに。きのうより順位が上がった商品や、はじめてランクインした商品も、毎日、更新します。"
+    body = f"""{head_band("yellow", '<img class="pair-mini" src="/assets/img/b-joy.webp" alt="" width="170" height="155">', "いま売れている、<wbr>ランキング", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("いま売れている", None)])}</div>
 {pr_quiet(cfg)}
 <p class="sec-lead">{esc(day)}のランキングです。ランキングは、楽天市場の売れ行きにもとづく数字で、贈り物として選ばれた順位ではありません。
 トイレットペーパーや飲料など、ふだんの買い物の商品と、このサイトの基準に合わない商品は、除いています。</p>
-<section style="margin-top:34px"><h2><span class="scribble">世代と性別を選ぶ</span></h2><ul class="tiles wide">{tiles}</ul></section>
+{genre_block}
+{people_block}
 {rise}
 {freshness({**d, "fetched_label": day})}"""
     return page(cfg, preview, path="/ranking/", title=f"いま売れている、世代別ランキング | {cfg['site_name']}", description=lead, body=body)
@@ -934,6 +944,7 @@ def ranking_hub_page(d: dict, cfg: dict, preview: bool) -> str:
 def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
     rv = d["ranking"]
     sg = rv["segments"][slug]
+    part = "に" if sg["kind"] == "people" else "の"       # 「20代女性に、いま売れている商品」 / 「スイーツ・お菓子の、いま売れている商品」
     day = rk.date_label(sg["date"])
     f = sg["facts"]
     facts = ""
@@ -953,7 +964,7 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
                    f'<p class="sec-lead">毎日のランキング上位30位に、3日以上、続けて入っている商品です(記録は{sg["days"]}日分)。</p>'
                    f'{ranking_grid(cfg, [(it, f"{n}日連続でランクイン(現在{it["rank"]}位)", "ロングヒット") for it, n in sg["stay"]])}</section>')
     others = "".join(f'<li><a href="/ranking/{o}/">{esc(rv["segments"][o]["label"])}</a></li>' for o in rv["order"] if o != slug)
-    body = f"""{head_band("yellow", '<img class="pair-mini" src="/assets/img/b-joy.webp" alt="" width="170" height="155">', f"{esc(sg['label'])}に、<wbr>いま売れている商品", f"楽天市場で、{sg['label']}に売れている商品の上位です({day}のランキング)。", single=True)}
+    body = f"""{head_band("yellow", '<img class="pair-mini" src="/assets/img/b-joy.webp" alt="" width="170" height="155">', f"{esc(sg['label'])}{part}、<wbr>いま売れている商品", f"楽天市場で、{sg['label']}{'に' if part == 'に' else 'で'}売れている商品の上位です({day}のランキング)。", single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("いま売れている", "/ranking/"), (sg["label"], None)])}</div>
 {pr_quiet(cfg)}
 {facts}
@@ -963,8 +974,8 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 {ranking_grid(cfg, [(it, f"現在{it['rank']}位", "順位") for it in sg["items"]])}</section>
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの世代・性別</span></h2><ul class="plain cols2 chips">{others}</ul></section>' if others else ""}
 {freshness({**d, "fetched_label": day})}"""
-    return page(cfg, preview, path=f"/ranking/{slug}/", title=f"{sg['label']}に、いま売れている商品 | {cfg['site_name']}",
-                description=f"楽天市場で{sg['label']}に売れている商品の上位。きのうより順位を上げた商品、はじめてランクインした商品も。{day}のランキングです。", body=body)
+    return page(cfg, preview, path=f"/ranking/{slug}/", title=f"{sg['label']}{part}、いま売れている商品 | {cfg['site_name']}",
+                description=f"楽天市場で{sg['label']}{'に' if part == 'に' else 'で'}売れている商品の上位。きのうより順位を上げた商品、はじめてランクインした商品も。{day}のランキングです。", body=body)
 
 
 
@@ -1026,7 +1037,7 @@ def numbers_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     tiles = "".join(f'<li><a class="tile wide" href="/numbers/{L["slug"]}/"><span><b>{esc(L["title"])}</b><small>{esc(L["short"])}({L["total"]}点)</small></span></a></li>'
                     for L in nv["lists"])
     lead = "レビューの件数、評価、価格といった、数字だけを手がかりに、プレゼントの候補を並べました。迷ったときの、ものさしにしてください。"
-    to_ranking = '<p class="more"><a class="btn btn-sub" href="/ranking/">世代別の、いま売れている商品も見る</a></p>' if d.get("ranking") else ""
+    to_ranking = '<p class="more"><a class="btn btn-sub" href="/ranking/">いま売れている商品も見る</a></p>' if d.get("ranking") else ""
     body = f"""{head_band("sky", '<img class="pair-mini" src="/assets/img/b-sparkle.webp" alt="" width="170" height="155">', "数字で選ぶ、<wbr>プレゼント", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("数字で選ぶ", None)])}</div>
 {pr_quiet(cfg)}
