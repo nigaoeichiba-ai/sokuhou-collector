@@ -201,10 +201,12 @@ jobs:
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "$KEY" > ~/.ssh/id_xserver
           chmod 600 ~/.ssh/id_xserver
+          sleep $((RANDOM % 25))   # the four site jobs start together; the server drops some simultaneous connections, so spread them out
           for try in 1 2 3 4 5 6; do   # the key scan sometimes comes back empty for a moment
-            ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+            ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /tmp/keyscan.err || true
             [ -s ~/.ssh/known_hosts ] && break
-            sleep $((try * 5))
+            echo "key scan attempt $try returned nothing: $(head -c 200 /tmp/keyscan.err | tr -s '[:space:]' ' ')"
+            sleep $((try * 10))
           done
           test -s ~/.ssh/known_hosts
       - name: Check the server (read only)
