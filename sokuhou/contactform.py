@@ -6,6 +6,7 @@
 The receiver (contact/send.php) appends each message as one JSON line to <site folder>/inbox/YYYY-MM.jsonl, which lies OUTSIDE the web root and
 survives deploys (a deploy swaps only public_html).  Spam control without a third-party service: a hidden honeypot field, at most two links in a
 message, at most five messages per sender and day (the sender is only a salted daily hash of the IP address, never the address itself).
+The receiver also mails each message to info@<the site's domain> (built at run time from the site folder's name: no address is printed on a page or written in the repository).
 A daily GitHub Actions job (.github/workflows/inbox.yml, sokuhou/inbox.py) copies new lines into the repository, where the routines read them.
 """
 from __future__ import annotations
@@ -49,6 +50,11 @@ def form_html(cfg: dict, *, default_kind: str = "", message_hint: str = "", page
 def thanks_body(cfg: dict) -> str:
     return ('<h1>送信しました</h1><p>お問い合わせを受け付けました。ありがとうございます。内容は、確認して、サイトの改善に役立てます。'
             'お返事は、できないことがあります。</p><p><a class="btn" href="/">トップページへ戻る</a></p>')
+
+
+def _php_text(text: str) -> str:
+    """Text that sits inside a PHP string in the template: no quote, backslash, dollar sign or line break can end or alter the string."""
+    return "".join(c for c in str(text) if c >= " " and c not in "\"'\\${}")
 
 
 def send_php(cfg: dict) -> str:
@@ -103,5 +109,19 @@ $rec = array('id' => bin2hex(random_bytes(6)), 'at' => date('c'), 'site' => base
              'email' => $email, 'page' => $page, 'who' => $who, 'ua' => clip((string)($_SERVER['HTTP_USER_AGENT'] ?? ''), 120));
 $ok = @file_put_contents($inbox . '/' . date('Y-m') . '.jsonl', json_encode($rec, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND | LOCK_EX);
 if ($ok === false) { fail(500, '保存できませんでした。時間をおいて、もう一度お試しください。'); }
+
+// Mail the message to the operator's address of this site: info@ + the domain (the site folder is named after the domain).  The address is built
+// here at run time and is printed on no page and written in no file of the repository.  The line saved above is the record: a mail that fails
+// (or an unexpected folder name) never fails the submission.
+$domain = basename($site);
+if (preg_match('/^[a-z0-9-]+(\.[a-z0-9-]+)+$/i', $domain)) {
+    $to = 'info@' . $domain;
+    $subject = '[__SITE__] お問い合わせ: ' . $kind;
+    $body = "サイト: __SITE__ (" . $domain . ")\n種類: " . $kind . "\n日時: " . date('Y-m-d H:i:s') . "\nページ: " . $page
+          . "\n返信先: " . ($email !== '' ? $email : '(なし)') . "\n\n" . $message . "\n";
+    $h = array('From: ' . $to, 'MIME-Version: 1.0', 'Content-Type: text/plain; charset=UTF-8', 'Content-Transfer-Encoding: base64');
+    if ($email !== '') { $h[] = 'Reply-To: ' . $email; }          // the address was validated above: no line breaks can be in it
+    @mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', chunk_split(base64_encode($body)), implode("\r\n", $h), '-f' . $to);
+}
 header('Location: __THANKS__', true, 303);
-""".replace("__KINDS__", kinds.replace("\\", "\\\\").replace("'", "\\'")).replace("__THANKS__", THANKS_PATH)
+""".replace("__KINDS__", kinds.replace("\\", "\\\\").replace("'", "\\'")).replace("__THANKS__", THANKS_PATH).replace("__SITE__", _php_text(cfg["site_name"]))
