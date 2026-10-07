@@ -82,5 +82,11 @@
    "The remote worker closes a blank laptop and tidies a plain desk, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": [
+  "focused-work",
+  "sharing-document",
+  "taking-notes",
+  "wifi-trouble"
+ ]
 }

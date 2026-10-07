@@ -82,5 +82,10 @@
    "Two residents wave to each other with a clear gap between them, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": [
+  "greeting",
+  "shopping",
+  "trash-out"
+ ]
 }
