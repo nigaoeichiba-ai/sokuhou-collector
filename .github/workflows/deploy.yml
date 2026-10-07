@@ -186,6 +186,9 @@ jobs:
           test "$(find release -name '*.html' | wc -l)" -ge "$MIN_PAGES"
           if [ "$MIN_CARDS" -gt 0 ]; then test "$(ls release/og | wc -l)" -ge "$MIN_CARDS"; fi   # share cards were drawn (the CJK font was found)
           du -sh release
+      - name: Site check (every link, the sitemap, headings, tables, empty sections of the REAL build; a problem stops the deploy)
+        if: steps.gate.outputs.go == 'true'
+        run: python -m sokuhou.sitecheck release --base ${{ matrix.url }}
       - name: SSH setup
         if: steps.gate.outputs.go == 'true'
         env:

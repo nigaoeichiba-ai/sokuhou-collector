@@ -427,6 +427,8 @@ main.wrap > h1:first-child { margin-top: 36px; }
 .memo-strip-in p { margin: 0 0 8px; font-size: .88rem; }
 .memo-strip .cards { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); margin-top: 8px; }
 .cal-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.tablewrap { overflow-x: auto; margin: 6px 0 18px; }
+.tablewrap .gift-days { margin: 0; min-width: 260px; }
 .gift-days { width: 100%; border-collapse: collapse; margin: 6px 0 18px; background: #fff; border: var(--line2); border-radius: 14px; overflow: hidden; }
 .gift-days th, .gift-days td { padding: .55em .8em; text-align: left; border-bottom: 1px solid #ecdcbc; font-size: .9rem; }
 .gift-days th { background: var(--butter, #fff1b8); font-size: .78rem; }
