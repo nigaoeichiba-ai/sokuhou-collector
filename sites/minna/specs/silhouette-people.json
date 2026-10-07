@@ -77,5 +77,6 @@
    "seen from behind, standing with arms relaxed"
   ]
  ],
- "subject_en": "adult person of medium build with short hair, gender-neutral, solid black silhouette, no facial features, 7-head-tall proportions"
+ "subject_en": "adult person of medium build with short hair, gender-neutral, solid black silhouette, no facial features, 7-head-tall proportions",
+ "exclude": []
 }

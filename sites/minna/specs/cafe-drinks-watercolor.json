@@ -1,0 +1,83 @@
+{
+ "slug": "cafe-drinks-watercolor",
+ "title": "カフェ・ドリンクのイラスト",
+ "subject": "",
+ "genre": "food",
+ "touch": "watercolor",
+ "title_fmt": "{ja}",
+ "subject_en": "cafe drinks in soft watercolour, each a separate item Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "コーヒー、紅茶、ラテ、ジュース、タピオカふうドリンクなど、カフェメニューに使えるやわらかい水彩12点。",
+ "tags": [
+  "カフェ",
+  "ドリンク",
+  "コーヒー",
+  "紅茶",
+  "ジュース",
+  "ラテ",
+  "メニュー"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "coffee",
+   "コーヒー",
+   "a cup of coffee with steam"
+  ],
+  [
+   "latte",
+   "ラテアート",
+   "a latte with heart latte art"
+  ],
+  [
+   "tea",
+   "紅茶",
+   "a teacup and a teapot"
+  ],
+  [
+   "greentea",
+   "抹茶ラテ",
+   "a matcha latte in a glass"
+  ],
+  [
+   "juice",
+   "オレンジジュース",
+   "a glass of orange juice with a slice"
+  ],
+  [
+   "soda",
+   "クリームソーダ",
+   "a cream soda with ice cream and a cherry"
+  ],
+  [
+   "milk",
+   "ミルク",
+   "a bottle of milk and a glass"
+  ],
+  [
+   "cocoa",
+   "ココア",
+   "hot cocoa with marshmallows"
+  ],
+  [
+   "smoothie",
+   "スムージー",
+   "a green smoothie with a straw"
+  ],
+  [
+   "bubble",
+   "ミルクティーふうのドリンク",
+   "a milk tea with dark pearls and a wide straw"
+  ],
+  [
+   "beans",
+   "コーヒー豆",
+   "coffee beans in a small sack"
+  ],
+  [
+   "cake",
+   "ケーキセット",
+   "a slice of cake and a coffee"
+  ]
+ ]
+}

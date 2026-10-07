@@ -1,0 +1,87 @@
+{
+ "slug": "kantyu-animals-watercolor",
+ "title": "雪の中のどうぶつ",
+ "subject": "",
+ "genre": "season",
+ "touch": "watercolor",
+ "title_fmt": "{ja}",
+ "subject_en": "winter animals in soft watercolour, each with a little snow around its feet, one animal per picture Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "雪の中のうさぎ、きつね、ペンギン…。寒中見舞いや冬のお便りに合う、やわらかい水彩のどうぶつ12点。",
+ "tags": [
+  "寒中見舞い",
+  "冬",
+  "雪",
+  "どうぶつ",
+  "水彩",
+  "1月",
+  "2月",
+  "ごあいさつ"
+ ],
+ "season": {
+  "from": "12-15",
+  "to": "02-10"
+ },
+ "holes": false,
+ "items": [
+  [
+   "rabbit",
+   "雪とうさぎ",
+   "a white rabbit sitting in snow"
+  ],
+  [
+   "fox",
+   "雪とキツネ",
+   "a fox trotting through snow"
+  ],
+  [
+   "penguin",
+   "雪とペンギン",
+   "a penguin with a red scarf"
+  ],
+  [
+   "bear",
+   "冬ごもりのくま",
+   "a sleepy bear wearing a knitted hat"
+  ],
+  [
+   "owl",
+   "雪の木のふくろう",
+   "an owl on a snowy branch"
+  ],
+  [
+   "deer",
+   "雪の中のこじか",
+   "a fawn standing in snow"
+  ],
+  [
+   "squirrel",
+   "どんぐりを持つりす",
+   "a squirrel holding an acorn in snow"
+  ],
+  [
+   "cat",
+   "こたつのねこ",
+   "a cat curled up at a kotatsu"
+  ],
+  [
+   "sheep",
+   "毛糸のひつじ",
+   "a sheep wearing a knitted scarf"
+  ],
+  [
+   "dog",
+   "雪あそびのいぬ",
+   "a puppy playing in snow"
+  ],
+  [
+   "hedgehog",
+   "雪のはりねずみ",
+   "a hedgehog with a tiny knit cap"
+  ],
+  [
+   "snowman",
+   "雪だるまとことり",
+   "a snowman with a small bird on its head"
+  ]
+ ]
+}

@@ -1,0 +1,86 @@
+{
+ "slug": "koinobori-flat",
+ "title": "こどもの日のイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Children's Day icons, each a separate object, flat Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "鯉のぼり、兜、柏餅、菖蒲など、こどもの日(端午の節句)のモチーフ12点。5月のおたよりや掲示に。",
+ "tags": [
+  "こどもの日",
+  "鯉のぼり",
+  "兜",
+  "柏餅",
+  "菖蒲",
+  "5月",
+  "端午の節句"
+ ],
+ "season": {
+  "from": "03-25",
+  "to": "05-10"
+ },
+ "holes": false,
+ "items": [
+  [
+   "koi-red",
+   "赤い鯉のぼり",
+   "a red carp streamer"
+  ],
+  [
+   "koi-blue",
+   "青い鯉のぼり",
+   "a blue carp streamer"
+  ],
+  [
+   "koi-set",
+   "鯉のぼりのセット",
+   "a pole with three carp streamers and a pinwheel"
+  ],
+  [
+   "kabuto",
+   "兜",
+   "a samurai helmet (kabuto) of paper"
+  ],
+  [
+   "kashiwa",
+   "柏餅",
+   "a kashiwa mochi wrapped in a leaf"
+  ],
+  [
+   "chimaki",
+   "ちまき",
+   "chimaki rice dumplings tied with grass"
+  ],
+  [
+   "shobu",
+   "菖蒲",
+   "iris leaves and flowers"
+  ],
+  [
+   "doll",
+   "武者人形",
+   "a cute warrior doll"
+  ],
+  [
+   "ema",
+   "金太郎ふう人形",
+   "a cute boy doll with a red apron and an axe (original design)"
+  ],
+  [
+   "carp-jump",
+   "とびはねる鯉",
+   "a carp jumping out of the water"
+  ],
+  [
+   "sword",
+   "おもちゃの刀",
+   "a toy paper sword"
+  ],
+  [
+   "flag",
+   "吹き流し",
+   "a coloured streamer set"
+  ]
+ ]
+}

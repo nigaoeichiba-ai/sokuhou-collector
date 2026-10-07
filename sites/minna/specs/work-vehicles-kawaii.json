@@ -1,0 +1,83 @@
+{
+ "slug": "work-vehicles-kawaii",
+ "title": "はたらくくるま",
+ "subject": "",
+ "genre": "life",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "cute working vehicles with simple friendly faces, kawaii, no text, no logos Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "消防車、救急車、パトカー、ショベルカーなど、はたらくくるま12台。子ども向けのおたよりに。",
+ "tags": [
+  "はたらくくるま",
+  "乗り物",
+  "消防車",
+  "救急車",
+  "パトカー",
+  "ショベルカー",
+  "子ども"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "fire",
+   "消防車",
+   "a fire truck"
+  ],
+  [
+   "ambulance",
+   "救急車",
+   "an ambulance with a plain cross"
+  ],
+  [
+   "police",
+   "パトカー",
+   "a police car"
+  ],
+  [
+   "excavator",
+   "ショベルカー",
+   "an excavator"
+  ],
+  [
+   "dump",
+   "ダンプカー",
+   "a dump truck"
+  ],
+  [
+   "crane",
+   "クレーン車",
+   "a crane truck"
+  ],
+  [
+   "mixer",
+   "ミキサー車",
+   "a cement mixer truck"
+  ],
+  [
+   "garbage",
+   "ごみ収集車",
+   "a garbage truck"
+  ],
+  [
+   "bus",
+   "路線バス",
+   "a city bus"
+  ],
+  [
+   "delivery",
+   "宅配トラック",
+   "a delivery truck"
+  ],
+  [
+   "tractor",
+   "トラクター",
+   "a tractor"
+  ],
+  [
+   "forklift",
+   "フォークリフト",
+   "a forklift"
+  ]
+ ]
+}

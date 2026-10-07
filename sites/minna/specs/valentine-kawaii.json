@@ -1,0 +1,86 @@
+{
+ "slug": "valentine-kawaii",
+ "title": "バレンタインのイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Valentine items, each a separate object, kawaii pink and brown Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "ハートのチョコ、ラッピング、手紙、ケーキ。バレンタインとホワイトデーのカードや告知に使える12点。",
+ "tags": [
+  "バレンタイン",
+  "チョコ",
+  "ハート",
+  "プレゼント",
+  "2月",
+  "ホワイトデー",
+  "手紙"
+ ],
+ "season": {
+  "from": "01-10",
+  "to": "03-16"
+ },
+ "holes": false,
+ "items": [
+  [
+   "choco-heart",
+   "ハートのチョコ",
+   "a heart-shaped chocolate with a ribbon"
+  ],
+  [
+   "box",
+   "チョコの箱",
+   "an open box of assorted chocolates"
+  ],
+  [
+   "letter",
+   "ラブレター",
+   "a sealed envelope with a heart sticker (blank)"
+  ],
+  [
+   "cake",
+   "ハートのケーキ",
+   "a small heart-shaped cake with strawberries"
+  ],
+  [
+   "cookie",
+   "ハートのクッキー",
+   "heart cookies with icing"
+  ],
+  [
+   "bouquet",
+   "小さな花束",
+   "a small bouquet of pink roses"
+  ],
+  [
+   "cupcake",
+   "カップケーキ",
+   "a pink cupcake with a heart on top"
+  ],
+  [
+   "gift",
+   "プレゼント",
+   "a gift box with a big bow"
+  ],
+  [
+   "candy",
+   "キャンディ",
+   "wrapped heart candies"
+  ],
+  [
+   "bear",
+   "ハートをもつくま",
+   "a cute bear holding a heart chocolate"
+  ],
+  [
+   "cat",
+   "チョコをもつねこ",
+   "a cute cat holding a chocolate bar"
+  ],
+  [
+   "whitebox",
+   "ホワイトデーのお返し",
+   "a white gift bag with a ribbon and a macaron"
+  ]
+ ]
+}

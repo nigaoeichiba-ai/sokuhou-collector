@@ -82,5 +82,6 @@
    "The shopkeeper turns off a simple light and tidies the counter, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": []
 }

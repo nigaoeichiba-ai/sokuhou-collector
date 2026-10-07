@@ -1,0 +1,83 @@
+{
+ "slug": "japan-sights-wa",
+ "title": "日本の名所のイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "subject_en": "Japanese landmarks drawn as generic motifs (not specific real buildings), each a separate item, wa style Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "富士山、鳥居、五重塔、お城など、日本らしい風景のモチーフ12点。観光案内や和風のデザインに。",
+ "tags": [
+  "観光",
+  "富士山",
+  "神社",
+  "五重塔",
+  "京都",
+  "旅行",
+  "和風"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "fuji",
+   "富士山",
+   "Mt. Fuji with a snow cap and a sun"
+  ],
+  [
+   "torii",
+   "鳥居",
+   "a red torii gate"
+  ],
+  [
+   "pagoda",
+   "五重塔",
+   "a five-storey pagoda"
+  ],
+  [
+   "castle",
+   "お城",
+   "a white Japanese castle"
+  ],
+  [
+   "bridge",
+   "太鼓橋",
+   "an arched bridge over a pond"
+  ],
+  [
+   "lantern",
+   "石どうろう",
+   "a stone lantern"
+  ],
+  [
+   "temple",
+   "お寺",
+   "a temple gate"
+  ],
+  [
+   "garden",
+   "日本庭園",
+   "a small Japanese garden with a pond"
+  ],
+  [
+   "onsen",
+   "温泉",
+   "an onsen with steam"
+  ],
+  [
+   "boat",
+   "屋形船",
+   "a traditional boat"
+  ],
+  [
+   "train",
+   "電車と桜",
+   "a train under cherry trees"
+  ],
+  [
+   "deer",
+   "鹿と紅葉",
+   "a deer with maple leaves"
+  ]
+ ]
+}

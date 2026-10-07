@@ -1,0 +1,84 @@
+{
+ "slug": "bousai-icons-pictogram",
+ "title": "防災のイラスト",
+ "subject": "",
+ "genre": "life",
+ "touch": "pictogram",
+ "title_fmt": "{ja}",
+ "subject_en": "disaster-prevention pictogram icons, each a separate object, bold and clear, no text Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "防災リュック、ヘルメット、懐中電灯、ラジオ、非常食など、防災の備えを表す12点。ポスターや回覧に。",
+ "tags": [
+  "防災",
+  "避難",
+  "災害",
+  "地震",
+  "備蓄",
+  "非常用持ち出し袋",
+  "ヘルメット",
+  "懐中電灯"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "bag",
+   "防災リュック",
+   "an emergency backpack"
+  ],
+  [
+   "helmet",
+   "防災ヘルメット",
+   "a safety helmet"
+  ],
+  [
+   "flashlight",
+   "懐中電灯",
+   "a flashlight with light rays"
+  ],
+  [
+   "radio",
+   "防災ラジオ",
+   "a hand-crank radio"
+  ],
+  [
+   "water",
+   "ペットボトルの水",
+   "water bottles in a stack"
+  ],
+  [
+   "food",
+   "非常食",
+   "canned food and biscuits"
+  ],
+  [
+   "firstaid",
+   "救急セット",
+   "a first-aid box with a plain cross"
+  ],
+  [
+   "whistle",
+   "ホイッスル",
+   "a whistle on a cord"
+  ],
+  [
+   "blanket",
+   "アルミブランケット",
+   "a folded silver emergency blanket"
+  ],
+  [
+   "exit",
+   "避難する人のマーク",
+   "a simple pictogram of a person running to an exit door"
+  ],
+  [
+   "map",
+   "ハザードマップ",
+   "a folded map with a location pin"
+  ],
+  [
+   "battery",
+   "モバイルバッテリー",
+   "a power bank with a cable"
+  ]
+ ]
+}

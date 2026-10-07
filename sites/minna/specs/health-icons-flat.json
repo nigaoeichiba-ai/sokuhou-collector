@@ -1,0 +1,84 @@
+{
+ "slug": "health-icons-flat",
+ "title": "健康・医療のアイコン",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "health and medical icons, each a separate object, flat Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "体温計、マスク、手洗い、薬、聴診器など、健康と医療のアイコン12点。院内掲示や健康だよりに。",
+ "tags": [
+  "健康",
+  "医療",
+  "体温計",
+  "マスク",
+  "手洗い",
+  "薬",
+  "病院",
+  "予防"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "thermometer",
+   "体温計",
+   "a digital thermometer"
+  ],
+  [
+   "mask",
+   "マスク",
+   "a face mask"
+  ],
+  [
+   "handwash",
+   "手洗い",
+   "two hands with soap bubbles under a tap"
+  ],
+  [
+   "pill",
+   "くすり",
+   "capsules and a pill bottle"
+  ],
+  [
+   "stethoscope",
+   "聴診器",
+   "a stethoscope"
+  ],
+  [
+   "bandage",
+   "ばんそうこう",
+   "adhesive bandages"
+  ],
+  [
+   "syringe",
+   "注射器",
+   "a syringe"
+  ],
+  [
+   "heartbeat",
+   "心拍",
+   "a heart with a pulse line"
+  ],
+  [
+   "toothbrush",
+   "歯みがき",
+   "a toothbrush and toothpaste"
+  ],
+  [
+   "apple",
+   "バランスのよい食事",
+   "a plate with vegetables and rice"
+  ],
+  [
+   "sleep",
+   "睡眠",
+   "a pillow with a crescent moon"
+  ],
+  [
+   "walk",
+   "ウォーキングシューズ",
+   "walking shoes"
+  ]
+ ]
+}

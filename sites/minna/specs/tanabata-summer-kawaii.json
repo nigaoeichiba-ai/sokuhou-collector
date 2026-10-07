@@ -1,0 +1,88 @@
+{
+ "slug": "tanabata-summer-kawaii",
+ "title": "七夕・夏まつりのイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Tanabata and summer-festival items and cute animals in yukata, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "笹かざり、花火、金魚、浴衣のどうぶつ、かき氷。七夕と夏まつりのお知らせに使える12点。",
+ "tags": [
+  "七夕",
+  "夏まつり",
+  "浴衣",
+  "花火",
+  "風鈴",
+  "かき氷",
+  "すいか",
+  "7月",
+  "8月"
+ ],
+ "season": {
+  "from": "06-10",
+  "to": "08-31"
+ },
+ "holes": false,
+ "items": [
+  [
+   "sasa",
+   "七夕のささかざり",
+   "a bamboo branch with blank paper strips and paper decorations"
+  ],
+  [
+   "fireworks",
+   "花火",
+   "a big firework burst"
+  ],
+  [
+   "goldfish",
+   "金魚",
+   "a cute goldfish in a bag of water"
+  ],
+  [
+   "furin",
+   "風鈴",
+   "a glass wind chime"
+  ],
+  [
+   "kakigori",
+   "かき氷",
+   "a shaved-ice bowl with syrup"
+  ],
+  [
+   "watermelon",
+   "すいか",
+   "a watermelon slice and a whole watermelon"
+  ],
+  [
+   "uchiwa",
+   "うちわ",
+   "a round fan with a plain pattern"
+  ],
+  [
+   "cat-yukata",
+   "浴衣のねこ",
+   "a cat in a blue yukata holding a fan"
+  ],
+  [
+   "rabbit-yukata",
+   "浴衣のうさぎ",
+   "a rabbit in a pink yukata"
+  ],
+  [
+   "lantern",
+   "ちょうちん",
+   "a row of red paper lanterns"
+  ],
+  [
+   "taiko",
+   "太鼓",
+   "a festival drum with sticks"
+  ],
+  [
+   "star",
+   "天の川の星",
+   "a star cluster and a crescent"
+  ]
+ ]
+}
