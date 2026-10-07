@@ -114,32 +114,43 @@
 
   // Shortfall checker (/check/). The arithmetic is a pure function (exposed as window.saichinCheck) so the browser tests can call it
   // with a fixed date; the DOM part below only reads the form and prints the result. Nothing typed here is sent or stored anywhere.
-  const fmt = (n) => Math.round(n).toLocaleString('ja-JP');
   const floor1 = (x) => Math.floor(x * 10 + 1e-9) / 10;
   const num1 = (x) => floor1(x).toLocaleString('ja-JP', { minimumFractionDigits: Number.isInteger(floor1(x)) ? 0 : 1, maximumFractionDigits: 1 });
   const KIND_TEXT = { hourly: '時給', daily: '日給', monthly: '月給' };
 
+  const ceil1 = (x) => Math.ceil(x * 10 - 1e-9) / 10;
+  const fmtUp = (n) => Math.max(1, Math.ceil(n - 1e-9)).toLocaleString('ja-JP');
+  const given = (v) => v !== '' && v != null;
   function evaluateCheck(inp, row, todayIso) {
     if (!row) return { error: '都道府県を選んでください。' };
-    const kind = inp.kind, pay = Number(inp.pay), hours = Number(inp.hours), days = Number(inp.days);
-    const excluded = kind === 'hourly' ? 0 : Math.max(0, Number(inp.excluded) || 0);
+    const kind = inp.kind;
     if (!KIND_TEXT[kind]) return { error: '賃金の形を選んでください。' };
-    if (!(pay > 0)) return { error: KIND_TEXT[kind] + 'の金額を入れてください。' };
-    if (!(hours > 0 && hours <= 24)) return { error: '1日の所定労働時間は、0より大きく24以下の数で入れてください。' };
-    if (!(days > 0 && days <= 366)) return { error: '年間の所定労働日数は、1〜366の数で入れてください。' };
+    const pay = Number(inp.pay);
+    if (!(pay > 0) || !Number.isFinite(pay)) return { error: KIND_TEXT[kind] + 'の金額を入れてください。' };
+    const excluded = kind === 'hourly' ? 0 : Number(inp.excluded) || 0;
+    if (!Number.isFinite(excluded) || excluded < 0) return { error: '手当の金額が正しくありません。0以上の数で入れてください。' };
+    const hours = given(inp.hours) ? Number(inp.hours) : NaN, days = given(inp.days) ? Number(inp.days) : NaN;
+    const hoursOk = hours > 0 && hours <= 24, daysOk = days > 0 && days <= 366;
+    // A day's hours matter for daily and monthly pay, the year's days for monthly pay; for the others they only turn the gap into a month and a year.
+    if ((kind !== 'hourly' || given(inp.hours)) && !hoursOk) return { error: '1日の所定労働時間は、0より大きく24以下の数で入れてください。' };
+    if ((kind === 'monthly' || given(inp.days)) && !daysOk) return { error: '年間の所定労働日数は、1〜366の数で入れてください。' };
     if (kind !== 'hourly' && excluded >= pay) return { error: '除外する手当が、' + KIND_TEXT[kind] + 'の金額以上になっています。入力を確かめてください。' };
     const effective = pay - excluded;
-    const monthlyHours = (hours * days) / 12;
+    const monthlyHours = hoursOk && daysOk ? (hours * days) / 12 : null;
     const hourly = kind === 'hourly' ? pay : kind === 'daily' ? effective / hours : effective / monthlyHours;
     const done = daysBetween(todayIso, row.date) <= 0;
     const rates = done
       ? [{ key: 'now', min: row.amount, since: row.date }]
       : [{ key: 'now', min: row.prev, until: row.date }, { key: 'new', min: row.amount, since: row.date }];
     const periods = rates.map((r) => {
-      const gap = r.min - hourly, short = gap > 1e-9;
+      // The verdict compares without dividing, so float noise at the boundary (180,000 / (2,000 / 12) = 1,080.0000000000002) cannot flip it.
+      const ok = kind === 'hourly' ? pay >= r.min : kind === 'daily' ? effective >= r.min * hours : effective * 12 >= r.min * hours * days;
+      const gap = r.min - hourly;
       const base = kind === 'hourly' ? r.min : kind === 'daily' ? Math.ceil(r.min * hours - 1e-9) : Math.ceil(r.min * monthlyHours - 1e-9);
+      const known = !ok && monthlyHours !== null;
       return Object.assign({}, r, {
-        gap, ok: !short, perMonth: short ? gap * monthlyHours : 0, perYear: short ? gap * hours * days : 0, required: base + excluded,
+        gap, ok, perMonth: ok ? 0 : known ? Math.max(gap, 0) * monthlyHours : null, perYear: ok ? 0 : known ? Math.max(gap, 0) * monthlyHours * 12 : null,
+        required: base + excluded,
       });
     });
     const steps = [];
@@ -176,7 +187,7 @@
     };
     const render = () => {
       const r = prefs.find((p) => p.name === sel.value);
-      const excluded = exclFields.reduce((s, f) => s + (Number(f.value) || 0), 0);
+      const excluded = exclFields.reduce((s, f) => s + Math.max(0, Number(f.value) || 0), 0);
       const res = evaluateCheck({ kind: kind(), pay: pay.value, excluded, hours: hours.value, days: days.value }, r, today);
       out.classList.remove('ok', 'ng');
       if (res.error) { out.textContent = pay.value ? res.error : '都道府県と賃金を入れると、最低賃金との差額を計算します。'; return; }
@@ -194,7 +205,7 @@
         cls = 'ng'; head = '現在の最低賃金を下回っています。';
       }
       const title = (p) => (res.done ? jp(p.since) + 'から(現在の額)' : p.key === 'new' ? jp(p.since) + 'から(新しい額)' : '今(' + jp(p.until) + 'の前日まで)');
-      const fmtGap = (p) => (p.ok ? '余裕 ' + num1(-p.gap) + '円' : '不足 ' + num1(p.gap) + '円');
+      const fmtGap = (p) => (p.ok ? '余裕 ' + num1(-p.gap) + '円' : '不足 ' + Math.max(0.1, ceil1(p.gap)).toLocaleString('ja-JP', { minimumFractionDigits: Number.isInteger(Math.max(0.1, ceil1(p.gap))) ? 0 : 1, maximumFractionDigits: 1 }) + '円');
       const need = { hourly: '時給', daily: '日給', monthly: '月給' }[res.kind];
       const line = (k, v) => '<dt>' + k + '</dt><dd>' + v + '</dd>';
       const table = '<div class="chk-periods">' + res.periods.map((p) => {
@@ -204,7 +215,7 @@
           line('あなたの時間額(換算後)', '約' + num1(res.hourly) + '円') +
           line('判定', '<b class="' + c + '">' + (p.ok ? '最低賃金以上' : '下回っています') + '</b>') +
           line('1時間あたりの差', '<b class="' + c + '">' + fmtGap(p) + '</b>') +
-          (p.ok ? '' : line('1か月あたりの不足額', '約' + fmt(p.perMonth) + '円') + line('1年あたりの不足額', '約' + fmt(p.perYear) + '円')) +
+          (p.ok || p.perMonth === null ? '' : line('1か月あたりの不足額', '約' + fmtUp(p.perMonth) + '円') + line('1年あたりの不足額', '約' + fmtUp(p.perYear) + '円')) +
           line('最低賃金を満たす' + need + 'の目安' + (res.kind === 'hourly' ? '' : '(手当を含む)'), yen(p.required)) +
           '</dl></section>';
       }).join('') + '</div>';
