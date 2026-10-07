@@ -104,7 +104,10 @@ def item_record(spec: dict, it: list[str], w: int, h: int) -> dict:
     touch = TOUCH_BY_SLUG[spec["touch"]]
     title = item_title(spec, it)
     desc = it[3] if len(it) > 3 and it[3] else f"{title}のイラスト。{touch[1]}のタッチ。"
-    tags = list(dict.fromkeys([*spec["tags"], spec["subject"] or spec["title"], it[1], touch[1], GENRE_BY_SLUG[spec["genre"]][1]]))
+    # a series of one character shares all its tags; a mixed series (twelve different animals, a set of icons) shares only its first four, broad tags,
+    # and every other tag must appear in the item's own phrase - otherwise a search for "ひつじ" finds the cat of the Santa set
+    own = spec["tags"] if spec["subject"] else [t for n, t in enumerate(spec["tags"]) if n < 4 or t in it[1] or t in item_title(spec, it)]
+    tags = list(dict.fromkeys([*own, spec["subject"] or spec["title"], it[1], touch[1], GENRE_BY_SLUG[spec["genre"]][1]]))
     return {"id": item_id(spec, it[0]), "file": f"{item_id(spec, it[0])}.webp", "title": title, "desc": desc, "tags": [t for t in tags if t], "w": w, "h": h}
 
 
