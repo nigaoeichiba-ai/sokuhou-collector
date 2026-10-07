@@ -42,7 +42,11 @@ jobs:
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "$KEY" > ~/.ssh/id_xserver
           chmod 600 ~/.ssh/id_xserver
-          ssh-keyscan -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          for try in 1 2 3 4 5 6; do   # the key scan sometimes comes back empty for a moment
+            ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+            [ -s ~/.ssh/known_hosts ] && break
+            sleep $((try * 5))
+          done
           stamp=$(date -u +%Y%m%d-%H%M)
           mkdir -p data/inbox
           for pair in saichin:saichin-sokuho.com kuma:kuma-sokuho.com yorokobu:yorokobu-present.com minna:minna-no-illust.com; do
