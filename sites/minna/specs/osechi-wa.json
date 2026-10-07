@@ -1,0 +1,86 @@
+{
+ "slug": "osechi-wa",
+ "title": "おせち料理のイラスト",
+ "subject": "",
+ "genre": "food",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "subject_en": "Japanese New Year osechi dishes, each a separate item, refined Japanese illustration style with red, gold and black accents Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "重箱のおせち、黒豆、伊達巻、鯛。お正月のお料理を和のタッチで描いた12点。",
+ "tags": [
+  "おせち",
+  "お正月",
+  "重箱",
+  "和食",
+  "年賀状",
+  "黒豆"
+ ],
+ "season": {
+  "from": "12-10",
+  "to": "01-15"
+ },
+ "holes": false,
+ "items": [
+  [
+   "jubako",
+   "おせちの重箱",
+   "a stacked three-tier red lacquer osechi box, lid beside it, filled with colourful dishes"
+  ],
+  [
+   "kuromame",
+   "黒豆",
+   "a small dish of glossy black beans"
+  ],
+  [
+   "datemaki",
+   "伊達巻",
+   "slices of datemaki rolled omelette with swirl pattern"
+  ],
+  [
+   "tai",
+   "鯛",
+   "a whole red sea bream, celebratory"
+  ],
+  [
+   "ebi",
+   "えび",
+   "a red curled shrimp on a small plate"
+  ],
+  [
+   "kamaboko",
+   "かまぼこ",
+   "red and white kamaboko slices arranged in a row"
+  ],
+  [
+   "kazunoko",
+   "数の子",
+   "herring roe pieces on a small plate"
+  ],
+  [
+   "kurikinton",
+   "栗きんとん",
+   "golden chestnut paste with a whole chestnut"
+  ],
+  [
+   "zouni",
+   "お雑煮",
+   "a lacquer bowl of ozoni with mochi, carrot and greens"
+  ],
+  [
+   "toso",
+   "お屠蘇",
+   "a red sake set with a flat cup and a pouring pitcher"
+  ],
+  [
+   "mochi",
+   "お餅",
+   "two round rice cakes stacked with a mandarin on top"
+  ],
+  [
+   "tazukuri",
+   "田作り",
+   "candied small dried sardines on a small plate"
+  ]
+ ],
+ "exclude": []
+}

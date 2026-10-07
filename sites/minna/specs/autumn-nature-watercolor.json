@@ -1,0 +1,86 @@
+{
+ "slug": "autumn-nature-watercolor",
+ "title": "秋の自然のイラスト",
+ "subject": "",
+ "genre": "nature",
+ "touch": "watercolor",
+ "title_fmt": "{ja}",
+ "subject_en": "Autumn nature items, each a separate object, soft watercolour wash look with a visible dark outline, muted warm colours Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "紅葉、どんぐり、きのこ、すすき。やわらかい水彩で描いた、秋の自然モチーフ12点。",
+ "tags": [
+  "秋",
+  "紅葉",
+  "どんぐり",
+  "きのこ",
+  "自然",
+  "すすき"
+ ],
+ "season": {
+  "from": "09-15",
+  "to": "11-30"
+ },
+ "holes": false,
+ "items": [
+  [
+   "momiji",
+   "もみじ",
+   "a red maple leaf"
+  ],
+  [
+   "ichou",
+   "いちょう",
+   "a yellow ginkgo leaf"
+  ],
+  [
+   "donguri",
+   "どんぐり",
+   "three acorns with caps"
+  ],
+  [
+   "kuri",
+   "くり",
+   "a chestnut burr half open with a nut inside"
+  ],
+  [
+   "kinoko",
+   "きのこ",
+   "a cluster of three brown mushrooms"
+  ],
+  [
+   "susuki",
+   "すすき",
+   "a bunch of pampas grass stalks"
+  ],
+  [
+   "matsuba",
+   "まつぼっくり",
+   "two pine cones with needles"
+  ],
+  [
+   "ochiba",
+   "落ち葉の山",
+   "a small pile of mixed fallen leaves"
+  ],
+  [
+   "kosumosu",
+   "コスモス",
+   "pink cosmos flowers on a stem"
+  ],
+  [
+   "higanbana",
+   "ひがんばな",
+   "a red spider lily"
+  ],
+  [
+   "persimmon",
+   "かき",
+   "two orange persimmons on a branch with leaves"
+  ],
+  [
+   "tombo",
+   "とんぼ",
+   "a red dragonfly with spread wings"
+  ]
+ ],
+ "exclude": []
+}

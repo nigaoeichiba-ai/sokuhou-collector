@@ -1,0 +1,83 @@
+{
+ "slug": "sparkles-deco-kawaii",
+ "title": "キラキラ・かざりのイラスト",
+ "subject": "",
+ "genre": "deco",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Small decorative accent items, each a separate object, kawaii pastel style with bold shapes Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "星、きらきら、リボン、ハート、花かざり。チラシやカードのアクセントに使える飾り12点。",
+ "tags": [
+  "キラキラ",
+  "星",
+  "かざり",
+  "リボン",
+  "ハート",
+  "アクセント"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "star",
+   "大きな星",
+   "a large chubby gold star"
+  ],
+  [
+   "sparkle",
+   "キラキラ",
+   "a four-pointed sparkle with two smaller ones attached by a gap"
+  ],
+  [
+   "ribbon",
+   "リボン",
+   "a pink bow ribbon"
+  ],
+  [
+   "heart",
+   "ふくらんだハート",
+   "a puffy pink heart"
+  ],
+  [
+   "crown",
+   "おうかん",
+   "a small gold crown with gems"
+  ],
+  [
+   "rainbow",
+   "にじ",
+   "a rainbow arc with two small clouds"
+  ],
+  [
+   "flower",
+   "花かざり",
+   "a round flower ornament with a green leaf"
+  ],
+  [
+   "lace",
+   "レースのかざり",
+   "a round lace doily in cream"
+  ],
+  [
+   "balloon",
+   "ふうせん",
+   "three balloons tied together with strings"
+  ],
+  [
+   "garland",
+   "ガーランド",
+   "a short triangular bunting garland, blank flags"
+  ],
+  [
+   "moon",
+   "月とほし",
+   "a crescent moon with a small star"
+  ],
+  [
+   "gem",
+   "ほうせき",
+   "a cut diamond gem in light blue"
+  ]
+ ],
+ "exclude": []
+}

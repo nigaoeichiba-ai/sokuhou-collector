@@ -1,0 +1,86 @@
+{
+ "slug": "ouchi-cleaning-flat",
+ "title": "大掃除・そうじのイラスト",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Cleaning tools and chores, each a separate object, clean flat vector style with simple shapes and bright colours Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "ほうき、バケツ、雑巾、掃除機。年末の大掃除や日々の掃除のお知らせに使える12点。",
+ "tags": [
+  "大掃除",
+  "そうじ",
+  "年末",
+  "ほうき",
+  "バケツ",
+  "洗剤"
+ ],
+ "season": {
+  "from": "11-25",
+  "to": "12-31"
+ },
+ "holes": false,
+ "items": [
+  [
+   "broom",
+   "ほうき",
+   "a bamboo broom with a dustpan"
+  ],
+  [
+   "bucket",
+   "バケツと雑巾",
+   "a blue bucket with a wrung cloth over the edge"
+  ],
+  [
+   "vacuum",
+   "掃除機",
+   "an upright vacuum cleaner"
+  ],
+  [
+   "spray",
+   "洗剤スプレー",
+   "a spray bottle of cleaner with a blank label"
+  ],
+  [
+   "sponge",
+   "スポンジ",
+   "a yellow and green sponge with soap bubbles"
+  ],
+  [
+   "gloves",
+   "ゴム手袋",
+   "a pair of yellow rubber gloves"
+  ],
+  [
+   "mop",
+   "モップ",
+   "a floor mop in a bucket"
+  ],
+  [
+   "window",
+   "窓ふき",
+   "a squeegee wiping a small window pane"
+  ],
+  [
+   "laundry",
+   "せんたくもの",
+   "a clothesline with a shirt and a towel"
+  ],
+  [
+   "trash",
+   "ごみ袋",
+   "two tied garbage bags"
+  ],
+  [
+   "duster",
+   "はたき",
+   "a feather duster"
+  ],
+  [
+   "sink",
+   "ぴかぴかの流し台",
+   "a shiny kitchen sink with sparkles"
+  ]
+ ],
+ "exclude": []
+}
