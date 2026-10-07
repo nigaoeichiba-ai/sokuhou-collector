@@ -1,0 +1,83 @@
+{
+ "slug": "doctor-doodle",
+ "title": "お医者さんのポーズ集",
+ "subject": "お医者さん",
+ "genre": "life",
+ "touch": "loose",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "お医者さん",
+  "医師",
+  "お医者さん",
+  "医療",
+  "病院",
+  "診察",
+  "手書き"
+ ],
+ "lead": "お医者さんのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-holding-stethoscope-chest",
+   "診察する",
+   "holding a stethoscope chest piece forward as if examining"
+  ],
+  [
+   "02-raised-explaining-open",
+   "説明する",
+   "one hand raised, explaining with an open mouth"
+  ],
+  [
+   "03-holding-clipboard-other",
+   "考える",
+   "holding a clipboard, other hand on chin, thinking"
+  ],
+  [
+   "04-smiling-nodding-arms",
+   "うなずく笑顔",
+   "smiling and nodding, arms relaxed"
+  ],
+  [
+   "05-bowing-politely",
+   "お辞儀",
+   "bowing politely"
+  ],
+  [
+   "06-pointing-side-index",
+   "指さし",
+   "pointing to the side with one index finger extended"
+  ],
+  [
+   "07-wearing-surgical-mask",
+   "マスク姿",
+   "wearing a surgical mask, standing with arms relaxed"
+  ],
+  [
+   "08-palms-forward-reassuring",
+   "大丈夫と励ます",
+   "both palms forward, reassuring \"it is okay\""
+  ],
+  [
+   "09-holding-simple-small",
+   "注射器を持ち上げる",
+   "holding a simple small syringe up"
+  ],
+  [
+   "10-sitting-typing-laptop",
+   "パソコン入力",
+   "sitting and typing on a laptop, side view"
+  ],
+  [
+   "11-arms-crossed-serious",
+   "腕組み",
+   "arms crossed, serious face"
+  ],
+  [
+   "12-slumped-forehead-sweat",
+   "疲れた",
+   "slumped, hand on forehead, sweat drop"
+  ]
+ ],
+ "subject_en": "Japanese male doctor about 45, short black hair with a little gray at the temples, round black glasses, light skin, white lab coat over a light blue shirt and gray tie, stethoscope around his neck, beige trousers, 3-head-tall"
+}

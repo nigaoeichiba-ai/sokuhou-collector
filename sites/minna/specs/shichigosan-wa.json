@@ -1,0 +1,92 @@
+{
+ "slug": "shichigosan-wa",
+ "title": "七五三（女の子7歳・男の子5歳）のポーズ集",
+ "subject": "七五三",
+ "genre": "season",
+ "touch": "wa",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "七五三",
+  "七五三",
+  "着物",
+  "晴れ着",
+  "千歳飴",
+  "11月",
+  "神社",
+  "和風"
+ ],
+ "lead": "七五三のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-holding-long-stick",
+   "千歳飴を持つ",
+   "holding a long stick candy in a simple bag, smiling"
+  ],
+  [
+   "02-bowing-politely",
+   "お辞儀",
+   "bowing politely"
+  ],
+  [
+   "03-pressed-together-eyes",
+   "お参り",
+   "hands pressed together, eyes closed, praying"
+  ],
+  [
+   "04-standing-smiling-front",
+   "笑顔で立つ",
+   "standing and smiling, hands in front"
+  ],
+  [
+   "05-seen-from-behind",
+   "後ろ姿で振り返る",
+   "seen from behind, looking back over her shoulder"
+  ],
+  [
+   "06-walking-small-steps",
+   "歩く",
+   "walking small steps, side view"
+  ],
+  [
+   "07-holding-long-stick",
+   "千歳飴を持つ",
+   "holding a long stick candy in a simple bag, smiling"
+  ],
+  [
+   "08-hips-proud",
+   "腰に手を当てる",
+   "hands on hips, proud"
+  ],
+  [
+   "09-pressed-together-eyes",
+   "お参り",
+   "hands pressed together, eyes closed, praying"
+  ],
+  [
+   "10-surprised-eyes-wide",
+   "驚く",
+   "surprised, eyes wide"
+  ],
+  [
+   "11-waving",
+   "手を振る",
+   "waving"
+  ],
+  [
+   "12-bowing-politely",
+   "お辞儀",
+   "bowing politely"
+  ]
+ ],
+ "subject_en": "Japanese girl, 7 years old, black hair in an updo with a red flower kanzashi, light skin, red kimono with a simple floral pattern and a gold obi, small red pouch bag, white tabi, zori sandals, 3-head-tall, dot eyes, rosy cheeks",
+ "sheet_subjects": [
+  "Japanese girl, 7 years old, black hair in an updo with a red flower kanzashi, light skin, red kimono with a simple floral pattern and a gold obi, small red pouch bag, white tabi, zori sandals, 3-head-tall, dot eyes, rosy cheeks",
+  "Japanese boy, 5 years old, short black hair, light skin, black haori with a small white family crest over a gray hakama, white tabi, zori sandals, 3-head-tall, dot eyes, proud face"
+ ],
+ "season": {
+  "from": "10-01",
+  "to": "11-30"
+ }
+}

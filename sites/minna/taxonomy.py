@@ -70,6 +70,10 @@ TOUCHES = [
      "no gradients, no texture, no shadow."),
     ("stick", "棒人間", "棒と丸でできた、かんたんな棒人間のタッチ。",
      "stick-figure style: round head, single-line limbs of equal thickness, black strokes with one accent colour per picture, expressive gestures, very simple, no shading, no shadow."),
+    ("duotone", "ワンカラーおしゃれ", "紺の線と、ひとつのアクセント色だけの、おしゃれなタッチ。",
+     "two-tone fashionable illustration: dark navy line art, ONE teal accent colour on the clothing and small props, light skin tone, everything else white, minimal and stylish, about 5-head proportion, no gradients, no shadow."),
+    ("animesoft", "アニメ風(立ち絵)", "やわらかい塗りの、立ち絵向けのアニメ風のタッチ。",
+     "clean friendly anime-style full-body standing portrait: soft cel shading, simple large eyes, about 6.5-head proportion, front-facing or three-quarter, consistent outfit, wholesome and non-suggestive, no shadow on the ground."),
     ("silhouette", "シルエット", "ひとつの色でつくった、シルエットのタッチ。",
      "solid single-colour silhouette illustration (deep navy #24304A) with crisp edges and a clearly readable outline shape; "
      "only tiny cut-out white details allowed (eyes, small patterns); no gradients, no shadow."),

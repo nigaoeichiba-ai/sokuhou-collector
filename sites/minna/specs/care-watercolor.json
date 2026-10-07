@@ -1,0 +1,83 @@
+{
+ "slug": "care-watercolor",
+ "title": "介護スタッフのポーズ集",
+ "subject": "介護スタッフ",
+ "genre": "life",
+ "touch": "watercolor",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "介護スタッフ",
+  "介護",
+  "介護士",
+  "ヘルパー",
+  "高齢者",
+  "福祉",
+  "水彩"
+ ],
+ "lead": "介護スタッフのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-smiling-greeting-raised",
+   "笑顔で挨拶",
+   "smiling and greeting, one hand raised in a gentle wave"
+  ],
+  [
+   "02-reaching-forward-help",
+   "手を差し伸べる",
+   "reaching one hand forward to help"
+  ],
+  [
+   "03-crouching-smiling-toward",
+   "しゃがんで話しかける",
+   "crouching, smiling toward the viewer at eye level"
+  ],
+  [
+   "04-small-fist-pump",
+   "励ますガッツポーズ",
+   "small fist pump, encouraging smile"
+  ],
+  [
+   "05-holding-small-notebook",
+   "メモを取る",
+   "holding a small notebook and pen, writing"
+  ],
+  [
+   "06-bowing-politely",
+   "お辞儀",
+   "bowing politely"
+  ],
+  [
+   "07-holding-simple-tray",
+   "配膳",
+   "holding a simple tray with one bowl, smiling"
+  ],
+  [
+   "08-folding-plain-towel",
+   "洗濯物をたたむ",
+   "folding a plain towel with both hands"
+  ],
+  [
+   "09-mopping-holding-mop",
+   "モップ掃除",
+   "mopping, holding a mop with both hands"
+  ],
+  [
+   "10-gesturing-open-guide",
+   "手で案内",
+   "gesturing with an open hand to guide, smiling"
+  ],
+  [
+   "11-sitting-sighing-chest",
+   "疲れて一息",
+   "sitting, sighing, hand on chest"
+  ],
+  [
+   "12-rubbing-together-as",
+   "手洗い",
+   "rubbing both hands together as if washing"
+  ]
+ ],
+ "subject_en": "Japanese care worker, woman in her early 30s, black hair in a low ponytail, light skin, light green polo shirt, beige apron, dark gray pants, white sneakers, kind eyes, 4-head-tall"
+}

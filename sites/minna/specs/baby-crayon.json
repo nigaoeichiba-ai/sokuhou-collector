@@ -1,0 +1,82 @@
+{
+ "slug": "baby-crayon",
+ "title": "赤ちゃん（クレヨン）のポーズ集",
+ "subject": "赤ちゃん",
+ "genre": "people",
+ "touch": "crayon",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "赤ちゃん",
+  "赤ちゃん",
+  "ベビー",
+  "育児",
+  "クレヨン",
+  "手書き"
+ ],
+ "lead": "赤ちゃんのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-crawling-knees-side",
+   "ハイハイ",
+   "crawling on hands and knees, side view"
+  ],
+  [
+   "02-sitting-upright-smiling",
+   "お座り",
+   "sitting upright, smiling"
+  ],
+  [
+   "03-laughing-arms-up",
+   "笑って両手を上げる",
+   "laughing with both arms up"
+  ],
+  [
+   "04-crying-tears-mouth",
+   "泣く",
+   "crying with tears, mouth open"
+  ],
+  [
+   "05-lying-its-back",
+   "眠る",
+   "lying on its back curled up, eyes closed"
+  ],
+  [
+   "06-standing-unsteadily-arms",
+   "よちよち立ち",
+   "standing unsteadily with arms out for balance"
+  ],
+  [
+   "07-taking-small-wobbling",
+   "歩く",
+   "taking small wobbling steps, arms raised"
+  ],
+  [
+   "08-holding-spoon-fist",
+   "離乳食を食べる",
+   "holding a spoon in a fist, food on the cheek"
+  ],
+  [
+   "09-sucking-thumb-looking",
+   "指しゃぶり",
+   "sucking a thumb, looking sleepy"
+  ],
+  [
+   "10-yawning-tiny-fist",
+   "あくび",
+   "yawning with a tiny fist raised"
+  ],
+  [
+   "11-waving-small",
+   "バイバイ",
+   "waving one small hand"
+  ],
+  [
+   "12-arms-raised-upward",
+   "抱っこをせがむ",
+   "both arms raised upward, asking to be picked up"
+  ]
+ ],
+ "subject_en": "Japanese baby about 1 year old, short wispy black hair with a tiny curl on top, round rosy cheeks, big round dot eyes, light-yellow onesie with a small bear face on the chest, white socks, chubby 2-head-tall proportions"
+}

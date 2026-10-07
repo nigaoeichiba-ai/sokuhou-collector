@@ -1,0 +1,81 @@
+{
+ "slug": "silhouette-people",
+ "title": "働く大人のシルエットのポーズ集",
+ "subject": "働く大人のシルエット",
+ "genre": "people",
+ "touch": "silhouette",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "働く大人のシルエット",
+  "シルエット",
+  "働く人",
+  "職業",
+  "ピクトグラム"
+ ],
+ "lead": "働く大人のシルエットのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-standing-thinking-chin",
+   "考える",
+   "standing thinking, one hand on chin"
+  ],
+  [
+   "02-walking-side-view",
+   "歩く（横向き）",
+   "walking, side view"
+  ],
+  [
+   "03-running-side-view",
+   "走る",
+   "running, side view, leaning forward"
+  ],
+  [
+   "04-sitting-invisible-chair",
+   "椅子に座る",
+   "sitting on an invisible chair, side view"
+  ],
+  [
+   "05-standing-raised-speaking",
+   "話す",
+   "standing with one hand raised in a speaking gesture"
+  ],
+  [
+   "06-pointing-forward-arm",
+   "指さす",
+   "pointing forward with one arm extended"
+  ],
+  [
+   "07-clapping-front-chest",
+   "拍手する",
+   "clapping with both hands in front of the chest"
+  ],
+  [
+   "08-bowing-degrees",
+   "お辞儀",
+   "bowing at 45 degrees"
+  ],
+  [
+   "09-waving-arm-raised",
+   "手を振る",
+   "waving with one arm raised overhead"
+  ],
+  [
+   "10-jumping-arms-raised",
+   "ジャンプ",
+   "jumping with both arms raised"
+  ],
+  [
+   "11-walking-while-holding",
+   "カバンを持って歩く",
+   "walking while holding a simple briefcase"
+  ],
+  [
+   "12-seen-from-behind",
+   "後ろ姿で立つ",
+   "seen from behind, standing with arms relaxed"
+  ]
+ ],
+ "subject_en": "adult person of medium build with short hair, gender-neutral, solid black silhouette, no facial features, 7-head-tall proportions"
+}

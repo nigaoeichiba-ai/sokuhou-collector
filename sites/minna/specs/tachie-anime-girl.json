@@ -1,0 +1,82 @@
+{
+ "slug": "tachie-anime-girl",
+ "title": "立ち絵キャラ（表情差分つき）のポーズ集",
+ "subject": "立ち絵キャラ",
+ "genre": "people",
+ "touch": "animesoft",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "立ち絵キャラ",
+  "立ち絵",
+  "表情差分",
+  "アニメ風",
+  "女の子",
+  "キャラクター"
+ ],
+ "lead": "立ち絵キャラのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-standing-front-facing",
+   "通常",
+   "standing front-facing, neutral calm face"
+  ],
+  [
+   "02-same-pose-smiling",
+   "笑顔",
+   "same pose, smiling"
+  ],
+  [
+   "03-same-pose-surprised",
+   "驚き",
+   "same pose, surprised with wide eyes"
+  ],
+  [
+   "04-same-pose-troubled",
+   "困り",
+   "same pose, troubled eyebrows, sweat drop"
+  ],
+  [
+   "05-same-pose-pouting",
+   "ぷんぷん怒り",
+   "same pose, pouting angry face"
+  ],
+  [
+   "06-same-pose-sad",
+   "悲しい",
+   "same pose, sad eyes with a small tear"
+  ],
+  [
+   "07-bowing-politely",
+   "お辞儀",
+   "bowing politely"
+  ],
+  [
+   "08-pointing-side-index",
+   "指さし",
+   "pointing to the side with one index finger extended"
+  ],
+  [
+   "09-chin-thinking",
+   "考える",
+   "hand on chin, thinking"
+  ],
+  [
+   "10-waving-smile",
+   "手を振る",
+   "waving with a smile"
+  ],
+  [
+   "11-clapping-happily",
+   "拍手",
+   "clapping happily"
+  ],
+  [
+   "12-seen-from-behind",
+   "後ろ姿",
+   "seen from behind, standing, long hair visible"
+  ]
+ ],
+ "subject_en": "Japanese young woman about 22, long black hair with straight bangs, hazel-brown eyes, pale blue cardigan over a white blouse with a small bow, dark gray skirt, black shoes, 6.5-head-tall, standing straight"
+}

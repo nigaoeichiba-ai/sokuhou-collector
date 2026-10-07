@@ -1,0 +1,83 @@
+{
+ "slug": "stick-radio-taiso",
+ "title": "棒人間の体操のポーズ集",
+ "subject": "棒人間の体操",
+ "genre": "life",
+ "touch": "stick",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "棒人間の体操",
+  "棒人間",
+  "ラジオ体操",
+  "体操",
+  "健康",
+  "運動",
+  "シニア"
+ ],
+ "lead": "棒人間の体操のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-stretching-arms-straight",
+   "背伸び",
+   "stretching both arms straight up on tiptoes"
+  ],
+  [
+   "02-swinging-arms-knees",
+   "腕を振って膝の曲げ伸ばし",
+   "swinging arms with knees slightly bent"
+  ],
+  [
+   "03-rotating-arm-large",
+   "腕を回す",
+   "rotating one arm in a large circle"
+  ],
+  [
+   "04-arching-chest-back",
+   "胸を反らす",
+   "arching the chest back with arms open"
+  ],
+  [
+   "05-bending-side-arm",
+   "体を横に曲げる",
+   "bending to the side with one arm over the head"
+  ],
+  [
+   "06-bending-forward-arms",
+   "体を前に曲げる",
+   "bending forward with arms hanging"
+  ],
+  [
+   "07-twisting-torso-arms",
+   "体をひねる",
+   "twisting the torso with arms extended"
+  ],
+  [
+   "08-arm-up-arm",
+   "腕を上下に伸ばす",
+   "one arm up and one arm down, reaching"
+  ],
+  [
+   "09-stepping-leg-out",
+   "片足を横に出す",
+   "stepping one leg out to the side with arms open"
+  ],
+  [
+   "10-jumping-arms-legs",
+   "ジャンプ",
+   "jumping with arms and legs spread"
+  ],
+  [
+   "11-walking-briskly-side",
+   "ウォーキング",
+   "walking briskly, side view, arms swinging"
+  ],
+  [
+   "12-taking-deep-breath",
+   "深呼吸",
+   "taking a deep breath, arms rising slowly"
+  ]
+ ],
+ "subject_en": "friendly stick figure with a round white head, black outline, dot eyes and a smile, body and limbs drawn as thick uniform black lines, a single red scarf as accent"
+}
