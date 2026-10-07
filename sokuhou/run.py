@@ -14,6 +14,7 @@ from typing import Callable
 from sokuhou import store
 from sokuhou.sources import (
     akita_kuma,
+    env_capture_kuma,
     env_kuma,
     estat_wage,
     jgrants,
@@ -63,6 +64,14 @@ def check_env_kuma(old, new):
             raise SanityError(f"{key}: update date went backwards")
     if old and len(new["injuries"]["years"]) < len(old["injuries"]["years"]):
         raise SanityError("injury table lost fiscal years")
+
+
+def check_env_capture(old, new):
+    """Provisional figures may be revised, but the table keeps its fiscal years and its update date does not go backwards."""
+    if old and new["updated"] < old["updated"]:
+        raise SanityError("capture table: update date went backwards")
+    if old and len(new["years"]) < len(old["years"]):
+        raise SanityError("capture table lost fiscal years")
 
 
 def check_jgrants(old, new):
@@ -116,6 +125,7 @@ GROUPS: dict[str, list[Source]] = {
         Source("minwage", mhlw_minwage.collect, check_minwage),
         Source("estat_wage", estat_wage.collect, check_estat_wage),
         Source("env_kuma", env_kuma.collect, check_env_kuma),
+        Source("env_capture_kuma", env_capture_kuma.collect, check_env_capture),
         Source("jgrants", jgrants.collect, check_jgrants),
     ],
     # kuma-sokuho.com's municipal sightings: collected several times a day by kuma-live.yml, which then deploys only that site

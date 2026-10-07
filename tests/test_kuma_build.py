@@ -578,5 +578,67 @@ class SourceKeyIsNotThePrefectureTest(unittest.TestCase):
         self.assertIn("空知総合振興局", self.read("live/hokkaido/index.html"))
 
 
+@unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
+class CapturesPagesTest(unittest.TestCase):
+    """The ministry's permitted-captures table: a ranking page, a block on each prefecture page, the feed, and nothing when there is no data."""
+
+    @classmethod
+    def setUpClass(cls):
+        from sokuhou.sources import env_capture_kuma
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.raw = raw_data()
+        cls.raw["notices"] = env_kuma.parse_notices((FIX / "env_kuma_effort12.html").read_text(encoding="utf-8"))
+        cls.caps = env_capture_kuma.parse_captures((FIX / "env_kuma_capture.pdf").read_bytes())
+        cls.caps["source_page"] = "https://www.env.go.jp/nature/choju/effort/effort12/effort12.html"
+        cls.out = Path(cls.tmp.name) / "site"
+        cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, captures=cls.caps)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def read(self, rel):
+        return (self.out / rel).read_text(encoding="utf-8")
+
+    def test_ranking_page_numbers_and_year_names(self):
+        html = self.read("ranking/captures/index.html")
+        self.assertIn("令和7年度の全国のクマ類の許可捕獲数は14,741頭で、秋田県が2,691頭で最も多く", html)
+        self.assertIn("<tr><td>平成20年度</td><td>1,492</td>", html)  # a Heisei year is not called Reiwa 20
+        self.assertNotIn("令和20年度", html)
+        self.assertIn("令和8年度(暫定)", html)
+        self.assertIn("令和8年7月末まで", html)
+        first = html.split("道府県別(令和7年度の多い順)")[1].split("</tr>")[1]
+        self.assertIn("秋田県", first)
+
+    def test_ties_share_a_rank(self):
+        html = self.read("ranking/captures/index.html")
+        self.assertEqual(html.count("<tr><td>28</td>"), 3)  # Nara, Okayama and Shiga all have 2
+
+    def test_tab_and_home_link_exist_only_with_data(self):
+        self.assertIn('href="/ranking/captures/"', self.read("ranking/sightings/index.html"))
+        self.assertIn('href="/ranking/captures/"', self.read("index.html"))
+        with tempfile.TemporaryDirectory() as tmp:
+            files = build.render_site(self.raw, CFG, Path(tmp) / "n", release=True)
+            self.assertNotIn("ranking/captures/index.html", files)
+            self.assertNotIn("ranking/captures", (Path(tmp) / "n" / "ranking" / "sightings" / "index.html").read_text(encoding="utf-8"))
+            self.assertNotIn("許可捕獲数", (Path(tmp) / "n" / "akita" / "index.html").read_text(encoding="utf-8"))
+
+    def test_prefecture_block_with_its_rank_and_an_unlisted_prefecture(self):
+        akita = self.read("akita/index.html")
+        self.assertIn("令和7年度の許可捕獲数は、2,691頭(捕殺2,691頭・非捕殺0頭)で、36道府県中1位でした", akita)
+        self.assertIn("令和8年度は、令和8年7月末までで252頭です", akita)
+        kochi = self.read("kochi/index.html")
+        self.assertIn("環境省の許可捕獲数の表には、高知県は載っていません", kochi)
+        self.assertIn("環境省の許可捕獲数の表には、愛媛県は載っていません", self.read("ehime/index.html"))
+
+    def test_feed_announces_the_update_by_the_ministrys_date(self):
+        feed = self.read("feed.xml")
+        self.assertIn("クマの許可捕獲数を、令和8年7月末まで更新しました(環境省)", feed)
+        self.assertIn("<updated>2026-09-09T00:00:00+09:00</updated>", feed)
+
+    def test_the_site_checker_passes(self):
+        self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
+
+
 if __name__ == "__main__":
     unittest.main()
