@@ -39,20 +39,33 @@ def segments() -> list[dict]:
     return out
 
 
-# Genres whose sales ranking is a good place to look for a gift (genre ids checked against ranking.rakuten.co.jp/daily/<id>/ on 2026-10-07).
-# A genre is asked for alone (the API does not allow genreId together with age or sex).
+# Genres whose sales ranking is a good place to look for a gift.  Ids are Rakuten's own and were read from ranking.rakuten.co.jp/daily/<id>/ on 2026-10-07
+# (the sub-genre tree is on each genre's page); a genre is asked for alone (the API does not allow genreId together with age or sex).
+# (slug, genre id, label, strict, recipient).  `recipient` (default none = an adult) is the person the genre is for: the fit rules in relevance.py drop titles
+# that say ベビー/キッズ/赤ちゃん from an adult's list, so the baby and children's genres name "baby" / "child".  strict=False marks a genre that Rakuten itself makes for presents (出産祝い・ギフト, カタログギフト ...): there the title
+# need not say "gift"; in every other genre a product is shown only when its title says it is a gift (GIFT_HINTS).
 GENRES = [
-    ("sweets", 551167, "スイーツ・お菓子"), ("flower", 100005, "花・ガーデン・DIY"), ("jewelry", 216129, "ジュエリー・アクセサリー"),
-    ("bag", 216131, "バッグ・小物・ブランド雑貨"), ("watch", 558929, "腕時計"), ("sake", 510901, "日本酒・焼酎"),
-    ("wine", 100317, "ワイン"), ("interior", 100804, "インテリア・寝具・収納"), ("kitchen", 558944, "キッチン用品・食器・調理器具"),
-    ("beauty", 100939, "美容・コスメ・香水"),
+    # made for presents
+    ("baby-gift", 508445, "出産祝い・ギフト", False, "baby"), ("catalog", 566732, "カタログギフト", False), ("ecatalog", 568914, "eカタログギフト", False),
+    ("sweets-set", 568410, "各種スイーツ・お菓子セット", False), ("hatsu-sekku", 566487, "雛祭り・端午の節句", False, "baby"),
+    ("jewelry-pair", 301966, "ペアアクセサリー", False), ("bridal", 551853, "ブライダルジュエリー・アクセサリー", False), ("watch-pair", 302123, "ペアウォッチ", False),
+    # everyday genres where gifts sit among the sales: only products whose title says gift
+    ("sweets", 551167, "スイーツ・お菓子"), ("cookies", 201153, "クッキー・焼き菓子"), ("chocolate", 201136, "チョコレート"), ("wagashi", 509708, "和菓子"),
+    ("flower", 113084, "花・観葉植物"), ("jewelry", 216129, "ジュエリー・アクセサリー"), ("watch", 558929, "腕時計"), ("bag", 216131, "バッグ・小物・ブランド雑貨"),
+    ("scarf", 560100, "マフラー・スカーフ"), ("handkerchief", 502464, "ハンカチ・ハンドタオル"), ("perfume", 111120, "香水・フレグランス"), ("beauty", 100939, "美容・コスメ・香水"),
+    ("tableware", 566114, "食器・カトラリー・グラス"), ("coffee-tea", 566115, "コーヒー・お茶用品"), ("kitchen", 558944, "キッチン用品・食器・調理器具"),
+    ("towel", 100664, "タオル"), ("bedding", 215566, "寝具"), ("decor", 100863, "インテリア小物・置物"), ("interior", 100804, "インテリア・寝具・収納"),
+    ("sake", 510901, "日本酒・焼酎"), ("wine", 100317, "ワイン"), ("whisky", 100330, "ウイスキー"),
+    ("plush", 566384, "ぬいぐるみ・人形"), ("baby-toy", 201591, "ベビー向けおもちゃ", True, "baby"), ("edu-toy", 201603, "知育玩具・学習玩具", True, "child"),
 ]
-# Left out after the first real snapshot (2026-10-07): beer & spirits (its gift-like places are the same wines as in ワイン), fashion, hobby, toys and baby goods. Their sales rankings are everyday clothes, seasonal decorations
-# and nappies whose titles merely contain the word プレゼント; nothing in them reads as a present.
+# Left out after reading real data (2026-10-07): the top level of fashion, hobby, toys and baby goods (everyday clothes, seasonal decoration, nappies whose titles merely
+# contain the word プレゼント), and beer & spirits (its gift-like places are the same wines as in ワイン).  A first version also dropped the baby genre because
+# the first 30 places were nappies; that was wrong: Rakuten has 出産祝い・ギフト, which is now fetched.
 
 
 def genre_segments() -> list[dict]:
-    return [{"slug": f"g-{slug}", "genre": gid, "label": label, "kind": "genre"} for slug, gid, label in GENRES]
+    return [{"slug": f"g-{g[0]}", "genre": g[1], "label": g[2], "kind": "genre", "strict": g[3] if len(g) > 3 else True,
+             "recipient": g[4] if len(g) > 4 else None} for g in GENRES]
 
 
 def all_segments() -> list[dict]:
@@ -99,7 +112,7 @@ def _ranked(entry: list) -> dict[str, int]:
 
 
 def update(store: dict | None, fresh: dict[str, list[dict]], today: date, keep=None, depth: int = PAGES * PLACES) -> dict:
-    """Merge today's snapshots into the store.  `keep` (a function of one item) decides which products are stored at all: the site only ever shows
+    """Merge today's snapshots into the store.  `keep` (a function of the segment slug and one item) decides which products are stored at all: the site only ever shows
     gift-like products (shown()), so only those are kept, each with its real Rakuten place, and the history holds [code, place] pairs of them.
     A segment that failed to fetch today (absent from `fresh`) keeps its previous data untouched."""
     store = dict(store or {})
@@ -107,7 +120,7 @@ def update(store: dict | None, fresh: dict[str, list[dict]], today: date, keep=N
     for slug, raw_items in fresh.items():
         if not raw_items:                       # the fetch failed or came back empty: keep what we had
             continue
-        items = [it for it in raw_items if keep is None or keep(it)]
+        items = [it for it in raw_items if keep is None or keep(slug, it)]
         old = segs.get(slug, {})
         history = dict(old.get("history") or {})
         ordered = sorted(items, key=lambda i: i["rank"])
@@ -174,7 +187,7 @@ BULK = ("1ケース", "ケース販売", "ケース(", "紙パック", "パッ�
 MAX_PRICE = 30000
 
 
-def shown(item: dict, filters: dict) -> bool:
+def shown(item: dict, filters: dict, strict: bool = True, recipient: str | None = None) -> bool:
     """A ranked product the page may show: for sale, above the site's minimum and below MAX_PRICE, none of the site's ng words, not a daily
     necessity or a bulk pack, a title that says it is a gift (GIFT_HINTS), and passing the same memorial / adult-only rules as the gift pages."""
     if not item.get("available", True) or not filters.get("min_price", 0) <= item.get("price", 0) <= MAX_PRICE:
@@ -182,9 +195,9 @@ def shown(item: dict, filters: dict) -> bool:
     name = item["name"]
     if any(w and w in name for w in filters.get("ng_words", [])) or any(w in name for w in DAILY) or any(w in name for w in BULK):
         return False
-    if not any(w in name for w in GIFT_HINTS):
+    if strict and not any(w in name for w in GIFT_HINTS):
         return False
-    return relevance.fits(name, None)
+    return relevance.fits(name, recipient)
 
 
 def view(store: dict | None, filters: dict, min_items: int = 8) -> dict | None:
@@ -196,7 +209,8 @@ def view(store: dict | None, filters: dict, min_items: int = 8) -> dict | None:
     for slug, s in (store.get("segments") or {}).items():
         if slug not in SEGMENTS:
             continue
-        items = [it for it in s.get("items", []) if shown(it, filters)]
+        strict = SEGMENTS[slug].get("strict", True)
+        items = [it for it in s.get("items", []) if shown(it, filters, strict, SEGMENTS[slug].get("recipient"))]
         if len(items) < min_items:
             continue
         mv = movers(s)
@@ -263,7 +277,7 @@ def main() -> None:
     out = Path(a.out)
     from sites.yorokobu import content as ct
     filters = ct.load()["filters"]
-    store = update(load(out), fresh, now.date(), keep=lambda it: shown(it, filters))
+    store = update(load(out), fresh, now.date(), keep=lambda slug, it: shown(it, filters, SEGMENTS[slug].get("strict", True), SEGMENTS[slug].get("recipient")))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(store, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     kept = {k: len(v["items"]) for k, v in store["segments"].items()}
