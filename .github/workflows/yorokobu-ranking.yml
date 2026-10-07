@@ -13,9 +13,9 @@ permissions:
   contents: write
 
 # Own group, NOT the deploy's `rakuten-api`: GitHub keeps only ONE waiting run per group and cancels an older waiting run when a newer one arrives,
-# so a push cancelled a waiting ranking run (seen on 2026-10-07).  Ranking and deploy therefore run side by side; the Rakuten limit (one application ID,
-# about one request a second) is respected by the ranking's slow pace (one request every 2.5 s, set in ranking.py) and by the deploy's own retries.
-# If a deploy ever fails with HTTP 429, make the ranking wait for it again.
+# so a push cancelled a waiting ranking run (seen on 2026-10-07).  Ranking and deploy therefore run side by side without waiting for each other.  The shared
+# Rakuten limit (one application ID, about one request a second) is kept by the ranking's slow pace: one request every 12 s (REQUEST_GAP in ranking.py)
+# is 0.08 requests/s, which together with a deploy's fetch (about 0.9/s) stays within it.  A run takes about 30 minutes.
 concurrency:
   group: yorokobu-ranking
   cancel-in-progress: false
@@ -23,7 +23,7 @@ concurrency:
 jobs:
   ranking:
     runs-on: ubuntu-latest
-    timeout-minutes: 30   # about 160 requests at one every 2.5 s (7 minutes) plus the commit
+    timeout-minutes: 60   # about 160 requests at one every 12 s (32 minutes) plus the commit
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
