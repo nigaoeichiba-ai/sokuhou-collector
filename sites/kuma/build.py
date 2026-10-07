@@ -722,7 +722,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     any_live = bool(live or d["live_prefs"])
     nav = [x for x in BASE_NAV if x[1] != "/live/" or any_live]
     if any_live:
-        nav = nav[:-1] + [("週ごとのまとめ", "/digest/", "/digest/")] + nav[-1:]
+        nav = nav[:-1] + [("地図", "/map/", "/map/"), ("週ごとのまとめ", "/digest/", "/digest/")] + nav[-1:]
     if cfg.get("rakuten_affiliate_id"):
         nav = nav[:-1] + [("グッズ(PR)", "/goods/", "/goods/")] + nav[-1:]
     SITE = {**SITE, "nav": nav}
@@ -750,7 +750,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         pages["map/index.html"] = live_mod.map_page(page_fn, d, lv)
         pages["map/points.json"] = live_mod.points_json(lv)
         if live_mod.licensed_sources(lv):
-            pages["data/index.html"] = live_mod.data_page(page_fn, d, lv)
+            pages["data/index.html"] = live_mod.data_page(page_fn, d, lv, cfg["site_url"].rstrip("/"))
             pages["data/" + live_mod.CSV_NAME] = live_mod.csv_text(lv)
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview, links)
