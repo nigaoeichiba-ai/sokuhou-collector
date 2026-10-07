@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-07",
+ "slug": "health-icons-flat",
+ "title": "健康・医療のアイコン",
+ "genre": "life",
+ "touch": "flat",
+ "lead": "体温計、マスク、手洗い、薬、聴診器など、健康と医療のアイコン12点。院内掲示や健康だよりに。",
+ "tags": [
+  "健康",
+  "医療",
+  "体温計",
+  "マスク",
+  "手洗い",
+  "薬",
+  "病院",
+  "予防"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "health-icons-flat-thermometer",
+   "file": "health-icons-flat-thermometer.webp",
+   "title": "体温計",
+   "desc": "体温計のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "健康・医療のアイコン",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 451,
+   "h": 391
+  },
+  {
+   "id": "health-icons-flat-mask",
+   "file": "health-icons-flat-mask.webp",
+   "title": "マスク",
+   "desc": "マスクのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "健康・医療のアイコン",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 482,
+   "h": 340
+  },
+  {
+   "id": "health-icons-flat-handwash",
+   "file": "health-icons-flat-handwash.webp",
+   "title": "手洗い",
+   "desc": "手洗いのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "手洗い",
+    "健康・医療のアイコン",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 460,
+   "h": 506
+  },
+  {
+   "id": "health-icons-flat-pill",
+   "file": "health-icons-flat-pill.webp",
+   "title": "くすり",
+   "desc": "くすりのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "健康・医療のアイコン",
+    "くすり",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 424,
+   "h": 453
+  },
+  {
+   "id": "health-icons-flat-stethoscope",
+   "file": "health-icons-flat-stethoscope.webp",
+   "title": "聴診器",
+   "desc": "聴診器のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "健康・医療のアイコン",
+    "聴診器",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 436,
+   "h": 477
+  },
+  {
+   "id": "health-icons-flat-bandage",
+   "file": "health-icons-flat-bandage.webp",
+   "title": "ばんそうこう",
+   "desc": "ばんそうこうのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "健康・医療のアイコン",
+    "ばんそうこう",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 402,
+   "h": 402
+  },
+  {
+   "id": "health-icons-flat-syringe",
+   "file": "health-icons-flat-syringe.webp",
+   "title": "注射器",
+   "desc": "注射器のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "健康・医療のアイコン",
+    "注射器",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 400,
+   "h": 415
+  },
+  {
+   "id": "health-icons-flat-heartbeat",
+   "file": "health-icons-flat-heartbeat.webp",
+   "title": "心拍",
+   "desc": "心拍のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "健康・医療のアイコン",
+    "心拍",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 419,
+   "h": 371
+  },
+  {
+   "id": "health-icons-flat-toothbrush",
+   "file": "health-icons-flat-toothbrush.webp",
+   "title": "歯みがき",
+   "desc": "歯みがきのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "健康・医療のアイコン",
+    "歯みがき",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 328,
+   "h": 436
+  },
+  {
+   "id": "health-icons-flat-apple",
+   "file": "health-icons-flat-apple.webp",
+   "title": "バランスのよい食事",
+   "desc": "バランスのよい食事のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "健康・医療のアイコン",
+    "バランスのよい食事",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 452,
+   "h": 416
+  },
+  {
+   "id": "health-icons-flat-sleep",
+   "file": "health-icons-flat-sleep.webp",
+   "title": "睡眠",
+   "desc": "睡眠のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "健康・医療のアイコン",
+    "睡眠",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 407,
+   "h": 400
+  },
+  {
+   "id": "health-icons-flat-walk",
+   "file": "health-icons-flat-walk.webp",
+   "title": "ウォーキングシューズ",
+   "desc": "ウォーキングシューズのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "健康",
+    "医療",
+    "体温計",
+    "マスク",
+    "健康・医療のアイコン",
+    "ウォーキングシューズ",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 486,
+   "h": 399
+  }
+ ]
+}

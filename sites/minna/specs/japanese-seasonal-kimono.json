@@ -82,5 +82,6 @@
    "The kimono woman sits in seiza posture on a plain mat, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": []
 }

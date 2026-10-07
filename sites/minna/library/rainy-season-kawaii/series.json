@@ -1,0 +1,241 @@
+{
+ "added": "2026-10-07",
+ "slug": "rainy-season-kawaii",
+ "title": "梅雨のイラスト",
+ "genre": "season",
+ "touch": "kawaii",
+ "lead": "かえる、かたつむり、てるてる坊主、あじさい。雨の日が楽しくなる、梅雨のイラスト12点。",
+ "tags": [
+  "梅雨",
+  "雨",
+  "かえる",
+  "かたつむり",
+  "てるてる坊主",
+  "あじさい",
+  "傘",
+  "6月"
+ ],
+ "subject": "",
+ "season": {
+  "from": "05-15",
+  "to": "07-15"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "rainy-season-kawaii-frog-umbrella",
+   "file": "rainy-season-kawaii-frog-umbrella.webp",
+   "title": "かさをさすかえる",
+   "desc": "かさをさすかえるのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "梅雨のイラスト",
+    "かさをさすかえる",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 409,
+   "h": 493
+  },
+  {
+   "id": "rainy-season-kawaii-snail",
+   "file": "rainy-season-kawaii-snail.webp",
+   "title": "かたつむり",
+   "desc": "かたつむりのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "梅雨のイラスト",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 487,
+   "h": 386
+  },
+  {
+   "id": "rainy-season-kawaii-teruteru",
+   "file": "rainy-season-kawaii-teruteru.webp",
+   "title": "てるてる坊主",
+   "desc": "てるてる坊主のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "てるてる坊主",
+    "梅雨のイラスト",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 324,
+   "h": 525
+  },
+  {
+   "id": "rainy-season-kawaii-hydrangea",
+   "file": "rainy-season-kawaii-hydrangea.webp",
+   "title": "あじさい",
+   "desc": "あじさいのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "あじさい",
+    "梅雨のイラスト",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 477,
+   "h": 426
+  },
+  {
+   "id": "rainy-season-kawaii-umbrella",
+   "file": "rainy-season-kawaii-umbrella.webp",
+   "title": "赤いかさ",
+   "desc": "赤いかさのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "梅雨のイラスト",
+    "赤いかさ",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 444,
+   "h": 428
+  },
+  {
+   "id": "rainy-season-kawaii-boots",
+   "file": "rainy-season-kawaii-boots.webp",
+   "title": "ながぐつ",
+   "desc": "ながぐつのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "梅雨のイラスト",
+    "ながぐつ",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 501,
+   "h": 408
+  },
+  {
+   "id": "rainy-season-kawaii-raincoat",
+   "file": "rainy-season-kawaii-raincoat.webp",
+   "title": "レインコートのひよこ",
+   "desc": "レインコートのひよこのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "梅雨のイラスト",
+    "レインコートのひよこ",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 387,
+   "h": 502
+  },
+  {
+   "id": "rainy-season-kawaii-cloud",
+   "file": "rainy-season-kawaii-cloud.webp",
+   "title": "雨雲",
+   "desc": "雨雲のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "梅雨のイラスト",
+    "雨雲",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 481,
+   "h": 448
+  },
+  {
+   "id": "rainy-season-kawaii-cat",
+   "file": "rainy-season-kawaii-cat.webp",
+   "title": "かさをもつねこ",
+   "desc": "かさをもつねこのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "梅雨のイラスト",
+    "かさをもつねこ",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 484,
+   "h": 544
+  },
+  {
+   "id": "rainy-season-kawaii-puddle",
+   "file": "rainy-season-kawaii-puddle.webp",
+   "title": "水たまり",
+   "desc": "水たまりのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "梅雨のイラスト",
+    "水たまり",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 476,
+   "h": 331
+  },
+  {
+   "id": "rainy-season-kawaii-rainbow",
+   "file": "rainy-season-kawaii-rainbow.webp",
+   "title": "雨あがりの虹",
+   "desc": "雨あがりの虹のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "梅雨のイラスト",
+    "雨あがりの虹",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 515,
+   "h": 379
+  },
+  {
+   "id": "rainy-season-kawaii-duck",
+   "file": "rainy-season-kawaii-duck.webp",
+   "title": "あひるの雨あそび",
+   "desc": "あひるの雨あそびのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "梅雨",
+    "雨",
+    "かえる",
+    "かたつむり",
+    "梅雨のイラスト",
+    "あひるの雨あそび",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 483,
+   "h": 436
+  }
+ ]
+}

@@ -220,7 +220,7 @@ def slice_sheet(path: Path, cols: int | None = None, rows: int | None = None, ke
         chroma = (max(key) - min(key)) > 120             # a key colour never occurs inside the art, so enclosed pockets can be removed
         rgba, finfo = flood_alpha(rgb, pockets=holes or chroma)
         info.update(method="flood", **finfo)
-        if finfo["bg_fraction"] < 0.35:
+        if finfo["bg_fraction"] < 0.25:
             info["count_problem"] = f"background could not be separated (only {finfo['bg_fraction']:.0%} of the sheet is background; outline too close to the background colour?)"
     else:
         rgba = key_to_alpha(rgb, key)

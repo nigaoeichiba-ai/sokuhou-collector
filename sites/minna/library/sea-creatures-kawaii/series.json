@@ -1,0 +1,239 @@
+{
+ "added": "2026-10-07",
+ "slug": "sea-creatures-kawaii",
+ "title": "うみのいきもの",
+ "genre": "animals",
+ "touch": "kawaii",
+ "lead": "さかな、たこ、かに、くらげ、イルカなど、海のいきものを12種類。水族館のお知らせや夏のおたよりに。",
+ "tags": [
+  "魚",
+  "さかな",
+  "海",
+  "水族館",
+  "たこ",
+  "いか",
+  "かに",
+  "くらげ",
+  "イルカ"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "sea-creatures-kawaii-fish",
+   "file": "sea-creatures-kawaii-fish.webp",
+   "title": "さかな",
+   "desc": "さかなのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "うみのいきもの",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 502,
+   "h": 418
+  },
+  {
+   "id": "sea-creatures-kawaii-octopus",
+   "file": "sea-creatures-kawaii-octopus.webp",
+   "title": "たこ",
+   "desc": "たこのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "たこ",
+    "うみのいきもの",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 459,
+   "h": 454
+  },
+  {
+   "id": "sea-creatures-kawaii-squid",
+   "file": "sea-creatures-kawaii-squid.webp",
+   "title": "いか",
+   "desc": "いかのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "いか",
+    "うみのいきもの",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 497,
+   "h": 509
+  },
+  {
+   "id": "sea-creatures-kawaii-crab",
+   "file": "sea-creatures-kawaii-crab.webp",
+   "title": "かに",
+   "desc": "かにのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "かに",
+    "うみのいきもの",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 503,
+   "h": 412
+  },
+  {
+   "id": "sea-creatures-kawaii-jellyfish",
+   "file": "sea-creatures-kawaii-jellyfish.webp",
+   "title": "くらげ",
+   "desc": "くらげのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "くらげ",
+    "うみのいきもの",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 420,
+   "h": 471
+  },
+  {
+   "id": "sea-creatures-kawaii-dolphin",
+   "file": "sea-creatures-kawaii-dolphin.webp",
+   "title": "イルカ",
+   "desc": "イルカのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "イルカ",
+    "うみのいきもの",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 497,
+   "h": 464
+  },
+  {
+   "id": "sea-creatures-kawaii-turtle",
+   "file": "sea-creatures-kawaii-turtle.webp",
+   "title": "うみがめ",
+   "desc": "うみがめのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "うみのいきもの",
+    "うみがめ",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 469,
+   "h": 402
+  },
+  {
+   "id": "sea-creatures-kawaii-seal",
+   "file": "sea-creatures-kawaii-seal.webp",
+   "title": "あざらし",
+   "desc": "あざらしのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "うみのいきもの",
+    "あざらし",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 516,
+   "h": 428
+  },
+  {
+   "id": "sea-creatures-kawaii-shrimp",
+   "file": "sea-creatures-kawaii-shrimp.webp",
+   "title": "えび",
+   "desc": "えびのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "うみのいきもの",
+    "えび",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 470,
+   "h": 481
+  },
+  {
+   "id": "sea-creatures-kawaii-seahorse",
+   "file": "sea-creatures-kawaii-seahorse.webp",
+   "title": "たつのおとしご",
+   "desc": "たつのおとしごのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "うみのいきもの",
+    "たつのおとしご",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 348,
+   "h": 501
+  },
+  {
+   "id": "sea-creatures-kawaii-clownfish",
+   "file": "sea-creatures-kawaii-clownfish.webp",
+   "title": "かくれクマノミふうの魚",
+   "desc": "かくれクマノミふうの魚のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "うみのいきもの",
+    "かくれクマノミふうの魚",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 504,
+   "h": 409
+  },
+  {
+   "id": "sea-creatures-kawaii-shark",
+   "file": "sea-creatures-kawaii-shark.webp",
+   "title": "ちいさなサメ",
+   "desc": "ちいさなサメのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "魚",
+    "さかな",
+    "海",
+    "水族館",
+    "うみのいきもの",
+    "ちいさなサメ",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 495,
+   "h": 420
+  }
+ ]
+}

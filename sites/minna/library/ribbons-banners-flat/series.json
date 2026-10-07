@@ -1,0 +1,239 @@
+{
+ "added": "2026-10-07",
+ "slug": "ribbons-banners-flat",
+ "title": "リボン・見出しかざり",
+ "genre": "deco",
+ "touch": "flat",
+ "lead": "リボン、バナー、ラベル、ふきだし風の見出しかざり12点。文字を入れて、見出しやタイトルに。中は空です。",
+ "tags": [
+  "リボン",
+  "見出し",
+  "バナー",
+  "かざり",
+  "タイトル",
+  "吹き出し",
+  "ラベル"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "ribbons-banners-flat-ribbon-red",
+   "file": "ribbons-banners-flat-ribbon-red.webp",
+   "title": "赤いリボン",
+   "desc": "赤いリボンのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "リボン・見出しかざり",
+    "赤いリボン",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 504,
+   "h": 247
+  },
+  {
+   "id": "ribbons-banners-flat-ribbon-blue",
+   "file": "ribbons-banners-flat-ribbon-blue.webp",
+   "title": "青いリボン",
+   "desc": "青いリボンのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "リボン・見出しかざり",
+    "青いリボン",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 500,
+   "h": 253
+  },
+  {
+   "id": "ribbons-banners-flat-label",
+   "file": "ribbons-banners-flat-label.webp",
+   "title": "ラベル",
+   "desc": "ラベルのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "ラベル",
+    "リボン・見出しかざり",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 474,
+   "h": 319
+  },
+  {
+   "id": "ribbons-banners-flat-banner",
+   "file": "ribbons-banners-flat-banner.webp",
+   "title": "旗のバナー",
+   "desc": "旗のバナーのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "リボン・見出しかざり",
+    "旗のバナー",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 469,
+   "h": 437
+  },
+  {
+   "id": "ribbons-banners-flat-scroll",
+   "file": "ribbons-banners-flat-scroll.webp",
+   "title": "巻物",
+   "desc": "巻物のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "リボン・見出しかざり",
+    "巻物",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 424,
+   "h": 474
+  },
+  {
+   "id": "ribbons-banners-flat-tag",
+   "file": "ribbons-banners-flat-tag.webp",
+   "title": "値札",
+   "desc": "値札のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "リボン・見出しかざり",
+    "値札",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 318,
+   "h": 556
+  },
+  {
+   "id": "ribbons-banners-flat-badge",
+   "file": "ribbons-banners-flat-badge.webp",
+   "title": "バッジ",
+   "desc": "バッジのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "リボン・見出しかざり",
+    "バッジ",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 431,
+   "h": 452
+  },
+  {
+   "id": "ribbons-banners-flat-stamp",
+   "file": "ribbons-banners-flat-stamp.webp",
+   "title": "スタンプ枠",
+   "desc": "スタンプ枠のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "リボン・見出しかざり",
+    "スタンプ枠",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 445,
+   "h": 447
+  },
+  {
+   "id": "ribbons-banners-flat-heading",
+   "file": "ribbons-banners-flat-heading.webp",
+   "title": "見出しのリボン",
+   "desc": "見出しのリボンのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "リボン・見出しかざり",
+    "見出しのリボン",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 531,
+   "h": 236
+  },
+  {
+   "id": "ribbons-banners-flat-bunting",
+   "file": "ribbons-banners-flat-bunting.webp",
+   "title": "ガーランド",
+   "desc": "ガーランドのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "リボン・見出しかざり",
+    "ガーランド",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 498,
+   "h": 202
+  },
+  {
+   "id": "ribbons-banners-flat-cloud",
+   "file": "ribbons-banners-flat-cloud.webp",
+   "title": "雲のラベル",
+   "desc": "雲のラベルのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "ラベル",
+    "リボン・見出しかざり",
+    "雲のラベル",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 507,
+   "h": 395
+  },
+  {
+   "id": "ribbons-banners-flat-star",
+   "file": "ribbons-banners-flat-star.webp",
+   "title": "星のバッジ",
+   "desc": "星のバッジのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "リボン",
+    "見出し",
+    "バナー",
+    "かざり",
+    "リボン・見出しかざり",
+    "星のバッジ",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 428,
+   "h": 415
+  }
+ ]
+}
