@@ -1,7 +1,7 @@
 {
  "as_of": "2026-10-06",
  "credit": "出典: 福島県「福島県クマ目撃マップ」(https://www.pref.fukushima.lg.jp/sec/16035b/tukinowaguma-mokugeki.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、福島県のページでご確認ください)",
- "fetched_at": "2026-10-07T15:34:51.862865+09:00",
+ "fetched_at": "2026-10-07T22:30:35.297119+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
@@ -14,7 +14,7 @@
    "10": 6,
    "4": 112,
    "5": 192,
-   "6": 247,
+   "6": 246,
    "7": 115,
    "8": 77,
    "9": 41
@@ -271,7 +271,6 @@
     "R08": {
      "10": 1,
      "5": 1,
-     "6": 1,
      "8": 1
     }
    }
@@ -634,7 +633,7 @@
  "source": "fukushima",
  "source_file": "https://services6.arcgis.com/M9nrgnB1gu8YnLFM/arcgis/rest/services/%E7%A6%8F%E5%B3%B6%E7%9C%8C%E3%82%AF%E3%83%9E%E7%9B%AE%E6%92%83%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88%E3%83%AC%E3%82%A4%E3%83%A4%E3%83%BC_202606_view/FeatureServer/0",
  "source_page": "https://www.pref.fukushima.lg.jp/sec/16035b/tukinowaguma-mokugeki.html",
- "total_fy": 790,
+ "total_fy": 789,
  "unparsed": 0,
  "update_note": "福島県が、ほぼ毎日更新します。最新の記録は、更新時点から遅れます。件数は、クマの目撃のほか、痕跡や被害の報告を含みます"
 }

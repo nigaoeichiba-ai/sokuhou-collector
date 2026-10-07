@@ -1,7 +1,7 @@
 {
  "as_of": "2026-10-07",
  "credit": "出典: 新潟県「にいがたクマ出没マップ」(https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、新潟県のページでご確認ください)",
- "fetched_at": "2026-10-07T15:34:54.109638+09:00",
+ "fetched_at": "2026-10-07T22:30:37.899296+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
@@ -11,7 +11,7 @@
    "3": 15
   },
   "R08": {
-   "10": 7,
+   "10": 9,
    "4": 67,
    "5": 161,
    "6": 218,
@@ -331,7 +331,7 @@
    }
   },
   "魚沼市": {
-   "latest": "2026-10-01",
+   "latest": "2026-10-07",
    "monthly": {
     "R07": {
      "1": 2,
@@ -339,7 +339,7 @@
      "3": 5
     },
     "R08": {
-     "10": 1,
+     "10": 3,
      "4": 4,
      "5": 10,
      "6": 5,
@@ -353,7 +353,7 @@
  "source": "niigata",
  "source_file": "https://services6.arcgis.com/SKz58fvdFlaEB35q/arcgis/rest/services/survey123_08d14b98657b47309b868f49602375c8_results/FeatureServer/0",
  "source_page": "https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html",
- "total_fy": 676,
+ "total_fy": 678,
  "unparsed": 0,
  "update_note": "新潟県が、ほぼ毎日更新します。最新の記録は、更新時点から遅れます。件数は、クマの目撃のほか、痕跡や人身被害の報告を含みます"
 }
