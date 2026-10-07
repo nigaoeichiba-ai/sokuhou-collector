@@ -23,6 +23,7 @@ HERE = Path(__file__).resolve().parent
 JST = timezone(timedelta(hours=9))
 HISTORY_DAYS = 45
 PLACES = 30                      # places per API page
+REQUEST_GAP = 2.5                # seconds between requests: the deploy fetches from the same application ID at the same time (limit about 1 request/s)
 PAGES = 4                        # pages fetched per segment: the top 120 (gift-like products are rare near the top of a sales ranking)
 
 AGES = (10, 20, 30, 40, 50)
@@ -269,7 +270,7 @@ def main() -> None:
     if not (app and key):
         sys.exit("RAKUTEN_APP_ID / RAKUTEN_ACCESS_KEY are not set")
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
-    client = rakuten.Client(app, key, cfg["site_url"].rstrip("/") + "/", affiliate_id=None)
+    client = rakuten.Client(app, key, cfg["site_url"].rstrip("/") + "/", affiliate_id=None, min_interval=REQUEST_GAP)
     now = datetime.now(JST)
     fresh = collect(client, now)
     if not any(fresh.values()):
