@@ -23,7 +23,7 @@ HERE = Path(__file__).resolve().parent
 JST = timezone(timedelta(hours=9))
 HISTORY_DAYS = 45
 PLACES = 30                      # places per API page
-REQUEST_GAP = 2.5                # seconds between requests: the deploy fetches from the same application ID at the same time (limit about 1 request/s)
+REQUEST_GAP = 12.0               # seconds between requests (0.08/s): the deploy fetches from the same application ID at about 0.9/s, and the shared limit is about 1/s, so a ranking run beside a deploy stays within it
 PAGES = 4                        # pages fetched per segment: the top 120 (gift-like products are rare near the top of a sales ranking)
 
 AGES = (10, 20, 30, 40, 50)
