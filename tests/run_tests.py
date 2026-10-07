@@ -30,13 +30,19 @@ def flatten(suite):
             yield t
 
 
+def module_of(test_id: str) -> str:
+    """'tests.test_minna_build.MinnaBuildTest.test_x' -> 'test_minna_build'.  A module that fails to import (a missing library in another project's
+    tests) is reported as 'tests.test_minna_factory'; it must still be recognised as that project's, or it would break every other project's run."""
+    return next((p for p in test_id.split(".") if p.startswith("test_")), test_id)
+
+
 def build(site: str | None) -> unittest.TestSuite:
     sys.path.insert(0, str(ROOT))
     found = unittest.TestLoader().discover(str(ROOT / "tests"), top_level_dir=str(ROOT))
     skip = [p for name, pats in OWNED.items() if site is not None and name != site for p in pats]
     out = unittest.TestSuite()
     for t in flatten(found):
-        module = t.id().split(".")[-3] if t.id().count(".") >= 2 else t.id()
+        module = module_of(t.id())
         if any(fnmatch.fnmatch(module, p) for p in skip):
             continue
         out.addTest(t)
