@@ -1,4 +1,5 @@
 """Print versions (A4 coloring pages, postcard-size New Year items) are built, are real PDFs and are linked only where they make sense."""
+import re
 import tempfile
 import unittest
 from datetime import date
@@ -95,6 +96,17 @@ class CalendarBuildTest(unittest.TestCase):
                 self.assertTrue((out / rel).read_bytes().startswith(b"%PDF"))
             self.assertGreater((out / "files/calendar/2027-hitsuji-all.pdf").stat().st_size, (out / "files/calendar/2027-hitsuji-01.pdf").stat().st_size * 6)
             # a different build date picks the right year: before September it is this year
+            for kind in ("shojo", "nafuda", "jikanwari"):
+                self.assertIn(f"printables/{kind}/index.html", files)
+                page_html = (out / "printables" / kind / "index.html").read_text(encoding="utf-8")
+                links = re.findall(r'href="(/files/printables/[^"]+\.pdf)"', page_html)
+                self.assertGreaterEqual(len(links), 6, kind)
+                for ln in links:
+                    self.assertTrue((out / ln.lstrip("/")).read_bytes().startswith(b"%PDF"), ln)
+            hub = (out / "printables" / "index.html").read_text(encoding="utf-8")
+            for kind in ("shojo", "nafuda", "jikanwari"):
+                self.assertIn(f"/printables/{kind}/", hub)
+            self.assertIn("/printables/", (out / "index.html").read_text(encoding="utf-8"))      # the home page points to the print corner
             self.assertEqual(build.calendar_year(date(2026, 8, 31)), 2026)
             self.assertEqual(build.calendar_year(date(2026, 9, 1)), 2027)
         finally:
