@@ -612,3 +612,4 @@ header.site .wrap { gap: 10px; flex-wrap: wrap; }
 .cal-card img { width: 100%; height: auto; border: 1px solid #e8dcc0; border-radius: 6px; }
 .cal-card b { font-weight: 900; }
 .cal-card small { color: var(--muted); }
+.cal-grid.wide { grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }

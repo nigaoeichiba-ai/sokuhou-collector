@@ -1,0 +1,276 @@
+{
+ "added": "2026-10-07",
+ "slug": "doctor-doodle",
+ "title": "お医者さんのポーズ集",
+ "genre": "life",
+ "touch": "loose",
+ "lead": "お医者さんのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "tags": [
+  "人物",
+  "イラスト",
+  "お医者さん",
+  "医師",
+  "お医者さん",
+  "医療",
+  "病院",
+  "診察",
+  "手書き"
+ ],
+ "subject": "お医者さん",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "doctor-doodle-01-holding-stethoscope-chest",
+   "file": "doctor-doodle-01-holding-stethoscope-chest.webp",
+   "title": "診察する(お医者さん)",
+   "desc": "診察する(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "診察する",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 246,
+   "h": 503
+  },
+  {
+   "id": "doctor-doodle-02-raised-explaining-open",
+   "file": "doctor-doodle-02-raised-explaining-open.webp",
+   "title": "説明する(お医者さん)",
+   "desc": "説明する(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "説明する",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 278,
+   "h": 501
+  },
+  {
+   "id": "doctor-doodle-03-holding-clipboard-other",
+   "file": "doctor-doodle-03-holding-clipboard-other.webp",
+   "title": "考える(お医者さん)",
+   "desc": "考える(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "考える",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 241,
+   "h": 501
+  },
+  {
+   "id": "doctor-doodle-04-smiling-nodding-arms",
+   "file": "doctor-doodle-04-smiling-nodding-arms.webp",
+   "title": "うなずく笑顔(お医者さん)",
+   "desc": "うなずく笑顔(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "うなずく笑顔",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 215,
+   "h": 503
+  },
+  {
+   "id": "doctor-doodle-05-bowing-politely",
+   "file": "doctor-doodle-05-bowing-politely.webp",
+   "title": "お辞儀(お医者さん)",
+   "desc": "お辞儀(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "お辞儀",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 185,
+   "h": 496
+  },
+  {
+   "id": "doctor-doodle-06-pointing-side-index",
+   "file": "doctor-doodle-06-pointing-side-index.webp",
+   "title": "指さし(お医者さん)",
+   "desc": "指さし(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "指さし",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 287,
+   "h": 502
+  },
+  {
+   "id": "doctor-doodle-07-wearing-surgical-mask",
+   "file": "doctor-doodle-07-wearing-surgical-mask.webp",
+   "title": "マスク姿(お医者さん)",
+   "desc": "マスク姿(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "マスク姿",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 209,
+   "h": 477
+  },
+  {
+   "id": "doctor-doodle-08-palms-forward-reassuring",
+   "file": "doctor-doodle-08-palms-forward-reassuring.webp",
+   "title": "大丈夫と励ます(お医者さん)",
+   "desc": "大丈夫と励ます(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "大丈夫と励ます",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 284,
+   "h": 475
+  },
+  {
+   "id": "doctor-doodle-09-holding-simple-small",
+   "file": "doctor-doodle-09-holding-simple-small.webp",
+   "title": "注射器を持ち上げる(お医者さん)",
+   "desc": "注射器を持ち上げる(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "注射器を持ち上げる",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 266,
+   "h": 478
+  },
+  {
+   "id": "doctor-doodle-10-sitting-typing-laptop",
+   "file": "doctor-doodle-10-sitting-typing-laptop.webp",
+   "title": "パソコン入力(お医者さん)",
+   "desc": "パソコン入力(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "パソコン入力",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 384,
+   "h": 461
+  },
+  {
+   "id": "doctor-doodle-11-arms-crossed-serious",
+   "file": "doctor-doodle-11-arms-crossed-serious.webp",
+   "title": "腕組み(お医者さん)",
+   "desc": "腕組み(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "腕組み",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 183,
+   "h": 466
+  },
+  {
+   "id": "doctor-doodle-12-slumped-forehead-sweat",
+   "file": "doctor-doodle-12-slumped-forehead-sweat.webp",
+   "title": "疲れた(お医者さん)",
+   "desc": "疲れた(お医者さん)のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "人物",
+    "イラスト",
+    "お医者さん",
+    "医師",
+    "医療",
+    "病院",
+    "診察",
+    "手書き",
+    "疲れた",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 223,
+   "h": 467
+  }
+ ]
+}

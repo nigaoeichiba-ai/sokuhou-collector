@@ -23,6 +23,54 @@
  "planned": 12,
  "items": [
   {
+   "id": "diverse-neighbors-japan-greeting",
+   "file": "diverse-neighbors-japan-greeting.webp",
+   "title": "あいさつをする(日本で暮らす多様な人々)",
+   "desc": "あいさつをする(日本で暮らす多様な人々)のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "人物",
+    "地域",
+    "暮らし",
+    "イラスト",
+    "多様性",
+    "住民",
+    "役所",
+    "日本語",
+    "病院",
+    "防災",
+    "交流",
+    "日本で暮らす多様な人々",
+    "あいさつをする",
+    "顔なしミニマル"
+   ],
+   "w": 231,
+   "h": 479
+  },
+  {
+   "id": "diverse-neighbors-japan-trash-out",
+   "file": "diverse-neighbors-japan-trash-out.webp",
+   "title": "ごみ出しをする(日本で暮らす多様な人々)",
+   "desc": "ごみ出しをする(日本で暮らす多様な人々)のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "人物",
+    "地域",
+    "暮らし",
+    "イラスト",
+    "多様性",
+    "住民",
+    "役所",
+    "日本語",
+    "病院",
+    "防災",
+    "交流",
+    "日本で暮らす多様な人々",
+    "ごみ出しをする",
+    "顔なしミニマル"
+   ],
+   "w": 469,
+   "h": 455
+  },
+  {
    "id": "diverse-neighbors-japan-city-office",
    "file": "diverse-neighbors-japan-city-office.webp",
    "title": "役所で相談する(日本で暮らす多様な人々)",
@@ -71,6 +119,30 @@
    "h": 387
   },
   {
+   "id": "diverse-neighbors-japan-shopping",
+   "file": "diverse-neighbors-japan-shopping.webp",
+   "title": "買い物をする(日本で暮らす多様な人々)",
+   "desc": "買い物をする(日本で暮らす多様な人々)のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "人物",
+    "地域",
+    "暮らし",
+    "イラスト",
+    "多様性",
+    "住民",
+    "役所",
+    "日本語",
+    "病院",
+    "防災",
+    "交流",
+    "日本で暮らす多様な人々",
+    "買い物をする",
+    "顔なしミニマル"
+   ],
+   "w": 260,
+   "h": 489
+  },
+  {
    "id": "diverse-neighbors-japan-hospital-reception",
    "file": "diverse-neighbors-japan-hospital-reception.webp",
    "title": "病院受付に行く(日本で暮らす多様な人々)",
@@ -93,6 +165,150 @@
    ],
    "w": 488,
    "h": 467
+  },
+  {
+   "id": "diverse-neighbors-japan-directions",
+   "file": "diverse-neighbors-japan-directions.webp",
+   "title": "道をたずねる(日本で暮らす多様な人々)",
+   "desc": "道をたずねる(日本で暮らす多様な人々)のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "人物",
+    "地域",
+    "暮らし",
+    "イラスト",
+    "多様性",
+    "住民",
+    "役所",
+    "日本語",
+    "病院",
+    "防災",
+    "交流",
+    "日本で暮らす多様な人々",
+    "道をたずねる",
+    "顔なしミニマル"
+   ],
+   "w": 460,
+   "h": 464
+  },
+  {
+   "id": "diverse-neighbors-japan-disaster-drill",
+   "file": "diverse-neighbors-japan-disaster-drill.webp",
+   "title": "防災訓練に参加(日本で暮らす多様な人々)",
+   "desc": "防災訓練に参加(日本で暮らす多様な人々)のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "人物",
+    "地域",
+    "暮らし",
+    "イラスト",
+    "多様性",
+    "住民",
+    "役所",
+    "日本語",
+    "病院",
+    "防災",
+    "交流",
+    "日本で暮らす多様な人々",
+    "防災訓練に参加",
+    "顔なしミニマル"
+   ],
+   "w": 308,
+   "h": 471
+  },
+  {
+   "id": "diverse-neighbors-japan-neighbor-chat",
+   "file": "diverse-neighbors-japan-neighbor-chat.webp",
+   "title": "近所で会話する(日本で暮らす多様な人々)",
+   "desc": "近所で会話する(日本で暮らす多様な人々)のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "人物",
+    "地域",
+    "暮らし",
+    "イラスト",
+    "多様性",
+    "住民",
+    "役所",
+    "日本語",
+    "病院",
+    "防災",
+    "交流",
+    "日本で暮らす多様な人々",
+    "近所で会話する",
+    "顔なしミニマル"
+   ],
+   "w": 522,
+   "h": 465
+  },
+  {
+   "id": "diverse-neighbors-japan-school-contact",
+   "file": "diverse-neighbors-japan-school-contact.webp",
+   "title": "学校連絡を見る(日本で暮らす多様な人々)",
+   "desc": "学校連絡を見る(日本で暮らす多様な人々)のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "人物",
+    "地域",
+    "暮らし",
+    "イラスト",
+    "多様性",
+    "住民",
+    "役所",
+    "日本語",
+    "病院",
+    "防災",
+    "交流",
+    "日本で暮らす多様な人々",
+    "学校連絡を見る",
+    "顔なしミニマル"
+   ],
+   "w": 366,
+   "h": 477
+  },
+  {
+   "id": "diverse-neighbors-japan-notice-reading",
+   "file": "diverse-neighbors-japan-notice-reading.webp",
+   "title": "チラシを読む(日本で暮らす多様な人々)",
+   "desc": "チラシを読む(日本で暮らす多様な人々)のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "人物",
+    "地域",
+    "暮らし",
+    "イラスト",
+    "多様性",
+    "住民",
+    "役所",
+    "日本語",
+    "病院",
+    "防災",
+    "交流",
+    "日本で暮らす多様な人々",
+    "チラシを読む",
+    "顔なしミニマル"
+   ],
+   "w": 355,
+   "h": 479
+  },
+  {
+   "id": "diverse-neighbors-japan-friendly-exchange",
+   "file": "diverse-neighbors-japan-friendly-exchange.webp",
+   "title": "笑顔風に交流(日本で暮らす多様な人々)",
+   "desc": "笑顔風に交流(日本で暮らす多様な人々)のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "人物",
+    "地域",
+    "暮らし",
+    "イラスト",
+    "多様性",
+    "住民",
+    "役所",
+    "日本語",
+    "病院",
+    "防災",
+    "交流",
+    "日本で暮らす多様な人々",
+    "笑顔風に交流",
+    "顔なしミニマル"
+   ],
+   "w": 510,
+   "h": 462
   }
  ]
 }
