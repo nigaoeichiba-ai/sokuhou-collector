@@ -1,0 +1,83 @@
+{
+ "slug": "nabe-oden-kawaii",
+ "title": "鍋・おでんのイラスト",
+ "subject": "",
+ "genre": "food",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Winter hot-pot and oden food items, each a separate object, kawaii soft style, warm colours Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "寄せ鍋、おでん、湯気のごはん。寒い季節のメニュー表やお知らせに使える12点。",
+ "tags": [
+  "鍋",
+  "おでん",
+  "冬",
+  "あたたかい",
+  "ごはん",
+  "しいたけ"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "nabe",
+   "寄せ鍋",
+   "a clay hot pot full of vegetables and tofu with steam"
+  ],
+  [
+   "oden",
+   "おでん",
+   "a bowl of oden with daikon, egg and konnyaku on a skewer"
+  ],
+  [
+   "daikon",
+   "だいこん",
+   "a boiled daikon slice, glossy and soft"
+  ],
+  [
+   "tamago",
+   "ゆでたまご",
+   "two peeled boiled eggs, cream coloured"
+  ],
+  [
+   "tofu",
+   "とうふ",
+   "a block of tofu with a small green onion"
+  ],
+  [
+   "shiitake",
+   "しいたけ",
+   "two shiitake mushrooms with a cut pattern"
+  ],
+  [
+   "negi",
+   "ねぎ",
+   "a bundle of long green onions"
+  ],
+  [
+   "hakusai",
+   "はくさい",
+   "a napa cabbage, pale green and yellow"
+  ],
+  [
+   "kotatsu-mikan",
+   "みかん",
+   "three tangerines with leaves in a small basket"
+  ],
+  [
+   "tea",
+   "あたたかいお茶",
+   "a steaming Japanese tea cup with a small saucer"
+  ],
+  [
+   "ramen",
+   "ラーメン",
+   "a bowl of ramen with egg, nori and pork slices"
+  ],
+  [
+   "udon",
+   "なべやきうどん",
+   "a small pot of udon with an egg and tempura shrimp"
+  ]
+ ],
+ "exclude": []
+}

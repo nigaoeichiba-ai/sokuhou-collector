@@ -1,0 +1,83 @@
+{
+ "slug": "family-winter-faceless",
+ "title": "冬のくらしの人物イラスト",
+ "subject": "",
+ "genre": "people",
+ "touch": "faceless",
+ "title_fmt": "{ja}",
+ "subject_en": "People in winter scenes, each a separate full-body figure, faceless style (no facial features at all, smooth oval face), flat simple shapes, varied ages, genders and skin tones, natural poses Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "マフラー、コート、雪遊び。顔を描かない人物イラストで、冬の生活シーンを12点。",
+ "tags": [
+  "冬",
+  "人物",
+  "顔なし",
+  "コート",
+  "マフラー",
+  "雪遊び"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "coat",
+   "コートを着る人",
+   "an adult putting on a long coat"
+  ],
+  [
+   "scarf",
+   "マフラーを巻く人",
+   "a person winding a thick scarf around the neck"
+  ],
+  [
+   "walk",
+   "雪道を歩く人",
+   "a person walking carefully with a small umbrella"
+  ],
+  [
+   "snowplay",
+   "雪遊びの子ども",
+   "a child rolling a snowball"
+  ],
+  [
+   "kotatsu",
+   "こたつでくつろぐ人",
+   "a person sitting at a kotatsu table with a mikan"
+  ],
+  [
+   "shovel",
+   "雪かきをする人",
+   "a person shoveling snow"
+  ],
+  [
+   "coffee",
+   "あたたかい飲みものの人",
+   "a person holding a steaming mug with both hands"
+  ],
+  [
+   "family",
+   "手をつなぐ親子",
+   "a parent and child holding hands, both in winter coats"
+  ],
+  [
+   "senior",
+   "ひなたぼっこのお年寄り",
+   "an elderly person sitting on a bench wrapped in a blanket"
+  ],
+  [
+   "mask",
+   "マスクをする人",
+   "a person putting on a face mask and a woolen hat"
+  ],
+  [
+   "shopping",
+   "買い物帰りの人",
+   "a person carrying two shopping bags"
+  ],
+  [
+   "skate",
+   "スケートをする人",
+   "a person ice skating with arms out"
+  ]
+ ],
+ "exclude": []
+}

@@ -1,0 +1,86 @@
+{
+ "slug": "christmas-pixel",
+ "title": "ドット絵のクリスマス",
+ "subject": "",
+ "genre": "season",
+ "touch": "pixel",
+ "title_fmt": "{ja}",
+ "subject_en": "Christmas items, each a separate object, retro 16-bit pixel art with clearly visible square pixels, limited palette of red, green, gold and white-cream Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "ツリー、サンタ、プレゼント、雪だるまをドット絵で描いた12点。ゲームふうのクリスマスカードに。",
+ "tags": [
+  "クリスマス",
+  "ドット絵",
+  "サンタ",
+  "ツリー",
+  "プレゼント",
+  "ゲーム"
+ ],
+ "season": {
+  "from": "11-25",
+  "to": "12-26"
+ },
+ "holes": false,
+ "items": [
+  [
+   "tree",
+   "クリスマスツリー",
+   "a decorated Christmas tree with a star"
+  ],
+  [
+   "santa",
+   "サンタさん",
+   "a Santa Claus character, original design"
+  ],
+  [
+   "gift",
+   "プレゼント",
+   "a gift box with a ribbon"
+  ],
+  [
+   "snowman",
+   "雪だるま",
+   "a snowman with a scarf"
+  ],
+  [
+   "reindeer",
+   "トナカイ",
+   "a reindeer with a red nose"
+  ],
+  [
+   "sock",
+   "くつした",
+   "a red Christmas stocking"
+  ],
+  [
+   "wreath",
+   "リース",
+   "a green wreath with a red bow"
+  ],
+  [
+   "bell",
+   "ベル",
+   "a gold bell with a bow"
+  ],
+  [
+   "candy",
+   "キャンディケイン",
+   "a red and white candy cane"
+  ],
+  [
+   "cake",
+   "クリスマスケーキ",
+   "a cake with strawberries and a candle"
+  ],
+  [
+   "star",
+   "ほし",
+   "a gold star"
+  ],
+  [
+   "candle",
+   "キャンドル",
+   "a lit candle with holly"
+  ]
+ ],
+ "exclude": []
+}
