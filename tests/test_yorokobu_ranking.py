@@ -164,6 +164,13 @@ class HistoryTest(unittest.TestCase):
         v = ranking.view(s, FILTERS)
         self.assertIn("g-baby-gift", v["order"])
 
+    def test_only_the_best_placed_products_are_kept_per_segment(self):
+        items = [ranked(f"p{i}", i + 1) for i in range(100)]
+        seg = ranking.update(None, {"g-wine": items}, date(2026, 10, 1))["segments"]["g-wine"]
+        self.assertEqual(len(seg["items"]), ranking.KEEP)
+        self.assertEqual(seg["items"][-1]["rank"], ranking.KEEP)
+        self.assertEqual(len(seg["history"]["2026-10-01"]), ranking.KEEP)
+
     def test_an_empty_fetch_does_not_wipe_the_stored_segment(self):
         s1 = ranking.update(None, {"f20": day(["a", "b"])}, date(2026, 10, 1))
         s2 = ranking.update(s1, {"f20": []}, date(2026, 10, 2))

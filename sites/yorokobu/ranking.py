@@ -23,6 +23,7 @@ HERE = Path(__file__).resolve().parent
 JST = timezone(timedelta(hours=9))
 HISTORY_DAYS = 45
 PLACES = 30                      # places per API page
+KEEP = 60                        # gift-like products kept per segment (the best places): keeps a page readable and the daily commit small
 REQUEST_GAP = 12.0               # seconds between requests (0.08/s): the deploy fetches from the same application ID at about 0.9/s, and the shared limit is about 1/s, so a ranking run beside a deploy stays within it
 PAGES = 4                        # pages fetched per segment: the top 120 (gift-like products are rare near the top of a sales ranking)
 
@@ -124,7 +125,7 @@ def update(store: dict | None, fresh: dict[str, list[dict]], today: date, keep=N
         items = [it for it in raw_items if keep is None or keep(slug, it)]
         old = segs.get(slug, {})
         history = dict(old.get("history") or {})
-        ordered = sorted(items, key=lambda i: i["rank"])
+        ordered = sorted(items, key=lambda i: i["rank"])[:KEEP]
         history[today.isoformat()] = [[it["code"], it["rank"]] for it in ordered]
         cutoff = (today - timedelta(days=HISTORY_DAYS)).isoformat()
         history = {d: codes for d, codes in sorted(history.items()) if d >= cutoff}
