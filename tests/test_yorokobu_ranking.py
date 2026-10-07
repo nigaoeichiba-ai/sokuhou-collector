@@ -84,7 +84,7 @@ class HistoryTest(unittest.TestCase):
 
     def test_only_kept_products_are_stored_and_the_history_keeps_their_real_places(self):
         items = [ranked("a", 7), ranked("b", 31), ranked("junk", 12, name="ソーラーライト 屋外")]
-        s = ranking.update(None, {"g-sweets": items}, date(2026, 10, 1), keep=lambda i: i["code"] != "junk")
+        s = ranking.update(None, {"g-sweets": items}, date(2026, 10, 1), keep=lambda slug, i: i["code"] != "junk")
         seg = s["segments"]["g-sweets"]
         self.assertEqual([i["code"] for i in seg["items"]], ["a", "b"])
         self.assertEqual(seg["history"]["2026-10-01"], [["a", 7], ["b", 31]])
@@ -120,7 +120,7 @@ class HistoryTest(unittest.TestCase):
 
     def test_a_segment_fetched_today_with_nothing_kept_does_not_keep_yesterdays_unfiltered_items(self):
         s = ranking.update(None, {"f20": day(codes(5))}, date(2026, 10, 1))                        # kept everything (no filter yet)
-        s = ranking.update(s, {"f20": day(codes(5))}, date(2026, 10, 2), keep=lambda i: False)      # today the filter keeps nothing
+        s = ranking.update(s, {"f20": day(codes(5))}, date(2026, 10, 2), keep=lambda slug, i: False)      # today the filter keeps nothing
         seg = s["segments"]["f20"]
         self.assertEqual(seg["items"], [])
         self.assertEqual(seg["date"], "2026-10-02")
@@ -134,15 +134,35 @@ class HistoryTest(unittest.TestCase):
 
     def test_only_genres_whose_products_are_given_as_presents_are_fetched(self):
         labels = {g[2] for g in ranking.GENRES}
-        for gone in ("レディースファッション", "メンズファッション", "ホビー", "おもちゃ", "キッズ・ベビー・マタニティ"):
-            self.assertNotIn(gone, labels)
-        self.assertIn("ワイン", labels)
-        self.assertNotIn("ビール・洋酒", labels)
+        for gone in ("レディースファッション", "メンズファッション", "ホビー", "おもちゃ", "キッズ・ベビー・マタニティ", "ビール・洋酒"):
+            self.assertNotIn(gone, labels)                       # the everyday top levels
+        for there in ("ワイン", "出産祝い・ギフト", "カタログギフト", "ペアウォッチ", "雛祭り・端午の節句"):
+            self.assertIn(there, labels)                         # the genres Rakuten makes for presents
 
     def test_segments_that_are_no_longer_fetched_are_dropped_from_the_store(self):
         old = {"segments": {"g-mens": {"label": "x", "kind": "genre", "items": [], "history": {}}, "g-wine": {"label": "ワイン", "kind": "genre", "date": "2026-10-01", "items": [], "history": {}}}}
         s = ranking.update(old, {"g-wine": day(codes(3))}, date(2026, 10, 2))
         self.assertEqual(sorted(s["segments"]), ["g-wine"])
+
+    def test_a_genre_made_for_presents_does_not_need_the_word_gift_in_the_title_but_every_other_exclusion_still_applies(self):
+        self.assertTrue(ranking.shown(ranked("a", 1, name="ベビー服 ロンパース 3点セット 日本製"), FILTERS, strict=False, recipient="baby"))
+        self.assertFalse(ranking.shown(ranked("a2", 1, name="ベビー服 ロンパース 3点セット 日本製"), FILTERS, strict=False))      # without a recipient the fit rules read it as an adult's list
+        self.assertFalse(ranking.shown(ranked("b", 1, name="ベビー服 ロンパース 3点セット 日本製"), FILTERS, strict=True))
+        self.assertFalse(ranking.shown(ranked("c", 1, name="パンパース オムツ テープ"), FILTERS, strict=False, recipient="baby"))           # nappies are never a present
+        self.assertFalse(ranking.shown(ranked("d", 1, price=90000, name="ベビーカー 高級"), FILTERS, strict=False, recipient="baby"))
+        self.assertTrue(ranking.SEGMENTS["g-baby-gift"]["strict"] is False and ranking.SEGMENTS["g-sweets"]["strict"] is True)
+        self.assertEqual((ranking.SEGMENTS["g-baby-gift"]["recipient"], ranking.SEGMENTS["g-edu-toy"]["recipient"], ranking.SEGMENTS["g-wine"]["recipient"]), ("baby", "child", None))
+
+    def test_the_store_keeps_non_strict_genres_without_hints_and_the_view_shows_them(self):
+        names = {f"p{i}": f"出産祝い 名入れ 小物 {i}" for i in range(10)}
+        names.update({f"q{i}": f"木製 小物入れ {i}" for i in range(10)})
+        items = day([f"p{i}" for i in range(10)] + [f"q{i}" for i in range(10)], names)
+        keep = lambda slug, it: ranking.shown(it, FILTERS, ranking.SEGMENTS[slug].get("strict", True), ranking.SEGMENTS[slug].get("recipient"))
+        s = ranking.update(None, {"g-baby-gift": items, "g-plush": items}, date(2026, 10, 1), keep=keep)
+        self.assertEqual(len(s["segments"]["g-baby-gift"]["items"]), 20)              # no hint needed in a present genre
+        self.assertEqual(len(s["segments"]["g-plush"]["items"]), 10)                  # a normal genre keeps the ones whose title says gift (出産祝い)
+        v = ranking.view(s, FILTERS)
+        self.assertIn("g-baby-gift", v["order"])
 
     def test_an_empty_fetch_does_not_wipe_the_stored_segment(self):
         s1 = ranking.update(None, {"f20": day(["a", "b"])}, date(2026, 10, 1))
