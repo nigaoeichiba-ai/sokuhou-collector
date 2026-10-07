@@ -43,7 +43,7 @@ LIVE_SOURCES = {
                 "as_of_text": "最新の記録は{d}の分までです(県の更新は不定期で、遅れて載ります)"},
     "yamanashi": {"pref": "山梨", "license": "山梨県オープンデータ利用規約(商用利用可・出典明記)", "name": "山梨県", "label": "山梨県・県の公式。ほぼ毎週更新", "monthly_label": "目撃の記録のみ",
                   "as_of_text": "最新の記録は{d}の分までです"},
-    "sorachi": {"pref": "北海道", "license": "CC-BY(北海道のサイトポリシー)", "name": "北海道空知総合振興局", "label": "北海道・空知総合振興局の公式(空知管内の24市町)", "monthly_label": "目撃のほか、痕跡などを含む(ヒグマの記録)",
+    "sorachi": {"pref": "北海道", "scope": "空知管内の24市町のみ", "license": "CC-BY(北海道のサイトポリシー)", "name": "北海道空知総合振興局", "label": "北海道・空知総合振興局の公式(空知管内の24市町)", "monthly_label": "目撃のほか、痕跡などを含む(ヒグマの記録)",
                 "as_of_text": "データは{d}時点です"},
     "akita": {"pref": "秋田", "license": "CC BY 4.0", "name": "秋田県", "label": "秋田県・県の公式。更新は月1回ほど", "monthly_label": "目撃のほか、痕跡などを含む(クマの記録のみ)",
               "as_of_text": "最新の記録は{d}の分までです"},
@@ -242,6 +242,9 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
     keys = sorted({r["src"] for r in rows})
     names = "・".join(infos[k]["name"] for k in keys)
     note = kind_note(infos, slug)
+    scopes = [LIVE_SOURCES[k]["scope"] for k in keys if LIVE_SOURCES.get(k, {}).get("scope")]
+    scope = scopes[0] if scopes and len(scopes) == len(keys) else ""   # a prefecture page that covers only part of the prefecture says so
+    pname_s = f"{pname}({scope})" if scope else pname
     city_rows = []
     for city, cr in sorted(cities.items(), key=lambda kv: (-len(kv[1]), kv[0])):
         label = f'<a href="{city_url(slug, city)}">{esc(city)}</a>' if city_has_page(cr) else esc(city)
@@ -259,7 +262,7 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
         chart = charts.bars([f"{m}月" for m in mc], list(mc.values()), title=f"{i['name']}の月別の記録", desc=f"{i['name']}が公表した{fy_label(cur)}の記録の月別の件数", uid=f"m{k}") if len(mc) >= 2 else ""
         month_blocks += f"<h3>{esc(i['name'])}</h3>\n{chart}{month_table(mine)}\n"
     body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", "/live/"), (pname, None)])}
-<h1>{esc(pname)}のクマの目撃情報({fy_label(cur)}・{esc(names)}の公式)</h1>
+<h1>{esc(pname_s)}のクマの目撃情報({fy_label(cur)}・{esc(names)}の公式)</h1>
 <p class="lead">{esc(names)}が公表している{fy_label(cur)}の記録は、{n(len(rows))}件です{('(' + esc(note) + ')') if note else ''}。市町村ごとの件数と、新しい順の記録を載せています。</p>
 {stats_html(len(rows), last30(rows, today), rows[0], today, cur)}
 {published}{after}<h2>市町村別の記録({fy_label(cur)})</h2>
@@ -273,8 +276,8 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
 {('<h2>' + esc(pname) + 'の公式の出没情報</h2>' + off_html) if off_html else ''}
 <p><a href="/live/{slug}/feed.xml">{esc(pname)}の最新の目撃(フィード)</a>を、フィードリーダーに登録すると、新しい記録が公表されるたびに届きます。</p>
 {source_notes(infos, keys)}"""
-    return page(path=f"/live/{slug}/", title=f"{pname}のクマの目撃情報({fy_label(cur)}・最新{n(len(rows))}件・市町村別)",
-                description=f"{pname}の{fy_label(cur)}のクマの目撃情報{n(len(rows))}件を、新しい順・市町村別に一覧にしています。最新は{md(rows[0]['at'][:10])}の{place_text(rows[0]['city'], rows[0]['place'])}です。",
+    return page(path=f"/live/{slug}/", title=f"{pname_s}のクマの目撃情報({fy_label(cur)}・最新{n(len(rows))}件・市町村別)",
+                description=f"{pname_s}の{fy_label(cur)}のクマの目撃情報{n(len(rows))}件を、新しい順・市町村別に一覧にしています。最新は{md(rows[0]['at'][:10])}の{place_text(rows[0]['city'], rows[0]['place'])}です。",
                 body=body, alternates=((f"{pname}の最新の目撃", f"/live/{slug}/feed.xml"),))
 
 
@@ -395,7 +398,7 @@ def csv_text(lv: dict) -> str:
     return "\ufeff" + buf.getvalue()
 
 
-def data_page(page, d: dict, lv: dict) -> str:
+def data_page(page, d: dict, lv: dict, base: str) -> str:
     cur = d["cur"]
     keys = licensed_sources(lv)
     rows_by = Counter(r["src"] for r in lv["records"])
@@ -416,5 +419,10 @@ def data_page(page, d: dict, lv: dict) -> str:
 <li><strong>日時</strong>: 取得元が公表している日付(と、あれば時刻)です。<strong>緯度・経度</strong>: 取得元が公表している場合だけです(小数点以下4桁に丸めています)。</li>
 </ul>
 <p class="notice">{CAUTION}このCSVは、このサイトが各自治体の公開データを加工して作成したもので、各自治体が作成したものではありません。引用するときは、「出典:各自治体の公開データを加工して作成(クマ出没速報)」のように、元の取得元と、加工したことを書いてください。ファイルは、データが更新されるたびに作り直しています(取得日: {jp_date(lv['today'].isoformat())})。</p>"""
-    return page(path="/data/", title=f"クマの目撃情報のデータ(CSV・{fy_label(cur)}・{len(keys)}か所・{n(total)}件)",
+    ld = {"@context": "https://schema.org", "@type": "Dataset", "name": f"クマの目撃情報(自治体の公式・{fy_label(cur)})",
+          "description": f"自治体が公表しているクマの目撃情報({len(keys)}か所・{total}件)の、取得元とライセンスつきの一覧", "inLanguage": "ja",
+          "url": base + "/data/", "isAccessibleForFree": True,
+          "distribution": [{"@type": "DataDownload", "encodingFormat": "text/csv", "contentUrl": base + "/data/" + CSV_NAME}]}
+    head = '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace("</", "<" + chr(92) + "/") + "</script>" + chr(10)
+    return page(path="/data/", head_extra=head, title=f"クマの目撃情報のデータ(CSV・{fy_label(cur)}・{len(keys)}か所・{n(total)}件)",
                 description=f"自治体が公表しているクマの目撃情報(再利用の条件が明示されている{len(keys)}か所・{n(total)}件)を、取得元とライセンスつきのCSVにまとめています。", body=body)
