@@ -1,2 +1,5 @@
 pypdf>=6
 pillow
+numpy
+scipy
+opencv-python-headless
