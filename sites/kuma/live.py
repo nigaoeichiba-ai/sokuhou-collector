@@ -54,6 +54,14 @@ LIVE_SOURCES.update({
                   "as_of_text": "最新の記録は{d}の分までです"},
     "niigata": {"pref": "新潟", "name": "新潟県", "label": "新潟県・県の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や人身被害の報告を含む",
                 "as_of_text": "最新の記録は{d}の分までです"},
+    "yamagata": {"pref": "山形", "name": "山形県", "label": "山形県・県の公式データを集計(件数のみ)", "monthly_label": "クマ目撃マップの報告(人身被害を含む)",
+                 "as_of_text": "最新の記録は{d}の分までです"},
+    "aomori": {"pref": "青森", "name": "青森県", "label": "青森県「くまログあおもり」を集計(件数のみ)", "monthly_label": "県が確認した報告のみ(目撃のほか、痕跡などを含む)",
+               "as_of_text": "最新の記録は{d}の分までです"},
+    "nara": {"pref": "奈良", "name": "奈良県", "label": "奈良県・県の公式データを集計(件数のみ)", "monthly_label": "「クマ」と「クマらしき」の報告を合わせた件数",
+             "as_of_text": "最新の記録は{d}の分までです"},
+    "saitama": {"pref": "埼玉", "name": "埼玉県", "label": "埼玉県・県の公式データを集計(件数のみ)", "monthly_label": "市町村が県に報告した出没の件数",
+                "as_of_text": "最新の記録は{d}の分までです"},
     "toyama": {"pref": "富山", "name": "富山県", "label": "富山県・県の公式(クマっぷ・件数のみ)", "monthly_label": "目撃のほか、痕跡や人身被害の報告を含む",
                "as_of_text": "最新の記録は{d}の分までです"},
 })
@@ -226,7 +234,7 @@ def hub_page(page, d: dict, lv: dict) -> str:
 <ul class="mini-list">{pref_links}</ul>
 <h2>取得元と、更新の状況</h2>
 {table(["取得元", f"{fy_label(cur)}の記録", "最新", "更新について"], src_rows)}
-{counts_section(lv)}<p class="notice">新しい取得元は、使用の条件を確かめてから、順に加えています。それまでは、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。取得は、1日に数回、自動で行っています。</p>"""
+{counts_section(lv)}<p class="notice">再利用の許可が明示されている取得元は、詳しい記録を載せ、明示されていない取得元は、件数と最新の日付だけを載せています。載っていない地域は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。取得は、1日に数回、自動で行っています。</p>"""
     return page(path="/live/", title=f"クマの最新の目撃情報(自治体の公式・{len(infos)}か所・{fy_label(cur)})",
                 description=f"{'・'.join(i['name'] for i in infos.values())}が公表しているクマの目撃情報を、新しい順に一覧にしています。{fy_label(cur)}の記録は{n(len(recs))}件です。",
                 body=body, alternates=(("最新の目撃", "/live/feed.xml"),))
@@ -452,7 +460,7 @@ def data_page(page, d: dict, lv: dict, base: str) -> str:
 
 COUNTS_NOTE = ("このサイトでは、件数と最新の日付だけを載せています。場所などの詳しい記録は、公式のページでご確認ください。"
                "掲載しているのは、公開されている情報から、このサイトが項目を抽出し、市町村別・月別に集計したもので、{name}が作成・保証したものではありません。"
-               "重複や件数の差の確認も、このサイトで行っています。掲載の中止をご希望の場合は、<a href=\"/contact/\">お問い合わせ</a>からご連絡ください。")
+               "日付や市町村が読めない行の割合の検査など、集計の検算は、このサイトで行っています。掲載の中止をご希望の場合は、<a href=\"/contact/\">お問い合わせ</a>からご連絡ください。")
 
 
 def prepare_counts(prefs: dict | None) -> list[dict]:
