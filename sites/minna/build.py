@@ -181,6 +181,36 @@ def thumb_bytes(webp: Path, width: int = 360) -> bytes:
     return _cached(webp, f"t{width}.webp", make)
 
 
+PDF_SIZES = {"a4": (1654, 2339, 200.0), "hagaki": (1181, 1748, 300.0)}     # pixels and dpi: A4 and a postcard (100 x 148 mm)
+
+
+def pdf_kinds(it: dict) -> list[str]:
+    """Print versions offered for an item: coloring pages on A4, New Year / frame items on a postcard."""
+    kinds = []
+    if it["touch"] == "lineart":
+        kinds.append("a4")
+    if it["genre"] in ("eto", "deco") and it["touch"] != "lineart":
+        kinds.append("hagaki")
+    return kinds
+
+
+def pdf_bytes(webp: Path, kind: str) -> bytes:
+    """A white page with the picture centred (no text, so no font is needed)."""
+    from PIL import Image
+    w, h, dpi = PDF_SIZES[kind]
+
+    def make():
+        im = Image.open(webp).convert("RGBA")
+        page = Image.new("RGB", (w, h), "white")
+        sc = min(w * 0.86 / im.width, h * 0.86 / im.height)
+        im = im.resize((max(1, int(im.width * sc)), max(1, int(im.height * sc))), Image.LANCZOS)
+        page.paste(im, ((w - im.width) // 2, (h - im.height) // 2), im)
+        buf = io.BytesIO()
+        page.save(buf, format="PDF", resolution=dpi, quality=88)
+        return buf.getvalue()
+    return _cached(webp, f"{kind}.pdf", make)
+
+
 def og_bytes(items: list[dict], bg: tuple[int, int, int]) -> bytes:
     """1200x630 share image: up to four illustrations on a colour."""
     from PIL import Image
@@ -482,6 +512,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 <div class="info"><h1>{esc(it['title'])}</h1><p class="lead">{esc(it['desc'])}</p>
 <p class="dl"><a class="btn big" href="/files/{it['id']}.png" download="{it['id']}.png">PNG(透明)をダウンロード</a>
 <a class="btn btn-sub" href="/files/{it['id']}.webp" download="{it['id']}.webp">WebP</a>
+{''.join(f'<a class="btn btn-sub" href="/files/{it["id"]}-{k}.pdf" download="{it["id"]}-{k}.pdf">{"A4で印刷(PDF)" if k == "a4" else "はがきサイズで印刷(PDF)"}</a>' for k in pdf_kinds(it))}
 <button class="btn btn-sub fav-big" type="button" data-fav="{it['id']}" aria-pressed="false">♡ お気に入り</button></p>
 <p class="meta">サイズ: {it['w']}×{it['h']}px(透明な背景) ・ セット: <a href="{s['url']}">{esc(s['title'])}</a> ・ タッチ: <a href="/touch/{it['touch']}/">{esc(t)}</a> ・ ジャンル: <a href="/genre/{it['genre']}/">{esc(g)}</a></p>
 <details class="export" data-src="/files/{it['id']}.png" data-name="{it['id']}"><summary>背景や大きさを変えて保存する</summary>
@@ -683,6 +714,8 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         pages[f"illust/{it['id']}/index.html"] = illust_page(cfg, preview, it, items, series, guides)
         pages[f"files/{it['id']}.png"] = png_bytes(it["path"])
         pages[f"files/{it['id']}.webp"] = it["path"].read_bytes()
+        for k in pdf_kinds(it):
+            pages[f"files/{it['id']}-{k}.pdf"] = pdf_bytes(it["path"], k)
         pages[f"thumbs/{it['id']}.webp"] = thumb_bytes(it["path"])
     pages["data/items.json"] = search_index(items, series)
     pages["feed.xml"] = feed_xml(cfg, series, today)
