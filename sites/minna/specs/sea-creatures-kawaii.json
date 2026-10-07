@@ -1,0 +1,85 @@
+{
+ "slug": "sea-creatures-kawaii",
+ "title": "うみのいきもの",
+ "subject": "",
+ "genre": "animals",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "cute sea animals, one species per picture, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "さかな、たこ、かに、くらげ、イルカなど、海のいきものを12種類。水族館のお知らせや夏のおたよりに。",
+ "tags": [
+  "魚",
+  "さかな",
+  "海",
+  "水族館",
+  "たこ",
+  "いか",
+  "かに",
+  "くらげ",
+  "イルカ"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "fish",
+   "さかな",
+   "a round blue fish"
+  ],
+  [
+   "octopus",
+   "たこ",
+   "a cute pink octopus"
+  ],
+  [
+   "squid",
+   "いか",
+   "a cute squid"
+  ],
+  [
+   "crab",
+   "かに",
+   "a cute red crab"
+  ],
+  [
+   "jellyfish",
+   "くらげ",
+   "a cute jellyfish"
+  ],
+  [
+   "dolphin",
+   "イルカ",
+   "a cute dolphin jumping"
+  ],
+  [
+   "turtle",
+   "うみがめ",
+   "a cute sea turtle"
+  ],
+  [
+   "seal",
+   "あざらし",
+   "a cute white seal pup"
+  ],
+  [
+   "shrimp",
+   "えび",
+   "a cute shrimp"
+  ],
+  [
+   "seahorse",
+   "たつのおとしご",
+   "a cute seahorse"
+  ],
+  [
+   "clownfish",
+   "かくれクマノミふうの魚",
+   "a cute orange fish with white stripes"
+  ],
+  [
+   "shark",
+   "ちいさなサメ",
+   "a cute small grey shark with a smile"
+  ]
+ ]
+}

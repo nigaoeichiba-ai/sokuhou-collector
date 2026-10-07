@@ -1,0 +1,84 @@
+{
+ "slug": "instruments-flat",
+ "title": "楽器のイラスト",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "musical instruments, each a separate object, flat Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "ピアノ、ギター、バイオリン、太鼓、リコーダーなど、音楽のイラスト12点。発表会や教室のお知らせに。",
+ "tags": [
+  "楽器",
+  "音楽",
+  "ピアノ",
+  "ギター",
+  "バイオリン",
+  "太鼓",
+  "リコーダー",
+  "発表会"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "piano",
+   "ピアノ",
+   "an upright piano"
+  ],
+  [
+   "guitar",
+   "ギター",
+   "an acoustic guitar"
+  ],
+  [
+   "violin",
+   "バイオリン",
+   "a violin with a bow"
+  ],
+  [
+   "drum",
+   "和太鼓",
+   "a Japanese taiko drum"
+  ],
+  [
+   "recorder",
+   "リコーダー",
+   "a recorder"
+  ],
+  [
+   "trumpet",
+   "トランペット",
+   "a trumpet"
+  ],
+  [
+   "flute",
+   "フルート",
+   "a flute"
+  ],
+  [
+   "harmonica",
+   "ハーモニカ",
+   "a harmonica"
+  ],
+  [
+   "tambourine",
+   "タンバリン",
+   "a tambourine"
+  ],
+  [
+   "xylophone",
+   "木琴",
+   "a xylophone"
+  ],
+  [
+   "note",
+   "音符",
+   "musical notes"
+  ],
+  [
+   "microphone",
+   "マイク",
+   "a microphone"
+  ]
+ ]
+}

@@ -1,0 +1,83 @@
+{
+ "slug": "stickers-cute-kawaii",
+ "title": "ワンポイントシール",
+ "subject": "",
+ "genre": "icon",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "sticker-style small motifs with a thick white-free outline, each a separate item, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "ハート、星、花、雲など、手帳やカードのワンポイントに使えるシール風のイラスト12点。",
+ "tags": [
+  "シール",
+  "ステッカー",
+  "ワンポイント",
+  "ハート",
+  "星",
+  "花",
+  "かわいい"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "heart",
+   "ハート",
+   "a plump pink heart"
+  ],
+  [
+   "star",
+   "星",
+   "a yellow star with a smiling face"
+  ],
+  [
+   "flower",
+   "お花",
+   "a simple daisy"
+  ],
+  [
+   "cloud",
+   "くも",
+   "a smiling cloud"
+  ],
+  [
+   "rainbow",
+   "にじ",
+   "a small rainbow"
+  ],
+  [
+   "moon",
+   "月",
+   "a smiling crescent moon"
+  ],
+  [
+   "sun",
+   "太陽",
+   "a smiling sun"
+  ],
+  [
+   "clover",
+   "四つ葉のクローバー",
+   "a four-leaf clover"
+  ],
+  [
+   "cherry",
+   "さくらんぼ",
+   "two cherries"
+  ],
+  [
+   "ribbon",
+   "リボン",
+   "a pink bow"
+  ],
+  [
+   "sparkle",
+   "キラキラ",
+   "three sparkles"
+  ],
+  [
+   "drop",
+   "しずく",
+   "a blue water drop with a face"
+  ]
+ ]
+}

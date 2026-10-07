@@ -83,5 +83,13 @@
  "sheet_subjects": [
   "dark-brown-skinned woman about 30, voluminous natural curly black hair, mustard blouse, black trousers, white sneakers, 6-head-tall, dot eyes, warm smile",
   "fair-skinned man about 35, short light-brown hair and a short beard, blue shirt, beige chinos, brown shoes, 6-head-tall, dot eyes, friendly smile"
+ ],
+ "exclude": [
+  "07-bowing-politely",
+  "08-raised-explaining",
+  "09-arms-crossed-thinking",
+  "10-welcoming-arms-open",
+  "11-cheek-troubled",
+  "12-clapping-happily"
  ]
 }

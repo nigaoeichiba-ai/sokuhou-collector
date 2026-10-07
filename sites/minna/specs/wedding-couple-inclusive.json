@@ -82,5 +82,6 @@
    "The couple stands side by side with relaxed happy posture and clear spacing, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": []
 }

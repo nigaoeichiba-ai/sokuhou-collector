@@ -82,5 +82,6 @@
    "The shop staff stands and waves gently toward the exit, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": []
 }

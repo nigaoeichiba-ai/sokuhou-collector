@@ -1,0 +1,85 @@
+{
+ "slug": "wa-patterns-tiles",
+ "title": "和柄のパターン",
+ "subject": "",
+ "genre": "deco",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "subject_en": "traditional Japanese pattern swatches, each a SQUARE tile completely filled with the pattern, no frame, no text, colours indigo, vermilion, gold, ivory Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "青海波、麻の葉、市松、七宝など、和柄のパターン12種類。背景や飾り、千代紙ふうの工作に。",
+ "tags": [
+  "和柄",
+  "和風",
+  "パターン",
+  "背景",
+  "青海波",
+  "麻の葉",
+  "市松",
+  "着物",
+  "千代紙"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "seigaiha",
+   "青海波",
+   "seigaiha wave pattern in indigo"
+  ],
+  [
+   "asanoha",
+   "麻の葉",
+   "asanoha hemp-leaf pattern in red"
+  ],
+  [
+   "ichimatsu",
+   "市松",
+   "ichimatsu checkerboard in indigo and white"
+  ],
+  [
+   "shippou",
+   "七宝",
+   "shippo overlapping circles in green"
+  ],
+  [
+   "uroko",
+   "鱗",
+   "uroko triangle scales in black and white"
+  ],
+  [
+   "sakura",
+   "桜",
+   "scattered cherry blossoms on pink"
+  ],
+  [
+   "kikko",
+   "亀甲",
+   "kikko hexagon pattern in gold"
+  ],
+  [
+   "karakusa",
+   "唐草",
+   "karakusa vine pattern in green"
+  ],
+  [
+   "yagasuri",
+   "矢絣",
+   "yagasuri arrow feather pattern"
+  ],
+  [
+   "kanoko",
+   "鹿の子",
+   "kanoko dot pattern in red"
+  ],
+  [
+   "tachiwaku",
+   "立涌",
+   "tachiwaku wavy lines"
+  ],
+  [
+   "ume",
+   "梅",
+   "plum blossoms on indigo"
+  ]
+ ]
+}

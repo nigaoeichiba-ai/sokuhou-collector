@@ -1,0 +1,87 @@
+{
+ "slug": "rainy-season-kawaii",
+ "title": "梅雨のイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "rainy season items and cute animals, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "かえる、かたつむり、てるてる坊主、あじさい。雨の日が楽しくなる、梅雨のイラスト12点。",
+ "tags": [
+  "梅雨",
+  "雨",
+  "かえる",
+  "かたつむり",
+  "てるてる坊主",
+  "あじさい",
+  "傘",
+  "6月"
+ ],
+ "season": {
+  "from": "05-15",
+  "to": "07-15"
+ },
+ "holes": false,
+ "items": [
+  [
+   "frog-umbrella",
+   "かさをさすかえる",
+   "a cute green frog holding a leaf umbrella"
+  ],
+  [
+   "snail",
+   "かたつむり",
+   "a cute snail on a hydrangea leaf"
+  ],
+  [
+   "teruteru",
+   "てるてる坊主",
+   "a smiling teru-teru-bozu charm hanging"
+  ],
+  [
+   "hydrangea",
+   "あじさい",
+   "a blue and purple hydrangea"
+  ],
+  [
+   "umbrella",
+   "赤いかさ",
+   "a red umbrella with raindrops"
+  ],
+  [
+   "boots",
+   "ながぐつ",
+   "a pair of yellow rain boots in a puddle"
+  ],
+  [
+   "raincoat",
+   "レインコートのひよこ",
+   "a chick wearing a tiny yellow raincoat"
+  ],
+  [
+   "cloud",
+   "雨雲",
+   "a smiling grey rain cloud"
+  ],
+  [
+   "cat",
+   "かさをもつねこ",
+   "a cat under a big umbrella"
+  ],
+  [
+   "puddle",
+   "水たまり",
+   "a puddle with ripples and a leaf boat"
+  ],
+  [
+   "rainbow",
+   "雨あがりの虹",
+   "a small rainbow with a cloud"
+  ],
+  [
+   "duck",
+   "あひるの雨あそび",
+   "a duckling splashing in a puddle"
+  ]
+ ]
+}

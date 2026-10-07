@@ -1,0 +1,83 @@
+{
+ "slug": "lucky-charms-wa",
+ "title": "縁起ものと和のこもの",
+ "subject": "",
+ "genre": "eto",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "subject_en": "lucky charms and Japanese small goods, each a separate item, wa style Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "招き猫、だるま、お守り、絵馬など、縁起のよい和のモチーフ12点。お正月や商売のお知らせに。",
+ "tags": [
+  "縁起物",
+  "招き猫",
+  "お守り",
+  "絵馬",
+  "和風",
+  "福",
+  "お正月"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "maneki",
+   "招き猫",
+   "a lucky beckoning cat with a raised paw (original design)"
+  ],
+  [
+   "daruma",
+   "だるま",
+   "a red daruma doll"
+  ],
+  [
+   "omamori",
+   "お守り",
+   "an omamori charm bag with a cord (blank)"
+  ],
+  [
+   "ema",
+   "絵馬",
+   "an ema plaque with a plum blossom"
+  ],
+  [
+   "fukusuke",
+   "福の字の扇",
+   "an open fan with gold clouds (no characters)"
+  ],
+  [
+   "crane",
+   "おりづる",
+   "an origami crane"
+  ],
+  [
+   "temari",
+   "てまり",
+   "a temari ball"
+  ],
+  [
+   "fortune",
+   "おみくじ",
+   "an omikuji paper strip tied to a branch (blank)"
+  ],
+  [
+   "koi",
+   "錦鯉",
+   "a koi carp"
+  ],
+  [
+   "bell",
+   "鈴",
+   "a shrine bell with a rope"
+  ],
+  [
+   "lantern",
+   "ちょうちん",
+   "a paper lantern"
+  ],
+  [
+   "fuji",
+   "富士山と松",
+   "Mt. Fuji with a pine tree"
+  ]
+ ]
+}

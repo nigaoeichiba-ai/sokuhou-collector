@@ -1,0 +1,83 @@
+{
+ "slug": "hobbies-flat",
+ "title": "趣味・おでかけのイラスト",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "hobby and weekend icons, each a separate object, flat Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "キャンプ、釣り、カメラ、読書、ガーデニングなど、趣味と週末のイラスト12点。",
+ "tags": [
+  "趣味",
+  "キャンプ",
+  "釣り",
+  "カメラ",
+  "読書",
+  "ガーデニング",
+  "旅行"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "tent",
+   "テント",
+   "a camping tent"
+  ],
+  [
+   "fishing",
+   "釣りざお",
+   "a fishing rod and a fish"
+  ],
+  [
+   "camera",
+   "カメラ",
+   "a vintage camera"
+  ],
+  [
+   "book",
+   "本",
+   "a stack of books"
+  ],
+  [
+   "garden",
+   "ガーデニング",
+   "a watering can and a flower pot"
+  ],
+  [
+   "luggage",
+   "旅行かばん",
+   "a suitcase with a hat"
+  ],
+  [
+   "map",
+   "地図とコンパス",
+   "a map and a compass"
+  ],
+  [
+   "bonfire",
+   "たき火",
+   "a campfire with marshmallows"
+  ],
+  [
+   "bicycle",
+   "自転車",
+   "a bicycle with a basket"
+  ],
+  [
+   "picnic",
+   "ピクニックバスケット",
+   "a picnic basket"
+  ],
+  [
+   "paint",
+   "絵の具",
+   "a paint palette and brush"
+  ],
+  [
+   "knit",
+   "あみもの",
+   "a ball of yarn and knitting needles"
+  ]
+ ]
+}

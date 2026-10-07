@@ -1,0 +1,85 @@
+{
+ "slug": "insects-kawaii",
+ "title": "むしのイラスト",
+ "subject": "",
+ "genre": "animals",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "cute insects, one species per picture, kawaii (friendly, not scary) Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "てんとうむし、ちょう、かぶとむし、とんぼなど、かわいい虫12種類。理科や夏のおたよりに。",
+ "tags": [
+  "虫",
+  "昆虫",
+  "てんとうむし",
+  "ちょう",
+  "かぶとむし",
+  "くわがた",
+  "とんぼ",
+  "夏",
+  "自然"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "ladybug",
+   "てんとうむし",
+   "a red ladybug"
+  ],
+  [
+   "butterfly",
+   "ちょう",
+   "a yellow butterfly"
+  ],
+  [
+   "beetle",
+   "かぶとむし",
+   "a rhinoceros beetle"
+  ],
+  [
+   "stag",
+   "くわがた",
+   "a stag beetle"
+  ],
+  [
+   "dragonfly",
+   "とんぼ",
+   "a red dragonfly"
+  ],
+  [
+   "bee",
+   "みつばち",
+   "a honeybee"
+  ],
+  [
+   "ant",
+   "あり",
+   "a small ant carrying a crumb"
+  ],
+  [
+   "grasshopper",
+   "ばった",
+   "a green grasshopper"
+  ],
+  [
+   "caterpillar",
+   "あおむし",
+   "a green caterpillar"
+  ],
+  [
+   "cricket",
+   "こおろぎ",
+   "a cricket with a violin-like wing"
+  ],
+  [
+   "firefly",
+   "ほたる",
+   "a firefly glowing softly"
+  ],
+  [
+   "snail",
+   "でんでんむし",
+   "a snail"
+  ]
+ ]
+}

@@ -1,0 +1,84 @@
+{
+ "slug": "wagashi-wa",
+ "title": "和菓子のイラスト",
+ "subject": "",
+ "genre": "food",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "subject_en": "Japanese sweets, each a separate item, elegant wa style Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "だんご、大福、練り切り、ようかんなど、和菓子12点。和風のお品書きや季節のお知らせに。",
+ "tags": [
+  "和菓子",
+  "だんご",
+  "大福",
+  "ようかん",
+  "練り切り",
+  "お茶",
+  "和風",
+  "お彼岸"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "dango",
+   "みたらしだんご",
+   "mitarashi dumplings on a skewer"
+  ],
+  [
+   "daifuku",
+   "大福",
+   "a white daifuku cut in half showing red bean paste"
+  ],
+  [
+   "nerikiri",
+   "練り切り(桜)",
+   "a nerikiri sweet shaped like a cherry blossom"
+  ],
+  [
+   "yokan",
+   "ようかん",
+   "sliced yokan on a plate"
+  ],
+  [
+   "ohagi",
+   "おはぎ",
+   "two ohagi rice cakes"
+  ],
+  [
+   "taiyaki",
+   "たい焼き",
+   "a taiyaki fish-shaped cake"
+  ],
+  [
+   "dorayaki",
+   "どら焼き",
+   "a dorayaki"
+  ],
+  [
+   "manju",
+   "お饅頭",
+   "steamed manju"
+  ],
+  [
+   "sakuramochi",
+   "桜もち",
+   "a sakura mochi in a leaf"
+  ],
+  [
+   "tea",
+   "抹茶とお菓子",
+   "a bowl of matcha with a sweet"
+  ],
+  [
+   "senbei",
+   "おせんべい",
+   "rice crackers"
+  ],
+  [
+   "kintsuba",
+   "きんつば",
+   "kintsuba squares"
+  ]
+ ]
+}

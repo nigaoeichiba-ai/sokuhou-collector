@@ -82,5 +82,6 @@
    "The student walks holding a plain certificate tube, no text or letters in the picture."
   ]
  ],
- "holes": false
+ "holes": false,
+ "exclude": []
 }

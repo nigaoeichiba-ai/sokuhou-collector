@@ -1,0 +1,89 @@
+{
+ "slug": "autumn-objects-flat",
+ "title": "秋のイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "autumn icons, each a separate object, simple and friendly Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
+ "lead": "紅葉、どんぐり、栗、きのこ、さつまいもなど、秋のモチーフ12点。おたよりや秋のメニュー、店頭の掲示に。",
+ "tags": [
+  "秋",
+  "紅葉",
+  "どんぐり",
+  "きのこ",
+  "栗",
+  "柿",
+  "さつまいも",
+  "ススキ",
+  "10月",
+  "11月"
+ ],
+ "season": {
+  "from": "09-01",
+  "to": "11-30"
+ },
+ "holes": false,
+ "items": [
+  [
+   "momiji",
+   "紅葉",
+   "a red maple leaf"
+  ],
+  [
+   "ginkgo",
+   "いちょう",
+   "a golden ginkgo leaf"
+  ],
+  [
+   "acorn",
+   "どんぐり",
+   "three acorns"
+  ],
+  [
+   "kuri",
+   "栗",
+   "chestnuts with a spiky burr"
+  ],
+  [
+   "kinoko",
+   "きのこ",
+   "a group of cute mushrooms"
+  ],
+  [
+   "kaki",
+   "柿",
+   "two persimmons with leaves"
+  ],
+  [
+   "imo",
+   "さつまいも",
+   "roasted sweet potatoes"
+  ],
+  [
+   "susuki",
+   "ススキ",
+   "pampas grass in a bundle"
+  ],
+  [
+   "scarecrow",
+   "かかし",
+   "a friendly scarecrow in a field"
+  ],
+  [
+   "nashi",
+   "梨",
+   "a golden pear"
+  ],
+  [
+   "sanma",
+   "さんま",
+   "a grilled sanma fish on a plate"
+  ],
+  [
+   "rice",
+   "おむすびと新米",
+   "a rice bowl with an ear of rice"
+  ]
+ ]
+}
