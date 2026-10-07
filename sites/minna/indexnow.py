@@ -16,6 +16,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ENDPOINT = "https://api.indexnow.org/indexnow"
+UA = "Mozilla/5.0 (compatible; minna-indexnow/1.0; +https://minna-no-illust.com/)"
 
 
 def payload(cfg: dict, urls: list[str]) -> dict:
@@ -31,7 +32,8 @@ def payload(cfg: dict, urls: list[str]) -> dict:
 
 
 def sitemap_urls(base: str) -> list[str]:
-    with urllib.request.urlopen(base.rstrip("/") + "/sitemap.xml", timeout=60) as r:
+    req = urllib.request.Request(base.rstrip("/") + "/sitemap.xml", headers={"User-Agent": UA})      # the host refuses the bare Python agent (403)
+    with urllib.request.urlopen(req, timeout=60) as r:
         xml = r.read().decode("utf-8")
     return re.findall(r"<loc>([^<]+)</loc>", xml)
 
@@ -47,7 +49,7 @@ def main(argv: list[str] | None = None) -> int:
     if a.dry_run:
         print(f"would send {len(body['urlList'])} URLs for {body['host']}")
         return 0
-    req = urllib.request.Request(ENDPOINT, data=json.dumps(body).encode("utf-8"), headers={"Content-Type": "application/json; charset=utf-8"})
+    req = urllib.request.Request(ENDPOINT, data=json.dumps(body).encode("utf-8"), headers={"Content-Type": "application/json; charset=utf-8", "User-Agent": UA})
     with urllib.request.urlopen(req, timeout=60) as r:
         print(f"IndexNow answered {r.status} for {len(body['urlList'])} URLs")
     return 0
