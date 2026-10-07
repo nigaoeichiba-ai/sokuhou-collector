@@ -15,6 +15,7 @@ import subprocess
 import tempfile
 import threading
 import unittest
+from fractions import Fraction
 from pathlib import Path
 
 from sites.saichin import build, content
@@ -25,12 +26,14 @@ CHROME = next((p for p in (r"C:\Program Files\Google\Chrome\Application\chrome.e
 
 
 def reference(kind, pay, excluded, hours, days, minimum):
-    """Ministry method, written independently of app.js: hourly equivalent of the wage that counts, compared with the minimum."""
+    """Ministry method, written independently of app.js and in EXACT arithmetic (fractions), so a verdict at the boundary has no tolerance to hide in:
+    the hourly equivalent of the wage that counts, compared with the minimum."""
+    pay, excluded, hours, days, minimum = (Fraction(x) for x in (pay, excluded, hours, days, minimum))
     effective = pay if kind == "hourly" else pay - excluded
     monthly_hours = hours * days / 12
     hourly = effective if kind == "hourly" else effective / hours if kind == "daily" else effective / monthly_hours
     gap = minimum - hourly
-    return {"hourly": hourly, "ok": gap <= 1e-9, "perMonth": max(gap, 0) * monthly_hours, "perYear": max(gap, 0) * hours * days}
+    return {"hourly": float(hourly), "ok": gap <= 0, "perMonth": float(max(gap, 0) * monthly_hours), "perYear": float(max(gap, 0) * hours * days)}
 
 
 class CheckPageTest(SiteFixture):
@@ -123,6 +126,25 @@ async function load(url) {
       ev({ kind: 'monthly', pay: 100000, excluded: 0, hours: 8, days: 400 }, row, TODAY).error,
       ev({ kind: 'monthly', pay: 100000, excluded: 0, hours: 8, days: 250 }, null, TODAY).error,
     ];
+    // hourly and daily pay do not need the days of the year to be judged
+    const noDays = ev({ kind: 'hourly', pay: 1200, excluded: 0, hours: '', days: '' }, { name: 'x', amount: 1163, prev: 1100, date: '2026-10-01' }, TODAY);
+    out.hourly_no_days = [noDays.error || null, noDays.periods && noDays.periods[0].ok];
+    const noDaysShort = ev({ kind: 'hourly', pay: 1000, excluded: 0, hours: '', days: '' }, { name: 'x', amount: 1163, prev: 1100, date: '2026-10-01' }, TODAY);
+    out.hourly_no_days_short = [noDaysShort.error || null, noDaysShort.periods && noDaysShort.periods[0].ok, noDaysShort.periods && noDaysShort.periods[0].perMonth];
+    out.daily_no_days = (() => { const r = ev({ kind: 'daily', pay: 8000, excluded: 0, hours: 8, days: '' }, { name: 'x', amount: 1163, prev: 1100, date: '2026-10-01' }, TODAY);
+      return [r.error || null, r.periods && r.periods[0].ok, r.periods && r.periods[0].perMonth]; })();
+    out.monthly_needs_days = ev({ kind: 'monthly', pay: 200000, excluded: 0, hours: 8, days: '' }, { name: 'x', amount: 1163, prev: 1100, date: '2026-10-01' }, TODAY).error;
+    // garbage that must be refused, never judged as a pass
+    out.garbage = [
+      ev({ kind: 'hourly', pay: Infinity, excluded: 0, hours: 8, days: 250 }, row, TODAY).error,
+      ev({ kind: 'hourly', pay: NaN, excluded: 0, hours: 8, days: 250 }, row, TODAY).error,
+      ev({ kind: 'monthly', pay: 190000, excluded: -10000, hours: 8, days: 250 }, row, TODAY).error,
+      ev({ kind: 'monthly', pay: 190000, excluded: Infinity, hours: 8, days: 250 }, row, TODAY).error,
+      ev({ kind: 'daily', pay: 8000, excluded: 0, hours: 'abc', days: 250 }, row, TODAY).error,
+    ];
+    // a tiny shortfall is shown as a shortfall (rounded up), never as 0 yen
+    const tiny = ev({ kind: 'hourly', pay: 1099.99, excluded: 0, hours: 8, days: 250 }, { name: 'x', amount: 1100, prev: 1050, date: '2026-10-01' }, TODAY);
+    out.tiny = [tiny.periods[0].ok, tiny.periods[0].gap > 0];
     // rounding is conservative: 1,099.96 yen an hour is shown as 1,099.9 and judged as short of 1,100
     const near = ev({ kind: 'hourly', pay: 1099.96, excluded: 0, hours: 8, days: 250 }, { name: 'x', amount: 1100, prev: 1050, date: '2026-10-01' }, TODAY);
     out.near = [near.periods[0].ok, near.steps[0]];
@@ -139,6 +161,10 @@ async function load(url) {
     out.small = (q('#chk-out').classList.contains('ok') ? 'ok' : q('#chk-out').classList.contains('ng') ? 'ng' : '?') + '|' + q('#chk-out .chk-head').textContent;
     out.has_table = q('#chk-out').querySelectorAll('section.chk-period').length >= 1;
     out.has_steps = !!q('#chk-out details.chk-steps');
+    // a negative allowance must not cancel a positive one: it counts as 0
+    type(q('#chk-pay'), '190000'); type(q('#chk-x-commute'), '10000'); type(q('#chk-x-family'), '-10000');
+    out.negative_allowance = q('#chk-out .chk-sum').textContent;
+    type(q('#chk-x-commute'), ''); type(q('#chk-x-family'), '');
     out.excl_visible_monthly = !q('#chk-excl').hidden;
     q('input[name="chk-kind"][value="hourly"]').checked = true; q('input[name="chk-kind"][value="hourly"]').dispatchEvent(new w.Event('input', { bubbles: true }));
     out.excl_hidden_hourly = q('#chk-excl').hidden;
@@ -187,14 +213,33 @@ def make_cases(n=300, seed=20261007):
         else:
             excluded = float(rng.choice([0, 0, 3000, 8000, 15000]))
             pay = float(rng.randint(120000, 320000))
-        today = "2026-10-10"
-        now_min = minimum if date <= today else prev
-        exp_last = reference(kind, pay, excluded, hours, days, minimum)
-        exp_now = reference(kind, pay, excluded, hours, days, now_min)
-        cases.append({"kind": kind, "pay": pay, "excluded": excluded, "hours": hours, "days": days, "amount": minimum, "prev": prev, "date": date,
-                      "expected": {"hourly": exp_last["hourly"], "ok_now": exp_now["ok"], "ok_last": exp_last["ok"],
-                                   "perMonth_last": exp_last["perMonth"], "perYear_last": exp_last["perYear"]}})
+        cases.append(_case(kind, pay, excluded, hours, days, minimum, prev, date))
+    # exactly on the boundary and one yen either side, for every pay type (the verdict must not depend on float noise)
+    for minimum in (1000, 1080, 1163, 1226, 1280):
+        for delta in (-1, 0, 1):
+            cases.append(_case("hourly", minimum + delta, 0, 8, 240, minimum, minimum - 50, "2026-10-01"))
+            cases.append(_case("daily", minimum * 8 + delta, 0, 8, 240, minimum, minimum - 50, "2026-10-01"))
+            cases.append(_case("daily", minimum * 8 + delta + 800, 800, 8, 240, minimum, minimum - 50, "2026-10-01"))
+            cases.append(_case("monthly", minimum * 160 + delta, 0, 8, 240, minimum, minimum - 50, "2026-10-01"))          # 8 h x 240 days / 12 = 160 h
+            cases.append(_case("monthly", minimum * 160 + delta + 5000, 5000, 8, 240, minimum, minimum - 50, "2026-10-01"))
+    # monthly wages that are EXACTLY the minimum, where plain float division lands just below it (30,000 / (4 x 100 / 12) = 899.9999999999999 yen):
+    # they meet the minimum, and one yen less does not
+    noise = [(h, d, m, int(Fraction(m) * Fraction(h) * d / 12)) for h in (4, 6, 7.5, 8) for d in range(100, 301, 7) for m in range(900, 1400, 11)
+             if (Fraction(m) * Fraction(h) * d / 12).denominator == 1 and (Fraction(m) * Fraction(h) * d / 12) / 1 == int(Fraction(m) * Fraction(h) * d / 12)
+             and int(Fraction(m) * Fraction(h) * d / 12) / (h * d / 12) < m]
+    for h, d, m, pay in noise[:40]:
+        cases.append(_case("monthly", pay, 0, h, d, m, m - 50, "2026-10-01"))
+        cases.append(_case("monthly", pay - 1, 0, h, d, m, m - 50, "2026-10-01"))
     return cases
+
+
+def _case(kind, pay, excluded, hours, days, minimum, prev, date, today="2026-10-10"):
+    now_min = minimum if date <= today else prev
+    exp_last = reference(kind, pay, excluded, hours, days, minimum)
+    exp_now = reference(kind, pay, excluded, hours, days, now_min)
+    return {"kind": kind, "pay": float(pay), "excluded": float(excluded), "hours": hours, "days": days, "amount": minimum, "prev": prev, "date": date,
+            "expected": {"hourly": exp_last["hourly"], "ok_now": exp_now["ok"], "ok_last": exp_last["ok"],
+                         "perMonth_last": exp_last["perMonth"], "perYear_last": exp_last["perYear"]}}
 
 
 @unittest.skipUnless(CHROME, "Chrome is not installed")
@@ -252,6 +297,39 @@ class CheckBrowserTest(unittest.TestCase):
         for message in self.out["errors"]:
             self.assertIsInstance(message, str)
             self.assertTrue(message.endswith("。"), message)
+
+    def test_hourly_and_daily_pay_do_not_need_the_days_of_the_year(self):
+        o = self.out
+        self.assertEqual(o["hourly_no_days"], [None, True])
+        self.assertEqual(o["hourly_no_days_short"], [None, False, None])      # judged; month and year not computable, so not shown
+        self.assertEqual(o["daily_no_days"], [None, False, None])
+        self.assertTrue(o["monthly_needs_days"] and "年間の所定労働日数" in o["monthly_needs_days"])
+
+    def test_garbage_input_is_refused_never_judged_as_a_pass(self):
+        self.assertEqual(len(self.out["garbage"]), 5)
+        for message in self.out["garbage"]:
+            self.assertIsInstance(message, str, self.out["garbage"])
+            self.assertTrue(message)
+
+    def test_a_tiny_shortfall_is_still_a_shortfall(self):
+        self.assertEqual(self.out["tiny"], [False, True])
+
+    def test_a_negative_allowance_does_not_cancel_a_positive_one(self):
+        self.assertIn("除外する手当 10,000円", self.out["negative_allowance"])
+
+    def test_the_sample_has_cases_where_float_division_alone_would_be_wrong(self):
+        flipped = [c for c in self.cases if c["kind"] == "monthly" and c["expected"]["ok_last"]
+                   and c["pay"] / (c["hours"] * c["days"] / 12) < c["amount"]]
+        self.assertGreaterEqual(len(flipped), 20)
+
+    def test_the_sample_has_boundary_cases_on_both_sides_for_every_pay_type(self):
+        edge = [c for c in self.cases if c["date"] == "2026-10-01" and c["prev"] == c["amount"] - 50]
+        self.assertGreaterEqual(len(edge), 60)
+        for kind in ("hourly", "daily", "monthly"):
+            verdicts = {c["expected"]["ok_last"] for c in edge if c["kind"] == kind}
+            self.assertEqual(verdicts, {True, False}, kind)
+            on_the_line = [c for c in edge if c["kind"] == kind and c["expected"]["ok_last"] and abs(c["expected"]["hourly"] - c["amount"]) < 1e-9]
+            self.assertTrue(on_the_line, kind)         # exactly equal to the minimum counts as meeting it
 
     def test_rounding_never_turns_a_shortfall_into_a_pass(self):
         ok, step = self.out["near"]
