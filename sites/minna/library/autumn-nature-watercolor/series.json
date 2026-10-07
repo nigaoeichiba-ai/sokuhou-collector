@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-08",
+ "slug": "autumn-nature-watercolor",
+ "title": "秋の自然のイラスト",
+ "genre": "nature",
+ "touch": "watercolor",
+ "lead": "紅葉、どんぐり、きのこ、すすき。やわらかい水彩で描いた、秋の自然モチーフ12点。",
+ "tags": [
+  "秋",
+  "紅葉",
+  "どんぐり",
+  "きのこ",
+  "自然",
+  "すすき"
+ ],
+ "subject": "",
+ "season": {
+  "from": "09-15",
+  "to": "11-30"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "autumn-nature-watercolor-momiji",
+   "file": "autumn-nature-watercolor-momiji.webp",
+   "title": "もみじ",
+   "desc": "もみじのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋の自然のイラスト",
+    "もみじ",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 324,
+   "h": 370
+  },
+  {
+   "id": "autumn-nature-watercolor-ichou",
+   "file": "autumn-nature-watercolor-ichou.webp",
+   "title": "いちょう",
+   "desc": "いちょうのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋の自然のイラスト",
+    "いちょう",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 332,
+   "h": 329
+  },
+  {
+   "id": "autumn-nature-watercolor-donguri",
+   "file": "autumn-nature-watercolor-donguri.webp",
+   "title": "どんぐり",
+   "desc": "どんぐりのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋の自然のイラスト",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 291,
+   "h": 280
+  },
+  {
+   "id": "autumn-nature-watercolor-kuri",
+   "file": "autumn-nature-watercolor-kuri.webp",
+   "title": "くり",
+   "desc": "くりのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋の自然のイラスト",
+    "くり",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 344,
+   "h": 344
+  },
+  {
+   "id": "autumn-nature-watercolor-kinoko",
+   "file": "autumn-nature-watercolor-kinoko.webp",
+   "title": "きのこ",
+   "desc": "きのこのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋の自然のイラスト",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 292,
+   "h": 330
+  },
+  {
+   "id": "autumn-nature-watercolor-susuki",
+   "file": "autumn-nature-watercolor-susuki.webp",
+   "title": "すすき",
+   "desc": "すすきのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "すすき",
+    "秋の自然のイラスト",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 335,
+   "h": 426
+  },
+  {
+   "id": "autumn-nature-watercolor-matsuba",
+   "file": "autumn-nature-watercolor-matsuba.webp",
+   "title": "まつぼっくり",
+   "desc": "まつぼっくりのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋の自然のイラスト",
+    "まつぼっくり",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 480,
+   "h": 450
+  },
+  {
+   "id": "autumn-nature-watercolor-ochiba",
+   "file": "autumn-nature-watercolor-ochiba.webp",
+   "title": "落ち葉の山",
+   "desc": "落ち葉の山のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋の自然のイラスト",
+    "落ち葉の山",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 533,
+   "h": 433
+  },
+  {
+   "id": "autumn-nature-watercolor-kosumosu",
+   "file": "autumn-nature-watercolor-kosumosu.webp",
+   "title": "コスモス",
+   "desc": "コスモスのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋の自然のイラスト",
+    "コスモス",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 430,
+   "h": 491
+  },
+  {
+   "id": "autumn-nature-watercolor-higanbana",
+   "file": "autumn-nature-watercolor-higanbana.webp",
+   "title": "ひがんばな",
+   "desc": "ひがんばなのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋の自然のイラスト",
+    "ひがんばな",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 482,
+   "h": 493
+  },
+  {
+   "id": "autumn-nature-watercolor-persimmon",
+   "file": "autumn-nature-watercolor-persimmon.webp",
+   "title": "かき",
+   "desc": "かきのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋の自然のイラスト",
+    "かき",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 500,
+   "h": 470
+  },
+  {
+   "id": "autumn-nature-watercolor-tombo",
+   "file": "autumn-nature-watercolor-tombo.webp",
+   "title": "とんぼ",
+   "desc": "とんぼのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋の自然のイラスト",
+    "とんぼ",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 487,
+   "h": 342
+  }
+ ]
+}

@@ -1,0 +1,236 @@
+{
+ "added": "2026-10-08",
+ "slug": "sparkles-deco-kawaii",
+ "title": "キラキラ・かざりのイラスト",
+ "genre": "deco",
+ "touch": "kawaii",
+ "lead": "星、きらきら、リボン、ハート、花かざり。チラシやカードのアクセントに使える飾り12点。",
+ "tags": [
+  "キラキラ",
+  "星",
+  "かざり",
+  "リボン",
+  "ハート",
+  "アクセント"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "sparkles-deco-kawaii-star",
+   "file": "sparkles-deco-kawaii-star.webp",
+   "title": "大きな星",
+   "desc": "大きな星のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "キラキラ・かざりのイラスト",
+    "大きな星",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 447,
+   "h": 424
+  },
+  {
+   "id": "sparkles-deco-kawaii-sparkle",
+   "file": "sparkles-deco-kawaii-sparkle.webp",
+   "title": "キラキラ",
+   "desc": "キラキラのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "キラキラ・かざりのイラスト",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 423,
+   "h": 377
+  },
+  {
+   "id": "sparkles-deco-kawaii-ribbon",
+   "file": "sparkles-deco-kawaii-ribbon.webp",
+   "title": "リボン",
+   "desc": "リボンのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "キラキラ・かざりのイラスト",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 448,
+   "h": 372
+  },
+  {
+   "id": "sparkles-deco-kawaii-heart",
+   "file": "sparkles-deco-kawaii-heart.webp",
+   "title": "ふくらんだハート",
+   "desc": "ふくらんだハートのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "ハート",
+    "キラキラ・かざりのイラスト",
+    "ふくらんだハート",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 449,
+   "h": 383
+  },
+  {
+   "id": "sparkles-deco-kawaii-crown",
+   "file": "sparkles-deco-kawaii-crown.webp",
+   "title": "おうかん",
+   "desc": "おうかんのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "キラキラ・かざりのイラスト",
+    "おうかん",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 471,
+   "h": 382
+  },
+  {
+   "id": "sparkles-deco-kawaii-rainbow",
+   "file": "sparkles-deco-kawaii-rainbow.webp",
+   "title": "にじ",
+   "desc": "にじのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "キラキラ・かざりのイラスト",
+    "にじ",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 523,
+   "h": 353
+  },
+  {
+   "id": "sparkles-deco-kawaii-flower",
+   "file": "sparkles-deco-kawaii-flower.webp",
+   "title": "花かざり",
+   "desc": "花かざりのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "キラキラ・かざりのイラスト",
+    "花かざり",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 467,
+   "h": 417
+  },
+  {
+   "id": "sparkles-deco-kawaii-lace",
+   "file": "sparkles-deco-kawaii-lace.webp",
+   "title": "レースのかざり",
+   "desc": "レースのかざりのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "キラキラ・かざりのイラスト",
+    "レースのかざり",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 471,
+   "h": 466
+  },
+  {
+   "id": "sparkles-deco-kawaii-balloon",
+   "file": "sparkles-deco-kawaii-balloon.webp",
+   "title": "ふうせん",
+   "desc": "ふうせんのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "キラキラ・かざりのイラスト",
+    "ふうせん",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 449,
+   "h": 501
+  },
+  {
+   "id": "sparkles-deco-kawaii-garland",
+   "file": "sparkles-deco-kawaii-garland.webp",
+   "title": "ガーランド",
+   "desc": "ガーランドのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "キラキラ・かざりのイラスト",
+    "ガーランド",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 488,
+   "h": 260
+  },
+  {
+   "id": "sparkles-deco-kawaii-moon",
+   "file": "sparkles-deco-kawaii-moon.webp",
+   "title": "月とほし",
+   "desc": "月とほしのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "キラキラ・かざりのイラスト",
+    "月とほし",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 432,
+   "h": 421
+  },
+  {
+   "id": "sparkles-deco-kawaii-gem",
+   "file": "sparkles-deco-kawaii-gem.webp",
+   "title": "ほうせき",
+   "desc": "ほうせきのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "キラキラ",
+    "星",
+    "かざり",
+    "リボン",
+    "キラキラ・かざりのイラスト",
+    "ほうせき",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 452,
+   "h": 374
+  }
+ ]
+}

@@ -1,0 +1,236 @@
+{
+ "added": "2026-10-08",
+ "slug": "nabe-oden-kawaii",
+ "title": "鍋・おでんのイラスト",
+ "genre": "food",
+ "touch": "kawaii",
+ "lead": "寄せ鍋、おでん、湯気のごはん。寒い季節のメニュー表やお知らせに使える12点。",
+ "tags": [
+  "鍋",
+  "おでん",
+  "冬",
+  "あたたかい",
+  "ごはん",
+  "しいたけ"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "nabe-oden-kawaii-nabe",
+   "file": "nabe-oden-kawaii-nabe.webp",
+   "title": "寄せ鍋",
+   "desc": "寄せ鍋のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "鍋・おでんのイラスト",
+    "寄せ鍋",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 531,
+   "h": 476
+  },
+  {
+   "id": "nabe-oden-kawaii-oden",
+   "file": "nabe-oden-kawaii-oden.webp",
+   "title": "おでん",
+   "desc": "おでんのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "鍋・おでんのイラスト",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 495,
+   "h": 454
+  },
+  {
+   "id": "nabe-oden-kawaii-daikon",
+   "file": "nabe-oden-kawaii-daikon.webp",
+   "title": "だいこん",
+   "desc": "だいこんのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "鍋・おでんのイラスト",
+    "だいこん",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 436,
+   "h": 383
+  },
+  {
+   "id": "nabe-oden-kawaii-tamago",
+   "file": "nabe-oden-kawaii-tamago.webp",
+   "title": "ゆでたまご",
+   "desc": "ゆでたまごのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "鍋・おでんのイラスト",
+    "ゆでたまご",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 493,
+   "h": 372
+  },
+  {
+   "id": "nabe-oden-kawaii-tofu",
+   "file": "nabe-oden-kawaii-tofu.webp",
+   "title": "とうふ",
+   "desc": "とうふのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "鍋・おでんのイラスト",
+    "とうふ",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 471,
+   "h": 372
+  },
+  {
+   "id": "nabe-oden-kawaii-shiitake",
+   "file": "nabe-oden-kawaii-shiitake.webp",
+   "title": "しいたけ",
+   "desc": "しいたけのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "しいたけ",
+    "鍋・おでんのイラスト",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 522,
+   "h": 369
+  },
+  {
+   "id": "nabe-oden-kawaii-negi",
+   "file": "nabe-oden-kawaii-negi.webp",
+   "title": "ねぎ",
+   "desc": "ねぎのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "鍋・おでんのイラスト",
+    "ねぎ",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 326,
+   "h": 451
+  },
+  {
+   "id": "nabe-oden-kawaii-hakusai",
+   "file": "nabe-oden-kawaii-hakusai.webp",
+   "title": "はくさい",
+   "desc": "はくさいのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "鍋・おでんのイラスト",
+    "はくさい",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 331,
+   "h": 443
+  },
+  {
+   "id": "nabe-oden-kawaii-kotatsu-mikan",
+   "file": "nabe-oden-kawaii-kotatsu-mikan.webp",
+   "title": "みかん",
+   "desc": "みかんのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "鍋・おでんのイラスト",
+    "みかん",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 416,
+   "h": 406
+  },
+  {
+   "id": "nabe-oden-kawaii-tea",
+   "file": "nabe-oden-kawaii-tea.webp",
+   "title": "あたたかいお茶",
+   "desc": "あたたかいお茶のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "鍋・おでんのイラスト",
+    "あたたかいお茶",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 336,
+   "h": 422
+  },
+  {
+   "id": "nabe-oden-kawaii-ramen",
+   "file": "nabe-oden-kawaii-ramen.webp",
+   "title": "ラーメン",
+   "desc": "ラーメンのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "鍋・おでんのイラスト",
+    "ラーメン",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 428,
+   "h": 390
+  },
+  {
+   "id": "nabe-oden-kawaii-udon",
+   "file": "nabe-oden-kawaii-udon.webp",
+   "title": "なべやきうどん",
+   "desc": "なべやきうどんのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "鍋",
+    "おでん",
+    "冬",
+    "あたたかい",
+    "鍋・おでんのイラスト",
+    "なべやきうどん",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 490,
+   "h": 368
+  }
+ ]
+}
