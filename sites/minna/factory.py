@@ -146,7 +146,21 @@ def sheet_prompt(spec: dict, sheet: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+PRIORITY = (("eto", 10), ("nenga", 10), ("newyear", 10), ("coloring-newyear", 10), ("christmas", 15), ("winter", 15), ("setsubun", 22), ("halloween", 30))
+
+
+def priority_of(spec: dict) -> int:
+    """Lower is drawn first: the season that is coming, then the rest; a spec may also carry its own "priority"."""
+    if "priority" in spec:
+        return int(spec["priority"])
+    for prefix, n in PRIORITY:
+        if spec["slug"].startswith(prefix):
+            return n
+    return 40
+
+
 def pending_sheets(specs: list[dict], sheets_dir: Path) -> list[tuple[dict, dict]]:
+    specs = sorted(specs, key=lambda x: (priority_of(x), x["slug"]))
     out = []
     for s in specs:
         lib = LIBRARY / s["slug"]
@@ -173,6 +187,25 @@ def cmd_brief(a) -> None:
     text = HEADER.format(dir=rel) + f"SHEETS TO PRODUCE ({len(pend)}):\n\n" + "\n".join(sheet_prompt(s, sh) for s, sh in pend)
     Path(a.out).write_text(text, encoding="utf-8")
     print(f"brief for {len(pend)} sheets -> {a.out}")
+
+
+def cmd_batches(a) -> None:
+    """Split everything still to be drawn into one brief per worker (w1.md, w2.md, ...), most urgent first, dealt out round-robin."""
+    sheets_dir = Path(a.sheets_dir)
+    pend = pending_sheets(load_specs(a.series.split(",") if a.series else None), sheets_dir)[: a.workers * a.per]
+    if not pend:
+        sys.exit("nothing to draw")
+    out = Path(a.out)
+    out.mkdir(parents=True, exist_ok=True)
+    rel = sheets_dir.relative_to(ROOT.parent).as_posix() if sheets_dir.is_relative_to(ROOT.parent) else sheets_dir.as_posix()
+    sheets_dir.mkdir(parents=True, exist_ok=True)
+    groups: list[list] = [[] for _ in range(a.workers)]
+    for i, item in enumerate(pend):
+        groups[i % a.workers].append(item)
+    for n, g in enumerate(groups, 1):
+        if g:
+            (out / f"{a.prefix}{n}.md").write_text(HEADER.format(dir=rel) + f"SHEETS TO PRODUCE ({len(g)}):\n\n" + "\n".join(sheet_prompt(s, sh) for s, sh in g), encoding="utf-8")
+            print(f"{a.prefix}{n}.md: {len(g)} sheets: " + ", ".join(sh["file"] for _, sh in g))
 
 
 # ---------------------------------------------------------------- ingest
@@ -294,10 +327,15 @@ def cmd_status(a) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name, fn in (("status", cmd_status), ("brief", cmd_brief), ("ingest", cmd_ingest), ("recover", cmd_recover)):
+    for name, fn in (("status", cmd_status), ("brief", cmd_brief), ("ingest", cmd_ingest), ("recover", cmd_recover), ("batches", cmd_batches)):
         p = sub.add_parser(name)
         p.add_argument("--series")
         p.add_argument("--sheets-dir", default=str(DEFAULT_SHEETS / "inbox"))
+        if name == "batches":
+            p.add_argument("--out", required=True)
+            p.add_argument("--workers", type=int, default=5)
+            p.add_argument("--per", type=int, default=8)
+            p.add_argument("--prefix", default="b")
         if name == "recover":
             p.add_argument("--hours", type=float, default=24)
         if name == "brief":
