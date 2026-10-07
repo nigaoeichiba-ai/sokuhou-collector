@@ -534,3 +534,12 @@ p, li { overflow-wrap: anywhere; }
 .memo > *, .memo-form > *, .memo-list-wrap > * { min-width: 0; }
 .memo-form input, .memo-form select, .memo-form textarea { box-sizing: border-box; width: 100%; max-width: 100%; }
 @media (max-width: 400px) { .memo-form, .memo-list-wrap { padding: 16px 14px; } }
+
+/* message examples */
+.msg-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 12px; }
+.msg-list li { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; padding: 14px 16px; background: #fff; border: var(--line2); border-radius: 18px; box-shadow: 3px 3px 0 var(--ink); }
+.msg-list .msg-text { margin: 0; flex: 1; min-width: 0; line-height: 1.85; overflow-wrap: anywhere; }
+.msg-list .copy { flex: none; padding: .35em .9em; border: 2px solid var(--ink); border-radius: 999px; background: var(--yellow-s, #fff1b8); font: 800 .8rem var(--body); color: var(--ink); cursor: pointer; }
+.msg-list .copy.done { background: var(--mint-s, #d7f7ea); }
+@media (max-width: 480px) { .msg-list li { flex-direction: column; } .msg-list .copy { align-self: flex-end; } }
+

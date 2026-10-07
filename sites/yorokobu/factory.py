@@ -47,6 +47,10 @@ ARTICLE_SPEC = """
 {"articles":[{"slug":"ascii-lowercase-hyphens","title":"title 18-40 chars, natural, specific","lead":"110-230 chars","sections":[{"h":"heading 8-22 chars","body":"200-420 chars, concrete: situations, wording to use, what to do and avoid"} x 4-5],"checklist":["3-6 short action items, 12-34 chars"],"faq":[{"q":"14-34 chars","a":"60-140 chars"} x 2-3],"themes":["2-4 slugs chosen ONLY from the theme list below, the ones a reader would want next"]}]}
 Do not write a "date" field (it is added automatically).
 """
+MESSAGE_SPEC = """
+{"messages":[{"occasion":"<an occasion slug from the list below>","intro":"110-240 chars: when and how people write a card or message for this occasion, calm and practical","sets":[{"to":"2-12 chars: who the message is for, e.g. 母へ / 職場の先輩へ / 遠くに住む友人へ","style":"丁寧|やわらかい|ひとこと","lines":["EXACTLY 3 different ready-to-copy messages for this person, each 30-110 chars, natural spoken-written Japanese, complete sentences ending with 。 or !"]} x 5-6 sets with different recipients and a mix of styles],"manners":["3 items, 34-100 chars: wording or habits to avoid on this occasion, or how to word things well"],"closing":["3-4 short closing phrases, 6-24 chars, e.g. 体に気をつけてね。"]}]}
+Messages must be usable as they are: they may address the person only as "あなた" or by relation (お母さん, 先輩), never with a placeholder or a name. Do not mention the gift's brand or price. Different sets must sound different (not the same sentence with the relation swapped).
+"""
 RULES = """
 LENGTH CALIBRATION: past answers were consistently about 30% SHORTER than requested because characters are hard to count. Aim for the upper half of every range (write about 40% more than feels necessary), then check a few fields by counting.
 HARD RULES: polite です・ます Japanese with varied sentence length; no statistics, surveys, rankings, "調査", "人気", "売れ筋"; no guarantees ("必ず", "絶対", "最高"); no brand or shop names; never mention Rakuten, Amazon, affiliates or AI; no medical or cosmetic-effect claims; no emojis; no stacked abstract nouns; each item reads differently, and nothing may repeat sentences of the existing pages. Products must be physical things you can find on a Japanese shopping site (no tickets, bookings or services). There is no python in your sandbox that you can rely on: count characters yourself while writing.
@@ -80,6 +84,13 @@ def brief(kind: str, n: int, out: Path, answer: Path) -> None:
                 f"an interest or a constraint instead of an occasion; each shows 4 product ideas that editors then fill with real products.\n\n"
                 f"WRITE {n} NEW theme pages that are clearly different from every covered one below (different angle, different products, different queries).\n"
                 f"Existing groups:\n{_groups_text(c)}\n{INSPIRATION}\nFORMAT:{THEME_SPEC}\nCOVERED THEMES (do not repeat; do not reuse these queries):\n{covered}\n{RULES}")
+    elif kind == "messages":
+        todo = [o for o in c["occasions"] if o["slug"] not in c["messages"]][:n]
+        listing = "\n".join(f"- {o['slug']} | {o['name']} | {o['timing']}" for o in todo)
+        text = (f"Content task (workspace-write). Reply in English with a very short report. Write exactly ONE file: {answer.as_posix()} (UTF-8 JSON, ensure_ascii false). "
+                f"Do not edit anything else.\n\nSITE: \"よろこぶプレゼント\", a Japanese gift site. For each occasion below write the message examples people copy onto a card or send "
+                f"with a gift (what they search as \"<occasion> メッセージ 例文\"). Write exactly {len(todo)} entries, one per occasion, using these slugs:\n{listing}\n\n"
+                f"FORMAT:{MESSAGE_SPEC}\n{RULES}")
     else:
         covered = "\n".join(f"- {a['slug']} | {a['title']}" for a in c["articles"]) or "(none yet)"
         themes = "\n".join(f"- {t['slug']}: {t['name']}" for t in c["themes"])
@@ -173,21 +184,46 @@ def merge_articles(answer: dict, today: date) -> tuple[int, list[str]]:
     return len(items), []
 
 
+def merge_messages(answer: dict, today: date) -> tuple[int, list[str]]:
+    c = _load()
+    items = answer.get("messages", [])
+    occ = {o["slug"] for o in c["occasions"]}
+    known = set(c["messages"])
+    probs: list[str] = []
+    for m in items:
+        probs += quality.message_problems(m, occ, known)
+        known.add(m.get("occasion", ""))
+    old = [ln for e in c["messages"].values() for s in e["sets"] for ln in s["lines"]]
+    new = [ln for m in items for s in m.get("sets", []) for ln in s.get("lines", [])]
+    dup = set(old) & set(new)
+    probs += [f"a message repeats an existing one: {x[:30]}" for x in dup]
+    if probs:
+        return 0, probs
+    path = CONTENT / "messages.json"
+    data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"messages": []}
+    for m in items:
+        m["added"] = today.isoformat()
+    data["messages"] += items
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+    _load()
+    return len(items), []
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("status")
     b = sub.add_parser("brief")
-    b.add_argument("kind", choices=["themes", "articles"])
+    b.add_argument("kind", choices=["themes", "articles", "messages"])
     b.add_argument("--n", type=int, default=5)
     b.add_argument("--out", type=Path, required=True)
     b.add_argument("--answer", type=Path, required=True)
     m = sub.add_parser("merge")
-    m.add_argument("kind", choices=["themes", "articles"])
+    m.add_argument("kind", choices=["themes", "articles", "messages"])
     m.add_argument("file", type=Path)
     m.add_argument("--today", default=date.today().isoformat())
     r = sub.add_parser("retry", help="write a brief that sends a refused answer back to Codex with the problems")
-    r.add_argument("kind", choices=["themes", "articles"])
+    r.add_argument("kind", choices=["themes", "articles", "messages"])
     r.add_argument("file", type=Path)
     r.add_argument("--out", type=Path, required=True)
     a = ap.parse_args()
