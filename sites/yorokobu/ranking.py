@@ -22,8 +22,8 @@ from sokuhou import rakuten
 HERE = Path(__file__).resolve().parent
 JST = timezone(timedelta(hours=9))
 HISTORY_DAYS = 45
-PLACES = 30                      # one API page
-KEEP = 30                        # places kept per segment in the snapshot
+PLACES = 30                      # places per API page
+PAGES = 4                        # pages fetched per segment: the top 120 (gift-like products are rare near the top of a sales ranking)
 
 AGES = (10, 20, 30, 40, 50)
 SEXES = ((1, "f", "女性"), (0, "m", "男性"))
@@ -71,62 +71,71 @@ def _item(raw: dict, place: int) -> dict | None:
     return base
 
 
-def snapshot_segment(client: rakuten.Client, seg: dict) -> list[dict]:
-    raw = client.ranking(genreId=seg["genre"], page=1) if seg.get("kind") == "genre" else client.ranking(age=seg["age"], sex=seg["sex"], page=1)
-    out = []
-    for i, r in enumerate(raw[:PLACES]):
-        it = _item(r, i + 1)
-        if it:
-            out.append(it)
+def snapshot_segment(client: rakuten.Client, seg: dict, pages: int = PAGES) -> list[dict]:
+    """The top places of one segment (PLACES per page, `pages` pages; fewer when the ranking ends sooner)."""
+    out: list[dict] = []
+    for page in range(1, pages + 1):
+        raw = (client.ranking(genreId=seg["genre"], page=page) if seg.get("kind") == "genre"
+               else client.ranking(age=seg["age"], sex=seg["sex"], page=page))
+        for i, r in enumerate(raw[:PLACES]):
+            it = _item(r, (page - 1) * PLACES + i + 1)
+            if it:
+                out.append(it)
+        if len(raw) < PLACES:
+            break
     return out
 
 
-def update(store: dict | None, fresh: dict[str, list[dict]], today: date) -> dict:
-    """Merge today's snapshots into the store: replace the latest items, add today's codes to the history, drop days older than HISTORY_DAYS.
+def _ranked(entry: list) -> dict[str, int]:
+    """One history entry as {code: place}.  New entries are [[code, place], ...]; the first snapshots stored only [code, ...] in rank order."""
+    out: dict[str, int] = {}
+    for i, e in enumerate(entry):
+        if isinstance(e, (list, tuple)):
+            out[e[0]] = int(e[1])
+        else:
+            out[e] = i + 1
+    return out
+
+
+def update(store: dict | None, fresh: dict[str, list[dict]], today: date, keep=None, depth: int = PAGES * PLACES) -> dict:
+    """Merge today's snapshots into the store.  `keep` (a function of one item) decides which products are stored at all: the site only ever shows
+    gift-like products (shown()), so only those are kept, each with its real Rakuten place, and the history holds [code, place] pairs of them.
     A segment that failed to fetch today (absent from `fresh`) keeps its previous data untouched."""
     store = dict(store or {})
     segs = dict(store.get("segments") or {})
     for slug, items in fresh.items():
+        items = [it for it in items if keep is None or keep(it)] if items else []
         if not items:
             continue
         old = segs.get(slug, {})
         history = dict(old.get("history") or {})
-        history[today.isoformat()] = [it["code"] for it in sorted(items, key=lambda i: i["rank"])][:KEEP]
+        ordered = sorted(items, key=lambda i: i["rank"])
+        history[today.isoformat()] = [[it["code"], it["rank"]] for it in ordered]
         cutoff = (today - timedelta(days=HISTORY_DAYS)).isoformat()
         history = {d: codes for d, codes in sorted(history.items()) if d >= cutoff}
-        segs[slug] = {"label": SEGMENTS[slug]["label"], "kind": SEGMENTS[slug]["kind"], "date": today.isoformat(), "items": sorted(items, key=lambda i: i["rank"])[:KEEP], "history": history}
-    return {"version": 1, "updated": today.isoformat(), "segments": segs}
+        segs[slug] = {"label": SEGMENTS[slug]["label"], "kind": SEGMENTS[slug]["kind"], "date": today.isoformat(), "depth": depth, "items": ordered, "history": history}
+    return {"version": 2, "updated": today.isoformat(), "segments": segs}
 
 
 def movers(seg: dict) -> dict:
     """What changed in one segment between the two latest dates of its history (empty lists when there is only one day).
-    risers: (code, places gained) sorted by gain; entered: codes not in the previous list; stay: code -> consecutive days present up to the latest."""
-    hist = seg.get("history") or {}
+    risers: (code, places gained in Rakuten's own ranking) sorted by gain; entered: codes that were not in the previous day's stored list;
+    stay: code -> consecutive days present up to the latest."""
+    hist = {d: _ranked(e) for d, e in (seg.get("history") or {}).items()}
     days = sorted(hist)
-    latest = hist[days[-1]] if days else []
+    latest = hist[days[-1]] if days else {}
     out = {"days": len(days), "risers": [], "entered": [], "stay": {}}
     if days:
-        run = {}
-        for code in latest:
-            n = 0
-            for d in reversed(days):
-                if code in hist[d]:
-                    n += 1
-                else:
-                    break
-            run[code] = n
-        out["stay"] = run
+        out["stay"] = {code: next((k for k, d in enumerate(reversed(days)) if code not in hist[d]), len(days)) for code in latest}
     if len(days) >= 2:
         prev = hist[days[-2]]
-        pos = {c: i + 1 for i, c in enumerate(prev)}
-        for i, code in enumerate(latest):
-            if code in pos:
-                gain = pos[code] - (i + 1)
-                if gain > 0:
-                    out["risers"].append((code, gain))
+        for code, place in sorted(latest.items(), key=lambda kv: kv[1]):
+            if code in prev:
+                if prev[code] - place > 0:
+                    out["risers"].append((code, prev[code] - place))
             else:
                 out["entered"].append(code)
-        out["risers"].sort(key=lambda t: (-t[1], latest.index(t[0])))
+        out["risers"].sort(key=lambda t: (-t[1], latest[t[0]]))
     return out
 
 
@@ -151,13 +160,25 @@ DAILY = ("トイレットペーパー", "ティッシュ", "ボックスティ�
          "牛丼の具", "牛めしの具", "ハイボール", "エクオール", "ピックアップ", "予約", "再販", "お一人様", "1人1点", "一人様")
 
 
+# The ranking says what SELLS, not what is given as a present (the first real snapshot showed cases of cheap shochu, solar garden lights, work shirts).
+# The API carries no gift flag, so a product is shown only when its own title says it is meant as a gift: one of these words must appear in it.
+GIFT_HINTS = ("ギフト", "プレゼント", "贈り物", "贈答", "内祝", "お祝い", "祝い", "誕生日", "母の日", "父の日", "敬老", "結婚祝", "出産祝", "退職", "のし", "熨斗",
+              "名入れ", "お返し", "詰め合わせ", "詰合せ", "詰め合せ", "アソート", "花束", "ブーケ", "アレンジメント", "ラッピング", "贈る", "お礼", "手土産", "化粧箱",
+              "ペア", "ホワイトデー", "バレンタイン", "クリスマス", "お歳暮", "お中元", "お見舞い", "引き出物", "ご挨拶")
+# bulk packs of drink are not presents even when the title says ギフト
+BULK = ("1ケース", "ケース販売", "ケース(", "紙パック", "パック 1.8L", "パック 1800ml", "1.8Lパック", "1800mlパック", "×6本", "×12本", "×24本", "×48本", "24本入", "48本")
+MAX_PRICE = 30000
+
+
 def shown(item: dict, filters: dict) -> bool:
-    """A ranked product the page may show: for sale, above the site's minimum price, none of the site's ng words, not a daily necessity,
-    and passing the same memorial / adult-only rules as the gift pages (no recipient is assumed)."""
-    if not item.get("available", True) or item.get("price", 0) < filters.get("min_price", 0):
+    """A ranked product the page may show: for sale, above the site's minimum and below MAX_PRICE, none of the site's ng words, not a daily
+    necessity or a bulk pack, a title that says it is a gift (GIFT_HINTS), and passing the same memorial / adult-only rules as the gift pages."""
+    if not item.get("available", True) or not filters.get("min_price", 0) <= item.get("price", 0) <= MAX_PRICE:
         return False
     name = item["name"]
-    if any(w and w in name for w in filters.get("ng_words", [])) or any(w in name for w in DAILY):
+    if any(w and w in name for w in filters.get("ng_words", [])) or any(w in name for w in DAILY) or any(w in name for w in BULK):
+        return False
+    if not any(w in name for w in GIFT_HINTS):
         return False
     return relevance.fits(name, None)
 
@@ -178,6 +199,7 @@ def view(store: dict | None, filters: dict, min_items: int = 8) -> dict | None:
         ok = {it["code"]: it for it in items}
         segs[slug] = {
             "slug": slug, "label": SEGMENTS[slug]["label"], "kind": SEGMENTS[slug]["kind"], "date": s.get("date") or store.get("updated"), "items": items, "facts": price_facts(items),
+            "depth": int(s.get("depth") or PLACES),
             "days": mv["days"],
             "risers": [(ok[c], g) for c, g in mv["risers"] if c in ok][:6],
             "entered": [ok[c] for c in mv["entered"] if c in ok][:6] if mv["days"] >= 2 else [],
@@ -235,10 +257,13 @@ def main() -> None:
     if not any(fresh.values()):
         sys.exit("no ranking could be fetched; the file is left unchanged")
     out = Path(a.out)
-    store = update(load(out), fresh, now.date())
+    from sites.yorokobu import content as ct
+    filters = ct.load()["filters"]
+    store = update(load(out), fresh, now.date(), keep=lambda it: shown(it, filters))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(store, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"ranking: {sum(1 for v in fresh.values() if v)} of {len(SEGMENTS)} segments, {client.calls} calls -> {out}")
+    kept = {k: len(v["items"]) for k, v in store["segments"].items()}
+    print(f"ranking: {sum(1 for v in fresh.values() if v)} of {len(SEGMENTS)} segments fetched, {client.calls} calls; gift-like products kept: {kept} -> {out}")
 
 
 if __name__ == "__main__":
