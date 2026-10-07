@@ -1,0 +1,240 @@
+{
+ "added": "2026-10-07",
+ "slug": "wa-patterns-tiles",
+ "title": "和柄のパターン",
+ "genre": "deco",
+ "touch": "wa",
+ "lead": "青海波、麻の葉、市松、七宝など、和柄のパターン12種類。背景や飾り、千代紙ふうの工作に。",
+ "tags": [
+  "和柄",
+  "和風",
+  "パターン",
+  "背景",
+  "青海波",
+  "麻の葉",
+  "市松",
+  "着物",
+  "千代紙"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "wa-patterns-tiles-seigaiha",
+   "file": "wa-patterns-tiles-seigaiha.webp",
+   "title": "青海波",
+   "desc": "青海波のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "青海波",
+    "和柄のパターン",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 441,
+   "h": 442
+  },
+  {
+   "id": "wa-patterns-tiles-asanoha",
+   "file": "wa-patterns-tiles-asanoha.webp",
+   "title": "麻の葉",
+   "desc": "麻の葉のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "麻の葉",
+    "和柄のパターン",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 446,
+   "h": 444
+  },
+  {
+   "id": "wa-patterns-tiles-ichimatsu",
+   "file": "wa-patterns-tiles-ichimatsu.webp",
+   "title": "市松",
+   "desc": "市松のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "市松",
+    "和柄のパターン",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 446,
+   "h": 448
+  },
+  {
+   "id": "wa-patterns-tiles-shippou",
+   "file": "wa-patterns-tiles-shippou.webp",
+   "title": "七宝",
+   "desc": "七宝のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "和柄のパターン",
+    "七宝",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 445,
+   "h": 446
+  },
+  {
+   "id": "wa-patterns-tiles-uroko",
+   "file": "wa-patterns-tiles-uroko.webp",
+   "title": "鱗",
+   "desc": "鱗のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "和柄のパターン",
+    "鱗",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 445,
+   "h": 443
+  },
+  {
+   "id": "wa-patterns-tiles-sakura",
+   "file": "wa-patterns-tiles-sakura.webp",
+   "title": "桜",
+   "desc": "桜のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "和柄のパターン",
+    "桜",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 445,
+   "h": 445
+  },
+  {
+   "id": "wa-patterns-tiles-kikko",
+   "file": "wa-patterns-tiles-kikko.webp",
+   "title": "亀甲",
+   "desc": "亀甲のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "和柄のパターン",
+    "亀甲",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 465,
+   "h": 456
+  },
+  {
+   "id": "wa-patterns-tiles-karakusa",
+   "file": "wa-patterns-tiles-karakusa.webp",
+   "title": "唐草",
+   "desc": "唐草のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "和柄のパターン",
+    "唐草",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 467,
+   "h": 455
+  },
+  {
+   "id": "wa-patterns-tiles-yagasuri",
+   "file": "wa-patterns-tiles-yagasuri.webp",
+   "title": "矢絣",
+   "desc": "矢絣のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "和柄のパターン",
+    "矢絣",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 465,
+   "h": 455
+  },
+  {
+   "id": "wa-patterns-tiles-kanoko",
+   "file": "wa-patterns-tiles-kanoko.webp",
+   "title": "鹿の子",
+   "desc": "鹿の子のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "和柄のパターン",
+    "鹿の子",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 464,
+   "h": 456
+  },
+  {
+   "id": "wa-patterns-tiles-tachiwaku",
+   "file": "wa-patterns-tiles-tachiwaku.webp",
+   "title": "立涌",
+   "desc": "立涌のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "和柄のパターン",
+    "立涌",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 466,
+   "h": 456
+  },
+  {
+   "id": "wa-patterns-tiles-ume",
+   "file": "wa-patterns-tiles-ume.webp",
+   "title": "梅",
+   "desc": "梅のイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "和柄",
+    "和風",
+    "パターン",
+    "背景",
+    "和柄のパターン",
+    "梅",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 465,
+   "h": 456
+  }
+ ]
+}

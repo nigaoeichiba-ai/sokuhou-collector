@@ -1,0 +1,240 @@
+{
+ "added": "2026-10-07",
+ "slug": "bousai-icons-pictogram",
+ "title": "防災のイラスト",
+ "genre": "life",
+ "touch": "pictogram",
+ "lead": "防災リュック、ヘルメット、懐中電灯、ラジオ、非常食など、防災の備えを表す12点。ポスターや回覧に。",
+ "tags": [
+  "防災",
+  "避難",
+  "災害",
+  "地震",
+  "備蓄",
+  "非常用持ち出し袋",
+  "ヘルメット",
+  "懐中電灯"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "bousai-icons-pictogram-bag",
+   "file": "bousai-icons-pictogram-bag.webp",
+   "title": "防災リュック",
+   "desc": "防災リュックのイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "防災のイラスト",
+    "防災リュック",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 437,
+   "h": 488
+  },
+  {
+   "id": "bousai-icons-pictogram-helmet",
+   "file": "bousai-icons-pictogram-helmet.webp",
+   "title": "防災ヘルメット",
+   "desc": "防災ヘルメットのイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "ヘルメット",
+    "防災のイラスト",
+    "防災ヘルメット",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 435,
+   "h": 446
+  },
+  {
+   "id": "bousai-icons-pictogram-flashlight",
+   "file": "bousai-icons-pictogram-flashlight.webp",
+   "title": "懐中電灯",
+   "desc": "懐中電灯のイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "懐中電灯",
+    "防災のイラスト",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 524,
+   "h": 358
+  },
+  {
+   "id": "bousai-icons-pictogram-radio",
+   "file": "bousai-icons-pictogram-radio.webp",
+   "title": "防災ラジオ",
+   "desc": "防災ラジオのイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "防災のイラスト",
+    "防災ラジオ",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 483,
+   "h": 422
+  },
+  {
+   "id": "bousai-icons-pictogram-water",
+   "file": "bousai-icons-pictogram-water.webp",
+   "title": "ペットボトルの水",
+   "desc": "ペットボトルの水のイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "防災のイラスト",
+    "ペットボトルの水",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 389,
+   "h": 459
+  },
+  {
+   "id": "bousai-icons-pictogram-food",
+   "file": "bousai-icons-pictogram-food.webp",
+   "title": "非常食",
+   "desc": "非常食のイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "防災のイラスト",
+    "非常食",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 483,
+   "h": 478
+  },
+  {
+   "id": "bousai-icons-pictogram-firstaid",
+   "file": "bousai-icons-pictogram-firstaid.webp",
+   "title": "救急セット",
+   "desc": "救急セットのイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "防災のイラスト",
+    "救急セット",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 451,
+   "h": 408
+  },
+  {
+   "id": "bousai-icons-pictogram-whistle",
+   "file": "bousai-icons-pictogram-whistle.webp",
+   "title": "ホイッスル",
+   "desc": "ホイッスルのイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "防災のイラスト",
+    "ホイッスル",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 479,
+   "h": 407
+  },
+  {
+   "id": "bousai-icons-pictogram-blanket",
+   "file": "bousai-icons-pictogram-blanket.webp",
+   "title": "アルミブランケット",
+   "desc": "アルミブランケットのイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "防災のイラスト",
+    "アルミブランケット",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 483,
+   "h": 385
+  },
+  {
+   "id": "bousai-icons-pictogram-exit",
+   "file": "bousai-icons-pictogram-exit.webp",
+   "title": "避難する人のマーク",
+   "desc": "避難する人のマークのイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "防災のイラスト",
+    "避難する人のマーク",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 436,
+   "h": 430
+  },
+  {
+   "id": "bousai-icons-pictogram-map",
+   "file": "bousai-icons-pictogram-map.webp",
+   "title": "ハザードマップ",
+   "desc": "ハザードマップのイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "防災のイラスト",
+    "ハザードマップ",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 461,
+   "h": 414
+  },
+  {
+   "id": "bousai-icons-pictogram-battery",
+   "file": "bousai-icons-pictogram-battery.webp",
+   "title": "モバイルバッテリー",
+   "desc": "モバイルバッテリーのイラスト。ピクトグラムのタッチ。",
+   "tags": [
+    "防災",
+    "避難",
+    "災害",
+    "地震",
+    "防災のイラスト",
+    "モバイルバッテリー",
+    "ピクトグラム",
+    "くらし・もの"
+   ],
+   "w": 502,
+   "h": 426
+  }
+ ]
+}

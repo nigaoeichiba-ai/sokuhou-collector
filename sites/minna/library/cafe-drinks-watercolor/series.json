@@ -1,0 +1,239 @@
+{
+ "added": "2026-10-07",
+ "slug": "cafe-drinks-watercolor",
+ "title": "カフェ・ドリンクのイラスト",
+ "genre": "food",
+ "touch": "watercolor",
+ "lead": "コーヒー、紅茶、ラテ、ジュース、タピオカふうドリンクなど、カフェメニューに使えるやわらかい水彩12点。",
+ "tags": [
+  "カフェ",
+  "ドリンク",
+  "コーヒー",
+  "紅茶",
+  "ジュース",
+  "ラテ",
+  "メニュー"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "cafe-drinks-watercolor-coffee",
+   "file": "cafe-drinks-watercolor-coffee.webp",
+   "title": "コーヒー",
+   "desc": "コーヒーのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "カフェ・ドリンクのイラスト",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 437,
+   "h": 462
+  },
+  {
+   "id": "cafe-drinks-watercolor-latte",
+   "file": "cafe-drinks-watercolor-latte.webp",
+   "title": "ラテアート",
+   "desc": "ラテアートのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "ラテ",
+    "カフェ・ドリンクのイラスト",
+    "ラテアート",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 467,
+   "h": 385
+  },
+  {
+   "id": "cafe-drinks-watercolor-tea",
+   "file": "cafe-drinks-watercolor-tea.webp",
+   "title": "紅茶",
+   "desc": "紅茶のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "カフェ・ドリンクのイラスト",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 501,
+   "h": 430
+  },
+  {
+   "id": "cafe-drinks-watercolor-greentea",
+   "file": "cafe-drinks-watercolor-greentea.webp",
+   "title": "抹茶ラテ",
+   "desc": "抹茶ラテのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "ラテ",
+    "カフェ・ドリンクのイラスト",
+    "抹茶ラテ",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 310,
+   "h": 443
+  },
+  {
+   "id": "cafe-drinks-watercolor-juice",
+   "file": "cafe-drinks-watercolor-juice.webp",
+   "title": "オレンジジュース",
+   "desc": "オレンジジュースのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "ジュース",
+    "カフェ・ドリンクのイラスト",
+    "オレンジジュース",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 339,
+   "h": 467
+  },
+  {
+   "id": "cafe-drinks-watercolor-soda",
+   "file": "cafe-drinks-watercolor-soda.webp",
+   "title": "クリームソーダ",
+   "desc": "クリームソーダのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "カフェ・ドリンクのイラスト",
+    "クリームソーダ",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 225,
+   "h": 534
+  },
+  {
+   "id": "cafe-drinks-watercolor-milk",
+   "file": "cafe-drinks-watercolor-milk.webp",
+   "title": "ミルク",
+   "desc": "ミルクのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "カフェ・ドリンクのイラスト",
+    "ミルク",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 399,
+   "h": 492
+  },
+  {
+   "id": "cafe-drinks-watercolor-cocoa",
+   "file": "cafe-drinks-watercolor-cocoa.webp",
+   "title": "ココア",
+   "desc": "ココアのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "カフェ・ドリンクのイラスト",
+    "ココア",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 432,
+   "h": 400
+  },
+  {
+   "id": "cafe-drinks-watercolor-smoothie",
+   "file": "cafe-drinks-watercolor-smoothie.webp",
+   "title": "スムージー",
+   "desc": "スムージーのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "カフェ・ドリンクのイラスト",
+    "スムージー",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 287,
+   "h": 518
+  },
+  {
+   "id": "cafe-drinks-watercolor-bubble",
+   "file": "cafe-drinks-watercolor-bubble.webp",
+   "title": "ミルクティーふうのドリンク",
+   "desc": "ミルクティーふうのドリンクのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "カフェ・ドリンクのイラスト",
+    "ミルクティーふうのドリンク",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 295,
+   "h": 505
+  },
+  {
+   "id": "cafe-drinks-watercolor-beans",
+   "file": "cafe-drinks-watercolor-beans.webp",
+   "title": "コーヒー豆",
+   "desc": "コーヒー豆のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "カフェ・ドリンクのイラスト",
+    "コーヒー豆",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 440,
+   "h": 439
+  },
+  {
+   "id": "cafe-drinks-watercolor-cake",
+   "file": "cafe-drinks-watercolor-cake.webp",
+   "title": "ケーキセット",
+   "desc": "ケーキセットのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "カフェ",
+    "ドリンク",
+    "コーヒー",
+    "紅茶",
+    "カフェ・ドリンクのイラスト",
+    "ケーキセット",
+    "やわらか水彩",
+    "たべもの"
+   ],
+   "w": 557,
+   "h": 428
+  }
+ ]
+}
