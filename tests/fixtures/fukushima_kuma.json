@@ -1,0 +1,1419 @@
+{
+"webmap": {
+"operationalLayers": [
+{
+"title": "目撃ポイント",
+"url": "https://services6.arcgis.com/M9nrgnB1gu8YnLFM/arcgis/rest/services/福島県クマ目撃ポイントレイヤー_202606_view/FeatureServer/0"
+}
+]
+},
+"layer": {
+"fields": [
+{
+"name": "objectid",
+"type": "esriFieldTypeOID",
+"alias": "ObjectID",
+"domain": null
+},
+{
+"name": "kuma_date",
+"type": "esriFieldTypeDate",
+"alias": "目撃日時",
+"domain": null
+},
+{
+"name": "city",
+"type": "esriFieldTypeString",
+"alias": "目撃場所の市町村名",
+"domain": {
+"type": "codedValue",
+"name": "fukushima_kuma_survey_202606_city_aa403a24-ce29-4db5-95d8-abd514e074cf",
+"codedValues": [
+{
+"name": "福島県",
+"code": "07"
+},
+{
+"name": "福島市",
+"code": "07201"
+},
+{
+"name": "会津若松市",
+"code": "07202"
+},
+{
+"name": "郡山市",
+"code": "07203"
+},
+{
+"name": "いわき市",
+"code": "07204"
+},
+{
+"name": "白河市",
+"code": "07205"
+},
+{
+"name": "須賀川市",
+"code": "07207"
+},
+{
+"name": "喜多方市",
+"code": "07208"
+},
+{
+"name": "相馬市",
+"code": "07209"
+},
+{
+"name": "二本松市",
+"code": "07210"
+},
+{
+"name": "田村市",
+"code": "07211"
+},
+{
+"name": "南相馬市",
+"code": "07212"
+},
+{
+"name": "伊達市",
+"code": "07213"
+},
+{
+"name": "本宮市",
+"code": "07214"
+},
+{
+"name": "桑折町",
+"code": "07301"
+},
+{
+"name": "国見町",
+"code": "07303"
+},
+{
+"name": "川俣町",
+"code": "07308"
+},
+{
+"name": "大玉村",
+"code": "07322"
+},
+{
+"name": "鏡石町",
+"code": "07342"
+},
+{
+"name": "天栄村",
+"code": "07344"
+},
+{
+"name": "下郷町",
+"code": "07362"
+},
+{
+"name": "檜枝岐村",
+"code": "07364"
+},
+{
+"name": "只見町",
+"code": "07367"
+},
+{
+"name": "南会津町",
+"code": "07368"
+},
+{
+"name": "北塩原村",
+"code": "07402"
+},
+{
+"name": "西会津町",
+"code": "07405"
+},
+{
+"name": "磐梯町",
+"code": "07407"
+},
+{
+"name": "猪苗代町",
+"code": "07408"
+},
+{
+"name": "会津坂下町",
+"code": "07421"
+},
+{
+"name": "湯川村",
+"code": "07422"
+},
+{
+"name": "柳津町",
+"code": "07423"
+},
+{
+"name": "三島町",
+"code": "07444"
+},
+{
+"name": "金山町",
+"code": "07445"
+},
+{
+"name": "昭和村",
+"code": "07446"
+},
+{
+"name": "会津美里町",
+"code": "07447"
+},
+{
+"name": "西郷村",
+"code": "07461"
+},
+{
+"name": "泉崎村",
+"code": "07464"
+},
+{
+"name": "中島村",
+"code": "07465"
+},
+{
+"name": "矢吹町",
+"code": "07466"
+},
+{
+"name": "棚倉町",
+"code": "07481"
+},
+{
+"name": "矢祭町",
+"code": "07482"
+},
+{
+"name": "塙町",
+"code": "07483"
+},
+{
+"name": "鮫川村",
+"code": "07484"
+},
+{
+"name": "石川町",
+"code": "07501"
+},
+{
+"name": "玉川村",
+"code": "07502"
+},
+{
+"name": "平田村",
+"code": "07503"
+},
+{
+"name": "浅川町",
+"code": "07504"
+},
+{
+"name": "古殿町",
+"code": "07505"
+},
+{
+"name": "三春町",
+"code": "07521"
+},
+{
+"name": "小野町",
+"code": "07522"
+},
+{
+"name": "広野町",
+"code": "07541"
+},
+{
+"name": "楢葉町",
+"code": "07542"
+},
+{
+"name": "富岡町",
+"code": "07543"
+},
+{
+"name": "川内村",
+"code": "07544"
+},
+{
+"name": "大熊町",
+"code": "07545"
+},
+{
+"name": "双葉町",
+"code": "07546"
+},
+{
+"name": "浪江町",
+"code": "07547"
+},
+{
+"name": "葛尾村",
+"code": "07548"
+},
+{
+"name": "新地町",
+"code": "07561"
+},
+{
+"name": "飯舘村",
+"code": "07564"
+}
+]
+}
+}
+]
+},
+"rows": [
+{
+"attributes": {
+"kuma_date": 1767254640000,
+"city": "07447"
+}
+},
+{
+"attributes": {
+"kuma_date": 1768967400000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1770624600000,
+"city": "07207"
+}
+},
+{
+"attributes": {
+"kuma_date": 1772964600000,
+"city": "07521"
+}
+},
+{
+"attributes": {
+"kuma_date": 1774602000000,
+"city": "07408"
+}
+},
+{
+"attributes": {
+"kuma_date": 1775425500000,
+"city": "07368"
+}
+},
+{
+"attributes": {
+"kuma_date": 1775908020000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1776310200000,
+"city": "07213"
+}
+},
+{
+"attributes": {
+"kuma_date": 1776666000000,
+"city": "07207"
+}
+},
+{
+"attributes": {
+"kuma_date": 1776898800000,
+"city": "07207"
+}
+},
+{
+"attributes": {
+"kuma_date": 1777324800000,
+"city": "07211"
+}
+},
+{
+"attributes": {
+"kuma_date": 1777692000000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1778132400000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1778536200000,
+"city": "07214"
+}
+},
+{
+"attributes": {
+"kuma_date": 1778734380000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1778878800000,
+"city": "07210"
+}
+},
+{
+"attributes": {
+"kuma_date": 1779090300000,
+"city": "07521"
+}
+},
+{
+"attributes": {
+"kuma_date": 1779186780000,
+"city": "07208"
+}
+},
+{
+"attributes": {
+"kuma_date": 1779449280000,
+"city": "07207"
+}
+},
+{
+"attributes": {
+"kuma_date": 1779702000000,
+"city": "07547"
+}
+},
+{
+"attributes": {
+"kuma_date": 1779956100000,
+"city": "07368"
+}
+},
+{
+"attributes": {
+"kuma_date": 1780176600000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1780447200000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1780585800000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1780738200000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1780870500000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1781042400000,
+"city": "07423"
+}
+},
+{
+"attributes": {
+"kuma_date": 1781160000000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1781305200000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1781518800000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1781664720000,
+"city": "07367"
+}
+},
+{
+"attributes": {
+"kuma_date": 1781824200000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1782096300000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1782291180000,
+"city": "07408"
+}
+},
+{
+"attributes": {
+"kuma_date": 1782630900000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1782796800000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1783139400000,
+"city": "07344"
+}
+},
+{
+"attributes": {
+"kuma_date": 1783437000000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1783748400000,
+"city": "07208"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784155500000,
+"city": "07211"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784606700000,
+"city": "07368"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784607600000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784670300000,
+"city": "07208"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784696400000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784715600000,
+"city": "07408"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784753400000,
+"city": "07322"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784759400000,
+"city": "07205"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784778300000,
+"city": "07208"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784814420000,
+"city": "07205"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784845200000,
+"city": "07421"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784858400000,
+"city": "07207"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784867700000,
+"city": "07423"
+}
+},
+{
+"attributes": {
+"kuma_date": 1784926680000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785097140000,
+"city": "07447"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785160800000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785201600000,
+"city": "07402"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785227400000,
+"city": "07208"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785227880000,
+"city": "07362"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785234600000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785288600000,
+"city": "07207"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785295800000,
+"city": "07368"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785304200000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785393000000,
+"city": "07405"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785435900000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785454200000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785474240000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785540600000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785621300000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785661200000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785704400000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785708600000,
+"city": "07214"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785720600000,
+"city": "07447"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785749400000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785911400000,
+"city": "07421"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785920400000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1785975600000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786009800000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786030200000,
+"city": "07502"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786060800000,
+"city": "07423"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786076100000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786153800000,
+"city": "07322"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786169400000,
+"city": "07210"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786228200000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786253400000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786259820000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786264200000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786269000000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786303800000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786352400000,
+"city": "07447"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786421400000,
+"city": "07322"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786493220000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786510800000,
+"city": "07402"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786515000000,
+"city": "07210"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786522800000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786658400000,
+"city": "07210"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786662600000,
+"city": "07447"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786690800000,
+"city": "07402"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786704600000,
+"city": "07208"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786763400000,
+"city": "07402"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786766700000,
+"city": "07210"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786772400000,
+"city": "07461"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786797000000,
+"city": "07208"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786876200000,
+"city": "07423"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786930800000,
+"city": "07402"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786933500000,
+"city": "07402"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786933800000,
+"city": "07402"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786969800000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786980600000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1786998600000,
+"city": "07211"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787029200000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787043600000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787128200000,
+"city": "07213"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787162100000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787176200000,
+"city": "07207"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787180100000,
+"city": "07322"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787182800000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787215500000,
+"city": "07522"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787383800000,
+"city": "07214"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787391300000,
+"city": "07402"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787397780000,
+"city": "07405"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787447400000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787463600000,
+"city": "07423"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787475600000,
+"city": "07208"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787475600000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787479680000,
+"city": "07213"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787544840000,
+"city": "07213"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787612400000,
+"city": "07213"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787635800000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787649600000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787650800000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787660100000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787751000000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787814000000,
+"city": "07447"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787875860000,
+"city": "07210"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787880600000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787894700000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787896800000,
+"city": "07547"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787907600000,
+"city": "07542"
+}
+},
+{
+"attributes": {
+"kuma_date": 1787919780000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788049200000,
+"city": "07402"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788077100000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788118500000,
+"city": "07210"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788143400000,
+"city": "07447"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788219000000,
+"city": "07303"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788247800000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788252900000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788324000000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788348600000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788608400000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788702600000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788787200000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788823200000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788833160000,
+"city": "07447"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788856500000,
+"city": "07308"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788907800000,
+"city": "07447"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788914700000,
+"city": "07308"
+}
+},
+{
+"attributes": {
+"kuma_date": 1788991200000,
+"city": "07211"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789029000000,
+"city": "07209"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789036200000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789077000000,
+"city": "07503"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789078740000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789090200000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789156800000,
+"city": "07214"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789160100000,
+"city": "07208"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789174800000,
+"city": "07405"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789252200000,
+"city": "07482"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789264800000,
+"city": "07364"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789353000000,
+"city": "07202"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789377000000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789523700000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789532520000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789544100000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789592400000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789596900000,
+"city": "07481"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789630500000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789714800000,
+"city": "07207"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789714920000,
+"city": "07204"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789781400000,
+"city": "07303"
+}
+},
+{
+"attributes": {
+"kuma_date": 1789858800000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1790065320000,
+"city": "07203"
+}
+},
+{
+"attributes": {
+"kuma_date": 1790134200000,
+"city": "07201"
+}
+},
+{
+"attributes": {
+"kuma_date": 1790217000000,
+"city": "07548"
+}
+},
+{
+"attributes": {
+"kuma_date": 1790396400000,
+"city": "07210"
+}
+},
+{
+"attributes": {
+"kuma_date": 1790715600000,
+"city": "07207"
+}
+},
+{
+"attributes": {
+"kuma_date": 1790803800000,
+"city": "07408"
+}
+},
+{
+"attributes": {
+"kuma_date": 1790971200000,
+"city": "07322"
+}
+},
+{
+"attributes": {
+"kuma_date": 1791054000000,
+"city": "07322"
+}
+},
+{
+"attributes": {
+"kuma_date": 1791098400000,
+"city": "07213"
+}
+},
+{
+"attributes": {
+"kuma_date": 1791154200000,
+"city": "07205"
+}
+},
+{
+"attributes": {
+"kuma_date": 1791232200000,
+"city": "07522"
+}
+}
+]
+}

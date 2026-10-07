@@ -17,14 +17,17 @@ from sokuhou.sources import (
     akita_kuma,
     env_capture_kuma,
     env_kuma,
+    fukushima_kuma,
     estat_wage,
     jgrants,
     mhlw_minwage,
     miyagi_kuma,
+    niigata_kuma,
     okayama_kuma,
     otsu_bear,
     otsu_fire,
     sorachi_kuma,
+    toyama_kuma,
     yamaguchi_kuma,
     yamanashi_kuma,
 )
@@ -148,6 +151,10 @@ GROUPS: dict[str, list[Source]] = {
         Source("okayama_kuma", okayama_kuma.collect, check_pref_bear),
         Source("yamanashi_kuma", yamanashi_kuma.collect, check_pref_bear),
         Source("sorachi_kuma", sorachi_kuma.collect, check_pref_bear),
+        # no explicit licence: counts only (municipality, month, count, latest date), see kumalib.package_counts
+        Source("fukushima_kuma", fukushima_kuma.collect, check_counts_bear),
+        Source("niigata_kuma", niigata_kuma.collect, check_counts_bear),
+        Source("toyama_kuma", toyama_kuma.collect, check_counts_bear),
         Source("otsu_bear", otsu_bear.collect, check_bear),
     ],
     "frequent": [
