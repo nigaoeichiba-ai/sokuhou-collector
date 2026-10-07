@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-07",
+ "slug": "vegetables-papercut",
+ "title": "やさい 切り絵",
+ "genre": "food",
+ "touch": "papercut",
+ "lead": "にんじん、トマト、きゅうり、だいこんなど、紙を重ねた切り絵風のやさい12点。給食だよりや食育のポスターにぴったりです。",
+ "tags": [
+  "やさい",
+  "野菜",
+  "にんじん",
+  "トマト",
+  "切り絵",
+  "食育",
+  "給食",
+  "ペーパークラフト"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "vegetables-papercut-carrot",
+   "file": "vegetables-papercut-carrot.webp",
+   "title": "にんじん",
+   "desc": "にんじんのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 400,
+   "h": 525
+  },
+  {
+   "id": "vegetables-papercut-tomato",
+   "file": "vegetables-papercut-tomato.webp",
+   "title": "トマト",
+   "desc": "トマトのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 416,
+   "h": 411
+  },
+  {
+   "id": "vegetables-papercut-cucumber",
+   "file": "vegetables-papercut-cucumber.webp",
+   "title": "きゅうり",
+   "desc": "きゅうりのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "きゅうり",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 436,
+   "h": 454
+  },
+  {
+   "id": "vegetables-papercut-radish",
+   "file": "vegetables-papercut-radish.webp",
+   "title": "だいこん",
+   "desc": "だいこんのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "だいこん",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 462,
+   "h": 548
+  },
+  {
+   "id": "vegetables-papercut-eggplant",
+   "file": "vegetables-papercut-eggplant.webp",
+   "title": "なす",
+   "desc": "なすのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "なす",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 364,
+   "h": 478
+  },
+  {
+   "id": "vegetables-papercut-cabbage",
+   "file": "vegetables-papercut-cabbage.webp",
+   "title": "キャベツ",
+   "desc": "キャベツのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "キャベツ",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 462,
+   "h": 449
+  },
+  {
+   "id": "vegetables-papercut-corn",
+   "file": "vegetables-papercut-corn.webp",
+   "title": "とうもろこし",
+   "desc": "とうもろこしのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "とうもろこし",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 429,
+   "h": 492
+  },
+  {
+   "id": "vegetables-papercut-potato",
+   "file": "vegetables-papercut-potato.webp",
+   "title": "じゃがいも",
+   "desc": "じゃがいものイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "じゃがいも",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 493,
+   "h": 429
+  },
+  {
+   "id": "vegetables-papercut-pumpkin",
+   "file": "vegetables-papercut-pumpkin.webp",
+   "title": "かぼちゃ",
+   "desc": "かぼちゃのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "かぼちゃ",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 506,
+   "h": 451
+  },
+  {
+   "id": "vegetables-papercut-broccoli",
+   "file": "vegetables-papercut-broccoli.webp",
+   "title": "ブロッコリー",
+   "desc": "ブロッコリーのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "ブロッコリー",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 474,
+   "h": 501
+  },
+  {
+   "id": "vegetables-papercut-onion",
+   "file": "vegetables-papercut-onion.webp",
+   "title": "たまねぎ",
+   "desc": "たまねぎのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "たまねぎ",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 413,
+   "h": 502
+  },
+  {
+   "id": "vegetables-papercut-greenpepper",
+   "file": "vegetables-papercut-greenpepper.webp",
+   "title": "ピーマン",
+   "desc": "ピーマンのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "やさい",
+    "野菜",
+    "にんじん",
+    "トマト",
+    "やさい 切り絵",
+    "ピーマン",
+    "切り絵・ペーパークラフト",
+    "たべもの"
+   ],
+   "w": 493,
+   "h": 478
+  }
+ ]
+}

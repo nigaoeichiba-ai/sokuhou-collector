@@ -1,0 +1,242 @@
+{
+ "added": "2026-10-07",
+ "slug": "kantyu-animals-watercolor",
+ "title": "雪の中のどうぶつ",
+ "genre": "season",
+ "touch": "watercolor",
+ "lead": "雪の中のうさぎ、きつね、ペンギン…。寒中見舞いや冬のお便りに合う、やわらかい水彩のどうぶつ12点。",
+ "tags": [
+  "寒中見舞い",
+  "冬",
+  "雪",
+  "どうぶつ",
+  "水彩",
+  "1月",
+  "2月",
+  "ごあいさつ"
+ ],
+ "subject": "",
+ "season": {
+  "from": "12-15",
+  "to": "02-10"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "kantyu-animals-watercolor-rabbit",
+   "file": "kantyu-animals-watercolor-rabbit.webp",
+   "title": "雪とうさぎ",
+   "desc": "雪とうさぎのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "雪とうさぎ",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 436,
+   "h": 483
+  },
+  {
+   "id": "kantyu-animals-watercolor-fox",
+   "file": "kantyu-animals-watercolor-fox.webp",
+   "title": "雪とキツネ",
+   "desc": "雪とキツネのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "雪とキツネ",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 540,
+   "h": 473
+  },
+  {
+   "id": "kantyu-animals-watercolor-penguin",
+   "file": "kantyu-animals-watercolor-penguin.webp",
+   "title": "雪とペンギン",
+   "desc": "雪とペンギンのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "雪とペンギン",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 393,
+   "h": 468
+  },
+  {
+   "id": "kantyu-animals-watercolor-bear",
+   "file": "kantyu-animals-watercolor-bear.webp",
+   "title": "冬ごもりのくま",
+   "desc": "冬ごもりのくまのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "冬ごもりのくま",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 508,
+   "h": 425
+  },
+  {
+   "id": "kantyu-animals-watercolor-owl",
+   "file": "kantyu-animals-watercolor-owl.webp",
+   "title": "雪の木のふくろう",
+   "desc": "雪の木のふくろうのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "雪の木のふくろう",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 502,
+   "h": 457
+  },
+  {
+   "id": "kantyu-animals-watercolor-deer",
+   "file": "kantyu-animals-watercolor-deer.webp",
+   "title": "雪の中のこじか",
+   "desc": "雪の中のこじかのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "雪の中のこじか",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 468,
+   "h": 523
+  },
+  {
+   "id": "kantyu-animals-watercolor-squirrel",
+   "file": "kantyu-animals-watercolor-squirrel.webp",
+   "title": "どんぐりを持つりす",
+   "desc": "どんぐりを持つりすのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "どんぐりを持つりす",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 461,
+   "h": 462
+  },
+  {
+   "id": "kantyu-animals-watercolor-cat",
+   "file": "kantyu-animals-watercolor-cat.webp",
+   "title": "こたつのねこ",
+   "desc": "こたつのねこのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "こたつのねこ",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 554,
+   "h": 377
+  },
+  {
+   "id": "kantyu-animals-watercolor-sheep",
+   "file": "kantyu-animals-watercolor-sheep.webp",
+   "title": "毛糸のひつじ",
+   "desc": "毛糸のひつじのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "毛糸のひつじ",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 461,
+   "h": 446
+  },
+  {
+   "id": "kantyu-animals-watercolor-dog",
+   "file": "kantyu-animals-watercolor-dog.webp",
+   "title": "雪あそびのいぬ",
+   "desc": "雪あそびのいぬのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "雪あそびのいぬ",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 482,
+   "h": 469
+  },
+  {
+   "id": "kantyu-animals-watercolor-hedgehog",
+   "file": "kantyu-animals-watercolor-hedgehog.webp",
+   "title": "雪のはりねずみ",
+   "desc": "雪のはりねずみのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "雪のはりねずみ",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 508,
+   "h": 467
+  },
+  {
+   "id": "kantyu-animals-watercolor-snowman",
+   "file": "kantyu-animals-watercolor-snowman.webp",
+   "title": "雪だるまとことり",
+   "desc": "雪だるまとことりのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "寒中見舞い",
+    "冬",
+    "雪",
+    "どうぶつ",
+    "雪の中のどうぶつ",
+    "雪だるまとことり",
+    "やわらか水彩",
+    "季節・行事"
+   ],
+   "w": 478,
+   "h": 489
+  }
+ ]
+}

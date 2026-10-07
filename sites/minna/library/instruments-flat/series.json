@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-07",
+ "slug": "instruments-flat",
+ "title": "楽器のイラスト",
+ "genre": "life",
+ "touch": "flat",
+ "lead": "ピアノ、ギター、バイオリン、太鼓、リコーダーなど、音楽のイラスト12点。発表会や教室のお知らせに。",
+ "tags": [
+  "楽器",
+  "音楽",
+  "ピアノ",
+  "ギター",
+  "バイオリン",
+  "太鼓",
+  "リコーダー",
+  "発表会"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "instruments-flat-piano",
+   "file": "instruments-flat-piano.webp",
+   "title": "ピアノ",
+   "desc": "ピアノのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "楽器のイラスト",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 474,
+   "h": 434
+  },
+  {
+   "id": "instruments-flat-guitar",
+   "file": "instruments-flat-guitar.webp",
+   "title": "ギター",
+   "desc": "ギターのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "楽器のイラスト",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 248,
+   "h": 499
+  },
+  {
+   "id": "instruments-flat-violin",
+   "file": "instruments-flat-violin.webp",
+   "title": "バイオリン",
+   "desc": "バイオリンのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "バイオリン",
+    "楽器のイラスト",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 306,
+   "h": 491
+  },
+  {
+   "id": "instruments-flat-drum",
+   "file": "instruments-flat-drum.webp",
+   "title": "和太鼓",
+   "desc": "和太鼓のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "太鼓",
+    "楽器のイラスト",
+    "和太鼓",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 372,
+   "h": 479
+  },
+  {
+   "id": "instruments-flat-recorder",
+   "file": "instruments-flat-recorder.webp",
+   "title": "リコーダー",
+   "desc": "リコーダーのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "リコーダー",
+    "楽器のイラスト",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 94,
+   "h": 479
+  },
+  {
+   "id": "instruments-flat-trumpet",
+   "file": "instruments-flat-trumpet.webp",
+   "title": "トランペット",
+   "desc": "トランペットのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "楽器のイラスト",
+    "トランペット",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 508,
+   "h": 273
+  },
+  {
+   "id": "instruments-flat-flute",
+   "file": "instruments-flat-flute.webp",
+   "title": "フルート",
+   "desc": "フルートのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "楽器のイラスト",
+    "フルート",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 508,
+   "h": 419
+  },
+  {
+   "id": "instruments-flat-harmonica",
+   "file": "instruments-flat-harmonica.webp",
+   "title": "ハーモニカ",
+   "desc": "ハーモニカのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "楽器のイラスト",
+    "ハーモニカ",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 486,
+   "h": 279
+  },
+  {
+   "id": "instruments-flat-tambourine",
+   "file": "instruments-flat-tambourine.webp",
+   "title": "タンバリン",
+   "desc": "タンバリンのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "楽器のイラスト",
+    "タンバリン",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 508,
+   "h": 342
+  },
+  {
+   "id": "instruments-flat-xylophone",
+   "file": "instruments-flat-xylophone.webp",
+   "title": "木琴",
+   "desc": "木琴のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "楽器のイラスト",
+    "木琴",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 522,
+   "h": 439
+  },
+  {
+   "id": "instruments-flat-note",
+   "file": "instruments-flat-note.webp",
+   "title": "音符",
+   "desc": "音符のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "楽器のイラスト",
+    "音符",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 468,
+   "h": 374
+  },
+  {
+   "id": "instruments-flat-microphone",
+   "file": "instruments-flat-microphone.webp",
+   "title": "マイク",
+   "desc": "マイクのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "楽器",
+    "音楽",
+    "ピアノ",
+    "ギター",
+    "楽器のイラスト",
+    "マイク",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 424,
+   "h": 488
+  }
+ ]
+}

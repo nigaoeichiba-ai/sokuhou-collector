@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-07",
+ "slug": "stickers-cute-kawaii",
+ "title": "ワンポイントシール",
+ "genre": "icon",
+ "touch": "kawaii",
+ "lead": "ハート、星、花、雲など、手帳やカードのワンポイントに使えるシール風のイラスト12点。",
+ "tags": [
+  "シール",
+  "ステッカー",
+  "ワンポイント",
+  "ハート",
+  "星",
+  "花",
+  "かわいい"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "stickers-cute-kawaii-heart",
+   "file": "stickers-cute-kawaii-heart.webp",
+   "title": "ハート",
+   "desc": "ハートのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "ワンポイントシール",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 468,
+   "h": 405
+  },
+  {
+   "id": "stickers-cute-kawaii-star",
+   "file": "stickers-cute-kawaii-star.webp",
+   "title": "星",
+   "desc": "星のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "星",
+    "ワンポイントシール",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 451,
+   "h": 430
+  },
+  {
+   "id": "stickers-cute-kawaii-flower",
+   "file": "stickers-cute-kawaii-flower.webp",
+   "title": "お花",
+   "desc": "お花のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "花",
+    "ワンポイントシール",
+    "お花",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 465,
+   "h": 461
+  },
+  {
+   "id": "stickers-cute-kawaii-cloud",
+   "file": "stickers-cute-kawaii-cloud.webp",
+   "title": "くも",
+   "desc": "くものイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "ワンポイントシール",
+    "くも",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 487,
+   "h": 374
+  },
+  {
+   "id": "stickers-cute-kawaii-rainbow",
+   "file": "stickers-cute-kawaii-rainbow.webp",
+   "title": "にじ",
+   "desc": "にじのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "ワンポイントシール",
+    "にじ",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 558,
+   "h": 381
+  },
+  {
+   "id": "stickers-cute-kawaii-moon",
+   "file": "stickers-cute-kawaii-moon.webp",
+   "title": "月",
+   "desc": "月のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "ワンポイントシール",
+    "月",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 432,
+   "h": 443
+  },
+  {
+   "id": "stickers-cute-kawaii-sun",
+   "file": "stickers-cute-kawaii-sun.webp",
+   "title": "太陽",
+   "desc": "太陽のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "ワンポイントシール",
+    "太陽",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 473,
+   "h": 469
+  },
+  {
+   "id": "stickers-cute-kawaii-clover",
+   "file": "stickers-cute-kawaii-clover.webp",
+   "title": "四つ葉のクローバー",
+   "desc": "四つ葉のクローバーのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "ワンポイントシール",
+    "四つ葉のクローバー",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 398,
+   "h": 446
+  },
+  {
+   "id": "stickers-cute-kawaii-cherry",
+   "file": "stickers-cute-kawaii-cherry.webp",
+   "title": "さくらんぼ",
+   "desc": "さくらんぼのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "ワンポイントシール",
+    "さくらんぼ",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 463,
+   "h": 419
+  },
+  {
+   "id": "stickers-cute-kawaii-ribbon",
+   "file": "stickers-cute-kawaii-ribbon.webp",
+   "title": "リボン",
+   "desc": "リボンのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "ワンポイントシール",
+    "リボン",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 447,
+   "h": 376
+  },
+  {
+   "id": "stickers-cute-kawaii-sparkle",
+   "file": "stickers-cute-kawaii-sparkle.webp",
+   "title": "キラキラ",
+   "desc": "キラキラのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "ワンポイントシール",
+    "キラキラ",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 396,
+   "h": 385
+  },
+  {
+   "id": "stickers-cute-kawaii-drop",
+   "file": "stickers-cute-kawaii-drop.webp",
+   "title": "しずく",
+   "desc": "しずくのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "シール",
+    "ステッカー",
+    "ワンポイント",
+    "ハート",
+    "ワンポイントシール",
+    "しずく",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 333,
+   "h": 424
+  }
+ ]
+}

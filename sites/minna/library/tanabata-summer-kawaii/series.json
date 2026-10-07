@@ -1,0 +1,242 @@
+{
+ "added": "2026-10-07",
+ "slug": "tanabata-summer-kawaii",
+ "title": "七夕・夏まつりのイラスト",
+ "genre": "season",
+ "touch": "kawaii",
+ "lead": "笹かざり、花火、金魚、浴衣のどうぶつ、かき氷。七夕と夏まつりのお知らせに使える12点。",
+ "tags": [
+  "七夕",
+  "夏まつり",
+  "浴衣",
+  "花火",
+  "風鈴",
+  "かき氷",
+  "すいか",
+  "7月",
+  "8月"
+ ],
+ "subject": "",
+ "season": {
+  "from": "06-10",
+  "to": "08-31"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "tanabata-summer-kawaii-sasa",
+   "file": "tanabata-summer-kawaii-sasa.webp",
+   "title": "七夕のささかざり",
+   "desc": "七夕のささかざりのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "七夕・夏まつりのイラスト",
+    "七夕のささかざり",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 463,
+   "h": 496
+  },
+  {
+   "id": "tanabata-summer-kawaii-fireworks",
+   "file": "tanabata-summer-kawaii-fireworks.webp",
+   "title": "花火",
+   "desc": "花火のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "七夕・夏まつりのイラスト",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 453,
+   "h": 455
+  },
+  {
+   "id": "tanabata-summer-kawaii-goldfish",
+   "file": "tanabata-summer-kawaii-goldfish.webp",
+   "title": "金魚",
+   "desc": "金魚のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "七夕・夏まつりのイラスト",
+    "金魚",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 417,
+   "h": 491
+  },
+  {
+   "id": "tanabata-summer-kawaii-furin",
+   "file": "tanabata-summer-kawaii-furin.webp",
+   "title": "風鈴",
+   "desc": "風鈴のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "風鈴",
+    "七夕・夏まつりのイラスト",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 279,
+   "h": 514
+  },
+  {
+   "id": "tanabata-summer-kawaii-kakigori",
+   "file": "tanabata-summer-kawaii-kakigori.webp",
+   "title": "かき氷",
+   "desc": "かき氷のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "かき氷",
+    "七夕・夏まつりのイラスト",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 437,
+   "h": 473
+  },
+  {
+   "id": "tanabata-summer-kawaii-watermelon",
+   "file": "tanabata-summer-kawaii-watermelon.webp",
+   "title": "すいか",
+   "desc": "すいかのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "すいか",
+    "七夕・夏まつりのイラスト",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 466,
+   "h": 463
+  },
+  {
+   "id": "tanabata-summer-kawaii-uchiwa",
+   "file": "tanabata-summer-kawaii-uchiwa.webp",
+   "title": "うちわ",
+   "desc": "うちわのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "七夕・夏まつりのイラスト",
+    "うちわ",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 402,
+   "h": 502
+  },
+  {
+   "id": "tanabata-summer-kawaii-cat-yukata",
+   "file": "tanabata-summer-kawaii-cat-yukata.webp",
+   "title": "浴衣のねこ",
+   "desc": "浴衣のねこのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "七夕・夏まつりのイラスト",
+    "浴衣のねこ",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 442,
+   "h": 530
+  },
+  {
+   "id": "tanabata-summer-kawaii-rabbit-yukata",
+   "file": "tanabata-summer-kawaii-rabbit-yukata.webp",
+   "title": "浴衣のうさぎ",
+   "desc": "浴衣のうさぎのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "七夕・夏まつりのイラスト",
+    "浴衣のうさぎ",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 330,
+   "h": 573
+  },
+  {
+   "id": "tanabata-summer-kawaii-lantern",
+   "file": "tanabata-summer-kawaii-lantern.webp",
+   "title": "ちょうちん",
+   "desc": "ちょうちんのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "七夕・夏まつりのイラスト",
+    "ちょうちん",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 529,
+   "h": 367
+  },
+  {
+   "id": "tanabata-summer-kawaii-taiko",
+   "file": "tanabata-summer-kawaii-taiko.webp",
+   "title": "太鼓",
+   "desc": "太鼓のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "七夕・夏まつりのイラスト",
+    "太鼓",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 417,
+   "h": 435
+  },
+  {
+   "id": "tanabata-summer-kawaii-star",
+   "file": "tanabata-summer-kawaii-star.webp",
+   "title": "天の川の星",
+   "desc": "天の川の星のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "七夕",
+    "夏まつり",
+    "浴衣",
+    "花火",
+    "七夕・夏まつりのイラスト",
+    "天の川の星",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 475,
+   "h": 419
+  }
+ ]
+}

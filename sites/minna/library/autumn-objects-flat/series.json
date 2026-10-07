@@ -1,0 +1,241 @@
+{
+ "added": "2026-10-07",
+ "slug": "autumn-objects-flat",
+ "title": "秋のイラスト",
+ "genre": "season",
+ "touch": "flat",
+ "lead": "紅葉、どんぐり、栗、きのこ、さつまいもなど、秋のモチーフ12点。おたよりや秋のメニュー、店頭の掲示に。",
+ "tags": [
+  "秋",
+  "紅葉",
+  "どんぐり",
+  "きのこ",
+  "栗",
+  "柿",
+  "さつまいも",
+  "ススキ",
+  "10月",
+  "11月"
+ ],
+ "subject": "",
+ "season": {
+  "from": "09-01",
+  "to": "11-30"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "autumn-objects-flat-momiji",
+   "file": "autumn-objects-flat-momiji.webp",
+   "title": "紅葉",
+   "desc": "紅葉のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋のイラスト",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 441,
+   "h": 462
+  },
+  {
+   "id": "autumn-objects-flat-ginkgo",
+   "file": "autumn-objects-flat-ginkgo.webp",
+   "title": "いちょう",
+   "desc": "いちょうのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋のイラスト",
+    "いちょう",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 425,
+   "h": 432
+  },
+  {
+   "id": "autumn-objects-flat-acorn",
+   "file": "autumn-objects-flat-acorn.webp",
+   "title": "どんぐり",
+   "desc": "どんぐりのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋のイラスト",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 447,
+   "h": 432
+  },
+  {
+   "id": "autumn-objects-flat-kuri",
+   "file": "autumn-objects-flat-kuri.webp",
+   "title": "栗",
+   "desc": "栗のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "栗",
+    "秋のイラスト",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 447,
+   "h": 441
+  },
+  {
+   "id": "autumn-objects-flat-kinoko",
+   "file": "autumn-objects-flat-kinoko.webp",
+   "title": "きのこ",
+   "desc": "きのこのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋のイラスト",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 445,
+   "h": 403
+  },
+  {
+   "id": "autumn-objects-flat-kaki",
+   "file": "autumn-objects-flat-kaki.webp",
+   "title": "柿",
+   "desc": "柿のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "柿",
+    "秋のイラスト",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 462,
+   "h": 416
+  },
+  {
+   "id": "autumn-objects-flat-imo",
+   "file": "autumn-objects-flat-imo.webp",
+   "title": "さつまいも",
+   "desc": "さつまいものイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "さつまいも",
+    "秋のイラスト",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 490,
+   "h": 414
+  },
+  {
+   "id": "autumn-objects-flat-susuki",
+   "file": "autumn-objects-flat-susuki.webp",
+   "title": "ススキ",
+   "desc": "ススキのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "ススキ",
+    "秋のイラスト",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 419,
+   "h": 498
+  },
+  {
+   "id": "autumn-objects-flat-scarecrow",
+   "file": "autumn-objects-flat-scarecrow.webp",
+   "title": "かかし",
+   "desc": "かかしのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋のイラスト",
+    "かかし",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 469,
+   "h": 492
+  },
+  {
+   "id": "autumn-objects-flat-nashi",
+   "file": "autumn-objects-flat-nashi.webp",
+   "title": "梨",
+   "desc": "梨のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋のイラスト",
+    "梨",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 423,
+   "h": 440
+  },
+  {
+   "id": "autumn-objects-flat-sanma",
+   "file": "autumn-objects-flat-sanma.webp",
+   "title": "さんま",
+   "desc": "さんまのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋のイラスト",
+    "さんま",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 537,
+   "h": 249
+  },
+  {
+   "id": "autumn-objects-flat-rice",
+   "file": "autumn-objects-flat-rice.webp",
+   "title": "おむすびと新米",
+   "desc": "おむすびと新米のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋",
+    "紅葉",
+    "どんぐり",
+    "きのこ",
+    "秋のイラスト",
+    "おむすびと新米",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 466,
+   "h": 439
+  }
+ ]
+}

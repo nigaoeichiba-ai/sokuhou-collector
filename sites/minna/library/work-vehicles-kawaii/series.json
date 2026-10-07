@@ -1,0 +1,224 @@
+{
+ "added": "2026-10-07",
+ "slug": "work-vehicles-kawaii",
+ "title": "はたらくくるま",
+ "genre": "life",
+ "touch": "kawaii",
+ "lead": "消防車、救急車、パトカー、ショベルカーなど、はたらくくるま12台。子ども向けのおたよりに。",
+ "tags": [
+  "はたらくくるま",
+  "乗り物",
+  "消防車",
+  "救急車",
+  "パトカー",
+  "ショベルカー",
+  "子ども"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "work-vehicles-kawaii-fire",
+   "file": "work-vehicles-kawaii-fire.webp",
+   "title": "消防車",
+   "desc": "消防車のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 503,
+   "h": 448
+  },
+  {
+   "id": "work-vehicles-kawaii-ambulance",
+   "file": "work-vehicles-kawaii-ambulance.webp",
+   "title": "救急車",
+   "desc": "救急車のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 513,
+   "h": 410
+  },
+  {
+   "id": "work-vehicles-kawaii-police",
+   "file": "work-vehicles-kawaii-police.webp",
+   "title": "パトカー",
+   "desc": "パトカーのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "パトカー",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 505,
+   "h": 404
+  },
+  {
+   "id": "work-vehicles-kawaii-excavator",
+   "file": "work-vehicles-kawaii-excavator.webp",
+   "title": "ショベルカー",
+   "desc": "ショベルカーのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "ショベルカー",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 501,
+   "h": 457
+  },
+  {
+   "id": "work-vehicles-kawaii-dump",
+   "file": "work-vehicles-kawaii-dump.webp",
+   "title": "ダンプカー",
+   "desc": "ダンプカーのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "ダンプカー",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 542,
+   "h": 409
+  },
+  {
+   "id": "work-vehicles-kawaii-crane",
+   "file": "work-vehicles-kawaii-crane.webp",
+   "title": "クレーン車",
+   "desc": "クレーン車のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "クレーン車",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 473,
+   "h": 471
+  },
+  {
+   "id": "work-vehicles-kawaii-mixer",
+   "file": "work-vehicles-kawaii-mixer.webp",
+   "title": "ミキサー車",
+   "desc": "ミキサー車のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "ミキサー車",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 506,
+   "h": 413
+  },
+  {
+   "id": "work-vehicles-kawaii-garbage",
+   "file": "work-vehicles-kawaii-garbage.webp",
+   "title": "ごみ収集車",
+   "desc": "ごみ収集車のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "ごみ収集車",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 501,
+   "h": 372
+  },
+  {
+   "id": "work-vehicles-kawaii-bus",
+   "file": "work-vehicles-kawaii-bus.webp",
+   "title": "路線バス",
+   "desc": "路線バスのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "路線バス",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 509,
+   "h": 363
+  },
+  {
+   "id": "work-vehicles-kawaii-delivery",
+   "file": "work-vehicles-kawaii-delivery.webp",
+   "title": "宅配トラック",
+   "desc": "宅配トラックのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "宅配トラック",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 502,
+   "h": 371
+  },
+  {
+   "id": "work-vehicles-kawaii-tractor",
+   "file": "work-vehicles-kawaii-tractor.webp",
+   "title": "トラクター",
+   "desc": "トラクターのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "トラクター",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 518,
+   "h": 420
+  },
+  {
+   "id": "work-vehicles-kawaii-forklift",
+   "file": "work-vehicles-kawaii-forklift.webp",
+   "title": "フォークリフト",
+   "desc": "フォークリフトのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "はたらくくるま",
+    "乗り物",
+    "消防車",
+    "救急車",
+    "フォークリフト",
+    "ゆるかわ",
+    "くらし・もの"
+   ],
+   "w": 477,
+   "h": 396
+  }
+ ]
+}

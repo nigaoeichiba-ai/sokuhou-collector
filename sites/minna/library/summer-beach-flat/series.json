@@ -1,0 +1,244 @@
+{
+ "added": "2026-10-07",
+ "slug": "summer-beach-flat",
+ "title": "海・夏休みのイラスト",
+ "genre": "season",
+ "touch": "flat",
+ "lead": "浮き輪、ビーチボール、ヤシの木、貝がらなど、海と夏休みのイラスト12点。",
+ "tags": [
+  "夏",
+  "海",
+  "夏休み",
+  "浮き輪",
+  "ビーチ",
+  "ひまわり",
+  "麦わら帽子",
+  "7月",
+  "8月"
+ ],
+ "subject": "",
+ "season": {
+  "from": "06-01",
+  "to": "08-31"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "summer-beach-flat-floatring",
+   "file": "summer-beach-flat-floatring.webp",
+   "title": "浮き輪",
+   "desc": "浮き輪のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "海・夏休みのイラスト",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 447,
+   "h": 440
+  },
+  {
+   "id": "summer-beach-flat-beachball",
+   "file": "summer-beach-flat-beachball.webp",
+   "title": "ビーチボール",
+   "desc": "ビーチボールのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "ビーチ",
+    "海・夏休みのイラスト",
+    "ビーチボール",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 428,
+   "h": 428
+  },
+  {
+   "id": "summer-beach-flat-palm",
+   "file": "summer-beach-flat-palm.webp",
+   "title": "ヤシの木",
+   "desc": "ヤシの木のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "海・夏休みのイラスト",
+    "ヤシの木",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 456,
+   "h": 479
+  },
+  {
+   "id": "summer-beach-flat-shell",
+   "file": "summer-beach-flat-shell.webp",
+   "title": "貝がら",
+   "desc": "貝がらのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "海・夏休みのイラスト",
+    "貝がら",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 480,
+   "h": 411
+  },
+  {
+   "id": "summer-beach-flat-starfish",
+   "file": "summer-beach-flat-starfish.webp",
+   "title": "ひとで",
+   "desc": "ひとでのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "海・夏休みのイラスト",
+    "ひとで",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 456,
+   "h": 438
+  },
+  {
+   "id": "summer-beach-flat-sunglass",
+   "file": "summer-beach-flat-sunglass.webp",
+   "title": "サングラス",
+   "desc": "サングラスのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "海・夏休みのイラスト",
+    "サングラス",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 510,
+   "h": 236
+  },
+  {
+   "id": "summer-beach-flat-strawhat",
+   "file": "summer-beach-flat-strawhat.webp",
+   "title": "麦わら帽子",
+   "desc": "麦わら帽子のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "麦わら帽子",
+    "海・夏休みのイラスト",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 516,
+   "h": 325
+  },
+  {
+   "id": "summer-beach-flat-sunflower",
+   "file": "summer-beach-flat-sunflower.webp",
+   "title": "ひまわり",
+   "desc": "ひまわりのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "ひまわり",
+    "海・夏休みのイラスト",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 407,
+   "h": 503
+  },
+  {
+   "id": "summer-beach-flat-icecream",
+   "file": "summer-beach-flat-icecream.webp",
+   "title": "アイスクリーム",
+   "desc": "アイスクリームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "海・夏休みのイラスト",
+    "アイスクリーム",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 459,
+   "h": 427
+  },
+  {
+   "id": "summer-beach-flat-sandcastle",
+   "file": "summer-beach-flat-sandcastle.webp",
+   "title": "砂のお城",
+   "desc": "砂のお城のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "海・夏休みのイラスト",
+    "砂のお城",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 461,
+   "h": 461
+  },
+  {
+   "id": "summer-beach-flat-umbrella",
+   "file": "summer-beach-flat-umbrella.webp",
+   "title": "ビーチパラソル",
+   "desc": "ビーチパラソルのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "ビーチ",
+    "海・夏休みのイラスト",
+    "ビーチパラソル",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 478,
+   "h": 491
+  },
+  {
+   "id": "summer-beach-flat-ship",
+   "file": "summer-beach-flat-ship.webp",
+   "title": "ヨット",
+   "desc": "ヨットのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "夏",
+    "海",
+    "夏休み",
+    "浮き輪",
+    "海・夏休みのイラスト",
+    "ヨット",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 447,
+   "h": 483
+  }
+ ]
+}
