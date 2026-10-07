@@ -21,6 +21,7 @@ sys.path.insert(0, str(ROOT))
 
 from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
 from sites.yorokobu import content as gift_content  # noqa: E402
+from sokuhou import contactform  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 SITE = {
@@ -176,13 +177,13 @@ def license_page(cfg: dict, preview: bool) -> str:
 
 
 def request_page(cfg: dict, preview: bool) -> str:
-    form = cfg.get("contact_form_url") or "/contact/"
+    form = contactform.form_html(cfg, default_kind="イラストのリクエスト", message_hint="例: しまエナガが、お花見でお弁当を食べているイラスト。スライドの表紙に使いたいです。", page_hint=False)
     body = f"""{crumbs([("トップ", "/"), ("リクエスト", None)])}
 <h1>こんなイラストが、ほしい</h1>
 <p class="lead">「このキャラクターの、こんなポーズが、ほしい」「こんな場面の、人物イラストが、ほしい」というご希望を、お聞かせください。</p>
 <p>いただいたご希望は、ほかの方にも、役に立つものを、選んで、順番に、イラストにして、公開します(個別のお返事や、納期のお約束は、できません)。</p>
-<p><a class="btn big" href="{esc(form)}" target="_blank" rel="noopener">リクエストを送る</a></p>
 <ul class="check"><li>どのキャラクターか(しまエナガ・人物など)</li><li>どんなポーズ・場面か</li><li>何に使いたいか(スライド・LINE・チラシなど)</li></ul>
+{form}
 <p class="notice">既存のキャラクターや、実在の人物、特定の作家の画風を、まねるご希望は、お受けできません。</p>"""
     return page(cfg, preview, path="/request/", title=f"イラストのリクエスト | {cfg['site_name']}", description="こんなイラストがほしい、というご希望を送れます。", body=body)
 
