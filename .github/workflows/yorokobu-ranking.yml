@@ -1,0 +1,49 @@
+name: yorokobu-ranking
+
+# Every day: today's Rakuten Ichiba sales ranking per age group and sex (10 lists, 10 API calls), merged into data/yorokobu_ranking.json
+# together with a 45-day history of the places, so the site can show what rose, what is new and what stays (sites/yorokobu/ranking.py).
+# The commit touches only data/yorokobu_ranking.json, which redeploys the gift site only.  Needs RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY.
+
+on:
+  schedule:
+    - cron: "20 21 * * *"   # 06:20 JST, before the 07:00 deploy
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rakuten-api   # shared with the yorokobu deploy job and the candidate shortlist: one application ID, one request per second
+  cancel-in-progress: false
+
+jobs:
+  ranking:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Fetch today's ranking
+        env:
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+        run: |
+          if [ -z "$RAKUTEN_APP_ID" ] || [ -z "$RAKUTEN_ACCESS_KEY" ]; then
+            echo "the Rakuten secrets are not set; nothing to do"
+            exit 0
+          fi
+          python -m sites.yorokobu.ranking --out data/yorokobu_ranking.json
+      - name: Commit
+        run: |
+          git config user.name "sokuhou-bot"
+          git config user.email "sokuhou-bot@users.noreply.github.com"
+          git add data/yorokobu_ranking.json
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "data: yorokobu ranking snapshot"
+            git pull --rebase origin main
+            git push
+          fi

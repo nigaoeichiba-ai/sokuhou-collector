@@ -134,7 +134,7 @@ def persona_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 <section style="margin-top:30px"><p class="persona-about">{esc(p["about"])}</p></section>
 <section class="cols"><div><h2><span class="scribble">よろこびやすいもの</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["likes"])}</ol></div>
 <div class="avoid"><h2><span class="scribble">ちょっと外しやすいもの</span></h2>{B.ul(p["avoid"], "warn")}</div></section>
-<section style="margin-top:34px"><h2><span class="scribble">このタイプへの、贈り方</span></h2><ul class="plain cols2 chips">{links}</ul>
+<section style="margin-top:34px"><h2><span class="scribble">このタイプへの、贈り方</span></h2>{f'<ul class="plain cols2 chips">{links}</ul>' if links else ""}
 <p class="persona-line">渡すときのひとこと: 「{esc(p["line"])}」</p></section>
 <p style="margin-top:34px"><a class="btn big" href="/diagnosis/">ほかの人も診断してみる</a></p>
 <section class="related" style="margin-top:40px"><h2><span class="scribble">ほかのタイプ</span></h2><ul class="plain cols2 chips">{others}</ul></section>"""
