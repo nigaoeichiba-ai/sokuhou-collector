@@ -83,5 +83,8 @@
    "雪だるまとことり",
    "a snowman with a small bird on its head"
   ]
+ ],
+ "exclude": [
+  "snowman"
  ]
 }
