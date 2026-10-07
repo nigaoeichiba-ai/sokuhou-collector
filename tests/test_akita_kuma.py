@@ -85,7 +85,7 @@ class AkitaKumaSnapshotTest(unittest.TestCase):
         self.assertEqual(self.d["monthly"]["R07"], {"10": 25, "12": 1, "6": 10, "8": 5, "7": 5, "11": 11, "9": 4, "5": 1, "2": 1})
 
     def test_collect_without_network(self):
-        with mock.patch.object(kuma, "MIN_ROWS", 1), mock.patch.object(kuma, "fetch", lambda url: SimpleNamespace(body=CSV.read_bytes())),                 mock.patch.object(kuma, "polite_fetch", lambda url: API.read_bytes()):
+        with mock.patch.object(kuma, "MIN_ROWS", 1), mock.patch.object(kuma, "fetch", lambda url: SimpleNamespace(body=CSV.read_bytes())),                 mock.patch.object(kuma, "polite_fetch", lambda url: API.read_bytes()), mock.patch.dict("os.environ", {"KUMA_AKITA_API": "1"}):
             out = kuma.collect()
         self.assertEqual(out["source"], "akita")
         self.assertEqual(out["source_page"], kuma.DATASET_PAGE)
@@ -135,14 +135,24 @@ class AkitaApiTest(unittest.TestCase):
     def test_a_failing_api_leaves_the_open_data_alone(self):
         def boom(url):
             raise OSError("down")
-        with mock.patch.object(kuma, "MIN_ROWS", 1), mock.patch.object(kuma, "fetch", lambda url: SimpleNamespace(body=CSV.read_bytes())),                 mock.patch.object(kuma, "polite_fetch", boom):
+        with mock.patch.object(kuma, "MIN_ROWS", 1), mock.patch.object(kuma, "fetch", lambda url: SimpleNamespace(body=CSV.read_bytes())),                 mock.patch.object(kuma, "polite_fetch", boom), mock.patch.dict("os.environ", {"KUMA_AKITA_API": "1"}):
             out = kuma.collect()
         self.assertEqual(out["as_of"], "2026-08-31")
         self.assertIn("OSError", out["api_error"])
         self.assertNotIn("_ids", out)
 
+    def test_the_scheduled_run_does_not_call_the_api_unless_it_is_switched_on(self):
+        calls = []
+        with mock.patch.object(kuma, "MIN_ROWS", 1), mock.patch.object(kuma, "fetch", lambda url: SimpleNamespace(body=CSV.read_bytes())),                 mock.patch.object(kuma, "polite_fetch", lambda url: calls.append(url) or API.read_bytes()), mock.patch.dict("os.environ", {}, clear=False):
+            import os
+            os.environ.pop("KUMA_AKITA_API", None)
+            out = kuma.collect()
+        self.assertEqual(calls, [])
+        self.assertEqual(out["as_of"], "2026-08-31")
+        self.assertNotIn("api_error", out)
+
     def test_collect_with_the_api_and_no_known_ids_stored(self):
-        with mock.patch.object(kuma, "MIN_ROWS", 1), mock.patch.object(kuma, "fetch", lambda url: SimpleNamespace(body=CSV.read_bytes())),                 mock.patch.object(kuma, "polite_fetch", lambda url: API.read_bytes()):
+        with mock.patch.object(kuma, "MIN_ROWS", 1), mock.patch.object(kuma, "fetch", lambda url: SimpleNamespace(body=CSV.read_bytes())),                 mock.patch.object(kuma, "polite_fetch", lambda url: API.read_bytes()), mock.patch.dict("os.environ", {"KUMA_AKITA_API": "1"}):
             out = kuma.collect()
         self.assertEqual(out["as_of"], "2026-10-06")
         self.assertNotIn("_ids", out)
