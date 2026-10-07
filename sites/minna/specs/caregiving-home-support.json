@@ -1,0 +1,86 @@
+{
+ "slug": "caregiving-home-support",
+ "title": "在宅介護サポート素材",
+ "subject": "在宅介護サポート素材",
+ "genre": "life",
+ "touch": "loose",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A gentle Japanese woman home-care worker in her 30s, short dark hair, lavender polo shirt, navy pants, small blank name badge, soft hand-drawn outline with light color fills, calm expression, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "在宅介護の支援場面を、やさしい手書きタッチで描いた人物素材です。介護サービス、家族向け資料、地域支援、見守り案内に使えます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "介護",
+  "在宅",
+  "イラスト",
+  "ヘルパー",
+  "見守り",
+  "食事",
+  "服薬",
+  "掃除",
+  "相談",
+  "家族"
+ ],
+ "items": [
+  [
+   "pushing-wheelchair",
+   "車いすを押す",
+   "The care worker pushes an empty wheelchair slowly from behind, no text or letters in the picture."
+  ],
+  [
+   "meal-support",
+   "食事を支える",
+   "The care worker places a simple meal tray on a table while standing, no text or letters in the picture."
+  ],
+  [
+   "medicine-check",
+   "服薬を確認する",
+   "The care worker holds a plain pill case and checks it calmly, no text or letters in the picture."
+  ],
+  [
+   "blood-pressure",
+   "血圧を測る",
+   "The care worker holds a simple blood pressure cuff beside a chair, no text or letters in the picture."
+  ],
+  [
+   "bath-support",
+   "入浴前に声かけ",
+   "The care worker stands near a bathroom door and gestures gently, no text or letters in the picture."
+  ],
+  [
+   "help-cleaning",
+   "掃除を手伝う",
+   "The care worker sweeps the floor with a simple broom, no text or letters in the picture."
+  ],
+  [
+   "shopping-support",
+   "買い物に同行",
+   "The care worker walks beside a shopping bag with open space for another person, no text or letters in the picture."
+  ],
+  [
+   "listening",
+   "相談を聞く",
+   "The care worker sits with attentive posture beside an empty chair, no text or letters in the picture."
+  ],
+  [
+   "exercise-support",
+   "体操を補助する",
+   "The care worker demonstrates a gentle arm stretch, no text or letters in the picture."
+  ],
+  [
+   "care-notes",
+   "記録を書き込む",
+   "The care worker writes in a blank notebook at a table, no text or letters in the picture."
+  ],
+  [
+   "family-explain",
+   "家族へ説明する",
+   "The care worker points at a blank sheet held at chest height, no text or letters in the picture."
+  ],
+  [
+   "warm-watch",
+   "笑顔で見守る",
+   "The care worker stands with hands relaxed and a warm watching posture, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

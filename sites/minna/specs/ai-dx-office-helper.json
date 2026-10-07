@@ -1,0 +1,86 @@
+{
+ "slug": "ai-dx-office-helper",
+ "title": "AI・DXを使う仕事の人",
+ "subject": "AI・DXを使う仕事の人",
+ "genre": "work",
+ "touch": "flat",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A neutral Japanese man office worker in his early 30s, short black hair, gray jacket, white shirt, dark slacks, simple minimal flat style, accompanied by abstract sparkle icon and tablet, no robot face copying existing characters, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "AIやDXを使う仕事場面を、ミニマルなフラットタッチで表す素材です。業務改善、IT導入、研修、社内資料、ツール紹介の記事に使えます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "仕事",
+  "IT",
+  "イラスト",
+  "AI",
+  "DX",
+  "自動化",
+  "データ",
+  "会議",
+  "セキュリティ",
+  "学習"
+ ],
+ "items": [
+  [
+   "asking-ai",
+   "AIに質問する",
+   "The office worker looks at a laptop with a blank screen and an abstract sparkle icon, no text or letters in the picture."
+  ],
+  [
+   "data-analysis",
+   "データを分析する",
+   "The office worker points to a blank chart shape on a tablet, no text or letters in the picture."
+  ],
+  [
+   "automation",
+   "自動化を設定する",
+   "The office worker arranges simple gear icons beside a blank monitor, no text or letters in the picture."
+  ],
+  [
+   "chat-screen",
+   "チャット画面を見る",
+   "The office worker views a blank chat-like panel with empty bubbles, no text or letters in the picture."
+  ],
+  [
+   "security-check",
+   "安全確認をする",
+   "The office worker checks a tablet beside a simple shield icon, no text or letters in the picture."
+  ],
+  [
+   "dx-meeting",
+   "DX会議で話す",
+   "The office worker stands beside a blank meeting board, no text or letters in the picture."
+  ],
+  [
+   "tablet-use",
+   "タブレット操作",
+   "The office worker holds and taps a tablet with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "chart-explain",
+   "グラフを説明する",
+   "The office worker gestures toward a blank abstract graph with no numbers, no text or letters in the picture."
+  ],
+  [
+   "error-trouble",
+   "エラーに困る",
+   "The office worker reacts to a blank warning icon on a laptop screen, no text or letters in the picture."
+  ],
+  [
+   "success",
+   "成功を喜ぶ",
+   "The office worker stands with a small success pose beside a sparkle icon, no text or letters in the picture."
+  ],
+  [
+   "learning",
+   "学習して座る",
+   "The office worker studies a blank tablet and notebook at a desk, no text or letters in the picture."
+  ],
+  [
+   "team-sharing",
+   "チームへ共有する",
+   "The office worker presents a blank tablet to a clearly separated colleague silhouette, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

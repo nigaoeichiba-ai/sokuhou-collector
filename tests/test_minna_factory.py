@@ -37,6 +37,32 @@ def make_sheet(cols=3, rows=2, n=None, vignette=False, touch_edge=False, size=(9
     return im
 
 
+def make_frame_sheet(smudge: bool):
+    """Six square frames (red ring, brown outline) whose middle is plain white or a dark soft smudge, like a generator returns."""
+    k3 = 3
+    w, h = 900, 600
+    im = Image.new("RGB", (w * k3, h * k3), (255, 255, 255))
+    d = ImageDraw.Draw(im)
+    for k in range(6):
+        cx, cy = (k % 3 + 0.5) * w / 3, (k // 3 + 0.5) * h / 2
+        r = 110
+        d.rectangle([(cx - r) * k3, (cy - r) * k3, (cx + r) * k3, (cy + r) * k3], fill=(91, 58, 41))
+        d.rectangle([(cx - r + 6) * k3, (cy - r + 6) * k3, (cx + r - 6) * k3, (cy + r - 6) * k3], fill=(225, 70, 90))
+        d.rectangle([(cx - r + 36) * k3, (cy - r + 36) * k3, (cx + r - 36) * k3, (cy + r - 36) * k3], fill=(91, 58, 41))
+        d.rectangle([(cx - r + 40) * k3, (cy - r + 40) * k3, (cx + r - 40) * k3, (cy + r - 40) * k3], fill=(255, 255, 255))
+    im = im.resize((w, h), Image.LANCZOS)
+    if smudge:
+        arr = np.asarray(im).astype(np.float32)
+        for k in range(6):
+            cx, cy = int((k % 3 + 0.5) * w / 3), int((k // 3 + 0.5) * h / 2)
+            yy, xx = np.mgrid[0:h, 0:w]
+            fade = np.clip(1 - np.hypot(xx - cx, yy - cy) / 70, 0, 1)[..., None]
+            inside = (np.abs(xx - cx) < 68) & (np.abs(yy - cy) < 68)
+            arr = np.where(inside[..., None], arr * (1 - 0.8 * fade) + np.array([90, 60, 40], np.float32) * 0.8 * fade, arr)
+        im = Image.fromarray(arr.astype(np.uint8))
+    return im
+
+
 class SpecsTest(unittest.TestCase):
     def test_every_spec_in_the_repo_is_valid_and_ids_are_unique(self):
         specs = factory.load_specs()          # raises SpecError on any problem
@@ -94,6 +120,25 @@ class SheetKitTest(unittest.TestCase):
         self.assertNotIn("count_problem", info)
         self.assertEqual(pieces[0].image.getpixel((0, 0))[3], 0)
         # the cream inside of the disc must survive (not eaten by the background growth)
+        c = pieces[0].image
+        self.assertEqual(c.getpixel((c.width // 2, c.height // 2))[3], 255)
+
+    def test_frames_get_a_transparent_middle_even_when_the_generator_smudges_it(self):
+        for smudge in (False, True):
+            with tempfile.TemporaryDirectory() as t:
+                p = Path(t) / "s.png"
+                make_frame_sheet(smudge).save(p)
+                pieces, info = sheetkit.slice_sheet(p, 3, 2, "#FFFFFF", holes=True)
+            self.assertEqual(len(pieces), 6, smudge)
+            c = pieces[0].image
+            self.assertEqual(c.getpixel((c.width // 2, c.height // 2))[3], 0, f"middle not transparent (smudge={smudge})")
+            self.assertEqual(c.getpixel((c.width // 2 - 92, c.height // 2))[3], 255, "the frame itself must stay opaque")
+
+    def test_without_the_holes_flag_a_plain_white_middle_is_kept(self):
+        with tempfile.TemporaryDirectory() as t:
+            p = Path(t) / "s.png"
+            make_frame_sheet(False).save(p)
+            pieces, _ = sheetkit.slice_sheet(p, 3, 2, "#FFFFFF", holes=False)
         c = pieces[0].image
         self.assertEqual(c.getpixel((c.width // 2, c.height // 2))[3], 255)
 

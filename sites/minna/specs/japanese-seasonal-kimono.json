@@ -1,0 +1,86 @@
+{
+ "slug": "japanese-seasonal-kimono",
+ "title": "和装と季節行事の人物",
+ "subject": "和装と季節行事の人物",
+ "genre": "season",
+ "touch": "wa",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A Japanese woman adult with neat black hair in a low bun, simple muted blue seasonal kimono with understated traditional pattern, warm Japanese line-art style with muted colors, respectful non-caricature cultural design, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "和装の人物と季節行事を、和風ゆる線画で上品に描く素材です。年中行事、観光、式典、地域広報、文化紹介に使いやすいです。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "和装",
+  "季節",
+  "イラスト",
+  "着物",
+  "行事",
+  "初詣",
+  "茶道",
+  "浴衣",
+  "観光",
+  "式典"
+ ],
+ "items": [
+  [
+   "shrine-visit",
+   "初詣に向かう",
+   "The kimono woman walks calmly toward a simple shrine gate shape, no text or letters in the picture."
+  ],
+  [
+   "coming-age",
+   "成人式で立つ",
+   "The kimono woman stands formally with a small plain clutch, no text or letters in the picture."
+  ],
+  [
+   "shichigosan",
+   "七五三に付き添う",
+   "The kimono woman stands beside a clearly separated child in formal clothes, no text or letters in the picture."
+  ],
+  [
+   "tea-ceremony",
+   "茶道で座る",
+   "The kimono woman sits seiza beside a plain tea bowl, no text or letters in the picture."
+  ],
+  [
+   "bon-dance",
+   "盆踊りを踊る",
+   "The kimono woman dances with simple raised arms in side view, no text or letters in the picture."
+  ],
+  [
+   "fireworks-yukata",
+   "浴衣で花火を見る",
+   "The kimono woman in the same outfit looks toward simple fireworks shapes, no text or letters in the picture."
+  ],
+  [
+   "formal-bow",
+   "丁寧にお辞儀",
+   "The kimono woman makes a formal bow with hands together in front, no text or letters in the picture."
+  ],
+  [
+   "holding-fan",
+   "扇子を持つ",
+   "The kimono woman stands holding a plain folding fan, no text or letters in the picture."
+  ],
+  [
+   "wagasa",
+   "和傘を差す",
+   "The kimono woman holds a simple wagasa umbrella while standing, no text or letters in the picture."
+  ],
+  [
+   "tour-guide",
+   "観光案内する",
+   "The kimono woman gestures toward a blank map board, no text or letters in the picture."
+  ],
+  [
+   "taking-photo",
+   "写真を撮る",
+   "The kimono woman holds a small camera in front of a blank scenery shape, no text or letters in the picture."
+  ],
+  [
+   "seiza",
+   "正座して座る",
+   "The kimono woman sits in seiza posture on a plain mat, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

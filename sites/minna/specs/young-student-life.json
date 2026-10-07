@@ -1,0 +1,86 @@
+{
+ "slug": "young-student-life",
+ "title": "学生生活と進路素材",
+ "subject": "学生生活と進路素材",
+ "genre": "school",
+ "touch": "chibi",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A Japanese high-school boy student with short black hair, navy blazer uniform, white shirt, gray slacks, dark school bag, slightly chibi 3-head proportion, clean flat anime-light style, friendly and non-romantic, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "学生生活と進路の場面を、ちびキャラ寄りの親しみやすいタッチで描く素材です。学校、塾、進路情報、受験案内の記事に合います。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "学生",
+  "学校",
+  "イラスト",
+  "高校生",
+  "勉強",
+  "進路",
+  "部活",
+  "面接",
+  "試験",
+  "卒業"
+ ],
+ "items": [
+  [
+   "going-school",
+   "登校して歩く",
+   "The student walks in side view carrying a school bag, no text or letters in the picture."
+  ],
+  [
+   "studying",
+   "机で勉強する",
+   "The student sits at a desk studying with a blank notebook, no text or letters in the picture."
+  ],
+  [
+   "phone-check",
+   "スマホを見る",
+   "The student stands checking a phone with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "club-activity",
+   "部活で動く",
+   "The student practices with a simple ball in open space, no text or letters in the picture."
+  ],
+  [
+   "talking-friends",
+   "友達と話す",
+   "The student talks with one friend standing clearly separated, no text or letters in the picture."
+  ],
+  [
+   "future-thinking",
+   "進路に悩む",
+   "The student sits with a blank career sheet and a small question symbol, no text or letters in the picture."
+  ],
+  [
+   "interview-practice",
+   "面接練習する",
+   "The student sits upright on a chair facing an empty chair, no text or letters in the picture."
+  ],
+  [
+   "presentation",
+   "前で発表する",
+   "The student stands beside a blank board and gestures simply, no text or letters in the picture."
+  ],
+  [
+   "before-exam",
+   "試験前に読む",
+   "The student reviews a blank notebook with focused posture, no text or letters in the picture."
+  ],
+  [
+   "exam-passed",
+   "合格を喜ぶ",
+   "The student celebrates beside a blank paper held low, no text or letters in the picture."
+  ],
+  [
+   "asking-teacher",
+   "先生に質問する",
+   "The student raises a hand toward a clearly separated teacher figure, no text or letters in the picture."
+  ],
+  [
+   "graduation",
+   "卒業で歩く",
+   "The student walks holding a plain certificate tube, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

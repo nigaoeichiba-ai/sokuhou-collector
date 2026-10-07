@@ -1,0 +1,86 @@
+{
+ "slug": "delivery-worker-seasonal",
+ "title": "配達員の季節業務",
+ "subject": "配達員の季節業務",
+ "genre": "work",
+ "touch": "linecolor",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A Japanese man delivery worker in his 30s, tan cap, navy delivery jacket, black pants, small plain parcel box, simple line-and-color style with thin navy outline and light fills, energetic but neutral, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "配達員の業務や季節対応を、線画カラーで明快に描く素材です。物流、宅配、店舗配送、働く人、地域サービスの記事に使いやすいです。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "配達",
+  "仕事",
+  "イラスト",
+  "宅配",
+  "荷物",
+  "台車",
+  "自転車",
+  "雨具",
+  "暑さ",
+  "玄関"
+ ],
+ "items": [
+  [
+   "holding-parcel",
+   "荷物を持つ",
+   "The delivery worker stands holding one plain parcel box at waist height, no text or letters in the picture."
+  ],
+  [
+   "pushing-cart",
+   "台車を押す",
+   "The delivery worker pushes a cart with plain boxes in side view, no text or letters in the picture."
+  ],
+  [
+   "door-delivery",
+   "玄関で渡す",
+   "The delivery worker holds a parcel toward an empty doorway, no text or letters in the picture."
+  ],
+  [
+   "safe-dropoff",
+   "置き配をする",
+   "The delivery worker places a plain box beside a door from a side view, no text or letters in the picture."
+  ],
+  [
+   "app-check",
+   "スマホで確認",
+   "The delivery worker checks a phone with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "rain-gear",
+   "雨具を着る",
+   "The delivery worker wears a simple raincoat and holds a parcel, no text or letters in the picture."
+  ],
+  [
+   "heat-care",
+   "暑さに備える",
+   "The delivery worker drinks from a plain bottle while standing, no text or letters in the picture."
+  ],
+  [
+   "blank-notice",
+   "不在票を入れる",
+   "The delivery worker slips a blank notice card into a mailbox, no text or letters in the picture."
+  ],
+  [
+   "bicycle-delivery",
+   "自転車で配達",
+   "The delivery worker rides a bicycle with a plain delivery box, no text or letters in the picture."
+  ],
+  [
+   "climbing-stairs",
+   "階段を上る",
+   "The delivery worker climbs stairs carrying one plain parcel, no text or letters in the picture."
+  ],
+  [
+   "delivery-bow",
+   "お辞儀をする",
+   "The delivery worker bows politely while holding a cap brim lightly, no text or letters in the picture."
+  ],
+  [
+   "job-done",
+   "達成感を出す",
+   "The delivery worker stands with a small satisfied pose beside an empty cart, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

@@ -1,0 +1,86 @@
+{
+ "slug": "teacher-student-classroom",
+ "title": "先生と学生の授業場面",
+ "subject": "先生と学生の授業場面",
+ "genre": "school",
+ "touch": "crayon",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A Japanese male teacher in his 40s with short black hair and glasses, green cardigan, and two middle-school students in simple navy uniforms, crayon educational worksheet style with soft uneven strokes, friendly expressions, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "授業や学校生活の場面を、クレヨン風の親しみやすい線でまとめた素材です。学校プリント、学習記事、教育サービス、教室案内に向きます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "学校",
+  "授業",
+  "イラスト",
+  "先生",
+  "学生",
+  "勉強",
+  "発表",
+  "質問",
+  "実験",
+  "登下校"
+ ],
+ "items": [
+  [
+   "blackboard-explain",
+   "黒板で説明する",
+   "The teacher stands beside a blank blackboard and explains with one hand, no text or letters in the picture."
+  ],
+  [
+   "raising-hand",
+   "手を挙げて答える",
+   "One student sits at a desk and raises one hand, no text or letters in the picture."
+  ],
+  [
+   "writing-notes",
+   "ノートを書く",
+   "One student writes in a blank notebook at a desk, no text or letters in the picture."
+  ],
+  [
+   "tablet-learning",
+   "タブレット学習",
+   "One student uses a tablet with a blank screen while seated, no text or letters in the picture."
+  ],
+  [
+   "group-work",
+   "離れて班活動",
+   "Two students stand clearly separated around a blank table for group work, no text or letters in the picture."
+  ],
+  [
+   "online-class",
+   "オンライン授業",
+   "The teacher sits before a laptop with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "student-presentation",
+   "前で発表する",
+   "One student stands beside a blank board and presents, no text or letters in the picture."
+  ],
+  [
+   "asking-question",
+   "困って質問する",
+   "One student stands with a raised hand and a small question symbol, no text or letters in the picture."
+  ],
+  [
+   "checking-answers",
+   "答え合わせする",
+   "The teacher looks at a blank worksheet on a desk, no text or letters in the picture."
+  ],
+  [
+   "reading-book",
+   "本を読んで座る",
+   "One student sits quietly reading a blank-covered book, no text or letters in the picture."
+  ],
+  [
+   "science-experiment",
+   "実験を観察する",
+   "One student watches a simple flask on a table from the side, no text or letters in the picture."
+  ],
+  [
+   "leaving-school",
+   "下校で歩く",
+   "One student walks with a school bag in side view, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

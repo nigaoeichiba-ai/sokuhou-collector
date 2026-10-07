@@ -1,0 +1,86 @@
+{
+ "slug": "faceless-remote-worker",
+ "title": "顔なしテレワーク人物",
+ "subject": "顔なしテレワーク人物",
+ "genre": "work",
+ "touch": "faceless",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A faceless Japanese woman remote worker in her early 30s, medium black bob hair, light gray cardigan, muted green shirt, dark pants, minimal flat illustration, no facial features, rounded simple shapes, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "在宅勤務中の人物を、顔なしミニマルタッチで静かに表現した素材です。テレワーク、働き方、暮らし、家庭内作業の記事に合わせやすい内容です。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "在宅勤務",
+  "仕事",
+  "イラスト",
+  "テレワーク",
+  "リモート",
+  "会議",
+  "通話",
+  "家事",
+  "集中",
+  "休憩"
+ ],
+ "items": [
+  [
+   "video-meeting",
+   "オンライン会議",
+   "The remote worker sits at a desk facing a laptop with a blank screen for a video meeting, no text or letters in the picture."
+  ],
+  [
+   "headset-call",
+   "ヘッドセット通話",
+   "The remote worker sits in side view wearing a headset and speaking calmly, no text or letters in the picture."
+  ],
+  [
+   "sleepy-desk",
+   "眠そうに座る",
+   "The remote worker sits at the desk with sleepy posture and a blank laptop nearby, no text or letters in the picture."
+  ],
+  [
+   "watching-child",
+   "子どもを気にする",
+   "The remote worker turns away from a desk toward a clearly separated small child silhouette, no text or letters in the picture."
+  ],
+  [
+   "receiving-delivery",
+   "宅配を受け取る",
+   "The remote worker stands at a door receiving a plain parcel from empty space, no text or letters in the picture."
+  ],
+  [
+   "checking-phone",
+   "スマホを確認",
+   "The remote worker stands holding a phone with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "taking-notes",
+   "メモを取る",
+   "The remote worker writes on a blank notebook at the desk, no text or letters in the picture."
+  ],
+  [
+   "stretching",
+   "伸びをする",
+   "The remote worker stands beside the chair and stretches both arms upward simply, no text or letters in the picture."
+  ],
+  [
+   "wifi-trouble",
+   "通信に困る",
+   "The remote worker looks at a blank laptop with a small abstract signal icon above it, no text or letters in the picture."
+  ],
+  [
+   "sharing-document",
+   "資料を共有する",
+   "The remote worker holds one blank sheet toward a blank laptop screen, no text or letters in the picture."
+  ],
+  [
+   "focused-work",
+   "集中して作業",
+   "The remote worker leans forward at the desk in a focused sitting pose, no text or letters in the picture."
+  ],
+  [
+   "closing-laptop",
+   "終業で片付け",
+   "The remote worker closes a blank laptop and tidies a plain desk, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

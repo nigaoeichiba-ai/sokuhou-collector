@@ -1,0 +1,86 @@
+{
+ "slug": "flat-office-young-worker",
+ "title": "若手会社員のポーズ集",
+ "subject": "若手会社員",
+ "genre": "work",
+ "touch": "flat",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A friendly Japanese woman office worker in her late 20s, short black hair, navy blazer, white shirt, beige trousers, simple flat vector style with no outline, 4.5-head proportion, warm neutral palette, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "若手会社員のよく使う所作を、清潔なフラットタッチでそろえた人物素材です。ビジネス資料や採用、社内案内、研修ページに使いやすい構成です。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "会社員",
+  "ビジネス",
+  "イラスト",
+  "若手",
+  "オフィス",
+  "プレゼン",
+  "電話",
+  "資料",
+  "挨拶",
+  "仕事"
+ ],
+ "items": [
+  [
+   "greeting-bow",
+   "挨拶して立つ",
+   "The office worker stands in a light greeting bow with open posture, no text or letters in the picture."
+  ],
+  [
+   "laptop-work",
+   "ノートPC作業",
+   "The office worker sits at a desk using a laptop with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "pointing-guide",
+   "指さし案内する",
+   "The office worker stands in side view and points toward an empty space for guidance, no text or letters in the picture."
+  ],
+  [
+   "agree-pose",
+   "了解ポーズする",
+   "The office worker smiles and makes a simple agreement gesture near the chest, no text or letters in the picture."
+  ],
+  [
+   "worried-thinking",
+   "困って考える",
+   "The office worker sits with one hand near the chin and a small abstract worry mark, no text or letters in the picture."
+  ],
+  [
+   "presentation",
+   "発表して説明",
+   "The office worker stands beside a blank board and explains with one hand, no text or letters in the picture."
+  ],
+  [
+   "phone-call",
+   "電話で話す",
+   "The office worker stands holding a simple phone to the ear, no text or letters in the picture."
+  ],
+  [
+   "holding-documents",
+   "資料を持って立つ",
+   "The office worker stands holding a few blank documents at the side, no text or letters in the picture."
+  ],
+  [
+   "success-pose",
+   "達成を喜ぶ",
+   "The office worker stands in a small success pose with one arm bent, no text or letters in the picture."
+  ],
+  [
+   "deep-bow",
+   "丁寧にお辞儀",
+   "The office worker makes a deeper formal bow from a three-quarter view, no text or letters in the picture."
+  ],
+  [
+   "hurrying-walk",
+   "急いで歩く",
+   "The office worker walks briskly while holding a blank folder, no text or letters in the picture."
+  ],
+  [
+   "coffee-break",
+   "休憩でコーヒー",
+   "The office worker sits calmly with a plain coffee cup on a break, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}
