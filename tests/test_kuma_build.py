@@ -495,6 +495,10 @@ class LiveSectionTest(unittest.TestCase):
         self.assertIn("6件", page)
         self.assertIn(">CSVをダウンロード(6件)<", page)
         self.assertIn('href="/data/kuma-sightings.csv"', page)
+        ld = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', page, re.S).group(1))
+        self.assertEqual(ld["@type"], "Dataset")
+        self.assertEqual(ld["distribution"][0]["contentUrl"], "https://kuma-sokuho.com/data/kuma-sightings.csv")
+        self.assertIn('href="/map/"', self.read("index.html"))  # the map is in the main navigation
 
     def test_a_source_without_stated_terms_is_not_offered_for_download(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -598,6 +602,7 @@ class SourceKeyIsNotThePrefectureTest(unittest.TestCase):
         self.assertIn(f"live/hokkaido/{live_mod.city_slug('hokkaido', '砂川市')}/index.html", self.files)
         self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
         self.assertIn("空知総合振興局", self.read("live/hokkaido/index.html"))
+        self.assertIn("<h1>北海道(空知管内の24市町のみ)のクマの目撃情報", self.read("live/hokkaido/index.html"))  # the page does not claim to cover all of Hokkaido
 
 
 @unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
