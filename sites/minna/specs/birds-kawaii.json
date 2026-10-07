@@ -80,5 +80,8 @@
    "フラミンゴ",
    "a pink flamingo standing on one leg"
   ]
+ ],
+ "exclude": [
+  "swallow"
  ]
 }

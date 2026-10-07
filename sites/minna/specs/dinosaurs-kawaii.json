@@ -78,5 +78,9 @@
    "海のきょうりゅうふう",
    "a cute long-necked sea reptile"
   ]
+ ],
+ "exclude": [
+  "bronto",
+  "ptera"
  ]
 }
