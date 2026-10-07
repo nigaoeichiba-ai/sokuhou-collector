@@ -67,3 +67,65 @@ def fullwidth_to_int(text: str) -> int | None:
     """'親子グマ２頭' -> 2, 'ヒグマ１頭' -> 1, nothing numeric -> None."""
     m = re.search(r"(\d+)\s*頭", unicodedata.normalize("NFKC", text or ""))
     return int(m.group(1)) if m else None
+
+
+# ---------------------------------------------------------------- sources WITHOUT an explicit re-use licence ("counts" mode)
+#
+# For these, only municipality, month, count and the latest date are kept (no place, no coordinates, no row list), the pages show
+# nothing else, and the data file in the public repository holds nothing else either.  The adapter aggregates in memory.
+
+COUNTS_UA = "kuma-sokuho-collector/1.0 (+https://kuma-sokuho.com/about/)"
+STOPPED: set[str] = set()   # source names whose publisher asked us to stop: never collected, never shown (see docs/KUMA_COMPETITORS_AND_ROADMAP.md)
+
+
+def package_counts(*, source: str, credit: str, update_note: str, as_of: date, rows: list[dict], page: str, files: list[str],
+                   unparsed: int = 0) -> dict:
+    """rows: dicts with observed_at (ISO date or datetime) and city only; everything else is ignored on purpose."""
+    muni: dict[str, dict] = {}
+    monthly: dict[str, dict[str, int]] = {}
+    for r in rows:
+        if not r.get("observed_at") or not r.get("city"):
+            continue
+        d = date.fromisoformat(r["observed_at"][:10])
+        fy = fy_label(fiscal_start(d))
+        m = muni.setdefault(r["city"], {"monthly": {}, "latest": d.isoformat()})
+        m["monthly"].setdefault(fy, {})[str(d.month)] = m["monthly"].get(fy, {}).get(str(d.month), 0) + 1
+        m["latest"] = max(m["latest"], d.isoformat())
+        monthly.setdefault(fy, {})[str(d.month)] = monthly.get(fy, {}).get(str(d.month), 0) + 1
+    fy_cur = fy_label(fiscal_start(as_of))
+    return {
+        "mode": "counts", "source": source, "credit": credit, "as_of": as_of.isoformat(), "update_note": update_note, "fy_current": fy_cur,
+        "total_fy": sum(monthly.get(fy_cur, {}).values()), "monthly": monthly, "municipalities": dict(sorted(muni.items())),
+        "unparsed": unparsed, "source_page": page, "source_file": files[0] if len(files) == 1 else files, "fetched_at": now_jst_iso(),
+    }
+
+
+_ROBOTS: dict[str, "object"] = {}
+
+
+def polite_fetch(url: str, timeout: float = 30.0, legacy_tls: bool = False) -> bytes:
+    """One GET with an identifying User-Agent, after checking the site's robots.txt (a disallowed or unreadable-by-rule URL is not fetched)."""
+    import ssl
+    import urllib.request
+    from urllib.parse import urlparse
+    from urllib.robotparser import RobotFileParser
+    p = urlparse(url)
+    rp = _ROBOTS.get(p.netloc)
+    if rp is None:
+        rp = RobotFileParser()
+        try:
+            req = urllib.request.Request(f"{p.scheme}://{p.netloc}/robots.txt", headers={"User-Agent": COUNTS_UA})
+            with urllib.request.urlopen(req, timeout=15) as r:
+                rp.parse(r.read().decode("utf-8", "replace").splitlines())
+        except Exception:  # noqa: BLE001 - no robots.txt (404) or none reachable: nothing forbids the fetch
+            rp.parse([])
+        _ROBOTS[p.netloc] = rp
+    if not rp.can_fetch(COUNTS_UA, url):
+        raise PermissionError(f"robots.txt of {p.netloc} disallows {url}")
+    ctx = None
+    if legacy_tls:
+        ctx = ssl.create_default_context()
+        ctx.set_ciphers("DEFAULT:@SECLEVEL=1")
+    req = urllib.request.Request(url, headers={"User-Agent": COUNTS_UA})
+    with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
+        return r.read()
