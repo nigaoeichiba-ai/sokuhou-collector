@@ -523,7 +523,7 @@ def hero_collage(items: list[dict]) -> str:
                    for n, c in enumerate(chosen))
 
 
-def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], today: date) -> str:
+def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], today: date, printable_thumbs: list[str] | None = None) -> str:
     genres_present = [g for g in GENRES if any(i["genre"] == g[0] for i in items)]
     gtiles = ""
     for slug, name, desc, _ in genres_present:
@@ -544,6 +544,11 @@ def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], 
         season_html = f'<section style="margin-top:44px"><div class="sec-head"><h2>いま使える<span class="scribble">特集</span></h2><p>季節の行事に、すぐ使えるイラストです。</p></div><ul class="special-grid">{cards}</ul></section>'
     newest = sorted(series, key=lambda s: (s["added"], s["slug"]), reverse=True)
     newest = [s for s in newest if not s["legacy"]][:8] or newest[:8]
+    print_html = ""
+    if printable_thumbs:
+        thumbs = "".join(f'<img src="{t}" alt="" width="110" height="156" loading="lazy">' for t in printable_thumbs[:4])
+        print_html = (f'<section style="margin-top:50px"><div class="sec-head"><h2>印刷して<span class="scribble">つかう</span></h2><p>カレンダー、ぬりえ、賞状、名札、時間割。A4で印刷できます。</p></div>'
+                      f'<a class="print-banner" href="/printables/"><span class="print-thumbs">{thumbs}</span><b>印刷できるもの(無料・A4)</b><small>{calendar_year(today)}年のカレンダー(祝日つき)・ぬりえ・賞状・名札・時間割</small></a></section>')
     body = f"""<section class="band mint dots hero"><div class="in"><div class="hero-text"><span class="sticker">ずっと無料・商用OK・登録不要</span>
 <h1><span class="nb">そのまま使える、</span><br><span class="nb"><em>かわいい</em>イラスト素材</span></h1>
 <p class="lead">どうぶつ・年賀状・行事・たべもの・フレームまで、{len(items)}点。ダウンロードして、すぐに使えます。クレジット表示も、点数の制限も、ありません。</p>
@@ -553,6 +558,7 @@ def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], 
 {licence_box()}
 {season_html}
 <section style="margin-top:44px"><div class="sec-head"><h2>ジャンルから<span class="scribble">さがす</span></h2></div><ul class="genre-grid">{gtiles}</ul></section>
+{print_html}
 <section style="margin-top:50px"><div class="sec-head"><h2>あたらしい<span class="scribble">セット</span></h2><p>同じキャラクター・同じタッチで、そろっています。</p></div>{set_grid(newest)}
 <p style="text-align:center"><a class="btn" href="/new/">新着をもっと見る</a></p></section>
 <section style="margin-top:50px"><div class="sec-head"><h2>タッチから<span class="scribble">えらぶ</span></h2><p>同じ絵でも、タッチがちがうと、雰囲気が変わります。</p></div><ul class="touch-grid">{ttiles}</ul></section>
@@ -852,7 +858,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     cal_files, cal_themes = build_calendars(items, today)
     pr_files, pr_kinds = build_printables(items)
     SITE["nav"] = [n for n in BASE_NAV if (built or n[1] != "/special/") and (guides or n[1] != "/guide/") and (cal_themes or n[1] != "/printables/")]
-    pages: dict[str, str | bytes] = {"index.html": index_page(cfg, preview, items, series, today)}
+    pages: dict[str, str | bytes] = {"index.html": index_page(cfg, preview, items, series, today, [m["img"] for m in cal_themes[0]["months"][:4]] if cal_themes else None)}
     pages.update(illust_hub(cfg, preview, items, series))
     pages.update(genre_pages(cfg, preview, items, series))
     pages.update(touch_pages(cfg, preview, items, series))

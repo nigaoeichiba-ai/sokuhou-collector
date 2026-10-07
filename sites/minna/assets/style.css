@@ -613,3 +613,9 @@ header.site .wrap { gap: 10px; flex-wrap: wrap; }
 .cal-card b { font-weight: 900; }
 .cal-card small { color: var(--muted); }
 .cal-grid.wide { grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }
+.print-banner { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 18px 16px; background: var(--sky-s); border: var(--line); border-radius: 26px; box-shadow: var(--shadow); color: var(--ink); text-decoration: none; text-align: center; transition: transform .15s; }
+.print-banner:hover { transform: translate(-2px, -3px); background: var(--yellow-s); }
+.print-thumbs { display: flex; gap: 10px; justify-content: center; }
+.print-thumbs img { width: 22%; max-width: 110px; height: auto; border: 1px solid #e8dcc0; border-radius: 6px; background: #fff; box-shadow: 2px 3px 0 rgba(43, 27, 20, .15); }
+.print-banner b { font-family: var(--display); font-weight: 400; font-size: 1.2rem; }
+.print-banner small { color: var(--muted); }
