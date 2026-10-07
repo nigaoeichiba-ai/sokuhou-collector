@@ -1,0 +1,58 @@
+{
+ "slug": "nenga-frames-kawaii",
+ "holes": true,
+ "title": "年賀状のフレーム ゆるかわ",
+ "subject": "",
+ "genre": "deco",
+ "touch": "kawaii",
+ "subject_en": "decorative portrait-orientation frames (ratio 2:3) with an EMPTY centre that is filled with the key colour so it becomes transparent",
+ "lead": "ひつじやお正月モチーフのかわいいフレーム。家族写真や子どもの写真を入れて、そのまま年賀状に。",
+ "tags": [
+  "フレーム",
+  "年賀状",
+  "かわいい",
+  "ひつじ",
+  "写真フレーム",
+  "家族",
+  "枠",
+  "はがき",
+  "お正月"
+ ],
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "sheep",
+   "ひつじのフレーム",
+   "a portrait frame (2:3) of small fluffy sheep peeking from the corners with a cloud-like border, centre empty"
+  ],
+  [
+   "cloud",
+   "もこもこ雲のフレーム",
+   "a portrait frame (2:3) of fluffy cloud scallops in cream, with tiny stars, centre empty"
+  ],
+  [
+   "mochi",
+   "鏡もちのフレーム",
+   "a portrait frame (2:3) with kagami-mochi at the bottom corners and pine at the top, centre empty"
+  ],
+  [
+   "star",
+   "お星さまのフレーム",
+   "a portrait frame (2:3) of yellow stars and sparkles in a red-gold border, centre empty"
+  ],
+  [
+   "ribbon",
+   "リボンのフレーム",
+   "a portrait frame (2:3) with a red ribbon bow at the top and a thin dotted border, centre empty"
+  ],
+  [
+   "flower",
+   "お花のフレーム",
+   "a portrait frame (2:3) of simple pink and white flowers with leaves around the border, centre empty"
+  ]
+ ]
+}

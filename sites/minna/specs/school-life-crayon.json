@@ -1,0 +1,84 @@
+{
+ "slug": "school-life-crayon",
+ "title": "学校・保育のイラスト 手描き",
+ "subject": "",
+ "genre": "school",
+ "touch": "crayon",
+ "subject_en": "school and nursery scenes/items drawn in crayon (no real people; cute animal or simple children figures allowed)",
+ "lead": "運動会、遠足、お誕生日会、おゆうぎなど、学校や園の行事を、あたたかい手描きタッチで12点。おたよりやクラスだよりに。",
+ "tags": [
+  "学校",
+  "保育園",
+  "幼稚園",
+  "運動会",
+  "遠足",
+  "おたより",
+  "行事",
+  "手描き",
+  "クレヨン"
+ ],
+ "season": null,
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "sportsday",
+   "運動会の旗",
+   "a string of colourful bunting flags with a small flag pole"
+  ],
+  [
+   "lunchbox",
+   "遠足のお弁当とリュック",
+   "a picnic basket, a small backpack and a thermos"
+  ],
+  [
+   "birthday",
+   "お誕生日会のケーキ",
+   "a birthday cake with candles and a crown"
+  ],
+  [
+   "paintbrush",
+   "絵の具セット",
+   "a paint palette with brushes"
+  ],
+  [
+   "recorder",
+   "リコーダー",
+   "a recorder and a music note"
+  ],
+  [
+   "watering",
+   "じょうろとひまわり",
+   "a watering can beside a sunflower"
+  ],
+  [
+   "bus",
+   "園バス",
+   "a small yellow nursery bus"
+  ],
+  [
+   "sandbox",
+   "砂遊びセット",
+   "a bucket, shovel and a sand castle"
+  ],
+  [
+   "kids",
+   "手をつなぐ子どもたち",
+   "three simple cheerful children holding hands (simple friendly crayon faces)"
+  ],
+  [
+   "rainy",
+   "かさとながぐつ",
+   "a yellow umbrella and rain boots with puddle"
+  ],
+  [
+   "picturebook",
+   "絵本",
+   "an open picture book with stars"
+  ],
+  [
+   "graduation",
+   "そつえんしょうしょ",
+   "a rolled certificate with a ribbon and a flower (blank)"
+  ]
+ ]
+}

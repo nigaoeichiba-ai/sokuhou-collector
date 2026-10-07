@@ -1,0 +1,118 @@
+{
+ "slug": "newyear-objects-wa",
+ "title": "お正月の飾り 和風",
+ "subject": "",
+ "genre": "eto",
+ "touch": "wa",
+ "subject_en": "New Year objects, each one a separate item (no characters)",
+ "lead": "門松、鏡もち、初日の出、鶴と亀、松竹梅、羽子板、凧、おせち、だるま、破魔矢まで。お正月の定番モチーフを、和風のタッチで18点そろえました。年賀状の飾りに。",
+ "tags": [
+  "お正月",
+  "年賀状",
+  "門松",
+  "鏡餅",
+  "初日の出",
+  "おせち",
+  "だるま",
+  "和風",
+  "和柄",
+  "縁起物"
+ ],
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "kadomatsu",
+   "門松",
+   "kadomatsu: bamboo stalks cut diagonally with pine branches and a red-white rope"
+  ],
+  [
+   "kagami",
+   "鏡もち",
+   "kagami-mochi: two stacked round rice cakes, a bitter orange (daidai) with leaf on top, on a folded-paper stand"
+  ],
+  [
+   "hatsuhinode",
+   "初日の出と富士山",
+   "a large rising sun with rays behind a stylised Mt. Fuji with a snow cap and a few pine silhouettes"
+  ],
+  [
+   "tsuru",
+   "鶴",
+   "an elegant white crane with a red crown, wings spread"
+  ],
+  [
+   "kame",
+   "亀",
+   "a cute auspicious turtle with a hexagon-pattern shell and a small seaweed tail"
+  ],
+  [
+   "shochikubai",
+   "松竹梅",
+   "pine, bamboo and plum blossoms arranged together as one auspicious bundle"
+  ],
+  [
+   "hagoita",
+   "羽子板",
+   "a decorative hagoita paddle with a plain pretty design of a plum blossom and a shuttlecock"
+  ],
+  [
+   "tako",
+   "凧",
+   "a simple rectangular Japanese kite with a tail and a plain bold design"
+  ],
+  [
+   "osechi",
+   "おせち料理",
+   "a three-tier osechi lacquer box with the top tier open showing colourful dishes"
+  ],
+  [
+   "daruma",
+   "だるま",
+   "a red daruma doll with one white eye and a gold brush-stroke pattern"
+  ],
+  [
+   "hamaya",
+   "破魔矢",
+   "a hamaya arrow with feathers and a small bell and red-white ribbon"
+  ],
+  [
+   "ema",
+   "絵馬",
+   "an ema wooden plaque in a house shape with a plain horse-less pattern of plum blossoms (blank)"
+  ],
+  [
+   "shishimai",
+   "獅子舞",
+   "a lion-dance (shishimai) head with red face, gold teeth and a green cloth body, friendly not scary"
+  ],
+  [
+   "senbazuru",
+   "松の枝と扇",
+   "a pine branch with an open folding fan beside it"
+  ],
+  [
+   "nanten",
+   "南天の実",
+   "a branch of red nanten berries with green leaves"
+  ],
+  [
+   "fukumame",
+   "お年玉袋",
+   "a small decorative red envelope (pochibukuro) with a plum pattern and a knot of gold-red string (blank, no text)"
+  ],
+  [
+   "mizuhiki",
+   "水引",
+   "a gold-and-red mizuhiki knot decoration in a plum-flower shape"
+  ],
+  [
+   "toshikoshi",
+   "年越しそば",
+   "a bowl of toshikoshi soba with fried tofu, green onion and a kamaboko slice, steam rising"
+  ]
+ ]
+}

@@ -1,0 +1,89 @@
+{
+ "slug": "winter-objects-flat",
+ "title": "冬のイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "flat",
+ "subject_en": "winter icons, each a separate object",
+ "lead": "雪、手ぶくろ、こたつ、みかん、ココア、マフラーなど、冬を感じる12点。おたよりやお店のお知らせ、冬のイベントの案内に。",
+ "tags": [
+  "冬",
+  "雪",
+  "こたつ",
+  "みかん",
+  "ココア",
+  "マフラー",
+  "手袋",
+  "寒中見舞い",
+  "12月",
+  "1月",
+  "2月"
+ ],
+ "season": {
+  "from": "11-15",
+  "to": "03-05"
+ },
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "snowflake",
+   "雪の結晶",
+   "a large snowflake crystal"
+  ],
+  [
+   "mittens",
+   "手ぶくろ",
+   "a pair of knitted mittens"
+  ],
+  [
+   "kotatsu",
+   "こたつ",
+   "a kotatsu table with a blanket and a mikan bowl"
+  ],
+  [
+   "mikan",
+   "みかん",
+   "three mandarin oranges with leaves"
+  ],
+  [
+   "cocoa",
+   "ココア",
+   "a mug of hot cocoa with marshmallows and steam"
+  ],
+  [
+   "scarf",
+   "マフラー",
+   "a striped knitted scarf"
+  ],
+  [
+   "snowman",
+   "雪だるま",
+   "a snowman with a bucket hat"
+  ],
+  [
+   "nabe",
+   "お鍋",
+   "a hot pot (nabe) with steam and vegetables"
+  ],
+  [
+   "heater",
+   "ストーブ",
+   "a small kerosene heater with a kettle on top"
+  ],
+  [
+   "coat",
+   "ダウンジャケット",
+   "a puffy winter jacket"
+  ],
+  [
+   "icicle",
+   "つらら",
+   "icicles hanging from a roof edge"
+  ],
+  [
+   "camellia",
+   "寒椿",
+   "a red camellia flower with snow on leaves"
+  ]
+ ]
+}

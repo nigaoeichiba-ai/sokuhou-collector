@@ -1,0 +1,87 @@
+{
+ "slug": "christmas-objects-flat",
+ "title": "クリスマスのアイコン",
+ "subject": "",
+ "genre": "season",
+ "touch": "flat",
+ "subject_en": "Christmas icons, each a separate object",
+ "lead": "ツリー、リース、プレゼント、くつした、キャンドルなど、クリスマスの定番モチーフ12点。カードやお知らせ、SNS画像にそのまま使えます。",
+ "tags": [
+  "クリスマス",
+  "冬",
+  "ツリー",
+  "プレゼント",
+  "サンタ",
+  "リース",
+  "12月",
+  "イベント"
+ ],
+ "season": {
+  "from": "11-01",
+  "to": "12-28"
+ },
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "tree",
+   "クリスマスツリー",
+   "a decorated Christmas tree with a star"
+  ],
+  [
+   "wreath",
+   "クリスマスリース",
+   "a green wreath with a red ribbon and berries"
+  ],
+  [
+   "gift",
+   "プレゼントボックス",
+   "a gift box with a ribbon"
+  ],
+  [
+   "stocking",
+   "くつした",
+   "a red Christmas stocking with white cuff holding a candy cane"
+  ],
+  [
+   "candle",
+   "キャンドル",
+   "a lit candle with holly leaves"
+  ],
+  [
+   "snowman",
+   "雪だるま",
+   "a snowman with scarf and carrot nose"
+  ],
+  [
+   "santahat",
+   "サンタの帽子",
+   "a red Santa hat with white fur"
+  ],
+  [
+   "bell",
+   "ベル",
+   "two golden jingle bells with a red bow"
+  ],
+  [
+   "cake",
+   "クリスマスケーキ",
+   "a strawberry shortcake with a small Santa figure"
+  ],
+  [
+   "candycane",
+   "キャンディケイン",
+   "red-and-white candy canes crossed"
+  ],
+  [
+   "reindeer",
+   "トナカイ",
+   "a cute reindeer face with antlers and a red nose"
+  ],
+  [
+   "star",
+   "ベツレヘムの星",
+   "a big golden shining star"
+  ]
+ ],
+ "holes": true
+}

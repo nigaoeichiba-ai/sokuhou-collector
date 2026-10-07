@@ -1,0 +1,83 @@
+{
+ "slug": "sweets-watercolor",
+ "title": "スイーツ 水彩",
+ "subject": "",
+ "genre": "food",
+ "touch": "watercolor",
+ "subject_en": "sweets and desserts, each a separate item",
+ "lead": "ショートケーキ、プリン、マカロン、ドーナツなど、やわらかい水彩でえがいたスイーツ12点。カフェのメニューやお菓子のレシピ、ブログに。",
+ "tags": [
+  "スイーツ",
+  "お菓子",
+  "ケーキ",
+  "カフェ",
+  "水彩",
+  "おやつ",
+  "デザート",
+  "プリン",
+  "マカロン"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "shortcake",
+   "ショートケーキ",
+   "a slice of strawberry shortcake"
+  ],
+  [
+   "pudding",
+   "プリン",
+   "custard pudding on a plate with caramel and a cherry"
+  ],
+  [
+   "macaron",
+   "マカロン",
+   "a stack of pastel macarons"
+  ],
+  [
+   "donut",
+   "ドーナツ",
+   "a pink glazed donut with sprinkles"
+  ],
+  [
+   "parfait",
+   "パフェ",
+   "a tall fruit parfait in a glass"
+  ],
+  [
+   "cookie",
+   "クッキー",
+   "assorted cookies"
+  ],
+  [
+   "icecream",
+   "ソフトクリーム",
+   "a soft-serve ice cream cone"
+  ],
+  [
+   "crepe",
+   "クレープ",
+   "a crepe with cream and fruit in paper"
+  ],
+  [
+   "cupcake",
+   "カップケーキ",
+   "a frosted cupcake with a cherry"
+  ],
+  [
+   "dorayaki",
+   "どら焼き",
+   "a dorayaki Japanese pancake sandwich"
+  ],
+  [
+   "daifuku",
+   "いちご大福",
+   "an ichigo daifuku cut in half"
+  ],
+  [
+   "tea",
+   "紅茶とスコーン",
+   "a cup of tea with a scone and jam"
+  ]
+ ]
+}

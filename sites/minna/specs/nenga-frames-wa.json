@@ -1,0 +1,58 @@
+{
+ "slug": "nenga-frames-wa",
+ "holes": true,
+ "title": "年賀状のフレーム 和風",
+ "subject": "",
+ "genre": "deco",
+ "touch": "wa",
+ "subject_en": "decorative portrait-orientation frames (ratio 2:3) with an EMPTY centre that is filled with the key colour so it becomes transparent; the frame itself is a thick decorative border",
+ "lead": "年賀状や写真に重ねて使える、和風のフレーム。中央があいているので、写真や文字を入れるだけで年賀状になります。",
+ "tags": [
+  "フレーム",
+  "年賀状",
+  "和風",
+  "和柄",
+  "枠",
+  "飾り枠",
+  "お正月",
+  "写真フレーム",
+  "はがき"
+ ],
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "pine",
+   "松のフレーム",
+   "a portrait frame (2:3) made of pine branches and a red-white rope at the top corners, centre empty"
+  ],
+  [
+   "plum",
+   "梅のフレーム",
+   "a portrait frame (2:3) of red and pink plum blossom branches around the border, centre empty"
+  ],
+  [
+   "seigaiha",
+   "青海波のフレーム",
+   "a portrait frame (2:3) with an indigo seigaiha wave pattern border with gold lines, centre empty"
+  ],
+  [
+   "asanoha",
+   "麻の葉のフレーム",
+   "a portrait frame (2:3) with a vermilion asanoha geometric pattern border, centre empty"
+  ],
+  [
+   "sun",
+   "日の出のフレーム",
+   "a portrait frame (2:3) with a rising sun and rays at the top, thin gold border, centre empty"
+  ],
+  [
+   "crane",
+   "鶴のフレーム",
+   "a portrait frame (2:3) with two cranes in the top corners and a thin gold border, centre empty"
+  ]
+ ]
+}

@@ -1,0 +1,82 @@
+{
+ "slug": "home-life-flat",
+ "title": "暮らしのアイコン",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "subject_en": "household items, each separate",
+ "lead": "家、洗濯機、掃除機、鍵、傘など、暮らしまわりのアイコン12点。引っ越しのお知らせ、家事のチェックリスト、住まいの資料に。",
+ "tags": [
+  "暮らし",
+  "家",
+  "家事",
+  "掃除",
+  "洗濯",
+  "引っ越し",
+  "アイコン",
+  "シンプル"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "house",
+   "家",
+   "a cozy house with a red roof"
+  ],
+  [
+   "washer",
+   "洗濯機",
+   "a washing machine"
+  ],
+  [
+   "vacuum",
+   "掃除機",
+   "a vacuum cleaner"
+  ],
+  [
+   "key",
+   "かぎ",
+   "a house key with a heart tag"
+  ],
+  [
+   "umbrella",
+   "かさ",
+   "an open umbrella"
+  ],
+  [
+   "sofa",
+   "ソファ",
+   "a sofa with a cushion"
+  ],
+  [
+   "plant",
+   "観葉植物",
+   "a potted plant"
+  ],
+  [
+   "lamp",
+   "ランプ",
+   "a table lamp"
+  ],
+  [
+   "bed",
+   "ベッド",
+   "a bed with pillows"
+  ],
+  [
+   "kettle",
+   "やかん",
+   "a kettle on a stove"
+  ],
+  [
+   "trash",
+   "ごみ箱",
+   "a trash bin with a recycle sign (no text)"
+  ],
+  [
+   "box",
+   "引っ越しの段ボール",
+   "stacked moving boxes with tape"
+  ]
+ ]
+}

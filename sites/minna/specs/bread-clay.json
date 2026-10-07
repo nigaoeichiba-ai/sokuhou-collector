@@ -1,0 +1,82 @@
+{
+ "slug": "bread-clay",
+ "title": "パン ぷっくり立体風",
+ "subject": "",
+ "genre": "food",
+ "touch": "clay",
+ "subject_en": "bakery items, each a separate item",
+ "lead": "食パン、クロワッサン、あんぱんなど、ぷっくりした立体風のパン12点。ベーカリーのポップやチラシ、レシピに。",
+ "tags": [
+  "パン",
+  "ベーカリー",
+  "クロワッサン",
+  "食パン",
+  "あんぱん",
+  "朝ごはん",
+  "立体",
+  "ぷっくり"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "shokupan",
+   "食パン",
+   "a loaf of sliced bread with a slice beside it"
+  ],
+  [
+   "croissant",
+   "クロワッサン",
+   "a croissant"
+  ],
+  [
+   "anpan",
+   "あんぱん",
+   "an anpan with a sesame seed on top"
+  ],
+  [
+   "melonpan",
+   "メロンパン",
+   "a melon-pan with a crisscross top"
+  ],
+  [
+   "baguette",
+   "バゲット",
+   "baguettes in a paper bag"
+  ],
+  [
+   "curry",
+   "カレーパン",
+   "a curry bread"
+  ],
+  [
+   "pretzel",
+   "プレッツェル",
+   "a pretzel"
+  ],
+  [
+   "cinnamon",
+   "シナモンロール",
+   "a cinnamon roll"
+  ],
+  [
+   "sandwich",
+   "サンドイッチ",
+   "a sandwich with lettuce and ham"
+  ],
+  [
+   "bun",
+   "くるみパン",
+   "round walnut bread buns"
+  ],
+  [
+   "toast",
+   "バタートースト",
+   "a toast with melting butter and a drizzle of honey"
+  ],
+  [
+   "cornbread",
+   "コーンパン",
+   "a corn bread roll"
+  ]
+ ]
+}

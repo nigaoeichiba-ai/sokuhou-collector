@@ -1,0 +1,83 @@
+{
+ "slug": "flowers-watercolor",
+ "title": "花 水彩",
+ "subject": "",
+ "genre": "nature",
+ "touch": "watercolor",
+ "subject_en": "flowers, each a separate bouquet or single flower",
+ "lead": "さくら、ひまわり、あじさい、コスモスなど、四季の花を、やわらかい水彩で12点。メッセージカードやウェディング、季節のお知らせに。",
+ "tags": [
+  "花",
+  "さくら",
+  "ひまわり",
+  "あじさい",
+  "コスモス",
+  "バラ",
+  "水彩",
+  "四季",
+  "メッセージカード"
+ ],
+ "title_fmt": "{ja}",
+ "items": [
+  [
+   "sakura",
+   "桜",
+   "a cherry blossom branch"
+  ],
+  [
+   "tulip",
+   "チューリップ",
+   "a few tulips"
+  ],
+  [
+   "rose",
+   "バラ",
+   "a red rose with leaves"
+  ],
+  [
+   "hydrangea",
+   "あじさい",
+   "a blue hydrangea"
+  ],
+  [
+   "sunflower",
+   "ひまわり",
+   "a sunflower"
+  ],
+  [
+   "cosmos",
+   "コスモス",
+   "pink cosmos flowers"
+  ],
+  [
+   "morningglory",
+   "あさがお",
+   "a blue morning glory with vine"
+  ],
+  [
+   "dandelion",
+   "たんぽぽ",
+   "a yellow dandelion and a fluff ball"
+  ],
+  [
+   "lavender",
+   "ラベンダー",
+   "a lavender bunch"
+  ],
+  [
+   "camellia",
+   "つばき",
+   "a pink camellia"
+  ],
+  [
+   "bouquet",
+   "花束",
+   "a mixed bouquet tied with a ribbon"
+  ],
+  [
+   "wreath",
+   "花のリース",
+   "a round flower wreath"
+  ]
+ ]
+}
