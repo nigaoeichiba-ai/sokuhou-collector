@@ -20,7 +20,7 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
 from sites.saichin import charts, content, ogimage, wage as wagelib  # noqa: E402
-from sokuhou.sitekit import asset_files, asset_pages  # noqa: E402
+from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
 SLUGS = dict(zip(
@@ -81,8 +81,8 @@ def missing_config(cfg: dict) -> list[str]:
     form = cfg.get("contact_form_url")
     if form and not form.startswith("https://"):
         missing.append("contact_form_url (must start with https://)")
-    elif not form and not cfg.get("contact_email"):
-        missing.append("contact_form_url or contact_email")
+    elif not form and not cfg.get("contact_email") and not cfg.get("contact_own"):
+        missing.append("contact_own, contact_form_url or contact_email")
     return missing
 
 
@@ -745,7 +745,7 @@ def guide_page(d: dict, g: dict, cfg: dict, preview: bool) -> str:
 def contact_summary(cfg: dict) -> str:
     """How to reach the operator, in the order of preference: the form, then the address (if one is published)."""
     parts = []
-    if cfg.get("contact_form_url"):
+    if cfg.get("contact_own") or cfg.get("contact_form_url"):
         parts.append('<a href="/contact/">お問い合わせフォーム</a>')
     if cfg.get("contact_email"):
         parts.append(esc(cfg["contact_email"]))
@@ -774,7 +774,7 @@ def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
     body = f"""<h1>プライバシーポリシー</h1>
 <h2>取得する情報</h2>
 <p>当サイトは、会員登録などの機能を持ちません。お問い合わせの際にいただいたお名前・メールアドレスなどは、返信のためだけに使い、法令に基づく場合を除いて、第三者へ提供しません。</p>
-<h2>入力された内容について</h2>
+{form_privacy(cfg)}<h2>入力された内容について</h2>
 <p>「あなたの時給は大丈夫?」や計算ツールに入力された都道府県・時給・月給などは、お使いの端末の中で計算するだけで、当サイトのサーバーへは送信・保存しません。</p>
 <h2>アクセス解析</h2>
 <p>現時点では、Google アナリティクスなどのアクセス解析ツールを使用していません。使用を始める場合は、このページでお知らせします。</p>
@@ -794,17 +794,8 @@ def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
 
 
 def contact_page(d: dict, cfg: dict, preview: bool) -> str:
-    form, mail = cfg.get("contact_form_url"), cfg.get("contact_email")
-    links = []
-    if form:
-        links.append(f'<p><a class="btn" href="{esc(form)}" rel="noopener" target="_blank">お問い合わせフォームを開く</a></p>')
-    if mail:
-        links.append(f'<p>メール: <a href="mailto:{esc(mail)}">{esc(mail)}</a></p>')
-    link = "\n".join(links) or "<p>(未設定)</p>"
-    body = f"""<h1>お問い合わせ</h1>
-<p>データの誤りのご指摘、ご意見・ご要望は、次からお送りください。内容によっては、お返事に日数がかかることや、お返事できないことがあります。</p>
-{link}
-<p class="notice">個別の労働条件や、賃金に関する法律相談にはお答えできません。お近くの都道府県労働局や労働基準監督署へご相談ください。</p>"""
+    body = contact_body(cfg, "個別の労働条件や、賃金に関する法律相談にはお答えできません。お近くの都道府県労働局や労働基準監督署へご相談ください。",
+                        message_hint="例: ○○県の最低賃金が、公表されている額と違っています。")
     return finish(layout(cfg, preview, path="/contact/", title=f"お問い合わせ | {cfg['site_name']}",
                          description="最低賃金速報へのお問い合わせ先です。データの誤りのご指摘、ご意見・ご要望を、フォームで受け付けています。", body=body, scripts=False), d)
 
@@ -1010,6 +1001,9 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, wage: di
     pages["about/index.html"] = about_page(d, cfg, preview)
     pages["privacy/index.html"] = privacy_page(d, cfg, preview)
     pages["contact/index.html"] = contact_page(d, cfg, preview)
+    if cfg.get("contact_own"):
+        pages.update(contact_files(cfg, lambda path, title, description, body: finish(layout(
+            cfg, preview, path=path, title=f"{title} | {cfg['site_name']}", description=description, body=body, scripts=False), d)))
     pages["404.html"] = not_found_page(d, cfg, preview)
 
     urls = ["/" + p[: -len("index.html")] for p in pages if p.endswith("index.html")]

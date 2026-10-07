@@ -190,8 +190,8 @@ class ReleaseBuildTest(BuildTestBase):
             self.render(cfg, release=True)
 
     def test_missing_config_names_the_fields(self):
-        self.assertEqual(build.missing_config(BASE_CFG), ["operator_name", "contact_form_url or contact_email"])
-        self.assertEqual(build.missing_config({**BASE_CFG, "operator_name": "x"}), ["contact_form_url or contact_email"])
+        self.assertEqual(build.missing_config(BASE_CFG), ["operator_name", "contact_own, contact_form_url or contact_email"])
+        self.assertEqual(build.missing_config({**BASE_CFG, "operator_name": "x"}), ["contact_own, contact_form_url or contact_email"])
 
     def test_adsense_snippet_and_ads_txt_only_when_configured(self):
         out, _ = self.render({**FULL_CFG, "adsense_pub_id": "ca-pub-1234567890123456"}, release=True)

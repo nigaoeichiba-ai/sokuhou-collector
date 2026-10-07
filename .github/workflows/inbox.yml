@@ -1,0 +1,72 @@
+name: inbox
+
+# Copies new contact-form messages from the four servers into data/inbox/ ENCRYPTED (the repository is public, so a message, which may carry
+# an e-mail address, is never stored in clear text).  Only the owner's PC holds the private key (~/.sokuhou/inbox_private.pem); the routines read
+# the messages there with `python -m sokuhou.inbox read`.  Messages stay on the server too (<site folder>/inbox/*.jsonl).
+# Needs the repository secrets XSERVER_SSH_KEY, XSERVER_HOST and XSERVER_USER (the same ones the deploy job uses).
+
+on:
+  schedule:
+    - cron: "50 18 * * *"   # 03:50 JST, before the daily factory routine
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-commit
+  cancel-in-progress: false
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  inbox:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Copy the new messages (encrypted)
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then
+            echo "XSERVER_SSH_KEY / XSERVER_HOST / XSERVER_USER are not all set; nothing to do"
+            exit 0
+          fi
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver
+          chmod 600 ~/.ssh/id_xserver
+          ssh-keyscan -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          stamp=$(date -u +%Y%m%d-%H%M)
+          mkdir -p data/inbox
+          for pair in saichin:saichin-sokuho.com kuma:kuma-sokuho.com yorokobu:yorokobu-present.com minna:minna-no-illust.com; do
+            site="${pair%%:*}"; dir="${pair##*:}"
+            if ! ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+                 "cd \"\$HOME/$dir/inbox\" 2>/dev/null && for f in *.jsonl; do if [ -f \"\$f\" ]; then echo \"== \$f\"; cat \"\$f\"; fi; done; true" > "raw_$site.txt"; then
+              echo "ssh failed for $site; skipped"
+              continue
+            fi
+            python -m sokuhou.inbox new --site "$site" --raw "raw_$site.txt" --state data/inbox/state.json --out "new_$site.jsonl"
+            if [ -s "new_$site.jsonl" ]; then
+              openssl smime -encrypt -aes256 -binary -in "new_$site.jsonl" -out "data/inbox/$site-$stamp.p7m" -outform DER sokuhou/inbox_cert.pem
+            fi
+          done
+          rm -f raw_*.txt new_*.jsonl
+      - name: Commit
+        run: |
+          git config user.name "sokuhou-bot"
+          git config user.email "sokuhou-bot@users.noreply.github.com"
+          git add data/inbox
+          if git diff --cached --quiet; then
+            echo "no new messages"
+          else
+            git commit -m "data: inbox (encrypted)"
+            git pull --rebase origin main
+            git push
+          fi
