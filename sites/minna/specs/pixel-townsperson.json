@@ -1,0 +1,82 @@
+{
+ "slug": "pixel-townsperson",
+ "title": "ドット絵の町の人のポーズ集",
+ "subject": "ドット絵の町の人",
+ "genre": "people",
+ "touch": "pixel",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "ドット絵の町の人",
+  "ドット絵",
+  "ゲーム",
+  "町の人",
+  "ピクセル",
+  "レトロ"
+ ],
+ "lead": "ドット絵の町の人のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-standing-facing-front",
+   "正面で立つ",
+   "standing facing front"
+  ],
+  [
+   "02-walking-facing-right",
+   "右向きで歩く",
+   "walking facing right"
+  ],
+  [
+   "03-walking-facing-left",
+   "左向きで歩く",
+   "walking facing left"
+  ],
+  [
+   "04-standing-facing-away",
+   "後ろ向きで立つ",
+   "standing facing away"
+  ],
+  [
+   "05-waving",
+   "手を振る",
+   "waving"
+  ],
+  [
+   "06-running-facing-right",
+   "走る",
+   "running facing right"
+  ],
+  [
+   "07-jumping-arms-up",
+   "ジャンプ",
+   "jumping with arms up"
+  ],
+  [
+   "08-surprised-arms-raised",
+   "驚く",
+   "surprised, arms raised"
+  ],
+  [
+   "09-cheering-arms-up",
+   "喜ぶ",
+   "cheering with arms up"
+  ],
+  [
+   "10-sitting-sleeping",
+   "座って居眠り",
+   "sitting and sleeping"
+  ],
+  [
+   "11-thinking-chin",
+   "考える",
+   "thinking with a hand on chin"
+  ],
+  [
+   "12-bowing",
+   "お辞儀",
+   "bowing"
+  ]
+ ],
+ "subject_en": "pixel art girl, 3-head-tall, brown bob hair, red scarf, green jacket, brown shorts, white boots, simple two-tone shading, black 1-pixel outline"
+}

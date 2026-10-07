@@ -1,0 +1,83 @@
+{
+ "slug": "nurse-kawaii",
+ "title": "ナースさんのポーズ集",
+ "subject": "ナースさん",
+ "genre": "life",
+ "touch": "kawaii",
+ "title_fmt": "{ja}({subject})",
+ "tags": [
+  "人物",
+  "イラスト",
+  "ナースさん",
+  "看護師",
+  "ナース",
+  "医療",
+  "病院",
+  "女性",
+  "かわいい"
+ ],
+ "lead": "ナースさんのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "items": [
+  [
+   "01-bowing-cheerfully-front",
+   "笑顔のお辞儀",
+   "bowing cheerfully with hands in front"
+  ],
+  [
+   "02-holding-clipboard-against",
+   "クリップボードを持つ",
+   "holding a clipboard against her chest, smiling"
+  ],
+  [
+   "03-index-finger-raised",
+   "説明する",
+   "one index finger raised, explaining"
+  ],
+  [
+   "04-extending-open-toward",
+   "手を差し伸べる",
+   "extending one open hand toward the viewer in a welcoming way"
+  ],
+  [
+   "05-holding-thermometer-up",
+   "体温計を見る",
+   "holding a thermometer up and looking at it"
+  ],
+  [
+   "06-standing-stethoscope-around",
+   "聴診器を首にかけて立つ",
+   "standing with a stethoscope around her neck, hands on hips"
+  ],
+  [
+   "07-holding-simple-small",
+   "注射器を持つ",
+   "holding a simple small syringe in one hand, calm smile"
+  ],
+  [
+   "08-wearing-surgical-mask",
+   "マスク姿でOK",
+   "wearing a surgical mask, arm raised in a friendly wave"
+  ],
+  [
+   "09-hurrying-running-worried",
+   "急いで走る",
+   "hurrying, running with a worried look"
+  ],
+  [
+   "10-sitting-sighing-cheek",
+   "疲れて一息",
+   "sitting and sighing, hand on cheek"
+  ],
+  [
+   "11-fist-pump-encouraging",
+   "ガッツポーズ",
+   "fist pump, encouraging"
+  ],
+  [
+   "12-rubbing-together-as",
+   "手洗い",
+   "rubbing both hands together as if washing"
+  ]
+ ],
+ "subject_en": "Japanese nurse, early 20s, light brown hair in a neat low bun, light skin, light pink short-sleeve scrub tunic over white long sleeves and matching pink pants, white nurse shoes, small blank name tag, 3-head-tall, big dot eyes, rosy cheeks"
+}
