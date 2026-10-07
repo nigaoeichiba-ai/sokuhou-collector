@@ -212,7 +212,7 @@ def view(store: dict | None, filters: dict, min_items: int = 8) -> dict | None:
         if slug not in SEGMENTS:
             continue
         strict = SEGMENTS[slug].get("strict", True)
-        items = [it for it in s.get("items", []) if shown(it, filters, strict, SEGMENTS[slug].get("recipient"))]
+        items = [it for it in s.get("items", []) if shown(it, filters, strict, SEGMENTS[slug].get("recipient"))][:KEEP]
         if len(items) < min_items:
             continue
         mv = movers(s)
