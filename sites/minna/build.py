@@ -354,7 +354,7 @@ def hero_collage(items: list[dict]) -> str:
     if len(chosen) < 5:
         chosen += [i for i in items if i not in chosen][: 5 - len(chosen)]
     pos = ["a", "b", "c", "d", "e"]
-    return "".join(f'<img class="hc {pos[n]}" src="/thumbs/{c["id"]}.webp" alt="{esc(c["title"])}" width="{min(c["w"], 360)}" height="{round(c["h"] * min(c["w"], 360) / c["w"])}"{"" if n == 0 else " loading=lazy"}>'
+    return "".join(f'<img class="hc {pos[n]}" src="/thumbs/{c["id"]}.webp" alt="{esc(c["title"])}" width="{min(c["w"], 360)}" height="{round(c["h"] * min(c["w"], 360) / c["w"])}">'
                    for n, c in enumerate(chosen))
 
 
