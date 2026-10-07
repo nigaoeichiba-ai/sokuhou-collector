@@ -118,6 +118,26 @@ class HistoryTest(unittest.TestCase):
         self.assertEqual(len(snap), 72)
         self.assertEqual([i["rank"] for i in snap][:3] + [snap[-1]["rank"]], [1, 2, 3, 72])
 
+    def test_a_segment_fetched_today_with_nothing_kept_does_not_keep_yesterdays_unfiltered_items(self):
+        s = ranking.update(None, {"f20": day(codes(5))}, date(2026, 10, 1))                        # kept everything (no filter yet)
+        s = ranking.update(s, {"f20": day(codes(5))}, date(2026, 10, 2), keep=lambda i: False)      # today the filter keeps nothing
+        seg = s["segments"]["f20"]
+        self.assertEqual(seg["items"], [])
+        self.assertEqual(seg["date"], "2026-10-02")
+        self.assertEqual(seg["history"]["2026-10-02"], [])
+
+    def test_seasonal_decoration_costumes_and_everyday_clothes_are_not_gifts_even_when_the_title_says_present(self):
+        for n in ("クリスマスツリー 150cm 高級 プレゼント", "ハロウィン コスプレ 子供 誕生日 ギフト", "ワイシャツ 長袖 メンズ ギフト プレゼント", "オーナメント セット ギフト"):
+            self.assertFalse(ranking.shown(ranked("x", 1, name=n), FILTERS), n)
+        self.assertTrue(ranking.shown(ranked("y", 1, name="誕生日 ギフト 高級 日本酒 飲み比べセット"), FILTERS))
+        self.assertFalse(ranking.shown(ranked("z", 1, name="誕生日 クリスマス 部屋着 パジャマ"), FILTERS))      # a season word alone is not enough
+
+    def test_only_genres_whose_products_are_given_as_presents_are_fetched(self):
+        labels = {g[2] for g in ranking.GENRES}
+        for gone in ("レディースファッション", "メンズファッション", "ホビー", "おもちゃ", "キッズ・ベビー・マタニティ"):
+            self.assertNotIn(gone, labels)
+        self.assertIn("ワイン", labels)
+
     def test_an_empty_fetch_does_not_wipe_the_stored_segment(self):
         s1 = ranking.update(None, {"f20": day(["a", "b"])}, date(2026, 10, 1))
         s2 = ranking.update(s1, {"f20": []}, date(2026, 10, 2))

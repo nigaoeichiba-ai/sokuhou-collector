@@ -45,9 +45,10 @@ GENRES = [
     ("sweets", 551167, "スイーツ・お菓子"), ("flower", 100005, "花・ガーデン・DIY"), ("jewelry", 216129, "ジュエリー・アクセサリー"),
     ("bag", 216131, "バッグ・小物・ブランド雑貨"), ("watch", 558929, "腕時計"), ("beer", 510915, "ビール・洋酒"), ("sake", 510901, "日本酒・焼酎"),
     ("wine", 100317, "ワイン"), ("interior", 100804, "インテリア・寝具・収納"), ("kitchen", 558944, "キッチン用品・食器・調理器具"),
-    ("beauty", 100939, "美容・コスメ・香水"), ("ladies", 100371, "レディースファッション"), ("mens", 551177, "メンズファッション"),
-    ("hobby", 101164, "ホビー"), ("toy", 566382, "おもちゃ"), ("baby", 100533, "キッズ・ベビー・マタニティ"),
+    ("beauty", 100939, "美容・コスメ・香水"),
 ]
+# Left out after the first real snapshot (2026-10-07): fashion, hobby, toys and baby goods. Their sales rankings are everyday clothes, seasonal decorations
+# and nappies whose titles merely contain the word プレゼント; nothing in them reads as a present.
 
 
 def genre_segments() -> list[dict]:
@@ -103,10 +104,10 @@ def update(store: dict | None, fresh: dict[str, list[dict]], today: date, keep=N
     A segment that failed to fetch today (absent from `fresh`) keeps its previous data untouched."""
     store = dict(store or {})
     segs = dict(store.get("segments") or {})
-    for slug, items in fresh.items():
-        items = [it for it in items if keep is None or keep(it)] if items else []
-        if not items:
+    for slug, raw_items in fresh.items():
+        if not raw_items:                       # the fetch failed or came back empty: keep what we had
             continue
+        items = [it for it in raw_items if keep is None or keep(it)]
         old = segs.get(slug, {})
         history = dict(old.get("history") or {})
         ordered = sorted(items, key=lambda i: i["rank"])
@@ -157,14 +158,17 @@ DAILY = ("トイレットペーパー", "ティッシュ", "ボックスティ�
          "メリーズ", "ムーニー", "パンパース", "グーン", "マミーポコ", "オムツ", "白米", "無洗米", "ブレンド米", "玄米", "雑穀米", "ミックスナッツ", "アーモンド 1kg",
          "福袋", "おせち", "業務用", "冷凍食品", "骨取り", "切り身", "切身", "クレアチン", "ペットシーツ", "ロイヤルカナン", "浄水", "カートリッジ", "洗濯洗剤",
          "ガチャ", "パーティション", "AED", "ゴミ収集", "コピー用紙", "コーヒー豆", "ドライフルーツ", "スーパードライ", "ミルクティー", "お茶 500ml",
-         "牛丼の具", "牛めしの具", "ハイボール", "エクオール", "ピックアップ", "予約", "再販", "お一人様", "1人1点", "一人様")
+         "牛丼の具", "牛めしの具", "ハイボール", "エクオール", "ピックアップ", "予約", "再販", "お一人様", "1人1点", "一人様",
+         # seasonal decoration and costumes
+         "クリスマスツリー", "ツリー", "オーナメント", "イルミネーション", "コスプレ", "ハロウィン", "仮装", "衣装", "ワークパンツ", "チノパン", "ワイシャツ", "スーツケース")
 
 
 # The ranking says what SELLS, not what is given as a present (the first real snapshot showed cases of cheap shochu, solar garden lights, work shirts).
 # The API carries no gift flag, so a product is shown only when its own title says it is meant as a gift: one of these words must appear in it.
-GIFT_HINTS = ("ギフト", "プレゼント", "贈り物", "贈答", "内祝", "お祝い", "祝い", "誕生日", "母の日", "父の日", "敬老", "結婚祝", "出産祝", "退職", "のし", "熨斗",
+GIFT_HINTS = ("ギフト", "プレゼント", "贈り物", "贈答", "内祝", "お祝い", "祝い", "母の日", "父の日", "敬老", "結婚祝", "出産祝", "退職", "のし", "熨斗",
               "名入れ", "お返し", "詰め合わせ", "詰合せ", "詰め合せ", "アソート", "花束", "ブーケ", "アレンジメント", "ラッピング", "贈る", "お礼", "手土産", "化粧箱",
-              "ペア", "ホワイトデー", "バレンタイン", "クリスマス", "お歳暮", "お中元", "お見舞い", "引き出物", "ご挨拶")
+              "ペア", "ホワイトデー", "お歳暮", "お中元", "お見舞い", "引き出物", "ご挨拶")
+# (「誕生日」「クリスマス」「バレンタイン」だけでは、贈り物と判定しない: 商品名に季節の語を詰め込んだ、飾りや衣装や普段使いの品が混ざるため)
 # bulk packs of drink are not presents even when the title says ギフト
 BULK = ("1ケース", "ケース販売", "ケース(", "紙パック", "パック 1.8L", "パック 1800ml", "1.8Lパック", "1800mlパック", "×6本", "×12本", "×24本", "×48本", "24本入", "48本")
 MAX_PRICE = 30000
