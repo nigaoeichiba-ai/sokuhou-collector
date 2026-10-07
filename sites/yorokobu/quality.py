@@ -92,6 +92,54 @@ def article_problems(a: dict, theme_slugs: set[str], known_slugs: set[str] | Non
     return out
 
 
+MESSAGE_FORBIDDEN = ["調査", "%", "％", "楽天", "アフィリ", "AI", "Amazon", "http", "ランキング", "No.1", "1位", "〇〇様へ、"]
+MESSAGE_STYLES = ["丁寧", "やわらかい", "ひとこと"]
+
+
+def message_problems(m: dict, occasion_slugs: set[str], known: set[str] | None = None) -> list[str]:
+    """One occasion's message examples: 5-6 sets of 3 ready-to-copy messages, manners and closing phrases, each within its length range."""
+    out = []
+    slug = m.get("occasion", "?")
+    for f in ("occasion", "intro", "sets", "manners", "closing"):
+        if not m.get(f):
+            out.append(f"{slug}: missing {f}")
+    if out:
+        return out
+    if slug not in occasion_slugs:
+        out.append(f"{slug}: unknown occasion")
+    if known and slug in known:
+        out.append(f"{slug}: messages exist")
+    if not 90 <= len(m["intro"]) <= 280:
+        out.append(f"{slug}: intro length {len(m['intro'])}")
+    if not 5 <= len(m["sets"]) <= 6:
+        out.append(f"{slug}: sets {len(m['sets'])} (need 5-6)")
+    lines_seen: list[str] = []
+    for s in m["sets"]:
+        to = s.get("to", "")
+        if not 2 <= len(to) <= 14:
+            out.append(f"{slug}: set '{to}' recipient label length {len(to)}")
+        if s.get("style") not in MESSAGE_STYLES:
+            out.append(f"{slug}: set '{to}' style {s.get('style')} (one of {MESSAGE_STYLES})")
+        lines = s.get("lines", [])
+        if len(lines) != 3:
+            out.append(f"{slug}: set '{to}' has {len(lines)} lines (need 3)")
+        for ln in lines:
+            if not 24 <= len(ln) <= 130:
+                out.append(f"{slug}: '{ln[:14]}...' message length {len(ln)} (24-130)")
+            lines_seen.append(ln)
+    if len(set(lines_seen)) != len(lines_seen):
+        out.append(f"{slug}: a message appears twice")
+    if not 3 <= len(m["manners"]) <= 4 or any(not 28 <= len(x) <= 110 for x in m["manners"]):
+        out.append(f"{slug}: manners need 3-4 items of 28-110 chars")
+    if not 3 <= len(m["closing"]) <= 5 or any(not 5 <= len(x) <= 28 for x in m["closing"]):
+        out.append(f"{slug}: closing needs 3-5 phrases of 5-28 chars")
+    blob = " ".join([m["intro"], *m["manners"], *m["closing"], *[ln for s in m["sets"] for ln in s.get("lines", [])], *[s.get("to", "") for s in m["sets"]]])
+    out += [f"{slug}: forbidden {w}" for w in MESSAGE_FORBIDDEN if w in blob]
+    if EMOJI.search(blob):
+        out.append(f"{slug}: emoji")
+    return out
+
+
 def repeated_sentences(texts: list[str]) -> list[str]:
     """Long sentences that occur more than once in the given texts (a new text must not copy the site's older ones)."""
     seen: dict[str, int] = {}

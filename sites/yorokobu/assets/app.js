@@ -395,4 +395,24 @@
     initBrowse(); initConcierge(); initFavorites(); initMemo(); initMemoStrip();
     initTaboo(); initCalc(); initQuiz();
   });
+  // ---------------------------------------------------------------- copy buttons (message examples): shown only when copying works
+  (function () {
+    var buttons = $$("button[data-copy]");
+    if (!buttons.length) return;
+    buttons.forEach(function (b) {
+      b.hidden = false;
+      b.addEventListener("click", function () {
+        var li = b.closest("li"), t = li && $(".msg-text", li);
+        if (!t) return;
+        var text = t.textContent;
+        function done() { b.textContent = "コピーしました"; b.classList.add("done"); setTimeout(function () { b.textContent = "コピー"; b.classList.remove("done"); }, 1800); }
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); }); }
+        else fallback(text, done);
+      });
+    });
+    function fallback(text, done) {
+      var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
+      try { if (document.execCommand("copy")) done(); } catch (e) {} document.body.removeChild(ta);
+    }
+  })();
 })();
