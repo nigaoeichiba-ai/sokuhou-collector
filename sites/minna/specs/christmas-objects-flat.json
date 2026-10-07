@@ -84,5 +84,12 @@
   ]
  ],
  "holes": true,
- "exclude": []
+ "exclude": [
+  "candle",
+  "gift",
+  "reindeer",
+  "santahat",
+  "stocking",
+  "tree"
+ ]
 }
