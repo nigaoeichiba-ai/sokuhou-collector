@@ -1,0 +1,86 @@
+{
+ "slug": "dot-avatar-people",
+ "title": "ドット絵人物アイコン",
+ "subject": "ドット絵人物アイコン",
+ "genre": "people",
+ "touch": "pixel",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A Japanese young adult man pixel-art character, black hair, blue jacket, white shirt, dark pants, 32-bit friendly style, small readable silhouette, limited palette, transparent background, consistent sprite-like proportions, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "人物アイコンの基本動作を、ドット絵タッチで小さく読みやすくまとめた素材です。ゲーム風UI、SNS、IT記事、プロフィール表示に使えます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "アイコン",
+  "ドット絵",
+  "イラスト",
+  "アバター",
+  "ゲーム風",
+  "歩く",
+  "走る",
+  "スマホ",
+  "座る",
+  "喜ぶ"
+ ],
+ "items": [
+  [
+   "front-stand",
+   "正面で立つ",
+   "The pixel character stands facing front in a neutral idle pose, no text or letters in the picture."
+  ],
+  [
+   "side-view",
+   "横向きで立つ",
+   "The pixel character stands in clean side view, no text or letters in the picture."
+  ],
+  [
+   "walking",
+   "歩いて進む",
+   "The pixel character walks in side view with one leg forward, no text or letters in the picture."
+  ],
+  [
+   "running",
+   "走って進む",
+   "The pixel character runs in side view with a simple motion pose, no text or letters in the picture."
+  ],
+  [
+   "waving",
+   "手を振って立つ",
+   "The pixel character stands and waves one hand, no text or letters in the picture."
+  ],
+  [
+   "computer-work",
+   "PC作業をする",
+   "The pixel character sits at a computer with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "phone-use",
+   "スマホを見る",
+   "The pixel character stands holding a phone with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "happy",
+   "喜んで跳ねる",
+   "The pixel character makes a small happy bounce pose, no text or letters in the picture."
+  ],
+  [
+   "troubled",
+   "困って立つ",
+   "The pixel character stands with a small worry symbol nearby, no text or letters in the picture."
+  ],
+  [
+   "pointing",
+   "指さしをする",
+   "The pixel character points toward empty space, no text or letters in the picture."
+  ],
+  [
+   "sitting",
+   "椅子に座る",
+   "The pixel character sits on a simple chair, no text or letters in the picture."
+  ],
+  [
+   "jumping",
+   "ジャンプする",
+   "The pixel character jumps upward with both feet off the ground, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

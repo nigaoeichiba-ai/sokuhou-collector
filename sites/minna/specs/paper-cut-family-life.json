@@ -1,0 +1,86 @@
+{
+ "slug": "paper-cut-family-life",
+ "title": "紙切り風くらし人物",
+ "subject": "紙切り風くらし人物",
+ "genre": "life",
+ "touch": "papercut",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A Japanese father family member in his 40s with simple black hair, blue shirt, cream pants, paper-cut style made of layered paper shapes, subtle paper shadow, limited colors, no realistic texture, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "暮らしの家事や近所づきあいを、切り絵風のやさしい形で描く素材です。生活情報、家事、地域、家庭、住まいの記事に合います。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "暮らし",
+  "家事",
+  "イラスト",
+  "切り絵",
+  "掃除",
+  "洗濯",
+  "料理",
+  "買い物",
+  "読書",
+  "近所"
+ ],
+ "items": [
+  [
+   "cleaning",
+   "掃除をする",
+   "The family member cleans the floor with a simple mop, no text or letters in the picture."
+  ],
+  [
+   "laundry",
+   "洗濯物を干す",
+   "The family member hangs plain laundry on a line, no text or letters in the picture."
+  ],
+  [
+   "cooking",
+   "料理をする",
+   "The family member stirs a pot at a kitchen counter, no text or letters in the picture."
+  ],
+  [
+   "shopping",
+   "買い物に行く",
+   "The family member walks with a reusable shopping bag, no text or letters in the picture."
+  ],
+  [
+   "reading",
+   "本を読んで座る",
+   "The family member sits and reads a blank-covered book, no text or letters in the picture."
+  ],
+  [
+   "gardening",
+   "庭仕事をする",
+   "The family member waters a simple plant pot, no text or letters in the picture."
+  ],
+  [
+   "sorting-trash",
+   "ごみを分別する",
+   "The family member places plain items into simple bins, no text or letters in the picture."
+  ],
+  [
+   "resting",
+   "椅子で休憩する",
+   "The family member rests on a chair with a plain cup nearby, no text or letters in the picture."
+  ],
+  [
+   "phone-call",
+   "電話で話す",
+   "The family member stands holding a simple phone to the ear, no text or letters in the picture."
+  ],
+  [
+   "neighbor-greeting",
+   "近所に挨拶する",
+   "The family member waves to a clearly separated neighbor figure, no text or letters in the picture."
+  ],
+  [
+   "carrying-box",
+   "荷物を運ぶ",
+   "The family member carries one plain box in both arms, no text or letters in the picture."
+  ],
+  [
+   "opening-window",
+   "窓を開ける",
+   "The family member opens a simple blank window in side view, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

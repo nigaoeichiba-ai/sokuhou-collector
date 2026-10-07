@@ -1,0 +1,86 @@
+{
+ "slug": "retro-shop-people",
+ "title": "レトロ商店街の人物",
+ "subject": "レトロ商店街の人物",
+ "genre": "work",
+ "touch": "retro",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A Japanese man small-town shopkeeper in his 50s, short black hair with gray, green apron over cream shirt, brown trousers, retro Japanese poster-inspired flat colors, simple friendly face, no real period stereotype, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "商店街の仕事場面を、昭和レトロなポスター風カラーでまとめた素材です。地域店舗、買い物、販促、まち案内、観光記事に使えます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "商店街",
+  "店舗",
+  "イラスト",
+  "レトロ",
+  "店主",
+  "レジ",
+  "品出し",
+  "配達",
+  "掃除",
+  "販促"
+ ],
+ "items": [
+  [
+   "storefront-greeting",
+   "店先で挨拶する",
+   "The shopkeeper stands at a storefront and greets with one hand, no text or letters in the picture."
+  ],
+  [
+   "noren",
+   "のれんを出す",
+   "The shopkeeper hangs a plain shop curtain with no marks, no text or letters in the picture."
+  ],
+  [
+   "cashier",
+   "レジに立つ",
+   "The shopkeeper stands behind a simple blank cash register, no text or letters in the picture."
+  ],
+  [
+   "stocking",
+   "品出しをする",
+   "The shopkeeper places blank packages on a shelf, no text or letters in the picture."
+  ],
+  [
+   "flyer",
+   "チラシを配る",
+   "The shopkeeper offers a blank flyer while standing, no text or letters in the picture."
+  ],
+  [
+   "arcade-walk",
+   "商店街を歩く",
+   "The shopkeeper walks under a simple blank arcade shape, no text or letters in the picture."
+  ],
+  [
+   "recommend",
+   "商品をすすめる",
+   "The shopkeeper gestures toward plain products on a counter, no text or letters in the picture."
+  ],
+  [
+   "delivery-prep",
+   "配達準備する",
+   "The shopkeeper packs plain boxes into a cart, no text or letters in the picture."
+  ],
+  [
+   "phone-order",
+   "電話注文を聞く",
+   "The shopkeeper speaks on a phone with a blank memo pad nearby, no text or letters in the picture."
+  ],
+  [
+   "sweeping",
+   "掃き掃除する",
+   "The shopkeeper sweeps the storefront with a broom, no text or letters in the picture."
+  ],
+  [
+   "blank-sale-sign",
+   "告知板を置く",
+   "The shopkeeper places a blank signboard in front of the shop, no text or letters in the picture."
+  ],
+  [
+   "closing-shop",
+   "閉店作業する",
+   "The shopkeeper turns off a simple light and tidies the counter, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

@@ -1,0 +1,86 @@
+{
+ "slug": "childcare-nursery-scenes",
+ "title": "保育園の毎日素材",
+ "subject": "保育園の毎日素材",
+ "genre": "school",
+ "touch": "picturebook",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A Japanese woman nursery teacher in her 30s with short brown hair, yellow apron, white shirt, beige pants, and small children in colorful simple clothes, picture-book style with soft rounded outlines and warm pastel colors, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "保育園の一日を、絵本風の温かいタッチで表す素材です。園だより、子育て支援、保育サービス、入園案内の説明に使いやすいです。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "保育",
+  "子ども",
+  "イラスト",
+  "保育園",
+  "先生",
+  "手洗い",
+  "給食",
+  "昼寝",
+  "遊び",
+  "連絡帳"
+ ],
+ "items": [
+  [
+   "morning-welcome",
+   "登園を迎える",
+   "The nursery teacher stands at a doorway welcoming one child with space between them, no text or letters in the picture."
+  ],
+  [
+   "hand-washing",
+   "手洗いを見守る",
+   "The nursery teacher stands near a child at a plain sink without overlapping, no text or letters in the picture."
+  ],
+  [
+   "reading-aloud",
+   "絵本を読む",
+   "The nursery teacher sits holding a blank picture book while children sit separated nearby, no text or letters in the picture."
+  ],
+  [
+   "nap-time",
+   "お昼寝を見守る",
+   "The nursery teacher sits beside small futons with children under plain blankets, no text or letters in the picture."
+  ],
+  [
+   "drawing",
+   "お絵かきをする",
+   "One child draws on a blank sheet at a low table, no text or letters in the picture."
+  ],
+  [
+   "outdoor-play",
+   "外遊びをする",
+   "One child runs beside a simple ball with open space, no text or letters in the picture."
+  ],
+  [
+   "lunch-time",
+   "給食を食べる",
+   "One child sits at a table with simple bowls and a cup, no text or letters in the picture."
+  ],
+  [
+   "comfort-child",
+   "泣く子を抱く",
+   "The nursery teacher gently holds one small child with clear simple silhouettes, no text or letters in the picture."
+  ],
+  [
+   "notebook",
+   "連絡帳を書く",
+   "The nursery teacher writes in a blank notebook at a desk, no text or letters in the picture."
+  ],
+  [
+   "evacuation-drill",
+   "避難訓練する",
+   "The nursery teacher leads one child in a helmet with clear spacing, no text or letters in the picture."
+  ],
+  [
+   "parent-talk",
+   "保護者と話す",
+   "The nursery teacher talks with one adult standing clearly apart, no text or letters in the picture."
+  ],
+  [
+   "pickup-time",
+   "お迎えで帰る",
+   "One child walks toward a clearly separated adult at pickup time, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

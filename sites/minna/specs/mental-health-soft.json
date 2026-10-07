@@ -1,0 +1,86 @@
+{
+ "slug": "mental-health-soft",
+ "title": "こころの健康と相談",
+ "subject": "こころの健康と相談",
+ "genre": "life",
+ "touch": "faceless",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A faceless Japanese woman adult in her 30s, short dark hair, oversized pale blue sweater, gray pants, soft rounded flat shapes, calm muted palette, gentle posture, no dramatic distress, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "こころの不調や相談の場面を、顔なしのやわらかなフラットタッチで表す素材です。健康、相談窓口、セルフケア、休息の記事に向きます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "健康",
+  "相談",
+  "イラスト",
+  "こころ",
+  "メンタル",
+  "休息",
+  "睡眠",
+  "深呼吸",
+  "日記",
+  "安心"
+ ],
+ "items": [
+  [
+   "cannot-sleep",
+   "眠れずに座る",
+   "The adult sits on a bed at night with a small moon symbol, no text or letters in the picture."
+  ],
+  [
+   "sighing",
+   "ため息をつく",
+   "The adult sits with shoulders lowered and a soft sigh symbol, no text or letters in the picture."
+  ],
+  [
+   "counseling",
+   "相談して座る",
+   "The adult sits across from an empty counseling chair with calm posture, no text or letters in the picture."
+  ],
+  [
+   "deep-breathing",
+   "深呼吸をする",
+   "The adult stands with hands near chest and breathes slowly, no text or letters in the picture."
+  ],
+  [
+   "journaling",
+   "日記を書く",
+   "The adult writes in a blank notebook at a table, no text or letters in the picture."
+  ],
+  [
+   "walking-outside",
+   "外を散歩する",
+   "The adult walks outside beside a simple tree shape, no text or letters in the picture."
+  ],
+  [
+   "resting",
+   "横になり休む",
+   "The adult rests on a couch with a plain cushion, no text or letters in the picture."
+  ],
+  [
+   "talking-friend",
+   "友人に話す",
+   "The adult talks with one friend seated clearly apart, no text or letters in the picture."
+  ],
+  [
+   "helpline-call",
+   "電話で相談する",
+   "The adult holds a phone near the ear while seated calmly, no text or letters in the picture."
+  ],
+  [
+   "reduce-work",
+   "仕事量を減らす",
+   "The adult removes one blank paper from a small stack on a desk, no text or letters in the picture."
+  ],
+  [
+   "relief",
+   "安心して座る",
+   "The adult sits with relaxed shoulders and a small relief symbol, no text or letters in the picture."
+  ],
+  [
+   "small-joy",
+   "小さく喜ぶ",
+   "The adult holds a plain warm cup and shows a gentle happy posture, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

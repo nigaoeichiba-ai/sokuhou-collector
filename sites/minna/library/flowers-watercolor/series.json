@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-07",
+ "slug": "flowers-watercolor",
+ "title": "花 水彩",
+ "genre": "nature",
+ "touch": "watercolor",
+ "lead": "さくら、ひまわり、あじさい、コスモスなど、四季の花を、やわらかい水彩で12点。メッセージカードやウェディング、季節のお知らせに。",
+ "tags": [
+  "花",
+  "さくら",
+  "ひまわり",
+  "あじさい",
+  "コスモス",
+  "バラ",
+  "水彩",
+  "四季",
+  "メッセージカード"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "flowers-watercolor-sakura",
+   "file": "flowers-watercolor-sakura.webp",
+   "title": "桜",
+   "desc": "桜のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "花 水彩",
+    "桜",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 477,
+   "h": 489
+  },
+  {
+   "id": "flowers-watercolor-tulip",
+   "file": "flowers-watercolor-tulip.webp",
+   "title": "チューリップ",
+   "desc": "チューリップのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "花 水彩",
+    "チューリップ",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 467,
+   "h": 519
+  },
+  {
+   "id": "flowers-watercolor-rose",
+   "file": "flowers-watercolor-rose.webp",
+   "title": "バラ",
+   "desc": "バラのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "バラ",
+    "花 水彩",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 486,
+   "h": 513
+  },
+  {
+   "id": "flowers-watercolor-hydrangea",
+   "file": "flowers-watercolor-hydrangea.webp",
+   "title": "あじさい",
+   "desc": "あじさいのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "花 水彩",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 495,
+   "h": 494
+  },
+  {
+   "id": "flowers-watercolor-sunflower",
+   "file": "flowers-watercolor-sunflower.webp",
+   "title": "ひまわり",
+   "desc": "ひまわりのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "花 水彩",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 456,
+   "h": 526
+  },
+  {
+   "id": "flowers-watercolor-cosmos",
+   "file": "flowers-watercolor-cosmos.webp",
+   "title": "コスモス",
+   "desc": "コスモスのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "コスモス",
+    "花 水彩",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 489,
+   "h": 515
+  },
+  {
+   "id": "flowers-watercolor-morningglory",
+   "file": "flowers-watercolor-morningglory.webp",
+   "title": "あさがお",
+   "desc": "あさがおのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "花 水彩",
+    "あさがお",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 408,
+   "h": 519
+  },
+  {
+   "id": "flowers-watercolor-dandelion",
+   "file": "flowers-watercolor-dandelion.webp",
+   "title": "たんぽぽ",
+   "desc": "たんぽぽのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "花 水彩",
+    "たんぽぽ",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 440,
+   "h": 501
+  },
+  {
+   "id": "flowers-watercolor-lavender",
+   "file": "flowers-watercolor-lavender.webp",
+   "title": "ラベンダー",
+   "desc": "ラベンダーのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "花 水彩",
+    "ラベンダー",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 425,
+   "h": 533
+  },
+  {
+   "id": "flowers-watercolor-camellia",
+   "file": "flowers-watercolor-camellia.webp",
+   "title": "つばき",
+   "desc": "つばきのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "花 水彩",
+    "つばき",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 495,
+   "h": 491
+  },
+  {
+   "id": "flowers-watercolor-bouquet",
+   "file": "flowers-watercolor-bouquet.webp",
+   "title": "花束",
+   "desc": "花束のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "花 水彩",
+    "花束",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 458,
+   "h": 522
+  },
+  {
+   "id": "flowers-watercolor-wreath",
+   "file": "flowers-watercolor-wreath.webp",
+   "title": "花のリース",
+   "desc": "花のリースのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "花",
+    "さくら",
+    "ひまわり",
+    "あじさい",
+    "花 水彩",
+    "花のリース",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 505,
+   "h": 503
+  }
+ ]
+}

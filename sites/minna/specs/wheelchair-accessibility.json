@@ -1,0 +1,86 @@
+{
+ "slug": "wheelchair-accessibility",
+ "title": "車いすバリアフリー行動",
+ "subject": "車いすバリアフリー行動",
+ "genre": "people",
+ "touch": "silhouette",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A Japanese man wheelchair user in his 30s with short dark hair, red jacket indicated by a single accent shape, dark wheelchair, respectful active silhouette style, clear cutout shape with no facial features, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "車いす利用者の移動や相談場面を、読み取りやすいシルエットで描く素材です。バリアフリー、交通、施設案内、福祉記事に使えます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "車いす",
+  "福祉",
+  "イラスト",
+  "バリアフリー",
+  "移動",
+  "スロープ",
+  "交通",
+  "相談",
+  "買い物",
+  "支援"
+ ],
+ "items": [
+  [
+   "self-propelling",
+   "自走して進む",
+   "The wheelchair user moves forward independently in side view, no text or letters in the picture."
+  ],
+  [
+   "using-ramp",
+   "スロープを使う",
+   "The wheelchair user travels up a simple ramp shape, no text or letters in the picture."
+  ],
+  [
+   "elevator",
+   "エレベーター待ち",
+   "The wheelchair user waits beside a blank elevator door, no text or letters in the picture."
+  ],
+  [
+   "desk-work",
+   "机で作業する",
+   "The wheelchair user sits at a desk with a blank laptop screen, no text or letters in the picture."
+  ],
+  [
+   "boarding-bus",
+   "バスに乗る",
+   "The wheelchair user approaches a simple bus doorway with ramp space, no text or letters in the picture."
+  ],
+  [
+   "shopping",
+   "買い物をする",
+   "The wheelchair user carries a small plain basket beside a shelf, no text or letters in the picture."
+  ],
+  [
+   "watching-sports",
+   "スポーツ観戦する",
+   "The wheelchair user faces a blank field shape in cheering posture, no text or letters in the picture."
+  ],
+  [
+   "service-counter",
+   "窓口で相談する",
+   "The wheelchair user sits at a blank service counter, no text or letters in the picture."
+  ],
+  [
+   "rainy-day",
+   "雨の日に移動",
+   "The wheelchair user moves under a plain umbrella in side view, no text or letters in the picture."
+  ],
+  [
+   "talking-friend",
+   "友人と話す",
+   "The wheelchair user talks with one standing friend clearly separated, no text or letters in the picture."
+  ],
+  [
+   "asking-assist",
+   "助けを求める",
+   "The wheelchair user raises one hand near a small help symbol, no text or letters in the picture."
+  ],
+  [
+   "confident-moving",
+   "笑顔風に進む",
+   "The wheelchair user moves forward with an upbeat posture, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

@@ -1,0 +1,86 @@
+{
+ "slug": "medical-team-gender-balanced",
+ "title": "医療チーム男女差分",
+ "subject": "医療チーム男女差分",
+ "genre": "life",
+ "touch": "lineart",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A small gender-balanced Japanese medical cast: female doctor with black ponytail, male nurse with short black hair, and pharmacist with glasses, white and pale teal uniforms, coloring-page line art with black outline only, calm soft faces, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "医療現場の基本動作を、ぬりえにも使える線画タッチでそろえた素材です。診療、服薬、受付、感染対策、院内案内の説明に向いています。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "医療",
+  "病院",
+  "イラスト",
+  "医師",
+  "看護師",
+  "薬剤師",
+  "診察",
+  "服薬",
+  "予防接種",
+  "受付"
+ ],
+ "items": [
+  [
+   "consultation",
+   "診察で向き合う",
+   "One doctor sits across from an empty patient chair in a calm consultation pose, no text or letters in the picture."
+  ],
+  [
+   "stethoscope",
+   "聴診器を使う",
+   "One nurse stands holding a stethoscope simply against the chest area of a mannequin icon, no text or letters in the picture."
+  ],
+  [
+   "temperature-check",
+   "体温を測る",
+   "One medical worker holds a simple thermometer near an empty chair, no text or letters in the picture."
+  ],
+  [
+   "explaining",
+   "説明して示す",
+   "One doctor points to a blank board while explaining, no text or letters in the picture."
+  ],
+  [
+   "medicine-guidance",
+   "服薬を案内する",
+   "One pharmacist holds a plain medicine bag and gestures gently, no text or letters in the picture."
+  ],
+  [
+   "vaccination",
+   "接種を準備する",
+   "One nurse prepares a simple syringe beside a blank tray, no text or letters in the picture."
+  ],
+  [
+   "chart-entry",
+   "カルテを入力",
+   "One medical worker sits at a computer with a blank screen, no text or letters in the picture."
+  ],
+  [
+   "wheelchair-assist",
+   "車いすを介助",
+   "One nurse stands behind a simple wheelchair with no seated person, no text or letters in the picture."
+  ],
+  [
+   "hand-washing",
+   "手洗いをする",
+   "One medical worker washes hands at a plain sink, no text or letters in the picture."
+  ],
+  [
+   "mask-wearing",
+   "マスクを着ける",
+   "One medical worker puts on a plain mask in front view, no text or letters in the picture."
+  ],
+  [
+   "team-discussion",
+   "チームで相談",
+   "Two medical workers stand clearly separated beside a blank clipboard, no text or letters in the picture."
+  ],
+  [
+   "reception-guide",
+   "受付へ案内する",
+   "One medical worker gestures toward a blank reception counter, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}

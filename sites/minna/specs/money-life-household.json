@@ -1,0 +1,86 @@
+{
+ "slug": "money-life-household",
+ "title": "家計とお金に悩む人",
+ "subject": "家計とお金に悩む人",
+ "genre": "life",
+ "touch": "stick",
+ "title_fmt": "{ja}({subject})",
+ "subject_en": "A Japanese man adult in his 40s, short black hair, orange sweater, navy pants, simple stick-figure style with friendly round head and minimal body lines, expressive but not exaggerated, no real person or existing character. Always the same face, hairstyle and outfit.",
+ "lead": "家計やお金の悩みを、軽い棒人間タッチでわかりやすく示す素材です。節約、相談、物価、投資入門、生活防衛の記事に使えます。検索結果でも用途が伝わりやすいです。",
+ "tags": [
+  "人物",
+  "家計",
+  "お金",
+  "イラスト",
+  "節約",
+  "物価",
+  "投資",
+  "請求",
+  "相談",
+  "決済",
+  "貯金"
+ ],
+ "items": [
+  [
+   "budget-book",
+   "家計簿をつける",
+   "The adult sits at a table and writes in a blank budget notebook, no text or letters in the picture."
+  ],
+  [
+   "bankbook-check",
+   "通帳を確認する",
+   "The adult holds a blank bankbook-like booklet with a worried posture, no text or letters in the picture."
+  ],
+  [
+   "saving-money",
+   "節約を考える",
+   "The adult stands beside a simple coin and lightbulb symbol, no text or letters in the picture."
+  ],
+  [
+   "price-worry",
+   "物価高に困る",
+   "The adult looks at plain shopping bags with a worry symbol, no text or letters in the picture."
+  ],
+  [
+   "learning-investment",
+   "投資を学ぶ",
+   "The adult reads a blank open book beside a simple chart shape, no text or letters in the picture."
+  ],
+  [
+   "wallet-check",
+   "財布を確認する",
+   "The adult opens a plain wallet and looks inside, no text or letters in the picture."
+  ],
+  [
+   "bill-surprise",
+   "請求に驚く",
+   "The adult reacts to a blank bill envelope on a table, no text or letters in the picture."
+  ],
+  [
+   "piggy-bank",
+   "貯金箱に入れる",
+   "The adult drops a coin into a plain piggy bank shape, no text or letters in the picture."
+  ],
+  [
+   "mobile-payment",
+   "スマホ決済する",
+   "The adult holds a phone with a blank screen near a plain terminal, no text or letters in the picture."
+  ],
+  [
+   "atm-use",
+   "ATMを使う",
+   "The adult stands at a cash machine with a blank panel, no text or letters in the picture."
+  ],
+  [
+   "consultation-counter",
+   "窓口で相談する",
+   "The adult sits at a blank consultation counter facing an empty chair, no text or letters in the picture."
+  ],
+  [
+   "feeling-relieved",
+   "安心して座る",
+   "The adult sits calmly with a small relief symbol nearby, no text or letters in the picture."
+  ]
+ ],
+ "holes": false
+}
