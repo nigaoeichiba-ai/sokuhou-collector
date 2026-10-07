@@ -142,10 +142,17 @@ class CliTest(unittest.TestCase):
             "akita_kuma",
             "yamaguchi_kuma",
             "okayama_kuma",
+            "yamanashi_kuma",
+            "sorachi_kuma",
             "jgrants",
             "otsu_bear",
             "otsu_fire",
         })
+
+    def test_municipal_bear_sources_run_in_the_kuma_group_so_the_daily_run_does_not_collect_them_twice(self):
+        kuma = {s.name for s in run.GROUPS["kuma"]}
+        self.assertEqual(kuma, {"miyagi_kuma", "akita_kuma", "yamaguchi_kuma", "okayama_kuma", "yamanashi_kuma", "sorachi_kuma", "otsu_bear"})
+        self.assertFalse(kuma & {s.name for s in run.GROUPS["daily"]})
 
 
 def store_total(path):
