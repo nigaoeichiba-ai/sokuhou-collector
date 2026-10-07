@@ -7,11 +7,12 @@ name: inbox
 
 on:
   schedule:
-    - cron: "50 18 * * *"   # 03:50 JST, before the daily factory routine
+    - cron: "50 * * * *"   # every hour (a message reaches the owner within about an hour; was once a day at 03:50 JST)
   workflow_dispatch:
 
 permissions:
   contents: write
+  issues: write   # the notice to the owner
 
 concurrency:
   group: data-commit
@@ -59,6 +60,7 @@ jobs:
             python -m sokuhou.inbox new --site "$site" --raw "raw_$site.txt" --state data/inbox/state.json --out "new_$site.jsonl"
             if [ -s "new_$site.jsonl" ]; then
               openssl smime -encrypt -aes256 -binary -in "new_$site.jsonl" -out "data/inbox/$site-$stamp.p7m" -outform DER sokuhou/inbox_cert.pem
+              python -m sokuhou.inbox summary --site "$site" --file "new_$site.jsonl" >> notice.txt   # site, count and kinds only: never the text
             fi
           done
           rm -f raw_*.txt new_*.jsonl
@@ -73,4 +75,14 @@ jobs:
             git commit -m "data: inbox (encrypted)"
             git pull --rebase origin main
             git push
+          fi
+      - name: Tell the owner (a GitHub issue: GitHub e-mails it; the text of the messages is NOT in it, the repository is public)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -s notice.txt ]; then
+            { echo "新しい問い合わせが届きました(内容は暗号化されています。件数と種類だけを書いています)。"; echo; sed 's/^/- /' notice.txt; echo; \
+              echo "読むには、PCで次のコマンドを実行してください: python -m sokuhou.inbox read --mark"; \
+              echo "「掲載内容に関するご連絡(掲載の中止のご依頼など)」は、早めに読んでください。"; } > issue_body.md
+            gh issue create --title "新しい問い合わせ: $(cut -d: -f1 notice.txt | sort -u | paste -sd, -)" --body-file issue_body.md
           fi
