@@ -26,8 +26,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
-      - name: Install dependencies
-        run: python -m pip install --quiet -r requirements.txt
+      # no pip install: the kuma sources use only the standard library (the PDF reader is imported lazily by the ministry's sources, which run in daily.yml)
       - name: Collect
         id: collect
         continue-on-error: true   # keep what succeeded, then fail the job below
