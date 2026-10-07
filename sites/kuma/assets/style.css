@@ -423,3 +423,5 @@ svg.tilemap .t5 { fill:#7f1d1d; } svg.tilemap .t5 + text { fill:#fff; }
 .near-list { padding-left:1.4em; margin:0; }
 .near-list li { padding:3px 0; overflow-wrap:anywhere; }
 .pref-nav li a span { margin-left:6px; font-size:.8rem; color:var(--muted); }
+.mini-list.wide li { max-width:none; gap:12px; }
+.mini-list.wide li b { flex:none; font-weight:600; color:var(--muted); font-size:.85rem; }

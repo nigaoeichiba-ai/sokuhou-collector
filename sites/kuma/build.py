@@ -201,16 +201,15 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
     guides = "".join(guide_card(g)
                      for g in content.GUIDES)
     live_home = ""
-    alerts = []
-    if d.get("live"):
-        last = d["live"]["items"][0]
-        alerts.append(f'最新の目撃(滋賀県大津市・市の公式): {md(last["observed_at"][:10])} {esc(last["place"])}。')
-    for src in d["live_prefs"]:
-        last = src["sights"][0]
-        alerts.append(f'最新の目撃({src["label"]}): {md(last["observed_at"][:10])} {esc(place_text(last))}。')
-    if alerts:
-        live_home = ('<div class="latest">' + "".join(f'<p class="alert">{a}</p>' for a in alerts) + '</div>\n'
-                     '<p><a href="/live/">自治体の目撃情報の一覧</a></p>\n')
+    lv = d.get("lv")
+    if lv and lv["records"]:
+        sights = [x for x in lv["records"] if x["kind"].startswith("目撃")][:8] or lv["records"][:8]
+        items = "".join(f'<li>{md(x["at"][:10])} {esc(pf.full(x["pref"]))}{esc(live_mod.place_text(x["city"], x["place"]))}<b>{esc(x["kind"])}</b></li>' for x in sights)
+        live_home = (f'<h2>最新の目撃情報(自治体の公式)</h2>\n'
+                     f'<p class="alert">{fy_label(d["cur"])}は、自治体が公表した記録が{n(len(lv["records"]))}件(直近30日は{n(live_mod.last30(lv["records"], lv["today"]))}件)。'
+                     f'最新は{md(lv["records"][0]["at"][:10])}({live_mod.ago_text(lv["records"][0]["at"], lv["today"])})です。</p>\n'
+                     f'<ul class="mini-list wide">{items}</ul>\n'
+                     f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図で見る(現在地の近く)</a> / <a href="/digest/">週ごとのまとめ</a>{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''}</p>\n')
     news_block = ""
     if d["notices"]:
         items = "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
@@ -727,6 +726,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     if cfg.get("rakuten_affiliate_id"):
         nav = nav[:-1] + [("グッズ(PR)", "/goods/", "/goods/")] + nav[-1:]
     SITE = {**SITE, "nav": nav}
+    d["lv"] = live_mod.prepare_live(d, today or datetime.now(JST).date()) if any_live else None
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
     for kind in ("sightings", "change", "injuries"):
         pages[f"ranking/{kind}/index.html"] = ranking_page(d, kind, cfg, preview)
@@ -736,7 +736,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages["emergency/index.html"] = emergency_page(d, cfg, preview)
     pages["news/index.html"] = news_page(d, cfg, preview)
     if any_live:
-        lv = live_mod.prepare_live(d, today or datetime.now(JST).date())
+        lv = d["lv"]
         page_fn = lambda **kw: page(cfg, preview, **kw)  # noqa: E731
         pages["live/index.html"] = live_mod.hub_page(page_fn, d, lv)
         for slug in lv["by_pref"]:
@@ -749,6 +749,9 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
             pages[f"live/{slug}/feed.xml"] = live_mod.feed_xml(lv, cfg, slug)
         pages["map/index.html"] = live_mod.map_page(page_fn, d, lv)
         pages["map/points.json"] = live_mod.points_json(lv)
+        if live_mod.licensed_sources(lv):
+            pages["data/index.html"] = live_mod.data_page(page_fn, d, lv)
+            pages["data/" + live_mod.CSV_NAME] = live_mod.csv_text(lv)
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview, links)
     pages["guide/index.html"] = guide_hub(cfg, preview)
