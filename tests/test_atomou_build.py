@@ -65,6 +65,35 @@ class Pages(BuildOnce):
         self.assertIn("grep -q \"AuthUserFile $home/$SITE_DIR/.htpasswd\" release/.htaccess", wf)  # the build is checked to name the real password file before upload
         self.assertIn("[ \"$unauth\" = \"401\" ] || ok=0", wf)  # and the live demo must refuse a visitor without the password
 
+    def test_calendar_and_plan_pages_and_the_guide_scripts(self):
+        self.assertIn('data-page="calendar"', self.rel["calendar/index.html"])
+        self.assertIn("/calendar/", self.rel["sitemap.xml"])
+        self.assertIn("noindex", self.rel["plan/index.html"])
+        self.assertNotIn("/plan/", self.rel["sitemap.xml"])
+        for k in ("index.html", "calendar/index.html", "plan/index.html"):
+            for n in ("core", "ics", "app", "plan", "guide"):
+                self.assertIn(f"/assets/{n}.js", self.rel[k], f"{k} lacks {n}.js")
+        for n in ("plan", "guide"):
+            self.assertIn(f"assets/{n}.js", self.rel)
+
+    def test_cards_are_short_no_source_line_and_two_buttons(self):
+        e = next(x for x in self.entries if not x["quiet"])
+        card = build.card_html(e)
+        self.assertNotIn("出典", card)
+        self.assertNotIn("確認日", card)
+        self.assertIn("☆ 予定に入れる", card)
+        self.assertIn(">詳細</a>", card)
+        self.assertNotIn("カレンダーに入れる", card)
+        page = self.rel[f"e/{e['id']}/index.html"]
+        self.assertIn("出典", page)  # the source and the check date live on the detail page
+        self.assertIn("確認した日", page)
+        self.assertIn("メモ・やることを書く", page)
+
+    def test_home_has_the_todays_list_block_first(self):
+        h = self.rel["index.html"]
+        self.assertLess(h.index('id="todo"'), h.index('data-block="search"'))
+        self.assertIn('id="grid" data-save-order="1"', h)
+
     def test_release_is_refused_without_an_operator(self):
         with self.assertRaises(build.BuildError):
             build.build_pages({**CFG, "operator_name": ""}, release=True, today=TODAY)
@@ -136,7 +165,7 @@ class Pages(BuildOnce):
         for k in ("index.html", "my/index.html", "e/" + self.entries[0]["id"] + "/index.html"):
             self.assertIn('href="/manual/"', self.rel[k], k)
         m = self.rel["manual/index.html"]
-        for q in ("料金はかかりますか", "機種変更をしたら", "お知らせが来ません"):
+        for q in ("料金はかかりますか", "機種変更をしたら", "お知らせは来ますか", "「やること」とは何ですか"):
             self.assertIn(q, m)
         self.assertNotIn("必ず届き", m)  # nothing promises that a notice arrives
 
@@ -262,11 +291,11 @@ class AppInChrome(BuildOnce):
             self.assertIn(want, dom)
         self.assertIn("date=2027-03-31", dom)   # 引っ越しの用意 -> the end of the fiscal year
         self.assertIn("date=2027-04-01", dom)   # 入学の用意 -> the start of the next one
-        self.assertIn("alarm=week", dom)
+        self.assertNotIn("alarm=", dom)  # the in-app calendar needs no alarm menu
 
     def test_home_edit_mode_shows_a_bar_on_every_block(self):
         dom = self.dom("/?edit=1")
-        self.assertEqual(dom.count('class="block-bar"'), 7)
+        self.assertEqual(dom.count('class="block-bar"'), 8)
         self.assertNotIn('class="block-bar"', self.dom("/"))
 
     def test_no_storage_errors_with_a_blank_profile(self):

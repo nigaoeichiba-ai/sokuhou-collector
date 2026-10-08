@@ -153,16 +153,22 @@ class CoreInChrome(unittest.TestCase):
 STORE_PAGE = """<!doctype html><meta charset="utf-8"><script>
 window.ATOMOU = { v: 'x', groups: ['締切・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' } } };
 localStorage.setItem('atomou.v1', %(stored)s);
-</script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script>
-<script>document.getElementById('out').textContent = JSON.stringify({ state: window.Atomou.state(), broken: localStorage.getItem('atomou.v1.broken') });</script>"""
+</script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script><script src="%(plan)s"></script>
+<script>document.getElementById('out').textContent = JSON.stringify({ state: window.Atomou.state(), broken: localStorage.getItem('atomou.v1.broken'), plan: window.AtomouPlan ? (function () {
+  var A = window.AtomouApp, P = window.AtomouPlan, items = P.planItems([]), D = function (s) { return A.C.parse(s); };
+  return { n: items.length, on10: P.eventsOn(items, D('2026-10-10')).map(function (i) { return i.title + '@' + i.time; }), on12: P.eventsOn(items, D('2026-10-12')).map(function (i) { return i.title; }),
+    on2030: P.eventsOn(items, D('2030-10-12')).map(function (i) { return i.title; }), off11: P.eventsOn(items, D('2026-10-11')).length,
+    tasks07: P.tasksOn(items, D('2026-10-07')).map(function (o) { return o.t.text; }), tasks09: P.tasksOn(items, D('2026-10-09')).map(function (o) { return o.t.text; }),
+    todo: P.todoRows(items).map(function (r) { return r.k + ':' + r.it.title + ':' + r.n + (r.t ? ':' + r.t.text : ''); }) };
+})() : null });</script>"""
 
 
-def run_store_page(stored_js: str) -> dict:
+def run_store_page(stored_js: str, query: str = "") -> dict:
     with tempfile.TemporaryDirectory() as td:
         page = Path(td) / "s.html"
-        page.write_text(STORE_PAGE % {"stored": stored_js, "core": (ASSETS / "core.js").as_uri(), "ics": (ASSETS / "ics.js").as_uri(), "app": (ASSETS / "app.js").as_uri()}, encoding="utf-8")
+        page.write_text(STORE_PAGE % {"stored": stored_js, "core": (ASSETS / "core.js").as_uri(), "ics": (ASSETS / "ics.js").as_uri(), "app": (ASSETS / "app.js").as_uri(), "plan": (ASSETS / "plan.js").as_uri()}, encoding="utf-8")
         r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={Path(td) / 'prof'}", "--virtual-time-budget=4000",
-                            "--dump-dom", page.as_uri()], capture_output=True, timeout=120)
+                            "--dump-dom", page.as_uri() + query], capture_output=True, timeout=120)
     dom = r.stdout.decode("utf-8", "replace")
     a = dom.index('<pre id="out">') + len('<pre id="out">')
     return json.loads(html.unescape(dom[a:dom.index("</pre>", a)]))
@@ -189,10 +195,107 @@ class StorageIsSanitised(unittest.TestCase):
         self.assertEqual(st["prefs"]["blocks"], {"order": ["search"], "hidden": ["cats"]})
         self.assertIsNone(res["broken"])
 
+    def test_the_schedule_book_places_events_tasks_and_todays_list(self):
+        stored = {"entries": [{"id": "e1", "title": "デート", "date": "2026-10-10", "kind": "event", "time": "19:00"},
+                              {"id": "b1", "title": "誕生日", "date": "2000-10-12", "kind": "birthday", "yearly": True},
+                              {"id": "w1", "title": "5月の予定", "date": "2026-05-01", "kind": "event"}],
+                  "notes": {"m:e1": {"memo": "店を予約", "tasks": [{"id": "t1", "before": 3, "text": "予約", "done": False}, {"id": "t2", "before": 1, "text": "花", "done": True},
+                                                                  {"id": "t3", "before": 400, "text": "範囲外", "done": False}]},
+                            "m:nope!": {"memo": "x", "tasks": []}}}
+        res = run_store_page(json.dumps(json.dumps(stored)), "?today=2026-10-08")
+        pl = res["plan"]
+        self.assertEqual(pl["n"], 3)
+        self.assertEqual(pl["on10"], ["デート@19:00"])
+        self.assertEqual(pl["on12"], ["誕生日"])
+        self.assertEqual(pl["on2030"], ["誕生日"])   # a yearly day is on its date every later year
+        self.assertEqual(pl["off11"], 0)
+        self.assertEqual(pl["tasks07"], ["予約"])    # 3 days before 10-10
+        self.assertEqual(pl["tasks09"], ["花"])      # done tasks stay on the calendar, they are only not in today's list
+        self.assertEqual(len(res["state"]["notes"]["m:e1"]["tasks"]), 2)  # the out-of-range task and the odd key were dropped
+        self.assertNotIn("m:nope!", res["state"]["notes"])
+        # today's list (2026-10-08): the date is 2 days away; the "予約" task was due yesterday, so it is overdue; the done task and the far birthday are not there
+        self.assertEqual(pl["todo"], ["task:デート:-1:予約", "event:デート:2"])
+
     def test_unreadable_data_is_kept_aside_not_overwritten(self):
         res = run_store_page(json.dumps("{not json"))
         self.assertEqual(res["state"]["entries"], [])
         self.assertEqual(res["broken"], "{not json")
+
+
+DRAG_PAGE = """<!doctype html><meta charset="utf-8"><body data-page="x"><style>.card{display:block;height:80px;margin:0 0 10px;width:300px}</style>
+<div class="cards" id="g" data-save-order="1">
+<article class="card" data-key="c:aaaaaaaaaa"><h3>A</h3><div class="c-act"><button type="button">b</button></div></article>
+<article class="card" data-key="c:bbbbbbbbbb"><h3>B</h3><div class="c-act"><button type="button">b</button></div></article>
+<article class="card" data-key="c:cccccccccc"><h3>C</h3><div class="c-act"><button type="button">b</button></div></article></div>
+<div class="cards" id="other"><article class="card" data-key="c:dddddddddd"><h3>D</h3></article></div>
+<pre id="out">pending</pre><script src="%(core)s"></script><script src="%(ics)s"></script><script src="%(app)s"></script>
+<script>
+(function () {
+  var g = document.getElementById('g'), out = { steps: [] };
+  function keys() { return Array.prototype.map.call(g.querySelectorAll('.card'), function (c) { return c.getAttribute('data-key').charAt(2); }).join(''); }
+  function pe(type, el, x, y) { el.dispatchEvent(new PointerEvent(type, { bubbles: true, cancelable: true, pointerId: 7, pointerType: 'mouse', button: 0, clientX: x, clientY: y })); }
+  function ctr(el, fx, fy) { var r = el.getBoundingClientRect(); return [r.left + r.width * (fx == null ? .5 : fx), r.top + r.height * (fy == null ? .5 : fy)]; }
+  var cards = g.querySelectorAll('.card'), A = cards[0], C = cards[2], a = ctr(A.querySelector('h3'), .2, .5), c = ctr(C, .9, .9);
+  pe('pointerdown', A.querySelector('h3'), a[0], a[1]); pe('pointermove', document.body, a[0] + 3, a[1]); out.steps.push(['small move keeps order', keys()]);
+  pe('pointermove', document.body, a[0] + 30, a[1] + 5); out.ghost = !!document.querySelector('.card.ghost'); out.dimmed = A.classList.contains('dragging');
+  pe('pointermove', document.body, c[0], c[1]); pe('pointerup', document.body, c[0], c[1]);
+  out.mouse = keys(); out.ghostGone = !document.querySelector('.card.ghost'); out.order = JSON.stringify(window.Atomou.state().order);
+  var bt = g.querySelector('.c-act button'), bb = ctr(bt); pe('pointerdown', bt, bb[0], bb[1]); pe('pointermove', document.body, bb[0] + 40, bb[1] + 40); pe('pointerup', document.body, bb[0] + 40, bb[1] + 40);
+  out.buttonSafe = keys() === out.mouse;
+  var D = document.querySelector('#other .card'), d = ctr(D); pe('pointerdown', D, d[0], d[1]); pe('pointermove', document.body, d[0] + 50, d[1]); out.otherGhost = !!document.querySelector('.card.ghost'); pe('pointerup', document.body, d[0], d[1]);
+  function te(type, el, x, y) {
+    var t = new Touch({ identifier: 1, target: el, clientX: x, clientY: y }), list = type === 'touchend' ? [] : [t];
+    el.dispatchEvent(new TouchEvent(type, { bubbles: true, cancelable: true, touches: list, targetTouches: list, changedTouches: [t] }));
+  }
+  var first = g.querySelectorAll('.card')[0], f = ctr(first), last = g.querySelectorAll('.card')[2], l = ctr(last, .9, .9), before = keys();
+  te('touchstart', first.querySelector('h3'), f[0], f[1]);
+  setTimeout(function () {
+    out.touchHeld = !!document.querySelector('.card.ghost');
+    te('touchmove', document.body, l[0], l[1]); te('touchend', document.body, l[0], l[1]);
+    out.touch = keys(); out.touchBefore = before; out.touchGhostGone = !document.querySelector('.card.ghost');
+    var one = g.querySelectorAll('.card')[0], o = ctr(one), k0 = keys();
+    te('touchstart', one.querySelector('h3'), o[0], o[1]); te('touchmove', document.body, o[0], o[1] + 60);
+    setTimeout(function () { out.swipeSafe = !document.querySelector('.card.ghost') && keys() === k0; te('touchend', document.body, o[0], o[1] + 60);
+      document.getElementById('out').textContent = JSON.stringify(out); }, 600);
+  }, 450);
+})();
+</script>"""
+
+
+@unittest.skipUnless(find_chrome(), "browser checks run locally")
+class CardsCanBeDragged(unittest.TestCase):
+    """The cards of the home / my page: grabbed anywhere with the mouse, held with a finger, not from a button, not in a grid that does not save its order."""
+
+    @classmethod
+    def setUpClass(cls):
+        with tempfile.TemporaryDirectory() as td:
+            page = Path(td) / "d.html"
+            page.write_text(DRAG_PAGE % {"core": (ASSETS / "core.js").as_uri(), "ics": (ASSETS / "ics.js").as_uri(), "app": (ASSETS / "app.js").as_uri()}, encoding="utf-8")
+            r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={Path(td) / 'prof'}", "--virtual-time-budget=6000",
+                                "--window-size=800,900", "--dump-dom", page.as_uri() + "?today=2026-10-08"], capture_output=True, timeout=120)
+        dom = r.stdout.decode("utf-8", "replace")
+        a = dom.index('<pre id="out">') + len('<pre id="out">')
+        cls.res = json.loads(html.unescape(dom[a:dom.index("</pre>", a)]))
+
+    def test_mouse_drag_from_the_card_text(self):
+        r = self.res
+        self.assertEqual(r["steps"][0][1], "abc")           # a 3px wobble is a click, not a drag
+        self.assertTrue(r["ghost"] and r["dimmed"])          # a floating copy follows the pointer; the real card is dimmed
+        self.assertEqual(r["mouse"], "bca")                  # A was dropped after C
+        self.assertTrue(r["ghostGone"])
+        self.assertEqual(json.loads(r["order"]), ["c:bbbbbbbbbb", "c:cccccccccc", "c:aaaaaaaaaa"])  # and the order is kept
+
+    def test_buttons_and_other_grids_do_not_start_a_drag(self):
+        self.assertTrue(self.res["buttonSafe"])
+        self.assertFalse(self.res["otherGhost"])
+
+    def test_touch_press_and_hold_drags_but_a_swipe_scrolls(self):
+        r = self.res
+        self.assertTrue(r["touchHeld"])
+        self.assertNotEqual(r["touch"], r["touchBefore"])
+        self.assertEqual(r["touch"], r["touchBefore"][1:] + r["touchBefore"][0])  # the first card went to the end
+        self.assertTrue(r["touchGhostGone"])
+        self.assertTrue(r["swipeSafe"])
 
 
 if __name__ == "__main__":
