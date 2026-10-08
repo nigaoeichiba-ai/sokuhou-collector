@@ -19,21 +19,72 @@
   "ひなあられ",
   "春"
  ],
- "season": {"from": "01-15", "to": "03-03"},
+ "season": {
+  "from": "01-15",
+  "to": "03-03"
+ },
  "holes": false,
  "items": [
-  ["ohina", "おひなさま", "a cute empress doll in a layered red and pink kimono with a small gold crown"],
-  ["odairi", "おだいりさま", "a cute emperor doll in a dark blue kimono holding a thin wooden tablet, with a tall black hat"],
-  ["pair", "おひなさまとおだいりさま", "the empress and emperor dolls sitting side by side on a small red platform"],
-  ["kanjo", "三人官女", "three small court-lady dolls in red and white, standing in a row"],
-  ["bonbori", "ぼんぼり", "a paper lantern lamp on a stand with a cherry blossom pattern"],
-  ["hishimochi", "ひしもち", "a three-layer diamond-shaped rice cake in pink, cream and green"],
-  ["arare", "ひなあられ", "a small bowl of colourful round rice crackers in pink, cream and green"],
-  ["momo", "桃の花", "a branch of pink peach blossoms"],
-  ["chirashi", "ちらし寿司", "a bowl of chirashi sushi topped with egg strips, shrimp and peas"],
-  ["hamaguri", "はまぐりのお吸い物", "a bowl of clear soup with a clam and a leaf"],
-  ["shirozake", "白酒", "a small cream-coloured sake bottle and cup with a pink ribbon"],
-  ["dan", "ひな壇", "a small three-step red-cloth display stand with the two main dolls on top and tiny lanterns"]
+  [
+   "ohina",
+   "おひなさま",
+   "a cute empress doll in a layered red and pink kimono with a small gold crown"
+  ],
+  [
+   "odairi",
+   "おだいりさま",
+   "a cute emperor doll in a dark blue kimono holding a thin wooden tablet, with a tall black hat"
+  ],
+  [
+   "pair",
+   "おひなさまとおだいりさま",
+   "the empress and emperor dolls sitting side by side on a small red platform"
+  ],
+  [
+   "kanjo",
+   "三人官女",
+   "three small court-lady dolls in red and white, standing in a row"
+  ],
+  [
+   "bonbori",
+   "ぼんぼり",
+   "a paper lantern lamp on a stand with a cherry blossom pattern"
+  ],
+  [
+   "hishimochi",
+   "ひしもち",
+   "a three-layer diamond-shaped rice cake in pink, cream and green"
+  ],
+  [
+   "arare",
+   "ひなあられ",
+   "a small bowl of colourful round rice crackers in pink, cream and green"
+  ],
+  [
+   "momo",
+   "桃の花",
+   "a branch of pink peach blossoms"
+  ],
+  [
+   "chirashi",
+   "ちらし寿司",
+   "a bowl of chirashi sushi topped with egg strips, shrimp and peas"
+  ],
+  [
+   "hamaguri",
+   "はまぐりのお吸い物",
+   "a bowl of clear soup with a clam and a leaf"
+  ],
+  [
+   "shirozake",
+   "白酒",
+   "a small cream-coloured sake bottle and cup with a pink ribbon"
+  ],
+  [
+   "dan",
+   "ひな壇",
+   "a small three-step red-cloth display stand with the two main dolls on top and tiny lanterns"
+  ]
  ],
  "exclude": []
 }

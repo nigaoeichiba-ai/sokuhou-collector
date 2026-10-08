@@ -20,18 +20,66 @@
  "season": null,
  "holes": false,
  "items": [
-  ["jan-narcissus", "1月 水仙", "a narcissus (daffodil) flower, cream petals with a yellow cup, on a stem with two leaves"],
-  ["feb-plum", "2月 梅", "a short plum branch with three pink blossoms and a bud"],
-  ["mar-tulip", "3月 チューリップ", "a single red tulip with two leaves"],
-  ["apr-sakura", "4月 さくら", "a small cherry blossom sprig with three pale pink flowers"],
-  ["may-suzuran", "5月 すずらん", "a lily-of-the-valley stem with cream bell flowers and two leaves"],
-  ["jun-ajisai", "6月 あじさい", "a round blue hydrangea head with two leaves"],
-  ["jul-lily", "7月 ゆり", "a single white lily, cream petals, on a stem with a bud"],
-  ["aug-sunflower", "8月 ひまわり", "a single sunflower with a brown centre and two leaves"],
-  ["sep-rindo", "9月 りんどう", "a gentian stem with several blue-violet flowers"],
-  ["oct-cosmos", "10月 コスモス", "two pink cosmos flowers on thin stems"],
-  ["nov-chrysanthemum", "11月 菊", "a yellow chrysanthemum with a short stem and leaves"],
-  ["dec-poinsettia", "12月 ポインセチア", "a red poinsettia with green lower leaves"]
+  [
+   "jan-narcissus",
+   "1月 水仙",
+   "a narcissus (daffodil) flower, cream petals with a yellow cup, on a stem with two leaves"
+  ],
+  [
+   "feb-plum",
+   "2月 梅",
+   "a short plum branch with three pink blossoms and a bud"
+  ],
+  [
+   "mar-tulip",
+   "3月 チューリップ",
+   "a single red tulip with two leaves"
+  ],
+  [
+   "apr-sakura",
+   "4月 さくら",
+   "a small cherry blossom sprig with three pale pink flowers"
+  ],
+  [
+   "may-suzuran",
+   "5月 すずらん",
+   "a lily-of-the-valley stem with cream bell flowers and two leaves"
+  ],
+  [
+   "jun-ajisai",
+   "6月 あじさい",
+   "a round blue hydrangea head with two leaves"
+  ],
+  [
+   "jul-lily",
+   "7月 ゆり",
+   "a single white lily, cream petals, on a stem with a bud"
+  ],
+  [
+   "aug-sunflower",
+   "8月 ひまわり",
+   "a single sunflower with a brown centre and two leaves"
+  ],
+  [
+   "sep-rindo",
+   "9月 りんどう",
+   "a gentian stem with several blue-violet flowers"
+  ],
+  [
+   "oct-cosmos",
+   "10月 コスモス",
+   "two pink cosmos flowers on thin stems"
+  ],
+  [
+   "nov-chrysanthemum",
+   "11月 菊",
+   "a yellow chrysanthemum with a short stem and leaves"
+  ],
+  [
+   "dec-poinsettia",
+   "12月 ポインセチア",
+   "a red poinsettia with green lower leaves"
+  ]
  ],
  "exclude": []
 }

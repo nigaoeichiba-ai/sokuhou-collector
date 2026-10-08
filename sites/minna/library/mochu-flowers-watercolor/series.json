@@ -1,0 +1,175 @@
+{
+ "added": "2026-10-09",
+ "slug": "mochu-flowers-watercolor",
+ "title": "喪中はがき・お悔やみの花 水彩",
+ "genre": "nature",
+ "touch": "watercolor",
+ "lead": "蓮、菊、百合、桔梗、りんどう。喪中はがき、寒中見舞い、お悔やみのカードに添える、落ち着いた色の花の水彩イラスト12点。登録不要で、そのまま使えます。",
+ "tags": [
+  "喪中",
+  "喪中はがき",
+  "お悔やみ",
+  "花",
+  "水彩",
+  "蓮",
+  "菊",
+  "百合",
+  "寒中見舞い"
+ ],
+ "subject": "",
+ "season": {
+  "from": "10-15",
+  "to": "01-31"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "mochu-flowers-watercolor-lotus",
+   "file": "mochu-flowers-watercolor-lotus.webp",
+   "title": "蓮の花",
+   "desc": "蓮の花のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "喪中",
+    "喪中はがき",
+    "お悔やみ",
+    "花",
+    "蓮",
+    "喪中はがき・お悔やみの花 水彩",
+    "蓮の花",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 413,
+   "h": 492
+  },
+  {
+   "id": "mochu-flowers-watercolor-white-mum",
+   "file": "mochu-flowers-watercolor-white-mum.webp",
+   "title": "白い菊",
+   "desc": "白い菊のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "喪中",
+    "喪中はがき",
+    "お悔やみ",
+    "花",
+    "菊",
+    "喪中はがき・お悔やみの花 水彩",
+    "白い菊",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 395,
+   "h": 490
+  },
+  {
+   "id": "mochu-flowers-watercolor-purple-mum",
+   "file": "mochu-flowers-watercolor-purple-mum.webp",
+   "title": "紫の菊",
+   "desc": "紫の菊のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "喪中",
+    "喪中はがき",
+    "お悔やみ",
+    "花",
+    "菊",
+    "喪中はがき・お悔やみの花 水彩",
+    "紫の菊",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 394,
+   "h": 490
+  },
+  {
+   "id": "mochu-flowers-watercolor-orchid",
+   "file": "mochu-flowers-watercolor-orchid.webp",
+   "title": "胡蝶蘭",
+   "desc": "胡蝶蘭のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "喪中",
+    "喪中はがき",
+    "お悔やみ",
+    "花",
+    "喪中はがき・お悔やみの花 水彩",
+    "胡蝶蘭",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 487,
+   "h": 466
+  },
+  {
+   "id": "mochu-flowers-watercolor-camellia",
+   "file": "mochu-flowers-watercolor-camellia.webp",
+   "title": "白い椿",
+   "desc": "白い椿のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "喪中",
+    "喪中はがき",
+    "お悔やみ",
+    "花",
+    "喪中はがき・お悔やみの花 水彩",
+    "白い椿",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 482,
+   "h": 489
+  },
+  {
+   "id": "mochu-flowers-watercolor-suzuran",
+   "file": "mochu-flowers-watercolor-suzuran.webp",
+   "title": "すずらん",
+   "desc": "すずらんのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "喪中",
+    "喪中はがき",
+    "お悔やみ",
+    "花",
+    "喪中はがき・お悔やみの花 水彩",
+    "すずらん",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 373,
+   "h": 480
+  },
+  {
+   "id": "mochu-flowers-watercolor-lotus-bud",
+   "file": "mochu-flowers-watercolor-lotus-bud.webp",
+   "title": "蓮のつぼみ",
+   "desc": "蓮のつぼみのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "喪中",
+    "喪中はがき",
+    "お悔やみ",
+    "花",
+    "蓮",
+    "喪中はがき・お悔やみの花 水彩",
+    "蓮のつぼみ",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 332,
+   "h": 504
+  },
+  {
+   "id": "mochu-flowers-watercolor-bouquet",
+   "file": "mochu-flowers-watercolor-bouquet.webp",
+   "title": "お供えの花束",
+   "desc": "お供えの花束のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "喪中",
+    "喪中はがき",
+    "お悔やみ",
+    "花",
+    "喪中はがき・お悔やみの花 水彩",
+    "お供えの花束",
+    "やわらか水彩",
+    "花・自然"
+   ],
+   "w": 482,
+   "h": 526
+  }
+ ]
+}

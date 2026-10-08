@@ -1,0 +1,177 @@
+{
+ "added": "2026-10-09",
+ "slug": "pets-silhouette",
+ "title": "ペットのシルエット",
+ "genre": "animals",
+ "touch": "silhouette",
+ "lead": "いぬ、ねこ、うさぎ、ハムスター、インコ、金魚。ペットショップや動物病院のお知らせ、看板、ピクトに使える、紺一色のシルエット12点。",
+ "tags": [
+  "ペット",
+  "シルエット",
+  "いぬ",
+  "ねこ",
+  "うさぎ",
+  "動物",
+  "動物病院",
+  "看板",
+  "マーク"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "pets-silhouette-dog-sit",
+   "file": "pets-silhouette-dog-sit.webp",
+   "title": "おすわりするいぬ",
+   "desc": "おすわりするいぬのイラスト。シルエットのタッチ。",
+   "tags": [
+    "ペット",
+    "シルエット",
+    "いぬ",
+    "ねこ",
+    "ペットのシルエット",
+    "おすわりするいぬ",
+    "どうぶつ"
+   ],
+   "w": 396,
+   "h": 433
+  },
+  {
+   "id": "pets-silhouette-dog-walk",
+   "file": "pets-silhouette-dog-walk.webp",
+   "title": "歩くいぬ",
+   "desc": "歩くいぬのイラスト。シルエットのタッチ。",
+   "tags": [
+    "ペット",
+    "シルエット",
+    "いぬ",
+    "ねこ",
+    "ペットのシルエット",
+    "歩くいぬ",
+    "どうぶつ"
+   ],
+   "w": 500,
+   "h": 358
+  },
+  {
+   "id": "pets-silhouette-cat-stretch",
+   "file": "pets-silhouette-cat-stretch.webp",
+   "title": "のびをするねこ",
+   "desc": "のびをするねこのイラスト。シルエットのタッチ。",
+   "tags": [
+    "ペット",
+    "シルエット",
+    "いぬ",
+    "ねこ",
+    "ペットのシルエット",
+    "のびをするねこ",
+    "どうぶつ"
+   ],
+   "w": 441,
+   "h": 383
+  },
+  {
+   "id": "pets-silhouette-rabbit",
+   "file": "pets-silhouette-rabbit.webp",
+   "title": "うさぎ",
+   "desc": "うさぎのイラスト。シルエットのタッチ。",
+   "tags": [
+    "ペット",
+    "シルエット",
+    "いぬ",
+    "ねこ",
+    "うさぎ",
+    "ペットのシルエット",
+    "どうぶつ"
+   ],
+   "w": 299,
+   "h": 378
+  },
+  {
+   "id": "pets-silhouette-goldfish",
+   "file": "pets-silhouette-goldfish.webp",
+   "title": "金魚",
+   "desc": "金魚のイラスト。シルエットのタッチ。",
+   "tags": [
+    "ペット",
+    "シルエット",
+    "いぬ",
+    "ねこ",
+    "ペットのシルエット",
+    "金魚",
+    "どうぶつ"
+   ],
+   "w": 474,
+   "h": 335
+  },
+  {
+   "id": "pets-silhouette-turtle",
+   "file": "pets-silhouette-turtle.webp",
+   "title": "かめ",
+   "desc": "かめのイラスト。シルエットのタッチ。",
+   "tags": [
+    "ペット",
+    "シルエット",
+    "いぬ",
+    "ねこ",
+    "ペットのシルエット",
+    "かめ",
+    "どうぶつ"
+   ],
+   "w": 461,
+   "h": 281
+  },
+  {
+   "id": "pets-silhouette-hedgehog",
+   "file": "pets-silhouette-hedgehog.webp",
+   "title": "ハリネズミ",
+   "desc": "ハリネズミのイラスト。シルエットのタッチ。",
+   "tags": [
+    "ペット",
+    "シルエット",
+    "いぬ",
+    "ねこ",
+    "ペットのシルエット",
+    "ハリネズミ",
+    "どうぶつ"
+   ],
+   "w": 449,
+   "h": 309
+  },
+  {
+   "id": "pets-silhouette-ferret",
+   "file": "pets-silhouette-ferret.webp",
+   "title": "フェレット",
+   "desc": "フェレットのイラスト。シルエットのタッチ。",
+   "tags": [
+    "ペット",
+    "シルエット",
+    "いぬ",
+    "ねこ",
+    "ペットのシルエット",
+    "フェレット",
+    "どうぶつ"
+   ],
+   "w": 575,
+   "h": 314
+  },
+  {
+   "id": "pets-silhouette-paw",
+   "file": "pets-silhouette-paw.webp",
+   "title": "肉球",
+   "desc": "肉球のイラスト。シルエットのタッチ。",
+   "tags": [
+    "ペット",
+    "シルエット",
+    "いぬ",
+    "ねこ",
+    "ペットのシルエット",
+    "肉球",
+    "どうぶつ"
+   ],
+   "w": 318,
+   "h": 280
+  }
+ ]
+}
