@@ -17,6 +17,8 @@ $MAIL_FROM = '__MAIL_FROM__';   // the sender of the code mails (owner: a mailbo
 $SITE_NAME = '__SITE_NAME__';
 $SITE_URL = '__SITE_URL__';
 
+$IDS = array_map(function ($t) { return $t['id']; }, $TIERS);
+
 function out($code, $data) { http_response_code($code); echo json_encode($data, JSON_UNESCAPED_UNICODE); exit; }
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') { out(405, array('error' => 'method')); }
 $origin = (string)($_SERVER['HTTP_ORIGIN'] ?? '');
@@ -72,7 +74,8 @@ function save_member($root, $id, $m) {
 }
 function public_view($m) {   // what the browser gets: never the sessions, never other members' data
     return array('email' => $m['email'], 'plan' => $m['plan'], 'tier' => $m['tier'], 'free_until' => $m['free_until'], 'ref_code' => $m['ref_code'],
-                 'referrals' => (int)($m['referrals'] ?? 0), 'notices' => array('on' => !empty($m['notices']['on']), 'n' => count($m['notices']['dates'] ?? array())), 'created' => $m['created']);
+                 'referrals' => (int)($m['referrals'] ?? 0), 'notices' => array('on' => !empty($m['notices']['on']), 'n' => count($m['notices']['dates'] ?? array())), 'created' => $m['created'],
+                 'surveys' => array_map('intval', array_keys(is_array($m['survey'] ?? null) ? $m['survey'] : array())));
 }
 function months_later($iso, $months) { $t = new DateTime($iso); $t->modify('+' . (int)$months . ' months'); return $t->format('Y-m-d'); }
 function find_by_ref($root, $code) {   // the referral code is short; the members folder is small enough to scan (hundreds to thousands)
@@ -111,7 +114,7 @@ if ($a === 'code') {
     if (count($sent) >= 3) { out(204, array()); }
     $code = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
     $sent[] = time();
-    $rec = array('h' => password_hash($code, PASSWORD_DEFAULT), 'exp' => time() + 600, 'tries' => 0, 'sent' => $sent, 'ref' => preg_match('/^[A-Z2-9]{8}$/', (string)($d['ref'] ?? '')) ? $d['ref'] : '');
+    $rec = array('h' => password_hash($code, PASSWORD_DEFAULT), 'exp' => time() + 600, 'tries' => 0, 'sent' => $sent, 'ref' => preg_match('/^[A-Z2-9]{8}$/', (string)($d['ref'] ?? '')) ? $d['ref'] : '', 'want' => in_array((string)($d['want'] ?? ''), $IDS, true) ? (string)$d['want'] : '');
     @file_put_contents($pf, json_encode($rec), LOCK_EX); @chmod($pf, 0600);
     $subject = '【' . $SITE_NAME . '】ログインの確認コード: ' . $code;
     $body = "確認コード: " . $code . "\n\n10分以内に、画面に入力してください。\nこのメールに心当たりがない場合は、何もしなくて大丈夫です。\n\n" . $SITE_NAME . "\n" . $SITE_URL . "\n";
@@ -132,15 +135,19 @@ if ($a === 'verify') {
     $m = load_member($root, $id);
     $today = date('Y-m-d');
     if (!$m) {
-        // a new member: the first-come counter decides the tier; the referral code (if any) is honoured when the tiers are full
+        // a new member: each first-come pool (the tester places and the ordinary places) counts on its own, offered at the same time; the
+        // visitor chose one.  A full tester pool falls back to the ordinary places (never the other way: testers have a condition).
+        // The referral code (if any) is honoured when there is no room.
         $cf = $root . '/counter.json';
         $fh = @fopen($cf, 'c+'); if (!$fh) { out(503, array('error' => 'counter')); }
         flock($fh, LOCK_EX);
-        $c = json_decode((string)stream_get_contents($fh), true); if (!is_array($c)) { $c = array('n' => 0); }
-        $n = (int)$c['n'] + 1; $c['n'] = $n;
+        $c = json_decode((string)stream_get_contents($fh), true); if (!is_array($c)) { $c = array(); }
+        if (!is_array($c['by'] ?? null)) { $c['by'] = array(); }
+        $n = (int)($c['n'] ?? 0) + 1; $c['n'] = $n;
+        $tier = ''; $months = 0; $want = (string)($p['want'] ?? ''); $order = array();
+        foreach ($TIERS as $t) { if ($t['id'] === $want) { array_unshift($order, $t); } elseif (empty($t['tester'])) { $order[] = $t; } }
+        foreach ($order as $t) { $used = (int)($c['by'][$t['id']] ?? 0); if ($used < (int)$t['size']) { $c['by'][$t['id']] = $used + 1; $tier = $t['id']; $months = (int)$t['months']; break; } }
         ftruncate($fh, 0); rewind($fh); fwrite($fh, json_encode($c)); fflush($fh); flock($fh, LOCK_UN); fclose($fh);
-        $tier = ''; $months = 0; $acc = 0;
-        foreach ($TIERS as $t) { $acc += (int)$t['size']; if ($n <= $acc) { $tier = $t['id']; $months = (int)$t['months']; break; } }
         $ref_by = '';
         if ($tier === '' && $p['ref'] !== '') { $found = find_by_ref($root, $p['ref']); if ($found && $found[0] !== $id) { $tier = 'referred'; $months = $REF_MONTHS; $ref_by = $found[0]; } }
         do { $code_new = ''; for ($i = 0; $i < 8; $i++) { $code_new .= substr('ABCDEFGHJKLMNPQRSTUVWXYZ23456789', random_int(0, 31), 1); } } while (find_by_ref($root, $code_new));
@@ -165,11 +172,11 @@ if ($a === 'verify') {
     out(200, array('member' => public_view($m)));
 }
 
-if ($a === 'seats') {   // public: which first-come tier is open and how many places are left (no personal data)
+if ($a === 'seats') {   // public: the places left in each first-come pool (no personal data)
     $c = is_file($root . '/counter.json') ? json_decode((string)file_get_contents($root . '/counter.json'), true) : null;
-    $n = is_array($c) ? (int)($c['n'] ?? 0) : 0; $acc = 0;
-    foreach ($TIERS as $t) { $acc += (int)$t['size']; if ($n < $acc) { out(200, array('tier' => $t['id'], 'left' => $acc - $n, 'size' => (int)$t['size'], 'months' => (int)$t['months'])); } }
-    out(200, array('tier' => '', 'left' => 0, 'size' => 0, 'months' => 0, 'ref_months' => $REF_MONTHS));
+    $by = is_array($c) && is_array($c['by'] ?? null) ? $c['by'] : array(); $pools = array();
+    foreach ($TIERS as $t) { $pools[] = array('id' => $t['id'], 'left' => max(0, (int)$t['size'] - (int)($by[$t['id']] ?? 0)), 'size' => (int)$t['size'], 'months' => (int)$t['months'], 'tester' => !empty($t['tester'])); }
+    out(200, array('pools' => $pools, 'ref_months' => $REF_MONTHS));
 }
 
 $s = session_member($root);
@@ -189,6 +196,20 @@ if ($a === 'update') {
         }
         $m['notices'] = array('on' => $on, 'dates' => $on ? $dates : array(), 'updated' => date('c'));
     }
+    save_member($root, $id, $m);
+    out(200, array('member' => public_view($m)));
+}
+
+if ($a === 'survey') {   // the tester's one-minute questionnaire: n = 1 (after a week) or 2 (after a month); two fixed choices and one short free text
+    if (($m['tier'] ?? '') !== 'tester') { out(403, array('error' => 'tester')); }
+    $n = (int)($d['n'] ?? 0);
+    if ($n !== 1 && $n !== 2) { out(400, array('error' => 'survey')); }
+    $ans = is_array($d['answers'] ?? null) ? $d['answers'] : array();
+    $freq = in_array((string)($ans['freq'] ?? ''), array('daily', 'weekly', 'rarely'), true) ? (string)$ans['freq'] : '';
+    $use = in_array((string)($ans['use'] ?? ''), array('count', 'calendar', 'todo', 'official', 'notice', 'other'), true) ? (string)$ans['use'] : '';
+    if ($freq === '' || $use === '') { out(400, array('error' => 'answers')); }
+    if (!is_array($m['survey'] ?? null)) { $m['survey'] = array(); }
+    $m['survey'][(string)$n] = array('at' => date('Y-m-d'), 'freq' => $freq, 'use' => $use, 'text' => mb_substr(trim((string)($ans['text'] ?? '')), 0, 300));
     save_member($root, $id, $m);
     out(200, array('member' => public_view($m)));
 }

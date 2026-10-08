@@ -16,7 +16,7 @@ from sokuhou.sitekit import BuildError  # noqa: E402
 
 TODAY = date(2026, 10, 8)
 CFG = json.loads((ROOT / "sites" / "atomou" / "config.json").read_text(encoding="utf-8"))
-ON = {**CFG, "member_mail_from": "noreply@atomou.com", "member_tiers": [{"id": "tester", "size": 100, "months": 18}, {"id": "first", "size": 300, "months": 12}], "member_ref_months": 6, "member_ref_give_months": 1, "member_ref_cap": 6}
+ON = {**CFG, "member_mail_from": "noreply@atomou.com", "member_tiers": [{"id": "tester", "label": "先着テスター", "size": 30, "months": 18, "tester": True}, {"id": "first", "label": "先着", "size": 270, "months": 12}], "member_ref_months": 6, "member_ref_give_months": 1, "member_ref_cap": 6}
 
 
 class Receiver(unittest.TestCase):
@@ -24,7 +24,7 @@ class Receiver(unittest.TestCase):
         self.php = build.member_php(ON)
 
     def test_config_values_are_filled_in(self):
-        self.assertIn('$TIERS = [{"id": "tester", "size": 100, "months": 18}, {"id": "first", "size": 300, "months": 12}];', self.php)
+        self.assertIn('$TIERS = [{"id": "tester", "size": 30, "months": 18, "tester": true}, {"id": "first", "size": 270, "months": 12, "tester": false}];', self.php)
         self.assertIn("$REF_MONTHS = 6;", self.php)
         self.assertIn("$REF_CAP = 6;", self.php)
         self.assertIn("$MAIL_FROM = 'noreply@atomou.com';", self.php)
@@ -59,7 +59,10 @@ class Receiver(unittest.TestCase):
 
     def test_first_come_tiers_and_single_level_referral(self):
         self.assertIn("flock($fh, LOCK_EX)", self.php)       # the counter is updated under a lock
-        self.assertIn("if ($n <= $acc) { $tier = $t['id']; $months = (int)$t['months']; break; }", self.php)
+        # the two pools are offered at the same time and count on their own; a full tester pool falls back to the ordinary one, never the other way
+        self.assertIn("if ($t['id'] === $want) { array_unshift($order, $t); } elseif (empty($t['tester'])) { $order[] = $t; }", self.php)
+        self.assertIn("$c['by'][$t['id']] = $used + 1;", self.php)
+        self.assertIn("in_array((string)($d['want'] ?? ''), $IDS, true)", self.php)
         self.assertIn("$tier = 'referred'; $months = $REF_MONTHS;", self.php)
         self.assertIn("(int)($rm['referrals'] ?? 0) < $REF_CAP", self.php)
         self.assertIn("$found[0] !== $id", self.php)         # no self-referral
@@ -80,9 +83,16 @@ class Receiver(unittest.TestCase):
     def test_seats_answer_is_public_and_carries_no_personal_data(self):
         seats = self.php[self.php.index("if ($a === 'seats')"):self.php.index("$s = session_member($root);")]
         self.assertLess(self.php.index("if ($a === 'seats')"), self.php.index("$s = session_member($root);"))   # before the login check
-        self.assertIn("'left' => $acc - $n", seats)
+        self.assertIn("'left' => max(0, (int)$t['size'] - (int)($by[$t['id']] ?? 0))", seats)
         for word in ("email", "load_member", "sessions"):
             self.assertNotIn(word, seats)
+
+    def test_only_testers_answer_the_questionnaire_with_fixed_choices(self):
+        q = self.php[self.php.index("if ($a === 'survey')"):self.php.index("if ($a === 'logout')")]
+        self.assertIn("($m['tier'] ?? '') !== 'tester'", q)
+        self.assertIn("array('daily', 'weekly', 'rarely')", q)
+        self.assertIn("mb_substr(trim((string)($ans['text'] ?? '')), 0, 300)", q)
+        self.assertIn("seal($root, $m)", self.php)          # stored with the sealed member record, never in the clear
 
     def test_delete_removes_the_record(self):
         self.assertIn("@unlink($root . '/m/' . $id . '.json');", self.php)
@@ -99,7 +109,7 @@ class Pages(unittest.TestCase):
         self.assertIn("terms/index.html", on)
         self.assertIn('id="member-box"', on["my/index.html"])
         self.assertIn('id="members"', on["privacy/index.html"])
-        self.assertIn('"members":{"tiers":{"tester":"tester","first":"first"},"ref":6,"give":1,"cap":6}', on["index.html"])
+        self.assertIn('"members":{"tiers":{"tester":"先着テスター","first":"先着"},"ref":6,"give":1,"cap":6}', on["index.html"])
         self.assertIn("member.js", build.BUNDLE[-1] + ".js")
         off = build.build_pages({**CFG, "member_mail_from": None}, release=True, today=TODAY)
         self.assertNotIn("api/m.php", off)
@@ -109,7 +119,7 @@ class Pages(unittest.TestCase):
 
     def test_terms_cover_the_decisions_the_owner_made(self):
         terms = build.build_pages(ON, release=True, today=TODAY)["terms/index.html"]
-        for want in ("パスワードはありません", "先着", "自動で料金がかかることはありません", "期間の延長だけで、お金や商品はありません", "自分で自分を紹介", "退会する", "責任を負いません"):
+        for want in ("パスワードはありません", "同時に募集します", "先着テスター", "1か月後に", "答えなかったときも、無料期間は取り消しません", "自動で料金がかかることはありません", "期間の延長だけで、お金や商品はありません", "自分で自分を紹介", "退会する", "責任を負いません"):
             self.assertIn(want, terms)
         self.assertNotIn("おめでとう", terms)
 
