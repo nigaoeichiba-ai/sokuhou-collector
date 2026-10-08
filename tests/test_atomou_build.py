@@ -49,6 +49,12 @@ class Pages(BuildOnce):
         m = re.search(r"\.c-title[^{]*\{[^}]*overflow-wrap:anywhere", css)
         self.assertIsNotNone(m, "the card title needs overflow-wrap:anywhere")
 
+    def test_every_button_and_chip_is_at_least_44px_tall(self):
+        # 2026-10-08 Codex skin review: card buttons were 40px and chips 38-42px; 44px is the smallest comfortable touch target
+        css = self.rel["assets/style.css"] + self.rel["assets/design.css"]
+        short = [m.group(0) for m in re.finditer(r"[^{}]*\.(?:btn|chip|mini|sbtn)[^{}]*\{[^}]*min-height:(\d+)px", css) if int(m.group(1)) < 44]
+        self.assertEqual(short, [])
+
     def test_release_and_preview_differ_only_in_indexing(self):
         self.assertIn("Allow: /", self.rel["robots.txt"])
         self.assertIn("Disallow: /", self.prev["robots.txt"])
