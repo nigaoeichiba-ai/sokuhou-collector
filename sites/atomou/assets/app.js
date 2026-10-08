@@ -115,12 +115,12 @@
   function persist() {
     S.updated = new Date().toISOString();
     try { localStorage.setItem(KEY, JSON.stringify(S)); return true; } catch (e) {
-      if (!warned) { warned = true; toast('この端末では保存できませんでした(プライベートモードなど)。このページを閉じると消えます。'); }
+      if (!warned) { warned = true; toast('この端末には保存できません(プライベートモードなど)。ページを閉じると消えます。'); }
       return false;
     }
   }
   S = load();
-  if (brokenSaved) setTimeout(function () { toast('保存されたデータを読み込めませんでした。元のデータは、別の場所に残してあります。'); }, 300);
+  if (brokenSaved) setTimeout(function () { toast('保存したデータを読み込めませんでした。元のデータは別に残してあります。'); }, 300);
 
   /* ---------- usage statistics: counts of fixed items only (no text, no dates, no ids); see /privacy/#stats ---------- */
   var STAT_RE = /^(view|skin|big|home_order|home_hidden|act)(:[a-z0-9_,-]{1,60}){1,2}$/, statQ = {}, statN = 0;
@@ -164,13 +164,13 @@
 
   /* ---------- kinds of personal days ---------- */
   var KINDS = {
-    event: { t: '予定', d: 'デート・会議・用事など', g: 1, yearly: false, r100: false, time: true, words: ['デート', '会議', '打ち合わせ', '病院', '旅行の予定'] },
-    anniversary: { t: '記念日', d: '結婚・付き合った日・開店など', g: 3, yearly: true, r100: true, words: ['結婚記念日', '付き合った日', '出会った日', '開店した日'] },
+    event: { t: '予定', d: 'デート、会議、用事', g: 1, yearly: false, r100: false, time: true, words: ['デート', '会議', '打ち合わせ', '病院', '旅行の予定'] },
+    anniversary: { t: '記念日', d: '結婚、付き合った日、開店', g: 3, yearly: true, r100: true, words: ['結婚記念日', '付き合った日', '出会った日', '開店した日'] },
     birthday: { t: '誕生日', d: '家族・友だち・推し', g: 2, yearly: true, r100: false, words: ['の誕生日', '家族の誕生日', '推しの誕生日'] },
     memorial: { t: '大切な人を思う日', d: '命日・ペット・あの日', g: 0, yearly: true, r100: false, quiet: true, words: ['命日', 'ペットの命日', 'あの日'] },
-    since: { t: 'はじめた日', d: '禁煙・転職・引っ越し・ダイエット', g: 4, yearly: false, r100: true, words: ['禁煙をはじめた日', '引っ越した日', '転職した日', 'ダイエットをはじめた日'] },
+    since: { t: 'はじめた日', d: '禁煙、転職、引っ越し', g: 4, yearly: false, r100: true, words: ['禁煙をはじめた日', '引っ越した日', '転職した日', 'ダイエットをはじめた日'] },
     until: { t: '楽しみな日・期限', d: '旅行・試験・提出・ライブ', g: 1, yearly: false, r100: false, words: ['旅行', '試験', 'ライブ', '提出の期限'] },
-    memo: { t: 'そのほか', d: 'ほかのなんでも', g: 6, yearly: false, r100: false, words: [] }
+    memo: { t: 'そのほか', d: 'どんな日でも', g: 6, yearly: false, r100: false, words: [] }
   };
 
   /* ---------- counting (the card's big number) ---------- */
@@ -196,7 +196,7 @@
     }
     if (e.yearly) {
       var y = nextYearly(d, today), n = y[0] - d[0];
-      out.push(when(y, e.kind === 'birthday' ? '次の誕生日(' + n + '歳)' : e.kind === 'memorial' ? '次の同じ日(' + n + '年)' : '次の記念日(' + n + '年目)'));
+      out.push(when(y, e.kind === 'birthday' ? '次の誕生日(' + n + '歳)' : e.kind === 'memorial' ? '次の同じ日(' + n + '年目)' : '次の記念日(' + n + '年目)'));
     }
     if (!e.quiet && e.kind !== 'birthday') {
       var s = nextRound(d, today, e.every100 ? 100 : 1000);
@@ -217,23 +217,23 @@
       var n = next[0] - d[0];
       if (NENKI[n] && !/あの日|震災|災害|事故|事件/.test(e.title)) {
         if (left === 0) return '今日は' + NENKI[n] + 'にあたります。';
-        if (left <= 150) return 'もうすぐ' + NENKI[n] + 'にあたります。法要をするときは、日程や場所を、早めに家族で相談しておくと安心です。';
+        if (left <= 150) return 'もうすぐ' + NENKI[n] + 'にあたります。法要の日取りは、早めに家族と相談を。';
       }
-      if (left > 0 && left <= 30) return 'もうすぐ同じ日です。お花やお供えは、前もって用意しておけます。';
+      if (left > 0 && left <= 30) return 'もうすぐ同じ日です。花やお供えは、前もって用意できます。';
       return '';
     }
     if (e.yearly) {
       next = nextYearly(d, today); left = C.totalDays(today, next); passed = C.totalDays(lastYearly(d, today), today);
       var bd = e.kind === 'birthday';
-      if (left === 0) return bd ? '今日は誕生日です。お祝いのメッセージを送りませんか。' : '今日は記念日です。';
-      if (left <= 14) return left + '日後です。プレゼントやお店の予約は、そろそろ決めておくと安心です。';
-      if (passed >= 1 && passed <= 30) return bd ? 'お誕生日を、少しすぎました。メッセージは、いまからでも間に合います。' : '記念日を、少しすぎました。まだお祝いしていなければ、ささやかなプレゼントや食事はいかがでしょう。';
+      if (left === 0) return bd ? '今日は誕生日です。メッセージを送りませんか。' : '今日は記念日です。';
+      if (left <= 14) return left + '日後です。プレゼントや店の予約は、そろそろ決める頃です。';
+      if (passed >= 1 && passed <= 30) return bd ? '誕生日を少し過ぎました。メッセージは、いまからでも間に合います。' : '記念日を少し過ぎました。まだなら、ささやかなプレゼントや食事を。';
       return '';
     }
     if (!e.quiet && e.kind === 'since') {
       var r = nextRound(d, today, e.every100 ? 100 : 1000);
       var gap = C.totalDays(today, r.date);
-      if (gap >= 0 && gap <= 7) return 'もうすぐ' + C.group(r.n) + '日目です。ここまで続けてきた日々を、ふり返ってみませんか。';
+      if (gap >= 0 && gap <= 7) return 'もうすぐ' + C.group(r.n) + '日目です。ここまでの日々を、少し振り返ってみませんか。';
     }
     return '';
   }
@@ -439,15 +439,15 @@
       var on = !grid.classList.contains('reorder');
       grid.classList.toggle('reorder', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      btn.textContent = on ? 'ボタンでの並べ替えを終わる' : '↑↓で動かす';
-      if (on) { toast('↑↓のボタンでも動かせます。カードは、そのままドラッグ(スマホは長押し)でも動かせます。'); stat('act:reorder'); }
+      btn.textContent = on ? '並べ替えを終える' : '並べ替え';
+      if (on) { toast('↑↓で動かせます。ドラッグ(スマホは長押し)でも動かせます。'); stat('act:reorder'); }
     });
   }
 
   /* ---------- actions on cards ---------- */
   function icsFor(card) {
     var key = card.getAttribute('data-key') || '', d = C.parse(card.getAttribute('data-date')), title = card.getAttribute('data-title');
-    if (!d || card.getAttribute('data-p') !== 'day') { toast('日にちがはっきりしないので、カレンダーには入れられません。'); return; }
+    if (!d || card.getAttribute('data-p') !== 'day') { toast('年や月までの日付は、ファイルにできません。'); return; }
     var ev;
     if (key.indexOf('m:') === 0) {
       var e = findEntry(key.slice(2));
@@ -461,12 +461,12 @@
     }
     stat('act:ics');
     ICS.download('atomou-' + key.slice(2) + '.ics', ICS.build([ev], title));
-    toast('カレンダーのファイルを作りました。開いて、予定に入れてください。');
+    toast('ファイルを作りました。開くと、カレンダーに入ります。');
   }
   function toggleSave(card) {
     var id = (card.getAttribute('data-key') || '').slice(2), i = S.saved.indexOf(id), g = card.getAttribute('data-g');
-    if (i >= 0) { S.saved.splice(i, 1); toast('予定からはずしました。'); }
-    else { S.saved.push(id); stat('act:save'); if (g && CONF.groups[g - 1]) bump(CONF.groups[g - 1]); toast('予定に入れました。カレンダーで見られます。'); }
+    if (i >= 0) { S.saved.splice(i, 1); toast('予定から外しました。'); }
+    else { S.saved.push(id); stat('act:save'); if (g && CONF.groups[g - 1]) bump(CONF.groups[g - 1]); toast('予定に入れました。カレンダーに出ます。'); }
     persist();
     $$('.card[data-key="c:' + id + '"]').forEach(fillCard);
     if (page === 'my') renderMy();
@@ -531,12 +531,12 @@
     if (!box || !id || S.prefs.skin === id || (S.prefs.seasonOff === id)) return;
     var sk = CONF.skins[id];
     box.hidden = false;
-    box.innerHTML = '<span>いまの季節: <b>' + H(sk.season.label || sk.name) + '</b>のきせかえ</span><button type="button" class="btn small" data-season="' + H(id) + '">使ってみる</button>' +
-      '<button type="button" class="mini" data-season-off="' + H(id) + '" aria-label="この案内を閉じる">×</button>';
+    box.innerHTML = '<span>季節のきせかえ「<b>' + H(sk.season.label || sk.name) + '</b>」</span><button type="button" class="btn small" data-season="' + H(id) + '">使う</button>' +
+      '<button type="button" class="mini" data-season-off="' + H(id) + '" aria-label="閉じる">×</button>';
   }
   document.addEventListener('click', function (ev) {
     var on = ev.target.closest ? ev.target.closest('[data-season]') : null, off = ev.target.closest ? ev.target.closest('[data-season-off]') : null;
-    if (on) { S.prefs.skin = on.getAttribute('data-season'); persist(); applyPrefs(); stat('act:skin:' + S.prefs.skin); var bx = $('#season'); if (bx) bx.hidden = true; toast('きせかえを変えました。いつでも「きせかえ」で戻せます。'); }
+    if (on) { S.prefs.skin = on.getAttribute('data-season'); persist(); applyPrefs(); stat('act:skin:' + S.prefs.skin); var bx = $('#season'); if (bx) bx.hidden = true; toast('きせかえを変えました。「きせかえ」からいつでも戻せます。'); }
     else if (off) { S.prefs.seasonOff = off.getAttribute('data-season-off'); persist(); var b2 = $('#season'); if (b2) b2.hidden = true; }
   });
   function pageSkins() {
@@ -602,7 +602,7 @@
       bar.className = 'block-bar'; bar.setAttribute('data-k', k);
       bar.innerHTML = '<b>' + H(els[k].getAttribute('data-title') || k) + '</b><span class="bar-btns"><button type="button" class="mini" data-b="up" aria-label="ひとつ上へ"' + (i === 0 ? ' disabled' : '') + '>↑</button>' +
         '<button type="button" class="mini" data-b="down" aria-label="ひとつ下へ"' + (i === order.length - 1 ? ' disabled' : '') + '>↓</button>' +
-        '<button type="button" class="mini" data-b="vis" aria-pressed="' + (off ? 'false' : 'true') + '">' + (off ? '出す' : 'かくす') + '</button></span>';
+        '<button type="button" class="mini" data-b="vis" aria-pressed="' + (off ? 'false' : 'true') + '">' + (off ? '表示' : '非表示') + '</button></span>';
       els[k].insertBefore(bar, els[k].firstChild);
     });
   }
@@ -613,7 +613,7 @@
     function show() {
       applyBlocks(editing);
       if (reset) reset.hidden = !editing;
-      if (btn) { btn.setAttribute('aria-pressed', editing ? 'true' : 'false'); btn.textContent = editing ? 'ホームの並べかえを終わる' : 'ホームの並べかえ・表示を変える'; }
+      if (btn) { btn.setAttribute('aria-pressed', editing ? 'true' : 'false'); btn.textContent = editing ? '編集を終える' : 'ホームを編集'; }
     }
     host.addEventListener('click', function (ev) {
       var b = ev.target.closest ? ev.target.closest('[data-b]') : null;
@@ -626,8 +626,8 @@
       S.prefs.blocks = { order: order, hidden: bp.hidden }; persist(); show();
       stat(act === 'vis' ? (bp.hidden.indexOf(k) >= 0 ? 'act:block_hide:' + k : 'act:block_show:' + k) : 'act:block_move');
     });
-    if (reset) reset.addEventListener('click', function () { S.prefs.blocks = { order: [], hidden: [] }; persist(); show(); toast('初期の並びに戻しました。'); });
-    if (btn) btn.addEventListener('click', function () { editing = !editing; show(); if (editing) toast('各ブロックの ↑↓ で並べかえ、「かくす」で表示を切りかえられます。'); });
+    if (reset) reset.addEventListener('click', function () { S.prefs.blocks = { order: [], hidden: [] }; persist(); show(); toast('元の並びに戻しました。'); });
+    if (btn) btn.addEventListener('click', function () { editing = !editing; show(); if (editing) toast('↑↓で並べ替え、「非表示」で隠せます。'); });
     show();
   }
 
@@ -694,7 +694,7 @@
       clearTimeout(statT); statT = setTimeout(function () { if (terms.length) stat(hits.length ? 'act:search_hit' : 'act:search_miss'); }, 1500);
       var shown = hits.slice(0, 60);
       render(out, shown.map(catItem));
-      info.textContent = hits.length ? hits.length + '件' + (hits.length > 60 ? '(近い順に60件を表示)' : '') : '';
+      info.textContent = hits.length ? hits.length + '件' + (hits.length > 60 ? '(近い順に60件)' : '') : '';
       var none = $('#none');
       none.hidden = hits.length > 0;
       var add = $('#none-add');
@@ -707,7 +707,7 @@
     $$('[data-g-chip]').forEach(function (b) { b.addEventListener('click', function () { st.g = b.getAttribute('data-g-chip'); run(); }); });
     var tb = $('#f-son');
     if (tb) tb.addEventListener('click', function () { st.t = !st.t; run(); });
-    loadCatalog().then(function (c) { cat = c || []; if (!c) info.textContent = '読み込めませんでした。時間をおいて、開き直してください。'; run(); });
+    loadCatalog().then(function (c) { cat = c || []; if (!c) info.textContent = '読み込めませんでした。しばらくして開き直してください。'; run(); });
   }
 
 
@@ -746,12 +746,12 @@
     stat('act:sync');
     gToken(function (tok) {
       gFind(tok).then(function (id) {
-        if (!id) return gPut(tok, null, S).then(function () { toast('Google ドライブに保存しました。別の端末でも、同じ方法でつなぐと読み込めます。'); });
+        if (!id) return gPut(tok, null, S).then(function () { toast('Google ドライブに保存しました。別の端末でも同じ手順で読み込めます。'); });
         return gApi(tok, 'https://www.googleapis.com/drive/v3/files/' + id + '?alt=media').then(function (r) { return r.json(); }).then(function (remote) {
           S = mergeStates(S, normalize(remote)); persist(); applyPrefs();
           return gPut(tok, id, S).then(function () { renderMy(); toast('同期しました。'); });
         });
-      }).catch(function () { toast('同期できませんでした。時間をおいて、もう一度お試しください。'); });
+      }).catch(function () { toast('同期できませんでした。しばらくして、もう一度お試しください。'); });
     });
   }
 
@@ -769,14 +769,14 @@
     renderMy();
     var grid = $('#my-grid');
     wireReorderToggle($('#reorder'), grid);
-    if (P.added) { toast('残しました。この端末の中だけに保存しています。'); try { history.replaceState(null, '', '/my/'); } catch (e) { /* ignore */ } }
+    if (P.added) { toast('この端末に残しました。'); try { history.replaceState(null, '', '/my/'); } catch (e) { /* ignore */ } }
     var big = $('#p-big'), alarm = $('#p-alarm');
     big.checked = !!S.prefs.big; alarm.value = S.prefs.alarm;
     var st = $('#p-stats'), sb = $('#sync-box'), sn = $('#sync-now');
-    if (st) { st.checked = !!S.prefs.stats; st.addEventListener('change', function () { S.prefs.stats = st.checked; persist(); toast(st.checked ? '統計に協力します。ありがとうございます。' : '統計の送信を止めました。'); }); }
+    if (st) { st.checked = !!S.prefs.stats; st.addEventListener('change', function () { S.prefs.stats = st.checked; persist(); toast(st.checked ? 'ご協力ありがとうございます。' : '統計の送信を止めました。'); }); }
     if (sb && GCID) { sb.hidden = false; sn.addEventListener('click', syncNow); }
     big.addEventListener('change', function () { S.prefs.big = big.checked; persist(); applyPrefs(); });
-    alarm.addEventListener('change', function () { S.prefs.alarm = alarm.value; persist(); toast('次からのカレンダーに使います。'); });
+    alarm.addEventListener('change', function () { S.prefs.alarm = alarm.value; persist(); toast('お知らせの時間を変えました。'); });
     $('#ics-all').addEventListener('click', function () {
       loadCatalog().then(function (cat) {
         var evs = [], by = {};
@@ -789,9 +789,9 @@
           var c = by[id], d = c && C.parse(c.date);
           if (d && c.precision === 'day') evs.push({ uid: 'e-' + id, title: c.title, date: d, alarm: S.prefs.alarm });
         });
-        if (!evs.length) { toast('入れられる日がまだありません。'); return; }
+        if (!evs.length) { toast('ファイルにできる日がまだありません。'); return; }
         ICS.download('atomou-all.ics', ICS.build(evs, 'あと何日、もう何日'));
-        toast(evs.length + '件を、カレンダーのファイルにしました。');
+        toast(evs.length + '件をファイルにしました。');
       });
     });
     $('#backup').addEventListener('click', function () { download('atomou-backup.json', JSON.stringify(S, null, 1)); });
@@ -804,12 +804,12 @@
           var o = JSON.parse(rd.result);
           if (!o || !Array.isArray(o.entries)) throw new Error('bad');
           localStorage.setItem(KEY, JSON.stringify(o)); S = load(); persist(); applyPrefs(); renderMy(); toast('読み込みました。');
-        } catch (e) { toast('このファイルは読み込めませんでした。'); }
+        } catch (e) { toast('このファイルは読み込めません。'); }
       };
       rd.readAsText(f);
     });
     $('#wipe').addEventListener('click', function () {
-      if (!window.confirm('この端末に残した日と設定を、すべて消します。よろしいですか。')) return;
+      if (!window.confirm('この端末の記録と設定をすべて消します。よろしいですか。')) return;
       S = blank(); persist(); applyPrefs(); renderMy(); big.checked = false; toast('すべて消しました。');
     });
   }
@@ -836,17 +836,17 @@
       '<button type="button" class="chip" data-p="year" aria-pressed="false">年だけ</button></div>' +
       '<div class="field"><label for="f-day" id="lab-date">日付を選ぶ</label><input type="date" id="f-day" min="0100-01-01" max="2200-12-31">' +
       '<input type="month" id="f-month" hidden placeholder="2026-10"><input type="number" id="f-year" hidden inputmode="numeric" min="1" max="2200" placeholder="例 1990"></div>' +
-      '<button type="button" class="chip" id="f-today">今日にする</button><p class="hint" id="h-approx" hidden>年だけ・年と月だけの日付は、おおよその日数(「約」つき)で表示します。</p><p class="err" id="e-date" role="alert"></p>' +
+      '<button type="button" class="chip" id="f-today">今日にする</button><p class="hint" id="h-approx" hidden>年や月までの日付は、「約」つきで数えます。</p><p class="err" id="e-date" role="alert"></p>' +
       '<div id="live" class="live" hidden aria-live="polite"></div></section>' +
-      '<section id="s3" hidden><h2>3. 名前をつけましょう</h2><p class="hint">あとで見て分かる名前なら十分です。選ぶだけでも使えます。</p><div class="chips" id="f-words"></div>' +
+      '<section id="s3" hidden><h2>3. 名前</h2><p class="hint">候補を押すか、短く入力します。</p><div class="chips" id="f-words"></div>' +
       '<div class="field"><label for="f-title">名前</label><input type="text" id="f-title" maxlength="40" autocomplete="off"></div></section>' +
       '<section id="s4" hidden><h2>4. 時刻・くり返し</h2>' +
-      '<div class="field" id="f-timebox" hidden><label for="f-time">時刻(わかれば)</label><input type="time" id="f-time"></div>' +
+      '<div class="field" id="f-timebox" hidden><label for="f-time">時刻(分かれば)</label><input type="time" id="f-time"></div>' +
       '<label class="chip" id="l-yearly"><input type="checkbox" id="f-yearly"> 毎年くり返す</label> <label class="chip" id="l-100"><input type="checkbox" id="f-100"> 100日ごとの節目も入れる</label>' +
-      '<p class="hint">残したあとの画面で、メモと「何日前までにやること」を書き込めます。</p></section>' +
-      '<p id="quiet-note" class="notice quiet" hidden>大切な日は、静かに残します。広告やおすすめは出しません。</p>' +
+      '<p class="hint">残したあと、メモと「やること」を書けます。</p></section>' +
+      '<p id="quiet-note" class="notice quiet" hidden>静かに残します。広告やおすすめは出しません。</p>' +
       '<p><button type="button" class="btn" id="f-save" hidden>この日を残す</button></p>' +
-      '<p class="hint">名前や日付は、この端末の中だけに保存します。サーバーには送りません。</p>';
+      '<p class="hint">名前も日付も、この端末の中だけに残ります。</p>';
     var $f = function (id) { return document.getElementById(id); };
     function show(id, on) { $f(id).hidden = !on; }
     function readDate() {
@@ -889,7 +889,7 @@
       $$('[data-p]', root).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-p') === p ? 'true' : 'false'); });
       $f('f-day').hidden = p !== 'day'; $f('f-month').hidden = p !== 'month'; $f('f-year').hidden = p !== 'year';
       $f('lab-date').setAttribute('for', p === 'day' ? 'f-day' : p === 'month' ? 'f-month' : 'f-year');
-      $f('lab-date').textContent = p === 'day' ? '日付を選ぶ' : p === 'month' ? '年と月を入れる(例 2026-10)' : '年を入れる(例 1990)';
+      $f('lab-date').textContent = p === 'day' ? '日付を選ぶ' : p === 'month' ? '年と月(例 2026-10)' : '年(例 1990)';
       $f('f-today').hidden = p !== 'day'; $f('h-approx').hidden = p === 'day';
       update();
     }

@@ -112,14 +112,14 @@
       box.hidden = false;
       status.textContent = KEY ? 'このブラウザは通知に対応していません。' : '通知は準備中です。';
       on.hidden = off.hidden = true;
-      if (iosNeedsHomeScreen() && KEY) { ios.hidden = false; status.textContent = 'iPhone では、ホーム画面に追加してから、そのアイコンで開くと通知を使えます。'; }
+      if (iosNeedsHomeScreen() && KEY) { ios.hidden = false; status.textContent = 'iPhone では、ホーム画面に追加し、そのアイコンから開くと通知を使えます。'; }
       return;
     }
     box.hidden = false;
     function show(sub) {
       var granted = Notification.permission === 'granted' && !!sub && S().prefs.push;
       on.hidden = granted; off.hidden = !granted;
-      status.textContent = granted ? 'この端末に届きます。' : (Notification.permission === 'denied' ? 'ブラウザの設定で通知が止められています。サイトの設定から許可してください。' : 'まだ届きません。');
+      status.textContent = granted ? 'この端末に届きます。' : (Notification.permission === 'denied' ? 'ブラウザの設定で通知が止まっています。サイトの設定で許可してください。' : 'まだ届きません。');
       ios.hidden = !(iosNeedsHomeScreen() && !granted);
     }
     current().then(show);

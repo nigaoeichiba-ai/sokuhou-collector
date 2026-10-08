@@ -8,29 +8,29 @@
   var $ = A.$, H = A.H, P = A.P, page = A.page;
   var TOURS = {
     home: [
-      ['[data-block="search"] input[type="search"]', 'ここで、日付や行事をさがせます。たとえば「年賀状」と入れてみてください。'],
-      ['[data-block="cats"] .chiprow a', 'ジャンルから、さがすこともできます。左右にずらすと、ほかのジャンルが出ます。'],
-      ['#grid .card [data-act="save"]', '「予定に入れる」を押すと、その日がカレンダーに入ります。'],
-      ['#grid .card', 'カードは、ドラッグで動かせます。スマホは、長く押してから動かします。'],
-      ['.tabbar a[href="/calendar/"], header.site nav a[href="/calendar/"]', '入れた予定は、ここのカレンダーで見られます。'],
-      ['.tabbar a[href="/add/"], header.site nav a[href="/add/"]', '自分の予定や記念日は、ここから1行で入れられます。たとえば「明日 19時 デート」。']
+      ['[data-block="search"] input[type="search"]', '日付や行事を探せます。たとえば「年賀状」。'],
+      ['[data-block="cats"] .chiprow a', 'ジャンルからも探せます。横にずらすと続きが出ます。'],
+      ['#grid .card [data-act="save"]', '「予定に入れる」で、カレンダーに入ります。'],
+      ['#grid .card', 'カードはドラッグで動かせます。スマホは長押ししてから。'],
+      ['.tabbar a[href="/calendar/"], header.site nav a[href="/calendar/"]', '入れた予定は、ここに並びます。'],
+      ['.tabbar a[href="/add/"], header.site nav a[href="/add/"]', '自分の予定や記念日は、ここから1行で残せます。例「明日 19時 デート」。']
     ],
     calendar: [
-      ['.cal-tools', '「月」と「一覧」を切りかえられます。'],
-      ['.cal-grid', '日を押すと、下に、その日の予定とやることが出ます。'],
-      ['#day-panel .btn', 'この日に予定を追加できます。入れた予定を押すと、メモや「何日前までにやること」を書けます。']
+      ['.cal-tools', '「月」と「一覧」を切り替えます。'],
+      ['.cal-grid', '日を押すと、その日の予定とやることが下に出ます。'],
+      ['#day-panel .btn', 'ここから予定を追加。予定を押すと、メモと「やること」を書けます。']
     ],
     plan: [
-      ['#p-memo', '持ち物や場所など、メモを書けます。自動で保存されます。'],
-      ['#t-text', '「何日前までに何をするか」を書き込めます。期限の日が、カレンダーとホームに出ます。'],
-      ['.plan-card .c-act', '予定を消すときは、ここです。']
+      ['#p-memo', 'メモは自動で保存されます。'],
+      ['#t-text', '「何日前までに何をするか」を書けます。期限の日はカレンダーとホームに出ます。'],
+      ['.plan-card .c-act', '消すときはここから。']
     ],
     add: [
-      ['#s1 .tile', 'まず、どんな日かを選びます。デートや会議なら「予定」です。']
+      ['#s1 .tile', 'まず、どんな日かを選びます。デートや会議は「予定」。']
     ],
     search: [
-      ['#q', '言葉を入れると、日付が出ます。ジャンルでしぼることもできます。'],
-      ['[data-g-chip]', 'ジャンルをえらぶと、そのジャンルだけが出ます。']
+      ['#q', '言葉を入れると日付が出ます。ジャンルでも絞れます。'],
+      ['[data-g-chip]', 'ジャンルを選ぶと、そのジャンルだけになります。']
     ]
   };
   var steps = TOURS[page];
@@ -58,9 +58,9 @@
     var step = live[idx], last = idx === live.length - 1;
     step.el.scrollIntoView({ block: 'center', behavior: 'instant' });  // not smooth: the spotlight must not lag behind the page
     tip.innerHTML = '<p class="g-n">' + (idx + 1) + ' / ' + live.length + '</p><p class="g-t">' + H(step.text) + '</p>' +
-      '<div class="g-b"><button type="button" class="btn small ghost" data-g="close">とじる</button>' +
+      '<div class="g-b"><button type="button" class="btn small ghost" data-g="close">閉じる</button>' +
       (idx > 0 ? '<button type="button" class="btn small ghost" data-g="prev">戻る</button>' : '') +
-      '<button type="button" class="btn small" data-g="next">' + (last ? 'おわり' : '次へ') + '</button></div>';
+      '<button type="button" class="btn small" data-g="next">' + (last ? '終わり' : '次へ') + '</button></div>';
     place();
     var nb = tip.querySelector('[data-g="next"]');
     if (nb) nb.focus({ preventScroll: true });

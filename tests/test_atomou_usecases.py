@@ -175,10 +175,10 @@ class UsecaseTests(unittest.TestCase):
         self.assertEqual([r["slug"] for r in usecases.related("exam-university")], usecases.by_slug("exam-university")["related"])
         self.assertEqual(usecases.related("no-such-slug"), [])
 
-    def test_situation_length_is_80_to_120(self):
+    def test_situation_length_is_60_to_120(self):  # 2026-10-08: the copy rewrite shortened the texts; the floor follows check_scenario
         for u in usecases.USECASES:
             with self.subTest(slug=u["slug"]):
-                self.assertTrue(80 <= len(u["situation"]) <= 120, len(u["situation"]))
+                self.assertTrue(60 <= len(u["situation"]) <= 120, len(u["situation"]))
 
     def test_texts_use_only_screens_that_exist(self):
         for u in usecases.USECASES:
@@ -300,7 +300,7 @@ class NegativeTests(unittest.TestCase):
     def test_the_real_buttons_are_not_flagged(self):
         ok = copy.deepcopy(usecases.by_slug("exam-university"))
         ok["steps"] = ["ホームのジャンル『試験・資格』を押す", "カードの『☆ 予定に入れる』を押す(入ると『★ 予定に入っています』に変わる)",
-                       "『詳細を確認する』で公式ページを見る", "『開く』や『消す』を使う", "『やること』を書いて『追加』を押す"]
+                       "『詳細』で公式ページを見る", "『開く』や『消す』を使う", "『やること』を書いて『追加』を押す"]
         self.assertEqual(check_screens(ok), [])
 
     def test_no_scenario_uses_the_old_buttons_anywhere(self):

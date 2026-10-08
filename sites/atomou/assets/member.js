@@ -11,7 +11,7 @@
   }
   function fmt(iso) { var d = A.C.parse(iso); return d ? d[0] + '年' + d[1] + '月' + d[2] + '日' : ''; }
   function tierText(m) {
-    if (m.free_until && m.free_until >= A.C.iso(A.TODAY)) return '全機能を ' + fmt(m.free_until) + ' まで使えます(' + (m.tier === 'referred' ? '紹介' : '先着') + ')。';
+    if (m.free_until && m.free_until >= A.C.iso(A.TODAY)) return 'すべての機能を' + fmt(m.free_until) + 'まで使えます(' + (m.tier === 'referred' ? '紹介' : '先着') + ')。';
     return '無料プランです。';
   }
 
@@ -30,7 +30,7 @@
     var me = null, email = '';
     function view(html) { box.querySelector('.m-body').innerHTML = html; }
     function stepOut() {
-      view('<p>会員になると、メールでのお知らせと、先着特典を使えます。無料です。パスワードはありません。</p>' +
+      view('<p>会員になると、メールのお知らせと先着の特典を使えます。無料で、パスワードはありません。</p>' +
         '<div class="field"><label for="m-email">メールアドレス</label><input type="email" id="m-email" autocomplete="email" inputmode="email" value="' + H(email) + '"></div>' +
         '<p><button type="button" class="btn" id="m-send">確認コードを送る</button></p>' +
         '<p class="hint">コードの入力で、<a href="/terms/">利用規約</a>と<a href="/privacy/#members">プライバシーポリシー</a>に同意したことになります。</p>');
@@ -40,21 +40,21 @@
         var ref = '';
         try { ref = localStorage.getItem('atomou.ref') || ''; } catch (e) { ref = ''; }
         $('#m-send').disabled = true;
-        call({ a: 'code', email: email, ref: ref }).then(function () { A.stat('act:member_code'); stepCode(); }, function () { A.toast('送れませんでした。しばらくしてお試しください。'); $('#m-send').disabled = false; });
+        call({ a: 'code', email: email, ref: ref }).then(function () { A.stat('act:member_code'); stepCode(); }, function () { A.toast('送れませんでした。しばらくして、もう一度お試しください。'); $('#m-send').disabled = false; });
       });
     }
     function stepCode() {
-      view('<p>' + H(email) + ' に、6 桁の確認コードを送りました。10 分以内に入力してください。</p>' +
+      view('<p>' + H(email) + ' に6桁の確認コードを送りました。10分以内に入力してください。</p>' +
         '<div class="field"><label for="m-code">確認コード</label><input type="text" id="m-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]*"></div>' +
         '<p><button type="button" class="btn" id="m-verify">ログイン</button> <button type="button" class="btn ghost" id="m-back">戻る</button></p>');
       $('#m-code').focus();
       $('#m-back').addEventListener('click', stepOut);
       $('#m-verify').addEventListener('click', function () {
         var code = $('#m-code').value.replace(/\D/g, '');
-        if (code.length !== 6) { A.toast('6 桁の数字を入力してください。'); return; }
+        if (code.length !== 6) { A.toast('6桁の数字を入力してください。'); return; }
         call({ a: 'verify', email: email, code: code }).then(function (r) {
           if (r.ok) { me = r.data.member; A.stat('act:member_login'); A.toast('ログインしました。'); stepIn(); return; }
-          A.toast(r.data.error === 'wrong' ? 'コードが違います。' + (r.data.left > 0 ? 'あと ' + r.data.left + ' 回。' : '') : 'コードの期限が切れました。もう一度送ってください。');
+          A.toast(r.data.error === 'wrong' ? 'コードが違います。' + (r.data.left > 0 ? 'あと' + r.data.left + '回。' : '') : 'コードの期限が切れました。もう一度送ってください。');
           if (r.data.error !== 'wrong') stepOut();
         }, function () { A.toast('確認できませんでした。'); });
       });
