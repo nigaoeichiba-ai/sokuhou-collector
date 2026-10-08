@@ -119,13 +119,13 @@
     function show(sub) {
       var granted = Notification.permission === 'granted' && !!sub && S().prefs.push;
       on.hidden = granted; off.hidden = !granted;
-      status.textContent = granted ? 'この端末に届きます。' : (Notification.permission === 'denied' ? 'ブラウザの設定で通知が止まっています。サイトの設定で許可してください。' : 'まだ届きません。');
+      status.textContent = granted ? 'この端末に届きます。' : (Notification.permission === 'denied' ? 'ブラウザの設定で通知が止まっています。サイトの設定で許可してください。' : '通知はオフです。');
       ios.hidden = !(iosNeedsHomeScreen() && !granted);
     }
     current().then(show);
     on.addEventListener('click', function () {
       on.disabled = true;
-      subscribe().then(function (sub) { A.toast('この端末に通知を届けます。'); show(sub); })
+      subscribe().then(function (sub) { A.toast('この端末で通知を受け取ります。'); show(sub); })
         .catch(function () { A.toast(Notification.permission === 'denied' ? '通知が許可されませんでした。' : '通知を始められませんでした。しばらくして、もう一度お試しください。'); show(null); })
         .then(function () { on.disabled = false; });
     });

@@ -33,7 +33,7 @@
       view('<p>会員になると、メールのお知らせと先着の特典を使えます。無料で、パスワードはありません。</p>' +
         '<div class="field"><label for="m-email">メールアドレス</label><input type="email" id="m-email" autocomplete="email" inputmode="email" value="' + H(email) + '"></div>' +
         '<p><button type="button" class="btn" id="m-send">確認コードを送る</button></p>' +
-        '<p class="hint">コードの入力で、<a href="/terms/">利用規約</a>と<a href="/privacy/#members">プライバシーポリシー</a>に同意したことになります。</p>');
+        '<p class="hint">コードを入力すると、<a href="/terms/">利用規約</a>と<a href="/privacy/#members">プライバシーポリシー</a>に同意したことになります。</p>');
       $('#m-send').addEventListener('click', function () {
         email = $('#m-email').value.trim();
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { A.toast('メールアドレスを確かめてください。'); return; }

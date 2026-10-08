@@ -440,7 +440,7 @@
       grid.classList.toggle('reorder', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
       btn.textContent = on ? '並べ替えを終える' : '並べ替え';
-      if (on) { toast('↑↓で動かせます。ドラッグ(スマホは長押し)でも動かせます。'); stat('act:reorder'); }
+      if (on) { toast('↑↓で並べ替えます。ドラッグ(スマホは長押し)でも動かせます。'); stat('act:reorder'); }
     });
   }
 
@@ -627,7 +627,7 @@
       stat(act === 'vis' ? (bp.hidden.indexOf(k) >= 0 ? 'act:block_hide:' + k : 'act:block_show:' + k) : 'act:block_move');
     });
     if (reset) reset.addEventListener('click', function () { S.prefs.blocks = { order: [], hidden: [] }; persist(); show(); toast('元の並びに戻しました。'); });
-    if (btn) btn.addEventListener('click', function () { editing = !editing; show(); if (editing) toast('↑↓で並べ替え、「非表示」で隠せます。'); });
+    if (btn) btn.addEventListener('click', function () { editing = !editing; show(); if (editing) toast('↑↓で並べ替えます。「非表示」で隠せます。'); });
     show();
   }
 
@@ -809,7 +809,7 @@
       rd.readAsText(f);
     });
     $('#wipe').addEventListener('click', function () {
-      if (!window.confirm('この端末の記録と設定をすべて消します。よろしいですか。')) return;
+      if (!window.confirm('この端末の記録と設定をすべて消します。元に戻せません。よろしいですか。')) return;
       S = blank(); persist(); applyPrefs(); renderMy(); big.checked = false; toast('すべて消しました。');
     });
   }
@@ -841,7 +841,7 @@
       '<section id="s3" hidden><h2>3. 名前</h2><p class="hint">候補を押すか、短く入力します。</p><div class="chips" id="f-words"></div>' +
       '<div class="field"><label for="f-title">名前</label><input type="text" id="f-title" maxlength="40" autocomplete="off"></div></section>' +
       '<section id="s4" hidden><h2>4. 時刻・くり返し</h2>' +
-      '<div class="field" id="f-timebox" hidden><label for="f-time">時刻(分かれば)</label><input type="time" id="f-time"></div>' +
+      '<div class="field" id="f-timebox" hidden><label for="f-time">時刻(任意)</label><input type="time" id="f-time"></div>' +
       '<label class="chip" id="l-yearly"><input type="checkbox" id="f-yearly"> 毎年くり返す</label> <label class="chip" id="l-100"><input type="checkbox" id="f-100"> 100日ごとの節目も入れる</label>' +
       '<p class="hint">残したあと、メモと「やること」を書けます。</p></section>' +
       '<p id="quiet-note" class="notice quiet" hidden>静かに残します。広告やおすすめは出しません。</p>' +
