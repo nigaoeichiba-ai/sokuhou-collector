@@ -1,0 +1,414 @@
+/* あと何日、もう何日 -- design.css: the SHAPE of each skin (きせかえ).
+   Loaded after style.css and skins.css.  The page puts data-head / data-btn / data-density / data-num / data-deco / data-nav / data-cat / data-list on <html>
+   (values: sites/atomou/skins.py ATTR_VALUES).  Without them (the basic skin) none of this applies: style.css is the look.
+   The first value of each key (left, pill, cozy, plain, none, pill, card, grid) is the base look and has no rules here.
+   Pictures (assets/skins/*.webp) are named only inside the selector of their own skin, so they load only when that skin is chosen; the rest is CSS and
+   inline SVG masks, in the skin's colours.  A quiet card (.card.quiet) is never decorated: the last block of this file puts it back to plain. */
+
+/* inline SVG shapes (used as masks / backgrounds) */
+:root{--svg-bat:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7.5c.9 0 1.5-1.3 1.9-2l.7 2.3c2-1 5-1.5 8.9.7-2 .6-3 1.9-3 3.6-1.4-1-3-.9-4 .5-1.2-.8-2.2-.5-2.6.8L12 16l-1-3.4c-.4-1.3-1.4-1.6-2.6-.8-1-1.4-2.6-1.5-4-.5 0-1.7-1-3-3-3.6 3.9-2.2 6.900-1.700 8.900-.7l.7-2.300c.4.700 1 2 1 2z'/%3E%3C/svg%3E");--svg-edge-scallop:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 36 16'%3E%3Cpath d='M0 0h36v2a18 14 0 0 1-36 0z'/%3E%3C/svg%3E");--svg-edge-scallop-up:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 36 16'%3E%3Cpath d='M0 16h36v-2a18 14 0 0 0-36 0z'/%3E%3C/svg%3E");--svg-edge-wave:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 80 16'%3E%3Cpath d='M0 0h80v8q-10 8-20 0t-20 0-20 0-20 0z'/%3E%3C/svg%3E");--svg-edge-wave-up:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 80 16'%3E%3Cpath d='M0 16h80V8q-10-8-20 0t-20 0-20 0-20 0z'/%3E%3C/svg%3E");--svg-edge-zig:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 32 14'%3E%3Cpath d='M0 0h32v1l-8 13-8-13-8 13-8-13z'/%3E%3C/svg%3E");--svg-flower:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cellipse cx='12' cy='6.2' rx='3.6' ry='5' transform='rotate(0 12 12)'/%3E%3Cellipse cx='12' cy='6.2' rx='3.6' ry='5' transform='rotate(72 12 12)'/%3E%3Cellipse cx='12' cy='6.2' rx='3.6' ry='5' transform='rotate(144 12 12)'/%3E%3Cellipse cx='12' cy='6.2' rx='3.6' ry='5' transform='rotate(216 12 12)'/%3E%3Cellipse cx='12' cy='6.2' rx='3.6' ry='5' transform='rotate(288 12 12)'/%3E%3Ccircle cx='12' cy='12' r='2.2' fill-opacity='.4'/%3E%3C/svg%3E");--svg-heart:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z'/%3E%3C/svg%3E");--svg-leaf:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z'/%3E%3C/svg%3E");--svg-moon:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M16 2.5A9.500 9.500 0 1 0 21.500 17 7.500 7.500 0 0 1 16 2.500z'/%3E%3C/svg%3E");--svg-pat-confetti:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 200 200'%3E%3Ccircle cx='20' cy='24' r='5' fill='%23FF6FA0'/%3E%3Crect x='90' y='12' width='16' height='6' rx='3' fill='%234DABF7' transform='rotate(30 98 15)'/%3E%3Cpath d='M150 30l8-14 8 14z' fill='%23FFC21A'/%3E%3Ccircle cx='170' cy='96' r='6' fill='%2351CF66'/%3E%3Crect x='30' y='90' width='18' height='6' rx='3' fill='%23FFC21A' transform='rotate(-35 39 93)'/%3E%3Cpath d='M90 100l8-14 8 14z' fill='%23B197FC'/%3E%3Ccircle cx='60' cy='160' r='5' fill='%234DABF7'/%3E%3Crect x='130' y='150' width='16' height='6' rx='3' fill='%23FF6FA0' transform='rotate(20 138 153)'/%3E%3Ccircle cx='185' cy='175' r='4' fill='%23FFC21A'/%3E%3Ccircle cx='120' cy='60' r='4' fill='%23FF922B'/%3E%3C/svg%3E");--svg-pat-grain:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .1  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");--svg-pat-halloween:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 260 260'%3E%3Cpath fill='%237B3FC4' d='M12 7.5c.9 0 1.5-1.3 1.9-2l.7 2.3c2-1 5-1.5 8.9.7-2 .6-3 1.9-3 3.6-1.4-1-3-.9-4 .5-1.2-.8-2.2-.5-2.6.8L12 16l-1-3.4c-.4-1.3-1.4-1.6-2.6-.8-1-1.4-2.6-1.5-4-.5 0-1.7-1-3-3-3.6 3.9-2.2 6.900-1.700 8.900-.7l.7-2.300c.4.700 1 2 1 2z' transform='translate(120 20) scale(1.3)'/%3E%3Cpath fill='%237B3FC4' d='M12 7.5c.9 0 1.5-1.3 1.9-2l.7 2.3c2-1 5-1.5 8.9.7-2 .6-3 1.9-3 3.6-1.4-1-3-.9-4 .5-1.2-.8-2.2-.5-2.6.8L12 16l-1-3.4c-.4-1.3-1.4-1.6-2.6-.8-1-1.4-2.6-1.5-4-.5 0-1.7-1-3-3-3.6 3.9-2.2 6.900-1.700 8.900-.7l.7-2.300c.4.700 1 2 1 2z' transform='translate(20 170) scale(1)'/%3E%3Cpath fill='%237B3FC4' d='M12 7.5c.9 0 1.5-1.3 1.9-2l.7 2.3c2-1 5-1.5 8.9.7-2 .6-3 1.9-3 3.6-1.4-1-3-.9-4 .5-1.2-.8-2.2-.5-2.6.8L12 16l-1-3.4c-.4-1.3-1.4-1.6-2.6-.8-1-1.4-2.6-1.5-4-.5 0-1.7-1-3-3-3.6 3.9-2.2 6.900-1.700 8.900-.7l.7-2.300c.4.700 1 2 1 2z' transform='translate(200 90) scale(.9)'/%3E%3Cpath fill='%23FFC21A' d='M12 2l3 7 7.5.6-5.7 4.9 1.8 7.5L12 17.8 5.4 22l1.8-7.5L1.5 9.6 9 9z' transform='translate(100 110) scale(.7)'/%3E%3Cpath fill='%23FFC21A' d='M12 2l3 7 7.5.6-5.7 4.9 1.8 7.5L12 17.8 5.4 22l1.8-7.5L1.5 9.6 9 9z' transform='translate(170 20) scale(.5)'/%3E%3Cpath fill='%23FFC21A' d='M12 2l3 7 7.5.6-5.7 4.9 1.8 7.5L12 17.8 5.4 22l1.8-7.5L1.5 9.6 9 9z' transform='translate(70 215) scale(.55)'/%3E%3Cpath fill='%23FFC21A' d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(235 150) scale(.5)'/%3E%3C/svg%3E");--svg-pat-hearts:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 180 180'%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(14 14) rotate(-15 9.0 9.0) scale(0.75)'/%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(100 30) rotate(15 6.0 6.0) scale(0.5)'/%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(150 90) rotate(-10 10.0 10.0) scale(0.8333333333333334)'/%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(50 100) rotate(20 6.0 6.0) scale(0.5)'/%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(20 150) rotate(0 7.0 7.0) scale(0.5833333333333334)'/%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(110 150) rotate(-20 8.0 8.0) scale(0.6666666666666666)'/%3E%3C/svg%3E");--svg-pat-leaves-a:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 260 260'%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(10 150) rotate(-30 45.0 45.0) scale(3.75)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(50 190) rotate(20 32.0 32.0) scale(2.6666666666666665)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(90 120) rotate(-70 30.0 30.0) scale(2.5)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(130 200) rotate(40 24.0 24.0) scale(2.0)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(20 90) rotate(-90 23.0 23.0) scale(1.9166666666666667)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(160 150) rotate(10 18.0 18.0) scale(1.5)'/%3E%3C/svg%3E");--svg-pat-leaves-b:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 260 260'%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(170 20) rotate(150 45.0 45.0) scale(3.75)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(140 4) rotate(100 30.0 30.0) scale(2.5)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(110 40) rotate(200 28.0 28.0) scale(2.3333333333333335)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(200 100) rotate(120 28.0 28.0) scale(2.3333333333333335)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(80 0) rotate(180 20.0 20.0) scale(1.6666666666666667)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(215 150) rotate(90 18.0 18.0) scale(1.5)'/%3E%3C/svg%3E");--svg-pat-petals:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 240 240'%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(20 20) rotate(30 11.0 11.0) scale(0.9166666666666666)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(120 10) rotate(-40 9.0 9.0) scale(0.75)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(190 60) rotate(70 12.0 12.0) scale(1.0)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(70 90) rotate(120 10.0 10.0) scale(0.8333333333333334)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(150 130) rotate(-20 11.0 11.0) scale(0.9166666666666666)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(20 160) rotate(200 10.0 10.0) scale(0.8333333333333334)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(100 190) rotate(10 12.0 12.0) scale(1.0)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(205 200) rotate(150 9.0 9.0) scale(0.75)'/%3E%3C/svg%3E");--svg-pat-seigaiha:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 60 30'%3E%3Ccircle cx='0' cy='30' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='0' cy='30' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='0' cy='30' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='30' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='30' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='30' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='30' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='30' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='30' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='15' cy='15' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='15' cy='15' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='15' cy='15' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='45' cy='15' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='45' cy='15' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='45' cy='15' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='0' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='0' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='0' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='0' cy='0' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='0' cy='0' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='0' cy='0' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='0' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='0' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='0' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E");--svg-pat-stars:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 160 160'%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(14 20) rotate(0 6.0 6.0) scale(0.5)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(96 8) rotate(0 4.0 4.0) scale(0.3333333333333333)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(130 66) rotate(0 7.0 7.0) scale(0.5833333333333334)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(50 90) rotate(0 4.0 4.0) scale(0.3333333333333333)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(20 130) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(100 130) rotate(0 6.0 6.0) scale(0.5)'/%3E%3Ccircle cx='70' cy='40' r='1.8' /%3E%3Ccircle cx='40' cy='60' r='1.4' /%3E%3Ccircle cx='120' cy='30' r='1.6' /%3E%3Ccircle cx='80' cy='110' r='1.6' /%3E%3Ccircle cx='145' cy='120' r='1.4' /%3E%3Ccircle cx='10' cy='80' r='1.4' /%3E%3C/svg%3E");--svg-pat-waves:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 80 24'%3E%3Cpath d='M0 12q10-12 20 0t20 0 20 0 20 0' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E");--svg-petal:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z'/%3E%3C/svg%3E");--svg-rule-confetti:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Ccircle cx='6' cy='5' r='3' /%3E%3Crect x='16' y='2' width='10' height='3' rx='1.5' transform='rotate(-25 21 3)'/%3E%3Ccircle cx='34' cy='5' r='3' /%3E%3Cpath d='M44 8l4-7 4 7z'/%3E%3Ccircle cx='60' cy='5' r='3' /%3E%3Crect x='66' y='2' width='6' height='3' rx='1.5'/%3E%3C/svg%3E");--svg-rule-dots:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Ccircle cx='8' cy='5' r='3.2' /%3E%3Ccircle cx='24' cy='5' r='3.2' /%3E%3Ccircle cx='40' cy='5' r='3.2' /%3E%3C/svg%3E");--svg-rule-grid:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Crect x='0' y='0' width='2' height='10'/%3E%3Crect x='8' y='0' width='2' height='10'/%3E%3Crect x='16' y='0' width='2' height='10'/%3E%3Crect x='24' y='0' width='2' height='10'/%3E%3Crect x='32' y='0' width='2' height='10'/%3E%3Crect x='40' y='0' width='2' height='10'/%3E%3Crect x='48' y='0' width='2' height='10'/%3E%3Crect x='56' y='0' width='2' height='10'/%3E%3Crect x='64' y='0' width='2' height='10'/%3E%3Crect x='0' y='4' width='72' height='2'/%3E%3C/svg%3E");--svg-rule-leaves:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(0 0) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(14 0) rotate(90 5.0 5.0) scale(0.4166666666666667)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(28 0) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Crect x='42' y='4' width='28' height='2' rx='1'/%3E%3C/svg%3E");--svg-rule-paper:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M0 2l2 1 2-1 2 1 2-1 2 1 2-1 2 1 2-1h42l2 1-2 1 2 1-2 1 2 1-2 1-2-1-2 1H14l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1z'/%3E%3C/svg%3E");--svg-rule-stars:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(2 0) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(30 0) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(58 0) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Crect x='14' y='4' width='14' height='2' rx='1'/%3E%3Crect x='42' y='4' width='14' height='2' rx='1'/%3E%3C/svg%3E");--svg-rule-stripes:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M0 10L6 0h4L4 10z'/%3E%3Cpath d='M11 10L17 0h4L15 10z'/%3E%3Cpath d='M22 10L28 0h4L26 10z'/%3E%3Cpath d='M33 10L39 0h4L37 10z'/%3E%3Cpath d='M44 10L50 0h4L48 10z'/%3E%3Cpath d='M55 10L61 0h4L59 10z'/%3E%3Cpath d='M66 10L72 0h4L70 10z'/%3E%3C/svg%3E");--svg-rule-sunburst:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M6 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(-30.0 6 10)'/%3E%3Cpath d='M18 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(-18.0 18 10)'/%3E%3Cpath d='M30 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(-6.0 30 10)'/%3E%3Cpath d='M42 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(6.0 42 10)'/%3E%3Cpath d='M54 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(18.0 54 10)'/%3E%3Cpath d='M66 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(30.0 66 10)'/%3E%3C/svg%3E");--svg-rule-waves:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M0 5q6-7 12 0t12 0 12 0 12 0 12 0 12 0' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E");--svg-spark:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z'/%3E%3C/svg%3E");--svg-star:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l3 7 7.5.6-5.7 4.9 1.8 7.5L12 17.8 5.4 22l1.8-7.5L1.5 9.6 9 9z'/%3E%3C/svg%3E")}
+
+:root{--strip-h:270px;--wrap-pad:16px;--font-mono:ui-monospace,"Cascadia Mono","SFMono-Regular",Consolas,"BIZ UDGothic","Courier New",monospace}
+header.site{--hd-fg:var(--head-text)}
+h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
+.c-count .num,.wizard .live .big{font-family:var(--font-num,var(--font))}
+
+/* ================= every skin (not basic): things the colour variables alone get wrong ================= */
+:root[data-skin] header.site nav a[aria-current="page"]{background:color-mix(in srgb,var(--head-text) 18%,transparent);color:var(--head-text)}
+:root[data-skin] header.site nav a[href="/add/"]{background:var(--accent);color:var(--on-accent);box-shadow:0 0 0 2px var(--head-text)}
+:root[data-skin] .card:not(.quiet){border-color:var(--cb,var(--line));box-shadow:var(--csh,var(--shadow))}
+:root[data-skin] :is(.panel,.uc,.day-panel,.stepcard,.qa details,.cal-grid,.skin){border-width:var(--bw)}
+:root[data-skin] :is(.panel,.uc,.day-panel,.stepcard,.qa details,.cal-grid,.skin){border-color:var(--pb,var(--line))}
+
+/* ================= head: the header and the top of the home page ================= */
+:root[data-head="center"] header.site .wrap{position:relative;justify-content:center}
+:root[data-head="center"] .brand{justify-content:center;margin:0 auto}
+:root[data-head="center"] .hicons{position:absolute;right:var(--wrap-pad,16px);top:50%;margin:0;transform:translateY(-50%)}
+@media (min-width:700px){
+  :root[data-head="center"] header.site .wrap{flex-direction:column;align-items:center;gap:0;padding-top:6px;padding-bottom:6px}
+  :root[data-head="center"] header.site nav{margin:0 auto;justify-content:center}
+}
+:root[data-head="center"] .hero,:root[data-head="center"] main>h1,:root[data-head="center"] main>.lead{text-align:center}
+:root[data-head="center"] .hero .lead{margin-inline:auto}
+:root[data-head="center"] .searchbox{margin-inline:auto}
+:root[data-head="center"] .chips.scroll{justify-content:safe center}
+
+:root[data-head="band"] header.site .wrap{padding-top:10px;padding-bottom:10px}
+:root[data-head="band"] .brand{font-size:1.2rem}
+:root[data-head="band"] .hero{margin:0 calc(-1 * var(--wrap-pad));padding:1.8rem var(--wrap-pad) 0;background:var(--band-bg);color:var(--band-text);box-shadow:0 0 0 100vmax var(--band-bg);clip-path:inset(0 -100vmax)}
+:root[data-head="band"] .hero h1{font-size:clamp(1.7rem,6vw,2.7rem)}
+:root[data-head="band"] .hero .lead{color:inherit}
+:root[data-head="band"] .hero a{color:inherit;text-underline-offset:3px}
+:root[data-head="band"] .hero::after{margin-top:1rem}
+:root[data-head="band"] header.site+.preview{display:none}
+
+:root[data-head="stripe"] header.site{border-bottom:3px double var(--deco2)}
+:root[data-head="stripe"] .brand::before{content:"";flex:none;width:6px;height:30px;margin-right:4px;background:var(--deco2)}
+:root[data-head="stripe"] :is(.hero h1,main>h1){padding-left:.6rem;border-left:7px solid var(--deco2)}
+:root[data-head="stripe"] main h2:not(.cal-title){padding-left:.55rem;border-left:5px solid var(--deco2)}
+
+/* ================= density ================= */
+:root[data-density="compact"] body{line-height:1.55}
+:root[data-density="compact"] h2{margin:1.4rem 0 .5rem}
+:root[data-density="compact"] .hero{padding:1rem 0 .3rem}
+:root[data-density="compact"] .cards{gap:10px}
+:root[data-density="compact"] .card{padding:10px 12px 8px;gap:3px}
+:root[data-density="compact"] .card.big{padding:12px 14px 10px}
+:root[data-density="compact"] .panel{padding:12px 14px;margin:.7rem 0}
+:root[data-density="compact"] [data-block]{margin:.8rem 0}
+:root[data-density="compact"] .cats{gap:6px}
+:root[data-density="compact"] .plist li{min-height:44px;padding:3px 0}
+:root[data-density="airy"]{--wrap-pad:20px}
+:root[data-density="airy"] body{line-height:1.9}
+:root[data-density="airy"] .wrap{padding-left:var(--wrap-pad);padding-right:var(--wrap-pad)}
+:root[data-density="airy"] h2{margin:3rem 0 1rem}
+:root[data-density="airy"] .hero{padding:2.6rem 0 1.2rem}
+:root[data-density="airy"] .cards{gap:24px}
+:root[data-density="airy"] .card{padding:22px 24px 18px;gap:9px}
+:root[data-density="airy"] .card.big{padding:26px 28px 22px}
+:root[data-density="airy"] .panel{padding:24px 26px;margin:1.6rem 0}
+:root[data-density="airy"] [data-block]{margin:2rem 0}
+:root[data-density="airy"] .cats{gap:16px}
+:root[data-density="airy"] .uc-grid,:root[data-density="airy"] .skins{gap:18px}
+
+/* ================= btn: buttons, chips, inputs ================= */
+:root[data-btn="square"] .btn{border-radius:2px;letter-spacing:.03em}
+:root[data-btn="square"] :is(.chip,.mini,.numgrid button,.tile,.wizard .tile){border-radius:2px}
+:root[data-btn="square"] :is(input[type=text],input[type=search],input[type=number],input[type=email],input[type=date],input[type=month],input[type=time],select,textarea){border-radius:2px}
+:root[data-btn="soft"] .btn{border-radius:14px;box-shadow:0 3px 0 rgba(0,0,0,.14)}
+:root[data-btn="soft"] .btn.ghost{box-shadow:none}
+:root[data-btn="soft"] :is(.chip,.mini){border-radius:12px}
+:root[data-btn="outline"] .btn{background:transparent;color:var(--accent);border-width:2px;border-radius:8px}
+:root[data-btn="outline"] .btn.ghost{border-style:dashed}
+:root[data-btn="outline"] .btn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+:root[data-btn="outline"] :is(.chip,.mini){border-radius:8px}
+:root[data-btn="outline"] :is(input[type=text],input[type=search],input[type=number],input[type=email],input[type=date],input[type=month],input[type=time],select,textarea){border-radius:8px}
+:root[data-btn="sticker"] .btn{border:3px solid var(--text);border-radius:10px;box-shadow:3px 3px 0 var(--text);color:var(--on-accent);transition:transform .08s,box-shadow .08s}
+:root[data-btn="sticker"] .btn.ghost{background:var(--surface);color:var(--text)}
+:root[data-btn="sticker"] .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--text)}
+:root[data-btn="sticker"] :is(.chip,.mini){border:2px solid var(--text);border-radius:10px;box-shadow:2px 2px 0 var(--text)}
+:root[data-btn="sticker"] :is(input[type=text],input[type=search],input[type=number],input[type=email],input[type=date],input[type=month],input[type=time],select,textarea){border:2px solid var(--text);border-radius:10px}
+:root[data-btn="underline"] .btn{background:transparent;color:var(--accent);border:0;border-bottom:3px solid var(--accent);border-radius:0;padding:0 6px}
+:root[data-btn="underline"] .btn.ghost{border-bottom-style:dashed}
+:root[data-btn="underline"] .btn[aria-pressed="true"]{background:var(--surface2)}
+:root[data-btn="underline"] :is(.chip,.mini){border-width:0 0 2px;border-radius:0;background:transparent}
+:root[data-btn="underline"] .chip[aria-pressed="true"],:root[data-btn="underline"] .chip.on{background:transparent;color:var(--accent);border-bottom:3px solid var(--accent)}
+:root[data-btn="underline"] :is(input[type=text],input[type=search],input[type=number],input[type=email],input[type=date],input[type=month],input[type=time],select,textarea){border-width:0 0 2px;border-radius:0}
+
+/* ================= num: the big number ================= */
+.card .c-count{--nc:var(--ato-ink,var(--ato))}
+.card[data-dir="mou"] .c-count{--nc:var(--mou-ink,var(--mou))}
+[data-card="panel"] .card .c-count{--nc:var(--on-ato)}
+[data-card="panel"] .card[data-dir="mou"] .c-count{--nc:var(--on-mou)}
+:root[data-num="outline"] .card:not(.quiet) .c-count .num{color:transparent;-webkit-text-stroke:2px var(--nc);paint-order:stroke fill;letter-spacing:.02em}
+:root[data-num="shadow"] .card:not(.quiet) .c-count .num{text-shadow:3px 3px 0 color-mix(in srgb,var(--nc) 28%,transparent)}
+:root[data-num="mono"] .card:not(.quiet) .c-count .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+:root[data-num="mono"] .wizard .live .big{font-family:var(--font-mono)}
+:root[data-num="badge"] .card:not(.quiet) .c-count .num{display:inline-block;padding:0 .45em;border-radius:999px;line-height:1.35;background:var(--ato-soft,var(--ato));color:var(--ato-ink,var(--on-ato))}
+:root[data-num="badge"] .card[data-dir="mou"]:not(.quiet) .c-count .num{background:var(--mou-soft,var(--mou));color:var(--mou-ink,var(--on-mou))}
+:root[data-num="badge"][data-card="panel"] .card:not(.quiet) .c-count .num{background:var(--surface);color:var(--text);box-shadow:inset 0 0 0 2px currentColor}
+
+/* ================= nav ================= */
+:root[data-nav="tab"] header.site .wrap{padding-bottom:0;align-items:flex-end}
+:root[data-nav="tab"] .brand{margin-bottom:6px}
+:root[data-nav="tab"] header.site nav a{border:2px solid color-mix(in srgb,var(--head-text) 40%,transparent);border-bottom:0;border-radius:12px 12px 0 0;background:color-mix(in srgb,var(--head-text) 9%,transparent)}
+:root[data-nav="tab"] header.site nav a[aria-current="page"]{background:var(--bg);color:var(--text);border-color:var(--bg)}
+:root[data-nav="tab"] header.site nav a[href="/add/"]{box-shadow:none;border-color:var(--accent)}
+:root[data-nav="underline"] header.site nav a{border-radius:0;border-bottom:3px solid transparent}
+:root[data-nav="underline"] header.site nav a[aria-current="page"]{background:transparent;border-bottom-color:var(--head-text)}
+:root[data-nav="underline"] header.site nav a[href="/add/"]{background:transparent;color:var(--head-text);box-shadow:none;border-bottom:3px double currentColor}
+:root[data-nav="boxed"] header.site nav a{border:2px solid color-mix(in srgb,var(--head-text) 55%,transparent);border-radius:3px}
+:root[data-nav="boxed"] header.site nav a[aria-current="page"]{background:var(--head-text);color:var(--head-bg)}
+:root[data-nav="boxed"] header.site nav a[href="/add/"]{box-shadow:none;border-color:var(--accent)}
+
+/* the phone's header icons and bottom tab bar follow the header's colours and the nav shape */
+:root[data-skin] .hicons a{color:var(--head-text)}
+:root[data-skin] .tabbar{background:var(--head-bg);color:var(--head-text);border-top:1px solid color-mix(in srgb,var(--head-text) 22%,transparent)}
+:root[data-skin] .tabbar a{color:color-mix(in srgb,var(--head-text) 86%,var(--head-bg))}
+:root[data-skin] .tabbar a[aria-current="page"]{color:var(--head-text);font-weight:900;background:color-mix(in srgb,var(--head-text) 14%,transparent)}
+:root[data-nav="tab"] .tabbar a{border:2px solid transparent;border-bottom:0;border-radius:12px 12px 0 0;margin:4px 3px 0}
+:root[data-nav="tab"] .tabbar a[aria-current="page"]{background:var(--bg);color:var(--text);border-color:var(--accent)}
+:root[data-nav="underline"] .tabbar a[aria-current="page"]{background:transparent;box-shadow:inset 0 3px 0 var(--head-text)}
+:root[data-nav="boxed"] .tabbar{gap:0}
+:root[data-nav="boxed"] .tabbar a{border-left:2px solid color-mix(in srgb,var(--head-text) 40%,transparent)}
+:root[data-nav="boxed"] .tabbar a:first-child{border-left:0}
+:root[data-nav="boxed"] .tabbar a[aria-current="page"]{background:var(--head-text);color:var(--head-bg)}
+
+/* ================= cat: the genre tiles on the home page ================= */
+.cats a:has(.mark[data-g="1"]){--gc:var(--g1)}.cats a:has(.mark[data-g="2"]){--gc:var(--g2)}.cats a:has(.mark[data-g="3"]){--gc:var(--g3)}
+.cats a:has(.mark[data-g="4"]){--gc:var(--g4)}.cats a:has(.mark[data-g="5"]){--gc:var(--g5)}.cats a:has(.mark[data-g="6"]){--gc:var(--g6)}
+:root[data-cat="chip"] .cats{grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),1fr));gap:8px}
+:root[data-cat="chip"] .cats a{min-height:48px;padding:4px 14px;border-radius:999px;font-size:.95rem;border-width:2px}
+:root[data-cat="chip"] .cats a small{display:inline}
+:root[data-cat="circle"] .cats{grid-template-columns:repeat(auto-fill,minmax(min(100%,128px),1fr));gap:14px 10px}
+:root[data-cat="circle"] .cats a{position:relative;flex-direction:column;justify-content:flex-start;gap:6px;min-height:0;padding:0 4px 10px;border:0;background:transparent;text-align:center;box-shadow:none;font-size:.95rem}
+:root[data-cat="circle"] .cats a::before{content:"";position:absolute;top:0;left:50%;width:76px;height:76px;margin-left:-38px;border-radius:50%;background:var(--surface);border:3px solid var(--gc,var(--g1));box-shadow:var(--shadow)}
+:root[data-cat="circle"] .cats a .mark{position:relative;width:36px;height:36px;margin:20px 0 20px}
+:root[data-cat="circle"] .cats a span{line-height:1.4}
+:root[data-cat="ribbon"] .cats a{padding-right:26px;border-left:10px solid var(--gc,var(--g1));border-radius:2px 0 0 2px;clip-path:polygon(0 0,100% 0,calc(100% - 14px) 50%,100% 100%,0 100%)}
+:root[data-cat="ribbon"] .cats a .mark{display:none}
+:root[data-cat="plain"] .cats{grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:0 24px}
+:root[data-cat="plain"] .cats a{border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;box-shadow:none;padding:6px 2px}
+
+/* ================= list: how the cards are laid out ================= */
+:root[data-list="masonry"] .cards:not(.plan-card){display:block;columns:290px;column-gap:16px}
+:root[data-list="masonry"] .cards:not(.plan-card)>.card{break-inside:avoid;margin:0 0 16px}
+:root[data-list="masonry"] .cards:not(.plan-card)>.card:nth-child(3n+2) .c-title{font-size:1.12rem}
+:root[data-list="list"] .cards:not(.plan-card){grid-template-columns:1fr;max-width:820px;gap:10px}
+
+/* ================= deco: the decoration ================= */
+:root[data-deco="dots"]:not([data-skin="valentine"]) body{background-image:radial-gradient(circle,color-mix(in srgb,var(--deco) 32%,transparent) 2px,transparent 2.6px),var(--bg-image);background-size:22px 22px,auto}
+:root[data-deco="grid"] body{background-image:linear-gradient(90deg,color-mix(in srgb,var(--deco) 16%,transparent) 1px,transparent 1px),linear-gradient(180deg,color-mix(in srgb,var(--deco) 16%,transparent) 1px,transparent 1px),var(--bg-image);background-size:32px 32px,32px 32px,auto}
+:root[data-deco="stripes"] body{background-image:repeating-linear-gradient(90deg,color-mix(in srgb,var(--deco) 11%,transparent) 0 26px,transparent 26px 52px),var(--bg-image)}
+:root:is([data-deco="stars"],[data-deco="leaves"],[data-deco="confetti"],[data-deco="sunburst"],[data-deco="paper"],[data-deco="waves"],[data-skin="valentine"]) body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none}
+:root[data-deco="stars"] body::before{background:var(--deco);opacity:.3;-webkit-mask:var(--svg-pat-stars) 0 0/160px 160px repeat;mask:var(--svg-pat-stars) 0 0/160px 160px repeat}
+:root[data-deco="leaves"] body::before{background:var(--deco);opacity:.2;-webkit-mask:var(--svg-pat-leaves-a) left bottom/260px no-repeat,var(--svg-pat-leaves-b) right top/260px no-repeat;mask:var(--svg-pat-leaves-a) left bottom/260px no-repeat,var(--svg-pat-leaves-b) right top/260px no-repeat}
+:root[data-deco="confetti"] body::before{background:var(--svg-pat-confetti) 0 0/200px 200px;opacity:.55}
+:root[data-deco="sunburst"] body::before{inset:0 0 auto 0;height:70vh;background:repeating-conic-gradient(from 0deg at 50% -6%,var(--deco) 0 4deg,transparent 4deg 9deg);opacity:.16;-webkit-mask:linear-gradient(#000,transparent);mask:linear-gradient(#000,transparent)}
+:root[data-deco="paper"] body::before{background:var(--svg-pat-grain);opacity:.22;mix-blend-mode:multiply}
+:root[data-deco="waves"] body::before{inset:auto 0 0 0;height:140px;background:var(--deco);opacity:.12;-webkit-mask:var(--svg-pat-waves) 0 0/80px 24px repeat;mask:var(--svg-pat-waves) 0 0/80px 24px repeat}
+:root[data-skin="valentine"] body::before{background:var(--deco);opacity:.14;-webkit-mask:var(--svg-pat-hearts) 0 0/180px repeat;mask:var(--svg-pat-hearts) 0 0/180px repeat}
+:root[data-skin="sakura"] body::before{background:var(--deco);opacity:.42;-webkit-mask:var(--svg-pat-petals) 0 0/240px repeat;mask:var(--svg-pat-petals) 0 0/240px repeat}
+:root[data-skin="halloween"] body::before{background:var(--svg-pat-halloween) 0 0/260px 260px;opacity:.32}
+:root[data-skin="wafuu"] body::before{height:200px;opacity:.09;background:var(--deco);-webkit-mask:var(--svg-pat-seigaiha) 0 0/60px 30px repeat;mask:var(--svg-pat-seigaiha) 0 0/60px 30px repeat}
+:root[data-skin="neon"] body{background-position:center top}
+/* edges that hang below the header / above the footer */
+:root[data-deco="waves"] header.site{position:relative;z-index:3;border-bottom:0}
+:root[data-deco="waves"] header.site::after{content:"";position:absolute;left:0;right:0;top:100%;height:16px;margin-top:-1px;background:var(--head-bg);-webkit-mask:var(--svg-edge-wave) 0 0/80px 16px repeat-x;mask:var(--svg-edge-wave) 0 0/80px 16px repeat-x;pointer-events:none}
+:root[data-skin="wafuu"] header.site::after{-webkit-mask:var(--svg-edge-scallop) 0 0/36px 16px repeat-x;mask:var(--svg-edge-scallop) 0 0/36px 16px repeat-x}
+:root[data-deco="waves"] footer.site{position:relative;margin-top:calc(3rem + 16px)}
+:root[data-deco="waves"] footer.site::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:16px;margin-bottom:-1px;background:var(--foot-bg);-webkit-mask:var(--svg-edge-wave-up) 0 100%/80px 16px repeat-x;mask:var(--svg-edge-wave-up) 0 100%/80px 16px repeat-x}
+:root[data-skin="wafuu"] footer.site::before{-webkit-mask:var(--svg-edge-scallop-up) 0 100%/36px 16px repeat-x;mask:var(--svg-edge-scallop-up) 0 100%/36px 16px repeat-x}
+:root[data-deco="stripes"][data-head="band"] header.site::after{content:"";position:absolute;left:0;right:0;top:100%;height:14px;background:var(--head-bg);-webkit-mask:var(--svg-edge-zig) 0 0/32px 14px repeat-x;mask:var(--svg-edge-zig) 0 0/32px 14px repeat-x;pointer-events:none}
+:root[data-deco="stripes"][data-head="band"] header.site{position:relative;z-index:3}
+/* a small ornament under every section heading */
+:root:is([data-deco="dots"],[data-deco="grid"],[data-deco="stripes"],[data-deco="waves"],[data-deco="stars"],[data-deco="leaves"],[data-deco="sunburst"],[data-deco="paper"],[data-deco="confetti"]) main h2:not(.cal-title)::after{content:"";display:block;width:72px;height:10px;margin-top:6px;background:var(--deco);-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:left center;mask-position:left center}
+:root[data-deco="dots"] main h2:not(.cal-title)::after{-webkit-mask-image:var(--svg-rule-dots);mask-image:var(--svg-rule-dots)}
+:root[data-deco="grid"] main h2:not(.cal-title)::after{-webkit-mask-image:var(--svg-rule-grid);mask-image:var(--svg-rule-grid)}
+:root[data-deco="stripes"] main h2:not(.cal-title)::after{-webkit-mask-image:var(--svg-rule-stripes);mask-image:var(--svg-rule-stripes)}
+:root[data-deco="waves"] main h2:not(.cal-title)::after{-webkit-mask-image:var(--svg-rule-waves);mask-image:var(--svg-rule-waves)}
+:root[data-deco="stars"] main h2:not(.cal-title)::after{-webkit-mask-image:var(--svg-rule-stars);mask-image:var(--svg-rule-stars)}
+:root[data-deco="leaves"] main h2:not(.cal-title)::after{-webkit-mask-image:var(--svg-rule-leaves);mask-image:var(--svg-rule-leaves)}
+:root[data-deco="sunburst"] main h2:not(.cal-title)::after{-webkit-mask-image:var(--svg-rule-sunburst);mask-image:var(--svg-rule-sunburst)}
+:root[data-deco="paper"] main h2:not(.cal-title)::after{-webkit-mask-image:var(--svg-rule-paper);mask-image:var(--svg-rule-paper);height:10px}
+:root[data-deco="confetti"] main h2:not(.cal-title)::after{-webkit-mask-image:var(--svg-rule-confetti);mask-image:var(--svg-rule-confetti);background:linear-gradient(90deg,var(--deco),var(--deco2))}
+:root[data-head="stripe"] main h2:not(.cal-title)::after{margin-left:-.55rem}
+:root[data-head="center"] main>h1::after,:root[data-head="center"] .hero h1::after{content:"";display:block;width:56px;height:4px;margin:.5rem auto 0;border-radius:2px;background:var(--deco)}
+
+/* ================= a corner mark on each card (--corner is set by the skin) ================= */
+:root[data-skin] .card:not(.quiet)::after{content:"";position:absolute;top:10px;right:10px;width:24px;height:24px;background:var(--corner-c,var(--deco2,var(--accent)));opacity:.85;-webkit-mask:var(--corner) center/contain no-repeat;mask:var(--corner) center/contain no-repeat;display:var(--corner-on,none);pointer-events:none}
+:root[data-skin] .card:not(.quiet) .c-top{padding-right:var(--corner-pad,0px)}
+
+/* ================= pictures: banner strips (one per skin that has a picture) ================= */
+:root[data-skin="notebook"]{--banner:url(/assets/skins/notebook.webp)}
+:root[data-skin="pop"]{--banner:url(/assets/skins/pop.webp)}
+:root[data-skin="pastel-pink"]{--banner:url(/assets/skins/pastel.webp)}
+:root[data-skin="mediterranean"]{--banner:url(/assets/skins/mediterranean.webp)}
+:root[data-skin="tropical"]{--banner:url(/assets/skins/tropical.webp)}
+:root[data-skin="kids"]{--banner:url(/assets/skins/kids.webp)}
+:root[data-skin="retro"]{--banner:url(/assets/skins/retro.webp)}
+:root[data-skin="forest"]{--banner:url(/assets/skins/forest.webp)}
+:root[data-skin="sunset"]{--banner:url(/assets/skins/sunset.webp)}
+:root[data-skin="nordic"]{--banner:url(/assets/skins/nordic.webp)}
+:root[data-skin="wafuu"]{--banner:url(/assets/skins/wafuu.webp)}
+:root[data-skin="chic-navy"]{--banner:url(/assets/skins/chicgold.webp)}
+:root[data-skin="halloween"]{--banner:url(/assets/skins/halloween.webp)}
+:root[data-skin="christmas"]{--banner:url(/assets/skins/christmas.webp)}
+:root[data-skin="newyear"]{--banner:url(/assets/skins/newyear.webp)}
+:root[data-skin="valentine"]{--banner:url(/assets/skins/valentine.webp)}
+:root[data-skin="sakura"]{--banner:url(/assets/skins/sakura.webp)}
+:root[data-skin="summer"]{--banner:url(/assets/skins/summer.webp)}
+:root[data-skin="tsukimi"]{--banner:url(/assets/skins/tsukimi.webp)}
+:root:is([data-skin="notebook"],[data-skin="pop"],[data-skin="pastel-pink"],[data-skin="mediterranean"],[data-skin="tropical"],[data-skin="kids"],[data-skin="retro"],[data-skin="forest"],[data-skin="sunset"],[data-skin="nordic"],[data-skin="wafuu"],[data-skin="chic-navy"],[data-skin="halloween"],[data-skin="christmas"],[data-skin="newyear"],[data-skin="valentine"],[data-skin="sakura"],[data-skin="summer"],[data-skin="tsukimi"]) .hero::after{content:"";display:block;width:100%;aspect-ratio:3.7/1;max-height:var(--strip-h);margin-top:.4rem;background:var(--banner) center bottom/cover no-repeat}
+:root:is([data-skin="notebook"],[data-skin="pop"],[data-skin="pastel-pink"],[data-skin="mediterranean"],[data-skin="tropical"],[data-skin="kids"],[data-skin="retro"],[data-skin="forest"],[data-skin="sunset"],[data-skin="nordic"],[data-skin="wafuu"],[data-skin="chic-navy"],[data-skin="halloween"],[data-skin="christmas"],[data-skin="newyear"],[data-skin="valentine"],[data-skin="sakura"],[data-skin="summer"],[data-skin="tsukimi"]) body:not([data-page="home"]) main::before{content:"";display:block;width:100%;aspect-ratio:7/1;min-height:56px;max-height:130px;margin:.6rem 0 0;background:var(--banner) center bottom/cover no-repeat}
+:root[data-skin="halloween"] footer.site{position:relative;margin-top:calc(3rem + 56px)}
+:root[data-skin="halloween"] footer.site::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:56px;background:url(/assets/skins/halloween-dots.webp) center bottom/auto 56px repeat-x}
+
+/* ================= each skin's own touches ================= */
+/* ---- 手帳: kraft paper, dashed stitching, a marker underline, tape on the cards */
+:root[data-skin="notebook"]{--cb:#D9C795;--csh:3px 3px 0 rgba(120,90,30,.18);--pb:#D9C795;--corner:var(--svg-flower);--corner-on:block;--corner-pad:30px;--corner-c:var(--deco2)}
+:root[data-skin="notebook"] .card:not(.quiet){border-style:dashed}
+:root[data-skin="notebook"] header.site{border-bottom:2px dashed #D9C795}
+:root[data-skin="notebook"] .hero h1{display:inline;padding:0 .2em;background:linear-gradient(transparent 60%,#FFE08A 60%);box-decoration-break:clone;-webkit-box-decoration-break:clone}
+:root[data-skin="notebook"] :is(.panel,.uc,.day-panel){border-style:dashed}
+
+/* ---- ポップ: thick outlines, offset shadows, sticker buttons, a yellow band */
+:root[data-skin="pop"]{--cb:var(--text);--csh:5px 5px 0 var(--text);--pb:var(--text)}
+:root[data-skin="pop"] header.site{border-bottom:5px solid var(--band-bg)}
+:root[data-skin="pop"] .hero h1{font-weight:900;text-shadow:3px 3px 0 var(--deco2)}
+:root[data-skin="pop"] .cats a{border:3px solid var(--text);box-shadow:3px 3px 0 var(--text)}
+:root[data-skin="pop"] :is(.panel,.uc,.day-panel,.stepcard,.qa details){box-shadow:4px 4px 0 var(--text)}
+:root[data-skin="pop"] .card:not(.quiet){border-width:3px}
+
+/* ---- すっきり: hairlines, no outlines, an underlined menu, round genre tiles */
+:root[data-skin="ring"] header.site{border-bottom:0;box-shadow:0 1px 0 var(--line)}
+:root[data-skin="ring"] .card:not(.quiet){border-color:transparent}
+:root[data-skin="ring"] .hero h1{font-weight:600;letter-spacing:.02em}
+
+/* ---- パステルピンク: dotted frames, sparkles, a heart in the corner */
+:root[data-skin="pastel-pink"]{--cb:#F2B3C6;--csh:0 4px 0 #F8CFDB;--corner:var(--svg-heart);--corner-on:block;--corner-pad:30px}
+:root[data-skin="pastel-pink"] .card:not(.quiet){border-style:dotted;border-width:2px}
+:root[data-skin="pastel-pink"] header.site{border-bottom:3px dotted var(--deco)}
+:root[data-skin="pastel-pink"] .hero h1{color:var(--accent)}
+
+/* ---- ミント: a green band, fresh leaves */
+:root[data-skin="mint"]{--corner:var(--svg-leaf);--corner-on:block;--corner-pad:30px;--corner-c:var(--deco)}
+:root[data-skin="mint"] header.site{border-bottom:0}
+:root[data-skin="mint"] .hero h1{letter-spacing:.01em}
+
+/* ---- シック紺と金: gold hairlines, a double frame, wide letter spacing */
+:root[data-skin="chic-navy"]{--cb:var(--accent);--csh:0 4px 14px rgba(0,0,0,.45);--pb:var(--accent)}
+:root[data-skin="chic-navy"] header.site{border-bottom:3px double var(--accent)}
+:root[data-skin="chic-navy"] .brand{letter-spacing:.14em;font-weight:600}
+:root[data-skin="chic-navy"] header.site nav a{letter-spacing:.08em}
+:root[data-skin="chic-navy"] .card:not(.quiet){outline:1px solid color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:-5px}
+:root[data-skin="chic-navy"] :is(.hero h1,main>h1){color:var(--ato);letter-spacing:.07em;font-weight:500}
+:root[data-skin="chic-navy"] .cats a{border-color:var(--accent)}
+
+/* ---- モノクロ: lines only, square, monospace numbers, graph paper */
+:root[data-skin="monochrome"]{--cb:var(--text);--csh:none;--pb:var(--text)}
+:root[data-skin="monochrome"] :is(h1,h2,h3,.brand){font-family:var(--font-mono)}
+:root[data-skin="monochrome"] header.site{border-bottom:0}
+:root[data-skin="monochrome"] .card:not(.quiet){border-width:2px}
+:root[data-skin="monochrome"] .logo{border-radius:0}
+:root[data-skin="monochrome"] .cats a{border:2px solid var(--text)}
+
+/* ---- 和風: a vertical accent line, seigaiha, a genre-coloured edge on each card */
+:root[data-skin="wafuu"]{--cb:#C9B98F}
+:root[data-skin="wafuu"] .card:not(.quiet){border-left:6px solid var(--g1);border-bottom:3px double #C9B98F}
+:root[data-skin="wafuu"] .hero h1{letter-spacing:.06em}
+:root[data-skin="wafuu"] .logo{border-radius:2px}
+
+/* ---- 北欧: quiet, no shadows, thin lines, plenty of air */
+:root[data-skin="nordic"]{--cb:var(--line);--csh:none}
+:root[data-skin="nordic"] .card:not(.quiet){border-radius:3px 3px 10px 10px}
+:root[data-skin="nordic"] .hero h1{font-weight:500;letter-spacing:.02em}
+:root[data-skin="nordic"] header.site{border-bottom:0;box-shadow:0 1px 0 var(--line)}
+
+/* ---- 地中海: arched cards like white-washed windows, wave edges, an aqua band */
+:root[data-skin="mediterranean"] .card:not(.quiet){border-radius:26px 26px 6px 6px}
+:root[data-skin="mediterranean"] .hero h1{letter-spacing:.02em}
+
+/* ---- 南国: leaf-shaped cards, big round tiles, leaf corners */
+:root[data-skin="tropical"]{--corner:var(--svg-leaf);--corner-on:block;--corner-pad:30px;--corner-c:var(--deco)}
+:root[data-skin="tropical"] .card:not(.quiet){border-radius:30px 6px 30px 6px}
+:root[data-skin="tropical"] header.site{border-bottom:0}
+:root[data-skin="tropical"] .hero h1{font-weight:900}
+
+/* ---- こども: round and fat, thick outlines, stars and confetti */
+:root[data-skin="kids"]{--cb:var(--text);--csh:5px 5px 0 var(--deco);--pb:var(--text);--corner:var(--svg-star);--corner-on:block;--corner-pad:30px;--corner-c:#FFB300}
+:root[data-skin="kids"] .card:not(.quiet){border-radius:30px;border-width:3px}
+:root[data-skin="kids"] header.site{border-bottom:5px dotted var(--deco2)}
+:root[data-skin="kids"] .hero h1{font-weight:900;text-shadow:3px 3px 0 var(--deco)}
+:root[data-skin="kids"] .cats a{border-width:3px}
+
+/* ---- レトロ: a kissaten with awning stripes, boxed tabs, monospace numbers */
+:root[data-skin="retro"]{--cb:var(--text);--csh:4px 4px 0 rgba(58,34,20,.28);--pb:var(--text)}
+:root[data-skin="retro"] header.site{border-bottom:4px solid var(--deco)}
+:root[data-skin="retro"] .card:not(.quiet){border-width:2px}
+:root[data-skin="retro"] .hero h1{letter-spacing:.08em;font-weight:900}
+:root[data-skin="retro"] .logo{border-radius:50%;box-shadow:0 0 0 2px var(--head-text)}
+:root[data-skin="retro"] .cats a{border:2px solid var(--text)}
+
+/* ---- ネオン: dark night, glowing edges, outlined numbers */
+:root[data-skin="neon"]{--cb:var(--deco2);--csh:0 0 0 1px color-mix(in srgb,var(--deco2) 60%,transparent),0 0 18px color-mix(in srgb,var(--deco2) 35%,transparent);--pb:var(--deco);--corner:var(--svg-spark);--corner-on:block;--corner-pad:30px;--corner-c:var(--deco)}
+:root[data-skin="neon"] header.site{border-bottom:2px solid var(--deco);box-shadow:0 6px 22px color-mix(in srgb,var(--deco) 35%,transparent)}
+:root[data-skin="neon"] .brand{text-shadow:0 0 10px color-mix(in srgb,var(--head-text) 60%,transparent)}
+:root[data-skin="neon"] .card:not(.quiet) .c-count .num{text-shadow:0 0 12px var(--nc)}
+:root[data-skin="neon"] .btn{box-shadow:0 0 12px color-mix(in srgb,var(--accent) 45%,transparent)}
+:root[data-skin="neon"] .cats a{border-color:var(--deco2);box-shadow:0 0 10px color-mix(in srgb,var(--deco2) 30%,transparent)}
+:root[data-skin="neon"] .hero h1{text-shadow:0 0 16px color-mix(in srgb,var(--deco) 55%,transparent)}
+
+/* ---- 深緑: soft, mossy, leaf corners, a dark green band */
+:root[data-skin="forest"]{--cb:#35513F;--corner:var(--svg-leaf);--corner-on:block;--corner-pad:30px;--corner-c:var(--deco)}
+:root[data-skin="forest"] .card:not(.quiet){border-radius:18px}
+:root[data-skin="forest"] header.site{border-bottom:0}
+
+/* ---- 夕焼け: a warm gradient header, a gradient title, sun rays */
+:root[data-skin="sunset"] header.site{background:linear-gradient(90deg,#FF8A5B,#FFA66B 55%,#FFC47E);border-bottom:0}
+:root[data-skin="sunset"] .hero h1{background:linear-gradient(90deg,#9A2A12,#5B3A8E);-webkit-background-clip:text;background-clip:text;color:transparent}
+:root[data-skin="sunset"] .card:not(.quiet){border-radius:26px 26px 26px 6px}
+
+/* ---- 色覚サポート: boxed menu, dashed vs solid, underlined numbers (not colour alone) */
+:root[data-skin="cb-safe"]{--cb:#8FA0B0;--pb:#8FA0B0}
+:root[data-skin="cb-safe"] .card:not(.quiet)[data-dir="ato"] .c-count .num{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:5px}
+:root[data-skin="cb-safe"] .card:not(.quiet)[data-dir="mou"] .c-count .num{text-decoration:underline dotted;text-decoration-thickness:3px;text-underline-offset:5px}
+:root[data-skin="cb-safe"] .card:not(.quiet)[data-dir="mou"]{border-style:dashed}
+
+/* ---- ダーク / ハイコントラスト / 大きな文字: readability first */
+:root[data-skin="dark"]{--cb:var(--line)}
+:root[data-skin="contrast"]{--cb:#FFFFFF;--pb:#FFFFFF;--csh:none}
+:root[data-skin="contrast"] header.site{border-bottom:4px solid var(--accent)}
+:root[data-skin="contrast"] a{text-decoration-thickness:2px}
+:root[data-skin="contrast"] .card:not(.quiet){border-width:3px}
+:root[data-skin="large"]{--cb:#8F8C80;--pb:#8F8C80}
+:root[data-skin="large"] :is(.btn,.chip){min-height:56px;font-size:1.05rem}
+:root[data-skin="large"] header.site nav a{min-height:52px}
+:root[data-skin="large"] a{text-decoration-thickness:2px;text-underline-offset:3px}
+
+/* ================= seasonal skins ================= */
+/* ---- ハロウィン */
+:root[data-skin="halloween"]{--cb:var(--text);--csh:5px 5px 0 var(--deco);--pb:var(--text);--corner:var(--svg-bat);--corner-on:block;--corner-pad:32px;--corner-c:var(--deco2)}
+:root[data-skin="halloween"] header.site{border-bottom:5px solid var(--deco)}
+:root[data-skin="halloween"] .hero h1{font-weight:900;text-shadow:3px 3px 0 var(--deco2)}
+:root[data-skin="halloween"] .hero .lead{color:#FFE9CF}
+:root[data-skin="halloween"] .card:not(.quiet){border-radius:24px 24px 12px 12px;border-width:3px}
+:root[data-skin="halloween"] .cats a::before{border-color:var(--deco);background:#FFF3E4}
+
+/* ---- クリスマス */
+:root[data-skin="christmas"]{--cb:#D8C9A8;--corner:var(--svg-spark);--corner-on:block;--corner-pad:30px;--corner-c:var(--deco2)}
+:root[data-skin="christmas"] header.site{border-bottom:5px double var(--deco)}
+:root[data-skin="christmas"] .hero h1{letter-spacing:.03em}
+
+/* ---- お正月 */
+:root[data-skin="newyear"]{--cb:var(--deco);--csh:0 2px 6px rgba(120,60,20,.16);--pb:var(--deco)}
+:root[data-skin="newyear"] header.site{border-bottom:4px solid var(--deco)}
+:root[data-skin="newyear"] .brand{letter-spacing:.1em}
+:root[data-skin="newyear"] .card:not(.quiet){outline:1px solid color-mix(in srgb,var(--deco) 55%,transparent);outline-offset:-5px}
+:root[data-skin="newyear"] .hero h1{color:var(--accent);letter-spacing:.08em}
+
+/* ---- バレンタイン */
+:root[data-skin="valentine"]{--cb:#F2B3C3;--corner:var(--svg-heart);--corner-on:block;--corner-pad:30px;--corner-c:var(--accent)}
+:root[data-skin="valentine"] header.site{border-bottom:3px dotted var(--deco)}
+:root[data-skin="valentine"] .card:not(.quiet){border-radius:26px}
+:root[data-skin="valentine"] .hero h1{color:var(--accent)}
+
+/* ---- さくら */
+:root[data-skin="sakura"]{--cb:#F3D5DB;--corner:var(--svg-petal);--corner-on:block;--corner-pad:30px;--corner-c:var(--deco)}
+:root[data-skin="sakura"] header.site{border-bottom:0;box-shadow:0 1px 0 #F3D5DB}
+:root[data-skin="sakura"] .card:not(.quiet){border-radius:22px}
+:root[data-skin="sakura"] .hero h1{font-weight:600;letter-spacing:.04em}
+
+/* ---- 夏まつり */
+:root[data-skin="summer"]{--cb:var(--text);--csh:4px 4px 0 var(--deco);--pb:var(--text);--corner:var(--svg-star);--corner-on:block;--corner-pad:30px;--corner-c:var(--deco2)}
+:root[data-skin="summer"] .card:not(.quiet){border-width:3px}
+:root[data-skin="summer"] .hero h1{font-weight:900}
+
+/* ---- お月見 */
+:root[data-skin="tsukimi"]{--cb:#D9CB9C;--corner:var(--svg-moon);--corner-on:block;--corner-pad:30px;--corner-c:var(--deco2)}
+:root[data-skin="tsukimi"] header.site{border-bottom:3px double var(--deco)}
+:root[data-skin="tsukimi"] .hero h1{letter-spacing:.08em}
+
+
+/* ================= calendar, plan, today list ================= */
+:root[data-skin] .cal-cell.today .cal-n{background:var(--accent);color:var(--on-accent)}
+:root[data-btn="square"] .cal-n,:root[data-btn="outline"] .cal-n{border-radius:4px}
+:root[data-btn="sticker"] .cal-cell.today .cal-n{box-shadow:2px 2px 0 var(--text)}
+:root[data-btn="square"] .cal-chip,:root[data-btn="outline"] .cal-chip{border-radius:2px}
+:root[data-btn="square"] .plist .when,:root[data-btn="outline"] .plist .when{border-radius:3px}
+:root[data-btn="sticker"] .plist .when{border:2px solid var(--text);border-radius:8px}
+:root[data-btn="underline"] .plist .when{border-radius:0;background:transparent;color:var(--accent);box-shadow:inset 0 -3px var(--accent);padding:0 4px}
+:root[data-head="band"] .cal-title,:root[data-head="center"] .cal-title{font-family:var(--font-head,var(--font))}
+:root[data-density="compact"] .cal-cell{min-height:52px}
+:root[data-density="airy"] .cal-cell{min-height:66px}
+@media (min-width:640px){:root[data-density="compact"] .cal-cell{min-height:80px}:root[data-density="airy"] .cal-cell{min-height:110px}}
+:root[data-deco="paper"] .day-panel,:root[data-deco="paper"] #todo{background-image:repeating-linear-gradient(180deg,transparent 0,transparent 33px,color-mix(in srgb,var(--deco) 22%,transparent) 33px,color-mix(in srgb,var(--deco) 22%,transparent) 34px)}
+:root[data-deco="grid"] .cal-grid{border-radius:0}
+
+/* ================= quiet cards stay quiet in every skin ================= */
+:root[data-skin] .card.quiet{transform:none;box-shadow:none;background-image:none}
+:root[data-skin] .card.quiet::before,:root[data-skin] .card.quiet::after{display:none!important}
+:root[data-skin] .card.quiet .c-count .num{color:var(--quiet-text);-webkit-text-stroke:0;text-shadow:none;background:transparent;padding:0;border-radius:0;box-shadow:none;font-family:var(--font);font-size:1.45rem;font-weight:600;letter-spacing:0}
+:root[data-skin] .card.quiet .btn{background:transparent;color:var(--quiet-text);border:2px solid var(--quiet-line);border-radius:999px;box-shadow:none;padding:0 14px}
+:root[data-skin] .card.quiet .c-title,:root[data-skin] .card.quiet .c-title a{font-family:var(--font)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
