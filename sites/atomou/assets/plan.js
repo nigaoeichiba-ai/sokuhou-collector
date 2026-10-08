@@ -83,7 +83,7 @@
     });
     return rows.sort(function (a, b) { return a.n - b.n || (a.k < b.k ? -1 : 1); });
   }
-  function whenWord(n) { return n < 0 ? '期限をすぎています' : n === 0 ? '今日' : n === 1 ? '明日' : 'あと' + n + '日'; }
+  function whenWord(n) { return n < 0 ? '期限切れ' : n === 0 ? '今日' : n === 1 ? '明日' : 'あと' + n + '日'; }
   function renderTodo(cat) {
     var box = $('#todo');
     if (!box) return;
@@ -94,7 +94,7 @@
     list.innerHTML = rows.length ? rows.slice(0, 8).map(function (r) {
       if (r.k === 'event') return '<li><span class="when">' + whenWord(r.n) + '</span> <a href="/plan/?key=' + H(r.it.key) + '">' + H(r.it.title) + '</a>' + (r.it.time ? ' <span class="muted">' + H(r.it.time) + '</span>' : '') + '</li>';
       return '<li class="task' + (r.n < 0 ? ' over' : '') + '"><span class="when">' + whenWord(r.n) + '</span> ' + taskCheckbox(r.it, r.t) + ' <span class="muted">(' + H(r.it.title) + ')</span></li>';
-    }).join('') : '<li class="muted">今日の予定・やることは、ありません。</li>';
+    }).join('') : '<li class="muted">今日の予定とやることはありません。</li>';
   }
 
   /* ---------- the calendar page ---------- */
@@ -131,7 +131,7 @@
       h += '</div>';
       var lines = dayLines(sel);
       h += '<section class="day-panel" id="day-panel" aria-live="polite"><h3>' + md(sel) + ' <small class="muted">' + rel(sel) + '</small></h3>' +
-        (lines ? '<ul class="plist">' + lines + '</ul>' : '<p class="muted">この日の予定は、ありません。</p>') +
+        (lines ? '<ul class="plist">' + lines + '</ul>' : '<p class="muted">この日の予定はありません。</p>') +
         '<p><a class="btn small" href="/add/?kind=event&amp;date=' + C.iso(sel) + '">この日に予定を追加</a></p></section>';
       return h;
     }
@@ -141,10 +141,10 @@
         var d = C.addDays(TODAY, i), lines = dayLines(d);
         if (lines) { any = true; h += '<section class="plist-day"><h3>' + md(d) + ' <small class="muted">' + rel(d) + '</small></h3><ul class="plist">' + lines + '</ul></section>'; }
       }
-      return any ? '<p class="hint">これから60日の予定とやることです。</p>' + h : '<p class="empty">これから60日の予定は、ありません。<br><a class="btn small" href="/add/?kind=event">予定を追加する</a></p>';
+      return any ? '<p class="hint">今日から60日分です。</p>' + h : '<p class="empty">60日先までの予定はありません。<br><a class="btn small" href="/add/?kind=event">予定を追加</a></p>';
     }
     function render() {
-      host.innerHTML = '<div class="chips cal-tools" role="group" aria-label="表示の切りかえ"><button type="button" class="chip" data-v="month" aria-pressed="' + (view === 'month') + '">月</button>' +
+      host.innerHTML = '<div class="chips cal-tools" role="group" aria-label="表示の切り替え"><button type="button" class="chip" data-v="month" aria-pressed="' + (view === 'month') + '">月</button>' +
         '<button type="button" class="chip" data-v="list" aria-pressed="' + (view === 'list') + '">一覧</button><a class="btn small" href="/add/?kind=event">＋ 予定を追加</a></div>' + (view === 'month' ? month() : list());
     }
     redo = function () { items = planItems(catCache); render(); };
@@ -165,11 +165,11 @@
   /* ---------- one plan: its card, memo, "do this N days before", and the optional file for other calendar apps ---------- */
   function pagePlan() {
     var key = P.key || '', box = $('#plan'), item = null;
-    function missing() { box.innerHTML = '<p class="empty">この予定は、見つかりませんでした。<br><a class="btn small" href="/calendar/">カレンダーへ</a></p>'; }
+    function missing() { box.innerHTML = '<p class="empty">この予定は見つかりません。<br><a class="btn small" href="/calendar/">カレンダーへ</a></p>'; }
     if (!/^[cm]:[A-Za-z0-9_-]{1,40}$/.test(key)) return missing();
     function taskList() {
       var b = baseOf(item), n = notesOf(key);
-      if (!n.tasks.length) return '<li class="muted">まだ、ありません。</li>';
+      if (!n.tasks.length) return '<li class="muted">まだありません。</li>';
       return n.tasks.slice().sort(function (x, y) { return y.before - x.before; }).map(function (t) {
         var due = b ? C.addDays(b, -t.before) : null;
         return '<li class="task">' + taskCheckbox(item, t) + ' <span class="muted">(' + beforeLabel(t.before) + (due ? ' ' + md(due) : '') + ')</span> <button type="button" class="mini" data-del-task="' + H(t.id) + '" aria-label="このやることを消す">×</button></li>';
@@ -178,20 +178,20 @@
     function render() {
       var own = item.own, e = own ? A.findEntry(item.id) : null, n = notesOf(key), h = '';
       h += '<div class="cards plan-card">' + A.cardHtml(item).replace('class="card', 'class="card big') + '</div>';
-      h += '<section class="plan-sec" id="tasks"><h2>やること(何日前までに何をするか)</h2><ul class="plist" id="task-list">' + taskList() + '</ul>' +
+      h += '<section class="plan-sec" id="tasks"><h2>やること(何日前までに)</h2><ul class="plist" id="task-list">' + taskList() + '</ul>' +
         '<form class="task-add" id="task-add"><label class="vh" for="t-before">いつまでに</label><select id="t-before">' + BEFORE.map(function (b) { return '<option value="' + b[0] + '"' + (b[0] === 7 ? ' selected' : '') + '>' + b[1] + '</option>'; }).join('') + '</select>' +
         '<label class="vh" for="t-text">やること</label><input type="text" id="t-text" maxlength="80" placeholder="例: 書類をそろえる" autocomplete="off"><button type="submit" class="btn small">追加</button></form>' +
-        '<p class="hint">期限の日は、カレンダーと、ホームの「今日の予定・やること」に出ます。</p></section>';
+        '<p class="hint">期限の日は、カレンダーとホームに出ます。</p></section>';
       h += '<section class="plan-sec"><h2>メモ</h2><div class="field"><label class="vh" for="p-memo">メモ</label><textarea id="p-memo" rows="4" maxlength="600" placeholder="持ち物、場所、連絡先など">' + H(n.memo) + '</textarea></div>' +
-        '<p class="hint">メモは、この端末の中だけに保存します。</p></section>';
+        '<p class="hint">この端末の中だけに残ります。</p></section>';
       if (e) {
-        h += '<section class="plan-sec"><h2>内容を直す</h2><div class="field"><label for="e-title">名前</label><input type="text" id="e-title" maxlength="40" value="' + H(e.title) + '"></div>';
+        h += '<section class="plan-sec"><h2>直す</h2><div class="field"><label for="e-title">名前</label><input type="text" id="e-title" maxlength="40" value="' + H(e.title) + '"></div>';
         if (e.precision === 'day') h += '<div class="field"><label for="e-date">日付</label><input type="date" id="e-date" value="' + H(e.date) + '"></div>';
         if (e.kind === 'event' && e.precision === 'day') h += '<div class="field"><label for="e-time">時刻</label><input type="time" id="e-time" value="' + H(e.time || '') + '"></div>';
-        h += '<p><button type="button" class="btn small" id="e-save">変更を保存</button></p></section>';
+        h += '<p><button type="button" class="btn small" id="e-save">保存</button></p></section>';
       }
-      if (item.p === 'day') h += '<details class="plan-sec more"><summary>他のカレンダーアプリも使うとき</summary><p class="hint">この予定を、iPhone の「カレンダー」や Google カレンダーなどに取り込める、ファイルをつくります。</p>' +
-        '<p><button type="button" class="btn small ghost" data-ics-for="' + H(key) + '">ファイルをつくる</button></p></details>';
+      if (item.p === 'day') h += '<details class="plan-sec more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">iPhone の「カレンダー」や Google カレンダーに取り込めるファイルです。</p>' +
+        '<p><button type="button" class="btn small ghost" data-ics-for="' + H(key) + '">ファイルを作る</button></p></details>';
       box.innerHTML = h;
       A.hydrate(box);
       if (own) $$('.c-act a', box).forEach(function (a) { a.remove(); });
@@ -207,7 +207,7 @@
       var text = $('#t-text').value.trim();
       if (!text) { $('#t-text').focus(); return; }
       var n = notesOf(key);
-      if (n.tasks.length >= 30) { A.toast('やることは、30件までです。'); return; }
+      if (n.tasks.length >= 30) { A.toast('やることは30件までです。'); return; }
       n.tasks.push({ id: Math.random().toString(36).slice(2, 8), before: +$('#t-before').value, text: text.slice(0, 80), done: false });
       setNotes(key, n); A.stat('act:task_add');
       var memo = $('#p-memo').value; if (memo !== n.memo) { n.memo = memo; setNotes(key, n); }
@@ -230,7 +230,7 @@
       else { var c = (cat || []).filter(function (x) { return x.id === key.slice(2); })[0]; item = c ? A.catItem(c) : null; }
       if (!item) return missing();
       render();
-      if (P.new) { A.toast('残しました。メモと、何日前までにやることを、続けて書けます。'); try { history.replaceState(null, '', '/plan/?key=' + key); } catch (x) { /* ignore */ } }
+      if (P.new) { A.toast('残しました。メモと「やること」を続けて書けます。'); try { history.replaceState(null, '', '/plan/?key=' + key); } catch (x) { /* ignore */ } }
     });
   }
 
