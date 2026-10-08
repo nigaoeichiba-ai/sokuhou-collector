@@ -43,6 +43,12 @@ class Pages(BuildOnce):
         self.assertEqual(sum(1 for k in self.rel if k.startswith("c/")), len(catalog.GROUPS))
         self.assertEqual(sum(1 for k in self.rel if k.startswith("e/")), len(self.entries))
 
+    def test_card_titles_may_break_inside_long_english_names(self):
+        # 2026-10-08: "SoftBank/Y!mobile/LINEMO" could not wrap and pushed a card 18px past a 300px screen (layoutcheck [overflow] on /c/sale/)
+        css = self.rel["assets/style.css"]
+        m = re.search(r"\.c-title[^{]*\{[^}]*overflow-wrap:anywhere", css)
+        self.assertIsNotNone(m, "the card title needs overflow-wrap:anywhere")
+
     def test_release_and_preview_differ_only_in_indexing(self):
         self.assertIn("Allow: /", self.rel["robots.txt"])
         self.assertIn("Disallow: /", self.prev["robots.txt"])
