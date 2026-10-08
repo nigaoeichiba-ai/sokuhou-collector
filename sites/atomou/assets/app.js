@@ -30,11 +30,11 @@
 
   /* ---------- state ---------- */
   var S = blank(), brokenSaved = false;
-  var BLOCK_IDS = ['search', 'cats', 'daily', 'mine', 'soon', 'record', 'usecases'], KIND_IDS = ['anniversary', 'birthday', 'memorial', 'since', 'until', 'memo'];
+  var BLOCK_IDS = ['todo', 'search', 'cats', 'daily', 'mine', 'soon', 'record', 'usecases'], KIND_IDS = ['event', 'anniversary', 'birthday', 'memorial', 'since', 'until', 'memo'];
   function statsDefault() {  // statistics are on unless the browser says "do not track" (DNT / Global Privacy Control)
     try { return !(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.globalPrivacyControl === true); } catch (e) { return true; }
   }
-  function blank() { return { v: 1, updated: '', entries: [], deleted: [], saved: [], order: [], genre: {}, prefs: { skin: 'basic', big: false, alarm: 'morning', stats: statsDefault(), blocks: { order: [], hidden: [] } } }; }
+  function blank() { return { v: 1, updated: '', entries: [], deleted: [], saved: [], order: [], genre: {}, notes: {}, prefs: { skin: 'basic', big: false, alarm: 'morning', stats: statsDefault(), blocks: { order: [], hidden: [] }, tour: {} } }; }
   function oneOf(v, list, dflt) { return list.indexOf(v) >= 0 ? v : dflt; }
   function cleanEntry(e) {  // whatever is in storage (or in a restored backup, or in a synced file) is reduced to known shapes before it can reach the page
     if (!e || typeof e !== 'object') return null;
@@ -43,7 +43,21 @@
     var kind = oneOf(e.kind, KIND_IDS, 'memo');
     return { id: id, title: String(e.title == null ? '' : e.title).slice(0, 80), date: C.iso(d), precision: oneOf(e.precision, ['day', 'month', 'year'], 'day'), kind: kind,
       quiet: !!e.quiet || kind === 'memorial', yearly: !!e.yearly, every100: !!e.every100, alarm: oneOf(e.alarm, ['morning', 'eve', 'week', 'none'], 'morning'),
-      created: /^\d{4}-\d{2}-\d{2}$/.test(String(e.created)) ? e.created : '' };
+      time: /^([01]\d|2[0-3]):[0-5]\d$/.test(String(e.time)) ? e.time : '', created: /^\d{4}-\d{2}-\d{2}$/.test(String(e.created)) ? e.created : '' };
+  }
+  function cleanNotes(n) {  // memo and "do this N days before" tasks, per day (key c:<catalogue id> or m:<own id>)
+    var out = {}, keys = n && typeof n === 'object' ? Object.keys(n).slice(0, 300) : [];
+    keys.forEach(function (k) {
+      var v = n[k];
+      if (!/^[cm]:[A-Za-z0-9_-]{1,40}$/.test(k) || !v || typeof v !== 'object') return;
+      var tasks = (Array.isArray(v.tasks) ? v.tasks : []).slice(0, 30).map(function (t) {
+        if (!t || typeof t !== 'object') return null;
+        var b = Math.floor(+t.before), text = String(t.text == null ? '' : t.text).slice(0, 80);
+        return (b >= 0 && b <= 365 && text) ? { id: /^[a-z0-9]{1,12}$/.test(String(t.id)) ? t.id : Math.random().toString(36).slice(2, 8), before: b, text: text, done: !!t.done } : null;
+      }).filter(Boolean), memo = String(v.memo == null ? '' : v.memo).slice(0, 600);
+      if (memo || tasks.length) out[k] = { memo: memo, tasks: tasks };
+    });
+    return out;
   }
   function normalize(o) {
     var s = blank(), p = (o && o.prefs) || {};
@@ -52,12 +66,16 @@
     s.entries = (Array.isArray(o.entries) ? o.entries : []).map(cleanEntry).filter(Boolean);
     s.deleted = (Array.isArray(o.deleted) ? o.deleted : []).filter(function (x) { return /^[A-Za-z0-9_-]{1,40}$/.test(String(x)); }).slice(-300);
     s.saved = (Array.isArray(o.saved) ? o.saved : []).filter(function (x) { return /^[0-9a-f]{10}$/.test(String(x)); });
+    s.notes = cleanNotes(o.notes);
     s.order = (Array.isArray(o.order) ? o.order : []).filter(function (x) { return /^[cm]:[A-Za-z0-9_-]{1,40}$/.test(String(x)); });
     (CONF.groups || []).forEach(function (g) { var n = o.genre && +o.genre[g]; if (n > 0) s.genre[g] = Math.min(20, Math.floor(n)); });
     s.prefs.skin = CONF.skins[p.skin] ? p.skin : 'basic';
     s.prefs.big = !!p.big;
     s.prefs.alarm = oneOf(p.alarm, ['morning', 'eve', 'week', 'none'], 'morning');
     s.prefs.stats = p.stats === undefined ? statsDefault() : !!p.stats;
+    s.prefs.tour = {};
+    ['home', 'calendar', 'plan', 'add', 'search'].forEach(function (k) { if (p.tour && p.tour[k] === true) s.prefs.tour[k] = true; });
+    s.prefs.seasonOff = /^[a-z0-9-]{1,30}$/.test(String(p.seasonOff)) && CONF.skins[p.seasonOff] ? p.seasonOff : '';
     var b = p.blocks || {};
     s.prefs.blocks = { order: (Array.isArray(b.order) ? b.order : []).filter(function (k) { return BLOCK_IDS.indexOf(k) >= 0; }),
       hidden: (Array.isArray(b.hidden) ? b.hidden : []).filter(function (k) { return BLOCK_IDS.indexOf(k) >= 0; }) };
@@ -84,6 +102,8 @@
     out.deleted = Object.keys(del).slice(-300);
     out.saved = older.saved.concat(newer.saved).filter(function (x, i, l) { return l.indexOf(x) === i; });
     out.order = newer.order.slice();
+    out.notes = Object.assign({}, older.notes, newer.notes);
+    Object.keys(out.notes).forEach(function (k) { if (k.charAt(0) === 'm' && del[k.slice(2)]) delete out.notes[k]; });
     Object.keys(older.genre).concat(Object.keys(newer.genre)).forEach(function (g) { out.genre[g] = Math.max(older.genre[g] || 0, newer.genre[g] || 0); });
     out.prefs = JSON.parse(JSON.stringify(newer.prefs));
     out.updated = newer.updated;
@@ -142,6 +162,7 @@
 
   /* ---------- kinds of personal days ---------- */
   var KINDS = {
+    event: { t: '予定', d: 'デート・会議・用事など', g: 1, yearly: false, r100: false, time: true, words: ['デート', '会議', '打ち合わせ', '病院', '旅行の予定'] },
     anniversary: { t: '記念日', d: '結婚・付き合った日・開店など', g: 3, yearly: true, r100: true, words: ['結婚記念日', '付き合った日', '出会った日', '開店した日'] },
     birthday: { t: '誕生日', d: '家族・友だち・推し', g: 2, yearly: true, r100: false, words: ['の誕生日', '家族の誕生日', '推しの誕生日'] },
     memorial: { t: '大切な人を思う日', d: '命日・ペット・あの日', g: 0, yearly: true, r100: false, quiet: true, words: ['命日', 'ペットの命日', 'あの日'] },
@@ -217,27 +238,26 @@
 
   /* ---------- cards (the same markup as build.py card_html) ---------- */
   function catItem(c) {
-    return { key: 'c:' + c.id, id: c.id, title: c.title, date: c.date, p: c.precision || 'day', g: CONF.groups.indexOf(c.group) + 1, kind: c.kind, region: c.region, quiet: !!c.quiet,
-      src: c.source_url, checked: c.checked_on, cat: c.category, own: false, href: '/e/' + c.id + '/' };
+    return { key: 'c:' + c.id, id: c.id, title: c.title, date: c.date, p: c.precision || 'day', g: CONF.groups.indexOf(c.group) + 1, kind: c.subject || c.category || c.kind, what: c.what || c.kind, kword: c.kind, place: c.place != null ? c.place : (c.region || ''), quiet: !!c.quiet,
+      cat: c.category, own: false, href: '/e/' + c.id + '/' };
   }
   function ownItem(e) {
     var k = KINDS[e.kind] || KINDS.memo;
-    return { key: 'm:' + e.id, id: e.id, title: e.title, date: e.date, p: e.precision || 'day', g: k.g, kind: k.t, quiet: !!e.quiet, own: true };
+    return { key: 'm:' + e.id, id: e.id, title: e.title, date: e.date, p: e.precision || 'day', g: k.g, kind: k.t, quiet: !!e.quiet, own: true, time: e.time || '', yearly: !!e.yearly };
   }
   function cardHtml(it) {
     var h = '<article class="card' + (it.quiet ? ' quiet' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.date) + '" data-p="' + H(it.p) + '"' +
       (it.g ? ' data-g="' + it.g + '"' : '') + (it.cat ? ' data-cat="' + H(it.cat) + '"' : '') + '>';
     h += '<div class="c-top">' + (it.g ? '<span class="mark m' + it.g + '" data-g="' + it.g + '" aria-hidden="true"></span>' : '') + '<span class="badge">' + H(it.kind) + '</span>' +
-      (it.region ? '<span class="reg">' + H(it.region) + '</span>' : '') + '</div>';
-    h += '<p class="c-count"><span class="word"></span><span class="num"></span></p><p class="c-sub"></p>';
+      (it.what ? '<span class="what">' + H(it.what) + '</span>' : '') + '</div>';
+    h += '<p class="c-count"><span class="word"></span><span class="num"></span><span class="rel"></span></p><p class="c-sub"></p>';
     h += '<h3 class="c-title">' + (it.href ? '<a href="' + H(it.href) + '">' + H(it.title) + '</a>' : H(it.title)) + '</h3>';
-    h += '<p class="c-date">' + H(fmtDate(it.date, it.p)) + '</p>';
+    h += '<p class="c-date">' + H(fmtDate(it.date, it.p)) + (it.time ? ' ' + H(it.time) : '') + (it.kword ? ' ' + H(it.kword) : '') + '</p>';
+    if (it.place) h += '<p class="c-place"><b>場所</b>' + H(it.place) + '</p>';
     if (it.own) h += '<div class="c-next"></div>';
-    else h += '<p class="c-src">出典: ' + H(host(it.src)) + '(確認日 ' + H(it.checked) + ')</p>';
     h += '<div class="c-act">';
-    if (!it.own) h += '<button type="button" class="btn small ghost" data-act="save" aria-pressed="false">☆ 保存する</button>';
-    if (it.p === 'day') h += '<button type="button" class="btn small" data-act="ics">カレンダーに入れる</button>';
-    if (it.own) h += '<button type="button" class="btn small ghost" data-act="del">消す</button>';
+    if (!it.own) h += '<button type="button" class="btn small" data-act="save" aria-pressed="false">☆ 予定に入れる</button><a class="btn small ghost" href="' + H(it.href) + '">詳細</a>';
+    if (it.own) h += '<a class="btn small" href="/plan/?key=' + H(it.key) + '">開く</a><button type="button" class="btn small ghost" data-act="del">消す</button>';
     h += '</div>';
     h += '<div class="c-move"><button type="button" class="mini grip" data-act="grip" aria-label="つかんで動かす">⠿</button><button type="button" class="mini" data-act="up" aria-label="ひとつ前へ">↑</button>' +
       '<button type="button" class="mini" data-act="down" aria-label="ひとつ後ろへ">↓</button></div>';
@@ -253,6 +273,8 @@
     if (word) word.textContent = w[0];
     if (num) num.textContent = w[1];
     if (sub) sub.textContent = r.sub ? '合計 ' + r.sub : '';
+    var rl = $('.rel', card), t = r.total;
+    if (rl) rl.textContent = (p === 'day' && t != null) ? (t === 1 ? '(明日)' : t === 2 ? '(明後日)' : t === -1 ? '(昨日)' : t === -2 ? '(おととい)' : '') : '';
     var cnt = $('.c-count', card);
     if (cnt) cnt.setAttribute('aria-label', r.big + (r.sub ? '(合計 ' + r.sub + ')' : ''));
     var nx = $('.c-next', card);
@@ -265,7 +287,7 @@
     if (sv && key.indexOf('c:') === 0) {
       var on = S.saved.indexOf(key.slice(2)) >= 0;
       sv.setAttribute('aria-pressed', on ? 'true' : 'false');
-      sv.textContent = on ? '★ 保存ずみ' : '☆ 保存する';
+      sv.textContent = on ? '★ 予定に入っています' : '☆ 予定に入れる';
     }
   }
   function hydrate(root) { $$('.card[data-date]', root || document).forEach(fillCard); }
@@ -331,35 +353,91 @@
       persist();
     }
   }
-  function startDrag(card, ev) {
-    var grid = card.parentNode, grip = ev.target, id = ev.pointerId;
-    ev.preventDefault();
+  /* A card can be grabbed anywhere (mouse: drag 6px; finger: press and hold), by its grip, or moved with the arrows (see "カードを動かす").
+     A floating copy follows the pointer; the real card is dimmed and takes the place it is dropped on. */
+  var drag = null, ghost = null, suppressClick = false, press = null, tPress = null;
+  function interactive(t) { return t.closest && t.closest('a,button,input,select,textarea,label,summary'); }
+  function dragGrid(card) { var g = card.parentNode; return g && g.getAttribute && g.getAttribute('data-save-order') === '1' && !card.classList.contains('big') && !card.classList.contains('ghost') ? g : null; }
+  function beginDrag(card, x, y) {
+    var r = card.getBoundingClientRect();
+    drag = { card: card, grid: card.parentNode, dx: x - r.left, dy: y - r.top };
+    ghost = card.cloneNode(true);
+    ghost.classList.add('ghost'); ghost.removeAttribute('data-key');
+    ghost.style.width = r.width + 'px'; ghost.style.left = r.left + 'px'; ghost.style.top = r.top + 'px';
+    document.body.appendChild(ghost);
     card.classList.add('dragging'); document.body.classList.add('drag-on');
-    try { grip.setPointerCapture(id); } catch (e) { /* the document listeners below work without it */ }
-    function move(e) {
-      if (e.pointerId !== id) return;
-      var y = e.clientY;
-      if (y < 70) window.scrollBy(0, -14); else if (y > window.innerHeight - 70) window.scrollBy(0, 14);
-      var el = document.elementFromPoint(e.clientX, e.clientY), over = el && el.closest && el.closest('.card');
-      if (!over || over === card || over.parentNode !== grid) return;
-      var r = over.getBoundingClientRect(), after = (e.clientX - r.left) / r.width + (e.clientY - r.top) / r.height > 1;
-      grid.insertBefore(card, after ? over.nextSibling : over);
-    }
-    function up(e) {
-      if (e.pointerId !== id) return;
-      document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); document.removeEventListener('pointercancel', up);
-      card.classList.remove('dragging'); document.body.classList.remove('drag-on'); changed(grid);
-    }
-    document.addEventListener('pointermove', move); document.addEventListener('pointerup', up); document.addEventListener('pointercancel', up);
+    try { var sel = window.getSelection && window.getSelection(); if (sel) sel.removeAllRanges(); if (navigator.vibrate) navigator.vibrate(12); } catch (e) { /* only a nicety */ }
   }
+  function dragMove(x, y) {
+    if (!drag) return;
+    ghost.style.left = (x - drag.dx) + 'px'; ghost.style.top = (y - drag.dy) + 'px';
+    if (y < 80) window.scrollBy(0, -16); else if (y > window.innerHeight - 80) window.scrollBy(0, 16);
+    var el = document.elementFromPoint(x, y), over = el && el.closest && el.closest('.card');
+    if (!over || over === drag.card || over.parentNode !== drag.grid) return;
+    var r = over.getBoundingClientRect(), after = (x - r.left) / r.width + (y - r.top) / r.height > 1;
+    drag.grid.insertBefore(drag.card, after ? over.nextSibling : over);
+  }
+  function endDrag() {
+    if (!drag) return;
+    drag.card.classList.remove('dragging'); document.body.classList.remove('drag-on');
+    if (ghost) { ghost.remove(); ghost = null; }
+    var g = drag.grid;
+    drag = null; changed(g); stat('act:drag');
+  }
+  function quietClick() { suppressClick = true; setTimeout(function () { suppressClick = false; }, 0); }
+  document.addEventListener('pointerdown', function (ev) {
+    if (ev.pointerType === 'touch' || ev.button !== 0 || !ev.target.closest) return;
+    var card = ev.target.closest('.card'), grip = ev.target.closest('[data-act="grip"]');
+    if (!card || !dragGrid(card) || (!grip && interactive(ev.target))) return;
+    press = { card: card, x: ev.clientX, y: ev.clientY, id: ev.pointerId, started: false };
+    if (grip) { ev.preventDefault(); press.started = true; beginDrag(card, ev.clientX, ev.clientY); }
+  });
+  document.addEventListener('pointermove', function (ev) {
+    if (!press || ev.pointerId !== press.id) return;
+    if (!press.started) {
+      if (Math.abs(ev.clientX - press.x) + Math.abs(ev.clientY - press.y) < 6) return;
+      press.started = true; beginDrag(press.card, press.x, press.y);
+    }
+    dragMove(ev.clientX, ev.clientY);
+  });
+  function pressEnd(ev) {
+    if (!press || ev.pointerId !== press.id) return;
+    if (press.started) { quietClick(); endDrag(); }
+    press = null;
+  }
+  document.addEventListener('pointerup', pressEnd);
+  document.addEventListener('pointercancel', pressEnd);
+  document.addEventListener('click', function (ev) { if (suppressClick) { ev.stopPropagation(); ev.preventDefault(); } }, true);
+  document.addEventListener('dragstart', function (ev) { if (ev.target.closest && ev.target.closest('.cards .card')) ev.preventDefault(); });
+  document.addEventListener('contextmenu', function (ev) { if (drag || tPress) ev.preventDefault(); });
+  function cancelTouch() { if (tPress) { clearTimeout(tPress.timer); tPress = null; } }
+  document.addEventListener('touchstart', function (ev) {
+    cancelTouch();
+    if (ev.touches.length !== 1 || !ev.target.closest) return;
+    var card = ev.target.closest('.card'), grip = ev.target.closest('[data-act="grip"]');
+    if (!card || !dragGrid(card) || (!grip && interactive(ev.target))) return;
+    var tc = ev.touches[0];
+    tPress = { card: card, x: tc.clientX, y: tc.clientY, on: false };
+    tPress.timer = setTimeout(function () { if (tPress) { tPress.on = true; beginDrag(card, tPress.x, tPress.y); } }, grip ? 0 : 380);
+  }, { passive: true });
+  document.addEventListener('touchmove', function (ev) {
+    if (!tPress) return;
+    var tc = ev.touches[0];
+    if (!tPress.on) { if (Math.abs(tc.clientX - tPress.x) + Math.abs(tc.clientY - tPress.y) > 10) cancelTouch(); return; }
+    ev.preventDefault();
+    dragMove(tc.clientX, tc.clientY);
+  }, { passive: false });
+  function touchEnd() { if (tPress && tPress.on) { quietClick(); endDrag(); } cancelTouch(); }
+  document.addEventListener('touchend', touchEnd);
+  document.addEventListener('touchcancel', touchEnd);
   function wireReorderToggle(btn, grid) {
     if (!btn) return;
     btn.addEventListener('click', function () {
       var on = !grid.classList.contains('reorder');
       grid.classList.toggle('reorder', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      btn.textContent = on ? '並べ替えを終わる' : 'カードを動かす';
-      if (on) { toast('つかむ印(⠿)をドラッグするか、↑↓で動かせます。'); stat('act:reorder'); }
+      btn.textContent = on ? 'ボタンでの並べ替えを終わる' : '↑↓で動かす';
+      if (on) { toast('↑↓のボタンでも動かせます。カードは、そのままドラッグ(スマホは長押し)でも動かせます。'); stat('act:reorder'); }
     });
   }
 
@@ -384,8 +462,8 @@
   }
   function toggleSave(card) {
     var id = (card.getAttribute('data-key') || '').slice(2), i = S.saved.indexOf(id), g = card.getAttribute('data-g');
-    if (i >= 0) { S.saved.splice(i, 1); toast('保存をはずしました。'); }
-    else { S.saved.push(id); stat('act:save'); if (g && CONF.groups[g - 1]) bump(CONF.groups[g - 1]); toast('保存しました。マイページで見られます。'); }
+    if (i >= 0) { S.saved.splice(i, 1); toast('予定からはずしました。'); }
+    else { S.saved.push(id); stat('act:save'); if (g && CONF.groups[g - 1]) bump(CONF.groups[g - 1]); toast('予定に入れました。カレンダーで見られます。'); }
     persist();
     $$('.card[data-key="c:' + id + '"]').forEach(fillCard);
     if (page === 'my') renderMy();
@@ -396,10 +474,17 @@
     S.entries = S.entries.filter(function (x) { return x.id !== id; });
     S.deleted.push(id); S.deleted = S.deleted.slice(-300);
     S.order = S.order.filter(function (k) { return k !== 'm:' + id; });
+    delete S.notes['m:' + id];
     persist(); toast('消しました。');
-    if (page === 'my') renderMy(); else if (page === 'home') renderMine();
+    if (page === 'my') renderMy(); else if (page === 'home') renderMine(); else if (page === 'plan') location.href = '/calendar/';
   }
   document.addEventListener('click', function (ev) {
+    var ib = ev.target.closest ? ev.target.closest('[data-ics-for]') : null;
+    if (ib) {  // "make a file for another calendar app": a small secondary button on the plan and event pages
+      var target = document.querySelector('.card[data-key="' + String(ib.getAttribute('data-ics-for')).replace(/[^cm:A-Za-z0-9_-]/g, '') + '"]');
+      if (target) icsFor(target);
+      return;
+    }
     var b = ev.target.closest ? ev.target.closest('[data-act]') : null;
     if (!b) return;
     var card = b.closest('.card'), act = b.getAttribute('data-act');
@@ -410,18 +495,40 @@
     else if (act === 'up') moveCard(card, -1);
     else if (act === 'down') moveCard(card, 1);
   });
-  document.addEventListener('pointerdown', function (ev) {
-    var g = ev.target.closest ? ev.target.closest('[data-act="grip"]') : null;
-    if (g && (ev.button === 0 || ev.pointerType === 'touch' || ev.pointerType === 'pen')) startDrag(g.closest('.card'), ev);
-  });
 
   /* ---------- skins ---------- */
+  var SKIN_ATTRS = ['head', 'btn', 'density', 'num', 'deco', 'nav', 'cat', 'list'];
   function applyPrefs() {
     var r = document.documentElement, id = (P.skin && CONF.skins[P.skin]) ? P.skin : S.prefs.skin, sk = CONF.skins[id];  // ?skin= is for screenshots and tests
-    if (!sk || id === 'basic') { r.removeAttribute('data-skin'); r.setAttribute('data-card', 'plain'); }
-    else { r.setAttribute('data-skin', id); r.setAttribute('data-card', sk.card); }
+    if (!sk || id === 'basic') { r.removeAttribute('data-skin'); r.setAttribute('data-card', 'plain'); SKIN_ATTRS.forEach(function (k) { r.removeAttribute('data-' + k); }); }
+    else {
+      r.setAttribute('data-skin', id); r.setAttribute('data-card', sk.card);
+      SKIN_ATTRS.forEach(function (k) { var v = sk.attrs && sk.attrs[k]; if (v) r.setAttribute('data-' + k, v); else r.removeAttribute('data-' + k); });
+    }
     if (S.prefs.big) r.setAttribute('data-big', '1'); else r.removeAttribute('data-big');
   }
+  function seasonSkin() {  // the seasonal skin whose dates include today ("MM-DD" windows; a window may cross the new year)
+    var md = ('0' + TODAY[1]).slice(-2) + '-' + ('0' + TODAY[2]).slice(-2), found = null;
+    Object.keys(CONF.skins).forEach(function (id) {
+      var se = CONF.skins[id].season;
+      if (!se || found) return;
+      if (se.from <= se.to ? (md >= se.from && md <= se.to) : (md >= se.from || md <= se.to)) found = id;
+    });
+    return found;
+  }
+  function renderSeason() {
+    var box = $('#season'), id = seasonSkin();
+    if (!box || !id || S.prefs.skin === id || (S.prefs.seasonOff === id)) return;
+    var sk = CONF.skins[id];
+    box.hidden = false;
+    box.innerHTML = '<span>いまの季節: <b>' + H(sk.season.label || sk.name) + '</b>のきせかえ</span><button type="button" class="btn small" data-season="' + H(id) + '">使ってみる</button>' +
+      '<button type="button" class="mini" data-season-off="' + H(id) + '" aria-label="この案内を閉じる">×</button>';
+  }
+  document.addEventListener('click', function (ev) {
+    var on = ev.target.closest ? ev.target.closest('[data-season]') : null, off = ev.target.closest ? ev.target.closest('[data-season-off]') : null;
+    if (on) { S.prefs.skin = on.getAttribute('data-season'); persist(); applyPrefs(); stat('act:skin:' + S.prefs.skin); var bx = $('#season'); if (bx) bx.hidden = true; toast('きせかえを変えました。いつでも「きせかえ」で戻せます。'); }
+    else if (off) { S.prefs.seasonOff = off.getAttribute('data-season-off'); persist(); var b2 = $('#season'); if (b2) b2.hidden = true; }
+  });
   function pageSkins() {
     var box = $('#skin-list');
     function mark() { $$('.skin', box).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-skin') === S.prefs.skin ? 'true' : 'false'); }); }
@@ -522,7 +629,7 @@
     loadCatalog().then(function (cat) {
       if (!cat) return;
       pool = liveFrom(cat);
-      render(grid, diverse(pool, 12).map(catItem));
+      render(grid, ordered(diverse(pool, 12).map(catItem)));
     });
     var sh = $('#shuffle');
     if (sh) sh.addEventListener('click', function () {
@@ -703,10 +810,10 @@
       '<div id="live" class="live" hidden aria-live="polite"></div></section>' +
       '<section id="s3" hidden><h2>3. 名前をつけましょう</h2><p class="hint">あとで見て分かる名前なら十分です。選ぶだけでも使えます。</p><div class="chips" id="f-words"></div>' +
       '<div class="field"><label for="f-title">名前</label><input type="text" id="f-title" maxlength="40" autocomplete="off"></div></section>' +
-      '<section id="s4" hidden><h2>4. カレンダーのお知らせ</h2>' +
+      '<section id="s4" hidden><h2>4. 時刻・くり返し</h2>' +
+      '<div class="field" id="f-timebox" hidden><label for="f-time">時刻(わかれば)</label><input type="time" id="f-time"></div>' +
       '<label class="chip" id="l-yearly"><input type="checkbox" id="f-yearly"> 毎年くり返す</label> <label class="chip" id="l-100"><input type="checkbox" id="f-100"> 100日ごとの節目も入れる</label>' +
-      '<div class="field"><label for="f-alarm">知らせる時間</label><select id="f-alarm"><option value="morning">当日の朝9時</option><option value="eve">前の日の夜9時</option><option value="week">1週間前の朝9時</option><option value="none">お知らせなし</option></select></div>' +
-      '<p class="hint">カレンダーアプリの設定によっては、お知らせが出ないことがあります。</p></section>' +
+      '<p class="hint">残したあとの画面で、メモと「何日前までにやること」を書き込めます。</p></section>' +
       '<p id="quiet-note" class="notice quiet" hidden>大切な日は、静かに残します。広告やおすすめは出しません。</p>' +
       '<p><button type="button" class="btn" id="f-save" hidden>この日を残す</button></p>' +
       '<p class="hint">名前や日付は、この端末の中だけに保存します。サーバーには送りません。</p>';
@@ -727,7 +834,8 @@
       ['s3', 's4', 'live', 'f-save'].forEach(function (id) { show(id, !!d && !!st.kind); });
       show('s4', !!d && st.p === 'day');
       show('quiet-note', !!d && !!k.quiet);
-      show('l-100', !k.quiet && st.p === 'day');
+      show('l-100', !k.quiet && !k.time && st.p === 'day');
+      show('f-timebox', !!k.time && st.p === 'day');
       if (!d) { $f('e-date').textContent = ''; return; }
       var r = C.countdown(d, TODAY, st.p);
       var live = $f('live');
@@ -740,7 +848,7 @@
       $$('[data-kind]', root).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-kind') === k ? 'true' : 'false'); });
       show('s2', true);
       var kd = KINDS[k];
-      $f('f-yearly').checked = !!kd.yearly; $f('f-100').checked = !!kd.r100; $f('f-alarm').value = kd.quiet ? 'none' : S.prefs.alarm;  // a day of remembrance starts with no notice
+      $f('f-yearly').checked = !!kd.yearly; $f('f-100').checked = !!kd.r100;
       $f('f-words').innerHTML = kd.words.map(function (w) { return '<button type="button" class="chip" data-word="' + H(w) + '">' + H(w) + '</button>'; }).join('');
       show('s3', false);
       update();
@@ -767,23 +875,23 @@
       }
       else if (t.id === 'f-save') save();
     });
-    ['f-day', 'f-month', 'f-year', 'f-title', 'f-alarm'].forEach(function (id) { $f(id).addEventListener('input', update); $f(id).addEventListener('change', update); });
+    ['f-day', 'f-month', 'f-year', 'f-title', 'f-time'].forEach(function (id) { $f(id).addEventListener('input', update); $f(id).addEventListener('change', update); });
     function save() {
       var d = readDate();
       if (!d) { $f('e-date').textContent = '日付を入れてください。'; return; }
       var k = KINDS[st.kind], e = {
         id: uid(), title: titleNow(), date: C.iso(d), precision: st.p, kind: st.kind, quiet: !!k.quiet,
-        yearly: st.p === 'day' && $f('f-yearly').checked, every100: st.p === 'day' && !k.quiet && $f('f-100').checked, alarm: $f('f-alarm').value, created: C.iso(TODAY)
+        yearly: st.p === 'day' && $f('f-yearly').checked, every100: st.p === 'day' && !k.quiet && !k.time && $f('f-100').checked, alarm: k.quiet ? 'none' : S.prefs.alarm, created: C.iso(TODAY),
+        time: k.time && st.p === 'day' && /^\d{2}:\d{2}$/.test($f('f-time').value) ? $f('f-time').value : ''
       };
-      S.entries.push(e); S.prefs.alarm = e.alarm === 'none' ? S.prefs.alarm : e.alarm; stat('act:add:' + e.kind);
+      S.entries.push(e); stat('act:add:' + e.kind);
       if (!persist()) return;  // storage blocked: stay on the form (the toast explains) instead of leaving and losing what was typed
-      location.href = '/my/?added=1';
+      location.href = '/plan/?key=m:' + e.id + '&new=1';
     }
     if (P.kind && KINDS[P.kind]) setKind(P.kind);
     if (P.title) { $f('f-title').value = P.title; }
     var when = P.date && C.parse(P.date) ? C.parse(P.date) : whenToken(P.when);
     if (when) { if (!st.kind) setKind('memo'); $f('f-day').value = C.iso(when); }
-    if (P.alarm && /^(morning|eve|week|none)$/.test(P.alarm)) $f('f-alarm').value = P.alarm;
     update();
   }
 
@@ -815,6 +923,7 @@
   /* ---------- start ---------- */
   applyPrefs();
   hydrate(document);
+  renderSeason();
   stat('view:' + (/^[a-z]+$/.test(page) ? page : 'other'));
   stat('skin:' + S.prefs.skin);
   if (S.prefs.big) stat('big:on');
@@ -825,6 +934,9 @@
   else if (page === 'skins') pageSkins();
   else if (page === 'category') pageCategory();
   else if (page === 'today') pageToday();
+  window.AtomouApp = { C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast,
+    loadCatalog: loadCatalog, catItem: catItem, ownItem: ownItem, cardHtml: cardHtml, hydrate: hydrate, fillCard: fillCard, fmtDate: fmtDate, wd: wd, occ: occ, nextYearly: nextYearly, KINDS: KINDS,
+    findEntry: findEntry, uid: uid, icsFor: icsFor, removeEntry: removeEntry, normalize: normalize, tipFor: tipFor, nextLines: nextLines, applyPrefs: applyPrefs };
   window.Atomou = { state: function () { return S; }, today: TODAY, tipFor: tipFor, nextLines: nextLines, whenToken: whenToken, stat: stat, statQueue: function () { return statQ; },
     normalize: normalize, mergeStates: mergeStates };
 })();
