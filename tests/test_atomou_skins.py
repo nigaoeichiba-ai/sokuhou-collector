@@ -75,6 +75,11 @@ def chroma(h):
     return (max(r, g, b) - min(r, g, b)) / 255
 
 
+def mix(a, b, t):
+    """a + (b - a) * t in sRGB, as #RRGGBB (what CSS color-mix(in srgb, b t%, a) gives)."""
+    return "#" + "".join(f"{round(x + (y - x) * t):02X}" for x, y in zip(_rgb(a), _rgb(b)))
+
+
 def check_skin(skin):
     """Return a list of problems for one skin dict (empty = fine)."""
     problems = []
@@ -95,6 +100,10 @@ def check_skin(skin):
         r = ratio(v[fg], v[bg])
         if r < need:
             problems.append(f"{sid}: --{fg}/--{bg} = {r:.2f} < {need} ({why})")
+    # the secondary button in every skin: accent text on a face of 9% accent over the card (design.css `.btn.ghost`)
+    face = mix(v["surface"], v["accent"], 0.09)
+    if ratio(v["accent"], face) < 4.5:
+        problems.append(f"{sid}: --accent on the ghost button face = {ratio(v['accent'], face):.2f} < 4.5 (secondary button)")
     # quiet card: lower saturation than its surroundings, and visibly its own surface
     if chroma(v["quiet-bg"]) > 0.12:
         problems.append(f"{sid}: --quiet-bg is too colourful ({chroma(v['quiet-bg']):.2f})")
@@ -319,6 +328,25 @@ def design_problems(css: str, assets: Path) -> list[str]:
     return out
 
 
+def button_problems(css: str) -> list[str]:
+    """Button rules in design.css that would make a button look unpressable (Codex skin review r1: dashed and text-only buttons).
+    Every rule whose selector names .btn (outside the quiet card and the toast) must not draw a dashed/dotted frame, remove the frame, or empty the face."""
+    out = []
+    for m in re.finditer(r"([^{}]*)\{([^{}]*)\}", css):
+        sel, body = m.group(1).strip(), m.group(2)
+        if ".btn" not in sel or ".quiet" in sel or ".toast" in sel:
+            continue
+        decls = [d.strip().replace(" ", "") for d in body.split(";")]
+        for d in decls:
+            if re.match(r"border(-bottom|-top)?-style:(dashed|dotted)", d) or re.search(r"border:\d*\s*(dashed|dotted)", d):
+                out.append(f"dashed button: {sel}")
+            if re.match(r"border:0$|border:none$", d):
+                out.append(f"button without a frame: {sel}")
+            if d == "background:transparent":
+                out.append(f"button without a face: {sel}")
+    return out
+
+
 class DesignCssTest(unittest.TestCase):
     """assets/design.css: the shape rules.  No external address, no font files, pictures only under their own skin, every picture present and small."""
 
@@ -345,6 +373,24 @@ class DesignCssTest(unittest.TestCase):
         for name, css in bad.items():
             self.assertTrue(design_problems(css, ASSETS), name)
         self.assertEqual(design_problems(':root[data-skin="pop"]{--b:url(/assets/skins/pop.webp)}', ASSETS), [])
+
+    def test_buttons_look_pressable_in_every_skin(self):
+        self.assertEqual(button_problems(self.css), [])
+        # the secondary button gets a face and a solid frame in every skin
+        self.assertRegex(self.css, r":root\[data-skin\] \.btn\.ghost[^{]*\{[^}]*border:2px solid var\(--accent\)")
+
+    def test_the_button_check_catches_the_old_rules(self):
+        old = {
+            "dashed ghost": ':root[data-btn="outline"] .btn.ghost{border-style:dashed}',
+            "dashed underline": ':root[data-btn="underline"] .btn.ghost{border-bottom-style:dashed}',
+            "text-only": ':root[data-btn="underline"] .btn{background:transparent;color:var(--accent);border:0;border-bottom:3px solid var(--accent)}',
+            "transparent": ':root[data-btn="outline"] .btn{background:transparent;color:var(--accent);border-width:2px}',
+        }
+        for name, css in old.items():
+            self.assertTrue(button_problems(css), name)
+        # the quiet card and the toast keep their own quiet / white-on-dark buttons
+        self.assertEqual(button_problems(':root[data-skin] .card.quiet .btn{background:transparent;border:2px solid var(--quiet-line)}'), [])
+        self.assertEqual(button_problems('.toast.act .btn.ghost{background:transparent}'), [])
 
     def test_pictures_are_small(self):
         files = list(self.skins_dir.glob("*.webp"))
@@ -429,6 +475,11 @@ class NegativeTest(unittest.TestCase):
         s = self.good()
         s["vars"]["ato"] = "#CCE0FF"
         self.assertTrue(any("--ato/--surface" in p for p in check_skin(s)))
+
+    def test_pale_secondary_button_is_caught(self):
+        s = self.good()
+        s["vars"]["accent"] = "#8FB4F0"  # pale blue: fails on the tinted button face
+        self.assertTrue(any("ghost button face" in p for p in check_skin(s)))
 
     def test_pale_muted_text_is_caught(self):
         s = self.good()

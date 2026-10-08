@@ -201,7 +201,7 @@ SKINS = [
           "bg-image linear-gradient(180deg,#E3EDFF 0,#F6F8FE 340px)"),
     _skin("pastel-pink", "パステルピンク", "ほんのりピンクのやさしい色", "やさしい・かわいい", "かわいい雰囲気が好きな方。幅広い年代", "sticky", False,
           "center soft cozy plain stars pill chip masonry",
-          "bg #FFF1F4; bg2 #FFE3EA; surface #FFFFFF; surface2 #FFE9EE; text #3A2330; muted #6B4A5A; line #F0C9D3;"
+          "bg #FFF1F4; bg2 #FFE3EA; surface #FFFFFF; surface2 #FFE9EE; text #3A2330; muted #5A3A4A; line #F0C9D3;"
           "accent #B0285F; on-accent #FFFFFF; ato #B0285F; on-ato #FFFFFF; mou #6A3FA0; on-mou #FFFFFF;"
           "quiet-bg #F1ECED; quiet-text #5B5154; quiet-line #D9CDD1; focus #B0285F;"
           "head-bg #FFD9E3; head-text #3A2330; foot-bg #5A2A40; foot-text #FFEFF4;"
@@ -217,13 +217,13 @@ SKINS = [
           "g1 #1D5FB0; g2 #B4530F; g3 #B8284E; g4 #0B6B55; g5 #6B46B0; g6 #0E7490;"
           "deco #6CCBAA; deco2 #0B6B55; radius 14px; shadow 0 2px 8px rgba(11,107,85,.12)"),
     _skin("chic-navy", "シック紺と金", "濃い紺に金色。上品で大人っぽい", "上品・落ち着き", "30代以上。大人っぽい雰囲気が好きな方", "plain", True,
-          "center outline airy plain stars underline plain grid",
-          "bg #0E1A2E; bg2 #14233D; surface #182A47; surface2 #213659; text #F3EEDD; muted #BFC6D6; line #33496E;"
+          "center outline cozy plain stars underline plain grid",
+          "bg #0E1A2E; bg2 #14233D; surface #1E3254; surface2 #27406A; text #F3EEDD; muted #C6CCDA; line #3A5078;"
           "accent #D4A93A; on-accent #14203A; ato #E3BC5A; on-ato #14203A; mou #9FC1F0; on-mou #0E1A2E;"
           "quiet-bg #1C2638; quiet-text #BDC3CF; quiet-line #364258; focus #E3BC5A;"
           "head-bg #09121F; head-text #E3BC5A; foot-bg #060D18; foot-text #D9D4C3;"
           "g1 #E3BC5A; g2 #FF9F6B; g3 #FF8FA8; g4 #6FD59A; g5 #B9A0FF; g6 #5CC8E0;"
-          f"deco #D4A93A; deco2 #9FC1F0; radius 8px; num-weight 600; font {FONT_MINCHO}; shadow 0 4px 14px rgba(0,0,0,.45)"),
+          f"deco #D4A93A; deco2 #9FC1F0; radius 8px; num-weight 700; font {FONT_SANS}; font-head {FONT_MINCHO}; shadow 0 4px 14px rgba(0,0,0,.45)"),
     _skin("monochrome", "モノクロ", "白と黒と灰色だけ。形でわかる", "硬質・すっきり", "色が気になる方。文字中心で見たい方", "plain", False,
           "left square compact mono grid boxed plain list",
           "bg #F2F2F2; bg2 #E6E6E6; surface #FFFFFF; surface2 #EEEEEE; text #111111; muted #4D4D4D; line #C8C8C8;"
@@ -231,18 +231,17 @@ SKINS = [
           "quiet-bg #EDEDED; quiet-text #4D4D4D; quiet-line #CFCFCF; focus #000000;"
           "head-bg #111111; head-text #FFFFFF; foot-bg #1A1A1A; foot-text #E6E6E6;"
           "g1 #1A1A1A; g2 #4D4D4D; g3 #6B6B6B; g4 #333333; g5 #808080; g6 #5C5C5C;"
-          f"deco #888888; deco2 #444444; radius 2px; num-weight 800; bw 2px; font {FONT_UD}; font-num {FONT_MONO}; shadow none"),
+          f"deco #888888; deco2 #444444; radius 2px; num-weight 800; bw 1px; font {FONT_UD}; font-num {FONT_MONO}; shadow 0 1px 3px rgba(0,0,0,.14)"),
     _skin("wafuu", "和風", "藍と朱、生成り色。落ち着いた和の色", "和・端正", "和の雰囲気が好きな方。40代以上にも", "plain", False,
-          "stripe soft airy plain waves underline ribbon grid",
+          "stripe soft cozy plain waves underline ribbon grid",
           "bg #F4EDDC; bg2 #EADFC6; surface #FBF7EA; surface2 #EFE6CF; text #1F2A38; muted #4A5361; line #D3C4A0;"
           "accent #1F3F6B; on-accent #FFFFFF; ato #1F3F6B; on-ato #FFFFFF; mou #B3261E; on-mou #FFFFFF;"
           "quiet-bg #E8E6DF; quiet-text #4C5258; quiet-line #CCC8BB; focus #1F3F6B;"
           "head-bg #1F3F6B; head-text #F4EDDC; foot-bg #232B3A; foot-text #EFE8D6;"
           "g1 #1F3F6B; g2 #B3261E; g3 #8E2F5C; g4 #2F6B3F; g5 #5B3E8A; g6 #7A5200;"
-          f"deco #1F3F6B; deco2 #B3261E; radius 4px; num-weight 600; font {FONT_MINCHO}; shadow 0 1px 3px rgba(31,42,56,.18);"
-          "bg-image repeating-linear-gradient(90deg,rgba(31,63,107,.05) 0,rgba(31,63,107,.05) 1px,transparent 1px,transparent 26px)"),
+          f"deco #1F3F6B; deco2 #B3261E; radius 4px; num-weight 700; font {FONT_SANS}; font-head {FONT_MINCHO}; shadow 0 1px 3px rgba(31,42,56,.18)"),
     _skin("nordic", "北欧", "淡い灰色と木の色。すっきり静か", "素朴・静か", "シンプルで落ち着いた部屋が好きな方", "plain", False,
-          "left underline airy plain none underline circle masonry",
+          "left underline cozy plain none underline circle masonry",
           "bg #F1F2F3; bg2 #E6E8EA; surface #FFFFFF; surface2 #EEF0F1; text #2A2F33; muted #565E64; line #D5D9DC;"
           "accent #7A5A3A; on-accent #FFFFFF; ato #3F6577; on-ato #FFFFFF; mou #8A5A2E; on-mou #FFFFFF;"
           "quiet-bg #EBECEC; quiet-text #50565B; quiet-line #D0D3D5; focus #3F6577;"
@@ -259,29 +258,28 @@ SKINS = [
           "band-bg #DCEEFA; band-text #0F2A4A; deco #5BB4E8; deco2 #0D5CA8; radius 14px; shadow 0 3px 12px rgba(13,92,168,.14)"),
     _skin("tropical", "南国", "黄色と深い緑。日ざしのような明るさ", "元気・明るい", "気分を上げたい方。幅広い年代", "panel", False,
           "band pill cozy badge leaves pill circle masonry",
-          "bg #FFF9E8; bg2 #FFEFC2; surface #FFFFFF; surface2 #FFF1CC; text #1E2B24; muted #44554A; line #F0DC9C;"
+          "bg #FFF9E8; bg2 #FFEFC2; surface #FFFFFF; surface2 #FFF1CC; text #1E2B24; muted #3A4A40; line #F0DC9C;"
           "accent #00796B; on-accent #FFFFFF; ato #00796B; on-ato #FFFFFF; mou #C6321A; on-mou #FFFFFF;"
           "quiet-bg #EFEDE4; quiet-text #55564C; quiet-line #D5D2C2; focus #00796B;"
           "head-bg #FFC933; head-text #1E2B24; foot-bg #0B4F46; foot-text #FFF4D6;"
           "g1 #00796B; g2 #C25100; g3 #C2185B; g4 #2E7D32; g5 #7B3FBF; g6 #0277BD;"
           f"band-bg #FFEFB0; band-text #1E2B24; deco #2E9E5B; deco2 #F28C1B; radius 18px; num-weight 900; font {FONT_ROUND}; shadow 0 3px 10px rgba(180,120,0,.18)"),
     _skin("kids", "こども", "まるくて大きい。にぎやかな色", "にぎやか・まるい", "こども、親子で使う方。小学生〜", "panel", False,
-          "center sticker airy badge confetti pill circle grid",
-          "bg #FFF6D6; bg2 #FFE9A8; surface #FFFFFF; surface2 #FFF0B8; text #2A2340; muted #4F4870; line #FFD36B;"
+          "center sticker cozy badge confetti pill circle grid",
+          "bg #FFF8E1; bg2 #FFEDB8; surface #FFFFFF; surface2 #FFF3C8; text #2A2340; muted #4A4468; line #F0DC9C;"
           "accent #C2255C; on-accent #FFFFFF; ato #1971C2; on-ato #FFFFFF; mou #C2410C; on-mou #FFFFFF;"
           "quiet-bg #EEECE6; quiet-text #55524D; quiet-line #D6D3CA; focus #1971C2;"
           "head-bg #FFD43B; head-text #2A2340; foot-bg #3B2F6B; foot-text #FFF6D6;"
           "g1 #1971C2; g2 #C2410C; g3 #C2255C; g4 #2B8A3E; g5 #7048E8; g6 #0C8599;"
-          f"deco #FF8FB1; deco2 #4DABF7; radius 24px; size 18px; num-weight 900; bw 3px; font {FONT_ROUND}; shadow 0 4px 0 rgba(255,180,0,.45);"
-          "bg-image radial-gradient(circle,#FFE08A 3px,transparent 3.5px)"),
+          f"deco #FF8FB1; deco2 #4DABF7; radius 22px; size 17px; num-weight 900; bw 2px; font {FONT_ROUND}; shadow 0 3px 0 rgba(42,35,64,.18)"),
     _skin("retro", "レトロ", "昭和の喫茶店。茶色とえんじ色", "なつかしい・渋い", "50代以上。なつかしい雰囲気が好きな方", "sticky", False,
           "band square cozy mono stripes tab ribbon list",
-          "bg #F0E0C0; bg2 #E4CFA6; surface #FBF1DA; surface2 #EEDDB8; text #3A2214; muted #5E4533; line #CDB48A;"
+          "bg #F3E6CC; bg2 #E4CFA6; surface #FCF4E2; surface2 #EEDDB8; text #3A2214; muted #4A3324; line #CDB48A;"
           "accent #8C2F1B; on-accent #FFFFFF; ato #1F5F5B; on-ato #FFFFFF; mou #8C2F1B; on-mou #FFFFFF;"
           "quiet-bg #E6DFD0; quiet-text #5A4F44; quiet-line #CBBFA8; focus #1F5F5B;"
           "head-bg #5B2A1A; head-text #F7E8C8; foot-bg #3A1F14; foot-text #EBD9B5;"
           "g1 #1F5F5B; g2 #A0431C; g3 #9C2A4A; g4 #4A6B1F; g5 #6B3F7A; g6 #1F5A86;"
-          f"band-bg #F7E8C8; band-text #3A2214; deco #B8860B; deco2 #8C2F1B; radius 4px; num-weight 800; bw 2px; font {FONT_MINCHO}; font-num {FONT_MONO}; shadow 3px 3px 0 rgba(58,34,20,.25)"),
+          f"band-bg #F7E8C8; band-text #3A2214; deco #B8860B; deco2 #8C2F1B; radius 4px; num-weight 800; bw 2px; font {FONT_SANS}; font-head {FONT_MINCHO}; font-num {FONT_MONO}; shadow 3px 3px 0 rgba(58,34,20,.18)"),
     _skin("neon", "ネオン", "暗い夜にピンクと水色の光", "未来的・派手", "10代〜30代。派手な色が好きな方", "ring", True,
           "left outline cozy outline grid boxed chip grid",
           "bg #0B0A14; bg2 #14122A; surface #181533; surface2 #231F47; text #F5F3FF; muted #B9B4DD; line #3C3670;"
@@ -289,11 +287,11 @@ SKINS = [
           "quiet-bg #1D1C2C; quiet-text #B5B3C8; quiet-line #3A3950; focus #3DF2FF;"
           "head-bg #07060F; head-text #3DF2FF; foot-bg #050409; foot-text #D8D4F5;"
           "g1 #3DF2FF; g2 #FFB347; g3 #FF6FB5; g4 #6BFF9E; g5 #B794FF; g6 #7FB5FF;"
-          "deco #FF4FD8; deco2 #3DF2FF; radius 14px; num-weight 800; bw 2px; shadow 0 0 14px rgba(61,242,255,.25);"
-          "bg-image radial-gradient(circle at 20% 0%,rgba(255,79,216,.18),transparent 45%)"),
+          "deco #FF4FD8; deco2 #3DF2FF; radius 14px; num-weight 800; bw 1px; shadow 0 0 10px rgba(61,242,255,.16);"
+          "bg-image radial-gradient(circle at 20% 0%,rgba(255,79,216,.12),transparent 40%)"),
     _skin("forest", "深緑", "深い森の緑。しっとり落ち着く", "しっとり・自然", "落ち着いた暗めの色が好きな方", "plain", True,
           "band soft cozy shadow leaves tab card masonry",
-          "bg #0F1F18; bg2 #15291F; surface #1B3226; surface2 #24412F; text #EDF3E8; muted #B5C7B6; line #35513F;"
+          "bg #0F1F18; bg2 #15291F; surface #223B2D; surface2 #2C4A39; text #EDF3E8; muted #C2D3C2; line #3C5A47;"
           "accent #A8D672; on-accent #10200A; ato #A8D672; on-ato #10200A; mou #F0B96B; on-mou #2A1A00;"
           "quiet-bg #222B26; quiet-text #B7C1BB; quiet-line #3A453F; focus #A8D672;"
           "head-bg #0A1712; head-text #D9EBC8; foot-bg #07110C; foot-text #C9D8C6;"
@@ -301,13 +299,13 @@ SKINS = [
           "deco #A8D672; deco2 #6FD3C4; radius 12px; shadow 0 3px 12px rgba(0,0,0,.45)"),
     _skin("sunset", "夕焼け", "オレンジから紫へ。あたたかい夕方", "あたたかい・ロマンチック", "やわらかい暖色が好きな方", "panel", False,
           "band pill cozy shadow sunburst pill chip grid",
-          "bg #FFF1E6; bg2 #FFE0CC; surface #FFFFFF; surface2 #FFE9DA; text #3A1F1A; muted #6A433B; line #F3C4A8;"
+          "bg #FFF6EE; bg2 #FFE0CC; surface #FFFFFF; surface2 #FFE9DA; text #3A1F1A; muted #5E3A32; line #F0CDB8;"
           "accent #B3361A; on-accent #FFFFFF; ato #B3361A; on-ato #FFFFFF; mou #5B3A8E; on-mou #FFFFFF;"
           "quiet-bg #F0EAE6; quiet-text #5A4C48; quiet-line #D8CCC5; focus #5B3A8E;"
           "head-bg #FF8A5B; head-text #3A1F1A; foot-bg #4A2340; foot-text #FFE9DA;"
           "g1 #5B3A8E; g2 #B3361A; g3 #B02A5E; g4 #2F7A4F; g5 #7A3FB0; g6 #1E6E8C;"
-          "band-bg #FFD9BF; band-text #3A1F1A; deco #FF8A5B; deco2 #8E5BC8; radius 16px; shadow 0 3px 12px rgba(179,54,26,.15);"
-          "bg-image linear-gradient(180deg,#FFD9BF 0,#FFF1E6 360px)"),
+          "band-bg #FFE0CA; band-text #3A1F1A; deco #FF8A5B; deco2 #8E5BC8; radius 16px; shadow 0 2px 8px rgba(179,54,26,.10);"
+          "bg-image linear-gradient(180deg,#FFE6D3 0,#FFF6EE 220px)"),
     _skin("cb-safe", "色覚サポート", "青とオレンジ中心。色だけに頼らない", "くっきり・実用的", "色の見分けが苦手な方。どなたでも", "plain", False,
           "left outline cozy plain none boxed card grid",
           "bg #F7F9FB; bg2 #E9EEF3; surface #FFFFFF; surface2 #EDF1F5; text #14202B; muted #44525F; line #C8D1DA;"
