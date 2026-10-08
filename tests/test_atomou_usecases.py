@@ -17,7 +17,10 @@ FIELDS = {"slug": str, "title": str, "who": str, "situation": str, "steps": list
           "tips": list, "cautions": list, "quiet": bool, "group": str, "related": list}
 # names of screens, buttons and features that do not exist (the texts were once written from the spec, before the screens were built)
 NO_SUCH_SCREEN = ("『登録』", "『もうすぐ』", "『これからの予定』", "『家族・自分の誕生日』", "『毎日の数え方』", "これからの予定", "家族・自分の誕生日",
-                  "毎日の数え方", "毎月", "知らせない", "当日の朝だけ", "切りかえ", "切り替え", "グラフ", "チップ", "数え年")
+                  "毎日の数え方", "毎月", "知らせない", "当日の朝だけ", "切りかえ", "切り替え", "グラフ", "チップ", "数え年",
+                  # the calendar lives inside the app now: the cards have no 'save' or 'add to calendar' button, and no file is downloaded
+                  # ('☆ 予定に入れる' / '★ 予定に入っています' are the real buttons and are not caught by these)
+                  "保存する", "カレンダーに入れる", "ダウンロード", "ファイルを開", "今日の数字", "あなたの日")
 # words a visitor can filter the catalogue by: categories and the synonym tags of sites/atomou/catalog.py
 CATALOG_TAGS = set(catalog.GROUP_OF_CATEGORY) | {t for v in catalog.SYNONYMS.values() for t in v} | set(catalog.GROUPS)
 
@@ -60,8 +63,8 @@ def check_screens(u):
     if c is not None:
         if f"『{c.get('group')}』" not in steps:
             p.append("公式の日付の例なのに、手順にジャンル名がない")
-        if "『☆ 保存する』" not in steps:
-            p.append("公式の日付の例なのに、手順に『☆ 保存する』がない")
+        if "『☆ 予定に入れる』" not in steps:
+            p.append("公式の日付の例なのに、手順に『☆ 予定に入れる』がない")
     elif "『この日を残す』" not in steps:
         p.append("自分の日の例なのに、手順に『この日を残す』がない")
     return p
@@ -275,12 +278,60 @@ class NegativeTests(unittest.TestCase):
     def test_steps_that_do_not_match_the_kind_of_scenario_are_found(self):
         u = copy.deepcopy(usecases.by_slug("exam-university"))
         u["steps"] = ["ホームのジャンル『試験・資格』を押す", "『大学入試』で絞り込む", "カードを開く"]
-        self.assertTrue(any("☆ 保存する" in x for x in check_screens(u)))
-        u["steps"] = ["『大学入試』で絞り込む", "カードで『☆ 保存する』を押す", "カレンダーに入れる"]
+        self.assertTrue(any("☆ 予定に入れる" in x for x in check_screens(u)))
+        u["steps"] = ["『大学入試』で絞り込む", "カードで『☆ 予定に入れる』を押す", "『カレンダー』で確かめる"]
         self.assertTrue(any("ジャンル名" in x for x in check_screens(u)))
         u = copy.deepcopy(usecases.by_slug("wedding-anniversary"))
         u["steps"] = ["メニューの『記録する』を押す", "日付を入れる", "完了"]
         self.assertTrue(any("この日を残す" in x for x in check_screens(u)))
+
+    def test_the_old_save_and_download_wording_is_found(self):
+        old = copy.deepcopy(usecases.by_slug("exam-university"))
+        old["steps"] = ["ホームのジャンル『試験・資格』を押す", "カードの『☆ 保存する』を押す", "『カレンダーに入れる』を押して、ファイルを開いて追加する"]
+        found = check_screens(old)
+        self.assertTrue(any("保存する" in x for x in found), found)
+        self.assertTrue(any("カレンダーに入れる" in x for x in found), found)
+        self.assertTrue(any("ファイルを開" in x for x in found), found)
+        old["steps"] = ["ホームのジャンル『試験・資格』を押す", "カードの『☆ 予定に入れる』を押す", "カレンダーのファイルをダウンロードする"]
+        self.assertTrue(any("ダウンロード" in x for x in check_screens(old)))
+        old["steps"] = ["ホームのジャンル『試験・資格』を押す", "カードの『☆ 予定に入れる』を押す", "マイページの『まとめてカレンダーに入れる』を押す"]
+        self.assertTrue(any("カレンダーに入れる" in x for x in check_screens(old)))
+
+    def test_the_real_buttons_are_not_flagged(self):
+        ok = copy.deepcopy(usecases.by_slug("exam-university"))
+        ok["steps"] = ["ホームのジャンル『試験・資格』を押す", "カードの『☆ 予定に入れる』を押す(入ると『★ 予定に入っています』に変わる)",
+                       "『詳細を確認する』で公式ページを見る", "『開く』や『消す』を使う", "『やること』を書いて『追加』を押す"]
+        self.assertEqual(check_screens(ok), [])
+
+    def test_no_scenario_uses_the_old_buttons_anywhere(self):
+        for u in usecases.USECASES:
+            blob = " | ".join(texts(u))
+            for w in ("☆ 保存する", "『保存する』", "『カレンダーに入れる』", "ダウンロード"):
+                with self.subTest(slug=u["slug"], word=w):
+                    self.assertNotIn(w, blob)
+
+    def test_official_scenarios_use_the_add_to_plan_button(self):
+        official = [u for u in usecases.USECASES if u["catalog"] is not None]
+        self.assertGreaterEqual(len(official), 10)
+        for u in official:
+            with self.subTest(slug=u["slug"]):
+                self.assertIn("『☆ 予定に入れる』", " | ".join(u["steps"]))
+
+    def test_planner_scenarios_exist_and_use_todo_and_events(self):
+        group = [u for u in usecases.USECASES if u["group"] == "予定と準備"]
+        self.assertGreaterEqual(len(group), 4)
+        self.assertTrue(any((u["own"] or {}).get("kind") == "event" for u in group))
+        self.assertGreaterEqual(sum("『やること』" in " | ".join(u["steps"] + u["tips"]) for u in usecases.USECASES), 15)
+
+    def test_the_file_for_other_calendar_apps_is_only_a_short_tip(self):
+        for u in usecases.USECASES:
+            self.assertFalse(any("他のカレンダーアプリ" in s for s in u["steps"]), u["slug"])
+
+    def test_grief_scenes_do_not_push_the_todo(self):
+        for u in usecases.USECASES:
+            if u["quiet"] and u["slug"] != "memorial-services":
+                with self.subTest(slug=u["slug"]):
+                    self.assertNotIn("やること", " | ".join(texts(u)))
 
     def test_screen_check_passes_the_real_data(self):
         for slug in ("exam-university", "wedding-anniversary", "memorial-day"):
