@@ -124,6 +124,7 @@
       ios.hidden = !(iosNeedsHomeScreen() && !granted);
     }
     current().then(show);
+    offerInstall(box);
     on.addEventListener('click', function () {
       on.disabled = true;
       subscribe().then(function (sub) { A.toast('この端末で通知を受け取ります。'); show(sub); })
@@ -137,6 +138,28 @@
     $('#p-alarm').addEventListener('change', function () { S().prefs.pushHash = ''; sync(true); });
   }
 
+  /* ---------- "add to the home screen" where the browser offers it (Chrome on Android, desktop Chrome/Edge); iPhone has no such button, hence the written steps ---------- */
+  var deferredInstall = null;
+  window.addEventListener('beforeinstallprompt', function (ev) { ev.preventDefault(); deferredInstall = ev; document.dispatchEvent(new Event('atomou:installable')); });
+  window.addEventListener('appinstalled', function () { deferredInstall = null; A.stat('act:installed'); });
+  function offerInstall(host) {
+    function put() {
+      if (!deferredInstall || host.querySelector('[data-install]')) return;
+      var p = document.createElement('p');
+      p.innerHTML = '<button type="button" class="btn ghost" data-install>ホーム画面に追加する</button>';
+      host.appendChild(p);
+      p.querySelector('button').addEventListener('click', function () {
+        var d = deferredInstall; deferredInstall = null;
+        if (!d) return;
+        A.stat('act:install_ask');
+        d.prompt();
+        if (d.userChoice) d.userChoice.then(function (c) { if (c && c.outcome === 'accepted') p.remove(); else put(); }, function () { /* ignore */ });
+      });
+    }
+    put();
+    document.addEventListener('atomou:installable', put);
+  }
+
   /* ---------- right after a day was recorded: the two things that make the day "kept" (plan page, ?new=1) ---------- */
   function afterSave(plan, quiet) {
     var H = A.H, h = '';
@@ -148,12 +171,16 @@
       h = '<p>決めた日に、この端末へ通知します。時間はマイページで変えられます。</p>' +
         '<p><button type="button" class="btn" id="as-push">この端末に通知を届ける</button></p><p class="hint" id="as-msg" role="status"></p>';
     }
-    if (!h) return;
+    if (!h && !deferredInstall) {   // nothing to say yet: the browser may still announce that the page can be installed
+      document.addEventListener('atomou:installable', function again() { document.removeEventListener('atomou:installable', again); afterSave(plan, quiet); });
+      return;
+    }
     var el = document.createElement('section');
     el.className = 'panel after-save';
     el.id = 'after-save';
-    el.innerHTML = '<h2>' + (iosNeedsHomeScreen() ? 'この日を忘れないために' : 'この日を、お知らせしますか') + '</h2>' + h;
+    el.innerHTML = '<h2>' + (iosNeedsHomeScreen() ? 'この日を忘れないために' : h ? 'この日を、お知らせしますか' : 'この日を、すぐ開けるように') + '</h2>' + (h || '<p>ホーム画面に追加すると、アプリのように開けます。</p>');
     plan.insertAdjacentElement('beforebegin', el);   // above the day's card: the first screen after saving, not below the memo
+    offerInstall(el);
     var b = el.querySelector('#as-push');
     if (b) b.addEventListener('click', function () {
       b.disabled = true;
