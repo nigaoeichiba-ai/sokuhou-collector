@@ -16,7 +16,7 @@ import calendar
 from datetime import date, timedelta
 
 ERAS = {"reiwa": ("令和", 2018), "heisei": ("平成", 1988), "showa": ("昭和", 1925), "taisho": ("大正", 1911), "meiji": ("明治", 1867)}
-SHORT_DAYS = 100  # below this many days the days are the big number; from here on the years/months/days are
+SHORT_DAYS = 100  # up to and including this many days the days are the big number ("あと100日"); beyond it the years/months/days are
 
 
 def add_months(d: date, n: int) -> date:
@@ -102,6 +102,6 @@ def countdown(target: date, today: date, precision: str = "day") -> dict:
         return {"dir": "today", "big": "今日", "sub": "", "total": 0, "ymd": (0, 0, 0), "approx": False}
     word = "あと" if t > 0 else "もう"
     y, m, d = ymd(today, target)
-    if abs(t) < SHORT_DAYS:
+    if abs(t) <= SHORT_DAYS:
         return {"dir": "ato" if t > 0 else "mou", "big": f"{word}{abs(t)}日", "sub": "", "total": t, "ymd": (y, m, d), "approx": False}
     return {"dir": "ato" if t > 0 else "mou", "big": word + unit_text(y, m, d), "sub": f"{abs(t):,}日", "total": t, "ymd": (y, m, d), "approx": False}

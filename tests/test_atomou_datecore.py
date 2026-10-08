@@ -74,7 +74,7 @@ class DateProperties(unittest.TestCase):
             r = dc.countdown(today + timedelta(days=off), today)
             self.assertEqual(r["total"], off)
             self.assertEqual(r["dir"], "today" if off == 0 else ("ato" if off > 0 else "mou"))
-            self.assertEqual(bool(r["sub"]), abs(off) >= dc.SHORT_DAYS)  # the total shows next to the years/months/days only
+            self.assertEqual(bool(r["sub"]), abs(off) > dc.SHORT_DAYS)  # the total shows next to the years/months/days only
 
 
 if __name__ == "__main__":
