@@ -54,13 +54,16 @@ class Pages(BuildOnce):
         self.assertIn("Require valid-user", self.prev[".htaccess"])
         self.assertIn(build.HTPASSWD_PLACEHOLDER, self.prev[".htaccess"])  # the deploy job fills in the path of the password file
         self.assertNotIn("AuthType", self.rel[".htaccess"])
+        self.assertIn("Ngx_Cache_NoCacheMode=on", self.prev[".htaccess"])  # Xserver's server cache would answer without asking for the password
+        self.assertNotIn("AllCacheMode", self.prev[".htaccess"])
+        self.assertIn("AllCacheMode", self.rel[".htaccess"])  # the public site keeps the cache
         self.assertIn("RewriteRule", self.prev[".htaccess"])  # the https redirect stays in both
 
     def test_the_workflow_never_deploys_the_demo_unprotected(self):
         wf = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
         self.assertIn('[ "$SITE" = "atomou" ] && [ "$ATOMOU_PUBLIC" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }', wf)
         self.assertIn("grep -q \"AuthUserFile $home/$SITE_DIR/.htpasswd\" release/.htaccess", wf)  # the build is checked to name the real password file before upload
-        self.assertIn("[ \"$(curl -s -o /dev/null -w '%{http_code}' \"$URL/\")\" = \"401\" ] || ok=0", wf)  # and the live demo must refuse a visitor without the password
+        self.assertIn("[ \"$unauth\" = \"401\" ] || ok=0", wf)  # and the live demo must refuse a visitor without the password
 
     def test_release_is_refused_without_an_operator(self):
         with self.assertRaises(build.BuildError):
