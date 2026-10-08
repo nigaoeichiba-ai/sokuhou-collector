@@ -54,6 +54,17 @@ PAGE = """<!doctype html><meta charset="utf-8"><script src="%(core)s"></script><
     until: T('until', '旅行', '2026-01-01', {})
   };
   res.when = ['year-end', 'new-year', 'fy-start', 'fy-end', 'today', 'nope'].map(function (t) { var d = A.whenToken(t); return d ? C.iso(d) : null; });
+  A.stat('view:home'); A.stat('act:add:memorial'); A.stat('act:skin:pastel-pink'); A.stat('act:search_miss');
+  ['view:ホーム', 'act:add:' + 'x'.repeat(70), 'unknown:thing', 'act', 'act:a:b:c', 'act:Save', 'view:home;drop'].forEach(function (k) { A.stat(k); });
+  res.statQ = A.statQueue();
+  var a1 = A.normalize({ updated: '2026-10-08T10:00:00.000Z', entries: [{ id: 'x1', title: '端末A', date: '2024-01-01' }, { id: 'x2', title: '消した', date: '2024-01-02' }], saved: ['aaaaaaaaaa'], deleted: [],
+    prefs: { skin: 'basic', big: false } });
+  var b1 = A.normalize({ updated: '2026-10-08T11:00:00.000Z', entries: [{ id: 'x3', title: '端末B', date: '2024-01-03' }, { id: 'x1', title: '端末Bで直した', date: '2024-01-01' }], saved: ['bbbbbbbbbb'],
+    deleted: ['x2'], prefs: { skin: 'basic', big: true, alarm: 'week' } });
+  var m = A.mergeStates(a1, b1);
+  res.merge = { ids: m.entries.map(function (e) { return e.id + ':' + e.title; }).sort(), saved: m.saved.sort(), deleted: m.deleted, big: m.prefs.big, alarm: m.prefs.alarm, updated: m.updated };
+  var m2 = A.mergeStates(b1, a1);
+  res.mergeSym = { ids: m2.entries.map(function (e) { return e.id + ':' + e.title; }).sort(), big: m2.prefs.big };
   document.getElementById('out').textContent = JSON.stringify(res);
 })();
 </script>"""
@@ -122,6 +133,18 @@ class CoreInChrome(unittest.TestCase):
         for k in ("sanki", "isshuki", "disaster"):  # grief entries: no congratulations, no gifts, no sales words
             for bad in ("おめでとう", "プレゼント", "お祝い", "セール", "おすすめ", "!", "!"):
                 self.assertNotIn(bad, t[k], k)
+
+    def test_statistics_keys_are_limited_to_the_fixed_vocabulary(self):
+        q = self.res["statQ"]
+        self.assertEqual(sorted(q), ["act:add:memorial", "act:search_miss", "act:skin:pastel-pink", "skin:basic", "view:home", "view:other"])  # the last two are the page view recorded at start
+        self.assertTrue(all(v == 1 for v in q.values()))
+
+    def test_sync_merge_unites_entries_and_respects_deletions(self):
+        m = self.res["merge"]
+        self.assertEqual(m["ids"], ["x1:端末Bで直した", "x3:端末B"])  # x2 was deleted on B; x1 exists on both: the newer side's copy wins
+        self.assertEqual(m["saved"], ["aaaaaaaaaa", "bbbbbbbbbb"])
+        self.assertEqual((m["big"], m["alarm"], m["deleted"]), (True, "week", ["x2"]))  # settings come from the newer device
+        self.assertEqual(self.res["mergeSym"], {"ids": m["ids"], "big": True})  # the order of the two arguments does not matter
 
     def test_today_tokens(self):
         self.assertEqual(self.res["when"], ["2026-12-31", "2027-01-01", "2027-04-01", "2027-03-31", "2026-10-08", None])

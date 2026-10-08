@@ -44,9 +44,19 @@ SITE = {
     "source_html": '日付は、公式の発表などで確認しています。あなたが記録した日は、この端末の中だけに保存されます。<a href="/manual/">使い方(説明書)</a> | <a href="/use/">こんな時に</a>',
 }
 WD = "月火水木金土日"
+# the one pattern a statistics key must match: assets/app.js (STAT_RE), api/e.php (from stats_receiver.php.tpl) and tests/test_atomou_build.py all use it
+STAT_KEY_RE = r"^(view|skin|big|home_order|home_hidden|act)(:[a-z0-9_,-]{1,60}){1,2}$"
 
 
 # ---------- shared helpers ----------
+def stats_php() -> str:
+    return (HERE / "stats_receiver.php.tpl").read_text(encoding="utf-8").replace("__RE__", "/" + STAT_KEY_RE + "/")
+
+
+STATS_SECTION = '<h2 id="stats">利用状況の統計</h2>\n<p>画面の使われ方を知って、使いやすくするために、件数だけの統計を取ります。送るのは、あらかじめ決めた項目の件数です。たとえば、「どのページが開かれたか」「選ばれたきせかえ」「ホームのブロックの並び方・非表示にされたブロック」「保存やカレンダーのボタンが押された回数」「検索で見つかったか、見つからなかったか(検索した言葉は送りません)」です。</p>\n<p>名前・日付・メモ・メールアドレス・検索した言葉・端末を識別する番号は、送りません。Cookie は使いません。サーバーには、1日ごとの合計の件数だけを保存します(同じ人かどうかは、分かりません)。送りすぎを防ぐため、アドレスから作った1日だけ有効な符号を、回数の制限にだけ使い、翌日以降に削除します。</p>\n<p>マイページの「利用状況の統計に協力する」で、いつでも止められます。ブラウザの「トラッキングしない」(DNT・Global Privacy Control)の設定がオンのときは、初めから止まっています。</p>'
+GOOGLE_SECTION = '<h2 id="google">Google アカウントでの引き継ぎ(任意)</h2>\n<p>マイページの「Google アカウントでつないで同期する」を押したときだけ、Google の画面が開きます。許可するのは、あなた自身の Google ドライブの中にある、このサイト専用の非表示フォルダ(アプリデータ)への保存だけです。記録した日・保存した日・設定を、そこに保存し、別の端末で読み込めます。当サイトのサーバーには送りません。当サイトは、あなたの Google アカウントの氏名やメールアドレスを取得しません。</p>\n<p>つなぐのをやめるときは、<a href="https://myaccount.google.com/permissions" rel="noopener" target="_blank">Google アカウントの権限の管理</a>から、「あと何日、もう何日」の権限を削除してください。</p>'
+
+
 def fmt_date(iso: str, precision: str = "day") -> str:
     y, m, d = (int(x) for x in iso.split("-"))
     if precision == "year":
@@ -129,6 +139,8 @@ class Ctx:
         self.ver = asset_version(SITE["assets"])
         conf = {"v": self.v_cat, "groups": catalog.GROUPS, "slugs": SLUGS,
                 "skins": {s["id"]: {"card": s["card"], "name": s["name"]} for s in skins.SKINS}}
+        if cfg.get("google_client_id"):
+            conf["gclient"] = cfg["google_client_id"]
         conf_js = json.dumps(conf, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
         card_map = json.dumps({s["id"]: s["card"] for s in skins.SKINS}, separators=(",", ":"))
         self.head = (f"<script>window.ATOMOU={conf_js};</script>\n"
@@ -226,6 +238,11 @@ def search_page(c: Ctx) -> str:
 
 
 def my_page(c: Ctx) -> str:
+    sync_html = ""
+    if c.cfg.get("google_client_id"):
+        sync_html = ('<h2 id="sync">端末をまたいで引き継ぐ</h2>\n<div class="panel" id="sync-box" hidden>'
+                     '<p>Google アカウントでつなぐと、記録した日を、自分の Google ドライブ(専用の非表示フォルダ)を通して、別の端末に引き継げます。当サイトのサーバーには預けません。'
+                     '<a href="/privacy/#google">くわしく</a></p><p><button type="button" class="btn" id="sync-now">Google アカウントでつないで同期する</button></p></div>\n')
     body = f"""{crumbs([("トップ", "/"), ("マイページ", None)])}
 <h1>マイページ</h1>
 <p class="lead muted">記録した日と、保存した日が並びます。この端末の中だけに保存されます。</p>
@@ -238,10 +255,11 @@ def my_page(c: Ctx) -> str:
 <div class="field"><label class="lab" for="p-big"><input type="checkbox" id="p-big"> 文字を大きくする</label></div>
 <div class="field"><label for="p-alarm">保存した日をカレンダーに入れるとき、知らせる時間</label>
 <select id="p-alarm"><option value="morning">当日の朝9時</option><option value="eve">前の日の夜9時</option><option value="week">1週間前の朝9時</option><option value="none">お知らせなし</option></select></div>
+<div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する(個人は特定されません。<a href="/privacy/#stats">くわしく</a>)</label></div>
 <p><a href="/skins/">きせかえ(見た目を変える)</a></p>
 <p><a href="/?edit=1">ホームの並べかえ・表示を変える</a></p>
 </div>
-<h2>バックアップ</h2>
+{sync_html}<h2>バックアップ</h2>
 <div class="panel">
 <p>記録は、この端末の中だけにあります。機種変更のときは、書き出して、新しい端末で読み込んでください。</p>
 <p><button type="button" class="btn small" id="backup">書き出す</button>
@@ -512,6 +530,16 @@ def today_page(c: Ctx) -> str:
     return c.page("/today/", f"今日の数字から、これからの準備を考える | {NAME}", "今年のあと何日、来年まであと何日、年度末まであと何日。今日の数字から、入学や引っ越しなどの準備を考え、自分の日として記録できます。", body, "today")
 
 
+def privacy_fix(c: Ctx, html: str) -> str:
+    """The shared privacy page says that no analytics is used; this site counts fixed items (and may offer a Google Drive hand-over), so that part is replaced."""
+    if "<title>プライバシーポリシー" not in html:
+        return html
+    old = "<h2>アクセス解析</h2>\n<p>現時点では、Google アナリティクスなどのアクセス解析ツールを使用していません。使用を始める場合は、このページでお知らせします。</p>"
+    if old not in html:
+        raise BuildError("sitekit's privacy text changed: update privacy_fix in sites/atomou/build.py")
+    return html.replace(old, STATS_SECTION + ("\n" + GOOGLE_SECTION if c.cfg.get("google_client_id") else ""), 1)
+
+
 def legal(c: Ctx) -> dict:
     cfg, site = c.cfg, c.site
     return legal_pages(
@@ -525,7 +553,7 @@ def legal(c: Ctx) -> dict:
         input_note=("<h2>この端末に保存する情報</h2>"
                     "<p>あなたが記録した日(名前・日付・設定)と、保存した日の一覧は、お使いのブラウザの中(localStorage)だけに保存します。当サイトのサーバーには送りません。"
                     "ブラウザのデータを消すと、記録も消えます。マイページの「書き出す」で、バックアップを作れます。</p>"),
-        finish=lambda html: c.finish(html, "legal"),
+        finish=lambda html: c.finish(privacy_fix(c, html), "legal"),
     )
 
 
@@ -552,6 +580,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     for e in entries:
         pages[f"e/{e['id']}/index.html"] = event_page(c, e, e["id"] in index_ids, live)
     pages.update(legal(c))
+    pages["api/e.php"] = stats_php()
     pages["assets/catalog.json"] = c.cat_json
     pages["assets/skins.css"] = c.skins_css
     pages.update(asset_pages(SITE["assets"]))
