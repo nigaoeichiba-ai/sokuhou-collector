@@ -30,7 +30,7 @@
 
   /* ---------- state ---------- */
   var S = blank();
-  function blank() { return { v: 1, entries: [], saved: [], order: [], genre: {}, prefs: { skin: 'basic', big: false, alarm: 'morning' } }; }
+  function blank() { return { v: 1, entries: [], saved: [], order: [], genre: {}, prefs: { skin: 'basic', big: false, alarm: 'morning', blocks: { order: [], hidden: [] } } }; }
   function load() {
     var s = blank();
     try {
@@ -108,17 +108,50 @@
     if (!d || e.precision !== 'day' || C.totalDays(d, today) <= 0) return out;
     function when(a, label) {
       var r = C.countdown(a, today, 'day');
-      return label + '(' + (a[1]) + '月' + a[2] + '日)・' + (r.dir === 'today' ? '今日' : r.big);
+      return label + ' ' + a[1] + '月' + a[2] + '日・' + (r.dir === 'today' ? '今日' : r.big);
     }
     if (e.yearly) {
       var y = nextYearly(d, today), n = y[0] - d[0];
-      out.push(when(y, e.kind === 'birthday' ? '次の誕生日:' + n + '歳' : e.kind === 'memorial' ? '次の同じ日:' + n + '年' : '次の記念日:' + n + '年目'));
+      out.push(when(y, e.kind === 'birthday' ? '次の誕生日(' + n + '歳)' : e.kind === 'memorial' ? '次の同じ日(' + n + '年)' : '次の記念日(' + n + '年目)'));
     }
     if (!e.quiet && e.kind !== 'birthday') {
       var s = nextRound(d, today, e.every100 ? 100 : 1000);
-      out.push(when(s.date, '次の節目:' + C.group(s.n) + '日目'));
+      out.push(when(s.date, '次の節目(' + C.group(s.n) + '日目)'));
     }
     return out;
+  }
+
+  /* gentle, plain suggestions under a personal day (written by hand; no AI, no sales talk; a memorial day never gets congratulations or products) */
+  var NENKI = { 1: '一周忌', 2: '三回忌', 6: '七回忌', 12: '十三回忌', 16: '十七回忌', 22: '二十三回忌', 26: '二十七回忌', 32: '三十三回忌' };
+  function lastYearly(d, today) { var c = occ(d, today[0]); return C.cmp(c, today) > 0 ? occ(d, today[0] - 1) : c; }
+  function tipFor(e, today) {
+    var d = C.parse(e.date);
+    if (!d || e.precision !== 'day' || C.totalDays(d, today) <= 0) return '';
+    var next, left, passed;
+    if (e.kind === 'memorial') {
+      next = nextYearly(d, today); left = C.totalDays(today, next);
+      var n = next[0] - d[0];
+      if (NENKI[n] && !/あの日|震災|災害|事故|事件/.test(e.title)) {
+        if (left === 0) return '今日は' + NENKI[n] + 'にあたります。';
+        if (left <= 150) return 'もうすぐ' + NENKI[n] + 'にあたります。法要をするときは、日程や場所を、早めに家族で相談しておくと安心です。';
+      }
+      if (left > 0 && left <= 30) return 'もうすぐ同じ日です。お花やお供えは、前もって用意しておけます。';
+      return '';
+    }
+    if (e.yearly) {
+      next = nextYearly(d, today); left = C.totalDays(today, next); passed = C.totalDays(lastYearly(d, today), today);
+      var bd = e.kind === 'birthday';
+      if (left === 0) return bd ? '今日は誕生日です。お祝いのメッセージを送りませんか。' : '今日は記念日です。';
+      if (left <= 14) return left + '日後です。プレゼントやお店の予約は、そろそろ決めておくと安心です。';
+      if (passed >= 1 && passed <= 30) return bd ? 'お誕生日を、少しすぎました。メッセージは、いまからでも間に合います。' : '記念日を、少しすぎました。まだお祝いしていなければ、ささやかなプレゼントや食事はいかがでしょう。';
+      return '';
+    }
+    if (!e.quiet && e.kind === 'since') {
+      var r = nextRound(d, today, e.every100 ? 100 : 1000);
+      var gap = C.totalDays(today, r.date);
+      if (gap >= 0 && gap <= 7) return 'もうすぐ' + C.group(r.n) + '日目です。ここまで続けてきた日々を、ふり返ってみませんか。';
+    }
+    return '';
   }
 
   /* ---------- cards (the same markup as build.py card_html) ---------- */
@@ -164,7 +197,8 @@
     var nx = $('.c-next', card);
     if (nx && key.indexOf('m:') === 0) {
       var e = findEntry(key.slice(2));
-      nx.innerHTML = e ? nextLines(e, TODAY).map(function (l) { return '<p>' + H(l) + '</p>'; }).join('') : '';
+      var tip = e ? tipFor(e, TODAY) : '';
+      nx.innerHTML = e ? nextLines(e, TODAY).map(function (l) { return '<p>' + H(l) + '</p>'; }).join('') + (tip ? '<p class="c-tip">' + H(tip) + '</p>' : '') : '';
     }
     var sv = $('[data-act="save"]', card);
     if (sv && key.indexOf('c:') === 0) {
@@ -342,8 +376,8 @@
     var el = $('#daily');
     if (!el) return;
     var n = C.dayOfYear(TODAY), fy = C.fiscalYear(TODAY);
-    el.innerHTML = '<span>今日は ' + fmtDate(C.iso(TODAY), 'day') + '</span><span>' + TODAY[0] + '年は、もう' + n[0] + '日め(年末まであと' + n[1] + '日)</span>' +
-      '<span>' + (TODAY[0] + 1) + '年まであと' + (n[1] + 1) + '日</span><span>' + fy[0] + '年度(4月から)は、あと' + fy[2] + '日</span>';
+    el.innerHTML = '<span>今日は ' + fmtDate(C.iso(TODAY), 'day') + '</span><a href="/today/#year">' + TODAY[0] + '年は、もう' + n[0] + '日め(年末まであと' + n[1] + '日)</a>' +
+      '<a href="/today/#newyear">' + (TODAY[0] + 1) + '年まであと' + (n[1] + 1) + '日</a><a href="/today/#fy">' + fy[0] + '年度(4月から)は、あと' + fy[2] + '日</a>';
   }
   function myItems(cat) {
     var items = S.entries.map(ownItem);
@@ -363,8 +397,58 @@
       if (items.length) render(grid, items);
     });
   }
+
+  /* ---------- home blocks: reorder / show / hide (this device only) ---------- */
+  var BLOCKS = ['search', 'cats', 'daily', 'mine', 'soon', 'record', 'usecases'];
+  function blockPrefs() {
+    var b = S.prefs.blocks || {};
+    return { order: Array.isArray(b.order) ? b.order : [], hidden: Array.isArray(b.hidden) ? b.hidden : [] };
+  }
+  function applyBlocks(editing) {
+    var host = $('#blocks');
+    if (!host) return;
+    var bp = blockPrefs(), els = {};
+    $$('[data-block]', host).forEach(function (el) { els[el.getAttribute('data-block')] = el; });
+    var order = bp.order.filter(function (k) { return els[k]; });
+    BLOCKS.forEach(function (k) { if (els[k] && order.indexOf(k) < 0) order.push(k); });
+    order.forEach(function (k) { host.appendChild(els[k]); });
+    order.forEach(function (k) { els[k].classList.toggle('block-off', bp.hidden.indexOf(k) >= 0); });
+    host.classList.toggle('editing', !!editing);
+    $$('.block-bar', host).forEach(function (b) { b.remove(); });
+    if (!editing) return;
+    order.forEach(function (k, i) {
+      var off = bp.hidden.indexOf(k) >= 0, bar = document.createElement('div');
+      bar.className = 'block-bar'; bar.setAttribute('data-k', k);
+      bar.innerHTML = '<b>' + H(els[k].getAttribute('data-title') || k) + '</b><span class="bar-btns"><button type="button" class="mini" data-b="up" aria-label="ひとつ上へ"' + (i === 0 ? ' disabled' : '') + '>↑</button>' +
+        '<button type="button" class="mini" data-b="down" aria-label="ひとつ下へ"' + (i === order.length - 1 ? ' disabled' : '') + '>↓</button>' +
+        '<button type="button" class="mini" data-b="vis" aria-pressed="' + (off ? 'false' : 'true') + '">' + (off ? '出す' : 'かくす') + '</button></span>';
+      els[k].insertBefore(bar, els[k].firstChild);
+    });
+  }
+  function wireBlocks() {
+    var host = $('#blocks'), btn = $('#edit-home');
+    if (!host) return;
+    var editing = P.edit === '1';
+    function show() {
+      applyBlocks(editing);
+      if (btn) { btn.setAttribute('aria-pressed', editing ? 'true' : 'false'); btn.textContent = editing ? 'ホームの並べかえを終わる' : 'ホームの並べかえ・表示を変える'; }
+    }
+    host.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-b]') : null;
+      if (!b) return;
+      var k = b.closest('.block-bar').getAttribute('data-k'), bp = blockPrefs(), order = $$('[data-block]', host).map(function (el) { return el.getAttribute('data-block'); });
+      var i = order.indexOf(k), act = b.getAttribute('data-b');
+      if (act === 'up' && i > 0) { order.splice(i, 1); order.splice(i - 1, 0, k); }
+      else if (act === 'down' && i < order.length - 1) { order.splice(i, 1); order.splice(i + 1, 0, k); }
+      else if (act === 'vis') { var h = bp.hidden.indexOf(k); if (h >= 0) bp.hidden.splice(h, 1); else bp.hidden.push(k); }
+      S.prefs.blocks = { order: order, hidden: bp.hidden }; persist(); show();
+    });
+    if (btn) btn.addEventListener('click', function () { editing = !editing; show(); if (editing) toast('各ブロックの ↑↓ で並べかえ、「かくす」で表示を切りかえられます。'); });
+    show();
+  }
+
   function pageHome() {
-    renderDaily(); renderMine();
+    renderDaily(); renderMine(); wireBlocks();
     var grid = $('#grid'), pool = [];
     wireReorderToggle($('#reorder'), grid);
     loadCatalog().then(function (cat) {
@@ -476,6 +560,16 @@
     });
   }
 
+  function whenToken(t) {  // dates the "today's numbers" page links to, worked out from the device's today
+    var y = TODAY[0], c;
+    if (t === 'year-end') return [y, 12, 31];
+    if (t === 'new-year') return [y + 1, 1, 1];
+    if (t === 'fy-start') { c = [y, 4, 1]; return C.cmp(c, TODAY) <= 0 ? [y + 1, 4, 1] : c; }
+    if (t === 'fy-end') { c = [y, 3, 31]; return C.cmp(c, TODAY) < 0 ? [y + 1, 3, 31] : c; }
+    if (t === 'today') return TODAY;
+    return null;
+  }
+
   /* ---------- add ---------- */
   function pageAdd() {
     var root = $('#wizard'), st = { kind: '', p: 'day', words: [] };
@@ -486,15 +580,15 @@
       '<section id="s2" hidden><h2>2. いつの日ですか</h2><div class="seg" role="group" aria-label="日付の細かさ">' +
       '<button type="button" class="chip" data-p="day" aria-pressed="true">年月日まで分かる</button><button type="button" class="chip" data-p="month" aria-pressed="false">年と月だけ</button>' +
       '<button type="button" class="chip" data-p="year" aria-pressed="false">年だけ</button></div>' +
-      '<div class="field"><label for="f-day" id="lab-date">日付をえらぶ</label><input type="date" id="f-day" min="0100-01-01" max="2200-12-31">' +
+      '<div class="field"><label for="f-day" id="lab-date">日付を選ぶ</label><input type="date" id="f-day" min="0100-01-01" max="2200-12-31">' +
       '<input type="month" id="f-month" hidden placeholder="2026-10"><input type="number" id="f-year" hidden inputmode="numeric" min="1" max="2200" placeholder="例 1990"></div>' +
       '<button type="button" class="chip" id="f-today">今日にする</button><p class="err" id="e-date" role="alert"></p>' +
       '<div id="live" class="live" hidden aria-live="polite"></div></section>' +
-      '<section id="s3" hidden><h2>3. 名前をつけましょう</h2><p class="hint">あとで見て分かればだいじょうぶです。えらぶだけでも使えます。</p><div class="chips" id="f-words"></div>' +
+      '<section id="s3" hidden><h2>3. 名前をつけましょう</h2><p class="hint">あとで見て分かる名前なら十分です。選ぶだけでも使えます。</p><div class="chips" id="f-words"></div>' +
       '<div class="field"><label for="f-title">名前</label><input type="text" id="f-title" maxlength="40" autocomplete="off"></div></section>' +
       '<section id="s4" hidden><h2>4. カレンダーのお知らせ</h2>' +
       '<label class="chip" id="l-yearly"><input type="checkbox" id="f-yearly"> 毎年くり返す</label> <label class="chip" id="l-100"><input type="checkbox" id="f-100"> 100日ごとの節目も入れる</label>' +
-      '<div class="field"><label for="f-alarm">知らせる時間</label><select id="f-alarm"><option value="morning">当日の朝9時</option><option value="eve">前の日の夜9時</option><option value="none">お知らせなし</option></select></div>' +
+      '<div class="field"><label for="f-alarm">知らせる時間</label><select id="f-alarm"><option value="morning">当日の朝9時</option><option value="eve">前の日の夜9時</option><option value="week">1週間前の朝9時</option><option value="none">お知らせなし</option></select></div>' +
       '<p class="hint">カレンダーアプリの設定によっては、お知らせが出ないことがあります。</p></section>' +
       '<p id="quiet-note" class="notice quiet" hidden>大切な日は、静かに残します。広告やおすすめは出しません。</p>' +
       '<p><button type="button" class="btn" id="f-save" hidden>この日を残す</button></p>' +
@@ -540,7 +634,7 @@
       $$('[data-p]', root).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-p') === p ? 'true' : 'false'); });
       $f('f-day').hidden = p !== 'day'; $f('f-month').hidden = p !== 'month'; $f('f-year').hidden = p !== 'year';
       $f('lab-date').setAttribute('for', p === 'day' ? 'f-day' : p === 'month' ? 'f-month' : 'f-year');
-      $f('lab-date').textContent = p === 'day' ? '日付をえらぶ' : p === 'month' ? '年と月を入れる(例 2026-10)' : '年を入れる(例 1990)';
+      $f('lab-date').textContent = p === 'day' ? '日付を選ぶ' : p === 'month' ? '年と月を入れる(例 2026-10)' : '年を入れる(例 1990)';
       $f('f-today').hidden = p !== 'day';
       update();
     }
@@ -570,7 +664,9 @@
     }
     if (P.kind && KINDS[P.kind]) setKind(P.kind);
     if (P.title) { $f('f-title').value = P.title; }
-    if (P.date && C.parse(P.date)) { if (!st.kind) setKind('memo'); $f('f-day').value = P.date; }
+    var when = P.date && C.parse(P.date) ? C.parse(P.date) : whenToken(P.when);
+    if (when) { if (!st.kind) setKind('memo'); $f('f-day').value = C.iso(when); }
+    if (P.alarm && /^(morning|eve|week|none)$/.test(P.alarm)) $f('f-alarm').value = P.alarm;
     update();
   }
 
@@ -586,6 +682,19 @@
     });
   }
 
+  /* ---------- today's numbers page ---------- */
+  function pageToday() {
+    var n = C.dayOfYear(TODAY), fy = C.fiscalYear(TODAY), vals = {
+      'year': '' + n[0], 'year-left': '' + n[1], 'newyear': '' + (n[1] + 1), 'newyear-y': '' + (TODAY[0] + 1), 'fy': '' + fy[2], 'fy-y': '' + fy[0], 'fy-pass': '' + fy[1],
+      'today': fmtDate(C.iso(TODAY), 'day'), 'y': '' + TODAY[0]
+    };
+    $$('[data-num]').forEach(function (el) { el.textContent = vals[el.getAttribute('data-num')] || ''; });
+    $$('a[data-when]').forEach(function (a) {
+      var d = whenToken(a.getAttribute('data-when'));
+      if (d) a.setAttribute('href', a.getAttribute('href') + (a.getAttribute('href').indexOf('?') < 0 ? '?' : '&') + 'date=' + C.iso(d));
+    });
+  }
+
   /* ---------- start ---------- */
   applyPrefs();
   hydrate(document);
@@ -595,5 +704,6 @@
   else if (page === 'add') pageAdd();
   else if (page === 'skins') pageSkins();
   else if (page === 'category') pageCategory();
-  window.Atomou = { state: function () { return S; }, today: TODAY };
+  else if (page === 'today') pageToday();
+  window.Atomou = { state: function () { return S; }, today: TODAY, tipFor: tipFor, nextLines: nextLines, whenToken: whenToken };
 })();

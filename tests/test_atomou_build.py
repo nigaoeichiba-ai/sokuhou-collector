@@ -35,7 +35,7 @@ class BuildOnce(unittest.TestCase):
 
 class Pages(BuildOnce):
     def test_the_pages_exist(self):
-        for p in ("index.html", "search/index.html", "my/index.html", "add/index.html", "skins/index.html", "manual/index.html", "use/index.html",
+        for p in ("index.html", "search/index.html", "my/index.html", "add/index.html", "skins/index.html", "manual/index.html", "today/index.html", "use/index.html",
                   "about/index.html", "privacy/index.html", "contact/index.html", "404.html", "sitemap.xml", "robots.txt", ".htaccess",
                   "assets/catalog.json", "assets/skins.css", "assets/app.js", "assets/core.js", "assets/ics.js", "assets/style.css", "favicon.ico"):
             self.assertIn(p, self.rel, p)
@@ -120,7 +120,7 @@ class Pages(BuildOnce):
         for k in ("index.html", "my/index.html", "e/" + self.entries[0]["id"] + "/index.html"):
             self.assertIn('href="/manual/"', self.rel[k], k)
         m = self.rel["manual/index.html"]
-        for q in ("お金は かかりますか", "スマホを 買いかえたら", "お知らせが 来ません"):
+        for q in ("料金はかかりますか", "機種変更をしたら", "お知らせが来ません"):
             self.assertIn(q, m)
         self.assertNotIn("必ず届き", m)  # nothing promises that a notice arrives
 
@@ -207,6 +207,20 @@ class AppInChrome(BuildOnce):
         dom = html.unescape(self.dom("/add/?kind=anniversary&title=付き合った日&date=2024-06-26"))
         self.assertIn("もう2年3か月12日", dom)
         self.assertIn("合計 834日", dom)
+
+    def test_today_page_numbers_and_links(self):
+        raw = html.unescape(self.dom("/today/"))
+        dom = re.sub(r"<[^>]+>", "", raw) + raw
+        for want in ("もう281日め", "年末まで、あと84日", "2027年まで、あと85日", "2026年度は、あと174日"):
+            self.assertIn(want, dom)
+        self.assertIn("date=2027-03-31", dom)   # 引っ越しの用意 -> the end of the fiscal year
+        self.assertIn("date=2027-04-01", dom)   # 入学の用意 -> the start of the next one
+        self.assertIn("alarm=week", dom)
+
+    def test_home_edit_mode_shows_a_bar_on_every_block(self):
+        dom = self.dom("/?edit=1")
+        self.assertEqual(dom.count('class="block-bar"'), 7)
+        self.assertNotIn('class="block-bar"', self.dom("/"))
 
     def test_no_storage_errors_with_a_blank_profile(self):
         # a fresh profile has no atomou.v1: the pages must render (my page shows its empty state)
