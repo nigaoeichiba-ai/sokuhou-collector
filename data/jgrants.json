@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-07T04:20:23.454647+00:00",
+ "fetched_at": "2026-10-08T00:57:31.106436+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -1443,6 +1443,18 @@
    "title": "【令和８年度】ＰＣＢ汚染変圧器高効率化補助金"
   },
   {
+   "acceptance_end_datetime": "2026-10-28T14:59:00.000Z",
+   "acceptance_start_datetime": "2026-10-07T00:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDc0YMAT",
+   "id": "a0WJ200000CDc0YMAT",
+   "institution_name": "令和８年度都市ガス分野の災害対応・レジリエンス強化にかかる支援事業費補助金",
+   "name": "S-00009417",
+   "subsidy_max_limit": 130502000,
+   "target_area_search": "全国",
+   "target_number_of_employees": "300名以下",
+   "title": "令和８年度都市ガス分野の災害対応・レジリエンス強化に係る支援事業費補助金"
+  },
+  {
    "acceptance_end_datetime": "2026-12-14T08:00:00.000Z",
    "acceptance_start_datetime": "2026-04-01T01:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDXmVMAX",
@@ -1995,5 +2007,5 @@
    "title": "伝統的工芸品産業支援補助金（令和8年度第2回災害復興事業）"
   }
  ],
- "total": 166
+ "total": 167
 }
