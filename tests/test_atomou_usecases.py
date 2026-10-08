@@ -15,6 +15,9 @@ PROMISE_BANNED = ("確実", "絶対", "必ず届", "忘れません")
 SLUG_RE = re.compile(r"^[a-z]+(-[a-z0-9]+)*$")
 FIELDS = {"slug": str, "title": str, "who": str, "situation": str, "steps": list, "catalog": (dict, type(None)), "own": (dict, type(None)),
           "tips": list, "cautions": list, "quiet": bool, "group": str, "related": list}
+# names of screens, buttons and features that do not exist (the texts were once written from the spec, before the screens were built)
+NO_SUCH_SCREEN = ("『登録』", "『もうすぐ』", "『これからの予定』", "『家族・自分の誕生日』", "『毎日の数え方』", "これからの予定", "家族・自分の誕生日",
+                  "毎日の数え方", "毎月", "知らせない", "当日の朝だけ", "切りかえ", "切り替え", "グラフ", "チップ", "数え年")
 # words a visitor can filter the catalogue by: categories and the synonym tags of sites/atomou/catalog.py
 CATALOG_TAGS = set(catalog.GROUP_OF_CATEGORY) | {t for v in catalog.SYNONYMS.values() for t in v} | set(catalog.GROUPS)
 
@@ -34,6 +37,34 @@ def texts(u):
                 walk(v)
     walk(u)
     return out
+
+
+def prose(u):
+    """The words a visitor reads (the group name and the slugs are labels, not prose)."""
+    own = u.get("own") or {}
+    out = [u.get("title", ""), u.get("who", ""), u.get("situation", ""), own.get("label", ""), own.get("hint", "")]
+    for k in ("steps", "tips", "cautions"):
+        out += [s for s in (u.get(k) or []) if isinstance(s, str)]
+    return out
+
+
+def check_screens(u):
+    """Problems with the screen names a scenario uses: names that do not exist, and steps that do not match the kind of scenario."""
+    p = []
+    for t in prose(u):
+        for w in NO_SUCH_SCREEN:
+            if w in t:
+                p.append(f"実在しない画面・機能の名前「{w}」")
+    steps = "\n".join(u.get("steps") or [])
+    c = u.get("catalog")
+    if c is not None:
+        if f"『{c.get('group')}』" not in steps:
+            p.append("公式の日付の例なのに、手順にジャンル名がない")
+        if "『☆ 保存する』" not in steps:
+            p.append("公式の日付の例なのに、手順に『☆ 保存する』がない")
+    elif "『この日を残す』" not in steps:
+        p.append("自分の日の例なのに、手順に『この日を残す』がない")
+    return p
 
 
 def check_scenario(u, slugs=None, groups_order=None, catalog_groups=None):
@@ -141,6 +172,16 @@ class UsecaseTests(unittest.TestCase):
         self.assertEqual([r["slug"] for r in usecases.related("exam-university")], usecases.by_slug("exam-university")["related"])
         self.assertEqual(usecases.related("no-such-slug"), [])
 
+    def test_situation_length_is_80_to_120(self):
+        for u in usecases.USECASES:
+            with self.subTest(slug=u["slug"]):
+                self.assertTrue(80 <= len(u["situation"]) <= 120, len(u["situation"]))
+
+    def test_texts_use_only_screens_that_exist(self):
+        for u in usecases.USECASES:
+            with self.subTest(slug=u["slug"]):
+                self.assertEqual(check_screens(u), [])
+
     def test_no_digits_that_look_like_dates_or_amounts(self):
         # facts live in the catalogue; the prose only describes how to count
         pat = re.compile(r"\d{4}年|\d{1,2}月\d{1,2}日|\d+円|\d+%")
@@ -202,6 +243,48 @@ class NegativeTests(unittest.TestCase):
             u = self.good()
             mutate(u)
             self.assertTrue(check_scenario(u), name)
+
+    def test_names_of_screens_that_do_not_exist_are_found_in_every_field(self):
+        fields = {
+            "situation": lambda u, w: u.update(situation=u["situation"] + w),
+            "steps": lambda u, w: u.update(steps=u["steps"][:-1] + [f"{w}を押す"]),
+            "tips": lambda u, w: u.update(tips=[f"{w}を使う"]),
+            "cautions": lambda u, w: u.update(cautions=[f"{w}に注意"]),
+            "own.hint": lambda u, w: u["own"].update(hint=f"{w}のとき"),
+            "title": lambda u, w: u.update(title=f"{w}の日"),
+        }
+        for w in NO_SUCH_SCREEN:
+            for name, put in fields.items():
+                u = copy.deepcopy(usecases.by_slug("exam-university"))
+                put(u, w)
+                with self.subTest(word=w, field=name):
+                    self.assertTrue(any(w in x for x in check_screens(u)))
+
+    def test_the_old_wording_of_the_spec_is_found(self):
+        old = copy.deepcopy(usecases.by_slug("exam-university"))
+        old["steps"] = ["ホームの『もうすぐ』を押す", "『試験・資格』から『大学入試』を選ぶ", "志望に合う試験のカードで『登録』を押す"]
+        found = check_screens(old)
+        self.assertTrue(any("『登録』" in x for x in found), found)
+        self.assertTrue(any("『もうすぐ』" in x for x in found), found)
+        old = copy.deepcopy(usecases.by_slug("family-birthday"))
+        old["steps"] = ["ホームの『記録する』を押す", "『どんな日ですか』で『家族・自分の誕生日』を選ぶ", "人のチップ(母、きょうだいなど)を選ぶ"]
+        found = check_screens(old)
+        self.assertTrue(any("家族・自分の誕生日" in x for x in found), found)
+        self.assertTrue(any("チップ" in x for x in found), found)
+
+    def test_steps_that_do_not_match_the_kind_of_scenario_are_found(self):
+        u = copy.deepcopy(usecases.by_slug("exam-university"))
+        u["steps"] = ["ホームのジャンル『試験・資格』を押す", "『大学入試』で絞り込む", "カードを開く"]
+        self.assertTrue(any("☆ 保存する" in x for x in check_screens(u)))
+        u["steps"] = ["『大学入試』で絞り込む", "カードで『☆ 保存する』を押す", "カレンダーに入れる"]
+        self.assertTrue(any("ジャンル名" in x for x in check_screens(u)))
+        u = copy.deepcopy(usecases.by_slug("wedding-anniversary"))
+        u["steps"] = ["メニューの『記録する』を押す", "日付を入れる", "完了"]
+        self.assertTrue(any("この日を残す" in x for x in check_screens(u)))
+
+    def test_screen_check_passes_the_real_data(self):
+        for slug in ("exam-university", "wedding-anniversary", "memorial-day"):
+            self.assertEqual(check_screens(usecases.by_slug(slug)), [])
 
     def test_missing_field_is_found(self):
         u = self.good()
