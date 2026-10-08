@@ -103,7 +103,14 @@
   btn = document.createElement('button');
   btn.type = 'button'; btn.className = 'guide-btn'; btn.setAttribute('aria-label', 'この画面の使い方ガイドを見る'); btn.innerHTML = '<span aria-hidden="true">?</span> ガイド';
   btn.addEventListener('click', start);
-  document.body.appendChild(btn);
+  document.body.appendChild(btn);   // wide screens: a button at the bottom right
+  var icons = document.querySelector('.hicons');   // phones: in the header, next to search (a floating button covered calendar days and card buttons)
+  if (icons) {
+    var hb = document.createElement('button');
+    hb.type = 'button'; hb.className = 'guide-icon'; hb.setAttribute('aria-label', 'この画面の使い方ガイドを見る'); hb.innerHTML = '<span aria-hidden="true">?</span>';
+    hb.addEventListener('click', start);
+    icons.insertBefore(hb, icons.firstChild);
+  }
   document.addEventListener('click', function (ev) { var b = ev.target.closest ? ev.target.closest('[data-guide]') : null; if (b) start(); });
   window.AtomouGuide = { start: start, steps: steps };
   // by itself, once per page, after the page has drawn its cards (and never in the tests, which pass ?today=)

@@ -402,7 +402,7 @@ def my_page(c: Ctx) -> str:
 {member_html}{push_html}{sync_html}<h2>他のカレンダーアプリに入れる</h2>
 <div class="panel"><p>iPhone の「カレンダー」や Google カレンダーに取り込めるファイルを作れます。1件ずつ作るときは、予定の詳細から。</p>
 <p><button type="button" class="btn small ghost" id="ics-all">すべての予定をファイルにする</button></p></div>
-<h2>バックアップ</h2>
+<h2 id="backup-h">バックアップ</h2>
 <div class="panel">
 <p>記録はこの端末の中だけにあります。機種変更の前に書き出し、新しい端末で読み込んでください。</p>
 <p><button type="button" class="btn small" id="backup">書き出す</button>

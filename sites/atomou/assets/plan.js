@@ -230,7 +230,7 @@
       else { var c = (cat || []).filter(function (x) { return x.id === key.slice(2); })[0]; item = c ? A.catItem(c) : null; }
       if (!item) return missing();
       render();
-      if (P.new) { A.toast('残しました。メモと「やること」を続けて書けます。'); try { history.replaceState(null, '', '/plan/?key=' + key); } catch (x) { /* ignore */ } }
+      if (P.new) { A.toast('残しました。メモと「やること」を続けて書けます。'); if (window.AtomouPush && item.own) window.AtomouPush.afterSave(box, !!item.quiet); try { history.replaceState(null, '', '/plan/?key=' + key); } catch (x) { /* ignore */ } }
     });
   }
 

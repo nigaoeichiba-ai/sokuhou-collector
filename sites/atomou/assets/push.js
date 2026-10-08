@@ -137,8 +137,38 @@
     $('#p-alarm').addEventListener('change', function () { S().prefs.pushHash = ''; sync(true); });
   }
 
+  /* ---------- right after a day was recorded: the two things that make the day "kept" (plan page, ?new=1) ---------- */
+  function afterSave(plan, quiet) {
+    var H = A.H, h = '';
+    if (iosNeedsHomeScreen()) {   // Safari removes what a site stored after about a week of Safari use without a visit; an icon on the home screen is exempt
+      h = '<p>iPhone の Safari は、しばらく開かないと、保存した日を消すことがあります。</p>' +
+        '<p>共有ボタンから「ホーム画面に追加」すると、消えにくくなります。通知も、ホーム画面のアイコンから開くと使えます。</p>' +
+        '<p>念のため、<a href="/my/#backup-h">バックアップ</a>で書き出しておくと安心です。</p>';
+    } else if (supported() && !quiet && Notification.permission === 'default' && !S().prefs.push) {
+      h = '<p>決めた日に、この端末へ通知します。時間はマイページで変えられます。</p>' +
+        '<p><button type="button" class="btn" id="as-push">この端末に通知を届ける</button></p><p class="hint" id="as-msg" role="status"></p>';
+    }
+    if (!h) return;
+    var el = document.createElement('section');
+    el.className = 'panel after-save';
+    el.id = 'after-save';
+    el.innerHTML = '<h2>' + (iosNeedsHomeScreen() ? 'この日を忘れないために' : 'この日を、お知らせしますか') + '</h2>' + h;
+    plan.insertAdjacentElement('beforebegin', el);   // above the day's card: the first screen after saving, not below the memo
+    var b = el.querySelector('#as-push');
+    if (b) b.addEventListener('click', function () {
+      b.disabled = true;
+      subscribe().then(function () { el.querySelector('#as-msg').textContent = 'この端末に届きます。'; b.hidden = true; A.toast('この端末で通知を受け取ります。'); })
+        .catch(function () { el.querySelector('#as-msg').textContent = Notification.permission === 'denied' ? '通知が許可されませんでした。' : '通知を始められませんでした。マイページから、もう一度お試しください。'; b.disabled = false; });
+    });
+  }
+
+  // ask the browser to keep the saved days (Chrome and Safari answer without a dialog; Firefox would ask, so it is not asked there)
+  if (!/Firefox\//.test(navigator.userAgent || '') && navigator.storage && navigator.storage.persist && S().entries && S().entries.length) {
+    try { navigator.storage.persist().catch(function () { /* ignore */ }); } catch (e) { /* ignore */ }
+  }
+
   if (A.page === 'my') pageMy();
   document.addEventListener('atomou:changed', function () { sync(false); });
   if (!P.today) setTimeout(function () { sync(false); }, 1500);   // after a change made on another page (or on another device), the server's list follows
-  window.AtomouPush = { plan: plan, sync: sync, supported: supported, SLOT: SLOT };
+  window.AtomouPush = { plan: plan, sync: sync, supported: supported, afterSave: afterSave, SLOT: SLOT };
 })();
