@@ -12,6 +12,7 @@
 header.site{--hd-fg:var(--head-text)}
 h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 .c-count .num,.wizard .live .big{font-family:var(--font-num,var(--font))}
+.card :is(.c-title,.c-title a,.c-date,.c-place,.badge){overflow-wrap:anywhere}
 
 /* ================= every skin (not basic): things the colour variables alone get wrong ================= */
 :root[data-skin] header.site nav a[aria-current="page"]{background:color-mix(in srgb,var(--head-text) 18%,transparent);color:var(--head-text)}
@@ -40,7 +41,6 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-head="band"] .hero .lead{color:inherit}
 :root[data-head="band"] .hero a{color:inherit;text-underline-offset:3px}
 :root[data-head="band"] .hero::after{margin-top:1rem}
-:root[data-head="band"] header.site+.preview{display:none}
 
 :root[data-head="stripe"] header.site{border-bottom:3px double var(--deco2)}
 :root[data-head="stripe"] .brand::before{content:"";flex:none;width:6px;height:30px;margin-right:4px;background:var(--deco2)}
@@ -220,7 +220,7 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-skin="summer"]{--banner:url(/assets/skins/summer.webp)}
 :root[data-skin="tsukimi"]{--banner:url(/assets/skins/tsukimi.webp)}
 :root:is([data-skin="notebook"],[data-skin="pop"],[data-skin="pastel-pink"],[data-skin="mediterranean"],[data-skin="tropical"],[data-skin="kids"],[data-skin="retro"],[data-skin="forest"],[data-skin="sunset"],[data-skin="nordic"],[data-skin="wafuu"],[data-skin="chic-navy"],[data-skin="halloween"],[data-skin="christmas"],[data-skin="newyear"],[data-skin="valentine"],[data-skin="sakura"],[data-skin="summer"],[data-skin="tsukimi"]) .hero::after{content:"";display:block;width:100%;aspect-ratio:3.7/1;max-height:var(--strip-h);margin-top:.4rem;background:var(--banner) center bottom/cover no-repeat}
-:root:is([data-skin="notebook"],[data-skin="pop"],[data-skin="pastel-pink"],[data-skin="mediterranean"],[data-skin="tropical"],[data-skin="kids"],[data-skin="retro"],[data-skin="forest"],[data-skin="sunset"],[data-skin="nordic"],[data-skin="wafuu"],[data-skin="chic-navy"],[data-skin="halloween"],[data-skin="christmas"],[data-skin="newyear"],[data-skin="valentine"],[data-skin="sakura"],[data-skin="summer"],[data-skin="tsukimi"]) body:not([data-page="home"]) main::before{content:"";display:block;width:100%;aspect-ratio:7/1;min-height:56px;max-height:130px;margin:.6rem 0 0;background:var(--banner) center bottom/cover no-repeat}
+:root:is([data-skin="notebook"],[data-skin="pop"],[data-skin="pastel-pink"],[data-skin="mediterranean"],[data-skin="tropical"],[data-skin="kids"],[data-skin="retro"],[data-skin="forest"],[data-skin="sunset"],[data-skin="nordic"],[data-skin="wafuu"],[data-skin="chic-navy"],[data-skin="halloween"],[data-skin="christmas"],[data-skin="newyear"],[data-skin="valentine"],[data-skin="sakura"],[data-skin="summer"],[data-skin="tsukimi"]) body:not([data-page="home"]) main::before{content:"";display:block;width:100%;height:clamp(64px,13vw,104px);margin:.6rem 0 0;background:var(--banner) center bottom/contain no-repeat}
 :root[data-skin="halloween"] footer.site{position:relative;margin-top:calc(3rem + 56px)}
 :root[data-skin="halloween"] footer.site::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:56px;background:url(/assets/skins/halloween-dots.webp) center bottom/auto 56px repeat-x}
 

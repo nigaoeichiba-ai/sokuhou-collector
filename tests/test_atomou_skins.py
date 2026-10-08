@@ -296,6 +296,26 @@ class SeasonTest(unittest.TestCase):
             d += timedelta(days=1)
 
 
+def design_problems(css: str, assets: Path) -> list[str]:
+    """What is wrong with a design.css text (empty = fine)."""
+    out = []
+    if re.search(r"https?:|@import|@font-face|//[a-z]", css):
+        out.append("an external address, @import or @font-face")
+    if "prefers-color-scheme" in css:
+        out.append("prefers-color-scheme (the page must not turn dark by itself)")
+    if css.count("{") != css.count("}"):
+        out.append("unbalanced braces")
+    for m in re.finditer(r"([^{}]*)\{([^{}]*)\}", css):
+        for u in re.findall(r"url\((?!\"data:|%23)([^)]+)\)", m.group(2)):
+            if not re.fullmatch(r"/assets/skins/[a-z0-9-]+\.webp", u):
+                out.append(f"picture address not under /assets/skins/*.webp: {u}")
+            elif not (assets / u.removeprefix("/assets/")).exists():
+                out.append(f"picture missing: {u}")
+            if "data-skin" not in m.group(1):
+                out.append(f"picture {u} is named outside a data-skin selector (it would load for every skin)")
+    return out
+
+
 class DesignCssTest(unittest.TestCase):
     """assets/design.css: the shape rules.  No external address, no font files, pictures only under their own skin, every picture present and small."""
 
@@ -304,24 +324,24 @@ class DesignCssTest(unittest.TestCase):
         cls.css = DESIGN.read_text(encoding="utf-8")
         cls.skins_dir = ASSETS / "skins"
 
-    def test_no_external_resources(self):
-        self.assertNotRegex(self.css, r"https?:|@import|@font-face|//[a-z]")
-        self.assertNotIn("prefers-color-scheme", self.css)
+    def test_design_css_is_clean(self):
+        self.assertEqual(design_problems(self.css, ASSETS), [])
+        self.assertTrue(re.search(r"url\(/assets/skins/", self.css))
 
-    def test_braces_balanced(self):
-        self.assertEqual(self.css.count("{"), self.css.count("}"))
-
-    def test_picture_urls_are_local_and_exist(self):
-        urls = re.findall(r"url\((?!\"data:|%23)([^)]+)\)", self.css)
-        self.assertTrue(urls)
-        for u in urls:
-            self.assertRegex(u, r"^/assets/skins/[a-z0-9-]+\.webp$")
-            self.assertTrue((ASSETS / u.removeprefix("/assets/")).exists(), u)
-
-    def test_a_picture_is_named_only_under_its_own_skin_selector(self):
-        """url(/assets/...) must sit in a rule whose selector names data-skin, so the picture loads only when that skin is chosen."""
-        for m in re.finditer(r"([^{}]*)\{([^{}]*url\(/assets/[^{}]*)\}", self.css):
-            self.assertIn("data-skin", m.group(1), m.group(1)[:80])
+    def test_the_check_catches_bad_css(self):
+        bad = {
+            "external": "body{background:url(https://example.com/a.png)}",
+            "import": '@import "x.css";',
+            "font": "@font-face{font-family:x}",
+            "dark": "@media (prefers-color-scheme: dark){:root{--bg:#000}}",
+            "braces": ":root{--a:1",
+            "everywhere": "body{background:url(/assets/skins/pop.webp)}",
+            "missing": ':root[data-skin="pop"]{--b:url(/assets/skins/nothing-here.webp)}',
+            "elsewhere": ':root[data-skin="pop"]{--b:url(/img/pop.webp)}',
+        }
+        for name, css in bad.items():
+            self.assertTrue(design_problems(css, ASSETS), name)
+        self.assertEqual(design_problems(':root[data-skin="pop"]{--b:url(/assets/skins/pop.webp)}', ASSETS), [])
 
     def test_pictures_are_small(self):
         files = list(self.skins_dir.glob("*.webp"))
@@ -332,6 +352,11 @@ class DesignCssTest(unittest.TestCase):
             total += f.stat().st_size
         self.assertLessEqual(total, 1_500_000)
         self.assertEqual({p.suffix for p in self.skins_dir.iterdir()}, {".webp"})
+
+    def test_every_picture_is_used_by_some_skin(self):
+        used = set(re.findall(r"/assets/skins/([a-z0-9-]+)\.webp", self.css))
+        have = {f.stem for f in self.skins_dir.glob("*.webp")}
+        self.assertEqual(have - used, set())
 
     def test_every_attribute_value_that_needs_rules_has_rules(self):
         for key, vals in skins.ATTR_VALUES.items():

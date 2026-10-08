@@ -9,11 +9,11 @@
   var TOURS = {
     home: [
       ['[data-block="search"] input[type="search"]', 'ここで、日付や行事をさがせます。たとえば「年賀状」と入れてみてください。'],
-      ['[data-block="cats"] .cats a', 'ジャンルから、さがすこともできます。'],
+      ['[data-block="cats"] .chiprow a', 'ジャンルから、さがすこともできます。左右にずらすと、ほかのジャンルが出ます。'],
       ['#grid .card [data-act="save"]', '「予定に入れる」を押すと、その日がカレンダーに入ります。'],
       ['#grid .card', 'カードは、ドラッグで動かせます。スマホは、長く押してから動かします。'],
-      ['header.site nav a[href="/calendar/"]', '入れた予定は、ここのカレンダーで見られます。'],
-      ['header.site nav a[href="/add/"]', '自分の予定や記念日は、ここから入れます。']
+      ['.tabbar a[href="/calendar/"], header.site nav a[href="/calendar/"]', '入れた予定は、ここのカレンダーで見られます。'],
+      ['.tabbar a[href="/add/"], header.site nav a[href="/add/"]', '自分の予定や記念日は、ここから1行で入れられます。たとえば「明日 19時 デート」。']
     ],
     calendar: [
       ['.cal-tools', '「月」と「一覧」を切りかえられます。'],
@@ -41,7 +41,10 @@
   function markSeen() { var st = A.state(); st.prefs.tour = st.prefs.tour || {}; st.prefs.tour[page] = true; A.persist(); }
   function visible(el) { var r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== 'hidden'; }
   function usable() {
-    return steps.map(function (s) { var el = document.querySelector(s[0]); return el && visible(el) ? { el: el, text: s[1] } : null; }).filter(Boolean);
+    return steps.map(function (s) {
+      var el = Array.prototype.slice.call(document.querySelectorAll(s[0])).filter(visible)[0];
+      return el ? { el: el, text: s[1] } : null;
+    }).filter(Boolean);
   }
   function place() {
     if (!live[idx]) return;
