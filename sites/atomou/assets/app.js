@@ -31,9 +31,12 @@
   /* ---------- state ---------- */
   var S = blank(), brokenSaved = false;
   var BLOCK_IDS = ['search', 'cats', 'daily', 'mine', 'soon', 'record', 'usecases'], KIND_IDS = ['anniversary', 'birthday', 'memorial', 'since', 'until', 'memo'];
-  function blank() { return { v: 1, entries: [], saved: [], order: [], genre: {}, prefs: { skin: 'basic', big: false, alarm: 'morning', blocks: { order: [], hidden: [] } } }; }
+  function statsDefault() {  // statistics are on unless the browser says "do not track" (DNT / Global Privacy Control)
+    try { return !(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.globalPrivacyControl === true); } catch (e) { return true; }
+  }
+  function blank() { return { v: 1, updated: '', entries: [], deleted: [], saved: [], order: [], genre: {}, prefs: { skin: 'basic', big: false, alarm: 'morning', stats: statsDefault(), blocks: { order: [], hidden: [] } } }; }
   function oneOf(v, list, dflt) { return list.indexOf(v) >= 0 ? v : dflt; }
-  function cleanEntry(e) {  // whatever is in storage (or in a restored backup) is reduced to known shapes before it can reach the page
+  function cleanEntry(e) {  // whatever is in storage (or in a restored backup, or in a synced file) is reduced to known shapes before it can reach the page
     if (!e || typeof e !== 'object') return null;
     var id = String(e.id || ''), d = C.parse(String(e.date));
     if (!/^[A-Za-z0-9_-]{1,40}$/.test(id) || !d) return null;
@@ -42,34 +45,53 @@
       quiet: !!e.quiet || kind === 'memorial', yearly: !!e.yearly, every100: !!e.every100, alarm: oneOf(e.alarm, ['morning', 'eve', 'week', 'none'], 'morning'),
       created: /^\d{4}-\d{2}-\d{2}$/.test(String(e.created)) ? e.created : '' };
   }
+  function normalize(o) {
+    var s = blank(), p = (o && o.prefs) || {};
+    o = o || {};
+    s.updated = /^\d{4}-\d{2}-\d{2}T[\d:.]+Z$/.test(String(o.updated)) ? o.updated : '';
+    s.entries = (Array.isArray(o.entries) ? o.entries : []).map(cleanEntry).filter(Boolean);
+    s.deleted = (Array.isArray(o.deleted) ? o.deleted : []).filter(function (x) { return /^[A-Za-z0-9_-]{1,40}$/.test(String(x)); }).slice(-300);
+    s.saved = (Array.isArray(o.saved) ? o.saved : []).filter(function (x) { return /^[0-9a-f]{10}$/.test(String(x)); });
+    s.order = (Array.isArray(o.order) ? o.order : []).filter(function (x) { return /^[cm]:[A-Za-z0-9_-]{1,40}$/.test(String(x)); });
+    (CONF.groups || []).forEach(function (g) { var n = o.genre && +o.genre[g]; if (n > 0) s.genre[g] = Math.min(20, Math.floor(n)); });
+    s.prefs.skin = CONF.skins[p.skin] ? p.skin : 'basic';
+    s.prefs.big = !!p.big;
+    s.prefs.alarm = oneOf(p.alarm, ['morning', 'eve', 'week', 'none'], 'morning');
+    s.prefs.stats = p.stats === undefined ? statsDefault() : !!p.stats;
+    var b = p.blocks || {};
+    s.prefs.blocks = { order: (Array.isArray(b.order) ? b.order : []).filter(function (k) { return BLOCK_IDS.indexOf(k) >= 0; }),
+      hidden: (Array.isArray(b.hidden) ? b.hidden : []).filter(function (k) { return BLOCK_IDS.indexOf(k) >= 0; }) };
+    return s;
+  }
   function load() {
-    var s = blank(), raw = null;
+    var raw = null;
     try {
       raw = localStorage.getItem(KEY);
-      if (raw) {
-        var o = JSON.parse(raw), p = o.prefs || {};
-        s.entries = (Array.isArray(o.entries) ? o.entries : []).map(cleanEntry).filter(Boolean);
-        s.saved = (Array.isArray(o.saved) ? o.saved : []).filter(function (x) { return /^[0-9a-f]{10}$/.test(String(x)); });
-        s.order = (Array.isArray(o.order) ? o.order : []).filter(function (x) { return /^[cm]:[A-Za-z0-9_-]{1,40}$/.test(String(x)); });
-        s.genre = {};
-        (CONF.groups || []).forEach(function (g) { var n = o.genre && +o.genre[g]; if (n > 0) s.genre[g] = Math.min(20, Math.floor(n)); });
-        s.prefs.skin = CONF.skins[p.skin] ? p.skin : 'basic';
-        s.prefs.big = !!p.big;
-        s.prefs.alarm = oneOf(p.alarm, ['morning', 'eve', 'week', 'none'], 'morning');
-        var b = p.blocks || {};
-        s.prefs.blocks = { order: (Array.isArray(b.order) ? b.order : []).filter(function (k) { return BLOCK_IDS.indexOf(k) >= 0; }),
-          hidden: (Array.isArray(b.hidden) ? b.hidden : []).filter(function (k) { return BLOCK_IDS.indexOf(k) >= 0; }) };
-      }
+      if (raw) return normalize(JSON.parse(raw));
     } catch (e) {
       if (raw) {  // unreadable data: keep a copy before anything is written over it, and say so
         brokenSaved = true;
         try { localStorage.setItem(KEY + '.broken', raw); } catch (e2) { /* nothing more can be done */ }
       }
     }
-    return s;
+    return blank();
+  }
+  function mergeStates(a, b) {  // a = this device, b = the synced file (both normalised): entries are united, the newer side wins on settings
+    var newer = a.updated >= b.updated ? a : b, older = newer === a ? b : a, del = {}, byId = {}, out = blank();
+    a.deleted.concat(b.deleted).forEach(function (id) { del[id] = 1; });
+    older.entries.concat(newer.entries).forEach(function (e) { byId[e.id] = e; });
+    out.entries = Object.keys(byId).filter(function (id) { return !del[id]; }).map(function (id) { return byId[id]; });
+    out.deleted = Object.keys(del).slice(-300);
+    out.saved = older.saved.concat(newer.saved).filter(function (x, i, l) { return l.indexOf(x) === i; });
+    out.order = newer.order.slice();
+    Object.keys(older.genre).concat(Object.keys(newer.genre)).forEach(function (g) { out.genre[g] = Math.max(older.genre[g] || 0, newer.genre[g] || 0); });
+    out.prefs = JSON.parse(JSON.stringify(newer.prefs));
+    out.updated = newer.updated;
+    return out;
   }
   var warned = false;
   function persist() {
+    S.updated = new Date().toISOString();
     try { localStorage.setItem(KEY, JSON.stringify(S)); return true; } catch (e) {
       if (!warned) { warned = true; toast('この端末では保存できませんでした(プライベートモードなど)。このページを閉じると消えます。'); }
       return false;
@@ -77,6 +99,22 @@
   }
   S = load();
   if (brokenSaved) setTimeout(function () { toast('保存されたデータを読み込めませんでした。元のデータは、別の場所に残してあります。'); }, 300);
+
+  /* ---------- usage statistics: counts of fixed items only (no text, no dates, no ids); see /privacy/#stats ---------- */
+  var STAT_RE = /^(view|skin|big|home_order|home_hidden|act)(:[a-z0-9_,-]{1,60}){1,2}$/, statQ = {}, statN = 0;
+  function stat(name) {
+    if (!S.prefs.stats || !STAT_RE.test(name) || name.length > 80 || statN >= 40) return;
+    if (!statQ[name]) statN++;
+    statQ[name] = Math.min(50, (statQ[name] || 0) + 1);
+  }
+  function flushStats() {
+    if (!statN) return;
+    var body = JSON.stringify({ v: 1, c: statQ });
+    statQ = {}; statN = 0;
+    try { if (navigator.sendBeacon) navigator.sendBeacon('/api/e.php', new Blob([body], { type: 'text/plain' })); } catch (e) { /* statistics are never worth an error */ }
+  }
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') flushStats(); });
+  window.addEventListener('pagehide', flushStats);
 
   /* ---------- small helpers ---------- */
   var toastTimer;
@@ -321,7 +359,7 @@
       grid.classList.toggle('reorder', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
       btn.textContent = on ? '並べ替えを終わる' : 'カードを動かす';
-      if (on) toast('つかむ印(⠿)をドラッグするか、↑↓で動かせます。');
+      if (on) { toast('つかむ印(⠿)をドラッグするか、↑↓で動かせます。'); stat('act:reorder'); }
     });
   }
 
@@ -340,13 +378,14 @@
       var g = card.getAttribute('data-g');
       if (g && CONF.groups[g - 1]) { bump(CONF.groups[g - 1]); persist(); }
     }
+    stat('act:ics');
     ICS.download('atomou-' + key.slice(2) + '.ics', ICS.build([ev], title));
     toast('カレンダーのファイルを作りました。開いて、予定に入れてください。');
   }
   function toggleSave(card) {
     var id = (card.getAttribute('data-key') || '').slice(2), i = S.saved.indexOf(id), g = card.getAttribute('data-g');
     if (i >= 0) { S.saved.splice(i, 1); toast('保存をはずしました。'); }
-    else { S.saved.push(id); if (g && CONF.groups[g - 1]) bump(CONF.groups[g - 1]); toast('保存しました。マイページで見られます。'); }
+    else { S.saved.push(id); stat('act:save'); if (g && CONF.groups[g - 1]) bump(CONF.groups[g - 1]); toast('保存しました。マイページで見られます。'); }
     persist();
     $$('.card[data-key="c:' + id + '"]').forEach(fillCard);
     if (page === 'my') renderMy();
@@ -355,6 +394,7 @@
     var id = (card.getAttribute('data-key') || '').slice(2), e = findEntry(id);
     if (!e || !window.confirm('「' + e.title + '」を消しますか。')) return;
     S.entries = S.entries.filter(function (x) { return x.id !== id; });
+    S.deleted.push(id); S.deleted = S.deleted.slice(-300);
     S.order = S.order.filter(function (k) { return k !== 'm:' + id; });
     persist(); toast('消しました。');
     if (page === 'my') renderMy(); else if (page === 'home') renderMine();
@@ -388,7 +428,7 @@
     box.addEventListener('click', function (ev) {
       var b = ev.target.closest('.skin');
       if (!b) return;
-      S.prefs.skin = b.getAttribute('data-skin'); persist(); applyPrefs(); mark();
+      S.prefs.skin = b.getAttribute('data-skin'); persist(); applyPrefs(); mark(); stat('act:skin:' + S.prefs.skin);
       toast('「' + b.getAttribute('data-name') + '」にしました。');
     });
     mark();
@@ -466,6 +506,7 @@
       else if (act === 'down' && i < order.length - 1) { order.splice(i, 1); order.splice(i + 1, 0, k); }
       else if (act === 'vis') { var h = bp.hidden.indexOf(k); if (h >= 0) bp.hidden.splice(h, 1); else bp.hidden.push(k); }
       S.prefs.blocks = { order: order, hidden: bp.hidden }; persist(); show();
+      stat(act === 'vis' ? (bp.hidden.indexOf(k) >= 0 ? 'act:block_hide:' + k : 'act:block_show:' + k) : 'act:block_move');
     });
     if (reset) reset.addEventListener('click', function () { S.prefs.blocks = { order: [], hidden: [] }; persist(); show(); toast('初期の並びに戻しました。'); });
     if (btn) btn.addEventListener('click', function () { editing = !editing; show(); if (editing) toast('各ブロックの ↑↓ で並べかえ、「かくす」で表示を切りかえられます。'); });
@@ -474,6 +515,8 @@
 
   function pageHome() {
     renderDaily(); renderMine(); wireBlocks();
+    var cb = blockPrefs();
+    if (cb.order.length || cb.hidden.length) { stat('home_order:' + (cb.order.length ? cb.order.join(',') : 'default')); cb.hidden.forEach(function (k) { stat('home_hidden:' + k); }); }
     var grid = $('#grid'), pool = [];
     wireReorderToggle($('#reorder'), grid);
     loadCatalog().then(function (cat) {
@@ -484,7 +527,7 @@
     var sh = $('#shuffle');
     if (sh) sh.addEventListener('click', function () {
       if (!pool.length) { hydrate(grid); return; }
-      render(grid, weighted(pool, 12).map(catItem));
+      render(grid, weighted(pool, 12).map(catItem)); stat('act:shuffle');
     });
   }
 
@@ -493,7 +536,7 @@
     return String(s || '').normalize('NFKC').toLowerCase().replace(/[ァ-ヶ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x60); }).replace(/\s+/g, ' ').trim();
   }
   function pageSearch() {
-    var q = $('#q'), out = $('#results'), info = $('#found'), st = { g: P.g || '', t: P.t === '1' }, cat = [];
+    var q = $('#q'), out = $('#results'), info = $('#found'), st = { g: P.g || '', t: P.t === '1' }, cat = [], statT;
     q.value = P.q || '';
     function sync() {
       var u = '/search/?' + [q.value ? 'q=' + encodeURIComponent(q.value) : '', st.g ? 'g=' + st.g : '', st.t ? 't=1' : ''].filter(Boolean).join('&');
@@ -511,6 +554,7 @@
         var hay = norm([c.title, c.category, c.group, c.region, c.kind].concat(c.tags || []).join(' '));
         return terms.every(function (t) { return hay.indexOf(t) >= 0; });
       }).sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+      clearTimeout(statT); statT = setTimeout(function () { if (terms.length) stat(hits.length ? 'act:search_hit' : 'act:search_miss'); }, 1500);
       var shown = hits.slice(0, 60);
       render(out, shown.map(catItem));
       info.textContent = hits.length ? hits.length + '件' + (hits.length > 60 ? '(近い順に60件を表示)' : '') : '';
@@ -527,6 +571,51 @@
     var tb = $('#f-son');
     if (tb) tb.addEventListener('click', function () { st.t = !st.t; run(); });
     loadCatalog().then(function (c) { cat = c || []; if (!c) info.textContent = '読み込めませんでした。時間をおいて、開き直してください。'; run(); });
+  }
+
+
+  /* ---------- carry over to another device with a Google account: the data goes to the visitor's own Google Drive (a hidden app folder);
+     this site's server never holds it.  Shown only when config.json has google_client_id. ---------- */
+  var GCID = CONF.gclient || '';
+  function loadGis(cb) {
+    if (window.google && google.accounts && google.accounts.oauth2) return cb();
+    var el = document.createElement('script');
+    el.src = 'https://accounts.google.com/gsi/client'; el.onload = cb; el.onerror = function () { toast('Google に接続できませんでした。'); };
+    document.head.appendChild(el);
+  }
+  function gToken(cb) {
+    loadGis(function () {
+      google.accounts.oauth2.initTokenClient({ client_id: GCID, scope: 'https://www.googleapis.com/auth/drive.appdata',
+        callback: function (r) { if (r && r.access_token) cb(r.access_token); else toast('Google との接続を取り消しました。'); } }).requestAccessToken({ prompt: '' });
+    });
+  }
+  function gApi(tok, url, opt) {
+    opt = opt || {}; opt.headers = Object.assign({ Authorization: 'Bearer ' + tok }, opt.headers || {});
+    return fetch(url, opt).then(function (r) { if (!r.ok) throw new Error(r.status); return r; });
+  }
+  function gFind(tok) {
+    return gApi(tok, 'https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&fields=files(id)&q=' + encodeURIComponent("name='atomou.json'")).then(function (r) { return r.json(); })
+      .then(function (j) { return j.files && j.files[0] ? j.files[0].id : null; });
+  }
+  function gPut(tok, id, obj) {
+    var json = JSON.stringify(obj);
+    if (id) return gApi(tok, 'https://www.googleapis.com/upload/drive/v3/files/' + id + '?uploadType=media', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: json });
+    var b = 'atomou' + Math.random().toString(36).slice(2);
+    return gApi(tok, 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', { method: 'POST', headers: { 'Content-Type': 'multipart/related; boundary=' + b },
+      body: '--' + b + '\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n' + JSON.stringify({ name: 'atomou.json', parents: ['appDataFolder'] }) + '\r\n--' + b +
+        '\r\nContent-Type: application/json\r\n\r\n' + json + '\r\n--' + b + '--' });
+  }
+  function syncNow() {
+    stat('act:sync');
+    gToken(function (tok) {
+      gFind(tok).then(function (id) {
+        if (!id) return gPut(tok, null, S).then(function () { toast('Google ドライブに保存しました。別の端末でも、同じ方法でつなぐと読み込めます。'); });
+        return gApi(tok, 'https://www.googleapis.com/drive/v3/files/' + id + '?alt=media').then(function (r) { return r.json(); }).then(function (remote) {
+          S = mergeStates(S, normalize(remote)); persist(); applyPrefs();
+          return gPut(tok, id, S).then(function () { renderMy(); toast('同期しました。'); });
+        });
+      }).catch(function () { toast('同期できませんでした。時間をおいて、もう一度お試しください。'); });
+    });
   }
 
   /* ---------- my page ---------- */
@@ -546,6 +635,9 @@
     if (P.added) { toast('残しました。この端末の中だけに保存しています。'); try { history.replaceState(null, '', '/my/'); } catch (e) { /* ignore */ } }
     var big = $('#p-big'), alarm = $('#p-alarm');
     big.checked = !!S.prefs.big; alarm.value = S.prefs.alarm;
+    var st = $('#p-stats'), sb = $('#sync-box'), sn = $('#sync-now');
+    if (st) { st.checked = !!S.prefs.stats; st.addEventListener('change', function () { S.prefs.stats = st.checked; persist(); toast(st.checked ? '統計に協力します。ありがとうございます。' : '統計の送信を止めました。'); }); }
+    if (sb && GCID) { sb.hidden = false; sn.addEventListener('click', syncNow); }
     big.addEventListener('change', function () { S.prefs.big = big.checked; persist(); applyPrefs(); });
     alarm.addEventListener('change', function () { S.prefs.alarm = alarm.value; persist(); toast('次からのカレンダーに使います。'); });
     $('#ics-all').addEventListener('click', function () {
@@ -683,7 +775,7 @@
         id: uid(), title: titleNow(), date: C.iso(d), precision: st.p, kind: st.kind, quiet: !!k.quiet,
         yearly: st.p === 'day' && $f('f-yearly').checked, every100: st.p === 'day' && !k.quiet && $f('f-100').checked, alarm: $f('f-alarm').value, created: C.iso(TODAY)
       };
-      S.entries.push(e); S.prefs.alarm = e.alarm === 'none' ? S.prefs.alarm : e.alarm;
+      S.entries.push(e); S.prefs.alarm = e.alarm === 'none' ? S.prefs.alarm : e.alarm; stat('act:add:' + e.kind);
       if (!persist()) return;  // storage blocked: stay on the form (the toast explains) instead of leaving and losing what was typed
       location.href = '/my/?added=1';
     }
@@ -723,6 +815,9 @@
   /* ---------- start ---------- */
   applyPrefs();
   hydrate(document);
+  stat('view:' + (/^[a-z]+$/.test(page) ? page : 'other'));
+  stat('skin:' + S.prefs.skin);
+  if (S.prefs.big) stat('big:on');
   if (page === 'home') pageHome();
   else if (page === 'search') pageSearch();
   else if (page === 'my') pageMy();
@@ -730,5 +825,6 @@
   else if (page === 'skins') pageSkins();
   else if (page === 'category') pageCategory();
   else if (page === 'today') pageToday();
-  window.Atomou = { state: function () { return S; }, today: TODAY, tipFor: tipFor, nextLines: nextLines, whenToken: whenToken };
+  window.Atomou = { state: function () { return S; }, today: TODAY, tipFor: tipFor, nextLines: nextLines, whenToken: whenToken, stat: stat, statQueue: function () { return statQ; },
+    normalize: normalize, mergeStates: mergeStates };
 })();
