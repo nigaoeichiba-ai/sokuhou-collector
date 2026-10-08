@@ -55,6 +55,13 @@ class Pages(BuildOnce):
         short = [m.group(0) for m in re.finditer(r"[^{}]*\.(?:btn|chip|mini|sbtn)[^{}]*\{[^}]*min-height:(\d+)px", css) if int(m.group(1)) < 44]
         self.assertEqual(short, [])
 
+    def test_breadcrumb_links_are_touch_targets(self):
+        # 2026-10-09 device test (iPhone/Pixel emulation): the "トップ" link of every page was 30x19px
+        css = self.rel["assets/style.css"]
+        m = re.search(r"\.crumbs a\{[^}]*min-height:(\d+)px", css)
+        self.assertIsNotNone(m)
+        self.assertGreaterEqual(int(m.group(1)), 44)
+
     def test_release_and_preview_differ_only_in_indexing(self):
         self.assertIn("Allow: /", self.rel["robots.txt"])
         self.assertIn("Disallow: /", self.prev["robots.txt"])
