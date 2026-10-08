@@ -113,5 +113,79 @@ class CatalogRules(unittest.TestCase):
         self.assertEqual(len({e["id"] for e in entries}), len(entries))
 
 
+BAD_SUBJECTS = ("その他", "地域", "全国")  # words that say nothing about what the topic is
+
+
+def label_problems(rows) -> list[str]:
+    """What a card must show so that anybody can tell what the day is: a subject (2-10 chars, never a vague word), what the day is (4-16 chars)
+    and a place that is empty or short.  `rows` are catalogue entries or raw seed items."""
+    out = []
+    for r in rows:
+        title, s, w, p = r.get("title", "?"), r.get("subject") or "", r.get("what") or "", r.get("place")
+        if not 2 <= len(s) <= 10:
+            out.append(f"{title}: subject の長さ {len(s)} ({s!r})")
+        if any(b in s for b in BAD_SUBJECTS):
+            out.append(f"{title}: subject が曖昧 ({s!r})")
+        if not 4 <= len(w) <= 16:
+            out.append(f"{title}: what の長さ {len(w)} ({w!r})")
+        if p is None or len(p) > 30:
+            out.append(f"{title}: place が長すぎる/無い ({p!r})")
+    return out
+
+
+class CardLabels(unittest.TestCase):
+    def test_every_real_seed_item_says_what_it_is(self):
+        raw = [it for _, it in catalog.load_seeds()]
+        self.assertGreater(len(raw), 380)
+        self.assertEqual(label_problems(raw), [])  # all of them, including items that are not published yet
+
+    def test_every_published_entry_has_clear_labels(self):
+        entries, _ = catalog.build_catalog(TODAY)
+        self.assertEqual(label_problems(entries), [])
+        self.assertEqual(label_problems(catalog.public_json(entries)), [])  # the browser gets the same three fields
+
+    def test_the_check_catches_vague_or_bad_labels(self):
+        bad = [item(title="曖昧1", subject="その他", what="試験の日", place="全国"), item(title="曖昧2", subject="地域のお祭り", what="お祭りの日", place=""),
+               item(title="曖昧3", subject="全国", what="試験の日", place=""), item(title="短い1", subject="資", what="試験の日", place=""),
+               item(title="短い2", subject="資格", what="開催", place=""), item(title="長い1", subject="資格", what="試験の日", place="あ" * 31),
+               item(title="長い2", subject="あ" * 11, what="試験の日", place=""), item(title="長い3", subject="資格", what="あ" * 17, place=""),
+               item(title="空", subject="", what="", place="")]
+        problems = label_problems(bad)
+        for t in ("曖昧1", "曖昧2", "曖昧3", "短い1", "短い2", "長い1", "長い2", "長い3", "空"):
+            with self.subTest(title=t):
+                self.assertTrue(any(line.startswith(t + ":") for line in problems), problems)
+        entries, _ = build([item(subject="その他", what="試験の日", place="全国")])  # and the same through the builder
+        self.assertTrue(label_problems(entries))
+
+    def test_labels_pass_through_to_entries_and_public_json(self):
+        entries, _ = build([item(subject="簿記検定", what="申込の締切", place="京都府(京都商工会議所)", title_note="直す案")])
+        e = entries[0]
+        self.assertEqual((e["subject"], e["what"], e["place"]), ("簿記検定", "申込の締切", "京都府(京都商工会議所)"))
+        pub = catalog.public_json(entries)[0]
+        self.assertEqual((pub["subject"], pub["what"], pub["place"]), ("簿記検定", "申込の締切", "京都府(京都商工会議所)"))
+        self.assertNotIn("title_note", pub)  # editorial notes never reach assets/catalog.json
+        self.assertNotIn("title_note", e)
+
+    def test_items_without_the_fields_fall_back_to_category_kind_region(self):
+        e = build([item()])[0][0]
+        self.assertEqual((e["subject"], e["what"], e["place"]), ("資格", "締切", "全国"))
+        e = build([item(category="その他", region="地域")])[0][0]  # "その他" -> the group; "地域" says nothing -> empty
+        self.assertEqual((e["subject"], e["place"]), ("試験・資格", ""))
+        e = build([item(place="")])[0][0]  # an explicit empty place is kept (unknown), it does not fall back to the region
+        self.assertEqual(e["place"], "")
+
+    def test_subject_and_what_are_searchable_tags(self):
+        e = build([item(title="第39期竜王戦七番勝負 第1局", subject="将棋", what="タイトル戦(竜王戦)第1局", category="その他")])[0][0]
+        self.assertIn("将棋", e["tags"])  # the title never says 将棋
+        self.assertIn("タイトル戦(竜王戦)第1局", e["tags"])
+        raw = [it for _, it in catalog.load_seeds() if it.get("subject") == "将棋"]
+        self.assertGreaterEqual(len(raw), 5)
+        entries, _ = catalog.build_catalog(TODAY)
+        shogi = [e for e in entries if e["subject"] == "将棋"]
+        self.assertGreaterEqual(len(shogi), 5)
+        self.assertTrue(all("将棋" in e["tags"] for e in shogi))
+        self.assertTrue(any("将棋" not in e["title"] for e in shogi))  # found although the title does not say it
+
+
 if __name__ == "__main__":
     unittest.main()

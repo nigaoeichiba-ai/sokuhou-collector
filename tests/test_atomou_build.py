@@ -71,10 +71,12 @@ class Pages(BuildOnce):
         self.assertIn("noindex", self.rel["plan/index.html"])
         self.assertNotIn("/plan/", self.rel["sitemap.xml"])
         for k in ("index.html", "calendar/index.html", "plan/index.html"):
-            for n in ("core", "ics", "app", "plan", "guide"):
-                self.assertIn(f"/assets/{n}.js", self.rel[k], f"{k} lacks {n}.js")
-        for n in ("plan", "guide"):
-            self.assertIn(f"assets/{n}.js", self.rel)
+            self.assertEqual(len(re.findall(r'<script src="/assets/[^"]+" defer>', self.rel[k])), 1, f"{k}: one script bundle")
+            self.assertIn("/assets/atomou.js?v=", self.rel[k])
+        bundle = self.rel["assets/atomou.js"]
+        for marker in ("window.AtomouCore", "window.AtomouICS", "window.AtomouApp", "window.AtomouPlan", "window.AtomouQuick", "window.AtomouGuide"):
+            self.assertIn(marker, bundle)
+        self.assertNotIn("skins.css", self.rel["index.html"].split("window.ATOMOU=")[0])  # the other skins are fetched only when one is chosen
 
     def test_cards_are_short_no_source_line_and_two_buttons(self):
         e = next(x for x in self.entries if not x["quiet"])
@@ -123,7 +125,7 @@ class Pages(BuildOnce):
     def test_catalog_json_has_public_fields_only(self):
         data = json.loads(self.rel["assets/catalog.json"])
         self.assertEqual(len(data), len(self.entries))
-        allowed = {"id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "region", "tags", "quiet", "ad_ok", "son_toku", "source_url", "checked_on", "status"}
+        allowed = {"id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "region", "tags", "quiet", "ad_ok", "son_toku", "source_url", "checked_on", "status", "subject", "what", "place"}
         for e in data:
             self.assertLessEqual(set(e), allowed)
 
@@ -256,10 +258,12 @@ class AppInChrome(BuildOnce):
 
     def test_home_counts_are_filled_and_nothing_is_empty(self):
         dom = self.dom("/")
-        self.assertGreaterEqual(dom.count('class="card'), 12)
+        self.assertGreaterEqual(dom.count('class="card'), 6)  # the first screen is six cards already in the page
         self.assertNotIn('<span class="num"></span>', dom)  # every card got its number
-        self.assertIn("今日は 2026年10月8日(木)", html.unescape(dom))
-        self.assertIn("2026年は、もう281日め", html.unescape(dom))
+        text = re.sub(r"<[^>]+>", "", html.unescape(dom))
+        self.assertIn("2026年10月8日(木)", text)      # today's line, filled by the script from the device's date
+        self.assertIn("年末まであと84日", text)
+        self.assertIn("年度末まであと174日", text)
         self.assertIn('data-dir="ato"', dom)
 
     def test_search_finds_by_word_and_by_synonym(self):
@@ -295,7 +299,7 @@ class AppInChrome(BuildOnce):
 
     def test_home_edit_mode_shows_a_bar_on_every_block(self):
         dom = self.dom("/?edit=1")
-        self.assertEqual(dom.count('class="block-bar"'), 8)
+        self.assertEqual(dom.count('class="block-bar"'), 7)  # todo, search, cats, daily, mine, soon, usecases
         self.assertNotIn('class="block-bar"', self.dom("/"))
 
     def test_no_storage_errors_with_a_blank_profile(self):

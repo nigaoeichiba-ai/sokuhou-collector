@@ -31,4 +31,6 @@ if __name__ == "__main__":
     icon(32).save(OUT / "favicon-32.png")
     icon(180).save(OUT / "apple-touch-icon.png")
     icon(48).save(OUT / "favicon.ico", sizes=[(48, 48)])
+    icon(192).save(OUT / "icon-192.png")
+    icon(512).save(OUT / "icon-512.png")
     print("icons written")

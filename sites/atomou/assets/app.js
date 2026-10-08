@@ -252,8 +252,8 @@
       (it.what ? '<span class="what">' + H(it.what) + '</span>' : '') + '</div>';
     h += '<p class="c-count"><span class="word"></span><span class="num"></span><span class="rel"></span></p><p class="c-sub"></p>';
     h += '<h3 class="c-title">' + (it.href ? '<a href="' + H(it.href) + '">' + H(it.title) + '</a>' : H(it.title)) + '</h3>';
-    h += '<p class="c-date">' + H(fmtDate(it.date, it.p)) + (it.time ? ' ' + H(it.time) : '') + (it.kword ? ' ' + H(it.kword) : '') + '</p>';
-    if (it.place) h += '<p class="c-place"><b>場所</b>' + H(it.place) + '</p>';
+    h += '<p class="c-date">' + H(fmtDate(it.date, it.p)) + (it.time ? ' ' + H(it.time) : '') + (it.kword ? ' ' + H(it.kword) : '') +
+      (it.place && it.place !== '全国' ? '<span class="pl"><b>場所</b>' + H(it.place) + '</span>' : '') + '</p>';
     if (it.own) h += '<div class="c-next"></div>';
     h += '<div class="c-act">';
     if (!it.own) h += '<button type="button" class="btn small" data-act="save" aria-pressed="false">☆ 予定に入れる</button><a class="btn small ghost" href="' + H(it.href) + '">詳細</a>';
@@ -269,6 +269,7 @@
     if (!d) return;
     var r = C.countdown(d, TODAY, p), w = split(r), key = card.getAttribute('data-key') || '';
     card.setAttribute('data-dir', r.dir);
+    card.setAttribute('data-long', w[1].length > 5 ? '1' : '0');
     var word = $('.word', card), num = $('.num', card), sub = $('.c-sub', card);
     if (word) word.textContent = w[0];
     if (num) num.textContent = w[1];
@@ -498,10 +499,17 @@
 
   /* ---------- skins ---------- */
   var SKIN_ATTRS = ['head', 'btn', 'density', 'num', 'deco', 'nav', 'cat', 'list'];
+  function ensureSkinCss() {
+    (CONF.css || []).forEach(function (u) {
+      var name = u.split('?')[0];
+      if (!document.querySelector('link[href^="' + name + '"]')) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = u; document.head.appendChild(l); }
+    });
+  }
   function applyPrefs() {
     var r = document.documentElement, id = (P.skin && CONF.skins[P.skin]) ? P.skin : S.prefs.skin, sk = CONF.skins[id];  // ?skin= is for screenshots and tests
     if (!sk || id === 'basic') { r.removeAttribute('data-skin'); r.setAttribute('data-card', 'plain'); SKIN_ATTRS.forEach(function (k) { r.removeAttribute('data-' + k); }); }
     else {
+      ensureSkinCss();
       r.setAttribute('data-skin', id); r.setAttribute('data-card', sk.card);
       SKIN_ATTRS.forEach(function (k) { var v = sk.attrs && sk.attrs[k]; if (v) r.setAttribute('data-' + k, v); else r.removeAttribute('data-' + k); });
     }
@@ -546,8 +554,8 @@
     var el = $('#daily');
     if (!el) return;
     var n = C.dayOfYear(TODAY), fy = C.fiscalYear(TODAY);
-    el.innerHTML = '<span>今日は ' + fmtDate(C.iso(TODAY), 'day') + '</span><a href="/today/#year">' + TODAY[0] + '年は、もう' + n[0] + '日め(年末まであと' + n[1] + '日)</a>' +
-      '<a href="/today/#newyear">' + (TODAY[0] + 1) + '年まであと' + (n[1] + 1) + '日</a><a href="/today/#fy">' + fy[0] + '年度(4月から)は、あと' + fy[2] + '日</a>';
+    el.innerHTML = '<span class="d-today">' + fmtDate(C.iso(TODAY), 'day') + '</span><a href="/today/#year">年末まであと' + n[1] + '日</a>' +
+      '<a href="/today/#newyear">' + (TODAY[0] + 1) + '年まであと' + (n[1] + 1) + '日</a><a href="/today/#fy">年度末まであと' + fy[2] + '日</a>';
   }
   function myItems(cat) {
     var items = S.entries.map(ownItem);
@@ -558,11 +566,12 @@
     }
     return ordered(items);
   }
+  function needCatalog() { return S.saved.length > 0 ? loadCatalog() : Promise.resolve([]); }
   function renderMine() {
     var box = $('#mine'), grid = $('#mine-grid');
     if (!box) return;
-    loadCatalog().then(function (cat) {
-      var items = myItems(cat).slice(0, 4);
+    needCatalog().then(function (cat) {
+      var items = myItems(cat).slice(0, 3);
       box.hidden = !items.length;
       if (items.length) render(grid, items);
     });
@@ -624,23 +633,42 @@
     renderDaily(); renderMine(); wireBlocks();
     var cb = blockPrefs();
     if (cb.order.length || cb.hidden.length) { stat('home_order:' + (cb.order.length ? cb.order.join(',') : 'default')); cb.hidden.forEach(function (k) { stat('home_hidden:' + k); }); }
-    var grid = $('#grid'), pool = [];
-    wireReorderToggle($('#reorder'), grid);
-    loadCatalog().then(function (cat) {
-      if (!cat) return;
-      pool = liveFrom(cat);
-      render(grid, ordered(diverse(pool, 12).map(catItem)));
-    });
+    var grid = $('#grid'), more = $('#more'), pool = [], shown = 6, random = null, ready = null;
+    function fetchPool() {  // the catalogue is downloaded only when someone asks for more, shuffles or searches
+      if (!ready) ready = loadCatalog().then(function (cat) { pool = liveFrom(cat || []); return pool; });
+      return ready;
+    }
+    function draw() {
+      var list = random ? random.slice(0, shown) : diverse(pool, shown);
+      render(grid, random ? list.map(catItem) : ordered(list.map(catItem)));
+      if (more) more.hidden = shown >= Math.min(pool.length, 36);
+    }
+    // the first screen is the cards already in the page (counted again here); a saved order is applied to them without any download
+    var idx = {};
+    S.order.forEach(function (k, i) { idx[k] = i; });
+    $$('.card', grid).sort(function (a, b) {
+      var x = idx[a.getAttribute('data-key')], y = idx[b.getAttribute('data-key')];
+      return (x == null ? 1e6 : x) - (y == null ? 1e6 : y);
+    }).forEach(function (c) { grid.appendChild(c); });
     var sh = $('#shuffle');
-    if (sh) sh.addEventListener('click', function () {
-      if (!pool.length) { hydrate(grid); return; }
-      render(grid, weighted(pool, 12).map(catItem)); stat('act:shuffle');
-    });
+    if (sh) sh.addEventListener('click', function () { fetchPool().then(function () { if (!pool.length) return; random = weighted(pool, 36); draw(); stat('act:shuffle'); }); });
+    if (more) more.addEventListener('click', function () { fetchPool().then(function () { shown = Math.min(shown + 6, 36); draw(); stat('act:more'); }); });
   }
 
   /* ---------- search ---------- */
   function norm(s) {
     return String(s || '').normalize('NFKC').toLowerCase().replace(/[ァ-ヶ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x60); }).replace(/\s+/g, ' ').trim();
+  }
+  function hayOf(c) { return norm([c.title, c.subject, c.what, c.category, c.group, c.place || c.region, c.kind].concat(c.tags || []).join(' ')); }
+  function matchCat(cat, q, limit) {
+    var terms = norm(q).split(' ').filter(Boolean);
+    if (!terms.length) return [];
+    var hits = cat.filter(function (c) {
+      if (c.status === 'ended') return false;
+      var hay = hayOf(c);
+      return terms.every(function (t) { return hay.indexOf(t) >= 0; });
+    }).sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+    return limit ? hits.slice(0, limit) : hits;
   }
   function pageSearch() {
     var q = $('#q'), out = $('#results'), info = $('#found'), st = { g: P.g || '', t: P.t === '1' }, cat = [], statT;
@@ -658,7 +686,7 @@
         if (c.status === 'ended') return false;
         if (gi >= 0 && c.group !== CONF.groups[gi]) return false;
         if (st.t && !c.son_toku) return false;
-        var hay = norm([c.title, c.category, c.group, c.region, c.kind].concat(c.tags || []).join(' '));
+        var hay = hayOf(c);
         return terms.every(function (t) { return hay.indexOf(t) >= 0; });
       }).sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
       clearTimeout(statT); statT = setTimeout(function () { if (terms.length) stat(hits.length ? 'act:search_hit' : 'act:search_miss'); }, 1500);
@@ -920,6 +948,10 @@
     });
   }
 
+  document.addEventListener('atomou:changed', function () {
+    if (page === 'home') renderMine(); else if (page === 'my') renderMy();
+  });
+
   /* ---------- start ---------- */
   applyPrefs();
   hydrate(document);
@@ -934,9 +966,12 @@
   else if (page === 'skins') pageSkins();
   else if (page === 'category') pageCategory();
   else if (page === 'today') pageToday();
-  window.AtomouApp = { C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast,
+  window.AtomouApp = { matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast,
     loadCatalog: loadCatalog, catItem: catItem, ownItem: ownItem, cardHtml: cardHtml, hydrate: hydrate, fillCard: fillCard, fmtDate: fmtDate, wd: wd, occ: occ, nextYearly: nextYearly, KINDS: KINDS,
     findEntry: findEntry, uid: uid, icsFor: icsFor, removeEntry: removeEntry, normalize: normalize, tipFor: tipFor, nextLines: nextLines, applyPrefs: applyPrefs };
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !P.today) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () { /* the site works without it */ }); });
+  }
   window.Atomou = { state: function () { return S; }, today: TODAY, tipFor: tipFor, nextLines: nextLines, whenToken: whenToken, stat: stat, statQueue: function () { return statQ; },
     normalize: normalize, mergeStates: mergeStates };
 })();
