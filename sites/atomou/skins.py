@@ -218,7 +218,7 @@ SKINS = [
           "deco #6CCBAA; deco2 #0B6B55; radius 14px; shadow 0 2px 8px rgba(11,107,85,.12)"),
     _skin("chic-navy", "シック紺と金", "濃い紺に金色。上品で大人っぽい", "上品・落ち着き", "30代以上。大人っぽい雰囲気が好きな方", "plain", True,
           "center outline cozy plain stars underline plain grid",
-          "bg #0E1A2E; bg2 #14233D; surface #1E3254; surface2 #27406A; text #F3EEDD; muted #C6CCDA; line #3A5078;"
+          "bg #0E1A2E; bg2 #14233D; surface #1E3254; surface2 #27406A; text #F7F3E8; muted #D3D8E4; line #3A5078;"
           "accent #D4A93A; on-accent #14203A; ato #E3BC5A; on-ato #14203A; mou #9FC1F0; on-mou #0E1A2E;"
           "quiet-bg #1C2638; quiet-text #BDC3CF; quiet-line #364258; focus #E3BC5A;"
           "head-bg #09121F; head-text #E3BC5A; foot-bg #060D18; foot-text #D9D4C3;"
@@ -243,7 +243,7 @@ SKINS = [
     _skin("nordic", "北欧", "淡い灰色と木の色。すっきり静か", "素朴・静か", "シンプルで落ち着いた部屋が好きな方", "plain", False,
           "left underline cozy plain none underline circle masonry",
           "bg #F1F2F3; bg2 #E6E8EA; surface #FFFFFF; surface2 #EEF0F1; text #2A2F33; muted #565E64; line #D5D9DC;"
-          "accent #7A5A3A; on-accent #FFFFFF; ato #3F6577; on-ato #FFFFFF; mou #8A5A2E; on-mou #FFFFFF;"
+          "accent #8C5A2B; on-accent #FFFFFF; ato #3F6577; on-ato #FFFFFF; mou #8A5A2E; on-mou #FFFFFF;"
           "quiet-bg #EBECEC; quiet-text #50565B; quiet-line #D0D3D5; focus #3F6577;"
           "head-bg #FFFFFF; head-text #2A2F33; foot-bg #3B3F43; foot-text #ECEDEE;"
           "g1 #3F6577; g2 #A0522D; g3 #A23B52; g4 #3F7A55; g5 #6C5A9A; g6 #2F7A80;"
@@ -282,7 +282,7 @@ SKINS = [
           f"band-bg #F7E8C8; band-text #3A2214; deco #B8860B; deco2 #8C2F1B; radius 4px; num-weight 800; bw 2px; font {FONT_SANS}; font-head {FONT_MINCHO}; font-num {FONT_MONO}; shadow 3px 3px 0 rgba(58,34,20,.18)"),
     _skin("neon", "ネオン", "暗い夜にピンクと水色の光", "未来的・派手", "10代〜30代。派手な色が好きな方", "ring", True,
           "left outline cozy outline grid boxed chip grid",
-          "bg #0B0A14; bg2 #14122A; surface #181533; surface2 #231F47; text #F5F3FF; muted #B9B4DD; line #3C3670;"
+          "bg #0B0A14; bg2 #14122A; surface #1E1A3F; surface2 #2A2552; text #F5F3FF; muted #C4BFE6; line #4A4390;"
           "accent #FF4FD8; on-accent #1A0016; ato #3DF2FF; on-ato #00161A; mou #FFE14D; on-mou #1A1500;"
           "quiet-bg #1D1C2C; quiet-text #B5B3C8; quiet-line #3A3950; focus #3DF2FF;"
           "head-bg #07060F; head-text #3DF2FF; foot-bg #050409; foot-text #D8D4F5;"
@@ -291,7 +291,7 @@ SKINS = [
           "bg-image radial-gradient(circle at 20% 0%,rgba(255,79,216,.12),transparent 40%)"),
     _skin("forest", "深緑", "深い森の緑。しっとり落ち着く", "しっとり・自然", "落ち着いた暗めの色が好きな方", "plain", True,
           "band soft cozy shadow leaves tab card masonry",
-          "bg #0F1F18; bg2 #15291F; surface #223B2D; surface2 #2C4A39; text #EDF3E8; muted #C2D3C2; line #3C5A47;"
+          "bg #0F1F18; bg2 #15291F; surface #223B2D; surface2 #2C4A39; text #F2F7EE; muted #CFDCCF; line #3C5A47;"
           "accent #A8D672; on-accent #10200A; ato #A8D672; on-ato #10200A; mou #F0B96B; on-mou #2A1A00;"
           "quiet-bg #222B26; quiet-text #B7C1BB; quiet-line #3A453F; focus #A8D672;"
           "head-bg #0A1712; head-text #D9EBC8; foot-bg #07110C; foot-text #C9D8C6;"
@@ -299,7 +299,7 @@ SKINS = [
           "deco #A8D672; deco2 #6FD3C4; radius 12px; shadow 0 3px 12px rgba(0,0,0,.45)"),
     _skin("sunset", "夕焼け", "オレンジから紫へ。あたたかい夕方", "あたたかい・ロマンチック", "やわらかい暖色が好きな方", "panel", False,
           "band pill cozy shadow sunburst pill chip grid",
-          "bg #FFF6EE; bg2 #FFE0CC; surface #FFFFFF; surface2 #FFE9DA; text #3A1F1A; muted #5E3A32; line #F0CDB8;"
+          "bg #FFF6EE; bg2 #FFE0CC; surface #FFFFFF; surface2 #FFE9DA; text #3A1F1A; muted #503029; line #F0CDB8;"
           "accent #B3361A; on-accent #FFFFFF; ato #B3361A; on-ato #FFFFFF; mou #5B3A8E; on-mou #FFFFFF;"
           "quiet-bg #F0EAE6; quiet-text #5A4C48; quiet-line #D8CCC5; focus #5B3A8E;"
           "head-bg #FF8A5B; head-text #3A1F1A; foot-bg #4A2340; foot-text #FFE9DA;"
