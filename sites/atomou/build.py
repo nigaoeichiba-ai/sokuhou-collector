@@ -597,7 +597,13 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
               and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
     pages.update(standard_files(listed, cfg, preview, today.isoformat()))
     if preview:
-        pages[".htaccess"] = pages[".htaccess"] + DEMO_AUTH
+        ht = pages[".htaccess"]
+        # Xserver's server cache answers repeat requests without asking Apache, which would skip the password: switch it off for the demo
+        ht = ht.replace('SetEnvIf Request_URI ".*" Ngx_Cache_NoCacheMode=off\n', 'SetEnvIf Request_URI ".*" Ngx_Cache_NoCacheMode=on\n')
+        ht = ht.replace('SetEnvIf Request_URI ".*" Ngx_Cache_AllCacheMode\n', "")
+        if "NoCacheMode=on" not in ht or "AllCacheMode" in ht:
+            raise BuildError("sitekit's .htaccess changed: update the demo's cache switch in sites/atomou/build.py")
+        pages[".htaccess"] = ht + DEMO_AUTH
     return pages
 
 
