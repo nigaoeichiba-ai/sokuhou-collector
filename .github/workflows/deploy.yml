@@ -265,7 +265,7 @@ jobs:
           home=$(ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" 'printf %s "$HOME"')
           test -n "$home"
           printf '%s:%s\n' "$DEMO_USER" "$(openssl passwd -apr1 "$DEMO_PASS")" | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
-            "set -e; cd \"\$HOME/$SITE_DIR\"; umask 077; cat > .htpasswd"
+            "set -e; cd \"\$HOME/$SITE_DIR\"; cat > .htpasswd; chmod 604 .htpasswd"
           sed -i "s#__HTPASSWD__#$home/$SITE_DIR/.htpasswd#" release/.htaccess
           grep -q "AuthUserFile $home/$SITE_DIR/.htpasswd" release/.htaccess
       - name: Upload and switch
@@ -319,7 +319,7 @@ jobs:
           echo "index=$code sitemap_urls=${urls:-0} ok=$ok"
           # every sitemap URL answers 200 and obeys the page rules, and every internal link on them answers 200 (checked twice before the site is rolled back, so a network blip does not undo a good deploy)
           if [ "${#AUTH[@]}" -gt 0 ]; then
-            echo "demo behind a password: the full live check is skipped (it cannot log in); the checks above passed"
+            if [ "$ok" = "1" ]; then echo "demo behind a password: the full live check is skipped (it cannot log in); the checks above passed"; fi
           elif [ "$ok" = "1" ] && ! python -m sokuhou.sitecheck --live --base "$URL" --probe "$PROBE"; then
             echo "live check failed; trying once more in 30 s"
             sleep 30
@@ -327,6 +327,12 @@ jobs:
           fi
           if [ "$ok" != "1" ]; then
             echo "verification failed, rolling back"
+            if [ "$SITE" = "atomou" ]; then   # why: the web server's error log and the password file's permissions (not its content)
+              ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" "
+                cd \"\$HOME/$SITE_DIR\" && ls -la .htpasswd && ls -d log* 2>/dev/null; grep -hn 'Auth\|Require' public_html/.htaccess | sed 's#/home/[^/]*/#/home/…/#';
+                for f in log/error_log* ../logs/*error* log/*error*; do [ -f \"\$f\" ] && { echo \"== \$f\"; tail -n 8 \"\$f\" | cut -c1-300; }; done; true
+              " || true
+            fi
             ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" "
               set -e
               cd \"\$HOME/$SITE_DIR\"
