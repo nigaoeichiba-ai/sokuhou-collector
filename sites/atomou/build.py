@@ -270,7 +270,7 @@ class Ctx:
         self.v_bundle = None
         css_urls = [f"/assets/skins.css?v={self.v_skin}"] + ([f"/assets/design.css?v={self.ver}"] if (SITE["assets"] / "design.css").exists() else [])
         conf = {"v": self.v_cat, "groups": catalog.GROUPS, "slugs": SLUGS, "css": css_urls,
-                "skins": {s["id"]: {"card": s["card"], "name": s["name"], "attrs": s.get("attrs", {}), **({"season": s["season"]} if s.get("season") else {})} for s in skins.SKINS}}
+                "skins": {s["id"]: {"card": s["card"], "name": s["name"], "attrs": s.get("attrs", {}), **({"dark": True} if s.get("dark") else {}), **({"season": s["season"]} if s.get("season") else {})} for s in skins.SKINS}}
         if cfg.get("google_client_id"):
             conf["gclient"] = cfg["google_client_id"]
         if cfg.get("vapid_public"):
@@ -458,6 +458,7 @@ def skins_page(c: Ctx) -> str:
 <p class="hint">左から、これから来る日、過ぎた日、大切な人を思う日(静かな表示)。</p>
 <div class="cards">{"".join(card_html(s, own=True, actions=False, link=False) for s in samples)}</div>
 <h2>選ぶ</h2>
+<p><label class="chip" for="skin-auto"><input type="checkbox" id="skin-auto"> 端末が暗い設定のときは、暗い配色にする</label></p>
 <div class="skins" id="skin-list">{"".join(tile(s) for s in skins.SKINS)}</div>
 <noscript><p class="notice">きせかえには JavaScript が必要です。</p></noscript>"""
     return c.page("/skins/", f"きせかえ | {NAME}", "きせかえは20種類以上。大きな文字、やさしい色、にぎやかな色まで。", body, "skins")
