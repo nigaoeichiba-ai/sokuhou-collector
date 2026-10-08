@@ -41,7 +41,7 @@ SITE = {
     "nav": [("さがす", "/search/", "/search/"), ("記録する", "/add/", "/add/"), ("マイページ", "/my/", "/my/"), ("きせかえ", "/skins/", "/skins/")],
     "glyph": "日",
     "assets": HERE / "assets",
-    "source_html": '日付は、公式の発表などで確認しています。あなたが記録した日は、この端末の中だけに保存されます。<a href="/manual/">つかいかた(説明書)</a> | <a href="/use/">こんな時に</a>',
+    "source_html": '日付は、公式の発表などで確認しています。あなたが記録した日は、この端末の中だけに保存されます。<a href="/manual/">使い方(説明書)</a> | <a href="/use/">こんな時に</a>',
 }
 WD = "月火水木金土日"
 
@@ -177,32 +177,37 @@ def home_page(c: Ctx) -> str:
                   for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
     body = f"""<section class="hero">
 <h1>{esc(CATCH)}</h1>
-<p class="lead">あの日からもう何日? あの日まであと何日? 日付をえらぶだけで数えて、カレンダーに入れられます。締切・試験・大会・お祭りなど、公式の日付は、ワンタップで保存できます。 <a href="/manual/">はじめての方は、説明書へ</a></p>
+<p class="lead">あの日からもう何日? あの日まであと何日? 日付を選ぶだけで数えて、カレンダーに入れられます。締切・試験・大会・お祭りなど、公式の日付は、ワンタップで保存できます。 <a href="/manual/">はじめての方は、説明書へ</a></p>
+</section>
+<div id="blocks">
+<section data-block="search" data-title="さがす">
 {search_form()}
 {popular_chips(c.entries)}
-<nav class="cats" aria-label="ジャンルから探す">{tiles}</nav>
-<div class="daily" id="daily" aria-label="今日の数字"></div>
 </section>
-<section id="mine" hidden>
+<section data-block="cats" data-title="ジャンルから探す"><nav class="cats" aria-label="ジャンルから探す">{tiles}</nav></section>
+<section data-block="daily" data-title="今日の数字"><div class="daily" id="daily" aria-label="今日の数字"></div></section>
+<section id="mine" data-block="mine" data-title="あなたの日" hidden>
 <div class="head-row"><h2>あなたの日</h2><div class="grow"><a class="btn small ghost" href="/my/">マイページへ</a></div></div>
 <div class="cards" id="mine-grid"></div>
 </section>
-<section>
+<section data-block="soon" data-title="もうすぐの日">
 <div class="head-row"><h2>もうすぐの日</h2><div class="grow"><button type="button" class="btn small" id="shuffle">シャッフル</button>
 <button type="button" class="btn small ghost" id="reorder" aria-pressed="false">カードを動かす</button></div></div>
 <div class="cards" id="grid">{"".join(card_html(e) for e in first)}</div>
 </section>
-<section class="panel">
+<section class="panel" data-block="record" data-title="自分の日を記録">
 <h2>自分の日も、数えてみませんか</h2>
-<ul class="steps"><li>どんな日かを、えらぶ</li><li>日付を、えらぶ</li><li>「この日を残す」を押す</li></ul>
+<ul class="steps"><li>どんな日かを選ぶ</li><li>日付を選ぶ</li><li>「この日を残す」を押す</li></ul>
 <p>名前や日付は、この端末の中だけに保存します。サーバーには送りません。</p>
 <p><a class="btn" href="/add/">日付を記録する</a></p>
 </section>
-<section>
+<section data-block="usecases" data-title="こんな時に">
 <div class="head-row"><h2>こんな時に</h2><div class="grow"><a class="btn small ghost" href="/use/">使い方をもっと見る</a></div></div>
 <div class="uc-grid">{ucs}</div>
-</section>"""
-    return c.page("/", f"{NAME}|{CATCH}", "あの日からもう何日?あの日まであと何日?日付をえらぶだけで数えて、カレンダーに入れられます。締切・試験・大会・お祭りなど、確認ずみの日付はワンタップで保存。", body, "home")
+</section>
+</div>
+<p class="edit-home"><button type="button" class="btn small ghost" id="edit-home" aria-pressed="false">ホームの並べかえ・表示を変える</button></p>"""
+    return c.page("/", f"{NAME}|{CATCH}", "あの日からもう何日?あの日まであと何日?日付を選ぶだけで数えて、カレンダーに入れられます。締切・試験・大会・お祭りなど、確認ずみの日付はワンタップで保存。", body, "home")
 
 
 def search_page(c: Ctx) -> str:
@@ -210,14 +215,14 @@ def search_page(c: Ctx) -> str:
         f'<button type="button" class="chip" data-g-chip="{SLUGS[i]}" aria-pressed="false">{esc(g)}</button>' for i, g in enumerate(catalog.GROUPS))
     body = f"""{crumbs([("トップ", "/"), ("さがす", None)])}
 <h1>日付をさがす</h1>
-<p class="lead muted">ことばで探すか、ジャンルをえらんでください。</p>
+<p class="lead muted">言葉で探すか、ジャンルを選んでください。</p>
 {search_form()}
 <div class="chips" role="group" aria-label="ジャンル">{chips}<button type="button" class="chip" id="f-son" aria-pressed="false">損得に関わる日だけ</button></div>
 <p class="small muted" id="found" aria-live="polite">&nbsp;</p>
 <div class="cards" id="results"></div>
-<div class="panel" id="none" hidden><p>見つかりませんでした。</p><p>ことばを短くするか、ジャンルを「すべて」にしてみてください。自分の日として、そのまま<a id="none-add" href="/add/">記録する</a>こともできます。</p></div>
+<div class="panel" id="none" hidden><p>見つかりませんでした。</p><p>言葉を短くするか、ジャンルを「すべて」にしてみてください。自分の日として、そのまま<a id="none-add" href="/add/">記録する</a>こともできます。</p></div>
 <noscript><p class="notice">さがす機能には JavaScript が必要です。ジャンルから探すときは、<a href="/c/deadline/">各ジャンルのページ</a>をご覧ください。</p></noscript>"""
-    return c.page("/search/", f"日付をさがす | {NAME}", "ことばやジャンルから、締切・試験・大会・お祭りなどの日付をさがせます。見つけた日はワンタップで保存。", body, "search")
+    return c.page("/search/", f"日付をさがす | {NAME}", "言葉やジャンルから、締切・試験・大会・お祭りなどの日付をさがせます。見つけた日はワンタップで保存。", body, "search")
 
 
 def my_page(c: Ctx) -> str:
@@ -232,8 +237,9 @@ def my_page(c: Ctx) -> str:
 <div class="panel">
 <div class="field"><label class="lab" for="p-big"><input type="checkbox" id="p-big"> 文字を大きくする</label></div>
 <div class="field"><label for="p-alarm">保存した日をカレンダーに入れるとき、知らせる時間</label>
-<select id="p-alarm"><option value="morning">当日の朝9時</option><option value="eve">前の日の夜9時</option><option value="none">お知らせなし</option></select></div>
+<select id="p-alarm"><option value="morning">当日の朝9時</option><option value="eve">前の日の夜9時</option><option value="week">1週間前の朝9時</option><option value="none">お知らせなし</option></select></div>
 <p><a href="/skins/">きせかえ(見た目を変える)</a></p>
+<p><a href="/?edit=1">ホームの並べかえ・表示を変える</a></p>
 </div>
 <h2>バックアップ</h2>
 <div class="panel">
@@ -249,9 +255,9 @@ def my_page(c: Ctx) -> str:
 def add_page(c: Ctx) -> str:
     body = f"""{crumbs([("トップ", "/"), ("日付を記録する", None)])}
 <h1>日付を記録する</h1>
-<p class="lead muted">えらぶだけで、数えます。年月日が分からなくても、年だけで残せます。</p>
+<p class="lead muted">選ぶだけで、数えます。年月日が分からなくても、年だけで残せます。</p>
 <div id="wizard" class="wizard"><noscript><p class="notice">日付の記録には JavaScript が必要です。</p></noscript></div>"""
-    return c.page("/add/", f"日付を記録する | {NAME}", "記念日・誕生日・はじめた日・命日などを、えらぶだけで記録。あと何日、もう何日かをすぐに表示します。", body, "add")
+    return c.page("/add/", f"日付を記録する | {NAME}", "記念日・誕生日・はじめた日・命日などを、選ぶだけで記録。あと何日、もう何日かをすぐに表示します。", body, "add")
 
 
 def skins_page(c: Ctx) -> str:
@@ -268,10 +274,10 @@ def skins_page(c: Ctx) -> str:
     ]
     body = f"""{crumbs([("トップ", "/"), ("きせかえ", None)])}
 <h1>きせかえ</h1>
-<p class="lead muted">見た目を、好きなものに変えられます。えらぶと、すぐに変わります。いちばん上の「ベーシック」が標準です。</p>
+<p class="lead muted">見た目を、好みのものに変えられます。選ぶと、すぐに変わります。いちばん上の「ベーシック」が標準です。</p>
 <h2>見えかた</h2>
 <div class="cards">{"".join(card_html(s, own=True, actions=False, link=False) for s in samples)}</div>
-<h2>えらぶ</h2>
+<h2>選ぶ</h2>
 <div class="skins" id="skin-list">{"".join(tile(s) for s in skins.SKINS)}</div>
 <noscript><p class="notice">きせかえには JavaScript が必要です。</p></noscript>"""
     return c.page("/skins/", f"きせかえ | {NAME}", "見た目を20種類以上から選べます。文字の大きいもの、色のやさしいもの、にぎやかなものまで。", body, "skins")
@@ -304,7 +310,7 @@ def use_page(c: Ctx, u: dict) -> str:
         acts.append(f'<a class="btn ghost" href="/c/{GROUP_SLUG[g]}/">公式の日付を見る</a>' if g in GROUP_SLUG else "")
         tags = "".join(f'<a class="chip" href="/search/?q={quote(t)}">{esc(t)}</a>' for t in cat.get("tags", []))
         if tags:
-            parts.append(f'<p class="small muted">さがすことば</p><div class="chips">{tags}</div>')
+            parts.append(f'<p class="small muted">探す言葉</p><div class="chips">{tags}</div>')
     if acts:
         parts.append("<p>" + " ".join(a for a in acts if a) + "</p>")
     if u["tips"]:
@@ -369,8 +375,8 @@ def category_page(c: Ctx, group: str, live: list[dict]) -> str:
 
 def manual_page(c: Ctx) -> str:
     t = c.today
-    sample = {"id": "sample", "title": "たとえば、家族で行く旅行の日", "date": (t + timedelta(days=45)).isoformat(), "kind": "楽しみな日", "g": 1, "quiet": False}
-    past = {"id": "sample2", "title": "たとえば、はじめた日", "date": (t - timedelta(days=400)).isoformat(), "kind": "はじめた日", "g": 4, "quiet": False}
+    sample = {"id": "sample", "title": "家族で行く旅行の日(例)", "date": (t + timedelta(days=45)).isoformat(), "kind": "楽しみな日", "g": 1, "quiet": False}
+    past = {"id": "sample2", "title": "禁煙をはじめた日(例)", "date": (t - timedelta(days=400)).isoformat(), "kind": "はじめた日", "g": 4, "quiet": False}
 
     def step(n: int, head: str, text: str) -> str:
         return f'<div class="stepcard"><span class="no" aria-hidden="true">{n}</span><div><b>{head}</b><p>{text}</p></div></div>'
@@ -379,66 +385,129 @@ def manual_page(c: Ctx) -> str:
         return f'<span class="btn small sample{" ghost" if ghost else ""}" aria-hidden="true">{label}</span>'
 
     qa = [
-        ("お金は かかりますか?", "かかりません。会員登録(ログイン)も いりません。"),
-        ("入れた日づけは、ほかの人に見えますか?", "見えません。入れた日づけは、いま使っている スマホ・パソコンの中だけに 入ります。当サイトの サーバーには 送りません。"),
-        ("スマホを 買いかえたら、どうなりますか?", "新しい スマホには 引きつがれません。買いかえる前に、「マイページ」の「書き出す」で ファイルを 作り、新しい スマホの「読み込む」で もどせます。"),
-        ("「カレンダーに入れる」を 押しても、お知らせが 来ません。", "お知らせを 出すのは、カレンダーの アプリです。アプリの 設定で、通知が オンに なっているか 見てください。アプリによっては、お知らせが 出ないことも あります。大切な日は、カレンダーの 画面でも 見て ください。"),
-        ("「あと」と「もう」は、どう ちがいますか?", "「あと」は、これから来る日までの 日数です。「もう」は、すぎた日からの 日数です。"),
-        ("日数の 数え方を おしえてください。", "今日を 0日 として 数えます。明日は「あと1日」、昨日は「もう1日」です。その日が 今日なら「今日」と 出ます。"),
-        ("文字が 小さくて 読みにくいです。", "「マイページ」の「設定」で「文字を大きくする」に 印を 入れてください。「きせかえ」の「大きな文字」や「ハイコントラスト」も 読みやすいです。"),
-        ("日づけが まちがっているようです。", "公式の日づけは、変わることが あります。その ページの 出典(もとの ページ)を 見てください。まちがいを 見つけたら、<a href=\"/contact/\">お問い合わせ</a>から 教えてください。"),
-        ("大切な人の 日も 入れて いいですか?", "いいです。「大切な人を思う日」を えらぶと、静かな 見た目で 残せます。広告や おすすめは 出しません。"),
-        ("入れた日を 消したいです。", "「マイページ」を ひらき、その カードの「消す」を 押します。ぜんぶ 消すときは、「設定」の下の「すべて消す」を 押します。"),
+        ("料金はかかりますか?", "無料です。会員登録(ログイン)も必要ありません。"),
+        ("入力した日付は、ほかの人に見えますか?", "見えません。入力した内容は、お使いのスマートフォンやパソコンの中だけに保存され、当サイトのサーバーには送りません。"),
+        ("機種変更をしたら、記録はどうなりますか?", "新しい端末には引き継がれません。変更の前に、マイページの「書き出す」でファイルを作り、新しい端末で「読み込む」を押してください。"),
+        ("「カレンダーに入れる」を押しても、お知らせが来ません。", "お知らせを出すのはカレンダーアプリです。アプリの通知設定がオンになっているか、確認してください。アプリによっては、お知らせが出ない場合もあります。大切な日は、カレンダーの画面でも確認してください。"),
+        ("「あと」と「もう」は、どう違いますか?", "「あと」は、これから来る日までの日数です。「もう」は、過ぎた日からの日数です。"),
+        ("日数の数え方を教えてください。", "今日を0日として数えます。明日は「あと1日」、昨日は「もう1日」と表示され、当日は「今日」と表示されます。"),
+        ("文字が小さくて読みにくいです。", "マイページの「設定」で「文字を大きくする」にチェックを入れてください。「きせかえ」の「大きな文字」や「ハイコントラスト」も読みやすくなります。"),
+        ("日付が間違っているようです。", "公式の日付は、変更されることがあります。各ページの出典(元のページ)をご確認ください。誤りを見つけたときは、<a href=\"/contact/\">お問い合わせ</a>からお知らせください。"),
+        ("大切な人を思う日も、入れてよいですか?", "入れて大丈夫です。「大切な人を思う日」を選ぶと、静かな見た目で残せます。広告やおすすめは表示しません。"),
+        ("入れた日を消したいです。", "マイページを開き、そのカードの「消す」を押します。すべて消すときは、「設定」の下にある「すべて消す」を押します。"),
     ]
     qa_html = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in qa)
     body = f"""{crumbs([("トップ", "/"), ("説明書", None)])}
 <div class="manual">
-<h1>つかいかた(説明書)</h1>
-<p class="lead">むずかしい ことは ありません。ゆっくり 見てください。このページは、いつでも ここに あります。</p>
+<h1>使い方(説明書)</h1>
+<p class="lead">「あと何日、もう何日」の使い方を説明します。むずかしい操作はありません。</p>
 
-<h2>このサイトで できること</h2>
+<h2>このサイトでできること</h2>
 <ul class="big-list">
-<li><b>日づけを 数えます。</b>「あの日から もう何日」「あの日まで あと何日」が すぐ 分かります。</li>
-<li><b>カレンダーに 入れられます。</b>忘れたくない日を、スマホの カレンダーに 入れて、当日に お知らせを 出せます。</li>
-<li><b>世の中の 大事な日も 見られます。</b>しめきり、しけん、大会、おまつりなど。正しい 日づけを 調べて 載せています。</li>
+<li><b>日付を数えます。</b>「あの日からもう何日」「あの日まであと何日」がすぐに分かります。</li>
+<li><b>カレンダーに入れられます。</b>忘れたくない日をスマートフォンのカレンダーに入れて、当日にお知らせを出せます。</li>
+<li><b>世の中の大事な日も見られます。</b>締切、試験、大会、お祭りなどの日付を、公式の情報で確認して載せています。</li>
 </ul>
 
-<h2>はじめて 使うとき</h2>
-{step(1, "「記録する」を 押す", "いちばん上の 青い「記録する」を 押します。")}
-{step(2, "どんな日かを えらぶ", "「記念日」「誕生日」などの 四角を ひとつ 押します。文字を 打たなくても 大丈夫です。")}
-{step(3, "日づけを えらぶ", "日づけの 欄を 押すと、カレンダーが 出ます。そこから えらびます。")}
-{step(4, "「この日を残す」を 押す", "これで 終わりです。「マイページ」に 入ります。")}
-<p class="hint">日づけの 年や 月が 分からない ときは、「年と月だけ」「年だけ」を えらべます。</p>
+<h2>はじめて使うとき</h2>
+{step(1, "「記録する」を押す", "画面上部の青い「記録する」を押します。")}
+{step(2, "どんな日かを選ぶ", "「記念日」「誕生日」など、近いものを選びます。文字を入力する必要はありません。")}
+{step(3, "日付を選ぶ", "日付の欄を押すとカレンダーが開くので、そこから選びます。")}
+{step(4, "「この日を残す」を押す", "保存されて、マイページが開きます。")}
+<p class="hint">年や月しか分からないときは、「年と月だけ」「年だけ」も選べます。</p>
 
-<h2>カードの 見かた</h2>
-<p>日づけは、「カード」という 四角に 出ます。</p>
+<h2>カードの見かた</h2>
+<p>日付は「カード」に表示されます。</p>
 <div class="cards" style="max-width:360px">{card_html(sample, own=True, actions=False, link=False)}</div>
 <ul class="big-list">
-<li><b>「あと」</b> … これから 来る 日までの 日数です。</li>
-<li><b>大きな 数字</b> … 日数です。100日より 多いときは、「2年3か月12日」のように 出て、すぐ下に 全部の 日数も 出ます。</li>
-<li><b>日づけ</b> … その日が 何月何日の 何曜日かです。</li>
+<li><b>「あと」</b> … これから来る日までの日数です。</li>
+<li><b>大きな数字</b> … 日数です。100日以上のときは「2年3か月12日」のように表示し、その下に合計の日数も表示します。</li>
+<li><b>日付</b> … その日が何月何日の何曜日かを表します。</li>
 </ul>
-<p>すぎた日は、こう 出ます。</p>
+<p>過ぎた日は、次のように表示されます。</p>
 <div class="cards" style="max-width:360px">{card_html(past, own=True, actions=False, link=False)}</div>
-<p>「<b>もう</b>」は、すぎた日から 数えた 日数です。</p>
+<p>「<b>もう</b>」は、その日から数えた日数です。</p>
 
-<h2>ボタンの はたらき</h2>
+<h2>ボタンの働き</h2>
 <dl class="info big-dl">
-<dt>{btn("☆ 保存する", True)}</dt><dd>気に入った日を、マイページに 取っておきます。もう一度 押すと、はずれます。</dd>
-<dt>{btn("カレンダーに入れる")}</dt><dd>スマホの カレンダーに 入れる ための ファイルを 作ります。作った ファイルを 開いて、「追加」を 押してください。</dd>
-<dt>{btn("消す", True)}</dt><dd>自分で 入れた日を 消します。</dd>
-<dt>{btn("シャッフル")}</dt><dd>トップページの カードを、ほかの日に 入れかえます。</dd>
-<dt>{btn("カードを動かす", True)}</dt><dd>カードの 並び方を かえられます。「⠿」を 指で つかんで 動かすか、「↑」「↓」を 押します。</dd>
-<dt>{btn("さがす")}</dt><dd>ことばで 日づけを さがします。「年賀状」「流星群」など、思いついた ことばを 入れてください。</dd>
-<dt>{btn("きせかえ", True)}</dt><dd>見た目を かえます。色や 文字の 大きさを、好きな ものに できます。</dd>
+<dt>{btn("☆ 保存する", True)}</dt><dd>気に入った日を、マイページに取っておきます。もう一度押すと、解除されます。</dd>
+<dt>{btn("カレンダーに入れる")}</dt><dd>スマートフォンのカレンダーに入れるためのファイルを作ります。ダウンロードされたファイルを開き、「追加」を押してください。表示はアプリによって異なります。</dd>
+<dt>{btn("消す", True)}</dt><dd>自分で入れた日を消します。</dd>
+<dt>{btn("シャッフル")}</dt><dd>トップページのカードを、別の日に入れ替えます。</dd>
+<dt>{btn("カードを動かす", True)}</dt><dd>カードの並び順を変えます。「⠿」をドラッグするか、「↑」「↓」を押してください。</dd>
+<dt>{btn("さがす")}</dt><dd>言葉で日付を探します。「年賀状」「流星群」など、思いついた言葉を入力してください。</dd>
+<dt>{btn("きせかえ", True)}</dt><dd>色や文字の大きさなど、見た目を変えます。</dd>
+<dt>{btn("ホームの並べかえ", True)}</dt><dd>トップページの各ブロックを入れ替えたり、表示しないようにしたりできます。トップページの一番下のボタンから使えます。</dd>
 </dl>
 
-<h2>こまったときは</h2>
+<h2>よくある質問</h2>
 <div class="qa">{qa_html}</div>
-<p>それでも 分からない ときは、<a href="/contact/">お問い合わせ</a>から 聞いてください。</p>
-<p><a class="btn" href="/add/">日付を 記録する</a> <a class="btn ghost" href="/use/">こんな時に 使えます(使い方の例)</a></p>
+<p>解決しないときは、<a href="/contact/">お問い合わせ</a>からご連絡ください。</p>
+<p><a class="btn" href="/add/">日付を記録する</a> <a class="btn ghost" href="/use/">こんな時に使えます(使い方の例)</a></p>
 </div>"""
-    return c.page("/manual/", f"つかいかた(説明書) | {NAME}", "あと何日、もう何日の使い方を、やさしい言葉で説明します。日づけの入れ方、カードの見かた、ボタンのはたらき、よくある質問。", body, "manual")
+    return c.page("/manual/", f"使い方(説明書) | {NAME}", "あと何日、もう何日の使い方を説明します。日付の入れ方、カードの見かた、ボタンの働き、よくある質問をまとめています。", body, "manual")
+
+
+def today_page(c: Ctx) -> str:
+    def purposes(items: list[tuple[str, str, str, str]]) -> str:
+        cards = "".join(
+            f'<a class="uc" href="/add/?kind={kind}&amp;title={quote(label)}&amp;alarm=week" data-when="{when}"><b>{esc(label)}</b><span>{esc(hint)}</span></a>'
+            for label, hint, kind, when in items)
+        return f'<div class="uc-grid">{cards}</div>'
+
+    t = c.today
+    doy = (t - date(t.year, 1, 1)).days + 1
+    total = 366 if (t.year % 4 == 0 and t.year % 100 != 0) or t.year % 400 == 0 else 365
+    fy_start = date(t.year if t.month >= 4 else t.year - 1, 4, 1)
+    static = {"today": fmt_date(t.isoformat()), "y": str(t.year), "year": str(doy), "year-left": str(total - doy), "newyear-y": str(t.year + 1), "newyear": str(total - doy + 1),
+              "fy-y": str(fy_start.year), "fy": str((date(fy_start.year + 1, 3, 31) - t).days)}
+
+    def n(key: str) -> str:  # filled with the visitor's own today by app.js; the build day's value is the fallback
+        return f'<span data-num="{key}">{static[key]}</span>'
+
+    def more(links: list[tuple[str, str]]) -> str:
+        return '<p class="small">くわしい使い方: ' + " / ".join(f'<a href="{h}">{esc(t)}</a>' for t, h in links) + "</p>"
+
+    body = f"""{crumbs([("トップ", "/"), ("今日の数字", None)])}
+<h1>今日の数字</h1>
+<p class="lead muted">今日の日付から、これからの準備を考えられます。当てはまるものを選ぶと、その日までの日数を、自分の日として記録できます。通知の時間も選べます。</p>
+<section id="today"><h2>今日は {n("today")}</h2>
+<p>お使いの端末の日付をもとに、下の日数を表示しています。</p></section>
+
+<section id="year">
+<h2>{n("y")}年は、もう{n("year")}日め</h2>
+<p>年末まで、あと{n("year-left")}日です。年内にしておきたいことは、ありますか。</p>
+{purposes([("年賀状の準備", "年末までの予定として記録します", "until", "year-end"), ("ふるさと納税の期限", "その年の分は12月31日までが目安です", "until", "year-end"),
+           ("年末の大掃除・買い出し", "年内の予定にします", "until", "year-end"), ("年内に済ませたい手続き", "自分で名前をつけて記録できます", "until", "year-end")])}
+{more([("年賀状", "/use/nengajo/"), ("ふるさと納税", "/use/furusato-nozei/"), ("年末までの日数", "/use/year-end-count/")])}
+</section>
+
+<section id="newyear">
+<h2>{n("newyear-y")}年まで、あと{n("newyear")}日</h2>
+<p>新しい年を迎える準備を、いまから考えておけます。</p>
+{purposes([("お正月の準備", "おせち・帰省・買い物など", "until", "new-year"), ("帰省・旅行の予約", "混みあう時期の予約を忘れないように", "until", "new-year"),
+           ("初詣の予定", "家族や友人との予定に", "until", "new-year")])}
+{more([("初詣・初日の出の日付をさがす", "/search/?q=%E5%88%9D%E8%A9%A3")])}
+</section>
+
+<section id="fy">
+<h2>{n("fy-y")}年度は、あと{n("fy")}日</h2>
+<p>年度は4月から翌年3月までです。年度の終わりと始まりに合わせて、準備できることがあります。</p>
+{purposes([("入学の用意", "入学式に向けた準備の目安に", "until", "fy-start"), ("新学期の用意", "学用品・手続きなどの準備に", "until", "fy-start"),
+           ("引っ越しの用意", "年度末は混みあうので、早めの予約を", "until", "fy-end"), ("年度末の手続き", "締切のある手続きを忘れないように", "until", "fy-end"),
+           ("転職・異動の準備", "新年度に向けた準備に", "until", "fy-start")])}
+{more([("年度末までの日数", "/use/fiscal-year-end/"), ("引っ越しの手続き", "/use/moving-procedure/"), ("就職活動", "/use/job-hunting/")])}
+</section>
+
+<section id="start">
+<h2>今日から数える</h2>
+<p>今日を「はじめた日」にして、続けた日数を数えられます。</p>
+{purposes([("禁煙をはじめた日", "続けた日数が、毎日増えていきます", "since", "today"), ("習慣をはじめた日", "運動・勉強・早起きなど", "since", "today"),
+           ("今日のできごと", "あとから「もう何日」と見返せます", "memo", "today")])}
+{more([("禁煙", "/use/quit-smoking/"), ("習慣", "/use/habit-streak/")])}
+</section>
+<p>どれも当てはまらないときは、<a href="/add/">自分で日付を入力する</a>こともできます。</p>"""
+    return c.page("/today/", f"今日の数字から、これからの準備を考える | {NAME}", "今年のあと何日、来年まであと何日、年度末まであと何日。今日の数字から、入学や引っ越しなどの準備を考え、自分の日として記録できます。", body, "today")
 
 
 def legal(c: Ctx) -> dict:
@@ -472,7 +541,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     live = live_entries(entries, today)
     pages: dict[str, str | bytes] = {
         "index.html": home_page(c), "search/index.html": search_page(c), "my/index.html": my_page(c), "add/index.html": add_page(c),
-        "skins/index.html": skins_page(c), "use/index.html": use_index(c), "manual/index.html": manual_page(c),
+        "skins/index.html": skins_page(c), "use/index.html": use_index(c), "manual/index.html": manual_page(c), "today/index.html": today_page(c),
     }
     for u in usecases.USECASES:
         pages[f"use/{u['slug']}/index.html"] = use_page(c, u)

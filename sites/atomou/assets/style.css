@@ -190,3 +190,16 @@ header.site nav a[href="/add/"]{background:var(--accent);color:var(--on-accent)}
 .qa summary{min-height:52px;display:flex;align-items:center;font-weight:800;cursor:pointer}
 .qa details[open] summary{border-bottom:1px solid var(--line)}
 .qa details p{margin:.7rem 0}
+
+/* home blocks, tips, today page */
+[data-block]{margin:1.2rem 0}
+.block-off{display:none}
+.editing .block-off{display:block;opacity:.45}
+.block-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:6px 10px;margin-bottom:8px;border:2px dashed var(--accent);border-radius:12px;background:var(--surface2);color:var(--text)}
+.bar-btns{display:flex;gap:6px}
+.mini[disabled]{opacity:.4;cursor:default}
+.edit-home{text-align:center;margin:2rem 0 0}
+.daily a{color:inherit;text-underline-offset:3px}
+.c-tip{margin:.3rem 0 0!important;padding:6px 10px;border-left:4px solid var(--accent);border-radius:6px;background:var(--surface2);color:var(--text);font-size:.85rem}
+.card.quiet .c-tip{border-left-color:var(--quiet-line);background:transparent;color:var(--quiet-text)}
+#today h2,#year h2,#newyear h2,#fy h2,#start h2{margin-top:2rem}

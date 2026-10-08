@@ -20,7 +20,7 @@
   }
   function dateStr(a) { return C.iso(a).replace(/-/g, ''); }
 
-  // ev: {uid, title, date:[y,m,d], yearly:bool, every100:bool, alarm:'morning'|'eve'|'none', note}
+  // ev: {uid, title, date:[y,m,d], yearly:bool, every100:bool, alarm:'morning'|'eve'|'week'|'none', note}
   function vevent(ev, now) {
     var d = ev.date, end = C.addDays(d, 1), L = ['BEGIN:VEVENT', 'UID:' + ev.uid + '@atomou.com', 'DTSTAMP:' + stamp(now), 'SUMMARY:' + esc(ev.title),
       'DTSTART;VALUE=DATE:' + dateStr(d), 'DTEND;VALUE=DATE:' + dateStr(end), 'TRANSP:TRANSPARENT'];
@@ -28,7 +28,7 @@
     else if (ev.yearly) L.push('RRULE:FREQ=YEARLY' + (d[1] === 2 && d[2] === 29 ? ';BYMONTH=2;BYMONTHDAY=-1' : ''));
     if (ev.note) L.push('DESCRIPTION:' + esc(ev.note));
     if (ev.alarm && ev.alarm !== 'none') {
-      L.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(ev.title), 'TRIGGER:' + (ev.alarm === 'eve' ? '-PT3H' : 'PT9H'), 'END:VALARM');
+      L.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(ev.title), 'TRIGGER:' + (ev.alarm === 'eve' ? '-PT3H' : ev.alarm === 'week' ? '-P6DT15H' : 'PT9H'), 'END:VALARM');
     }
     L.push('END:VEVENT');
     return L;

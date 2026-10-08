@@ -22,7 +22,7 @@ def find_chrome():
     return next((p for p in CHROME_PATHS if Path(p).exists()), None) or shutil.which("google-chrome") or shutil.which("chromium")
 
 
-PAGE = """<!doctype html><meta charset="utf-8"><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre>
+PAGE = """<!doctype html><meta charset="utf-8"><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script>
 <script>
 (function () {
   var V = %(vectors)s, C = AtomouCore, ICS = AtomouICS, P = C.parse, res = {};
@@ -35,8 +35,25 @@ PAGE = """<!doctype html><meta charset="utf-8"><script src="%(core)s"></script><
   res.wareki = V.wareki.map(function (c) { return C.warekiToYear(c.era, c.n); });
   res.bad = ['2026-02-30', '2026-13-01', 'abc', '2026-1-1'].map(function (s) { return P(s); });
   res.ics = ICS.build([{ uid: 'e-abc', title: 'テスト, 試験; 申込\\n締切', date: [2026, 11, 20], alarm: 'morning' },
-    { uid: 'm-1', title: 'うるう日', date: [2024, 2, 29], yearly: true, every100: true, alarm: 'eve' }, { uid: 'q', title: '静か', date: [2020, 3, 1], alarm: 'none' }],
+    { uid: 'm-1', title: 'うるう日', date: [2024, 2, 29], yearly: true, every100: true, alarm: 'eve' }, { uid: 'q', title: '静か', date: [2020, 3, 1], alarm: 'none' },
+    { uid: 'w', title: '一週間前', date: [2026, 12, 1], alarm: 'week' }],
     'あと何日、もう何日', new Date(Date.UTC(2026, 9, 8, 1, 2, 3)));
+  var A = window.Atomou, T = function (kind, title, date, extra) { return A.tipFor(Object.assign({ kind: kind, title: title, date: date, precision: 'day' }, extra || {}), [2026, 10, 8]); };
+  res.tips = {
+    sanki: T('memorial', '命日', '2024-10-20', { yearly: true, quiet: true }),
+    isshuki: T('memorial', 'ペットの命日', '2025-12-01', { yearly: true, quiet: true }),
+    disaster: T('memorial', 'あの日', '2020-10-20', { yearly: true, quiet: true }),
+    memorialFar: T('memorial', '命日', '2024-03-01', { yearly: true, quiet: true }),
+    passed: T('anniversary', '付き合った日', '2020-10-01', { yearly: true }),
+    soon: T('anniversary', '結婚記念日', '2020-10-12', { yearly: true }),
+    birthday: T('birthday', '誕生日', '2000-10-08', { yearly: true }),
+    birthdayPassed: T('birthday', '誕生日', '2000-09-20', { yearly: true }),
+    since: T('since', '禁煙', '2026-07-01', { every100: true }),
+    sinceFar: T('since', '禁煙', '2026-09-01', { every100: true }),
+    future: T('anniversary', '未来', '2027-01-01', { yearly: true }),
+    until: T('until', '旅行', '2026-01-01', {})
+  };
+  res.when = ['year-end', 'new-year', 'fy-start', 'fy-end', 'today', 'nope'].map(function (t) { var d = A.whenToken(t); return d ? C.iso(d) : null; });
   document.getElementById('out').textContent = JSON.stringify(res);
 })();
 </script>"""
@@ -48,10 +65,10 @@ class CoreInChrome(unittest.TestCase):
     def setUpClass(cls):
         with tempfile.TemporaryDirectory() as td:
             page = Path(td) / "t.html"
-            page.write_text(PAGE % {"core": (ASSETS / "core.js").as_uri(), "ics": (ASSETS / "ics.js").as_uri(), "vectors": json.dumps(VECTORS)}, encoding="utf-8")
+            page.write_text(PAGE % {"core": (ASSETS / "core.js").as_uri(), "ics": (ASSETS / "ics.js").as_uri(), "app": (ASSETS / "app.js").as_uri(), "vectors": json.dumps(VECTORS)}, encoding="utf-8")
             prof = Path(td) / "prof"
             r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={prof}", "--virtual-time-budget=4000",
-                                "--dump-dom", page.as_uri()], capture_output=True, timeout=120)
+                                "--dump-dom", page.as_uri() + "?today=2026-10-08"], capture_output=True, timeout=120)
         dom = r.stdout.decode("utf-8", "replace")
         a = dom.index('<pre id="out">') + len('<pre id="out">')
         cls.res = json.loads(html.unescape(dom[a:dom.index("</pre>", a)]))
@@ -85,8 +102,29 @@ class CoreInChrome(unittest.TestCase):
             self.assertIn(key, unfolded)
         self.assertIn("SUMMARY:テスト\\, 試験\\; 申込\\n締切", unfolded)  # comma, semicolon and newline are escaped
         self.assertEqual(unfolded.count("BEGIN:VEVENT"), unfolded.count("END:VEVENT"))
-        self.assertEqual(unfolded.count("BEGIN:VALARM"), 3)  # the first two events and the 100-day series of the second; the third asked for none
-        self.assertEqual(unfolded.count("BEGIN:VEVENT"), 4)  # three events + the 100-day series of the second
+        self.assertEqual(unfolded.count("BEGIN:VALARM"), 4)  # the first two events and the 100-day series of the second; the third asked for none
+        self.assertEqual(unfolded.count("BEGIN:VEVENT"), 5)  # four events + the 100-day series of the second
+        self.assertIn("TRIGGER:-P6DT15H", unfolded)  # one week before, 9:00
+
+    def test_tips_are_gentle_and_correct(self):
+        t = self.res["tips"]
+        self.assertIn("三回忌", t["sanki"])          # 2024-10-20 -> the second anniversary of the death is the 三回忌
+        self.assertIn("一周忌", t["isshuki"])
+        self.assertNotIn("回忌", t["disaster"])     # a disaster day is not given a Buddhist memorial name
+        self.assertIn("もうすぐ同じ日", t["disaster"])
+        self.assertEqual(t["memorialFar"], "")
+        self.assertIn("プレゼント", t["passed"])
+        self.assertIn("4日後", t["soon"])
+        self.assertIn("今日は誕生日", t["birthday"])
+        self.assertIn("メッセージ", t["birthdayPassed"])
+        self.assertIn("もうすぐ100日目", t["since"])
+        self.assertEqual((t["sinceFar"], t["future"], t["until"]), ("", "", ""))
+        for k in ("sanki", "isshuki", "disaster"):  # grief entries: no congratulations, no gifts, no sales words
+            for bad in ("おめでとう", "プレゼント", "お祝い", "セール", "おすすめ", "!", "!"):
+                self.assertNotIn(bad, t[k], k)
+
+    def test_today_tokens(self):
+        self.assertEqual(self.res["when"], ["2026-12-31", "2027-01-01", "2027-04-01", "2027-03-31", "2026-10-08", None])
 
 
 if __name__ == "__main__":
