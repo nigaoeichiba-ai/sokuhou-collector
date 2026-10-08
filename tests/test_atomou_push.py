@@ -159,6 +159,19 @@ class Receiver(unittest.TestCase):
         self.assertIn("http_response_code(429)", php)                  # a daily limit per sender
         self.assertRegex(php, r"preg_match\('#\^https://")            # only https endpoints
 
+    def test_only_this_site_and_the_browsers_push_services_are_accepted(self):
+        import re
+        php = build.push_php({"site_url": "https://atomou.com/"})
+        self.assertIn("$origin !== 'https://atomou.com'", php)         # the pages of this site only (as api/m.php)
+        self.assertNotIn("__SITE_URL__", php)
+        pat = re.search(r"preg_match\('#(\^https://\(\[A-Za-z0-9-\]\+\\.\)\*.*?)#', \$endpoint\)", php).group(1)
+        for ok in ("https://fcm.googleapis.com/fcm/send/abc", "https://updates.push.services.mozilla.com/wpush/v2/abc",
+                   "https://web.push.apple.com/QAbc", "https://wns2-par02p.notify.windows.com/?token=x", "https://updates-autopush.stage.mozaws.net/wpush/v2/a"):
+            self.assertTrue(re.search(pat, ok), ok)
+        for bad in ("https://evil.example.com/x", "https://fcm.googleapis.com.evil.example/x", "https://evilgoogleapis.com/x", "http://fcm.googleapis.com/x",
+                    "https://169.254.169.254/latest/meta-data/", "https://push.apple.com@evil.example/x"):
+            self.assertFalse(re.search(pat, bad), bad)
+
     def test_build_emits_the_receiver_and_the_service_worker_handlers(self):
         pages = build.build_pages({**CFG, "vapid_public": "BPublicKeyForTests_" + "x" * 60}, release=True, today=TODAY)
         self.assertIn("api/push.php", pages)
