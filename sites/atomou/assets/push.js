@@ -40,6 +40,7 @@
         add(C.addDays(base, -t.before), 'm', 'やること: ' + t.text + '(' + it.title + ')', url);
       });
     });
+    if (window.AtomouMember && window.AtomouMember.extraNotices) window.AtomouMember.extraNotices(today).forEach(function (x) { add(x.d, x.s, x.t, x.u); });   // a monitor's questionnaire reminder
     var list = Object.keys(dates).sort().map(function (k) { return dates[k]; });
     return { dates: list, mirror: mirror, hash: list.map(function (x) { return x.d + x.s; }).join(',') };
   }

@@ -4,7 +4,7 @@
 // web root): the e-mail address, the plan / first-come tier and its end date, the referral code, the sessions (hashes), and — only when
 // the member switched it on — the days to notify by e-mail with a short title each.  Nothing else.  Files: <site folder>/members/ (outside
 // public_html): key (32 random bytes), counter.json (first-come numbers), pending/<id>.json (codes, 10 minutes), m/<id>.json (members).
-// Every answer is JSON.  Every request is a POST with a JSON body {"v":1,"a":"<action>", ...}.  Actions: code, verify, me, update, logout, delete.
+// Every answer is JSON.  Every request is a POST with a JSON body {"v":1,"a":"<action>", ...}.  Actions: code, verify, seats, thanks, me, update, survey, logout, delete.
 date_default_timezone_set('Asia/Tokyo');
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -75,7 +75,18 @@ function save_member($root, $id, $m) {
 function public_view($m) {   // what the browser gets: never the sessions, never other members' data
     return array('email' => $m['email'], 'plan' => $m['plan'], 'tier' => $m['tier'], 'free_until' => $m['free_until'], 'ref_code' => $m['ref_code'],
                  'referrals' => (int)($m['referrals'] ?? 0), 'notices' => array('on' => !empty($m['notices']['on']), 'n' => count($m['notices']['dates'] ?? array())), 'created' => $m['created'],
-                 'surveys' => array_map('intval', array_keys(is_array($m['survey'] ?? null) ? $m['survey'] : array())));
+                 'surveys' => array_map('intval', array_keys(is_array($m['survey'] ?? null) ? $m['survey'] : array())),
+                 'pen' => (string)($m['pen'] ?? ''), 'pen_ok' => !empty($m['pen_ok']), 'badges' => badges_of($m));
+}
+function badges_of($m) {   // shown on the my page; 'early' comes from the first-come places, the others from the monthly awards
+    $b = in_array($m['tier'] ?? '', array('tester', 'first'), true) ? array('early') : array();
+    foreach ((is_array($m['badges'] ?? null) ? $m['badges'] : array()) as $x) { if (!in_array($x, $b, true)) { $b[] = $x; } }
+    return $b;
+}
+function extend($m, $months, $today) {
+    $base = (($m['free_until'] ?? '') !== '' && $m['free_until'] > $today) ? $m['free_until'] : $today;
+    $m['free_until'] = months_later($base, $months);
+    return $m;
 }
 function months_later($iso, $months) { $t = new DateTime($iso); $t->modify('+' . (int)$months . ' months'); return $t->format('Y-m-d'); }
 function find_by_ref($root, $code) {   // the referral code is short; the members folder is small enough to scan (hundreds to thousands)
@@ -153,18 +164,12 @@ if ($a === 'verify') {
         do { $code_new = ''; for ($i = 0; $i < 8; $i++) { $code_new .= substr('ABCDEFGHJKLMNPQRSTUVWXYZ23456789', random_int(0, 31), 1); } } while (find_by_ref($root, $code_new));
         $m = array('email' => $email, 'created' => $today, 'number' => $n, 'plan' => 'free', 'tier' => $tier, 'free_until' => $months ? months_later($today, $months) : '',
                    'ref_code' => $code_new, 'ref_by' => $ref_by, 'referrals' => 0, 'sessions' => array(), 'notices' => array('on' => false, 'dates' => array()));
-        if ($ref_by !== '') {   // the referrer gets the same months, up to the cap (single level, time only, no money)
-            $rm = load_member($root, $ref_by);
-            if ($rm && (int)($rm['referrals'] ?? 0) < $REF_CAP) {
-                $rm['referrals'] = (int)($rm['referrals'] ?? 0) + 1;
-                $base = ($rm['free_until'] !== '' && $rm['free_until'] > $today) ? $rm['free_until'] : $today;
-                $rm['free_until'] = months_later($base, $REF_GIVE);
-                save_member($root, $ref_by, $rm);
-            }
-        }
+        // the referrer is rewarded later, when this person has used the site on two days at least a week apart (the visit block after the login check):
+        // a throwaway address registered only for the reward never counts
     }
     $secret = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
     $exp = time() + 90 * 86400;
+    $m['seen'] = array_slice(array_values(array_unique(array_merge(is_array($m['seen'] ?? null) ? $m['seen'] : array(), array($today)))), -20);
     $m['sessions'][] = array('h' => hash('sha256', $secret), 'exp' => $exp, 'made' => $today);
     if (count($m['sessions']) > 10) { $m['sessions'] = array_slice($m['sessions'], -10); }
     save_member($root, $id, $m);
@@ -179,9 +184,43 @@ if ($a === 'seats') {   // public: the places left in each first-come pool (no p
     out(200, array('pools' => $pools, 'ref_months' => $REF_MONTHS));
 }
 
+if ($a === 'thanks') {   // public: written by the monthly job (sites/atomou/monthly.py); only consented pen names, never an address
+    $t = is_file($root . '/thanks.json') ? json_decode((string)file_get_contents($root . '/thanks.json'), true) : null;
+    out(200, is_array($t) ? $t : array('months' => array()));
+}
+
 $s = session_member($root);
 if (!$s) { out(401, array('error' => 'login')); }
 list($id, $m) = $s;
+
+// ---------- on every visit of a member: the day of use, the referral check, the monthly awards ----------
+$today = date('Y-m-d'); $changed = false;
+$seen = is_array($m['seen'] ?? null) ? $m['seen'] : array();
+if (!in_array($today, $seen, true)) { $seen[] = $today; $m['seen'] = array_slice($seen, -20); $changed = true; }
+if (($m['ref_by'] ?? '') !== '' && empty($m['ref_ok']) && count($m['seen']) >= 2 && strtotime(max($m['seen'])) - strtotime(min($m['seen'])) >= 7 * 86400) {
+    $m['ref_ok'] = $today; $changed = true;
+    $rm = load_member($root, $m['ref_by']);
+    if ($rm && (int)($rm['referrals'] ?? 0) < $REF_CAP) {   // single level, time only, capped
+        $rm['referrals'] = (int)($rm['referrals'] ?? 0) + 1;
+        $rm = extend($rm, $REF_GIVE, $today);
+        $rm['ref_log'] = array_slice(array_merge(is_array($rm['ref_log'] ?? null) ? $rm['ref_log'] : array(), array(date('Y-m'))), -60);
+        save_member($root, $m['ref_by'], $rm);
+    }
+}
+$aw = is_file($root . '/awards.json') ? json_decode((string)file_get_contents($root . '/awards.json'), true) : null;
+if (is_array($aw) && is_array($aw[$id] ?? null)) {   // written by the monthly job; each award is applied once (by its key)
+    $done = is_array($m['awards_done'] ?? null) ? $m['awards_done'] : array();
+    foreach ($aw[$id] as $x) {
+        $key = (string)($x['key'] ?? '');
+        if ($key === '' || in_array($key, $done, true)) { continue; }
+        if ((int)($x['months'] ?? 0) > 0) { $m = extend($m, min(12, (int)$x['months']), $today); }
+        $badge = (string)($x['badge'] ?? '');
+        if (preg_match('/^[a-z_]{1,20}$/', $badge)) { $b = is_array($m['badges'] ?? null) ? $m['badges'] : array(); if (!in_array($badge, $b, true)) { $b[] = $badge; } $m['badges'] = $b; }
+        $done[] = $key; $changed = true;
+    }
+    $m['awards_done'] = array_slice($done, -100);
+}
+if ($changed) { save_member($root, $id, $m); }
 
 if ($a === 'me') { out(200, array('member' => public_view($m))); }
 
@@ -196,11 +235,17 @@ if ($a === 'update') {
         }
         $m['notices'] = array('on' => $on, 'dates' => $on ? $dates : array(), 'updated' => date('c'));
     }
+    if (array_key_exists('pen', $d)) {   // the name on the thanks page: 20 characters, no address, no link, no phone number
+        $pen = mb_substr(trim(preg_replace('/[\x00-\x1F\x7F<>"\'&]/u', '', (string)$d['pen'])), 0, 20);
+        if (preg_match('/@|https?:|www\.|\d{7,}/i', $pen)) { out(400, array('error' => 'pen')); }
+        $m['pen'] = $pen;
+    }
+    if (array_key_exists('pen_ok', $d)) { $m['pen_ok'] = !empty($d['pen_ok']) && ($m['pen'] ?? '') !== ''; }
     save_member($root, $id, $m);
     out(200, array('member' => public_view($m)));
 }
 
-if ($a === 'survey') {   // the tester's one-minute questionnaire: n = 1 (after a week) or 2 (after a month); two fixed choices and one short free text
+if ($a === 'survey') {   // the monitor's one-minute questionnaire (tier id 'tester'): n = 1 (after a week) or 2 (after a month); two fixed choices and one short free text
     if (($m['tier'] ?? '') !== 'tester') { out(403, array('error' => 'tester')); }
     $n = (int)($d['n'] ?? 0);
     if ($n !== 1 && $n !== 2) { out(400, array('error' => 'survey')); }
