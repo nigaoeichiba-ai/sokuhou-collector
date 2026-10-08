@@ -308,14 +308,16 @@ jobs:
           AUTH=()
           if [ "$SITE" = "atomou" ] && [ "${ATOMOU_PUBLIC:-}" != "true" ]; then
             AUTH=(-u "$DEMO_USER:$DEMO_PASS")   # the demo is behind a password: it must refuse a visitor without it and answer one with it
-            [ "$(curl -s -o /dev/null -w '%{http_code}' "$URL/")" = "401" ] || ok=0
+            unauth=$(curl -s -o /dev/null -w '%{http_code}' "$URL/"); echo "without the password: $unauth (must be 401)"
+            [ "$unauth" = "401" ] || ok=0
           fi
           code=$(curl -s "${AUTH[@]}" -o /tmp/index.html -w '%{http_code}' "$URL/") || ok=0
           [ "$code" = "200" ] || ok=0
-          grep -q "$MARKER" /tmp/index.html || ok=0
+          grep -q "$MARKER" /tmp/index.html || { echo "the page lacks the marker text"; ok=0; }
           urls=$(curl -s "${AUTH[@]}" "$URL/sitemap.xml" | grep -c '<loc>') || ok=0
           [ "${urls:-0}" -ge "$((MIN_PAGES - 5))" ] || ok=0
-          [ "$(curl -s "${AUTH[@]}" -o /dev/null -w '%{http_code}' "$URL$PROBE")" = "200" ] || ok=0
+          probe=$(curl -s "${AUTH[@]}" -o /dev/null -w '%{http_code}' "$URL$PROBE"); echo "probe $PROBE: $probe (must be 200)"
+          [ "$probe" = "200" ] || ok=0
           echo "index=$code sitemap_urls=${urls:-0} ok=$ok"
           # every sitemap URL answers 200 and obeys the page rules, and every internal link on them answers 200 (checked twice before the site is rolled back, so a network blip does not undo a good deploy)
           if [ "${#AUTH[@]}" -gt 0 ]; then
