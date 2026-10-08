@@ -1,0 +1,41 @@
+{
+ "slug": "oshogatsu-asobi-crayon",
+ "title": "お正月あそび クレヨン",
+ "subject": "",
+ "genre": "season",
+ "touch": "crayon",
+ "title_fmt": "{ja}",
+ "priority": 12,
+ "subject_en": "Traditional Japanese New Year games and toys, each a separate object, drawn in a warm crayon style with bright childlike colours. Every object has a closed, clearly darker outline; light parts (paper, rice cakes) are warm cream (#FFF6E0) or tinted, never pure white. No letters or characters on the cards, kites or paper.",
+ "lead": "こま、たこ、はねつき、かるた、ふくわらい、けん玉。園や学校のおたより1月号、お正月の遊びの説明、すごろくの素材に使える、クレヨンのタッチの12点。",
+ "tags": [
+  "お正月",
+  "お正月あそび",
+  "こま",
+  "たこあげ",
+  "羽根つき",
+  "かるた",
+  "福笑い",
+  "けん玉",
+  "1月",
+  "おたより",
+  "保育"
+ ],
+ "season": {"from": "11-15", "to": "01-31"},
+ "holes": false,
+ "items": [
+  ["koma", "こま", "a wooden spinning top with a red and blue stripe and a string"],
+  ["tako", "たこあげ", "a traditional square Japanese kite with a red sun design and a long tail (no letters)"],
+  ["hagoita", "羽子板と羽根", "a decorated wooden paddle with a small shuttlecock beside it"],
+  ["karuta", "かるた", "a stack of blank playing cards with one card showing a simple picture of a rabbit"],
+  ["fukuwarai", "福笑い", "a round blank face board with separate eyebrow, eye, nose and mouth pieces beside it"],
+  ["kendama", "けん玉", "a wooden kendama with a red ball on a string"],
+  ["sugoroku", "すごろく", "a dice and a rolled-up board game sheet with a winding path of circles (no letters)"],
+  ["otedama", "お手玉", "three small cloth beanbags with colourful patterns"],
+  ["daruma-otoshi", "だるま落とし", "a daruma-otoshi stack of colourful blocks with a small mallet"],
+  ["menko", "めんこ", "three round menko cards with simple patterns"],
+  ["mochitsuki", "もちつき", "a wooden mortar with a rice cake and a mallet"],
+  ["kakizome", "書きぞめ", "a brush and an ink stone beside a blank sheet of cream paper"]
+ ],
+ "exclude": []
+}

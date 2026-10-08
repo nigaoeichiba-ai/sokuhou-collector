@@ -1,0 +1,39 @@
+{
+ "slug": "mochu-flowers-watercolor",
+ "title": "喪中はがき・お悔やみの花 水彩",
+ "subject": "",
+ "genre": "nature",
+ "touch": "watercolor",
+ "title_fmt": "{ja}",
+ "priority": 8,
+ "subject_en": "Quiet, dignified flowers for mourning and condolence cards, each a separate single flower or small spray, calm muted palette (soft lavender, grey-blue, pale pink, ivory, sage green), no bright colours, no faces, no ribbons. Outlines are closed thin pencil-like lines darker than the fill; light petals are warm cream (#FFF6E0) or faintly tinted, never pure white.",
+ "lead": "蓮、菊、百合、桔梗、りんどう。喪中はがき、寒中見舞い、お悔やみのカードに添える、落ち着いた色の花の水彩イラスト12点。登録不要で、そのまま使えます。",
+ "tags": [
+  "喪中",
+  "喪中はがき",
+  "お悔やみ",
+  "花",
+  "水彩",
+  "蓮",
+  "菊",
+  "百合",
+  "寒中見舞い"
+ ],
+ "season": {"from": "10-15", "to": "01-31"},
+ "holes": false,
+ "items": [
+  ["lotus", "蓮の花", "a single lotus flower, pale pink petals, with one round leaf"],
+  ["white-mum", "白い菊", "a white chrysanthemum with a short stem and two leaves, petals in warm cream"],
+  ["purple-mum", "紫の菊", "a soft purple chrysanthemum with a short stem and leaves"],
+  ["lily", "百合", "a single white lily flower on a stem with a bud, petals in warm cream with pale green centre"],
+  ["kikyo", "桔梗", "a bellflower (kikyo) stem with three purple star-shaped blooms"],
+  ["rindo", "りんどう", "a gentian stem with several deep blue-violet tubular flowers"],
+  ["orchid", "胡蝶蘭", "a short arching stem of three phalaenopsis orchid flowers in ivory and pale pink"],
+  ["camellia", "白い椿", "a white camellia flower with glossy dark green leaves, petals in warm cream"],
+  ["suzuran", "すずらん", "a lily-of-the-valley stem with small cream bell flowers and two leaves"],
+  ["lotus-bud", "蓮のつぼみ", "a closed pale pink lotus bud on a stem beside a small leaf"],
+  ["bouquet", "お供えの花束", "a small calm bouquet of white lilies and purple chrysanthemums tied with a plain pale ribbon"],
+  ["branch", "すすきと桔梗", "a sprig of pampas grass with one purple bellflower, calm autumn mood"]
+ ],
+ "exclude": []
+}
