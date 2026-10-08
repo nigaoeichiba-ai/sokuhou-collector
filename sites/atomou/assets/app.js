@@ -748,6 +748,8 @@
       none.hidden = hits.length > 0;
       var add = $('#none-add');
       if (add) add.href = '/add/' + (q.value ? '?title=' + encodeURIComponent(q.value) : '');
+      var ask = $('#none-ask');
+      if (ask) ask.href = '/contact/?kind=request' + (q.value ? '&q=' + encodeURIComponent(q.value.slice(0, 60)) : '');
       sync();
     }
     var t;
@@ -1003,10 +1005,28 @@
     if (page === 'home') renderMine(); else if (page === 'my') renderMy();
   });
 
+  /* ---------- the first screen of a visitor who has recorded nothing yet ---------- */
+  function renderHero() {
+    var h = $('#hero-cta');
+    if (h) h.hidden = S.entries.length > 0 || S.saved.length > 0;
+  }
+  document.addEventListener('atomou:changed', renderHero);
+
+  /* ---------- the contact form, when it was reached from "send it as a day I would like to see" on the search page ---------- */
+  function prefillContact() {
+    var f = document.querySelector('form.cf');
+    if (!f || !P.kind) return;
+    var sel = f.querySelector('select[name="kind"]'), ta = f.querySelector('textarea');
+    if (sel && P.kind === 'request') { Array.prototype.forEach.call(sel.options, function (o) { if (o.value.indexOf('載せてほしい') === 0) sel.value = o.value; }); }
+    if (ta && P.q && !ta.value) ta.value = '載せてほしい日: ' + String(P.q).slice(0, 60) + '\n(いつ頃・どこで分かるか、わかれば書いてください)\n';
+  }
+
   /* ---------- start ---------- */
+  prefillContact();
   applyPrefs();
   hydrate(document);
   renderSeason();
+  renderHero();
   stat('view:' + (/^[a-z]+$/.test(page) ? page : 'other'));
   stat('skin:' + S.prefs.skin);
   if (S.prefs.big) stat('big:on');

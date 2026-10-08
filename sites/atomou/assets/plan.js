@@ -162,6 +162,20 @@
     A.loadCatalog().then(function (cat) { catCache = cat || []; items = planItems(catCache); render(); });
   }
 
+  function nextMilestone(e) {   // right after saving: when the day comes round next, so there is a reason to open the page again
+    var d = e && e.precision === 'day' ? C.parse(e.date) : null;
+    if (!d) return '';
+    var gone = C.toDays(TODAY[0], TODAY[1], TODAY[2]) - C.toDays(d[0], d[1], d[2]), next;
+    if (e.every100 && gone >= 0) { var n = (Math.floor(gone / 100) + 1) * 100; return '次の100日ごとの節目は、' + n + '日目の' + A.fmtDate(C.iso(C.addDays(d, n)), 'day') + 'です。'; }
+    if (e.yearly) {
+      var dd = d[1] === 2 && d[2] > 28 ? 28 : d[2];
+      next = [TODAY[0], d[1], dd];
+      if (C.cmp(next, TODAY) < 0) next = [TODAY[0] + 1, d[1], dd];
+      return '次の同じ日は、' + A.fmtDate(C.iso(next), 'day') + 'です。';
+    }
+    return '';
+  }
+
   /* ---------- one plan: its card, memo, "do this N days before", and the optional file for other calendar apps ---------- */
   function pagePlan() {
     var key = P.key || '', box = $('#plan'), item = null;
@@ -245,7 +259,7 @@
       else { var c = (cat || []).filter(function (x) { return x.id === key.slice(2); })[0]; item = c ? A.catItem(c) : null; }
       if (!item) return missing();
       render();
-      if (P.new) { A.toast('残しました。メモと「やること」を続けて書けます。'); if (window.AtomouPush && item.own) window.AtomouPush.afterSave(box, !!item.quiet); try { history.replaceState(null, '', '/plan/?key=' + key); } catch (x) { /* ignore */ } }
+      if (P.new) { A.toast('残しました。' + (nextMilestone(item.own && A.findEntry(item.id)) || 'メモと「やること」を続けて書けます。')); if (window.AtomouPush && item.own) window.AtomouPush.afterSave(box, !!item.quiet); try { history.replaceState(null, '', '/plan/?key=' + key); } catch (x) { /* ignore */ } }
     });
   }
 
