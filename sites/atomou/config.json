@@ -15,8 +15,8 @@
   "google_client_id": "891343099225-me934is0n6g79dpqhtlpui8qqf428o5t.apps.googleusercontent.com",
   "launch_date": "2026-10-08",
   "index_per_week": 6,
-  "vapid_public": null,
-  "member_mail_from": null,
+  "vapid_public": "BHkvQGm4yZtK-RqWZ0qDScR7_zK-ekgK3Ih0WIDMjo3LGj5761tCprTkaBygnLs7rUTSx41anCPbYuWwOwUnGDU",
+  "member_mail_from": "noreply@atomou.com",
   "member_tiers": [
     {
       "id": "tester",
