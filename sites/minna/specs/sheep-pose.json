@@ -5,7 +5,7 @@
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME sheep character (kawaii mascot): a super-fluffy cloud-like cream-white wool body made of big scallops, a small round face in soft peach-beige, tiny curled tan horns and little dark-brown hooves",
- "lead": "雲のようにふわふわの毛と、くるんと巻いた角が目じるしのひつじ。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "lead": "雲のようにふわふわの毛と、くるんと巻いた角が目じるしのひつじ。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。 3枚目は、ハイタッチ・かんがえる・本をよむ・プレゼント・かさ・うたう。",
  "tags": [
   "ひつじ",
   "羊",
@@ -76,6 +76,36 @@
    "cheer",
    "ガッツポーズする",
    "fist-pump cheering pose with sparkling eyes"
+  ],
+  [
+   "hi5",
+   "ハイタッチ",
+   "raising one hoof high for a high-five, big smile"
+  ],
+  [
+   "think",
+   "かんがえる",
+   "tilting head with a hoof on the chin, puzzled"
+  ],
+  [
+   "read",
+   "本をよむ",
+   "sitting and reading an open book"
+  ],
+  [
+   "gift",
+   "プレゼント",
+   "holding out a wrapped gift box with both hooves"
+  ],
+  [
+   "umbrella",
+   "かさをさす",
+   "standing under a small open umbrella"
+  ],
+  [
+   "sing",
+   "うたう",
+   "singing happily with a few music notes"
   ]
  ],
  "exclude": []

@@ -5,7 +5,7 @@
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME cat character (kawaii mascot): a chubby cat with a patched face: cream fur with brown patches around both eyes meeting on the forehead in a small heart shape, white muzzle, short striped brown tail ending in a cream tip",
- "lead": "目のまわりのぶちと、おでこのハートもようがトレードマークの、まるっこいねこ。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "lead": "目のまわりのぶちと、おでこのハートもようがトレードマークの、まるっこいねこ。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。 3枚目は、ハイタッチ・かんがえる・本をよむ・プレゼント・かさ・うたう。",
  "tags": [
   "ねこ",
   "猫",
@@ -75,6 +75,36 @@
    "cheer",
    "ガッツポーズする",
    "fist-pump cheering pose with sparkling eyes"
+  ],
+  [
+   "hi5",
+   "ハイタッチ",
+   "raising one paw high for a high-five, big smile"
+  ],
+  [
+   "think",
+   "かんがえる",
+   "tilting head with a paw on the chin, puzzled"
+  ],
+  [
+   "read",
+   "本をよむ",
+   "sitting and reading an open book"
+  ],
+  [
+   "gift",
+   "プレゼント",
+   "holding out a wrapped gift box with both paws"
+  ],
+  [
+   "umbrella",
+   "かさをさす",
+   "standing under a small open umbrella"
+  ],
+  [
+   "sing",
+   "うたう",
+   "singing happily with a few music notes"
   ]
  ],
  "exclude": []

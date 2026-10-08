@@ -1,0 +1,41 @@
+{
+ "slug": "winter-health-picturebook",
+ "title": "冬の健康・かぜ予防 絵本風",
+ "subject": "",
+ "genre": "school",
+ "touch": "picturebook",
+ "title_fmt": "{ja}",
+ "priority": 16,
+ "subject_en": "Winter health and cold-prevention scenes for school and nursery newsletters, each a separate small scene with ONE friendly child (about 3.5-head proportion, round face, simple clothes) or a single object. Picture-book style with soft rounded closed outlines in warm brown-grey, clearly darker than the fill; light parts (masks, tissue, snow, milk) are warm cream (#FFF6E0) or tinted, never pure white. No letters.",
+ "lead": "手洗い、うがい、マスク、早寝早起き、あたたかい服。保健だよりや園のおたより、教室の掲示に使える、冬の健康のイラスト12点。絵本のようなやさしいタッチ。",
+ "tags": [
+  "健康",
+  "かぜ予防",
+  "インフルエンザ",
+  "手洗い",
+  "うがい",
+  "マスク",
+  "保健だより",
+  "冬",
+  "12月",
+  "1月",
+  "保育"
+ ],
+ "season": {"from": "11-01", "to": "02-28"},
+ "holes": false,
+ "items": [
+  ["handwash", "手あらい", "a child washing hands at a small sink with soap bubbles"],
+  ["gargle", "うがい", "a child gargling with a cup, head tilted back"],
+  ["mask", "マスク", "a child wearing a cream face mask, waving"],
+  ["sleep", "早ねはやおき", "a child asleep in bed with a moon-and-star blanket"],
+  ["warm-clothes", "あたたかい服", "a child in a coat, knitted hat, mittens and scarf"],
+  ["breakfast", "朝ごはん", "a child eating a bowl of rice with miso soup and an egg"],
+  ["humidifier", "かしつき", "a small humidifier with gentle steam"],
+  ["window", "かんき", "a child opening a window with fresh air swirls"],
+  ["thermometer", "体温計", "a digital thermometer with a blank display"],
+  ["cough", "せきエチケット", "a child covering the mouth with an elbow"],
+  ["vaccine", "予防せっしゅ", "a child with a small bandage on the arm, brave smile"],
+  ["rest", "おうちで休む", "a child resting on a sofa with a blanket and a mug"]
+ ],
+ "exclude": []
+}

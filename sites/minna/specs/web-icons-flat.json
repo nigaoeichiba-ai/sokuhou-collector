@@ -1,0 +1,39 @@
+{
+ "slug": "web-icons-flat",
+ "title": "お知らせ・Webのアイコン",
+ "subject": "",
+ "genre": "icon",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "priority": 32,
+ "subject_en": "Simple web and notice icons, each a separate rounded flat icon on its own, friendly palette (navy, sky blue, orange, mint). Every icon has a closed, clearly darker edge tone around its shape; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters or numbers.",
+ "lead": "電話、メール、地図ピン、時計、カレンダー、検索、ホーム、ベル、ダウンロード。サイトのお知らせ、チラシの連絡先、スライドに使えるアイコン12点。",
+ "tags": [
+  "アイコン",
+  "Web",
+  "お知らせ",
+  "電話",
+  "メール",
+  "地図",
+  "連絡先",
+  "シンプル",
+  "フラット"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  ["phone", "電話", "a telephone handset icon in a rounded circle"],
+  ["mail", "メール", "an envelope icon"],
+  ["map-pin", "地図ピン", "a map location pin with a dot"],
+  ["clock", "時計", "a round clock face with two hands (no numbers)"],
+  ["calendar", "カレンダー", "a calendar page with a ring binding and a few blank squares"],
+  ["search", "検索", "a magnifying glass"],
+  ["home", "ホーム", "a simple house icon with a door"],
+  ["bell", "お知らせ", "a notification bell with a small dot"],
+  ["download", "ダウンロード", "a downward arrow onto a tray"],
+  ["cart", "カート", "a shopping cart icon"],
+  ["gear", "設定", "a gear icon"],
+  ["chat", "チャット", "two overlapping speech bubbles"]
+ ],
+ "exclude": []
+}
