@@ -49,6 +49,19 @@ class Pages(BuildOnce):
         self.assertNotIn("noindex", self.rel["index.html"])
         self.assertIn("noindex", self.prev["index.html"])
 
+    def test_a_demo_build_asks_for_a_password_and_a_release_build_does_not(self):
+        self.assertIn("AuthType Basic", self.prev[".htaccess"])
+        self.assertIn("Require valid-user", self.prev[".htaccess"])
+        self.assertIn(build.HTPASSWD_PLACEHOLDER, self.prev[".htaccess"])  # the deploy job fills in the path of the password file
+        self.assertNotIn("AuthType", self.rel[".htaccess"])
+        self.assertIn("RewriteRule", self.prev[".htaccess"])  # the https redirect stays in both
+
+    def test_the_workflow_never_deploys_the_demo_unprotected(self):
+        wf = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
+        self.assertIn('[ "$SITE" = "atomou" ] && [ "$ATOMOU_PUBLIC" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }', wf)
+        self.assertIn("grep -q \"AuthUserFile $home/$SITE_DIR/.htpasswd\" release/.htaccess", wf)  # the build is checked to name the real password file before upload
+        self.assertIn("[ \"$(curl -s -o /dev/null -w '%{http_code}' \"$URL/\")\" = \"401\" ] || ok=0", wf)  # and the live demo must refuse a visitor without the password
+
     def test_release_is_refused_without_an_operator(self):
         with self.assertRaises(build.BuildError):
             build.build_pages({**CFG, "operator_name": ""}, release=True, today=TODAY)
