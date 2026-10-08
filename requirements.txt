@@ -3,3 +3,4 @@ pillow
 numpy
 scipy
 opencv-python-headless
+cryptography

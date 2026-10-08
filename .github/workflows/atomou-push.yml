@@ -1,0 +1,122 @@
+name: atomou-push
+
+# atomou.com: sends the push notifications of the day ("the site tells you").  Twice a day: the morning slot (07:00 JST = 22:00 UTC the
+# day before) and the evening slot (21:00 JST = 12:00 UTC).  GitHub's schedule can run some minutes late; that is fine for a reminder.
+# The subscription folder lives on the server outside the web root (~/atomou.com/push/, written by api/push.php).  This job copies it
+# over SSH (the same key the deploy uses), sends one content-free message per due subscription (sites/atomou/push_send.py), and deletes
+# on the server the subscriptions the push services declared dead.  Nothing about a subscription is printed: counts only.
+#
+# Needs (owner): secret ATOMOU_VAPID_PRIVATE (from `python sites/atomou/make_vapid.py`); the public half goes to config.json "vapid_public".
+# Without the secret the job ends quietly.
+
+on:
+  schedule:
+    - cron: "0 22 * * *"    # 07:00 JST: the morning slot
+    - cron: "0 12 * * *"    # 21:00 JST: the evening slot (the night before)
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: "m = morning, e = evening (empty = by the clock)"
+        default: ""
+      dry_run:
+        description: "true = count only, send nothing"
+        default: "false"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atomou-push
+  cancel-in-progress: false
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Gate
+        id: gate
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+          VAPID: ${{ secrets.ATOMOU_VAPID_PRIVATE }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then echo "XSERVER secrets are not set; nothing to do"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if [ -z "$VAPID" ]; then echo "ATOMOU_VAPID_PRIVATE is not set; nothing to do"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "go=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v5
+        if: steps.gate.outputs.go == 'true'
+      - uses: actions/setup-python@v6
+        if: steps.gate.outputs.go == 'true'
+        with:
+          python-version: "3.13"
+      - name: Install
+        if: steps.gate.outputs.go == 'true'
+        run: python -m pip install --quiet cryptography
+      - name: SSH setup
+        if: steps.gate.outputs.go == 'true'
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver
+          chmod 600 ~/.ssh/id_xserver
+          for try in 1 2 3 4 5 6; do
+            ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /tmp/keyscan.err || true
+            [ -s ~/.ssh/known_hosts ] && break
+            echo "key scan attempt $try returned nothing"
+            sleep $((try * 10))
+          done
+          test -s ~/.ssh/known_hosts
+      - name: Which slot
+        id: slot
+        if: steps.gate.outputs.go == 'true'
+        env:
+          IN_SLOT: ${{ inputs.slot }}
+        run: |
+          slot="$IN_SLOT"
+          if [ -z "$slot" ]; then
+            h=$(TZ=Asia/Tokyo date +%H)
+            if [ "$h" -ge 15 ] || [ "$h" -lt 3 ]; then slot=e; else slot=m; fi
+          fi
+          echo "slot=$slot" >> "$GITHUB_OUTPUT"
+          echo "today=$(TZ=Asia/Tokyo date +%F)" >> "$GITHUB_OUTPUT"
+          echo "slot $slot, today $(TZ=Asia/Tokyo date +%F) (JST)"
+      - name: Copy the subscriptions from the server
+        if: steps.gate.outputs.go == 'true'
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -euo pipefail
+          mkdir -p push
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+            'set -e; d="$HOME/atomou.com/push"; if [ -d "$d" ]; then cd "$d" && tar -czf - --exclude="rate-*" --exclude="*.tmp" . ; else tar -czf - -T /dev/null; fi' | tar -C push -xzf -
+          echo "subscription files: $(ls push | grep -c '\.json$' || true)"
+      - name: Send
+        if: steps.gate.outputs.go == 'true'
+        env:
+          ATOMOU_VAPID_PRIVATE: ${{ secrets.ATOMOU_VAPID_PRIVATE }}
+          DRY: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          extra=""
+          if [ "$DRY" = "true" ]; then extra="--dry-run"; fi
+          python -m sites.atomou.push_send --dir push --slot "${{ steps.slot.outputs.slot }}" --today "${{ steps.slot.outputs.today }}" $extra
+      - name: Delete the dead subscriptions on the server
+        if: steps.gate.outputs.go == 'true'
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -euo pipefail
+          n=$(grep -c . push/gone.txt || true)
+          echo "dead subscriptions: $n"
+          [ "$n" -gt 0 ] || exit 0
+          grep -E '^[0-9a-f]{64}\.json$' push/gone.txt | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+            'set -e; cd "$HOME/atomou.com/push" && while read -r f; do rm -f -- "./$f"; done'
