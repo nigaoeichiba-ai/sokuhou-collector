@@ -1,8 +1,8 @@
 {
- "as_of": "2026-10-06",
+ "as_of": "2026-10-07",
  "bad_coords": 1,
  "credit": "出典:山口県警察本部地域企画課「山口県内のクマ出没情報(YPくまっぷ)」(山口県オープンデータ、CC BY)を加工して作成",
- "fetched_at": "2026-10-07T13:10:04.355458+09:00",
+ "fetched_at": "2026-10-08T19:40:07.268234+09:00",
  "fy_current": "R08",
  "monthly": {
   "R07": {
@@ -11,7 +11,7 @@
    "3": 1
   },
   "R08": {
-   "10": 5,
+   "10": 6,
    "4": 21,
    "5": 55,
    "6": 51,
@@ -21,6 +21,16 @@
   }
  },
  "sightings": [
+  {
+   "city": "周南市",
+   "count": 2,
+   "kind": "目撃",
+   "lat": 34.1207,
+   "lon": 131.7147,
+   "observed_at": "2026-10-07T12:15:00+09:00",
+   "place": "大字馬神 県道上",
+   "species": "クマ"
+  },
   {
    "city": "萩市",
    "count": 1,
@@ -2330,9 +2340,9 @@
    "species": "クマ"
   }
  ],
- "sightings_in_window": 231,
+ "sightings_in_window": 232,
  "source": "yamaguchi",
- "source_file": "https://yamaguchi-opendata.jp/ckan/dataset/928b40db-0a74-4ad7-b70e-019045860fd4/resource/b257b81d-4acd-4067-ba53-fe8c5235081b/download/r8-01011006.csv",
+ "source_file": "https://yamaguchi-opendata.jp/ckan/dataset/928b40db-0a74-4ad7-b70e-019045860fd4/resource/b257b81d-4acd-4067-ba53-fe8c5235081b/download/r8-01011007.csv",
  "source_page": "https://yamaguchi-opendata.jp/ckan/dataset/yp-2026",
  "unparsed": 0,
  "update_note": "山口県警察が認知した目撃・痕跡の情報です。随時更新されます"
