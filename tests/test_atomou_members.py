@@ -77,7 +77,7 @@ class Receiver(unittest.TestCase):
     def test_referrer_reward_is_separate_and_small(self):
         # 2026-10-09: the referrer used to get the referred person's 6 months per referral (up to 3 years); now its own, smaller number
         self.assertIn("$REF_GIVE = 1;", self.php)
-        self.assertIn("$rm['free_until'] = months_later($base, $REF_GIVE);", self.php)
+        self.assertIn("$rm = extend($rm, $REF_GIVE, $today);", self.php)
         self.assertNotIn("months_later($base, $REF_MONTHS)", self.php)
 
     def test_seats_answer_is_public_and_carries_no_personal_data(self):
