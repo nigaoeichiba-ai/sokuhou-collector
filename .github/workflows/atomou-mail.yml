@@ -1,0 +1,116 @@
+name: atomou-mail
+
+# atomou.com: sends the e-mail notices of the day to the members who switched them on (sites/atomou/mail_send.py), twice a day a few
+# minutes after the push job.  The members folder (~/atomou.com/members/, written by api/m.php; records sealed, key file beside them)
+# is copied over SSH with the deploy key.  Nothing about a member is printed: counts only.
+#
+# Needs (owner): secrets ATOMOU_SMTP_HOST, ATOMOU_SMTP_USER, ATOMOU_SMTP_PASS (a mailbox of the domain on Xserver; port 587 STARTTLS),
+# and config.json "member_mail_from" (the same address).  Without them the job ends quietly.
+
+on:
+  schedule:
+    - cron: "10 22 * * *"   # 07:10 JST: the morning slot
+    - cron: "10 12 * * *"   # 21:10 JST: the evening slot (the night before)
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: "m = morning, e = evening (empty = by the clock)"
+        default: ""
+      dry_run:
+        description: "true = count only, send nothing"
+        default: "false"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atomou-mail
+  cancel-in-progress: false
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Gate
+        id: gate
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+          SMTP_HOST: ${{ secrets.ATOMOU_SMTP_HOST }}
+          SMTP_USER: ${{ secrets.ATOMOU_SMTP_USER }}
+          SMTP_PASS: ${{ secrets.ATOMOU_SMTP_PASS }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then echo "XSERVER secrets are not set; nothing to do"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if [ -z "$SMTP_HOST" ] || [ -z "$SMTP_USER" ] || [ -z "$SMTP_PASS" ]; then echo "ATOMOU_SMTP_* secrets are not set; nothing to do"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "go=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v5
+        if: steps.gate.outputs.go == 'true'
+      - uses: actions/setup-python@v6
+        if: steps.gate.outputs.go == 'true'
+        with:
+          python-version: "3.13"
+      - name: Install
+        if: steps.gate.outputs.go == 'true'
+        run: python -m pip install --quiet cryptography
+      - name: SSH setup
+        if: steps.gate.outputs.go == 'true'
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver
+          chmod 600 ~/.ssh/id_xserver
+          for try in 1 2 3 4 5 6; do
+            ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /tmp/keyscan.err || true
+            [ -s ~/.ssh/known_hosts ] && break
+            echo "key scan attempt $try returned nothing"
+            sleep $((try * 10))
+          done
+          test -s ~/.ssh/known_hosts
+      - name: Which slot
+        id: slot
+        if: steps.gate.outputs.go == 'true'
+        env:
+          IN_SLOT: ${{ inputs.slot }}
+        run: |
+          slot="$IN_SLOT"
+          if [ -z "$slot" ]; then
+            h=$(TZ=Asia/Tokyo date +%H)
+            if [ "$h" -ge 15 ] || [ "$h" -lt 3 ]; then slot=e; else slot=m; fi
+          fi
+          echo "slot=$slot" >> "$GITHUB_OUTPUT"
+          echo "today=$(TZ=Asia/Tokyo date +%F)" >> "$GITHUB_OUTPUT"
+      - name: Copy the members folder from the server
+        if: steps.gate.outputs.go == 'true'
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -euo pipefail
+          mkdir -p members/m
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+            'set -e; d="$HOME/atomou.com/members"; if [ -f "$d/key" ]; then cd "$d" && tar -czf - key m ; else tar -czf - -T /dev/null; fi' | tar -C members -xzf -
+          echo "member files: $(ls members/m 2>/dev/null | grep -c '\.json$' || true)"
+      - name: Send
+        if: steps.gate.outputs.go == 'true'
+        env:
+          ATOMOU_SMTP_HOST: ${{ secrets.ATOMOU_SMTP_HOST }}
+          ATOMOU_SMTP_PORT: ${{ secrets.ATOMOU_SMTP_PORT || '587' }}
+          ATOMOU_SMTP_USER: ${{ secrets.ATOMOU_SMTP_USER }}
+          ATOMOU_SMTP_PASS: ${{ secrets.ATOMOU_SMTP_PASS }}
+          DRY: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          if [ ! -f members/key ]; then echo "no members yet"; exit 0; fi
+          extra=""
+          if [ "$DRY" = "true" ]; then extra="--dry-run"; fi
+          python -m sites.atomou.mail_send --dir members --slot "${{ steps.slot.outputs.slot }}" --today "${{ steps.slot.outputs.today }}" $extra
+      - name: Forget the copy
+        if: always() && steps.gate.outputs.go == 'true'
+        run: rm -rf members
