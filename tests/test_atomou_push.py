@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+
 import urllib.error
 from datetime import date
 from pathlib import Path
@@ -116,15 +117,23 @@ class Sender(unittest.TestCase):
                 raise urllib.error.HTTPError(req.full_url, 503, "Busy", {}, io.BytesIO(b""))
             return Resp()
 
-        priv, _ = webpush.generate_vapid()
-        counts = push_send.run(f, "2026-10-20", "m", priv, opener=opener)
-        self.assertEqual(counts, {"subscriptions": 4, "due": 3, "sent": 1, "gone": 1, "retry": 1, "failed": 0})
+        priv, pub = webpush.generate_vapid()
+        counts = push_send.run(f, "2026-10-20", "m", priv, opener=opener, public=pub)
+        self.assertEqual(counts, {"subscriptions": 4, "due": 3, "sent": 1, "gone": 1, "retry": 1, "failed": 0, "key_matches_config": True})
         self.assertEqual((f / "gone.txt").read_text(), "b" * 64 + ".json\n")
         self.assertEqual(len(seen), 3)
         h = seen[0].headers
         self.assertEqual((h["Content-encoding"], h["Ttl"], h["Urgency"]), ("aes128gcm", "43200", "normal"))
         self.assertTrue(h["Authorization"].startswith("vapid t="))
         self.assertNotIn("endpoint", json.dumps(counts))
+
+    def test_a_key_that_does_not_match_the_public_key_is_refused(self):
+        _, s1 = browser_subscription()
+        f = self.folder({"a" * 64 + ".json": {**s1, "dates": [{"d": "2026-10-20", "s": "m"}]}})
+        other, _ = webpush.generate_vapid()
+        with self.assertRaises(SystemExit):
+            push_send.run(f, "2026-10-20", "m", other, opener=lambda *a, **k: None)
+        self.assertFalse(push_send.run(f, "2026-10-20", "m", other, dry_run=True)["key_matches_config"])
 
     def test_payload_carries_only_the_day_and_slot(self):
         self.assertEqual(push_send.payload("2026-10-20", "e"), {"v": 1, "d": "2026-10-20", "s": "e"})
