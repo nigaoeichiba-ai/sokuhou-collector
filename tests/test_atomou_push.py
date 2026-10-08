@@ -159,6 +159,17 @@ class Receiver(unittest.TestCase):
         self.assertIn("http_response_code(429)", php)                  # a daily limit per sender
         self.assertRegex(php, r"preg_match\('#\^https://")            # only https endpoints
 
+    def test_key_survives_a_careless_paste_and_a_bad_one_is_explained(self):
+        priv, pub = webpush.generate_vapid()
+        for wrapped in (priv, priv + "\r\n", "﻿" + priv, '"' + priv + '"', "​" + priv + " ", "  " + priv + "\n\n"):
+            self.assertEqual(webpush.b64u(webpush.public_bytes(webpush.load_private_key(wrapped).public_key())), pub)
+        with self.assertRaises(ValueError) as cm:
+            webpush.load_private_key(priv + "　あ")
+        msg = str(cm.exception)
+        self.assertIn("U+3000", msg)
+        self.assertIn("U+3042", msg)
+        self.assertNotIn(priv, msg)                                 # the key itself is never printed
+
     def test_only_this_site_and_the_browsers_push_services_are_accepted(self):
         import re
         php = build.push_php({"site_url": "https://atomou.com/"})
