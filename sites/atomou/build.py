@@ -421,7 +421,7 @@ def manual_page(c: Ctx) -> str:
 <div class="cards" style="max-width:360px">{card_html(sample, own=True, actions=False, link=False)}</div>
 <ul class="big-list">
 <li><b>「あと」</b> … これから来る日までの日数です。</li>
-<li><b>大きな数字</b> … 日数です。100日以上のときは「2年3か月12日」のように表示し、その下に合計の日数も表示します。</li>
+<li><b>大きな数字</b> … 日数です。100日を超えるときは「2年3か月12日」のように表示し、その下に合計の日数も表示します。</li>
 <li><b>日付</b> … その日が何月何日の何曜日かを表します。</li>
 </ul>
 <p>過ぎた日は、次のように表示されます。</p>

@@ -86,7 +86,7 @@
     var t = totalDays(today, target);
     if (t === 0) return { dir: 'today', big: '今日', sub: '', total: 0, approx: false };
     var word = t > 0 ? 'あと' : 'もう', dir = t > 0 ? 'ato' : 'mou', b = ymd(today, target);
-    if (Math.abs(t) < SHORT_DAYS) return { dir: dir, big: word + Math.abs(t) + '日', sub: '', total: t, approx: false };
+    if (Math.abs(t) <= SHORT_DAYS) return { dir: dir, big: word + Math.abs(t) + '日', sub: '', total: t, approx: false };
     return { dir: dir, big: word + unitText(b[0], b[1], b[2]), sub: group(Math.abs(t)) + '日', total: t, approx: false };
   }
 
