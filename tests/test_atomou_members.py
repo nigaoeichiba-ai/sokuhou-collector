@@ -16,7 +16,7 @@ from sokuhou.sitekit import BuildError  # noqa: E402
 
 TODAY = date(2026, 10, 8)
 CFG = json.loads((ROOT / "sites" / "atomou" / "config.json").read_text(encoding="utf-8"))
-ON = {**CFG, "member_mail_from": "noreply@atomou.com", "member_tiers": [{"id": "tester", "size": 100, "months": 18}, {"id": "first", "size": 300, "months": 12}], "member_ref_months": 6, "member_ref_cap": 6}
+ON = {**CFG, "member_mail_from": "noreply@atomou.com", "member_tiers": [{"id": "tester", "size": 100, "months": 18}, {"id": "first", "size": 300, "months": 12}], "member_ref_months": 6, "member_ref_give_months": 1, "member_ref_cap": 6}
 
 
 class Receiver(unittest.TestCase):
@@ -71,6 +71,19 @@ class Receiver(unittest.TestCase):
         self.assertIn("'dates' => $on ? $dates : array()", self.php)
         self.assertIn("mb_substr((string)($x['t'] ?? ''), 0, 60)", self.php)
 
+    def test_referrer_reward_is_separate_and_small(self):
+        # 2026-10-09: the referrer used to get the referred person's 6 months per referral (up to 3 years); now its own, smaller number
+        self.assertIn("$REF_GIVE = 1;", self.php)
+        self.assertIn("$rm['free_until'] = months_later($base, $REF_GIVE);", self.php)
+        self.assertNotIn("months_later($base, $REF_MONTHS)", self.php)
+
+    def test_seats_answer_is_public_and_carries_no_personal_data(self):
+        seats = self.php[self.php.index("if ($a === 'seats')"):self.php.index("$s = session_member($root);")]
+        self.assertLess(self.php.index("if ($a === 'seats')"), self.php.index("$s = session_member($root);"))   # before the login check
+        self.assertIn("'left' => $acc - $n", seats)
+        for word in ("email", "load_member", "sessions"):
+            self.assertNotIn(word, seats)
+
     def test_delete_removes_the_record(self):
         self.assertIn("@unlink($root . '/m/' . $id . '.json');", self.php)
 
@@ -86,7 +99,7 @@ class Pages(unittest.TestCase):
         self.assertIn("terms/index.html", on)
         self.assertIn('id="member-box"', on["my/index.html"])
         self.assertIn('id="members"', on["privacy/index.html"])
-        self.assertIn('"members":1', on["index.html"])
+        self.assertIn('"members":{"tiers":{"tester":"tester","first":"first"},"ref":6,"give":1,"cap":6}', on["index.html"])
         self.assertIn("member.js", build.BUNDLE[-1] + ".js")
         off = build.build_pages({**CFG, "member_mail_from": None}, release=True, today=TODAY)
         self.assertNotIn("api/m.php", off)
