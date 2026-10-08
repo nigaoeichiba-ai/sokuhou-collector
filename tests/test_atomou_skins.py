@@ -10,9 +10,12 @@ sys.path.insert(0, str(ROOT))
 
 from sites.atomou import skins  # noqa: E402
 
+ASSETS = ROOT / "sites" / "atomou" / "assets"
+DESIGN = ASSETS / "design.css"
+
 HEX = re.compile(r"^#[0-9A-Fa-f]{6}$")
 SHADOW_LAYER = re.compile(r"^(?:-?\d+(?:px)?\s+){2,4}rgba\(\d+,\d+,\d+,[0-9.]+\)$")
-COLOUR_VARS = [v for v in skins.VARS if v not in ("radius", "shadow", "font", "size", "num-weight", "bg-image")]
+COLOUR_VARS = [v for v in skins.VARS if v not in skins.NON_COLOUR_VARS]
 
 # (foreground, background, minimum ratio, why)
 PAIRS = [
@@ -22,11 +25,18 @@ PAIRS = [
     ("on-accent", "accent", 4.5, "main button"),
     ("on-ato", "ato", 4.5, "text on 'ato' colour"),
     ("on-mou", "mou", 4.5, "text on 'mou' colour"),
+    ("ato-ink", "ato-soft", 4.5, "'ato' label: ink on its pale face"),
+    ("mou-ink", "mou-soft", 4.5, "'mou' label: ink on its pale face"),
+    ("ato-ink", "surface", 4.5, "'ato' ink on card"),
+    ("mou-ink", "surface", 4.5, "'mou' ink on card"),
     ("ato", "surface", 3.0, "big 'ato' number on card"),
     ("mou", "surface", 3.0, "big 'mou' number on card"),
     ("quiet-text", "quiet-bg", 4.5, "quiet card text"),
     ("head-text", "head-bg", 4.5, "header"),
     ("foot-text", "foot-bg", 4.5, "footer"),
+    ("band-text", "band-bg", 4.5, "hero band"),
+    ("accent", "bg", 4.5, "links and outline buttons on page"),
+    ("accent", "surface", 4.5, "outline buttons on card"),
     ("focus", "bg", 3.0, "focus ring on page"),
     ("g1", "surface", 3.0, "genre mark 1 on card"),
     ("g2", "surface", 3.0, "genre mark 2 on card"),
@@ -106,6 +116,11 @@ def check_skin(skin):
         problems.append(f"{sid}: --size must be 16px-22px, got {v['size']!r}")
     if not re.fullmatch(r"\d{3}", v["num-weight"]) or not 500 <= int(v["num-weight"]) <= 900:
         problems.append(f"{sid}: --num-weight must be 500-900, got {v['num-weight']!r}")
+    if not re.fullmatch(r"\d(px)", v["bw"]) or not 1 <= int(v["bw"][0]) <= 4:
+        problems.append(f"{sid}: --bw must be 1px-4px, got {v['bw']!r}")
+    for k in ("font-head", "font-num"):
+        if re.search(r"https?:|//|url\(|@import|src", v[k], re.I):
+            problems.append(f"{sid}: --{k} must be system fonts only: {v[k]!r}")
     if not re.fullmatch(r"\d+px", v["radius"]):
         problems.append(f"{sid}: bad --radius {v['radius']!r}")
     if v["shadow"] != "none" and not all(SHADOW_LAYER.match(x.strip()) for x in re.split(r",(?![^(]*\))", v["shadow"])):
@@ -119,21 +134,17 @@ def check_skin(skin):
 
 
 def all_variants():
-    """Every skin, plus basic's dark values as a skin of its own."""
-    for s in skins.SKINS:
-        yield s
-        if s.get("dark_vars"):
-            d = dict(s)
-            d.update(id=s["id"] + "(dark)", vars=s["dark_vars"], dark=True)
-            yield d
+    """Every skin (normal and seasonal)."""
+    yield from skins.SKINS
 
 
 class SkinListTest(unittest.TestCase):
     def test_count_and_basic_first(self):
-        self.assertGreaterEqual(len(skins.SKINS), 18)
+        self.assertEqual(len(skins.normal_skins()), 21)
         self.assertEqual(skins.SKINS[0]["id"], "basic")
         self.assertEqual(skins.SKINS[0]["name"], "ベーシック")
-        self.assertTrue(skins.SKINS[0].get("dark_vars"))
+        self.assertFalse(skins.SKINS[0]["dark"])
+        self.assertNotIn("dark_vars", skins.SKINS[0])
 
     def test_ids_unique_and_well_formed(self):
         ids = [s["id"] for s in skins.SKINS]
@@ -143,7 +154,7 @@ class SkinListTest(unittest.TestCase):
 
     def test_meta(self):
         for s in skins.SKINS:
-            for k in ("id", "name", "desc", "mood", "audience", "card", "dark"):
+            for k in ("id", "name", "desc", "mood", "audience", "card", "dark", "attrs"):
                 self.assertIn(k, s, s.get("id"))
             self.assertIn(s["card"], skins.CARDS, s["id"])
             self.assertIsInstance(s["dark"], bool)
@@ -173,7 +184,7 @@ class SkinColourTest(unittest.TestCase):
         for s in all_variants():
             self.assertEqual(check_skin(s), [], s["id"])
             n += 1
-        self.assertGreaterEqual(n, 19)
+        self.assertEqual(n, len(skins.SKINS))
 
     def test_pair_count_per_skin(self):
         self.assertGreaterEqual(len(PAIRS), 18)
@@ -206,6 +217,137 @@ class SkinColourTest(unittest.TestCase):
             self.assertLessEqual(chroma(v["quiet-bg"]), 0.12, s["id"])
 
 
+class AttrsTest(unittest.TestCase):
+    def test_every_skin_has_valid_attrs(self):
+        for s in skins.SKINS:
+            self.assertEqual(skins.attr_problems(s), [], s["id"])
+
+    def test_every_attr_value_is_used_by_some_skin(self):
+        for key, vals in skins.ATTR_VALUES.items():
+            used = {s["attrs"][key] for s in skins.SKINS}
+            self.assertEqual(used, set(vals), key)
+
+    def test_basic_keeps_the_base_look(self):
+        for key, vals in skins.ATTR_VALUES.items():
+            self.assertEqual(skins.get("basic")["attrs"][key], vals[0], key)
+
+    def test_skins_are_not_only_recoloured(self):
+        """21 normal skins must differ in shape too: no two normal skins share the same eight attributes, and ten of them differ from every other skin in at least three."""
+        normal = skins.normal_skins()
+        shapes = [tuple(s["attrs"][k] for k in skins.ATTR_ORDER) for s in normal]
+        self.assertEqual(len(set(shapes)), len(shapes))
+        far = 0
+        for i, a in enumerate(shapes):
+            if all(sum(x != y for x, y in zip(a, b)) >= 3 for j, b in enumerate(shapes) if j != i):
+                far += 1
+        self.assertGreaterEqual(far, 10)
+        # the skins with a character (everything except the readability-first ones) change the header or decorate the page
+        plain = {"basic", "dark", "contrast", "large", "cb-safe", "ring", "nordic"}
+        for s in normal:
+            if s["id"] not in plain:
+                self.assertTrue(s["attrs"]["head"] != "left" or s["attrs"]["deco"] != "none", s["id"])
+
+    def test_bad_attrs_are_caught(self):
+        s = copy.deepcopy(skins.get("pop"))
+        s["attrs"]["head"] = "huge"
+        self.assertTrue(any("attrs.head" in p for p in skins.attr_problems(s)))
+        del s["attrs"]["btn"]
+        self.assertTrue(any("attrs.btn is missing" in p for p in skins.attr_problems(s)))
+        s["attrs"]["foo"] = "x"
+        self.assertTrue(any("not a known key" in p for p in skins.attr_problems(s)))
+        s2 = copy.deepcopy(skins.get("pop"))
+        del s2["attrs"]
+        self.assertTrue(skins.attr_problems(s2))
+
+
+class SeasonTest(unittest.TestCase):
+    def test_seasonal_skins_come_last_and_are_marked(self):
+        flags = [skins.is_seasonal(s) for s in skins.SKINS]
+        self.assertEqual(flags, sorted(flags))  # False first, then True
+        self.assertEqual({s["id"] for s in skins.seasonal_skins()}, {"halloween", "christmas", "newyear", "valentine", "sakura", "summer", "tsukimi"})
+
+    def test_season_fields(self):
+        for s in skins.seasonal_skins():
+            se = s["season"]
+            self.assertRegex(se["from"], r"^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$", s["id"])
+            self.assertRegex(se["to"], r"^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$", s["id"])
+            self.assertTrue(se["label"].strip(), s["id"])
+        self.assertEqual(skins.get("halloween")["season"], {"from": "10-10", "to": "11-02", "label": "ハロウィン"})
+
+    def test_in_season_inclusive_and_across_new_year(self):
+        from datetime import date
+        h, n = skins.get("halloween"), skins.get("newyear")
+        self.assertTrue(skins.in_season(h, date(2026, 10, 10)))
+        self.assertTrue(skins.in_season(h, date(2026, 11, 2)))
+        self.assertFalse(skins.in_season(h, date(2026, 10, 9)))
+        self.assertFalse(skins.in_season(h, date(2026, 11, 3)))
+        self.assertTrue(skins.in_season(n, date(2026, 12, 27)))
+        self.assertTrue(skins.in_season(n, date(2027, 1, 10)))
+        self.assertFalse(skins.in_season(n, date(2027, 1, 11)))
+        self.assertFalse(skins.in_season(n, date(2026, 12, 26)))
+        self.assertFalse(skins.in_season(skins.get("basic"), date(2026, 10, 10)))
+        self.assertEqual([s["id"] for s in skins.current_seasons(date(2026, 10, 20))], ["halloween"])
+
+    def test_every_day_of_the_year_is_handled(self):
+        from datetime import date, timedelta
+        d = date(2026, 1, 1)
+        while d.year == 2026:
+            skins.current_seasons(d)
+            d += timedelta(days=1)
+
+
+class DesignCssTest(unittest.TestCase):
+    """assets/design.css: the shape rules.  No external address, no font files, pictures only under their own skin, every picture present and small."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.css = DESIGN.read_text(encoding="utf-8")
+        cls.skins_dir = ASSETS / "skins"
+
+    def test_no_external_resources(self):
+        self.assertNotRegex(self.css, r"https?:|@import|@font-face|//[a-z]")
+        self.assertNotIn("prefers-color-scheme", self.css)
+
+    def test_braces_balanced(self):
+        self.assertEqual(self.css.count("{"), self.css.count("}"))
+
+    def test_picture_urls_are_local_and_exist(self):
+        urls = re.findall(r"url\((?!\"data:|%23)([^)]+)\)", self.css)
+        self.assertTrue(urls)
+        for u in urls:
+            self.assertRegex(u, r"^/assets/skins/[a-z0-9-]+\.webp$")
+            self.assertTrue((ASSETS / u.removeprefix("/assets/")).exists(), u)
+
+    def test_a_picture_is_named_only_under_its_own_skin_selector(self):
+        """url(/assets/...) must sit in a rule whose selector names data-skin, so the picture loads only when that skin is chosen."""
+        for m in re.finditer(r"([^{}]*)\{([^{}]*url\(/assets/[^{}]*)\}", self.css):
+            self.assertIn("data-skin", m.group(1), m.group(1)[:80])
+
+    def test_pictures_are_small(self):
+        files = list(self.skins_dir.glob("*.webp"))
+        self.assertGreaterEqual(len(files), 15)
+        total = 0
+        for f in files:
+            self.assertLessEqual(f.stat().st_size, 60_000, f.name)
+            total += f.stat().st_size
+        self.assertLessEqual(total, 1_500_000)
+        self.assertEqual({p.suffix for p in self.skins_dir.iterdir()}, {".webp"})
+
+    def test_every_attribute_value_that_needs_rules_has_rules(self):
+        for key, vals in skins.ATTR_VALUES.items():
+            for v in vals[1:]:
+                self.assertIn(f'[data-{key}="{v}"]', self.css, f"{key}={v}")
+
+    def test_quiet_card_guard_exists(self):
+        self.assertIn(".card.quiet::after", self.css)
+        self.assertRegex(self.css, r"\.card\.quiet \.btn")
+
+    def test_decorations_never_touch_the_quiet_card(self):
+        # the corner mark and the number styles are written for .card:not(.quiet)
+        self.assertRegex(self.css, r"\.card:not\(\.quiet\)::after")
+        self.assertRegex(self.css, r"\.card:not\(\.quiet\) \.c-count \.num")
+
+
 class SkinCssTest(unittest.TestCase):
     def test_every_skin_has_a_block_with_all_variables(self):
         out = skins.css()
@@ -216,15 +358,15 @@ class SkinCssTest(unittest.TestCase):
             for k in skins.VARS:
                 self.assertIn(f"--{k}:", body, f"{s['id']} --{k}")
 
-    def test_basic_is_default_and_follows_os_dark(self):
+    def test_basic_is_default_and_never_follows_the_os_dark_mode(self):
         out = skins.css()
         self.assertIn(":root{--bg:#F7F7F5", out)
-        m = re.search(r"@media \(prefers-color-scheme: dark\)\{:root:not\(\[data-skin\]\)\{([^}]*)\}\}", out)
-        self.assertIsNotNone(m)
-        for k in skins.VARS:
-            self.assertIn(f"--{k}:", m.group(1))
-        self.assertIn("--bg:#121316", m.group(1))
-        self.assertEqual(out.count("prefers-color-scheme"), 1)  # only basic follows the OS
+        self.assertNotIn("prefers-color-scheme", out)
+        self.assertNotIn("@media", out)
+
+    def test_design_css_does_not_follow_the_os_dark_mode_either(self):
+        self.assertNotIn("prefers-color-scheme: dark", DESIGN.read_text(encoding="utf-8"))
+        self.assertNotIn("prefers-color-scheme:dark", DESIGN.read_text(encoding="utf-8"))
 
     def test_braces_balanced(self):
         out = skins.css()
