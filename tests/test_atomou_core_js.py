@@ -38,6 +38,11 @@ PAGE = """<!doctype html><meta charset="utf-8"><script src="%(core)s"></script><
     { uid: 'm-1', title: 'うるう日', date: [2024, 2, 29], yearly: true, every100: true, alarm: 'eve' }, { uid: 'q', title: '静か', date: [2020, 3, 1], alarm: 'none' },
     { uid: 'w', title: '一週間前', date: [2026, 12, 1], alarm: 'week' }],
     'あと何日、もう何日', new Date(Date.UTC(2026, 9, 8, 1, 2, 3)));
+  res.icsTimed = ICS.build([{ uid: 't1', title: '歯医者', date: [2026, 12, 1], time: '15:30', alarm: 'morning' },
+    { uid: 't2', title: '早朝', date: [2026, 12, 2], time: '07:00', alarm: 'morning' },
+    { uid: 't3', title: '深夜', date: [2026, 12, 3], time: '23:30', alarm: 'eve', yearly: true },
+    { uid: 't4', title: '一週間前', date: [2026, 12, 4], time: '10:00', alarm: 'week' },
+    { uid: 't5', title: '時刻が不正', date: [2026, 12, 5], time: '25:99', alarm: 'none' }], 'x', new Date(Date.UTC(2026, 9, 8, 1, 2, 3)));
   var A = window.Atomou, T = function (kind, title, date, extra) { return A.tipFor(Object.assign({ kind: kind, title: title, date: date, precision: 'day' }, extra || {}), [2026, 10, 8]); };
   res.tips = {
     sanki: T('memorial', '命日', '2024-10-20', { yearly: true, quiet: true }),
@@ -116,6 +121,22 @@ class CoreInChrome(unittest.TestCase):
         self.assertEqual(unfolded.count("BEGIN:VALARM"), 4)  # the first two events and the 100-day series of the second; the third asked for none
         self.assertEqual(unfolded.count("BEGIN:VEVENT"), 5)  # four events + the 100-day series of the second
         self.assertIn("TRIGGER:-P6DT15H", unfolded)  # one week before, 9:00
+
+    def test_a_day_with_a_time_becomes_a_one_hour_event_in_japan_time(self):
+        # 2026-10-09 core check: the time of an event used to be dropped, and it became an all-day entry
+        ics = self.res["icsTimed"].replace("\r\n ", "")
+        self.assertIn("BEGIN:VTIMEZONE\r\nTZID:Asia/Tokyo", ics)
+        self.assertIn("DTSTART;TZID=Asia/Tokyo:20261201T153000", ics)
+        self.assertIn("DTEND;TZID=Asia/Tokyo:20261201T163000", ics)
+        self.assertIn("TRIGGER:-PT6H30M", ics)               # 15:30 with the 9:00 morning alert
+        self.assertIn("TRIGGER:-PT30M", ics)                 # 07:00 is before 9:00: 30 minutes before
+        self.assertIn("DTSTART;TZID=Asia/Tokyo:20261203T233000", ics)
+        self.assertIn("DTEND;TZID=Asia/Tokyo:20261204T003000", ics)   # across midnight
+        self.assertIn("TRIGGER:-P1DT2H30M", ics)             # the evening before at 21:00 for an event at 23:30: 26.5 hours
+        self.assertIn("TRIGGER:-P7DT1H", ics)                # a week before at 9:00 for an event at 10:00: 7 days 1 hour
+        self.assertIn("DTSTART;VALUE=DATE:20261205", ics)    # an invalid time stays all-day
+        self.assertEqual(ics.count("BEGIN:VTIMEZONE"), 1)
+        self.assertNotIn("BEGIN:VTIMEZONE", self.res["ics"])  # no timed event: no zone block
 
     def test_tips_are_gentle_and_correct(self):
         t = self.res["tips"]

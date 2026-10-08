@@ -470,7 +470,7 @@
     if (key.indexOf('m:') === 0) {
       var e = findEntry(key.slice(2));
       if (!e) return;
-      ev = { uid: 'm-' + e.id, title: e.title, date: d, yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm };
+      ev = { uid: 'm-' + e.id, title: e.title, date: d, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm };
     } else {
       ev = { uid: 'e-' + key.slice(2), title: title, date: d, alarm: S.prefs.alarm };
       if (S.saved.indexOf(key.slice(2)) < 0) { S.saved.push(key.slice(2)); persist(); fillCard(card); }
@@ -834,7 +834,7 @@
         (cat || []).forEach(function (c) { by[c.id] = c; });
         S.entries.forEach(function (e) {
           var d = C.parse(e.date);
-          if (d && e.precision === 'day') evs.push({ uid: 'm-' + e.id, title: e.title, date: d, yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm });
+          if (d && e.precision === 'day') evs.push({ uid: 'm-' + e.id, title: e.title, date: d, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm });
         });
         S.saved.forEach(function (id) {
           var c = by[id], d = c && C.parse(c.date);
