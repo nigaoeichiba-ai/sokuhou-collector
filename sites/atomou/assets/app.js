@@ -42,7 +42,7 @@
     if (!/^[A-Za-z0-9_-]{1,40}$/.test(id) || !d) return null;
     var kind = oneOf(e.kind, KIND_IDS, 'memo');
     return { id: id, title: String(e.title == null ? '' : e.title).slice(0, 80), date: C.iso(d), precision: oneOf(e.precision, ['day', 'month', 'year'], 'day'), kind: kind,
-      quiet: !!e.quiet || kind === 'memorial', yearly: !!e.yearly, every100: !!e.every100, alarm: oneOf(e.alarm, ['morning', 'eve', 'week', 'none'], 'morning'),
+      quiet: !!e.quiet || kind === 'memorial', yearly: !!e.yearly, every100: !!e.every100, alarm: oneOf(e.alarm, ['', 'morning', 'eve', 'week', 'none'], ''),   // '' = follow the setting on the my page
       time: /^([01]\d|2[0-3]):[0-5]\d$/.test(String(e.time)) ? e.time : '', created: /^\d{4}-\d{2}-\d{2}$/.test(String(e.created)) ? e.created : '' };
   }
   function cleanNotes(n) {  // memo and "do this N days before" tasks, per day (key c:<catalogue id> or m:<own id>)
@@ -146,8 +146,16 @@
   function toast(msg) {
     var t = $('#toast');
     if (!t) { t = document.createElement('div'); t.id = 'toast'; t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
-    t.textContent = msg; t.hidden = false;
+    t.className = 'toast'; t.textContent = msg; t.hidden = false;
     clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.hidden = true; }, 4200);
+  }
+  function toastAct(msg, label, fn) {   // a message with one button (undo)
+    var t = $('#toast');
+    if (!t) { t = document.createElement('div'); t.id = 'toast'; t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
+    t.className = 'toast act'; t.innerHTML = '<span></span><button type="button" class="btn small ghost"></button>';
+    t.firstChild.textContent = msg; t.lastChild.textContent = label; t.hidden = false;
+    t.lastChild.addEventListener('click', function () { t.hidden = true; clearTimeout(toastTimer); fn(); });
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.hidden = true; }, 7000);
   }
   function wd(a) { return WD.charAt(((C.toDays(a[0], a[1], a[2]) % 7) + 11) % 7); }
   function fmtDate(iso, p) {
@@ -338,11 +346,18 @@
   function bump(group) { S.genre[group] = Math.min(20, (S.genre[group] || 0) + 1); }
 
   /* ---------- order / drag ---------- */
+  function rank(it) {   // without a hand-made order: the day that comes next first (a yearly day by its next turn), then past days, the most recent first
+    var a = C.parse(it.date);
+    if (!a) return 5e5;
+    var t = C.toDays(TODAY[0], TODAY[1], TODAY[2]), dd = a[2] > 28 && a[1] === 2 ? 28 : a[2], d = C.toDays(a[0], a[1], dd) - t;
+    if (it.yearly) { d = C.toDays(TODAY[0], a[1], dd) - t; if (d < 0) d = C.toDays(TODAY[0] + 1, a[1], dd) - t; return d; }
+    return d >= 0 ? d : 1e5 - d;
+  }
   function ordered(items) {
     var idx = {};
     S.order.forEach(function (k, i) { idx[k] = i; });
     return items.map(function (it, i) { return { it: it, i: i }; }).sort(function (a, b) {
-      var x = idx[a.it.key] == null ? 1e6 + a.i : idx[a.it.key], y = idx[b.it.key] == null ? 1e6 + b.i : idx[b.it.key];
+      var x = idx[a.it.key] == null ? 1e6 + rank(a.it) + a.i / 1000 : idx[a.it.key], y = idx[b.it.key] == null ? 1e6 + rank(b.it) + b.i / 1000 : idx[b.it.key];
       return x - y;
     }).map(function (o) { return o.it; });
   }
@@ -455,7 +470,7 @@
     if (key.indexOf('m:') === 0) {
       var e = findEntry(key.slice(2));
       if (!e) return;
-      ev = { uid: 'm-' + e.id, title: e.title, date: d, yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || 'morning' };
+      ev = { uid: 'm-' + e.id, title: e.title, date: d, yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm };
     } else {
       ev = { uid: 'e-' + key.slice(2), title: title, date: d, alarm: S.prefs.alarm };
       if (S.saved.indexOf(key.slice(2)) < 0) { S.saved.push(key.slice(2)); persist(); fillCard(card); }
@@ -476,13 +491,23 @@
   }
   function removeEntry(card) {
     var id = (card.getAttribute('data-key') || '').slice(2), e = findEntry(id);
-    if (!e || !window.confirm('「' + e.title + '」を消しますか。')) return;
+    if (!e) return;
+    if (page === 'plan' && !window.confirm('「' + e.title + '」を消しますか。')) return;   // the plan page leaves for the calendar, so there is no room for "undo": ask first
+    var at = S.entries.indexOf(e), notes = S.notes['m:' + id], ord = S.order.indexOf('m:' + id);
     S.entries = S.entries.filter(function (x) { return x.id !== id; });
     S.deleted.push(id); S.deleted = S.deleted.slice(-300);
     S.order = S.order.filter(function (k) { return k !== 'm:' + id; });
     delete S.notes['m:' + id];
-    persist(); toast('消しました。');
-    if (page === 'my') renderMy(); else if (page === 'home') renderMine(); else if (page === 'plan') location.href = '/calendar/';
+    persist();
+    if (page === 'my') renderMy(); else if (page === 'home') renderMine(); else if (page === 'plan') { toast('消しました。'); location.href = '/calendar/'; return; }
+    toastAct('「' + e.title + '」を消しました。', '元に戻す', function () {
+      S.entries.splice(Math.min(at, S.entries.length), 0, e);
+      S.deleted = S.deleted.filter(function (x) { return x !== id; });
+      if (notes) S.notes['m:' + id] = notes;
+      if (ord >= 0) S.order.splice(Math.min(ord, S.order.length), 0, 'm:' + id);
+      persist(); stat('act:undo_delete');
+      if (page === 'my') renderMy(); else if (page === 'home') renderMine();
+    });
   }
   document.addEventListener('click', function (ev) {
     var ib = ev.target.closest ? ev.target.closest('[data-ics-for]') : null;
@@ -807,7 +832,7 @@
         (cat || []).forEach(function (c) { by[c.id] = c; });
         S.entries.forEach(function (e) {
           var d = C.parse(e.date);
-          if (d && e.precision === 'day') evs.push({ uid: 'm-' + e.id, title: e.title, date: d, yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || 'morning' });
+          if (d && e.precision === 'day') evs.push({ uid: 'm-' + e.id, title: e.title, date: d, yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm });
         });
         S.saved.forEach(function (id) {
           var c = by[id], d = c && C.parse(c.date);
@@ -935,7 +960,7 @@
       if (!d) { $f('e-date').textContent = '日付を入れてください。'; return; }
       var k = KINDS[st.kind], e = {
         id: uid(), title: titleNow(), date: C.iso(d), precision: st.p, kind: st.kind, quiet: !!k.quiet,
-        yearly: st.p === 'day' && $f('f-yearly').checked, every100: st.p === 'day' && !k.quiet && !k.time && $f('f-100').checked, alarm: k.quiet ? 'none' : S.prefs.alarm, created: C.iso(TODAY),
+        yearly: st.p === 'day' && $f('f-yearly').checked, every100: st.p === 'day' && !k.quiet && !k.time && $f('f-100').checked, alarm: k.quiet ? 'none' : '', created: C.iso(TODAY),
         time: k.time && st.p === 'day' && /^\d{2}:\d{2}$/.test($f('f-time').value) ? $f('f-time').value : ''
       };
       S.entries.push(e); stat('act:add:' + e.kind);
@@ -992,7 +1017,7 @@
   else if (page === 'skins') pageSkins();
   else if (page === 'category') pageCategory();
   else if (page === 'today') pageToday();
-  window.AtomouApp = { matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast,
+  window.AtomouApp = { matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
     loadCatalog: loadCatalog, catItem: catItem, ownItem: ownItem, cardHtml: cardHtml, hydrate: hydrate, fillCard: fillCard, fmtDate: fmtDate, wd: wd, occ: occ, nextYearly: nextYearly, KINDS: KINDS,
     findEntry: findEntry, uid: uid, icsFor: icsFor, removeEntry: removeEntry, normalize: normalize, tipFor: tipFor, nextLines: nextLines, applyPrefs: applyPrefs };
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !P.today) {

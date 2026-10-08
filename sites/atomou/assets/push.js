@@ -32,7 +32,7 @@
     items.forEach(function (it) {
       var base = Pl.baseOf(it);
       if (!base) return;
-      var e = it.own ? A.findEntry(it.id) : null, alarm = it.own ? (e ? e.alarm : 'none') : st.prefs.alarm, slot = SLOT[alarm];
+      var e = it.own ? A.findEntry(it.id) : null, alarm = it.own ? (e ? (e.alarm || st.prefs.alarm) : 'none') : st.prefs.alarm, slot = SLOT[alarm];
       var url = it.own ? '/plan/?key=' + encodeURIComponent(it.key) : '/plan/?key=' + encodeURIComponent(it.key);
       if (slot) add(C.addDays(base, slot.off), slot.s, slot.pre + it.title + (it.time ? ' ' + it.time : ''), url);
       Pl.notesOf(it.key).tasks.forEach(function (t) {

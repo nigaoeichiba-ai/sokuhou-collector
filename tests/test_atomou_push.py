@@ -240,6 +240,16 @@ class PlannerInChrome(unittest.TestCase):
         self.assertEqual(r["hash"], "2026-10-17m,2026-10-20m,2026-10-24e")
         self.assertEqual((r["state"]["push"], r["state"]["pushHash"]), (True, "2026-10-01m"))   # the two preferences survive the sanitiser
 
+    def test_a_day_without_its_own_setting_follows_the_setting_on_the_my_page(self):
+        # 2026-10-09 core check: changing "お知らせの時間" used to leave one's own days on the time they were created with
+        stored = {"v": 1, "entries": [
+            {"id": "b1", "title": "継ぐ日", "date": "2026-10-20", "precision": "day", "kind": "event", "alarm": ""},
+            {"id": "b2", "title": "決めた日", "date": "2026-10-21", "precision": "day", "kind": "event", "alarm": "morning"},
+            {"id": "b3", "title": "しない日", "date": "2026-10-22", "precision": "day", "kind": "event", "alarm": "none"}],
+            "prefs": {"alarm": "eve", "push": True}}
+        r = self.run_page(stored)
+        self.assertEqual(r["dates"], [{"d": "2026-10-19", "s": "e"}, {"d": "2026-10-21", "s": "m"}])   # b1 the evening before (the setting), b2 its own, b3 none
+
     def test_hostile_preferences_are_reduced(self):
         r = self.run_page({"v": 1, "entries": [], "prefs": {"push": "yes", "pushHash": "<script>"}})
         self.assertEqual((r["state"]["push"], r["state"]["pushHash"]), (True, ""))
