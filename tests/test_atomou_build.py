@@ -20,7 +20,7 @@ from sokuhou import sitecheck  # noqa: E402
 from tests.test_atomou_core_js import find_chrome  # noqa: E402
 
 TODAY = date(2026, 10, 8)
-CFG = json.loads((ROOT / "sites" / "atomou" / "config.json").read_text(encoding="utf-8"))
+CFG = {k: v for k, v in json.loads((ROOT / "sites" / "atomou" / "config.json").read_text(encoding="utf-8")).items() if k != "google_client_id"}  # the Google hand-over is tested with and without an id below
 
 
 class BuildOnce(unittest.TestCase):
