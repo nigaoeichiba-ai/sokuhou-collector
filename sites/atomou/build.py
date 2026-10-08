@@ -68,6 +68,19 @@ AddType application/manifest+json .webmanifest
 """
 
 
+PUSH_BOX = '''<h2 id="push">通知(この端末に届く)</h2>
+<div class="panel" id="push-box" hidden>
+<p>予定の日と、やることの期限の日に、この端末へ通知を届けます。届くのは「お知らせの時間」に合わせて、当日の朝(7時ごろ)か、前の日の夜(21時ごろ)です。通知の文は端末の中で作られ、サーバーに送るのは「知らせる日」だけです。<a href="/privacy/#push">くわしく</a></p>
+<p id="push-status" class="muted"></p>
+<p id="push-ios" class="hint" hidden>iPhone・iPad では、共有ボタンから「ホーム画面に追加」をして、そのアイコンから開くと、通知を使えます。</p>
+<p><button type="button" class="btn" id="push-on">この端末に通知を届ける</button> <button type="button" class="btn ghost" id="push-off" hidden>通知を止める</button></p>
+</div>
+'''
+
+MEMBER_BOX = '''<h2 id="member">会員(無料)</h2>
+<div class="panel" id="member-box" hidden><div class="m-body"><p class="muted">読み込み中…</p></div></div>
+'''
+
 HTPASSWD_PLACEHOLDER = "__HTPASSWD__"
 DEMO_AUTH = (
     "# demo: nobody gets in without the password (the deploy job writes the password file outside public_html and fills in its path)\n"
@@ -80,7 +93,30 @@ def stats_php() -> str:
     return (HERE / "stats_receiver.php.tpl").read_text(encoding="utf-8").replace("__RE__", "/" + STAT_KEY_RE + "/")
 
 
+def push_php() -> str:
+    return (HERE / "push_receiver.php.tpl").read_text(encoding="utf-8")
+
+
+def members_on(cfg: dict) -> bool:
+    return bool(cfg.get("member_mail_from"))
+
+
+def member_php(cfg: dict) -> str:
+    tiers = cfg.get("member_tiers") or []
+    for t in tiers:
+        if not (isinstance(t, dict) and re.fullmatch(r"[a-z0-9_-]{1,20}", str(t.get("id", ""))) and int(t.get("size", 0)) >= 0 and int(t.get("months", 0)) >= 0):
+            raise BuildError(f"member_tiers: bad tier {t!r}")
+    php = (HERE / "member_receiver.php.tpl").read_text(encoding="utf-8")
+    for k, v in (("__TIERS__", json.dumps([{"id": t["id"], "size": int(t["size"]), "months": int(t["months"])} for t in tiers])),
+                 ("__REF_MONTHS__", str(int(cfg.get("member_ref_months", 6)))), ("__REF_CAP__", str(int(cfg.get("member_ref_cap", 6)))),
+                 ("__MAIL_FROM__", str(cfg["member_mail_from"]).replace("'", "")), ("__SITE_NAME__", NAME.replace("'", "")), ("__SITE_URL__", str(cfg["site_url"]).rstrip("/"))):
+        php = php.replace(k, v)
+    return php
+
+
 STATS_SECTION = '<h2 id="stats">利用状況の統計</h2>\n<p>画面の使われ方を知って、使いやすくするために、件数だけの統計を取ります。送るのは、あらかじめ決めた項目の件数です。たとえば、「どのページが開かれたか」「選ばれたきせかえ」「ホームのブロックの並び方・非表示にされたブロック」「保存やカレンダーのボタンが押された回数」「検索で見つかったか、見つからなかったか(検索した言葉は送りません)」です。</p>\n<p>名前・日付・メモ・メールアドレス・検索した言葉・端末を識別する番号は、送りません。Cookie は使いません。サーバーには、1日ごとの合計の件数だけを保存します(同じ人かどうかは、分かりません)。送りすぎを防ぐため、アドレスから作った1日だけ有効な符号を、回数の制限にだけ使い、翌日以降に削除します。</p>\n<p>マイページの「利用状況の統計に協力する」で、いつでも止められます。ブラウザの「トラッキングしない」(DNT・Global Privacy Control)の設定がオンのときは、初めから止まっています。</p>'
+PUSH_SECTION = '<h2 id="push">通知(任意)</h2>\n<p>マイページの「この端末に通知を届ける」を押し、ブラウザの許可をしたときだけ、通知を使えます。そのとき当サイトのサーバーに保存するのは、ブラウザが作った通知の宛先(購読情報)と、知らせる日(日付と、朝か夜か)だけです。予定の名前・時刻・メモ・やることの内容は保存しません。通知の文は、お使いの端末の中で作られます。</p>\n<p>通知は、当サイトが GitHub Actions(GitHub, Inc.)上で動かす送信プログラムから、お使いのブラウザのプッシュ配信サービス(Google、Apple、Mozilla など)を通して届きます。「通知を止める」を押すか、ブラウザの設定で通知を止めると、購読情報はサーバーから削除されます。配信サービスから「宛先がない」と返されたものも削除します。</p>'
+MEMBERS_SECTION = '<h2 id="members">会員登録(任意)</h2>\n<p>会員登録は無料で、パスワードはありません。メールアドレスに送る確認コードでログインします。サーバーに保存するのは、メールアドレス、登録日、プランと無料期間、紹介コード、ログイン中の端末の印(ランダムな値の要約)です。「メールでもお知らせする」をオンにした人に限り、知らせる日(日付と、朝か夜か)と予定の名前(短く)も保存します。オフにすると、その部分はすぐ消します。</p>\n<p>これらは、サーバーの公開されない場所に、暗号化して保存します。記録した日・メモ・やることの内容そのものは、会員でも端末の中だけにあります。確認コードのメールは、ログインのためにだけ送ります。広告のメールは、別に同意した人にしか送りません。マイページの「退会する」で、会員の記録はすぐ消えます。</p>'
 GOOGLE_SECTION = '<h2 id="google">Google アカウントでの引き継ぎ(任意)</h2>\n<p>マイページの「Google アカウントでつないで同期する」を押したときだけ、Google の画面が開きます。許可するのは、あなた自身の Google ドライブの中にある、このサイト専用の非表示フォルダ(アプリデータ)への保存だけです。記録した日・保存した日・設定を、そこに保存し、別の端末で読み込めます。当サイトのサーバーには送りません。当サイトは、あなたの Google アカウントの氏名やメールアドレスを取得しません。</p>\n<p>つなぐのをやめるときは、<a href="https://myaccount.google.com/permissions" rel="noopener" target="_blank">Google アカウントの権限の管理</a>から、「あと何日、もう何日」の権限を削除してください。</p>'
 
 
@@ -173,7 +209,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'app', 'plan', 'quick', 'guide')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'app', 'plan', 'quick', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -235,6 +271,10 @@ class Ctx:
                 "skins": {s["id"]: {"card": s["card"], "name": s["name"], "attrs": s.get("attrs", {}), **({"season": s["season"]} if s.get("season") else {})} for s in skins.SKINS}}
         if cfg.get("google_client_id"):
             conf["gclient"] = cfg["google_client_id"]
+        if cfg.get("vapid_public"):
+            conf["vapid"] = cfg["vapid_public"]
+        if members_on(cfg):
+            conf["members"] = 1
         conf_js = json.dumps(conf, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
         card_map = json.dumps({s["id"]: [s["card"], s.get("attrs", {})] for s in skins.SKINS}, separators=(",", ":"))
         self.head = (f"<script>window.ATOMOU={conf_js};</script>\n"
@@ -335,6 +375,8 @@ def search_page(c: Ctx) -> str:
 
 def my_page(c: Ctx) -> str:
     sync_html = ""
+    push_html = PUSH_BOX if c.cfg.get("vapid_public") else ""
+    member_html = MEMBER_BOX if members_on(c.cfg) else ""
     if c.cfg.get("google_client_id"):
         sync_html = ('<h2 id="sync">端末をまたいで引き継ぐ</h2>\n<div class="panel" id="sync-box" hidden>'
                      '<p>Google アカウントでつなぐと、記録した日を、自分の Google ドライブ(専用の非表示フォルダ)を通して、別の端末に引き継げます。当サイトのサーバーには預けません。'
@@ -348,13 +390,13 @@ def my_page(c: Ctx) -> str:
 <h2>設定</h2>
 <div class="panel">
 <div class="field"><label class="lab" for="p-big"><input type="checkbox" id="p-big"> 文字を大きくする</label></div>
-<div class="field"><label for="p-alarm">他のカレンダーアプリ用のファイルに入れる、お知らせの時間</label>
-<select id="p-alarm"><option value="morning">当日の朝9時</option><option value="eve">前の日の夜9時</option><option value="week">1週間前の朝9時</option><option value="none">お知らせなし</option></select></div>
+<div class="field"><label for="p-alarm">お知らせの時間(通知と、他のカレンダーアプリ用のファイルに使います)</label>
+<select id="p-alarm"><option value="morning">当日の朝</option><option value="eve">前の日の夜</option><option value="week">1週間前の朝</option><option value="none">お知らせなし</option></select></div>
 <div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する(個人は特定されません。<a href="/privacy/#stats">くわしく</a>)</label></div>
 <p><a href="/skins/">きせかえ(見た目を変える)</a></p>
 <p><a href="/?edit=1">ホームの並べかえ・表示を変える</a></p>
 </div>
-{sync_html}<h2>他のカレンダーアプリを使う人へ</h2>
+{member_html}{push_html}{sync_html}<h2>他のカレンダーアプリを使う人へ</h2>
 <div class="panel"><p>入れた予定を、iPhone の「カレンダー」や Google カレンダーにも取り込みたいときは、ファイルをつくれます。1件ずつは、予定の詳細ページからです。</p>
 <p><button type="button" class="btn small ghost" id="ics-all">すべての予定のファイルをつくる</button></p></div>
 <h2>バックアップ</h2>
@@ -664,6 +706,31 @@ def today_page(c: Ctx) -> str:
     return c.page("/today/", f"今日の数字から、これからの準備を考える | {NAME}", "今年のあと何日、来年まであと何日、年度末まであと何日。今日の数字から、入学や引っ越しなどの準備を考え、自分の日として記録できます。", body, "today")
 
 
+SW_PUSH = """// push: the message says only which day and slot (m = morning, e = the evening before); the text comes from the mirror that push.js keeps in the cache
+const TITLE = 'あと何日、もう何日';
+self.addEventListener('push', (e) => {
+  e.waitUntil((async () => {
+    let d = {};
+    try { d = e.data ? e.data.json() : {}; } catch (x) { d = {}; }
+    const key = String(d.d || '') + '|' + (d.s === 'e' ? 'e' : 'm');
+    let lines = [];
+    try { const c = await caches.open('atomou-notice'); const r = await c.match('/_notice'); if (r) { const m = await r.json(); lines = Array.isArray(m[key]) ? m[key] : []; } } catch (x) { lines = []; }
+    const body = lines.length ? lines.map((l) => l.t).join('\\n') : (d.s === 'e' ? '明日の予定があります。' : '今日の予定・やることがあります。');
+    const url = (lines.length === 1 && lines[0].u) ? lines[0].u : '/';
+    await self.registration.showNotification(TITLE, { body, icon: '/assets/icon-192.png', tag: 'atomou-' + key, data: { url } });
+  })());
+});
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || '/';
+  e.waitUntil(clients.matchAll({ type: 'window', includeUncontrolled: true }).then((ws) => {
+    for (const w of ws) { if ('focus' in w) { if ('navigate' in w) w.navigate(url); return w.focus(); } }
+    return clients.openWindow(url);
+  }));
+});
+"""
+
+
 def sw_js(c: Ctx) -> str:
     """A small service worker: the pages and scripts open at once on the next visit (assets from the cache, pages from the network first), and it is the base of notifications later."""
     urls = [f"/assets/style.css?v={c.ver}", f"/assets/atomou.js?v={c.v_bundle}"]
@@ -677,7 +744,35 @@ def sw_js(c: Ctx) -> str:
             "  if (r.method !== 'GET' || u.origin !== location.origin || u.pathname.startsWith('/api/')) return;\n"
             "  if (u.pathname.startsWith('/assets/')) { e.respondWith(caches.match(r).then((m) => m || fetch(r).then((x) => { if (x.ok) { const y = x.clone(); caches.open(CACHE).then((c) => c.put(r, y)); } return x; }))); return; }\n"
             "  if (r.mode === 'navigate') { e.respondWith(fetch(r).then((x) => { if (x.ok) { const y = x.clone(); caches.open(CACHE).then((c) => c.put(r, y)); } return x; }).catch(() => caches.match(r).then((m) => m || caches.match('/')))); }\n"
-            "});\n")
+            "});\n" + SW_PUSH)
+
+
+html_escape = esc
+
+
+def terms_page(c: Ctx) -> str:
+    op = html_escape(c.cfg.get("operator_name") or "運営者")
+    body = f"""{crumbs([("トップ", "/"), ("利用規約", None)])}
+<h1>利用規約</h1>
+<p class="lead muted">「{NAME}」(以下「当サイト」)の会員機能を使うときの決まりです。会員にならなくても、当サイトは使えます。</p>
+<h2>1. 会員登録</h2>
+<p>会員登録は無料です。メールアドレスだけで登録でき、パスワードはありません。1 人 1 つのメールアドレスで登録してください。13 歳未満の方は、保護者の同意を得てください。</p>
+<h2>2. 無料期間と先着の特典</h2>
+<p>先着の人数までの会員は、登録日から決められた期間、すべての機能を無料で使えます。期間は、マイページに表示します。人数と期間は、当サイトが定め、期の途中で変えません。期間が終わっても、自動で料金がかかることはありません。</p>
+<h2>3. 紹介</h2>
+<p>紹介リンクから登録した人と、紹介した人には、無料期間が足されます(回数に上限があります)。特典は期間の延長だけで、お金や商品はありません。自分で自分を紹介すること、同じ人が複数のアドレスで登録することは、特典の対象になりません。</p>
+<h2>4. お知らせのメール</h2>
+<p>「メールでもお知らせする」をオンにした人にだけ、知らせる日の朝か前の日の夜に、メールを送ります。届かないことや遅れることがあります。大切な手続きは、公式のページでも確かめてください。</p>
+<h2>5. してはいけないこと</h2>
+<p>他人のメールアドレスでの登録、当サイトの仕組みに負担をかける行為、法令や公序良俗に反する使い方はしないでください。当サイトは、これらがあったとき、会員の登録を止めることがあります。</p>
+<h2>6. 退会と記録の削除</h2>
+<p>マイページの「退会する」で、いつでも退会できます。会員の記録はすぐに消えます。端末の中の記録は残ります。</p>
+<h2>7. 免責</h2>
+<p>当サイトは、表示する日付や計算が正しいよう努めますが、誤り・変更・中止があることがあります。当サイトの利用によって生じた損害について、当サイトは責任を負いません。ただし、当サイトに故意または重大な過失があるときは、この限りではありません。</p>
+<h2>8. 変更</h2>
+<p>この規約は、変えることがあります。変えたときは、このページで知らせます。</p>
+<p class="muted">運営: {op}。制定: 2026年10月。</p>"""
+    return c.page("/terms/", f"利用規約 | {NAME}", "会員機能の利用規約です。無料の会員登録、先着の特典、紹介、お知らせのメール、退会について。", body, "legal")
 
 
 def privacy_fix(c: Ctx, html: str) -> str:
@@ -687,7 +782,7 @@ def privacy_fix(c: Ctx, html: str) -> str:
     old = "<h2>アクセス解析</h2>\n<p>現時点では、Google アナリティクスなどのアクセス解析ツールを使用していません。使用を始める場合は、このページでお知らせします。</p>"
     if old not in html:
         raise BuildError("sitekit's privacy text changed: update privacy_fix in sites/atomou/build.py")
-    return html.replace(old, STATS_SECTION + ("\n" + GOOGLE_SECTION if c.cfg.get("google_client_id") else ""), 1)
+    return html.replace(old, STATS_SECTION + ("\n" + PUSH_SECTION if c.cfg.get("vapid_public") else "") + ("\n" + MEMBERS_SECTION if members_on(c.cfg) else "") + ("\n" + GOOGLE_SECTION if c.cfg.get("google_client_id") else ""), 1)
 
 
 def legal(c: Ctx) -> dict:
@@ -733,6 +828,10 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
         pages[f"e/{e['id']}/index.html"] = event_page(c, e, e["id"] in index_ids, live)
     pages.update(legal(c))
     pages["api/e.php"] = stats_php()
+    pages["api/push.php"] = push_php()
+    if members_on(cfg):
+        pages["api/m.php"] = member_php(cfg)
+        pages["terms/index.html"] = terms_page(c)
     pages["manifest.webmanifest"] = json.dumps({
         "name": NAME, "short_name": "あと何日", "description": CATCH, "start_url": "/", "scope": "/", "display": "standalone", "lang": "ja",
         "background_color": "#F7F7F5", "theme_color": "#FFFFFF",
