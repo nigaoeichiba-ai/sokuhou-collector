@@ -286,3 +286,43 @@ class AfterSaveInChrome(unittest.TestCase):
         # a file: page is not a secure context for the page's purposes (supported() is false), so nothing is offered and nothing breaks
         r = self.run_page("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36", False)
         self.assertFalse(r["shown"])
+
+
+NIGHT_PAGE = """<!doctype html><meta charset="utf-8"><script>
+window.ATOMOU = { v: 'x', groups: ['締切・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' }, dark: { card: 'plain', dark: true, attrs: {} }, sakura: { card: 'plain', attrs: {} } } };
+var DARK = %(dark)s; window.matchMedia = function (q) { return { matches: DARK && /prefers-color-scheme:\s*dark/.test(q), addEventListener: function () {} }; };   // headless Chrome has no setting for the device's colour scheme
+%(stored)s
+</script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script>
+<script>document.getElementById('out').textContent = JSON.stringify({ skin: document.documentElement.getAttribute('data-skin'), prefs: window.Atomou.state().prefs });</script>"""
+
+
+@unittest.skipUnless(find_chrome(), "browser checks run locally")
+class NightSkinInChrome(unittest.TestCase):
+    def run_page(self, prefs: dict, dark_device: bool) -> dict:
+        stored = {"v": 1, "entries": [], "prefs": prefs}
+        with tempfile.TemporaryDirectory() as td:
+            page = Path(td) / "p.html"
+            setter = "" if prefs is None else "localStorage.setItem('atomou.v1', " + json.dumps(json.dumps(stored)) + ");"   # None: a visitor who has stored nothing yet
+            page.write_text(NIGHT_PAGE % {"stored": setter, "dark": "true" if dark_device else "false", **{n: (ASSETS / f"{n}.js").as_uri() for n in ("core", "ics", "app")}}, encoding="utf-8")
+            args = [find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={Path(td) / 'prof'}", "--virtual-time-budget=4000"]
+            r = subprocess.run(args + ["--dump-dom", page.as_uri() + "?today=2026-10-08"], capture_output=True, timeout=120)
+        dom = r.stdout.decode("utf-8", "replace")
+        a = dom.index('<pre id="out">') + len('<pre id="out">')
+        return json.loads(html.unescape(dom[a:dom.index("</pre>", a)]))
+
+    def test_following_the_device_uses_the_night_skin_only_on_a_dark_device(self):
+        # 2026-10-09: the owner asked for dark mode through the skins, not a new mechanism
+        on = {"skin": "basic", "skinAuto": True, "skinNight": "dark"}
+        self.assertEqual(self.run_page(on, True)["skin"], "dark")
+        self.assertIsNone(self.run_page(on, False)["skin"])                      # a light device keeps the day skin
+        self.assertIsNone(self.run_page({"skin": "basic"}, True)["skin"])        # not asked for: the page is never switched by itself
+        r = self.run_page({"skin": "sakura", "skinAuto": True, "skinNight": "sakura"}, True)   # a night skin must be a dark one
+        self.assertEqual(r["prefs"]["skinNight"], "dark")
+        self.assertEqual(r["skin"], "dark")
+
+    def test_a_fresh_visitor_has_the_night_preferences_too(self):
+        for prefs in (None, {}):          # nothing stored yet (the blank state) and stored without them (the normaliser)
+            r = self.run_page(prefs, False)
+            self.assertEqual((r["prefs"]["skinAuto"], r["prefs"]["skinNight"], r["prefs"]["nightAsked"]), (False, "dark", False))
+        r = self.run_page({}, False)
+        self.assertEqual((r["prefs"]["skinAuto"], r["prefs"]["skinNight"], r["prefs"]["nightAsked"]), (False, "dark", False))
