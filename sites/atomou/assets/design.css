@@ -8,7 +8,7 @@
 /* inline SVG shapes (used as masks / backgrounds) */
 :root{--svg-bat:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7.5c.9 0 1.5-1.3 1.9-2l.7 2.3c2-1 5-1.5 8.9.7-2 .6-3 1.9-3 3.6-1.4-1-3-.9-4 .5-1.2-.8-2.2-.5-2.6.8L12 16l-1-3.4c-.4-1.3-1.4-1.6-2.6-.8-1-1.4-2.6-1.5-4-.5 0-1.7-1-3-3-3.6 3.9-2.2 6.900-1.700 8.900-.7l.7-2.300c.4.700 1 2 1 2z'/%3E%3C/svg%3E");--svg-edge-scallop:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 36 16'%3E%3Cpath d='M0 0h36v2a18 14 0 0 1-36 0z'/%3E%3C/svg%3E");--svg-edge-scallop-up:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 36 16'%3E%3Cpath d='M0 16h36v-2a18 14 0 0 0-36 0z'/%3E%3C/svg%3E");--svg-edge-wave:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 80 16'%3E%3Cpath d='M0 0h80v8q-10 8-20 0t-20 0-20 0-20 0z'/%3E%3C/svg%3E");--svg-edge-wave-up:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 80 16'%3E%3Cpath d='M0 16h80V8q-10-8-20 0t-20 0-20 0-20 0z'/%3E%3C/svg%3E");--svg-edge-zig:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 32 14'%3E%3Cpath d='M0 0h32v1l-8 13-8-13-8 13-8-13z'/%3E%3C/svg%3E");--svg-flower:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cellipse cx='12' cy='6.2' rx='3.6' ry='5' transform='rotate(0 12 12)'/%3E%3Cellipse cx='12' cy='6.2' rx='3.6' ry='5' transform='rotate(72 12 12)'/%3E%3Cellipse cx='12' cy='6.2' rx='3.6' ry='5' transform='rotate(144 12 12)'/%3E%3Cellipse cx='12' cy='6.2' rx='3.6' ry='5' transform='rotate(216 12 12)'/%3E%3Cellipse cx='12' cy='6.2' rx='3.6' ry='5' transform='rotate(288 12 12)'/%3E%3Ccircle cx='12' cy='12' r='2.2' fill-opacity='.4'/%3E%3C/svg%3E");--svg-heart:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z'/%3E%3C/svg%3E");--svg-leaf:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z'/%3E%3C/svg%3E");--svg-moon:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M16 2.5A9.500 9.500 0 1 0 21.500 17 7.500 7.500 0 0 1 16 2.500z'/%3E%3C/svg%3E");--svg-pat-confetti:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 200 200'%3E%3Ccircle cx='20' cy='24' r='5' fill='%23FF6FA0'/%3E%3Crect x='90' y='12' width='16' height='6' rx='3' fill='%234DABF7' transform='rotate(30 98 15)'/%3E%3Cpath d='M150 30l8-14 8 14z' fill='%23FFC21A'/%3E%3Ccircle cx='170' cy='96' r='6' fill='%2351CF66'/%3E%3Crect x='30' y='90' width='18' height='6' rx='3' fill='%23FFC21A' transform='rotate(-35 39 93)'/%3E%3Cpath d='M90 100l8-14 8 14z' fill='%23B197FC'/%3E%3Ccircle cx='60' cy='160' r='5' fill='%234DABF7'/%3E%3Crect x='130' y='150' width='16' height='6' rx='3' fill='%23FF6FA0' transform='rotate(20 138 153)'/%3E%3Ccircle cx='185' cy='175' r='4' fill='%23FFC21A'/%3E%3Ccircle cx='120' cy='60' r='4' fill='%23FF922B'/%3E%3C/svg%3E");--svg-pat-grain:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .1  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");--svg-pat-halloween:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 260 260'%3E%3Cpath fill='%237B3FC4' d='M12 7.5c.9 0 1.5-1.3 1.9-2l.7 2.3c2-1 5-1.5 8.9.7-2 .6-3 1.9-3 3.6-1.4-1-3-.9-4 .5-1.2-.8-2.2-.5-2.6.8L12 16l-1-3.4c-.4-1.3-1.4-1.6-2.6-.8-1-1.4-2.6-1.5-4-.5 0-1.7-1-3-3-3.6 3.9-2.2 6.900-1.700 8.900-.7l.7-2.300c.4.700 1 2 1 2z' transform='translate(120 20) scale(1.3)'/%3E%3Cpath fill='%237B3FC4' d='M12 7.5c.9 0 1.5-1.3 1.9-2l.7 2.3c2-1 5-1.5 8.9.7-2 .6-3 1.9-3 3.6-1.4-1-3-.9-4 .5-1.2-.8-2.2-.5-2.6.8L12 16l-1-3.4c-.4-1.3-1.4-1.6-2.6-.8-1-1.4-2.6-1.5-4-.5 0-1.7-1-3-3-3.6 3.9-2.2 6.900-1.700 8.900-.7l.7-2.300c.4.700 1 2 1 2z' transform='translate(20 170) scale(1)'/%3E%3Cpath fill='%237B3FC4' d='M12 7.5c.9 0 1.5-1.3 1.9-2l.7 2.3c2-1 5-1.5 8.9.7-2 .6-3 1.9-3 3.6-1.4-1-3-.9-4 .5-1.2-.8-2.2-.5-2.6.8L12 16l-1-3.4c-.4-1.3-1.4-1.6-2.6-.8-1-1.4-2.6-1.5-4-.5 0-1.7-1-3-3-3.6 3.9-2.2 6.900-1.700 8.900-.7l.7-2.300c.4.700 1 2 1 2z' transform='translate(200 90) scale(.9)'/%3E%3Cpath fill='%23FFC21A' d='M12 2l3 7 7.5.6-5.7 4.9 1.8 7.5L12 17.8 5.4 22l1.8-7.5L1.5 9.6 9 9z' transform='translate(100 110) scale(.7)'/%3E%3Cpath fill='%23FFC21A' d='M12 2l3 7 7.5.6-5.7 4.9 1.8 7.5L12 17.8 5.4 22l1.8-7.5L1.5 9.6 9 9z' transform='translate(170 20) scale(.5)'/%3E%3Cpath fill='%23FFC21A' d='M12 2l3 7 7.5.6-5.7 4.9 1.8 7.5L12 17.8 5.4 22l1.8-7.5L1.5 9.6 9 9z' transform='translate(70 215) scale(.55)'/%3E%3Cpath fill='%23FFC21A' d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(235 150) scale(.5)'/%3E%3C/svg%3E");--svg-pat-hearts:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 180 180'%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(14 14) rotate(-15 9.0 9.0) scale(0.75)'/%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(100 30) rotate(15 6.0 6.0) scale(0.5)'/%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(150 90) rotate(-10 10.0 10.0) scale(0.8333333333333334)'/%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(50 100) rotate(20 6.0 6.0) scale(0.5)'/%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(20 150) rotate(0 7.0 7.0) scale(0.5833333333333334)'/%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' transform='translate(110 150) rotate(-20 8.0 8.0) scale(0.6666666666666666)'/%3E%3C/svg%3E");--svg-pat-leaves-a:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 260 260'%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(10 150) rotate(-30 45.0 45.0) scale(3.75)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(50 190) rotate(20 32.0 32.0) scale(2.6666666666666665)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(90 120) rotate(-70 30.0 30.0) scale(2.5)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(130 200) rotate(40 24.0 24.0) scale(2.0)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(20 90) rotate(-90 23.0 23.0) scale(1.9166666666666667)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(160 150) rotate(10 18.0 18.0) scale(1.5)'/%3E%3C/svg%3E");--svg-pat-leaves-b:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 260 260'%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(170 20) rotate(150 45.0 45.0) scale(3.75)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(140 4) rotate(100 30.0 30.0) scale(2.5)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(110 40) rotate(200 28.0 28.0) scale(2.3333333333333335)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(200 100) rotate(120 28.0 28.0) scale(2.3333333333333335)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(80 0) rotate(180 20.0 20.0) scale(1.6666666666666667)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(215 150) rotate(90 18.0 18.0) scale(1.5)'/%3E%3C/svg%3E");--svg-pat-petals:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 240 240'%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(20 20) rotate(30 11.0 11.0) scale(0.9166666666666666)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(120 10) rotate(-40 9.0 9.0) scale(0.75)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(190 60) rotate(70 12.0 12.0) scale(1.0)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(70 90) rotate(120 10.0 10.0) scale(0.8333333333333334)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(150 130) rotate(-20 11.0 11.0) scale(0.9166666666666666)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(20 160) rotate(200 10.0 10.0) scale(0.8333333333333334)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(100 190) rotate(10 12.0 12.0) scale(1.0)'/%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z' transform='translate(205 200) rotate(150 9.0 9.0) scale(0.75)'/%3E%3C/svg%3E");--svg-pat-seigaiha:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 60 30'%3E%3Ccircle cx='0' cy='30' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='0' cy='30' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='0' cy='30' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='30' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='30' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='30' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='30' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='30' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='30' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='15' cy='15' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='15' cy='15' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='15' cy='15' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='45' cy='15' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='45' cy='15' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='45' cy='15' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='0' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='0' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='30' cy='0' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='0' cy='0' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='0' cy='0' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='0' cy='0' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='0' r='14' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='0' r='10' fill='none' stroke='black' stroke-width='1.6'/%3E%3Ccircle cx='60' cy='0' r='6' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E");--svg-pat-stars:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 160 160'%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(14 20) rotate(0 6.0 6.0) scale(0.5)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(96 8) rotate(0 4.0 4.0) scale(0.3333333333333333)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(130 66) rotate(0 7.0 7.0) scale(0.5833333333333334)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(50 90) rotate(0 4.0 4.0) scale(0.3333333333333333)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(20 130) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(100 130) rotate(0 6.0 6.0) scale(0.5)'/%3E%3Ccircle cx='70' cy='40' r='1.8' /%3E%3Ccircle cx='40' cy='60' r='1.4' /%3E%3Ccircle cx='120' cy='30' r='1.6' /%3E%3Ccircle cx='80' cy='110' r='1.6' /%3E%3Ccircle cx='145' cy='120' r='1.4' /%3E%3Ccircle cx='10' cy='80' r='1.4' /%3E%3C/svg%3E");--svg-pat-waves:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 80 24'%3E%3Cpath d='M0 12q10-12 20 0t20 0 20 0 20 0' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E");--svg-petal:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2c4 3 6 7 4 12-1 3-3 6-4 8-1-2-3-5-4-8-2-5 0-9 4-12z'/%3E%3C/svg%3E");--svg-rule-confetti:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Ccircle cx='6' cy='5' r='3' /%3E%3Crect x='16' y='2' width='10' height='3' rx='1.5' transform='rotate(-25 21 3)'/%3E%3Ccircle cx='34' cy='5' r='3' /%3E%3Cpath d='M44 8l4-7 4 7z'/%3E%3Ccircle cx='60' cy='5' r='3' /%3E%3Crect x='66' y='2' width='6' height='3' rx='1.5'/%3E%3C/svg%3E");--svg-rule-dots:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Ccircle cx='8' cy='5' r='3.2' /%3E%3Ccircle cx='24' cy='5' r='3.2' /%3E%3Ccircle cx='40' cy='5' r='3.2' /%3E%3C/svg%3E");--svg-rule-grid:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Crect x='0' y='0' width='2' height='10'/%3E%3Crect x='8' y='0' width='2' height='10'/%3E%3Crect x='16' y='0' width='2' height='10'/%3E%3Crect x='24' y='0' width='2' height='10'/%3E%3Crect x='32' y='0' width='2' height='10'/%3E%3Crect x='40' y='0' width='2' height='10'/%3E%3Crect x='48' y='0' width='2' height='10'/%3E%3Crect x='56' y='0' width='2' height='10'/%3E%3Crect x='64' y='0' width='2' height='10'/%3E%3Crect x='0' y='4' width='72' height='2'/%3E%3C/svg%3E");--svg-rule-leaves:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(0 0) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(14 0) rotate(90 5.0 5.0) scale(0.4166666666666667)'/%3E%3Cpath d='M3 21C3 10 10 3 21 3c0 11-7 18-18 18z' transform='translate(28 0) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Crect x='42' y='4' width='28' height='2' rx='1'/%3E%3C/svg%3E");--svg-rule-paper:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M0 2l2 1 2-1 2 1 2-1 2 1 2-1 2 1 2-1h42l2 1-2 1 2 1-2 1 2 1-2 1-2-1-2 1H14l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1z'/%3E%3C/svg%3E");--svg-rule-stars:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(2 0) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(30 0) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z' transform='translate(58 0) rotate(0 5.0 5.0) scale(0.4166666666666667)'/%3E%3Crect x='14' y='4' width='14' height='2' rx='1'/%3E%3Crect x='42' y='4' width='14' height='2' rx='1'/%3E%3C/svg%3E");--svg-rule-stripes:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M0 10L6 0h4L4 10z'/%3E%3Cpath d='M11 10L17 0h4L15 10z'/%3E%3Cpath d='M22 10L28 0h4L26 10z'/%3E%3Cpath d='M33 10L39 0h4L37 10z'/%3E%3Cpath d='M44 10L50 0h4L48 10z'/%3E%3Cpath d='M55 10L61 0h4L59 10z'/%3E%3Cpath d='M66 10L72 0h4L70 10z'/%3E%3C/svg%3E");--svg-rule-sunburst:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M6 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(-30.0 6 10)'/%3E%3Cpath d='M18 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(-18.0 18 10)'/%3E%3Cpath d='M30 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(-6.0 30 10)'/%3E%3Cpath d='M42 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(6.0 42 10)'/%3E%3Cpath d='M54 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(18.0 54 10)'/%3E%3Cpath d='M66 0v10' stroke='black' stroke-width='2' stroke-linecap='round' transform='rotate(30.0 66 10)'/%3E%3C/svg%3E");--svg-rule-waves:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 72 10'%3E%3Cpath d='M0 5q6-7 12 0t12 0 12 0 12 0 12 0 12 0' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E");--svg-spark:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11z'/%3E%3C/svg%3E");--svg-star:url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l3 7 7.5.6-5.7 4.9 1.8 7.5L12 17.8 5.4 22l1.8-7.5L1.5 9.6 9 9z'/%3E%3C/svg%3E")}
 
-:root{--strip-h:270px;--wrap-pad:16px;--font-mono:ui-monospace,"Cascadia Mono","SFMono-Regular",Consolas,"BIZ UDGothic","Courier New",monospace}
+:root{--strip-h:180px;--wrap-pad:16px;--font-mono:ui-monospace,"Cascadia Mono","SFMono-Regular",Consolas,"BIZ UDGothic","Courier New",monospace}
 header.site{--hd-fg:var(--head-text)}
 h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 .c-count .num,.wizard .live .big{font-family:var(--font-num,var(--font))}
@@ -21,6 +21,15 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-skin] :is(.chip,.mini,.btn.small,.card:not(.big) .c-act .btn.small){min-height:44px}
 :root[data-skin] :is(.panel,.uc,.day-panel,.stepcard,.qa details,.cal-grid,.skin){border-width:var(--bw)}
 :root[data-skin] :is(.panel,.uc,.day-panel,.stepcard,.qa details,.cal-grid,.skin){border-color:var(--pb,var(--line))}
+/* the secondary button (詳細, シャッフル, カレンダー...) is a tinted face inside a solid frame in every skin: a ghost button on a decorated page did not read
+   as pressable (Codex skin review r1, 2026-10-08).  The toast keeps its own white-on-dark button; the quiet card's rule at the end of this file still wins. */
+:root[data-skin] .btn.ghost:not(:where(.toast .btn)){background:color-mix(in srgb,var(--accent) 9%,var(--surface));color:var(--accent);border:2px solid var(--accent)}
+:root[data-skin] .btn.ghost:not(:where(.toast .btn)):hover{background:color-mix(in srgb,var(--accent) 16%,var(--surface))}
+/* the kind, date and place on a card: a little larger and heavier than in basic, so they win over the skin's decoration */
+:root[data-skin] .card:not(.big) .c-top .what{font-size:.88rem;font-weight:700}
+:root[data-skin] .card:not(.big) .c-date{font-weight:700}
+:root[data-skin] .card:not(.big) .c-date .pl{font-weight:600}
+:root[data-skin] .card:not(.big) .c-place{font-size:.9rem;font-weight:600}
 
 /* ================= head: the header and the top of the home page ================= */
 :root[data-head="center"] header.site .wrap{position:relative;justify-content:center}
@@ -63,15 +72,15 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-density="airy"]{--wrap-pad:20px}
 :root[data-density="airy"] body{line-height:1.9}
 :root[data-density="airy"] .wrap{padding-left:var(--wrap-pad);padding-right:var(--wrap-pad)}
-:root[data-density="airy"] h2{margin:3rem 0 1rem}
-:root[data-density="airy"] .hero{padding:2.6rem 0 1.2rem}
-:root[data-density="airy"] .cards{gap:24px}
-:root[data-density="airy"] .card{padding:22px 24px 18px;gap:9px}
-:root[data-density="airy"] .card.big{padding:26px 28px 22px}
-:root[data-density="airy"] .panel{padding:24px 26px;margin:1.6rem 0}
-:root[data-density="airy"] [data-block]{margin:2rem 0}
-:root[data-density="airy"] .cats{gap:16px}
-:root[data-density="airy"] .uc-grid,:root[data-density="airy"] .skins{gap:18px}
+:root[data-density="airy"] h2{margin:2.2rem 0 .8rem}
+:root[data-density="airy"] .hero{padding:2rem 0 1rem}
+:root[data-density="airy"] .cards{gap:14px}
+:root[data-density="airy"] .card{padding:16px 18px 14px;gap:7px}
+:root[data-density="airy"] .card.big{padding:22px 24px 18px}
+:root[data-density="airy"] .panel{padding:20px 22px;margin:1.3rem 0}
+:root[data-density="airy"] [data-block]{margin:1.4rem 0}
+:root[data-density="airy"] .cats{gap:12px}
+:root[data-density="airy"] .uc-grid,:root[data-density="airy"] .skins{gap:14px}
 
 /* ================= btn: buttons, chips, inputs ================= */
 :root[data-btn="square"] .btn{border-radius:2px;letter-spacing:.03em}
@@ -80,9 +89,10 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-btn="soft"] .btn{border-radius:14px;box-shadow:0 3px 0 rgba(0,0,0,.14)}
 :root[data-btn="soft"] .btn.ghost{box-shadow:none}
 :root[data-btn="soft"] :is(.chip,.mini){border-radius:12px}
-:root[data-btn="outline"] .btn{background:transparent;color:var(--accent);border-width:2px;border-radius:8px}
-:root[data-btn="outline"] .btn.ghost{border-style:dashed}
-:root[data-btn="outline"] .btn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+/* outline: a filled main button inside a darker frame, the secondary one a tinted face in the same frame (no more transparent or dashed buttons) */
+:root[data-btn="outline"] .btn{border-width:2px;border-radius:8px;border-color:color-mix(in srgb,var(--accent) 65%,var(--text))}
+:root[data-btn="outline"] .btn.ghost{border-color:var(--accent)}
+:root[data-btn="outline"] .btn[aria-pressed="true"]{background:var(--surface);color:var(--accent);border-color:var(--accent)}
 :root[data-btn="outline"] :is(.chip,.mini){border-radius:8px}
 :root[data-btn="outline"] :is(input[type=text],input[type=search],input[type=number],input[type=email],input[type=date],input[type=month],input[type=time],select,textarea){border-radius:8px}
 :root[data-btn="sticker"] .btn{border:3px solid var(--text);border-radius:10px;box-shadow:3px 3px 0 var(--text);color:var(--on-accent);transition:transform .08s,box-shadow .08s}
@@ -90,18 +100,20 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-btn="sticker"] .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--text)}
 :root[data-btn="sticker"] :is(.chip,.mini){border:2px solid var(--text);border-radius:10px;box-shadow:2px 2px 0 var(--text)}
 :root[data-btn="sticker"] :is(input[type=text],input[type=search],input[type=number],input[type=email],input[type=date],input[type=month],input[type=time],select,textarea){border:2px solid var(--text);border-radius:10px}
-:root[data-btn="underline"] .btn{background:transparent;color:var(--accent);border:0;border-bottom:3px solid var(--accent);border-radius:0;padding:0 6px}
-:root[data-btn="underline"] .btn.ghost{border-bottom-style:dashed}
-:root[data-btn="underline"] .btn[aria-pressed="true"]{background:var(--surface2)}
-:root[data-btn="underline"] :is(.chip,.mini){border-width:0 0 2px;border-radius:0;background:transparent}
-:root[data-btn="underline"] .chip[aria-pressed="true"],:root[data-btn="underline"] .chip.on{background:transparent;color:var(--accent);border-bottom:3px solid var(--accent)}
+/* underline: a flat button with a heavier bottom edge (a filled face: text-only buttons were invisible on the nordic cards) */
+:root[data-btn="underline"] .btn{border-radius:5px;border-bottom-width:4px;border-bottom-color:color-mix(in srgb,var(--accent) 70%,var(--text))}
+:root[data-btn="underline"] .btn.ghost{border-bottom-color:var(--accent)}
+:root[data-btn="underline"] .btn[aria-pressed="true"]{background:var(--surface2);color:var(--accent)}
+:root[data-btn="underline"] :is(.chip,.mini){border-width:0 0 2px;border-radius:6px 6px 0 0;background:var(--surface2)}
+:root[data-btn="underline"] .chip[aria-pressed="true"],:root[data-btn="underline"] .chip.on{background:var(--surface2);color:var(--accent);border-bottom:3px solid var(--accent)}
 :root[data-btn="underline"] :is(input[type=text],input[type=search],input[type=number],input[type=email],input[type=date],input[type=month],input[type=time],select,textarea){border-width:0 0 2px;border-radius:0}
 
 /* ================= num: the big number ================= */
 .card .c-count{--nc:var(--ato-ink,var(--ato))}
 .card[data-dir="mou"] .c-count{--nc:var(--mou-ink,var(--mou))}
-:root[data-num="outline"] .card:not(.quiet) .c-count .num{color:transparent;-webkit-text-stroke:2px var(--nc);paint-order:stroke fill;letter-spacing:.02em}
-:root[data-num="outline"] .card[data-long="1"]:not(.quiet) .c-count .num{color:var(--nc);-webkit-text-stroke:0}
+/* outline: the number keeps the text colour (readable) and gets a coloured stroke around it (a hollow number was hard to read on the neon cards) */
+:root[data-num="outline"] .card:not(.quiet) .c-count .num{-webkit-text-stroke:1px var(--nc);paint-order:stroke fill;letter-spacing:.02em;text-shadow:0 0 8px color-mix(in srgb,var(--nc) 55%,transparent)}
+:root[data-num="outline"] .card[data-long="1"]:not(.quiet) .c-count .num{-webkit-text-stroke:0;text-shadow:none}
 :root[data-num="shadow"] .card:not(.quiet) .c-count .num{text-shadow:3px 3px 0 color-mix(in srgb,var(--nc) 28%,transparent)}
 :root[data-num="mono"] .card:not(.quiet) .c-count .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
 :root[data-num="mono"] .wizard .live .big{font-family:var(--font-mono)}
@@ -167,20 +179,22 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-list="list"] .cards:not(.plan-card){grid-template-columns:1fr;max-width:820px;gap:10px}
 
 /* ================= deco: the decoration ================= */
-:root[data-deco="dots"]:not([data-skin="valentine"]) body{background-image:radial-gradient(circle,color-mix(in srgb,var(--deco) 32%,transparent) 2px,transparent 2.6px),var(--bg-image);background-size:22px 22px,auto}
-:root[data-deco="grid"] body{background-image:linear-gradient(90deg,color-mix(in srgb,var(--deco) 16%,transparent) 1px,transparent 1px),linear-gradient(180deg,color-mix(in srgb,var(--deco) 16%,transparent) 1px,transparent 1px),var(--bg-image);background-size:32px 32px,32px 32px,auto}
-:root[data-deco="stripes"] body{background-image:repeating-linear-gradient(90deg,color-mix(in srgb,var(--deco) 11%,transparent) 0 26px,transparent 26px 52px),var(--bg-image)}
+/* the page patterns are faint on purpose: the cards carry the information, the pattern only sets the mood (densities halved after Codex skin review r1) */
+:root[data-deco="dots"]:not([data-skin="valentine"]) body{background-image:radial-gradient(circle,color-mix(in srgb,var(--deco) 20%,transparent) 2px,transparent 2.6px),var(--bg-image);background-size:22px 22px,auto}
+:root[data-deco="grid"] body{background-image:linear-gradient(90deg,color-mix(in srgb,var(--deco) 7%,transparent) 1px,transparent 1px),linear-gradient(180deg,color-mix(in srgb,var(--deco) 7%,transparent) 1px,transparent 1px),var(--bg-image);background-size:32px 32px,32px 32px,auto}
+:root[data-deco="stripes"] body{background-image:repeating-linear-gradient(90deg,color-mix(in srgb,var(--deco) 6%,transparent) 0 26px,transparent 26px 52px),var(--bg-image)}
 :root:is([data-deco="stars"],[data-deco="leaves"],[data-deco="confetti"],[data-deco="sunburst"],[data-deco="paper"],[data-deco="waves"],[data-skin="valentine"]) body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none}
-:root[data-deco="stars"] body::before{background:var(--deco);opacity:.3;-webkit-mask:var(--svg-pat-stars) 0 0/160px 160px repeat;mask:var(--svg-pat-stars) 0 0/160px 160px repeat}
-:root[data-deco="leaves"] body::before{background:var(--deco);opacity:.2;-webkit-mask:var(--svg-pat-leaves-a) left bottom/260px no-repeat,var(--svg-pat-leaves-b) right top/260px no-repeat;mask:var(--svg-pat-leaves-a) left bottom/260px no-repeat,var(--svg-pat-leaves-b) right top/260px no-repeat}
-:root[data-deco="confetti"] body::before{background:var(--svg-pat-confetti) 0 0/200px 200px;opacity:.55}
-:root[data-deco="sunburst"] body::before{inset:0 0 auto 0;height:70vh;background:repeating-conic-gradient(from 0deg at 50% -6%,var(--deco) 0 4deg,transparent 4deg 9deg);opacity:.16;-webkit-mask:linear-gradient(#000,transparent);mask:linear-gradient(#000,transparent)}
+:root[data-deco="stars"] body::before{background:var(--deco);opacity:.16;-webkit-mask:var(--svg-pat-stars) 0 0/160px 160px repeat;mask:var(--svg-pat-stars) 0 0/160px 160px repeat}
+:root[data-deco="leaves"] body::before{background:var(--deco);opacity:.12;-webkit-mask:var(--svg-pat-leaves-a) left bottom/260px no-repeat,var(--svg-pat-leaves-b) right top/260px no-repeat;mask:var(--svg-pat-leaves-a) left bottom/260px no-repeat,var(--svg-pat-leaves-b) right top/260px no-repeat}
+:root[data-deco="confetti"] body::before{background:var(--svg-pat-confetti) 0 0/200px 200px;opacity:.26}
+:root[data-deco="sunburst"] body::before{inset:0 0 auto 0;height:70vh;background:repeating-conic-gradient(from 0deg at 50% -6%,var(--deco) 0 4deg,transparent 4deg 9deg);opacity:.09;-webkit-mask:linear-gradient(#000,transparent);mask:linear-gradient(#000,transparent)}
 :root[data-deco="paper"] body::before{background:var(--svg-pat-grain);opacity:.22;mix-blend-mode:multiply}
 :root[data-deco="waves"] body::before{inset:auto 0 0 0;height:140px;background:var(--deco);opacity:.12;-webkit-mask:var(--svg-pat-waves) 0 0/80px 24px repeat;mask:var(--svg-pat-waves) 0 0/80px 24px repeat}
 :root[data-skin="valentine"] body::before{background:var(--deco);opacity:.14;-webkit-mask:var(--svg-pat-hearts) 0 0/180px repeat;mask:var(--svg-pat-hearts) 0 0/180px repeat}
 :root[data-skin="sakura"] body::before{background:var(--deco);opacity:.42;-webkit-mask:var(--svg-pat-petals) 0 0/240px repeat;mask:var(--svg-pat-petals) 0 0/240px repeat}
 :root[data-skin="halloween"] body::before{background:var(--svg-pat-halloween) 0 0/260px 260px;opacity:.32}
-:root[data-skin="wafuu"] body::before{height:200px;opacity:.09;background:var(--deco);-webkit-mask:var(--svg-pat-seigaiha) 0 0/60px 30px repeat;mask:var(--svg-pat-seigaiha) 0 0/60px 30px repeat}
+:root[data-skin="wafuu"] body::before{height:200px;opacity:.06;background:var(--deco);-webkit-mask:var(--svg-pat-seigaiha) 0 0/60px 30px repeat;mask:var(--svg-pat-seigaiha) 0 0/60px 30px repeat}
+:root[data-skin="pastel-pink"] body::before{opacity:.11}
 :root[data-skin="neon"] body{background-position:center top}
 /* edges that hang below the header / above the footer */
 :root[data-deco="waves"] header.site{position:relative;z-index:3;border-bottom:0}
@@ -206,7 +220,7 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-head="center"] main>h1::after,:root[data-head="center"] .hero h1::after{content:"";display:block;width:56px;height:4px;margin:.5rem auto 0;border-radius:2px;background:var(--deco)}
 
 /* ================= a corner mark on each card (--corner is set by the skin) ================= */
-:root[data-skin] .card:not(.quiet)::after{content:"";position:absolute;top:10px;right:10px;width:24px;height:24px;background:var(--corner-c,var(--deco2,var(--accent)));opacity:.85;-webkit-mask:var(--corner) center/contain no-repeat;mask:var(--corner) center/contain no-repeat;display:var(--corner-on,none);pointer-events:none}
+:root[data-skin] .card:not(.quiet)::after{content:"";position:absolute;top:10px;right:10px;width:20px;height:20px;background:var(--corner-c,var(--deco2,var(--accent)));opacity:.7;-webkit-mask:var(--corner) center/contain no-repeat;mask:var(--corner) center/contain no-repeat;display:var(--corner-on,none);pointer-events:none}
 :root[data-skin] .card:not(.quiet) .c-top{padding-right:var(--corner-pad,0px)}
 
 /* ================= pictures: banner strips (one per skin that has a picture) ================= */
@@ -229,8 +243,8 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-skin="sakura"]{--banner:url(/assets/skins/sakura.webp)}
 :root[data-skin="summer"]{--banner:url(/assets/skins/summer.webp)}
 :root[data-skin="tsukimi"]{--banner:url(/assets/skins/tsukimi.webp)}
-:root:is([data-skin="notebook"],[data-skin="pop"],[data-skin="pastel-pink"],[data-skin="mediterranean"],[data-skin="tropical"],[data-skin="kids"],[data-skin="retro"],[data-skin="forest"],[data-skin="sunset"],[data-skin="nordic"],[data-skin="wafuu"],[data-skin="chic-navy"],[data-skin="halloween"],[data-skin="christmas"],[data-skin="newyear"],[data-skin="valentine"],[data-skin="sakura"],[data-skin="summer"],[data-skin="tsukimi"]) .hero::after{content:"";display:block;width:100%;aspect-ratio:3.7/1;max-height:var(--strip-h);margin-top:.4rem;background:var(--banner) center bottom/cover no-repeat}
-:root:is([data-skin="notebook"],[data-skin="pop"],[data-skin="pastel-pink"],[data-skin="mediterranean"],[data-skin="tropical"],[data-skin="kids"],[data-skin="retro"],[data-skin="forest"],[data-skin="sunset"],[data-skin="nordic"],[data-skin="wafuu"],[data-skin="chic-navy"],[data-skin="halloween"],[data-skin="christmas"],[data-skin="newyear"],[data-skin="valentine"],[data-skin="sakura"],[data-skin="summer"],[data-skin="tsukimi"]) body:not([data-page="home"]) main::before{content:"";display:block;width:100%;height:clamp(64px,13vw,104px);margin:.6rem 0 0;background:var(--banner) center bottom/contain no-repeat}
+:root:is([data-skin="notebook"],[data-skin="pop"],[data-skin="pastel-pink"],[data-skin="mediterranean"],[data-skin="tropical"],[data-skin="kids"],[data-skin="retro"],[data-skin="forest"],[data-skin="sunset"],[data-skin="nordic"],[data-skin="wafuu"],[data-skin="chic-navy"],[data-skin="halloween"],[data-skin="christmas"],[data-skin="newyear"],[data-skin="valentine"],[data-skin="sakura"],[data-skin="summer"],[data-skin="tsukimi"]) .hero::after{content:"";display:block;width:100%;aspect-ratio:4.8/1;max-height:var(--strip-h);margin-top:.4rem;border-radius:10px;background:var(--banner) center bottom/cover no-repeat}
+:root:is([data-skin="notebook"],[data-skin="pop"],[data-skin="pastel-pink"],[data-skin="mediterranean"],[data-skin="tropical"],[data-skin="kids"],[data-skin="retro"],[data-skin="forest"],[data-skin="sunset"],[data-skin="nordic"],[data-skin="wafuu"],[data-skin="chic-navy"],[data-skin="halloween"],[data-skin="christmas"],[data-skin="newyear"],[data-skin="valentine"],[data-skin="sakura"],[data-skin="summer"],[data-skin="tsukimi"]) body:not([data-page="home"]) main::before{content:"";display:block;width:100%;height:clamp(56px,10vw,88px);margin:.6rem 0 0;background:var(--banner) center bottom/contain no-repeat}
 :root[data-skin="halloween"] footer.site{position:relative;margin-top:calc(3rem + 56px)}
 :root[data-skin="halloween"] footer.site::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:56px;background:url(/assets/skins/halloween-dots.webp) center bottom/auto 56px repeat-x}
 
@@ -255,10 +269,9 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-skin="ring"] .card:not(.quiet){border-color:transparent}
 :root[data-skin="ring"] .hero h1{font-weight:600;letter-spacing:.02em}
 
-/* ---- パステルピンク: dotted frames, sparkles, a heart in the corner */
-:root[data-skin="pastel-pink"]{--cb:#F2B3C6;--csh:0 4px 0 #F8CFDB;--corner:var(--svg-heart);--corner-on:block;--corner-pad:30px}
-:root[data-skin="pastel-pink"] .card:not(.quiet){border-style:dotted;border-width:2px}
-:root[data-skin="pastel-pink"] header.site{border-bottom:3px dotted var(--deco)}
+/* ---- パステルピンク: white cards in a thin pink frame, a few faint sparkles, a small heart in the corner */
+:root[data-skin="pastel-pink"]{--cb:#F2B3C6;--csh:0 2px 8px rgba(176,40,95,.10);--corner:var(--svg-heart);--corner-on:block;--corner-pad:28px}
+:root[data-skin="pastel-pink"] header.site{border-bottom:2px solid #F2B3C6}
 :root[data-skin="pastel-pink"] .hero h1{color:var(--accent)}
 
 /* ---- ミント: a green band, fresh leaves */
@@ -271,26 +284,25 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-skin="chic-navy"] header.site{border-bottom:3px double var(--accent)}
 :root[data-skin="chic-navy"] .brand{letter-spacing:.14em;font-weight:600}
 :root[data-skin="chic-navy"] header.site nav a{letter-spacing:.08em}
-:root[data-skin="chic-navy"] .card:not(.quiet){outline:1px solid color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:-5px}
-:root[data-skin="chic-navy"] :is(.hero h1,main>h1){color:var(--ato);letter-spacing:.07em;font-weight:500}
+:root[data-skin="chic-navy"] :is(.hero h1,main>h1){color:var(--ato);letter-spacing:.07em;font-weight:600}
 :root[data-skin="chic-navy"] .cats a{border-color:var(--accent)}
 
-/* ---- モノクロ: lines only, square, monospace numbers, graph paper */
-:root[data-skin="monochrome"]{--cb:var(--text);--csh:none;--pb:var(--text)}
+/* ---- モノクロ: square, monospace numbers, faint graph paper; white cards with a soft shadow so they are faces, not wireframes */
+:root[data-skin="monochrome"]{--cb:#BDBDBD;--csh:0 1px 3px rgba(0,0,0,.14);--pb:#BDBDBD}
 :root[data-skin="monochrome"] :is(h1,h2,h3,.brand){font-family:var(--font-mono)}
 :root[data-skin="monochrome"] header.site{border-bottom:0}
-:root[data-skin="monochrome"] .card:not(.quiet){border-width:2px}
+:root[data-skin="monochrome"] .card:not(.quiet){border-top:4px solid var(--gc,var(--g1))}
 :root[data-skin="monochrome"] .logo{border-radius:0}
 :root[data-skin="monochrome"] .cats a{border:2px solid var(--text)}
 
 /* ---- 和風: a vertical accent line, seigaiha, a genre-coloured edge on each card */
 :root[data-skin="wafuu"]{--cb:#C9B98F}
-:root[data-skin="wafuu"] .card:not(.quiet){border-left:6px solid var(--g1);border-bottom:3px double #C9B98F}
+:root[data-skin="wafuu"] .card:not(.quiet){border-left:5px solid var(--gc,var(--g1))}
 :root[data-skin="wafuu"] .hero h1{letter-spacing:.06em}
 :root[data-skin="wafuu"] .logo{border-radius:2px}
 
 /* ---- 北欧: quiet, no shadows, thin lines, plenty of air */
-:root[data-skin="nordic"]{--cb:var(--line);--csh:none}
+:root[data-skin="nordic"]{--cb:#CDD2D6;--csh:0 1px 3px rgba(42,47,51,.08)}
 :root[data-skin="nordic"] .card:not(.quiet){border-radius:3px 3px 10px 10px}
 :root[data-skin="nordic"] .hero h1{font-weight:500;letter-spacing:.02em}
 :root[data-skin="nordic"] header.site{border-bottom:0;box-shadow:0 1px 0 var(--line)}
@@ -305,39 +317,37 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-skin="tropical"] header.site{border-bottom:0}
 :root[data-skin="tropical"] .hero h1{font-weight:900}
 
-/* ---- こども: round and fat, thick outlines, stars and confetti */
-:root[data-skin="kids"]{--cb:var(--text);--csh:5px 5px 0 var(--deco);--pb:var(--text);--corner:var(--svg-star);--corner-on:block;--corner-pad:30px;--corner-c:#FFB300}
-:root[data-skin="kids"] .card:not(.quiet){border-radius:30px;border-width:3px}
-:root[data-skin="kids"] header.site{border-bottom:5px dotted var(--deco2)}
-:root[data-skin="kids"] .hero h1{font-weight:900;text-shadow:3px 3px 0 var(--deco)}
-:root[data-skin="kids"] .cats a{border-width:3px}
+/* ---- こども: round and fat, white cards with a dark outline, a little confetti; colour only in the accents */
+:root[data-skin="kids"]{--cb:var(--text);--csh:0 3px 0 rgba(42,35,64,.18);--pb:var(--text);--corner:var(--svg-star);--corner-on:block;--corner-pad:28px;--corner-c:#FFB300}
+:root[data-skin="kids"] .card:not(.quiet){border-radius:22px}
+:root[data-skin="kids"] header.site{border-bottom:4px solid var(--deco2)}
+:root[data-skin="kids"] .hero h1{font-weight:900}
+:root[data-skin="kids"] .cats a{border-width:2px}
 
 /* ---- レトロ: a kissaten with awning stripes, boxed tabs, monospace numbers */
-:root[data-skin="retro"]{--cb:var(--text);--csh:4px 4px 0 rgba(58,34,20,.28);--pb:var(--text)}
+:root[data-skin="retro"]{--cb:#8A6A48;--csh:3px 3px 0 rgba(58,34,20,.18);--pb:#8A6A48}
 :root[data-skin="retro"] header.site{border-bottom:4px solid var(--deco)}
-:root[data-skin="retro"] .card:not(.quiet){border-width:2px}
 :root[data-skin="retro"] .hero h1{letter-spacing:.08em;font-weight:900}
 :root[data-skin="retro"] .logo{border-radius:50%;box-shadow:0 0 0 2px var(--head-text)}
 :root[data-skin="retro"] .cats a{border:2px solid var(--text)}
 
-/* ---- ネオン: dark night, glowing edges, outlined numbers */
-:root[data-skin="neon"]{--cb:var(--deco2);--csh:0 0 0 1px color-mix(in srgb,var(--deco2) 60%,transparent),0 0 18px color-mix(in srgb,var(--deco2) 35%,transparent);--pb:var(--deco);--corner:var(--svg-spark);--corner-on:block;--corner-pad:30px;--corner-c:var(--deco)}
-:root[data-skin="neon"] header.site{border-bottom:2px solid var(--deco);box-shadow:0 6px 22px color-mix(in srgb,var(--deco) 35%,transparent)}
+/* ---- ネオン: dark night; the glow is only on the header line, the title and the number.  Cards are dark faces with a quiet border, buttons one flat colour. */
+:root[data-skin="neon"]{--cb:#4A4390;--csh:0 0 0 1px rgba(61,242,255,.18);--pb:#4A4390;--corner:var(--svg-spark);--corner-on:block;--corner-pad:28px;--corner-c:var(--deco)}
+:root[data-skin="neon"] header.site{border-bottom:2px solid var(--deco);box-shadow:0 4px 16px color-mix(in srgb,var(--deco) 30%,transparent)}
 :root[data-skin="neon"] .brand{text-shadow:0 0 10px color-mix(in srgb,var(--head-text) 60%,transparent)}
-:root[data-skin="neon"] .card:not(.quiet) .c-count .num{text-shadow:0 0 12px var(--nc)}
-:root[data-skin="neon"] .btn{box-shadow:0 0 12px color-mix(in srgb,var(--accent) 45%,transparent)}
-:root[data-skin="neon"] .cats a{border-color:var(--deco2);box-shadow:0 0 10px color-mix(in srgb,var(--deco2) 30%,transparent)}
-:root[data-skin="neon"] .hero h1{text-shadow:0 0 16px color-mix(in srgb,var(--deco) 55%,transparent)}
+:root[data-skin="neon"] .cats a{border-color:#4A4390}
+:root[data-skin="neon"] .hero h1{text-shadow:0 0 14px color-mix(in srgb,var(--deco) 50%,transparent)}
 
 /* ---- 深緑: soft, mossy, leaf corners, a dark green band */
-:root[data-skin="forest"]{--cb:#35513F;--corner:var(--svg-leaf);--corner-on:block;--corner-pad:30px;--corner-c:var(--deco)}
+:root[data-skin="forest"]{--cb:#3C5A47;--corner:var(--svg-leaf);--corner-on:block;--corner-pad:28px;--corner-c:var(--deco)}
 :root[data-skin="forest"] .card:not(.quiet){border-radius:18px}
 :root[data-skin="forest"] header.site{border-bottom:0}
 
 /* ---- 夕焼け: a warm gradient header, a gradient title, sun rays */
 :root[data-skin="sunset"] header.site{background:linear-gradient(90deg,#FF8A5B,#FFA66B 55%,#FFC47E);border-bottom:0}
 :root[data-skin="sunset"] .hero h1{background:linear-gradient(90deg,#9A2A12,#5B3A8E);-webkit-background-clip:text;background-clip:text;color:transparent}
-:root[data-skin="sunset"] .card:not(.quiet){border-radius:26px 26px 26px 6px}
+:root[data-skin="sunset"]{--cb:#EFCDB8;--csh:0 2px 8px rgba(179,54,26,.10)}
+:root[data-skin="sunset"] .card:not(.quiet){border-radius:22px 22px 22px 6px}
 
 /* ---- 色覚サポート: boxed menu, dashed vs solid, underlined numbers (not colour alone) */
 :root[data-skin="cb-safe"]{--cb:#8FA0B0;--pb:#8FA0B0}
