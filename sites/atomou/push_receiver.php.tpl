@@ -7,6 +7,8 @@ date_default_timezone_set('Asia/Tokyo');
 header('X-Robots-Tag: noindex');
 header('Cache-Control: no-store');
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') { http_response_code(405); exit; }
+$origin = (string)($_SERVER['HTTP_ORIGIN'] ?? '');
+if ($origin !== '' && $origin !== '__SITE_URL__') { http_response_code(403); exit; }   // the pages of this site only
 $raw = file_get_contents('php://input', false, null, 0, 16385);
 if ($raw === false || strlen($raw) > 16384) { http_response_code(413); exit; }
 $d = json_decode($raw, true);
@@ -25,6 +27,8 @@ foreach ((glob($dir . '/rate-*') ?: array()) as $f) { if (strpos($f, '/rate-' . 
 
 $endpoint = $d['endpoint'] ?? (is_array($d['sub'] ?? null) ? ($d['sub']['endpoint'] ?? '') : '');
 if (!is_string($endpoint) || strlen($endpoint) > 1024 || !preg_match('#^https://[A-Za-z0-9.-]+(:\d+)?/[^\s"<>]*$#', $endpoint)) { http_response_code(400); exit; }
+// Only the push services of the browsers (Chrome/Android, Firefox, Safari/iOS, Edge): the sender would otherwise POST to any address a visitor names.
+if (!preg_match('#^https://([A-Za-z0-9-]+\.)*(googleapis\.com|push\.services\.mozilla\.com|mozaws\.net|push\.apple\.com|notify\.windows\.com)(:\d+)?/#', $endpoint)) { http_response_code(400); exit; }
 $file = $dir . '/' . hash('sha256', $endpoint) . '.json';
 
 if (!empty($d['off'])) {                           // the visitor switched the notifications off: forget the subscription at once

@@ -93,8 +93,9 @@ def stats_php() -> str:
     return (HERE / "stats_receiver.php.tpl").read_text(encoding="utf-8").replace("__RE__", "/" + STAT_KEY_RE + "/")
 
 
-def push_php() -> str:
-    return (HERE / "push_receiver.php.tpl").read_text(encoding="utf-8")
+def push_php(cfg: dict | None = None) -> str:
+    url = str((cfg or json.loads((HERE / "config.json").read_text(encoding="utf-8")))["site_url"]).rstrip("/")
+    return (HERE / "push_receiver.php.tpl").read_text(encoding="utf-8").replace("__SITE_URL__", url)
 
 
 def members_on(cfg: dict) -> bool:
@@ -848,7 +849,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
         pages[f"e/{e['id']}/index.html"] = event_page(c, e, e["id"] in index_ids, live)
     pages.update(legal(c))
     pages["api/e.php"] = stats_php()
-    pages["api/push.php"] = push_php()
+    pages["api/push.php"] = push_php(cfg)
     if members_on(cfg):
         pages["api/m.php"] = member_php(cfg)
         pages["terms/index.html"] = terms_page(c)
