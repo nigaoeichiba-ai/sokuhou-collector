@@ -7,8 +7,9 @@ name: deploy-sites
 #   XSERVER_USER      the Xserver server ID (the SSH user name)
 # The kuma site is built and uploaded only when the repository variable DEPLOY_KUMA is "true" (set after the
 # owner has added kuma-sokuho.com to the Xserver server); the same switch for minna-no-illust.com is DEPLOY_MINNA and for atomou.com DEPLOY_ATOMOU.
-# atomou is still a DEMO and must not be reachable: it is deployed only when BOTH DEPLOY_ATOMOU and ATOMOU_PUBLIC are "true" (ATOMOU_PUBLIC = release build, indexable).
-# A password-protected demo deploy is not wired yet, so DEPLOY_ATOMOU alone deploys nothing.
+# atomou is a DEMO until the repository variable ATOMOU_PUBLIC is "true" (release build, indexable). While it is a demo it is deployed only
+# behind a password (HTTP Basic): the secrets ATOMOU_DEMO_USER and ATOMOU_DEMO_PASSWORD (owner-made) must exist, the job writes the password
+# file to ~/atomou.com/.htpasswd (outside public_html) and the preview build's .htaccess asks for it. Without them nothing is deployed.
 #
 # Manual runs are a check only unless "Really deploy" is ticked: they build, run the tests and prove that the
 # SSH login and the target folder work, but change nothing on the server.
@@ -114,6 +115,8 @@ jobs:
           MINNA: ${{ vars.DEPLOY_MINNA }}
           ATOMOU: ${{ vars.DEPLOY_ATOMOU }}
           ATOMOU_PUBLIC: ${{ vars.ATOMOU_PUBLIC }}
+          DEMO_USER: ${{ secrets.ATOMOU_DEMO_USER }}
+          DEMO_PASS: ${{ secrets.ATOMOU_DEMO_PASSWORD }}
           RK_APP: ${{ secrets.RAKUTEN_APP_ID }}
           RK_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           SITE: ${{ matrix.site }}
@@ -164,8 +167,12 @@ jobs:
             echo "DEPLOY_MINNA is not true; the minna site is skipped"
             go=false
           fi
-          if [ "$SITE" = "atomou" ] && { [ "$ATOMOU" != "true" ] || [ "$ATOMOU_PUBLIC" != "true" ]; }; then
-            echo "atomou is a demo: it is deployed only when DEPLOY_ATOMOU and ATOMOU_PUBLIC are both true; the atomou site is skipped"
+          if [ "$SITE" = "atomou" ] && [ "$ATOMOU" != "true" ]; then
+            echo "DEPLOY_ATOMOU is not true; the atomou site is skipped"
+            go=false
+          fi
+          if [ "$SITE" = "atomou" ] && [ "$ATOMOU_PUBLIC" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }; then
+            echo "atomou is still a demo and ATOMOU_DEMO_USER / ATOMOU_DEMO_PASSWORD are not set: it is not deployed unprotected; the atomou site is skipped"
             go=false
           fi
           echo "go=$go" >> "$GITHUB_OUTPUT"
@@ -245,6 +252,22 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
             "set -e; cd \"\$HOME/$SITE_DIR\"; pwd; test -d public_html; command -v tar >/dev/null; ls -d public_html*"
+      - name: Demo password file for atomou (outside public_html; the preview build asks for it)
+        if: steps.gate.outputs.go == 'true' && matrix.site == 'atomou' && vars.ATOMOU_PUBLIC != 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+          SITE_DIR: ${{ matrix.dir }}
+          DEMO_USER: ${{ secrets.ATOMOU_DEMO_USER }}
+          DEMO_PASS: ${{ secrets.ATOMOU_DEMO_PASSWORD }}
+        run: |
+          set -euo pipefail
+          home=$(ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" 'printf %s "$HOME"')
+          test -n "$home"
+          printf '%s:%s\n' "$DEMO_USER" "$(openssl passwd -apr1 "$DEMO_PASS")" | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+            "set -e; cd \"\$HOME/$SITE_DIR\"; umask 077; cat > .htpasswd"
+          sed -i "s#__HTPASSWD__#$home/$SITE_DIR/.htpasswd#" release/.htaccess
+          grep -q "AuthUserFile $home/$SITE_DIR/.htpasswd" release/.htaccess
       - name: Upload and switch
         if: steps.gate.outputs.go == 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         env:
@@ -275,18 +298,29 @@ jobs:
           MARKER: ${{ matrix.marker }}
           MIN_PAGES: ${{ matrix.min_pages }}
           PROBE: ${{ matrix.probe }}
+          SITE: ${{ matrix.site }}
+          ATOMOU_PUBLIC: ${{ vars.ATOMOU_PUBLIC }}
+          DEMO_USER: ${{ secrets.ATOMOU_DEMO_USER }}
+          DEMO_PASS: ${{ secrets.ATOMOU_DEMO_PASSWORD }}
         run: |
           set -u
           ok=1
-          code=$(curl -s -o /tmp/index.html -w '%{http_code}' "$URL/") || ok=0
+          AUTH=()
+          if [ "$SITE" = "atomou" ] && [ "${ATOMOU_PUBLIC:-}" != "true" ]; then
+            AUTH=(-u "$DEMO_USER:$DEMO_PASS")   # the demo is behind a password: it must refuse a visitor without it and answer one with it
+            [ "$(curl -s -o /dev/null -w '%{http_code}' "$URL/")" = "401" ] || ok=0
+          fi
+          code=$(curl -s "${AUTH[@]}" -o /tmp/index.html -w '%{http_code}' "$URL/") || ok=0
           [ "$code" = "200" ] || ok=0
           grep -q "$MARKER" /tmp/index.html || ok=0
-          urls=$(curl -s "$URL/sitemap.xml" | grep -c '<loc>') || ok=0
+          urls=$(curl -s "${AUTH[@]}" "$URL/sitemap.xml" | grep -c '<loc>') || ok=0
           [ "${urls:-0}" -ge "$((MIN_PAGES - 5))" ] || ok=0
-          [ "$(curl -s -o /dev/null -w '%{http_code}' "$URL$PROBE")" = "200" ] || ok=0
+          [ "$(curl -s "${AUTH[@]}" -o /dev/null -w '%{http_code}' "$URL$PROBE")" = "200" ] || ok=0
           echo "index=$code sitemap_urls=${urls:-0} ok=$ok"
           # every sitemap URL answers 200 and obeys the page rules, and every internal link on them answers 200 (checked twice before the site is rolled back, so a network blip does not undo a good deploy)
-          if [ "$ok" = "1" ] && ! python -m sokuhou.sitecheck --live --base "$URL" --probe "$PROBE"; then
+          if [ "${#AUTH[@]}" -gt 0 ]; then
+            echo "demo behind a password: the full live check is skipped (it cannot log in); the checks above passed"
+          elif [ "$ok" = "1" ] && ! python -m sokuhou.sitecheck --live --base "$URL" --probe "$PROBE"; then
             echo "live check failed; trying once more in 30 s"
             sleep 30
             python -m sokuhou.sitecheck --live --base "$URL" --probe "$PROBE" || ok=0
