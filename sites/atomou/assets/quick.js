@@ -69,7 +69,7 @@
   var sheet = null, back = null, dirty = { date: false, time: false, kind: false };
   function fmt(d) { return d ? d[1] + '月' + d[2] + '日(' + A.wd(d) + ')' : ''; }
   function summary(p, d) {
-    if (!d) return '日付を選んでください(下の「今日」「明日」でも選べます)。';
+    if (!d) return '日付を選んでください。「今日」「明日」でも選べます。';
     var n = C.totalDays(TODAY, d);
     return fmt(d) + (p.time ? ' ' + p.time : '') + ' ・ ' + (n === 0 ? '今日' : n === 1 ? '明日' : n > 0 ? 'あと' + n + '日' : 'もう' + (-n) + '日');
   }
@@ -83,18 +83,18 @@
     preset = preset || {};
     dirty = { date: false, time: false, kind: false };
     back = document.createElement('div'); back.className = 'sheet-back';
-    sheet = document.createElement('div'); sheet.className = 'sheet'; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', '予定を入れる');
+    sheet = document.createElement('div'); sheet.className = 'sheet'; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', '予定を残す');
     sheet.innerHTML = '<div class="sheet-grip" aria-hidden="true"></div>' +
       '<label class="vh" for="qa-text">予定の内容</label>' +
       '<input id="qa-text" type="text" autocomplete="off" enterkeyhint="done" maxlength="60" placeholder="例: 明日 19時 デート" value="' + H(preset.title || '') + '">' +
       '<p class="qa-sum" id="qa-sum" aria-live="polite"></p>' +
-      '<div class="qa-chips" role="group" aria-label="日付をえらぶ"><button type="button" class="chip" data-qd="0">今日</button><button type="button" class="chip" data-qd="1">明日</button>' +
+      '<div class="qa-chips" role="group" aria-label="日付を選ぶ"><button type="button" class="chip" data-qd="0">今日</button><button type="button" class="chip" data-qd="1">明日</button>' +
       '<button type="button" class="chip" data-qd="sat">今週末</button><button type="button" class="chip" data-qd="next">来週</button></div>' +
       '<div class="qa-row"><label>日付<input type="date" id="qa-date"></label><label>時刻<input type="time" id="qa-time"></label>' +
       '<label>種類<select id="qa-kind">' + Object.keys(KINDS).map(function (k) { return '<option value="' + k + '">' + H(KINDS[k].t) + '</option>'; }).join('') + '</select></label></div>' +
-      '<div class="qa-ex" aria-label="入れ方の例"><button type="button" class="chip" data-ex="明日 19時 デート">明日 19時 デート</button><button type="button" class="chip" data-ex="12/25 クリスマス">12/25 クリスマス</button>' +
+      '<div class="qa-ex" aria-label="例"><button type="button" class="chip" data-ex="明日 19時 デート">明日 19時 デート</button><button type="button" class="chip" data-ex="12/25 クリスマス">12/25 クリスマス</button>' +
       '<button type="button" class="chip" data-ex="来週の土曜 友だちと食事">来週の土曜 友だちと食事</button></div>' +
-      '<div class="qa-act"><button type="button" class="btn" id="qa-save">入れる</button><a class="btn ghost" href="/add/">くわしく入れる</a></div>';
+      '<div class="qa-act"><button type="button" class="btn" id="qa-save">残す</button><a class="btn ghost" href="/add/">詳しく</a></div>';
     document.body.appendChild(back); document.body.appendChild(sheet);
     var txt = $('#qa-text'), dt = $('#qa-date'), tm = $('#qa-time'), kd = $('#qa-kind');
     if (preset.date) { dt.value = C.iso(preset.date); dirty.date = true; }
@@ -109,7 +109,7 @@
     }
     function save() {
       var r = refresh(), d = r.d;
-      if (!d) { $('#qa-sum').textContent = '日付を選んでください(下の「今日」「明日」でも選べます)。'; dt.focus(); return; }
+      if (!d) { $('#qa-sum').textContent = '日付を選んでください。「今日」「明日」でも選べます。'; dt.focus(); return; }
       var kind = kd.value, k = KINDS[kind] || KINDS.memo, st = A.state(), e = {
         id: A.uid(), title: r.p.title, date: C.iso(d), precision: 'day', kind: kind, quiet: !!k.quiet, yearly: !!k.yearly || r.p.yearly, every100: false,
         alarm: k.quiet ? 'none' : st.prefs.alarm, created: C.iso(TODAY), time: kind === 'event' ? (tm.value || '') : ''
@@ -144,7 +144,7 @@
   function done(e) {
     var old = $('#toast'); if (old) old.remove();
     var t = document.createElement('div'); t.id = 'toast'; t.className = 'toast act'; t.setAttribute('role', 'status');
-    t.innerHTML = '<span>「' + H(e.title) + '」を ' + H(fmt(C.parse(e.date))) + (e.time ? ' ' + H(e.time) : '') + ' に入れました</span>' +
+    t.innerHTML = '<span>「' + H(e.title) + '」を ' + H(fmt(C.parse(e.date))) + (e.time ? ' ' + H(e.time) : '') + ' に残しました</span>' +
       '<a class="btn small" href="/plan/?key=m:' + H(e.id) + '">開く</a><button type="button" class="btn small ghost" data-undo="1">元に戻す</button>';
     document.body.appendChild(t);
     var timer = setTimeout(function () { t.remove(); }, 7000);
@@ -187,12 +187,12 @@
         box.hidden = false; return;
       }
       var hits = A.matchCat(cat, v, 6);
-      if (!hits.length) { box.innerHTML = '<p class="sg-h">見つかりません。ことばを短くするか、ジャンルから探してください。</p>'; box.hidden = false; return; }
+      if (!hits.length) { box.innerHTML = '<p class="sg-h">見つかりません。言葉を短くするか、ジャンルから探してください。</p>'; box.hidden = false; return; }
       box.innerHTML = hits.map(function (c) {
         var n = C.totalDays(TODAY, C.parse(c.date));
         return '<a class="sg" href="/e/' + H(c.id) + '/"><span class="sg-t">' + H(c.title) + '</span><span class="sg-m">' + H(c.subject || c.category) + ' ・ ' + H(fmt(C.parse(c.date))) + ' ・ ' +
           (n === 0 ? '今日' : n > 0 ? 'あと' + n + '日' : 'もう' + (-n) + '日') + '</span></a>';
-      }).join('') + '<a class="sg sg-all" href="/search/?q=' + encodeURIComponent(v) + '">「' + H(v) + '」の結果を、すべて見る</a>';
+      }).join('') + '<a class="sg sg-all" href="/search/?q=' + encodeURIComponent(v) + '">「' + H(v) + '」の結果をすべて見る</a>';
       box.hidden = false;
     }
     var t;
