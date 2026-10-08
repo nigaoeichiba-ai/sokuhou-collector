@@ -45,8 +45,13 @@ def private_key_from_b64u(raw: str) -> ec.EllipticCurvePrivateKey:
 
 
 def load_private_key(text: str) -> ec.EllipticCurvePrivateKey:
-    """Accepts the base64url scalar or a PEM block."""
-    t = text.strip()
+    """Accepts the base64url scalar or a PEM block.  Invisible characters a copy-and-paste may bring along (BOM, zero-width, no-break space) and
+    surrounding quotes are dropped; any other non-ASCII character is refused with its position and code point (never the key itself)."""
+    t = text.translate({ord(c): None for c in "\ufeff\u200b\u200c\u200d\u2060\u00a0"}).strip().strip("\"'`").strip()
+    bad = [(i, ord(c)) for i, c in enumerate(t) if ord(c) > 127]
+    if bad:
+        raise ValueError("the VAPID private key contains non-ASCII characters (position: code point) " + ", ".join(f"{i}: U+{c:04X}" for i, c in bad[:8])
+                         + "; register exactly the 43 characters of the key and nothing else")
     if t.startswith("-----"):
         k = serialization.load_pem_private_key(t.encode("ascii"), password=None)
         if not isinstance(k, ec.EllipticCurvePrivateKey):
