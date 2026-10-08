@@ -187,7 +187,13 @@
       if (e) {
         h += '<section class="plan-sec"><h2>直す</h2><div class="field"><label for="e-title">名前</label><input type="text" id="e-title" maxlength="40" value="' + H(e.title) + '"></div>';
         if (e.precision === 'day') h += '<div class="field"><label for="e-date">日付</label><input type="date" id="e-date" value="' + H(e.date) + '"></div>';
+        else if (e.precision === 'month') h += '<div class="field"><label for="e-date">年と月(例 2026-10)</label><input type="month" id="e-date" value="' + H(String(e.date).slice(0, 7)) + '" placeholder="2026-10"></div>';
+        else h += '<div class="field"><label for="e-date">年(例 1990)</label><input type="number" id="e-date" inputmode="numeric" min="1" max="2200" value="' + H(String(e.date).slice(0, 4)) + '"></div>';
         if (e.kind === 'event' && e.precision === 'day') h += '<div class="field"><label for="e-time">時刻</label><input type="time" id="e-time" value="' + H(e.time || '') + '"></div>';
+        if (e.precision === 'day') h += '<div class="field"><label class="lab" for="e-yearly"><input type="checkbox" id="e-yearly"' + (e.yearly ? ' checked' : '') + '> 毎年くり返す</label></div>';
+        h += '<div class="field"><label for="e-alarm">お知らせ</label><select id="e-alarm">' + [['', '設定に合わせる(マイページ)'], ['morning', '当日の朝'], ['eve', '前日の夜'], ['week', '1週間前の朝'], ['none', 'しない']].map(function (o) {
+          return '<option value="' + o[0] + '"' + ((e.alarm || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>';
+        }).join('') + '</select></div>';
         h += '<p><button type="button" class="btn small" id="e-save">保存</button></p></section>';
       }
       if (item.p === 'day') h += '<details class="plan-sec more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">iPhone の「カレンダー」や Google カレンダーに取り込めるファイルです。</p>' +
@@ -220,7 +226,16 @@
         var e = A.findEntry(item.id), title = $('#e-title').value.trim(), dt = $('#e-date'), tm = $('#e-time');
         if (!e) return;
         if (title) e.title = title.slice(0, 80);
-        if (dt && C.parse(dt.value)) e.date = C.iso(C.parse(dt.value));
+        if (dt) {
+          var v = dt.value.trim(), nd = null, mm;
+          if (e.precision === 'day') nd = C.parse(v);
+          else if (e.precision === 'month') { mm = /^(\d{4})-(\d{2})$/.exec(v); nd = mm && +mm[2] >= 1 && +mm[2] <= 12 ? [+mm[1], +mm[2], 1] : null; }
+          else { var yy = parseInt(v, 10); nd = yy >= 1 && yy <= 2200 ? [yy, 1, 1] : null; }
+          if (!nd) { A.toast('日付を確かめてください。'); return; }
+          e.date = C.iso(nd);
+        }
+        var yl = $('#e-yearly'); if (yl) e.yearly = yl.checked;
+        var al = $('#e-alarm'); if (al) e.alarm = al.value;
         if (tm) e.time = /^([01]\d|2[0-3]):[0-5]\d$/.test(tm.value) ? tm.value : '';
         A.persist(); A.stat('act:plan_edit'); item = A.ownItem(e); render(); A.toast('直しました。');
       }

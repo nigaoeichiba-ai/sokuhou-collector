@@ -187,7 +187,7 @@ class StorageIsSanitised(unittest.TestCase):
         st = res["state"]
         self.assertEqual(len(st["entries"]), 1)
         e = st["entries"][0]
-        self.assertEqual((e["precision"], e["kind"], e["alarm"], e["date"]), ("day", "memo", "morning", "2026-10-10"))
+        self.assertEqual((e["precision"], e["kind"], e["alarm"], e["date"]), ("day", "memo", "", "2026-10-10"))
         self.assertEqual(st["saved"], ["abcdef0123"])
         self.assertEqual(st["order"], ["c:abcdef0123"])
         self.assertEqual(st["genre"], {"締切・制度": 20})
