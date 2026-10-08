@@ -49,6 +49,14 @@ STAT_KEY_RE = r"^(view|skin|big|home_order|home_hidden|act)(:[a-z0-9_,-]{1,60}){
 
 
 # ---------- shared helpers ----------
+HTPASSWD_PLACEHOLDER = "__HTPASSWD__"
+DEMO_AUTH = (
+    "# demo: nobody gets in without the password (the deploy job writes the password file outside public_html and fills in its path)\n"
+    'AuthType Basic\nAuthName "atomou demo"\n'
+    f"AuthUserFile {HTPASSWD_PLACEHOLDER}\nRequire valid-user\n"
+)
+
+
 def stats_php() -> str:
     return (HERE / "stats_receiver.php.tpl").read_text(encoding="utf-8").replace("__RE__", "/" + STAT_KEY_RE + "/")
 
@@ -588,6 +596,8 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     listed = {k: 1 for k in pages if k.endswith("index.html") and k != "my/index.html"
               and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
     pages.update(standard_files(listed, cfg, preview, today.isoformat()))
+    if preview:
+        pages[".htaccess"] = pages[".htaccess"] + DEMO_AUTH
     return pages
 
 
