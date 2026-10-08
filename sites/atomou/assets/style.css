@@ -40,8 +40,8 @@ footer.site{margin-top:3rem;background:var(--foot-bg);color:var(--foot-text);pad
 footer.site a{color:var(--foot-text)}
 footer.site .legal{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:.6rem}
 footer.site .legal a,footer.site .legal span{display:inline-flex;align-items:center;min-height:44px}
-.crumbs{font-size:.875rem;color:var(--muted);margin:1rem 0 .4rem}
-.crumbs a{color:var(--muted)}
+.crumbs{font-size:.875rem;color:var(--muted);margin:.35rem 0 0}
+.crumbs a{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;margin:0 -4px;color:var(--muted)}   /* a link is a touch target: 44px like the buttons */
 
 /* buttons / forms */
 .btn,button.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:0 20px;border:2px solid var(--accent);border-radius:999px;background:var(--accent);color:var(--on-accent);font:inherit;font-weight:800;text-decoration:none;cursor:pointer}
