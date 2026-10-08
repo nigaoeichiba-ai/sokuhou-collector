@@ -1,6 +1,11 @@
 /* あと何日、もう何日: date arithmetic.  The same rules as sites/atomou/datecore.py (checked against tests/fixtures/atomou/date_vectors.json in a real Chrome).
    Calendar dates only: [year, month, day]; no Date object, no time zone, so a visitor's clock can never move a date by a day.
    "Today" is passed in by the caller. */
+// an uncaught error anywhere in the bundle is written on <html data-jserr>, so a headless test (and a person with the inspector) can see it
+if (typeof window !== 'undefined' && window.addEventListener) {
+  window.addEventListener('error', function (e) { try { document.documentElement.setAttribute('data-jserr', String(e && e.message || e).slice(0, 200)); } catch (x) {} });
+  window.addEventListener('unhandledrejection', function (e) { try { document.documentElement.setAttribute('data-jserr', 'promise: ' + String(e && e.reason || e).slice(0, 200)); } catch (x) {} });
+}
 (function (root) {
   'use strict';
   var ERAS = { reiwa: 2018, heisei: 1988, showa: 1925, taisho: 1911, meiji: 1867 };
