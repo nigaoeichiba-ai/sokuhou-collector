@@ -858,7 +858,7 @@
     }
     function titleNow() { var t = $f('f-title').value.trim(); return t || (st.kind ? KINDS[st.kind].t : ''); }
     function update() {
-      var d = readDate(), k = KINDS[st.kind];
+      var d = readDate(), k = KINDS[st.kind] || {};   // no kind chosen yet (the page opens that way): nothing to show, but nothing to throw either
       ['s3', 's4', 'live', 'f-save'].forEach(function (id) { show(id, !!d && !!st.kind); });
       show('s4', !!d && st.p === 'day');
       show('quiet-note', !!d && !!k.quiet);

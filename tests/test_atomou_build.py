@@ -308,6 +308,14 @@ class AppInChrome(BuildOnce):
         self.assertEqual(dom.count('class="block-bar"'), 7)  # todo, search, cats, daily, mine, soon, usecases
         self.assertNotIn('class="block-bar"', self.dom("/"))
 
+    def test_no_uncaught_script_error_on_any_main_page(self):
+        # 2026-10-08: /add/ threw "Cannot read properties of undefined (reading 'quiet')" before a kind was chosen; dump-dom cannot see the console,
+        # so core.js writes every uncaught error on <html data-jserr> and this test reads it
+        for path in ("/", "/add/", "/calendar/", "/my/", "/search/", "/skins/", "/today/", "/plan/", "/use/", "/add/?quick=1", "/?edit=1"):
+            dom = self.dom(path)
+            m = re.search(r'<html[^>]*data-jserr="([^"]*)"', dom)
+            self.assertIsNone(m, f"{path}: {m.group(1) if m else ''}")
+
     def test_no_storage_errors_with_a_blank_profile(self):
         # a fresh profile has no atomou.v1: the pages must render (my page shows its empty state)
         dom = self.dom("/my/")
