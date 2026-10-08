@@ -1,5 +1,5 @@
 /* ICS (calendar file) writer.  Wording on the site: "カレンダーに入れる" -- an alarm is requested but never promised (calendars treat VALARM differently).
-   Events are all-day (DTSTART;VALUE=DATE).  UIDs are stable, so importing a file twice updates instead of duplicating. */
+   Events are all-day (DTSTART;VALUE=DATE), except a day with a time of day, which is a one-hour event in Japan time.  UIDs are stable, so importing a file twice updates instead of duplicating. */
 (function (root) {
   'use strict';
   var C = root.AtomouCore;
@@ -20,15 +20,29 @@
   }
   function dateStr(a) { return C.iso(a).replace(/-/g, ''); }
 
-  // ev: {uid, title, date:[y,m,d], yearly:bool, every100:bool, alarm:'morning'|'eve'|'week'|'none', note}
+  function hm(t) { var m = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(t || ''); return m ? [+m[1], +m[2]] : null; }
+  function wall(d, h, m) { var p = function (n) { return (n < 10 ? '0' : '') + n; }; return dateStr(d) + 'T' + p(h) + p(m) + '00'; }
+  function dur(min) { var d = Math.floor(min / 1440), h = Math.floor(min % 1440 / 60), m = min % 60; return '-P' + (d ? d + 'D' : '') + (h || m ? 'T' + (h ? h + 'H' : '') + (m ? m + 'M' : '') : 'T0M'); }
+  // when the alert should come before an event that starts at minute t of its day: morning = 9:00 that day, eve = 21:00 the day before, week = 9:00 seven days before
+  function alertBefore(alarm, t) {
+    if (alarm === 'eve') return t + 180;
+    if (alarm === 'week') return 7 * 1440 - 540 + t;
+    return t > 540 ? t - 540 : 30;   // morning; an event earlier than that is announced 30 minutes before
+  }
+
+  // ev: {uid, title, date:[y,m,d], time:'HH:MM' (optional: then it is a one-hour event in Japan time, not an all-day one), yearly:bool, every100:bool, alarm:'morning'|'eve'|'week'|'none', note}
   function vevent(ev, now) {
-    var d = ev.date, end = C.addDays(d, 1), L = ['BEGIN:VEVENT', 'UID:' + ev.uid + '@atomou.com', 'DTSTAMP:' + stamp(now), 'SUMMARY:' + esc(ev.title),
-      'DTSTART;VALUE=DATE:' + dateStr(d), 'DTEND;VALUE=DATE:' + dateStr(end), 'TRANSP:TRANSPARENT'];
+    var d = ev.date, end = C.addDays(d, 1), t = hm(ev.time), L = ['BEGIN:VEVENT', 'UID:' + ev.uid + '@atomou.com', 'DTSTAMP:' + stamp(now), 'SUMMARY:' + esc(ev.title)];
+    if (t) {
+      var endMin = t[0] * 60 + t[1] + 60, endDay = endMin >= 1440 ? end : d;
+      L.push('DTSTART;TZID=Asia/Tokyo:' + wall(d, t[0], t[1]), 'DTEND;TZID=Asia/Tokyo:' + wall(endDay, Math.floor(endMin % 1440 / 60), endMin % 60), 'TRANSP:OPAQUE');
+    } else L.push('DTSTART;VALUE=DATE:' + dateStr(d), 'DTEND;VALUE=DATE:' + dateStr(end), 'TRANSP:TRANSPARENT');
     if (ev.rrule) L.push('RRULE:' + ev.rrule);
     else if (ev.yearly) L.push('RRULE:FREQ=YEARLY' + (d[1] === 2 && d[2] === 29 ? ';BYMONTH=2;BYMONTHDAY=-1' : ''));
     if (ev.note) L.push('DESCRIPTION:' + esc(ev.note));
     if (ev.alarm && ev.alarm !== 'none') {
-      L.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(ev.title), 'TRIGGER:' + (ev.alarm === 'eve' ? '-PT3H' : ev.alarm === 'week' ? '-P6DT15H' : 'PT9H'), 'END:VALARM');
+      L.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(ev.title),
+        'TRIGGER:' + (t ? dur(alertBefore(ev.alarm, t[0] * 60 + t[1])) : (ev.alarm === 'eve' ? '-PT3H' : ev.alarm === 'week' ? '-P6DT15H' : 'PT9H')), 'END:VALARM');
     }
     L.push('END:VEVENT');
     return L;
@@ -37,6 +51,9 @@
     now = now || new Date();
     var L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//atomou.com//あと何日、もう何日//JA', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:' + esc(name || 'あと何日、もう何日'),
       'X-WR-TIMEZONE:Asia/Tokyo'];
+    if (events.some(function (ev) { return hm(ev.time); })) {   // a fixed +09:00 zone, no summer time: every calendar app reads it
+      L.push('BEGIN:VTIMEZONE', 'TZID:Asia/Tokyo', 'BEGIN:STANDARD', 'DTSTART:19700101T000000', 'TZOFFSETFROM:+0900', 'TZOFFSETTO:+0900', 'TZNAME:JST', 'END:STANDARD', 'END:VTIMEZONE');
+    }
     events.forEach(function (ev) {
       vevent(ev, now).forEach(function (l) { L.push(l); });
       if (ev.every100) {  // the 100-day marks of a date (100, 200, ...): one repeating event, the first one 100 days after the date
