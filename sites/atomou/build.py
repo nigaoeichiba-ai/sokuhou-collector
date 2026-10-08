@@ -293,7 +293,7 @@ class Ctx:
         self.site = dict(SITE)
 
     def page(self, path: str, title: str, desc: str, body: str, kind: str, *, noindex: bool = False) -> str:
-        html = layout(self.site, self.cfg, self.preview, path=path, title=title, description=desc, body=body)
+        html = layout(self.site, self.cfg, self.preview, path=path, title=title, description=desc, body=body, og_image="/assets/og.png")   # the share picture (make_og.py)
         return self.finish(html, kind, noindex)
 
     def finish(self, html: str, kind: str, noindex: bool = False) -> str:
@@ -331,7 +331,12 @@ def home_page(c: Ctx) -> str:
     chips = "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS))
     ucs = "".join(f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>'
                   for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
-    body = f"""<section class="hero"><h1>{esc(CATCH)}</h1></section>
+    body = f"""<section class="hero"><h1>{esc(CATCH)}</h1>
+<div class="hero-cta" id="hero-cta" hidden>
+<p class="hero-note">登録なしで、無料で使えます。名前も日付も、この端末の中だけに残ります。</p>
+<p class="hero-btns"><a class="btn" href="/add/">自分の日を残す</a></p>
+<nav class="chiprow" aria-label="残せる日の例"><a class="chip" href="/add/?kind=anniversary">記念日</a><a class="chip" href="/add/?kind=birthday">誕生日</a><a class="chip" href="/add/?kind=until">楽しみな日・期限</a><a class="chip" href="/add/?kind=memorial">大切な人を思う日</a></nav>
+</div></section>
 <div id="season" class="season" hidden></div>
 <div id="blocks">
 <section id="todo" data-block="todo" data-title="今日の予定・やること" hidden>
@@ -371,7 +376,7 @@ def search_page(c: Ctx) -> str:
 <div class="chips" role="group" aria-label="ジャンル">{chips}<button type="button" class="chip" id="f-son" aria-pressed="false">お金や手続きの日だけ</button></div>
 <p class="small muted" id="found" aria-live="polite">&nbsp;</p>
 <div class="cards" id="results"></div>
-<div class="panel" id="none" hidden><p>見つかりませんでした。</p><p>言葉を短くするか、ジャンルを「すべて」にしてみてください。この言葉のまま<a id="none-add" href="/add/">自分の日として残す</a>こともできます。</p></div>
+<div class="panel" id="none" hidden><p>見つかりませんでした。</p><p>言葉を短くするか、ジャンルを「すべて」にしてみてください。この言葉のまま<a id="none-add" href="/add/">自分の日として残す</a>こともできます。</p><p class="muted">載せてほしい日があれば、<a id="none-ask" href="/contact/?kind=request">載せてほしい日として送る</a>こともできます。</p></div>
 <noscript><p class="notice">検索には JavaScript が必要です。<a href="/c/deadline/">ジャンルのページ</a>からも探せます。</p></noscript>"""
     return c.page("/search/", f"日付をさがす | {NAME}", "言葉やジャンルから、締切・試験・大会・お祭りの日付を探せます。見つけた日は、ワンタップで予定に。", body, "search")
 
@@ -387,7 +392,7 @@ def my_page(c: Ctx) -> str:
     body = f"""{crumbs([("トップ", "/"), ("マイページ", None)])}
 <h1>マイページ</h1>
 <p class="lead muted">記録した日と予定に入れた日が並びます。この端末の中だけに保存します。</p>
-<div class="panel" id="my-empty" hidden><p>まだありません。</p><p><a class="btn" href="/add/">記録する</a> <a class="btn ghost" href="/search/">さがす</a></p></div>
+<div class="panel" id="my-empty" hidden><p>まだ記録はありません。まず1つ、忘れたくない日を残せます。</p><p class="muted">名前も日付も、この端末の中だけに保存されます。</p><p><a class="btn" href="/add/">日を残す</a> <a class="btn ghost" href="/search/">公式の日付をさがす</a></p></div>
 <div class="head-row" id="my-tools" hidden><div class="grow" style="margin-left:0"><button type="button" class="btn small ghost" id="reorder" aria-pressed="false">並べ替え</button></div></div>
 <div class="cards" id="my-grid" data-save-order="1"></div>
 <h2>設定</h2>
@@ -514,6 +519,9 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     fmt = fmt_date(e["date"], e["precision"])
     end = f"〜{fmt_date(e['date_end'])}" if e.get("date_end") else ""
     rel = [] if quiet else [r for r in live if r["group"] == e["group"] and r["id"] != e["id"] and not r["quiet"]][:4]
+    near = [] if quiet or e["precision"] != "day" else sorted(
+        (r for r in live if r["id"] != e["id"] and not r["quiet"] and r["precision"] == "day" and r not in rel and abs((date.fromisoformat(r["date"]) - d).days) <= 10),
+        key=lambda r: (abs((date.fromisoformat(r["date"]) - d).days), r["date"], r["id"]))[:4]   # the days around it: a reason to look at the next page
     sentence = (f"{e['title']}は、{fmt}{end}です。" if e["precision"] == "day" else f"{e['title']}は、{fmt}です。") + (
         f"{today.year}年{today.month}月{today.day}日の時点で、{word}。" if e["precision"] == "day" else "")
     body = crumbs([("トップ", "/"), (e["group"], f"/c/{GROUP_SLUG[e['group']]}/"), (e["title"], None)]) + f"""
@@ -527,7 +535,8 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 <p class="small muted">日付は変わることがあります。申し込みや手続きの前に、出典の公式ページでご確認ください。</p>
 <p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを書く</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の日として残す</a></p>
 {f'<details class="more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">iPhone の「カレンダー」や Google カレンダーに取り込めるファイルです。</p><p><button type="button" class="btn small ghost" data-ics-for="c:{e["id"]}">ファイルを作る</button></p></details>' if e["precision"] == "day" else ""}
-{('<h2>同じジャンルの日</h2><div class="cards">' + "".join(card_html(r) for r in rel) + "</div>") if rel else ""}"""
+{('<h2>同じジャンルの日</h2><div class="cards">' + "".join(card_html(r) for r in rel) + "</div>") if rel else ""}
+{('<h2>同じ頃の日</h2><p class="hint">この日の前後10日にある日です。</p><div class="cards">' + "".join(card_html(r) for r in near) + "</div>") if near else ""}"""
     suffix = "からもう何日？" if e["status"] == "ended" else "はいつ？あと何日？"
     title = f"{e['title']}{suffix} {fmt} | {NAME}"
     desc = f"{e['title']}は{fmt}{end}。出典と確認した日つき。あと何日かを数えて、予定に入れられます。"

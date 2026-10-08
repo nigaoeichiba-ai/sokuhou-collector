@@ -70,6 +70,24 @@ class Pages(BuildOnce):
         self.assertRegex(css, r"@media \(max-width:699px\)\{[^@]*\.guide-btn\{display:none\}")
         self.assertRegex(css, r"@media \(max-width:359px\)\{\.guide-icon\{display:none\}\.guide-btn\{display:inline-block")   # 300px: no room for a 4th header icon (layoutcheck overflow)
 
+    def test_every_page_has_a_share_picture_and_the_picture_exists(self):
+        # 2026-10-09 review: the share card was the small "summary" one without a picture
+        for path in ("index.html", "add/index.html", "use/index.html"):
+            self.assertIn('og:image" content="https://atomou.com/assets/og.png"', self.rel[path])
+            self.assertIn('twitter:card" content="summary_large_image"', self.rel[path])
+        og = Path(build.HERE / "assets" / "og.png")
+        self.assertTrue(og.exists())
+        self.assertTrue(og.read_bytes().startswith(bytes([0x89]) + b"PNG"))
+
+    def test_event_pages_lead_on_to_the_days_around_them(self):
+        # 2026-10-09 review: a detail page was a dead end
+        pages = [h for k, h in self.rel.items() if k.startswith("e/") and k.endswith("index.html")]
+        with_near = [h for h in pages if "同じ頃の日" in h]
+        self.assertGreater(len(with_near), len(pages) * 0.8)
+        self.assertTrue(all("同じ頃の日" not in h or "この日の前後10日にある日です。" in h for h in pages))
+        quiet = [h for h in pages if 'class="notice quiet"' in h]
+        self.assertTrue(all("同じ頃の日" not in h for h in quiet))     # a quiet day leads nowhere else
+
     def test_release_and_preview_differ_only_in_indexing(self):
         self.assertIn("Allow: /", self.rel["robots.txt"])
         self.assertIn("Disallow: /", self.prev["robots.txt"])
