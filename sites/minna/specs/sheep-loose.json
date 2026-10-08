@@ -1,0 +1,38 @@
+{
+ "slug": "sheep-loose",
+ "title": "ゆるい手書きのひつじ 未年",
+ "subject": "ひつじ",
+ "genre": "eto",
+ "touch": "loose",
+ "priority": 10,
+ "subject_en": "the SAME loosely hand-drawn sheep character: a round cloud-shaped woolly body in warm cream (#FFF6E0, never pure white), a small oval face in soft beige with dot eyes and a tiny smile, two little curled horns, stubby dark-grey legs. Outline is a closed, slightly wobbly dark-grey line all around; no shading.",
+ "lead": "2027年の干支、ひつじを、ゆるい手書きのタッチで。年賀状のワンポイント、LINEのあけおめ、おたよりの1月号に。手をふる、もちつき、こたつ、だるまなど、お正月のポーズ12点。",
+ "tags": [
+  "ひつじ",
+  "羊",
+  "未年",
+  "干支",
+  "年賀状",
+  "2027",
+  "お正月",
+  "ゆるい",
+  "手書き"
+ ],
+ "season": {"from": "10-01", "to": "01-31"},
+ "holes": false,
+ "items": [
+  ["wave", "手をふる", "standing and waving one hoof"],
+  ["bow", "あけましておめでとう", "bowing politely with both front hooves together"],
+  ["mochi", "もちつき", "holding a wooden mallet beside a small mortar of rice cake"],
+  ["kotatsu", "こたつでみかん", "sitting in a small kotatsu table with a tangerine on top"],
+  ["kite", "たこあげ", "flying a small square kite on a string"],
+  ["daruma", "だるまとひつじ", "sitting next to a red daruma doll"],
+  ["kadomatsu", "門松とひつじ", "standing beside a small kadomatsu pine decoration"],
+  ["otoshidama", "お年玉", "holding a small blank envelope with both hooves, happy"],
+  ["sleep", "おひるね", "curled up asleep with a tiny sleep bubble"],
+  ["sake", "お屠蘇", "holding a small red lacquer cup"],
+  ["fuji", "初日の出", "sitting and looking at a small rising sun behind a hill"],
+  ["heart", "だいすき", "holding a big pink heart"]
+ ],
+ "exclude": []
+}

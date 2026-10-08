@@ -1,0 +1,38 @@
+{
+ "slug": "sheep-watercolor",
+ "title": "水彩のひつじと年賀状のモチーフ",
+ "subject": "",
+ "genre": "eto",
+ "touch": "watercolor",
+ "title_fmt": "{ja}",
+ "priority": 10,
+ "subject_en": "Soft watercolour sheep and New Year motifs for 2027 greeting cards, each a separate object; the sheep is gently realistic (not a mascot): fluffy wool in warm cream (#FFF6E0, never pure white) with soft grey-beige shadows, a kind face, small curled horns. Outlines are closed thin pencil-like lines darker than the fill.",
+ "lead": "水彩でやわらかく描いた、ひつじと年賀状の素材12点。大人っぽい年賀状、寒中見舞い、お店のお知らせに。親子のひつじ、梅、松竹梅、富士山、鏡もちなど。",
+ "tags": [
+  "ひつじ",
+  "羊",
+  "未年",
+  "年賀状",
+  "2027",
+  "水彩",
+  "お正月",
+  "おしゃれ"
+ ],
+ "season": {"from": "10-01", "to": "01-31"},
+ "holes": false,
+ "items": [
+  ["sheep-stand", "ひつじ", "a standing sheep in three-quarter view, fluffy cream wool"],
+  ["sheep-sit", "すわるひつじ", "a sheep sitting on the ground, calm and content"],
+  ["parent-child", "親子のひつじ", "a sheep with a small lamb nestled beside it"],
+  ["lamb", "子ひつじ", "a small lamb standing on thin legs, curious face"],
+  ["sheep-plum", "ひつじと梅", "a sheep beside a branch of pink plum blossoms"],
+  ["sheep-fuji", "ひつじと富士山", "a sheep in front of a small snow-capped mountain and rising sun"],
+  ["kagamimochi", "鏡もち", "a kagami-mochi: two stacked rice cakes with a small orange on top"],
+  ["shochikubai", "松竹梅", "a small arrangement of pine, bamboo and plum blossom"],
+  ["plum-branch", "梅の枝", "a branch of pink and cream plum blossoms"],
+  ["sunrise", "初日の出", "a rising red-orange sun over soft hills and clouds"],
+  ["temari", "手まり", "two decorative thread balls (temari) in red, gold and indigo"],
+  ["sheep-flowers", "花とひつじ", "a sheep with a wreath of small flowers around its neck"]
+ ],
+ "exclude": []
+}

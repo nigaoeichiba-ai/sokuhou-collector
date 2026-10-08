@@ -1,0 +1,38 @@
+{
+ "slug": "stick-work-scenes",
+ "title": "棒人間の仕事いろいろ",
+ "subject": "",
+ "genre": "work",
+ "touch": "stick",
+ "title_fmt": "{ja}",
+ "priority": 35,
+ "subject_en": "the SAME friendly stick figure at work: a round head in warm cream (#FFF6E0, never pure white) with a closed black outline, dot eyes and a simple mouth, body and limbs as thick uniform black lines, a single blue necktie as the only accent colour; props are drawn with the same thick black line and may use the same blue. Each item is a separate small scene with one figure (two figures only where stated).",
+ "lead": "プレゼン、会議、電話、握手、ひらめき、残業。資料やマニュアル、社内の掲示にそのまま使える、棒人間の仕事の場面12点。",
+ "tags": [
+  "棒人間",
+  "ビジネス",
+  "仕事",
+  "資料",
+  "プレゼン",
+  "会議",
+  "マニュアル",
+  "シンプル"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  ["present", "プレゼンする", "pointing at a blank whiteboard on a stand"],
+  ["meeting", "会議", "two stick figures sitting at a small table facing each other"],
+  ["phone", "電話する", "holding a phone to the ear, other hand raised"],
+  ["handshake", "握手", "two stick figures shaking hands"],
+  ["pc", "パソコン作業", "sitting at a desk typing on a laptop"],
+  ["idea", "ひらめき", "standing with one finger up and a light bulb above the head"],
+  ["hurry", "いそぐ", "running with a briefcase, motion lines"],
+  ["think", "なやむ", "standing with a hand on the chin and a small empty thought bubble"],
+  ["bow", "おじぎ", "bowing at the waist"],
+  ["clap", "拍手", "clapping with small motion marks"],
+  ["coffee", "休憩", "sitting on a chair holding a mug with steam"],
+  ["overtime", "残業", "slumped at a desk with a laptop and a crescent moon above"]
+ ],
+ "exclude": []
+}
