@@ -1,0 +1,192 @@
+{
+ "added": "2026-10-09",
+ "slug": "nyugaku-spring-kawaii",
+ "title": "入学・入園のイラスト",
+ "genre": "school",
+ "touch": "kawaii",
+ "lead": "ランドセル、さくらの校門、園児の帽子、上ばき、名札、チューリップ。入学・入園のお知らせ、4月のおたより、お祝いのカードに使える12点。",
+ "tags": [
+  "入学",
+  "入園",
+  "入学式",
+  "入園式",
+  "4月",
+  "春",
+  "ランドセル",
+  "さくら",
+  "新学期",
+  "おたより"
+ ],
+ "subject": "",
+ "season": {
+  "from": "02-01",
+  "to": "04-15"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "nyugaku-spring-kawaii-randoseru",
+   "file": "nyugaku-spring-kawaii-randoseru.webp",
+   "title": "ランドセル",
+   "desc": "ランドセルのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "入学",
+    "入園",
+    "入学式",
+    "入園式",
+    "ランドセル",
+    "入学・入園のイラスト",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 414,
+   "h": 424
+  },
+  {
+   "id": "nyugaku-spring-kawaii-randoseru-boy",
+   "file": "nyugaku-spring-kawaii-randoseru-boy.webp",
+   "title": "ランドセルの男の子",
+   "desc": "ランドセルの男の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "入学",
+    "入園",
+    "入学式",
+    "入園式",
+    "ランドセル",
+    "入学・入園のイラスト",
+    "ランドセルの男の子",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 339,
+   "h": 509
+  },
+  {
+   "id": "nyugaku-spring-kawaii-enji-hat",
+   "file": "nyugaku-spring-kawaii-enji-hat.webp",
+   "title": "園児の帽子",
+   "desc": "園児の帽子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "入学",
+    "入園",
+    "入学式",
+    "入園式",
+    "入学・入園のイラスト",
+    "園児の帽子",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 470,
+   "h": 398
+  },
+  {
+   "id": "nyugaku-spring-kawaii-uwabaki",
+   "file": "nyugaku-spring-kawaii-uwabaki.webp",
+   "title": "上ばき",
+   "desc": "上ばきのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "入学",
+    "入園",
+    "入学式",
+    "入園式",
+    "入学・入園のイラスト",
+    "上ばき",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 481,
+   "h": 435
+  },
+  {
+   "id": "nyugaku-spring-kawaii-nafuda",
+   "file": "nyugaku-spring-kawaii-nafuda.webp",
+   "title": "名札",
+   "desc": "名札のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "入学",
+    "入園",
+    "入学式",
+    "入園式",
+    "入学・入園のイラスト",
+    "名札",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 390,
+   "h": 433
+  },
+  {
+   "id": "nyugaku-spring-kawaii-tulip",
+   "file": "nyugaku-spring-kawaii-tulip.webp",
+   "title": "チューリップ",
+   "desc": "チューリップのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "入学",
+    "入園",
+    "入学式",
+    "入園式",
+    "入学・入園のイラスト",
+    "チューリップ",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 505,
+   "h": 341
+  },
+  {
+   "id": "nyugaku-spring-kawaii-sakura-branch",
+   "file": "nyugaku-spring-kawaii-sakura-branch.webp",
+   "title": "さくらの枝",
+   "desc": "さくらの枝のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "入学",
+    "入園",
+    "入学式",
+    "入園式",
+    "さくら",
+    "入学・入園のイラスト",
+    "さくらの枝",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 509,
+   "h": 431
+  },
+  {
+   "id": "nyugaku-spring-kawaii-ceremony-flower",
+   "file": "nyugaku-spring-kawaii-ceremony-flower.webp",
+   "title": "お祝いの花",
+   "desc": "お祝いの花のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "入学",
+    "入園",
+    "入学式",
+    "入園式",
+    "入学・入園のイラスト",
+    "お祝いの花",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 369,
+   "h": 488
+  },
+  {
+   "id": "nyugaku-spring-kawaii-bento",
+   "file": "nyugaku-spring-kawaii-bento.webp",
+   "title": "はじめてのお弁当",
+   "desc": "はじめてのお弁当のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "入学",
+    "入園",
+    "入学式",
+    "入園式",
+    "入学・入園のイラスト",
+    "はじめてのお弁当",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 523,
+   "h": 460
+  }
+ ]
+}

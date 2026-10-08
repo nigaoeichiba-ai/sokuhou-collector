@@ -1,0 +1,243 @@
+{
+ "added": "2026-10-09",
+ "slug": "oshogatsu-asobi-crayon",
+ "title": "お正月あそび クレヨン",
+ "genre": "season",
+ "touch": "crayon",
+ "lead": "こま、たこ、はねつき、かるた、ふくわらい、けん玉。園や学校のおたより1月号、お正月の遊びの説明、すごろくの素材に使える、クレヨンのタッチの12点。",
+ "tags": [
+  "お正月",
+  "お正月あそび",
+  "こま",
+  "たこあげ",
+  "羽根つき",
+  "かるた",
+  "福笑い",
+  "けん玉",
+  "1月",
+  "おたより",
+  "保育"
+ ],
+ "subject": "",
+ "season": {
+  "from": "11-15",
+  "to": "01-31"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "oshogatsu-asobi-crayon-koma",
+   "file": "oshogatsu-asobi-crayon-koma.webp",
+   "title": "こま",
+   "desc": "こまのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "お正月あそび クレヨン",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 459,
+   "h": 456
+  },
+  {
+   "id": "oshogatsu-asobi-crayon-tako",
+   "file": "oshogatsu-asobi-crayon-tako.webp",
+   "title": "たこあげ",
+   "desc": "たこあげのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "お正月あそび クレヨン",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 470,
+   "h": 516
+  },
+  {
+   "id": "oshogatsu-asobi-crayon-hagoita",
+   "file": "oshogatsu-asobi-crayon-hagoita.webp",
+   "title": "羽子板と羽根",
+   "desc": "羽子板と羽根のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "お正月あそび クレヨン",
+    "羽子板と羽根",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 444,
+   "h": 491
+  },
+  {
+   "id": "oshogatsu-asobi-crayon-karuta",
+   "file": "oshogatsu-asobi-crayon-karuta.webp",
+   "title": "かるた",
+   "desc": "かるたのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "かるた",
+    "お正月あそび クレヨン",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 443,
+   "h": 453
+  },
+  {
+   "id": "oshogatsu-asobi-crayon-fukuwarai",
+   "file": "oshogatsu-asobi-crayon-fukuwarai.webp",
+   "title": "福笑い",
+   "desc": "福笑いのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "福笑い",
+    "お正月あそび クレヨン",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 529,
+   "h": 419
+  },
+  {
+   "id": "oshogatsu-asobi-crayon-kendama",
+   "file": "oshogatsu-asobi-crayon-kendama.webp",
+   "title": "けん玉",
+   "desc": "けん玉のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "けん玉",
+    "お正月あそび クレヨン",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 455,
+   "h": 468
+  },
+  {
+   "id": "oshogatsu-asobi-crayon-sugoroku",
+   "file": "oshogatsu-asobi-crayon-sugoroku.webp",
+   "title": "すごろく",
+   "desc": "すごろくのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "お正月あそび クレヨン",
+    "すごろく",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 495,
+   "h": 435
+  },
+  {
+   "id": "oshogatsu-asobi-crayon-otedama",
+   "file": "oshogatsu-asobi-crayon-otedama.webp",
+   "title": "お手玉",
+   "desc": "お手玉のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "お正月あそび クレヨン",
+    "お手玉",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 483,
+   "h": 424
+  },
+  {
+   "id": "oshogatsu-asobi-crayon-daruma-otoshi",
+   "file": "oshogatsu-asobi-crayon-daruma-otoshi.webp",
+   "title": "だるま落とし",
+   "desc": "だるま落としのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "お正月あそび クレヨン",
+    "だるま落とし",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 462,
+   "h": 470
+  },
+  {
+   "id": "oshogatsu-asobi-crayon-menko",
+   "file": "oshogatsu-asobi-crayon-menko.webp",
+   "title": "めんこ",
+   "desc": "めんこのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "お正月あそび クレヨン",
+    "めんこ",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 501,
+   "h": 447
+  },
+  {
+   "id": "oshogatsu-asobi-crayon-mochitsuki",
+   "file": "oshogatsu-asobi-crayon-mochitsuki.webp",
+   "title": "もちつき",
+   "desc": "もちつきのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "お正月あそび クレヨン",
+    "もちつき",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 474,
+   "h": 481
+  },
+  {
+   "id": "oshogatsu-asobi-crayon-kakizome",
+   "file": "oshogatsu-asobi-crayon-kakizome.webp",
+   "title": "書きぞめ",
+   "desc": "書きぞめのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "お正月",
+    "お正月あそび",
+    "こま",
+    "たこあげ",
+    "お正月あそび クレヨン",
+    "書きぞめ",
+    "クレヨン・手描き",
+    "季節・行事"
+   ],
+   "w": 515,
+   "h": 463
+  }
+ ]
+}

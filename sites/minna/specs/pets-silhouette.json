@@ -22,18 +22,70 @@
  "season": null,
  "holes": false,
  "items": [
-  ["dog-sit", "おすわりするいぬ", "a medium dog sitting in side view, ears up"],
-  ["dog-walk", "歩くいぬ", "a dog walking in side view with a wagging tail"],
-  ["cat-sit", "すわるねこ", "a cat sitting upright in side view, tail curled around the feet"],
-  ["cat-stretch", "のびをするねこ", "a cat stretching with its back arched"],
-  ["rabbit", "うさぎ", "a rabbit sitting with long upright ears, side view"],
-  ["hamster", "ハムスター", "a round hamster holding a seed, side view"],
-  ["budgie", "インコ", "a budgerigar perched on a short branch, side view"],
-  ["goldfish", "金魚", "a goldfish with a flowing tail, side view"],
-  ["turtle", "かめ", "a tortoise walking, side view"],
-  ["hedgehog", "ハリネズミ", "a hedgehog with spiky back, side view"],
-  ["ferret", "フェレット", "a long ferret standing on four legs, side view"],
-  ["paw", "肉球", "a single paw print with four toe pads"]
+  [
+   "dog-sit",
+   "おすわりするいぬ",
+   "a medium dog sitting in side view, ears up"
+  ],
+  [
+   "dog-walk",
+   "歩くいぬ",
+   "a dog walking in side view with a wagging tail"
+  ],
+  [
+   "cat-sit",
+   "すわるねこ",
+   "a cat sitting upright in side view, tail curled around the feet"
+  ],
+  [
+   "cat-stretch",
+   "のびをするねこ",
+   "a cat stretching with its back arched"
+  ],
+  [
+   "rabbit",
+   "うさぎ",
+   "a rabbit sitting with long upright ears, side view"
+  ],
+  [
+   "hamster",
+   "ハムスター",
+   "a round hamster holding a seed, side view"
+  ],
+  [
+   "budgie",
+   "インコ",
+   "a budgerigar perched on a short branch, side view"
+  ],
+  [
+   "goldfish",
+   "金魚",
+   "a goldfish with a flowing tail, side view"
+  ],
+  [
+   "turtle",
+   "かめ",
+   "a tortoise walking, side view"
+  ],
+  [
+   "hedgehog",
+   "ハリネズミ",
+   "a hedgehog with spiky back, side view"
+  ],
+  [
+   "ferret",
+   "フェレット",
+   "a long ferret standing on four legs, side view"
+  ],
+  [
+   "paw",
+   "肉球",
+   "a single paw print with four toe pads"
+  ]
  ],
- "exclude": []
+ "exclude": [
+  "budgie",
+  "cat-sit",
+  "hamster"
+ ]
 }
