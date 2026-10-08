@@ -1,0 +1,56 @@
+/* ICS (calendar file) writer.  Wording on the site: "カレンダーに入れる" -- an alarm is requested but never promised (calendars treat VALARM differently).
+   Events are all-day (DTSTART;VALUE=DATE).  UIDs are stable, so importing a file twice updates instead of duplicating. */
+(function (root) {
+  'use strict';
+  var C = root.AtomouCore;
+
+  function esc(s) { return String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n'); }
+  function fold(line) {  // 75 octets per line, never inside a multi-byte character
+    var out = [], cur = '', bytes = 0, enc = new TextEncoder();
+    for (var ch of line) {
+      var b = enc.encode(ch).length;
+      if (bytes + b > (out.length ? 74 : 75)) { out.push(cur); cur = ' ' + ch; bytes = 1 + b; } else { cur += ch; bytes += b; }
+    }
+    out.push(cur);
+    return out.join('\r\n');
+  }
+  function stamp(now) {
+    var p = function (n) { return (n < 10 ? '0' : '') + n; };
+    return now.getUTCFullYear() + p(now.getUTCMonth() + 1) + p(now.getUTCDate()) + 'T' + p(now.getUTCHours()) + p(now.getUTCMinutes()) + p(now.getUTCSeconds()) + 'Z';
+  }
+  function dateStr(a) { return C.iso(a).replace(/-/g, ''); }
+
+  // ev: {uid, title, date:[y,m,d], yearly:bool, every100:bool, alarm:'morning'|'eve'|'none', note}
+  function vevent(ev, now) {
+    var d = ev.date, end = C.addDays(d, 1), L = ['BEGIN:VEVENT', 'UID:' + ev.uid + '@atomou.com', 'DTSTAMP:' + stamp(now), 'SUMMARY:' + esc(ev.title),
+      'DTSTART;VALUE=DATE:' + dateStr(d), 'DTEND;VALUE=DATE:' + dateStr(end), 'TRANSP:TRANSPARENT'];
+    if (ev.rrule) L.push('RRULE:' + ev.rrule);
+    else if (ev.yearly) L.push('RRULE:FREQ=YEARLY' + (d[1] === 2 && d[2] === 29 ? ';BYMONTH=2;BYMONTHDAY=-1' : ''));
+    if (ev.note) L.push('DESCRIPTION:' + esc(ev.note));
+    if (ev.alarm && ev.alarm !== 'none') {
+      L.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(ev.title), 'TRIGGER:' + (ev.alarm === 'eve' ? '-PT3H' : 'PT9H'), 'END:VALARM');
+    }
+    L.push('END:VEVENT');
+    return L;
+  }
+  function build(events, name, now) {
+    now = now || new Date();
+    var L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//atomou.com//あと何日、もう何日//JA', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:' + esc(name || 'あと何日、もう何日'),
+      'X-WR-TIMEZONE:Asia/Tokyo'];
+    events.forEach(function (ev) {
+      vevent(ev, now).forEach(function (l) { L.push(l); });
+      if (ev.every100) {  // the 100-day marks of a date (100, 200, ...): one repeating event, the first one 100 days after the date
+        vevent({ uid: ev.uid + '-100', title: ev.title + ' から100日', date: C.addDays(ev.date, 100), rrule: 'FREQ=DAILY;INTERVAL=100;COUNT=60', alarm: ev.alarm }, now)
+          .forEach(function (l) { L.push(l); });
+      }
+    });
+    L.push('END:VCALENDAR');
+    return L.map(fold).join('\r\n') + '\r\n';
+  }
+  function download(filename, text) {
+    var blob = new Blob([text], { type: 'text/calendar;charset=utf-8' }), url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1000);
+  }
+  root.AtomouICS = { build: build, download: download, fold: fold, esc: esc };
+})(typeof window !== 'undefined' ? window : this);
