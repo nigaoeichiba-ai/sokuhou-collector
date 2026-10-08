@@ -247,3 +247,42 @@ class PlannerInChrome(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+AFTER_SAVE_PAGE = """<!doctype html><meta charset="utf-8"><script>
+window.ATOMOU = { v: 'x', groups: ['締切・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' } }, vapid: 'BPublicKeyForTests' };
+localStorage.setItem('atomou.v1', %(stored)s);
+</script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><div id="plan"></div><script src="%(app)s"></script><script src="%(plan)s"></script><script src="%(push)s"></script>
+<script>window.AtomouPush.afterSave(document.getElementById('plan'), %(quiet)s); var el = document.getElementById('after-save');
+document.getElementById('out').textContent = JSON.stringify({ shown: !!el, text: el ? el.textContent : '', button: !!(el && el.querySelector('button')) });</script>"""
+
+
+@unittest.skipUnless(find_chrome(), "browser checks run locally")
+class AfterSaveInChrome(unittest.TestCase):
+    IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"
+
+    def run_page(self, ua: str, quiet: bool) -> dict:
+        stored = {"v": 1, "entries": [], "prefs": {}}
+        with tempfile.TemporaryDirectory() as td:
+            page = Path(td) / "p.html"
+            page.write_text(AFTER_SAVE_PAGE % {"stored": json.dumps(json.dumps(stored)), "quiet": "true" if quiet else "false",
+                                               **{n: (ASSETS / f"{n}.js").as_uri() for n in ("core", "ics", "app", "plan", "push")}}, encoding="utf-8")
+            r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={Path(td) / 'prof'}", "--virtual-time-budget=4000",
+                                f"--user-agent={ua}", "--dump-dom", page.as_uri() + "?today=2026-10-08"], capture_output=True, timeout=120)
+        dom = r.stdout.decode("utf-8", "replace")
+        a = dom.index('<pre id="out">') + len('<pre id="out">')
+        return json.loads(html.unescape(dom[a:dom.index("</pre>", a)]))
+
+    def test_iphone_safari_is_told_why_and_how_to_keep_the_day(self):
+        # 2026-10-09 review: Safari removes script-written storage after about a week without a visit; the home-screen icon is exempt
+        for quiet in (False, True):    # the same advice for a quiet (memorial) day: it is about not losing it
+            r = self.run_page(self.IPHONE, quiet)
+            self.assertTrue(r["shown"])
+            self.assertIn("ホーム画面に追加", r["text"])
+            self.assertIn("消すことがあります", r["text"])
+            self.assertFalse(r["button"])                     # nothing to press: the steps are the share button's
+
+    def test_a_browser_that_cannot_push_and_is_not_an_iphone_gets_no_card(self):
+        # a file: page is not a secure context for the page's purposes (supported() is false), so nothing is offered and nothing breaks
+        r = self.run_page("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36", False)
+        self.assertFalse(r["shown"])
