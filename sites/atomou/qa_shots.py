@@ -20,7 +20,7 @@ TODAY = "2026-10-08"
 PAGES = {  # name -> (path, {width: height})
     "home": ("/", {500: 3000, 1280: 2200}), "search": ("/search/?q=%E5%B9%B4%E8%B3%80", {500: 1900, 1280: 1500}), "my": ("/my/", {500: 1400}),
     "add": ("/add/?kind=anniversary", {500: 1700, 1280: 1300}), "skins": ("/skins/", {500: 3200, 1280: 2000}), "use": ("/use/", {500: 3000}),
-    "usecase": ("/use/couple-anniversary/", {500: 1800, 1280: 1400}), "category": ("/c/deadline/", {500: 2400}), "manual": ("/manual/", {500: 5200}),
+    "usecase": ("/use/couple-anniversary/", {500: 1800, 1280: 1400}), "category": ("/c/deadline/", {500: 2400}), "manual": ("/manual/", {500: 5200}), "today": ("/today/", {500: 3400, 1280: 2200}),
 }
 
 
