@@ -6,7 +6,9 @@ name: deploy-sites
 #   XSERVER_HOST      e.g. sv8477.xserver.jp
 #   XSERVER_USER      the Xserver server ID (the SSH user name)
 # The kuma site is built and uploaded only when the repository variable DEPLOY_KUMA is "true" (set after the
-# owner has added kuma-sokuho.com to the Xserver server); the same switch for minna-no-illust.com is DEPLOY_MINNA.
+# owner has added kuma-sokuho.com to the Xserver server); the same switch for minna-no-illust.com is DEPLOY_MINNA and for atomou.com DEPLOY_ATOMOU.
+# atomou is still a DEMO and must not be reachable: it is deployed only when BOTH DEPLOY_ATOMOU and ATOMOU_PUBLIC are "true" (ATOMOU_PUBLIC = release build, indexable).
+# A password-protected demo deploy is not wired yet, so DEPLOY_ATOMOU alone deploys nothing.
 #
 # Manual runs are a check only unless "Really deploy" is ticked: they build, run the tests and prove that the
 # SSH login and the target folder work, but change nothing on the server.
@@ -33,7 +35,7 @@ on:
         type: boolean
         default: false
       only:
-        description: "Only this site (saichin, kuma, yorokobu, minna); empty = every site (kuma-live.yml uses it after each data collection)"
+        description: "Only this site (saichin, kuma, yorokobu, minna, atomou); empty = every site (kuma-live.yml uses it after each data collection)"
         type: string
         default: ""
 
@@ -82,6 +84,14 @@ jobs:
             min_cards: 0
             marker: みんなのイラスト
             probe: /sitemap-images.xml
+          - site: atomou
+            dir: atomou.com
+            url: https://atomou.com
+            build: python sites/atomou/build.py ${{ vars.ATOMOU_PUBLIC == 'true' && '--release' || '' }} --out release
+            min_pages: 60
+            min_cards: 0
+            marker: あと何日、もう何日
+            probe: /assets/catalog.json
     concurrency:
       # sites that call the Rakuten API share one queue (one application ID, about one request per second), so two such jobs never run at once
       group: ${{ matrix.site == 'yorokobu' && 'rakuten-api' || format('deploy-{0}', matrix.site) }}
@@ -102,6 +112,8 @@ jobs:
           KUMA: ${{ vars.DEPLOY_KUMA }}
           YOROKOBU: ${{ vars.DEPLOY_YOROKOBU }}
           MINNA: ${{ vars.DEPLOY_MINNA }}
+          ATOMOU: ${{ vars.DEPLOY_ATOMOU }}
+          ATOMOU_PUBLIC: ${{ vars.ATOMOU_PUBLIC }}
           RK_APP: ${{ secrets.RAKUTEN_APP_ID }}
           RK_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           SITE: ${{ matrix.site }}
@@ -124,6 +136,7 @@ jobs:
                 case "$f" in
                   sites/yorokobu/*|tests/test_yorokobu*|tests/fixtures/yorokobu/*|data/yorokobu*) owner=yorokobu ;;
                   sites/minna/*|tests/test_minna*) owner=minna ;;
+                  sites/atomou/*|tests/test_atomou*|tests/fixtures/atomou/*|data/atomou/*) owner=atomou ;;
                   sites/kuma/*|tests/test_kuma*|tests/test_*_kuma.py|tests/test_otsu_bear.py|tests/fixtures/*kuma*|tests/fixtures/otsu_bear*|data/*_kuma.json|data/otsu_bear.json|sokuhou/sources/*_kuma.py|sokuhou/sources/otsu_bear.py) owner=kuma ;;
                   *) owner=shared ;;
                 esac
@@ -149,6 +162,10 @@ jobs:
           fi
           if [ "$SITE" = "minna" ] && [ "$MINNA" != "true" ]; then
             echo "DEPLOY_MINNA is not true; the minna site is skipped"
+            go=false
+          fi
+          if [ "$SITE" = "atomou" ] && { [ "$ATOMOU" != "true" ] || [ "$ATOMOU_PUBLIC" != "true" ]; }; then
+            echo "atomou is a demo: it is deployed only when DEPLOY_ATOMOU and ATOMOU_PUBLIC are both true; the atomou site is skipped"
             go=false
           fi
           echo "go=$go" >> "$GITHUB_OUTPUT"
