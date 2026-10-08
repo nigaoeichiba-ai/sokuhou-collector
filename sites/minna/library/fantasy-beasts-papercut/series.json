@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-09",
+ "slug": "fantasy-beasts-papercut",
+ "title": "空想の生きもの 切り絵風",
+ "genre": "animals",
+ "touch": "papercut",
+ "lead": "雲のくじら、星をくわえたきつね、森のかさ鹿。オリジナルの空想の生きもの12点を、切り絵のように重ねた紙のタッチで。絵本、ポスター、ゲームの素材に。",
+ "tags": [
+  "空想",
+  "ファンタジー",
+  "幻獣",
+  "切り絵",
+  "オリジナル",
+  "動物",
+  "絵本"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "fantasy-beasts-papercut-cloud-whale",
+   "file": "fantasy-beasts-papercut-cloud-whale.webp",
+   "title": "雲のくじら",
+   "desc": "雲のくじらのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "雲のくじら",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 523,
+   "h": 404
+  },
+  {
+   "id": "fantasy-beasts-papercut-star-fox",
+   "file": "fantasy-beasts-papercut-star-fox.webp",
+   "title": "星をくわえたきつね",
+   "desc": "星をくわえたきつねのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "星をくわえたきつね",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 500,
+   "h": 493
+  },
+  {
+   "id": "fantasy-beasts-papercut-forest-deer",
+   "file": "fantasy-beasts-papercut-forest-deer.webp",
+   "title": "森のかさ鹿",
+   "desc": "森のかさ鹿のイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "森のかさ鹿",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 451,
+   "h": 509
+  },
+  {
+   "id": "fantasy-beasts-papercut-moon-rabbit",
+   "file": "fantasy-beasts-papercut-moon-rabbit.webp",
+   "title": "月のうさぎ",
+   "desc": "月のうさぎのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "月のうさぎ",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 425,
+   "h": 505
+  },
+  {
+   "id": "fantasy-beasts-papercut-sea-turtle",
+   "file": "fantasy-beasts-papercut-sea-turtle.webp",
+   "title": "うみがめの島",
+   "desc": "うみがめの島のイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "うみがめの島",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 536,
+   "h": 484
+  },
+  {
+   "id": "fantasy-beasts-papercut-sky-fish",
+   "file": "fantasy-beasts-papercut-sky-fish.webp",
+   "title": "そらとぶ魚",
+   "desc": "そらとぶ魚のイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "そらとぶ魚",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 492,
+   "h": 490
+  },
+  {
+   "id": "fantasy-beasts-papercut-owl-lamp",
+   "file": "fantasy-beasts-papercut-owl-lamp.webp",
+   "title": "ランプふくろう",
+   "desc": "ランプふくろうのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "ランプふくろう",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 432,
+   "h": 480
+  },
+  {
+   "id": "fantasy-beasts-papercut-dragon",
+   "file": "fantasy-beasts-papercut-dragon.webp",
+   "title": "まるいりゅう",
+   "desc": "まるいりゅうのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "まるいりゅう",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 499,
+   "h": 485
+  },
+  {
+   "id": "fantasy-beasts-papercut-bear-berry",
+   "file": "fantasy-beasts-papercut-bear-berry.webp",
+   "title": "ベリーぐま",
+   "desc": "ベリーぐまのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "ベリーぐま",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 493,
+   "h": 488
+  },
+  {
+   "id": "fantasy-beasts-papercut-snow-bird",
+   "file": "fantasy-beasts-papercut-snow-bird.webp",
+   "title": "雪のとり",
+   "desc": "雪のとりのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "雪のとり",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 480,
+   "h": 505
+  },
+  {
+   "id": "fantasy-beasts-papercut-flower-cat",
+   "file": "fantasy-beasts-papercut-flower-cat.webp",
+   "title": "花ねこ",
+   "desc": "花ねこのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "花ねこ",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 525,
+   "h": 475
+  },
+  {
+   "id": "fantasy-beasts-papercut-wind-horse",
+   "file": "fantasy-beasts-papercut-wind-horse.webp",
+   "title": "風のうま",
+   "desc": "風のうまのイラスト。切り絵・ペーパークラフトのタッチ。",
+   "tags": [
+    "空想",
+    "ファンタジー",
+    "幻獣",
+    "切り絵",
+    "空想の生きもの 切り絵風",
+    "風のうま",
+    "切り絵・ペーパークラフト",
+    "どうぶつ"
+   ],
+   "w": 510,
+   "h": 524
+  }
+ ]
+}

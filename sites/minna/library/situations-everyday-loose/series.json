@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-09",
+ "slug": "situations-everyday-loose",
+ "title": "日常の場面 ゆるい手書き",
+ "genre": "life",
+ "touch": "loose",
+ "lead": "朝ごはん、満員電車、スマホを見る、ごろ寝。ありそうでなかった、日常のひとこまを12点。スライドやブログの「あるある」の挿絵に。",
+ "tags": [
+  "日常",
+  "あるある",
+  "くらし",
+  "ゆるい",
+  "人物",
+  "ブログ",
+  "スライド"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "situations-everyday-loose-breakfast",
+   "file": "situations-everyday-loose-breakfast.webp",
+   "title": "朝ごはん",
+   "desc": "朝ごはんのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "朝ごはん",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 336,
+   "h": 448
+  },
+  {
+   "id": "situations-everyday-loose-train",
+   "file": "situations-everyday-loose-train.webp",
+   "title": "満員電車",
+   "desc": "満員電車のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "満員電車",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 409,
+   "h": 461
+  },
+  {
+   "id": "situations-everyday-loose-phone",
+   "file": "situations-everyday-loose-phone.webp",
+   "title": "スマホを見る",
+   "desc": "スマホを見るのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "スマホを見る",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 451,
+   "h": 402
+  },
+  {
+   "id": "situations-everyday-loose-gorogoro",
+   "file": "situations-everyday-loose-gorogoro.webp",
+   "title": "ごろ寝",
+   "desc": "ごろ寝のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "ごろ寝",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 467,
+   "h": 311
+  },
+  {
+   "id": "situations-everyday-loose-laundry",
+   "file": "situations-everyday-loose-laundry.webp",
+   "title": "洗濯物をほす",
+   "desc": "洗濯物をほすのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "洗濯物をほす",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 454,
+   "h": 425
+  },
+  {
+   "id": "situations-everyday-loose-shopping",
+   "file": "situations-everyday-loose-shopping.webp",
+   "title": "スーパーで買い物",
+   "desc": "スーパーで買い物のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "スーパーで買い物",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 403,
+   "h": 442
+  },
+  {
+   "id": "situations-everyday-loose-umbrella",
+   "file": "situations-everyday-loose-umbrella.webp",
+   "title": "雨の日の通勤",
+   "desc": "雨の日の通勤のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "雨の日の通勤",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 339,
+   "h": 482
+  },
+  {
+   "id": "situations-everyday-loose-cook",
+   "file": "situations-everyday-loose-cook.webp",
+   "title": "夕ごはんを作る",
+   "desc": "夕ごはんを作るのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "夕ごはんを作る",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 354,
+   "h": 412
+  },
+  {
+   "id": "situations-everyday-loose-bath",
+   "file": "situations-everyday-loose-bath.webp",
+   "title": "お風呂でひと息",
+   "desc": "お風呂でひと息のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "お風呂でひと息",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 449,
+   "h": 387
+  },
+  {
+   "id": "situations-everyday-loose-late",
+   "file": "situations-everyday-loose-late.webp",
+   "title": "寝ぼうして走る",
+   "desc": "寝ぼうして走るのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "寝ぼうして走る",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 413,
+   "h": 455
+  },
+  {
+   "id": "situations-everyday-loose-call",
+   "file": "situations-everyday-loose-call.webp",
+   "title": "電話で話す",
+   "desc": "電話で話すのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "電話で話す",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 255,
+   "h": 478
+  },
+  {
+   "id": "situations-everyday-loose-sleep",
+   "file": "situations-everyday-loose-sleep.webp",
+   "title": "ふとんでぐっすり",
+   "desc": "ふとんでぐっすりのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "日常",
+    "あるある",
+    "くらし",
+    "ゆるい",
+    "日常の場面 ゆるい手書き",
+    "ふとんでぐっすり",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 492,
+   "h": 439
+  }
+ ]
+}

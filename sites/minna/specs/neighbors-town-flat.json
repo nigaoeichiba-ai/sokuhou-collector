@@ -1,0 +1,85 @@
+{
+ "slug": "neighbors-town-flat",
+ "title": "町のいろいろな人 フラット",
+ "subject": "",
+ "genre": "people",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Community workers each shown as ONE friendly person at work with a typical prop, simple flat style, varied ages and skin tones, 4.5-head proportion, simple dot eyes. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters.",
+ "lead": "駅員、配達員、八百屋さん、消防士、図書館員。町で働く人たちを、顔の見えるフラットなタッチで12点。地域のお知らせや、学校の学習資料に。",
+ "tags": [
+  "町",
+  "職業",
+  "仕事",
+  "地域",
+  "お知らせ",
+  "学習",
+  "人物"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "station",
+   "駅員さん",
+   "a station attendant in uniform and cap with a signal paddle"
+  ],
+  [
+   "post",
+   "郵便配達員さん",
+   "a mail carrier with a bag on a scooter"
+  ],
+  [
+   "greengrocer",
+   "八百屋さん",
+   "a greengrocer with an apron beside a crate of vegetables"
+  ],
+  [
+   "fire",
+   "消防士さん",
+   "a firefighter in a helmet holding a hose"
+  ],
+  [
+   "library",
+   "図書館員さん",
+   "a librarian with a cart of books"
+  ],
+  [
+   "baker",
+   "パン屋さん",
+   "a baker holding a tray of bread"
+  ],
+  [
+   "police",
+   "おまわりさん",
+   "a police officer waving traffic"
+  ],
+  [
+   "bus",
+   "バスの運転手さん",
+   "a bus driver at the wheel, smiling"
+  ],
+  [
+   "garbage",
+   "清掃員さん",
+   "a sanitation worker with a broom and a cart"
+  ],
+  [
+   "nurse",
+   "看護師さん",
+   "a nurse holding a clipboard"
+  ],
+  [
+   "farmer",
+   "農家さん",
+   "a farmer with a straw hat holding a radish"
+  ],
+  [
+   "teacher",
+   "先生",
+   "a teacher pointing at a blank blackboard"
+  ]
+ ],
+ "exclude": [],
+ "priority": 27
+}

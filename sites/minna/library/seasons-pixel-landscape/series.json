@@ -1,0 +1,225 @@
+{
+ "added": "2026-10-09",
+ "slug": "seasons-pixel-landscape",
+ "title": "四季の風景 ドット絵",
+ "genre": "nature",
+ "touch": "pixel",
+ "lead": "春の桜、夏の海、秋の紅葉、冬の雪。四季の小さな風景を、ゲームのようなドット絵で12点。ブログのアイキャッチやゲーム風デザインに。",
+ "tags": [
+  "ドット絵",
+  "風景",
+  "四季",
+  "レトロゲーム",
+  "春夏秋冬",
+  "背景"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "seasons-pixel-landscape-spring-sakura",
+   "file": "seasons-pixel-landscape-spring-sakura.webp",
+   "title": "春の桜並木",
+   "desc": "春の桜並木のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "春の桜並木",
+    "花・自然"
+   ],
+   "w": 497,
+   "h": 428
+  },
+  {
+   "id": "seasons-pixel-landscape-spring-field",
+   "file": "seasons-pixel-landscape-spring-field.webp",
+   "title": "菜の花畑",
+   "desc": "菜の花畑のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "菜の花畑",
+    "花・自然"
+   ],
+   "w": 505,
+   "h": 420
+  },
+  {
+   "id": "seasons-pixel-landscape-summer-sea",
+   "file": "seasons-pixel-landscape-summer-sea.webp",
+   "title": "夏の海",
+   "desc": "夏の海のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "夏の海",
+    "花・自然"
+   ],
+   "w": 513,
+   "h": 439
+  },
+  {
+   "id": "seasons-pixel-landscape-summer-fireworks",
+   "file": "seasons-pixel-landscape-summer-fireworks.webp",
+   "title": "夏の花火",
+   "desc": "夏の花火のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "夏の花火",
+    "花・自然"
+   ],
+   "w": 501,
+   "h": 455
+  },
+  {
+   "id": "seasons-pixel-landscape-autumn-maple",
+   "file": "seasons-pixel-landscape-autumn-maple.webp",
+   "title": "秋の紅葉",
+   "desc": "秋の紅葉のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "秋の紅葉",
+    "花・自然"
+   ],
+   "w": 510,
+   "h": 450
+  },
+  {
+   "id": "seasons-pixel-landscape-autumn-harvest",
+   "file": "seasons-pixel-landscape-autumn-harvest.webp",
+   "title": "秋の収穫",
+   "desc": "秋の収穫のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "秋の収穫",
+    "花・自然"
+   ],
+   "w": 517,
+   "h": 431
+  },
+  {
+   "id": "seasons-pixel-landscape-winter-snow",
+   "file": "seasons-pixel-landscape-winter-snow.webp",
+   "title": "冬の雪原",
+   "desc": "冬の雪原のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "冬の雪原",
+    "花・自然"
+   ],
+   "w": 507,
+   "h": 440
+  },
+  {
+   "id": "seasons-pixel-landscape-winter-house",
+   "file": "seasons-pixel-landscape-winter-house.webp",
+   "title": "雪の家",
+   "desc": "雪の家のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "雪の家",
+    "花・自然"
+   ],
+   "w": 479,
+   "h": 480
+  },
+  {
+   "id": "seasons-pixel-landscape-rain",
+   "file": "seasons-pixel-landscape-rain.webp",
+   "title": "雨の街",
+   "desc": "雨の街のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "雨の街",
+    "花・自然"
+   ],
+   "w": 510,
+   "h": 441
+  },
+  {
+   "id": "seasons-pixel-landscape-night-town",
+   "file": "seasons-pixel-landscape-night-town.webp",
+   "title": "夜の町",
+   "desc": "夜の町のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "夜の町",
+    "花・自然"
+   ],
+   "w": 513,
+   "h": 474
+  },
+  {
+   "id": "seasons-pixel-landscape-mountain",
+   "file": "seasons-pixel-landscape-mountain.webp",
+   "title": "山と湖",
+   "desc": "山と湖のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "山と湖",
+    "花・自然"
+   ],
+   "w": 514,
+   "h": 461
+  },
+  {
+   "id": "seasons-pixel-landscape-farm",
+   "file": "seasons-pixel-landscape-farm.webp",
+   "title": "のどかな畑",
+   "desc": "のどかな畑のイラスト。ドット絵のタッチ。",
+   "tags": [
+    "ドット絵",
+    "風景",
+    "四季",
+    "レトロゲーム",
+    "四季の風景 ドット絵",
+    "のどかな畑",
+    "花・自然"
+   ],
+   "w": 520,
+   "h": 472
+  }
+ ]
+}
