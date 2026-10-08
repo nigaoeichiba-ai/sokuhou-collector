@@ -4,14 +4,15 @@
   'use strict';
   var A = window.AtomouApp;
   if (!A || !A.CONF.members) return;
-  var $ = A.$, H = A.H, S = A.state, API = '/api/m.php';
+  var $ = A.$, H = A.H, S = A.state, API = '/api/m.php', MC = A.CONF.members || {}, TIERS = MC.tiers || {};
   function call(body) {
     return fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(Object.assign({ v: 1 }, body)), credentials: 'same-origin' })
       .then(function (r) { return r.status === 204 ? { ok: true, data: {} } : r.json().then(function (j) { return { ok: r.ok, status: r.status, data: j }; }); });
   }
   function fmt(iso) { var d = A.C.parse(iso); return d ? d[0] + '年' + d[1] + '月' + d[2] + '日' : ''; }
+  function months(n) { return n % 12 === 0 ? (n / 12) + '年間' : n === 6 ? '半年間' : n + 'か月'; }
   function tierText(m) {
-    if (m.free_until && m.free_until >= A.C.iso(A.TODAY)) return 'すべての機能を' + fmt(m.free_until) + 'まで使えます(' + (m.tier === 'referred' ? '紹介' : '先着') + ')。';
+    if (m.free_until && m.free_until >= A.C.iso(A.TODAY)) return 'すべての機能を' + fmt(m.free_until) + 'まで使えます(' + (m.tier === 'referred' ? '紹介' : (TIERS[m.tier] || '先着')) + ')。';
     return '無料プランです。';
   }
 
@@ -30,10 +31,17 @@
     var me = null, email = '';
     function view(html) { box.querySelector('.m-body').innerHTML = html; }
     function stepOut() {
-      view('<p>会員になると、メールのお知らせと先着の特典を使えます。無料で、パスワードはありません。</p>' +
+      view('<p>会員になると、メールのお知らせと先着の特典を使えます。無料で、パスワードはありません。</p><p class="notice" id="m-seats" hidden></p>' +
         '<div class="field"><label for="m-email">メールアドレス</label><input type="email" id="m-email" autocomplete="email" inputmode="email" value="' + H(email) + '"></div>' +
         '<p><button type="button" class="btn" id="m-send">確認コードを送る</button></p>' +
         '<p class="hint">コードを入力すると、<a href="/terms/">利用規約</a>と<a href="/privacy/#members">プライバシーポリシー</a>に同意したことになります。</p>');
+      call({ a: 'seats' }).then(function (r) {
+        var d = r.ok && r.data, el = $('#m-seats');
+        if (!el || !d) return;
+        el.innerHTML = d.tier ? '<b>' + H(TIERS[d.tier] || '先着') + '</b>: 残り' + d.left + '名。いま登録すると、登録日から' + months(d.months) + 'すべての機能が無料です。'
+          : '先着の枠は埋まりました。紹介リンクから登録すると、' + months(MC.ref) + 'すべての機能が無料です。';
+        el.hidden = false;
+      }).catch(function () { /* the counter is a nicety */ });
       $('#m-send').addEventListener('click', function () {
         email = $('#m-email').value.trim();
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { A.toast('メールアドレスを確かめてください。'); return; }
@@ -64,7 +72,7 @@
       view('<p><b>' + H(me.email) + '</b><br>' + H(tierText(me)) + '</p>' +
         '<div class="field"><label class="lab" for="m-notice"><input type="checkbox" id="m-notice"' + (me.notices.on ? ' checked' : '') + '> メールでもお知らせする(通知と同じ日・同じ時間)</label></div>' +
         '<p class="hint">オンにすると、知らせる日と予定の名前(短く)をサーバーに預かります。オフにすると消します。</p>' +
-        '<h3>紹介</h3><p>この紹介リンクから登録した人は、半年間すべての機能を使えます。あなたにも同じ期間が足されます(上限あり)。</p>' +
+        '<h3>紹介</h3><p>この紹介リンクから登録した人は、' + months(MC.ref) + 'すべての機能を無料で使えます。1人の登録につき、あなたにも' + months(MC.give) + '足されます(' + MC.cap + '人まで)。</p>' +
         '<p><input type="text" readonly value="' + H(link) + '" id="m-link"> <button type="button" class="btn small ghost" id="m-copy">コピー</button></p>' +
         '<p><button type="button" class="btn small ghost" id="m-logout">ログアウト</button> <button type="button" class="btn small ghost" id="m-delete">退会する</button></p>');
       $('#m-copy').addEventListener('click', function () { try { navigator.clipboard.writeText(link).then(function () { A.toast('コピーしました。'); }); } catch (e) { $('#m-link').select(); } });

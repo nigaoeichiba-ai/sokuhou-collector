@@ -10,7 +10,8 @@ header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 header('X-Robots-Tag: noindex');
 $TIERS = __TIERS__;             // first-come tiers in order: [{"id":"tester","size":100,"months":18}, ...]  (from config.json; the owner decides the numbers)
-$REF_MONTHS = __REF_MONTHS__;   // months a referred member gets after the tiers are full, and the referrer per referral (single level, capped)
+$REF_MONTHS = __REF_MONTHS__;   // months a referred member gets after the tiers are full
+$REF_GIVE = __REF_GIVE__;       // months the referrer gets per referral (single level, capped)
 $REF_CAP = __REF_CAP__;         // the most referrals a member is rewarded for
 $MAIL_FROM = '__MAIL_FROM__';   // the sender of the code mails (owner: a mailbox of the domain with SPF/DKIM)
 $SITE_NAME = '__SITE_NAME__';
@@ -150,7 +151,7 @@ if ($a === 'verify') {
             if ($rm && (int)($rm['referrals'] ?? 0) < $REF_CAP) {
                 $rm['referrals'] = (int)($rm['referrals'] ?? 0) + 1;
                 $base = ($rm['free_until'] !== '' && $rm['free_until'] > $today) ? $rm['free_until'] : $today;
-                $rm['free_until'] = months_later($base, $REF_MONTHS);
+                $rm['free_until'] = months_later($base, $REF_GIVE);
                 save_member($root, $ref_by, $rm);
             }
         }
@@ -162,6 +163,13 @@ if ($a === 'verify') {
     save_member($root, $id, $m);
     set_cookie($id . '.' . $secret, $exp);
     out(200, array('member' => public_view($m)));
+}
+
+if ($a === 'seats') {   // public: which first-come tier is open and how many places are left (no personal data)
+    $c = is_file($root . '/counter.json') ? json_decode((string)file_get_contents($root . '/counter.json'), true) : null;
+    $n = is_array($c) ? (int)($c['n'] ?? 0) : 0; $acc = 0;
+    foreach ($TIERS as $t) { $acc += (int)$t['size']; if ($n < $acc) { out(200, array('tier' => $t['id'], 'left' => $acc - $n, 'size' => (int)$t['size'], 'months' => (int)$t['months'])); } }
+    out(200, array('tier' => '', 'left' => 0, 'size' => 0, 'months' => 0, 'ref_months' => $REF_MONTHS));
 }
 
 $s = session_member($root);

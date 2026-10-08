@@ -20,15 +20,18 @@
   "member_tiers": [
     {
       "id": "tester",
+      "label": "先着テスター100名",
       "size": 100,
       "months": 18
     },
     {
       "id": "first",
+      "label": "先着300名",
       "size": 300,
       "months": 12
     }
   ],
   "member_ref_months": 6,
-  "member_ref_cap": 6
+  "member_ref_cap": 12,
+  "member_ref_give_months": 1
 }
