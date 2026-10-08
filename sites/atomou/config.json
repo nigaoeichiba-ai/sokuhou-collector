@@ -4,10 +4,31 @@
   "operator_name": "株式会社MACS",
   "contact_email": null,
   "contact_own": true,
-  "contact_kinds": ["日付の間違いのご指摘", "載せてほしい日のご要望", "不具合・ご意見", "その他"],
+  "contact_kinds": [
+    "日付の間違いのご指摘",
+    "載せてほしい日のご要望",
+    "不具合・ご意見",
+    "その他"
+  ],
   "adsense_pub_id": null,
   "google_site_verification": null,
   "google_client_id": "891343099225-me934is0n6g79dpqhtlpui8qqf428o5t.apps.googleusercontent.com",
   "launch_date": "2026-10-08",
-  "index_per_week": 6
+  "index_per_week": 6,
+  "vapid_public": null,
+  "member_mail_from": null,
+  "member_tiers": [
+    {
+      "id": "tester",
+      "size": 100,
+      "months": 18
+    },
+    {
+      "id": "first",
+      "size": 300,
+      "months": 12
+    }
+  ],
+  "member_ref_months": 6,
+  "member_ref_cap": 6
 }
