@@ -34,7 +34,7 @@
   function statsDefault() {  // statistics are on unless the browser says "do not track" (DNT / Global Privacy Control)
     try { return !(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.globalPrivacyControl === true); } catch (e) { return true; }
   }
-  function blank() { return { v: 1, updated: '', entries: [], deleted: [], saved: [], order: [], genre: {}, notes: {}, prefs: { skin: 'basic', big: false, alarm: 'morning', stats: statsDefault(), push: false, pushHash: '', blocks: { order: [], hidden: [] }, tour: {} } }; }
+  function blank() { return { v: 1, updated: '', entries: [], deleted: [], saved: [], order: [], genre: {}, notes: {}, prefs: { skin: 'basic', big: false, skinAuto: false, skinNight: 'dark', nightAsked: false, alarm: 'morning', stats: statsDefault(), push: false, pushHash: '', blocks: { order: [], hidden: [] }, tour: {} } }; }
   function oneOf(v, list, dflt) { return list.indexOf(v) >= 0 ? v : dflt; }
   function cleanEntry(e) {  // whatever is in storage (or in a restored backup, or in a synced file) is reduced to known shapes before it can reach the page
     if (!e || typeof e !== 'object') return null;
@@ -71,6 +71,9 @@
     (CONF.groups || []).forEach(function (g) { var n = o.genre && +o.genre[g]; if (n > 0) s.genre[g] = Math.min(20, Math.floor(n)); });
     s.prefs.skin = CONF.skins[p.skin] ? p.skin : 'basic';
     s.prefs.big = !!p.big;
+    s.prefs.skinAuto = !!p.skinAuto;   // follow the device: the night skin when the device is set dark
+    s.prefs.skinNight = CONF.skins[p.skinNight] && CONF.skins[p.skinNight].dark ? p.skinNight : 'dark';
+    s.prefs.nightAsked = !!p.nightAsked;
     s.prefs.alarm = oneOf(p.alarm, ['morning', 'eve', 'week', 'none'], 'morning');
     s.prefs.stats = p.stats === undefined ? statsDefault() : !!p.stats;
     s.prefs.push = !!p.push;
@@ -507,8 +510,10 @@
       if (!document.querySelector('link[href^="' + name + '"]')) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = u; document.head.appendChild(l); }
     });
   }
+  function deviceIsDark() { try { return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); } catch (e) { return false; } }
+  try { var mq = window.matchMedia('(prefers-color-scheme: dark)'); if (mq.addEventListener) mq.addEventListener('change', function () { if (S.prefs.skinAuto) applyPrefs(); }); } catch (e) { /* ignore */ }
   function applyPrefs() {
-    var r = document.documentElement, id = (P.skin && CONF.skins[P.skin]) ? P.skin : S.prefs.skin, sk = CONF.skins[id];  // ?skin= is for screenshots and tests
+    var r = document.documentElement, id = (P.skin && CONF.skins[P.skin]) ? P.skin : (S.prefs.skinAuto && deviceIsDark() && CONF.skins[S.prefs.skinNight]) ? S.prefs.skinNight : S.prefs.skin, sk = CONF.skins[id];  // ?skin= is for screenshots and tests
     if (!sk || id === 'basic') { r.removeAttribute('data-skin'); r.setAttribute('data-card', 'plain'); SKIN_ATTRS.forEach(function (k) { r.removeAttribute('data-' + k); }); }
     else {
       ensureSkinCss();
@@ -528,6 +533,11 @@
   }
   function renderSeason() {
     var box = $('#season'), id = seasonSkin();
+    if (box && !P.today && deviceIsDark() && !S.prefs.skinAuto && !S.prefs.nightAsked && !CONF.skins[S.prefs.skin].dark) {   // the first time on a device set to dark: offer, never switch by itself
+      box.hidden = false;
+      box.innerHTML = '<span>この端末は暗い設定です。暗い配色にしますか。</span><button type="button" class="btn small" data-night="1">暗い配色にする</button><button type="button" class="btn small ghost" data-night="0">このまま</button>';
+      return;
+    }
     if (!box || !id || S.prefs.skin === id || (S.prefs.seasonOff === id)) return;
     var sk = CONF.skins[id];
     box.hidden = false;
@@ -535,19 +545,33 @@
       '<button type="button" class="mini" data-season-off="' + H(id) + '" aria-label="閉じる">×</button>';
   }
   document.addEventListener('click', function (ev) {
+    var nt = ev.target.closest ? ev.target.closest('[data-night]') : null;
+    if (nt) {
+      S.prefs.nightAsked = true; S.prefs.skinAuto = nt.getAttribute('data-night') === '1'; persist(); applyPrefs();
+      var nb = $('#season'); if (nb) nb.hidden = true;
+      stat('act:night_' + (S.prefs.skinAuto ? 'on' : 'off'));
+      toast(S.prefs.skinAuto ? '暗い設定のときは、暗い配色にします。「きせかえ」で変えられます。' : '今のままにします。「きせかえ」でいつでも変えられます。');
+      return;
+    }
     var on = ev.target.closest ? ev.target.closest('[data-season]') : null, off = ev.target.closest ? ev.target.closest('[data-season-off]') : null;
     if (on) { S.prefs.skin = on.getAttribute('data-season'); persist(); applyPrefs(); stat('act:skin:' + S.prefs.skin); var bx = $('#season'); if (bx) bx.hidden = true; toast('きせかえを変えました。「きせかえ」からいつでも戻せます。'); }
     else if (off) { S.prefs.seasonOff = off.getAttribute('data-season-off'); persist(); var b2 = $('#season'); if (b2) b2.hidden = true; }
   });
   function pageSkins() {
     var box = $('#skin-list');
-    function mark() { $$('.skin', box).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-skin') === S.prefs.skin ? 'true' : 'false'); }); }
+    function shown() { return S.prefs.skinAuto && deviceIsDark() ? S.prefs.skinNight : S.prefs.skin; }
+    function mark() { $$('.skin', box).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-skin') === shown() ? 'true' : 'false'); }); }
     box.addEventListener('click', function (ev) {
       var b = ev.target.closest('.skin');
       if (!b) return;
-      S.prefs.skin = b.getAttribute('data-skin'); persist(); applyPrefs(); mark(); stat('act:skin:' + S.prefs.skin);
-      toast('「' + b.getAttribute('data-name') + '」にしました。');
+      var picked = b.getAttribute('data-skin');
+      if (S.prefs.skinAuto && CONF.skins[picked] && CONF.skins[picked].dark) S.prefs.skinNight = picked;   // with "follow the device" on, a dark pick is the night skin
+      else S.prefs.skin = picked;
+      persist(); applyPrefs(); mark(); stat('act:skin:' + picked);
+      toast(S.prefs.skinAuto && deviceIsDark() && !(CONF.skins[picked] && CONF.skins[picked].dark) ? '昼の配色を「' + b.getAttribute('data-name') + '」にしました。暗い設定の間は、暗い配色のままです。' : '「' + b.getAttribute('data-name') + '」にしました。');
     });
+    var auto = $('#skin-auto');
+    if (auto) { auto.checked = !!S.prefs.skinAuto; auto.addEventListener('change', function () { S.prefs.skinAuto = auto.checked; S.prefs.nightAsked = true; persist(); applyPrefs(); stat('act:night_' + (auto.checked ? 'on' : 'off')); toast(auto.checked ? '暗い設定のときは、暗い配色にします。' : '端末の設定には合わせません。'); }); }
     mark();
   }
 
