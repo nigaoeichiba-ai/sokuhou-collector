@@ -107,7 +107,7 @@ def member_php(cfg: dict) -> str:
         if not (isinstance(t, dict) and re.fullmatch(r"[a-z0-9_-]{1,20}", str(t.get("id", ""))) and int(t.get("size", 0)) >= 0 and int(t.get("months", 0)) >= 0):
             raise BuildError(f"member_tiers: bad tier {t!r}")
     php = (HERE / "member_receiver.php.tpl").read_text(encoding="utf-8")
-    for k, v in (("__TIERS__", json.dumps([{"id": t["id"], "size": int(t["size"]), "months": int(t["months"])} for t in tiers])),
+    for k, v in (("__TIERS__", json.dumps([{"id": t["id"], "size": int(t["size"]), "months": int(t["months"]), "tester": bool(t.get("tester"))} for t in tiers])),
                  ("__REF_MONTHS__", str(int(cfg.get("member_ref_months", 6)))), ("__REF_GIVE__", str(int(cfg.get("member_ref_give_months", 1)))),
                  ("__REF_CAP__", str(int(cfg.get("member_ref_cap", 12)))),
                  ("__MAIL_FROM__", str(cfg["member_mail_from"]).replace("'", "")), ("__SITE_NAME__", NAME.replace("'", "")), ("__SITE_URL__", str(cfg["site_url"]).rstrip("/"))):
@@ -761,7 +761,7 @@ def terms_page(c: Ctx) -> str:
 <h2>1. 会員登録</h2>
 <p>会員登録は無料です。メールアドレスだけで登録でき、パスワードはありません。1人1つのメールアドレスで登録してください。13歳未満の方は、保護者の同意を得てください。</p>
 <h2>2. 無料期間と先着の特典</h2>
-<p>先着の人数までの会員は、登録日から決められた期間、すべての機能を無料で使えます。期間はマイページに表示します。人数と期間は当サイトが定め、途中で変えません。期間が終わっても、自動で料金がかかることはありません。</p>
+<p>先着の枠は 2 種類あり、同時に募集します。「先着テスター」と「先着」のどちらかを選んで登録します。どちらも、登録日から決められた期間、すべての機能を無料で使えます。先着テスターは、登録の1週間後と1か月後に、マイページに出る短いアンケート(1分ほど)に答えることが条件です。答えなかったときも、無料期間は取り消しません。先着テスターの枠が埋まっているときは、先着の枠で登録します。期間はマイページに表示します。人数と期間は当サイトが定め、途中で変えません。期間が終わっても、自動で料金がかかることはありません。</p>
 <h2>3. 紹介</h2>
 <p>紹介リンクから登録した人と、紹介した人には、無料期間が足されます(回数に上限があります)。特典は期間の延長だけで、お金や商品はありません。自分で自分を紹介すること、同じ人が複数のアドレスで登録することは、特典の対象外です。</p>
 <h2>4. お知らせのメール</h2>

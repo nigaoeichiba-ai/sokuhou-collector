@@ -226,7 +226,7 @@
       next = nextYearly(d, today); left = C.totalDays(today, next); passed = C.totalDays(lastYearly(d, today), today);
       var bd = e.kind === 'birthday';
       if (left === 0) return bd ? '今日は誕生日です。メッセージを送りませんか。' : '今日は記念日です。';
-      if (left <= 14) return left + '日後です。プレゼントや店の予約は、そろそろ決める頃です。';
+      if (left <= 14) return left + '日後です。プレゼントや店の予約は、もう決まりましたか？';
       if (passed >= 1 && passed <= 30) return bd ? '誕生日を少し過ぎました。メッセージは、いまからでも間に合います。' : '記念日を少し過ぎました。まだなら、ささやかなプレゼントや食事を。';
       return '';
     }
