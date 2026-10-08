@@ -1,0 +1,224 @@
+"""atomou: the use cases are complete, easy to read, calm where the day is a sad one, and never promise what the service cannot promise."""
+import copy
+import re
+import sys
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from sites.atomou import catalog, usecases  # noqa: E402
+
+QUIET_BANNED = ("おめでとう", "楽しい", "お得", "おすすめ", "セール", "!", "！")  # half-width and full-width exclamation marks
+PROMISE_BANNED = ("確実", "絶対", "必ず届", "忘れません")
+SLUG_RE = re.compile(r"^[a-z]+(-[a-z0-9]+)*$")
+FIELDS = {"slug": str, "title": str, "who": str, "situation": str, "steps": list, "catalog": (dict, type(None)), "own": (dict, type(None)),
+          "tips": list, "cautions": list, "quiet": bool, "group": str, "related": list}
+# words a visitor can filter the catalogue by: categories and the synonym tags of sites/atomou/catalog.py
+CATALOG_TAGS = set(catalog.GROUP_OF_CATEGORY) | {t for v in catalog.SYNONYMS.values() for t in v} | set(catalog.GROUPS)
+
+
+def texts(u):
+    """Every string a scenario can show, so a banned word cannot hide in a nested field."""
+    out = []
+
+    def walk(x):
+        if isinstance(x, str):
+            out.append(x)
+        elif isinstance(x, dict):
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, (list, tuple)):
+            for v in x:
+                walk(v)
+    walk(u)
+    return out
+
+
+def check_scenario(u, slugs=None, groups_order=None, catalog_groups=None):
+    """Return the list of problems of one scenario (a dict), so the check can be tried on bad data too."""
+    p = []
+    for k, typ in FIELDS.items():
+        if k not in u:
+            p.append(f"{k} がない")
+        elif not isinstance(u[k], typ):
+            p.append(f"{k} の型が違う")
+    if p:
+        return p
+    if not SLUG_RE.match(u["slug"]):
+        p.append("slug は英小文字とハイフンだけ")
+    if not u["title"] or len(u["title"]) > 25:
+        p.append("title は1〜25字")
+    if not u["who"] or len(u["who"]) > 20:
+        p.append("who は1〜20字")
+    if not 60 <= len(u["situation"]) <= 160:
+        p.append("situation は60〜160字")
+    if not 3 <= len(u["steps"]) <= 5 or not all(isinstance(s, str) and s for s in u["steps"]):
+        p.append("steps は3〜5個の文字列")
+    if not 1 <= len(u["tips"]) <= 3 or not all(isinstance(s, str) and s for s in u["tips"]):
+        p.append("tips は1〜3個の文字列")
+    if len(u["cautions"]) > 2 or not all(isinstance(s, str) and s for s in u["cautions"]):
+        p.append("cautions は0〜2個の文字列")
+    if len(u["related"]) > 3:
+        p.append("related は3個まで")
+    if slugs is not None:
+        for r in u["related"]:
+            if r not in slugs:
+                p.append(f"related の {r} がない")
+            if r == u["slug"]:
+                p.append("related が自分自身")
+    if groups_order is not None and u["group"] not in groups_order:
+        p.append("group が GROUPS_ORDER にない")
+    c = u["catalog"]
+    if c is not None:
+        if set(c) != {"group", "tags"}:
+            p.append("catalog の項目は group と tags")
+        else:
+            if c["group"] is not None and (catalog_groups is None or c["group"] not in catalog_groups):
+                p.append("catalog の group がカタログにない")
+            if not isinstance(c["tags"], list) or not all(isinstance(t, str) for t in c["tags"]):
+                p.append("catalog の tags は文字列のリスト")
+    o = u["own"]
+    if o is not None:
+        if set(o) != {"label", "kind", "hint"} or not all(isinstance(v, str) and v for v in o.values()):
+            p.append("own の項目は label・kind・hint")
+        elif o["kind"] not in usecases.KINDS:
+            p.append("own の kind が不明")
+    for t in texts(u):
+        for w in PROMISE_BANNED:
+            if w in t:
+                p.append(f"約束の言葉「{w}」")
+    if u["quiet"]:
+        for t in texts(u):
+            for w in QUIET_BANNED:
+                if w in t:
+                    p.append(f"静かな場面に禁句「{w}」")
+    return sorted(set(p))
+
+
+class UsecaseTests(unittest.TestCase):
+    def test_enough_scenarios(self):
+        self.assertGreaterEqual(len(usecases.USECASES), 25)
+
+    def test_slugs_unique(self):
+        slugs = [u["slug"] for u in usecases.USECASES]
+        self.assertEqual(len(slugs), len(set(slugs)))
+
+    def test_every_scenario_is_valid(self):
+        slugs = {u["slug"] for u in usecases.USECASES}
+        for u in usecases.USECASES:
+            with self.subTest(slug=u.get("slug")):
+                self.assertEqual(check_scenario(u, slugs, usecases.GROUPS_ORDER, set(catalog.GROUPS)), [])
+
+    def test_catalog_tags_exist_in_the_catalog_vocabulary(self):
+        for u in usecases.USECASES:
+            for t in (u["catalog"] or {}).get("tags", []):
+                with self.subTest(slug=u["slug"], tag=t):
+                    self.assertIn(t, CATALOG_TAGS)
+
+    def test_groups(self):
+        self.assertEqual(len(usecases.GROUPS_ORDER), len(set(usecases.GROUPS_ORDER)))
+        used = {u["group"] for u in usecases.USECASES}
+        self.assertEqual(used, set(usecases.GROUPS_ORDER), "使われない見出し、または未登録の見出しがある")
+        self.assertEqual(sum(len(v) for _, v in usecases.grouped()), len(usecases.USECASES))
+
+    def test_grief_scenes_exist_and_carry_no_catalog_or_ads(self):
+        quiet = [u for u in usecases.USECASES if u["quiet"]]
+        self.assertGreaterEqual(len(quiet), 4)
+        for u in quiet:
+            self.assertIsNone(u["catalog"], u["slug"])  # official sale/ad-friendly cards are never offered next to grief
+        slugs = {u["slug"] for u in quiet}
+        self.assertTrue({"memorial-day", "monthly-memorial", "pet-memorial"} <= slugs)
+
+    def test_services_notes_say_regions_differ(self):
+        u = usecases.by_slug("memorial-services")
+        self.assertTrue(any("地域" in c and "宗派" in c for c in u["cautions"]))
+
+    def test_helpers(self):
+        self.assertIsNone(usecases.by_slug("no-such-slug"))
+        self.assertEqual(usecases.by_slug("exam-university")["slug"], "exam-university")
+        self.assertEqual([r["slug"] for r in usecases.related("exam-university")], usecases.by_slug("exam-university")["related"])
+        self.assertEqual(usecases.related("no-such-slug"), [])
+
+    def test_no_digits_that_look_like_dates_or_amounts(self):
+        # facts live in the catalogue; the prose only describes how to count
+        pat = re.compile(r"\d{4}年|\d{1,2}月\d{1,2}日|\d+円|\d+%")
+        for u in usecases.USECASES:
+            for t in texts(u):
+                with self.subTest(slug=u["slug"]):
+                    self.assertIsNone(pat.search(t), t)
+
+
+class NegativeTests(unittest.TestCase):
+    """The checker must catch the faults it exists for."""
+
+    def good(self):
+        return copy.deepcopy(usecases.by_slug("memorial-day"))
+
+    def test_good_passes(self):
+        self.assertEqual(check_scenario(self.good()), [])
+
+    def test_banned_words_in_a_quiet_scene_are_found(self):
+        for w in QUIET_BANNED:
+            u = self.good()
+            u["tips"] = [f"今日は{w}の日です"]
+            self.assertTrue(any(w in x for x in check_scenario(u)), w)
+
+    def test_banned_word_in_a_nested_field_is_found(self):
+        u = self.good()
+        u["own"]["hint"] = "おめでとうを伝える日"
+        self.assertTrue(any("おめでとう" in x for x in check_scenario(u)))
+
+    def test_banned_words_are_allowed_where_the_scene_is_not_quiet(self):
+        u = copy.deepcopy(usecases.by_slug("furusato-nozei"))
+        u["tips"] = ["セールの時期にも"]
+        self.assertEqual(check_scenario(u, catalog_groups=set(catalog.GROUPS)), [])
+
+    def test_promises_are_found_in_any_scene(self):
+        for quiet in (True, False):
+            for w in PROMISE_BANNED:
+                u = self.good()
+                u["quiet"] = quiet
+                u["cautions"] = [f"{w}に知らせます"]
+                self.assertTrue(any(w in x for x in check_scenario(u)), (quiet, w))
+
+    def test_structure_faults_are_found(self):
+        cases = {
+            "title が長い": lambda u: u.update(title="あ" * 26),
+            "steps が2個": lambda u: u.update(steps=["a", "b"]),
+            "steps が6個": lambda u: u.update(steps=["a"] * 6),
+            "situation が短い": lambda u: u.update(situation="短い"),
+            "situation が長い": lambda u: u.update(situation="あ" * 161),
+            "slug が大文字": lambda u: u.update(slug="Memorial"),
+            "slug が日本語": lambda u: u.update(slug="めもりある"),
+            "tips が空": lambda u: u.update(tips=[]),
+            "cautions が3個": lambda u: u.update(cautions=["a", "b", "c"]),
+            "related が4個": lambda u: u.update(related=["a", "b", "c", "d"]),
+            "quiet が文字列": lambda u: u.update(quiet="yes"),
+            "own の kind が不明": lambda u: u.update(own={"label": "a", "kind": "zzz", "hint": "b"}),
+        }
+        for name, mutate in cases.items():
+            u = self.good()
+            mutate(u)
+            self.assertTrue(check_scenario(u), name)
+
+    def test_missing_field_is_found(self):
+        u = self.good()
+        del u["steps"]
+        self.assertTrue(any("steps" in x for x in check_scenario(u)))
+
+    def test_dangling_related_group_and_catalog_group_are_found(self):
+        u = self.good()
+        u["related"] = ["nowhere"]
+        self.assertTrue(any("nowhere" in x for x in check_scenario(u, slugs={"memorial-day"})))
+        u = self.good()
+        u["group"] = "知らない見出し"
+        self.assertTrue(any("GROUPS_ORDER" in x for x in check_scenario(u, groups_order=usecases.GROUPS_ORDER)))
+        u = copy.deepcopy(usecases.by_slug("exam-university"))
+        u["catalog"] = {"group": "ないジャンル", "tags": ["大学入試"]}
+        self.assertTrue(any("catalog" in x for x in check_scenario(u, catalog_groups=set(catalog.GROUPS))))
+
+
+if __name__ == "__main__":
+    unittest.main()
