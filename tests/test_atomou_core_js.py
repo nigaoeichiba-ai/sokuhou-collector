@@ -127,5 +127,50 @@ class CoreInChrome(unittest.TestCase):
         self.assertEqual(self.res["when"], ["2026-12-31", "2027-01-01", "2027-04-01", "2027-03-31", "2026-10-08", None])
 
 
+STORE_PAGE = """<!doctype html><meta charset="utf-8"><script>
+window.ATOMOU = { v: 'x', groups: ['締切・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' } } };
+localStorage.setItem('atomou.v1', %(stored)s);
+</script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script>
+<script>document.getElementById('out').textContent = JSON.stringify({ state: window.Atomou.state(), broken: localStorage.getItem('atomou.v1.broken') });</script>"""
+
+
+def run_store_page(stored_js: str) -> dict:
+    with tempfile.TemporaryDirectory() as td:
+        page = Path(td) / "s.html"
+        page.write_text(STORE_PAGE % {"stored": stored_js, "core": (ASSETS / "core.js").as_uri(), "ics": (ASSETS / "ics.js").as_uri(), "app": (ASSETS / "app.js").as_uri()}, encoding="utf-8")
+        r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={Path(td) / 'prof'}", "--virtual-time-budget=4000",
+                            "--dump-dom", page.as_uri()], capture_output=True, timeout=120)
+    dom = r.stdout.decode("utf-8", "replace")
+    a = dom.index('<pre id="out">') + len('<pre id="out">')
+    return json.loads(html.unescape(dom[a:dom.index("</pre>", a)]))
+
+
+@unittest.skipUnless(find_chrome(), "browser checks run locally")
+class StorageIsSanitised(unittest.TestCase):
+    """Anything in localStorage (or in a restored backup file) is reduced to known shapes before it can reach innerHTML or a CSS selector."""
+
+    def test_hostile_values_are_dropped_or_rounded(self):
+        evil = {"entries": [{"id": "ok1", "title": "<img src=x onerror=1>", "date": "2026-10-10", "precision": 'day" onmouseover="x', "kind": "evil", "alarm": "zzz"},
+                            {"id": "bad id", "date": "2026-10-10"}, {"id": "x2", "date": "2026-02-30"}, "str", None],
+                "saved": ["abcdef0123", '"><script>', "ABCDEF0123"], "order": ["c:abcdef0123", "evil", 'm:"]'],
+                "genre": {"締切・制度": 99, "x": 5}, "prefs": {"skin": "nope", "big": 1, "alarm": "x", "blocks": {"order": ["search", "evil"], "hidden": ["cats", "x"]}}}
+        res = run_store_page(json.dumps(json.dumps(evil)))
+        st = res["state"]
+        self.assertEqual(len(st["entries"]), 1)
+        e = st["entries"][0]
+        self.assertEqual((e["precision"], e["kind"], e["alarm"], e["date"]), ("day", "memo", "morning", "2026-10-10"))
+        self.assertEqual(st["saved"], ["abcdef0123"])
+        self.assertEqual(st["order"], ["c:abcdef0123"])
+        self.assertEqual(st["genre"], {"締切・制度": 20})
+        self.assertEqual((st["prefs"]["skin"], st["prefs"]["big"], st["prefs"]["alarm"]), ("basic", True, "morning"))
+        self.assertEqual(st["prefs"]["blocks"], {"order": ["search"], "hidden": ["cats"]})
+        self.assertIsNone(res["broken"])
+
+    def test_unreadable_data_is_kept_aside_not_overwritten(self):
+        res = run_store_page(json.dumps("{not json"))
+        self.assertEqual(res["state"]["entries"], [])
+        self.assertEqual(res["broken"], "{not json")
+
+
 if __name__ == "__main__":
     unittest.main()

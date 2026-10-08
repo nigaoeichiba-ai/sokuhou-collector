@@ -206,7 +206,7 @@ def home_page(c: Ctx) -> str:
 <div class="uc-grid">{ucs}</div>
 </section>
 </div>
-<p class="edit-home"><button type="button" class="btn small ghost" id="edit-home" aria-pressed="false">ホームの並べかえ・表示を変える</button></p>"""
+<p class="edit-home"><button type="button" class="btn small ghost" id="edit-home" aria-pressed="false">ホームの並べかえ・表示を変える</button> <button type="button" class="btn small ghost" id="reset-home" hidden>初期の並びに戻す</button></p>"""
     return c.page("/", f"{NAME}|{CATCH}", "あの日からもう何日?あの日まであと何日?日付を選ぶだけで数えて、カレンダーに入れられます。締切・試験・大会・お祭りなど、確認ずみの日付はワンタップで保存。", body, "home")
 
 
@@ -276,6 +276,7 @@ def skins_page(c: Ctx) -> str:
 <h1>きせかえ</h1>
 <p class="lead muted">見た目を、好みのものに変えられます。選ぶと、すぐに変わります。いちばん上の「ベーシック」が標準です。</p>
 <h2>見えかた</h2>
+<p class="hint">左から、これから来る日、過ぎた日、大切な人を思う日(静かな表示)の例です。</p>
 <div class="cards">{"".join(card_html(s, own=True, actions=False, link=False) for s in samples)}</div>
 <h2>選ぶ</h2>
 <div class="skins" id="skin-list">{"".join(tile(s) for s in skins.SKINS)}</div>
@@ -390,6 +391,7 @@ def manual_page(c: Ctx) -> str:
         ("機種変更をしたら、記録はどうなりますか?", "新しい端末には引き継がれません。変更の前に、マイページの「書き出す」でファイルを作り、新しい端末で「読み込む」を押してください。"),
         ("「カレンダーに入れる」を押しても、お知らせが来ません。", "お知らせを出すのはカレンダーアプリです。アプリの通知設定がオンになっているか、確認してください。アプリによっては、お知らせが出ない場合もあります。大切な日は、カレンダーの画面でも確認してください。"),
         ("「あと」と「もう」は、どう違いますか?", "「あと」は、これから来る日までの日数です。「もう」は、過ぎた日からの日数です。"),
+        ("2月29日は、どう扱われますか?", "うるう年でない年は、2月28日として数えます。カレンダーのファイルでは、毎年「2月の最終日」にくり返します。"),
         ("日数の数え方を教えてください。", "今日を0日として数えます。明日は「あと1日」、昨日は「もう1日」と表示され、当日は「今日」と表示されます。"),
         ("文字が小さくて読みにくいです。", "マイページの「設定」で「文字を大きくする」にチェックを入れてください。「きせかえ」の「大きな文字」や「ハイコントラスト」も読みやすくなります。"),
         ("日付が間違っているようです。", "公式の日付は、変更されることがあります。各ページの出典(元のページ)をご確認ください。誤りを見つけたときは、<a href=\"/contact/\">お問い合わせ</a>からお知らせください。"),
