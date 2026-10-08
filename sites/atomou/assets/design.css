@@ -17,7 +17,8 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 /* ================= every skin (not basic): things the colour variables alone get wrong ================= */
 :root[data-skin] header.site nav a[aria-current="page"]{background:color-mix(in srgb,var(--head-text) 18%,transparent);color:var(--head-text)}
 :root[data-skin] header.site nav a[href="/add/"]{background:var(--accent);color:var(--on-accent);box-shadow:0 0 0 2px var(--head-text)}
-:root[data-skin] .card:not(.quiet){border-color:var(--cb,var(--line));box-shadow:var(--csh,var(--shadow))}
+:root[data-skin] .card:not(.quiet){border-width:var(--bw);border-color:var(--cb,var(--line));box-shadow:var(--csh,var(--shadow))}
+:root[data-skin] :is(.chip,.mini,.btn.small,.card:not(.big) .c-act .btn.small){min-height:44px}
 :root[data-skin] :is(.panel,.uc,.day-panel,.stepcard,.qa details,.cal-grid,.skin){border-width:var(--bw)}
 :root[data-skin] :is(.panel,.uc,.day-panel,.stepcard,.qa details,.cal-grid,.skin){border-color:var(--pb,var(--line))}
 
@@ -38,12 +39,13 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 :root[data-head="band"] .brand{font-size:1.2rem}
 :root[data-head="band"] .hero{margin:0 calc(-1 * var(--wrap-pad));padding:1.8rem var(--wrap-pad) 0;background:var(--band-bg);color:var(--band-text);box-shadow:0 0 0 100vmax var(--band-bg);clip-path:inset(0 -100vmax)}
 :root[data-head="band"] .hero h1{font-size:clamp(1.7rem,6vw,2.7rem)}
-:root[data-head="band"] .hero .lead{color:inherit}
+:root[data-head="band"] .hero :is(h1,p,.lead){color:inherit}
 :root[data-head="band"] .hero a{color:inherit;text-underline-offset:3px}
 :root[data-head="band"] .hero::after{margin-top:1rem}
 
 :root[data-head="stripe"] header.site{border-bottom:3px double var(--deco2)}
-:root[data-head="stripe"] .brand::before{content:"";flex:none;width:6px;height:30px;margin-right:4px;background:var(--deco2)}
+:root[data-head="stripe"] .brand::before{content:"";flex:none;width:5px;height:28px;margin-right:0;background:var(--deco2)}
+:root[data-head="stripe"] .wm-svg{max-width:54vw}
 :root[data-head="stripe"] :is(.hero h1,main>h1){padding-left:.6rem;border-left:7px solid var(--deco2)}
 :root[data-head="stripe"] main h2:not(.cal-title){padding-left:.55rem;border-left:5px solid var(--deco2)}
 
@@ -98,15 +100,23 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 /* ================= num: the big number ================= */
 .card .c-count{--nc:var(--ato-ink,var(--ato))}
 .card[data-dir="mou"] .c-count{--nc:var(--mou-ink,var(--mou))}
-[data-card="panel"] .card .c-count{--nc:var(--on-ato)}
-[data-card="panel"] .card[data-dir="mou"] .c-count{--nc:var(--on-mou)}
 :root[data-num="outline"] .card:not(.quiet) .c-count .num{color:transparent;-webkit-text-stroke:2px var(--nc);paint-order:stroke fill;letter-spacing:.02em}
+:root[data-num="outline"] .card[data-long="1"]:not(.quiet) .c-count .num{color:var(--nc);-webkit-text-stroke:0}
 :root[data-num="shadow"] .card:not(.quiet) .c-count .num{text-shadow:3px 3px 0 color-mix(in srgb,var(--nc) 28%,transparent)}
 :root[data-num="mono"] .card:not(.quiet) .c-count .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
 :root[data-num="mono"] .wizard .live .big{font-family:var(--font-mono)}
-:root[data-num="badge"] .card:not(.quiet) .c-count .num{display:inline-block;padding:0 .45em;border-radius:999px;line-height:1.35;background:var(--ato-soft,var(--ato));color:var(--ato-ink,var(--on-ato))}
-:root[data-num="badge"] .card[data-dir="mou"]:not(.quiet) .c-count .num{background:var(--mou-soft,var(--mou));color:var(--mou-ink,var(--on-mou))}
-:root[data-num="badge"][data-card="panel"] .card:not(.quiet) .c-count .num{background:var(--surface);color:var(--text);box-shadow:inset 0 0 0 2px currentColor}
+:root[data-num="badge"] .card:not(.quiet) .c-count .num{display:inline-block;padding:0 .45em;border-radius:999px;line-height:1.35;background:var(--ato);color:var(--on-ato)}
+:root[data-num="badge"] .card[data-dir="mou"]:not(.quiet) .c-count .num{background:var(--mou);color:var(--on-mou)}
+
+/* the card kinds (data-card) once more, for the compact card: the count column is a pale face (panel) or a ring (ring) */
+:root[data-card="panel"] .card:not(.quiet) .c-count{margin:0;padding:8px 6px;border-radius:max(6px,calc(var(--radius) - 4px));background:var(--ato-soft,var(--surface2));color:var(--ato-ink,var(--text))}
+:root[data-card="panel"] .card[data-dir="mou"]:not(.quiet) .c-count{background:var(--mou-soft,var(--surface2));color:var(--mou-ink,var(--text))}
+:root[data-card="panel"] .card:not(.quiet) .c-count .word{background:var(--surface);color:inherit;border:0}
+:root[data-card="panel"] .card:not(.quiet) .c-count .num{color:var(--text)}
+:root[data-card="panel"] .card:not(.quiet) .c-count .rel{color:inherit}
+:root[data-card="panel"] .card.big:not(.quiet) .c-count{margin:0 -18px;padding:10px 18px}
+:root[data-card="ring"] .card:not(.big):not(.quiet) .c-count{width:auto;max-width:none;padding:8px 6px;border:3px solid var(--ato-ink,var(--ato));border-radius:18px}
+:root[data-card="ring"] .card[data-dir="mou"]:not(.big):not(.quiet) .c-count{border-style:dotted;border-color:var(--mou-ink,var(--mou))}
 
 /* ================= nav ================= */
 :root[data-nav="tab"] header.site .wrap{padding-bottom:0;align-items:flex-end}
