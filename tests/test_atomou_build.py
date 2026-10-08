@@ -62,6 +62,14 @@ class Pages(BuildOnce):
         self.assertIsNotNone(m)
         self.assertGreaterEqual(int(m.group(1)), 44)
 
+    def test_the_guide_sits_in_the_header_on_phones_and_floats_only_where_there_is_no_room(self):
+        # 2026-10-09 device test: the floating button covered calendar days and card buttons on every phone
+        css, js = self.rel["assets/style.css"], self.rel["assets/guide.js"] if "assets/guide.js" in self.rel else "".join(v for k, v in self.rel.items() if k.endswith(".js"))
+        self.assertIn("guide-icon", js)
+        self.assertIn(".hicons", js)
+        self.assertRegex(css, r"@media \(max-width:699px\)\{[^@]*\.guide-btn\{display:none\}")
+        self.assertRegex(css, r"@media \(max-width:359px\)\{\.guide-icon\{display:none\}\.guide-btn\{display:inline-block")   # 300px: no room for a 4th header icon (layoutcheck overflow)
+
     def test_release_and_preview_differ_only_in_indexing(self):
         self.assertIn("Allow: /", self.rel["robots.txt"])
         self.assertIn("Disallow: /", self.prev["robots.txt"])
