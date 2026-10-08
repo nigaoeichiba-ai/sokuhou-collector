@@ -61,8 +61,23 @@ def entry_id(item: dict) -> str:
     return hashlib.sha1(key.encode("utf-8")).hexdigest()[:10]
 
 
+def labels_for(item: dict, group: str) -> tuple[str, str, str]:
+    """(subject, what, place) for a card: what the topic is, what the day is, where.  A seed item that has no such fields falls back
+    to its category ("その他" -> the group), its kind and its region ("地域" says nothing, so it becomes empty)."""
+    category = item.get("category") or ""
+    subject = str(item.get("subject") or "").strip() or (group if category in ("", "その他") else category)
+    what = str(item.get("what") or "").strip() or str(item.get("kind") or "")
+    if item.get("place") is not None:
+        place = str(item["place"]).strip()
+    else:
+        region = item.get("region") or ""
+        place = "" if region == "地域" else region
+    return subject, what, place
+
+
 def tags_for(item: dict, group: str) -> list[str]:
-    tags = [group, item.get("category") or "", item.get("region") or ""]
+    subject, what, _ = labels_for(item, group)
+    tags = [group, item.get("category") or "", item.get("region") or "", subject, what]
     title = item.get("title", "")
     for key, extra in SYNONYMS.items():
         if key in title:
@@ -122,10 +137,12 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
         sens = it.get("sensitivity") or "none"
         quiet = sens in QUIET
         lead = LEAD.get(it.get("kind"), LEAD_DEFAULT)
+        subject, what, place = labels_for(it, group)
         entries.append({
             "id": eid, "title": it["title"].strip(), "date": it["date"], "date_end": it.get("date_end") or None,
             "precision": it.get("precision") if it.get("precision") in ("day", "month") else "day",
             "weekday": WEEKDAYS[d.weekday()], "kind": it["kind"], "category": it["category"], "group": group, "region": it.get("region") or None,
+            "subject": subject, "what": what, "place": place,
             "tags": tags_for(it, group), "sensitivity": sens, "quiet": quiet, "ad_ok": bool(it.get("ad_ok", True)) and not quiet,
             "son_toku": bool(it.get("son_toku")), "source_url": it["source_url"], "source_quote": (it.get("source_quote") or "")[:60] or None,
             "checked_on": it["checked_on"], "status": ("ended" if last < today else ("old_checked" if (today - checked).days > STALE_DAYS else "active")),
@@ -148,6 +165,5 @@ def indexable_ids(entries: list[dict], today: date, launch: date, per_week: int 
 
 def public_json(entries: list[dict]) -> list[dict]:
     """The fields the browser needs (assets/catalog.json)."""
-    keys = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "region", "tags", "quiet", "ad_ok", "son_toku",
-            "source_url", "checked_on", "status")
+    keys = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "region", "subject", "what", "place", "tags", "quiet", "ad_ok", "son_toku", "status")
     return [{k: e[k] for k in keys} for e in entries]

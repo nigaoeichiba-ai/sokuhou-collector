@@ -99,7 +99,7 @@
 
   /* ---------- the calendar page ---------- */
   function pageCalendar() {
-    var host = $('#cal'), items = [];
+    var host = $('#cal'), items = [], catCache = [];
     var view = P.v === 'list' ? 'list' : 'month';
     var ym = /^\d{4}-\d{2}$/.test(P.m || '') && +P.m.slice(5) >= 1 && +P.m.slice(5) <= 12 ? [+P.m.slice(0, 4), +P.m.slice(5)] : [TODAY[0], TODAY[1]];
     var sel = (P.d && C.parse(P.d)) || TODAY;
@@ -147,7 +147,7 @@
       host.innerHTML = '<div class="chips cal-tools" role="group" aria-label="表示の切りかえ"><button type="button" class="chip" data-v="month" aria-pressed="' + (view === 'month') + '">月</button>' +
         '<button type="button" class="chip" data-v="list" aria-pressed="' + (view === 'list') + '">一覧</button><a class="btn small" href="/add/?kind=event">＋ 予定を追加</a></div>' + (view === 'month' ? month() : list());
     }
-    redo = render;
+    redo = function () { items = planItems(catCache); render(); };
     host.addEventListener('click', function (ev) {
       var t = ev.target.closest ? ev.target.closest('button') : null;
       if (!t) return;
@@ -159,7 +159,7 @@
         render();
       } else if (t.hasAttribute('data-d')) { sel = C.parse(t.getAttribute('data-d')); render(); var p = $('#day-panel'); if (p && p.scrollIntoView) p.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
     });
-    A.loadCatalog().then(function (cat) { items = planItems(cat); render(); });
+    A.loadCatalog().then(function (cat) { catCache = cat || []; items = planItems(catCache); render(); });
   }
 
   /* ---------- one plan: its card, memo, "do this N days before", and the optional file for other calendar apps ---------- */
@@ -237,9 +237,11 @@
   if (page === 'calendar') pageCalendar();
   else if (page === 'plan') pagePlan();
   else if (page === 'home') {
-    redo = function () { A.loadCatalog().then(renderTodo); };
-    A.loadCatalog().then(renderTodo);
+    var need = function () { return A.state().saved.length ? A.loadCatalog() : Promise.resolve([]); };
+    redo = function () { need().then(renderTodo); };
+    need().then(renderTodo);
   }
+  document.addEventListener('atomou:changed', function () { again(); });
   A.plan = { planItems: planItems, eventsOn: eventsOn, tasksOn: tasksOn, todoRows: todoRows, baseOf: baseOf, notesOf: notesOf };
   window.AtomouPlan = A.plan;
 })();

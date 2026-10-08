@@ -22,7 +22,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.atomou import catalog, skins, usecases  # noqa: E402
+from sites.atomou import catalog, datecore, skins, usecases  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
@@ -40,16 +40,34 @@ GROUP_LEAD = {
 POPULAR = ["年賀状", "ふるさと納税", "共通テスト", "流星群", "紅白", "コミケ", "最低賃金", "確定申告", "ドラフト"]
 SITE = {
     "nav": [("さがす", "/search/", "/search/"), ("カレンダー", "/calendar/", "/calendar/"), ("記録する", "/add/", "/add/"), ("マイページ", "/my/", "/my/")],
-    "glyph": "日",
+    "glyph": "",
     "assets": HERE / "assets",
     "source_html": '日付は、公式の発表などで確認しています。あなたが記録した日は、この端末の中だけに保存されます。<a href="/manual/">使い方(説明書)</a> | <a href="/use/">こんな時に</a> | <a href="/skins/">きせかえ</a>',
 }
 WD = "月火水木金土日"
+_TODAY = date.today()   # set by build_pages: the date the static counts on the cards are worked out for (the browser recounts at once)
 # the one pattern a statistics key must match: assets/app.js (STAT_RE), api/e.php (from stats_receiver.php.tpl) and tests/test_atomou_build.py all use it
 STAT_KEY_RE = r"^(view|skin|big|home_order|home_hidden|act)(:[a-z0-9_,-]{1,60}){1,2}$"
 
 
 # ---------- shared helpers ----------
+HT_CACHE = """
+# assets carry ?v=<hash> in their URLs, so they can be kept for a year; pages are always asked for again
+<IfModule mod_headers.c>
+<FilesMatch "\\.(css|js|json|svg|png|webp|ico)$">
+Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+<FilesMatch "(sw\\.js|manifest\\.webmanifest)$">
+Header set Cache-Control "no-cache"
+</FilesMatch>
+</IfModule>
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/json image/svg+xml application/manifest+json
+</IfModule>
+AddType application/manifest+json .webmanifest
+"""
+
+
 HTPASSWD_PLACEHOLDER = "__HTPASSWD__"
 DEMO_AUTH = (
     "# demo: nobody gets in without the password (the deploy job writes the password file outside public_html and fills in its path)\n"
@@ -106,6 +124,16 @@ def diverse(pool: list[dict], n: int) -> list[dict]:
     return sorted(pick, key=lambda e: e["date"])
 
 
+def count_parts(iso: str, precision: str) -> tuple[str, str, str, str, str]:
+    """(direction, word, number, relative word, total) as app.js fillCard works them out, for the static markup."""
+    r = datecore.countdown(date.fromisoformat(iso), _TODAY, precision)
+    big = r["big"]
+    word = big[:2] if big[:2] in ("あと", "もう") else ""
+    t = r.get("total")
+    rel = {1: "(明日)", 2: "(明後日)", -1: "(昨日)", -2: "(おととい)"}.get(t, "") if precision == "day" and t is not None else ""
+    return r["dir"], word, big[len(word):], rel, (f"合計 {r['sub']}" if r.get("sub") else "")
+
+
 def card_html(e: dict, *, own: bool = False, actions: bool = True, big: bool = False, link: bool = True) -> str:
     """The card markup; app.js cardHtml builds the same thing (tests/test_atomou_build.py compares the class lists).
     No source line here: the source and the check date are on the detail page ("詳細")."""
@@ -113,20 +141,20 @@ def card_html(e: dict, *, own: bool = False, actions: bool = True, big: bool = F
     key = ("m:" if own else "c:") + e["id"]
     p = e.get("precision") or "day"
     cls = "card" + (" quiet" if e.get("quiet") else "") + (" big" if big else "")
-    h = [f'<article class="{cls}" data-key="{esc(key)}" data-title="{esc(e["title"])}" data-date="{esc(e["date"])}" data-p="{p}"'
+    direction, word, num, rel, sub = count_parts(e["date"], p)
+    h = [f'<article class="{cls}" data-key="{esc(key)}" data-title="{esc(e["title"])}" data-date="{esc(e["date"])}" data-p="{p}" data-dir="{direction}" data-long="{1 if len(num) > 5 else 0}"'
          + (f' data-g="{g}"' if g else "") + (f' data-cat="{esc(e["category"])}"' if e.get("category") else "") + ">"]
     subject = e.get("subject") or (e.get("category") if not own else None) or e["kind"]
     what = e.get("what") or (e.get("kind") if not own else None)
     place = e.get("place") if e.get("place") is not None else (e.get("region") if not own else None)
     h.append('<div class="c-top">' + (f'<span class="mark m{g}" data-g="{g}" aria-hidden="true"></span>' if g else "")
              + f'<span class="badge">{esc(subject if not own else e["kind"])}</span>' + (f'<span class="what">{esc(what)}</span>' if what and not own else "") + "</div>")
-    h.append('<p class="c-count"><span class="word"></span><span class="num"></span><span class="rel"></span></p><p class="c-sub"></p>')
+    h.append(f'<p class="c-count"><span class="word">{word}</span><span class="num">{esc(num)}</span><span class="rel">{rel}</span></p><p class="c-sub">{esc(sub)}</p>')
     title = esc(e["title"])
     linked = '<a href="/e/' + e["id"] + '/">' + title + "</a>" if link and not own else title
     h.append(f'<h3 class="c-title">{linked}</h3>')
-    h.append(f'<p class="c-date">{esc(fmt_date(e["date"], p))}{" " + esc(e["kind"]) if not own and e.get("kind") else ""}</p>')
-    if place and not own:
-        h.append(f'<p class="c-place"><b>場所</b>{esc(place)}</p>')
+    pl = f'<span class="pl"><b>場所</b>{esc(place)}</span>' if place and place != "全国" and not own else ""
+    h.append(f'<p class="c-date">{esc(fmt_date(e["date"], p))}{" " + esc(e["kind"]) if not own and e.get("kind") else ""}{pl}</p>')
     if own:
         h.append('<div class="c-next"></div>')
     if actions:
@@ -145,7 +173,23 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
+BUNDLE = ('core', 'ics', 'app', 'plan', 'quick', 'guide')   # one script instead of six requests; the sources stay separate files
+
+
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
+def _wordmark() -> str:
+    """assets/wordmark.svg (made by atomou/design/logo/make_wordmark.py from the outlines of Noto Sans JP, SIL OFL) inlined, its colours as variables a skin may set."""
+    f = HERE / "assets" / "wordmark.svg"
+    svg = f.read_text(encoding="utf-8").strip() if f.exists() else ""
+    for old, new in (("#1A56B8", "var(--wm-ato,#1A56B8)"), ("#C2410C", "var(--wm-mou,#C2410C)"), ("#1F2937", "var(--wm-ink,currentColor)")):
+        svg = svg.replace(f'"{old}"', f'"{new}"')
+    return '<span class="wm">' + svg.replace("<svg ", '<svg class="wm-svg" focusable="false" ', 1) + "</span>" if svg else "あと何日、もう何日"
+
+
+WORDMARK = _wordmark()
+
+
+
 def _icon(d: str) -> str:  # own line icons: 24 grid, 1.75 stroke, round ends, no fill, currentColor
     return f'<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{d}</svg>'
 
@@ -182,7 +226,12 @@ class Ctx:
         self.v_cat = hashlib.sha1(self.cat_json.encode("utf-8")).hexdigest()[:8]
         self.v_skin = hashlib.sha1(skins_css.encode("utf-8")).hexdigest()[:8]
         self.ver = asset_version(SITE["assets"])
-        conf = {"v": self.v_cat, "groups": catalog.GROUPS, "slugs": SLUGS,
+        basic_css, other_css = skins.css().split("\n", 1)   # the first line is the basic skin's :root block; the others are fetched only when one of them is chosen
+        self.skins_css = other_css
+        self.v_skin = hashlib.sha1(other_css.encode("utf-8")).hexdigest()[:8]
+        self.v_bundle = None
+        css_urls = [f"/assets/skins.css?v={self.v_skin}"] + ([f"/assets/design.css?v={self.ver}"] if (SITE["assets"] / "design.css").exists() else [])
+        conf = {"v": self.v_cat, "groups": catalog.GROUPS, "slugs": SLUGS, "css": css_urls,
                 "skins": {s["id"]: {"card": s["card"], "name": s["name"], "attrs": s.get("attrs", {}), **({"season": s["season"]} if s.get("season") else {})} for s in skins.SKINS}}
         if cfg.get("google_client_id"):
             conf["gclient"] = cfg["google_client_id"]
@@ -190,11 +239,14 @@ class Ctx:
         card_map = json.dumps({s["id"]: [s["card"], s.get("attrs", {})] for s in skins.SKINS}, separators=(",", ":"))
         self.head = (f"<script>window.ATOMOU={conf_js};</script>\n"
                      "<script>(function(){try{var p=(JSON.parse(localStorage.getItem('atomou.v1')||'{}').prefs)||{},m=" + card_map +
-                     ",r=document.documentElement;if(p.skin&&p.skin!=='basic'&&m[p.skin]){r.setAttribute('data-skin',p.skin);r.setAttribute('data-card',m[p.skin][0]);for(var k in m[p.skin][1])r.setAttribute('data-'+k,m[p.skin][1][k])}"
+                     ",r=document.documentElement;if(p.skin&&p.skin!=='basic'&&m[p.skin]){__LOAD__r.setAttribute('data-skin',p.skin);r.setAttribute('data-card',m[p.skin][0]);for(var k in m[p.skin][1])r.setAttribute('data-'+k,m[p.skin][1][k])}"
                      "if(p.big)r.setAttribute('data-big','1')}catch(e){}})()</script>\n"
-                     f'<link rel="stylesheet" href="/assets/skins.css?v={self.v_skin}">\n'
-                     + (f'<link rel="stylesheet" href="/assets/design.css?v={self.ver}">\n' if (SITE["assets"] / "design.css").exists() else ""))
-        self.tail = "".join(f'<script src="/assets/{n}.js?v={self.ver}" defer></script>\n' for n in ("core", "ics", "app", "plan", "guide"))
+                     f'<style>{basic_css}</style>\n<link rel="manifest" href="/manifest.webmanifest">\n<meta name="theme-color" content="#ffffff">\n')
+        load = "".join(f"var l{i}=document.createElement('link');l{i}.rel='stylesheet';l{i}.href='{u}';document.head.appendChild(l{i});" for i, u in enumerate(css_urls))
+        self.head = self.head.replace("__LOAD__", load)
+        self.bundle = "\n".join((SITE["assets"] / f"{n}.js").read_text(encoding="utf-8") for n in BUNDLE)
+        self.v_bundle = hashlib.sha1(self.bundle.encode("utf-8")).hexdigest()[:8]
+        self.tail = f'<script src="/assets/atomou.js?v={self.v_bundle}" defer></script>\n'
         self.site = dict(SITE)
 
     def page(self, path: str, title: str, desc: str, body: str, kind: str, *, noindex: bool = False) -> str:
@@ -210,15 +262,16 @@ class Ctx:
         m = re.search(r'rel="canonical" href="https?://[^/"]+(/[^"]*)"', html)
         path = m.group(1) if m else "/"
         html = html.replace("</nav>\n</div></header>", "</nav>\n" + HEAD_ICONS + "\n</div></header>", 1)
+        html = re.sub(r'<span class="logo" aria-hidden="true"></span>[^<]*</a>', lambda _m: WORDMARK + "</a>", html, count=1)
         return html.replace("</body>", tabbar_html(path) + self.tail + "</body>", 1)
 
 
 # ---------- pages ----------
 def search_form(q: str = "") -> str:
-    return ('<form class="searchbox" id="searchform" action="/search/" method="get" role="search">'
+    return ('<div class="sbox"><form class="searchbox" id="searchform" action="/search/" method="get" role="search">'
             '<label class="vh" for="q">日付をさがす</label>'
-            f'<input type="search" id="q" name="q" value="{esc(q)}" placeholder="さがす(例: 年賀状、共通テスト、流星群)" autocomplete="off">'
-            '<button type="submit" class="btn">さがす</button></form>')
+            f'<input type="search" id="q" name="q" value="{esc(q)}" placeholder="さがす(年賀状、共通テスト、流星群)" autocomplete="off" enterkeyhint="search">'
+            f'<button type="submit" class="sbtn" aria-label="さがす">{ICONS["search"]}</button></form><div class="suggest" id="suggest" hidden></div></div>')
 
 
 def popular_chips(entries: list[dict]) -> str:
@@ -231,46 +284,34 @@ def popular_chips(entries: list[dict]) -> str:
 
 def home_page(c: Ctx) -> str:
     live = live_entries(c.entries, c.today)
-    first = diverse(live, 12)
-    counts = {g: sum(1 for e in live if e["group"] == g) for g in catalog.GROUPS}
-    tiles = "".join(f'<a href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}<span>{esc(g)}<br><small class="muted">{counts[g]}件</small></span></a>' for i, g in enumerate(catalog.GROUPS))
+    first = diverse(live, 6)
+    chips = "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS))
     ucs = "".join(f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>'
                   for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
-    body = f"""<section class="hero">
-<h1>{esc(CATCH)}</h1>
-<p class="lead">あの日からもう何日? あの日まであと何日? 日付を選ぶだけで数えて、カレンダーに入れられます。締切・試験・大会・お祭りなど、公式の日付は、ワンタップで保存できます。 <a href="/manual/">はじめての方は、説明書へ</a></p>
-</section>
+    body = f"""<section class="hero"><h1>{esc(CATCH)}</h1></section>
 <div id="season" class="season" hidden></div>
 <div id="blocks">
 <section id="todo" data-block="todo" data-title="今日の予定・やること" hidden>
-<div class="head-row"><h2>今日の予定・やること</h2><div class="grow"><a class="btn small ghost" href="/calendar/">カレンダーを見る</a></div></div>
+<div class="head-row"><h2>今日の予定・やること</h2><div class="grow"><a class="btn small ghost" href="/calendar/">カレンダー</a></div></div>
 <ul class="plist" id="todo-list"><li class="muted">読み込み中です。</li></ul>
 </section>
 <section data-block="search" data-title="さがす">
 {search_form()}
-{popular_chips(c.entries)}
 </section>
-<section data-block="cats" data-title="ジャンルから探す"><nav class="cats" aria-label="ジャンルから探す">{tiles}</nav></section>
-<section data-block="daily" data-title="今日の数字"><div class="daily" id="daily" aria-label="今日の数字"></div></section>
+<section data-block="cats" data-title="ジャンル"><nav class="chiprow" aria-label="ジャンルから探す">{chips}</nav></section>
+<section data-block="daily" data-title="今日の数字"><div class="daily" id="daily" aria-label="今日の数字"><span>今日の日付と、年末・年度末までの日数が出ます。</span></div></section>
 <section id="mine" data-block="mine" data-title="あなたの日" hidden>
-<div class="head-row"><h2>あなたの日</h2><div class="grow"><a class="btn small ghost" href="/my/">マイページへ</a></div></div>
+<div class="head-row"><h2>あなたの日</h2><div class="grow"><a class="btn small ghost" href="/my/">マイページ</a></div></div>
 <div class="cards" id="mine-grid" data-save-order="1"></div>
 </section>
 <section data-block="soon" data-title="もうすぐの日">
-<div class="head-row"><h2>もうすぐの日</h2><div class="grow"><button type="button" class="btn small" id="shuffle">シャッフル</button>
-<button type="button" class="btn small ghost" id="reorder" aria-pressed="false">↑↓で動かす</button></div></div>
-<p class="hint">カードは、ドラッグで動かせます(スマホは長押し)。</p>
+<div class="head-row"><h2>もうすぐの日</h2><div class="grow"><button type="button" class="btn small ghost" id="shuffle">シャッフル</button></div></div>
 <div class="cards" id="grid" data-save-order="1">{"".join(card_html(e) for e in first)}</div>
-</section>
-<section class="panel" data-block="record" data-title="自分の日を記録">
-<h2>自分の日も、数えてみませんか</h2>
-<ul class="steps"><li>どんな日かを選ぶ(予定・記念日・誕生日など)</li><li>日付を選ぶ</li><li>「この日を残す」を押す</li></ul>
-<p>名前や日付は、この端末の中だけに保存します。サーバーには送りません。</p>
-<p><a class="btn" href="/add/">日付を記録する</a></p>
+<p class="more-row"><button type="button" class="btn ghost" id="more">もっと見る</button></p>
 </section>
 <section data-block="usecases" data-title="こんな時に">
-<div class="head-row"><h2>こんな時に</h2><div class="grow"><a class="btn small ghost" href="/use/">使い方をもっと見る</a></div></div>
-<div class="uc-grid">{ucs}</div>
+<div class="head-row"><h2>こんな時に</h2><div class="grow"><a class="btn small ghost" href="/use/">一覧</a></div></div>
+<div class="uc-grid compact">{ucs}</div>
 </section>
 </div>
 <p class="edit-home"><button type="button" class="btn small ghost" id="edit-home" aria-pressed="false">ホームの並べかえ・表示を変える</button> <button type="button" class="btn small ghost" id="reset-home" hidden>初期の並びに戻す</button></p>"""
@@ -623,6 +664,22 @@ def today_page(c: Ctx) -> str:
     return c.page("/today/", f"今日の数字から、これからの準備を考える | {NAME}", "今年のあと何日、来年まであと何日、年度末まであと何日。今日の数字から、入学や引っ越しなどの準備を考え、自分の日として記録できます。", body, "today")
 
 
+def sw_js(c: Ctx) -> str:
+    """A small service worker: the pages and scripts open at once on the next visit (assets from the cache, pages from the network first), and it is the base of notifications later."""
+    urls = [f"/assets/style.css?v={c.ver}", f"/assets/atomou.js?v={c.v_bundle}"]
+    urls.append(f"/assets/catalog.json?v={c.v_cat}")
+    return ("// generated by sites/atomou/build.py (do not edit)\n"
+            f"const CACHE = 'atomou-{c.ver}-{c.v_cat}-{c.v_skin}';\nconst PRE = {json.dumps(urls)};\n"
+            "self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRE)).then(() => self.skipWaiting())); });\n"
+            "self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });\n"
+            "self.addEventListener('fetch', (e) => {\n"
+            "  const r = e.request, u = new URL(r.url);\n"
+            "  if (r.method !== 'GET' || u.origin !== location.origin || u.pathname.startsWith('/api/')) return;\n"
+            "  if (u.pathname.startsWith('/assets/')) { e.respondWith(caches.match(r).then((m) => m || fetch(r).then((x) => { if (x.ok) { const y = x.clone(); caches.open(CACHE).then((c) => c.put(r, y)); } return x; }))); return; }\n"
+            "  if (r.mode === 'navigate') { e.respondWith(fetch(r).then((x) => { if (x.ok) { const y = x.clone(); caches.open(CACHE).then((c) => c.put(r, y)); } return x; }).catch(() => caches.match(r).then((m) => m || caches.match('/')))); }\n"
+            "});\n")
+
+
 def privacy_fix(c: Ctx, html: str) -> str:
     """The shared privacy page says that no analytics is used; this site counts fixed items (and may offer a Google Drive hand-over), so that part is replaced."""
     if "<title>プライバシーポリシー" not in html:
@@ -652,7 +709,9 @@ def legal(c: Ctx) -> dict:
 
 # ---------- the site ----------
 def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> dict:
+    global _TODAY
     today = today or date.today()
+    _TODAY = today
     missing = missing_config(cfg)
     if release and missing:
         raise BuildError(f"release build refused: set {', '.join(missing)} in config.json")
@@ -674,13 +733,21 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
         pages[f"e/{e['id']}/index.html"] = event_page(c, e, e["id"] in index_ids, live)
     pages.update(legal(c))
     pages["api/e.php"] = stats_php()
+    pages["manifest.webmanifest"] = json.dumps({
+        "name": NAME, "short_name": "あと何日", "description": CATCH, "start_url": "/", "scope": "/", "display": "standalone", "lang": "ja",
+        "background_color": "#F7F7F5", "theme_color": "#FFFFFF",
+        "icons": [{"src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png"},
+                  {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}]}, ensure_ascii=False, indent=1) + "\n"
+    pages["sw.js"] = sw_js(c)
     pages["assets/catalog.json"] = c.cat_json
     pages["assets/skins.css"] = c.skins_css
+    pages["assets/atomou.js"] = c.bundle
     pages.update(asset_pages(SITE["assets"]))
     # the sitemap lists indexable pages only (not /my/, not event pages that are held back)
     listed = {k: 1 for k in pages if k.endswith("index.html") and k != "my/index.html"
               and k != "plan/index.html" and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
     pages.update(standard_files(listed, cfg, preview, today.isoformat()))
+    pages[".htaccess"] = pages[".htaccess"] + HT_CACHE
     if preview:
         ht = pages[".htaccess"]
         # Xserver's server cache answers repeat requests without asking Apache, which would skip the password: switch it off for the demo
