@@ -1,0 +1,88 @@
+{
+ "slug": "nenga-jimai-flat",
+ "title": "年賀状じまい・ごあいさつ",
+ "subject": "",
+ "genre": "season",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Gentle thank-you and farewell-greeting motifs for retiring from New Year cards, each a separate object, simple flat style in calm pastel colours. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters.",
+ "lead": "年賀状じまいの挨拶状やシールに添える、感謝の小さなイラスト12点。やさしい色のフラットなタッチで、押しつけがましくない仕上がりです。",
+ "tags": [
+  "年賀状じまい",
+  "ごあいさつ",
+  "感謝",
+  "終活",
+  "ありがとう",
+  "シール",
+  "寒中見舞い"
+ ],
+ "season": {
+  "from": "11-15",
+  "to": "01-31"
+ },
+ "holes": false,
+ "items": [
+  [
+   "letter",
+   "手紙",
+   "a letter with an envelope tied by a thin ribbon"
+  ],
+  [
+   "pen",
+   "万年筆",
+   "a fountain pen with an ink bottle"
+  ],
+  [
+   "stamp",
+   "切手",
+   "a postage stamp with a simple flower design and a wavy postmark circle"
+  ],
+  [
+   "postbox",
+   "ポスト",
+   "a red Japanese post box"
+  ],
+  [
+   "tea",
+   "お茶",
+   "a tea cup and a small teapot"
+  ],
+  [
+   "hands",
+   "ありがとうの手",
+   "two hands holding a small heart"
+  ],
+  [
+   "bow",
+   "おじぎ",
+   "a simple bowing person seen from the side, faceless"
+  ],
+  [
+   "flower",
+   "一輪の花",
+   "a single flower in a small vase"
+  ],
+  [
+   "sunset",
+   "夕やけ",
+   "a calm sunset over a small hill"
+  ],
+  [
+   "bird",
+   "ことり",
+   "a small bird sitting on a branch"
+  ],
+  [
+   "card",
+   "メッセージカード",
+   "a blank card with a ribbon"
+  ],
+  [
+   "wave",
+   "手をふる",
+   "a hand waving goodbye gently"
+  ]
+ ],
+ "exclude": [],
+ "priority": 11
+}

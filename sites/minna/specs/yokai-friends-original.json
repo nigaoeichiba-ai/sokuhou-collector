@@ -1,0 +1,85 @@
+{
+ "slug": "yokai-friends-original",
+ "title": "オリジナル妖怪とおばけ",
+ "subject": "",
+ "genre": "animals",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "ORIGINAL cute yokai/ghost creatures invented for this series (not any existing yokai character or franchise), each a separate chubby creature with a distinct silhouette, simple expressive faces, and one signature colour each. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters.",
+ "lead": "ぷるぷるのおばけ、からかさ、ちょうちん、こけだま。どこにもいない、オリジナルの妖怪12体。ハロウィンやイベントのキャラ、ゲームの素材に。",
+ "tags": [
+  "妖怪",
+  "おばけ",
+  "オリジナルキャラ",
+  "ハロウィン",
+  "ゆるい",
+  "かわいい",
+  "モンスター"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "jelly",
+   "ぷるぷるおばけ",
+   "a mint-green jelly ghost with a wobbly bottom"
+  ],
+  [
+   "umbrella",
+   "かさこぞう",
+   "a one-eyed folded umbrella creature hopping on one leg"
+  ],
+  [
+   "lantern",
+   "ちょうちんおばけ",
+   "a round red paper lantern creature with a long tongue-shaped tail"
+  ],
+  [
+   "scarf",
+   "まきまきおばけ",
+   "a long snake-like scarf creature wrapped in a spiral"
+  ],
+  [
+   "moss",
+   "こけだま",
+   "a round fuzzy green moss ball creature with tiny feet"
+  ],
+  [
+   "cloud",
+   "ふわふわぐも",
+   "a small cloud creature with a sleepy face and a tiny umbrella tail"
+  ],
+  [
+   "leaf",
+   "葉っぱのおばけ",
+   "a round brown creature with a green leaf on its head, original design"
+  ],
+  [
+   "cat-tail",
+   "二本しっぽのねこ",
+   "a cat with two curly tails and a small bell"
+  ],
+  [
+   "moon",
+   "お月みおばけ",
+   "a pale yellow ghost holding a crescent moon like a swing"
+  ],
+  [
+   "teapot",
+   "ちゃがま",
+   "a teapot creature with a spout nose and steam hair"
+  ],
+  [
+   "frog-drop",
+   "あめがえる",
+   "a raindrop-shaped blue creature with frog-like legs"
+  ],
+  [
+   "shadow",
+   "かげぼうし",
+   "a friendly dark-purple shadow creature with big yellow eyes"
+  ]
+ ],
+ "exclude": [],
+ "priority": 20
+}

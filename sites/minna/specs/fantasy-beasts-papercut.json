@@ -1,0 +1,85 @@
+{
+ "slug": "fantasy-beasts-papercut",
+ "title": "空想の生きもの 切り絵風",
+ "subject": "",
+ "genre": "animals",
+ "touch": "papercut",
+ "title_fmt": "{ja}",
+ "subject_en": "ORIGINAL imaginary fantasy creatures invented for this series, each a separate creature in layered paper-cut style with 4 to 6 colours, distinct silhouette, calm friendly faces, no weapons. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters.",
+ "lead": "雲のくじら、星をくわえたきつね、森のかさ鹿。オリジナルの空想の生きもの12点を、切り絵のように重ねた紙のタッチで。絵本、ポスター、ゲームの素材に。",
+ "tags": [
+  "空想",
+  "ファンタジー",
+  "幻獣",
+  "切り絵",
+  "オリジナル",
+  "動物",
+  "絵本"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "cloud-whale",
+   "雲のくじら",
+   "a whale whose body is a fluffy cloud, with tiny stars along the back"
+  ],
+  [
+   "star-fox",
+   "星をくわえたきつね",
+   "a fox with a large tail holding a small yellow star in its mouth"
+  ],
+  [
+   "forest-deer",
+   "森のかさ鹿",
+   "a deer whose antlers are tree branches with leaves and tiny mushrooms"
+  ],
+  [
+   "moon-rabbit",
+   "月のうさぎ",
+   "a rabbit with a crescent moon shaped ear curl"
+  ],
+  [
+   "sea-turtle",
+   "うみがめの島",
+   "a big turtle with a tiny island of trees on its shell"
+  ],
+  [
+   "sky-fish",
+   "そらとぶ魚",
+   "a flying fish with wing-like fins and a rainbow tail"
+  ],
+  [
+   "owl-lamp",
+   "ランプふくろう",
+   "an owl with a glowing lantern belly"
+  ],
+  [
+   "dragon",
+   "まるいりゅう",
+   "a small round friendly dragon with tiny wings and a curled tail"
+  ],
+  [
+   "bear-berry",
+   "ベリーぐま",
+   "a bear covered with berry bushes on its back"
+  ],
+  [
+   "snow-bird",
+   "雪のとり",
+   "a white-and-blue bird with a long snowflake-patterned tail"
+  ],
+  [
+   "flower-cat",
+   "花ねこ",
+   "a cat with flowers blooming along its spine"
+  ],
+  [
+   "wind-horse",
+   "風のうま",
+   "a pale horse with a mane made of swirling wind lines"
+  ]
+ ],
+ "exclude": [],
+ "priority": 24
+}
