@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-09",
+ "slug": "yokai-friends-original",
+ "title": "オリジナル妖怪とおばけ",
+ "genre": "animals",
+ "touch": "kawaii",
+ "lead": "ぷるぷるのおばけ、からかさ、ちょうちん、こけだま。どこにもいない、オリジナルの妖怪12体。ハロウィンやイベントのキャラ、ゲームの素材に。",
+ "tags": [
+  "妖怪",
+  "おばけ",
+  "オリジナルキャラ",
+  "ハロウィン",
+  "ゆるい",
+  "かわいい",
+  "モンスター"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "yokai-friends-original-jelly",
+   "file": "yokai-friends-original-jelly.webp",
+   "title": "ぷるぷるおばけ",
+   "desc": "ぷるぷるおばけのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "ぷるぷるおばけ",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 483,
+   "h": 450
+  },
+  {
+   "id": "yokai-friends-original-umbrella",
+   "file": "yokai-friends-original-umbrella.webp",
+   "title": "かさこぞう",
+   "desc": "かさこぞうのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "かさこぞう",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 384,
+   "h": 496
+  },
+  {
+   "id": "yokai-friends-original-lantern",
+   "file": "yokai-friends-original-lantern.webp",
+   "title": "ちょうちんおばけ",
+   "desc": "ちょうちんおばけのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "ちょうちんおばけ",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 451,
+   "h": 522
+  },
+  {
+   "id": "yokai-friends-original-scarf",
+   "file": "yokai-friends-original-scarf.webp",
+   "title": "まきまきおばけ",
+   "desc": "まきまきおばけのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "まきまきおばけ",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 409,
+   "h": 507
+  },
+  {
+   "id": "yokai-friends-original-moss",
+   "file": "yokai-friends-original-moss.webp",
+   "title": "こけだま",
+   "desc": "こけだまのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "こけだま",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 454,
+   "h": 493
+  },
+  {
+   "id": "yokai-friends-original-cloud",
+   "file": "yokai-friends-original-cloud.webp",
+   "title": "ふわふわぐも",
+   "desc": "ふわふわぐものイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "ふわふわぐも",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 490,
+   "h": 479
+  },
+  {
+   "id": "yokai-friends-original-leaf",
+   "file": "yokai-friends-original-leaf.webp",
+   "title": "葉っぱのおばけ",
+   "desc": "葉っぱのおばけのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "葉っぱのおばけ",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 429,
+   "h": 469
+  },
+  {
+   "id": "yokai-friends-original-cat-tail",
+   "file": "yokai-friends-original-cat-tail.webp",
+   "title": "二本しっぽのねこ",
+   "desc": "二本しっぽのねこのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "二本しっぽのねこ",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 546,
+   "h": 470
+  },
+  {
+   "id": "yokai-friends-original-moon",
+   "file": "yokai-friends-original-moon.webp",
+   "title": "お月みおばけ",
+   "desc": "お月みおばけのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "お月みおばけ",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 468,
+   "h": 445
+  },
+  {
+   "id": "yokai-friends-original-teapot",
+   "file": "yokai-friends-original-teapot.webp",
+   "title": "ちゃがま",
+   "desc": "ちゃがまのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "ちゃがま",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 487,
+   "h": 483
+  },
+  {
+   "id": "yokai-friends-original-frog-drop",
+   "file": "yokai-friends-original-frog-drop.webp",
+   "title": "あめがえる",
+   "desc": "あめがえるのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "あめがえる",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 458,
+   "h": 479
+  },
+  {
+   "id": "yokai-friends-original-shadow",
+   "file": "yokai-friends-original-shadow.webp",
+   "title": "かげぼうし",
+   "desc": "かげぼうしのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "妖怪",
+    "おばけ",
+    "オリジナルキャラ",
+    "ハロウィン",
+    "オリジナル妖怪とおばけ",
+    "かげぼうし",
+    "ゆるかわ",
+    "どうぶつ"
+   ],
+   "w": 491,
+   "h": 493
+  }
+ ]
+}

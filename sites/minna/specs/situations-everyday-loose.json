@@ -1,0 +1,85 @@
+{
+ "slug": "situations-everyday-loose",
+ "title": "日常の場面 ゆるい手書き",
+ "subject": "",
+ "genre": "life",
+ "touch": "loose",
+ "title_fmt": "{ja}",
+ "subject_en": "Everyday-life situations with ONE person (adult, short dark hair, simple clothes, dot eyes), each a small complete scene with a few props, loose hand-drawn style. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters.",
+ "lead": "朝ごはん、満員電車、スマホを見る、ごろ寝。ありそうでなかった、日常のひとこまを12点。スライドやブログの「あるある」の挿絵に。",
+ "tags": [
+  "日常",
+  "あるある",
+  "くらし",
+  "ゆるい",
+  "人物",
+  "ブログ",
+  "スライド"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "breakfast",
+   "朝ごはん",
+   "a person eating toast at a small table with a cup of coffee"
+  ],
+  [
+   "train",
+   "満員電車",
+   "a person holding a strap in a crowded train, tired, a few other faceless commuters"
+  ],
+  [
+   "phone",
+   "スマホを見る",
+   "a person looking at a smartphone while sitting on a sofa"
+  ],
+  [
+   "gorogoro",
+   "ごろ寝",
+   "a person lying on the floor in front of a TV with snacks"
+  ],
+  [
+   "laundry",
+   "洗濯物をほす",
+   "a person hanging laundry on a balcony line"
+  ],
+  [
+   "shopping",
+   "スーパーで買い物",
+   "a person pushing a shopping cart with vegetables"
+  ],
+  [
+   "umbrella",
+   "雨の日の通勤",
+   "a person walking with an umbrella and wet shoes"
+  ],
+  [
+   "cook",
+   "夕ごはんを作る",
+   "a person cooking at a stove with a pot and steam"
+  ],
+  [
+   "bath",
+   "お風呂でひと息",
+   "a person relaxing in a bathtub with a towel on the head"
+  ],
+  [
+   "late",
+   "寝ぼうして走る",
+   "a person running with toast in the mouth and an untied tie"
+  ],
+  [
+   "call",
+   "電話で話す",
+   "a person talking on a mobile phone while walking"
+  ],
+  [
+   "sleep",
+   "ふとんでぐっすり",
+   "a person asleep in a futon with a moon-and-stars pattern"
+  ]
+ ],
+ "exclude": [],
+ "priority": 26
+}

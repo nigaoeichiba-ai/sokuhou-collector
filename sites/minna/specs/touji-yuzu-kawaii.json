@@ -1,0 +1,88 @@
+{
+ "slug": "touji-yuzu-kawaii",
+ "title": "冬至・ゆず湯のイラスト",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Winter solstice (toji) customs and foods, each a separate object, kawaii soft style, warm yellow and orange palette. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters.",
+ "lead": "かぼちゃ、ゆず湯、小豆がゆ、こんにゃく。12月22日ごろの冬至の行事を、12点にまとめました。給食だよりや保健だより、デイサービスの掲示に。",
+ "tags": [
+  "冬至",
+  "ゆず湯",
+  "かぼちゃ",
+  "12月",
+  "おたより",
+  "給食だより",
+  "行事食"
+ ],
+ "season": {
+  "from": "12-01",
+  "to": "12-25"
+ },
+ "holes": false,
+ "items": [
+  [
+   "yuzu",
+   "ゆず",
+   "three yellow yuzu citrus fruits with leaves"
+  ],
+  [
+   "yuzuyu",
+   "ゆず湯",
+   "a wooden tub with hot water, floating yuzu and gentle steam"
+  ],
+  [
+   "kabocha",
+   "かぼちゃ",
+   "a whole kabocha squash with a cut half showing seeds"
+  ],
+  [
+   "kabocha-ni",
+   "かぼちゃの煮もの",
+   "a small bowl of simmered kabocha pieces"
+  ],
+  [
+   "azuki",
+   "小豆がゆ",
+   "a bowl of red-bean porridge with steam"
+  ],
+  [
+   "konnyaku",
+   "こんにゃく",
+   "a pair of konnyaku blocks on a small plate"
+  ],
+  [
+   "sun",
+   "いちばん短い昼",
+   "a small low sun over a hill with long shadows, winter mood"
+  ],
+  [
+   "night",
+   "長い夜",
+   "a crescent moon and stars over a quiet house"
+  ],
+  [
+   "towel",
+   "タオルとあひる",
+   "a folded towel with a small yellow rubber duck"
+  ],
+  [
+   "kotatsu",
+   "こたつ",
+   "a cosy kotatsu table with a quilt and a tangerine"
+  ],
+  [
+   "nanakusa",
+   "冬至の食べもの",
+   "a tray with a kabocha slice, a carrot, a ginkgo nut, a kumquat and a bowl of udon noodles, simply drawn"
+  ],
+  [
+   "scarf",
+   "あったか冬じたく",
+   "a knitted scarf, mittens and a hat arranged together"
+  ]
+ ],
+ "exclude": [],
+ "priority": 14
+}

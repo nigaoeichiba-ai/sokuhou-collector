@@ -1,0 +1,84 @@
+{
+ "slug": "seasons-pixel-landscape",
+ "title": "四季の風景 ドット絵",
+ "subject": "",
+ "genre": "nature",
+ "touch": "pixel",
+ "title_fmt": "{ja}",
+ "subject_en": "Small landscape vignettes, each a compact diorama on its own rounded ground patch (not a full-bleed background), retro pixel art with crisp pixels and a 1-pixel dark outline around the whole shape. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters.",
+ "lead": "春の桜、夏の海、秋の紅葉、冬の雪。四季の小さな風景を、ゲームのようなドット絵で12点。ブログのアイキャッチやゲーム風デザインに。",
+ "tags": [
+  "ドット絵",
+  "風景",
+  "四季",
+  "レトロゲーム",
+  "春夏秋冬",
+  "背景"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "spring-sakura",
+   "春の桜並木",
+   "a small diorama with cherry trees and a path"
+  ],
+  [
+   "spring-field",
+   "菜の花畑",
+   "a small yellow rapeseed field with butterflies"
+  ],
+  [
+   "summer-sea",
+   "夏の海",
+   "a small beach with waves, a parasol and a cloud"
+  ],
+  [
+   "summer-fireworks",
+   "夏の花火",
+   "a night hill diorama with colourful fireworks"
+  ],
+  [
+   "autumn-maple",
+   "秋の紅葉",
+   "a small hillside with red and orange maples"
+  ],
+  [
+   "autumn-harvest",
+   "秋の収穫",
+   "a small field with pumpkins and a scarecrow"
+  ],
+  [
+   "winter-snow",
+   "冬の雪原",
+   "a small snowy field with a snowman and pine trees"
+  ],
+  [
+   "winter-house",
+   "雪の家",
+   "a cosy house with a lit window in snow"
+  ],
+  [
+   "rain",
+   "雨の街",
+   "a small town corner with puddles and an umbrella"
+  ],
+  [
+   "night-town",
+   "夜の町",
+   "a small town at night with a moon and lit windows"
+  ],
+  [
+   "mountain",
+   "山と湖",
+   "a small mountain with a blue lake"
+  ],
+  [
+   "farm",
+   "のどかな畑",
+   "a small farm with a barn and a windmill"
+  ]
+ ],
+ "exclude": [],
+ "priority": 36
+}

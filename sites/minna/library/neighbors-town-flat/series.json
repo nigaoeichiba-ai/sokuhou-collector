@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-09",
+ "slug": "neighbors-town-flat",
+ "title": "町のいろいろな人 フラット",
+ "genre": "people",
+ "touch": "flat",
+ "lead": "駅員、配達員、八百屋さん、消防士、図書館員。町で働く人たちを、顔の見えるフラットなタッチで12点。地域のお知らせや、学校の学習資料に。",
+ "tags": [
+  "町",
+  "職業",
+  "仕事",
+  "地域",
+  "お知らせ",
+  "学習",
+  "人物"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "neighbors-town-flat-station",
+   "file": "neighbors-town-flat-station.webp",
+   "title": "駅員さん",
+   "desc": "駅員さんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "駅員さん",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 209,
+   "h": 477
+  },
+  {
+   "id": "neighbors-town-flat-post",
+   "file": "neighbors-town-flat-post.webp",
+   "title": "郵便配達員さん",
+   "desc": "郵便配達員さんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "郵便配達員さん",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 365,
+   "h": 479
+  },
+  {
+   "id": "neighbors-town-flat-greengrocer",
+   "file": "neighbors-town-flat-greengrocer.webp",
+   "title": "八百屋さん",
+   "desc": "八百屋さんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "八百屋さん",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 383,
+   "h": 479
+  },
+  {
+   "id": "neighbors-town-flat-fire",
+   "file": "neighbors-town-flat-fire.webp",
+   "title": "消防士さん",
+   "desc": "消防士さんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "消防士さん",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 281,
+   "h": 501
+  },
+  {
+   "id": "neighbors-town-flat-library",
+   "file": "neighbors-town-flat-library.webp",
+   "title": "図書館員さん",
+   "desc": "図書館員さんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "図書館員さん",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 327,
+   "h": 490
+  },
+  {
+   "id": "neighbors-town-flat-baker",
+   "file": "neighbors-town-flat-baker.webp",
+   "title": "パン屋さん",
+   "desc": "パン屋さんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "パン屋さん",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 289,
+   "h": 499
+  },
+  {
+   "id": "neighbors-town-flat-police",
+   "file": "neighbors-town-flat-police.webp",
+   "title": "おまわりさん",
+   "desc": "おまわりさんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "おまわりさん",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 442,
+   "h": 492
+  },
+  {
+   "id": "neighbors-town-flat-bus",
+   "file": "neighbors-town-flat-bus.webp",
+   "title": "バスの運転手さん",
+   "desc": "バスの運転手さんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "バスの運転手さん",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 365,
+   "h": 435
+  },
+  {
+   "id": "neighbors-town-flat-garbage",
+   "file": "neighbors-town-flat-garbage.webp",
+   "title": "清掃員さん",
+   "desc": "清掃員さんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "清掃員さん",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 421,
+   "h": 481
+  },
+  {
+   "id": "neighbors-town-flat-nurse",
+   "file": "neighbors-town-flat-nurse.webp",
+   "title": "看護師さん",
+   "desc": "看護師さんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "看護師さん",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 211,
+   "h": 519
+  },
+  {
+   "id": "neighbors-town-flat-farmer",
+   "file": "neighbors-town-flat-farmer.webp",
+   "title": "農家さん",
+   "desc": "農家さんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "農家さん",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 341,
+   "h": 518
+  },
+  {
+   "id": "neighbors-town-flat-teacher",
+   "file": "neighbors-town-flat-teacher.webp",
+   "title": "先生",
+   "desc": "先生のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "町",
+    "職業",
+    "仕事",
+    "地域",
+    "町のいろいろな人 フラット",
+    "先生",
+    "シンプルフラット",
+    "人物"
+   ],
+   "w": 461,
+   "h": 514
+  }
+ ]
+}
