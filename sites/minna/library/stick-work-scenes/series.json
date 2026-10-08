@@ -1,0 +1,228 @@
+{
+ "added": "2026-10-09",
+ "slug": "stick-work-scenes",
+ "title": "棒人間の仕事いろいろ",
+ "genre": "work",
+ "touch": "stick",
+ "lead": "プレゼン、会議、電話、握手、ひらめき、残業。資料やマニュアル、社内の掲示にそのまま使える、棒人間の仕事の場面12点。",
+ "tags": [
+  "棒人間",
+  "ビジネス",
+  "仕事",
+  "資料",
+  "プレゼン",
+  "会議",
+  "マニュアル",
+  "シンプル"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "stick-work-scenes-present",
+   "file": "stick-work-scenes-present.webp",
+   "title": "プレゼンする",
+   "desc": "プレゼンするのイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "プレゼン",
+    "棒人間の仕事いろいろ",
+    "プレゼンする",
+    "仕事・ビジネス"
+   ],
+   "w": 428,
+   "h": 396
+  },
+  {
+   "id": "stick-work-scenes-meeting",
+   "file": "stick-work-scenes-meeting.webp",
+   "title": "会議",
+   "desc": "会議のイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "会議",
+    "棒人間の仕事いろいろ",
+    "仕事・ビジネス"
+   ],
+   "w": 425,
+   "h": 352
+  },
+  {
+   "id": "stick-work-scenes-phone",
+   "file": "stick-work-scenes-phone.webp",
+   "title": "電話する",
+   "desc": "電話するのイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "棒人間の仕事いろいろ",
+    "電話する",
+    "仕事・ビジネス"
+   ],
+   "w": 250,
+   "h": 397
+  },
+  {
+   "id": "stick-work-scenes-handshake",
+   "file": "stick-work-scenes-handshake.webp",
+   "title": "握手",
+   "desc": "握手のイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "棒人間の仕事いろいろ",
+    "握手",
+    "仕事・ビジネス"
+   ],
+   "w": 357,
+   "h": 382
+  },
+  {
+   "id": "stick-work-scenes-pc",
+   "file": "stick-work-scenes-pc.webp",
+   "title": "パソコン作業",
+   "desc": "パソコン作業のイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "棒人間の仕事いろいろ",
+    "パソコン作業",
+    "仕事・ビジネス"
+   ],
+   "w": 343,
+   "h": 367
+  },
+  {
+   "id": "stick-work-scenes-idea",
+   "file": "stick-work-scenes-idea.webp",
+   "title": "ひらめき",
+   "desc": "ひらめきのイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "棒人間の仕事いろいろ",
+    "ひらめき",
+    "仕事・ビジネス"
+   ],
+   "w": 208,
+   "h": 472
+  },
+  {
+   "id": "stick-work-scenes-hurry",
+   "file": "stick-work-scenes-hurry.webp",
+   "title": "いそぐ",
+   "desc": "いそぐのイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "棒人間の仕事いろいろ",
+    "いそぐ",
+    "仕事・ビジネス"
+   ],
+   "w": 411,
+   "h": 400
+  },
+  {
+   "id": "stick-work-scenes-think",
+   "file": "stick-work-scenes-think.webp",
+   "title": "なやむ",
+   "desc": "なやむのイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "棒人間の仕事いろいろ",
+    "なやむ",
+    "仕事・ビジネス"
+   ],
+   "w": 373,
+   "h": 481
+  },
+  {
+   "id": "stick-work-scenes-bow",
+   "file": "stick-work-scenes-bow.webp",
+   "title": "おじぎ",
+   "desc": "おじぎのイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "棒人間の仕事いろいろ",
+    "おじぎ",
+    "仕事・ビジネス"
+   ],
+   "w": 221,
+   "h": 402
+  },
+  {
+   "id": "stick-work-scenes-clap",
+   "file": "stick-work-scenes-clap.webp",
+   "title": "拍手",
+   "desc": "拍手のイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "棒人間の仕事いろいろ",
+    "拍手",
+    "仕事・ビジネス"
+   ],
+   "w": 211,
+   "h": 435
+  },
+  {
+   "id": "stick-work-scenes-coffee",
+   "file": "stick-work-scenes-coffee.webp",
+   "title": "休憩",
+   "desc": "休憩のイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "棒人間の仕事いろいろ",
+    "休憩",
+    "仕事・ビジネス"
+   ],
+   "w": 280,
+   "h": 412
+  },
+  {
+   "id": "stick-work-scenes-overtime",
+   "file": "stick-work-scenes-overtime.webp",
+   "title": "残業",
+   "desc": "残業のイラスト。棒人間のタッチ。",
+   "tags": [
+    "棒人間",
+    "ビジネス",
+    "仕事",
+    "資料",
+    "棒人間の仕事いろいろ",
+    "残業",
+    "仕事・ビジネス"
+   ],
+   "w": 459,
+   "h": 453
+  }
+ ]
+}

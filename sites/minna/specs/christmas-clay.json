@@ -17,21 +17,72 @@
   "雪だるま",
   "12月"
  ],
- "season": {"from": "11-01", "to": "12-25"},
+ "season": {
+  "from": "11-01",
+  "to": "12-25"
+ },
  "holes": false,
  "items": [
-  ["tree", "クリスマスツリー", "a puffy green Christmas tree with round red and gold ornaments and a star"],
-  ["bauble", "オーナメント", "a round red ornament ball with a gold cap and a small loop"],
-  ["snowman", "雪だるま", "a cream-coloured puffy snowman with a red scarf and a tiny hat"],
-  ["gift", "プレゼント", "a red gift box with a gold ribbon bow"],
-  ["gingerbread", "ジンジャークッキー", "a gingerbread person cookie with icing dots and a smile"],
-  ["bell", "ベル", "a gold bell with a red ribbon"],
-  ["stocking", "くつした", "a red Christmas stocking with cream fur trim"],
-  ["candy-cane", "キャンディケイン", "a red-and-cream striped candy cane"],
-  ["wreath", "リース", "a small round green wreath with red berries and a bow (solid centre, no hole)"],
-  ["star", "星", "a puffy gold star"],
-  ["reindeer", "トナカイ", "a cute round brown reindeer with a red nose and small antlers"],
-  ["cake", "クリスマスケーキ", "a round strawberry shortcake with a tiny tree topper"]
+  [
+   "tree",
+   "クリスマスツリー",
+   "a puffy green Christmas tree with round red and gold ornaments and a star"
+  ],
+  [
+   "bauble",
+   "オーナメント",
+   "a round red ornament ball with a gold cap and a small loop"
+  ],
+  [
+   "snowman",
+   "雪だるま",
+   "a cream-coloured puffy snowman with a red scarf and a tiny hat"
+  ],
+  [
+   "gift",
+   "プレゼント",
+   "a red gift box with a gold ribbon bow"
+  ],
+  [
+   "gingerbread",
+   "ジンジャークッキー",
+   "a gingerbread person cookie with icing dots and a smile"
+  ],
+  [
+   "bell",
+   "ベル",
+   "a gold bell with a red ribbon"
+  ],
+  [
+   "stocking",
+   "くつした",
+   "a red Christmas stocking with cream fur trim"
+  ],
+  [
+   "candy-cane",
+   "キャンディケイン",
+   "a red-and-cream striped candy cane"
+  ],
+  [
+   "wreath",
+   "リース",
+   "a small round green wreath with red berries and a bow (solid centre, no hole)"
+  ],
+  [
+   "star",
+   "星",
+   "a puffy gold star"
+  ],
+  [
+   "reindeer",
+   "トナカイ",
+   "a cute round brown reindeer with a red nose and small antlers"
+  ],
+  [
+   "cake",
+   "クリスマスケーキ",
+   "a round strawberry shortcake with a tiny tree topper"
+  ]
  ],
  "exclude": []
 }

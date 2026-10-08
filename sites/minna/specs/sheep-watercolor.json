@@ -18,21 +18,72 @@
   "お正月",
   "おしゃれ"
  ],
- "season": {"from": "10-01", "to": "01-31"},
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
  "holes": false,
  "items": [
-  ["sheep-stand", "ひつじ", "a standing sheep in three-quarter view, fluffy cream wool"],
-  ["sheep-sit", "すわるひつじ", "a sheep sitting on the ground, calm and content"],
-  ["parent-child", "親子のひつじ", "a sheep with a small lamb nestled beside it"],
-  ["lamb", "子ひつじ", "a small lamb standing on thin legs, curious face"],
-  ["sheep-plum", "ひつじと梅", "a sheep beside a branch of pink plum blossoms"],
-  ["sheep-fuji", "ひつじと富士山", "a sheep in front of a small snow-capped mountain and rising sun"],
-  ["kagamimochi", "鏡もち", "a kagami-mochi: two stacked rice cakes with a small orange on top"],
-  ["shochikubai", "松竹梅", "a small arrangement of pine, bamboo and plum blossom"],
-  ["plum-branch", "梅の枝", "a branch of pink and cream plum blossoms"],
-  ["sunrise", "初日の出", "a rising red-orange sun over soft hills and clouds"],
-  ["temari", "手まり", "two decorative thread balls (temari) in red, gold and indigo"],
-  ["sheep-flowers", "花とひつじ", "a sheep with a wreath of small flowers around its neck"]
+  [
+   "sheep-stand",
+   "ひつじ",
+   "a standing sheep in three-quarter view, fluffy cream wool"
+  ],
+  [
+   "sheep-sit",
+   "すわるひつじ",
+   "a sheep sitting on the ground, calm and content"
+  ],
+  [
+   "parent-child",
+   "親子のひつじ",
+   "a sheep with a small lamb nestled beside it"
+  ],
+  [
+   "lamb",
+   "子ひつじ",
+   "a small lamb standing on thin legs, curious face"
+  ],
+  [
+   "sheep-plum",
+   "ひつじと梅",
+   "a sheep beside a branch of pink plum blossoms"
+  ],
+  [
+   "sheep-fuji",
+   "ひつじと富士山",
+   "a sheep in front of a small snow-capped mountain and rising sun"
+  ],
+  [
+   "kagamimochi",
+   "鏡もち",
+   "a kagami-mochi: two stacked rice cakes with a small orange on top"
+  ],
+  [
+   "shochikubai",
+   "松竹梅",
+   "a small arrangement of pine, bamboo and plum blossom"
+  ],
+  [
+   "plum-branch",
+   "梅の枝",
+   "a branch of pink and cream plum blossoms"
+  ],
+  [
+   "sunrise",
+   "初日の出",
+   "a rising red-orange sun over soft hills and clouds"
+  ],
+  [
+   "temari",
+   "手まり",
+   "two decorative thread balls (temari) in red, gold and indigo"
+  ],
+  [
+   "sheep-flowers",
+   "花とひつじ",
+   "a sheep with a wreath of small flowers around its neck"
+  ]
  ],
  "exclude": []
 }

@@ -1,0 +1,241 @@
+{
+ "added": "2026-10-09",
+ "slug": "sheep-watercolor",
+ "title": "水彩のひつじと年賀状のモチーフ",
+ "genre": "eto",
+ "touch": "watercolor",
+ "lead": "水彩でやわらかく描いた、ひつじと年賀状の素材12点。大人っぽい年賀状、寒中見舞い、お店のお知らせに。親子のひつじ、梅、松竹梅、富士山、鏡もちなど。",
+ "tags": [
+  "ひつじ",
+  "羊",
+  "未年",
+  "年賀状",
+  "2027",
+  "水彩",
+  "お正月",
+  "おしゃれ"
+ ],
+ "subject": "",
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "sheep-watercolor-sheep-stand",
+   "file": "sheep-watercolor-sheep-stand.webp",
+   "title": "ひつじ",
+   "desc": "ひつじのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 407,
+   "h": 473
+  },
+  {
+   "id": "sheep-watercolor-sheep-sit",
+   "file": "sheep-watercolor-sheep-sit.webp",
+   "title": "すわるひつじ",
+   "desc": "すわるひつじのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "すわるひつじ",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 388,
+   "h": 352
+  },
+  {
+   "id": "sheep-watercolor-parent-child",
+   "file": "sheep-watercolor-parent-child.webp",
+   "title": "親子のひつじ",
+   "desc": "親子のひつじのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "親子のひつじ",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 489,
+   "h": 401
+  },
+  {
+   "id": "sheep-watercolor-lamb",
+   "file": "sheep-watercolor-lamb.webp",
+   "title": "子ひつじ",
+   "desc": "子ひつじのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "子ひつじ",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 267,
+   "h": 448
+  },
+  {
+   "id": "sheep-watercolor-sheep-plum",
+   "file": "sheep-watercolor-sheep-plum.webp",
+   "title": "ひつじと梅",
+   "desc": "ひつじと梅のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "ひつじと梅",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 475,
+   "h": 478
+  },
+  {
+   "id": "sheep-watercolor-sheep-fuji",
+   "file": "sheep-watercolor-sheep-fuji.webp",
+   "title": "ひつじと富士山",
+   "desc": "ひつじと富士山のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "ひつじと富士山",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 501,
+   "h": 484
+  },
+  {
+   "id": "sheep-watercolor-kagamimochi",
+   "file": "sheep-watercolor-kagamimochi.webp",
+   "title": "鏡もち",
+   "desc": "鏡もちのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "鏡もち",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 491,
+   "h": 488
+  },
+  {
+   "id": "sheep-watercolor-shochikubai",
+   "file": "sheep-watercolor-shochikubai.webp",
+   "title": "松竹梅",
+   "desc": "松竹梅のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "松竹梅",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 437,
+   "h": 517
+  },
+  {
+   "id": "sheep-watercolor-plum-branch",
+   "file": "sheep-watercolor-plum-branch.webp",
+   "title": "梅の枝",
+   "desc": "梅の枝のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "梅の枝",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 457,
+   "h": 482
+  },
+  {
+   "id": "sheep-watercolor-sunrise",
+   "file": "sheep-watercolor-sunrise.webp",
+   "title": "初日の出",
+   "desc": "初日の出のイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "初日の出",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 502,
+   "h": 443
+  },
+  {
+   "id": "sheep-watercolor-temari",
+   "file": "sheep-watercolor-temari.webp",
+   "title": "手まり",
+   "desc": "手まりのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "手まり",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 477,
+   "h": 379
+  },
+  {
+   "id": "sheep-watercolor-sheep-flowers",
+   "file": "sheep-watercolor-sheep-flowers.webp",
+   "title": "花とひつじ",
+   "desc": "花とひつじのイラスト。やわらか水彩のタッチ。",
+   "tags": [
+    "ひつじ",
+    "羊",
+    "未年",
+    "年賀状",
+    "水彩のひつじと年賀状のモチーフ",
+    "花とひつじ",
+    "やわらか水彩",
+    "干支・年賀状"
+   ],
+   "w": 514,
+   "h": 482
+  }
+ ]
+}

@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-09",
+ "slug": "birth-flowers-linecolor",
+ "title": "12か月の誕生花",
+ "genre": "nature",
+ "touch": "linecolor",
+ "lead": "1月の水仙から12月のポインセチアまで、月ごとの誕生花を1輪ずつ。誕生日カード、お誕生日の掲示、月のおたよりの飾りに使える12点。",
+ "tags": [
+  "誕生花",
+  "花",
+  "月別",
+  "誕生日",
+  "お誕生日",
+  "カード",
+  "おたより"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "birth-flowers-linecolor-jan-narcissus",
+   "file": "birth-flowers-linecolor-jan-narcissus.webp",
+   "title": "1月 水仙",
+   "desc": "1月 水仙のイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "1月 水仙",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 348,
+   "h": 494
+  },
+  {
+   "id": "birth-flowers-linecolor-feb-plum",
+   "file": "birth-flowers-linecolor-feb-plum.webp",
+   "title": "2月 梅",
+   "desc": "2月 梅のイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "2月 梅",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 432,
+   "h": 424
+  },
+  {
+   "id": "birth-flowers-linecolor-mar-tulip",
+   "file": "birth-flowers-linecolor-mar-tulip.webp",
+   "title": "3月 チューリップ",
+   "desc": "3月 チューリップのイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "3月 チューリップ",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 333,
+   "h": 486
+  },
+  {
+   "id": "birth-flowers-linecolor-apr-sakura",
+   "file": "birth-flowers-linecolor-apr-sakura.webp",
+   "title": "4月 さくら",
+   "desc": "4月 さくらのイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "4月 さくら",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 367,
+   "h": 438
+  },
+  {
+   "id": "birth-flowers-linecolor-may-suzuran",
+   "file": "birth-flowers-linecolor-may-suzuran.webp",
+   "title": "5月 すずらん",
+   "desc": "5月 すずらんのイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "5月 すずらん",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 339,
+   "h": 491
+  },
+  {
+   "id": "birth-flowers-linecolor-jun-ajisai",
+   "file": "birth-flowers-linecolor-jun-ajisai.webp",
+   "title": "6月 あじさい",
+   "desc": "6月 あじさいのイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "6月 あじさい",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 430,
+   "h": 441
+  },
+  {
+   "id": "birth-flowers-linecolor-jul-lily",
+   "file": "birth-flowers-linecolor-jul-lily.webp",
+   "title": "7月 ゆり",
+   "desc": "7月 ゆりのイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "7月 ゆり",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 442,
+   "h": 500
+  },
+  {
+   "id": "birth-flowers-linecolor-aug-sunflower",
+   "file": "birth-flowers-linecolor-aug-sunflower.webp",
+   "title": "8月 ひまわり",
+   "desc": "8月 ひまわりのイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "8月 ひまわり",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 422,
+   "h": 487
+  },
+  {
+   "id": "birth-flowers-linecolor-sep-rindo",
+   "file": "birth-flowers-linecolor-sep-rindo.webp",
+   "title": "9月 りんどう",
+   "desc": "9月 りんどうのイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "9月 りんどう",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 381,
+   "h": 509
+  },
+  {
+   "id": "birth-flowers-linecolor-oct-cosmos",
+   "file": "birth-flowers-linecolor-oct-cosmos.webp",
+   "title": "10月 コスモス",
+   "desc": "10月 コスモスのイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "10月 コスモス",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 460,
+   "h": 496
+  },
+  {
+   "id": "birth-flowers-linecolor-nov-chrysanthemum",
+   "file": "birth-flowers-linecolor-nov-chrysanthemum.webp",
+   "title": "11月 菊",
+   "desc": "11月 菊のイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "11月 菊",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 425,
+   "h": 483
+  },
+  {
+   "id": "birth-flowers-linecolor-dec-poinsettia",
+   "file": "birth-flowers-linecolor-dec-poinsettia.webp",
+   "title": "12月 ポインセチア",
+   "desc": "12月 ポインセチアのイラスト。線画カラーのタッチ。",
+   "tags": [
+    "誕生花",
+    "花",
+    "月別",
+    "誕生日",
+    "12か月の誕生花",
+    "12月 ポインセチア",
+    "線画カラー",
+    "花・自然"
+   ],
+   "w": 490,
+   "h": 484
+  }
+ ]
+}

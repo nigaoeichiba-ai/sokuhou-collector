@@ -21,18 +21,66 @@
  "season": null,
  "holes": false,
  "items": [
-  ["present", "プレゼンする", "pointing at a blank whiteboard on a stand"],
-  ["meeting", "会議", "two stick figures sitting at a small table facing each other"],
-  ["phone", "電話する", "holding a phone to the ear, other hand raised"],
-  ["handshake", "握手", "two stick figures shaking hands"],
-  ["pc", "パソコン作業", "sitting at a desk typing on a laptop"],
-  ["idea", "ひらめき", "standing with one finger up and a light bulb above the head"],
-  ["hurry", "いそぐ", "running with a briefcase, motion lines"],
-  ["think", "なやむ", "standing with a hand on the chin and a small empty thought bubble"],
-  ["bow", "おじぎ", "bowing at the waist"],
-  ["clap", "拍手", "clapping with small motion marks"],
-  ["coffee", "休憩", "sitting on a chair holding a mug with steam"],
-  ["overtime", "残業", "slumped at a desk with a laptop and a crescent moon above"]
+  [
+   "present",
+   "プレゼンする",
+   "pointing at a blank whiteboard on a stand"
+  ],
+  [
+   "meeting",
+   "会議",
+   "two stick figures sitting at a small table facing each other"
+  ],
+  [
+   "phone",
+   "電話する",
+   "holding a phone to the ear, other hand raised"
+  ],
+  [
+   "handshake",
+   "握手",
+   "two stick figures shaking hands"
+  ],
+  [
+   "pc",
+   "パソコン作業",
+   "sitting at a desk typing on a laptop"
+  ],
+  [
+   "idea",
+   "ひらめき",
+   "standing with one finger up and a light bulb above the head"
+  ],
+  [
+   "hurry",
+   "いそぐ",
+   "running with a briefcase, motion lines"
+  ],
+  [
+   "think",
+   "なやむ",
+   "standing with a hand on the chin and a small empty thought bubble"
+  ],
+  [
+   "bow",
+   "おじぎ",
+   "bowing at the waist"
+  ],
+  [
+   "clap",
+   "拍手",
+   "clapping with small motion marks"
+  ],
+  [
+   "coffee",
+   "休憩",
+   "sitting on a chair holding a mug with steam"
+  ],
+  [
+   "overtime",
+   "残業",
+   "slumped at a desk with a laptop and a crescent moon above"
+  ]
  ],
  "exclude": []
 }

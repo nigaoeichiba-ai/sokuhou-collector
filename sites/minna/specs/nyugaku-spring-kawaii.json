@@ -20,21 +20,76 @@
   "新学期",
   "おたより"
  ],
- "season": {"from": "02-01", "to": "04-15"},
+ "season": {
+  "from": "02-01",
+  "to": "04-15"
+ },
  "holes": false,
  "items": [
-  ["randoseru", "ランドセル", "a red school backpack (randoseru) with a small flap, standing"],
-  ["randoseru-boy", "ランドセルの男の子", "a small boy with a black school backpack, waving happily"],
-  ["randoseru-girl", "ランドセルの女の子", "a small girl with a red school backpack, smiling"],
-  ["gate", "さくらの校門", "a school gate with two pillars and a cherry tree in bloom beside it (blank nameplate)"],
-  ["enji-hat", "園児の帽子", "a yellow kindergarten hat with a chin strap"],
-  ["enji", "園児", "a small child in a smock and yellow hat holding a tiny bag, cheerful"],
-  ["uwabaki", "上ばき", "a pair of cream indoor school shoes with a blue toe"],
-  ["nafuda", "名札", "a blank name badge with a tulip shape and a safety pin"],
-  ["tulip", "チューリップ", "three tulips in red, yellow and pink with leaves"],
-  ["sakura-branch", "さくらの枝", "a branch of cherry blossoms"],
-  ["ceremony-flower", "お祝いの花", "a rosette-style ribbon flower in red and cream with two streamers (no letters)"],
-  ["bento", "はじめてのお弁当", "an open lunch box with rice, a tiny octopus sausage and broccoli"]
+  [
+   "randoseru",
+   "ランドセル",
+   "a red school backpack (randoseru) with a small flap, standing"
+  ],
+  [
+   "randoseru-boy",
+   "ランドセルの男の子",
+   "a small boy with a black school backpack, waving happily"
+  ],
+  [
+   "randoseru-girl",
+   "ランドセルの女の子",
+   "a small girl with a red school backpack, smiling"
+  ],
+  [
+   "gate",
+   "さくらの校門",
+   "a school gate with two pillars and a cherry tree in bloom beside it (blank nameplate)"
+  ],
+  [
+   "enji-hat",
+   "園児の帽子",
+   "a yellow kindergarten hat with a chin strap"
+  ],
+  [
+   "enji",
+   "園児",
+   "a small child in a smock and yellow hat holding a tiny bag, cheerful"
+  ],
+  [
+   "uwabaki",
+   "上ばき",
+   "a pair of cream indoor school shoes with a blue toe"
+  ],
+  [
+   "nafuda",
+   "名札",
+   "a blank name badge with a tulip shape and a safety pin"
+  ],
+  [
+   "tulip",
+   "チューリップ",
+   "three tulips in red, yellow and pink with leaves"
+  ],
+  [
+   "sakura-branch",
+   "さくらの枝",
+   "a branch of cherry blossoms"
+  ],
+  [
+   "ceremony-flower",
+   "お祝いの花",
+   "a rosette-style ribbon flower in red and cream with two streamers (no letters)"
+  ],
+  [
+   "bento",
+   "はじめてのお弁当",
+   "an open lunch box with rice, a tiny octopus sausage and broccoli"
+  ]
  ],
- "exclude": []
+ "exclude": [
+  "enji",
+  "gate",
+  "randoseru-girl"
+ ]
 }

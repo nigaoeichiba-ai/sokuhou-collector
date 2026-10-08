@@ -21,21 +21,72 @@
   "1月",
   "保育"
  ],
- "season": {"from": "11-01", "to": "02-28"},
+ "season": {
+  "from": "11-01",
+  "to": "02-28"
+ },
  "holes": false,
  "items": [
-  ["handwash", "手あらい", "a child washing hands at a small sink with soap bubbles"],
-  ["gargle", "うがい", "a child gargling with a cup, head tilted back"],
-  ["mask", "マスク", "a child wearing a cream face mask, waving"],
-  ["sleep", "早ねはやおき", "a child asleep in bed with a moon-and-star blanket"],
-  ["warm-clothes", "あたたかい服", "a child in a coat, knitted hat, mittens and scarf"],
-  ["breakfast", "朝ごはん", "a child eating a bowl of rice with miso soup and an egg"],
-  ["humidifier", "かしつき", "a small humidifier with gentle steam"],
-  ["window", "かんき", "a child opening a window with fresh air swirls"],
-  ["thermometer", "体温計", "a digital thermometer with a blank display"],
-  ["cough", "せきエチケット", "a child covering the mouth with an elbow"],
-  ["vaccine", "予防せっしゅ", "a child with a small bandage on the arm, brave smile"],
-  ["rest", "おうちで休む", "a child resting on a sofa with a blanket and a mug"]
+  [
+   "handwash",
+   "手あらい",
+   "a child washing hands at a small sink with soap bubbles"
+  ],
+  [
+   "gargle",
+   "うがい",
+   "a child gargling with a cup, head tilted back"
+  ],
+  [
+   "mask",
+   "マスク",
+   "a child wearing a cream face mask, waving"
+  ],
+  [
+   "sleep",
+   "早ねはやおき",
+   "a child asleep in bed with a moon-and-star blanket"
+  ],
+  [
+   "warm-clothes",
+   "あたたかい服",
+   "a child in a coat, knitted hat, mittens and scarf"
+  ],
+  [
+   "breakfast",
+   "朝ごはん",
+   "a child eating a bowl of rice with miso soup and an egg"
+  ],
+  [
+   "humidifier",
+   "かしつき",
+   "a small humidifier with gentle steam"
+  ],
+  [
+   "window",
+   "かんき",
+   "a child opening a window with fresh air swirls"
+  ],
+  [
+   "thermometer",
+   "体温計",
+   "a digital thermometer with a blank display"
+  ],
+  [
+   "cough",
+   "せきエチケット",
+   "a child covering the mouth with an elbow"
+  ],
+  [
+   "vaccine",
+   "予防せっしゅ",
+   "a child with a small bandage on the arm, brave smile"
+  ],
+  [
+   "rest",
+   "おうちで休む",
+   "a child resting on a sofa with a blanket and a mug"
+  ]
  ],
  "exclude": []
 }
