@@ -26,7 +26,7 @@ from sites.atomou import catalog, datecore, skins, usecases  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
-CATCH = "あの日からもう何日、あの日まであと何日。"
+CATCH = "忘れたくない日を、お知らせします。"   # decided by the owner (2026-10-08); the copy pass may not change it
 SLUGS = ["deadline", "sale", "events", "exams", "hobby", "festival"]
 GROUP_SLUG = dict(zip(catalog.GROUPS, SLUGS))
 GROUP_LEAD = {
@@ -70,9 +70,9 @@ AddType application/manifest+json .webmanifest
 
 PUSH_BOX = '''<h2 id="push">この端末への通知</h2>
 <div class="panel" id="push-box" hidden>
-<p>予定の日と、やることの期限の日に、この端末へ通知を届けます。「お知らせの時間」に合わせて、当日の朝(7時ごろ)か前日の夜(21時ごろ)に届きます。通知の文は端末の中で作り、サーバーに送るのは知らせる日だけです。<a href="/privacy/#push">詳しく</a></p>
+<p>予定の日とやることの期限に、この端末へ通知します。届く時間は「お知らせの時間」で選べます(当日の朝7時ごろ、または前日の夜21時ごろ)。サーバーに送るのは日付だけです。予定の内容は端末に残ります。<a href="/privacy/#push">詳しく</a></p>
 <p id="push-status" class="muted"></p>
-<p id="push-ios" class="hint" hidden>iPhone・iPad では、共有ボタンの「ホーム画面に追加」で追加し、そのアイコンから開くと通知を使えます。</p>
+<p id="push-ios" class="hint" hidden>iPhone・iPad は、共有ボタンから「ホーム画面に追加」し、そのアイコンから開くと通知を使えます。</p>
 <p><button type="button" class="btn" id="push-on">この端末に通知を届ける</button> <button type="button" class="btn ghost" id="push-off" hidden>通知を止める</button></p>
 </div>
 '''
@@ -365,10 +365,10 @@ def search_page(c: Ctx) -> str:
 <h1>日付をさがす</h1>
 <p class="lead muted">言葉を入れるか、ジャンルを選びます。</p>
 {search_form()}
-<div class="chips" role="group" aria-label="ジャンル">{chips}<button type="button" class="chip" id="f-son" aria-pressed="false">損得のある日だけ</button></div>
+<div class="chips" role="group" aria-label="ジャンル">{chips}<button type="button" class="chip" id="f-son" aria-pressed="false">お金や手続きの日だけ</button></div>
 <p class="small muted" id="found" aria-live="polite">&nbsp;</p>
 <div class="cards" id="results"></div>
-<div class="panel" id="none" hidden><p>見つかりませんでした。</p><p>言葉を短くするか、ジャンルを「すべて」に。この言葉のまま<a id="none-add" href="/add/">自分の日として残す</a>こともできます。</p></div>
+<div class="panel" id="none" hidden><p>見つかりませんでした。</p><p>言葉を短くするか、ジャンルを「すべて」にしてみてください。この言葉のまま<a id="none-add" href="/add/">自分の日として残す</a>こともできます。</p></div>
 <noscript><p class="notice">検索には JavaScript が必要です。<a href="/c/deadline/">ジャンルのページ</a>からも探せます。</p></noscript>"""
     return c.page("/search/", f"日付をさがす | {NAME}", "言葉やジャンルから、締切・試験・大会・お祭りの日付を探せます。見つけた日は、ワンタップで予定に。", body, "search")
 
@@ -379,25 +379,25 @@ def my_page(c: Ctx) -> str:
     member_html = MEMBER_BOX if members_on(c.cfg) else ""
     if c.cfg.get("google_client_id"):
         sync_html = ('<h2 id="sync">別の端末に引き継ぐ</h2>\n<div class="panel" id="sync-box" hidden>'
-                     '<p>Google アカウントでつなぐと、記録した日を自分の Google ドライブ(専用の非表示フォルダ)経由で別の端末に引き継げます。当サイトのサーバーには預けません。'
+                     '<p>Google アカウントでつなぐと、記録した日を自分の Google ドライブに保存して、別の端末に引き継げます。当サイトのサーバーには預けません。'
                      '<a href="/privacy/#google">詳しく</a></p><p><button type="button" class="btn" id="sync-now">Google アカウントで同期する</button></p></div>\n')
     body = f"""{crumbs([("トップ", "/"), ("マイページ", None)])}
 <h1>マイページ</h1>
-<p class="lead muted">記録した日と、予定に入れた日。この端末の中だけにあります。</p>
+<p class="lead muted">記録した日と予定に入れた日が並びます。この端末の中だけに保存します。</p>
 <div class="panel" id="my-empty" hidden><p>まだありません。</p><p><a class="btn" href="/add/">記録する</a> <a class="btn ghost" href="/search/">さがす</a></p></div>
 <div class="head-row" id="my-tools" hidden><div class="grow" style="margin-left:0"><button type="button" class="btn small ghost" id="reorder" aria-pressed="false">並べ替え</button></div></div>
 <div class="cards" id="my-grid" data-save-order="1"></div>
 <h2>設定</h2>
 <div class="panel">
 <div class="field"><label class="lab" for="p-big"><input type="checkbox" id="p-big"> 文字を大きくする</label></div>
-<div class="field"><label for="p-alarm">お知らせの時間(通知と、他のカレンダーアプリのファイルに使います)</label>
+<div class="field"><label for="p-alarm">お知らせの時間</label>
 <select id="p-alarm"><option value="morning">当日の朝</option><option value="eve">前日の夜</option><option value="week">1週間前の朝</option><option value="none">なし</option></select></div>
 <div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する(個人は特定されません。<a href="/privacy/#stats">詳しく</a>)</label></div>
 <p><a href="/skins/">きせかえ</a></p>
 <p><a href="/?edit=1">ホームを編集</a></p>
 </div>
 {member_html}{push_html}{sync_html}<h2>他のカレンダーアプリに入れる</h2>
-<div class="panel"><p>iPhone の「カレンダー」や Google カレンダーに取り込めるファイルを作れます。1件ずつは、予定の詳細から。</p>
+<div class="panel"><p>iPhone の「カレンダー」や Google カレンダーに取り込めるファイルを作れます。1件ずつ作るときは、予定の詳細から。</p>
 <p><button type="button" class="btn small ghost" id="ics-all">すべての予定をファイルにする</button></p></div>
 <h2>バックアップ</h2>
 <div class="panel">
@@ -413,7 +413,7 @@ def my_page(c: Ctx) -> str:
 def add_page(c: Ctx) -> str:
     body = f"""{crumbs([("トップ", "/"), ("記録する", None)])}
 <h1>日付を記録する</h1>
-<p class="lead muted">選ぶだけで数えます。年だけでも残せます。</p>
+<p class="lead muted">日付を選ぶだけで数えます。年だけでも残せます。</p>
 <div id="wizard" class="wizard"><noscript><p class="notice">日付の記録には JavaScript が必要です。</p></noscript></div>"""
     return c.page("/add/", f"日付を記録する | {NAME}", "記念日・誕生日・はじめた日・命日を、選ぶだけで記録。あと何日、もう何日かをその場で数えます。", body, "add")
 
@@ -421,7 +421,7 @@ def add_page(c: Ctx) -> str:
 def calendar_page(c: Ctx) -> str:
     body = f"""{crumbs([("トップ", "/"), ("カレンダー", None)])}
 <h1>カレンダー</h1>
-<p class="lead muted">記録した日と、予定に入れた日。日を押すと、その日の予定とやることが出ます。</p>
+<p class="lead muted">記録した日と予定に入れた日が並びます。日を押すと、その日の予定とやることが出ます。</p>
 <div id="cal"></div>
 <noscript><p class="notice">カレンダーには JavaScript が必要です。</p></noscript>"""
     return c.page("/calendar/", f"カレンダー | {NAME}", "記録した日と公式の日付を、月のカレンダーと一覧で。予定ごとにメモと「何日前までにやること」を書けます。", body, "calendar")
@@ -515,7 +515,7 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     body = crumbs([("トップ", "/"), (e["group"], f"/c/{GROUP_SLUG[e['group']]}/"), (e["title"], None)]) + f"""
 <h1>{esc(e['title'])}</h1>
 {card_html(e, big=True, link=False)}
-<p>{esc(sentence)}<span class="small muted">(この数字はページを作った日のもの。上のカードは今日の数字です。)</span></p>
+<p>{esc(sentence)}<span class="small muted">上のカードは、今日の日付で数えた数字です。</span></p>
 {'<p class="notice quiet">この日は、静かにお知らせします。</p>' if quiet else ""}
 <h2>出典と確認した日</h2>
 <dl class="info"><dt>出典</dt><dd><a href="{esc(e['source_url'])}" rel="noopener nofollow" target="_blank">{esc(host(e['source_url']))}</a></dd>
@@ -524,7 +524,7 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 <p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを書く</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の日として残す</a></p>
 {f'<details class="more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">iPhone の「カレンダー」や Google カレンダーに取り込めるファイルです。</p><p><button type="button" class="btn small ghost" data-ics-for="c:{e["id"]}">ファイルを作る</button></p></details>' if e["precision"] == "day" else ""}
 {('<h2>同じジャンルの日</h2><div class="cards">' + "".join(card_html(r) for r in rel) + "</div>") if rel else ""}"""
-    suffix = "からもう何日?" if e["status"] == "ended" else "はいつ?あと何日?"
+    suffix = "からもう何日？" if e["status"] == "ended" else "はいつ？あと何日？"
     title = f"{e['title']}{suffix} {fmt} | {NAME}"
     desc = f"{e['title']}は{fmt}{end}。出典と確認した日つき。あと何日かを数えて、予定に入れられます。"
     return c.page(f"/e/{e['id']}/", title, desc, body, "event", noindex=not indexable)
@@ -563,18 +563,18 @@ def manual_page(c: Ctx) -> str:
         return f'<span class="btn small sample{" ghost" if ghost else ""}" aria-hidden="true">{label}</span>'
 
     qa = [
-        ("料金はかかりますか?", "無料です。会員登録も要りません。"),
-        ("入力した内容は、ほかの人に見えますか?", "見えません。予定・メモ・やることは、お使いの端末の中だけにあり、当サイトのサーバーには送りません。"),
-        ("予定の前に、お知らせは来ますか?", "スマートフォンへの通知は、まだありません。開いたときに、ホームの「今日の予定・やること」とカレンダーに出ます。他のカレンダーアプリの通知を使うときは、予定の詳細の「他のカレンダーアプリに入れる」でファイルを作って取り込みます。"),
-        ("「やること」とは何ですか?", "予定の何日前までに何をするかを書く欄です。たとえば「試験の1週間前: 願書を出す」。期限の日がカレンダーとホームに出て、チェックで済みになります。"),
-        ("機種変更をしたら、記録はどうなりますか?", "自動では引き継がれません。変更の前にマイページの「書き出す」でファイルを作り、新しい端末で「読み込む」を押します。マイページに Google アカウントでの引き継ぎが出ていれば、それも使えます。"),
-        ("「あと」と「もう」の違いは?", "「あと」はこれから来る日まで、「もう」は過ぎた日からの日数です。"),
-        ("日数はどう数えますか?", "今日を0日とします。明日は「あと1日」、昨日は「もう1日」、当日は「今日」です。"),
-        ("2月29日の扱いは?", "うるう年でない年は、2月28日として数えます。"),
-        ("文字が小さい。", "マイページの「設定」で「文字を大きくする」にチェックを入れます。「きせかえ」の「大きな文字」「ハイコントラスト」も読みやすい設定です。"),
-        ("日付が違うようです。", "公式の日付は変わることがあります。カードの「詳細」に出典と確認した日があります。誤りは<a href=\"/contact/\">お問い合わせ</a>からお知らせください。"),
-        ("大切な人を思う日も入れられますか?", "入れられます。「大切な人を思う日」を選ぶと、静かな見た目で残ります。広告やおすすめは出しません。"),
-        ("入れた日を消すには?", "マイページかカレンダーからその予定を開き、「消す」を押します。すべて消すときは、マイページの「すべて消す」。"),
+        ("料金はかかりますか？", "無料です。会員登録なしで使えます。会員(無料)になると、メールのお知らせと先着の特典が使えます。"),
+        ("入力した内容は、ほかの人に見えますか？", "見えません。予定・メモ・やることは、お使いの端末の中だけにあり、当サイトのサーバーには送りません。"),
+        ("予定の前に、お知らせは来ますか？", "マイページの「この端末への通知」をオンにすると、予定の当日の朝か前日の夜に、この端末へ通知が届きます(iPhone はホーム画面に追加してから)。会員はメールでも受け取れます。他のカレンダーアプリの通知を使うときは、予定の詳細の「他のカレンダーアプリに入れる」でファイルを作って取り込みます。"),
+        ("「やること」とは何ですか？", "予定の何日前までに何をするかを書く欄です。たとえば「試験の1週間前: 願書を出す」。期限の日がカレンダーとホームに出て、チェックで済みになります。"),
+        ("機種変更をしたら、記録はどうなりますか？", "自動では引き継がれません。変更の前にマイページの「書き出す」でファイルを作り、新しい端末で「読み込む」を押します。マイページに Google アカウントでの引き継ぎが出ていれば、それも使えます。"),
+        ("「あと」と「もう」の違いは？", "「あと」はこれから来る日まで、「もう」は過ぎた日からの日数です。"),
+        ("日数はどう数えますか？", "今日を0日とします。明日は「あと1日」、昨日は「もう1日」、当日は「今日」です。"),
+        ("2月29日はどう数えますか？", "うるう年でない年は、2月28日として数えます。"),
+        ("文字が小さくて読みにくい。", "マイページの「設定」で「文字を大きくする」にチェックを入れます。「きせかえ」の「大きな文字」「ハイコントラスト」も読みやすい設定です。"),
+        ("日付が間違っているようです。", "公式の日付は変わることがあります。カードの「詳細」に出典と確認した日があります。誤りは<a href=\"/contact/\">お問い合わせ</a>からお知らせください。"),
+        ("大切な人を思う日も入れられますか？", "入れられます。「大切な人を思う日」を選ぶと、静かな見た目で残ります。広告やおすすめは出しません。"),
+        ("入れた日を消すには？", "マイページかカレンダーからその予定を開き、「消す」を押します。すべて消すときは、マイページの「すべて消す」。"),
     ]
     qa_html = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in qa)
     body = f"""{crumbs([("トップ", "/"), ("説明書", None)])}
@@ -586,8 +586,9 @@ def manual_page(c: Ctx) -> str:
 <h2>できること</h2>
 <ul class="big-list">
 <li><b>日付を数える。</b>あの日からもう何日、あの日まであと何日。</li>
-<li><b>カレンダーとして使う。</b>デート、会議、記念日を入れて、月と一覧で見ます。予定ごとに、メモと「何日前までにやること」を書けます。</li>
-<li><b>公式の日付を使う。</b>締切、試験、大会、お祭りの日付を、公式の発表で確認して載せています。「予定に入れる」で、カレンダーに入ります。</li>
+<li><b>カレンダーとして使う。</b>デート・会議・記念日を入れて、月と一覧で見ます。予定ごとに、メモと「何日前までにやること」を書けます。</li>
+<li><b>お知らせを受け取る。</b>予定の当日の朝か前日の夜に、この端末へ通知が届きます。</li>
+<li><b>公式の日付を使う。</b>締切・試験・大会・お祭りの日付を、公式の発表で確認して載せています。「予定に入れる」で、カレンダーに入ります。</li>
 </ul>
 
 <h2>はじめて使うとき</h2>
@@ -666,7 +667,7 @@ def today_page(c: Ctx) -> str:
 
     body = f"""{crumbs([("トップ", "/"), ("今日の数字", None)])}
 <h1>今日の数字</h1>
-<p class="lead muted">今日の数字から、先の準備を。選ぶと、その日までの日数を自分の日として残せます。</p>
+<p class="lead muted">年末や年度末までの日数と、その準備の目安です。選ぶと、その日までを自分の日として残せます。</p>
 <section id="today"><h2>今日は {n("today")}</h2>
 <p>数字は、お使いの端末の日付で数えています。</p></section>
 
@@ -680,8 +681,8 @@ def today_page(c: Ctx) -> str:
 
 <section id="newyear">
 <h2>{n("newyear-y")}年まで、あと{n("newyear")}日</h2>
-<p>新年の準備を、いまから。</p>
-{purposes([("お正月の準備", "おせち、帰省、買い物", "until", "new-year"), ("帰省・旅行の予約", "混む時期の予約に", "until", "new-year"),
+<p>新年の準備を始める目安に。</p>
+{purposes([("お正月の準備", "おせち・帰省・買い物", "until", "new-year"), ("帰省・旅行の予約", "混む時期の予約に", "until", "new-year"),
            ("初詣の予定", "家族や友人との予定に", "until", "new-year")])}
 {more([("初詣・初日の出の日付", "/search/?q=%E5%88%9D%E8%A9%A3")])}
 </section>
@@ -698,7 +699,7 @@ def today_page(c: Ctx) -> str:
 <section id="start">
 <h2>今日から数える</h2>
 <p>今日を「はじめた日」にして、続けた日数を数えます。</p>
-{purposes([("禁煙をはじめた日", "続けた日数が毎日増えます", "since", "today"), ("習慣をはじめた日", "運動、勉強、早起き", "since", "today"),
+{purposes([("禁煙をはじめた日", "続けた日数が毎日増えます", "since", "today"), ("習慣をはじめた日", "運動・勉強・早起き", "since", "today"),
            ("今日のできごと", "あとから「もう何日」と見返せます", "memo", "today")])}
 {more([("禁煙", "/use/quit-smoking/"), ("習慣", "/use/habit-streak/")])}
 </section>
@@ -782,6 +783,8 @@ def privacy_fix(c: Ctx, html: str) -> str:
     old = "<h2>アクセス解析</h2>\n<p>現時点では、Google アナリティクスなどのアクセス解析ツールを使用していません。使用を始める場合は、このページでお知らせします。</p>"
     if old not in html:
         raise BuildError("sitekit's privacy text changed: update privacy_fix in sites/atomou/build.py")
+    if members_on(c.cfg):
+        html = html.replace("当サイトは、会員登録などの機能を持ちません。", "会員登録は任意です(下の「会員登録(任意)」)。", 1)
     return html.replace(old, STATS_SECTION + ("\n" + PUSH_SECTION if c.cfg.get("vapid_public") else "") + ("\n" + MEMBERS_SECTION if members_on(c.cfg) else "") + ("\n" + GOOGLE_SECTION if c.cfg.get("google_client_id") else ""), 1)
 
 

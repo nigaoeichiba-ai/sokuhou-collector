@@ -11,7 +11,7 @@
       ['[data-block="search"] input[type="search"]', '日付や行事を探せます。たとえば「年賀状」。'],
       ['[data-block="cats"] .chiprow a', 'ジャンルからも探せます。横にずらすと続きが出ます。'],
       ['#grid .card [data-act="save"]', '「予定に入れる」で、カレンダーに入ります。'],
-      ['#grid .card', 'カードはドラッグで動かせます。スマホは長押ししてから。'],
+      ['#grid .card', 'カードはドラッグで動かせます。スマホは長押ししてから動かします。'],
       ['.tabbar a[href="/calendar/"], header.site nav a[href="/calendar/"]', '入れた予定は、ここに並びます。'],
       ['.tabbar a[href="/add/"], header.site nav a[href="/add/"]', '自分の予定や記念日は、ここから1行で残せます。例「明日 19時 デート」。']
     ],

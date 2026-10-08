@@ -141,7 +141,7 @@
         var d = C.addDays(TODAY, i), lines = dayLines(d);
         if (lines) { any = true; h += '<section class="plist-day"><h3>' + md(d) + ' <small class="muted">' + rel(d) + '</small></h3><ul class="plist">' + lines + '</ul></section>'; }
       }
-      return any ? '<p class="hint">今日から60日分です。</p>' + h : '<p class="empty">60日先までの予定はありません。<br><a class="btn small" href="/add/?kind=event">予定を追加</a></p>';
+      return any ? '<p class="hint">今日から60日先までです。</p>' + h : '<p class="empty">60日先までの予定はありません。<br><a class="btn small" href="/add/?kind=event">予定を追加</a></p>';
     }
     function render() {
       host.innerHTML = '<div class="chips cal-tools" role="group" aria-label="表示の切り替え"><button type="button" class="chip" data-v="month" aria-pressed="' + (view === 'month') + '">月</button>' +
