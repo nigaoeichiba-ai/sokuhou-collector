@@ -104,7 +104,13 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--slot", choices=("m", "e"), required=True)
     ap.add_argument("--today", default=today_jst())
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--check-smtp", action="store_true", help="only log in to the SMTP server and log out (no mail is sent)")
     a = ap.parse_args(argv)
+    if a.check_smtp:
+        with Smtp(os.environ["ATOMOU_SMTP_HOST"], int(os.environ.get("ATOMOU_SMTP_PORT", "587")), os.environ["ATOMOU_SMTP_USER"], os.environ["ATOMOU_SMTP_PASS"]):
+            pass
+        print(json.dumps({"smtp_login": "ok"}))
+        return 0
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
     if not cfg.get("member_mail_from"):
         print(json.dumps({"skipped": "member_mail_from is not set"}))

@@ -97,6 +97,14 @@ jobs:
           ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
             'set -e; d="$HOME/atomou.com/members"; if [ -f "$d/key" ]; then cd "$d" && tar -czf - key m ; else tar -czf - -T /dev/null; fi' | tar -C members -xzf -
           echo "member files: $(ls members/m 2>/dev/null | grep -c '\.json$' || true)"
+      - name: Check the SMTP login (dry run only; nothing is sent)
+        if: steps.gate.outputs.go == 'true' && inputs.dry_run == 'true'
+        env:
+          ATOMOU_SMTP_HOST: ${{ secrets.ATOMOU_SMTP_HOST }}
+          ATOMOU_SMTP_PORT: ${{ secrets.ATOMOU_SMTP_PORT || '587' }}
+          ATOMOU_SMTP_USER: ${{ secrets.ATOMOU_SMTP_USER }}
+          ATOMOU_SMTP_PASS: ${{ secrets.ATOMOU_SMTP_PASS }}
+        run: python -m sites.atomou.mail_send --dir members --slot m --check-smtp
       - name: Send
         if: steps.gate.outputs.go == 'true'
         env:

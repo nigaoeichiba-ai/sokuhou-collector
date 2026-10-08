@@ -51,16 +51,21 @@ def payload(today: str, slot: str) -> dict:
     return {"v": 1, "d": today, "s": slot}
 
 
-def run(folder: Path, today: str, slot: str, key_text: str | None, *, dry_run: bool = False, opener=None) -> dict:
+def run(folder: Path, today: str, slot: str, key_text: str | None, *, dry_run: bool = False, opener=None, public: str | None = None) -> dict:
     subs = load(folder)
     due = [(p, s) for p, s in subs if is_due(s, today, slot)]
     counts = {"subscriptions": len(subs), "due": len(due), "sent": 0, "gone": 0, "retry": 0, "failed": 0}
+    if key_text:   # the secret must be the private half of config.json's vapid_public, or every push is refused by the push services
+        pub = public if public is not None else json.loads((Path(__file__).resolve().parent / "config.json").read_text(encoding="utf-8")).get("vapid_public") or ""
+        counts["key_matches_config"] = webpush.b64u(webpush.public_bytes(webpush.load_private_key(key_text).public_key())) == pub
     gone: list[str] = []
     if dry_run or not due:
         (folder / "gone.txt").write_text("", encoding="utf-8")
         return counts
     if not key_text:
         raise SystemExit("ATOMOU_VAPID_PRIVATE is not set")
+    if not counts.get("key_matches_config"):
+        raise SystemExit("ATOMOU_VAPID_PRIVATE does not belong to config.json vapid_public")
     key = webpush.load_private_key(key_text)
     for p, s in due:
         r = webpush.send(s, payload(today, slot), key, SUBJECT, opener=opener)

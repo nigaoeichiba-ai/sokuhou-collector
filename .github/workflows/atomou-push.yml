@@ -107,7 +107,8 @@ jobs:
           set -euo pipefail
           extra=""
           if [ "$DRY" = "true" ]; then extra="--dry-run"; fi
-          python -m sites.atomou.push_send --dir push --slot "${{ steps.slot.outputs.slot }}" --today "${{ steps.slot.outputs.today }}" $extra
+          python -m sites.atomou.push_send --dir push --slot "${{ steps.slot.outputs.slot }}" --today "${{ steps.slot.outputs.today }}" $extra | tee result.json
+          grep -q '"key_matches_config": true' result.json || { echo "the VAPID secret does not match config.json vapid_public"; exit 1; }
       - name: Delete the dead subscriptions on the server
         if: steps.gate.outputs.go == 'true'
         env:
