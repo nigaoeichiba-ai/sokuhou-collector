@@ -125,6 +125,37 @@ class Pages(BuildOnce):
         self.assertNotIn("必ず届き", m)  # nothing promises that a notice arrives
 
 
+class StatsAndPrivacy(BuildOnce):
+    def test_receiver_is_generated_with_the_same_key_pattern_as_the_app(self):
+        php = self.rel["api/e.php"]
+        self.assertIn("'/" + build.STAT_KEY_RE + "/'", php)
+        js = (ROOT / "sites" / "atomou" / "assets" / "app.js").read_text(encoding="utf-8")
+        self.assertIn("var STAT_RE = /" + build.STAT_KEY_RE + "/", js)
+        for needle in ("php://input", "4096", "flock", "dirname(__DIR__, 2)", "http_response_code(405)"):
+            self.assertIn(needle, php)
+        self.assertEqual(php.count("REMOTE_ADDR"), 1)  # the address appears once, and only to be hashed
+        self.assertIn("hash('sha256', $ip", php)
+        self.assertNotIn("__RE__", php)
+
+    def test_privacy_page_describes_the_statistics_and_not_the_old_no_analytics_text(self):
+        p = self.rel["privacy/index.html"]
+        self.assertIn('id="stats"', p)
+        self.assertIn("検索した言葉は送りません", p)
+        self.assertNotIn("アクセス解析ツールを使用していません", p)
+        self.assertNotIn('id="google"', p)  # no Google hand-over without a client id
+
+    def test_google_hand_over_appears_only_with_a_client_id(self):
+        pages = build.build_pages({**CFG, "google_client_id": "123-abc.apps.googleusercontent.com"}, release=True, today=TODAY)
+        self.assertIn('id="google"', pages["privacy/index.html"])
+        self.assertIn('id="sync-now"', pages["my/index.html"])
+        self.assertIn('"gclient":"123-abc.apps.googleusercontent.com"', pages["index.html"])
+        self.assertNotIn("sync-now", self.rel["my/index.html"])
+        self.assertNotIn("gclient", self.rel["index.html"])
+
+    def test_my_page_has_the_statistics_switch(self):
+        self.assertIn('id="p-stats"', self.rel["my/index.html"])
+
+
 class CardMarkup(BuildOnce):
     """build.card_html and app.js cardHtml must produce the same structure: the static cards are replaced by the script's on first load."""
 
