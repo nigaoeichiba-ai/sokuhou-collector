@@ -279,7 +279,7 @@ class AfterSaveInChrome(unittest.TestCase):
             r = self.run_page(self.IPHONE, quiet)
             self.assertTrue(r["shown"])
             self.assertIn("ホーム画面に追加", r["text"])
-            self.assertIn("消すことがあります", r["text"])
+            self.assertIn("消えることがあります", r["text"])
             self.assertFalse(r["button"])                     # nothing to press: the steps are the share button's
 
     def test_a_browser_that_cannot_push_and_is_not_an_iphone_gets_no_card(self):

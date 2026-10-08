@@ -141,8 +141,8 @@
   function afterSave(plan, quiet) {
     var H = A.H, h = '';
     if (iosNeedsHomeScreen()) {   // Safari removes what a site stored after about a week of Safari use without a visit; an icon on the home screen is exempt
-      h = '<p>iPhone の Safari は、しばらく開かないと、保存した日を消すことがあります。</p>' +
-        '<p>共有ボタンから「ホーム画面に追加」すると、消えにくくなります。通知も、ホーム画面のアイコンから開くと使えます。</p>' +
+      h = '<p>iPhone の Safari では、しばらくこのサイトを使わないと、保存した日が消えることがあります。</p>' +
+        '<p>共有ボタンから「ホーム画面に追加」し、そのアイコンから開くと、消えにくくなります。通知も、そのアイコンから開くと使えます。</p>' +
         '<p>念のため、<a href="/my/#backup-h">バックアップ</a>で書き出しておくと安心です。</p>';
     } else if (supported() && !quiet && Notification.permission === 'default' && !S().prefs.push) {
       h = '<p>決めた日に、この端末へ通知します。時間はマイページで変えられます。</p>' +
