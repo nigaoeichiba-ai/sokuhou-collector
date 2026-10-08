@@ -20,7 +20,7 @@
   "member_tiers": [
     {
       "id": "tester",
-      "label": "先着テスター",
+      "label": "先着モニター",
       "size": 30,
       "months": 18,
       "tester": true
