@@ -1,16 +1,16 @@
 {
- "as_of": "2026-10-06",
+ "as_of": "2026-10-08",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 1,
  "dates_after_as_of_by_month": {
   "10": 1
  },
- "fetched_at": "2026-10-07T09:38:58.915647+09:00",
+ "fetched_at": "2026-10-08T19:40:02.410803+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "1": 0,
-   "10": 26,
+   "10": 32,
    "11": 0,
    "12": 0,
    "2": 0,
@@ -31,6 +31,38 @@
    "kind": "目撃",
    "observed_at": "2026-10-29T15:20:00+09:00",
    "place": "駒場字上五仏",
+   "species": "クマ"
+  },
+  {
+   "city": "富谷市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-07T13:00:00+09:00",
+   "place": "大清水一丁目",
+   "species": "クマ"
+  },
+  {
+   "city": "大衡村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-06T16:00:00+09:00",
+   "place": "衡中北地区　一本木地内",
+   "species": "クマ"
+  },
+  {
+   "city": "富谷市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-06T11:45:00+09:00",
+   "place": "日吉台一丁目",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-06T06:20:00+09:00",
+   "place": "赤岩石兜",
    "species": "クマ"
   },
   {
@@ -95,6 +127,22 @@
    "kind": "その他",
    "observed_at": "2026-10-05T07:30:00+09:00",
    "place": "芋沢字向田１１－１８",
+   "species": "クマ"
+  },
+  {
+   "city": "大和町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-04T16:50:00+09:00",
+   "place": "落合松坂字銅山地内",
+   "species": "クマ"
+  },
+  {
+   "city": "栗原市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-10-04T14:00:00+09:00",
+   "place": "築館字萩沢忽滑沢　地内",
    "species": "クマ"
   },
   {
@@ -10579,7 +10627,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261006.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261008.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }
