@@ -20,7 +20,7 @@ VARS = (
     "bg", "bg2", "surface", "surface2", "text", "muted", "line", "accent", "on-accent", "ato", "on-ato", "mou", "on-mou",
     "ato-soft", "ato-ink", "mou-soft", "mou-ink",
     "quiet-bg", "quiet-text", "quiet-line", "focus", "head-bg", "head-text", "foot-bg", "foot-text",
-    "g1", "g2", "g3", "g4", "g5", "g6", "band-bg", "band-text", "deco", "deco2",
+    "g1", "g2", "g3", "g4", "g5", "g6", "band-bg", "band-text", "deco", "deco2", "wm-ato", "wm-mou", "wm-ink",
     "radius", "shadow", "font", "font-head", "font-num", "size", "num-weight", "bw", "bg-image",
 )
 NON_COLOUR_VARS = ("radius", "shadow", "font", "font-head", "font-num", "size", "num-weight", "bw", "bg-image")
@@ -90,6 +90,15 @@ def _soft_and_ink(colour: str, surface: str, text: str) -> tuple:
     return soft, ink
 
 
+def _toward(colour: str, target: str, bg: str, need: float) -> str:
+    """`colour`, pulled towards `target` just far enough to reach the contrast `need` against `bg` (colour itself when it already does)."""
+    for step in range(0, 13):
+        c = _mix(colour, target, step / 12)
+        if _ratio(c, bg) >= need:
+            return c
+    return target
+
+
 def _v(spec: str) -> dict:
     """'bg #FFF; text #000; ...' -> {'bg': '#FFF', ...}; the style variables not given take DEFAULTS, and the new ones follow their parents."""
     out = dict(DEFAULTS)
@@ -102,6 +111,10 @@ def _v(spec: str) -> dict:
         soft, ink = _soft_and_ink(out[name], out["surface"], out["text"])
         out.setdefault(f"{name}-soft", soft)
         out.setdefault(f"{name}-ink", ink)
+    # the wordmark in the header: its two colours and its ink must read on the header's own background
+    out.setdefault("wm-ink", out["head-text"])
+    out.setdefault("wm-ato", _toward(out["ato"], out["head-text"], out["head-bg"], 3.5))
+    out.setdefault("wm-mou", _toward(out["mou"], out["head-text"], out["head-bg"], 3.5))
     out.setdefault("band-bg", out["head-bg"])
     out.setdefault("band-text", out["head-text"])
     out.setdefault("deco", out["accent"])
