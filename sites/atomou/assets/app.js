@@ -623,7 +623,7 @@
       $$('[data-kind]', root).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-kind') === k ? 'true' : 'false'); });
       show('s2', true);
       var kd = KINDS[k];
-      $f('f-yearly').checked = !!kd.yearly; $f('f-100').checked = !!kd.r100; $f('f-alarm').value = S.prefs.alarm;
+      $f('f-yearly').checked = !!kd.yearly; $f('f-100').checked = !!kd.r100; $f('f-alarm').value = kd.quiet ? 'none' : S.prefs.alarm;  // a day of remembrance starts with no notice
       $f('f-words').innerHTML = kd.words.map(function (w) { return '<button type="button" class="chip" data-word="' + H(w) + '">' + H(w) + '</button>'; }).join('');
       show('s3', false);
       update();
@@ -659,7 +659,7 @@
         yearly: st.p === 'day' && $f('f-yearly').checked, every100: st.p === 'day' && !k.quiet && $f('f-100').checked, alarm: $f('f-alarm').value, created: C.iso(TODAY)
       };
       S.entries.push(e); S.prefs.alarm = e.alarm === 'none' ? S.prefs.alarm : e.alarm;
-      persist();
+      if (!persist()) return;  // storage blocked: stay on the form (the toast explains) instead of leaving and losing what was typed
       location.href = '/my/?added=1';
     }
     if (P.kind && KINDS[P.kind]) setKind(P.kind);
