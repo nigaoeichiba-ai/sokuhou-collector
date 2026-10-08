@@ -29,21 +29,43 @@
   })();
 
   /* ---------- state ---------- */
-  var S = blank();
+  var S = blank(), brokenSaved = false;
+  var BLOCK_IDS = ['search', 'cats', 'daily', 'mine', 'soon', 'record', 'usecases'], KIND_IDS = ['anniversary', 'birthday', 'memorial', 'since', 'until', 'memo'];
   function blank() { return { v: 1, entries: [], saved: [], order: [], genre: {}, prefs: { skin: 'basic', big: false, alarm: 'morning', blocks: { order: [], hidden: [] } } }; }
+  function oneOf(v, list, dflt) { return list.indexOf(v) >= 0 ? v : dflt; }
+  function cleanEntry(e) {  // whatever is in storage (or in a restored backup) is reduced to known shapes before it can reach the page
+    if (!e || typeof e !== 'object') return null;
+    var id = String(e.id || ''), d = C.parse(String(e.date));
+    if (!/^[A-Za-z0-9_-]{1,40}$/.test(id) || !d) return null;
+    var kind = oneOf(e.kind, KIND_IDS, 'memo');
+    return { id: id, title: String(e.title == null ? '' : e.title).slice(0, 80), date: C.iso(d), precision: oneOf(e.precision, ['day', 'month', 'year'], 'day'), kind: kind,
+      quiet: !!e.quiet || kind === 'memorial', yearly: !!e.yearly, every100: !!e.every100, alarm: oneOf(e.alarm, ['morning', 'eve', 'week', 'none'], 'morning'),
+      created: /^\d{4}-\d{2}-\d{2}$/.test(String(e.created)) ? e.created : '' };
+  }
   function load() {
-    var s = blank();
+    var s = blank(), raw = null;
     try {
-      var raw = localStorage.getItem(KEY);
+      raw = localStorage.getItem(KEY);
       if (raw) {
-        var o = JSON.parse(raw);
-        s.entries = (o.entries || []).filter(function (e) { return e && e.id && e.title != null && C.parse(e.date); });
-        s.saved = (o.saved || []).filter(function (x) { return typeof x === 'string'; });
-        s.order = (o.order || []).filter(function (x) { return typeof x === 'string'; });
-        s.genre = o.genre || {};
-        Object.keys(s.prefs).forEach(function (k) { if (o.prefs && o.prefs[k] != null) s.prefs[k] = o.prefs[k]; });
+        var o = JSON.parse(raw), p = o.prefs || {};
+        s.entries = (Array.isArray(o.entries) ? o.entries : []).map(cleanEntry).filter(Boolean);
+        s.saved = (Array.isArray(o.saved) ? o.saved : []).filter(function (x) { return /^[0-9a-f]{10}$/.test(String(x)); });
+        s.order = (Array.isArray(o.order) ? o.order : []).filter(function (x) { return /^[cm]:[A-Za-z0-9_-]{1,40}$/.test(String(x)); });
+        s.genre = {};
+        (CONF.groups || []).forEach(function (g) { var n = o.genre && +o.genre[g]; if (n > 0) s.genre[g] = Math.min(20, Math.floor(n)); });
+        s.prefs.skin = CONF.skins[p.skin] ? p.skin : 'basic';
+        s.prefs.big = !!p.big;
+        s.prefs.alarm = oneOf(p.alarm, ['morning', 'eve', 'week', 'none'], 'morning');
+        var b = p.blocks || {};
+        s.prefs.blocks = { order: (Array.isArray(b.order) ? b.order : []).filter(function (k) { return BLOCK_IDS.indexOf(k) >= 0; }),
+          hidden: (Array.isArray(b.hidden) ? b.hidden : []).filter(function (k) { return BLOCK_IDS.indexOf(k) >= 0; }) };
       }
-    } catch (e) { /* storage blocked: the page still works for this visit */ }
+    } catch (e) {
+      if (raw) {  // unreadable data: keep a copy before anything is written over it, and say so
+        brokenSaved = true;
+        try { localStorage.setItem(KEY + '.broken', raw); } catch (e2) { /* nothing more can be done */ }
+      }
+    }
     return s;
   }
   var warned = false;
@@ -54,6 +76,7 @@
     }
   }
   S = load();
+  if (brokenSaved) setTimeout(function () { toast('保存されたデータを読み込めませんでした。元のデータは、別の場所に残してあります。'); }, 300);
 
   /* ---------- small helpers ---------- */
   var toastTimer;
@@ -164,7 +187,7 @@
     return { key: 'm:' + e.id, id: e.id, title: e.title, date: e.date, p: e.precision || 'day', g: k.g, kind: k.t, quiet: !!e.quiet, own: true };
   }
   function cardHtml(it) {
-    var h = '<article class="card' + (it.quiet ? ' quiet' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.date) + '" data-p="' + it.p + '"' +
+    var h = '<article class="card' + (it.quiet ? ' quiet' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.date) + '" data-p="' + H(it.p) + '"' +
       (it.g ? ' data-g="' + it.g + '"' : '') + (it.cat ? ' data-cat="' + H(it.cat) + '"' : '') + '>';
     h += '<div class="c-top">' + (it.g ? '<span class="mark m' + it.g + '" data-g="' + it.g + '" aria-hidden="true"></span>' : '') + '<span class="badge">' + H(it.kind) + '</span>' +
       (it.region ? '<span class="reg">' + H(it.region) + '</span>' : '') + '</div>';
@@ -399,7 +422,7 @@
   }
 
   /* ---------- home blocks: reorder / show / hide (this device only) ---------- */
-  var BLOCKS = ['search', 'cats', 'daily', 'mine', 'soon', 'record', 'usecases'];
+  var BLOCKS = BLOCK_IDS;
   function blockPrefs() {
     var b = S.prefs.blocks || {};
     return { order: Array.isArray(b.order) ? b.order : [], hidden: Array.isArray(b.hidden) ? b.hidden : [] };
@@ -426,11 +449,12 @@
     });
   }
   function wireBlocks() {
-    var host = $('#blocks'), btn = $('#edit-home');
+    var host = $('#blocks'), btn = $('#edit-home'), reset = $('#reset-home');
     if (!host) return;
     var editing = P.edit === '1';
     function show() {
       applyBlocks(editing);
+      if (reset) reset.hidden = !editing;
       if (btn) { btn.setAttribute('aria-pressed', editing ? 'true' : 'false'); btn.textContent = editing ? 'ホームの並べかえを終わる' : 'ホームの並べかえ・表示を変える'; }
     }
     host.addEventListener('click', function (ev) {
@@ -443,6 +467,7 @@
       else if (act === 'vis') { var h = bp.hidden.indexOf(k); if (h >= 0) bp.hidden.splice(h, 1); else bp.hidden.push(k); }
       S.prefs.blocks = { order: order, hidden: bp.hidden }; persist(); show();
     });
+    if (reset) reset.addEventListener('click', function () { S.prefs.blocks = { order: [], hidden: [] }; persist(); show(); toast('初期の並びに戻しました。'); });
     if (btn) btn.addEventListener('click', function () { editing = !editing; show(); if (editing) toast('各ブロックの ↑↓ で並べかえ、「かくす」で表示を切りかえられます。'); });
     show();
   }
@@ -582,7 +607,7 @@
       '<button type="button" class="chip" data-p="year" aria-pressed="false">年だけ</button></div>' +
       '<div class="field"><label for="f-day" id="lab-date">日付を選ぶ</label><input type="date" id="f-day" min="0100-01-01" max="2200-12-31">' +
       '<input type="month" id="f-month" hidden placeholder="2026-10"><input type="number" id="f-year" hidden inputmode="numeric" min="1" max="2200" placeholder="例 1990"></div>' +
-      '<button type="button" class="chip" id="f-today">今日にする</button><p class="err" id="e-date" role="alert"></p>' +
+      '<button type="button" class="chip" id="f-today">今日にする</button><p class="hint" id="h-approx" hidden>年だけ・年と月だけの日付は、おおよその日数(「約」つき)で表示します。</p><p class="err" id="e-date" role="alert"></p>' +
       '<div id="live" class="live" hidden aria-live="polite"></div></section>' +
       '<section id="s3" hidden><h2>3. 名前をつけましょう</h2><p class="hint">あとで見て分かる名前なら十分です。選ぶだけでも使えます。</p><div class="chips" id="f-words"></div>' +
       '<div class="field"><label for="f-title">名前</label><input type="text" id="f-title" maxlength="40" autocomplete="off"></div></section>' +
@@ -635,7 +660,7 @@
       $f('f-day').hidden = p !== 'day'; $f('f-month').hidden = p !== 'month'; $f('f-year').hidden = p !== 'year';
       $f('lab-date').setAttribute('for', p === 'day' ? 'f-day' : p === 'month' ? 'f-month' : 'f-year');
       $f('lab-date').textContent = p === 'day' ? '日付を選ぶ' : p === 'month' ? '年と月を入れる(例 2026-10)' : '年を入れる(例 1990)';
-      $f('f-today').hidden = p !== 'day';
+      $f('f-today').hidden = p !== 'day'; $f('h-approx').hidden = p === 'day';
       update();
     }
     root.addEventListener('click', function (ev) {
