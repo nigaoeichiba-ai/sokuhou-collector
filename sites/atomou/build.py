@@ -108,7 +108,8 @@ def member_php(cfg: dict) -> str:
             raise BuildError(f"member_tiers: bad tier {t!r}")
     php = (HERE / "member_receiver.php.tpl").read_text(encoding="utf-8")
     for k, v in (("__TIERS__", json.dumps([{"id": t["id"], "size": int(t["size"]), "months": int(t["months"])} for t in tiers])),
-                 ("__REF_MONTHS__", str(int(cfg.get("member_ref_months", 6)))), ("__REF_CAP__", str(int(cfg.get("member_ref_cap", 6)))),
+                 ("__REF_MONTHS__", str(int(cfg.get("member_ref_months", 6)))), ("__REF_GIVE__", str(int(cfg.get("member_ref_give_months", 1)))),
+                 ("__REF_CAP__", str(int(cfg.get("member_ref_cap", 12)))),
                  ("__MAIL_FROM__", str(cfg["member_mail_from"]).replace("'", "")), ("__SITE_NAME__", NAME.replace("'", "")), ("__SITE_URL__", str(cfg["site_url"]).rstrip("/"))):
         php = php.replace(k, v)
     return php
@@ -274,7 +275,8 @@ class Ctx:
         if cfg.get("vapid_public"):
             conf["vapid"] = cfg["vapid_public"]
         if members_on(cfg):
-            conf["members"] = 1
+            conf["members"] = {"tiers": {t["id"]: t.get("label", t["id"]) for t in cfg.get("member_tiers") or []},
+                               "ref": int(cfg.get("member_ref_months", 6)), "give": int(cfg.get("member_ref_give_months", 1)), "cap": int(cfg.get("member_ref_cap", 12))}
         conf_js = json.dumps(conf, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
         card_map = json.dumps({s["id"]: [s["card"], s.get("attrs", {})] for s in skins.SKINS}, separators=(",", ":"))
         self.head = (f"<script>window.ATOMOU={conf_js};</script>\n"
