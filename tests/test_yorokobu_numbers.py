@@ -87,7 +87,7 @@ class BuildTest(unittest.TestCase):
         page = (out / "numbers/reviews-10000/index.html").read_text(encoding="utf-8")
         self.assertIn("レビュー件数が10,000件以上で、レビュー平均が4.3以上", page)
         self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/yorokobu?pc=", page)
-        self.assertIn('<span class="pr-chip">PR</span>', page)
+        self.assertIn('aria-label="広告を含みます">PR</span>', page)
         self.assertIn("保証するものではありません", page)
         self.assertIn("/numbers/reviews-10000/", (out / "sitemap.xml").read_text(encoding="utf-8"))
         problems = [p for p in sitecheck.check_dir(out, CFG["site_url"]) if "numbers" in p]
