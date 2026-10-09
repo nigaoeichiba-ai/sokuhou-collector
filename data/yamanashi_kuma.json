@@ -1,12 +1,12 @@
 {
- "as_of": "2026-10-07",
+ "as_of": "2026-10-08",
  "bad_coords": 1,
  "credit": "出典:「ツキノワグマ出没・目撃情報(令和8年度)」(山梨県)(https://catalog.dataplatform-yamanashi.jp/dataset/kuma1)を加工して作成(山梨県オープンデータ利用規約に基づく)",
- "fetched_at": "2026-10-07T22:30:30.775723+09:00",
+ "fetched_at": "2026-10-09T19:39:17.949984+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
-   "10": 7,
+   "10": 8,
    "4": 16,
    "5": 33,
    "6": 53,
@@ -16,6 +16,16 @@
   }
  },
  "sightings": [
+  {
+   "city": "小菅村",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.7233,
+   "lon": 138.9896,
+   "observed_at": "2026-10-08T18:20:00+09:00",
+   "place": "長作",
+   "species": "ツキノワグマ"
+  },
   {
    "city": "北杜市",
    "count": 1,
@@ -2299,7 +2309,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 229,
+ "sightings_in_window": 230,
  "source": "yamanashi",
  "source_file": [
   "https://catalog.dataplatform-yamanashi.jp/dataset/bed5301d-75b2-4976-8687-2b2721ae143a/resource/89d2478e-e29e-46e3-9ad3-19bf44822d4d/download/2026kumadata.csv",
