@@ -262,6 +262,16 @@ HEAD_ICONS = ('<div class="hicons"><a href="/search/" aria-label="さがす">' +
 
 
 
+# the AdSense code (sitekit puts it in every page's head) stays only on the pages that are content: never on the app (record, calendar, my page, plan, search, skins, thanks),
+# and never on a quiet day or an item with ad_ok false (see event_page)
+ADS_KINDS = {"home", "category", "event", "use", "today", "manual"}
+_ADS_TAG = re.compile(r'<script async src="https://pagead2\.googlesyndication\.com/[^"]*"[^>]*></script>\n?')
+
+
+def strip_ads(html: str) -> str:
+    return _ADS_TAG.sub("", html)
+
+
 class Ctx:
     def __init__(self, cfg: dict, preview: bool, today: date, entries: list[dict], skins_css: str):
         self.cfg, self.preview, self.today, self.entries = cfg, preview, today, entries
@@ -304,6 +314,8 @@ class Ctx:
 
     def finish(self, html: str, kind: str, noindex: bool = False) -> str:
         extra = ""
+        if kind not in ADS_KINDS:
+            html = strip_ads(html)
         if noindex and 'name="robots"' not in html:
             extra = '<meta name="robots" content="noindex,follow">\n'
         html = html.replace("</head>", extra + self.head + "</head>", 1)
@@ -552,7 +564,8 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     title = f"{e['title']}{suffix} {fmt} | {NAME}"
     place = (e.get("place") or "").strip()
     desc = f"{e['title']}は{fmt}{end}" + (f"、{place}" if place and place not in ("全国", "地域") else "") + "。" + (f"{guide['about'].split('。')[0]}。" if guide else "") + "出典と確認した日つき。あと何日かを数えて、予定に入れられます。"
-    return c.page(f"/e/{e['id']}/", title, desc, body, "event", noindex=not indexable)
+    html = c.page(f"/e/{e['id']}/", title, desc, body, "event", noindex=not indexable)
+    return strip_ads(html) if quiet or not e.get("ad_ok", True) else html
 
 
 def category_page(c: Ctx, group: str, live: list[dict]) -> str:
