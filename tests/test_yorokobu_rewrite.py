@@ -97,15 +97,41 @@ class MergeTest(unittest.TestCase):
         self.assertEqual(done, 0)
         self.assertTrue(any("unknown page" in n for n in notes))
 
-    def test_the_brief_lists_the_worst_pages_first_and_never_the_titles(self):
+    def test_the_brief_carries_only_the_flagged_fields_with_their_reasons_and_never_the_titles(self):
+        data, items = rewrite.load("pairs")
+        items[0]["reasons"] = ["選びやすいです。", "渡しやすいです。", "使いやすいです。", "持ち帰りやすいです。", "分けやすいです。"]
+        (self.dir / "pairs.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
         out, ans = self.dir / "b.md", self.dir / "a.json"
         rewrite.brief("pairs", 3, out, ans)
         text = out.read_text(encoding="utf-8")
+        key = rewrite.KINDS["pairs"][2](items[0])
         self.assertIn(ans.as_posix(), text)
         self.assertIn("never like a template", text)
+        self.assertIn("FLAGGED", text)
+        self.assertIn(f"- {key} / reasons.0:", text)                         # the reason is named
+        self.assertIn("このページ全体で「〜やすい」が6回", text)            # five in the reasons and one in the lead
         self.assertNotIn('"title"', text.split("TEXTS:")[1])
-        worst = rewrite.ranked("pairs")[0][1]
-        self.assertIn(worst, text)
+        self.assertNotIn('"how_to_choose.', text.split("TEXTS:")[1])           # a field without 〜やすい (and nothing else wrong) is not sent
+
+    def test_the_review_stage_lists_only_what_changed_and_applies_only_valid_corrections(self):
+        before = self.dir / "before.json"
+        shutil.copy(self.dir / "pairs.json", before)
+        data, items = rewrite.load("pairs")
+        k = rewrite.KINDS["pairs"][2](items[0])
+        old_reason = items[0]["reasons"][0]
+        items[0]["reasons"][0] = old_reason + "。"[:0] + "ですです"                  # a (bad) rewrite that is now on disk
+        (self.dir / "pairs.json").write_bytes(json.dumps(data, ensure_ascii=False, indent=1).encode("utf-8"))
+        ch = rewrite._changed("pairs", before)
+        self.assertEqual(list(ch), [k])
+        self.assertEqual(ch[k]["reasons.0"][0], old_reason)
+        ans = self.dir / "verdict.json"
+        ans.write_text(json.dumps({k: {"reasons.0": old_reason}}, ensure_ascii=False), encoding="utf-8")           # the reader says: the original was better
+        fixed, kept, notes = rewrite.review_merge("pairs", before, ans)
+        self.assertEqual(fixed, 0)                                           # "not better" is not a reason to refuse here, but the text equals the original: it is applied
+        ans.write_text(json.dumps({k: {"reasons.0": "あ"}}, ensure_ascii=False), encoding="utf-8")                 # far too short: refused
+        fixed, kept, notes = rewrite.review_merge("pairs", before, ans)
+        self.assertEqual(fixed, 0)
+        self.assertTrue(any("refused" in n for n in notes))
 
     def test_every_kind_has_fields_and_a_score(self):
         for kind in rewrite.KINDS:
