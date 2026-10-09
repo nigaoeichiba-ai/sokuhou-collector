@@ -1,7 +1,7 @@
 {
- "as_of": "2026-10-07",
+ "as_of": "2026-10-09",
  "credit": "出典: 埼玉県「埼玉県ツキノワグマ出没マップ」(https://www.pref.saitama.lg.jp/a0508/tyouzyu/kumatyui.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、埼玉県のページでご確認ください)",
- "fetched_at": "2026-10-07T22:31:03.168712+09:00",
+ "fetched_at": "2026-10-09T19:39:55.160503+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
@@ -11,7 +11,7 @@
    "3": 2
   },
   "R08": {
-   "10": 7,
+   "10": 9,
    "4": 4,
    "5": 17,
    "6": 27,
@@ -105,14 +105,14 @@
    }
   },
   "秩父市": {
-   "latest": "2026-10-07",
+   "latest": "2026-10-09",
    "monthly": {
     "R07": {
      "1": 3,
      "3": 2
     },
     "R08": {
-     "10": 2,
+     "10": 4,
      "5": 7,
      "6": 15,
      "7": 17,
@@ -137,7 +137,7 @@
  "source": "saitama",
  "source_file": "https://services9.arcgis.com/n65w8AXGaYPTqFYI/arcgis/rest/services/survey123_3123e5ed452d4e89845e4ba6129c1e2d_results/FeatureServer/0",
  "source_page": "https://www.pref.saitama.lg.jp/a0508/tyouzyu/kumatyui.html",
- "total_fy": 102,
+ "total_fy": 104,
  "unparsed": 0,
  "update_note": "埼玉県が、市町村からの報告を受けて、ほぼ随時更新します。最新の記録は、更新時点から遅れます。件数は、市町村が県に報告した、クマの出没の件数です"
 }
