@@ -143,7 +143,7 @@ class Pages(BuildOnce):
         page = self.rel[f"e/{e['id']}/index.html"]
         self.assertIn("出典", page)  # the source and the check date live on the detail page
         self.assertIn("確認日", page)
-        self.assertIn("メモ・やることを書く", page)
+        self.assertIn("メモ・やることを追加", page)
 
     def test_home_has_the_todays_list_block_first(self):
         h = self.rel["index.html"]
@@ -256,7 +256,7 @@ class Pages(BuildOnce):
         for v in pages:
             ids = re.search(r'data-saveall="([^"]+)"', v).group(1).split(",")
             self.assertTrue(all(re.fullmatch(r"[0-9a-f]{10}", i) for i in ids))
-            self.assertIn(f"この日を含む{len(ids)}件を、まとめて予定に入れる", v)
+            self.assertIn(f"この日を含む{len(ids)}件をまとめて予定に入れる", v)
         quiet = [v for kk, v in self.rel.items() if kk.startswith("e/") and isinstance(v, str) and "この日は、静かにお知らせします" in v]
         self.assertTrue(all("data-saveall" not in v for v in quiet))     # a quiet day leads nowhere else
 
@@ -273,6 +273,17 @@ class Pages(BuildOnce):
         app = (build.SITE["assets"] / "app.js").read_text(encoding="utf-8")
         key = re.search(r"o\.value\.indexOf\('([^']+)'\) === 0", app).group(1)
         self.assertIn(f">{key}", self.rel["contact/index.html"])             # the "send it as a day I would like to see" option the search page links to
+
+    def test_the_sentences_composed_for_every_day_read_as_japanese(self):
+        # the lead and the questions are put together from the catalog entry; these are the slips a reader noticed (2026-10-09)
+        bad = {"a range with 'までに'": r"まで(に)(開催|実施|始まり|行われ|終了)", "a clause as the subject": r"(る|れる|ます)は、20\d\d年", "a clause before の概要": r"(る|れる|ます)の概要",
+               "決勝 for a horse race": r"決勝が行われ", "締切 twice": r"締切は、[^。]*が締切です", "改定 twice": r"改定は、[^。]*に改定されます", "場所 for an area": r"場所は(西日本|東日本|九州|東北)"}
+        for k, v in self.rel.items():
+            if k.startswith("e/") and isinstance(v, str):
+                m = re.search(r'<section class="article".*?</section>', v, re.S)
+                text = re.sub(r"<[^>]+>", "", m.group(0)) if m else ""
+                for name, pat in bad.items():
+                    self.assertIsNone(re.search(pat, text), f"{k}: {name}")
 
     def test_event_pages_state_source_and_check_date(self):
         e = self.entries[0]
