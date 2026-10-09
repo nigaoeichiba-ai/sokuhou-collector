@@ -94,12 +94,39 @@ class ReviewBuild(unittest.TestCase):
         self.assertNotIn('<span class="num"></span>', home)
         self.assertIn('href="/e/', home)
 
-    def test_the_deploy_job_has_the_review_switch(self):
+    def test_the_deploy_job_has_the_review_switch_and_hides_the_demo_behind_its_password(self):
         wf = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
         self.assertIn("vars.ATOMOU_REVIEW == 'true' && '--review'", wf)
-        self.assertIn('[ "${ATOMOU_REVIEW:-}" != "true" ] && { [ -z "$DEMO_USER" ]', wf)       # without the review switch the demo still needs its password
-        self.assertIn("vars.ATOMOU_PUBLIC != 'true' && vars.ATOMOU_REVIEW != 'true'", wf)
+        self.assertIn('[ "$ATOMOU_PUBLIC" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }', wf)   # no password, no atomou deploy, review copy or not
+        self.assertIn("vars.ATOMOU_PUBLIC != 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)", wf)   # the password file is written in both modes
+        self.assertIn("python sites/atomou/build.py --demo-sub --out demo_build", wf)
+        self.assertIn("cp -a demo_build/. release/demo/", wf)
+        self.assertIn('hidden=$(curl -s -o /dev/null -w \'%{http_code}\' "$URL/demo/")', wf)
+        self.assertIn('[ "$hidden" = "401" ] || ok=0', wf)           # the live check: the hidden demo must refuse a visitor
         self.assertLess(wf.index("vars.ATOMOU_PUBLIC == 'true' && '--release'"), wf.index("vars.ATOMOU_REVIEW == 'true' && '--review'"))   # the real release wins over the review copy
+
+
+class HiddenDemo(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from sites.atomou import build
+        cls.pages = build.build_demo_sub(CFG, "https://demo.atomou.com", TODAY)
+
+    def test_the_demo_names_its_own_host_and_stays_behind_a_password(self):
+        self.assertIn("https://demo.atomou.com/", self.pages["index.html"])
+        self.assertNotIn('rel="canonical" href="https://atomou.com', self.pages["index.html"])
+        self.assertIn("AuthType Basic", self.pages[".htaccess"])
+        self.assertIn("__HTPASSWD__", self.pages[".htaccess"])
+        self.assertIn("noindex", self.pages["index.html"])
+
+    def test_the_receivers_find_the_site_folder_one_level_further_up(self):
+        # public_html/demo/api/m.php: dirname 3 is the site folder, outside every web folder; level 2 would be public_html itself
+        php = {k: v for k, v in self.pages.items() if k.endswith(".php")}
+        self.assertTrue({"api/m.php", "api/push.php", "api/e.php", "contact/send.php"} <= set(php), sorted(php))
+        for k, v in php.items():
+            self.assertIn("dirname(__DIR__, 3)", v, k)
+            self.assertNotIn("dirname(__DIR__, 2)", v, k)
+        self.assertIn("'https://demo.atomou.com'", self.pages["api/m.php"].replace('"', "'"))     # requests are accepted from the demo's own address
 
 
 if __name__ == "__main__":

@@ -902,6 +902,19 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     return pages
 
 
+def build_demo_sub(cfg: dict, site_url: str, today: date | None = None) -> dict:
+    """The full demo as a folder of the review copy, served as the root of its own host (demo.<domain>: the subdomain's document root is public_html/demo).
+    The pages and the PHP receivers are those of the demo; only the site address differs (the receivers accept requests from it, canonical links name it), and the
+    receivers find the site folder one level further up (public_html/demo/api/m.php -> <site folder>), so what members and subscribers send never lands in a public folder."""
+    pages = build_pages({**cfg, "site_url": site_url}, release=False, today=today)
+    for k, v in list(pages.items()):
+        if k.endswith(".php"):
+            if "dirname(__DIR__, 2)" not in v:
+                raise BuildError(f"{k}: the site-folder line changed; update build_demo_sub")
+            pages[k] = v.replace("dirname(__DIR__, 2)", "dirname(__DIR__, 3)")
+    return pages
+
+
 def render_site(cfg: dict, out: Path, release: bool = False, today: date | None = None) -> list[str]:
     pages = build_pages(cfg, release, today)
     write_pages(pages, out)
@@ -912,12 +925,18 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--release", action="store_true")
     ap.add_argument("--review", action="store_true", help="the small review copy (sites/atomou/review.py): public to crawlers, not indexable, no application")
+    ap.add_argument("--demo-sub", action="store_true", help="the full demo for the folder public_html/demo of the review copy (host demo.<domain>)")
     ap.add_argument("--out", default=str(HERE / "dist"))
     ap.add_argument("--today", default="")
     a = ap.parse_args()
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
     try:
-        if a.review:
+        if a.demo_sub:
+            host = urlparse(cfg["site_url"]).netloc
+            pages = build_demo_sub(cfg, f"https://demo.{host}", date.fromisoformat(a.today) if a.today else None)
+            write_pages(pages, Path(a.out))
+            files = sorted(pages)
+        elif a.review:
             from sites.atomou import review
             pages = review.build_pages(cfg, date.fromisoformat(a.today) if a.today else None)
             write_pages(pages, Path(a.out))
