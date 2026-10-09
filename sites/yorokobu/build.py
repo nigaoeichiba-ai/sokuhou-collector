@@ -92,8 +92,20 @@ def amazon_more(cfg: dict, query: str, label: str) -> str:
     """The "Amazonでも探す" button (an Amazon search for `query`) with the Associates notice; empty when no tracking ID is set.  Used on the pages that list no single product."""
     if not cfg.get("amazon_tracking_id"):
         return ""
-    return (f'<section style="margin-top:40px"><p class="more"><a class="btn btn-sub" href="{esc(amazon_url(cfg, query))}" rel="sponsored nofollow noopener" target="_blank">'
-            f'{esc(label)}</a></p>{amazon_disclosure(cfg)}</section>')
+    return (f'<section style="margin-top:40px"><p class="more"><a class="btn" href="{esc(amazon_url(cfg, query))}" rel="sponsored nofollow noopener" target="_blank">'
+            f'{esc(label)}</a></p></section>')
+
+
+def amazon_query(name: str, limit: int = 30) -> str:
+    """The words to search Amazon for a product known by its Rakuten title: the product name at the front of the title, without the shop's brackets and
+    sales words (a title of 60 characters finds nothing there, because every word has to match)."""
+    s = re.sub(r"[【\[\(（〔《][^】\]\)）〕》]*[】\]\)）〕》]", " ", name)
+    out = ""
+    for w in s.split():
+        if out and len(out) + 1 + len(w) > limit:
+            break
+        out = f"{out} {w}".strip()
+    return out or name[:limit]
 
 
 def pr_lead(cfg: dict) -> str:
@@ -237,6 +249,10 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
     if it.get("note"):  # the editors' one-line reason for picking this product
         note += f'<p class="pick-note"><b>{it.get("note_label") or ("ソムリエのひとこと" if it.get("curated") else "見立て")}</b>{esc(it["note"])}</p>'
     label = "ショップで見る" if own else "楽天市場で見る"
+    buttons = f'<a class="btn" href="{esc(href)}" rel="{rel}" target="_blank">{label}</a>'
+    if not own and cfg.get("amazon_tracking_id"):          # the same product, looked for on Amazon: one button each, the same size and colour
+        buttons += (f'<a class="btn" href="{esc(amazon_url(cfg, amazon_query(name)))}" rel="sponsored nofollow noopener" target="_blank" '
+                    f'aria-label="Amazonで同じ商品を探す">Amazonで探す</a>')
     badge = f'<span class="rank r{rank}">{rank}</span>' if rank and rank <= 3 and not own else ""
     attrs = (f'data-code="{esc(it["code"])}" data-price="{it["price"]}" data-reviews="{it["reviews"]}" data-rating="{it["rating"]}" '
              f'data-ship="{1 if it["free_shipping"] else 0}" data-gift="{1 if it.get("gift") else 0}" data-tier="{esc(tier)}" data-type="{esc(kind)}" '
@@ -247,7 +263,7 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
             f'<img src="{esc(it["image"])}" alt="{esc(short(name, 40))}" width="300" height="300" loading="lazy"></a>'
             f'<div class="item-body"><h3><a href="{esc(href)}" rel="{rel}" target="_blank">{esc(short(name))}</a></h3>'
             f'<p class="price">{yen(it["price"])}</p><p class="meta">{"".join(bits)}</p>{note}'
-            f'<a class="btn" href="{esc(href)}" rel="{rel}" target="_blank">{label}</a></div></li>')
+            f'<div class="item-btns">{buttons}</div></div></li>')
 
 
 def item_grid(cfg: dict, items: list[dict], cls: str = "items") -> str:
@@ -287,7 +303,9 @@ def pr_foot(cfg: dict, amazon: bool = False, rakuten: bool = True) -> str:
     """The full notice at the bottom of a page; it names each programme only when the page really has a link to it."""
     amazon = amazon and bool(cfg.get("amazon_tracking_id"))
     names = "・".join((["楽天アフィリエイト"] if rakuten or not amazon else []) + (["Amazonアソシエイト"] if amazon else []))
-    return ('<aside class="pr-foot"><b>広告について</b>このページには、広告(' + names + ')のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。商品は、編集方針にもとづいて運営者が選んでいます。</aside>')
+    prices = '掲載している価格・レビューは、楽天市場の情報です。Amazonの価格は、リンク先でご確認ください。' if amazon and rakuten else ""
+    return ('<aside class="pr-foot"><b>広告について</b>このページには、広告(' + names + ')のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。商品は、編集方針にもとづいて運営者が選んでいます。' + prices
+            + (amazon_disclosure(cfg) if amazon else "") + '</aside>')
 
 
 def auto_note(it: dict, ctx: dict) -> str:
@@ -482,8 +500,8 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 
     amazon = ""
     if cfg.get("amazon_tracking_id"):
-        amazon = (f'<p class="more"><a class="btn btn-sub" href="{esc(amazon_url(cfg, p["queries"][0]))}" rel="sponsored nofollow noopener" target="_blank">'
-                  f'Amazonでも探す</a></p>{amazon_disclosure(cfg)}')
+        amazon = (f'<p class="more"><a class="btn" href="{esc(amazon_url(cfg, p["queries"][0]))}" rel="sponsored nofollow noopener" target="_blank">'
+                  f'Amazonで探す</a></p>')
     color = COLORS[list(c["occ"]).index(p["occasion"]) % 4]
     head = head_band(color, f'{ic_wrap("occasion", occ["slug"])}<span class="x">×</span>{ic_wrap("recipient", rec["slug"])}', esc(p["title"]), p["lead"],
                      mascot=OCC_MASCOT.get(p["occasion"], ("r-joy", "b-sparkle", "r-wink", "b-joy")[list(c["occ"]).index(p["occasion"]) % 4]))
@@ -540,8 +558,8 @@ def theme_page(d: dict, cfg: dict, preview: bool, t: dict) -> str:
     avoid = f'<section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(t["avoid"], "warn")}</section>' if t["avoid"] else ""
     amazon = ""
     if cfg.get("amazon_tracking_id"):
-        amazon = (f'<p class="more"><a class="btn btn-sub" href="{esc(amazon_url(cfg, t["ideas"][0]["query"]))}" rel="sponsored nofollow noopener" target="_blank">'
-                  f'Amazonでも探す</a></p>{amazon_disclosure(cfg)}')
+        amazon = (f'<p class="more"><a class="btn" href="{esc(amazon_url(cfg, t["ideas"][0]["query"]))}" rel="sponsored nofollow noopener" target="_blank">'
+                  f'Amazonで探す</a></p>')
     head = head_band(color, theme_mark(t, 96), esc(t["title"]), t["lead"], single=True, mascot=mascot)
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("切り口から探す", "/theme/"), (t["name"], None)])}</div>
