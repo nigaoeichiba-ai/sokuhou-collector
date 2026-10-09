@@ -493,6 +493,15 @@
     $$('.card[data-key="c:' + id + '"]').forEach(fillCard);
     if (page === 'my') renderMy();
   }
+  function saveAll(btn) {   // "この日を含むN件を、まとめて予定に入れる": every day of the same kind (the exam's entry, test day, results...) in one tap
+    var ids = (btn.getAttribute('data-saveall') || '').split(',').filter(function (x) { return /^[0-9a-f]{10}$/.test(x); }), added = 0;
+    ids.forEach(function (id) { if (S.saved.indexOf(id) < 0) { S.saved.push(id); added++; } });
+    if (!added) { toast('すでに、すべて予定に入っています。'); return; }
+    stat('act:save');
+    persist();
+    ids.forEach(function (id) { $$('.card[data-key="c:' + id + '"]').forEach(fillCard); });
+    toast(added + '件を予定に入れました。カレンダーに出ます。');
+  }
   function removeEntry(card) {
     var id = (card.getAttribute('data-key') || '').slice(2), e = findEntry(id);
     if (!e) return;
@@ -520,6 +529,8 @@
       if (target) icsFor(target);
       return;
     }
+    var all = ev.target.closest ? ev.target.closest('[data-saveall]') : null;
+    if (all) { saveAll(all); return; }
     var b = ev.target.closest ? ev.target.closest('[data-act]') : null;
     if (!b) return;
     var card = b.closest('.card'), act = b.getAttribute('data-act');
@@ -905,7 +916,7 @@
       '<div class="field" id="f-timebox" hidden><label for="f-time">時刻(任意)</label><input type="time" id="f-time"></div>' +
       '<label class="chip" id="l-yearly"><input type="checkbox" id="f-yearly"> 毎年くり返す</label> <label class="chip" id="l-100"><input type="checkbox" id="f-100"> 100日ごとの節目も入れる</label>' +
       '<p class="hint">残したあと、メモと「やること」を書けます。</p></section>' +
-      '<p id="quiet-note" class="notice quiet" hidden>静かに残します。広告やおすすめは出しません。</p>' +
+      '<p id="quiet-note" class="notice quiet" hidden>静かに残します。広告やおすすめは出さず、「おめでとう」とも書きません。記録はこの端末の中だけにあります。</p>' +
       '<p><button type="button" class="btn" id="f-save" hidden>この日を残す</button></p>' +
       '<p class="hint">名前も日付も、この端末の中だけに残ります。</p>';
     var $f = function (id) { return document.getElementById(id); };
@@ -924,7 +935,7 @@
       var d = readDate(), k = KINDS[st.kind] || {};   // no kind chosen yet (the page opens that way): nothing to show, but nothing to throw either
       ['s3', 's4', 'live', 'f-save'].forEach(function (id) { show(id, !!d && !!st.kind); });
       show('s4', !!d && st.p === 'day');
-      show('quiet-note', !!d && !!k.quiet);
+      show('quiet-note', !!k.quiet);
       show('l-100', !k.quiet && !k.time && st.p === 'day');
       show('f-timebox', !!k.time && st.p === 'day');
       if (!d) { $f('e-date').textContent = ''; return; }
