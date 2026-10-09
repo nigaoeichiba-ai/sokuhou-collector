@@ -131,8 +131,9 @@
     var panel = $(".fav-panel", bar), ul = $("ul", panel);
     function text() {
       var lines = favs.map(function (x) { return "・" + x.name + "(¥" + Number(x.price).toLocaleString() + ")"; });
-      return "贈り物の候補です。どれが合うか、意見をください。\n" + lines.join("\n") + "\n" + location.href.split("#")[0];
+      return "贈り物の候補です。どれが合うか、意見をください。\n" + lines.join("\n") + "\n" + listUrl();
     }
+    function listUrl() { return location.origin + "/list/?c=" + favs.map(function (x) { return encodeURIComponent(x.code); }).join(","); }
     function paint() {
       $$(".item").forEach(function (li) {
         var b = $(".fav", li);
@@ -163,6 +164,11 @@
       });
     });
     $(".fav-open", bar).addEventListener("click", function () { panel.hidden = !panel.hidden; });
+    if (navigator.share) {                                  // the phone's own share sheet (LINE, mail, messages ...)
+      var sb = document.createElement("button"); sb.type = "button"; sb.className = "btn btn-sub"; sb.textContent = "共有する";
+      sb.addEventListener("click", function () { navigator.share({ title: "贈り物の候補", text: "贈り物の候補です。どれが合うか、意見をください。", url: listUrl() }).catch(function () {}); });
+      $(".fav-actions", bar).appendChild(sb);
+    }
     $(".fav-copy", bar).addEventListener("click", function () {
       if (navigator.clipboard) navigator.clipboard.writeText(text());
       this.textContent = "コピーしました";
@@ -170,7 +176,43 @@
     paint(); render();
   }
 
+  // ---------------------------------------------------------------- 共有リスト: /list/?c=code,code shows the candidates a friend sent
+  function initList() {
+    var root = $("#sharedlist");
+    if (!root) return;
+    var msg = $(".list-msg", root), ul = $("#list-items", root);
+    var codes = (new URLSearchParams(location.search).get("c") || "").split(",").map(function (c) { try { return decodeURIComponent(c); } catch (e) { return ""; } }).filter(Boolean).slice(0, 12);
+    if (!codes.length) { msg.textContent = "候補が指定されていません。"; return; }
+    fetch(root.getAttribute("data-src")).then(function (r) { return r.json(); }).then(function (db) {
+      var n = 0;
+      codes.forEach(function (c) {
+        var it = Object.prototype.hasOwnProperty.call(db, c) ? db[c] : null;
+        if (!it) return;
+        n++;
+        var li = document.createElement("li"); li.className = "item";
+        var a1 = document.createElement("a"); a1.className = "item-img"; a1.href = it.u; a1.target = "_blank"; a1.rel = "sponsored nofollow noopener";
+        var img = document.createElement("img"); img.src = it.i; img.alt = it.n; img.width = 300; img.height = 300; img.loading = "lazy"; a1.appendChild(img);
+        var body = document.createElement("div"); body.className = "item-body";
+        var h3 = document.createElement("h3"); var a2 = document.createElement("a"); a2.href = it.u; a2.target = "_blank"; a2.rel = "sponsored nofollow noopener"; a2.textContent = it.n; h3.appendChild(a2);
+        var pr = document.createElement("p"); pr.className = "price"; pr.textContent = "¥" + Number(it.p).toLocaleString();
+        var btns = document.createElement("div"); btns.className = "item-btns";
+        var b1 = document.createElement("a"); b1.className = "btn"; b1.href = it.u; b1.target = "_blank"; b1.rel = "sponsored nofollow noopener"; b1.textContent = "楽天市場で見る"; btns.appendChild(b1);
+        if (it.a) { var b2 = document.createElement("a"); b2.className = "btn"; b2.href = it.a; b2.target = "_blank"; b2.rel = "sponsored nofollow noopener"; b2.textContent = "Amazonで探す"; btns.appendChild(b2); }
+        body.appendChild(h3); body.appendChild(pr); body.appendChild(btns);
+        li.appendChild(a1); li.appendChild(body); ul.appendChild(li);
+      });
+      msg.textContent = n ? n + "点の候補です。" : "候補を表示できませんでした。商品が入れ替わった可能性があります。";
+    }).catch(function () { msg.textContent = "候補を読み込めませんでした。"; });
+  }
+
   function initShare() {
+    $$(".share-btn.native").forEach(function (b) {
+      if (!navigator.share) return;
+      b.hidden = false;
+      b.addEventListener("click", function () {
+        navigator.share({ title: document.title, text: b.getAttribute("data-text") || "", url: b.getAttribute("data-url") }).catch(function () {});
+      });
+    });
     $$(".share-btn.copy").forEach(function (b) {
       b.addEventListener("click", function () {
         var u = b.getAttribute("data-url");
@@ -430,7 +472,7 @@
     var f = $("form.finder");
     if (f) window.YorokobuFinder(f);
     initBrowse(); initConcierge(); initFavorites(); initMemo(); initMemoStrip();
-    initTaboo(); initCalc(); initGacha(); initQuiz();
+    initTaboo(); initCalc(); initGacha(); initQuiz(); initList();
   });
   // ---------------------------------------------------------------- copy buttons (message examples): shown only when copying works
   (function () {
