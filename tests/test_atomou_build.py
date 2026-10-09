@@ -322,6 +322,13 @@ class Pages(BuildOnce):
             self.assertNotIn(f"og/{q['id']}.png", self.rel)
             self.assertNotIn("/og/", self.rel[f"e/{q['id']}/index.html"])
 
+    def test_the_card_page_exists_is_not_indexed_and_the_days_link_to_it(self):
+        page = self.rel["card/index.html"]
+        self.assertIn("noindex", page)
+        self.assertNotIn("/card/", self.rel["sitemap.xml"])
+        self.assertIn("/card/#from=c:", self.rel[f"e/{next(e for e in self.entries if not e['quiet'])['id']}/index.html"])
+        self.assertIn('href="/card/"', self.rel["index.html"])
+
     def test_interests_page_is_not_indexed_and_the_home_links_to_it(self):
         page = self.rel["interests/index.html"]
         self.assertIn("noindex", page)
@@ -541,6 +548,22 @@ class AppInChrome(BuildOnce):
         text = unquote(m.group(1))
         self.assertIn("まで、あと54日", text)             # counted from the device's date (2026-10-08), not from the build
         self.assertIn("/e/f2bb25e347/", text)
+
+    def test_a_card_in_a_link_is_shown_with_todays_count_and_its_words_are_not_markup(self):
+        import base64
+        import json as _j
+        card = {"t": "〇〇バンド <b>ワンマン</b>ライブ", "d": "2026-12-01", "m": "開場18:00 渋谷", "th": 1, "tasks": [{"b": 7, "x": "チケットを買う"}], "k": "event"}
+        pack = base64.urlsafe_b64encode(_j.dumps(card, ensure_ascii=False).encode("utf-8")).decode().rstrip("=")
+        with tempfile.TemporaryDirectory() as prof:
+            r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={prof}", "--virtual-time-budget=6000",
+                                "--dump-dom", f"{self.base}/card/?today=2026-10-08#c={pack}"], capture_output=True, timeout=120)
+        dom = html.unescape(r.stdout.decode("utf-8", "replace"))
+        text = re.sub(r"<[^>]+>", "", dom)
+        self.assertIn("あと54日", text)
+        self.assertIn("ワンマン", text)
+        self.assertIn("7日前(11/24)", text)
+        self.assertNotIn("<b>ワンマン</b>", dom.split('id="x-card"')[1])      # the markup in a title is dropped, never run
+        self.assertIn("自分の予定帳に入れる", text)
 
     def test_home_edit_mode_shows_a_bar_on_every_block(self):
         dom = self.dom("/?edit=1")

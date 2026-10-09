@@ -229,7 +229,8 @@
           (own ? '<div class="field"><label class="lab" for="sh-title"><input type="checkbox" id="sh-title" data-share-title> 題名も入れる(オフなら「ある日まで、あと○日」)</label></div>' : '<p class="hint">送るのは、この公式の日付のページです。あなたの予定は入りません。</p>') +
           '<p class="share-btns"><a class="btn small" data-share-to="line" href="#" target="_blank" rel="noopener">LINEで送る</a> <a class="btn small ghost" data-share-to="x" href="#" target="_blank" rel="noopener">Xで投稿</a> ' +
           '<button type="button" class="btn small ghost" data-share="copy">文面をコピー</button> <button type="button" class="btn small ghost" data-share="image">画像で保存</button> ' +
-          '<button type="button" class="btn small ghost" data-share="native" hidden>ほかのアプリで送る</button></p></section>';
+          '<button type="button" class="btn small ghost" data-share="native" hidden>ほかのアプリで送る</button></p>' +
+          '<p class="hint"><a href="/card/#from=' + H(key) + '">ひとこと・やることを入れたカードにして送る</a>(受け取った人が1タップで自分の予定帳に入れられます)</p></section>';
       }
       box.innerHTML = h;
       if (window.AtomouShare) AtomouShare.init(box);
