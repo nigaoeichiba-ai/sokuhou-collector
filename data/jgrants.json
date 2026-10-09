@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-08T00:57:31.106436+00:00",
+ "fetched_at": "2026-10-09T01:12:03.715843+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -25,6 +25,18 @@
    "target_area_search": "東京都",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "農林水産物認証取得支援事業（農家認証取得支援事業）補助金"
+  },
+  {
+   "acceptance_end_datetime": "2026-12-28T08:00:00.000Z",
+   "acceptance_start_datetime": "2022-04-01T01:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0W2x000007CStOEAW",
+   "id": "a0W2x000007CStOEAW",
+   "institution_name": null,
+   "name": "S-00002267",
+   "subsidy_max_limit": 0,
+   "target_area_search": "東京都",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "農林水産物認証取得支援事業（水産認証取得支援事業）補助金"
   },
   {
    "acceptance_end_datetime": "2026-10-12T14:59:00.000Z",
@@ -373,18 +385,6 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "休廃止鉱山鉱害防止等工事費補助金（令和７年度補正）【九州監督部】"
-  },
-  {
-   "acceptance_end_datetime": "2026-12-28T08:00:00.000Z",
-   "acceptance_start_datetime": "2022-04-01T01:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0W2x000007CStOEAW",
-   "id": "a0W2x000007CStOEAW",
-   "institution_name": "農林水産物認証取得支援事業（水産認証取得支援事業）補助金",
-   "name": "S-00002267",
-   "subsidy_max_limit": 0,
-   "target_area_search": "東京都",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "農林水産物認証取得支援事業（水産認証取得支援事業）補助金"
   },
   {
    "acceptance_end_datetime": "2026-12-28T08:15:00.000Z",
@@ -1215,6 +1215,18 @@
    "title": "INPIT事業再編計画支援事業補助金（令和８年度）"
   },
   {
+   "acceptance_end_datetime": "2026-10-29T08:00:00.000Z",
+   "acceptance_start_datetime": "2026-10-08T06:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDXscMAH",
+   "id": "a0WJ200000CDXscMAH",
+   "institution_name": "IP360（令和７年度補正コンテンツ産業成長投資支援事業費補助金）",
+   "name": "S-00008284",
+   "subsidy_max_limit": 40000000,
+   "target_area_search": "全国",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "IP360 海外展開支援（ローカライズ支援）"
+  },
+  {
    "acceptance_end_datetime": "2026-10-31T14:59:00.000Z",
    "acceptance_start_datetime": "2026-05-20T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDYbNMAX",
@@ -1971,6 +1983,18 @@
    "title": "令和８年度訪問介護員等補助者同行支援補助金"
   },
   {
+   "acceptance_end_datetime": "2026-10-28T03:00:00.000Z",
+   "acceptance_start_datetime": "2026-10-08T01:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003iZLKUA2",
+   "id": "a0WfQ000003iZLKUA2",
+   "institution_name": "酒類業振興支援事業費補助金",
+   "name": "S-00009934",
+   "subsidy_max_limit": 15000000,
+   "target_area_search": "茨城県 / 栃木県 / 群馬県 / 埼玉県 / 新潟県 / 長野県 / 千葉県 / 東京都 / 神奈川県 / 山梨県 / 富山県 / 石川県 / 福井県 / 岐阜県 / 静岡県 / 愛知県 / 三重県 / 滋賀県 / 京都府 / 大阪府 / 兵庫県 / 奈良県 / 和歌山県 / 鳥取県 / 島根県 / 岡山県 / 広島県 / 山口県 / 徳島県 / 香川県 / 愛媛県 / 高知県 / 福岡県 / 佐賀県 / 長崎県 / 北海道 / 青森県 / 岩手県 / 宮城県 / 秋田県 / 山形県 / 福島県 / 熊本県 / 大分県 / 宮崎県 / 鹿児島県 / 沖縄県",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "令和８年度酒類業振興支援事業費補助金（第６期）"
+  },
+  {
    "acceptance_end_datetime": "2026-11-15T14:59:00.000Z",
    "acceptance_start_datetime": "2026-09-14T15:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDeUgMAL",
@@ -2007,5 +2031,5 @@
    "title": "伝統的工芸品産業支援補助金（令和8年度第2回災害復興事業）"
   }
  ],
- "total": 167
+ "total": 169
 }
