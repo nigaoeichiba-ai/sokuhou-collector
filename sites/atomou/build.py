@@ -22,7 +22,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.atomou import articles, catalog, datecore, skins, usecases  # noqa: E402
+from sites.atomou import articles, catalog, datecore, feeds, skins, usecases  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
@@ -675,7 +675,8 @@ def category_page(c: Ctx, group: str, live: list[dict]) -> str:
 <p class="lead muted">{esc(GROUP_LEAD[group])}</p>
 {search_form()}
 {chips}
-<div class="cards" id="grid">{"".join(card_html(e) for e in rows)}</div>"""
+<div class="cards" id="grid">{"".join(card_html(e) for e in rows)}</div>
+{feeds.subscribe_html(GROUP_SLUG[group] + ".ics", str(c.cfg["site_url"]).rstrip("/"), urlparse(str(c.cfg["site_url"])).netloc) if any(feeds.feedable(e) for e in rows) else ""}"""
     if not rows:
         body = body.replace('<div class="cards" id="grid"></div>', '<p class="empty">いまは日付がありません。</p>')
     return c.page(f"/c/{GROUP_SLUG[group]}/", f"{group}の日付一覧 | {NAME}", f"{GROUP_LEAD[group]}あと何日かが一目で分かり、ワンタップで予定に入れられます。", body, "category")
@@ -945,7 +946,9 @@ def legal(c: Ctx) -> dict:
         contact_notice="日付の誤りのご指摘は、ページの名前と、正しい日付の出典(アドレス)を添えていただけると早く確認できます。",
         input_note=("<h2>この端末に保存する情報</h2>"
                     "<p>記録した日(名前・日付・時刻・メモ・やること・設定)と、予定に入れた日の一覧、選んだ好きな分野は、お使いのブラウザの中(localStorage)だけに保存します。当サイトのサーバーには送りません。"
-                    "ブラウザのデータを消すと記録も消えます。バックアップはマイページの「書き出す」で作れます。</p>"),
+                    "ブラウザのデータを消すと記録も消えます。バックアップはマイページの「書き出す」で作れます。</p>"
+                    "<h2>カレンダーの購読(任意)</h2>"
+                    "<p>ジャンルのページから、公式の日付をカレンダーアプリに購読できます。購読用のファイルは、誰でも取得できる公開データです。購読すると、Google などのカレンダーのサービスが、定期的にこのファイルを取りに来ます。当サイトは、購読した人を知ることはありません。</p>"),
         finish=lambda html: c.finish(privacy_fix(c, html), "legal"),
     )
 
@@ -972,6 +975,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
         pages[f"use/{u['slug']}/index.html"] = use_page(c, u)
     for g in catalog.GROUPS:
         pages[f"c/{GROUP_SLUG[g]}/index.html"] = category_page(c, g, live)
+    pages.update(feeds.feed_pages(live, catalog.GROUPS, GROUP_SLUG, str(cfg["site_url"]).rstrip("/"), today))   # cal/<genre>.ics, cal/all.ics: the days as a calendar to subscribe to
     for e in entries:
         pages[f"e/{e['id']}/index.html"] = event_page(c, e, e["id"] in index_ids, live)
     pages.update(legal(c))
