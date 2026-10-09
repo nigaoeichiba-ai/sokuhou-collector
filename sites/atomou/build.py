@@ -576,9 +576,9 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 <dl class="info"><dt>出典</dt><dd><a href="{esc(e['source_url'])}" rel="noopener nofollow" target="_blank">{esc(host(e['source_url']))}</a></dd>
 <dt>確認日</dt><dd>{esc(e['checked_on'])}</dd>{f"<dt>出典の文</dt><dd>{esc(e['source_quote'])}</dd>" if e.get('source_quote') else ""}</dl>
 <p class="small muted">日付や時刻は変わることがあります。出典の公式ページで、最新の情報をご確認ください。</p>
-<p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを書く</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の日として記録する</a></p>
+<p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを追加</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の予定として記録する</a></p>
 {f'<details class="more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">iPhone の「カレンダー」や Google カレンダーに取り込めるファイルです。</p><p><button type="button" class="btn small ghost" data-ics-for="c:{e["id"]}">ファイルを作る</button></p></details>' if e["precision"] == "day" else ""}
-{(f'<h2>同じ「{esc(e["subject"])}」の日</h2><p class="saveall"><button type="button" class="btn small" data-saveall="{",".join([e["id"]] + [r["id"] for r in same])}">この日を含む{len(same) + 1}件を、まとめて予定に入れる</button></p><div class="cards">' + "".join(card_html(r) for r in same) + "</div>") if same else ""}
+{(f'<h2>同じ「{esc(e["subject"])}」の日</h2><p class="saveall"><button type="button" class="btn small" data-saveall="{",".join([e["id"]] + [r["id"] for r in same])}">この日を含む{len(same) + 1}件をまとめて予定に入れる</button></p><div class="cards">' + "".join(card_html(r) for r in same) + "</div>") if same else ""}
 {('<h2>同じジャンルの日</h2><div class="cards">' + "".join(card_html(r) for r in rel) + "</div>") if rel else ""}
 {('<h2>同じ頃の日</h2><p class="hint">この日の前後10日にある日です。</p><div class="cards">' + "".join(card_html(r) for r in near) + "</div>") if near else ""}"""
     suffix = "からもう何日？" if e["status"] == "ended" else "はいつ？あと何日？"

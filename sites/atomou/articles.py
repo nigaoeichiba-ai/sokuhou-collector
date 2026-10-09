@@ -25,7 +25,7 @@ KIND_VERB = {
     "発表": ("に発表されます", "に発表されました"),
     "極大": ("に極大を迎えます", "に極大を迎えました"),
     "終了": ("に終了します", "に終了しました"),
-    "決勝": ("に決勝が行われます", "に決勝が行われました"),
+    "決勝": ("に行われます", "に行われました"),
     "施行": ("に施行されます", "に施行されました"),
     "発売": ("に発売されます", "に発売されました"),
 }
@@ -57,15 +57,45 @@ def when_text(e: dict, fmt, today: date) -> str:
     return _span(e, fmt)[0]
 
 
+DAY_KINDS = {"改定", "施行", "終了", "発表", "開始", "発売", "極大"}
+AREA_KINDS = {"改定", "終了", "施行", "改正", "締切"}   # the place of these is the area they apply to, not a venue (the same set the cards use)
+
+
+def _two_days(e: dict, fmt) -> str | None:
+    """'2026年10月24日(土)・25日(日)' when a range is one or two days long inside one month, else None."""
+    if not e.get("date_end") or e["precision"] != "day":
+        return None
+    a, b = date.fromisoformat(e["date"]), date.fromisoformat(e["date_end"])
+    if (b - a).days not in (1, 2) or a.month != b.month or a.year != b.year:
+        return None
+    return fmt(e["date"], "day") + "・" + fmt(e["date_end"], "day").split("月", 1)[1]
+
+
 def lead(e: dict, fmt, today: date) -> str:
     verb = KIND_VERB.get(e["kind"], ("に行われます", "に行われました"))
     last = date.fromisoformat(e.get("date_end") or e["date"])
     past = last < today
     when, _ = _span(e, fmt)
-    s = f"{e['title']}は、{when}{verb[1] if past else verb[0]}。"
+    i = 1 if past else 0
+    short = _two_days(e, fmt)
+    if e["kind"] in DAY_KINDS and not (e.get("date_end") and not short):
+        # "2027年2月11日(木)は、「木星が衝(一晩中見える時期)」の日です。": these titles say what happens (it is a statement, or it repeats the kind), so the title is quoted instead of made the subject
+        s = f"{when}は、{e['title']}です。" if e["title"].endswith("日") else f"{when}は、「{e['title']}」の日{'でした' if past else 'です'}。"
+        s = s.replace("の日でした。", "の日でした。") if past else s
+    elif e["kind"] == "極大":
+        s = f"{when}は、「{e['title']}」の期間{'でした' if past else 'です'}。"
+    elif e.get("date_end") and not short:
+        if e["kind"] in ("開催", "試験日"):   # a range takes "まで" and no "に": 2026年10月17日(土)から2027年2月14日(日)まで開催されます
+            s = f"{e['title']}は、{when}{verb[i][1:]}。"
+        else:
+            s = f"{e['title']}は、{when}{'でした' if past else 'です'}。"
+    elif e["kind"] == "締切" and "締切" in e["title"]:     # "…申込締切は、2027年2月3日(水)です。" (not "…締切は、…が締切です")
+        s = f"{e['title']}は、{when}{'でした' if past else 'です'}。"
+    else:
+        s = f"{e['title']}は、{short or when}{verb[i]}。"
     place = (e.get("place") or "").strip()
     if place and place not in ("全国", "地域"):
-        s += f"場所は{place}です。"
+        s += f"{'対象地域' if e['kind'] in AREA_KINDS else '場所'}は{place}です。"
     return s
 
 
@@ -82,6 +112,24 @@ def facts(e: dict, fmt, host: str) -> list[tuple[str, str]]:
     return rows
 
 
+ASTRO_SUBJECTS = {"流星群", "月と土星", "満月", "火星と木星", "水星", "金星", "日食", "木星", "火星", "土星", "月食"}
+
+
+def _change_note(e: dict) -> tuple[str, str]:
+    """The question about changes, worded for the kind of day (a meteor shower, a system change and a festival do not change for the same reasons)."""
+    if e["subject"] in ASTRO_SUBJECTS or e["kind"] == "極大":
+        return ("日付が変わることはありますか。",
+                "天体の動きから計算した日付なので、日付そのものはほとんど変わりません。見え方は、天候や場所、時刻によって変わります。時刻の詳細は、国立天文台などの公式ページでご確認ください。")
+    if e["group"] == "締切・制度":
+        return ("内容や日付が変わることはありますか。",
+                "制度の内容や実施の時期は、今後の発表で変わることがあります。手続きの前に、出典の公式ページで最新の情報をご確認ください。")
+    if e["group"] == "消費・セール":
+        return ("日付が変わることはありますか。",
+                "セールやサービスの内容と日付は、実施する会社の都合で変わることがあります。購入や申し込みの前に、公式ページでご確認ください。")
+    return ("日程が変わることはありますか。",
+            "主催者の都合や天候などで、日程が変わったり、中止になったりすることがあります。申し込みや参加の前に、公式ページで最新の情報をご確認ください。")
+
+
 def faq(e: dict, fmt, today: date, guide: dict | None) -> list[tuple[str, str]]:
     when, _ = _span(e, fmt)
     last = date.fromisoformat(e.get("date_end") or e["date"])
@@ -94,12 +142,12 @@ def faq(e: dict, fmt, today: date, guide: dict | None) -> list[tuple[str, str]]:
         left = f"{when}です。現在、期間中です。"
     else:
         left = f"{when}です。{today.year}年{today.month}月{today.day}日の時点で、あと{(start - today).days}日です。"
-    out = [(f"{e['title']}はいつですか。", left)]
+    name = f"「{e['title']}」" if e["kind"] in DAY_KINDS else e["title"]
+    out = [(f"{name}はいつですか。", left)]
     place = (e.get("place") or "").strip()
     if place and place not in ("全国", "地域"):
-        out.append((f"{e['title']}はどこですか。", f"{place}です。"))
-    out.append(("日程が変わることはありますか。",
-                "主催者や官公庁の都合、天候などにより、日程が変わることや中止になることがあります。申し込みや参加の前に、公式ページで最新情報を確認してください。"))
+        out.append(("どの地域が対象ですか。" if e["kind"] in AREA_KINDS else "場所はどこですか。", f"{place}です。"))
+    out.append(_change_note(e))
     for q in (guide or {}).get("faq", [])[:2]:
         out.append((q["q"], q["a"]))
     return out
