@@ -45,6 +45,8 @@ LIVE_SOURCES = {
                   "as_of_text": "最新の記録は{d}の分までです"},
     "sorachi": {"pref": "北海道", "scope": "空知管内の24市町のみ", "license": "CC-BY(北海道のサイトポリシー)", "name": "北海道空知総合振興局", "label": "北海道・空知総合振興局の公式(空知管内の24市町)", "monthly_label": "目撃のほか、痕跡などを含む(ヒグマの記録)",
                 "as_of_text": "データは{d}時点です"},
+    "toyama": {"pref": "富山", "license": "富山県自然保護課の許可(2026年10月・出典表記は不要)", "name": "富山県", "label": "富山県・県の公式(クマっぷ。位置は載せていません)", "coords": False, "monthly_label": "目撃のほか、痕跡や人身被害の報告を含む",
+               "as_of_text": "最新の記録は{d}の分までです"},
     "akita": {"pref": "秋田", "license": "CC BY 4.0", "name": "秋田県", "label": "秋田県・県の公式。オープンデータは月1回ほど更新", "monthly_label": "目撃のほか、痕跡などを含む(クマの記録のみ)",
               "as_of_text": "最新の記録は{d}の分までです"},
 }
@@ -62,8 +64,6 @@ LIVE_SOURCES.update({
              "as_of_text": "最新の記録は{d}の分までです"},
     "saitama": {"pref": "埼玉", "name": "埼玉県", "label": "埼玉県・県の公式データを集計(件数のみ)", "monthly_label": "市町村が県に報告した出没の件数",
                 "as_of_text": "最新の記録は{d}の分までです"},
-    "toyama": {"pref": "富山", "name": "富山県", "label": "富山県・県の公式(クマっぷ・件数のみ)", "monthly_label": "目撃のほか、痕跡や人身被害の報告を含む",
-               "as_of_text": "最新の記録は{d}の分までです"},
 })
 OTSU_PAGE = "https://www.city.otsu.lg.jp/soshiki/025/1605/g/t/74581.html"
 OTSU_MAP = "https://www.google.com/maps/d/viewer?mid=1rE5HcSdJnm2gX3iT1FMt0aCVuQ9ArDs"
@@ -197,7 +197,8 @@ def source_notes(infos: dict, keys: list[str]) -> str:
     out = ""
     for k in keys:
         i = infos[k]
-        out += (f'<p class="notice">{esc(i["credit"])}。位置の座標は、地図にだけ使っています。{esc(i["note"])}。取得日: {jp_date(i["fetched"])}。'
+        where = "位置の座標は、地図にだけ使っています。" if LIVE_SOURCES.get(k, {}).get("coords", True) else "位置の座標は、載せていません。"
+        out += (f'<p class="notice">{esc(i["credit"])}。{where}{esc(i["note"])}。取得日: {jp_date(i["fetched"])}。'
                 f'公式ページは<a href="{esc(i["page"])}" rel="noopener" target="_blank">こちら</a>です。</p>\n')
     return out
 
@@ -393,7 +394,7 @@ def map_page(page, d: dict, lv: dict) -> str:
 <div class="map-legend"><span><i class="m7"></i>7日以内</span><span><i class="m30"></i>8〜30日前</span><span><i class="m90"></i>31日より前</span></div>
 <div id="near-list" hidden><h2>現在地の近くの記録</h2><div class="near-slot"></div><p class="notice">現在地は、この端末の中だけで使い、サイトには送りません。直線距離です。</p></div>
 <p class="notice">地図の背景は、<a href="https://maps.gsi.go.jp/development/ichiran.html" rel="noopener" target="_blank">国土地理院の地理院タイル</a>です。位置は、自治体が公表した座標(小数点以下4桁に丸めたもの)で、実際の場所と、数十メートルほど違うことがあります。{CAUTION}</p>
-{source_notes(infos, list(infos))}
+{source_notes(infos, [k for k in infos if any(r["lat"] is not None and r["src"] == k for r in lv["records"])])}
 <script src="/assets/leaflet.js"></script>
 <script src="/assets/map.js" defer></script>"""
     return page(path="/map/", title=f"クマの目撃マップ(自治体の公式・直近{MAP_DAYS}日・{n(len(pts))}か所)",
