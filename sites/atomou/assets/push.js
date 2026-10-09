@@ -30,15 +30,21 @@
       (mirror[k] = mirror[k] || []).push({ t: text, u: url });
     }
     items.forEach(function (it) {
-      var base = Pl.baseOf(it);
-      if (!base) return;
+      var d0 = C.parse(it.date);
+      if (!d0 || it.p !== 'day') return;
       var e = it.own ? A.findEntry(it.id) : null, alarm = it.own ? (e ? (e.alarm || st.prefs.alarm) : 'none') : st.prefs.alarm, slot = SLOT[alarm];
-      var url = it.own ? '/plan/?key=' + encodeURIComponent(it.key) : '/plan/?key=' + encodeURIComponent(it.key);
-      if (slot) add(C.addDays(base, slot.off), slot.s, slot.pre + it.title + (it.time ? ' ' + it.time : ''), url);
-      Pl.notesOf(it.key).tasks.forEach(function (t) {
-        if (t.done) return;
-        add(C.addDays(base, -t.before), 'm', 'やること: ' + t.text + '(' + it.title + ')', url);
+      var url = '/plan/?key=' + encodeURIComponent(it.key), turns = [], y;
+      if (it.yearly) { for (y = Math.max(today[0], d0[0]); y <= last[0] + 1; y++) turns.push(A.occ(d0, y)); } else turns.push(d0);   // a yearly day comes round twice within 400 days
+      turns.forEach(function (base) {
+        if (slot) add(C.addDays(base, slot.off), slot.s, slot.pre + it.title + (it.time ? ' ' + it.time : ''), url);
+        Pl.notesOf(it.key).tasks.forEach(function (t) {
+          if (t.done) return;
+          add(C.addDays(base, -t.before), 'm', 'やること: ' + t.text + '(' + it.title + ')', url);
+        });
       });
+      if (slot && it.own && it.every100 && !it.quiet) {   // the 100-day marks
+        for (var n = 100; C.cmp(C.addDays(d0, n + slot.off), last) <= 0; n += 100) add(C.addDays(d0, n + slot.off), slot.s, slot.pre + it.title + ' から' + n + '日', url);
+      }
     });
     if (window.AtomouMember && window.AtomouMember.extraNotices) window.AtomouMember.extraNotices(today).forEach(function (x) { add(x.d, x.s, x.t, x.u); });   // a monitor's questionnaire reminder
     var list = Object.keys(dates).sort().map(function (k) { return dates[k]; });
@@ -196,6 +202,7 @@
 
   if (A.page === 'my') pageMy();
   document.addEventListener('atomou:changed', function () { sync(false); });
+  document.addEventListener('atomou:saved', function () { sync(false); });   // any saved change (a fixed date, a deleted day, a new task) reaches the server's list
   if (!P.today) setTimeout(function () { sync(false); }, 1500);   // after a change made on another page (or on another device), the server's list follows
   window.AtomouPush = { plan: plan, sync: sync, supported: supported, afterSave: afterSave, SLOT: SLOT };
 })();
