@@ -7,7 +7,8 @@ name: deploy-sites
 #   XSERVER_USER      the Xserver server ID (the SSH user name)
 # The kuma site is built and uploaded only when the repository variable DEPLOY_KUMA is "true" (set after the
 # owner has added kuma-sokuho.com to the Xserver server); the same switch for minna-no-illust.com is DEPLOY_MINNA and for atomou.com DEPLOY_ATOMOU.
-# atomou is a DEMO until the repository variable ATOMOU_PUBLIC is "true" (while ATOMOU_REVIEW is "true" and ATOMOU_PUBLIC is not, the small REVIEW copy is deployed instead: public to crawlers but not indexable, no password; see sites/atomou/review.py) (release build, indexable). While it is a demo it is deployed only
+# atomou is a DEMO until the repository variable ATOMOU_PUBLIC is "true" (release build, indexable). While ATOMOU_REVIEW is "true" and ATOMOU_PUBLIC is not, the small REVIEW copy
+# (public to crawlers but not indexable, no password; sites/atomou/review.py) is the site and the full demo rides along in public_html/demo, the folder of demo.atomou.com. A demo is deployed only
 # behind a password (HTTP Basic): the secret ATOMOU_DEMO_PASSWORD (owner-made) must exist (the user name is ATOMOU_DEMO_USER, "demo" when that secret is not set), the job writes the password
 # file to ~/atomou.com/.htpasswd (outside public_html) and the preview build's .htaccess asks for it. Without them nothing is deployed.
 #
@@ -172,7 +173,7 @@ jobs:
             echo "DEPLOY_ATOMOU is not true; the atomou site is skipped"
             go=false
           fi
-          if [ "$SITE" = "atomou" ] && [ "$ATOMOU_PUBLIC" != "true" ] && [ "${ATOMOU_REVIEW:-}" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }; then
+          if [ "$SITE" = "atomou" ] && [ "$ATOMOU_PUBLIC" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }; then
             echo "atomou is still a demo and ATOMOU_DEMO_USER / ATOMOU_DEMO_PASSWORD are not set: it is not deployed unprotected; the atomou site is skipped"
             go=false
           fi
@@ -227,6 +228,16 @@ jobs:
       - name: Phone-width layout check (Chrome measures sample pages of every kind at 300 / 375 / 768 px; sideways overflow or squeezed text stops the deploy)
         if: steps.gate.outputs.go == 'true'
         run: python -m sokuhou.layoutcheck release
+      - name: Hidden demo for atomou (review copy only; the full demo goes to public_html/demo, the folder of demo.atomou.com, behind its password)
+        if: steps.gate.outputs.go == 'true' && matrix.site == 'atomou' && vars.ATOMOU_PUBLIC != 'true' && vars.ATOMOU_REVIEW == 'true'
+        run: |
+          set -euo pipefail
+          python sites/atomou/build.py --demo-sub --out demo_build
+          python -m sokuhou.sitecheck demo_build --base https://demo.atomou.com
+          python -m sokuhou.layoutcheck demo_build
+          test -f demo_build/.htaccess
+          mkdir -p release/demo
+          cp -a demo_build/. release/demo/
       - name: SSH setup
         if: steps.gate.outputs.go == 'true'
         env:
@@ -254,7 +265,7 @@ jobs:
           ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
             "set -e; cd \"\$HOME/$SITE_DIR\"; pwd; test -d public_html; command -v tar >/dev/null; ls -d public_html*"
       - name: Demo password file for atomou (outside public_html; the preview build asks for it)
-        if: steps.gate.outputs.go == 'true' && matrix.site == 'atomou' && vars.ATOMOU_PUBLIC != 'true' && vars.ATOMOU_REVIEW != 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+        if: steps.gate.outputs.go == 'true' && matrix.site == 'atomou' && vars.ATOMOU_PUBLIC != 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
@@ -267,8 +278,13 @@ jobs:
           test -n "$home"
           printf '%s:%s\n' "$DEMO_USER" "$(openssl passwd -apr1 "$DEMO_PASS")" | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
             "set -e; cd \"\$HOME/$SITE_DIR\"; cat > .htpasswd; chmod 604 .htpasswd"
-          sed -i "s#__HTPASSWD__#$home/$SITE_DIR/.htpasswd#" release/.htaccess
-          grep -q "AuthUserFile $home/$SITE_DIR/.htpasswd" release/.htaccess
+          for f in release/.htaccess release/demo/.htaccess; do   # the demo itself, or (review copy) the hidden demo folder
+            if [ -f "$f" ] && grep -q __HTPASSWD__ "$f"; then
+              sed -i "s#__HTPASSWD__#$home/$SITE_DIR/.htpasswd#" "$f"
+              grep -q "AuthUserFile $home/$SITE_DIR/.htpasswd" "$f"
+            fi
+          done
+          if [ -d release/demo ]; then grep -q "AuthUserFile" release/demo/.htaccess; fi
       - name: Upload and switch
         if: steps.gate.outputs.go == 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         env:
@@ -312,6 +328,10 @@ jobs:
             AUTH=(-u "$DEMO_USER:$DEMO_PASS")   # the demo is behind a password: it must refuse a visitor without it and answer one with it
             unauth=$(curl -s -o /dev/null -w '%{http_code}' "$URL/"); echo "without the password: $unauth (must be 401)"
             [ "$unauth" = "401" ] || ok=0
+          fi
+          if [ "$SITE" = "atomou" ] && [ "${ATOMOU_PUBLIC:-}" != "true" ] && [ "${ATOMOU_REVIEW:-}" = "true" ]; then
+            hidden=$(curl -s -o /dev/null -w '%{http_code}' "$URL/demo/"); echo "the hidden demo folder without the password: $hidden (must be 401)"
+            [ "$hidden" = "401" ] || ok=0
           fi
           code=$(curl -s "${AUTH[@]}" -o /tmp/index.html -w '%{http_code}' "$URL/") || ok=0
           [ "$code" = "200" ] || ok=0
