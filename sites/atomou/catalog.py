@@ -61,6 +61,17 @@ def entry_id(item: dict) -> str:
     return hashlib.sha1(key.encode("utf-8")).hexdigest()[:10]
 
 
+def shown_kind(item: dict) -> str:
+    """The word a card or page shows for the kind.  The id keeps the stored kind, so a page does not move when this word changes:
+    a horse race is held (not a 'final'), and Jupiter's opposition is not a 'peak'."""
+    kind = item.get("kind", "")
+    if kind == "決勝" and item.get("subject") == "競馬":
+        return "開催"
+    if kind == "極大" and "衝" in str(item.get("title", "")):
+        return "衝"
+    return kind
+
+
 def labels_for(item: dict, group: str) -> tuple[str, str, str]:
     """(subject, what, place) for a card: what the topic is, what the day is, where.  A seed item that has no such fields falls back
     to its category ("その他" -> the group), its kind and its region ("地域" says nothing, so it becomes empty)."""
@@ -137,6 +148,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
         sens = it.get("sensitivity") or "none"
         quiet = sens in QUIET
         lead = LEAD.get(it.get("kind"), LEAD_DEFAULT)
+        it = {**it, "kind": shown_kind(it)}
         subject, what, place = labels_for(it, group)
         entries.append({
             "id": eid, "title": it["title"].strip(), "date": it["date"], "date_end": it.get("date_end") or None,

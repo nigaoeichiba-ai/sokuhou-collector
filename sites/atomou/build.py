@@ -409,7 +409,7 @@ def search_page(c: Ctx) -> str:
 <div class="chips" role="group" aria-label="ジャンル">{chips}<button type="button" class="chip" id="f-son" aria-pressed="false">お金や手続きの日だけ</button></div>
 <p class="small muted" id="found" aria-live="polite">&nbsp;</p>
 <div class="cards" id="results"></div>
-<div class="panel" id="none" hidden><p>該当する日付が見つかりませんでした。</p><p>言葉を短くするか、ジャンルを「すべて」にしてみてください。この言葉のまま<a id="none-add" href="/add/">自分の日として記録する</a>こともできます。</p><p class="muted">探している日がなければ、<a id="none-ask" href="/contact/?kind=request">載せてほしい日として知らせて</a>ください。</p></div>
+<div class="panel" id="none" hidden><p>該当する日付が見つかりませんでした。</p><p>言葉を短くするか、ジャンルを「すべて」にしてみてください。この言葉のまま<a id="none-add" href="/add/">日付として記録する</a>こともできます。</p><p class="muted">探している日がなければ、<a id="none-ask" href="/contact/?kind=request">お問い合わせ</a>から、載せてほしい日を送ってください。</p></div>
 <noscript><p class="notice">検索には JavaScript が必要です。<a href="/c/deadline/">ジャンルのページ</a>からも探せます。</p></noscript>"""
     return c.page("/search/", f"日付をさがす | {NAME}", "言葉やジャンルから、締切・試験・大会・お祭りの日付を探せます。見つけた日は、ワンタップで予定に。", body, "search")
 
@@ -433,7 +433,7 @@ def my_page(c: Ctx) -> str:
 <div class="field"><label class="lab" for="p-big"><input type="checkbox" id="p-big"> 文字を大きくする</label></div>
 <div class="field"><label for="p-alarm">通知の時間(通知・カレンダーに入れるとき)</label>
 <select id="p-alarm"><option value="morning">当日の朝</option><option value="eve">前日の夜</option><option value="week">1週間前の朝</option><option value="none">なし</option></select></div>
-<div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する(個人は特定されません。<a href="/privacy/#stats">詳しく</a>)</label></div>
+<div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する(個人は特定されません。<a href="/privacy/#stats">詳しい説明</a>)</label></div>
 <p><a href="/skins/">きせかえ</a></p>
 <p><a href="/?edit=1">ホームを編集</a></p>
 <p><a href="/?intro=1">はじめての方へ(このサイトの説明)を見る</a></p>
@@ -464,7 +464,7 @@ def add_page(c: Ctx) -> str:
 def calendar_page(c: Ctx) -> str:
     body = f"""{crumbs([("トップ", "/"), ("カレンダー", None)])}
 <h1>カレンダー</h1>
-<p class="lead muted">記録した日と予定に入れた日が並びます。日を押すと、その日の予定とやることが出ます。</p>
+<p class="lead muted">記録した日と予定に入れた日が並びます。日付を選ぶと、その日の予定とやることが表示されます。</p>
 <div id="cal"></div>
 <noscript><p class="notice">カレンダーには JavaScript が必要です。</p></noscript>"""
     return c.page("/calendar/", f"カレンダー | {NAME}", "記録した日と公式の日付を、月のカレンダーと一覧で確認できます。予定ごとにメモと「何日前までにやること」を書けます。", body, "calendar")
@@ -660,7 +660,7 @@ def manual_page(c: Ctx) -> str:
 <h2>カレンダー</h2>
 <ul class="big-list">
 <li>「カレンダー」を押すと、月の表が出ます。「一覧」にすると、今日から60日の予定とやることが日ごとに並びます。</li>
-<li>日を押すと、その日の予定とやることが下に出ます。「この日に予定を追加」で、その日の予定を記録できます。</li>
+<li>日付を選ぶと、その日の予定とやることが下に表示されます。「この日に予定を追加」で、その日の予定を記録できます。</li>
 <li>予定を押すと、詳細が開き、メモと「やること」を書けます。</li>
 </ul>
 
@@ -698,7 +698,7 @@ def manual_page(c: Ctx) -> str:
 
 <h2>よくある質問</h2>
 <div class="qa">{qa_html}</div>
-<p>解決しないときは、<a href="/contact/">お問い合わせ</a>へ。</p>
+<p>解決しないときは、<a href="/contact/">お問い合わせ</a>から送ってください。</p>
 <p><a class="btn" href="/add/">記録する</a> <a class="btn ghost" href="/use/">こんな時に</a></p>
 </div>"""
     return c.page("/manual/", f"使い方 | {NAME}", "「あと何日、もう何日」の使い方。記録のしかた、カレンダーとやること、カードの見方、ボタン、よくある質問。", body, "manual")
@@ -762,7 +762,7 @@ def today_page(c: Ctx) -> str:
            ("今日のできごと", "あとから「もう何日」と見返せます", "memo", "today")])}
 {more([("禁煙", "/use/quit-smoking/"), ("習慣", "/use/habit-streak/")])}
 </section>
-<p>当てはまらないときは、<a href="/add/">自分で日付を記録する</a>こともできます。</p>"""
+<p>当てはまらないときは、<a href="/add/">自分で日付を記録</a>できます。</p>"""
     return c.page("/today/", f"今日の数字 | {NAME}", "年末まであと何日、来年まであと何日、年度末まであと何日。入学や引っ越しの準備を、自分の日として残せます。", body, "today")
 
 
@@ -835,9 +835,9 @@ def terms_page(c: Ctx) -> str:
 <h2>3. 紹介</h2>
 <p>紹介リンクから登録した人には、無料期間が付きます。紹介した人の無料期間は、紹介で登録した人が1週間以上あけて2回使ったときに延びます(人数に上限があります)。特典は期間の延長だけで、お金や商品はありません。自分で自分を紹介すること、同じ人が複数のアドレスで登録することは、特典の対象外です。</p>
 <h2>3-2. 協力者のページ</h2>
-<p>紹介の人数と、採用されたご意見をもとに、毎月<a href="/thanks/">協力者のページ</a>でご紹介し、無料期間の延長や称号をお贈りします。載せる名前は、ご本人が公開に同意したペンネームだけです。順位や採用は当サイトが決め、その理由はお答えしないことがあります。</p>
+<p>紹介の人数と、採用されたご意見をもとに、毎月<a href="/thanks/">協力者のページ</a>で紹介します。無料期間の延長や称号を贈ります。載せる名前は、ご本人が公開に同意したペンネームだけです。順位や採用は当サイトが決め、その理由はお答えしないことがあります。</p>
 <h2>4. お知らせのメール</h2>
-<p>「メールでもお知らせする」をオンにした人にだけ、知らせる日の朝か前日の夜にメールを送ります。届かないことや遅れることがあります。大切な手続きは、公式のページでも確かめてください。</p>
+<p>「メールでもお知らせする」をオンにした人にだけ、通知する日の朝か前日の夜にメールを送ります。届かないことや遅れることがあります。大切な手続きは、公式のページでも確かめてください。</p>
 <h2>5. してはいけないこと</h2>
 <p>他人のメールアドレスでの登録、当サイトの仕組みに負担をかける行為、法令や公序良俗に反する使い方はしないでください。これらがあったときは、会員の登録を止めることがあります。</p>
 <h2>6. 退会と記録の削除</h2>
