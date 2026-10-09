@@ -14,6 +14,7 @@ import hashlib
 import json
 import re
 import sys
+import unicodedata
 from datetime import date, timedelta
 from pathlib import Path
 from urllib.parse import quote, urlparse
@@ -37,7 +38,7 @@ GROUP_LEAD = {
     "天文・季節": "流星群、満月、日食、二十四節気。空と季節を楽しむ日。",
     "地域のお祭り": "祭り、花火、イルミネーション、紅葉、初詣。出かけたい日。",
     "乗り物・レース": "鉄道、観光列車、カーレース、バイク、ボート。乗り物が好きな人の日。",
-    "ゲーム・アニメ・同人": "コミケ、ゲームマーケット、アニメ、模型、即売会。好きな人が楽しみにする日。",
+    "趣味・ゲーム・アニメ": "コミケ、ゲームマーケット、アニメ、模型、手芸、即売会。好きなことを楽しむ日。",
     "番組・音楽・賞": "紅白歌合戦、ライブ、ノーベル賞、アカデミー賞、映画祭。発表や放送を待つ日。",
 }
 POPULAR = ["年賀状", "ふるさと納税", "共通テスト", "流星群", "紅白", "コミケ", "最低賃金", "確定申告", "ドラフト"]
@@ -119,7 +120,7 @@ def member_php(cfg: dict) -> str:
     return php
 
 
-STATS_SECTION = '<h2 id="stats">利用状況の統計</h2>\n<p>使いやすくするため、件数だけの統計を取ります。送るのは、あらかじめ決めた項目の件数です。「どのページが開かれたか」「選ばれたきせかえ」「ホームに表示する項目の並びと非表示」「予定に入れる・ファイルを作る・共有するボタンが押された回数」「検索で見つかったか(検索した言葉は送りません)」。</p>\n<p>名前・日付・メモ・メールアドレス・検索した言葉・端末を識別する番号は送りません。Cookie は使いません。サーバーに残るのは1日ごとの合計の件数だけで、同じ人かどうかは分かりません。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。</p>\n<p>マイページの「利用状況の統計に協力する」でいつでも止められます。ブラウザの「トラッキングしない」(DNT・Global Privacy Control)がオンのときは、初めから止まっています。</p>'
+STATS_SECTION = '<h2 id="stats">利用状況の統計</h2>\n<p>使いやすくするため、件数だけの統計を取ります。送るのは、あらかじめ決めた項目の件数です。「どのページが開かれたか」「選ばれたきせかえ」「ホームに表示する項目の並びと非表示」「予定に入れる・ファイルを作る・共有するボタンが押された回数」「選ばれた好きな分野(あらかじめ決めた一覧にあるものだけ)の回数」「検索で見つかったか(検索した言葉は送りません)」。</p>\n<p>名前・日付・メモ・メールアドレス・検索した言葉・端末を識別する番号は送りません。Cookie は使いません。サーバーに残るのは1日ごとの合計の件数だけで、同じ人かどうかは分かりません。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。</p>\n<p>マイページの「利用状況の統計に協力する」でいつでも止められます。ブラウザの「トラッキングしない」(DNT・Global Privacy Control)がオンのときは、初めから止まっています。</p>'
 PUSH_SECTION = '<h2 id="push">通知(任意)</h2>\n<p>マイページの「この端末で通知を受け取る」を押し、ブラウザで許可したときだけ通知を使えます。当サイトのサーバーに保存するのは、ブラウザが作った通知の宛先(購読情報)と、通知する日(日付と、朝か夜か)だけです。予定の名前・時刻・メモ・やることの内容は保存しません。通知文は、お使いの端末で作ります。</p>\n<p>通知は、当サイトが GitHub Actions(GitHub, Inc.)で動かす送信プログラムから、お使いのブラウザのプッシュ配信サービス(Google、Apple、Mozilla など)を通して届きます。「通知を止める」を押すか、ブラウザの設定で通知を止めると、購読情報はサーバーから削除します。配信サービスから「宛先がない」と返されたものも削除します。</p>'
 MEMBERS_SECTION = '<h2 id="members">会員登録(任意)</h2>\n<p>会員登録は無料で、パスワードはありません。メールアドレスに送る確認コードでログインします。サーバーに保存するのは、メールアドレス、登録日、プランと無料期間、紹介コード、ログイン中の端末の印(ランダムな値の要約)です。「メールでもお知らせする」をオンにした人に限り、知らせる日(日付と、朝か夜か)と予定の名前(短く)も保存します。オフにすると、その部分はすぐ消します。</p>\n<p>これらは、サーバーの公開されない場所に暗号化して保存します。記録した日・メモ・やることの内容そのものは、会員でも端末の中だけにあります。ペンネームを入れて公開に同意した人は、そのペンネームを協力者のページに載せます。紹介の確認のため、サイトを使った日(直近20日分)を保存します。モニターのアンケートの答えは、サイトの改善のためだけに使い、運営者だけが読みます。確認コードのメールは、ログインのためだけに送ります。広告のメールは、別に同意した人にしか送りません。マイページの「退会する」で、会員の記録はすぐ消えます。</p>'
 GOOGLE_SECTION = '<h2 id="google">Google アカウントでの引き継ぎ(任意)</h2>\n<p>マイページの「Google アカウントで同期する」を押したときだけ、Google の画面が開きます。許可するのは、あなたの Google ドライブの中にあるこのサイト専用の非表示フォルダ(アプリデータ)への保存だけです。記録した日・予定に入れた日・好きな分野・設定をそこに保存し、別の端末で読み込めます。当サイトのサーバーには送りません。Google アカウントの氏名やメールアドレスは取得しません。</p>\n<p>やめるときは、<a href="https://myaccount.google.com/permissions" rel="noopener" target="_blank">Google アカウントの権限の管理</a>で「あと何日、もう何日」の権限を削除してください。</p>'
@@ -407,27 +408,55 @@ def home_page(c: Ctx) -> str:
     return c.page("/", f"{NAME}|{CATCH}", "あの日からもう何日、あの日まであと何日。日付を選ぶだけで数えて、カレンダーで見られます。締切・試験・大会・お祭りの確認済みの日付は、ワンタップで予定に入れられます。", body, "home")
 
 
+def _norm(s: str) -> str:
+    """The same folding as the script's norm(): full/half width and case folded, katakana as hiragana, white space collapsed."""
+    s = unicodedata.normalize("NFKC", str(s or "")).lower()
+    s = "".join(chr(ord(ch) - 0x60) if "ァ" <= ch <= "ヶ" else ch for ch in s)
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def _hay(e: dict) -> str:
+    return _norm(" ".join([e["title"], e.get("subject") or "", e.get("what") or "", e.get("category") or "", e["group"], e.get("place") or e.get("region") or "", e["kind"]] + list(e.get("tags") or [])))
+
+
+def interest_sections(live: list[dict]) -> list[dict]:
+    """[{"name", "items": [{"id", "name", "n"}]}]: the fields a visitor may choose (data/atomou/interests.json), each with the number of upcoming days that belong to it
+    (the same word test the home page uses), and a last section for the fields of the catalogue that no name above reaches."""
+    data = json.loads((ROOT / "data/atomou/interests.json").read_text(encoding="utf-8"))
+    days = [e for e in live if not e["quiet"]]
+    hays = [(e, _hay(e)) for e in days]
+    out, reached = [], set()
+    for s in data["sections"]:
+        items = []
+        for it in s["items"]:
+            w = _norm(it["name"])
+            hit = [e for e, h in hays if e["subject"] == it["name"] or w in h]
+            reached.update(e["id"] for e in hit)
+            items.append({"id": it["id"], "name": it["name"], "n": len(hit)})
+        out.append({"name": s["name"], "items": items})
+    rest: dict[str, int] = {}
+    for e in days:
+        if e["id"] not in reached and e.get("subject"):
+            rest[e["subject"]] = rest.get(e["subject"], 0) + 1
+    if rest:
+        out.append({"name": "そのほかの日付のある分野", "items": [{"id": 0, "name": k, "n": v} for k, v in sorted(rest.items(), key=lambda kv: (-kv[1], kv[0]))]})
+    return out
+
+
 def interests_page(c: Ctx, live: list[dict]) -> str:
-    """"好きな分野を選ぶ": every subject of the catalogue under its genre as a chip (what is chosen is kept on this device and shown on the home page), a box to add any word, and a share box."""
-    by: dict[str, dict] = {}
-    for e in live:
-        if e["quiet"]:
-            continue
-        s = by.setdefault(e["subject"], {"group": e["group"], "n": 0, "tags": set()})
-        s["n"] += 1
-        s["tags"].update(t for t in e.get("tags") or [] if t)
+    """"好きな分野を選ぶ": fields in groups as chips (what is chosen is kept on this device and shown on the home page), a box to add any word, and a share box."""
     secs = []
-    for i, g in enumerate(catalog.GROUPS):
-        subs = sorted(((k, v) for k, v in by.items() if v["group"] == g), key=lambda kv: (-kv[1]["n"], kv[0]))
-        if not subs:
-            continue
-        chips = "".join(
-            f'<button type="button" class="chip" aria-pressed="false" data-int="{esc(k)}" data-hay="{esc(" ".join(sorted({k} | v["tags"])))}">{esc(k)}<span class="n">{v["n"]}</span></button>'
-            for k, v in subs)
-        secs.append(f'<section data-int-sec="{i + 1}"><h2 class="int-h">{mark_html(i + 1)}{esc(g)}</h2><div class="chiprow">{chips}</div></section>')
+    for i, s in enumerate(interest_sections(live)):
+        chips = ""
+        for it in s["items"]:
+            soon = " soon" if not it["n"] else ""
+            ident = ' data-id="' + str(it["id"]) + '"' if it["id"] else ""
+            count = str(it["n"]) if it["n"] else "準備中"
+            chips += f'<button type="button" class="chip{soon}" aria-pressed="false" data-int="{esc(it["name"])}"{ident}>{esc(it["name"])}<span class="n">{count}</span></button>'
+        secs.append(f'<section data-int-sec="{i + 1}"><h2 class="int-h">{esc(s["name"])}</h2><div class="chiprow">{chips}</div></section>')
     body = f"""{crumbs([("トップ", "/"), ("好きな分野", None)])}
 <h1>好きな分野を選ぶ</h1>
-<p class="lead muted">選んだ分野の日が、ホームにまとまって並びます。選んだ内容は、この端末の中だけに保存されます。</p>
+<p class="lead muted">選んだ分野の日が、ホームにまとまって並びます。まだ日付のない分野(準備中)も選べます。選んだ内容は、この端末の中に保存されます。</p>
 <div id="int-pick" class="panel" hidden></div>
 <div id="int-chosen"></div>
 <div class="sbox"><form class="searchbox" id="int-form" role="search"><label class="vh" for="int-q">分野を探す・追加する</label>
@@ -440,7 +469,7 @@ def interests_page(c: Ctx, live: list[dict]) -> str:
 <button type="button" class="btn small ghost" data-share="copy">リンクをコピー</button> <button type="button" class="btn small ghost" data-share="native" hidden>ほかのアプリで送る</button></p></section>
 {"".join(secs)}
 <noscript><p class="notice">分野を選ぶには JavaScript が必要です。<a href="/search/">さがす</a>からも探せます。</p></noscript>"""
-    return c.page("/interests/", f"好きな分野を選ぶ | {NAME}", "将棋・流星群・英検など、好きな分野を選ぶと、その分野の日付がホームに並びます。選んだ内容は端末の中だけに保存されます。", body, "interests", noindex=True)
+    return c.page("/interests/", f"好きな分野を選ぶ | {NAME}", "将棋・流星群・英検・剣道・手芸など、好きな分野を選ぶと、その分野の日付がホームに並びます。選んだ内容は端末の中に保存されます。", body, "interests", noindex=True)
 
 
 def search_page(c: Ctx) -> str:
@@ -622,6 +651,14 @@ def google_calendar_url(e: dict, page_url: str) -> str:
             + "&details=" + quote(detail) + "&ctz=Asia%2FTokyo")
 
 
+def outlook_calendar_url(e: dict, page_url: str) -> str:
+    """Outlook.com / Microsoft 365 on the web: the same day as a whole-day event in its own form."""
+    d = date.fromisoformat(e["date"])
+    last = date.fromisoformat(e.get("date_end") or e["date"]) + timedelta(days=1)
+    return ("https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=" + quote(e["title"]) + "&startdt=" + d.isoformat()
+            + "&enddt=" + last.isoformat() + "&allday=true&body=" + quote(f"詳しい日付と出典: {page_url}"))
+
+
 def share_block(c: Ctx, e: dict) -> str:
     """Buttons to send a public day to somebody: LINE, X, the link, a picture, the phone's share sheet.  The words are filled in by share.js (with today's count); the links here work without it."""
     page_url = f"{str(c.cfg['site_url']).rstrip('/')}/e/{e['id']}/"
@@ -669,7 +706,7 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 <p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを追加</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の予定として記録する</a>{(' <a class="btn small ghost" href="' + esc(google_calendar_url(e, str(c.cfg['site_url']).rstrip('/') + '/e/' + e['id'] + '/')) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a>') if e["precision"] == "day" else ""}</p>
 {"" if quiet else share_block(c, e)}
 {"" if quiet else '<p class="int-line"><button type="button" class="btn small ghost" data-int-toggle="' + esc(e["subject"]) + '">「' + esc(e["subject"]) + '」を好きな分野に入れる</button> <a class="small" href="/interests/">好きな分野を選ぶ</a></p>'}
-{f'<details class="more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">iPhone の「カレンダー」や Google カレンダーに取り込めるファイルです。</p><p><button type="button" class="btn small ghost" data-ics-for="c:{e["id"]}">ファイルを作る</button></p></details>' if e["precision"] == "day" else ""}
+{f'<details class="more"><summary>ほかのカレンダーアプリに入れる</summary><p class="hint">Outlook は下のボタンから入れられます。iPhone の「カレンダー」、Yahoo!カレンダー、TimeTree などには、ファイルを作って取り込みます。</p><p><a class="btn small ghost" href="{esc(outlook_calendar_url(e, str(c.cfg["site_url"]).rstrip("/") + "/e/" + e["id"] + "/"))}" target="_blank" rel="noopener">Outlookに追加</a> <button type="button" class="btn small ghost" data-ics-for="c:{e["id"]}">ファイルを作る</button></p></details>' if e["precision"] == "day" else ""}
 {(f'<h2>同じ「{esc(e["subject"])}」の日</h2><p class="saveall"><button type="button" class="btn small" data-saveall="{",".join([e["id"]] + [r["id"] for r in same])}">この日を含む{len(same) + 1}件をまとめて予定に入れる</button></p><div class="cards">' + "".join(card_html(r) for r in same) + "</div>") if same else ""}
 {('<h2>同じジャンルの日</h2><div class="cards">' + "".join(card_html(r) for r in rel) + "</div>") if rel else ""}
 {('<h2>同じ頃の日</h2><p class="hint">この日の前後10日にある日です。</p><div class="cards">' + "".join(card_html(r) for r in near) + "</div>") if near else ""}"""
