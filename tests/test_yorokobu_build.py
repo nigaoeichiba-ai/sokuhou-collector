@@ -71,7 +71,7 @@ class BuildTest(unittest.TestCase):
 
     def test_the_sommelier_proposes_kinds_of_gift_with_a_reason_and_a_search_link(self):
         html = self.read("gift/birthday-boyfriend/index.html")
-        self.assertIn("ソムリエの提案", html)
+        self.assertIn("おすすめの贈り方", html)
         for text in ("毎日使う財布", "名入れの小物", "毎日使う小物は、使うたびに思い出してもらえます。"):
             self.assertIn(text, html)
         self.assertIn("楽天市場で「誕生日 彼氏 財布」をもっと見る", html)
@@ -295,7 +295,7 @@ class ThemeTest(unittest.TestCase):
         self.assertIn("気持ちから選ぶ", hub)
         page = (self.out / "theme" / "beauty" / "index.html").read_text(encoding="utf-8")
         self.assertIn("美容に興味がある人へのプレゼント", page)
-        self.assertIn("ソムリエの提案", page)
+        self.assertIn("おすすめの贈り方", page)
         self.assertIn('class="item"', page)
         self.assertIn("楽天市場で「フェイスローラー ギフト」をもっと見る", page)
         sitemap = (self.out / "sitemap.xml").read_text(encoding="utf-8")
