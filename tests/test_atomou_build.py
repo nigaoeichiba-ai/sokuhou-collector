@@ -285,6 +285,17 @@ class Pages(BuildOnce):
                 for name, pat in bad.items():
                     self.assertIsNone(re.search(pat, text), f"{k}: {name}")
 
+    def test_words_the_use_cases_quote_from_the_screens_exist_on_the_screens(self):
+        # a wording pass once renamed a heading and a button while the steps still named the old ones
+        src = chr(10).join((build.HERE / f).read_text(encoding="utf-8") for f in ("build.py", "assets/app.js", "assets/plan.js", "assets/push.js", "assets/member.js", "assets/quick.js", "assets/guide.js", "skins.py", "articles.py"))
+        examples = {"○○の納期", "うちの子の誕生日", "お酒をやめた日", "七五三のお参り", "健診の予約", "免許の期限", "冷蔵庫の保証が切れる日", "勉強をはじめた日", "夏休みのはじまり",
+                    "年度末の締め切り", "最後の出勤日", "母の誕生日", "資格の更新", "駅伝・マラソン"}     # names a visitor types, and a catalog tag
+        for u in usecases.USECASES:
+            for text in [*u.get("steps", []), *u.get("tips", []), *u.get("cautions", []), u.get("situation", "")]:
+                for tok in re.findall(r"『([^』]+)』", text):
+                    core = tok.replace("☆ ", "").replace("★ ", "")
+                    self.assertTrue(core in src or tok in examples, f"{u['slug']}: 『{tok}』 is not on any screen")
+
     def test_event_pages_state_source_and_check_date(self):
         e = self.entries[0]
         page = self.rel[f"e/{e['id']}/index.html"]
