@@ -224,9 +224,11 @@
     banner();
   }
   // when the member has the e-mail notices on, the days follow the device (same trigger as the push list)
-  document.addEventListener('atomou:changed', function () {
+  function followDevice() {
     if (A.page !== 'my') return;
     var cb = $('#m-notice');
     if (cb && cb.checked) noticeDates().then(function (dates) { return call({ a: 'update', notices: { on: true, dates: dates } }); }).catch(function () { /* next time */ });
-  });
+  }
+  document.addEventListener('atomou:changed', followDevice);
+  document.addEventListener('atomou:saved', followDevice);
 })();

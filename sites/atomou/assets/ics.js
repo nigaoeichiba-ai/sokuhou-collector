@@ -57,7 +57,7 @@
     events.forEach(function (ev) {
       vevent(ev, now).forEach(function (l) { L.push(l); });
       if (ev.every100) {  // the 100-day marks of a date (100, 200, ...): one repeating event, the first one 100 days after the date
-        vevent({ uid: ev.uid + '-100', title: ev.title + ' から100日', date: C.addDays(ev.date, 100), rrule: 'FREQ=DAILY;INTERVAL=100;COUNT=60', alarm: ev.alarm }, now)
+        vevent({ uid: ev.uid + '-100', title: ev.title + '(100日ごとの節目)', date: C.addDays(ev.date, 100), rrule: 'FREQ=DAILY;INTERVAL=100;COUNT=60', alarm: ev.alarm }, now)
           .forEach(function (l) { L.push(l); });
       }
     });

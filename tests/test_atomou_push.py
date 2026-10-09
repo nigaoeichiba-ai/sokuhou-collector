@@ -231,13 +231,14 @@ class PlannerInChrome(unittest.TestCase):
         ], "notes": {"m:a1": {"memo": "x", "tasks": [{"id": "t1", "before": 3, "text": "保険証を用意", "done": False}, {"id": "t2", "before": 1, "text": "済んだこと", "done": True}]}},
             "prefs": {"alarm": "morning", "push": True, "pushHash": "2026-10-01m"}}
         r = self.run_page(stored)
-        self.assertEqual(r["dates"], [{"d": "2026-10-17", "s": "m"}, {"d": "2026-10-20", "s": "m"}, {"d": "2026-10-24", "s": "e"}])
+        # the yearly anniversary comes round twice within the 400 days of the window (2026-10-25 and 2027-10-25)
+        self.assertEqual(r["dates"], [{"d": "2026-10-17", "s": "m"}, {"d": "2026-10-20", "s": "m"}, {"d": "2026-10-24", "s": "e"}, {"d": "2027-10-24", "s": "e"}])
         self.assertEqual([l["t"] for l in r["mirror"]["2026-10-20|m"]], ["歯医者 15:00"])
         self.assertEqual([l["t"] for l in r["mirror"]["2026-10-17|m"]], ["やること: 保険証を用意(歯医者)"])
         self.assertEqual([l["t"] for l in r["mirror"]["2026-10-24|e"]], ["明日 結婚記念日"])
         self.assertEqual(r["mirror"]["2026-10-20|m"][0]["u"], "/plan/?key=m%3Aa1")
         self.assertNotIn("父の命日", json.dumps(r["mirror"], ensure_ascii=False))     # alarm "none"
-        self.assertEqual(r["hash"], "2026-10-17m,2026-10-20m,2026-10-24e")
+        self.assertEqual(r["hash"], "2026-10-17m,2026-10-20m,2026-10-24e,2027-10-24e")
         self.assertEqual((r["state"]["push"], r["state"]["pushHash"]), (True, "2026-10-01m"))   # the two preferences survive the sanitiser
 
     def test_a_day_without_its_own_setting_follows_the_setting_on_the_my_page(self):
@@ -249,6 +250,21 @@ class PlannerInChrome(unittest.TestCase):
             "prefs": {"alarm": "eve", "push": True}}
         r = self.run_page(stored)
         self.assertEqual(r["dates"], [{"d": "2026-10-19", "s": "e"}, {"d": "2026-10-21", "s": "m"}])   # b1 the evening before (the setting), b2 its own, b3 none
+
+    def test_the_hundred_day_marks_are_notified_and_a_yearly_day_in_every_turn(self):
+        # 2026-10-09 Codex review: only ICS knew the 100-day marks, and a yearly day was planned for its next turn only
+        stored = {"v": 1, "entries": [
+            {"id": "c1", "title": "付き合った日", "date": "2026-07-01", "precision": "day", "kind": "anniversary", "every100": True, "alarm": "morning"},
+            {"id": "c2", "title": "静かな日", "date": "2026-07-01", "precision": "day", "kind": "memorial", "quiet": True, "every100": True, "alarm": "morning"}],
+            "prefs": {"alarm": "morning", "push": True}}
+        r = self.run_page(stored)
+        days = [x["d"] for x in r["dates"]]
+        self.assertIn("2026-10-09", days)                    # the 100th day (2026-07-01 + 100)
+        self.assertIn("2027-01-17", days)                    # the 200th
+        self.assertIn("2027-08-05", days)                    # the 400th
+        self.assertNotIn("2027-11-13", days)                 # the 500th is beyond the 400-day window (ends 2027-11-12)
+        self.assertEqual([t["t"] for t in r["mirror"]["2026-10-09|m"]], ["付き合った日 から100日"])
+        self.assertNotIn("静かな日 から100日", json.dumps(r["mirror"], ensure_ascii=False))     # a quiet day has no 100-day marks
 
     def test_hostile_preferences_are_reduced(self):
         r = self.run_page({"v": 1, "entries": [], "prefs": {"push": "yes", "pushHash": "<script>"}})
