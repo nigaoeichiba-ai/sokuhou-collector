@@ -1,16 +1,16 @@
 {
- "as_of": "2026-10-08",
+ "as_of": "2026-10-09",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 1,
  "dates_after_as_of_by_month": {
   "10": 1
  },
- "fetched_at": "2026-10-08T19:40:02.410803+09:00",
+ "fetched_at": "2026-10-09T19:39:09.242652+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "1": 0,
-   "10": 32,
+   "10": 39,
    "11": 0,
    "12": 0,
    "2": 0,
@@ -31,6 +31,54 @@
    "kind": "目撃",
    "observed_at": "2026-10-29T15:20:00+09:00",
    "place": "駒場字上五仏",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-08T15:05:00+09:00",
+   "place": "笹が陣",
+   "species": "クマ"
+  },
+  {
+   "city": "富谷市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-08T10:30:00+09:00",
+   "place": "富谷落合　地内",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-08T08:30:00+09:00",
+   "place": "芳ノ口",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市泉区",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-08T01:16:00+09:00",
+   "place": "泉区七北田字大沢木戸（泉インターチェンジ）",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-08T00:45:00+09:00",
+   "place": "三日町",
+   "species": "クマ"
+  },
+  {
+   "city": "利府町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-08T00:15:00+09:00",
+   "place": "菅谷字鐘撞堂",
    "species": "クマ"
   },
   {
@@ -87,6 +135,14 @@
    "kind": "目撃",
    "observed_at": "2026-10-05T15:30:00+09:00",
    "place": "鹿島台広長字無清水地内",
+   "species": "クマ"
+  },
+  {
+   "city": "南三陸町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-05T14:45:00+09:00",
+   "place": "志津川字沼田",
    "species": "クマ"
   },
   {
@@ -10627,7 +10683,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261008.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261009.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }
