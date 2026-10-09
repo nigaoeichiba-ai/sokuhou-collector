@@ -610,3 +610,37 @@ header.site nav a[aria-current] { background: var(--ink); color: #fff; border-co
   .hero-cta .btn.big { font-size: 1rem; padding: .65em 1.3em; }
 }
 .hero-cta .btn.big { font-size: 1.05rem; padding: .7em 1.5em; }
+
+/* ---- no mascots (2026-10-09): the bird characters are gone from every page; the hero is the text and the finder, the notes are plain */
+.hero .in { grid-template-columns: 1fr; max-width: 760px; }
+.hero { padding-bottom: 36px; }
+.hero .finder { margin-top: 28px; }
+.bird-say.plain { display: block; margin: 10px 0 14px; padding: .55em .9em; border-left: 4px solid var(--yellow); background: var(--yellow-s); border-radius: 0 12px 12px 0; }
+.bird-say.plain p { margin: 0; }
+.bird-say.plain::before, .bird-say.plain::after { display: none; }
+@media (max-width: 760px) { .hero .finder { margin-top: 22px; } }
+
+/* ---- icons (2026-10-09): one-colour line drawings for the occasions, a lettered badge for each person (the cartoon pictures are gone) */
+.ic.line { color: var(--ink); }
+.tile .ic.line, .chip-ic .ic.line { width: 50px; height: 50px; }
+.tile.wide .ic.line { width: 44px; height: 44px; }
+.chip-grid.round .ic.line { width: 42px; height: 42px; }
+.pagehead-ic .ic.line { width: 60px; height: 60px; }
+.pagehead-ic.single .ic.line { width: 66px; height: 66px; }
+.steps .ic.line, .steps .ic.badge { width: 56px; height: 56px; margin: 0 auto 8px; display: block; }
+.ic.badge { display: grid; place-items: center; font-family: var(--body); font-weight: 700; color: var(--ink); line-height: 1; font-size: 1.7rem; }
+.ic.badge.b2 { font-size: 1.3rem; } .ic.badge.b3, .ic.badge.b4 { font-size: 1.05rem; }
+.steps .ic.badge { background: var(--pink-s); border-radius: 50%; }
+.tile:hover .ic, .chip-ic:hover .ic { transform: none; }
+.tile .ic-wrap, .chip-ic .ic-wrap { background: var(--cs); }
+@media (max-width: 760px) {
+  .tile .ic.line, .chip-ic .ic.line { width: 44px; height: 44px; }
+  .chip-grid.round .ic.line { width: 36px; height: 36px; }
+  .chip-grid.round .ic.badge { font-size: 1.15rem; } .chip-grid.round .ic.badge.b2 { font-size: .95rem; } .chip-grid.round .ic.badge.b3, .chip-grid.round .ic.badge.b4 { font-size: .8rem; }
+  .pagehead-ic .ic.line { width: 52px; height: 52px; }
+}
+
+/* page heads without a character: a compact band */
+.band.pagehead-band { padding-top: 30px; padding-bottom: 34px; }
+.pagehead-band .pagehead { padding-bottom: 0; }
+@media (max-width: 760px) { .band.pagehead-band { padding-top: 24px; padding-bottom: 28px; } .pagehead-band .pagehead { padding-bottom: 0; } }
