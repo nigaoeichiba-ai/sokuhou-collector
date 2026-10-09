@@ -94,7 +94,7 @@ def amazon_url(cfg: dict, query: str, low: int | None = None, high: int | None =
 
 
 def amazon_more(cfg: dict, query: str, label: str) -> str:
-    """The "Amazonでも探す" button (an Amazon search for `query`) with the Associates notice; empty when no tracking ID is set.  Used on the pages that list no single product."""
+    """The "Amazonで探す" button (an Amazon search for `query`) with the Associates notice; empty when no tracking ID is set.  Used on the pages that list no single product."""
     if not cfg.get("amazon_tracking_id"):
         return ""
     return (f'<section style="margin-top:40px"><p class="more"><a class="btn" href="{esc(amazon_url(cfg, query))}" rel="sponsored nofollow noopener" target="_blank">'
@@ -532,6 +532,53 @@ def quick_pair_note(c: dict, p: dict) -> str:
             f'<a href="/occasion/{occ["slug"]}/#quick">のし・時期・注意をまとめて見る</a></p>')
 
 
+# ---------------------------------------------------------------- Amazonで見つけた贈り物 (hand-picked from Amazon's own best-seller lists; text and a link, no price, no picture)
+
+def amazon_dp(cfg: dict, asin: str) -> str:
+    return f"https://www.amazon.co.jp/dp/{asin}?tag={quote(cfg['amazon_tracking_id'], safe='')}"
+
+
+def amazon_pick_card(cfg: dict, p: dict) -> str:
+    return (f'<li class="apick"><div class="apick-body"><span class="type">{esc(p["kind"])}</span><h3>{esc(p["name"])}</h3>'
+            f'<p class="apick-maker">{esc(p["maker"])}</p><p>{esc(p["why"])}</p></div>'
+            f'<a class="btn" href="{esc(amazon_dp(cfg, p["asin"]))}" rel="sponsored nofollow noopener" target="_blank" aria-label="{esc(p["name"])}をAmazonで見る">Amazonで見る</a></li>')
+
+
+def amazon_picks_for(c: dict, occasion: str, recipient: str | None = None, limit: int = 4) -> list[dict]:
+    out = [p for p in c.get("amazon", []) if occasion in p["occasions"] and (not p.get("recipients") or recipient is None or recipient in p["recipients"])]
+    return out[:limit]
+
+
+def amazon_picks_section(cfg: dict, c: dict, occasion: str, recipient: str | None = None, limit: int = 4) -> str:
+    if not cfg.get("amazon_tracking_id"):
+        return ""
+    picks = amazon_picks_for(c, occasion, recipient, limit)
+    if not picks:
+        return ""
+    cards = "".join(amazon_pick_card(cfg, p) for p in picks)
+    return (f'<section class="amazon-picks" style="margin-top:50px"><h2><span class="scribble">Amazonで見つけた贈り物</span></h2>'
+            f'<p class="sec-lead">Amazonの売れ筋ランキングから、この場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。</p>'
+            f'<ul class="apicks">{cards}</ul>'
+            f'<p class="more"><a class="btn btn-sub" href="/amazon/">Amazonで選ぶ贈り物を、すべて見る</a></p></section>')
+
+
+def amazon_hub_page(d: dict, cfg: dict, preview: bool) -> str:
+    c = d["c"]
+    kinds: dict[str, list[dict]] = {}
+    for p in c["amazon"]:
+        kinds.setdefault(p["kind"], []).append(p)
+    blocks = "".join(f'<section style="margin-top:40px"><h2><span class="scribble">{esc(k)}</span></h2><ul class="apicks">{"".join(amazon_pick_card(cfg, p) for p in ps)}</ul></section>'
+                     for k, ps in kinds.items())
+    lead = "Amazonの売れ筋ランキングから、贈り物に選びやすい商品を、人の手で選びました。楽天市場の商品と並べて、見比べてください。"
+    body = f"""{head_band("sky", "", "Amazonで選ぶ、<wbr>贈り物", lead, single=True)}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("Amazonで選ぶ贈り物", None)])}</div>
+{pr_quiet(cfg)}
+<p class="sec-lead">ここに載せているのは、Amazonの「グルメギフト」「Amazonデバイス」「ギフトカード」の売れ筋ランキングで確かめた商品です(確認日: {esc(c["amazon_checked"])})。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。</p>
+{blocks}
+<p class="memo-note" style="margin-top:36px">イベントや相手から探すなら、<a href="/occasion/">イベントから探す</a>、<a href="/for/">相手から探す</a>へ。</p>"""
+    return page(cfg, preview, path="/amazon/", title=f"Amazonで選ぶ、贈り物 | {cfg['site_name']}", description=lead, body=body)
+
+
 def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     set_keep(d["c"]["occ"][p["occasion"]]["name"])
     c = d["c"]
@@ -566,6 +613,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 {proposals}
 {own_note}
 {browse}
+{amazon_picks_section(cfg, c, p["occasion"], p["recipient"])}
 {concierge(cfg, d, p)}
 <section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(avoid, "warn")}</section>
 {guide_link(c, p["occasion"])}
@@ -669,7 +717,8 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
 {shown}
 {msg_link(c, o["slug"])}<section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>
 {guide_link(c, o["slug"])}
-{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "のプレゼントを、Amazonでも探す")}"""
+{amazon_picks_section(cfg, c, o["slug"])}
+{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "のプレゼントを、Amazonで探す")}"""
     return page(cfg, preview, path=f"/occasion/{o['slug']}/", title=f"{o['name']}のプレゼント 選び方と相手別のおすすめ | {cfg['site_name']}",
                 description=o["blurb"][:110], body=body, og_image=og_for(f"occasion/{o['slug']}"))
 
@@ -690,7 +739,7 @@ def recipient_page(d: dict, cfg: dict, preview: bool, r: dict) -> str:
 <div class="avoid"><h2><span class="scribble">避けたいもの</span></h2>{ul(r["avoid"], "warn")}</div></section>
 <section style="margin-top:50px"><h2><span class="scribble">イベントを選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}
-{amazon_more(cfg, r["name"] + " プレゼント", r["name"] + "へのプレゼントを、Amazonでも探す")}"""
+{amazon_more(cfg, r["name"] + " プレゼント", r["name"] + "へのプレゼントを、Amazonで探す")}"""
     return page(cfg, preview, path=f"/for/{r['slug']}/", title=f"{r['name']}へのプレゼント イベント別のおすすめ | {cfg['site_name']}",
                 description=r["blurb"][:110], body=body, og_image=og_for(f"for/{r['slug']}"))
 
@@ -839,7 +888,7 @@ def guide_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 {share_bar(cfg, f"/guide/{slug}/", f"{g['title']}", "この記事を、だれかに送る")}
 <section class="related" style="margin-top:44px"><h2><span class="scribble">{esc(o["name"])}の贈り物を、選ぶ</span></h2>
 <ul class="plain">{links}</ul><p style="margin-top:14px"><a class="btn btn-sub" href="/occasion/{slug}/">{esc(o["name"])}のおすすめを見る</a></p></section>
-{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "の贈り物を、Amazonでも探す")}
+{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "の贈り物を、Amazonで探す")}
 <script type="application/ld+json">{ld}</script>"""
     return page(cfg, preview, path=f"/guide/{slug}/", title=f"{g['title']} | {cfg['site_name']}", description=g["intro"][:110], body=body, og_image=og_for(f"occasion/{slug}"))
 
@@ -1076,7 +1125,7 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 <section style="margin-top:40px"><h2><span class="scribble">ランキング(上位)</span></h2>
 <p class="sec-lead">順位は、楽天市場のランキングの順位です(上位{sg["depth"]}位のなかから、商品名で贈り物向きと分かるものだけを、載せています。ふだんの買い物の商品などは、除いているため、順位に欠けがあります)。</p>
 {ranking_grid(cfg, [(it, f"現在{it['rank']}位", "順位") for it in sg["items"]])}</section>
-{amazon_more(cfg, sg["label"] + (" プレゼント" if sg["kind"] == "people" else " ギフト"), sg["label"] + ("への" if sg["kind"] == "people" else "の") + "贈り物を、Amazonでも探す")}
+{amazon_more(cfg, sg["label"] + (" プレゼント" if sg["kind"] == "people" else " ギフト"), sg["label"] + ("への" if sg["kind"] == "people" else "の") + "贈り物を、Amazonで探す")}
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの世代・性別</span></h2><ul class="plain cols2 chips">{others}</ul></section>' if others else ""}
 {freshness({**d, "fetched_label": day})}"""
     return page(cfg, preview, path=f"/ranking/{slug}/", title=f"{sg['label']}{part}、いま売れている商品 | {cfg['site_name']}",
@@ -1123,7 +1172,7 @@ def message_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 <section class="avoid" style="margin-top:44px"><h2><span class="scribble">言葉を選ぶときの、気をつけたいこと</span></h2>{ul(m["manners"], "warn")}</section>
 <section style="margin-top:44px"><h2><span class="scribble">贈るものを、探す</span></h2>
 <p><a class="btn" href="/occasion/{slug}/">{esc(o["name"])}のプレゼントを探す</a></p>{guide_link(c, slug)}</section>
-{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "に贈るものを、Amazonでも探す")}
+{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "に贈るものを、Amazonで探す")}
 {related}"""
     return page(cfg, preview, path=f"/message/{slug}/", title=f"{o['name']}のメッセージ例文集 | {cfg['site_name']}", description=lead[:110], body=body,
                 og_image=og_for(f"occasion/{slug}"))
@@ -1167,7 +1216,7 @@ def numbers_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 {pr_quiet(cfg)}
 <p class="sec-lead">条件に合う商品の、いまの数字です{more}。レビューは購入した人の感想で、品質を保証するものではありません。</p>
 <section style="margin-top:30px">{item_grid(cfg, L["items"])}</section>
-{amazon_more(cfg, "プレゼント ギフト 人気", "プレゼントを、Amazonでも探す")}
+{amazon_more(cfg, "プレゼント ギフト 人気", "プレゼントを、Amazonで探す")}
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの条件</span></h2><ul class="plain cols2 chips">{others}</ul></section>' if others else ""}
 {freshness(d)}"""
     return page(cfg, preview, path=f"/numbers/{slug}/", title=f"{L['title']} | {cfg['site_name']}", description=L["says"][:110], body=body)
@@ -1222,7 +1271,7 @@ def month_page(d: dict, cfg: dict, preview: bool, m: int, today: date, months: l
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("月ごとの贈りどき", "/month/"), (f"{m}月", None)])}</div>
 {pr_with_amazon(cfg)}
 {sec}
-{amazon_more(cfg, (mc["occ"][0]["name"] + " プレゼント") if mc["occ"] else "プレゼント ギフト", ((mc["occ"][0]["name"] + "の") if mc["occ"] else "") + "プレゼントを、Amazonでも探す")}
+{amazon_more(cfg, (mc["occ"][0]["name"] + " プレゼント") if mc["occ"] else "プレゼント ギフト", ((mc["occ"][0]["name"] + "の") if mc["occ"] else "") + "プレゼントを、Amazonで探す")}
 <p class="memo-note" style="margin-top:36px">日付は{mc["y"]}年のものです(毎年自動で更新します)。誕生日や記念日など、人によって違う日は、<a href="/memo/">たいせつな日メモ</a>に登録できます。カレンダーに入れるなら<a href="/calendar/">贈りどきカレンダー</a>へ。</p>
 {nav}"""
     return page(cfg, preview, path=f"/month/{m}/", title=f"{m}月の贈りどき 準備したいプレゼントのイベント | {cfg['site_name']}", description=lead, body=body,
@@ -1348,6 +1397,8 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages["message/index.html"] = message_hub_page(d, cfg, preview)
         for slug in c["messages"]:
             pages[f"message/{slug}/index.html"] = message_page(d, cfg, preview, slug)
+    if c.get("amazon") and cfg.get("amazon_tracking_id"):
+        pages["amazon/index.html"] = amazon_hub_page(d, cfg, preview)
     if d["numbers"]:
         pages["numbers/index.html"] = numbers_hub_page(d, cfg, preview)
         for L in d["numbers"]["lists"]:
