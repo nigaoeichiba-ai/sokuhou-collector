@@ -1,1239 +1,2130 @@
 {
-"webmap": {
-"operationalLayers": [
-{
-"title": "富山県ツキノワグマ出没情報",
-"url": "https://services7.arcgis.com/pUdPpUsq83Kw8pWi/arcgis/rest/services/survey123_3f07f1f9864d43368d48b5f373d6cd68_results/FeatureServer/0"
-}
-]
-},
-"layer": {
-"fields": [
-{
-"name": "objectid",
-"type": "esriFieldTypeOID",
-"alias": "ObjectID",
-"domain": null
-},
-{
-"name": "HasseiDateTime",
-"type": "esriFieldTypeDate",
-"alias": "発生日時",
-"domain": null
-},
-{
-"name": "HasseiCity",
-"type": "esriFieldTypeString",
-"alias": "市町村",
-"domain": {
-"type": "codedValue",
-"name": "cvd_HasseiCity",
-"codedValues": [
-{
-"name": "富山市",
-"code": "富山市"
-},
-{
-"name": "高岡市",
-"code": "高岡市"
-},
-{
-"name": "魚津市",
-"code": "魚津市"
-},
-{
-"name": "氷見市",
-"code": "氷見市"
-},
-{
-"name": "滑川市",
-"code": "滑川市"
-},
-{
-"name": "黒部市",
-"code": "黒部市"
-},
-{
-"name": "砺波市",
-"code": "砺波市"
-},
-{
-"name": "小矢部市",
-"code": "小矢部市"
-},
-{
-"name": "南砺市",
-"code": "南砺市"
-},
-{
-"name": "射水市",
-"code": "射水市"
-},
-{
-"name": "舟橋村",
-"code": "舟橋村"
-},
-{
-"name": "上市町",
-"code": "上市町"
-},
-{
-"name": "立山町",
-"code": "立山町"
-},
-{
-"name": "入善町",
-"code": "入善町"
-},
-{
-"name": "朝日町",
-"code": "朝日町"
-}
-]
-}
-}
-]
-},
-"rows": [
-{
-"attributes": {
-"HasseiDateTime": 1768023000000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1771671000000,
-"HasseiCity": "黒部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1772603400000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1773694800000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1775168400000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1775637300000,
-"HasseiCity": "魚津市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1776557700000,
-"HasseiCity": "高岡市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1776906000000,
-"HasseiCity": "氷見市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1777078800000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1777498800000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1777534800000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1777617000000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1777973880000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1778364000000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1778634000000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1778735520000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1778992200000,
-"HasseiCity": "朝日町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1779100800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1779432000000,
-"HasseiCity": "砺波市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1779661800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1779702300000,
-"HasseiCity": "魚津市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1779783300000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1779790500000,
-"HasseiCity": "高岡市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1779941400000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1780372200000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1780455600000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1780612200000,
-"HasseiCity": "黒部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1780635600000,
-"HasseiCity": "砺波市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1780779600000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1780874100000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1780906680000,
-"HasseiCity": "高岡市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1780978200000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1781080200000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1781130000000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1781138400000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1781187300000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1781228700000,
-"HasseiCity": "射水市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1781256600000,
-"HasseiCity": "氷見市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1781418600000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1781473800000,
-"HasseiCity": "朝日町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782009000000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782116700000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782168000000,
-"HasseiCity": "氷見市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782188520000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782267300000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782284400000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782345000000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782345600000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782365400000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782367800000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782373500000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782457680000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782505800000,
-"HasseiCity": "黒部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782511200000,
-"HasseiCity": "魚津市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782513000000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782523800000,
-"HasseiCity": "氷見市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782702000000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782712800000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782723000000,
-"HasseiCity": "氷見市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782807300000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782849600000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1782874200000,
-"HasseiCity": "魚津市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783026000000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783055700000,
-"HasseiCity": "黒部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783077000000,
-"HasseiCity": "上市町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783116000000,
-"HasseiCity": "砺波市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783133100000,
-"HasseiCity": "砺波市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783156740000,
-"HasseiCity": "砺波市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783197000000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783300500000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783333800000,
-"HasseiCity": "氷見市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783384800000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783427700000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783467600000,
-"HasseiCity": "砺波市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783495200000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783565400000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783587600000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783588800000,
-"HasseiCity": "砺波市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783596600000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783644000000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783830900000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1783895700000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784028000000,
-"HasseiCity": "砺波市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784029800000,
-"HasseiCity": "高岡市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784091600000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784183400000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784195400000,
-"HasseiCity": "射水市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784233200000,
-"HasseiCity": "射水市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784266800000,
-"HasseiCity": "射水市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784370900000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784371200000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784430000000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784440800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784540100000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784624400000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784629800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784700000000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784771100000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784883000000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784935500000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1784989800000,
-"HasseiCity": "氷見市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785010800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785010800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785016800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785061680000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785065400000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785073140000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785077700000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785093120000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785094800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785097800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785103200000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785103200000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785109200000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785155400000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785184200000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785184200000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785193380000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785195000000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785273600000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785282000000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785303900000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785304800000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785304800000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785327000000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785374400000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785375000000,
-"HasseiCity": "高岡市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785380100000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785452400000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785455100000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785463800000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785536100000,
-"HasseiCity": "高岡市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785581400000,
-"HasseiCity": "砺波市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785589200000,
-"HasseiCity": "砺波市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785752100000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785825600000,
-"HasseiCity": "射水市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785836700000,
-"HasseiCity": "高岡市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1785994140000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786012200000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786051800000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786054200000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786055400000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786063200000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786064400000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786095000000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786159800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786244400000,
-"HasseiCity": "射水市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786318200000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786327500000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786327500000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786354200000,
-"HasseiCity": "氷見市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786401900000,
-"HasseiCity": "黒部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786410000000,
-"HasseiCity": "黒部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786613400000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786677300000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786701600000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1786833000000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1787130000000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1787218200000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1787354700000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1787434200000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1787436000000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1787467800000,
-"HasseiCity": "高岡市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1787529600000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1787650500000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1788085800000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1788227400000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1788241200000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1788377400000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1788481200000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1788825600000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1788955200000,
-"HasseiCity": "氷見市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1789117200000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1789153200000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1789363800000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1789536600000,
-"HasseiCity": "小矢部市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1789678800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1790206800000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1790550000000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1790634300000,
-"HasseiCity": "氷見市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1790672400000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1790751600000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1790818800000,
-"HasseiCity": "氷見市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1790845200000,
-"HasseiCity": "南砺市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1790897400000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1790929800000,
-"HasseiCity": "富山市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1790978700000,
-"HasseiCity": "立山町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1791046800000,
-"HasseiCity": "魚津市"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1791190200000,
-"HasseiCity": "朝日町"
-}
-},
-{
-"attributes": {
-"HasseiDateTime": 1791322800000,
-"HasseiCity": "小矢部市"
-}
-}
-]
+ "webmap": {
+  "operationalLayers": [
+   {
+    "title": "富山県ツキノワグマ出没情報",
+    "url": "https://services7.arcgis.com/pUdPpUsq83Kw8pWi/arcgis/rest/services/survey123_3f07f1f9864d43368d48b5f373d6cd68_results/FeatureServer/0"
+   }
+  ]
+ },
+ "layer": {
+  "fields": [
+   {
+    "name": "objectid",
+    "type": "esriFieldTypeOID",
+    "alias": "ObjectID",
+    "domain": null
+   },
+   {
+    "name": "HoukokuType",
+    "type": "esriFieldTypeString",
+    "alias": "目撃・痕跡・人身被害の別",
+    "domain": {
+     "type": "codedValue",
+     "name": "cvd_HoukokuType",
+     "codedValues": [
+      {
+       "name": "目撃",
+       "code": "目撃"
+      },
+      {
+       "name": "目撃（クマAIカメラ等）",
+       "code": "目撃（クマAIカメラ等）"
+      },
+      {
+       "name": "痕跡",
+       "code": "痕跡"
+      },
+      {
+       "name": "人身被害",
+       "code": "人身被害"
+      }
+     ]
+    }
+   },
+   {
+    "name": "HasseiDateTime",
+    "type": "esriFieldTypeDate",
+    "alias": "発生日時",
+    "domain": null
+   },
+   {
+    "name": "HasseiCity",
+    "type": "esriFieldTypeString",
+    "alias": "市町村",
+    "domain": {
+     "type": "codedValue",
+     "name": "cvd_HasseiCity",
+     "codedValues": [
+      {
+       "name": "富山市",
+       "code": "富山市"
+      },
+      {
+       "name": "高岡市",
+       "code": "高岡市"
+      },
+      {
+       "name": "魚津市",
+       "code": "魚津市"
+      },
+      {
+       "name": "氷見市",
+       "code": "氷見市"
+      },
+      {
+       "name": "滑川市",
+       "code": "滑川市"
+      },
+      {
+       "name": "黒部市",
+       "code": "黒部市"
+      },
+      {
+       "name": "砺波市",
+       "code": "砺波市"
+      },
+      {
+       "name": "小矢部市",
+       "code": "小矢部市"
+      },
+      {
+       "name": "南砺市",
+       "code": "南砺市"
+      },
+      {
+       "name": "射水市",
+       "code": "射水市"
+      },
+      {
+       "name": "舟橋村",
+       "code": "舟橋村"
+      },
+      {
+       "name": "上市町",
+       "code": "上市町"
+      },
+      {
+       "name": "立山町",
+       "code": "立山町"
+      },
+      {
+       "name": "入善町",
+       "code": "入善町"
+      },
+      {
+       "name": "朝日町",
+       "code": "朝日町"
+      }
+     ]
+    }
+   },
+   {
+    "name": "HasseiArea",
+    "type": "esriFieldTypeString",
+    "alias": "地区名",
+    "domain": null
+   },
+   {
+    "name": "BearAdult",
+    "type": "esriFieldTypeDouble",
+    "alias": "成獣",
+    "domain": null
+   },
+   {
+    "name": "BearYoung",
+    "type": "esriFieldTypeDouble",
+    "alias": "幼獣",
+    "domain": null
+   },
+   {
+    "name": "BearUnknown",
+    "type": "esriFieldTypeDouble",
+    "alias": "不明",
+    "domain": null
+   }
+  ]
+ },
+ "rows": [
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1791322800000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "嘉例谷",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1791242100000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "川西",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1791190200000,
+    "HasseiCity": "朝日町",
+    "HasseiArea": "南保谷",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1791046800000,
+    "HasseiCity": "魚津市",
+    "HasseiArea": "黒沢",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1790978700000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "横江地内",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1790929800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "青柳",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1790897400000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "芦峅寺",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 2
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1790845200000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "高窪",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1790818800000,
+    "HasseiCity": "氷見市",
+    "HasseiArea": "早借",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1790751600000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町新町",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1790672400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "中田一丁目",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 2
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1790634300000,
+    "HasseiCity": "氷見市",
+    "HasseiArea": "戸津宮",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1790550000000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "三清東",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "人身被害",
+    "HasseiDateTime": 1790206800000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "ブナオ峠",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1789678800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "八尾町谷内",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1789536600000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "高木",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1789363800000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "室堂平",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1789153200000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "水橋中村",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1789117200000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "杉内谷",
+    "BearAdult": 1,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1788955200000,
+    "HasseiCity": "氷見市",
+    "HasseiArea": "余川",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1788825600000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "日中",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1788481200000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "白岩地内",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1788377400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "八尾町新田",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1788241200000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "川西",
+    "BearAdult": 1,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1788227400000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "天狗平",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1788085800000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "城山町",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1787650500000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "八尾町奥田",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1787529600000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "新屋",
+    "BearAdult": 0,
+    "BearYoung": 2,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1787467800000,
+    "HasseiCity": "高岡市",
+    "HasseiArea": "福岡町五位",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1787436000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "八尾町大杉",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1787434200000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "立山町室堂",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1787354700000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町上吉川",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1787218200000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "新屋",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1787130000000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "新屋",
+    "BearAdult": 0,
+    "BearYoung": 2,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786833000000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "奥大日岳",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786701600000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "山田小谷",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786677300000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "芦峅寺地内",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786613400000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "芦峅寺",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1786410000000,
+    "HasseiCity": "黒部市",
+    "HasseiArea": "宇奈月町内山地区",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786401900000,
+    "HasseiCity": "黒部市",
+    "HasseiArea": "宇奈月町下立地区",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786354200000,
+    "HasseiCity": "氷見市",
+    "HasseiArea": "味川",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786327500000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "立山地区",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786327500000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "新室堂乗越",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786318200000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "芦峅寺地内",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786244400000,
+    "HasseiCity": "射水市",
+    "HasseiArea": "南太閤山",
+    "BearAdult": 0,
+    "BearYoung": 2,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786159800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "小見",
+    "BearAdult": 1,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786095000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "小見",
+    "BearAdult": 1,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1786064400000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "上見",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786063200000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "芦峅寺",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1786055400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "高屋敷",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1786054200000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "横谷",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786051800000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "砂子谷",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1786012200000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "嘉例谷",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785994140000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "室堂、祓堂近く",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785836700000,
+    "HasseiCity": "高岡市",
+    "HasseiArea": "石堤",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785825600000,
+    "HasseiCity": "射水市",
+    "HasseiArea": "水戸田",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785752100000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "横谷",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785589200000,
+    "HasseiCity": "砺波市",
+    "HasseiArea": "鹿島",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785581400000,
+    "HasseiCity": "砺波市",
+    "HasseiArea": "庄川町庄",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785536100000,
+    "HasseiCity": "高岡市",
+    "HasseiArea": "下山田",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785463800000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "小森谷",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785455100000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "芹川",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 2
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785452400000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "芦峅寺",
+    "BearAdult": 1,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785380100000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "芦峅寺",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785375000000,
+    "HasseiCity": "高岡市",
+    "HasseiArea": "福岡町小野",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785374400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "猪谷",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785327000000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "田川",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785304800000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "東大森",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785304800000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "道新地区",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785303900000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "横内",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785282000000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "後谷",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785273600000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "新屋",
+    "BearAdult": 0,
+    "BearYoung": 2,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785195000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "堀川町",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785193380000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "太田",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785184200000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "横内",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785184200000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "大場",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785155400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "太田",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785109200000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "小杉",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785103200000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "八尾町諏訪町",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785103200000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "下堀",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785097800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町広田",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785094800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "堀川町",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785093120000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "小杉",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785077700000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "才覚寺",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785073140000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町上轡田",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785065400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町新屋",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785061680000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町広田",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785016800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町広田",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1785010800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町富川",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1785010800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町羽根",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784989800000,
+    "HasseiCity": "氷見市",
+    "HasseiArea": "堀田",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1784935500000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "小山",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784883000000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "千垣〜芦峅寺間の芳見橋付近",
+    "BearAdult": 1,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784771100000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町小長沢",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784700000000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "末谷口",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784629800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町鶚谷",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784624400000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "砂子谷",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784540100000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "立野原東",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784440800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "牧",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784430000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "八尾町細滝",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784371200000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "水橋新保",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784370900000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "蔵本新地内",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784266800000,
+    "HasseiCity": "射水市",
+    "HasseiArea": "青井谷",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784233200000,
+    "HasseiCity": "射水市",
+    "HasseiArea": "生源寺",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784195400000,
+    "HasseiCity": "射水市",
+    "HasseiArea": "生源寺",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784183400000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "西赤尾町",
+    "BearAdult": 1,
+    "BearYoung": 2,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784091600000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "利賀村高沼",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1784029800000,
+    "HasseiCity": "高岡市",
+    "HasseiArea": "勝木原",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃（クマAIカメラ等）",
+    "HasseiDateTime": 1784028000000,
+    "HasseiCity": "砺波市",
+    "HasseiArea": "庄川町庄",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783895700000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "下島",
+    "BearAdult": 1,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783830900000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "中畑",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1783644000000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "栃津地内",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783596600000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "川西",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783588800000,
+    "HasseiCity": "砺波市",
+    "HasseiArea": "太田",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783587600000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町青島",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783565400000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "利賀村百瀬川（谷内）",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783495200000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "利賀村百瀬川",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783467600000,
+    "HasseiCity": "砺波市",
+    "HasseiArea": "庄川町庄",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783427700000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町長沢",
+    "BearAdult": 1,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783384800000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "芦峅寺",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783333800000,
+    "HasseiCity": "氷見市",
+    "HasseiArea": "味川",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783300500000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "芦峅寺",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1783197000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "八尾町布谷",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃（クマAIカメラ等）",
+    "HasseiDateTime": 1783156740000,
+    "HasseiCity": "砺波市",
+    "HasseiArea": "徳万",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783133100000,
+    "HasseiCity": "砺波市",
+    "HasseiArea": "庄川町庄",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783116000000,
+    "HasseiCity": "砺波市",
+    "HasseiArea": "庄川町庄",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783077000000,
+    "HasseiCity": "上市町",
+    "HasseiArea": "丸山",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1783055700000,
+    "HasseiCity": "黒部市",
+    "HasseiArea": "宇奈月町音沢地区",
+    "BearAdult": 0,
+    "BearYoung": 1,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1783026000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "八尾町高熊",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1782874200000,
+    "HasseiCity": "魚津市",
+    "HasseiArea": "片貝山の守キャンプ場",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1774328400000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "千垣",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1773810000000,
+    "HasseiCity": "射水市",
+    "HasseiArea": "上野",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1773694800000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "白岩",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1773436800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "山田湯",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1773207000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "八尾町保内",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1772603400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "婦中町長沢",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1772600400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "八尾町下笹原",
+    "BearAdult": 0,
+    "BearYoung": 0,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1772131800000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": " 南砺市天神",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1771671000000,
+    "HasseiCity": "黒部市",
+    "HasseiArea": "宇奈月町内山",
+    "BearAdult": 1,
+    "BearYoung": 0,
+    "BearUnknown": 0
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1768865100000,
+    "HasseiCity": "黒部市",
+    "HasseiArea": "黒部市宇奈月温泉",
+    "BearAdult": 1,
+    "BearYoung": null,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1768794000000,
+    "HasseiCity": "黒部市",
+    "HasseiArea": "黒部市宇奈月温泉",
+    "BearAdult": 1,
+    "BearYoung": null,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1768023000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市万願寺",
+    "BearAdult": null,
+    "BearYoung": 1,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1767167100000,
+    "HasseiCity": "上市町",
+    "HasseiArea": "上市町湯崎野",
+    "BearAdult": 1,
+    "BearYoung": null,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1767141000000,
+    "HasseiCity": "魚津市",
+    "HasseiArea": "魚津市石垣",
+    "BearAdult": null,
+    "BearYoung": 1,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1766466000000,
+    "HasseiCity": "滑川市",
+    "HasseiArea": "滑川市有金",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1766458800000,
+    "HasseiCity": "滑川市",
+    "HasseiArea": "滑川市安田",
+    "BearAdult": 1,
+    "BearYoung": null,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1766456100000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市婦中町長沢",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1766381400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市婦中町袋",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1766316600000,
+    "HasseiCity": "黒部市",
+    "HasseiArea": "黒部市愛本",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1766201400000,
+    "HasseiCity": "黒部市",
+    "HasseiArea": "黒部市前沢",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1766125800000,
+    "HasseiCity": "小矢部市",
+    "HasseiArea": "小矢部市谷坪野",
+    "BearAdult": 1,
+    "BearYoung": null,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1766012400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市八尾町松原",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1765926000000,
+    "HasseiCity": "滑川市",
+    "HasseiArea": "滑川市栗山",
+    "BearAdult": null,
+    "BearYoung": 1,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765652400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市八尾町福島",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765609800000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "立山町下田",
+    "BearAdult": null,
+    "BearYoung": 1,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765593300000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "立山町下田",
+    "BearAdult": null,
+    "BearYoung": 1,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765522800000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "立山町上金剛寺",
+    "BearAdult": null,
+    "BearYoung": 1,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765413000000,
+    "HasseiCity": "魚津市",
+    "HasseiArea": "魚津市石垣",
+    "BearAdult": null,
+    "BearYoung": 1,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765349100000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市婦中町長沢",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765339200000,
+    "HasseiCity": "高岡市",
+    "HasseiArea": "高岡市伏木矢田",
+    "BearAdult": null,
+    "BearYoung": 1,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765319400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市婦中町外輪野",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1765240800000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "立山町芦峅寺",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765230600000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市花崎",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765227600000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "南砺市大島",
+    "BearAdult": 2,
+    "BearYoung": null,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765225800000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市八尾町福島上野",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765146600000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "南砺市山本",
+    "BearAdult": 1,
+    "BearYoung": null,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765146600000,
+    "HasseiCity": "魚津市",
+    "HasseiArea": "魚津市舛田",
+    "BearAdult": null,
+    "BearYoung": 1,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765081800000,
+    "HasseiCity": "滑川市",
+    "HasseiArea": "滑川市東福寺野",
+    "BearAdult": 1,
+    "BearYoung": null,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1765058400000,
+    "HasseiCity": "射水市",
+    "HasseiArea": "射水市浄土寺",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1765008000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市東福沢",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1764997200000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市婦中町小倉",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "人身被害",
+    "HasseiDateTime": 1764783000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市婦中町河原町",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1764743400000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "砺波市庄川町金屋",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1764648000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市婦中町下吉川",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "痕跡",
+    "HasseiDateTime": 1764644400000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "南砺市井波地内",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1764639600000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "立山町宮路地内",
+    "BearAdult": null,
+    "BearYoung": 1,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1764626400000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "立山町宮路",
+    "BearAdult": null,
+    "BearYoung": 1,
+    "BearUnknown": null
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1764625800000,
+    "HasseiCity": "南砺市",
+    "HasseiArea": "南砺市利賀村上畠",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1764591000000,
+    "HasseiCity": "富山市",
+    "HasseiArea": "富山市婦中町下条",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  },
+  {
+   "attributes": {
+    "HoukokuType": "目撃",
+    "HasseiDateTime": 1764574200000,
+    "HasseiCity": "立山町",
+    "HasseiArea": "立山町宮路",
+    "BearAdult": null,
+    "BearYoung": null,
+    "BearUnknown": 1
+   }
+  }
+ ]
 }

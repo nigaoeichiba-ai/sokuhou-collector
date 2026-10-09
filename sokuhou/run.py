@@ -155,10 +155,10 @@ GROUPS: dict[str, list[Source]] = {
         Source("okayama_kuma", okayama_kuma.collect, check_pref_bear),
         Source("yamanashi_kuma", yamanashi_kuma.collect, check_pref_bear),
         Source("sorachi_kuma", sorachi_kuma.collect, check_pref_bear),
+        Source("toyama_kuma", toyama_kuma.collect, check_pref_bear),   # the prefecture's written permission (2026-10-06): records, no coordinates
         # no explicit licence: counts only (municipality, month, count, latest date), see kumalib.package_counts
         Source("fukushima_kuma", fukushima_kuma.collect, check_counts_bear),
         Source("niigata_kuma", niigata_kuma.collect, check_counts_bear),
-        Source("toyama_kuma", toyama_kuma.collect, check_counts_bear),
         Source("yamagata_kuma", yamagata_kuma.collect, check_counts_bear),
         Source("aomori_kuma", aomori_kuma.collect, check_counts_bear),
         Source("nara_kuma", nara_kuma.collect, check_counts_bear),

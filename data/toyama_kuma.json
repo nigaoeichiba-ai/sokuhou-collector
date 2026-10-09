@@ -1,14 +1,101 @@
 {
  "as_of": "2026-10-07",
- "credit": "出典: 富山県「富山県ツキノワグマ出没情報地図【クマっぷ】」(https://www.pref.toyama.jp/1709/kurashi/kankyoushizen/shizen/yaseiseibutsu/kumap.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、富山県のページでご確認ください)",
- "fetched_at": "2026-10-08T19:40:19.593094+09:00",
+ "bad_coords": 0,
+ "credit": "出典: 富山県「富山県ツキノワグマ出没情報地図【クマっぷ】」(https://www.pref.toyama.jp/1709/kurashi/kankyoushizen/shizen/yaseiseibutsu/kumap.html)の公開データを、富山県自然保護課の許可を得て、加工して作成(富山県が作成したものではありません)",
+ "fetched_at": "2026-10-09T10:12:55.467837+09:00",
  "fy_current": "R08",
- "mode": "counts",
  "monthly": {
+  "R01": {
+   "1": 5,
+   "10": 414,
+   "11": 231,
+   "12": 25,
+   "2": 8,
+   "4": 6,
+   "5": 24,
+   "6": 36,
+   "7": 41,
+   "8": 26,
+   "9": 117
+  },
+  "R02": {
+   "1": 1,
+   "10": 200,
+   "11": 77,
+   "12": 4,
+   "3": 1,
+   "4": 11,
+   "5": 33,
+   "6": 73,
+   "7": 44,
+   "8": 57,
+   "9": 87
+  },
+  "R03": {
+   "10": 18,
+   "11": 40,
+   "12": 5,
+   "2": 2,
+   "3": 1,
+   "4": 11,
+   "5": 24,
+   "6": 42,
+   "7": 34,
+   "8": 16,
+   "9": 11
+  },
+  "R04": {
+   "10": 23,
+   "11": 6,
+   "12": 3,
+   "2": 1,
+   "3": 4,
+   "4": 12,
+   "5": 23,
+   "6": 64,
+   "7": 39,
+   "8": 19,
+   "9": 32
+  },
+  "R05": {
+   "1": 2,
+   "10": 258,
+   "11": 176,
+   "12": 18,
+   "2": 3,
+   "3": 5,
+   "4": 6,
+   "5": 30,
+   "6": 62,
+   "7": 33,
+   "8": 17,
+   "9": 33
+  },
+  "R06": {
+   "10": 30,
+   "11": 23,
+   "12": 10,
+   "3": 3,
+   "4": 10,
+   "5": 32,
+   "6": 85,
+   "7": 43,
+   "8": 45,
+   "9": 45
+  },
   "R07": {
    "1": 3,
+   "10": 422,
+   "11": 313,
+   "12": 41,
    "2": 2,
-   "3": 7
+   "3": 7,
+   "4": 10,
+   "5": 25,
+   "6": 58,
+   "7": 67,
+   "8": 45,
+   "9": 75
   },
   "R08": {
    "10": 9,
@@ -20,191 +107,2404 @@
    "9": 16
   }
  },
- "municipalities": {
-  "上市町": {
-   "latest": "2026-07-03",
-   "monthly": {
-    "R08": {
-     "4": 1,
-     "5": 2,
-     "7": 1
-    }
-   }
+ "sightings": [
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-07",
+   "place": "嘉例谷",
+   "species": "ツキノワグマ"
   },
-  "入善町": {
-   "latest": "2026-06-16",
-   "monthly": {
-    "R08": {
-     "6": 3
-    }
-   }
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-06",
+   "place": "川西",
+   "species": "ツキノワグマ"
   },
-  "南砺市": {
-   "latest": "2026-10-06",
-   "monthly": {
-    "R07": {
-     "2": 1
-    },
-    "R08": {
-     "10": 2,
-     "4": 1,
-     "5": 3,
-     "6": 23,
-     "7": 11,
-     "8": 5,
-     "9": 3
-    }
-   }
+  {
+   "city": "朝日町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-05",
+   "place": "南保谷",
+   "species": "ツキノワグマ"
   },
-  "富山市": {
-   "latest": "2026-10-02",
-   "monthly": {
-    "R07": {
-     "1": 1,
-     "3": 4
-    },
-    "R08": {
-     "10": 1,
-     "4": 4,
-     "5": 13,
-     "6": 13,
-     "7": 30,
-     "8": 7,
-     "9": 5
-    }
-   }
+  {
+   "city": "魚津市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-04",
+   "place": "黒沢",
+   "species": "ツキノワグマ"
   },
-  "射水市": {
-   "latest": "2026-08-09",
-   "monthly": {
-    "R07": {
-     "3": 1
-    },
-    "R08": {
-     "6": 3,
-     "7": 3,
-     "8": 2
-    }
-   }
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-03",
+   "place": "横江地内",
+   "species": "ツキノワグマ"
   },
-  "小矢部市": {
-   "latest": "2026-10-07",
-   "monthly": {
-    "R08": {
-     "10": 1,
-     "4": 2,
-     "5": 3,
-     "6": 9,
-     "7": 4,
-     "8": 4,
-     "9": 2
-    }
-   }
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-02",
+   "place": "青柳",
+   "species": "ツキノワグマ"
   },
-  "朝日町": {
-   "latest": "2026-10-05",
-   "monthly": {
-    "R08": {
-     "10": 1,
-     "5": 3,
-     "6": 5
-    }
-   }
+  {
+   "city": "立山町",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-10-02",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
   },
-  "氷見市": {
-   "latest": "2026-10-01",
-   "monthly": {
-    "R08": {
-     "10": 1,
-     "4": 2,
-     "6": 9,
-     "7": 2,
-     "8": 1,
-     "9": 2
-    }
-   }
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-01",
+   "place": "高窪",
+   "species": "ツキノワグマ"
   },
-  "滑川市": {
-   "latest": "2026-05-01",
-   "monthly": {
-    "R08": {
-     "5": 1
-    }
-   }
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-01",
+   "place": "早借",
+   "species": "ツキノワグマ"
   },
-  "砺波市": {
-   "latest": "2026-08-01",
-   "monthly": {
-    "R08": {
-     "4": 1,
-     "5": 2,
-     "6": 2,
-     "7": 6,
-     "8": 2
-    }
-   }
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-30",
+   "place": "婦中町新町",
+   "species": "ツキノワグマ"
   },
-  "立山町": {
-   "latest": "2026-10-03",
-   "monthly": {
-    "R07": {
-     "3": 2
-    },
-    "R08": {
-     "10": 2,
-     "4": 3,
-     "5": 6,
-     "6": 15,
-     "7": 10,
-     "8": 9,
-     "9": 4
-    }
-   }
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-29",
+   "place": "戸津宮",
+   "species": "ツキノワグマ"
   },
-  "高岡市": {
-   "latest": "2026-08-23",
-   "monthly": {
-    "R08": {
-     "4": 3,
-     "5": 3,
-     "6": 2,
-     "7": 2,
-     "8": 3
-    }
-   }
+  {
+   "city": "富山市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-09-29",
+   "place": "中田一丁目",
+   "species": "ツキノワグマ"
   },
-  "魚津市": {
-   "latest": "2026-10-04",
-   "monthly": {
-    "R08": {
-     "10": 1,
-     "4": 2,
-     "5": 2,
-     "6": 3,
-     "7": 1
-    }
-   }
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-28",
+   "place": "三清東",
+   "species": "ツキノワグマ"
   },
-  "黒部市": {
-   "latest": "2026-08-11",
-   "monthly": {
-    "R07": {
-     "1": 2,
-     "2": 1
-    },
-    "R08": {
-     "5": 2,
-     "6": 10,
-     "7": 1,
-     "8": 2
-    }
-   }
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "人身被害",
+   "observed_at": "2026-09-24",
+   "place": "ブナオ峠",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-18",
+   "place": "八尾町谷内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-09-16",
+   "place": "高木",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-09-14",
+   "place": "室堂平",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-12",
+   "place": "水橋中村",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-09-11",
+   "place": "杉内谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-09",
+   "place": "余川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-08",
+   "place": "日中",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-04",
+   "place": "白岩地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-03",
+   "place": "八尾町新田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-09-01",
+   "place": "川西",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-01",
+   "place": "天狗平",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-30",
+   "place": "城山町",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-25",
+   "place": "八尾町奥田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-08-24",
+   "place": "新屋",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-23",
+   "place": "立山町室堂",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-23",
+   "place": "福岡町五位",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-23",
+   "place": "八尾町大杉",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-22",
+   "place": "婦中町上吉川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-20",
+   "place": "新屋",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-08-19",
+   "place": "新屋",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-16",
+   "place": "奥大日岳",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-14",
+   "place": "芦峅寺地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-14",
+   "place": "山田小谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-13",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-11",
+   "place": "宇奈月町内山地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-11",
+   "place": "宇奈月町下立地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "芦峅寺地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "立山地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "新室堂乗越",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "味川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "射水市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-08-09",
+   "place": "南太閤山",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-08-08",
+   "place": "小見",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-08-07",
+   "place": "高屋敷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-07",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-07",
+   "place": "砂子谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-08-07",
+   "place": "横谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-08-07",
+   "place": "小見",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-08-07",
+   "place": "上見",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-08-06",
+   "place": "室堂、祓堂近く",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-06",
+   "place": "嘉例谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-04",
+   "place": "石堤",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "射水市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-08-04",
+   "place": "水戸田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-03",
+   "place": "横谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-01",
+   "place": "鹿島",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-01",
+   "place": "庄川町庄",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-01",
+   "place": "下山田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-31",
+   "place": "芹川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-31",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-31",
+   "place": "小森谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-30",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-30",
+   "place": "福岡町小野",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-30",
+   "place": "猪谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-29",
+   "place": "道新地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-29",
+   "place": "田川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-29",
+   "place": "横内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-29",
+   "place": "東大森",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-29",
+   "place": "新屋",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-29",
+   "place": "後谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-28",
+   "place": "横内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-28",
+   "place": "太田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-28",
+   "place": "大場",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-28",
+   "place": "堀川町",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-27",
+   "place": "小杉",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-27",
+   "place": "小杉",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-27",
+   "place": "婦中町広田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-27",
+   "place": "太田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-27",
+   "place": "堀川町",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-27",
+   "place": "八尾町諏訪町",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-27",
+   "place": "下堀",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "才覚寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-26",
+   "place": "婦中町羽根",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "婦中町新屋",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-26",
+   "place": "婦中町広田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "婦中町広田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "婦中町富川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "婦中町上轡田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-25",
+   "place": "小山",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-25",
+   "place": "堀田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-24",
+   "place": "千垣〜芦峅寺間の芳見橋付近",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-23",
+   "place": "婦中町小長沢",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-22",
+   "place": "末谷口",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-21",
+   "place": "砂子谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-21",
+   "place": "婦中町鶚谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-20",
+   "place": "立野原東",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "牧",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "八尾町細滝",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-18",
+   "place": "蔵本新地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-18",
+   "place": "水橋新保",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "射水市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "青井谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "射水市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "生源寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 3,
+   "kind": "目撃",
+   "observed_at": "2026-07-16",
+   "place": "西赤尾町",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "射水市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-16",
+   "place": "生源寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-15",
+   "place": "利賀村高沼",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃（クマAIカメラ等）",
+   "observed_at": "2026-07-14",
+   "place": "庄川町庄",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-14",
+   "place": "勝木原",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-13",
+   "place": "下島",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-12",
+   "place": "中畑",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-10",
+   "place": "栃津地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "川西",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "婦中町青島",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "太田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "利賀村百瀬川（谷内）",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-08",
+   "place": "庄川町庄",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-08",
+   "place": "利賀村百瀬川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "婦中町長沢",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-06",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-06",
+   "place": "味川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-05",
+   "place": "八尾町布谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃（クマAIカメラ等）",
+   "observed_at": "2026-07-04",
+   "place": "徳万",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-04",
+   "place": "庄川町庄",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-04",
+   "place": "庄川町庄",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "宇奈月町音沢地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-03",
+   "place": "八尾町高熊",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "上市町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "丸山",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "魚津市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "片貝山の守キャンプ場",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-01",
+   "place": "婦中町小長沢",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-30",
+   "place": "後谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 3,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "立野原西",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "早借",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "利賀村押場",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-27",
+   "place": "若栗地区権蔵橋付近",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "魚津市",
+   "count": 1,
+   "kind": "目撃（クマAIカメラ等）",
+   "observed_at": "2026-06-27",
+   "place": "片貝山ノ守キャンプ場付近",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-27",
+   "place": "中谷内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-27",
+   "place": "万願寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "人身被害",
+   "observed_at": "2026-06-26",
+   "place": "立野原東",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "立山町（桂台付近）",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "田川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "千垣",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "八尾町上笹原",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "立山町（桂台付近）",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "東中江",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-23",
+   "place": "下田子",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-23",
+   "place": "下梨",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-22",
+   "place": "本宮",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-21",
+   "place": "後谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-21",
+   "place": "宇奈月温泉地区宇奈月ダム付近",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-20",
+   "place": "稲積",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-20",
+   "place": "小滝",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "射水市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-20",
+   "place": "加茂中部",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-19",
+   "place": "泉",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-19",
+   "place": "才川七",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-19",
+   "place": "一本木",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "鞍川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "魚津市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-06-18",
+   "place": "道坂",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 2,
+   "kind": "痕跡",
+   "observed_at": "2026-06-18",
+   "place": "立山地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "川西",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "山田若土",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "婦中町島田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "婦中町外輪野",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "利賀村上村",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "朝日町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "元屋敷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "見座",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "稲積",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-06-17",
+   "place": "浅地",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "利賀村北豆谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "朝日町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "元屋敷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "西中野",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "入善町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "芦崎",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "入善町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "芦崎",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "浅地",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "魚津市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-06-16",
+   "place": "六郎丸",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "井栗谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "朝日町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "竹ノ内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "立山地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "朝日町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "桜町",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "大鋸屋",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "利賀村北豆谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-14",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-14",
+   "place": "盛新",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-14",
+   "place": "楡原",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "立山",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "射水市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "黒河地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "野田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "福岡町花尾",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "磯辺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "浅地",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "安楽寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "入善町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "芦崎",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-06-11",
+   "place": "立山地区（横江地内）",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-06-11",
+   "place": "村椿地区荒俣地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "堀",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "利賀村百瀬川（谷内）",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "利賀村",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "利賀村",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "若栗地区若栗公民館付近",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "村椿地区荒俣地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "射水市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "射水市",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "三熊",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-09",
+   "place": "西大森",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-09",
+   "place": "利賀村利賀",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-09",
+   "place": "利賀村上百瀬（中村）",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "立山地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "福岡町赤丸",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "田家地区神谷地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "法林寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "村椿地区荒俣地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "利賀村上村",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-07",
+   "place": "加納",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-07",
+   "place": "前沢地区山田新地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "朝日町",
+   "count": 2,
+   "kind": "痕跡",
+   "observed_at": "2026-06-06",
+   "place": "高畠",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-05",
+   "place": "荻生地区長正寺地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-06-05",
+   "place": "砺波市東別所",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-05",
+   "place": "田家地区阿窪地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-05",
+   "place": "成出",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-05",
+   "place": "三熊",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-03",
+   "place": "米沢",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-03",
+   "place": "山田中瀬",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "立山地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "小院瀬見",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "安楽寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-01",
+   "place": "立山地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-30",
+   "place": "田家地区田家野地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-05-28",
+   "place": "山田中村",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "上市町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-27",
+   "place": "広野新",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-27",
+   "place": "岩木（大沢野）",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "魚津市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "青柳",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "福岡町上向田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "田川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "田川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "利賀村",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "魚津市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "東山",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-05-25",
+   "place": "小羽（大沢野地域）",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃（クマAIカメラ等）",
+   "observed_at": "2026-05-25",
+   "place": "安川",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "婦中町外輪野",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "婦中町友坂",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-24",
+   "place": "萩原",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃（クマAIカメラ等）",
+   "observed_at": "2026-05-22",
+   "place": "栃上",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "朝日町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "南保谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-21",
+   "place": "婦中町新町",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "上市町",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-05-21",
+   "place": "上市町舘",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-18",
+   "place": "婦中町外輪野",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-17",
+   "place": "田畑",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "朝日町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-17",
+   "place": "横尾",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-17",
+   "place": "宇奈月町黒薙",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-15",
+   "place": "利田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "人身被害",
+   "observed_at": "2026-05-14",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-14",
+   "place": "米田町二丁目",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-14",
+   "place": "手洗野（尾久保）",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-14",
+   "place": "八尾町下新町",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-13",
+   "place": "芦峅寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-11",
+   "place": "婦中町大瀬谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-11",
+   "place": "上畠",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-05-10",
+   "place": "金剛新",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-09",
+   "place": "横江（立山）",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-05-09",
+   "place": "末三賀",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-05",
+   "place": "法楽寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-02",
+   "place": "黒瀬",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-02",
+   "place": "福岡町西明寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "滑川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-01",
+   "place": "魚躬",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "朝日町",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-05-01",
+   "place": "山崎",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-01",
+   "place": "利賀村",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-30",
+   "place": "法楽寺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "小矢部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-30",
+   "place": "嶺",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-30",
+   "place": "利賀村",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "上市町",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-04-30",
+   "place": "上市町放士ケ瀬",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "人身被害",
+   "observed_at": "2026-04-29",
+   "place": "森",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-29",
+   "place": "境",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-04-25",
+   "place": "池田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-25",
+   "place": "四谷尾",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃（クマAIカメラ等）",
+   "observed_at": "2026-04-24",
+   "place": "中谷内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-23",
+   "place": "坪池",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "砺波市",
+   "count": 1,
+   "kind": "目撃（クマAIカメラ等）",
+   "observed_at": "2026-04-20",
+   "place": "徳万",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-19",
+   "place": "福岡町上野",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "魚津市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-19",
+   "place": "大海寺新",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-14",
+   "place": "下タ林",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-13",
+   "place": "西大沢",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-04-08",
+   "place": "東黒牧",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "魚津市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-04-08",
+   "place": "大海寺新",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-05",
+   "place": "伏木矢田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-04-03",
+   "place": "千垣",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-03-24",
+   "place": "千垣",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "射水市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-03-18",
+   "place": "上野",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "立山町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-03-17",
+   "place": "白岩",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-03-14",
+   "place": "山田湯",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-03-11",
+   "place": "八尾町保内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-03-04",
+   "place": "婦中町長沢",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-03-04",
+   "place": "八尾町下笹原",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-02-27",
+   "place": "南砺市天神",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-02-21",
+   "place": "宇奈月町内山",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-01-20",
+   "place": "黒部市宇奈月温泉",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "黒部市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-01-19",
+   "place": "黒部市宇奈月温泉",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-01-10",
+   "place": "富山市万願寺",
+   "species": "ツキノワグマ"
   }
- },
+ ],
+ "sightings_in_window": 4275,
  "source": "toyama",
  "source_file": "https://services7.arcgis.com/pUdPpUsq83Kw8pWi/arcgis/rest/services/survey123_3f07f1f9864d43368d48b5f373d6cd68_results/FeatureServer/0",
  "source_page": "https://www.pref.toyama.jp/1709/kurashi/kankyoushizen/shizen/yaseiseibutsu/kumap.html",
- "total_fy": 287,
  "unparsed": 0,
  "update_note": "富山県が、市町村からの報告を受けて、ほぼ随時更新します。件数は、クマの目撃のほか、痕跡や人身被害の報告を含みます"
 }
