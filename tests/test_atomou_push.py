@@ -241,6 +241,18 @@ class PlannerInChrome(unittest.TestCase):
         self.assertEqual(r["hash"], "2026-10-17m,2026-10-20m,2026-10-24e,2027-10-24e")
         self.assertEqual((r["state"]["push"], r["state"]["pushHash"]), (True, "2026-10-01m"))   # the two preferences survive the sanitiser
 
+    def test_the_days_before_notices_are_planned_for_each_chosen_count_and_hostile_values_are_dropped(self):
+        stored = {"v": 1, "entries": [
+            {"id": "d1", "title": "旅行", "date": "2026-11-20", "precision": "day", "kind": "until", "alarm": "none"},
+            {"id": "d2", "title": "静かな日", "date": "2026-11-20", "precision": "day", "kind": "memorial", "quiet": True, "alarm": "none"}],
+            "notes": {"m:d1": {"memo": "", "tasks": [], "remind": [30, 7, 1, 999, "x", 7]}, "m:d2": {"memo": "", "tasks": [], "remind": [7]}},
+            "prefs": {"alarm": "morning", "push": True}}
+        r = self.run_page(stored)
+        self.assertEqual([x["d"] for x in r["dates"]], ["2026-10-21", "2026-11-13", "2026-11-19"])            # 30 days, 7 days and the day before (999, "x" and the repeat are dropped)
+        self.assertEqual([l["t"] for l in r["mirror"]["2026-10-21|m"]], ["あと30日: 旅行"])
+        self.assertEqual([l["t"] for l in r["mirror"]["2026-11-19|m"]], ["明日 旅行"])
+        self.assertNotIn("静かな日", json.dumps(r["mirror"], ensure_ascii=False))                          # a quiet day gets no countdown notices
+
     def test_a_day_without_its_own_setting_follows_the_setting_on_the_my_page(self):
         # 2026-10-09 core check: changing "お知らせの時間" used to leave one's own days on the time they were created with
         stored = {"v": 1, "entries": [
