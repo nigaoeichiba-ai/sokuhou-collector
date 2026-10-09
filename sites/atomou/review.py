@@ -41,6 +41,8 @@ class ReviewCtx(B.Ctx):
                                     + " | ".join(f'<a href="{u}">{esc(g)}</a>' for g, u in genres))
 
     def finish(self, html: str, kind: str, noindex: bool = False) -> str:
+        if kind not in B.ADS_KINDS:
+            html = B.strip_ads(html)
         html = html.replace("</head>", '<meta name="robots" content="noindex,nofollow">\n' + self.head + "</head>", 1)
         html = html.replace("<body>", f'<body data-page="{kind}">', 1)
         html = re.sub(r'<span class="logo" aria-hidden="true"></span>[^<]*</a>', lambda _m: B.WORDMARK + "</a>", html, count=1)
@@ -112,7 +114,8 @@ def event_page(c: ReviewCtx, e: dict, live: list[dict], guides: dict[str, dict])
     desc = (f"{e['title']}は{fmt}{end}" + (f"、{place}" if place and place not in ("全国", "地域") else "") + "。"
             + (f"{guide['about'].split('。')[0]}。" if guide else "") + "出典と確認した日つき。")
     suffix = "からもう何日？" if e["status"] == "ended" else "はいつ？あと何日？"
-    return c.page(f"/e/{e['id']}/", f"{e['title']}{suffix} {fmt} | {NAME}", desc, body, "event")
+    html = c.page(f"/e/{e['id']}/", f"{e['title']}{suffix} {fmt} | {NAME}", desc, body, "event")
+    return B.strip_ads(html) if e.get("quiet") or not e.get("ad_ok", True) else html
 
 
 def legal(c: ReviewCtx) -> dict:

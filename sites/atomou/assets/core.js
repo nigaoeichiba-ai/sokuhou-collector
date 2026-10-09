@@ -95,7 +95,47 @@ if (typeof window !== 'undefined' && window.addEventListener) {
     return { dir: dir, big: word + unitText(b[0], b[1], b[2]), sub: group(Math.abs(t)) + '日', total: t, approx: false };
   }
 
-  var api = { isLeap: isLeap, dim: dim, valid: valid, toDays: toDays, fromDays: fromDays, parse: parse, iso: iso, cmp: cmp, addDays: addDays, addMonths: addMonths,
+  // a date typed or dictated as words: "12月25日", "2027年3月3日", "令和8年4月1日", "二〇二七年三月三日", "2027/3/3", "明日" -> [y, m, d] ([y, m, 1] / [y, 1, 1] for the coarser
+  // precisions), or null.  Without a year it is the next time that day comes (today counts).
+  var KDIG = { '〇': 0, '零': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9 };
+  var ERA_WORDS = { '令和': 'reiwa', '平成': 'heisei', '昭和': 'showa', '大正': 'taisho', '明治': 'meiji' };
+  var REL_DAYS = { '今日': 0, '明日': 1, '明後日': 2, '昨日': -1, 'きょう': 0, 'あした': 1, 'あさって': 2, 'きのう': -1 };
+  function kanjiNumbers(s) {   // 十二 -> 12, 二〇二七 -> 2027
+    return s.replace(/[〇零一二三四五六七八九十百]+/g, function (k) {
+      if (!/[十百]/.test(k)) return k.split('').map(function (c) { return KDIG[c]; }).join('');
+      var n = 0, cur = 0, i, c;
+      for (i = 0; i < k.length; i++) {
+        c = k.charAt(i);
+        if (c === '百') { n += (cur || 1) * 100; cur = 0; } else if (c === '十') { n += (cur || 1) * 10; cur = 0; } else cur = KDIG[c];
+      }
+      return String(n + cur);
+    });
+  }
+  function parseSpoken(text, p, today) {
+    var s = kanjiNumbers(String(text || '').normalize('NFKC').replace(/\s+/g, '')).replace(/[。.,、]+$/, '').replace(/元年/, '1年'), r, y, m, d;
+    r = /^(令和|平成|昭和|大正|明治)(\d{1,2})年/.exec(s);
+    if (r) s = (ERAS[ERA_WORDS[r[1]]] + +r[2]) + '年' + s.slice(r[0].length);
+    if (p === 'day') {
+      if (REL_DAYS.hasOwnProperty(s)) return addDays(today, REL_DAYS[s]);
+      r = /^(\d{1,4})[年\/.\-](\d{1,2})[月\/.\-](\d{1,2})日?$/.exec(s);
+      if (r) return +r[1] <= 2200 && valid(+r[1], +r[2], +r[3]) ? [+r[1], +r[2], +r[3]] : null;
+      r = /^(\d{1,2})[月\/.](\d{1,2})日?$/.exec(s);
+      if (!r) return null;
+      for (y = today[0]; y <= today[0] + 8; y++) if (valid(y, +r[1], +r[2]) && cmp([y, +r[1], +r[2]], today) >= 0) return [y, +r[1], +r[2]];
+      return null;
+    }
+    if (p === 'month') {
+      r = /^(\d{1,4})[年\/.\-](\d{1,2})月?$/.exec(s);
+      if (r) return +r[1] >= 1 && +r[1] <= 2200 && +r[2] >= 1 && +r[2] <= 12 ? [+r[1], +r[2], 1] : null;
+      r = /^(\d{1,2})月$/.exec(s);
+      if (!r || +r[1] < 1 || +r[1] > 12) return null;
+      m = +r[1]; return [m < today[1] ? today[0] + 1 : today[0], m, 1];
+    }
+    r = /^(\d{1,4})年?$/.exec(s);
+    return r && +r[1] >= 1 && +r[1] <= 2200 ? [+r[1], 1, 1] : null;
+  }
+
+  var api = { parseSpoken: parseSpoken, isLeap: isLeap, dim: dim, valid: valid, toDays: toDays, fromDays: fromDays, parse: parse, iso: iso, cmp: cmp, addDays: addDays, addMonths: addMonths,
     totalDays: totalDays, ymd: ymd, nextThousand: nextThousand, dayOfYear: dayOfYear, fiscalYear: fiscalYear, warekiToYear: warekiToYear, countdown: countdown, group: group };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.AtomouCore = api;

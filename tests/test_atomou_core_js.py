@@ -22,6 +22,20 @@ def find_chrome():
     return next((p for p in CHROME_PATHS if Path(p).exists()), None) or shutil.which("google-chrome") or shutil.which("chromium")
 
 
+# (what was typed or dictated, the precision chosen, the day it means with today = 2026-10-09)
+SPOKEN = [
+    ("12月25日", "day", [2026, 12, 25]), ("2027年3月3日", "day", [2027, 3, 3]), ("令和8年4月1日", "day", [2026, 4, 1]), ("平成元年1月8日", "day", [1989, 1, 8]),
+    ("二〇二七年三月三日", "day", [2027, 3, 3]), ("十二月二十五日", "day", [2026, 12, 25]), ("2027/3/3", "day", [2027, 3, 3]), ("2027-03-03", "day", [2027, 3, 3]),
+    ("２０２７年１２月２５日。", "day", [2027, 12, 25]), (" 12 月 25 日 ", "day", [2026, 12, 25]),
+    ("今日", "day", [2026, 10, 9]), ("明日", "day", [2026, 10, 10]), ("明後日", "day", [2026, 10, 11]), ("昨日", "day", [2026, 10, 8]), ("あさって", "day", [2026, 10, 11]), ("きょう", "day", [2026, 10, 9]),
+    ("10月9日", "day", [2026, 10, 9]), ("10月8日", "day", [2027, 10, 8]),     # no year: the next time that day comes, and today counts
+    ("2月29日", "day", [2028, 2, 29]),                                       # 2027 has none
+    ("2026年10月", "month", [2026, 10, 1]), ("11月", "month", [2026, 11, 1]), ("9月", "month", [2027, 9, 1]), ("1990年", "year", [1990, 1, 1]), ("1990", "year", [1990, 1, 1]),
+    ("2027年3月", "day", None), ("2027年13月1日", "day", None), ("2027年2月30日", "day", None), ("abc", "day", None), ("", "day", None), ("2027年3月3日", "month", None),
+    ("0年", "year", None), ("9999年", "year", None), ("12月25日", "year", None),
+]
+
+
 PAGE = """<!doctype html><meta charset="utf-8"><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script>
 <script>
 (function () {
@@ -34,6 +48,7 @@ PAGE = """<!doctype html><meta charset="utf-8"><script src="%(core)s"></script><
   res.nt = V.next_thousand.map(function (c) { var r = C.nextThousand(P(c.start), P(c.today)); return [r.days, C.iso(r.date)]; });
   res.wareki = V.wareki.map(function (c) { return C.warekiToYear(c.era, c.n); });
   res.bad = ['2026-02-30', '2026-13-01', 'abc', '2026-1-1'].map(function (s) { return P(s); });
+  res.spoken = %(spoken)s.map(function (c) { return C.parseSpoken(c[0], c[1], [2026, 10, 9]); });
   res.ics = ICS.build([{ uid: 'e-abc', title: 'テスト, 試験; 申込\\n締切', date: [2026, 11, 20], alarm: 'morning' },
     { uid: 'm-1', title: 'うるう日', date: [2024, 2, 29], yearly: true, every100: true, alarm: 'eve' }, { uid: 'q', title: '静か', date: [2020, 3, 1], alarm: 'none' },
     { uid: 'w', title: '一週間前', date: [2026, 12, 1], alarm: 'week' }],
@@ -81,7 +96,7 @@ class CoreInChrome(unittest.TestCase):
     def setUpClass(cls):
         with tempfile.TemporaryDirectory() as td:
             page = Path(td) / "t.html"
-            page.write_text(PAGE % {"core": (ASSETS / "core.js").as_uri(), "ics": (ASSETS / "ics.js").as_uri(), "app": (ASSETS / "app.js").as_uri(), "vectors": json.dumps(VECTORS)}, encoding="utf-8")
+            page.write_text(PAGE % {"core": (ASSETS / "core.js").as_uri(), "ics": (ASSETS / "ics.js").as_uri(), "app": (ASSETS / "app.js").as_uri(), "vectors": json.dumps(VECTORS), "spoken": json.dumps([c[:2] for c in SPOKEN], ensure_ascii=False)}, encoding="utf-8")
             prof = Path(td) / "prof"
             r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={prof}", "--virtual-time-budget=4000",
                                 "--dump-dom", page.as_uri() + "?today=2026-10-08"], capture_output=True, timeout=120)
@@ -103,6 +118,10 @@ class CoreInChrome(unittest.TestCase):
         self.assertEqual(self.res["fy"], [[c["start"], c["n"], c["left"]] for c in VECTORS["fiscal_year"]])
         self.assertEqual(self.res["nt"], [[c["days"], c["date"]] for c in VECTORS["next_thousand"]])
         self.assertEqual(self.res["wareki"], [c["y"] for c in VECTORS["wareki"]])
+
+    def test_a_date_typed_or_dictated_as_words_is_read_the_way_it_was_said(self):
+        for (text, p, want), got in zip(SPOKEN, self.res["spoken"]):
+            self.assertEqual(got, want, f"{text!r} ({p})")
 
     def test_invalid_dates_are_rejected(self):
         self.assertEqual(self.res["bad"], [None, None, None, None])

@@ -189,12 +189,26 @@ class Pages(BuildOnce):
             self.assertIn(f'[data-skin="{s["id"]}"]', css)
         self.assertNotIn("http", css)  # no external fonts or images
 
-    def test_every_page_loads_only_its_own_scripts_and_no_ads_yet(self):
+    def test_every_page_loads_only_its_own_scripts_and_the_ad_code_only_where_ads_may_be(self):
+        by_id = {e["id"]: e for e in self.entries}
+        pub = CFG["adsense_pub_id"].replace("ca-", "")
+        self.assertIn(f"google.com, {pub}, DIRECT", self.rel["ads.txt"])
+        seen = set()
         for k, v in self.rel.items():
             if k.endswith(".html") and isinstance(v, str):
-                self.assertNotIn("adsbygoogle", v, k)  # no ad code until an AdSense id is set (and never on quiet pages)
+                has = "adsbygoogle" in v
+                kind = re.search(r'<body data-page="([^"]+)"', v)
+                kind = kind.group(1) if kind else ""
+                m = re.fullmatch(r"e/([^/]+)/index.html", k)
+                if m:
+                    e = by_id[m.group(1)]
+                    self.assertEqual(has, not e["quiet"] and e.get("ad_ok", True), k)   # a quiet day or an item with ad_ok false never carries it
+                elif kind:
+                    self.assertEqual(has, kind in build.ADS_KINDS, k)     # the app's pages (record, calendar, my page, plan, search, skins) never do
+                seen.add(has)
                 for src in re.findall(r'<script[^>]+src="([^"]+)"', v):
-                    self.assertTrue(src.startswith("/assets/"), f"{k}: {src}")
+                    self.assertTrue(src.startswith("/assets/") or src.startswith("https://pagead2.googlesyndication.com/"), f"{k}: {src}")
+        self.assertEqual(seen, {True, False})
         self.assertNotIn("googletagmanager", self.rel["index.html"])  # no analytics (the privacy policy says so)
 
     def test_quiet_entries_never_get_related_items_or_ads(self):
