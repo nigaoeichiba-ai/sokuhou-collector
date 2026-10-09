@@ -274,6 +274,30 @@ class Pages(BuildOnce):
         key = re.search(r"o\.value\.indexOf\('([^']+)'\) === 0", app).group(1)
         self.assertIn(f">{key}", self.rel["contact/index.html"])             # the "send it as a day I would like to see" option the search page links to
 
+    def test_event_pages_have_share_and_google_calendar_links_and_quiet_ones_do_not(self):
+        shared = 0
+        for k, v in self.rel.items():
+            if not (k.startswith("e/") and isinstance(v, str)):
+                continue
+            if 'class="share"' in v:
+                shared += 1
+                self.assertIn("line.me/R/msg/text/", v, k)
+                self.assertIn("twitter.com/intent/tweet", v, k)
+                self.assertNotIn("あなたの予定", v.split('class="share"')[1].split("</section>")[0].replace("あなたの予定は入りません", ""), k)
+            if 'class="share"' in v:      # a day with a date can go to Google Calendar; "2027年1月ごろ" cannot
+                self.assertEqual("calendar.google.com/calendar/render" in v, 'class="share" aria-label="人に送る" data-title' in v and 'data-p="day"' in v.split('class="share"')[1].split(">")[0], k)
+        self.assertGreater(shared, 250)
+        quiet = [e for e in self.entries if e["quiet"]]
+        for e in quiet:
+            self.assertNotIn('class="share"', self.rel[f"e/{e['id']}/index.html"])
+
+    def test_interests_page_is_not_indexed_and_the_home_links_to_it(self):
+        page = self.rel["interests/index.html"]
+        self.assertIn("noindex", page)
+        self.assertIn('href="/interests/"', self.rel["index.html"])
+        self.assertNotIn("/interests/", self.rel["sitemap.xml"])
+        self.assertEqual(len(catalog.GROUPS), page.count("data-int-sec="))     # a section per genre
+
     def test_the_sentences_composed_for_every_day_read_as_japanese(self):
         # the lead and the questions are put together from the catalog entry; these are the slips a reader noticed (2026-10-09)
         bad = {"a range with 'までに'": r"まで(に)(開催|実施|始まり|行われ|終了)", "a clause as the subject": r"(る|れる|ます)は、20\d\d年", "a clause before の概要": r"(る|れる|ます)の概要",
@@ -463,9 +487,25 @@ class AppInChrome(BuildOnce):
         self.assertIn("date=2027-04-01", dom)   # 入学の用意 -> the start of the next one
         self.assertNotIn("alarm=", dom)  # the in-app calendar needs no alarm menu
 
+    def test_interests_page_offers_every_subject_and_reads_a_friends_link(self):
+        dom = html.unescape(self.dom("/interests/?pick=将棋,剣道"))
+        self.assertGreaterEqual(dom.count('data-int="'), 60)
+        self.assertRegex(dom, r'id="int-pick"(?![^>]*hidden)')
+        self.assertIn("将棋・剣道", re.sub(r"<[^>]+>", "", dom))
+        self.assertNotIn('data-int-drop="将棋"', dom)      # offered, never added without a tap
+
+    def test_share_words_carry_todays_count_and_a_link_to_the_day(self):
+        dom = html.unescape(self.dom("/e/f2bb25e347/"))
+        m = re.search(r'data-share-to="line" href="([^"]+)"', dom)
+        self.assertIsNotNone(m)
+        from urllib.parse import unquote
+        text = unquote(m.group(1))
+        self.assertIn("まで、あと54日", text)             # counted from the device's date (2026-10-08), not from the build
+        self.assertIn("/e/f2bb25e347/", text)
+
     def test_home_edit_mode_shows_a_bar_on_every_block(self):
         dom = self.dom("/?edit=1")
-        self.assertEqual(dom.count('class="block-bar"'), 7)  # todo, search, cats, daily, mine, soon, usecases
+        self.assertEqual(dom.count('class="block-bar"'), 8)  # todo, search, cats, daily, mine, interests, soon, usecases
         self.assertNotIn('class="block-bar"', self.dom("/"))
 
     def test_no_uncaught_script_error_on_any_main_page(self):

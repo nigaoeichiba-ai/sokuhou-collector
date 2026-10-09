@@ -119,10 +119,10 @@ def member_php(cfg: dict) -> str:
     return php
 
 
-STATS_SECTION = '<h2 id="stats">利用状況の統計</h2>\n<p>使いやすくするため、件数だけの統計を取ります。送るのは、あらかじめ決めた項目の件数です。「どのページが開かれたか」「選ばれたきせかえ」「ホームに表示する項目の並びと非表示」「予定に入れる・ファイルを作るボタンが押された回数」「検索で見つかったか(検索した言葉は送りません)」。</p>\n<p>名前・日付・メモ・メールアドレス・検索した言葉・端末を識別する番号は送りません。Cookie は使いません。サーバーに残るのは1日ごとの合計の件数だけで、同じ人かどうかは分かりません。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。</p>\n<p>マイページの「利用状況の統計に協力する」でいつでも止められます。ブラウザの「トラッキングしない」(DNT・Global Privacy Control)がオンのときは、初めから止まっています。</p>'
+STATS_SECTION = '<h2 id="stats">利用状況の統計</h2>\n<p>使いやすくするため、件数だけの統計を取ります。送るのは、あらかじめ決めた項目の件数です。「どのページが開かれたか」「選ばれたきせかえ」「ホームに表示する項目の並びと非表示」「予定に入れる・ファイルを作る・共有するボタンが押された回数」「検索で見つかったか(検索した言葉は送りません)」。</p>\n<p>名前・日付・メモ・メールアドレス・検索した言葉・端末を識別する番号は送りません。Cookie は使いません。サーバーに残るのは1日ごとの合計の件数だけで、同じ人かどうかは分かりません。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。</p>\n<p>マイページの「利用状況の統計に協力する」でいつでも止められます。ブラウザの「トラッキングしない」(DNT・Global Privacy Control)がオンのときは、初めから止まっています。</p>'
 PUSH_SECTION = '<h2 id="push">通知(任意)</h2>\n<p>マイページの「この端末で通知を受け取る」を押し、ブラウザで許可したときだけ通知を使えます。当サイトのサーバーに保存するのは、ブラウザが作った通知の宛先(購読情報)と、通知する日(日付と、朝か夜か)だけです。予定の名前・時刻・メモ・やることの内容は保存しません。通知文は、お使いの端末で作ります。</p>\n<p>通知は、当サイトが GitHub Actions(GitHub, Inc.)で動かす送信プログラムから、お使いのブラウザのプッシュ配信サービス(Google、Apple、Mozilla など)を通して届きます。「通知を止める」を押すか、ブラウザの設定で通知を止めると、購読情報はサーバーから削除します。配信サービスから「宛先がない」と返されたものも削除します。</p>'
 MEMBERS_SECTION = '<h2 id="members">会員登録(任意)</h2>\n<p>会員登録は無料で、パスワードはありません。メールアドレスに送る確認コードでログインします。サーバーに保存するのは、メールアドレス、登録日、プランと無料期間、紹介コード、ログイン中の端末の印(ランダムな値の要約)です。「メールでもお知らせする」をオンにした人に限り、知らせる日(日付と、朝か夜か)と予定の名前(短く)も保存します。オフにすると、その部分はすぐ消します。</p>\n<p>これらは、サーバーの公開されない場所に暗号化して保存します。記録した日・メモ・やることの内容そのものは、会員でも端末の中だけにあります。ペンネームを入れて公開に同意した人は、そのペンネームを協力者のページに載せます。紹介の確認のため、サイトを使った日(直近20日分)を保存します。モニターのアンケートの答えは、サイトの改善のためだけに使い、運営者だけが読みます。確認コードのメールは、ログインのためだけに送ります。広告のメールは、別に同意した人にしか送りません。マイページの「退会する」で、会員の記録はすぐ消えます。</p>'
-GOOGLE_SECTION = '<h2 id="google">Google アカウントでの引き継ぎ(任意)</h2>\n<p>マイページの「Google アカウントで同期する」を押したときだけ、Google の画面が開きます。許可するのは、あなたの Google ドライブの中にあるこのサイト専用の非表示フォルダ(アプリデータ)への保存だけです。記録した日・予定に入れた日・設定をそこに保存し、別の端末で読み込めます。当サイトのサーバーには送りません。Google アカウントの氏名やメールアドレスは取得しません。</p>\n<p>やめるときは、<a href="https://myaccount.google.com/permissions" rel="noopener" target="_blank">Google アカウントの権限の管理</a>で「あと何日、もう何日」の権限を削除してください。</p>'
+GOOGLE_SECTION = '<h2 id="google">Google アカウントでの引き継ぎ(任意)</h2>\n<p>マイページの「Google アカウントで同期する」を押したときだけ、Google の画面が開きます。許可するのは、あなたの Google ドライブの中にあるこのサイト専用の非表示フォルダ(アプリデータ)への保存だけです。記録した日・予定に入れた日・好きな分野・設定をそこに保存し、別の端末で読み込めます。当サイトのサーバーには送りません。Google アカウントの氏名やメールアドレスは取得しません。</p>\n<p>やめるときは、<a href="https://myaccount.google.com/permissions" rel="noopener" target="_blank">Google アカウントの権限の管理</a>で「あと何日、もう何日」の権限を削除してください。</p>'
 
 
 def fmt_date(iso: str, precision: str = "day") -> str:
@@ -222,7 +222,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'app', 'plan', 'quick', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'app', 'share', 'plan', 'quick', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -370,7 +370,7 @@ def home_page(c: Ctx) -> str:
 <section class="hero"><h1>{esc(CATCH)}</h1>
 <div class="hero-cta" id="hero-cta" hidden>
 <p class="hero-note">登録なしで、無料で使えます。名前も日付も、お使いの端末に保存されます。</p>
-<p class="hero-btns"><a class="btn" href="/add/">大切な日を記録する</a></p>
+<p class="hero-btns"><a class="btn" href="/add/">大切な日を記録する</a> <a class="btn ghost" href="/interests/">好きな分野から探す</a></p>
 <nav class="chiprow" aria-label="残せる日の例"><a class="chip" href="/add/?kind=anniversary">記念日</a><a class="chip" href="/add/?kind=birthday">誕生日</a><a class="chip" href="/add/?kind=until">楽しみな日・期限</a><a class="chip" href="/add/?kind=memorial">大切な人を思う日</a></nav>
 </div></section>
 <div id="season" class="season" hidden></div>
@@ -382,6 +382,11 @@ def home_page(c: Ctx) -> str:
 <section id="mine" data-block="mine" data-title="記録した日" hidden>
 <div class="head-row"><h2>記録した日</h2><div class="grow"><a class="btn small ghost" href="/my/">マイページ</a></div></div>
 <div class="cards" id="mine-grid" data-save-order="1"></div>
+</section>
+<section id="interests" data-block="interests" data-title="好きな分野の日" hidden>
+<div class="head-row"><h2>好きな分野の日</h2><div class="grow"><a class="btn small ghost" href="/interests/">分野を選ぶ</a></div></div>
+<p class="hint" id="int-prompt" hidden>将棋、流星群、英検など、好きな分野を選ぶと、その分野の日がここに並びます。<a href="/interests/">選んでみる</a></p>
+<div id="int-wrap" hidden><div class="cards" id="int-grid"></div><p class="hint" id="int-miss"></p></div>
 </section>
 <section data-block="search" data-title="さがす">
 {search_form()}
@@ -400,6 +405,42 @@ def home_page(c: Ctx) -> str:
 </div>
 <p class="edit-home"><button type="button" class="btn small ghost" id="edit-home" aria-pressed="false">ホームを編集</button> <button type="button" class="btn small ghost" id="reset-home" hidden>元に戻す</button></p>"""
     return c.page("/", f"{NAME}|{CATCH}", "あの日からもう何日、あの日まであと何日。日付を選ぶだけで数えて、カレンダーで見られます。締切・試験・大会・お祭りの確認済みの日付は、ワンタップで予定に入れられます。", body, "home")
+
+
+def interests_page(c: Ctx, live: list[dict]) -> str:
+    """"好きな分野を選ぶ": every subject of the catalogue under its genre as a chip (what is chosen is kept on this device and shown on the home page), a box to add any word, and a share box."""
+    by: dict[str, dict] = {}
+    for e in live:
+        if e["quiet"]:
+            continue
+        s = by.setdefault(e["subject"], {"group": e["group"], "n": 0, "tags": set()})
+        s["n"] += 1
+        s["tags"].update(t for t in e.get("tags") or [] if t)
+    secs = []
+    for i, g in enumerate(catalog.GROUPS):
+        subs = sorted(((k, v) for k, v in by.items() if v["group"] == g), key=lambda kv: (-kv[1]["n"], kv[0]))
+        if not subs:
+            continue
+        chips = "".join(
+            f'<button type="button" class="chip" aria-pressed="false" data-int="{esc(k)}" data-hay="{esc(" ".join(sorted({k} | v["tags"])))}">{esc(k)}<span class="n">{v["n"]}</span></button>'
+            for k, v in subs)
+        secs.append(f'<section data-int-sec="{i + 1}"><h2 class="int-h">{mark_html(i + 1)}{esc(g)}</h2><div class="chiprow">{chips}</div></section>')
+    body = f"""{crumbs([("トップ", "/"), ("好きな分野", None)])}
+<h1>好きな分野を選ぶ</h1>
+<p class="lead muted">選んだ分野の日が、ホームにまとまって並びます。選んだ内容は、この端末の中だけに保存されます。</p>
+<div id="int-pick" class="panel" hidden></div>
+<div id="int-chosen"></div>
+<div class="sbox"><form class="searchbox" id="int-form" role="search"><label class="vh" for="int-q">分野を探す・追加する</label>
+<input type="text" id="int-q" maxlength="24" autocomplete="off" placeholder="探す・追加する(例: 剣道、釣り、写真)" enterkeyhint="done"><button type="submit" class="sbtn" aria-label="追加">{ICONS['plus']}</button></form></div>
+<p class="small muted" id="int-note" aria-live="polite"></p>
+<p class="int-go" id="int-go" hidden><a class="btn" href="/">選んだ分野の日を見る</a></p>
+<section class="share" id="int-share" aria-label="好きな分野を人に送る" hidden data-url="">
+<h2>好きな分野を人に送る</h2><p class="hint">送るのは、選んだ分野の名前だけです。予定や記録は入りません。</p>
+<p class="share-btns"><a class="btn small" data-share-to="line" href="#" target="_blank" rel="noopener">LINEで送る</a> <a class="btn small ghost" data-share-to="x" href="#" target="_blank" rel="noopener">Xで投稿</a>
+<button type="button" class="btn small ghost" data-share="copy">リンクをコピー</button> <button type="button" class="btn small ghost" data-share="native" hidden>ほかのアプリで送る</button></p></section>
+{"".join(secs)}
+<noscript><p class="notice">分野を選ぶには JavaScript が必要です。<a href="/search/">さがす</a>からも探せます。</p></noscript>"""
+    return c.page("/interests/", f"好きな分野を選ぶ | {NAME}", "将棋・流星群・英検など、好きな分野を選ぶと、その分野の日付がホームに並びます。選んだ内容は端末の中だけに保存されます。", body, "interests", noindex=True)
 
 
 def search_page(c: Ctx) -> str:
@@ -551,6 +592,31 @@ def use_page(c: Ctx, u: dict) -> str:
     return c.page(f"/use/{u['slug']}/", f"{u['title']} | {NAME}", u["situation"], body, "use")
 
 
+def google_calendar_url(e: dict, page_url: str) -> str:
+    """The address that opens Google Calendar's own form with the day filled in (a whole day: the end date is the day after).  The page address goes into the details, so the day leads back here."""
+    d = date.fromisoformat(e["date"])
+    last = date.fromisoformat(e.get("date_end") or e["date"]) + timedelta(days=1)
+    detail = f"詳しい日付と出典: {page_url}"
+    return ("https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + quote(e["title"]) + "&dates=" + d.strftime("%Y%m%d") + "/" + last.strftime("%Y%m%d")
+            + "&details=" + quote(detail) + "&ctz=Asia%2FTokyo")
+
+
+def share_block(c: Ctx, e: dict) -> str:
+    """Buttons to send a public day to somebody: LINE, X, the link, a picture, the phone's share sheet.  The words are filled in by share.js (with today's count); the links here work without it."""
+    page_url = f"{str(c.cfg['site_url']).rstrip('/')}/e/{e['id']}/"
+    fmt = fmt_date(e["date"], e["precision"])
+    text = f"「{e['title']}」({fmt})。出典つきの公式の日付です。"
+    line = "https://line.me/R/msg/text/?" + quote(text + chr(10) + page_url)
+    x = "https://twitter.com/intent/tweet?text=" + quote(text) + "&url=" + quote(page_url, safe="")
+    return (f'<section class="share" aria-label="人に送る" data-title="{esc(e["title"])}" data-date="{e["date"]}" data-p="{e["precision"]}" data-url="{esc(page_url)}">'
+            '<h2>人に送る</h2><p class="hint">送るのは、この公式の日付のページです。あなたの予定は入りません。</p>'
+            f'<p class="share-btns"><a class="btn small" data-share-to="line" href="{esc(line)}" target="_blank" rel="noopener">LINEで送る</a> '
+            f'<a class="btn small ghost" data-share-to="x" href="{esc(x)}" target="_blank" rel="noopener">Xで投稿</a> '
+            '<button type="button" class="btn small ghost" data-share="copy">リンクをコピー</button> '
+            '<button type="button" class="btn small ghost" data-share="image">画像で保存</button> '
+            '<button type="button" class="btn small ghost" data-share="native" hidden>ほかのアプリで送る</button></p></section>')
+
+
 def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     quiet = e["quiet"]
     today = c.today
@@ -579,7 +645,9 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 <dl class="info"><dt>出典</dt><dd><a href="{esc(e['source_url'])}" rel="noopener nofollow" target="_blank">{esc(host(e['source_url']))}</a></dd>
 <dt>確認日</dt><dd>{esc(e['checked_on'])}</dd>{f"<dt>出典の文</dt><dd>{esc(e['source_quote'])}</dd>" if e.get('source_quote') else ""}</dl>
 <p class="small muted">日付や時刻は変わることがあります。出典の公式ページで、最新の情報をご確認ください。</p>
-<p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを追加</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の予定として記録する</a></p>
+<p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを追加</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の予定として記録する</a>{(' <a class="btn small ghost" href="' + esc(google_calendar_url(e, str(c.cfg['site_url']).rstrip('/') + '/e/' + e['id'] + '/')) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a>') if e["precision"] == "day" else ""}</p>
+{"" if quiet else share_block(c, e)}
+{"" if quiet else '<p class="int-line"><button type="button" class="btn small ghost" data-int-toggle="' + esc(e["subject"]) + '">「' + esc(e["subject"]) + '」を好きな分野に入れる</button> <a class="small" href="/interests/">好きな分野を選ぶ</a></p>'}
 {f'<details class="more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">iPhone の「カレンダー」や Google カレンダーに取り込めるファイルです。</p><p><button type="button" class="btn small ghost" data-ics-for="c:{e["id"]}">ファイルを作る</button></p></details>' if e["precision"] == "day" else ""}
 {(f'<h2>同じ「{esc(e["subject"])}」の日</h2><p class="saveall"><button type="button" class="btn small" data-saveall="{",".join([e["id"]] + [r["id"] for r in same])}">この日を含む{len(same) + 1}件をまとめて予定に入れる</button></p><div class="cards">' + "".join(card_html(r) for r in same) + "</div>") if same else ""}
 {('<h2>同じジャンルの日</h2><div class="cards">' + "".join(card_html(r) for r in rel) + "</div>") if rel else ""}
@@ -876,7 +944,7 @@ def legal(c: Ctx) -> dict:
                         "<p>「あと○日」「もう○日」は、お使いの端末の日付をもとにブラウザの中で数えています。端末の日付がずれていれば、数字もずれます。</p>",
         contact_notice="日付の誤りのご指摘は、ページの名前と、正しい日付の出典(アドレス)を添えていただけると早く確認できます。",
         input_note=("<h2>この端末に保存する情報</h2>"
-                    "<p>記録した日(名前・日付・時刻・メモ・やること・設定)と、予定に入れた日の一覧は、お使いのブラウザの中(localStorage)だけに保存します。当サイトのサーバーには送りません。"
+                    "<p>記録した日(名前・日付・時刻・メモ・やること・設定)と、予定に入れた日の一覧、選んだ好きな分野は、お使いのブラウザの中(localStorage)だけに保存します。当サイトのサーバーには送りません。"
                     "ブラウザのデータを消すと記録も消えます。バックアップはマイページの「書き出す」で作れます。</p>"),
         finish=lambda html: c.finish(privacy_fix(c, html), "legal"),
     )
@@ -897,7 +965,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     index_ids = catalog.indexable_ids(entries, today, launch, int(cfg.get("index_per_week", 6)))
     live = live_entries(entries, today)
     pages: dict[str, str | bytes] = {
-        "index.html": home_page(c), "search/index.html": search_page(c), "my/index.html": my_page(c), "add/index.html": add_page(c),
+        "index.html": home_page(c), "search/index.html": search_page(c), "interests/index.html": interests_page(c, live), "my/index.html": my_page(c), "add/index.html": add_page(c),
         "skins/index.html": skins_page(c), "use/index.html": use_index(c), "manual/index.html": manual_page(c), "today/index.html": today_page(c), "calendar/index.html": calendar_page(c), "plan/index.html": plan_page(c),
     }
     for u in usecases.USECASES:
@@ -925,7 +993,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     pages.update(asset_pages(SITE["assets"]))
     # the sitemap lists indexable pages only (not /my/, not event pages that are held back)
     listed = {k: 1 for k in pages if k.endswith("index.html") and k != "my/index.html"
-              and k != "plan/index.html" and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
+              and k != "plan/index.html" and k != "interests/index.html" and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
     pages.update(standard_files(listed, cfg, preview, today.isoformat()))
     pages[".htaccess"] = pages[".htaccess"] + HT_CACHE
     if preview:
