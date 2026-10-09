@@ -224,7 +224,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'app', 'share', 'plan', 'quick', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'app', 'share', 'card', 'plan', 'quick', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -401,7 +401,7 @@ def home_page(c: Ctx) -> str:
 <p class="more-row"><button type="button" class="btn ghost" id="more">もっと見る</button></p>
 </section>
 <section data-block="usecases" data-title="こんな時に">
-<div class="head-row"><h2>こんな時に</h2><div class="grow"><a class="btn small ghost" href="/use/">一覧</a></div></div>
+<div class="head-row"><h2>こんな時に</h2><div class="grow"><a class="btn small ghost" href="/card/">カードを作って送る</a> <a class="btn small ghost" href="/use/">一覧</a></div></div>
 <div class="uc-grid compact">{ucs}</div>
 </section>
 </div>
@@ -471,6 +471,14 @@ def interests_page(c: Ctx, live: list[dict]) -> str:
 {"".join(secs)}
 <noscript><p class="notice">分野を選ぶには JavaScript が必要です。<a href="/search/">さがす</a>からも探せます。</p></noscript>"""
     return c.page("/interests/", f"好きな分野を選ぶ | {NAME}", "将棋・流星群・英検・剣道・手芸など、好きな分野を選ぶと、その分野の日付がホームに並びます。選んだ内容は端末の中に保存されます。", body, "interests", noindex=True)
+
+
+def card_page(c: Ctx) -> str:
+    """/card/: make a card (a day with a name, a note and things to do before it) and send it as a link or a picture; open a card somebody sent.  All of it is in the part of the address after the "#"."""
+    body = f"""{crumbs([("トップ", "/"), ("カードを作って送る", None)])}
+<h1>カードを作って送る</h1>
+<div id="card-box"><noscript><p class="notice">カードを作るには JavaScript が必要です。</p></noscript></div>"""
+    return c.page("/card/", f"カードを作って送る | {NAME}", "日付・ひとこと・やることを入れたカードを、リンクや画像で送れます。受け取った人は、1タップで自分の予定帳に入れられます。内容はサーバーに保存されません。", body, "card", noindex=True)
 
 
 def search_page(c: Ctx) -> str:
@@ -673,7 +681,8 @@ def share_block(c: Ctx, e: dict) -> str:
             f'<a class="btn small ghost" data-share-to="x" href="{esc(x)}" target="_blank" rel="noopener">Xで投稿</a> '
             '<button type="button" class="btn small ghost" data-share="copy">リンクをコピー</button> '
             '<button type="button" class="btn small ghost" data-share="image">画像で保存</button> '
-            '<button type="button" class="btn small ghost" data-share="native" hidden>ほかのアプリで送る</button></p></section>')
+            '<button type="button" class="btn small ghost" data-share="native" hidden>ほかのアプリで送る</button></p>'
+            f'<p class="hint"><a href="/card/#from=c:{e["id"]}">ひとことを足して、自分のカードにして送る</a>(バンドのライブ、取引先との予定、友だちとの約束にも使えます)</p></section>')
 
 
 def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
@@ -1007,7 +1016,9 @@ def legal(c: Ctx) -> dict:
                     "<p>記録した日(名前・日付・時刻・メモ・やること・設定)と、予定に入れた日の一覧、選んだ好きな分野は、お使いのブラウザの中(localStorage)だけに保存します。当サイトのサーバーには送りません。"
                     "ブラウザのデータを消すと記録も消えます。バックアップはマイページの「書き出す」で作れます。</p>"
                     "<h2>カレンダーの購読(任意)</h2>"
-                    "<p>ジャンルのページから、公式の日付をカレンダーアプリに購読できます。購読用のファイルは、誰でも取得できる公開データです。購読すると、Google などのカレンダーのサービスが、定期的にこのファイルを取りに来ます。当サイトは、購読した人を知ることはありません。</p>"),
+                    "<p>ジャンルのページから、公式の日付をカレンダーアプリに購読できます。購読用のファイルは、誰でも取得できる公開データです。購読すると、Google などのカレンダーのサービスが、定期的にこのファイルを取りに来ます。当サイトは、購読した人を知ることはありません。</p>"
+                    "<h2>カードの共有(任意)</h2>"
+                    "<p>「カードを作って送る」で作ったカードの内容(題名・日付・ひとこと・やること)は、リンクのうち「#」より後ろに入ります。この部分は、ブラウザから当サイトのサーバーへは送られず、保存もされません。リンクを渡した相手の端末で、カードとして表示されます。リンクを送る相手と手段は、あなたが選びます。</p>"),
         finish=lambda html: c.finish(privacy_fix(c, html), "legal"),
     )
 
@@ -1027,7 +1038,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     index_ids = catalog.indexable_ids(entries, today, launch, int(cfg.get("index_per_week", 6)))
     live = live_entries(entries, today)
     pages: dict[str, str | bytes] = {
-        "index.html": home_page(c), "search/index.html": search_page(c), "interests/index.html": interests_page(c, live), "my/index.html": my_page(c), "add/index.html": add_page(c),
+        "index.html": home_page(c), "search/index.html": search_page(c), "interests/index.html": interests_page(c, live), "card/index.html": card_page(c), "my/index.html": my_page(c), "add/index.html": add_page(c),
         "skins/index.html": skins_page(c), "use/index.html": use_index(c), "manual/index.html": manual_page(c), "today/index.html": today_page(c), "calendar/index.html": calendar_page(c), "plan/index.html": plan_page(c),
     }
     for u in usecases.USECASES:
@@ -1057,7 +1068,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     pages.update(asset_pages(SITE["assets"]))
     # the sitemap lists indexable pages only (not /my/, not event pages that are held back)
     listed = {k: 1 for k in pages if k.endswith("index.html") and k != "my/index.html"
-              and k != "plan/index.html" and k != "interests/index.html" and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
+              and k != "plan/index.html" and k != "interests/index.html" and k != "card/index.html" and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
     pages.update(standard_files(listed, cfg, preview, today.isoformat()))
     pages[".htaccess"] = pages[".htaccess"] + HT_CACHE
     if preview:
