@@ -277,13 +277,34 @@ class Pages(BuildOnce):
     def test_the_sentences_composed_for_every_day_read_as_japanese(self):
         # the lead and the questions are put together from the catalog entry; these are the slips a reader noticed (2026-10-09)
         bad = {"a range with 'までに'": r"まで(に)(開催|実施|始まり|行われ|終了)", "a clause as the subject": r"(る|れる|ます)は、20\d\d年", "a clause before の概要": r"(る|れる|ます)の概要",
-               "決勝 for a horse race": r"決勝が行われ", "締切 twice": r"締切は、[^。]*が締切です", "改定 twice": r"改定は、[^。]*に改定されます", "場所 for an area": r"場所は(西日本|東日本|九州|東北)"}
+               "決勝 for a horse race": r"決勝が行われ", "締切 twice": r"締切は、[^。]*が締切です", "改定 twice": r"改定は、[^。]*に改定されます", "場所 for an area": r"場所は(西日本|東日本|九州|東北)", "a month called a day": r"ごろは、「"}
         for k, v in self.rel.items():
             if k.startswith("e/") and isinstance(v, str):
                 m = re.search(r'<section class="article".*?</section>', v, re.S)
                 text = re.sub(r"<[^>]+>", "", m.group(0)) if m else ""
                 for name, pat in bad.items():
                     self.assertIsNone(re.search(pat, text), f"{k}: {name}")
+
+    def test_kind_words_fit_the_day_and_a_one_day_event_is_not_a_period(self):
+        # a horse race is "held" (no "final"), an opposition is not a "peak"; the ids still come from the stored kind (2026-10-10)
+        by_subject = {(e["subject"], e["kind"]) for e in self.entries}
+        self.assertNotIn(("競馬", "決勝"), by_subject)
+        self.assertIn(("競馬", "開催"), by_subject)
+        self.assertTrue(any("衝" in e["title"] and e["kind"] == "衝" for e in self.entries))
+        self.assertEqual(catalog.shown_kind({"kind": "決勝", "subject": "サッカー", "title": "天皇杯 決勝"}), "決勝")
+        today = date(2026, 10, 10)
+        one_day = {"title": "テスト", "date": "2026-10-10", "date_end": None, "precision": "day", "kind": "改定", "group": "締切・制度", "subject": "税", "place": "", "region": None}
+        question, answer = build.articles.faq(one_day, build.fmt_date, today, None)[0]
+        self.assertNotIn("期間中", answer)
+        self.assertIn("今日", answer)
+
+    def test_the_questions_of_a_subject_guide_do_not_name_one_member_of_the_subject(self):
+        # the meteor-shower guide once asked "ふたご座流星群はどんな流星群ですか?" on the pages of other showers
+        guides = json.loads((build.ROOT / "data/atomou/guides.json").read_text(encoding="utf-8"))
+        for g in guides:
+            if g["subject"] == "流星群":
+                for q in g["faq"]:
+                    self.assertNotRegex(q["q"], r"座流星群は")
 
     def test_words_the_use_cases_quote_from_the_screens_exist_on_the_screens(self):
         # a wording pass once renamed a heading and a button while the steps still named the old ones

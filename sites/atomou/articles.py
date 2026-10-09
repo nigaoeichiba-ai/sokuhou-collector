@@ -28,9 +28,10 @@ KIND_VERB = {
     "決勝": ("に行われます", "に行われました"),
     "施行": ("に施行されます", "に施行されました"),
     "発売": ("に発売されます", "に発売されました"),
+    "衝": ("に衝を迎えます", "に衝を迎えました"),
 }
 KIND_ROW = {"開催": "開催", "試験日": "試験日", "開始": "開始日", "締切": "締切", "改定": "改定日", "発表": "発表日", "極大": "極大日", "終了": "終了日",
-            "決勝": "決勝", "施行": "施行日", "発売": "発売日"}
+            "決勝": "決勝", "施行": "施行日", "発売": "発売日", "衝": "衝の日"}
 
 
 def load_guides(path: Path = GUIDES_FILE) -> dict[str, dict]:
@@ -57,7 +58,7 @@ def when_text(e: dict, fmt, today: date) -> str:
     return _span(e, fmt)[0]
 
 
-DAY_KINDS = {"改定", "施行", "終了", "発表", "開始", "発売", "極大"}
+DAY_KINDS = {"改定", "施行", "終了", "発表", "開始", "発売", "極大", "衝"}
 AREA_KINDS = {"改定", "終了", "施行", "改正", "締切"}   # the place of these is the area they apply to, not a venue (the same set the cards use)
 
 
@@ -78,11 +79,13 @@ def lead(e: dict, fmt, today: date) -> str:
     when, _ = _span(e, fmt)
     i = 1 if past else 0
     short = _two_days(e, fmt)
-    if e["kind"] in DAY_KINDS and not (e.get("date_end") and not short):
+    if e["kind"] in DAY_KINDS and e["precision"] != "day":     # "…の令和9年分への改定は、2027年1月ごろの予定です。" (a month is not a day)
+        s = f"{e['title']}は、{when}{'でした' if past else 'の予定です'}。"
+    elif e["kind"] in DAY_KINDS and not (e.get("date_end") and not short):
         # "2027年2月11日(木)は、「木星が衝(一晩中見える時期)」の日です。": these titles say what happens (it is a statement, or it repeats the kind), so the title is quoted instead of made the subject
         s = f"{when}は、{e['title']}です。" if e["title"].endswith("日") else f"{when}は、「{e['title']}」の日{'でした' if past else 'です'}。"
         s = s.replace("の日でした。", "の日でした。") if past else s
-    elif e["kind"] == "極大":
+    elif e["kind"] in ("極大", "衝"):
         s = f"{when}は、「{e['title']}」の期間{'でした' if past else 'です'}。"
     elif e.get("date_end") and not short:
         if e["kind"] in ("開催", "試験日"):   # a range takes "まで" and no "に": 2026年10月17日(土)から2027年2月14日(日)まで開催されます
@@ -117,7 +120,7 @@ ASTRO_SUBJECTS = {"流星群", "月と土星", "満月", "火星と木星", "水
 
 def _change_note(e: dict) -> tuple[str, str]:
     """The question about changes, worded for the kind of day (a meteor shower, a system change and a festival do not change for the same reasons)."""
-    if e["subject"] in ASTRO_SUBJECTS or e["kind"] == "極大":
+    if e["subject"] in ASTRO_SUBJECTS or e["kind"] in ("極大", "衝"):
         return ("日付が変わることはありますか。",
                 "天体の動きから計算した日付なので、日付そのものはほとんど変わりません。見え方は、天候や場所、時刻によって変わります。時刻の詳細は、国立天文台などの公式ページでご確認ください。")
     if e["group"] == "締切・制度":
@@ -139,7 +142,7 @@ def faq(e: dict, fmt, today: date, guide: dict | None) -> list[tuple[str, str]]:
     elif last < today:
         left = f"{when}でした。もう{(today - last).days}日が過ぎています。"
     elif start <= today <= last:
-        left = f"{when}です。現在、期間中です。"
+        left = f"{when}です。" + ("今日がその日です。" if start == last else "現在、期間中です。")
     else:
         left = f"{when}です。{today.year}年{today.month}月{today.day}日の時点で、あと{(start - today).days}日です。"
     name = f"「{e['title']}」" if e["kind"] in DAY_KINDS else e["title"]
