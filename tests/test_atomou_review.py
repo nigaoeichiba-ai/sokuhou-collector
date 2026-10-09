@@ -100,8 +100,8 @@ class ReviewBuild(unittest.TestCase):
         self.assertIn('[ "$ATOMOU_PUBLIC" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }', wf)   # no password, no atomou deploy, review copy or not
         self.assertIn("vars.ATOMOU_PUBLIC != 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)", wf)   # the password file is written in both modes
         self.assertIn("python sites/atomou/build.py --demo-sub --out demo_build", wf)
-        self.assertIn("cp -a demo_build/. release/demo/", wf)
-        self.assertIn('hidden=$(curl -s -o /dev/null -w \'%{http_code}\' "$URL/demo/")', wf)
+        self.assertIn('for d in demo demo.atomou.com; do mkdir -p "release/$d"; cp -a demo_build/. "release/$d/"; done', wf)   # either folder name can be the subdomain's document root
+        self.assertIn('hidden=$(curl -s -o /dev/null -w \'%{http_code}\' "$URL$p")', wf)
         self.assertIn('[ "$hidden" = "401" ] || ok=0', wf)           # the live check: the hidden demo must refuse a visitor
         self.assertLess(wf.index("vars.ATOMOU_PUBLIC == 'true' && '--release'"), wf.index("vars.ATOMOU_REVIEW == 'true' && '--review'"))   # the real release wins over the review copy
 

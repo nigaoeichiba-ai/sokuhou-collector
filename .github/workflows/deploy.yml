@@ -236,8 +236,8 @@ jobs:
           python -m sokuhou.sitecheck demo_build --base https://demo.atomou.com
           python -m sokuhou.layoutcheck demo_build
           test -f demo_build/.htaccess
-          mkdir -p release/demo
-          cp -a demo_build/. release/demo/
+          # the panel does not show a subdomain's document root: Xserver's default is public_html/<host name>, the owner's note says public_html/demo; both get the demo (both behind the password)
+          for d in demo demo.atomou.com; do mkdir -p "release/$d"; cp -a demo_build/. "release/$d/"; done
       - name: SSH setup
         if: steps.gate.outputs.go == 'true'
         env:
@@ -278,13 +278,13 @@ jobs:
           test -n "$home"
           printf '%s:%s\n' "$DEMO_USER" "$(openssl passwd -apr1 "$DEMO_PASS")" | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
             "set -e; cd \"\$HOME/$SITE_DIR\"; cat > .htpasswd; chmod 604 .htpasswd"
-          for f in release/.htaccess release/demo/.htaccess; do   # the demo itself, or (review copy) the hidden demo folder
+          for f in release/.htaccess release/demo/.htaccess release/demo.atomou.com/.htaccess; do   # the demo itself, or (review copy) the hidden demo folder
             if [ -f "$f" ] && grep -q __HTPASSWD__ "$f"; then
               sed -i "s#__HTPASSWD__#$home/$SITE_DIR/.htpasswd#" "$f"
               grep -q "AuthUserFile $home/$SITE_DIR/.htpasswd" "$f"
             fi
           done
-          if [ -d release/demo ]; then grep -q "AuthUserFile" release/demo/.htaccess; fi
+          for d in release/demo release/demo.atomou.com; do if [ -d "$d" ]; then grep -q "AuthUserFile" "$d/.htaccess"; fi; done
       - name: Upload and switch
         if: steps.gate.outputs.go == 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         env:
@@ -330,8 +330,11 @@ jobs:
             [ "$unauth" = "401" ] || ok=0
           fi
           if [ "$SITE" = "atomou" ] && [ "${ATOMOU_PUBLIC:-}" != "true" ] && [ "${ATOMOU_REVIEW:-}" = "true" ]; then
-            hidden=$(curl -s -o /dev/null -w '%{http_code}' "$URL/demo/"); echo "the hidden demo folder without the password: $hidden (must be 401)"
-            [ "$hidden" = "401" ] || ok=0
+            for p in /demo/ /demo.atomou.com/; do
+              hidden=$(curl -s -o /dev/null -w '%{http_code}' "$URL$p"); echo "the hidden demo folder $p without the password: $hidden (must be 401)"
+              [ "$hidden" = "401" ] || ok=0
+            done
+            sub=$(curl -s -o /dev/null -w '%{http_code}' https://demo.atomou.com/) || sub=none; echo "demo.atomou.com itself: $sub (401 = the subdomain reaches the demo; 404 = its document root is somewhere else)"
           fi
           code=$(curl -s "${AUTH[@]}" -o /tmp/index.html -w '%{http_code}' "$URL/") || ok=0
           [ "$code" = "200" ] || ok=0
