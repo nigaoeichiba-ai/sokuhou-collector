@@ -23,21 +23,31 @@ LEAD = {"締切": 45, "試験日": 45, "施行": 45, "改定": 45}
 LEAD_DEFAULT = 60       # days before the date that the page may be indexed
 QUIET = ("grief", "disaster", "medical", "legal")
 
-GROUPS = ["締切・制度", "消費・セール", "大会・番組", "試験・資格", "マニア・天文", "地域のお祭り"]
+GROUPS = ["締切・制度", "消費・セール", "スポーツ・勝負", "試験・資格", "天文・季節", "地域のお祭り", "乗り物・レース", "ゲーム・アニメ・同人", "番組・音楽・賞"]
+# The first six keep their place (and so their colour and shape); the last three were split out of "マニア・天文" and "大会・番組" on 2026-10-10.
 GROUP_OF_CATEGORY = {
     "税": "締切・制度", "年金・保険": "締切・制度", "給付": "締切・制度", "制度": "締切・制度", "料金": "締切・制度",
     "セール": "消費・セール", "ふるさと納税": "消費・セール", "年賀状": "消費・セール", "ポイント": "消費・セール",
     "サービス終了": "消費・セール", "料金改定": "消費・セール",
     "大学入試": "試験・資格", "高校入試": "試験・資格", "資格": "試験・資格", "就活": "試験・資格", "奨学金": "試験・資格", "公務員": "試験・資格",
-    "野球": "大会・番組", "サッカー": "大会・番組", "駅伝・マラソン": "大会・番組", "相撲": "大会・番組", "フィギュア": "大会・番組",
-    "番組": "大会・番組", "音楽": "大会・番組",
-    "天文": "マニア・天文", "鉄道": "マニア・天文", "即売会": "マニア・天文", "ゲーム・アニメ": "マニア・天文", "ホビー": "マニア・天文",
-    "乗り物": "マニア・天文", "ライブ": "マニア・天文",
+    "野球": "スポーツ・勝負", "サッカー": "スポーツ・勝負", "駅伝・マラソン": "スポーツ・勝負", "相撲": "スポーツ・勝負", "フィギュア": "スポーツ・勝負",
+    "番組": "番組・音楽・賞", "音楽": "番組・音楽・賞", "ライブ": "番組・音楽・賞",
+    "天文": "天文・季節",
+    "鉄道": "乗り物・レース", "乗り物": "乗り物・レース",
+    "即売会": "ゲーム・アニメ・同人", "ゲーム・アニメ": "ゲーム・アニメ・同人", "ホビー": "ゲーム・アニメ・同人",
     "祭り": "地域のお祭り", "花火": "地域のお祭り", "イルミネーション": "地域のお祭り", "紅葉・花": "地域のお祭り", "スキー": "地域のお祭り",
     "初詣・初日の出": "地域のお祭り", "施設": "地域のお祭り",
 }
-GROUP_OF_FILE = {"seed_tax_law": "締切・制度", "seed_consumer": "消費・セール", "seed_exams": "試験・資格", "seed_sports_culture": "大会・番組",
-                 "seed_otaku_astro": "マニア・天文", "seed_regional": "地域のお祭り"}
+# a few topics sit under the catch-all category "その他" (or a neighbour's category) in the seeds; the topic decides the genre
+GROUP_OF_SUBJECT = {
+    "ラグビー": "スポーツ・勝負", "競馬": "スポーツ・勝負", "将棋": "スポーツ・勝負", "マラソン": "スポーツ・勝負", "女子マラソン": "スポーツ・勝負",
+    "F1": "乗り物・レース",
+    "ノーベル賞": "番組・音楽・賞", "アカデミー賞": "番組・音楽・賞", "映画祭": "番組・音楽・賞", "映画賞": "番組・音楽・賞",
+    "コミックマーケット": "ゲーム・アニメ・同人",
+    "宝くじ": "消費・セール", "年金(iDeCo)": "締切・制度", "住宅の補助金": "締切・制度", "共通テスト": "試験・資格",
+}
+GROUP_OF_FILE = {"seed_tax_law": "締切・制度", "seed_consumer": "消費・セール", "seed_exams": "試験・資格", "seed_sports_culture": "スポーツ・勝負",
+                 "seed_otaku_astro": "ゲーム・アニメ・同人", "seed_regional": "地域のお祭り"}
 SYNONYMS = {  # words a visitor may type -> tags, so "時給" finds a minimum-wage item and "はがき" finds the New Year cards
     "最低賃金": ["時給", "賃金", "バイト", "パート"], "年賀": ["年賀状", "はがき", "お正月"], "ふるさと納税": ["寄附", "返礼品"],
     "共通テスト": ["大学入試", "センター試験", "受験"], "TOEIC": ["英語", "資格", "試験"], "流星群": ["星", "天体観測", "天文"],
@@ -113,7 +123,7 @@ def load_seeds(seed_dir: Path = SEED_DIR) -> list[tuple[str, dict]]:
 def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None = None) -> tuple[list[dict], Counter]:
     block = blocklist if blocklist is not None else (json.loads((seed_dir / "blocklist.json").read_text(encoding="utf-8"))
                                                        if (seed_dir / "blocklist.json").exists() else {"keywords": []})
-    entries, rejects, seen = [], Counter(), set()
+    entries, rejects, seen, seen_days = [], Counter(), set(), set()
     for base, it in load_seeds(seed_dir):
         if not it.get("verified"):
             rejects["未確認"] += 1
@@ -136,7 +146,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
         if last < today - timedelta(days=KEEP_AFTER_DAYS):
             rejects["終了して30日超"] += 1
             continue
-        group = GROUP_OF_CATEGORY.get(it["category"]) or GROUP_OF_FILE.get(base)
+        group = GROUP_OF_SUBJECT.get(str(it.get("subject") or "").strip()) or GROUP_OF_CATEGORY.get(it["category"]) or GROUP_OF_FILE.get(base)
         if not group:
             rejects["ジャンル不明"] += 1
             continue
@@ -145,6 +155,11 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
             rejects["重複"] += 1
             continue
         seen.add(eid)
+        same_day = (str(it["title"]).strip(), it["date"])        # the same event listed in two seed files (a marathon in the regional and the sports file): the first file's entry stays
+        if same_day in seen_days:
+            rejects["重複(同名同日)"] += 1
+            continue
+        seen_days.add(same_day)
         sens = it.get("sensitivity") or "none"
         quiet = sens in QUIET
         lead = LEAD.get(it.get("kind"), LEAD_DEFAULT)
