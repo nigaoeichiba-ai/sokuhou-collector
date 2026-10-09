@@ -197,6 +197,78 @@ def merge(kind: str, answer: Path, write: bool = True) -> tuple[int, int, list[s
     return done, kept, notes
 
 
+def _changed(kind: str, before: Path) -> dict[str, dict[str, list[str]]]:
+    """{page key: {field path: [text before the rewrite, text now]}} for the fields that differ from the `before` copy of the content file."""
+    f, inner, key, _ = KINDS[kind]
+    old = json.loads(before.read_text(encoding="utf-8"))
+    old_items = old[inner] if isinstance(old, dict) else old
+    old_by = {key(it): it for it in old_items}
+    _, items = load(kind)
+    out: dict[str, dict[str, list[str]]] = {}
+    for it in items:
+        k = key(it)
+        if k not in old_by:
+            continue
+        a, b = fields(kind, old_by[k]), fields(kind, it)
+        diff = {p: [a[p], b[p]] for p in b if p in a and a[p] != b[p]}
+        if diff:
+            out[k] = diff
+    return out
+
+
+REVIEW_RULES = """
+You are the second reader of a rewrite. For each field below you get the ORIGINAL wording and the REWRITTEN wording of a Japanese gift-site text.
+Judge the REWRITTEN one as a careful native editor would:
+- Is it grammatical, natural written Japanese? Typical failures of a mechanical rewrite: 「〜やすい」 swapped for 「〜できる」 where the sentence no longer works (e.g. 「ものが扱えます」, 「受け取ってもらえます」 with the wrong subject), a noun that cannot take the verb, a changed meaning, a stiffer or odder phrase than the original, a doubled word.
+- Does it keep the original meaning, every number and every kind of product, and add nothing new?
+If it is fine, answer "ok". If not, answer with ONE corrected text: the best natural wording that keeps the meaning, keeps the length within 70-130% of the original, uses 「〜やすい」 at most once, and has no comma after every short phrase. You may return the original wording if it was better.
+Answer as JSON {page key: {field path: "ok" or "corrected text"}} with exactly the same keys and paths.
+"""
+
+
+def review_brief(kind: str, before: Path, out: Path, answer: Path) -> None:
+    ch = _changed(kind, before)
+    payload = {k: {p: {"original": a, "rewritten": b} for p, (a, b) in d.items()} for k, d in ch.items()}
+    n = sum(len(d) for d in ch.values())
+    text = (f"Review task (workspace-write). Reply in English with a very short report. Write exactly ONE file: {answer.as_posix()} (UTF-8 JSON, ensure_ascii false). Do not edit anything else.\n"
+            f"{REVIEW_RULES}\nFIELDS ({n}):\n{json.dumps(payload, ensure_ascii=False, indent=1)}\n")
+    out.write_text(text, encoding="utf-8", newline="\n")
+    print(f"review brief for {n} fields of {len(ch)} {kind} pages written to {out}; Codex must write {answer}")
+
+
+def review_merge(kind: str, before: Path, answer: Path) -> tuple[int, int, list[str]]:
+    """Apply the second reader's corrections: a corrected text replaces the current one when it passes the gate against the ORIGINAL text; 'ok' keeps the rewrite."""
+    ch = _changed(kind, before)
+    data, items = load(kind)
+    key = KINDS[kind][2]
+    by_key = {key(it): it for it in items}
+    verdict = json.loads(answer.read_text(encoding="utf-8"))
+    fixed = kept = 0
+    notes: list[str] = []
+    for k, flds in verdict.items():
+        for path, v in flds.items():
+            if k not in ch or path not in ch[k]:
+                notes.append(f"{k}.{path}: not a changed field")
+                continue
+            orig, now = ch[k][path]
+            if v.strip().lower() == "ok" or v.strip() == now.strip():
+                kept += 1
+                continue
+            why = [w for w in accept(orig, v, f"{k}.{path}") if not w.startswith("not better")]
+            if why:
+                notes.append(f"{k}.{path}: correction refused ({'; '.join(why)}); the rewrite stays")
+                continue
+            _set(by_key[k], path, v)
+            fixed += 1
+    if fixed:
+        f = KINDS[kind][0]
+        raw = (CONTENT / f).read_bytes().decode("utf-8")
+        nl = "\r\n" if "\r\n" in raw else "\n"
+        out = json.dumps(data, ensure_ascii=False, indent=1).replace("\n", nl) + (nl if raw.endswith("\n") else "")
+        (CONTENT / f).write_bytes(out.encode("utf-8"))
+    return fixed, kept, notes
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -207,6 +279,15 @@ def main(argv: list[str] | None = None) -> int:
     b.add_argument("--offset", type=int, default=0)
     b.add_argument("--out", type=Path, required=True)
     b.add_argument("--answer", type=Path, required=True)
+    rb = sub.add_parser("review-brief")
+    rb.add_argument("kind", choices=sorted(KINDS))
+    rb.add_argument("--before", type=Path, required=True)
+    rb.add_argument("--out", type=Path, required=True)
+    rb.add_argument("--answer", type=Path, required=True)
+    rm = sub.add_parser("review-merge")
+    rm.add_argument("kind", choices=sorted(KINDS))
+    rm.add_argument("--before", type=Path, required=True)
+    rm.add_argument("answer", type=Path)
     m = sub.add_parser("merge")
     m.add_argument("kind", choices=sorted(KINDS))
     m.add_argument("answer", type=Path)
@@ -218,6 +299,15 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if a.cmd == "brief":
         brief(a.kind, a.n, a.out, a.answer, a.offset)
+        return 0
+    if a.cmd == "review-brief":
+        review_brief(a.kind, a.before, a.out, a.answer)
+        return 0
+    if a.cmd == "review-merge":
+        fixed, kept, notes = review_merge(a.kind, a.before, a.answer)
+        print(f"corrected {fixed} fields, kept {kept} rewrites")
+        for n in notes[:60]:
+            print(" ", n)
         return 0
     done, kept, notes = merge(a.kind, a.answer)
     print(f"rewrote {done} fields, kept {kept} old ones")
