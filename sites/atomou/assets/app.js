@@ -45,6 +45,7 @@
       quiet: !!e.quiet || kind === 'memorial', yearly: !!e.yearly, every100: !!e.every100, alarm: oneOf(e.alarm, ['', 'morning', 'eve', 'week', 'none'], ''),   // '' = follow the setting on the my page
       time: /^([01]\d|2[0-3]):[0-5]\d$/.test(String(e.time)) ? e.time : '', created: /^\d{4}-\d{2}-\d{2}$/.test(String(e.created)) ? e.created : '' };
   }
+  var REMIND_SET = [100, 60, 30, 14, 7, 3, 1];
   function cleanNotes(n) {  // memo and "do this N days before" tasks, per day (key c:<catalogue id> or m:<own id>)
     var out = {}, keys = n && typeof n === 'object' ? Object.keys(n).slice(0, 300) : [];
     keys.forEach(function (k) {
@@ -55,7 +56,8 @@
         var b = Math.floor(+t.before), text = String(t.text == null ? '' : t.text).slice(0, 80);
         return (b >= 0 && b <= 365 && text) ? { id: /^[a-z0-9]{1,12}$/.test(String(t.id)) ? t.id : Math.random().toString(36).slice(2, 8), before: b, text: text, done: !!t.done } : null;
       }).filter(Boolean), memo = String(v.memo == null ? '' : v.memo).slice(0, 600);
-      if (memo || tasks.length) out[k] = { memo: memo, tasks: tasks };
+      var remind = (Array.isArray(v.remind) ? v.remind : []).map(function (r) { return Math.floor(+r); }).filter(function (r, i, l) { return REMIND_SET.indexOf(r) >= 0 && l.indexOf(r) === i; }).sort(function (a, b) { return b - a; });   // days before: a notice for each
+      if (memo || tasks.length || remind.length) out[k] = { memo: memo, tasks: tasks, remind: remind };
     });
     return out;
   }
@@ -484,9 +486,9 @@
     if (key.indexOf('m:') === 0) {
       var e = findEntry(key.slice(2));
       if (!e) return;
-      ev = { uid: 'm-' + e.id, title: e.title, date: d, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm };
+      ev = { uid: 'm-' + e.id, title: e.title, date: d, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm, reminds: (S.notes[key] && S.notes[key].remind) || [] };
     } else {
-      ev = { uid: 'e-' + key.slice(2), title: title, date: d, alarm: S.prefs.alarm, note: '詳しい日付と出典: ' + location.origin + '/e/' + key.slice(2) + '/' };
+      ev = { uid: 'e-' + key.slice(2), title: title, date: d, alarm: S.prefs.alarm, reminds: (S.notes[key] && S.notes[key].remind) || [], note: '詳しい日付と出典: ' + location.origin + '/e/' + key.slice(2) + '/' };
       if (S.saved.indexOf(key.slice(2)) < 0) { S.saved.push(key.slice(2)); persist(); fillCard(card); }
       var g = card.getAttribute('data-g');
       if (g && CONF.groups[g - 1]) { bump(CONF.groups[g - 1]); persist(); }

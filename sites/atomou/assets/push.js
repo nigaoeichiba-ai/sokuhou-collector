@@ -37,6 +37,9 @@
       if (it.yearly) { for (y = Math.max(today[0], d0[0]); y <= last[0] + 1; y++) turns.push(A.occ(d0, y)); } else turns.push(d0);   // a yearly day comes round twice within 400 days
       turns.forEach(function (base) {
         if (slot) add(C.addDays(base, slot.off), slot.s, slot.pre + it.title + (it.time ? ' ' + it.time : ''), url);
+        if (!it.quiet) (Pl.notesOf(it.key).remind || []).forEach(function (r) {   // "あと30日" and so on, as many as the visitor chose for this day
+          add(C.addDays(base, -r), 'm', (r === 1 ? '明日 ' : 'あと' + r + '日: ') + it.title + (it.time ? ' ' + it.time : ''), url);
+        });
         Pl.notesOf(it.key).tasks.forEach(function (t) {
           if (t.done) return;
           add(C.addDays(base, -t.before), 'm', 'やること: ' + t.text + '(' + it.title + ')', url);
