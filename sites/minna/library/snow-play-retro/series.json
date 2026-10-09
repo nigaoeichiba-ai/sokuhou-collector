@@ -1,0 +1,222 @@
+{
+ "added": "2026-10-10",
+ "slug": "snow-play-retro",
+ "title": "昭和の雪あそび",
+ "genre": "people",
+ "touch": "retro",
+ "lead": "雪だるま、かまくら、そり、おしくらまんじゅう。昭和の冬の子どもの遊び12場面。レトロなチラシやポスターに。",
+ "tags": [
+  "昭和",
+  "レトロ",
+  "雪あそび",
+  "冬",
+  "子ども",
+  "懐かしい"
+ ],
+ "subject": "",
+ "season": {
+  "from": "12-01",
+  "to": "02-20"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "snow-play-retro-snowman",
+   "file": "snow-play-retro-snowman.webp",
+   "title": "雪だるま",
+   "desc": "雪だるまのイラスト。昭和レトロのタッチ。",
+   "tags": [
+    "昭和",
+    "レトロ",
+    "雪あそび",
+    "冬",
+    "昭和の雪あそび",
+    "雪だるま",
+    "昭和レトロ",
+    "人物"
+   ],
+   "w": 515,
+   "h": 499
+  },
+  {
+   "id": "snow-play-retro-kamakura",
+   "file": "snow-play-retro-kamakura.webp",
+   "title": "かまくら",
+   "desc": "かまくらのイラスト。昭和レトロのタッチ。",
+   "tags": [
+    "昭和",
+    "レトロ",
+    "雪あそび",
+    "冬",
+    "昭和の雪あそび",
+    "かまくら",
+    "昭和レトロ",
+    "人物"
+   ],
+   "w": 528,
+   "h": 432
+  },
+  {
+   "id": "snow-play-retro-sled",
+   "file": "snow-play-retro-sled.webp",
+   "title": "そりすべり",
+   "desc": "そりすべりのイラスト。昭和レトロのタッチ。",
+   "tags": [
+    "昭和",
+    "レトロ",
+    "雪あそび",
+    "冬",
+    "昭和の雪あそび",
+    "そりすべり",
+    "昭和レトロ",
+    "人物"
+   ],
+   "w": 493,
+   "h": 448
+  },
+  {
+   "id": "snow-play-retro-oshikura",
+   "file": "snow-play-retro-oshikura.webp",
+   "title": "おしくらまんじゅう",
+   "desc": "おしくらまんじゅうのイラスト。昭和レトロのタッチ。",
+   "tags": [
+    "昭和",
+    "レトロ",
+    "雪あそび",
+    "冬",
+    "昭和の雪あそび",
+    "おしくらまんじゅう",
+    "昭和レトロ",
+    "人物"
+   ],
+   "w": 510,
+   "h": 429
+  },
+  {
+   "id": "snow-play-retro-snowball",
+   "file": "snow-play-retro-snowball.webp",
+   "title": "雪合戦",
+   "desc": "雪合戦のイラスト。昭和レトロのタッチ。",
+   "tags": [
+    "昭和",
+    "レトロ",
+    "雪あそび",
+    "冬",
+    "昭和の雪あそび",
+    "雪合戦",
+    "昭和レトロ",
+    "人物"
+   ],
+   "w": 544,
+   "h": 428
+  },
+  {
+   "id": "snow-play-retro-stove",
+   "file": "snow-play-retro-stove.webp",
+   "title": "ストーブ",
+   "desc": "ストーブのイラスト。昭和レトロのタッチ。",
+   "tags": [
+    "昭和",
+    "レトロ",
+    "雪あそび",
+    "冬",
+    "昭和の雪あそび",
+    "ストーブ",
+    "昭和レトロ",
+    "人物"
+   ],
+   "w": 399,
+   "h": 421
+  },
+  {
+   "id": "snow-play-retro-mikan",
+   "file": "snow-play-retro-mikan.webp",
+   "title": "こたつのみかん",
+   "desc": "こたつのみかんのイラスト。昭和レトロのタッチ。",
+   "tags": [
+    "昭和",
+    "レトロ",
+    "雪あそび",
+    "冬",
+    "昭和の雪あそび",
+    "こたつのみかん",
+    "昭和レトロ",
+    "人物"
+   ],
+   "w": 533,
+   "h": 442
+  },
+  {
+   "id": "snow-play-retro-footprints",
+   "file": "snow-play-retro-footprints.webp",
+   "title": "雪の足あと",
+   "desc": "雪の足あとのイラスト。昭和レトロのタッチ。",
+   "tags": [
+    "昭和",
+    "レトロ",
+    "雪あそび",
+    "冬",
+    "昭和の雪あそび",
+    "雪の足あと",
+    "昭和レトロ",
+    "人物"
+   ],
+   "w": 381,
+   "h": 459
+  },
+  {
+   "id": "snow-play-retro-snow-angel",
+   "file": "snow-play-retro-snow-angel.webp",
+   "title": "雪の天使",
+   "desc": "雪の天使のイラスト。昭和レトロのタッチ。",
+   "tags": [
+    "昭和",
+    "レトロ",
+    "雪あそび",
+    "冬",
+    "昭和の雪あそび",
+    "雪の天使",
+    "昭和レトロ",
+    "人物"
+   ],
+   "w": 469,
+   "h": 477
+  },
+  {
+   "id": "snow-play-retro-sweet-potato",
+   "file": "snow-play-retro-sweet-potato.webp",
+   "title": "焼きいも",
+   "desc": "焼きいものイラスト。昭和レトロのタッチ。",
+   "tags": [
+    "昭和",
+    "レトロ",
+    "雪あそび",
+    "冬",
+    "昭和の雪あそび",
+    "焼きいも",
+    "昭和レトロ",
+    "人物"
+   ],
+   "w": 394,
+   "h": 480
+  },
+  {
+   "id": "snow-play-retro-skate",
+   "file": "snow-play-retro-skate.webp",
+   "title": "スケート",
+   "desc": "スケートのイラスト。昭和レトロのタッチ。",
+   "tags": [
+    "昭和",
+    "レトロ",
+    "雪あそび",
+    "冬",
+    "昭和の雪あそび",
+    "スケート",
+    "昭和レトロ",
+    "人物"
+   ],
+   "w": 525,
+   "h": 486
+  }
+ ]
+}

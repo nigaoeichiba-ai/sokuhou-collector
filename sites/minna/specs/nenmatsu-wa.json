@@ -1,0 +1,87 @@
+{
+ "slug": "nenmatsu-wa",
+ "title": "年越しとお正月の準備",
+ "subject": "",
+ "genre": "season",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "subject_en": "Japanese New Year's Eve and New Year preparation motifs, each a separate item in traditional style, using vermilion, indigo, gold and ivory. No people. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
+ "lead": "除夜の鐘、年越しそば、しめ縄、鏡もち、初日の出。大みそかからお正月への和のイラスト12点。年末のおたよりや案内に。",
+ "tags": [
+  "大みそか",
+  "年越し",
+  "除夜の鐘",
+  "しめ縄",
+  "鏡もち",
+  "初日の出",
+  "和風"
+ ],
+ "season": {
+  "from": "12-15",
+  "to": "01-07"
+ },
+ "holes": false,
+ "items": [
+  [
+   "joya-bell",
+   "除夜の鐘",
+   "a large temple bell hanging in a small wooden frame with a striking log"
+  ],
+  [
+   "toshikoshi",
+   "年越しそば",
+   "a bowl of soba noodles with tempura shrimp and green onion, steam rising"
+  ],
+  [
+   "shimenawa",
+   "しめ縄",
+   "a twisted straw shimenawa rope with white paper zigzag streamers and an orange"
+  ],
+  [
+   "kagamimochi",
+   "鏡もち",
+   "a kagami mochi stack of two rice cakes on a stand with an orange on top"
+  ],
+  [
+   "hatsuhinode",
+   "初日の出",
+   "the first sunrise over a calm sea with a pine tree silhouette"
+  ],
+  [
+   "kadomatsu",
+   "門松",
+   "a pair of kadomatsu bamboo and pine decorations tied with straw"
+  ],
+  [
+   "osoji",
+   "大そうじの道具",
+   "a broom, a bucket and a cloth leaning together"
+  ],
+  [
+   "hatsuyume",
+   "初夢",
+   "a sleeping pillow with a small Mount Fuji, a hawk and an eggplant floating above"
+  ],
+  [
+   "toshidama",
+   "年神さまの折り紙",
+   "a folded paper crane and a small red and white bow"
+  ],
+  [
+   "lantern-night",
+   "大みそかの提灯",
+   "a paper lantern lit with a golden glow and falling snow dots"
+  ],
+  [
+   "new-calendar",
+   "新しい暦",
+   "a hanging scroll style calendar with a red sun mark, no readable letters"
+  ],
+  [
+   "hagoita",
+   "羽子板",
+   "a decorated hagoita paddle with a shuttlecock"
+  ]
+ ],
+ "exclude": []
+}

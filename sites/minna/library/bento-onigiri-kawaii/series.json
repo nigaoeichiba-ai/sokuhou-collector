@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-10",
+ "slug": "bento-onigiri-kawaii",
+ "title": "おにぎりとお弁当",
+ "genre": "food",
+ "touch": "kawaii",
+ "lead": "おにぎり、おかずいろいろ、お弁当箱、水筒。遠足、ピクニック、毎日のお弁当に使える食べものイラスト12点。",
+ "tags": [
+  "お弁当",
+  "おにぎり",
+  "遠足",
+  "ピクニック",
+  "食べ物",
+  "かわいい"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "bento-onigiri-kawaii-onigiri-triangle",
+   "file": "bento-onigiri-kawaii-onigiri-triangle.webp",
+   "title": "三角おにぎり",
+   "desc": "三角おにぎりのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "三角おにぎり",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 454,
+   "h": 415
+  },
+  {
+   "id": "bento-onigiri-kawaii-onigiri-round",
+   "file": "bento-onigiri-kawaii-onigiri-round.webp",
+   "title": "まるいおにぎり",
+   "desc": "まるいおにぎりのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "まるいおにぎり",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 422,
+   "h": 416
+  },
+  {
+   "id": "bento-onigiri-kawaii-tamagoyaki",
+   "file": "bento-onigiri-kawaii-tamagoyaki.webp",
+   "title": "たまご焼き",
+   "desc": "たまご焼きのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "たまご焼き",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 495,
+   "h": 392
+  },
+  {
+   "id": "bento-onigiri-kawaii-karaage",
+   "file": "bento-onigiri-kawaii-karaage.webp",
+   "title": "からあげ",
+   "desc": "からあげのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "からあげ",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 505,
+   "h": 428
+  },
+  {
+   "id": "bento-onigiri-kawaii-wiener",
+   "file": "bento-onigiri-kawaii-wiener.webp",
+   "title": "タコさんウインナー",
+   "desc": "タコさんウインナーのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "タコさんウインナー",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 419,
+   "h": 411
+  },
+  {
+   "id": "bento-onigiri-kawaii-bento-box",
+   "file": "bento-onigiri-kawaii-bento-box.webp",
+   "title": "お弁当箱",
+   "desc": "お弁当箱のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "お弁当箱",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 497,
+   "h": 472
+  },
+  {
+   "id": "bento-onigiri-kawaii-thermos",
+   "file": "bento-onigiri-kawaii-thermos.webp",
+   "title": "すいとう",
+   "desc": "すいとうのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "すいとう",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 306,
+   "h": 488
+  },
+  {
+   "id": "bento-onigiri-kawaii-pickled-plum",
+   "file": "bento-onigiri-kawaii-pickled-plum.webp",
+   "title": "うめぼし",
+   "desc": "うめぼしのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "うめぼし",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 437,
+   "h": 415
+  },
+  {
+   "id": "bento-onigiri-kawaii-broccoli-tomato",
+   "file": "bento-onigiri-kawaii-broccoli-tomato.webp",
+   "title": "ブロッコリーとミニトマト",
+   "desc": "ブロッコリーとミニトマトのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "ブロッコリーとミニトマト",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 530,
+   "h": 448
+  },
+  {
+   "id": "bento-onigiri-kawaii-sandwich",
+   "file": "bento-onigiri-kawaii-sandwich.webp",
+   "title": "サンドイッチ",
+   "desc": "サンドイッチのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "サンドイッチ",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 459,
+   "h": 464
+  },
+  {
+   "id": "bento-onigiri-kawaii-furoshiki",
+   "file": "bento-onigiri-kawaii-furoshiki.webp",
+   "title": "お弁当づつみ",
+   "desc": "お弁当づつみのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "お弁当づつみ",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 460,
+   "h": 422
+  },
+  {
+   "id": "bento-onigiri-kawaii-rice-ball-set",
+   "file": "bento-onigiri-kawaii-rice-ball-set.webp",
+   "title": "おにぎりセット",
+   "desc": "おにぎりセットのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "お弁当",
+    "おにぎり",
+    "遠足",
+    "ピクニック",
+    "おにぎりとお弁当",
+    "おにぎりセット",
+    "ゆるかわ",
+    "たべもの"
+   ],
+   "w": 551,
+   "h": 295
+  }
+ ]
+}

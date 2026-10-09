@@ -1,0 +1,83 @@
+{
+ "slug": "bento-onigiri-kawaii",
+ "title": "おにぎりとお弁当",
+ "subject": "",
+ "genre": "food",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Cute lunch-box foods, each a single separate item with a tiny simple face on it where natural: onigiri rice balls, side dishes, bento boxes, a thermos. Food items only, no people. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
+ "lead": "おにぎり、おかずいろいろ、お弁当箱、水筒。遠足、ピクニック、毎日のお弁当に使える食べものイラスト12点。",
+ "tags": [
+  "お弁当",
+  "おにぎり",
+  "遠足",
+  "ピクニック",
+  "食べ物",
+  "かわいい"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "onigiri-triangle",
+   "三角おにぎり",
+   "a triangular onigiri rice ball with a strip of dark seaweed"
+  ],
+  [
+   "onigiri-round",
+   "まるいおにぎり",
+   "a round onigiri rice ball with sesame seeds on top"
+  ],
+  [
+   "tamagoyaki",
+   "たまご焼き",
+   "three slices of rolled Japanese omelette stacked"
+  ],
+  [
+   "karaage",
+   "からあげ",
+   "three pieces of fried chicken with a lemon wedge"
+  ],
+  [
+   "wiener",
+   "タコさんウインナー",
+   "an octopus-shaped red sausage with a smile"
+  ],
+  [
+   "bento-box",
+   "お弁当箱",
+   "an open two-tier lunch box filled with rice and side dishes seen from above"
+  ],
+  [
+   "thermos",
+   "すいとう",
+   "a small bottle-shaped thermos with a cup lid"
+  ],
+  [
+   "pickled-plum",
+   "うめぼし",
+   "a single pickled plum on a small bed of rice"
+  ],
+  [
+   "broccoli-tomato",
+   "ブロッコリーとミニトマト",
+   "a broccoli floret and two cherry tomatoes together"
+  ],
+  [
+   "sandwich",
+   "サンドイッチ",
+   "a cut sandwich with lettuce and egg filling showing its cross-section"
+  ],
+  [
+   "furoshiki",
+   "お弁当づつみ",
+   "a lunch box wrapped in a knotted cloth with a simple dot pattern"
+  ],
+  [
+   "rice-ball-set",
+   "おにぎりセット",
+   "three different onigiri lined up side by side on a small tray"
+  ]
+ ],
+ "exclude": []
+}

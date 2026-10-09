@@ -1,0 +1,89 @@
+{
+ "slug": "winter-stars-flat",
+ "title": "冬の星空と星座",
+ "subject": "",
+ "genre": "nature",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Night-sky motifs in flat style: deep indigo, yellow and pale blue only, each a separate item (constellation drawn as a few star points joined by a thin line plus a small simple creature shape, telescope, shooting star). No letters. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
+ "lead": "オリオン、おおいぬ、すばる、流れ星、天体望遠鏡。冬の夜空を楽しむイラスト12点。天体観察のおたよりやポスターに。",
+ "tags": [
+  "星空",
+  "星座",
+  "冬",
+  "オリオン",
+  "天体観測",
+  "夜空"
+ ],
+ "season": {
+  "from": "11-20",
+  "to": "02-20"
+ },
+ "holes": false,
+ "items": [
+  [
+   "orion",
+   "オリオン座",
+   "the Orion constellation shown as a hunter figure formed by yellow stars and thin lines"
+  ],
+  [
+   "canis",
+   "おおいぬ座",
+   "a dog shaped constellation made of yellow stars and thin lines"
+  ],
+  [
+   "pleiades",
+   "すばる",
+   "a cluster of six bright blue-white stars"
+  ],
+  [
+   "shooting",
+   "流れ星",
+   "a shooting star with a curved glowing tail of small stars"
+  ],
+  [
+   "telescope",
+   "天体望遠鏡",
+   "a telescope on a tripod pointing up"
+  ],
+  [
+   "crescent",
+   "三日月とお星さま",
+   "a crescent moon with two small stars"
+  ],
+  [
+   "full-moon",
+   "満月",
+   "a full moon with soft crater marks"
+  ],
+  [
+   "planet",
+   "土星",
+   "a ringed planet with bands"
+  ],
+  [
+   "observer",
+   "星を見る人",
+   "the back view of a child in a coat and scarf looking up at stars"
+  ],
+  [
+   "rocket",
+   "ロケット",
+   "a small rocket flying up with a flame and tiny stars"
+  ],
+  [
+   "star-chart",
+   "星座早見盤",
+   "a round planisphere star chart with a rotating disc"
+  ],
+  [
+   "lantern-star",
+   "星のランタン",
+   "a hanging lantern shaped like a star glowing yellow"
+  ]
+ ],
+ "exclude": [
+  "lantern-star",
+  "observer"
+ ]
+}
