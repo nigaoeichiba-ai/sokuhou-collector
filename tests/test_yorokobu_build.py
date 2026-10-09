@@ -49,6 +49,19 @@ class BuildTest(unittest.TestCase):
         self.assertIn("amazon.co.jp/s?k=", html)
         self.assertIn("Amazonのアソシエイトとして", html)
 
+    def test_event_and_recipient_pages_offer_an_amazon_search_with_the_notice(self):
+        for rel in ("occasion/birthday/index.html", "for/mother/index.html"):
+            html = self.read(rel)
+            self.assertIn("amazon.co.jp/s?k=", html, rel)
+            self.assertIn("tag=amazonmacs-22", html, rel)
+            self.assertIn("Amazonのアソシエイトとして", html, rel)
+            self.assertIn("Amazonアソシエイト", html, rel)                       # the PR notice names Amazon because the page has the link
+        with tempfile.TemporaryDirectory() as tmp:                                  # no tracking ID: no Amazon link and no mention
+            out = Path(tmp) / "s"
+            build.render_site(self.c, self.items, {**CFG, "amazon_tracking_id": None}, out, release=True, today=TODAY)
+            html = (out / "occasion/birthday/index.html").read_text(encoding="utf-8")
+            self.assertNotIn("amazon", html.lower())
+
     def test_rakuten_rules_for_displaying_prices(self):
         html = self.read("gift/birthday-boyfriend/index.html")
         self.assertIn("価格・在庫は2026年10月7日 7:00時点の情報です", html)
