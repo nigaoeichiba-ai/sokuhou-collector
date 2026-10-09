@@ -878,6 +878,10 @@
     return null;
   }
 
+  var MIC_SVG = '<svg class="mic" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V22h2v-3.1A7 7 0 0 0 19 12h-2z"/></svg>';
+  function micHint(what) { return '<p class="hint mic-hint">' + MIC_SVG + '<span>' + (what || '') + 'キーボードのマイクで、声でも入れられます。</span></p>'; }
+  window.AtomouMicHint = micHint;
+
   /* ---------- add ---------- */
   function pageAdd() {
     var root = $('#wizard'), st = { kind: '', p: 'day', words: [] };
@@ -890,10 +894,12 @@
       '<button type="button" class="chip" data-p="year" aria-pressed="false">年だけ</button></div>' +
       '<div class="field"><label for="f-day" id="lab-date">日付を選ぶ</label><input type="date" id="f-day" min="0100-01-01" max="2200-12-31">' +
       '<input type="month" id="f-month" hidden placeholder="2026-10"><input type="number" id="f-year" hidden inputmode="numeric" min="1" max="2200" placeholder="例 1990"></div>' +
+      '<div class="field"><label for="f-say">文字や声で入れる(例: 12月25日)</label><input type="text" id="f-say" autocomplete="off" maxlength="30" placeholder="12月25日 / 2027年3月3日 / 明日">' +
+      '<p class="hint" id="say-note" aria-live="polite"></p>' + micHint('') + '</div>' +
       '<button type="button" class="chip" id="f-today">今日にする</button><p class="hint" id="h-approx" hidden>年や月までの日付は、「約」つきで数えます。</p><p class="err" id="e-date" role="alert"></p>' +
       '<div id="live" class="live" hidden aria-live="polite"></div></section>' +
       '<section id="s3" hidden><h2>3. 名前</h2><p class="hint">候補を押すか、短く入力します。</p><div class="chips" id="f-words"></div>' +
-      '<div class="field"><label for="f-title">名前</label><input type="text" id="f-title" maxlength="40" autocomplete="off"></div></section>' +
+      '<div class="field"><label for="f-title">名前</label><input type="text" id="f-title" maxlength="40" autocomplete="off">' + micHint('') + '</div></section>' +
       '<section id="s4" hidden><h2>4. 時刻・くり返し</h2>' +
       '<div class="field" id="f-timebox" hidden><label for="f-time">時刻(任意)</label><input type="time" id="f-time"></div>' +
       '<label class="chip" id="l-yearly"><input type="checkbox" id="f-yearly"> 毎年くり返す</label> <label class="chip" id="l-100"><input type="checkbox" id="f-100"> 100日ごとの節目も入れる</label>' +
@@ -938,6 +944,17 @@
       update();
       $f('s2').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    function say() {
+      var v = $f('f-say').value, note = $f('say-note'), d;
+      if (!v.trim()) { note.textContent = ''; return; }
+      d = C.parseSpoken(v, st.p, TODAY);
+      if (!d) { note.textContent = st.p === 'day' ? '読み取れませんでした。年月日の形で入れてください(例: 12月25日)。' : st.p === 'month' ? '読み取れませんでした(例: 2026年10月)。' : '読み取れませんでした(例: 1990年)。'; return; }
+      if (st.p === 'day') $f('f-day').value = C.iso(d);
+      else if (st.p === 'month') $f('f-month').value = String(d[0]).padStart(4, '0') + '-' + String(d[1]).padStart(2, '0');
+      else $f('f-year').value = d[0];
+      note.textContent = '→ ' + fmtDate(C.iso(d), st.p);
+      update();
+    }
     function setP(p) {
       st.p = p;
       $$('[data-p]', root).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-p') === p ? 'true' : 'false'); });
@@ -945,6 +962,7 @@
       $f('lab-date').setAttribute('for', p === 'day' ? 'f-day' : p === 'month' ? 'f-month' : 'f-year');
       $f('lab-date').textContent = p === 'day' ? '日付を選ぶ' : p === 'month' ? '年と月(例 2026-10)' : '年(例 1990)';
       $f('f-today').hidden = p !== 'day'; $f('h-approx').hidden = p === 'day';
+      $f('f-say').value = ''; $f('say-note').textContent = '';
       update();
     }
     root.addEventListener('click', function (ev) {
@@ -952,13 +970,15 @@
       if (!t) return;
       if (t.hasAttribute('data-kind')) setKind(t.getAttribute('data-kind'));
       else if (t.hasAttribute('data-p')) setP(t.getAttribute('data-p'));
-      else if (t.id === 'f-today') { $f('f-day').value = C.iso(TODAY); update(); }
+      else if (t.id === 'f-today') { $f('f-day').value = C.iso(TODAY); $f('f-say').value = ''; $f('say-note').textContent = ''; update(); }
       else if (t.hasAttribute('data-word')) {
         var w = t.getAttribute('data-word'), cur = $f('f-title').value;
         $f('f-title').value = (w.charAt(0) === 'の' && cur) ? cur + w : w; update();
       }
       else if (t.id === 'f-save') save();
     });
+    $f('f-say').addEventListener('input', say);
+    ['f-day', 'f-month', 'f-year'].forEach(function (id) { $f(id).addEventListener('input', function () { $f('f-say').value = ''; $f('say-note').textContent = ''; }); });
     ['f-day', 'f-month', 'f-year', 'f-title', 'f-time'].forEach(function (id) { $f(id).addEventListener('input', update); $f(id).addEventListener('change', update); });
     function save() {
       var d = readDate();

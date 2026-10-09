@@ -10,6 +10,7 @@
   function beforeLabel(n) { for (var i = 0; i < BEFORE.length; i++) if (BEFORE[i][0] === n) return BEFORE[i][1]; return n + '日前'; }
   function wdIdx(a) { return ((C.toDays(a[0], a[1], a[2]) % 7) + 11) % 7; }  // 0 = Sunday
   function md(a) { return a[1] + '月' + a[2] + '日(' + A.wd(a) + ')'; }
+  function mic() { return window.AtomouMicHint ? window.AtomouMicHint('') : ''; }   // the small microphone hint under a free-text field
   function rel(d) { var n = C.totalDays(TODAY, d); return n === 0 ? '今日' : n === 1 ? '明日' : n > 1 ? 'あと' + n + '日' : 'もう' + (-n) + '日'; }
 
   /* ---------- what is in the book ---------- */
@@ -199,14 +200,15 @@
       h += '<section class="plan-sec" id="tasks"><h2>やること(何日前までに)</h2><ul class="plist" id="task-list">' + taskList() + '</ul>' +
         '<form class="task-add" id="task-add"><label class="vh" for="t-before">いつまでに</label><select id="t-before">' + BEFORE.map(function (b) { return '<option value="' + b[0] + '"' + (b[0] === 7 ? ' selected' : '') + '>' + b[1] + '</option>'; }).join('') + '</select>' +
         '<label class="vh" for="t-text">やること</label><input type="text" id="t-text" maxlength="80" placeholder="例: 書類をそろえる" autocomplete="off"><button type="submit" class="btn small">追加</button></form>' +
-        '<p class="hint">期限の日は、カレンダーとホームに出ます。</p></section>';
+        '<p class="hint">期限の日は、カレンダーとホームに出ます。</p>' + mic() + '</section>';
       h += '<section class="plan-sec"><h2>メモ</h2><div class="field"><label class="vh" for="p-memo">メモ</label><textarea id="p-memo" rows="4" maxlength="600" placeholder="持ち物、場所、連絡先など">' + H(n.memo) + '</textarea></div>' +
-        '<p class="hint">この端末の中だけに残ります。</p></section>';
+        '<p class="hint">この端末の中だけに残ります。</p>' + mic() + '</section>';
       if (e) {
-        h += '<section class="plan-sec"><h2>直す</h2><div class="field"><label for="e-title">名前</label><input type="text" id="e-title" maxlength="40" value="' + H(e.title) + '"></div>';
+        h += '<section class="plan-sec"><h2>直す</h2><div class="field"><label for="e-title">名前</label><input type="text" id="e-title" maxlength="40" value="' + H(e.title) + '">' + mic() + '</div>';
         if (e.precision === 'day') h += '<div class="field"><label for="e-date">日付</label><input type="date" id="e-date" value="' + H(e.date) + '"></div>';
         else if (e.precision === 'month') h += '<div class="field"><label for="e-date">年と月(例 2026-10)</label><input type="month" id="e-date" value="' + H(String(e.date).slice(0, 7)) + '" placeholder="2026-10"></div>';
         else h += '<div class="field"><label for="e-date">年(例 1990)</label><input type="number" id="e-date" inputmode="numeric" min="1" max="2200" value="' + H(String(e.date).slice(0, 4)) + '"></div>';
+        h += '<div class="field"><label for="e-say">文字や声で入れる(例: 12月25日)</label><input type="text" id="e-say" autocomplete="off" maxlength="30" placeholder="' + (e.precision === 'day' ? '12月25日 / 2027年3月3日' : e.precision === 'month' ? '2026年10月' : '1990年') + '"><p class="hint" id="e-say-note" aria-live="polite"></p>' + mic() + '</div>';
         if (e.kind === 'event' && e.precision === 'day') h += '<div class="field"><label for="e-time">時刻</label><input type="time" id="e-time" value="' + H(e.time || '') + '"></div>';
         if (e.precision === 'day') h += '<div class="field"><label class="lab" for="e-yearly"><input type="checkbox" id="e-yearly"' + (e.yearly ? ' checked' : '') + '> 毎年くり返す</label></div>';
         if (e.precision === 'day' && !e.quiet && e.kind !== 'event') h += '<div class="field"><label class="lab" for="e-100"><input type="checkbox" id="e-100"' + (e.every100 ? ' checked' : '') + '> 100日ごとの節目も入れる</label></div>';
@@ -221,8 +223,18 @@
       A.hydrate(box);
       if (own) $$('.c-act a', box).forEach(function (a) { a.remove(); });
     }
+    function saySpoken(input) {   // the words in "文字や声で入れる" fill the date field above it; "保存" writes it
+      var dt = $('#e-date'), note = $('#e-say-note'), e = A.findEntry(item.id), p = e ? e.precision : 'day', d;
+      if (!dt || !note) return;
+      if (!input.value.trim()) { note.textContent = ''; return; }
+      d = C.parseSpoken(input.value, p, TODAY);
+      if (!d) { note.textContent = '読み取れませんでした。' + (p === 'day' ? '年月日の形で入れてください(例: 12月25日)。' : p === 'month' ? '(例: 2026年10月)' : '(例: 1990年)'); return; }
+      dt.value = p === 'day' ? C.iso(d) : p === 'month' ? String(d[0]).padStart(4, '0') + '-' + String(d[1]).padStart(2, '0') : String(d[0]);
+      note.textContent = '→ ' + A.fmtDate(C.iso(d), p) + '(「保存」で直ります)';
+    }
     redo = function () { var m = $('#p-memo'); if (m) notesOf(key).memo = m.value; render(); };
     box.addEventListener('input', function (ev) {
+      if (ev.target.id === 'e-say') { saySpoken(ev.target); return; }
       if (ev.target.id !== 'p-memo') return;
       clearTimeout(box._t);
       box._t = setTimeout(function () { var n = notesOf(key); n.memo = ev.target.value; setNotes(key, n); }, 350);

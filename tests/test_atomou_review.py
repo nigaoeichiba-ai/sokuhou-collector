@@ -32,7 +32,7 @@ class ReviewBuild(unittest.TestCase):
 
     def test_only_the_content_and_the_legal_pages_exist(self):
         for k in self.pages:
-            ok = (k in ("index.html", "404.html", "robots.txt", "sitemap.xml", ".htaccess", "favicon.ico", "apple-touch-icon.png")
+            ok = (k in ("index.html", "404.html", "robots.txt", "sitemap.xml", ".htaccess", "ads.txt", "favicon.ico", "apple-touch-icon.png")
                   or re.match(r"^(c/[a-z]+|e/[0-9a-f]{10}|about|privacy|contact)/index\.html$", k) or k in ("contact/send.php", "contact/thanks.html")
                   or k in review.ALLOWED_ASSETS or k.startswith("google"))
             self.assertTrue(ok, k)
@@ -61,7 +61,10 @@ class ReviewBuild(unittest.TestCase):
     def test_the_only_scripts_recount_the_cards(self):
         for k, h in self.html.items():
             srcs = re.findall(r'<script[^>]*src="([^"]*)"', h)
-            self.assertTrue(set(srcs) <= {"/assets/core.js", "/assets/review.js"}, f"{k}: {srcs}")
+            own = [s for s in srcs if not s.startswith("https://pagead2.googlesyndication.com/")]   # the AdSense code is the one outside script (its crawler needs it on the review copy)
+            self.assertTrue(set(own) <= {"/assets/core.js", "/assets/review.js"}, f"{k}: {srcs}")
+            if k.startswith("e/") and 'class="notice quiet"' in h:
+                self.assertEqual(own, srcs, f"{k}: a quiet day carries no ad code")
             self.assertNotIn("data-act=", h, k)                    # no "add to my days" buttons
             self.assertNotIn("window.ATOMOU", h, k)
 
