@@ -167,7 +167,7 @@
         '<p class="hint">オンにすると、通知する日と予定名(短く)をサーバーで預かります。オフにすると削除します。</p>' +
         '<h3>紹介</h3><p>この紹介リンクから登録した人は、' + months(MC.ref) + 'すべての機能を無料で使えます。その人が1週間以上あけて2回使うと、あなたにも' + months(MC.give) + '追加されます(' + MC.cap + '人まで)。</p>' +
         '<p><input type="text" readonly value="' + H(link) + '" id="m-link"> <button type="button" class="btn small ghost" id="m-copy">コピー</button></p>' +
-        '<h3>協力者のページ</h3><p>紹介の人数と、採用されたご意見を毎月<a href="/thanks/">協力者のページ</a>で紹介します。無料期間の延長や称号をお贈りします。掲載するのはペンネームだけです。</p>' +
+        '<h3>協力者のページ</h3><p>紹介の人数と、採用されたご意見を毎月<a href="/thanks/">協力者のページ</a>で紹介します。無料期間の延長や称号を贈ります。掲載するのはペンネームだけです。</p>' +
         '<div class="field"><label for="m-pen">ペンネーム(20字まで)</label><input type="text" id="m-pen" maxlength="20" value="' + H(me.pen || '') + '"></div>' +
         '<div class="field"><label class="lab" for="m-penok"><input type="checkbox" id="m-penok"' + (me.pen_ok ? ' checked' : '') + '> 協力者のページにペンネームを載せてよい</label></div>' +
         '<p><button type="button" class="btn small" id="m-pensave">保存</button></p>' +
