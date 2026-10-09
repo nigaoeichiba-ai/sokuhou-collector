@@ -179,7 +179,8 @@ ul.warn li::before { content: "!"; position: absolute; left: .8em; top: .85em; w
 .stars { color: #e08a00; }
 .ship { color: #0b9a6a; }
 .own { margin: 0; font-size: .72rem; font-weight: 700; color: var(--ink); background: var(--yellow-s); border: 2px solid var(--ink); border-radius: 8px; padding: .05em .6em; align-self: flex-start; }
-.item .btn { margin-top: auto; padding: .55em 1em; font-size: .92rem; }
+.item-btns { margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; }
+.item .btn { flex: 1 1 7em; padding: .55em .6em; font-size: .92rem; }
 .keepsake { margin-top: 28px; padding: 28px 24px 26px; background: var(--yellow-s); border: var(--line2); border-radius: 30px; box-shadow: var(--shadow-c); }
 
 /* related */
