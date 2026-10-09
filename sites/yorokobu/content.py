@@ -113,7 +113,8 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     articles = _load_articles(content_dir, theme)
     messages = _load_messages(content_dir, occ)
     etiquette = _load_etiquette(content_dir, occ)
-    return {"messages": messages, "etiquette": etiquette, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
+    amazon, amazon_checked = _load_amazon(content_dir, occ, rec)
+    return {"messages": messages, "etiquette": etiquette, "amazon": amazon, "amazon_checked": amazon_checked, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
             "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "themes": themes,
             "theme": theme, "theme_groups": groups, "articles": articles,
             "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
@@ -170,6 +171,28 @@ def _load_etiquette(content_dir: Path, occ: dict) -> dict:
             raise BuildError(f"etiquette {slug}: at least two sources with a name and an https url")
         out[slug] = e
     return out
+
+
+ASIN = re.compile(r"[A-Z0-9]{10}")
+
+
+def _load_amazon(content_dir: Path, occ: dict, rec: dict) -> tuple[list[dict], str]:
+    """Hand-picked Amazon products (amazon_picks.json, optional): shown as a text card with a link, never with a price or a picture."""
+    data = _optional(content_dir, "amazon_picks.json")
+    out: list[dict] = []
+    seen: set[str] = set()
+    for p in (data or {}).get("picks", []):
+        _need(p, ("asin", "name", "maker", "kind", "occasions", "why", "source"), f"amazon pick {p.get('asin')}")
+        if not ASIN.fullmatch(p["asin"]) or p["asin"] in seen:
+            raise BuildError(f"amazon pick {p['asin']}: a bad or repeated ASIN")
+        seen.add(p["asin"])
+        bad = [o for o in p["occasions"] if o not in occ] + [r for r in p.get("recipients", []) if r not in rec]
+        if bad:
+            raise BuildError(f"amazon pick {p['asin']}: unknown occasion or recipient {bad}")
+        if "円" in p["why"] or "¥" in p["why"] or "￥" in p["why"]:
+            raise BuildError(f"amazon pick {p['asin']}: no price in the text (a price may only come from Amazon's API)")
+        out.append(p)
+    return out, (data or {}).get("checked", "")
 
 
 def _optional(content_dir: Path, name: str):
