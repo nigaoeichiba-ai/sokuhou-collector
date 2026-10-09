@@ -115,8 +115,11 @@
     return out;
   }
   var warned = false;
+  var savedT = null;
   function persist() {
     S.updated = new Date().toISOString();
+    clearTimeout(savedT);
+    savedT = setTimeout(function () { document.dispatchEvent(new CustomEvent('atomou:saved')); }, 600);   // the notice lists (push, mail) follow every change, not only the next page load
     try { localStorage.setItem(KEY, JSON.stringify(S)); return true; } catch (e) {
       if (!warned) { warned = true; toast('この端末には保存できません(プライベートモードなど)。ページを閉じると消えます。'); }
       return false;
@@ -256,7 +259,7 @@
   }
   function ownItem(e) {
     var k = KINDS[e.kind] || KINDS.memo;
-    return { key: 'm:' + e.id, id: e.id, title: e.title, date: e.date, p: e.precision || 'day', g: k.g, kind: k.t, quiet: !!e.quiet, own: true, time: e.time || '', yearly: !!e.yearly };
+    return { key: 'm:' + e.id, id: e.id, title: e.title, date: e.date, p: e.precision || 'day', g: k.g, kind: k.t, quiet: !!e.quiet, own: true, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100 };
   }
   function cardHtml(it) {
     var h = '<article class="card' + (it.quiet ? ' quiet' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.date) + '" data-p="' + H(it.p) + '"' +
@@ -349,8 +352,8 @@
   function rank(it) {   // without a hand-made order: the day that comes next first (a yearly day by its next turn), then past days, the most recent first
     var a = C.parse(it.date);
     if (!a) return 5e5;
-    var t = C.toDays(TODAY[0], TODAY[1], TODAY[2]), dd = a[2] > 28 && a[1] === 2 ? 28 : a[2], d = C.toDays(a[0], a[1], dd) - t;
-    if (it.yearly) { d = C.toDays(TODAY[0], a[1], dd) - t; if (d < 0) d = C.toDays(TODAY[0] + 1, a[1], dd) - t; return d; }
+    var d = C.totalDays(TODAY, a);
+    if (it.yearly) return C.totalDays(TODAY, nextYearly(a, TODAY));
     return d >= 0 ? d : 1e5 - d;
   }
   function ordered(items) {

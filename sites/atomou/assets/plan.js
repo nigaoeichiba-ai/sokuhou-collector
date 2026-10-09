@@ -36,6 +36,10 @@
       var dd = C.parse(it.date);
       if (!dd || it.p !== 'day') return;
       if (C.cmp(dd, d) === 0 || (it.yearly && d[0] > dd[0] && C.cmp(A.occ(dd, d[0]), d) === 0)) out.push(it);
+      else if (it.every100 && !it.quiet) {   // the 100-day marks (100, 200, ...) of a day
+        var n = C.totalDays(dd, d);
+        if (n >= 100 && n % 100 === 0) out.push(Object.assign({}, it, { title: it.title + ' から' + n + '日', mark: n }));
+      }
     });
     return out.sort(function (a, b) { return (a.time || '99') < (b.time || '99') ? -1 : 1; });
   }
@@ -205,6 +209,7 @@
         else h += '<div class="field"><label for="e-date">年(例 1990)</label><input type="number" id="e-date" inputmode="numeric" min="1" max="2200" value="' + H(String(e.date).slice(0, 4)) + '"></div>';
         if (e.kind === 'event' && e.precision === 'day') h += '<div class="field"><label for="e-time">時刻</label><input type="time" id="e-time" value="' + H(e.time || '') + '"></div>';
         if (e.precision === 'day') h += '<div class="field"><label class="lab" for="e-yearly"><input type="checkbox" id="e-yearly"' + (e.yearly ? ' checked' : '') + '> 毎年くり返す</label></div>';
+        if (e.precision === 'day' && !e.quiet && e.kind !== 'event') h += '<div class="field"><label class="lab" for="e-100"><input type="checkbox" id="e-100"' + (e.every100 ? ' checked' : '') + '> 100日ごとの節目も入れる</label></div>';
         h += '<div class="field"><label for="e-alarm">お知らせ</label><select id="e-alarm">' + [['', '設定に合わせる(マイページ)'], ['morning', '当日の朝'], ['eve', '前日の夜'], ['week', '1週間前の朝'], ['none', 'しない']].map(function (o) {
           return '<option value="' + o[0] + '"' + ((e.alarm || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>';
         }).join('') + '</select></div>';
@@ -249,6 +254,7 @@
           e.date = C.iso(nd);
         }
         var yl = $('#e-yearly'); if (yl) e.yearly = yl.checked;
+        var h100 = $('#e-100'); if (h100) e.every100 = h100.checked;
         var al = $('#e-alarm'); if (al) e.alarm = al.value;
         if (tm) e.time = /^([01]\d|2[0-3]):[0-5]\d$/.test(tm.value) ? tm.value : '';
         A.persist(); A.stat('act:plan_edit'); item = A.ownItem(e); render(); A.toast('直しました。');
