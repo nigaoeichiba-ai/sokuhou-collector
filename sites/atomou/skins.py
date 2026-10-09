@@ -20,7 +20,7 @@ VARS = (
     "bg", "bg2", "surface", "surface2", "text", "muted", "line", "accent", "on-accent", "ato", "on-ato", "mou", "on-mou",
     "ato-soft", "ato-ink", "mou-soft", "mou-ink",
     "quiet-bg", "quiet-text", "quiet-line", "focus", "head-bg", "head-text", "foot-bg", "foot-text",
-    "g1", "g2", "g3", "g4", "g5", "g6", "band-bg", "band-text", "deco", "deco2", "wm-ato", "wm-mou", "wm-ink",
+    "g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8", "g9", "band-bg", "band-text", "deco", "deco2", "wm-ato", "wm-mou", "wm-ink",
     "radius", "shadow", "font", "font-head", "font-num", "size", "num-weight", "bw", "bg-image",
 )
 NON_COLOUR_VARS = ("radius", "shadow", "font", "font-head", "font-num", "size", "num-weight", "bw", "bg-image")
@@ -115,6 +115,10 @@ def _v(spec: str) -> dict:
     out.setdefault("wm-ink", out["head-text"])
     out.setdefault("wm-ato", _toward(out["ato"], out["head-text"], out["head-bg"], 3.5))
     out.setdefault("wm-mou", _toward(out["mou"], out["head-text"], out["head-bg"], 3.5))
+    # genres 7-9 (added 2026-10-10) are mixes of two older genre colours: each skin only names six, and the shape of the mark tells the genres apart as well
+    out.setdefault("g7", _mix(out["g2"], out["g4"], 0.5))
+    out.setdefault("g8", _mix(out["g3"], out["g5"], 0.5))
+    out.setdefault("g9", _mix(out["g1"], out["g4"], 0.5))
     out.setdefault("band-bg", out["head-bg"])
     out.setdefault("band-text", out["head-text"])
     out.setdefault("deco", out["accent"])

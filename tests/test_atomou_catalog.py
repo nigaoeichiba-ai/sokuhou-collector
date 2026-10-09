@@ -67,6 +67,19 @@ class CatalogRules(unittest.TestCase):
         entries, rejects = build([item(), item(title="同じ出典・同じ日付")])
         self.assertEqual((len(entries), rejects["重複"]), (1, 1))
 
+    def test_the_same_event_listed_in_two_seed_files_appears_once(self):
+        # the marathons were in the regional and the sports file (2026-10-10); two pages with one text are two doorways to one event
+        entries, rejects = catalog.build_catalog(date(2026, 10, 10))
+        days = [(e["title"], e["date"]) for e in entries]
+        self.assertEqual(len(days), len(set(days)))
+        self.assertGreater(rejects["重複(同名同日)"], 0)
+
+    def test_every_genre_has_events_and_every_event_has_a_known_genre(self):
+        entries, _ = catalog.build_catalog(date(2026, 10, 10))
+        used = {e["group"] for e in entries}
+        self.assertEqual(used, set(catalog.GROUPS))
+        self.assertEqual(len(catalog.GROUPS), 9)
+
     def test_id_does_not_depend_on_the_title(self):
         a, _ = build([item()])
         b, _ = build([item(title="タイトルを直した")])
