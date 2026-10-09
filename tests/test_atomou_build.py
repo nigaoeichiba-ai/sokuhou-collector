@@ -309,6 +309,19 @@ class Pages(BuildOnce):
         self.assertIn("calendar.google.com/calendar/r?cid=webcal", self.rel["c/exams/index.html"])
         self.assertIn("DESCRIPTION:詳しい日付と出典: https://", feeds_["cal/all.ics"])
 
+    def test_a_public_day_has_its_own_share_picture_and_a_quiet_one_does_not(self):
+        from sites.atomou import ogimage
+        if not ogimage.available():
+            self.skipTest("no Pillow or Japanese font here (the pages then keep the common picture)")
+        e = next(x for x in self.entries if not x["quiet"] and x["status"] != "ended")
+        page = self.rel[f"e/{e['id']}/index.html"]
+        self.assertIn(f"/og/{e['id']}.png", page)
+        png = self.rel[f"og/{e['id']}.png"]
+        self.assertTrue(png.startswith(bytes([137]) + b"PNG"))
+        for q in (x for x in self.entries if x["quiet"]):
+            self.assertNotIn(f"og/{q['id']}.png", self.rel)
+            self.assertNotIn("/og/", self.rel[f"e/{q['id']}/index.html"])
+
     def test_interests_page_is_not_indexed_and_the_home_links_to_it(self):
         page = self.rel["interests/index.html"]
         self.assertIn("noindex", page)

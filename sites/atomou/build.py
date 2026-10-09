@@ -22,7 +22,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.atomou import articles, catalog, datecore, feeds, skins, usecases  # noqa: E402
+from sites.atomou import articles, catalog, datecore, feeds, ogimage, skins, usecases  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
@@ -314,8 +314,8 @@ class Ctx:
         self.tail = f'<script src="/assets/atomou.js?v={self.v_bundle}" defer></script>\n'
         self.site = dict(SITE)
 
-    def page(self, path: str, title: str, desc: str, body: str, kind: str, *, noindex: bool = False) -> str:
-        html = layout(self.site, self.cfg, self.preview, path=path, title=title, description=desc, body=body, og_image="/assets/og.png")   # the share picture (make_og.py)
+    def page(self, path: str, title: str, desc: str, body: str, kind: str, *, noindex: bool = False, og: str | None = None) -> str:
+        html = layout(self.site, self.cfg, self.preview, path=path, title=title, description=desc, body=body, og_image=og or "/assets/og.png")   # the share picture (make_og.py; a public day has its own: ogimage.py)
         return self.finish(html, kind, noindex)
 
     def finish(self, html: str, kind: str, noindex: bool = False) -> str:
@@ -592,6 +592,27 @@ def use_page(c: Ctx, u: dict) -> str:
     return c.page(f"/use/{u['slug']}/", f"{u['title']} | {NAME}", u["situation"], body, "use")
 
 
+def og_path(e: dict) -> str | None:
+    """The address of the day's own share picture (None when pictures cannot be drawn here, or the day is a quiet one)."""
+    return f"/og/{e['id']}.png" if ogimage.available() and not e["quiet"] else None
+
+
+def og_pages(live: list[dict]) -> dict[str, bytes]:
+    if not ogimage.available():
+        return {}
+    base = skins.SKINS[0]["vars"]
+    out = {}
+    for e in live:
+        if e["quiet"]:
+            continue
+        i = catalog.GROUPS.index(e["group"]) + 1 if e["group"] in catalog.GROUPS else 1
+        h = str(base.get(f"g{i}", "#1D4ED8")).lstrip("#")
+        end = f"〜{fmt_date(e['date_end'])}" if e.get("date_end") else ""
+        out[f"og/{e['id']}.png"] = ogimage.card(title=e["title"], date_text=fmt_date(e["date"], e["precision"]) + end,
+                                                field=f"{e['group']} / {e['subject']}" if e.get("subject") else e["group"], colour=tuple(int(h[k:k + 2], 16) for k in (0, 2, 4)))
+    return out
+
+
 def google_calendar_url(e: dict, page_url: str) -> str:
     """The address that opens Google Calendar's own form with the day filled in (a whole day: the end date is the day after).  The page address goes into the details, so the day leads back here."""
     d = date.fromisoformat(e["date"])
@@ -656,7 +677,7 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     title = f"{e['title']}{suffix} {fmt} | {NAME}"
     place = (e.get("place") or "").strip()
     desc = f"{e['title']}は{fmt}{end}" + (f"、{place}" if place and place not in ("全国", "地域") else "") + "。" + (f"{guide['about'].split('。')[0]}。" if guide else "") + "出典と確認日つき。あと何日かを数えて、予定に入れられます。"
-    html = c.page(f"/e/{e['id']}/", title, desc, body, "event", noindex=not indexable)
+    html = c.page(f"/e/{e['id']}/", title, desc, body, "event", noindex=not indexable, og=og_path(e))
     return strip_ads(html) if quiet or not e.get("ad_ok", True) else html
 
 
@@ -975,6 +996,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
         pages[f"use/{u['slug']}/index.html"] = use_page(c, u)
     for g in catalog.GROUPS:
         pages[f"c/{GROUP_SLUG[g]}/index.html"] = category_page(c, g, live)
+    pages.update(og_pages(live))      # og/<id>.png: the picture a chat app shows for a day's link
     pages.update(feeds.feed_pages(live, catalog.GROUPS, GROUP_SLUG, str(cfg["site_url"]).rstrip("/"), today))   # cal/<genre>.ics, cal/all.ics: the days as a calendar to subscribe to
     for e in entries:
         pages[f"e/{e['id']}/index.html"] = event_page(c, e, e["id"] in index_ids, live)
