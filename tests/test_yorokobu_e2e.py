@@ -247,7 +247,7 @@ class BrowserTest(unittest.TestCase):
         self.assertNotIn("error", o)
         self.assertEqual(o["prefill"], ["birthday", "mother"])                  # ?o=&r= from a gift page
         self.assertTrue(o["date_hidden_for_fixed"])                              # Mother's Day needs no date
-        self.assertIn("毎年、日にちが決まっています", o["fixed_note"])
+        self.assertIn("毎年、日付が決まっています", o["fixed_note"])
         self.assertTrue(o["date_visible_for_birthday"])
         self.assertEqual(o["card_title"], "ハナコの誕生日")
         self.assertEqual(o["card_count"], "あと30日")

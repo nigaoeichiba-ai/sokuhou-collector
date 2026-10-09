@@ -22,6 +22,31 @@ def _words(blob: str) -> list[str]:
     return [w for w in FORBIDDEN_WORDS + TEMPLATE_PHRASES if w in blob] + (["emoji"] if EMOJI.search(blob) else [])
 
 
+# ---- Japanese style (the rules are in sokuhou-sites/docs/STYLE_GUIDE_YOROKOBU_CODEX_2026-10-09.md and the owner's note that the site's Japanese felt off)
+INTERNAL_WORDS = ["切り口", "ソムリエ", "ナビゲーター", "見立て", "ギフトマップ", "コンシェルジュ", "ガチャ"]     # editors' jargon; the reader does not know them
+YOUNG_TONE = ["選んでね", "見つけたよ", "どれがよさそう", "ぜんぶ", "わくわく", "いっしょに見つけ", "してね。", "だよ。"]       # a gift site for adults does not talk like this
+CLAIMS_WITHOUT_BASIS = ["よく読まれている", "人気の", "売れ筋"]
+PARTICLE_COMMA = re.compile(r"[をにでとがはもへの]、")        # 「3週間前に、カレンダーで、お知らせします」: a comma after every short phrase
+MAX_YASUI = 4                                                    # 「〜しやすい」 is the easy way to end a reason: at most 4 in one item, and at most 2 sentences ending 「〜やすいです。」
+MAX_SENTENCE = 100
+
+
+def language_problems(blob: str, slug: str, casual: bool = False) -> list[str]:
+    """Style problems in one item's text.  `casual` (card messages written in the sender's voice) allows ね/よ endings."""
+    out = [f"{slug}: internal word {w}" for w in INTERNAL_WORDS if w in blob]
+    out += [f"{slug}: claim without basis {w}" for w in CLAIMS_WITHOUT_BASIS if w in blob]
+    if not casual:
+        out += [f"{slug}: childish tone {w}" for w in YOUNG_TONE if w in blob]
+    for s in re.split(r"(?<=。)", blob):
+        if len(PARTICLE_COMMA.findall(s)) >= 3 and len(s) < 80:
+            out.append(f"{slug}: a comma after every short phrase: {s[:30]}")
+        if len(s) > MAX_SENTENCE:
+            out.append(f"{slug}: sentence of {len(s)} characters (split it): {s[:30]}")
+    if blob.count("やすい") > MAX_YASUI or blob.count("やすいです。") > 2:
+        out.append(f"{slug}: too many 〜やすい ({blob.count('やすい')}); name the concrete reason instead (分けられる, 持ち帰れる, 保管できる)")
+    return out
+
+
 def theme_problems(t: dict, groups: set[str], known_queries: set[str] | None = None, known_slugs: set[str] | None = None) -> list[str]:
     out = []
     slug = t.get("slug", "?")
@@ -38,6 +63,7 @@ def theme_problems(t: dict, groups: set[str], known_queries: set[str] | None = N
         out.append(f"{slug}: unknown group {t['group']}")
     blob = " ".join([t["title"], t["lead"], *t["reasons"], *t["how_to_choose"], *t.get("avoid", []), *[i["label"] + i["why"] for i in t["ideas"]]])
     out += [f"{slug}: forbidden {w}" for w in _words(blob)]
+    out += language_problems(blob, slug)
     if not 75 <= len(t["lead"]) <= 260:
         out.append(f"{slug}: lead length {len(t['lead'])}")
     if not 12 <= len(t["title"]) <= 40:
@@ -75,6 +101,7 @@ def article_problems(a: dict, theme_slugs: set[str], known_slugs: set[str] | Non
         out.append(f"{slug}: slug exists")
     blob = " ".join([a["title"], a["lead"], *[s["h"] + s["body"] for s in a["sections"]], *a.get("checklist", []), *[f["q"] + f["a"] for f in a["faq"]]])
     out += [f"{slug}: forbidden {w}" for w in _words(blob)]
+    out += language_problems(blob, slug)
     if not 15 <= len(a["title"]) <= 44:
         out.append(f"{slug}: title length {len(a['title'])}")
     if not 80 <= len(a["lead"]) <= 260:
@@ -135,6 +162,8 @@ def message_problems(m: dict, occasion_slugs: set[str], known: set[str] | None =
         out.append(f"{slug}: closing needs 3-5 phrases of 5-28 chars")
     blob = " ".join([m["intro"], *m["manners"], *m["closing"], *[ln for s in m["sets"] for ln in s.get("lines", [])], *[s.get("to", "") for s in m["sets"]]])
     out += [f"{slug}: forbidden {w}" for w in MESSAGE_FORBIDDEN if w in blob]
+    out += language_problems(" ".join([m["intro"], *m["manners"]]), slug)                                           # the site's own voice
+    out += language_problems(" ".join([*[ln for s in m["sets"] for ln in s.get("lines", [])], *m["closing"]]), slug, casual=True)   # the sender's voice: ね/よ are fine
     if EMOJI.search(blob):
         out.append(f"{slug}: emoji")
     return out
