@@ -48,7 +48,7 @@ SEASON = {
     "new-job": (3, 4), "promotion": (3, 4), "retirement": (2, 3), "farewell": (3, 4), "oseibo": (11, 12),
     "ochugen": (6, 7), "year-end-gathering": (11, 12), "homecoming": (7, 8, 12),
 }
-NAME_LIMIT = 56
+NAME_LIMIT = 44
 PORTRAIT_SHOWN = 2
 
 
@@ -82,9 +82,27 @@ def strip_occasions(name: str) -> str:
     return out if len(out) >= 10 else " ".join(name.split())
 
 
+SPEC_ONLY = re.compile(r"[0-9０-９%％.\-+×x]+")
+
+
 def short(name: str, limit: int = NAME_LIMIT) -> str:
+    """A title for a card: the shop's keyword string without its repeats ("折りたたみ" then "折りたたみ傘"), cut at a word boundary, never in the middle of a word."""
     name = strip_occasions(name)
-    return name if len(name) <= limit else name[: limit - 1].rstrip() + "…"
+    kept: list[str] = []
+    for t in name.split():
+        if SPEC_ONLY.fullmatch(t) or any(t in k for k in kept):
+            continue
+        kept = [k for k in kept if k not in t] + [t]                  # a later, more specific word replaces the plainer one before it
+    text = " ".join(kept) or name
+    if len(text) <= limit:
+        return text
+    out = ""
+    for t in text.split(" "):
+        nxt = f"{out} {t}".strip()
+        if len(nxt) > limit - 1:
+            break
+        out = nxt
+    return (out or text[: limit - 1].rstrip()) + "…"
 
 
 def amazon_url(cfg: dict, query: str, low: int | None = None, high: int | None = None) -> str:
@@ -124,14 +142,16 @@ RANKING_ON = False   # set by render_site: the nav and the home page link to /ra
 
 def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
+    amazon_links = kw.pop("amazon_links", False)                     # a page whose Amazon buttons are made by its script
     if "pr-quiet" in kw.get("body", ""):
-        kw["body"] += pr_foot(cfg, "amazon.co.jp/" in kw["body"], "rakuten.co.jp/" in kw["body"])
+        kw["body"] += pr_foot(cfg, amazon_links or "amazon.co.jp/" in kw["body"], "rakuten.co.jp/" in kw["body"] or amazon_links)
     if "#o-" in kw.get("body", ""):
         kw["body"] += icons.sprite()                                  # the occasion symbols the page uses
     site = {**SITE, "nav": SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])}
     return layout(site, cfg, preview, scripts=True, head_extra=FONTS, **kw)
 
 
+SEEN: dict = {}   # every product a page showed (code -> name, price, image, links): the data file of the shared-list page
 OG: set = set()   # the share-card images drawn in this build ("gift/<key>", "occasion/<slug>", "for/<slug>", "default")
 
 
@@ -147,6 +167,7 @@ def share_bar(cfg: dict, path: str, text: str, label: str = "この候補、誰�
     return (f'<div class="share"><span class="share-label">{esc(label)}</span>'
             f'<a class="share-btn line" href="{esc(line)}" target="_blank" rel="noopener">LINEで送る</a>'
             f'<a class="share-btn x" href="{esc(x)}" target="_blank" rel="noopener">Xで共有</a>'
+            f'<button type="button" class="share-btn native" hidden data-url="{esc(url)}" data-text="{esc(text)}">共有する</button>'
             f'<button type="button" class="share-btn copy" data-url="{esc(url)}">リンクをコピー</button></div>')
 
 
@@ -248,6 +269,9 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
     note = '<p class="own">運営者のショップ</p>' if own else ""
     if it.get("note"):  # the editors' one-line reason for picking this product
         note += f'<p class="pick-note"><b>{it.get("note_label") or ("選んだ理由" if it.get("curated") else "数字から見ると")}</b>{esc(it["note"])}</p>'
+    if not own:
+        SEEN[it["code"]] = {"n": short(name, 60), "p": it["price"], "i": it["image"], "u": href,
+                            "a": amazon_url(cfg, amazon_query(name)) if cfg.get("amazon_tracking_id") else ""}
     label = "ショップで見る" if own else "楽天市場で見る"
     buttons = f'<a class="btn" href="{esc(href)}" rel="{rel}" target="_blank">{label}</a>'
     if not own and cfg.get("amazon_tracking_id"):          # the same product, looked for on Amazon: one button each, the same size and colour
@@ -577,6 +601,24 @@ def amazon_hub_page(d: dict, cfg: dict, preview: bool) -> str:
 {blocks}
 <p class="memo-note" style="margin-top:36px">イベントや相手から探すなら、<a href="/occasion/">イベントから探す</a>、<a href="/for/">相手から探す</a>へ。</p>"""
     return page(cfg, preview, path="/amazon/", title=f"Amazonで選ぶ、贈り物 | {cfg['site_name']}", description=lead, body=body)
+
+
+# ---------------------------------------------------------------- 共有リスト (/list/?c=code,code: what a friend sent; the data is list/items.json)
+
+def list_page(d: dict, cfg: dict, preview: bool) -> str:
+    lead = "友人や家族から届いた、贈り物の候補です。気に入ったものを教えてあげてください。"
+    body = f"""{head_band("sky", "", "贈り物の候補", lead, single=True)}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("贈り物の候補", None)])}</div>
+{pr_quiet(cfg)}
+<section id="sharedlist" class="sharedlist" data-src="/list/items.json">
+<p class="list-msg" role="status" aria-live="polite">候補を読み込んでいます。</p>
+<ul class="items" id="list-items"></ul>
+<noscript><p class="notice">このページは、JavaScript が使える環境でお使いください。</p></noscript>
+<p class="more"><a class="btn" href="/">自分でも、プレゼントを探す</a></p>
+</section>
+<p class="notice">商品の価格・在庫・レビューは、取得した時点の情報です。購入前に、販売ページでご確認ください。</p>"""
+    html = page(cfg, preview, path="/list/", title=f"贈り物の候補 | {cfg['site_name']}", description=lead, body=body, amazon_links=bool(cfg.get("amazon_tracking_id")))
+    return html.replace("<head>", '<head>\n<meta name="robots" content="noindex,nofollow">', 1)
 
 
 def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
@@ -1343,6 +1385,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     d["gacha"] = gacha_data(d, cfg)
     cards: dict[str, bytes] = {}
     OG.clear()
+    SEEN.clear()
     if ogimage.available():
         site = cfg["site_name"]
         cards["og/default.png"] = ogimage.card(title="よろこばれるプレゼント、見つかります。", tag="イベントと相手から", site=site)
@@ -1428,7 +1471,11 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         input_note="", finish=lambda s: s))
     pages["manifest.webmanifest"] = json.dumps(MANIFEST, ensure_ascii=False, indent=1)
     pages.update(cards)
-    pages.update(standard_files(pages, cfg, preview, d["fetched_date"]))
+    listed = dict(pages)                                   # the sitemap lists the pages that can be found by searching, not the shared-list page (noindex, built from a link)
+    if SEEN:
+        pages["list/index.html"] = list_page(d, cfg, preview)
+        pages["list/items.json"] = json.dumps(SEEN, ensure_ascii=False, separators=(",", ":"))
+    pages.update(standard_files(listed, cfg, preview, d["fetched_date"]))
     pages.update(asset_pages(HERE / "assets"))
     write_pages(pages, out)
     return sorted(pages)
