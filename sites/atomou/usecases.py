@@ -23,8 +23,8 @@ GROUPS_ORDER = [
     "お金と手続き", "暮らしの期限", "予定と準備", "趣味と推し活", "旅行とお祭り", "毎日の数え方",
 ]
 
-# shown as a caution where a day is meant to be noticed: there is no push or mail notice yet
-NO_PUSH = "スマホやメールへの通知はまだありません。開いたときに、ホームの「今日の予定・やること」とカレンダーに出ます"
+# shown as a caution where a day is meant to be noticed: notices are optional (the my page turns them on); without them the day shows on the home page and the calendar
+NO_PUSH = "通知は任意です。マイページで通知をオンにしたときだけ、予定の日の朝か前日の夜に届きます。オンにしなくても、開いたときにホームの「今日の予定・やること」とカレンダーに出ます"
 
 USECASES: list[dict] = [
     # ---------------------------------------------------------------- 記念日と家族
