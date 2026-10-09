@@ -90,3 +90,32 @@ def card(*, title: str, date_text: str, field: str, colour: tuple) -> bytes:
     buf = io.BytesIO()
     img.save(buf, format="PNG", optimize=True)
     return buf.getvalue()
+
+
+@functools.lru_cache(maxsize=256)
+def countdown(*, title: str, big: str, date_text: str, field: str, colour: tuple, size: str) -> bytes:
+    """The countdown picture for a feed ('square', 1080x1080) or a story / short ('story', 1080x1920): the title, the big 'あと○日', the date.  Drawn on the day it is made, so the number is that day's."""
+    from PIL import Image, ImageDraw
+    path = find_font()
+    if path is None:
+        raise RuntimeError("no Japanese font found")
+    w, h = (1080, 1080) if size == "square" else (1080, 1920)
+    img = Image.new("RGB", (w, h), PAPER)
+    d = ImageDraw.Draw(img)
+    d.rectangle([0, 0, w, 26], fill=colour)
+    pad = 80
+    d.text((pad, 110), "あと何日、もう何日", font=_fit(d, "あと何日、もう何日", path, 40, w - 2 * pad), fill=MUTED, anchor="ls")
+    tf = _fit(d, title[:60], path, 84, w - 2 * pad, floor=52)
+    y = 330 if size == "square" else 560
+    for r in _lines(d, title, tf, w - 2 * pad, 4):
+        d.text((pad, y), r, font=tf, fill=INK, anchor="ls")
+        y += int(tf.size * 1.3)
+    y += 150 if size == "square" else 220
+    d.text((pad, y), big, font=_fit(d, big, path, 260, w - 2 * pad, floor=120), fill=colour, anchor="ls")
+    y += 110
+    d.text((pad + 4, y), date_text, font=_fit(d, date_text, path, 52, w - 2 * pad, floor=34), fill=MUTED, anchor="ls")
+    d.text((pad, h - 90), field, font=_fit(d, field, path, 38, w - 2 * pad - 360), fill=MUTED, anchor="ls")
+    d.text((w - pad, h - 90), "atomou.com", font=_fit(d, "atomou.com", path, 36, 320), fill=MUTED, anchor="rs")
+    buf = io.BytesIO()
+    img.save(buf, format="PNG", optimize=True)
+    return buf.getvalue()
