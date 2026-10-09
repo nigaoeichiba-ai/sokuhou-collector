@@ -291,6 +291,24 @@ class Pages(BuildOnce):
         for e in quiet:
             self.assertNotIn('class="share"', self.rel[f"e/{e['id']}/index.html"])
 
+    def test_calendar_feeds_hold_whole_public_days_only_and_are_well_formed(self):
+        crlf = chr(13) + chr(10)
+        feeds_ = {k: v for k, v in self.rel.items() if k.startswith("cal/") and k.endswith(".ics")}
+        self.assertIn("cal/all.ics", feeds_)
+        self.assertGreaterEqual(len(feeds_), 8)
+        quiet_ids = {e["id"] for e in self.entries if e["quiet"]}
+        month_ids = {e["id"] for e in self.entries if e["precision"] != "day"}
+        for k, v in feeds_.items():
+            self.assertTrue(v.startswith("BEGIN:VCALENDAR" + crlf) and v.endswith("END:VCALENDAR" + crlf), k)
+            self.assertEqual(v.count("BEGIN:VEVENT"), v.count("END:VEVENT"), k)
+            for line in v.split(crlf):
+                self.assertLessEqual(len(line.encode("utf-8")), 75, f"{k}: {line[:30]}")
+            for i in re.findall(r"UID:([0-9a-f]{10})@", v):
+                self.assertNotIn(i, quiet_ids, k)
+                self.assertNotIn(i, month_ids, k)
+        self.assertIn("calendar.google.com/calendar/r?cid=webcal", self.rel["c/exams/index.html"])
+        self.assertIn("DESCRIPTION:詳しい日付と出典: https://", feeds_["cal/all.ics"])
+
     def test_interests_page_is_not_indexed_and_the_home_links_to_it(self):
         page = self.rel["interests/index.html"]
         self.assertIn("noindex", page)

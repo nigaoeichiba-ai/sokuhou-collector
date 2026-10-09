@@ -1,0 +1,46 @@
+name: atomou-social
+
+# atomou.com growth routine, every morning (08:05 JST): writes the day's posts (sites/atomou/social.py) onto this run's summary page, so the owner can paste
+# them into X / LINE by hand, and - only when the owner has made an account and set its secrets - sends them to Bluesky and Mastodon.
+# Without a secret nothing is sent.  Nothing is committed (so no deploy is started): the posts are facts from the verified catalogue and a link.
+#
+# Owner (optional, when an account exists):
+#   Bluesky : repository secrets ATOMOU_BSKY_HANDLE (e.g. atomou.bsky.social) and ATOMOU_BSKY_APP_PASSWORD (an "app password" made in Bluesky's settings)
+#   Mastodon: ATOMOU_MASTODON_BASE (e.g. https://mstdn.jp) and ATOMOU_MASTODON_TOKEN (an application token with write:statuses)
+
+on:
+  schedule:
+    - cron: "5 23 * * *"
+  workflow_dispatch:
+    inputs:
+      post:
+        description: "true = also send to the connected accounts (the schedule always does; a manual run only drafts unless true)"
+        default: "false"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atomou-social
+  cancel-in-progress: false
+
+jobs:
+  posts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Draft and (when connected) post
+        env:
+          ATOMOU_BSKY_HANDLE: ${{ secrets.ATOMOU_BSKY_HANDLE }}
+          ATOMOU_BSKY_APP_PASSWORD: ${{ secrets.ATOMOU_BSKY_APP_PASSWORD }}
+          ATOMOU_MASTODON_BASE: ${{ secrets.ATOMOU_MASTODON_BASE }}
+          ATOMOU_MASTODON_TOKEN: ${{ secrets.ATOMOU_MASTODON_TOKEN }}
+          SEND: ${{ github.event_name == 'schedule' || github.event.inputs.post == 'true' }}
+        run: |
+          flag=""
+          if [ "$SEND" = "true" ]; then flag="--post"; fi
+          python -m sites.atomou.social --out "$GITHUB_STEP_SUMMARY" $flag
