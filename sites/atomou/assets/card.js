@@ -17,6 +17,16 @@
   var KIND_OK = ['event', 'anniversary', 'birthday', 'since', 'until', 'memo'];   // no memorial: such a day is never turned into a card to send
   var MAX = { t: 40, m: 200, task: 60, tasks: 8 };
 
+  /* ---------- starting points: what a card is often for ---------- */
+  var TEMPLATES = [
+    { id: 'live', n: 'ライブ・イベントの告知', t: '〇〇 ワンマンライブ', m: '開場・開演・会場・チケットのことを書く', k: 'until', th: 5, days: 45, tasks: [{ b: 30, x: 'チケットを確かめる' }, { b: 7, x: '持ち物を確かめる' }, { b: 1, x: '行き方を確かめる' }] },
+    { id: 'friend', n: '友だちとの約束', t: '〇〇とごはん', tm: '12:00', m: '集合場所・お店のことを書く', k: 'event', th: 7, days: 7, tasks: [{ b: 1, x: '集合場所を確かめる' }] },
+    { id: 'work', n: '取引先との打ち合わせ', t: '〇〇の打ち合わせ', tm: '10:00', m: '場所(または会議のURL以外の目印)・資料のことを書く', k: 'event', th: 8, days: 7, tasks: [{ b: 3, x: '資料を送る' }, { b: 1, x: '話すことを確かめる' }] },
+    { id: 'shop', n: '今日の買い物', t: '今日の買い物', tm: '17:00', m: '行く店・予算のことを書く', k: 'event', th: 3, days: 0, tasks: [{ b: 0, x: '牛乳' }, { b: 0, x: '卵' }, { b: 0, x: 'パン' }] },
+    { id: 'deadline', n: '提出の締切', t: '〇〇の提出', m: '提出先・必要なものを書く', k: 'until', th: 2, days: 14, tasks: [{ b: 7, x: '書類をそろえる' }, { b: 1, x: '最後に見直す' }] },
+    { id: 'trip', n: '旅行の準備', t: '〇〇旅行', m: '行き先・集合のことを書く', k: 'until', th: 1, days: 60, tasks: [{ b: 30, x: '宿と交通を予約する' }, { b: 7, x: '持ち物を確かめる' }, { b: 1, x: '荷造りをする' }] }
+  ];
+
   /* ---------- the link ---------- */
   function b64enc(s) {
     var bytes = new TextEncoder().encode(s), bin = '';
@@ -188,6 +198,7 @@
   function editMode() {
     var d = draft;
     box.innerHTML = '<p class="lead muted">日付・ひとこと・やることを入れて、リンクや画像でだれにでも送れます。受け取った人は、1タップで自分の予定帳に入れられます。</p>' +
+      '<div class="x-tpl"><span class="lab">こんなときに(押すと、例が入ります)</span><div class="chiprow">' + TEMPLATES.map(function (t) { return '<button type="button" class="chip" data-tpl="' + t.id + '">' + H(t.n) + '</button>'; }).join('') + '</div></div>' +
       '<div class="x-grid"><form id="x-form" autocomplete="off">' +
       '<div class="field"><label for="x-t">題名(例: 〇〇バンド ワンマンライブ)</label><input type="text" id="x-t" maxlength="' + MAX.t + '" value="' + H(d.t) + '"></div>' +
       '<div class="field"><label for="x-d">日付</label><input type="date" id="x-d" value="' + H(d.d) + '"></div>' +
@@ -199,6 +210,10 @@
       '<div class="field"><span class="lab">やること(何日前までに)</span><div id="x-tasks"></div><button type="button" class="btn small ghost" id="x-addtask">やることを足す</button></div>' +
       '</form><div class="x-side"><div id="x-card"></div><p class="x-actions"><button type="button" class="btn" id="x-make">リンクをつくる</button></p><div id="x-out"></div></div></div>';
     taskRows(); preview(); wireEdit();
+    $('.x-tpl').addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-tpl]') : null, tp = b && TEMPLATES.filter(function (x) { return x.id === b.getAttribute('data-tpl'); })[0];
+      if (tp) { draft = clean({ t: tp.t, d: C.iso(C.addDays(TODAY, tp.days)), tm: tp.tm || '', m: tp.m, th: tp.th, k: tp.k, tasks: tp.tasks }) || draft; A.stat('act:card_tpl_' + tp.id); editMode(); window.scrollTo(0, 0); }
+    });
   }
   function taskRows() {
     $('#x-tasks').innerHTML = draft.tasks.map(function (t, i) {
