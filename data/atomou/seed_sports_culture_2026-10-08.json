@@ -20,7 +20,7 @@
   "note": "開始16:50予定、グランドプリンスホテル新高輪(開催要項 npb.jp/news/detail/20260930_01.html)。"
  },
  {
-  "title": "ドラフト会議の観覧券、一般発売が始まる",
+  "title": "ドラフト会議の観覧券の一般発売が始まる",
   "date": "2026-10-10",
   "precision": "day",
   "kind": "開始",
@@ -62,7 +62,7 @@
   "title_note": "野球の話と分かる言葉が無い。例: 「プロ野球 SMBC日本シリーズ2026」"
  },
  {
-  "title": "MLBワールドシリーズ2026 開幕",
+  "title": "MLBワールドシリーズ2026が開幕",
   "date": "2026-10-23",
   "date_end": "2026-10-31",
   "precision": "day",
@@ -70,7 +70,7 @@
   "category": "野球",
   "region": "全国",
   "subject": "メジャーリーグ",
-  "what": "ワールドシリーズ開幕",
+  "what": "ワールドシリーズの開幕",
   "place": "",
   "son_toku": false,
   "son_toku_reason": "",
@@ -110,7 +110,7 @@
   "category": "駅伝・マラソン",
   "region": "全国",
   "subject": "箱根駅伝",
-  "what": "予選会(出場校を決める)",
+  "what": "出場校を決める予選会",
   "place": "",
   "son_toku": false,
   "son_toku_reason": "",
@@ -451,7 +451,7 @@
   "category": "駅伝・マラソン",
   "region": "地域",
   "subject": "女子マラソン",
-  "what": "名古屋ウィメンズ大会",
+  "what": "名古屋ウィメンズマラソン大会",
   "place": "愛知県(名古屋市)",
   "son_toku": false,
   "son_toku_reason": "",
@@ -757,7 +757,7 @@
   "note": ""
  },
  {
-  "title": "センバツ高校野球 第99回 開幕",
+  "title": "第99回センバツ高校野球 開幕",
   "date": "2027-03-19",
   "precision": "day",
   "kind": "開始",
@@ -827,7 +827,7 @@
   "region": "全国",
   "subject": "紅白歌合戦",
   "what": "大みそかの音楽番組",
-  "place": "東京都(NHKホール)・テレビ放送",
+  "place": "東京都(NHKホール)",
   "son_toku": false,
   "son_toku_reason": "",
   "source_url": "https://www.nhk.or.jp/kouhaku/topics77/topics-20260916.html",
@@ -880,7 +880,7 @@
   "note": ""
  },
  {
-  "title": "東京国際映画祭 第39回",
+  "title": "第39回東京国際映画祭",
   "date": "2026-10-26",
   "date_end": "2026-11-04",
   "precision": "day",
@@ -981,7 +981,7 @@
   "note": "現地日付。日本時間では3/15になる見込み。"
  },
  {
-  "title": "日本アカデミー賞(第50回)授賞式",
+  "title": "第50回日本アカデミー賞 授賞式",
   "date": "2027-03-12",
   "precision": "day",
   "kind": "開催",
@@ -1001,7 +1001,7 @@
   "note": "東京国際フォーラム ホールA。"
  },
  {
-  "title": "F1日本グランプリ(鈴鹿)2027",
+  "title": "F1日本グランプリ2027(鈴鹿)",
   "date": "2027-04-09",
   "date_end": "2027-04-11",
   "precision": "day",
