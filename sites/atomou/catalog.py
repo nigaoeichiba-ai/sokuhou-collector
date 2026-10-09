@@ -146,7 +146,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
         if last < today - timedelta(days=KEEP_AFTER_DAYS):
             rejects["終了して30日超"] += 1
             continue
-        group = GROUP_OF_SUBJECT.get(str(it.get("subject") or "").strip()) or GROUP_OF_CATEGORY.get(it["category"]) or GROUP_OF_FILE.get(base)
+        group = (it.get("group") if it.get("group") in GROUPS else None) or GROUP_OF_SUBJECT.get(str(it.get("subject") or "").strip()) or GROUP_OF_CATEGORY.get(it["category"]) or GROUP_OF_FILE.get(base)
         if not group:
             rejects["ジャンル不明"] += 1
             continue
