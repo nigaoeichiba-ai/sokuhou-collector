@@ -74,7 +74,7 @@ def taboo_page(d: dict, cfg: dict, preview: bool) -> str:
                      f'<span class="tb-level">{esc(label)}</span><h3>{esc(e["title"])}</h3><p>{esc(e["why"])}</p>'
                      f'<p class="tb-tip"><b>こうすると安心</b>{esc(e["tip"])}</p>{alt}</li>')
     lead = "贈ろうと思っている品を入れると、昔からの言い伝えやマナー上の注意が、あるかどうか分かります。気にしすぎなくてよいものも、お伝えします。"
-    body = f"""{B.head_band("sky", '<img class="pair-mini" src="/assets/img/navi-map.webp" alt="" width="170" height="130">', "贈る前に、縁起・マナーチェック", lead, single=True, mascot="b-wink")}
+    body = f"""{B.head_band("sky", '', "贈る前に、縁起・マナーチェック", lead, single=True, mascot="b-wink")}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("縁起・マナーチェック", None)])}</div>
 <section class="tbcheck" id="tbcheck"><div class="tb-form"><label>贈ろうと思っている品<input type="search" name="q" placeholder="例: くし、ハンカチ、靴、お茶" autocomplete="off"></label>
 <label>贈る場面<select name="o"><option value="">指定しない</option>{opts}</select></label></div>
@@ -89,7 +89,7 @@ def taboo_page(d: dict, cfg: dict, preview: bool) -> str:
 def calc_page(d: dict, cfg: dict, preview: bool) -> str:
     B = _b()
     lead = "いただいたお祝いへのお返しの目安と、みんなで贈るときの一人あたりの金額を、すぐに計算できます。"
-    body = f"""{B.head_band("yellow", '<img class="pair-mini" src="/assets/img/concierge-note.webp" alt="" width="170" height="130">', "お返し・割り勘の計算", lead, single=True, mascot="r-wink")}
+    body = f"""{B.head_band("yellow", '', "お返し・割り勘の計算", lead, single=True, mascot="r-wink")}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("お返し・割り勘の計算", None)])}</div>
 <div class="cols calc-cols" id="calc">
 <section class="calc-card" data-calc="return"><h2><span class="scribble">お返しの目安</span></h2>
@@ -152,7 +152,7 @@ def gacha_page(d: dict, cfg: dict, preview: bool, pool: dict, tiers: list[dict])
     lead = "贈る相手と予算を選んでボタンを押すと、条件に合う商品を1点、提案します。迷ったときのきっかけにしてください。"
     rec = "".join(f'<option value="{esc(s)}">{esc(v["name"])}</option>' for s, v in pool.items())
     bud = "".join(f'<option value="{esc(t["slug"])}">{esc(t["label"])}</option>' for t in tiers)
-    body = f"""{B.head_band("sky", '<img class="pair-mini" src="/assets/img/concierge-bell.webp" alt="" width="170" height="130">', "おまかせで、<wbr>1点提案します", lead, single=True, mascot="b-joy")}
+    body = f"""{B.head_band("sky", '', "おまかせで、<wbr>1点提案します", lead, single=True, mascot="b-joy")}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("おまかせ提案", None)])}</div>
 {B.pr_quiet(cfg)}
 <section id="gacha" class="gacha" data-src="/tool/gacha/items.json" data-aff="{esc(cfg["rakuten_affiliate_id"])}" data-trk="{esc(cfg.get("rakuten_tracking_id") or "")}">
@@ -176,7 +176,7 @@ def quiz_page(d: dict, cfg: dict, preview: bool) -> str:
     data = esc(json.dumps({"questions": c["questions"], "slugs": [p["slug"] for p in c["personas"]]}, ensure_ascii=False, separators=(",", ":")))
     people = "".join(f'<li><a href="/diagnosis/{p["slug"]}/">{esc(p["name"])}</a></li>' for p in c["personas"])
     lead = "あの人のことを思い出しながら、6つの質問に答えてください。贈り物のヒントになる「タイプ」が分かります。"
-    body = f"""{B.head_band("lilac", '<img class="pair-mini" src="/assets/img/b-sparkle.webp" alt="" width="170" height="155">', "あの人は、どんなタイプ?", lead, single=True, mascot="r-sparkle")}
+    body = f"""{B.head_band("lilac", '', "あの人は、どんなタイプ?", lead, single=True, mascot="r-sparkle")}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("プレゼント診断", None)])}</div>
 <section class="quiz" id="quiz" data-json="{data}"><noscript><p class="notice">この診断は、JavaScriptを使います。下の一覧から、タイプを見てみてください。</p></noscript>
 <div class="quiz-card" hidden><p class="quiz-step"></p><h2 class="quiz-q"></h2><div class="quiz-opts"></div></div>
@@ -192,7 +192,7 @@ def persona_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     themes = [c["theme"][s] for s in p["themes"] if s in live]
     links = "".join(f'<li><a href="/theme/{t["slug"]}/">{esc(t["title"])}</a></li>' for t in themes)
     others = "".join(f'<li><a href="/diagnosis/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in c["persona"]["personas"] if x["slug"] != p["slug"])
-    body = f"""{B.head_band("pink", '<img class="pair-mini" src="/assets/img/r-joy.webp" alt="" width="170" height="155">', esc(p["name"]), p["tagline"], single=True, mascot="b-joy")}
+    body = f"""{B.head_band("pink", '', esc(p["name"]), p["tagline"], single=True, mascot="b-joy")}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("プレゼント診断", "/diagnosis/"), (p["name"], None)])}</div>
 {B.share_bar(cfg, f"/diagnosis/{p['slug']}/", f"うちのあの人は『{p['name']}』だった! あなたの周りの人は?", "この結果を、だれかに送る")}
 <section style="margin-top:30px"><p class="persona-about">{esc(p["about"])}</p></section>
@@ -217,7 +217,7 @@ def tools_hub_page(d: dict, cfg: dict, preview: bool) -> str:
              ("/calendar/", "贈りどきカレンダー", "母の日、お歳暮など、一年の贈りどきをカレンダーに入れられます。", True)]
     tiles = "".join(f'<li><a class="tile wide tool-tile" href="{h}"><span><b>{esc(n)}</b><small>{esc(t)}</small></span></a></li>' for h, n, t, ok in cards if ok)
     lead = "プレゼント選びを楽にして、楽しくするための道具をそろえています。"
-    body = f"""{B.head_band("yellow", '<img class="pair-mini" src="/assets/img/navi-scope.webp" alt="" width="170" height="130">', "診断・ツール", lead, single=True)}
+    body = f"""{B.head_band("yellow", '', "診断・ツール", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", None)])}</div>
 <section style="margin-top:34px"><ul class="tiles wide">{tiles}</ul></section>"""
     return B.page(cfg, preview, path="/tool/", title=f"診断・ツール | {cfg['site_name']}", description=lead, body=body)
