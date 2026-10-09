@@ -231,6 +231,9 @@ class Pages(BuildOnce):
         self.assertIn("/?guide=1", guide)                          # pages without a tour of their own send the "ガイドを見る" button to the home tour
         self.assertIn('id="guide"', self.rel["manual/index.html"])
         self.assertIn('href="/manual/#guide">使い方</a>', home)    # the footer link: where to look again
+        my = self.rel["my/index.html"]
+        self.assertIn('href="/?intro=1"', my)                      # the my page: the introduction and the guide again
+        self.assertIn('data-guide="start"', my)
 
     def test_the_source_and_check_date_are_also_shown_right_under_the_card(self):
         e = self.entries[0]

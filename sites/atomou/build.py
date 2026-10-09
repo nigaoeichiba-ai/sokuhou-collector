@@ -428,11 +428,13 @@ def my_page(c: Ctx) -> str:
 <h2>設定</h2>
 <div class="panel">
 <div class="field"><label class="lab" for="p-big"><input type="checkbox" id="p-big"> 文字を大きくする</label></div>
-<div class="field"><label for="p-alarm">お知らせの時間</label>
+<div class="field"><label for="p-alarm">お知らせの時間(通知・カレンダーに入れるとき)</label>
 <select id="p-alarm"><option value="morning">当日の朝</option><option value="eve">前日の夜</option><option value="week">1週間前の朝</option><option value="none">なし</option></select></div>
 <div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する(個人は特定されません。<a href="/privacy/#stats">詳しく</a>)</label></div>
 <p><a href="/skins/">きせかえ</a></p>
 <p><a href="/?edit=1">ホームを編集</a></p>
+<p><a href="/?intro=1">はじめての方へ(このサイトの説明)を見る</a></p>
+<p><button type="button" class="btn small ghost" data-guide="start">使い方のガイドを見る</button></p>
 </div>
 {member_html}{push_html}{sync_html}<h2>他のカレンダーアプリに入れる</h2>
 <div class="panel"><p>iPhone の「カレンダー」や Google カレンダーに取り込めるファイルを作れます。1件ずつ作るときは、予定の詳細から。</p>
