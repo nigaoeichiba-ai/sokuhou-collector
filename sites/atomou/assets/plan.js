@@ -219,8 +219,8 @@
       }
       if (item.p === 'day') {
         var gurl = window.AtomouShare ? AtomouShare.googleUrl(item.title, item.date, own ? '' : '詳しい日付と出典: ' + location.origin + '/e/' + item.id + '/') : '';
-        h += '<details class="plan-sec more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">Google カレンダーに入れるときは、下の1つめを押します。iPhone の「カレンダー」などには、ファイルを作って取り込みます。</p>' +
-          '<p>' + (gurl ? '<a class="btn small ghost" href="' + H(gurl) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a> ' : '') +
+        h += '<details class="plan-sec more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">Google カレンダーと Outlook には、下のボタンから入れられます。iPhone の「カレンダー」、Yahoo!カレンダー、TimeTree などには、ファイルを作って取り込みます。</p>' +
+          '<p>' + (gurl ? '<a class="btn small ghost" href="' + H(gurl) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a> <a class="btn small ghost" href="' + H(AtomouShare.outlookUrl(item.title, item.date, own ? '' : '詳しい日付と出典: ' + location.origin + '/e/' + item.id + '/')) + '" target="_blank" rel="noopener">Outlookに追加</a> ' : '') +
           '<button type="button" class="btn small ghost" data-ics-for="' + H(key) + '">ファイルを作る</button></p></details>';
       }
       if (!(own && (!e || e.quiet))) {   // a day of one's own is sent as words and a picture only (no page to link to), without its title unless the box is ticked

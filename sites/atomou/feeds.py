@@ -76,8 +76,10 @@ def subscribe_html(path: str, base: str, host: str) -> str:
     from urllib.parse import quote
     web = f"webcal://{host}/{FEED_DIR}/{path}"
     google = "https://calendar.google.com/calendar/r?cid=" + quote(web, safe=":/")
+    outlook = "https://outlook.live.com/calendar/0/addfromweb?url=" + quote(f"https://{host}/{FEED_DIR}/{path}", safe="") + "&name=" + quote("あと何日、もう何日")
     return (f'<details class="more"><summary>このジャンルの日付を、カレンダーに購読する</summary>'
             '<p class="hint">一度入れると、あとから追加された日付も自動でカレンダーに届きます。</p>'
             f'<p><a class="btn small" href="{google}" target="_blank" rel="noopener">Googleカレンダーに追加</a> '
-            f'<a class="btn small ghost" href="{web}">iPhone・Mac・Outlookで購読</a> '
+            f'<a class="btn small ghost" href="{web}">iPhone・Macで購読</a> '
+            f'<a class="btn small ghost" href="{outlook}" target="_blank" rel="noopener">Outlookで購読</a> '
             f'<a class="btn small ghost" href="/{FEED_DIR}/{path}" download>ファイルをダウンロード</a></p></details>')
