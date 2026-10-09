@@ -30,11 +30,11 @@
 
   /* ---------- state ---------- */
   var S = blank(), brokenSaved = false;
-  var BLOCK_IDS = ['todo', 'search', 'cats', 'daily', 'mine', 'soon', 'record', 'usecases'], KIND_IDS = ['event', 'anniversary', 'birthday', 'memorial', 'since', 'until', 'memo'];
+  var BLOCK_IDS = ['todo', 'search', 'cats', 'daily', 'mine', 'interests', 'soon', 'record', 'usecases'], KIND_IDS = ['event', 'anniversary', 'birthday', 'memorial', 'since', 'until', 'memo'];
   function statsDefault() {  // statistics are on unless the browser says "do not track" (DNT / Global Privacy Control)
     try { return !(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.globalPrivacyControl === true); } catch (e) { return true; }
   }
-  function blank() { return { v: 1, updated: '', entries: [], deleted: [], saved: [], order: [], genre: {}, notes: {}, prefs: { skin: 'basic', big: false, skinAuto: false, skinNight: 'dark', nightAsked: false, alarm: 'morning', stats: statsDefault(), push: false, pushHash: '', blocks: { order: [], hidden: [] }, tour: {}, intro: false } }; }
+  function blank() { return { v: 1, updated: '', entries: [], deleted: [], saved: [], order: [], genre: {}, interests: [], notes: {}, prefs: { skin: 'basic', big: false, skinAuto: false, skinNight: 'dark', nightAsked: false, alarm: 'morning', stats: statsDefault(), push: false, pushHash: '', blocks: { order: [], hidden: [] }, tour: {}, intro: false } }; }
   function oneOf(v, list, dflt) { return list.indexOf(v) >= 0 ? v : dflt; }
   function cleanEntry(e) {  // whatever is in storage (or in a restored backup, or in a synced file) is reduced to known shapes before it can reach the page
     if (!e || typeof e !== 'object') return null;
@@ -59,6 +59,14 @@
     });
     return out;
   }
+  function cleanInterests(list) {   // the fields (subjects) and words the visitor likes: short plain text, at most 30
+    var out = [];
+    (Array.isArray(list) ? list : []).forEach(function (w) {
+      w = String(w == null ? '' : w).replace(/[\u0000-\u001f<>"'&\\]/g, '').trim().slice(0, 24);
+      if (w && out.indexOf(w) < 0 && out.length < 30) out.push(w);
+    });
+    return out;
+  }
   function normalize(o) {
     var s = blank(), p = (o && o.prefs) || {};
     o = o || {};
@@ -67,6 +75,7 @@
     s.deleted = (Array.isArray(o.deleted) ? o.deleted : []).filter(function (x) { return /^[A-Za-z0-9_-]{1,40}$/.test(String(x)); }).slice(-300);
     s.saved = (Array.isArray(o.saved) ? o.saved : []).filter(function (x) { return /^[0-9a-f]{10}$/.test(String(x)); });
     s.notes = cleanNotes(o.notes);
+    s.interests = cleanInterests(o.interests);
     s.order = (Array.isArray(o.order) ? o.order : []).filter(function (x) { return /^[cm]:[A-Za-z0-9_-]{1,40}$/.test(String(x)); });
     (CONF.groups || []).forEach(function (g) { var n = o.genre && +o.genre[g]; if (n > 0) s.genre[g] = Math.min(20, Math.floor(n)); });
     s.prefs.skin = CONF.skins[p.skin] ? p.skin : 'basic';
@@ -108,6 +117,7 @@
     out.deleted = Object.keys(del).slice(-300);
     out.saved = older.saved.concat(newer.saved).filter(function (x, i, l) { return l.indexOf(x) === i; });
     out.order = newer.order.slice();
+    out.interests = cleanInterests(older.interests.concat(newer.interests));
     out.notes = Object.assign({}, older.notes, newer.notes);
     Object.keys(out.notes).forEach(function (k) { if (k.charAt(0) === 'm' && del[k.slice(2)]) delete out.notes[k]; });
     Object.keys(older.genre).concat(Object.keys(newer.genre)).forEach(function (g) { out.genre[g] = Math.max(older.genre[g] || 0, newer.genre[g] || 0); });
@@ -476,7 +486,7 @@
       if (!e) return;
       ev = { uid: 'm-' + e.id, title: e.title, date: d, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm };
     } else {
-      ev = { uid: 'e-' + key.slice(2), title: title, date: d, alarm: S.prefs.alarm };
+      ev = { uid: 'e-' + key.slice(2), title: title, date: d, alarm: S.prefs.alarm, note: '詳しい日付と出典: ' + location.origin + '/e/' + key.slice(2) + '/' };
       if (S.saved.indexOf(key.slice(2)) < 0) { S.saved.push(key.slice(2)); persist(); fillCard(card); }
       var g = card.getAttribute('data-g');
       if (g && CONF.groups[g - 1]) { bump(CONF.groups[g - 1]); persist(); }
@@ -643,6 +653,109 @@
     });
   }
 
+  /* ---------- the fields the visitor likes: chosen on /interests/, listed on the home page ---------- */
+  function interestHits(cat, w) {   // the upcoming days that belong to a field or a word ("将棋", "剣道"); a quiet day is never put on such a list
+    var nw = norm(w), out = [];
+    cat.forEach(function (c) {
+      if (c.status === 'ended' || c.quiet) return;
+      var last = C.parse(c.date_end || c.date);
+      if (!last || C.cmp(last, TODAY) < 0) return;
+      if (c.subject === w || (c.tags || []).indexOf(w) >= 0 || hayOf(c).indexOf(nw) >= 0) out.push(c);
+    });
+    return out.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : a.title < b.title ? -1 : 1; });
+  }
+  function hasInterest(w) { return S.interests.indexOf(w) >= 0; }
+  function setInterest(w, on) {
+    var i = S.interests.indexOf(w);
+    if (on && i < 0 && S.interests.length < 30) { S.interests.push(w); stat('act:interest_add'); }
+    else if (!on && i >= 0) S.interests.splice(i, 1);
+    persist();
+  }
+  function requestLink(w) { return '/contact/?kind=request&q=' + encodeURIComponent(w); }
+  function renderInterests() {
+    var box = $('#interests');
+    if (!box) return;
+    var prompt = $('#int-prompt'), wrap = $('#int-wrap'), grid = $('#int-grid'), miss = $('#int-miss'), list = S.interests;
+    box.hidden = false;
+    prompt.hidden = !!list.length; wrap.hidden = !list.length;
+    if (!list.length) return;
+    loadCatalog().then(function (cat) {
+      var seen = {}, items = [], missing = [];
+      list.forEach(function (w) {
+        var hits = interestHits(cat || [], w);
+        if (!hits.length) missing.push(w);
+        hits.forEach(function (c) { if (!seen[c.id]) { seen[c.id] = 1; items.push(c); } });
+      });
+      items.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+      render(grid, items.slice(0, 6).map(catItem));
+      miss.innerHTML = (items.length > 6 ? '選んだ分野の日は、ほかに' + (items.length - 6) + '件あります。<a href="/search/?q=' + encodeURIComponent(list[0]) + '">探す</a> ' : '') +
+        missing.map(function (w) { return '「' + H(w) + '」は、まだ日付がありません。<a href="' + requestLink(w) + '">載せてほしい分野として送る</a>'; }).join('<br>');
+    });
+  }
+  function pageInterests() {
+    var chips = $$('[data-int]'), chosen = $('#int-chosen'), note = $('#int-note'), q = $('#int-q'), form = $('#int-form'), share = $('#int-share'), go = $('#int-go'), pick = $('#int-pick'), cat = [];
+    function sync() {
+      chips.forEach(function (b) { b.setAttribute('aria-pressed', hasInterest(b.getAttribute('data-int')) ? 'true' : 'false'); });
+      chosen.innerHTML = S.interests.length ? '<p class="hint">選んだ分野(押すと外せます)</p><div class="chiprow">' + S.interests.map(function (w) { return '<button type="button" class="chip" aria-pressed="true" data-int-drop="' + H(w) + '">' + H(w) + ' ×</button>'; }).join('') + '</div>'
+        : '<p class="hint">まだ選んでいません。下の分野を押すか、言葉を入れて追加します。</p>';
+      go.hidden = !S.interests.length;
+      share.hidden = !S.interests.length;
+      share.setAttribute('data-text', '好きな分野の日付を、あと何日かで見られます: ' + S.interests.slice(0, 8).join('・'));
+      share.setAttribute('data-url', location.origin + '/interests/?pick=' + encodeURIComponent(S.interests.slice(0, 10).join(',')));
+      if (window.AtomouShare) AtomouShare.init(share);
+    }
+    function say(w) {
+      var n = interestHits(cat, w).length;
+      note.innerHTML = n ? '「' + H(w) + '」を追加しました。今は' + n + '件の日があります。' : '「' + H(w) + '」を追加しました。まだ日付がありません。<a href="' + requestLink(w) + '">載せてほしい分野として送る</a>';
+    }
+    loadCatalog().then(function (c) { cat = c || []; });
+    document.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-int],[data-int-drop]') : null;
+      if (!b) return;
+      if (b.hasAttribute('data-int')) { var w = b.getAttribute('data-int'); setInterest(w, !hasInterest(w)); if (hasInterest(w)) say(w); else note.textContent = ''; }
+      else setInterest(b.getAttribute('data-int-drop'), false);
+      sync();
+    });
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var w = q.value.replace(/[\u0000-\u001f<>"'&\\]/g, '').trim().slice(0, 24);
+      if (!w) return;
+      var hit = chips.filter(function (b) { return norm(b.getAttribute('data-int')) === norm(w); })[0];
+      if (hit) w = hit.getAttribute('data-int');
+      if (!hasInterest(w) && S.interests.length >= 30) { note.textContent = '選べるのは30個までです。'; return; }
+      setInterest(w, true); say(w); q.value = ''; filter(); sync();
+    });
+    function filter() {   // typing narrows the fields shown
+      var t = norm(q.value);
+      chips.forEach(function (b) { b.hidden = !!t && norm(b.getAttribute('data-hay') || b.getAttribute('data-int')).indexOf(t) < 0; });
+      $$('[data-int-sec]').forEach(function (s) { s.hidden = !!t && !$$('[data-int]', s).some(function (b) { return !b.hidden; }); });
+    }
+    q.addEventListener('input', filter);
+    if (P.pick) {   // a link from a friend: the fields they chose, offered (never added without a tap)
+      var words = cleanInterests(String(P.pick).split(',')).slice(0, 10);
+      if (words.length) {
+        pick.hidden = false;
+        pick.innerHTML = '<p>友だちが選んだ分野: <b>' + words.map(H).join('・') + '</b></p><p><button type="button" class="btn small" id="int-take">この分野を自分の好きな分野にする</button></p>';
+        $('#int-take').addEventListener('click', function () { words.forEach(function (w) { setInterest(w, true); }); pick.hidden = true; note.textContent = '追加しました。ホームに、その分野の日が並びます。'; sync(); });
+      }
+    }
+    sync();
+  }
+  function toggleLabel(b) {
+    var w = b.getAttribute('data-int-toggle');
+    b.textContent = hasInterest(w) ? '好きな分野から外す' : '「' + w + '」を好きな分野に入れる';
+    b.setAttribute('aria-pressed', hasInterest(w) ? 'true' : 'false');
+  }
+  $$('[data-int-toggle]').forEach(toggleLabel);
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest ? ev.target.closest('[data-int-toggle]') : null;
+    if (!b) return;
+    var w = b.getAttribute('data-int-toggle');
+    setInterest(w, !hasInterest(w));
+    toggleLabel(b);
+    toast(hasInterest(w) ? 'ホームに、この分野の日が並びます。' : '外しました。');
+  });
+
   /* ---------- home blocks: reorder / show / hide (this device only) ---------- */
   var BLOCKS = BLOCK_IDS;
   function blockPrefs() {
@@ -696,7 +809,7 @@
   }
 
   function pageHome() {
-    renderDaily(); renderMine(); wireBlocks();
+    renderDaily(); renderMine(); renderInterests(); wireBlocks();
     var cb = blockPrefs();
     if (cb.order.length || cb.hidden.length) { stat('home_order:' + (cb.order.length ? cb.order.join(',') : 'default')); cb.hidden.forEach(function (k) { stat('home_hidden:' + k); }); }
     var grid = $('#grid'), more = $('#more'), pool = [], shown = 6, random = null, ready = null;
@@ -1079,6 +1192,7 @@
   else if (page === 'skins') pageSkins();
   else if (page === 'category') pageCategory();
   else if (page === 'today') pageToday();
+  else if (page === 'interests') pageInterests();
   window.AtomouApp = { matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
     loadCatalog: loadCatalog, catItem: catItem, ownItem: ownItem, cardHtml: cardHtml, hydrate: hydrate, fillCard: fillCard, fmtDate: fmtDate, wd: wd, occ: occ, nextYearly: nextYearly, KINDS: KINDS,
     findEntry: findEntry, uid: uid, icsFor: icsFor, removeEntry: removeEntry, normalize: normalize, tipFor: tipFor, nextLines: nextLines, applyPrefs: applyPrefs };
