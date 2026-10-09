@@ -1,0 +1,86 @@
+{
+  "updated": "2026-10-09",
+  "note": "Every entry was checked against the pages named in its sources (opened and read on 2026-10-09). An amount is written only where at least two of them agree. Add occasions only the same way; the build refuses an amount without two sources.",
+  "occasions": [
+    {
+      "slug": "birth-gift",
+      "budget": [
+        {"to": "友人・同僚", "range": "5,000〜10,000円", "note": "同僚は、職場で連名にしてまとめることも多いです。"},
+        {"to": "兄弟姉妹・近い親族", "range": "10,000〜30,000円", "note": "親族内の決まりがあれば、それに合わせます。"}
+      ],
+      "timing": "生後7日ごろから、お宮参りのある生後1か月ごろまでが目安です。直接渡すなら、産後2〜3週間ほどたって、母子の体調が落ち着いたころが理想とされています。",
+      "noshi": {"applicable": true, "omote": "御出産御祝/御祝", "mizuhiki": "紅白の蝶結び", "note": "友人など気軽な間柄では、水引を付けないこともあります。目上の方への表書きは、ひらがなを避けて漢字で書きます。"},
+      "cautions": [
+        "「安産」の言葉は、実際の経過が分からないため、避けたほうが無難とされています。",
+        "出産直後の訪問や、連絡なしの訪問は避けます。会えないときは、宅配で送る方法もあります。"
+      ],
+      "return_gift": null,
+      "confidence": "high",
+      "sources": [
+        {"name": "シャディ 出産祝いのマナー", "url": "https://shaddy.jp/shussan/manner/basic/"},
+        {"name": "小田急百貨店 出産祝いのマナー", "url": "https://www.odakyu-dept.co.jp/okurimono/baby-gift/manners.html"},
+        {"name": "高島屋 出産のお祝い ご贈答マナー", "url": "https://www.takashimaya.co.jp/giftnavi/oiwai_01.html"}
+      ]
+    },
+    {
+      "slug": "wedding-gift",
+      "budget": [
+        {"to": "式に出席しない人(品物でも現金でも)", "range": "10,000〜20,000円", "note": "品物は、10,000円前後が目安です。"},
+        {"to": "友人(披露宴に出席するご祝儀)", "range": "20,000〜30,000円", "note": "30,000円が一般的です。"},
+        {"to": "上司・恩師(ご祝儀)", "range": "30,000〜50,000円"},
+        {"to": "兄弟姉妹・親戚(ご祝儀)", "range": "30,000〜100,000円", "note": "関係が近いほど高めになります。"}
+      ],
+      "timing": "式に招かれたら、式の1週間から10日前までに届くよう手配します。式を行わない場合は、結婚の報告を受けてから、1か月以内を目安に贈ります。式当日に会場へ品物を持参するのは避けます。",
+      "noshi": {"applicable": true, "omote": "寿/御結婚御祝", "mizuhiki": "紅白または金銀の結び切り(10本)", "note": "結び切りは、一度きりにしたいお祝いに使います。連名にするときは、右側が目上の人です。洋風の贈り物なら、のしの代わりにリボンとカードを添えてもかまいません。"},
+      "cautions": [
+        "刃物や割れ物は縁起を気にする人もいるため、希望がなければ控えるのが無難です。",
+        "ご祝儀の金額は、奇数を目安にし、4万円と9万円は避けます。",
+        "好みが分からないときは、カタログギフトや消耗品が外しにくい選択です。"
+      ],
+      "return_gift": null,
+      "confidence": "high",
+      "sources": [
+        {"name": "ゼクシィ 結婚祝いのマナー", "url": "https://zexy.net/mar/manual/guest/weddinggift.html"},
+        {"name": "高島屋 結婚のお祝い ご贈答マナー", "url": "https://www.takashimaya.co.jp/giftnavi/oiwai_04.html"},
+        {"name": "三越伊勢丹 結婚祝いのマナーガイド", "url": "https://www.mistore.jp/gifts/wedding/wedding_manner/"}
+      ]
+    },
+    {
+      "slug": "oseibo",
+      "budget": [
+        {"to": "一般的なお付き合い", "range": "3,000〜5,000円", "note": "相手に気を遣わせない金額が目安です。"}
+      ],
+      "timing": "関東は12月の初めから、関西などは12月13日ごろから、12月31日までに贈ります。20日ごろまでに届くようにすると安心です。",
+      "noshi": {"applicable": true, "omote": "御歳暮", "mizuhiki": "紅白の蝶結び", "note": "遅れたときは、年明けから松の内(関東は1月7日、関西は1月15日)までは「御年賀」、立春の前までは「寒中御伺」、立春以降は「余寒御伺」にします。"},
+      "cautions": [
+        "相手が喪中のときは、忌明けを過ぎてから贈ります。紅白の水引は避けて、無地の短冊にします。",
+        "毎年の習慣でなければ、「御礼」「御挨拶」の表書きにしても自然です。"
+      ],
+      "return_gift": null,
+      "confidence": "high",
+      "sources": [
+        {"name": "大丸松坂屋 お歳暮の時期", "url": "https://www.daimaru-matsuzakaya.jp/oseibo/contents1/", "year": 2026},
+        {"name": "三越伊勢丹 お歳暮の贈り物マナー", "url": "https://www.mistore.jp/gifts/seibo/seibo_manner"}
+      ]
+    },
+    {
+      "slug": "ochugen",
+      "budget": [
+        {"to": "両親・親戚", "range": "3,000〜5,000円"},
+        {"to": "上司・恩師・仕事関係", "range": "3,000〜10,000円", "note": "上司や恩師は、5,000円前後がよく選ばれます。"}
+      ],
+      "timing": "関東は7月の初めから15日ごろまで、関西・東海・中国・四国は7月中旬から8月15日ごろまでが目安です。この時期を過ぎたら、表書きを「暑中御伺」か「残暑御伺」に替えて贈ります。",
+      "noshi": {"applicable": true, "omote": "御中元", "mizuhiki": "紅白の蝶結び", "note": "関東では、7月16日から立秋の前日までが「暑中御伺」、立秋から8月下旬までが「残暑御伺」です。相手が喪中でも贈れますが、その場合は白無地ののしにします。"},
+      "cautions": [
+        "生ものは、先方が受け取れる日を確認してから送ります。",
+        "贈ったり贈らなかったりするのは好まれません。毎年続けても負担にならない金額にします。"
+      ],
+      "return_gift": "お返しは、基本的に不要です。届いたら、一両日中にお礼状かお礼の連絡をします。",
+      "confidence": "high",
+      "sources": [
+        {"name": "三越伊勢丹 お中元の贈り物マナーガイド", "url": "https://www.mistore.jp/gifts/chugen/chugen_manner", "year": 2026},
+        {"name": "大丸松坂屋 お中元のマナー", "url": "https://www.daimaru-matsuzakaya.jp/ochugen/contents5/", "year": 2026}
+      ]
+    }
+  ]
+}
