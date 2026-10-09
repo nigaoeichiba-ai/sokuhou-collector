@@ -224,7 +224,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'app', 'share', 'card', 'plan', 'quick', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'app', 'share', 'card', 'ical', 'plan', 'quick', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -524,6 +524,10 @@ def my_page(c: Ctx) -> str:
 {member_html}{push_html}{sync_html}<h2>他のカレンダーアプリに入れる</h2>
 <div class="panel"><p>iPhone の「カレンダー」や Google カレンダーに取り込めるファイルを作れます。1件ずつ作るときは、予定の詳細から。</p>
 <p><button type="button" class="btn small ghost" id="ics-all">すべての予定をファイルにする</button></p></div>
+<h2 id="ical-h">ほかのカレンダーから取り込む</h2>
+<div class="panel"><p>Google カレンダーなどから書き出した .ics のファイルを、この予定帳に入れられます。ファイルはこの端末の中だけで読み、どこにも送りません。</p>
+<details class="more"><summary>Google カレンダーからの書き出し方</summary><ol><li>パソコンで Google カレンダーを開きます。</li><li>右上の歯車から「設定」を開きます。</li><li>「インポート/エクスポート」の「エクスポート」を押します。</li><li>ダウンロードした ZIP を開き、中の .ics のファイルを、下から選びます。</li></ol></details>
+<p><label class="btn small ghost" for="ical-file">.ics のファイルを選ぶ</label><input class="vh" type="file" id="ical-file" accept=".ics,text/calendar"></p><div id="ical-out" aria-live="polite"></div></div>
 <h2 id="backup-h">バックアップ</h2>
 <div class="panel">
 <p>記録はこの端末に保存されています。機種変更の前に書き出し、新しい端末で読み込んでください。</p>
