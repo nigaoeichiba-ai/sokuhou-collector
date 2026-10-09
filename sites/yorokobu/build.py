@@ -108,7 +108,7 @@ RANKING_ON = False   # set by render_site: the nav and the home page link to /ra
 def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
     if "pr-quiet" in kw.get("body", ""):
-        kw["body"] += pr_foot(cfg, "amazon.co.jp/" in kw["body"])
+        kw["body"] += pr_foot(cfg, "amazon.co.jp/" in kw["body"], "rakuten.co.jp/" in kw["body"])
     site = {**SITE, "nav": SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])}
     return layout(site, cfg, preview, scripts=True, head_extra=FONTS, **kw)
 
@@ -273,16 +273,21 @@ def freshness(d: dict) -> str:
             "価格、販売可能情報は、変更される場合があります。購入時に楽天市場店舗(www.rakuten.co.jp)に表示されている価格が、その商品の販売に適用されます。</p>")
 
 
+def pr_with_amazon(cfg: dict) -> str:
+    """The PR label for a page whose only affiliate link is the Amazon search button (the other pages carry it already)."""
+    return pr_quiet(cfg) if cfg.get("amazon_tracking_id") else ""
+
+
 def pr_quiet(cfg: dict) -> str:
     """A one-line label at the top of the page (the full text sits in the footer of every page)."""
     return '<p class="pr-quiet"><span class="pr-chip">PR</span>広告を含みます(くわしくはページ下部)</p>'
 
 
-def pr_foot(cfg: dict, amazon: bool = False) -> str:
-    """The full notice at the bottom of a page; it names Amazon only when the page really has an Amazon link."""
-    return ('<aside class="pr-foot"><b>広告について</b>このページには、広告(楽天アフィリエイト'
-            + ('・Amazonアソシエイト' if amazon and cfg.get("amazon_tracking_id") else "")
-            + ')のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。商品は、編集方針にもとづいて運営者が選んでいます。</aside>')
+def pr_foot(cfg: dict, amazon: bool = False, rakuten: bool = True) -> str:
+    """The full notice at the bottom of a page; it names each programme only when the page really has a link to it."""
+    amazon = amazon and bool(cfg.get("amazon_tracking_id"))
+    names = "・".join((["楽天アフィリエイト"] if rakuten or not amazon else []) + (["Amazonアソシエイト"] if amazon else []))
+    return ('<aside class="pr-foot"><b>広告について</b>このページには、広告(' + names + ')のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。商品は、編集方針にもとづいて運営者が選んでいます。</aside>')
 
 
 def auto_note(it: dict, ctx: dict) -> str:
@@ -757,12 +762,14 @@ def guide_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
     head = head_band("sky", ic_wrap("occasion", slug), esc(g["title"]), g["intro"], single=True, mascot=OCC_MASCOT.get(slug, "r-wink"))
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (o["name"], f"/occasion/{slug}/"), ("読みもの", None)])}</div>
+{pr_with_amazon(cfg)}
 <article class="guide">{secs}
 <section class="g-sec"><h2><span class="scribble">贈る前の、チェックリスト</span></h2><ul class="checklist">{checks}</ul></section>
 <section class="g-sec"><h2><span class="scribble">よくある質問</span></h2>{faq}</section></article>
 {share_bar(cfg, f"/guide/{slug}/", f"{g['title']}", "この記事を、だれかに送る")}
 <section class="related" style="margin-top:44px"><h2><span class="scribble">{esc(o["name"])}の贈り物を、選ぶ</span></h2>
 <ul class="plain">{links}</ul><p style="margin-top:14px"><a class="btn btn-sub" href="/occasion/{slug}/">{esc(o["name"])}のおすすめを見る</a></p></section>
+{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "の贈り物を、Amazonでも探す")}
 <script type="application/ld+json">{ld}</script>"""
     return page(cfg, preview, path=f"/guide/{slug}/", title=f"{g['title']} | {cfg['site_name']}", description=g["intro"][:110], body=body, og_image=og_for(f"occasion/{slug}"))
 
@@ -1040,12 +1047,14 @@ def message_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
     lead = m["intro"]
     body = f"""{head_band("pink", ic_wrap("occasion", slug), f'{esc(o["name"])}の<wbr>メッセージ例文集', lead, single=True, mascot=OCC_MASCOT.get(slug, "b-wink"))}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("メッセージ例文集", "/message/"), (o["name"], None)])}</div>
+{pr_with_amazon(cfg)}
 <p class="sec-lead">気に入った文の「コピー」を押すと、そのまま貼りつけられます。相手との関係に合わせて、言葉を少し変えると、さらに気持ちが伝わります。</p>
 {sets}
 <section style="margin-top:44px"><h2><span class="scribble">最後に添える、ひとこと</span></h2><ul class="msg-list">{closing}</ul></section>
 <section class="avoid" style="margin-top:44px"><h2><span class="scribble">言葉を選ぶときの、気をつけたいこと</span></h2>{ul(m["manners"], "warn")}</section>
 <section style="margin-top:44px"><h2><span class="scribble">贈るものを、探す</span></h2>
 <p><a class="btn" href="/occasion/{slug}/">{esc(o["name"])}のプレゼントを探す</a></p>{guide_link(c, slug)}</section>
+{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "に贈るものを、Amazonでも探す")}
 {related}"""
     return page(cfg, preview, path=f"/message/{slug}/", title=f"{o['name']}のメッセージ例文集 | {cfg['site_name']}", description=lead[:110], body=body,
                 og_image=og_for(f"occasion/{slug}"))
@@ -1089,6 +1098,7 @@ def numbers_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 {pr_quiet(cfg)}
 <p class="sec-lead">条件に合う商品の、いまの数字です{more}。レビューは購入した人の感想で、品質を保証するものではありません。</p>
 <section style="margin-top:30px">{item_grid(cfg, L["items"])}</section>
+{amazon_more(cfg, "プレゼント ギフト 人気", "プレゼントを、Amazonでも探す")}
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの条件</span></h2><ul class="plain cols2 chips">{others}</ul></section>' if others else ""}
 {freshness(d)}"""
     return page(cfg, preview, path=f"/numbers/{slug}/", title=f"{L['title']} | {cfg['site_name']}", description=L["says"][:110], body=body)
@@ -1141,7 +1151,9 @@ def month_page(d: dict, cfg: dict, preview: bool, m: int, today: date, months: l
     head = head_band(COLORS[m % 4], ic_wrap("occasion", mc["occ"][0]["slug"]) if mc["occ"] else "", f"{m}月の<wbr>贈りどき", lead, single=True, mascot="b-sparkle")
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("月ごとの贈りどき", "/month/"), (f"{m}月", None)])}</div>
+{pr_with_amazon(cfg)}
 {sec}
+{amazon_more(cfg, (mc["occ"][0]["name"] + " プレゼント") if mc["occ"] else "プレゼント ギフト", ((mc["occ"][0]["name"] + "の") if mc["occ"] else "") + "プレゼントを、Amazonでも探す")}
 <p class="memo-note" style="margin-top:36px">日にちは、{mc["y"]}年のものです(毎年、自動で更新します)。誕生日や記念日など、人によって違う日は、<a href="/memo/">たいせつな日メモ</a>に登録できます。カレンダーに入れるなら、<a href="/calendar/">贈りどきカレンダー</a>へ。</p>
 {nav}"""
     return page(cfg, preview, path=f"/month/{m}/", title=f"{m}月の贈りどき 準備したいプレゼントのイベント | {cfg['site_name']}", description=lead, body=body,
