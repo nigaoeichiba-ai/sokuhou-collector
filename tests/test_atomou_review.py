@@ -28,7 +28,7 @@ class ReviewBuild(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.pages = review.build_pages(CFG, TODAY)
-        cls.html = {k: v for k, v in cls.pages.items() if k.endswith(".html") and isinstance(v, str)}
+        cls.html = {k: v for k, v in cls.pages.items() if k.endswith(".html") and isinstance(v, str) and not k.startswith("google")}   # (a Search Console ownership file is a one-line text, not a page)
 
     def test_only_the_content_and_the_legal_pages_exist(self):
         for k in self.pages:
