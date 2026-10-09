@@ -1,6 +1,7 @@
-/* Screen guide: a short step-by-step tour that points at the real buttons of the page.  It starts by itself the first time a page is opened
-   (not when ?today= is used, which the tests and screenshots use), and the "ガイド" button starts it again at any time.
-   Which pages were seen is kept in the visitor's own settings (prefs.tour); nothing is sent anywhere. */
+/* Screen guide: a short step-by-step tour that points at the real buttons of the page.  It never starts over the page by itself: a first-time visitor
+   of the home page is shown an introduction (what the site is, three things it does) with a button to start the tour, and the first time another page is opened
+   a slim bar offers the tour (not when ?today= is used, which the tests and screenshots use).  The "?" / "ガイド" buttons and the "使い方" link start it at any time.
+   What was seen is kept in the visitor's own settings (prefs.tour, prefs.intro); nothing is sent anywhere. */
 (function () {
   'use strict';
   var A = window.AtomouApp;
@@ -34,7 +35,10 @@
     ]
   };
   var steps = TOURS[page];
-  if (!steps) return;
+  if (!steps) {   // a page without a tour of its own (the manual, a day's page...): the "ガイドを見る" button opens the home page's tour
+    document.addEventListener('click', function (ev) { var b = ev.target.closest ? ev.target.closest('[data-guide]') : null; if (b) location.href = '/?guide=1'; });
+    return;
+  }
   var idx = 0, live = [], shade, hole, tip, btn;
 
   function seen() { var t = A.state().prefs.tour || {}; return !!t[page]; }
@@ -113,7 +117,37 @@
   }
   document.addEventListener('click', function (ev) { var b = ev.target.closest ? ev.target.closest('[data-guide]') : null; if (b) start(); });
   window.AtomouGuide = { start: start, steps: steps };
-  // by itself, once per page, after the page has drawn its cards (and never in the tests, which pass ?today=)
-  if (!P.today && !seen() && P.guide !== '0') setTimeout(start, 1200);
-  else if (P.guide === '1') setTimeout(start, 600);
+  // the offer: the home page's introduction card, or a slim bar on the other pages (once; never in the tests, which pass ?today=)
+  function offer() {
+    var main = document.querySelector('main') || document.body, bar = document.createElement('div');
+    bar.className = 'guide-offer'; bar.setAttribute('role', 'region'); bar.setAttribute('aria-label', 'この画面の使い方');
+    bar.innerHTML = '<span>この画面の使い方を、30秒で見られます。</span><button type="button" class="btn small" data-o="go">見る</button><button type="button" class="btn small ghost" data-o="no">いらない</button>';
+    bar.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-o]') : null;
+      if (!b) return;
+      bar.parentNode.removeChild(bar); markSeen();
+      if (b.getAttribute('data-o') === 'go') start();
+    });
+    main.insertBefore(bar, main.firstChild);
+  }
+  function intro() {
+    var box = document.getElementById('intro'), st = A.state();
+    if (!box) return false;
+    if (st.prefs.intro && P.intro !== '1') return false;
+    box.hidden = false; document.body.classList.add('intro-open');   // the floating guide button would cover the text
+    box.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-intro]') : null;
+      if (!b) return;
+      box.hidden = true; document.body.classList.remove('intro-open'); st.prefs.intro = true; A.persist();
+      A.stat(b.getAttribute('data-intro') === 'start' ? 'act:intro_tour' : 'act:intro_close');
+      if (b.getAttribute('data-intro') === 'start') setTimeout(start, 150);
+    });
+    A.stat('act:intro_show');
+    return true;
+  }
+  if (P.guide === '1') setTimeout(start, 600);
+  else if ((!P.today || P.intro === '1') && P.guide !== '0') {
+    if (page === 'home') intro();
+    else if (!seen() && !P.today) offer();
+  }
 })();
