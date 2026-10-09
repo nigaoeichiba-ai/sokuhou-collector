@@ -1057,11 +1057,18 @@
   }
 
   /* ---------- start ---------- */
+  function chipFade() {   // a row of chips that goes on past the screen edge fades at that edge (so people who do not know "swipe" see there is more)
+    $$('.chiprow, .chips.scroll').forEach(function (r) {
+      function upd() { r.classList.toggle('more-right', r.scrollWidth - r.clientWidth - r.scrollLeft > 4); }
+      upd(); r.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd);
+    });
+  }
   prefillContact();
   applyPrefs();
   hydrate(document);
   renderSeason();
   renderHero();
+  chipFade();
   stat('view:' + (/^[a-z]+$/.test(page) ? page : 'other'));
   stat('skin:' + S.prefs.skin);
   if (S.prefs.big) stat('big:on');
