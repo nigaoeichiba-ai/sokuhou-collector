@@ -104,6 +104,17 @@ class QuickSheetTest(unittest.TestCase):
         self.assertEqual(build.budget_for(e, "in-laws")["to"], "義父母")
         self.assertIsNone(build.budget_for(e, "colleague"))
 
+    def test_the_real_etiquette_data_loads_is_written_calmly_and_every_amount_has_two_sources(self):
+        from sites.yorokobu import quality
+        real = content.load()["etiquette"]
+        self.assertGreaterEqual(len(real), 4)
+        for slug, e in real.items():
+            texts = [e["timing"], e["noshi"].get("note", ""), *e["cautions"], e.get("return_gift") or "", e.get("budget_note") or "", *[r.get("note", "") for r in e.get("budget", [])]]
+            self.assertEqual(quality.language_problems("".join(t if t.endswith("。") or not t else t for t in texts), slug), [], slug)
+            self.assertGreaterEqual(len(e["sources"]), 2, slug)
+            for r in e.get("budget", []):
+                self.assertIn(e["confidence"], ("high", "medium"), slug)
+
 
 if __name__ == "__main__":
     unittest.main()

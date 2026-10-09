@@ -644,3 +644,15 @@ header.site nav a[aria-current] { background: var(--ink); color: #fff; border-co
 .band.pagehead-band { padding-top: 30px; padding-bottom: 34px; }
 .pagehead-band .pagehead { padding-bottom: 0; }
 @media (max-width: 760px) { .band.pagehead-band { padding-top: 24px; padding-bottom: 28px; } .pagehead-band .pagehead { padding-bottom: 0; } }
+/* the sheet on a phone: one block per row instead of three cramped columns; the header scrolls away (two rows of buttons were a quarter of the screen) */
+@media (max-width: 560px) {
+  .quick-table, .quick-table tbody, .quick-table tr, .quick-table th, .quick-table td { display: block; }
+  .quick-table thead { display: none; }
+  .quick-table tr { padding: .55em 0; border-bottom: 1px solid #e8d9b8; }
+  .quick-table th[scope="row"] { border: 0; padding: 0; font-size: .9rem; color: var(--muted); }
+  .quick-table td { border: 0; padding: .1em 0; }
+  .quick-table td:nth-child(2) { font-weight: 700; font-size: 1.1rem; }
+  .quick-table td:nth-child(3) { color: var(--muted); font-size: .85rem; }
+  .quick-table td:empty { display: none; }
+  header.site { position: static; }
+}
