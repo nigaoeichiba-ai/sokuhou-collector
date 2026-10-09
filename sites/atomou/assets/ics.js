@@ -44,6 +44,10 @@
       L.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(ev.title),
         'TRIGGER:' + (t ? dur(alertBefore(ev.alarm, t[0] * 60 + t[1])) : (ev.alarm === 'eve' ? '-PT3H' : ev.alarm === 'week' ? '-P6DT15H' : 'PT9H')), 'END:VALARM');
     }
+    (ev.reminds || []).forEach(function (r) {   // "the days before" notices: 9:00 that many days earlier (an all-day event starts at 0:00)
+      if (!(r >= 1)) return;
+      L.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc('あと' + r + '日: ' + ev.title), 'TRIGGER:-P' + (r - 1) + 'DT15H', 'END:VALARM');
+    });
     L.push('END:VEVENT');
     return L;
   }

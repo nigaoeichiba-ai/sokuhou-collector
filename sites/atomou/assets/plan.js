@@ -20,10 +20,15 @@
     st.saved.forEach(function (id) { if (by[id]) items.push(A.catItem(by[id])); });
     return items;
   }
-  function notesOf(key) { return S().notes[key] || { memo: '', tasks: [] }; }
+  function remindPreset(item) {   // the notices that suit the kind of day (a test, a trip and a birthday are not prepared for alike)
+    var g = item.g ? (A.CONF.groups || [])[item.g - 1] : '', k = item.own ? ((A.findEntry(item.id) || {}).kind || '') : '';
+    if (item.own) return k === 'until' ? [30, 7, 1] : k === 'anniversary' || k === 'birthday' ? [7, 1] : k === 'event' ? [1] : k === 'since' ? [] : [7, 1];
+    return g === '試験・資格' ? [30, 14, 7, 1] : g === '締切・制度' ? [14, 7, 3, 1] : g === '消費・セール' ? [7, 1] : [7, 1];
+  }
+  function notesOf(key) { var n = S().notes[key] || { memo: '', tasks: [] }; if (!n.remind) n.remind = []; return n; }
   function setNotes(key, n) {
     var st = S();
-    if (!n.memo && !n.tasks.length) delete st.notes[key]; else st.notes[key] = n;
+    if (!n.memo && !n.tasks.length && !(n.remind && n.remind.length)) delete st.notes[key]; else st.notes[key] = n;
     A.persist();
   }
   function baseOf(it) {  // the date the tasks count back from (a yearly day: its next turn)
@@ -197,6 +202,12 @@
     function render() {
       var own = item.own, e = own ? A.findEntry(item.id) : null, n = notesOf(key), h = '';
       h += '<div class="cards plan-card">' + A.cardHtml(item).replace('class="card', 'class="card big') + '</div>';
+      if (item.p === 'day' && !item.quiet) {   // the notices that count down to the day (this device's push, and the alarms of the calendar file)
+        var rem = notesOf(key).remind, sug = remindPreset(item);
+        h += '<section class="plan-sec" id="remind"><h2>あと何日の知らせ</h2><p class="hint">日にちが近づくたびに、知らせます。通知をオンにしているときに届きます。カレンダーのファイルにも入ります。</p><div class="chiprow">' +
+          [100, 60, 30, 14, 7, 3, 1].map(function (r) { return '<button type="button" class="chip" data-remind="' + r + '" aria-pressed="' + (rem.indexOf(r) >= 0) + '">' + (r === 1 ? '前日' : r + '日前') + '</button>'; }).join('') + '</div>' +
+          '<p class="share-btns"><button type="button" class="btn small ghost" data-remind-preset="' + sug.join(',') + '">おすすめにする(' + sug.map(function (r) { return r === 1 ? '前日' : r + '日前'; }).join('・') + ')</button> <button type="button" class="btn small ghost" data-remind-preset="">なしにする</button></p></section>';
+      }
       h += '<section class="plan-sec" id="tasks"><h2>やること(期限)</h2><ul class="plist" id="task-list">' + taskList() + '</ul>' +
         '<form class="task-add" id="task-add"><label class="vh" for="t-before">いつまでに</label><select id="t-before">' + BEFORE.map(function (b) { return '<option value="' + b[0] + '"' + (b[0] === 7 ? ' selected' : '') + '>' + b[1] + '</option>'; }).join('') + '</select>' +
         '<label class="vh" for="t-text">やること</label><input type="text" id="t-text" maxlength="80" placeholder="例: 書類をそろえる" autocomplete="off"><button type="submit" class="btn small">追加</button></form>' +
@@ -265,6 +276,14 @@
       render(); var t = $('#t-text'); if (t) t.focus();
     });
     box.addEventListener('click', function (ev) {
+      var rb = ev.target.closest ? ev.target.closest('[data-remind],[data-remind-preset]') : null;
+      if (rb) {
+        var rn = notesOf(key), r = rb.getAttribute('data-remind');
+        if (r !== null) { r = +r; var at = rn.remind.indexOf(r); if (at >= 0) rn.remind.splice(at, 1); else rn.remind.push(r); }
+        else rn.remind = rb.getAttribute('data-remind-preset') ? rb.getAttribute('data-remind-preset').split(',').map(Number) : [];
+        rn.remind.sort(function (a, b) { return b - a; });
+        setNotes(key, rn); A.stat('act:remind_set'); render(); return;
+      }
       var d = ev.target.closest ? ev.target.closest('[data-del-task]') : null;
       if (d) { var n = notesOf(key); n.tasks = n.tasks.filter(function (t) { return t.id !== d.getAttribute('data-del-task'); }); setNotes(key, n); render(); return; }
       if (ev.target.id === 'e-save') {
