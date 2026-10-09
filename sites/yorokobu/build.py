@@ -612,7 +612,7 @@ def list_page(d: dict, cfg: dict, preview: bool) -> str:
 {pr_quiet(cfg)}
 <section id="sharedlist" class="sharedlist" data-src="/list/items.json">
 <p class="list-msg" role="status" aria-live="polite">候補を読み込んでいます。</p>
-<ul class="items" id="list-items"></ul>
+<ul class="items" id="list-items" aria-live="polite"></ul>
 <noscript><p class="notice">このページは、JavaScript が使える環境でお使いください。</p></noscript>
 <p class="more"><a class="btn" href="/">自分でも、プレゼントを探す</a></p>
 </section>
