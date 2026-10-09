@@ -115,7 +115,7 @@ class Pages(BuildOnce):
 
     def test_the_workflow_never_deploys_the_demo_unprotected(self):
         wf = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
-        self.assertIn('[ "$SITE" = "atomou" ] && [ "$ATOMOU_PUBLIC" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }', wf)
+        self.assertIn('[ "$SITE" = "atomou" ] && [ "$ATOMOU_PUBLIC" != "true" ] && [ "${ATOMOU_REVIEW:-}" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }', wf)   # unless it is the review copy (no password), the demo needs one
         self.assertIn("grep -q \"AuthUserFile $home/$SITE_DIR/.htpasswd\" release/.htaccess", wf)  # the build is checked to name the real password file before upload
         self.assertIn("[ \"$unauth\" = \"401\" ] || ok=0", wf)  # and the live demo must refuse a visitor without the password
 
