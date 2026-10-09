@@ -528,8 +528,8 @@
   },
   {
     "title": "LINEアプリの旧バージョンのサポート終了予定",
-    "date": "2026-11-01",
-    "precision": "month",
+    "date": "2026-11-04",
+    "precision": "day",
     "kind": "終了",
     "category": "サービス終了",
     "region": "全国",
@@ -539,12 +539,12 @@
     "son_toku": true,
     "son_toku_reason": "対象バージョン(iOS 14.6.3未満、Android 14.4.6未満)は使えなくなる。更新が必要。",
     "source_url": "https://help.line.me/line/smartphone?contentId=200002720&lang=ja",
-    "source_quote": "2026年11月上旬に、LINEアプリ バージョン14.6.3未満",
-    "checked_on": "2026-10-08",
+    "source_quote": "2026年11月4日に、LINEアプリ バージョン14.6.3未満(iOS/iPadOS)および14.4.6未満(Android)のサポートを終了する予定です。",
+    "checked_on": "2026-10-09",
     "verified": true,
     "sensitivity": "none",
     "ad_ok": true,
-    "note": "LINEヘルプ公式で確認。「11月上旬」「予定」の表記のため月精度。iOS 15.0以上/Android 8.0以上が必要と記載。"
+    "note": "LINEヘルプ公式(更新日2026-10-08)で確認。「予定」の表記。iOS 15.0以上/Android 8.0以上が必要と記載。前回(10-08)は「11月上旬」の月精度だったが、日が明記されたので日精度にした。"
   },
   {
     "title": "dカード(一般)のポイント還元が100円1pから200円1pに",
