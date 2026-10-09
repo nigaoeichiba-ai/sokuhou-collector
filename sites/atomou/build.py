@@ -628,14 +628,14 @@ def manual_page(c: Ctx) -> str:
 
 <h2>カードの見方</h2>
 <p>日付は「カード」で表示します。</p>
-<div class="cards" style="max-width:360px">{card_html(sample, own=True, actions=False, link=False)}</div>
+<div class="cards" style="max-width:360px;grid-template-columns:1fr">{card_html(sample, own=True, actions=False, link=False)}</div>
 <ul class="big-list">
 <li><b>「あと」</b> … これから来る日までの日数。</li>
 <li><b>大きな数字</b> … 日数。100日を超えると「2年3か月12日」の形になり、下に合計の日数が出ます。</li>
 <li><b>日付</b> … その日の年月日と曜日。</li>
 </ul>
 <p>過ぎた日はこの形です。「<b>もう</b>」は、その日から今日までの日数。</p>
-<div class="cards" style="max-width:360px">{card_html(past, own=True, actions=False, link=False)}</div>
+<div class="cards" style="max-width:360px;grid-template-columns:1fr">{card_html(past, own=True, actions=False, link=False)}</div>
 
 <h2>ボタン</h2>
 <dl class="info big-dl">

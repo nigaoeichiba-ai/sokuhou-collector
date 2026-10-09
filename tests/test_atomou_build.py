@@ -88,6 +88,15 @@ class Pages(BuildOnce):
         quiet = [h for h in pages if 'class="notice quiet"' in h]
         self.assertTrue(all("同じ頃の日" not in h for h in quiet))     # a quiet day leads nowhere else
 
+    def test_sample_cards_in_a_narrow_box_are_single_column(self):
+        # 2026-10-09 CI layoutcheck failure: at 720px+ the card grid has two columns, so a 360px box gave a 176px card and a 36px title column
+        # (49px with the fonts of this machine, 36px with the fonts of CI). A box narrower than a card grid must not be a grid of two.
+        manual = self.rel["manual/index.html"]
+        boxes = re.findall(r'<div class="cards" style="([^"]*)">', manual)
+        self.assertGreaterEqual(len(boxes), 2)
+        for style in boxes:
+            self.assertIn("grid-template-columns:1fr", style)
+
     def test_release_and_preview_differ_only_in_indexing(self):
         self.assertIn("Allow: /", self.rel["robots.txt"])
         self.assertIn("Disallow: /", self.prev["robots.txt"])
