@@ -901,7 +901,7 @@
       '<section id="s1"><h2>1. どんな日ですか</h2><div class="tiles">' + Object.keys(KINDS).map(function (k) {
         return '<button type="button" class="tile" data-kind="' + k + '"><span>' + H(KINDS[k].t) + '</span><br><small class="muted">' + H(KINDS[k].d) + '</small></button>';
       }).join('') + '</div></section>' +
-      '<section id="s2" hidden><h2>2. いつですか</h2><div class="seg" role="group" aria-label="日付の細かさ">' +
+      '<section id="s2" hidden><h2>2. いつの日ですか</h2><div class="seg" role="group" aria-label="日付の細かさ">' +
       '<button type="button" class="chip" data-p="day" aria-pressed="true">年月日まで分かる</button><button type="button" class="chip" data-p="month" aria-pressed="false">年と月だけ</button>' +
       '<button type="button" class="chip" data-p="year" aria-pressed="false">年だけ</button></div>' +
       '<div class="field"><label for="f-day" id="lab-date">日付を選ぶ</label><input type="date" id="f-day" min="0100-01-01" max="2200-12-31">' +

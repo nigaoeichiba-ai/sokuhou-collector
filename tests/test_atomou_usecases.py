@@ -65,8 +65,8 @@ def check_screens(u):
             p.append("公式の日付の例なのに、手順にジャンル名がない")
         if "『☆ 予定に入れる』" not in steps:
             p.append("公式の日付の例なのに、手順に『☆ 予定に入れる』がない")
-    elif "『この日を残す』" not in steps:
-        p.append("自分の日の例なのに、手順に『この日を残す』がない")
+    elif "『この日を記録する』" not in steps:
+        p.append("自分の日の例なのに、手順に『この日を記録する』がない")
     return p
 
 
@@ -283,7 +283,7 @@ class NegativeTests(unittest.TestCase):
         self.assertTrue(any("ジャンル名" in x for x in check_screens(u)))
         u = copy.deepcopy(usecases.by_slug("wedding-anniversary"))
         u["steps"] = ["メニューの『記録する』を押す", "日付を入れる", "完了"]
-        self.assertTrue(any("この日を残す" in x for x in check_screens(u)))
+        self.assertTrue(any("この日を記録する" in x for x in check_screens(u)))
 
     def test_the_old_save_and_download_wording_is_found(self):
         old = copy.deepcopy(usecases.by_slug("exam-university"))
