@@ -94,6 +94,46 @@ def pick(entries: list[dict], today: date, base: str) -> list[dict]:
     return posts[:MAX_POSTS]
 
 
+SNS_CAPTION = {
+    "instagram": "プロフィールのリンクから、カードを開けます。",
+    "tiktok": "リンクはプロフィールに。",
+    "youtube": "くわしい日付と出典はこちら:",
+}
+
+
+def asset_kit(posts: list[dict], entries: list[dict], today: date, out_dir: Path, base: str) -> list[str]:
+    """For Instagram, TikTok and YouTube Shorts (which do not take a link in the post itself): the count picture of today's count post as a story (1080x1920) and a square (1080x1080),
+    and a caption for each place.  Needs Pillow and a Japanese font (the workflow installs them); without them nothing is written."""
+    from sites.atomou import ogimage
+    if not ogimage.available():
+        return []
+    by_id = {e["id"]: e for e in entries}
+    written = []
+    out_dir.mkdir(parents=True, exist_ok=True)
+    skins_vars = __import__("sites.atomou.skins", fromlist=["SKINS"]).SKINS[0]["vars"]
+    for p in posts:
+        e = by_id.get(p.get("id", ""))
+        if p["kind"] != "count" or not e:
+            continue
+        n = (date.fromisoformat(e["date"]) - today).days
+        i = catalog.GROUPS.index(e["group"]) + 1 if e["group"] in catalog.GROUPS else 1
+        h = str(skins_vars.get(f"g{i}", "#1D4ED8")).lstrip("#")
+        d = date.fromisoformat(e["date"])
+        date_text = f"{d.year}年{d.month}月{d.day}日({WD[d.weekday()]})"
+        for size in ("story", "square"):
+            png = ogimage.countdown(title=e["title"], big="明日" if n == 1 else f"あと{n}日", date_text=date_text,
+                                    field=f"{e['group']} / {e['subject']}" if e.get("subject") else e["group"], colour=tuple(int(h[k:k + 2], 16) for k in (0, 2, 4)), size=size)
+            f = out_dir / f"{today.isoformat()}-{e['id']}-{size}.png"
+            f.write_bytes(png)
+            written.append(f.name)
+        cap = [f"## {e['title']}(あと{n}日)", ""]
+        for name, tail in SNS_CAPTION.items():
+            cap += [f"**{name}**: 「{_short(e['title'], 30)}」まで、あと{n}日。{date_text}。出典つきの公式の日付です。{tail} {base}/e/{e['id']}/", ""]
+        (out_dir / f"{today.isoformat()}-{e['id']}-captions.md").write_text(chr(10).join(cap), encoding="utf-8")
+        written.append(f"{today.isoformat()}-{e['id']}-captions.md")
+    return written
+
+
 def markdown(posts: list[dict], today: date) -> str:
     out = [f"# atomou 今日の投稿の下書き({today.isoformat()})", ""]
     if not posts:
@@ -151,6 +191,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--today")
     ap.add_argument("--out")
     ap.add_argument("--post", action="store_true")
+    ap.add_argument("--assets", help="a folder: also write the story / square pictures and captions for Instagram, TikTok and YouTube Shorts")
     a = ap.parse_args(argv)
     today = date.fromisoformat(a.today) if a.today else datetime.now(ZoneInfo("Asia/Tokyo")).date()
     entries, _ = catalog.build_catalog(today)
@@ -161,6 +202,8 @@ def main(argv: list[str] | None = None) -> int:
             f.write(md)
     else:
         sys.stdout.buffer.write(md.encode("utf-8"))
+    if a.assets:
+        print("assets:", ", ".join(asset_kit(posts, entries, today, Path(a.assets), _site())) or "none (no Pillow or Japanese font, or no count post today)")
     if a.post and posts:
         env = os.environ
         if env.get("ATOMOU_BSKY_HANDLE") and env.get("ATOMOU_BSKY_APP_PASSWORD"):

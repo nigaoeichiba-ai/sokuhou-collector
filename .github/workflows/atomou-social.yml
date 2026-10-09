@@ -1,7 +1,7 @@
 name: atomou-social
 
 # atomou.com growth routine, every morning (08:05 JST): writes the day's posts (sites/atomou/social.py) onto this run's summary page, so the owner can paste
-# them into X / LINE by hand, and - only when the owner has made an account and set its secrets - sends them to Bluesky and Mastodon.
+# them into X / LINE by hand (and the day's story / square pictures with captions are attached as the artifact "sns-kit", for Instagram, TikTok and YouTube Shorts), and - only when the owner has made an account and set its secrets - sends them to Bluesky and Mastodon.
 # Without a secret nothing is sent.  Nothing is committed (so no deploy is started): the posts are facts from the verified catalogue and a link.
 #
 # Owner (optional, when an account exists):
@@ -33,6 +33,11 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
+      - name: Fonts and Pillow (for the pictures)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
+          python -m pip install --quiet pillow
       - name: Draft and (when connected) post
         env:
           ATOMOU_BSKY_HANDLE: ${{ secrets.ATOMOU_BSKY_HANDLE }}
@@ -43,4 +48,11 @@ jobs:
         run: |
           flag=""
           if [ "$SEND" = "true" ]; then flag="--post"; fi
-          python -m sites.atomou.social --out "$GITHUB_STEP_SUMMARY" $flag
+          python -m sites.atomou.social --out "$GITHUB_STEP_SUMMARY" --assets "$RUNNER_TEMP/kit" $flag
+      - name: The pictures and captions for Instagram, TikTok and YouTube Shorts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sns-kit
+          path: ${{ runner.temp }}/kit
+          if-no-files-found: ignore
+          retention-days: 14
