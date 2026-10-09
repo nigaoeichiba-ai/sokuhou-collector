@@ -31,6 +31,17 @@ class AcceptTest(unittest.TestCase):
         new = "最高に使いやすい品です。薄型なので渡すときに場所を取りません。毎日使えて持ち帰りも楽です。3つの品を、2週間前までに確認します。"
         self.assertTrue(any("forbidden" in w for w in rewrite.accept(self.OLD, new, "x")))
 
+    def test_a_rewrite_that_is_not_better_than_the_old_text_is_refused(self):
+        old = "選びやすいです。渡しやすいです。使いやすいです。持ち帰りやすいです。3つの品を確認します。"
+        same_problem = "選びやすいです。渡しやすいです。使いやすいです。持ち帰りやすいです。3つの品を見比べます。"
+        self.assertTrue(any("not better" in w for w in rewrite.accept(old, same_problem, "x")))
+
+    def test_issues_are_named_so_that_codex_can_act_on_them(self):
+        self.assertTrue(rewrite.issues_of("選びやすい。渡しやすい。持ち帰りやすい。"))
+        self.assertTrue(rewrite.issues_of("そっと寄り添う品です。"))
+        self.assertTrue(rewrite.issues_of("誕生日や記念日を登録すると、3週間前に、カレンダーで、お知らせします。"))
+        self.assertEqual(rewrite.issues_of("通勤バッグに入る薄型のポーチなら、職場で渡しても持ち帰れます。"), [])
+
 
 class MergeTest(unittest.TestCase):
     def setUp(self):

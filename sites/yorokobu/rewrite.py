@@ -98,6 +98,26 @@ def style_score(text: str) -> int:
     return s
 
 
+def issues_of(text: str, page_total: int = 0) -> list[str]:
+    """What is off in one field, in words Codex can act on (empty = leave the field alone).  `page_total`: the 「〜やすい」 count of the whole page it belongs to."""
+    out = []
+    n = text.count("やすい")
+    if n > 1:
+        out.append(f"「〜やすい」が{n}回: 具体的な言い方に替える")
+    elif n == 1 and page_total > quality.MAX_YASUI:
+        out.append(f"このページ全体で「〜やすい」が{page_total}回あります(4回以下にしたい): この文の「〜やすい」を、具体的な言い方に替える")
+    for w in ("寄り添", "そっと", "さりげな"):
+        if w in text:
+            out.append(f"「{w}」を普通の言葉に")
+    for s in re.split(r"(?<=。)", text):
+        if len(quality.PARTICLE_COMMA.findall(s)) >= 3 and len(s) < 80:
+            out.append(f"読点が多すぎる文: {s[:24]}…")
+        if len(s) > quality.MAX_SENTENCE:
+            out.append(f"長すぎる文({len(s)}字): {s[:24]}…")
+    out += [f"言葉「{w}」を使わない" for w in quality.INTERNAL_WORDS + quality.YOUNG_TONE if w in text]
+    return out
+
+
 def ranked(kind: str) -> list[tuple[int, str]]:
     _, items = load(kind)
     key = KINDS[kind][2]
@@ -109,6 +129,8 @@ def accept(old: str, new: str, key: str) -> list[str]:
     why = []
     if new.strip() == old.strip():
         return ["unchanged"]
+    if style_score(new) >= style_score(old):
+        why.append(f"not better (style score {style_score(new)} vs {style_score(old)})")
     if not 0.7 * len(old) <= len(new) <= 1.3 * len(old):
         why.append(f"length {len(new)} vs {len(old)}")
     if sorted(re.findall(r"[0-9]+", old)) != sorted(re.findall(r"[0-9]+", new)):
@@ -123,12 +145,20 @@ def brief(kind: str, n: int, out: Path, answer: Path, offset: int = 0) -> None:
     key = KINDS[kind][2]
     order = [k for sc, k in ranked(kind) if sc > 0][offset:offset + n]
     by_key = {key(it): it for it in items}
-    payload = {k: fields(kind, by_key[k]) for k in order}
+    payload, reasons = {}, []
+    for k in order:                                   # only the fields that have something wrong, and what it is
+        flds = fields(kind, by_key[k])
+        total = sum(t.count("やすい") for t in flds.values())
+        flagged = {p: t for p, t in flds.items() if issues_of(t, total)}
+        if flagged:
+            payload[k] = flagged
+            reasons += [f"- {k} / {p}: " + " ; ".join(issues_of(t, total)) for p, t in flagged.items()]
     text = (f"Rewrite task (workspace-write). Reply in English with a very short report. Write exactly ONE file: {answer.as_posix()} (UTF-8 JSON, ensure_ascii false). "
-            f"Do not edit anything else.\n\nSITE: \"よろこぶプレゼント\", a Japanese gift-recommendation site. Below are the texts of {len(order)} existing {kind} pages as JSON "
-            f"{{page key: {{field path: text}}}}. Rewrite EVERY field's wording so that it reads as natural, calm, concrete Japanese, and write the same structure back: "
-            f"{{page key: {{field path: rewritten text}}}} with exactly the same page keys and field paths.\n{BRIEF_RULES}\n{factory.RULES}\n\nTEXTS:\n"
-            f"{json.dumps(payload, ensure_ascii=False, indent=1)}\n")
+            f"Do not edit anything else.\n\nSITE: \"よろこぶプレゼント\", a Japanese gift-recommendation site. Below are fields of {len(payload)} existing {kind} pages that have a wording problem "
+            f"(listed under FLAGGED), as JSON {{page key: {{field path: text}}}}. Fix ONLY the flagged problem in each field with the SMALLEST edit that makes it read as natural, calm, concrete Japanese; "
+            f"keep every other word and the order as they are. Do not add a new phrase, claim, example or product that the field does not already contain, and never add filler such as "
+            f"a closing sentence. Write the same structure back: {{page key: {{field path: corrected text}}}} with exactly the same page keys and field paths (a field you judge fine stays unchanged).\n"
+            f"{BRIEF_RULES}\n{factory.RULES}\n\nFLAGGED:\n" + "\n".join(reasons) + f"\n\nTEXTS:\n{json.dumps(payload, ensure_ascii=False, indent=1)}\n")
     out.write_text(text, encoding="utf-8", newline="\n")
     print(f"brief for {len(order)} {kind} written to {out}; Codex must write {answer}")
 
