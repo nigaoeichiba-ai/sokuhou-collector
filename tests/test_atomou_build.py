@@ -219,6 +219,19 @@ class Pages(BuildOnce):
             self.assertNotIn("同じジャンルの日", page)
             self.assertIn('class="card quiet', page)
 
+    def test_a_first_visitor_gets_an_introduction_not_a_tour_over_the_page(self):
+        home = self.rel["index.html"]
+        self.assertIn('<section class="intro" id="intro"', home)
+        self.assertIn(" hidden>", home.split('id="intro"', 1)[1].split(">", 1)[0] + " hidden>")   # shown by the script to a first-time visitor only
+        for need in ("はじめての方へ", 'data-intro="start"', 'data-intro="close"', "あとから見直すには"):
+            self.assertIn(need, home)
+        guide = (build.SITE["assets"] / "guide.js").read_text(encoding="utf-8")
+        self.assertNotIn("setTimeout(start, 1200)", guide)       # the old behaviour: the spotlight tour started 1.2 s after the page opened
+        self.assertIn("function offer()", guide)
+        self.assertIn("/?guide=1", guide)                          # pages without a tour of their own send the "ガイドを見る" button to the home tour
+        self.assertIn('id="guide"', self.rel["manual/index.html"])
+        self.assertIn('href="/manual/#guide">使い方</a>', home)    # the footer link: where to look again
+
     def test_event_pages_state_source_and_check_date(self):
         e = self.entries[0]
         page = self.rel[f"e/{e['id']}/index.html"]

@@ -34,7 +34,7 @@
   function statsDefault() {  // statistics are on unless the browser says "do not track" (DNT / Global Privacy Control)
     try { return !(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.globalPrivacyControl === true); } catch (e) { return true; }
   }
-  function blank() { return { v: 1, updated: '', entries: [], deleted: [], saved: [], order: [], genre: {}, notes: {}, prefs: { skin: 'basic', big: false, skinAuto: false, skinNight: 'dark', nightAsked: false, alarm: 'morning', stats: statsDefault(), push: false, pushHash: '', blocks: { order: [], hidden: [] }, tour: {} } }; }
+  function blank() { return { v: 1, updated: '', entries: [], deleted: [], saved: [], order: [], genre: {}, notes: {}, prefs: { skin: 'basic', big: false, skinAuto: false, skinNight: 'dark', nightAsked: false, alarm: 'morning', stats: statsDefault(), push: false, pushHash: '', blocks: { order: [], hidden: [] }, tour: {}, intro: false } }; }
   function oneOf(v, list, dflt) { return list.indexOf(v) >= 0 ? v : dflt; }
   function cleanEntry(e) {  // whatever is in storage (or in a restored backup, or in a synced file) is reduced to known shapes before it can reach the page
     if (!e || typeof e !== 'object') return null;
@@ -79,6 +79,7 @@
     s.prefs.push = !!p.push;
     s.prefs.pushHash = /^[0-9me,-]{0,4000}$/.test(String(p.pushHash || '')) ? String(p.pushHash || '') : '';
     s.prefs.tour = {};
+    s.prefs.intro = p.intro === true;
     ['home', 'calendar', 'plan', 'add', 'search'].forEach(function (k) { if (p.tour && p.tour[k] === true) s.prefs.tour[k] = true; });
     s.prefs.seasonOff = /^[a-z0-9-]{1,30}$/.test(String(p.seasonOff)) && CONF.skins[p.seasonOff] ? p.seasonOff : '';
     var b = p.blocks || {};

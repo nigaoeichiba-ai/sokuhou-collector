@@ -42,7 +42,7 @@ SITE = {
     "nav": [("さがす", "/search/", "/search/"), ("カレンダー", "/calendar/", "/calendar/"), ("記録する", "/add/", "/add/"), ("マイページ", "/my/", "/my/")],
     "glyph": "",
     "assets": HERE / "assets",
-    "source_html": '公式の日付は、出典と確認した日つき。記録した日は、この端末の中だけに残ります。<a href="/manual/">説明書</a> | <a href="/use/">こんな時に</a> | <a href="/skins/">きせかえ</a>',
+    "source_html": '公式の日付は、出典と確認した日つき。記録した日は、この端末の中だけに残ります。<a href="/manual/">説明書</a> | <a href="/manual/#guide">使い方</a> | <a href="/use/">こんな時に</a> | <a href="/skins/">きせかえ</a>',
 }
 WD = "月火水木金土日"
 _TODAY = date.today()   # set by build_pages: the date the static counts on the cards are worked out for (the browser recounts at once)
@@ -349,7 +349,19 @@ def home_page(c: Ctx) -> str:
     chips = "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS))
     ucs = "".join(f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>'
                   for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
-    body = f"""<section class="hero"><h1>{esc(CATCH)}</h1>
+    body = f"""<section class="intro" id="intro" aria-labelledby="intro-h" hidden>
+<h2 id="intro-h">はじめての方へ</h2>
+<p class="intro-lead">公式の日付まであと何日、大切な日からもう何日かを、ひと目で数えます。</p>
+<ol class="intro-steps">
+<li><b>さがす</b><span>試験・締切・大会・お祭りの公式の日付(出典つき)</span></li>
+<li><b>残す</b><span>気になる日や自分の大切な日を、1行で</span></li>
+<li><b>知る</b><span>あと何日かをひと目で。カレンダーや通知にも</span></li>
+</ol>
+<p class="intro-note">登録なしで、無料です。名前も日付も、この端末の中だけに残ります。</p>
+<p class="intro-btns"><button type="button" class="btn" data-intro="start">30秒で使い方を見る</button> <button type="button" class="btn ghost" data-intro="close">すぐ使う</button></p>
+<p class="hint">あとから見直すには、画面上の「?」か、ページ下の「使い方」を押します。</p>
+</section>
+<section class="hero"><h1>{esc(CATCH)}</h1>
 <div class="hero-cta" id="hero-cta" hidden>
 <p class="hero-note">登録なしで、無料で使えます。名前も日付も、この端末の中だけに残ります。</p>
 <p class="hero-btns"><a class="btn" href="/add/">自分の日を残す</a></p>
@@ -619,7 +631,7 @@ def manual_page(c: Ctx) -> str:
 <div class="manual">
 <h1>説明書</h1>
 <p class="lead">「あと何日、もう何日」の使い方です。画面のガイドは、実際のボタンを指しながら案内します。</p>
-<p><button type="button" class="btn" data-guide="start">ガイドを見る</button> <span class="hint">各ページ右下の「ガイド」からも見られます。</span></p>
+<p id="guide"><button type="button" class="btn" data-guide="start">ガイドを見る</button> <span class="hint">各ページ右下の「ガイド」からも見られます。</span></p>
 
 <h2>できること</h2>
 <ul class="big-list">
