@@ -132,7 +132,7 @@ class Pages(unittest.TestCase):
         self.assertIn("noindex", th)
         self.assertIn("お金や商品ではありません", th)
         terms = pages["terms/index.html"]
-        for want in ("先着モニター", "それぞれ7日以内", "答えるまで画面の上にお願いを表示します", "1週間以上あけて2回使ったとき", "協力者のページ"):
+        for want in ("先着モニター", "それぞれ7日以内", "回答するまで、画面の上部に案内を表示します", "1週間以上あけて2回使ったとき", "協力者のページ"):
             self.assertIn(want, terms)
         self.assertNotIn("テスター", terms)
         self.assertIn("直近20日分", pages["privacy/index.html"])

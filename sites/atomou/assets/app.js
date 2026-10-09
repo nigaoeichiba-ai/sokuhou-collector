@@ -1052,8 +1052,8 @@
     var f = document.querySelector('form.cf');
     if (!f || !P.kind) return;
     var sel = f.querySelector('select[name="kind"]'), ta = f.querySelector('textarea');
-    if (sel && P.kind === 'request') { Array.prototype.forEach.call(sel.options, function (o) { if (o.value.indexOf('追加してほしい') === 0) sel.value = o.value; }); }
-    if (ta && P.q && !ta.value) ta.value = '追加してほしい日: ' + String(P.q).slice(0, 60) + '\n(いつ頃か、どこで確認できるか、わかれば書いてください)\n';
+    if (sel && P.kind === 'request') { Array.prototype.forEach.call(sel.options, function (o) { if (o.value.indexOf('載せてほしい') === 0) sel.value = o.value; }); }
+    if (ta && P.q && !ta.value) ta.value = '載せてほしい日: ' + String(P.q).slice(0, 60) + '\n(いつ頃か、どこで確認できるか、わかれば書いてください)\n';
   }
 
   /* ---------- start ---------- */

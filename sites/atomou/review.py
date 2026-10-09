@@ -101,13 +101,13 @@ def event_page(c: ReviewCtx, e: dict, live: list[dict], guides: dict[str, dict])
     body = crumbs([("トップ", "/"), (e["group"], f"/c/{B.GROUP_SLUG[e['group']]}/"), (e["title"], None)]) + f"""
 <h1>{esc(e['title'])}</h1>
 {B.card_html(e, big=True, link=False)}
-<p class="small muted">上のカードは、今日の日付で数えた数字です。</p>
+<p class="small muted">上のカードの日数は、今日の日付をもとに数えています。</p>
 <p class="small muted src-line">出典: <a href="#src">{esc(B.host(e['source_url']))}</a>(確認日 {esc(e['checked_on'])})</p>
 {art}
 <h2 id="src">出典と確認日</h2>
 <dl class="info"><dt>出典</dt><dd><a href="{esc(e['source_url'])}" rel="noopener nofollow" target="_blank">{esc(B.host(e['source_url']))}</a></dd>
 <dt>確認日</dt><dd>{esc(e['checked_on'])}</dd>{quote}</dl>
-<p class="small muted">日付は変わることがあります。申し込みや手続きの前に、出典の公式ページでご確認ください。</p>
+<p class="small muted">日付や時刻は変わることがあります。出典の公式ページで、最新の情報をご確認ください。</p>
 {block(f'同じ「{esc(e["subject"])}」の日', same)}
 {block('同じジャンルの日', kin)}
 {block('同じ頃の日', near, '<p class="hint">この日の前後10日にある日です。</p>')}"""
