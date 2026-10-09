@@ -68,7 +68,7 @@ class GachaDataTest(unittest.TestCase):
     def test_the_page_has_the_form_the_notice_the_disclaimer_and_is_linked_from_the_tools_hub(self):
         html = (self.out / "tool/gacha/index.html").read_text(encoding="utf-8")
         for needle in ('id="gacha"', 'data-src="/tool/gacha/items.json"', 'data-aff="aaaa1111.bbbb2222.cccc3333.dddd4444"', 'name="r"', 'name="t"', "1点、提案してもらう",
-                       '<span class="pr-chip">PR</span>', "価格・在庫は2026年10月7日"):
+                       'aria-label="広告を含みます">PR</span>', "価格・在庫は2026年10月7日"):
             self.assertIn(needle, html)
         self.assertIn('href="/tool/gacha/"', (self.out / "tool/index.html").read_text(encoding="utf-8"))
         self.assertIn("/tool/gacha/", (self.out / "sitemap.xml").read_text(encoding="utf-8"))

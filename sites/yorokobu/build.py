@@ -296,7 +296,7 @@ def pr_with_amazon(cfg: dict) -> str:
 
 def pr_quiet(cfg: dict) -> str:
     """A one-line label at the top of the page (the full text sits in the footer of every page)."""
-    return '<p class="pr-quiet"><span class="pr-chip">PR</span>広告を含みます(くわしくはページ下部)</p>'
+    return '<p class="pr-quiet"><span class="pr-chip" title="広告を含みます" aria-label="広告を含みます">PR</span></p>'
 
 
 def pr_foot(cfg: dict, amazon: bool = False, rakuten: bool = True) -> str:
@@ -1007,7 +1007,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
     ticker = ticker + ticker
     body = f"""<section class="band yellow dots hero scallop-b"><div class="in">
 <div class="hero-text"><span class="sticker">プレゼント選びを、もっと楽に</span>
-<h1><span class="nb">相手に<em>よろこばれる</em></span><br><span class="nb">プレゼントを、</span><br><span class="nb">迷わず探す</span></h1>
+<h1><span class="nb"><em>よろこばれる</em>プレゼント、</span><br><span class="nb">見つかります。</span></h1>
 <p class="lead">イベントと贈る相手から、喜ばれやすい選び方と、おすすめの商品が見つかります。</p>
 {finder(d)}
 <p class="hero-cta"><a class="btn big" href="/occasion/">イベントから探す</a><a class="btn big btn-sub" href="/for/">相手から探す</a></p></div>
@@ -1345,7 +1345,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     OG.clear()
     if ogimage.available():
         site = cfg["site_name"]
-        cards["og/default.png"] = ogimage.card(title="プレゼント選びを、もっと楽に", tag="イベントと相手から", site=site)
+        cards["og/default.png"] = ogimage.card(title="よろこばれるプレゼント、見つかります。", tag="イベントと相手から", site=site)
         for o in c["occasions"]:
             cards[f"og/occasion/{o['slug']}.png"] = ogimage.card(title=f"{o['name']}のプレゼント", tag="選び方と相手別", site=site)
         for r in c["recipients"]:
