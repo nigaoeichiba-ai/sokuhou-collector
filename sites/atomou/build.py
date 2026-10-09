@@ -373,15 +373,15 @@ def home_page(c: Ctx) -> str:
 <div class="head-row"><h2>今日の予定・やること</h2><div class="grow"><a class="btn small ghost" href="/calendar/">カレンダー</a></div></div>
 <ul class="plist" id="todo-list"><li class="muted">読み込み中…</li></ul>
 </section>
+<section id="mine" data-block="mine" data-title="あなたの日" hidden>
+<div class="head-row"><h2>あなたの日</h2><div class="grow"><a class="btn small ghost" href="/my/">マイページ</a></div></div>
+<div class="cards" id="mine-grid" data-save-order="1"></div>
+</section>
 <section data-block="search" data-title="さがす">
 {search_form()}
 </section>
 <section data-block="cats" data-title="ジャンル"><nav class="chiprow" aria-label="ジャンルから探す">{chips}</nav></section>
 <section data-block="daily" data-title="今日の数字"><div class="daily" id="daily" aria-label="今日の数字"><span>今日の日付と、年末・年度末までの日数。</span></div></section>
-<section id="mine" data-block="mine" data-title="あなたの日" hidden>
-<div class="head-row"><h2>あなたの日</h2><div class="grow"><a class="btn small ghost" href="/my/">マイページ</a></div></div>
-<div class="cards" id="mine-grid" data-save-order="1"></div>
-</section>
 <section data-block="soon" data-title="もうすぐの日">
 <div class="head-row"><h2>もうすぐの日</h2><div class="grow"><button type="button" class="btn small ghost" id="shuffle">シャッフル</button></div></div>
 <div class="cards" id="grid" data-save-order="1">{"".join(card_html(e) for e in first)}</div>
@@ -506,9 +506,12 @@ def use_index(c: Ctx) -> str:
     for name, items in usecases.grouped():
         secs.append(f"<h2>{esc(name)}</h2><div class=\"uc-grid\">" + "".join(
             f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>' for u in items) + "</div>")
+    popular = "".join(f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>'
+                      for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
     body = f"""{crumbs([("トップ", "/"), ("こんな時に", None)])}
 <h1>こんな時に使えます</h1>
-<p class="lead muted">場面ごとの使い方です。</p>
+<p class="lead muted">場面ごとの使い方です。まず、よく使われる6つから。</p>
+<h2>よく使われる</h2><div class="uc-grid">{popular}</div>
 {"".join(secs)}"""
     return c.page("/use/", f"こんな時に使えます | {NAME}", "付き合った記念日、大切な人を思う日、確定申告、受験、推し活。使い方を場面ごとに。", body, "use")
 
@@ -572,7 +575,7 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 <p class="small muted">日付は変わることがあります。申し込みや手続きの前に、出典の公式ページでご確認ください。</p>
 <p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを書く</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の日として残す</a></p>
 {f'<details class="more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">iPhone の「カレンダー」や Google カレンダーに取り込めるファイルです。</p><p><button type="button" class="btn small ghost" data-ics-for="c:{e["id"]}">ファイルを作る</button></p></details>' if e["precision"] == "day" else ""}
-{(f'<h2>同じ「{esc(e["subject"])}」の日</h2><div class="cards">' + "".join(card_html(r) for r in same) + "</div>") if same else ""}
+{(f'<h2>同じ「{esc(e["subject"])}」の日</h2><p class="saveall"><button type="button" class="btn small" data-saveall="{",".join([e["id"]] + [r["id"] for r in same])}">この日を含む{len(same) + 1}件を、まとめて予定に入れる</button></p><div class="cards">' + "".join(card_html(r) for r in same) + "</div>") if same else ""}
 {('<h2>同じジャンルの日</h2><div class="cards">' + "".join(card_html(r) for r in rel) + "</div>") if rel else ""}
 {('<h2>同じ頃の日</h2><p class="hint">この日の前後10日にある日です。</p><div class="cards">' + "".join(card_html(r) for r in near) + "</div>") if near else ""}"""
     suffix = "からもう何日？" if e["status"] == "ended" else "はいつ？あと何日？"
