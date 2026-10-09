@@ -95,11 +95,13 @@ class ReviewBuild(unittest.TestCase):
         self.assertIn('href="/e/', home)
 
     def test_the_deploy_ssh_setup_survives_a_dropped_key_scan(self):
-        # runs 90 and 91 failed after 4.5 minutes of empty key scans (the server drops simultaneous connections): ssh retries on its own and records the host key itself
-        import yaml
-        wf = yaml.safe_load((ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8"))
-        run = [x for x in wf["jobs"]["deploy"]["steps"] if x.get("name") == "SSH setup"][0]["run"]
-        self.assertIn("ConnectionAttempts 5", run)
+        # runs 90, 91 and 97 lost the server for minutes (it drops simultaneous connections): each site starts at its own offset, the job waits for the server and records the host key itself
+        wf = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
+        start = wf.index("      - name: SSH setup\n")
+        run = wf[start: wf.index("\n      - name:", start + 10)]
+        self.assertIn("ConnectionAttempts 2", run)
+        self.assertIn("server not reachable (attempt", run)   # it waits for the server (run 97: one job could not connect for 5 minutes)
+        self.assertIn('[ "$reached" = 1 ]', run)
         self.assertIn("StrictHostKeyChecking accept-new", run)
         self.assertNotIn("test -s ~/.ssh/known_hosts", run)   # an empty scan no longer fails the job
 
