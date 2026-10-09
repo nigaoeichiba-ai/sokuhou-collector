@@ -1,0 +1,26 @@
+{
+  "updated": "2026-10-09",
+  "occasions": [
+    {
+      "slug": "birthday",
+      "budget": [],
+      "budget_note": "誕生日に決まった相場はありません。関係の近さと、相手の好みに合わせて決めます。",
+      "timing": "当日か、前後1週間ほどのうちに渡すのが自然です。遠方なら、前日までに届く日に指定します。",
+      "noshi": {"applicable": false, "note": "友人や恋人への贈り物には、ふつうは付けません。"},
+      "cautions": ["相手の好みが分からないときは、消えものや小さな日用品が無難です。", "高価すぎる贈り物は、相手に気を遣わせることがあります。"],
+      "return_gift": null,
+      "confidence": "medium",
+      "sources": [{"name": "テスト出典A", "url": "https://example.com/a", "year": 2025}, {"name": "テスト出典B", "url": "https://example.com/b"}]
+    },
+    {
+      "slug": "mothers-day",
+      "budget": [{"to": "両親(実の親)", "range": "3,000〜5,000円", "note": "花とお菓子の組み合わせが多い価格帯です。"}, {"to": "義父母", "range": "3,000〜5,000円"}],
+      "timing": "5月の第2日曜日に届くよう、1週間前までに手配します。",
+      "noshi": {"applicable": true, "omote": "母の日/感謝", "mizuhiki": "付けない場合も多い", "note": "花や菓子に、メッセージカードを添える人が多いです。"},
+      "cautions": ["当日の配送は混み合うため、日付を指定します。", "好みや持病を確かめられないときは、食べ物の量に気をつけます。"],
+      "return_gift": null,
+      "confidence": "high",
+      "sources": [{"name": "テスト出典C", "url": "https://example.com/c"}, {"name": "テスト出典D", "url": "https://example.com/d", "year": 2024}]
+    }
+  ]
+}

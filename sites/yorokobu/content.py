@@ -6,6 +6,7 @@ build instead of producing a broken page.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from sokuhou.sitekit import BuildError
@@ -111,7 +112,8 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     theme = {t["slug"]: t for t in themes}
     articles = _load_articles(content_dir, theme)
     messages = _load_messages(content_dir, occ)
-    return {"messages": messages, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
+    etiquette = _load_etiquette(content_dir, occ)
+    return {"messages": messages, "etiquette": etiquette, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
             "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "themes": themes,
             "theme": theme, "theme_groups": groups, "articles": articles,
             "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
@@ -130,6 +132,43 @@ def _load_messages(content_dir: Path, occ: dict) -> dict:
         for s in m["sets"]:
             _need(s, ("to", "style", "lines"), f"messages {m['occasion']} set")
         out[m["occasion"]] = m
+    return out
+
+
+ETIQUETTE_RANGE = re.compile(r"[0-9][0-9,]*(〜[0-9][0-9,]*)?円(以上|以内)?")
+ETIQUETTE_CONFIDENCE = ("high", "medium", "low")
+
+
+def _load_etiquette(content_dir: Path, occ: dict) -> dict:
+    """The 'before you give' sheet per occasion (etiquette.json, optional): amounts by relation, timing, noshi, cautions, and the sources they come from.
+    An amount is published only with two sources, and never at low confidence: a wrong figure on a manners page is worse than none."""
+    data = _optional(content_dir, "etiquette.json")
+    out: dict = {}
+    for e in (data or {}).get("occasions", []):
+        slug = e.get("slug")
+        _need(e, ("slug", "timing", "noshi", "cautions", "confidence", "sources"), f"etiquette {slug}")
+        if slug not in occ:
+            raise BuildError(f"etiquette for unknown occasion {slug}")
+        if slug in out:
+            raise BuildError(f"duplicate etiquette for {slug}")
+        if e["confidence"] not in ETIQUETTE_CONFIDENCE:
+            raise BuildError(f"etiquette {slug}: confidence must be one of {ETIQUETTE_CONFIDENCE}")
+        if "applicable" not in e["noshi"]:
+            raise BuildError(f"etiquette {slug}: noshi needs applicable (true or false)")
+        if e["noshi"]["applicable"] and not (e["noshi"].get("omote") and e["noshi"].get("mizuhiki")):
+            raise BuildError(f"etiquette {slug}: noshi needs omote and mizuhiki")
+        budget = e.get("budget") or []
+        for r in budget:
+            _need(r, ("to", "range"), f"etiquette {slug} budget")
+            if not ETIQUETTE_RANGE.fullmatch(r["range"]):
+                raise BuildError(f"etiquette {slug}: amount '{r['range']}' is not like 5,000〜10,000円")
+        if budget and e["confidence"] == "low":
+            raise BuildError(f"etiquette {slug}: an amount needs medium or high confidence")
+        if not budget and not e.get("budget_note"):
+            raise BuildError(f"etiquette {slug}: no amount and no budget_note")
+        if len(e["sources"]) < 2 or any(not (s.get("name") and str(s.get("url", "")).startswith("https://")) for s in e["sources"]):
+            raise BuildError(f"etiquette {slug}: at least two sources with a name and an https url")
+        out[slug] = e
     return out
 
 
