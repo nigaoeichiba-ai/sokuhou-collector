@@ -77,6 +77,12 @@ TOUCHES = [
     ("silhouette", "シルエット", "ひとつの色でつくった、シルエットのタッチ。",
      "solid single-colour silhouette illustration (deep navy #24304A) with crisp edges and a clearly readable outline shape; "
      "only tiny cut-out white details allowed (eyes, small patterns); no gradients, no shadow."),
+    ("realistic", "リアル・図鑑風", "実物に近い、くわしく描いた、図鑑のようなタッチ。",
+     "realistic natural-history illustration: true-to-life proportions and natural colours, fine detail of fur, feathers or scales built with soft painted shading ON the subject only, "
+     "thin dark-brown outline, like a field-guide plate; it is a drawing, never a photograph; no cast shadow, no ground, no background."),
+    ("cool", "かっこいい・ポップ", "太い線とはっきりした色の、かっこいい、ポップなタッチ。",
+     "bold cool pop-graphic illustration: thick confident black outlines, high-contrast saturated colours (red, yellow, cyan, black), strong angular shapes and simple halftone-dot shading ON the subject only, "
+     "dynamic pose, energetic poster feel, original designs only (no existing characters or logos); no cast shadow, no background."),
 ]
 
 GENRE_BY_SLUG = {g[0]: g for g in GENRES}
