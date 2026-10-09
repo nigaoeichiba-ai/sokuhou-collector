@@ -570,3 +570,43 @@ p, li { overflow-wrap: anywhere; }
 .gacha-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 @media (max-width: 560px) { .gacha-card { grid-template-columns: minmax(0, 1fr); } }
 
+
+/* ---------------------------------------------------------------- calm theme (2026-10-09)
+   A gift site for adults (母の日, 退職祝い, お歳暮 ...) looked like a site for teenagers: saturated yellow, thick black outlines, hard shadows, pop lettering,
+   stickers tilted at every corner.  The characters stay; the toy-like details go: thin warm lines, soft shadows, a plain rounded heading face,
+   a pale hero, no tilting.  Everything here overrides the rules above, so removing this block restores the old look. */
+:root {
+  --display: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+  --yellow: #f7cb62; --yellow-s: #fff3cf; --cream: #fff6df; --pink: #e8506f; --pink-d: #c93658;
+  --line: 1.5px solid #5a4337; --line2: 1px solid #d8c6a3;
+  --shadow: 0 8px 22px rgba(90, 60, 35, .14); --shadow-s: 0 2px 8px rgba(90, 60, 35, .16); --shadow-c: 0 2px 10px rgba(90, 60, 35, .12);
+}
+h1, h2, h3 { font-weight: 700; letter-spacing: .01em; line-height: 1.45; }
+.btn, .sticker, .item .rank { font-weight: 700; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(90, 60, 35, .2); }
+.btn:active { transform: none; box-shadow: var(--shadow-s); }
+.sticker { transform: none; }
+.item .rank { transform: none; top: -10px; left: -6px; }
+.scribble::after { transform: none; height: .32em; opacity: .75; }
+header.site { border-bottom: 1px solid #e3d3b8; }
+header.site nav a { background: #fff; border: 1px solid #d8c6a3; box-shadow: none; font-weight: 700; }
+header.site nav a:hover { transform: none; box-shadow: none; background: var(--yellow-s); }
+header.site nav a[aria-current] { background: var(--ink); color: #fff; border-color: var(--ink); }
+.band.yellow { background-color: var(--cream); }
+.band.dots { background-image: none; }
+.hero h1 { text-shadow: none; font-weight: 700; }
+.hero h1 em { text-shadow: none; }
+.tile, .chip-ic, .item { border-radius: 16px; }
+.tile:hover, .chip-ic:hover, .item:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(90, 60, 35, .18); }
+.item-img { border-radius: 15px 15px 0 0; }
+.tile .ic-wrap, .chip-ic .ic-wrap { border: 1.5px solid #5a4337; }
+.marquee { transform: none; margin-top: 0; background: #5a4337; border-block: 0; }
+.marquee span { font-weight: 700; font-size: 1rem; }
+.hero-art .pair { max-width: 440px; animation: none; }
+@media (max-width: 760px) {
+  .hero-art { order: 2; }
+  .hero-art .pair { max-width: 300px; }
+  .hero .finder { margin-top: 52px; }
+  .hero-cta .btn.big { font-size: 1rem; padding: .65em 1.3em; }
+}
+.hero-cta .btn.big { font-size: 1.05rem; padding: .7em 1.5em; }

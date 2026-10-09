@@ -163,7 +163,7 @@ MANIFEST = {
     "shortcuts": [{"name": "たいせつな日メモ", "url": "/memo/"}, {"name": "イベントから探す", "url": "/occasion/"}, {"name": "相手から探す", "url": "/for/"}],
 }
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Mochiy+Pop+One'
+         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700'
          '&family=Zen+Maru+Gothic:wght@500;700;900&display=swap">\n'
          '<link rel="manifest" href="/manifest.webmanifest">\n<meta name="theme-color" content="#ffc93c">\n'
          '<meta name="apple-mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-title" content="よろこぶ">\n')
