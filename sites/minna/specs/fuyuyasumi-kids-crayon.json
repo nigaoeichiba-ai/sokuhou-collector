@@ -1,0 +1,86 @@
+{
+ "slug": "fuyuyasumi-kids-crayon",
+ "title": "冬休みのこどもたち",
+ "subject": "",
+ "genre": "school",
+ "touch": "crayon",
+ "title_fmt": "{ja}",
+ "subject_en": "Winter-holiday children scenes with ONE cheerful child (round head, dot eyes, rosy cheeks, simple winter clothes), each a small complete scene with a few props, crayon hand-drawn style. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
+ "lead": "冬休みの宿題、大そうじ、雪あそび、お年玉。冬休みのこどもの1日12場面。終業式のおたよりやしおりに。",
+ "tags": [
+  "冬休み",
+  "宿題",
+  "子ども",
+  "終業式",
+  "おたより",
+  "学校"
+ ],
+ "season": {
+  "from": "12-10",
+  "to": "01-10"
+ },
+ "holes": false,
+ "items": [
+  [
+   "homework",
+   "冬休みの宿題",
+   "a child doing homework at a low desk with a pencil and a workbook"
+  ],
+  [
+   "plan",
+   "計画表を書く",
+   "a child writing a daily schedule chart on a big sheet"
+  ],
+  [
+   "cleaning",
+   "おそうじを手伝う",
+   "a child wiping a window with a cloth and a bucket"
+  ],
+  [
+   "snowman",
+   "雪だるまをつくる",
+   "a child rolling a large snowball next to a small snowman"
+  ],
+  [
+   "sled",
+   "そりすべり",
+   "a child sliding downhill on a sled with a scarf flying"
+  ],
+  [
+   "kotatsu",
+   "こたつでみかん",
+   "a child in a kotatsu table peeling a tangerine"
+  ],
+  [
+   "otoshidama",
+   "お年玉をもらう",
+   "a child receiving a small decorated envelope with both hands"
+  ],
+  [
+   "kakizome",
+   "書き初め",
+   "a child writing with a big brush on long paper, no readable letters"
+  ],
+  [
+   "kite",
+   "たこあげ",
+   "a child running with a kite flying up"
+  ],
+  [
+   "cards",
+   "かるたあそび",
+   "two children playing a card game on the floor"
+  ],
+  [
+   "mochi",
+   "おもちつき",
+   "a child with a small mallet next to a mortar of mochi and a helper hand"
+  ],
+  [
+   "sleepy",
+   "ねぼうの朝",
+   "a child under a blanket with a sleepy face and a clock"
+  ]
+ ],
+ "exclude": []
+}

@@ -1,0 +1,83 @@
+{
+ "slug": "robot-friends-clay",
+ "title": "オリジナルのロボット仲間",
+ "subject": "",
+ "genre": "animals",
+ "touch": "clay",
+ "title_fmt": "{ja}",
+ "subject_en": "ORIGINAL friendly robot characters invented for this series (not any existing robot or franchise), each a separate chubby robot with a distinct silhouette, a simple glowing face screen and one signature pastel colour each. Matte clay look. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
+ "lead": "まんまるロボ、掃除ロボ、花を育てるロボ。どこにもいない、オリジナルのやさしいロボット12体。ゲームやイベントのキャラに。",
+ "tags": [
+  "ロボット",
+  "オリジナルキャラ",
+  "キャラクター",
+  "未来",
+  "粘土",
+  "かわいい"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "round",
+   "まんまるロボ",
+   "a perfectly round mint-green robot with two tiny arms and a smile screen"
+  ],
+  [
+   "cleaner",
+   "そうじロボ",
+   "a flat disc-shaped yellow cleaning robot with a small brush and a happy face"
+  ],
+  [
+   "gardener",
+   "お花ロボ",
+   "a pink robot with a watering can arm and a flower growing on its head"
+  ],
+  [
+   "cook",
+   "おりょうりロボ",
+   "a white-blue robot with a chef hat and a ladle hand"
+  ],
+  [
+   "umbrella",
+   "かさロボ",
+   "a small blue robot whose head is an umbrella"
+  ],
+  [
+   "tall",
+   "のっぽロボ",
+   "a tall thin orange robot with long legs and a cheerful face"
+  ],
+  [
+   "tiny",
+   "ちびロボ",
+   "a tiny peach-coloured robot with a big head and wheels"
+  ],
+  [
+   "bird",
+   "とりロボ",
+   "a bird-shaped cream robot with propeller wings"
+  ],
+  [
+   "cat",
+   "ねこロボ",
+   "a cat-shaped lavender robot with antenna ears"
+  ],
+  [
+   "book",
+   "本よみロボ",
+   "a green robot with an open book for a chest"
+  ],
+  [
+   "music",
+   "おんがくロボ",
+   "a coral robot with a speaker belly and musical note antennae"
+  ],
+  [
+   "sleepy",
+   "ねむねむロボ",
+   "a grey-blue robot with half-closed screen eyes and a blanket scarf"
+  ]
+ ],
+ "exclude": []
+}

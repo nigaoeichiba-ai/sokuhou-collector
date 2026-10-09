@@ -1,0 +1,88 @@
+{
+ "slug": "snow-play-retro",
+ "title": "昭和の雪あそび",
+ "subject": "",
+ "genre": "people",
+ "touch": "retro",
+ "title_fmt": "{ja}",
+ "subject_en": "Showa-era retro winter play scenes with ONE or two children in old-fashioned knit hats, mittens and padded coats, each a small complete scene with a few props. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
+ "lead": "雪だるま、かまくら、そり、おしくらまんじゅう。昭和の冬の子どもの遊び12場面。レトロなチラシやポスターに。",
+ "tags": [
+  "昭和",
+  "レトロ",
+  "雪あそび",
+  "冬",
+  "子ども",
+  "懐かしい"
+ ],
+ "season": {
+  "from": "12-01",
+  "to": "02-20"
+ },
+ "holes": false,
+ "items": [
+  [
+   "snowman",
+   "雪だるま",
+   "two children rolling a big snowball to make a snowman with a bucket hat"
+  ],
+  [
+   "kamakura",
+   "かまくら",
+   "a child peeking out of a dome-shaped snow hut with a small candle inside"
+  ],
+  [
+   "sled",
+   "そりすべり",
+   "two children sliding down on a wooden sled"
+  ],
+  [
+   "oshikura",
+   "おしくらまんじゅう",
+   "four children back to back pushing each other with red cheeks"
+  ],
+  [
+   "snowball",
+   "雪合戦",
+   "two children throwing snowballs from behind small snow walls"
+  ],
+  [
+   "icicle",
+   "つらら",
+   "a child pointing at long icicles hanging from a tiled roof edge"
+  ],
+  [
+   "stove",
+   "ストーブ",
+   "a child warming hands by a kerosene stove with a kettle on top"
+  ],
+  [
+   "mikan",
+   "こたつのみかん",
+   "a child and a cat at a kotatsu with a bowl of tangerines"
+  ],
+  [
+   "footprints",
+   "雪の足あと",
+   "a child walking in fresh snow looking back at a trail of footprints"
+  ],
+  [
+   "snow-angel",
+   "雪の天使",
+   "a child lying in snow making a snow angel with arms spread"
+  ],
+  [
+   "sweet-potato",
+   "焼きいも",
+   "a child holding a hot roasted sweet potato wrapped in paper with steam"
+  ],
+  [
+   "skate",
+   "スケート",
+   "a child ice skating with wobbly arms on a small frozen pond"
+  ]
+ ],
+ "exclude": [
+  "icicle"
+ ]
+}

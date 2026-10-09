@@ -1,0 +1,240 @@
+{
+ "added": "2026-10-10",
+ "slug": "year-end-office-faceless",
+ "title": "仕事納めと年末の職場",
+ "genre": "work",
+ "touch": "faceless",
+ "lead": "大掃除、請求書、仕事納めのあいさつ、忘年会。年末の職場の場面12点。社内報や資料、ブログに。",
+ "tags": [
+  "仕事納め",
+  "年末",
+  "忘年会",
+  "職場",
+  "ビジネス",
+  "顔なし"
+ ],
+ "subject": "",
+ "season": {
+  "from": "12-01",
+  "to": "12-31"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "year-end-office-faceless-cleaning",
+   "file": "year-end-office-faceless-cleaning.webp",
+   "title": "デスクの大そうじ",
+   "desc": "デスクの大そうじのイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "デスクの大そうじ",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 527,
+   "h": 454
+  },
+  {
+   "id": "year-end-office-faceless-boxes",
+   "file": "year-end-office-faceless-boxes.webp",
+   "title": "書類を整理する",
+   "desc": "書類を整理するのイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "書類を整理する",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 338,
+   "h": 481
+  },
+  {
+   "id": "year-end-office-faceless-calendar",
+   "file": "year-end-office-faceless-calendar.webp",
+   "title": "仕事納めのカレンダー",
+   "desc": "仕事納めのカレンダーのイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "仕事納めのカレンダー",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 443,
+   "h": 472
+  },
+  {
+   "id": "year-end-office-faceless-greeting",
+   "file": "year-end-office-faceless-greeting.webp",
+   "title": "年末のあいさつ",
+   "desc": "年末のあいさつのイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "年末のあいさつ",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 475,
+   "h": 451
+  },
+  {
+   "id": "year-end-office-faceless-bonenkai",
+   "file": "year-end-office-faceless-bonenkai.webp",
+   "title": "忘年会の乾杯",
+   "desc": "忘年会の乾杯のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "忘年会の乾杯",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 521,
+   "h": 445
+  },
+  {
+   "id": "year-end-office-faceless-invoice",
+   "file": "year-end-office-faceless-invoice.webp",
+   "title": "請求書を送る",
+   "desc": "請求書を送るのイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "請求書を送る",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 506,
+   "h": 415
+  },
+  {
+   "id": "year-end-office-faceless-review",
+   "file": "year-end-office-faceless-review.webp",
+   "title": "一年をふりかえる",
+   "desc": "一年をふりかえるのイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "一年をふりかえる",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 446,
+   "h": 450
+  },
+  {
+   "id": "year-end-office-faceless-late",
+   "file": "year-end-office-faceless-late.webp",
+   "title": "ぎりぎりの追い込み",
+   "desc": "ぎりぎりの追い込みのイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "ぎりぎりの追い込み",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 509,
+   "h": 433
+  },
+  {
+   "id": "year-end-office-faceless-gift",
+   "file": "year-end-office-faceless-gift.webp",
+   "title": "お歳暮をおくる",
+   "desc": "お歳暮をおくるのイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "お歳暮をおくる",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 343,
+   "h": 470
+  },
+  {
+   "id": "year-end-office-faceless-kadomatsu",
+   "file": "year-end-office-faceless-kadomatsu.webp",
+   "title": "会社の門松",
+   "desc": "会社の門松のイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "会社の門松",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 446,
+   "h": 472
+  },
+  {
+   "id": "year-end-office-faceless-homeward",
+   "file": "year-end-office-faceless-homeward.webp",
+   "title": "仕事を終えて帰る",
+   "desc": "仕事を終えて帰るのイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "仕事を終えて帰る",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 426,
+   "h": 469
+  },
+  {
+   "id": "year-end-office-faceless-thanks",
+   "file": "year-end-office-faceless-thanks.webp",
+   "title": "ありがとうの寄せ書き",
+   "desc": "ありがとうの寄せ書きのイラスト。顔なしミニマルのタッチ。",
+   "tags": [
+    "仕事納め",
+    "年末",
+    "忘年会",
+    "職場",
+    "仕事納めと年末の職場",
+    "ありがとうの寄せ書き",
+    "顔なしミニマル",
+    "仕事・ビジネス"
+   ],
+   "w": 519,
+   "h": 428
+  }
+ ]
+}

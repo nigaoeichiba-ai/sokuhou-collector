@@ -1,0 +1,83 @@
+{
+ "slug": "camping-picturebook",
+ "title": "のんびりキャンプ",
+ "subject": "",
+ "genre": "life",
+ "touch": "picturebook",
+ "title_fmt": "{ja}",
+ "subject_en": "Cosy camping items and tiny scenes in picture-book style, each a separate item (tent, campfire, lantern, cooking gear, a person in a warm jacket where noted with a round friendly face). No brand names. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
+ "lead": "テント、たき火、ランタン、ホットサンド。冬も楽しいのんびりキャンプの道具と場面12点。アウトドアのブログやチラシに。",
+ "tags": [
+  "キャンプ",
+  "アウトドア",
+  "たき火",
+  "テント",
+  "絵本",
+  "くらし"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "tent",
+   "テント",
+   "a dome tent with an open flap and a warm light inside"
+  ],
+  [
+   "campfire",
+   "たき火",
+   "a campfire made of crossed logs with orange flames and sparks"
+  ],
+  [
+   "lantern",
+   "ランタン",
+   "a glowing camping lantern with a handle"
+  ],
+  [
+   "hotsand",
+   "ホットサンド",
+   "a hot sandwich maker with a toasted sandwich cut in half"
+  ],
+  [
+   "marshmallow",
+   "焼きマシュマロ",
+   "a stick with two toasted marshmallows over a small flame"
+  ],
+  [
+   "chair",
+   "キャンプチェア",
+   "a folding camp chair with a blanket and a mug on its arm"
+  ],
+  [
+   "sleeping-bag",
+   "寝袋",
+   "a rolled out sleeping bag with a pillow and a tiny star pattern"
+  ],
+  [
+   "kettle",
+   "やかん",
+   "a small camping kettle on a stove with steam"
+  ],
+  [
+   "camper",
+   "あたたまる人",
+   "a person in a puffy jacket and beanie warming hands by a fire"
+  ],
+  [
+   "stars",
+   "星を見上げる",
+   "the back view of a person sitting on a chair looking at stars from beside a tent"
+  ],
+  [
+   "backpack",
+   "リュック",
+   "a big hiking backpack with a rolled mat and a hanging mug"
+  ],
+  [
+   "cocoa",
+   "あつあつココア",
+   "a steaming enamel mug of cocoa beside a small wrapped blanket"
+  ]
+ ],
+ "exclude": []
+}
