@@ -410,6 +410,8 @@ main.wrap > h1:first-child { margin-top: 36px; }
 .memo-add select, .memo-add input { padding: .55em .7em; border: var(--line2); border-radius: 12px; background: #fff7e0; font: 700 .95rem var(--body); color: var(--ink); }
 .memo-fixed { margin: 0; padding: .5em .8em; background: var(--butter, #fff1b8); border-radius: 10px; font-size: .84rem; font-weight: 700; }
 .memo-note { font-size: .78rem; color: var(--muted); }
+.list-msg { font-weight: 700; margin: 16px 0 8px; }
+.sharedlist .items { margin-top: 10px; }
 .apicks { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
 .apick { display: flex; flex-direction: column; gap: 10px; background: #fff; border: var(--line2); border-radius: 16px; padding: 14px 16px; box-shadow: var(--shadow-s); }
 .apick h3 { margin: 2px 0 0; font-size: 1rem; line-height: 1.5; }
