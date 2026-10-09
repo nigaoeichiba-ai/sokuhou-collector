@@ -47,6 +47,9 @@ PAIRS = [
     ("g4", "surface", 3.0, "genre mark 4 on card"),
     ("g5", "surface", 3.0, "genre mark 5 on card"),
     ("g6", "surface", 3.0, "genre mark 6 on card"),
+    ("g7", "surface", 3.0, "genre mark 7 on card"),
+    ("g8", "surface", 3.0, "genre mark 8 on card"),
+    ("g9", "surface", 3.0, "genre mark 9 on card"),
 ]
 STRICT = {"contrast", "large"}  # these two need >= 10 for the text pairs
 STRICT_PAIRS = {("text", "bg"), ("text", "surface")}
