@@ -1,0 +1,86 @@
+{
+ "slug": "hatsumode-scenes-loose",
+ "title": "初詣のいろいろな場面",
+ "subject": "",
+ "genre": "people",
+ "touch": "loose",
+ "title_fmt": "{ja}",
+ "subject_en": "Hatsumode (first shrine visit of the year) situations with ONE or two ordinary adults in winter coats, dot eyes, each a small complete scene with a few props, loose hand-drawn style. No real shrine names. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
+ "lead": "鳥居をくぐる、おみくじを結ぶ、お賽銭、甘酒、破魔矢。初詣のひとコマ12場面。お正月のブログ、おたより、SNSに。",
+ "tags": [
+  "初詣",
+  "お正月",
+  "神社",
+  "おみくじ",
+  "ゆるい",
+  "人物"
+ ],
+ "season": {
+  "from": "12-20",
+  "to": "01-20"
+ },
+ "holes": false,
+ "items": [
+  [
+   "torii",
+   "鳥居をくぐる",
+   "a person in a coat bowing slightly before walking under a red torii gate"
+  ],
+  [
+   "offering",
+   "お賽銭を入れる",
+   "a person throwing a coin into a wooden offering box with hands ready to pray"
+  ],
+  [
+   "pray",
+   "手を合わせる",
+   "a person praying with eyes closed and hands together in front of a shrine hall"
+  ],
+  [
+   "omikuji",
+   "おみくじを引く",
+   "a person pulling a paper fortune slip from a hexagonal box"
+  ],
+  [
+   "musubi",
+   "おみくじを結ぶ",
+   "a person tying a paper fortune slip onto a rope stand"
+  ],
+  [
+   "amazake",
+   "甘酒でひと息",
+   "a person warming hands around a paper cup of hot amazake, steam rising"
+  ],
+  [
+   "hamaya",
+   "破魔矢を買う",
+   "a person holding a hamaya arrow and an ema wooden plaque at a small stall"
+  ],
+  [
+   "ema",
+   "絵馬を書く",
+   "a person writing a wish on a wooden ema plaque with a brush pen"
+  ],
+  [
+   "queue",
+   "長い行列",
+   "a line of faceless people in winter coats waiting under a lantern"
+  ],
+  [
+   "kimono",
+   "着物で初詣",
+   "a person in a kimono with a fluffy scarf walking carefully on a stone path"
+  ],
+  [
+   "stall",
+   "屋台で買い食い",
+   "a person buying a skewer of grilled food at a festival stall with a striped awning"
+  ],
+  [
+   "family",
+   "家族で初詣",
+   "a small family of three walking together, a child pointing at the shrine"
+  ]
+ ],
+ "exclude": []
+}

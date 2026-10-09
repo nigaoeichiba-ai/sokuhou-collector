@@ -1,0 +1,235 @@
+{
+ "added": "2026-10-10",
+ "slug": "camping-picturebook",
+ "title": "のんびりキャンプ",
+ "genre": "life",
+ "touch": "picturebook",
+ "lead": "テント、たき火、ランタン、ホットサンド。冬も楽しいのんびりキャンプの道具と場面12点。アウトドアのブログやチラシに。",
+ "tags": [
+  "キャンプ",
+  "アウトドア",
+  "たき火",
+  "テント",
+  "絵本",
+  "くらし"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "camping-picturebook-tent",
+   "file": "camping-picturebook-tent.webp",
+   "title": "テント",
+   "desc": "テントのイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 568,
+   "h": 418
+  },
+  {
+   "id": "camping-picturebook-campfire",
+   "file": "camping-picturebook-campfire.webp",
+   "title": "たき火",
+   "desc": "たき火のイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 412,
+   "h": 472
+  },
+  {
+   "id": "camping-picturebook-lantern",
+   "file": "camping-picturebook-lantern.webp",
+   "title": "ランタン",
+   "desc": "ランタンのイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "ランタン",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 241,
+   "h": 472
+  },
+  {
+   "id": "camping-picturebook-hotsand",
+   "file": "camping-picturebook-hotsand.webp",
+   "title": "ホットサンド",
+   "desc": "ホットサンドのイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "ホットサンド",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 491,
+   "h": 497
+  },
+  {
+   "id": "camping-picturebook-marshmallow",
+   "file": "camping-picturebook-marshmallow.webp",
+   "title": "焼きマシュマロ",
+   "desc": "焼きマシュマロのイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "焼きマシュマロ",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 507,
+   "h": 448
+  },
+  {
+   "id": "camping-picturebook-chair",
+   "file": "camping-picturebook-chair.webp",
+   "title": "キャンプチェア",
+   "desc": "キャンプチェアのイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "キャンプチェア",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 502,
+   "h": 489
+  },
+  {
+   "id": "camping-picturebook-sleeping-bag",
+   "file": "camping-picturebook-sleeping-bag.webp",
+   "title": "寝袋",
+   "desc": "寝袋のイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "寝袋",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 472,
+   "h": 475
+  },
+  {
+   "id": "camping-picturebook-kettle",
+   "file": "camping-picturebook-kettle.webp",
+   "title": "やかん",
+   "desc": "やかんのイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "やかん",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 327,
+   "h": 473
+  },
+  {
+   "id": "camping-picturebook-camper",
+   "file": "camping-picturebook-camper.webp",
+   "title": "あたたまる人",
+   "desc": "あたたまる人のイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "あたたまる人",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 517,
+   "h": 509
+  },
+  {
+   "id": "camping-picturebook-stars",
+   "file": "camping-picturebook-stars.webp",
+   "title": "星を見上げる",
+   "desc": "星を見上げるのイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "星を見上げる",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 480,
+   "h": 475
+  },
+  {
+   "id": "camping-picturebook-backpack",
+   "file": "camping-picturebook-backpack.webp",
+   "title": "リュック",
+   "desc": "リュックのイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "リュック",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 439,
+   "h": 475
+  },
+  {
+   "id": "camping-picturebook-cocoa",
+   "file": "camping-picturebook-cocoa.webp",
+   "title": "あつあつココア",
+   "desc": "あつあつココアのイラスト。絵本風のタッチ。",
+   "tags": [
+    "キャンプ",
+    "アウトドア",
+    "たき火",
+    "テント",
+    "のんびりキャンプ",
+    "あつあつココア",
+    "絵本風",
+    "くらし・もの"
+   ],
+   "w": 482,
+   "h": 463
+  }
+ ]
+}

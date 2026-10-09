@@ -1,0 +1,86 @@
+{
+ "slug": "winter-flowers-linecolor",
+ "title": "冬の花と実",
+ "subject": "",
+ "genre": "nature",
+ "touch": "linecolor",
+ "title_fmt": "{ja}",
+ "subject_en": "Winter flowers, berries and branches, each a separate small botanical item with coloured petals (red, pink, yellow, orange, green leaves) and clear dark-navy outlines. Avoid all-white flowers. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
+ "lead": "つばき、すいせん、シクラメン、ポインセチア、なんてん。冬を彩る花と実のイラスト12点。冬のおたよりやカードに。",
+ "tags": [
+  "冬",
+  "花",
+  "椿",
+  "水仙",
+  "ポインセチア",
+  "植物"
+ ],
+ "season": {
+  "from": "11-25",
+  "to": "02-15"
+ },
+ "holes": false,
+ "items": [
+  [
+   "tsubaki",
+   "つばき",
+   "a red camellia flower with glossy green leaves"
+  ],
+  [
+   "suisen",
+   "すいせん",
+   "yellow and cream daffodils with long green leaves"
+  ],
+  [
+   "cyclamen",
+   "シクラメン",
+   "a pink cyclamen plant with heart-shaped leaves"
+  ],
+  [
+   "poinsettia",
+   "ポインセチア",
+   "a red poinsettia with green leaves"
+  ],
+  [
+   "nanten",
+   "なんてん",
+   "a branch of red nandina berries with green leaves"
+  ],
+  [
+   "sazanka",
+   "さざんか",
+   "a pink sasanqua camellia branch with leaves"
+  ],
+  [
+   "ume-bud",
+   "うめのつぼみ",
+   "a branch of pink plum blossoms and buds"
+  ],
+  [
+   "holly",
+   "ヒイラギ",
+   "a sprig of holly with red berries"
+  ],
+  [
+   "senryo",
+   "せんりょう",
+   "a branch with a cluster of orange-red berries and dark green leaves"
+  ],
+  [
+   "pansy",
+   "パンジー",
+   "three purple and yellow pansies in a small group"
+  ],
+  [
+   "kinkan",
+   "きんかん",
+   "a small branch with several orange kumquats and leaves"
+  ],
+  [
+   "potted",
+   "冬の寄せ植え",
+   "a small terracotta pot with a mix of colourful winter flowers"
+  ]
+ ],
+ "exclude": []
+}

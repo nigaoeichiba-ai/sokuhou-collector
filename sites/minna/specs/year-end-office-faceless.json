@@ -1,0 +1,86 @@
+{
+ "slug": "year-end-office-faceless",
+ "title": "仕事納めと年末の職場",
+ "subject": "",
+ "genre": "work",
+ "touch": "faceless",
+ "title_fmt": "{ja}",
+ "subject_en": "Year-end workplace scenes with faceless office workers (plain heads, muted clothing), each a small complete scene with a few props. Include no company names. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
+ "lead": "大掃除、請求書、仕事納めのあいさつ、忘年会。年末の職場の場面12点。社内報や資料、ブログに。",
+ "tags": [
+  "仕事納め",
+  "年末",
+  "忘年会",
+  "職場",
+  "ビジネス",
+  "顔なし"
+ ],
+ "season": {
+  "from": "12-01",
+  "to": "12-31"
+ },
+ "holes": false,
+ "items": [
+  [
+   "cleaning",
+   "デスクの大そうじ",
+   "a person wiping a desk with a cloth next to a box of tidied items"
+  ],
+  [
+   "boxes",
+   "書類を整理する",
+   "a person carrying a stack of folders and a cardboard box"
+  ],
+  [
+   "calendar",
+   "仕事納めのカレンダー",
+   "a person crossing off the last day on a wall calendar with a marker"
+  ],
+  [
+   "greeting",
+   "年末のあいさつ",
+   "two people bowing politely to each other"
+  ],
+  [
+   "bonenkai",
+   "忘年会の乾杯",
+   "four people raising glasses at a table with dishes"
+  ],
+  [
+   "invoice",
+   "請求書を送る",
+   "a person at a laptop with a paper airplane leaving the screen"
+  ],
+  [
+   "review",
+   "一年をふりかえる",
+   "a person at a whiteboard with a simple rising line chart"
+  ],
+  [
+   "late",
+   "ぎりぎりの追い込み",
+   "a person typing fast with a coffee cup and a small clock"
+  ],
+  [
+   "gift",
+   "お歳暮をおくる",
+   "a person holding a wrapped gift box with a ribbon"
+  ],
+  [
+   "kadomatsu",
+   "会社の門松",
+   "a person placing a small pine decoration at an office entrance"
+  ],
+  [
+   "homeward",
+   "仕事を終えて帰る",
+   "a person with a bag walking out of the office at dusk, relaxed"
+  ],
+  [
+   "thanks",
+   "ありがとうの寄せ書き",
+   "three people signing a large greeting card together"
+  ]
+ ],
+ "exclude": []
+}

@@ -1,0 +1,204 @@
+{
+ "added": "2026-10-10",
+ "slug": "winter-stars-flat",
+ "title": "冬の星空と星座",
+ "genre": "nature",
+ "touch": "flat",
+ "lead": "オリオン、おおいぬ、すばる、流れ星、天体望遠鏡。冬の夜空を楽しむイラスト12点。天体観察のおたよりやポスターに。",
+ "tags": [
+  "星空",
+  "星座",
+  "冬",
+  "オリオン",
+  "天体観測",
+  "夜空"
+ ],
+ "subject": "",
+ "season": {
+  "from": "11-20",
+  "to": "02-20"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "winter-stars-flat-orion",
+   "file": "winter-stars-flat-orion.webp",
+   "title": "オリオン座",
+   "desc": "オリオン座のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "星空",
+    "星座",
+    "冬",
+    "オリオン",
+    "冬の星空と星座",
+    "オリオン座",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 326,
+   "h": 495
+  },
+  {
+   "id": "winter-stars-flat-canis",
+   "file": "winter-stars-flat-canis.webp",
+   "title": "おおいぬ座",
+   "desc": "おおいぬ座のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "星空",
+    "星座",
+    "冬",
+    "オリオン",
+    "冬の星空と星座",
+    "おおいぬ座",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 409,
+   "h": 380
+  },
+  {
+   "id": "winter-stars-flat-pleiades",
+   "file": "winter-stars-flat-pleiades.webp",
+   "title": "すばる",
+   "desc": "すばるのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "星空",
+    "星座",
+    "冬",
+    "オリオン",
+    "冬の星空と星座",
+    "すばる",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 356,
+   "h": 363
+  },
+  {
+   "id": "winter-stars-flat-shooting",
+   "file": "winter-stars-flat-shooting.webp",
+   "title": "流れ星",
+   "desc": "流れ星のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "星空",
+    "星座",
+    "冬",
+    "オリオン",
+    "冬の星空と星座",
+    "流れ星",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 406,
+   "h": 232
+  },
+  {
+   "id": "winter-stars-flat-telescope",
+   "file": "winter-stars-flat-telescope.webp",
+   "title": "天体望遠鏡",
+   "desc": "天体望遠鏡のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "星空",
+    "星座",
+    "冬",
+    "オリオン",
+    "冬の星空と星座",
+    "天体望遠鏡",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 373,
+   "h": 444
+  },
+  {
+   "id": "winter-stars-flat-crescent",
+   "file": "winter-stars-flat-crescent.webp",
+   "title": "三日月とお星さま",
+   "desc": "三日月とお星さまのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "星空",
+    "星座",
+    "冬",
+    "オリオン",
+    "冬の星空と星座",
+    "三日月とお星さま",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 383,
+   "h": 379
+  },
+  {
+   "id": "winter-stars-flat-full-moon",
+   "file": "winter-stars-flat-full-moon.webp",
+   "title": "満月",
+   "desc": "満月のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "星空",
+    "星座",
+    "冬",
+    "オリオン",
+    "冬の星空と星座",
+    "満月",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 407,
+   "h": 402
+  },
+  {
+   "id": "winter-stars-flat-planet",
+   "file": "winter-stars-flat-planet.webp",
+   "title": "土星",
+   "desc": "土星のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "星空",
+    "星座",
+    "冬",
+    "オリオン",
+    "冬の星空と星座",
+    "土星",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 540,
+   "h": 357
+  },
+  {
+   "id": "winter-stars-flat-rocket",
+   "file": "winter-stars-flat-rocket.webp",
+   "title": "ロケット",
+   "desc": "ロケットのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "星空",
+    "星座",
+    "冬",
+    "オリオン",
+    "冬の星空と星座",
+    "ロケット",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 379,
+   "h": 378
+  },
+  {
+   "id": "winter-stars-flat-star-chart",
+   "file": "winter-stars-flat-star-chart.webp",
+   "title": "星座早見盤",
+   "desc": "星座早見盤のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "星空",
+    "星座",
+    "冬",
+    "オリオン",
+    "冬の星空と星座",
+    "星座早見盤",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 439,
+   "h": 471
+  }
+ ]
+}

@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-10",
+ "slug": "dividers-lines-kawaii",
+ "title": "かわいい区切り線",
+ "genre": "deco",
+ "touch": "kawaii",
+ "lead": "おたよりやブログの見出し下に。花、星、リボン、しっぽの区切り線12点。横長でそのまま使えます。",
+ "tags": [
+  "区切り線",
+  "罫線",
+  "ライン",
+  "飾り罫",
+  "おたより",
+  "ブログ"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "dividers-lines-kawaii-flowers",
+   "file": "dividers-lines-kawaii-flowers.webp",
+   "title": "花の区切り線",
+   "desc": "花の区切り線のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "花の区切り線",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 499,
+   "h": 122
+  },
+  {
+   "id": "dividers-lines-kawaii-stars",
+   "file": "dividers-lines-kawaii-stars.webp",
+   "title": "星の区切り線",
+   "desc": "星の区切り線のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "星の区切り線",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 488,
+   "h": 133
+  },
+  {
+   "id": "dividers-lines-kawaii-ribbon",
+   "file": "dividers-lines-kawaii-ribbon.webp",
+   "title": "リボンの区切り線",
+   "desc": "リボンの区切り線のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "リボンの区切り線",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 509,
+   "h": 149
+  },
+  {
+   "id": "dividers-lines-kawaii-hearts",
+   "file": "dividers-lines-kawaii-hearts.webp",
+   "title": "ハートの区切り線",
+   "desc": "ハートの区切り線のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "ハートの区切り線",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 508,
+   "h": 91
+  },
+  {
+   "id": "dividers-lines-kawaii-clouds",
+   "file": "dividers-lines-kawaii-clouds.webp",
+   "title": "くもの区切り線",
+   "desc": "くもの区切り線のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "くもの区切り線",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 482,
+   "h": 132
+  },
+  {
+   "id": "dividers-lines-kawaii-leaves",
+   "file": "dividers-lines-kawaii-leaves.webp",
+   "title": "葉っぱの区切り線",
+   "desc": "葉っぱの区切り線のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "葉っぱの区切り線",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 505,
+   "h": 127
+  },
+  {
+   "id": "dividers-lines-kawaii-dots",
+   "file": "dividers-lines-kawaii-dots.webp",
+   "title": "水玉の区切り線",
+   "desc": "水玉の区切り線のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "水玉の区切り線",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 502,
+   "h": 78
+  },
+  {
+   "id": "dividers-lines-kawaii-wave",
+   "file": "dividers-lines-kawaii-wave.webp",
+   "title": "なみの区切り線",
+   "desc": "なみの区切り線のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "なみの区切り線",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 502,
+   "h": 106
+  },
+  {
+   "id": "dividers-lines-kawaii-bunting",
+   "file": "dividers-lines-kawaii-bunting.webp",
+   "title": "ガーランド",
+   "desc": "ガーランドのイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "ガーランド",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 507,
+   "h": 129
+  },
+  {
+   "id": "dividers-lines-kawaii-paws",
+   "file": "dividers-lines-kawaii-paws.webp",
+   "title": "足あとの区切り線",
+   "desc": "足あとの区切り線のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "足あとの区切り線",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 504,
+   "h": 112
+  },
+  {
+   "id": "dividers-lines-kawaii-snow",
+   "file": "dividers-lines-kawaii-snow.webp",
+   "title": "雪の区切り線",
+   "desc": "雪の区切り線のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "雪の区切り線",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 502,
+   "h": 125
+  },
+  {
+   "id": "dividers-lines-kawaii-zigzag",
+   "file": "dividers-lines-kawaii-zigzag.webp",
+   "title": "ジグザグの区切り線",
+   "desc": "ジグザグの区切り線のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "区切り線",
+    "罫線",
+    "ライン",
+    "飾り罫",
+    "かわいい区切り線",
+    "ジグザグの区切り線",
+    "ゆるかわ",
+    "フレーム・かざり"
+   ],
+   "w": 508,
+   "h": 101
+  }
+ ]
+}

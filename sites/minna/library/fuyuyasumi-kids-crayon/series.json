@@ -1,0 +1,240 @@
+{
+ "added": "2026-10-10",
+ "slug": "fuyuyasumi-kids-crayon",
+ "title": "冬休みのこどもたち",
+ "genre": "school",
+ "touch": "crayon",
+ "lead": "冬休みの宿題、大そうじ、雪あそび、お年玉。冬休みのこどもの1日12場面。終業式のおたよりやしおりに。",
+ "tags": [
+  "冬休み",
+  "宿題",
+  "子ども",
+  "終業式",
+  "おたより",
+  "学校"
+ ],
+ "subject": "",
+ "season": {
+  "from": "12-10",
+  "to": "01-10"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "fuyuyasumi-kids-crayon-homework",
+   "file": "fuyuyasumi-kids-crayon-homework.webp",
+   "title": "冬休みの宿題",
+   "desc": "冬休みの宿題のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "冬休みの宿題",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 449,
+   "h": 453
+  },
+  {
+   "id": "fuyuyasumi-kids-crayon-plan",
+   "file": "fuyuyasumi-kids-crayon-plan.webp",
+   "title": "計画表を書く",
+   "desc": "計画表を書くのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "計画表を書く",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 490,
+   "h": 482
+  },
+  {
+   "id": "fuyuyasumi-kids-crayon-cleaning",
+   "file": "fuyuyasumi-kids-crayon-cleaning.webp",
+   "title": "おそうじを手伝う",
+   "desc": "おそうじを手伝うのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "おそうじを手伝う",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 455,
+   "h": 478
+  },
+  {
+   "id": "fuyuyasumi-kids-crayon-snowman",
+   "file": "fuyuyasumi-kids-crayon-snowman.webp",
+   "title": "雪だるまをつくる",
+   "desc": "雪だるまをつくるのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "雪だるまをつくる",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 500,
+   "h": 454
+  },
+  {
+   "id": "fuyuyasumi-kids-crayon-sled",
+   "file": "fuyuyasumi-kids-crayon-sled.webp",
+   "title": "そりすべり",
+   "desc": "そりすべりのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "そりすべり",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 536,
+   "h": 481
+  },
+  {
+   "id": "fuyuyasumi-kids-crayon-kotatsu",
+   "file": "fuyuyasumi-kids-crayon-kotatsu.webp",
+   "title": "こたつでみかん",
+   "desc": "こたつでみかんのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "こたつでみかん",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 570,
+   "h": 502
+  },
+  {
+   "id": "fuyuyasumi-kids-crayon-otoshidama",
+   "file": "fuyuyasumi-kids-crayon-otoshidama.webp",
+   "title": "お年玉をもらう",
+   "desc": "お年玉をもらうのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "お年玉をもらう",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 504,
+   "h": 454
+  },
+  {
+   "id": "fuyuyasumi-kids-crayon-kakizome",
+   "file": "fuyuyasumi-kids-crayon-kakizome.webp",
+   "title": "書き初め",
+   "desc": "書き初めのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "書き初め",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 395,
+   "h": 496
+  },
+  {
+   "id": "fuyuyasumi-kids-crayon-kite",
+   "file": "fuyuyasumi-kids-crayon-kite.webp",
+   "title": "たこあげ",
+   "desc": "たこあげのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "たこあげ",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 501,
+   "h": 501
+  },
+  {
+   "id": "fuyuyasumi-kids-crayon-cards",
+   "file": "fuyuyasumi-kids-crayon-cards.webp",
+   "title": "かるたあそび",
+   "desc": "かるたあそびのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "かるたあそび",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 556,
+   "h": 454
+  },
+  {
+   "id": "fuyuyasumi-kids-crayon-mochi",
+   "file": "fuyuyasumi-kids-crayon-mochi.webp",
+   "title": "おもちつき",
+   "desc": "おもちつきのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "おもちつき",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 448,
+   "h": 503
+  },
+  {
+   "id": "fuyuyasumi-kids-crayon-sleepy",
+   "file": "fuyuyasumi-kids-crayon-sleepy.webp",
+   "title": "ねぼうの朝",
+   "desc": "ねぼうの朝のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "冬休み",
+    "宿題",
+    "子ども",
+    "終業式",
+    "冬休みのこどもたち",
+    "ねぼうの朝",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 568,
+   "h": 457
+  }
+ ]
+}
