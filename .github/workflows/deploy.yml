@@ -7,7 +7,7 @@ name: deploy-sites
 #   XSERVER_USER      the Xserver server ID (the SSH user name)
 # The kuma site is built and uploaded only when the repository variable DEPLOY_KUMA is "true" (set after the
 # owner has added kuma-sokuho.com to the Xserver server); the same switch for minna-no-illust.com is DEPLOY_MINNA and for atomou.com DEPLOY_ATOMOU.
-# atomou is a DEMO until the repository variable ATOMOU_PUBLIC is "true" (release build, indexable). While it is a demo it is deployed only
+# atomou is a DEMO until the repository variable ATOMOU_PUBLIC is "true" (while ATOMOU_REVIEW is "true" and ATOMOU_PUBLIC is not, the small REVIEW copy is deployed instead: public to crawlers but not indexable, no password; see sites/atomou/review.py) (release build, indexable). While it is a demo it is deployed only
 # behind a password (HTTP Basic): the secret ATOMOU_DEMO_PASSWORD (owner-made) must exist (the user name is ATOMOU_DEMO_USER, "demo" when that secret is not set), the job writes the password
 # file to ~/atomou.com/.htpasswd (outside public_html) and the preview build's .htaccess asks for it. Without them nothing is deployed.
 #
@@ -88,11 +88,11 @@ jobs:
           - site: atomou
             dir: atomou.com
             url: https://atomou.com
-            build: python sites/atomou/build.py ${{ vars.ATOMOU_PUBLIC == 'true' && '--release' || '' }} --out release
+            build: python sites/atomou/build.py ${{ vars.ATOMOU_PUBLIC == 'true' && '--release' || (vars.ATOMOU_REVIEW == 'true' && '--review' || '') }} --out release
             min_pages: 60
             min_cards: 0
             marker: あと何日、もう何日
-            probe: /assets/catalog.json
+            probe: ${{ vars.ATOMOU_PUBLIC != 'true' && vars.ATOMOU_REVIEW == 'true' && '/c/exams/' || '/assets/catalog.json' }}
     concurrency:
       # sites that call the Rakuten API share one queue (one application ID, about one request per second), so two such jobs never run at once
       group: ${{ matrix.site == 'yorokobu' && 'rakuten-api' || format('deploy-{0}', matrix.site) }}
@@ -115,6 +115,7 @@ jobs:
           MINNA: ${{ vars.DEPLOY_MINNA }}
           ATOMOU: ${{ vars.DEPLOY_ATOMOU }}
           ATOMOU_PUBLIC: ${{ vars.ATOMOU_PUBLIC }}
+          ATOMOU_REVIEW: ${{ vars.ATOMOU_REVIEW }}
           DEMO_USER: ${{ secrets.ATOMOU_DEMO_USER || 'demo' }}
           DEMO_PASS: ${{ secrets.ATOMOU_DEMO_PASSWORD }}
           RK_APP: ${{ secrets.RAKUTEN_APP_ID }}
@@ -171,7 +172,7 @@ jobs:
             echo "DEPLOY_ATOMOU is not true; the atomou site is skipped"
             go=false
           fi
-          if [ "$SITE" = "atomou" ] && [ "$ATOMOU_PUBLIC" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }; then
+          if [ "$SITE" = "atomou" ] && [ "$ATOMOU_PUBLIC" != "true" ] && [ "${ATOMOU_REVIEW:-}" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }; then
             echo "atomou is still a demo and ATOMOU_DEMO_USER / ATOMOU_DEMO_PASSWORD are not set: it is not deployed unprotected; the atomou site is skipped"
             go=false
           fi
@@ -253,7 +254,7 @@ jobs:
           ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
             "set -e; cd \"\$HOME/$SITE_DIR\"; pwd; test -d public_html; command -v tar >/dev/null; ls -d public_html*"
       - name: Demo password file for atomou (outside public_html; the preview build asks for it)
-        if: steps.gate.outputs.go == 'true' && matrix.site == 'atomou' && vars.ATOMOU_PUBLIC != 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+        if: steps.gate.outputs.go == 'true' && matrix.site == 'atomou' && vars.ATOMOU_PUBLIC != 'true' && vars.ATOMOU_REVIEW != 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
@@ -300,13 +301,14 @@ jobs:
           PROBE: ${{ matrix.probe }}
           SITE: ${{ matrix.site }}
           ATOMOU_PUBLIC: ${{ vars.ATOMOU_PUBLIC }}
+          ATOMOU_REVIEW: ${{ vars.ATOMOU_REVIEW }}
           DEMO_USER: ${{ secrets.ATOMOU_DEMO_USER || 'demo' }}
           DEMO_PASS: ${{ secrets.ATOMOU_DEMO_PASSWORD }}
         run: |
           set -u
           ok=1
           AUTH=()
-          if [ "$SITE" = "atomou" ] && [ "${ATOMOU_PUBLIC:-}" != "true" ]; then
+          if [ "$SITE" = "atomou" ] && [ "${ATOMOU_PUBLIC:-}" != "true" ] && [ "${ATOMOU_REVIEW:-}" != "true" ]; then
             AUTH=(-u "$DEMO_USER:$DEMO_PASS")   # the demo is behind a password: it must refuse a visitor without it and answer one with it
             unauth=$(curl -s -o /dev/null -w '%{http_code}' "$URL/"); echo "without the password: $unauth (must be 401)"
             [ "$unauth" = "401" ] || ok=0

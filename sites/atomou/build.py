@@ -22,7 +22,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.atomou import catalog, datecore, skins, usecases  # noqa: E402
+from sites.atomou import articles, catalog, datecore, skins, usecases  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
@@ -172,9 +172,14 @@ def count_parts(iso: str, precision: str) -> tuple[str, str, str, str, str]:
     return r["dir"], word, big[len(word):], rel, (f"合計 {r['sub']}" if r.get("sub") else "")
 
 
-def card_html(e: dict, *, own: bool = False, actions: bool = True, big: bool = False, link: bool = True) -> str:
+_ACTIONS = True   # the review build (review.py) switches the card buttons off: it has no application behind them
+
+
+def card_html(e: dict, *, own: bool = False, actions: bool | None = None, big: bool = False, link: bool = True) -> str:
     """The card markup; app.js cardHtml builds the same thing (tests/test_atomou_build.py compares the class lists).
     No source line here: the source and the check date are on the detail page ("詳細")."""
+    if actions is None:
+        actions = _ACTIONS
     g = catalog.GROUPS.index(e["group"]) + 1 if e.get("group") in catalog.GROUPS else int(e.get("g") or 0)
     key = ("m:" if own else "c:") + e["id"]
     p = e.get("precision") or "day"
@@ -225,6 +230,7 @@ def _wordmark() -> str:
 
 
 WORDMARK = _wordmark()
+GUIDES = articles.load_guides()   # data/atomou/guides.json: what each subject is (written once per subject)
 
 
 
@@ -524,10 +530,14 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
         key=lambda r: (abs((date.fromisoformat(r["date"]) - d).days), r["date"], r["id"]))[:4]   # the days around it: a reason to look at the next page
     sentence = (f"{e['title']}は、{fmt}{end}です。" if e["precision"] == "day" else f"{e['title']}は、{fmt}です。") + (
         f"{today.year}年{today.month}月{today.day}日の時点で、{word}。" if e["precision"] == "day" else "")
+    guide = GUIDES.get(e["subject"])
+    art = articles.article_html(e, fmt_date, host(e["source_url"]), today, guide)   # what the day is, when and where, what to check, the usual questions
+    same = [] if quiet else sorted((r for r in live if r["subject"] == e["subject"] and r["id"] != e["id"] and not r["quiet"]), key=lambda r: (r["date"], r["id"]))[:6]
     body = crumbs([("トップ", "/"), (e["group"], f"/c/{GROUP_SLUG[e['group']]}/"), (e["title"], None)]) + f"""
 <h1>{esc(e['title'])}</h1>
 {card_html(e, big=True, link=False)}
-<p>{esc(sentence)}<span class="small muted">上のカードは、今日の日付で数えた数字です。</span></p>
+{'<p class="small muted">上のカードは、今日の日付で数えた数字です。</p>' if art else f'<p>{esc(sentence)}<span class="small muted">上のカードは、今日の日付で数えた数字です。</span></p>'}
+{art}
 {'<p class="notice quiet">この日は、静かにお知らせします。</p>' if quiet else ""}
 <h2>出典と確認した日</h2>
 <dl class="info"><dt>出典</dt><dd><a href="{esc(e['source_url'])}" rel="noopener nofollow" target="_blank">{esc(host(e['source_url']))}</a></dd>
@@ -535,11 +545,13 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 <p class="small muted">日付は変わることがあります。申し込みや手続きの前に、出典の公式ページでご確認ください。</p>
 <p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを書く</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の日として残す</a></p>
 {f'<details class="more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">iPhone の「カレンダー」や Google カレンダーに取り込めるファイルです。</p><p><button type="button" class="btn small ghost" data-ics-for="c:{e["id"]}">ファイルを作る</button></p></details>' if e["precision"] == "day" else ""}
+{(f'<h2>同じ「{esc(e["subject"])}」の日</h2><div class="cards">' + "".join(card_html(r) for r in same) + "</div>") if same else ""}
 {('<h2>同じジャンルの日</h2><div class="cards">' + "".join(card_html(r) for r in rel) + "</div>") if rel else ""}
 {('<h2>同じ頃の日</h2><p class="hint">この日の前後10日にある日です。</p><div class="cards">' + "".join(card_html(r) for r in near) + "</div>") if near else ""}"""
     suffix = "からもう何日？" if e["status"] == "ended" else "はいつ？あと何日？"
     title = f"{e['title']}{suffix} {fmt} | {NAME}"
-    desc = f"{e['title']}は{fmt}{end}。出典と確認した日つき。あと何日かを数えて、予定に入れられます。"
+    place = (e.get("place") or "").strip()
+    desc = f"{e['title']}は{fmt}{end}" + (f"、{place}" if place and place not in ("全国", "地域") else "") + "。" + (f"{guide['about'].split('。')[0]}。" if guide else "") + "出典と確認した日つき。あと何日かを数えて、予定に入れられます。"
     return c.page(f"/e/{e['id']}/", title, desc, body, "event", noindex=not indexable)
 
 
@@ -899,12 +911,19 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--release", action="store_true")
+    ap.add_argument("--review", action="store_true", help="the small review copy (sites/atomou/review.py): public to crawlers, not indexable, no application")
     ap.add_argument("--out", default=str(HERE / "dist"))
     ap.add_argument("--today", default="")
     a = ap.parse_args()
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
     try:
-        files = render_site(cfg, Path(a.out), release=a.release, today=date.fromisoformat(a.today) if a.today else None)
+        if a.review:
+            from sites.atomou import review
+            pages = review.build_pages(cfg, date.fromisoformat(a.today) if a.today else None)
+            write_pages(pages, Path(a.out))
+            files = sorted(pages)
+        else:
+            files = render_site(cfg, Path(a.out), release=a.release, today=date.fromisoformat(a.today) if a.today else None)
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {a.out}")
