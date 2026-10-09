@@ -21,6 +21,7 @@ sys.path.insert(0, str(ROOT))
 
 from sites.yorokobu import content as ct  # noqa: E402
 from sites.yorokobu import giftcal  # noqa: E402
+from sites.yorokobu import icons  # noqa: E402
 from sites.yorokobu import relevance  # noqa: E402
 from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu import numberlists as nm  # noqa: E402
@@ -34,7 +35,11 @@ from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs,
 SOURCE_HTML = ('商品の情報は楽天ウェブサービスを利用して取得しています。 '
                '<a href="https://webservice.rakuten.co.jp/" target="_blank">Supported by Rakuten Developers</a>')  # the credit HTML is prescribed: use as is
 NAV = [("イベントから", "/occasion/", "/occasion/"), ("相手から", "/for/", "/for/"), ("季節の贈り物", "/#season", "/season-none/")]
-SITE = {"nav": NAV[:2] + [("気持ちから", "/theme/", "/theme/"), ("診断・ツール", "/tool/", "/tool/")], "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">', "assets": HERE / "assets",
+# the logo mark: a gift box in the site's pink (the bird mascots were taken out on 2026-10-09: "as long as the mascot is there, the childishness stays")
+LOGO_MARK = ('<svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="36" height="36" rx="9" fill="#e8506f"/>'
+             '<rect x="8" y="16" width="20" height="12" rx="1.5" fill="#fff"/><rect x="6.5" y="12" width="23" height="5" rx="1.5" fill="#fff"/>'
+             '<rect x="16.5" y="12" width="3" height="16" fill="#e8506f"/><path d="M18 12c-3-5-8-4-6.5-1.5 1 1.6 4 1.5 6.5 1.5zm0 0c3-5 8-4 6.5-1.5-1 1.6-4 1.5-6.5 1.5z" fill="#fff"/></svg>')
+SITE = {"nav": NAV[:2] + [("気持ちから", "/theme/", "/theme/"), ("診断・ツール", "/tool/", "/tool/")], "glyph": LOGO_MARK, "assets": HERE / "assets",
         "source_html": SOURCE_HTML}
 # months (1-12) in which an occasion is worth showing as "いまが贈りどき"; the rest are evergreen
 SEASON = {
@@ -121,6 +126,8 @@ def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
     if "pr-quiet" in kw.get("body", ""):
         kw["body"] += pr_foot(cfg, "amazon.co.jp/" in kw["body"], "rakuten.co.jp/" in kw["body"])
+    if "#o-" in kw.get("body", ""):
+        kw["body"] += icons.sprite()                                  # the occasion symbols the page uses
     site = {**SITE, "nav": SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])}
     return layout(site, cfg, preview, scripts=True, head_extra=FONTS, **kw)
 
@@ -144,7 +151,7 @@ def share_bar(cfg: dict, path: str, text: str, label: str = "この候補、誰�
 
 
 def icon_img(kind: str, slug: str, size: int = 64) -> str:
-    return f'<img class="ic" src="/assets/img/{kind}/{slug}.webp" alt="" width="{size}" height="{size}" loading="lazy">'
+    return icons.icon(kind, slug, size)
 
 
 def ul(items: list[str], cls: str = "") -> str:
@@ -193,15 +200,8 @@ def deco(kind: str, color: str, x: str, y: str, size: int, rot: int = 0, delay: 
 
 
 def party(kind: str = "hero") -> str:
-    """The scattered balloons, stars and confetti around a hero."""
-    if kind == "hero":
-        items = [("balloon", "pink", "2%", "-6%", 54, -8, 0), ("balloon", "sky", "88%", "2%", 58, 10, 1.2), ("star", "white", "46%", "-4%", 40, 12, .6),
-                 ("sparkle", "white", "92%", "46%", 42, 0, 2), ("dot", "pink", "6%", "46%", 22, 0, .3), ("bar", "mint", "52%", "86%", 46, -24, .9),
-                 ("tri", "lilac", "40%", "30%", 30, 18, 1.6), ("box", "pink", "-1%", "72%", 84, -10, 1.1), ("sparkle", "yellow", "64%", "6%", 34, 0, .4)]
-    else:
-        items = [("star", "white", "1%", "8%", 34, 12, 0), ("dot", "pink", "44%", "12%", 20, 0, .8), ("sparkle", "white", "90%", "14%", 36, 0, 1.4),
-                 ("bar", "mint", "70%", "74%", 40, -20, .5), ("balloon", "pink", "94%", "52%", 40, 10, 1)]
-    return "".join(deco(k, c, x, y, sz, r, d) for k, c, x, y, sz, r, d in items)
+    """The balloons and confetti that used to be scattered around the heroes: none now (an adult gift site)."""
+    return ""
 
 
 def scallop_class(color: str) -> str:
@@ -378,8 +378,7 @@ def round_chip(href: str, kind: str, slug: str, name: str) -> str:
 def head_band(color: str, icons: str, h1: str, lead: str, single: bool = False, mascot: str = "b-wink") -> str:
     return (f'<div class="{scallop_class(color)} pagehead-band dots"><div class="in"><div class="pagehead">'
             f'<div class="pagehead-ic{" single" if single else ""}">{icons}</div><div><h1>{h1}</h1><p class="lead">{esc(lead)}</p></div></div>'
-            f'<img class="head-mascot" src="/assets/img/{mascot}.webp" alt="" width="190" height="150" loading="lazy"></div>'
-            f'{party("page")}</div>')
+            f'</div></div>')
 
 
 def ic_wrap(kind: str, slug: str) -> str:
@@ -387,8 +386,8 @@ def ic_wrap(kind: str, slug: str) -> str:
 
 
 def bird_say(img: str, text: str, cls: str = "") -> str:
-    """A bird speaking: the avatar and a speech bubble."""
-    return f'<div class="bird-say {cls}"><img src="/assets/img/{img}.webp" alt="" width="120" height="90" loading="lazy"><p>{text}</p></div>'
+    """A short note in the page's voice (it used to be a bird's speech bubble; `img` is ignored)."""
+    return f'<div class="bird-say plain {cls}"><p>{text}</p></div>'
 
 
 def idea_card(cfg: dict, idea: dict, i: int, tiers: list[dict]) -> str:
@@ -415,7 +414,6 @@ def concierge(cfg: dict, d: dict, p: dict | None, heading: str = "ひとこと�
     chips = "".join(f'<li><a href="{esc(search_link(cfg, k))}" rel="sponsored nofollow noopener" target="_blank">{esc(k)}</a></li>' for k in kws)
     ctx = esc(" ".join(x for x in [(p or {}).get("recipient_keyword", "")] if x))
     return f"""<section class="concierge band-soft" id="concierge"><div class="concierge-in">
-<img class="concierge-bird hop" src="/assets/img/concierge-note.webp" alt="" width="190" height="150" loading="lazy">
 <div class="concierge-body"><h2>{heading}</h2>
 <p>その人について、ひとこと教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。</p>
 <form class="kw-form" data-aff="{esc(cfg['rakuten_affiliate_id'])}" data-trk="{esc(cfg.get('rakuten_tracking_id') or '')}" data-ctx="{ctx}">
@@ -639,7 +637,7 @@ def theme_hub_page(d: dict, cfg: dict, preview: bool) -> str:
             sections += (f'<section style="margin-top:44px"><h2><span class="scribble">{esc(g["name"])}</span></h2><p class="sec-lead">{esc(g["blurb"])}</p>'
                          f'<ul class="tiles">{"".join(theme_tile(t) for t in ts)}</ul></section>')
     lead = "贈りたい気持ちや、相手の好きなことから、プレゼントを探します。イベントや相手が決まっていなくても、ここから始められます。"
-    body = f"""{head_band("lilac", '<img class="pair-mini" src="/assets/img/b-sparkle.webp" alt="" width="170" height="155">', "気持ち・興味から、<wbr>プレゼントを探す", lead, single=True)}
+    body = f"""{head_band("lilac", '', "気持ち・興味から、<wbr>プレゼントを探す", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("気持ち・興味から探す", None)])}</div>
 {pr_quiet(cfg)}{sections}"""
     return page(cfg, preview, path="/theme/", title=f"気持ち・興味から、プレゼントを探す | {cfg['site_name']}", description=lead, body=body)
@@ -705,7 +703,7 @@ def hub_page(d: dict, cfg: dict, preview: bool, kind: str) -> str:
     else:
         rows = "".join(tile(f'/for/{r["slug"]}/', "recipient", r["slug"], r["name"]) for r in c["recipients"])
         title, h1, lead, path, color = "贈る相手から探す", "贈る相手から、<wbr>プレゼントを探す", "贈る相手を選ぶと、イベントごとのおすすめが見つかります。", "/for/", "sky"
-    body = f"""{head_band(color, f'<img class="pair-mini" src="/assets/img/r-joy.webp" alt="" width="170" height="155">', h1, lead, single=True)}
+    body = f"""{head_band(color, f'', h1, lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (title, None)])}</div>
 <section style="margin-top:34px"><ul class="tiles">{rows}</ul></section>"""
     return page(cfg, preview, path=path, title=f"{title} | {cfg['site_name']}", description=lead, body=body)
@@ -816,7 +814,7 @@ def guide_link(c: dict, occasion: str, cls: str = "guide-link") -> str:
     g = c["guides"].get(occasion)
     if not g:
         return ""
-    return (f'<aside class="{cls}"><img src="/assets/img/concierge-note.webp" alt="" width="90" height="68" loading="lazy">'
+    return (f'<aside class="{cls}">'
             f'<div><b>読みもの</b><a href="/guide/{occasion}/">{esc(g["title"])}</a></div></aside>')
 
 
@@ -862,7 +860,7 @@ def article_page(d: dict, cfg: dict, preview: bool, a: dict) -> str:
                      "inLanguage": "ja", "author": {"@type": "Organization", "name": cfg["operator_name"]}}, ensure_ascii=False)
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage",
                          "mainEntity": [{"@type": "Question", "name": f["q"], "acceptedAnswer": {"@type": "Answer", "text": f["a"]}} for f in a["faq"]]}, ensure_ascii=False)
-    head = head_band("lilac", '<img class="pair-mini" src="/assets/img/concierge-note.webp" alt="" width="170" height="130">', esc(a["title"]), a["lead"], single=True, mascot="r-wink")
+    head = head_band("lilac", '', esc(a["title"]), a["lead"], single=True, mascot="r-wink")
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("読みもの", "/read/"), (a["title"], None)])}</div>
 <p class="meta-date">{esc(a["date"])} 公開</p>
@@ -877,7 +875,7 @@ def read_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     arts = d["c"]["articles"]
     lead = "プレゼント選びの前に読んでおくと役立つ、読みものです。新しい記事を順次追加しています。"
     rows = "".join(f'<li><a class="tile wide read-tile" href="/read/{a["slug"]}/"><span><b>{esc(a["title"])}</b><small>{esc(a["date"])} ・ {esc(a["lead"][:60])}…</small></span></a></li>' for a in arts)
-    body = f"""{head_band("lilac", '<img class="pair-mini" src="/assets/img/concierge-note.webp" alt="" width="170" height="130">', "プレゼントの読みもの", lead, single=True)}
+    body = f"""{head_band("lilac", '', "プレゼントの読みもの", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("読みもの", None)])}</div>
 <section style="margin-top:34px"><ul class="tiles wide">{rows}</ul></section>"""
     return page(cfg, preview, path="/read/", title=f"プレゼントの読みもの | {cfg['site_name']}", description=lead, body=body)
@@ -921,7 +919,7 @@ def finder(d: dict) -> str:
     rec = "".join(f'<option value="{r["slug"]}">{esc(r["name"])}</option>' for r in c["recipients"])
     bud = "".join(f'<option value="{t["slug"]}">{esc(t["label"])}</option>' for t in c["filters"]["tiers"])
     fmap = esc(json.dumps(finder_map(d), separators=(",", ":")))
-    return (f'<form class="finder" action="/occasion/" method="get" data-map="{fmap}"><img class="peek hop" src="/assets/img/concierge-bell.webp" alt="" width="96" height="73">'
+    return (f'<form class="finder" action="/occasion/" method="get" data-map="{fmap}">'
             f'<p class="finder-title">贈り物を探す</p>'
             f'<div class="finder-row"><select name="o" aria-label="イベント"><option value="">イベント</option>{occ}</select>'
             f'<select name="r" aria-label="贈る相手"><option value="">贈る相手</option>{rec}</select>'
@@ -964,19 +962,18 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <p class="lead">イベントと贈る相手から、喜ばれやすい選び方と、おすすめの商品が見つかります。</p>
 {finder(d)}
 <p class="hero-cta"><a class="btn big" href="/occasion/">イベントから探す</a><a class="btn big btn-sub" href="/for/">相手から探す</a></p></div>
-<div class="hero-art">{party("hero")}<img class="pair" src="/assets/img/mascot-pair.webp" alt="赤と青のマフラーをしたシマエナガのふたりが、プレゼントを持って喜んでいる" width="1400" height="579"></div>
 </div></section>
 <div class="marquee" aria-hidden="true"><div class="track">{ticker}</div></div>
 {pr_quiet(cfg)}
-<section id="memo-strip" class="memo-strip" data-json="{esc(json.dumps(memo_data(d, cfg, today), ensure_ascii=False, separators=(",", ":")))}"><div class="memo-strip-in"><img class="hop" src="/assets/img/concierge-note.webp" alt="" width="150" height="114" loading="lazy">
+<section id="memo-strip" class="memo-strip" data-json="{esc(json.dumps(memo_data(d, cfg, today), ensure_ascii=False, separators=(",", ":")))}"><div class="memo-strip-in">
 <div><h2>大切な日を忘れない</h2><p>誕生日や記念日を登録すると、3週間前にカレンダーでお知らせします。</p>
 <p><a class="btn" href="/memo/">たいせつな日メモをつくる</a> <a class="btn btn-sub" href="/calendar/">贈りどきカレンダー</a></p></div></div></section>
 <section style="margin-top:56px"><div class="sec-head"><span class="sticker">NOW</span><h2>いまが<span class="scribble">贈りどき</span></h2><p>これから迎えるイベントのプレゼントを、先取りで。</p></div>
 <ul class="tiles wide">{season}</ul>{month_more}</section>
-<section class="band sky scallop" style="margin-top:70px"><div class="in"><div class="sec-head"><img class="step-mascot hop" src="/assets/img/navi-scope.webp" alt="望遠鏡をのぞくシマエナガと、道を指さすシマエナガ" width="380" height="193" loading="lazy"><h2>選び方は、かんたん<span class="scribble">3ステップ</span></h2></div>
-<ol class="steps"><li><img src="/assets/img/occasion/birthday.webp" alt="" width="84" height="84" loading="lazy"><b>イベントを選ぶ</b><p>誕生日、母の日、クリスマスなど、贈るきっかけを選びます。</p></li>
-<li><img src="/assets/img/recipient/mother.webp" alt="" width="84" height="84" loading="lazy"><b>相手を選ぶ</b><p>彼氏、母、同僚など、贈る相手に合わせた選び方が見つかります。</p></li>
-<li><img src="/assets/img/occasion/thanks.webp" alt="" width="84" height="84" loading="lazy"><b>予算で選ぶ</b><p>3,000円以内から、2万円以上まで。予算に合う商品を比べられます。</p></li></ol></div></section>
+<section class="band sky scallop" style="margin-top:70px"><div class="in"><div class="sec-head"><h2>選び方は、かんたん<span class="scribble">3ステップ</span></h2></div>
+<ol class="steps"><li>{icon_img("occasion", "birthday", 56)}<b>イベントを選ぶ</b><p>誕生日、母の日、クリスマスなど、贈るきっかけを選びます。</p></li>
+<li>{icon_img("recipient", "mother", 56)}<b>相手を選ぶ</b><p>彼氏、母、同僚など、贈る相手に合わせた選び方が見つかります。</p></li>
+<li>{icon_img("occasion", "thanks", 56)}<b>予算で選ぶ</b><p>3,000円以内から、2万円以上まで。予算に合う商品を比べられます。</p></li></ol></div></section>
 <section class="band pink scallop"><div class="in"><div class="sec-head"><h2>イベントから<span class="scribble">探す</span></h2><p>贈るきっかけを選んでください。</p></div>
 <ul class="chip-grid">{occ}</ul></div></section>
 <section class="band cream flat"><div class="in"><div class="sec-head"><h2>贈る相手から<span class="scribble">探す</span></h2><p>だれに贈る?</p></div>
@@ -988,10 +985,10 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 {message_band(d)}
 {theme_band}
 <section class="band yellow dots scallop about-home"><div class="in">
-<div><img src="/assets/img/pair-gift.webp" alt="" width="600" height="239" loading="lazy" style="width:100%;max-width:460px;display:block;margin:0 auto"></div>
+
 <div class="bubble"><h2 style="font-size:1.3rem">このサイトについて</h2>
 <p>「何を贈ればいいか分からない」というときに、<strong>イベント</strong>と<strong>贈る相手</strong>から、選び方のポイントと商品の例を探せるサイトです。</p>
-<p>商品は、楽天市場の情報を毎日自動で更新して表示しています。シマエナガのふたりが、あなたの「贈りたい気持ち」を応援します。</p></div></div></section>"""
+<p>商品は、楽天市場の情報を毎日自動で更新して表示しています。</p></div></div></section>"""
     return page(cfg, preview, path="/", title=f"{cfg['site_name']} イベントと相手から、喜ばれるプレゼントを探す",
                 description="誕生日・母の日・クリスマスなど、イベントと贈る相手から、喜ばれやすいプレゼントの選び方と、おすすめの商品が見つかります。", body=body,
                 og_image=og_for("default"))
@@ -1036,7 +1033,7 @@ def ranking_hub_page(d: dict, cfg: dict, preview: bool) -> str:
         rise = ('<section style="margin-top:44px"><h2><span class="scribble">きのうより、順位を上げた商品</span></h2>'
                 '<p class="sec-lead">順位の変化は、毎日のランキングが2日分たまってから表示します。</p></section>')
     lead = "楽天市場のランキングをもとに、ジャンル別・年代別・性別ごとに、いま売れている商品を紹介します。前日より順位が上がった商品や、はじめてランクインした商品も、毎日更新します。"
-    body = f"""{head_band("yellow", '<img class="pair-mini" src="/assets/img/b-joy.webp" alt="" width="170" height="155">', "いま売れている、<wbr>ランキング", lead, single=True)}
+    body = f"""{head_band("yellow", '', "いま売れている、<wbr>ランキング", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("いま売れている", None)])}</div>
 {pr_quiet(cfg)}
 <p class="sec-lead">{esc(day)}のランキングです。ランキングは、楽天市場の売れ行きにもとづく数字で、贈り物として選ばれた順位ではありません。
@@ -1071,7 +1068,7 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
                    f'<p class="sec-lead">毎日のランキング上位{sg["depth"]}位に、3日以上続けて入っている商品です(記録は{sg["days"]}日分)。</p>'
                    f'{ranking_grid(cfg, [(it, f"{n}日連続でランクイン(現在{it["rank"]}位)", "ロングヒット") for it, n in sg["stay"]])}</section>')
     others = "".join(f'<li><a href="/ranking/{o}/">{esc(rv["segments"][o]["label"])}</a></li>' for o in rv["order"] if o != slug)
-    body = f"""{head_band("yellow", '<img class="pair-mini" src="/assets/img/b-joy.webp" alt="" width="170" height="155">', f"{esc(sg['label'])}{part}、<wbr>いま売れている商品", f"楽天市場で、{sg['label']}{'に' if part == 'に' else 'で'}売れている商品の上位です({day}のランキング)。", single=True)}
+    body = f"""{head_band("yellow", '', f"{esc(sg['label'])}{part}、<wbr>いま売れている商品", f"楽天市場で、{sg['label']}{'に' if part == 'に' else 'で'}売れている商品の上位です({day}のランキング)。", single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("いま売れている", "/ranking/"), (sg["label"], None)])}</div>
 {pr_quiet(cfg)}
 {facts}
@@ -1098,7 +1095,7 @@ def message_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     tiles = "".join(tile(f'/message/{o["slug"]}/', "occasion", o["slug"], f'{o["name"]}のメッセージ', f'{len(c["messages"][o["slug"]]["sets"])}人分の例文')
                     for o in c["occasions"] if o["slug"] in c["messages"])
     lead = "プレゼントに添える一言や、カードに書くメッセージを、イベントと贈る相手ごとに集めました。気に入った文を、そのままコピーして使えます。"
-    body = f"""{head_band("pink", '<img class="pair-mini" src="/assets/img/r-joy.webp" alt="" width="170" height="155">', "プレゼントに添える、<wbr>メッセージ例文集", lead, single=True)}
+    body = f"""{head_band("pink", '', "プレゼントに添える、<wbr>メッセージ例文集", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("メッセージ例文集", None)])}</div>
 <section style="margin-top:34px"><h2><span class="scribble">イベントをえらぶ</span></h2><ul class="tiles">{tiles}</ul></section>"""
     return page(cfg, preview, path="/message/", title=f"プレゼントに添える、メッセージ例文集 | {cfg['site_name']}", description=lead, body=body)
@@ -1148,7 +1145,7 @@ def numbers_hub_page(d: dict, cfg: dict, preview: bool) -> str:
                     for L in nv["lists"])
     lead = "レビューの件数・評価・価格などの数字を条件に、プレゼントの候補を並べました。迷ったときの目安にしてください。"
     to_ranking = '<p class="more"><a class="btn btn-sub" href="/ranking/">いま売れている商品も見る</a></p>' if d.get("ranking") else ""
-    body = f"""{head_band("sky", '<img class="pair-mini" src="/assets/img/b-sparkle.webp" alt="" width="170" height="155">', "数字で選ぶ、<wbr>プレゼント", lead, single=True)}
+    body = f"""{head_band("sky", '', "数字で選ぶ、<wbr>プレゼント", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("数字で選ぶ", None)])}</div>
 {pr_quiet(cfg)}
 <p class="sec-lead">このサイトで紹介している商品{nv["pool"]}点のなかから、数字の条件に合うものを自動で集めています。レビューは購入した人の感想です。商品の品質や、贈った相手が喜ぶことを保証するものではありません。</p>
@@ -1165,7 +1162,7 @@ def numbers_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
     shown = len(L["items"])
     more = f"(条件に合う{L['total']}点のうち、上位{shown}点)" if L["total"] > shown else f"({L['total']}点)"
     set_keep()
-    body = f"""{head_band("sky", '<img class="pair-mini" src="/assets/img/b-sparkle.webp" alt="" width="170" height="155">', esc(L["title"]), L["says"], single=True)}
+    body = f"""{head_band("sky", '', esc(L["title"]), L["says"], single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("数字で選ぶ", "/numbers/"), (L["title"], None)])}</div>
 {pr_quiet(cfg)}
 <p class="sec-lead">条件に合う商品の、いまの数字です{more}。レビューは購入した人の感想で、品質を保証するものではありません。</p>
@@ -1299,23 +1296,20 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     OG.clear()
     if ogimage.available():
         site = cfg["site_name"]
-        birds = ("r-joy", "b-sparkle", "r-wink", "b-joy")
-        cards["og/default.png"] = ogimage.card(title="プレゼント選びを、もっと楽に", tag="イベントと相手から", bird="mascot-pair", site=site)
+        cards["og/default.png"] = ogimage.card(title="プレゼント選びを、もっと楽に", tag="イベントと相手から", site=site)
         for o in c["occasions"]:
-            cards[f"og/occasion/{o['slug']}.png"] = ogimage.card(title=f"{o['name']}のプレゼント", tag="選び方と相手別", bird=OCC_MASCOT.get(o["slug"], "b-wink"), site=site)
+            cards[f"og/occasion/{o['slug']}.png"] = ogimage.card(title=f"{o['name']}のプレゼント", tag="選び方と相手別", site=site)
         for r in c["recipients"]:
-            cards[f"og/for/{r['slug']}.png"] = ogimage.card(title=f"{r['name']}へのプレゼント", tag="イベント別", bird="r-sparkle", site=site)
+            cards[f"og/for/{r['slug']}.png"] = ogimage.card(title=f"{r['name']}へのプレゼント", tag="イベント別", site=site)
         for p in c["pairs"]:
             cards[f"og/gift/{ct.pair_key(p)}.png"] = ogimage.card(
-                title=p["title"].split(" ")[0], tag=f"{c['rec'][p['recipient']]['name']} × {c['occ'][p['occasion']]['name']}",
-                bird=OCC_MASCOT.get(p["occasion"], birds[list(c["occ"]).index(p["occasion"]) % 4]), site=site)
+                title=p["title"].split(" ")[0], tag=f"{c['rec'][p['recipient']]['name']} × {c['occ'][p['occasion']]['name']}", site=site)
         for ps in (c["persona"] or {}).get("personas", []):
-            cards[f"og/diagnosis/{ps['slug']}.png"] = ogimage.card(title=ps["name"], tag="プレゼント診断", bird="b-sparkle", site=site)
+            cards[f"og/diagnosis/{ps['slug']}.png"] = ogimage.card(title=ps["name"], tag="プレゼント診断", site=site)
         for a in c["articles"]:
-            cards[f"og/read/{a['slug']}.png"] = ogimage.card(title=a["title"], tag="読みもの", bird="r-wink", site=site)
+            cards[f"og/read/{a['slug']}.png"] = ogimage.card(title=a["title"], tag="読みもの", site=site)
         for th in c["themes"]:
-            cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]),
-                                                               bird=group_style(th["group"])[1], site=site)
+            cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]), site=site)
         OG.update(k[len("og/"):-len(".png")] for k in cards)
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview, today),
                                      "occasion/index.html": hub_page(d, cfg, preview, "occasion"),
