@@ -78,7 +78,7 @@ class CatalogRules(unittest.TestCase):
         entries, _ = catalog.build_catalog(date(2026, 10, 10))
         used = {e["group"] for e in entries}
         self.assertEqual(used, set(catalog.GROUPS))
-        self.assertEqual(len(catalog.GROUPS), 9)
+        self.assertEqual(len(catalog.GROUPS), 10)
 
     def test_id_does_not_depend_on_the_title(self):
         a, _ = build([item()])
