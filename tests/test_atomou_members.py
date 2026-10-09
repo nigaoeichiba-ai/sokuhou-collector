@@ -119,7 +119,7 @@ class Pages(unittest.TestCase):
 
     def test_terms_cover_the_decisions_the_owner_made(self):
         terms = build.build_pages(ON, release=True, today=TODAY)["terms/index.html"]
-        for want in ("パスワードはありません", "同時に募集します", "先着テスター", "1か月後に", "答えなかったときも、無料期間は取り消しません", "自動で料金がかかることはありません", "期間の延長だけで、お金や商品はありません", "自分で自分を紹介", "退会する", "責任を負いません"):
+        for want in ("パスワードはありません", "同時に募集します", "先着テスター", "1か月後に", "回答しなかったときも、無料期間は取り消しません", "自動で料金がかかることはありません", "期間の延長だけで、お金や商品はありません", "自分で自分を紹介", "退会する", "責任を負いません"):
             self.assertIn(want, terms)
         self.assertNotIn("おめでとう", terms)
 

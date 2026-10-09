@@ -266,12 +266,20 @@ class Pages(BuildOnce):
         self.assertLess(home.index('data-block="mine"'), home.index('data-block="search"'))
         self.assertIn("<h2>よく使われる</h2>", self.rel["use/index.html"])
 
+    def test_text_that_other_code_looks_for_still_matches(self):
+        # a wording pass once changed strings that are search patterns: the privacy page's member sentence and the contact form's option (both live in shared parts)
+        privacy = self.rel["privacy/index.html"]
+        self.assertNotIn("会員登録などの機能を持ちません", privacy)         # the member site replaces it (the shared text says there is no sign-up)
+        app = (build.SITE["assets"] / "app.js").read_text(encoding="utf-8")
+        key = re.search(r"o\.value\.indexOf\('([^']+)'\) === 0", app).group(1)
+        self.assertIn(f">{key}", self.rel["contact/index.html"])             # the "send it as a day I would like to see" option the search page links to
+
     def test_event_pages_state_source_and_check_date(self):
         e = self.entries[0]
         page = self.rel[f"e/{e['id']}/index.html"]
         self.assertIn(e["source_url"].replace("&", "&amp;"), page)
         self.assertIn(e["checked_on"], page)
-        self.assertIn("公式ページでご確認ください", page)
+        self.assertIn("公式ページで、最新の情報をご確認ください", page)
 
     def test_privacy_policy_says_where_personal_days_live(self):
         p = self.rel["privacy/index.html"]
@@ -406,7 +414,7 @@ class AppInChrome(BuildOnce):
     def test_today_page_numbers_and_links(self):
         raw = html.unescape(self.dom("/today/"))
         dom = re.sub(r"<[^>]+>", "", raw) + raw
-        for want in ("もう281日め", "年末まで、あと84日", "2027年まで、あと85日", "2026年度は、あと174日"):
+        for want in ("今日で281日目", "年末まで、あと84日", "2027年まで、あと85日", "2026年度は、あと174日"):
             self.assertIn(want, dom)
         self.assertIn("date=2027-03-31", dom)   # 引っ越しの用意 -> the end of the fiscal year
         self.assertIn("date=2027-04-01", dom)   # 入学の用意 -> the start of the next one

@@ -116,7 +116,7 @@ def article_html(e: dict, fmt, host: str, today: date, guide: dict | None) -> st
 <h2>{esc(e['title'])}の概要</h2>
 <p>{esc(lead(e, fmt, today))}</p>
 <p>{esc(guide['about'])}</p>
-<h2>日程と場所</h2>
+<h2>日付の詳細</h2>
 <dl class="info">{rows}</dl>
 <h2>{esc(e['subject'])}の日程の見方</h2>
 <p>{esc(guide['when'])}</p>
