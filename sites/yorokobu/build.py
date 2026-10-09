@@ -88,6 +88,14 @@ def amazon_url(cfg: dict, query: str, low: int | None = None, high: int | None =
     return f"https://www.amazon.co.jp/s?k={quote(query, safe='')}{price}&tag={quote(cfg['amazon_tracking_id'], safe='')}"
 
 
+def amazon_more(cfg: dict, query: str, label: str) -> str:
+    """The "Amazonでも探す" button (an Amazon search for `query`) with the Associates notice; empty when no tracking ID is set.  Used on the pages that list no single product."""
+    if not cfg.get("amazon_tracking_id"):
+        return ""
+    return (f'<section style="margin-top:40px"><p class="more"><a class="btn btn-sub" href="{esc(amazon_url(cfg, query))}" rel="sponsored nofollow noopener" target="_blank">'
+            f'{esc(label)}</a></p>{amazon_disclosure(cfg)}</section>')
+
+
 def pr_lead(cfg: dict) -> str:
     return ('<p class="pr-lead"><span class="pr-note">PR</span>このページには、広告(楽天アフィリエイト'
             + ('・Amazonアソシエイト' if cfg.get("amazon_tracking_id") else "")
@@ -585,7 +593,8 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
 <section style="margin-top:50px"><h2><span class="scribble">相手を選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}
 {msg_link(c, o["slug"])}<section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>
-{guide_link(c, o["slug"])}"""
+{guide_link(c, o["slug"])}
+{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "のプレゼントを、Amazonでも探す")}"""
     return page(cfg, preview, path=f"/occasion/{o['slug']}/", title=f"{o['name']}のプレゼント 選び方と相手別のおすすめ | {cfg['site_name']}",
                 description=o["blurb"][:110], body=body, og_image=og_for(f"occasion/{o['slug']}"))
 
@@ -605,7 +614,8 @@ def recipient_page(d: dict, cfg: dict, preview: bool, r: dict) -> str:
 <section style="margin-top:40px" class="cols"><div><h2><span class="scribble">喜ばれやすいもの</span></h2><ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in r["likes"])}</ol></div>
 <div class="avoid"><h2><span class="scribble">避けたいもの</span></h2>{ul(r["avoid"], "warn")}</div></section>
 <section style="margin-top:50px"><h2><span class="scribble">イベントを選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
-{shown}"""
+{shown}
+{amazon_more(cfg, r["name"] + " プレゼント", r["name"] + "へのプレゼントを、Amazonでも探す")}"""
     return page(cfg, preview, path=f"/for/{r['slug']}/", title=f"{r['name']}へのプレゼント イベント別のおすすめ | {cfg['site_name']}",
                 description=r["blurb"][:110], body=body, og_image=og_for(f"for/{r['slug']}"))
 
@@ -990,6 +1000,7 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 <section style="margin-top:40px"><h2><span class="scribble">ランキング(上位)</span></h2>
 <p class="sec-lead">順位は、楽天市場のランキングの順位です(上位{sg["depth"]}位のなかから、商品名で贈り物向きと分かるものだけを、載せています。ふだんの買い物の商品などは、除いているため、順位に欠けがあります)。</p>
 {ranking_grid(cfg, [(it, f"現在{it['rank']}位", "順位") for it in sg["items"]])}</section>
+{amazon_more(cfg, sg["label"] + (" プレゼント" if sg["kind"] == "people" else " ギフト"), sg["label"] + ("への" if sg["kind"] == "people" else "の") + "贈り物を、Amazonでも探す")}
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの世代・性別</span></h2><ul class="plain cols2 chips">{others}</ul></section>' if others else ""}
 {freshness({**d, "fetched_label": day})}"""
     return page(cfg, preview, path=f"/ranking/{slug}/", title=f"{sg['label']}{part}、いま売れている商品 | {cfg['site_name']}",

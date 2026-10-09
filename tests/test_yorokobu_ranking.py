@@ -344,6 +344,20 @@ class BuildTest(unittest.TestCase):
             self.assertEqual([p for p in sitecheck.check_dir(out, CFG["site_url"], skip=("lists",)) if "ranking" in p], [])
         build.RANKING_ON = False
 
+    def test_ranking_pages_offer_an_amazon_search_when_the_site_has_an_associates_id(self):
+        s = ranking.update(None, {"g-sweets": day(codes(16, "s")), "f20": day(codes(16))}, date(2026, 10, 7))
+        cfg = {**CFG, "amazon_tracking_id": "amazonmacs-22"}
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "s"
+            build.render_site(self.c, self.items, cfg, out, release=True, today=date(2026, 10, 7), ranking=s)
+            for slug in ("g-sweets", "f20"):
+                html = (out / f"ranking/{slug}/index.html").read_text(encoding="utf-8")
+                self.assertIn("amazon.co.jp/s?k=", html, slug)
+                self.assertIn("tag=amazonmacs-22", html, slug)
+                self.assertIn("Amazonのアソシエイトとして", html, slug)
+            self.assertEqual([p for p in sitecheck.check_dir(out, cfg["site_url"], skip=("lists",)) if "ranking" in p], [])
+        build.RANKING_ON = False
+
     def test_without_ranking_data_there_are_no_ranking_pages_and_no_links(self):
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "s"
