@@ -126,14 +126,14 @@
     function show(sub) {
       var granted = Notification.permission === 'granted' && !!sub && S().prefs.push;
       on.hidden = granted; off.hidden = !granted;
-      status.textContent = granted ? 'この端末に届きます。' : (Notification.permission === 'denied' ? 'ブラウザの設定で通知が止まっています。サイトの設定で許可してください。' : '通知はオフです。');
+      status.textContent = granted ? 'この端末に通知が届きます。' : (Notification.permission === 'denied' ? 'ブラウザの設定で通知が止まっています。サイトの設定で許可してください。' : '通知はオフです。');
       ios.hidden = !(iosNeedsHomeScreen() && !granted);
     }
     current().then(show);
     offerInstall(box);
     on.addEventListener('click', function () {
       on.disabled = true;
-      subscribe().then(function (sub) { A.toast('この端末で通知を受け取ります。'); show(sub); })
+      subscribe().then(function (sub) { A.toast('この端末に通知が届きます。'); show(sub); })
         .catch(function () { A.toast(Notification.permission === 'denied' ? '通知が許可されませんでした。' : '通知を始められませんでした。しばらくして、もう一度お試しください。'); show(null); })
         .then(function () { on.disabled = false; });
     });
@@ -171,11 +171,11 @@
     var H = A.H, h = '';
     if (iosNeedsHomeScreen()) {   // Safari removes what a site stored after about a week of Safari use without a visit; an icon on the home screen is exempt
       h = '<p>iPhone の Safari では、しばらくこのサイトを使わないと、保存した日が消えることがあります。</p>' +
-        '<p>共有ボタンから「ホーム画面に追加」し、そのアイコンから開くと、消えにくくなります。通知も、そのアイコンから開くと使えます。</p>' +
+        '<p>共有ボタンからホーム画面に追加し、そのアイコンから開くと、保存した日が消えにくくなります。通知もそのアイコンから開くと使えます。</p>' +
         '<p>念のため、<a href="/my/#backup-h">バックアップ</a>で書き出しておくと安心です。</p>';
     } else if (supported() && !quiet && Notification.permission === 'default' && !S().prefs.push) {
-      h = '<p>決めた日に、この端末へ通知します。時間はマイページで変えられます。</p>' +
-        '<p><button type="button" class="btn" id="as-push">この端末に通知を届ける</button></p><p class="hint" id="as-msg" role="status"></p>';
+      h = '<p>決めた日に、この端末へ通知します。時間はマイページで変更できます。</p>' +
+        '<p><button type="button" class="btn" id="as-push">通知を受け取る</button></p><p class="hint" id="as-msg" role="status"></p>';
     }
     if (!h && !deferredInstall) {   // nothing to say yet: the browser may still announce that the page can be installed
       document.addEventListener('atomou:installable', function again() { document.removeEventListener('atomou:installable', again); afterSave(plan, quiet); });
@@ -184,13 +184,13 @@
     var el = document.createElement('section');
     el.className = 'panel after-save';
     el.id = 'after-save';
-    el.innerHTML = '<h2>' + (iosNeedsHomeScreen() ? 'この日を忘れないために' : h ? 'この日を、お知らせしますか' : 'この日を、すぐ開けるように') + '</h2>' + (h || '<p>ホーム画面に追加すると、アプリのように開けます。</p>');
+    el.innerHTML = '<h2>' + (iosNeedsHomeScreen() ? 'この日を忘れないために' : h ? 'この日を通知しますか' : 'この日をすぐ開けるように') + '</h2>' + (h || '<p>ホーム画面に追加すると、アプリのように開けます。</p>');
     plan.insertAdjacentElement('beforebegin', el);   // above the day's card: the first screen after saving, not below the memo
     offerInstall(el);
     var b = el.querySelector('#as-push');
     if (b) b.addEventListener('click', function () {
       b.disabled = true;
-      subscribe().then(function () { el.querySelector('#as-msg').textContent = 'この端末に届きます。'; b.hidden = true; A.toast('この端末で通知を受け取ります。'); })
+      subscribe().then(function () { el.querySelector('#as-msg').textContent = 'この端末に通知が届きます。'; b.hidden = true; A.toast('この端末に通知が届きます。'); })
         .catch(function () { el.querySelector('#as-msg').textContent = Notification.permission === 'denied' ? '通知が許可されませんでした。' : '通知を始められませんでした。マイページから、もう一度お試しください。'; b.disabled = false; });
     });
   }

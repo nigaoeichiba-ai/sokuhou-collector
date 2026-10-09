@@ -29,7 +29,7 @@ KIND_VERB = {
     "施行": ("に施行されます", "に施行されました"),
     "発売": ("に発売されます", "に発売されました"),
 }
-KIND_ROW = {"開催": "開催", "試験日": "試験日", "開始": "始まる日", "締切": "締切", "改定": "改定の日", "発表": "発表の日", "極大": "極大の日", "終了": "終わる日",
+KIND_ROW = {"開催": "開催", "試験日": "試験日", "開始": "開始日", "締切": "締切", "改定": "改定日", "発表": "発表日", "極大": "極大日", "終了": "終了日",
             "決勝": "決勝", "施行": "施行日", "発売": "発売日"}
 
 
@@ -78,7 +78,7 @@ def facts(e: dict, fmt, host: str) -> list[tuple[str, str]]:
     elif e.get("region"):
         rows.append(("地域", e["region"]))
     rows.append(("ジャンル", e["group"] + (f" / {e['subject']}" if e.get("subject") else "")))
-    rows.append(("確認した日", fmt(e["checked_on"], "day")))
+    rows.append(("確認日", fmt(e["checked_on"], "day")))
     return rows
 
 
@@ -91,7 +91,7 @@ def faq(e: dict, fmt, today: date, guide: dict | None) -> list[tuple[str, str]]:
     elif last < today:
         left = f"{when}でした。もう{(today - last).days}日が過ぎています。"
     elif start <= today <= last:
-        left = f"{when}です。いまちょうど、その期間の中です。"
+        left = f"{when}です。現在、期間中です。"
     else:
         left = f"{when}です。{today.year}年{today.month}月{today.day}日の時点で、あと{(start - today).days}日です。"
     out = [(f"{e['title']}はいつですか。", left)]
@@ -99,7 +99,7 @@ def faq(e: dict, fmt, today: date, guide: dict | None) -> list[tuple[str, str]]:
     if place and place not in ("全国", "地域"):
         out.append((f"{e['title']}はどこですか。", f"{place}です。"))
     out.append(("日程が変わることはありますか。",
-                "主催者や官公庁の都合、天候などで、日程が変わったり、中止になったりすることがあります。申し込みや参加の前に、出典の公式ページで最新の情報を確かめてください。"))
+                "主催者や官公庁の都合、天候などにより、日程が変わることや中止になることがあります。申し込みや参加の前に、公式ページで最新情報を確認してください。"))
     for q in (guide or {}).get("faq", [])[:2]:
         out.append((q["q"], q["a"]))
     return out

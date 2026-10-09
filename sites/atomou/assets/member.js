@@ -74,8 +74,8 @@
     var el = document.createElement('div');
     el.id = 'm-due'; el.className = 'notice';
     el.innerHTML = d.late
-      ? 'モニターのアンケート(1分)の期限が過ぎています。答えると、この表示は消えます。 <a class="btn small" href="/my/#member">答える</a>'
-      : 'モニターのアンケート(1分)に、' + md(d.deadline) + 'までにお答えください。 <a class="btn small" href="/my/#member">答える</a> <button type="button" class="btn small ghost" id="m-later">あとで</button>';
+      ? 'モニターのアンケート(1分)の期限が過ぎています。回答すると、この表示は消えます。 <a class="btn small" href="/my/#member">答える</a>'
+      : 'モニターのアンケート(1分)は、' + md(d.deadline) + 'までにお答えください。 <a class="btn small" href="/my/#member">答える</a> <button type="button" class="btn small ghost" id="m-later">あとで</button>';
     main.insertBefore(el, main.firstChild);
     var b = $('#m-later');
     if (b) b.addEventListener('click', function () { try { localStorage.setItem(LATER, C.iso(A.TODAY)); } catch (e) { /* ignore */ } el.remove(); });
@@ -98,17 +98,17 @@
     function view(html) { box.querySelector('.m-body').innerHTML = html; }
     function stepOut() {
       keep(null);
-      view('<p>会員になると、メールのお知らせと先着の特典を使えます。無料で、パスワードはありません。</p><div class="panel" id="m-pools" hidden></div>' +
+      view('<p>会員になると、メール通知と先着特典を利用できます。無料で、パスワードは不要です。</p><div class="panel" id="m-pools" hidden></div>' +
         '<div class="field"><label for="m-email">メールアドレス</label><input type="email" id="m-email" autocomplete="email" inputmode="email" value="' + H(email) + '"></div>' +
         '<p><button type="button" class="btn" id="m-send">確認コードを送る</button></p>' +
         '<p class="hint">コードを入力すると、<a href="/terms/">利用規約</a>と<a href="/privacy/#members">プライバシーポリシー</a>に同意したことになります。</p>');
       call({ a: 'seats' }).then(function (r) {
         var el = $('#m-pools'), pools = (r.ok && r.data && r.data.pools) || [], open = pools.filter(function (x) { return x.left > 0; });
         if (!el) return;
-        if (!open.length) { el.innerHTML = '<p>先着の枠は埋まりました。紹介リンクから登録すると、' + months(MC.ref) + 'すべての機能が無料です。</p>'; el.hidden = false; return; }
-        el.innerHTML = '<p><b>先着の特典</b>(どちらかを選びます)</p>' + open.map(function (x, i) {
+        if (!open.length) { el.innerHTML = '<p>先着の枠は埋まりました。紹介リンクから登録すると、' + months(MC.ref) + 'すべての機能を無料で使えます。</p>'; el.hidden = false; return; }
+        el.innerHTML = '<p><b>先着の特典</b>(どちらかを選んでください)</p>' + open.map(function (x, i) {
           return '<p><label class="lab pool"><input type="radio" name="m-want" value="' + H(x.id) + '"' + (i === open.length - 1 ? ' checked' : '') + '> <b>' + H(TIERS[x.id] || x.id) + '</b> 残り' + x.left + '名<br>' +
-            '<span class="muted">登録日から' + months(x.months) + '、すべての機能が無料。' + (x.tester ? '条件: 登録の1週間後と1か月後に、1分のアンケートに答える(それぞれ7日以内)。' : '条件はありません。') + '</span></label></p>';
+            '<span class="muted">登録日から' + months(x.months) + '、すべての機能を無料で使えます。' + (x.tester ? '条件: 登録の1週間後と1か月後に、1分のアンケートへ回答する(それぞれ7日以内)。' : '条件はありません。') + '</span></label></p>';
         }).join('');
         el.hidden = false;
       }).catch(function () { /* the places are a nicety; signing up works without them */ });
@@ -143,10 +143,10 @@
       if (!d) return '';
       function opts(name, list) { return list.map(function (o, i) { return '<label class="lab"><input type="radio" name="' + name + '" value="' + o[0] + '"' + (i ? '' : ' checked') + '> ' + o[1] + '</label>'; }).join(''); }
       return '<div class="panel" id="m-survey"><h3>モニターのアンケート(' + d.n + '/2・1分)</h3>' +
-        '<p class="hint">' + (d.late ? '期限(' + md(d.deadline) + ')が過ぎています。答えると、画面の上の表示が消えます。' : md(d.deadline) + 'までにお答えください。期限を過ぎると、答えるまで画面の上に表示されます。') + '</p>' +
-        '<p>どのくらい使っていますか。</p>' + opts('s-freq', [['daily', 'ほぼ毎日'], ['weekly', '週に数回'], ['rarely', 'ときどき']]) +
-        '<p>いちばん使う機能は。</p>' + opts('s-use', [['count', '日数を数える'], ['calendar', 'カレンダー'], ['todo', 'やること'], ['official', '公式の日付'], ['notice', '通知'], ['other', 'そのほか']]) +
-        '<div class="field"><label for="s-text">分かりにくい所や、ほしい機能(任意)</label><textarea id="s-text" maxlength="300" rows="3"></textarea></div>' +
+        '<p class="hint">' + (d.late ? '期限(' + md(d.deadline) + ')が過ぎています。答えると、画面の上の表示が消えます。' : md(d.deadline) + 'までにお答えください。期限を過ぎると、回答するまで画面上部に表示されます。') + '</p>' +
+        '<p>どのくらいの頻度で使っていますか。</p>' + opts('s-freq', [['daily', 'ほぼ毎日'], ['weekly', '週に数回'], ['rarely', 'ときどき']]) +
+        '<p>いちばん使う機能は何ですか。</p>' + opts('s-use', [['count', '日数を数える'], ['calendar', 'カレンダー'], ['todo', 'やること'], ['official', '公式の日付'], ['notice', '通知'], ['other', 'そのほか']]) +
+        '<div class="field"><label for="s-text">分かりにくいところや、ほしい機能(任意)</label><textarea id="s-text" maxlength="300" rows="3"></textarea></div>' +
         '<p><button type="button" class="btn" id="s-send" data-n="' + d.n + '">送る</button></p></div>';
     }
     function wireSurvey() {
@@ -164,10 +164,10 @@
       var link = location.origin + '/?ref=' + me.ref_code, badges = (me.badges || []).map(function (b) { return BADGES[b]; }).filter(Boolean);
       view('<p><b>' + H(me.email) + '</b><br>' + H(tierText(me)) + (badges.length ? '<br>称号: ' + H(badges.join('・')) : '') + '</p>' + surveyHtml() +
         '<div class="field"><label class="lab" for="m-notice"><input type="checkbox" id="m-notice"' + (me.notices.on ? ' checked' : '') + '> メールでもお知らせする(通知と同じ日・同じ時間)</label></div>' +
-        '<p class="hint">オンにすると、知らせる日と予定の名前(短く)をサーバーに預かります。オフにすると消します。</p>' +
-        '<h3>紹介</h3><p>この紹介リンクから登録した人は、' + months(MC.ref) + 'すべての機能を無料で使えます。その人が1週間以上あけて2回使うと、あなたにも' + months(MC.give) + '足されます(' + MC.cap + '人まで)。</p>' +
+        '<p class="hint">オンにすると、通知する日と予定名(短く)をサーバーで預かります。オフにすると削除します。</p>' +
+        '<h3>紹介</h3><p>この紹介リンクから登録した人は、' + months(MC.ref) + 'すべての機能を無料で使えます。その人が1週間以上あけて2回使うと、あなたにも' + months(MC.give) + '追加されます(' + MC.cap + '人まで)。</p>' +
         '<p><input type="text" readonly value="' + H(link) + '" id="m-link"> <button type="button" class="btn small ghost" id="m-copy">コピー</button></p>' +
-        '<h3>協力者のページ</h3><p>紹介の人数と、採用されたご意見を毎月<a href="/thanks/">協力者のページ</a>で紹介し、無料期間の延長や称号をお贈りします。載せるのはペンネームだけです。</p>' +
+        '<h3>協力者のページ</h3><p>紹介の人数と、採用されたご意見を毎月<a href="/thanks/">協力者のページ</a>で紹介します。無料期間の延長や称号をお贈りします。掲載するのはペンネームだけです。</p>' +
         '<div class="field"><label for="m-pen">ペンネーム(20字まで)</label><input type="text" id="m-pen" maxlength="20" value="' + H(me.pen || '') + '"></div>' +
         '<div class="field"><label class="lab" for="m-penok"><input type="checkbox" id="m-penok"' + (me.pen_ok ? ' checked' : '') + '> 協力者のページにペンネームを載せてよい</label></div>' +
         '<p><button type="button" class="btn small" id="m-pensave">保存</button></p>' +
@@ -176,19 +176,19 @@
       $('#m-copy').addEventListener('click', function () { try { navigator.clipboard.writeText(link).then(function () { A.toast('コピーしました。'); }); } catch (e) { $('#m-link').select(); } });
       $('#m-pensave').addEventListener('click', function () {
         call({ a: 'update', pen: $('#m-pen').value, pen_ok: $('#m-penok').checked }).then(function (r) {
-          if (r.ok) { me = r.data.member; A.toast(me.pen_ok ? 'ペンネームを保存しました。協力者のページに載せます。' : 'ペンネームを保存しました。'); stepIn(); }
+          if (r.ok) { me = r.data.member; A.toast(me.pen_ok ? 'ペンネームを保存しました。協力者のページに掲載します。' : 'ペンネームを保存しました。'); stepIn(); }
           else A.toast(r.data && r.data.error === 'pen' ? 'ペンネームに、メールアドレス・URL・電話番号は使えません。' : '保存できませんでした。');
         });
       });
       $('#m-notice').addEventListener('change', function () {
         var on = $('#m-notice').checked;
         noticeDates().then(function (dates) { return call({ a: 'update', notices: { on: on, dates: dates } }); }).then(function (r) {
-          if (r.ok) { me = r.data.member; A.toast(on ? 'メールでもお知らせします。' : 'メールのお知らせを止めました。'); } else { A.toast('保存できませんでした。'); $('#m-notice').checked = !on; }
+          if (r.ok) { me = r.data.member; A.toast(on ? 'メールでも通知します。' : 'メール通知を止めました。'); } else { A.toast('保存できませんでした。'); $('#m-notice').checked = !on; }
         });
       });
       $('#m-logout').addEventListener('click', function () { call({ a: 'logout' }).then(function () { me = null; A.toast('ログアウトしました。'); stepOut(); }); });
       $('#m-delete').addEventListener('click', function () {
-        if (!window.confirm('会員の登録を消します。この端末の記録は残ります。よろしいですか。')) return;
+        if (!window.confirm('会員登録を削除します。この端末の記録は残ります。よろしいですか。')) return;
         call({ a: 'delete' }).then(function () { me = null; A.toast('退会しました。'); stepOut(); });
       });
     }

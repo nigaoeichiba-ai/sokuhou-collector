@@ -162,7 +162,7 @@ class CoreInChrome(unittest.TestCase):
         self.assertIn("三回忌", t["sanki"])          # 2024-10-20 -> the second anniversary of the death is the 三回忌
         self.assertIn("一周忌", t["isshuki"])
         self.assertNotIn("回忌", t["disaster"])     # a disaster day is not given a Buddhist memorial name
-        self.assertIn("もうすぐ同じ日", t["disaster"])
+        self.assertIn("まもなく同じ日", t["disaster"])
         self.assertEqual(t["memorialFar"], "")
         self.assertIn("プレゼント", t["passed"])
         self.assertIn("4日後", t["soon"])
