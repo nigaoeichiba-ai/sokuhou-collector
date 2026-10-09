@@ -122,12 +122,12 @@
     clearTimeout(savedT);
     savedT = setTimeout(function () { document.dispatchEvent(new CustomEvent('atomou:saved')); }, 600);   // the notice lists (push, mail) follow every change, not only the next page load
     try { localStorage.setItem(KEY, JSON.stringify(S)); return true; } catch (e) {
-      if (!warned) { warned = true; toast('この端末には保存できません(プライベートモードなど)。ページを閉じると消えます。'); }
+      if (!warned) { warned = true; toast('この端末に保存できません。プライベートモードなどでは、ページを閉じると消えます。'); }
       return false;
     }
   }
   S = load();
-  if (brokenSaved) setTimeout(function () { toast('保存したデータを読み込めませんでした。元のデータは別に残してあります。'); }, 300);
+  if (brokenSaved) setTimeout(function () { toast('保存したデータを読み込めませんでした。元のデータはそのまま残っています。'); }, 300);
 
   /* ---------- usage statistics: counts of fixed items only (no text, no dates, no ids); see /privacy/#stats ---------- */
   var STAT_RE = /^(view|skin|big|home_order|home_hidden|act)(:[a-z0-9_,-]{1,60}){1,2}$/, statQ = {}, statN = 0;
@@ -232,17 +232,17 @@
       var n = next[0] - d[0];
       if (NENKI[n] && !/あの日|震災|災害|事故|事件/.test(e.title)) {
         if (left === 0) return '今日は' + NENKI[n] + 'にあたります。';
-        if (left <= 150) return 'もうすぐ' + NENKI[n] + 'にあたります。法要の日取りは、早めに家族と相談を。';
+        if (left <= 150) return 'もうすぐ' + NENKI[n] + 'にあたります。法要の日取りは、早めに家族と相談しておくと安心です。';
       }
-      if (left > 0 && left <= 30) return 'もうすぐ同じ日です。花やお供えは、前もって用意できます。';
+      if (left > 0 && left <= 30) return 'まもなく同じ日です。花やお供えは、早めに用意できます。';
       return '';
     }
     if (e.yearly) {
       next = nextYearly(d, today); left = C.totalDays(today, next); passed = C.totalDays(lastYearly(d, today), today);
       var bd = e.kind === 'birthday';
       if (left === 0) return bd ? '今日は誕生日です。メッセージを送りませんか。' : '今日は記念日です。';
-      if (left <= 14) return left + '日後です。プレゼントや店の予約は、もう決まりましたか？';
-      if (passed >= 1 && passed <= 30) return bd ? '誕生日を少し過ぎました。メッセージは、いまからでも間に合います。' : '記念日を少し過ぎました。まだなら、ささやかなプレゼントや食事を。';
+      if (left <= 14) return left + '日後です。プレゼントやお店の予約は、もう決まりましたか？';
+      if (passed >= 1 && passed <= 30) return bd ? '誕生日を少し過ぎました。メッセージは、いまからでも間に合います。' : '記念日を少し過ぎました。まだなら、食事やプレゼントを考えてもよさそうです。';
       return '';
     }
     if (!e.quiet && e.kind === 'since') {
@@ -270,7 +270,7 @@
     h += '<p class="c-count"><span class="word"></span><span class="num"></span><span class="rel"></span></p><p class="c-sub"></p>';
     h += '<h3 class="c-title">' + (it.href ? '<a href="' + H(it.href) + '">' + H(it.title) + '</a>' : H(it.title)) + '</h3>';
     h += '<p class="c-date">' + H(fmtDate(it.date, it.p)) + (it.time ? ' ' + H(it.time) : '') + (it.kword ? ' ' + H(it.kword) : '') +
-      (it.place && it.place !== '全国' ? '<span class="pl"><b>場所</b>' + H(it.place) + '</span>' : '') + '</p>';
+      (it.place && it.place !== '全国' ? '<span class="pl"><b>' + (['改定', '終了', '施行', '改正', '締切'].indexOf(it.kind) >= 0 ? '対象地域' : '場所') + '</b>' + H(it.place) + '</span>' : '') + '</p>';
     if (it.own) h += '<div class="c-next"></div>';
     h += '<div class="c-act">';
     if (!it.own) h += '<button type="button" class="btn small" data-act="save" aria-pressed="false">☆ 予定に入れる</button><a class="btn small ghost" href="' + H(it.href) + '">詳細</a>';
@@ -462,7 +462,7 @@
       grid.classList.toggle('reorder', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
       btn.textContent = on ? '並べ替えを終える' : '並べ替え';
-      if (on) { toast('↑↓で並べ替えます。ドラッグ(スマホは長押し)でも動かせます。'); stat('act:reorder'); }
+      if (on) { toast('↑↓で並べ替えできます。ドラッグ(スマホは長押し)でも動かせます。'); stat('act:reorder'); }
     });
   }
 
@@ -483,12 +483,12 @@
     }
     stat('act:ics');
     ICS.download('atomou-' + key.slice(2) + '.ics', ICS.build([ev], title));
-    toast('ファイルを作りました。開くと、カレンダーに入ります。');
+    toast('作成したファイルを開くと、カレンダーに追加できます。');
   }
   function toggleSave(card) {
     var id = (card.getAttribute('data-key') || '').slice(2), i = S.saved.indexOf(id), g = card.getAttribute('data-g');
     if (i >= 0) { S.saved.splice(i, 1); toast('予定から外しました。'); }
-    else { S.saved.push(id); stat('act:save'); if (g && CONF.groups[g - 1]) bump(CONF.groups[g - 1]); toast('予定に入れました。カレンダーに出ます。'); }
+    else { S.saved.push(id); stat('act:save'); if (g && CONF.groups[g - 1]) bump(CONF.groups[g - 1]); toast('予定に入れました。カレンダーに表示されます。'); }
     persist();
     $$('.card[data-key="c:' + id + '"]').forEach(fillCard);
     if (page === 'my') renderMy();
@@ -496,11 +496,11 @@
   function saveAll(btn) {   // "この日を含むN件を、まとめて予定に入れる": every day of the same kind (the exam's entry, test day, results...) in one tap
     var ids = (btn.getAttribute('data-saveall') || '').split(',').filter(function (x) { return /^[0-9a-f]{10}$/.test(x); }), added = 0;
     ids.forEach(function (id) { if (S.saved.indexOf(id) < 0) { S.saved.push(id); added++; } });
-    if (!added) { toast('すでに、すべて予定に入っています。'); return; }
+    if (!added) { toast('すべて予定に入っています。'); return; }
     stat('act:save');
     persist();
     ids.forEach(function (id) { $$('.card[data-key="c:' + id + '"]').forEach(fillCard); });
-    toast(added + '件を予定に入れました。カレンダーに出ます。');
+    toast(added + '件を予定に入れました。カレンダーに表示されます。');
   }
   function removeEntry(card) {
     var id = (card.getAttribute('data-key') || '').slice(2), e = findEntry(id);
@@ -575,7 +575,7 @@
     var box = $('#season'), id = seasonSkin();
     if (box && !P.today && deviceIsDark() && !S.prefs.skinAuto && !S.prefs.nightAsked && !CONF.skins[S.prefs.skin].dark) {   // the first time on a device set to dark: offer, never switch by itself
       box.hidden = false;
-      box.innerHTML = '<span>この端末は暗い設定です。暗い配色にしますか。</span><button type="button" class="btn small" data-night="1">暗い配色にする</button><button type="button" class="btn small ghost" data-night="0">このまま</button>';
+      box.innerHTML = '<span>端末が暗い配色に設定されています。サイトも暗い配色にしますか。</span><button type="button" class="btn small" data-night="1">暗い配色にする</button><button type="button" class="btn small ghost" data-night="0">このまま</button>';
       return;
     }
     if (!box || !id || S.prefs.skin === id || (S.prefs.seasonOff === id)) return;
@@ -590,11 +590,11 @@
       S.prefs.nightAsked = true; S.prefs.skinAuto = nt.getAttribute('data-night') === '1'; persist(); applyPrefs();
       var nb = $('#season'); if (nb) nb.hidden = true;
       stat('act:night_' + (S.prefs.skinAuto ? 'on' : 'off'));
-      toast(S.prefs.skinAuto ? '暗い設定のときは、暗い配色にします。「きせかえ」で変えられます。' : '今のままにします。「きせかえ」でいつでも変えられます。');
+      toast(S.prefs.skinAuto ? '端末が暗い配色のときは、サイトも暗い配色にします。きせかえで変更できます。' : '今のままにします。きせかえでいつでも変更できます。');
       return;
     }
     var on = ev.target.closest ? ev.target.closest('[data-season]') : null, off = ev.target.closest ? ev.target.closest('[data-season-off]') : null;
-    if (on) { S.prefs.skin = on.getAttribute('data-season'); persist(); applyPrefs(); stat('act:skin:' + S.prefs.skin); var bx = $('#season'); if (bx) bx.hidden = true; toast('きせかえを変えました。「きせかえ」からいつでも戻せます。'); }
+    if (on) { S.prefs.skin = on.getAttribute('data-season'); persist(); applyPrefs(); stat('act:skin:' + S.prefs.skin); var bx = $('#season'); if (bx) bx.hidden = true; toast('きせかえを変更しました。いつでも元に戻せます。'); }
     else if (off) { S.prefs.seasonOff = off.getAttribute('data-season-off'); persist(); var b2 = $('#season'); if (b2) b2.hidden = true; }
   });
   function pageSkins() {
@@ -611,7 +611,7 @@
       toast(S.prefs.skinAuto && deviceIsDark() && !(CONF.skins[picked] && CONF.skins[picked].dark) ? '昼の配色を「' + b.getAttribute('data-name') + '」にしました。暗い設定の間は、暗い配色のままです。' : '「' + b.getAttribute('data-name') + '」にしました。');
     });
     var auto = $('#skin-auto');
-    if (auto) { auto.checked = !!S.prefs.skinAuto; auto.addEventListener('change', function () { S.prefs.skinAuto = auto.checked; S.prefs.nightAsked = true; persist(); applyPrefs(); stat('act:night_' + (auto.checked ? 'on' : 'off')); toast(auto.checked ? '暗い設定のときは、暗い配色にします。' : '端末の設定には合わせません。'); }); }
+    if (auto) { auto.checked = !!S.prefs.skinAuto; auto.addEventListener('change', function () { S.prefs.skinAuto = auto.checked; S.prefs.nightAsked = true; persist(); applyPrefs(); stat('act:night_' + (auto.checked ? 'on' : 'off')); toast(auto.checked ? '端末が暗い配色のときは、サイトも暗い配色にします。' : '端末の配色には合わせません。'); }); }
     mark();
   }
 
@@ -691,7 +691,7 @@
       stat(act === 'vis' ? (bp.hidden.indexOf(k) >= 0 ? 'act:block_hide:' + k : 'act:block_show:' + k) : 'act:block_move');
     });
     if (reset) reset.addEventListener('click', function () { S.prefs.blocks = { order: [], hidden: [] }; persist(); show(); toast('元の並びに戻しました。'); });
-    if (btn) btn.addEventListener('click', function () { editing = !editing; show(); if (editing) toast('↑↓で並べ替えます。「非表示」で隠せます。'); });
+    if (btn) btn.addEventListener('click', function () { editing = !editing; show(); if (editing) toast('↑↓で並べ替えできます。非表示にもできます。'); });
     show();
   }
 
@@ -835,14 +835,14 @@
     renderMy();
     var grid = $('#my-grid');
     wireReorderToggle($('#reorder'), grid);
-    if (P.added) { toast('この端末に残しました。'); try { history.replaceState(null, '', '/my/'); } catch (e) { /* ignore */ } }
+    if (P.added) { toast('この端末に保存しました。'); try { history.replaceState(null, '', '/my/'); } catch (e) { /* ignore */ } }
     var big = $('#p-big'), alarm = $('#p-alarm');
     big.checked = !!S.prefs.big; alarm.value = S.prefs.alarm;
     var st = $('#p-stats'), sb = $('#sync-box'), sn = $('#sync-now');
     if (st) { st.checked = !!S.prefs.stats; st.addEventListener('change', function () { S.prefs.stats = st.checked; persist(); toast(st.checked ? 'ご協力ありがとうございます。' : '統計の送信を止めました。'); }); }
     if (sb && GCID) { sb.hidden = false; sn.addEventListener('click', syncNow); }
     big.addEventListener('change', function () { S.prefs.big = big.checked; persist(); applyPrefs(); });
-    alarm.addEventListener('change', function () { S.prefs.alarm = alarm.value; persist(); toast('お知らせの時間を変えました。'); });
+    alarm.addEventListener('change', function () { S.prefs.alarm = alarm.value; persist(); toast('通知の時間を変更しました。'); });
     $('#ics-all').addEventListener('click', function () {
       loadCatalog().then(function (cat) {
         var evs = [], by = {};
@@ -855,9 +855,9 @@
           var c = by[id], d = c && C.parse(c.date);
           if (d && c.precision === 'day') evs.push({ uid: 'e-' + id, title: c.title, date: d, alarm: S.prefs.alarm });
         });
-        if (!evs.length) { toast('ファイルにできる日がまだありません。'); return; }
+        if (!evs.length) { toast('ファイルにできる日がありません。'); return; }
         ICS.download('atomou-all.ics', ICS.build(evs, 'あと何日、もう何日'));
-        toast(evs.length + '件をファイルにしました。');
+        toast(evs.length + '件の予定をファイルにしました。');
       });
     });
     $('#backup').addEventListener('click', function () { download('atomou-backup.json', JSON.stringify(S, null, 1)); });
@@ -870,7 +870,7 @@
           var o = JSON.parse(rd.result);
           if (!o || !Array.isArray(o.entries)) throw new Error('bad');
           localStorage.setItem(KEY, JSON.stringify(o)); S = load(); persist(); applyPrefs(); renderMy(); toast('読み込みました。');
-        } catch (e) { toast('このファイルは読み込めません。'); }
+        } catch (e) { toast('このファイルは読み込めませんでした。'); }
       };
       rd.readAsText(f);
     });
@@ -901,24 +901,24 @@
       '<section id="s1"><h2>1. どんな日ですか</h2><div class="tiles">' + Object.keys(KINDS).map(function (k) {
         return '<button type="button" class="tile" data-kind="' + k + '"><span>' + H(KINDS[k].t) + '</span><br><small class="muted">' + H(KINDS[k].d) + '</small></button>';
       }).join('') + '</div></section>' +
-      '<section id="s2" hidden><h2>2. いつの日ですか</h2><div class="seg" role="group" aria-label="日付の細かさ">' +
+      '<section id="s2" hidden><h2>2. いつですか</h2><div class="seg" role="group" aria-label="日付の細かさ">' +
       '<button type="button" class="chip" data-p="day" aria-pressed="true">年月日まで分かる</button><button type="button" class="chip" data-p="month" aria-pressed="false">年と月だけ</button>' +
       '<button type="button" class="chip" data-p="year" aria-pressed="false">年だけ</button></div>' +
       '<div class="field"><label for="f-day" id="lab-date">日付を選ぶ</label><input type="date" id="f-day" min="0100-01-01" max="2200-12-31">' +
       '<input type="month" id="f-month" hidden placeholder="2026-10"><input type="number" id="f-year" hidden inputmode="numeric" min="1" max="2200" placeholder="例 1990"></div>' +
-      '<div class="field"><label for="f-say">文字や声で入れる(例: 12月25日)</label><input type="text" id="f-say" autocomplete="off" maxlength="30" placeholder="12月25日 / 2027年3月3日 / 明日">' +
+      '<div class="field"><label for="f-say">文字や声で入力する(例: 12月25日)</label><input type="text" id="f-say" autocomplete="off" maxlength="30" placeholder="12月25日 / 2027年3月3日 / 明日">' +
       '<p class="hint" id="say-note" aria-live="polite"></p>' + micHint('') + '</div>' +
       '<button type="button" class="chip" id="f-today">今日にする</button><p class="hint" id="h-approx" hidden>年や月までの日付は、「約」つきで数えます。</p><p class="err" id="e-date" role="alert"></p>' +
       '<div id="live" class="live" hidden aria-live="polite"></div></section>' +
-      '<section id="s3" hidden><h2>3. 名前</h2><p class="hint">候補を押すか、短く入力します。</p><div class="chips" id="f-words"></div>' +
+      '<section id="s3" hidden><h2>3. 名前</h2><p class="hint">候補を選ぶか、短く入力します。</p><div class="chips" id="f-words"></div>' +
       '<div class="field"><label for="f-title">名前</label><input type="text" id="f-title" maxlength="40" autocomplete="off">' + micHint('') + '</div></section>' +
       '<section id="s4" hidden><h2>4. 時刻・くり返し</h2>' +
       '<div class="field" id="f-timebox" hidden><label for="f-time">時刻(任意)</label><input type="time" id="f-time"></div>' +
       '<label class="chip" id="l-yearly"><input type="checkbox" id="f-yearly"> 毎年くり返す</label> <label class="chip" id="l-100"><input type="checkbox" id="f-100"> 100日ごとの節目も入れる</label>' +
-      '<p class="hint">残したあと、メモと「やること」を書けます。</p></section>' +
-      '<p id="quiet-note" class="notice quiet" hidden>静かに残します。広告やおすすめは出さず、「おめでとう」とも書きません。記録はこの端末の中だけにあります。</p>' +
-      '<p><button type="button" class="btn" id="f-save" hidden>この日を残す</button></p>' +
-      '<p class="hint">名前も日付も、この端末の中だけに残ります。</p>';
+      '<p class="hint">記録したあと、メモとやることを書けます。</p></section>' +
+      '<p id="quiet-note" class="notice quiet" hidden>静かに記録できます。広告は表示しません。</p>' +
+      '<p><button type="button" class="btn" id="f-save" hidden>この日を記録する</button></p>' +
+      '<p class="hint">名前も日付も、この端末に保存されます。</p>';
     var $f = function (id) { return document.getElementById(id); };
     function show(id, on) { $f(id).hidden = !on; }
     function readDate() {
@@ -960,7 +960,7 @@
       var v = $f('f-say').value, note = $f('say-note'), d;
       if (!v.trim()) { note.textContent = ''; return; }
       d = C.parseSpoken(v, st.p, TODAY);
-      if (!d) { note.textContent = st.p === 'day' ? '読み取れませんでした。年月日の形で入れてください(例: 12月25日)。' : st.p === 'month' ? '読み取れませんでした(例: 2026年10月)。' : '読み取れませんでした(例: 1990年)。'; return; }
+      if (!d) { note.textContent = st.p === 'day' ? '読み取れませんでした。年月日で入力してください(例: 12月25日)。' : st.p === 'month' ? '読み取れませんでした。年と月で入力してください(例: 2026年10月)。' : '読み取れませんでした。年で入力してください(例: 1990年)。'; return; }
       if (st.p === 'day') $f('f-day').value = C.iso(d);
       else if (st.p === 'month') $f('f-month').value = String(d[0]).padStart(4, '0') + '-' + String(d[1]).padStart(2, '0');
       else $f('f-year').value = d[0];
@@ -1052,8 +1052,8 @@
     var f = document.querySelector('form.cf');
     if (!f || !P.kind) return;
     var sel = f.querySelector('select[name="kind"]'), ta = f.querySelector('textarea');
-    if (sel && P.kind === 'request') { Array.prototype.forEach.call(sel.options, function (o) { if (o.value.indexOf('載せてほしい') === 0) sel.value = o.value; }); }
-    if (ta && P.q && !ta.value) ta.value = '載せてほしい日: ' + String(P.q).slice(0, 60) + '\n(いつ頃・どこで分かるか、わかれば書いてください)\n';
+    if (sel && P.kind === 'request') { Array.prototype.forEach.call(sel.options, function (o) { if (o.value.indexOf('追加してほしい') === 0) sel.value = o.value; }); }
+    if (ta && P.q && !ta.value) ta.value = '追加してほしい日: ' + String(P.q).slice(0, 60) + '\n(いつ頃か、どこで確認できるか、わかれば書いてください)\n';
   }
 
   /* ---------- start ---------- */

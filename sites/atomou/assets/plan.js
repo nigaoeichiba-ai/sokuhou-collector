@@ -113,7 +113,7 @@
       var marks = evs.slice(0, 3).map(chip).join('') + (tks.length && evs.length < 3 ? '<span class="cal-chip task"><span class="t">やること' + tks.length + '</span></span>' : '');
       var more = evs.length + (tks.length ? 1 : 0) - 3;
       var cls = 'cal-cell' + (C.cmp(d, TODAY) === 0 ? ' today' : '') + (C.cmp(d, sel) === 0 ? ' sel' : '') + (wdIdx(d) === 0 ? ' sun' : wdIdx(d) === 6 ? ' sat' : '');
-      return '<button type="button" class="' + cls + '" data-d="' + C.iso(d) + '" aria-pressed="' + (C.cmp(d, sel) === 0) + '" aria-label="' + md(d) + ' 予定' + evs.length + '件 やること' + tks.length + '件">' +
+      return '<button type="button" class="' + cls + '" data-d="' + C.iso(d) + '" aria-pressed="' + (C.cmp(d, sel) === 0) + '" aria-label="' + md(d) + ' 予定' + evs.length + '件のやること' + tks.length + '件">' +
         '<span class="cal-n">' + d[2] + '</span><span class="cal-marks">' + marks + (more > 0 ? '<span class="cal-more">+' + more + '</span>' : '') + '</span></button>';
     }
     function dayLines(d) {
@@ -146,7 +146,7 @@
         var d = C.addDays(TODAY, i), lines = dayLines(d);
         if (lines) { any = true; h += '<section class="plist-day"><h3>' + md(d) + ' <small class="muted">' + rel(d) + '</small></h3><ul class="plist">' + lines + '</ul></section>'; }
       }
-      return any ? '<p class="hint">今日から60日先までです。</p>' + h : '<p class="empty">60日先までの予定はありません。<br><a class="btn small" href="/add/?kind=event">予定を追加</a></p>';
+      return any ? '<p class="hint">今日から60日後まで表示しています。</p>' + h : '<p class="empty">60日後までの予定はありません。<br><a class="btn small" href="/add/?kind=event">予定を追加</a></p>';
     }
     function render() {
       host.innerHTML = '<div class="chips cal-tools" role="group" aria-label="表示の切り替え"><button type="button" class="chip" data-v="month" aria-pressed="' + (view === 'month') + '">月</button>' +
@@ -184,11 +184,11 @@
   /* ---------- one plan: its card, memo, "do this N days before", and the optional file for other calendar apps ---------- */
   function pagePlan() {
     var key = P.key || '', box = $('#plan'), item = null;
-    function missing() { box.innerHTML = '<p class="empty">この予定は見つかりません。<br><a class="btn small" href="/calendar/">カレンダーへ</a></p>'; }
+    function missing() { box.innerHTML = '<p class="empty">この予定は見つかりません。カレンダーから選び直してください。<br><a class="btn small" href="/calendar/">カレンダーへ</a></p>'; }
     if (!/^[cm]:[A-Za-z0-9_-]{1,40}$/.test(key)) return missing();
     function taskList() {
       var b = baseOf(item), n = notesOf(key);
-      if (!n.tasks.length) return '<li class="muted">まだありません。</li>';
+      if (!n.tasks.length) return '<li class="muted">やることはまだありません。</li>';
       return n.tasks.slice().sort(function (x, y) { return y.before - x.before; }).map(function (t) {
         var due = b ? C.addDays(b, -t.before) : null;
         return '<li class="task">' + taskCheckbox(item, t) + ' <span class="muted">(' + beforeLabel(t.before) + (due ? ' ' + md(due) : '') + ')</span> <button type="button" class="mini" data-del-task="' + H(t.id) + '" aria-label="このやることを消す">×</button></li>';
@@ -197,18 +197,18 @@
     function render() {
       var own = item.own, e = own ? A.findEntry(item.id) : null, n = notesOf(key), h = '';
       h += '<div class="cards plan-card">' + A.cardHtml(item).replace('class="card', 'class="card big') + '</div>';
-      h += '<section class="plan-sec" id="tasks"><h2>やること(何日前までに)</h2><ul class="plist" id="task-list">' + taskList() + '</ul>' +
+      h += '<section class="plan-sec" id="tasks"><h2>やること(期限)</h2><ul class="plist" id="task-list">' + taskList() + '</ul>' +
         '<form class="task-add" id="task-add"><label class="vh" for="t-before">いつまでに</label><select id="t-before">' + BEFORE.map(function (b) { return '<option value="' + b[0] + '"' + (b[0] === 7 ? ' selected' : '') + '>' + b[1] + '</option>'; }).join('') + '</select>' +
         '<label class="vh" for="t-text">やること</label><input type="text" id="t-text" maxlength="80" placeholder="例: 書類をそろえる" autocomplete="off"><button type="submit" class="btn small">追加</button></form>' +
-        '<p class="hint">期限の日は、カレンダーとホームに出ます。</p>' + mic() + '</section>';
+        '<p class="hint">期限の日は、カレンダーとホームに表示されます。</p>' + mic() + '</section>';
       h += '<section class="plan-sec"><h2>メモ</h2><div class="field"><label class="vh" for="p-memo">メモ</label><textarea id="p-memo" rows="4" maxlength="600" placeholder="持ち物、場所、連絡先など">' + H(n.memo) + '</textarea></div>' +
-        '<p class="hint">この端末の中だけに残ります。</p>' + mic() + '</section>';
+        '<p class="hint">この端末に保存されます。</p>' + mic() + '</section>';
       if (e) {
         h += '<section class="plan-sec"><h2>直す</h2><div class="field"><label for="e-title">名前</label><input type="text" id="e-title" maxlength="40" value="' + H(e.title) + '">' + mic() + '</div>';
         if (e.precision === 'day') h += '<div class="field"><label for="e-date">日付</label><input type="date" id="e-date" value="' + H(e.date) + '"></div>';
         else if (e.precision === 'month') h += '<div class="field"><label for="e-date">年と月(例 2026-10)</label><input type="month" id="e-date" value="' + H(String(e.date).slice(0, 7)) + '" placeholder="2026-10"></div>';
         else h += '<div class="field"><label for="e-date">年(例 1990)</label><input type="number" id="e-date" inputmode="numeric" min="1" max="2200" value="' + H(String(e.date).slice(0, 4)) + '"></div>';
-        h += '<div class="field"><label for="e-say">文字や声で入れる(例: 12月25日)</label><input type="text" id="e-say" autocomplete="off" maxlength="30" placeholder="' + (e.precision === 'day' ? '12月25日 / 2027年3月3日' : e.precision === 'month' ? '2026年10月' : '1990年') + '"><p class="hint" id="e-say-note" aria-live="polite"></p>' + mic() + '</div>';
+        h += '<div class="field"><label for="e-say">文字や声で入力する(例: 12月25日)</label><input type="text" id="e-say" autocomplete="off" maxlength="30" placeholder="' + (e.precision === 'day' ? '12月25日 / 2027年3月3日' : e.precision === 'month' ? '2026年10月' : '1990年') + '"><p class="hint" id="e-say-note" aria-live="polite"></p>' + mic() + '</div>';
         if (e.kind === 'event' && e.precision === 'day') h += '<div class="field"><label for="e-time">時刻</label><input type="time" id="e-time" value="' + H(e.time || '') + '"></div>';
         if (e.precision === 'day') h += '<div class="field"><label class="lab" for="e-yearly"><input type="checkbox" id="e-yearly"' + (e.yearly ? ' checked' : '') + '> 毎年くり返す</label></div>';
         if (e.precision === 'day' && !e.quiet && e.kind !== 'event') h += '<div class="field"><label class="lab" for="e-100"><input type="checkbox" id="e-100"' + (e.every100 ? ' checked' : '') + '> 100日ごとの節目も入れる</label></div>';
@@ -230,7 +230,7 @@
       d = C.parseSpoken(input.value, p, TODAY);
       if (!d) { note.textContent = '読み取れませんでした。' + (p === 'day' ? '年月日の形で入れてください(例: 12月25日)。' : p === 'month' ? '(例: 2026年10月)' : '(例: 1990年)'); return; }
       dt.value = p === 'day' ? C.iso(d) : p === 'month' ? String(d[0]).padStart(4, '0') + '-' + String(d[1]).padStart(2, '0') : String(d[0]);
-      note.textContent = '→ ' + A.fmtDate(C.iso(d), p) + '(「保存」で直ります)';
+      note.textContent = '→ ' + A.fmtDate(C.iso(d), p) + '(保存すると反映されます)';
     }
     redo = function () { var m = $('#p-memo'); if (m) notesOf(key).memo = m.value; render(); };
     box.addEventListener('input', function (ev) {
@@ -269,7 +269,7 @@
         var h100 = $('#e-100'); if (h100) e.every100 = h100.checked;
         var al = $('#e-alarm'); if (al) e.alarm = al.value;
         if (tm) e.time = /^([01]\d|2[0-3]):[0-5]\d$/.test(tm.value) ? tm.value : '';
-        A.persist(); A.stat('act:plan_edit'); item = A.ownItem(e); render(); A.toast('直しました。');
+        A.persist(); A.stat('act:plan_edit'); item = A.ownItem(e); render(); A.toast('保存しました。');
       }
     });
     A.loadCatalog().then(function (cat) {
@@ -277,7 +277,7 @@
       else { var c = (cat || []).filter(function (x) { return x.id === key.slice(2); })[0]; item = c ? A.catItem(c) : null; }
       if (!item) return missing();
       render();
-      if (P.new) { A.toast('残しました。' + (nextMilestone(item.own && A.findEntry(item.id)) || 'メモと「やること」を続けて書けます。')); if (window.AtomouPush && item.own) window.AtomouPush.afterSave(box, !!item.quiet); try { history.replaceState(null, '', '/plan/?key=' + key); } catch (x) { /* ignore */ } }
+      if (P.new) { A.toast('記録しました。' + (nextMilestone(item.own && A.findEntry(item.id)) || '続けてメモとやることを書けます。')); if (window.AtomouPush && item.own) window.AtomouPush.afterSave(box, !!item.quiet); try { history.replaceState(null, '', '/plan/?key=' + key); } catch (x) { /* ignore */ } }
     });
   }
 

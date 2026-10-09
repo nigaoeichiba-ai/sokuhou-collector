@@ -19,8 +19,8 @@ from sokuhou.sitekit import asset_pages, crumbs, esc, layout, legal_pages, stand
 
 NAME = B.NAME
 TAGLINE = "公式の日付まで、あと何日"
-LEAD = ("試験、締切、制度の変更、大会、天文、お祭りなど、公式に決まっている日付を、出典と確認した日をつけて集めています。"
-        "それぞれの日まで、あと何日かが一目で分かります。")
+LEAD = ("試験、締切、制度の変更、大会、天文、お祭りなど、公式に決まっている日付を、出典と確認日を添えて集めています。"
+        "それぞれの日まであと何日かがひと目で分かります。")
 ALLOWED_ASSETS = {"assets/style.css", "assets/core.js", "assets/review.js", "assets/wordmark.svg", "assets/og.png", "assets/favicon.ico", "assets/favicon-32.png",
                   "assets/apple-touch-icon.png", "assets/icon-192.png", "assets/icon-512.png", "favicon.ico", "apple-touch-icon.png"}
 ROBOTS = ("# a review copy: not for search engines.  Google's AdSense crawler may read it.\n"
@@ -37,7 +37,7 @@ class ReviewCtx(B.Ctx):
         genres = [(g, f"/c/{B.GROUP_SLUG[g]}/") for g in catalog.GROUPS]
         self.site = dict(B.SITE)
         self.site["nav"] = [(g, u, u) for g, u in genres]
-        self.site["source_html"] = ("公式の日付は、出典と確認した日つきで載せています。 "
+        self.site["source_html"] = ("公式の日付には、出典と確認日を載せています。 "
                                     + " | ".join(f'<a href="{u}">{esc(g)}</a>' for g, u in genres))
 
     def finish(self, html: str, kind: str, noindex: bool = False) -> str:
@@ -61,7 +61,7 @@ def home_page(c: ReviewCtx, live: list[dict]) -> str:
 <h2>このサイトについて</h2>
 <p>「あと何日」を知りたい日付は、人によって違います。受験や資格試験の日、年末の手続きの締切、好きな大会や番組、観たい天体、行きたいお祭り。
 その日付を、官公庁や主催者などの公式な発表から集めて、日ごとに「どんな日か」「いつ、どこで」「何を確かめておくとよいか」を、一つずつ解説しています。</p>
-<p>日付は変更や中止になることがあります。どの日付にも、出典のページと、確認した日を載せています。申し込みや手続きの前には、出典の公式ページで最新の情報をご確認ください。
+<p>日付は変更や中止になることがあります。どの日付にも、出典のページと、確認日を載せています。申し込みや手続きの前には、出典の公式ページで最新の情報をご確認ください。
 誤りを見つけた場合は、<a href="/contact/">お問い合わせ</a>からお知らせください。</p>"""
     return c.page("/", f"{NAME}|{TAGLINE}", f"{LEAD}", body, "home")
 
@@ -102,18 +102,18 @@ def event_page(c: ReviewCtx, e: dict, live: list[dict], guides: dict[str, dict])
 <h1>{esc(e['title'])}</h1>
 {B.card_html(e, big=True, link=False)}
 <p class="small muted">上のカードは、今日の日付で数えた数字です。</p>
-<p class="small muted src-line">出典: <a href="#src">{esc(B.host(e['source_url']))}</a>(確認した日 {esc(e['checked_on'])})</p>
+<p class="small muted src-line">出典: <a href="#src">{esc(B.host(e['source_url']))}</a>(確認日 {esc(e['checked_on'])})</p>
 {art}
-<h2 id="src">出典と確認した日</h2>
+<h2 id="src">出典と確認日</h2>
 <dl class="info"><dt>出典</dt><dd><a href="{esc(e['source_url'])}" rel="noopener nofollow" target="_blank">{esc(B.host(e['source_url']))}</a></dd>
-<dt>確認した日</dt><dd>{esc(e['checked_on'])}</dd>{quote}</dl>
+<dt>確認日</dt><dd>{esc(e['checked_on'])}</dd>{quote}</dl>
 <p class="small muted">日付は変わることがあります。申し込みや手続きの前に、出典の公式ページでご確認ください。</p>
 {block(f'同じ「{esc(e["subject"])}」の日', same)}
 {block('同じジャンルの日', kin)}
 {block('同じ頃の日', near, '<p class="hint">この日の前後10日にある日です。</p>')}"""
     place = (e.get("place") or "").strip()
     desc = (f"{e['title']}は{fmt}{end}" + (f"、{place}" if place and place not in ("全国", "地域") else "") + "。"
-            + (f"{guide['about'].split('。')[0]}。" if guide else "") + "出典と確認した日つき。")
+            + (f"{guide['about'].split('。')[0]}。" if guide else "") + "出典と確認日つき。")
     suffix = "からもう何日？" if e["status"] == "ended" else "はいつ？あと何日？"
     html = c.page(f"/e/{e['id']}/", f"{e['title']}{suffix} {fmt} | {NAME}", desc, body, "event")
     return B.strip_ads(html) if e.get("quiet") or not e.get("ad_ok", True) else html
@@ -122,10 +122,10 @@ def event_page(c: ReviewCtx, e: dict, live: list[dict], guides: dict[str, dict])
 def legal(c: ReviewCtx) -> dict:
     return legal_pages(
         c.site, c.cfg, False,
-        purpose="試験・締切・大会・天文・お祭りなど、公式に決まっている日付を、出典と確認した日をつけてまとめ、あと何日かをわかりやすく示すこと。",
-        sources_html="各日付のページに、出典(官公庁・主催者の公式ページ)と確認した日を載せています。",
+        purpose="試験・締切・大会・天文・お祭りなど、公式に決まっている日付を、出典と確認日をつけてまとめ、あと何日かをわかりやすく示すこと。",
+        sources_html="各日付のページに、出典(官公庁・主催者の公式ページ)と確認日を載せています。",
         update_text="公式の発表をもとに、随時確認・追加します。",
-        disclaimer_html="<p>日付は公式の発表をもとに確認していますが、変更・中止されることがあります。申し込みや手続きの前に、出典の公式ページでご確認ください。当サイトの情報にもとづく行動の結果について、責任を負いかねます。</p>"
+        disclaimer_html="<p>日付は公式の発表をもとに確認していますが、変更・中止されることがあります。申し込みや手続きの前に、出典の公式ページでご確認ください。当サイトの情報にもとづく行動の結果について、当サイトは責任を負いません。</p>"
                         "<p>「あと○日」「もう○日」は、お使いの端末の日付をもとにブラウザの中で数えています。端末の日付がずれていれば、数字もずれます。</p>",
         contact_notice="日付の誤りのご指摘は、ページの名前と、正しい日付の出典(アドレス)を添えていただけると早く確認できます。",
         finish=lambda html: c.finish(html, "legal"),

@@ -83,7 +83,7 @@
     preset = preset || {};
     dirty = { date: false, time: false, kind: false };
     back = document.createElement('div'); back.className = 'sheet-back';
-    sheet = document.createElement('div'); sheet.className = 'sheet'; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', '予定を残す');
+    sheet = document.createElement('div'); sheet.className = 'sheet'; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', '予定を記録する');
     sheet.innerHTML = '<div class="sheet-grip" aria-hidden="true"></div>' +
       '<label class="vh" for="qa-text">予定の内容</label>' +
       '<input id="qa-text" type="text" autocomplete="off" enterkeyhint="done" maxlength="60" placeholder="例: 明日 19時 デート" value="' + H(preset.title || '') + '">' +
@@ -144,7 +144,7 @@
   function done(e) {
     var old = $('#toast'); if (old) old.remove();
     var t = document.createElement('div'); t.id = 'toast'; t.className = 'toast act'; t.setAttribute('role', 'status');
-    t.innerHTML = '<span>「' + H(e.title) + '」を ' + H(fmt(C.parse(e.date))) + (e.time ? ' ' + H(e.time) : '') + ' に残しました</span>' +
+    t.innerHTML = '<span>「' + H(e.title) + '」を ' + H(fmt(C.parse(e.date))) + (e.time ? ' ' + H(e.time) : '') + ' に記録しました</span>' +
       '<a class="btn small" href="/plan/?key=m:' + H(e.id) + '">開く</a><button type="button" class="btn small ghost" data-undo="1">元に戻す</button>';
     document.body.appendChild(t);
     var timer = setTimeout(function () { t.remove(); }, 7000);
@@ -181,7 +181,7 @@
       var v = q.value.trim();
       if (!cat) return;
       if (!v) {
-        box.innerHTML = '<p class="sg-h">よく探される言葉</p><div class="chips">' + ['年賀状', 'ふるさと納税', '共通テスト', '流星群', '最低賃金', '確定申告', '将棋', 'ドラフト'].map(function (w) {
+        box.innerHTML = '<p class="sg-h">よく検索される言葉</p><div class="chips">' + ['年賀状', 'ふるさと納税', '共通テスト', '流星群', '最低賃金', '確定申告', '将棋', 'ドラフト'].map(function (w) {
           return '<a class="chip" href="/search/?q=' + encodeURIComponent(w) + '">' + H(w) + '</a>';
         }).join('') + '</div>';
         box.hidden = false; return;

@@ -142,7 +142,7 @@ class Pages(BuildOnce):
         self.assertNotIn("カレンダーに入れる", card)
         page = self.rel[f"e/{e['id']}/index.html"]
         self.assertIn("出典", page)  # the source and the check date live on the detail page
-        self.assertIn("確認した日", page)
+        self.assertIn("確認日", page)
         self.assertIn("メモ・やることを書く", page)
 
     def test_home_has_the_todays_list_block_first(self):
@@ -223,7 +223,7 @@ class Pages(BuildOnce):
         home = self.rel["index.html"]
         self.assertIn('<section class="intro" id="intro"', home)
         self.assertIn(" hidden>", home.split('id="intro"', 1)[1].split(">", 1)[0] + " hidden>")   # shown by the script to a first-time visitor only
-        for need in ("はじめての方へ", 'data-intro="start"', 'data-intro="close"', "あとから見直すには"):
+        for need in ("はじめての方へ", 'data-intro="start"', 'data-intro="close"', "いつでも見直せます"):
             self.assertIn(need, home)
         guide = (build.SITE["assets"] / "guide.js").read_text(encoding="utf-8")
         self.assertNotIn("setTimeout(start, 1200)", guide)       # the old behaviour: the spotlight tour started 1.2 s after the page opened

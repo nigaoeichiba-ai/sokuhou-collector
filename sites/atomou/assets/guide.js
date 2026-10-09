@@ -9,25 +9,25 @@
   var $ = A.$, H = A.H, P = A.P, page = A.page;
   var TOURS = {
     home: [
-      ['[data-block="search"] input[type="search"]', '日付や行事を探せます。たとえば「年賀状」。'],
-      ['[data-block="cats"] .chiprow a', 'ジャンルからも探せます。横にずらすと続きが出ます。'],
+      ['[data-block="search"] input[type="search"]', '日付や行事を検索できます。例: 年賀状'],
+      ['[data-block="cats"] .chiprow a', 'ジャンルからも探せます。横にスライドすると続きが表示されます。'],
       ['#grid .card [data-act="save"]', '「予定に入れる」で、カレンダーに入ります。'],
-      ['#grid .card', 'カードはドラッグで動かせます。スマホは長押ししてから動かします。'],
-      ['.tabbar a[href="/calendar/"], header.site nav a[href="/calendar/"]', '入れた予定は、ここに並びます。'],
-      ['.tabbar a[href="/add/"], header.site nav a[href="/add/"]', '自分の予定や記念日は、ここから1行で残せます。例「明日 19時 デート」。']
+      ['#grid .card', 'カードはドラッグで動かせます。スマホは長押ししてから動かせます。'],
+      ['.tabbar a[href="/calendar/"], header.site nav a[href="/calendar/"]', '予定に入れた日は、ここに並びます。'],
+      ['.tabbar a[href="/add/"], header.site nav a[href="/add/"]', '自分の予定や記念日は、ここから1行で記録できます。例: 明日 19時 デート']
     ],
     calendar: [
       ['.cal-tools', '「月」と「一覧」を切り替えます。'],
       ['.cal-grid', '日を押すと、その日の予定とやることが下に出ます。'],
-      ['#day-panel .btn', 'ここから予定を追加。予定を押すと、メモと「やること」を書けます。']
+      ['#day-panel .btn', 'ここから予定を追加できます。予定を押すと、メモとやることを書けます。']
     ],
     plan: [
       ['#p-memo', 'メモは自動で保存されます。'],
       ['#t-text', '「何日前までに何をするか」を書けます。期限の日はカレンダーとホームに出ます。'],
-      ['.plan-card .c-act', '消すときはここから。']
+      ['.plan-card .c-act', '削除もここからできます。']
     ],
     add: [
-      ['#s1 .tile', 'まず、どんな日かを選びます。デートや会議は「予定」。']
+      ['#s1 .tile', 'まず、どんな日かを選びます。デートや会議は予定です。']
     ],
     search: [
       ['#q', '言葉を入れると日付が出ます。ジャンルでも絞れます。'],
@@ -121,7 +121,7 @@
   function offer() {
     var main = document.querySelector('main') || document.body, bar = document.createElement('div');
     bar.className = 'guide-offer'; bar.setAttribute('role', 'region'); bar.setAttribute('aria-label', 'この画面の使い方');
-    bar.innerHTML = '<span>この画面の使い方を、30秒で見られます。</span><button type="button" class="btn small" data-o="go">見る</button><button type="button" class="btn small ghost" data-o="no">いらない</button>';
+    bar.innerHTML = '<span>この画面の使い方を30秒で確認できます。</span><button type="button" class="btn small" data-o="go">見る</button><button type="button" class="btn small ghost" data-o="no">表示しない</button>';
     bar.addEventListener('click', function (ev) {
       var b = ev.target.closest ? ev.target.closest('[data-o]') : null;
       if (!b) return;

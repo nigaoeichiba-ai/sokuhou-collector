@@ -141,7 +141,7 @@ def _season(frm: str, to: str, label: str) -> dict:
 
 
 SKINS = [
-    _skin("basic", "ベーシック", "標準。白地にすっきり", "中立・すっきり・見やすい", "どなたでも。迷ったらこれ", "plain", False,
+    _skin("basic", "ベーシック", "標準。白地ですっきり", "シンプル・すっきり・見やすい", "どなたでも。迷ったらこれ", "plain", False,
           "left pill cozy plain none pill card grid",
           "bg #F7F7F5; bg2 #EFEFEB; surface #FFFFFF; surface2 #F0F0EC; text #1A1A1A; muted #5A5A55; line #E2E2DC;"
           "accent #1A56B8; on-accent #FFFFFF; ato #1A56B8; on-ato #FFFFFF; mou #A8420A; on-mou #FFFFFF;"
@@ -149,7 +149,7 @@ SKINS = [
           "quiet-bg #EDEDEB; quiet-text #4A4F4D; quiet-line #CFCFCB; focus #1A56B8;"
           "head-bg #FFFFFF; head-text #1A1A1A; foot-bg #2B2F36; foot-text #F2F2F2;"
           "g1 #1D4ED8; g2 #C2410C; g3 #BE123C; g4 #0B7A3F; g5 #6D28D9; g6 #0E7490"),
-    _skin("dark", "ダーク", "紺黒の夜向け。まぶしくない", "静か・落ち着き", "夜に使う方。まぶしさが苦手な方", "plain", True,
+    _skin("dark", "ダーク", "夜向けの紺黒。まぶしくない", "静か・落ち着いた", "夜に使う方。まぶしさが苦手な方", "plain", True,
           "left soft cozy plain none pill card grid",
           "bg #0F1720; bg2 #162230; surface #1B2938; surface2 #243649; text #EAF1F8; muted #AEBDCC; line #34495F;"
           "accent #5AA9FF; on-accent #04182E; ato #7DBBFF; on-ato #04182E; mou #FFB26B; on-mou #2B1300;"
@@ -165,7 +165,7 @@ SKINS = [
           "head-bg #000000; head-text #FFE600; foot-bg #000000; foot-text #FFFFFF;"
           "g1 #FFE600; g2 #FF9F43; g3 #FF7AA8; g4 #5CFF9A; g5 #C9A8FF; g6 #5CE1FF;"
           f"radius 6px; shadow none; size 18px; num-weight 900; bw 3px; font {FONT_UD}"),
-    _skin("large", "大きな文字", "大きく濃い文字。ゆったり", "ゆったり・はっきり", "文字が小さいと読みにくい方、シニア世代", "plain", False,
+    _skin("large", "大きな文字", "大きく濃い文字。ゆったり読める", "ゆったり・はっきり", "小さな文字が読みにくい方、シニア世代", "plain", False,
           "left pill airy plain none pill card list",
           "bg #FFFDF7; bg2 #F3EFE3; surface #FFFFFF; surface2 #F1EEE4; text #111111; muted #3F3F3F; line #A8A59A;"
           "accent #0B3D91; on-accent #FFFFFF; ato #0B3D91; on-ato #FFFFFF; mou #8A2F00; on-mou #FFFFFF;"
@@ -173,7 +173,7 @@ SKINS = [
           "head-bg #FFFFFF; head-text #111111; foot-bg #1F2430; foot-text #FFFFFF;"
           "g1 #0B3D91; g2 #9A3A00; g3 #9E1033; g4 #0B6B36; g5 #5B21B6; g6 #0B5E73;"
           f"radius 14px; size 20px; num-weight 800; bw 2px; font {FONT_UD}; shadow 0 2px 6px rgba(0,0,0,.14)"),
-    _skin("notebook", "手帳", "紙の手帳。付箋とテープ", "ぬくもり・手書き風", "毎日の記録を楽しみたい方。幅広い年代", "sticky", False,
+    _skin("notebook", "手帳", "紙の手帳風。付箋とテープ", "ぬくもり・手書き風", "毎日の記録を楽しみたい方。幅広い年代", "sticky", False,
           "left soft cozy plain paper tab ribbon masonry",
           "bg #FBF4E2; bg2 #F6EBCB; surface #FFFCF3; surface2 #F6EBCB; text #23302F; muted #4B5754; line #E3D5AE;"
           "accent #B23A07; on-accent #FFFFFF; ato #B23A07; on-ato #FFFFFF; mou #13585A; on-mou #FFFFFF;"
@@ -182,7 +182,7 @@ SKINS = [
           "g1 #8A5A00; g2 #B23A07; g3 #A3294A; g4 #2E6B3A; g5 #6B3F8A; g6 #13585A;"
           f"deco #D9A441; deco2 #13585A; radius 6px; shadow 3px 3px 0 rgba(120,90,30,.18); font {FONT_ROUND};"
           "bg-image repeating-linear-gradient(180deg,transparent 0,transparent 35px,#EBDDB6 35px,#EBDDB6 36px)"),
-    _skin("pop", "ポップ", "鮮やかな青と黄。元気", "元気・はっきり", "10代〜40代。にぎやかなのが好きな方", "panel", False,
+    _skin("pop", "ポップ", "鮮やかな青と黄色。元気", "元気・はっきり", "にぎやかな雰囲気が好きな方。10代〜40代", "panel", False,
           "band sticker cozy badge dots boxed card grid",
           "bg #EEF3FB; bg2 #E1EAF8; surface #FFFFFF; surface2 #E6EDF9; text #0F172A; muted #475569; line #CFD9EA;"
           "accent #1D4ED8; on-accent #FFFFFF; ato #1D4ED8; on-ato #FFFFFF; mou #C2410C; on-mou #FFFFFF;"
@@ -190,7 +190,7 @@ SKINS = [
           "head-bg #1D4ED8; head-text #FFFFFF; foot-bg #0B1B4A; foot-text #E8EEFF;"
           "g1 #1D4ED8; g2 #C2410C; g3 #BE123C; g4 #0B7A3F; g5 #6D28D9; g6 #0E7490;"
           "band-bg #FFD84D; band-text #0F172A; deco #1D4ED8; deco2 #FF4D8D; radius 16px; num-weight 900; bw 3px; shadow 0 2px 0 rgba(15,23,42,.06),0 8px 22px rgba(15,23,42,.10)"),
-    _skin("ring", "すっきり", "白と淡い青。日数をリングで", "軽い・さわやか", "アプリのような見た目が好きな方", "ring", False,
+    _skin("ring", "すっきり", "白と淡い青。日数をリングで表示", "軽やか・さわやか", "アプリのような見た目が好きな方", "ring", False,
           "left pill airy plain none underline circle grid",
           "bg #F6F8FE; bg2 #E9EEFB; surface #FFFFFF; surface2 #EDF0FA; text #1D2540; muted #485272; line #E4E8F4;"
           "accent #3652D0; on-accent #FFFFFF; ato #1B5BA8; on-ato #FFFFFF; mou #A5432A; on-mou #FFFFFF;"
@@ -208,7 +208,7 @@ SKINS = [
           "g1 #B0285F; g2 #B4531A; g3 #C0183F; g4 #1F7A4F; g5 #6A3FA0; g6 #17708A;"
           f"deco #F28DAA; deco2 #B79BE0; radius 20px; font {FONT_ROUND}; shadow 0 3px 10px rgba(176,40,95,.12);"
           "bg-image radial-gradient(circle,#FFD0DC 1.5px,transparent 2px)"),
-    _skin("mint", "ミント", "すっきりした緑。落ち着く", "さわやか・清潔", "すっきりした色が好きな方。幅広い年代", "plain", False,
+    _skin("mint", "ミント", "すっきりした緑。落ち着く", "さわやか・清潔感", "すっきりした色が好きな方。幅広い年代", "plain", False,
           "band pill cozy plain leaves pill chip grid",
           "bg #EAF8F2; bg2 #D6F0E5; surface #FFFFFF; surface2 #E3F5EC; text #12302A; muted #2F5D50; line #BFE3D3;"
           "accent #0B6B55; on-accent #FFFFFF; ato #0B6B55; on-ato #FFFFFF; mou #A64B14; on-mou #FFFFFF;"
@@ -216,7 +216,7 @@ SKINS = [
           "head-bg #0B6B55; head-text #FFFFFF; foot-bg #0F3B31; foot-text #E2F6EE;"
           "g1 #1D5FB0; g2 #B4530F; g3 #B8284E; g4 #0B6B55; g5 #6B46B0; g6 #0E7490;"
           "deco #6CCBAA; deco2 #0B6B55; radius 14px; shadow 0 2px 8px rgba(11,107,85,.12)"),
-    _skin("chic-navy", "シック紺と金", "濃紺に金。上品", "上品・落ち着き", "30代以上。大人っぽい雰囲気が好きな方", "plain", True,
+    _skin("chic-navy", "シック紺と金", "濃紺に金色。上品", "上品・落ち着いた", "30代以上。大人っぽい雰囲気が好きな方", "plain", True,
           "center outline cozy plain stars underline plain grid",
           "bg #0E1A2E; bg2 #14233D; surface #1E3254; surface2 #27406A; text #F7F3E8; muted #D3D8E4; line #3A5078;"
           "accent #D4A93A; on-accent #14203A; ato #E3BC5A; on-ato #14203A; mou #9FC1F0; on-mou #0E1A2E;"
@@ -224,7 +224,7 @@ SKINS = [
           "head-bg #09121F; head-text #E3BC5A; foot-bg #060D18; foot-text #D9D4C3;"
           "g1 #E3BC5A; g2 #FF9F6B; g3 #FF8FA8; g4 #6FD59A; g5 #B9A0FF; g6 #5CC8E0;"
           f"deco #D4A93A; deco2 #9FC1F0; radius 8px; num-weight 700; font {FONT_SANS}; font-head {FONT_MINCHO}; shadow 0 4px 14px rgba(0,0,0,.45)"),
-    _skin("monochrome", "モノクロ", "白黒と灰色だけ。形で分かる", "硬質・すっきり", "色が気になる方。文字中心で見たい方", "plain", False,
+    _skin("monochrome", "モノクロ", "白黒と灰色だけ。形で分かる", "硬質・すっきり", "色を控えめにしたい方。文字中心で見たい方", "plain", False,
           "left square compact mono grid boxed plain list",
           "bg #F2F2F2; bg2 #E6E6E6; surface #FFFFFF; surface2 #EEEEEE; text #111111; muted #4D4D4D; line #C8C8C8;"
           "accent #222222; on-accent #FFFFFF; ato #1A1A1A; on-ato #FFFFFF; mou #595959; on-mou #FFFFFF;"
@@ -232,7 +232,7 @@ SKINS = [
           "head-bg #111111; head-text #FFFFFF; foot-bg #1A1A1A; foot-text #E6E6E6;"
           "g1 #1A1A1A; g2 #4D4D4D; g3 #6B6B6B; g4 #333333; g5 #808080; g6 #5C5C5C;"
           f"deco #888888; deco2 #444444; radius 2px; num-weight 800; bw 1px; font {FONT_UD}; font-num {FONT_MONO}; shadow 0 1px 3px rgba(0,0,0,.14)"),
-    _skin("wafuu", "和風", "藍と朱と生成り。和の色", "和・端正", "和の雰囲気が好きな方。40代以上にも", "plain", False,
+    _skin("wafuu", "和風", "藍と朱と生成り。和の色", "和・端正", "和の雰囲気が好きな方。40代以上にもおすすめ", "plain", False,
           "stripe soft cozy plain waves underline ribbon grid",
           "bg #F4EDDC; bg2 #EADFC6; surface #FBF7EA; surface2 #EFE6CF; text #1F2A38; muted #4A5361; line #D3C4A0;"
           "accent #1F3F6B; on-accent #FFFFFF; ato #1F3F6B; on-ato #FFFFFF; mou #B3261E; on-mou #FFFFFF;"
@@ -240,7 +240,7 @@ SKINS = [
           "head-bg #1F3F6B; head-text #F4EDDC; foot-bg #232B3A; foot-text #EFE8D6;"
           "g1 #1F3F6B; g2 #B3261E; g3 #8E2F5C; g4 #2F6B3F; g5 #5B3E8A; g6 #7A5200;"
           f"deco #1F3F6B; deco2 #B3261E; radius 4px; num-weight 700; font {FONT_SANS}; font-head {FONT_MINCHO}; shadow 0 1px 3px rgba(31,42,56,.18)"),
-    _skin("nordic", "北欧", "淡い灰色と木の色。静か", "素朴・静か", "シンプルで落ち着いた部屋が好きな方", "plain", False,
+    _skin("nordic", "北欧", "淡い灰色と木の色。静かな印象", "素朴・静か", "シンプルで落ち着いた雰囲気が好きな方", "plain", False,
           "left underline cozy plain none underline circle masonry",
           "bg #F1F2F3; bg2 #E6E8EA; surface #FFFFFF; surface2 #EEF0F1; text #2A2F33; muted #565E64; line #D5D9DC;"
           "accent #8C5A2B; on-accent #FFFFFF; ato #3F6577; on-ato #FFFFFF; mou #8A5A2E; on-mou #FFFFFF;"
@@ -256,7 +256,7 @@ SKINS = [
           "head-bg #0D5CA8; head-text #FFFFFF; foot-bg #0A2E55; foot-text #E6F1FB;"
           "g1 #0D5CA8; g2 #B5481A; g3 #B02A55; g4 #1B7A52; g5 #5E4BA6; g6 #0F7C8C;"
           "band-bg #DCEEFA; band-text #0F2A4A; deco #5BB4E8; deco2 #0D5CA8; radius 14px; shadow 0 3px 12px rgba(13,92,168,.14)"),
-    _skin("tropical", "南国", "黄と深い緑。日ざしの明るさ", "元気・明るい", "気分を上げたい方。幅広い年代", "panel", False,
+    _skin("tropical", "南国", "黄色と深い緑。日ざしの明るさ", "元気・明るい", "明るい気分で使いたい方。幅広い年代", "panel", False,
           "band pill cozy badge leaves pill circle masonry",
           "bg #FFF9E8; bg2 #FFEFC2; surface #FFFFFF; surface2 #FFF1CC; text #1E2B24; muted #3A4A40; line #F0DC9C;"
           "accent #00796B; on-accent #FFFFFF; ato #00796B; on-ato #FFFFFF; mou #C6321A; on-mou #FFFFFF;"
@@ -264,7 +264,7 @@ SKINS = [
           "head-bg #FFC933; head-text #1E2B24; foot-bg #0B4F46; foot-text #FFF4D6;"
           "g1 #00796B; g2 #C25100; g3 #C2185B; g4 #2E7D32; g5 #7B3FBF; g6 #0277BD;"
           f"band-bg #FFEFB0; band-text #1E2B24; deco #2E9E5B; deco2 #F28C1B; radius 18px; num-weight 900; font {FONT_ROUND}; shadow 0 3px 10px rgba(180,120,0,.18)"),
-    _skin("kids", "こども", "丸くて大きい。にぎやかな色", "にぎやか・まるい", "こども、親子で使う方。小学生〜", "panel", False,
+    _skin("kids", "こども", "丸くて大きい。にぎやかな配色", "にぎやか・まるい", "子どもや親子で使う方。小学生〜", "panel", False,
           "center sticker cozy badge confetti pill circle grid",
           "bg #FFF8E1; bg2 #FFEDB8; surface #FFFFFF; surface2 #FFF3C8; text #2A2340; muted #4A4468; line #F0DC9C;"
           "accent #C2255C; on-accent #FFFFFF; ato #1971C2; on-ato #FFFFFF; mou #C2410C; on-mou #FFFFFF;"
@@ -272,7 +272,7 @@ SKINS = [
           "head-bg #FFD43B; head-text #2A2340; foot-bg #3B2F6B; foot-text #FFF6D6;"
           "g1 #1971C2; g2 #C2410C; g3 #C2255C; g4 #2B8A3E; g5 #7048E8; g6 #0C8599;"
           f"deco #FF8FB1; deco2 #4DABF7; radius 22px; size 17px; num-weight 900; bw 2px; font {FONT_ROUND}; shadow 0 3px 0 rgba(42,35,64,.18)"),
-    _skin("retro", "レトロ", "昭和の喫茶店。茶とえんじ", "なつかしい・渋い", "50代以上。なつかしい雰囲気が好きな方", "sticky", False,
+    _skin("retro", "レトロ", "昭和の喫茶店風。茶とえんじ", "なつかしい・渋い", "50代以上。なつかしい雰囲気が好きな方", "sticky", False,
           "band square cozy mono stripes tab ribbon list",
           "bg #F3E6CC; bg2 #E4CFA6; surface #FCF4E2; surface2 #EEDDB8; text #3A2214; muted #4A3324; line #CDB48A;"
           "accent #8C2F1B; on-accent #FFFFFF; ato #1F5F5B; on-ato #FFFFFF; mou #8C2F1B; on-mou #FFFFFF;"
@@ -280,7 +280,7 @@ SKINS = [
           "head-bg #5B2A1A; head-text #F7E8C8; foot-bg #3A1F14; foot-text #EBD9B5;"
           "g1 #1F5F5B; g2 #A0431C; g3 #9C2A4A; g4 #4A6B1F; g5 #6B3F7A; g6 #1F5A86;"
           f"band-bg #F7E8C8; band-text #3A2214; deco #B8860B; deco2 #8C2F1B; radius 4px; num-weight 800; bw 2px; font {FONT_SANS}; font-head {FONT_MINCHO}; font-num {FONT_MONO}; shadow 3px 3px 0 rgba(58,34,20,.18)"),
-    _skin("neon", "ネオン", "夜にともるピンクと水色", "未来的・派手", "10代〜30代。派手な色が好きな方", "ring", True,
+    _skin("neon", "ネオン", "夜に映えるピンクと水色", "未来的・華やか", "10代〜30代。派手な色が好きな方", "ring", True,
           "left outline cozy outline grid boxed chip grid",
           "bg #0B0A14; bg2 #14122A; surface #1E1A3F; surface2 #2A2552; text #F5F3FF; muted #C4BFE6; line #4A4390;"
           "accent #FF4FD8; on-accent #1A0016; ato #3DF2FF; on-ato #00161A; mou #FFE14D; on-mou #1A1500;"
@@ -289,7 +289,7 @@ SKINS = [
           "g1 #3DF2FF; g2 #FFB347; g3 #FF6FB5; g4 #6BFF9E; g5 #B794FF; g6 #7FB5FF;"
           "deco #FF4FD8; deco2 #3DF2FF; radius 14px; num-weight 800; bw 1px; shadow 0 0 10px rgba(61,242,255,.16);"
           "bg-image radial-gradient(circle at 20% 0%,rgba(255,79,216,.12),transparent 40%)"),
-    _skin("forest", "深緑", "深い森の緑。しっとり", "しっとり・自然", "落ち着いた暗めの色が好きな方", "plain", True,
+    _skin("forest", "深緑", "深い森の緑。しっとり落ち着く", "しっとり・自然", "落ち着いた暗めの色が好きな方", "plain", True,
           "band soft cozy shadow leaves tab card masonry",
           "bg #0F1F18; bg2 #15291F; surface #223B2D; surface2 #2C4A39; text #F2F7EE; muted #CFDCCF; line #3C5A47;"
           "accent #A8D672; on-accent #10200A; ato #A8D672; on-ato #10200A; mou #F0B96B; on-mou #2A1A00;"
@@ -297,7 +297,7 @@ SKINS = [
           "head-bg #0A1712; head-text #D9EBC8; foot-bg #07110C; foot-text #C9D8C6;"
           "g1 #8CC8FF; g2 #F0A56B; g3 #F28DA6; g4 #A8D672; g5 #C3A8F0; g6 #6FD3C4;"
           "deco #A8D672; deco2 #6FD3C4; radius 12px; shadow 0 3px 12px rgba(0,0,0,.45)"),
-    _skin("sunset", "夕焼け", "オレンジから紫へ。夕方の色", "あたたかい・ロマンチック", "やわらかい暖色が好きな方", "panel", False,
+    _skin("sunset", "夕焼け", "オレンジから紫へ。夕焼けの色", "あたたかい・ロマンチック", "やわらかい暖色が好きな方", "panel", False,
           "band pill cozy shadow sunburst pill chip grid",
           "bg #FFF6EE; bg2 #FFE0CC; surface #FFFFFF; surface2 #FFE9DA; text #3A1F1A; muted #503029; line #F0CDB8;"
           "accent #B3361A; on-accent #FFFFFF; ato #B3361A; on-ato #FFFFFF; mou #5B3A8E; on-mou #FFFFFF;"
@@ -306,7 +306,7 @@ SKINS = [
           "g1 #5B3A8E; g2 #B3361A; g3 #B02A5E; g4 #2F7A4F; g5 #7A3FB0; g6 #1E6E8C;"
           "band-bg #FFE0CA; band-text #3A1F1A; deco #FF8A5B; deco2 #8E5BC8; radius 16px; shadow 0 2px 8px rgba(179,54,26,.10);"
           "bg-image linear-gradient(180deg,#FFE6D3 0,#FFF6EE 220px)"),
-    _skin("cb-safe", "色覚サポート", "青とオレンジ中心。色だけに頼らない", "くっきり・実用的", "色の見分けが苦手な方。どなたでも", "plain", False,
+    _skin("cb-safe", "色覚サポート", "青とオレンジが中心。色だけに頼らない", "くっきり・実用的", "色の見分けが苦手な方。どなたでも", "plain", False,
           "left outline cozy plain none boxed card grid",
           "bg #F7F9FB; bg2 #E9EEF3; surface #FFFFFF; surface2 #EDF1F5; text #14202B; muted #44525F; line #C8D1DA;"
           "accent #0B5CAD; on-accent #FFFFFF; ato #0B5CAD; on-ato #FFFFFF; mou #B35900; on-mou #FFFFFF;"
@@ -324,7 +324,7 @@ SKINS = [
           "g1 #6B2FA8; g2 #C2410C; g3 #B3245C; g4 #3F7D20; g5 #7A3FBF; g6 #0E7490;"
           f"deco #F28C1B; deco2 #7B3FC4; radius 18px; num-weight 900; bw 3px; font {FONT_ROUND}; shadow 0 3px 0 rgba(42,22,64,.18)",
           season=_season("10-10", "11-02", "ハロウィン")),
-    _skin("christmas", "クリスマス", "赤と緑と金。ツリーとプレゼント", "わくわく・あたたかい", "クリスマスの前後に。12月", "panel", False,
+    _skin("christmas", "クリスマス", "赤と緑と金色。ツリーとプレゼント", "わくわく・あたたかい", "クリスマスの前後に。12月", "panel", False,
           "band pill cozy badge stars tab ribbon grid",
           "bg #FBF7F0; bg2 #F3EAD8; surface #FFFFFF; surface2 #F6EFE0; text #1F2A24; muted #4A5A50; line #E0D6C4;"
           "accent #B3122B; on-accent #FFFFFF; ato #B3122B; on-ato #FFFFFF; mou #1E6B3C; on-mou #FFFFFF;"
@@ -333,7 +333,7 @@ SKINS = [
           "g1 #1E6B3C; g2 #B3122B; g3 #8E3B96; g4 #1E5FA8; g5 #8A5A00; g6 #0E7490;"
           "band-bg #E4F0E6; band-text #14402A; deco #C99A2E; deco2 #B3122B; radius 14px; num-weight 800; shadow 0 3px 10px rgba(30,60,40,.15)",
           season=_season("12-01", "12-26", "クリスマス")),
-    _skin("newyear", "お正月", "朱と金と松。おめでたい新年", "おめでたい・晴れやか", "年末年始に。12月末〜1月10日ごろ", "plain", False,
+    _skin("newyear", "お正月", "朱と金色と松。晴れやかな新年", "おめでたい・晴れやか", "年末年始に。12月末〜1月10日ごろ", "plain", False,
           "center square airy plain sunburst underline plain grid",
           "bg #FFF8EC; bg2 #F8EBD0; surface #FFFEFA; surface2 #F8EDD6; text #2A1A12; muted #5C4636; line #EBD7B0;"
           "accent #B3171B; on-accent #FFFFFF; ato #B3171B; on-ato #FFFFFF; mou #1F4E3D; on-mou #FFFFFF;"
@@ -342,7 +342,7 @@ SKINS = [
           "g1 #1F4E3D; g2 #B3171B; g3 #8E2F5C; g4 #2F6B3F; g5 #5B3E8A; g6 #7A5200;"
           f"deco #C9A227; deco2 #B3171B; radius 6px; num-weight 700; font {FONT_MINCHO}; shadow 0 2px 6px rgba(120,60,20,.16)",
           season=_season("12-27", "01-10", "お正月")),
-    _skin("valentine", "バレンタイン", "ピンクとチョコ。ハート", "あまい・かわいい", "バレンタインの前後に。2月", "plain", False,
+    _skin("valentine", "バレンタイン", "ピンクとチョコ色。ハート", "あまい・かわいい", "バレンタインの前後に。2月", "plain", False,
           "center soft cozy shadow dots pill chip masonry",
           "bg #FFF2F4; bg2 #FFE0E6; surface #FFFFFF; surface2 #FFE8EC; text #3B1D26; muted #6B4452; line #F2C6D0;"
           "accent #A8123E; on-accent #FFFFFF; ato #A8123E; on-ato #FFFFFF; mou #6F3B24; on-mou #FFFFFF;"
@@ -361,7 +361,7 @@ SKINS = [
           "deco #F4A3BA; deco2 #7DBE86; radius 18px; shadow 0 3px 12px rgba(184,50,94,.12);"
           "bg-image linear-gradient(180deg,#FFE4EC 0,#FFF6F8 320px)",
           season=_season("03-20", "04-15", "さくら")),
-    _skin("summer", "夏まつり", "ちょうちんと花火。夏の夜", "にぎやか・すずしい", "夏休みやお祭りのころに。7月〜8月", "panel", False,
+    _skin("summer", "夏まつり", "ちょうちんと花火。夏の夜", "にぎやか・涼しげ", "夏休みやお祭りのころに。7月〜8月", "panel", False,
           "band sticker cozy badge waves pill chip grid",
           "bg #F0FAFF; bg2 #D9F0FA; surface #FFFFFF; surface2 #E3F4FB; text #0F2740; muted #38546E; line #BFE0EF;"
           "accent #0B4F9C; on-accent #FFFFFF; ato #C8281E; on-ato #FFFFFF; mou #0B4F9C; on-mou #FFFFFF;"
