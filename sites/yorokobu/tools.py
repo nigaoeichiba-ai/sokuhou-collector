@@ -54,7 +54,7 @@ def gift_map(page_key: str, ideas: list[dict], tags: dict, shown: set[int] | Non
                      f'<text x="{px:.0f}" y="{py + 5:.0f}" class="gm-n" text-anchor="middle">{i + 1}</text>'
                      f'<text x="{tx:.0f}" y="{py + 5:.0f}" class="gm-l" text-anchor="{anchor}">{esc(idea["label"])}</text></a>')
     parts.append("</svg>")
-    return ('<section class="gmap"><div class="sec-title"><span class="tag">ギフトマップ</span><h2>この提案は、どんなタイプ?</h2></div>'
+    return ('<section class="gmap"><div class="sec-title"><span class="tag">タイプ別マップ</span><h2>この提案は、どんなタイプ?</h2></div>'
             '<p class="sec-lead">横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと、提案に移動します。</p>'
             + "".join(parts) + "</section>")
 
@@ -149,23 +149,23 @@ def gacha_data(d: dict, cfg: dict) -> str | None:
 
 def gacha_page(d: dict, cfg: dict, preview: bool, pool: dict, tiers: list[dict]) -> str:
     B = _b()
-    lead = "贈る相手と予算を選んで、ボタンをひとつ押すと、ソムリエが、商品をひとつ、えらんで見せます。迷ったときの、きっかけにしてください。"
+    lead = "贈る相手と予算を選んでボタンを押すと、条件に合う商品を1点、提案します。迷ったときのきっかけにしてください。"
     rec = "".join(f'<option value="{esc(s)}">{esc(v["name"])}</option>' for s, v in pool.items())
     bud = "".join(f'<option value="{esc(t["slug"])}">{esc(t["label"])}</option>' for t in tiers)
-    body = f"""{B.head_band("sky", '<img class="pair-mini" src="/assets/img/concierge-bell.webp" alt="" width="170" height="130">', "ソムリエの、<wbr>おまかせガチャ", lead, single=True, mascot="b-joy")}
-<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("おまかせガチャ", None)])}</div>
+    body = f"""{B.head_band("sky", '<img class="pair-mini" src="/assets/img/concierge-bell.webp" alt="" width="170" height="130">', "おまかせで、<wbr>1点提案します", lead, single=True, mascot="b-joy")}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("おまかせ提案", None)])}</div>
 {B.pr_quiet(cfg)}
 <section id="gacha" class="gacha" data-src="/tool/gacha/items.json" data-aff="{esc(cfg["rakuten_affiliate_id"])}" data-trk="{esc(cfg.get("rakuten_tracking_id") or "")}">
 <form class="gacha-form" onsubmit="return false"><label>贈る相手<select name="r">{rec}</select></label>
 <label>予算<select name="t">{bud}</select></label>
-<button type="submit" class="btn big">ガチャを回す</button></form>
+<button type="submit" class="btn big">1点、提案してもらう</button></form>
 <p class="gacha-msg" role="status" aria-live="polite"></p>
 <div class="gacha-out" aria-live="polite"></div>
 <noscript><p class="notice">このページは、JavaScript が使える環境でお使いください。使えない場合は、<a href="/for/">相手から探す</a>ページでも、おすすめを探せます。</p></noscript>
 </section>
 <p class="notice">表示される商品は、このサイトで紹介している商品から、ランダムに選んでいます。価格・在庫・レビューは、取得した時点の情報です。</p>
 {B.freshness(d)}"""
-    return B.page(cfg, preview, path="/tool/gacha/", title=f"ソムリエのおまかせガチャ | {cfg['site_name']}", description=lead, body=body)
+    return B.page(cfg, preview, path="/tool/gacha/", title=f"おまかせ提案 | {cfg['site_name']}", description=lead, body=body)
 
 
 # ---------------------------------------------------------------- quiz and persona pages
@@ -175,7 +175,7 @@ def quiz_page(d: dict, cfg: dict, preview: bool) -> str:
     c = d["c"]["persona"]
     data = esc(json.dumps({"questions": c["questions"], "slugs": [p["slug"] for p in c["personas"]]}, ensure_ascii=False, separators=(",", ":")))
     people = "".join(f'<li><a href="/diagnosis/{p["slug"]}/">{esc(p["name"])}</a></li>' for p in c["personas"])
-    lead = "あの人のことを思い出しながら、6つの質問に答えてください。1分で、贈り物のヒントになる「タイプ」が見つかります。"
+    lead = "あの人のことを思い出しながら、6つの質問に答えてください。贈り物のヒントになる「タイプ」が分かります。"
     body = f"""{B.head_band("lilac", '<img class="pair-mini" src="/assets/img/b-sparkle.webp" alt="" width="170" height="155">', "あの人は、どんなタイプ?", lead, single=True, mascot="r-sparkle")}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("プレゼント診断", None)])}</div>
 <section class="quiz" id="quiz" data-json="{data}"><noscript><p class="notice">この診断は、JavaScriptを使います。下の一覧から、タイプを見てみてください。</p></noscript>
@@ -209,14 +209,14 @@ def persona_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 def tools_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     B = _b()
     c = d["c"]
-    cards = [("/diagnosis/", "あの人はどんなタイプ?", "6つの質問で、贈る相手の「タイプ」と、合う贈り方が分かります。", c["persona"]),
+    cards = [("/diagnosis/", "あの人はどんなタイプ?", "6つの質問に答えると、贈る相手の「タイプ」と合う贈り方が分かります。", c["persona"]),
              ("/tool/taboo/", "縁起・マナーチェック", "贈る前に、気をつけたい言い伝えやマナーが、あるかどうか確かめます。", c["taboo"]),
-             ("/tool/gacha/", "ソムリエのおまかせガチャ", "贈る相手と予算を選ぶと、商品をひとつ、ランダムに見せてくれます。", d.get("gacha")),
+             ("/tool/gacha/", "おまかせ提案", "贈る相手と予算を選ぶと、条件に合う商品を1点、提案します。", d.get("gacha")),
              ("/tool/calc/", "お返し・割り勘の計算", "お返しの金額の目安と、連名で贈るときの一人あたりの金額を計算します。", True),
              ("/memo/", "たいせつな日メモ", "誕生日や記念日を登録して、贈りどきを逃さないようにします。", True),
-             ("/calendar/", "贈りどきカレンダー", "母の日、お歳暮など、一年の贈りどきを、カレンダーに入れられます。", True)]
+             ("/calendar/", "贈りどきカレンダー", "母の日、お歳暮など、一年の贈りどきをカレンダーに入れられます。", True)]
     tiles = "".join(f'<li><a class="tile wide tool-tile" href="{h}"><span><b>{esc(n)}</b><small>{esc(t)}</small></span></a></li>' for h, n, t, ok in cards if ok)
-    lead = "プレゼント選びを、もっと楽にして、もっと楽しくするための道具を、そろえています。"
+    lead = "プレゼント選びを楽にして、楽しくするための道具をそろえています。"
     body = f"""{B.head_band("yellow", '<img class="pair-mini" src="/assets/img/navi-scope.webp" alt="" width="170" height="130">', "診断・ツール", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", None)])}</div>
 <section style="margin-top:34px"><ul class="tiles wide">{tiles}</ul></section>"""

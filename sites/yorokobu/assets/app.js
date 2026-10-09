@@ -45,7 +45,7 @@
     f.addEventListener("submit", function (e) {
       e.preventDefault();
       var ov = o.value, rv = r.value, bv = b.value;
-      if (!ov && !rv) { msg.textContent = "イベントか、贈る相手を、選んでください。"; msg.hidden = false; return; }
+      if (!ov && !rv) { msg.textContent = "イベントか贈る相手を選んでください。"; msg.hidden = false; return; }
       if (ov && rv) { location.href = "/gift/" + ov + "-" + rv + "/" + (bv ? "?b=" + encodeURIComponent(bv) : "") + "#browse"; return; }
       location.href = ov ? "/occasion/" + ov + "/" : "/for/" + rv + "/";
     });
@@ -131,7 +131,7 @@
     var panel = $(".fav-panel", bar), ul = $("ul", panel);
     function text() {
       var lines = favs.map(function (x) { return "・" + x.name + "(¥" + Number(x.price).toLocaleString() + ")"; });
-      return "贈り物の候補です。どれがよさそう?\n" + lines.join("\n") + "\n" + location.href.split("#")[0];
+      return "贈り物の候補です。どれが合うか、意見をください。\n" + lines.join("\n") + "\n" + location.href.split("#")[0];
     }
     function paint() {
       $$(".item").forEach(function (li) {
@@ -258,7 +258,7 @@
     function onOcc() {
       var occ = form.elements.occ.value, fx = data.fixed[occ];
       when.hidden = !!fx; form.elements.date.required = !fx;
-      if (fx) { var nd = nextDate({ occ: occ }, data.fixed); fixedNote.textContent = "この日は、毎年、日にちが決まっています。次は " + (nd.getMonth() + 1) + "月" + nd.getDate() + "日です。"; fixedNote.hidden = false; }
+      if (fx) { var nd = nextDate({ occ: occ }, data.fixed); fixedNote.textContent = "この日は毎年、日付が決まっています。次は " + (nd.getMonth() + 1) + "月" + nd.getDate() + "日です。"; fixedNote.hidden = false; }
       else fixedNote.hidden = true;
     }
     form.elements.occ.addEventListener("change", onOcc);
@@ -339,7 +339,7 @@
         var okOcc = !occ || !li.getAttribute("data-occ") || occs.indexOf(occ) >= 0;
         li.hidden = !(okName && okOcc); if (!li.hidden) shown++;
       });
-      msg.textContent = (term || occ) ? (shown ? shown + "件、見つかりました。" : "とくに知られている注意は、見つかりませんでした。ふつうに贈って大丈夫なことが多いです。") : "下のリストから、品の名前でしぼりこめます。";
+      msg.textContent = (term || occ) ? (shown ? shown + "件、見つかりました。" : "大きな注意点は見つかりませんでした。相手の事情に合わせて確認してください。") : "下のリストから、品の名前でしぼりこめます。";
     }
     q.addEventListener("input", run); o.addEventListener("change", run);
     var pre = new URLSearchParams(location.search).get("q"); if (pre) { q.value = pre; run(); }
@@ -375,7 +375,7 @@
       if (!p.length) { msg.textContent = "その組み合わせの商品は、まだありません。ほかの予算を選んでみてください。"; out.textContent = ""; return; }
       var pick = p[Math.floor(Math.random() * p.length)], guard = 0;
       while (p.length > 1 && pick[3] === last && guard++ < 8) pick = p[Math.floor(Math.random() * p.length)];
-      last = pick[3]; msg.textContent = "ソムリエの、おすすめです。"; show(pick);
+      last = pick[3]; msg.textContent = "条件に合う商品を1点、選びました。"; show(pick);
     }
     function ready() { form.addEventListener("submit", function (e) { e.preventDefault(); spin(); }); }
     msg.textContent = "準備しています…";
