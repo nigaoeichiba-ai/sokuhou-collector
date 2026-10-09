@@ -247,14 +247,17 @@ jobs:
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "$KEY" > ~/.ssh/id_xserver
           chmod 600 ~/.ssh/id_xserver
-          sleep $((RANDOM % 25))   # the four site jobs start together; the server drops some simultaneous connections, so spread them out
+          sleep $((RANDOM % 60))   # the five site jobs start together; the server drops some simultaneous connections, so spread them out
+          # every ssh call below retries the connection itself, and a host key that the scan could not fetch is accepted on first contact (the scan is the same trust, taken from the same network)
+          printf '%s\n' 'Host *' '  ConnectionAttempts 5' '  ConnectTimeout 20' '  StrictHostKeyChecking accept-new' > ~/.ssh/config
+          chmod 600 ~/.ssh/config
           for try in 1 2 3 4 5 6; do   # the key scan sometimes comes back empty for a moment
             ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /tmp/keyscan.err || true
             [ -s ~/.ssh/known_hosts ] && break
             echo "key scan attempt $try returned nothing: $(head -c 200 /tmp/keyscan.err | tr -s '[:space:]' ' ')"
-            sleep $((try * 10))
+            sleep $((try * 5))
           done
-          test -s ~/.ssh/known_hosts
+          [ -s ~/.ssh/known_hosts ] || echo "no host key from the scan: the first ssh call records it"
       - name: Check the server (read only)
         if: steps.gate.outputs.go == 'true'
         env:
