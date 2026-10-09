@@ -28,7 +28,7 @@ from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc,
 
 NAME = "あと何日、もう何日"
 CATCH = "忘れたくない日を、お知らせします。"   # decided by the owner (2026-10-08); the copy pass may not change it
-SLUGS = ["deadline", "sale", "sports", "exams", "sky", "festival", "vehicles", "hobby", "shows"]
+SLUGS = ["deadline", "sale", "sports", "exams", "sky", "festival", "vehicles", "hobby", "shows", "life"]
 GROUP_SLUG = dict(zip(catalog.GROUPS, SLUGS))
 GROUP_LEAD = {
     "締切・制度": "確定申告、年金、制度の施行日。過ぎると困る日。",
@@ -40,6 +40,7 @@ GROUP_LEAD = {
     "乗り物・レース": "鉄道、観光列車、カーレース、バイク、ボート。乗り物が好きな人の日。",
     "趣味・ゲーム・アニメ": "コミケ、ゲームマーケット、アニメ、模型、手芸、即売会。好きなことを楽しむ日。",
     "番組・音楽・賞": "紅白歌合戦、ライブ、ノーベル賞、アカデミー賞、映画祭。発表や放送を待つ日。",
+    "暮らし・健康": "結婚、子育て、健康、防災。暮らしの節目になる日。",
 }
 POPULAR = ["年賀状", "ふるさと納税", "共通テスト", "流星群", "紅白", "コミケ", "最低賃金", "確定申告", "ドラフト"]
 SITE = {

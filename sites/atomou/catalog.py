@@ -23,7 +23,7 @@ LEAD = {"締切": 45, "試験日": 45, "施行": 45, "改定": 45}
 LEAD_DEFAULT = 60       # days before the date that the page may be indexed
 QUIET = ("grief", "disaster", "medical", "legal")
 
-GROUPS = ["締切・制度", "消費・セール", "スポーツ・勝負", "試験・資格", "天文・季節", "地域のお祭り", "乗り物・レース", "趣味・ゲーム・アニメ", "番組・音楽・賞"]
+GROUPS = ["締切・制度", "消費・セール", "スポーツ・勝負", "試験・資格", "天文・季節", "地域のお祭り", "乗り物・レース", "趣味・ゲーム・アニメ", "番組・音楽・賞", "暮らし・健康"]
 # The first six keep their place (and so their colour and shape); the last three were split out of "マニア・天文" and "大会・番組" on 2026-10-10.
 GROUP_OF_CATEGORY = {
     "税": "締切・制度", "年金・保険": "締切・制度", "給付": "締切・制度", "制度": "締切・制度", "料金": "締切・制度",
