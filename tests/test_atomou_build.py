@@ -232,6 +232,21 @@ class Pages(BuildOnce):
         self.assertIn('id="guide"', self.rel["manual/index.html"])
         self.assertIn('href="/manual/#guide">使い方</a>', home)    # the footer link: where to look again
 
+    def test_the_source_and_check_date_are_also_shown_right_under_the_card(self):
+        e = self.entries[0]
+        page = self.rel[f"e/{e['id']}/index.html"]
+        line = re.search(r'<p class="small muted src-line">(.*?)</p>', page)
+        self.assertIsNotNone(line)
+        self.assertIn(e["checked_on"], line.group(1))
+        self.assertIn('href="#src"', line.group(1))
+        self.assertIn('<h2 id="src">', page)
+        self.assertLess(page.index("src-line"), page.index("<h2 id=\"src\">"))     # the proof sits above the long text, not only below it
+
+    def test_use_case_pages_do_not_say_notices_are_missing(self):
+        for k, v in self.rel.items():
+            if k.startswith("use/") and isinstance(v, str):
+                self.assertNotIn("通知はまだありません", v, k)      # push and mail notices exist (optional)
+
     def test_event_pages_state_source_and_check_date(self):
         e = self.entries[0]
         page = self.rel[f"e/{e['id']}/index.html"]

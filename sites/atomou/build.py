@@ -355,7 +355,7 @@ def home_page(c: Ctx) -> str:
 <ol class="intro-steps">
 <li><b>さがす</b><span>試験・締切・大会・お祭りの公式の日付(出典つき)</span></li>
 <li><b>残す</b><span>気になる日や自分の大切な日を、1行で</span></li>
-<li><b>知る</b><span>あと何日かをひと目で。カレンダーや通知にも</span></li>
+<li><b>知る</b><span>あと何日かをひと目で。カレンダーに入れられ、通知も任意で使えます</span></li>
 </ol>
 <p class="intro-note">登録なしで、無料です。名前も日付も、この端末の中だけに残ります。</p>
 <p class="intro-btns"><button type="button" class="btn" data-intro="start">30秒で使い方を見る</button> <button type="button" class="btn ghost" data-intro="close">すぐ使う</button></p>
@@ -561,9 +561,10 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 <h1>{esc(e['title'])}</h1>
 {card_html(e, big=True, link=False)}
 {'<p class="small muted">上のカードは、今日の日付で数えた数字です。</p>' if art else f'<p>{esc(sentence)}<span class="small muted">上のカードは、今日の日付で数えた数字です。</span></p>'}
+<p class="small muted src-line">出典: <a href="#src">{esc(host(e['source_url']))}</a>(確認した日 {esc(e['checked_on'])})</p>
 {art}
 {'<p class="notice quiet">この日は、静かにお知らせします。</p>' if quiet else ""}
-<h2>出典と確認した日</h2>
+<h2 id="src">出典と確認した日</h2>
 <dl class="info"><dt>出典</dt><dd><a href="{esc(e['source_url'])}" rel="noopener nofollow" target="_blank">{esc(host(e['source_url']))}</a></dd>
 <dt>確認した日</dt><dd>{esc(e['checked_on'])}</dd>{f"<dt>出典の文</dt><dd>{esc(e['source_quote'])}</dd>" if e.get('source_quote') else ""}</dl>
 <p class="small muted">日付は変わることがあります。申し込みや手続きの前に、出典の公式ページでご確認ください。</p>
