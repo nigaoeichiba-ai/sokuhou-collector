@@ -482,6 +482,58 @@ def related_section(cols: list[tuple[str, str]]) -> str:
     return f'<section class="related" style="margin-top:40px"><h2><span class="scribble">あわせて読みたい</span></h2><div class="cols">{inner}</div></section>' if inner else ""
 
 
+# ---------------------------------------------------------------- 贈る前の早見表 (amounts, timing, noshi and cautions per occasion; from etiquette.json, with its sources)
+
+REL_WORDS = {"boyfriend": ("恋人", "パートナー"), "girlfriend": ("恋人", "パートナー"), "husband": ("夫婦", "配偶者", "パートナー"), "wife": ("夫婦", "配偶者", "パートナー"),
+             "father": ("両親", "親"), "mother": ("両親", "親"), "grandfather": ("祖父母", "祖父", "親族"), "grandmother": ("祖父母", "祖母", "親族"),
+             "friend-female": ("友人", "友達"), "friend-male": ("友人", "友達"), "colleague": ("同僚", "職場"), "boss": ("上司", "目上"), "teacher": ("先生",),
+             "baby": ("赤ちゃん", "子ども", "本人"), "toddler": ("子ども", "幼児"), "child": ("子ども", "小学生"), "teen": ("子ども", "中高生"), "in-laws": ("義父母", "義")}
+
+
+def budget_for(e: dict, recipient: str) -> dict | None:
+    """The amount row that fits a recipient (by words in its 'to'), or None."""
+    for w in REL_WORDS.get(recipient, ()):
+        for r in e.get("budget") or []:
+            if w in r["to"]:
+                return r
+    return None
+
+
+def quick_section(c: dict, slug: str) -> str:
+    e = c.get("etiquette", {}).get(slug)
+    if not e:
+        return ""
+    name = c["occ"][slug]["name"]
+    if e.get("budget"):
+        rows = "".join(f'<tr><th scope="row">{esc(r["to"])}</th><td>{esc(r["range"])}</td><td>{esc(r.get("note", ""))}</td></tr>' for r in e["budget"])
+        money = f'<div class="tablewrap"><table class="quick-table"><thead><tr><th>贈る相手</th><th>金額の目安</th><th>ひとこと</th></tr></thead><tbody>{rows}</tbody></table></div>'
+    else:
+        money = f'<p>{esc(e["budget_note"])}</p>'
+    n = e["noshi"]
+    if n.get("applicable"):
+        noshi = f'<p><b>表書き</b> {esc(n["omote"])}<br><b>水引</b> {esc(n["mizuhiki"])}</p>' + (f'<p>{esc(n["note"])}</p>' if n.get("note") else "")
+    else:
+        noshi = '<p>のしは、付けなくてもかまいません。</p>' + (f'<p>{esc(n["note"])}</p>' if n.get("note") else "")
+    back = f'<div class="qcard"><h3>お返しの目安</h3><p>{esc(e["return_gift"])}</p></div>' if e.get("return_gift") else ""
+    src = "、".join(f'<a href="{esc(s["url"])}" rel="nofollow noopener" target="_blank">{esc(s["name"])}</a>' + (f'({s["year"]}年)' if s.get("year") else "") for s in e["sources"])
+    return (f'<section class="quick" id="quick"><h2><span class="scribble">{esc(name)}の、贈る前の早見表</span></h2>'
+            f'<div class="quick-grid"><div class="qcard wide"><h3>金額の目安</h3>{money}</div>'
+            f'<div class="qcard"><h3>贈る時期</h3><p>{esc(e["timing"])}</p></div>'
+            f'<div class="qcard"><h3>のし(表書き・水引)</h3>{noshi}</div>'
+            f'<div class="qcard"><h3>気をつけたいこと</h3>{ul(e["cautions"], "warn")}</div>{back}</div>'
+            f'<p class="quick-src">金額や習慣は目安です。地域や家庭、相手との関係で変わります。参考にした出典: {src}</p></section>')
+
+
+def quick_pair_note(c: dict, p: dict) -> str:
+    e = c.get("etiquette", {}).get(p["occasion"])
+    row = budget_for(e, p["recipient"]) if e else None
+    if not row:
+        return ""
+    occ, rec = c["occ"][p["occasion"]], c["rec"][p["recipient"]]
+    return (f'<p class="quick-pair"><b>金額の目安</b>{esc(rec["name"])}への{esc(occ["name"])}は、{esc(row["range"])}ほど。'
+            f'<a href="/occasion/{occ["slug"]}/#quick">のし・時期・注意をまとめて見る</a></p>')
+
+
 def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     set_keep(d["c"]["occ"][p["occasion"]]["name"])
     c = d["c"]
@@ -510,6 +562,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 {pr_quiet(cfg)}
 {share_bar(cfg, f"/gift/{key}/", f"{p['title'].split(' ')[0]}の候補です。どれが合うか、意見をください。")}
 <p class="memo-link"><a href="/memo/?o={p['occasion']}&amp;r={p['recipient']}">この日を忘れない(たいせつな日メモに登録)</a></p>
+{quick_pair_note(c, p)}
 <section class="why-how"><div class="cols"><div><h2><span class="scribble">喜ばれやすい理由</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["reasons"])}</ol></div>
 <div class="how"><h2><span class="scribble">選び方のポイント</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["how_to_choose"])}</ol></div></div></section>
 {proposals}
@@ -611,7 +664,8 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("イベント", "/occasion/"), (o["name"], None)])}</div>
 {pr_quiet(cfg)}
-<section style="margin-top:40px" class="cols"><div><h2><span class="scribble">贈る時期の目安</span></h2><p>{esc(o["timing"])}</p></div>
+{quick_section(c, o["slug"])}
+<section style="margin-top:40px" class="cols">{"" if c.get("etiquette", {}).get(o["slug"]) else f'<div><h2><span class="scribble">贈る時期の目安</span></h2><p>{esc(o["timing"])}</p></div>'}
 <div><h2><span class="scribble">選ぶポイント</span></h2><ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in o["tips"])}</ol></div></section>
 <section style="margin-top:50px"><h2><span class="scribble">相手を選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}
