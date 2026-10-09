@@ -250,6 +250,22 @@ class Pages(BuildOnce):
             if k.startswith("use/") and isinstance(v, str):
                 self.assertNotIn("通知はまだありません", v, k)      # push and mail notices exist (optional)
 
+    def test_a_set_of_days_can_be_saved_in_one_tap(self):
+        pages = [v for kk, v in self.rel.items() if kk.startswith("e/") and isinstance(v, str) and "data-saveall" in v]
+        self.assertTrue(pages)
+        for v in pages:
+            ids = re.search(r'data-saveall="([^"]+)"', v).group(1).split(",")
+            self.assertTrue(all(re.fullmatch(r"[0-9a-f]{10}", i) for i in ids))
+            self.assertIn(f"この日を含む{len(ids)}件を、まとめて予定に入れる", v)
+        quiet = [v for kk, v in self.rel.items() if kk.startswith("e/") and isinstance(v, str) and "この日は、静かにお知らせします" in v]
+        self.assertTrue(all("data-saveall" not in v for v in quiet))     # a quiet day leads nowhere else
+
+    def test_the_home_page_puts_the_visitors_own_days_before_the_search(self):
+        home = self.rel["index.html"]
+        self.assertLess(home.index('data-block="todo"'), home.index('data-block="mine"'))
+        self.assertLess(home.index('data-block="mine"'), home.index('data-block="search"'))
+        self.assertIn("<h2>よく使われる</h2>", self.rel["use/index.html"])
+
     def test_event_pages_state_source_and_check_date(self):
         e = self.entries[0]
         page = self.rel[f"e/{e['id']}/index.html"]
