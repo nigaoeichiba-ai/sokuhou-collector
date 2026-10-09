@@ -263,6 +263,10 @@ class FooterNoticeTest(unittest.TestCase):
         self.assertIn("Amazonアソシエイト", page)
         page = build.page(cfg, False, path="/y/", title="t", description="d", body='<p class="pr-quiet">PR</p>')
         self.assertNotIn("Amazonアソシエイト", page)
+        self.assertIn("楽天アフィリエイト", build.pr_foot(cfg, amazon=False, rakuten=True))
+        amazon_only = build.pr_foot(cfg, amazon=True, rakuten=False)
+        self.assertIn("Amazonアソシエイト", amazon_only)
+        self.assertNotIn("楽天アフィリエイト", amazon_only)                    # a page whose only link is Amazon does not claim a Rakuten link
 
     def test_no_coming_of_age_page_for_children(self):
         from sites.yorokobu import content as real
