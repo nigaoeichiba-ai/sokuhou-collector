@@ -712,7 +712,7 @@
     document.addEventListener('click', function (ev) {
       var b = ev.target.closest ? ev.target.closest('[data-int],[data-int-drop]') : null;
       if (!b) return;
-      if (b.hasAttribute('data-int')) { var w = b.getAttribute('data-int'); setInterest(w, !hasInterest(w)); if (hasInterest(w)) say(w); else note.textContent = ''; }
+      if (b.hasAttribute('data-int')) { var w = b.getAttribute('data-int'); setInterest(w, !hasInterest(w)); if (hasInterest(w)) { say(w); if (/^[0-9]{1,4}$/.test(b.getAttribute('data-id') || '')) stat('act:int_' + b.getAttribute('data-id')); } else note.textContent = ''; }
       else setInterest(b.getAttribute('data-int-drop'), false);
       sync();
     });

@@ -327,7 +327,15 @@ class Pages(BuildOnce):
         self.assertIn("noindex", page)
         self.assertIn('href="/interests/"', self.rel["index.html"])
         self.assertNotIn("/interests/", self.rel["sitemap.xml"])
-        self.assertEqual(len(catalog.GROUPS), page.count("data-int-sec="))     # a section per genre
+        import json as _j
+        tax = _j.loads((build.ROOT / "data/atomou/interests.json").read_text(encoding="utf-8"))
+        self.assertGreaterEqual(page.count("data-int-sec="), len(tax["sections"]))     # a section per group of the list of fields
+        self.assertGreaterEqual(page.count('data-int="'), 200)                         # wide enough for niche tastes
+        self.assertIn("準備中", page)                                                  # a field with no day yet can still be chosen
+        ids = [i["id"] for s in tax["sections"] for i in s["items"]]
+        self.assertEqual(len(ids), len(set(ids)))
+        names = [i["name"] for s in tax["sections"] for i in s["items"]]
+        self.assertEqual(len(names), len(set(names)))
 
     def test_the_sentences_composed_for_every_day_read_as_japanese(self):
         # the lead and the questions are put together from the catalog entry; these are the slips a reader noticed (2026-10-09)

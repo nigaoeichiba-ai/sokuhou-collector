@@ -143,6 +143,13 @@
     return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + enc(title) + '&dates=' + s(d) + '/' + s(C.addDays(d, 1)) + '&details=' + enc(detail || '') + '&ctz=Asia%2FTokyo';
   }
 
+  function outlookUrl(title, iso, detail) {
+    var d = C.parse(iso);
+    if (!d) return '';
+    function s(a) { return String(a[0]).padStart(4, '0') + '-' + String(a[1]).padStart(2, '0') + '-' + String(a[2]).padStart(2, '0'); }
+    return 'https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=' + enc(title) + '&startdt=' + s(d) + '&enddt=' + s(C.addDays(d, 1)) + '&allday=true&body=' + enc(detail || '');
+  }
+
   init();
-  window.AtomouShare = { init: init, words: words, googleUrl: googleUrl, drawCard: drawCard };
+  window.AtomouShare = { init: init, words: words, googleUrl: googleUrl, outlookUrl: outlookUrl, drawCard: drawCard };
 })();
