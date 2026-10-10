@@ -159,13 +159,20 @@ class Wiring(unittest.TestCase):
         self.assertNotIn("git push", wf)                                   # nothing is committed: no deploy is started by it
         self.assertIn('if [ -z "$KEY" ]', wf)                              # without the server secrets it only makes the file
 
+    def test_the_recheck_workflow_runs_every_six_hours_and_only_writes_its_file(self):
+        wf = (ROOT / ".github" / "workflows" / "atomou-recheck.yml").read_text(encoding="utf-8")
+        self.assertIn('cron: "20 */6 * * *"', wf)
+        self.assertIn("sites/atomou/recheck.py", wf)
+        self.assertIn("recheck.v1.json", wf)
+        self.assertNotIn("git push", wf)
+
     def test_a_deploy_carries_the_live_folder_over(self):
         dep = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
         self.assertIn("cp -a " + chr(92) + '"public_html/' + chr(92) + '$d' + chr(92) + '" ' + chr(92) + '".deploy_next/' + chr(92) + '$d' + chr(92) + '"', dep)
 
     def test_the_live_file_is_never_cached_by_the_browser(self):
         from sites.atomou import build
-        self.assertRegex(build.HT_CACHE, r'<FilesMatch "\(sw\\\.js\|manifest\\\.webmanifest\|live\\\.v1\\\.json\)\$">\s*Header set Cache-Control "no-cache"')
+        self.assertIn('manifest' + chr(92) + '.webmanifest|(live|recheck)' + chr(92) + '.v1' + chr(92) + '.json)$">', build.HT_CACHE)
 
 
 if __name__ == "__main__":

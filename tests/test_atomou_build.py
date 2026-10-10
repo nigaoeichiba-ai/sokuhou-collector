@@ -695,6 +695,23 @@ class AppInChrome(BuildOnce):
         dom = html.unescape(self.dom("/topics/", "&livesrc=/fixtures/live.json"))
         self.assertRegex(dom, r'id="live-t"(?![^>]*hidden)')
 
+    def test_a_day_the_robot_could_not_find_on_its_page_says_so(self):
+        e = next(x for x in self.entries if x["status"] == "active" and not x["quiet"])
+        fx = Path(self.tmp.name) / "fixtures"
+        fx.mkdir(exist_ok=True)
+        (fx / "rc.json").write_text(json.dumps({"v": 1, "changed": [e["id"]]}), encoding="utf-8")
+        dom = html.unescape(self.dom(f"/e/{e['id']}/", "&recheck=/fixtures/rc.json"))
+        self.assertIn('class="notice rc-note"', dom)
+        self.assertIn("出典のページで、この日付が見つかりませんでした", dom)
+        self.assertIn("再確認中", dom)
+        from sites.atomou.build import GROUP_SLUG
+        dom = html.unescape(self.dom(f"/c/{GROUP_SLUG[e['group']]}/", "&recheck=/fixtures/rc.json"))
+        card = dom.split(f'data-key="c:{e["id"]}"')[1].split("</article>")[0]
+        self.assertIn("再確認中", card)
+        other = dom.split("</article>")[0]
+        if e["id"] not in other:
+            self.assertNotIn("再確認中", other)                                  # only the flagged day carries it
+
     def test_without_the_live_file_the_block_stays_hidden(self):
         dom = self.dom("/", "&livesrc=/fixtures/none.json")
         self.assertRegex(dom, r'id="live"[^>]*hidden')
