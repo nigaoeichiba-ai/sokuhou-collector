@@ -123,7 +123,7 @@
     A.stat('act:guide_start');
     show();
   }
-  var sheet = null;
+  var sheet = null, opener = null;
   function tipsFor() {
     var t = (HINTS[page] || []).slice();
     if (page === 'card' && A.tier && A.tier.on) t.push('自分で書けるカードは' + A.tier.limit() + '枚までです。使わないカードを消すと空きます。カードを人に送ると、書ける枚数がふえます。');
@@ -133,12 +133,22 @@
     if (!sheet) return;
     sheet.parentNode.removeChild(sheet); sheet = null;
     document.removeEventListener('keydown', onSheetKey);
-    if (btn) btn.focus({ preventScroll: true });
+    var back = opener && document.contains(opener) && opener.offsetParent !== null ? opener : btn;
+    opener = null;
+    if (back) back.focus({ preventScroll: true });
   }
-  function onSheetKey(ev) { if (ev.key === 'Escape') closeSheet(); }
+  function onSheetKey(ev) {
+    if (ev.key === 'Escape') { closeSheet(); return; }
+    if (ev.key !== 'Tab' || !sheet) return;   // keep Tab inside the sheet (aria-modal)
+    var f = Array.prototype.slice.call(sheet.querySelectorAll('a[href],button:not([disabled])')), first = f[0], last = f[f.length - 1];
+    if (!f.length) return;
+    if (ev.shiftKey && (document.activeElement === first || document.activeElement === sheet.querySelector('.hs-box'))) { ev.preventDefault(); last.focus(); }
+    else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+  }
   function openHints() {
     if (sheet) return closeSheet();
     if (tip) return;   // the spotlight tour is running
+    opener = document.activeElement;
     sheet = document.createElement('div'); sheet.className = 'hint-sheet'; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', 'このページのヒント');
     sheet.innerHTML = '<div class="hs-back" data-hs="close"></div><div class="hs-box" tabindex="-1"><h2>このページのヒント</h2><ul>' + tipsFor().map(function (x) { return '<li>' + H(x) + '</li>'; }).join('') + '</ul>' +
       '<p class="hs-act">' + (steps.length ? '<button type="button" class="btn small" data-hs="tour">画面で順に見る</button>' : '') + '<a class="btn small ghost" href="/manual/">くわしい使い方</a><button type="button" class="btn small ghost" data-hs="close">閉じる</button></p></div>';
