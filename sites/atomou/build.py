@@ -117,6 +117,11 @@ def members_on(cfg: dict) -> bool:
     return bool(cfg.get("member_mail_from"))
 
 
+def share_php() -> str:
+    """api/s.php: the receiver of shared cards that stay up to date (locked cards only; see share_receiver.php.tpl)."""
+    return (HERE / "share_receiver.php.tpl").read_text(encoding="utf-8").replace("__SITE_URL__", "https://atomou.com")
+
+
 def member_php(cfg: dict) -> str:
     tiers = cfg.get("member_tiers") or []
     for t in tiers:
@@ -234,7 +239,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'app', 'tier', 'share', 'card', 'ical', 'plan', 'quick', 'setup', 'swipe', 'live', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'app', 'tier', 'shared', 'share', 'card', 'ical', 'plan', 'quick', 'setup', 'swipe', 'live', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -311,7 +316,7 @@ class Ctx:
         if cfg.get("vapid_public"):
             conf["vapid"] = cfg["vapid_public"]
         if isinstance(cfg.get("plans"), dict) and cfg["plans"].get("on"):
-            conf["plans"] = {k: cfg["plans"][k] for k in ("on", "plus_open", "free_cards", "shares_per_slot", "extra_max", "free_remind") if k in cfg["plans"]}
+            conf["plans"] = {k: cfg["plans"][k] for k in ("on", "plus_open", "free_cards", "free_shared", "shares_per_slot", "extra_max", "free_remind") if k in cfg["plans"]}
         if members_on(cfg):
             conf["members"] = {"tiers": {t["id"]: t.get("label", t["id"]) for t in cfg.get("member_tiers") or []},
                                "ref": int(cfg.get("member_ref_months", 6)), "give": int(cfg.get("member_ref_give_months", 1)), "cap": int(cfg.get("member_ref_cap", 12))}
@@ -547,7 +552,7 @@ def my_page(c: Ctx) -> str:
 <p><a href="/?intro=1">はじめての方へ(このサイトの説明)を見る</a></p>
 <p><button type="button" class="btn small ghost" data-guide="start">使い方を見る</button></p>
 </div>
-{member_html}<div id="tier-box"></div>{push_html}{sync_html}<h2>他のカレンダーアプリに入れる</h2>
+{member_html}<div id="tier-box"></div><section id="shared-box" hidden></section>{push_html}{sync_html}<h2>他のカレンダーアプリに入れる</h2>
 <div class="panel"><p>iPhone の「カレンダー」や Google カレンダーに取り込めるファイルを作れます。1件ずつ作るときは、予定の詳細から。</p>
 <p><button type="button" class="btn small ghost" id="ics-all">すべての予定をファイルにする</button></p></div>
 <h2 id="ical-h">ほかのカレンダーから取り込む</h2>
@@ -1120,6 +1125,10 @@ def legal(c: Ctx) -> dict:
                     "ブラウザのデータを消すと記録も消えます。バックアップはマイページの「書き出す」で作れます。</p>"
                     "<h2>カレンダーの購読(任意)</h2>"
                     "<p>ジャンルのページから、公式の日付をカレンダーアプリに購読できます。購読用のファイルは、誰でも取得できる公開データです。購読すると、Google などのカレンダーのサービスが、定期的にこのファイルを取りに来ます。当サイトは、購読した人を知ることはありません。</p>"
+                    "<h2>更新が届く共有カード(任意)</h2>"
+                    "<p>「更新が届く共有カードにする」を押したときだけ、カードをサーバーに預かります。カードの内容(題名・日付・ひとこと・やること)は、あなたのブラウザの中で、ランダムな鍵で暗号にしてから送ります。鍵は、リンクのうち「#」より後ろにだけあり、当サイトのサーバーには送られません。サーバーに残るのは、暗号になった内容、カードの番号(ランダム)、版の番号、作った日・更新した日、編集用の合言葉を変換した値、問題の報告の件数です。サーバーは、カードの内容を読めません。"
+                    "リンクを知っている人は、だれでもカードを読めます。編集用のリンクを知っている人は、だれでも直せます。リンクは、渡す相手を選んでください。180日間、更新がないカードは、自動で消えます。いつでも、編集用のリンクから消せます。問題のあるカードは、読んだ人が「問題を知らせる」で報告でき、3人以上から報告があると表示を止めます。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。"
+                    "フォローしたカードの一覧と鍵は、あなたの端末の中にだけ保存します。</p>"
                     "<h2>カードの共有(任意)</h2>"
                     "<p>「カードを作って送る」で作ったカードの内容(題名・日付・ひとこと・やること)は、リンクのうち「#」より後ろに入ります。この部分は、ブラウザから当サイトのサーバーへは送られず、保存もされません。リンクを渡した相手の端末で、カードとして表示されます。スマホの共有メニューから渡した文章も、サーバーには送られず、ご利用の端末の中で、カードを作るページに渡されます。リンクを送る相手と手段は、あなたが選びます。</p>"),
         finish=lambda html: c.finish(legal_wording(privacy_fix(c, html)), "legal"),
@@ -1154,6 +1163,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
         pages[f"e/{e['id']}/index.html"] = event_page(c, e, e["id"] in index_ids, live)
     pages.update(legal(c))
     pages["api/e.php"] = stats_php()
+    pages["api/s.php"] = share_php()
     pages["api/push.php"] = push_php(cfg)
     if members_on(cfg):
         pages["api/m.php"] = member_php(cfg)

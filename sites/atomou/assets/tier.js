@@ -37,6 +37,13 @@
     A.persist();
     if (!plus() && Math.floor(S.prefs.shares / PER) > before && before < MORE) A.toast('カードを送ってくれてありがとうございます。書けるカードが1枚ふえました。');
   }
+  var FREE_SHARED = Math.max(0, CF.free_shared == null ? 2 : +CF.free_shared);   // how many shared cards (kept up to date on the server) a free planner may make
+  function sharedBlocked() {
+    if (!ON || plus() || !A.shared) return false;
+    if (A.shared.list().filter(function (x) { return x.mine; }).length < FREE_SHARED) return false;
+    A.toast('無料プランで作れる共有カードは、' + FREE_SHARED + '枚までです。使わない共有カードを消すと、空きます。' + (PLUS_OPEN ? 'プラスプランなら、枚数の制限はありません。' : ''));
+    return true;
+  }
   function remindAllowed(r) { return plus() || FREE_REMIND.indexOf(r) >= 0; }
 
   function box() {
@@ -49,5 +56,5 @@
   }
   if (A.page === 'my') box();
   document.addEventListener('atomou:saved', box);
-  A.tier = { on: ON, plusOpen: PLUS_OPEN, plus: plus, used: used, limit: limit, room: room, blocked: blocked, shared: shared, remindAllowed: remindAllowed, freeRemind: FREE_REMIND };
+  A.tier = { on: ON, plusOpen: PLUS_OPEN, sharedBlocked: sharedBlocked, plus: plus, used: used, limit: limit, room: room, blocked: blocked, shared: shared, remindAllowed: remindAllowed, freeRemind: FREE_REMIND };
 })();
