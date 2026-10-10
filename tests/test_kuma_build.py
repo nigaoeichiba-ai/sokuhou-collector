@@ -498,6 +498,9 @@ class LiveSectionTest(unittest.TestCase):
         ld = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', page, re.S).group(1))
         self.assertEqual(ld["@type"], "Dataset")
         self.assertEqual(ld["distribution"][0]["contentUrl"], "https://kuma-sokuho.com/data/kuma-sightings.csv")
+        self.assertGreaterEqual(len(ld["description"]), 50)  # Dataset Search wants a description of at least 50 characters
+        self.assertRegex(ld["dateModified"], r"^\d{4}-\d{2}-\d{2}$")
+        self.assertTrue(ld["creator"]["name"] and ld["keywords"])
         self.assertIn('href="/map/"', self.read("index.html"))  # the map is in the main navigation
 
     def test_a_source_without_stated_terms_is_not_offered_for_download(self):
