@@ -149,6 +149,17 @@ class CitePageTest(unittest.TestCase):
         self.assertIn("https://kuma-sokuho.com/live/akita/", text)
         self.assertIn("環境省・自治体が作成したものではありません", text)
 
+    def test_the_stated_update_frequency_is_the_one_the_workflow_runs(self):
+        wf = (Path(__file__).resolve().parents[1] / ".github" / "workflows" / "kuma-live.yml").read_text(encoding="utf-8")
+        crons = re.findall(r'^\s*- cron: "([^"]+)"', wf, re.M)
+        self.assertEqual(len(crons), 1)
+        minute, hour, *rest = crons[0].split()
+        self.assertTrue(minute.isdigit() and hour.isdigit() and rest == ["*", "*", "*"], crons)       # one fixed time a day
+        text = text_of(self.read("cite/index.html"))
+        self.assertIn("1日1回", text)
+        self.assertNotIn("3時間ごと", text)
+        self.assertIn("取得は、1日1回、自動で行っています", text_of(self.read("live/index.html")))
+
     def test_no_claim_of_what_the_site_does_not_do(self):
         text = text_of(self.read("cite/index.html"))
         for bad in ("日本一", "最多", "安全です", "確実", "全国のすべて"):

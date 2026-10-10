@@ -223,7 +223,7 @@ def hub_page(page, d: dict, lv: dict) -> str:
 <ul class="mini-list">{pref_links}</ul>
 <h2>取得元と、更新の状況</h2>
 {table(["取得元", f"{fy_label(cur)}の記録", "最新", "更新について"], src_rows)}
-{counts_section(lv)}<p class="notice">再利用の許可が明示されている取得元は、詳しい記録を載せ、明示されていない取得元は、件数と最新の日付だけを載せています。載っていない地域は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。取得は、1日に数回、自動で行っています。取得元・数え方・引用のしかたは、<a href="/cite/">データの出典・引用のしかた</a>をご覧ください。</p>"""
+{counts_section(lv)}<p class="notice">再利用の許可が明示されている取得元は、詳しい記録を載せ、明示されていない取得元は、件数と最新の日付だけを載せています。載っていない地域は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。取得は、1日1回、自動で行っています。取得元・数え方・引用のしかたは、<a href="/cite/">データの出典・引用のしかた</a>をご覧ください。</p>"""
     return page(path="/live/", title=f"クマの最新の目撃情報(自治体の公式・{len(infos)}か所・{fy_label(cur)})",
                 description=f"{'・'.join(i['name'] for i in infos.values())}が公表しているクマの目撃情報を、新しい順に一覧にしています。{fy_label(cur)}の記録は{n(len(recs))}件です。",
                 body=body, alternates=(("最新の目撃", "/live/feed.xml"),))

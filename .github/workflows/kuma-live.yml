@@ -1,13 +1,13 @@
 name: kuma-live
 
-# kuma-sokuho.com: collects the municipal bear sightings (prefecture / city open data) several times a day. When any data
+# kuma-sokuho.com: collects the municipal bear sightings (prefecture / city open data) once a day. When any data
 # file changed, it is committed and ONLY the kuma site is deployed (deploy.yml, input "only"), so the site shows the
 # newest records within minutes of the municipality publishing them, and the other sites are not rebuilt.
 # A push made with the workflow token does not start other workflows, so the deploy is started explicitly below.
 
 on:
   schedule:
-    - cron: "20 */3 * * *"   # every 3 hours at :20 UTC (the municipalities update once a day to once a month)
+    - cron: "20 21 * * *"   # once a day at 06:20 JST (owner decision 2026-10-10; the municipalities update once a day to once a month). /cite/ says "1日1回"
   workflow_dispatch:
 
 permissions:
