@@ -54,6 +54,21 @@ GROUP_OF_SUBJECT = {
 }
 GROUP_OF_FILE = {"seed_tax_law": G_MONEY, "seed_consumer": G_SHOP, "seed_exams": G_SCHOOL, "seed_sports_culture": G_SPORT,
                  "seed_otaku_astro": G_HOBBY, "seed_regional": G_TRIP}
+def _load_taxonomy() -> dict:
+    return json.loads((SEED_DIR / "taxonomy.json").read_text(encoding="utf-8"))
+
+
+TAXONOMY = _load_taxonomy()   # 大(group) -> [中 {name, categories, subjects}]; 小 is the subject of a day
+MID_OTHER = "ほか"
+MID_OF_SUBJECT = {(g, s): m["name"] for g, mids in TAXONOMY.items() if g in GROUPS for m in mids for s in m["subjects"]}
+MID_OF_CATEGORY = {(g, c): m["name"] for g, mids in TAXONOMY.items() if g in GROUPS for m in mids for c in m["categories"]}
+
+
+def mid_for(group: str, subject: str, category: str) -> str:
+    """The 中 category of a day: its subject (小) decides first, then its category; a day that fits none is "ほか" (the tests keep that at zero)."""
+    return MID_OF_SUBJECT.get((group, subject)) or MID_OF_CATEGORY.get((group, category)) or MID_OTHER
+
+
 SYNONYMS = {  # words a visitor may type -> tags, so "時給" finds a minimum-wage item and "はがき" finds the New Year cards
     "最低賃金": ["時給", "賃金", "バイト", "パート"], "年賀": ["年賀状", "はがき", "お正月"], "ふるさと納税": ["寄附", "返礼品"],
     "共通テスト": ["大学入試", "センター試験", "受験"], "TOEIC": ["英語", "資格", "試験"], "流星群": ["星", "天体観測", "天文"],
@@ -174,7 +189,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
         entries.append({
             "id": eid, "title": it["title"].strip(), "date": it["date"], "date_end": it.get("date_end") or None,
             "precision": it.get("precision") if it.get("precision") in ("day", "month") else "day",
-            "weekday": WEEKDAYS[d.weekday()], "kind": it["kind"], "category": it["category"], "group": group, "region": it.get("region") or None,
+            "weekday": WEEKDAYS[d.weekday()], "kind": it["kind"], "category": it["category"], "group": group, "mid": mid_for(group, subject, it["category"]), "region": it.get("region") or None,
             "subject": subject, "what": what, "place": place,
             "tags": tags_for(it, group), "sensitivity": sens, "quiet": quiet, "ad_ok": bool(it.get("ad_ok", True)) and not quiet,
             "son_toku": bool(it.get("son_toku")), "source_url": it["source_url"], "source_quote": (it.get("source_quote") or "")[:60] or None,
@@ -198,5 +213,5 @@ def indexable_ids(entries: list[dict], today: date, launch: date, per_week: int 
 
 def public_json(entries: list[dict]) -> list[dict]:
     """The fields the browser needs (assets/catalog.json)."""
-    keys = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "region", "subject", "what", "place", "tags", "quiet", "ad_ok", "son_toku", "status")
+    keys = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "subject", "what", "place", "tags", "quiet", "ad_ok", "son_toku", "status")
     return [{k: e[k] for k in keys} for e in entries]
