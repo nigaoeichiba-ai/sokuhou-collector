@@ -45,6 +45,8 @@ LIVE_SOURCES = {
                   "as_of_text": "最新の記録は{d}の分までです"},
     "sorachi": {"pref": "北海道", "scope": "空知管内の24市町のみ", "license": "CC-BY(北海道のサイトポリシー)", "name": "北海道空知総合振興局", "label": "北海道・空知総合振興局の公式(空知管内の24市町)", "monthly_label": "目撃のほか、痕跡などを含む(ヒグマの記録)",
                 "as_of_text": "データは{d}時点です"},
+    "ishikari": {"pref": "北海道", "scope": "石狩市のみ", "license": "CC BY 4.0(石狩市オープンデータ利用規約・承諾不要)", "name": "北海道石狩市", "label": "石狩市・市の公式(オープンデータ)",
+                 "monthly_label": "目撃のほか、痕跡などを含む(ヒグマの記録)", "as_of_text": "最新の記録は{d}の分までです"},
     "toyama": {"pref": "富山", "license": "富山県自然保護課の許可(2026年10月・出典表記は不要)", "name": "富山県", "label": "富山県・県の公式(クマっぷ。位置は載せていません)", "coords": False, "monthly_label": "目撃のほか、痕跡や人身被害の報告を含む",
                "as_of_text": "最新の記録は{d}の分までです"},
     "akita": {"pref": "秋田", "license": "CC BY 4.0", "name": "秋田県", "label": "秋田県・県の公式。オープンデータは月1回ほど更新", "monthly_label": "目撃のほか、痕跡などを含む(クマの記録のみ)",
@@ -260,7 +262,8 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
     names = "・".join(infos[k]["name"] for k in keys)
     note = kind_note(infos, slug)
     scopes = [LIVE_SOURCES[k]["scope"] for k in keys if LIVE_SOURCES.get(k, {}).get("scope")]
-    scope = scopes[0] if scopes and len(scopes) == len(keys) else ""   # a prefecture page that covers only part of the prefecture says so
+    # a prefecture page that covers only part of the prefecture says so (every source scoped: all the scopes, e.g. "空知管内の24市町、石狩市のみ")
+    scope = "、".join(s.removesuffix("のみ") for s in scopes) + "のみ" if scopes and len(scopes) == len(keys) else ""
     pname_s = f"{pname}({scope})" if scope else pname
     city_rows = []
     for city, cr in sorted(cities.items(), key=lambda kv: (-len(kv[1]), kv[0])):
