@@ -153,7 +153,10 @@ class Sources(unittest.TestCase):
 class Wiring(unittest.TestCase):
     def test_the_workflow_runs_every_ten_minutes_and_puts_only_the_live_file_on_the_server(self):
         wf = (ROOT / ".github" / "workflows" / "atomou-live.yml").read_text(encoding="utf-8")
-        self.assertIn('cron: "*/10 * * * *"', wf)
+        self.assertIn('cron: "3-59/10 * * * *"', wf)                       # every ten minutes, not on the round minutes where the deploys start
+        self.assertIn("live_uploaded.txt", wf)                              # the server (the same one the deploys use over SSH) is called only when the headlines changed, or after 6 hours
+        self.assertIn("the server is not called", wf)
+        self.assertLess(wf.index("the server is not called"), wf.index("ssh -i"))
         self.assertIn("sites/atomou/live.py", wf)
         self.assertIn("live.v1.json", wf)
         self.assertNotIn("git push", wf)                                   # nothing is committed: no deploy is started by it
