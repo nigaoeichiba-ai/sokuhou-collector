@@ -135,7 +135,47 @@ if (typeof window !== 'undefined' && window.addEventListener) {
     return r && +r[1] >= 1 && +r[1] <= 2200 ? [+r[1], 1, 1] : null;
   }
 
-  var api = { parseSpoken: parseSpoken, isLeap: isLeap, dim: dim, valid: valid, toDays: toDays, fromDays: fromDays, parse: parse, iso: iso, cmp: cmp, addDays: addDays, addMonths: addMonths,
+  /* extractDays(text, today): the days written in a pasted text (a search result, an answer of an AI, a flyer's words) -> [{date:[y,m,d], iso, time, title, context}], nearest first,
+     at most 8.  "2026年12月1日", "12月1日(火)", "12/1(火)", "令和8年12月1日" and a time near it ("19:00", "19時30分"; "開演" wins over "開場").  A day written without a year is the
+     next such day from today.  The title is the sentence the day stands in (the day and the time cut out).  Nothing is guessed beyond the words: no LLM, no network. */
+  var WD_CH = '月火水木金土日';
+  function extractDays(text, today) {
+    var src = String(text || '').normalize('NFKC').replace(/[\r\n]+/g, '\n'), found = [], seen = {}, re, m;
+    function push(y, mo, d, at, len) {
+      if (!valid(y, mo, d)) return;
+      var key = y + '-' + mo + '-' + d;
+      if (seen[key]) return;
+      seen[key] = 1;
+      var a = Math.max(src.lastIndexOf('\n', at), src.lastIndexOf('。', at), src.lastIndexOf('!', at), src.lastIndexOf('?', at)) + 1;
+      var bn = src.indexOf('\n', at + len), bk = src.indexOf('。', at + len), b = Math.min(bn < 0 ? 1e9 : bn, bk < 0 ? 1e9 : bk, src.length);
+      var sentence = src.slice(a, b).trim(), around = src.slice(at, Math.min(src.length, at + len + 60));
+      var time = '', tm = /(開演|開始|スタート|START)[^0-9]{0,6}(\d{1,2})[:時](\d{2})?/.exec(around) || /(\d{1,2}):(\d{2})/.exec(around) || /(\d{1,2})時(?:(\d{1,2})分)?/.exec(around);
+      if (tm) {
+        var hh = +(tm[1] && /^\d/.test(tm[1]) ? tm[1] : tm[2]), mm = tm[1] && /^\d/.test(tm[1]) ? +(tm[2] || 0) : +(tm[3] || 0);
+        if (hh >= 0 && hh <= 23 && mm >= 0 && mm <= 59) time = (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm;
+      }
+      var title = sentence.replace(/(令和|平成|昭和)?\d{1,4}年\s*\d{1,2}月\s*\d{1,2}日|\d{1,2}月\s*\d{1,2}日|\d{1,2}\/\d{1,2}/g, ' ').replace(/[\(（][月火水木金土日](?:曜日?)?[\)）]|[月火水木金土日]曜日/g, ' ').replace(/\d{1,2}[:時]\d{0,2}分?/g, ' ').replace(/[\s　、,:：\-~〜～]+/g, ' ').replace(/^[\s・●○■□▼▲]+|[\s　]+$/g, '').trim().slice(0, 40);
+      found.push({ date: [y, mo, d], iso: iso([y, mo, d]), time: time, title: title, context: src.slice(Math.max(0, at - 20), Math.min(src.length, at + len + 40)).replace(/\n/g, ' ').trim() });
+    }
+    function nextYear(mo, d) {
+      var y = today[0];
+      if (!valid(y, mo, d)) { if (valid(y + 1, mo, d)) return y + 1; return 0; }
+      return cmp([y, mo, d], today) >= -30 ? y : y + 1;   // a day up to a month past is still this year's
+    }
+    re = /(令和|平成|昭和)\s*(\d{1,2}|元)\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日/g;
+    while ((m = re.exec(src))) push(({ '令和': 2018, '平成': 1988, '昭和': 1925 })[m[1]] + (m[2] === '元' ? 1 : +m[2]), +m[3], +m[4], m.index, m[0].length);
+    re = /(\d{4})\s*[年\/.\-]\s*(\d{1,2})\s*[月\/.\-]\s*(\d{1,2})\s*日?/g;
+    while ((m = re.exec(src))) push(+m[1], +m[2], +m[3], m.index, m[0].length);
+    re = /(^|[^\d\/])(\d{1,2})\s*月\s*(\d{1,2})\s*日/g;
+    while ((m = re.exec(src))) { var y1 = nextYear(+m[2], +m[3]); if (y1) push(y1, +m[2], +m[3], m.index + m[1].length, m[0].length - m[1].length); }
+    re = /(^|[^\d\/.])(\d{1,2})\/(\d{1,2})(?=[\(（日]|[月火水木金土](?!\d)|\s|$|[。、])(?:[\(（][月火水木金土日][\)）])?/g;
+    while ((m = re.exec(src))) { var y2 = nextYear(+m[2], +m[3]); if (y2 && +m[2] <= 12) push(y2, +m[2], +m[3], m.index + m[1].length, m[0].length - m[1].length); }
+    found.sort(function (a, b) { return a.iso < b.iso ? -1 : a.iso > b.iso ? 1 : 0; });
+    var future = found.filter(function (x) { return cmp(x.date, today) >= -30; });
+    return (future.length ? future : found).slice(0, 8);
+  }
+
+  var api = { extractDays: extractDays, parseSpoken: parseSpoken, isLeap: isLeap, dim: dim, valid: valid, toDays: toDays, fromDays: fromDays, parse: parse, iso: iso, cmp: cmp, addDays: addDays, addMonths: addMonths,
     totalDays: totalDays, ymd: ymd, nextThousand: nextThousand, dayOfYear: dayOfYear, fiscalYear: fiscalYear, warekiToYear: warekiToYear, countdown: countdown, group: group };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.AtomouCore = api;

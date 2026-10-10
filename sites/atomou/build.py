@@ -955,6 +955,7 @@ def sw_js(c: Ctx) -> str:
             "self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });\n"
             "self.addEventListener('fetch', (e) => {\n"
             "  const r = e.request, u = new URL(r.url);\n"
+            "  if (r.method === 'POST' && u.origin === location.origin && u.pathname === '/card/') { e.respondWith((async () => { const f = await r.formData(); const t = JSON.stringify({ title: String(f.get('title') || '').slice(0, 200), text: String(f.get('text') || '').slice(0, 3000), url: String(f.get('url') || '').slice(0, 300) }); return Response.redirect('/card/#share=' + btoa(unescape(encodeURIComponent(t))).replace(/\\+/g, '-').replace(/\\//g, '_').replace(/=+$/, ''), 303); })()); return; }\n"
             "  if (r.method !== 'GET' || u.origin !== location.origin || u.pathname.startsWith('/api/')) return;\n"
             "  if (u.pathname.startsWith('/assets/')) { e.respondWith(caches.match(r).then((m) => m || fetch(r).then((x) => { if (x.ok) { const y = x.clone(); caches.open(CACHE).then((c) => c.put(r, y)); } return x; }))); return; }\n"
             "  if (r.mode === 'navigate') { e.respondWith(fetch(r).then((x) => { if (x.ok) { const y = x.clone(); caches.open(CACHE).then((c) => c.put(r, y)); } return x; }).catch(() => caches.match(r).then((m) => m || caches.match('/')))); }\n"
@@ -1057,7 +1058,7 @@ def legal(c: Ctx) -> dict:
                     "<h2>カレンダーの購読(任意)</h2>"
                     "<p>ジャンルのページから、公式の日付をカレンダーアプリに購読できます。購読用のファイルは、誰でも取得できる公開データです。購読すると、Google などのカレンダーのサービスが、定期的にこのファイルを取りに来ます。当サイトは、購読した人を知ることはありません。</p>"
                     "<h2>カードの共有(任意)</h2>"
-                    "<p>「カードを作って送る」で作ったカードの内容(題名・日付・ひとこと・やること)は、リンクのうち「#」より後ろに入ります。この部分は、ブラウザから当サイトのサーバーへは送られず、保存もされません。リンクを渡した相手の端末で、カードとして表示されます。リンクを送る相手と手段は、あなたが選びます。</p>"),
+                    "<p>「カードを作って送る」で作ったカードの内容(題名・日付・ひとこと・やること)は、リンクのうち「#」より後ろに入ります。この部分は、ブラウザから当サイトのサーバーへは送られず、保存もされません。リンクを渡した相手の端末で、カードとして表示されます。スマホの共有メニューから渡した文章も、サーバーには送られず、ご利用の端末の中で、カードを作るページに渡されます。リンクを送る相手と手段は、あなたが選びます。</p>"),
         finish=lambda html: c.finish(legal_wording(privacy_fix(c, html)), "legal"),
     )
 
@@ -1098,6 +1099,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     pages["manifest.webmanifest"] = json.dumps({
         "name": NAME, "short_name": "あと何日", "description": CATCH, "start_url": "/", "scope": "/", "display": "standalone", "lang": "ja",
         "background_color": "#F7F7F5", "theme_color": "#FFFFFF",
+        "share_target": {"action": "/card/", "method": "POST", "enctype": "application/x-www-form-urlencoded", "params": {"title": "title", "text": "text", "url": "url"}},
         "icons": [{"src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png"},
                   {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}]}, ensure_ascii=False, indent=1) + "\n"
     pages["sw.js"] = sw_js(c)
