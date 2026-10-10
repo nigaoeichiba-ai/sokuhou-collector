@@ -308,6 +308,10 @@ jobs:
             tar -xzf - -C .deploy_next
             test -f .deploy_next/index.html
             test -f .deploy_next/.htaccess
+            # atomou's live file (made every 10 minutes by atomou-live.yml) is not part of the build: it is carried over, so a deploy does not leave the app without it
+            for d in live demo/live demo.atomou.com/live; do
+              if [ -d \"public_html/\$d\" ]; then mkdir -p \".deploy_next/\$(dirname \$d)\"; cp -a \"public_html/\$d\" \".deploy_next/\$d\"; fi
+            done
             rm -rf .deploy_prev
             mv public_html .deploy_prev
             mv .deploy_next public_html

@@ -1,0 +1,28 @@
+{
+  "_about": "速報に使う公式フィード。出典の持ち主が、再利用のために出している RSS / RDF / Atom だけ。見出し・公式ページのアドレス・時刻・見出しに書かれた日付だけを使い、本文・画像・サムネイルは使わない。SNS・ニュースポータル(Google ニュース・Yahoo!ニュース)・報道各社・PR TIMES・NHK は、規約が許さないので入れない。on:false にすると止まる。rules は、見出しにパターンがあれば、その大/中/小に分ける(最初に当たったもの)。確かめた日: 2026-10-10(codex_live_sources_2026-10-11.md、各フィードの実取得)。",
+  "sources": [
+    {"id": "nintendo", "name": "任天堂 更新情報", "url": "https://www.nintendo.co.jp/news/whatsnew.xml", "group": "趣味・ゲーム・アニメ", "mid": "ゲームの発売日", "subject": "任天堂", "every_min": 10, "only": "発売|予約|配信|開始|発表|Direct|ダウンロード|アップデート|イベント"},
+    {"id": "playstation", "name": "PlayStation.Blog 日本語", "url": "https://blog.ja.playstation.com/feed/", "group": "趣味・ゲーム・アニメ", "mid": "ゲームの発売日", "subject": "PlayStation", "every_min": 10, "only": "発売|予約|配信|開始|発表|State of Play|PS Plus|アップデート|イベント"},
+    {"id": "capcom", "name": "カプコン お知らせ", "url": "https://www.capcom.co.jp/rss/news.xml", "group": "趣味・ゲーム・アニメ", "mid": "ゲームの発売日", "subject": "カプコン", "every_min": 15, "only": "発売|予約|配信|開始|発表|アップデート|イベント"},
+    {"id": "steam", "name": "Steam ニュース", "url": "https://store.steampowered.com/feeds/news.xml", "group": "趣味・ゲーム・アニメ", "mid": "ゲームの発売日", "subject": "Steam", "every_min": 30, "on": false},
+    {"id": "boj", "name": "日本銀行 新着情報", "url": "https://www.boj.or.jp/rss/whatsnew.xml", "group": "経済・政治", "mid": "日銀・金融", "subject": "日銀", "every_min": 10,
+     "rules": [{"re": "金融政策決定会合|公表予定|展望レポート|短観", "group": "経済・政治", "mid": "日銀・金融", "subject": "日銀"}], "skip": "学生向け|職員|採用|説明会"},
+    {"id": "cao", "name": "内閣府 新着情報", "url": "https://www.cao.go.jp/rss/news.rdf", "group": "経済・政治", "mid": "国会・政府の予定", "subject": "内閣府", "every_min": 15,
+     "rules": [{"re": "GDP|国民経済計算|景気", "group": "経済・政治", "mid": "経済指標・決算", "subject": "GDP"}, {"re": "世論調査|調査会|委員会|会議", "group": "経済・政治", "mid": "国会・政府の予定", "subject": "内閣府"}]},
+    {"id": "kantei", "name": "首相官邸 新着情報", "url": "https://www.kantei.go.jp/index-jnews.rdf", "group": "経済・政治", "mid": "国会・政府の予定", "subject": "首相官邸", "every_min": 15, "only": "会議|閣議|国会|訪問|会談|サミット|選挙|基本方針|決定|開催"},
+    {"id": "meti", "name": "経済産業省 新着情報", "url": "https://www.meti.go.jp/ml_index_release_atom.xml", "group": "経済・政治", "mid": "法律・制度の施行", "subject": "経済産業省", "every_min": 20,
+     "rules": [{"re": "補助金|公募|募集|申請", "group": "お金・税金・制度", "mid": "賃金・補助金・給付", "subject": "補助金"}], "only": "補助金|公募|募集|施行|開始|公表|発表|開催|締切"},
+    {"id": "mhlw", "name": "厚生労働省 新着情報", "url": "https://www.mhlw.go.jp/stf/news.rdf", "group": "お金・税金・制度", "mid": "法律・制度の変更", "subject": "厚生労働省", "every_min": 20,
+     "rules": [{"re": "年金|保険料|給付", "group": "お金・税金・制度", "mid": "年金・保険", "subject": "年金"}, {"re": "最低賃金|賃金", "group": "お金・税金・制度", "mid": "賃金・補助金・給付", "subject": "最低賃金"}, {"re": "予防接種|ワクチン|感染症|健康|検診|週間|月間", "group": "健康・くらし", "mid": "健康・医療の週間", "subject": "健康"}],
+     "only": "年金|保険|賃金|給付|施行|開始|予防接種|健康|検診|週間|月間|募集|締切|改正", "skip": "記者会見|大臣"},
+    {"id": "mlit", "name": "国土交通省 報道発表", "url": "https://www.mlit.go.jp/pressrelease.rdf", "group": "路線・交通", "mid": "ダイヤ改正・運行", "subject": "国土交通省", "every_min": 20,
+     "rules": [{"re": "運賃|料金", "group": "路線・交通", "mid": "運賃・料金の改定", "subject": "運賃"}, {"re": "空港|航空|就航", "group": "路線・交通", "mid": "航空・高速バス・道路", "subject": "航空"}, {"re": "高速道路|道路|ETC", "group": "路線・交通", "mid": "航空・高速バス・道路", "subject": "高速道路"}, {"re": "新駅|開業|新線|新型車両", "group": "路線・交通", "mid": "新駅・新路線・新型車両", "subject": "新路線"}],
+     "only": "鉄道|新幹線|運賃|料金|空港|航空|高速道路|バス|開業|新駅|ダイヤ|就航|ETC"},
+    {"id": "soumu", "name": "総務省 新着情報", "url": "https://www.soumu.go.jp/news.rdf", "group": "経済・政治", "mid": "法律・制度の施行", "subject": "総務省", "every_min": 20,
+     "rules": [{"re": "選挙|投票", "group": "経済・政治", "mid": "選挙", "subject": "選挙"}, {"re": "携帯|通信|電波|ネット|放送", "group": "スマホ・ネット・アプリ", "mid": "携帯・回線", "subject": "通信"}], "only": "選挙|投票|携帯|通信|電波|放送|施行|開始|統計|公表|募集"},
+    {"id": "jaxa", "name": "JAXA プレスリリース", "url": "https://www.jaxa.jp/rss/press_j.rdf", "group": "天気・災害", "mid": "日食・宇宙開発", "subject": "宇宙開発", "every_min": 30, "only": "打ち上げ|打上げ|ロケット|探査機|観測|予定|公開|開催"},
+    {"id": "microsoft", "name": "Microsoft Windows リリース情報", "url": "https://learn.microsoft.com/api/search/rss?search=windows+release+health&locale=ja-jp", "group": "スマホ・ネット・アプリ", "mid": "アプリ・ソフト", "subject": "Windows", "every_min": 60, "on": false},
+    {"id": "apple-dev", "name": "Apple Developer ニュース", "url": "https://developer.apple.com/news/rss/news.rss", "group": "スマホ・ネット・アプリ", "mid": "パソコン・スマホ本体", "subject": "Apple", "every_min": 30, "only": "release|available|deadline|iOS|iPadOS|macOS|Xcode|requirements"},
+    {"id": "android", "name": "Android Developers Blog", "url": "https://android-developers.googleblog.com/feeds/posts/default", "group": "スマホ・ネット・アプリ", "mid": "パソコン・スマホ本体", "subject": "Android", "every_min": 60, "only": "Android 1|release|available|beta|stable"}
+  ]
+}

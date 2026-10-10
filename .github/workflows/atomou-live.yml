@@ -1,0 +1,83 @@
+name: atomou-live
+
+# atomou.com 速報: every 10 minutes, read the OFFICIAL feeds listed in data/atomou/live_sources.json (sites/atomou/live.py: ministries, the central bank, a game maker's own news, platform blogs),
+# and put the small file live.v1.json on the server where the app reads it (assets/live.js).  The page behind every headline is the official one; nothing but the headline, its address,
+# the time, the genre and a day written in the headline is kept.  Social networks, news portals and press agencies are never read.
+# No commit is made (so no deploy starts).  The state (ETags, first-seen times) lives in the Actions cache.
+# Needs the same repository secrets as the deploy (XSERVER_SSH_KEY, XSERVER_HOST, XSERVER_USER); without them the file is only made and shown on the run's summary.
+# A schedule on GitHub can be late by minutes; a later step can move this to a cron on the server itself.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atomou-live
+  cancel-in-progress: true
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Restore the state
+        uses: actions/cache/restore@v4
+        with:
+          path: live_state.json
+          key: atomou-live-state-${{ github.run_id }}
+          restore-keys: atomou-live-state-
+      - name: Read the official feeds
+        run: |
+          python sites/atomou/live.py --state live_state.json --out live.v1.json | tee live.log
+          {
+            echo "### atomou live"
+            echo '```'
+            cat live.log
+            echo '```'
+            echo "items: $(python -c "import json;print(len(json.load(open('live.v1.json',encoding='utf-8'))['items']))")"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Save the state
+        uses: actions/cache/save@v4
+        with:
+          path: live_state.json
+          key: atomou-live-state-${{ github.run_id }}
+      - name: Put the file on the server
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then echo "server secrets are not set: the file is only made"; exit 0; fi
+          python -c "import json;d=json.load(open('live.v1.json',encoding='utf-8'));assert d['v']==1 and isinstance(d['items'],list)"
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver && chmod 600 ~/.ssh/id_xserver
+          printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 15' '  StrictHostKeyChecking accept-new' > ~/.ssh/config && chmod 600 ~/.ssh/config
+          ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /dev/null || true
+          # the app is at the site's root (when public) and in the hidden demo folders (now): the file goes to each place that already has a live folder or an app
+          cat live.v1.json | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" '
+            set -e
+            cd "$HOME/atomou.com"
+            tmp=$(mktemp)
+            cat > "$tmp"
+            for d in public_html public_html/demo public_html/demo.atomou.com; do
+              if [ -f "$d/index.html" ] && [ -f "$d/assets/catalog.json" ]; then
+                mkdir -p "$d/live"
+                cp "$tmp" "$d/live/live.v1.json.new"
+                mv "$d/live/live.v1.json.new" "$d/live/live.v1.json"
+                chmod 644 "$d/live/live.v1.json"
+                echo "put: $d/live/live.v1.json"
+              fi
+            done
+            rm -f "$tmp"
+          '
