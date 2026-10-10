@@ -34,5 +34,7 @@ jobs:
             echo "== php binaries"; ls /usr/bin/php* 2>/dev/null | head; ls /opt/php-*/bin/php 2>/dev/null | head
             echo "== site"; cd "$HOME/atomou.com" 2>/dev/null && ls; ls public_html/live 2>/dev/null | head
             echo "== crontab"; crontab -l 2>&1 | head -20
+            echo "== live cron"; ls -la --time-style=full-iso "$HOME/atomou.com/script/live/last.log" "$HOME/atomou.com/script/live/live.v1.json" 2>&1 | cut -c1-120; head -8 "$HOME/atomou.com/script/live/last.log" 2>&1; date
+            echo "== words inbox"; ls -la "$HOME/atomou.com/inbox" 2>&1 | head -12
             echo "== tls to the feeds"; python3 -c "import ssl,urllib.request;print(urllib.request.urlopen(\"https://www.meti.go.jp/ml_index_release_atom.xml\",timeout=15).status)" 2>&1 | tail -1
           '
