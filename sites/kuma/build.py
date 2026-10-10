@@ -22,6 +22,7 @@ sys.path.insert(0, str(ROOT))
 
 from sites.kuma import charts, content, digest  # noqa: E402
 from sites.kuma import captures as captures_mod  # noqa: E402
+from sites.kuma import cite as cite_mod  # noqa: E402
 from sites.kuma import live as live_mod  # noqa: E402
 from sites.kuma.fmt import day_text, fy_label, fy_start, jp_date, md, n, ratio_text, table  # noqa: E402
 from sokuhou import prefectures as pf  # noqa: E402
@@ -209,7 +210,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
                      f'<p class="alert">{fy_label(d["cur"])}は、自治体が公表した記録が{n(len(lv["records"]))}件(直近30日は{n(live_mod.last30(lv["records"], lv["today"]))}件)。'
                      f'最新は{md(lv["records"][0]["at"][:10])}({live_mod.ago_text(lv["records"][0]["at"], lv["today"])})です。</p>\n'
                      f'<ul class="mini-list wide">{items}</ul>\n'
-                     f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図で見る(現在地の近く)</a> / <a href="/digest/">週ごとのまとめ</a>{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''}</p>\n')
+                     f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図で見る(現在地の近く)</a> / <a href="/digest/">週ごとのまとめ</a>{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''} / <a href="/cite/">データの出典・引用のしかた</a></p>\n')
     news_block = ""
     if d["notices"]:
         items = "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
@@ -720,6 +721,9 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     d = prepare(raw)
     d["captures"] = captures_mod.prepare(captures)
     links = links or {}
+    from sokuhou.sources import kumalib   # a source on the stop list is shown nowhere (list, counts, map, feed, CSV, digest, sources page)
+    prefs = {k: v for k, v in (prefs or {}).items() if not kumalib.is_stopped(k)} or None
+    otsu = None if kumalib.is_stopped("otsu") else otsu
     live = prepare_live(otsu)
     d["live"] = live
     d["live_prefs"] = prepare_prefs(prefs)
@@ -731,6 +735,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     if cfg.get("rakuten_affiliate_id"):
         nav = nav[:-1] + [("グッズ(PR)", "/goods/", "/goods/")] + nav[-1:]
     SITE = {**SITE, "nav": nav}
+    # the footer of every page links to where the numbers come from (the page exists only with live data); SITE is module-wide, so set it every time
+    SITE["source_html"] = SOURCE_HTML + (' 数字の出典・数え方・引用のしかたは、<a href="/cite/">こちら</a>。' if any_live else "")
     d["lv"] = live_mod.prepare_live(d, today or datetime.now(JST).date()) if any_live else None
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
     for kind in ("sightings", "change", "injuries"):
@@ -757,6 +763,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         for slug in lv["by_pref"]:
             pages[f"live/{slug}/feed.xml"] = live_mod.feed_xml(lv, cfg, slug)
         pages["map/index.html"] = live_mod.map_page(page_fn, d, lv)
+        pages["cite/index.html"] = cite_mod.cite_page(page_fn, d, lv, cfg, cfg["site_url"].rstrip("/"))
         pages["map/points.json"] = live_mod.points_json(lv)
         if live_mod.licensed_sources(lv):
             pages["data/index.html"] = live_mod.data_page(page_fn, d, lv, cfg["site_url"].rstrip("/"))

@@ -174,7 +174,7 @@ GROUPS: dict[str, list[Source]] = {
 def run_group(sources: list[Source], data_dir: Path) -> tuple[list[str], dict[str, str]]:
     changed, errors = [], {}
     for src in sources:
-        if src.name in kumalib.STOPPED:      # the publisher asked us to stop: not collected (and the site ignores its stored file)
+        if kumalib.is_stopped(src.name):      # the publisher asked us to stop: not collected (and the site ignores its stored file)
             continue
         path = data_dir / f"{src.name}.json"
         try:
