@@ -9,7 +9,7 @@ name: atomou-live
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "3-59/10 * * * *"   # minutes 3, 13, 23 ...: not on the round minutes where the deploys and the other jobs start
   workflow_dispatch:
 
 permissions:
@@ -34,7 +34,9 @@ jobs:
       - name: Restore the state
         uses: actions/cache/restore@v4
         with:
-          path: live_state.json
+          path: |
+            live_state.json
+            live_uploaded.txt
           key: atomou-live-state-${{ github.run_id }}
           restore-keys: atomou-live-state-
       - name: Read the official feeds
@@ -47,11 +49,6 @@ jobs:
             echo '```'
             echo "items: $(python -c "import json;print(len(json.load(open('live.v1.json',encoding='utf-8'))['items']))")"
           } >> "$GITHUB_STEP_SUMMARY"
-      - name: Save the state
-        uses: actions/cache/save@v4
-        with:
-          path: live_state.json
-          key: atomou-live-state-${{ github.run_id }}
       - name: Put the file on the server
         env:
           KEY: ${{ secrets.XSERVER_SSH_KEY }}
@@ -60,6 +57,11 @@ jobs:
         run: |
           if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then echo "server secrets are not set: the file is only made"; exit 0; fi
           python -c "import json;d=json.load(open('live.v1.json',encoding='utf-8'));assert d['v']==1 and isinstance(d['items'],list)"
+          # The server is called only when the headlines changed (or after 6 hours, so that a lost file comes back): most 10-minute runs find nothing new, and the same server takes the deploys' SSH too
+          new=$(python -c "import json,hashlib;d=json.load(open('live.v1.json',encoding='utf-8'));print(hashlib.sha256(json.dumps(d['items'],sort_keys=True,ensure_ascii=False).encode()).hexdigest())")
+          now=$(date +%s); old=""; at=0
+          if [ -f live_uploaded.txt ]; then read -r old at < live_uploaded.txt || true; fi
+          if [ "$new" = "$old" ] && [ $((now - ${at:-0})) -lt 21600 ]; then echo "no change since the last put ($((now - at)) s ago): the server is not called"; exit 0; fi
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "$KEY" > ~/.ssh/id_xserver && chmod 600 ~/.ssh/id_xserver
           printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 15' '  StrictHostKeyChecking accept-new' > ~/.ssh/config && chmod 600 ~/.ssh/config
@@ -81,3 +83,12 @@ jobs:
             done
             rm -f "$tmp"
           '
+          echo "$new $now" > live_uploaded.txt
+      - name: Save the state
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            live_state.json
+            live_uploaded.txt
+          key: atomou-live-state-${{ github.run_id }}
