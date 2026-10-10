@@ -98,9 +98,15 @@
       A.toast('画像を保存しました。');
     }, 'image/png');
   }
+  var lastBump = 0;
+  function bump() {   // one more send for the free plan's room; a quick run of clicks counts once
+    var now = Date.now();
+    if (!A.tier || now - lastBump < 20000) return;
+    lastBump = now; A.tier.shared();
+  }
   function copy(m) {
     var t = m.text + (m.url ? '\n' + m.url : '');
-    function done() { A.toast('文面とリンクをコピーしました。'); }
+    function done() { A.toast('文面とリンクをコピーしました。'); bump(); }
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, fallback);
     else fallback();
     function fallback() {
@@ -129,12 +135,12 @@
     if (!box) return;
     var what = t.getAttribute('data-share') || t.getAttribute('data-share-to'), m = message(box);
     A.stat('act:share:' + what);
-    if (A.tier) A.tier.shared();
+    if (t.hasAttribute('data-share-to')) bump();
     if (t.hasAttribute('data-share-to')) { refresh(box); return; }   // a link: the browser follows it
     ev.preventDefault();
     if (what === 'copy') copy(m);
-    else if (what === 'image') saveImage(box);
-    else if (what === 'native' && navigator.share) navigator.share({ text: m.text, url: m.url }).catch(function () { /* closed */ });
+    else if (what === 'image') { saveImage(box); bump(); }
+    else if (what === 'native' && navigator.share) navigator.share({ text: m.text, url: m.url }).then(bump, function () { /* closed */ });
   });
 
   /* "Googleカレンダーに追加": the address that opens Google Calendar's own form with the day filled in (a whole day: the end is the next day) */

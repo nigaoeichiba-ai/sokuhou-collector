@@ -891,6 +891,7 @@
       $$('[data-g-chip]').forEach(function (b) { b.setAttribute('aria-pressed', (b.getAttribute('data-g-chip') === st.g) ? 'true' : 'false'); });
       var tb = $('#f-son'); if (tb) tb.setAttribute('aria-pressed', st.t ? 'true' : 'false');
       var gi = CONF.slugs.indexOf(st.g);
+      levels(gi);   // first: it drops a middle or small choice the catalogue does not have (a broken address), then the list is made
       var hits = cat.filter(function (c) {
         if (c.status === 'ended') return false;
         if (gi >= 0 && c.group !== CONF.groups[gi]) return false;
@@ -901,7 +902,6 @@
         return terms.every(function (t) { return hay.indexOf(t) >= 0; });
       }).sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
       clearTimeout(statT); statT = setTimeout(function () { if (terms.length) stat(hits.length ? 'act:search_hit' : 'act:search_miss'); }, 1500);
-      levels(gi);
       var shown = hits.slice(0, 60);
       render(out, shown.map(catItem));
       info.textContent = hits.length ? hits.length + '件' + (hits.length > 60 ? '(近い順に60件)' : '') : '';
@@ -915,7 +915,7 @@
     }
     function levels(gi) {   // 中 chips of the chosen genre (counts of the days still to come), and 小 chips of the chosen 中
       var mb = $('#mid-chips'), sb = $('#sub-chips'), g = gi >= 0 ? CONF.groups[gi] : '', nm = {}, ns = {}, ml, sl;
-      if (!mb || !sb) return;
+      if (!mb || !sb || !cat.length) return;   // before the catalogue is here nothing can be judged
       cat.forEach(function (c) {
         if (c.status === 'ended' || c.group !== g || !c.mid) return;
         nm[c.mid] = (nm[c.mid] || 0) + 1;
@@ -923,6 +923,7 @@
       });
       ml = Object.keys(nm).sort(function (a, b) { return nm[b] - nm[a] || (a < b ? -1 : 1); });
       if (st.m && !nm[st.m]) { st.m = ''; st.s = ''; }
+      if (st.s && !ns[st.s]) st.s = '';
       sl = Object.keys(ns).sort(function (a, b) { return ns[b] - ns[a] || (a < b ? -1 : 1); }).slice(0, 24);
       mb.hidden = !g || ml.length < 2;
       mb.innerHTML = mb.hidden ? '' : '<button type="button" class="chip" data-m-chip="" aria-pressed="' + (st.m ? 'false' : 'true') + '">' + H(g) + 'すべて</button>' + ml.map(function (m) {
@@ -1183,8 +1184,10 @@
   /* ---------- category page (filter by sub-category) ---------- */
   function pageCategory() {
     var chips = $$('[data-cat-chip]'), cards = $$('#grid .card'), subBox = $('#subchips'), mid = '', sub = '';
-    var hm = /[#&]m=([^&]+)/.exec(location.hash || '');
+    var hm = /[#&]m=([^&]+)/.exec(location.hash || ''), hs = /[#&]s=([^&]+)/.exec(location.hash || '');
     if (hm) { try { mid = decodeURIComponent(hm[1]); } catch (e) { mid = ''; } }
+    if (hs && mid) { try { sub = decodeURIComponent(hs[1]); } catch (e) { sub = ''; } }
+    function keep() { try { history.replaceState(null, '', location.pathname + (mid ? '#m=' + encodeURIComponent(mid) + (sub ? '&s=' + encodeURIComponent(sub) : '') : '')); } catch (e) { /* ignore */ } }
     function apply() {   // 大 is the page; 中 = data-cat; 小 = data-sub
       chips.forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-cat-chip') === mid ? 'true' : 'false'); });
       cards.forEach(function (card) { card.hidden = (!!mid && card.getAttribute('data-cat') !== mid) || (!!sub && card.getAttribute('data-sub') !== sub); });
@@ -1200,16 +1203,16 @@
     chips.forEach(function (b) {
       b.addEventListener('click', function () {
         mid = b.getAttribute('data-cat-chip'); sub = '';
-        try { history.replaceState(null, '', location.pathname + (mid ? '#m=' + encodeURIComponent(mid) : '')); } catch (e) { /* ignore */ }
-        apply();
+        keep(); apply();
       });
     });
     if (subBox) subBox.addEventListener('click', function (ev) {
       var b = ev.target.closest ? ev.target.closest('[data-sub-chip]') : null;
       if (!b) return;
-      sub = b.getAttribute('data-sub-chip'); apply();
+      sub = b.getAttribute('data-sub-chip'); keep(); apply();
     });
-    if (mid && !chips.some(function (x) { return x.getAttribute('data-cat-chip') === mid; })) mid = '';
+    if (mid && !chips.some(function (x) { return x.getAttribute('data-cat-chip') === mid; })) { mid = ''; sub = ''; }
+    if (sub && !cards.some(function (c) { return c.getAttribute('data-cat') === mid && c.getAttribute('data-sub') === sub; })) sub = '';
     apply();
   }
 

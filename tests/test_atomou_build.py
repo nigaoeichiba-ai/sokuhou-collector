@@ -627,6 +627,18 @@ class AppInChrome(BuildOnce):
         self.assertRegex(dom, r'<a href="https://example\.com/live/2026"[^>]*>example\.com</a></li>')
         self.assertIn("主催者の公式ページ", dom)
 
+    def test_a_broken_sub_in_the_address_is_dropped_and_a_good_one_is_kept_on_the_genre_page(self):
+        dom = html.unescape(self.dom("/search/?g=sports&m=野球&s=ありもしない題材"))
+        self.assertRegex(dom, r'<p class="small muted" id="found"[^>]*>\d+件')       # not an empty list
+        self.assertIn('data-m-chip="野球" aria-pressed="true"', dom)
+        dom = html.unescape(self.dom("/c/sports/#m=マラソン・駅伝&s=箱根駅伝"))
+        shown = re.findall(r'<article class="card"(?![^>]*hidden)[^>]*data-sub="([^"]+)"', dom)
+        self.assertTrue(shown and set(shown) == {"箱根駅伝"}, set(shown))
+
+    def test_the_setup_shows_an_example_under_every_genre(self):
+        dom = html.unescape(self.dom("/", "&setup=1"))
+        self.assertEqual(len(re.findall(r'<span class="chip-t">[^<]+<small>', dom)), 10)
+
     def test_search_with_no_match_offers_to_record_it(self):
         dom = self.dom("/search/?q=zzzqqqxxx")
         self.assertRegex(dom, r'id="none"(?![^>]*hidden)')
