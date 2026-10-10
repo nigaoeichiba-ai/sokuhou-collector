@@ -265,7 +265,7 @@ class NegativeTests(unittest.TestCase):
 
     def test_the_old_wording_of_the_spec_is_found(self):
         old = copy.deepcopy(usecases.by_slug("exam-university"))
-        old["steps"] = ["ホームの『もうすぐ』を押す", "『試験・資格』から『大学入試』を選ぶ", "志望に合う試験のカードで『登録』を押す"]
+        old["steps"] = ["ホームの『もうすぐ』を押す", "『学校・資格』から『大学入試』を選ぶ", "志望に合う試験のカードで『登録』を押す"]
         found = check_screens(old)
         self.assertTrue(any("『登録』" in x for x in found), found)
         self.assertTrue(any("『もうすぐ』" in x for x in found), found)
@@ -277,7 +277,7 @@ class NegativeTests(unittest.TestCase):
 
     def test_steps_that_do_not_match_the_kind_of_scenario_are_found(self):
         u = copy.deepcopy(usecases.by_slug("exam-university"))
-        u["steps"] = ["ホームのジャンル『試験・資格』を押す", "『大学入試』で絞り込む", "カードを開く"]
+        u["steps"] = ["ホームのジャンル『学校・資格』を押す", "『大学入試』で絞り込む", "カードを開く"]
         self.assertTrue(any("☆ 予定に入れる" in x for x in check_screens(u)))
         u["steps"] = ["『大学入試』で絞り込む", "カードで『☆ 予定に入れる』を押す", "『カレンダー』で確かめる"]
         self.assertTrue(any("ジャンル名" in x for x in check_screens(u)))
@@ -287,19 +287,19 @@ class NegativeTests(unittest.TestCase):
 
     def test_the_old_save_and_download_wording_is_found(self):
         old = copy.deepcopy(usecases.by_slug("exam-university"))
-        old["steps"] = ["ホームのジャンル『試験・資格』を押す", "カードの『☆ 保存する』を押す", "『カレンダーに入れる』を押して、ファイルを開いて追加する"]
+        old["steps"] = ["ホームのジャンル『学校・資格』を押す", "カードの『☆ 保存する』を押す", "『カレンダーに入れる』を押して、ファイルを開いて追加する"]
         found = check_screens(old)
         self.assertTrue(any("保存する" in x for x in found), found)
         self.assertTrue(any("カレンダーに入れる" in x for x in found), found)
         self.assertTrue(any("ファイルを開" in x for x in found), found)
-        old["steps"] = ["ホームのジャンル『試験・資格』を押す", "カードの『☆ 予定に入れる』を押す", "カレンダーのファイルをダウンロードする"]
+        old["steps"] = ["ホームのジャンル『学校・資格』を押す", "カードの『☆ 予定に入れる』を押す", "カレンダーのファイルをダウンロードする"]
         self.assertTrue(any("ダウンロード" in x for x in check_screens(old)))
-        old["steps"] = ["ホームのジャンル『試験・資格』を押す", "カードの『☆ 予定に入れる』を押す", "マイページの『まとめてカレンダーに入れる』を押す"]
+        old["steps"] = ["ホームのジャンル『学校・資格』を押す", "カードの『☆ 予定に入れる』を押す", "マイページの『まとめてカレンダーに入れる』を押す"]
         self.assertTrue(any("カレンダーに入れる" in x for x in check_screens(old)))
 
     def test_the_real_buttons_are_not_flagged(self):
         ok = copy.deepcopy(usecases.by_slug("exam-university"))
-        ok["steps"] = ["ホームのジャンル『試験・資格』を押す", "カードの『☆ 予定に入れる』を押す(入ると『★ 予定に入っています』に変わる)",
+        ok["steps"] = ["ホームのジャンル『学校・資格』を押す", "カードの『☆ 予定に入れる』を押す(入ると『★ 予定に入っています』に変わる)",
                        "『詳細』で公式ページを見る", "『開く』や『消す』を使う", "『やること』を書いて『追加』を押す"]
         self.assertEqual(check_screens(ok), [])
 
