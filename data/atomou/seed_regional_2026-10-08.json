@@ -1010,7 +1010,8 @@
     "verified": true,
     "sensitivity": "none",
     "ad_ok": true,
-    "note": ""
+    "note": "",
+    "keep": true
   },
   {
     "title": "神戸ルミナリエ(第32回)",

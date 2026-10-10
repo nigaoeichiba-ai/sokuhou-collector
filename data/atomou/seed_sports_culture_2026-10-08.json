@@ -59,7 +59,8 @@
   "sensitivity": "none",
   "ad_ok": true,
   "note": "第7戦は11月1日(日)(7戦目まで行った場合)。出場チームはクライマックスシリーズ後に決まる。悪天候で変更の可能性。",
-  "title_note": "野球の話と分かる言葉が無い。例: 「プロ野球 SMBC日本シリーズ2026」"
+  "title_note": "野球の話と分かる言葉が無い。例: 「プロ野球 SMBC日本シリーズ2026」",
+  "keep": true
  },
  {
   "title": "MLBワールドシリーズ2026が開幕",
@@ -421,7 +422,8 @@
   "verified": true,
   "sensitivity": "none",
   "ad_ok": true,
-  "note": "大阪マラソン公式(osaka-marathon.com)にも2027年2月28日(日)開催と記載。ランナー募集は公式で案内済みで、募集の締切は未確認。"
+  "note": "大阪マラソン公式(osaka-marathon.com)にも2027年2月28日(日)開催と記載。ランナー募集は公式で案内済みで、募集の締切は未確認。",
+  "keep": true
  },
  {
   "title": "東京マラソン2027",
@@ -877,7 +879,8 @@
   "verified": true,
   "sensitivity": "none",
   "ad_ok": true,
-  "note": ""
+  "note": "",
+  "keep": true
  },
  {
   "title": "第39回東京国際映画祭",
@@ -898,7 +901,8 @@
   "verified": true,
   "sensitivity": "none",
   "ad_ok": true,
-  "note": ""
+  "note": "",
+  "keep": true
  },
  {
   "title": "ノーベル平和賞の発表",
@@ -998,7 +1002,8 @@
   "verified": true,
   "sensitivity": "none",
   "ad_ok": true,
-  "note": "東京国際フォーラム ホールA。"
+  "note": "東京国際フォーラム ホールA。",
+  "keep": true
  },
  {
   "title": "F1日本グランプリ2027(鈴鹿)",

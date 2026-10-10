@@ -107,7 +107,7 @@ def quote_has_date(c: dict, precision: str) -> bool:
     if precision == "month":
         return norm(f"{m}月") in qn or bool(re.search(rf"{y}[/.]{m}\b", q))
     en = MONTHS_EN[m - 1]
-    forms = [f"{m}月{d}日", f"{m}/{d}", f"{y}年{m}月{d}日", f"{y}.{m}.{d}", f"{y}/{m}/{d}", f"{m}.{d}", f"{d} {en} {y}", f"{en} {d}, {y}", f"{en} {d} {y}", f"{d} {en[:3]} {y}", f"{en[:3]} {d}, {y}"]
+    forms = [f"{m}月{d}日", f"{m}/{d}", f"{y}年{m}月{d}日", f"{y}.{m}.{d}", f"{y}/{m}/{d}", f"{m}.{d}", f"{d} {en} {y}", f"{en} {d}, {y}", f"{en} {d} {y}", f"{d} {en[:3]} {y}", f"{en[:3]} {d}, {y}", f"{d} {en}", f"{en} {d}", f"{d} {en[:3]}", f"{en[:3]} {d}", f"{d}th {en}", f"{d}th of {en}"]
     return any(norm(x).lower() in qn.lower() for x in forms) or bool(re.search(rf"{d}日|{d}[(（]", q))
 
 
