@@ -161,7 +161,7 @@ h1,h2,h3,.brand{font-family:var(--font-head,var(--font))}
 
 /* ================= cat: the genre tiles on the home page ================= */
 .cats a:has(.mark[data-g="1"]){--gc:var(--g1)}.cats a:has(.mark[data-g="2"]){--gc:var(--g2)}.cats a:has(.mark[data-g="3"]){--gc:var(--g3)}
-.cats a:has(.mark[data-g="4"]){--gc:var(--g4)}.cats a:has(.mark[data-g="5"]){--gc:var(--g5)}.cats a:has(.mark[data-g="6"]){--gc:var(--g6)}.cats a:has(.mark[data-g="7"]){--gc:var(--g7)}.cats a:has(.mark[data-g="8"]){--gc:var(--g8)}.cats a:has(.mark[data-g="9"]){--gc:var(--g9)}.cats a:has(.mark[data-g="10"]){--gc:var(--g10)}
+.cats a:has(.mark[data-g="4"]){--gc:var(--g4)}.cats a:has(.mark[data-g="5"]){--gc:var(--g5)}.cats a:has(.mark[data-g="6"]){--gc:var(--g6)}.cats a:has(.mark[data-g="7"]){--gc:var(--g7)}.cats a:has(.mark[data-g="8"]){--gc:var(--g8)}.cats a:has(.mark[data-g="9"]){--gc:var(--g9)}.cats a:has(.mark[data-g="10"]){--gc:var(--g10)}.cats a:has(.mark[data-g="11"]){--gc:var(--g11)}.cats a:has(.mark[data-g="12"]){--gc:var(--g12)}.cats a:has(.mark[data-g="13"]){--gc:var(--g13)}.cats a:has(.mark[data-g="14"]){--gc:var(--g14)}.cats a:has(.mark[data-g="15"]){--gc:var(--g15)}
 :root[data-cat="chip"] .cats{grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),1fr));gap:8px}
 :root[data-cat="chip"] .cats a{min-height:48px;padding:4px 14px;border-radius:999px;font-size:.95rem;border-width:2px}
 :root[data-cat="chip"] .cats a small{display:inline}

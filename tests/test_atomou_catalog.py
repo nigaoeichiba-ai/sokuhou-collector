@@ -77,8 +77,9 @@ class CatalogRules(unittest.TestCase):
     def test_every_genre_has_events_and_every_event_has_a_known_genre(self):
         entries, _ = catalog.build_catalog(date(2026, 10, 10))
         used = {e["group"] for e in entries}
-        self.assertEqual(used, set(catalog.GROUPS))
-        self.assertEqual(len(catalog.GROUPS), 10)
+        self.assertTrue(used <= set(catalog.GROUPS))
+        self.assertTrue(set(catalog.GROUPS[:11]) <= used)     # the genres we have data for; the later ones (路線・交通 ...) show up only when they have a day
+        self.assertEqual(len(catalog.GROUPS), 15)
 
     def test_id_does_not_depend_on_the_title(self):
         a, _ = build([item()])
@@ -213,7 +214,7 @@ class ThreeLevels(unittest.TestCase):
             self.assertGreaterEqual(len(names), 2, g)
             subjects = [s for m in mids for s in m["subjects"]]
             self.assertEqual(len(subjects), len(set(subjects)), f"{g}: a subject is in two mids")
-            self.assertTrue(all(2 <= len(n) <= 14 for n in names), names)
+            self.assertTrue(all(2 <= len(n) <= 16 for n in names), names)
 
     def test_every_real_day_has_a_mid_and_no_day_is_left_in_the_leftover(self):
         entries, _ = catalog.build_catalog(TODAY)

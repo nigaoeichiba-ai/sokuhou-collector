@@ -18,15 +18,15 @@
     if (done) S.prefs.setup = true;
     A.persist();
   }
-  var EX = { 'お金・税金・制度': '最低賃金・年金・確定申告', '買い物・料金・セール': '年賀状・セール・値上げ', 'スポーツ': '野球・マラソン・剣道', '学校・資格': '入試・英検・TOEIC', '天文・暦': '流星群・満月・節分',
-    'おでかけ・旅行': '祭り・紅葉・イルミネーション', '通信・IT・アプリ': 'スマホ料金・アプリの終了', '趣味・ゲーム・アニメ': 'コミケ・将棋・手芸', 'エンタメ・音楽・賞': '紅白・ライブ・映画賞', '暮らし・健康・グルメ': '健康週間・結婚・食のイベント' };
+  var EX = { 'お金・税金・制度': '最低賃金・年金・確定申告', '買い物・料金・セール': '年賀状・セール・値上げ', 'スポーツ': '野球・マラソン・剣道', '学校・資格': '入試・英検・TOEIC', '天気・災害': '流星群・満月・節分',
+    'おでかけ・旅行': '祭り・紅葉・イルミネーション', 'スマホ・ネット・アプリ': 'スマホ料金・アプリの終了', '趣味・ゲーム・アニメ': 'コミケ・将棋・手芸', 'エンタメ・音楽・賞': '紅白・映画賞・ノーベル賞', '健康・くらし': '健康週間・予防接種・結婚', 'グルメ・食のイベント': 'ボジョレー・カニ漁・食べ歩き', '路線・交通': 'ダイヤ改正・運賃・観光列車', '経済・政治': '選挙・日銀・法律の施行', '国際': '国際会議・海外の行事', 'イベント・チケット': 'ライブ・展覧会・チケット発売' };
   function marks(g) { var i = CONF.groups.indexOf(g) + 1; return '<span class="mark m' + i + '" data-g="' + i + '" aria-hidden="true"></span>'; }
   function head(n) { return '<h2 id="setup-h">はじめに、あなたに近い日を選びます</h2><p class="step-n" aria-live="polite">' + n + ' / 3</p>'; }
   function view() {
     var h = '';
     if (step === 1) {
       h = head(1) + '<p class="intro-lead">気になるジャンルを選んでください(いくつでも)。選んだジャンルの日が、ホームの先頭に並びます。</p><div class="chiprow wrap" role="group" aria-label="ジャンル">' +
-        CONF.groups.map(function (g) { return '<button type="button" class="chip" data-g-pick="' + H(g) + '" aria-pressed="' + (sel.indexOf(g) >= 0) + '">' + marks(g) + '<span class="chip-t">' + H(g) + (EX[g] ? '<small>' + H(EX[g]) + '</small>' : '') + '</span></button>'; }).join('') + '</div>' +
+        (CONF.shown || CONF.groups).map(function (g) { return '<button type="button" class="chip" data-g-pick="' + H(g) + '" aria-pressed="' + (sel.indexOf(g) >= 0) + '">' + marks(g) + '<span class="chip-t">' + H(g) + (EX[g] ? '<small>' + H(EX[g]) + '</small>' : '') + '</span></button>'; }).join('') + '</div>' +
         '<p class="intro-btns"><button type="button" class="btn" data-setup="next"' + (sel.length ? '' : ' disabled') + '>次へ</button> <button type="button" class="btn ghost" data-setup="later">あとで選ぶ</button></p>';
     } else if (step === 2) {
       h = head(2) + '<p class="intro-lead">お住まいの都道府県を選ぶと、近くの日もホームに出ます(選ばなくても使えます)。</p><div class="field"><label class="vh" for="setup-reg">都道府県</label><select id="setup-reg"><option value="">選ばない</option>' +
