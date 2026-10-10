@@ -15,7 +15,7 @@ ASSETS = Path(__file__).resolve().parents[1] / "sites/atomou/assets"
 CONFIG = json.loads((Path(__file__).resolve().parents[1] / "sites/atomou/config.json").read_text(encoding="utf-8"))
 
 PAGE = """<!doctype html><meta charset="utf-8"><script>
-window.ATOMOU = { v: 'x', groups: ['締切・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' } }, plans: %(plans)s };
+window.ATOMOU = { v: 'x', groups: ['手続き・お金'], slugs: ['deadline'], skins: { basic: { card: 'plain' } }, plans: %(plans)s };
 localStorage.setItem('atomou.v1', %(stored)s);
 %(member)s
 </script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script><script src="%(tier)s"></script>

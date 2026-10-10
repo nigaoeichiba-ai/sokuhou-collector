@@ -23,7 +23,7 @@
   function remindPreset(item) {   // the notices that suit the kind of day (a test, a trip and a birthday are not prepared for alike)
     var g = item.g ? (A.CONF.groups || [])[item.g - 1] : '', k = item.own ? ((A.findEntry(item.id) || {}).kind || '') : '';
     if (item.own) return k === 'until' ? [30, 7, 1] : k === 'anniversary' || k === 'birthday' ? [7, 1] : k === 'event' ? [1] : k === 'since' ? [] : [7, 1];
-    return g === '試験・資格' ? [30, 14, 7, 1] : g === '締切・制度' ? [14, 7, 3, 1] : g === '消費・セール' ? [7, 1] : [7, 1];
+    return g === '学校・資格' ? [30, 14, 7, 1] : g === '手続き・お金' ? [14, 7, 3, 1] : g === '買い物・サービス' ? [7, 1] : [7, 1];
   }
   function notesOf(key) { var n = S().notes[key] || { memo: '', tasks: [] }; if (!n.remind) n.remind = []; return n; }
   function setNotes(key, n) {
