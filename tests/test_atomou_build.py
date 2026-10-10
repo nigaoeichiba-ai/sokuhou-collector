@@ -3,6 +3,7 @@ import functools
 import html
 import http.server
 import json
+import json as _json
 import re
 import subprocess
 import sys
@@ -572,6 +573,26 @@ class AppInChrome(BuildOnce):
         self.assertIn("7日前(11/24)", text)
         self.assertNotIn("<b>ワンマン</b>", dom.split('id="x-card"')[1])      # the markup in a title is dropped, never run
         self.assertIn("自分の予定帳に入れる", text)
+
+    def test_words_handed_over_from_a_share_sheet_are_read_for_days(self):
+        import base64
+        import json as _j
+        payload = {"title": "〇〇ライブ", "text": "2026年12月1日(火) 開演19:00 渋谷", "url": ""}
+        pack = base64.urlsafe_b64encode(_j.dumps(payload, ensure_ascii=False).encode("utf-8")).decode().rstrip("=")
+        with tempfile.TemporaryDirectory() as prof:
+            r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={prof}", "--virtual-time-budget=6000",
+                                "--dump-dom", f"{self.base}/card/?today=2026-10-10#share={pack}"], capture_output=True, timeout=120)
+        dom = html.unescape(r.stdout.decode("utf-8", "replace"))
+        self.assertIn('data-cand="0"', dom)                  # the day was found in the words that came from the other app
+        self.assertIn("2026年12月1日(火) 19:00", re.sub(r"<[^>]+>", "", dom))
+
+    def test_the_phones_share_sheet_can_hand_words_to_the_card_page_without_the_server_seeing_them(self):
+        manifest = _json.loads(self.rel["manifest.webmanifest"])
+        st = manifest["share_target"]
+        self.assertEqual((st["action"], st["method"]), ("/card/", "POST"))      # a POST is caught by the service worker; a GET would put the words in the address the server sees
+        sw = self.rel["sw.js"]
+        self.assertIn("pathname === '/card/'", sw)
+        self.assertIn("'/card/#share='", sw)
 
     def test_home_edit_mode_shows_a_bar_on_every_block(self):
         dom = self.dom("/?edit=1")
