@@ -130,6 +130,7 @@ class ReceiverText(unittest.TestCase):
     def test_it_generates_with_the_site_address_and_without_placeholders(self):
         from sites.atomou import build
         g = build.share_php()
+        self.assertIn("$SITE_URL = 'https://demo.example';", build.share_php({"site_url": "https://demo.example/"}))
         self.assertIn("$SITE_URL = 'https://atomou.com';", g)
         self.assertNotIn("__SITE_URL__", g)
 
