@@ -1193,7 +1193,7 @@
       cards.forEach(function (card) { if (mid && card.getAttribute('data-cat') === mid) { var s = card.getAttribute('data-sub') || ''; if (s) n[s] = (n[s] || 0) + 1; } });
       list = Object.keys(n).sort(function (a, b) { return n[b] - n[a] || (a < b ? -1 : 1); }).slice(0, 24);
       subBox.hidden = !(mid && list.length > 1);
-      subBox.innerHTML = subBox.hidden ? '' : '<button type="button" class="chip" data-sub-chip="" aria-pressed="' + (sub ? 'false' : 'true') + '">すべて</button>' + list.map(function (s) {
+      subBox.innerHTML = subBox.hidden ? '' : '<button type="button" class="chip" data-sub-chip="" aria-pressed="' + (sub ? 'false' : 'true') + '">' + H(mid) + 'すべて</button>' + list.map(function (s) {
         return '<button type="button" class="chip" data-sub-chip="' + H(s) + '" aria-pressed="' + (sub === s ? 'true' : 'false') + '">' + H(s) + '<small> ' + n[s] + '</small></button>';
       }).join('');
     }
