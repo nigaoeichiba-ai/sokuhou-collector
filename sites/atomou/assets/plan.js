@@ -211,12 +211,13 @@
           '<h3 class="x-h3">あと何日の知らせ</h3><p class="hint">日にちが近づくたびに、知らせます。通知をオンにしているときに届きます。カレンダーのファイルにも入ります。</p><div class="chiprow">' +
           [100, 60, 30, 14, 7, 3, 1].map(function (r) {
             var ok = allowed(r);
+            if (!ok && !(T && T.plusOpen)) return '';   // a day only the plus plan has is not offered until that plan exists
             return '<button type="button" class="chip" data-remind="' + r + '" aria-pressed="' + (rem.indexOf(r) >= 0) + '"' + (ok ? '' : ' disabled') + '>' + (r === 1 ? '前日' : r + '日前') + (ok ? '' : '(プラス)') + '</button>';
           }).join('') + '</div>' +
           '<p class="share-btns"><button type="button" class="btn small ghost" data-remind-preset="' + sug.filter(allowed).join(',') + '">おすすめにする(' + sug.filter(allowed).map(function (r) { return r === 1 ? '前日' : r + '日前'; }).join('・') + ')</button> <button type="button" class="btn small ghost" data-remind-preset="">あと何日の知らせをなしにする</button></p>' +
           (T && T.plus() ? '<div class="field"><label for="r-custom">日数を自分で決める(1〜365)</label><div class="x-task"><input type="number" id="r-custom" min="1" max="365" inputmode="numeric" placeholder="例: 45"><button type="button" class="btn small" id="r-custom-add">足す</button></div></div>' +
             '<div class="field"><label for="r-slot">知らせる時間帯</label><select id="r-slot"><option value="m"' + (nn.remindSlot === 'e' ? '' : ' selected') + '>朝</option><option value="e"' + (nn.remindSlot === 'e' ? ' selected' : '') + '>前の日の夜</option></select></div>' :
-            (free ? '<p class="hint">プラスプランでは、日数を自由に決めたり、朝か夜かを選んだりできます。</p>' : '')) +
+            (free && T && T.plusOpen ? '<p class="hint">プラスプランでは、日数を自由に決めたり、朝か夜かを選んだりできます。</p>' : '')) +
           (rem.some(function (r) { return [100, 60, 30, 14, 7, 3, 1].indexOf(r) < 0; }) ? '<p class="hint">自分で決めた日数: ' + rem.filter(function (r) { return [100, 60, 30, 14, 7, 3, 1].indexOf(r) < 0; }).map(function (r) { return '<button type="button" class="chip" data-remind="' + r + '" aria-pressed="true">' + r + '日前 ×</button>'; }).join(' ') + '</p>' : '') +
           '</section>';
       }

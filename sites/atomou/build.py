@@ -301,7 +301,7 @@ class Ctx:
         if cfg.get("vapid_public"):
             conf["vapid"] = cfg["vapid_public"]
         if isinstance(cfg.get("plans"), dict) and cfg["plans"].get("on"):
-            conf["plans"] = {k: cfg["plans"][k] for k in ("on", "free_cards", "shares_per_slot", "extra_max", "free_remind") if k in cfg["plans"]}
+            conf["plans"] = {k: cfg["plans"][k] for k in ("on", "plus_open", "free_cards", "shares_per_slot", "extra_max", "free_remind") if k in cfg["plans"]}
         if members_on(cfg):
             conf["members"] = {"tiers": {t["id"]: t.get("label", t["id"]) for t in cfg.get("member_tiers") or []},
                                "ref": int(cfg.get("member_ref_months", 6)), "give": int(cfg.get("member_ref_give_months", 1)), "cap": int(cfg.get("member_ref_cap", 12))}
