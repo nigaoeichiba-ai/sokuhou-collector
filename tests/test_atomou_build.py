@@ -795,10 +795,15 @@ class AppInChrome(BuildOnce):
         self.assertIn("pathname === '/card/'", sw)
         self.assertIn("'/card/#share='", sw)
 
-    def test_home_edit_mode_shows_a_bar_on_every_block(self):
+    def test_home_customize_panel_lists_every_part_and_opens_from_the_top_button(self):
+        top = self.dom("/")
+        self.assertIn('id="custom-open"', top)
+        self.assertRegex(top, r'id="custom"[^>]*hidden')                      # closed until the button is pressed
+        self.assertNotIn('class="block-bar"', top)
         dom = self.dom("/?edit=1")
-        self.assertEqual(dom.count('class="block-bar"'), 10)  # todo, live, search, cats, daily, mine, interests, region, soon, usecases
-        self.assertNotIn('class="block-bar"', self.dom("/"))
+        self.assertNotRegex(dom, r'id="custom"[^>]*hidden')
+        self.assertEqual(dom.count('data-p="grip"'), 10)    # todo, live, search, cats, daily, mine, interests, region, soon, usecases
+        self.assertEqual(dom.count('data-p="vis"'), 10)
 
     def test_no_uncaught_script_error_on_any_main_page(self):
         # 2026-10-08: /add/ threw "Cannot read properties of undefined (reading 'quiet')" before a kind was chosen; dump-dom cannot see the console,

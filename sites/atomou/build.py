@@ -417,6 +417,8 @@ def home_page(c: Ctx) -> str:
 <nav class="chiprow" aria-label="残せる日の例"><a class="chip" href="/add/?kind=anniversary">記念日</a><a class="chip" href="/add/?kind=birthday">誕生日</a><a class="chip" href="/add/?kind=until">楽しみな日・期限</a><a class="chip" href="/add/?kind=memorial">大切な日</a></nav>
 </div></section>
 <div id="season" class="season" hidden></div>
+<p class="custom-row"><button type="button" class="btn small ghost" id="custom-open" aria-expanded="false" aria-controls="custom">ホームをカスタマイズ</button></p>
+<section class="panel custom" id="custom" aria-labelledby="custom-h" hidden></section>
 <div id="blocks">
 <section id="todo" data-block="todo" data-title="今日の予定・やること" hidden>
 <div class="head-row"><h2>今日の予定・やること</h2><div class="grow"><a class="btn small ghost" href="/calendar/">カレンダー</a></div></div>
@@ -456,7 +458,7 @@ def home_page(c: Ctx) -> str:
 <div class="uc-grid compact">{ucs}</div>
 </section>
 </div>
-<p class="edit-home"><button type="button" class="btn small ghost" id="pager-toggle" aria-pressed="false">めくって見る</button> <button type="button" class="btn small ghost" id="edit-home" aria-pressed="false">ホームを編集</button> <button type="button" class="btn small ghost" id="reset-home" hidden>元に戻す</button></p>"""
+<p class="edit-home"><button type="button" class="btn small ghost" id="pager-toggle" aria-pressed="false">めくって見る</button></p>"""
     return c.page("/", f"{NAME}|{CATCH}", "あの日からもう何日、あの日まであと何日。日付を選ぶだけで数えて、カレンダーで見られます。締切・試験・大会・お祭りの確認済みの日付は、ワンタップで予定に入れられます。", body, "home")
 
 
@@ -570,7 +572,7 @@ def my_page(c: Ctx) -> str:
 <select id="p-alarm"><option value="morning">当日の朝</option><option value="eve">前日の夜</option><option value="week">1週間前の朝</option><option value="none">なし</option></select></div>
 <div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する(個人は特定されません。<a href="/privacy/#stats">詳しい説明</a>)</label></div>
 <p><a href="/skins/">きせかえ</a></p>
-<p><a href="/?edit=1">ホームを編集</a></p>
+<p><a href="/?edit=1">ホームをカスタマイズ(部品の表示・並べ替え)</a></p>
 <p><a href="/?intro=1">はじめての方へ(このサイトの説明)を見る</a></p>
 <p><button type="button" class="btn small ghost" data-guide="start">使い方を見る</button></p>
 </div>
@@ -948,7 +950,7 @@ def manual_page(c: Ctx) -> str:
 <dt>{btn("並べ替え", True)}</dt><dd>カードの順をボタンで変えます。ドラッグ(スマホは長押し)でも動かせます。</dd>
 <dt>{btn("さがす")}</dt><dd>言葉で日付を探します。「年賀状」「流星群」のように入れます。</dd>
 <dt>{btn("きせかえ", True)}</dt><dd>色や形、文字の大きさを変えます。季節のきせかえもあります。</dd>
-<dt>{btn("ホームを編集", True)}</dt><dd>ホームに表示する項目の順を変え、非表示にできます。ホームのいちばん下にあります。</dd>
+<dt>{btn("ホームをカスタマイズ", True)}</dt><dd>ホームに表示する部品を選び、順番を変えられます。つかんで動かすこともできます。ホームの上のほう、ボタンの下にあります。</dd>
 </dl>
 
 <h2>よくある質問</h2>

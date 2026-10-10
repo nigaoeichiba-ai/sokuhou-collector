@@ -211,8 +211,6 @@ header.site nav a[href="/add/"]{background:var(--accent);color:var(--on-accent)}
 /* home blocks, tips, today page */
 [data-block]{margin:1.2rem 0}
 .block-off{display:none}
-.editing .block-off{display:block;opacity:.45}
-.block-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:6px 10px;margin-bottom:8px;border:2px dashed var(--accent);border-radius:12px;background:var(--surface2);color:var(--text)}
 .bar-btns{display:flex;gap:6px}
 .mini[disabled]{opacity:.4;cursor:default}
 .edit-home{text-align:center;margin:2rem 0 0}
@@ -483,3 +481,9 @@ body{word-break:auto-phrase;text-wrap:pretty}
 .eg-cards{display:grid;gap:10px;margin:.4rem 0 .8rem;pointer-events:none;user-select:none}@media (min-width:600px){.eg-cards{grid-template-columns:1fr 1fr}}
 .setup .chip[aria-pressed="true"] .chip-t small,.setup .chip.on .chip-t small{color:inherit}
 .tablewrap{overflow-x:auto;max-width:100%}
+/* the home page's customize panel: every part as a row (handle, show/hide, up, down) */
+.custom-row{margin:.4rem 0 0;text-align:right}.custom{margin:.6rem 0 1rem}.custom h2{margin:0 0 .3rem;font-size:1.1rem}
+.parts{list-style:none;margin:.6rem 0;padding:0;display:grid;gap:8px}.parts li{display:flex;align-items:center;gap:8px;padding:6px 8px;border:2px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text)}
+.parts li.drag{border-color:var(--accent);box-shadow:var(--shadow,0 2px 8px rgba(0,0,0,.15))}.parts .grip{touch-action:none;cursor:grab;flex:none}.parts li.drag .grip{cursor:grabbing}
+.part-t{flex:1;min-width:0;display:flex;align-items:center;gap:10px;font-weight:700;cursor:pointer}.part-t input{flex:none;width:24px;height:24px;margin:0}.part-t span{display:grid;gap:1px;min-width:0;overflow-wrap:anywhere}.part-t small{font-weight:400;font-size:.78rem;color:var(--muted)}
+.part-btns{display:flex;flex-wrap:wrap;gap:8px;margin:.6rem 0 0}
