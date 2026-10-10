@@ -75,7 +75,17 @@ def fullwidth_to_int(text: str) -> int | None:
 # nothing else, and the data file in the public repository holds nothing else either.  The adapter aggregates in memory.
 
 COUNTS_UA = "kuma-sokuho-collector/1.0 (+https://kuma-sokuho.com/about/)"
-STOPPED: set[str] = set()   # source names whose publisher asked us to stop: never collected, never shown (see docs/KUMA_COMPETITORS_AND_ROADMAP.md)
+STOPPED: set[str] = set()   # sources whose publisher asked us to stop: never collected, never shown (see docs/KUMA_COMPETITORS_AND_ROADMAP.md)
+
+
+def _base_name(name: str) -> str:
+    """'fukushima_kuma' (the collector's name), 'fukushima' (the site's key) and 'otsu_bear' / 'otsu' are one source each."""
+    return name.removesuffix("_kuma").removesuffix("_bear")
+
+
+def is_stopped(name: str) -> bool:
+    """True if `name` (collector name or site key) is on the stop list, whichever of the two spellings the list uses."""
+    return _base_name(name) in {_base_name(s) for s in STOPPED}
 
 
 def package_counts(*, source: str, credit: str, update_note: str, as_of: date, rows: list[dict], page: str, files: list[str],
