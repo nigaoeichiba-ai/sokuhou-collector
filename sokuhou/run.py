@@ -26,8 +26,8 @@ from sokuhou.sources import (
     nara_kuma,
     niigata_kuma,
     okayama_kuma,
-    otsu_bear,
     otsu_fire,
+    otsu_kuma,
     saitama_kuma,
     sorachi_kuma,
     toyama_kuma,
@@ -163,7 +163,7 @@ GROUPS: dict[str, list[Source]] = {
         Source("aomori_kuma", aomori_kuma.collect, check_counts_bear),
         Source("nara_kuma", nara_kuma.collect, check_counts_bear),
         Source("saitama_kuma", saitama_kuma.collect, check_counts_bear),
-        Source("otsu_bear", otsu_bear.collect, check_bear),
+        Source("otsu_kuma", otsu_kuma.collect, check_counts_bear),
     ],
     "frequent": [
         Source("otsu_fire", otsu_fire.collect, check_fire, store.merge_incidents),

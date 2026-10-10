@@ -75,7 +75,7 @@ class DigestPagesTest(unittest.TestCase):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name)
         full = {**GOOD, "source": "miyagi", "source_page": "https://example.jp/m", "credit": "出典:テスト", "update_note": "更新します"}
-        build.render_site(raw, CFG, cls.out, release=True, otsu=None, prefs={"miyagi": full})
+        build.render_site(raw, CFG, cls.out, release=True, prefs={"miyagi": full})
 
     @classmethod
     def tearDownClass(cls):
@@ -102,5 +102,5 @@ class DigestPagesTest(unittest.TestCase):
         raw = raw_data()
         raw["notices"] = []
         with tempfile.TemporaryDirectory() as tmp:
-            files = build.render_site(raw, CFG, Path(tmp), release=True, otsu=None, prefs=None)
+            files = build.render_site(raw, CFG, Path(tmp), release=True, prefs=None)
         self.assertFalse([f for f in files if f.startswith("digest/")])

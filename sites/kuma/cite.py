@@ -14,7 +14,6 @@ from sokuhou import prefectures as pf
 from sokuhou.sitekit import crumbs, esc
 
 NO_LICENSE_TEXT = "再利用の許可が明示されていないため、件数と最新の日付だけを載せています"
-OTSU_LICENSE_TEXT = "利用条件が示されていないため、CSV・再配布の対象にしていません"
 RATE_LIMIT_TEXT = "取得元ごとの数え方が違うため、取得元どうしの件数は、足したり比べたりしないでください"
 
 
@@ -31,8 +30,8 @@ def source_rows(d: dict, lv: dict) -> list[dict]:
     for k, i in lv["infos"].items():
         meta = LIVE_SOURCES.get(k, {})
         out.append({"key": k, "pref": i["pref"], "name": i["name"], "mode": "records", "count": per_src[k], "latest": i["as_of"],
-                    "fetched": i["fetched"], "page": i["page"], "note": i["note"], "scope": meta.get("scope", "" if k != "otsu" else "大津市のみ"),
-                    "license": meta.get("license") or OTSU_LICENSE_TEXT, "months": _month_counts(recs, k)})
+                    "fetched": i["fetched"], "page": i["page"], "note": i["note"], "scope": meta.get("scope", ""),
+                    "license": meta["license"], "months": _month_counts(recs, k)})
     for c in lv["counts"]:
         meta = LIVE_SOURCES.get(c["key"], {})
         out.append({"key": c["key"], "pref": c["pref"], "name": c["name"], "mode": "counts", "count": c["total"], "latest": c["latest"],
@@ -81,14 +80,11 @@ def cite_page(page, d: dict, lv: dict, cfg: dict, base: str) -> str:
     rows = source_rows(d, lv)
     rec_prefs, cnt_prefs, none_prefs = covered_prefs(rows)
     n_rec = sum(1 for r in rows if r["mode"] == "records")
-    n_lic = sum(1 for r in rows if r["mode"] == "records" and r["key"] in LIVE_SOURCES and LIVE_SOURCES[r["key"]].get("license"))
     n_cnt = sum(1 for r in rows if r["mode"] == "counts")
-    nolic = [r["name"] for r in rows if r["mode"] == "records" and not (r["key"] in LIVE_SOURCES and LIVE_SOURCES[r["key"]].get("license"))]
-    nolic_text = f"{'・'.join(nolic)}は、利用条件が示されていないため、CSV・再配布の対象にしていません。" if nolic else ""
     src_table = table(
         ["取得元", "載せ方", f"{fy_label(cur)}の件数", "最新の日付", "取得日", "利用条件", "取得元の更新"],
         [[f'<a href="{esc(r["page"])}" rel="noopener" target="_blank">{esc(r["name"])}</a>' + (f"<br><small>{esc(r['scope'])}のみ</small>" if r["scope"] and not r["scope"].endswith("のみ") else (f"<br><small>{esc(r['scope'])}</small>" if r["scope"] else "")),
-          ("記録(一覧・市町村・CSV)" if r["license"] != OTSU_LICENSE_TEXT else "記録(一覧・市町村。CSVには入れていません)") if r["mode"] == "records" else "件数のみ", n(r["count"]), md(r["latest"]), md(r["fetched"]), esc(r["license"]), esc(r["note"])]
+          "記録(一覧・市町村・CSV)" if r["mode"] == "records" else "件数のみ", n(r["count"]), md(r["latest"]), md(r["fetched"]), esc(r["license"]), esc(r["note"])]
          for r in rows])
     cmp_rows, items, months = ministry_rows(d, rows)
     same = sum(1 for x in items if x["env"] == x["ours"])
@@ -120,7 +116,7 @@ def cite_page(page, d: dict, lv: dict, cfg: dict, base: str) -> str:
 <h1>データの出典・数え方・引用のしかた</h1>
 <p class="lead">このサイトの数字が、どこから来て、どう数えられ、どこまで信頼できるかを、公開します。報道・研究・自治体の資料に、お使いいただいて構いません。使うときは、下の「引用のしかた」のとおり、出典を書いてください。基準日: {jp_date(today.isoformat())}(このページは、データが更新されるたびに作り直します)。</p>
 <h2>1. 取得元の一覧({n(len(rows))}か所)</h2>
-<p>当サイトは、<strong>自治体・国などの公式の公開データだけ</strong>を使っています。報道・SNS・住民の投稿・他のサイトが集めたデータは、使っていません。詳しい記録(一覧・市町村ページ・地図)まで載せているのは{n(n_rec)}か所で、そのうち再利用の許可が明示されている{n(n_lic)}か所は、CSV にも入れています。{esc(nolic_text)}許可が明示されていない{n(n_cnt)}か所は、市町村・月・件数・最新の日付だけを載せています。環境省の出没件数と人身被害の資料(速報値)は、<a href="/ranking/sightings/">都道府県ランキング</a>などで使っています。</p>
+<p>当サイトは、<strong>自治体・国などの公式の公開データだけ</strong>を使っています。報道・SNS・住民の投稿・他のサイトが集めたデータは、使っていません。再利用の許可が明示されている{n(n_rec)}か所は、詳しい記録(一覧・市町村ページ・地図・CSV)まで載せ、許可が明示されていない{n(n_cnt)}か所は、市町村・月・件数・最新の日付だけを載せています(大津市のように、市のページが公開している情報でも、許可が明示されていなければ、件数だけです)。環境省の出没件数と人身被害の資料(速報値)は、<a href="/ranking/sightings/">都道府県ランキング</a>などで使っています。</p>
 {src_table}
 <p class="notice">{esc(RATE_LIMIT_TEXT)}。「取得日」は、当サイトが取得元を確認した日です。各取得元の出典の書き方は、各ページの末尾にあります。{csv_note}</p>
 {covered}
