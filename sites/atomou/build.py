@@ -209,7 +209,10 @@ def card_html(e: dict, *, own: bool = False, actions: bool | None = None, big: b
     p = e.get("precision") or "day"
     cls = "card" + (" quiet" if e.get("quiet") else "") + (" big" if big else "")
     direction, word, num, rel, sub = count_parts(e["date"], p)
-    h = [f'<article class="{cls}" data-key="{esc(key)}" data-title="{esc(e["title"])}" data-date="{esc(e["date"])}" data-p="{p}" data-dir="{direction}" data-long="{1 if len(num) > 5 else 0}"'
+    est = bool(e.get("estimated")) and not own
+    if est:
+        rel = "(予想)"                  # an estimate: the count is to the usual day of the year, and says so
+    h = [f'<article class="{cls}" data-key="{esc(key)}" data-title="{esc(e["title"])}" data-date="{esc(e["date"])}" data-p="{p}"{" data-est=" + chr(34) + "1" + chr(34) if est else ""} data-dir="{direction}" data-long="{1 if len(num) > 5 else 0}"'
          + (f' data-g="{g}"' if g else "") + (f' data-cat="{esc(e["mid"])}"' if e.get("mid") else "") + (f' data-sub="{esc(e["subject"])}"' if e.get("mid") and e.get("subject") else "") + ">"]
     subject = e.get("subject") or (e.get("category") if not own else None) or e["kind"]
     what = e.get("what") or (e.get("kind") if not own else None)
@@ -221,7 +224,8 @@ def card_html(e: dict, *, own: bool = False, actions: bool | None = None, big: b
     linked = '<a href="/e/' + e["id"] + '/">' + title + "</a>" if link and not own else title
     h.append(f'<h3 class="c-title">{linked}</h3>')
     pl = f'<span class="pl"><b>{"対象地域" if e.get("kind") in AREA_KINDS else "場所"}</b>{esc(place)}</span>' if place and place != "全国" and not own else ""
-    h.append(f'<p class="c-date">{esc(fmt_date(e["date"], p))}{" " + esc(e["kind"]) if not own and e.get("kind") else ""}{pl}</p>')
+    shown_date = (e.get("typical") or fmt_date(e["date"], p)) if est else fmt_date(e["date"], p)
+    h.append(f'<p class="c-date">{esc(shown_date)}{" " + esc(e["kind"]) if not own and e.get("kind") else ""}{pl}</p>')
     if own:
         h.append('<div class="c-next"></div>')
     if actions:
@@ -682,7 +686,7 @@ def og_pages(live: list[dict]) -> dict[str, bytes]:
         i = catalog.GROUPS.index(e["group"]) + 1 if e["group"] in catalog.GROUPS else 1
         h = str(base.get(f"g{i}", "#1D4ED8")).lstrip("#")
         end = f"〜{fmt_date(e['date_end'])}" if e.get("date_end") else ""
-        out[f"og/{e['id']}.png"] = ogimage.card(title=e["title"], date_text=fmt_date(e["date"], e["precision"]) + end,
+        out[f"og/{e['id']}.png"] = ogimage.card(title=e["title"], date_text=((e.get("typical") or "") + "(予想)" if e.get("estimated") and e.get("typical") else fmt_date(e["date"], e["precision"]) + end),
                                                 field=f"{e['group']} / {e['subject']}" if e.get("subject") else e["group"], colour=tuple(int(h[k:k + 2], 16) for k in (0, 2, 4)))
     return out
 
@@ -746,10 +750,19 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     near = [] if quiet or e["precision"] != "day" else sorted(
         (r for r in live if r["id"] != e["id"] and not r["quiet"] and r["precision"] == "day" and r not in rel and abs((date.fromisoformat(r["date"]) - d).days) <= 10),
         key=lambda r: (abs((date.fromisoformat(r["date"]) - d).days), r["date"], r["id"]))[:4]   # the days around it: a reason to look at the next page
+    est = bool(e.get("estimated"))
     sentence = (f"{e['title']}は、{fmt}{end}です。" if e["precision"] == "day" else f"{e['title']}は、{fmt}です。") + (
         f"{today.year}年{today.month}月{today.day}日の時点で、{word}。" if e["precision"] == "day" else "")
+    if est:
+        sentence = (f"{e['title']}の今回の日付は、まだ公式に発表されていません。{e.get('typical') or '例年の時期'}に行われているため、その頃として、日数を数えています(予想)。"
+                    "公式に発表されたら、この日付を更新します。")
     guide = GUIDES.get(e["subject"])
-    art = articles.article_html(e, fmt_date, host(e["source_url"]), today, guide)   # what the day is, when and where, what to check, the usual questions
+    art = "" if est else articles.article_html(e, fmt_date, host(e["source_url"]), today, guide)   # what the day is, when and where, what to check, the usual questions
+    hist = ""
+    if e.get("history"):
+        rows = "".join(f"<tr><th scope=\"row\">{int(h[:4])}年</th><td>{esc(fmt_date(h))}</td></tr>" for h in e["history"])
+        hist = (f'<h2>これまでの日付</h2><p class="small muted">公式のページで確かめた、過去の日付です。</p>'
+                f'<table class="info-table"><tbody>{rows}</tbody></table>')
     same = [] if quiet else sorted((r for r in live if r["subject"] == e["subject"] and r["id"] != e["id"] and not r["quiet"]), key=lambda r: (r["date"], r["id"]))[:6]
     body = crumbs([("トップ", "/"), (e["group"], f"/c/{GROUP_SLUG[e['group']]}/")] + ([(e["mid"], f"/c/{GROUP_SLUG[e['group']]}/#m={quote(e['mid'])}")] if e.get("mid") and e["mid"] != catalog.MID_OTHER else []) + [(e["title"], None)]) + f"""
 <h1>{esc(e['title'])}</h1>
@@ -757,19 +770,22 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 {'<p class="small muted">上のカードの日数は、今日の日付をもとに数えています。</p>' if art else f'<p>{esc(sentence)}<span class="small muted">上のカードの日数は、今日の日付をもとに数えています。</span></p>'}
 <p class="small muted src-line">出典: <a href="#src">{esc(host(e['source_url']))}</a>(確認日 {esc(e['checked_on'])})</p>
 {art}
+{hist}
 {'<p class="notice quiet">この日は、静かにお知らせします。</p>' if quiet else ""}
 <h2 id="src">出典と確認日</h2>
 <dl class="info"><dt>出典</dt><dd><a href="{esc(e['source_url'])}" rel="noopener nofollow" target="_blank">{esc(host(e['source_url']))}</a></dd>
 <dt>確認日</dt><dd>{esc(e['checked_on'])}</dd>{f"<dt>出典の文</dt><dd>{esc(e['source_quote'])}</dd>" if e.get('source_quote') else ""}</dl>
 <p class="small muted">日付や時刻は変わることがあります。出典の公式ページで、最新の情報をご確認ください。</p>
-<p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを追加</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の予定として記録する</a>{(' <a class="btn small ghost" href="' + esc(google_calendar_url(e, str(c.cfg['site_url']).rstrip('/') + '/e/' + e['id'] + '/')) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a>') if e["precision"] == "day" else ""}</p>
+<p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを追加</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の予定として記録する</a>{(' <a class="btn small ghost" href="' + esc(google_calendar_url(e, str(c.cfg['site_url']).rstrip('/') + '/e/' + e['id'] + '/')) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a>') if e["precision"] == "day" and not est else ""}</p>
 {"" if quiet else share_block(c, e)}
 {"" if quiet else '<p class="int-line"><button type="button" class="btn small ghost" data-int-toggle="' + esc(e["subject"]) + '">「' + esc(e["subject"]) + '」を好きな分野に入れる</button> <a class="small" href="/interests/">好きな分野を選ぶ</a></p>'}
-{f'<details class="more"><summary>ほかのカレンダーアプリに入れる</summary><p class="hint">Outlook は下のボタンから入れられます。iPhone の「カレンダー」、Yahoo!カレンダー、TimeTree などには、ファイルを作って取り込みます。</p><p><a class="btn small ghost" href="{esc(outlook_calendar_url(e, str(c.cfg["site_url"]).rstrip("/") + "/e/" + e["id"] + "/"))}" target="_blank" rel="noopener">Outlookに追加</a> <button type="button" class="btn small ghost" data-ics-for="c:{e["id"]}">ファイルを作る</button></p></details>' if e["precision"] == "day" else ""}
+{f'<details class="more"><summary>ほかのカレンダーアプリに入れる</summary><p class="hint">Outlook は下のボタンから入れられます。iPhone の「カレンダー」、Yahoo!カレンダー、TimeTree などには、ファイルを作って取り込みます。</p><p><a class="btn small ghost" href="{esc(outlook_calendar_url(e, str(c.cfg["site_url"]).rstrip("/") + "/e/" + e["id"] + "/"))}" target="_blank" rel="noopener">Outlookに追加</a> <button type="button" class="btn small ghost" data-ics-for="c:{e["id"]}">ファイルを作る</button></p></details>' if e["precision"] == "day" and not est else ""}
 {(f'<h2>同じ「{esc(e["subject"])}」の日</h2><p class="saveall"><button type="button" class="btn small" data-saveall="{",".join([e["id"]] + [r["id"] for r in same])}">この日を含む{len(same) + 1}件をまとめて予定に入れる</button></p><div class="cards">' + "".join(card_html(r) for r in same) + "</div>") if same else ""}
 {('<h2>同じジャンルの日</h2><div class="cards">' + "".join(card_html(r) for r in rel) + "</div>") if rel else ""}
 {('<h2>同じ頃の日</h2><p class="hint">この日の前後10日にある日です。</p><div class="cards">' + "".join(card_html(r) for r in near) + "</div>") if near else ""}"""
     suffix = "からもう何日？" if e["status"] == "ended" else "はいつ？あと何日？"
+    if est and e.get("typical"):
+        fmt, end = e["typical"] + "(予想)", ""
     title = f"{e['title']}{suffix} {fmt} | {NAME}"
     place = (e.get("place") or "").strip()
     desc = f"{e['title']}は{fmt}{end}" + (f"、{place}" if place and place not in ("全国", "地域") else "") + "。" + (f"{guide['about'].split('。')[0]}。" if guide else "") + "出典と確認日つき。あと何日かを数えて、予定に入れられます。"
