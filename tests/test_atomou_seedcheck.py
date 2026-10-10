@@ -64,6 +64,21 @@ class Checking(unittest.TestCase):
         ok, bad = run([cand(), cand()])
         self.assertEqual((len(ok), bad[0][1]), (1, "duplicate"))
 
+    def test_a_japanese_era_date_counts_as_the_western_date(self):
+        self.assertEqual(seedcheck.era_years(2026), ["令和8年"])
+        self.assertIn("令和元年", seedcheck.era_years(2019))
+        self.assertEqual(seedcheck.era_years(1995), ["平成7年"])
+        self.assertTrue(seedcheck.text_has_full_date("2025-01-12", "令和7年1月12日(日)決勝"))
+        self.assertTrue(seedcheck.text_has_full_date("2025-01-12", "令和７年１月１２日"))
+        self.assertFalse(seedcheck.text_has_full_date("2025-01-12", "令和8年1月12日"))      # a wrong year is not matched
+        self.assertTrue(seedcheck.text_has_date("2030-01-01", "令和12年開催", "year"))
+        page = "決勝は令和7年1月12日(日)でした"
+        pages = {"https://official.example/est": page}
+        c = cand(title="予想の行事", date="2027-01-12", estimated=True, typical="例年1月12日ごろ", series="est-2027", history=["2025-01-12"], history_url="https://official.example/est",
+                 source_url="https://official.example/est", source_quote="令和7年1月12日(日)")
+        ok, bad = seedcheck.check([c], TODAY, existing=set(), page_of=pages.get, render_of=lambda u: "")
+        self.assertEqual((len(ok), bad), (1, []))
+
 
 if __name__ == "__main__":
     unittest.main()
