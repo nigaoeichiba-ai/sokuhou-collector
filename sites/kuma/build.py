@@ -436,7 +436,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
     for src in d["live_prefs"]:
         if live_mod.LIVE_SOURCES[src["key"]]["pref"] == r["short"]:
             recent = "".join(f'<li>{day_text(x["observed_at"])} {esc(place_text(x))}</li>' for x in src["sights"][:5])
-            live_block = (f'<h2>{src["name"]}が公表している最新の目撃情報</h2>\n'
+            live_block += (f'<h2>{src["name"]}が公表している最新の目撃情報</h2>\n'
                           f'<p>{src["as_of_text"].format(d=jp_date(src["as_of"]))}。</p>\n<ul class="mini-list">{recent}</ul>\n'
                           f'<p><a href="/live/{r["slug"]}/">{src["name"]}の目撃情報の一覧(市町村別・地図)</a></p>\n')
     cap_html = captures_mod.pref_block(d["captures"], r["short"], r["name"])
