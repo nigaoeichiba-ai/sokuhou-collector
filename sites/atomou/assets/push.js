@@ -32,13 +32,14 @@
     items.forEach(function (it) {
       var d0 = C.parse(it.date);
       if (!d0 || it.p !== 'day') return;
+      if (Pl.notesOf(it.key).mute) return;   // the visitor turned every notice of this day off
       var e = it.own ? A.findEntry(it.id) : null, alarm = it.own ? (e ? (e.alarm || st.prefs.alarm) : 'none') : st.prefs.alarm, slot = SLOT[alarm];
       var url = '/plan/?key=' + encodeURIComponent(it.key), turns = [], y;
       if (it.yearly) { for (y = Math.max(today[0], d0[0]); y <= last[0] + 1; y++) turns.push(A.occ(d0, y)); } else turns.push(d0);   // a yearly day comes round twice within 400 days
       turns.forEach(function (base) {
         if (slot) add(C.addDays(base, slot.off), slot.s, slot.pre + it.title + (it.time ? ' ' + it.time : ''), url);
-        if (!it.quiet) (Pl.notesOf(it.key).remind || []).forEach(function (r) {   // "あと30日" and so on, as many as the visitor chose for this day
-          add(C.addDays(base, -r), 'm', (r === 1 ? '明日 ' : 'あと' + r + '日: ') + it.title + (it.time ? ' ' + it.time : ''), url);
+        (Pl.notesOf(it.key).remind || []).forEach(function (r) {   // "あと30日" and so on, as many as the visitor chose for this day (a quiet day has none unless it was asked for)
+          add(C.addDays(base, -r), Pl.notesOf(it.key).remindSlot === 'e' ? 'e' : 'm', (r === 1 ? '明日 ' : 'あと' + r + '日: ') + it.title + (it.time ? ' ' + it.time : ''), url);
         });
         Pl.notesOf(it.key).tasks.forEach(function (t) {
           if (t.done) return;

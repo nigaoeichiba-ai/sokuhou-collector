@@ -34,5 +34,6 @@
   ],
   "member_ref_months": 6,
   "member_ref_cap": 12,
-  "member_ref_give_months": 1
+  "member_ref_give_months": 1,
+  "plans": {"on": false, "free_cards": 5, "shares_per_slot": 3, "extra_max": 20, "free_remind": [7, 1]}
 }

@@ -115,6 +115,7 @@
         alarm: k.quiet ? 'none' : st.prefs.alarm, created: C.iso(TODAY), time: kind === 'event' ? (tm.value || '') : ''
       };
       if (e.title === KINDS[kind].t && txt.value.trim() === '') e.title = k.t;
+      if (A.tier && A.tier.blocked(1) && !k.quiet) return;
       st.entries.push(e); A.stat('act:add:' + kind); A.stat('act:quick');
       if (!A.persist()) return;
       close(); done(e);

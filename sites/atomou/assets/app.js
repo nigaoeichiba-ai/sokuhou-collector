@@ -45,7 +45,6 @@
       quiet: !!e.quiet || kind === 'memorial', yearly: !!e.yearly, every100: !!e.every100, alarm: oneOf(e.alarm, ['', 'morning', 'eve', 'week', 'none'], ''),   // '' = follow the setting on the my page
       time: /^([01]\d|2[0-3]):[0-5]\d$/.test(String(e.time)) ? e.time : '', created: /^\d{4}-\d{2}-\d{2}$/.test(String(e.created)) ? e.created : '' };
   }
-  var REMIND_SET = [100, 60, 30, 14, 7, 3, 1];
   function cleanNotes(n) {  // memo and "do this N days before" tasks, per day (key c:<catalogue id> or m:<own id>)
     var out = {}, keys = n && typeof n === 'object' ? Object.keys(n).slice(0, 300) : [];
     keys.forEach(function (k) {
@@ -56,8 +55,9 @@
         var b = Math.floor(+t.before), text = String(t.text == null ? '' : t.text).slice(0, 80);
         return (b >= 0 && b <= 365 && text) ? { id: /^[a-z0-9]{1,12}$/.test(String(t.id)) ? t.id : Math.random().toString(36).slice(2, 8), before: b, text: text, done: !!t.done } : null;
       }).filter(Boolean), memo = String(v.memo == null ? '' : v.memo).slice(0, 600);
-      var remind = (Array.isArray(v.remind) ? v.remind : []).map(function (r) { return Math.floor(+r); }).filter(function (r, i, l) { return REMIND_SET.indexOf(r) >= 0 && l.indexOf(r) === i; }).sort(function (a, b) { return b - a; });   // days before: a notice for each
-      if (memo || tasks.length || remind.length) out[k] = { memo: memo, tasks: tasks, remind: remind };
+      var remind = (Array.isArray(v.remind) ? v.remind : []).map(function (r) { return Math.floor(+r); }).filter(function (r, i, l) { return r >= 1 && r <= 365 && l.indexOf(r) === i; }).sort(function (a, b) { return b - a; }).slice(0, 12);   // days before: a notice for each
+      var slot = v.remindSlot === 'e' ? 'e' : 'm', mute = v.mute === true;   // morning (default) or the evening before the day's count; mute = no notice at all for this day
+      if (memo || tasks.length || remind.length || mute) out[k] = { memo: memo, tasks: tasks, remind: remind, remindSlot: slot, mute: mute };
     });
     return out;
   }
@@ -91,6 +91,7 @@
     s.prefs.pushHash = /^[0-9me,-]{0,4000}$/.test(String(p.pushHash || '')) ? String(p.pushHash || '') : '';
     s.prefs.tour = {};
     s.prefs.intro = p.intro === true;
+    s.prefs.shares = Math.max(0, Math.min(9999, Math.floor(+p.shares) || 0));   // how many times a day was sent (the plan: sending earns room for more cards)
     ['home', 'calendar', 'plan', 'add', 'search'].forEach(function (k) { if (p.tour && p.tour[k] === true) s.prefs.tour[k] = true; });
     s.prefs.seasonOff = /^[a-z0-9-]{1,30}$/.test(String(p.seasonOff)) && CONF.skins[p.seasonOff] ? p.seasonOff : '';
     var b = p.blocks || {};
@@ -1103,6 +1104,7 @@
         yearly: st.p === 'day' && $f('f-yearly').checked, every100: st.p === 'day' && !k.quiet && !k.time && $f('f-100').checked, alarm: k.quiet ? 'none' : '', created: C.iso(TODAY),
         time: k.time && st.p === 'day' && /^\d{2}:\d{2}$/.test($f('f-time').value) ? $f('f-time').value : ''
       };
+      if (window.AtomouApp && window.AtomouApp.tier && window.AtomouApp.tier.blocked(1) && !k.quiet) return;   // a free planner is full (the reason is shown)
       S.entries.push(e); stat('act:add:' + e.kind);
       if (!persist()) return;  // storage blocked: stay on the form (the toast explains) instead of leaving and losing what was typed
       location.href = '/plan/?key=m:' + e.id + '&new=1';

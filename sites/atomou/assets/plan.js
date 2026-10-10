@@ -28,7 +28,7 @@
   function notesOf(key) { var n = S().notes[key] || { memo: '', tasks: [] }; if (!n.remind) n.remind = []; return n; }
   function setNotes(key, n) {
     var st = S();
-    if (!n.memo && !n.tasks.length && !(n.remind && n.remind.length)) delete st.notes[key]; else st.notes[key] = n;
+    if (!n.memo && !n.tasks.length && !(n.remind && n.remind.length) && !n.mute) delete st.notes[key]; else st.notes[key] = n;
     A.persist();
   }
   function baseOf(it) {  // the date the tasks count back from (a yearly day: its next turn)
@@ -202,11 +202,23 @@
     function render() {
       var own = item.own, e = own ? A.findEntry(item.id) : null, n = notesOf(key), h = '';
       h += '<div class="cards plan-card">' + A.cardHtml(item).replace('class="card', 'class="card big') + '</div>';
-      if (item.p === 'day' && !item.quiet) {   // the notices that count down to the day (this device's push, and the alarms of the calendar file)
-        var rem = notesOf(key).remind, sug = remindPreset(item);
-        h += '<section class="plan-sec" id="remind"><h2>あと何日の知らせ</h2><p class="hint">日にちが近づくたびに、知らせます。通知をオンにしているときに届きます。カレンダーのファイルにも入ります。</p><div class="chiprow">' +
-          [100, 60, 30, 14, 7, 3, 1].map(function (r) { return '<button type="button" class="chip" data-remind="' + r + '" aria-pressed="' + (rem.indexOf(r) >= 0) + '">' + (r === 1 ? '前日' : r + '日前') + '</button>'; }).join('') + '</div>' +
-          '<p class="share-btns"><button type="button" class="btn small ghost" data-remind-preset="' + sug.join(',') + '">おすすめにする(' + sug.map(function (r) { return r === 1 ? '前日' : r + '日前'; }).join('・') + ')</button> <button type="button" class="btn small ghost" data-remind-preset="">なしにする</button></p></section>';
+      if (item.p === 'day') {   // the notices of this day: one switch for all of them, the days before, and (plus plan) any number of days and the time of day
+        var nn = notesOf(key), rem = nn.remind, sug = remindPreset(item), T = A.tier, free = T && T.on && !T.plus();
+        var allowed = function (r) { return !T || T.remindAllowed(r); };
+        h += '<section class="plan-sec" id="remind"><h2>知らせ</h2>' +
+          '<p><label class="lab" for="r-on"><input type="checkbox" id="r-on"' + (nn.mute ? '' : ' checked') + '> この日の知らせを出す(オフにすると、この日の知らせはすべて止まります)</label></p>' +
+          (item.quiet ? '<p class="hint">静かに残す日です。知らせは、必要なときだけ、ご自分で選んでオンにしてください。ふだんは出しません。</p>' : '') +
+          '<h3 class="x-h3">あと何日の知らせ</h3><p class="hint">日にちが近づくたびに、知らせます。通知をオンにしているときに届きます。カレンダーのファイルにも入ります。</p><div class="chiprow">' +
+          [100, 60, 30, 14, 7, 3, 1].map(function (r) {
+            var ok = allowed(r);
+            return '<button type="button" class="chip" data-remind="' + r + '" aria-pressed="' + (rem.indexOf(r) >= 0) + '"' + (ok ? '' : ' disabled') + '>' + (r === 1 ? '前日' : r + '日前') + (ok ? '' : '(プラス)') + '</button>';
+          }).join('') + '</div>' +
+          '<p class="share-btns"><button type="button" class="btn small ghost" data-remind-preset="' + sug.filter(allowed).join(',') + '">おすすめにする(' + sug.filter(allowed).map(function (r) { return r === 1 ? '前日' : r + '日前'; }).join('・') + ')</button> <button type="button" class="btn small ghost" data-remind-preset="">あと何日の知らせをなしにする</button></p>' +
+          (T && T.plus() ? '<div class="field"><label for="r-custom">日数を自分で決める(1〜365)</label><div class="x-task"><input type="number" id="r-custom" min="1" max="365" inputmode="numeric" placeholder="例: 45"><button type="button" class="btn small" id="r-custom-add">足す</button></div></div>' +
+            '<div class="field"><label for="r-slot">知らせる時間帯</label><select id="r-slot"><option value="m"' + (nn.remindSlot === 'e' ? '' : ' selected') + '>朝</option><option value="e"' + (nn.remindSlot === 'e' ? ' selected' : '') + '>前の日の夜</option></select></div>' :
+            (free ? '<p class="hint">プラスプランでは、日数を自由に決めたり、朝か夜かを選んだりできます。</p>' : '')) +
+          (rem.some(function (r) { return [100, 60, 30, 14, 7, 3, 1].indexOf(r) < 0; }) ? '<p class="hint">自分で決めた日数: ' + rem.filter(function (r) { return [100, 60, 30, 14, 7, 3, 1].indexOf(r) < 0; }).map(function (r) { return '<button type="button" class="chip" data-remind="' + r + '" aria-pressed="true">' + r + '日前 ×</button>'; }).join(' ') + '</p>' : '') +
+          '</section>';
       }
       h += '<section class="plan-sec" id="tasks"><h2>やること(期限)</h2><ul class="plist" id="task-list">' + taskList() + '</ul>' +
         '<form class="task-add" id="task-add"><label class="vh" for="t-before">いつまでに</label><select id="t-before">' + BEFORE.map(function (b) { return '<option value="' + b[0] + '"' + (b[0] === 7 ? ' selected' : '') + '>' + b[1] + '</option>'; }).join('') + '</select>' +
@@ -272,7 +284,19 @@
       var memo = $('#p-memo').value; if (memo !== n.memo) { n.memo = memo; setNotes(key, n); }
       render(); var t = $('#t-text'); if (t) t.focus();
     });
+    box.addEventListener('change', function (ev) {
+      var id = ev.target.id;
+      if (id === 'r-on') { var m1 = notesOf(key); m1.mute = !ev.target.checked; setNotes(key, m1); A.stat('act:notice_' + (m1.mute ? 'off' : 'on')); }
+      else if (id === 'r-slot') { var m2 = notesOf(key); m2.remindSlot = ev.target.value === 'e' ? 'e' : 'm'; setNotes(key, m2); }
+    });
     box.addEventListener('click', function (ev) {
+      if (ev.target.id === 'r-custom-add') {
+        var cv = Math.floor(+($('#r-custom') || {}).value), cn = notesOf(key);
+        if (!(cv >= 1 && cv <= 365)) { A.toast('日数は、1から365までで入れてください。'); return; }
+        if (cn.remind.length >= 12) { A.toast('あと何日の知らせは、12個までです。'); return; }
+        if (cn.remind.indexOf(cv) < 0) cn.remind.push(cv);
+        cn.remind.sort(function (x, y) { return y - x; }); setNotes(key, cn); render(); return;
+      }
       var rb = ev.target.closest ? ev.target.closest('[data-remind],[data-remind-preset]') : null;
       if (rb) {
         var rn = notesOf(key), r = rb.getAttribute('data-remind');
