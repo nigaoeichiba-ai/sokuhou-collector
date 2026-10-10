@@ -6,7 +6,7 @@ Each source is one module under `sokuhou/sources/` that exposes `parse()` (pure,
 | Source | Module | Notes |
 |---|---|---|
 | Otsu City fire dispatch | `sokuhou.sources.otsu_fire` | The page lists only the latest ~10 incidents, so history must be accumulated by the caller. |
-| Otsu City black-bear sightings (counts only) | `sokuhou.sources.otsu_kuma` | The city's own page (dated headings only; robots.txt checked). The city states no licence, so only municipality, month, count and latest date are stored, like every source without an explicit licence. |
+| Otsu City black-bear sightings | `sokuhou.sources.otsu_bear` | Google My Maps KML published by the city. Cross-checked against the city's own per-year counts. Terms of programmatic access to the KML endpoint are not yet confirmed. |
 | MHLW regional minimum wages | `sokuhou.sources.mhlw_minwage` | Reads the history workbook linked from the MHLW page. Raises unless all 47 prefectures and the weighted average are present. Source terms: Public Data License v1.0 (attribution required; state that the data was processed). |
 | jGrants subsidies open for application | `sokuhou.sources.jgrants` | Official public API, no authentication. |
 
