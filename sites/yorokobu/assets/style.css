@@ -439,6 +439,52 @@ main.wrap > h1:first-child { margin-top: 36px; }
 .tb-form input, .tb-form select, .calc-card input, .calc-card select { width: 100%; }
 .memo-form input, .memo-form select, .memo-form textarea { width: 100%; max-width: 100%; }
 
+/* data room: charts made of plain bars */
+.chart { margin: 22px 0 8px; padding: 22px 24px 18px; background: #fff; border-radius: 20px; box-shadow: var(--shadow); }
+.chart h3 { margin: 0 0 14px; font-size: 1.1rem; }
+.chart figcaption { margin-top: 12px; font-size: .76rem; line-height: 1.7; color: var(--muted); }
+.hb { display: grid; gap: 10px; }
+.hb-row { display: grid; grid-template-columns: 9.5em minmax(0, 1fr) 9em; gap: 4px 12px; align-items: center; }
+.hb-row.multi { grid-template-columns: 9.5em minmax(0, 1fr); align-items: start; }
+.hb-l { font-size: .88rem; color: var(--ink); text-decoration: none; line-height: 1.5; }
+a.hb-l:hover { text-decoration: underline; }
+.hb-track { position: relative; display: block; height: 18px; background: var(--line2); border-radius: 6px; overflow: hidden; }
+.hb-fill { display: block; height: 100%; border-radius: 6px; background: var(--c-peach); }
+.hb-fill.s1 { background: #e59a7e; } .hb-fill.s2 { background: #7fb3c6; } .hb-fill.s3 { background: #9bc283; }
+.hb-lines .hb-line:nth-child(1) .hb-fill { background: #e59a7e; }
+.hb-lines .hb-line:nth-child(2) .hb-fill { background: #7fb3c6; } .hb-lines .hb-line:nth-child(3) .hb-fill { background: #e0b94f; }
+.hb-lines { display: grid; gap: 5px; }
+.hb-line { display: grid; grid-template-columns: minmax(0, 1fr) 4.2em; gap: 10px; align-items: center; }
+.hb-v { font: 700 .86rem var(--num); color: var(--ink2); white-space: nowrap; }
+.hb-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 12px; padding: 0; font-size: .82rem; }
+.hb-legend li { display: flex; align-items: center; gap: 6px; }
+.hb-legend .hb-fill { width: 14px; height: 14px; border-radius: 4px; }
+.hb-legend li:nth-child(1) .hb-fill { background: #e59a7e; } .hb-legend li:nth-child(2) .hb-fill { background: #7fb3c6; } .hb-legend li:nth-child(3) .hb-fill { background: #e0b94f; }
+.rg-fill { position: absolute; top: 0; bottom: 0; background: #f0c3b3; border-radius: 6px; }
+.rg-med { position: absolute; top: -2px; bottom: -2px; width: 3px; margin-left: -1px; background: var(--ink); border-radius: 2px; }
+.vc { display: flex; align-items: flex-end; gap: 2px; height: 210px; padding-top: 22px; }
+.vc-col { flex: 1 1 0; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; position: relative; }
+.vc-col i { display: block; width: 100%; background: #e59a7e; border-radius: 4px 4px 0 0; }
+.vc-col small { margin-top: 4px; font: 500 .62rem var(--num); color: var(--muted); white-space: nowrap; }
+.vc-v { position: absolute; top: 0; font: 700 .68rem var(--num); color: var(--ink2); }
+.vc-col b { font-weight: 700; }
+.chart-data { margin-top: 14px; font-size: .86rem; }
+.chart-data summary { cursor: pointer; color: var(--accent-d); font-weight: 700; }
+.data-notes { margin-top: 32px; }
+.data-notes ul { margin: 0; padding-left: 1.2em; }
+.data-notes li { margin-bottom: .4em; }
+.findings { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.finding { display: grid; gap: 4px; padding: 16px 18px; background: #fff; border-radius: 16px; box-shadow: var(--shadow); color: var(--ink); text-decoration: none; transition: transform .2s, box-shadow .2s; }
+.finding:hover { transform: translateY(-3px); box-shadow: var(--shadow-h); }
+.finding b { font-family: var(--serif); font-size: 1.02rem; line-height: 1.5; }
+.finding span { font-size: .84rem; color: var(--muted); line-height: 1.7; }
+@media (max-width: 560px) {
+  .hb-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .hb-row .hb-track { grid-column: 1 / -1; grid-row: 2; }
+  .hb-row.multi { grid-template-columns: 1fr; }
+  .chart { padding: 18px 16px 14px; }
+}
+
 /* footer: light, so that nothing pulls the eye down */
 footer.site { margin-top: 0; background: #f2eadd; color: var(--ink2); padding: 36px 0 44px; font-size: .84rem; }
 footer.site a { color: var(--ink); }
