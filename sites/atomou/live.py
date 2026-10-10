@@ -9,8 +9,6 @@ networks, news portals and the press agencies are not read (their terms do not a
 
 Politeness: a conditional request (ETag / Last-Modified), a minimum gap per source, a name and a contact in the User-Agent, a short time-out, and a source that fails again and again is left alone
 for longer and longer.  The output keeps the last 72 hours."""
-from __future__ import annotations
-
 import argparse
 import hashlib
 import json
@@ -44,7 +42,7 @@ def _now() -> datetime:
     return datetime.now(timezone.utc)
 
 
-def load_sources(path: Path = SOURCES_FILE) -> list[dict]:
+def load_sources(path=SOURCES_FILE):
     data = json.loads(path.read_text(encoding="utf-8"))
     return [s for s in data["sources"] if s.get("on", True) and str(s.get("url", "")).startswith("https://")]
 
@@ -65,11 +63,24 @@ def _local(tag: str) -> str:
     return tag.rsplit("}", 1)[-1].lower()
 
 
-def _text(el: ET.Element | None) -> str:
+def _text(el) -> str:
     return unescape(re.sub(r"<[^>]+>", " ", "".join(el.itertext()))).strip() if el is not None else ""
 
 
-def parse_time(s: str) -> datetime | None:
+def _iso(s: str) -> datetime:
+    """An ISO 8601 time such as 2026-10-10T09:30:00+09:00, 2026-10-10T00:30:00Z or 2026-10-10 (Python 3.6 on the server has no datetime.fromisoformat)."""
+    s = s.strip().replace("Z", "+0000")
+    s = re.sub(r"([+-]\d\d):(\d\d)$", lambda m: m.group(1) + m.group(2), s)
+    s = re.sub(r"\.\d+(?=[+-]\d{4}$|$)", "", s)
+    for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d %H:%M:%S%z", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M%z", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(s, fmt)
+        except ValueError:
+            continue
+    raise ValueError(s)
+
+
+def parse_time(s: str):
     s = (s or "").strip()
     if not s:
         return None
@@ -79,13 +90,13 @@ def parse_time(s: str) -> datetime | None:
         d = None
     if d is None:
         try:
-            d = datetime.fromisoformat(s.replace("Z", "+00:00"))
+            d = _iso(s)
         except ValueError:
             return None
     return d.astimezone(timezone.utc) if d.tzinfo else d.replace(tzinfo=JST).astimezone(timezone.utc)
 
 
-def parse_feed(text: str) -> list[dict]:
+def parse_feed(text: str):
     """RSS 2.0 / RDF (RSS 1.0) / Atom -> [{title, url, desc, time}].  Anything that is not well-formed gives []."""
     text = re.sub(r"^<\?xml[^>]*\?>", "", text.lstrip("﻿ \r\n\t"))
     try:
@@ -134,7 +145,7 @@ def day_in(text: str, published: date) -> str:
 
 
 # ---------- genre ----------
-def classify(src: dict, title: str) -> tuple[str, str, str]:
+def classify(src: dict, title: str):
     """(group, mid, subject): the source's own, or the first rule of the source whose pattern is in the title."""
     for rule in src.get("rules", []):
         if re.search(rule["re"], title):
@@ -146,7 +157,7 @@ def item_id(url: str) -> str:
     return hashlib.sha1(url.split("#")[0].encode("utf-8")).hexdigest()[:10]
 
 
-def make_items(src: dict, entries: list[dict], now: datetime, seen: dict) -> list[dict]:
+def make_items(src: dict, entries, now: datetime, seen: dict):
     out = []
     for e in entries:
         url, title = e["url"], e["title"][:TITLE_MAX * 2]
@@ -170,7 +181,7 @@ def make_items(src: dict, entries: list[dict], now: datetime, seen: dict) -> lis
 
 
 # ---------- fetching ----------
-def fetch(src: dict, st: dict, now: datetime, opener=None) -> tuple[list[dict], dict]:
+def fetch(src: dict, st: dict, now: datetime, opener=None):
     """One conditional request.  Returns (entries, new state of the source)."""
     s = dict(st)
     gap = int(src.get("every_min", 10)) * 60 * (1 + min(int(s.get("fails", 0)), 6) ** 2)   # a failing source is asked less and less often
@@ -202,7 +213,7 @@ def fetch(src: dict, st: dict, now: datetime, opener=None) -> tuple[list[dict], 
     return parse_feed(decode(body, ct)), s
 
 
-def run(sources: list[dict], state: dict, now: datetime | None = None, opener=None) -> tuple[dict, dict, dict]:
+def run(sources, state: dict, now=None, opener=None):
     """-> (public live json, new state, report).  `state` = {"sources": {id: {...}}, "items": {id: item}}."""
     now = now or _now()
     items = {k: v for k, v in (state.get("items") or {}).items() if parse_time(v.get("p", "")) and now - parse_time(v["p"]) <= timedelta(hours=KEEP_HOURS)}
@@ -226,7 +237,7 @@ def run(sources: list[dict], state: dict, now: datetime | None = None, opener=No
     return pub, {"sources": src_state, "items": items}, report
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--state", default="live_state.json")
     ap.add_argument("--out", default="live.v1.json")
