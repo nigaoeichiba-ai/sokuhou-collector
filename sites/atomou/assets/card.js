@@ -223,14 +223,32 @@
     });
   }
   var pasted = '';
+  var SNS_HOSTS = /(^|\.)(x\.com|twitter\.com|instagram\.com|facebook\.com|tiktok\.com|youtube\.com|youtu\.be|threads\.net|t\.co)$/;
+  function linksIn(text) {   // the web addresses written in the pasted words: a post of a social site points to the organiser's own page, which is the one to read the date from
+    var seen = {}, out = [];
+    (String(text || '').match(/https?:\/\/[^\s<>"'　)）」』]+/g) || []).forEach(function (u) {
+      var host = '';
+      try { host = new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return; }
+      if (!host || seen[u] || out.length >= 5) return;
+      seen[u] = 1; out.push({ url: u, host: host, sns: SNS_HOSTS.test(host) });
+    });
+    return out;
+  }
+  function linksHtml(text) {
+    var ls = linksIn(text);
+    if (!ls.length) return '';
+    var sns = ls.some(function (l) { return l.sns; });
+    return '<p class="hint">' + (sns ? 'SNSの投稿は、日付が変わることがあります。主催者の公式ページや、予約・チケットのページを開いて、日付が書かれた文章をもう一度貼ると、確かな日付になります。' : '文章の中のリンクです。日付が書かれたページを開いて、その文章を貼ることもできます。') + '</p><ul class="x-links">' +
+      ls.map(function (l) { return '<li><a href="' + H(l.url) + '" target="_blank" rel="noopener noreferrer nofollow">' + H(l.host) + '</a>' + (l.sns ? ' <span class="small muted">(SNSの投稿)</span>' : '') + '</li>'; }).join('') + '</ul>';
+  }
   function findDays(text) {   // days in the words: pick one and it fills the card (the title, the date, the time, and the words around it as the note)
     var out = $('#x-found'), list = C.extractDays(text, TODAY);
     A.stat('act:card_paste');
     if (!text.trim()) { out.textContent = '文章を貼り付けてください。'; return; }
-    if (!list.length) { out.textContent = '日付が見つかりませんでした。「12月1日」「2026年12月1日」のように書かれた日付を探します。下の欄に、日付を直接入れることもできます。'; return; }
+    if (!list.length) { out.innerHTML = '<p>日付が見つかりませんでした。「12月1日」「2026年12月1日」のように書かれた日付を探します。下の欄に、日付を直接入れることもできます。</p>' + linksHtml(text); return; }
     out.innerHTML = '<p class="hint">見つかった日付です。使うものを押すと、カードに入ります。</p><div class="x-cands">' + list.map(function (c, i) {
       return '<button type="button" class="chip" data-cand="' + i + '">' + H(A.fmtDate(c.iso, 'day') + (c.time ? ' ' + c.time : '') + (c.title ? ' ' + c.title.slice(0, 18) : '')) + '</button>';
-    }).join('') + '</div>';
+    }).join('') + '</div>' + linksHtml(text);
     out.onclick = function (ev) {
       var b = ev.target.closest ? ev.target.closest('[data-cand]') : null, c = b && list[+b.getAttribute('data-cand')];
       if (!c) return;

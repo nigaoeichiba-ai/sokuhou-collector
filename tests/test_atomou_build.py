@@ -617,6 +617,16 @@ class AppInChrome(BuildOnce):
         self.assertTrue(gs and gs <= {"3", "4"}, gs)
         self.assertEqual(gs, {"3", "4"})   # both genres are on the first screen, not one of them six times
 
+    def test_a_pasted_post_lists_its_links_so_the_official_page_can_be_opened(self):
+        import base64
+        payload = json.dumps({"title": "", "text": "〇〇ワンマンライブ 2026年12月1日(火) 開演19:00 詳細→ https://x.com/band/status/1 https://example.com/live/2026", "url": ""}, ensure_ascii=False)
+        frag = base64.urlsafe_b64encode(payload.encode("utf-8")).decode().rstrip("=")
+        dom = html.unescape(self.dom("/card/", f"&x=1#share={frag}"))
+        self.assertIn('data-cand="0"', dom)
+        self.assertRegex(dom, r'<a href="https://x\.com/band/status/1"[^>]*rel="noopener noreferrer nofollow">x\.com</a> <span[^>]*>\(SNSの投稿\)')
+        self.assertRegex(dom, r'<a href="https://example\.com/live/2026"[^>]*>example\.com</a></li>')
+        self.assertIn("主催者の公式ページ", dom)
+
     def test_search_with_no_match_offers_to_record_it(self):
         dom = self.dom("/search/?q=zzzqqqxxx")
         self.assertRegex(dom, r'id="none"(?![^>]*hidden)')
