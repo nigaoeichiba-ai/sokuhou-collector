@@ -319,7 +319,8 @@
   "verified": true,
   "sensitivity": "none",
   "ad_ok": true,
-  "note": "13時から16時。"
+  "note": "13時から16時。",
+  "keep": true
  },
  {
   "title": "TOEIC L&R 12月19日実施回 申込締切",
