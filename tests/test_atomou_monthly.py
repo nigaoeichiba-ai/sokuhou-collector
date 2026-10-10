@@ -140,7 +140,7 @@ class Pages(unittest.TestCase):
 
 
 PLAN_PAGE = """<!doctype html><meta charset="utf-8"><script>
-window.ATOMOU = { v: 'x', groups: ['手続き・お金'], slugs: ['deadline'], skins: { basic: { card: 'plain' } }, vapid: 'B', members: { tiers: { tester: '先着モニター' }, ref: 6, give: 1, cap: 12 } };
+window.ATOMOU = { v: 'x', groups: ['お金・税金・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' } }, vapid: 'B', members: { tiers: { tester: '先着モニター' }, ref: 6, give: 1, cap: 12 } };
 localStorage.setItem('atomou.v1', '{"v":1,"entries":[]}');
 localStorage.setItem('atomou.member', %(member)s);
 </script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script><script src="%(plan)s"></script><script src="%(push)s"></script><script src="%(memberjs)s"></script>

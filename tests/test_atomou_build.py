@@ -374,7 +374,7 @@ class Pages(BuildOnce):
         self.assertTrue(any("衝" in e["title"] and e["kind"] == "衝" for e in self.entries))
         self.assertEqual(catalog.shown_kind({"kind": "決勝", "subject": "サッカー", "title": "天皇杯 決勝"}), "決勝")
         today = date(2026, 10, 10)
-        one_day = {"title": "テスト", "date": "2026-10-10", "date_end": None, "precision": "day", "kind": "改定", "group": "手続き・お金", "subject": "税", "place": "", "region": None}
+        one_day = {"title": "テスト", "date": "2026-10-10", "date_end": None, "precision": "day", "kind": "改定", "group": "お金・税金・制度", "subject": "税", "place": "", "region": None}
         question, answer = build.articles.faq(one_day, build.fmt_date, today, None)[0]
         self.assertNotIn("期間中", answer)
         self.assertIn("今日", answer)
