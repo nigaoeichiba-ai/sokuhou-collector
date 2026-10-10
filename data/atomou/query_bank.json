@@ -1,0 +1,94 @@
+{
+  "v": 1,
+  "built": "2026-10-10",
+  "basis": "実測の検索 約 720 本(Claude の手分け A1〜A6 199 本 + B1〜B6 420 本、Codex 約 70 本、私の確認 約 35 本)。判定は検索結果の題名・URL・要約から。ページ本文を開いて確かめたのは 各エージェント 8 回までなので、命中数は推定。順位は日によって変わる。",
+  "rules": [
+    "公式ドメインを 1 本の検索につき 1 つだけ指定する(allowed_domains)。複数並べると 1 社が結果を独占する。絞りなしの 10 件は、民間のまとめ・ニュース・チケット販売で埋まる(祭り名での絞りなしは 74 件中 0)",
+    "広いドメイン(co.jp / or.jp / lg.jp / go.jp)は、分野によって Yahoo! や過去ページが混ざる。lg.jp は『令和8年度』+制度語+行事名と組み合わせると安定(13/13)",
+    "ドメインが分からないときは、絞りなしで 1 本引いて公式の URL を拾い、2 周目でそのドメインに絞る",
+    "2 周目の固有名詞(命中ページの作品名・商品名・祭り名・制度名)は、必ず公式ドメインで絞る。絞りなしだと公式は出ない",
+    "年と月を必ず入れる。事業者が書く言い方(『11月1日』)まで入れると当たる。『12月』だけでは当たらない",
+    "『まとめ』『最新』『今週』『日本』『企業名の並べ書き』は、公式が 0(まとめサイトを引く)",
+    "検索結果の要約の日付は、別のページや別の作品の日付を取り違えることがある。必ず公式ページを開いて、日付が載っていることを確かめてから使う",
+    "公式の発表がまだ出ていない月・年(ダイヤ改正、運賃改定、チェーン店の 2 か月先の新商品)は、型を変えても出ない。例年の発表時期の暦を先に調べる",
+    "名前が変わった・終わった催しは外れる。『2026』と書いても終了済みの回(2026 年 1 月開催など)が出る",
+    "日付が窓(今日から 90 日先)の外のものは、候補にしない"
+  ],
+  "unusable_domains": {
+    "note": "allowed_domains に指定すると検索ツールがエラー(400)にした。代わりの入口を使う",
+    "domains": ["tv-asahi.co.jp", "tbs.co.jp", "fujitv.co.jp", "ntv.co.jp", "nhk.or.jp", "mbs.jp", "ytv.co.jp", "bs-asahi.co.jp", "ponycanyon.co.jp"],
+    "use_instead": ["tver.jp", "tv-tokyo.co.jp", "ktv.jp", "wowow.co.jp", "bs11.jp"]
+  },
+  "recipes": [
+    {"genre": "tickets", "topic": "舞台・ホール・劇場", "q": "{Y}年{M}月 公演 スケジュール", "domains": ["kageki.hankyu.co.jp", "nntt.jac.go.jp", "geigeki.jp", "umegei.com", "tohostage.com", "festivalhall.jp", "suntory.co.jp", "kitara-sapporo.or.jp", "bunkamura.co.jp"], "yield": "公式 3.3/本、15/19 本で命中。12・1月でも同程度"},
+    {"genre": "tickets", "topic": "美術館・展覧会", "q": "{Y}年{M}月 展覧会 会期 開催予定", "domains": ["momat.go.jp", "nfaj.go.jp"], "yield": "公式 3.0/本"},
+    {"genre": "tickets", "topic": "音楽フェス", "q": "{フェス名} {Y+1} 開催決定", "domains": ["rockinon.com"], "yield": "年度別の公式サイトは過去の回が出る。主催者の『開催決定』『〜を終えて』記事から次回の日付を取る(命中 0.25/本)"},
+    {"genre": "tickets", "topic": "音楽ライブ・コンサート", "q": "{Y}年{M}月 コンサート スケジュール", "domains": ["co.jp", "or.jp"], "yield": "命中 9/10(イープラス等のチケット会社の一覧を含む)。会場の月別カレンダー(サントリーホール)は質が最良"},
+    {"genre": "shows", "topic": "映画", "q": "{Y}年{M}月 映画 公開予定 一覧", "domains": ["toho.co.jp", "gaga.co.jp", "shochiku.co.jp"], "yield": "公式 5/本(co.jp, or.jp の束ね)。東宝 /movie/lineup/ は 2027-01-08 公開作まで載る"},
+    {"genre": "shows", "topic": "ドラマ", "q": "{作品名} 放送開始日 公式", "domains": ["tv-tokyo.co.jp", "ktv.jp", "wowow.co.jp", "tver.jp"], "yield": "作品名+公式+ドメイン: 公式 1.44/本(絞りなしは 0)。局の編成は月だけのことが多い"},
+    {"genre": "shows", "topic": "アニメ", "q": "{Y+1}年1月 放送開始 TVアニメ", "domains": ["aniplex.co.jp", "toho.co.jp", "kadokawa.co.jp"], "yield": "公式 3/10(2027年1月)。10 月は始まったものが多い"},
+    {"genre": "shows", "topic": "動画配信", "q": "{Y}年{M}月 配信開始 独占配信", "domains": ["about.netflix.com", "unext.co.jp", "disneyplus.com", "hulu.jp", "aboutamazon.jp"], "yield": "公式 3〜5/本。日まで取れる。配信終了日は Hulu の『もうすぐ終了予定』ページだけ"},
+    {"genre": "hobby", "topic": "本・コミック", "q": "{Y}年{M}月 新刊 発売予定", "domains": ["kodansha.co.jp", "kadokawa.co.jp", "shueisha.co.jp", "shinchosha.co.jp", "shogakukan.co.jp"], "yield": "公式 (b) 1.9/本。12・1月分はまだ空のことが多い(10・11月が中心)"},
+    {"genre": "hobby", "topic": "ホビー・カード・一番くじ", "q": "{Y}年{M}月 発売予定 新商品", "domains": ["bandai-hobby.net", "dm.takaratomy.co.jp", "ws-tcg.com", "onepiece-cardgame.com", "1kuji.com", "tamiya.com"], "yield": "公式 1.75/本、13/16 本で命中。日単位で載るのは 1kuji.com、toy.bandai.co.jp、ws-tcg.com、digimoncard.com、tamiya.com"},
+    {"genre": "hobby", "topic": "ゲーム", "q": "{Y}年{M}月 ゲーム 予約開始", "domains": ["nintendo.com", "playstation.com", "square-enix.com", "capcom.co.jp", "sega.jp", "konami.com", "bandainamcoent.co.jp"], "yield": "公式 3/本(8 ドメインの束ねで)。作品名だけでは公式が出ない"},
+    {"genre": "it", "topic": "サービス終了・サポート終了", "q": "提供終了 {Y}年{M}月 サービス 終了日 お知らせ 公式", "domains": ["co.jp", "or.jp"], "yield": "命中 4/10(絞りなしは 1)。事業者ドメイン(microsoft.com など)に絞ると、ライフサイクル表がそのまま出る"},
+    {"genre": "sale", "topic": "価格改定・値上げ", "q": "{Y}年{M}月1日 価格改定のお知らせ", "domains": ["co.jp", "or.jp"], "yield": "公式 8/10。電気料金は電力会社ドメインで 9/10。値上げの一覧は帝国データバンクの月別調査"},
+    {"genre": "sale", "topic": "セール・ポイント", "q": "{Y}年{M}月 キャンペーン 期間 ポイント還元", "domains": ["paypay.ne.jp", "yodobashi.com", "rakuten.co.jp"], "yield": "公式 6〜8/10。楽天・Amazon の日程は公式予約ページで確認(カレンダーサイトは予測のことがある)"},
+    {"genre": "food", "topic": "季節行事の予約(クリスマスケーキ・おせち)", "q": "クリスマスケーキ {Y} 予約 受付期間 受取日", "domains": ["family.co.jp", "sej.co.jp", "lawson.co.jp"], "yield": "公式 6.0/本(最良の型)"},
+    {"genre": "food", "topic": "新商品・期間限定", "q": "{Y}年{M}月 新商品 発売日", "domains": ["sej.co.jp", "suntory.co.jp", "meiji.co.jp"], "yield": "公式 1.6/本。チェーンは発表の 2〜4 週間前から。サントリー・ロッテは 1〜3 か月先まで"},
+    {"genre": "food", "topic": "開店・開業・閉店", "q": "{Y}年{M}月 オープン 開業 グランドオープン 日", "domains": ["aeon.info", "aeonmall.com", "parco.jp", "muji.com"], "yield": "公式 2〜4/本。イオンモールの開業・リニューアル一覧は日付つき(ハロン 11/14、伊達 11/27)"},
+    {"genre": "trip", "topic": "テーマパーク", "q": "{施設名} {Y}年{M}月 イベント 開催期間", "domains": ["usj.co.jp", "puroland.jp", "ghibli-park.jp", "legoland.jp"], "yield": "公式 2.8/本(USJ 7、ピューロランド 6)。ディズニー・海遊館・東京ドームは動的で弱い(イベント名で攻める)"},
+    {"genre": "trip", "topic": "祭り・花火・イルミネーション", "q": "{祭り名} {Y} 開催日 公式", "domains": ["(主催者の公式ドメインを 1 本ずつ指定)"], "yield": "ドメインなしは 74 件中 0、公式ドメインありは 2.2/本。ドメイン不明なら、絞りなしで 1 本引いて URL を拾う"},
+    {"genre": "trip", "topic": "航空・旅行", "q": "就航 {Y}年{M}月 運航開始 新路線 予約開始", "domains": ["press.jal.co.jp", "ana.co.jp", "jreast.co.jp"], "yield": "press.jal.co.jp 公式 6/本。メインの jal.co.jp に絞ると一般ルールばかり出る(プレスリリースの名前空間に絞る)"},
+    {"genre": "exams", "topic": "資格試験", "q": "{試験名} 試験日 申込期間 {Y}年度", "domains": ["eiken.or.jp", "kentei.ne.jp", "iibc-global.org", "retio.or.jp", "jafp.or.jp", "ipa.go.jp", "kanken.or.jp"], "yield": "公式 5/本。日程ページがある方のドメインを選ぶ(TOEIC は toeic.or.jp が 0、iibc-global.org が 8/9)"},
+    {"genre": "exams", "topic": "入試", "q": "令和{和暦年度} 公立高等学校 入学者選抜 日程 出願期間", "domains": ["lg.jp", "ac.jp", "ed.jp"], "yield": "公式 10/10(窓の外の 2027 年 1〜3 月が多い)"},
+    {"genre": "deadline", "topic": "制度・給付金・手続き", "q": "令和{和暦} 年度 高齢者インフルエンザ予防接種 実施期間", "domains": ["lg.jp"], "yield": "公式 4.2/本(13/13)。制度語+具体的な行事名。どの自治体が出るかは検索次第。自治体名で 2 周目"},
+    {"genre": "politics", "topic": "統計・経済指標", "q": "{Y}年{M}月 公表予定 統計 カレンダー", "domains": ["go.jp"], "yield": "命中 10(e-Stat、METI、JILPT)。日銀は or.jp で絞ると boj.or.jp が出る"},
+    {"genre": "politics", "topic": "選挙", "q": "令和{和暦}年{M}月 選挙 投票日 一覧", "domains": ["lg.jp"], "yield": "命中 7(東京・千葉・新潟・兵庫・秋田・大阪の選管の日程)"},
+    {"genre": "transit", "topic": "工事・運休・冬ダイヤ", "q": "{Y}年{M}月 通行止め 工事 実施日 高速道路", "domains": ["c-nexco.co.jp", "w-nexco.co.jp", "shutoko.jp", "westjr.co.jp"], "yield": "公式 3〜5。ダイヤ改正・運賃改定は発表前だと 0(例年の発表時期の暦を先に調べる)"},
+    {"genre": "sports", "topic": "大会・レース", "q": "{Y}年{M}月 {競技} 日程", "domains": ["jleague.jp", "jra.go.jp", "jaaf.or.jp"], "yield": "公式 3〜4/本(競馬 4/18、J リーグ 3/10)。主催者のドメインを 1 つずつ"}
+  ],
+  "monthly_url_patterns": {
+    "note": "本文の未来日付まで確認できたもの(確認)と、検索結果の URL だけ見えたもの(型のみ)。月別の URL を持つ公式ページは、検索を通さずに URL を組み立てて直接取れる(規約と robots.txt の確認が済んだものだけ)",
+    "confirmed": [
+      {"site": "札幌コンサートホール Kitara", "url": "https://www.kitara-sapporo.or.jp/event/index.html?dsp=list&month=YYYY-MM"},
+      {"site": "梅田芸術劇場(日別)", "url": "https://www.umegei.com/system/schedules/onedays/YYYY-MM-DD"},
+      {"site": "Bunkamura チケット", "url": "https://ticket.bunkamura.co.jp/Show/programMonthlyList/index/YYYYMMDD/all"},
+      {"site": "国立映画アーカイブ(年度)", "url": "https://www.nfaj.go.jp/visit/schedule/fy2026/"},
+      {"site": "一番くじ倶楽部", "url": "https://1kuji.com/products?sale_month={M}&sale_year={YYYY}"},
+      {"site": "KADOKAWA 新刊カレンダー", "url": "https://www.kadokawa.co.jp/calendar/?target={N}"},
+      {"site": "タカラトミー トミカ", "url": "https://www.takaratomy.co.jp/products/tomica/new/{YYMM}.htm"},
+      {"site": "簿記検定", "url": "https://www.kentei.ne.jp/calendar_{西暦年度}"},
+      {"site": "英検", "url": "https://www.eiken.or.jp/eiken/schedule/{西暦年度}-examinee.html"},
+      {"site": "気象庁 季節予報の発表日", "url": "https://www.jma.go.jp/jma/kishou/know/kisetsu_riyou/calendar/index.html"},
+      {"site": "宅建(RETIO)", "url": "https://www.retio.or.jp/exam/schedule/"},
+      {"site": "FP 協会", "url": "https://www.jafp.or.jp/exam/schedule/"},
+      {"site": "東京都選管", "url": "https://www.senkyo.metro.tokyo.lg.jp/election/schedule/senkyo{西暦}"},
+      {"site": "IPA 試験", "url": "https://www.ipa.go.jp/shiken/{西暦}/ap_koudo_sc_kikan.html"},
+      {"site": "Prime Video 新着(About Amazon)", "url": "https://www.aboutamazon.jp/news/entertainment/amazon-prime-video-new-content-{english-month}-{年}"},
+      {"site": "Hulu もうすぐ配信/終了", "url": "https://www.hulu.jp/features/comingsoon"},
+      {"site": "イオンモール 開業・リニューアル", "url": "https://www.aeonmall.com/open_renewal/search/"},
+      {"site": "横浜市 イベントカレンダー", "url": "https://www.city.yokohama.lg.jp/kanko-bunka/kanko-event/eventannai/kanko/calendar/list_calendar{YYYYMM}.html"}
+    ],
+    "pattern_only": [
+      {"site": "サントリーホール", "url": "https://www.suntory.co.jp/suntoryhall/schedule/{YYYYMM}/"},
+      {"site": "梅田芸術劇場(月別)", "url": "https://www.umegei.com/system/schedules/index/{YYYY-MM}"},
+      {"site": "歌舞伎美人", "url": "https://www.kabuki-bito.jp/ticket-schedule/?ym={YYYYMM}"},
+      {"site": "講談社 コミック・書籍", "url": "https://www.kodansha.co.jp/comic/calendar/{YYYYMM}"},
+      {"site": "集英社 新刊コミックス", "url": "https://www.shueisha.co.jp/books/newcomics/index.html?genre=inherit&month={next|afternext}"},
+      {"site": "ガシャポン", "url": "https://gashapon.jp/schedule/?ym={YYYYMM}"},
+      {"site": "ファミ通", "url": "https://www.famitsu.com/schedule/{機種}/{YYYYMM}"},
+      {"site": "大学入試センター", "url": "https://www.dnc.ac.jp/kyotsu/shiken_jouhou/r{和暦年度}/"},
+      {"site": "東京都交通局", "url": "https://www.kotsu.metro.tokyo.jp/pickup_information/news/{subway|bus}/{西暦}/"}
+    ],
+    "aggregators_not_visited": [
+      "bestcalendar.jp: /release/{game|manga|new-book|magazine|light-novel|hobby|switch2|seinen-manga}/{Y}/{M}",
+      "premium.gamepedia.jp/hobby/genres/{id}/calendar?d={Y}-{MM}",
+      "toy-people.com/jp/release-date/{YYYYMM}-{N}"
+    ]
+  },
+  "learning": {
+    "plan": "毎日の調査で、使った検索ごとに『命中した公式ページ数』を記録し、次の日の優先度にする(命中の多い型を上に、少ない型は言い換えて試す)。記録は data/atomou/research_log/ に、検索ワードと件数だけ(利用者のワードは入れない)。",
+    "log_fields": ["date", "recipe_genre", "query", "domain", "official_hits", "card_made"]
+  }
+}
