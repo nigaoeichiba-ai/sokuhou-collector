@@ -167,7 +167,7 @@
       '<span class="share-sep" aria-hidden="true"></span><span class="share-lead">画像</span>' +
       '<button type="button" class="sbt sbt-t" data-x-img="wide" title="横長(X・LINE)">横</button><button type="button" class="sbt sbt-t" data-x-img="square" title="正方形(Instagram)">正</button><button type="button" class="sbt sbt-t" data-x-img="story" title="縦長(ストーリーズ・TikTok・Shorts)">縦</button></div>' +
       '<p class="hint">リンクの中に、カードの内容が入っています(サーバーには保存されません)。画像は、横=X・LINE、正=Instagram、縦=ストーリーズ・TikTok・Shorts。</p>' +
-      (A.tier && A.tier.on ? (A.tier.plus() ? '<p><label class="lab" for="x-nosign"><input type="checkbox" id="x-nosign"' + (signed() ? '' : ' checked') + '> 署名とリンクを入れずに送る(プラスプラン)</label></p>' : '<p class="hint">無料プランでは、画像と文に、サイトの名前とリンクが入ります。プラスプランでは、入れずに送れます。</p>') : '');
+      (A.tier && A.tier.on ? (A.tier.plus() ? '<p><label class="lab" for="x-nosign"><input type="checkbox" id="x-nosign"' + (signed() ? '' : ' checked') + '> 署名とリンクを入れずに送る(プラスプラン)</label></p>' : '<p class="hint">画像と文に、サイトの名前とリンクが入ります。' + (A.tier.plusOpen ? 'プラスプランでは、入れずに送れます。' : '') + '</p>') : '');
   }
   function wireShare(card) {
     var s = $('#x-share'); if (!s) return;
