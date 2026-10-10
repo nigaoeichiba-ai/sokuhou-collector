@@ -1,0 +1,139 @@
+{
+ "date": "2026-10-11",
+ "weekday": "日",
+ "themes": [
+  "t19",
+  "t26",
+  "t33",
+  "t40"
+ ],
+ "regional": "全国(総合)",
+ "words": {
+  "users": 0,
+  "explored": 64,
+  "target": 30,
+  "note": "利用者の登録ワードは0件。初日の目標30個を超えて調べた(サブエージェント6本)"
+ },
+ "searches": 122,
+ "fetches": 147,
+ "cards": 78,
+ "cards_ratio": 1.22,
+ "cards_by_agent": {
+  "A1_price_system": 16,
+  "A2_festival_illumination": 12,
+  "A3_seasonal_products": 12,
+  "A4_screen_music": 17,
+  "A5_game_it": 15,
+  "A6_sports_world": 6
+ },
+ "rejected": {
+  "final_seedcheck": [
+   {
+    "reason": "duplicate (LA28 opening)",
+    "n": 1
+   },
+   {
+    "reason": "quote lacks newest earlier day: 令和表記のみ (高校ラグビー予想)",
+    "n": 1
+   }
+  ],
+  "during_agents": "subject too long 4+1, what too short several, quote not on page 3, duplicate 1, quote lacks date 2 (直して通したもの)"
+ },
+ "queries": [
+  {
+   "q": "<社名> 価格改定 2026年11月1日出荷分",
+   "domain": "kewpie.com / meiji.co.jp / ajinomoto.co.jp / nestle.co.jp",
+   "official_hits": "4/4",
+   "card": true
+  },
+  {
+   "q": "厚生労働省関係の主な制度変更 令和8年10月",
+   "domain": "mhlw.go.jp",
+   "official_hits": 1,
+   "card": true
+  },
+  {
+   "q": "<事業者名> 商品 2026 予約/受付",
+   "domain": "family.co.jp / lawson.co.jp / sej.co.jp / starbucks.co.jp / aeonmall.com",
+   "official_hits": "6/6",
+   "card": true
+  },
+  {
+   "q": "<名称> 会期 開催概要",
+   "domain": "ceatec.com",
+   "official_hits": 1,
+   "card": true
+  },
+  {
+   "q": "<事業者名> <年> 開催期間",
+   "domain": "kiyomizudera.or.jp / eikando.or.jp / ashikaga.co.jp / senso-ji.jp / marunouchi.com / kobe-luminarie.jp",
+   "official_hits": "約8",
+   "card": true
+  },
+  {
+   "q": "年月+作品/局名",
+   "domain": "toho.co.jp / aniplex.co.jp / kageki.hankyu.co.jp / about.netflix.com / tv-tokyo.co.jp / shochiku.co.jp",
+   "official_hits": "6/6",
+   "card": true
+  },
+  {
+   "q": "大会名+年+月日",
+   "domain": "hakone-ekiden.jp / m-1gp.com / jfa.jp / rugbyworldcup.com / aichi-nagoya2026.org",
+   "official_hits": "約8",
+   "card": true
+  },
+  {
+   "q": "絞りなしの日程検索(祭り・イルミ)",
+   "domain": "-",
+   "official_hits": 0,
+   "card": false
+  },
+  {
+   "q": "電気・ガス料金 2026年冬 補助",
+   "domain": "meti系",
+   "official_hits": 0,
+   "card": false
+  },
+  {
+   "q": "Apple 新製品イベント(2026-10-13と報じられた)",
+   "domain": "apple.com/jp",
+   "official_hits": 0,
+   "card": false,
+   "note": "公式ページに日付なし"
+  }
+ ],
+ "failed_words": [
+  "Apple 新製品発表イベント(公式に日付なし。再挑戦)",
+  "Capcom/Square Enix 11-12月発売",
+  "ボジョレー・ヌーヴォー2026解禁日(サントリー403)",
+  "さっぽろホワイトイルミネーション2026",
+  "ヨコハマミライト2026",
+  "御堂筋イルミネーション2026",
+  "ハウステンボス Starlight Million 2026(JS表示)",
+  "NHK紅白(nhk.or.jp検索不可)",
+  "大相撲11月場所(sumo.or.jp取得不可)",
+  "高校ラグビー第106回(西暦表記の公式ページを探す)",
+  "七五三・新嘗祭",
+  "ゆうパック改定の実施日",
+  "2026年12月・2027年1月の鉄道運賃改定",
+  "電気・ガス料金補助 2027年1月以降"
+ ],
+ "injections": [],
+ "unusable": [
+  "suntory.co.jp(403)",
+  "post.japanpost.jp(403/PDF別紙)",
+  "jreast.co.jp(403)",
+  "nhk.or.jp(検索不可)",
+  "sumo.or.jp(取得不可)",
+  "一部のPDFは WebFetch で読めず、保存して pypdf で抽出した"
+ ],
+ "tests": "python tests/run_tests.py --site atomou: 607 tests OK(最初に17件落ちた。原因は、既存の種データ『津波防災の日・世界津波の日』が静かな扱いになっていなかったこと=seed_wave3 を sensitivity disaster に直した。ほか usecases の失敗は別セッションの編集中の一時的なもの)",
+ "next_target": 40,
+ "next_target_reason": "cards/words=1.22 ≥ 0.6、落ちた理由に同じ原因の偏りなし(subject/what の文字数は事前に注意する)",
+ "improvements_for_tomorrow": [
+  "subject は10字以内・what は4〜16字を候補作成時に守る",
+  "和暦表記しかない公式ページは、西暦の過去日が並ぶ別ページ(history_url)を探す",
+  "403 のドメイン(suntory, japanpost, jreast)は、別のプレスリリースサイトの公式ドメインを探す",
+  "月曜は query_bank の yield 更新"
+ ]
+}

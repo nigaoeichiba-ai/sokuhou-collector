@@ -1577,7 +1577,7 @@
     "source_url": "https://www.data.jma.go.jp/okinawa/know/memo/sougou.html",
     "source_quote": "・11月５日は「津波防災の日」「世界津波の日」",
     "checked_on": "2026-10-10",
-    "sensitivity": "none",
+    "sensitivity": "disaster",
     "ad_ok": true,
     "son_toku": false,
     "note": "出典ページの本文で日付を機械的に確かめた(2026-10-10)。",
