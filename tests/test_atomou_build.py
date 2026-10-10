@@ -279,17 +279,17 @@ class Pages(BuildOnce):
         for k, v in self.rel.items():
             if not (k.startswith("e/") and isinstance(v, str)):
                 continue
-            if 'class="share"' in v:
+            if 'class="share share-row"' in v:
                 shared += 1
                 self.assertIn("line.me/R/msg/text/", v, k)
                 self.assertIn("twitter.com/intent/tweet", v, k)
-                self.assertNotIn("あなたの予定", v.split('class="share"')[1].split("</section>")[0].replace("あなたの予定は入りません", ""), k)
-            if 'class="share"' in v:      # a day with a date can go to Google Calendar; "2027年1月ごろ" cannot
-                self.assertEqual("calendar.google.com/calendar/render" in v, 'class="share" aria-label="人に送る" data-title' in v and 'data-p="day"' in v.split('class="share"')[1].split(">")[0], k)
+                self.assertNotIn("あなたの予定", v.split('class="share share-row"')[1].split("</section>")[0].replace("あなたの予定は入りません", ""), k)
+            if 'class="share share-row"' in v:      # a day with a date can go to Google Calendar; "2027年1月ごろ" cannot
+                self.assertEqual("calendar.google.com/calendar/render" in v, 'class="share share-row" aria-label="人に送る" data-title' in v and 'data-p="day"' in v.split('class="share share-row"')[1].split(">")[0], k)
         self.assertGreater(shared, 250)
         quiet = [e for e in self.entries if e["quiet"]]
         for e in quiet:
-            self.assertNotIn('class="share"', self.rel[f"e/{e['id']}/index.html"])
+            self.assertNotIn('class="share share-row"', self.rel[f"e/{e['id']}/index.html"])
 
     def test_calendar_feeds_hold_whole_public_days_only_and_are_well_formed(self):
         crlf = chr(13) + chr(10)
@@ -321,6 +321,16 @@ class Pages(BuildOnce):
         for q in (x for x in self.entries if x["quiet"]):
             self.assertNotIn(f"og/{q['id']}.png", self.rel)
             self.assertNotIn("/og/", self.rel[f"e/{q['id']}/index.html"])
+
+    def test_the_legal_pages_use_the_plainer_wording_the_owner_approved(self):
+        for k in ("privacy/index.html", "contact/index.html", "about/index.html"):
+            page = self.rel[k]
+            for old, new in build.LEGAL_WORDING:
+                self.assertNotIn(old, page, f"{k}: {old[:30]}")
+        privacy = self.rel["privacy/index.html"]
+        self.assertIn("このポリシーについてのお問い合わせは、", privacy)
+        self.assertIn("に同意したものとして扱います。", self.rel["contact/index.html"])
+        self.assertNotIn("みなします", self.rel["contact/index.html"])
 
     def test_the_card_page_exists_is_not_indexed_and_the_days_link_to_it(self):
         page = self.rel["card/index.html"]
@@ -533,12 +543,10 @@ class AppInChrome(BuildOnce):
         self.assertIn("date=2027-04-01", dom)   # 入学の用意 -> the start of the next one
         self.assertNotIn("alarm=", dom)  # the in-app calendar needs no alarm menu
 
-    def test_interests_page_offers_every_subject_and_reads_a_friends_link(self):
-        dom = html.unescape(self.dom("/interests/?pick=将棋,剣道"))
+    def test_interests_page_offers_every_subject(self):
+        dom = html.unescape(self.dom("/interests/"))
         self.assertGreaterEqual(dom.count('data-int="'), 60)
-        self.assertRegex(dom, r'id="int-pick"(?![^>]*hidden)')
-        self.assertIn("将棋・剣道", re.sub(r"<[^>]+>", "", dom))
-        self.assertNotIn('data-int-drop="将棋"', dom)      # offered, never added without a tap
+        self.assertNotIn('id="int-share"', dom)        # the names of the fields alone are not worth sending
 
     def test_share_words_carry_todays_count_and_a_link_to_the_day(self):
         dom = html.unescape(self.dom("/e/f2bb25e347/"))
