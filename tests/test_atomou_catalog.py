@@ -78,7 +78,9 @@ class CatalogRules(unittest.TestCase):
         entries, _ = catalog.build_catalog(date(2026, 10, 10))
         used = {e["group"] for e in entries}
         self.assertTrue(used <= set(catalog.GROUPS))
-        self.assertTrue(set(catalog.GROUPS[:11]) <= used)     # the genres we have data for; the later ones (路線・交通 ...) show up only when they have a day
+        self.assertEqual(used, set(catalog.GROUPS))           # all fifteen have days (a genre with none is not shown, see Ctx.shown)
+        counts = {g: sum(1 for e in entries if e["group"] == g) for g in catalog.GROUPS}
+        self.assertTrue(all(n >= 6 for n in counts.values()), counts)
         self.assertEqual(len(catalog.GROUPS), 15)
 
     def test_id_does_not_depend_on_the_title(self):
