@@ -270,7 +270,7 @@
   /* ---------- cards (the same markup as build.py card_html) ---------- */
   function catItem(c) {
     return { key: 'c:' + c.id, id: c.id, title: c.title, date: c.date, p: c.precision || 'day', g: CONF.groups.indexOf(c.group) + 1, kind: c.subject || c.category || c.kind, what: c.what || c.kind, kword: c.kind, place: c.place != null ? c.place : (c.region || ''), quiet: !!c.quiet,
-      cat: c.category, own: false, href: '/e/' + c.id + '/' };
+      cat: c.mid, sub: c.subject, own: false, href: '/e/' + c.id + '/' };
   }
   function ownItem(e) {
     var k = KINDS[e.kind] || KINDS.memo;
@@ -278,7 +278,7 @@
   }
   function cardHtml(it) {
     var h = '<article class="card' + (it.quiet ? ' quiet' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.date) + '" data-p="' + H(it.p) + '"' +
-      (it.g ? ' data-g="' + it.g + '"' : '') + (it.cat ? ' data-cat="' + H(it.cat) + '"' : '') + '>';
+      (it.g ? ' data-g="' + it.g + '"' : '') + (it.cat ? ' data-cat="' + H(it.cat) + '"' : '') + (it.cat && it.sub ? ' data-sub="' + H(it.sub) + '"' : '') + '>';
     h += '<div class="c-top">' + (it.g ? '<span class="mark m' + it.g + '" data-g="' + it.g + '" aria-hidden="true"></span>' : '') + '<span class="badge">' + H(it.kind) + '</span>' +
       (it.what ? '<span class="what">' + H(it.what) + '</span>' : '') + '</div>';
     h += '<p class="c-count"><span class="word"></span><span class="num"></span><span class="rel"></span></p><p class="c-sub"></p>';
@@ -871,10 +871,10 @@
     return limit ? hits.slice(0, limit) : hits;
   }
   function pageSearch() {
-    var q = $('#q'), out = $('#results'), info = $('#found'), st = { g: P.g || '', t: P.t === '1' }, cat = [], statT;
+    var q = $('#q'), out = $('#results'), info = $('#found'), st = { g: P.g || '', m: P.m || '', s: P.s || '', t: P.t === '1' }, cat = [], statT;
     q.value = P.q || '';
     function sync() {
-      var u = '/search/?' + [q.value ? 'q=' + encodeURIComponent(q.value) : '', st.g ? 'g=' + st.g : '', st.t ? 't=1' : ''].filter(Boolean).join('&');
+      var u = '/search/?' + [q.value ? 'q=' + encodeURIComponent(q.value) : '', st.g ? 'g=' + st.g : '', st.g && st.m ? 'm=' + encodeURIComponent(st.m) : '', st.g && st.m && st.s ? 's=' + encodeURIComponent(st.s) : '', st.t ? 't=1' : ''].filter(Boolean).join('&');
       try { history.replaceState(null, '', u.replace(/\?$/, '')); } catch (e) { /* ignore */ }
     }
     function run() {
@@ -885,11 +885,14 @@
       var hits = cat.filter(function (c) {
         if (c.status === 'ended') return false;
         if (gi >= 0 && c.group !== CONF.groups[gi]) return false;
+        if (gi >= 0 && st.m && c.mid !== st.m) return false;
+        if (gi >= 0 && st.m && st.s && c.subject !== st.s) return false;
         if (st.t && !c.son_toku) return false;
         var hay = hayOf(c);
         return terms.every(function (t) { return hay.indexOf(t) >= 0; });
       }).sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
       clearTimeout(statT); statT = setTimeout(function () { if (terms.length) stat(hits.length ? 'act:search_hit' : 'act:search_miss'); }, 1500);
+      levels(gi);
       var shown = hits.slice(0, 60);
       render(out, shown.map(catItem));
       info.textContent = hits.length ? hits.length + '件' + (hits.length > 60 ? '(近い順に60件)' : '') : '';
@@ -901,10 +904,33 @@
       if (ask) ask.href = '/contact/?kind=request' + (q.value ? '&q=' + encodeURIComponent(q.value.slice(0, 60)) : '');
       sync();
     }
+    function levels(gi) {   // 中 chips of the chosen genre (counts of the days still to come), and 小 chips of the chosen 中
+      var mb = $('#mid-chips'), sb = $('#sub-chips'), g = gi >= 0 ? CONF.groups[gi] : '', nm = {}, ns = {}, ml, sl;
+      if (!mb || !sb) return;
+      cat.forEach(function (c) {
+        if (c.status === 'ended' || c.group !== g || !c.mid) return;
+        nm[c.mid] = (nm[c.mid] || 0) + 1;
+        if (st.m === c.mid && c.subject) ns[c.subject] = (ns[c.subject] || 0) + 1;
+      });
+      ml = Object.keys(nm).sort(function (a, b) { return nm[b] - nm[a] || (a < b ? -1 : 1); });
+      if (st.m && !nm[st.m]) { st.m = ''; st.s = ''; }
+      sl = Object.keys(ns).sort(function (a, b) { return ns[b] - ns[a] || (a < b ? -1 : 1); }).slice(0, 24);
+      mb.hidden = !g || ml.length < 2;
+      mb.innerHTML = mb.hidden ? '' : '<button type="button" class="chip" data-m-chip="" aria-pressed="' + (st.m ? 'false' : 'true') + '">' + H(g) + 'すべて</button>' + ml.map(function (m) {
+        return '<button type="button" class="chip" data-m-chip="' + H(m) + '" aria-pressed="' + (st.m === m ? 'true' : 'false') + '">' + H(m) + '<small> ' + nm[m] + '</small></button>';
+      }).join('');
+      sb.hidden = !st.m || sl.length < 2;
+      sb.innerHTML = sb.hidden ? '' : '<button type="button" class="chip" data-s-chip="" aria-pressed="' + (st.s ? 'false' : 'true') + '">' + H(st.m) + 'すべて</button>' + sl.map(function (s) {
+        return '<button type="button" class="chip" data-s-chip="' + H(s) + '" aria-pressed="' + (st.s === s ? 'true' : 'false') + '">' + H(s) + '<small> ' + ns[s] + '</small></button>';
+      }).join('');
+    }
+    var mBox = $('#mid-chips'), sBox = $('#sub-chips');
+    if (mBox) mBox.addEventListener('click', function (ev) { var b = ev.target.closest ? ev.target.closest('[data-m-chip]') : null; if (b) { st.m = b.getAttribute('data-m-chip'); st.s = ''; run(); } });
+    if (sBox) sBox.addEventListener('click', function (ev) { var b = ev.target.closest ? ev.target.closest('[data-s-chip]') : null; if (b) { st.s = b.getAttribute('data-s-chip'); run(); } });
     var t;
     q.addEventListener('input', function () { clearTimeout(t); t = setTimeout(run, 120); });
     $('#searchform').addEventListener('submit', function (e) { e.preventDefault(); run(); });
-    $$('[data-g-chip]').forEach(function (b) { b.addEventListener('click', function () { st.g = b.getAttribute('data-g-chip'); run(); }); });
+    $$('[data-g-chip]').forEach(function (b) { b.addEventListener('click', function () { st.g = b.getAttribute('data-g-chip'); st.m = ''; st.s = ''; run(); }); });
     var tb = $('#f-son');
     if (tb) tb.addEventListener('click', function () { st.t = !st.t; run(); });
     loadCatalog().then(function (c) { cat = c || []; if (!c) info.textContent = '読み込めませんでした。しばらくして開き直してください。'; run(); });
@@ -1148,14 +1174,35 @@
 
   /* ---------- category page (filter by sub-category) ---------- */
   function pageCategory() {
-    var chips = $$('[data-cat-chip]'), cards = $$('#grid .card');
+    var chips = $$('[data-cat-chip]'), cards = $$('#grid .card'), subBox = $('#subchips'), mid = '', sub = '';
+    var hm = /[#&]m=([^&]+)/.exec(location.hash || '');
+    if (hm) { try { mid = decodeURIComponent(hm[1]); } catch (e) { mid = ''; } }
+    function apply() {   // 大 is the page; 中 = data-cat; 小 = data-sub
+      chips.forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-cat-chip') === mid ? 'true' : 'false'); });
+      cards.forEach(function (card) { card.hidden = (!!mid && card.getAttribute('data-cat') !== mid) || (!!sub && card.getAttribute('data-sub') !== sub); });
+      if (!subBox) return;
+      var n = {}, list;
+      cards.forEach(function (card) { if (mid && card.getAttribute('data-cat') === mid) { var s = card.getAttribute('data-sub') || ''; if (s) n[s] = (n[s] || 0) + 1; } });
+      list = Object.keys(n).sort(function (a, b) { return n[b] - n[a] || (a < b ? -1 : 1); }).slice(0, 24);
+      subBox.hidden = !(mid && list.length > 1);
+      subBox.innerHTML = subBox.hidden ? '' : '<button type="button" class="chip" data-sub-chip="" aria-pressed="' + (sub ? 'false' : 'true') + '">すべて</button>' + list.map(function (s) {
+        return '<button type="button" class="chip" data-sub-chip="' + H(s) + '" aria-pressed="' + (sub === s ? 'true' : 'false') + '">' + H(s) + '<small> ' + n[s] + '</small></button>';
+      }).join('');
+    }
     chips.forEach(function (b) {
       b.addEventListener('click', function () {
-        var c = b.getAttribute('data-cat-chip');
-        chips.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-        cards.forEach(function (card) { card.hidden = !!c && card.getAttribute('data-cat') !== c; });
+        mid = b.getAttribute('data-cat-chip'); sub = '';
+        try { history.replaceState(null, '', location.pathname + (mid ? '#m=' + encodeURIComponent(mid) : '')); } catch (e) { /* ignore */ }
+        apply();
       });
     });
+    if (subBox) subBox.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-sub-chip]') : null;
+      if (!b) return;
+      sub = b.getAttribute('data-sub-chip'); apply();
+    });
+    if (mid && !chips.some(function (x) { return x.getAttribute('data-cat-chip') === mid; })) mid = '';
+    apply();
   }
 
   /* ---------- today's numbers page ---------- */

@@ -195,7 +195,7 @@ def card_html(e: dict, *, own: bool = False, actions: bool | None = None, big: b
     cls = "card" + (" quiet" if e.get("quiet") else "") + (" big" if big else "")
     direction, word, num, rel, sub = count_parts(e["date"], p)
     h = [f'<article class="{cls}" data-key="{esc(key)}" data-title="{esc(e["title"])}" data-date="{esc(e["date"])}" data-p="{p}" data-dir="{direction}" data-long="{1 if len(num) > 5 else 0}"'
-         + (f' data-g="{g}"' if g else "") + (f' data-cat="{esc(e["category"])}"' if e.get("category") else "") + ">"]
+         + (f' data-g="{g}"' if g else "") + (f' data-cat="{esc(e["mid"])}"' if e.get("mid") else "") + (f' data-sub="{esc(e["subject"])}"' if e.get("mid") and e.get("subject") else "") + ">"]
     subject = e.get("subject") or (e.get("category") if not own else None) or e["kind"]
     what = e.get("what") or (e.get("kind") if not own else None)
     place = e.get("place") if e.get("place") is not None else (e.get("region") if not own else None)
@@ -494,6 +494,8 @@ def search_page(c: Ctx) -> str:
 <p class="lead muted">言葉を入力するか、ジャンルを選んでください。</p>
 {search_form()}
 <div class="chips" role="group" aria-label="ジャンル">{chips}<button type="button" class="chip" id="f-son" aria-pressed="false">お金や手続きの日だけ</button></div>
+<div class="chips" id="mid-chips" role="group" aria-label="中分類" hidden></div>
+<div class="chips" id="sub-chips" role="group" aria-label="小分類" hidden></div>
 <p class="small muted" id="found" aria-live="polite">&nbsp;</p>
 <div class="cards" id="results"></div>
 <div class="panel" id="none" hidden><p>該当する日付が見つかりませんでした。</p><p>言葉を短くするか、ジャンルを「すべて」にしてみてください。この言葉のまま<a id="none-add" href="/add/">日付として記録する</a>こともできます。</p><p class="muted">探している日がなければ、<a id="none-ask" href="/contact/?kind=request">お問い合わせ</a>から、載せてほしい日を送ってください。</p></div>
@@ -724,7 +726,7 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     guide = GUIDES.get(e["subject"])
     art = articles.article_html(e, fmt_date, host(e["source_url"]), today, guide)   # what the day is, when and where, what to check, the usual questions
     same = [] if quiet else sorted((r for r in live if r["subject"] == e["subject"] and r["id"] != e["id"] and not r["quiet"]), key=lambda r: (r["date"], r["id"]))[:6]
-    body = crumbs([("トップ", "/"), (e["group"], f"/c/{GROUP_SLUG[e['group']]}/"), (e["title"], None)]) + f"""
+    body = crumbs([("トップ", "/"), (e["group"], f"/c/{GROUP_SLUG[e['group']]}/")] + ([(e["mid"], f"/c/{GROUP_SLUG[e['group']]}/#m={quote(e['mid'])}")] if e.get("mid") and e["mid"] != catalog.MID_OTHER else []) + [(e["title"], None)]) + f"""
 <h1>{esc(e['title'])}</h1>
 {card_html(e, big=True, link=False)}
 {'<p class="small muted">上のカードの日数は、今日の日付をもとに数えています。</p>' if art else f'<p>{esc(sentence)}<span class="small muted">上のカードの日数は、今日の日付をもとに数えています。</span></p>'}
@@ -752,14 +754,12 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 
 def category_page(c: Ctx, group: str, live: list[dict]) -> str:
     rows = [e for e in live if e["group"] == group][:200]
-    cats: list[str] = []
-    for e in rows:
-        if e["category"] not in cats:
-            cats.append(e["category"])
+    mids = [m["name"] for m in catalog.TAXONOMY.get(group, []) if any(e.get("mid") == m["name"] for e in rows)]
     chips = ""
-    if len(cats) > 1:
-        chips = ('<div class="chips" role="group" aria-label="絞り込み"><button type="button" class="chip" data-cat-chip="" aria-pressed="true">すべて</button>'
-                 + "".join(f'<button type="button" class="chip" data-cat-chip="{esc(x)}" aria-pressed="false">{esc(x)}</button>' for x in cats) + "</div>")
+    if len(mids) > 1:
+        chips = ('<div class="chips" role="group" aria-label="中分類で絞り込む"><button type="button" class="chip" data-cat-chip="" aria-pressed="true">すべて</button>'
+                 + "".join(f'<button type="button" class="chip" data-cat-chip="{esc(x)}" aria-pressed="false">{esc(x)}<small> {sum(1 for e in rows if e.get("mid") == x)}</small></button>' for x in mids)
+                 + '</div><div class="chips" id="subchips" role="group" aria-label="小分類で絞り込む" hidden></div>')
     body = f"""{crumbs([("トップ", "/"), (group, None)])}
 <h1>{esc(group)}の日付</h1>
 <p class="lead muted">{esc(GROUP_LEAD[group])}</p>
