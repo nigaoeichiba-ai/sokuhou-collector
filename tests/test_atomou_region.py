@@ -13,7 +13,7 @@ from tests.test_atomou_core_js import find_chrome  # noqa: E402
 
 ASSETS = Path(__file__).resolve().parents[1] / "sites/atomou/assets"
 PAGE = """<!doctype html><meta charset="utf-8"><script>
-window.ATOMOU = { v: 'x', groups: ['手続き・お金'], slugs: ['deadline'], skins: { basic: { card: 'plain' } }, regions: ['東京都', '大阪府', '北海道'] };
+window.ATOMOU = { v: 'x', groups: ['お金・税金・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' } }, regions: ['東京都', '大阪府', '北海道'] };
 localStorage.setItem('atomou.v1', %(stored)s);
 </script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script>
 <script>var cat = [
