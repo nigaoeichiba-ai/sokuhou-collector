@@ -588,7 +588,7 @@ class AppInChrome(BuildOnce):
     def test_every_page_with_something_to_operate_has_a_hint_sheet(self):
         e = next(x for x in self.entries if x["status"] == "active")
         pages = {"home": "/", "search": "/search/", "category": "/c/sports/", "event": f"/e/{e['id']}/", "my": "/my/", "plan": "/plan/?key=m:none", "add": "/add/",
-                 "calendar": "/calendar/", "interests": "/interests/", "card": "/card/", "topics": "/topics/", "skins": "/skins/", "manual": "/manual/", "today": "/today/", "use": "/use/"}
+                 "calendar": "/calendar/", "interests": "/interests/", "card": "/card/", "topics": "/topics/", "regionhub": "/region/", "skins": "/skins/", "manual": "/manual/", "today": "/today/", "use": "/use/"}
         for name, path in pages.items():
             with self.subTest(page=name):
                 dom = html.unescape(self.dom(path, "&hint=1"))
@@ -650,6 +650,17 @@ class AppInChrome(BuildOnce):
         top = set(re.findall(r'data-sub-chip="([^"*]+)"', dom))
         subs = re.findall(r'<article class="card"(?![^>]*hidden)[^>]*data-sub="([^"]+)"', dom)
         self.assertTrue(subs and not (set(subs) & top), (set(subs), top))      # the days shown are the ones that are not under a named chip
+
+    def test_the_region_page_goes_from_area_to_prefecture_to_days(self):
+        dom = html.unescape(self.dom("/region/?r=東京都"))
+        self.assertIn('data-reg-area="関東" aria-pressed="true"', dom)
+        self.assertIn('data-reg-pref="東京都" aria-pressed="true"', dom)
+        self.assertRegex(dom, r'id="reg-prefs"(?![^>]*hidden)')
+        self.assertRegex(dom, r'id="reg-found"[^>]*>東京都の日 \d+件')
+        self.assertGreaterEqual(dom.split('id="reg-cards"')[1].count("<article"), 1)
+        dom = html.unescape(self.dom("/region/"))
+        self.assertIn("地方を選んでください。", dom)
+        self.assertEqual(len(re.findall(r'data-reg-area="', dom)), 8)
 
     def test_the_setup_shows_an_example_under_every_genre(self):
         dom = html.unescape(self.dom("/", "&setup=1"))

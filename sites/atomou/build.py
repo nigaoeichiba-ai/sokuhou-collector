@@ -28,6 +28,10 @@ from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc,
 
 NAME = "あと何日、もう何日"
 PREFECTURES = "北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県 茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県 新潟県 富山県 石川県 福井県 山梨県 長野県 岐阜県 静岡県 愛知県 三重県 滋賀県 京都府 大阪府 兵庫県 奈良県 和歌山県 鳥取県 島根県 岡山県 広島県 山口県 徳島県 香川県 愛媛県 高知県 福岡県 佐賀県 長崎県 熊本県 大分県 宮崎県 鹿児島県 沖縄県".split()
+AREAS = [("北海道", "北海道"), ("東北", "青森県 岩手県 宮城県 秋田県 山形県 福島県"), ("関東", "茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県"),
+         ("中部", "新潟県 富山県 石川県 福井県 山梨県 長野県 岐阜県 静岡県 愛知県"), ("近畿", "三重県 滋賀県 京都府 大阪府 兵庫県 奈良県 和歌山県"),
+         ("中国", "鳥取県 島根県 岡山県 広島県 山口県"), ("四国", "徳島県 香川県 愛媛県 高知県"), ("九州・沖縄", "福岡県 佐賀県 長崎県 熊本県 大分県 宮崎県 鹿児島県 沖縄県")]
+AREAS = [(a, p.split()) for a, p in AREAS]   # 大 = 地域, 中 = 地方, 小 = 都道府県
 CATCH = "忘れたくない日を、お知らせします。"   # decided by the owner (2026-10-08); the copy pass may not change it
 SLUGS = ["deadline", "sale", "sports", "exams", "weather", "trip", "it", "hobby", "shows", "health", "food", "transit", "politics", "world", "tickets"]
 GROUP_SLUG = dict(zip(catalog.GROUPS, SLUGS))
@@ -127,7 +131,7 @@ def member_php(cfg: dict) -> str:
     return php
 
 
-STATS_SECTION = '<h2 id="stats">利用状況の統計</h2>\n<p>使いやすくするため、件数だけの統計を取ります。送るのは、あらかじめ決めた項目の件数です。「どのページが開かれたか」「選ばれたきせかえ」「ホームに表示する項目の並びと非表示」「予定に入れる・ファイルを作る・共有するボタンが押された回数」「選ばれた好きな分野(あらかじめ決めた一覧にあるものだけ)の回数」「検索で見つかったか(検索した言葉は送りません)」。</p>\n<p>名前・日付・メモ・メールアドレス・検索した言葉・端末を識別する番号は送りません。Cookie は使いません。サーバーに残るのは1日ごとの合計の件数だけで、同じ人かどうかは分かりません。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。</p>\n<p>マイページの「利用状況の統計に協力する」でいつでも止められます。ブラウザの「トラッキングしない」(DNT・Global Privacy Control)がオンのときは、初めから止まっています。</p>'
+STATS_SECTION = '<h2 id="stats">利用状況の統計</h2>\n<p>使いやすくするため、件数だけの統計を取ります。送るのは、あらかじめ決めた項目の件数です。「どのページが開かれたか」「選ばれたきせかえ」「ホームに表示する項目の並びと非表示」「予定に入れる・ファイルを作る・共有するボタンが押された回数」「予定に入れられた公式の日の回数(どの日が人気かを知るためです。日の番号だけで、人は分かりません)」「選ばれた好きな分野(あらかじめ決めた一覧にあるものだけ)の回数」「検索で見つかったか(検索した言葉は送りません)」。</p>\n<p>名前・日付・メモ・メールアドレス・検索した言葉・端末を識別する番号は送りません。Cookie は使いません。サーバーに残るのは1日ごとの合計の件数だけで、同じ人かどうかは分かりません。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。</p>\n<p>マイページの「利用状況の統計に協力する」でいつでも止められます。ブラウザの「トラッキングしない」(DNT・Global Privacy Control)がオンのときは、初めから止まっています。</p>'
 PUSH_SECTION = '<h2 id="push">通知(任意)</h2>\n<p>マイページの「この端末で通知を受け取る」を押し、ブラウザで許可したときだけ通知を使えます。当サイトのサーバーに保存するのは、ブラウザが作った通知の宛先(購読情報)と、通知する日(日付と、朝か夜か)だけです。予定の名前・時刻・メモ・やることの内容は保存しません。通知文は、お使いの端末で作ります。</p>\n<p>通知は、当サイトが GitHub Actions(GitHub, Inc.)で動かす送信プログラムから、お使いのブラウザのプッシュ配信サービス(Google、Apple、Mozilla など)を通して届きます。「通知を止める」を押すか、ブラウザの設定で通知を止めると、購読情報はサーバーから削除します。配信サービスから「宛先がない」と返されたものも削除します。</p>'
 MEMBERS_SECTION = '<h2 id="members">会員登録(任意)</h2>\n<p>会員登録は無料で、パスワードはありません。メールアドレスに送る確認コードでログインします。サーバーに保存するのは、メールアドレス、登録日、プランと無料期間、紹介コード、ログイン中の端末の印(ランダムな値の要約)です。「メールでもお知らせする」をオンにした人に限り、知らせる日(日付と、朝か夜か)と予定の名前(短く)も保存します。オフにすると、その部分はすぐ消します。</p>\n<p>これらは、サーバーの公開されない場所に暗号化して保存します。記録した日・メモ・やることの内容そのものは、会員でも端末の中だけにあります。ペンネームを入れて公開に同意した人は、そのペンネームを協力者のページに載せます。紹介の確認のため、サイトを使った日(直近20日分)を保存します。モニターのアンケートの答えは、サイトの改善のためだけに使い、運営者だけが読みます。確認コードのメールは、ログインのためだけに送ります。広告のメールは、別に同意した人にしか送りません。マイページの「退会する」で、会員の記録はすぐ消えます。</p>'
 GOOGLE_SECTION = '<h2 id="google">Google アカウントでの引き継ぎ(任意)</h2>\n<p>マイページの「Google アカウントで同期する」を押したときだけ、Google の画面が開きます。許可するのは、あなたの Google ドライブの中にあるこのサイト専用の非表示フォルダ(アプリデータ)への保存だけです。記録した日・予定に入れた日・好きな分野・設定をそこに保存し、別の端末で読み込めます。当サイトのサーバーには送りません。Google アカウントの氏名やメールアドレスは取得しません。</p>\n<p>やめるときは、<a href="https://myaccount.google.com/permissions" rel="noopener" target="_blank">Google アカウントの権限の管理</a>で「あと何日、もう何日」の権限を削除してください。</p>'
@@ -300,7 +304,7 @@ class Ctx:
         self.v_skin = hashlib.sha1(other_css.encode("utf-8")).hexdigest()[:8]
         self.v_bundle = None
         css_urls = [f"/assets/skins.css?v={self.v_skin}"] + ([f"/assets/design.css?v={self.ver}"] if (SITE["assets"] / "design.css").exists() else [])
-        conf = {"v": self.v_cat, "groups": catalog.GROUPS, "shown": self.shown, "slugs": SLUGS, "regions": PREFECTURES, "css": css_urls,
+        conf = {"v": self.v_cat, "areas": AREAS, "groups": catalog.GROUPS, "shown": self.shown, "slugs": SLUGS, "regions": PREFECTURES, "css": css_urls,
                 "skins": {s["id"]: {"card": s["card"], "name": s["name"], "attrs": s.get("attrs", {}), **({"dark": True} if s.get("dark") else {}), **({"season": s["season"]} if s.get("season") else {})} for s in skins.SKINS}}
         if cfg.get("google_client_id"):
             conf["gclient"] = cfg["google_client_id"]
@@ -363,7 +367,7 @@ def popular_chips(entries: list[dict]) -> str:
 def home_page(c: Ctx) -> str:
     live = live_entries(c.entries, c.today)
     first = diverse(live, 6)
-    chips = '<a class="chip" href="/topics/">最新・トピックス</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS) if g in c.shown)
+    chips = '<a class="chip" href="/topics/">最新・トピックス</a><a class="chip" href="/region/">地域</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS) if g in c.shown)
     ucs = "".join(f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>'
                   for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
     body = f"""<section class="intro setup" id="setup" aria-labelledby="setup-h" hidden></section>
@@ -780,6 +784,20 @@ def category_page(c: Ctx, group: str, live: list[dict]) -> str:
     return c.page(f"/c/{GROUP_SLUG[group]}/", f"{group}の日付一覧 | {NAME}", f"{GROUP_LEAD[group]}あと何日かが一目で分かり、ワンタップで予定に入れられます。", body, "category")
 
 
+def region_hub_page(c: Ctx) -> str:
+    """地域: the days of a place.  大 = 地域, 中 = 地方, 小 = 都道府県; the list itself is made in the browser (assets/app.js pageRegionHub) from the catalogue."""
+    rows = "".join(f'<h2>{esc(a)}</h2><div class="chips">' + "".join(f'<a class="chip" href="/region/?r={quote(p)}">{esc(p)}</a>' for p in ps) + "</div>" for a, ps in AREAS)
+    body = f"""{crumbs([("トップ", "/"), ("地域", None)])}
+<h1>地域の日</h1>
+<p class="lead muted">地方から都道府県を選ぶと、その地域で開かれる日や、その地域の制度の日が並びます。</p>
+<div class="chips" id="reg-areas" role="group" aria-label="地方"></div>
+<div class="chips" id="reg-prefs" role="group" aria-label="都道府県" hidden></div>
+<p class="small muted" id="reg-found" aria-live="polite">&nbsp;</p>
+<div class="cards" id="reg-cards"></div>
+<noscript>{rows}</noscript>"""
+    return c.page("/region/", f"地域の日 | {NAME}", "北海道から沖縄まで、都道府県ごとに、その地域で開かれる日と、制度の日を探せます。", body, "regionhub")
+
+
 def topics_page(c: Ctx, live: list[dict]) -> str:
     """最新・トピックス: what is close and what was added lately, from the official dates only (rebuilt every morning at 07:00 JST)."""
     today = c.today
@@ -1115,7 +1133,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     live = live_entries(entries, today)
     pages: dict[str, str | bytes] = {
         "index.html": home_page(c), "search/index.html": search_page(c), "interests/index.html": interests_page(c, live), "card/index.html": card_page(c), "my/index.html": my_page(c), "add/index.html": add_page(c),
-        "skins/index.html": skins_page(c), "use/index.html": use_index(c), "manual/index.html": manual_page(c), "today/index.html": today_page(c), "calendar/index.html": calendar_page(c), "plan/index.html": plan_page(c), "topics/index.html": topics_page(c, live),
+        "skins/index.html": skins_page(c), "use/index.html": use_index(c), "manual/index.html": manual_page(c), "today/index.html": today_page(c), "calendar/index.html": calendar_page(c), "plan/index.html": plan_page(c), "topics/index.html": topics_page(c, live), "region/index.html": region_hub_page(c),
     }
     for u in usecases.USECASES:
         pages[f"use/{u['slug']}/index.html"] = use_page(c, u)

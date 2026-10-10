@@ -54,6 +54,7 @@ def summary(total: Counter) -> dict:
         "blocks_hidden_on_views": group(total, "home_hidden"),
         "block_hide_clicks": {k.split(":", 1)[1]: v for k, v in acts.items() if k.startswith("block_hide:")},
         "actions": {k: v for k, v in acts.items() if ":" not in k},
+        "popular_days": dict(list({k.split(":", 1)[1]: v for k, v in acts.items() if k.startswith("pop:")}.items())[:50]),   # official days put into a planner (the day's public id: how many times)
         "added_by_kind": {k.split(":", 1)[1]: v for k, v in acts.items() if k.startswith("add:")},
         "big_text_views": total.get("big:on", 0),
     }
