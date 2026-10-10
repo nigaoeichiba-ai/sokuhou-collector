@@ -92,7 +92,8 @@
     s.prefs.pushHash = /^[0-9me,-]{0,4000}$/.test(String(p.pushHash || '')) ? String(p.pushHash || '') : '';
     s.prefs.tour = {};
     s.prefs.intro = p.intro === true;
-    s.prefs.setup = p.setup === true;   // the first-visit setup was done (or put off)
+    s.prefs.setup = p.setup === true;
+    s.prefs.pager = p.pager === true;   // the home lists as pages to turn (assets/swipe.js)   // the first-visit setup was done (or put off)
     s.prefs.genres = Array.isArray(p.genres) ? p.genres.filter(function (g, i, a) { return CONF.groups.indexOf(g) >= 0 && a.indexOf(g) === i; }) : [];   // the genres the visitor chose: the home page leans to them
     s.prefs.region = CONF.regions && CONF.regions.indexOf(p.region) >= 0 ? p.region : '';   // the prefecture the visitor lives in (this device only): days near it come first
     s.prefs.shares = Math.max(0, Math.min(9999, Math.floor(+p.shares) || 0));   // how many times a day was sent (the plan: sending earns room for more cards)
@@ -383,10 +384,24 @@
       return x - y;
     }).map(function (o) { return o.it; });
   }
+  var slidAt = 0, calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function slide(grid, change, held) {   // the cards that change places glide there (a short ease), the one in the hand stays where the finger is
+    if (calm) { change(); return; }
+    var cards = $$('.card', grid), before = cards.map(function (c) { return c.getBoundingClientRect(); });
+    slidAt = Date.now();
+    change();
+    cards.forEach(function (c, i) {
+      if (c === held) return;
+      var a = c.getBoundingClientRect(), dx = before[i].left - a.left, dy = before[i].top - a.top;
+      if (!dx && !dy) return;
+      c.style.transition = 'none'; c.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+      requestAnimationFrame(function () { requestAnimationFrame(function () { c.style.transition = 'transform .16s ease-out'; c.style.transform = ''; setTimeout(function () { c.style.transition = ''; }, 200); }); });
+    });
+  }
   function moveCard(card, dir) {
     var sib = dir < 0 ? card.previousElementSibling : card.nextElementSibling;
     if (!sib) return;
-    if (dir < 0) card.parentNode.insertBefore(card, sib); else card.parentNode.insertBefore(sib, card);
+    slide(card.parentNode, function () { if (dir < 0) card.parentNode.insertBefore(card, sib); else card.parentNode.insertBefore(sib, card); }, null);
     card.focus && card.scrollIntoView({ block: 'nearest' });
     changed(card.parentNode);
   }
@@ -400,7 +415,7 @@
      A floating copy follows the pointer; the real card is dimmed and takes the place it is dropped on. */
   var drag = null, ghost = null, suppressClick = false, press = null, tPress = null;
   function interactive(t) { return t.closest && t.closest('a,button,input,select,textarea,label,summary'); }
-  function dragGrid(card) { var g = card.parentNode; return g && g.getAttribute && g.getAttribute('data-save-order') === '1' && !card.classList.contains('big') && !card.classList.contains('ghost') ? g : null; }
+  function dragGrid(card) { var g = card.parentNode; return g && g.getAttribute && g.getAttribute('data-save-order') === '1' && !g.classList.contains('pager') && !card.classList.contains('big') && !card.classList.contains('ghost') ? g : null; }
   function beginDrag(card, x, y) {
     var r = card.getBoundingClientRect();
     drag = { card: card, grid: card.parentNode, dx: x - r.left, dy: y - r.top };
@@ -417,8 +432,9 @@
     if (y < 80) window.scrollBy(0, -16); else if (y > window.innerHeight - 80) window.scrollBy(0, 16);
     var el = document.elementFromPoint(x, y), over = el && el.closest && el.closest('.card');
     if (!over || over === drag.card || over.parentNode !== drag.grid) return;
+    if (Date.now() - slidAt < 130) return;   // the cards are still gliding: where they are drawn is not where they will be
     var r = over.getBoundingClientRect(), after = (x - r.left) / r.width + (y - r.top) / r.height > 1;
-    drag.grid.insertBefore(drag.card, after ? over.nextSibling : over);
+    slide(drag.grid, function () { drag.grid.insertBefore(drag.card, after ? over.nextSibling : over); }, drag.card);
   }
   function endDrag() {
     if (!drag) return;
@@ -1307,7 +1323,7 @@
   else if (page === 'category') pageCategory();
   else if (page === 'today') pageToday();
   else if (page === 'interests') pageInterests();
-  window.AtomouApp = { regionHits: regionHits, interestHits: interestHits, matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
+  window.AtomouApp = { toggleSave: toggleSave, regionHits: regionHits, interestHits: interestHits, matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
     loadCatalog: loadCatalog, catItem: catItem, ownItem: ownItem, cardHtml: cardHtml, hydrate: hydrate, fillCard: fillCard, fmtDate: fmtDate, wd: wd, occ: occ, nextYearly: nextYearly, KINDS: KINDS,
     findEntry: findEntry, uid: uid, icsFor: icsFor, removeEntry: removeEntry, normalize: normalize, tipFor: tipFor, nextLines: nextLines, applyPrefs: applyPrefs };
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !P.today) {
