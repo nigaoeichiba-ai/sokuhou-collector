@@ -191,7 +191,7 @@ class CoreInChrome(unittest.TestCase):
 
 
 STORE_PAGE = """<!doctype html><meta charset="utf-8"><script>
-window.ATOMOU = { v: 'x', groups: ['手続き・お金'], slugs: ['deadline'], skins: { basic: { card: 'plain' } } };
+window.ATOMOU = { v: 'x', groups: ['お金・税金・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' } } };
 localStorage.setItem('atomou.v1', %(stored)s);
 </script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script><script src="%(plan)s"></script>
 <script>document.getElementById('out').textContent = JSON.stringify({ state: window.Atomou.state(), broken: localStorage.getItem('atomou.v1.broken'), plan: window.AtomouPlan ? (function () {
@@ -222,7 +222,7 @@ class StorageIsSanitised(unittest.TestCase):
         evil = {"entries": [{"id": "ok1", "title": "<img src=x onerror=1>", "date": "2026-10-10", "precision": 'day" onmouseover="x', "kind": "evil", "alarm": "zzz"},
                             {"id": "bad id", "date": "2026-10-10"}, {"id": "x2", "date": "2026-02-30"}, "str", None],
                 "saved": ["abcdef0123", '"><script>', "ABCDEF0123"], "order": ["c:abcdef0123", "evil", 'm:"]'],
-                "genre": {"手続き・お金": 99, "x": 5}, "prefs": {"skin": "nope", "big": 1, "alarm": "x", "blocks": {"order": ["search", "evil"], "hidden": ["cats", "x"]}}}
+                "genre": {"お金・税金・制度": 99, "x": 5}, "prefs": {"skin": "nope", "big": 1, "alarm": "x", "blocks": {"order": ["search", "evil"], "hidden": ["cats", "x"]}}}
         res = run_store_page(json.dumps(json.dumps(evil)))
         st = res["state"]
         self.assertEqual(len(st["entries"]), 1)
@@ -230,7 +230,7 @@ class StorageIsSanitised(unittest.TestCase):
         self.assertEqual((e["precision"], e["kind"], e["alarm"], e["date"]), ("day", "memo", "", "2026-10-10"))
         self.assertEqual(st["saved"], ["abcdef0123"])
         self.assertEqual(st["order"], ["c:abcdef0123"])
-        self.assertEqual(st["genre"], {"手続き・お金": 20})
+        self.assertEqual(st["genre"], {"お金・税金・制度": 20})
         self.assertEqual((st["prefs"]["skin"], st["prefs"]["big"], st["prefs"]["alarm"]), ("basic", True, "morning"))
         self.assertEqual(st["prefs"]["blocks"], {"order": ["search"], "hidden": ["cats"]})
         self.assertIsNone(res["broken"])

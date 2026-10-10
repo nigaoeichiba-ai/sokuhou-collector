@@ -203,7 +203,7 @@ class Receiver(unittest.TestCase):
 
 
 PLAN_PAGE = """<!doctype html><meta charset="utf-8"><script>
-window.ATOMOU = { v: 'x', groups: ['手続き・お金'], slugs: ['deadline'], skins: { basic: { card: 'plain' } }, vapid: 'BPublicKeyForTests' };
+window.ATOMOU = { v: 'x', groups: ['お金・税金・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' } }, vapid: 'BPublicKeyForTests' };
 localStorage.setItem('atomou.v1', %(stored)s);
 </script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script><script src="%(plan)s"></script><script src="%(push)s"></script>
 <script>var p = window.AtomouPush.plan([], [2026, 10, 8]); document.getElementById('out').textContent = JSON.stringify({ dates: p.dates, mirror: p.mirror, hash: p.hash, state: window.Atomou.state().prefs });</script>"""
@@ -298,7 +298,7 @@ if __name__ == "__main__":
 
 
 AFTER_SAVE_PAGE = """<!doctype html><meta charset="utf-8"><script>
-window.ATOMOU = { v: 'x', groups: ['手続き・お金'], slugs: ['deadline'], skins: { basic: { card: 'plain' } }, vapid: 'BPublicKeyForTests' };
+window.ATOMOU = { v: 'x', groups: ['お金・税金・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' } }, vapid: 'BPublicKeyForTests' };
 localStorage.setItem('atomou.v1', %(stored)s);
 </script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><div id="plan"></div><script src="%(app)s"></script><script src="%(plan)s"></script><script src="%(push)s"></script>
 <script>window.AtomouPush.afterSave(document.getElementById('plan'), %(quiet)s); %(extra)s var el = document.getElementById('after-save');
@@ -345,7 +345,7 @@ class AfterSaveInChrome(unittest.TestCase):
 
 
 NIGHT_PAGE = """<!doctype html><meta charset="utf-8"><script>
-window.ATOMOU = { v: 'x', groups: ['手続き・お金'], slugs: ['deadline'], skins: { basic: { card: 'plain' }, dark: { card: 'plain', dark: true, attrs: {} }, sakura: { card: 'plain', attrs: {} } } };
+window.ATOMOU = { v: 'x', groups: ['お金・税金・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' }, dark: { card: 'plain', dark: true, attrs: {} }, sakura: { card: 'plain', attrs: {} } } };
 var DARK = %(dark)s; window.matchMedia = function (q) { return { matches: DARK && /prefers-color-scheme:\s*dark/.test(q), addEventListener: function () {} }; };   // headless Chrome has no setting for the device's colour scheme
 %(stored)s
 </script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script>

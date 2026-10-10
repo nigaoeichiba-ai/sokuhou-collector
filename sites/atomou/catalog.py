@@ -23,31 +23,37 @@ LEAD = {"締切": 45, "試験日": 45, "施行": 45, "改定": 45}
 LEAD_DEFAULT = 60       # days before the date that the page may be indexed
 QUIET = ("grief", "disaster", "medical", "legal")
 
-GROUPS = ["手続き・お金", "買い物・サービス", "スポーツ", "学校・資格", "空・季節", "おでかけ・地域", "乗り物・レース", "趣味・ゲーム・アニメ", "エンタメ・音楽・賞", "暮らし・健康・グルメ"]
-# The first six keep their place (and so their colour and shape); the last three were split out of "マニア・天文" and "大会・番組" on 2026-10-10.
+GROUPS = ["お金・税金・制度", "買い物・料金・セール", "スポーツ", "学校・資格", "天文・暦", "おでかけ・旅行", "通信・IT・アプリ", "趣味・ゲーム・アニメ", "エンタメ・音楽・賞", "暮らし・健康・グルメ"]
+# Named after the big portals' own words (Yahoo!, Rakuten, ぴあ, じゃらん, 食べログ, 価格.com): the position of a genre fixes its colour and shape, so a rename keeps the position.
+# 2026-10-10 (owner): "手続き" alone is vague, "サービス" and "空・季節" are not portal words, a race is not always a vehicle -> races went to スポーツ, vehicle shows to 趣味, trains to おでかけ・旅行.
+G_MONEY, G_SHOP, G_SPORT, G_SCHOOL, G_SKY, G_TRIP, G_IT, G_HOBBY, G_SHOW, G_LIFE = GROUPS
 GROUP_OF_CATEGORY = {
-    "税": "手続き・お金", "年金・保険": "手続き・お金", "給付": "手続き・お金", "制度": "手続き・お金", "料金": "手続き・お金",
-    "セール": "買い物・サービス", "ふるさと納税": "買い物・サービス", "年賀状": "買い物・サービス", "ポイント": "買い物・サービス",
-    "サービス終了": "買い物・サービス", "料金改定": "買い物・サービス",
-    "大学入試": "学校・資格", "高校入試": "学校・資格", "資格": "学校・資格", "就活": "学校・資格", "奨学金": "学校・資格", "公務員": "学校・資格",
-    "野球": "スポーツ", "サッカー": "スポーツ", "駅伝・マラソン": "スポーツ", "相撲": "スポーツ", "フィギュア": "スポーツ",
-    "番組": "エンタメ・音楽・賞", "音楽": "エンタメ・音楽・賞", "ライブ": "エンタメ・音楽・賞",
-    "天文": "空・季節",
-    "鉄道": "乗り物・レース", "乗り物": "乗り物・レース",
-    "即売会": "趣味・ゲーム・アニメ", "ゲーム・アニメ": "趣味・ゲーム・アニメ", "ホビー": "趣味・ゲーム・アニメ",
-    "祭り": "おでかけ・地域", "花火": "おでかけ・地域", "イルミネーション": "おでかけ・地域", "紅葉・花": "おでかけ・地域", "スキー": "おでかけ・地域",
-    "初詣・初日の出": "おでかけ・地域", "施設": "おでかけ・地域",
+    "税": G_MONEY, "年金・保険": G_MONEY, "給付": G_MONEY, "制度": G_MONEY, "料金": G_MONEY, "ふるさと納税": G_MONEY,
+    "セール": G_SHOP, "年賀状": G_SHOP, "ポイント": G_SHOP, "料金改定": G_SHOP,
+    "サービス終了": G_IT,
+    "大学入試": G_SCHOOL, "高校入試": G_SCHOOL, "資格": G_SCHOOL, "就活": G_SCHOOL, "奨学金": G_SCHOOL, "公務員": G_SCHOOL,
+    "野球": G_SPORT, "サッカー": G_SPORT, "駅伝・マラソン": G_SPORT, "相撲": G_SPORT, "フィギュア": G_SPORT,
+    "番組": G_SHOW, "音楽": G_SHOW, "ライブ": G_SHOW,
+    "天文": G_SKY,
+    "鉄道": G_TRIP, "キャンプ": G_TRIP, "乗り物": G_HOBBY,
+    "即売会": G_HOBBY, "ゲーム・アニメ": G_HOBBY, "ホビー": G_HOBBY,
+    "祭り": G_TRIP, "花火": G_TRIP, "イルミネーション": G_TRIP, "紅葉・花": G_TRIP, "スキー": G_TRIP,
+    "初詣・初日の出": G_TRIP, "施設": G_TRIP,
+    "健康": G_LIFE, "結婚": G_LIFE,
 }
 # a few topics sit under the catch-all category "その他" (or a neighbour's category) in the seeds; the topic decides the genre
 GROUP_OF_SUBJECT = {
-    "ラグビー": "スポーツ", "競馬": "乗り物・レース", "将棋": "趣味・ゲーム・アニメ", "食べ歩き": "暮らし・健康・グルメ", "スイーツ": "暮らし・健康・グルメ", "日本酒": "暮らし・健康・グルメ", "カニ": "暮らし・健康・グルメ", "マラソン": "スポーツ", "女子マラソン": "スポーツ",
-    "F1": "乗り物・レース",
-    "ノーベル賞": "エンタメ・音楽・賞", "アカデミー賞": "エンタメ・音楽・賞", "映画祭": "エンタメ・音楽・賞", "映画賞": "エンタメ・音楽・賞",
-    "コミックマーケット": "趣味・ゲーム・アニメ",
-    "宝くじ": "買い物・サービス", "年金(iDeCo)": "手続き・お金", "住宅の補助金": "手続き・お金", "共通テスト": "学校・資格",
+    "ラグビー": G_SPORT, "マラソン": G_SPORT, "女子マラソン": G_SPORT,
+    "競馬": G_SPORT, "F1": G_SPORT, "カーレース": G_SPORT, "バイクレース": G_SPORT,
+    "将棋": G_HOBBY, "コミックマーケット": G_HOBBY,
+    "食べ歩き": G_LIFE, "スイーツ": G_LIFE, "日本酒": G_LIFE, "カニ": G_LIFE, "カニ漁": G_LIFE, "蟹騒動": G_LIFE,
+    "ノーベル賞": G_SHOW, "アカデミー賞": G_SHOW, "映画祭": G_SHOW, "映画賞": G_SHOW,
+    "宝くじ": G_SHOP, "年金(iDeCo)": G_MONEY, "住宅の補助金": G_MONEY, "共通テスト": G_SCHOOL, "ゆうちょ銀行": G_MONEY,
+    "新幹線": G_TRIP, "燃油サーチャージ": G_TRIP,
+    "ahamo": G_IT, "WiMAX": G_IT, "IIJmio": G_IT, "SoftBank光": G_IT, "ドコモ": G_IT, "NTT東日本": G_IT, "NTT西日本": G_IT,
 }
-GROUP_OF_FILE = {"seed_tax_law": "手続き・お金", "seed_consumer": "買い物・サービス", "seed_exams": "学校・資格", "seed_sports_culture": "スポーツ",
-                 "seed_otaku_astro": "趣味・ゲーム・アニメ", "seed_regional": "おでかけ・地域"}
+GROUP_OF_FILE = {"seed_tax_law": G_MONEY, "seed_consumer": G_SHOP, "seed_exams": G_SCHOOL, "seed_sports_culture": G_SPORT,
+                 "seed_otaku_astro": G_HOBBY, "seed_regional": G_TRIP}
 SYNONYMS = {  # words a visitor may type -> tags, so "時給" finds a minimum-wage item and "はがき" finds the New Year cards
     "最低賃金": ["時給", "賃金", "バイト", "パート"], "年賀": ["年賀状", "はがき", "お正月"], "ふるさと納税": ["寄附", "返礼品"],
     "共通テスト": ["大学入試", "センター試験", "受験"], "TOEIC": ["英語", "資格", "試験"], "流星群": ["星", "天体観測", "天文"],
