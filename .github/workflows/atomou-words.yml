@@ -1,0 +1,73 @@
+name: atomou-words
+
+# atomou.com: copies the new words that visitors asked us to look up (api/w.php keeps them in <site folder>/inbox/words-YYYYMM.jsonl) into data/inbox/atomou-<stamp>.p7m ENCRYPTED
+# (the repository is public: a word may hold anything a person typed).  Only the owner's PC holds the private key (~/.sokuhou/inbox_private.pem); the daily research reads the words
+# there with `python sites/atomou/words.py read --mark`.  The other sites' messages are not touched (inbox.yml does those).
+# Needs the repository secrets XSERVER_SSH_KEY, XSERVER_HOST and XSERVER_USER (the same ones the deploy job uses).
+
+on:
+  schedule:
+    - cron: "40 18 * * *"   # 03:40 JST, before the daily research routine (06:14)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-commit
+  cancel-in-progress: false
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  words:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Copy the new words (encrypted)
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then
+            echo "XSERVER_SSH_KEY / XSERVER_HOST / XSERVER_USER are not all set; nothing to do"
+            exit 0
+          fi
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver
+          chmod 600 ~/.ssh/id_xserver
+          for try in 1 2 3 4 5 6; do   # the key scan sometimes comes back empty for a moment
+            ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+            [ -s ~/.ssh/known_hosts ] && break
+            sleep $((try * 5))
+          done
+          stamp=$(date -u +%Y%m%d-%H%M)
+          mkdir -p data/inbox
+          if ! ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+               "cd \"\$HOME/atomou.com/inbox\" 2>/dev/null && for f in words-*.jsonl; do if [ -f \"\$f\" ]; then echo \"== \$f\"; cat \"\$f\"; fi; done; true" > raw_atomou.txt; then
+            echo "ssh failed; skipped"
+            exit 0
+          fi
+          python -m sokuhou.inbox new --site atomou --raw raw_atomou.txt --state data/inbox/state.json --out new_atomou.jsonl
+          if [ -s new_atomou.jsonl ]; then
+            openssl smime -encrypt -aes256 -binary -in new_atomou.jsonl -out "data/inbox/atomou-$stamp.p7m" -outform DER sokuhou/inbox_cert.pem
+          fi
+          rm -f raw_atomou.txt new_atomou.jsonl
+      - name: Commit
+        run: |
+          git config user.name "sokuhou-bot"
+          git config user.email "sokuhou-bot@users.noreply.github.com"
+          git add data/inbox
+          if git diff --cached --quiet; then
+            echo "no new words"
+          else
+            git commit -m "data: atomou words (encrypted)"
+            git pull --rebase origin main
+            git push
+          fi

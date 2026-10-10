@@ -123,6 +123,20 @@ def share_php(cfg: dict | None = None) -> str:
     return (HERE / "share_receiver.php.tpl").read_text(encoding="utf-8").replace("__SITE_URL__", url)
 
 
+def forbidden_words() -> dict:
+    """data/atomou/forbidden_words.json: the words a visitor may not ask us to look up (gambling, adult, crime, a death, personal information); the page, api/w.php and the daily research all use it."""
+    return json.loads((ROOT / "data/atomou/forbidden_words.json").read_text(encoding="utf-8"))
+
+
+def words_php(cfg: dict | None = None) -> str:
+    """api/w.php: the receiver of the words visitors ask us to look up (see words_receiver.php.tpl)."""
+    url = str((cfg or {}).get("site_url") or "https://atomou.com").rstrip("/")
+    fw = forbidden_words()
+    j = lambda x: json.dumps(x, ensure_ascii=False)   # noqa: E731
+    return ((HERE / "words_receiver.php.tpl").read_text(encoding="utf-8").replace("__SITE_URL__", url).replace("__TERMS__", j([t.lower() for t in fw["terms"]]))
+            .replace("__PERSONAL__", j(fw["personal"]["regex"])).replace("__MIN__", str(int(fw["min_length"]))).replace("__MAX__", str(int(fw["max_length"]))).replace("__PER_DAY__", str(int(fw["per_day"]))))
+
+
 def member_php(cfg: dict) -> str:
     tiers = cfg.get("member_tiers") or []
     for t in tiers:
@@ -316,6 +330,8 @@ class Ctx:
         css_urls = [f"/assets/skins.css?v={self.v_skin}"] + ([f"/assets/design.css?v={self.ver}"] if (SITE["assets"] / "design.css").exists() else [])
         conf = {"v": self.v_cat, "areas": AREAS, "groups": catalog.GROUPS, "shown": self.shown, "slugs": SLUGS, "regions": PREFECTURES, "css": css_urls,
                 "skins": {s["id"]: {"card": s["card"], "name": s["name"], "attrs": s.get("attrs", {}), **({"dark": True} if s.get("dark") else {}), **({"season": s["season"]} if s.get("season") else {})} for s in skins.SKINS}}
+        fw = forbidden_words()
+        conf["fw"] = {"terms": [t.lower() for t in fw["terms"]], "re": fw["personal"]["regex"], "min": int(fw["min_length"]), "max": int(fw["max_length"]), "day": int(fw["per_day"])}   # the same refusal as api/w.php, so that a visitor is told before sending
         if cfg.get("google_client_id"):
             conf["gclient"] = cfg["google_client_id"]
         if cfg.get("vapid_public"):
@@ -499,6 +515,7 @@ def interests_page(c: Ctx, live: list[dict]) -> str:
 <div class="sbox"><form class="searchbox" id="int-form" role="search"><label class="vh" for="int-q">分野を探す・追加する</label>
 <input type="text" id="int-q" maxlength="24" autocomplete="off" placeholder="探す・追加する(例: 剣道、釣り、写真)" enterkeyhint="done"><button type="submit" class="sbtn" aria-label="追加">{ICONS['plus']}</button></form></div>
 <p class="small muted" id="int-note" aria-live="polite"></p>
+<div class="small" id="int-send" aria-live="polite"></div>
 <p class="int-go" id="int-go" hidden><a class="btn" href="/">選んだ分野の日を見る</a></p>
 <div class="field" id="live-alert"><label class="lab" for="live-alert-cb"><input type="checkbox" id="live-alert-cb"> 好きな言葉の速報を知らせる</label>
 <p class="hint">選んだ分野や言葉に合う公式の発表が出たら、サイトを開いている間、画面でお知らせします。ブラウザの通知を許可すると、通知でも出ます。サイトを閉じているときは届きません。</p><p class="small muted" id="live-alert-note" aria-live="polite"></p></div>
@@ -1146,6 +1163,11 @@ def legal(c: Ctx) -> dict:
                     "<p>「更新が届く共有カードにする」を押したときだけ、カードをサーバーに預かります。カードの内容(題名・日付・ひとこと・やること)は、あなたのブラウザの中で、ランダムな鍵で暗号にしてから送ります。鍵は、リンクのうち「#」より後ろにだけあり、当サイトのサーバーには送られません。サーバーに残るのは、暗号になった内容、カードの番号(ランダム)、版の番号、作った日・更新した日、編集用の合言葉を変換した値、問題の報告の件数です。サーバーは、カードの内容を読めません。"
                     "リンクを知っている人は、だれでもカードを読めます。編集用のリンクを知っている人は、だれでも直せます。リンクは、渡す相手を選んでください。180日間、更新がないカードは、自動で消えます。いつでも、編集用のリンクから消せます。問題のあるカードは、読んだ人が「問題を知らせる」で報告でき、3人以上から報告があると表示を止めます。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。"
                     "フォローしたカードの一覧と鍵は、あなたの端末の中にだけ保存します。</p>"
+                    '<h2 id="words">調べてほしいワード(任意)</h2>'
+                    "<p>「好きな分野を選ぶ」のページで、入れたワードの横の「このワードを調べてもらう」を押したときだけ、そのワードをサーバーに預かります。押さなければ、ワードは、この端末の中にだけあります。"
+                    "サーバーに残るのは、ワードの文字、受け付けた時刻、ランダムな番号だけです。名前・メールアドレス・アドレス(IP)・クッキーは、ワードに結びつけません。送りすぎを防ぐため、アドレスから作った1日限りの符号を、1日の回数の数えにだけ使い、翌日に削除します。"
+                    "預かったワードは、公式の情報を調べて、日付をカードにするためにだけ使います。カードに、だれが頼んだかは出ません。ワードは、暗号にして取り出し、公開しません。ワードは、200日で削除します。"
+                    "個人の名前・電話番号・住所・メールアドレス・アドレス(URL)は、入力しないでください(受け付けません)。ギャンブル・アダルトなどの禁止ワードは、カードにできません。調べても、日付が見つからないことがあります。調べる時期は、お約束できません。</p>"
                     "<h2>カードの共有(任意)</h2>"
                     "<p>「カードを作って送る」で作ったカードの内容(題名・日付・ひとこと・やること)は、リンクのうち「#」より後ろに入ります。この部分は、ブラウザから当サイトのサーバーへは送られず、保存もされません。リンクを渡した相手の端末で、カードとして表示されます。スマホの共有メニューから渡した文章も、サーバーには送られず、ご利用の端末の中で、カードを作るページに渡されます。リンクを送る相手と手段は、あなたが選びます。</p>"),
         finish=lambda html: c.finish(legal_wording(privacy_fix(c, html)), "legal"),
@@ -1181,6 +1203,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     pages.update(legal(c))
     pages["api/e.php"] = stats_php()
     pages["api/s.php"] = share_php(cfg)
+    pages["api/w.php"] = words_php(cfg)
     pages["api/push.php"] = push_php(cfg)
     if members_on(cfg):
         pages["api/m.php"] = member_php(cfg)
