@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from sites.yorokobu import content as ct  # noqa: E402
+from sites.yorokobu import dailypicks as dp  # noqa: E402
 from sites.yorokobu import fetch  # noqa: E402
 from sites.yorokobu.picking import pick, usable  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
@@ -100,6 +101,11 @@ def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | Non
         nonempty += bool(union)
     if pairs and nonempty < fetch.MIN_PAIR_SHARE * len(pairs):
         raise rakuten.RakutenError(f"only {nonempty} of {len(pairs)} pages have any product; not using this refresh")
+    daily = {}                                            # the daily picks of the newest days: price, rating and picture as they are now
+    for code in dp.rakuten_codes(c.get("daily") or []):
+        it = get(code)
+        if it:
+            daily[code] = it
     portrait = []
     try:
         for x in client.search(shopCode=fetch.PORTRAIT_SHOP, hits=fetch.HITS, availability=1):
@@ -111,7 +117,7 @@ def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | Non
     now = now or datetime.now(fetch.JST)
     if replaced or dropped:
         print(f"replaced with backups: {len(replaced)}; picks gone with no backup left: {len(dropped)}; ideas filled by search: {searched}", file=sys.stderr)
-    return {"version": 2, "curated": True, "fetched_at": now.isoformat(timespec="seconds"), "pairs": out_pairs, "portrait": portrait,
+    return {"version": 2, "curated": True, "fetched_at": now.isoformat(timespec="seconds"), "pairs": out_pairs, "portrait": portrait, "daily": daily,
             "stats": {"requests": client.calls, "pages": len(pairs), "replaced": len(replaced), "dropped": len(dropped), "searched_ideas": searched,
                       "errors": state["errors"] + fallback_state["errors"]}}
 
