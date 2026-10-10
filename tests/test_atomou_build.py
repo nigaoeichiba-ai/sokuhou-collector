@@ -180,7 +180,7 @@ class Pages(BuildOnce):
     def test_catalog_json_has_public_fields_only(self):
         data = json.loads(self.rel["assets/catalog.json"])
         self.assertEqual(len(data), len(self.entries))
-        allowed = {"id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "tags", "quiet", "ad_ok", "son_toku", "source_url", "checked_on", "status", "subject", "what", "place"}
+        allowed = {"id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "tags", "quiet", "ad_ok", "son_toku", "source_url", "checked_on", "status", "subject", "what", "place", "added"}
         for e in data:
             self.assertLessEqual(set(e), allowed)
 
@@ -440,6 +440,26 @@ class ThreeLevelPages(BuildOnce):
         self.assertIn(">年賀状<", h)
 
 
+class TopicsPage(BuildOnce):
+    def test_the_topics_page_lists_near_and_new_days_from_official_dates(self):
+        h = self.rel["topics/index.html"]
+        self.assertIn("<h1>最新・トピックス</h1>", h)
+        self.assertIn("<h2>今週と来週の日</h2>", h)
+        self.assertIn("<h2>新しく加わった日</h2>", h)
+        near = re.findall(r'data-date="(\d{4}-\d{2}-\d{2})"', h.split("<h2>新しく加わった日</h2>")[0].split("<h2>今週と来週の日</h2>")[1])
+        self.assertTrue(near and all("2026-10-08" <= d <= "2026-10-22" for d in near), near)
+        self.assertIn('href="/topics/"', self.rel["index.html"])
+        self.assertIn("/topics/", self.rel["sitemap.xml"])
+
+    def test_a_day_knows_when_it_was_added(self):
+        by_added = {}
+        entries, _ = catalog.build_catalog(date(2026, 10, 10))
+        for e in entries:
+            self.assertRegex(e["added"], r"^\d{4}-\d{2}-\d{2}$")
+            by_added[e["added"]] = by_added.get(e["added"], 0) + 1
+        self.assertIn("2026-10-10", by_added)     # the micro seeds were written on the 10th
+
+
 class StatsAndPrivacy(BuildOnce):
     def test_receiver_is_generated_with_the_same_key_pattern_as_the_app(self):
         php = self.rel["api/e.php"]
@@ -564,13 +584,38 @@ class AppInChrome(BuildOnce):
     def test_every_page_with_something_to_operate_has_a_hint_sheet(self):
         e = next(x for x in self.entries if x["status"] == "active")
         pages = {"home": "/", "search": "/search/", "category": "/c/sports/", "event": f"/e/{e['id']}/", "my": "/my/", "plan": "/plan/?key=m:none", "add": "/add/",
-                 "calendar": "/calendar/", "interests": "/interests/", "card": "/card/", "skins": "/skins/", "manual": "/manual/", "today": "/today/", "use": "/use/"}
+                 "calendar": "/calendar/", "interests": "/interests/", "card": "/card/", "topics": "/topics/", "skins": "/skins/", "manual": "/manual/", "today": "/today/", "use": "/use/"}
         for name, path in pages.items():
             with self.subTest(page=name):
                 dom = html.unescape(self.dom(path, "&hint=1"))
                 self.assertIn('class="hint-sheet"', dom)
                 self.assertGreaterEqual(dom.split('class="hs-box"')[1].split("</ul>")[0].count("<li>"), 2)
                 self.assertIn("ヒント", dom)
+
+    def test_the_first_visit_setup_asks_for_a_genre_first(self):
+        dom = html.unescape(self.dom("/", "&setup=1"))
+        self.assertRegex(dom, r'id="setup"(?![^>]*hidden)')
+        self.assertEqual(len(re.findall(r'data-g-pick="', dom)), 10)
+        self.assertRegex(dom, r'<button[^>]*data-setup="next"[^>]*disabled')     # one genre at least before going on
+        self.assertIn("あとで選ぶ", dom)
+        self.assertNotRegex(dom, r'id="intro"(?![^>]*hidden)')                    # the old introduction does not open over it
+        self.assertIn("1 / 3", dom)
+        dom = html.unescape(self.dom("/", "&setup=1&step=2"))
+        self.assertIn('id="setup-reg"', dom)
+        self.assertIn("北海道", dom)
+        dom = html.unescape(self.dom("/", "&setup=1&step=3"))
+        self.assertIn('href="/add/?kind=birthday"', dom)
+
+    def test_no_setup_panel_in_the_tests_unless_asked(self):
+        self.assertRegex(self.dom("/"), r'id="setup"[^>]*hidden')
+
+    def test_chosen_genres_decide_the_home_cards(self):
+        dom = html.unescape(self.dom("/", "&pg=sports,exams"))
+        self.assertIn("あなたのジャンルのもうすぐの日", dom)
+        grid = dom.split('id="grid"')[1].split('id="more"')[0]
+        gs = set(re.findall(r'<article class="card[^"]*"[^>]*data-g="(\d+)"', grid))
+        self.assertTrue(gs and gs <= {"3", "4"}, gs)
+        self.assertEqual(gs, {"3", "4"})   # both genres are on the first screen, not one of them six times
 
     def test_search_with_no_match_offers_to_record_it(self):
         dom = self.dom("/search/?q=zzzqqqxxx")
