@@ -7,10 +7,11 @@ from __future__ import annotations
 
 import json
 
+from sites.yorokobu import icons
 from sokuhou.sitekit import crumbs, esc
 
 LEVELS = {"care": ("気にする人が多い", "care"), "note": ("覚えておくと安心", "note"), "ok": ("たいていは大丈夫", "ok")}
-DOT_COLORS = ["#ff4d6d", "#38bdf8", "#2fd09b", "#ffc93c"]
+DOT_COLORS = ["#e8503f", "#4c8fa8", "#6e9b52", "#e2a93b"]
 
 
 def _b():
@@ -209,13 +210,14 @@ def persona_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 def tools_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     B = _b()
     c = d["c"]
-    cards = [("/diagnosis/", "あの人はどんなタイプ?", "6つの質問に答えると、贈る相手の「タイプ」と合う贈り方が分かります。", c["persona"]),
-             ("/tool/taboo/", "縁起・マナーチェック", "贈る前に、気をつけたい言い伝えやマナーが、あるかどうか確かめます。", c["taboo"]),
-             ("/tool/gacha/", "おまかせ提案", "贈る相手と予算を選ぶと、条件に合う商品を1点、提案します。", d.get("gacha")),
-             ("/tool/calc/", "お返し・割り勘の計算", "お返しの金額の目安と、連名で贈るときの一人あたりの金額を計算します。", True),
-             ("/memo/", "たいせつな日メモ", "誕生日や記念日を登録して、贈りどきを逃さないようにします。", True),
-             ("/calendar/", "贈りどきカレンダー", "母の日、お歳暮など、一年の贈りどきをカレンダーに入れられます。", True)]
-    tiles = "".join(f'<li><a class="tile wide tool-tile" href="{h}"><span><b>{esc(n)}</b><small>{esc(t)}</small></span></a></li>' for h, n, t, ok in cards if ok)
+    cards = [("/diagnosis/", "sparkle", "あの人はどんなタイプ?", "6つの質問に答えると、贈る相手の「タイプ」と合う贈り方が分かります。", c["persona"]),
+             ("/tool/taboo/", "shield-check", "縁起・マナーチェック", "贈る前に、気をつけたい言い伝えやマナーが、あるかどうか確かめます。", c["taboo"]),
+             ("/tool/gacha/", "dice-five", "おまかせ提案", "贈る相手と予算を選ぶと、条件に合う商品を1点、提案します。", d.get("gacha")),
+             ("/tool/calc/", "currency-jpy", "お返し・割り勘の計算", "お返しの金額の目安と、連名で贈るときの一人あたりの金額を計算します。", True),
+             ("/memo/", "calendar-heart", "たいせつな日メモ", "誕生日や記念日を登録して、贈りどきを逃さないようにします。", True),
+             ("/calendar/", "calendar-check", "贈りどきカレンダー", "母の日、お歳暮など、一年の贈りどきをカレンダーに入れられます。", True)]
+    tiles = "".join(f'<li><a class="tile wide tool-tile" href="{h}"><span class="ic-wrap">{icons.glyph(g, 30)}</span><span><b>{esc(n)}</b><small>{esc(t)}</small></span></a></li>'
+                    for h, g, n, t, ok in cards if ok)
     lead = "プレゼント選びを楽にして、楽しくするための道具をそろえています。"
     body = f"""{B.head_band("yellow", '', "診断・ツール", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", None)])}</div>

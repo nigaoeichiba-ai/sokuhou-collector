@@ -102,8 +102,8 @@ class BuildTest(unittest.TestCase):
 
     def test_the_top_page_finder_has_no_pre_selection_and_knows_which_pages_exist(self):
         html = self.read("index.html")
-        self.assertIn('<option value="">イベント</option>', html)
-        self.assertIn('<option value="">贈る相手</option>', html)
+        self.assertIn('<option value="">どんな日</option>', html)
+        self.assertIn('<option value="">だれ</option>', html)
         self.assertNotIn("selected", html.split('class="finder"')[1].split("</form>")[0])
         m = re.search(r'data-map="([^"]+)"', html)
         fmap = json.loads(m.group(1).replace("&quot;", '"'))
