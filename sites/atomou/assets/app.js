@@ -1253,6 +1253,17 @@
     document.addEventListener('DOMContentLoaded', wireMic);
   })();
 
+  (function () {   // /contact/?kind=date&page=<address of a day's page>: the form opens with the page and the kind filled in
+    function fill() {
+      var f = document.querySelector('form.cf');
+      if (!f || location.pathname.replace(/index\.html$/, '') !== '/contact/') return;
+      var pg = f.querySelector('input[name="page"]'), kd = f.querySelector('select[name="kind"]');
+      if (pg && !pg.value && /^(https:\/\/[a-z0-9.-]+)?\/[\w./%-]{1,180}$/i.test(P.page || '')) pg.value = P.page;
+      if (kd && P.kind === 'date') Array.prototype.forEach.call(kd.options, function (o) { if (o.text.indexOf('日付の間違い') >= 0) kd.value = o.value; });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill); else fill();
+  })();
+
   /* ---------- add ---------- */
   function pageAdd() {
     var root = $('#wizard'), st = { kind: '', p: 'day', applied: '' };
@@ -1417,6 +1428,35 @@
     apply();
   }
 
+  /* ---------- 今日は何の日: today's month and day, taken from the date's own page ---------- */
+  function pageKyou() {
+    var box = $('#kyou-today');
+    if (!box) return;
+    var md = String(TODAY[1]).padStart(2, '0') + '-' + String(TODAY[2]).padStart(2, '0'), a = document.querySelector('a[href="/kyou/' + md + '/"]'), head = '<h2>' + TODAY[1] + '月' + TODAY[2] + '日(今日)</h2>';
+    if (!a) { box.innerHTML = head + '<p>今日の日付は、まだ載せていません。下の月から、ほかの日を調べられます。</p>'; return; }
+    fetch(a.getAttribute('href')).then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) {
+      var doc = new DOMParser().parseFromString(t || '', 'text/html'), list = doc.querySelector('#kyou-list'), past = doc.querySelector('#kyou-past');
+      box.innerHTML = head + (list ? '<div class="cards" id="kyou-now">' + list.innerHTML + '</div>' : '') + (past ? '<h3>過ぎた' + TODAY[1] + '月' + TODAY[2] + '日</h3><ul class="kyou-rows">' + past.innerHTML + '</ul>' : '') +
+        (!list && !past ? '<p>今日の日付は、まだ載せていません。</p>' : '') + '<p><a class="btn small ghost" href="' + a.getAttribute('href') + '">この日のページ</a></p>';
+      hydrate(box);
+    }).catch(function () { box.innerHTML = head + '<p><a class="btn small" href="' + a.getAttribute('href') + '">今日の日付を見る</a></p>'; });
+  }
+  /* ---------- 新着・人気: the popular list is a small file the server writes (live/pop.v1.json: ids in order, no numbers) ---------- */
+  function pageNew() {
+    var grid = $('#pop-grid'), none = $('#pop-none');
+    if (!grid) return;
+    function empty() { if (none) { none.hidden = false; none.textContent = '予定に入れる人が増えると、ここに人気の日が並びます。'; } }
+    fetch('/live/pop.v1.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      if (!j || !Array.isArray(j.items) || !j.items.length) { empty(); return; }
+      return loadCatalog().then(function (cat) {
+        var by = {}; (cat || []).forEach(function (c) { by[c.id] = c; });
+        var items = j.items.map(function (i) { return by[i.id]; }).filter(function (c) { return c && c.status !== 'ended' && !c.quiet; }).slice(0, 12);
+        if (!items.length) { empty(); return; }
+        render(grid, items.map(catItem)); if (none) none.hidden = true;
+      });
+    }).catch(empty);
+  }
+
   /* ---------- today's numbers page ---------- */
   function pageToday() {
     var n = C.dayOfYear(TODAY), fy = C.fiscalYear(TODAY), vals = {
@@ -1474,6 +1514,8 @@
   else if (page === 'skins') pageSkins();
   else if (page === 'category') pageCategory();
   else if (page === 'today') pageToday();
+  else if (page === 'kyou') pageKyou();
+  else if (page === 'new') pageNew();
   else if (page === 'interests') pageInterests();
   window.AtomouApp = { toggleSave: toggleSave, picked: picked, pickCount: pickCount, regionHits: regionHits, interestHits: interestHits, matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
     loadCatalog: loadCatalog, catItem: catItem, ownItem: ownItem, cardHtml: cardHtml, hydrate: hydrate, fillCard: fillCard, fmtDate: fmtDate, wd: wd, occ: occ, nextYearly: nextYearly, KINDS: KINDS,

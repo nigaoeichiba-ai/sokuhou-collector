@@ -14,6 +14,19 @@ if command -v flock > /dev/null 2>&1; then
   flock -n 9 || exit 0
 fi
 LOG="$BASE/last.log"
+# the popular days (live/pop.v1.json, from the counts api/e.php keeps): about once an hour, and a failure here never stops the live feed
+POP="$BASE/pop.v1.json"
+if [ ! -f "$POP" ] || [ -n "$(find "$POP" -mmin +50 2> /dev/null)" ]; then
+  if /usr/bin/python3 sites/atomou/server_pop.py "$SITE/stats" "$BASE/pop.new.json" > "$BASE/pop.log" 2>&1; then
+    mv "$BASE/pop.new.json" "$POP"
+    for d in public_html public_html/demo public_html/demo.atomou.com; do
+      if [ -f "$SITE/$d/index.html" ] && [ -f "$SITE/$d/assets/catalog.json" ]; then
+        mkdir -p "$SITE/$d/live"
+        cp "$POP" "$SITE/$d/live/pop.v1.json.new" && mv "$SITE/$d/live/pop.v1.json.new" "$SITE/$d/live/pop.v1.json" && chmod 644 "$SITE/$d/live/pop.v1.json"
+      fi
+    done
+  fi
+fi
 if ! /usr/bin/python3 sites/atomou/live.py --state "$BASE/state.json" --out "$BASE/live.new.json" > "$LOG" 2>&1; then
   echo "live.py failed" >> "$LOG"
   exit 1
