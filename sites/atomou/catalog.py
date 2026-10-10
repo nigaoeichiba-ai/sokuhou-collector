@@ -103,6 +103,12 @@ def shown_kind(item: dict) -> str:
     return kind
 
 
+def _added(item: dict) -> str:
+    """The day a day was added to the catalogue: an explicit "added" of the item, else the date in its seed file's name, else its check date (shown on /topics/)."""
+    m = re.search(r"(\d{4}-\d{2}-\d{2})", str(item.get("added") or item.get("_file") or ""))
+    return m.group(1) if m else str(item["checked_on"])
+
+
 def labels_for(item: dict, group: str) -> tuple[str, str, str]:
     """(subject, what, place) for a card: what the topic is, what the day is, where.  A seed item that has no such fields falls back
     to its category ("その他" -> the group), its kind and its region ("地域" says nothing, so it becomes empty)."""
@@ -137,7 +143,7 @@ def load_seeds(seed_dir: Path = SEED_DIR) -> list[tuple[str, dict]]:
     for path in sorted(seed_dir.glob("seed_*.json")):
         base = path.name.rsplit("_2026", 1)[0] if "_2026" in path.name else path.stem
         for it in json.loads(path.read_text(encoding="utf-8")):
-            out.append((base, it))
+            out.append((base, {**it, "_file": path.name}))   # the file name carries the day it was written (see _added)
     return out
 
 
@@ -193,7 +199,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
             "subject": subject, "what": what, "place": place,
             "tags": tags_for(it, group), "sensitivity": sens, "quiet": quiet, "ad_ok": bool(it.get("ad_ok", True)) and not quiet,
             "son_toku": bool(it.get("son_toku")), "source_url": it["source_url"], "source_quote": (it.get("source_quote") or "")[:60] or None,
-            "checked_on": it["checked_on"], "status": ("ended" if last < today else ("old_checked" if (today - checked).days > STALE_DAYS else "active")),
+            "checked_on": it["checked_on"], "added": _added(it), "status": ("ended" if last < today else ("old_checked" if (today - checked).days > STALE_DAYS else "active")),
             "publish_on": max(date(2000, 1, 1), d - timedelta(days=lead)).isoformat(),
         })
     entries.sort(key=lambda e: (e["date"], e["title"]))
@@ -213,5 +219,5 @@ def indexable_ids(entries: list[dict], today: date, launch: date, per_week: int 
 
 def public_json(entries: list[dict]) -> list[dict]:
     """The fields the browser needs (assets/catalog.json)."""
-    keys = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "subject", "what", "place", "tags", "quiet", "ad_ok", "son_toku", "status")
+    keys = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "subject", "what", "place", "tags", "quiet", "ad_ok", "son_toku", "status", "added")
     return [{k: e[k] for k in keys} for e in entries]

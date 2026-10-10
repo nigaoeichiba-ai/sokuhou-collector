@@ -225,7 +225,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'app', 'tier', 'share', 'card', 'ical', 'plan', 'quick', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'app', 'tier', 'share', 'card', 'ical', 'plan', 'quick', 'setup', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -357,10 +357,11 @@ def popular_chips(entries: list[dict]) -> str:
 def home_page(c: Ctx) -> str:
     live = live_entries(c.entries, c.today)
     first = diverse(live, 6)
-    chips = "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS))
+    chips = '<a class="chip" href="/topics/">最新・トピックス</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS))
     ucs = "".join(f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>'
                   for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
-    body = f"""<section class="intro" id="intro" aria-labelledby="intro-h" hidden>
+    body = f"""<section class="intro setup" id="setup" aria-labelledby="setup-h" hidden></section>
+<section class="intro" id="intro" aria-labelledby="intro-h" hidden>
 <h2 id="intro-h">はじめての方へ</h2>
 <p class="intro-lead">試験や締切までの日数も、記念日からの日数も、ここで数えられます。</p>
 <ol class="intro-steps">
@@ -372,6 +373,7 @@ def home_page(c: Ctx) -> str:
 <p class="intro-btns"><button type="button" class="btn" data-intro="start">30秒で使い方を見る</button> <button type="button" class="btn ghost" data-intro="close">すぐ使う</button></p>
 <p class="hint">この案内は、画面上の「?」や、ページ下の「使い方」から、いつでも見直せます。</p>
 </section>
+<p class="setup-redo" id="setup-redo" hidden><button type="button" class="btn small ghost">ジャンルを選び直す</button></p>
 <section class="hero"><h1>{esc(CATCH)}</h1>
 <div class="hero-cta" id="hero-cta" hidden>
 <p class="hero-note">登録なしで、無料で使えます。</p>
@@ -404,7 +406,7 @@ def home_page(c: Ctx) -> str:
 <section data-block="cats" data-title="ジャンル"><nav class="chiprow" aria-label="ジャンルから探す">{chips}</nav></section>
 <section data-block="daily" data-title="今日の数字"><div class="daily" id="daily" aria-label="今日の数字"><span>今日の日付と、年末・年度末までの日数。</span></div></section>
 <section data-block="soon" data-title="もうすぐの日">
-<div class="head-row"><h2>もうすぐの日</h2><div class="grow"><button type="button" class="btn small ghost" id="shuffle">シャッフル</button></div></div>
+<div class="head-row"><h2 id="soon-h">もうすぐの日</h2><div class="grow"><button type="button" class="btn small ghost" id="shuffle">シャッフル</button></div></div>
 <div class="cards" id="grid" data-save-order="1">{"".join(card_html(e) for e in first)}</div>
 <p class="more-row"><button type="button" class="btn ghost" id="more">もっと見る</button></p>
 </section>
@@ -772,6 +774,26 @@ def category_page(c: Ctx, group: str, live: list[dict]) -> str:
     return c.page(f"/c/{GROUP_SLUG[group]}/", f"{group}の日付一覧 | {NAME}", f"{GROUP_LEAD[group]}あと何日かが一目で分かり、ワンタップで予定に入れられます。", body, "category")
 
 
+def topics_page(c: Ctx, live: list[dict]) -> str:
+    """最新・トピックス: what is close and what was added lately, from the official dates only (rebuilt every morning at 07:00 JST)."""
+    today = c.today
+    soon = [e for e in live if e["date"] <= (today + timedelta(days=14)).isoformat() and e["date"] >= today.isoformat() and not e.get("quiet")][:12]
+    since = (today - timedelta(days=30)).isoformat()
+    fresh = sorted(sorted([e for e in live if e.get("added", "") >= since and not e.get("quiet")], key=lambda e: e["date"]), key=lambda e: e["added"], reverse=True)[:12]   # the newest first, the nearest date first within a day
+    def block(title: str, note: str, rows: list[dict]) -> str:
+        if not rows:
+            return ""
+        return f'<h2>{esc(title)}</h2><p class="hint">{esc(note)}</p><div class="cards">' + "".join(card_html(e) for e in rows) + "</div>"
+    body = f"""{crumbs([("トップ", "/"), ("最新・トピックス", None)])}
+<h1>最新・トピックス</h1>
+<p class="lead muted">いま近い日と、新しく加わった日です。載せるのは、公式の発表ページで日付を確かめられた日だけです。出典と確認日は、各日のページにあります。</p>
+{block("今週と来週の日", "今日から14日以内の日です。近い順です。", soon)}
+{block("新しく加わった日", "この30日に加わった日です。新しい順です。", fresh)}
+{'<p class="empty">いまは、ご案内できる新しい日がありません。</p>' if not soon and not fresh else ""}
+<p class="hint">探している日が載っていないときは、<a href="/contact/?kind=request">リクエスト</a>から知らせてください。確かめられたものから、追加していきます。</p>"""
+    return c.page("/topics/", f"最新・トピックス | {NAME}", "いま近い日と、新しく加わった日。公式の発表ページで日付を確かめられた日だけを載せています。", body, "topics")
+
+
 def manual_page(c: Ctx) -> str:
     t = c.today
     sample = {"id": "sample", "title": "家族で行く旅行の日(例)", "date": (t + timedelta(days=45)).isoformat(), "kind": "予定", "g": 1, "quiet": False}
@@ -1087,7 +1109,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     live = live_entries(entries, today)
     pages: dict[str, str | bytes] = {
         "index.html": home_page(c), "search/index.html": search_page(c), "interests/index.html": interests_page(c, live), "card/index.html": card_page(c), "my/index.html": my_page(c), "add/index.html": add_page(c),
-        "skins/index.html": skins_page(c), "use/index.html": use_index(c), "manual/index.html": manual_page(c), "today/index.html": today_page(c), "calendar/index.html": calendar_page(c), "plan/index.html": plan_page(c),
+        "skins/index.html": skins_page(c), "use/index.html": use_index(c), "manual/index.html": manual_page(c), "today/index.html": today_page(c), "calendar/index.html": calendar_page(c), "plan/index.html": plan_page(c), "topics/index.html": topics_page(c, live),
     }
     for u in usecases.USECASES:
         pages[f"use/{u['slug']}/index.html"] = use_page(c, u)

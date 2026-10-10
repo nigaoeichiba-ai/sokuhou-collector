@@ -91,6 +91,8 @@
     s.prefs.pushHash = /^[0-9me,-]{0,4000}$/.test(String(p.pushHash || '')) ? String(p.pushHash || '') : '';
     s.prefs.tour = {};
     s.prefs.intro = p.intro === true;
+    s.prefs.setup = p.setup === true;   // the first-visit setup was done (or put off)
+    s.prefs.genres = Array.isArray(p.genres) ? p.genres.filter(function (g, i, a) { return CONF.groups.indexOf(g) >= 0 && a.indexOf(g) === i; }) : [];   // the genres the visitor chose: the home page leans to them
     s.prefs.region = CONF.regions && CONF.regions.indexOf(p.region) >= 0 ? p.region : '';   // the prefecture the visitor lives in (this device only): days near it come first
     s.prefs.shares = Math.max(0, Math.min(9999, Math.floor(+p.shares) || 0));   // how many times a day was sent (the plan: sending earns room for more cards)
     ['home', 'calendar', 'plan', 'add', 'search'].forEach(function (k) { if (p.tour && p.tour[k] === true) s.prefs.tour[k] = true; });
@@ -344,7 +346,8 @@
     }).sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : a.title < b.title ? -1 : 1; });
   }
   function diverse(pool, n) {  // the soonest ones of each genre, so the first screen is not one kind of date
-    var per = Math.ceil(n / Math.max(1, CONF.groups.length)), pick = [], seen = {};
+    var kinds = {}; pool.forEach(function (c) { kinds[c.group] = 1; });
+    var per = Math.ceil(n / Math.max(1, Object.keys(kinds).length)), pick = [], seen = {};
     pool.forEach(function (c) { seen[c.group] = seen[c.group] || 0; if (seen[c.group] < per && pick.length < n) { seen[c.group]++; pick.push(c); } });
     pool.forEach(function (c) { if (pick.length < n && pick.indexOf(c) < 0) pick.push(c); });
     return pick.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
@@ -833,15 +836,21 @@
     renderDaily(); renderMine(); renderInterests(); renderRegion(); wireBlocks();
     var cb = blockPrefs();
     if (cb.order.length || cb.hidden.length) { stat('home_order:' + (cb.order.length ? cb.order.join(',') : 'default')); cb.hidden.forEach(function (k) { stat('home_hidden:' + k); }); }
-    var grid = $('#grid'), more = $('#more'), pool = [], shown = 6, random = null, ready = null;
+    var grid = $('#grid'), more = $('#more'), pool = [], shown = 6, random = null, ready = null, mine = (S.prefs.genres || []).slice();
+    if (P.today && P.pg) mine = P.pg.split(',').map(function (s) { return CONF.groups[CONF.slugs.indexOf(s)]; }).filter(Boolean);   // tests: ?today=...&pg=sports,exams stands in for the chosen genres
+    function poolFor() { var p = mine.length ? pool.filter(function (c) { return mine.indexOf(c.group) >= 0; }) : pool; return p.length >= 6 || !mine.length ? p : pool; }
     function fetchPool() {  // the catalogue is downloaded only when someone asks for more, shuffles or searches
       if (!ready) ready = loadCatalog().then(function (cat) { pool = liveFrom(cat || []); return pool; });
       return ready;
     }
     function draw() {
-      var list = random ? random.slice(0, shown) : diverse(pool, shown);
+      var from = poolFor(), list = random ? random.slice(0, shown) : diverse(from, shown);
       render(grid, random ? list.map(catItem) : ordered(list.map(catItem)));
-      if (more) more.hidden = shown >= Math.min(pool.length, 36);
+      if (more) more.hidden = shown >= Math.min(from.length, 36);
+    }
+    if (mine.length) {   // chosen genres: the "soon" block is theirs, drawn at once (the page's own six cards are the general ones)
+      var sh2 = $('#soon-h'); if (sh2) sh2.textContent = 'あなたのジャンルのもうすぐの日';
+      fetchPool().then(function () { if (pool.length) draw(); });
     }
     // the first screen is the cards already in the page (counted again here); a saved order is applied to them without any download
     var idx = {};
@@ -851,7 +860,7 @@
       return (x == null ? 1e6 : x) - (y == null ? 1e6 : y);
     }).forEach(function (c) { grid.appendChild(c); });
     var sh = $('#shuffle');
-    if (sh) sh.addEventListener('click', function () { fetchPool().then(function () { if (!pool.length) return; random = weighted(pool, 36); draw(); stat('act:shuffle'); }); });
+    if (sh) sh.addEventListener('click', function () { fetchPool().then(function () { if (!pool.length) return; random = weighted(poolFor(), 36); draw(); stat('act:shuffle'); }); });
     if (more) more.addEventListener('click', function () { fetchPool().then(function () { shown = Math.min(shown + 6, 36); draw(); stat('act:more'); }); });
   }
 
