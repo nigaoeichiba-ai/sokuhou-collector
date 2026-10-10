@@ -22,7 +22,8 @@
     ['since', /禁煙|禁酒|はじめた日|始めた日|スタート|開始した日/], ['until', /試験|締切|締め切り|提出|期限|旅行|ライブ|コンサート|発売|申込|申し込み|出願/],
     ['event', /デート|会議|打ち合わせ|打合せ|ミーティング|面談|病院|通院|歯医者|予約|食事|ランチ|ディナー|飲み会|集まり|授業|レッスン|出張|発表|面接/]
   ];
-  function guessKind(t) { for (var i = 0; i < KEYS.length; i++) if (KEYS[i][1].test(t)) return KEYS[i][0]; return 'event'; }
+  function kindOf(t) { for (var i = 0; i < KEYS.length; i++) if (KEYS[i][1].test(t)) return KEYS[i][0]; return ''; }
+  function guessKind(t) { return kindOf(t) || 'event'; }
 
   function parse(raw) {
     var s = String(raw || '').normalize('NFKC'), out = { title: '', date: null, time: '', kind: 'event', yearly: false, dateFound: false, timeFound: false };
@@ -169,7 +170,7 @@
     ev.preventDefault();
     open(m[1] ? { date: C.parse(m[1]) } : {});
   });
-  window.AtomouQuick = { open: open, parse: parse };
+  window.AtomouQuick = { open: open, parse: parse, kindOf: kindOf };
   if (A.P.quick === '1') setTimeout(function () { open({}); }, 300);
 
   /* ---------- suggestions under the search box ---------- */

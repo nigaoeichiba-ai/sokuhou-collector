@@ -70,6 +70,21 @@
     });
     return out;
   }
+  function pickList(list, depth) {   // "genre>middle[>small]" names: the genre must be one the site has, the parts are plain short text; at most 80, no repeats
+    var out = [];
+    (Array.isArray(list) ? list : []).forEach(function (k) {
+      if (typeof k !== 'string' || k.length > 90 || out.length >= 80 || out.indexOf(k) >= 0) return;
+      var a = k.split('>');
+      if (a.length !== depth || CONF.groups.indexOf(a[0]) < 0 || a.some(function (x) { return !x || x.length > 30; })) return;
+      out.push(k);
+    });
+    return out;
+  }
+  function picked(c) {   // does a catalogue day belong to what the visitor chose (a whole genre, a middle part or a small part)?
+    var p = S.prefs, g = c.group || '', m = g + '>' + (c.mid || ''), sm = m + '>' + (c.subject || '');
+    return (p.genres || []).indexOf(g) >= 0 || (p.mids || []).indexOf(m) >= 0 || (p.subs || []).indexOf(sm) >= 0;
+  }
+  function pickCount() { var p = S.prefs; return (p.genres || []).length + (p.mids || []).length + (p.subs || []).length; }
   function normalize(o) {
     var s = blank(), p = (o && o.prefs) || {};
     o = o || {};
@@ -96,6 +111,7 @@
     s.prefs.pager = p.pager === true;
     s.prefs.liveAlert = p.liveAlert === true;   // announce a new official headline that matches the visitor's words (assets/live.js)   // the home lists as pages to turn (assets/swipe.js)   // the first-visit setup was done (or put off)
     s.prefs.genres = Array.isArray(p.genres) ? p.genres.filter(function (g, i, a) { return CONF.groups.indexOf(g) >= 0 && a.indexOf(g) === i; }) : [];   // the genres the visitor chose: the home page leans to them
+    s.prefs.mids = pickList(p.mids, 2); s.prefs.subs = pickList(p.subs, 3);   // a middle part ("genre>middle") or a small part ("genre>middle>small") of a genre the visitor chose
     s.prefs.region = CONF.regions && CONF.regions.indexOf(p.region) >= 0 ? p.region : '';   // the prefecture the visitor lives in (this device only): days near it come first
     s.prefs.shares = Math.max(0, Math.min(9999, Math.floor(+p.shares) || 0));   // how many times a day was sent (the plan: sending earns room for more cards)
     ['home', 'calendar', 'plan', 'add', 'search'].forEach(function (k) { if (p.tour && p.tour[k] === true) s.prefs.tour[k] = true; });
@@ -201,7 +217,7 @@
     event: { t: '予定', d: 'デート、会議、用事', g: 1, yearly: false, r100: false, time: true, words: ['デート', '会議', '打ち合わせ', '病院', '旅行の予定'] },
     anniversary: { t: '記念日', d: '結婚、付き合った日、開店', g: 3, yearly: true, r100: true, words: ['結婚記念日', '付き合った日', '出会った日', '開店した日'] },
     birthday: { t: '誕生日', d: '家族・友だち・推し', g: 2, yearly: true, r100: false, words: ['の誕生日', '家族の誕生日', '推しの誕生日'] },
-    memorial: { t: '大切な人を思う日', d: '命日・ペット・あの日', g: 0, yearly: true, r100: false, quiet: true, words: ['命日', 'ペットの命日', 'あの日'] },
+    memorial: { t: '大切な日', d: '命日・ペット・あの日', g: 0, yearly: true, r100: false, quiet: true, words: ['命日', 'ペットの命日', 'あの日'] },
     since: { t: 'はじめた日', d: '禁煙、転職、引っ越し', g: 4, yearly: false, r100: true, words: ['禁煙をはじめた日', '引っ越した日', '転職した日', 'ダイエットをはじめた日'] },
     until: { t: '楽しみな日・期限', d: '旅行・試験・提出・ライブ', g: 1, yearly: false, r100: false, words: ['旅行', '試験', 'ライブ', '提出の期限'] },
     memo: { t: 'そのほか', d: 'どんな日でも', g: 6, yearly: false, r100: false, words: [] }
@@ -890,9 +906,11 @@
     renderDaily(); renderMine(); renderInterests(); renderRegion(); wireBlocks();
     var cb = blockPrefs();
     if (cb.order.length || cb.hidden.length) { stat('home_order:' + (cb.order.length ? cb.order.join(',') : 'default')); cb.hidden.forEach(function (k) { stat('home_hidden:' + k); }); }
-    var grid = $('#grid'), more = $('#more'), pool = [], shown = 6, random = null, ready = null, mine = (S.prefs.genres || []).slice();
-    if (P.today && P.pg) mine = P.pg.split(',').map(function (s) { return CONF.groups[CONF.slugs.indexOf(s)]; }).filter(Boolean);   // tests: ?today=...&pg=sports,exams stands in for the chosen genres
-    function poolFor() { var p = mine.length ? pool.filter(function (c) { return mine.indexOf(c.group) >= 0; }) : pool; return p.length >= 6 || !mine.length ? p : pool; }
+    var grid = $('#grid'), more = $('#more'), pool = [], shown = 6, random = null, ready = null, mine = (S.prefs.genres || []).slice(), testPick = false;
+    if (P.today && P.pg) { mine = P.pg.split(',').map(function (s) { return CONF.groups[CONF.slugs.indexOf(s)]; }).filter(Boolean); testPick = true; }   // tests: ?today=...&pg=sports,exams stands in for the chosen genres
+    var hasMine = testPick ? mine.length > 0 : pickCount() > 0;
+    function isMine(c) { return testPick ? mine.indexOf(c.group) >= 0 : picked(c); }
+    function poolFor() { var p = hasMine ? pool.filter(isMine) : pool; return p.length >= 6 || !hasMine ? p : pool; }
     function fetchPool() {  // the catalogue is downloaded only when someone asks for more, shuffles or searches
       if (!ready) ready = loadCatalog().then(function (cat) { pool = liveFrom(cat || []); return pool; });
       return ready;
@@ -902,7 +920,7 @@
       render(grid, random ? list.map(catItem) : ordered(list.map(catItem)));
       if (more) more.hidden = shown >= Math.min(from.length, 36);
     }
-    if (mine.length) {   // chosen genres: the "soon" block is theirs, drawn at once (the page's own six cards are the general ones)
+    if (hasMine) {   // chosen genres: the "soon" block is theirs, drawn at once (the page's own six cards are the general ones)
       var sh2 = $('#soon-h'); if (sh2) sh2.textContent = 'あなたのジャンルのもうすぐの日';
       fetchPool().then(function () { if (pool.length) draw(); });
     }
@@ -1143,29 +1161,73 @@
     return null;
   }
 
-  var MIC_SVG = '<svg class="mic" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V22h2v-3.1A7 7 0 0 0 19 12h-2z"/></svg>';
-  function micHint(what) { return '<p class="hint mic-hint">' + MIC_SVG + '<span>' + (what || '') + 'キーボードのマイクで、声でも入れられます。</span></p>'; }
+  var MIC_SVG = '<svg class="mic" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V22h2v-3.1A7 7 0 0 0 19 12h-2z"/></svg>';
+  /* The microphone button of a free-text field: it is written after the field and moved next to the input it belongs to (wireMic).  Pressed, it listens with the browser's own speech
+     recognition (where there is one) and writes the words into the field; where the browser has none, it only puts the cursor in the field (the keyboard's own microphone does the rest). */
+  function micHint() { return '<button type="button" class="mic-btn" aria-label="声で入力する" aria-pressed="false">' + MIC_SVG + '</button>'; }
   window.AtomouMicHint = micHint;
+  function wireMic() {
+    $$('.mic-btn:not([data-w])').forEach(function (b) {
+      b.setAttribute('data-w', '1');
+      var scope = b.closest('.field') || b.closest('section') || b.parentNode, inp = null;
+      $$('input[type="text"],textarea', scope).forEach(function (x) { if (x.compareDocumentPosition(b) & 4) inp = x; });   // the last field before the button
+      if (!inp || (inp.parentNode.className || '').indexOf('inrow') >= 0) { if (b.parentNode) b.parentNode.removeChild(b); return; }
+      var wrap = document.createElement('span'); wrap.className = 'inrow';
+      inp.parentNode.insertBefore(wrap, inp); wrap.appendChild(inp); wrap.appendChild(b);
+      if (inp.id) b.setAttribute('aria-controls', inp.id);
+    });
+  }
+  var micBusy = null;
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest ? ev.target.closest('.mic-btn') : null;
+    if (!b) return;
+    var inp = b.previousElementSibling, SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!inp || !/^(INPUT|TEXTAREA)$/.test(inp.tagName)) return;
+    if (micBusy) { var was = micBusy; micBusy = null; try { was.rec.stop(); } catch (e) { /* already stopped */ } was.btn.setAttribute('aria-pressed', 'false'); if (was.btn === b) return; }
+    if (!SR) { inp.focus(); return; }
+    var rec;
+    try { rec = new SR(); } catch (e) { inp.focus(); return; }
+    rec.lang = 'ja-JP'; rec.interimResults = false; rec.maxAlternatives = 1; rec.continuous = false;
+    rec.onresult = function (e) {
+      var t = '';
+      for (var i = e.resultIndex; i < e.results.length; i++) if (e.results[i].isFinal) t += e.results[i][0].transcript;
+      t = t.trim();
+      if (!t) return;
+      var max = +inp.getAttribute('maxlength') || 0, v = inp.value ? inp.value + t : t;
+      inp.value = max ? v.slice(0, max) : v;
+      inp.dispatchEvent(new Event('input', { bubbles: true })); inp.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+    rec.onerror = function (e) { if (e && (e.error === 'not-allowed' || e.error === 'service-not-allowed')) toast('マイクが使えません。ブラウザの設定で、このサイトのマイクを許可してください。'); };
+    rec.onend = function () { b.setAttribute('aria-pressed', 'false'); if (micBusy && micBusy.btn === b) micBusy = null; };
+    micBusy = { rec: rec, btn: b }; b.setAttribute('aria-pressed', 'true');
+    try { rec.start(); stat('act:mic'); } catch (e) { micBusy = null; b.setAttribute('aria-pressed', 'false'); inp.focus(); }
+  });
+  (function () {
+    var queued = false;
+    function go() { queued = false; wireMic(); }
+    if (window.MutationObserver) new MutationObserver(function () { if (!queued) { queued = true; (window.requestAnimationFrame || setTimeout)(go); } }).observe(document.documentElement, { childList: true, subtree: true });
+    document.addEventListener('DOMContentLoaded', wireMic);
+  })();
 
   /* ---------- add ---------- */
   function pageAdd() {
-    var root = $('#wizard'), st = { kind: '', p: 'day', words: [] };
+    var root = $('#wizard'), st = { kind: '', p: 'day', applied: '' };
     root.innerHTML =
-      '<section id="s1"><h2>1. どんな日ですか</h2><div class="tiles">' + Object.keys(KINDS).map(function (k) {
-        return '<button type="button" class="tile" data-kind="' + k + '"><span>' + H(KINDS[k].t) + '</span><br><small class="muted">' + H(KINDS[k].d) + '</small></button>';
-      }).join('') + '</div></section>' +
-      '<section id="s2" hidden><h2>2. いつの日ですか</h2><div class="seg" role="group" aria-label="日付の細かさ">' +
-      '<button type="button" class="chip" data-p="day" aria-pressed="true">年月日まで分かる</button><button type="button" class="chip" data-p="month" aria-pressed="false">年と月だけ</button>' +
+      '<section id="s1"><h2>1. 記録したい日</h2><div class="seg" role="group" aria-label="日付の入れ方">' +
+      '<button type="button" class="chip" id="f-today">今日</button>' +
+      '<button type="button" class="chip" data-p="day" aria-pressed="true">年月日</button><button type="button" class="chip" data-p="month" aria-pressed="false">年と月だけ</button>' +
       '<button type="button" class="chip" data-p="year" aria-pressed="false">年だけ</button></div>' +
       '<div class="field"><label for="f-day" id="lab-date">日付を選ぶ</label><input type="date" id="f-day" min="0100-01-01" max="2200-12-31">' +
       '<input type="month" id="f-month" hidden placeholder="2026-10"><input type="number" id="f-year" hidden inputmode="numeric" min="1" max="2200" placeholder="例 1990"></div>' +
-      '<div class="field"><label for="f-say">文字や声で入力する(例: 12月25日)</label><input type="text" id="f-say" autocomplete="off" maxlength="30" placeholder="12月25日 / 2027年3月3日 / 明日">' +
-      '<p class="hint" id="say-note" aria-live="polite"></p>' + micHint('') + '</div>' +
-      '<button type="button" class="chip" id="f-today">今日にする</button><p class="hint" id="h-approx" hidden>年や月までの日付は、「約」つきで数えます。</p><p class="err" id="e-date" role="alert"></p>' +
+      '<div class="field"><label for="f-say">文字で日付を入力する</label><input type="text" id="f-say" autocomplete="off" maxlength="30" placeholder="12月25日 / 2027年3月3日 / 明日">' +
+      '<p class="hint" id="say-note" aria-live="polite"></p>' + micHint() + '</div>' +
+      '<p class="hint" id="h-approx" hidden>年や月までの日付は、「約」つきで数えます。</p><p class="err" id="e-date" role="alert"></p>' +
       '<div id="live" class="live" hidden aria-live="polite"></div></section>' +
-      '<section id="s3" hidden><h2>3. 名前</h2><p class="hint">候補を選ぶか、短く入力します。</p><div class="chips" id="f-words"></div>' +
-      '<div class="field"><label for="f-title">名前</label><input type="text" id="f-title" maxlength="40" autocomplete="off">' + micHint('') + '</div></section>' +
-      '<section id="s4" hidden><h2>4. 時刻・くり返し</h2>' +
+      '<section id="s2" hidden><h2>2. どんな日ですか</h2><div class="tiles" role="group" aria-label="日の種類">' + Object.keys(KINDS).map(function (k) {
+        return '<button type="button" class="tile" data-kind="' + k + '" aria-pressed="false"><span>' + H(KINDS[k].t) + '</span><br><small class="muted">' + H(KINDS[k].d) + '</small></button>';
+      }).join('') + '</div><div class="chips" id="f-words"></div>' +
+      '<div class="field"><label for="f-title">文字で入力する(例: 結婚記念日)</label><input type="text" id="f-title" maxlength="40" autocomplete="off">' + micHint() + '</div></section>' +
+      '<section id="s3" hidden><h2>3. 時刻・くり返し</h2>' +
       '<div class="field" id="f-timebox" hidden><label for="f-time">時刻(任意)</label><input type="time" id="f-time"></div>' +
       '<label class="chip" id="l-yearly"><input type="checkbox" id="f-yearly"> 毎年くり返す</label> <label class="chip" id="l-100"><input type="checkbox" id="f-100"> 100日ごとの節目も入れる</label>' +
       '<p class="hint">記録したあと、メモとやることを書けます。</p></section>' +
@@ -1182,32 +1244,39 @@
       } else { var y = parseInt($f('f-year').value, 10); d = y >= 1 && y <= 2200 ? [y, 1, 1] : null; }
       return d;
     }
-    function titleNow() { var t = $f('f-title').value.trim(); return t || (st.kind ? KINDS[st.kind].t : ''); }
+    function typed() { return $f('f-title').value.trim(); }
+    function kindNow() {   // the tile the visitor pressed; else what the typed words say (no match: "そのほか"); else none yet
+      if (st.kind) return st.kind;
+      var t = typed();
+      if (!t) return '';
+      return (window.AtomouQuick && window.AtomouQuick.kindOf && window.AtomouQuick.kindOf(t)) || 'memo';
+    }
+    function titleNow() { var t = typed(); return t || (kindNow() ? KINDS[kindNow()].t : ''); }
+    function applyKind(k) {   // what the kind sets: the name suggestions and the two boxes
+      if (st.applied === k) return;
+      st.applied = k;
+      var kd = KINDS[k];
+      $f('f-yearly').checked = !!(kd && kd.yearly); $f('f-100').checked = !!(kd && kd.r100);
+      $f('f-words').innerHTML = kd ? kd.words.map(function (w) { return '<button type="button" class="chip" data-word="' + H(w) + '">' + H(w) + '</button>'; }).join('') : '';
+    }
     function update() {
-      var d = readDate(), k = KINDS[st.kind] || {};   // no kind chosen yet (the page opens that way): nothing to show, but nothing to throw either
-      ['s3', 's4', 'live', 'f-save'].forEach(function (id) { show(id, !!d && !!st.kind); });
-      show('s4', !!d && st.p === 'day');
+      var d = readDate(), kind = kindNow(), k = KINDS[kind] || {};
+      show('s2', !!d || !!st.kind);
+      $$('[data-kind]', root).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-kind') === kind ? 'true' : 'false'); });
+      applyKind(kind);
+      show('s3', !!d && !!kind && st.p === 'day');
+      show('live', !!d); show('f-save', !!d && !!kind);
       show('quiet-note', !!k.quiet);
       show('l-100', !k.quiet && !k.time && st.p === 'day');
       show('f-timebox', !!k.time && st.p === 'day');
       if (!d) { $f('e-date').textContent = ''; return; }
       var r = C.countdown(d, TODAY, st.p);
-      var live = $f('live');
+      var live = $f('live'), name = titleNow();
       live.className = 'live' + (r.dir === 'mou' ? ' mou' : '');
-      live.innerHTML = '<div>' + H(titleNow()) + '</div><div class="big">' + H(r.big) + '</div>' + (r.sub ? '<div class="muted">合計 ' + H(r.sub) + '</div>' : '') +
+      live.innerHTML = (name ? '<div>' + H(name) + '</div>' : '') + '<div class="big">' + H(r.big) + '</div>' + (r.sub ? '<div class="muted">合計 ' + H(r.sub) + '</div>' : '') +
         '<div class="muted">' + H(fmtDate(C.iso(d), st.p)) + '</div>';
     }
-    function setKind(k) {
-      st.kind = k;
-      $$('[data-kind]', root).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-kind') === k ? 'true' : 'false'); });
-      show('s2', true);
-      var kd = KINDS[k];
-      $f('f-yearly').checked = !!kd.yearly; $f('f-100').checked = !!kd.r100;
-      $f('f-words').innerHTML = kd.words.map(function (w) { return '<button type="button" class="chip" data-word="' + H(w) + '">' + H(w) + '</button>'; }).join('');
-      show('s3', false);
-      update();
-      $f('s2').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    function setKind(k) { st.kind = st.kind === k ? '' : k; update(); }
     function say() {
       var v = $f('f-say').value, note = $f('say-note'), d;
       if (!v.trim()) { note.textContent = ''; return; }
@@ -1225,7 +1294,7 @@
       $f('f-day').hidden = p !== 'day'; $f('f-month').hidden = p !== 'month'; $f('f-year').hidden = p !== 'year';
       $f('lab-date').setAttribute('for', p === 'day' ? 'f-day' : p === 'month' ? 'f-month' : 'f-year');
       $f('lab-date').textContent = p === 'day' ? '日付を選ぶ' : p === 'month' ? '年と月(例 2026-10)' : '年(例 1990)';
-      $f('f-today').hidden = p !== 'day'; $f('h-approx').hidden = p === 'day';
+      $f('h-approx').hidden = p === 'day';
       $f('f-say').value = ''; $f('say-note').textContent = '';
       update();
     }
@@ -1234,7 +1303,7 @@
       if (!t) return;
       if (t.hasAttribute('data-kind')) setKind(t.getAttribute('data-kind'));
       else if (t.hasAttribute('data-p')) setP(t.getAttribute('data-p'));
-      else if (t.id === 'f-today') { $f('f-day').value = C.iso(TODAY); $f('f-say').value = ''; $f('say-note').textContent = ''; update(); }
+      else if (t.id === 'f-today') { setP('day'); $f('f-day').value = C.iso(TODAY); update(); }
       else if (t.hasAttribute('data-word')) {
         var w = t.getAttribute('data-word'), cur = $f('f-title').value;
         $f('f-title').value = (w.charAt(0) === 'の' && cur) ? cur + w : w; update();
@@ -1245,10 +1314,11 @@
     ['f-day', 'f-month', 'f-year'].forEach(function (id) { $f(id).addEventListener('input', function () { $f('f-say').value = ''; $f('say-note').textContent = ''; }); });
     ['f-day', 'f-month', 'f-year', 'f-title', 'f-time'].forEach(function (id) { $f(id).addEventListener('input', update); $f(id).addEventListener('change', update); });
     function save() {
-      var d = readDate();
+      var d = readDate(), kind = kindNow();
       if (!d) { $f('e-date').textContent = '日付を入れてください。'; return; }
-      var k = KINDS[st.kind], e = {
-        id: uid(), title: titleNow(), date: C.iso(d), precision: st.p, kind: st.kind, quiet: !!k.quiet,
+      if (!kind) return;
+      var k = KINDS[kind], e = {
+        id: uid(), title: titleNow(), date: C.iso(d), precision: st.p, kind: kind, quiet: !!k.quiet,
         yearly: st.p === 'day' && $f('f-yearly').checked, every100: st.p === 'day' && !k.quiet && !k.time && $f('f-100').checked, alarm: k.quiet ? 'none' : '', created: C.iso(TODAY),
         time: k.time && st.p === 'day' && /^\d{2}:\d{2}$/.test($f('f-time').value) ? $f('f-time').value : ''
       };
@@ -1257,11 +1327,12 @@
       if (!persist()) return;  // storage blocked: stay on the form (the toast explains) instead of leaving and losing what was typed
       location.href = '/plan/?key=m:' + e.id + '&new=1';
     }
-    if (P.kind && KINDS[P.kind]) setKind(P.kind);
+    if (P.kind && KINDS[P.kind]) st.kind = P.kind;
     if (P.title) { $f('f-title').value = P.title; }
     var when = P.date && C.parse(P.date) ? C.parse(P.date) : whenToken(P.when);
-    if (when) { if (!st.kind) setKind('memo'); $f('f-day').value = C.iso(when); }
+    if (when) { if (!st.kind && !typed()) st.kind = 'memo'; $f('f-day').value = C.iso(when); }
     update();
+    wireMic();
   }
 
   /* ---------- category page (filter by sub-category) ---------- */
@@ -1360,7 +1431,7 @@
   else if (page === 'category') pageCategory();
   else if (page === 'today') pageToday();
   else if (page === 'interests') pageInterests();
-  window.AtomouApp = { toggleSave: toggleSave, regionHits: regionHits, interestHits: interestHits, matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
+  window.AtomouApp = { toggleSave: toggleSave, picked: picked, pickCount: pickCount, regionHits: regionHits, interestHits: interestHits, matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
     loadCatalog: loadCatalog, catItem: catItem, ownItem: ownItem, cardHtml: cardHtml, hydrate: hydrate, fillCard: fillCard, fmtDate: fmtDate, wd: wd, occ: occ, nextYearly: nextYearly, KINDS: KINDS,
     findEntry: findEntry, uid: uid, icsFor: icsFor, removeEntry: removeEntry, normalize: normalize, tipFor: tipFor, nextLines: nextLines, applyPrefs: applyPrefs };
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !P.today) {

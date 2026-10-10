@@ -407,14 +407,14 @@ def home_page(c: Ctx) -> str:
 </ol>
 <p class="intro-note">登録なしで、無料で使えます。</p>
 <p class="intro-btns"><button type="button" class="btn" data-intro="start">30秒で使い方を見る</button> <button type="button" class="btn ghost" data-intro="close">すぐ使う</button></p>
-<p class="hint">この案内は、画面上の「?」や、ページ下の「使い方」から、いつでも見直せます。</p>
+<p class="hint">この案内は、画面右下の「? ヒント」や、ページ下の「使い方」から、いつでも見直せます。</p>
 </section>
 <p class="setup-redo" id="setup-redo" hidden><button type="button" class="btn small ghost">ジャンルを選び直す</button></p>
 <section class="hero"><h1>{esc(CATCH)}</h1>
 <div class="hero-cta" id="hero-cta" hidden>
 <p class="hero-note">登録なしで、無料で使えます。</p>
 <p class="hero-btns"><a class="btn" href="/add/">大切な日を記録する</a> <a class="btn ghost" href="/interests/">好きな分野から探す</a></p>
-<nav class="chiprow" aria-label="残せる日の例"><a class="chip" href="/add/?kind=anniversary">記念日</a><a class="chip" href="/add/?kind=birthday">誕生日</a><a class="chip" href="/add/?kind=until">楽しみな日・期限</a><a class="chip" href="/add/?kind=memorial">大切な人を思う日</a></nav>
+<nav class="chiprow" aria-label="残せる日の例"><a class="chip" href="/add/?kind=anniversary">記念日</a><a class="chip" href="/add/?kind=birthday">誕生日</a><a class="chip" href="/add/?kind=until">楽しみな日・期限</a><a class="chip" href="/add/?kind=memorial">大切な日</a></nav>
 </div></section>
 <div id="season" class="season" hidden></div>
 <div id="blocks">
@@ -595,7 +595,7 @@ def my_page(c: Ctx) -> str:
 def add_page(c: Ctx) -> str:
     body = f"""{crumbs([("トップ", "/"), ("記録する", None)])}
 <h1>日付を記録する</h1>
-<p class="lead muted">日付を選ぶだけで数えます。年だけでも記録できます。</p>
+<p class="lead muted">未来の予定や過去の思い出など、忘れたくない日を記録し、その日が近づいたら思い出せるように通知設定ができます。</p>
 <div id="wizard" class="wizard"><noscript><p class="notice">日付の記録には JavaScript が必要です。</p></noscript></div>"""
     return c.page("/add/", f"日付を記録する | {NAME}", "記念日・誕生日・はじめた日・命日を、選ぶだけで記録できます。あと何日、もう何日かをその場で数えます。", body, "add")
 
@@ -627,14 +627,14 @@ def skins_page(c: Ctx) -> str:
     samples = [
         {"id": "s1", "title": "申込の締切(例)", "date": (t + timedelta(days=45)).isoformat(), "kind": "締切", "g": 1, "quiet": False},
         {"id": "s2", "title": "はじめた日(例)", "date": (t - timedelta(days=400)).isoformat(), "kind": "はじめた日", "g": 4, "quiet": False},
-        {"id": "s3", "title": "祖父を思う日(例)", "date": (t - timedelta(days=800)).isoformat(), "kind": "大切な人を思う日", "g": 0, "quiet": True},
+        {"id": "s3", "title": "祖父を思う日(例)", "date": (t - timedelta(days=800)).isoformat(), "kind": "大切な日", "g": 0, "quiet": True},
     ]
     body = f"""{crumbs([("トップ", "/"), ("きせかえ", None)])}
 <h1>きせかえ</h1>
 <div id="season" class="season" hidden></div>
 <p class="lead muted">選ぶと、すぐ変わります。標準は「ベーシック」。</p>
 <h2>見え方</h2>
-<p class="hint">左から、これから来る日、過ぎた日、大切な人を思う日(静かな表示)です。</p>
+<p class="hint">左から、これから来る日、過ぎた日、大切な日(静かな表示)です。</p>
 <div class="cards">{"".join(card_html(s, own=True, actions=False, link=False) for s in samples)}</div>
 <h2>選ぶ</h2>
 <p><label class="chip" for="skin-auto"><input type="checkbox" id="skin-auto"> 端末が暗い設定のときは、暗い配色にする</label></p>
@@ -779,7 +779,7 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     if e.get("history"):
         rows = "".join(f"<tr><th scope=\"row\">{int(h[:4])}年</th><td>{esc(fmt_date(h))}</td></tr>" for h in e["history"])
         hist = (f'<h2>これまでの日付</h2><p class="small muted">公式のページで確かめた、過去の日付です。</p>'
-                f'<table class="info-table"><tbody>{rows}</tbody></table>')
+                f'<div class="tablewrap"><table class="info-table"><tbody>{rows}</tbody></table></div>')
     same = [] if quiet else sorted((r for r in live if r["subject"] == e["subject"] and r["id"] != e["id"] and not r["quiet"]), key=lambda r: (r["date"], r["id"]))[:6]
     body = crumbs([("トップ", "/"), (e["group"], f"/c/{GROUP_SLUG[e['group']]}/")] + ([(e["mid"], f"/c/{GROUP_SLUG[e['group']]}/#m={quote(e['mid'])}")] if e.get("mid") and e["mid"] != catalog.MID_OTHER else []) + [(e["title"], None)]) + f"""
 <h1>{esc(e['title'])}</h1>
@@ -887,7 +887,7 @@ def manual_page(c: Ctx) -> str:
         ("2月29日はどう数えますか？", "うるう年でない年は、2月28日として数えます。"),
         ("文字が小さくて読みにくい。", "マイページの「設定」で「文字を大きくする」にチェックを入れます。「きせかえ」の「大きな文字」「ハイコントラスト」も読みやすい設定です。"),
         ("日付が間違っているようです。", "公式の日付は変わることがあります。カードの「詳細」に出典と確認日があります。誤りは<a href=\"/contact/\">お問い合わせ</a>からお知らせください。"),
-        ("大切な人を思う日も入れられますか？", "入れられます。「大切な人を思う日」を選ぶと、静かな表示で記録されます。広告は表示しません。"),
+        ("大切な人を思う日も入れられますか？", "入れられます。「大切な日」を選ぶと、静かな表示で記録されます。広告は表示しません。"),
         ("入れた日を消すには？", "マイページかカレンダーからその予定を開き、「消す」を押します。すべて消すときは、マイページの「すべて消す」。"),
     ]
     qa_html = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in qa)
@@ -1157,6 +1157,8 @@ def legal(c: Ctx) -> dict:
         input_note=("<h2>この端末に保存する情報</h2>"
                     "<p>記録した日(名前・日付・時刻・メモ・やること・設定)と、予定に入れた日の一覧、選んだ好きな分野は、お使いのブラウザの中(localStorage)だけに保存します。当サイトのサーバーには送りません。"
                     "ブラウザのデータを消すと記録も消えます。バックアップはマイページの「書き出す」で作れます。</p>"
+                    "<h2>声での入力(任意)</h2>"
+                    "<p>入力欄の横のマイクのボタンを押したときだけ、お使いのブラウザの音声認識を使います。音声を文字にする処理は、ブラウザの提供元の音声認識サービスで行われることがあり、その扱いはお使いのブラウザの案内に従います。当サイトは、音声を受け取らず、保存しません。当サイトに入るのは、文字になった結果だけです。</p>"
                     "<h2>カレンダーの購読(任意)</h2>"
                     "<p>ジャンルのページから、公式の日付をカレンダーアプリに購読できます。購読用のファイルは、誰でも取得できる公開データです。購読すると、Google などのカレンダーのサービスが、定期的にこのファイルを取りに来ます。当サイトは、購読した人を知ることはありません。</p>"
                     "<h2>更新が届く共有カード(任意)</h2>"
