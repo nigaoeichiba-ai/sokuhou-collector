@@ -40,6 +40,12 @@ class SetupCopyTest(unittest.TestCase):
         self.assertIn("function picked(", app)
         self.assertIn("s.prefs.mids = pickList(p.mids, 2); s.prefs.subs = pickList(p.subs, 3);", app)
 
+    def test_a_pick_can_shrink_on_a_phone(self):
+        # deploy #148 failed: at 300px (CI's wider font) the fold button stuck out 10px.  A chip next to its fold button must be allowed to shrink and wrap.
+        css = read("style.css")
+        self.assertIn(".pick>.chip:not(.fold){min-width:0;flex:1 1 auto}", css)
+        self.assertIn(".pick .chip-t{min-width:0;overflow-wrap:anywhere}", css)
+
     def test_the_hint_button_exists_while_the_setup_is_open(self):
         css = read("style.css")
         self.assertNotIn(".intro-open .guide-btn{display:none}", css)
