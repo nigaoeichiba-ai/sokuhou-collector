@@ -234,7 +234,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'app', 'tier', 'share', 'card', 'ical', 'plan', 'quick', 'setup', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'app', 'tier', 'share', 'card', 'ical', 'plan', 'quick', 'setup', 'swipe', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -425,7 +425,7 @@ def home_page(c: Ctx) -> str:
 <div class="uc-grid compact">{ucs}</div>
 </section>
 </div>
-<p class="edit-home"><button type="button" class="btn small ghost" id="edit-home" aria-pressed="false">ホームを編集</button> <button type="button" class="btn small ghost" id="reset-home" hidden>元に戻す</button></p>"""
+<p class="edit-home"><button type="button" class="btn small ghost" id="pager-toggle" aria-pressed="false">めくって見る</button> <button type="button" class="btn small ghost" id="edit-home" aria-pressed="false">ホームを編集</button> <button type="button" class="btn small ghost" id="reset-home" hidden>元に戻す</button></p>"""
     return c.page("/", f"{NAME}|{CATCH}", "あの日からもう何日、あの日まであと何日。日付を選ぶだけで数えて、カレンダーで見られます。締切・試験・大会・お祭りの確認済みの日付は、ワンタップで予定に入れられます。", body, "home")
 
 

@@ -311,7 +311,7 @@ class CardsCanBeDragged(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             page = Path(td) / "d.html"
             page.write_text(DRAG_PAGE % {"core": (ASSETS / "core.js").as_uri(), "ics": (ASSETS / "ics.js").as_uri(), "app": (ASSETS / "app.js").as_uri()}, encoding="utf-8")
-            r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={Path(td) / 'prof'}", "--virtual-time-budget=6000",
+            r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={Path(td) / 'prof'}", "--virtual-time-budget=6000", "--force-prefers-reduced-motion",
                                 "--window-size=800,900", "--dump-dom", page.as_uri() + "?today=2026-10-08"], capture_output=True, timeout=120)
         dom = r.stdout.decode("utf-8", "replace")
         a = dom.index('<pre id="out">') + len('<pre id="out">')

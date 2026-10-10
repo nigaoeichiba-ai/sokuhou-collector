@@ -276,6 +276,14 @@ details.more summary{min-height:48px;display:flex;align-items:center;cursor:poin
 
 /* screen guide */
 .setup .chip{height:auto;padding-top:8px;padding-bottom:8px;text-align:left}.setup .chip-t{display:grid;gap:1px}.setup .chip-t small{font-weight:400;font-size:.78rem;color:var(--muted)}.setup .btn[disabled]{opacity:.45;cursor:not-allowed}.setup .step-n{margin:0 0 .3rem;font-size:.85rem;color:var(--muted)}.setup .chiprow.wrap{flex-wrap:wrap;overflow:visible}.setup select{max-width:100%}.setup-redo{margin:.2rem 0 0;text-align:right}
+.card{touch-action:pan-y pinch-zoom}
+.cards.pager{display:flex;grid-template-columns:none;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:2px 2px 8px;scrollbar-width:thin}
+.cards.pager .card{flex:0 0 min(88%,360px);scroll-snap-align:center;touch-action:auto}
+.pager-bar{display:flex;align-items:center;justify-content:center;gap:14px;margin:.2rem 0 0}.pager-bar .pg-n{min-width:4.5em;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.sw-on,.sw-on body{overflow-x:hidden}
+.card.swiping{box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.swipe-hint{position:absolute;left:-92px;top:50%;width:84px;margin-top:-1.1em;text-align:center;font-size:.8rem;font-weight:700;color:var(--muted)}.swipe-hint.go{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.cards.pager{scroll-behavior:auto}}
 .hint-sheet{position:fixed;inset:0;z-index:70}.hs-back{position:absolute;inset:0;background:rgba(0,0,0,.45)}
 .hs-box{position:absolute;left:0;right:0;bottom:0;max-height:78vh;overflow:auto;padding:1rem 16px calc(1rem + env(safe-area-inset-bottom));background:var(--surface);color:var(--text);border-radius:18px 18px 0 0;box-shadow:0 -6px 24px rgba(0,0,0,.25);outline:0}
 .hs-box h2{margin:0 0 .5rem;font-size:1.1rem}.hs-box ul{margin:0 0 .8rem;padding-left:1.2rem;display:grid;gap:.4rem}.hs-box li{line-height:1.7}

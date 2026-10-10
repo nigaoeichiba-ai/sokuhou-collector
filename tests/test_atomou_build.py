@@ -662,6 +662,17 @@ class AppInChrome(BuildOnce):
         self.assertIn("地方を選んでください。", dom)
         self.assertEqual(len(re.findall(r'data-reg-area="', dom)), 8)
 
+    def test_the_page_turn_view_makes_the_lists_pages_with_a_counter(self):
+        dom = html.unescape(self.dom("/", "&pager=1"))
+        self.assertRegex(dom, r'<div class="cards pager"[^>]*id="grid"|<div class="cards pager" id="grid"|id="grid"[^>]*class="[^"]*pager')
+        self.assertIn('class="pager-bar"', dom)
+        self.assertRegex(dom, r'class="pg-n"[^>]*>1 / \d+')
+        self.assertIn('id="pager-toggle" aria-pressed="true"', dom)
+        self.assertIn("並べて見る", dom)
+        dom = html.unescape(self.dom("/"))
+        self.assertNotIn('class="pager-bar"', dom)
+        self.assertIn("めくって見る", dom)
+
     def test_the_setup_shows_an_example_under_every_genre(self):
         dom = html.unescape(self.dom("/", "&setup=1"))
         self.assertEqual(len(re.findall(r'<span class="chip-t">[^<]+<small>', dom)), len(self.shown_groups()))
