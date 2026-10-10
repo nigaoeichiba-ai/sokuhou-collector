@@ -275,20 +275,20 @@
   /* ---------- cards (the same markup as build.py card_html) ---------- */
   function catItem(c) {
     return { key: 'c:' + c.id, id: c.id, title: c.title, date: c.date, p: c.precision || 'day', g: CONF.groups.indexOf(c.group) + 1, kind: c.subject || c.category || c.kind, what: c.what || c.kind, kword: c.kind, place: c.place != null ? c.place : (c.region || ''), quiet: !!c.quiet,
-      cat: c.mid, sub: c.subject, own: false, href: '/e/' + c.id + '/' };
+      cat: c.mid, sub: c.subject, own: false, href: '/e/' + c.id + '/', est: !!c.estimated, typical: c.typical || '' };
   }
   function ownItem(e) {
     var k = KINDS[e.kind] || KINDS.memo;
     return { key: 'm:' + e.id, id: e.id, title: e.title, date: e.date, p: e.precision || 'day', g: k.g, kind: k.t, quiet: !!e.quiet, own: true, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100 };
   }
   function cardHtml(it) {
-    var h = '<article class="card' + (it.quiet ? ' quiet' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.date) + '" data-p="' + H(it.p) + '"' +
+    var h = '<article class="card' + (it.quiet ? ' quiet' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.date) + '" data-p="' + H(it.p) + '"' + (it.est ? ' data-est="1"' : '') +
       (it.g ? ' data-g="' + it.g + '"' : '') + (it.cat ? ' data-cat="' + H(it.cat) + '"' : '') + (it.cat && it.sub ? ' data-sub="' + H(it.sub) + '"' : '') + '>';
     h += '<div class="c-top">' + (it.g ? '<span class="mark m' + it.g + '" data-g="' + it.g + '" aria-hidden="true"></span>' : '') + '<span class="badge">' + H(it.kind) + '</span>' +
       (it.what ? '<span class="what">' + H(it.what) + '</span>' : '') + '</div>';
     h += '<p class="c-count"><span class="word"></span><span class="num"></span><span class="rel"></span></p><p class="c-sub"></p>';
     h += '<h3 class="c-title">' + (it.href ? '<a href="' + H(it.href) + '">' + H(it.title) + '</a>' : H(it.title)) + '</h3>';
-    h += '<p class="c-date">' + H(fmtDate(it.date, it.p)) + (it.time ? ' ' + H(it.time) : '') + (it.kword ? ' ' + H(it.kword) : '') +
+    h += '<p class="c-date">' + H(it.est && it.typical ? it.typical : fmtDate(it.date, it.p)) + (it.time ? ' ' + H(it.time) : '') + (it.kword ? ' ' + H(it.kword) : '') +
       (it.place && it.place !== '全国' ? '<span class="pl"><b>' + (['改定', '終了', '施行', '改正', '締切'].indexOf(it.kind) >= 0 ? '対象地域' : '場所') + '</b>' + H(it.place) + '</span>' : '') + '</p>';
     if (it.own) h += '<div class="c-next"></div>';
     h += '<div class="c-act">';
@@ -311,7 +311,7 @@
     if (num) num.textContent = w[1];
     if (sub) sub.textContent = r.sub ? '合計 ' + r.sub : '';
     var rl = $('.rel', card), t = r.total;
-    if (rl) rl.textContent = (p === 'day' && t != null) ? (t === 1 ? '(明日)' : t === 2 ? '(明後日)' : t === -1 ? '(昨日)' : t === -2 ? '(おととい)' : '') : '';
+    if (rl) rl.textContent = card.getAttribute('data-est') === '1' ? '(予想)' : (p === 'day' && t != null) ? (t === 1 ? '(明日)' : t === 2 ? '(明後日)' : t === -1 ? '(昨日)' : t === -2 ? '(おととい)' : '') : '';
     var cnt = $('.c-count', card);
     if (cnt) cnt.setAttribute('aria-label', r.big + (r.sub ? '(合計 ' + r.sub + ')' : ''));
     var nx = $('.c-next', card);

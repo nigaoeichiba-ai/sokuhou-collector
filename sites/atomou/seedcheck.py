@@ -99,8 +99,22 @@ def render(url: str, chrome: str | None = None) -> str:
 
 
 def quote_has_date(c: dict, precision: str) -> bool:
-    y, m, d = (int(x) for x in c["date"].split("-"))
-    q = c["source_quote"]
+    return text_has_date(c["date"], c["source_quote"], precision)
+
+
+def text_has_full_date(iso: str, text: str) -> bool:
+    """The day with its YEAR is written in the text (an earlier year of a yearly event: '31日' alone would match any year)."""
+    y, m, d = (int(x) for x in iso.split("-"))
+    tn = norm(text).lower()
+    en = MONTHS_EN[m - 1]
+    forms = [f"{y}年{m}月{d}日", f"{y}/{m}/{d}", f"{y}/{m:02d}/{d:02d}", f"{y}.{m}.{d}", f"{y}.{m:02d}.{d:02d}", f"{y}-{m:02d}-{d:02d}", f"{d} {en} {y}", f"{en} {d}, {y}", f"{en} {d} {y}", f"{d} {en[:3]} {y}", f"{en[:3]} {d}, {y}"]
+    return any(norm(x).lower() in tn for x in forms)
+
+
+def text_has_date(iso: str, text: str, precision: str = "day") -> bool:
+    """The day (or its month, or its year) is written in the text, in any of the usual ways."""
+    y, m, d = (int(x) for x in iso.split("-"))
+    q = text
     qn = norm(q)
     if precision == "year":
         return str(y) in qn
@@ -141,8 +155,14 @@ def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int 
             why = "duplicate"
         elif c.get("date_end") and not (c["date"] <= c["date_end"] <= ("2100-12-31" if c.get("keep") else hi)):
             why = "bad date_end"
-        elif any(re.search(r"[<>{}\\]", v) for k, v in c.items() if k != "source_url" and isinstance(v, str)):
+        elif any(re.search(r"[<>{}\\]", v) for k, v in c.items() if k not in ("source_url", "history_url") and isinstance(v, str)):
             why = "markup"
+        elif c.get("estimated"):
+            hist = [h for h in (c.get("history") or []) if re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(h))]
+            if not (c.get("typical") and c.get("series") and hist):
+                why = "an estimate needs typical, series and history"
+            elif len(c["typical"]) > 40 or c["date"] < today.isoformat():
+                why = "an estimate must be a short phrase and a day to come"
         if why:
             rejected.append((c.get("title"), why))
             continue
@@ -151,7 +171,7 @@ def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int 
     pages: dict[str, str] = {}
     if page_of is None:
         byhost = defaultdict(list)
-        for u in sorted({c["source_url"] for c in todo}):
+        for u in sorted({c["source_url"] for c in todo} | {c["history_url"] for c in todo if str(c.get("history_url") or "").startswith("https://")}):
             byhost[urlparse(u).netloc].append(u)
 
         def job(item):
@@ -176,7 +196,17 @@ def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int 
         if len(nq) < 4:
             rejected.append((c["title"], "quote too short"))
             continue
-        if not quote_has_date(c, prec):
+        est = bool(c.get("estimated"))
+        hist_ok: list[str] = []
+        if est:
+            # the quote proves the NEWEST earlier day; every day of the history must be written on the history page (or the source page); only those are kept
+            hist_text = page_of(c.get("history_url") or c["source_url"]) or ""
+            hist_ok = [h for h in sorted(set(c["history"]), reverse=True) if text_has_full_date(h, hist_text) or text_has_full_date(h, page)]
+            ref = {"date": hist_ok[0] if hist_ok else c["history"][0], "source_quote": c["source_quote"]}
+            if not hist_ok or not text_has_full_date(ref["date"], ref["source_quote"]):
+                rejected.append((c["title"], "the quote does not contain the newest earlier day" if hist_ok else "no earlier day is written on the page"))
+                continue
+        elif not quote_has_date(c, prec):
             rejected.append((c["title"], "the quote does not contain the date"))
             continue
         found = nq in norm(page)
@@ -193,6 +223,10 @@ def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int 
             continue
         item = {k: v for k, v in c.items() if not k.startswith("_")}
         item["source_quote"] = item["source_quote"][:60]
+        if est:
+            item["history"] = hist_ok
+            item.pop("history_url", None)
+            item["note"] = ((item.get("note") or "") + " 例年の時期からの予想。過去の日付は、公式ページで確かめた。").strip()
         item.update({"checked_on": today.isoformat(), "verified": True})
         item.setdefault("sensitivity", "none")
         item.setdefault("ad_ok", True)
