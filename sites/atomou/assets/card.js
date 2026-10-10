@@ -11,7 +11,7 @@
 
   var THEMES = [
     { n: '白', bg: '#FFFFFF', fg: '#1A1A1A', ac: '#1A56B8' }, { n: '青', bg: '#1A56B8', fg: '#FFFFFF', ac: '#FFE08A' }, { n: '赤', bg: '#B91C3C', fg: '#FFFFFF', ac: '#FFE08A' },
-    { n: '緑', bg: '#0B6B3A', fg: '#FFFFFF', ac: '#D7F5A8' }, { n: '紫', bg: '#5B21B6', fg: '#FFFFFF', ac: '#FFD6F0' }, { n: '黒', bg: '#14181F', fg: '#F2F2F2', ac: '#7DBBFF' },
+    { n: '緑', bg: '#0B6B3A', fg: '#FFFFFF', ac: '#D7F5A8' }, { n: '紫', bg: '#5B21B6', fg: '#FFFFFF', ac: '#FFD6F0' }, { n: '黒', bg: '#14181F', fg: '#F2F2F2', ac: '#7DBBFF' }, { n: '付箋', bg: '#FFF1A8', fg: '#3F3500', ac: '#B45309', sticky: true },
     { n: '黄', bg: '#FFE600', fg: '#1A1A1A', ac: '#B00020' }, { n: 'ピンク', bg: '#FFE4EC', fg: '#4A1F2E', ac: '#C2185B' }, { n: '紺', bg: '#0E2A55', fg: '#EAF1FF', ac: '#FFB26B' }, { n: '生成り', bg: '#F5EFE3', fg: '#3B3224', ac: '#A0431C' }
   ];
   var KIND_OK = ['event', 'anniversary', 'birthday', 'since', 'until', 'memo'];   // no memorial: such a day is never turned into a card to send
@@ -76,7 +76,7 @@
   /* ---------- drawing the card on the page ---------- */
   function cardHtml(card) {
     var th = THEMES[card.th], c = count(card), tasks = card.tasks.slice().sort(function (a, b) { return b.b - a.b; });
-    var h = '<div class="xcard" style="--xbg:' + th.bg + ';--xfg:' + th.fg + ';--xac:' + th.ac + '">' +
+    var h = '<div class="xcard' + (th.sticky ? ' xsticky' : '') + '" style="--xbg:' + th.bg + ';--xfg:' + th.fg + ';--xac:' + th.ac + '">' +
       '<div class="x-top">あと何日、もう何日</div><h2 class="x-title">' + H(card.t || '(題名なし)') + '</h2>' +
       '<div class="x-big">' + H(c.big) + '</div><div class="x-date">' + H(when(card)) + '</div>';
     if (card.m) h += '<p class="x-note">' + H(card.m).replace(/\n/g, '<br>') + '</p>';
@@ -201,6 +201,8 @@
   function editMode() {
     var d = draft;
     box.innerHTML = '<p class="lead muted">日付・ひとこと・やることを入れて、リンクや画像でだれにでも送れます。受け取った人は、1タップで自分の予定帳に入れられます。</p>' +
+      '<div class="x-paste"><label class="lab" for="x-paste">調べた文章を貼り付ける(Google や AI の答え、チラシの文章など)</label><textarea id="x-paste" rows="3" maxlength="4000" placeholder="例: 〇〇ワンマンライブ 2026年12月1日(火) 開場18:00 開演19:00 渋谷…"></textarea>' +
+      '<p class="x-actions"><button type="button" class="btn small" id="x-find">日付を探す</button> <span class="hint">貼った文章は、この端末の中だけで読みます。</span></p><div id="x-found" aria-live="polite"></div></div>' +
       '<div class="x-tpl"><span class="lab">こんなときに(押すと、例が入ります)</span><div class="chiprow">' + TEMPLATES.map(function (t) { return '<button type="button" class="chip" data-tpl="' + t.id + '">' + H(t.n) + '</button>'; }).join('') + '</div></div>' +
       '<div class="x-grid"><form id="x-form" autocomplete="off">' +
       '<div class="field"><label for="x-t">題名(例: 〇〇バンド ワンマンライブ)</label><input type="text" id="x-t" maxlength="' + MAX.t + '" value="' + H(d.t) + '"></div>' +
@@ -213,10 +215,28 @@
       '<div class="field"><span class="lab">やること(何日前までに)</span><div id="x-tasks"></div><button type="button" class="btn small ghost" id="x-addtask">やることを足す</button></div>' +
       '</form><div class="x-side"><div id="x-card"></div><p class="x-actions"><button type="button" class="btn" id="x-make">リンクをつくる</button></p><div id="x-out"></div></div></div>';
     taskRows(); preview(); wireEdit();
+    $('#x-find').addEventListener('click', function () { findDays($('#x-paste').value); });
+    if (pasted) { $('#x-paste').value = pasted; pasted = ''; findDays($('#x-paste').value); }
     $('.x-tpl').addEventListener('click', function (ev) {
       var b = ev.target.closest ? ev.target.closest('[data-tpl]') : null, tp = b && TEMPLATES.filter(function (x) { return x.id === b.getAttribute('data-tpl'); })[0];
       if (tp) { draft = clean({ t: tp.t, d: C.iso(C.addDays(TODAY, tp.days)), tm: tp.tm || '', m: tp.m, th: tp.th, k: tp.k, tasks: tp.tasks }) || draft; A.stat('act:card_tpl_' + tp.id); editMode(); window.scrollTo(0, 0); }
     });
+  }
+  var pasted = '';
+  function findDays(text) {   // days in the words: pick one and it fills the card (the title, the date, the time, and the words around it as the note)
+    var out = $('#x-found'), list = C.extractDays(text, TODAY);
+    A.stat('act:card_paste');
+    if (!text.trim()) { out.textContent = '文章を貼り付けてください。'; return; }
+    if (!list.length) { out.textContent = '日付が見つかりませんでした。「12月1日」「2026年12月1日」のように書かれた日付を探します。下の欄に、日付を直接入れることもできます。'; return; }
+    out.innerHTML = '<p class="hint">見つかった日付です。使うものを押すと、カードに入ります。</p><div class="x-cands">' + list.map(function (c, i) {
+      return '<button type="button" class="chip" data-cand="' + i + '">' + H(A.fmtDate(c.iso, 'day') + (c.time ? ' ' + c.time : '') + (c.title ? ' ' + c.title.slice(0, 18) : '')) + '</button>';
+    }).join('') + '</div>';
+    out.onclick = function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-cand]') : null, c = b && list[+b.getAttribute('data-cand')];
+      if (!c) return;
+      draft = clean({ t: c.title || draft.t, d: c.iso, tm: c.time, m: c.context.slice(0, MAX.m), th: draft.th, tasks: draft.tasks, e: '', k: draft.k }) || draft;
+      editMode(); window.scrollTo(0, 0); A.toast('カードに入れました。題名やひとことを直してください。');
+    };
   }
   function taskRows() {
     $('#x-tasks').innerHTML = draft.tasks.map(function (t, i) {
@@ -271,6 +291,12 @@
 
   // a card made from a day: #from=c:<official id> or #from=m:<own id> (the visitor chose to turn it into a card)
   function prefill() {
+    var sh = /[#&]share=([A-Za-z0-9_-]+)/.exec(location.hash || '');
+    if (sh && !card) {   // words handed over from another app's share sheet (the service worker turned the post into this link; nothing went to a server)
+      try { var o = JSON.parse(b64dec(sh[1])); pasted = [o.title, o.text, o.url].filter(Boolean).join('\n').slice(0, 4000); editing = true; } catch (e) { pasted = ''; }
+      history.replaceState(null, '', '/card/#edit=1');
+      return Promise.resolve();
+    }
     var m = /[#&]from=([cm]):([A-Za-z0-9_-]{1,40})/.exec(location.hash || '');
     if (!m) return Promise.resolve();
     if (m[1] === 'm') {
