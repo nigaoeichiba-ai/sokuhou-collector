@@ -153,8 +153,8 @@ class Sources(unittest.TestCase):
 class Wiring(unittest.TestCase):
     def test_the_workflow_runs_every_ten_minutes_and_puts_only_the_live_file_on_the_server(self):
         wf = (ROOT / ".github" / "workflows" / "atomou-live.yml").read_text(encoding="utf-8")
-        self.assertIn('cron: "3-59/10 * * * *"', wf)                       # every ten minutes, not on the round minutes where the deploys start
-        self.assertIn("live_uploaded.txt", wf)                              # the server (the same one the deploys use over SSH) is called only when the headlines changed, or after 6 hours
+        self.assertNotIn("schedule:", wf)                                   # the 10-minute run is the server's own cron (server_live.sh); GitHub never started this schedule
+        self.assertIn("live_uploaded.txt", wf)                              # a run by hand calls the server (the one the deploys use over SSH) only when the headlines changed, or after 6 hours
         self.assertIn("the server is not called", wf)
         self.assertLess(wf.index("the server is not called"), wf.index("ssh -i"))
         self.assertIn("sites/atomou/live.py", wf)
