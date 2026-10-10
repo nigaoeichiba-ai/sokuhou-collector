@@ -25,7 +25,7 @@ ICS = CRLF.join([
     "END:VCALENDAR", ""])
 
 PAGE = """<!doctype html><meta charset="utf-8"><script>
-window.ATOMOU = { v: 'x', groups: ['締切・制度'], slugs: ['deadline'], skins: { basic: { card: 'plain' } } };
+window.ATOMOU = { v: 'x', groups: ['手続き・お金'], slugs: ['deadline'], skins: { basic: { card: 'plain' } } };
 </script><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script><script src="%(ical)s"></script>
 <script>var r = window.AtomouIcal.parse(%(text)s); document.getElementById('out').textContent = JSON.stringify(r);</script>"""
 

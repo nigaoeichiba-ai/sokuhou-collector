@@ -30,7 +30,7 @@
 
   /* ---------- state ---------- */
   var S = blank(), brokenSaved = false;
-  var BLOCK_IDS = ['todo', 'search', 'cats', 'daily', 'mine', 'interests', 'soon', 'record', 'usecases'], KIND_IDS = ['event', 'anniversary', 'birthday', 'memorial', 'since', 'until', 'memo'];
+  var BLOCK_IDS = ['todo', 'search', 'cats', 'daily', 'mine', 'interests', 'region', 'soon', 'record', 'usecases'], KIND_IDS = ['event', 'anniversary', 'birthday', 'memorial', 'since', 'until', 'memo'];
   function statsDefault() {  // statistics are on unless the browser says "do not track" (DNT / Global Privacy Control)
     try { return !(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.globalPrivacyControl === true); } catch (e) { return true; }
   }
@@ -91,6 +91,7 @@
     s.prefs.pushHash = /^[0-9me,-]{0,4000}$/.test(String(p.pushHash || '')) ? String(p.pushHash || '') : '';
     s.prefs.tour = {};
     s.prefs.intro = p.intro === true;
+    s.prefs.region = CONF.regions && CONF.regions.indexOf(p.region) >= 0 ? p.region : '';   // the prefecture the visitor lives in (this device only): days near it come first
     s.prefs.shares = Math.max(0, Math.min(9999, Math.floor(+p.shares) || 0));   // how many times a day was sent (the plan: sending earns room for more cards)
     ['home', 'calendar', 'plan', 'add', 'search'].forEach(function (k) { if (p.tour && p.tour[k] === true) s.prefs.tour[k] = true; });
     s.prefs.seasonOff = /^[a-z0-9-]{1,30}$/.test(String(p.seasonOff)) && CONF.skins[p.seasonOff] ? p.seasonOff : '';
@@ -667,6 +668,30 @@
     });
     return out.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : a.title < b.title ? -1 : 1; });
   }
+  function regionHits(cat, pref) {   // upcoming days whose place or region is in the prefecture ("東京都(東京ビッグサイト)" or region "東京都")
+    var out = [];
+    cat.forEach(function (c) {
+      if (c.status === 'ended' || c.quiet) return;
+      var last = C.parse(c.date_end || c.date);
+      if (!last || C.cmp(last, TODAY) < 0) return;
+      if (String(c.place || '').indexOf(pref) === 0 || c.region === pref || String(c.place || '').indexOf(pref) >= 0) out.push(c);
+    });
+    return out.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : a.title < b.title ? -1 : 1; });
+  }
+  function renderRegion() {
+    var box = $('#region');
+    if (!box) return;
+    var pref = S.prefs.region, none = $('#reg-none'), wrap = $('#reg-wrap'), grid = $('#reg-grid'), more = $('#reg-more');
+    box.hidden = false;
+    none.hidden = !!pref; wrap.hidden = !pref;
+    if (!pref) return;
+    $('#reg-title').textContent = pref + 'の日';
+    loadCatalog().then(function (cat) {
+      var hits = regionHits(cat || [], pref);
+      render(grid, hits.slice(0, 6).map(catItem));
+      more.innerHTML = hits.length ? (hits.length > 6 ? 'ほかに' + (hits.length - 6) + '件あります。<a href="/search/?q=' + encodeURIComponent(pref) + '">' + H(pref) + 'の日をすべて見る</a>' : '') : pref + 'の日は、まだありません。全国の日は、下に並んでいます。';
+    });
+  }
   function hasInterest(w) { return S.interests.indexOf(w) >= 0; }
   function setInterest(w, on) {
     var i = S.interests.indexOf(w);
@@ -696,6 +721,11 @@
     });
   }
   function pageInterests() {
+    var regSel = $('#reg-select');
+    if (regSel) {
+      regSel.value = S.prefs.region || '';
+      regSel.addEventListener('change', function () { S.prefs.region = CONF.regions && CONF.regions.indexOf(regSel.value) >= 0 ? regSel.value : ''; persist(); stat('act:region_set'); $('#reg-note').textContent = S.prefs.region ? S.prefs.region + 'を選びました。ホームに、' + S.prefs.region + 'の日が並びます。' : '地域の選択を外しました。'; });
+    }
     var chips = $$('[data-int]'), chosen = $('#int-chosen'), note = $('#int-note'), q = $('#int-q'), form = $('#int-form'), go = $('#int-go'), cat = [];
     function sync() {
       chips.forEach(function (b) { b.setAttribute('aria-pressed', hasInterest(b.getAttribute('data-int')) ? 'true' : 'false'); });
@@ -800,7 +830,7 @@
   }
 
   function pageHome() {
-    renderDaily(); renderMine(); renderInterests(); wireBlocks();
+    renderDaily(); renderMine(); renderInterests(); renderRegion(); wireBlocks();
     var cb = blockPrefs();
     if (cb.order.length || cb.hidden.length) { stat('home_order:' + (cb.order.length ? cb.order.join(',') : 'default')); cb.hidden.forEach(function (k) { stat('home_hidden:' + k); }); }
     var grid = $('#grid'), more = $('#more'), pool = [], shown = 6, random = null, ready = null;
@@ -1185,7 +1215,7 @@
   else if (page === 'category') pageCategory();
   else if (page === 'today') pageToday();
   else if (page === 'interests') pageInterests();
-  window.AtomouApp = { matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
+  window.AtomouApp = { regionHits: regionHits, interestHits: interestHits, matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
     loadCatalog: loadCatalog, catItem: catItem, ownItem: ownItem, cardHtml: cardHtml, hydrate: hydrate, fillCard: fillCard, fmtDate: fmtDate, wd: wd, occ: occ, nextYearly: nextYearly, KINDS: KINDS,
     findEntry: findEntry, uid: uid, icsFor: icsFor, removeEntry: removeEntry, normalize: normalize, tipFor: tipFor, nextLines: nextLines, applyPrefs: applyPrefs };
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !P.today) {

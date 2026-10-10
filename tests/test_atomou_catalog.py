@@ -34,7 +34,7 @@ class CatalogRules(unittest.TestCase):
         entries, rejects = build([item()])
         self.assertEqual(len(entries), 1)
         e = entries[0]
-        self.assertEqual((e["group"], e["weekday"], e["status"], e["ad_ok"], e["quiet"]), ("試験・資格", "金", "active", True, False))
+        self.assertEqual((e["group"], e["weekday"], e["status"], e["ad_ok"], e["quiet"]), ("学校・資格", "金", "active", True, False))
         self.assertEqual(sum(rejects.values()), 0)
         self.assertNotIn("note", catalog.public_json(entries)[0])  # nothing internal leaks into assets/catalog.json
 
@@ -57,7 +57,7 @@ class CatalogRules(unittest.TestCase):
         self.assertEqual((entries, rejects["ジャンル不明"]), ([], 1))
         # ... while a known file gives its items the file's genre
         entries, _ = build([item(category="その他")])
-        self.assertEqual(entries[0]["group"], "試験・資格")
+        self.assertEqual(entries[0]["group"], "学校・資格")
 
     def test_check_date_in_the_future_is_rejected(self):
         entries, rejects = build([item(checked_on="2026-12-01")])
@@ -158,7 +158,7 @@ class CardLabels(unittest.TestCase):
         self.assertEqual(label_problems(catalog.public_json(entries)), [])  # the browser gets the same three fields
 
     def test_the_check_catches_vague_or_bad_labels(self):
-        bad = [item(title="曖昧1", subject="その他", what="試験の日", place="全国"), item(title="曖昧2", subject="地域のお祭り", what="お祭りの日", place=""),
+        bad = [item(title="曖昧1", subject="その他", what="試験の日", place="全国"), item(title="曖昧2", subject="おでかけ・地域", what="お祭りの日", place=""),
                item(title="曖昧3", subject="全国", what="試験の日", place=""), item(title="短い1", subject="資", what="試験の日", place=""),
                item(title="短い2", subject="資格", what="開催", place=""), item(title="長い1", subject="資格", what="試験の日", place="あ" * 31),
                item(title="長い2", subject="あ" * 11, what="試験の日", place=""), item(title="長い3", subject="資格", what="あ" * 17, place=""),
@@ -183,7 +183,7 @@ class CardLabels(unittest.TestCase):
         e = build([item()])[0][0]
         self.assertEqual((e["subject"], e["what"], e["place"]), ("資格", "締切", "全国"))
         e = build([item(category="その他", region="地域")])[0][0]  # "その他" -> the group; "地域" says nothing -> empty
-        self.assertEqual((e["subject"], e["place"]), ("試験・資格", ""))
+        self.assertEqual((e["subject"], e["place"]), ("学校・資格", ""))
         e = build([item(place="")])[0][0]  # an explicit empty place is kept (unknown), it does not fall back to the region
         self.assertEqual(e["place"], "")
 

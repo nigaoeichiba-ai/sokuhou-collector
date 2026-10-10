@@ -27,20 +27,21 @@ from sites.atomou import articles, catalog, datecore, feeds, ogimage, skins, use
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
+PREFECTURES = "北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県 茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県 新潟県 富山県 石川県 福井県 山梨県 長野県 岐阜県 静岡県 愛知県 三重県 滋賀県 京都府 大阪府 兵庫県 奈良県 和歌山県 鳥取県 島根県 岡山県 広島県 山口県 徳島県 香川県 愛媛県 高知県 福岡県 佐賀県 長崎県 熊本県 大分県 宮崎県 鹿児島県 沖縄県".split()
 CATCH = "忘れたくない日を、お知らせします。"   # decided by the owner (2026-10-08); the copy pass may not change it
 SLUGS = ["deadline", "sale", "sports", "exams", "sky", "festival", "vehicles", "hobby", "shows", "life"]
 GROUP_SLUG = dict(zip(catalog.GROUPS, SLUGS))
 GROUP_LEAD = {
-    "締切・制度": "確定申告、年金、制度の施行日。過ぎると困る日。",
-    "消費・セール": "年賀状、大型セール、ポイントの期限、サービス終了。暮らしとお金に関わる日。",
-    "スポーツ・勝負": "野球、サッカー、駅伝・マラソン、相撲、競馬、将棋。結果が気になる日。",
-    "試験・資格": "大学入試、高校入試、資格試験、就活、奨学金の締切。",
-    "天文・季節": "流星群、満月、日食、二十四節気。空と季節を楽しむ日。",
-    "地域のお祭り": "祭り、花火、イルミネーション、紅葉、初詣。出かけたい日。",
-    "乗り物・レース": "鉄道、観光列車、カーレース、バイク、ボート。乗り物が好きな人の日。",
-    "趣味・ゲーム・アニメ": "コミケ、ゲームマーケット、アニメ、模型、手芸、即売会。好きなことを楽しむ日。",
-    "番組・音楽・賞": "紅白歌合戦、ライブ、ノーベル賞、アカデミー賞、映画祭。発表や放送を待つ日。",
-    "暮らし・健康": "結婚、子育て、健康、防災。暮らしの節目になる日。",
+    "手続き・お金": "税金、年金、保険、最低賃金、制度の変更。期限のある手続きの日。",
+    "買い物・サービス": "年賀状、大型セール、ポイントの期限、料金の改定、サービス終了。",
+    "スポーツ": "野球、サッカー、マラソン・駅伝、相撲、体操、剣道など、大会や試合の日。",
+    "学校・資格": "大学入試、高校入試、資格試験、就活、奨学金の締切。",
+    "空・季節": "流星群、満月、日食、二十四節気。空と季節の変わり目。",
+    "おでかけ・地域": "祭り、花火、イルミネーション、紅葉、初詣。出かけたい日。",
+    "乗り物・レース": "鉄道、観光列車、競馬、F1、カーレース、バイク、ボート。",
+    "趣味・ゲーム・アニメ": "コミケ、ゲームマーケット、アニメ、将棋、手芸、盆栽、写真、即売会。",
+    "エンタメ・音楽・賞": "紅白歌合戦、ライブ、ノーベル賞、アカデミー賞、映画祭。発表や放送を待つ日。",
+    "暮らし・健康・グルメ": "結婚、健康、食のイベント、防災。暮らしの節目になる日。",
 }
 POPULAR = ["年賀状", "ふるさと納税", "共通テスト", "流星群", "紅白", "コミケ", "最低賃金", "確定申告", "ドラフト"]
 SITE = {
@@ -293,7 +294,7 @@ class Ctx:
         self.v_skin = hashlib.sha1(other_css.encode("utf-8")).hexdigest()[:8]
         self.v_bundle = None
         css_urls = [f"/assets/skins.css?v={self.v_skin}"] + ([f"/assets/design.css?v={self.ver}"] if (SITE["assets"] / "design.css").exists() else [])
-        conf = {"v": self.v_cat, "groups": catalog.GROUPS, "slugs": SLUGS, "css": css_urls,
+        conf = {"v": self.v_cat, "groups": catalog.GROUPS, "slugs": SLUGS, "regions": PREFECTURES, "css": css_urls,
                 "skins": {s["id"]: {"card": s["card"], "name": s["name"], "attrs": s.get("attrs", {}), **({"dark": True} if s.get("dark") else {}), **({"season": s["season"]} if s.get("season") else {})} for s in skins.SKINS}}
         if cfg.get("google_client_id"):
             conf["gclient"] = cfg["google_client_id"]
@@ -392,6 +393,11 @@ def home_page(c: Ctx) -> str:
 <p class="hint" id="int-prompt" hidden>将棋、流星群、英検など、好きな分野を選ぶと、その分野の日がここに並びます。<a href="/interests/">選んでみる</a></p>
 <div id="int-wrap" hidden><div class="cards" id="int-grid"></div><p class="hint" id="int-miss"></p></div>
 </section>
+<section id="region" data-block="region" data-title="お住まいの地域の日" hidden>
+<div class="head-row"><h2 id="reg-title">お住まいの地域の日</h2><div class="grow"><a class="btn small ghost" href="/interests/#region">地域を選ぶ</a></div></div>
+<p class="hint" id="reg-none" hidden>お住まいの都道府県を選ぶと、その地域の日が、ここに並びます。<a href="/interests/#region">選んでみる</a></p>
+<div id="reg-wrap" hidden><div class="cards" id="reg-grid"></div><p class="hint" id="reg-more"></p></div>
+</section>
 <section data-block="search" data-title="さがす">
 {search_form()}
 </section>
@@ -461,6 +467,8 @@ def interests_page(c: Ctx, live: list[dict]) -> str:
 <h1>好きな分野を選ぶ</h1>
 <p class="lead muted">選んだ分野の日が、ホームにまとまって並びます。まだ日付のない分野(準備中)も選べます。選んだ内容は、この端末の中に保存されます。</p>
 <div id="int-chosen"></div>
+<div class="field" id="region-pick"><label for="reg-select">お住まいの都道府県</label><select id="reg-select"><option value="">選ばない</option>{"".join(f'<option value="{p}">{p}</option>' for p in PREFECTURES)}</select>
+<p class="hint">選ぶと、その地域の日が、ホームの先頭近くに並びます。選んだ地域は、この端末の中だけに保存されます。</p><p class="small muted" id="reg-note" aria-live="polite"></p></div>
 <div class="sbox"><form class="searchbox" id="int-form" role="search"><label class="vh" for="int-q">分野を探す・追加する</label>
 <input type="text" id="int-q" maxlength="24" autocomplete="off" placeholder="探す・追加する(例: 剣道、釣り、写真)" enterkeyhint="done"><button type="submit" class="sbtn" aria-label="追加">{ICONS['plus']}</button></form></div>
 <p class="small muted" id="int-note" aria-live="polite"></p>
