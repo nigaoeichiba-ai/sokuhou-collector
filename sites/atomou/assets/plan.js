@@ -226,7 +226,7 @@
         '<label class="vh" for="t-text">やること</label><input type="text" id="t-text" maxlength="80" placeholder="例: 書類をそろえる" autocomplete="off"><button type="submit" class="btn small">追加</button></form>' +
         '<p class="hint">期限の日は、カレンダーとホームに表示されます。</p>' + mic() + '</section>';
       h += '<section class="plan-sec"><h2>メモ</h2><div class="field"><label class="vh" for="p-memo">メモ</label><textarea id="p-memo" rows="4" maxlength="600" placeholder="持ち物、場所、連絡先など">' + H(n.memo) + '</textarea></div>' +
-        '<p class="hint">この端末に保存されます。</p>' + mic() + '</section>';
+        mic() + '</section>';
       if (e) {
         h += '<section class="plan-sec"><h2>直す</h2><div class="field"><label for="e-title">名前</label><input type="text" id="e-title" maxlength="40" value="' + H(e.title) + '">' + mic() + '</div>';
         if (e.precision === 'day') h += '<div class="field"><label for="e-date">日付</label><input type="date" id="e-date" value="' + H(e.date) + '"></div>';

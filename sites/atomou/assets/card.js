@@ -163,10 +163,10 @@
   var draft = card || { t: '', d: C.iso(C.addDays(TODAY, 30)), tm: '', m: '', th: 0, tasks: [], e: '', k: 'event' };
 
   function shareHtml() {
-    return '<div class="share share-row" id="x-share" data-text="" data-url="" title="リンクの中に、このカードの内容が入っています。サーバーには保存されません。"><span class="share-lead">送る</span>' + AtomouShare.icons(['line', 'x', 'copy', 'native']) +
+    return '<div class="share share-row" id="x-share" data-text="" data-url="" title="リンクを渡すと、相手の画面にこのカードが開きます。"><span class="share-lead">送る</span>' + AtomouShare.icons(['line', 'x', 'copy', 'native']) +
       '<span class="share-sep" aria-hidden="true"></span><span class="share-lead">画像</span>' +
       '<button type="button" class="sbt sbt-t" data-x-img="wide" title="横長(X・LINE)">横</button><button type="button" class="sbt sbt-t" data-x-img="square" title="正方形(Instagram)">正</button><button type="button" class="sbt sbt-t" data-x-img="story" title="縦長(ストーリーズ・TikTok・Shorts)">縦</button></div>' +
-      '<p class="hint">リンクの中に、カードの内容が入っています(サーバーには保存されません)。画像は、横=X・LINE、正=Instagram、縦=ストーリーズ・TikTok・Shorts。</p>' +
+      '<p class="hint">画像は、横=X・LINE、正=Instagram、縦=ストーリーズ・TikTok・Shorts。</p>' +
       (A.tier && A.tier.on ? (A.tier.plus() ? '<p><label class="lab" for="x-nosign"><input type="checkbox" id="x-nosign"' + (signed() ? '' : ' checked') + '> 署名とリンクを入れずに送る(プラスプラン)</label></p>' : '<p class="hint">画像と文に、サイトの名前とリンクが入ります。' + (A.tier.plusOpen ? 'プラスプランでは、入れずに送れます。' : '') + '</p>') : '');
   }
   function wireShare(card) {
@@ -202,7 +202,7 @@
     var d = draft;
     box.innerHTML = '<p class="lead muted">日付・ひとこと・やることを入れて、リンクや画像でだれにでも送れます。受け取った人は、1タップで自分の予定帳に入れられます。</p>' +
       '<div class="x-paste"><label class="lab" for="x-paste">調べた文章を貼り付ける(Google や AI の答え、チラシの文章など)</label><textarea id="x-paste" rows="3" maxlength="4000" placeholder="例: 〇〇ワンマンライブ 2026年12月1日(火) 開場18:00 開演19:00 渋谷…"></textarea>' +
-      '<p class="x-actions"><button type="button" class="btn small" id="x-find">日付を探す</button> <span class="hint">貼った文章は、この端末の中だけで読みます。</span></p><div id="x-found" aria-live="polite"></div></div>' +
+      '<p class="x-actions"><button type="button" class="btn small" id="x-find">日付を探す</button> </p><div id="x-found" aria-live="polite"></div></div>' +
       '<div class="x-tpl"><span class="lab">こんなときに(押すと、例が入ります)</span><div class="chiprow">' + TEMPLATES.map(function (t) { return '<button type="button" class="chip" data-tpl="' + t.id + '">' + H(t.n) + '</button>'; }).join('') + '</div></div>' +
       '<div class="x-grid"><form id="x-form" autocomplete="off">' +
       '<div class="field"><label for="x-t">題名(例: 〇〇バンド ワンマンライブ)</label><input type="text" id="x-t" maxlength="' + MAX.t + '" value="' + H(d.t) + '"></div>' +

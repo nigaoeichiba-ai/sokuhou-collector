@@ -180,7 +180,7 @@ class Pages(BuildOnce):
     def test_catalog_json_has_public_fields_only(self):
         data = json.loads(self.rel["assets/catalog.json"])
         self.assertEqual(len(data), len(self.entries))
-        allowed = {"id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "region", "tags", "quiet", "ad_ok", "son_toku", "source_url", "checked_on", "status", "subject", "what", "place"}
+        allowed = {"id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "tags", "quiet", "ad_ok", "son_toku", "source_url", "checked_on", "status", "subject", "what", "place"}
         for e in data:
             self.assertLessEqual(set(e), allowed)
 
