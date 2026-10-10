@@ -10,6 +10,29 @@
   var $ = A.$, H = A.H, C = A.C, CONF = A.CONF, P = A.P;
   var home = $('#live-list'), topics = $('#live-list-t');
   var alertBox = $('#live-alert');
+
+  /* ---------- 再確認中: the days the checking robot (sites/atomou/recheck.py) could not find on their official page any more ---------- */
+  var RC_URL = (A.P.today && A.P.recheck && /^\/[\w./-]+$/.test(A.P.recheck)) ? A.P.recheck : '/live/recheck.v1.json', rc = null;
+  function markRc() {
+    if (!rc) return;
+    A.$$('.card[data-key^="c:"]:not([data-rc])').forEach(function (card) {
+      card.setAttribute('data-rc', '1');
+      var id = (card.getAttribute('data-key') || '').slice(2);
+      if (!rc[id]) return;
+      var top = card.querySelector('.c-top');
+      if (top) top.insertAdjacentHTML('beforeend', '<span class="badge warn">再確認中</span>');
+      if (A.page === 'event' && card.classList.contains('big') && !$('.rc-note')) card.insertAdjacentHTML('beforebegin', '<p class="notice rc-note">出典のページで、この日付が見つかりませんでした。変わったかもしれません。出典の公式ページで確かめてください。</p>');
+    });
+  }
+  if (A.page !== 'my' && A.page !== 'card' && A.page !== 'add' && A.page !== 'plan') {
+    fetch(RC_URL, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      if (!j || !Array.isArray(j.changed) || !j.changed.length) return;
+      rc = {}; j.changed.forEach(function (i) { if (/^[0-9a-f]{10}$/.test(i)) rc[i] = 1; });
+      markRc();
+      var watch = $('#blocks') || $('main') || document.body;
+      new MutationObserver(function () { clearTimeout(markRc.t); markRc.t = setTimeout(markRc, 80); }).observe(watch, { childList: true, subtree: true });
+    }).catch(function () { /* no file: nothing is marked */ });
+  }
   if (!home && !topics && !alertBox) return;
   var URL_ = (P.today && P.livesrc && /^\/[\w./-]+$/.test(P.livesrc)) ? P.livesrc : '/live/live.v1.json';   // tests: ?today=...&livesrc=/fixtures/live.json
   var SEEN_KEY = 'atomou.live.seen', items = [], timer = null;
