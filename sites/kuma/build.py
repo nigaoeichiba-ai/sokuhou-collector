@@ -23,7 +23,9 @@ sys.path.insert(0, str(ROOT))
 from sites.kuma import charts, content, digest  # noqa: E402
 from sites.kuma import captures as captures_mod  # noqa: E402
 from sites.kuma import cite as cite_mod  # noqa: E402
+from sites.kuma import finder as finder_mod  # noqa: E402
 from sites.kuma import official as official_mod  # noqa: E402
+from sites.kuma import season as season_mod  # noqa: E402
 from sites.kuma import live as live_mod  # noqa: E402
 from sites.kuma.fmt import day_text, fy_label, fy_start, jp_date, md, n, ratio_text, table  # noqa: E402
 from sokuhou import prefectures as pf  # noqa: E402
@@ -211,7 +213,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
                      f'<p class="alert">{fy_label(d["cur"])}は、自治体が公表した記録が{n(len(lv["records"]))}件(直近30日は{n(live_mod.last30(lv["records"], lv["today"]))}件)。'
                      f'最新は{md(lv["records"][0]["at"][:10])}({live_mod.ago_text(lv["records"][0]["at"], lv["today"])})です。</p>\n'
                      f'<ul class="mini-list wide">{items}</ul>\n'
-                     f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図で見る(現在地の近く)</a>{' / <a href="/digest/">週ごとのまとめ</a>' if d.get("has_digest") else ''}{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''} / <a href="/official/">都道府県の公式の出没情報(リンク集)</a> / <a href="/cite/">データの出典・引用のしかた</a></p>\n')
+                     f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図で見る(現在地の近く)</a>{' / <a href="/digest/">週ごとのまとめ</a>' if d.get("has_digest") else ''}{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''} / <a href="/search/">市町村名から探す</a> / <a href="/official/">都道府県の公式の出没情報(リンク集)</a> / <a href="/cite/">データの出典・引用のしかた</a></p>\n')
     news_block = ""
     if d["notices"]:
         items = "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
@@ -238,7 +240,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 {tile_map(d)}
 <h2>{fy_label(done)}に出没が多かった道府県</h2>
 {top_rows}
-<p><a href="/ranking/sightings/">全国のランキング</a> / <a href="/ranking/change/">前年度の同じ期間との比較</a> / <a href="/ranking/injuries/">人身被害のランキング</a>{' / <a href="/ranking/captures/">許可捕獲数のランキング</a>' if d.get('captures') else ''}</p>
+<p><a href="/ranking/sightings/">全国のランキング</a> / <a href="/ranking/change/">前年度の同じ期間との比較</a> / <a href="/ranking/injuries/">人身被害のランキング</a> / <a href="/season/">何月に多いか(都道府県別)</a>{' / <a href="/ranking/captures/">許可捕獲数のランキング</a>' if d.get('captures') else ''}</p>
 <h2>{fy_label(done)}は、出没が秋に集中しました</h2>
 <p>全国の月別では、{d['peak_month']}月が最も多く({n(nat['monthly'][done][d['months'].index(d['peak_month'])])}件)でした。{fy_label(cur)}の月別も、公表が進み次第、追加します。</p>
 {charts.lines([{"label": fy_label(y), "values": nat["monthly"][y], "cls": c, "strong": y == cur} for y, c in zip(d["years"], ("c0", "c1", "c2", "c3", "c4"))], [f"{m}月" for m in d["months"]], title="全国の月別の出没件数", desc="令和4年度から令和8年度までの、全国の月別の出没件数(件)", uid="home")}
@@ -738,6 +740,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         for slug in lv["by_pref"]:
             pages[f"live/{slug}/feed.xml"] = live_mod.feed_xml(lv, cfg, slug)
         pages["map/index.html"] = live_mod.map_page(page_fn, d, lv)
+        pages["search/index.html"] = finder_mod.finder_page(page_fn, d, lv)
         pages["cite/index.html"] = cite_mod.cite_page(page_fn, d, lv, cfg, cfg["site_url"].rstrip("/"))
         pages["map/points.json"] = live_mod.points_json(lv)
         if live_mod.licensed_sources(lv):
@@ -745,6 +748,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
             pages["data/" + live_mod.CSV_NAME] = live_mod.csv_text(lv)
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview, links)
+    pages["season/index.html"] = season_mod.season_page(lambda **kw: page(cfg, preview, **kw), d, today or datetime.now(JST).date(), bool(d.get("lv")))
     pages["official/index.html"] = official_mod.official_page(lambda **kw: page(cfg, preview, **kw), d, d.get("lv"), links)
     pages["guide/index.html"] = guide_hub(cfg, preview)
     for g in content.GUIDES:
