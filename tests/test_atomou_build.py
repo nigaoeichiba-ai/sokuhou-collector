@@ -26,6 +26,10 @@ CFG = {k: v for k, v in json.loads((ROOT / "sites" / "atomou" / "config.json").r
 
 class BuildOnce(unittest.TestCase):
     @classmethod
+    def shown_groups(cls):   # a genre with no day to show has no chip and no page
+        return [g for g in catalog.GROUPS if any(e["group"] == g and e["status"] != "ended" for e in cls.entries)]
+
+    @classmethod
     def setUpClass(cls):
         cls.rel = build.build_pages(CFG, release=True, today=TODAY)
         cls.prev = build.build_pages(CFG, release=False, today=TODAY)
@@ -41,7 +45,7 @@ class Pages(BuildOnce):
                   "assets/catalog.json", "assets/skins.css", "assets/app.js", "assets/core.js", "assets/ics.js", "assets/style.css", "favicon.ico"):
             self.assertIn(p, self.rel, p)
         self.assertEqual(sum(1 for k in self.rel if k.startswith("use/") and k.endswith("/index.html")), len(usecases.USECASES) + 1)
-        self.assertEqual(sum(1 for k in self.rel if k.startswith("c/")), len(catalog.GROUPS))
+        self.assertEqual(sum(1 for k in self.rel if k.startswith("c/")), len(self.shown_groups()))
         self.assertEqual(sum(1 for k in self.rel if k.startswith("e/")), len(self.entries))
 
     def test_card_titles_may_break_inside_long_english_names(self):
@@ -595,7 +599,7 @@ class AppInChrome(BuildOnce):
     def test_the_first_visit_setup_asks_for_a_genre_first(self):
         dom = html.unescape(self.dom("/", "&setup=1"))
         self.assertRegex(dom, r'id="setup"(?![^>]*hidden)')
-        self.assertEqual(len(re.findall(r'data-g-pick="', dom)), 10)
+        self.assertEqual(len(re.findall(r'data-g-pick="', dom)), len(self.shown_groups()))
         self.assertRegex(dom, r'<button[^>]*data-setup="next"[^>]*disabled')     # one genre at least before going on
         self.assertIn("あとで選ぶ", dom)
         self.assertNotRegex(dom, r'id="intro"(?![^>]*hidden)')                    # the old introduction does not open over it
@@ -635,9 +639,21 @@ class AppInChrome(BuildOnce):
         shown = re.findall(r'<article class="card"(?![^>]*hidden)[^>]*data-sub="([^"]+)"', dom)
         self.assertTrue(shown and set(shown) == {"箱根駅伝"}, set(shown))
 
+    def test_small_chips_beyond_the_cap_become_one_other_chip(self):
+        dom = html.unescape(self.dom("/search/?g=trip&m=祭り・伝統行事&s=*", "&cap=5"))
+        self.assertIn('data-s-chip="*" aria-pressed="true"', dom)
+        self.assertEqual(len(re.findall(r'data-s-chip="[^"*]+"', dom)), 4)          # 4 named + その他 = 5
+        shown = re.findall(r'<article class="card"[^>]*data-g="6"', dom.split('id="results"')[1])
+        self.assertTrue(len(shown) >= 1)
+        dom = html.unescape(self.dom("/c/trip/#m=祭り・伝統行事&s=*", "&cap=5"))
+        self.assertIn('data-sub-chip="*" aria-pressed="true"', dom)
+        top = set(re.findall(r'data-sub-chip="([^"*]+)"', dom))
+        subs = re.findall(r'<article class="card"(?![^>]*hidden)[^>]*data-sub="([^"]+)"', dom)
+        self.assertTrue(subs and not (set(subs) & top), (set(subs), top))      # the days shown are the ones that are not under a named chip
+
     def test_the_setup_shows_an_example_under_every_genre(self):
         dom = html.unescape(self.dom("/", "&setup=1"))
-        self.assertEqual(len(re.findall(r'<span class="chip-t">[^<]+<small>', dom)), 10)
+        self.assertEqual(len(re.findall(r'<span class="chip-t">[^<]+<small>', dom)), len(self.shown_groups()))
 
     def test_search_with_no_match_offers_to_record_it(self):
         dom = self.dom("/search/?q=zzzqqqxxx")

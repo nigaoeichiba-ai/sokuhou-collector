@@ -21,6 +21,7 @@
     return o;
   }
   var P = params();
+  var SUBCAP = P.today && +P.cap >= 3 ? +P.cap : 24;   // how many small chips before the rest become one "その他" (the tests lower it)
   var TODAY = (function () {
     var p = P.today && /^\d{4}-\d{2}-\d{2}$/.test(P.today) ? C.parse(P.today) : null;
     if (p) return p;
@@ -880,7 +881,7 @@
     return limit ? hits.slice(0, limit) : hits;
   }
   function pageSearch() {
-    var q = $('#q'), out = $('#results'), info = $('#found'), st = { g: P.g || '', m: P.m || '', s: P.s || '', t: P.t === '1' }, cat = [], statT;
+    var q = $('#q'), out = $('#results'), info = $('#found'), st = { g: P.g || '', m: P.m || '', s: P.s || '', t: P.t === '1' }, cat = [], statT, topSubs = {};
     q.value = P.q || '';
     function sync() {
       var u = '/search/?' + [q.value ? 'q=' + encodeURIComponent(q.value) : '', st.g ? 'g=' + st.g : '', st.g && st.m ? 'm=' + encodeURIComponent(st.m) : '', st.g && st.m && st.s ? 's=' + encodeURIComponent(st.s) : '', st.t ? 't=1' : ''].filter(Boolean).join('&');
@@ -896,7 +897,7 @@
         if (c.status === 'ended') return false;
         if (gi >= 0 && c.group !== CONF.groups[gi]) return false;
         if (gi >= 0 && st.m && c.mid !== st.m) return false;
-        if (gi >= 0 && st.m && st.s && c.subject !== st.s) return false;
+        if (gi >= 0 && st.m && st.s && (st.s === '*' ? topSubs[c.subject] : c.subject !== st.s)) return false;
         if (st.t && !c.son_toku) return false;
         var hay = hayOf(c);
         return terms.every(function (t) { return hay.indexOf(t) >= 0; });
@@ -921,10 +922,13 @@
         nm[c.mid] = (nm[c.mid] || 0) + 1;
         if (st.m === c.mid && c.subject) ns[c.subject] = (ns[c.subject] || 0) + 1;
       });
-      ml = Object.keys(nm).sort(function (a, b) { return nm[b] - nm[a] || (a < b ? -1 : 1); });
+      ml = Object.keys(nm).sort(function (a, b) { return (a === 'その他') - (b === 'その他') || nm[b] - nm[a] || (a < b ? -1 : 1); });   // "その他" is the last 中
       if (st.m && !nm[st.m]) { st.m = ''; st.s = ''; }
-      if (st.s && !ns[st.s]) st.s = '';
-      sl = Object.keys(ns).sort(function (a, b) { return ns[b] - ns[a] || (a < b ? -1 : 1); }).slice(0, 24);
+      var allS = Object.keys(ns).sort(function (a, b) { return ns[b] - ns[a] || (a < b ? -1 : 1); }), many = allS.length > SUBCAP, restN = 0;
+      sl = many ? allS.slice(0, SUBCAP - 1) : allS; topSubs = {}; sl.forEach(function (s) { topSubs[s] = 1; });
+      if (many) allS.slice(SUBCAP - 1).forEach(function (s) { restN += ns[s]; });   // the small ones that did not fit are one "その他" (s=*)
+      if (st.s && st.s !== '*' && !ns[st.s]) st.s = '';
+      if (st.s === '*' && !many) st.s = '';
       mb.hidden = !g || ml.length < 2;
       mb.innerHTML = mb.hidden ? '' : '<button type="button" class="chip" data-m-chip="" aria-pressed="' + (st.m ? 'false' : 'true') + '">' + H(g) + 'すべて</button>' + ml.map(function (m) {
         return '<button type="button" class="chip" data-m-chip="' + H(m) + '" aria-pressed="' + (st.m === m ? 'true' : 'false') + '">' + H(m) + '<small> ' + nm[m] + '</small></button>';
@@ -932,7 +936,7 @@
       sb.hidden = !st.m || sl.length < 2;
       sb.innerHTML = sb.hidden ? '' : '<button type="button" class="chip" data-s-chip="" aria-pressed="' + (st.s ? 'false' : 'true') + '">' + H(st.m) + 'すべて</button>' + sl.map(function (s) {
         return '<button type="button" class="chip" data-s-chip="' + H(s) + '" aria-pressed="' + (st.s === s ? 'true' : 'false') + '">' + H(s) + '<small> ' + ns[s] + '</small></button>';
-      }).join('');
+      }).join('') + (many ? '<button type="button" class="chip" data-s-chip="*" aria-pressed="' + (st.s === '*' ? 'true' : 'false') + '">その他<small> ' + restN + '</small></button>' : '');
     }
     var mBox = $('#mid-chips'), sBox = $('#sub-chips');
     if (mBox) mBox.addEventListener('click', function (ev) { var b = ev.target.closest ? ev.target.closest('[data-m-chip]') : null; if (b) { st.m = b.getAttribute('data-m-chip'); st.s = ''; run(); } });
@@ -1183,7 +1187,7 @@
 
   /* ---------- category page (filter by sub-category) ---------- */
   function pageCategory() {
-    var chips = $$('[data-cat-chip]'), cards = $$('#grid .card'), subBox = $('#subchips'), mid = '', sub = '';
+    var chips = $$('[data-cat-chip]'), cards = $$('#grid .card'), subBox = $('#subchips'), mid = '', sub = '', top = {};
     var hm = /[#&]m=([^&]+)/.exec(location.hash || ''), hs = /[#&]s=([^&]+)/.exec(location.hash || '');
     if (hm) { try { mid = decodeURIComponent(hm[1]); } catch (e) { mid = ''; } }
     if (hs && mid) { try { sub = decodeURIComponent(hs[1]); } catch (e) { sub = ''; } }
@@ -1192,13 +1196,16 @@
       chips.forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-cat-chip') === mid ? 'true' : 'false'); });
       cards.forEach(function (card) { card.hidden = (!!mid && card.getAttribute('data-cat') !== mid) || (!!sub && card.getAttribute('data-sub') !== sub); });
       if (!subBox) return;
-      var n = {}, list;
+      var n = {}, list, all, many, restN = 0;
       cards.forEach(function (card) { if (mid && card.getAttribute('data-cat') === mid) { var s = card.getAttribute('data-sub') || ''; if (s) n[s] = (n[s] || 0) + 1; } });
-      list = Object.keys(n).sort(function (a, b) { return n[b] - n[a] || (a < b ? -1 : 1); }).slice(0, 24);
+      all = Object.keys(n).sort(function (a, b) { return n[b] - n[a] || (a < b ? -1 : 1); }); many = all.length > SUBCAP;
+      list = many ? all.slice(0, SUBCAP - 1) : all; top = {}; list.forEach(function (s) { top[s] = 1; });
+      if (many) all.slice(SUBCAP - 1).forEach(function (s) { restN += n[s]; });
+      cards.forEach(function (card) { if (sub) card.hidden = (!!mid && card.getAttribute('data-cat') !== mid) || (sub === '*' ? !!top[card.getAttribute('data-sub')] : card.getAttribute('data-sub') !== sub); });
       subBox.hidden = !(mid && list.length > 1);
       subBox.innerHTML = subBox.hidden ? '' : '<button type="button" class="chip" data-sub-chip="" aria-pressed="' + (sub ? 'false' : 'true') + '">' + H(mid) + 'すべて</button>' + list.map(function (s) {
         return '<button type="button" class="chip" data-sub-chip="' + H(s) + '" aria-pressed="' + (sub === s ? 'true' : 'false') + '">' + H(s) + '<small> ' + n[s] + '</small></button>';
-      }).join('');
+      }).join('') + (many ? '<button type="button" class="chip" data-sub-chip="*" aria-pressed="' + (sub === '*' ? 'true' : 'false') + '">その他<small> ' + restN + '</small></button>' : '');
     }
     chips.forEach(function (b) {
       b.addEventListener('click', function () {
@@ -1212,7 +1219,7 @@
       sub = b.getAttribute('data-sub-chip'); keep(); apply();
     });
     if (mid && !chips.some(function (x) { return x.getAttribute('data-cat-chip') === mid; })) { mid = ''; sub = ''; }
-    if (sub && !cards.some(function (c) { return c.getAttribute('data-cat') === mid && c.getAttribute('data-sub') === sub; })) sub = '';
+    if (sub && sub !== '*' && !cards.some(function (c) { return c.getAttribute('data-cat') === mid && c.getAttribute('data-sub') === sub; })) sub = '';
     apply();
   }
 
