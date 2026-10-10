@@ -30,9 +30,9 @@ jobs:
           printf '%s\n' "$KEY" > ~/.ssh/id_xserver && chmod 600 ~/.ssh/id_xserver
           printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 15' '  StrictHostKeyChecking accept-new' > ~/.ssh/config && chmod 600 ~/.ssh/config
           ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /dev/null || true
-          python3 -c "import ast,sys;ast.parse(open('sites/atomou/live.py',encoding='utf-8').read(),feature_version=(3,6))"
+          python3 -c "import ast,sys;[ast.parse(open(f,encoding='utf-8').read(),feature_version=(3,6)) for f in ('sites/atomou/live.py','sites/atomou/server_pop.py')]"
           mkdir -p stage/sites/atomou stage/data/atomou
-          cp sites/atomou/live.py stage/sites/atomou/ && cp sites/atomou/server_live.sh stage/ && cp data/atomou/live_sources.json stage/data/atomou/
+          cp sites/atomou/live.py sites/atomou/server_pop.py stage/sites/atomou/ && cp sites/atomou/server_live.sh stage/ && cp data/atomou/live_sources.json stage/data/atomou/
           tar -C stage -cf - . | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" '
             set -e
             mkdir -p "$HOME/atomou.com/script/live"
@@ -41,6 +41,6 @@ jobs:
             chmod 755 server_live.sh
             echo "== files"; ls -la . sites/atomou data/atomou | head -30
             echo "== one run"; /bin/bash ./server_live.sh; echo "exit $?"
-            echo "== log"; cat last.log | head -30
+            echo "== log"; cat last.log | head -30; echo "== pop"; cat pop.log 2>&1 | head -3; ls -la pop.v1.json 2>&1
             echo "== file"; ls -la live.v1.json 2>&1; python3 -c "import json;d=json.load(open(\"live.v1.json\",encoding=\"utf-8\"));print(\"items\",len(d[\"items\"]))" 2>&1 | tail -2
           '
