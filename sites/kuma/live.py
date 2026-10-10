@@ -449,7 +449,10 @@ def data_page(page, d: dict, lv: dict, base: str) -> str:
 </ul>
 <p class="notice">{CAUTION}このCSVは、このサイトが各自治体の公開データを加工して作成したもので、各自治体が作成したものではありません。引用するときは、「出典:各自治体の公開データを加工して作成(クマ出没速報)」のように、元の取得元と、加工したことを書いてください。ファイルは、データが更新されるたびに作り直しています(取得日: {jp_date(lv['today'].isoformat())})。</p>"""
     ld = {"@context": "https://schema.org", "@type": "Dataset", "name": f"クマの目撃情報(自治体の公式・{fy_label(cur)})",
-          "description": f"自治体が公表しているクマの目撃情報({len(keys)}か所・{total}件)の、取得元とライセンスつきの一覧", "inLanguage": "ja",
+          "description": (f"自治体が公表しているクマの目撃情報のうち、再利用の条件が明示されている{len(keys)}か所の{fy_label(cur)}の記録{total}件を、"
+                          "取得元・ライセンス・市町村名・日時をそろえて1つのCSVにまとめたものです。ライセンスは行ごとに、取得元が示している条件を記載しています。"),
+          "inLanguage": "ja", "keywords": ["クマ", "出没", "目撃情報", "オープンデータ"],
+          "creator": {"@type": "Organization", "name": "クマ出没速報"}, "dateModified": lv["today"].isoformat(),
           "url": base + "/data/", "isAccessibleForFree": True,
           "distribution": [{"@type": "DataDownload", "encodingFormat": "text/csv", "contentUrl": base + "/data/" + CSV_NAME}]}
     head = '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace("</", "<" + chr(92) + "/") + "</script>" + chr(10)
