@@ -351,6 +351,21 @@ def button_problems(css: str) -> list[str]:
     return out
 
 
+def chosen_chip_problems(style_css: str, design_css: str) -> list[str]:
+    """A chosen chip is drawn on --accent (white-ish text).  Its small text must take the chip's own colour and its genre mark must be drawn in the text colour: the muted
+    colour and the genre colours are only checked on a card's surface, so on --accent they were unreadable (owner, 2026-10-11: the setup's chosen chips)."""
+    out = []
+    if not re.search(r'\.chip\[aria-pressed="true"\] small[^{]*\{[^}]*color:inherit', style_css):
+        out.append("the small text of a chosen chip keeps its muted colour")
+    if not re.search(r'\.chip\[aria-pressed="true"\] \.mark[^{]*\{[^}]*background:var\(--on-accent\)', style_css):
+        out.append("the genre mark of a chosen chip keeps its genre colour")
+    if not re.search(r'\.setup \.chip\[aria-pressed="true"\] \.chip-t small[^{]*\{[^}]*color:inherit', style_css):
+        out.append("the setup's own small-text rule wins over the chosen-chip rule")
+    if 'data-btn="underline"] .chip[aria-pressed="true"] .mark' not in design_css:
+        out.append("the underline buttons (a pale chosen chip) lose their genre mark colour")
+    return out
+
+
 class DesignCssTest(unittest.TestCase):
     """assets/design.css: the shape rules.  No external address, no font files, pictures only under their own skin, every picture present and small."""
 
@@ -382,6 +397,22 @@ class DesignCssTest(unittest.TestCase):
         self.assertEqual(button_problems(self.css), [])
         # the secondary button gets a face and a solid frame in every skin
         self.assertRegex(self.css, r":root\[data-skin\] \.btn\.ghost[^{]*\{[^}]*border:2px solid var\(--accent\)")
+
+    def test_a_chosen_chip_stays_readable_in_every_skin(self):
+        style = (ASSETS / "style.css").read_text(encoding="utf-8")
+        self.assertEqual(chosen_chip_problems(style, self.css), [])
+        # a chosen chip: --on-accent on --accent (checked as PAIRS), and in the underline look: --accent on --surface2
+        for sk in skins.SKINS:
+            v = sk["vars"]
+            self.assertGreaterEqual(ratio(v["on-accent"], v["accent"]), 4.5, sk["id"])
+            if sk["attrs"].get("btn") == "underline":
+                self.assertGreaterEqual(ratio(v["accent"], v["surface2"]), 4.5, sk["id"])
+
+    def test_the_chosen_chip_check_catches_the_old_rules(self):
+        style = (ASSETS / "style.css").read_text(encoding="utf-8")
+        old = style.replace(".chip[aria-pressed=\"true\"] small,.chip.on small{color:inherit}", "").replace("background:var(--on-accent)}", "background:var(--g1)}")
+        self.assertTrue(chosen_chip_problems(old, self.css))
+        self.assertTrue(chosen_chip_problems(style, self.css.replace('data-btn="underline"] .chip[aria-pressed="true"] .mark', "x")))
 
     def test_the_button_check_catches_the_old_rules(self):
         old = {
