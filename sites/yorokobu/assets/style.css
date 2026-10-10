@@ -485,6 +485,49 @@ a.hb-l:hover { text-decoration: underline; }
   .chart { padding: 18px 16px 14px; }
 }
 
+/* daily picks */
+.pick-theme { margin: 22px 0 0; padding: 14px 18px; background: #fff; border-radius: 14px; box-shadow: var(--shadow); font-family: var(--serif); font-weight: 700; font-size: 1.1rem; }
+.pick-theme .eyebrow { margin-bottom: .2em; }
+.pick-hls { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
+.pick-hl { display: flex; align-items: center; gap: 14px; padding: 12px; background: #fff; border-radius: 16px; box-shadow: var(--shadow); color: var(--ink); text-decoration: none; transition: transform .2s, box-shadow .2s; }
+.pick-hl:hover { transform: translateY(-3px); box-shadow: var(--shadow-h); }
+.pick-hl img { flex: none; width: 84px; height: 84px; border-radius: 12px; object-fit: cover; }
+.pick-hl span { display: grid; gap: 2px; min-width: 0; line-height: 1.5; }
+.hl-tag { font: 700 .72rem var(--sans); color: var(--accent-d); letter-spacing: .06em; }
+.pick-hl strong { font-family: var(--serif); font-size: .98rem; }
+.pick-hl small { color: var(--muted); font-size: .74rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pick-toc { margin-top: 26px; }
+.pick-list { display: grid; gap: 22px; }
+.pick { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; padding: 20px; background: #fff; border-radius: 20px; box-shadow: var(--shadow); scroll-margin-top: 80px; }
+.pick-img { position: relative; display: block; align-self: start; border-radius: 14px; overflow: hidden; background: #fff; }
+.pick-img img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+.pick-img.mood img { aspect-ratio: 3 / 2; }
+.img-note { position: absolute; left: 8px; bottom: 8px; padding: .05em .7em; border-radius: 999px; background: rgba(255, 255, 255, .92); font-size: .68rem; color: var(--ink2); }
+.pick-body { min-width: 0; }
+.pick-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 6px; font-size: .78rem; color: var(--muted); }
+.pick-no { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--t-butter); color: var(--ink); font: 700 .82rem var(--num); }
+.pick-body h3 { margin: 0 0 4px; font-size: 1.2rem; line-height: 1.55; }
+.pick-name { margin: 0 0 10px; font-size: .8rem; color: var(--muted); line-height: 1.6; }
+.pick-sum { margin: 0 0 10px; font-size: .96rem; line-height: 1.95; }
+.pick-for { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; padding: 0; }
+.pick-for li { padding: .1em .8em; border-radius: 999px; background: var(--t-mist); font-size: .76rem; }
+.pick-pc { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+.pick-pc > div { padding: 10px 14px; border-radius: 12px; background: var(--bg); }
+.pick-pc h4 { margin: 0 0 4px; font: 700 .76rem var(--sans); letter-spacing: .06em; color: var(--muted); }
+.pick-pc p { margin: 0; font-size: .88rem; line-height: 1.85; }
+.pick-check { margin: 0 0 12px; padding: 0; list-style: none; display: grid; gap: 3px; font-size: .8rem; color: var(--ink2); }
+.pick-check li { padding-left: 1.1em; position: relative; line-height: 1.7; }
+.pick-check li::before { content: ""; position: absolute; left: .2em; top: .75em; width: 5px; height: 5px; border-radius: 50%; background: var(--marker); }
+.pick-price { margin: 0 0 10px; font: 700 1.35rem/1.3 var(--num); }
+.pick-price small { display: block; font: 400 .74rem/1.6 var(--sans); color: var(--muted); }
+.pick .item-btns { padding-top: 0; }
+.pick .item-btns .btn { flex: 0 1 auto; padding: .5em 1.4em; }
+@media (max-width: 760px) {
+  .pick { grid-template-columns: 1fr; padding: 14px; gap: 14px; }
+  .pick-pc { grid-template-columns: 1fr; }
+  .pick .item-btns .btn { flex: 1 1 100%; }
+}
+
 /* footer: light, so that nothing pulls the eye down */
 footer.site { margin-top: 0; background: #f2eadd; color: var(--ink2); padding: 36px 0 44px; font-size: .84rem; }
 footer.site a { color: var(--ink); }

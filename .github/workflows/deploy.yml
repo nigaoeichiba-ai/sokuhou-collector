@@ -196,8 +196,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: out/yorokobu_items.json
-          # the key changes with the day and with the editorial files that decide which products are fetched, so new picks, themes and ideas show up on the next deploy
-          key: yorokobu-items-v3-${{ env.DAY }}-${{ hashFiles('sites/yorokobu/content/picks.json', 'sites/yorokobu/content/themes.json', 'sites/yorokobu/content/ideas.json') }}
+          # the key changes with the day and with the editorial files that decide which products are fetched, so new picks, themes, ideas and daily picks show up on the next deploy
+          key: yorokobu-items-v4-${{ env.DAY }}-${{ hashFiles('sites/yorokobu/content/picks.json', 'sites/yorokobu/content/themes.json', 'sites/yorokobu/content/ideas.json', 'sites/yorokobu/content/daily/*.json') }}
       - name: Fetch products
         if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu' && steps.items-cache.outputs.cache-hit != 'true'
         env:

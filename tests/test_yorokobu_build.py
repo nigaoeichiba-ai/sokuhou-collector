@@ -162,10 +162,10 @@ class BuildTest(unittest.TestCase):
         self.assertIn("/memo/?o=birthday&amp;r=boyfriend", self.read("gift/birthday-boyfriend/index.html"))
         self.assertIn('id="memo-strip"', self.read("index.html"))
 
-    def test_every_product_gets_a_facts_only_note(self):
+    def test_a_card_has_a_note_only_where_an_editor_wrote_one(self):
         html = self.read("gift/birthday-boyfriend/index.html")
-        self.assertIn('class="pick-note"', html)
-        self.assertIn("レビューがいちばん多い一品です(平均4.5・200件)", html)       # a2 has the most reviews on this page
+        self.assertNotIn("レビューがいちばん多い一品です", html)       # a sentence made from the numbers and repeated on every card reads as machine-made
+        self.assertNotIn("このページでは、いちばん手ごろな価格です", html)
         self.assertNotIn("売れ筋", html)
         self.assertNotIn("人気No", html)
 
