@@ -72,7 +72,7 @@ HT_CACHE = """
 <FilesMatch "\\.(css|js|json|svg|png|webp|ico)$">
 Header set Cache-Control "public, max-age=31536000, immutable"
 </FilesMatch>
-<FilesMatch "(sw\\.js|manifest\\.webmanifest)$">
+<FilesMatch "(sw\\.js|manifest\\.webmanifest|live\\.v1\\.json)$">
 Header set Cache-Control "no-cache"
 </FilesMatch>
 </IfModule>
@@ -234,7 +234,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'app', 'tier', 'share', 'card', 'ical', 'plan', 'quick', 'setup', 'swipe', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'app', 'tier', 'share', 'card', 'ical', 'plan', 'quick', 'setup', 'swipe', 'live', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -396,6 +396,11 @@ def home_page(c: Ctx) -> str:
 <div class="head-row"><h2>今日の予定・やること</h2><div class="grow"><a class="btn small ghost" href="/calendar/">カレンダー</a></div></div>
 <ul class="plist" id="todo-list"><li class="muted">読み込み中…</li></ul>
 </section>
+<section id="live" data-block="live" data-title="速報(公式の発表)" hidden>
+<div class="head-row"><h2>速報</h2><div class="grow"><a class="btn small ghost" href="/topics/">もっと見る</a></div></div>
+<p class="hint">公式の発表を、数分おきに集めています。日付や内容は、リンク先の公式ページで確かめてください。</p>
+<ul class="live-list" id="live-list"><li class="muted">読み込み中…</li></ul>
+</section>
 <section id="mine" data-block="mine" data-title="記録した日" hidden>
 <div class="head-row"><h2>記録した日</h2><div class="grow"><a class="btn small ghost" href="/my/">マイページ</a></div></div>
 <div class="cards" id="mine-grid" data-save-order="1"></div>
@@ -485,6 +490,8 @@ def interests_page(c: Ctx, live: list[dict]) -> str:
 <input type="text" id="int-q" maxlength="24" autocomplete="off" placeholder="探す・追加する(例: 剣道、釣り、写真)" enterkeyhint="done"><button type="submit" class="sbtn" aria-label="追加">{ICONS['plus']}</button></form></div>
 <p class="small muted" id="int-note" aria-live="polite"></p>
 <p class="int-go" id="int-go" hidden><a class="btn" href="/">選んだ分野の日を見る</a></p>
+<div class="field" id="live-alert"><label class="lab" for="live-alert-cb"><input type="checkbox" id="live-alert-cb"> 好きな言葉の速報を知らせる</label>
+<p class="hint">選んだ分野や言葉に合う公式の発表が出たら、サイトを開いている間、画面でお知らせします。ブラウザの通知を許可すると、通知でも出ます。サイトを閉じているときは届きません。</p><p class="small muted" id="live-alert-note" aria-live="polite"></p></div>
 {"".join(secs)}
 <noscript><p class="notice">分野を選ぶには JavaScript が必要です。<a href="/search/">さがす</a>からも探せます。</p></noscript>"""
     return c.page("/interests/", f"好きな分野を選ぶ | {NAME}", "将棋・流星群・英検・剣道・手芸など、好きな分野を選ぶと、その分野の日付がホームに並びます。", body, "interests", noindex=True)
@@ -811,6 +818,7 @@ def topics_page(c: Ctx, live: list[dict]) -> str:
     body = f"""{crumbs([("トップ", "/"), ("最新・トピックス", None)])}
 <h1>最新・トピックス</h1>
 <p class="lead muted">いま近い日と、新しく加わった日です。載せるのは、公式の発表ページで日付を確かめられた日だけです。出典と確認日は、各日のページにあります。</p>
+<section id="live-t" hidden><h2>速報(公式の発表)</h2><p class="hint">公式のフィードから、数分おきに集めた見出しです。あなたの言葉に合うものが先に並びます。日付や内容は、リンク先の公式ページで確かめてください。</p><ul class="live-list" id="live-list-t"><li class="muted">読み込み中…</li></ul></section>
 {block("今週と来週の日", "今日から14日以内の日です。近い順です。", soon)}
 {block("新しく加わった日", "この30日に加わった日です。新しい順です。", fresh)}
 {'<p class="empty">いまは、ご案内できる新しい日がありません。</p>' if not soon and not fresh else ""}
@@ -991,6 +999,7 @@ self.addEventListener('push', (e) => {
 self.addEventListener('notificationclick', (e) => {
   e.notification.close();
   const url = (e.notification.data && e.notification.data.url) || '/';
+  if (/^https:\\/\\//.test(url) && !url.startsWith(self.location.origin)) { e.waitUntil(clients.openWindow(url)); return; }   // a headline of an official feed opens its own page
   e.waitUntil(clients.matchAll({ type: 'window', includeUncontrolled: true }).then((ws) => {
     for (const w of ws) { if ('focus' in w) { if ('navigate' in w) w.navigate(url); return w.focus(); } }
     return clients.openWindow(url);

@@ -31,7 +31,7 @@
 
   /* ---------- state ---------- */
   var S = blank(), brokenSaved = false;
-  var BLOCK_IDS = ['todo', 'search', 'cats', 'daily', 'mine', 'interests', 'region', 'soon', 'record', 'usecases'], KIND_IDS = ['event', 'anniversary', 'birthday', 'memorial', 'since', 'until', 'memo'];
+  var BLOCK_IDS = ['todo', 'live', 'search', 'cats', 'daily', 'mine', 'interests', 'region', 'soon', 'record', 'usecases'], KIND_IDS = ['event', 'anniversary', 'birthday', 'memorial', 'since', 'until', 'memo'];
   function statsDefault() {  // statistics are on unless the browser says "do not track" (DNT / Global Privacy Control)
     try { return !(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.globalPrivacyControl === true); } catch (e) { return true; }
   }
@@ -93,7 +93,8 @@
     s.prefs.tour = {};
     s.prefs.intro = p.intro === true;
     s.prefs.setup = p.setup === true;
-    s.prefs.pager = p.pager === true;   // the home lists as pages to turn (assets/swipe.js)   // the first-visit setup was done (or put off)
+    s.prefs.pager = p.pager === true;
+    s.prefs.liveAlert = p.liveAlert === true;   // announce a new official headline that matches the visitor's words (assets/live.js)   // the home lists as pages to turn (assets/swipe.js)   // the first-visit setup was done (or put off)
     s.prefs.genres = Array.isArray(p.genres) ? p.genres.filter(function (g, i, a) { return CONF.groups.indexOf(g) >= 0 && a.indexOf(g) === i; }) : [];   // the genres the visitor chose: the home page leans to them
     s.prefs.region = CONF.regions && CONF.regions.indexOf(p.region) >= 0 ? p.region : '';   // the prefecture the visitor lives in (this device only): days near it come first
     s.prefs.shares = Math.max(0, Math.min(9999, Math.floor(+p.shares) || 0));   // how many times a day was sent (the plan: sending earns room for more cards)
