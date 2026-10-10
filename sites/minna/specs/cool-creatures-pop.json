@@ -1,0 +1,84 @@
+{
+ "slug": "cool-creatures-pop",
+ "title": "かっこいい生きもの",
+ "subject": "",
+ "genre": "animals",
+ "touch": "cool",
+ "title_fmt": "{ja}",
+ "subject_en": "Cool, bold stylised creatures with strong angular shapes, dynamic poses, thick dark outlines and saturated colours, original designs, each ONE creature centred. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "ドラゴン、クジラ、オオカミ、ワシなど、かっこいい生きもの12点。力強い線とはっきりした色で、ポスターやアイコン、ゲームの素材に。",
+ "tags": [
+  "かっこいい",
+  "ドラゴン",
+  "クジラ",
+  "オオカミ",
+  "ワシ",
+  "ポスター",
+  "アイコン"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "dragon",
+   "ドラゴン",
+   "a fierce red dragon with wings spread"
+  ],
+  [
+   "whale",
+   "クジラ",
+   "a blue whale leaping with wave patterns"
+  ],
+  [
+   "wolf",
+   "オオカミ",
+   "a howling grey wolf"
+  ],
+  [
+   "eagle",
+   "ワシ",
+   "an eagle diving with wings open"
+  ],
+  [
+   "tiger",
+   "トラ",
+   "a roaring tiger"
+  ],
+  [
+   "shark",
+   "サメ",
+   "a sharp-looking shark"
+  ],
+  [
+   "phoenix",
+   "ほのおの鳥",
+   "a fiery bird with long tail feathers"
+  ],
+  [
+   "lion",
+   "ライオン",
+   "a lion with a big mane"
+  ],
+  [
+   "horse",
+   "うま",
+   "a galloping horse"
+  ],
+  [
+   "bear",
+   "クマ",
+   "a standing bear with strong arms"
+  ],
+  [
+   "dragon-blue",
+   "青いドラゴン",
+   "a blue dragon coiled with ice crystals"
+  ],
+  [
+   "kraken",
+   "海の怪物",
+   "a giant octopus-like sea monster with tentacles"
+  ]
+ ],
+ "exclude": []
+}

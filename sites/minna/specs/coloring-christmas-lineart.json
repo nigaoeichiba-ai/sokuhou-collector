@@ -1,0 +1,87 @@
+{
+ "slug": "coloring-christmas-lineart",
+ "title": "クリスマスのぬりえ",
+ "subject": "",
+ "genre": "season",
+ "touch": "lineart",
+ "title_fmt": "{ja}",
+ "subject_en": "Coloring pages of Christmas items, each ONE big simple object or scene, centred, drawn with thick, clean, closed black outlines only and NOTHING filled in: the inside of every shape stays plain white. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "ツリー、サンタ、トナカイ、ブーツ、ケーキなど、クリスマスのぬりえ12点。線はくっきり太めで、小さな子どもでも塗りやすく、印刷してすぐ使えます。",
+ "tags": [
+  "ぬりえ",
+  "塗り絵",
+  "クリスマス",
+  "線画",
+  "子ども",
+  "印刷",
+  "無料"
+ ],
+ "season": {
+  "from": "11-01",
+  "to": "12-26"
+ },
+ "holes": false,
+ "items": [
+  [
+   "tree",
+   "クリスマスツリー",
+   "a decorated Christmas tree with a star, balls and gifts"
+  ],
+  [
+   "santa",
+   "サンタさん",
+   "a smiling Santa Claus standing with a sack"
+  ],
+  [
+   "reindeer",
+   "トナカイ",
+   "a cute reindeer with big antlers and a bell"
+  ],
+  [
+   "boot",
+   "ブーツ",
+   "a Christmas boot filled with candy and small gifts"
+  ],
+  [
+   "cake",
+   "クリスマスケーキ",
+   "a round Christmas cake with strawberries and a small Santa"
+  ],
+  [
+   "wreath",
+   "リース",
+   "a Christmas wreath with a ribbon and pinecones"
+  ],
+  [
+   "snowman",
+   "雪だるま",
+   "a snowman with a scarf and a bucket hat"
+  ],
+  [
+   "gift",
+   "プレゼント",
+   "three stacked gift boxes with ribbons"
+  ],
+  [
+   "bell",
+   "ベル",
+   "two jingle bells with holly and a ribbon"
+  ],
+  [
+   "sleigh",
+   "そり",
+   "a sleigh full of presents"
+  ],
+  [
+   "angel",
+   "天使",
+   "a small angel with wings and a trumpet"
+  ],
+  [
+   "house",
+   "ゆきの家",
+   "a cozy house with snow on the roof and a chimney"
+  ]
+ ],
+ "exclude": []
+}

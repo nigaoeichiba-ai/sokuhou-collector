@@ -1,0 +1,57 @@
+{
+ "slug": "oseibo-gifts-flat",
+ "title": "お歳暮の贈り物",
+ "subject": "",
+ "genre": "season",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Year-end gift items (oseibo), each ONE item centred in its cell, flat illustration; any gift wrapping paper is plain with a red and white knot ribbon and NO characters. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "ハム、ビール、みかん、洗剤、のしつきの箱など、お歳暮の贈り物6点。お礼状やお知らせ、特集ページに。",
+ "tags": [
+  "お歳暮",
+  "贈り物",
+  "ギフト",
+  "のし",
+  "冬",
+  "お礼状",
+  "年末"
+ ],
+ "season": {
+  "from": "11-15",
+  "to": "12-25"
+ },
+ "holes": false,
+ "items": [
+  [
+   "box",
+   "のしつきの箱",
+   "a wrapped gift box with a red and white knot ribbon"
+  ],
+  [
+   "ham",
+   "ハムの詰め合わせ",
+   "a gift box of ham and sausages"
+  ],
+  [
+   "beer",
+   "ビールのセット",
+   "a gift set of beer cans in a box"
+  ],
+  [
+   "mikan",
+   "みかんの箱",
+   "a wooden box full of tangerines"
+  ],
+  [
+   "soap",
+   "洗剤のセット",
+   "a gift set of soap bottles in a box"
+  ],
+  [
+   "sweets",
+   "お菓子の詰め合わせ",
+   "an assorted sweets gift tin"
+  ]
+ ],
+ "exclude": []
+}
