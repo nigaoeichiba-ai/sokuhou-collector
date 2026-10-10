@@ -45,18 +45,22 @@ class TierInChrome(unittest.TestCase):
     def entry(i, date="2026-12-01", kind="event", quiet=False, yearly=False):
         return {"id": f"e{i}", "title": f"予定{i}", "date": date, "precision": "day", "kind": kind, "quiet": quiet, "yearly": yearly}
 
-    def test_the_config_ships_with_plans_off(self):
-        self.assertFalse(CONFIG["plans"]["on"])        # nothing is limited until the owner switches it on
+    def test_the_config_has_the_limit_on_and_the_plus_plan_not_yet_open(self):
+        self.assertTrue(CONFIG["plans"]["on"])          # the owner decided (2026-10-10): the limit is on from the public release
+        self.assertFalse(CONFIG["plans"].get("plus_open"))   # nothing speaks of the plus plan until it can be had
+        self.assertEqual(CONFIG["plans"]["free_cards"], 5)
 
     def test_with_plans_off_nothing_is_limited(self):
         r = self.run_page({}, [self.entry(i) for i in range(9)])
         self.assertTrue(r["plus"])
         self.assertIsNone(r["room"])                   # Infinity does not survive JSON: null
 
-    def test_a_free_planner_holds_five_upcoming_cards_and_a_quiet_or_past_one_does_not_count(self):
-        entries = [self.entry(i) for i in range(4)] + [self.entry(8, quiet=True, kind="memorial"), self.entry(9, date="2020-01-01"), self.entry(10, date="2020-01-01", yearly=True)]
+    def test_a_free_planner_holds_five_cards_and_only_a_quiet_one_does_not_count(self):
+        entries = [self.entry(i) for i in range(3)] + [self.entry(8, quiet=True, kind="memorial"), self.entry(9, date="2020-01-01"), self.entry(10, date="2020-01-01", yearly=True)]
         r = self.run_page(self.ON, entries)
-        self.assertEqual((r["plus"], r["used"], r["limit"], r["room"]), (False, 5, 5, 0))     # 4 upcoming + 1 yearly day; the memorial and the past day are free
+        self.assertEqual((r["plus"], r["used"], r["limit"], r["room"]), (False, 5, 5, 0))     # 3 + the past day + the yearly day; the memorial is free
+        r = self.run_page(self.ON, entries[:4])
+        self.assertEqual((r["used"], r["room"]), (3, 2))                                      # deleting cards gives the places back
         self.assertEqual((r["ok"], r["ok7"]), (False, True))                                  # 30 days before is plus; 7 days before is free
 
     def test_sending_three_times_makes_room_for_one_more(self):
