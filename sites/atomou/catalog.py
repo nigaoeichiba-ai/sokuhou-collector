@@ -178,7 +178,8 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
             continue
         end = _d(it.get("date_end")) if it.get("date_end") else None
         last = end or d
-        if last < today - timedelta(days=KEEP_AFTER_DAYS):
+        keep = bool(it.get("keep"))        # a day people look for long after it (a big event, a history day, a yearly event) is never hidden; a new product or a short notice is, after KEEP_AFTER_DAYS
+        if last < today - timedelta(days=KEEP_AFTER_DAYS) and not keep:
             rejects["終了して30日超"] += 1
             continue
         group = (it.get("group") if it.get("group") in GROUPS else LEGACY_GROUP.get(it.get("group"))) or GROUP_OF_SUBJECT.get(str(it.get("subject") or "").strip()) or GROUP_OF_CATEGORY.get(it["category"]) or GROUP_OF_FILE.get(base)
@@ -202,7 +203,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
         subject, what, place = labels_for(it, group)
         entries.append({
             "id": eid, "title": it["title"].strip(), "date": it["date"], "date_end": it.get("date_end") or None,
-            "precision": it.get("precision") if it.get("precision") in ("day", "month") else "day",
+            "precision": it.get("precision") if it.get("precision") in ("day", "month", "year") else "day", "keep": keep,
             "weekday": WEEKDAYS[d.weekday()], "kind": it["kind"], "category": it["category"], "group": group, "mid": (it.get("mid") if it.get("mid") in MID_NAMES.get(group, ()) else mid_for(group, subject, it["category"])), "region": it.get("region") or None,
             "subject": subject, "what": what, "place": place,
             "tags": tags_for(it, group), "sensitivity": sens, "quiet": quiet, "ad_ok": bool(it.get("ad_ok", True)) and not quiet,
@@ -220,12 +221,12 @@ def indexable_ids(entries: list[dict], today: date, launch: date, per_week: int 
     (per_week x weeks since launch, soonest date first) has room.  The rest stay usable on the site (noindex, not in the sitemap)."""
     weeks = max(0, (today - launch).days // 7) + 1
     allowed = per_week * weeks
-    eligible = [e for e in entries if e["status"] == "active" and e["publish_on"] <= today.isoformat()]
+    eligible = [e for e in entries if (e["status"] == "active" or e.get("keep")) and e["publish_on"] <= today.isoformat()]     # a kept day is searched for after it has passed too
     eligible.sort(key=lambda e: (e["date"], e["title"]))
     return {e["id"] for e in eligible[:allowed]}
 
 
 def public_json(entries: list[dict]) -> list[dict]:
     """The fields the browser needs (assets/catalog.json)."""
-    keys = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "subject", "what", "place", "tags", "quiet", "ad_ok", "son_toku", "status", "added")
+    keys = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "subject", "what", "place", "tags", "quiet", "ad_ok", "son_toku", "status", "added", "keep")
     return [{k: e[k] for k in keys} for e in entries]
