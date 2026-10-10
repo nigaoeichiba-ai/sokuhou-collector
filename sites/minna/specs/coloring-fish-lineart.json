@@ -81,5 +81,8 @@
    "a tuna fish with a streamlined body"
   ]
  ],
- "exclude": []
+ "exclude": [
+  "shark",
+  "whale"
+ ]
 }

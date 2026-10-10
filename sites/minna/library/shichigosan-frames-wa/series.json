@@ -1,0 +1,133 @@
+{
+ "added": "2026-10-11",
+ "slug": "shichigosan-frames-wa",
+ "title": "七五三のフレーム",
+ "genre": "deco",
+ "touch": "wa",
+ "lead": "七五三のおたより、写真の台紙、SNS画像に。千歳飴、鶴、松竹梅、菊、手毬、扇の飾り枠6点。中があいているので、写真や文字をそのまま重ねられます。",
+ "tags": [
+  "七五三",
+  "フレーム",
+  "枠",
+  "千歳飴",
+  "和風",
+  "11月",
+  "おたより"
+ ],
+ "subject": "",
+ "season": {
+  "from": "10-01",
+  "to": "11-30"
+ },
+ "planned": 6,
+ "items": [
+  {
+   "id": "shichigosan-frames-wa-chitose",
+   "file": "shichigosan-frames-wa-chitose.webp",
+   "title": "千歳飴のフレーム",
+   "desc": "千歳飴のフレームのイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "七五三",
+    "フレーム",
+    "枠",
+    "千歳飴",
+    "七五三のフレーム",
+    "千歳飴のフレーム",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 515,
+   "h": 496
+  },
+  {
+   "id": "shichigosan-frames-wa-crane",
+   "file": "shichigosan-frames-wa-crane.webp",
+   "title": "鶴のフレーム",
+   "desc": "鶴のフレームのイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "七五三",
+    "フレーム",
+    "枠",
+    "千歳飴",
+    "七五三のフレーム",
+    "鶴のフレーム",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 516,
+   "h": 503
+  },
+  {
+   "id": "shichigosan-frames-wa-shochikubai",
+   "file": "shichigosan-frames-wa-shochikubai.webp",
+   "title": "松竹梅のフレーム",
+   "desc": "松竹梅のフレームのイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "七五三",
+    "フレーム",
+    "枠",
+    "千歳飴",
+    "七五三のフレーム",
+    "松竹梅のフレーム",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 533,
+   "h": 494
+  },
+  {
+   "id": "shichigosan-frames-wa-kiku",
+   "file": "shichigosan-frames-wa-kiku.webp",
+   "title": "菊のフレーム",
+   "desc": "菊のフレームのイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "七五三",
+    "フレーム",
+    "枠",
+    "千歳飴",
+    "七五三のフレーム",
+    "菊のフレーム",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 519,
+   "h": 507
+  },
+  {
+   "id": "shichigosan-frames-wa-temari",
+   "file": "shichigosan-frames-wa-temari.webp",
+   "title": "手毬のフレーム",
+   "desc": "手毬のフレームのイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "七五三",
+    "フレーム",
+    "枠",
+    "千歳飴",
+    "七五三のフレーム",
+    "手毬のフレーム",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 497,
+   "h": 497
+  },
+  {
+   "id": "shichigosan-frames-wa-ougi",
+   "file": "shichigosan-frames-wa-ougi.webp",
+   "title": "扇のフレーム",
+   "desc": "扇のフレームのイラスト。和風・和柄のタッチ。",
+   "tags": [
+    "七五三",
+    "フレーム",
+    "枠",
+    "千歳飴",
+    "七五三のフレーム",
+    "扇のフレーム",
+    "和風・和柄",
+    "フレーム・かざり"
+   ],
+   "w": 544,
+   "h": 514
+  }
+ ]
+}
