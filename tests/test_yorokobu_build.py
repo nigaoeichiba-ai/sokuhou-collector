@@ -169,6 +169,17 @@ class BuildTest(unittest.TestCase):
         self.assertNotIn("売れ筋", html)
         self.assertNotIn("人気No", html)
 
+    def test_a_page_with_breadcrumbs_carries_the_breadcrumb_data_and_the_home_page_none(self):
+        html = self.read("gift/birthday-boyfriend/index.html")
+        blocks = [json.loads(x) for x in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)]
+        bc = next(b for b in blocks if b["@type"] == "BreadcrumbList")
+        names = [x["name"] for x in bc["itemListElement"]]
+        self.assertEqual(names[0], "トップ")
+        self.assertEqual([x["position"] for x in bc["itemListElement"]], [1, 2, 3])
+        self.assertEqual(bc["itemListElement"][0]["item"], "https://yorokobu-present.com/")
+        self.assertNotIn("item", bc["itemListElement"][-1])                         # the current page is not a link
+        self.assertNotIn("BreadcrumbList", self.read("index.html"))
+
     def test_the_site_can_be_added_to_the_home_screen(self):
         m = json.loads(self.read("manifest.webmanifest"))
         self.assertEqual((m["display"], m["scope"], m["lang"]), ("standalone", "/", "ja"))

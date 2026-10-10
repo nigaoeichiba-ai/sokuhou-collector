@@ -142,7 +142,7 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
 {B.share_bar(cfg, day_path(iso), f"{h1}: {day['theme']}", "このページを、だれかに送る")}
 {nav}
 <script type="application/ld+json">{ld}</script><script type="application/ld+json">{ld2}</script>"""
-    return B.page(cfg, preview, path=day_path(iso), title=f"{h1}|{day['theme']} | {cfg['site_name']}", description=day["lede"][:110], body=body)
+    return B.page(cfg, preview, path=day_path(iso), title=f"{h1}|{day['theme']} | {cfg['site_name']}", description=day["lede"][:110], body=body, og_image=B.og_for(f"picks/{iso}"))
 
 
 def hub_page(d: dict, cfg: dict, preview: bool, days: list[dict]) -> str:

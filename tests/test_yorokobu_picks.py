@@ -204,6 +204,13 @@ class PagesTest(unittest.TestCase):
         self.assertIn("Amazonのアソシエイトとして", html)                      # the Associates sentence is on a page with Amazon links
         self.assertIn('class="pr-chip"', html)
 
+    def test_a_day_has_its_own_share_card(self):
+        from sites.yorokobu import ogimage
+        if not ogimage.available():
+            self.skipTest("Pillow or a Japanese font is missing")
+        self.assertTrue((self.out / "og/picks/2026-10-11.png").exists())
+        self.assertIn("/og/picks/2026-10-11.png", self.read("picks/2026-10-11/index.html"))
+
     def test_structured_data_lists_the_twenty_with_their_anchors(self):
         html = self.read("picks/2026-10-11/index.html")
         ld = [json.loads(x) for x in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)]
