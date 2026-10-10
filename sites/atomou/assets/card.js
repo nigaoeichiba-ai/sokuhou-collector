@@ -276,7 +276,7 @@
       '<div class="x-grid"><form id="x-form" autocomplete="off">' +
       '<div class="field"><label for="x-t">題名(例: 〇〇バンド ワンマンライブ)</label><input type="text" id="x-t" maxlength="' + MAX.t + '" value="' + H(d.t) + '"></div>' +
       '<div class="field"><label for="x-d">日付</label><input type="date" id="x-d" value="' + H(d.d) + '"></div>' +
-      '<div class="field"><label for="x-say">文字や声で入力する(例: 12月25日)</label><input type="text" id="x-say" maxlength="30" placeholder="12月25日 / 2027年3月3日">' + (window.AtomouMicHint ? window.AtomouMicHint() : '') + '</div>' +
+      '<div class="field"><label for="x-say">文字で日付を入力する</label><input type="text" id="x-say" maxlength="30" placeholder="12月25日 / 2027年3月3日">' + (window.AtomouMicHint ? window.AtomouMicHint() : '') + '</div>' +
       '<div class="field"><label for="x-tm">時刻(なくてもよい)</label><input type="time" id="x-tm" value="' + H(d.tm) + '"></div>' +
       '<div class="field"><label for="x-m">ひとこと(場所・持ち物・連絡先など。リンクのアドレスは入れられません)</label><textarea id="x-m" rows="3" maxlength="' + MAX.m + '">' + H(d.m) + '</textarea></div>' +
       '<div class="field"><label for="x-k">種類</label><select id="x-k">' + KIND_OK.map(function (k) { return '<option value="' + k + '"' + (d.k === k ? ' selected' : '') + '>' + H(KINDS[k].t) + '</option>'; }).join('') + '</select></div>' +

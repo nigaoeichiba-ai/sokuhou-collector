@@ -80,7 +80,11 @@
       var sec = $('#live-t'); if (sec) sec.hidden = !rows.length;
     }
   }
-  function S_genres() { return (A.state().prefs.genres || []).slice(); }
+  function S_genres() {   // the genres of the visitor's choice, whole or in part
+    var p = A.state().prefs, out = (p.genres || []).slice();
+    (p.mids || []).concat(p.subs || []).forEach(function (k) { var g = String(k).split('>')[0]; if (out.indexOf(g) < 0) out.push(g); });
+    return out;
+  }
 
   /* ---------- a new headline of the visitor's words, while the site is open ---------- */
   function seenList() { try { return JSON.parse(localStorage.getItem(SEEN_KEY) || 'null'); } catch (e) { return null; } }

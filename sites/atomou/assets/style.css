@@ -61,6 +61,8 @@ input::placeholder{color:var(--muted)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:.6rem 0}
 .chip{text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border:2px solid var(--line);border-radius:999px;background:var(--surface);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
 .chip[aria-pressed="true"],.chip.on{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}
+/* a chosen chip: its small text takes the chip's own colour and its genre mark is drawn in the text colour (the genre colours are only checked on a card's surface, not on --accent) */
+.chip[aria-pressed="true"] small,.chip.on small{color:inherit}.chip[aria-pressed="true"] .mark,.chip.on .mark{background:var(--on-accent)}
 .seg{display:flex;flex-wrap:wrap;gap:8px}
 .numgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
 .numgrid button{min-height:44px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
@@ -469,6 +471,15 @@ input[type=time]{width:100%;min-height:48px;padding:.5rem .8rem;border:2px solid
 .article .qa p{margin:0}
 .mic-hint{display:flex;align-items:center;gap:.35rem;margin:.3rem 0 0;font-size:.8125rem}.mic{flex:none;color:var(--muted)}
 .intro{margin:.2rem 0 .9rem;padding:1rem 1rem .8rem;border:2px solid var(--accent);border-radius:16px;background:var(--surface)}.intro h2{margin:0 0 .3rem;font-size:1.1rem}.intro-lead{margin:.2rem 0 .6rem;font-weight:700}.intro-steps{list-style:none;margin:0 0 .6rem;padding:0;display:grid;gap:.5rem;counter-reset:s}.intro-steps li{counter-increment:s;display:grid;grid-template-columns:2rem 1fr;gap:0 .6rem;align-items:start}.intro-steps li::before{content:counter(s);grid-row:1/3;width:2rem;height:2rem;border-radius:50%;background:var(--accent);color:var(--on-accent,#fff);font-weight:800;display:flex;align-items:center;justify-content:center}.intro-steps b{font-size:1rem}.intro-steps span{color:var(--muted);font-size:.9375rem}.intro-note{margin:.4rem 0;font-size:.9375rem}.intro-btns{display:flex;flex-wrap:wrap;gap:.5rem;margin:.5rem 0 .3rem}.guide-offer{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.2rem 0 .7rem;padding:.5rem .7rem;border:1px solid var(--line,#ccc);border-radius:12px;background:var(--surface)}.guide-offer span{flex:1 1 12rem;font-size:.9375rem}
-.intro-open .guide-btn{display:none}.intro{padding:.8rem .9rem .6rem}.intro-steps{gap:.35rem}.intro-steps li{grid-template-columns:1.8rem 1fr}.intro-steps li::before{width:1.8rem;height:1.8rem;font-size:.9rem}.intro-steps span{font-size:.875rem}
+.intro{padding:.8rem .9rem .6rem}.intro-steps{gap:.35rem}.intro-steps li{grid-template-columns:1.8rem 1fr}.intro-steps li::before{width:1.8rem;height:1.8rem;font-size:.9rem}.intro-steps span{font-size:.875rem}
 .more-right{-webkit-mask-image:linear-gradient(to right,#000 90%,transparent);mask-image:linear-gradient(to right,#000 90%,transparent)}
 body{word-break:auto-phrase;text-wrap:pretty}
+/* the microphone button of a text field, and the three-level choice of the first-visit setup (genre > middle > small) */
+.inrow{display:flex;align-items:stretch;gap:6px;min-width:0}.inrow>input,.inrow>textarea{flex:1;min-width:0}.task-add .inrow{flex:1;min-width:10em}
+.mic-btn{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;min-height:44px;padding:0;border:2px solid var(--line);border-radius:999px;background:var(--surface);color:var(--accent);cursor:pointer}
+.mic-btn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}.mic-btn .mic{color:inherit}
+.pick{display:inline-flex;gap:4px;align-items:stretch;max-width:100%}.pick .chip.fold{padding:0 10px;font-size:.8rem;min-width:44px;justify-content:center}.setup .chip[aria-disabled="true"]{cursor:default;opacity:.85}
+.pick-panel{margin:.6rem 0;padding:.6rem .7rem;border:2px solid var(--line);border-radius:var(--radius,12px);background:var(--surface)}.pick-panel .hint{margin:0 0 .5rem}.pick-sub{margin-top:.6rem;padding-top:.5rem;border-top:1px dashed var(--line)}.pick-sub .hint{margin:0 0 .5rem}
+.eg-cards{display:grid;gap:10px;margin:.4rem 0 .8rem;pointer-events:none;user-select:none}@media (min-width:600px){.eg-cards{grid-template-columns:1fr 1fr}}
+.setup .chip[aria-pressed="true"] .chip-t small,.setup .chip.on .chip-t small{color:inherit}
+.tablewrap{overflow-x:auto;max-width:100%}
