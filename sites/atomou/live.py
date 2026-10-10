@@ -68,7 +68,7 @@ def _text(el) -> str:
 
 
 def _iso(s: str) -> datetime:
-    """An ISO 8601 time such as 2026-10-10T09:30:00+09:00, 2026-10-10T00:30:00Z or 2026-10-10 (Python 3.6 on the server has no datetime.fromisoformat)."""
+    """An ISO 8601 time such as 2026-10-10T09:30:00+09:00, 2026-10-10T00:30:00Z or 2026-10-10 (the server's Python 3.6 has no ISO reader of its own)."""
     s = s.strip().replace("Z", "+0000")
     s = re.sub(r"([+-]\d\d):(\d\d)$", lambda m: m.group(1) + m.group(2), s)
     s = re.sub(r"\.\d+(?=[+-]\d{4}$|$)", "", s)
