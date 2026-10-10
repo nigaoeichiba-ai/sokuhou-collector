@@ -1,5 +1,6 @@
 """atomou: the built site (pages, indexing rules, privacy-relevant properties) and the browser app in a real headless Chrome."""
 import functools
+from datetime import datetime, timedelta, timezone
 import html
 import http.server
 import json
@@ -673,6 +674,31 @@ class AppInChrome(BuildOnce):
         self.assertNotIn('class="pager-bar"', dom)
         self.assertIn("めくって見る", dom)
 
+    def test_the_live_block_shows_official_headlines_with_the_visitors_words_first(self):
+        fx = Path(self.tmp.name) / "fixtures"
+        fx.mkdir(exist_ok=True)
+        now = datetime.now(timezone.utc)
+        items = [{"id": "a1", "t": "日本銀行 金融政策決定会合の結果を公表", "u": "https://www.boj.or.jp/x", "s": "日本銀行 新着情報", "p": (now - timedelta(minutes=30)).isoformat(), "d": "", "g": "経済・政治", "m": "日銀・金融", "k": "日銀"},
+                 {"id": "b2", "t": "『新作ゲーム』の発売日を12月3日に決定<b>", "u": "https://www.nintendo.co.jp/y", "s": "任天堂 更新情報", "p": (now - timedelta(hours=3)).isoformat(), "d": "2026-12-03", "g": "趣味・ゲーム・アニメ", "m": "ゲームの発売日", "k": "任天堂"},
+                 {"id": "c3", "t": "危ないリンク", "u": "javascript:alert(1)", "s": "x", "p": now.isoformat(), "d": "", "g": "国際", "m": "その他", "k": ""}]
+        (fx / "live.json").write_text(json.dumps({"v": 1, "items": items}, ensure_ascii=False), encoding="utf-8")
+        dom = html.unescape(self.dom("/", "&livesrc=/fixtures/live.json&words=ゲーム"))
+        self.assertRegex(dom, r'id="live"(?![^>]*hidden)')
+        live = dom.split('id="live-list"')[1].split("</ul>")[0]
+        self.assertEqual(live.count("<li"), 2)                                          # the javascript: address is not shown
+        self.assertLess(live.index("新作ゲーム"), live.index("日本銀行"))                  # the visitor's word first, then the newest
+        self.assertIn("あなたの言葉: ゲーム", live)
+        self.assertRegex(live, r'<a class="live-t" href="https://www.nintendo.co.jp/y" target="_blank" rel="noopener noreferrer nofollow">')
+        self.assertIn("自動検出", live)
+        self.assertIn("日付: 2026年12月3日", live)
+        self.assertIn("&lt;b&gt;", self.dom("/", "&livesrc=/fixtures/live.json").split('id="live-list"')[1].split("</ul>")[0].replace("&amp;lt;", "&lt;"))   # a headline is text, not markup
+        dom = html.unescape(self.dom("/topics/", "&livesrc=/fixtures/live.json"))
+        self.assertRegex(dom, r'id="live-t"(?![^>]*hidden)')
+
+    def test_without_the_live_file_the_block_stays_hidden(self):
+        dom = self.dom("/", "&livesrc=/fixtures/none.json")
+        self.assertRegex(dom, r'id="live"[^>]*hidden')
+
     def test_the_setup_shows_an_example_under_every_genre(self):
         dom = html.unescape(self.dom("/", "&setup=1"))
         self.assertEqual(len(re.findall(r'<span class="chip-t">[^<]+<small>', dom)), len(self.shown_groups()))
@@ -754,7 +780,7 @@ class AppInChrome(BuildOnce):
 
     def test_home_edit_mode_shows_a_bar_on_every_block(self):
         dom = self.dom("/?edit=1")
-        self.assertEqual(dom.count('class="block-bar"'), 9)  # todo, search, cats, daily, mine, interests, region, soon, usecases
+        self.assertEqual(dom.count('class="block-bar"'), 10)  # todo, live, search, cats, daily, mine, interests, region, soon, usecases
         self.assertNotIn('class="block-bar"', self.dom("/"))
 
     def test_no_uncaught_script_error_on_any_main_page(self):
