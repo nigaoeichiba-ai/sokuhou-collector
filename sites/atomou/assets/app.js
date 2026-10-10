@@ -917,7 +917,7 @@
     var terms = norm(q).split(' ').filter(Boolean);
     if (!terms.length) return [];
     var hits = cat.filter(function (c) {
-      if (c.status === 'ended') return false;
+      if (c.status === 'ended' && !c.keep) return false;   // a kept day (a big event, a history day) is found after it has passed too
       var hay = hayOf(c);
       return terms.every(function (t) { return hay.indexOf(t) >= 0; });
     }).sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
@@ -937,7 +937,7 @@
       var gi = CONF.slugs.indexOf(st.g);
       levels(gi);   // first: it drops a middle or small choice the catalogue does not have (a broken address), then the list is made
       var hits = cat.filter(function (c) {
-        if (c.status === 'ended') return false;
+        if (c.status === 'ended' && !c.keep) return false;
         if (gi >= 0 && c.group !== CONF.groups[gi]) return false;
         if (gi >= 0 && st.m && c.mid !== st.m) return false;
         if (gi >= 0 && st.m && st.s && (st.s === '*' ? topSubs[c.subject] : c.subject !== st.s)) return false;
