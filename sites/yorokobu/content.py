@@ -117,7 +117,23 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     return {"messages": messages, "etiquette": etiquette, "amazon": amazon, "amazon_checked": amazon_checked, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
             "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "themes": themes,
             "theme": theme, "theme_groups": groups, "articles": articles,
-            "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
+            "stats": _load_stats(content_dir), "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
+
+
+def _load_stats(content_dir: Path) -> dict:
+    """The outside numbers of the data room (stats.json, optional): public statistics and one survey, each with its source.  A table that does not add up
+    (survey shares that are not 100%, a year without a number) is refused: a chart built on it would look exact and be wrong."""
+    data = _optional(content_dir, "stats.json") or {}
+    for key, v in data.get("vital", {}).items():
+        _need(v, ("label", "unit", "series", "source", "url"), f"stats vital {key}")
+        if not v["url"].startswith("https://") or any(not isinstance(n, int) or n <= 0 for n in v["series"].values()):
+            raise BuildError(f"stats vital {key}: a bad url or a number that is not a positive integer")
+    for key, v in data.get("survey_budget", {}).items():
+        _need(v, ("title", "source", "url", "method", "bands", "years", "checked"), f"stats survey {key}")
+        for year, shares in v["years"].items():
+            if len(shares) != len(v["bands"]) or abs(sum(shares) - 100) > 1.5:
+                raise BuildError(f"stats survey {key} {year}: the shares do not add up to 100% ({sum(shares):.1f})")
+    return data
 
 
 def _load_messages(content_dir: Path, occ: dict) -> dict:

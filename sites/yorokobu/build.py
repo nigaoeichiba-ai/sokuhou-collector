@@ -18,8 +18,11 @@ from urllib.parse import quote
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
+if __name__ == "__main__":
+    sys.modules.setdefault("sites.yorokobu.build", sys.modules[__name__])   # tools.py and dataroom.py import this module lazily: they must get THIS one (its nav flags), not a second copy
 
 from sites.yorokobu import content as ct  # noqa: E402
+from sites.yorokobu import dataroom  # noqa: E402
 from sites.yorokobu import giftcal  # noqa: E402
 from sites.yorokobu import icons  # noqa: E402
 from sites.yorokobu import relevance  # noqa: E402
@@ -138,6 +141,7 @@ def pr_lead(cfg: dict) -> str:
 
 
 RANKING_ON = False   # set by render_site: the nav and the home page link to /ranking/ only when that page is built
+DATA_ON = False      # the same for /data/ (the data room)
 
 
 def page(cfg, preview, **kw):
@@ -146,7 +150,7 @@ def page(cfg, preview, **kw):
     if "pr-quiet" in kw.get("body", ""):
         kw["body"] += pr_foot(cfg, amazon_links or "amazon.co.jp/" in kw["body"], "rakuten.co.jp/" in kw["body"] or amazon_links)
     kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", ""))   # the pictures the page uses (only those)
-    site = {**SITE, "nav": SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])}
+    site = {**SITE, "nav": SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else []) + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
     return layout(site, cfg, preview, scripts=True, head_extra=FONTS, **kw)
 
 
@@ -1044,6 +1048,17 @@ def ranking_band(d: dict) -> str:
             f'<p class="more">{btns}</p></section>')
 
 
+def data_band(d: dict) -> str:
+    """Home block for the data room: today's finding of each chart page."""
+    rows = dataroom.home_teaser(d)
+    if not rows:
+        return ""
+    cards = "".join(f'<li><a class="finding" href="{p}"><b>{esc(t)}</b><span>{esc(f)}</span></a></li>' for p, t, f in rows)
+    return ('<section class="block"><div class="sec-head"><span class="eyebrow">Data</span><h2>数字で見る、贈り物</h2>'
+            '<p>プレゼントの価格や予算を、商品のデータと国の統計で、グラフにしました。毎日、更新しています。</p></div>'
+            f'<ul class="findings">{cards}</ul><p class="more"><a class="btn btn-sub" href="/data/">データ室を見る</a></p></section>')
+
+
 def daily_mix(d: dict, today: date, n: int, skip: set[str] = frozenset(), salt: int = 0) -> list[dict]:
     """n products spread over the kinds of gift (food, goods, experiences ...), different every day: the picture of the top page.
     Only products with a few good reviews and a real price are taken, so that the first thing a visitor sees is a gift, not a bargain bin."""
@@ -1168,6 +1183,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <section class="block"><div class="sec-head"><span class="eyebrow">Popular</span><h2>まず見たい、おすすめページ</h2></div>
 <ul class="plain cols2 chips">{pop}</ul></section>
 {whats_new(d)}
+{data_band(d)}
 {ranking_band(d)}
 {message_band(d)}
 {theme_band}
@@ -1472,8 +1488,9 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     today = today or date.today()
     d = prepare(c, items, cfg)
     d["ranking"] = rk.view(ranking, c["filters"])
-    global RANKING_ON
+    global RANKING_ON, DATA_ON
     RANKING_ON = bool(d["ranking"])
+    DATA_ON = bool(dataroom.results(d))
     d["numbers"] = nm.view(d["pairs"], c["filters"])
     d["gacha"] = gacha_data(d, cfg)
     cards: dict[str, bytes] = {}
@@ -1543,6 +1560,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages["ranking/index.html"] = ranking_hub_page(d, cfg, preview)
         for slug in d["ranking"]["order"]:
             pages[f"ranking/{slug}/index.html"] = ranking_page(d, cfg, preview, slug)
+    pages.update(dataroom.build_pages(d, cfg, preview))
     if d["live_themes"]:
         pages["theme/index.html"] = theme_hub_page(d, cfg, preview)
         for th in d["live_themes"]:
