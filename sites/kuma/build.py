@@ -367,24 +367,6 @@ def emergency_page(d: dict, cfg: dict, preview: bool) -> str:
                 description=f"{fy_label(cur)}のクマの緊急銃猟{n(len(emg['cases']))}件と、死亡事故の日付・場所を、環境省の資料から一覧にしています。", body=body)
 
 
-OTSU_PAGE = "https://www.city.otsu.lg.jp/soshiki/025/1605/g/t/74581.html"
-OTSU_MAP = "https://www.google.com/maps/d/viewer?mid=1rE5HcSdJnm2gX3iT1FMt0aCVuQ9ArDs"
-
-
-def prepare_live(otsu: dict | None) -> dict | None:
-    """Otsu City's own sighting list (from the city's published map), newest first. None when there is no data."""
-    if not otsu or not otsu.get("sightings"):
-        return None
-    items = sorted((s for s in otsu["sightings"] if s.get("observed_at")), key=lambda s: s["observed_at"], reverse=True)
-    if not items:
-        return None
-    by_fy: dict[str, list] = {}
-    for s in items:
-        by_fy.setdefault(s["fiscal_year"], []).append(s)
-    return {"items": items, "by_fy": by_fy, "official": otsu.get("official_counts", {}), "fetched_date": otsu["fetched_at"][:10],
-            "latest_fy": items[0]["fiscal_year"]}
-
-
 PREF_LIVE = live_mod.LIVE_SOURCES
 FY_MONTHS = (4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3)
 
@@ -451,11 +433,6 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
     emg_html = ("<ul class='mini-list'>" + "".join(f'<li>{md(c["date"])} {esc(c["place"])}<b>{esc(c["species"])}</b></li>' for c in emg) + "</ul>") if emg else f"<p>環境省の{fy_label(cur)}の一覧には、{esc(r['name'])}の事例はありません(環境省が把握する事例に限ります)。</p>"
     fat_html = ("<ul class='mini-list'>" + "".join(f'<li>{jp_date(i["date"])} {esc(i["place"])}<b>{i["victims"]}人</b></li>' for i in sorted(fat, key=lambda i: i["date"], reverse=True)) + "</ul>") if fat else f"<p>環境省の資料(令和7・8年度)には、{esc(r['name'])}の死亡事故はありません。</p>"
     live_block = ""
-    if d.get("live") and r["slug"] == "shiga":
-        lv = d["live"]
-        recent = "".join(f'<li>{day_text(x["observed_at"])} {esc(x["place"])}</li>' for x in lv["items"][:5])
-        live_block = (f'<h2>大津市の最新の目撃情報(市の公式)</h2>\n<ul class="mini-list">{recent}</ul>\n'
-                      '<p><a href="/live/shiga/">大津市の目撃情報の一覧(市町村別・地図)</a></p>\n')
     for src in d["live_prefs"]:
         if live_mod.LIVE_SOURCES[src["key"]]["pref"] == r["short"]:
             recent = "".join(f'<li>{day_text(x["observed_at"])} {esc(place_text(x))}</li>' for x in src["sights"][:5])
@@ -636,10 +613,8 @@ def goods_page(d: dict, cfg: dict, preview: bool) -> str:
 
 # ---------------------------------------------------------------- weekly digest
 
-def digest_sources(otsu: dict | None, prefs: dict | None) -> list[dict]:
+def digest_sources(prefs: dict | None) -> list[dict]:
     out = [digest.pref_source(k, meta["name"], (prefs or {})[k]) for k, meta in PREF_LIVE.items() if (prefs or {}).get(k)]
-    if otsu:
-        out.append(digest.otsu_source(otsu))
     return [x for x in out if x]
 
 
@@ -711,7 +686,7 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
 # ---------------------------------------------------------------- site
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None,
-                otsu: dict | None = None, prefs: dict | None = None, today: date | None = None,
+                prefs: dict | None = None, today: date | None = None,
                 captures: dict | None = None) -> list[str]:
     global SITE
     missing = missing_config(cfg)
@@ -723,12 +698,9 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     links = links or {}
     from sokuhou.sources import kumalib   # a source on the stop list is shown nowhere (list, counts, map, feed, CSV, digest, sources page)
     prefs = {k: v for k, v in (prefs or {}).items() if not kumalib.is_stopped(k)} or None
-    otsu = None if kumalib.is_stopped("otsu") else otsu
-    live = prepare_live(otsu)
-    d["live"] = live
     d["live_prefs"] = prepare_prefs(prefs)
     d["live_counts"] = live_mod.prepare_counts(prefs)
-    any_live = bool(live or d["live_prefs"] or d["live_counts"])
+    any_live = bool(d["live_prefs"] or d["live_counts"])
     nav = [x for x in BASE_NAV if x[1] != "/live/" or any_live]
     if any_live:
         nav = nav[:-1] + [("地図", "/map/", "/map/"), ("週ごとのまとめ", "/digest/", "/digest/")] + nav[-1:]
@@ -776,7 +748,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages["notify/index.html"] = notify_page(d, cfg, preview)
     if cfg.get("rakuten_affiliate_id"):
         pages["goods/index.html"] = goods_page(d, cfg, preview)
-    dig = digest.build(digest_sources(otsu, prefs))
+    dig = digest.build(digest_sources(prefs))
     if dig["weeks"]:
         dig["fetched_date"] = d["fetched_date"]
         pages["digest/index.html"] = digest_hub(dig, cfg, preview)
@@ -818,8 +790,6 @@ def main() -> None:
     data = Path(args.data)
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
     raw = json.loads((data / "env_kuma.json").read_text(encoding="utf-8"))
-    otsu_file = data / "otsu_bear.json"
-    otsu = json.loads(otsu_file.read_text(encoding="utf-8")) if otsu_file.exists() else None
     prefs = {k: json.loads((data / f"{k}_kuma.json").read_text(encoding="utf-8"))
              for k in live_mod.LIVE_SOURCES if (data / f"{k}_kuma.json").exists()}
     cap_file = data / "env_capture_kuma.json"
@@ -827,7 +797,7 @@ def main() -> None:
     links_file = HERE / "links.json"
     links = json.loads(links_file.read_text(encoding="utf-8")) if links_file.exists() else {}
     try:
-        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, otsu=otsu, prefs=prefs, captures=captures)
+        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, prefs=prefs, captures=captures)
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {args.out}")

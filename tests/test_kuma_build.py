@@ -202,73 +202,6 @@ class KumaSiteTest(unittest.TestCase):
             self.assertNotRegex(g["body"], r"必ず(助か|守れ|撃退)|絶対に安全|100%")
 
 
-OTSU = {
-    "fetched_at": "2026-10-05T17:33:25+09:00",
-    "official_counts": {"令和8年度": 3, "令和7年度": 45},
-    "sightings": [
-        {"fiscal_year": "令和8年度", "observed_at": "2026-09-11T07:30:00+09:00", "place": "南小松", "lat": 35.2, "lon": 135.9},
-        {"fiscal_year": "令和8年度", "observed_at": "2026-10-03T08:30:00+09:00", "place": "北比良", "lat": 35.25, "lon": 135.93},
-        {"fiscal_year": "令和8年度", "observed_at": "2026-10-03T06:00:00+09:00", "place": "伊香立下龍華町", "lat": 35.1, "lon": 135.8},
-        {"fiscal_year": "令和7年度", "observed_at": "2025-10-20T00:00:00+09:00", "place": "仰木町", "lat": 35.1, "lon": 135.9},
-    ],
-}
-
-
-@unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
-class LiveTest(unittest.TestCase):
-    """Otsu City's own sighting list: newest first, with the city's page credited, on its own municipality page."""
-
-    @classmethod
-    def setUpClass(cls):
-        cls.raw = raw_data()
-        cls.raw["notices"] = []
-        cls.tmp = tempfile.TemporaryDirectory()
-        cls.out = Path(cls.tmp.name) / "site"
-        cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, otsu=OTSU, today=date(2026, 10, 5))
-        cls.city = f"live/shiga/{live_mod.city_slug('shiga', '大津市')}/index.html"
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.tmp.cleanup()
-
-    def read(self, rel):
-        return (self.out / rel).read_text(encoding="utf-8")
-
-    def test_newest_first_and_the_latest_is_on_the_home_page(self):
-        html = self.read("live/shiga/index.html")
-        self.assertLess(html.index("北比良"), html.index("伊香立下龍華町"))
-        self.assertLess(html.index("伊香立下龍華町"), html.index("南小松"))
-        self.assertIn("最新の記録: 10月3日(2日前) 大津市北比良", self.read(self.city))  # fetched 2026-10-05, seen 2026-10-03
-        self.assertIn("<li>10月3日 滋賀県大津市北比良<b>目撃</b></li>", self.read("index.html"))
-
-    def test_the_city_page_is_linked_and_credited(self):
-        html = self.read("live/shiga/index.html")
-        self.assertIn("https://www.city.otsu.lg.jp/soshiki/025/1605/g/t/74581.html", html)
-        self.assertIn("大津市が作成したものではありません", html)
-        self.assertIn('href="/live/shiga/"', self.read("live/index.html"))
-
-    def test_counts_are_ours_and_older_years_are_not_mixed_in(self):
-        html = self.read(self.city)
-        self.assertIn("令和8年度の記録は3件で、直近30日は3件", html)
-        self.assertNotIn("仰木町", html)  # last fiscal year's sighting
-        self.assertIn("<tr><td>2026年10月3日 8時30分ごろ</td>", html)
-        month_table = html.split("大津市の月別の記録</h2>")[1].split("</table>")[0]
-        self.assertEqual(re.findall(r"<td>(\d+)月</td><td>(\d+)</td>", month_table), [("9", "1"), ("10", "2")])
-
-    def test_shiga_page_carries_the_live_block_and_other_prefectures_do_not(self):
-        self.assertIn("大津市の最新の目撃情報(市の公式)", self.read("shiga/index.html"))
-        self.assertIn('href="/live/shiga/"', self.read("shiga/index.html"))
-        self.assertNotIn("大津市の最新の目撃情報", self.read("akita/index.html"))
-
-    def test_nav_has_the_live_link_only_when_there_is_data(self):
-        self.assertIn('href="/live/"', self.read("index.html"))
-        with tempfile.TemporaryDirectory() as tmp:
-            files = build.render_site(self.raw, CFG, Path(tmp) / "n", release=True, otsu=None)
-            self.assertNotIn("live/index.html", files)
-            self.assertNotIn("map/index.html", files)
-            self.assertNotIn('href="/live/"', (Path(tmp) / "n" / "index.html").read_text(encoding="utf-8"))
-
-
 class ChartTest(unittest.TestCase):
     def test_nice_max_and_gaps(self):
         self.assertEqual(charts.nice_max(216), 250)
@@ -317,7 +250,7 @@ class PrefLiveTest(unittest.TestCase):
         cls.raw["notices"] = []
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name) / "site"
-        build.render_site(cls.raw, CFG, cls.out, release=True, otsu=None, prefs={"miyagi": MIYAGI, "akita": AKITA}, today=date(2026, 10, 6))
+        build.render_site(cls.raw, CFG, cls.out, release=True, prefs={"miyagi": MIYAGI, "akita": AKITA}, today=date(2026, 10, 6))
 
     @classmethod
     def tearDownClass(cls):
@@ -386,7 +319,7 @@ class DateOnlyTest(unittest.TestCase):
         raw = raw_data()
         raw["notices"] = []
         with tempfile.TemporaryDirectory() as tmp:
-            build.render_site(raw, CFG, Path(tmp) / "s", release=True, otsu=None, prefs={"okayama": okayama}, today=date(2026, 10, 6))
+            build.render_site(raw, CFG, Path(tmp) / "s", release=True, prefs={"okayama": okayama}, today=date(2026, 10, 6))
             html = (Path(tmp) / "s" / "live" / "okayama" / "index.html").read_text(encoding="utf-8")
             self.assertIn("<td>2026年9月6日</td><td>新見市哲西町大野部</td><td>目撃</td>", html)
             self.assertIn("岡山県が公表している令和8年度の記録は、1件です", html)
@@ -422,7 +355,7 @@ class LiveSectionTest(unittest.TestCase):
         cls.raw["notices"] = env_kuma.parse_notices((FIX / "env_kuma_effort12.html").read_text(encoding="utf-8"))
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name) / "site"
-        cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, otsu=None, prefs={"yamaguchi": _yamaguchi()}, today=date(2026, 10, 7))
+        cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, prefs={"yamaguchi": _yamaguchi()}, today=date(2026, 10, 7))
         cls.iwakuni = f"live/yamaguchi/{live_mod.city_slug('yamaguchi', '岩国市')}/index.html"
 
     @classmethod
@@ -505,7 +438,8 @@ class LiveSectionTest(unittest.TestCase):
 
     def test_a_source_without_stated_terms_is_not_offered_for_download(self):
         with tempfile.TemporaryDirectory() as tmp:
-            files = build.render_site(self.raw, CFG, Path(tmp) / "o", release=True, otsu=OTSU, today=date(2026, 10, 5))
+            with mock.patch.dict(live_mod.LIVE_SOURCES, {"fukushima": COUNTS_META}):
+                files = build.render_site(self.raw, CFG, Path(tmp) / "o", release=True, prefs={"fukushima": _counts_raw()}, today=date(2026, 10, 5))
             self.assertNotIn("data/index.html", files)
             self.assertNotIn("data/kuma-sightings.csv", files)
         self.assertEqual(live_mod.LIVE_SOURCES["yamaguchi"]["license"], "CC BY")
