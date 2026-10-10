@@ -23,7 +23,7 @@
   function limit() { return FREE + Math.min(MORE, Math.floor((A.state().prefs.shares || 0) / PER)); }
   function room() { return (!ON || plus()) ? Infinity : Math.max(0, limit() - used()); }
   function say() {
-    return '無料プランで書けるカードは、いま' + limit() + '枚までです(' + used() + '枚使っています)。人に送ると、' + PER + '回ごとに1枚ふえます。使わないカードを消しても、空きます。' + (PLUS_OPEN ? 'プラスプランなら、枚数の制限はありません。' : '');
+    return '無料プランで書けるカードは、いま' + limit() + '枚までです(' + used() + '枚使っています)。' + (Math.floor((A.state().prefs.shares || 0) / PER) >= MORE ? '' : '人に送ると、' + PER + '回ごとに1枚ふえます。') + '使わないカードを消しても、空きます。' + (PLUS_OPEN ? 'プラスプランなら、枚数の制限はありません。' : '');
   }
   function blocked(n) {   // true (and the reason shown) when n more cards would not fit
     if (room() >= (n || 1)) return false;
@@ -45,7 +45,7 @@
     var p = plus(), left = PER - ((A.state().prefs.shares || 0) % PER);
     el.innerHTML = '<h2 id="plan-h">プラン</h2><div class="panel"><p><b>' + (p ? 'プラスプラン' : '無料プラン') + '</b></p>' +
       (p ? '<p>カードの枚数に制限はありません。署名なしで送れます。知らせの日数と時間帯を、自由に決められます。</p>' :
-        '<p>書けるカード: <b>' + used() + ' / ' + limit() + '枚</b>(あと' + left + '回送ると、1枚ふえます)</p><p class="hint">公式の日付を「予定に入れる」は、枚数に入りません。大切な人を思う日も、入りません。カードを消すと、その分だけ空きます。' + (PLUS_OPEN ? 'プラスプランは、制限なし・署名なし・知らせを自由に決められます。' : '') + '</p>') + '</div>';
+        '<p>書けるカード: <b>' + used() + ' / ' + limit() + '枚</b>' + (Math.floor((A.state().prefs.shares || 0) / PER) >= MORE ? '(送って増やせる枚数の上限です)' : '(あと' + left + '回送ると、1枚ふえます)') + '</p><p class="hint">公式の日付を「予定に入れる」は、枚数に入りません。大切な人を思う日も、入りません。カードを消すと、その分だけ空きます。' + (PLUS_OPEN ? 'プラスプランは、制限なし・署名なし・知らせを自由に決められます。' : '') + '</p>') + '</div>';
   }
   if (A.page === 'my') box();
   document.addEventListener('atomou:saved', box);

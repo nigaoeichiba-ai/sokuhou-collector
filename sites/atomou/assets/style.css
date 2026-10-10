@@ -275,7 +275,7 @@ details.more summary{min-height:48px;display:flex;align-items:center;cursor:poin
 .season{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 14px;margin:.6rem 0;border-radius:var(--radius);background:var(--bg2);border:1px dashed var(--accent)}
 
 /* screen guide */
-.setup .btn[disabled]{opacity:.45;cursor:not-allowed}.setup .step-n{margin:0 0 .3rem;font-size:.85rem;color:var(--muted)}.setup .chiprow.wrap{flex-wrap:wrap;overflow:visible}.setup select{max-width:100%}.setup-redo{margin:.2rem 0 0;text-align:right}
+.setup .chip{height:auto;padding-top:8px;padding-bottom:8px;text-align:left}.setup .chip-t{display:grid;gap:1px}.setup .chip-t small{font-weight:400;font-size:.78rem;color:var(--muted)}.setup .btn[disabled]{opacity:.45;cursor:not-allowed}.setup .step-n{margin:0 0 .3rem;font-size:.85rem;color:var(--muted)}.setup .chiprow.wrap{flex-wrap:wrap;overflow:visible}.setup select{max-width:100%}.setup-redo{margin:.2rem 0 0;text-align:right}
 .hint-sheet{position:fixed;inset:0;z-index:70}.hs-back{position:absolute;inset:0;background:rgba(0,0,0,.45)}
 .hs-box{position:absolute;left:0;right:0;bottom:0;max-height:78vh;overflow:auto;padding:1rem 16px calc(1rem + env(safe-area-inset-bottom));background:var(--surface);color:var(--text);border-radius:18px 18px 0 0;box-shadow:0 -6px 24px rgba(0,0,0,.25);outline:0}
 .hs-box h2{margin:0 0 .5rem;font-size:1.1rem}.hs-box ul{margin:0 0 .8rem;padding-left:1.2rem;display:grid;gap:.4rem}.hs-box li{line-height:1.7}
