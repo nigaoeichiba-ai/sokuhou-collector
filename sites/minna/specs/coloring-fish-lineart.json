@@ -1,0 +1,85 @@
+{
+ "slug": "coloring-fish-lineart",
+ "title": "さかなのぬりえ",
+ "subject": "",
+ "genre": "animals",
+ "touch": "lineart",
+ "title_fmt": "{ja}",
+ "subject_en": "Coloring pages of fish and sea creatures, each ONE big simple animal, centred, drawn with thick clean closed black outlines only and NOTHING filled in: the inside of every shape stays plain white. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "金魚、クジラ、サメ、タコなど、さかな・海の生きものの塗り絵12点。線は太くはっきりしていて、印刷して子どもと楽しめます。",
+ "tags": [
+  "ぬりえ",
+  "塗り絵",
+  "さかな",
+  "魚",
+  "海",
+  "線画",
+  "子ども",
+  "印刷"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "goldfish",
+   "金魚",
+   "a goldfish with flowing fins"
+  ],
+  [
+   "whale",
+   "クジラ",
+   "a whale spouting water"
+  ],
+  [
+   "shark",
+   "サメ",
+   "a friendly shark"
+  ],
+  [
+   "octopus",
+   "タコ",
+   "an octopus with curling tentacles"
+  ],
+  [
+   "turtle",
+   "ウミガメ",
+   "a sea turtle with a patterned shell"
+  ],
+  [
+   "seahorse",
+   "タツノオトシゴ",
+   "a seahorse"
+  ],
+  [
+   "jellyfish",
+   "クラゲ",
+   "a jellyfish with long tentacles"
+  ],
+  [
+   "crab",
+   "カニ",
+   "a crab with big claws"
+  ],
+  [
+   "dolphin",
+   "イルカ",
+   "a jumping dolphin"
+  ],
+  [
+   "clownfish",
+   "クマノミ",
+   "a clownfish with stripes by an anemone"
+  ],
+  [
+   "starfish",
+   "ヒトデ",
+   "a starfish and a shell"
+  ],
+  [
+   "tuna",
+   "マグロ",
+   "a tuna fish with a streamlined body"
+  ]
+ ],
+ "exclude": []
+}

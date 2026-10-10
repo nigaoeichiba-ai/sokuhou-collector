@@ -1,0 +1,89 @@
+{
+ "slug": "autumn-taste-flat",
+ "title": "秋の味覚",
+ "subject": "",
+ "genre": "food",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Autumn foods, each ONE item centred in its cell, flat illustration with soft shading. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "さんま、栗、さつまいも、きのこ、柿、梨、ぶどう、新米など、秋の味覚12点。レシピ、給食だより、チラシのすみに。",
+ "tags": [
+  "秋の味覚",
+  "秋",
+  "食べ物",
+  "さんま",
+  "栗",
+  "さつまいも",
+  "柿",
+  "新米",
+  "給食だより"
+ ],
+ "season": {
+  "from": "09-10",
+  "to": "11-30"
+ },
+ "holes": false,
+ "items": [
+  [
+   "sanma",
+   "さんま",
+   "a grilled Pacific saury fish on a plate with a lemon wedge"
+  ],
+  [
+   "kuri",
+   "栗",
+   "chestnuts, some in spiky husks"
+  ],
+  [
+   "satsumaimo",
+   "さつまいも",
+   "two sweet potatoes, one cut open showing yellow flesh"
+  ],
+  [
+   "kinoko",
+   "きのこ",
+   "a group of mushrooms in different shapes"
+  ],
+  [
+   "kaki",
+   "柿",
+   "two orange persimmons with leaves"
+  ],
+  [
+   "nashi",
+   "梨",
+   "a pear and a cut half"
+  ],
+  [
+   "budo",
+   "ぶどう",
+   "a bunch of purple grapes with leaves"
+  ],
+  [
+   "shinmai",
+   "新米",
+   "a bowl of steaming white rice with chopsticks"
+  ],
+  [
+   "matsutake",
+   "松茸",
+   "matsutake mushrooms"
+  ],
+  [
+   "ringo",
+   "りんご",
+   "red apples, one cut"
+  ],
+  [
+   "ginnan",
+   "ぎんなん",
+   "ginkgo nuts in a small dish"
+  ],
+  [
+   "kabocha",
+   "かぼちゃ",
+   "a green kabocha squash cut in half"
+  ]
+ ],
+ "exclude": []
+}

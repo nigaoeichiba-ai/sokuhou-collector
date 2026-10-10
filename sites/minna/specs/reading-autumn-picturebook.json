@@ -1,0 +1,88 @@
+{
+ "slug": "reading-autumn-picturebook",
+ "title": "読書の秋",
+ "subject": "",
+ "genre": "life",
+ "touch": "picturebook",
+ "title_fmt": "{ja}",
+ "subject_en": "Picture-book style scenes of autumn reading with original cute animal characters, soft textured colours, warm autumn palette, ONE scene per cell. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "ねこがページをめくる、くまが図書館で本を借りる。読書の秋の場面を、絵本のようなやさしいタッチで12点。図書だよりや読書感想文の案内に。",
+ "tags": [
+  "読書の秋",
+  "読書",
+  "本",
+  "図書館",
+  "秋",
+  "絵本",
+  "図書だより",
+  "おたより"
+ ],
+ "season": {
+  "from": "09-15",
+  "to": "11-15"
+ },
+ "holes": false,
+ "items": [
+  [
+   "cat-read",
+   "木の下で読むねこ",
+   "a cat reading a big book under a tree with falling leaves"
+  ],
+  [
+   "bear-library",
+   "図書館のくま",
+   "a bear carrying a stack of books in a library"
+  ],
+  [
+   "rabbit-lamp",
+   "ランプで読むうさぎ",
+   "a rabbit reading in bed by a small lamp"
+  ],
+  [
+   "owl-books",
+   "本を読むふくろう",
+   "an owl wearing glasses reading on a branch"
+  ],
+  [
+   "fox-tea",
+   "お茶と本のきつね",
+   "a fox reading with a cup of tea and a scarf"
+  ],
+  [
+   "child-bench",
+   "ベンチで読む子",
+   "a child reading on a park bench among ginkgo leaves"
+  ],
+  [
+   "mouse-tiny",
+   "小さな本のねずみ",
+   "a mouse reading a tiny book on an acorn"
+  ],
+  [
+   "shelf",
+   "本だな",
+   "a cozy bookshelf with books, a plant and a lamp"
+  ],
+  [
+   "stack",
+   "本のたば",
+   "a tall stack of books with a bookmark and autumn leaves"
+  ],
+  [
+   "picnic",
+   "読書ピクニック",
+   "animals reading together on a picnic blanket"
+  ],
+  [
+   "bookmark",
+   "しおり",
+   "autumn leaf bookmarks in a row"
+  ],
+  [
+   "night",
+   "夜の読書",
+   "a squirrel reading by candlelight near a window with the moon"
+  ]
+ ],
+ "exclude": []
+}
