@@ -284,6 +284,7 @@ details.more summary{min-height:48px;display:flex;align-items:center;cursor:poin
 .card.swiping{box-shadow:0 6px 18px rgba(0,0,0,.18)}
 .swipe-hint{position:absolute;left:-92px;top:50%;width:84px;margin-top:-1.1em;text-align:center;font-size:.8rem;font-weight:700;color:var(--muted)}.swipe-hint.go{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){.cards.pager{scroll-behavior:auto}}
+.badge.warn{background:var(--warn-bg,#FFF1C2);color:var(--warn-text,#6B4A00);border:1px solid var(--warn-line,#E5C25C)}
 .live-list{list-style:none;margin:.4rem 0 0;padding:0;display:grid;gap:8px}
 .live-i{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
 .live-i.hit{border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}

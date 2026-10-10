@@ -72,7 +72,7 @@ HT_CACHE = """
 <FilesMatch "\\.(css|js|json|svg|png|webp|ico)$">
 Header set Cache-Control "public, max-age=31536000, immutable"
 </FilesMatch>
-<FilesMatch "(sw\\.js|manifest\\.webmanifest|live\\.v1\\.json)$">
+<FilesMatch "(sw\\.js|manifest\\.webmanifest|(live|recheck)\\.v1\\.json)$">
 Header set Cache-Control "no-cache"
 </FilesMatch>
 </IfModule>

@@ -1,0 +1,80 @@
+name: atomou-recheck
+
+# atomou.com 検証ロボ: every 6 hours, open the official page behind the days of the catalogue again (sites/atomou/recheck.py: the nearer the day, the more often) and see whether the day's words are still on it.
+# A day whose page still speaks of the event but no longer has its date goes into recheck.v1.json, which the app shows as "再確認中" on that day; the report on this run's summary lists those days, and the days
+# whose page no longer speaks of the event at all, so that they can be corrected from the new page.  Nothing is edited by the robot.  Nothing is committed (so no deploy starts).
+# Needs the same repository secrets as the deploy (XSERVER_SSH_KEY, XSERVER_HOST, XSERVER_USER); without them the file is only made and shown on the summary.
+
+on:
+  schedule:
+    - cron: "20 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atomou-recheck
+  cancel-in-progress: false
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  recheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Restore the state
+        uses: actions/cache/restore@v4
+        with:
+          path: recheck_state.json
+          key: atomou-recheck-state-${{ github.run_id }}
+          restore-keys: atomou-recheck-state-
+      - name: Check the pages
+        run: |
+          python sites/atomou/recheck.py --state recheck_state.json --out recheck.v1.json --report recheck_report.md --max 120
+          { echo "### atomou recheck"; cat recheck_report.md; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Save the state
+        uses: actions/cache/save@v4
+        with:
+          path: recheck_state.json
+          key: atomou-recheck-state-${{ github.run_id }}
+      - name: Put the file on the server
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then echo "server secrets are not set: the file is only made"; exit 0; fi
+          python -c "import json;d=json.load(open('recheck.v1.json',encoding='utf-8'));assert d['v']==1 and isinstance(d['changed'],list)"
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver && chmod 600 ~/.ssh/id_xserver
+          printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 15' '  StrictHostKeyChecking accept-new' > ~/.ssh/config && chmod 600 ~/.ssh/config
+          ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /dev/null || true
+          cat recheck.v1.json | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" '
+            set -e
+            cd "$HOME/atomou.com"
+            tmp=$(mktemp)
+            cat > "$tmp"
+            for d in public_html public_html/demo public_html/demo.atomou.com; do
+              if [ -f "$d/index.html" ] && [ -f "$d/assets/catalog.json" ]; then
+                mkdir -p "$d/live"
+                cp "$tmp" "$d/live/recheck.v1.json.new"
+                mv "$d/live/recheck.v1.json.new" "$d/live/recheck.v1.json"
+                chmod 644 "$d/live/recheck.v1.json"
+                echo "put: $d/live/recheck.v1.json"
+              fi
+            done
+            rm -f "$tmp"
+          '
+      - name: Keep the report
+        uses: actions/upload-artifact@v4
+        with:
+          name: recheck-report
+          path: recheck_report.md
+          retention-days: 14
