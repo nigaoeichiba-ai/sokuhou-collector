@@ -115,10 +115,26 @@ class DataRoomTest(unittest.TestCase):
         main = self.read("data/price-bands/index.html").split("<main")[1].split("</main>")[0]
         self.assertEqual(re.findall(r"<script(?![^>]*ld\+json)", main), [])                # structured data only: the charts need no script
 
+    def test_budget_pages_exist_for_each_price_range_with_enough_products_and_are_linked_from_the_home_page(self):
+        d = build.prepare(self.c, self.items, CFG)
+        tiers = build.budget_tiers(d)
+        self.assertGreaterEqual(len(tiers), 2)
+        home = self.read("index.html")
+        for tier, pool in tiers:
+            self.assertTrue(len(pool) >= build.MIN_BUDGET_ITEMS and all(build.in_tier(it["price"], tier) for it, _ in pool), tier["slug"])
+            html = self.read(f"budget/{tier['slug']}/index.html")
+            self.assertEqual(html.count('<li class="item"'), len(pool))
+            self.assertIn(f'href="/budget/{tier["slug"]}/"', home)
+            self.assertIn("いちばん多い種類は", html)
+            self.assertEqual(len({it["code"] for it, _ in pool}), len(pool))                # a product once
+        self.assertTrue((self.out / "budget/index.html").exists())
+        self.assertIn("/budget/", self.read("sitemap.xml"))
+
     def test_with_too_few_products_there_is_no_price_chart_and_without_statistics_no_room_at_all(self):
         with tempfile.TemporaryDirectory() as tmp:
             out = render(Path(tmp), json.loads((FIX / "items.json").read_text(encoding="utf-8")))
             self.assertFalse((out / "data/price-bands").exists())                    # 12 products are not a chart
+            self.assertFalse((out / "budget").exists())                              # nor a budget page
             self.assertTrue((out / "data/births-marriages").exists())                # the public statistics need no products
         with tempfile.TemporaryDirectory() as tmp:
             c = content.load(FIX)
