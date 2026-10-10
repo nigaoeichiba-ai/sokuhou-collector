@@ -757,7 +757,43 @@
     function say(w) {
       var n = interestHits(cat, w).length;
       note.innerHTML = n ? '「' + H(w) + '」を追加しました。今は' + n + '件の日があります。' : '「' + H(w) + '」を追加しました。まだ日付がありません。<a href="' + requestLink(w) + '">載せてほしい分野として送る</a>';
+      sendBox(w);
     }
+    /* ask us to look up a word (api/w.php): only when the visitor presses the button; the refusals are the same as the server's (CONF.fw) */
+    var sendEl = $('#int-send');
+    function wordBad(w) {
+      var f = CONF.fw || {}, flat = String(w).normalize ? w.normalize('NFKC').toLowerCase() : String(w).toLowerCase(), i;
+      if (w.length < (f.min || 2) || w.length > (f.max || 30)) return 'length';
+      for (i = 0; i < (f.terms || []).length; i++) if (flat.indexOf(f.terms[i]) >= 0) return 'word';
+      for (i = 0; i < (f.re || []).length; i++) { try { if (new RegExp(f.re[i], 'i').test(flat)) return 'word'; } catch (e) { /* a pattern the browser does not know */ } }
+      return '';
+    }
+    function sentWords() { try { var o = JSON.parse(localStorage.getItem('atomou.words') || '{}'); return o.day === C.iso(TODAY) ? o.list || [] : []; } catch (e) { return []; } }
+    function rememberSent(w) { try { var l = sentWords(); l.push(w); localStorage.setItem('atomou.words', JSON.stringify({ day: C.iso(TODAY), list: l })); } catch (e) { /* no storage */ } }
+    function sendBox(w) {
+      if (!sendEl) return;
+      var bad = wordBad(w);
+      if (bad === 'word') { sendEl.innerHTML = '<p class="muted">「' + H(w) + '」は、調べてもらえない言葉です(ギャンブル・アダルト・個人の情報などは、カードにできません)。</p>'; return; }
+      if (bad) { sendEl.innerHTML = ''; return; }
+      if (sentWords().indexOf(w) >= 0) { sendEl.innerHTML = '<p class="muted">「' + H(w) + '」は、今日、送りました。</p>'; return; }
+      sendEl.innerHTML = '<p><button type="button" class="btn small" data-word-send="' + H(w) + '">このワードを調べてもらう</button></p>' +
+        '<p class="muted">数日以内に、公式の情報を調べます。見つかった日付を、カードにします。見つからないこともあります。押すと、ワードがサーバーに保存されます(個人とは結びつけません。<a href="/privacy/#words">詳しく</a>)。ギャンブル・アダルト・個人の情報などは、カードにできません。</p>';
+    }
+    document.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-word-send]') : null;
+      if (!b || !sendEl) return;
+      var w = b.getAttribute('data-word-send');
+      if (wordBad(w) || sentWords().length >= ((CONF.fw || {}).day || 10)) { sendEl.innerHTML = '<p class="muted">今日は、これ以上は送れません。明日、また送れます。</p>'; return; }
+      b.disabled = true;
+      var ctl = window.AbortController ? new AbortController() : null, t = setTimeout(function () { if (ctl) ctl.abort(); }, 8000);
+      fetch('/api/w.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ v: 1, w: w }), signal: ctl ? ctl.signal : undefined }).then(function (r) {
+        clearTimeout(t);
+        if (r.status === 200) { rememberSent(w); stat('act:word_send'); sendEl.innerHTML = '<p>「' + H(w) + '」を受け付けました。数日以内に調べます。見つかった日付を、カードにします。見つからないこともあります。</p>'; }
+        else if (r.status === 422) sendEl.innerHTML = '<p class="muted">「' + H(w) + '」は、調べてもらえない言葉です(ギャンブル・アダルト・個人の情報などは、カードにできません)。</p>';
+        else if (r.status === 429) sendEl.innerHTML = '<p class="muted">今日は、これ以上は送れません。明日、また送れます。</p>';
+        else { b.disabled = false; sendEl.insertAdjacentHTML('beforeend', '<p class="muted">送れませんでした。時間をおいて、もう一度お試しください。</p>'); }
+      }).catch(function () { clearTimeout(t); b.disabled = false; sendEl.insertAdjacentHTML('beforeend', '<p class="muted">送れませんでした。時間をおいて、もう一度お試しください。</p>'); });
+    });
     loadCatalog().then(function (c) { cat = c || []; });
     document.addEventListener('click', function (ev) {
       var b = ev.target.closest ? ev.target.closest('[data-int],[data-int-drop]') : null;
