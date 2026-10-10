@@ -14,6 +14,10 @@
     "名前が変わった・終わった催しは外れる。『2026』と書いても終了済みの回(2026 年 1 月開催など)が出る",
     "日付が窓(今日から 90 日先)の外のものは、候補にしない"
   ],
+  "forbidden": {
+    "note": "オーナー決定(2026-10-10)。禁止ワードはカードにできない。入力で受け付けず、調べる前にも確認する",
+    "topics": ["ギャンブル系(競馬・競輪・ボートレース・オートレース・パチンコ・パチスロ・カジノ・宝くじ・toto・オンラインカジノ)", "アダルト系", "個人の名前・住所・電話番号などの個人情報", "犯罪・違法・事件・事故・災害の被害", "亡くなった人の話題"]
+  },
   "unusable_domains": {
     "note": "allowed_domains に指定すると検索ツールがエラー(400)にした。代わりの入口を使う",
     "domains": ["tv-asahi.co.jp", "tbs.co.jp", "fujitv.co.jp", "ntv.co.jp", "nhk.or.jp", "mbs.jp", "ytv.co.jp", "bs-asahi.co.jp", "ponycanyon.co.jp"],
@@ -46,7 +50,7 @@
     {"genre": "politics", "topic": "統計・経済指標", "q": "{Y}年{M}月 公表予定 統計 カレンダー", "domains": ["go.jp"], "yield": "命中 10(e-Stat、METI、JILPT)。日銀は or.jp で絞ると boj.or.jp が出る"},
     {"genre": "politics", "topic": "選挙", "q": "令和{和暦}年{M}月 選挙 投票日 一覧", "domains": ["lg.jp"], "yield": "命中 7(東京・千葉・新潟・兵庫・秋田・大阪の選管の日程)"},
     {"genre": "transit", "topic": "工事・運休・冬ダイヤ", "q": "{Y}年{M}月 通行止め 工事 実施日 高速道路", "domains": ["c-nexco.co.jp", "w-nexco.co.jp", "shutoko.jp", "westjr.co.jp"], "yield": "公式 3〜5。ダイヤ改正・運賃改定は発表前だと 0(例年の発表時期の暦を先に調べる)"},
-    {"genre": "sports", "topic": "大会・レース", "q": "{Y}年{M}月 {競技} 日程", "domains": ["jleague.jp", "jra.go.jp", "jaaf.or.jp"], "yield": "公式 3〜4/本(競馬 4/18、J リーグ 3/10)。主催者のドメインを 1 つずつ"}
+    {"genre": "sports", "topic": "大会・レース", "q": "{Y}年{M}月 {競技} 日程", "domains": ["jleague.jp", "jaaf.or.jp"], "yield": "公式 3〜4/本(J リーグ 3/10、日本陸連の年間日程)。主催者のドメインを 1 つずつ。競馬・競輪・ボートレースは、禁止ワード(ギャンブル系)のため扱わない"}
   ],
   "monthly_url_patterns": {
     "note": "本文の未来日付まで確認できたもの(確認)と、検索結果の URL だけ見えたもの(型のみ)。月別の URL を持つ公式ページは、検索を通さずに URL を組み立てて直接取れる(規約と robots.txt の確認が済んだものだけ)",

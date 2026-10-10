@@ -22,6 +22,15 @@ class QueryBank(unittest.TestCase):
             self.assertFalse(any("yahoo" in d.lower() for d in r["domains"]), r["topic"])
             self.assertNotIn("まとめ", r["q"], r["topic"])
 
+    def test_no_recipe_or_theme_goes_after_a_forbidden_topic(self):
+        banned = ("競馬", "競輪", "ボートレース", "パチンコ", "カジノ", "宝くじ", "toto", "jra.go.jp", "keirin.jp", "boatrace.jp")
+        self.assertIn("ギャンブル", " ".join(DATA["forbidden"]["topics"]))
+        blob = json.dumps(DATA["recipes"], ensure_ascii=False)
+        themes = (ROOT / "data" / "atomou" / "research_themes.json").read_text(encoding="utf-8")
+        for w in banned:
+            self.assertNotIn(w, blob.replace("競馬・競輪・ボートレースは、禁止ワード(ギャンブル系)のため扱わない", ""), w)
+            self.assertNotIn(w, themes, w)
+
     def test_the_domains_the_search_tool_refuses_are_not_used_in_a_recipe(self):
         bad = set(DATA["unusable_domains"]["domains"])
         for r in DATA["recipes"]:
