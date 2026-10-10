@@ -478,7 +478,7 @@ body{word-break:auto-phrase;text-wrap:pretty}
 .inrow{display:flex;align-items:stretch;gap:6px;min-width:0}.inrow>input,.inrow>textarea{flex:1;min-width:0}.task-add .inrow{flex:1;min-width:10em}
 .mic-btn{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;min-height:44px;padding:0;border:2px solid var(--line);border-radius:999px;background:var(--surface);color:var(--accent);cursor:pointer}
 .mic-btn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}.mic-btn .mic{color:inherit}
-.pick{display:inline-flex;gap:4px;align-items:stretch;max-width:100%}.pick .chip.fold{padding:0 10px;font-size:.8rem;min-width:44px;justify-content:center}.setup .chip[aria-disabled="true"]{cursor:default;opacity:.85}
+.pick{display:inline-flex;gap:4px;align-items:stretch;max-width:100%;min-width:0}.pick>.chip:not(.fold){min-width:0;flex:1 1 auto}.pick .chip-t{min-width:0;overflow-wrap:anywhere}.pick .chip.fold{flex:none}.pick .chip.fold{padding:0 10px;font-size:.8rem;min-width:44px;justify-content:center}.setup .chip[aria-disabled="true"]{cursor:default;opacity:.85}
 .pick-panel{margin:.6rem 0;padding:.6rem .7rem;border:2px solid var(--line);border-radius:var(--radius,12px);background:var(--surface)}.pick-panel .hint{margin:0 0 .5rem}.pick-sub{margin-top:.6rem;padding-top:.5rem;border-top:1px dashed var(--line)}.pick-sub .hint{margin:0 0 .5rem}
 .eg-cards{display:grid;gap:10px;margin:.4rem 0 .8rem;pointer-events:none;user-select:none}@media (min-width:600px){.eg-cards{grid-template-columns:1fr 1fr}}
 .setup .chip[aria-pressed="true"] .chip-t small,.setup .chip.on .chip-t small{color:inherit}
