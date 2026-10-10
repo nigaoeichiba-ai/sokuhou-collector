@@ -161,11 +161,10 @@
   var draft = card || { t: '', d: C.iso(C.addDays(TODAY, 30)), tm: '', m: '', th: 0, tasks: [], e: '', k: 'event' };
 
   function shareHtml() {
-    return '<section class="share" id="x-share" data-text="" data-url=""><h2>送る</h2><p class="hint">リンクの中に、このカードの内容が入っています。当サイトのサーバーには保存されません。</p>' +
-      '<p class="share-btns"><a class="btn small" data-share-to="line" href="#" target="_blank" rel="noopener">LINEで送る</a> <a class="btn small ghost" data-share-to="x" href="#" target="_blank" rel="noopener">Xで投稿</a> ' +
-      '<button type="button" class="btn small ghost" data-share="copy">リンクをコピー</button> <button type="button" class="btn small ghost" data-share="native" hidden>ほかのアプリで送る</button></p>' +
-      '<h3 class="x-h3">画像で送る</h3><p class="share-btns"><button type="button" class="btn small ghost" data-x-img="wide">横長(X・LINE)</button> <button type="button" class="btn small ghost" data-x-img="square">正方形(Instagram)</button> <button type="button" class="btn small ghost" data-x-img="story">縦長(ストーリーズ・TikTok・Shorts)</button></p>' +
-      '<p class="hint">画像には日数が入ります。画像のそばに、リンクを書き添えると、見た人がカードを開けます。</p></section>';
+    return '<div class="share share-row" id="x-share" data-text="" data-url="" title="リンクの中に、このカードの内容が入っています。サーバーには保存されません。"><span class="share-lead">送る</span>' + AtomouShare.icons(['line', 'x', 'copy', 'native']) +
+      '<span class="share-sep" aria-hidden="true"></span><span class="share-lead">画像</span>' +
+      '<button type="button" class="sbt sbt-t" data-x-img="wide" title="横長(X・LINE)">横</button><button type="button" class="sbt sbt-t" data-x-img="square" title="正方形(Instagram)">正</button><button type="button" class="sbt sbt-t" data-x-img="story" title="縦長(ストーリーズ・TikTok・Shorts)">縦</button></div>' +
+      '<p class="hint">リンクの中に、カードの内容が入っています(サーバーには保存されません)。画像は、横=X・LINE、正=Instagram、縦=ストーリーズ・TikTok・Shorts。</p>';
   }
   function wireShare(card) {
     var s = $('#x-share'); if (!s) return;

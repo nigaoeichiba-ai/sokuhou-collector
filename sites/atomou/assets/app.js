@@ -695,16 +695,12 @@
     });
   }
   function pageInterests() {
-    var chips = $$('[data-int]'), chosen = $('#int-chosen'), note = $('#int-note'), q = $('#int-q'), form = $('#int-form'), share = $('#int-share'), go = $('#int-go'), pick = $('#int-pick'), cat = [];
+    var chips = $$('[data-int]'), chosen = $('#int-chosen'), note = $('#int-note'), q = $('#int-q'), form = $('#int-form'), go = $('#int-go'), cat = [];
     function sync() {
       chips.forEach(function (b) { b.setAttribute('aria-pressed', hasInterest(b.getAttribute('data-int')) ? 'true' : 'false'); });
       chosen.innerHTML = S.interests.length ? '<p class="hint">選んだ分野(押すと外せます)</p><div class="chiprow">' + S.interests.map(function (w) { return '<button type="button" class="chip" aria-pressed="true" data-int-drop="' + H(w) + '">' + H(w) + ' ×</button>'; }).join('') + '</div>'
         : '<p class="hint">まだ選んでいません。下の分野を押すか、言葉を入れて追加します。</p>';
       go.hidden = !S.interests.length;
-      share.hidden = !S.interests.length;
-      share.setAttribute('data-text', '好きな分野の日付を、あと何日かで見られます: ' + S.interests.slice(0, 8).join('・'));
-      share.setAttribute('data-url', location.origin + '/interests/?pick=' + encodeURIComponent(S.interests.slice(0, 10).join(',')));
-      if (window.AtomouShare) AtomouShare.init(share);
     }
     function say(w) {
       var n = interestHits(cat, w).length;
@@ -733,14 +729,6 @@
       $$('[data-int-sec]').forEach(function (s) { s.hidden = !!t && !$$('[data-int]', s).some(function (b) { return !b.hidden; }); });
     }
     q.addEventListener('input', filter);
-    if (P.pick) {   // a link from a friend: the fields they chose, offered (never added without a tap)
-      var words = cleanInterests(String(P.pick).split(',')).slice(0, 10);
-      if (words.length) {
-        pick.hidden = false;
-        pick.innerHTML = '<p>友だちが選んだ分野: <b>' + words.map(H).join('・') + '</b></p><p><button type="button" class="btn small" id="int-take">この分野を自分の好きな分野にする</button></p>';
-        $('#int-take').addEventListener('click', function () { words.forEach(function (w) { setInterest(w, true); }); pick.hidden = true; note.textContent = '追加しました。ホームに、その分野の日が並びます。'; sync(); });
-      }
-    }
     sync();
   }
   function toggleLabel(b) {

@@ -458,16 +458,11 @@ def interests_page(c: Ctx, live: list[dict]) -> str:
     body = f"""{crumbs([("トップ", "/"), ("好きな分野", None)])}
 <h1>好きな分野を選ぶ</h1>
 <p class="lead muted">選んだ分野の日が、ホームにまとまって並びます。まだ日付のない分野(準備中)も選べます。選んだ内容は、この端末の中に保存されます。</p>
-<div id="int-pick" class="panel" hidden></div>
 <div id="int-chosen"></div>
 <div class="sbox"><form class="searchbox" id="int-form" role="search"><label class="vh" for="int-q">分野を探す・追加する</label>
 <input type="text" id="int-q" maxlength="24" autocomplete="off" placeholder="探す・追加する(例: 剣道、釣り、写真)" enterkeyhint="done"><button type="submit" class="sbtn" aria-label="追加">{ICONS['plus']}</button></form></div>
 <p class="small muted" id="int-note" aria-live="polite"></p>
 <p class="int-go" id="int-go" hidden><a class="btn" href="/">選んだ分野の日を見る</a></p>
-<section class="share" id="int-share" aria-label="好きな分野を人に送る" hidden data-url="">
-<h2>好きな分野を人に送る</h2><p class="hint">送るのは、選んだ分野の名前だけです。予定や記録は入りません。</p>
-<p class="share-btns"><a class="btn small" data-share-to="line" href="#" target="_blank" rel="noopener">LINEで送る</a> <a class="btn small ghost" data-share-to="x" href="#" target="_blank" rel="noopener">Xで投稿</a>
-<button type="button" class="btn small ghost" data-share="copy">リンクをコピー</button> <button type="button" class="btn small ghost" data-share="native" hidden>ほかのアプリで送る</button></p></section>
 {"".join(secs)}
 <noscript><p class="notice">分野を選ぶには JavaScript が必要です。<a href="/search/">さがす</a>からも探せます。</p></noscript>"""
     return c.page("/interests/", f"好きな分野を選ぶ | {NAME}", "将棋・流星群・英検・剣道・手芸など、好きな分野を選ぶと、その分野の日付がホームに並びます。選んだ内容は端末の中に保存されます。", body, "interests", noindex=True)
@@ -672,21 +667,34 @@ def outlook_calendar_url(e: dict, page_url: str) -> str:
             + "&enddt=" + last.isoformat() + "&allday=true&body=" + quote(f"詳しい日付と出典: {page_url}"))
 
 
+SHARE_ICONS = {
+    "line": '<path d="M4 5h16v11h-8.5L7 20v-4H4z"/>',
+    "x": '<path d="M5 5l14 14M19 5L5 19"/>',
+    "copy": '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+    "image": '<rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M4 17l5-5 4 4 3-3 4 4"/>',
+    "native": '<circle cx="6" cy="12" r="2"/><circle cx="17" cy="6" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 11l7-4M8 13l7 4"/>',
+}
+
+
+def share_icon(kind: str, label: str, *, href: str = "", hidden: bool = False) -> str:
+    """One small round icon button of the share row (the words are for screen readers and the tooltip)."""
+    svg = f'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{SHARE_ICONS[kind]}</svg><span class="vh">{label}</span>'
+    if kind in ("line", "x"):
+        return f'<a class="sbt" data-share-to="{kind}" href="{esc(href)}" target="_blank" rel="noopener" title="{label}">{svg}</a>'
+    return f'<button type="button" class="sbt" data-share="{kind}" title="{label}"{" hidden" if hidden else ""}>{svg}</button>'
+
+
 def share_block(c: Ctx, e: dict) -> str:
-    """Buttons to send a public day to somebody: LINE, X, the link, a picture, the phone's share sheet.  The words are filled in by share.js (with today's count); the links here work without it."""
+    """Icons to send a public day to somebody (LINE, X, the link, a picture, the phone's share sheet) in one thin row.  share.js fills in today's count; the links work without it."""
     page_url = f"{str(c.cfg['site_url']).rstrip('/')}/e/{e['id']}/"
     fmt = fmt_date(e["date"], e["precision"])
     text = f"「{e['title']}」({fmt})。出典つきの公式の日付です。"
     line = "https://line.me/R/msg/text/?" + quote(text + chr(10) + page_url)
     x = "https://twitter.com/intent/tweet?text=" + quote(text) + "&url=" + quote(page_url, safe="")
-    return (f'<section class="share" aria-label="人に送る" data-title="{esc(e["title"])}" data-date="{e["date"]}" data-p="{e["precision"]}" data-url="{esc(page_url)}">'
-            '<h2>人に送る</h2><p class="hint">送るのは、この公式の日付のページです。あなたの予定は入りません。</p>'
-            f'<p class="share-btns"><a class="btn small" data-share-to="line" href="{esc(line)}" target="_blank" rel="noopener">LINEで送る</a> '
-            f'<a class="btn small ghost" data-share-to="x" href="{esc(x)}" target="_blank" rel="noopener">Xで投稿</a> '
-            '<button type="button" class="btn small ghost" data-share="copy">リンクをコピー</button> '
-            '<button type="button" class="btn small ghost" data-share="image">画像で保存</button> '
-            '<button type="button" class="btn small ghost" data-share="native" hidden>ほかのアプリで送る</button></p>'
-            f'<p class="hint"><a href="/card/#from=c:{e["id"]}">ひとことを足して、自分のカードにして送る</a>(バンドのライブ、取引先との予定、友だちとの約束にも使えます)</p></section>')
+    return (f'<div class="share share-row" aria-label="人に送る" data-title="{esc(e["title"])}" data-date="{e["date"]}" data-p="{e["precision"]}" data-url="{esc(page_url)}">'
+            '<span class="share-lead">送る</span>'
+            + share_icon("line", "LINEで送る", href=line) + share_icon("x", "Xで投稿", href=x) + share_icon("copy", "リンクをコピー") + share_icon("image", "画像で保存") + share_icon("native", "ほかのアプリで送る", hidden=True)
+            + f'<a class="share-more" href="/card/#from=c:{e["id"]}" title="ひとこと・やることを足したカードにして送ります">カードにして送る</a></div>')
 
 
 def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
@@ -994,6 +1002,31 @@ def terms_page(c: Ctx) -> str:
     return c.page("/terms/", f"利用規約 | {NAME}", "会員機能の利用規約です。無料の会員登録、先着の特典、紹介、お知らせのメール、退会について。", body, "legal")
 
 
+# The shared legal pages (sokuhou/sitekit.py, also used by the other sites) are worded for all of them; this site's owner approved a plainer wording on 2026-10-10.
+# Each pair is (the shared sentence, this site's sentence); a test checks that none of the shared sentences is left on the three pages.
+LEGAL_WORDING = [
+    ("お問い合わせの際にいただいたお名前・メールアドレスなどは、返信のためだけに使い、法令に基づく場合を除いて、第三者へ提供しません。", "お問い合わせでいただいた内容は、返信のためだけに使います。法令にもとづく場合を除いて、第三者には提供しません。"),
+    ("お問い合わせフォームでは、ご用件の内容と、(任意で)該当ページのアドレス、メールアドレスをお預かりします。あわせて、迷惑メッセージを防ぐため、送信元のIPアドレスを、毎日変わる値で変換した記号(元のIPアドレスには戻せません)と、ブラウザの種類を記録します。これらは、サイトの改善と、お返事のためだけに使い、法令に基づく場合を除いて、第三者へ提供しません。メールアドレスをいただいても、お返事できないことがあります。",
+     "お問い合わせフォームでは、ご用件の内容と、入力された場合のページのアドレスとメールアドレスをお預かりします。迷惑メッセージを防ぐため、送信元のIPアドレスを毎日変わる値に変換した記号(元のIPアドレスには戻せません)と、ブラウザの種類も記録します。いただいた情報は、サイトの改善と返信のためだけに使います。法令にもとづく場合を除いて、第三者には提供しません。メールアドレスをいただいても、返信できないことがあります。"),
+    ("当サイトは、第三者配信の広告サービス「Google AdSense」を利用する場合があります。広告配信事業者は、利用者の興味に応じた広告を表示するために、Cookie(クッキー)を使用することがあります。", "当サイトでは、第三者配信の広告サービス「Google AdSense」を利用することがあります。広告配信事業者は、利用者の興味に合わせた広告を表示するために、Cookie を使うことがあります。"),
+    ("Cookie を無効にする、または、パーソナライズ広告を無効にするには、", "Cookie やパーソナライズ広告を無効にするには、"),
+    ("第三者配信事業者による Cookie の使用を無効にするには、", "第三者配信事業者による Cookie の使用は、"),
+    ('aboutads.info</a> もご利用いただけます。', 'aboutads.info</a> からも無効にできます。'),
+    ("広告の配信にあたり、お使いのブラウザから広告配信事業者へ、閲覧に関する情報が送信されることがあります。", "広告を配信するため、お使いのブラウザから広告配信事業者へ、閲覧に関する情報が送られることがあります。"),
+    ("当サイトには、商品やサービスの紹介リンク(アフィリエイトリンク)が含まれる場合があります。該当するページには、広告であることを明示します。リンク先で商品が購入されると、当サイトの運営者に報酬が支払われることがあります。", "当サイトには、商品やサービスを紹介するリンク(アフィリエイトリンク)が含まれることがあります。該当するページには、広告であることを書いています。リンク先で商品が購入されると、運営者に報酬が支払われることがあります。"),
+    ("</a>に記載しています。</p>", "</a>に載せています。</p>"),
+    ("このポリシーは、必要に応じて見直し、変更する場合があります。変更後の内容は、このページに掲載した時点から効力を持ちます。", "このポリシーは、必要に応じて見直し、変更することがあります。変更後の内容は、このページに載せた時点から有効です。"),
+    ("データの誤りのご指摘、ご意見・ご要望は、次からお送りください。内容によっては、お返事に日数がかかることや、お返事できないことがあります。", "データの誤りのご指摘、ご意見・ご要望は、次のフォームからお送りください。内容によっては、返信に日数がかかることや、返信できないことがあります。"),
+    ("の内容に同意したものとみなします。いただいた内容は、サイトの改善と、お返事のためだけに使います。", "に同意したものとして扱います。いただいた内容は、サイトの改善と返信のためだけに使います。"),
+]
+
+
+def legal_wording(html: str) -> str:
+    for old, new in LEGAL_WORDING:
+        html = html.replace(old, new)
+    return re.sub(r"このポリシーに関するお問い合わせは、(.*?)からお願いします。", r"このポリシーについてのお問い合わせは、\1からお送りください。", html)
+
+
 def privacy_fix(c: Ctx, html: str) -> str:
     """The shared privacy page says that no analytics is used; this site counts fixed items (and may offer a Google Drive hand-over), so that part is replaced."""
     if "<title>プライバシーポリシー" not in html:
@@ -1002,7 +1035,7 @@ def privacy_fix(c: Ctx, html: str) -> str:
     if old not in html:
         raise BuildError("sitekit's privacy text changed: update privacy_fix in sites/atomou/build.py")
     if members_on(c.cfg):
-        html = html.replace("当サイトは、会員登録などの機能を持ちません。", "会員登録は任意です(下の「会員登録(任意)」)。", 1)
+        html = html.replace("当サイトは、会員登録などの機能を持ちません。", "会員登録は任意です(下の「会員登録(任意)」を参照)。", 1)
     return html.replace(old, STATS_SECTION + ("\n" + PUSH_SECTION if c.cfg.get("vapid_public") else "") + ("\n" + MEMBERS_SECTION if members_on(c.cfg) else "") + ("\n" + GOOGLE_SECTION if c.cfg.get("google_client_id") else ""), 1)
 
 
@@ -1013,9 +1046,9 @@ def legal(c: Ctx) -> dict:
         purpose="記録した日について、あと何日、もう何日かを数え、カレンダーで見られるようにすること。締切・試験・大会・お祭りの公式の日付を、ワンタップで予定に入れられるようにすること。",
         sources_html="各日付のページに、出典(官公庁・主催者の公式ページ)と確認日を載せています。",
         update_text="公式の発表をもとに、随時確認・追加します。",
-        disclaimer_html="<p>日付は公式の発表をもとに確認していますが、変更・中止されることがあります。申し込みや手続きの前に、出典の公式ページでご確認ください。当サイトの情報にもとづく行動の結果について、当サイトは責任を負いません。</p>"
-                        "<p>「あと○日」「もう○日」は、お使いの端末の日付をもとにブラウザの中で数えています。端末の日付がずれていれば、数字もずれます。</p>",
-        contact_notice="日付の誤りのご指摘は、ページの名前と、正しい日付の出典(アドレス)を添えていただけると早く確認できます。",
+        disclaimer_html="<p>日付は公式の発表をもとに確認していますが、変更や中止になることがあります。申し込みや手続きの前に、出典の公式ページで確認してください。当サイトの情報をもとにした行動の結果について、当サイトは責任を負いません。</p>"
+                        "<p>「あと○日」「もう○日」は、お使いの端末の日付をもとに、ブラウザの中で数えています。端末の日付がずれていると、数字もずれます。</p>",
+        contact_notice="日付の誤りのご指摘は、ページの名前と、正しい日付の出典(アドレス)を添えていただけると、早く確認できます。",
         input_note=("<h2>この端末に保存する情報</h2>"
                     "<p>記録した日(名前・日付・時刻・メモ・やること・設定)と、予定に入れた日の一覧、選んだ好きな分野は、お使いのブラウザの中(localStorage)だけに保存します。当サイトのサーバーには送りません。"
                     "ブラウザのデータを消すと記録も消えます。バックアップはマイページの「書き出す」で作れます。</p>"
@@ -1023,7 +1056,7 @@ def legal(c: Ctx) -> dict:
                     "<p>ジャンルのページから、公式の日付をカレンダーアプリに購読できます。購読用のファイルは、誰でも取得できる公開データです。購読すると、Google などのカレンダーのサービスが、定期的にこのファイルを取りに来ます。当サイトは、購読した人を知ることはありません。</p>"
                     "<h2>カードの共有(任意)</h2>"
                     "<p>「カードを作って送る」で作ったカードの内容(題名・日付・ひとこと・やること)は、リンクのうち「#」より後ろに入ります。この部分は、ブラウザから当サイトのサーバーへは送られず、保存もされません。リンクを渡した相手の端末で、カードとして表示されます。リンクを送る相手と手段は、あなたが選びます。</p>"),
-        finish=lambda html: c.finish(privacy_fix(c, html), "legal"),
+        finish=lambda html: c.finish(legal_wording(privacy_fix(c, html)), "legal"),
     )
 
 

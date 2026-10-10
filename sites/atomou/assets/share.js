@@ -150,6 +150,21 @@
     return 'https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=' + enc(title) + '&startdt=' + s(d) + '&enddt=' + s(C.addDays(d, 1)) + '&allday=true&body=' + enc(detail || '');
   }
 
+  var ICON = {
+    line: '<path d="M4 5h16v11h-8.5L7 20v-4H4z"/>', x: '<path d="M5 5l14 14M19 5L5 19"/>',
+    copy: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+    image: '<rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M4 17l5-5 4 4 3-3 4 4"/>',
+    native: '<circle cx="6" cy="12" r="2"/><circle cx="17" cy="6" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 11l7-4M8 13l7 4"/>'
+  };
+  var LABEL = { line: 'LINEで送る', x: 'Xで投稿', copy: 'リンクをコピー', image: '画像で保存', native: 'ほかのアプリで送る' };
+  function icons(kinds) {   /* one thin row of small icon buttons (the words are for screen readers and the tooltip) */
+    return kinds.map(function (k) {
+      var svg = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[k] + '</svg><span class="vh">' + LABEL[k] + '</span>';
+      return (k === 'line' || k === 'x') ? '<a class="sbt" data-share-to="' + k + '" href="#" target="_blank" rel="noopener" title="' + LABEL[k] + '">' + svg + '</a>'
+        : '<button type="button" class="sbt" data-share="' + k + '" title="' + LABEL[k] + '"' + (k === 'native' ? ' hidden' : '') + '>' + svg + '</button>';
+    }).join('');
+  }
+
   init();
-  window.AtomouShare = { init: init, words: words, googleUrl: googleUrl, outlookUrl: outlookUrl, drawCard: drawCard };
+  window.AtomouShare = { icons: icons, init: init, words: words, googleUrl: googleUrl, outlookUrl: outlookUrl, drawCard: drawCard };
 })();

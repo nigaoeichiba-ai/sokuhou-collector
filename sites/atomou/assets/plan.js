@@ -235,13 +235,10 @@
           '<button type="button" class="btn small ghost" data-ics-for="' + H(key) + '">ファイルを作る</button></p></details>';
       }
       if (!(own && (!e || e.quiet))) {   // a day of one's own is sent as words and a picture only (no page to link to), without its title unless the box is ticked
-        h += '<section class="plan-sec share" aria-label="人に送る" data-title="' + H(item.title) + '" data-date="' + H(item.date) + '" data-p="' + H(item.p) + '"' +
-          (own ? ' data-private="1"' : ' data-url="' + H(location.origin + '/e/' + item.id + '/') + '"') + '><h2>人に送る</h2>' +
-          (own ? '<div class="field"><label class="lab" for="sh-title"><input type="checkbox" id="sh-title" data-share-title> 題名も入れる(オフなら「ある日まで、あと○日」)</label></div>' : '<p class="hint">送るのは、この公式の日付のページです。あなたの予定は入りません。</p>') +
-          '<p class="share-btns"><a class="btn small" data-share-to="line" href="#" target="_blank" rel="noopener">LINEで送る</a> <a class="btn small ghost" data-share-to="x" href="#" target="_blank" rel="noopener">Xで投稿</a> ' +
-          '<button type="button" class="btn small ghost" data-share="copy">文面をコピー</button> <button type="button" class="btn small ghost" data-share="image">画像で保存</button> ' +
-          '<button type="button" class="btn small ghost" data-share="native" hidden>ほかのアプリで送る</button></p>' +
-          '<p class="hint"><a href="/card/#from=' + H(key) + '">ひとこと・やることを入れたカードにして送る</a>(受け取った人が1タップで自分の予定帳に入れられます)</p></section>';
+        h += '<div class="plan-sec share share-row" aria-label="人に送る" data-title="' + H(item.title) + '" data-date="' + H(item.date) + '" data-p="' + H(item.p) + '"' +
+          (own ? ' data-private="1"' : ' data-url="' + H(location.origin + '/e/' + item.id + '/') + '"') + '><span class="share-lead">送る</span>' + AtomouShare.icons(['line', 'x', 'copy', 'image', 'native']) +
+          '<a class="share-more" href="/card/#from=' + H(key) + '" title="ひとこと・やることを入れたカードにして送ります">カードにして送る</a>' +
+          (own ? '<label class="lab share-title" for="sh-title"><input type="checkbox" id="sh-title" data-share-title> 題名も入れる</label>' : '') + '</div>';
       }
       box.innerHTML = h;
       if (window.AtomouShare) AtomouShare.init(box);
