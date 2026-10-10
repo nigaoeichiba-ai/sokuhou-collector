@@ -577,8 +577,9 @@ footer.site .src { color: var(--muted); }
   .hero h1 { font-size: calc((100vw - 40px) / 12.6); }
   header.site { position: static; }
   header.site .wrap { flex-wrap: wrap; row-gap: 4px; }
-  header.site nav { width: 100%; justify-content: flex-start; gap: 2px 16px; }
-  header.site nav a { font-size: .86rem; white-space: nowrap; }
+  header.site nav { width: 100%; justify-content: flex-start; flex-wrap: nowrap; gap: 2px 18px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  header.site nav::-webkit-scrollbar { display: none; }
+  header.site nav a { flex: none; font-size: .86rem; white-space: nowrap; }
   .quick-table, .quick-table tbody, .quick-table tr, .quick-table th, .quick-table td { display: block; }
   .quick-table thead { display: none; }
   .quick-table tr { padding: .55em 0; border-bottom: 1px solid var(--line2); }
