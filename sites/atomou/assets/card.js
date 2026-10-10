@@ -60,7 +60,7 @@
     if (!m) return null;
     try { return clean(JSON.parse(b64dec(m[1]))); } catch (e) { return null; }
   }
-  function linkOf(card) { return location.origin + '/card/#c=' + pack(card); }
+  function linkOf(card) { return linked && A.shared ? A.shared.linkOf(linked, false) : location.origin + '/card/#c=' + pack(card); }
 
   /* ---------- reading the day ---------- */
   function count(card) {
@@ -159,7 +159,8 @@
   }
 
   /* ---------- the page ---------- */
-  var box = $('#card-box'), card = fromHash(), editing = !card || /[#&]edit=1/.test(location.hash || '');
+  var box = $('#card-box'), card = fromHash(), editing = !card || /[#&]edit=1/.test(location.hash || ''), linked = null, sref = A.shared && A.shared.parseRef(location.hash);   // linked: a card kept up to date on the server
+  if (sref) { card = null; editing = false; }
   var draft = card || { t: '', d: C.iso(C.addDays(TODAY, 30)), tm: '', m: '', th: 0, tasks: [], e: '', k: 'event' };
 
   function shareHtml() {
@@ -182,20 +183,88 @@
     return '<a class="btn small ghost" href="' + H(g) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a> <a class="btn small ghost" href="' + H(o) + '" target="_blank" rel="noopener">Outlookに追加</a>';
   }
 
+  /* ---------- a card kept up to date: the extra actions ---------- */
+  function when_(ts) { var d = new Date((+ts || 0) * 1000); return isNaN(d) || !ts ? '' : (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2); }
+  function sharedViewHtml() {
+    if (!linked) return '';
+    var fol = A.shared.find(linked.id), following = !!(fol && fol.follow !== false);
+    return '<div class="x-shared" id="x-shared"><p><b>更新が届く共有カード</b>' + (linked.upd ? '(最終更新: ' + H(when_(linked.upd)) + ')' : '') + '</p>' +
+      '<p class="x-actions">' + (following ? '<button type="button" class="btn small ghost" id="x-unfollow">フォローをやめる</button>' : '<button type="button" class="btn small" id="x-follow">このカードをフォローする(更新をお知らせ)</button>') +
+      (linked.e ? ' <button type="button" class="btn small" id="x-edit-shared">編集して更新する</button>' : '') + ' <button type="button" class="btn small ghost" id="x-report">問題を知らせる</button></p>' +
+      '<p class="hint">リンクを知っている人は、だれでもこのカードを読めます。' + (linked.e ? 'いま開いているのは編集用のリンクです。知っている人は、だれでも直せます。他の人には、読むだけのリンクを渡してください。' : '') + '</p>' +
+      (linked.e ? '<p class="x-actions"><button type="button" class="btn small ghost" data-copy="' + H(A.shared.linkOf(linked, false)) + '">読むだけのリンクをコピー</button> <button type="button" class="btn small ghost" data-copy="' + H(A.shared.linkOf(linked, true)) + '">編集用のリンクをコピー</button> <button type="button" class="btn small ghost" id="x-del-shared">この共有カードを消す</button></p>' : '') + '</div>';
+  }
+  function copyText(t) {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { A.toast('コピーしました。'); }, function () { A.toast('コピーできませんでした。'); });
+    else A.toast('コピーできませんでした。');
+  }
+  function wireSharedView() {
+    var s = $('#x-shared'); if (!s) return;
+    s.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('button') : null;
+      if (!b) return;
+      if (b.hasAttribute('data-copy')) { copyText(b.getAttribute('data-copy')); return; }
+      if (b.id === 'x-follow') {
+        if (A.shared.follow(linked, { card: card, ver: linked.ver, upd: linked.upd })) {
+          if (window.Notification && Notification.permission === 'default') { try { Notification.requestPermission(); } catch (e) { /* the browser decides */ } }
+          A.toast('フォローしました。更新があると、お知らせします。'); viewMode();
+        }
+      } else if (b.id === 'x-unfollow') { A.shared.unfollow(linked.id); A.toast('フォローをやめました。'); viewMode(); }
+      else if (b.id === 'x-edit-shared') { draft = clean(JSON.parse(JSON.stringify(card))); editing = true; history.replaceState(null, '', location.pathname + location.search + '#s=' + linked.id + '.' + linked.k + '.' + linked.e + '&edit=1'); render(); }
+      else if (b.id === 'x-report') { A.shared.report(linked.id).then(function (ok) { A.toast(ok ? '知らせました。ありがとうございます。' : '送れませんでした。'); }); }
+      else if (b.id === 'x-del-shared') {
+        if (window.confirm('この共有カードを消します。フォローしている人にも見えなくなります。よろしいですか。')) A.shared.remove(linked).then(function (ok) { if (ok) { A.toast('消しました。'); location.href = '/card/'; } else A.toast('消せませんでした。'); });
+      }
+    });
+  }
+  function sharedEditHtml() {
+    if (!A.shared || !A.shared.supported()) return '';
+    var can = !!(linked && linked.e);
+    return '<p class="x-actions"><button type="button" class="btn" id="x-shared-go">' + (can ? '共有カードを更新する' : '更新が届く共有カードにする') + '</button></p>' +
+      '<p class="hint">' + (can ? 'フォローしている人に、新しい内容が届きます。' : 'リンクを渡した人のカードが、あなたの更新に合わせて変わります。内容は暗号にして預かり、鍵はリンクの中にだけあります。') + '</p><div id="x-shared-out" aria-live="polite"></div>';
+  }
+  function wireSharedEdit() {
+    var go = $('#x-shared-go'); if (!go) return;
+    go.addEventListener('click', function () {
+      readForm(); draft.tasks = draft.tasks.filter(function (t) { return t.x; });
+      if (!draft.t) { A.toast('題名を入れてください。'); return; }
+      var c = clean(draft), out = $('#x-shared-out');
+      var can = !!(linked && linked.e);
+      if (!can && A.tier && A.tier.sharedBlocked && A.tier.sharedBlocked()) return;
+      go.disabled = true; out.textContent = '送っています…';
+      var job = can ? A.shared.update(linked, c).then(function (r) { linked.ver = r.ver; linked.upd = r.upd; return linked; }) : A.shared.create(c).then(function (x) { linked = x; return x; });
+      job.then(function (x) {
+        card = c; history.replaceState(null, '', location.pathname + location.search + '#s=' + x.id + '.' + x.k + '.' + x.e);
+        out.innerHTML = '<p>' + (can ? '更新しました。フォローしている人には、サイトを開いたとき、または数分のうちに届きます。' : '共有カードができました。') + '</p><p class="x-actions"><button type="button" class="btn small" id="x-view">できあがりを見る</button></p>' + shareHtml();
+        wireShare(card);
+        $('#x-view').addEventListener('click', function () { editing = false; render(); window.scrollTo(0, 0); });
+        go.disabled = false;
+      }, function (err) {
+        go.disabled = false;
+        if (err && err.message === 'conflict') {
+          out.innerHTML = '<p>他の人が先に更新しました。最新の内容を読み込んでから、もう一度直してください。</p><p class="x-actions"><button type="button" class="btn small" id="x-newest">最新の内容を読み込む</button></p>';
+          $('#x-newest').addEventListener('click', function () {
+            A.shared.read(linked).then(function (r) { linked.ver = r.ver; linked.upd = r.upd; draft = clean(r.card) || draft; A.shared.put({ id: linked.id, ver: r.ver, seen: r.ver }); render(); }, function () { A.toast('読み込めませんでした。'); });
+          });
+        } else out.textContent = err && err.message === 'limit' ? '今日は、共有カードを作れる数に達しました。明日、もう一度お試しください。' : '送れませんでした。しばらくして、もう一度お試しください。';
+      });
+    });
+  }
   function viewMode() {
     A.stat('act:card_view');
     box.innerHTML = '<div id="x-card">' + cardHtml(card) + '</div>' +
       '<p class="x-actions"><button type="button" class="btn" id="x-add">自分の予定帳に入れる</button> ' + calLinks(card) + '</p>' +
       '<p class="hint" id="x-added" aria-live="polite"></p>' +
       '<p class="x-actions"><button type="button" class="btn small ghost" id="x-edit">このカードを直して、自分のカードにする</button> <a class="btn small ghost" href="/card/">新しいカードを作る</a>' + (card.e ? ' <a class="btn small ghost" href="/e/' + H(card.e) + '/">この日の公式ページ(出典つき)</a>' : '') + '</p>' +
-      shareHtml() +
+      sharedViewHtml() + shareHtml() +
       '<p class="small muted">このカードの内容は、リンクを作った人が書いたものです。当サイトは内容を確認していません。心当たりのないカードや、不審なお願いが書かれたカードは、開かずに閉じてください。</p>';
     wireShare(card);
+    wireSharedView();
     $('#x-add').addEventListener('click', function () {
       var key = addToPlanner(card);
       if (key) { $('#x-added').innerHTML = '予定帳に入れました。<a href="/plan/?key=' + H(key) + '">メモ・やることを見る</a> / <a href="/calendar/">カレンダーを見る</a>'; A.toast('予定帳に入れました。'); }
     });
-    $('#x-edit').addEventListener('click', function () { draft = clean(JSON.parse(JSON.stringify(card))); editing = true; history.replaceState(null, '', '/card/#edit=1'); render(); });
+    $('#x-edit').addEventListener('click', function () { linked = null; draft = clean(JSON.parse(JSON.stringify(card))); editing = true; history.replaceState(null, '', location.pathname + location.search + '#edit=1'); render(); });
   }
 
   function editMode() {
@@ -213,8 +282,8 @@
       '<div class="field"><label for="x-k">種類</label><select id="x-k">' + KIND_OK.map(function (k) { return '<option value="' + k + '"' + (d.k === k ? ' selected' : '') + '>' + H(KINDS[k].t) + '</option>'; }).join('') + '</select></div>' +
       '<div class="field"><span class="lab">色</span><div class="x-themes" role="group" aria-label="色">' + THEMES.map(function (t, i) { return '<button type="button" class="x-th" data-th="' + i + '" aria-pressed="' + (d.th === i) + '" style="background:' + t.bg + ';color:' + t.fg + ';border-color:' + t.ac + '">' + H(t.n) + '</button>'; }).join('') + '</div></div>' +
       '<div class="field"><span class="lab">やること(何日前までに)</span><div id="x-tasks"></div><button type="button" class="btn small ghost" id="x-addtask">やることを足す</button></div>' +
-      '</form><div class="x-side"><div id="x-card"></div><p class="x-actions"><button type="button" class="btn" id="x-make">リンクをつくる</button></p><div id="x-out"></div></div></div>';
-    taskRows(); preview(); wireEdit();
+      '</form><div class="x-side"><div id="x-card"></div>' + sharedEditHtml() + '<p class="x-actions"><button type="button" class="btn" id="x-make">リンクをつくる</button></p><div id="x-out"></div></div></div>';
+    taskRows(); preview(); wireEdit(); wireSharedEdit();
     $('#x-find').addEventListener('click', function () { findDays($('#x-paste').value); });
     if (pasted) { $('#x-paste').value = pasted; pasted = ''; findDays($('#x-paste').value); }
     $('.x-tpl').addEventListener('click', function (ev) {
@@ -294,7 +363,7 @@
       readForm();
       draft.tasks = draft.tasks.filter(function (t) { return t.x; });
       if (!draft.t) { A.toast('題名を入れてください。'); return; }
-      card = clean(draft); history.replaceState(null, '', '/card/#c=' + pack(card));
+      card = clean(draft); history.replaceState(null, '', location.pathname + location.search + '#c=' + pack(card));
       A.stat('act:card_make');
       $('#x-out').innerHTML = '<p>リンクができました。このリンクを開いた人に、カードが届きます。</p><p class="x-actions"><button type="button" class="btn small" id="x-view">できあがりを見る</button></p>' + shareHtml();
       wireShare(card);
@@ -312,7 +381,7 @@
     var sh = /[#&]share=([A-Za-z0-9_-]+)/.exec(location.hash || '');
     if (sh && !card) {   // words handed over from another app's share sheet (the service worker turned the post into this link; nothing went to a server)
       try { var o = JSON.parse(b64dec(sh[1])); pasted = [o.title, o.text, o.url].filter(Boolean).join('\n').slice(0, 4000); editing = true; } catch (e) { pasted = ''; }
-      history.replaceState(null, '', '/card/#edit=1');
+      history.replaceState(null, '', location.pathname + location.search + '#edit=1');
       return Promise.resolve();
     }
     var m = /[#&]from=([cm]):([A-Za-z0-9_-]{1,40})/.exec(location.hash || '');
@@ -328,7 +397,28 @@
       if (c && !c.quiet && c.precision === 'day') draft = clean({ t: c.title, d: c.date, e: c.id, k: 'event', th: 0, m: '', tasks: [] }) || draft;
     });
   }
-  prefill().then(function () { if (!card && /[#&]from=/.test(location.hash || '')) editing = true; render(); });
-  window.addEventListener('hashchange', function () { var c = fromHash(); if (c) { card = c; editing = false; render(); } });
+  function loadShared() {
+    if (!A.shared || !A.shared.supported()) { box.innerHTML = '<p class="notice">このブラウザでは、共有カードを開けません。新しいブラウザでお試しください。</p>'; return; }
+    box.innerHTML = '<p class="muted">共有カードを読み込んでいます…</p>';
+    A.shared.read(sref).then(function (r) {
+      card = clean(r.card);
+      if (!card) throw new Error('key');
+      linked = { id: sref.id, k: sref.k, e: sref.e, ver: r.ver, upd: r.upd };
+      var fol = A.shared.find(sref.id);
+      if (fol) A.shared.put({ id: sref.id, e: sref.e || fol.e || '', ver: r.ver, seen: r.ver, upd: r.upd, t: card.t, d: card.d, changed: false });
+      editing = /[#&]edit=1/.test(location.hash || '') && !!sref.e;
+      if (editing) draft = clean(JSON.parse(JSON.stringify(card)));
+      render();
+    }, function (err) {
+      var m = err && err.message;
+      box.innerHTML = '<p class="notice">' + (m === 'none' ? 'この共有カードは見つかりません。消されたか、長い間更新がなく、期限が切れた可能性があります。' : m === 'blocked' ? 'このカードは、問題があると知らされたため、表示できません。' : m === 'key' ? 'リンクが正しくないようです。リンクの最後まで、そのままコピーしてください。' : '読み込めませんでした。しばらくして、開き直してください。') + '</p><p><a class="btn" href="/card/">新しいカードを作る</a></p>';
+    });
+  }
+  if (sref) loadShared();
+  else prefill().then(function () { if (!card && /[#&]from=/.test(location.hash || '')) editing = true; render(); });
+  window.addEventListener('hashchange', function () {
+    var r = A.shared && A.shared.parseRef(location.hash);   // another shared card's link was pasted into the address bar: read it from the start
+    if (r && (!sref || r.id !== sref.id || (!!r.e !== !!sref.e))) { location.reload(); return; }
+    var c = fromHash(); if (c) { card = c; editing = false; render(); } });
   window.AtomouCard = { pack: pack, clean: clean, drawCard: drawCard, words: words };
 })();
