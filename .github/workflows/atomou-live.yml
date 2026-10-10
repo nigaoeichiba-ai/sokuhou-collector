@@ -5,11 +5,10 @@ name: atomou-live
 # the time, the genre and a day written in the headline is kept.  Social networks, news portals and press agencies are never read.
 # No commit is made (so no deploy starts).  The state (ETags, first-seen times) lives in the Actions cache.
 # Needs the same repository secrets as the deploy (XSERVER_SSH_KEY, XSERVER_HOST, XSERVER_USER); without them the file is only made and shown on the run's summary.
-# A schedule on GitHub can be late by minutes; a later step can move this to a cron on the server itself.
+# NOT scheduled any more (2026-10-10): GitHub never started the schedule, and a ministry refuses GitHub's addresses.  The 10-minute run is a cron of the server itself
+# (sites/atomou/server_live.sh, put there by the workflow atomou-server-live.yml).  This workflow stays for a run by hand.
 
 on:
-  schedule:
-    - cron: "3-59/10 * * * *"   # minutes 3, 13, 23 ...: not on the round minutes where the deploys and the other jobs start
   workflow_dispatch:
 
 permissions:
