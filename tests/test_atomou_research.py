@@ -32,6 +32,19 @@ class ResearchThemes(unittest.TestCase):
         self.assertTrue(any("Yahoo" in x for x in DATA["trending"]["not_used"]))
         self.assertFalse(any("yahoo" in s["url"].lower() for s in DATA["trending"]["sources"]))
 
+    def test_every_theme_has_a_search_with_a_year_and_no_news_portal(self):
+        for t in DATA["themes"]:
+            self.assertIn("{Y}", t["q"], t["id"])                                 # a year is always in the words (without it old articles come first)
+            self.assertNotIn("まとめ", t["q"], t["id"])                            # "まとめ" brings the affiliate blogs
+            self.assertIsInstance(t["tested"], bool)
+            self.assertFalse(any("yahoo" in x.lower() for x in t["domains"]), t["id"])
+        self.assertGreaterEqual(sum(1 for t in DATA["themes"] if t["tested"]), 8)
+
+    def test_the_search_advice_names_what_works_and_what_to_avoid(self):
+        s = DATA["search"]
+        self.assertTrue(s["works"] and s["avoid"] and len(s["event_words"]) >= 20)
+        self.assertTrue(any("まとめ" in x for x in s["avoid"]))
+
     def test_the_regional_rotation_covers_the_whole_country_in_a_week(self):
         self.assertEqual(len(DATA["regional"]["rotation"]), DATA["days"])
         self.assertTrue(all("{県}" in x for x in DATA["regional"]["themes"]))
