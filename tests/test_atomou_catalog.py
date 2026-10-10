@@ -200,5 +200,35 @@ class CardLabels(unittest.TestCase):
         self.assertTrue(any("将棋" not in e["title"] for e in shogi))  # found although the title does not say it
 
 
+class ThreeLevels(unittest.TestCase):
+    """大(genre) -> 中 -> 小(subject): the owner wants all three levels (2026-10-10); data/atomou/taxonomy.json holds the 中."""
+
+    def test_the_tree_matches_the_genres_and_a_subject_sits_in_one_mid_only(self):
+        self.assertEqual(sorted(g for g in catalog.TAXONOMY if not g.startswith("_")), sorted(catalog.GROUPS))
+        for g, mids in catalog.TAXONOMY.items():
+            if g.startswith("_"):
+                continue
+            names = [m["name"] for m in mids]
+            self.assertEqual(len(names), len(set(names)), g)
+            self.assertGreaterEqual(len(names), 2, g)
+            subjects = [s for m in mids for s in m["subjects"]]
+            self.assertEqual(len(subjects), len(set(subjects)), f"{g}: a subject is in two mids")
+            self.assertTrue(all(2 <= len(n) <= 14 for n in names), names)
+
+    def test_every_real_day_has_a_mid_and_no_day_is_left_in_the_leftover(self):
+        entries, _ = catalog.build_catalog(TODAY)
+        left = [(e["group"], e["subject"], e["category"], e["title"]) for e in entries if e["mid"] == catalog.MID_OTHER]
+        self.assertEqual(left, [], "add the subject (or category) of these days to data/atomou/taxonomy.json")
+        for e in entries:
+            self.assertIn(e["mid"], [m["name"] for m in catalog.TAXONOMY[e["group"]]])
+        self.assertIn("mid", catalog.public_json(entries)[0])
+
+    def test_the_subject_decides_before_the_category(self):
+        self.assertEqual(catalog.mid_for("おでかけ・旅行", "雪まつり", "祭り"), "雪・冬のおでかけ")
+        self.assertEqual(catalog.mid_for("おでかけ・旅行", "高山祭", "祭り"), "祭り・伝統行事")
+        self.assertEqual(catalog.mid_for("スポーツ", "競馬", "その他"), "競馬・モータースポーツ")
+        self.assertEqual(catalog.mid_for("スポーツ", "知らない題材", "その他"), catalog.MID_OTHER)
+
+
 if __name__ == "__main__":
     unittest.main()

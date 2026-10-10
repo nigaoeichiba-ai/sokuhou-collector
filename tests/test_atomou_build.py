@@ -419,6 +419,27 @@ class Pages(BuildOnce):
         self.assertNotIn("必ず届き", m)  # nothing promises that a notice arrives
 
 
+class ThreeLevelPages(BuildOnce):
+    def test_the_genre_page_has_mid_chips_with_counts_and_the_cards_carry_mid_and_subject(self):
+        h = self.rel["c/sports/index.html"]
+        self.assertIn('data-cat-chip="野球"', h)
+        self.assertIn('data-cat-chip="マラソン・駅伝"', h)
+        self.assertIn('id="subchips"', h)
+        self.assertRegex(h, r'data-cat="マラソン・駅伝" data-sub="[^"]+"')
+        self.assertNotIn('data-cat="駅伝・マラソン"', h)   # the raw category is no longer the filter
+
+    def test_the_search_page_has_the_mid_and_sub_rows(self):
+        h = self.rel["search/index.html"]
+        self.assertIn('id="mid-chips"', h)
+        self.assertIn('id="sub-chips"', h)
+
+    def test_the_event_page_shows_the_mid_in_its_trail(self):
+        e = next(x for x in self.entries if x["mid"] == "年賀状")
+        h = self.rel[f"e/{e['id']}/index.html"]
+        self.assertIn("/c/sale/#m=", h)
+        self.assertIn(">年賀状<", h)
+
+
 class StatsAndPrivacy(BuildOnce):
     def test_receiver_is_generated_with_the_same_key_pattern_as_the_app(self):
         php = self.rel["api/e.php"]
@@ -498,9 +519,10 @@ class AppInChrome(BuildOnce):
         cls.tmp.cleanup()
 
     def dom(self, path: str, extra: str = "") -> str:
+        path, _, frag = path.partition("#")   # a #fragment goes after the query
         with tempfile.TemporaryDirectory() as prof:
             r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={prof}", "--virtual-time-budget=6000",
-                                "--dump-dom", f"{self.base}{path}{'&' if '?' in path else '?'}today=2026-10-08{extra}"], capture_output=True, timeout=120)
+                                "--dump-dom", f"{self.base}{path}{'&' if '?' in path else '?'}today=2026-10-08{extra}{'#' + frag if frag else ''}"], capture_output=True, timeout=120)
         return r.stdout.decode("utf-8", "replace")
 
     def test_home_counts_are_filled_and_nothing_is_empty(self):
@@ -518,6 +540,26 @@ class AppInChrome(BuildOnce):
             dom = html.unescape(self.dom(f"/search/?q={q}"))
             self.assertIn(word, dom, q)
             self.assertRegex(dom, r'<p class="small muted" id="found"[^>]*>\d+件', q)
+
+    def test_search_narrows_by_genre_then_mid_then_sub(self):
+        dom = html.unescape(self.dom("/search/?g=sports&m=マラソン・駅伝&s=箱根駅伝"))
+        self.assertRegex(dom, r'id="mid-chips"(?![^>]*hidden)')
+        self.assertIn('data-m-chip="マラソン・駅伝" aria-pressed="true"', dom)
+        self.assertRegex(dom, r'id="sub-chips"(?![^>]*hidden)')
+        self.assertIn('data-s-chip="箱根駅伝" aria-pressed="true"', dom)
+        self.assertRegex(dom, r'<p class="small muted" id="found"[^>]*>2件')
+        self.assertNotIn("プロ野球", dom.split('id="results"')[1])
+        dom = html.unescape(self.dom("/search/?g=sports"))
+        self.assertIn('data-m-chip="野球"', dom)
+        self.assertRegex(dom, r'id="sub-chips"[^>]*hidden')   # no mid chosen yet: no sub row
+
+    def test_genre_page_filters_by_mid_and_shows_sub_chips(self):
+        dom = html.unescape(self.dom("/c/sports/#m=マラソン・駅伝"))
+        self.assertIn('data-cat-chip="マラソン・駅伝" aria-pressed="true"', dom)
+        self.assertRegex(dom, r'id="subchips"(?![^>]*hidden)')
+        self.assertIn('data-sub-chip="箱根駅伝"', dom)
+        shown = re.findall(r'<article class="card"(?![^>]*hidden)[^>]*data-cat="([^"]+)"', dom)
+        self.assertTrue(shown and set(shown) == {"マラソン・駅伝"}, set(shown))
 
     def test_search_with_no_match_offers_to_record_it(self):
         dom = self.dom("/search/?q=zzzqqqxxx")
