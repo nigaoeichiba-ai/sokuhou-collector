@@ -123,8 +123,8 @@ def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int 
             why = "missing " + ",".join(k for k in need if not c.get(k))
         elif prec not in PRECISIONS:
             why = "bad precision"
-        elif not re.fullmatch(r"\d{4}-\d{2}-\d{2}", c["date"]) or not (lo <= c["date"] <= hi):
-            why = "date outside window"
+        elif not re.fullmatch(r"\d{4}-\d{2}-\d{2}", c["date"]) or not (("1800-01-01" if c.get("keep") else lo) <= c["date"] <= ("2100-12-31" if c.get("keep") else hi)):
+            why = "date outside window"      # a kept day (a big event, a day in history) may be from any time, near or far
         elif c["kind"] not in KINDS:
             why = "bad kind"
         elif c["group"] not in catalog.GROUPS:
@@ -139,7 +139,7 @@ def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int 
             why = "place too long"
         elif norm(c["title"]) in existing or (norm(c["title"]), c["date"]) in seen:
             why = "duplicate"
-        elif c.get("date_end") and not (c["date"] <= c["date_end"] <= hi):
+        elif c.get("date_end") and not (c["date"] <= c["date_end"] <= ("2100-12-31" if c.get("keep") else hi)):
             why = "bad date_end"
         elif any(re.search(r"[<>{}\\]", v) for k, v in c.items() if k != "source_url" and isinstance(v, str)):
             why = "markup"
