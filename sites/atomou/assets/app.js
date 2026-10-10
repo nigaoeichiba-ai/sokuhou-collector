@@ -506,14 +506,14 @@
   function toggleSave(card) {
     var id = (card.getAttribute('data-key') || '').slice(2), i = S.saved.indexOf(id), g = card.getAttribute('data-g');
     if (i >= 0) { S.saved.splice(i, 1); toast('予定から外しました。'); }
-    else { S.saved.push(id); stat('act:save'); if (g && CONF.groups[g - 1]) bump(CONF.groups[g - 1]); toast('予定に入れました。カレンダーに表示されます。'); }
+    else { S.saved.push(id); stat('act:save'); if (/^[0-9a-f]{10}$/.test(id)) stat('act:pop:' + id); if (g && CONF.groups[g - 1]) bump(CONF.groups[g - 1]); toast('予定に入れました。カレンダーに表示されます。'); }
     persist();
     $$('.card[data-key="c:' + id + '"]').forEach(fillCard);
     if (page === 'my') renderMy();
   }
   function saveAll(btn) {   // "この日を含むN件を、まとめて予定に入れる": every day of the same kind (the exam's entry, test day, results...) in one tap
     var ids = (btn.getAttribute('data-saveall') || '').split(',').filter(function (x) { return /^[0-9a-f]{10}$/.test(x); }), added = 0;
-    ids.forEach(function (id) { if (S.saved.indexOf(id) < 0) { S.saved.push(id); added++; } });
+    ids.forEach(function (id) { if (S.saved.indexOf(id) < 0) { S.saved.push(id); added++; stat('act:pop:' + id); } });
     if (!added) { toast('すべて予定に入っています。'); return; }
     stat('act:save');
     persist();
@@ -863,6 +863,32 @@
     var sh = $('#shuffle');
     if (sh) sh.addEventListener('click', function () { fetchPool().then(function () { if (!pool.length) return; random = weighted(poolFor(), 36); draw(); stat('act:shuffle'); }); });
     if (more) more.addEventListener('click', function () { fetchPool().then(function () { shown = Math.min(shown + 6, 36); draw(); stat('act:more'); }); });
+  }
+
+  /* ---------- 地域: 大 = 地域, 中 = 地方, 小 = 都道府県 ---------- */
+  function pageRegionHub() {
+    var areas = $('#reg-areas'), prefs = $('#reg-prefs'), found = $('#reg-found'), out = $('#reg-cards'), cat = [], st = { a: '', r: P.r || '' }, AREAS = CONF.areas || [];
+    function areaOf(pref) { for (var i = 0; i < AREAS.length; i++) if (AREAS[i][1].indexOf(pref) >= 0) return AREAS[i][0]; return ''; }
+    if (st.r && !areaOf(st.r)) st.r = '';
+    st.a = P.a || areaOf(st.r) || '';
+    function count(pref) { return regionHits(cat, pref).length; }
+    function run() {
+      var hs = [];
+      if (st.r) hs = regionHits(cat, st.r);
+      areas.innerHTML = AREAS.map(function (a) {
+        var n = a[1].reduce(function (s, p) { return s + count(p); }, 0);
+        return '<button type="button" class="chip" data-reg-area="' + H(a[0]) + '" aria-pressed="' + (st.a === a[0]) + '">' + H(a[0]) + '<small> ' + n + '</small></button>';
+      }).join('');
+      var cur = AREAS.filter(function (a) { return a[0] === st.a; })[0];
+      prefs.hidden = !cur;
+      prefs.innerHTML = cur ? cur[1].map(function (p) { return '<button type="button" class="chip" data-reg-pref="' + H(p) + '" aria-pressed="' + (st.r === p) + '">' + H(p) + '<small> ' + count(p) + '</small></button>'; }).join('') : '';
+      render(out, hs.slice(0, 60).map(catItem));
+      found.textContent = st.r ? (hs.length ? st.r + 'の日 ' + hs.length + '件' + (hs.length > 60 ? '(近い順に60件)' : '') : st.r + 'の日は、まだありません。全国の日は、ホームやジャンルのページにあります。') : '地方を選んでください。';
+      try { history.replaceState(null, '', '/region/' + (st.r ? '?r=' + encodeURIComponent(st.r) : st.a ? '?a=' + encodeURIComponent(st.a) : '')); } catch (e) { /* ignore */ }
+    }
+    areas.addEventListener('click', function (ev) { var b = ev.target.closest ? ev.target.closest('[data-reg-area]') : null; if (b) { st.a = b.getAttribute('data-reg-area'); st.r = ''; run(); } });
+    prefs.addEventListener('click', function (ev) { var b = ev.target.closest ? ev.target.closest('[data-reg-pref]') : null; if (b) { st.r = b.getAttribute('data-reg-pref'); stat('act:region_hub'); run(); } });
+    loadCatalog().then(function (c) { cat = c || []; if (!c) found.textContent = '読み込めませんでした。しばらくして開き直してください。'; run(); });
   }
 
   /* ---------- search ---------- */
@@ -1274,6 +1300,7 @@
   if (S.prefs.big) stat('big:on');
   if (page === 'home') pageHome();
   else if (page === 'search') pageSearch();
+  else if (page === 'regionhub') pageRegionHub();
   else if (page === 'my') pageMy();
   else if (page === 'add') pageAdd();
   else if (page === 'skins') pageSkins();
