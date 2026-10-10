@@ -1,6 +1,6 @@
 """Weekly digest of the sightings that municipalities publish (Mon-Sun weeks, ISO week keys like 2026-W40).
 
-Pure functions: every number comes from the prefecture / city lists in data/*_kuma.json and data/otsu_bear.json.
+Pure functions: every number comes from the prefecture / city lists in data/*_kuma.json.
 A prefecture's list goes into the digest only for the months in which the number of rows equals that prefecture's own
 monthly figure (so a truncated list, as Akita's is, is left out instead of being counted wrongly), and only up to the
 as-of date the prefecture itself states.
@@ -44,15 +44,6 @@ def pref_source(key: str, name: str, raw: dict) -> dict | None:
     per_month = Counter((d.year, d.month) for d in rows)  # every row, including any dated after as_of
     return {"key": key, "name": name, "days": [d for d in rows if d <= as_of], "as_of": as_of, "per_month": per_month,
             "monthly": monthly, "note": ""}
-
-
-def otsu_source(raw: dict) -> dict | None:
-    rows = [r for r in raw.get("sightings", []) if r.get("observed_at")]
-    if not rows:
-        return None
-    cov = date.fromisoformat(raw["fetched_at"][:10])
-    return {"key": "otsu", "name": "滋賀県大津市", "days": [d for d in _days(rows) if d <= cov], "as_of": cov, "per_month": None,
-            "monthly": None, "note": "大津市が公開している地図の件数を、このサイトが読み取ったものです(市の公表件数と、1件ほど違うことがあります)。"}
 
 
 def covers(src: dict, ws: date) -> bool:

@@ -64,10 +64,9 @@ LIVE_SOURCES.update({
              "as_of_text": "最新の記録は{d}の分までです"},
     "saitama": {"pref": "埼玉", "name": "埼玉県", "label": "埼玉県・県の公式データを集計(件数のみ)", "monthly_label": "市町村が県に報告した出没の件数",
                 "as_of_text": "最新の記録は{d}の分までです"},
+    "otsu": {"pref": "滋賀", "scope": "大津市のみ", "name": "滋賀県大津市", "label": "大津市・市の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や錯誤捕獲の報告を含む",
+             "as_of_text": "最新の記録は{d}の分までです"},
 })
-OTSU_PAGE = "https://www.city.otsu.lg.jp/soshiki/025/1605/g/t/74581.html"
-OTSU_MAP = "https://www.google.com/maps/d/viewer?mid=1rE5HcSdJnm2gX3iT1FMt0aCVuQ9ArDs"
-OTSU_CREDIT = "出典: 大津市が公開している、クマ出没マップ(ツキノワグマ目撃情報)を加工して作成。大津市が作成したものではありません"
 
 
 def fy_of(day: str) -> str:
@@ -99,11 +98,6 @@ def build_records(d: dict) -> list[dict]:
         for x in src["items"]:
             out.append({"src": src["key"], "pref": pref, "slug": pf.SLUG[pref], "city": norm_city(x["city"]), "place": x["place"],
                         "at": x["observed_at"], "kind": x["kind"], "count": x.get("count"), "lat": x.get("lat"), "lon": x.get("lon")})
-    live = d.get("live")
-    if live:
-        for x in live["items"]:
-            out.append({"src": "otsu", "pref": "滋賀", "slug": "shiga", "city": "大津市", "place": x["place"], "at": x["observed_at"],
-                        "kind": "目撃", "count": None, "lat": x.get("lat"), "lon": x.get("lon")})
     cur = d["cur"]
     out = [r for r in out if fy_of(r["at"]) == cur]
     out.sort(key=lambda r: (r["at"], r["place"]), reverse=True)
@@ -117,12 +111,6 @@ def sources_info(d: dict) -> dict[str, dict]:
         out[src["key"]] = {"name": src["name"], "pref": LIVE_SOURCES[src["key"]]["pref"], "as_of": src["as_of"], "credit": src["credit"],
                            "page": src["page"], "note": src["update_note"], "monthly": src["monthly"], "monthly_label": src["monthly_label"],
                            "label": src["label"], "fetched": src["fetched_date"], "as_of_text": src["as_of_text"], "after": src["after"]}
-    live = d.get("live")
-    if live:
-        last = live["items"][0]["observed_at"][:10]
-        out["otsu"] = {"name": "滋賀県大津市", "pref": "滋賀", "as_of": last, "credit": OTSU_CREDIT, "page": OTSU_PAGE,
-                       "note": "市の更新には、数日かかることがあります", "monthly": None, "monthly_label": "", "label": "大津市・市の公式",
-                       "fetched": live["fetched_date"], "as_of_text": "最新の記録は{d}の分です", "after": 0}
     return out
 
 
@@ -409,7 +397,7 @@ CSV_HEAD = ["取得元", "ライセンス・利用条件", "都道府県", "市�
 
 
 def licensed_sources(lv: dict) -> list[str]:
-    """Sources whose own terms allow re-use with a credit (the city of Otsu publishes none, so its records are not offered for download)."""
+    """Record sources whose own terms (or the publisher's written permission) allow re-use: only these go into the CSV."""
     return [k for k in lv["infos"] if LIVE_SOURCES.get(k, {}).get("license")]
 
 
