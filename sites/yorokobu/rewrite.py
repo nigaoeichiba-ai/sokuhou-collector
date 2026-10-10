@@ -36,6 +36,7 @@ BRIEF_RULES = """
 STYLE (adult readers who choose a gift calmly; polite です・ます; natural written Japanese like a careful editor, never like a template):
 - Keep the meaning, the scenes and every number exactly. Do not add facts, products, claims or advice that the original does not contain; do not drop any.
 - Cut the stock phrases: at most 4 uses of 「〜やすい」 in one item and at most 2 sentences ending 「〜やすいです。」. Say the concrete thing instead (分けられる, 持ち帰れる, 保管できる, 迷わない, 傷みにくい ...). Also avoid 寄り添う, そっと, さりげなく, 負担 where a plain word works.
+- Cut generic praise that fits any gift and sounds machine-made: 上質, こだわり, 感謝の気持ちを伝える, 心に残る, 大切です/大切にしたい repeated. Say the concrete detail (what it is, when it is used, what to check) or leave the sentence out.
 - Vary how sentences start and end; do not end three sentences in a row the same way. Most sentences 35-75 characters; split anything over 90.
 - A comma (、) only where the meaning breaks or in a list of three or more; never after every short phrase.
 - Do not use: 切り口, ソムリエ, ナビゲーター, 見立て, ギフトマップ, コンシェルジュ, ガチャ, ね/よ endings, 「よく読まれている」「人気」.
@@ -89,12 +90,16 @@ def load(kind: str) -> tuple[dict | list, list[dict]]:
     return data, (data[inner] if isinstance(data, dict) else data)
 
 
+AI_TELLS = ("上質", "こだわり", "感謝の気持ち", "気持ちを伝え", "心に残る", "大切です")   # stock phrases that fit any gift and read as machine-made when they repeat across pages
+
+
 def style_score(text: str) -> int:
     """Higher = the wording is more in need of a rewrite."""
     s = text.count("やすい") * 2 + text.count("やすいです。") * 3 + sum(text.count(w) for w in ("寄り添", "そっと", "さりげな"))
     s += sum(len(quality.PARTICLE_COMMA.findall(x)) >= 3 for x in re.split(r"(?<=。)", text)) * 4
     s += sum(len(x) > quality.MAX_SENTENCE for x in re.split(r"(?<=。)", text)) * 3
     s += sum(text.count(w) * 5 for w in quality.INTERNAL_WORDS + quality.YOUNG_TONE)
+    s += sum(text.count(w) * 3 for w in AI_TELLS)
     return s
 
 
@@ -115,6 +120,7 @@ def issues_of(text: str, page_total: int = 0) -> list[str]:
         if len(s) > quality.MAX_SENTENCE:
             out.append(f"長すぎる文({len(s)}字): {s[:24]}…")
     out += [f"言葉「{w}」を使わない" for w in quality.INTERNAL_WORDS + quality.YOUNG_TONE if w in text]
+    out += [f"決まり文句「{w}」: どんな贈り物にも当てはまる言い方なので、具体的な事実や場面に替えるか、文ごと削る" for w in AI_TELLS if w in text]
     return out
 
 

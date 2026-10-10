@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from html import unescape as _html_unescape
 import re
 import sys
 from datetime import date, datetime
@@ -44,7 +45,7 @@ LOGO_MARK = ('<svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.
              '<rect x="8" y="16" width="20" height="12" rx="1.5" fill="#fff"/><rect x="6.5" y="12" width="23" height="5" rx="1.5" fill="#fff"/>'
              '<rect x="16.5" y="12" width="3" height="16" fill="#e8503f"/><path d="M18 12c-3-5-8-4-6.5-1.5 1 1.6 4 1.5 6.5 1.5zm0 0c3-5 8-4 6.5-1.5-1 1.6-4 1.5-6.5 1.5z" fill="#fff"/></svg>')
 SITE = {"nav": NAV[:2] + [("気持ちから", "/theme/", "/theme/"), ("診断・ツール", "/tool/", "/tool/")], "glyph": LOGO_MARK, "assets": HERE / "assets",
-        "source_html": SOURCE_HTML}
+        "source_html": SOURCE_HTML, "legal_extra": (("編集方針", "/policy/"),)}
 # months (1-12) in which an occasion is worth showing as "いまが贈りどき"; the rest are evergreen
 SEASON = {
     "mothers-day": (4, 5), "fathers-day": (5, 6), "respect-for-aged-day": (8, 9), "christmas": (11, 12),
@@ -146,12 +147,30 @@ DATA_ON = False      # the same for /data/ (the data room)
 PICKS_ON = False     # and for /picks/ (the daily picks)
 
 
+CRUMB_ITEM = re.compile(r'<a href="([^"]+)">([^<]+)</a>|<span>([^<]+)</span>')
+
+
+def breadcrumb_ld(cfg: dict, body: str) -> str:
+    """schema.org BreadcrumbList made from the page's own breadcrumb navigation (empty when the page has none)."""
+    m = re.search(r'<nav class="crumbs"[^>]*>(.*?)</nav>', body, re.S)
+    if not m:
+        return ""
+    base = cfg["site_url"].rstrip("/")
+    rows = []
+    for href, label, last in CRUMB_ITEM.findall(m.group(1)):
+        name = _html_unescape(label or last)
+        rows.append({"@type": "ListItem", "position": len(rows) + 1, "name": name, **({"item": base + href} if href else {})})
+    if len(rows) < 2:
+        return ""
+    return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": rows}, ensure_ascii=False) + "</script>"
+
+
 def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
     amazon_links = kw.pop("amazon_links", False)                     # a page whose Amazon buttons are made by its script
     if "pr-quiet" in kw.get("body", ""):
         kw["body"] += pr_foot(cfg, amazon_links or "amazon.co.jp/" in kw["body"], "rakuten.co.jp/" in kw["body"] or amazon_links)
-    kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", ""))   # the pictures the page uses (only those)
+    kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", "")) + breadcrumb_ld(cfg, kw.get("body", ""))   # the pictures the page uses (only those), the breadcrumb data
     site = {**SITE, "nav": ([("今日のおすすめ", "/picks/", "/picks/")] if PICKS_ON else []) + SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])
                               + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
     return layout(site, cfg, preview, scripts=True, head_extra=FONTS, **kw)
@@ -334,7 +353,7 @@ def pr_foot(cfg: dict, amazon: bool = False, rakuten: bool = True) -> str:
     amazon = amazon and bool(cfg.get("amazon_tracking_id"))
     names = "・".join((["楽天アフィリエイト"] if rakuten or not amazon else []) + (["Amazonアソシエイト"] if amazon else []))
     prices = '掲載している価格・レビューは、楽天市場の情報です。Amazonの価格は、リンク先でご確認ください。' if amazon and rakuten else ""
-    return ('<aside class="pr-foot"><b>広告について</b>このページには、広告(' + names + ')のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。商品は、編集方針にもとづいて運営者が選んでいます。' + prices
+    return ('<aside class="pr-foot"><b>広告について</b>このページには、広告(' + names + ')のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。商品の選び方は、<a href="/policy/">編集方針</a>に書いています。' + prices
             + (amazon_disclosure(cfg) if amazon else "") + '</aside>')
 
 
@@ -1169,7 +1188,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 {theme_band}
 <section class="about-home"><h2>このサイトについて</h2>
 <p>「何を贈ればいいか分からない」というときに、<strong>イベント</strong>と<strong>贈る相手</strong>から、選び方のポイントと商品の例を探せるサイトです。</p>
-<p>商品は、楽天市場の情報を毎日自動で更新して表示しています。</p></section>"""
+<p>商品の価格・在庫は、毎日、楽天市場の情報にあわせて更新しています。選び方や文章の作り方は、<a href="/policy/">編集方針</a>に書いています。</p></section>"""
     return page(cfg, preview, path="/", title=f"{cfg['site_name']} イベントと相手から、喜ばれるプレゼントを探す",
                 description="誕生日・母の日・クリスマスなど、イベントと贈る相手から、喜ばれやすいプレゼントの選び方と、おすすめの商品が見つかります。", body=body,
                 og_image=og_for("default"))
@@ -1328,7 +1347,7 @@ def numbers_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     body = f"""{head_band("sky", '', "数字で選ぶ、<wbr>プレゼント", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("数字で選ぶ", None)])}</div>
 {pr_quiet(cfg)}
-<p class="sec-lead">このサイトで紹介している商品{nv["pool"]}点のなかから、数字の条件に合うものを自動で集めています。レビューは購入した人の感想です。商品の品質や、贈った相手が喜ぶことを保証するものではありません。</p>
+<p class="sec-lead">このサイトで紹介している商品{nv["pool"]}点のなかから、数字の条件に合うものを集めています。レビューは購入した人の感想です。商品の品質や、贈った相手が喜ぶことを保証するものではありません。</p>
 <section style="margin-top:34px"><h2><span class="scribble">条件をえらぶ</span></h2><ul class="tiles wide">{tiles}</ul></section>
 {to_ranking}
 {freshness(d)}"""
@@ -1403,7 +1422,7 @@ def month_page(d: dict, cfg: dict, preview: bool, m: int, today: date, months: l
 {pr_with_amazon(cfg)}
 {sec}
 {amazon_more(cfg, (mc["occ"][0]["name"] + " プレゼント") if mc["occ"] else "プレゼント ギフト", ((mc["occ"][0]["name"] + "の") if mc["occ"] else "") + "プレゼントを、Amazonで探す")}
-<p class="memo-note" style="margin-top:36px">日付は{mc["y"]}年のものです(毎年自動で更新します)。誕生日や記念日など、人によって違う日は、<a href="/memo/">たいせつな日メモ</a>に登録できます。カレンダーに入れるなら<a href="/calendar/">贈りどきカレンダー</a>へ。</p>
+<p class="memo-note" style="margin-top:36px">日付は{mc["y"]}年のものです(毎年、新しい年の日付に更新します)。誕生日や記念日など、人によって違う日は、<a href="/memo/">たいせつな日メモ</a>に登録できます。カレンダーに入れるなら<a href="/calendar/">贈りどきカレンダー</a>へ。</p>
 {nav}"""
     return page(cfg, preview, path=f"/month/{m}/", title=f"{m}月の贈りどき 準備したいプレゼントのイベント | {cfg['site_name']}", description=lead, body=body,
                 og_image=og_for("default"))
@@ -1427,6 +1446,39 @@ def month_hub_page(d: dict, cfg: dict, preview: bool, today: date, months: list[
 <ul class="tiles wide">{tiles}</ul></section>"""
     return page(cfg, preview, path="/month/", title=f"月ごとの贈りどき 1年のプレゼントの準備カレンダー | {cfg['site_name']}", description=lead, body=body,
                 og_image=og_for("default"))
+
+
+# ---------------------------------------------------------------- 編集方針 (how products are chosen, how the text is made, how numbers are used: written down, and true)
+
+def policy_page(d: dict, cfg: dict, preview: bool) -> str:
+    op = esc(cfg.get("operator_name") or "運営者")
+    lead = "よろこぶプレゼントが、どのように商品を選び、文章を書き、数字を扱っているかを、まとめています。"
+    secs = [
+        ("運営", f'<p>運営は{op}です(<a href="/about/">運営者情報</a>)。ご意見や、内容の誤りのご指摘は、<a href="/contact/">お問い合わせ</a>から受け付けています。</p>'),
+        ("載せる商品の選び方", "<ul><li>贈り物として渡しやすい品であること(日用品や、相手の年齢に合わない品は除きます)。</li>"
+         "<li>商品ページで、仕様と注意事項が確かめられること。</li><li>購入者の評価が、一定の水準を満たしていること。</li>"
+         "<li>同じ店の商品に、かたよらないこと。</li></ul><p>広告の報酬の有無や大小で、載せる商品や順番を決めることはしません。</p>"),
+        ("文章の作り方", "<p>商品の説明は、商品ページの仕様、メーカーなどの公開情報、購入者の声の傾向を読んで、自分たちの言葉でまとめています。"
+         "商品ページやレビューの文章を、そのまま載せることはしません。確かめられないことは、書かないようにしています。</p>"
+         "<p>当サイトで商品を実際に使って試した感想ではありません。そのことは、商品を紹介するページにも書いています。</p>"),
+        ("毎日のおすすめ", '<p><a href="/picks/">毎日のおすすめ</a>では、楽天市場とAmazonから10点ずつを選び、渡す場面と、贈る前に確かめたい点まで書いています。'
+         "公開前に、数字や言い回しを、別の目でも確かめています。</p>"),
+        ("価格と画像", "<p>楽天市場の商品の価格・在庫・画像・評価は、楽天ウェブサービスから、毎日、取得し直しています。"
+         "Amazonの商品は、規約により、価格・評価・商品の写真を載せていません。写真の代わりに、贈る場面を表したイメージ画像を使い、その旨を明記しています。</p>"),
+        ("数字と統計", '<p><a href="/data/">データ室</a>の数字は、出典を明記しています。「当サイトの商品」と書いてあるものは、当サイトで取り上げた商品の集計で、市場全体ではありません。</p>'),
+        ("広告について", "<p>当サイトは、楽天アフィリエイトとAmazonアソシエイトに参加しています。リンク先で購入されると、運営者に報酬が支払われることがあります。広告のあるページには、「PR」と表示しています。</p>"),
+        ("訂正", "<p>誤りが分かったときは、速やかに直します。お気づきの点は、お問い合わせからお知らせください。</p>"),
+        ("アイコン", '<p>アイコンには、<a href="https://phosphoricons.com/" rel="noopener" target="_blank">Phosphor Icons</a>(MITライセンス)を使っています。</p>'),
+    ]
+    if not PICKS_ON:
+        secs = [x for x in secs if x[0] != "毎日のおすすめ"]
+    if not DATA_ON:
+        secs = [x for x in secs if x[0] != "数字と統計"]
+    body = "".join(f'<section class="g-sec"><h2>{h}</h2>{x}</section>' for h, x in secs)
+    html = f"""{head_band("lilac", "", "編集方針", lead, single=True)}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("編集方針", None)])}</div>
+<article class="guide">{body}</article>"""
+    return page(cfg, preview, path="/policy/", title=f"編集方針 | {cfg['site_name']}", description=lead, body=html)
 
 
 # ---------------------------------------------------------------- site
@@ -1491,12 +1543,16 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
             cards[f"og/diagnosis/{ps['slug']}.png"] = ogimage.card(title=ps["name"], tag="プレゼント診断", site=site)
         for a in c["articles"]:
             cards[f"og/read/{a['slug']}.png"] = ogimage.card(title=a["title"], tag="読みもの", site=site)
+        for day in c.get("daily") or []:
+            m, dd = int(day["date"][5:7]), int(day["date"][8:10])
+            cards[f"og/picks/{day['date']}.png"] = ogimage.card(title=f"今日のおすすめギフト {m}月{dd}日", tag=day["theme"], site=site)
         for th in c["themes"]:
             cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]), site=site)
         OG.update(k[len("og/"):-len(".png")] for k in cards)
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview, today),
                                      "occasion/index.html": hub_page(d, cfg, preview, "occasion"),
                                      "for/index.html": hub_page(d, cfg, preview, "for")}
+    pages["policy/index.html"] = policy_page(d, cfg, preview)
     pages["memo/index.html"] = memo_page(d, cfg, preview, today)
     pages["calendar/index.html"] = calendar_page(d, cfg, preview, today)
     months = month_pages(c, today)
@@ -1554,8 +1610,8 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     pages.update(legal_pages(
         SITE, cfg, preview,
         purpose="イベントと贈る相手から、プレゼントの選び方と、商品の例を、探しやすく整理して、贈り物選びに役立てていただくこと。",
-        sources_html='商品の名前・価格・画像・レビュー・販売ページのリンクは、<a href="https://webservice.rakuten.co.jp/" rel="noopener" target="_blank">楽天ウェブサービス</a>(楽天市場)から、自動で取得しています。選び方の文章は、当サイトの運営者が作成しています。',
-        update_text="商品の情報は毎日自動で更新します。各ページに取得した日付を表示します。",
+        sources_html='商品の名前・価格・画像・レビュー・販売ページのリンクは、<a href="https://webservice.rakuten.co.jp/" rel="noopener" target="_blank">楽天ウェブサービス</a>(楽天市場)の情報を使っています。選び方などの文章は、当サイトの編集方針にもとづいて作成しています。',
+        update_text="商品の価格・在庫は、毎日、楽天市場の情報にあわせて更新します。各ページに取得した日付を表示します。",
         disclaimer_html=("<p>商品の価格・在庫・送料・レビューは、取得した時点の情報で、販売ページと異なる場合があります。購入前に、必ず、販売ページでご確認ください。"
                          "当サイトは、商品の品質や、贈った相手が喜ぶことを保証するものではありません。</p>"
                          "<p>当サイトの運営者は、楽天市場で、似顔絵のショップも運営しています。そのショップの商品を紹介するときは、そのことを、ページ上に明示します。</p>"
