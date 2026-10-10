@@ -29,7 +29,7 @@
   function keep(m) {
     try {
       if (!m) { localStorage.removeItem(CACHE); return; }
-      localStorage.setItem(CACHE, JSON.stringify({ tier: String(m.tier || ''), created: String(m.created || ''), surveys: (m.surveys || []).filter(function (x) { return x === 1 || x === 2; }), at: C.iso(A.TODAY) }));
+      localStorage.setItem(CACHE, JSON.stringify({ tier: String(m.tier || ''), plan: m.plan === 'plus' ? 'plus' : '', free_until: /^\d{4}-\d{2}-\d{2}$/.test(String(m.free_until || '')) ? m.free_until : '', created: String(m.created || ''), surveys: (m.surveys || []).filter(function (x) { return x === 1 || x === 2; }), at: C.iso(A.TODAY) }));
     } catch (e) { /* only a nicety */ }
   }
 

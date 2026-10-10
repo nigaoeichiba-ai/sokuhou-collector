@@ -33,12 +33,13 @@
   }
   function message(box) {
     var priv = box.getAttribute('data-private') === '1', url = priv ? location.origin + '/' : (box.getAttribute('data-url') || pageUrl());
+    if (box.getAttribute('data-nolink') === '1') return { text: words(box), url: '' };   // sent as words only (the plus plan): no signature, no link
     if (box.hasAttribute('data-text')) return { text: words(box), url: url };
     return { text: words(box) + (priv ? '\n日数は「あと何日、もう何日」で数えています。' : '\n出典つきの公式の日付です。'), url: url };
   }
 
-  function lineUrl(m) { return 'https://line.me/R/msg/text/?' + enc(m.text + '\n' + m.url); }
-  function xUrl(m) { return 'https://twitter.com/intent/tweet?text=' + enc(m.text) + '&url=' + enc(m.url); }
+  function lineUrl(m) { return 'https://line.me/R/msg/text/?' + enc(m.text + (m.url ? '\n' + m.url : '')); }
+  function xUrl(m) { return 'https://twitter.com/intent/tweet?text=' + enc(m.text) + (m.url ? '&url=' + enc(m.url) : ''); }
   function refresh(box) {
     var m = message(box), l = box.querySelector('[data-share-to="line"]'), x = box.querySelector('[data-share-to="x"]');
     if (l) l.href = lineUrl(m);
@@ -98,7 +99,7 @@
     }, 'image/png');
   }
   function copy(m) {
-    var t = m.text + '\n' + m.url;
+    var t = m.text + (m.url ? '\n' + m.url : '');
     function done() { A.toast('文面とリンクをコピーしました。'); }
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, fallback);
     else fallback();
@@ -128,6 +129,7 @@
     if (!box) return;
     var what = t.getAttribute('data-share') || t.getAttribute('data-share-to'), m = message(box);
     A.stat('act:share:' + what);
+    if (A.tier) A.tier.shared();
     if (t.hasAttribute('data-share-to')) { refresh(box); return; }   // a link: the browser follows it
     ev.preventDefault();
     if (what === 'copy') copy(m);

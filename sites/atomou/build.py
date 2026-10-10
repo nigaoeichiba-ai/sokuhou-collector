@@ -224,7 +224,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'app', 'share', 'card', 'ical', 'plan', 'quick', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'app', 'tier', 'share', 'card', 'ical', 'plan', 'quick', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -299,6 +299,8 @@ class Ctx:
             conf["gclient"] = cfg["google_client_id"]
         if cfg.get("vapid_public"):
             conf["vapid"] = cfg["vapid_public"]
+        if isinstance(cfg.get("plans"), dict) and cfg["plans"].get("on"):
+            conf["plans"] = {k: cfg["plans"][k] for k in ("on", "free_cards", "shares_per_slot", "extra_max", "free_remind") if k in cfg["plans"]}
         if members_on(cfg):
             conf["members"] = {"tiers": {t["id"]: t.get("label", t["id"]) for t in cfg.get("member_tiers") or []},
                                "ref": int(cfg.get("member_ref_months", 6)), "give": int(cfg.get("member_ref_give_months", 1)), "cap": int(cfg.get("member_ref_cap", 12))}
@@ -516,7 +518,7 @@ def my_page(c: Ctx) -> str:
 <p><a href="/?intro=1">はじめての方へ(このサイトの説明)を見る</a></p>
 <p><button type="button" class="btn small ghost" data-guide="start">使い方を見る</button></p>
 </div>
-{member_html}{push_html}{sync_html}<h2>他のカレンダーアプリに入れる</h2>
+{member_html}<div id="tier-box"></div>{push_html}{sync_html}<h2>他のカレンダーアプリに入れる</h2>
 <div class="panel"><p>iPhone の「カレンダー」や Google カレンダーに取り込めるファイルを作れます。1件ずつ作るときは、予定の詳細から。</p>
 <p><button type="button" class="btn small ghost" id="ics-all">すべての予定をファイルにする</button></p></div>
 <h2 id="ical-h">ほかのカレンダーから取り込む</h2>
