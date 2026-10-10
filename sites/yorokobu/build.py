@@ -1058,6 +1058,15 @@ def data_band(d: dict) -> str:
             f'<ul class="findings">{cards}</ul><p class="more"><a class="btn btn-sub" href="/data/">データ室を見る</a></p></section>')
 
 
+def budget_block(d: dict) -> str:
+    tiers = budget_tiers(d)
+    if not tiers:
+        return ""
+    chips = "".join(f'<li><a href="/budget/{x["slug"]}/">{esc(budget_title(x))}</a></li>' for x, _ in tiers)
+    return ('<section class="block"><div class="sec-head"><span class="eyebrow">Budget</span><h2>予算から、探す</h2><p>いくらまでかけるかが決まっていれば、ここから。</p></div>'
+            f'<ul class="plain cols2 chips budget-chips">{chips}</ul></section>')
+
+
 def daily_mix(d: dict, today: date, n: int, skip: set[str] = frozenset(), salt: int = 0) -> list[dict]:
     """n products spread over the kinds of gift (food, goods, experiences ...), different every day: the picture of the top page.
     Only products with a few good reviews and a real price are taken, so that the first thing a visitor sees is a gift, not a bargain bin."""
@@ -1175,6 +1184,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <ul class="tiles wide">{season}</ul>{month_more}</section>
 <section class="block"><div class="sec-head"><span class="eyebrow">For whom</span><h2>だれに、贈りますか?</h2></div>
 <ul class="chip-grid round">{rec}</ul></section>
+{budget_block(d)}
 <section class="block"><div class="sec-head"><span class="eyebrow">Occasions</span><h2>どんな日に、贈りますか?</h2></div>
 <ul class="chip-grid">{occ}</ul></section>
 {rail}
@@ -1448,6 +1458,90 @@ def month_hub_page(d: dict, cfg: dict, preview: bool, today: date, months: list[
                 og_image=og_for("default"))
 
 
+# ---------------------------------------------------------------- 予算から探す (/budget/<tier>/: the products of one price range, from every page of the site)
+
+MIN_BUDGET_ITEMS = 12
+
+
+def budget_pool(d: dict, tier: dict) -> list[tuple[dict, str]]:
+    """The best products of one price range with their kind of gift, spread over the kinds (round by round), at most three from one shop."""
+    kinds: dict[str, dict[str, dict]] = {}
+    for key in sorted(d["pairs"]):
+        for idea in pair_items(d, key)[0]:
+            for it in idea["items"]:
+                if in_tier(it["price"], tier) and it["code"] not in kinds.get(idea["type"], {}):
+                    kinds.setdefault(idea["type"], {})[it["code"]] = it
+    order = [k for k in TYPE_ORDER if k in kinds]
+    ranked = {k: sorted(kinds[k].values(), key=lambda i: (-score(i), i["code"])) for k in order}
+    out, seen, shops = [], set(), {}
+    for rnd in range(12):
+        for k in order:
+            if rnd >= len(ranked[k]):
+                continue
+            it = ranked[k][rnd]
+            if it["code"] in seen or shops.get(it["shop_code"], 0) >= 3:
+                continue
+            seen.add(it["code"])
+            shops[it["shop_code"]] = shops.get(it["shop_code"], 0) + 1
+            out.append((it, k))
+            if len(out) >= 24:
+                return out
+    return out
+
+
+def budget_tiers(d: dict) -> list[tuple[dict, list[tuple[dict, str]]]]:
+    """(tier, products) for each price range that has enough products to be worth a page."""
+    out = []
+    for tier in d["c"]["filters"]["tiers"]:
+        pool = budget_pool(d, tier)
+        if len(pool) >= MIN_BUDGET_ITEMS:
+            out.append((tier, pool))
+    return out
+
+
+def budget_title(tier: dict) -> str:
+    return tier["label"]
+
+
+def budget_page(d: dict, cfg: dict, preview: bool, tier: dict, pool: list, tiers: list) -> str:
+    set_keep()
+    c = d["c"]
+    name = budget_title(tier)
+    counts: dict[str, int] = {}
+    for _, k in pool:
+        counts[k] = counts.get(k, 0) + 1
+    top = sorted(counts, key=lambda k: -counts[k])[:3]
+    prices = sorted(it["price"] for it, _ in pool)
+    note = (f"当サイトで取り上げている商品のうち、{tier['label']}の価格帯から、種類がかたよらないように{len(pool)}点を選びました。"
+            f"いちばん多い種類は、{ ' と '.join(top[:2]) }です。価格の中央値は{yen(prices[len(prices) // 2])}です。")
+    cards = "".join(item_card(cfg, it, kind=k) for it, k in pool)
+    others = "".join(f'<li><a href="/budget/{x["slug"]}/">{esc(budget_title(x))}</a></li>' for x, _ in tiers if x["slug"] != tier["slug"])
+    occ = "".join(round_chip(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"]) for o in c["occasions"][:12])
+    amazon = ""
+    if cfg.get("amazon_tracking_id"):
+        amazon = (f'<p class="more"><a class="btn" href="{esc(amazon_url(cfg, "プレゼント ギフト", tier.get("min") or None, tier.get("max")))}" rel="sponsored nofollow noopener" target="_blank">'
+                  f'{esc(name)}の贈り物を、Amazonで探す</a></p>')
+    lead = f"{name}で贈れる、プレゼントの候補です。贈る相手やイベントが決まっていなくても、この予算から選べます。"
+    body = f"""{head_band("yellow", "", f"{esc(name)}で贈る、<wbr>プレゼント", lead, single=True)}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("予算から探す", "/budget/"), (name, None)])}</div>
+{pr_quiet(cfg)}
+<p class="sec-lead" style="margin-top:18px">{esc(note)}</p>
+<section style="margin-top:26px"><ul class="items">{cards}</ul>{freshness(d)}</section>
+{amazon}
+<section class="block"><div class="sec-head"><h2>ほかの予算から探す</h2></div><ul class="plain cols2 chips">{others}</ul></section>
+<section class="block"><div class="sec-head"><h2>イベントから、{esc(tier['label'])}で探す</h2><p>イベントのページでは、予算で絞り込めます。</p></div><ul class="chip-grid">{occ}</ul></section>"""
+    return page(cfg, preview, path=f"/budget/{tier['slug']}/", title=f"{name}で贈る、プレゼントのおすすめ | {cfg['site_name']}", description=lead, body=body)
+
+
+def budget_hub_page(d: dict, cfg: dict, preview: bool, tiers: list) -> str:
+    rows = "".join(f'<li><a class="tile wide" href="/budget/{x["slug"]}/"><span><b>{esc(budget_title(x))}</b><small>{len(pool)}点から選べます</small></span></a></li>' for x, pool in tiers)
+    lead = "予算から、プレゼントを探します。贈る相手やイベントが決まっていなくても、いくらまでかけるかが決まっていれば、ここから始められます。"
+    body = f"""{head_band("sky", "", "予算から、<wbr>プレゼントを探す", lead, single=True)}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("予算から探す", None)])}</div>
+<section style="margin-top:34px"><ul class="tiles wide">{rows}</ul></section>"""
+    return page(cfg, preview, path="/budget/", title=f"予算から、プレゼントを探す | {cfg['site_name']}", description=lead, body=body)
+
+
 # ---------------------------------------------------------------- 編集方針 (how products are chosen, how the text is made, how numbers are used: written down, and true)
 
 def policy_page(d: dict, cfg: dict, preview: bool) -> str:
@@ -1553,6 +1647,11 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
                                      "occasion/index.html": hub_page(d, cfg, preview, "occasion"),
                                      "for/index.html": hub_page(d, cfg, preview, "for")}
     pages["policy/index.html"] = policy_page(d, cfg, preview)
+    bt = budget_tiers(d)
+    if bt:
+        pages["budget/index.html"] = budget_hub_page(d, cfg, preview, bt)
+        for tier, pool in bt:
+            pages[f"budget/{tier['slug']}/index.html"] = budget_page(d, cfg, preview, tier, pool, bt)
     pages["memo/index.html"] = memo_page(d, cfg, preview, today)
     pages["calendar/index.html"] = calendar_page(d, cfg, preview, today)
     months = month_pages(c, today)
