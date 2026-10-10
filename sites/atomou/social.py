@@ -46,7 +46,7 @@ def _md(e: dict) -> str:
 
 def public_days(entries: list[dict], today: date) -> list[dict]:
     """Whole days still to come that may be posted (verified catalogue entries, not quiet, with a day)."""
-    return sorted((e for e in entries if e["precision"] == "day" and not e["quiet"] and date.fromisoformat(e["date"]) > today and e["status"] != "ended"),
+    return sorted((e for e in entries if e["precision"] == "day" and not e["quiet"] and not e.get("estimated") and date.fromisoformat(e["date"]) > today and e["status"] != "ended"),
                   key=lambda e: (e["date"], e["id"]))
 
 

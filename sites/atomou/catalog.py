@@ -96,7 +96,7 @@ def _d(s) -> date | None:
 
 
 def entry_id(item: dict) -> str:
-    key = f"{item.get('source_url', '')}|{item.get('date', '')}|{item.get('kind', '')}"
+    key = f"{item.get('source_url', '')}|{item.get('date', '')}|{item.get('kind', '')}" + ("|estimate" if item.get("estimated") else "")   # an estimate and the official day it gives way to are two entries
     return hashlib.sha1(key.encode("utf-8")).hexdigest()[:10]
 
 
@@ -204,6 +204,8 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
         entries.append({
             "id": eid, "title": it["title"].strip(), "date": it["date"], "date_end": it.get("date_end") or None,
             "precision": it.get("precision") if it.get("precision") in ("day", "month", "year") else "day", "keep": keep,
+            "estimated": bool(it.get("estimated")), "typical": str(it.get("typical") or "")[:40], "series": str(it.get("series") or ""),
+            "history": sorted({h for h in (it.get("history") or []) if _d(h) is not None}, reverse=True)[:12],     # the days of the earlier years (checked on the official page), newest first
             "weekday": WEEKDAYS[d.weekday()], "kind": it["kind"], "category": it["category"], "group": group, "mid": (it.get("mid") if it.get("mid") in MID_NAMES.get(group, ()) else mid_for(group, subject, it["category"])), "region": it.get("region") or None,
             "subject": subject, "what": what, "place": place,
             "tags": tags_for(it, group), "sensitivity": sens, "quiet": quiet, "ad_ok": bool(it.get("ad_ok", True)) and not quiet,
@@ -211,6 +213,15 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
             "checked_on": it["checked_on"], "added": _added(it), "status": ("ended" if last < today else ("old_checked" if (today - checked).days > STALE_DAYS else "active")),
             "publish_on": max(date(2000, 1, 1), d - timedelta(days=lead)).isoformat(),
         })
+    # an estimate ("例年12月31日ごろ") stands only until the official day of that cycle is known: a confirmed entry of the same series (the key names the cycle: "kouhaku-2026") takes its place
+    confirmed = {e["series"] for e in entries if e["series"] and not e["estimated"]}
+    kept = []
+    for e in entries:
+        if e["estimated"] and e["series"] in confirmed:
+            rejects["予想を確定の日で置き換え"] += 1
+            continue
+        kept.append(e)
+    entries = kept
     entries.sort(key=lambda e: (e["date"], e["title"]))
     return entries, rejects
 
@@ -228,5 +239,5 @@ def indexable_ids(entries: list[dict], today: date, launch: date, per_week: int 
 
 def public_json(entries: list[dict]) -> list[dict]:
     """The fields the browser needs (assets/catalog.json)."""
-    keys = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "subject", "what", "place", "tags", "quiet", "ad_ok", "son_toku", "status", "added", "keep")
+    keys = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "subject", "what", "place", "tags", "quiet", "ad_ok", "son_toku", "status", "added", "keep", "estimated", "typical")
     return [{k: e[k] for k in keys} for e in entries]
