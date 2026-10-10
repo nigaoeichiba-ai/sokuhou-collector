@@ -117,9 +117,10 @@ def members_on(cfg: dict) -> bool:
     return bool(cfg.get("member_mail_from"))
 
 
-def share_php() -> str:
-    """api/s.php: the receiver of shared cards that stay up to date (locked cards only; see share_receiver.php.tpl)."""
-    return (HERE / "share_receiver.php.tpl").read_text(encoding="utf-8").replace("__SITE_URL__", "https://atomou.com")
+def share_php(cfg: dict | None = None) -> str:
+    """api/s.php: the receiver of shared cards that stay up to date (locked cards only; see share_receiver.php.tpl).  The site address is the one of this build (the demo host has its own)."""
+    url = str((cfg or {}).get("site_url") or "https://atomou.com").rstrip("/")
+    return (HERE / "share_receiver.php.tpl").read_text(encoding="utf-8").replace("__SITE_URL__", url)
 
 
 def member_php(cfg: dict) -> str:
@@ -1163,7 +1164,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
         pages[f"e/{e['id']}/index.html"] = event_page(c, e, e["id"] in index_ids, live)
     pages.update(legal(c))
     pages["api/e.php"] = stats_php()
-    pages["api/s.php"] = share_php()
+    pages["api/s.php"] = share_php(cfg)
     pages["api/push.php"] = push_php(cfg)
     if members_on(cfg):
         pages["api/m.php"] = member_php(cfg)
