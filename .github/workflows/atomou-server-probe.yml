@@ -1,0 +1,38 @@
+name: atomou-server-probe
+
+# atomou.com: looks at the server (read only): which tools it has (python3, php), whether the live folder is there, and what the cron of the account can run.  Run by hand ("Run workflow").
+# Needs the same repository secrets as the deploy (XSERVER_SSH_KEY, XSERVER_HOST, XSERVER_USER).  It changes nothing on the server.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Look at the server
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then echo "server secrets are not set"; exit 0; fi
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver && chmod 600 ~/.ssh/id_xserver
+          printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 15' '  StrictHostKeyChecking accept-new' > ~/.ssh/config && chmod 600 ~/.ssh/config
+          ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /dev/null || true
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" '
+            echo "== tools"; for t in python3 python php curl wget crontab; do p=$(command -v $t 2>/dev/null) && echo "$t: $p" || echo "$t: -"; done
+            echo "== versions"; python3 --version 2>&1 | head -1; php --version 2>&1 | head -1
+            echo "== php binaries"; ls /usr/bin/php* 2>/dev/null | head; ls /opt/php-*/bin/php 2>/dev/null | head
+            echo "== site"; cd "$HOME/atomou.com" 2>/dev/null && ls; ls public_html/live 2>/dev/null | head
+            echo "== crontab"; crontab -l 2>&1 | head -20
+            echo "== tls to the feeds"; python3 -c "import ssl,urllib.request;print(urllib.request.urlopen(\"https://www.meti.go.jp/ml_index_release_atom.xml\",timeout=15).status)" 2>&1 | tail -1
+          '

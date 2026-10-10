@@ -141,6 +141,8 @@ def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int 
             why = "date outside window"      # a kept day (a big event, a day in history) may be from any time, near or far
         elif c["kind"] not in KINDS:
             why = "bad kind"
+        elif c.get("sensitivity", "none") not in ("none",) + tuple(catalog.QUIET):
+            why = "bad sensitivity"
         elif c["group"] not in catalog.GROUPS:
             why = "bad group"
         elif not str(c["source_url"]).startswith("https://"):
