@@ -80,6 +80,7 @@ class UrlAndTitleTest(unittest.TestCase):
     def test_the_apis_own_affiliate_redirect_is_unwrapped(self):
         self.assertEqual(rakuten.clean_item_url(self.WRAPPED), "https://item.rakuten.co.jp/akuse-one/sai109-a/")
         self.assertEqual(rakuten.clean_item_url("https://item.rakuten.co.jp/s/x/"), "https://item.rakuten.co.jp/s/x/")
+        self.assertEqual(rakuten.clean_item_url("https://item.rakuten.co.jp/s/x/?rafcid=wsc_i_ra_0123"), "https://item.rakuten.co.jp/s/x/")   # the API's own tracking is dropped
         n = rakuten.normalize({**raw_item("a1", 2000), "itemUrl": self.WRAPPED})
         self.assertEqual(n["url"], "https://item.rakuten.co.jp/akuse-one/sai109-a/")
 

@@ -124,6 +124,8 @@ def clean_item_url(url: str) -> str:
         target = urllib.parse.parse_qs(parts.query).get("pc", [""])[0]
         if target.startswith("https://"):
             return clean_item_url(target)
+    if parts.netloc == "item.rakuten.co.jp" and parts.query:        # the ranking API adds its own tracking (rafcid=...): it must not travel inside our affiliate link
+        return urllib.parse.urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))
     return url
 
 

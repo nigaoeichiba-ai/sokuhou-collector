@@ -23,6 +23,7 @@ if __name__ == "__main__":
 
 from sites.yorokobu import content as ct  # noqa: E402
 from sites.yorokobu import dataroom  # noqa: E402
+from sites.yorokobu import picksite  # noqa: E402
 from sites.yorokobu import giftcal  # noqa: E402
 from sites.yorokobu import icons  # noqa: E402
 from sites.yorokobu import relevance  # noqa: E402
@@ -142,6 +143,7 @@ def pr_lead(cfg: dict) -> str:
 
 RANKING_ON = False   # set by render_site: the nav and the home page link to /ranking/ only when that page is built
 DATA_ON = False      # the same for /data/ (the data room)
+PICKS_ON = False     # and for /picks/ (the daily picks)
 
 
 def page(cfg, preview, **kw):
@@ -150,7 +152,8 @@ def page(cfg, preview, **kw):
     if "pr-quiet" in kw.get("body", ""):
         kw["body"] += pr_foot(cfg, amazon_links or "amazon.co.jp/" in kw["body"], "rakuten.co.jp/" in kw["body"] or amazon_links)
     kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", ""))   # the pictures the page uses (only those)
-    site = {**SITE, "nav": SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else []) + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
+    site = {**SITE, "nav": ([("今日のおすすめ", "/picks/", "/picks/")] if PICKS_ON else []) + SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])
+                              + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
     return layout(site, cfg, preview, scripts=True, head_extra=FONTS, **kw)
 
 
@@ -335,24 +338,6 @@ def pr_foot(cfg: dict, amazon: bool = False, rakuten: bool = True) -> str:
             + (amazon_disclosure(cfg) if amazon else "") + '</aside>')
 
 
-def auto_note(it: dict, ctx: dict) -> str:
-    """One or two true sentences about a product, from its own numbers and the page it appears on (no invented claims)."""
-    facts = []
-    n, r = it["reviews"], it["rating"]
-    if n and n >= ctx["max_reviews"] and n >= 30:
-        facts.append(f"このページの商品の中で、レビューがいちばん多い一品です(平均{r:.1f}・{n:,}件)。")
-    elif n >= 20 and r >= 4.3:
-        facts.append(f"レビューは{n:,}件、平均{r:.1f}です。")
-    elif n and r >= 4.0:
-        facts.append(f"レビュー平均{r:.1f}({n:,}件)です。")
-    if it["price"] == ctx["min_price"] and ctx["count"] > 3:
-        facts.append("このページでは、いちばん手ごろな価格です。")
-    perks = [x for x, ok in (("送料無料", it["free_shipping"]), ("ギフト包装などのギフト対応", it.get("gift")), ("お届け日の指定", it.get("appoint"))) if ok]
-    if perks:
-        facts.append("・".join(perks) + "に対応しています。")
-    return "".join(facts[:2])
-
-
 def pair_items(d: dict, key: str) -> tuple[list[dict], dict, list[dict]]:
     """(ideas, tiers, union of every product on the page, best first) for one page; copes with data fetched before ideas existed."""
     v = d["pairs"].get(key) or {}
@@ -456,14 +441,9 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
     ideas, tiers_map, union = pair_items(d, key)
     tier_defs = [c["tiers"][t] for t in p["tiers"]]
     own = own_item(d, p["occasion"]) if p.get("portrait_note") else None
-    ctx = {"max_reviews": max((i["reviews"] for i in union), default=0), "min_price": min((i["price"] for i in union), default=0), "count": len(union),
-           "shops": {sc: sum(1 for i in union if i["shop_code"] == sc) for sc in {i["shop_code"] for i in union}}}
 
-    def noted(it: dict) -> dict:
-        if it.get("note"):
-            return {**it, "curated": True}
-        note = auto_note(it, ctx)
-        return {**it, "note": note} if note else it
+    def noted(it: dict) -> dict:           # a one-line reason is shown only where an editor wrote one (a sentence made from the numbers, repeated on every card, reads as machine-made)
+        return {**it, "curated": True} if it.get("note") else it
     union = [noted(i) for i in union]
     ideas = [{**idea, "items": [noted(i) for i in idea["items"]]} for idea in ideas]
     grid_items = list(union)
@@ -506,8 +486,7 @@ def top_picks(cfg: dict, d: dict, key: str, n: int = 4) -> str:
     union = pair_items(d, key)[2]
     if len(union) < 3:
         return ""
-    ctx = {"max_reviews": max(i["reviews"] for i in union), "min_price": min(i["price"] for i in union), "count": len(union)}
-    cards = "".join(item_card(cfg, {**it, "note": it.get("note") or auto_note(it, ctx)}, rank=i + 1) for i, it in enumerate(union[:n]))
+    cards = "".join(item_card(cfg, it, rank=i + 1) for i, it in enumerate(union[:n]))
     return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>評価と売れ行きから、{min(n, len(union))}点</h2></div>'
             f'<ul class="items">{cards}</ul>{freshness(d)}</section>')
 
@@ -995,6 +974,7 @@ def feed_xml(d: dict, cfg: dict) -> str:
     base = cfg["site_url"].rstrip("/")
     items = [(a["date"], a["title"], f"{base}/read/{a['slug']}/", a["lead"]) for a in d["c"]["articles"]]
     items += [(t.get("added") or d["fetched_date"], t["title"], f"{base}/theme/{t['slug']}/", t["lead"]) for t in d["live_themes"] if t.get("added")]
+    items += picksite.feed_entries(d, cfg)
     items = sorted(items, reverse=True)[:40]
     entries = "".join(f"<entry><title>{esc(t)}</title><link href=\"{esc(u)}\"/><id>{esc(u)}</id><updated>{day}T00:00:00+09:00</updated><summary>{esc(s[:140])}</summary></entry>\n"
                       for day, t, u, s in items)
@@ -1155,8 +1135,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
                       f'<ul class="tiles">{"".join(theme_tile(x) for x in picks)}</ul><p class="more"><a class="btn btn-sub" href="/theme/">テーマを、すべて見る</a></p></section>')
     rail = ""
     if rail_items:
-        ctx = {"max_reviews": 10 ** 9, "min_price": 0, "count": 0}
-        cards = "".join(item_card(cfg, {**it, "note": auto_note(it, ctx)}, rank=None) for it in rail_items)
+        cards = "".join(item_card(cfg, it, rank=None) for it in rail_items)
         rail = (f'<section class="block"><div class="sec-head"><div><span class="eyebrow">Today</span><h2>今日の、贈り物の候補</h2>'
                 f'<p>毎日、入れ替わります。ジャンルがかたよらないように、評価の高い商品を選んでいます。</p></div></div>'
                 f'<ul class="rail">{cards}</ul>{freshness(d)}</section>')
@@ -1170,6 +1149,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 {collage(cfg, hero_items) if hero_items else ""}
 </section>
 {pr_quiet(cfg)}
+{picksite.home_block(d, cfg)}
 <section id="memo-strip" class="memo-strip block" data-json="{esc(json.dumps(memo_data(d, cfg, today), ensure_ascii=False, separators=(",", ":")))}"><div class="memo-strip-in">
 <div><span class="eyebrow">Countdown</span><h2>贈りどきまで、あと何日?</h2>{countdown_chips(c, today)}<p class="more"><a class="btn btn-sub" href="/calendar/">贈りどきカレンダー</a></p></div></div></section>
 <section class="block"><div class="sec-head"><span class="eyebrow">Now</span><h2>いま、準備したいイベント</h2><p>これから迎えるイベントのプレゼントを、先取りで。</p></div>
@@ -1470,7 +1450,7 @@ def prepare(c: dict, items: dict | None, cfg: dict) -> dict:
         else:  # data fetched before ideas existed: budget lists only
             pairs[k] = {t: [i for i in lst if ok(i)] for t, lst in v.items() if isinstance(lst, list)}
     d = {"c": c, "pairs": pairs, "portrait": items.get("portrait", []), "fetched_label": label, "site_name": cfg["site_name"],
-         "fetched_date": (f or date.today().isoformat())[:10]}
+         "fetched_date": (f or date.today().isoformat())[:10], "daily_items": items.get("daily", {})}
     if items.get("pairs"):
         d["live_themes"] = [t for t in c["themes"] if len(pair_items(d, t["key"])[2]) >= MIN_THEME_ITEMS]
     else:                       # a preview build without any product data shows every theme
@@ -1488,9 +1468,10 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     today = today or date.today()
     d = prepare(c, items, cfg)
     d["ranking"] = rk.view(ranking, c["filters"])
-    global RANKING_ON, DATA_ON
+    global RANKING_ON, DATA_ON, PICKS_ON
     RANKING_ON = bool(d["ranking"])
     DATA_ON = bool(dataroom.results(d))
+    PICKS_ON = bool(c.get("daily"))
     d["numbers"] = nm.view(d["pairs"], c["filters"])
     d["gacha"] = gacha_data(d, cfg)
     cards: dict[str, bytes] = {}
@@ -1561,6 +1542,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         for slug in d["ranking"]["order"]:
             pages[f"ranking/{slug}/index.html"] = ranking_page(d, cfg, preview, slug)
     pages.update(dataroom.build_pages(d, cfg, preview))
+    pages.update(picksite.build_pages(d, cfg, preview))
     if d["live_themes"]:
         pages["theme/index.html"] = theme_hub_page(d, cfg, preview)
         for th in d["live_themes"]:
