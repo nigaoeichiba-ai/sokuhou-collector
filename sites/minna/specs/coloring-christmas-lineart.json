@@ -83,5 +83,7 @@
    "a cozy house with snow on the roof and a chimney"
   ]
  ],
- "exclude": []
+ "exclude": [
+  "boot"
+ ]
 }

@@ -1,0 +1,203 @@
+{
+ "added": "2026-10-11",
+ "slug": "coloring-fish-lineart",
+ "title": "さかなのぬりえ",
+ "genre": "animals",
+ "touch": "lineart",
+ "lead": "金魚、クジラ、サメ、タコなど、さかな・海の生きものの塗り絵12点。線は太くはっきりしていて、印刷して子どもと楽しめます。",
+ "tags": [
+  "ぬりえ",
+  "塗り絵",
+  "さかな",
+  "魚",
+  "海",
+  "線画",
+  "子ども",
+  "印刷"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "coloring-fish-lineart-goldfish",
+   "file": "coloring-fish-lineart-goldfish.webp",
+   "title": "金魚",
+   "desc": "金魚のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "さかな",
+    "魚",
+    "さかなのぬりえ",
+    "金魚",
+    "ぬりえ・線画",
+    "どうぶつ"
+   ],
+   "w": 506,
+   "h": 492
+  },
+  {
+   "id": "coloring-fish-lineart-octopus",
+   "file": "coloring-fish-lineart-octopus.webp",
+   "title": "タコ",
+   "desc": "タコのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "さかな",
+    "魚",
+    "さかなのぬりえ",
+    "タコ",
+    "ぬりえ・線画",
+    "どうぶつ"
+   ],
+   "w": 514,
+   "h": 519
+  },
+  {
+   "id": "coloring-fish-lineart-turtle",
+   "file": "coloring-fish-lineart-turtle.webp",
+   "title": "ウミガメ",
+   "desc": "ウミガメのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "さかな",
+    "魚",
+    "さかなのぬりえ",
+    "ウミガメ",
+    "ぬりえ・線画",
+    "どうぶつ"
+   ],
+   "w": 556,
+   "h": 443
+  },
+  {
+   "id": "coloring-fish-lineart-seahorse",
+   "file": "coloring-fish-lineart-seahorse.webp",
+   "title": "タツノオトシゴ",
+   "desc": "タツノオトシゴのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "さかな",
+    "魚",
+    "さかなのぬりえ",
+    "タツノオトシゴ",
+    "ぬりえ・線画",
+    "どうぶつ"
+   ],
+   "w": 330,
+   "h": 552
+  },
+  {
+   "id": "coloring-fish-lineart-jellyfish",
+   "file": "coloring-fish-lineart-jellyfish.webp",
+   "title": "クラゲ",
+   "desc": "クラゲのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "さかな",
+    "魚",
+    "さかなのぬりえ",
+    "クラゲ",
+    "ぬりえ・線画",
+    "どうぶつ"
+   ],
+   "w": 411,
+   "h": 479
+  },
+  {
+   "id": "coloring-fish-lineart-crab",
+   "file": "coloring-fish-lineart-crab.webp",
+   "title": "カニ",
+   "desc": "カニのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "さかな",
+    "魚",
+    "さかなのぬりえ",
+    "カニ",
+    "ぬりえ・線画",
+    "どうぶつ"
+   ],
+   "w": 481,
+   "h": 414
+  },
+  {
+   "id": "coloring-fish-lineart-dolphin",
+   "file": "coloring-fish-lineart-dolphin.webp",
+   "title": "イルカ",
+   "desc": "イルカのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "さかな",
+    "魚",
+    "さかなのぬりえ",
+    "イルカ",
+    "ぬりえ・線画",
+    "どうぶつ"
+   ],
+   "w": 466,
+   "h": 431
+  },
+  {
+   "id": "coloring-fish-lineart-clownfish",
+   "file": "coloring-fish-lineart-clownfish.webp",
+   "title": "クマノミ",
+   "desc": "クマノミのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "さかな",
+    "魚",
+    "さかなのぬりえ",
+    "クマノミ",
+    "ぬりえ・線画",
+    "どうぶつ"
+   ],
+   "w": 459,
+   "h": 455
+  },
+  {
+   "id": "coloring-fish-lineart-starfish",
+   "file": "coloring-fish-lineart-starfish.webp",
+   "title": "ヒトデ",
+   "desc": "ヒトデのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "さかな",
+    "魚",
+    "さかなのぬりえ",
+    "ヒトデ",
+    "ぬりえ・線画",
+    "どうぶつ"
+   ],
+   "w": 479,
+   "h": 429
+  },
+  {
+   "id": "coloring-fish-lineart-tuna",
+   "file": "coloring-fish-lineart-tuna.webp",
+   "title": "マグロ",
+   "desc": "マグロのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "さかな",
+    "魚",
+    "さかなのぬりえ",
+    "マグロ",
+    "ぬりえ・線画",
+    "どうぶつ"
+   ],
+   "w": 504,
+   "h": 337
+  }
+ ]
+}

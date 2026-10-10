@@ -1,0 +1,229 @@
+{
+ "added": "2026-10-11",
+ "slug": "fuyujitaku-flat",
+ "title": "冬支度",
+ "genre": "life",
+ "touch": "flat",
+ "lead": "マフラー、手袋、こたつ、ストーブ、毛布、加湿器など、冬支度のイラスト12点。暮らしの記事、チラシ、おたよりのすみに。",
+ "tags": [
+  "冬支度",
+  "冬",
+  "防寒",
+  "こたつ",
+  "ストーブ",
+  "マフラー",
+  "手袋",
+  "暮らし"
+ ],
+ "subject": "",
+ "season": {
+  "from": "10-10",
+  "to": "12-10"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "fuyujitaku-flat-muffler",
+   "file": "fuyujitaku-flat-muffler.webp",
+   "title": "マフラー",
+   "desc": "マフラーのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "マフラー",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 463,
+   "h": 439
+  },
+  {
+   "id": "fuyujitaku-flat-gloves",
+   "file": "fuyujitaku-flat-gloves.webp",
+   "title": "手袋",
+   "desc": "手袋のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "手袋",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 434,
+   "h": 389
+  },
+  {
+   "id": "fuyujitaku-flat-kotatsu",
+   "file": "fuyujitaku-flat-kotatsu.webp",
+   "title": "こたつ",
+   "desc": "こたつのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 567,
+   "h": 399
+  },
+  {
+   "id": "fuyujitaku-flat-stove",
+   "file": "fuyujitaku-flat-stove.webp",
+   "title": "ストーブ",
+   "desc": "ストーブのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "ストーブ",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 314,
+   "h": 534
+  },
+  {
+   "id": "fuyujitaku-flat-blanket",
+   "file": "fuyujitaku-flat-blanket.webp",
+   "title": "毛布",
+   "desc": "毛布のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "毛布",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 522,
+   "h": 393
+  },
+  {
+   "id": "fuyujitaku-flat-humidifier",
+   "file": "fuyujitaku-flat-humidifier.webp",
+   "title": "加湿器",
+   "desc": "加湿器のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "加湿器",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 303,
+   "h": 518
+  },
+  {
+   "id": "fuyujitaku-flat-coat",
+   "file": "fuyujitaku-flat-coat.webp",
+   "title": "コート",
+   "desc": "コートのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "コート",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 427,
+   "h": 494
+  },
+  {
+   "id": "fuyujitaku-flat-boots",
+   "file": "fuyujitaku-flat-boots.webp",
+   "title": "ブーツ",
+   "desc": "ブーツのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "ブーツ",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 443,
+   "h": 394
+  },
+  {
+   "id": "fuyujitaku-flat-hotwater",
+   "file": "fuyujitaku-flat-hotwater.webp",
+   "title": "湯たんぽ",
+   "desc": "湯たんぽのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "湯たんぽ",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 304,
+   "h": 459
+  },
+  {
+   "id": "fuyujitaku-flat-heattech",
+   "file": "fuyujitaku-flat-heattech.webp",
+   "title": "あったか下着",
+   "desc": "あったか下着のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "あったか下着",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 449,
+   "h": 431
+  },
+  {
+   "id": "fuyujitaku-flat-tires",
+   "file": "fuyujitaku-flat-tires.webp",
+   "title": "スタッドレスタイヤ",
+   "desc": "スタッドレスタイヤのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "スタッドレスタイヤ",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 387,
+   "h": 455
+  },
+  {
+   "id": "fuyujitaku-flat-window",
+   "file": "fuyujitaku-flat-window.webp",
+   "title": "窓の結露対策",
+   "desc": "窓の結露対策のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "冬支度",
+    "冬",
+    "防寒",
+    "こたつ",
+    "窓の結露対策",
+    "シンプルフラット",
+    "くらし・もの"
+   ],
+   "w": 475,
+   "h": 446
+  }
+ ]
+}
