@@ -1,20 +1,20 @@
 {
-  "_about": "大(ジャンル)→中→小 の分け方。大は catalog.GROUPS(10)。中は、ここに書いた subject(題材=小)か category で決まる。小は、各日の subject。subject が先、なければ category。どれにも当たらない日は「ほか」(テストで 0 件を確かめる)。",
+  "_about": "大(ジャンル)→中→小 の分け方。大は catalog.GROUPS(15)。中は、ここに書いた subject(題材=小)か category で決まる。小は各日の subject。subject が先、なければ category。どれにも当たらない日は「その他」(テストで、いまのデータは 0 件を確かめる)。seed の項目が \"mid\" を持ち、その大の中分類にあれば、それを使う。\"partner\" は、予約・購入・チケットなど、あとで提携の案内を出せる中分類のしるし(いまは何も出さない。悲しみに関わる日・静かな日には、決して出さない)。",
   "お金・税金・制度": [
-    {"name": "税金", "categories": ["税", "ふるさと納税"], "subjects": ["所得税", "所得税(予定納税)", "給与の税金", "ふるさと納税"]},
+    {"name": "税金", "categories": ["税", "ふるさと納税"], "subjects": ["所得税", "所得税(予定納税)", "給与の税金", "ふるさと納税"], "partner": "furusato"},
     {"name": "年金・保険", "categories": ["年金・保険"], "subjects": ["国民年金", "年金(iDeCo)", "国民健康保険", "薬の保険適用"]},
     {"name": "賃金・補助金・給付", "categories": ["制度", "給付"], "subjects": ["最低賃金", "住宅の補助金"]},
-    {"name": "銀行・金融", "categories": ["料金"], "subjects": ["ゆうちょ銀行"]}
+    {"name": "銀行・金融", "categories": ["料金"], "subjects": ["ゆうちょ銀行"]},
+    {"name": "法律・制度の変更", "categories": [], "subjects": []},
+    {"name": "その他", "categories": [], "subjects": []}
   ],
   "買い物・料金・セール": [
-    {"name": "セール・ポイント", "categories": ["セール", "ポイント"], "subjects": ["Amazonセール", "dカード"]},
+    {"name": "ショッピング・セール・ポイント", "categories": ["セール", "ポイント"], "subjects": ["Amazonセール", "dカード"], "partner": "shopping"},
     {"name": "年賀状", "categories": ["年賀状"], "subjects": ["年賀状"]},
     {"name": "宝くじ", "categories": [], "subjects": ["宝くじ"]},
-    {"name": "値上げ・料金の改定", "categories": ["料金改定"], "subjects": ["電気料金", "宅配便", "食品", "お菓子"]}
-  ],
-  "通信・IT・アプリ": [
-    {"name": "携帯・回線", "categories": [], "subjects": ["ahamo", "ドコモ", "楽天モバイル", "IIJmio", "SoftBank光", "WiMAX", "ネット回線", "NTT東日本", "NTT西日本", "携帯電話の特典"]},
-    {"name": "アプリ・ソフト", "categories": ["サービス終了"], "subjects": ["LINE", "Windows 11", "Officeソフト", "送金アプリ", "マンガアプリ", "カーナビアプリ", "Yahoo!きっず"]}
+    {"name": "値上げ・料金の改定", "categories": ["料金改定"], "subjects": ["電気料金", "宅配便", "食品", "お菓子"]},
+    {"name": "新商品・発売日", "categories": [], "subjects": [], "partner": "shopping"},
+    {"name": "その他", "categories": [], "subjects": []}
   ],
   "スポーツ": [
     {"name": "野球", "categories": ["野球"], "subjects": ["プロ野球", "高校野球", "メジャーリーグ"]},
@@ -22,21 +22,30 @@
     {"name": "マラソン・駅伝", "categories": ["駅伝・マラソン"], "subjects": ["マラソン", "女子マラソン", "箱根駅伝", "大学駅伝", "女子駅伝", "大学女子駅伝", "高校駅伝", "実業団駅伝", "男子駅伝"]},
     {"name": "武道・相撲", "categories": ["相撲"], "subjects": ["剣道", "柔道", "空手", "弓道", "大相撲"]},
     {"name": "体操・卓球・フィギュア", "categories": ["フィギュア"], "subjects": ["体操", "卓球", "フィギュアスケート"]},
-    {"name": "競馬・モータースポーツ", "categories": [], "subjects": ["競馬", "F1", "カーレース", "バイクレース"]}
+    {"name": "競馬・モータースポーツ", "categories": [], "subjects": ["競馬", "F1", "カーレース", "バイクレース"]},
+    {"name": "ゴルフ・テニス・個人競技", "categories": [], "subjects": []},
+    {"name": "ウィンタースポーツ", "categories": [], "subjects": []},
+    {"name": "格闘技・プロレス", "categories": [], "subjects": []},
+    {"name": "観戦チケット", "categories": [], "subjects": [], "partner": "ticket"},
+    {"name": "その他", "categories": [], "subjects": []}
   ],
   "学校・資格": [
     {"name": "高校入試", "categories": ["高校入試"], "subjects": ["高校入試"]},
     {"name": "大学入試・留学試験", "categories": ["大学入試"], "subjects": ["大学入試", "共通テスト", "日本留学試験"]},
-    {"name": "語学・検定", "categories": [], "subjects": ["TOEIC", "英検", "漢検(漢字検定)", "日本語能力試験", "簿記検定", "FP技能検定"]},
+    {"name": "語学・検定", "categories": [], "subjects": ["TOEIC", "英検", "漢検(漢字検定)", "日本語能力試験", "簿記検定", "FP技能検定"], "partner": "study"},
     {"name": "医療・福祉の国家試験", "categories": [], "subjects": ["医師国家試験", "歯科医師国家試験", "看護師国家試験", "薬剤師国家試験", "保育士試験", "介護福祉士", "社会福祉士"]},
-    {"name": "法律・ビジネス・技術の資格", "categories": ["資格"], "subjects": ["司法試験", "行政書士", "宅地建物取引士", "公認会計士", "中小企業診断士", "情報処理試験", "電気工事士", "気象予報士"]},
-    {"name": "公務員・就職", "categories": ["公務員", "就活", "奨学金"], "subjects": ["国家公務員", "就職活動"]}
+    {"name": "法律・ビジネス・技術の資格", "categories": ["資格"], "subjects": ["司法試験", "行政書士", "宅地建物取引士", "公認会計士", "中小企業診断士", "情報処理試験", "電気工事士", "気象予報士"], "partner": "study"},
+    {"name": "公務員・就職", "categories": ["公務員", "就活", "奨学金"], "subjects": ["国家公務員", "就職活動"]},
+    {"name": "その他", "categories": [], "subjects": []}
   ],
-  "天文・暦": [
+  "天気・災害": [
     {"name": "流星群", "categories": [], "subjects": ["流星群"]},
     {"name": "月・惑星", "categories": [], "subjects": ["満月", "水星", "金星", "火星", "木星", "月と土星", "火星と木星"]},
     {"name": "日食・宇宙開発", "categories": [], "subjects": ["日食", "宇宙開発"]},
-    {"name": "二十四節気・暦", "categories": ["天文"], "subjects": ["二十四節気", "節分", "春分の日"]}
+    {"name": "暦・季節", "categories": ["天文"], "subjects": ["二十四節気", "節分", "春分の日"]},
+    {"name": "防災・火災予防", "categories": [], "subjects": []},
+    {"name": "天気・気象", "categories": [], "subjects": []},
+    {"name": "その他", "categories": [], "subjects": []}
   ],
   "おでかけ・旅行": [
     {"name": "祭り・伝統行事", "categories": ["祭り"], "subjects": []},
@@ -45,26 +54,85 @@
     {"name": "紅葉・花", "categories": ["紅葉・花"], "subjects": ["紅葉", "桜まつり", "菊まつり"]},
     {"name": "雪・冬のおでかけ", "categories": ["スキー"], "subjects": ["雪まつり", "かまくら", "雪灯篭まつり", "雪あかりの路", "雪吊り"]},
     {"name": "初詣・初日の出", "categories": ["初詣・初日の出"], "subjects": []},
-    {"name": "観光列車・乗り物の旅", "categories": ["鉄道"], "subjects": ["観光列車", "新幹線", "燃油サーチャージ"]},
     {"name": "キャンプ・アウトドア", "categories": ["キャンプ"], "subjects": ["キャンプ", "熱気球"]},
-    {"name": "施設・観光地", "categories": ["施設"], "subjects": ["白川郷"]}
+    {"name": "施設・観光地", "categories": ["施設"], "subjects": ["白川郷"]},
+    {"name": "宿・ツアーの予約", "categories": [], "subjects": [], "partner": "travel"},
+    {"name": "その他", "categories": [], "subjects": []}
+  ],
+  "スマホ・ネット・アプリ": [
+    {"name": "携帯・回線", "categories": [], "subjects": ["ahamo", "ドコモ", "楽天モバイル", "IIJmio", "SoftBank光", "WiMAX", "ネット回線", "NTT東日本", "NTT西日本", "携帯電話の特典"]},
+    {"name": "アプリ・ソフト", "categories": ["サービス終了"], "subjects": ["LINE", "Windows 11", "Officeソフト", "送金アプリ", "マンガアプリ", "カーナビアプリ", "Yahoo!きっず"]},
+    {"name": "パソコン・スマホ本体", "categories": [], "subjects": [], "partner": "shopping"},
+    {"name": "SNS・ネットサービス", "categories": [], "subjects": []},
+    {"name": "その他", "categories": [], "subjects": []}
   ],
   "趣味・ゲーム・アニメ": [
     {"name": "同人・即売会", "categories": ["即売会"], "subjects": ["コミックマーケット", "同人誌"]},
     {"name": "アニメ・ゲーム", "categories": ["ゲーム・アニメ"], "subjects": ["アニメ"]},
+    {"name": "ゲームの発売日", "categories": [], "subjects": [], "partner": "shopping"},
     {"name": "手芸・ものづくり", "categories": ["ホビー"], "subjects": ["手芸", "盆栽", "フィギュア・模型"]},
     {"name": "将棋・ボードゲーム", "categories": [], "subjects": ["将棋", "ボードゲーム"]},
     {"name": "写真・アート", "categories": [], "subjects": ["写真", "アート"]},
-    {"name": "車・バイク・ボート", "categories": ["乗り物"], "subjects": ["カスタムカー", "バイク", "ボート"]}
+    {"name": "車・バイク・ボート", "categories": ["乗り物"], "subjects": ["カスタムカー", "バイク", "ボート"]},
+    {"name": "その他", "categories": [], "subjects": []}
   ],
   "エンタメ・音楽・賞": [
     {"name": "賞・表彰", "categories": [], "subjects": ["ノーベル賞", "アカデミー賞", "映画賞"]},
     {"name": "映画", "categories": [], "subjects": ["映画祭"]},
-    {"name": "テレビ・音楽・ライブ", "categories": ["番組", "音楽", "ライブ"], "subjects": ["紅白歌合戦"]}
+    {"name": "テレビ・番組", "categories": ["番組"], "subjects": ["紅白歌合戦"]},
+    {"name": "音楽", "categories": ["音楽"], "subjects": []},
+    {"name": "本・出版", "categories": [], "subjects": []},
+    {"name": "その他", "categories": [], "subjects": []}
   ],
-  "暮らし・健康・グルメ": [
-    {"name": "健康", "categories": ["健康"], "subjects": ["健康"]},
+  "健康・くらし": [
+    {"name": "健康・医療の週間", "categories": ["健康"], "subjects": ["健康"]},
     {"name": "結婚・記念日", "categories": ["結婚"], "subjects": ["結婚"]},
-    {"name": "グルメ", "categories": [], "subjects": ["食べ歩き", "スイーツ", "日本酒", "カニ", "カニ漁", "蟹騒動"]}
+    {"name": "子育て・七五三", "categories": [], "subjects": []},
+    {"name": "住まい・家事", "categories": [], "subjects": []},
+    {"name": "防犯・消費生活", "categories": [], "subjects": []},
+    {"name": "その他", "categories": [], "subjects": []}
+  ],
+  "グルメ・食のイベント": [
+    {"name": "解禁・旬", "categories": [], "subjects": ["カニ", "カニ漁"]},
+    {"name": "食べ歩き・フェス", "categories": ["食べ歩き"], "subjects": ["食べ歩き", "蟹騒動"]},
+    {"name": "スイーツ・お菓子", "categories": [], "subjects": ["スイーツ"]},
+    {"name": "酒・ドリンク", "categories": [], "subjects": ["日本酒"]},
+    {"name": "食の記念日", "categories": [], "subjects": []},
+    {"name": "お取り寄せ・予約", "categories": [], "subjects": [], "partner": "shopping"},
+    {"name": "その他", "categories": [], "subjects": []}
+  ],
+  "路線・交通": [
+    {"name": "ダイヤ改正・運行", "categories": [], "subjects": []},
+    {"name": "運賃・料金の改定", "categories": [], "subjects": ["燃油サーチャージ"]},
+    {"name": "新駅・新路線・新型車両", "categories": [], "subjects": []},
+    {"name": "観光列車", "categories": ["鉄道"], "subjects": ["観光列車"]},
+    {"name": "きっぷ・予約の発売日", "categories": [], "subjects": ["新幹線"], "partner": "travel"},
+    {"name": "航空・高速バス・道路", "categories": [], "subjects": []},
+    {"name": "その他", "categories": [], "subjects": []}
+  ],
+  "経済・政治": [
+    {"name": "選挙", "categories": [], "subjects": []},
+    {"name": "国会・政府の予定", "categories": [], "subjects": []},
+    {"name": "日銀・金融", "categories": [], "subjects": []},
+    {"name": "経済指標・決算", "categories": [], "subjects": []},
+    {"name": "法律・制度の施行", "categories": [], "subjects": []},
+    {"name": "その他", "categories": [], "subjects": []}
+  ],
+  "国際": [
+    {"name": "国際会議・首脳会談", "categories": [], "subjects": []},
+    {"name": "海外の行事・祝祭", "categories": [], "subjects": []},
+    {"name": "国際スポーツ大会", "categories": [], "subjects": []},
+    {"name": "国連・国際デー", "categories": [], "subjects": []},
+    {"name": "海外の選挙・政治", "categories": [], "subjects": []},
+    {"name": "その他", "categories": [], "subjects": []}
+  ],
+  "イベント・チケット": [
+    {"name": "ライブ・コンサート", "categories": ["ライブ"], "subjects": [], "partner": "ticket"},
+    {"name": "フェス", "categories": [], "subjects": [], "partner": "ticket"},
+    {"name": "演劇・舞台・お笑い", "categories": [], "subjects": [], "partner": "ticket"},
+    {"name": "展覧会・博覧会", "categories": [], "subjects": [], "partner": "ticket"},
+    {"name": "映画の公開", "categories": [], "subjects": [], "partner": "ticket"},
+    {"name": "チケットの発売・先行", "categories": [], "subjects": [], "partner": "ticket"},
+    {"name": "その他", "categories": [], "subjects": []}
   ]
 }

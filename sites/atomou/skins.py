@@ -20,7 +20,7 @@ VARS = (
     "bg", "bg2", "surface", "surface2", "text", "muted", "line", "accent", "on-accent", "ato", "on-ato", "mou", "on-mou",
     "ato-soft", "ato-ink", "mou-soft", "mou-ink",
     "quiet-bg", "quiet-text", "quiet-line", "focus", "head-bg", "head-text", "foot-bg", "foot-text",
-    "g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8", "g9", "g10", "band-bg", "band-text", "deco", "deco2", "wm-ato", "wm-mou", "wm-ink",
+    "g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8", "g9", "g10", "g11", "g12", "g13", "g14", "g15", "band-bg", "band-text", "deco", "deco2", "wm-ato", "wm-mou", "wm-ink",
     "radius", "shadow", "font", "font-head", "font-num", "size", "num-weight", "bw", "bg-image",
 )
 NON_COLOUR_VARS = ("radius", "shadow", "font", "font-head", "font-num", "size", "num-weight", "bw", "bg-image")
@@ -120,6 +120,12 @@ def _v(spec: str) -> dict:
     out.setdefault("g8", _mix(out["g3"], out["g5"], 0.5))
     out.setdefault("g9", _mix(out["g1"], out["g4"], 0.5))
     out.setdefault("g10", _mix(out["g5"], out["g6"], 0.5))
+    # genres 11-15 (added 2026-10-10): mixes again
+    out.setdefault("g11", _mix(out["g2"], out["g3"], 0.5))
+    out.setdefault("g12", _mix(out["g1"], out["g6"], 0.5))
+    out.setdefault("g13", _mix(out["g3"], out["g1"], 0.5))
+    out.setdefault("g14", _mix(out["g4"], out["g2"], 0.5))
+    out.setdefault("g15", _mix(out["g3"], out["g5"], 0.4))
     out.setdefault("band-bg", out["head-bg"])
     out.setdefault("band-text", out["head-text"])
     out.setdefault("deco", out["accent"])

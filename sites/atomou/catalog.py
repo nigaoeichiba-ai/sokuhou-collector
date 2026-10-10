@@ -23,49 +23,57 @@ LEAD = {"締切": 45, "試験日": 45, "施行": 45, "改定": 45}
 LEAD_DEFAULT = 60       # days before the date that the page may be indexed
 QUIET = ("grief", "disaster", "medical", "legal")
 
-GROUPS = ["お金・税金・制度", "買い物・料金・セール", "スポーツ", "学校・資格", "天文・暦", "おでかけ・旅行", "通信・IT・アプリ", "趣味・ゲーム・アニメ", "エンタメ・音楽・賞", "暮らし・健康・グルメ"]
+GROUPS = ["お金・税金・制度", "買い物・料金・セール", "スポーツ", "学校・資格", "天気・災害", "おでかけ・旅行", "スマホ・ネット・アプリ", "趣味・ゲーム・アニメ", "エンタメ・音楽・賞",
+          "健康・くらし", "グルメ・食のイベント", "路線・交通", "経済・政治", "国際", "イベント・チケット"]
 # Named after the big portals' own words (Yahoo!, Rakuten, ぴあ, じゃらん, 食べログ, 価格.com): the position of a genre fixes its colour and shape, so a rename keeps the position.
-# 2026-10-10 (owner): "手続き" alone is vague, "サービス" and "空・季節" are not portal words, a race is not always a vehicle -> races went to スポーツ, vehicle shows to 趣味, trains to おでかけ・旅行.
-G_MONEY, G_SHOP, G_SPORT, G_SCHOOL, G_SKY, G_TRIP, G_IT, G_HOBBY, G_SHOW, G_LIFE = GROUPS
+# 2026-10-10 (owner): everyday words first ("天気・災害", "スマホ・ネット・アプリ"); "暮らし・健康・グルメ" split into 健康・くらし and グルメ・食のイベント; 路線・交通, 経済・政治, 国際, イベント・チケット added.
+(G_MONEY, G_SHOP, G_SPORT, G_SCHOOL, G_SKY, G_TRIP, G_IT, G_HOBBY, G_SHOW, G_LIFE, G_FOOD, G_TRANSIT, G_POLITICS, G_WORLD, G_TICKET) = GROUPS
 GROUP_OF_CATEGORY = {
     "税": G_MONEY, "年金・保険": G_MONEY, "給付": G_MONEY, "制度": G_MONEY, "料金": G_MONEY, "ふるさと納税": G_MONEY,
     "セール": G_SHOP, "年賀状": G_SHOP, "ポイント": G_SHOP, "料金改定": G_SHOP,
     "サービス終了": G_IT,
     "大学入試": G_SCHOOL, "高校入試": G_SCHOOL, "資格": G_SCHOOL, "就活": G_SCHOOL, "奨学金": G_SCHOOL, "公務員": G_SCHOOL,
     "野球": G_SPORT, "サッカー": G_SPORT, "駅伝・マラソン": G_SPORT, "相撲": G_SPORT, "フィギュア": G_SPORT,
-    "番組": G_SHOW, "音楽": G_SHOW, "ライブ": G_SHOW,
+    "番組": G_SHOW, "音楽": G_SHOW, "ライブ": G_TICKET,
     "天文": G_SKY,
-    "鉄道": G_TRIP, "キャンプ": G_TRIP, "乗り物": G_HOBBY,
+    "鉄道": G_TRANSIT, "キャンプ": G_TRIP, "乗り物": G_HOBBY,
     "即売会": G_HOBBY, "ゲーム・アニメ": G_HOBBY, "ホビー": G_HOBBY,
     "祭り": G_TRIP, "花火": G_TRIP, "イルミネーション": G_TRIP, "紅葉・花": G_TRIP, "スキー": G_TRIP,
     "初詣・初日の出": G_TRIP, "施設": G_TRIP,
-    "健康": G_LIFE, "結婚": G_LIFE,
+    "健康": G_LIFE, "結婚": G_LIFE, "食べ歩き": G_FOOD, "スイーツ": G_FOOD,
 }
 # a few topics sit under the catch-all category "その他" (or a neighbour's category) in the seeds; the topic decides the genre
 GROUP_OF_SUBJECT = {
     "ラグビー": G_SPORT, "マラソン": G_SPORT, "女子マラソン": G_SPORT,
     "競馬": G_SPORT, "F1": G_SPORT, "カーレース": G_SPORT, "バイクレース": G_SPORT,
     "将棋": G_HOBBY, "コミックマーケット": G_HOBBY,
-    "食べ歩き": G_LIFE, "スイーツ": G_LIFE, "日本酒": G_LIFE, "カニ": G_LIFE, "カニ漁": G_LIFE, "蟹騒動": G_LIFE,
+    "食べ歩き": G_FOOD, "スイーツ": G_FOOD, "日本酒": G_FOOD, "カニ": G_FOOD, "カニ漁": G_FOOD, "蟹騒動": G_FOOD,
     "ノーベル賞": G_SHOW, "アカデミー賞": G_SHOW, "映画祭": G_SHOW, "映画賞": G_SHOW,
     "宝くじ": G_SHOP, "年金(iDeCo)": G_MONEY, "住宅の補助金": G_MONEY, "共通テスト": G_SCHOOL, "ゆうちょ銀行": G_MONEY,
-    "新幹線": G_TRIP, "燃油サーチャージ": G_TRIP,
+    "新幹線": G_TRANSIT, "燃油サーチャージ": G_TRANSIT,
     "ahamo": G_IT, "WiMAX": G_IT, "IIJmio": G_IT, "SoftBank光": G_IT, "ドコモ": G_IT, "NTT東日本": G_IT, "NTT西日本": G_IT,
 }
 GROUP_OF_FILE = {"seed_tax_law": G_MONEY, "seed_consumer": G_SHOP, "seed_exams": G_SCHOOL, "seed_sports_culture": G_SPORT,
                  "seed_otaku_astro": G_HOBBY, "seed_regional": G_TRIP}
+# the names the seed files used before a rename: an explicit "group" written with an old name still finds its genre
+LEGACY_GROUP = {"手続き・お金": G_MONEY, "買い物・サービス": G_SHOP, "天文・暦": G_SKY, "空・季節": G_SKY, "通信・IT・アプリ": G_IT, "暮らし・健康・グルメ": G_LIFE, "おでかけ・地域": G_TRIP}
+
+
 def _load_taxonomy() -> dict:
     return json.loads((SEED_DIR / "taxonomy.json").read_text(encoding="utf-8"))
 
 
 TAXONOMY = _load_taxonomy()   # 大(group) -> [中 {name, categories, subjects}]; 小 is the subject of a day
-MID_OTHER = "ほか"
+MID_OTHER = "その他"
 MID_OF_SUBJECT = {(g, s): m["name"] for g, mids in TAXONOMY.items() if g in GROUPS for m in mids for s in m["subjects"]}
 MID_OF_CATEGORY = {(g, c): m["name"] for g, mids in TAXONOMY.items() if g in GROUPS for m in mids for c in m["categories"]}
 
 
+MID_NAMES = {g: tuple(m["name"] for m in mids) for g, mids in TAXONOMY.items() if g in GROUPS}
+
+
 def mid_for(group: str, subject: str, category: str) -> str:
-    """The 中 category of a day: its subject (小) decides first, then its category; a day that fits none is "ほか" (the tests keep that at zero)."""
+    """The 中 category of a day: its subject (小) decides first, then its category; a day that fits none is "その他" (the tests keep that at zero for the days we have)."""
     return MID_OF_SUBJECT.get((group, subject)) or MID_OF_CATEGORY.get((group, category)) or MID_OTHER
 
 
@@ -173,7 +181,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
         if last < today - timedelta(days=KEEP_AFTER_DAYS):
             rejects["終了して30日超"] += 1
             continue
-        group = (it.get("group") if it.get("group") in GROUPS else None) or GROUP_OF_SUBJECT.get(str(it.get("subject") or "").strip()) or GROUP_OF_CATEGORY.get(it["category"]) or GROUP_OF_FILE.get(base)
+        group = (it.get("group") if it.get("group") in GROUPS else LEGACY_GROUP.get(it.get("group"))) or GROUP_OF_SUBJECT.get(str(it.get("subject") or "").strip()) or GROUP_OF_CATEGORY.get(it["category"]) or GROUP_OF_FILE.get(base)
         if not group:
             rejects["ジャンル不明"] += 1
             continue
@@ -195,7 +203,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
         entries.append({
             "id": eid, "title": it["title"].strip(), "date": it["date"], "date_end": it.get("date_end") or None,
             "precision": it.get("precision") if it.get("precision") in ("day", "month") else "day",
-            "weekday": WEEKDAYS[d.weekday()], "kind": it["kind"], "category": it["category"], "group": group, "mid": mid_for(group, subject, it["category"]), "region": it.get("region") or None,
+            "weekday": WEEKDAYS[d.weekday()], "kind": it["kind"], "category": it["category"], "group": group, "mid": (it.get("mid") if it.get("mid") in MID_NAMES.get(group, ()) else mid_for(group, subject, it["category"])), "region": it.get("region") or None,
             "subject": subject, "what": what, "place": place,
             "tags": tags_for(it, group), "sensitivity": sens, "quiet": quiet, "ad_ok": bool(it.get("ad_ok", True)) and not quiet,
             "son_toku": bool(it.get("son_toku")), "source_url": it["source_url"], "source_quote": (it.get("source_quote") or "")[:60] or None,

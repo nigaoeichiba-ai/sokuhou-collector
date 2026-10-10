@@ -29,19 +29,24 @@ from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc,
 NAME = "あと何日、もう何日"
 PREFECTURES = "北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県 茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県 新潟県 富山県 石川県 福井県 山梨県 長野県 岐阜県 静岡県 愛知県 三重県 滋賀県 京都府 大阪府 兵庫県 奈良県 和歌山県 鳥取県 島根県 岡山県 広島県 山口県 徳島県 香川県 愛媛県 高知県 福岡県 佐賀県 長崎県 熊本県 大分県 宮崎県 鹿児島県 沖縄県".split()
 CATCH = "忘れたくない日を、お知らせします。"   # decided by the owner (2026-10-08); the copy pass may not change it
-SLUGS = ["deadline", "sale", "sports", "exams", "sky", "trip", "it", "hobby", "shows", "life"]
+SLUGS = ["deadline", "sale", "sports", "exams", "weather", "trip", "it", "hobby", "shows", "health", "food", "transit", "politics", "world", "tickets"]
 GROUP_SLUG = dict(zip(catalog.GROUPS, SLUGS))
 GROUP_LEAD = {
     "お金・税金・制度": "税金、年金、保険、最低賃金、補助金、制度の変更。期限のある手続きの日。",
     "買い物・料金・セール": "年賀状、大型セール、宝くじ、ポイントの期限、電気・宅配・食品などの料金の改定。",
     "スポーツ": "野球、サッカー、マラソン・駅伝、相撲、競馬、F1など、大会や試合の日。",
     "学校・資格": "大学入試、高校入試、資格試験、就活、奨学金の締切。",
-    "天文・暦": "流星群、満月、日食、惑星、二十四節気。星と暦の節目。",
-    "おでかけ・旅行": "祭り、花火、イルミネーション、紅葉、初詣、観光列車、キャンプ。出かけたい日。",
-    "通信・IT・アプリ": "携帯・回線の料金、アプリやソフトのサービス終了、サポート期限。",
+    "天気・災害": "流星群、満月、日食、二十四節気、防災の日や火災予防運動。空と季節の節目。",
+    "おでかけ・旅行": "祭り、花火、イルミネーション、紅葉、初詣、キャンプ。出かけたい日。",
+    "スマホ・ネット・アプリ": "携帯・回線の料金、アプリやソフトのサービス終了、サポート期限。",
     "趣味・ゲーム・アニメ": "コミケ、ゲームマーケット、アニメ、将棋、手芸、盆栽、写真、即売会、車・バイクのショー。",
-    "エンタメ・音楽・賞": "紅白歌合戦、ライブ、ノーベル賞、アカデミー賞、映画祭。発表や放送を待つ日。",
-    "暮らし・健康・グルメ": "結婚、健康、食のイベント、旬の解禁。暮らしの節目になる日。",
+    "エンタメ・音楽・賞": "紅白歌合戦、ノーベル賞、アカデミー賞、映画祭、番組。発表や放送を待つ日。",
+    "健康・くらし": "健康週間、予防接種、結婚・記念日、子育て、住まい。暮らしの節目になる日。",
+    "グルメ・食のイベント": "ボジョレー解禁、カニ漁の解禁、食べ歩き、スイーツ、酒まつり。旬と食の日。",
+    "路線・交通": "ダイヤ改正、運賃の改定、新駅・新路線、観光列車、きっぷの発売日。",
+    "経済・政治": "選挙、国会、日銀の会合、経済指標、法律の施行。ニュースになる日。",
+    "国際": "国際会議、海外の行事、国際スポーツ大会、国連の日。世界の予定。",
+    "イベント・チケット": "ライブ、フェス、舞台、展覧会、映画の公開、チケットの発売日。",
 }
 POPULAR = ["年賀状", "ふるさと納税", "共通テスト", "流星群", "紅白", "コミケ", "最低賃金", "確定申告", "ドラフト"]
 SITE = {
@@ -155,7 +160,7 @@ def live_entries(entries: list[dict], today: date) -> list[dict]:
 
 def diverse(pool: list[dict], n: int) -> list[dict]:
     """The soonest of each genre first, so the first screen is not one kind of date (app.js diverse)."""
-    per = -(-n // len(catalog.GROUPS))
+    per = -(-n // max(1, len({e['group'] for e in pool})))
     pick, seen = [], {}
     for e in pool:
         seen.setdefault(e["group"], 0)
@@ -284,6 +289,7 @@ def strip_ads(html: str) -> str:
 class Ctx:
     def __init__(self, cfg: dict, preview: bool, today: date, entries: list[dict], skins_css: str):
         self.cfg, self.preview, self.today, self.entries = cfg, preview, today, entries
+        self.shown = [g for g in catalog.GROUPS if any(e["group"] == g and e["status"] != "ended" for e in entries)]   # the genres that have a day to show
         self.cat_json = json.dumps(catalog.public_json(entries), ensure_ascii=False, separators=(",", ":"))
         self.skins_css = skins_css
         self.v_cat = hashlib.sha1(self.cat_json.encode("utf-8")).hexdigest()[:8]
@@ -294,7 +300,7 @@ class Ctx:
         self.v_skin = hashlib.sha1(other_css.encode("utf-8")).hexdigest()[:8]
         self.v_bundle = None
         css_urls = [f"/assets/skins.css?v={self.v_skin}"] + ([f"/assets/design.css?v={self.ver}"] if (SITE["assets"] / "design.css").exists() else [])
-        conf = {"v": self.v_cat, "groups": catalog.GROUPS, "slugs": SLUGS, "regions": PREFECTURES, "css": css_urls,
+        conf = {"v": self.v_cat, "groups": catalog.GROUPS, "shown": self.shown, "slugs": SLUGS, "regions": PREFECTURES, "css": css_urls,
                 "skins": {s["id"]: {"card": s["card"], "name": s["name"], "attrs": s.get("attrs", {}), **({"dark": True} if s.get("dark") else {}), **({"season": s["season"]} if s.get("season") else {})} for s in skins.SKINS}}
         if cfg.get("google_client_id"):
             conf["gclient"] = cfg["google_client_id"]
@@ -357,7 +363,7 @@ def popular_chips(entries: list[dict]) -> str:
 def home_page(c: Ctx) -> str:
     live = live_entries(c.entries, c.today)
     first = diverse(live, 6)
-    chips = '<a class="chip" href="/topics/">最新・トピックス</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS))
+    chips = '<a class="chip" href="/topics/">最新・トピックス</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS) if g in c.shown)
     ucs = "".join(f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>'
                   for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
     body = f"""<section class="intro setup" id="setup" aria-labelledby="setup-h" hidden></section>
@@ -490,7 +496,7 @@ def card_page(c: Ctx) -> str:
 
 def search_page(c: Ctx) -> str:
     chips = '<button type="button" class="chip" data-g-chip="" aria-pressed="true">すべて</button>' + "".join(
-        f'<button type="button" class="chip" data-g-chip="{SLUGS[i]}" aria-pressed="false">{esc(g)}</button>' for i, g in enumerate(catalog.GROUPS))
+        f'<button type="button" class="chip" data-g-chip="{SLUGS[i]}" aria-pressed="false">{esc(g)}</button>' for i, g in enumerate(catalog.GROUPS) if g in c.shown)
     body = f"""{crumbs([("トップ", "/"), ("さがす", None)])}
 <h1>日付をさがす</h1>
 <p class="lead muted">言葉を入力するか、ジャンルを選んでください。</p>
@@ -1113,7 +1119,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     }
     for u in usecases.USECASES:
         pages[f"use/{u['slug']}/index.html"] = use_page(c, u)
-    for g in catalog.GROUPS:
+    for g in c.shown:
         pages[f"c/{GROUP_SLUG[g]}/index.html"] = category_page(c, g, live)
     pages.update(og_pages(live))      # og/<id>.png: the picture a chat app shows for a day's link
     pages.update(feeds.feed_pages(live, catalog.GROUPS, GROUP_SLUG, str(cfg["site_url"]).rstrip("/"), today))   # cal/<genre>.ics, cal/all.ics: the days as a calendar to subscribe to

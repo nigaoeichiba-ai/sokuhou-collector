@@ -34,7 +34,7 @@ class ReviewCtx(B.Ctx):
         self.head = (f'<style>{basic_css}</style>\n<style>.hero{{padding:1.4rem 0 .4rem}}.hero h1{{font-size:1.7rem;font-weight:800;color:var(--text);line-height:1.4}}</style>\n'
                      '<meta name="theme-color" content="#ffffff">\n')
         self.tail = '<script src="/assets/core.js" defer></script>\n<script src="/assets/review.js" defer></script>\n'
-        genres = [(g, f"/c/{B.GROUP_SLUG[g]}/") for g in catalog.GROUPS]
+        genres = [(g, f"/c/{B.GROUP_SLUG[g]}/") for g in self.shown]
         self.site = dict(B.SITE)
         self.site["nav"] = [(g, u, u) for g, u in genres]
         self.site["source_html"] = ("公式の日付には、出典と確認日を載せています。 "
@@ -52,7 +52,7 @@ class ReviewCtx(B.Ctx):
 def home_page(c: ReviewCtx, live: list[dict]) -> str:
     soon = B.diverse([e for e in live if not e["quiet"]], 12)
     genres = "".join(
-        f'<a class="uc" href="/c/{B.GROUP_SLUG[g]}/"><b>{esc(g)}</b><span>{esc(B.GROUP_LEAD[g])}</span></a>' for g in catalog.GROUPS)
+        f'<a class="uc" href="/c/{B.GROUP_SLUG[g]}/"><b>{esc(g)}</b><span>{esc(B.GROUP_LEAD[g])}</span></a>' for g in c.shown)
     body = f"""<section class="hero"><h1>{esc(NAME)}</h1><p class="lead">{esc(LEAD)}</p></section>
 <h2>もうすぐの日</h2>
 <div class="cards">{"".join(B.card_html(e) for e in soon)}</div>
@@ -143,7 +143,7 @@ def build_pages(cfg: dict, today: date | None = None) -> dict:
     B._ACTIONS = False      # cards without "add to my days": there is no application here
     try:
         pages: dict[str, str | bytes] = {"index.html": home_page(c, live)}
-        for g in catalog.GROUPS:
+        for g in c.shown:
             pages[f"c/{B.GROUP_SLUG[g]}/index.html"] = category_page(c, g, live)
         for e in entries:
             pages[f"e/{e['id']}/index.html"] = event_page(c, e, live, guides)
