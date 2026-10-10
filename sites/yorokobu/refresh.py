@@ -135,7 +135,11 @@ def main() -> None:
         sys.exit("RAKUTEN_APP_ID / RAKUTEN_ACCESS_KEY are not set")
     cfg = json.loads((ROOT / "sites" / "yorokobu" / "config.json").read_text(encoding="utf-8"))
     client = rakuten.Client(app_id, key, referer=cfg["site_url"].rstrip("/") + "/", affiliate_id=cfg.get("rakuten_affiliate_id"))
-    data = refresh(c, client, picks, a.limit_pairs)
+    try:
+        data = refresh(c, client, picks, a.limit_pairs)
+    except Exception as e:                     # GitHub shows an ::error:: line as an annotation on the run (readable without logging in), so a failed refresh says why
+        print(f"::error title=yorokobu refresh failed::{type(e).__name__}: {str(e)[:400]} (API calls so far: {client.calls})")
+        raise
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

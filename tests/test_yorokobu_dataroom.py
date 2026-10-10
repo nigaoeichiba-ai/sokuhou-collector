@@ -112,7 +112,8 @@ class DataRoomTest(unittest.TestCase):
     def test_the_pages_pass_the_site_check_and_carry_no_script(self):
         problems = [p for p in sitecheck.check_dir(self.out, CFG["site_url"], skip=("lists",)) if "/data/" in p or "data/" in p]
         self.assertEqual(problems, [])
-        self.assertNotIn("<script", self.read("data/price-bands/index.html").split("<main")[1].split("</main>")[0])
+        main = self.read("data/price-bands/index.html").split("<main")[1].split("</main>")[0]
+        self.assertEqual(re.findall(r"<script(?![^>]*ld\+json)", main), [])                # structured data only: the charts need no script
 
     def test_with_too_few_products_there_is_no_price_chart_and_without_statistics_no_room_at_all(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -525,6 +525,7 @@ a.hb-l:hover { text-decoration: underline; }
 @media (max-width: 760px) {
   .pick { grid-template-columns: 1fr; padding: 14px; gap: 14px; }
   .pick-pc { grid-template-columns: 1fr; }
+  .pick-img:not(.mood) { max-width: 240px; }
   .pick .item-btns .btn { flex: 1 1 100%; }
 }
 

@@ -109,6 +109,7 @@ def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, descr
     links = "".join(f'<link rel="alternate" type="application/atom+xml" title="{esc(t)}" href="{esc(h)}">\n'
                     for t, h in alternates)
     script = f'<script src="/assets/app.js?v={ver}" defer></script>\n' if scripts else ""
+    extra_legal = "".join(f'<a href="{esc(h)}">{esc(t)}</a>' for t, h in site.get("legal_extra", ()))   # a site's own extra footer links (none by default)
     return f"""<!doctype html>
 <html lang="ja">
 <head>
@@ -136,7 +137,7 @@ def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, descr
 </main>
 <footer class="site"><div class="wrap">
 <p class="src">{site['source_html']}</p>
-<p class="legal"><a href="/about/">運営者情報</a><a href="/privacy/">プライバシーポリシー</a><a href="/contact/">お問い合わせ</a><span>&copy; {name}</span></p>
+<p class="legal"><a href="/about/">運営者情報</a>{extra_legal}<a href="/privacy/">プライバシーポリシー</a><a href="/contact/">お問い合わせ</a><span>&copy; {name}</span></p>
 </div></footer>
 {script}</body>
 </html>
