@@ -1,0 +1,84 @@
+{
+ "slug": "event-lines-flat",
+ "title": "行事の飾り罫・区切り線",
+ "subject": "",
+ "genre": "deco",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Horizontal decorative divider lines, each ONE wide thin strip about 6:1 in shape, centred in its cell with space around, made of repeating small motifs along a line. Strips are separate and never touch each other. Flat style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "クリスマス、お月見、お正月、秋、冬の飾り罫・区切り線12点。見出しの下や文章の区切りに、横長のままそのまま使えます。",
+ "tags": [
+  "区切り線",
+  "ライン",
+  "飾り罫",
+  "クリスマス",
+  "お月見",
+  "お正月",
+  "おたより"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "xmas-holly",
+   "クリスマスのヒイラギの線",
+   "a divider of green holly leaves with red berries"
+  ],
+  [
+   "xmas-lights",
+   "クリスマスのライトの線",
+   "a divider of a string of colourful round lights on a wavy wire"
+  ],
+  [
+   "xmas-stars",
+   "クリスマスの星と雪の線",
+   "a divider of gold stars and snowflakes"
+  ],
+  [
+   "xmas-bells",
+   "クリスマスのベルの線",
+   "a divider of small golden bells with red ribbons"
+  ],
+  [
+   "moon-susuki",
+   "お月見のすすきの線",
+   "a divider of pampas grass plumes with small yellow moons"
+  ],
+  [
+   "moon-dango",
+   "お月見のだんごの線",
+   "a divider of round white-cream dumplings and small rabbits"
+  ],
+  [
+   "ny-pine",
+   "お正月の松竹梅の線",
+   "a divider of pine, bamboo and plum blossoms"
+  ],
+  [
+   "ny-kumade",
+   "お正月のおめでたい線",
+   "a divider of red and white cords, fans and gold coins"
+  ],
+  [
+   "autumn-leaves",
+   "もみじの線",
+   "a divider of red and orange maple leaves"
+  ],
+  [
+   "ginkgo",
+   "いちょうの線",
+   "a divider of yellow ginkgo leaves"
+  ],
+  [
+   "winter-snow",
+   "雪だるまの線",
+   "a divider of small snowmen and snowflakes"
+  ],
+  [
+   "winter-mikan",
+   "みかんとこたつの線",
+   "a divider of tangerines and small leaves"
+  ]
+ ],
+ "exclude": []
+}

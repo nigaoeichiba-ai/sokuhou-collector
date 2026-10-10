@@ -1,0 +1,87 @@
+{
+ "slug": "mochitsuki-usagi-kawaii",
+ "title": "うさぎの餅つき",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Original cute white-cream rabbit characters with pink inner ears, round and soft, doing rice-cake pounding; wooden mortar and mallet. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "うさぎが臼と杵で餅をつく、年末の風景12点。つきたてのお餅、丸める、鏡餅、きなこ餅まで。年末年始のおたよりや年賀状に。",
+ "tags": [
+  "餅つき",
+  "うさぎ",
+  "お餅",
+  "鏡餅",
+  "年末",
+  "お正月",
+  "年賀状"
+ ],
+ "season": {
+  "from": "12-01",
+  "to": "01-10"
+ },
+ "holes": false,
+ "items": [
+  [
+   "pound",
+   "杵でつくうさぎ",
+   "a rabbit swinging a wooden mallet over a mortar"
+  ],
+  [
+   "turn",
+   "餅を返すうさぎ",
+   "a rabbit turning the rice cake with wet hands"
+  ],
+  [
+   "roll",
+   "餅を丸めるうさぎ",
+   "a rabbit rolling round rice cakes on a tray"
+  ],
+  [
+   "kagami",
+   "鏡餅",
+   "a kagami-mochi two-tier rice cake with an orange on top and a rabbit beside it"
+  ],
+  [
+   "kinako",
+   "きなこ餅",
+   "a rabbit eating kinako rice cake with a happy face"
+  ],
+  [
+   "anko",
+   "あんこ餅",
+   "a plate of anko rice cakes with a rabbit"
+  ],
+  [
+   "duo",
+   "ふたりでつく",
+   "two rabbits pounding together in rhythm"
+  ],
+  [
+   "steam",
+   "もち米を蒸す",
+   "a rabbit with a steamer full of rice and steam"
+  ],
+  [
+   "child",
+   "子うさぎのお手伝い",
+   "a baby rabbit holding a small mallet"
+  ],
+  [
+   "moon",
+   "月のうさぎ",
+   "a rabbit pounding rice cake under a big moon"
+  ],
+  [
+   "nobashi",
+   "のし餅",
+   "a rabbit cutting a flat rice cake with a knife"
+  ],
+  [
+   "zoni",
+   "お雑煮",
+   "a rabbit with a bowl of ozoni soup"
+  ]
+ ],
+ "exclude": []
+}

@@ -1,0 +1,89 @@
+{
+ "slug": "event-frames-flat",
+ "title": "行事の飾り枠セット",
+ "subject": "",
+ "genre": "deco",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Decorative frames/borders with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, landscape or square, thick enough to hold text or a photo. Flat colourful style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "運動会、賞状、お正月、お月見、ハロウィン、卒業、給食、お弁当、ポップなど、行事とくらしの飾り枠12点。中があいているので、おたよりや掲示物にそのまま使えます。",
+ "tags": [
+  "フレーム",
+  "枠",
+  "運動会",
+  "賞状",
+  "お正月",
+  "お月見",
+  "ハロウィン",
+  "卒業",
+  "給食",
+  "お弁当",
+  "ポップ",
+  "おたより"
+ ],
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "undokai",
+   "運動会のフレーム",
+   "a frame with small flags, a baton, a medal and a running track pattern, centre empty"
+  ],
+  [
+   "shojo",
+   "賞状のフレーム",
+   "an ornate certificate border in gold and deep red with corner flourishes and laurel leaves, centre empty"
+  ],
+  [
+   "oshogatsu",
+   "お正月のフレーム",
+   "a frame with pine, plum blossoms, a rising sun and red-white cords, centre empty"
+  ],
+  [
+   "otsukimi",
+   "お月見のフレーム",
+   "a frame with pampas grass, dumplings on a stand and a big yellow moon at the corner, centre empty"
+  ],
+  [
+   "halloween",
+   "ハロウィンのフレーム",
+   "a frame with pumpkins, bats, candy and purple cobweb corners, centre empty"
+  ],
+  [
+   "sotsugyo",
+   "卒業のフレーム",
+   "a frame with cherry blossoms, a rolled diploma and a mortarboard, centre empty"
+  ],
+  [
+   "kyushoku",
+   "給食のフレーム",
+   "a frame with milk bottles, bread, spoons and forks along the border, centre empty"
+  ],
+  [
+   "obento",
+   "お弁当のフレーム",
+   "a frame made of bento box items: rice balls, fried eggs, sausages, broccoli, centre empty"
+  ],
+  [
+   "pop",
+   "ポップなフレーム",
+   "a bold frame with bright zigzags, dots, stars and speech-burst corners in yellow, pink and blue, centre empty"
+  ],
+  [
+   "christmas",
+   "クリスマスのフレーム",
+   "a frame with holly leaves, red berries, small bells and gift boxes, centre empty"
+  ],
+  [
+   "dokusho",
+   "読書の秋のフレーム",
+   "a frame with stacked books, ginkgo and maple leaves and a reading glasses motif, centre empty"
+  ],
+  [
+   "nenga",
+   "年賀状向けのひつじ枠",
+   "a frame with cute round sheep, clouds and gold stars along the border, centre empty"
+  ]
+ ],
+ "exclude": []
+}

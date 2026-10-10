@@ -1,0 +1,88 @@
+{
+ "slug": "fuyujitaku-flat",
+ "title": "冬支度",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Winter preparation household items, each ONE item centred in its cell, flat illustration. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "マフラー、手袋、こたつ、ストーブ、毛布、加湿器など、冬支度のイラスト12点。暮らしの記事、チラシ、おたよりのすみに。",
+ "tags": [
+  "冬支度",
+  "冬",
+  "防寒",
+  "こたつ",
+  "ストーブ",
+  "マフラー",
+  "手袋",
+  "暮らし"
+ ],
+ "season": {
+  "from": "10-10",
+  "to": "12-10"
+ },
+ "holes": false,
+ "items": [
+  [
+   "muffler",
+   "マフラー",
+   "a thick red knitted scarf"
+  ],
+  [
+   "gloves",
+   "手袋",
+   "a pair of knitted mittens with a snowflake pattern"
+  ],
+  [
+   "kotatsu",
+   "こたつ",
+   "a kotatsu table with a quilt and a tangerine on it"
+  ],
+  [
+   "stove",
+   "ストーブ",
+   "a kerosene heater with a kettle on top"
+  ],
+  [
+   "blanket",
+   "毛布",
+   "a folded warm blanket with a checked pattern"
+  ],
+  [
+   "humidifier",
+   "加湿器",
+   "a small humidifier with steam"
+  ],
+  [
+   "coat",
+   "コート",
+   "a long winter coat on a hanger"
+  ],
+  [
+   "boots",
+   "ブーツ",
+   "a pair of winter boots"
+  ],
+  [
+   "hotwater",
+   "湯たんぽ",
+   "a hot-water bottle with a knitted cover"
+  ],
+  [
+   "heattech",
+   "あったか下着",
+   "a folded warm undershirt and socks"
+  ],
+  [
+   "tires",
+   "スタッドレスタイヤ",
+   "a snow tire with a deep tread"
+  ],
+  [
+   "window",
+   "窓の結露対策",
+   "a window with condensation drops and a small cloth"
+  ]
+ ],
+ "exclude": []
+}

@@ -1,0 +1,86 @@
+{
+ "slug": "realistic-animals-pets",
+ "title": "リアルな動物（図鑑風）",
+ "subject": "",
+ "genre": "animals",
+ "touch": "realistic",
+ "title_fmt": "{ja}",
+ "subject_en": "Realistic natural-history illustration style of animals, each ONE animal full body, centred, accurate proportions and natural colours, soft shading. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "犬、ハムスター、カエル、魚、昆虫など、図鑑のようなリアルな動物12点。理科の資料や自由研究、解説スライドに。",
+ "tags": [
+  "リアル",
+  "図鑑",
+  "動物",
+  "犬",
+  "ハムスター",
+  "カエル",
+  "魚",
+  "昆虫",
+  "理科"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "dog",
+   "犬",
+   "a Shiba Inu dog standing"
+  ],
+  [
+   "hamster",
+   "ハムスター",
+   "a golden hamster holding a seed"
+  ],
+  [
+   "frog",
+   "カエル",
+   "a green tree frog on a leaf"
+  ],
+  [
+   "koi",
+   "コイ",
+   "a colourful koi carp swimming"
+  ],
+  [
+   "beetle",
+   "カブトムシ",
+   "a rhinoceros beetle"
+  ],
+  [
+   "butterfly",
+   "チョウ",
+   "a swallowtail butterfly with open wings"
+  ],
+  [
+   "cat",
+   "ねこ",
+   "a tabby cat sitting"
+  ],
+  [
+   "rabbit",
+   "うさぎ",
+   "a brown rabbit sitting"
+  ],
+  [
+   "sparrow",
+   "スズメ",
+   "a sparrow perched"
+  ],
+  [
+   "ladybug",
+   "テントウムシ",
+   "a ladybug on a leaf"
+  ],
+  [
+   "goldfish",
+   "金魚",
+   "a red goldfish"
+  ],
+  [
+   "dragonfly",
+   "トンボ",
+   "a red dragonfly"
+  ]
+ ],
+ "exclude": []
+}

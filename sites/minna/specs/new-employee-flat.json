@@ -1,0 +1,85 @@
+{
+ "slug": "new-employee-flat",
+ "title": "新入社員の毎日",
+ "subject": "",
+ "genre": "work",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "A young Japanese new employee, short black hair, light skin, navy suit, white shirt, dot eyes, smiling, flat business illustration, 4-head-tall; the same person on every cell. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "名刺交換、電話対応、おじぎ、メモ、報連相など、新入社員の場面12点。研修資料や入社案内、マニュアルに。",
+ "tags": [
+  "新入社員",
+  "新社会人",
+  "ビジネス",
+  "研修",
+  "名刺",
+  "電話",
+  "報連相",
+  "おじぎ"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "meishi",
+   "名刺交換",
+   "exchanging business cards with both hands"
+  ],
+  [
+   "denwa",
+   "電話対応",
+   "answering a phone call with a notepad"
+  ],
+  [
+   "ojigi",
+   "おじぎ",
+   "bowing politely"
+  ],
+  [
+   "memo",
+   "メモをとる",
+   "taking notes in a notebook while listening"
+  ],
+  [
+   "hourenso",
+   "上司に報告",
+   "reporting to a senior colleague at a desk"
+  ],
+  [
+   "pc",
+   "パソコン作業",
+   "working at a laptop"
+  ],
+  [
+   "kenshu",
+   "研修を受ける",
+   "sitting in a training session looking at a screen"
+  ],
+  [
+   "onboard",
+   "初出社",
+   "walking through an office door with a bag"
+  ],
+  [
+   "lunch",
+   "ランチ",
+   "eating lunch with a coworker"
+  ],
+  [
+   "trouble",
+   "困った顔",
+   "looking worried with a hand on the head over papers"
+  ],
+  [
+   "ganbaru",
+   "がんばる",
+   "making a determined fist pose"
+  ],
+  [
+   "kanpai",
+   "歓迎会",
+   "raising a glass at a welcome party"
+  ]
+ ],
+ "exclude": []
+}

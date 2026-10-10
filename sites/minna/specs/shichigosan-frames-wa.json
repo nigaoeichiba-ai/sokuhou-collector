@@ -1,0 +1,57 @@
+{
+ "slug": "shichigosan-frames-wa",
+ "title": "七五三のフレーム",
+ "subject": "",
+ "genre": "deco",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "subject_en": "Decorative frames/borders with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, landscape or square, thick enough to hold text or a photo. Japanese traditional style, flat colours. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "七五三のおたより、写真の台紙、SNS画像に。千歳飴、鶴、松竹梅、菊、手毬、扇の飾り枠6点。中があいているので、写真や文字をそのまま重ねられます。",
+ "tags": [
+  "七五三",
+  "フレーム",
+  "枠",
+  "千歳飴",
+  "和風",
+  "11月",
+  "おたより"
+ ],
+ "season": {
+  "from": "10-01",
+  "to": "11-30"
+ },
+ "holes": true,
+ "items": [
+  [
+   "chitose",
+   "千歳飴のフレーム",
+   "a frame decorated with red and white long stick candies in bags, centre empty"
+  ],
+  [
+   "crane",
+   "鶴のフレーム",
+   "a frame with two white cranes and gold clouds at the corners, centre empty"
+  ],
+  [
+   "shochikubai",
+   "松竹梅のフレーム",
+   "a frame of pine, bamboo and plum blossom branches, centre empty"
+  ],
+  [
+   "kiku",
+   "菊のフレーム",
+   "a frame of chrysanthemums in red, gold and white, centre empty"
+  ],
+  [
+   "temari",
+   "手毬のフレーム",
+   "a frame with colourful temari balls and ribbons at the corners, centre empty"
+  ],
+  [
+   "ougi",
+   "扇のフレーム",
+   "a frame made of folded fans in red and gold overlapping along the border, centre empty"
+  ]
+ ],
+ "exclude": []
+}
