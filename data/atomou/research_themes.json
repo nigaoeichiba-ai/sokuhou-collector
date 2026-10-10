@@ -20,7 +20,7 @@
     {"id": "t10", "genre": "shows", "name": "音楽の新譜発売日・授賞式の開催日", "day": 3, "primary": "レーベル・主催者の公式サイト", "q": "{Y}年{M}月 発売 アルバム シングル 発売日 公式", "domains": ["sonymusic.co.jp", "avex.com", "universal-music.co.jp", "eplus.jp", "pia.jp", "l-tike.com"], "tested": false},
     {"id": "t11", "genre": "sports", "name": "プロ野球・Jリーグ・Bリーグなどの日程・チケット発売日", "day": 0, "primary": "リーグ・球団の公式サイト", "q": "{Y}年 日程 試合日程 チケット発売日 公式", "domains": ["co.jp", "or.jp"], "tested": false},
     {"id": "t12", "genre": "sports", "name": "マラソン・大会・大相撲・格闘技の開催日と申込締切", "day": 4, "primary": "主催者の公式サイト", "q": "{Y}年{M}月 開催 大会 エントリー 申込期間 公式", "domains": ["or.jp"], "tested": false},
-    {"id": "t13", "genre": "sports", "name": "競馬・競輪・ボートレースの大きなレースの日程", "day": 5, "primary": "主催団体の公式サイト", "q": "{Y}年 重賞 G1 開催日程 公式", "domains": ["jra.go.jp", "keirin.jp", "boatrace.jp"], "tested": false},
+    {"id": "t13", "genre": "sports", "name": "ゴルフ・テニス・バスケ・バレー・ラグビー・駅伝などの国内大会の日程", "day": 5, "primary": "競技団体・主催者の公式サイト", "q": "{Y}年{M}月 {競技} 日程 公式", "domains": ["jleague.jp", "jaaf.or.jp", "bleague.jp"], "tested": false},
     {"id": "t14", "genre": "it", "name": "スマホ・PC・ガジェットの発売日・発表イベント日", "day": 1, "primary": "メーカーの公式サイト", "q": "{Y}年{M}月 発売日 発表 新製品 スマートフォン 公式", "domains": ["co.jp"], "tested": false},
     {"id": "t15", "genre": "it", "name": "アプリ・OS・サービスの提供終了日・サポート終了日", "day": 2, "primary": "提供元の公式お知らせ", "q": "{Y}年{M}月 サービス終了 提供終了 お知らせ サポート終了 公式", "domains": ["co.jp"], "tested": false},
     {"id": "t16", "genre": "it", "name": "通信会社の料金改定・キャンペーン終了日", "day": 3, "primary": "通信会社の公式ページ", "q": "{Y}年{M}月 料金改定 キャンペーン 終了 お知らせ", "domains": ["docomo.ne.jp", "au.com", "softbank.jp", "rakuten.co.jp"], "tested": false},
