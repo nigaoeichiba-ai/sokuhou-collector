@@ -49,8 +49,8 @@ class NoMascotTest(unittest.TestCase):
     def test_every_symbol_a_page_uses_is_defined_on_that_page(self):
         used_somewhere = 0
         for rel, html in self.pages():
-            used = set(re.findall(r'<use href="#(o-[a-z\-]+)"', html))
-            defined = set(re.findall(r'<symbol id="(o-[a-z\-]+)"', html))
+            used = set(re.findall(r'<use href="#(p-[a-z\-]+)"', html))
+            defined = set(re.findall(r'<symbol id="(p-[a-z\-]+)"', html))
             self.assertLessEqual(used, defined, rel)
             used_somewhere += bool(used)
         self.assertGreater(used_somewhere, 100)
