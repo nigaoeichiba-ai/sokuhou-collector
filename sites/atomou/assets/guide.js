@@ -34,10 +34,28 @@
       ['[data-g-chip]', 'ジャンルを選ぶと、そのジャンルだけになります。']
     ]
   };
-  var steps = TOURS[page];
-  if (!steps) {   // a page without a tour of its own (the manual, a day's page...): the "ガイドを見る" button opens the home page's tour
+
+  /* The "ヒント" sheet: what this page does, in a few lines, on every page that has something to operate (the owner: "the pages are not yet intuitive").  The spotlight tour
+     (TOURS) is offered from the sheet where the page has one.  Every line describes a thing the page really has. */
+  var HINTS = {
+    home: ['「さがす」に言葉を入れると、日付が出ます。例: 年賀状', 'カードの「予定に入れる」を押すと、カレンダーに入ります。', '好きな分野とお住まいの地域を選ぶと、ホームが自分向けになります。', '下の「ホームを編集」で、ブロックの並び替えや非表示ができます。'],
+    search: ['言葉を短く入れると、見つかりやすくなります。', 'ジャンルを選ぶと、その下に中分類・小分類が出て、さらに絞れます。', '見つからない言葉は、そのまま自分の日として記録できます。'],
+    category: ['上の中分類を押すと絞れます。選ぶと、小分類(題材)が出ます。', 'カードの「予定に入れる」で、自分の予定帳に入ります。', 'ページの下から、このジャンルの日をカレンダーアプリで購読できます。'],
+    event: ['出典と確認日が載っています。公式の日付を、確かめてから使えます。', '「予定に入れる」で、自分の予定帳に入ります。', '共有のアイコンで、LINE・X・リンクのコピーなどで送れます。「カードにして送る」では、ひとこと付きのカードを作れます。', 'Google カレンダー・Outlook・ファイルで、ふだんのカレンダーアプリにも入れられます。'],
+    my: ['記録した日と、予定に入れた日が並びます。', '通知をオンにすると、予定の日にお知らせが届きます。', 'カレンダーのファイル(.ics)の取り込み・書き出しと、バックアップができます。', '機種変更の前に、バックアップを書き出してください。'],
+    plan: ['メモは、書くと自動で保存されます。', '「やること」に、何日前までに何をするかを書きます。期限の日は、カレンダーとホームに出ます。', '「知らせ」で、あと何日の知らせを選べます。この日の知らせは、スイッチで止められます。', '友だちに送るときは、下の共有のアイコンを使います。'],
+    add: ['まず種類を選びます。日付と名前だけで記録できます。', '「明日 19時 デート」のように、1行で入れることもできます。', '日付は、年月日・年月・年だけ、から選べます。', '保存したあとで、メモとやることを足せます。'],
+    calendar: ['「月」と「一覧」を切り替えられます。', '日付を選ぶと、その日の予定とやることが下に出ます。', '予定を押すと、メモとやることを書けます。'],
+    interests: ['分野を押すと、ホームに「好きな分野の日」が並びます。', 'お住まいの都道府県を選ぶと、その地域の日もホームに出ます。', '好きな言葉は、自由に足せます。日付がまだない分野は「準備中」です。'],
+    card: ['日付・題名・ひとことを入れて、カードを作ります。', '調べた文章を貼り付けて「日付を探す」を押すと、日付を拾ってカードに入れます。', '色(付箋の色もあります)や、こんなときのひな形を選べます。', 'リンクや画像で送れます。受け取った人は、1タップで自分の予定帳に入れられます。'],
+    skins: ['選ぶと、すぐ見た目が変わります。', '文字を大きくする設定があります。', '暗い配色も選べます。'],
+    manual: ['知りたい項目の見出しから探せます。', '画面のガイドは、実際のボタンを指しながら案内します。'],
+    today: ['今日が、年のなんにち目か、年末・年度末まであと何日かが分かります。', '数字を押すと、その日を予定にしたり、記録したりできます。'],
+    use: ['場面ごとの使い方です。自分に近いものを選んでください。', '各ページの「やってみる」から、そのまま記録できます。']
+  };
+  var steps = TOURS[page] || [];
+  if (!steps.length) {   // a page without a tour of its own (the manual, a day's page...): the "ガイドを見る" button opens the home page's tour; the "ヒント" sheet is still here
     document.addEventListener('click', function (ev) { var b = ev.target.closest ? ev.target.closest('[data-guide]') : null; if (b) location.href = '/?guide=1'; });
-    return;
   }
   var idx = 0, live = [], shade, hole, tip, btn;
 
@@ -104,19 +122,52 @@
     A.stat('act:guide_start');
     show();
   }
-  btn = document.createElement('button');
-  btn.type = 'button'; btn.className = 'guide-btn'; btn.setAttribute('aria-label', 'この画面の使い方ガイドを見る'); btn.innerHTML = '<span aria-hidden="true">?</span> ガイド';
-  btn.addEventListener('click', start);
-  document.body.appendChild(btn);   // wide screens: a button at the bottom right
-  var icons = document.querySelector('.hicons');   // phones: in the header, next to search (a floating button covered calendar days and card buttons)
-  if (icons) {
-    var hb = document.createElement('button');
-    hb.type = 'button'; hb.className = 'guide-icon'; hb.setAttribute('aria-label', 'この画面の使い方ガイドを見る'); hb.innerHTML = '<span aria-hidden="true">?</span>';
-    hb.addEventListener('click', start);
-    icons.insertBefore(hb, icons.firstChild);
+  var sheet = null;
+  function tipsFor() {
+    var t = (HINTS[page] || []).slice();
+    if (page === 'card' && A.tier && A.tier.on) t.push('自分で書けるカードは' + A.tier.limit() + '枚までです。使わないカードを消すと空きます。カードを人に送ると、書ける枚数がふえます。');
+    return t;
   }
-  document.addEventListener('click', function (ev) { var b = ev.target.closest ? ev.target.closest('[data-guide]') : null; if (b) start(); });
-  window.AtomouGuide = { start: start, steps: steps };
+  function closeSheet() {
+    if (!sheet) return;
+    sheet.parentNode.removeChild(sheet); sheet = null;
+    document.removeEventListener('keydown', onSheetKey);
+    if (btn) btn.focus({ preventScroll: true });
+  }
+  function onSheetKey(ev) { if (ev.key === 'Escape') closeSheet(); }
+  function openHints() {
+    if (sheet) return closeSheet();
+    if (tip) return;   // the spotlight tour is running
+    sheet = document.createElement('div'); sheet.className = 'hint-sheet'; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', 'このページのヒント');
+    sheet.innerHTML = '<div class="hs-back" data-hs="close"></div><div class="hs-box" tabindex="-1"><h2>このページのヒント</h2><ul>' + tipsFor().map(function (x) { return '<li>' + H(x) + '</li>'; }).join('') + '</ul>' +
+      '<p class="hs-act">' + (steps.length ? '<button type="button" class="btn small" data-hs="tour">画面で順に見る</button>' : '') + '<a class="btn small ghost" href="/manual/">くわしい使い方</a><button type="button" class="btn small ghost" data-hs="close">閉じる</button></p></div>';
+    sheet.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-hs]') : null;
+      if (!b) return;
+      var a = b.getAttribute('data-hs');
+      closeSheet();
+      if (a === 'tour') setTimeout(start, 50);
+    });
+    document.body.appendChild(sheet);
+    document.addEventListener('keydown', onSheetKey);
+    A.stat('act:hint_open');
+    sheet.querySelector('.hs-box').focus({ preventScroll: true });
+  }
+  if (HINTS[page]) {
+    btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'guide-btn'; btn.setAttribute('aria-label', 'このページのヒントを見る'); btn.innerHTML = '<span aria-hidden="true">?</span> ヒント';
+    btn.addEventListener('click', openHints);
+    document.body.appendChild(btn);   // wide screens: a button at the bottom right
+    var icons = document.querySelector('.hicons');   // phones: in the header, next to search (a floating button covered calendar days and card buttons)
+    if (icons) {
+      var hb = document.createElement('button');
+      hb.type = 'button'; hb.className = 'guide-icon'; hb.setAttribute('aria-label', 'このページのヒントを見る'); hb.innerHTML = '<span aria-hidden="true">?</span>';
+      hb.addEventListener('click', openHints);
+      icons.insertBefore(hb, icons.firstChild);
+    }
+  }
+  document.addEventListener('click', function (ev) { var b = ev.target.closest ? ev.target.closest('[data-guide]') : null; if (b && steps.length) start(); });
+  window.AtomouGuide = { start: start, steps: steps, hints: openHints };
   // the offer: the home page's introduction card, or a slim bar on the other pages (once; never in the tests, which pass ?today=)
   function offer() {
     var main = document.querySelector('main') || document.body, bar = document.createElement('div');
@@ -145,6 +196,7 @@
     A.stat('act:intro_show');
     return true;
   }
+  if (P.hint === '1' && HINTS[page]) setTimeout(openHints, 300);   // ?hint=1 opens the sheet (the tests and screenshots use it)
   if (P.guide === '1') setTimeout(start, 600);
   else if ((!P.today || P.intro === '1') && P.guide !== '0') {
     if (page === 'home') intro();

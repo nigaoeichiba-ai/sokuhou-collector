@@ -561,6 +561,17 @@ class AppInChrome(BuildOnce):
         shown = re.findall(r'<article class="card"(?![^>]*hidden)[^>]*data-cat="([^"]+)"', dom)
         self.assertTrue(shown and set(shown) == {"マラソン・駅伝"}, set(shown))
 
+    def test_every_page_with_something_to_operate_has_a_hint_sheet(self):
+        e = next(x for x in self.entries if x["status"] == "active")
+        pages = {"home": "/", "search": "/search/", "category": "/c/sports/", "event": f"/e/{e['id']}/", "my": "/my/", "plan": "/plan/?key=m:none", "add": "/add/",
+                 "calendar": "/calendar/", "interests": "/interests/", "card": "/card/", "skins": "/skins/", "manual": "/manual/", "today": "/today/", "use": "/use/"}
+        for name, path in pages.items():
+            with self.subTest(page=name):
+                dom = html.unescape(self.dom(path, "&hint=1"))
+                self.assertIn('class="hint-sheet"', dom)
+                self.assertGreaterEqual(dom.split('class="hs-box"')[1].split("</ul>")[0].count("<li>"), 2)
+                self.assertIn("ヒント", dom)
+
     def test_search_with_no_match_offers_to_record_it(self):
         dom = self.dom("/search/?q=zzzqqqxxx")
         self.assertRegex(dom, r'id="none"(?![^>]*hidden)')
