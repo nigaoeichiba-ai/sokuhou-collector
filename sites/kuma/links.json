@@ -274,7 +274,7 @@
  "兵庫": [
   {
    "label": "ツキノワグマ対策(県の公式ページ)",
-   "url": "http://web.pref.hyogo.lg.jp/nk27/hw24_000000018.html",
+   "url": "https://web.pref.hyogo.lg.jp/nk27/hw24_000000018.html",
    "source": "pref"
   },
   {
@@ -344,9 +344,9 @@
    "source": "pref"
   },
   {
-   "label": "環境省が案内している出没情報",
-   "url": "https://www.pref.tokushima.lg.jp/ippannokata/kurashi/shizen/7241461/",
-   "source": "moe"
+   "label": "国有林でのツキノワグマの目撃情報(四国森林管理局・農林水産省)",
+   "url": "https://www.rinya.maff.go.jp/shikoku/keikaku/20230706_kumamokugeki.html",
+   "source": "maff"
   }
  ],
  "愛媛": [

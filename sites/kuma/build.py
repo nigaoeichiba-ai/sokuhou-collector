@@ -23,6 +23,7 @@ sys.path.insert(0, str(ROOT))
 from sites.kuma import charts, content, digest  # noqa: E402
 from sites.kuma import captures as captures_mod  # noqa: E402
 from sites.kuma import cite as cite_mod  # noqa: E402
+from sites.kuma import official as official_mod  # noqa: E402
 from sites.kuma import live as live_mod  # noqa: E402
 from sites.kuma.fmt import day_text, fy_label, fy_start, jp_date, md, n, ratio_text, table  # noqa: E402
 from sokuhou import prefectures as pf  # noqa: E402
@@ -210,7 +211,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
                      f'<p class="alert">{fy_label(d["cur"])}は、自治体が公表した記録が{n(len(lv["records"]))}件(直近30日は{n(live_mod.last30(lv["records"], lv["today"]))}件)。'
                      f'最新は{md(lv["records"][0]["at"][:10])}({live_mod.ago_text(lv["records"][0]["at"], lv["today"])})です。</p>\n'
                      f'<ul class="mini-list wide">{items}</ul>\n'
-                     f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図で見る(現在地の近く)</a> / <a href="/digest/">週ごとのまとめ</a>{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''} / <a href="/cite/">データの出典・引用のしかた</a></p>\n')
+                     f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図で見る(現在地の近く)</a>{' / <a href="/digest/">週ごとのまとめ</a>' if d.get("has_digest") else ''}{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''} / <a href="/official/">都道府県の公式の出没情報(リンク集)</a> / <a href="/cite/">データの出典・引用のしかた</a></p>\n')
     news_block = ""
     if d["notices"]:
         items = "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
@@ -701,9 +702,11 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     d["live_prefs"] = prepare_prefs(prefs)
     d["live_counts"] = live_mod.prepare_counts(prefs)
     any_live = bool(d["live_prefs"] or d["live_counts"])
+    dig = digest.build(digest_sources(prefs))      # built before the navigation: /digest/ is linked only when a week page exists
+    d["has_digest"] = bool(dig["weeks"])
     nav = [x for x in BASE_NAV if x[1] != "/live/" or any_live]
     if any_live:
-        nav = nav[:-1] + [("地図", "/map/", "/map/"), ("週ごとのまとめ", "/digest/", "/digest/")] + nav[-1:]
+        nav = nav[:-1] + [("地図", "/map/", "/map/")] + ([("週ごとのまとめ", "/digest/", "/digest/")] if d["has_digest"] else []) + nav[-1:]
     if cfg.get("rakuten_affiliate_id"):
         nav = nav[:-1] + [("グッズ(PR)", "/goods/", "/goods/")] + nav[-1:]
     SITE = {**SITE, "nav": nav}
@@ -742,13 +745,13 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
             pages["data/" + live_mod.CSV_NAME] = live_mod.csv_text(lv)
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview, links)
+    pages["official/index.html"] = official_mod.official_page(lambda **kw: page(cfg, preview, **kw), d, d.get("lv"), links)
     pages["guide/index.html"] = guide_hub(cfg, preview)
     for g in content.GUIDES:
         pages[f"guide/{g['slug']}/index.html"] = guide_page(g, cfg, preview)
     pages["notify/index.html"] = notify_page(d, cfg, preview)
     if cfg.get("rakuten_affiliate_id"):
         pages["goods/index.html"] = goods_page(d, cfg, preview)
-    dig = digest.build(digest_sources(prefs))
     if dig["weeks"]:
         dig["fetched_date"] = d["fetched_date"]
         pages["digest/index.html"] = digest_hub(dig, cfg, preview)
