@@ -995,7 +995,7 @@
     renderMy();
     var grid = $('#my-grid');
     wireReorderToggle($('#reorder'), grid);
-    if (P.added) { toast('この端末に保存しました。'); try { history.replaceState(null, '', '/my/'); } catch (e) { /* ignore */ } }
+    if (P.added) { toast('保存しました。'); try { history.replaceState(null, '', '/my/'); } catch (e) { /* ignore */ } }
     var big = $('#p-big'), alarm = $('#p-alarm');
     big.checked = !!S.prefs.big; alarm.value = S.prefs.alarm;
     var st = $('#p-stats'), sb = $('#sync-box'), sn = $('#sync-now');
@@ -1077,8 +1077,7 @@
       '<label class="chip" id="l-yearly"><input type="checkbox" id="f-yearly"> 毎年くり返す</label> <label class="chip" id="l-100"><input type="checkbox" id="f-100"> 100日ごとの節目も入れる</label>' +
       '<p class="hint">記録したあと、メモとやることを書けます。</p></section>' +
       '<p id="quiet-note" class="notice quiet" hidden>静かに記録できます。広告は表示しません。</p>' +
-      '<p><button type="button" class="btn" id="f-save" hidden>この日を記録する</button></p>' +
-      '<p class="hint">名前も日付も、この端末に保存されます。</p>';
+      '<p><button type="button" class="btn" id="f-save" hidden>この日を記録する</button></p>';
     var $f = function (id) { return document.getElementById(id); };
     function show(id, on) { $f(id).hidden = !on; }
     function readDate() {

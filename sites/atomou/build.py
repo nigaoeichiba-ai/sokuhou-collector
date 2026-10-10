@@ -48,7 +48,7 @@ SITE = {
     "nav": [("さがす", "/search/", "/search/"), ("カレンダー", "/calendar/", "/calendar/"), ("記録する", "/add/", "/add/"), ("マイページ", "/my/", "/my/")],
     "glyph": "",
     "assets": HERE / "assets",
-    "source_html": '公式の日付には、出典と確認日を載せています。記録した日は、この端末に保存されます。<a href="/manual/">説明書</a> | <a href="/manual/#guide">使い方</a> | <a href="/use/">こんな時に</a> | <a href="/skins/">きせかえ</a>',
+    "source_html": '公式の日付には、出典と確認日を載せています。<a href="/manual/">説明書</a> | <a href="/manual/#guide">使い方</a> | <a href="/use/">こんな時に</a> | <a href="/skins/">きせかえ</a>',
 }
 WD = "月火水木金土日"
 _TODAY = date.today()   # set by build_pages: the date the static counts on the cards are worked out for (the browser recounts at once)
@@ -368,13 +368,13 @@ def home_page(c: Ctx) -> str:
 <li><b>記録する</b><span>記念日や予定など、大切な日を1行で記録できます</span></li>
 <li><b>知らせる</b><span>あと何日かがひと目で分かります。カレンダーへの追加や通知は、必要なときだけ使えます。</span></li>
 </ol>
-<p class="intro-note">登録なしで、無料で使えます。記録は、お使いの端末に保存されます。</p>
+<p class="intro-note">登録なしで、無料で使えます。</p>
 <p class="intro-btns"><button type="button" class="btn" data-intro="start">30秒で使い方を見る</button> <button type="button" class="btn ghost" data-intro="close">すぐ使う</button></p>
 <p class="hint">この案内は、画面上の「?」や、ページ下の「使い方」から、いつでも見直せます。</p>
 </section>
 <section class="hero"><h1>{esc(CATCH)}</h1>
 <div class="hero-cta" id="hero-cta" hidden>
-<p class="hero-note">登録なしで、無料で使えます。名前も日付も、お使いの端末に保存されます。</p>
+<p class="hero-note">登録なしで、無料で使えます。</p>
 <p class="hero-btns"><a class="btn" href="/add/">大切な日を記録する</a> <a class="btn ghost" href="/interests/">好きな分野から探す</a></p>
 <nav class="chiprow" aria-label="残せる日の例"><a class="chip" href="/add/?kind=anniversary">記念日</a><a class="chip" href="/add/?kind=birthday">誕生日</a><a class="chip" href="/add/?kind=until">楽しみな日・期限</a><a class="chip" href="/add/?kind=memorial">大切な人を思う日</a></nav>
 </div></section>
@@ -465,17 +465,17 @@ def interests_page(c: Ctx, live: list[dict]) -> str:
         secs.append(f'<section data-int-sec="{i + 1}"><h2 class="int-h">{esc(s["name"])}</h2><div class="chiprow">{chips}</div></section>')
     body = f"""{crumbs([("トップ", "/"), ("好きな分野", None)])}
 <h1>好きな分野を選ぶ</h1>
-<p class="lead muted">選んだ分野の日が、ホームにまとまって並びます。まだ日付のない分野(準備中)も選べます。選んだ内容は、この端末の中に保存されます。</p>
+<p class="lead muted">選んだ分野の日が、ホームにまとまって並びます。まだ日付のない分野(準備中)も選べます。</p>
 <div id="int-chosen"></div>
 <div class="field" id="region-pick"><label for="reg-select">お住まいの都道府県</label><select id="reg-select"><option value="">選ばない</option>{"".join(f'<option value="{p}">{p}</option>' for p in PREFECTURES)}</select>
-<p class="hint">選ぶと、その地域の日が、ホームの先頭近くに並びます。選んだ地域は、この端末の中だけに保存されます。</p><p class="small muted" id="reg-note" aria-live="polite"></p></div>
+<p class="hint">選ぶと、その地域の日が、ホームの先頭近くに並びます。</p><p class="small muted" id="reg-note" aria-live="polite"></p></div>
 <div class="sbox"><form class="searchbox" id="int-form" role="search"><label class="vh" for="int-q">分野を探す・追加する</label>
 <input type="text" id="int-q" maxlength="24" autocomplete="off" placeholder="探す・追加する(例: 剣道、釣り、写真)" enterkeyhint="done"><button type="submit" class="sbtn" aria-label="追加">{ICONS['plus']}</button></form></div>
 <p class="small muted" id="int-note" aria-live="polite"></p>
 <p class="int-go" id="int-go" hidden><a class="btn" href="/">選んだ分野の日を見る</a></p>
 {"".join(secs)}
 <noscript><p class="notice">分野を選ぶには JavaScript が必要です。<a href="/search/">さがす</a>からも探せます。</p></noscript>"""
-    return c.page("/interests/", f"好きな分野を選ぶ | {NAME}", "将棋・流星群・英検・剣道・手芸など、好きな分野を選ぶと、その分野の日付がホームに並びます。選んだ内容は端末の中に保存されます。", body, "interests", noindex=True)
+    return c.page("/interests/", f"好きな分野を選ぶ | {NAME}", "将棋・流星群・英検・剣道・手芸など、好きな分野を選ぶと、その分野の日付がホームに並びます。", body, "interests", noindex=True)
 
 
 def card_page(c: Ctx) -> str:
@@ -483,7 +483,7 @@ def card_page(c: Ctx) -> str:
     body = f"""{crumbs([("トップ", "/"), ("カードを作って送る", None)])}
 <h1>カードを作って送る</h1>
 <div id="card-box"><noscript><p class="notice">カードを作るには JavaScript が必要です。</p></noscript></div>"""
-    return c.page("/card/", f"カードを作って送る | {NAME}", "日付・ひとこと・やることを入れたカードを、リンクや画像で送れます。受け取った人は、1タップで自分の予定帳に入れられます。内容はサーバーに保存されません。", body, "card", noindex=True)
+    return c.page("/card/", f"カードを作って送る | {NAME}", "日付・ひとこと・やることを入れたカードを、リンクや画像で送れます。受け取った人は、1タップで自分の予定帳に入れられます。", body, "card", noindex=True)
 
 
 def search_page(c: Ctx) -> str:
@@ -509,12 +509,12 @@ def my_page(c: Ctx) -> str:
     member_html = MEMBER_BOX if members_on(c.cfg) else ""
     if c.cfg.get("google_client_id"):
         sync_html = ('<h2 id="sync">別の端末に引き継ぐ</h2>\n<div class="panel" id="sync-box" hidden>'
-                     '<p>Google アカウントでつなぐと、記録した日を自分の Google ドライブに保存して、別の端末に引き継げます。当サイトのサーバーには保存しません。'
+                     '<p>Google アカウントでつなぐと、記録した日を自分の Google ドライブに保存して、別の端末に引き継げます。'
                      '<a href="/privacy/#google">詳しく</a></p><p><button type="button" class="btn" id="sync-now">Google アカウントで同期する</button></p></div>\n')
     body = f"""{crumbs([("トップ", "/"), ("マイページ", None)])}
 <h1>マイページ</h1>
-<p class="lead muted">記録した日と、予定に入れた日がここに並びます。データはこの端末に保存されます。</p>
-<div class="panel" id="my-empty" hidden><p>まだ記録がありません。忘れたくない日を記録すると、ここに表示されます。</p><p class="muted">名前も日付も、この端末に保存されます。</p><p><a class="btn" href="/add/">日を記録する</a> <a class="btn ghost" href="/search/">公式の日付をさがす</a></p></div>
+<p class="lead muted">記録した日と、予定に入れた日がここに並びます。</p>
+<div class="panel" id="my-empty" hidden><p>まだ記録がありません。忘れたくない日を記録すると、ここに表示されます。</p><p><a class="btn" href="/add/">日を記録する</a> <a class="btn ghost" href="/search/">公式の日付をさがす</a></p></div>
 <div class="head-row" id="my-tools" hidden><div class="grow" style="margin-left:0"><button type="button" class="btn small ghost" id="reorder" aria-pressed="false">並べ替え</button></div></div>
 <div class="cards" id="my-grid" data-save-order="1"></div>
 <h2>設定</h2>
@@ -532,7 +532,7 @@ def my_page(c: Ctx) -> str:
 <div class="panel"><p>iPhone の「カレンダー」や Google カレンダーに取り込めるファイルを作れます。1件ずつ作るときは、予定の詳細から。</p>
 <p><button type="button" class="btn small ghost" id="ics-all">すべての予定をファイルにする</button></p></div>
 <h2 id="ical-h">ほかのカレンダーから取り込む</h2>
-<div class="panel"><p>Google カレンダーなどから書き出した .ics のファイルを、この予定帳に入れられます。ファイルはこの端末の中だけで読み、どこにも送りません。</p>
+<div class="panel"><p>Google カレンダーなどから書き出した .ics のファイルを、この予定帳に入れられます。</p>
 <details class="more"><summary>Google カレンダーからの書き出し方</summary><ol><li>パソコンで Google カレンダーを開きます。</li><li>右上の歯車から「設定」を開きます。</li><li>「インポート/エクスポート」の「エクスポート」を押します。</li><li>ダウンロードした ZIP を開き、中の .ics のファイルを、下から選びます。</li></ol></details>
 <p><label class="btn small ghost" for="ical-file">.ics のファイルを選ぶ</label><input class="vh" type="file" id="ical-file" accept=".ics,text/calendar"></p><div id="ical-out" aria-live="polite"></div></div>
 <h2 id="backup-h">バックアップ</h2>
@@ -543,7 +543,7 @@ def my_page(c: Ctx) -> str:
 <button type="button" class="btn small ghost" id="wipe">すべて消す</button></p>
 </div>
 <noscript><p class="notice">マイページには JavaScript が必要です。</p></noscript>"""
-    return c.page("/my/", f"マイページ | {NAME}", "記録した日と、予定に入れた日の一覧です。この端末に保存します。", body, "my", noindex=True)
+    return c.page("/my/", f"マイページ | {NAME}", "記録した日と、予定に入れた日の一覧です。", body, "my", noindex=True)
 
 
 def add_page(c: Ctx) -> str:
@@ -568,7 +568,7 @@ def plan_page(c: Ctx) -> str:
 <h1>予定の詳細</h1>
 <div id="plan"><p class="muted">読み込み中…</p></div>
 <noscript><p class="notice">予定の詳細には JavaScript が必要です。</p></noscript>"""
-    return c.page("/plan/", f"予定の詳細 | {NAME}", "予定のメモと、何日前までにやることを保存できます。この端末に保存されます。", body, "plan", noindex=True)
+    return c.page("/plan/", f"予定の詳細 | {NAME}", "予定のメモと、何日前までにやることを保存できます。", body, "plan", noindex=True)
 
 
 def skins_page(c: Ctx) -> str:
