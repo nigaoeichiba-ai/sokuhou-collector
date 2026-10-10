@@ -20,6 +20,7 @@ from sokuhou.sources import (
     env_kuma,
     fukushima_kuma,
     estat_wage,
+    ishikari_kuma,
     jgrants,
     mhlw_minwage,
     miyagi_kuma,
@@ -155,6 +156,7 @@ GROUPS: dict[str, list[Source]] = {
         Source("okayama_kuma", okayama_kuma.collect, check_pref_bear),
         Source("yamanashi_kuma", yamanashi_kuma.collect, check_pref_bear),
         Source("sorachi_kuma", sorachi_kuma.collect, check_pref_bear),
+        Source("ishikari_kuma", ishikari_kuma.collect, check_pref_bear),   # the city's own open data, CC BY 4.0, no approval needed
         Source("toyama_kuma", toyama_kuma.collect, check_pref_bear),   # the prefecture's written permission (2026-10-06): records, no coordinates
         # no explicit licence: counts only (municipality, month, count, latest date), see kumalib.package_counts
         Source("fukushima_kuma", fukushima_kuma.collect, check_counts_bear),
