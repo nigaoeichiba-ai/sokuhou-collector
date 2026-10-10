@@ -1,0 +1,223 @@
+{
+ "added": "2026-10-11",
+ "slug": "coloring-christmas-lineart",
+ "title": "クリスマスのぬりえ",
+ "genre": "season",
+ "touch": "lineart",
+ "lead": "ツリー、サンタ、トナカイ、ブーツ、ケーキなど、クリスマスのぬりえ12点。線はくっきり太めで、小さな子どもでも塗りやすく、印刷してすぐ使えます。",
+ "tags": [
+  "ぬりえ",
+  "塗り絵",
+  "クリスマス",
+  "線画",
+  "子ども",
+  "印刷",
+  "無料"
+ ],
+ "subject": "",
+ "season": {
+  "from": "11-01",
+  "to": "12-26"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "coloring-christmas-lineart-tree",
+   "file": "coloring-christmas-lineart-tree.webp",
+   "title": "クリスマスツリー",
+   "desc": "クリスマスツリーのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "クリスマス",
+    "線画",
+    "クリスマスのぬりえ",
+    "クリスマスツリー",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 419,
+   "h": 515
+  },
+  {
+   "id": "coloring-christmas-lineart-santa",
+   "file": "coloring-christmas-lineart-santa.webp",
+   "title": "サンタさん",
+   "desc": "サンタさんのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "クリスマス",
+    "線画",
+    "クリスマスのぬりえ",
+    "サンタさん",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 448,
+   "h": 492
+  },
+  {
+   "id": "coloring-christmas-lineart-reindeer",
+   "file": "coloring-christmas-lineart-reindeer.webp",
+   "title": "トナカイ",
+   "desc": "トナカイのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "クリスマス",
+    "線画",
+    "クリスマスのぬりえ",
+    "トナカイ",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 354,
+   "h": 504
+  },
+  {
+   "id": "coloring-christmas-lineart-cake",
+   "file": "coloring-christmas-lineart-cake.webp",
+   "title": "クリスマスケーキ",
+   "desc": "クリスマスケーキのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "クリスマス",
+    "線画",
+    "クリスマスのぬりえ",
+    "クリスマスケーキ",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 501,
+   "h": 455
+  },
+  {
+   "id": "coloring-christmas-lineart-wreath",
+   "file": "coloring-christmas-lineart-wreath.webp",
+   "title": "リース",
+   "desc": "リースのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "クリスマス",
+    "線画",
+    "クリスマスのぬりえ",
+    "リース",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 475,
+   "h": 472
+  },
+  {
+   "id": "coloring-christmas-lineart-snowman",
+   "file": "coloring-christmas-lineart-snowman.webp",
+   "title": "雪だるま",
+   "desc": "雪だるまのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "クリスマス",
+    "線画",
+    "クリスマスのぬりえ",
+    "雪だるま",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 450,
+   "h": 516
+  },
+  {
+   "id": "coloring-christmas-lineart-gift",
+   "file": "coloring-christmas-lineart-gift.webp",
+   "title": "プレゼント",
+   "desc": "プレゼントのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "クリスマス",
+    "線画",
+    "クリスマスのぬりえ",
+    "プレゼント",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 407,
+   "h": 490
+  },
+  {
+   "id": "coloring-christmas-lineart-bell",
+   "file": "coloring-christmas-lineart-bell.webp",
+   "title": "ベル",
+   "desc": "ベルのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "クリスマス",
+    "線画",
+    "クリスマスのぬりえ",
+    "ベル",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 460,
+   "h": 479
+  },
+  {
+   "id": "coloring-christmas-lineart-sleigh",
+   "file": "coloring-christmas-lineart-sleigh.webp",
+   "title": "そり",
+   "desc": "そりのイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "クリスマス",
+    "線画",
+    "クリスマスのぬりえ",
+    "そり",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 518,
+   "h": 421
+  },
+  {
+   "id": "coloring-christmas-lineart-angel",
+   "file": "coloring-christmas-lineart-angel.webp",
+   "title": "天使",
+   "desc": "天使のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "クリスマス",
+    "線画",
+    "クリスマスのぬりえ",
+    "天使",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 439,
+   "h": 513
+  },
+  {
+   "id": "coloring-christmas-lineart-house",
+   "file": "coloring-christmas-lineart-house.webp",
+   "title": "ゆきの家",
+   "desc": "ゆきの家のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "クリスマス",
+    "線画",
+    "クリスマスのぬりえ",
+    "ゆきの家",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 509,
+   "h": 466
+  }
+ ]
+}

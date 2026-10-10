@@ -1,0 +1,230 @@
+{
+ "added": "2026-10-11",
+ "slug": "autumn-taste-flat",
+ "title": "秋の味覚",
+ "genre": "food",
+ "touch": "flat",
+ "lead": "さんま、栗、さつまいも、きのこ、柿、梨、ぶどう、新米など、秋の味覚12点。レシピ、給食だより、チラシのすみに。",
+ "tags": [
+  "秋の味覚",
+  "秋",
+  "食べ物",
+  "さんま",
+  "栗",
+  "さつまいも",
+  "柿",
+  "新米",
+  "給食だより"
+ ],
+ "subject": "",
+ "season": {
+  "from": "09-10",
+  "to": "11-30"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "autumn-taste-flat-sanma",
+   "file": "autumn-taste-flat-sanma.webp",
+   "title": "さんま",
+   "desc": "さんまのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 520,
+   "h": 286
+  },
+  {
+   "id": "autumn-taste-flat-kuri",
+   "file": "autumn-taste-flat-kuri.webp",
+   "title": "栗",
+   "desc": "栗のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "栗",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 479,
+   "h": 378
+  },
+  {
+   "id": "autumn-taste-flat-satsumaimo",
+   "file": "autumn-taste-flat-satsumaimo.webp",
+   "title": "さつまいも",
+   "desc": "さつまいものイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "さつまいも",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 490,
+   "h": 354
+  },
+  {
+   "id": "autumn-taste-flat-kinoko",
+   "file": "autumn-taste-flat-kinoko.webp",
+   "title": "きのこ",
+   "desc": "きのこのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "きのこ",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 505,
+   "h": 424
+  },
+  {
+   "id": "autumn-taste-flat-kaki",
+   "file": "autumn-taste-flat-kaki.webp",
+   "title": "柿",
+   "desc": "柿のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "柿",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 486,
+   "h": 367
+  },
+  {
+   "id": "autumn-taste-flat-nashi",
+   "file": "autumn-taste-flat-nashi.webp",
+   "title": "梨",
+   "desc": "梨のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "梨",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 490,
+   "h": 401
+  },
+  {
+   "id": "autumn-taste-flat-budo",
+   "file": "autumn-taste-flat-budo.webp",
+   "title": "ぶどう",
+   "desc": "ぶどうのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "ぶどう",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 452,
+   "h": 488
+  },
+  {
+   "id": "autumn-taste-flat-shinmai",
+   "file": "autumn-taste-flat-shinmai.webp",
+   "title": "新米",
+   "desc": "新米のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "新米",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 428,
+   "h": 504
+  },
+  {
+   "id": "autumn-taste-flat-matsutake",
+   "file": "autumn-taste-flat-matsutake.webp",
+   "title": "松茸",
+   "desc": "松茸のイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "松茸",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 490,
+   "h": 475
+  },
+  {
+   "id": "autumn-taste-flat-ringo",
+   "file": "autumn-taste-flat-ringo.webp",
+   "title": "りんご",
+   "desc": "りんごのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "りんご",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 497,
+   "h": 459
+  },
+  {
+   "id": "autumn-taste-flat-ginnan",
+   "file": "autumn-taste-flat-ginnan.webp",
+   "title": "ぎんなん",
+   "desc": "ぎんなんのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "ぎんなん",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 504,
+   "h": 367
+  },
+  {
+   "id": "autumn-taste-flat-kabocha",
+   "file": "autumn-taste-flat-kabocha.webp",
+   "title": "かぼちゃ",
+   "desc": "かぼちゃのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "秋の味覚",
+    "秋",
+    "食べ物",
+    "さんま",
+    "かぼちゃ",
+    "シンプルフラット",
+    "たべもの"
+   ],
+   "w": 513,
+   "h": 445
+  }
+ ]
+}

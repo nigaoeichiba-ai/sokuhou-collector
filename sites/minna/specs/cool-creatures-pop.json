@@ -80,5 +80,8 @@
    "a giant octopus-like sea monster with tentacles"
   ]
  ],
- "exclude": []
+ "exclude": [
+  "dragon",
+  "eagle"
+ ]
 }

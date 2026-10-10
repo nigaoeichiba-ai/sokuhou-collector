@@ -1,0 +1,240 @@
+{
+ "added": "2026-10-11",
+ "slug": "realistic-animals-pets",
+ "title": "リアルな動物（図鑑風）",
+ "genre": "animals",
+ "touch": "realistic",
+ "lead": "犬、ハムスター、カエル、魚、昆虫など、図鑑のようなリアルな動物12点。理科の資料や自由研究、解説スライドに。",
+ "tags": [
+  "リアル",
+  "図鑑",
+  "動物",
+  "犬",
+  "ハムスター",
+  "カエル",
+  "魚",
+  "昆虫",
+  "理科"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "realistic-animals-pets-dog",
+   "file": "realistic-animals-pets-dog.webp",
+   "title": "犬",
+   "desc": "犬のイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "リアルな動物（図鑑風）",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 438,
+   "h": 486
+  },
+  {
+   "id": "realistic-animals-pets-hamster",
+   "file": "realistic-animals-pets-hamster.webp",
+   "title": "ハムスター",
+   "desc": "ハムスターのイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "ハムスター",
+    "リアルな動物（図鑑風）",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 329,
+   "h": 432
+  },
+  {
+   "id": "realistic-animals-pets-frog",
+   "file": "realistic-animals-pets-frog.webp",
+   "title": "カエル",
+   "desc": "カエルのイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "カエル",
+    "リアルな動物（図鑑風）",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 504,
+   "h": 344
+  },
+  {
+   "id": "realistic-animals-pets-koi",
+   "file": "realistic-animals-pets-koi.webp",
+   "title": "コイ",
+   "desc": "コイのイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "リアルな動物（図鑑風）",
+    "コイ",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 498,
+   "h": 437
+  },
+  {
+   "id": "realistic-animals-pets-beetle",
+   "file": "realistic-animals-pets-beetle.webp",
+   "title": "カブトムシ",
+   "desc": "カブトムシのイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "リアルな動物（図鑑風）",
+    "カブトムシ",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 420,
+   "h": 498
+  },
+  {
+   "id": "realistic-animals-pets-butterfly",
+   "file": "realistic-animals-pets-butterfly.webp",
+   "title": "チョウ",
+   "desc": "チョウのイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "リアルな動物（図鑑風）",
+    "チョウ",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 518,
+   "h": 395
+  },
+  {
+   "id": "realistic-animals-pets-cat",
+   "file": "realistic-animals-pets-cat.webp",
+   "title": "ねこ",
+   "desc": "ねこのイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "リアルな動物（図鑑風）",
+    "ねこ",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 357,
+   "h": 521
+  },
+  {
+   "id": "realistic-animals-pets-rabbit",
+   "file": "realistic-animals-pets-rabbit.webp",
+   "title": "うさぎ",
+   "desc": "うさぎのイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "リアルな動物（図鑑風）",
+    "うさぎ",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 454,
+   "h": 500
+  },
+  {
+   "id": "realistic-animals-pets-sparrow",
+   "file": "realistic-animals-pets-sparrow.webp",
+   "title": "スズメ",
+   "desc": "スズメのイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "リアルな動物（図鑑風）",
+    "スズメ",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 454,
+   "h": 437
+  },
+  {
+   "id": "realistic-animals-pets-ladybug",
+   "file": "realistic-animals-pets-ladybug.webp",
+   "title": "テントウムシ",
+   "desc": "テントウムシのイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "リアルな動物（図鑑風）",
+    "テントウムシ",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 462,
+   "h": 408
+  },
+  {
+   "id": "realistic-animals-pets-goldfish",
+   "file": "realistic-animals-pets-goldfish.webp",
+   "title": "金魚",
+   "desc": "金魚のイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "魚",
+    "リアルな動物（図鑑風）",
+    "金魚",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 532,
+   "h": 422
+  },
+  {
+   "id": "realistic-animals-pets-dragonfly",
+   "file": "realistic-animals-pets-dragonfly.webp",
+   "title": "トンボ",
+   "desc": "トンボのイラスト。リアル・図鑑風のタッチ。",
+   "tags": [
+    "リアル",
+    "図鑑",
+    "動物",
+    "犬",
+    "リアルな動物（図鑑風）",
+    "トンボ",
+    "リアル・図鑑風",
+    "どうぶつ"
+   ],
+   "w": 520,
+   "h": 415
+  }
+ ]
+}
