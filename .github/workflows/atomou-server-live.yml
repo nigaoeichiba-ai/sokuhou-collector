@@ -1,0 +1,46 @@
+name: atomou-server-live
+
+# atomou.com 速報 on the server: puts the live feed script (sites/atomou/live.py, data/atomou/live_sources.json, sites/atomou/server_live.sh) on the server, in ~/atomou.com/script/live/,
+# and runs it once to see that it works (Python 3.6 of the server).  The 10-minute run itself is a cron of the server (set in the Xserver panel: */10 * * * * /bin/bash $HOME/atomou.com/script/live/server_live.sh).
+# Run by hand ("Run workflow") after a change of these files.  Needs the same repository secrets as the deploy (XSERVER_SSH_KEY, XSERVER_HOST, XSERVER_USER).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - name: Put the script on the server and try it once
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then echo "server secrets are not set"; exit 0; fi
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver && chmod 600 ~/.ssh/id_xserver
+          printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 15' '  StrictHostKeyChecking accept-new' > ~/.ssh/config && chmod 600 ~/.ssh/config
+          ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /dev/null || true
+          python3 -c "import ast,sys;ast.parse(open('sites/atomou/live.py',encoding='utf-8').read(),feature_version=(3,6))"
+          mkdir -p stage/sites/atomou stage/data/atomou
+          cp sites/atomou/live.py stage/sites/atomou/ && cp sites/atomou/server_live.sh stage/ && cp data/atomou/live_sources.json stage/data/atomou/
+          tar -C stage -cf - . | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" '
+            set -e
+            mkdir -p "$HOME/atomou.com/script/live"
+            cd "$HOME/atomou.com/script/live"
+            tar -xf -
+            chmod 755 server_live.sh
+            echo "== files"; ls -la . sites/atomou data/atomou | head -30
+            echo "== one run"; /bin/bash ./server_live.sh; echo "exit $?"
+            echo "== log"; cat last.log | head -30
+            echo "== file"; ls -la live.v1.json 2>&1; python3 -c "import json;d=json.load(open(\"live.v1.json\",encoding=\"utf-8\"));print(\"items\",len(d[\"items\"]))" 2>&1 | tail -2
+          '
