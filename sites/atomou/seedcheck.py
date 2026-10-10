@@ -102,12 +102,30 @@ def quote_has_date(c: dict, precision: str) -> bool:
     return text_has_date(c["date"], c["source_quote"], precision)
 
 
+ERAS = (("令和", 2019, 2018), ("平成", 1989, 1988), ("昭和", 1926, 1925), ("大正", 1912, 1911))   # (name, first year, offset)
+
+
+def era_years(y: int) -> list[str]:
+    """The Japanese-era spellings of a Western year ('令和8年' for 2026; '令和元年' for 2019)."""
+    out = []
+    for name, first, off in ERAS:
+        if y >= first:
+            n = y - off
+            out += [f"{name}{n}年"] + ([f"{name}元年"] if n == 1 else [])
+            break
+    return out
+
+
+def era_dates(y: int, m: int, d: int) -> list[str]:
+    return [f"{e}{m}月{d}日" for e in era_years(y)]
+
+
 def text_has_full_date(iso: str, text: str) -> bool:
     """The day with its YEAR is written in the text (an earlier year of a yearly event: '31日' alone would match any year)."""
     y, m, d = (int(x) for x in iso.split("-"))
     tn = norm(text).lower()
     en = MONTHS_EN[m - 1]
-    forms = [f"{y}年{m}月{d}日", f"{y}/{m}/{d}", f"{y}/{m:02d}/{d:02d}", f"{y}.{m}.{d}", f"{y}.{m:02d}.{d:02d}", f"{y}-{m:02d}-{d:02d}", f"{d} {en} {y}", f"{en} {d}, {y}", f"{en} {d} {y}", f"{d} {en[:3]} {y}", f"{en[:3]} {d}, {y}"]
+    forms = [f"{y}年{m}月{d}日", f"{y}/{m}/{d}", f"{y}/{m:02d}/{d:02d}", f"{y}.{m}.{d}", f"{y}.{m:02d}.{d:02d}", f"{y}-{m:02d}-{d:02d}", f"{d} {en} {y}", f"{en} {d}, {y}", f"{en} {d} {y}", f"{d} {en[:3]} {y}", f"{en[:3]} {d}, {y}"] + era_dates(y, m, d)
     return any(norm(x).lower() in tn for x in forms)
 
 
@@ -117,7 +135,7 @@ def text_has_date(iso: str, text: str, precision: str = "day") -> bool:
     q = text
     qn = norm(q)
     if precision == "year":
-        return str(y) in qn
+        return str(y) in qn or any(norm(e) in qn for e in era_years(y))
     if precision == "month":
         return norm(f"{m}月") in qn or bool(re.search(rf"{y}[/.]{m}\b", q))
     en = MONTHS_EN[m - 1]
