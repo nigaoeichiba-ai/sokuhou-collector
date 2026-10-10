@@ -162,6 +162,23 @@ class Wiring(unittest.TestCase):
         self.assertNotIn("git push", wf)                                   # nothing is committed: no deploy is started by it
         self.assertIn('if [ -z "$KEY" ]', wf)                              # without the server secrets it only makes the file
 
+    def test_the_live_script_runs_on_the_servers_python_3_6_and_the_server_cron_puts_the_file_without_ssh(self):
+        import ast
+        src = (ROOT / "sites" / "atomou" / "live.py").read_text(encoding="utf-8")
+        ast.parse(src, feature_version=(3, 6))                         # no syntax newer than the server's Python (3.6.8)
+        self.assertNotIn("from __future__ import annotations", src)    # 3.7+
+        self.assertNotIn("fromisoformat", src)                         # 3.7+
+        sh = (ROOT / "sites" / "atomou" / "server_live.sh").read_text(encoding="utf-8")
+        self.assertIn("sites/atomou/live.py", sh)
+        self.assertIn("/usr/bin/python3", sh)
+        self.assertNotIn("ssh ", sh)                                   # the server reads the feeds itself
+        self.assertIn("live.v1.json", sh)
+        self.assertIn("public_html/demo.atomou.com", sh)
+        wf = (ROOT / "." / ".github" / "workflows" / "atomou-server-live.yml").read_text(encoding="utf-8")
+        self.assertIn("feature_version=(3,6)", wf)
+        self.assertIn("workflow_dispatch", wf)
+        self.assertNotIn("schedule:", wf)
+
     def test_the_recheck_workflow_runs_every_six_hours_and_only_writes_its_file(self):
         wf = (ROOT / ".github" / "workflows" / "atomou-recheck.yml").read_text(encoding="utf-8")
         self.assertIn('cron: "20 */6 * * *"', wf)
