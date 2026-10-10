@@ -54,9 +54,9 @@
   function addAll(events) {
     var S = A.state(), have = {};
     S.entries.forEach(function (e) { have[e.id] = 1; });
-    var n = 0;
+    var n = 0, room = A.tier ? A.tier.room() : Infinity;
     events.forEach(function (e) {
-      if (have[e.id] || S.entries.length >= 500) return;
+      if (have[e.id] || S.entries.length >= 500 || n >= room) return;
       S.entries.push({ id: e.id, title: e.title, date: e.date, precision: 'day', kind: 'event', quiet: false, yearly: e.yearly, every100: false, alarm: '', time: e.time, created: C.iso(TODAY) });
       if (e.memo) S.notes['m:' + e.id] = { memo: e.memo, tasks: [], remind: [] };
       n++;
@@ -84,7 +84,7 @@
         if (go) go.addEventListener('click', function () {
           var n = addAll(fresh);
           A.stat('act:ical_import');
-          out.innerHTML = '<p>' + n + '件を、予定帳に入れました。<a href="/calendar/">カレンダーを見る</a></p>';
+          out.innerHTML = '<p>' + n + '件を、予定帳に入れました。<a href="/calendar/">カレンダーを見る</a></p>' + (n < fresh.length ? '<p class="hint">無料プランの枚数の上限のため、残りの' + (fresh.length - n) + '件は入っていません。</p>' : '');
           document.dispatchEvent(new CustomEvent('atomou:changed'));
         });
       };

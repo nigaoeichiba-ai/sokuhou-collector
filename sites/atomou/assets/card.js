@@ -91,13 +91,14 @@
 
   /* ---------- the picture (1200x630 for chat and X, 1080x1080 for Instagram, 1080x1920 for stories and shorts) ---------- */
   var SIZES = { wide: [1200, 630], square: [1080, 1080], story: [1080, 1920] };
+  function signed() { return !(A.tier && A.tier.on && A.tier.plus() && A.state().prefs.noSign); }   // plus may send a picture or words without the site's name and link
   function drawCard(card, size) {
     var wh = SIZES[size] || SIZES.wide, W = wh[0], Hh = wh[1], cv = document.createElement('canvas'), g = cv.getContext('2d'), th = THEMES[card.th], c = count(card);
     var font = getComputedStyle(document.body).fontFamily || 'sans-serif', k = W / 1200, pad = Math.round(70 * k), story = size === 'story';
     cv.width = W; cv.height = Hh;
     g.fillStyle = th.bg; g.fillRect(0, 0, W, Hh);
     g.fillStyle = th.ac; g.fillRect(0, 0, W, Math.round(16 * k));
-    g.textBaseline = 'alphabetic'; g.fillStyle = th.fg; g.globalAlpha = .7; g.font = '700 ' + Math.round(34 * k) + 'px ' + font; g.fillText('あと何日、もう何日', pad, Math.round(100 * k)); g.globalAlpha = 1;
+    g.textBaseline = 'alphabetic'; g.fillStyle = th.fg; if (signed()) { g.globalAlpha = .7; g.font = '700 ' + Math.round(34 * k) + 'px ' + font; g.fillText('あと何日、もう何日', pad, Math.round(100 * k)); } g.globalAlpha = 1;
     function wrap(text, fontPx, maxW, rows) {
       g.font = '800 ' + fontPx + 'px ' + font;
       var lines = [], cur = '', i, ch;
@@ -126,7 +127,7 @@
         y += Math.round(tk * 1.8);
       });
     }
-    g.globalAlpha = .7; g.textAlign = 'right'; g.font = '600 ' + Math.round(32 * k) + 'px ' + font; g.fillText('atomou.com', W - pad, Hh - Math.round(44 * k));
+    if (signed()) { g.globalAlpha = .7; g.textAlign = 'right'; g.font = '600 ' + Math.round(32 * k) + 'px ' + font; g.fillText('atomou.com', W - pad, Hh - Math.round(44 * k)); }
     return cv;
   }
   function saveImage(card, size) {
@@ -146,6 +147,7 @@
   function addToPlanner(card) {
     var S = A.state(), id = A.uid(), key = 'm:' + id;
     if (S.entries.length >= 500) { A.toast('記録が多いため、追加できません。マイページで整理してください。'); return null; }
+    if (A.tier && A.tier.blocked(1)) return null;
     S.entries.push({ id: id, title: card.t || '(題名なし)', date: card.d, precision: 'day', kind: card.k, quiet: false, yearly: false, every100: false, alarm: '', time: card.tm || '', created: C.iso(TODAY) });
     if (card.m || card.tasks.length) {
       S.notes[key] = { memo: card.m, tasks: card.tasks.map(function (t) { return { id: Math.random().toString(36).slice(2, 8), before: t.b, text: t.x, done: false }; }) };
@@ -164,12 +166,14 @@
     return '<div class="share share-row" id="x-share" data-text="" data-url="" title="リンクの中に、このカードの内容が入っています。サーバーには保存されません。"><span class="share-lead">送る</span>' + AtomouShare.icons(['line', 'x', 'copy', 'native']) +
       '<span class="share-sep" aria-hidden="true"></span><span class="share-lead">画像</span>' +
       '<button type="button" class="sbt sbt-t" data-x-img="wide" title="横長(X・LINE)">横</button><button type="button" class="sbt sbt-t" data-x-img="square" title="正方形(Instagram)">正</button><button type="button" class="sbt sbt-t" data-x-img="story" title="縦長(ストーリーズ・TikTok・Shorts)">縦</button></div>' +
-      '<p class="hint">リンクの中に、カードの内容が入っています(サーバーには保存されません)。画像は、横=X・LINE、正=Instagram、縦=ストーリーズ・TikTok・Shorts。</p>';
+      '<p class="hint">リンクの中に、カードの内容が入っています(サーバーには保存されません)。画像は、横=X・LINE、正=Instagram、縦=ストーリーズ・TikTok・Shorts。</p>' +
+      (A.tier && A.tier.on ? (A.tier.plus() ? '<p><label class="lab" for="x-nosign"><input type="checkbox" id="x-nosign"' + (signed() ? '' : ' checked') + '> 署名とリンクを入れずに送る(プラスプラン)</label></p>' : '<p class="hint">無料プランでは、画像と文に、サイトの名前とリンクが入ります。プラスプランでは、入れずに送れます。</p>') : '');
   }
   function wireShare(card) {
     var s = $('#x-share'); if (!s) return;
     s.setAttribute('data-text', words(card) + (card.m ? '\n' + card.m.slice(0, 60) : ''));
     s.setAttribute('data-url', linkOf(card));
+    if (signed()) s.removeAttribute('data-nolink'); else s.setAttribute('data-nolink', '1');   // a card sent as words only carries no link
     if (window.AtomouShare) AtomouShare.init(s);
   }
   function calLinks(card) {
