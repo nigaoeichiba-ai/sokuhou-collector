@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-09T01:12:03.715843+00:00",
+ "fetched_at": "2026-10-10T00:45:43.368177+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -25,18 +25,6 @@
    "target_area_search": "東京都",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "農林水産物認証取得支援事業（農家認証取得支援事業）補助金"
-  },
-  {
-   "acceptance_end_datetime": "2026-12-28T08:00:00.000Z",
-   "acceptance_start_datetime": "2022-04-01T01:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0W2x000007CStOEAW",
-   "id": "a0W2x000007CStOEAW",
-   "institution_name": null,
-   "name": "S-00002267",
-   "subsidy_max_limit": 0,
-   "target_area_search": "東京都",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "農林水産物認証取得支援事業（水産認証取得支援事業）補助金"
   },
   {
    "acceptance_end_datetime": "2026-10-12T14:59:00.000Z",
@@ -99,6 +87,18 @@
    "title": "［第十一回］事業再構築補助金（交付申請等）"
   },
   {
+   "acceptance_end_datetime": "2026-10-12T15:00:00.000Z",
+   "acceptance_start_datetime": "2026-09-02T00:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0W5h00000UcWrwEAF",
+   "id": "a0W5h00000UcWrwEAF",
+   "institution_name": null,
+   "name": "S-00004124",
+   "subsidy_max_limit": 0,
+   "target_area_search": "東京都",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "東京都専門医認定支援事業補助金"
+  },
+  {
    "acceptance_end_datetime": "2026-10-16T14:59:00.000Z",
    "acceptance_start_datetime": "2026-09-17T05:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0W5h00000ZueXcEAJ",
@@ -109,6 +109,18 @@
    "target_area_search": "東京都",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "ドローンを活用したツアー造成支援補助金"
+  },
+  {
+   "acceptance_end_datetime": "2030-05-30T15:00:00.000Z",
+   "acceptance_start_datetime": "2023-11-15T15:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ2000000pejTMAQ",
+   "id": "a0WJ2000000pejTMAQ",
+   "institution_name": null,
+   "name": "S-00004972",
+   "subsidy_max_limit": 0,
+   "target_area_search": "東京都",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "令和７年度救急搬送患者受入体制強化事業"
   },
   {
    "acceptance_end_datetime": "2032-03-07T14:59:00.000Z",
@@ -279,18 +291,6 @@
    "title": "廃止石油坑井封鎖事業費補助金（令和8年度：関東東北産業保安監督部東北支部）"
   },
   {
-   "acceptance_end_datetime": "2026-10-09T03:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-01T05:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDeS9MAL",
-   "id": "a0WJ200000CDeS9MAL",
-   "institution_name": "二酸化炭素排出抑制対策事業費等補助金",
-   "name": "S-00009770",
-   "subsidy_max_limit": 0,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和７年度（補正予算）地域共生を目指したデータセンター脱炭素化設備導入支援事業（三次公募）"
-  },
-  {
    "acceptance_end_datetime": "2027-03-31T14:59:00.000Z",
    "acceptance_start_datetime": "2026-03-31T15:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDYsSMAX",
@@ -385,6 +385,18 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "休廃止鉱山鉱害防止等工事費補助金（令和７年度補正）【九州監督部】"
+  },
+  {
+   "acceptance_end_datetime": "2026-12-28T08:00:00.000Z",
+   "acceptance_start_datetime": "2022-04-01T01:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0W2x000007CStOEAW",
+   "id": "a0W2x000007CStOEAW",
+   "institution_name": "農林水産物認証取得支援事業（水産認証取得支援事業）補助金",
+   "name": "S-00002267",
+   "subsidy_max_limit": 0,
+   "target_area_search": "東京都",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "農林水産物認証取得支援事業（水産認証取得支援事業）補助金"
   },
   {
    "acceptance_end_datetime": "2026-12-28T08:15:00.000Z",
@@ -529,18 +541,6 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "休廃止鉱山鉱害防止等工事費補助金（令和８年度当初）【東北支部】"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-09T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-18T00:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDeXvMAL",
-   "id": "a0WJ200000CDeXvMAL",
-   "institution_name": "中小企業等海外展開支援事業費補助金（海外出願支援事業）",
-   "name": "S-00009807",
-   "subsidy_max_limit": 3000000,
-   "target_area_search": "福岡県",
-   "target_number_of_employees": "300名以下",
-   "title": "【福岡県3次】令和8年度_中小企業等海外展開支援事業費補助金（海外出願支援事業）"
   },
   {
    "acceptance_end_datetime": "2027-03-31T09:00:00.000Z",
@@ -1335,18 +1335,6 @@
    "title": "産業車両等の脱炭素化促進事業のうち、空港における脱炭素化促進事業②空港におけるEV・FCV型車両導入事業（二酸化炭素排出抑制対策事業費等補助金）"
   },
   {
-   "acceptance_end_datetime": "2026-10-09T03:00:00.000Z",
-   "acceptance_start_datetime": "2026-08-21T05:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDdnJMAT",
-   "id": "a0WJ200000CDdnJMAT",
-   "institution_name": "脱炭素成長型経済構造移行推進対策費補助金（ゼロエミッション船等の建造促進事業）",
-   "name": "S-00009589",
-   "subsidy_max_limit": 0,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和７年度(補正予算) ゼロエミッション船等の建造促進事業 2次公募"
-  },
-  {
    "acceptance_end_datetime": "2026-10-23T08:00:00.000Z",
    "acceptance_start_datetime": "2026-08-24T01:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003I7R7UAK",
@@ -2017,19 +2005,7 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "［第十三回］事業再構築補助金_GX進出類型（交付申請等）"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-09T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-08-28T05:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDeQmMAL",
-   "id": "a0WJ200000CDeQmMAL",
-   "institution_name": "伝統的工芸品産業支援補助金",
-   "name": "S-00009766",
-   "subsidy_max_limit": 10000000,
-   "target_area_search": "新潟県 / 福井県 / 富山県 / 石川県",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "伝統的工芸品産業支援補助金（令和8年度第2回災害復興事業）"
   }
  ],
- "total": 169
+ "total": 167
 }
