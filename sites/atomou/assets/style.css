@@ -487,3 +487,10 @@ body{word-break:auto-phrase;text-wrap:pretty}
 .parts li.drag{border-color:var(--accent);box-shadow:var(--shadow,0 2px 8px rgba(0,0,0,.15))}.parts .grip{touch-action:none;cursor:grab;flex:none}.parts li.drag .grip{cursor:grabbing}
 .part-t{flex:1;min-width:0;display:flex;align-items:center;gap:10px;font-weight:700;cursor:pointer}.part-t input{flex:none;width:24px;height:24px;margin:0}.part-t span{display:grid;gap:1px;min-width:0;overflow-wrap:anywhere}.part-t small{font-weight:400;font-size:.78rem;color:var(--muted)}
 .part-btns{display:flex;flex-wrap:wrap;gap:8px;margin:.6rem 0 0}
+/* how sure a day's page is about its date (確認済 / 訂正済 / 再確認中 / 未発表): every pair is one the skins already check */
+.vrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:.5rem 0}.vbadge{display:inline-block;padding:2px 12px;border-radius:999px;font-size:.85rem;font-weight:800;border:1.5px solid currentColor}
+.vb-ok,.vb-fixed{background:var(--ato-soft);color:var(--ato-ink)}.vb-old{background:var(--mou-soft);color:var(--mou-ink)}.vb-pending{background:var(--quiet-bg);color:var(--quiet-text)}
+.changes{margin:0;padding-left:1.1em}.fix-line{margin:.6rem 0}
+/* 今日は何の日 */
+.kyou-rows{list-style:none;margin:.4rem 0 1rem;padding:0;display:grid;gap:6px}.kyou-rows li{padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}.kyou-rows .y{display:inline-block;min-width:3.6em;font-weight:800;color:var(--ato-ink)}
+.kyou-today{margin:.6rem 0 1.2rem}.chips small{font-weight:400;font-size:.78rem;margin-left:.2em}

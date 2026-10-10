@@ -72,7 +72,7 @@ HT_CACHE = """
 <FilesMatch "\\.(css|js|json|svg|png|webp|ico)$">
 Header set Cache-Control "public, max-age=31536000, immutable"
 </FilesMatch>
-<FilesMatch "(sw\\.js|manifest\\.webmanifest|(live|recheck)\\.v1\\.json)$">
+<FilesMatch "(sw\\.js|manifest\\.webmanifest|(live|recheck|pop)\\.v1\\.json)$">
 Header set Cache-Control "no-cache"
 </FilesMatch>
 </IfModule>
@@ -306,7 +306,7 @@ HEAD_ICONS = ('<div class="hicons"><a href="/search/" aria-label="さがす">' +
 
 # the AdSense code (sitekit puts it in every page's head) stays only on the pages that are content: never on the app (record, calendar, my page, plan, search, skins, thanks),
 # and never on a quiet day or an item with ad_ok false (see event_page)
-ADS_KINDS = {"home", "category", "event", "use", "today", "manual"}
+ADS_KINDS = {"home", "category", "event", "use", "today", "manual", "kyou", "new"}
 _ADS_TAG = re.compile(r'<script async src="https://pagead2\.googlesyndication\.com/[^"]*"[^>]*></script>\n?')
 
 
@@ -393,7 +393,7 @@ def popular_chips(entries: list[dict]) -> str:
 def home_page(c: Ctx) -> str:
     live = live_entries(c.entries, c.today)
     first = diverse(live, 6)
-    chips = '<a class="chip" href="/topics/">最新・トピックス</a><a class="chip" href="/region/">地域</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS) if g in c.shown)
+    chips = '<a class="chip" href="/topics/">最新・トピックス</a><a class="chip" href="/kyou/">今日は何の日</a><a class="chip" href="/new/">新着・人気</a><a class="chip" href="/region/">地域</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS) if g in c.shown)
     ucs = "".join(f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>'
                   for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
     body = f"""<section class="intro setup" id="setup" aria-labelledby="setup-h" hidden></section>
@@ -757,6 +757,42 @@ def share_block(c: Ctx, e: dict) -> str:
             + f'<a class="share-more" href="/card/#from=c:{e["id"]}" title="ひとこと・やることを足したカードにして送ります">カードにして送る</a></div>')
 
 
+VERIFY_LABELS = {"ok": "確認済", "fixed": "訂正済", "old": "再確認中", "pending": "未発表"}
+EVENT_LD_KINDS = ("開催", "決勝", "極大")   # kinds that are real events a person can go to (the others get the page markup only)
+
+
+def verify_badge(e: dict) -> tuple[str, str]:
+    """(key, a sentence): how sure the page is about its date.  未発表 = an estimate; 訂正済 = the date was corrected (corrected_on); 再確認中 = the check is old (the robot looks again);
+    otherwise 確認済.  assets/live.js turns the badge into 再確認中 when the checking robot cannot find the date on its page any more."""
+    if e.get("estimated"):
+        return "pending", "公式の発表を待っています。発表されたら、この日付を更新します。"
+    if e.get("corrected_on"):
+        return "fixed", f"{fmt_date(e['corrected_on'])}に、日付を訂正しました。"
+    if e.get("status") == "old_checked":
+        return "old", f"最後に確かめたのは{fmt_date(e['checked_on'])}です。公式ページで、もう一度確かめています。"
+    return "ok", f"{fmt_date(e['checked_on'])}に、公式ページで確かめました。"
+
+
+def page_ld(c: Ctx, e: dict, url: str) -> str:
+    """Structured data of a day's page: the page (published / modified) and, for a real event with a place, the event.  Quiet days and estimates get the page markup only."""
+    site = str(c.cfg["site_url"]).rstrip("/")
+    page = {"@type": "WebPage", "name": e["title"], "url": url, "inLanguage": "ja", "datePublished": e["added"], "dateModified": e.get("corrected_on") or e["checked_on"],
+            "isPartOf": {"@type": "WebSite", "name": NAME, "url": site}}
+    graph = [page]
+    place = (e.get("place") or "").strip()
+    if not e["quiet"] and not e.get("estimated") and e["precision"] == "day" and e["kind"] in EVENT_LD_KINDS and place and place not in ("全国", "地域"):
+        ev = {"@type": "Event", "name": e["title"], "startDate": e["date"], "eventStatus": "https://schema.org/EventScheduled",
+              "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "url": url,
+              "location": {"@type": "Place", "name": place, "address": {"@type": "PostalAddress", "addressCountry": "JP", "addressRegion": (e.get("region") or place)[:30]}}}
+        if e.get("date_end"):
+            ev["endDate"] = e["date_end"]
+        if e.get("what"):
+            ev["description"] = e["what"]
+        graph.append(ev)
+    data = {"@context": "https://schema.org", "@graph": graph}
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False).replace("</", "<\\/") + "</script>"
+
+
 def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     quiet = e["quiet"]
     today = c.today
@@ -782,10 +818,17 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
         rows = "".join(f"<tr><th scope=\"row\">{int(h[:4])}年</th><td>{esc(fmt_date(h))}</td></tr>" for h in e["history"])
         hist = (f'<h2>これまでの日付</h2><p class="small muted">公式のページで確かめた、過去の日付です。</p>'
                 f'<div class="tablewrap"><table class="info-table"><tbody>{rows}</tbody></table></div>')
+    vkey, vtext = verify_badge(e)
+    vrow = f'<p class="vrow"><span class="vbadge vb-{vkey}" data-vbadge>{VERIFY_LABELS[vkey]}</span> <span class="small muted" data-vtext>{esc(vtext)}</span></p>'
+    page_url = f"{str(c.cfg['site_url']).rstrip('/')}/e/{e['id']}/"
+    log = "".join(f"<li><time datetime=\"{x['on']}\">{esc(fmt_date(x['on']))}</time> {esc(x['text'])}</li>" for x in e.get("changes") or [])
+    log_html = (f"<dt>更新の記録</dt><dd><ul class=\"changes\">{log}</ul></dd>" if log else "")
+    fix_link = f'<a class="btn small ghost" href="/contact/?kind=date&amp;page={quote(page_url, safe="")}">日付の間違いを知らせる</a>'
     same = [] if quiet else sorted((r for r in live if r["subject"] == e["subject"] and r["id"] != e["id"] and not r["quiet"]), key=lambda r: (r["date"], r["id"]))[:6]
     body = crumbs([("トップ", "/"), (e["group"], f"/c/{GROUP_SLUG[e['group']]}/")] + ([(e["mid"], f"/c/{GROUP_SLUG[e['group']]}/#m={quote(e['mid'])}")] if e.get("mid") and e["mid"] != catalog.MID_OTHER else []) + [(e["title"], None)]) + f"""
 <h1>{esc(e['title'])}</h1>
 {card_html(e, big=True, link=False)}
+{vrow}
 {'<p class="small muted">上のカードの日数は、今日の日付をもとに数えています。</p>' if art else f'<p>{esc(sentence)}<span class="small muted">上のカードの日数は、今日の日付をもとに数えています。</span></p>'}
 <p class="small muted src-line">出典: <a href="#src">{esc(host(e['source_url']))}</a>(確認日 {esc(e['checked_on'])})</p>
 {art}
@@ -793,7 +836,8 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 {'<p class="notice quiet">この日は、静かにお知らせします。</p>' if quiet else ""}
 <h2 id="src">出典と確認日</h2>
 <dl class="info"><dt>出典</dt><dd><a href="{esc(e['source_url'])}" rel="noopener nofollow" target="_blank">{esc(host(e['source_url']))}</a></dd>
-<dt>確認日</dt><dd>{esc(e['checked_on'])}</dd>{f"<dt>出典の文</dt><dd>{esc(e['source_quote'])}</dd>" if e.get('source_quote') else ""}</dl>
+<dt>確認日</dt><dd>{esc(e['checked_on'])}</dd>{f"<dt>出典の文</dt><dd>{esc(e['source_quote'])}</dd>" if e.get('source_quote') else ""}<dt>掲載</dt><dd>{esc(e['added'])}</dd>{log_html}</dl>
+<p class="fix-line">{fix_link}</p>
 <p class="small muted">日付や時刻は変わることがあります。出典の公式ページで、最新の情報をご確認ください。</p>
 <p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを追加</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の予定として記録する</a>{(' <a class="btn small ghost" href="' + esc(google_calendar_url(e, str(c.cfg['site_url']).rstrip('/') + '/e/' + e['id'] + '/')) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a>') if e["precision"] == "day" and not est else ""}</p>
 {"" if quiet else share_block(c, e)}
@@ -808,7 +852,7 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     title = f"{e['title']}{suffix} {fmt} | {NAME}"
     place = (e.get("place") or "").strip()
     desc = f"{e['title']}は{fmt}{end}" + (f"、{place}" if place and place not in ("全国", "地域") else "") + "。" + (f"{guide['about'].split('。')[0]}。" if guide else "") + "出典と確認日つき。あと何日かを数えて、予定に入れられます。"
-    html = c.page(f"/e/{e['id']}/", title, desc, body, "event", noindex=not indexable, og=og_path(e))
+    html = c.page(f"/e/{e['id']}/", title, desc, body + page_ld(c, e, page_url), "event", noindex=not indexable, og=og_path(e))
     return strip_ads(html) if quiet or not e.get("ad_ok", True) else html
 
 
@@ -1179,6 +1223,82 @@ def legal(c: Ctx) -> dict:
 
 
 # ---------- the site ----------
+# ---------- 今日は何の日 (/kyou/ and /kyou/MM-DD/) ----------
+def kyou_days(entries: list[dict]) -> dict[str, list[tuple[int, dict, bool]]]:
+    """'MM-DD' -> [(year, entry, from_history)]: every day of the catalogue (and every earlier date a repeating day is known to have had) by its month and day."""
+    out: dict[str, list[tuple[int, dict, bool]]] = {}
+    for e in entries:
+        if e["precision"] != "day":
+            continue
+        if not e.get("estimated"):   # an estimate has no day of its own yet, but the days of its earlier years are known
+            out.setdefault(e["date"][5:], []).append((int(e["date"][:4]), e, False))
+        for h in e.get("history") or []:
+            if len(h) == 10:
+                out.setdefault(h[5:], []).append((int(h[:4]), e, True))
+    for v in out.values():
+        v.sort(key=lambda t: (t[0], t[1]["title"]))
+    return out
+
+
+def kyou_page(c: Ctx, md: str, items: list[tuple[int, dict, bool]], prev_next: tuple[str, str]) -> tuple[str, bool]:
+    """One date's page: what falls on that month and day (days to come as cards, days that have passed as a list).  Returns (html, indexable): a date with a single day stays out of search results."""
+    m, d = int(md[:2]), int(md[3:])
+    today = c.today
+    upcoming = [(y, e) for y, e, h in items if not h and date.fromisoformat(e["date"]) >= today]
+    past = [(y, e, h) for y, e, h in items if h or date.fromisoformat(e["date"]) < today]
+    quiet_any = any(e["quiet"] for _, e, _h in items)
+    cards = "".join(card_html(e) for _, e in upcoming if not e["quiet"])[:200000]
+    rows = []
+    for y, e, h in sorted(past, key=lambda t: (-t[0], t[1]["title"])):
+        rows.append(f'<li><span class="y">{y}年</span> <a href="/e/{e["id"]}/">{esc(e["title"])}</a>{"<small> 静かな日</small>" if e["quiet"] else ""}</li>')
+    quiet_up = "".join(f'<li><span class="y">{y}年</span> <a href="/e/{e["id"]}/">{esc(e["title"])}</a><small> 静かな日</small></li>' for y, e in upcoming if e["quiet"])
+    n = len(items)
+    pn = "".join(f'<a class="chip" href="/kyou/{x}/">{int(x[:2])}月{int(x[3:])}日</a>' for x in prev_next if x)
+    body = crumbs([("トップ", "/"), ("今日は何の日", "/kyou/"), (f"{m}月{d}日", None)]) + f"""
+<h1>{m}月{d}日は何の日</h1>
+<p class="lead muted">{m}月{d}日にある日付を、年ごとにまとめました。出典つきの公式の日付だけです。</p>
+{('<h2>これからの' + str(m) + '月' + str(d) + '日</h2><div class="cards" id="kyou-list">' + cards + '</div>') if cards else ''}
+{('<ul class="kyou-rows">' + quiet_up + '</ul>') if quiet_up else ''}
+{('<h2>過ぎた' + str(m) + '月' + str(d) + '日</h2><ul class="kyou-rows" id="kyou-past">' + "".join(rows) + '</ul>') if rows else ''}
+<nav class="chiprow" aria-label="ほかの日"><a class="chip" href="/kyou/">今日は何の日(一覧)</a>{pn}</nav>"""
+    title = f"{m}月{d}日は何の日？ {n}件の日付 | {NAME}"
+    names = "、".join(e["title"] for _, e, _h in items[:3])
+    desc = f"{m}月{d}日にある日付: {names}など{n}件。出典と確認日つきで、あと何日か、もう何日かも数えられます。"[:150]
+    html = c.page(f"/kyou/{md}/", title, desc, body, "kyou", noindex=n < 2)
+    return (strip_ads(html) if quiet_any else html), n >= 2
+
+
+def kyou_index(c: Ctx, days: dict[str, list]) -> str:
+    months = []
+    for m in range(1, 13):
+        chips = "".join(f'<a class="chip" href="/kyou/{k}/">{int(k[3:])}日<small> {len(v)}</small></a>' for k, v in sorted(days.items()) if int(k[:2]) == m)
+        if chips:
+            months.append(f'<h2 id="m{m}">{m}月</h2><div class="chips">{chips}</div>')
+    body = crumbs([("トップ", "/"), ("今日は何の日", None)]) + f"""
+<h1>今日は何の日</h1>
+<section class="kyou-today" id="kyou-today" aria-live="polite"><p class="muted">今日の日付を調べています…</p></section>
+<p class="lead muted">この日付にどんな日があるかを、月と日ごとに調べられます。数字は、その日にある日付の件数です。</p>
+{"".join(months)}"""
+    return c.page("/kyou/", f"今日は何の日 月日からさがす | {NAME}", "今日は何の日か、月と日から調べられます。出典つきの公式の日付だけを集め、あと何日か、もう何日かも数えられます。", body, "kyou")
+
+
+# ---------- 新着・人気 (/new/) ----------
+def new_page(c: Ctx, live: list[dict]) -> str:
+    """The days added most lately (built into the page) and the days most people put into their planner (read from live/pop.v1.json, which the server's own cron writes from its counts)."""
+    fresh = sorted((e for e in live if not e["quiet"]), key=lambda e: (e["added"], e["date"]), reverse=True)[:48]
+    groups: dict[str, list[dict]] = {}
+    for e in fresh:
+        groups.setdefault(e["added"], []).append(e)
+    blocks = "".join(f'<h3>{esc(fmt_date(a))}に載せた日</h3><div class="cards">{"".join(card_html(e) for e in v)}</div>' for a, v in groups.items())
+    body = crumbs([("トップ", "/"), ("新着・人気", None)]) + f"""
+<h1>新着・人気の日</h1>
+<section id="pop"><h2>人気の日</h2><p class="hint">この30日間に、予定に入れた人が多い順です(人数は出しません)。</p>
+<div class="cards" id="pop-grid"></div><p class="muted" id="pop-none">読み込み中…</p></section>
+<h2>新しく載せた日</h2>
+{blocks}"""
+    return c.page("/new/", f"新着・人気の日 | {NAME}", "最近載せた日付と、予定に入れた人が多い日付。出典と確認日つきの公式の日付だけです。", body, "new")
+
+
 def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> dict:
     global _TODAY
     today = today or date.today()
@@ -1200,6 +1320,16 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
         pages[f"use/{u['slug']}/index.html"] = use_page(c, u)
     for g in c.shown:
         pages[f"c/{GROUP_SLUG[g]}/index.html"] = category_page(c, g, live)
+    kd = kyou_days(entries)
+    kyou_noindex: set[str] = set()
+    pages["kyou/index.html"] = kyou_index(c, kd)
+    dates = sorted(kd)
+    for i, md in enumerate(dates):
+        html, indexable = kyou_page(c, md, kd[md], (dates[i - 1] if i else "", dates[i + 1] if i + 1 < len(dates) else ""))
+        pages[f"kyou/{md}/index.html"] = html
+        if not indexable:
+            kyou_noindex.add(f"kyou/{md}/index.html")
+    pages["new/index.html"] = new_page(c, live)
     pages.update(og_pages(live))      # og/<id>.png: the picture a chat app shows for a day's link
     pages.update(feeds.feed_pages(live, catalog.GROUPS, GROUP_SLUG, str(cfg["site_url"]).rstrip("/"), today))   # cal/<genre>.ics, cal/all.ics: the days as a calendar to subscribe to
     for e in entries:
@@ -1226,7 +1356,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     pages.update(asset_pages(SITE["assets"]))
     # the sitemap lists indexable pages only (not /my/, not event pages that are held back)
     listed = {k: 1 for k in pages if k.endswith("index.html") and k != "my/index.html"
-              and k != "plan/index.html" and k != "interests/index.html" and k != "card/index.html" and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
+              and k != "plan/index.html" and k != "interests/index.html" and k != "card/index.html" and k not in kyou_noindex and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
     pages.update(standard_files(listed, cfg, preview, today.isoformat()))
     pages[".htaccess"] = pages[".htaccess"] + HT_CACHE
     if preview:

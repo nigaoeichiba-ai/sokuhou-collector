@@ -111,6 +111,19 @@ def shown_kind(item: dict) -> str:
     return kind
 
 
+def _day_or_empty(v) -> str:
+    return str(v) if isinstance(v, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", v) and _d(v) is not None else ""
+
+
+def _changes(v) -> list:
+    """The change log of a day: [{"on": "2026-10-12", "text": "開催日が11月3日に変わった"}], newest first, at most 8, short (what a visitor may read on the day's page)."""
+    out = []
+    for x in (v if isinstance(v, list) else []):
+        if isinstance(x, dict) and _day_or_empty(x.get("on")) and isinstance(x.get("text"), str) and x["text"].strip():
+            out.append({"on": x["on"], "text": x["text"].strip()[:60]})
+    return sorted(out, key=lambda c: c["on"], reverse=True)[:8]
+
+
 def _added(item: dict) -> str:
     """The day a day was added to the catalogue: an explicit "added" of the item, else the date in its seed file's name, else its check date (shown on /topics/)."""
     m = re.search(r"(\d{4}-\d{2}-\d{2})", str(item.get("added") or item.get("_file") or ""))
@@ -212,6 +225,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
             "son_toku": bool(it.get("son_toku")), "source_url": it["source_url"], "source_quote": (it.get("source_quote") or "")[:60] or None,
             "checked_on": it["checked_on"], "added": _added(it), "status": ("ended" if last < today else ("old_checked" if (today - checked).days > STALE_DAYS else "active")),
             "publish_on": max(date(2000, 1, 1), d - timedelta(days=lead)).isoformat(),
+            "corrected_on": _day_or_empty(it.get("corrected_on")), "changes": _changes(it.get("changes")),
         })
     # an estimate ("例年12月31日ごろ") stands only until the official day of that cycle is known: a confirmed entry of the same series (the key names the cycle: "kouhaku-2026") takes its place
     confirmed = {e["series"] for e in entries if e["series"] and not e["estimated"]}
