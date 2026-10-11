@@ -15,9 +15,9 @@ FW = json.loads((ROOT / "data" / "atomou" / "forbidden_words.json").read_text(en
 
 class Refusing(unittest.TestCase):
     def test_gambling_adult_crime_a_death_and_personal_information_are_refused(self):
-        for w in ("競馬 予想", "パチンコ 新台", "ｶｼﾞﾉ 日本", "ボートレース オッズ", "アダルト 配信", "有名人 訃報", "闇バイト 募集", "電話 09012345678", "連絡は a@example.com", "https://example.com", "東京都千代田区の住所"):
+        for w in ("競馬 予想", "パチンコ 新台", "ｶｼﾞﾉ 日本", "ボートレース オッズ", "アダルト 配信", "有名人 訃報", "闇バイト 募集", "電話 09012345678", "090-1234-5678", "03 1234 5678", "０９０－１２３４－５６７８", "100-0001 近く", "連絡は a@example.com", "https://example.com", "東京都千代田区の住所"):
             self.assertNotEqual(words.refusal(w), "", w)
-        for w in ("新作ゲーム 発売日", "万博", "共通テスト 2027", "鉄道 ダイヤ改正", "ワールドカップ"):
+        for w in ("新作ゲーム 発売日", "万博", "共通テスト 2027", "鉄道 ダイヤ改正", "ワールドカップ", "2026-10-11 発売", "2027年3月 公開", "プロ野球 2026-27 開幕", "M-1 2026 決勝"):
             self.assertEqual(words.refusal(w), "", w)
 
     def test_length_and_the_words_typed_to_try_the_receiver(self):
