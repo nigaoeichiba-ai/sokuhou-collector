@@ -1608,6 +1608,15 @@ def prepare(c: dict, items: dict | None, cfg: dict) -> dict:
     return d
 
 
+def mood_photo(key: str) -> str:
+    """The mood photograph (assets/mood) for a share card: one of the eighteen, chosen by the page's name, so every page has its own and a rebuild keeps it."""
+    from zlib import crc32
+    from sites.yorokobu import dailypicks as dp
+    kinds = list(dp.KIND_KEY.values())
+    h = crc32(key.encode("utf-8"))
+    return f"{kinds[h % len(kinds)]}-{(h // 7) % dp.MOOD_VARIANTS + 1}"
+
+
 def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool = False, today: date | None = None, ranking: dict | None = None) -> list[str]:
     missing = missing_config(cfg)
     if release and missing:
@@ -1629,23 +1638,23 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     SEEN.clear()
     if ogimage.available():
         site = cfg["site_name"]
-        cards["og/default.png"] = ogimage.card(title="よろこばれるプレゼント、見つかります。", tag="イベントと相手から", site=site)
+        cards["og/default.png"] = ogimage.card(title="よろこばれるプレゼント、見つかります。", tag="イベントと相手から", site=site, photo=mood_photo("default"))
         for o in c["occasions"]:
-            cards[f"og/occasion/{o['slug']}.png"] = ogimage.card(title=f"{o['name']}のプレゼント", tag="選び方と相手別", site=site)
+            cards[f"og/occasion/{o['slug']}.png"] = ogimage.card(title=f"{o['name']}のプレゼント", tag="選び方と相手別", site=site, photo=mood_photo(o["slug"]))
         for r in c["recipients"]:
-            cards[f"og/for/{r['slug']}.png"] = ogimage.card(title=f"{r['name']}へのプレゼント", tag="イベント別", site=site)
+            cards[f"og/for/{r['slug']}.png"] = ogimage.card(title=f"{r['name']}へのプレゼント", tag="イベント別", site=site, photo=mood_photo(r["slug"]))
         for p in c["pairs"]:
             cards[f"og/gift/{ct.pair_key(p)}.png"] = ogimage.card(
-                title=p["title"].split(" ")[0], tag=f"{c['rec'][p['recipient']]['name']} × {c['occ'][p['occasion']]['name']}", site=site)
+                title=p["title"].split(" ")[0], tag=f"{c['rec'][p['recipient']]['name']} × {c['occ'][p['occasion']]['name']}", site=site, photo=mood_photo(ct.pair_key(p)))
         for ps in (c["persona"] or {}).get("personas", []):
-            cards[f"og/diagnosis/{ps['slug']}.png"] = ogimage.card(title=ps["name"], tag="プレゼント診断", site=site)
+            cards[f"og/diagnosis/{ps['slug']}.png"] = ogimage.card(title=ps["name"], tag="プレゼント診断", site=site, photo=mood_photo(ps["slug"]))
         for a in c["articles"]:
-            cards[f"og/read/{a['slug']}.png"] = ogimage.card(title=a["title"], tag="読みもの", site=site)
+            cards[f"og/read/{a['slug']}.png"] = ogimage.card(title=a["title"], tag="読みもの", site=site, photo=mood_photo(a["slug"]))
         for day in c.get("daily") or []:
             m, dd = int(day["date"][5:7]), int(day["date"][8:10])
-            cards[f"og/picks/{day['date']}.png"] = ogimage.card(title=f"今日のおすすめギフト {m}月{dd}日", tag=day["theme"], site=site)
+            cards[f"og/picks/{day['date']}.png"] = ogimage.card(title="今日のおすすめギフト", tag=f"{m}月{dd}日 {day['theme']}", site=site, photo=day["amazon"][0]["mood"])
         for th in c["themes"]:
-            cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]), site=site)
+            cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]), site=site, photo=mood_photo(th["slug"]))
         OG.update(k[len("og/"):-len(".png")] for k in cards)
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview, today),
                                      "occasion/index.html": hub_page(d, cfg, preview, "occasion"),
