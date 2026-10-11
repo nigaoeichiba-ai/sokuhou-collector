@@ -104,6 +104,7 @@
     s.prefs.alarm = oneOf(p.alarm, ['morning', 'eve', 'week', 'none'], 'morning');
     s.prefs.stats = p.stats === undefined ? statsDefault() : !!p.stats;
     s.prefs.push = !!p.push;
+    s.prefs.pushShared = p.pushShared === true;   // also announce a change of a shared card that this device follows (needs the notifications above)
     s.prefs.pushHash = /^[0-9me,-]{0,4000}$/.test(String(p.pushHash || '')) ? String(p.pushHash || '') : '';
     s.prefs.tour = {};
     s.prefs.intro = p.intro === true;
