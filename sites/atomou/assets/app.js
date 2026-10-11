@@ -117,6 +117,9 @@
     s.prefs.shares = Math.max(0, Math.min(9999, Math.floor(+p.shares) || 0));   // how many times a day was sent (the plan: sending earns room for more cards)
     ['home', 'calendar', 'plan', 'add', 'search'].forEach(function (k) { if (p.tour && p.tour[k] === true) s.prefs.tour[k] = true; });
     s.prefs.seasonOff = /^[a-z0-9-]{1,30}$/.test(String(p.seasonOff)) && CONF.skins[p.seasonOff] ? p.seasonOff : '';
+    var gc = p.gcal || {};   // the calendar of its own that was made in the visitor's Google Calendar (its id) and which days were sent there (assets/gcal.js)
+    s.prefs.gcal = { cal: /^[A-Za-z0-9._@-]{5,200}$/.test(String(gc.cal)) ? String(gc.cal) : '',
+      sent: (Array.isArray(gc.sent) ? gc.sent : []).filter(function (u) { return /^[me]-[A-Za-z0-9_-]{1,40}(-100)?$/.test(String(u)); }).slice(-600) };
     var b = p.blocks || {};
     s.prefs.blocks = { order: (Array.isArray(b.order) ? b.order : []).filter(function (k) { return BLOCK_IDS.indexOf(k) >= 0; }),
       hidden: (Array.isArray(b.hidden) ? b.hidden : []).filter(function (k) { return BLOCK_IDS.indexOf(k) >= 0; }) };
@@ -1096,15 +1099,16 @@
   /* ---------- carry over to another device with a Google account: the data goes to the visitor's own Google Drive (a hidden app folder);
      this site's server never holds it.  Shown only when config.json has google_client_id. ---------- */
   var GCID = CONF.gclient || '';
-  function loadGis(cb) {
+  var gisEl = null;
+  function loadGis(cb, quiet) {   // quiet: loading ahead of a press (the my page), so a failure is not announced
     if (window.google && google.accounts && google.accounts.oauth2) return cb();
-    var el = document.createElement('script');
-    el.src = 'https://accounts.google.com/gsi/client'; el.onload = cb; el.onerror = function () { toast('Google に接続できませんでした。'); };
-    document.head.appendChild(el);
+    if (!gisEl) { gisEl = document.createElement('script'); gisEl.src = 'https://accounts.google.com/gsi/client'; gisEl.addEventListener('error', function () { gisEl = null; }); document.head.appendChild(gisEl); }
+    gisEl.addEventListener('load', cb);
+    if (!quiet) gisEl.addEventListener('error', function () { toast('Google に接続できませんでした。'); });
   }
-  function gToken(cb) {
+  function gToken(cb, scope) {   // scope: the Drive app folder (default) or, for sending days to Google Calendar, the one in assets/gcal.js
     loadGis(function () {
-      google.accounts.oauth2.initTokenClient({ client_id: GCID, scope: 'https://www.googleapis.com/auth/drive.appdata',
+      google.accounts.oauth2.initTokenClient({ client_id: GCID, scope: scope || 'https://www.googleapis.com/auth/drive.appdata',
         callback: function (r) { if (r && r.access_token) cb(r.access_token); else toast('Google との接続を取り消しました。'); } }).requestAccessToken({ prompt: '' });
     });
   }
@@ -1137,6 +1141,62 @@
     });
   }
 
+  /* ---------- the days that can be written to a calendar (the file, or Google Calendar): the visitor's own days with a full date, and the official ones they saved ---------- */
+  function collectEvs(cat, withReminds) {
+    var evs = [], by = {};
+    (cat || []).forEach(function (c) { by[c.id] = c; });
+    S.entries.forEach(function (e) {
+      var d = C.parse(e.date);
+      if (!d || e.precision !== 'day') return;
+      var ev = { uid: 'm-' + e.id, title: e.title, date: d, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm };
+      if (withReminds) ev.reminds = (S.notes['m:' + e.id] && S.notes['m:' + e.id].remind) || [];
+      evs.push(ev);
+    });
+    S.saved.forEach(function (id) {
+      var c = by[id], d = c && C.parse(c.date);
+      if (!d || c.precision !== 'day') return;
+      var ev = { uid: 'e-' + id, title: c.title, date: d, alarm: S.prefs.alarm };
+      if (withReminds) ev.reminds = (S.notes['e:' + id] && S.notes['e:' + id].remind) || [];
+      evs.push(ev);
+    });
+    return evs;
+  }
+
+  /* ---------- send the days to a calendar of their own in Google Calendar (assets/gcal.js; the browser talks to Google, our server is not involved) ---------- */
+  function gcalMsg(e) {
+    if (e && e.status === 401) return 'Google との接続が切れました。もう一度お試しください。';
+    if (e && e.status === 403) return 'Google カレンダーに送れませんでした。許可が足りないか、Google 側で止められています。';
+    return 'Google カレンダーに送れませんでした。しばらくして、もう一度お試しください。';
+  }
+  function wireGcal() {
+    var box = $('#gcal-box');
+    if (!box || !GCID || !window.AtomouGcal) return;
+    var G = window.AtomouGcal, send = $('#gcal-send'), un = $('#gcal-unlink');
+    box.hidden = false;
+    loadGis(function () { /* ready before the press: the Google window must open straight from the click */ }, true);
+    function show() { un.hidden = !S.prefs.gcal.cal; }
+    show();
+    send.addEventListener('click', function () {
+      gToken(function (tok) {
+        loadCatalog().then(function (cat) {
+          var evs = collectEvs(cat, true);
+          if (!evs.length && !S.prefs.gcal.cal) { toast('送れる日がありません。日付まで決まった日を記録してください。'); return; }
+          toast('Google カレンダーに送っています…');
+          G.send(tok, evs, S.prefs.gcal).then(function (r) {
+            S.prefs.gcal = r.state; persist(); show();
+            toast((r.added + r.updated) + '件の日を Google カレンダーに送りました' + (r.removed ? '(' + r.removed + '件を取り除きました)' : '') + '。');
+          }).catch(function (e) { toast(gcalMsg(e)); });
+        });
+      }, G.SCOPE);
+    });
+    un.addEventListener('click', function () {
+      if (!window.confirm('Google カレンダーの「' + G.NAME + '」を消します。この予定帳の記録は消えません。よろしいですか。')) return;
+      gToken(function (tok) {
+        G.unlink(tok, S.prefs.gcal).then(function (st) { S.prefs.gcal = st; persist(); show(); toast('Google カレンダーから消しました。'); }).catch(function (e) { toast(gcalMsg(e)); });
+      }, G.SCOPE);
+    });
+  }
+
   /* ---------- my page ---------- */
   function renderMy() {
     var grid = $('#my-grid'), empty = $('#my-empty'), tools = $('#my-tools');
@@ -1161,21 +1221,13 @@
     alarm.addEventListener('change', function () { S.prefs.alarm = alarm.value; persist(); toast('通知の時間を変更しました。'); });
     $('#ics-all').addEventListener('click', function () {
       loadCatalog().then(function (cat) {
-        var evs = [], by = {};
-        (cat || []).forEach(function (c) { by[c.id] = c; });
-        S.entries.forEach(function (e) {
-          var d = C.parse(e.date);
-          if (d && e.precision === 'day') evs.push({ uid: 'm-' + e.id, title: e.title, date: d, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm });
-        });
-        S.saved.forEach(function (id) {
-          var c = by[id], d = c && C.parse(c.date);
-          if (d && c.precision === 'day') evs.push({ uid: 'e-' + id, title: c.title, date: d, alarm: S.prefs.alarm });
-        });
+        var evs = collectEvs(cat);
         if (!evs.length) { toast('ファイルにできる日がありません。'); return; }
         ICS.download('atomou-all.ics', ICS.build(evs, 'あと何日、もう何日'));
         toast(evs.length + '件の予定をファイルにしました。');
       });
     });
+    wireGcal();
     $('#backup').addEventListener('click', function () { download('atomou-backup.json', JSON.stringify(S, null, 1)); });
     $('#restore').addEventListener('change', function (ev) {
       var f = ev.target.files[0];

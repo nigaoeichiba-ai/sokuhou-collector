@@ -155,7 +155,7 @@ def member_php(cfg: dict) -> str:
 STATS_SECTION = '<h2 id="stats">利用状況の統計</h2>\n<p>使いやすくするため、件数だけの統計を取ります。送るのは、あらかじめ決めた項目の件数です。「どのページが開かれたか」「選ばれたきせかえ」「ホームに表示する項目の並びと非表示」「予定に入れる・ファイルを作る・共有するボタンが押された回数」「予定に入れられた公式の日の回数(どの日が人気かを知るためです。日の番号だけで、人は分かりません)」「選ばれた好きな分野(あらかじめ決めた一覧にあるものだけ)の回数」「検索で見つかったか(検索した言葉は送りません)」。</p>\n<p>名前・日付・メモ・メールアドレス・検索した言葉・端末を識別する番号は送りません。Cookie は使いません。サーバーに残るのは1日ごとの合計の件数だけで、同じ人かどうかは分かりません。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。</p>\n<p>マイページの「利用状況の統計に協力する」でいつでも止められます。ブラウザの「トラッキングしない」(DNT・Global Privacy Control)がオンのときは、初めから止まっています。</p>'
 PUSH_SECTION = '<h2 id="push">通知(任意)</h2>\n<p>マイページの「この端末で通知を受け取る」を押し、ブラウザで許可したときだけ通知を使えます。当サイトのサーバーに保存するのは、ブラウザが作った通知の宛先(購読情報)と、通知する日(日付と、朝か夜か)だけです。予定の名前・時刻・メモ・やることの内容は保存しません。通知文は、お使いの端末で作ります。</p>\n<p>「フォローしている共有カードが更新されたときも、通知する」を選んだときだけ、フォローしている共有カードの番号(ランダムな文字列)と、お使いの端末で見た版の番号も、同じ購読情報と一緒に預かります。カードの中身は、もともと暗号になっていて、当サイトは読めません。通知は「共有カードが更新されました」とだけ伝えます。チェックを外すと、この情報は次の同期で消えます。</p>\n<p>通知は、当サイトが GitHub Actions(GitHub, Inc.)で動かす送信プログラムから、お使いのブラウザのプッシュ配信サービス(Google、Apple、Mozilla など)を通して届きます。「通知を止める」を押すか、ブラウザの設定で通知を止めると、購読情報はサーバーから削除します。配信サービスから「宛先がない」と返されたものも削除します。</p>'
 MEMBERS_SECTION = '<h2 id="members">会員登録(任意)</h2>\n<p>会員登録は無料で、パスワードはありません。メールアドレスに送る確認コードでログインします。サーバーに保存するのは、メールアドレス、登録日、プランと無料期間、紹介コード、ログイン中の端末の印(ランダムな値の要約)です。「メールでもお知らせする」をオンにした人に限り、知らせる日(日付と、朝か夜か)と予定の名前(短く)も保存します。オフにすると、その部分はすぐ消します。</p>\n<p>これらは、サーバーの公開されない場所に暗号化して保存します。記録した日・メモ・やることの内容そのものは、会員でも端末の中だけにあります。ペンネームを入れて公開に同意した人は、そのペンネームを協力者のページに載せます。紹介の確認のため、サイトを使った日(直近20日分)を保存します。モニターのアンケートの答えは、サイトの改善のためだけに使い、運営者だけが読みます。確認コードのメールは、ログインのためだけに送ります。広告のメールは、別に同意した人にしか送りません。マイページの「退会する」で、会員の記録はすぐ消えます。</p>'
-GOOGLE_SECTION = '<h2 id="google">Google アカウントでの引き継ぎ(任意)</h2>\n<p>マイページの「Google アカウントで同期する」を押したときだけ、Google の画面が開きます。許可するのは、あなたの Google ドライブの中にあるこのサイト専用の非表示フォルダ(アプリデータ)への保存だけです。記録した日・予定に入れた日・好きな分野・設定をそこに保存し、別の端末で読み込めます。当サイトのサーバーには送りません。Google アカウントの氏名やメールアドレスは取得しません。</p>\n<p>やめるときは、<a href="https://myaccount.google.com/permissions" rel="noopener" target="_blank">Google アカウントの権限の管理</a>で「あと何日、もう何日」の権限を削除してください。</p>'
+GOOGLE_SECTION = '<h2 id="google">Google アカウントでの引き継ぎ(任意)</h2>\n<p>マイページの「Google アカウントで同期する」を押したときだけ、Google の画面が開きます。許可するのは、あなたの Google ドライブの中にあるこのサイト専用の非表示フォルダ(アプリデータ)への保存だけです。記録した日・予定に入れた日・好きな分野・設定をそこに保存し、別の端末で読み込めます。当サイトのサーバーには送りません。Google アカウントの氏名やメールアドレスは取得しません。</p>\n<p>マイページの「Google カレンダーに送る」を押したときも、Google の画面が開きます。こちらで求める許可は、Google の画面にも出る説明のとおり、「メイン以外の Google カレンダーの作成、そのカレンダー上の予定の参照、作成、変更、削除」です。いつもの予定を読み取る許可は求めません。「あと何日、もう何日」という専用のカレンダーを作り、記録した日と、予定に入れた日をそこに書き込みます。ブラウザから Google に直接送るので、当サイトのサーバーには、予定の内容を送りません。送るのはボタンを押したときだけで、Google カレンダーの側で変えた内容は、読み戻しません。専用のカレンダーは、マイページの「Google カレンダーから消す」で消せます。</p>\n<p>やめるときは、<a href="https://myaccount.google.com/permissions" rel="noopener" target="_blank">Google アカウントの権限の管理</a>で「あと何日、もう何日」の権限を削除してください。</p>'
 
 
 def fmt_date(iso: str, precision: str = "day") -> str:
@@ -259,7 +259,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'app', 'tier', 'shared', 'share', 'card', 'ical', 'plan', 'quick', 'setup', 'swipe', 'live', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'gcal', 'app', 'tier', 'shared', 'share', 'card', 'ical', 'plan', 'quick', 'setup', 'swipe', 'live', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -556,7 +556,13 @@ def my_page(c: Ctx) -> str:
     sync_html = ""
     push_html = PUSH_BOX if c.cfg.get("vapid_public") else ""
     member_html = MEMBER_BOX if members_on(c.cfg) else ""
+    gcal_html = ""
     if c.cfg.get("google_client_id"):
+        gcal_html = ('<h2 id="gcal-h">Google カレンダーに送る</h2>\n<div class="panel" id="gcal-box" hidden>'
+                     '<p>記録した日と、予定に入れた日を、あなたの Google カレンダーに「あと何日、もう何日」という専用のカレンダーとして送れます。いつもの予定には触れません。<a href="/privacy/#google">詳しく</a></p>'
+                     '<p class="muted">送るのは、ボタンを押したときだけです。送ったあとにこの予定帳で日を変えたり消したりしたときは、もう一度押してください。Google カレンダーの側で変えた内容は、ここには戻りません。'
+                     '時刻のない日の「当日の朝」の通知は、Google カレンダーでは、その日の午前0時になります。</p>'
+                     '<p><button type="button" class="btn" id="gcal-send">Google カレンダーに送る</button> <button type="button" class="btn small ghost" id="gcal-unlink" hidden>Google カレンダーから消す</button></p></div>\n')
         sync_html = ('<h2 id="sync">別の端末に引き継ぐ</h2>\n<div class="panel" id="sync-box" hidden>'
                      '<p>Google アカウントでつなぐと、記録した日を自分の Google ドライブに保存して、別の端末に引き継げます。'
                      '<a href="/privacy/#google">詳しく</a></p><p><button type="button" class="btn" id="sync-now">Google アカウントで同期する</button></p></div>\n')
@@ -580,7 +586,7 @@ def my_page(c: Ctx) -> str:
 {member_html}<div id="tier-box"></div><section id="shared-box" hidden></section>{push_html}{sync_html}<h2>他のカレンダーアプリに入れる</h2>
 <div class="panel"><p>iPhone の「カレンダー」や Google カレンダーに取り込めるファイルを作れます。1件ずつ作るときは、予定の詳細から。</p>
 <p><button type="button" class="btn small ghost" id="ics-all">すべての予定をファイルにする</button></p></div>
-<h2 id="ical-h">ほかのカレンダーから取り込む</h2>
+{gcal_html}<h2 id="ical-h">ほかのカレンダーから取り込む</h2>
 <div class="panel"><p>Google カレンダーなどから書き出した .ics のファイルを、この予定帳に入れられます。</p>
 <details class="more"><summary>Google カレンダーからの書き出し方</summary><ol><li>パソコンで Google カレンダーを開きます。</li><li>右上の歯車から「設定」を開きます。</li><li>「インポート/エクスポート」の「エクスポート」を押します。</li><li>ダウンロードした ZIP を開き、中の .ics のファイルを、下から選びます。</li></ol></details>
 <p><label class="btn small ghost" for="ical-file">.ics のファイルを選ぶ</label><input class="vh" type="file" id="ical-file" accept=".ics,text/calendar"></p><div id="ical-out" aria-live="polite"></div></div>
