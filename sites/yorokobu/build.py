@@ -1098,14 +1098,19 @@ def daily_mix(d: dict, today: date, n: int, skip: set[str] = frozenset(), salt: 
     return out
 
 
-def collage(cfg: dict, items: list[dict]) -> str:
+def mood_collage(today: date) -> str:
+    """The hero picture: six mood photographs (assets/mood, made by Codex), a different set each day.  Shop photographs carry the shops' own banners
+    (point rates, sale stickers) and would make the first screen look like a flyer; the products themselves are right below, in 今日のおすすめ and the rail."""
+    from sites.yorokobu import dailypicks as dp
+    kinds = [k for k in TYPE_ORDER if k in dp.KIND_KEY]
+    off = today.toordinal() % len(kinds)
     cells = ""
-    for it in items:
-        name = it.get("display") or rakuten.clean_title(it["name"])
-        href = rakuten_link(cfg, rakuten.clean_item_url(it["url"]))
-        cells += (f'<a class="cg" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
-                  f'<img src="{esc(it["image"])}" alt="{esc(short(name, 40))}" width="300" height="300" loading="lazy"><span class="cg-price">{yen(it["price"])}</span></a>')
-    return f'<div class="collage">{cells}<p class="collage-note">写真は、楽天市場の商品です(広告)。毎日、入れ替わります。</p></div>'
+    for i in range(6):
+        kind = kinds[(off + i * 2) % len(kinds)] if len(kinds) > 6 else kinds[i % len(kinds)]
+        variant = (today.toordinal() + i) % dp.MOOD_VARIANTS + 1
+        cells += (f'<span class="cg"><img src="/assets/mood/{dp.KIND_KEY[kind]}-{variant}.webp" alt="" width="480" height="320" loading="eager">'
+                  f'<span class="cg-kind">{esc(kind)}</span></span>')
+    return f'<div class="collage" aria-hidden="true">{cells}</div>'
 
 
 def countdown_chips(c: dict, today: date) -> str:
@@ -1146,8 +1151,7 @@ def home_tools(d: dict) -> str:
 def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
     set_keep()
     c = d["c"]
-    hero_items = daily_mix(d, today, 6)
-    rail_items = daily_mix(d, today, 10, skip={i["code"] for i in hero_items}, salt=1)
+    rail_items = daily_mix(d, today, 10, salt=1)
     season = "".join(season_tile(o, today) for o in season_occasions(c, today)[:6])
     month_more = (f'<p class="more"><a class="btn btn-sub" href="/month/{today.month}/">{today.month}月の贈りどきを、すべて見る</a></p>'
                   if today.month in month_pages(c, today) else "")
@@ -1167,14 +1171,14 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
         rail = (f'<section class="block"><div class="sec-head"><div><span class="eyebrow">Today</span><h2>今日の、贈り物の候補</h2>'
                 f'<p>毎日、入れ替わります。ジャンルがかたよらないように、評価の高い商品を選んでいます。</p></div></div>'
                 f'<ul class="rail">{cards}</ul>{freshness(d)}</section>')
-    hero_cls = "hero" if hero_items else "hero no-collage"
+    hero_cls = "hero"
     body = f"""<section class="{hero_cls}">
 <div class="hero-text">
 <h1><span class="nb">よろこばれるプレゼント、</span><br><span class="nb"><em>見つかります。</em></span></h1>
 <p class="lead">イベントと贈る相手から、喜ばれやすい選び方と、おすすめの商品が見つかります。</p>
 {finder(d)}
 </div>
-{collage(cfg, hero_items) if hero_items else ""}
+{mood_collage(today)}
 </section>
 {pr_quiet(cfg)}
 {picksite.home_block(d, cfg)}
