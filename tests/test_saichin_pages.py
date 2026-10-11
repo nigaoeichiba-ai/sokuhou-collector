@@ -131,6 +131,17 @@ class SiteTest(SiteFixture):
         for kind in build.RANKINGS:
             self.assertEqual(self.read(f"ranking/{kind}/index.html").count('<td class="rk">'), 47)
 
+    def test_gap_from_national_average_column_matches_hand_calculation(self):
+        avg = self.d["avg"]
+        text = self.read("ranking/high/index.html")
+        cells = re.findall(r'<td>(\d[\d,]*)円</td><td>([+−][\d.]+)円</td>', text)
+        self.assertEqual(len(cells), 47)
+        for amount, gap in cells:
+            expected = round(int(amount.replace(",", "")) - avg, 1)
+            self.assertEqual(float(gap.replace("−", "-")), expected)
+        above = sum(1 for amt, _ in cells if int(amt.replace(",", "")) > avg)
+        self.assertIn(f"{above}都道府県が平均より高く", text)
+
     # ---- calendar
     def test_calendar_has_every_prefecture_once_and_dates_in_order(self):
         text = self.read("calendar/index.html")
