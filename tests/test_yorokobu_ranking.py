@@ -131,6 +131,8 @@ class HistoryTest(unittest.TestCase):
             self.assertFalse(ranking.shown(ranked("x", 1, name=n), FILTERS), n)
         self.assertTrue(ranking.shown(ranked("y", 1, name="誕生日 ギフト 高級 日本酒 飲み比べセット"), FILTERS))
         self.assertFalse(ranking.shown(ranked("z", 1, name="誕生日 クリスマス 部屋着 パジャマ"), FILTERS))      # a season word alone is not enough
+        for n in ("犬 ケージ トイレ付き ペットサークル 室内 木製 プレゼント", "準硬式野球ボール 公認球 H号 12球 ギフト", "1st写真集 豪華版 贈り物"):   # not presents (weekly review 2026-10-12, /ranking/f10/)
+            self.assertFalse(ranking.shown(ranked("p", 1, name=n), FILTERS, strict=False), n)
 
     def test_only_genres_whose_products_are_given_as_presents_are_fetched(self):
         labels = {g[2] for g in ranking.GENRES}
