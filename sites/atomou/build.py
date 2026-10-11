@@ -233,7 +233,8 @@ def card_html(e: dict, *, own: bool = False, actions: bool | None = None, big: b
     what = e.get("what") or (e.get("kind") if not own else None)
     place = e.get("place") if e.get("place") is not None else (e.get("region") if not own else None)
     h.append('<div class="c-top">' + (f'<span class="mark m{g}" data-g="{g}" aria-hidden="true"></span>' if g else "")
-             + f'<span class="badge">{esc(subject if not own else e["kind"])}</span>' + (f'<span class="what">{esc(what)}</span>' if what and not own else "") + "</div>")
+             + f'<span class="badge">{esc(subject if not own else e["kind"])}</span>' + (f'<span class="what">{esc(what)}</span>' if what and not own else "")
+             + ('<button type="button" class="pin" data-act="pin" aria-pressed="false" aria-label="ピン留めする(先頭に表示)">☆</button>' if own else "") + "</div>")
     h.append(f'<p class="c-count"><span class="word">{word}</span><span class="num">{esc(num)}</span><span class="rel">{rel}</span></p><p class="c-sub">{esc(sub)}</p>')
     title = esc(e["title"])
     linked = '<a href="/e/' + e["id"] + '/">' + title + "</a>" if link and not own else title
@@ -245,7 +246,7 @@ def card_html(e: dict, *, own: bool = False, actions: bool | None = None, big: b
         h.append('<div class="c-next"></div>')
     if actions:
         if own:
-            a = f'<a class="btn small" href="/plan/?key={esc(key)}">開く</a><button type="button" class="btn small ghost" data-act="del">消す</button>'
+            a = f'<a class="btn small" href="/plan/?key={esc(key)}">開く</a><button type="button" class="btn small ghost" data-act="copy">コピー</button><button type="button" class="btn small ghost" data-act="del">消す</button>'
         else:
             a = '<button type="button" class="btn small" data-act="save" aria-pressed="false">☆ 予定に入れる</button>' + ("" if big else f'<a class="btn small ghost" href="/e/{e["id"]}/">詳細</a>')
         h.append('<div class="c-act">' + a + "</div>")
@@ -391,6 +392,24 @@ def popular_chips(entries: list[dict]) -> str:
     return '<div class="chips scroll" aria-label="よく探される言葉">' + "".join(out) + "</div>" if out else ""
 
 
+SORT_OPTIONS = (('pin', 'ピンを先に、近い順'), ('near', '近い順'), ('kind', '種類別'), ('new', '登録が新しい順'), ('name', '名前順'), ('hand', '手動の順'))
+
+
+PUB_SORT_OPTIONS = (('soon', '日付が近い順'), ('new', '新着'), ('pop', '人気(予定に入れた人が多い順)'), ('pick', 'あなたの興味順'), ('area', 'お住まいの地域に近い順'))
+
+
+def pub_sort_select() -> str:
+    """How the official days are put in order (assets/app.js sortPublic): the choice is kept on the device."""
+    opts = "".join(f'<option value="{k}">{v}</option>' for k, v in PUB_SORT_OPTIONS)
+    return f'<div class="sortrow"><label class="sortsel"><span class="lab">並べ替え</span> <select id="pub-sort" aria-label="並べ替え">{opts}</select></label><p class="hint" id="pub-note" aria-live="polite"></p></div>'
+
+
+def sort_select(sel_id: str) -> str:
+    """How the visitor's own days are put in order (assets/app.js sortItems); the page's script sets the value that is kept on the device."""
+    opts = "".join(f'<option value="{k}">{v}</option>' for k, v in SORT_OPTIONS)
+    return f'<label class="sortsel"><span class="vh">並べ替え</span><select id="{sel_id}" class="mine-sort" aria-label="並べ替え">{opts}</select></label>'
+
+
 def home_page(c: Ctx) -> str:
     live = live_entries(c.entries, c.today)
     first = diverse(live, 6)
@@ -431,8 +450,9 @@ def home_page(c: Ctx) -> str:
 <ul class="live-list" id="live-list"><li class="muted">読み込み中…</li></ul>
 </section>
 <section id="mine" data-block="mine" data-title="記録した日" hidden>
-<div class="head-row"><h2>記録した日</h2><div class="grow"><a class="btn small ghost" href="/my/">マイページ</a></div></div>
+<div class="head-row"><h2>記録した日</h2><div class="grow">{sort_select("mine-sort")}<a class="btn small ghost" href="/my/">マイページ</a></div></div>
 <div class="cards" id="mine-grid" data-save-order="1"></div>
+<p class="more-row" id="mine-more" hidden></p>
 </section>
 <section id="interests" data-block="interests" data-title="好きな分野の日" hidden>
 <div class="head-row"><h2>好きな分野の日</h2><div class="grow"><a class="btn small ghost" href="/interests/">分野を選ぶ</a></div></div>
@@ -545,6 +565,7 @@ def search_page(c: Ctx) -> str:
 <div class="chips" role="group" aria-label="ジャンル">{chips}<button type="button" class="chip" id="f-son" aria-pressed="false">お金や手続きの日だけ</button></div>
 <div class="chips" id="mid-chips" role="group" aria-label="中分類" hidden></div>
 <div class="chips" id="sub-chips" role="group" aria-label="小分類" hidden></div>
+{pub_sort_select()}
 <p class="small muted" id="found" aria-live="polite">&nbsp;</p>
 <div class="cards" id="results"></div>
 <div class="panel" id="none" hidden><p>該当する日付が見つかりませんでした。</p><p>言葉を短くするか、ジャンルを「すべて」にしてみてください。この言葉のまま<a id="none-add" href="/add/">日付として記録する</a>こともできます。</p><p class="muted">探している日がなければ、<a id="none-ask" href="/contact/?kind=request">お問い合わせ</a>から、載せてほしい日を送ってください。</p></div>
@@ -563,14 +584,18 @@ def my_page(c: Ctx) -> str:
                      '<p class="muted">送るのは、ボタンを押したときだけです。送ったあとにこの予定帳で日を変えたり消したりしたときは、もう一度押してください。Google カレンダーの側で変えた内容は、ここには戻りません。'
                      '時刻のない日の「当日の朝」の通知は、Google カレンダーでは、その日の午前0時になります。</p>'
                      '<p><button type="button" class="btn" id="gcal-send">Google カレンダーに送る</button> <button type="button" class="btn small ghost" id="gcal-unlink" hidden>Google カレンダーから消す</button></p></div>\n')
-        sync_html = ('<h2 id="sync">別の端末に引き継ぐ</h2>\n<div class="panel" id="sync-box" hidden>'
-                     '<p>Google アカウントでつなぐと、記録した日を自分の Google ドライブに保存して、別の端末に引き継げます。'
+        sync_html = ('<div id="sync-box" hidden><p id="sync">Google アカウントでつなぐと、記録した日を自分の Google ドライブに保存して、別の端末に引き継げます。'
                      '<a href="/privacy/#google">詳しく</a></p><p><button type="button" class="btn" id="sync-now">Google アカウントで同期する</button></p></div>\n')
     body = f"""{crumbs([("トップ", "/"), ("マイページ", None)])}
 <h1>マイページ</h1>
 <p class="lead muted">記録した日と、予定に入れた日がここに並びます。</p>
 <div class="panel" id="my-empty" hidden><p>まだ記録がありません。忘れたくない日を記録すると、ここに表示されます。</p><p><a class="btn" href="/add/">日を記録する</a> <a class="btn ghost" href="/search/">公式の日付をさがす</a></p></div>
-<div class="head-row" id="my-tools" hidden><div class="grow" style="margin-left:0"><button type="button" class="btn small ghost" id="reorder" aria-pressed="false">並べ替え</button></div></div>
+<details class="panel move" id="move-box"><summary id="backup-h">別の端末へ移す・バックアップ</summary>
+<p>機種変更や、パソコンとスマホで見るときは、ここから。記録はこの端末に保存されています。</p>
+{sync_html}<p class="move-btns"><button type="button" class="btn" id="backup">ファイルに書き出す</button> <label class="btn ghost" for="restore">ファイルから読み込む</label><input class="vh" type="file" id="restore" accept="application/json,.json"></p>
+<p class="hint">書き出したファイルを、自分あてにLINEやメールで送ると、新しい端末で開いて読み込めます。名前やメモも入るので、送り先に気をつけてください。</p>
+</details>
+<div class="head-row" id="my-tools" hidden><div class="grow" style="margin-left:0">{sort_select("my-sort")}<label class="sortsel" id="my-find-wrap" hidden><span class="vh">題名で探す</span><input type="search" id="my-find" placeholder="題名で探す" autocomplete="off" maxlength="40"></label><button type="button" class="btn small ghost" id="reorder" aria-pressed="false">手で動かす</button></div></div>
 <div class="cards" id="my-grid" data-save-order="1"></div>
 <h2>設定</h2>
 <div class="panel">
@@ -583,19 +608,17 @@ def my_page(c: Ctx) -> str:
 <p><a href="/?intro=1">はじめての方へ(このサイトの説明)を見る</a></p>
 <p><button type="button" class="btn small ghost" data-guide="start">使い方を見る</button></p>
 </div>
-{member_html}<div id="tier-box"></div><section id="shared-box" hidden></section>{push_html}{sync_html}<h2>他のカレンダーアプリに入れる</h2>
+{member_html}<div id="tier-box"></div><section id="shared-box" hidden></section>{push_html}<h2>他のカレンダーアプリに入れる</h2>
 <div class="panel"><p>iPhone の「カレンダー」や Google カレンダーに取り込めるファイルを作れます。1件ずつ作るときは、予定の詳細から。</p>
 <p><button type="button" class="btn small ghost" id="ics-all">すべての予定をファイルにする</button></p></div>
 {gcal_html}<h2 id="ical-h">ほかのカレンダーから取り込む</h2>
 <div class="panel"><p>Google カレンダーなどから書き出した .ics のファイルを、この予定帳に入れられます。</p>
 <details class="more"><summary>Google カレンダーからの書き出し方</summary><ol><li>パソコンで Google カレンダーを開きます。</li><li>右上の歯車から「設定」を開きます。</li><li>「インポート/エクスポート」の「エクスポート」を押します。</li><li>ダウンロードした ZIP を開き、中の .ics のファイルを、下から選びます。</li></ol></details>
 <p><label class="btn small ghost" for="ical-file">.ics のファイルを選ぶ</label><input class="vh" type="file" id="ical-file" accept=".ics,text/calendar"></p><div id="ical-out" aria-live="polite"></div></div>
-<h2 id="backup-h">バックアップ</h2>
+<h2 id="wipe-h">この端末の記録を消す</h2>
 <div class="panel">
-<p>記録はこの端末に保存されています。機種変更の前に書き出し、新しい端末で読み込んでください。</p>
-<p><button type="button" class="btn small" id="backup">書き出す</button>
-<label class="btn small ghost" for="restore">読み込む</label><input class="vh" type="file" id="restore" accept="application/json,.json">
-<button type="button" class="btn small ghost" id="wipe">すべて消す</button></p>
+<p>この端末に保存されている記録と設定を、すべて消します。元に戻せません。消す前に、上の「ファイルに書き出す」で控えを作れます。</p>
+<p><button type="button" class="btn small ghost" id="wipe">すべて消す</button></p>
 </div>
 <noscript><p class="notice">マイページには JavaScript が必要です。</p></noscript>"""
     return c.page("/my/", f"マイページ | {NAME}", "記録した日と、予定に入れた日の一覧です。", body, "my", noindex=True)
@@ -876,6 +899,7 @@ def category_page(c: Ctx, group: str, live: list[dict]) -> str:
 <p class="lead muted">{esc(GROUP_LEAD[group])}</p>
 {search_form()}
 {chips}
+{pub_sort_select() if rows else ""}
 <div class="cards" id="grid">{"".join(card_html(e) for e in rows)}</div>
 {feeds.subscribe_html(GROUP_SLUG[group] + ".ics", str(c.cfg["site_url"]).rstrip("/"), urlparse(str(c.cfg["site_url"])).netloc) if any(feeds.feedable(e) for e in rows) else ""}"""
     if not rows:
@@ -1210,14 +1234,14 @@ def legal(c: Ctx) -> dict:
         contact_notice="日付の誤りのご指摘は、ページの名前と、正しい日付の出典(アドレス)を添えていただけると、早く確認できます。",
         input_note=("<h2>この端末に保存する情報</h2>"
                     "<p>記録した日(名前・日付・時刻・メモ・やること・設定)と、予定に入れた日の一覧、選んだ好きな分野は、お使いのブラウザの中(localStorage)だけに保存します。当サイトのサーバーには送りません。"
-                    "ブラウザのデータを消すと記録も消えます。バックアップはマイページの「書き出す」で作れます。</p>"
+                    "ブラウザのデータを消すと記録も消えます。バックアップはマイページの「ファイルに書き出す」で作れます。</p>"
                     "<h2>声での入力(任意)</h2>"
                     "<p>入力欄の横のマイクのボタンを押したときだけ、お使いのブラウザの音声認識を使います。音声を文字にする処理は、ブラウザの提供元の音声認識サービスで行われることがあり、その扱いはお使いのブラウザの案内に従います。当サイトは、音声を受け取らず、保存しません。当サイトに入るのは、文字になった結果だけです。</p>"
                     "<h2>カレンダーの購読(任意)</h2>"
                     "<p>ジャンルのページから、公式の日付をカレンダーアプリに購読できます。購読用のファイルは、誰でも取得できる公開データです。購読すると、Google などのカレンダーのサービスが、定期的にこのファイルを取りに来ます。当サイトは、購読した人を知ることはありません。</p>"
                     "<h2>更新が届く共有カード(任意)</h2>"
                     "<p>「更新が届く共有カードにする」を押したときだけ、カードをサーバーに預かります。カードの内容(題名・日付・ひとこと・やること)は、あなたのブラウザの中で、ランダムな鍵で暗号にしてから送ります。鍵は、リンクのうち「#」より後ろにだけあり、当サイトのサーバーには送られません。サーバーに残るのは、暗号になった内容、カードの番号(ランダム)、版の番号、作った日・更新した日、編集用の合言葉を変換した値、問題の報告の件数です。サーバーは、カードの内容を読めません。"
-                    "リンクを知っている人は、だれでもカードを読めます。編集用のリンクを知っている人は、だれでも直せます。リンクは、渡す相手を選んでください。180日間、更新がないカードは、自動で消えます。いつでも、編集用のリンクから消せます。問題のあるカードは、読んだ人が「問題を知らせる」で報告でき、3人以上から報告があると表示を止めます。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。"
+                    "リンクを知っている人は、だれでもカードを読めます。編集用のリンクを知っている人は、だれでも修正できます。リンクは、渡す相手を選んでください。180日間、更新がないカードは、自動で消えます。いつでも、編集用のリンクから消せます。問題のあるカードは、読んだ人が「問題を知らせる」で報告でき、3人以上から報告があると表示を止めます。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。"
                     "フォローしたカードの一覧と鍵は、あなたの端末の中にだけ保存します。</p>"
                     '<h2 id="words">調べてほしいワード(任意)</h2>'
                     "<p>「好きな分野を選ぶ」のページで、入れたワードの横の「このワードを調べてもらう」を押したときだけ、そのワードをサーバーに預かります。押さなければ、ワードは、この端末の中にだけあります。"

@@ -102,6 +102,20 @@ input::placeholder{color:var(--muted)}
 .share{margin:1.2rem 0}.share-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}.share-lead{font-size:.85rem;color:var(--muted);font-weight:700;margin-right:2px}.sbt{box-sizing:border-box;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--text);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;font:inherit}.sbt:hover{border-color:var(--accent);color:var(--accent)}.sbt[hidden]{display:none}.sbt-t{font-size:.9rem;font-weight:800}.share-more{margin-left:6px;font-size:.85rem}.share-sep{width:1px;height:22px;background:var(--line);margin:0 6px}.share-title{font-size:.85rem;margin-left:8px}.share-btns{display:flex;flex-wrap:wrap;gap:8px;margin:.6rem 0}
 .c-top{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted);font-weight:700}
 .c-top .reg{margin-left:auto}
+.c-top .pin{margin-left:auto;min-width:44px;min-height:44px;margin-top:-10px;margin-right:-8px;border:0;background:transparent;color:var(--muted);font-size:1.35rem;line-height:1;cursor:pointer}
+.c-top .pin[aria-pressed="true"]{color:var(--accent)}
+.card.pinned{border-color:var(--accent)}
+.card.big .pin{display:none}
+.plan-card.own .c-act{display:none}
+.card .c-act [data-act="del"]{margin-left:auto;border-color:transparent;color:var(--muted);font-weight:500}   /* "消す" stands apart from "開く" (a slip of the thumb used to delete) */
+.move{margin:.8rem 0}.move>summary{min-height:44px;display:flex;align-items:center;font-weight:800;cursor:pointer}.move[open]>summary{margin-bottom:.4rem}
+.qa-recent{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:.4rem 0}.qa-recent .lab{font-size:.85rem;font-weight:700;color:var(--muted)}.qa-recent .chip{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sortsel input[type="search"]{min-height:44px;max-width:100%;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);font:inherit}
+.plan-bar{display:flex;flex-wrap:wrap;gap:8px;margin:.8rem 0}.shift{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:.2rem 0 .8rem}.shift .lab{font-weight:700}
+.qa-copy{margin:.2rem 0 .5rem;font-size:.9rem;color:var(--muted)}
+.sortrow{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:.6rem 0}.sortrow .hint{margin:0}.sortsel .lab{font-weight:700}
+.sortsel select{min-height:44px;max-width:100%;padding:0 10px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);font:inherit}
+.home-tools{margin:1.4rem 0 .4rem;display:grid;gap:.4rem}.home-tools .setup-redo,.home-tools .custom-row{margin:0;text-align:left}
 .c-count{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 8px;margin:.1rem 0}
 .c-count .word{font-weight:800;font-size:1rem;padding:1px 10px;border-radius:999px;background:var(--ato);color:var(--on-ato)}
 .card[data-dir="mou"] .c-count .word{background:var(--mou);color:var(--on-mou);border-radius:6px}

@@ -67,6 +67,20 @@
   }
 
   /* ---------- the sheet ---------- */
+  function recentChips(src) {   // the names used lately (this device only; not a quiet day): one tap puts the name in, so a thing that comes round again is not typed again
+    if (src) return '';
+    var seen = {}, list = A.state().entries.filter(function (e) { return !e.quiet && e.title; }).sort(function (a, b) { return a.created < b.created ? 1 : a.created > b.created ? -1 : 0; })
+      .filter(function (e) { if (seen[e.title]) return false; seen[e.title] = 1; return true; }).slice(0, 8);
+    return list.length ? '<div class="qa-recent" role="group" aria-label="前に使った名前"><span class="lab">前に使った</span>' + list.map(function (e) { return '<button type="button" class="chip" data-rt="' + H(e.title) + '">' + H(e.title) + '</button>'; }).join('') + '</div>' : '';
+  }
+  function copyChips(src) {   // dates counted from the card being copied (from today when it is past): a week later, a month later, the same day next year
+    var base = C.parse(src.date) || TODAY;
+    if (C.cmp(base, TODAY) < 0) base = TODAY;
+    var ny = C.addMonths(C.parse(src.date) || TODAY, 12);
+    while (C.cmp(ny, TODAY) < 0) ny = C.addMonths(ny, 12);
+    var list = [['1週間後', C.addDays(base, 7)], ['1か月後', C.addMonths(base, 1)], ['来年の同じ日', ny]];
+    return '<div class="qa-chips" role="group" aria-label="コピー元から日付を選ぶ">' + list.map(function (x) { return '<button type="button" class="chip" data-qiso="' + C.iso(x[1]) + '">' + x[0] + '</button>'; }).join('') + '</div>';
+  }
   var sheet = null, back = null, dirty = { date: false, time: false, kind: false };
   function fmt(d) { return d ? d[1] + '月' + d[2] + '日(' + A.wd(d) + ')' : ''; }
   function summary(p, d) {
@@ -79,26 +93,39 @@
     sheet.remove(); back.remove(); sheet = back = null; document.removeEventListener('keydown', onKey);
   }
   function onKey(ev) { if (ev.key === 'Escape') close(); }
+  function cloneNotes(from, to) {   // the memo, the tasks and the notices of a card go with its copy (the tasks start undone)
+    var st = A.state(), n = st.notes['m:' + from];
+    if (!n) return;
+    var c = JSON.parse(JSON.stringify(n));
+    (c.tasks || []).forEach(function (t) { t.id = Math.random().toString(36).slice(2, 8); t.done = false; });
+    st.notes['m:' + to] = c;
+  }
   function open(preset) {
     if (sheet) return;
     preset = preset || {};
+    var src = preset.copy ? A.findEntry(preset.copy) : null;   // copy: the card to start from (everything but the date)
     dirty = { date: false, time: false, kind: false };
     back = document.createElement('div'); back.className = 'sheet-back';
-    sheet = document.createElement('div'); sheet.className = 'sheet'; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', '予定を記録する');
+    sheet = document.createElement('div'); sheet.className = 'sheet'; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', src ? '予定をコピーして記録する' : '予定を記録する');
     sheet.innerHTML = '<div class="sheet-grip" aria-hidden="true"></div>' +
       '<label class="vh" for="qa-text">予定の内容</label>' +
-      '<input id="qa-text" type="text" autocomplete="off" enterkeyhint="done" maxlength="60" placeholder="例: 明日 19時 デート" value="' + H(preset.title || '') + '">' +
+      '<input id="qa-text" type="text" autocomplete="off" enterkeyhint="done" maxlength="60" placeholder="例: 明日 19時 デート" value="' + H(src ? src.title : (preset.title || '')) + '">' + (window.AtomouMicHint ? window.AtomouMicHint() : '') +
       '<p class="qa-sum" id="qa-sum" aria-live="polite"></p>' +
+      (src ? '<p class="qa-copy">「' + H(src.title) + '」をコピーしています。日付を選ぶと、残せます。メモとやることも、いっしょに入ります。</p>' + copyChips(src) : '') +
       '<div class="qa-chips" role="group" aria-label="日付を選ぶ"><button type="button" class="chip" data-qd="0">今日</button><button type="button" class="chip" data-qd="1">明日</button>' +
       '<button type="button" class="chip" data-qd="sat">今週末</button><button type="button" class="chip" data-qd="next">来週</button></div>' +
+      '<div class="qa-chips" role="group" aria-label="今日から数えて日付を選ぶ">' + [['7日後', C.addDays(TODAY, 7)], ['30日後', C.addDays(TODAY, 30)], ['100日後', C.addDays(TODAY, 100)], ['1年後', C.addMonths(TODAY, 12)]].map(function (x) { return '<button type="button" class="chip" data-qiso="' + C.iso(x[1]) + '">' + x[0] + '</button>'; }).join('') + '</div>' +
       '<div class="qa-row"><label>日付<input type="date" id="qa-date"></label><label>時刻<input type="time" id="qa-time"></label>' +
       '<label>種類<select id="qa-kind">' + Object.keys(KINDS).map(function (k) { return '<option value="' + k + '">' + H(KINDS[k].t) + '</option>'; }).join('') + '</select></label></div>' +
-      '<div class="qa-ex" aria-label="例"><button type="button" class="chip" data-ex="明日 19時 デート">明日 19時 デート</button><button type="button" class="chip" data-ex="12/25 クリスマス">12/25 クリスマス</button>' +
+      '<div class="qa-chips" role="group" aria-label="時刻を選ぶ">' + [['9時', '09:00'], ['12時', '12:00'], ['18時', '18:00'], ['19時', '19:00'], ['時刻なし', '']].map(function (x) { return '<button type="button" class="chip" data-qt="' + x[1] + '">' + x[0] + '</button>'; }).join('') + '</div>' +
+      recentChips(src) + '<div class="qa-ex" aria-label="例"><button type="button" class="chip" data-ex="明日 19時 デート">明日 19時 デート</button><button type="button" class="chip" data-ex="12/25 クリスマス">12/25 クリスマス</button>' +
       '<button type="button" class="chip" data-ex="来週の土曜 友だちと食事">来週の土曜 友だちと食事</button></div>' +
       '<div class="qa-act"><button type="button" class="btn" id="qa-save">残す</button><a class="btn ghost" href="/add/">詳しく</a></div>';
     document.body.appendChild(back); document.body.appendChild(sheet);
+    if (window.AtomouWireMic) window.AtomouWireMic();
     var txt = $('#qa-text'), dt = $('#qa-date'), tm = $('#qa-time'), kd = $('#qa-kind');
     if (preset.date) { dt.value = C.iso(preset.date); dirty.date = true; }
+    if (src) { kd.value = src.kind; dirty.kind = true; dirty.date = true; if (src.time) { tm.value = src.time; dirty.time = true; } }   // a copy: the date is not read from the title; it is chosen
     function refresh() {
       var p = parse(txt.value);
       if (!dirty.date) dt.value = p.date ? C.iso(p.date) : '';
@@ -116,8 +143,11 @@
         alarm: k.quiet ? 'none' : st.prefs.alarm, created: C.iso(TODAY), time: kind === 'event' ? (tm.value || '') : ''
       };
       if (e.title === KINDS[kind].t && txt.value.trim() === '') e.title = k.t;
+      if (src && txt.value === src.title) e.title = src.title.slice(0, 80);   // the title is kept as it was (not read again as a date and a time)
+      if (src) { e.yearly = !!src.yearly; e.every100 = !!src.every100; e.alarm = k.quiet ? 'none' : (src.alarm || e.alarm); }
       if (A.tier && A.tier.blocked(1) && !k.quiet) return;
       st.entries.push(e); A.stat('act:add:' + kind); A.stat('act:quick');
+      if (src) { cloneNotes(src.id, e.id); A.stat('act:copy'); }
       if (!A.persist()) return;
       close(); done(e);
     }
@@ -133,7 +163,7 @@
         if (v === 'sat') d = weekdayOf(0, 6); else if (v === 'next') d = weekdayOf(1, 1); else d = C.addDays(TODAY, +v);
         if (C.cmp(d, TODAY) < 0) d = C.addDays(d, 7);
         dt.value = C.iso(d); dirty.date = true; refresh();
-      } else if (b.hasAttribute('data-ex')) { txt.value = b.getAttribute('data-ex'); dirty = { date: false, time: false, kind: false }; refresh(); txt.focus(); }
+      } else if (b.hasAttribute('data-rt')) { txt.value = b.getAttribute('data-rt'); dirty = { date: false, time: false, kind: false }; refresh(); txt.focus(); } else if (b.hasAttribute('data-qt')) { tm.value = b.getAttribute('data-qt'); dirty.time = true; refresh(); } else if (b.hasAttribute('data-qiso')) { dt.value = b.getAttribute('data-qiso'); dirty.date = true; refresh(); } else if (b.hasAttribute('data-ex')) { txt.value = b.getAttribute('data-ex'); dirty = { date: false, time: false, kind: false }; refresh(); txt.focus(); }
     });
     back.addEventListener('click', close);
     document.addEventListener('keydown', onKey);
