@@ -31,6 +31,7 @@ PAGES = [
     ("/add/?quick=1", ""),
     ("/my/", ""),
     ("/interests/", ""),
+    ("/rule/?preset=pension", ""),
     ("/contact/?kind=date&page=https%3A%2F%2Fatomou.com%2Fe%2Fabc%2F", ""),
     ("/card/", "var t=d.querySelector('[data-tpl]'); if (t) t.click(); var a=d.getElementById('x-addtask'); if (a) a.click();"),
 ]
