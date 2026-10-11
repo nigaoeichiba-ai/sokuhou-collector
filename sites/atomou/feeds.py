@@ -8,8 +8,12 @@ Only whole days are listed ("2027年1月ごろ" has no day to put in a calendar)
 from __future__ import annotations
 
 from datetime import date, timedelta
+from urllib.parse import urlparse
 
 FEED_DIR = "cal"
+# sites whose terms forbid using the information commercially (read 2026-10-12, docs/terms_ics_feeds_2026-10-12.md): their days are not put in the feeds
+NO_FEED_DOMAINS = ("rugby-japan.jp", "jtta.or.jp")
+CAO_NOTE = "祝日の日付は、内閣府「国民の祝日について」(公共データ利用規約 第1.0版)をもとに、法律の定めから当サイトで計算したものです。"
 
 
 def _esc(s: str) -> str:
@@ -34,8 +38,18 @@ def _fold(line: str) -> str:
     return "\r\n ".join(out)
 
 
+def _host(e: dict) -> str:
+    return (urlparse(str(e.get("source_url") or "")).hostname or "").lower()
+
+
 def feedable(e: dict) -> bool:
-    return e["precision"] == "day" and not e["quiet"]
+    """A whole day, not a quiet one, not an estimate (a guessed day must not look like a fixed one in someone's calendar), not from a site whose terms forbid the use."""
+    host = _host(e)
+    return e["precision"] == "day" and not e["quiet"] and not e.get("estimated") and not any(host == d or host.endswith("." + d) for d in NO_FEED_DOMAINS)
+
+
+def _note(entries: list[dict]) -> str:
+    return CAO_NOTE if any(_host(e).endswith("cao.go.jp") for e in entries) else ""
 
 
 def ics_feed(name: str, description: str, entries: list[dict], base: str, now: date) -> str:
@@ -65,9 +79,9 @@ def feed_pages(live: list[dict], groups: list[str], slugs: dict[str, str], base:
     for g in groups:
         rows = [e for e in usable if e["group"] == g]
         if rows:
-            pages[f"{FEED_DIR}/{slugs[g]}.ics"] = ics_feed(f"あと何日、もう何日 {g}", f"{g}の公式の日付(出典と確認日つき)。", rows, base, now)
+            pages[f"{FEED_DIR}/{slugs[g]}.ics"] = ics_feed(f"あと何日、もう何日 {g}", f"{g}の公式の日付(出典と確認日つき)。" + _note(rows), rows, base, now)
     if usable:
-        pages[f"{FEED_DIR}/all.ics"] = ics_feed("あと何日、もう何日 すべての日付", "締切・試験・大会・お祭りなど、公式の日付(出典と確認日つき)。", usable, base, now)
+        pages[f"{FEED_DIR}/all.ics"] = ics_feed("あと何日、もう何日 すべての日付", "締切・試験・大会・お祭りなど、公式の日付(出典と確認日つき)。" + _note(usable), usable, base, now)
     return pages
 
 
