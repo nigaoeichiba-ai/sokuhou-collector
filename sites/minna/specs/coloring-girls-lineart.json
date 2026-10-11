@@ -1,0 +1,86 @@
+{
+ "slug": "coloring-girls-lineart",
+ "title": "女の子・キャラクターのぬりえ",
+ "subject": "",
+ "genre": "people",
+ "touch": "lineart",
+ "title_fmt": "{ja}",
+ "subject_en": "Coloring pages of original cute girl characters, each ONE character full body or waist up, centred, drawn with thick clean closed black outlines only and NOTHING filled in: the inside of every shape stays plain white. Friendly simple faces. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "ドレス、制服、ようふく、お祭りなど、いろいろな女の子の塗り絵12点。線は太くはっきりしていて、印刷して子どもと楽しめます。",
+ "tags": [
+  "ぬりえ",
+  "塗り絵",
+  "女の子",
+  "キャラクター",
+  "線画",
+  "子ども",
+  "印刷"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "dress",
+   "ドレスの女の子",
+   "a girl in a puffy dress with a ribbon"
+  ],
+  [
+   "uniform",
+   "制服の女の子",
+   "a girl in a school uniform with a bag"
+  ],
+  [
+   "yukata",
+   "浴衣の女の子",
+   "a girl in a yukata holding a fan"
+  ],
+  [
+   "princess",
+   "おひめさまの女の子",
+   "an original little princess with a small crown"
+  ],
+  [
+   "magic",
+   "まほうつかいの女の子",
+   "a girl with a pointed hat and a star wand"
+  ],
+  [
+   "rainy",
+   "雨の日の女の子",
+   "a girl with an umbrella and rain boots"
+  ],
+  [
+   "flowers",
+   "お花をもつ女の子",
+   "a girl holding a big bouquet"
+  ],
+  [
+   "dance",
+   "おどる女の子",
+   "a girl in a ballet costume doing a pose"
+  ],
+  [
+   "sweets",
+   "おかしを食べる女の子",
+   "a girl with a large cupcake"
+  ],
+  [
+   "pet",
+   "ペットと女の子",
+   "a girl hugging a small puppy"
+  ],
+  [
+   "winter",
+   "冬の女の子",
+   "a girl in a coat, scarf and earmuffs"
+  ],
+  [
+   "friends",
+   "なかよしの女の子",
+   "two girls holding hands"
+  ]
+ ],
+ "exclude": [
+  "rainy"
+ ]
+}

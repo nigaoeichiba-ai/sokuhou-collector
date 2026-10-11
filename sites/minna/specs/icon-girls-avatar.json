@@ -1,0 +1,83 @@
+{
+ "slug": "icon-girls-avatar",
+ "title": "女の子のアイコン",
+ "subject": "",
+ "genre": "icon",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Round-friendly original girl avatar icons, each ONE head-and-shoulders portrait, centred, simple kawaii face, different hairstyles and hair colours, flat background-less. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "ボブ、ポニーテール、おだんごなど、いろいろな髪型の女の子のアイコン12点。SNSやLINEのアイコンに。",
+ "tags": [
+  "アイコン",
+  "女の子",
+  "SNS",
+  "LINE",
+  "アバター",
+  "かわいい"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "bob",
+   "ボブの女の子",
+   "a girl with a bob haircut"
+  ],
+  [
+   "pony",
+   "ポニーテールの女の子",
+   "a girl with a high ponytail"
+  ],
+  [
+   "odango",
+   "おだんごヘアの女の子",
+   "a girl with two hair buns"
+  ],
+  [
+   "twin",
+   "ツインテールの女の子",
+   "a girl with twin tails"
+  ],
+  [
+   "long",
+   "ロングヘアの女の子",
+   "a girl with long straight hair"
+  ],
+  [
+   "curly",
+   "くるくるカールの女の子",
+   "a girl with curly hair"
+  ],
+  [
+   "short",
+   "ショートヘアの女の子",
+   "a girl with a short cut"
+  ],
+  [
+   "cap",
+   "ぼうしの女の子",
+   "a girl wearing a cap"
+  ],
+  [
+   "glasses",
+   "めがねの女の子",
+   "a girl with round glasses"
+  ],
+  [
+   "ribbon",
+   "リボンの女の子",
+   "a girl with a big ribbon in her hair"
+  ],
+  [
+   "scarf",
+   "マフラーの女の子",
+   "a girl wearing a scarf"
+  ],
+  [
+   "flower",
+   "お花のかざりの女の子",
+   "a girl with a flower hair clip"
+  ]
+ ],
+ "exclude": []
+}

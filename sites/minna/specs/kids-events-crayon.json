@@ -1,0 +1,84 @@
+{
+ "slug": "kids-events-crayon",
+ "title": "保育園・幼稚園の行事",
+ "subject": "",
+ "genre": "school",
+ "touch": "crayon",
+ "title_fmt": "{ja}",
+ "subject_en": "Crayon-textured children's illustrations of kindergarten events, each ONE scene or object centred in its cell, bright cheerful colours with waxy outlines. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "遠足、防災訓練、お遊戯会、いも掘りなど、保育園・幼稚園の行事12点。おたよりや園の掲示物に。",
+ "tags": [
+  "保育園",
+  "幼稚園",
+  "遠足",
+  "防災訓練",
+  "行事",
+  "おたより",
+  "園児"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "ensoku",
+   "遠足",
+   "children walking in a line with backpacks"
+  ],
+  [
+   "bousai",
+   "防災訓練",
+   "children in safety hoods walking calmly"
+  ],
+  [
+   "yuugi",
+   "お遊戯会",
+   "children in animal costumes on a stage"
+  ],
+  [
+   "imohori",
+   "いも掘り",
+   "children pulling up sweet potatoes"
+  ],
+  [
+   "undokai",
+   "運動会",
+   "children running a race with a ribbon at the finish"
+  ],
+  [
+   "tamaire",
+   "玉入れ",
+   "children throwing balls at a basket pole"
+  ],
+  [
+   "hatsuhi",
+   "お誕生日会",
+   "a child with a birthday crown and a cake"
+  ],
+  [
+   "mochitsuki",
+   "もちつき会",
+   "children and a teacher with a mallet and mortar"
+  ],
+  [
+   "nikki",
+   "お絵かき",
+   "children drawing on large paper"
+  ],
+  [
+   "bus",
+   "園バス",
+   "a small kindergarten bus with children waving"
+  ],
+  [
+   "tsuyu",
+   "どろんこ遊び",
+   "children playing in mud with buckets"
+  ],
+  [
+   "sotsuen",
+   "卒園式",
+   "a child holding a diploma tube"
+  ]
+ ],
+ "exclude": []
+}

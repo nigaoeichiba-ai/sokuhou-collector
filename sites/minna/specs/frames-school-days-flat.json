@@ -1,0 +1,87 @@
+{
+ "slug": "frames-school-days-flat",
+ "title": "給食・お弁当・卒業のフレーム",
+ "subject": "",
+ "genre": "deco",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Decorative frames with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, landscape or square, thick enough to hold text or a photo. Flat colourful style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "給食、お弁当、卒業、遠足、入学、読書、お月見、ハロウィン、紅葉などの飾り枠12点。中があいているので、写真や文字をそのまま入れられます。",
+ "tags": [
+  "フレーム",
+  "枠",
+  "給食",
+  "お弁当",
+  "卒業",
+  "お月見",
+  "ハロウィン",
+  "おたより"
+ ],
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "kyushoku",
+   "給食のフレーム",
+   "a frame of a milk carton, bread, a tray and spoons, centre empty"
+  ],
+  [
+   "obento",
+   "お弁当のフレーム",
+   "a frame of lunchbox side dishes: egg roll, sausage octopus, tomato, broccoli, centre empty"
+  ],
+  [
+   "sotsugyo",
+   "卒業のフレーム",
+   "a frame of cherry blossoms, a rolled diploma and a ribbon, centre empty"
+  ],
+  [
+   "ensoku",
+   "遠足のフレーム",
+   "a frame of a backpack, a rice ball, a water bottle, trees and a path, centre empty"
+  ],
+  [
+   "nyugaku",
+   "入学のフレーム",
+   "a frame of a red school bag, pencils, tulips and a rainbow, centre empty"
+  ],
+  [
+   "dokusho",
+   "読書のフレーム",
+   "a frame of stacked books, glasses, a bookmark and autumn leaves, centre empty"
+  ],
+  [
+   "otsukimi",
+   "お月見のフレーム",
+   "a frame with a big pale moon, pampas grass, dumplings and a rabbit silhouette, centre empty"
+  ],
+  [
+   "halloween",
+   "ハロウィンのフレーム",
+   "a frame of pumpkins, bats, candy and a cute ghost in purple and orange, centre empty"
+  ],
+  [
+   "momiji",
+   "紅葉のフレーム",
+   "a frame made of red and yellow maple and ginkgo leaves, centre empty"
+  ],
+  [
+   "fuyu",
+   "冬のフレーム",
+   "a frame of snowflakes, a scarf, mittens and a snowman, centre empty"
+  ],
+  [
+   "kodomo",
+   "こどもの日のフレーム",
+   "a frame with carp streamers, iris leaves and a samurai helmet, centre empty"
+  ],
+  [
+   "tanabata",
+   "七夕のフレーム",
+   "a frame with bamboo branches, paper strips and stars, centre empty"
+  ]
+ ],
+ "exclude": [
+  "obento"
+ ]
+}

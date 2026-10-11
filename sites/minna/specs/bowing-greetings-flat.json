@@ -1,0 +1,86 @@
+{
+ "slug": "bowing-greetings-flat",
+ "title": "お辞儀・あいさつする人",
+ "subject": "",
+ "genre": "people",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Flat-style people bowing or greeting politely, each ONE person full body, centred, simple friendly faces, varied ages and genders. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "保育士、看護師、新入社員、店員など、お辞儀やあいさつをする人のイラスト12点。案内状やお知らせに。",
+ "tags": [
+  "お辞儀",
+  "あいさつ",
+  "保育士",
+  "看護師",
+  "新入社員",
+  "店員",
+  "人物"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "hoikushi",
+   "お辞儀する保育士",
+   "a nursery teacher in an apron bowing politely"
+  ],
+  [
+   "nurse",
+   "お辞儀する看護師",
+   "a nurse in a uniform bowing politely"
+  ],
+  [
+   "newbie",
+   "お辞儀する新入社員",
+   "a young office worker in a suit bowing"
+  ],
+  [
+   "clerk",
+   "お辞儀する店員",
+   "a shop clerk in an apron bowing"
+  ],
+  [
+   "teacher",
+   "お辞儀する先生",
+   "a school teacher bowing at a classroom door"
+  ],
+  [
+   "doctor",
+   "お辞儀する医師",
+   "a doctor in a white coat bowing"
+  ],
+  [
+   "waiter",
+   "お辞儀するウェイター",
+   "a waiter with a tray bowing"
+  ],
+  [
+   "host",
+   "お辞儀する案内係",
+   "a guide in a uniform with a hand gesturing welcome"
+  ],
+  [
+   "thanks",
+   "ありがとうのお辞儀",
+   "a person bowing deeply with hands at sides"
+  ],
+  [
+   "sorry",
+   "おわびのお辞儀",
+   "a person bowing deeply in apology"
+  ],
+  [
+   "wave",
+   "手をふる人",
+   "a person waving hello"
+  ],
+  [
+   "handshake",
+   "あくしゅする人",
+   "two people shaking hands"
+  ]
+ ],
+ "exclude": [
+  "waiter"
+ ]
+}

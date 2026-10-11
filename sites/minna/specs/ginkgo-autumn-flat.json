@@ -1,0 +1,84 @@
+{
+ "slug": "ginkgo-autumn-flat",
+ "title": "いちょう・秋の木の葉",
+ "subject": "",
+ "genre": "nature",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Autumn ginkgo and fallen-leaf illustrations, each ONE separate object or small scene centred in its cell, golden yellow and warm orange with dark brown outlines, flat style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "いちょうの葉、並木道、ぎんなん、落ち葉あそびなど、いちょうを中心にした秋の絵12点。",
+ "tags": [
+  "いちょう",
+  "銀杏",
+  "イチョウ",
+  "落ち葉",
+  "秋",
+  "黄葉",
+  "ぎんなん"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "leaf",
+   "いちょうの葉",
+   "a single golden ginkgo leaf with a stem"
+  ],
+  [
+   "leaves",
+   "いちょうの葉のあつまり",
+   "five ginkgo leaves of different sizes arranged loosely"
+  ],
+  [
+   "tree",
+   "いちょうの木",
+   "a big ginkgo tree with golden crown and brown trunk"
+  ],
+  [
+   "avenue",
+   "いちょう並木",
+   "a road lined with ginkgo trees and falling leaves"
+  ],
+  [
+   "nuts",
+   "ぎんなん",
+   "a small basket of ginkgo nuts with a few leaves"
+  ],
+  [
+   "carpet",
+   "いちょうの黄色いじゅうたん",
+   "a round patch of yellow fallen ginkgo leaves on the ground"
+  ],
+  [
+   "child",
+   "落ち葉をあつめる子ども",
+   "a child in a jacket gathering ginkgo leaves with a rake"
+  ],
+  [
+   "bookmark",
+   "いちょうの葉のしおり",
+   "a ginkgo leaf pressed in a bookmark with a ribbon"
+  ],
+  [
+   "wreath",
+   "いちょうの葉のリース",
+   "a round wreath made of ginkgo leaves, centre empty"
+  ],
+  [
+   "cat",
+   "いちょうと猫",
+   "a cat sitting on a pile of ginkgo leaves"
+  ],
+  [
+   "bird",
+   "いちょうの枝と小鳥",
+   "a ginkgo branch with a small bird"
+  ],
+  [
+   "rain",
+   "ひらひら舞ういちょう",
+   "ginkgo leaves floating down in the wind"
+  ]
+ ],
+ "exclude": []
+}

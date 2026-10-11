@@ -1,0 +1,82 @@
+{
+ "slug": "cool-boys-pop",
+ "title": "かっこいい男の子",
+ "subject": "",
+ "genre": "people",
+ "touch": "cool",
+ "title_fmt": "{ja}",
+ "subject_en": "Cool stylish original boy characters in a bold pop illustration style with strong dark outlines and saturated colours, each ONE character full body or waist up, centred, confident poses. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "スケボー、バンド、ヒーロー風など、かっこいい男の子のイラスト12点。アイコンやポスターに。",
+ "tags": [
+  "かっこいい",
+  "男の子",
+  "ポップ",
+  "キャラクター",
+  "人物"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "skate",
+   "スケボーの男の子",
+   "a boy riding a skateboard with a cap"
+  ],
+  [
+   "band",
+   "バンドの男の子",
+   "a boy playing an electric guitar"
+  ],
+  [
+   "hero",
+   "ヒーロー風の男の子",
+   "a boy in an original hero costume with a cape"
+  ],
+  [
+   "soccer",
+   "サッカーの男の子",
+   "a boy kicking a soccer ball"
+  ],
+  [
+   "hiphop",
+   "ダンスの男の子",
+   "a boy in a hoodie doing a dance pose"
+  ],
+  [
+   "bike",
+   "自転車の男の子",
+   "a boy riding a bike with a helmet"
+  ],
+  [
+   "headphones",
+   "ヘッドホンの男の子",
+   "a boy wearing big headphones"
+  ],
+  [
+   "jacket",
+   "ジャケットの男の子",
+   "a boy in a jacket with hands in pockets"
+  ],
+  [
+   "basket",
+   "バスケの男の子",
+   "a boy dribbling a basketball"
+  ],
+  [
+   "ninja",
+   "忍者風の男の子",
+   "a boy in an original ninja-style outfit"
+  ],
+  [
+   "camera",
+   "カメラの男の子",
+   "a boy holding a camera"
+  ],
+  [
+   "sunglasses",
+   "サングラスの男の子",
+   "a boy with sunglasses and a smile"
+  ]
+ ],
+ "exclude": []
+}
