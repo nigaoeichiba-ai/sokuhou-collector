@@ -494,3 +494,9 @@ body{word-break:auto-phrase;text-wrap:pretty}
 /* 今日は何の日 */
 .kyou-rows{list-style:none;margin:.4rem 0 1rem;padding:0;display:grid;gap:6px}.kyou-rows li{padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}.kyou-rows .y{display:inline-block;min-width:3.6em;font-weight:800;color:var(--ato-ink)}
 .kyou-today{margin:.6rem 0 1.2rem}.chips small{font-weight:400;font-size:.78rem;margin-left:.2em}
+/* the 特集 pages */
+.figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:.8rem 0}.figures p{margin:0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.figures b{display:block;font-size:1.8rem;line-height:1.2;color:var(--ato-ink)}.figures span{font-size:.85rem}
+@media (min-width:700px){.figures{grid-template-columns:repeat(4,minmax(0,1fr))}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
+.cd{font-weight:800;color:var(--ato-ink);white-space:nowrap}.special-rows li{display:block}.special-links{list-style:none;margin:.4rem 0 1rem;padding:0;display:grid;gap:8px}.special-links a{display:grid;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);text-decoration:none}.special-links span{font-size:.85rem;color:var(--muted)}
+.term,.day{margin:0 0 .8rem;padding:6px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.term h3,.day h3{margin:.4rem 0 .3rem;font-size:1.05rem}.term.now,.day.now{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.season-now,.day-now{margin:.6rem 0 1rem;padding:8px 14px;border-radius:12px;background:var(--ato-soft);color:var(--ato-ink)}.season-now p,.day-now p{margin:.2rem 0}.big-cd{font-weight:800;font-size:1.2rem}

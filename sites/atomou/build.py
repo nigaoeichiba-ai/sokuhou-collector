@@ -23,7 +23,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.atomou import articles, catalog, datecore, feeds, ogimage, skins, usecases  # noqa: E402
+from sites.atomou import articles, catalog, datecore, feeds, ogimage, skins, specials, usecases  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
@@ -307,7 +307,7 @@ HEAD_ICONS = ('<div class="hicons"><a href="/search/" aria-label="さがす">' +
 
 # the AdSense code (sitekit puts it in every page's head) stays only on the pages that are content: never on the app (record, calendar, my page, plan, search, skins, thanks),
 # and never on a quiet day or an item with ad_ok false (see event_page)
-ADS_KINDS = {"home", "category", "event", "use", "today", "manual", "kyou", "new"}
+ADS_KINDS = {"home", "category", "event", "use", "today", "manual", "kyou", "new", "special"}
 _ADS_TAG = re.compile(r'<script async src="https://pagead2\.googlesyndication\.com/[^"]*"[^>]*></script>\n?')
 
 
@@ -1283,6 +1283,7 @@ def kyou_index(c: Ctx, days: dict[str, list]) -> str:
     body = crumbs([("トップ", "/"), ("今日は何の日", None)]) + f"""
 <h1>今日は何の日</h1>
 <section class="kyou-today" id="kyou-today" aria-live="polite"><p class="muted">今日の日付を調べています…</p></section>
+{specials.special_links(c.today)}
 <p class="lead muted">この日付にどんな日があるかを、月と日ごとに調べられます。数字は、その日にある日付の件数です。</p>
 {"".join(months)}"""
     return c.page("/kyou/", f"今日は何の日 月日からさがす | {NAME}", "今日は何の日か、月と日から調べられます。出典つきの公式の日付だけを集め、あと何日か、もう何日かも数えられます。", body, "kyou")
@@ -1337,6 +1338,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
         if not indexable:
             kyou_noindex.add(f"kyou/{md}/index.html")
     pages["new/index.html"] = new_page(c, live)
+    pages.update(specials.special_pages(c, entries))      # 特集 under /kyou/: holidays, solar terms, December
     pages.update(og_pages(live))      # og/<id>.png: the picture a chat app shows for a day's link
     pages.update(feeds.feed_pages(live, catalog.GROUPS, GROUP_SLUG, str(cfg["site_url"]).rstrip("/"), today))   # cal/<genre>.ics, cal/all.ics: the days as a calendar to subscribe to
     for e in entries:
