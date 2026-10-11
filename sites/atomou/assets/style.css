@@ -443,7 +443,7 @@ header.site .wrap{min-height:56px;padding-top:6px;padding-bottom:6px}
 .qa-sum{margin:.6rem 0 .4rem;min-height:1.6em;font-weight:700}
 .qa-chips,.qa-ex{display:flex;gap:8px;flex-wrap:wrap;margin:.4rem 0}
 .qa-ex .chip{font-weight:500;font-size:.85rem;min-height:44px;color:var(--muted)}
-.qa-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:.7rem 0}
+.qa-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:.7rem 0}.qa-row input,.qa-row select{min-width:0;width:100%;box-sizing:border-box}@media (max-width:360px){.qa-row{grid-template-columns:minmax(0,1fr)}}
 .qa-row label{display:grid;gap:4px;font-size:.78rem;font-weight:700;color:var(--muted)}
 .qa-row label:last-child{grid-column:1 / -1}
 .qa-act{display:flex;gap:8px;margin-top:.8rem}
