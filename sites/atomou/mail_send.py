@@ -15,7 +15,7 @@ import json
 import os
 import smtplib
 import sys
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from email.message import EmailMessage
 from email.utils import formatdate, make_msgid
 from pathlib import Path
@@ -56,6 +56,44 @@ def compose(to: str, sender: str, site_url: str, operator: str, today: str, slot
     return msg
 
 
+def weekly_lines(m: dict, today: str) -> list[str]:
+    """The member's own notice lines of the coming 7 days (today included), oldest first, as "M月D日 text"."""
+    n = m.get("notices") or {}
+    if not (n.get("on") and n.get("weekly")):
+        return []
+    end = (date.fromisoformat(today) + timedelta(days=6)).isoformat()
+    rows = sorted({(x["d"], str(x.get("t") or "予定があります")) for x in (n.get("dates") or []) if isinstance(x, dict) and isinstance(x.get("d"), str) and today <= x["d"] <= end})
+    return [f"{int(d[5:7])}月{int(d[8:10])}日 {t}" for d, t in rows][:30]
+
+
+def official_days(entries: list[dict], today: str, limit: int = 5) -> list[dict]:
+    """Public days of the next 14 days (not a quiet day, not an estimate, a whole day), soonest first: what the weekly mail adds to the member's own days."""
+    start = date.fromisoformat(today)
+    end = (start + timedelta(days=13)).isoformat()
+    rows = [e for e in entries if e["precision"] == "day" and not e["quiet"] and not e.get("estimated") and e["status"] != "ended" and today <= e["date"] <= end]
+    return sorted(rows, key=lambda e: (e["date"], e["title"]))[:limit]
+
+
+def compose_weekly(to: str, sender: str, site_url: str, operator: str, today: str, lines: list[str], official: list[dict]) -> EmailMessage:
+    d0 = date.fromisoformat(today)
+    msg = EmailMessage()
+    msg["Subject"] = f"【{NAME}】今週の予定({d0.month}月{d0.day}日から)" + (f": {len(lines)}件" if lines else "")
+    msg["From"] = f"{NAME} <{sender}>"
+    msg["To"] = to
+    msg["Date"] = formatdate(localtime=True)
+    msg["Message-ID"] = make_msgid(domain=sender.split("@", 1)[-1])
+    msg["Auto-Submitted"] = "auto-generated"
+    body = f"{d0.month}月{d0.day}日からの1週間です。\n\n"
+    body += ("あなたの予定\n" + "".join(f"・{t}\n" for t in lines) + "\n") if lines else "あなたの予定: この1週間に、お知らせする日はありません。\n\n"
+    if official:
+        body += "このあとの公式の日\n" + "".join(f"・{int(e['date'][5:7])}月{int(e['date'][8:10])}日 {e['title']} {site_url}/e/{e['id']}/\n" for e in official) + "\n"
+    body += (f"開く: {site_url}/my/\n\n"
+             f"このメールは、{NAME} のマイページで「毎週月曜の朝に、1週間の予定と、公式の日をまとめて受け取る」をオンにした方に送っています。"
+             f"止めるときは、マイページでオフにしてください。\n{operator}\n{site_url}\n")
+    msg.set_content(body)
+    return msg
+
+
 class Smtp:
     """A thin wrapper so the tests can replace it."""
 
@@ -81,8 +119,15 @@ class Smtp:
 def run(folder: Path, today: str, slot: str, cfg: dict, *, dry_run: bool = False, smtp=None) -> dict:
     key = members.load_key(folder)
     all_members = members.load_members(folder, key)
-    due = [(mid, m, lines_for(m, today, slot)) for mid, m in all_members]
-    due = [(mid, m, ls) for mid, m, ls in due if ls]
+    official: list[dict] = []
+    if slot == "w":   # the Monday digest: the member's own days of the week, and the public days of the next two weeks (from the catalogue of this build)
+        from sites.atomou import catalog
+        official = official_days(catalog.build_catalog(date.fromisoformat(today))[0], today)
+        due = [(mid, m, weekly_lines(m, today)) for mid, m in all_members if (m.get("notices") or {}).get("on") and (m.get("notices") or {}).get("weekly")]
+        due = [(mid, m, ls) for mid, m, ls in due if ls or official]
+    else:
+        due = [(mid, m, lines_for(m, today, slot)) for mid, m in all_members]
+        due = [(mid, m, ls) for mid, m, ls in due if ls]
     counts = {"members": len(all_members), "due": len(due), "sent": 0, "failed": 0}
     if dry_run or not due:
         return counts
@@ -91,7 +136,8 @@ def run(folder: Path, today: str, slot: str, cfg: dict, *, dry_run: bool = False
     with smtp as s:
         for _mid, m, ls in due:
             try:
-                s.send(compose(m["email"], sender, cfg["site_url"].rstrip("/"), cfg.get("operator_name") or NAME, today, slot, ls))
+                site, op = cfg["site_url"].rstrip("/"), cfg.get("operator_name") or NAME
+                s.send(compose_weekly(m["email"], sender, site, op, today, ls, official) if slot == "w" else compose(m["email"], sender, site, op, today, slot, ls))
                 counts["sent"] += 1
             except Exception:  # noqa: BLE001 — one bad address must not stop the others
                 counts["failed"] += 1
@@ -101,7 +147,7 @@ def run(folder: Path, today: str, slot: str, cfg: dict, *, dry_run: bool = False
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dir", required=True)
-    ap.add_argument("--slot", choices=("m", "e"), required=True)
+    ap.add_argument("--slot", choices=("m", "e", "w"), required=True)
     ap.add_argument("--today", default=today_jst())
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--check-smtp", action="store_true", help="only log in to the SMTP server and log out (no mail is sent)")

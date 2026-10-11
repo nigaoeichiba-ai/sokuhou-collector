@@ -103,5 +103,49 @@ class Sender(unittest.TestCase):
         self.assertEqual(mail_send.run(f, "2026-10-20", "m", CFG, dry_run=True)["sent"], 0)
 
 
+class Weekly(Sender):
+    def test_the_monday_digest_goes_only_to_members_who_switched_it_on(self):
+        f = self.folder({
+            "a" * 64: {"email": "a@example.com", "notices": {"on": True, "weekly": True, "dates": [{"d": "2026-10-19", "s": "m", "t": "会議"}, {"d": "2026-10-23", "s": "m", "t": "歯医者"}, {"d": "2026-10-30", "s": "m", "t": "先の予定"}]}},
+            "b" * 64: {"email": "b@example.com", "notices": {"on": True, "dates": [{"d": "2026-10-20", "s": "m", "t": "x"}]}},                       # no weekly switch
+            "c" * 64: {"email": "c@example.com", "notices": {"on": False, "weekly": True, "dates": [{"d": "2026-10-20", "s": "m", "t": "x"}]}},       # notices off
+        })
+        sent = []
+
+        class Fake:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def send(self, msg):
+                sent.append(msg)
+
+        counts = mail_send.run(f, "2026-10-19", "w", CFG, smtp=Fake())
+        self.assertEqual((counts["due"], counts["sent"]), (1, 1))
+        msg = sent[0]
+        self.assertEqual(msg["To"], "a@example.com")
+        self.assertIn("今週の予定(10月19日から)", msg["Subject"])
+        body = msg.get_content()
+        self.assertIn("・10月19日 会議\n・10月23日 歯医者\n", body)
+        self.assertNotIn("先の予定", body)                      # beyond the 7 days
+        self.assertIn("https://atomou.com/my/", body)
+        self.assertIn("止めるときは、マイページでオフにしてください", body)
+        self.assertNotIn("amazon", body.lower())
+        self.assertNotIn("rakuten", body.lower())
+
+    def test_lines_and_official_days(self):
+        m = {"notices": {"on": True, "weekly": True, "dates": [{"d": "2026-10-19", "s": "m", "t": "A"}, {"d": "2026-10-19", "s": "e", "t": "A"}, {"d": "2026-10-26", "s": "m", "t": "B"}]}}
+        self.assertEqual(mail_send.weekly_lines(m, "2026-10-19"), ["10月19日 A"])           # a line once, and 7 days only (the 26th is the next Monday)
+        self.assertEqual(mail_send.weekly_lines({"notices": {"on": True, "dates": m["notices"]["dates"]}}, "2026-10-19"), [])
+        entries = [{"id": "x1", "title": "近い日", "date": "2026-10-20", "precision": "day", "quiet": False, "status": "active"},
+                   {"id": "x2", "title": "静かな日", "date": "2026-10-20", "precision": "day", "quiet": True, "status": "active"},
+                   {"id": "x3", "title": "予想", "date": "2026-10-21", "precision": "day", "quiet": False, "status": "active", "estimated": True},
+                   {"id": "x4", "title": "遠い日", "date": "2026-12-01", "precision": "day", "quiet": False, "status": "active"},
+                   {"id": "x5", "title": "月だけ", "date": "2026-10-22", "precision": "month", "quiet": False, "status": "active"}]
+        self.assertEqual([e["id"] for e in mail_send.official_days(entries, "2026-10-19")], ["x1"])
+
+
 if __name__ == "__main__":
     unittest.main()
