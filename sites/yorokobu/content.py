@@ -77,6 +77,15 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
         _need(o, OCCASION_FIELDS, f"occasion {o.get('slug')}")
     for r in recipients:
         _need(r, RECIPIENT_FIELDS, f"recipient {r.get('slug')}")
+        rows = r.get("like_rows")
+        if rows is not None:                                   # one row per line of 「喜ばれやすいもの」: its heading, its Rakuten searches and its must-words
+            if len(rows) != len(r["likes"]):
+                raise BuildError(f"recipient {r['slug']}: like_rows has to have one row per line of likes")
+            for n, row in enumerate(rows):
+                _need(row, ("title", "queries", "must"), f"recipient {r['slug']} like_rows[{n}]")
+                if not 1 <= len(row["queries"]) <= 4 or any(not isinstance(q, str) or not q.strip() for q in row["queries"]):
+                    raise BuildError(f"recipient {r['slug']} like_rows[{n}]: queries")
+                check_must(row, f"recipient {r['slug']} like_rows[{n}]")
     occ = {o["slug"]: o for o in occasions}
     rec = {r["slug"]: r for r in recipients}
     tiers = {t["slug"]: t for t in filters["tiers"]}
@@ -101,6 +110,8 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     for p in pairs:
         extra = ideas.get(pair_key(p))
         p["ideas"] = extra["ideas"] if extra and extra.get("ideas") else _fallback_ideas(p)
+        for n, idea in enumerate(p["ideas"]):
+            check_must(idea, f"ideas {pair_key(p)}#{n}")
         p["keywords"] = extra["keywords"] if extra and extra.get("keywords") else [w for q in p["queries"] for w in [" ".join(x for x in q.split() if x not in STOP)] if w]
     guides_file = content_dir / "guides.json"
     guides = {g["occasion"]: g for g in json.loads(guides_file.read_text(encoding="utf-8"))["guides"]} if guides_file.exists() else {}
@@ -187,14 +198,28 @@ def check_board(b: dict) -> None:
         _need(r, ("title", "study", "rows"), f"{where} rank")
         if r["study"] not in ids:
             raise BuildError(f"{where}: a ranking names an unknown study {r['study']}")
-    data = _plain_json({k: v for k, v in b.items() if k not in ("takeaways", "slug", "board")}
-                       | {"charts": [{k: v for k, v in ch.items() if k != "finding"} for ch in b.get("charts", [])]})
+    # the numbers the board's data has: chart rows, headline values, the rows of rankings, the studies, and its `facts` (source numbers that only a note uses)
+    data = _plain_json([ch["rows"] for ch in b.get("charts", [])] + [h["value"] for h in b["headline"]] + [r["rows"] for r in b.get("ranks", [])]
+                       + [b["studies"], b.get("facts", [])])
     have = _numbers(data)
-    prose = list(b["takeaways"]) + [ch["finding"] for ch in b.get("charts", [])]
+    prose = (list(b["takeaways"]) + [ch["finding"] for ch in b.get("charts", [])] + [ch.get("note", "") for ch in b.get("charts", [])]
+             + [r.get("note", "") for r in b.get("ranks", [])] + list(b["cautions"]) + [h["label"] for h in b["headline"]])
     for sentence in prose:
         for q in QUANTITY.findall(sentence):
             if q.replace(",", "") not in have:
                 raise BuildError(f"{where}: the sentence '{sentence[:30]}…' states {q}, which is not in the board's data")
+    for ch in b.get("charts", []):
+        if len(ch["rows"]) > 8:
+            raise BuildError(f"{where} chart {ch['id']}: more than 8 rows (the picture of a chart draws 8)")
+
+
+def check_must(idea: dict, where: str) -> None:
+    """An idea's `must` (words of which a product title has to contain one) is a list of 1-12 short strings, when it is there."""
+    m = idea.get("must")
+    if m is None:
+        return
+    if not isinstance(m, list) or not 1 <= len(m) <= 12 or any(not isinstance(w, str) or not 1 <= len(w.strip()) <= 12 for w in m):
+        raise BuildError(f"{where}: must has to be a list of 1-12 short words")
 
 
 def _load_surveys(content_dir: Path) -> dict:
@@ -383,6 +408,8 @@ def _load_themes(content_dir: Path, rec: dict, tiers: dict, group_slugs: set[str
         for x in t["tiers"]:
             if x not in tiers:
                 raise BuildError(f"theme {t['slug']}: unknown tier {x}")
+        for n, idea in enumerate(t["ideas"]):
+            check_must(idea, f"theme {t['slug']}#{n}")
         t["key"] = f"theme-{t['slug']}"
         t["recipient"] = t.get("recipient") or None
         t.setdefault("avoid", [])

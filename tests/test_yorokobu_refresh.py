@@ -43,7 +43,7 @@ class RefreshTest(unittest.TestCase):
     def test_each_pick_is_looked_up_by_item_code_and_keeps_its_note(self):
         data, t = self.run_refresh()
         ideas = data["pairs"]["birthday-boyfriend"]["ideas"]
-        self.assertEqual([i["code"] for i in ideas[0]["items"]], ["p1", "p2"])
+        self.assertEqual([i["code"] for i in ideas[0]["items"]][:2], ["p1", "p2"])             # (an idea with fewer than three then gets searched for more)
         self.assertEqual(ideas[0]["items"][0]["note"], "毎日使う定番です。")
         self.assertTrue(any("itemCode=p1" in u for u, _ in t.urls))
         self.assertEqual(data["stats"]["replaced"], 0)
@@ -63,7 +63,7 @@ class RefreshTest(unittest.TestCase):
     def test_a_pick_that_is_gone_or_sold_out_is_replaced_by_the_first_good_backup(self):
         data, _ = self.run_refresh(gone=("p1",), sold_out=("b1",))
         codes = [i["code"] for i in data["pairs"]["birthday-boyfriend"]["ideas"][0]["items"]]
-        self.assertEqual(codes, ["p2", "b2"])        # p1 is gone, b1 is sold out: b2 steps in
+        self.assertEqual(codes[:2], ["p2", "b2"])        # p1 is gone, b1 is sold out: b2 steps in
         self.assertEqual(data["stats"]["replaced"], 1)
         self.assertEqual(data["stats"]["dropped"], 1)
 

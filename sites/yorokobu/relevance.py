@@ -62,3 +62,18 @@ def fits_occasion(name: str, occasion: str, occasion_name: str = "") -> bool:
     if not any(w in name and w not in own for w in OCCASION_ONLY_ALL):
         return True
     return sum(1 for w in OCCASION_WORDS if w in name) >= 3
+
+
+def _norm(text: str) -> str:
+    """Titles are written in full-width and half-width forms and in any case; compare them as one."""
+    import unicodedata
+    return unicodedata.normalize("NFKC", text).lower().replace(" ", "")
+
+
+def fits_idea(name: str, must: list[str] | tuple[str, ...] | None) -> bool:
+    """Is this product the kind of thing the idea is about?  `must` is the idea's list of words (any one is enough; spelling variants are in the list):
+    "保温タンブラー" lists タンブラー, ボトル, 水筒, so a card case that the search returned for it is not shown.  An idea without a list accepts everything."""
+    if not must:
+        return True
+    n = _norm(name)
+    return any(_norm(w) in n for w in must)

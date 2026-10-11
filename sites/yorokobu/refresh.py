@@ -22,6 +22,7 @@ sys.path.insert(0, str(ROOT))
 from sites.yorokobu import content as ct  # noqa: E402
 from sites.yorokobu import dailypicks as dp  # noqa: E402
 from sites.yorokobu import fetch  # noqa: E402
+from sites.yorokobu import relevance  # noqa: E402
 from sites.yorokobu.picking import pick, usable  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
 
@@ -81,7 +82,7 @@ def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | Non
                     if len(items) >= wanted:
                         break
                     it = get(code)
-                    if it and code not in used and usable(it, filters, p.get("recipient"), relaxed=True):
+                    if it and code not in used and usable(it, filters, p.get("recipient"), relaxed=True) and relevance.fits_idea(it["name"], idea.get("must")):
                         items.append({**it, "note": note} if note else it)
                         used.add(code)
                         if n >= wanted:
@@ -91,10 +92,18 @@ def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | Non
             if len(items) < 2:  # nothing curated survives (or this idea was never curated): the keyword search fills in
                 searched += 1
                 found = fetch._search(client, f"{key} idea {i} fallback", fallback_state, 1000, keyword=idea["query"], hits=fetch.HITS)
-                more = pick(found, None, filters, limit=4 - len(items), recipient=p.get("recipient"), exclude=used)
+                more = pick(found, None, filters, limit=4 - len(items), recipient=p.get("recipient"), exclude=used, must=idea.get("must"))
                 items += more
                 used |= {x["code"] for x in more}
-            ideas_out.append({k: idea[k] for k in ("label", "type", "query", "why")} | {"items": items})
+            if len(items) < fetch.IDEA_MIN:                  # still short of the right kind: other searches (the idea's title, its must-words)
+                for q in fetch.extra_queries(idea, p.get("recipient")):
+                    found = fetch._search(client, f"{key} idea {i} extra", fallback_state, 1000, keyword=q, hits=fetch.HITS, sort="-reviewCount")
+                    more = pick(found, None, filters, limit=4 - len(items), recipient=p.get("recipient"), exclude=used, must=idea.get("must"))
+                    items += more
+                    used |= {x["code"] for x in more}
+                    if len(items) >= fetch.IDEA_MIN:
+                        break
+            ideas_out.append({k: idea[k] for k in ("label", "type", "query", "why", "must") if k in idea} | {"items": items})
         union = [it for idea in ideas_out for it in idea["items"]]
         tiers = {t: pick(union, c["tiers"][t], filters, recipient=p.get("recipient")) for t in p["tiers"]}
         out_pairs[key] = {"ideas": ideas_out, "tiers": tiers}
@@ -117,7 +126,8 @@ def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | Non
     now = now or datetime.now(fetch.JST)
     if replaced or dropped:
         print(f"replaced with backups: {len(replaced)}; picks gone with no backup left: {len(dropped)}; ideas filled by search: {searched}", file=sys.stderr)
-    return {"version": 2, "curated": True, "fetched_at": now.isoformat(timespec="seconds"), "pairs": out_pairs, "portrait": portrait, "daily": daily,
+    likes = fetch.collect_likes(c, client, fallback_state)
+    return {"version": 2, "curated": True, "fetched_at": now.isoformat(timespec="seconds"), "pairs": out_pairs, "portrait": portrait, "daily": daily, "likes": likes,
             "stats": {"requests": client.calls, "pages": len(pairs), "replaced": len(replaced), "dropped": len(dropped), "searched_ideas": searched,
                       "errors": state["errors"] + fallback_state["errors"]}}
 

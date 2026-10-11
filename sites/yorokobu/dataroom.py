@@ -446,6 +446,7 @@ def _shop_section(d: dict, b: dict) -> str:
             btns += (f'<a class="btn" href="{esc(B.amazon_url(cfg, r["query"], r["lo"] or None, r["hi"]))}" rel="sponsored nofollow noopener" target="_blank">Amazonで探す({esc(rt)})</a>')
         out += (f'<div class="shop-range"><h3>{esc(r["label"])}</h3><ul class="items">{"".join(B.item_card(cfg, it) for it in picked)}</ul>'
                 f'<p class="more">{btns}</p></div>')
+    B.set_keep()                                                      # (the words kept in titles belong to the page being built; not to the next one)
     if not out:
         return ""
     return ('<section class="block" id="shop"><div class="sec-head"><h2>この予算で、探す</h2><p>調査で多かった価格帯の商品です。ボタンから、楽天市場・Amazonで、ほかの商品も探せます。</p></div>'
