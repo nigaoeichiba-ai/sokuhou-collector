@@ -1,0 +1,148 @@
+{
+ "date": "2026-10-12",
+ "weekday": "月",
+ "themes": [
+  "t01",
+  "t04",
+  "t11",
+  "t20",
+  "t27",
+  "t34"
+ ],
+ "regional": "北海道・東北",
+ "words": {
+  "users": 0,
+  "explored": 135,
+  "target": 40,
+  "note": "概算。候補にした95件+公式が見つからず落としたワード約40。利用者の登録ワードは0件。サブエージェント6本(各60本まで)"
+ },
+ "searches": 120,
+ "fetches": 187,
+ "counts_note": "検索・fetch は各エージェントの自己申告の合計(概算)。私の検索3本を含む",
+ "cards": 63,
+ "cards_ratio": 0.47,
+ "cards_by_agent": {
+  "A1_live_stage": "候補21",
+  "A2_game_it": "候補21(+再提出2)",
+  "A3_sports": "候補17",
+  "A4_tax_system": "候補11",
+  "A5_park_food": "候補9",
+  "A6_hokkaido_tohoku": "候補15"
+ },
+ "candidates": 95,
+ "accepted_first_pass": 61,
+ "accepted_total": 63,
+ "rejected": {
+  "final_seedcheck": [
+   {
+    "reason": "quote not on the page (WebFetchの要約が返した文字列で原文と一致せず。任天堂Direct紹介9件、四季3件など)",
+    "n": 17
+   },
+   {
+    "reason": "duplicate (すでにあるカード)",
+    "n": 7
+   },
+   {
+    "reason": "fetch failed (SSL証明書検証 4件=美術館/博物館、403 1件=東京メトロ)",
+    "n": 5
+   },
+   {
+    "reason": "subject must be 2-10 characters",
+    "n": 2,
+    "note": "直して再提出し通過"
+   },
+   {
+    "reason": "estimate needs typical/series/history",
+    "n": 1
+   }
+  ]
+ },
+ "queries": [
+  {
+   "q": "<作品/大会名> <年> 開催日 / 日程",
+   "domain": "npb.jp / jfa.jp / league-one.jp / marathon.tokyo / hakone-ekiden.jp / jleague.jp",
+   "official_hits": "約9ドメイン",
+   "card": true
+  },
+  {
+   "q": "公式の一覧ページを直接 fetch(release_list, revue/index, 特別展一覧)",
+   "domain": "shiki.jp / kageki.hankyu.co.jp / tnm.jp / tobikan.jp",
+   "official_hits": "多数",
+   "card": true
+  },
+  {
+   "q": "Nintendo Switch 2 ソフト 2026年11月 発売予定",
+   "domain": "nintendo.com",
+   "official_hits": 1,
+   "card": false,
+   "note": "1本で約35本分の日付が出たが、引用が原文と一致せず9件落ちた(要約モデル経由のため)"
+  },
+  {
+   "q": "<市>市 令和8年度 申請期限 受付期間",
+   "domain": "city.sapporo.jp / city.sendai.jp",
+   "official_hits": 5,
+   "card": true
+  },
+  {
+   "q": "令和8年10月 施行 制度 開始 厚生労働省 / <制度名> 令和8年10月 日本年金機構",
+   "domain": "mhlw.go.jp / nenkin.go.jp",
+   "official_hits": "4",
+   "card": true
+  },
+  {
+   "q": "<事業者名> <年> 開催期間(固有名詞+年)",
+   "domain": "usj.co.jp / puroland.jp / fujiq.jp / tokyo-skytree.jp / keionet.com",
+   "official_hits": "ほぼ毎回",
+   "card": true
+  },
+  {
+   "q": "2026-12/2027-01 の鉄道運賃改定・ダイヤ改正; 電気・ガス冬の補助",
+   "domain": "絞りなし / meti.go.jp",
+   "official_hits": 0,
+   "card": false,
+   "note": "未発表の可能性が高い"
+  },
+  {
+   "q": "ボージョレ・ヌーヴォー2026 解禁",
+   "domain": "キリン/サッポロ/アサヒ/メルシャン",
+   "official_hits": 0,
+   "card": false,
+   "note": "規則(11月第3木曜)のみで2026年の日付なし。2日続けて失敗"
+  }
+ ],
+ "failed_words": [
+  "大相撲11月場所(sumo.orのfetch不可。ブラウザで確認)",
+  "NHK紅白第77回(nhk.or.jp検索不可)",
+  "全日本フィギュア2026",
+  "確定申告の期限・年末調整の納期(nta.go.jp Shift_JIS文字化け)",
+  "ゆうパック運賃改定の実施日(PDF)",
+  "ボージョレ・ヌーヴォー2026(2回目)",
+  "東京ディズニーシー25周年・インディ再開(fetchタイムアウト)",
+  "ハウステンボス スターライトミリオン",
+  "Apple 新製品イベント(日付なし。2回目)",
+  "秋田竿燈まつり2026 / 仙台七夕まつり2026",
+  "札幌駅・千歳線新駅(JR北海道PDF)",
+  "さっぽろホワイトイルミネーション全体期間",
+  "FUJI ROCK 2027 / SUMMER SONIC 2027",
+  "バンダイナムコ・セガの11-12月タイトル"
+ ],
+ "injections": [],
+ "unusable": [
+  "jreast.co.jp(403)",
+  "enecho.meti.go.jp(403)",
+  "japanpost.jp(PDFのみ)",
+  "sumo.or.jp(fetch不可)",
+  "nhk.or.jp(検索に指定不可)",
+  "美術館/博物館の一部(SSL検証エラー=手元環境の問題の可能性)"
+ ],
+ "tests": "seedcheck 61/95 通過 + 2 再提出 = 63。run_tests --site atomou は実行中(結果は報告に)",
+ "next_target": 40,
+ "next_target_reason": "cards/words=0.47(0.4〜0.6)なので+0。落ちた理由の最多は 'quote not on the page'(WebFetchの要約の文字列を引用にした)",
+ "improvements_for_tomorrow": [
+  "引用は、要約ではなく原文の一文を取る。fetchの prompt に『日付を含む1文を、一字一句そのまま』と入れる",
+  "日付が表の行のページは、引用を表の1行(セルをそのまま連結)にしない",
+  "SSL検証エラーのドメインは、ブラウザで開き seen_in_browser を使う",
+  "NHK/sumo/JR東/日本郵便/enecho は、別の公式ドメインかブラウザで",
+  "月曜: query_bank の yield 更新(下)"
+ ]
+}
