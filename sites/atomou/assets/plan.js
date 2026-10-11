@@ -98,9 +98,9 @@
     var box = $('#todo');
     if (!box) return;
     var items = planItems(cat);
-    box.hidden = !items.length;
-    if (!items.length) return;
-    var rows = todoRows(items), list = $('#todo-list');
+    var rows = items.length ? todoRows(items) : [], list = $('#todo-list');
+    box.hidden = !rows.length;   // nothing today: the part is left out (it only said so); the calendar is in the tab bar
+    if (!rows.length) return;
     list.innerHTML = rows.length ? rows.slice(0, 8).map(function (r) {
       if (r.k === 'event') return '<li><span class="when">' + whenWord(r.n) + '</span> <a href="/plan/?key=' + H(r.it.key) + '">' + H(r.it.title) + '</a>' + (r.it.time ? ' <span class="muted">' + H(r.it.time) + '</span>' : '') + '</li>';
       return '<li class="task' + (r.n < 0 ? ' over' : '') + '"><span class="when">' + whenWord(r.n) + '</span> ' + taskCheckbox(r.it, r.t) + ' <span class="muted">(' + H(r.it.title) + ')</span></li>';
@@ -216,10 +216,31 @@
         return '<li class="task">' + taskCheckbox(item, t) + ' <span class="muted">(' + beforeLabel(t.before) + (due ? ' ' + md(due) : '') + ')</span> <button type="button" class="mini" data-del-task="' + H(t.id) + '" aria-label="このやることを消す">×</button></li>';
       }).join('');
     }
+    function planBar(e) {   // the actions on a card of one's own, right under the card (they used to be two or three screens down)
+      if (!e) return '';
+      return '<div class="plan-bar" id="plan-bar" role="group" aria-label="このカードの操作"><button type="button" class="btn small" data-plan-act="edit">修正</button>' +
+        '<button type="button" class="btn small ghost" data-plan-act="copy">コピー</button>' +
+        '<button type="button" class="btn small ghost" data-plan-act="pin" aria-pressed="' + (e.pin ? 'true' : 'false') + '">' + (e.pin ? '★ ピン留め中' : '☆ ピン留め') + '</button>' +
+        '<button type="button" class="btn small ghost" data-plan-act="del">消す</button></div>';
+    }
+    function shiftRow(e) {   // a plan that moved: one tap puts it a day, a week or a month later
+      if (!e || e.precision !== 'day' || e.yearly || ['event', 'until', 'memo'].indexOf(e.kind) < 0) return '';
+      return '<p class="shift" id="shift-row"><span class="lab">日付をずらす</span> <button type="button" class="chip" data-shift="d1">+1日</button><button type="button" class="chip" data-shift="w1">+1週間</button><button type="button" class="chip" data-shift="m1">+1か月</button></p>';
+    }
+    function arrange() {   // the order on the page: the card, its actions, sending it, correcting it, then the notices, tasks and memo, the weeks, the files for other calendars
+      var anchor = $('.plan-card', box);
+      if (!anchor) return;
+      ['#plan-bar', '#shift-row', '.share-row', '#edit-sec', '#remind', '#tasks', '#memo-sec', '#weeks', '.more'].forEach(function (sel) {
+        var el = $(sel, box);
+        if (!el) return;
+        if (anchor.nextElementSibling !== el) anchor.parentNode.insertBefore(el, anchor.nextSibling);
+        anchor = el;
+      });
+    }
     function render() {
       var own = item.own, e = own ? A.findEntry(item.id) : null, n = notesOf(key), h = '';
-      h += '<div class="cards plan-card">' + A.cardHtml(item).replace('class="card', 'class="card big') + '</div>';
-      h += weeksSection(item);
+      h += '<div class="cards plan-card' + (own ? ' own' : '') + '">' + A.cardHtml(item).replace('class="card', 'class="card big') + '</div>';
+      h += planBar(e) + shiftRow(e) + weeksSection(item);
       if (item.p === 'day') {   // the notices of this day: one switch for all of them, the days before, and (plus plan) any number of days and the time of day
         var nn = notesOf(key), rem = nn.remind, sug = remindPreset(item), T = A.tier, free = T && T.on && !T.plus();
         var allowed = function (r) { return !T || T.remindAllowed(r); };
@@ -243,10 +264,10 @@
         '<form class="task-add" id="task-add"><label class="vh" for="t-before">いつまでに</label><select id="t-before">' + BEFORE.map(function (b) { return '<option value="' + b[0] + '"' + (b[0] === 7 ? ' selected' : '') + '>' + b[1] + '</option>'; }).join('') + '</select>' +
         '<label class="vh" for="t-text">やること</label><input type="text" id="t-text" maxlength="80" placeholder="例: 書類をそろえる" autocomplete="off"><button type="submit" class="btn small">追加</button></form>' +
         '<p class="hint">期限の日は、カレンダーとホームに表示されます。</p>' + mic() + '</section>';
-      h += '<section class="plan-sec"><h2>メモ</h2><div class="field"><label class="vh" for="p-memo">メモ</label><textarea id="p-memo" rows="4" maxlength="600" placeholder="持ち物、場所、連絡先など">' + H(n.memo) + '</textarea></div>' +
+      h += '<section class="plan-sec" id="memo-sec"><h2>メモ</h2><div class="field"><label class="vh" for="p-memo">メモ</label><textarea id="p-memo" rows="4" maxlength="600" placeholder="持ち物、場所、連絡先など">' + H(n.memo) + '</textarea></div>' +
         mic() + '</section>';
       if (e) {
-        h += '<section class="plan-sec"><h2>直す</h2><div class="field"><label for="e-title">名前</label><input type="text" id="e-title" maxlength="40" value="' + H(e.title) + '">' + mic() + '</div>';
+        h += '<section class="plan-sec" id="edit-sec"><h2>修正</h2><div class="field"><label for="e-title">名前</label><input type="text" id="e-title" maxlength="40" value="' + H(e.title) + '">' + mic() + '</div>';
         if (e.precision === 'day') h += '<div class="field"><label for="e-date">日付</label><input type="date" id="e-date" value="' + H(e.date) + '"></div>';
         else if (e.precision === 'month') h += '<div class="field"><label for="e-date">年と月(例 2026-10)</label><input type="month" id="e-date" value="' + H(String(e.date).slice(0, 7)) + '" placeholder="2026-10"></div>';
         else h += '<div class="field"><label for="e-date">年(例 1990)</label><input type="number" id="e-date" inputmode="numeric" min="1" max="2200" value="' + H(String(e.date).slice(0, 4)) + '"></div>';
@@ -275,6 +296,7 @@
       if (window.AtomouShare) AtomouShare.init(box);
       A.hydrate(box);
       if (own) $$('.c-act a', box).forEach(function (a) { a.remove(); });
+      arrange();
     }
     function saySpoken(input) {   // the words in "文字で日付を入力する" fill the date field above it; "保存" writes it
       var dt = $('#e-date'), note = $('#e-say-note'), e = A.findEntry(item.id), p = e ? e.precision : 'day', d;
@@ -309,6 +331,25 @@
       else if (id === 'r-slot') { var m2 = notesOf(key); m2.remindSlot = ev.target.value === 'e' ? 'e' : 'm'; setNotes(key, m2); }
     });
     box.addEventListener('click', function (ev) {
+      var pb = ev.target.closest ? ev.target.closest('[data-plan-act]') : null;
+      if (pb) {
+        var pact = pb.getAttribute('data-plan-act'), pe = A.findEntry(item.id);
+        if (!pe) return;
+        if (pact === 'edit') { var ed = $('#edit-sec'); if (ed) { ed.scrollIntoView({ block: 'start' }); var et = $('#e-title'); if (et) et.focus({ preventScroll: true }); } }
+        else if (pact === 'copy') { if (!pe.quiet && A.tier && A.tier.blocked(1)) return; if (window.AtomouQuick) window.AtomouQuick.open({ copy: pe.id }); }
+        else if (pact === 'pin') { if (A.setPin(pe.id) !== null) { item = A.ownItem(pe); render(); } }
+        else if (pact === 'del') { var pc = $('.plan-card .card', box); if (pc) A.removeEntry(pc); }
+        return;
+      }
+      var sb = ev.target.closest ? ev.target.closest('[data-shift]') : null;
+      if (sb) {
+        var se = A.findEntry(item.id), sd = se && C.parse(se.date);
+        if (!se || !sd) return;
+        var sk = sb.getAttribute('data-shift'), nd2 = sk === 'd1' ? C.addDays(sd, 1) : sk === 'w1' ? C.addDays(sd, 7) : C.addMonths(sd, 1), was = se.date;
+        se.date = C.iso(nd2); A.persist(); A.stat('act:shift_' + sk); item = A.ownItem(se); render();
+        A.toastAct(A.fmtDate(se.date, 'day') + ' にずらしました。', '元に戻す', function () { se.date = was; A.persist(); item = A.ownItem(se); render(); });
+        return;
+      }
       if (ev.target.id === 'r-custom-add') {
         var cv = Math.floor(+($('#r-custom') || {}).value), cn = notesOf(key);
         if (!(cv >= 1 && cv <= 365)) { A.toast('日数は、1から365までで入れてください。'); return; }

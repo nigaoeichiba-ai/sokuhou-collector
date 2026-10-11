@@ -32,6 +32,7 @@
   /* ---------- state ---------- */
   var S = blank(), brokenSaved = false;
   var BLOCK_IDS = ['todo', 'live', 'search', 'cats', 'daily', 'mine', 'interests', 'region', 'soon', 'record', 'usecases'], KIND_IDS = ['event', 'anniversary', 'birthday', 'memorial', 'since', 'until', 'memo'];
+  var SORTS = ['pin', 'near', 'kind', 'new', 'name', 'hand'], KIND_ORDER = ['event', 'until', 'anniversary', 'birthday', 'since', 'memorial', 'memo'], PIN_MAX = 5, HOME_MINE = 5, PUB_SORTS = ['soon', 'new', 'pop', 'pick', 'area'];   // how the visitor's own days are put in order; at most 5 pinned; how many the home page lists
   function statsDefault() {  // statistics are on unless the browser says "do not track" (DNT / Global Privacy Control)
     try { return !(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.globalPrivacyControl === true); } catch (e) { return true; }
   }
@@ -44,7 +45,7 @@
     var kind = oneOf(e.kind, KIND_IDS, 'memo');
     return { id: id, title: String(e.title == null ? '' : e.title).slice(0, 80), date: C.iso(d), precision: oneOf(e.precision, ['day', 'month', 'year'], 'day'), kind: kind,
       quiet: !!e.quiet || kind === 'memorial', yearly: !!e.yearly, every100: !!e.every100, alarm: oneOf(e.alarm, ['', 'morning', 'eve', 'week', 'none'], ''),   // '' = follow the setting on the my page
-      time: /^([01]\d|2[0-3]):[0-5]\d$/.test(String(e.time)) ? e.time : '', created: /^\d{4}-\d{2}-\d{2}$/.test(String(e.created)) ? e.created : '' };
+      pin: e.pin === true, time: /^([01]\d|2[0-3]):[0-5]\d$/.test(String(e.time)) ? e.time : '', created: /^\d{4}-\d{2}-\d{2}$/.test(String(e.created)) ? e.created : '' };
   }
   function cleanNotes(n) {  // memo and "do this N days before" tasks, per day (key c:<catalogue id> or m:<own id>)
     var out = {}, keys = n && typeof n === 'object' ? Object.keys(n).slice(0, 300) : [];
@@ -110,6 +111,7 @@
     s.prefs.intro = p.intro === true;
     s.prefs.setup = p.setup === true;
     s.prefs.pager = p.pager === true;
+    s.prefs.sort = { mine: oneOf(p.sort && p.sort.mine, SORTS, ''), pub: oneOf(p.sort && p.sort.pub, PUB_SORTS, '') };   // how the visitor's own days are ordered ('' = pinned first, or the hand-made order when there is one), and how the official days are
     s.prefs.liveAlert = p.liveAlert === true;   // announce a new official headline that matches the visitor's words (assets/live.js)   // the home lists as pages to turn (assets/swipe.js)   // the first-visit setup was done (or put off)
     s.prefs.genres = Array.isArray(p.genres) ? p.genres.filter(function (g, i, a) { return CONF.groups.indexOf(g) >= 0 && a.indexOf(g) === i; }) : [];   // the genres the visitor chose: the home page leans to them
     s.prefs.mids = pickList(p.mids, 2); s.prefs.subs = pickList(p.subs, 3);   // a middle part ("genre>middle") or a small part ("genre>middle>small") of a genre the visitor chose
@@ -299,13 +301,14 @@
   }
   function ownItem(e) {
     var k = KINDS[e.kind] || KINDS.memo;
-    return { key: 'm:' + e.id, id: e.id, title: e.title, date: e.date, p: e.precision || 'day', g: k.g, kind: k.t, quiet: !!e.quiet, own: true, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100 };
+    return { key: 'm:' + e.id, id: e.id, title: e.title, date: e.date, p: e.precision || 'day', g: k.g, kind: k.t, quiet: !!e.quiet, own: true, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, pin: !!e.pin, kid: e.kind, created: e.created || '' };
   }
   function cardHtml(it) {
-    var h = '<article class="card' + (it.quiet ? ' quiet' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.date) + '" data-p="' + H(it.p) + '"' + (it.est ? ' data-est="1"' : '') +
+    var h = '<article class="card' + (it.quiet ? ' quiet' : '') + (it.pin ? ' pinned' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.date) + '" data-p="' + H(it.p) + '"' + (it.est ? ' data-est="1"' : '') +
       (it.g ? ' data-g="' + it.g + '"' : '') + (it.cat ? ' data-cat="' + H(it.cat) + '"' : '') + (it.cat && it.sub ? ' data-sub="' + H(it.sub) + '"' : '') + '>';
     h += '<div class="c-top">' + (it.g ? '<span class="mark m' + it.g + '" data-g="' + it.g + '" aria-hidden="true"></span>' : '') + '<span class="badge">' + H(it.kind) + '</span>' +
-      (it.what ? '<span class="what">' + H(it.what) + '</span>' : '') + '</div>';
+      (it.what ? '<span class="what">' + H(it.what) + '</span>' : '') +
+      (it.own ? '<button type="button" class="pin" data-act="pin" aria-pressed="' + (it.pin ? 'true' : 'false') + '" aria-label="' + (it.pin ? 'ピン留めを外す' : 'ピン留めする(先頭に表示)') + '">' + (it.pin ? '★' : '☆') + '</button>' : '') + '</div>';
     h += '<p class="c-count"><span class="word"></span><span class="num"></span><span class="rel"></span></p><p class="c-sub"></p>';
     h += '<h3 class="c-title">' + (it.href ? '<a href="' + H(it.href) + '">' + H(it.title) + '</a>' : H(it.title)) + '</h3>';
     h += '<p class="c-date">' + H(it.est && it.typical ? it.typical : fmtDate(it.date, it.p)) + (it.time ? ' ' + H(it.time) : '') + (it.kword ? ' ' + H(it.kword) : '') +
@@ -313,7 +316,7 @@
     if (it.own) h += '<div class="c-next"></div>';
     h += '<div class="c-act">';
     if (!it.own) h += '<button type="button" class="btn small" data-act="save" aria-pressed="false">☆ 予定に入れる</button><a class="btn small ghost" href="' + H(it.href) + '">詳細</a>';
-    if (it.own) h += '<a class="btn small" href="/plan/?key=' + H(it.key) + '">開く</a><button type="button" class="btn small ghost" data-act="del">消す</button>';
+    if (it.own) h += '<a class="btn small" href="/plan/?key=' + H(it.key) + '">開く</a><button type="button" class="btn small ghost" data-act="copy">コピー</button><button type="button" class="btn small ghost" data-act="del">消す</button>';
     h += '</div>';
     h += '<div class="c-move"><button type="button" class="mini grip" data-act="grip" aria-label="つかんで動かす">⠿</button><button type="button" class="mini" data-act="up" aria-label="ひとつ前へ">↑</button>' +
       '<button type="button" class="mini" data-act="down" aria-label="ひとつ後ろへ">↓</button></div>';
@@ -429,6 +432,7 @@
   function changed(grid) {
     if (grid.getAttribute('data-save-order') === '1') {
       S.order = $$('.card', grid).map(function (c) { return c.getAttribute('data-key'); });
+      if (grid.id === 'my-grid' || grid.id === 'mine-grid') { S.prefs.sort = Object.assign({}, S.prefs.sort, { mine: 'hand' }); syncSorts(); }   // the order the visitor made by hand is the one to keep
       persist();
     }
   }
@@ -516,8 +520,8 @@
       var on = !grid.classList.contains('reorder');
       grid.classList.toggle('reorder', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      btn.textContent = on ? '並べ替えを終える' : '並べ替え';
-      if (on) { toast('↑↓で並べ替えできます。ドラッグ(スマホは長押し)でも動かせます。'); stat('act:reorder'); }
+      btn.textContent = on ? '動かし終える' : '手で動かす';
+      if (on) { toast('↑↓で動かせます。ドラッグ(スマホは長押し)でも動かせます。動かすと、並べ替えは「手動の順」になります。'); stat('act:reorder'); }
     });
   }
 
@@ -557,6 +561,23 @@
     ids.forEach(function (id) { $$('.card[data-key="c:' + id + '"]').forEach(fillCard); });
     toast(added + '件を予定に入れました。カレンダーに表示されます。');
   }
+  function setPin(id, on) {   // pin a card of the visitor's own (at most PIN_MAX), or take the pin off; returns the new state, or null when nothing was changed
+    var e = findEntry(id);
+    if (!e) return null;
+    var want = on === undefined ? !e.pin : !!on;
+    if (want && !e.pin && S.entries.filter(function (x) { return x.pin; }).length >= PIN_MAX) { toast('ピン留めは' + PIN_MAX + '枚までです。外すカードを、先に選んでください。'); return null; }
+    var wasHand = sortMode() === 'hand';
+    if (want && wasHand) { S.prefs.sort = Object.assign({}, S.prefs.sort, { mine: 'pin' }); syncSorts(); }   // the pin would not come first in the hand-made order: the order becomes "pinned first"
+    e.pin = want; persist(); stat(want ? 'act:pin' : 'act:unpin');
+    toast(want ? (sortMode() === 'pin' ? 'ピン留めしました。ホームの先頭に出ます。' + (wasHand ? '並べ替えは「ピンを先に」にしました。' : '') : 'ピン留めしました。並べ替えを「ピンを先に」にすると、先頭に出ます。') : 'ピン留めを外しました。');
+    return want;
+  }
+  function copyCard(id) {   // a card of one's own is the start of a new one (the quick sheet opens with it); the free plan's limit counts the copy
+    var e = findEntry(id), T = window.AtomouApp && window.AtomouApp.tier;
+    if (!e) return;
+    if (!e.quiet && T && T.blocked(1)) return;
+    if (window.AtomouQuick) window.AtomouQuick.open({ copy: id });
+  }
   function removeEntry(card) {
     var id = (card.getAttribute('data-key') || '').slice(2), e = findEntry(id);
     if (!e) return;
@@ -593,6 +614,8 @@
     if (act === 'save') toggleSave(card);
     else if (act === 'ics') icsFor(card);
     else if (act === 'del') removeEntry(card);
+    else if (act === 'copy') copyCard((card.getAttribute('data-key') || '').slice(2));
+    else if (act === 'pin') { if (setPin((card.getAttribute('data-key') || '').slice(2)) !== null) { if (page === 'my') renderMy(); else if (page === 'home') renderMine(); } }
     else if (act === 'up') moveCard(card, -1);
     else if (act === 'down') moveCard(card, 1);
   });
@@ -678,6 +701,67 @@
     el.innerHTML = '<span class="d-today">' + fmtDate(C.iso(TODAY), 'day') + '</span><a href="/today/#year">年末まであと' + n[1] + '日</a>' +
       '<a href="/today/#newyear">' + (TODAY[0] + 1) + '年まであと' + (n[1] + 1) + '日</a><a href="/today/#fy">年度末まであと' + fy[2] + '日</a>';
   }
+  function sortMode() { var m = (S.prefs.sort || {}).mine; return m || (S.order.length ? 'hand' : 'pin'); }
+  function sortItems(items) {   // pin: the pinned first, then the day that comes next; near; kind; new (the newest written first); name; hand (the order made by hand)
+    var mode = sortMode();
+    if (mode === 'hand') return ordered(items);
+    var kidx = function (it) { var i = KIND_ORDER.indexOf(it.kid); return i < 0 ? 99 : i; };
+    return items.map(function (it, i) { return { it: it, i: i }; }).sort(function (a, b) {
+      var x = a.it, y = b.it, r = rank(x) - rank(y);
+      if (mode === 'pin') return ((y.pin ? 1 : 0) - (x.pin ? 1 : 0)) || r || a.i - b.i;
+      if (mode === 'kind') return (kidx(x) - kidx(y)) || r || a.i - b.i;
+      if (mode === 'new') return (x.created < y.created ? 1 : x.created > y.created ? -1 : 0) || r || a.i - b.i;
+      if (mode === 'name') return String(x.title).localeCompare(String(y.title), 'ja') || r || a.i - b.i;
+      return r || a.i - b.i;
+    }).map(function (o) { return o.it; });
+  }
+  function syncSorts() { $$('select.mine-sort').forEach(function (s) { s.value = sortMode(); }); }
+  function wireSort(id, redraw) {
+    var sel = $('#' + id);
+    if (!sel) return;
+    sel.value = sortMode();
+    sel.addEventListener('change', function () { S.prefs.sort = Object.assign({}, S.prefs.sort, { mine: sel.value }); persist(); stat('act:sort_' + sel.value); syncSorts(); redraw(); });
+  }
+
+  /* ---------- the order of the official days (search, genre pages): soon (the day that comes next), new (put in the catalogue lately), pop (put in by most visitors: the order of live/pop.v1.json, which holds ids only), pick (the fields chosen on the setup first), area (the chosen prefecture first) ---------- */
+  var POP = {}, popPromise = null;
+  function loadPop() {
+    if (!popPromise) popPromise = fetch('/live/pop.v1.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      POP = {}; ((j && j.items) || []).forEach(function (x, i) { if (x && x.id) POP[x.id] = i; });
+      return POP;
+    }).catch(function () { POP = {}; return POP; });
+    return popPromise;
+  }
+  function pubMode() { var v = (S.prefs.sort || {}).pub; return PUB_SORTS.indexOf(v) >= 0 ? v : 'soon'; }
+  function pubNote(mode) {   // a line when the choice has nothing to lean on yet: the list stays in the order of the days
+    if (mode === 'pop' && !Object.keys(POP).length) return '人気の日は、予定に入れる人が増えると並びます。いまは日付が近い順です。';
+    if (mode === 'pick' && !pickCount()) return '初回設定や「好きな分野」で分野を選ぶと、その分野が先に並びます。いまは日付が近い順です。';
+    if (mode === 'area' && !S.prefs.region) return 'お住まいの都道府県を選ぶと、その地域の日が先に並びます。いまは日付が近い順です。';
+    return '';
+  }
+  function sortPublic(list, mode) {
+    var byDate = function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : a.title < b.title ? -1 : a.title > b.title ? 1 : 0; }, arr = list.slice();
+    if (mode === 'new') return arr.sort(function (a, b) { return (a.added < b.added ? 1 : a.added > b.added ? -1 : 0) || byDate(a, b); });
+    if (mode === 'pop') return arr.sort(function (a, b) { var x = POP[a.id], y = POP[b.id]; if (x != null && y != null) return x - y; if (x != null) return -1; if (y != null) return 1; return byDate(a, b); });
+    if (mode === 'pick') return arr.sort(function (a, b) { return (picked(b) ? 1 : 0) - (picked(a) ? 1 : 0) || byDate(a, b); });
+    if (mode === 'area') {
+      var pref = S.prefs.region, here = function (c) { return pref && (String(c.place || '').indexOf(pref) >= 0 || c.region === pref) ? 1 : 0; };
+      return arr.sort(function (a, b) { return here(b) - here(a) || byDate(a, b); });
+    }
+    return arr.sort(byDate);
+  }
+  function wirePub(redraw) {
+    var sel = $('#pub-sort'), note = $('#pub-note');
+    if (!sel) return;
+    sel.value = pubMode();
+    function go() {
+      var m = pubMode();
+      if (m === 'pop') loadPop().then(function () { if (note) note.textContent = pubNote(m); redraw(); });
+      else { if (note) note.textContent = pubNote(m); redraw(); }
+    }
+    sel.addEventListener('change', function () { S.prefs.sort = Object.assign({}, S.prefs.sort, { pub: sel.value }); persist(); stat('act:sort_' + sel.value); go(); });
+    if (pubMode() !== 'soon') go();
+  }
   function myItems(cat) {
     var items = S.entries.map(ownItem);
     if (cat) {
@@ -685,16 +769,17 @@
       cat.forEach(function (c) { by[c.id] = c; });
       S.saved.forEach(function (id) { if (by[id]) items.push(catItem(by[id])); });
     }
-    return ordered(items);
+    return sortItems(items);
   }
   function needCatalog() { return S.saved.length > 0 ? loadCatalog() : Promise.resolve([]); }
   function renderMine() {
     var box = $('#mine'), grid = $('#mine-grid');
     if (!box) return;
     needCatalog().then(function (cat) {
-      var items = myItems(cat).slice(0, 3);
+      var all = myItems(cat), items = all.slice(0, HOME_MINE), more = $('#mine-more');
       box.hidden = !items.length;
       if (items.length) render(grid, items);
+      if (more) { more.hidden = all.length <= HOME_MINE; more.innerHTML = all.length > HOME_MINE ? '<a class="btn small ghost" href="/my/">ほかの' + (all.length - HOME_MINE) + '件を見る</a>' : ''; }
     });
   }
 
@@ -866,7 +951,8 @@
     var bp = blockPrefs(), els = {};
     $$('[data-block]', host).forEach(function (el) { els[el.getAttribute('data-block')] = el; });
     var order = bp.order.filter(function (k) { return els[k]; });
-    BLOCKS.forEach(function (k) { if (els[k] && order.indexOf(k) < 0) order.push(k); });
+    var base = (!bp.order.length && S.entries.length) ? ['mine'].concat(BLOCKS.filter(function (k) { return k !== 'mine'; })) : BLOCKS;   // a visitor with days of their own sees them first
+    base.forEach(function (k) { if (els[k] && order.indexOf(k) < 0) order.push(k); });
     order.forEach(function (k) { host.appendChild(els[k]); });
     order.forEach(function (k) { els[k].classList.toggle('block-off', bp.hidden.indexOf(k) >= 0); });
     return order;
@@ -950,7 +1036,16 @@
     if (P.edit === '1') { setOpen(true); panel.scrollIntoView({ block: 'start' }); }
   }
 
+  function tidyTop() {   // a visitor who already has days of their own sees them first: the tagline goes, and the small controls at the top (re-choose genres, season, customise) move to the foot as one row
+    if (!S.entries.length) return;
+    var hero = $('.hero'), foot = document.createElement('div'), edit = $('.edit-home'), blocks = $('#blocks');
+    if (hero) hero.hidden = true;
+    foot.className = 'home-tools';
+    ['#setup-redo', '#season', '.custom-row', '#custom'].forEach(function (sel) { var el = $(sel); if (el) foot.appendChild(el); });
+    if (blocks && blocks.parentNode) blocks.parentNode.insertBefore(foot, edit || blocks.nextSibling);
+  }
   function pageHome() {
+    tidyTop(); wireSort('mine-sort', renderMine);
     renderDaily(); renderMine(); renderInterests(); renderRegion(); wireBlocks();
     var cb = blockPrefs();
     if (cb.order.length || cb.hidden.length) { stat('home_order:' + (cb.order.length ? cb.order.join(',') : 'default')); cb.hidden.forEach(function (k) { stat('home_hidden:' + k); }); }
@@ -1046,7 +1141,8 @@
         if (st.t && !c.son_toku) return false;
         var hay = hayOf(c);
         return terms.every(function (t) { return hay.indexOf(t) >= 0; });
-      }).sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+      });
+      hits = sortPublic(hits, pubMode());
       clearTimeout(statT); statT = setTimeout(function () { if (terms.length) stat(hits.length ? 'act:search_hit' : 'act:search_miss'); }, 1500);
       var shown = hits.slice(0, 60);
       render(out, shown.map(catItem));
@@ -1092,7 +1188,7 @@
     $$('[data-g-chip]').forEach(function (b) { b.addEventListener('click', function () { st.g = b.getAttribute('data-g-chip'); st.m = ''; st.s = ''; run(); }); });
     var tb = $('#f-son');
     if (tb) tb.addEventListener('click', function () { st.t = !st.t; run(); });
-    loadCatalog().then(function (c) { cat = c || []; if (!c) info.textContent = '読み込めませんでした。しばらくして開き直してください。'; run(); });
+    loadCatalog().then(function (c) { cat = c || []; if (!c) info.textContent = '読み込めませんでした。しばらくして開き直してください。'; run(); wirePub(run); });
   }
 
 
@@ -1205,10 +1301,19 @@
       empty.hidden = items.length > 0; tools.hidden = !items.length;
       grid.setAttribute('data-save-order', '1');
       render(grid, items);
+      var fw = $('#my-find-wrap'); if (fw) fw.hidden = items.length < 6;   // from six cards on, a box to find one by its name
+      applyFind();
     });
   }
+  function applyFind() {
+    var fi = $('#my-find'), q = fi ? norm(fi.value) : '';
+    $$('#my-grid .card').forEach(function (card) { card.hidden = !!q && norm(card.getAttribute('data-title')).indexOf(q) < 0; });
+  }
   function pageMy() {
-    renderMy();
+    renderMy(); wireSort('my-sort', renderMy);
+    var fd = $('#my-find'); if (fd) fd.addEventListener('input', applyFind);
+    var mv = $('#move-box');
+    if (mv && (location.hash === '#backup-h' || location.hash === '#sync')) mv.open = true;   // a link to the transfer part opens it
     var grid = $('#my-grid');
     wireReorderToggle($('#reorder'), grid);
     if (P.added) { toast('保存しました。'); try { history.replaceState(null, '', '/my/'); } catch (e) { /* ignore */ } }
@@ -1274,6 +1379,7 @@
       if (inp.id) b.setAttribute('aria-controls', inp.id);
     });
   }
+  window.AtomouWireMic = wireMic;   // a part made later (the quick-add sheet) puts its microphone next to its field at once
   var micBusy = null;
   document.addEventListener('click', function (ev) {
     var b = ev.target.closest ? ev.target.closest('.mic-btn') : null;
@@ -1449,6 +1555,14 @@
     var hm = /[#&]m=([^&]+)/.exec(location.hash || ''), hs = /[#&]s=([^&]+)/.exec(location.hash || '');
     if (hm) { try { mid = decodeURIComponent(hm[1]); } catch (e) { mid = ''; } }
     if (hs && mid) { try { sub = decodeURIComponent(hs[1]); } catch (e) { sub = ''; } }
+    wirePub(function () {   // the cards of the page are put in the chosen order (they are in the page; the catalogue says which is new, which is chosen)
+      loadCatalog().then(function (cat) {
+        var by = {}, grid = $('#grid');
+        (cat || []).forEach(function (c) { by[c.id] = c; });
+        var objs = cards.map(function (card) { return by[(card.getAttribute('data-key') || '').slice(2)]; }).filter(Boolean);
+        sortPublic(objs, pubMode()).forEach(function (c) { var card = grid && grid.querySelector('.card[data-key="c:' + c.id + '"]'); if (card) grid.appendChild(card); });
+      });
+    });
     function keep() { try { history.replaceState(null, '', location.pathname + (mid ? '#m=' + encodeURIComponent(mid) + (sub ? '&s=' + encodeURIComponent(sub) : '') : '')); } catch (e) { /* ignore */ } }
     function apply() {   // 大 is the page; 中 = data-cat; 小 = data-sub
       chips.forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-cat-chip') === mid ? 'true' : 'false'); });
@@ -1608,7 +1722,7 @@
   else if (page === 'interests') pageInterests();
   window.AtomouApp = { toggleSave: toggleSave, picked: picked, pickCount: pickCount, regionHits: regionHits, interestHits: interestHits, matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
     loadCatalog: loadCatalog, catItem: catItem, ownItem: ownItem, cardHtml: cardHtml, hydrate: hydrate, fillCard: fillCard, fmtDate: fmtDate, wd: wd, occ: occ, nextYearly: nextYearly, KINDS: KINDS,
-    findEntry: findEntry, uid: uid, icsFor: icsFor, removeEntry: removeEntry, normalize: normalize, tipFor: tipFor, nextLines: nextLines, applyPrefs: applyPrefs };
+    findEntry: findEntry, uid: uid, icsFor: icsFor, removeEntry: removeEntry, normalize: normalize, tipFor: tipFor, nextLines: nextLines, applyPrefs: applyPrefs, setPin: setPin, sortMode: sortMode, sortItems: sortItems, myItems: myItems };
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !P.today) {
     window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () { /* the site works without it */ }); });
   }

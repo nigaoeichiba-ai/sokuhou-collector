@@ -191,7 +191,7 @@
     return '<div class="x-shared" id="x-shared"><p><b>更新が届く共有カード</b>' + (linked.upd ? '(最終更新: ' + H(when_(linked.upd)) + ')' : '') + '</p>' +
       '<p class="x-actions">' + (following ? '<button type="button" class="btn small ghost" id="x-unfollow">フォローをやめる</button>' : '<button type="button" class="btn small" id="x-follow">このカードをフォローする(更新をお知らせ)</button>') +
       (linked.e ? ' <button type="button" class="btn small" id="x-edit-shared">編集して更新する</button>' : '') + ' <button type="button" class="btn small ghost" id="x-report">問題を知らせる</button></p>' +
-      '<p class="hint">リンクを知っている人は、だれでもこのカードを読めます。' + (linked.e ? 'いま開いているのは編集用のリンクです。知っている人は、だれでも直せます。他の人には、読むだけのリンクを渡してください。' : '') + '</p>' +
+      '<p class="hint">リンクを知っている人は、だれでもこのカードを読めます。' + (linked.e ? 'いま開いているのは編集用のリンクです。知っている人は、だれでも修正できます。他の人には、読むだけのリンクを渡してください。' : '') + '</p>' +
       (linked.e ? '<p class="x-actions"><button type="button" class="btn small ghost" data-copy="' + H(A.shared.linkOf(linked, false)) + '">読むだけのリンクをコピー</button> <button type="button" class="btn small ghost" data-copy="' + H(A.shared.linkOf(linked, true)) + '">編集用のリンクをコピー</button> <button type="button" class="btn small ghost" id="x-del-shared">この共有カードを消す</button></p>' : '') + '</div>';
   }
   function copyText(t) {
@@ -242,7 +242,7 @@
       }, function (err) {
         go.disabled = false;
         if (err && err.message === 'conflict') {
-          out.innerHTML = '<p>他の人が先に更新しました。最新の内容を読み込んでから、もう一度直してください。</p><p class="x-actions"><button type="button" class="btn small" id="x-newest">最新の内容を読み込む</button></p>';
+          out.innerHTML = '<p>他の人が先に更新しました。最新の内容を読み込んでから、もう一度修正してください。</p><p class="x-actions"><button type="button" class="btn small" id="x-newest">最新の内容を読み込む</button></p>';
           $('#x-newest').addEventListener('click', function () {
             A.shared.read(linked).then(function (r) { linked.ver = r.ver; linked.upd = r.upd; draft = clean(r.card) || draft; A.shared.put({ id: linked.id, ver: r.ver, seen: r.ver }); render(); }, function () { A.toast('読み込めませんでした。'); });
           });
@@ -255,7 +255,7 @@
     box.innerHTML = '<div id="x-card">' + cardHtml(card) + '</div>' +
       '<p class="x-actions"><button type="button" class="btn" id="x-add">自分の予定帳に入れる</button> ' + calLinks(card) + '</p>' +
       '<p class="hint" id="x-added" aria-live="polite"></p>' +
-      '<p class="x-actions"><button type="button" class="btn small ghost" id="x-edit">このカードを直して、自分のカードにする</button> <a class="btn small ghost" href="/card/">新しいカードを作る</a>' + (card.e ? ' <a class="btn small ghost" href="/e/' + H(card.e) + '/">この日の公式ページ(出典つき)</a>' : '') + '</p>' +
+      '<p class="x-actions"><button type="button" class="btn small ghost" id="x-edit">このカードを修正して、自分のカードにする</button> <a class="btn small ghost" href="/card/">新しいカードを作る</a>' + (card.e ? ' <a class="btn small ghost" href="/e/' + H(card.e) + '/">この日の公式ページ(出典つき)</a>' : '') + '</p>' +
       sharedViewHtml() + shareHtml() +
       '<p class="small muted">このカードの内容は、リンクを作った人が書いたものです。当サイトは内容を確認していません。心当たりのないカードや、不審なお願いが書かれたカードは、開かずに閉じてください。</p>';
     wireShare(card);
@@ -322,7 +322,7 @@
       var b = ev.target.closest ? ev.target.closest('[data-cand]') : null, c = b && list[+b.getAttribute('data-cand')];
       if (!c) return;
       draft = clean({ t: c.title || draft.t, d: c.iso, tm: c.time, m: c.context.slice(0, MAX.m), th: draft.th, tasks: draft.tasks, e: '', k: draft.k }) || draft;
-      editMode(); window.scrollTo(0, 0); A.toast('カードに入れました。題名やひとことを直してください。');
+      editMode(); window.scrollTo(0, 0); A.toast('カードに入れました。題名やひとことを修正してください。');
     };
   }
   function taskRows() {
