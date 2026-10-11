@@ -52,7 +52,8 @@
     });
     if (window.AtomouMember && window.AtomouMember.extraNotices) window.AtomouMember.extraNotices(today).forEach(function (x) { add(x.d, x.s, x.t, x.u); });   // a monitor's questionnaire reminder
     var list = Object.keys(dates).sort().map(function (k) { return dates[k]; });
-    return { dates: list, mirror: mirror, hash: list.map(function (x) { return x.d + x.s; }).join(',') };
+    var watch = (S().prefs.pushShared && A.shared) ? A.shared.list().slice(0, 30).map(function (x) { return { id: x.id, ver: +x.seen || 0 }; }) : [];
+    return { dates: list, watch: watch, mirror: mirror, hash: list.map(function (x) { return x.d + x.s; }).join(',') + (watch.length ? '|' + watch.map(function (w) { return w.id + w.ver; }).join(',') : '') };
   }
 
   function writeMirror(mirror) {
@@ -84,7 +85,7 @@
         var p = plan(cat || []);
         return writeMirror(p.mirror).then(function () {
           if (!force && p.hash === st.prefs.pushHash) return true;
-          return post({ v: 1, sub: sub.toJSON(), dates: p.dates }).then(function (ok) {
+          return post({ v: 1, sub: sub.toJSON(), dates: p.dates, watch: p.watch }).then(function (ok) {
             if (ok) { st.prefs.pushHash = p.hash; A.persist(); }
             return ok;
           });
@@ -146,6 +147,11 @@
       unsubscribe().then(function () { A.toast('通知を止めました。'); show(null); off.disabled = false; });
     });
     $('#p-alarm').addEventListener('change', function () { S().prefs.pushHash = ''; sync(true); });
+    var sh = $('#push-shared');   // "also tell me when a shared card I follow is changed": the cards' ids and the versions seen go to the server with the subscription
+    if (sh) {
+      sh.checked = !!S().prefs.pushShared;
+      sh.addEventListener('change', function () { S().prefs.pushShared = sh.checked; S().prefs.pushHash = ''; A.persist(); A.stat(sh.checked ? 'act:push_shared_on' : 'act:push_shared_off'); sync(true); });
+    }
   }
 
   /* ---------- "add to the home screen" where the browser offers it (Chrome on Android, desktop Chrome/Edge); iPhone has no such button, hence the written steps ---------- */

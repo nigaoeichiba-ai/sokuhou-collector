@@ -23,7 +23,7 @@ from zoneinfo import ZoneInfo
 
 from sites.atomou import webpush
 
-SLOTS = ("m", "e")
+SLOTS = ("m", "e", "s")   # s: a shared card the subscription watches has a version newer than the one announced (no date involved)
 SUBJECT = "https://atomou.com"   # RFC 8292: a contact for the push service (mailto: or https:)
 
 
@@ -47,13 +47,33 @@ def is_due(sub: dict, today: str, slot: str) -> bool:
     return any(isinstance(x, dict) and x.get("d") == today and x.get("s", "m") == slot for x in sub["dates"])
 
 
+def shared_due(sub: dict, versions: dict) -> dict:
+    """{card id: newest version} of the watched cards that changed since this device saw them and since the last announcement."""
+    out = {}
+    for w in sub.get("watch") or []:
+        if not isinstance(w, dict) or not isinstance(w.get("id"), str):
+            continue
+        try:
+            seen, sent = int(w.get("ver", 0)), int(w.get("sent", 0))
+        except (TypeError, ValueError):
+            continue
+        now = versions.get(w["id"], 0)
+        if isinstance(now, int) and now > max(seen, sent):
+            out[w["id"]] = now
+    return out
+
+
 def payload(today: str, slot: str) -> dict:
+    if slot == "s":
+        return {"v": 1, "s": "u"}      # "a card you follow was changed": nothing else; the device says the rest itself
     return {"v": 1, "d": today, "s": slot}
 
 
-def run(folder: Path, today: str, slot: str, key_text: str | None, *, dry_run: bool = False, opener=None, public: str | None = None) -> dict:
+def run(folder: Path, today: str, slot: str, key_text: str | None, *, dry_run: bool = False, opener=None, public: str | None = None, versions: dict | None = None) -> dict:
     subs = load(folder)
-    due = [(p, s) for p, s in subs if is_due(s, today, slot)]
+    changed = {p.name: shared_due(s, versions or {}) for p, s in subs} if slot == "s" else {}
+    due = [(p, s) for p, s in subs if (changed[p.name] if slot == "s" else is_due(s, today, slot))]
+    notified: dict[str, dict] = {}
     counts = {"subscriptions": len(subs), "due": len(due), "sent": 0, "gone": 0, "retry": 0, "failed": 0}
     if key_text:   # the secret must be the private half of config.json's vapid_public, or every push is refused by the push services
         pub = public if public is not None else json.loads((Path(__file__).resolve().parent / "config.json").read_text(encoding="utf-8")).get("vapid_public") or ""
@@ -61,6 +81,7 @@ def run(folder: Path, today: str, slot: str, key_text: str | None, *, dry_run: b
     gone: list[str] = []
     if dry_run or not due:
         (folder / "gone.txt").write_text("", encoding="utf-8")
+        (folder / "notified.json").write_text("{}", encoding="utf-8")
         return counts
     if not key_text:
         raise SystemExit("ATOMOU_VAPID_PRIVATE is not set")
@@ -71,6 +92,8 @@ def run(folder: Path, today: str, slot: str, key_text: str | None, *, dry_run: b
         r = webpush.send(s, payload(today, slot), key, SUBJECT, opener=opener)
         if 200 <= r.status < 300:
             counts["sent"] += 1
+            if slot == "s":
+                notified[p.name] = changed[p.name]
         elif r.gone:
             counts["gone"] += 1
             gone.append(p.name)
@@ -79,6 +102,7 @@ def run(folder: Path, today: str, slot: str, key_text: str | None, *, dry_run: b
         else:
             counts["failed"] += 1
     (folder / "gone.txt").write_text("".join(n + "\n" for n in gone), encoding="utf-8")
+    (folder / "notified.json").write_text(json.dumps(notified), encoding="utf-8")   # file name -> {card id: version announced}: the workflow writes it back to the server
     return counts
 
 
@@ -88,8 +112,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--slot", choices=SLOTS, required=True)
     ap.add_argument("--today", default=today_jst())
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--versions", default="", help="slot s: a JSON file {card id: version} (what the server holds)")
     a = ap.parse_args(argv)
-    counts = run(Path(a.dir), a.today, a.slot, os.environ.get("ATOMOU_VAPID_PRIVATE"), dry_run=a.dry_run)
+    versions = json.loads(Path(a.versions).read_text(encoding="utf-8")) if a.versions else {}
+    counts = run(Path(a.dir), a.today, a.slot, os.environ.get("ATOMOU_VAPID_PRIVATE"), dry_run=a.dry_run, versions=versions)
     print(json.dumps({"today": a.today, "slot": a.slot, **counts}))
     return 0
 

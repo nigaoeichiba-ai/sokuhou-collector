@@ -45,7 +45,21 @@ foreach ((is_array($d['dates'] ?? null) ? $d['dates'] : array()) as $x) {
     $s = ($x['s'] ?? 'm') === 'e' ? 'e' : 'm';
     $dates[$x['d'] . $s] = array('d' => $x['d'], 's' => $s);
 }
-$rec = array('endpoint' => $endpoint, 'keys' => array('p256dh' => $keys['p256dh'], 'auth' => $keys['auth']), 'dates' => array_values($dates), 'updated' => date('c'));
+// Shared cards the visitor asked to hear about (a separate opt-in on the my page): the card's id and the version this device has seen.  'sent' is the newest version already announced
+// to this subscription, kept across re-registrations so that the same change is never announced twice.
+$watch = array(); $nw = 0;
+foreach ((is_array($d['watch'] ?? null) ? $d['watch'] : array()) as $x) {
+    if (++$nw > 30) { break; }
+    if (!is_array($x) || !is_string($x['id'] ?? null) || !preg_match('/^[A-Za-z0-9_-]{22}$/', $x['id'])) { continue; }
+    $watch[$x['id']] = array('id' => $x['id'], 'ver' => max(0, min(1000000, (int)($x['ver'] ?? 0))), 'sent' => 0);
+}
+if ($watch && is_file($file)) {
+    $old = json_decode((string)@file_get_contents($file), true);
+    foreach ((is_array($old) && is_array($old['watch'] ?? null)) ? $old['watch'] : array() as $o) {
+        if (is_array($o) && is_string($o['id'] ?? null) && isset($watch[$o['id']])) { $watch[$o['id']]['sent'] = max($watch[$o['id']]['sent'], (int)($o['sent'] ?? 0)); }
+    }
+}
+$rec = array('endpoint' => $endpoint, 'keys' => array('p256dh' => $keys['p256dh'], 'auth' => $keys['auth']), 'dates' => array_values($dates), 'watch' => array_values($watch), 'updated' => date('c'));
 $tmp = $file . '.tmp';
 if (@file_put_contents($tmp, json_encode($rec), LOCK_EX) === false || !@rename($tmp, $file)) { @unlink($tmp); http_response_code(503); exit; }
 @chmod($file, 0600);

@@ -13,10 +13,11 @@ on:
   schedule:
     - cron: "0 22 * * *"    # 07:00 JST: the morning slot
     - cron: "0 12 * * *"    # 21:00 JST: the evening slot (the night before)
+    - cron: "37 * * * *"    # every hour: slot s, "a shared card you follow was changed" (sends only when a watched card has a newer version)
   workflow_dispatch:
     inputs:
       slot:
-        description: "m = morning, e = evening (empty = by the clock)"
+        description: "m = morning, e = evening, s = shared cards (empty = by the clock)"
         default: ""
       dry_run:
         description: "true = count only, send nothing"
@@ -78,8 +79,10 @@ jobs:
         if: steps.gate.outputs.go == 'true'
         env:
           IN_SLOT: ${{ inputs.slot }}
+          SCHEDULE: ${{ github.event.schedule }}
         run: |
           slot="$IN_SLOT"
+          if [ -z "$slot" ] && [ "$SCHEDULE" = "37 * * * *" ]; then slot=s; fi
           if [ -z "$slot" ]; then
             h=$(TZ=Asia/Tokyo date +%H)
             if [ "$h" -ge 15 ] || [ "$h" -lt 3 ]; then slot=e; else slot=m; fi
@@ -98,6 +101,15 @@ jobs:
           ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
             'set -e; d="$HOME/atomou.com/push"; if [ -d "$d" ]; then cd "$d" && tar -czf - --exclude="rate-*" --exclude="*.tmp" . ; else tar -czf - -T /dev/null; fi' | tar -C push -xzf -
           echo "subscription files: $(ls push | grep -c '\.json$' || true)"
+      - name: Versions of the shared cards (slot s)
+        if: steps.gate.outputs.go == 'true' && steps.slot.outputs.slot == 's'
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" python3 - < sites/atomou/server_versions.py > versions.json
+          python -c "import json;d=json.load(open('versions.json'));print('shared cards on the server:', len(d))"
       - name: Send
         if: steps.gate.outputs.go == 'true'
         env:
@@ -107,6 +119,7 @@ jobs:
           set -euo pipefail
           extra=""
           if [ "$DRY" = "true" ]; then extra="--dry-run"; fi
+          if [ "${{ steps.slot.outputs.slot }}" = "s" ]; then extra="$extra --versions versions.json"; fi
           python -m sites.atomou.push_send --dir push --slot "${{ steps.slot.outputs.slot }}" --today "${{ steps.slot.outputs.today }}" $extra | tee result.json
           grep -q '"key_matches_config": true' result.json || { echo "the VAPID secret does not match config.json vapid_public"; exit 1; }
       - name: Delete the dead subscriptions on the server
@@ -121,3 +134,13 @@ jobs:
           [ "$n" -gt 0 ] || exit 0
           grep -E '^[0-9a-f]{64}\.json$' push/gone.txt | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
             'set -e; cd "$HOME/atomou.com/push" && while read -r f; do rm -f -- "./$f"; done'
+      - name: Write back what was announced (slot s)
+        if: steps.gate.outputs.go == 'true' && steps.slot.outputs.slot == 's' && inputs.dry_run != 'true'
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -euo pipefail
+          [ "$(cat push/notified.json)" != "{}" ] || { echo "nothing was announced"; exit 0; }
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" 'cat > "$HOME/atomou.com/push/.notified.json"' < push/notified.json
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" python3 - < sites/atomou/server_mark_sent.py
