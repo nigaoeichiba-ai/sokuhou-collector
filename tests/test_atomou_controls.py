@@ -134,10 +134,19 @@ class Controls(unittest.TestCase):
     @unittest.skipUnless(layoutcheck.find_chrome(), "Chrome is needed")
     def test_every_control_survives_wider_text(self):
         # CI draws Japanese text wider than the owner's Windows does (deploy #157: the quick-add box stuck out at 300px only there): the same pages with 30% larger text in every control
-        stress = "input,select,textarea,label,button{font-size:1.3em!important}"
+        # (deploy #158: the card page's task rows grew past the screen there; 1.6 leaves room for a font even wider than CI's)
+        stress = "input,select,textarea,label,button{font-size:1.6em!important}"
         res = self.measure(extra_css=stress)
         bad = [f"{r['page']} @{r['width']}: {r['bad']}" for r in res if r["bad"] and r["width"] == 300]
         self.assertEqual(bad, [])
+
+    @unittest.skipUnless(layoutcheck.find_chrome(), "Chrome is needed")
+    def test_the_stress_finds_the_task_rows_that_grew_past_the_screen(self):
+        # the rule before deploy #158's fix: the rows' own minimum width let them grow wider than the form
+        old = ("input,select,textarea,label,button{font-size:1.8em!important}#x-tasks,.x-task{min-width:auto!important;max-width:none!important}"
+               ".x-task input{min-width:12em!important}.x-task select{min-width:6em!important}")
+        res = self.measure(extra_css=old, pages=[p for p in PAGES if p[0] == "/card/"])
+        self.assertTrue(any(r["bad"] for r in res if r["width"] == 300), res)
 
     @unittest.skipUnless(layoutcheck.find_chrome(), "Chrome is needed")
     def test_the_check_finds_the_old_card_task_rule(self):
