@@ -128,7 +128,7 @@ class Pages(unittest.TestCase):
         self.assertIn("/[?&]ref=([A-Z2-9]{8})\\b/", js)
         self.assertIn("credentials: 'same-origin'", js)
         self.assertIn("autocomplete=\"one-time-code\"", js)
-        self.assertIn("a: 'update', notices: { on: on, dates: dates }", js)
+        self.assertIn("a: 'update', notices: { on: on, weekly: !!(wk && wk.checked), dates: dates }", js)
         self.assertNotIn('type="password"', js)
 
 

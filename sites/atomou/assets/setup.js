@@ -39,10 +39,10 @@
     (cat || []).forEach(function (c) {
       if (c.status === 'ended' && !c.keep) return;
       var g = c.group, m = c.mid, s = c.subject;
-      if (!g || !m || CONF.groups.indexOf(g) < 0 || m === 'その他') return;
+      if (!g || !m || CONF.groups.indexOf(g) < 0) return;
       var gg = t[g] || (t[g] = {}), mm = gg[m] || (gg[m] = { n: 0, s: {} });
       mm.n++;
-      if (s && s !== m && s !== 'その他') mm.s[s] = (mm.s[s] || 0) + 1;
+      if (s && s !== m) mm.s[s] = (mm.s[s] || 0) + 1;
     });
     return t;
   }
