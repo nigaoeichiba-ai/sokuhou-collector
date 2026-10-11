@@ -288,8 +288,11 @@ ul.warn li::before { content: "!"; position: absolute; left: .85em; top: .85em; 
 .share-label { font-size: .82rem; font-weight: 700; margin-right: 4px; color: var(--muted); }
 .share-btn { display: inline-block; padding: .3em 1em; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font: 500 .82rem var(--sans); text-decoration: none; cursor: pointer; }
 .share-btn:hover { border-color: var(--ink); }
-.share-btn.line { background: #06c755; color: #fff; border-color: #06c755; }
-.share-btn.x { background: #111; color: #fff; border-color: #111; }
+.share-btn.line::before, .share-btn.mail::before, .share-btn.save::before { content: ""; display: inline-block; width: .55em; height: .55em; border-radius: 50%; margin-right: .5em; vertical-align: .05em; background: #06c755; }
+.share-btn.mail::before { background: var(--c-sage, #9bc283); } .share-btn.save::before { background: #e59a7e; }
+.share-hint { margin: 6px 0 0; font-size: .74rem; color: var(--muted); line-height: 1.7; }
+.chart-send { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; padding-top: 12px; border-top: 1px dashed var(--line); }
+.chart-send > span { font-size: .8rem; color: var(--muted); margin-right: 2px; }
 .share-btn[hidden] { display: none; }
 
 /* note / pr */
@@ -436,6 +439,26 @@ main.wrap > h1:first-child { margin-top: 36px; }
 .tb-form > *, .calc-card > *, .memo > *, .memo-form > *, .memo-list-wrap > * { min-width: 0; }
 .tb-form input, .tb-form select, .calc-card input, .calc-card select { width: 100%; }
 .memo-form input, .memo-form select, .memo-form textarea { width: 100%; max-width: 100%; }
+
+/* data room: survey boards (the numbers at a glance, then the products of the price range) */
+.stat-tiles { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.stat-tiles li { display: flex; flex-direction: column; gap: 4px; padding: 16px 18px 14px; background: #fff; border-radius: 18px; box-shadow: var(--shadow); }
+.stat-tiles b { font: 700 clamp(1.7rem, 5vw, 2.2rem)/1.1 var(--num); color: var(--ink); letter-spacing: .01em; }
+.stat-tiles span { font-size: .88rem; line-height: 1.6; color: var(--ink2); }
+.stat-tiles small { margin-top: auto; padding-top: 6px; font-size: .7rem; color: var(--muted); }
+.data-notes .stat-tiles, .data-notes .studies { padding-left: 0; } .data-notes .stat-tiles li, .data-notes .studies li { margin-bottom: 0; }
+.board-days { margin: 18px 0 0; padding: 12px 16px; background: var(--t-butter); border-radius: 14px; font-size: .92rem; line-height: 1.8; }
+.board-days b { display: block; }
+.studies { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 12px; }
+.studies li { padding: 14px 18px; background: #fff; border-radius: 16px; box-shadow: var(--shadow); }
+.studies > li > a { display: block; font-size: .94rem; line-height: 1.7; overflow-wrap: anywhere; }
+.studies a b { display: block; font-size: .8rem; font-weight: 500; color: var(--muted); }
+.studies dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px 14px; margin: 8px 0 0; font-size: .8rem; line-height: 1.7; color: var(--ink2); }
+.studies dt { color: var(--muted); } .studies dd { margin: 0; overflow-wrap: anywhere; }
+.shop-range { margin-top: 22px; }
+.shop-range h3 { margin: 0 0 10px; font-size: 1.05rem; }
+.chart-note { margin: 10px 0 0; font-size: .76rem; color: var(--muted); }
+.chart-send .share-btn.save::before { background: #e59a7e; }
 
 /* data room: charts made of plain bars */
 .chart { margin: 22px 0 8px; padding: 22px 24px 18px; background: #fff; border-radius: 20px; box-shadow: var(--shadow); }

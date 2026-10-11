@@ -83,7 +83,7 @@ class DataRoomTest(unittest.TestCase):
     def test_every_chart_has_its_source_and_its_numbers_as_a_table(self):
         for rel in ("data/price-bands/index.html", "data/occasion-prices/index.html", "data/mothers-day-budget/index.html", "data/births-marriages/index.html"):
             html = self.read(rel)
-            figures = re.findall(r"<figure class=\"chart\">(.*?)</figure>", html, re.S)
+            figures = re.findall(r"<figure class=\"chart\"[^>]*>(.*?)</figure>", html, re.S)
             self.assertGreaterEqual(len(figures), 1, rel)
             for f in figures:
                 self.assertIn("出典:", f.split("<figcaption>")[1], rel)
@@ -156,7 +156,7 @@ class DataRoomTest(unittest.TestCase):
                 if expect:
                     html = (out / "data/ranking-prices/index.html").read_text(encoding="utf-8")
                     self.assertIn("3,000円", html)
-                    self.assertEqual(len(re.findall(r"<figure class=\"chart\">", html)), 2)
+                    self.assertEqual(len(re.findall(r"<figure class=\"chart\"", html)), 2)
         build.RANKING_ON = False
 
     def test_a_statistics_table_that_does_not_add_up_is_refused(self):

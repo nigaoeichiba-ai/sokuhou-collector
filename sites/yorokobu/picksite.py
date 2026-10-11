@@ -139,7 +139,7 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
 {B.freshness(d) if live_any else ""}</section>
 {f'<section class="block" id="amazon"><div class="sec-head"><span class="eyebrow">Amazon</span><h2>Amazonで選ぶ{len(a_cards)}点</h2>{az_note}</div><div class="pick-list">{"".join(a_cards)}</div></section>' if a_cards else ""}
 <section class="block" id="policy"><div class="sec-head"><h2>このページの選び方</h2></div><p class="notice">{esc(POLICY)}</p></section>
-{B.share_bar(cfg, day_path(iso), f"{h1}: {day['theme']}", "このページを、だれかに送る")}
+{B.share_bar(cfg, day_path(iso), f"{h1}: {day['theme']}", "このページを、だれかに・自分に送る", hint=True)}
 {nav}
 <script type="application/ld+json">{ld}</script><script type="application/ld+json">{ld2}</script>"""
     return B.page(cfg, preview, path=day_path(iso), title=f"{h1}|{day['theme']} | {cfg['site_name']}", description=day["lede"][:110], body=body, og_image=B.og_for(f"picks/{iso}"))
