@@ -12,7 +12,7 @@ import json
 from html import unescape as _html_unescape
 import re
 import sys
-from datetime import date, datetime
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import quote
 
@@ -1731,7 +1731,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     if release and not (items and items.get("pairs")):
         raise BuildError("release build refused: no fetched products (run sites/yorokobu/fetch.py first)")
     preview = bool(missing)
-    today = today or date.today()
+    today = today or datetime.now(timezone(timedelta(hours=9))).date()  # JST: the runner's clock is UTC, which showed "あと" one day too many from 00:00 to 09:00 JST
     d = prepare(c, items, cfg)
     d["cfg"], d["today"] = cfg, today
     d["ranking"] = rk.view(ranking, c["filters"])
