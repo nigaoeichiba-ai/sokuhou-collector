@@ -1,0 +1,909 @@
+{
+ "version": 1,
+ "interests": {
+  "coffee_tea": {
+   "label": "コーヒー・お茶",
+   "kind": "食べもの・飲みもの",
+   "queries": [
+    "コーヒー ドリップ 詰め合わせ",
+    "日本茶 紅茶 詰め合わせ"
+   ],
+   "must": [
+    "珈琲",
+    "コーヒー",
+    "ドリップ",
+    "紅茶",
+    "日本茶",
+    "煎茶",
+    "抹茶",
+    "ほうじ茶"
+   ]
+  },
+  "sweets": {
+   "label": "スイーツ",
+   "kind": "食べもの・飲みもの",
+   "queries": [
+    "焼き菓子 詰め合わせ 個包装",
+    "チョコレート 洋菓子 詰め合わせ"
+   ],
+   "must": [
+    "菓子",
+    "スイーツ",
+    "クッキー",
+    "焼菓子",
+    "チョコ",
+    "ケーキ",
+    "羊羹",
+    "最中"
+   ]
+  },
+  "gourmet": {
+   "label": "グルメ・惣菜",
+   "kind": "食べもの・飲みもの",
+   "queries": [
+    "おつまみ 惣菜 詰め合わせ",
+    "グルメ 缶詰 高級"
+   ],
+   "must": [
+    "惣菜",
+    "おつまみ",
+    "缶詰",
+    "珍味",
+    "ハム",
+    "チーズ",
+    "佃煮",
+    "燻製"
+   ]
+  },
+  "alcohol": {
+   "label": "お酒・晩酌",
+   "kind": "食べもの・飲みもの",
+   "queries": [
+    "日本酒 飲み比べ",
+    "ワイン クラフトビール"
+   ],
+   "must": [
+    "日本酒",
+    "ワイン",
+    "ビール",
+    "焼酎",
+    "ウイスキー",
+    "梅酒",
+    "酒",
+    "リキュール"
+   ]
+  },
+  "bath_care": {
+   "label": "入浴・ボディ",
+   "kind": "癒し・リラックス",
+   "queries": [
+    "入浴剤 バスソルト",
+    "ボディケア ハンドクリーム"
+   ],
+   "must": [
+    "入浴剤",
+    "バスソルト",
+    "石けん",
+    "石鹸",
+    "ボディ",
+    "ハンド",
+    "クリーム",
+    "スクラブ"
+   ]
+  },
+  "beauty": {
+   "label": "美容ケア",
+   "kind": "癒し・リラックス",
+   "queries": [
+    "スキンケア 美容液",
+    "リップ ハンドケア"
+   ],
+   "must": [
+    "美容液",
+    "化粧水",
+    "乳液",
+    "リップ",
+    "パック",
+    "マスク",
+    "コスメ",
+    "スキンケア"
+   ]
+  },
+  "cozy_home": {
+   "label": "くつろぎ雑貨",
+   "kind": "実用品",
+   "queries": [
+    "ブランケット タオル 上質",
+    "部屋着 ルームウェア"
+   ],
+   "must": [
+    "毛布",
+    "ブランケット",
+    "タオル",
+    "部屋着",
+    "パジャマ",
+    "ルーム",
+    "スリッパ",
+    "ガウン"
+   ]
+  },
+  "kitchen": {
+   "label": "食器・台所",
+   "kind": "実用品",
+   "queries": [
+    "食器 マグカップ ペア",
+    "キッチン雑貨 便利"
+   ],
+   "must": [
+    "食器",
+    "皿",
+    "マグ",
+    "カップ",
+    "箸",
+    "包丁",
+    "まな板",
+    "キッチン"
+   ]
+  },
+  "stationery": {
+   "label": "文具・手帳",
+   "kind": "実用品",
+   "queries": [
+    "文具 手帳 上質",
+    "万年筆 ノート"
+   ],
+   "must": [
+    "文具",
+    "手帳",
+    "ノート",
+    "万年筆",
+    "ボールペン",
+    "ペン",
+    "ブック",
+    "栞"
+   ]
+  },
+  "fashion_small": {
+   "label": "服飾小物",
+   "kind": "ファッション小物",
+   "queries": [
+    "財布 ポーチ レディース",
+    "ハンカチ スカーフ 上質"
+   ],
+   "must": [
+    "財布",
+    "ポーチ",
+    "ハンカチ",
+    "スカーフ",
+    "キーケース",
+    "名刺入れ",
+    "カード",
+    "ストール"
+   ]
+  },
+  "accessory": {
+   "label": "アクセサリー",
+   "kind": "ファッション小物",
+   "queries": [
+    "アクセサリー ネックレス 上品",
+    "ピアス イヤリング シンプル"
+   ],
+   "must": [
+    "指輪",
+    "リング",
+    "ネックレス",
+    "ピアス",
+    "イヤリング",
+    "ブレス",
+    "真珠",
+    "パール"
+   ]
+  },
+  "gadget": {
+   "label": "便利ガジェット",
+   "kind": "実用品",
+   "queries": [
+    "便利家電 小型",
+    "ガジェット 充電器"
+   ],
+   "must": [
+    "家電",
+    "充電器",
+    "モバイル",
+    "イヤホン",
+    "加湿器",
+    "ライト",
+    "マウス",
+    "スピーカー"
+   ]
+  },
+  "outdoor": {
+   "label": "散歩・外遊び",
+   "kind": "体験・お出かけ",
+   "queries": [
+    "アウトドア 雑貨 コンパクト",
+    "散歩 帽子 水筒"
+   ],
+   "must": [
+    "アウトドア",
+    "キャンプ",
+    "水筒",
+    "ボトル",
+    "帽子",
+    "リュック",
+    "レジャー",
+    "ランタン"
+   ]
+  },
+  "sports": {
+   "label": "運動・健康",
+   "kind": "実用品",
+   "queries": [
+    "フィットネス グッズ",
+    "ヨガ ウェア タオル"
+   ],
+   "must": [
+    "ヨガ",
+    "筋トレ",
+    "ダンベル",
+    "マット",
+    "ウェア",
+    "プロテイン",
+    "ストレッチ",
+    "フィット"
+   ]
+  },
+  "craft": {
+   "label": "手作り趣味",
+   "kind": "趣味・ホビー",
+   "queries": [
+    "手芸 キット 大人",
+    "料理 キット 道具"
+   ],
+   "must": [
+    "手芸",
+    "刺繍",
+    "編み物",
+    "キット",
+    "工具",
+    "陶芸",
+    "料理",
+    "クラフト"
+   ]
+  },
+  "plants": {
+   "label": "花・植物",
+   "kind": "癒し・リラックス",
+   "queries": [
+    "花 アレンジメント",
+    "観葉植物 鉢植え"
+   ],
+   "must": [
+    "花",
+    "植物",
+    "観葉",
+    "鉢植え",
+    "フラワー",
+    "ブーケ",
+    "盆栽",
+    "多肉"
+   ]
+  },
+  "health_sleep": {
+   "label": "健康・睡眠",
+   "kind": "癒し・リラックス",
+   "queries": [
+    "睡眠 グッズ 快眠",
+    "健康 グッズ リラックス"
+   ],
+   "must": [
+    "枕",
+    "まくら",
+    "快眠",
+    "睡眠",
+    "アイマスク",
+    "温活",
+    "マッサージ",
+    "サポーター"
+   ]
+  },
+  "hobby_play": {
+   "label": "趣味・遊び",
+   "kind": "趣味・ホビー",
+   "queries": [
+    "ゲーム グッズ 大人",
+    "推し活 収納 雑貨"
+   ],
+   "must": [
+    "ゲーム",
+    "ボード",
+    "パズル",
+    "推し",
+    "収納",
+    "フィギュア",
+    "カード",
+    "ホビー"
+   ]
+  }
+ },
+ "intro": {
+  "open": {
+   "title": "プレゼント選びの参考に",
+   "lead": "プレゼントを選ぶ参考に、最近の好みを教えてください。答えたくない質問は、とばしてかまいません。回答は、このリンクを送った人だけが見られます。",
+   "done": "ありがとうございます。選ぶ参考にします。"
+  },
+  "secret": {
+   "title": "最近の好みについて",
+   "lead": "最近の好みの傾向をたずねるアンケートです。答えたくない質問は、とばしてかまいません。回答は、このリンクを送った人だけが見られます。",
+   "done": "ありがとうございます。回答を受け取りました。"
+  }
+ },
+ "questions": [
+  {
+   "id": "q1",
+   "key": "weekend",
+   "multi": true,
+   "max": 3,
+   "open": "休日はどんな過ごし方が多いですか。",
+   "secret": "最近の休日は、どんな過ごし方が多いですか。",
+   "options": [
+    {
+     "id": "home",
+     "label": "家でゆっくり",
+     "w": {
+      "cozy_home": 3,
+      "bath_care": 2,
+      "coffee_tea": 1,
+      "health_sleep": 1
+     }
+    },
+    {
+     "id": "cafe",
+     "label": "カフェで過ごす",
+     "w": {
+      "coffee_tea": 3,
+      "sweets": 2,
+      "stationery": 1
+     }
+    },
+    {
+     "id": "cook",
+     "label": "料理をする",
+     "w": {
+      "kitchen": 3,
+      "gourmet": 2,
+      "craft": 1
+     }
+    },
+    {
+     "id": "walk",
+     "label": "散歩や外出",
+     "w": {
+      "outdoor": 3,
+      "plants": 1,
+      "fashion_small": 1
+     }
+    },
+    {
+     "id": "exercise",
+     "label": "体を動かす",
+     "w": {
+      "sports": 3,
+      "health_sleep": 2,
+      "outdoor": 1
+     }
+    },
+    {
+     "id": "shop",
+     "label": "買い物を見る",
+     "w": {
+      "fashion_small": 2,
+      "accessory": 2,
+      "beauty": 1
+     }
+    },
+    {
+     "id": "hobby",
+     "label": "趣味に使う",
+     "w": {
+      "hobby_play": 3,
+      "craft": 2,
+      "stationery": 1
+     }
+    },
+    {
+     "id": "none",
+     "label": "特に決まっていない",
+     "w": {}
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "key": "drink",
+   "multi": true,
+   "max": 3,
+   "open": "ふだんよく飲むものを選んでください。",
+   "secret": "ふだんよく飲むものに近いものを選んでください。",
+   "options": [
+    {
+     "id": "coffee",
+     "label": "コーヒー",
+     "w": {
+      "coffee_tea": 3,
+      "sweets": 1
+     }
+    },
+    {
+     "id": "tea",
+     "label": "紅茶・お茶",
+     "w": {
+      "coffee_tea": 3,
+      "sweets": 1
+     }
+    },
+    {
+     "id": "alcohol",
+     "label": "お酒",
+     "w": {
+      "alcohol": 3,
+      "gourmet": 2,
+      "kitchen": 1
+     }
+    },
+    {
+     "id": "juice",
+     "label": "ジュース・炭酸",
+     "w": {
+      "sweets": 2,
+      "gourmet": 1
+     }
+    },
+    {
+     "id": "water",
+     "label": "水・白湯",
+     "w": {
+      "health_sleep": 2,
+      "sports": 1,
+      "cozy_home": 1
+     }
+    },
+    {
+     "id": "herb",
+     "label": "ハーブティー",
+     "w": {
+      "coffee_tea": 2,
+      "bath_care": 1,
+      "health_sleep": 1
+     }
+    },
+    {
+     "id": "notmuch",
+     "label": "あまりこだわらない",
+     "w": {}
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "key": "taste",
+   "multi": true,
+   "max": 3,
+   "open": "好きな味や食べものを選んでください。",
+   "secret": "最近、好みに合う味や食べものはどれですか。",
+   "options": [
+    {
+     "id": "sweet",
+     "label": "甘いもの",
+     "w": {
+      "sweets": 3,
+      "coffee_tea": 1
+     }
+    },
+    {
+     "id": "salty",
+     "label": "しょっぱいもの",
+     "w": {
+      "gourmet": 3,
+      "alcohol": 1
+     }
+    },
+    {
+     "id": "fruit",
+     "label": "フルーツ",
+     "w": {
+      "sweets": 2,
+      "gourmet": 1
+     }
+    },
+    {
+     "id": "spicy",
+     "label": "辛いもの",
+     "w": {
+      "gourmet": 3,
+      "alcohol": 1
+     }
+    },
+    {
+     "id": "japanese",
+     "label": "和風",
+     "w": {
+      "coffee_tea": 2,
+      "sweets": 2,
+      "gourmet": 1
+     }
+    },
+    {
+     "id": "western",
+     "label": "洋風",
+     "w": {
+      "sweets": 2,
+      "gourmet": 2,
+      "coffee_tea": 1
+     }
+    },
+    {
+     "id": "light",
+     "label": "軽めの味",
+     "w": {
+      "coffee_tea": 1,
+      "health_sleep": 1
+     }
+    },
+    {
+     "id": "nofood",
+     "label": "食べものは控えめ",
+     "w": {}
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "key": "curious",
+   "multi": true,
+   "max": 3,
+   "open": "いま気になっている分野を選んでください。",
+   "secret": "最近、気になっている分野はありますか。",
+   "options": [
+    {
+     "id": "beauty",
+     "label": "美容",
+     "w": {
+      "beauty": 3,
+      "bath_care": 1
+     }
+    },
+    {
+     "id": "health",
+     "label": "健康・睡眠",
+     "w": {
+      "health_sleep": 3,
+      "sports": 1
+     }
+    },
+    {
+     "id": "room",
+     "label": "部屋の雰囲気",
+     "w": {
+      "cozy_home": 3,
+      "plants": 2,
+      "bath_care": 1
+     }
+    },
+    {
+     "id": "fashion",
+     "label": "ファッション",
+     "w": {
+      "fashion_small": 3,
+      "accessory": 2,
+      "beauty": 1
+     }
+    },
+    {
+     "id": "gadget",
+     "label": "ガジェット",
+     "w": {
+      "gadget": 3,
+      "stationery": 1
+     }
+    },
+    {
+     "id": "kitchen",
+     "label": "キッチン・食器",
+     "w": {
+      "kitchen": 3,
+      "gourmet": 1,
+      "coffee_tea": 1
+     }
+    },
+    {
+     "id": "tools",
+     "label": "趣味の道具",
+     "w": {
+      "craft": 2,
+      "hobby_play": 2,
+      "outdoor": 1
+     }
+    },
+    {
+     "id": "none",
+     "label": "特にない",
+     "w": {}
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "key": "style",
+   "multi": false,
+   "open": "持ち物は、どんな選び方が好みに近いですか。",
+   "secret": "身の回りのものは、どんな選び方が好みに近いですか。",
+   "options": [
+    {
+     "id": "useful",
+     "label": "実用重視",
+     "w": {
+      "kitchen": 2,
+      "stationery": 2,
+      "gadget": 2,
+      "cozy_home": 1
+     }
+    },
+    {
+     "id": "design",
+     "label": "デザイン重視",
+     "w": {
+      "accessory": 2,
+      "fashion_small": 2,
+      "plants": 1,
+      "beauty": 1
+     }
+    },
+    {
+     "id": "classic",
+     "label": "ブランドや定番",
+     "w": {
+      "fashion_small": 2,
+      "accessory": 2,
+      "coffee_tea": 1,
+      "sweets": 1
+     }
+    },
+    {
+     "id": "simple",
+     "label": "シンプルなもの",
+     "w": {
+      "cozy_home": 2,
+      "kitchen": 1,
+      "stationery": 1,
+      "health_sleep": 1
+     }
+    },
+    {
+     "id": "unique",
+     "label": "少し個性的",
+     "w": {
+      "hobby_play": 2,
+      "craft": 2,
+      "gadget": 1
+     }
+    },
+    {
+     "id": "any",
+     "label": "こだわらない",
+     "w": {}
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "key": "color",
+   "multi": false,
+   "open": "好きな色の雰囲気を選んでください。",
+   "secret": "身近にあると落ち着く色の雰囲気はどれですか。",
+   "options": [
+    {
+     "id": "natural",
+     "label": "ナチュラル",
+     "w": {
+      "cozy_home": 2,
+      "plants": 2,
+      "kitchen": 1,
+      "bath_care": 1
+     }
+    },
+    {
+     "id": "mono",
+     "label": "モノトーン",
+     "w": {
+      "gadget": 2,
+      "stationery": 2,
+      "fashion_small": 1
+     }
+    },
+    {
+     "id": "pastel",
+     "label": "パステル",
+     "w": {
+      "beauty": 2,
+      "sweets": 1,
+      "accessory": 1,
+      "bath_care": 1
+     }
+    },
+    {
+     "id": "vivid",
+     "label": "はっきりした色",
+     "w": {
+      "fashion_small": 2,
+      "hobby_play": 1,
+      "outdoor": 1,
+      "accessory": 1
+     }
+    },
+    {
+     "id": "warm",
+     "label": "温かみのある色",
+     "w": {
+      "cozy_home": 2,
+      "coffee_tea": 1,
+      "craft": 1,
+      "plants": 1
+     }
+    },
+    {
+     "id": "omakase",
+     "label": "おまかせ",
+     "w": {}
+    }
+   ]
+  },
+  {
+   "id": "q7",
+   "key": "receive",
+   "multi": false,
+   "open": "受け取るなら、どんなものがうれしいですか。",
+   "secret": "身の回りに増やすなら、どんなものがうれしいですか。",
+   "options": [
+    {
+     "id": "consume",
+     "label": "食べて消えるもの",
+     "w": {
+      "sweets": 3,
+      "coffee_tea": 2,
+      "gourmet": 2,
+      "alcohol": 1
+     }
+    },
+    {
+     "id": "lasting",
+     "label": "長く使えるもの",
+     "w": {
+      "kitchen": 2,
+      "stationery": 2,
+      "fashion_small": 2,
+      "gadget": 1
+     }
+    },
+    {
+     "id": "relax",
+     "label": "くつろげるもの",
+     "w": {
+      "bath_care": 2,
+      "cozy_home": 2,
+      "health_sleep": 2,
+      "beauty": 1
+     }
+    },
+    {
+     "id": "experience",
+     "label": "体験・お出かけ",
+     "w": {
+      "outdoor": 2,
+      "sports": 1,
+      "craft": 1,
+      "hobby_play": 1
+     }
+    },
+    {
+     "id": "personal",
+     "label": "気持ちが伝わるもの",
+     "w": {
+      "stationery": 2,
+      "accessory": 1,
+      "plants": 1,
+      "craft": 1
+     }
+    },
+    {
+     "id": "surprise",
+     "label": "少し意外なもの",
+     "w": {
+      "hobby_play": 2,
+      "gadget": 1,
+      "craft": 1
+     }
+    }
+   ]
+  },
+  {
+   "id": "q8",
+   "key": "avoid",
+   "multi": true,
+   "max": 4,
+   "open": "苦手なもの、避けたいものがあれば選んでください。",
+   "secret": "苦手なもの、避けたいものがあれば選んでください。",
+   "options": [
+    {
+     "id": "scent",
+     "label": "香りが強いもの",
+     "w": {}
+    },
+    {
+     "id": "sweet",
+     "label": "甘いもの",
+     "w": {}
+    },
+    {
+     "id": "alcohol",
+     "label": "お酒",
+     "w": {}
+    },
+    {
+     "id": "allergy",
+     "label": "食物アレルギー",
+     "w": {}
+    },
+    {
+     "id": "bulky",
+     "label": "場所をとるもの",
+     "w": {}
+    },
+    {
+     "id": "flashy",
+     "label": "派手なデザイン",
+     "w": {}
+    },
+    {
+     "id": "none",
+     "label": "特にない",
+     "w": {}
+    }
+   ]
+  },
+  {
+   "id": "q9",
+   "key": "budget",
+   "multi": false,
+   "open": "あなた自身が気軽に受け取れる金額感はどれですか。",
+   "secret": "ちょっとしたものに、気軽に出せる金額はどれくらいですか。",
+   "options": [
+    {
+     "id": "b2000",
+     "label": "2,000円まで",
+     "w": {}
+    },
+    {
+     "id": "b5000",
+     "label": "5,000円まで",
+     "w": {}
+    },
+    {
+     "id": "b10000",
+     "label": "10,000円まで",
+     "w": {}
+    },
+    {
+     "id": "b20000",
+     "label": "20,000円まで",
+     "w": {}
+    },
+    {
+     "id": "bmore",
+     "label": "それ以上でもよい",
+     "w": {}
+    }
+   ]
+  }
+ ]
+}

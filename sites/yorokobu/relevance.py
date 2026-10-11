@@ -77,3 +77,22 @@ def fits_idea(name: str, must: list[str] | tuple[str, ...] | None) -> bool:
         return True
     n = _norm(name)
     return any(_norm(w) in n for w in must)
+
+
+def head_position(name: str, must: list[str] | tuple[str, ...] | None, limit: int = 50) -> int | None:
+    """Where in the head of the title (see fits_head) the first of the words stands: 0 is the very front; None when none of them is there."""
+    import re
+    head = re.sub(r"[【\[（(][^】\]）)]*[】\]）)]", " ", name)
+    head = _norm(" ".join(head.split())[:limit])
+    hits = [head.find(_norm(w)) for w in (must or []) if _norm(w) and _norm(w) in head]
+    return min(hits) if hits else None
+
+
+def fits_head(name: str, must: list[str] | tuple[str, ...] | None, limit: int = 50) -> bool:
+    """Like fits_idea, but the word has to be near the front of the title, once the shop's bracketed sales words are taken off: the kind of thing a product is comes
+    first in its title ("ハンドクリーム ギフト ..."), while a word far behind is often only one of the keywords the shop stuffed in ("... 花柄").  For the product lists
+    that are made from every product of the site (ask/rec.json), where an idea of a page does not already tell what the product is."""
+    import re
+    head = re.sub(r"[【\[（(][^】\]）)]*[】\]）)]", " ", name)
+    head = " ".join(head.split())[:limit]
+    return fits_idea(head, must)

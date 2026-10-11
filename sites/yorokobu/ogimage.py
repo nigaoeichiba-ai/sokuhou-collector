@@ -149,6 +149,81 @@ def chart_card(*, title: str, finding: str, rows: tuple, source: str, site: str,
     return buf.getvalue()
 
 
+@functools.lru_cache(maxsize=64)
+def persona_card(*, name: str, tagline: str, likes: tuple, avoid: tuple, line: str, site: str, photo: str = "") -> bytes:
+    """The result of the 診断 as a picture to keep or send (1080x1350): the type's name, what pleases that person, what to be careful with, the line to say when handing it over."""
+    from PIL import Image, ImageDraw, ImageFont
+    path = find_font()
+    if path is None:
+        raise RuntimeError("no Japanese font found")
+    w, h = 1080, 1350
+    img = Image.new("RGB", (w, h), CREAM)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([24, 24, w - 24, h - 24], radius=32, outline=LINE, width=3, fill=WHITE)
+    x0, inner = 78, w - 156
+    y = 70
+    photo_file = ASSETS / "mood" / f"{photo}.webp" if photo else None
+    if photo_file and photo_file.exists():                                  # a mood photograph across the top, rounded
+        ph = Image.open(photo_file).convert("RGB")
+        ph_w, ph_h = w - 96, 300
+        scale = max(ph_w / ph.width, ph_h / ph.height)
+        ph = ph.resize((int(ph.width * scale) + 1, int(ph.height * scale) + 1), Image.LANCZOS)
+        left, top = (ph.width - ph_w) // 2, (ph.height - ph_h) // 2
+        ph = ph.crop((left, top, left + ph_w, top + ph_h))
+        mask = Image.new("L", (ph_w, ph_h), 0)
+        ImageDraw.Draw(mask).rounded_rectangle([0, 0, ph_w - 1, ph_h - 1], radius=26, fill=255)
+        img.paste(ph, (48, 48), mask)
+        y = 48 + ph_h + 34
+    f_tag = ImageFont.truetype(path, 28)
+    d.rounded_rectangle([x0, y, x0 + d.textlength("プレゼント診断の結果", font=f_tag) + 44, y + 50], radius=25, fill=ACCENT_S)
+    d.text((x0 + 22, y + 25), "プレゼント診断の結果", font=f_tag, fill=ACCENT, anchor="lm")
+    y += 80
+    f_name = ImageFont.truetype(path, 62)
+    for ln in _wrap(d, name, f_name, inner, 2):
+        d.text((x0, y), ln, font=f_name, fill=INK)
+        y += 78
+    f_tg = ImageFont.truetype(path, 31)
+    for ln in _wrap(d, tagline, f_tg, inner, 2):
+        d.text((x0, y), ln, font=f_tg, fill=(110, 100, 90))
+        y += 44
+    y += 22
+    f_h = ImageFont.truetype(path, 30)
+    f_row = ImageFont.truetype(path, 34)
+    d.text((x0, y), "よろこびやすいもの", font=f_h, fill=ACCENT)
+    y += 52
+    for i, t in enumerate(likes[:3], 1):
+        d.ellipse([x0, y + 4, x0 + 44, y + 48], fill=ACCENT_S)
+        d.text((x0 + 22, y + 26), str(i), font=f_h, fill=ACCENT, anchor="mm")
+        d.text((x0 + 66, y + 26), _fit(d, t, f_row, inner - 66), font=f_row, fill=INK, anchor="lm")
+        y += 64
+    y += 18
+    d.text((x0, y), "ちょっと外しやすいもの", font=f_h, fill=(110, 100, 90))
+    y += 52
+    for t in avoid[:2]:
+        d.text((x0 + 4, y + 22), "・" + _fit(d, t, f_row, inner - 40), font=f_row, fill=(90, 82, 74), anchor="lm")
+        y += 58
+    y += 20
+    d.line([x0, y, w - x0, y], fill=LINE, width=2)
+    y += 28
+    f_line = ImageFont.truetype(path, 30)
+    for ln in _wrap(d, f"渡すときのひとこと: 「{line}」", f_line, inner, 3):
+        d.text((x0, y), ln, font=f_line, fill=INK)
+        y += 44
+    f_site = ImageFont.truetype(path, 30)
+    sw = d.textlength(site, font=f_site)
+    d.rounded_rectangle([w - x0 - sw - 40, h - 24 - 84, w - x0, h - 24 - 30], radius=27, fill=CREAM, outline=LINE, width=2)
+    d.text((w - x0 - sw - 20, h - 24 - 57), site, font=f_site, fill=INK, anchor="lm")
+    buf = io.BytesIO()
+    img.save(buf, format="PNG", optimize=True)
+    return buf.getvalue()
+
+
+def _fit(draw, text: str, font, max_w: int) -> str:
+    while draw.textlength(text, font=font) > max_w and len(text) > 2:
+        text = text[:-2] + "…"
+    return text
+
+
 @functools.lru_cache(maxsize=1024)
 def card(*, title: str, tag: str, site: str, photo: str = "") -> bytes:
     """One card: `tag` is the small label, `title` the headline, `photo` the name of a mood photograph in assets/mood (without .webp; none = text only)."""

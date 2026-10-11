@@ -1,0 +1,129 @@
+name: yorokobu-ask-push
+
+# yorokobu-present.com: tells the person who made a "それとなく聞く" survey that it got a new answer (a Web Push message with no content).
+# Every ten minutes (GitHub's schedule can run some minutes late; that is fine for this).  The subscriptions live on the server outside the web root
+# (~/yorokobu-present.com/ask/push/, written by api/ask.php).  This job copies that folder over SSH (the same key the deploy uses), asks the server for the number of
+# answers of each survey (counts only), sends one content-free message per subscription that has new answers (sites/yorokobu/ask_push.py), deletes the
+# subscriptions the push services declared dead and writes back what was announced.  Nothing about a subscription is printed: counts only.
+#
+# Needs: the XSERVER_* secrets of the deploy, and a VAPID private key: YOROKOBU_VAPID_PRIVATE or, while there is none, ATOMOU_VAPID_PRIVATE (the sites of the operator
+# share the key pair whose public half is in config.json "vapid_public").  Without them the job ends quietly.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "true = count only, send nothing"
+        default: "false"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: yorokobu-ask-push
+  cancel-in-progress: false
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Gate
+        id: gate
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+          VAPID1: ${{ secrets.YOROKOBU_VAPID_PRIVATE }}
+          VAPID2: ${{ secrets.ATOMOU_VAPID_PRIVATE }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then echo "XSERVER secrets are not set; nothing to do"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if [ -z "$VAPID1" ] && [ -z "$VAPID2" ]; then echo "no VAPID private key is set; nothing to do"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "go=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v5
+        if: steps.gate.outputs.go == 'true'
+      - uses: actions/setup-python@v6
+        if: steps.gate.outputs.go == 'true'
+        with:
+          python-version: "3.13"
+      - name: Install
+        if: steps.gate.outputs.go == 'true'
+        run: python -m pip install --quiet cryptography
+      - name: SSH setup
+        if: steps.gate.outputs.go == 'true'
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver
+          chmod 600 ~/.ssh/id_xserver
+          for try in 1 2 3 4 5 6; do
+            ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /tmp/keyscan.err || true
+            [ -s ~/.ssh/known_hosts ] && break
+            echo "key scan attempt $try returned nothing"
+            sleep $((try * 10))
+          done
+          test -s ~/.ssh/known_hosts
+      - name: Copy the subscriptions from the server
+        id: copy
+        if: steps.gate.outputs.go == 'true'
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -euo pipefail
+          mkdir -p push
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+            'set -e; d="$HOME/yorokobu-present.com/ask/push"; if [ -d "$d" ]; then cd "$d" && tar -czf - --exclude="*.tmp" . ; else tar -czf - -T /dev/null; fi' | tar -C push -xzf -
+          n=$(ls push | grep -c '\.json$' || true)
+          echo "subscription files: $n"
+          if [ "$n" -gt 0 ]; then echo "any=true" >> "$GITHUB_OUTPUT"; else echo "any=false" >> "$GITHUB_OUTPUT"; fi
+      - name: Answers of each survey
+        if: steps.gate.outputs.go == 'true' && steps.copy.outputs.any == 'true'
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" python3 - < sites/yorokobu/ask_server_versions.py > versions.json
+          python -c "import json;d=json.load(open('versions.json'));print('surveys on the server:', len(d))"
+      - name: Send
+        if: steps.gate.outputs.go == 'true' && steps.copy.outputs.any == 'true'
+        env:
+          YOROKOBU_VAPID_PRIVATE: ${{ secrets.YOROKOBU_VAPID_PRIVATE }}
+          ATOMOU_VAPID_PRIVATE: ${{ secrets.ATOMOU_VAPID_PRIVATE }}
+          DRY: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          extra=""
+          if [ "$DRY" = "true" ]; then extra="--dry-run"; fi
+          python -m sites.yorokobu.ask_push --dir push --versions versions.json $extra | tee result.json
+          if grep -q '"key_matches_config": false' result.json; then echo "the VAPID secret does not match config.json vapid_public"; exit 1; fi
+      - name: Delete the dead subscriptions on the server
+        if: steps.gate.outputs.go == 'true' && steps.copy.outputs.any == 'true'
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -euo pipefail
+          n=$(grep -c . push/gone.txt || true)
+          echo "dead subscriptions: $n"
+          [ "$n" -gt 0 ] || exit 0
+          grep -E '^[0-9a-f]{64}\.json$' push/gone.txt | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+            'set -e; cd "$HOME/yorokobu-present.com/ask/push" && while read -r f; do rm -f -- "./$f"; done'
+      - name: Write back what was announced
+        if: steps.gate.outputs.go == 'true' && steps.copy.outputs.any == 'true' && inputs.dry_run != 'true'
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -euo pipefail
+          [ "$(cat push/notified.json)" != "{}" ] || { echo "nothing was announced"; exit 0; }
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" 'cat > "$HOME/yorokobu-present.com/ask/push/.notified.json"' < push/notified.json
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" python3 - < sites/yorokobu/ask_server_mark.py

@@ -128,7 +128,7 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     return {"messages": messages, "etiquette": etiquette, "amazon": amazon, "amazon_checked": amazon_checked, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
             "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "themes": themes,
             "theme": theme, "theme_groups": groups, "articles": articles,
-            "stats": _load_stats(content_dir), "surveys": _load_surveys(content_dir), "daily": _load_daily(content_dir), "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
+            "stats": _load_stats(content_dir), "surveys": _load_surveys(content_dir), "ask": _load_ask(content_dir), "daily": _load_daily(content_dir), "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
 
 
 def _load_daily(content_dir: Path) -> list[dict]:
@@ -220,6 +220,57 @@ def check_must(idea: dict, where: str) -> None:
         return
     if not isinstance(m, list) or not 1 <= len(m) <= 12 or any(not isinstance(w, str) or not 1 <= len(w.strip()) <= 12 for w in m):
         raise BuildError(f"{where}: must has to be a list of 1-12 short words")
+
+
+SECRET_FORBIDDEN = re.compile(r"プレゼント|ギフト|贈|誕生日|祝|サプライズ|お返し")
+ASK_KINDS = ("実用品", "食べもの・飲みもの", "ファッション小物", "癒し・リラックス", "思い出・名入れ", "体験・お出かけ", "趣味・ホビー", "おもしろ・サプライズ", "子ども向け")
+
+
+def _load_ask(content_dir: Path) -> dict:
+    """ask.json (optional): the questions of the 「それとなく聞く」アンケート in its two modes, and the interest groups the answers lead to (each with its Rakuten searches
+    and the words a product title has to contain).  Every answer option names only interest groups that exist; the secret mode's texts never say what the
+    questions are for (no プレゼント, 贈り物, 誕生日 ...), because that mode is for a surprise."""
+    data = _optional(content_dir, "ask.json")
+    if not data:
+        return {}
+    ints = data.get("interests") or {}
+    if len(ints) < 10:
+        raise BuildError("ask.json: interests are missing")
+    for k, v in ints.items():
+        _need(v, ("label", "kind", "queries", "must"), f"ask interest {k}")
+        if v["kind"] not in ASK_KINDS or not 1 <= len(v["queries"]) <= 3 or not re.fullmatch(r"[a-z_]{2,20}", k):
+            raise BuildError(f"ask interest {k}: kind, queries or id")
+        check_must(v, f"ask interest {k}")
+    for mode in ("open", "secret"):
+        _need(data["intro"][mode], ("title", "lead", "done"), f"ask intro {mode}")
+    for mode_text in [data["intro"]["secret"]["title"], data["intro"]["secret"]["lead"], data["intro"]["secret"]["done"]]:
+        if SECRET_FORBIDDEN.search(mode_text):
+            raise BuildError(f"ask.json: the secret intro says what it is for: {mode_text[:20]}")
+    qids, keys = set(), set()
+    for q in data["questions"]:
+        _need(q, ("id", "key", "open", "secret", "options"), f"ask question {q.get('id')}")
+        if not re.fullmatch(r"q[0-9]{1,2}", q["id"]) or q["id"] in qids or q["key"] in keys:
+            raise BuildError(f"ask question {q['id']}: duplicate or bad id")
+        qids.add(q["id"])
+        keys.add(q["key"])
+        if SECRET_FORBIDDEN.search(q["secret"]):
+            raise BuildError(f"ask question {q['id']}: the secret wording says what it is for")
+        oids = set()
+        for o in q["options"]:
+            _need(o, ("id", "label"), f"ask option {q['id']}")
+            if not re.fullmatch(r"[a-z0-9]{1,12}", o["id"]) or o["id"] in oids or SECRET_FORBIDDEN.search(o["label"]):
+                raise BuildError(f"ask option {q['id']}.{o['id']}: duplicate, bad id or a word the secret mode cannot show")
+            oids.add(o["id"])
+            for w, n in (o.get("w") or {}).items():
+                if w not in ints or not isinstance(n, int) or not 1 <= n <= 3:
+                    raise BuildError(f"ask option {q['id']}.{o['id']}: weight for an unknown interest or out of 1-3")
+        if q["key"] in ("avoid", "budget") and any(o.get("w") for o in q["options"]):
+            raise BuildError(f"ask question {q['id']}: avoid/budget options carry no interest weights")
+    need = {"avoid": {"scent", "sweet", "alcohol", "allergy", "bulky", "flashy", "none"}, "budget": {"b2000", "b5000", "b10000", "b20000", "bmore"}}
+    for q in data["questions"]:
+        if q["key"] in need and {o["id"] for o in q["options"]} != need[q["key"]]:
+            raise BuildError(f"ask question {q['id']}: the options of {q['key']} have to be exactly {sorted(need[q['key']])}")
+    return data
 
 
 def _load_surveys(content_dir: Path) -> dict:
