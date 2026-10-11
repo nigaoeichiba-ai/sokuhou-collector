@@ -186,6 +186,16 @@ def quiz_page(d: dict, cfg: dict, preview: bool) -> str:
     return B.page(cfg, preview, path="/diagnosis/", title=f"あの人はどんなタイプ? プレゼント診断 | {cfg['site_name']}", description=lead, body=body)
 
 
+def result_row(cfg: dict, p: dict) -> str:
+    """Under the share buttons of a result: the result as a picture (to keep, or to hand to the phone's share sheet where it can take a file)."""
+    B = _b()
+    base = cfg["site_url"].rstrip("/")
+    img = f"/diagnosis/img/{p['slug']}.png"
+    text = f"うちのあの人は『{p['name']}』だった!"
+    return (f'<div class="chart-send"><span>この結果を、画像で</span><a class="share-btn save" href="{img}" download="yorokobu-{esc(p["slug"])}.png">画像で保存</a>'
+            f'<button type="button" class="share-btn native" hidden data-img="{img}" data-url="{esc(base)}/diagnosis/{esc(p["slug"])}/" data-text="{esc(text)}" data-name="yorokobu-{esc(p["slug"])}.png">画像を送る</button></div>')
+
+
 def persona_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     B = _b()
     c = d["c"]
@@ -196,6 +206,7 @@ def persona_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     body = f"""{B.head_band("pink", '', esc(p["name"]), p["tagline"], single=True, mascot="b-joy")}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("プレゼント診断", "/diagnosis/"), (p["name"], None)])}</div>
 {B.share_bar(cfg, f"/diagnosis/{p['slug']}/", f"うちのあの人は『{p['name']}』だった! あなたの周りの人は?", "この結果を、だれかに送る")}
+{result_row(cfg, p)}
 <section style="margin-top:30px"><p class="persona-about">{esc(p["about"])}</p></section>
 <section class="cols"><div><h2><span class="scribble">よろこびやすいもの</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["likes"])}</ol></div>
 <div class="avoid"><h2><span class="scribble">ちょっと外しやすいもの</span></h2>{B.ul(p["avoid"], "warn")}</div></section>
@@ -212,6 +223,8 @@ def tools_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     c = d["c"]
     cards = [("/diagnosis/", "sparkle", "あの人はどんなタイプ?", "6つの質問に答えると、贈る相手の「タイプ」と合う贈り方が分かります。", c["persona"]),
              ("/tool/taboo/", "shield-check", "縁起・マナーチェック", "贈る前に、気をつけたい言い伝えやマナーが、あるかどうか確かめます。", c["taboo"]),
+             ("/dock/", "list-checks", "贈り物ドック", "相手のことを入力すると、健康診断の結果票のように、項目ごとの点数と評価、おすすめの種類を返します。", c.get("ask")),
+             ("/ask/", "chat-circle-text", "ほしいものを聞く", "好みやほしいものを、それとなく聞くアンケートを作って、リンクで送ります。結果とおすすめも見られます。", c.get("ask")),
              ("/tool/gacha/", "dice-five", "おまかせ提案", "贈る相手と予算を選ぶと、条件に合う商品を1点、提案します。", d.get("gacha")),
              ("/tool/calc/", "currency-jpy", "お返し・割り勘の計算", "お返しの金額の目安と、連名で贈るときの一人あたりの金額を計算します。", True),
              ("/memo/", "calendar-heart", "たいせつな日メモ", "誕生日や記念日を登録して、贈りどきを逃さないようにします。", True),

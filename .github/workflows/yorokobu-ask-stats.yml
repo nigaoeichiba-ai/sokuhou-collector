@@ -1,0 +1,85 @@
+name: yorokobu-ask-stats
+
+# yorokobu-present.com: once a day, copies the COUNTERS of the 診断ドック and of the answers of all "それとなく聞く" surveys (how often each option was chosen: no survey,
+# no person, no answer of anyone) from the server into data/yorokobu_ask_stats.json.  The site shows them as a page of the data room once there are enough, and the
+# routines read them to improve the questions and the report (sites/yorokobu/askstats.py).  The commit touches only that file.
+#
+# Needs the XSERVER_* secrets of the deploy.  Without them the job ends quietly.
+
+on:
+  schedule:
+    - cron: "40 19 * * *"   # 04:40 JST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: yorokobu-ask-stats
+  cancel-in-progress: false
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Gate
+        id: gate
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then echo "XSERVER secrets are not set; nothing to do"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "go=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v5
+        if: steps.gate.outputs.go == 'true'
+      - uses: actions/setup-python@v6
+        if: steps.gate.outputs.go == 'true'
+        with:
+          python-version: "3.13"
+      - name: SSH setup
+        if: steps.gate.outputs.go == 'true'
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver
+          chmod 600 ~/.ssh/id_xserver
+          for try in 1 2 3 4 5 6; do
+            ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /tmp/keyscan.err || true
+            [ -s ~/.ssh/known_hosts ] && break
+            sleep $((try * 10))
+          done
+          test -s ~/.ssh/known_hosts
+      - name: Copy the counters
+        if: steps.gate.outputs.go == 'true'
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          set -euo pipefail
+          mkdir -p stats
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+            'set -e; d="$HOME/yorokobu-present.com/ask/stats"; if [ -d "$d" ]; then cd "$d" && tar -czf - --exclude="*.tmp" . ; else tar -czf - -T /dev/null; fi' | tar -C stats -xzf -
+          ls stats | head -20
+      - name: Merge
+        if: steps.gate.outputs.go == 'true'
+        run: python -m sites.yorokobu.askstats --dir stats --out data/yorokobu_ask_stats.json
+      - name: Commit
+        if: steps.gate.outputs.go == 'true'
+        run: |
+          git config user.name "sokuhou-bot"
+          git config user.email "sokuhou-bot@users.noreply.github.com"
+          git add data/yorokobu_ask_stats.json
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "data: yorokobu ask/dock counters"
+            git pull --rebase origin main
+            git push
+          fi

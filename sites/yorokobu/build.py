@@ -25,6 +25,7 @@ if __name__ == "__main__":
 from sites.yorokobu import content as ct  # noqa: E402
 from sites.yorokobu import dataroom  # noqa: E402
 from sites.yorokobu import picksite  # noqa: E402
+from sites.yorokobu import askpages  # noqa: E402
 from sites.yorokobu import giftcal  # noqa: E402
 from sites.yorokobu import icons  # noqa: E402
 from sites.yorokobu import relevance  # noqa: E402
@@ -173,8 +174,25 @@ def page(cfg, preview, **kw):
     kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", "")) + breadcrumb_ld(cfg, kw.get("body", ""))   # the pictures the page uses (only those), the breadcrumb data
     site = {**SITE, "nav": ([("今日のおすすめ", "/picks/", "/picks/")] if PICKS_ON else []) + SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])
                               + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
-    return layout(site, cfg, preview, scripts=True, head_extra=FONTS, **kw)
+    head_extra = FONTS + kw.pop("head_extra", "")
+    return layout(site, cfg, preview, scripts=True, head_extra=head_extra, **kw)
 
+
+SW_JS = """// The service worker of よろこぶプレゼント: only to show the notification "a survey of yours got a new answer" (Web Push).  It keeps no cache and handles no request.
+self.addEventListener('install', function () { self.skipWaiting(); });
+self.addEventListener('activate', function (e) { e.waitUntil(self.clients.claim()); });
+self.addEventListener('push', function (e) {
+  e.waitUntil(self.registration.showNotification('アンケートに、新しい回答が届きました', { body: 'タップすると、結果を見られます。', icon: '/assets/icon-192.png', tag: 'yorokobu-ask', data: { url: '/ask/mine/' } }));
+});
+self.addEventListener('notificationclick', function (e) {
+  e.notification.close();
+  var url = (e.notification.data && e.notification.data.url) || '/ask/mine/';
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (list) {
+    for (var i = 0; i < list.length; i++) { if (list[i].url.indexOf('/ask/mine/') >= 0 && 'focus' in list[i]) { return list[i].focus(); } }
+    return self.clients.openWindow(url);
+  }));
+});
+"""
 
 SEEN: dict = {}   # every product a page showed (code -> name, price, image, links): the data file of the shared-list page
 OG: set = set()   # the share-card images drawn in this build ("gift/<key>", "occasion/<slug>", "for/<slug>", "default")
@@ -198,6 +216,7 @@ def share_bar(cfg: dict, path: str, text: str, label: str = "この候補、誰�
             f'<a class="share-btn mail" href="{esc(mail)}">メールで送る</a>'
             f'<a class="share-btn x" href="{esc(x)}" target="_blank" rel="noopener">Xで共有</a>'
             f'<button type="button" class="share-btn native" hidden data-url="{esc(url)}" data-text="{esc(text)}">共有する</button>'
+            f'<button type="button" class="share-btn qr" hidden data-url="{esc(url)}">スマホで開く(QR)</button>'
             f'<button type="button" class="share-btn copy" data-url="{esc(url)}">リンクをコピー</button></div>{note}')
 
 
@@ -1211,6 +1230,9 @@ def home_tools(d: dict) -> str:
     rows = []
     if d["gacha"]:
         rows.append(tool_tile("/tool/gacha/", "dice-five", "おまかせ提案", "条件を選ぶと、1点だけ提案します"))
+    if c.get("ask"):
+        rows.append(tool_tile("/dock/", "list-checks", "贈り物ドック", "相手のことを入れると、診断の結果票を返します"))
+        rows.append(tool_tile("/ask/", "chat-circle-text", "ほしいものを聞く", "好みを、それとなく聞くアンケートを作る"))
     rows.append(tool_tile("/memo/", "calendar-heart", "たいせつな日メモ", "誕生日や記念日を、3週間前にお知らせ"))
     if c["persona"]:
         rows.append(tool_tile("/diagnosis/", "sparkle", "プレゼント診断", "相手のタイプから、合う贈り物を"))
@@ -1737,6 +1759,8 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
                 title=p["title"].split(" ")[0], tag=f"{c['rec'][p['recipient']]['name']} × {c['occ'][p['occasion']]['name']}", site=site, photo=mood_photo(ct.pair_key(p)))
         for ps in (c["persona"] or {}).get("personas", []):
             cards[f"og/diagnosis/{ps['slug']}.png"] = ogimage.card(title=ps["name"], tag="プレゼント診断", site=site, photo=mood_photo(ps["slug"]))
+            cards[f"diagnosis/img/{ps['slug']}.png"] = ogimage.persona_card(name=ps["name"], tagline=ps["tagline"], likes=tuple(ps["likes"]), avoid=tuple(ps["avoid"]), line=ps["line"],
+                                                                              site=cfg["site_url"].split("//")[-1].rstrip("/"), photo=mood_photo(ps["slug"]))
         for a in c["articles"]:
             cards[f"og/read/{a['slug']}.png"] = ogimage.card(title=a["title"], tag="読みもの", site=site, photo=mood_photo(a["slug"]))
         for day in c.get("daily") or []:
@@ -1805,6 +1829,10 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
             pages[f"ranking/{slug}/index.html"] = ranking_page(d, cfg, preview, slug)
     pages.update(dataroom.build_pages(d, cfg, preview))
     pages.update(picksite.build_pages(d, cfg, preview))
+    ask_pages, ask_quiet = askpages.build_files(d, cfg, preview, today)
+    pages.update(ask_pages)
+    if ask_pages:
+        pages["sw.js"] = SW_JS
     if d["live_themes"]:
         pages["theme/index.html"] = theme_hub_page(d, cfg, preview)
         for th in d["live_themes"]:
@@ -1823,13 +1851,14 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
                          "<p>当サイトの運営者は、楽天市場で、似顔絵のショップも運営しています。そのショップの商品を紹介するときは、そのことを、ページ上に明示します。</p>"
                          "<p>当サイトは、楽天グループ株式会社が運営するものではありません。</p>"),
         contact_notice="商品の購入・配送・返品などのお問い合わせは、各販売店へお願いします。当サイトでは、商品の販売を行っていません。",
-        input_note="", finish=lambda s: s))
+        input_note=askpages.ASK_PRIVACY if c.get("ask") else "", finish=lambda s: s))
     pages["manifest.webmanifest"] = json.dumps(MANIFEST, ensure_ascii=False, indent=1)
     pages.update(cards)
     listed = dict(pages)                                   # the sitemap lists the pages that can be found by searching, not the shared-list page (noindex, built from a link)
     if SEEN:
         pages["list/index.html"] = list_page(d, cfg, preview)
         pages["list/items.json"] = json.dumps(SEEN, ensure_ascii=False, separators=(",", ":"))
+    pages.update(ask_quiet)                                 # the other person's page and the results: not listed (noindex), built after the sitemap's list
     pages.update(standard_files(listed, cfg, preview, d["fetched_date"]))
     pages.update(asset_pages(HERE / "assets"))
     write_pages(pages, out)

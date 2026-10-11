@@ -243,6 +243,33 @@
     }).catch(function () { msg.textContent = "候補を読み込めませんでした。"; });
   }
 
+  var qrLoading = null;
+  function loadQr() {
+    if (window.YorokobuQR) return Promise.resolve();
+    if (!qrLoading) qrLoading = new Promise(function (ok, ng) { var el = document.createElement("script"); el.src = "/assets/qr.js"; el.onload = ok; el.onerror = ng; document.head.appendChild(el); });
+    return qrLoading;
+  }
+  // a QR code of `url` in a small panel over the page (Esc, a click outside or the button closes it)
+  function showQr(url, what) {
+    loadQr().then(function () {
+      var svg = window.YorokobuQR.svg(url, { label: what + "のQRコード" });
+      if (!svg) return;
+      var pop = document.createElement("div");
+      pop.className = "qr-pop"; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", "スマホで開く");
+      pop.innerHTML = '<div class="qr-card"><div class="qr-img"></div><p><b>スマホのカメラで読み取ると、' + what + 'を開けます。</b></p><p class="qr-url"></p><button type="button" class="btn btn-sub">閉じる</button></div>';
+      $(".qr-img", pop).innerHTML = svg;
+      $(".qr-url", pop).textContent = url;
+      function close() { pop.remove(); document.removeEventListener("keydown", onKey); }
+      function onKey(e) { if (e.key === "Escape") close(); }
+      pop.addEventListener("click", function (e) { if (e.target === pop) close(); });
+      $("button", pop).addEventListener("click", close);
+      document.addEventListener("keydown", onKey);
+      document.body.appendChild(pop);
+      $("button", pop).focus();
+    }).catch(function () {});
+  }
+  window.YorokobuShowQr = showQr;
+
   function initShare() {
     $$(".share-btn.native").forEach(function (b) {
       var img = b.getAttribute("data-img");
@@ -263,6 +290,13 @@
       b.addEventListener("click", function () {
         navigator.share({ title: document.title, text: b.getAttribute("data-text") || "", url: b.getAttribute("data-url") }).catch(function () {});
       });
+    });
+    // 「スマホで開く」: on a PC (a mouse, not a finger), the address of this page as a QR code, made here in the browser (qr.js is loaded when it is first needed)
+    var pc = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    $$(".share-btn.qr").forEach(function (b) {
+      if (!pc) return;
+      b.hidden = false;
+      b.addEventListener("click", function () { showQr(b.getAttribute("data-url") || location.href, "このページ"); });
     });
     $$(".share-btn.copy").forEach(function (b) {
       b.addEventListener("click", function () {
