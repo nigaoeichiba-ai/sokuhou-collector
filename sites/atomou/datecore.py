@@ -49,6 +49,22 @@ def next_thousand(start: date, today: date) -> tuple[int, date]:
     return n, start + timedelta(days=n)
 
 
+def weeks_text(n: int) -> str:
+    """A number of days as weeks and days: 3 -> 3日, 7 -> 1週, 100 -> 14週2日 (assets/core.js weeksText is the same)."""
+    n = max(0, int(n))
+    w, d = divmod(n, 7)
+    return (f"{w}週{d}日" if d else f"{w}週") if w else f"{d}日"
+
+
+def weekdays_left(today: date, weekday: int) -> int:
+    """How many days of the given weekday (0 = Monday ... 6 = Sunday) come after today, up to December 31 of the same year (today is not counted)."""
+    n = (date(today.year, 12, 31) - today).days
+    if n <= 0:
+        return 0
+    first = (weekday - today.weekday()) % 7 or 7
+    return 0 if first > n else (n - first) // 7 + 1
+
+
 def is_thousand_day(start: date, today: date) -> bool:
     d = (today - start).days
     return d > 0 and d % 1000 == 0

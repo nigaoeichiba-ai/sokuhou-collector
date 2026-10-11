@@ -75,6 +75,21 @@ if (typeof window !== 'undefined' && window.addEventListener) {
     return p;
   }
   function group(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  // weeks: a number of days as "3日", "1週", "14週2日" (the same as datecore.weeks_text)
+  function weeksText(n) {
+    n = Math.max(0, Math.floor(n));
+    var w = Math.floor(n / 7), d = n % 7;
+    return w ? (d ? w + '週' + d + '日' : w + '週') : d + '日';
+  }
+  function weekday(a) { return (new Date(Date.UTC(a[0], a[1] - 1, a[2])).getUTCDay() + 6) % 7; }   // 0 = Monday ... 6 = Sunday
+  // how many days of the given weekday (0 = Monday ... 6 = Sunday) come after today and up to December 31 of the same year (today is not counted)
+  function weekdaysLeft(today, wd) {
+    var n = totalDays(today, [today[0], 12, 31]);
+    if (n <= 0) return 0;
+    var first = (wd - weekday(today) + 7) % 7;
+    if (first === 0) first = 7;
+    return first > n ? 0 : Math.floor((n - first) / 7) + 1;
+  }
 
   function countdown(target, today, precision) {
     precision = precision || 'day';
@@ -176,7 +191,7 @@ if (typeof window !== 'undefined' && window.addEventListener) {
   }
 
   var api = { extractDays: extractDays, parseSpoken: parseSpoken, isLeap: isLeap, dim: dim, valid: valid, toDays: toDays, fromDays: fromDays, parse: parse, iso: iso, cmp: cmp, addDays: addDays, addMonths: addMonths,
-    totalDays: totalDays, ymd: ymd, nextThousand: nextThousand, dayOfYear: dayOfYear, fiscalYear: fiscalYear, warekiToYear: warekiToYear, countdown: countdown, group: group };
+    totalDays: totalDays, ymd: ymd, nextThousand: nextThousand, dayOfYear: dayOfYear, fiscalYear: fiscalYear, warekiToYear: warekiToYear, countdown: countdown, group: group, weeksText: weeksText, weekday: weekday, weekdaysLeft: weekdaysLeft };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.AtomouCore = api;
 })(typeof window !== 'undefined' ? window : this);

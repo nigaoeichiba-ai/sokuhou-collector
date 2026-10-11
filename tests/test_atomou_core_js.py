@@ -47,6 +47,8 @@ PAGE = """<!doctype html><meta charset="utf-8"><script src="%(core)s"></script><
   res.fy = V.fiscal_year.map(function (c) { return C.fiscalYear(P(c.d)); });
   res.nt = V.next_thousand.map(function (c) { var r = C.nextThousand(P(c.start), P(c.today)); return [r.days, C.iso(r.date)]; });
   res.wareki = V.wareki.map(function (c) { return C.warekiToYear(c.era, c.n); });
+  res.weeks = V.weeks.map(function (c) { return C.weeksText(c.n); });
+  res.wdl = V.weekdays_left.map(function (c) { return C.weekdaysLeft(P(c.today), c.weekday); });
   res.bad = ['2026-02-30', '2026-13-01', 'abc', '2026-1-1'].map(function (s) { return P(s); });
   res.spoken = %(spoken)s.map(function (c) { return C.parseSpoken(c[0], c[1], [2026, 10, 9]); });
   res.ics = ICS.build([{ uid: 'e-abc', title: 'テスト, 試験; 申込\\n締切', date: [2026, 11, 20], alarm: 'morning' },
@@ -118,6 +120,10 @@ class CoreInChrome(unittest.TestCase):
         self.assertEqual(self.res["fy"], [[c["start"], c["n"], c["left"]] for c in VECTORS["fiscal_year"]])
         self.assertEqual(self.res["nt"], [[c["days"], c["date"]] for c in VECTORS["next_thousand"]])
         self.assertEqual(self.res["wareki"], [c["y"] for c in VECTORS["wareki"]])
+
+    def test_weeks_and_the_weekdays_left_agree_with_the_python_core(self):
+        self.assertEqual(self.res["weeks"], [c["text"] for c in VECTORS["weeks"]])
+        self.assertEqual(self.res["wdl"], [c["n"] for c in VECTORS["weekdays_left"]])
 
     def test_a_date_typed_or_dictated_as_words_is_read_the_way_it_was_said(self):
         for (text, p, want), got in zip(SPOKEN, self.res["spoken"]):

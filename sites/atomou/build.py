@@ -23,7 +23,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.atomou import articles, catalog, datecore, feeds, ogimage, skins, specials, usecases  # noqa: E402
+from sites.atomou import articles, calendar_data, catalog, datecore, feeds, ogimage, skins, specials, usecases  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
@@ -1280,6 +1280,13 @@ def kyou_page(c: Ctx, md: str, items: list[tuple[int, dict, bool]], prev_next: t
     return html, indexable
 
 
+def year_left_block(today: date) -> str:
+    """The rest of the year counted in weeks (案5): the script of the visitor's own day fills it in; the next solar terms (from the Observatory's figures in the data file) are in the page."""
+    terms = [[t["name"], t["date"].isoformat()] for y in (today.year, today.year + 1) for t in calendar_data.terms_of(y) if t["date"] >= today][:3]
+    return (f'<section class="year-left" id="year-left" data-terms="{esc(json.dumps(terms, ensure_ascii=False))}" hidden><h2>今年の残りを、週で見る</h2>'
+            '<ul id="year-left-list"><li>数えています…</li></ul><p class="hint">いまの日付は、お使いの端末の日付です。</p></section>')
+
+
 def kyou_index(c: Ctx, days: dict[str, list]) -> str:
     months = []
     for m in range(1, 13):
@@ -1289,6 +1296,7 @@ def kyou_index(c: Ctx, days: dict[str, list]) -> str:
     body = crumbs([("トップ", "/"), ("今日は何の日", None)]) + f"""
 <h1>今日は何の日</h1>
 <section class="kyou-today" id="kyou-today" aria-live="polite"><p class="muted">今日の日付を調べています…</p></section>
+{year_left_block(c.today)}
 {specials.special_links(c.today)}
 <p class="lead muted">この日付にどんな日があるかを、月と日ごとに調べられます。数字は、その日にある日付の件数です。</p>
 {"".join(months)}"""
