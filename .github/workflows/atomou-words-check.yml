@@ -25,11 +25,12 @@ jobs:
         run: |
           if [ -z "$DEMO_PASS" ]; then echo "the demo password secret is not set"; exit 1; fi
           url=https://demo.atomou.com/api/w.php
-          post() { curl -s -m 30 -o body.txt -w '%{http_code}' -u "$DEMO_USER:$DEMO_PASS" -H 'Origin: https://demo.atomou.com' -H 'Content-Type: text/plain' --data "$1" "$url"; }
+          # the shared server is slow at times (a time-out is HTTP 000): try three times before calling it a failure
+          post() { local c=000 t; for t in 1 2 3; do c=$(curl -s -m 45 -o body.txt -w '%{http_code}' -u "$DEMO_USER:$DEMO_PASS" -H 'Origin: https://demo.atomou.com' -H 'Content-Type: text/plain' --data "$1" "$url" || true); [ "$c" != "000" ] && break; sleep 15; done; echo "$c"; }
           ok=$(post '{"v":1,"w":"動作確認 テスト 2026-10-11"}'); echo "a test word: HTTP $ok $(head -c 200 body.txt)"
           bad=$(post '{"v":1,"w":"動作確認 馬券 予想"}'); echo "a forbidden word: HTTP $bad $(head -c 200 body.txt)"
           tel=$(post '{"v":1,"w":"動作確認 090-1234-5678"}'); echo "a phone number: HTTP $tel $(head -c 200 body.txt)"
-          get=$(curl -s -m 30 -o body.txt -w '%{http_code}' -u "$DEMO_USER:$DEMO_PASS" "$url"); echo "a GET: HTTP $get"
+          get=$(curl -s -m 45 -o body.txt -w '%{http_code}' -u "$DEMO_USER:$DEMO_PASS" "$url" || true); echo "a GET: HTTP $get"
           { echo "### api/w.php"; echo "test word: $ok / forbidden word: $bad / phone number: $tel / GET: $get"; } >> "$GITHUB_STEP_SUMMARY"
           [ "$ok" = "200" ] && [ "$bad" = "422" ] && [ "$tel" = "422" ] && [ "$get" = "405" ]
       - name: Look at the inbox on the server (read only)
