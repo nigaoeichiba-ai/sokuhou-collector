@@ -527,6 +527,21 @@ def mothers_day_extra(d: dict) -> str:
             + _studies_section(ex["studies"]) + _cautions(ex["cautions"]))
 
 
+def occasion_teaser(d: dict, occasion: str, compact: bool = False) -> str:
+    """On an occasion's page (and, shortened, on its pair pages): what people say they spend and give, from the survey board of that occasion, and the way into it."""
+    sv = d["c"].get("surveys") or {}
+    board = next((b for b in sv.get("boards", []) if b.get("occasion") == occasion), None)
+    path = f'/data/{board["slug"]}/' if board else ("/data/mothers-day-budget/" if occasion == "mothers-day" and sv.get("mothers_day_extra") else "")
+    src = board or (sv.get("mothers_day_extra") if path else None)
+    if not path or not src or path not in {r[0] for r in results(d)}:
+        return ""
+    studies = {s["id"]: s for s in src["studies"]}
+    head = src["headline"][:2 if compact else 4]
+    name = d["c"]["occ"][occasion]["name"]
+    return (f'<section class="board-teaser{" compact" if compact else ""}"><h2><span class="scribble">{esc(name)}、みんなはいくらで何を贈る?</span></h2>{_tiles(head, studies)}'
+            f'<p class="more"><a class="btn btn-sub" href="{path}">調査の数字を、くわしく見る(データ室)</a></p></section>')
+
+
 BUILDERS = (price_bands, occasion_prices, mothers_day_budget, births_marriages, ranking_prices, survey_boards)
 
 

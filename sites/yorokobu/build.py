@@ -298,7 +298,7 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
         bits.append('<span class="tagx">日付指定可</span>')
     note = '<p class="own">運営者のショップ</p>' if own else ""
     if it.get("note"):  # the editors' one-line reason for picking this product
-        note += f'<p class="pick-note"><b>{it.get("note_label") or ("選んだ理由" if it.get("curated") else "数字から見ると")}</b>{esc(it["note"])}</p>'
+        note += f'<p class="pick-note"><b>{it.get("note_label") or "選んだ理由"}</b>{esc(it["note"])}</p>'
     if not own:
         SEEN[it["code"]] = {"n": short(name, 60), "p": it["price"], "i": it["image"], "u": href,
                             "a": amazon_url(cfg, amazon_query(name)) if cfg.get("amazon_tracking_id") else ""}
@@ -701,6 +701,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 {top_picks(cfg, d, key)}
 <p class="memo-link"><a href="/memo/?o={p['occasion']}&amp;r={p['recipient']}">この日を忘れない(たいせつな日メモに登録)</a></p>
 {quick_pair_note(c, p)}
+{dataroom.occasion_teaser(d, p["occasion"], compact=True)}
 <section class="why-how"><div class="cols"><div><h2><span class="scribble">喜ばれやすい理由</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["reasons"])}</ol></div>
 <div class="how"><h2><span class="scribble">選び方のポイント</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in p["how_to_choose"])}</ol></div></div></section>
 {proposals}
@@ -807,6 +808,7 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("イベント", "/occasion/"), (o["name"], None)])}</div>
 {pr_quiet(cfg)}
 {quick_section(c, o["slug"])}
+{dataroom.occasion_teaser(d, o["slug"])}
 <section style="margin-top:40px" class="cols">{"" if c.get("etiquette", {}).get(o["slug"]) else f'<div><h2><span class="scribble">贈る時期の目安</span></h2><p>{esc(o["timing"])}</p></div>'}
 <div><h2><span class="scribble">選ぶポイント</span></h2><ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in o["tips"])}</ol></div></section>
 <section style="margin-top:50px"><h2><span class="scribble">相手を選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
