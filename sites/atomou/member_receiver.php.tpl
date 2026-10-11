@@ -74,7 +74,7 @@ function save_member($root, $id, $m) {
 }
 function public_view($m) {   // what the browser gets: never the sessions, never other members' data
     return array('email' => $m['email'], 'plan' => $m['plan'], 'tier' => $m['tier'], 'free_until' => $m['free_until'], 'ref_code' => $m['ref_code'],
-                 'referrals' => (int)($m['referrals'] ?? 0), 'notices' => array('on' => !empty($m['notices']['on']), 'n' => count($m['notices']['dates'] ?? array())), 'created' => $m['created'],
+                 'referrals' => (int)($m['referrals'] ?? 0), 'notices' => array('on' => !empty($m['notices']['on']), 'weekly' => !empty($m['notices']['weekly']), 'n' => count($m['notices']['dates'] ?? array())), 'created' => $m['created'],
                  'surveys' => array_map('intval', array_keys(is_array($m['survey'] ?? null) ? $m['survey'] : array())),
                  'pen' => (string)($m['pen'] ?? ''), 'pen_ok' => !empty($m['pen_ok']), 'badges' => badges_of($m));
 }
@@ -233,7 +233,8 @@ if ($a === 'update') {
             if (!is_array($x) || !is_string($x['d'] ?? null) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $x['d'])) { continue; }
             $dates[] = array('d' => $x['d'], 's' => ($x['s'] ?? 'm') === 'e' ? 'e' : 'm', 't' => mb_substr((string)($x['t'] ?? ''), 0, 60));
         }
-        $m['notices'] = array('on' => $on, 'dates' => $on ? $dates : array(), 'updated' => date('c'));
+        $weekly = $on && !empty($d['notices']['weekly']);   // the Monday digest: only for a member who also has the notices on (the days it lists are those notices)
+        $m['notices'] = array('on' => $on, 'weekly' => $weekly, 'dates' => $on ? $dates : array(), 'updated' => date('c'));
     }
     if (array_key_exists('pen', $d)) {   // the name on the thanks page: 20 characters, no address, no link, no phone number
         $pen = mb_substr(trim(preg_replace('/[\x00-\x1F\x7F<>"\'&]/u', '', (string)$d['pen'])), 0, 20);

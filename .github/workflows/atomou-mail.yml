@@ -11,10 +11,11 @@ on:
   schedule:
     - cron: "10 22 * * *"   # 07:10 JST: the morning slot
     - cron: "10 12 * * *"   # 21:10 JST: the evening slot (the night before)
+    - cron: "40 22 * * 0"   # Monday 07:40 JST: slot w, the weekly digest (members who switched it on)
   workflow_dispatch:
     inputs:
       slot:
-        description: "m = morning, e = evening (empty = by the clock)"
+        description: "m = morning, e = evening, w = weekly digest (empty = by the clock)"
         default: ""
       dry_run:
         description: "true = count only, send nothing"
@@ -78,8 +79,10 @@ jobs:
         if: steps.gate.outputs.go == 'true'
         env:
           IN_SLOT: ${{ inputs.slot }}
+          SCHEDULE: ${{ github.event.schedule }}
         run: |
           slot="$IN_SLOT"
+          if [ -z "$slot" ] && [ "$SCHEDULE" = "40 22 * * 0" ]; then slot=w; fi
           if [ -z "$slot" ]; then
             h=$(TZ=Asia/Tokyo date +%H)
             if [ "$h" -ge 15 ] || [ "$h" -lt 3 ]; then slot=e; else slot=m; fi

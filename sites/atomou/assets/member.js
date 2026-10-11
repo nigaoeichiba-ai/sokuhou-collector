@@ -164,6 +164,7 @@
       var link = location.origin + '/?ref=' + me.ref_code, badges = (me.badges || []).map(function (b) { return BADGES[b]; }).filter(Boolean);
       view('<p><b>' + H(me.email) + '</b><br>' + H(tierText(me)) + (badges.length ? '<br>称号: ' + H(badges.join('・')) : '') + '</p>' + surveyHtml() +
         '<div class="field"><label class="lab" for="m-notice"><input type="checkbox" id="m-notice"' + (me.notices.on ? ' checked' : '') + '> メールでもお知らせする(通知と同じ日・同じ時間)</label></div>' +
+        '<div class="field"><label class="lab" for="m-weekly"><input type="checkbox" id="m-weekly"' + (me.notices.weekly ? ' checked' : '') + (me.notices.on ? '' : ' disabled') + '> 毎週月曜の朝に、1週間の予定と、公式の日をまとめて受け取る</label></div>' +
         '<p class="hint">オンにすると、通知する日と予定名(短く)をサーバーで預かります。オフにすると削除します。</p>' +
         '<h3>紹介</h3><p>この紹介リンクから登録した人は、' + months(MC.ref) + 'すべての機能を無料で使えます。その人が1週間以上あけて2回使うと、あなたにも' + months(MC.give) + '追加されます(' + MC.cap + '人まで)。</p>' +
         '<p><input type="text" readonly value="' + H(link) + '" id="m-link"> <button type="button" class="btn small ghost" id="m-copy">コピー</button></p>' +
@@ -181,9 +182,16 @@
         });
       });
       $('#m-notice').addEventListener('change', function () {
-        var on = $('#m-notice').checked;
-        noticeDates().then(function (dates) { return call({ a: 'update', notices: { on: on, dates: dates } }); }).then(function (r) {
+        var on = $('#m-notice').checked, wk = $('#m-weekly');
+        if (wk) { wk.disabled = !on; if (!on) wk.checked = false; }
+        noticeDates().then(function (dates) { return call({ a: 'update', notices: { on: on, weekly: !!(wk && wk.checked), dates: dates } }); }).then(function (r) {
           if (r.ok) { me = r.data.member; A.toast(on ? 'メールでも通知します。' : 'メール通知を止めました。'); } else { A.toast('保存できませんでした。'); $('#m-notice').checked = !on; }
+        });
+      });
+      $('#m-weekly').addEventListener('change', function () {
+        var wk = $('#m-weekly').checked;
+        noticeDates().then(function (dates) { return call({ a: 'update', notices: { on: true, weekly: wk, dates: dates } }); }).then(function (r) {
+          if (r.ok) { me = r.data.member; A.toast(wk ? '毎週月曜の朝に、まとめてお送りします。' : '毎週のメールを止めました。'); } else { A.toast('保存できませんでした。'); $('#m-weekly').checked = !wk; }
         });
       });
       $('#m-logout').addEventListener('click', function () { call({ a: 'logout' }).then(function () { me = null; A.toast('ログアウトしました。'); stepOut(); }); });
@@ -227,7 +235,7 @@
   function followDevice() {
     if (A.page !== 'my') return;
     var cb = $('#m-notice');
-    if (cb && cb.checked) noticeDates().then(function (dates) { return call({ a: 'update', notices: { on: true, dates: dates } }); }).catch(function () { /* next time */ });
+    if (cb && cb.checked) noticeDates().then(function (dates) { var wk = $('#m-weekly'); return call({ a: 'update', notices: { on: true, weekly: !!(wk && wk.checked), dates: dates } }); }).catch(function () { /* next time */ });
   }
   document.addEventListener('atomou:changed', followDevice);
   document.addEventListener('atomou:saved', followDevice);
