@@ -5,10 +5,11 @@ Nothing is copied from another page.  Each says where its facts come from and ho
 by the visitor's own clock (data-cd), and the term / day of today is marked by the script (pageSpecial in assets/app.js).  The pages are not in the menu: they hang under /kyou/."""
 from __future__ import annotations
 
+import json
 from datetime import date, timedelta
 from urllib.parse import quote
 
-from sites.atomou import bizday, calendar_data as cal
+from sites.atomou import bizday, calendar_data as cal, phenology
 
 CAO = "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html"
 OPERATOR = "株式会社MACS"
@@ -162,8 +163,47 @@ def pension_page(c) -> str:
     return c.page("/kyou/pension/", f"年金の支払日 {ys[0]}年・{ys[-1]}年の一覧 | {B.NAME}", "年金は偶数月の15日。15日が土日・祝日のときの支払日と、あと何日かを、2年分まとめました。", body, SPECIAL_KIND)
 
 
+def _md(n: int) -> str:
+    return f"{n // 100}月{n % 100}日"
+
+
+MAIN_STATIONS = ["札幌", "仙台", "新潟", "東京", "名古屋", "金沢", "大阪", "広島", "高松", "福岡", "鹿児島", "那覇"]
+
+
+def pheno_page(c) -> str:
+    """案3: the usual days of the cherry blossoms and the autumn leaves, from the Agency's long series of observations.  Only the past is shown, never a forecast.  A table of the main stations is in
+    the page; the script (assets/pheno.js) lets the visitor choose any of the Agency's stations, counts the days to the usual day and draws the last ten years."""
+    B = _b()
+    esc = B.esc
+    data = phenology.load()
+    sections = []
+    for it in data["items"]:
+        by = {s["n"]: s for s in it["stations"]}
+        rows = "".join(
+            f'<tr><th scope="row">{esc(n)}</th><td>{_md(by[n]["normal"]) if by[n]["normal"] else "—"}</td><td>{_md(by[n]["usual"]) if by[n]["usual"] else "—"}</td>'
+            f'<td>{_md(by[n]["early"][0])}({by[n]["early"][1]}年)</td><td>{_md(by[n]["late"][0])}({by[n]["late"][1]}年)</td></tr>' for n in MAIN_STATIONS if n in by)
+        sections.append(f'<h3>{esc(it["name"])}</h3><div class="tablewrap"><table class="info-table"><thead><tr><th scope="col">地点</th><th scope="col">平年(気象庁)</th><th scope="col">直近10年の平均</th>'
+                        f'<th scope="col">いちばん早い日</th><th scope="col">いちばん遅い日</th></tr></thead><tbody>{rows}</tbody></table></div>')
+    blob = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    body = B.crumbs([("トップ", "/"), ("今日は何の日", "/kyou/"), ("桜と紅葉の、例年の日", None)]) + f"""
+<h1>桜と紅葉の、例年の日</h1>
+<p class="lead muted">桜の開花・満開と、いちょうの黄葉、かえでの紅葉が、これまでの年に、いつごろだったかをまとめました。気象庁の観測の記録(1953年から{data["last"]}年)をもとにしています。<b>今年の開花の予想ではありません。</b></p>
+<section class="panel" id="pheno" data-last="{data["last"]}">
+<div class="field"><label for="ph-st">地点</label><select id="ph-st"><option value="東京">東京</option></select></div>
+<div id="ph-out" aria-live="polite"><p class="muted">地点を選ぶと、その地点の例年の日と、あと何日かが出ます。</p></div>
+</section>
+<script type="application/json" id="ph-data">{blob}</script>
+<h2>主な地点の一覧</h2>
+<p class="hint">「平年」は、気象庁が1991〜2020年の観測から出した日です。「直近10年の平均」は、{data["last"] - 9}〜{data["last"]}年のうち観測のある年の平均で、こちらで数えました。日付は「ごろ」の目安です。</p>
+{"".join(sections)}
+<h2>日付のもとになったもの</h2>
+<p class="small muted">出典: <a href="{data["source"]}" rel="noopener nofollow" target="_blank">気象庁ホームページ「生物季節観測の情報」</a>の累年値(さくらの開花・満開、いちょうの黄葉、かえでの紅葉)を加工して作成しました。平年は気象庁の値、直近10年の平均、いちばん早い日・遅い日は、{OPERATOR}が数え直したものです。いちばん早い日・遅い日は、その地点の桜やいちょう、かえでの観測すべてを数えているため、気象庁の最早・最晩と食いちがう地点があります。観測する地点や種目は変わることがあり、{data["last"]}年までの記録です。これは過去の記録であり、今年の開花や紅葉の時期を予想するものではありません。今年の状況は、気象庁などの発表で確かめてください。</p>"""
+    return c.page("/kyou/sakura/", "桜と紅葉の、例年の日 開花・満開・黄葉・紅葉 | " + B.NAME, "桜の開花と満開、いちょうの黄葉、かえでの紅葉の例年の日と、あと何日か。気象庁の観測の記録をもとに、地点ごとに。", body, SPECIAL_KIND)
+
+
 def special_pages(c, entries: list[dict]) -> dict[str, str]:
     out = {}
+    out["kyou/sakura/index.html"] = pheno_page(c)
     out["kyou/pension/index.html"] = pension_page(c)
     for y in years_for(c.today):
         out[f"kyou/holidays-{y}/index.html"] = holiday_page(c, y)
@@ -178,6 +218,7 @@ def special_links(today: date) -> str:
     items = "".join(f'<li><a href="/kyou/holidays-{y}/"><b>{y}年の祝日と連休</b><span>3連休以上と、休みの取りどころ</span></a></li>' for y in ys[::-1])
     items += '<li><a href="/kyou/season/"><b>季節の便り</b><span>二十四節気まで、あと何日</span></a></li>'
     items += f'<li><a href="/kyou/december/"><b>{today.year}年12月の日めくり</b><span>1日ごとの公式の日</span></a></li>'
+    items += '<li><a href="/kyou/sakura/"><b>桜と紅葉の、例年の日</b><span>開花・満開・紅葉の、これまでの日</span></a></li>'
     items += '<li><a href="/kyou/pension/"><b>年金の支払日</b><span>偶数月の15日。休みなら前の平日</span></a></li>'
     items += '<li><a href="/rule/"><b>毎月の日付の計算</b><span>休みなら前の営業日、のような日付</span></a></li>'
     return f'<h2>特集</h2><ul class="special-links">{items}</ul>'

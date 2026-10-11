@@ -259,7 +259,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'gcal', 'app', 'tier', 'shared', 'share', 'card', 'ical', 'plan', 'quiz', 'rule', 'quick', 'setup', 'swipe', 'live', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'gcal', 'app', 'tier', 'shared', 'share', 'card', 'ical', 'plan', 'quiz', 'rule', 'pheno', 'quick', 'setup', 'swipe', 'live', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
