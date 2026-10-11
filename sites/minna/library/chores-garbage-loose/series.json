@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-12",
+ "slug": "chores-garbage-loose",
+ "title": "ゴミ出し・家の当番",
+ "genre": "life",
+ "touch": "loose",
+ "lead": "ゴミ出し、分別、せんたく、そうじなど、家の当番の場面12点。町内のおしらせや家族の当番表に。",
+ "tags": [
+  "ゴミ出し",
+  "ごみ",
+  "分別",
+  "家事",
+  "当番",
+  "くらし",
+  "そうじ"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "chores-garbage-loose-gomidashi",
+   "file": "chores-garbage-loose-gomidashi.webp",
+   "title": "ゴミ出し",
+   "desc": "ゴミ出しのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "ゴミ出し・家の当番",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 471,
+   "h": 417
+  },
+  {
+   "id": "chores-garbage-loose-bunbetsu",
+   "file": "chores-garbage-loose-bunbetsu.webp",
+   "title": "ゴミの分別",
+   "desc": "ゴミの分別のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "ゴミ出し・家の当番",
+    "ゴミの分別",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 455,
+   "h": 462
+  },
+  {
+   "id": "chores-garbage-loose-shigen",
+   "file": "chores-garbage-loose-shigen.webp",
+   "title": "資源ごみ",
+   "desc": "資源ごみのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "ゴミ出し・家の当番",
+    "資源ごみ",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 461,
+   "h": 339
+  },
+  {
+   "id": "chores-garbage-loose-kanbin",
+   "file": "chores-garbage-loose-kanbin.webp",
+   "title": "びんと缶",
+   "desc": "びんと缶のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "ゴミ出し・家の当番",
+    "びんと缶",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 400,
+   "h": 357
+  },
+  {
+   "id": "chores-garbage-loose-sentaku",
+   "file": "chores-garbage-loose-sentaku.webp",
+   "title": "せんたく",
+   "desc": "せんたくのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "ゴミ出し・家の当番",
+    "せんたく",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 469,
+   "h": 431
+  },
+  {
+   "id": "chores-garbage-loose-souji",
+   "file": "chores-garbage-loose-souji.webp",
+   "title": "そうじ",
+   "desc": "そうじのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "そうじ",
+    "ゴミ出し・家の当番",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 506,
+   "h": 445
+  },
+  {
+   "id": "chores-garbage-loose-mado",
+   "file": "chores-garbage-loose-mado.webp",
+   "title": "まどふき",
+   "desc": "まどふきのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "ゴミ出し・家の当番",
+    "まどふき",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 461,
+   "h": 446
+  },
+  {
+   "id": "chores-garbage-loose-kaimono",
+   "file": "chores-garbage-loose-kaimono.webp",
+   "title": "買い物",
+   "desc": "買い物のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "ゴミ出し・家の当番",
+    "買い物",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 329,
+   "h": 468
+  },
+  {
+   "id": "chores-garbage-loose-cook",
+   "file": "chores-garbage-loose-cook.webp",
+   "title": "夕ごはんの支度",
+   "desc": "夕ごはんの支度のイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "ゴミ出し・家の当番",
+    "夕ごはんの支度",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 499,
+   "h": 454
+  },
+  {
+   "id": "chores-garbage-loose-dishes",
+   "file": "chores-garbage-loose-dishes.webp",
+   "title": "食器あらい",
+   "desc": "食器あらいのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "ゴミ出し・家の当番",
+    "食器あらい",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 500,
+   "h": 463
+  },
+  {
+   "id": "chores-garbage-loose-kids",
+   "file": "chores-garbage-loose-kids.webp",
+   "title": "お手伝いする子ども",
+   "desc": "お手伝いする子どものイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "ゴミ出し・家の当番",
+    "お手伝いする子ども",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 487,
+   "h": 389
+  },
+  {
+   "id": "chores-garbage-loose-tonari",
+   "file": "chores-garbage-loose-tonari.webp",
+   "title": "近所へのあいさつ",
+   "desc": "近所へのあいさつのイラスト。ゆるい手書きのタッチ。",
+   "tags": [
+    "ゴミ出し",
+    "ごみ",
+    "分別",
+    "家事",
+    "ゴミ出し・家の当番",
+    "近所へのあいさつ",
+    "ゆるい手書き",
+    "くらし・もの"
+   ],
+   "w": 518,
+   "h": 450
+  }
+ ]
+}

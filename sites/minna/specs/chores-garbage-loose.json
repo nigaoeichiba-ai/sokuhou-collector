@@ -1,0 +1,84 @@
+{
+ "slug": "chores-garbage-loose",
+ "title": "ゴミ出し・家の当番",
+ "subject": "",
+ "genre": "life",
+ "touch": "loose",
+ "title_fmt": "{ja}",
+ "subject_en": "Hand-drawn loose-line illustrations of everyday household chores, each ONE person or scene centred in its cell, relaxed warm colours. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "ゴミ出し、分別、せんたく、そうじなど、家の当番の場面12点。町内のおしらせや家族の当番表に。",
+ "tags": [
+  "ゴミ出し",
+  "ごみ",
+  "分別",
+  "家事",
+  "当番",
+  "くらし",
+  "そうじ"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "gomidashi",
+   "ゴミ出し",
+   "a person carrying a garbage bag to a collection point"
+  ],
+  [
+   "bunbetsu",
+   "ゴミの分別",
+   "a person sorting trash into three bins"
+  ],
+  [
+   "shigen",
+   "資源ごみ",
+   "a bundle of newspapers tied with string and flattened boxes"
+  ],
+  [
+   "kanbin",
+   "びんと缶",
+   "a crate of bottles and cans"
+  ],
+  [
+   "sentaku",
+   "せんたく",
+   "a person hanging laundry on a line"
+  ],
+  [
+   "souji",
+   "そうじ",
+   "a person vacuuming a living room"
+  ],
+  [
+   "mado",
+   "まどふき",
+   "a person wiping a window"
+  ],
+  [
+   "kaimono",
+   "買い物",
+   "a person with a shopping bag and a reusable bag"
+  ],
+  [
+   "cook",
+   "夕ごはんの支度",
+   "a person cooking at the stove"
+  ],
+  [
+   "dishes",
+   "食器あらい",
+   "a person washing dishes"
+  ],
+  [
+   "kids",
+   "お手伝いする子ども",
+   "a child helping to set the table"
+  ],
+  [
+   "tonari",
+   "近所へのあいさつ",
+   "two neighbours greeting each other in front of houses"
+  ]
+ ],
+ "exclude": []
+}

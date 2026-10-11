@@ -1,0 +1,220 @@
+{
+ "added": "2026-10-12",
+ "slug": "coloring-girls-lineart",
+ "title": "女の子・キャラクターのぬりえ",
+ "genre": "people",
+ "touch": "lineart",
+ "lead": "ドレス、制服、ようふく、お祭りなど、いろいろな女の子の塗り絵12点。線は太くはっきりしていて、印刷して子どもと楽しめます。",
+ "tags": [
+  "ぬりえ",
+  "塗り絵",
+  "女の子",
+  "キャラクター",
+  "線画",
+  "子ども",
+  "印刷"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "coloring-girls-lineart-dress",
+   "file": "coloring-girls-lineart-dress.webp",
+   "title": "ドレスの女の子",
+   "desc": "ドレスの女の子のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "女の子",
+    "キャラクター",
+    "女の子・キャラクターのぬりえ",
+    "ドレスの女の子",
+    "ぬりえ・線画",
+    "人物"
+   ],
+   "w": 378,
+   "h": 522
+  },
+  {
+   "id": "coloring-girls-lineart-uniform",
+   "file": "coloring-girls-lineart-uniform.webp",
+   "title": "制服の女の子",
+   "desc": "制服の女の子のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "女の子",
+    "キャラクター",
+    "女の子・キャラクターのぬりえ",
+    "制服の女の子",
+    "ぬりえ・線画",
+    "人物"
+   ],
+   "w": 343,
+   "h": 510
+  },
+  {
+   "id": "coloring-girls-lineart-yukata",
+   "file": "coloring-girls-lineart-yukata.webp",
+   "title": "浴衣の女の子",
+   "desc": "浴衣の女の子のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "女の子",
+    "キャラクター",
+    "女の子・キャラクターのぬりえ",
+    "浴衣の女の子",
+    "ぬりえ・線画",
+    "人物"
+   ],
+   "w": 366,
+   "h": 522
+  },
+  {
+   "id": "coloring-girls-lineart-princess",
+   "file": "coloring-girls-lineart-princess.webp",
+   "title": "おひめさまの女の子",
+   "desc": "おひめさまの女の子のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "女の子",
+    "キャラクター",
+    "女の子・キャラクターのぬりえ",
+    "おひめさまの女の子",
+    "ぬりえ・線画",
+    "人物"
+   ],
+   "w": 384,
+   "h": 532
+  },
+  {
+   "id": "coloring-girls-lineart-magic",
+   "file": "coloring-girls-lineart-magic.webp",
+   "title": "まほうつかいの女の子",
+   "desc": "まほうつかいの女の子のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "女の子",
+    "キャラクター",
+    "女の子・キャラクターのぬりえ",
+    "まほうつかいの女の子",
+    "ぬりえ・線画",
+    "人物"
+   ],
+   "w": 377,
+   "h": 535
+  },
+  {
+   "id": "coloring-girls-lineart-flowers",
+   "file": "coloring-girls-lineart-flowers.webp",
+   "title": "お花をもつ女の子",
+   "desc": "お花をもつ女の子のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "女の子",
+    "キャラクター",
+    "女の子・キャラクターのぬりえ",
+    "お花をもつ女の子",
+    "ぬりえ・線画",
+    "人物"
+   ],
+   "w": 374,
+   "h": 527
+  },
+  {
+   "id": "coloring-girls-lineart-dance",
+   "file": "coloring-girls-lineart-dance.webp",
+   "title": "おどる女の子",
+   "desc": "おどる女の子のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "女の子",
+    "キャラクター",
+    "女の子・キャラクターのぬりえ",
+    "おどる女の子",
+    "ぬりえ・線画",
+    "人物"
+   ],
+   "w": 390,
+   "h": 529
+  },
+  {
+   "id": "coloring-girls-lineart-sweets",
+   "file": "coloring-girls-lineart-sweets.webp",
+   "title": "おかしを食べる女の子",
+   "desc": "おかしを食べる女の子のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "女の子",
+    "キャラクター",
+    "女の子・キャラクターのぬりえ",
+    "おかしを食べる女の子",
+    "ぬりえ・線画",
+    "人物"
+   ],
+   "w": 372,
+   "h": 526
+  },
+  {
+   "id": "coloring-girls-lineart-pet",
+   "file": "coloring-girls-lineart-pet.webp",
+   "title": "ペットと女の子",
+   "desc": "ペットと女の子のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "女の子",
+    "キャラクター",
+    "女の子・キャラクターのぬりえ",
+    "ペットと女の子",
+    "ぬりえ・線画",
+    "人物"
+   ],
+   "w": 433,
+   "h": 504
+  },
+  {
+   "id": "coloring-girls-lineart-winter",
+   "file": "coloring-girls-lineart-winter.webp",
+   "title": "冬の女の子",
+   "desc": "冬の女の子のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "女の子",
+    "キャラクター",
+    "女の子・キャラクターのぬりえ",
+    "冬の女の子",
+    "ぬりえ・線画",
+    "人物"
+   ],
+   "w": 346,
+   "h": 529
+  },
+  {
+   "id": "coloring-girls-lineart-friends",
+   "file": "coloring-girls-lineart-friends.webp",
+   "title": "なかよしの女の子",
+   "desc": "なかよしの女の子のイラスト。ぬりえ・線画のタッチ。",
+   "tags": [
+    "ぬりえ",
+    "塗り絵",
+    "女の子",
+    "キャラクター",
+    "女の子・キャラクターのぬりえ",
+    "なかよしの女の子",
+    "ぬりえ・線画",
+    "人物"
+   ],
+   "w": 542,
+   "h": 511
+  }
+ ]
+}

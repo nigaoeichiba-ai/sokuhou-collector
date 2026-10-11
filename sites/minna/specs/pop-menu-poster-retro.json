@@ -1,0 +1,87 @@
+{
+ "slug": "pop-menu-poster-retro",
+ "title": "ポップ・メニュー・ポスターの飾り",
+ "subject": "",
+ "genre": "deco",
+ "touch": "retro",
+ "title_fmt": "{ja}",
+ "subject_en": "Showa-era retro shop decorations, each ONE separate piece centred in its cell: bold price-tag shapes, starburst badges, ribbon banners and menu board frames with an EMPTY centre of plain white so it becomes transparent. Limited vintage palette of red, mustard yellow, teal and cream. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "お店のポップ、メニュー枠、ポスター枠、値札、星形のバッジなど、昭和レトロな飾り12点。中があいている枠は、文字や写真をのせてそのまま使えます。",
+ "tags": [
+  "ポップ",
+  "メニュー",
+  "ポスター",
+  "値札",
+  "枠",
+  "レトロ",
+  "お店",
+  "チラシ"
+ ],
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "menu-board",
+   "メニューの黒板風の枠",
+   "a menu board frame with a wooden border and small flowers in the corners, centre empty"
+  ],
+  [
+   "menu-scroll",
+   "メニューの巻物風の枠",
+   "a menu frame shaped like a paper scroll with ribbon ties, centre empty"
+  ],
+  [
+   "poster-frame",
+   "ポスターの枠",
+   "a poster frame with a thick striped border and star corners, centre empty"
+  ],
+  [
+   "pop-starburst",
+   "ポップの星形",
+   "a starburst badge shape with a zigzag edge, centre empty"
+  ],
+  [
+   "pop-price-tag",
+   "値札のポップ",
+   "a hanging price-tag shape with a string and a round hole, centre empty"
+  ],
+  [
+   "pop-ribbon",
+   "リボンのポップ",
+   "a wide ribbon banner with folded ends, centre empty"
+  ],
+  [
+   "pop-balloon",
+   "ふきだし風のポップ",
+   "a bold comic-style speech burst shape, centre empty"
+  ],
+  [
+   "pop-sale-flag",
+   "旗かざりのポップ",
+   "a string of triangle pennant flags in red, yellow and teal"
+  ],
+  [
+   "pop-circle",
+   "まるいポップ",
+   "a round badge with a scalloped edge, centre empty"
+  ],
+  [
+   "pop-arrow",
+   "矢印のポップ",
+   "a bold pointing arrow banner with a dotted outline, centre empty"
+  ],
+  [
+   "pop-notice",
+   "おしらせの枠",
+   "a notice board frame with a pin and a tape strip at the top, centre empty"
+  ],
+  [
+   "pop-chirashi",
+   "チラシの枠",
+   "a flyer frame with a zigzag top edge and dotted border, centre empty"
+  ]
+ ],
+ "exclude": [
+  "menu-scroll"
+ ]
+}

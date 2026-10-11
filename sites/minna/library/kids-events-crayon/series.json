@@ -1,0 +1,236 @@
+{
+ "added": "2026-10-12",
+ "slug": "kids-events-crayon",
+ "title": "保育園・幼稚園の行事",
+ "genre": "school",
+ "touch": "crayon",
+ "lead": "遠足、防災訓練、お遊戯会、いも掘りなど、保育園・幼稚園の行事12点。おたよりや園の掲示物に。",
+ "tags": [
+  "保育園",
+  "幼稚園",
+  "遠足",
+  "防災訓練",
+  "行事",
+  "おたより",
+  "園児"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "kids-events-crayon-ensoku",
+   "file": "kids-events-crayon-ensoku.webp",
+   "title": "遠足",
+   "desc": "遠足のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 531,
+   "h": 292
+  },
+  {
+   "id": "kids-events-crayon-bousai",
+   "file": "kids-events-crayon-bousai.webp",
+   "title": "防災訓練",
+   "desc": "防災訓練のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 499,
+   "h": 307
+  },
+  {
+   "id": "kids-events-crayon-yuugi",
+   "file": "kids-events-crayon-yuugi.webp",
+   "title": "お遊戯会",
+   "desc": "お遊戯会のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "お遊戯会",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 532,
+   "h": 403
+  },
+  {
+   "id": "kids-events-crayon-imohori",
+   "file": "kids-events-crayon-imohori.webp",
+   "title": "いも掘り",
+   "desc": "いも掘りのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "いも掘り",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 531,
+   "h": 351
+  },
+  {
+   "id": "kids-events-crayon-undokai",
+   "file": "kids-events-crayon-undokai.webp",
+   "title": "運動会",
+   "desc": "運動会のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "運動会",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 526,
+   "h": 360
+  },
+  {
+   "id": "kids-events-crayon-tamaire",
+   "file": "kids-events-crayon-tamaire.webp",
+   "title": "玉入れ",
+   "desc": "玉入れのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "玉入れ",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 515,
+   "h": 482
+  },
+  {
+   "id": "kids-events-crayon-hatsuhi",
+   "file": "kids-events-crayon-hatsuhi.webp",
+   "title": "お誕生日会",
+   "desc": "お誕生日会のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "お誕生日会",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 390,
+   "h": 509
+  },
+  {
+   "id": "kids-events-crayon-mochitsuki",
+   "file": "kids-events-crayon-mochitsuki.webp",
+   "title": "もちつき会",
+   "desc": "もちつき会のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "もちつき会",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 493,
+   "h": 508
+  },
+  {
+   "id": "kids-events-crayon-nikki",
+   "file": "kids-events-crayon-nikki.webp",
+   "title": "お絵かき",
+   "desc": "お絵かきのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "お絵かき",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 525,
+   "h": 429
+  },
+  {
+   "id": "kids-events-crayon-bus",
+   "file": "kids-events-crayon-bus.webp",
+   "title": "園バス",
+   "desc": "園バスのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "園バス",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 520,
+   "h": 394
+  },
+  {
+   "id": "kids-events-crayon-tsuyu",
+   "file": "kids-events-crayon-tsuyu.webp",
+   "title": "どろんこ遊び",
+   "desc": "どろんこ遊びのイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "どろんこ遊び",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 533,
+   "h": 481
+  },
+  {
+   "id": "kids-events-crayon-sotsuen",
+   "file": "kids-events-crayon-sotsuen.webp",
+   "title": "卒園式",
+   "desc": "卒園式のイラスト。クレヨン・手描きのタッチ。",
+   "tags": [
+    "保育園",
+    "幼稚園",
+    "遠足",
+    "防災訓練",
+    "保育園・幼稚園の行事",
+    "卒園式",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 386,
+   "h": 493
+  }
+ ]
+}

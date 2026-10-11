@@ -1,0 +1,224 @@
+{
+ "added": "2026-10-12",
+ "slug": "frames-school-days-flat",
+ "title": "給食・お弁当・卒業のフレーム",
+ "genre": "deco",
+ "touch": "flat",
+ "lead": "給食、お弁当、卒業、遠足、入学、読書、お月見、ハロウィン、紅葉などの飾り枠12点。中があいているので、写真や文字をそのまま入れられます。",
+ "tags": [
+  "フレーム",
+  "枠",
+  "給食",
+  "お弁当",
+  "卒業",
+  "お月見",
+  "ハロウィン",
+  "おたより"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "frames-school-days-flat-kyushoku",
+   "file": "frames-school-days-flat-kyushoku.webp",
+   "title": "給食のフレーム",
+   "desc": "給食のフレームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "給食",
+    "お弁当",
+    "給食・お弁当・卒業のフレーム",
+    "給食のフレーム",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 456,
+   "h": 448
+  },
+  {
+   "id": "frames-school-days-flat-sotsugyo",
+   "file": "frames-school-days-flat-sotsugyo.webp",
+   "title": "卒業のフレーム",
+   "desc": "卒業のフレームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "給食",
+    "お弁当",
+    "卒業",
+    "給食・お弁当・卒業のフレーム",
+    "卒業のフレーム",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 486,
+   "h": 465
+  },
+  {
+   "id": "frames-school-days-flat-ensoku",
+   "file": "frames-school-days-flat-ensoku.webp",
+   "title": "遠足のフレーム",
+   "desc": "遠足のフレームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "給食",
+    "お弁当",
+    "給食・お弁当・卒業のフレーム",
+    "遠足のフレーム",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 488,
+   "h": 484
+  },
+  {
+   "id": "frames-school-days-flat-nyugaku",
+   "file": "frames-school-days-flat-nyugaku.webp",
+   "title": "入学のフレーム",
+   "desc": "入学のフレームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "給食",
+    "お弁当",
+    "給食・お弁当・卒業のフレーム",
+    "入学のフレーム",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 505,
+   "h": 506
+  },
+  {
+   "id": "frames-school-days-flat-dokusho",
+   "file": "frames-school-days-flat-dokusho.webp",
+   "title": "読書のフレーム",
+   "desc": "読書のフレームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "給食",
+    "お弁当",
+    "給食・お弁当・卒業のフレーム",
+    "読書のフレーム",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 500,
+   "h": 474
+  },
+  {
+   "id": "frames-school-days-flat-otsukimi",
+   "file": "frames-school-days-flat-otsukimi.webp",
+   "title": "お月見のフレーム",
+   "desc": "お月見のフレームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "給食",
+    "お弁当",
+    "お月見",
+    "給食・お弁当・卒業のフレーム",
+    "お月見のフレーム",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 481,
+   "h": 461
+  },
+  {
+   "id": "frames-school-days-flat-halloween",
+   "file": "frames-school-days-flat-halloween.webp",
+   "title": "ハロウィンのフレーム",
+   "desc": "ハロウィンのフレームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "給食",
+    "お弁当",
+    "ハロウィン",
+    "給食・お弁当・卒業のフレーム",
+    "ハロウィンのフレーム",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 543,
+   "h": 454
+  },
+  {
+   "id": "frames-school-days-flat-momiji",
+   "file": "frames-school-days-flat-momiji.webp",
+   "title": "紅葉のフレーム",
+   "desc": "紅葉のフレームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "給食",
+    "お弁当",
+    "給食・お弁当・卒業のフレーム",
+    "紅葉のフレーム",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 492,
+   "h": 460
+  },
+  {
+   "id": "frames-school-days-flat-fuyu",
+   "file": "frames-school-days-flat-fuyu.webp",
+   "title": "冬のフレーム",
+   "desc": "冬のフレームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "給食",
+    "お弁当",
+    "給食・お弁当・卒業のフレーム",
+    "冬のフレーム",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 491,
+   "h": 463
+  },
+  {
+   "id": "frames-school-days-flat-kodomo",
+   "file": "frames-school-days-flat-kodomo.webp",
+   "title": "こどもの日のフレーム",
+   "desc": "こどもの日のフレームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "給食",
+    "お弁当",
+    "給食・お弁当・卒業のフレーム",
+    "こどもの日のフレーム",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 526,
+   "h": 461
+  },
+  {
+   "id": "frames-school-days-flat-tanabata",
+   "file": "frames-school-days-flat-tanabata.webp",
+   "title": "七夕のフレーム",
+   "desc": "七夕のフレームのイラスト。シンプルフラットのタッチ。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "給食",
+    "お弁当",
+    "給食・お弁当・卒業のフレーム",
+    "七夕のフレーム",
+    "シンプルフラット",
+    "フレーム・かざり"
+   ],
+   "w": 486,
+   "h": 472
+  }
+ ]
+}

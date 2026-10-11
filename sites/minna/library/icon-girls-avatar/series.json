@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-12",
+ "slug": "icon-girls-avatar",
+ "title": "女の子のアイコン",
+ "genre": "icon",
+ "touch": "kawaii",
+ "lead": "ボブ、ポニーテール、おだんごなど、いろいろな髪型の女の子のアイコン12点。SNSやLINEのアイコンに。",
+ "tags": [
+  "アイコン",
+  "女の子",
+  "SNS",
+  "LINE",
+  "アバター",
+  "かわいい"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "icon-girls-avatar-bob",
+   "file": "icon-girls-avatar-bob.webp",
+   "title": "ボブの女の子",
+   "desc": "ボブの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "ボブの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 421,
+   "h": 456
+  },
+  {
+   "id": "icon-girls-avatar-pony",
+   "file": "icon-girls-avatar-pony.webp",
+   "title": "ポニーテールの女の子",
+   "desc": "ポニーテールの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "ポニーテールの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 457,
+   "h": 481
+  },
+  {
+   "id": "icon-girls-avatar-odango",
+   "file": "icon-girls-avatar-odango.webp",
+   "title": "おだんごヘアの女の子",
+   "desc": "おだんごヘアの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "おだんごヘアの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 455,
+   "h": 454
+  },
+  {
+   "id": "icon-girls-avatar-twin",
+   "file": "icon-girls-avatar-twin.webp",
+   "title": "ツインテールの女の子",
+   "desc": "ツインテールの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "ツインテールの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 488,
+   "h": 461
+  },
+  {
+   "id": "icon-girls-avatar-long",
+   "file": "icon-girls-avatar-long.webp",
+   "title": "ロングヘアの女の子",
+   "desc": "ロングヘアの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "ロングヘアの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 439,
+   "h": 470
+  },
+  {
+   "id": "icon-girls-avatar-curly",
+   "file": "icon-girls-avatar-curly.webp",
+   "title": "くるくるカールの女の子",
+   "desc": "くるくるカールの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "くるくるカールの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 505,
+   "h": 472
+  },
+  {
+   "id": "icon-girls-avatar-short",
+   "file": "icon-girls-avatar-short.webp",
+   "title": "ショートヘアの女の子",
+   "desc": "ショートヘアの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "ショートヘアの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 459,
+   "h": 486
+  },
+  {
+   "id": "icon-girls-avatar-cap",
+   "file": "icon-girls-avatar-cap.webp",
+   "title": "ぼうしの女の子",
+   "desc": "ぼうしの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "ぼうしの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 482,
+   "h": 504
+  },
+  {
+   "id": "icon-girls-avatar-glasses",
+   "file": "icon-girls-avatar-glasses.webp",
+   "title": "めがねの女の子",
+   "desc": "めがねの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "めがねの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 397,
+   "h": 515
+  },
+  {
+   "id": "icon-girls-avatar-ribbon",
+   "file": "icon-girls-avatar-ribbon.webp",
+   "title": "リボンの女の子",
+   "desc": "リボンの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "リボンの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 495,
+   "h": 522
+  },
+  {
+   "id": "icon-girls-avatar-scarf",
+   "file": "icon-girls-avatar-scarf.webp",
+   "title": "マフラーの女の子",
+   "desc": "マフラーの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "マフラーの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 395,
+   "h": 529
+  },
+  {
+   "id": "icon-girls-avatar-flower",
+   "file": "icon-girls-avatar-flower.webp",
+   "title": "お花のかざりの女の子",
+   "desc": "お花のかざりの女の子のイラスト。ゆるかわのタッチ。",
+   "tags": [
+    "アイコン",
+    "女の子",
+    "SNS",
+    "LINE",
+    "女の子のアイコン",
+    "お花のかざりの女の子",
+    "ゆるかわ",
+    "アイコン・マーク"
+   ],
+   "w": 483,
+   "h": 498
+  }
+ ]
+}
