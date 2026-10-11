@@ -1266,8 +1266,8 @@ def kyou_page(c: Ctx, md: str, items: list[tuple[int, dict, bool]], prev_next: t
     title = f"{m}月{d}日は何の日？ {n}件の日付 | {NAME}"
     names = "、".join(e["title"] for _, e, _h in items[:3])
     desc = f"{m}月{d}日にある日付: {names}など{n}件。出典と確認日つきで、あと何日か、もう何日かも数えられます。"[:150]
-    html = c.page(f"/kyou/{md}/", title, desc, body, "kyou", noindex=n < 2)
-    return (strip_ads(html) if quiet_any else html), n >= 2
+    html = c.page(f"/kyou/{md}/", title, desc, body, "kyouq" if quiet_any else "kyou", noindex=n < 2)   # "kyouq" is not an ad kind: a date with a quiet day carries no ad code
+    return html, n >= 2
 
 
 def kyou_index(c: Ctx, days: dict[str, list]) -> str:

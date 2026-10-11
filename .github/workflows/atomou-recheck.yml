@@ -56,7 +56,8 @@ jobs:
           printf '%s\n' "$KEY" > ~/.ssh/id_xserver && chmod 600 ~/.ssh/id_xserver
           printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 15' '  StrictHostKeyChecking accept-new' > ~/.ssh/config && chmod 600 ~/.ssh/config
           ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /dev/null || true
-          cat recheck.v1.json | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" '
+          # the server sometimes drops a connection while a deploy is running (run #1 of this workflow failed just here): try again, with growing pauses
+          put() { cat recheck.v1.json | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" '
             set -e
             cd "$HOME/atomou.com"
             tmp=$(mktemp)
@@ -71,7 +72,13 @@ jobs:
               fi
             done
             rm -f "$tmp"
-          '
+          '; }
+          done_=0
+          for try in 1 2 3 4 5 6; do
+            if put; then done_=1; break; fi
+            echo "the server did not take the file (attempt $try)"; sleep $((try * 30))
+          done
+          [ "$done_" = 1 ]
       - name: Keep the report
         uses: actions/upload-artifact@v4
         with:
