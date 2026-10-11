@@ -2,10 +2,13 @@ import json
 import unittest
 from datetime import datetime
 
+from pathlib import Path
+
 from sites.yorokobu import fetch, refresh
 from sokuhou import rakuten
 from tests.test_yorokobu_fetch import CONTENT, FILTERS, FakeTransport, client, raw_item
 
+CONTENT_DIR_REAL = Path(__file__).resolve().parents[1] / "sites" / "yorokobu" / "content"
 PICKS = {
     "birthday-boyfriend": [
         {"picks": [{"code": "p1", "note": "毎日使う定番です。"}, {"code": "p2", "note": "革の質感のレビューが多いです。"}], "backups": ["b1", "b2"]},
@@ -44,6 +47,18 @@ class RefreshTest(unittest.TestCase):
         self.assertEqual(ideas[0]["items"][0]["note"], "毎日使う定番です。")
         self.assertTrue(any("itemCode=p1" in u for u, _ in t.urls))
         self.assertEqual(data["stats"]["replaced"], 0)
+
+    def test_the_daily_picks_of_the_newest_days_are_looked_up_again_and_a_gone_one_is_left_out_of_the_data(self):
+        import copy
+        day = json.loads((CONTENT_DIR_REAL / "daily" / "2026-10-11.json").read_text(encoding="utf-8"))
+        content = dict(CONTENT)
+        content["daily"] = [day]
+        gone = (day["rakuten"][2]["code"],)
+        t = FakeTransport(lambda u: item_for(u, gone, ()))
+        data = refresh.refresh(content, client(t), {k: copy.deepcopy(v) for k, v in PICKS.items()}, now=datetime(2026, 10, 11, 7, 0))
+        self.assertEqual(sorted(data["daily"]), sorted(e["code"] for i, e in enumerate(day["rakuten"]) if e["code"] not in gone))
+        self.assertTrue(all(any(f"itemCode={e['code'].replace(':', '%3A')}" in u or f"itemCode={e['code']}" in u for u, _ in t.urls) for e in day["rakuten"]))
+        self.assertEqual(refresh.dp.rakuten_codes([]), [])                       # no day files: nothing to look up
 
     def test_a_pick_that_is_gone_or_sold_out_is_replaced_by_the_first_good_backup(self):
         data, _ = self.run_refresh(gone=("p1",), sold_out=("b1",))
