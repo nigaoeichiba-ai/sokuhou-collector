@@ -1442,6 +1442,26 @@
       hydrate(box);
     }).catch(function () { box.innerHTML = head + '<p><a class="btn small" href="' + a.getAttribute('href') + '">今日の日付を見る</a></p>'; });
   }
+  /* ---------- the 特集 pages under /kyou/ (holidays, solar terms, December): "あと○日" from the device's clock, and today's term / day marked ---------- */
+  function pageSpecial() {
+    $$('[data-cd]').forEach(function (el) {
+      var d = C.parse(el.getAttribute('data-cd'));
+      if (d) el.textContent = C.countdown(d, TODAY, 'day').big;
+    });
+    var terms = $$('article.term[data-d]'), now = $('#season-now'), days = $$('article.day[data-d]'), dn = $('#day-now');
+    if (now && terms.length) {
+      var iso = C.iso(TODAY), cur = null, nxt = null;
+      terms.forEach(function (t) { if (t.getAttribute('data-d') <= iso) cur = t; else if (!nxt) nxt = t; });
+      var name = function (t) { return t.querySelector('h3').firstChild.textContent.trim(); };
+      if (cur) cur.classList.add('now');
+      now.innerHTML = (cur ? '<p>いまは「<b>' + H(name(cur)) + '</b>」の頃です。</p>' : '') + (nxt ? '<p>次の節気は「<b>' + H(name(nxt)) + '</b>」。<span class="big-cd">' + H(C.countdown(C.parse(nxt.getAttribute('data-d')), TODAY, 'day').big) + '</span>です。</p>' : '');
+    }
+    if (dn && days.length) {
+      var t0 = C.iso(TODAY), hit = days.filter(function (x) { return x.getAttribute('data-d') === t0; })[0];
+      if (hit) { hit.classList.add('now'); dn.innerHTML = '<p>今日(' + TODAY[1] + '月' + TODAY[2] + '日)は、<a href="#' + (hit.id || (hit.id = 'd' + TODAY[2])) + '">この日です</a>。</p>'; }
+      else { dn.hidden = true; }
+    }
+  }
   /* ---------- 新着・人気: the popular list is a small file the server writes (live/pop.v1.json: ids in order, no numbers) ---------- */
   function pageNew() {
     var grid = $('#pop-grid'), none = $('#pop-none');
@@ -1516,6 +1536,7 @@
   else if (page === 'category') pageCategory();
   else if (page === 'today') pageToday();
   else if (page === 'kyou') pageKyou();
+  else if (page === 'special') pageSpecial();
   else if (page === 'new') pageNew();
   else if (page === 'interests') pageInterests();
   window.AtomouApp = { toggleSave: toggleSave, picked: picked, pickCount: pickCount, regionHits: regionHits, interestHits: interestHits, matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
