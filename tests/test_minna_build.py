@@ -39,6 +39,30 @@ class MinnaBuildTest(unittest.TestCase):
             for rel in (f"illust/{it['id']}/index.html", f"files/{it['id']}.png", f"files/{it['id']}.webp", f"thumbs/{it['id']}.webp"):
                 self.assertIn(rel, self.files)
 
+    def test_keyword_pages_exist_only_for_words_with_enough_items_from_several_sets(self):
+        tags = build.tag_list(self.items)
+        self.assertGreater(len(tags), 20)
+        self.assertLessEqual(len(tags), build.MAX_TAG_PAGES)
+        for tag in tags:
+            users = [i for i in self.items if tag in i["tags"]]
+            self.assertGreaterEqual(len(users), build.MIN_TAG)                 # counted here, not by the builder
+            self.assertGreaterEqual(len({i["series"] for i in users}), 2)
+            self.assertNotIn(" ", tag)
+            html = self.read(build.tag_url(tag).strip("/") + "/index.html")
+            self.assertIn(f"{len(users)}点あつめました", html)
+            self.assertIn("<h1>「" + tag + "」のイラスト</h1>", html)
+        for rare in ("イラスト", "かわいい"):
+            self.assertNotIn(rare, tags)
+        self.assertIn("/tag/", self.read("sitemap.xml"))
+
+    def test_detail_page_links_a_keyword_to_its_page_only_when_the_page_exists(self):
+        tags = set(build.tag_list(self.items))
+        it = next(i for i in self.items if any(t in tags for t in i["tags"]) and any(t not in tags for t in i["tags"]))
+        html = self.read(f"illust/{it['id']}/index.html")
+        for t in it["tags"]:
+            link = f'<li><a href="{build.tag_url(t)}">{t}</a></li>'
+            self.assertEqual(link in html, t in tags)
+
     def test_downloads_are_transparent_pngs_of_the_stated_size(self):
         from PIL import Image
         it = self.items[0]

@@ -14,6 +14,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import sys
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -32,6 +33,8 @@ from sokuhou import contactform, rakuten  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 PER_PAGE = 60
+MIN_TAG = 12            # a keyword page exists only with at least this many items from at least two sets
+MAX_TAG_PAGES = 150
 MIN_CROSS = 12          # a genre x touch page exists only with at least this many items
 BASE_NAV = [("イラスト", "/illust/", "/illust/"), ("特集", "/special/", "/special/"), ("読みもの", "/guide/", "/guide/"), ("印刷", "/printables/", "/printables/"), ("カードをつくる", "/tool/card/", "/tool/"), ("リクエスト", "/request/", "/request/")]
 SITE = {
@@ -668,6 +671,38 @@ def genre_pages(cfg, preview, items, series) -> dict:
     return out
 
 
+def tag_list(items: list[dict]) -> list[str]:
+    """Keywords that get their own page: plain words used by >= MIN_TAG items from >= 2 sets, most used first.
+
+    Skipped: genre/touch names (they have pages already), set-name tags with a space, months, years, and the two words every item carries."""
+    found: dict[str, list[dict]] = {}
+    for it in items:
+        for t in set(it["tags"]):
+            found.setdefault(t, []).append(it)
+    skip = {g[1] for g in GENRES} | {t[1] for t in TOUCHES} | {"イラスト", "かわいい"}
+    ok = [t for t, v in found.items() if len(v) >= MIN_TAG and t not in skip and " " not in t and not re.fullmatch(r"\d+月?|令和\d+年|\d+", t)
+          and len({i["series"] for i in v}) >= 2]
+    return sorted(ok, key=lambda t: (-len(found[t]), t))[:MAX_TAG_PAGES]
+
+
+def tag_url(tag: str) -> str:
+    """ASCII and stable (a hash of the word): sitemaps and static hosting want escaped URLs, and Japanese folder names would need two spellings."""
+    return f"/tag/{hashlib.sha1(tag.encode('utf-8')).hexdigest()[:10]}/"
+
+
+def tag_pages(cfg, preview, items, tags: list[str]) -> dict:
+    out = {}
+    for tag in tags:
+        its = sorted((i for i in items if tag in i["tags"]), key=lambda i: (i["added"], i["id"]), reverse=True)
+        nseries = len({i["series"] for i in its})
+        head = (f'<h1>「{esc(tag)}」のイラスト</h1><p class="lead">「{esc(tag)}」のキーワードがついたイラストを、{nseries}つのセットから{len(its)}点あつめました。'
+                f'無料・商用OK・クレジット不要。</p>{licence_box()}')
+        pages = paged(cfg, preview, tag_url(tag), its, head, f"{tag}のイラスト 無料・商用OK | {cfg['site_name']}",
+                      f"{tag}のイラスト{len(its)}点。無料・商用OK・登録不要の透明PNG。", [("トップ", "/"), (tag, None)])
+        out.update(pages)
+    return out
+
+
 def touch_pages(cfg, preview, items, series) -> dict:
     out = {}
     for slug, name, desc, _ in TOUCHES:
@@ -722,7 +757,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
     mates = (s["items"][idx + 1:] + s["items"][:idx])[:8]
     others = [x for x in items if x["genre"] == it["genre"] and x["series"] != it["series"]][:4]
     uses = "".join(f"<li>{esc(u)}</li>" for u in USES[it["genre"]])
-    tags = "".join(f'<li>{esc(x)}</li>' for x in it["tags"])
+    tags = "".join(f'<li><a href="{tag_url(x)}">{esc(x)}</a></li>' if x in SITE.get("tags", ()) else f'<li>{esc(x)}</li>' for x in it["tags"])
     ld = json.dumps({"@context": "https://schema.org", "@type": "ImageObject", "contentUrl": f"{base}/files/{it['id']}.png", "name": it["title"],
                      "description": it["desc"], "license": f"{base}/license/", "acquireLicensePage": f"{base}/license/",
                      "creditText": cfg["site_name"], "creator": {"@type": "Organization", "name": cfg["operator_name"]}, "width": it["w"], "height": it["h"],
@@ -916,6 +951,9 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     pages.update(illust_hub(cfg, preview, items, series))
     pages.update(genre_pages(cfg, preview, items, series))
     pages.update(touch_pages(cfg, preview, items, series))
+    tags = tag_list(items)
+    SITE["tags"] = set(tags)
+    pages.update(tag_pages(cfg, preview, items, tags))
     pages["license/index.html"] = license_page(cfg, preview)
     pages["request/index.html"] = request_page(cfg, preview)
     pages["tool/card/index.html"] = tool_page(cfg, preview, items, series)
