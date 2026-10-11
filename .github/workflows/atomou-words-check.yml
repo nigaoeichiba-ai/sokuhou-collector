@@ -1,0 +1,52 @@
+name: atomou-words-check
+
+# atomou.com: one real try of the words receiver (api/w.php) on the hidden demo (demo.atomou.com, behind its password): a test word must be kept, a forbidden word and a phone
+# number must be refused, a GET must be refused.  Then the server is looked at (read only): the word's line must be in the inbox.  Run by hand ("Run workflow").
+# The test word starts with 動作確認 (the daily research skips such words).  Uses the demo's own secrets (ATOMOU_DEMO_USER / ATOMOU_DEMO_PASSWORD) and the deploy's SSH secrets.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Try the receiver
+        env:
+          DEMO_USER: ${{ secrets.ATOMOU_DEMO_USER || 'demo' }}
+          DEMO_PASS: ${{ secrets.ATOMOU_DEMO_PASSWORD }}
+        run: |
+          if [ -z "$DEMO_PASS" ]; then echo "the demo password secret is not set"; exit 1; fi
+          url=https://demo.atomou.com/api/w.php
+          post() { curl -s -m 30 -o body.txt -w '%{http_code}' -u "$DEMO_USER:$DEMO_PASS" -H 'Origin: https://demo.atomou.com' -H 'Content-Type: text/plain' --data "$1" "$url"; }
+          ok=$(post '{"v":1,"w":"動作確認 テスト 2026-10-11"}'); echo "a test word: HTTP $ok $(head -c 200 body.txt)"
+          bad=$(post '{"v":1,"w":"動作確認 馬券 予想"}'); echo "a forbidden word: HTTP $bad $(head -c 200 body.txt)"
+          tel=$(post '{"v":1,"w":"動作確認 090-1234-5678"}'); echo "a phone number: HTTP $tel $(head -c 200 body.txt)"
+          get=$(curl -s -m 30 -o body.txt -w '%{http_code}' -u "$DEMO_USER:$DEMO_PASS" "$url"); echo "a GET: HTTP $get"
+          { echo "### api/w.php"; echo "test word: $ok / forbidden word: $bad / phone number: $tel / GET: $get"; } >> "$GITHUB_STEP_SUMMARY"
+          [ "$ok" = "200" ] && [ "$bad" = "422" ] && [ "$tel" = "422" ] && [ "$get" = "405" ]
+      - name: Look at the inbox on the server (read only)
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then echo "server secrets are not set"; exit 1; fi
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver && chmod 600 ~/.ssh/id_xserver
+          printf '%s\n' 'Host *' '  ConnectionAttempts 3' '  ConnectTimeout 20' '  StrictHostKeyChecking accept-new' > ~/.ssh/config && chmod 600 ~/.ssh/config
+          ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /dev/null || true
+          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" '
+            d="$HOME/atomou.com/inbox"
+            ls -la "$d" 2>&1 | head -8
+            echo "== lines of the test"; grep -h "動作確認" "$d"/words-*.jsonl 2>/dev/null | tail -3 | cut -c1-200
+            echo "== forbidden word kept? (must be 0)"; grep -h "馬券" "$d"/words-*.jsonl 2>/dev/null | wc -l
+          ' | tee inbox.txt
+          grep -q "動作確認 テスト" inbox.txt
