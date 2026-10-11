@@ -184,16 +184,21 @@ def og_for(name: str) -> str:
     return f"/og/{name}.png" if name in OG else "/assets/img/og.webp"
 
 
-def share_bar(cfg: dict, path: str, text: str, label: str = "この候補、誰かに相談する") -> str:
-    """LINE / X / copy-link buttons.  The shared text carries our page URL only, never an affiliate link."""
+def share_bar(cfg: dict, path: str, text: str, label: str = "この候補、誰かに相談する", hint: bool = False) -> str:
+    """LINE / mail / X / copy-link buttons (and the phone's own share sheet, shown by the script when there is one).  The shared text carries our page URL only,
+    never an affiliate link.  `hint` adds the line that says how to send the page to oneself (a note for later on the phone)."""
     url = cfg["site_url"].rstrip("/") + path
-    line = "https://line.me/R/share?text=" + quote(f"{text}\n{url}", safe="")
+    both = f"{text}\n{url}"
+    line = "https://line.me/R/share?text=" + quote(both, safe="")
     x = "https://twitter.com/intent/tweet?text=" + quote(text, safe="") + "&url=" + quote(url, safe="")
+    mail = "mailto:?subject=" + quote(text, safe="") + "&body=" + quote(both, safe="")
+    note = '<p class="share-hint">あとで見返すなら、LINEの送り先に自分のトークを選ぶか、メールで自分あてに送っておくと、スマホで開けます。</p>' if hint else ""
     return (f'<div class="share"><span class="share-label">{esc(label)}</span>'
             f'<a class="share-btn line" href="{esc(line)}" target="_blank" rel="noopener">LINEで送る</a>'
+            f'<a class="share-btn mail" href="{esc(mail)}">メールで送る</a>'
             f'<a class="share-btn x" href="{esc(x)}" target="_blank" rel="noopener">Xで共有</a>'
             f'<button type="button" class="share-btn native" hidden data-url="{esc(url)}" data-text="{esc(text)}">共有する</button>'
-            f'<button type="button" class="share-btn copy" data-url="{esc(url)}">リンクをコピー</button></div>')
+            f'<button type="button" class="share-btn copy" data-url="{esc(url)}">リンクをコピー</button></div>{note}')
 
 
 def icon_img(kind: str, slug: str, size: int = 64) -> str:
@@ -659,7 +664,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (occ["name"], f"/occasion/{occ['slug']}/"), (p["title"].split(" ")[0], None)])}</div>
 {pr_quiet(cfg)}
-{share_bar(cfg, f"/gift/{key}/", f"{p['title'].split(' ')[0]}の候補です。どれが合うか、意見をください。")}
+{share_bar(cfg, f"/gift/{key}/", f"{p['title'].split(' ')[0]}の候補です。どれが合うか、意見をください。", hint=True)}
 {top_picks(cfg, d, key)}
 <p class="memo-link"><a href="/memo/?o={p['occasion']}&amp;r={p['recipient']}">この日を忘れない(たいせつな日メモに登録)</a></p>
 {quick_pair_note(c, p)}
@@ -1600,7 +1605,7 @@ def prepare(c: dict, items: dict | None, cfg: dict) -> dict:
         else:  # data fetched before ideas existed: budget lists only
             pairs[k] = {t: [i for i in lst if ok(i)] for t, lst in v.items() if isinstance(lst, list)}
     d = {"c": c, "pairs": pairs, "portrait": items.get("portrait", []), "fetched_label": label, "site_name": cfg["site_name"],
-         "fetched_date": (f or date.today().isoformat())[:10], "daily_items": items.get("daily", {})}
+         "fetched_date": (f or date.today().isoformat())[:10], "daily_items": items.get("daily", {}), "site_url": cfg["site_url"]}
     if items.get("pairs"):
         d["live_themes"] = [t for t in c["themes"] if len(pair_items(d, t["key"])[2]) >= MIN_THEME_ITEMS]
     else:                       # a preview build without any product data shows every theme
@@ -1626,6 +1631,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     preview = bool(missing)
     today = today or date.today()
     d = prepare(c, items, cfg)
+    d["cfg"], d["today"] = cfg, today
     d["ranking"] = rk.view(ranking, c["filters"])
     global RANKING_ON, DATA_ON, PICKS_ON
     RANKING_ON = bool(d["ranking"])
@@ -1655,7 +1661,12 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
             cards[f"og/picks/{day['date']}.png"] = ogimage.card(title="今日のおすすめギフト", tag=f"{m}月{dd}日 {day['theme']}", site=site, photo=day["amazon"][0]["mood"])
         for th in c["themes"]:
             cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]), site=site, photo=mood_photo(th["slug"]))
-        OG.update(k[len("og/"):-len(".png")] for k in cards)
+        for cid, ch in (d.get("_chart_cards") or {}).items():          # the data room's charts as pictures: a preview for sharing the page, a tall one to keep or send
+            kw = dict(title=ch["title"], finding=ch["finding"], rows=ch["rows"], source=ch["source"], site=cfg["site_url"].split("//")[-1].rstrip("/"),
+                      series=ch.get("series", "s1"), ranges=bool(ch.get("ranges")))
+            cards[f"og/data/{cid}.png"] = ogimage.chart_card(**kw)
+            cards[f"data/img/{cid}.png"] = ogimage.chart_card(**kw, tall=True)
+        OG.update(k[len("og/"):-len(".png")] for k in cards if k.startswith("og/"))
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview, today),
                                      "occasion/index.html": hub_page(d, cfg, preview, "occasion"),
                                      "for/index.html": hub_page(d, cfg, preview, "for")}

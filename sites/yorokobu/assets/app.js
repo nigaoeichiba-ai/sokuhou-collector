@@ -126,7 +126,8 @@
     var bar = document.createElement("div");
     bar.className = "fav-bar"; bar.hidden = true;
     bar.innerHTML = '<button type="button" class="fav-open">♥ 気になるリスト <b>0</b></button><div class="fav-panel" hidden><h3>気になるリスト</h3><ul></ul>' +
-      '<p class="fav-note">このブラウザにだけ保存されます。</p><div class="fav-actions"><a class="btn" target="_blank" rel="noopener">LINEで送る</a><button type="button" class="btn btn-sub fav-copy">コピー</button></div></div>';
+      '<p class="fav-note">このブラウザにだけ保存されます。</p><div class="fav-actions"><a class="btn fav-line" target="_blank" rel="noopener">LINEで送る</a><a class="btn btn-sub fav-mail">メールで送る</a><button type="button" class="btn btn-sub fav-img">画像で保存</button><button type="button" class="btn btn-sub fav-copy">コピー</button></div>' +
+      '<p class="fav-note">自分のスマホに残すなら、LINEの送り先に自分のトークを選ぶか、メールで自分あてに送ります。画像は、スクリーンショットのように保存できます。</p></div>';
     document.body.appendChild(bar);
     var panel = $(".fav-panel", bar), ul = $("ul", panel);
     function text() {
@@ -153,7 +154,8 @@
         $("button", li).addEventListener("click", function () { favs = favs.filter(function (y) { return y.code !== x.code; }); save(); paint(); render(); });
         ul.appendChild(li);
       });
-      $("a.btn", panel).href = "https://line.me/R/msg/text/?" + encodeURIComponent(text());
+      $(".fav-line", panel).href = "https://line.me/R/msg/text/?" + encodeURIComponent(text());
+      $(".fav-mail", panel).href = "mailto:?subject=" + encodeURIComponent("贈り物の候補") + "&body=" + encodeURIComponent(text());
     }
     buttons.forEach(function (b) {
       b.addEventListener("click", function () {
@@ -169,6 +171,41 @@
       sb.addEventListener("click", function () { navigator.share({ title: "贈り物の候補", text: "贈り物の候補です。どれが合うか、意見をください。", url: listUrl() }).catch(function () {}); });
       $(".fav-actions", bar).appendChild(sb);
     }
+    // the list as a picture (names and prices; drawn here in the browser, nothing is sent anywhere): saved, or handed to the phone's share sheet
+    function drawList(done) {
+      var W = 1080, pad = 70, rowH = 96, headH = 210, footH = 150, n = favs.length, H = headH + n * rowH + footH;
+      var c = document.createElement("canvas"); c.width = W; c.height = H;
+      var g = c.getContext("2d"), FONT = '"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif';
+      g.fillStyle = "#fbf6ee"; g.fillRect(0, 0, W, H);
+      g.fillStyle = "#fff"; g.strokeStyle = "#e9dfd0"; g.lineWidth = 3;
+      g.beginPath(); if (g.roundRect) g.roundRect(24, 24, W - 48, H - 48, 32); else g.rect(24, 24, W - 48, H - 48); g.fill(); g.stroke();
+      g.fillStyle = "#2b2621"; g.textBaseline = "alphabetic";
+      g.font = "700 50px " + FONT; g.fillText("贈り物の候補", pad, 118);
+      g.font = "400 28px " + FONT; g.fillStyle = "#766c62"; g.fillText(n + "点。どれが合うか、意見をください。", pad, 168);
+      favs.forEach(function (x, i) {
+        var y = headH + i * rowH;
+        g.strokeStyle = "#f2e9db"; g.lineWidth = 2; g.beginPath(); g.moveTo(pad, y); g.lineTo(W - pad, y); g.stroke();
+        var price = "¥" + Number(x.price).toLocaleString();
+        g.font = "700 32px " + FONT; var pw = g.measureText(price).width;
+        g.font = "400 31px " + FONT; g.fillStyle = "#2b2621";
+        var name = String(x.name);
+        while (g.measureText(name).width > W - 2 * pad - pw - 30 && name.length > 4) name = name.slice(0, -2) + "…";
+        g.fillText(name, pad, y + 58);
+        g.font = "700 32px " + FONT; g.textAlign = "right"; g.fillText(price, W - pad, y + 58); g.textAlign = "left";
+      });
+      g.font = "400 26px " + FONT; g.fillStyle = "#766c62"; g.fillText("よろこぶプレゼント  yorokobu-present.com", pad, H - 70);
+      c.toBlob(done, "image/png");
+    }
+    $(".fav-img", bar).addEventListener("click", function () {
+      drawList(function (blob) {
+        if (!blob) return;
+        var file = null;
+        try { file = new File([blob], "okurimono-kouho.png", { type: "image/png" }); } catch (e) {}
+        if (file && navigator.canShare && navigator.share && navigator.canShare({ files: [file] })) { navigator.share({ files: [file], title: "贈り物の候補" }).catch(function () {}); return; }
+        var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "okurimono-kouho.png"; document.body.appendChild(a); a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+      });
+    });
     $(".fav-copy", bar).addEventListener("click", function () {
       if (navigator.clipboard) navigator.clipboard.writeText(text());
       this.textContent = "コピーしました";
@@ -207,6 +244,18 @@
 
   function initShare() {
     $$(".share-btn.native").forEach(function (b) {
+      var img = b.getAttribute("data-img");
+      if (img) {                                          // a picture of a chart: the phone's share sheet takes the file itself (LINE, its Keep memo, mail, notes ...)
+        try { if (!navigator.share || !navigator.canShare || !navigator.canShare({ files: [new File([""], "a.png", { type: "image/png" })] })) return; } catch (e) { return; }
+        b.hidden = false;
+        b.addEventListener("click", function () {
+          fetch(img).then(function (r) { return r.blob(); }).then(function (blob) {
+            var f = new File([blob], b.getAttribute("data-name") || "chart.png", { type: "image/png" });
+            return navigator.share({ files: [f], title: b.getAttribute("data-text") || "", text: (b.getAttribute("data-text") || "") + "\n" + b.getAttribute("data-url") });
+          }).catch(function () {});
+        });
+        return;
+      }
       if (!navigator.share) return;
       b.hidden = false;
       b.addEventListener("click", function () {
