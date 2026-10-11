@@ -35,18 +35,31 @@ class KyouTest(Built):
             self.assertIn(f"kyou/{md}/index.html", self.rel)
             self.assertIn(f'href="/kyou/{md}/"', idx)
 
-    def test_a_date_with_one_day_stays_out_of_search_results_and_the_sitemap(self):
+    def test_at_launch_no_date_page_is_indexed_and_none_carries_an_ad(self):
         days = build.kyou_days(self.entries)
         sitemap = self.rel["sitemap.xml"]
+        self.assertEqual(CFG["kyou_date_min_items"], 0)
+        for md in list(days)[:30]:
+            html = self.rel[f"kyou/{md}/index.html"]
+            self.assertIn('content="noindex', html, md)
+            self.assertNotIn("adsbygoogle", html, md)
+            self.assertNotIn(f"/kyou/{md}/", sitemap, md)
+        self.assertIn("/kyou/", sitemap)                                                            # the hub and the new/popular page are indexed
+        self.assertNotIn('content="noindex', self.rel["kyou/index.html"])
+        self.assertNotIn('content="noindex', self.rel["new/index.html"])
+
+    def test_a_date_with_enough_days_can_be_opened_up_by_the_setting(self):
+        pages = build.build_pages({**CFG, "kyou_date_min_items": 2}, release=True, today=TODAY)
+        days = build.kyou_days(self.entries)
         thin = [md for md, v in days.items() if len(v) < 2]
         rich = [md for md, v in days.items() if len(v) >= 2]
         self.assertTrue(thin and rich)
         for md in thin[:5]:
-            self.assertIn("noindex", self.rel[f"kyou/{md}/index.html"], md)
-            self.assertNotIn(f"/kyou/{md}/", sitemap, md)
+            self.assertIn("noindex", pages[f"kyou/{md}/index.html"], md)
+            self.assertNotIn(f"/kyou/{md}/", pages["sitemap.xml"], md)
         for md in rich[:5]:
-            self.assertNotIn('content="noindex', self.rel[f"kyou/{md}/index.html"], md)
-            self.assertIn(f"/kyou/{md}/", sitemap, md)
+            self.assertNotIn('content="noindex', pages[f"kyou/{md}/index.html"], md)
+            self.assertIn(f"/kyou/{md}/", pages["sitemap.xml"], md)
 
     def test_a_date_with_a_quiet_day_has_no_ads_and_no_cards_for_it(self):
         quiet = [e for e in self.entries if e["quiet"] and e["precision"] == "day" and not e.get("estimated")]
