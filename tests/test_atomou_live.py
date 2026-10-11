@@ -192,7 +192,7 @@ class Wiring(unittest.TestCase):
 
     def test_the_live_file_is_never_cached_by_the_browser(self):
         from sites.atomou import build
-        self.assertIn('manifest' + chr(92) + '.webmanifest|(live|recheck)' + chr(92) + '.v1' + chr(92) + '.json)$">', build.HT_CACHE)
+        self.assertIn('manifest' + chr(92) + '.webmanifest|(live|recheck|pop)' + chr(92) + '.v1' + chr(92) + '.json)$">', build.HT_CACHE)
 
 
 if __name__ == "__main__":

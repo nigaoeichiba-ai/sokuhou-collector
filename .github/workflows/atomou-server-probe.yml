@@ -28,7 +28,7 @@ jobs:
           printf '%s\n' "$KEY" > ~/.ssh/id_xserver && chmod 600 ~/.ssh/id_xserver
           printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 15' '  StrictHostKeyChecking accept-new' > ~/.ssh/config && chmod 600 ~/.ssh/config
           ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /dev/null || true
-          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" '
+          probe() { ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" '
             echo "== tools"; for t in python3 python php curl wget crontab; do p=$(command -v $t 2>/dev/null) && echo "$t: $p" || echo "$t: -"; done
             echo "== versions"; python3 --version 2>&1 | head -1; php --version 2>&1 | head -1
             echo "== php binaries"; ls /usr/bin/php* 2>/dev/null | head; ls /opt/php-*/bin/php 2>/dev/null | head
@@ -37,4 +37,9 @@ jobs:
             echo "== live cron"; ls -la --time-style=full-iso "$HOME/atomou.com/script/live/last.log" "$HOME/atomou.com/script/live/live.v1.json" 2>&1 | cut -c1-120; head -8 "$HOME/atomou.com/script/live/last.log" 2>&1; date
             echo "== words inbox"; ls -la "$HOME/atomou.com/inbox" 2>&1 | head -12
             echo "== tls to the feeds"; python3 -c "import ssl,urllib.request;print(urllib.request.urlopen(\"https://www.meti.go.jp/ml_index_release_atom.xml\",timeout=15).status)" 2>&1 | tail -1
-          '
+          '; }
+          for try in 1 2 3 4 5; do   # the server sometimes drops a connection while a deploy runs: try again
+            if probe; then exit 0; fi
+            echo "no answer (attempt $try)"; sleep $((try * 30))
+          done
+          exit 1
