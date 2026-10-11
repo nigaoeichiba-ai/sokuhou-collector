@@ -1266,8 +1266,12 @@ def kyou_page(c: Ctx, md: str, items: list[tuple[int, dict, bool]], prev_next: t
     title = f"{m}月{d}日は何の日？ {n}件の日付 | {NAME}"
     names = "、".join(e["title"] for _, e, _h in items[:3])
     desc = f"{m}月{d}日にある日付: {names}など{n}件。出典と確認日つきで、あと何日か、もう何日かも数えられます。"[:150]
-    html = c.page(f"/kyou/{md}/", title, desc, body, "kyouq" if quiet_any else "kyou", noindex=n < 2)   # "kyouq" is not an ad kind: a date with a quiet day carries no ad code
-    return html, n >= 2
+    # Policy (Codex's reading of Google's and AdSense's rules, 2026-10-11): a page per month and day is a short list, so at launch none of them is indexed and none carries an ad.
+    # config.json "kyou_date_min_items" (0 = none) is the number of days a date needs before it may be indexed; raise it step by step once Search Console shows the detail pages are indexed well.
+    need = int(c.cfg.get("kyou_date_min_items") or 0)
+    indexable = bool(need) and n >= need
+    html = c.page(f"/kyou/{md}/", title, desc, body, "kyou" if indexable and not quiet_any else "kyouq", noindex=not indexable)   # "kyouq" is not an ad kind: no ad code
+    return html, indexable
 
 
 def kyou_index(c: Ctx, days: dict[str, list]) -> str:
@@ -1294,7 +1298,8 @@ def new_page(c: Ctx, live: list[dict]) -> str:
     blocks = "".join(f'<h3>{esc(fmt_date(a))}に載せた日</h3><div class="cards">{"".join(card_html(e) for e in v)}</div>' for a, v in groups.items())
     body = crumbs([("トップ", "/"), ("新着・人気", None)]) + f"""
 <h1>新着・人気の日</h1>
-<section id="pop"><h2>人気の日</h2><p class="hint">この30日間に、予定に入れた人が多い順です(人数は出しません)。</p>
+<p class="lead muted">新しく載せた日と、予定に入れた人が多い日です。{esc(fmt_date(c.today.isoformat()))}時点で、新しく載せた日は{len(fresh)}件を並べています。</p>
+<section id="pop"><h2>人気の日</h2><p class="hint">この30日間に、予定に入れた人が多い順です(人数は出しません)。サーバーが1時間おきに数え直し、3人以上が選んだ日だけを並べます。</p>
 <div class="cards" id="pop-grid"></div><p class="muted" id="pop-none">読み込み中…</p></section>
 <h2>新しく載せた日</h2>
 {blocks}"""
