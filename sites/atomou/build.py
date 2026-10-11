@@ -259,7 +259,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'gcal', 'app', 'tier', 'shared', 'share', 'card', 'ical', 'plan', 'quick', 'setup', 'swipe', 'live', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'gcal', 'app', 'tier', 'shared', 'share', 'card', 'ical', 'plan', 'quiz', 'quick', 'setup', 'swipe', 'live', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -394,7 +394,7 @@ def popular_chips(entries: list[dict]) -> str:
 def home_page(c: Ctx) -> str:
     live = live_entries(c.entries, c.today)
     first = diverse(live, 6)
-    chips = '<a class="chip" href="/topics/">最新・トピックス</a><a class="chip" href="/kyou/">今日は何の日</a><a class="chip" href="/new/">新着・人気</a><a class="chip" href="/region/">地域</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS) if g in c.shown)
+    chips = '<a class="chip" href="/topics/">最新・トピックス</a><a class="chip" href="/kyou/">今日は何の日</a><a class="chip" href="/new/">新着・人気</a><a class="chip" href="/quiz/">今日の1問</a><a class="chip" href="/region/">地域</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS) if g in c.shown)
     ucs = "".join(f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>'
                   for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
     body = f"""<section class="intro setup" id="setup" aria-labelledby="setup-h" hidden></section>
@@ -1303,6 +1303,21 @@ def kyou_index(c: Ctx, days: dict[str, list]) -> str:
     return c.page("/kyou/", f"今日は何の日 月日からさがす | {NAME}", "今日は何の日か、月と日から調べられます。出典つきの公式の日付だけを集め、あと何日か、もう何日かも数えられます。", body, "kyou")
 
 
+# ---------- 今日の1問 (/quiz/) ----------
+def quiz_page(c: Ctx) -> str:
+    """案4: one small question a day, made in the browser from the visitor's date (assets/quiz.js).  The page carries the holidays and solar terms the questions need (from our own counts and the
+    Observatory's figures); the official days come from the catalogue.  No ads, not in the sitemap, noindex: the page is the same every day to a crawler."""
+    t0 = c.today - timedelta(days=3)
+    hol = [[n, d.isoformat()] for d, n in sorted((d, n) for y in (c.today.year, c.today.year + 1) for d, n in calendar_data.holidays(y).items() if d >= t0)]
+    terms = [[t["name"], t["date"].isoformat()] for y in (c.today.year, c.today.year + 1) for t in calendar_data.terms_of(y) if t["date"] >= t0]
+    body = crumbs([("トップ", "/"), ("今日の1問", None)]) + f"""
+<h1>今日の1問</h1>
+<p class="lead muted">日付から決まる、1日1問の小さな問題です。答えには、かならず理由がつきます。</p>
+<section class="panel quiz" id="quiz" data-hol="{esc(json.dumps(hol, ensure_ascii=False))}" data-terms="{esc(json.dumps(terms, ensure_ascii=False))}"><p class="muted">今日の問題を用意しています…</p></section>
+<p class="hint">問題は、お使いの端末の日付から決まります。答えた結果は、この端末の中にだけ残り、当サイトには送りません。静かに残したい日は、出題しません。</p>"""
+    return c.page("/quiz/", f"今日の1問 | {NAME}", "日付から決まる、1日1問の小さな問題。答えには理由がつきます。", body, "quiz", noindex=True)
+
+
 # ---------- 新着・人気 (/new/) ----------
 def new_page(c: Ctx, live: list[dict]) -> str:
     """The days added most lately (built into the page) and the days most people put into their planner (read from live/pop.v1.json, which the server's own cron writes from its counts)."""
@@ -1352,6 +1367,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
         if not indexable:
             kyou_noindex.add(f"kyou/{md}/index.html")
     pages["new/index.html"] = new_page(c, live)
+    pages["quiz/index.html"] = quiz_page(c)
     pages.update(specials.special_pages(c, entries))      # 特集 under /kyou/: holidays, solar terms, December
     pages.update(og_pages(live))      # og/<id>.png: the picture a chat app shows for a day's link
     pages.update(feeds.feed_pages(live, catalog.GROUPS, GROUP_SLUG, str(cfg["site_url"]).rstrip("/"), today))   # cal/<genre>.ics, cal/all.ics: the days as a calendar to subscribe to
@@ -1378,7 +1394,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     pages["assets/atomou.js"] = c.bundle
     pages.update(asset_pages(SITE["assets"]))
     # the sitemap lists indexable pages only (not /my/, not event pages that are held back)
-    listed = {k: 1 for k in pages if k.endswith("index.html") and k != "my/index.html"
+    listed = {k: 1 for k in pages if k.endswith("index.html") and k != "my/index.html" and k != "quiz/index.html"
               and k != "plan/index.html" and k != "interests/index.html" and k != "card/index.html" and k not in kyou_noindex and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
     pages.update(standard_files(listed, cfg, preview, today.isoformat()))
     pages[".htaccess"] = pages[".htaccess"] + HT_CACHE
