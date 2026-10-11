@@ -8,7 +8,7 @@ from __future__ import annotations
 from datetime import date, timedelta
 from urllib.parse import quote
 
-from sites.atomou import calendar_data as cal
+from sites.atomou import bizday, calendar_data as cal
 
 CAO = "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html"
 OPERATOR = "株式会社MACS"
@@ -138,8 +138,33 @@ def december_page(c, entries: list[dict]) -> str:
     return c.page("/kyou/december/", f"{y}年12月の日めくり 1日ごとの公式の日 | {B.NAME}", f"{y}年12月1日から31日まで、期限・開始・節目の公式の日を、1日ごとに。あと何日かも分かります。", body, SPECIAL_KIND)
 
 
+def pension_page(c) -> str:
+    """案7: the six regular payment days of the pension, counted from the rule the Japan Pension Service states (the 15th of the even months; a Saturday, Sunday or holiday: the weekday before)."""
+    B = _b()
+    esc = B.esc
+    ys = years_for(c.today)
+    hol = bizday.holiday_set(ys[0], ys[-1])
+    blocks = []
+    for y in ys:
+        rows = ""
+        for m, d in zip((2, 4, 6, 8, 10, 12), bizday.pension_dates(y, hol)):
+            note = "" if d.day == 15 else f' <span class="muted">(15日は{cal.wd(date(y, m, 15))}曜日のため、前の平日)</span>'
+            prev = [(m - 2 - 1) % 12 + 1, (m - 1 - 1) % 12 + 1]
+            rows += f'<tr><th scope="row">{m}月</th><td>{md(d)}{note}</td><td>{prev[0]}月・{prev[1]}月分</td><td>{cd(d)}</td></tr>'
+        blocks.append(f'<h2>{y}年の支払日</h2><div class="tablewrap"><table class="info-table"><thead><tr><th scope="col">支払月</th><th scope="col">支払日</th><th scope="col">対象の月</th><th scope="col">あと何日</th></tr></thead><tbody>{rows}</tbody></table></div>')
+    body = B.crumbs([("トップ", "/"), ("今日は何の日", "/kyou/"), ("年金の支払日", None)]) + f"""
+<h1>年金の支払日</h1>
+<p class="lead muted">年金は、原則として、偶数月(2・4・6・8・10・12月)の15日に支払われます。15日が土曜・日曜・祝日のときは、その直前の平日です。</p>
+{"".join(blocks)}
+<p><a class="btn" href="/rule/?preset=pension">自分の予定に入れる(次の支払日を数える)</a></p>
+<h2>日付のもとになったもの</h2>
+<p class="small muted">支払日の決まりは、日本年金機構の「<a href="{bizday.PENSION_SOURCE}" rel="noopener nofollow" target="_blank">年金はいつ支払われますか。</a>」にある、偶数月の15日と、15日が土日・祝日のときの扱いです。このページの日付は、その決まりに、祝日法のきまりから数え直した祝日をあてはめて、{OPERATOR}が作成しました。対象の月は、「支払月の前月までの2か月分」として並べています。実際の支払日は、年金振込通知書や日本年金機構の案内で、かならず確かめてください。</p>"""
+    return c.page("/kyou/pension/", f"年金の支払日 {ys[0]}年・{ys[-1]}年の一覧 | {B.NAME}", "年金は偶数月の15日。15日が土日・祝日のときの支払日と、あと何日かを、2年分まとめました。", body, SPECIAL_KIND)
+
+
 def special_pages(c, entries: list[dict]) -> dict[str, str]:
     out = {}
+    out["kyou/pension/index.html"] = pension_page(c)
     for y in years_for(c.today):
         out[f"kyou/holidays-{y}/index.html"] = holiday_page(c, y)
     out["kyou/season/index.html"] = season_page(c, entries)
@@ -153,4 +178,6 @@ def special_links(today: date) -> str:
     items = "".join(f'<li><a href="/kyou/holidays-{y}/"><b>{y}年の祝日と連休</b><span>3連休以上と、休みの取りどころ</span></a></li>' for y in ys[::-1])
     items += '<li><a href="/kyou/season/"><b>季節の便り</b><span>二十四節気まで、あと何日</span></a></li>'
     items += f'<li><a href="/kyou/december/"><b>{today.year}年12月の日めくり</b><span>1日ごとの公式の日</span></a></li>'
+    items += '<li><a href="/kyou/pension/"><b>年金の支払日</b><span>偶数月の15日。休みなら前の平日</span></a></li>'
+    items += '<li><a href="/rule/"><b>毎月の日付の計算</b><span>休みなら前の営業日、のような日付</span></a></li>'
     return f'<h2>特集</h2><ul class="special-links">{items}</ul>'

@@ -23,7 +23,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.atomou import articles, calendar_data, catalog, datecore, feeds, ogimage, skins, specials, usecases  # noqa: E402
+from sites.atomou import articles, bizday, calendar_data, catalog, datecore, feeds, ogimage, skins, specials, usecases  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
@@ -259,7 +259,7 @@ def mark_html(i: int) -> str:
     return f'<span class="mark m{i}" data-g="{i}" aria-hidden="true"></span>'
 
 
-BUNDLE = ('core', 'ics', 'gcal', 'app', 'tier', 'shared', 'share', 'card', 'ical', 'plan', 'quiz', 'quick', 'setup', 'swipe', 'live', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
+BUNDLE = ('core', 'ics', 'gcal', 'app', 'tier', 'shared', 'share', 'card', 'ical', 'plan', 'quiz', 'rule', 'quick', 'setup', 'swipe', 'live', 'guide', 'push', 'member')   # one script instead of six requests; the sources stay separate files
 
 
 # ---------- site-wide wrapping (skins, scripts, body tag) ----------
@@ -1318,6 +1318,35 @@ def quiz_page(c: Ctx) -> str:
     return c.page("/quiz/", f"今日の1問 | {NAME}", "日付から決まる、1日1問の小さな問題。答えには理由がつきます。", body, "quiz", noindex=True)
 
 
+# ---------- 毎月の日付の計算 (/rule/) ----------
+def rule_page(c: Ctx) -> str:
+    """案7: a day of every month that moves off the closed days, counted in the browser (assets/rule.js).  The page carries the holidays for this year and the two after (the build's own count)."""
+    last = f"{c.today.year + 2}-12-31"
+    hol = sorted(d.isoformat() for d in bizday.holiday_set(c.today.year, c.today.year + 2))
+    day_opts = "".join(f'<option value="{n}">{n}日</option>' for n in range(1, 32)) + '<option value="0">月末</option>'
+    body = crumbs([("トップ", "/"), ("今日は何の日", "/kyou/"), ("毎月の日付の計算", None)]) + f"""
+<h1>毎月の日付の計算</h1>
+<p class="lead muted">「毎月15日。休みなら前の営業日」のような日付を、休みの日を避けて数えます。家賃や引き落とし、給料、年金の日に使えます。</p>
+<section id="rule" data-hol="{esc(json.dumps(hol))}" data-last="{last}">
+<div class="panel">
+<div class="field"><label for="r-title">名前</label><input type="text" id="r-title" maxlength="30" autocomplete="off" placeholder="例: 家賃の引き落とし"></div>
+<div class="field"><label for="r-day">毎月何日</label><select id="r-day">{day_opts}</select></div>
+<div class="field"><label for="r-months">どの月</label><select id="r-months"><option value="all">毎月</option><option value="even">偶数月(年金など)</option><option value="odd">奇数月</option></select></div>
+<div class="field"><label for="r-how">休みの日に当たったら</label><select id="r-how"><option value="prev">前の営業日にする</option><option value="next">次の営業日にする</option><option value="none">そのままの日にする</option></select></div>
+<div class="field"><label for="r-bank">休みの数え方</label><select id="r-bank"><option value="bank">銀行の休み(土日・祝日・12月31日〜1月3日)</option><option value="office">土日・祝日だけ</option></select></div>
+<p id="r-presets"><button type="button" class="btn small ghost" data-preset="pension">年金の支払日(偶数月の15日)にする</button></p>
+<div id="rule-preview" aria-live="polite"></div>
+<p><button type="button" class="btn" id="r-save">このルールを保存する</button></p>
+</div>
+<h2>保存したルール</h2>
+<div id="rule-list"></div>
+</section>
+<p class="hint">ルールは、この端末の中にだけ残ります。当サイトには送りません。「この日を予定に入れる」で入れるのは、その1回分の日です。次の日は、このページで数えて、また入れてください。</p>
+<h2>数え方と、目安であること</h2>
+<p class="small muted">銀行の休みは、銀行法と銀行法施行令の定め(日曜日、土曜日、国民の祝日、12月31日から1月3日)のとおりに数えています(<a href="{bizday.BANK_LAW}" rel="noopener nofollow" target="_blank">銀行法施行令</a>)。祝日は、祝日法のきまりから数え直したものです。銀行は、このほかに営業所ごとの休みを決められるため、実際の引き落とし日や振込日は、利用する金融機関や会社の案内で確かめてください。数えられるのは、{c.today.year + 2}年末までです。年金の支払日は、<a href="/kyou/pension/">年金の支払日</a>にまとめています。</p>"""
+    return c.page("/rule/", f"毎月の日付の計算 休みなら前の営業日 | {NAME}", "毎月15日、休みなら前の営業日、のような日付を数えます。家賃・引き落とし・給料・年金の日に。", body, "rule", noindex=True)
+
+
 # ---------- 新着・人気 (/new/) ----------
 def new_page(c: Ctx, live: list[dict]) -> str:
     """The days added most lately (built into the page) and the days most people put into their planner (read from live/pop.v1.json, which the server's own cron writes from its counts)."""
@@ -1368,6 +1397,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
             kyou_noindex.add(f"kyou/{md}/index.html")
     pages["new/index.html"] = new_page(c, live)
     pages["quiz/index.html"] = quiz_page(c)
+    pages["rule/index.html"] = rule_page(c)
     pages.update(specials.special_pages(c, entries))      # 特集 under /kyou/: holidays, solar terms, December
     pages.update(og_pages(live))      # og/<id>.png: the picture a chat app shows for a day's link
     pages.update(feeds.feed_pages(live, catalog.GROUPS, GROUP_SLUG, str(cfg["site_url"]).rstrip("/"), today))   # cal/<genre>.ics, cal/all.ics: the days as a calendar to subscribe to
@@ -1394,7 +1424,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     pages["assets/atomou.js"] = c.bundle
     pages.update(asset_pages(SITE["assets"]))
     # the sitemap lists indexable pages only (not /my/, not event pages that are held back)
-    listed = {k: 1 for k in pages if k.endswith("index.html") and k != "my/index.html" and k != "quiz/index.html"
+    listed = {k: 1 for k in pages if k.endswith("index.html") and k != "my/index.html" and k != "quiz/index.html" and k != "rule/index.html"
               and k != "plan/index.html" and k != "interests/index.html" and k != "card/index.html" and k not in kyou_noindex and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
     pages.update(standard_files(listed, cfg, preview, today.isoformat()))
     pages[".htaccess"] = pages[".htaccess"] + HT_CACHE
