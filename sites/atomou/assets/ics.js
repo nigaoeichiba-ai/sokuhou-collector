@@ -73,5 +73,5 @@
     a.href = url; a.download = filename; document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1000);
   }
-  root.AtomouICS = { build: build, download: download, fold: fold, esc: esc };
+  root.AtomouICS = { build: build, download: download, fold: fold, esc: esc, alertBefore: alertBefore };
 })(typeof window !== 'undefined' ? window : this);
