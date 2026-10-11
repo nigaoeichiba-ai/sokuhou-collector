@@ -114,6 +114,19 @@ class BoardsTest(unittest.TestCase):
         self.assertIn("/data/gift-feelings/", hub)
         self.assertIn("/data/birthday-survey/", self.read("sitemap.xml"))
 
+    def test_the_occasion_and_pair_pages_lead_into_the_board_and_show_its_first_numbers(self):
+        occ = self.read("occasion/birthday/index.html")
+        self.assertIn("みんなはいくらで何を贈る?", occ)
+        self.assertIn('href="/data/birthday-survey/"', occ)
+        self.assertEqual(occ.count('<ul class="stat-tiles">'), 1)
+        self.assertIn("17,643円", occ)
+        pair = next(self.out.glob("gift/birthday-*/index.html")).read_text(encoding="utf-8")
+        self.assertIn('class="board-teaser compact"', pair)
+        self.assertEqual(pair.count("<li><b>"), 2)                                                  # two numbers on a pair page, four on the occasion page
+        mothers = self.read("occasion/mothers-day/index.html")
+        self.assertIn('href="/data/mothers-day-budget/"', mothers)                                  # the Mother's Day board is the older budget page, with the extra surveys
+        self.assertNotIn("board-teaser", self.read("occasion/index.html"))
+
     def test_a_board_for_no_occasion_has_no_shop_section(self):
         html = self.read("data/gift-feelings/index.html")
         self.assertNotIn("この予算で、探す", html)

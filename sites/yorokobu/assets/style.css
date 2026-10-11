@@ -456,6 +456,8 @@ main.wrap > h1:first-child { margin-top: 36px; }
 .stat-tiles b { font: 700 clamp(1.7rem, 5vw, 2.2rem)/1.1 var(--num); color: var(--ink); letter-spacing: .01em; }
 .stat-tiles span { font-size: .88rem; line-height: 1.6; color: var(--ink2); }
 .stat-tiles small { margin-top: auto; padding-top: 6px; font-size: .7rem; color: var(--muted); }
+.board-teaser { margin-top: 36px; } .board-teaser .stat-tiles { margin-top: 12px; } .board-teaser .more { margin: 14px 0 0; }
+.board-teaser.compact { margin-top: 22px; } .board-teaser.compact h2 { font-size: 1.05rem; }
 .data-notes .stat-tiles, .data-notes .studies { padding-left: 0; } .data-notes .stat-tiles li, .data-notes .studies li { margin-bottom: 0; }
 .board-days { margin: 18px 0 0; padding: 12px 16px; background: var(--t-butter); border-radius: 14px; font-size: .92rem; line-height: 1.8; }
 .board-days b { display: block; }
