@@ -50,6 +50,13 @@ class DateVectors(unittest.TestCase):
             n, when = dc.next_thousand(d(c["start"]), d(c["today"]))
             self.assertEqual((n, when.isoformat()), (c["days"], c["date"]))
 
+    def test_weeks_and_the_weekdays_left_in_the_year(self):
+        # hand-counted in the vectors file: 2026-10-11 is a Sunday, 11 Saturdays and 11 Sundays are left; 2027 has 52 Saturdays after its first day (a Friday)
+        for c in VECTORS["weeks"]:
+            self.assertEqual(dc.weeks_text(c["n"]), c["text"])
+        for c in VECTORS["weekdays_left"]:
+            self.assertEqual(dc.weekdays_left(d(c["today"]), c["weekday"]), c["n"], c)
+
     def test_wareki(self):
         for c in VECTORS["wareki"]:
             self.assertEqual(dc.wareki_to_year(c["era"], c["n"]), c["y"])

@@ -1482,7 +1482,22 @@
   }
 
   /* ---------- 今日は何の日: today's month and day, taken from the date's own page ---------- */
+  /* ---------- the rest of this year in weeks (案5): from the device's date; the next solar terms come from the page ---------- */
+  function yearLeft() {
+    var box = $('#year-left'), ul = $('#year-left-list');
+    if (!box || !ul) return;
+    var left = C.dayOfYear(TODAY)[1], sat = C.weekdaysLeft(TODAY, 5), sun = C.weekdaysLeft(TODAY, 6), h = '';
+    h += '<li>' + TODAY[0] + '年が終わるまで、あと<b>' + C.weeksText(left) + '</b>' + (left >= 7 ? '(' + left + '日)' : '') + 'です。</li>';
+    h += '<li>今日より後の土曜日は、年内にあと<b>' + sat + '回</b>、日曜日は<b>' + sun + '回</b>です。</li>';
+    var terms = [];
+    try { terms = JSON.parse(box.getAttribute('data-terms') || '[]'); } catch (e) { terms = []; }
+    var nx = terms.filter(function (t) { var d = C.parse(t[1]); return d && C.cmp(d, TODAY) > 0; })[0];
+    if (nx) h += '<li>次の節気「' + H(nx[0]) + '」まで、あと<b>' + C.weeksText(C.totalDays(TODAY, C.parse(nx[1]))) + '</b>です。</li>';
+    ul.innerHTML = h;
+    box.hidden = false;
+  }
   function pageKyou() {
+    yearLeft();
     var box = $('#kyou-today');
     if (!box) return;
     var md = String(TODAY[1]).padStart(2, '0') + '-' + String(TODAY[2]).padStart(2, '0'), a = document.querySelector('a[href="/kyou/' + md + '/"]'), head = '<h2>' + TODAY[1] + '月' + TODAY[2] + '日(今日)</h2>';

@@ -186,6 +186,23 @@
     return '';
   }
 
+  // "週で見る": how many weeks and days there are to a day (or since it), and one cell for each week.  Not for a quiet day.  A day with more than 26 years behind it or 2 years ahead gets the words only.
+  function weeksSection(item) {
+    var d = item.p === 'day' && !item.quiet ? C.parse(item.date) : null;
+    if (!d) return '';
+    var n = C.totalDays(TODAY, d), m = Math.abs(n);
+    if (!m) return '';
+    var past = n < 0, whole = Math.floor(m / 7), part = m % 7 ? 1 : 0, cells = whole + part, cap = past ? 1352 : 104, words = C.weeksText(m);
+    var h = '<section class="plan-sec" id="weeks"><h2>週で見る</h2><p class="weeks-line">' + (past ? 'もう' : 'あと') + '<b>' + words + '</b>' + (m >= 7 ? '(' + C.group(m) + '日)' : '') + 'です。</p>';
+    if (cells <= cap) {
+      var out = '';
+      for (var i = 0; i < cells; i++) out += '<i class="' + (past ? 'on' : 'fut') + (i >= whole ? ' part' : '') + '"></i>';
+      h += '<div class="wgrid" role="img" aria-label="1マスが1週です。' + (past ? 'この日から' : 'この日まで') + words + '分を並べています。">' + out + '</div>' +
+        '<p class="hint">1マスが1週です。1段が約1年(52週)で、' + (past ? 'この日の週から今日の週まで' : '今日の週からこの日の週まで') + 'を数えています。' + (part ? '最後の薄いマスは、7日に満たない分です。' : '') + '</p>';
+    } else h += '<p class="hint">' + (past ? '26年' : '2年') + 'をこえるため、マスは並べません。</p>';
+    return h + '</section>';
+  }
+
   /* ---------- one plan: its card, memo, "do this N days before", and the optional file for other calendar apps ---------- */
   function pagePlan() {
     var key = P.key || '', box = $('#plan'), item = null;
@@ -202,6 +219,7 @@
     function render() {
       var own = item.own, e = own ? A.findEntry(item.id) : null, n = notesOf(key), h = '';
       h += '<div class="cards plan-card">' + A.cardHtml(item).replace('class="card', 'class="card big') + '</div>';
+      h += weeksSection(item);
       if (item.p === 'day') {   // the notices of this day: one switch for all of them, the days before, and (plus plan) any number of days and the time of day
         var nn = notesOf(key), rem = nn.remind, sug = remindPreset(item), T = A.tier, free = T && T.on && !T.plus();
         var allowed = function (r) { return !T || T.remindAllowed(r); };
