@@ -458,6 +458,9 @@ def concierge(cfg: dict, d: dict, p: dict | None, heading: str = "ひとこと�
 <ul class="kw-chips">{chips}</ul></div></div></section>"""
 
 
+MIN_IDEA_ITEMS = 2    # an idea is shown as a proposal only with at least this many products of its kind (one product is not a proposal)
+
+
 def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict | None]:
     """The product part shared by every page that has ideas: (sommelier proposals, filterable navigator, the operator's own listing or None)."""
     c = d["c"]
@@ -472,7 +475,7 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
     ideas = [{**idea, "items": [noted(i) for i in idea["items"]]} for idea in ideas]
     grid_items = list(union)
     # the proposals (sommelier)
-    proposals = "".join(idea_card(cfg, idea, i, c["filters"]["tiers"]) for i, idea in enumerate(ideas) if idea["items"])
+    proposals = "".join(idea_card(cfg, idea, i, c["filters"]["tiers"]) for i, idea in enumerate(ideas) if len(idea["items"]) >= MIN_IDEA_ITEMS)
     if proposals:
         proposals = (f'<section class="proposals"><div class="sec-title"><span class="tag">おすすめの贈り方</span><h2>{esc(heading)}</h2></div>'
                      f'<div class="idea-grid">{proposals}</div></section>')
@@ -501,17 +504,47 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
 {freshness(d)}</section>"""
     else:
         browse = '<section class="browse"><p class="notice">いま表示できる商品がありません。下の入力欄から、楽天市場で探してください。</p></section>'
-    gm = gift_map(key, ideas, d["c"]["map_tags"], {i for i, idea in enumerate(ideas) if idea["items"]})
+    gm = gift_map(key, ideas, d["c"]["map_tags"], {i for i, idea in enumerate(ideas) if len(idea["items"]) >= MIN_IDEA_ITEMS})
     return proposals + gm, browse, own
+
+
+def spread(groups: list[list[dict]], n: int, per_shop: int = 2) -> list[dict]:
+    """The best product of each group first (groups = kinds of gift, each sorted best first), then the second best of each, and so on: a mix instead of
+    four necklaces.  A product once, at most `per_shop` from one shop."""
+    ranked = sorted((g for g in groups if g), key=lambda g: -score(g[0]))
+    out, seen, shops = [], set(), {}
+    for rnd in range(max((len(g) for g in ranked), default=0)):
+        for g in ranked:
+            if rnd >= len(g):
+                continue
+            it = g[rnd]
+            if it["code"] in seen or shops.get(it["shop_code"], 0) >= per_shop:
+                continue
+            seen.add(it["code"])
+            shops[it["shop_code"]] = shops.get(it["shop_code"], 0) + 1
+            out.append(it)
+            if len(out) >= n:
+                return out
+    return out
+
+
+def kinds_of(d: dict, keys: list[str]) -> list[list[dict]]:
+    """The products of the pages `keys` grouped by kind of gift (the nine kinds), each group best first."""
+    by: dict[str, dict[str, dict]] = {}
+    for key in keys:
+        for idea in pair_items(d, key)[0]:
+            for it in idea["items"]:
+                by.setdefault(idea["type"], {}).setdefault(it["code"], it)
+    return [sorted(v.values(), key=lambda i: (-score(i), i["code"])) for k, v in sorted(by.items(), key=lambda kv: TYPE_ORDER.index(kv[0]) if kv[0] in TYPE_ORDER else 99)]
 
 
 def top_picks(cfg: dict, d: dict, key: str, n: int = 4) -> str:
     """The first thing under a gift page's head: the products people look at first, before any explanation (a visitor came for the gifts)."""
-    union = pair_items(d, key)[2]
-    if len(union) < 3:
+    shown = spread([sorted(idea["items"], key=lambda i: -score(i)) for idea in pair_items(d, key)[0]], n)
+    if len(shown) < 3:
         return ""
-    cards = "".join(item_card(cfg, it, rank=i + 1) for i, it in enumerate(union[:n]))
-    return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>評価と売れ行きから、{min(n, len(union))}点</h2></div>'
+    cards = "".join(item_card(cfg, it, rank=i + 1) for i, it in enumerate(shown))
+    return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>種類のちがう、人気の{len(shown)}点</h2></div>'
             f'<ul class="items">{cards}</ul>{freshness(d)}</section>')
 
 
@@ -766,8 +799,8 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
     c = d["c"]
     pairs = [p for p in c["pairs"] if p["occasion"] == o["slug"]]
     cards = "".join(tile(f'/gift/{ct.pair_key(p)}/', "recipient", p["recipient"], f'{c["rec"][p["recipient"]]["name"]}へ', p["title"].split(" ")[0]) for p in pairs)
-    featured = top_items([pair_items(d, ct.pair_key(p))[2] for p in pairs])
-    shown = (f'<section style="margin-top:50px"><h2><span class="scribble">選ばれている贈り物の例</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
+    featured = spread(kinds_of(d, [ct.pair_key(p) for p in pairs]), 6)
+    shown = (f'<section style="margin-top:50px"><h2><span class="scribble">種類のちがう、選ばれている贈り物</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
     color = COLORS[list(c["occ"]).index(o["slug"]) % 4]
     head = head_band(color, ic_wrap("occasion", o["slug"]), f'{esc(o["name"])}の<wbr>プレゼント', o["blurb"], single=True, mascot=OCC_MASCOT.get(o["slug"], "b-wink"))
     body = f"""{head}
@@ -786,20 +819,55 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
                 description=o["blurb"][:110], body=body, og_image=og_for(f"occasion/{o['slug']}"))
 
 
+def like_items(d: dict, r: dict, i: int, n: int = 4) -> list[dict]:
+    """The products under line `i` of 「喜ばれやすいもの」: those fetched for that line, or (data without them) the products of this person's pages whose titles are of that kind."""
+    row = (r.get("like_rows") or [None] * (i + 1))[i]
+    if not row:
+        return []
+    got = (d.get("likes") or {}).get(r["slug"], [])
+    if i < len(got) and got[i]:
+        return got[i][:n]
+    pool: dict[str, dict] = {}
+    for p in d["c"]["pairs"]:
+        if p["recipient"] == r["slug"]:
+            for it in pair_items(d, ct.pair_key(p))[2]:
+                if relevance.fits_idea(it["name"], row["must"]):
+                    pool.setdefault(it["code"], it)
+    return spread([sorted(pool.values(), key=lambda it: (-score(it), it["code"]))], n)
+
+
+def likes_section(d: dict, cfg: dict, r: dict) -> str:
+    """「喜ばれやすいもの」: each line is a kind of gift, with products of that kind under it and the way to search for more (one button each for Rakuten and Amazon)."""
+    rows = r.get("like_rows")
+    if not rows:
+        return f'<ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in r["likes"])}</ol>'
+    out = ""
+    for i, (text, row) in enumerate(zip(r["likes"], rows)):
+        items = like_items(d, r, i)
+        cards = f'<ul class="items mini">{"".join(item_card(cfg, it) for it in items)}</ul>' if items else ""
+        q = row["queries"][0]
+        btns = f'<a class="btn" href="{esc(search_link(cfg, q))}" rel="sponsored nofollow noopener" target="_blank">楽天市場で「{esc(q)}」を探す</a>'
+        if cfg.get("amazon_tracking_id"):
+            btns += f'<a class="btn" href="{esc(amazon_url(cfg, q))}" rel="sponsored nofollow noopener" target="_blank">Amazonで探す</a>'
+        out += (f'<li class="like-row" id="like-{i + 1}"><div class="like-head"><span class="like-n">{i + 1}</span><div><h3>{esc(row["title"])}</h3><p>{esc(text)}</p></div></div>'
+                f'{cards}<p class="more">{btns}</p></li>')
+    return f'<ol class="like-rows">{out}</ol>'
+
+
 def recipient_page(d: dict, cfg: dict, preview: bool, r: dict) -> str:
     set_keep()
     c = d["c"]
     pairs = [p for p in c["pairs"] if p["recipient"] == r["slug"]]
     cards = "".join(tile(f'/gift/{ct.pair_key(p)}/', "occasion", p["occasion"], c["occ"][p["occasion"]]["name"], p["title"].split(" ")[0]) for p in pairs)
-    featured = top_items([pair_items(d, ct.pair_key(p))[2] for p in pairs])
-    shown = (f'<section style="margin-top:50px"><h2><span class="scribble">選ばれている贈り物の例</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
+    featured = spread(kinds_of(d, [ct.pair_key(p) for p in pairs]), 6)
+    shown = (f'<section style="margin-top:50px"><h2><span class="scribble">種類のちがう、選ばれている贈り物</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
     color = COLORS[list(c["rec"]).index(r["slug"]) % 4]
     head = head_band(color, ic_wrap("recipient", r["slug"]), f'{esc(r["name"])}への<wbr>プレゼント', r["blurb"], single=True, mascot="r-sparkle")
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("相手から", "/for/"), (r["name"], None)])}</div>
 {pr_quiet(cfg)}
-<section style="margin-top:40px" class="cols"><div><h2><span class="scribble">喜ばれやすいもの</span></h2><ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in r["likes"])}</ol></div>
-<div class="avoid"><h2><span class="scribble">避けたいもの</span></h2>{ul(r["avoid"], "warn")}</div></section>
+<section style="margin-top:40px"><h2><span class="scribble">喜ばれやすいもの</span></h2>{likes_section(d, cfg, r)}{freshness(d) if r.get("like_rows") else ""}</section>
+<section class="avoid" style="margin-top:40px"><h2><span class="scribble">避けたいもの</span></h2>{ul(r["avoid"], "warn")}</section>
 <section style="margin-top:50px"><h2><span class="scribble">イベントを選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}
 {amazon_more(cfg, r["name"] + " プレゼント", r["name"] + "へのプレゼントを、Amazonで探す")}"""
@@ -1595,16 +1663,26 @@ def prepare(c: dict, items: dict | None, cfg: dict) -> dict:
         label = f"{t.year}年{t.month}月{t.day}日 {t.hour}:{t.minute:02d}"
     # the stored lists were chosen at fetch time; apply today's rules again (relaxed superset) so a rule change shows without refetching
     owner = {ct.pair_key(p): p.get("recipient") for p in ct.pages(c)}
+    must_of = {(ct.pair_key(p), idea["label"]): idea.get("must") for p in ct.pages(c) for idea in p["ideas"]}
+    must_at = {(ct.pair_key(p), n): idea.get("must") for p in ct.pages(c) for n, idea in enumerate(p["ideas"])}     # (data stored under another label is matched by its place)
     pairs = {}
     for k, v in items.get("pairs", {}).items():
         def ok(i, k=k):
             return usable(i, c["filters"], owner.get(k), relaxed=True)
-        if "ideas" in v:
-            pairs[k] = {"ideas": [{**idea, "items": [i for i in idea["items"] if ok(i)]} for idea in v["ideas"]],
-                        "tiers": {t: [i for i in lst if ok(i)] for t, lst in v["tiers"].items()}}
+        if "ideas" in v:                                   # each idea keeps only products of its own kind (its must-words), and a budget list only what an idea shows
+            ideas = [{**idea, "items": [i for i in idea["items"] if ok(i) and relevance.fits_idea(i["name"], must_of.get((k, idea["label"])) or must_at.get((k, n)) or idea.get("must"))]}
+                     for n, idea in enumerate(v["ideas"])]
+            shown = {i["code"] for idea in ideas for i in idea["items"]}
+            pairs[k] = {"ideas": ideas, "tiers": {t: [i for i in lst if ok(i) and i["code"] in shown] for t, lst in v["tiers"].items()}}
         else:  # data fetched before ideas existed: budget lists only
             pairs[k] = {t: [i for i in lst if ok(i)] for t, lst in v.items() if isinstance(lst, list)}
-    d = {"c": c, "pairs": pairs, "portrait": items.get("portrait", []), "fetched_label": label, "site_name": cfg["site_name"],
+    rec_by = {r["slug"]: r for r in c["recipients"]}
+    likes = {}
+    for slug, rows in (items.get("likes") or {}).items():      # the products fetched for each line of 「喜ばれやすいもの」: only of that line's kind, only what fits the person
+        spec = (rec_by.get(slug) or {}).get("like_rows") or []
+        likes[slug] = [[i for i in lst if usable(i, c["filters"], slug, relaxed=True) and relevance.fits_idea(i["name"], spec[n]["must"] if n < len(spec) else None)]
+                       for n, lst in enumerate(rows)]
+    d = {"c": c, "pairs": pairs, "likes": likes, "portrait": items.get("portrait", []), "fetched_label": label, "site_name": cfg["site_name"],
          "fetched_date": (f or date.today().isoformat())[:10], "daily_items": items.get("daily", {}), "site_url": cfg["site_url"]}
     if items.get("pairs"):
         d["live_themes"] = [t for t in c["themes"] if len(pair_items(d, t["key"])[2]) >= MIN_THEME_ITEMS]
@@ -1637,6 +1715,9 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     RANKING_ON = bool(d["ranking"])
     DATA_ON = bool(dataroom.results(d))
     PICKS_ON = bool(c.get("daily"))
+    if release:                                              # what a page says against what it shows (a line in the deploy log)
+        from sites.yorokobu import consistency
+        print(consistency.summary(consistency.audit(d)))
     d["numbers"] = nm.view(d["pairs"], c["filters"])
     d["gacha"] = gacha_data(d, cfg)
     cards: dict[str, bytes] = {}

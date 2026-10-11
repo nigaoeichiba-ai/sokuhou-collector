@@ -71,6 +71,20 @@ class BoardsTest(unittest.TestCase):
         bad["charts"][0]["finding"] = "子どもへ贈った人は、52%です。"
         with self.assertRaises(BuildError):
             content.check_board(bad)
+        bad = copy.deepcopy(b)                                                      # a note, a caution and a label are checked as well
+        bad["charts"][1]["note"] = "同性の友人では、5,000円未満が67%でした。"
+        with self.assertRaises(BuildError):
+            content.check_board(bad)
+        bad = copy.deepcopy(b)
+        bad["cautions"].append("調査は、881人の数字です。")
+        content.check_board(bad)                                                    # (a bare count of people is not a quantity the check knows)
+        bad["cautions"][-1] = "予算は、9,999円が平均です。"
+        with self.assertRaises(BuildError):
+            content.check_board(bad)
+        bad = copy.deepcopy(b)
+        bad["headline"][1]["label"] = "恋人への平均予算は21,000円"
+        with self.assertRaises(BuildError):
+            content.check_board(bad)
 
     def test_a_chart_row_that_does_not_fit_its_unit_or_a_source_that_does_not_exist_is_refused(self):
         b = json.loads(REAL.read_text(encoding="utf-8"))["boards"][0]

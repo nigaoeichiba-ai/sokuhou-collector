@@ -34,6 +34,47 @@ TIER_MIN = 4          # a budget tier with fewer products than this gets a price
 TIER_EXTRA_REQUESTS = 2
 
 
+IDEA_MIN = 3          # an idea with fewer products than this (after only the right kind is kept) gets other searches
+EXTRA_QUERIES = 2
+
+
+def extra_queries(idea: dict, recipient: str | None) -> list[str]:
+    """Other searches for an idea that came out short: its title, then its first must-word with the person's gender word (the words that name the kind of thing)."""
+    from sites.yorokobu import relevance
+    gender = {"f": "レディース", "m": "メンズ"}.get(relevance.PROFILE.get(recipient, (None, "adult"))[0], "")
+    out = [f'{idea["label"]} ギフト']
+    for w in (idea.get("must") or [])[:2]:
+        out.append(f"{gender} {w} ギフト".strip())
+    return list(dict.fromkeys(out))[:EXTRA_QUERIES]
+
+
+LIKE_ITEMS = 4
+
+
+def collect_likes(c: dict, client: rakuten.Client, state: dict) -> dict:
+    """The products under each line of a person's 「喜ばれやすいもの」: one search per query of the line, only titles of that line's kind (its must-words) and that fit
+    the person, the best of each query in turn.  {recipient slug: [[items] for each line]}."""
+    out: dict = {}
+    for r in c.get("recipients", []):
+        rows = r.get("like_rows") or []
+        lines = []
+        for n, row in enumerate(rows):
+            per_query = []
+            for q in row["queries"]:
+                found = _search(client, f'{r["slug"]} like {n}', state, 1000, keyword=q, hits=HITS)
+                per_query.append(pick(found, None, c["filters"], limit=LIKE_ITEMS, recipient=r["slug"], must=row["must"]))
+            items, seen = [], set()
+            for rnd in range(LIKE_ITEMS):
+                for lst in per_query:
+                    if rnd < len(lst) and lst[rnd]["code"] not in seen and len(items) < LIKE_ITEMS:
+                        seen.add(lst[rnd]["code"])
+                        items.append(lst[rnd])
+            lines.append(items)
+        if lines:
+            out[r["slug"]] = lines
+    return out
+
+
 def plan(c: dict) -> list[dict]:
     """The first-pass requests: one keyword search per idea of every page."""
     return [{"pair": ct.pair_key(p), "idea": i, "params": {"keyword": idea["query"], "hits": HITS}}
@@ -89,9 +130,16 @@ def collect(c: dict, client: rakuten.Client, limit_pairs: int | None = None, now
         used: set = set()
         ideas_out = []
         for i, idea in enumerate(p["ideas"]):
-            items = pick(pool[i], None, filters, limit=IDEA_ITEMS, recipient=p.get("recipient"), exclude=used)
+            items = pick(pool[i], None, filters, limit=IDEA_ITEMS, recipient=p.get("recipient"), exclude=used, must=idea.get("must"))
+            if len(items) < IDEA_MIN:                        # too few that are really of this kind: other searches, sorted by how many reviews they have
+                for q in extra_queries(idea, p.get("recipient")):
+                    more = pick(_search(client, f"{key} idea {i} extra", state, total, keyword=q, hits=HITS, sort="-reviewCount"), None, filters,
+                                limit=IDEA_ITEMS - len(items), recipient=p.get("recipient"), exclude=used | {x["code"] for x in items}, must=idea.get("must"))
+                    items += more
+                    if len(items) >= IDEA_MIN:
+                        break
             used |= {it["code"] for it in items}
-            ideas_out.append({k: idea[k] for k in ("label", "type", "query", "why")} | {"items": items})
+            ideas_out.append({k: idea[k] for k in ("label", "type", "query", "why", "must") if k in idea} | {"items": items})
         out_pairs[key] = {"ideas": ideas_out, "tiers": tiers}
         count = len({it["code"] for i in ideas_out for it in i["items"]} | {it["code"] for lst in tiers.values() for it in lst})
         nonempty += count > 0
@@ -110,7 +158,7 @@ def collect(c: dict, client: rakuten.Client, limit_pairs: int | None = None, now
     now = now or datetime.now(JST)
     if thin:
         print("pages with fewer than 8 products:", ", ".join(f"{k}={n}" for k, n in thin), file=sys.stderr)
-    return {"version": 2, "fetched_at": now.isoformat(timespec="seconds"), "pairs": out_pairs, "portrait": portrait,
+    return {"version": 2, "fetched_at": now.isoformat(timespec="seconds"), "pairs": out_pairs, "portrait": portrait, "likes": collect_likes(c, client, state),
             "stats": {"requests": client.calls, "pages": len(pairs), "pages_with_products": nonempty, "thin_pages": len(thin), "errors": state["errors"]}}
 
 

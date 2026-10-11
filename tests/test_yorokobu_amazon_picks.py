@@ -8,6 +8,7 @@ from datetime import date
 from pathlib import Path
 
 from sites.yorokobu import build, content, quality
+from tests.yorokobu_data import with_musts
 from sokuhou import sitecheck
 from sokuhou.sitekit import BuildError
 
@@ -33,7 +34,7 @@ class AmazonPicksTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.c = content.load()
-        cls.items = json.loads((FIX / "items.json").read_text(encoding="utf-8"))
+        cls.items = with_musts(json.loads((FIX / "items.json").read_text(encoding="utf-8")), cls.c)
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name) / "site"
         build.render_site(cls.c, cls.items, CFG, cls.out, release=True, today=date(2026, 10, 9))

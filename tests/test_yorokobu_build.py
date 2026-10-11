@@ -72,8 +72,9 @@ class BuildTest(unittest.TestCase):
     def test_the_sommelier_proposes_kinds_of_gift_with_a_reason_and_a_search_link(self):
         html = self.read("gift/birthday-boyfriend/index.html")
         self.assertIn("おすすめの贈り方", html)
-        for text in ("毎日使う財布", "名入れの小物", "毎日使う小物は、使うたびに思い出してもらえます。"):
+        for text in ("毎日使う財布", "毎日使う小物は、使うたびに思い出してもらえます。"):
             self.assertIn(text, html)
+        self.assertNotIn("名入れの小物", html.split('class="proposals"')[1])     # an idea with a single product is not a proposal
         self.assertIn("楽天市場で「誕生日 彼氏 財布」をもっと見る", html)
         self.assertIn("search.rakuten.co.jp%2Fsearch%2Fmall%2F", html)
 

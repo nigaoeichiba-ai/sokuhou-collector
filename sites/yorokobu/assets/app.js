@@ -130,11 +130,12 @@
       '<p class="fav-note">自分のスマホに残すなら、LINEの送り先に自分のトークを選ぶか、メールで自分あてに送ります。画像は、スクリーンショットのように保存できます。</p></div>';
     document.body.appendChild(bar);
     var panel = $(".fav-panel", bar), ul = $("ul", panel);
+    var MAX_SEND = 12;                                      // a list sent as text, link or picture is the first twelve (the shared-list page shows twelve)
     function text() {
-      var lines = favs.map(function (x) { return "・" + x.name + "(¥" + Number(x.price).toLocaleString() + ")"; });
+      var lines = favs.slice(0, MAX_SEND).map(function (x) { return "・" + x.name + "(¥" + Number(x.price).toLocaleString() + ")"; });
       return "贈り物の候補です。どれが合うか、意見をください。\n" + lines.join("\n") + "\n" + listUrl();
     }
-    function listUrl() { return location.origin + "/list/?c=" + favs.map(function (x) { return encodeURIComponent(x.code); }).join(","); }
+    function listUrl() { return location.origin + "/list/?c=" + favs.slice(0, MAX_SEND).map(function (x) { return encodeURIComponent(x.code); }).join(","); }
     function paint() {
       $$(".item").forEach(function (li) {
         var b = $(".fav", li);
@@ -173,7 +174,7 @@
     }
     // the list as a picture (names and prices; drawn here in the browser, nothing is sent anywhere): saved, or handed to the phone's share sheet
     function drawList(done) {
-      var W = 1080, pad = 70, rowH = 96, headH = 210, footH = 150, n = favs.length, H = headH + n * rowH + footH;
+      var W = 1080, pad = 70, rowH = 96, headH = 210, footH = 150, list = favs.slice(0, MAX_SEND), n = list.length, H = headH + n * rowH + footH;
       var c = document.createElement("canvas"); c.width = W; c.height = H;
       var g = c.getContext("2d"), FONT = '"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif';
       g.fillStyle = "#fbf6ee"; g.fillRect(0, 0, W, H);
@@ -182,7 +183,7 @@
       g.fillStyle = "#2b2621"; g.textBaseline = "alphabetic";
       g.font = "700 50px " + FONT; g.fillText("贈り物の候補", pad, 118);
       g.font = "400 28px " + FONT; g.fillStyle = "#766c62"; g.fillText(n + "点。どれが合うか、意見をください。", pad, 168);
-      favs.forEach(function (x, i) {
+      list.forEach(function (x, i) {
         var y = headH + i * rowH;
         g.strokeStyle = "#f2e9db"; g.lineWidth = 2; g.beginPath(); g.moveTo(pad, y); g.lineTo(W - pad, y); g.stroke();
         var price = "¥" + Number(x.price).toLocaleString();
@@ -249,7 +250,8 @@
         try { if (!navigator.share || !navigator.canShare || !navigator.canShare({ files: [new File([""], "a.png", { type: "image/png" })] })) return; } catch (e) { return; }
         b.hidden = false;
         b.addEventListener("click", function () {
-          fetch(img).then(function (r) { return r.blob(); }).then(function (blob) {
+          fetch(img).then(function (r) { if (!r.ok) throw new Error("no image"); return r.blob(); }).then(function (blob) {
+            if (blob.type !== "image/png") throw new Error("not an image");
             var f = new File([blob], b.getAttribute("data-name") || "chart.png", { type: "image/png" });
             return navigator.share({ files: [f], title: b.getAttribute("data-text") || "", text: (b.getAttribute("data-text") || "") + "\n" + b.getAttribute("data-url") });
           }).catch(function () {});
