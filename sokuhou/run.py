@@ -131,6 +131,10 @@ def check_counts_bear(old, new):
     for city, m in new["municipalities"].items():
         if set(m) != {"monthly", "latest"}:
             raise SanityError(f"{city}: unexpected fields {sorted(m)}")
+    # the only rows a counts source may carry are the ones two publications agree on (sokuhou/sources/corroborated.py): date, municipality, place, kind, count
+    for r in new.get("corroborated", []):
+        if set(r) != {"observed_at", "city", "place", "kind", "count"} or r["city"] not in new["municipalities"]:
+            raise SanityError(f"corroborated record in an unexpected shape: {sorted(r)}")
     if old and old.get("fy_current") == new["fy_current"] and new["total_fy"] < old["total_fy"] * 0.7:
         raise SanityError(f"{new['source']} {new['fy_current']} count dropped {old['total_fy']} -> {new['total_fy']}")
 

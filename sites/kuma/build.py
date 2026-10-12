@@ -770,7 +770,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     if detail_names:
         live_sources_text += f"。「最新の目撃」のページは、{'・'.join(detail_names)}が公開している目撃情報(各ページに出典と取得日を表示)"
     if count_names:
-        live_sources_text += f"。{'・'.join(count_names)}は、再利用の許可が明示されていないため、公開されている情報から件数と最新の日付だけを集計して載せています"
+        live_sources_text += f"。{'・'.join(count_names)}は、再利用の許可が明示されていないため、公開されている情報から件数と最新の日付" + ("を集計して載せています(複数の公開情報で一致を確認できた目撃は、場所も載せています)"
+                                                         if any(c.get("records") for c in d["live_counts"]) else "だけを集計して載せています")
     pages.update(legal_pages(
         SITE, cfg, preview,
         purpose="クマの出没や人身被害に関する、環境省の公表データを、都道府県別・月別に整理して、暮らしの安全の判断に役立てていただくこと。",

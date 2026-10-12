@@ -1,7 +1,1129 @@
 {
  "as_of": "2026-10-04",
+ "corroborated": [
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-02",
+   "place": "大字下宝沢地内の農地"
+  },
+  {
+   "city": "山形市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-09-30",
+   "place": "大字上桜田地内(悠創の丘)"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-29",
+   "place": "坂野辺新田字西狢山地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-28",
+   "place": "泉町地内の雑木林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-23",
+   "place": "花楯二丁目地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-23",
+   "place": "泉町地内の雑木林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-23",
+   "place": "土樋地内の河川敷"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-20",
+   "place": "新橋"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-19",
+   "place": "新橋"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-18",
+   "place": "新橋"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-17",
+   "place": "上安町"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-14",
+   "place": "浜中字分散山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-10",
+   "place": "十里塚字村東山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-09",
+   "place": "黒森字葭葉山地内"
+  },
+  {
+   "city": "山形市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-09-06",
+   "place": "大字新山地内の路上"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-03",
+   "place": "茗ケ沢字前畑地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-31",
+   "place": "黒森字境山地内"
+  },
+  {
+   "city": "山形市",
+   "count": 3,
+   "kind": "目撃",
+   "observed_at": "2026-08-31",
+   "place": "大字関沢地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-17",
+   "place": "百目鬼地内の農地"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-15",
+   "place": "十里塚字村東山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-14",
+   "place": "竹田字竹ノ下地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-14",
+   "place": "浜中字八間山地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-13",
+   "place": "大字中桜田地内の山林"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-12",
+   "place": "大蕨字上黒沢地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-11",
+   "place": "日の出町"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "新橋"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "大蕨字脇地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "北沢字中野沢地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-08",
+   "place": "蔵王温泉地内の路上"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-07",
+   "place": "浜中字乙地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-06",
+   "place": "市条字水上地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-06",
+   "place": "山谷字西沢地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-06",
+   "place": "大字関沢地内の山林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-06",
+   "place": "大字岩波地内の路上"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-06",
+   "place": "千代田字宅田地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-05",
+   "place": "茗ケ沢字沢尻地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-05",
+   "place": "田沢字村下地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-05",
+   "place": "北沢"
+  },
+  {
+   "city": "酒田市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-04",
+   "place": "黒森字乙地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-31",
+   "place": "常禅寺字西田地内"
+  },
+  {
+   "city": "酒田市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-31",
+   "place": "字北町地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-30",
+   "place": "中曽根字四枚田地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-29",
+   "place": "大字岩波地内の雑木林"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-27",
+   "place": "浜中字村東地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-27",
+   "place": "市条字山本地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "蔵王成沢地内の路上"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-24",
+   "place": "北俣字桂沢地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-24",
+   "place": "光ヶ丘"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-23",
+   "place": "飯田西二丁目地内の大学敷地"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-22",
+   "place": "十里塚字村東山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-20",
+   "place": "十里塚字村東山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "坂野辺新田字西狢山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-18",
+   "place": "十里塚字村東山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "緑ヶ丘"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "田沢字長根地内"
+  },
+  {
+   "city": "酒田市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-17",
+   "place": "成興野字箕輪地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-16",
+   "place": "若宮町"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-13",
+   "place": "蔵王上野地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-13",
+   "place": "蔵王上野地内の路上"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-13",
+   "place": "坂野辺新田字地続山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-12",
+   "place": "浜中"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-10",
+   "place": "蔵王温泉地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-10",
+   "place": "蔵王温泉地内の路上"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-10",
+   "place": "山谷新田字金谷地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-10",
+   "place": "光ヶ丘"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-08",
+   "place": "大字中桜田地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "大字関沢地内の山林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-05",
+   "place": "蔵王地内の山林"
+  },
+  {
+   "city": "酒田市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-04",
+   "place": "山楯字三之宮地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-02",
+   "place": "関字向地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-02",
+   "place": "大蕨字前田地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "麓字緑沢地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "大字門伝地内の路上"
+  },
+  {
+   "city": "酒田市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-30",
+   "place": "竹田字藤里地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "楯山"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-27",
+   "place": "生石字矢口地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-27",
+   "place": "大字滑川地内の山林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-27",
+   "place": "大字山寺地内の山林"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-26",
+   "place": "北俣字鹿島地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "大字山寺地内の雑木林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "大字山寺地内の山林"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "下青沢字小平沢地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-23",
+   "place": "蔵王半郷地内の雑木林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-23",
+   "place": "大字上桜田地内の山林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-22",
+   "place": "大字岩波地内の山林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-19",
+   "place": "大字八森地内の道路法面"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "生石字大平地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "大字岩波地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "蔵王半郷地内の路上"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "小泉字前田地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "大字土坂地内の山林"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "その他",
+   "observed_at": "2026-06-16",
+   "place": "下黒川"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "蔵王半郷地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "大字菅沢地内の雑木林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "大字滑川地内の山林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "大字柏倉地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "大字柏倉地内の山林"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-14",
+   "place": "宮海字南砂畑地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-14",
+   "place": "大字山寺地内の山林"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "相沢字北森地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "福山字宮ノ前地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "大字村木沢地内の雑木林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "大字平清水地内の駐車場"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "大字平清水地内の山林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "大字岩波地内の農地"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "生石字矢流川地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "坂野辺新田字地続山地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "立谷川三丁目地内の路上"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "浜中字小浜地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "大字松原地内の雑木林"
+  },
+  {
+   "city": "山形市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-09",
+   "place": "蔵王松ケ丘一丁目地内の会社敷地"
+  },
+  {
+   "city": "酒田市",
+   "count": 2,
+   "kind": "痕跡",
+   "observed_at": "2026-06-08",
+   "place": "生石字林新田地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "大字関沢地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-06",
+   "place": "大字平清水地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-06",
+   "place": "大字山寺地内の路上"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-05",
+   "place": "麓字緑沢地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-05",
+   "place": "大字山寺地内の路上"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "田沢字大沢地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "大字山寺地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "大字妙見寺地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "大字下東山地内の河川敷"
+  },
+  {
+   "city": "山形市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-06-03",
+   "place": "富神前地内の農地"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "泉町地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "松波一丁目地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "松波一丁目地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "大字村木沢地内の山林"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "山元字五百刈地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "大字山寺地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "大字山寺地内の線路付近"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "北沢字長面地内"
+  },
+  {
+   "city": "酒田市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-31",
+   "place": "泥沢字大峰地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-29",
+   "place": "大字新山地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-29",
+   "place": "大字山寺地内の線路付近"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-27",
+   "place": "茗ケ沢字早坂地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-27",
+   "place": "十里塚字村東山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "黒森字砂土端地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-24",
+   "place": "浜中字村北分散地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "大字山寺地内の路上"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-21",
+   "place": "大字松原地内の雑木林"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "坂野辺新田字地続山地内"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-18",
+   "place": "みはらしの丘地内の雑木林"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-15",
+   "place": "大字十文字地内の雑種地"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-15",
+   "place": "十里塚字東山北地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-13",
+   "place": "飯森山"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-13",
+   "place": "坂野辺新田字西狢山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-11",
+   "place": "緑ヶ丘"
+  },
+  {
+   "city": "山形市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-11",
+   "place": "大字平清水地内の山林(千歳山)"
+  },
+  {
+   "city": "酒田市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-11",
+   "place": "十里塚字八間山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-10",
+   "place": "浜中"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-07",
+   "place": "茗ケ沢字前畑地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-06",
+   "place": "城輪字嘉平田地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-01",
+   "place": "宮海字明治地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-01",
+   "place": "光ヶ丘"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-30",
+   "place": "宮野浦字家岸地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-29",
+   "place": "北俣字向地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-28",
+   "place": "坂野辺新田字葉萱地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 3,
+   "kind": "目撃",
+   "observed_at": "2026-04-20",
+   "place": "下青沢字大平沢地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-15",
+   "place": "浜中字八間山地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-06",
+   "place": "臼ケ沢字池田通地内"
+  },
+  {
+   "city": "酒田市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-01",
+   "place": "臼ケ沢字池田通地内"
+  }
+ ],
  "credit": "出典: 山形県「クマ目撃マップ」の元データ(https://www.pref.yamagata.jp/050011/kurashi/shizen/seibutsu/about_kuma/kuma_yamagata_top.html)から、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、山形県のページでご確認ください)",
- "fetched_at": "2026-10-07T15:34:58.857762+09:00",
+ "fetched_at": "2026-10-13T05:27:56.856249+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {

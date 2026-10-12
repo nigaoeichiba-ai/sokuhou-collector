@@ -1,7 +1,170 @@
 {
  "as_of": "2026-10-09",
+ "corroborated": [
+  {
+   "city": "秩父市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-09",
+   "place": "荒川上田野地内(諸上橋付近)"
+  },
+  {
+   "city": "秩父市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-09",
+   "place": "荒川上田野地内(荒川総合運動公園付近)"
+  },
+  {
+   "city": "秩父市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-07",
+   "place": "荒川白久地内(白川橋より西に約300m付近)"
+  },
+  {
+   "city": "秩父市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-07",
+   "place": "荒川白久地内(旧荒川郵便局跡地から東に約250m付近)"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-06",
+   "place": "河原沢 大諸バス停北西150m付近"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-04",
+   "place": "小鹿野町下小鹿野 津谷木橋下流100m付近"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-03",
+   "place": "小鹿野町両神小森大堤バス停東20m付近"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-01",
+   "place": "小鹿野町伊豆沢綾平 馬場集会所北150m付近"
+  },
+  {
+   "city": "秩父市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-27",
+   "place": "荒川上田野地内(坂口区農民センターより北に約50m付近)"
+  },
+  {
+   "city": "秩父市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-18",
+   "place": "荒川日野地内(寺沢公衆トイレより北に約50m付近)"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-16",
+   "place": "小鹿野町両神薄 浦島口バス停南西1km付近"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-09",
+   "place": "小鹿野町両神小森 鳶岩バス停西200m付近"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-22",
+   "place": "小鹿野町両神薄 日蔭バス停南西650m付近"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-15",
+   "place": "小鹿野町両神薄 出原 出原バス停北東100m付近"
+  },
+  {
+   "city": "秩父市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-12",
+   "place": "荒川久那地内(秩父鉄道浦山口駅より南西に約400m付近)"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-12",
+   "place": "小鹿野町般若 柿の久保 法性寺西500m付近"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "小鹿野町小鹿野 小鹿野町役場南西150m付近"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "小鹿野町藤倉 倉尾神社西500m付近"
+  },
+  {
+   "city": "秩父市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "荒川小野原地内(日野鷺橋より西に約450m付近)"
+  },
+  {
+   "city": "秩父市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-13",
+   "place": "荒川贄川地内(荒川西小学校より南西に約200m付近)"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "小鹿野町三山法師落人 法師落人橋バス停付近"
+  },
+  {
+   "city": "秩父市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "荒川白久地内(秩父鉄道白久駅より東に約750m付近)"
+  },
+  {
+   "city": "小鹿野町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-31",
+   "place": "小鹿野町両神薄 両神山東岳付近"
+  }
+ ],
  "credit": "出典: 埼玉県「埼玉県ツキノワグマ出没マップ」(https://www.pref.saitama.lg.jp/a0508/tyouzyu/kumatyui.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、埼玉県のページでご確認ください)",
- "fetched_at": "2026-10-09T19:39:55.160503+09:00",
+ "fetched_at": "2026-10-13T05:27:59.228730+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {

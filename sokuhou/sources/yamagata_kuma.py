@@ -2,6 +2,8 @@
 
 山形県は、データの再利用の許可を明示していない(県サイトの著作権の案内は「複製、転用をすることはできません」)。だから、CSV の「市町村」(列名は「ユーザ名」)と
 「目撃した日付」の2列だけを読み、メモリの中で月別・市町村別に数えて、件数と最新日だけを保存する。緯度・経度・地名・備考などの列は、読んだ直後に捨てる。
+ただし(2026-10-13・オーナーの方針)、酒田市と山形市が自分のページにも載せている目撃(同じ市・同じ日)は、2つの公開情報が一致したものとして、
+市のページにある日付・場所・種類を、出典を示さずに保存する(`corroborated.py`)。県の CSV の列は、いままでどおり保存しない。
 CSV の住所は日付入りのファイル名(`YYYYMMDD_kemonote-cleaned.csv`)で変わるので、県の「クマに関する情報」ページのリンクから探す。
 CSV は暦年(1月1日から)なので、年が変わる1月には令和7年度の4〜12月分が消える。その場合は件数が足りず、保存せずに例外になる。
 """
@@ -15,7 +17,7 @@ import sys
 from datetime import date, datetime
 from urllib.parse import urljoin, urlparse
 
-from sokuhou.sources import kumacounts
+from sokuhou.sources import corroborated, kumacounts
 
 PAGE = "https://www.pref.yamagata.jp/050011/kurashi/shizen/seibutsu/about_kuma/kuma_yamagata_top.html"
 LINK = re.compile(r'href="([^"]*?(\d{8})_kemonote-cleaned\.csv)"')
@@ -86,7 +88,13 @@ def parse(data: bytes, url: str, today: date | None = None) -> dict:
 def collect(now: datetime | None = None) -> dict:
     url = csv_url_from_page(fetch(PAGE).decode("utf-8", "replace"))
     kumacounts.pause()
-    return parse(fetch(url), url, kumacounts.today_jst(now))
+    data = fetch(url)
+    today = kumacounts.today_jst(now)
+    result = parse(data, url, today)
+    # the sightings that a municipality's own page also lists (same city, same day) are stored with their place: two publications agree
+    return corroborated.attach(result, read_rows(data), [(corroborated.SAKATA_PAGE, corroborated.parse_sakata),
+                                                          (corroborated.YAMAGATA_CITY_PAGE, corroborated.parse_yamagata_city)],
+                               fetch, today, kumacounts.pause, kumacounts.norm_city)
 
 
 if __name__ == "__main__":
