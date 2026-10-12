@@ -255,7 +255,30 @@ def attach(result: dict, prefecture_rows, readers: list, fetch, today: date, pau
         print(f"corroborated: {e}", file=sys.stderr)
     if records:
         result["corroborated"] = records
+        result["corroborated_on"] = {city: today.isoformat() for city in sorted({r["city"] for r in records})}      # the day each municipality was last read
     return result
+
+
+CARRY_DAYS = 3
+
+
+def carry_over(old: dict | None, new: dict) -> dict:
+    """If a municipality's page could not be read today, keep its records that were confirmed within the last CARRY_DAYS days.
+
+    (A page that is down for a day must not blank its rows; a page that stays unreadable stops being shown after CARRY_DAYS.)
+    The facts do not change, so yesterday's confirmed record is still a confirmed record today."""
+    if not old or not old.get("corroborated"):
+        return new
+    today = date.fromisoformat(new["fetched_at"][:10])
+    seen = old.get("corroborated_on") or {}
+    fresh = {r["city"] for r in new.get("corroborated", [])}
+    kept = [r for r in old["corroborated"]
+            if r["city"] not in fresh and r["city"] in seen and 0 <= (today - date.fromisoformat(seen[r["city"]])).days <= CARRY_DAYS]
+    if not kept:
+        return new
+    merged = sorted(new.get("corroborated", []) + kept, key=lambda r: (r["observed_at"], r["place"]), reverse=True)
+    on = {**{c: seen[c] for c in {r["city"] for r in kept}}, **(new.get("corroborated_on") or {})}
+    return {**new, "corroborated": merged, "corroborated_on": dict(sorted(on.items()))}
 
 
 def collect_records(prefecture_rows, readers: list, fetch, today: date, pause=lambda: None,

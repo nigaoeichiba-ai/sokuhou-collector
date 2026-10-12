@@ -632,8 +632,11 @@
    "place": "清里区弥生地内"
   }
  ],
+ "corroborated_on": {
+  "上越市": "2026-10-13"
+ },
  "credit": "出典: 新潟県「にいがたクマ出没マップ」(https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、新潟県のページでご確認ください)",
- "fetched_at": "2026-10-13T05:37:39.067177+09:00",
+ "fetched_at": "2026-10-13T05:44:20.402362+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {

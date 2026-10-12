@@ -1122,8 +1122,12 @@
    "place": "臼ケ沢字池田通地内"
   }
  ],
+ "corroborated_on": {
+  "山形市": "2026-10-13",
+  "酒田市": "2026-10-13"
+ },
  "credit": "出典: 山形県「クマ目撃マップ」の元データ(https://www.pref.yamagata.jp/050011/kurashi/shizen/seibutsu/about_kuma/kuma_yamagata_top.html)から、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、山形県のページでご確認ください)",
- "fetched_at": "2026-10-13T05:27:56.856249+09:00",
+ "fetched_at": "2026-10-13T05:44:23.404459+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
