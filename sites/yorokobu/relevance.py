@@ -92,12 +92,15 @@ def _norm(text: str) -> str:
     return unicodedata.normalize("NFKC", text).lower().replace(" ", "")
 
 
-def fits_idea(name: str, must: list[str] | tuple[str, ...] | None) -> bool:
+def fits_idea(name: str, must: list[str] | tuple[str, ...] | None, never: list[str] | tuple[str, ...] | None = None) -> bool:
     """Is this product the kind of thing the idea is about?  `must` is the idea's list of words (any one is enough; spelling variants are in the list):
-    "保温タンブラー" lists タンブラー, ボトル, 水筒, so a card case that the search returned for it is not shown.  An idea without a list accepts everything."""
+    "保温タンブラー" lists タンブラー, ボトル, 水筒, so a card case that the search returned for it is not shown.  An idea without a list accepts everything.
+    `never` (optional) lists words of things that only sound like the idea (a "ピンチハンガー" for hats under 洗濯ピンチ): a title with one of them is not shown."""
+    n = _norm(name)
+    if never and any(_norm(w) in n for w in never if _norm(w)):
+        return False
     if not must:
         return True
-    n = _norm(name)
     return any(_norm(w) in n for w in must)
 
 

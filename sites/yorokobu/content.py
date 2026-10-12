@@ -215,6 +215,9 @@ def check_board(b: dict) -> None:
 
 def check_must(idea: dict, where: str) -> None:
     """An idea's `must` (words of which a product title has to contain one) is a list of 1-12 short strings, when it is there."""
+    n = idea.get("not")
+    if n is not None and (not isinstance(n, list) or not 1 <= len(n) <= 12 or any(not isinstance(w, str) or not 1 <= len(w.strip()) <= 12 for w in n)):
+        raise BuildError(f"{where}: not has to be a list of 1-12 short words")
     m = idea.get("must")
     if m is None:
         return

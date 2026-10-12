@@ -82,7 +82,7 @@ def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | Non
                     if len(items) >= wanted:
                         break
                     it = get(code)
-                    if it and code not in used and usable(it, filters, p.get("recipient"), relaxed=True) and relevance.fits_idea(it["name"], idea.get("must")):
+                    if it and code not in used and usable(it, filters, p.get("recipient"), relaxed=True) and relevance.fits_idea(it["name"], idea.get("must"), idea.get("not")):
                         items.append({**it, "note": note} if note else it)
                         used.add(code)
                         if n >= wanted:
@@ -92,13 +92,13 @@ def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | Non
             if len(items) < 2:  # nothing curated survives (or this idea was never curated): the keyword search fills in
                 searched += 1
                 found = fetch._search(client, f"{key} idea {i} fallback", fallback_state, 1000, keyword=idea["query"], hits=fetch.HITS)
-                more = pick(found, None, filters, limit=4 - len(items), recipient=p.get("recipient"), exclude=used, must=idea.get("must"))
+                more = pick(found, None, filters, limit=4 - len(items), recipient=p.get("recipient"), exclude=used, must=idea.get("must"), never=idea.get("not"))
                 items += more
                 used |= {x["code"] for x in more}
             if len(items) < fetch.IDEA_MIN:                  # still short of the right kind: other searches (the idea's title, its must-words)
                 for q in fetch.extra_queries(idea, p.get("recipient")):
                     found = fetch._search(client, f"{key} idea {i} extra", fallback_state, 1000, keyword=q, hits=fetch.HITS, sort="-reviewCount")
-                    more = pick(found, None, filters, limit=4 - len(items), recipient=p.get("recipient"), exclude=used, must=idea.get("must"))
+                    more = pick(found, None, filters, limit=4 - len(items), recipient=p.get("recipient"), exclude=used, must=idea.get("must"), never=idea.get("not"))
                     items += more
                     used |= {x["code"] for x in more}
                     if len(items) >= fetch.IDEA_MIN:

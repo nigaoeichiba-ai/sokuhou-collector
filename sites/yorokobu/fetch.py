@@ -130,11 +130,11 @@ def collect(c: dict, client: rakuten.Client, limit_pairs: int | None = None, now
         used: set = set()
         ideas_out = []
         for i, idea in enumerate(p["ideas"]):
-            items = pick(pool[i], None, filters, limit=IDEA_ITEMS, recipient=p.get("recipient"), exclude=used, must=idea.get("must"))
+            items = pick(pool[i], None, filters, limit=IDEA_ITEMS, recipient=p.get("recipient"), exclude=used, must=idea.get("must"), never=idea.get("not"))
             if len(items) < IDEA_MIN:                        # too few that are really of this kind: other searches, sorted by how many reviews they have
                 for q in extra_queries(idea, p.get("recipient")):
                     more = pick(_search(client, f"{key} idea {i} extra", state, total, keyword=q, hits=HITS, sort="-reviewCount"), None, filters,
-                                limit=IDEA_ITEMS - len(items), recipient=p.get("recipient"), exclude=used | {x["code"] for x in items}, must=idea.get("must"))
+                                limit=IDEA_ITEMS - len(items), recipient=p.get("recipient"), exclude=used | {x["code"] for x in items}, must=idea.get("must"), never=idea.get("not"))
                     items += more
                     if len(items) >= IDEA_MIN:
                         break

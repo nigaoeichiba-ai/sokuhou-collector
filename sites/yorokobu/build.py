@@ -1731,13 +1731,14 @@ def prepare(c: dict, items: dict | None, cfg: dict) -> dict:
     owner = {ct.pair_key(p): p.get("recipient") for p in ct.pages(c)}
     must_of = {(ct.pair_key(p), idea["label"]): idea.get("must") for p in ct.pages(c) for idea in p["ideas"]}
     must_at = {(ct.pair_key(p), n): idea.get("must") for p in ct.pages(c) for n, idea in enumerate(p["ideas"])}     # (data stored under another label is matched by its place)
+    not_at = {(ct.pair_key(p), n): idea.get("not") for p in ct.pages(c) for n, idea in enumerate(p["ideas"])}
     pairs = {}
     for k, v in items.get("pairs", {}).items():
         def ok(i, k=k):
             return usable(i, c["filters"], owner.get(k), relaxed=True)
         if "ideas" in v:                                   # each idea keeps only products of its own kind (its must-words), and a budget list only what an idea shows
             musts = [must_of.get((k, idea["label"])) or must_at.get((k, n)) or idea.get("must") for n, idea in enumerate(v["ideas"])]
-            ideas = [{**idea, "must": musts[n], "items": [i for i in idea["items"] if ok(i) and relevance.fits_idea(i["name"], musts[n])]}
+            ideas = [{**idea, "must": musts[n], "items": [i for i in idea["items"] if ok(i) and relevance.fits_idea(i["name"], musts[n], not_at.get((k, n)))]}
                      for n, idea in enumerate(v["ideas"])]
             shown = {i["code"] for idea in ideas for i in idea["items"]}
             pairs[k] = {"ideas": ideas, "tiers": {t: [i for i in lst if ok(i) and i["code"] in shown] for t, lst in v["tiers"].items()}}
