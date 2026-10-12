@@ -1,0 +1,9 @@
+{
+ "note": "IndexNow keys. They are public by design (the deploy publishes /<key>.txt at each site's root so the engines can check ownership); nothing here is secret. One key per host.",
+ "hosts": {
+  "saichin-sokuho.com": "0710ee1fc6423f35f4eb889d52f3183f",
+  "kuma-sokuho.com": "c6c29827b5f781b7b5d8f233fea254e5",
+  "yorokobu-present.com": "7feb08382c7496f90bd6447259acf0b0",
+  "minna-no-illust.com": "eff1ddfeb966d8ebbc3d4ff2ba008287"
+ }
+}

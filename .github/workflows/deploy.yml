@@ -228,6 +228,9 @@ jobs:
       - name: Phone-width layout check (Chrome measures sample pages of every kind at 300 / 375 / 768 px; sideways overflow or squeezed text stops the deploy)
         if: steps.gate.outputs.go == 'true'
         run: python -m sokuhou.layoutcheck release
+      - name: IndexNow key file (the search engines fetch it to check that we own the site; public by design)
+        if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou'
+        run: python -m sokuhou.indexnow prepare --root release --base ${{ matrix.url }}
       - name: Hidden demo for atomou (review copy only; the full demo goes to public_html/demo, the folder of demo.atomou.com, behind its password)
         if: steps.gate.outputs.go == 'true' && matrix.site == 'atomou' && vars.ATOMOU_PUBLIC != 'true' && vars.ATOMOU_REVIEW == 'true'
         run: |
@@ -292,6 +295,10 @@ jobs:
             fi
           done
           for d in release/demo release/demo.atomou.com; do if [ -d "$d" ]; then grep -q "AuthUserFile" "$d/.htaccess"; fi; done
+      - name: IndexNow previous sitemap (the live one, kept before the new build replaces it; a failure only means nothing is sent afterwards)
+        if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+        continue-on-error: true
+        run: python -m sokuhou.indexnow snapshot --base ${{ matrix.url }} --out prev_sitemap.xml
       - name: Upload and switch
         if: steps.gate.outputs.go == 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         env:
@@ -381,3 +388,7 @@ jobs:
             "
             exit 1
           fi
+      - name: IndexNow submit (tells Bing and the other IndexNow engines which pages are new or changed; it never fails or rolls back a deploy)
+        if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+        continue-on-error: true
+        run: python -m sokuhou.indexnow submit --root release --base ${{ matrix.url }} --prev prev_sitemap.xml
