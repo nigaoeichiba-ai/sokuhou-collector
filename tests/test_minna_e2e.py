@@ -42,6 +42,19 @@ async function load(url) {
     out.bg_dark = box.style.backgroundColor; out.solid = box.classList.contains('solid');
     d.querySelector('.bgsw button[data-bg=""]').click(); out.bg_reset = box.style.backgroundColor === '' && !box.classList.contains('solid');
 
+    // the print makers: the holidays computed in the browser are the ones printables.py computes, and every kind of page is drawn
+    f = await load('/tool/calendar/'); d = f.contentDocument; w = f.contentWindow; await wait(1500);
+    out.hol = {}; for (let y = 2023; y <= 2040; y++) out.hol[y] = w.minnaMaker.holidays(y);
+    d.querySelector('#mk-list button').click(); await wait(1500);
+    const cc = d.getElementById('mk-canvas'), ink = (cv, y0, h) => { const x = cv.getContext('2d').getImageData(0, y0, cv.width, h).data; let n = 0; for (let i = 0; i < x.length; i += 4) if (x[i] < 120 && x[i + 1] < 120 && x[i + 2] < 120) n++; return n; };
+    out.cal = { size: [cc.width, cc.height], msg: d.getElementById('mk-msg').textContent, header_ink: ink(cc, 800, 60), title_ink: ink(cc, 200, 160) };
+    f = await load('/tool/nametag/'); d = f.contentDocument; w = f.contentWindow; await wait(1500);
+    d.querySelector('#mk-list button').click(); await wait(1500);
+    out.tag = {};
+    for (const tpl of ['tag8', 'seat', 'cert']) {
+      const sel = d.querySelector('[name="tpl"]'); sel.value = tpl; d.querySelector('[name="name"]').value = '山田 太郎'; sel.dispatchEvent(new w.Event('change')); await wait(500);
+      const cv = d.getElementById('mk-canvas'); out.tag[tpl] = { ink: ink(cv, 0, cv.height), msg: d.getElementById('mk-msg').textContent, cert_fields_hidden: d.querySelector('[data-for="cert"]').hidden };
+    }
     // phone width: the header links must stay readable (not squeezed into one-character-wide columns)
     {
       const f2 = document.createElement('iframe'); f2.style.width = '300px'; f2.style.height = '800px'; document.body.appendChild(f2);
@@ -95,6 +108,25 @@ class MinnaBrowserTest(unittest.TestCase):
             self.assertGreaterEqual(w, 40)      # a two-character label such as 特集 is about 48 px; vertical text would be far narrower and taller
             self.assertLessEqual(h, 60)
         self.assertLessEqual(self.out["scroll300"], 301)
+
+    def test_calendar_holidays_in_the_browser_match_the_python_ones(self):
+        from sites.minna import printables
+        for year, got in self.out["hol"].items():
+            want = {d.isoformat(): n for d, n in printables.holidays(int(year)).items()}
+            self.assertEqual(got, want, year)
+
+    def test_calendar_and_name_pages_are_drawn(self):
+        cal = self.out["cal"]
+        self.assertEqual(cal["size"], [1240, 1754])
+        self.assertIn("選んだイラスト", cal["msg"])
+        self.assertGreater(cal["header_ink"], 200)       # the weekday names
+        self.assertGreater(cal["title_ink"], 2000)       # the big month number
+        tag = self.out["tag"]
+        for tpl in ("tag8", "seat", "cert"):
+            self.assertNotIn("表示できません", tag[tpl]["msg"])
+            self.assertGreater(tag[tpl]["ink"], 3000, tpl)
+        self.assertFalse(tag["cert"]["cert_fields_hidden"])
+        self.assertTrue(self.out["tag"]["tag8"]["cert_fields_hidden"])
 
     def test_background_switcher(self):
         self.assertEqual(self.out["bg_dark"], "rgb(43, 27, 20)")

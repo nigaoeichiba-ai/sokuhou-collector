@@ -766,3 +766,30 @@ header.site nav a[aria-current] { background: var(--brand); color: var(--ink); }
 .ai-opts { display: grid; gap: 6px; }
 .ai-opts .chip { text-align: left; white-space: normal; line-height: 1.6; border-radius: 10px; }
 @media (max-width: 480px) { .assist-open { right: 10px; bottom: 10px; } .assist { left: 8px; right: 8px; bottom: 66px; } .assist-nudge { right: 10px; bottom: 64px; } }
+
+/* print makers and the tools hub */
+.mk-cols { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 28px; align-items: start; margin: 20px 0 30px; }
+.mk-side { display: grid; gap: 10px; }
+.mk-h { font-size: 1rem; margin: 10px 0 2px; }
+.mk-opts { display: grid; gap: 10px; }
+.mk-opts label { display: grid; gap: 4px; font-weight: 700; font-size: .9rem; }
+.mk-opts label.chk { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+.mk-opts input[type="text"], .mk-opts select, .mk-opts textarea, .mk-search input { width: 100%; padding: .5em .8em; border: 1px solid var(--edge); border-radius: 8px; background: #fff; font: 500 1rem var(--body); color: var(--ink); }
+.mk-opts [hidden] { display: none; }
+.mk-search { display: flex; gap: 8px; }
+.mk-search input { flex: 1; min-width: 0; }
+.mk-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.mk-chips .chip, .ai-opts .chip { padding: .25em .8em; border: 1px solid var(--edge); border-radius: 999px; background: #fff; font: 700 .85rem var(--body); color: var(--ink); cursor: pointer; }
+.mk-chips .chip:hover, .ai-opts .chip:hover, .as-chips .chip:hover { background: var(--mint-s); }
+.mk-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 6px; max-height: 340px; overflow: auto; padding: 4px; border: var(--line); border-radius: 10px; background: #fff; }
+.mk-list button { padding: 2px; border: 2px solid transparent; border-radius: 8px; background: #fff; cursor: pointer; }
+.mk-list button[aria-pressed="true"] { border-color: var(--pink); }
+.mk-list img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
+#mk-canvas { width: 100%; height: auto; max-width: 620px; background: #fff; border: var(--line); border-radius: 8px; box-shadow: var(--shadow); }
+.tool-grid { list-style: none; margin: 22px 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); }
+.tool-card { display: grid; gap: 6px; height: 100%; padding: 16px 18px; background: #fff; border: var(--line); border-radius: 12px; color: var(--ink); text-decoration: none; }
+.tool-card:hover { background: var(--mint-s); }
+.tool-card b { font-size: 1.05rem; }
+.tool-card span { font-size: .9rem; color: var(--muted); line-height: 1.7; }
+@media (max-width: 760px) { .mk-cols { grid-template-columns: minmax(0, 1fr); } }
+.use-links { display: grid; gap: 6px; }
