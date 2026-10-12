@@ -131,6 +131,80 @@
     return '<li class="ic"><a class="illust-card" href="/illust/' + r[0] + '/"><span class="checker"><img src="/thumbs/' + r[0] + '.webp" alt="' + esc(r[1]) + '" width="' + w + '" height="' + h + '" loading="lazy"></span><b>' + esc(r[1]) + '</b></a>' +
       '<button class="fav" type="button" data-fav="' + r[0] + '" aria-pressed="false" aria-label="お気に入りに入れる">♡</button></li>';
   }
+  /* ---------- search: synonyms, unspaced phrases, "close" results, "もしかして" (no AI: a word list and string matching) ---------- */
+  var synP = null, vocabP = null;
+  function loadSyn() { // /data/synonyms.json: groups of words that mean the same; -> { normalised word: [every normalised word of its groups] }
+    if (!synP) synP = fetch("/data/synonyms.json").then(function (r) { return r.json(); }).catch(function () { return { groups: [] }; }).then(function (d) {
+      var idx = {};
+      (d.groups || []).forEach(function (g) { var ns = g.map(norm).filter(Boolean); ns.forEach(function (n) { idx[n] = (idx[n] || []).concat(ns); }); });
+      Object.keys(idx).forEach(function (k) { idx[k] = idx[k].filter(function (v, i, a) { return a.indexOf(v) === i; }); });
+      return idx;
+    });
+    return synP;
+  }
+  function loadVocab() { // the words the library knows (tags and set titles): to split "ひつじのこたつ" and to suggest the word that was probably meant
+    if (!vocabP) vocabP = loadIndex().then(function (rows) {
+      var set = {};
+      rows.forEach(function (r) { (r[2] + " " + r[5]).split(/\s+/).forEach(function (t) { var n = norm(t); if (n.length >= 2) set[n] = (set[n] || 0) + 1; }); });
+      return set;
+    });
+    return vocabP;
+  }
+  function near1(a, b) { // one edit apart: one character added, dropped or changed
+    if (a === b) return true;
+    var la = a.length, lb = b.length; if (Math.abs(la - lb) > 1) return false;
+    var i = 0; while (i < la && i < lb && a[i] === b[i]) i++;
+    if (la === lb) return a.slice(i + 1) === b.slice(i + 1);
+    return la > lb ? a.slice(i + 1) === b.slice(i) : a.slice(i) === b.slice(i + 1);
+  }
+  function splitPhrase(s, vocab) { // "ひつじのこたつ" -> ["ひつじ", "こたつ"]: the longest known words that fit, left to right
+    var terms = Object.keys(vocab).filter(function (t) { return s.indexOf(t) >= 0; }).sort(function (a, b) { return b.length - a.length; }), used = [], out = [];
+    terms.forEach(function (t) {
+      var at = s.indexOf(t), free = used.every(function (u) { return at >= u[1] || at + t.length <= u[0]; });
+      if (free) { used.push([at, at + t.length]); out.push([at, t]); }
+    });
+    return out.sort(function (a, b) { return a[0] - b[0]; }).map(function (x) { return x[1]; });
+  }
+  function searchAll(rows, idx, vocab, qText, g, t) { // -> { exact, near, words, parts, suggest }
+    var words = norm(qText).split(/\s+/).filter(Boolean);
+    function matcher(ws, ignoreFilters) {
+      var alts = ws.map(function (w) { return idx[w] || [w]; });
+      return function (r) {
+        if (!ignoreFilters && ((g && r[3] !== g) || (t && r[4] !== t))) return false;
+        var hay = norm(r[1] + " " + r[2] + " " + r[5]);
+        return alts.every(function (a) { return a.some(function (x) { return hay.indexOf(x) >= 0; }); });
+      };
+    }
+    var res = { exact: [], near: [], words: words, parts: [], suggest: [] };
+    if (!words.length) { res.exact = rows.filter(function (r) { return (!g || r[3] === g) && (!t || r[4] === t); }); return res; }
+    res.exact = rows.filter(matcher(words));
+    if (!res.exact.length) {
+      // close results: how many of the query's two-character pieces (or of its known words) a picture's title and tags contain; works without spaces and with particles in between
+      var s = words.join("").replace(/[のをがにでとはも]/g, ""), parts = words.length === 1 ? splitPhrase(words[0], vocab) : [], grams = [], scored = [];
+      res.parts = parts;
+      for (var i = 0; i + 1 < s.length; i++) grams.push(s.slice(i, i + 2));
+      var pm = parts.map(function (w) { return matcher([w]); }), partsCover = s.length ? parts.join("").length / s.length : 0;   // known words count only if they make up half of what was typed
+      rows.forEach(function (r) {
+        if ((g && r[3] !== g) || (t && r[4] !== t)) return;
+        var hay = norm(r[1] + " " + r[2] + " " + r[5]);
+        var cov = grams.length >= 2 ? grams.filter(function (x) { return hay.indexOf(x) >= 0; }).length / grams.length : 0;
+        var pc = pm.length && partsCover >= 0.5 ? pm.filter(function (f) { return f(r); }).length / pm.length : 0, sc = Math.max(cov, pc);
+        if (sc >= 0.6) scored.push([sc, r[1].length, r]);
+      });
+      if (!scored.length && words.length > 1) { // several words and no picture has them all: the best-covered first
+        var fns = words.map(function (w) { return matcher([w]); });
+        rows.forEach(function (r) { var n = fns.filter(function (f) { return f(r); }).length; if (n) scored.push([n / words.length, r[1].length, r]); });
+      }
+      scored.sort(function (a, b) { return b[0] - a[0] || a[1] - b[1]; });
+      res.near = scored.slice(0, 120).map(function (x) { return x[2]; });
+    }
+    words.forEach(function (w) { // a word nobody has, one edit away from a word the library knows
+      if (w.length >= 3 && !idx[w] && !vocab[w] && !rows.some(matcher([w], true))) {
+        res.suggest = res.suggest.concat(Object.keys(vocab).filter(function (v) { return v.length >= 3 && near1(w, v); }).sort(function (a, b) { return vocab[b] - vocab[a]; }).slice(0, 2));
+      }
+    });
+    return res;
+  }
   function initSearch() {
     var app = $("#search-app"); if (!app) return;
     var list = $("#search-results"), status = $("#search-status"), more = $("#search-more"), q = $('[name="q"]', app), g = $('[name="g"]', app), t = $('[name="t"]', app);
@@ -144,18 +218,18 @@
       more.hidden = shown >= hits.length; paintFavs();
     }
     function run() {
-      loadIndex().then(function (rows) {
-        var words = norm(q.value).split(/\s+/).filter(Boolean);
-        if (!words.length && !g.value && !t.value) { hits = []; status.textContent = "キーワードを入れてください。ひらがな・カタカナは、どちらでも見つかります。"; list.innerHTML = ""; more.hidden = true; return; }
-        hits = rows.filter(function (r) {
-          if (g.value && r[3] !== g.value) return false;
-          if (t.value && r[4] !== t.value) return false;
-          var hay = norm(r[1] + " " + r[2] + " " + r[5]);
-          return words.every(function (w) { return hay.indexOf(w) >= 0; });
-        });
-        status.textContent = hits.length ? hits.length + "点、見つかりました。" : "見つかりませんでした。ほかの言葉で、さがしてみてください。";
+      Promise.all([loadIndex(), loadSyn()]).then(function (v) {
+        return loadVocab().then(function (vocab) { return searchAll(v[0], v[1], vocab, q.value, g.value, t.value); });
+      }).then(function (res) {
+        var om = $("#search-miss"); if (om) om.remove();
+        var chips = $("#search-chips"); if (chips) chips.hidden = !!(res.words.length || g.value || t.value);
+        if (!res.words.length && !g.value && !t.value) { hits = []; status.textContent = "キーワードを入れてください。ひらがな・カタカナ・似た言い方(塗り絵とぬりえ など)は、どちらでも見つかります。"; list.innerHTML = ""; more.hidden = true; return; }
+        var sug = res.suggest.length ? ' もしかして: ' + res.suggest.map(function (s) { return '<a href="/search/?q=' + encodeURIComponent(s) + '">' + esc(s) + "</a>"; }).join("、") + "?" : "";
+        if (res.exact.length) { hits = res.exact; status.innerHTML = hits.length + "点、見つかりました。" + sug; }
+        else if (res.near.length) { hits = res.near; status.innerHTML = "ぴったりの絵は、ありませんでした。近いものを、" + Math.min(hits.length, 120) + "点、出しました。" + sug; }
+        else { hits = []; status.innerHTML = "見つかりませんでした。ほかの言葉で、さがしてみてください。" + sug; }
         draw(true);
-        if (hits.length || !q.value.trim()) { var om = $("#search-miss"); if (om) om.remove(); } else showMiss(list, q.value);
+        if (!res.exact.length && res.words.length) showMiss(list, q.value);
       });
     }
     app.addEventListener("submit", function (e) { e.preventDefault(); var u = new URL(location.href); u.search = new URLSearchParams({ q: q.value, g: g.value, t: t.value }).toString(); history.replaceState(null, "", u); run(); });
@@ -336,6 +410,19 @@
     });
   }
 
-  document.addEventListener("DOMContentLoaded", function () { initBg(); initCard(); initFav(); initSearch(); initFavPage(); initExport(); initZip(); initRequest(); });
+  // what the helper panel (assist.js, loaded when it is first opened) shares with this file
+  window.minnaApp = { norm: norm, esc: esc, loadIndex: loadIndex, loadSyn: loadSyn, loadVocab: loadVocab, searchAll: searchAll, cardHtml: cardHtml, loadRules: loadRules, refuseW: refuseW, sendWish: sendWish, saveWish: saveWish, paintFavs: paintFavs };
+  function initAssist() {
+    var b = document.getElementById("assist-open"); if (!b) return;
+    b.addEventListener("click", function () {
+      if (window.minnaAssist) { window.minnaAssist.toggle(); return; }
+      b.disabled = true; var sc = document.createElement("script"); sc.src = b.getAttribute("data-src");
+      sc.onload = function () { b.disabled = false; window.minnaAssist.toggle(); };
+      sc.onerror = function () { b.disabled = false; b.textContent = "いま、ひらけません"; };
+      document.head.appendChild(sc);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () { initBg(); initCard(); initFav(); initSearch(); initFavPage(); initExport(); initZip(); initRequest(); initAssist(); });
 
 })();
