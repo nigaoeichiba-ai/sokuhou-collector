@@ -9,7 +9,7 @@
   var FILLER = /(ください|下さい|ほしいです|ほしい|欲しい|さがしています|さがして|探しています|探して|ありますか|ありませんか|ないですか|教えてください|教えて|おしえて|使いたいです|使いたい|つかいたい|のイラスト|イラスト|いらすと|の絵|絵が|絵を|絵|かわいい|可愛い|おしゃれな|おしゃれ|無料の|無料|フリー素材|フリー|素材|に使えます|に使える|使えます|使える|に使って|使って)/g;
   var REQ = /(リクエスト|描いてほしい|描いて欲しい|描いてください|作ってほしい|作ってください|つくってほしい)/;
 
-  function loadData() { if (!dataP) dataP = fetch("/data/assist.json").then(function (r) { return r.json(); }).catch(function () { return { pages: [], faq: [], touches: {}, chips: [] }; }); return dataP; }
+  function loadData() { return A.loadAssist(); }
   function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
   function say(who, html) { var d = el("div", "as-msg " + who, html); log.appendChild(d); log.scrollTop = log.scrollHeight; return d; }
   function chips(list) {
@@ -71,14 +71,6 @@
     faq.forEach(function (f) { var n = f.k.filter(function (k) { return flatText.indexOf(norm(k)) >= 0; }).length; if (n > bestN) { best = f; bestN = n; } });
     return best;
   }
-  function pagesFor(words, idx, pages) {
-    var scored = [];
-    pages.forEach(function (p) {
-      var hay = norm(p.n + " " + (p.k || []).join(" ")), n = words.filter(function (w) { return w.length >= 2 && (idx[w] || [w]).some(function (a) { return hay.indexOf(a) >= 0; }); }).length;
-      if (n) scored.push([n, p]);
-    });
-    return scored.sort(function (a, b) { return b[0] - a[0]; }).slice(0, 3).map(function (x) { return x[1]; });
-  }
   function handle(text) {
     text = String(text || "").trim(); if (!text) return;
     say("me", esc(text));
@@ -98,7 +90,7 @@
     {
       var f = norm(text), ans = faqFor(f, d.faq), words = norm(strip(text)).split(/\s+/).filter(Boolean);
       if (ans) say("bot", esc(ans.a) + (ans.u ? '<br><a href="' + esc(ans.u) + '">' + esc(ans.l || "くわしく") + "</a>" : ""));
-      var pg = pagesFor(words, idx, d.pages);
+      var pg = A.pagesFor(words, idx, d.pages);
       if (pg.length) say("bot", "こんなページも、あります。<ul class=\"as-links\">" + pg.map(function (p) { return '<li><a href="' + esc(p.u) + '">' + esc(p.n) + "</a><small>" + esc(p.t || "") + "</small></li>"; }).join("") + "</ul>");
       if (ans) { // an answer was given: look for pictures only if the rest of the sentence names something the library knows
         var left = norm(strip(text)).replace(new RegExp(ans.k.map(function (k) { return norm(k).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }).join("|"), "g"), "").replace(NOTHING_LEFT, "");
