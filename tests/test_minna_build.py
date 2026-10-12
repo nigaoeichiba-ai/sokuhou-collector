@@ -44,7 +44,7 @@ class MinnaBuildTest(unittest.TestCase):
         self.assertGreater(len(tags), 20)
         self.assertLessEqual(len(tags), build.MAX_TAG_PAGES)
         for tag in tags:
-            users = [i for i in self.items if tag in i["tags"]]
+            users = build.tagged(self.items, tag)
             self.assertGreaterEqual(len(users), build.MIN_TAG)                 # counted here, not by the builder
             self.assertGreaterEqual(len({i["series"] for i in users}), 2)
             self.assertNotIn(" ", tag)
@@ -54,6 +54,14 @@ class MinnaBuildTest(unittest.TestCase):
         for rare in ("イラスト", "かわいい"):
             self.assertNotIn(rare, tags)
         self.assertIn("/tag/", self.read("sitemap.xml"))
+
+    def test_a_guide_set_carrying_every_animals_name_does_not_fill_one_animals_page(self):
+        """The 犬 page led with a sparrow: the animal guide set tags all twelve items 犬, ハムスター, カエル ... (weekly review 2026-10-12)."""
+        guide = [i for i in self.items if i["series"] == "realistic-animals-pets"]
+        self.assertGreater(len(guide), 8)
+        listed = {i["id"] for i in build.tagged(self.items, "犬")}
+        self.assertIn("realistic-animals-pets-dog", listed)
+        self.assertNotIn("realistic-animals-pets-sparrow", listed)
 
     def test_detail_page_links_a_keyword_to_its_page_only_when_the_page_exists(self):
         tags = set(build.tag_list(self.items))

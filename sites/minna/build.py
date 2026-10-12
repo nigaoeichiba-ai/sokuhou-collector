@@ -671,14 +671,20 @@ def genre_pages(cfg, preview, items, series) -> dict:
     return out
 
 
+def tagged(items: list[dict], tag: str) -> list[dict]:
+    """Items a keyword page lists.  A guide set (12 animals) carries every animal's name as a set-wide tag, so the 犬 page led with a sparrow;
+    an item whose set has a sibling titled exactly like the tag, and which is not that sibling, is left out (weekly review 2026-10-12)."""
+    subject_of = {(i["series"], i["title"]) for i in items}
+    return [i for i in items if tag in i["tags"] and (i["title"] == tag or (i["series"], tag) not in subject_of)]
+
+
 def tag_list(items: list[dict]) -> list[str]:
     """Keywords that get their own page: plain words used by >= MIN_TAG items from >= 2 sets, most used first.
 
     Skipped: genre/touch names (they have pages already), set-name tags with a space, months, years, and the two words every item carries."""
     found: dict[str, list[dict]] = {}
-    for it in items:
-        for t in set(it["tags"]):
-            found.setdefault(t, []).append(it)
+    for t in {t for it in items for t in it["tags"]}:
+        found[t] = tagged(items, t)
     skip = {g[1] for g in GENRES} | {t[1] for t in TOUCHES} | {"イラスト", "かわいい"}
     ok = [t for t, v in found.items() if len(v) >= MIN_TAG and t not in skip and " " not in t and not re.fullmatch(r"\d+月?|令和\d+年|\d+", t)
           and len({i["series"] for i in v}) >= 2]
@@ -693,7 +699,7 @@ def tag_url(tag: str) -> str:
 def tag_pages(cfg, preview, items, tags: list[str]) -> dict:
     out = {}
     for tag in tags:
-        its = sorted((i for i in items if tag in i["tags"]), key=lambda i: (i["added"], i["id"]), reverse=True)
+        its = sorted(tagged(items, tag), key=lambda i: (i["added"], i["id"]), reverse=True)
         nseries = len({i["series"] for i in its})
         head = (f'<h1>「{esc(tag)}」のイラスト</h1><p class="lead">「{esc(tag)}」のキーワードがついたイラストを、{nseries}つのセットから{len(its)}点あつめました。'
                 f'無料・商用OK・クレジット不要。</p>{licence_box()}')
