@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-13",
+  "weekday": "火",
+  "themes": ["t02", "t08", "t14", "t21", "t28", "t35"],
+  "regional": "関東",
+  "words": {"users": 0, "explored": 40, "target": 40, "note": "利用者の登録ワード0件(3件は禁止ワード等で除外)。サブエージェント6本(各60本まで)。Wikipedia閲覧数APIは404で取得できず、話題ワードは未実施"},
+  "searches": 280,
+  "fetches": 520,
+  "counts_note": "検索・fetch は各エージェントの自己申告の合計(概算)。A1 45、A2 57、A3 23、A4 53、A5 46、A6 13 本",
+  "candidates": 161,
+  "cards": 148,
+  "cards_ratio": 3.7,
+  "cards_ratio_note": "ワード単位でなく候補単位のため、前日(0.47)と単純比較できない。次回のワード数目標は据え置き 40",
+  "cards_by_agent": {"A1_stage_exhibit_kanto": "35", "A2_movies_music": "45", "A3_gadgets_stores": "27", "A4_policy_tax": "18", "A5_travel_transit": "31", "A6_retry": "5"},
+  "rejected": {"final_seedcheck": [
+    {"reason": "subject must be 2-10 characters", "n": 6, "note": "直せば再提出できる"},
+    {"reason": "markup (題名の記号)", "n": 4},
+    {"reason": "duplicate", "n": 1},
+    {"reason": "second report: quote lacks the date", "n": 1},
+    {"reason": "fetch failed (接続切断)", "n": 1}
+  ]},
+  "agent_discards": "既存カードとの重複が最多。次に2媒体目が見つからない、公式のJS描画・403・SSL・PDF、日付が未発表",
+  "queries": [
+    {"q": "美術館・劇場・公園の公式一覧ページを Python で直接取得", "domain": "artizon / tobikan / mitsubishi / kageki.hankyu / toho / hitachikaihin", "official_hits": "多数", "card": true},
+    {"q": "企業の公式ニュース一覧を直接取得", "domain": "family.co.jp / uniqlo / mazda / daihatsu / suzuki / lawson / yoshinoya", "official_hits": "多数", "card": true},
+    {"q": "自治体の納期カレンダー(住民税・固定資産税)", "domain": "city.edogawa / city.kashiwa / city.yokohama / tax.metro.tokyo", "official_hits": "多数", "card": true},
+    {"q": "映画: Filmarks と 映画.com の作品ページ2媒体", "domain": "filmarks.com / eiga.com", "official_hits": "なし(press)", "card": true},
+    {"q": "新譜: アーティスト名+作品名+発売日、別々の2媒体", "domain": "realsound / natalie / billboard-japan / hmv", "official_hits": "なし(press)", "card": true},
+    {"q": "イルミ速報・鉄道の日まとめから公式をたどる", "domain": "jorudan / tabiris / iko-yo", "official_hits": "一部", "card": true}
+  ],
+  "failed_words": ["FUJI ROCK 2027(日付未発表)", "SUMMER SONIC 2027(日付未発表)", "ボージョレ・ヌーヴォー2027(2媒体目なし)", "SENDAI光のページェント2026(未発表)", "秋田のイルミネーション(未発表)", "歌舞伎座2027年公演", "2027年1月期ドラマ・アニメの大半(未発表)", "デジタル庁・金融庁・国税庁・消費者庁の施行日(JS描画)", "ディズニー・サンリオの新規発表", "JAL/ANA の予約開始日"],
+  "injections": [],
+  "unusable": ["JR東日本・小田急・OLC 等(403/タイムアウト)", "国立西洋美術館(JS描画)", "東京国立博物館・花園神社(SSL)", "oricon(429)", "トヨタ・日産・マクドナルド公式(JS/403)"],
+  "tests": "seedcheck 148/161 通過。tests/run_tests.py --site atomou: 852 tests OK",
+  "next_target": 40,
+  "improvements_for_tomorrow": [
+    "subject は2〜10字・題名の記号(! ★ ぇ など)に注意。候補を書く時点で確認する",
+    "Wikipedia 閲覧数API は ja.wikipedia 形式で 404。別の書式かドメインを試すか、話題ワードの入口を別に探す",
+    "公式一覧ページを Python で直接取る型と、自治体カレンダー型が命中率が高い",
+    "既存カード(約3500件)との重複が最多の捨て理由。existing_titles.txt を最新化して渡す"
+  ],
+  "ideas_file": "atomou/docs/ideas/2026-10-13.md"
+}
