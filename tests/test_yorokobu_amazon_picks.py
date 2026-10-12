@@ -58,6 +58,7 @@ class AmazonPicksTest(unittest.TestCase):
         html = self.read("amazon/index.html")
         for p in self.c["amazon"]:
             self.assertIn(f"https://www.amazon.co.jp/dp/{p['asin']}?tag=amazonmacs-22", html, p["asin"])
+        html = re.sub(r'<aside class="sale-bar".*?</aside>', "", html, flags=re.S)         # the sale bar's links are not picks
         self.assertEqual(html.count('rel="sponsored nofollow noopener"'), len(self.c["amazon"]))
         self.assertIn("Amazonのアソシエイトとして", html)
         self.assertIn('class="pr-quiet"', html)

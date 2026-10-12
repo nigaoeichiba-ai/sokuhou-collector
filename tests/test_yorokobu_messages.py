@@ -184,7 +184,9 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(html.count("data-copy hidden"), 15 + 3)
         self.assertIn("母へ", html)
         self.assertIn("言葉を選ぶときの、気をつけたいこと", html)
-        self.assertNotIn("hb.afl.rakuten.co.jp", html)                            # a pure reading page: no affiliate link, so no PR notice either
+        import re as _re
+        body = _re.sub(r'<aside class="sale-bar".*?</aside>', "", html, flags=_re.S)  # (the slim sale bar is on every page and says PR itself)
+        self.assertNotIn("hb.afl.rakuten.co.jp", body)                            # a pure reading page: no product link of its own
         self.assertNotIn('class="pr-quiet"', html)
         self.assertIn("data-copy", (Path(build.HERE) / "assets" / "app.js").read_text(encoding="utf-8"))
 
