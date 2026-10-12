@@ -185,6 +185,16 @@ def _range(e: dict) -> str:
 
 
 MIN_POINT_ITEMS = 4
+HERO = {"autumn": "秋の窓辺の机に、ギフトの箱と壁のカレンダー、開いたノートが並んでいる(イメージ)",
+        "winter": "雪の夜、机の上でギフトを包んでいる人と、壁のカレンダー(イメージ)"}
+
+
+def hero(now: datetime) -> str:
+    """The picture at the top of /sale/ (drawn for the page; no logo, no shop's banner, no text in it): the winter one from November to February."""
+    kind = "winter" if now.astimezone(JST).month in (11, 12, 1, 2) else "autumn"
+    base = f"/assets/sale/{kind}"
+    return (f'<figure class="sale-hero"><img src="{base}-1200.webp" srcset="{base}-640.webp 640w, {base}-1200.webp 1200w" sizes="(max-width: 1140px) 100vw, 1100px" '
+            f'alt="{esc(HERO[kind])}" width="1200" height="800" loading="eager" fetchpriority="high" decoding="async"></figure>')
 
 
 def points_section(d: dict, cfg: dict) -> str:
@@ -224,6 +234,7 @@ def sale_page(d: dict, cfg: dict, preview: bool, events: list[dict], href: dict[
         "<li><b>エントリーと条件を、確かめる。</b>ポイントアップは、エントリーが必要な場合があります。対象の条件と上限は、各店の公式ページに書かれています。</li>"
         "<li><b>のし・ラッピング・日付指定を、確かめる。</b>店ごとに違います。商品ページで、先に見ておきます。</li></ol>")
     body = f"""{B.head_band("yellow", "", "セールの日程と贈り物を買うタイミング", "楽天市場とAmazonが発表した、お得に買える日をまとめています。始まる前に候補を選んでおくと、その日に迷わず注文できます。", single=True)}
+{hero(now)}
 <div class="crumbs-wrap">{B.crumbs([("トップ", "/"), ("セールの日程", None)])}</div>
 {B.pr_quiet(cfg)}
 <section class="block"><div class="sec-head"><h2>いまとこれからのセール</h2></div>{f'<div class="sale-cards">{cards}</div>' if cards else '<p class="notice">いま発表されているセールはありません。決まりしだい、ここに載せます。</p>'}</section>
