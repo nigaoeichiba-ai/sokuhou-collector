@@ -86,7 +86,58 @@
       img.src = url; img.hidden = false;
       var a = document.createElement("a"); a.href = url; a.download = "card.png"; document.body.appendChild(a); a.click(); a.remove();
     });
+    initCardAI(app, f);
     window.MinnaCard.draw(canvas, values(), data.chars);
+  }
+
+  // ---------- the browser's own model (Chrome's built-in Gemini Nano through the Prompt API): offered only where the browser has it, free, and it runs on this device.
+  // Nothing typed here is sent to this site or to a server.  The model's text is only ever shown through textContent and only after a length and URL check; it is never run as markup.
+  var AI_OPTS = { expectedInputs: [{ type: "text", languages: ["ja"] }], expectedOutputs: [{ type: "text", languages: ["ja"] }] };
+  var aiSessions = {};
+  function aiState() { // "available", "downloadable", "downloading" or "unavailable"
+    try {
+      if (typeof LanguageModel === "undefined" || !LanguageModel.availability) return Promise.resolve("unavailable");
+      return Promise.resolve(LanguageModel.availability(AI_OPTS)).then(function (s) { return s || "unavailable"; }, function () { return "unavailable"; });
+    } catch (e) { return Promise.resolve("unavailable"); }
+  }
+  function aiAsk(key, system, prompt, schema, onProgress) { // one short question to a fresh copy of a session that holds only the instructions; resolves to the parsed JSON
+    var p = aiSessions[key];
+    if (!p) {
+      p = aiSessions[key] = Promise.resolve(LanguageModel.create({
+        expectedInputs: AI_OPTS.expectedInputs, expectedOutputs: AI_OPTS.expectedOutputs, initialPrompts: [{ role: "system", content: system }],
+        monitor: function (m) { if (onProgress) m.addEventListener("downloadprogress", function (e) { onProgress(e.loaded); }); }
+      })).catch(function (e) { delete aiSessions[key]; throw e; });
+    }
+    var run = p.then(function (s) { return s.clone(); }).then(function (c) {
+      return Promise.resolve(c.prompt(prompt, { responseConstraint: schema })).then(function (t) { try { c.destroy(); } catch (e) {} return JSON.parse(t); }, function (e) { try { c.destroy(); } catch (x) {} throw e; });
+    });
+    return Promise.race([run, new Promise(function (_, rej) { setTimeout(function () { rej(new Error("timeout")); }, 60000); })]);
+  }
+  var CARD_SYS = "あなたは日本語のメッセージカードの文面を考える担当です。丁寧で自然な、大人が使える日本語で書きます。1案は1〜2文で40文字以内。絵文字・顔文字・URLは使いません。宛名と差出人の名前は文面に入れません。";
+  var CARD_SCHEMA = { type: "object", properties: { messages: { type: "array", items: { type: "string" }, minItems: 3, maxItems: 3 } }, required: ["messages"] };
+  function cleanLine(s) { return String(s || "").replace(/[<>\u0000-\u001f]/g, "").replace(/\s+/g, " ").trim(); }
+  function initCardAI(app, f) {
+    var box = $(".ai-box", app), btn = $("[data-ai-msg]", app); if (!box || !btn) return;
+    var note = $(".ai-note", app), opts = $(".ai-opts", app), state = "unavailable";
+    aiState().then(function (s) { state = s; if (s !== "unavailable") box.hidden = false; });
+    btn.addEventListener("click", function () {
+      var v = { tpl: f.tpl.value, to: f.to.value.trim() };
+      btn.disabled = true; opts.textContent = "";
+      note.textContent = state === "available" ? "考えています…" : "AIを準備しています。初回は数分かかることがあります。";
+      aiAsk("card", CARD_SYS, "カードの種類: " + (TITLES[v.tpl] || "") + (v.to ? "\n宛名: " + v.to : "") + "\n文面を3案お願いします。", CARD_SCHEMA, function (x) { note.textContent = "AIを準備しています… " + Math.round(x * 100) + "%"; })
+        .then(function (r) {
+          var list = (r && Array.isArray(r.messages) ? r.messages : []).map(cleanLine).filter(function (m) { return m.length >= 4 && m.length <= 60 && !/https?:|www\./i.test(m); }).slice(0, 3);
+          if (!list.length) throw new Error("none");
+          list.forEach(function (m) {
+            var b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = m;
+            b.addEventListener("click", function () { f.msg.value = m; f.msg.dispatchEvent(new Event("input", { bubbles: true })); });
+            opts.appendChild(b);
+          });
+          note.textContent = "AIが作った案です。選ぶと入力欄に入ります。内容を確認してから使ってください。";
+        })
+        .catch(function () { note.textContent = "案を作れませんでした。ご自身の言葉で入力してください。"; })
+        .then(function () { btn.disabled = false; });
+    });
   }
 
 
@@ -457,16 +508,27 @@
   }
 
   // what the helper panel (assist.js, loaded when it is first opened) shares with this file
-  window.minnaApp = { safeLocal: safeLocal, safeSlug: safeSlug, pagesFor: pagesFor, loadAssist: loadAssist, norm: norm, esc: esc, loadIndex: loadIndex, loadSyn: loadSyn, loadVocab: loadVocab, searchAll: searchAll, cardHtml: cardHtml, loadRules: loadRules, refuseW: refuseW, sendWish: sendWish, saveWish: saveWish, paintFavs: paintFavs };
+  window.minnaApp = { aiState: aiState, aiAsk: aiAsk, safeLocal: safeLocal, safeSlug: safeSlug, pagesFor: pagesFor, loadAssist: loadAssist, norm: norm, esc: esc, loadIndex: loadIndex, loadSyn: loadSyn, loadVocab: loadVocab, searchAll: searchAll, cardHtml: cardHtml, loadRules: loadRules, refuseW: refuseW, sendWish: sendWish, saveWish: saveWish, paintFavs: paintFavs };
+  var NUDGE_KEY = "minna:nudge";
   function initAssist() {
     var b = document.getElementById("assist-open"); if (!b) return;
-    b.addEventListener("click", function () {
+    var nudge = document.getElementById("assist-nudge"), label = $(".t", b);
+    function seen() { try { sessionStorage.setItem(NUDGE_KEY, "1"); } catch (e) { /* private window */ } }
+    function hideNudge() { if (nudge) nudge.hidden = true; seen(); }
+    function go() {
+      hideNudge();
       if (window.minnaAssist) { window.minnaAssist.toggle(); return; }
       b.disabled = true; var sc = document.createElement("script"); sc.src = b.getAttribute("data-src");
       sc.onload = function () { b.disabled = false; window.minnaAssist.toggle(); };
-      sc.onerror = function () { b.disabled = false; b.textContent = "現在開けません"; };
+      sc.onerror = function () { b.disabled = false; if (label) label.textContent = "現在開けません"; };
       document.head.appendChild(sc);
-    });
+    }
+    [b].concat($$("[data-assist-open]")).forEach(function (x) { x.addEventListener("click", go); });
+    if (nudge) {
+      $(".n-x", nudge).addEventListener("click", hideNudge);
+      var shown = false; try { shown = !!sessionStorage.getItem(NUDGE_KEY); } catch (e) {}
+      if (!shown) setTimeout(function () { if (window.minnaAssist) return; nudge.hidden = false; seen(); setTimeout(function () { nudge.hidden = true; }, 15000); }, 3000);
+    }
   }
 
   document.addEventListener("DOMContentLoaded", function () { initBg(); initCard(); initFav(); initSearch(); initFavPage(); initExport(); initZip(); initRequest(); initAssist(); });
