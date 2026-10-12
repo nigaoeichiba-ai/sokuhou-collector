@@ -626,3 +626,28 @@ header.site .wrap { gap: 10px; flex-wrap: wrap; }
 .pr-box li span { display: flex; flex-wrap: wrap; gap: 8px; }
 .pr-box .btn { padding: .35em 1em; font-size: .85rem; }
 .pr-small { margin: 10px 0 0; font-size: .74rem; color: var(--muted); line-height: 1.6; }
+
+/* requests */
+.req-app { margin: 24px 0; padding: 18px 20px; background: #fff; border: var(--line); border-radius: 20px; box-shadow: var(--shadow-s); }
+.req-app h2 { margin-top: 0; }
+.req-app label { display: grid; gap: 4px; font-weight: 800; font-size: .92rem; margin-bottom: 12px; }
+.req-app input, .req-app select { width: 100%; box-sizing: border-box; padding: .65em .8em; border: var(--line2); border-radius: 12px; background: var(--paper); color: inherit; font: inherit; }
+.req-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 0 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.chip { padding: .3em .9em; background: var(--yellow-s); color: var(--ink); border: var(--line2); border-radius: 999px; font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer; }
+.chip:hover { background: var(--yellow); }
+.req-msg { margin: 8px 0 0; font-weight: 800; min-height: 1.6em; }
+.req-msg.ok { color: #0b7a55; }
+.req-msg.bad { color: #b3203f; }
+.req-small { margin: 10px 0 0; font-size: .78rem; color: var(--muted); line-height: 1.7; }
+.req-board { list-style: none; margin: 10px 0; padding: 0; display: grid; gap: 8px; }
+.req-board li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 8px 12px; background: var(--paper); border: var(--line2); border-radius: 12px; }
+.req-board small { color: var(--muted); }
+.req-state { padding: .1em .8em; font-size: .78rem; font-weight: 900; border: var(--line2); border-radius: 999px; background: var(--sky-s); }
+.req-state.done { background: var(--mint-s); }
+.req-state.wip { background: var(--yellow-s); }
+.req-long { margin: 24px 0; }
+.req-long summary { cursor: pointer; font-weight: 800; }
+.miss { margin: 14px 0; padding: 14px 18px; background: var(--yellow-s); border: var(--line2); border-radius: 16px; }
+.miss p { margin: 4px 0; }
+[hidden] { display: none !important; }

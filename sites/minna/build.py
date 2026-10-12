@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.minna import model, printables  # noqa: E402
+from sites.minna import model, printables, wishes  # noqa: E402
 from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
 from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
 from sites.minna.taxonomy import GENRE_BY_SLUG, GENRES, TOUCH_BY_SLUG, TOUCHES  # noqa: E402
@@ -878,16 +878,70 @@ def license_page(cfg: dict, preview: bool) -> str:
                 description="個人も商用も無料、クレジット表示も、登録も、点数の制限も、ありません。できること、お願い、AIで作ったイラストの扱いを、説明します。", body=body)
 
 
+def php_single(text: str) -> str:
+    """Text as the inside of a PHP single-quoted string (only the backslash and the quote need care there)."""
+    return text.replace("\\", "\\\\").replace("'", "\\'")
+
+
+def request_php(cfg: dict) -> str:
+    """api/q.php: the receiver of illustration requests (see request_receiver.php.tpl); the rules are the page's own (content/request_rules.json)."""
+    url = str(cfg["site_url"]).rstrip("/")
+    rules = json.dumps(wishes.client_rules(), ensure_ascii=False, separators=(",", ":"))
+    j = lambda x: json.dumps(x, ensure_ascii=False)   # noqa: E731
+    php = (HERE / "request_receiver.php.tpl").read_text(encoding="utf-8")
+    return (php.replace("__SITE_URL__", php_single(url)).replace("__RULES__", php_single(rules)).replace("__USES__", j(wishes.USES)).replace("__TOUCHES__", j([t[0] for t in TOUCHES])))
+
+
+def request_board() -> dict:
+    f = HERE / "content" / "request_board.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {"v": 1, "updated": "", "rows": []}
+
+
+def request_data_files() -> dict:
+    """data/request-rules.json (the request box and the search page use it) and data/request-board.json (what is being made / published, for the 'your request' note)."""
+    rules = wishes.client_rules()
+    rules["uses"] = wishes.USES
+    return {"data/request-rules.json": json.dumps(rules, ensure_ascii=False, separators=(",", ":")),
+            "data/request-board.json": json.dumps(request_board(), ensure_ascii=False, separators=(",", ":"))}
+
+
 def request_page(cfg: dict, preview: bool) -> str:
     form = contactform.form_html(cfg, default_kind="イラストのリクエスト", message_hint="例: ひつじが、お正月に、こたつでみかんを食べているイラスト。年賀状に使いたいです。", page_hint=False)
+    board = request_board()["rows"]
+    uopts = '<option value="">使い道: えらばない</option>' + "".join(f'<option value="{esc(u)}">{esc(u)}</option>' for u in wishes.USES)
+    topts = '<option value="">タッチ: おまかせ</option>' + "".join(f'<option value="{t[0]}">{esc(t[1])}</option>' for t in TOUCHES)
+    examples = ["こたつでみかんを食べるひつじ", "運動会のフレーム", "おじいちゃんとおばあちゃんの、おでかけ", "リアルなカエル", "ハロウィンの、かぼちゃのライン", "お歳暮のお礼状に添える絵"]
+    chips = "".join(f'<button type="button" class="chip" data-example="{esc(e)}">{esc(e)}</button>' for e in examples)
+
+    def row(r):
+        link = f'<a href="/series/{esc(r["series"])}/">{esc(r["title"])}</a>' if r.get("series") and r["status"] == "公開しました" else esc(r["title"])
+        asked = f'<small>{r["asked"]}人がほしいと言いました</small>' if r.get("asked", 0) > 1 else ""
+        return f'<li><span class="req-state {"done" if r["status"] == "公開しました" else "wip"}">{esc(r["status"])}</span> <b>{link}</b>{asked}</li>'
+    board_html = (f'<ul class="req-board">{"".join(row(r) for r in board)}</ul>' if board else
+                  '<p class="memo-note">まだ、お答えしたリクエストは、ありません。最初のリクエストを、お待ちしています。</p>')
     body = f"""{crumbs([("トップ", "/"), ("リクエスト", None)])}
 <h1>こんなイラストが、ほしい</h1>
-<p class="lead">「こんな動物の、こんなポーズが、ほしい」「こんな場面の、イラストが、ほしい」というご希望を、お聞かせください。</p>
-<p>いただいたご希望は、ほかの方にも、役に立つものを、選んで、順番に、イラストにして、公開します(個別のお返事や、納期のお約束は、できません)。</p>
-<ul class="check"><li>どんなモチーフか(動物・食べ物・行事など)</li><li>どんなポーズ・場面か</li><li>何に使いたいか(年賀状・スライド・LINE・チラシなど)</li></ul>
-{form}
-<p class="notice">既存のキャラクターや、実在の人物、特定の作家の画風を、まねるご希望は、お受けできません。</p>"""
-    return page(cfg, preview, path="/request/", title=f"イラストのリクエスト | {cfg['site_name']}", description="こんなイラストがほしい、というご希望を送れます。", body=body)
+<p class="lead">「こんな場面の、イラストが、ほしい」を、ひとことで、送ってください。つくれるものは、順番に描いて、このサイトに公開します。早ければ、翌日です。</p>
+<section id="req-app" class="req-app" aria-labelledby="req-h">
+<h2 id="req-h"><span class="scribble">ひとことで、リクエスト</span></h2>
+<form id="req-form" novalidate>
+<label>どんなイラスト?<input type="text" name="w" maxlength="60" placeholder="例: こたつでみかんを食べるひつじ" autocomplete="off" required></label>
+<div class="req-row"><label>使い道<select name="u">{uopts}</select></label><label>タッチ<select name="t">{topts}</select></label></div>
+<p><button class="btn big" type="submit">リクエストする</button></p>
+<p class="req-msg" id="req-msg" role="status" aria-live="polite"></p>
+</form>
+<p class="memo-note">思いつかないときは、ここから:</p><div class="chips">{chips}</div>
+<p class="req-small">送った言葉は、イラストを選ぶために、集計して使います。住所・メールアドレス・名前は、聞きません。送った内容は、この端末にも、記録されます(「あなたのリクエスト」に出ます)。<a href="/privacy/">プライバシーポリシー</a></p>
+</section>
+<section id="req-mine" class="req-mine" hidden><h2><span class="scribble">あなたのリクエスト</span></h2><p class="memo-note">この端末から送ったリクエストと、そのあとの様子です(この端末の中だけに、記録されています)。</p><div id="req-mine-list"></div></section>
+<section><h2><span class="scribble">リクエストへの、お答え</span></h2>
+<p>いただいたリクエストから、ほかの方にも、役に立つものを、選んで、描いています。つくっているもの、公開したものを、ここに並べます。</p>{board_html}</section>
+<section><h2><span class="scribble">お受けできないもの</span></h2>
+<ul class="warn"><li>既存のキャラクター・商品名・会社のロゴ(「ポケモン」「ミッキー」など)。かわりに、<b>オリジナルの</b>、似た雰囲気のキャラクターなら、お受けできます。</li>
+<li>実在の人物、似顔絵、特定の作家の絵を、まねるもの。</li><li>暴力・性的な内容、法律や公序良俗に反するもの、個人を特定できる情報。</li></ul>
+<p class="memo-note">個別のお返事や、納期のお約束は、できません。つくれないこともあります。AIで描くため、思い通りにならないときもあります。</p></section>
+<details class="req-long"><summary>くわしく、伝えたい方は(長い文章のフォーム)</summary>{form}</details>"""
+    return page(cfg, preview, path="/request/", title=f"イラストのリクエスト | {cfg['site_name']}", description="こんなイラストがほしい、を、ひとことで送れます。つくれるものは、順番に描いて、公開します。", body=body)
 
 
 def tool_page(cfg: dict, preview: bool, items: list[dict], series: list[dict]) -> str:
@@ -962,6 +1016,8 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     pages.update(tag_pages(cfg, preview, items, tags))
     pages["license/index.html"] = license_page(cfg, preview)
     pages["request/index.html"] = request_page(cfg, preview)
+    pages["api/q.php"] = request_php(cfg)
+    pages.update(request_data_files())
     pages["tool/card/index.html"] = tool_page(cfg, preview, items, series)
     pages["search/index.html"] = search_page(cfg, preview)
     pages["favorites/index.html"] = favorites_page(cfg, preview)
@@ -1005,7 +1061,13 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         disclaimer_html=("<p>イラストの利用によって生じた問題について、当サイトは責任を負いません。ご利用条件は、<a href=\"/license/\">利用について</a>をご覧ください。</p>"
                          "<p>既存のキャラクター・実在の人物・特定の作家の画風を、まねる指示では、作っていません。似ているというご指摘があれば、お問い合わせください。</p>"),
         contact_notice="リクエストは、お約束のお返事や、納期を、お約束するものではありません。",
-        input_note="<p>カードをつくる機能や、お気に入りに入力・保存した内容は、この端末のブラウザの中だけで使われ、当サイトには、送信されません。</p>"))
+        input_note=("<p>カードをつくる機能や、お気に入りに入力・保存した内容は、この端末のブラウザの中だけで使われ、当サイトには、送信されません。</p>"
+                    "<p>「リクエスト」欄に書いて送った言葉(と、選んだ使い道・タッチ)は、イラストを企画するために、当サイトのサーバーに保存し、集計して使います。"
+                    "住所・メールアドレス・名前は、聞きません。送った人の端末や回線を特定できる情報(IPアドレスなど)は、保存しません。"
+                    "1日の送信回数を数えるためだけに、日ごとに変わる、元に戻せない値を、その日のあいだ使い、翌日に消します。"
+                    "検索で見つからなかったときの「この絵を、リクエストする」ボタンも同じで、ボタンを押したときだけ、検索した言葉を送ります。"
+                    "送った言葉は、この端末のブラウザにも、「あなたのリクエスト」の表示のために、記録されます(ブラウザのデータを消すと、なくなります)。"
+                    "個人を特定できる内容や、お受けできない内容は、保存せずに、お断りします。</p>")))
     pages.update(standard_files(pages, cfg, preview, today.isoformat()))
     pages["sitemap-images.xml"] = sitemap_images(cfg, items)
     if cfg.get("indexnow_key"):

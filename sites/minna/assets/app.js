@@ -155,6 +155,7 @@
         });
         status.textContent = hits.length ? hits.length + "点、見つかりました。" : "見つかりませんでした。ほかの言葉で、さがしてみてください。";
         draw(true);
+        if (hits.length || !q.value.trim()) { var om = $("#search-miss"); if (om) om.remove(); } else showMiss(list, q.value);
       });
     }
     app.addEventListener("submit", function (e) { e.preventDefault(); var u = new URL(location.href); u.search = new URLSearchParams({ q: q.value, g: g.value, t: t.value }).toString(); history.replaceState(null, "", u); run(); });
@@ -244,6 +245,97 @@
     });
   }
 
-  document.addEventListener("DOMContentLoaded", function () { initBg(); initCard(); initFav(); initSearch(); initFavPage(); initExport(); initZip(); });
+
+  /* ---------- requests: the request box, "your requests", and the offer after a search that found nothing ---------- */
+  var REQ_KEY = "minna-wishes", rulesP = null, boardP = null;
+  function loadRules() { if (!rulesP) rulesP = fetch("/data/request-rules.json").then(function (r) { return r.json(); }).catch(function () { return null; }); return rulesP; }
+  function loadBoard() { if (!boardP) boardP = fetch("/data/request-board.json").then(function (r) { return r.json(); }).catch(function () { return { rows: [] }; }); return boardP; }
+  function flatW(s) {
+    return String(s || "").normalize("NFKC").toLowerCase().replace(/[ァ-ヶ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 96); }).replace(/\s+/g, "");
+  }
+  function refuseW(rules, text) { // "" when the wish may be sent, else the sentence to show (the same rules as api/q.php)
+    var w = String(text || "").replace(/[\u0000-\u001f\u007f<>"'&\\]/g, "").trim();
+    if (w.length < rules.min || w.length > rules.max) return rules.min + "〜" + rules.max + "文字で、書いてください。";
+    var f = flatW(w), i, j, g;
+    for (i = 0; i < rules.groups.length; i++) { g = rules.groups[i]; for (j = 0; j < g.terms.length; j++) { if (g.terms[j] && f.indexOf(g.terms[j]) >= 0) return rules.reasons[g.k] + "。"; } }
+    for (i = 0; i < rules.personal.length; i++) { try { if (new RegExp(rules.personal[i], "i").test(f)) return rules.reasons.personal + "。"; } catch (e) { /* a pattern this browser cannot read: the server still checks */ } }
+    return "";
+  }
+  function myWishes() { try { var a = JSON.parse(localStorage.getItem(REQ_KEY) || "[]"); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function saveWish(w) {
+    try { var a = myWishes().filter(function (x) { return x.w !== w; }); a.unshift({ w: w, at: new Date().toISOString().slice(0, 10) }); localStorage.setItem(REQ_KEY, JSON.stringify(a.slice(0, 20))); } catch (e) { /* private window: the request itself still works */ }
+  }
+  var SEND_ERR = { rate: "きょうは、たくさん送っていただきました。あしたまた、お願いします。", full: "いま、受け付けが、たてこんでいます。すこし、まってください。" };
+  function sendWish(payload) { // -> { ok, msg }
+    return fetch("/api/q.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.assign({ v: 1 }, payload)) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok === true, err: d.error || "" }; }); })
+      .catch(function () { return { ok: false, err: "net" }; })
+      .then(function (res) {
+        if (res.ok) return { ok: true, msg: "受け付けました。ありがとうございます。つくれるものは、順番に描いて、公開します(お約束は、できません)。" };
+        return loadRules().then(function (rules) {
+          var why = rules && rules.reasons && rules.reasons[res.err];
+          return { ok: false, msg: why ? why + "。" : (SEND_ERR[res.err] || "いま、送れませんでした。しばらくして、もう一度、お願いします。") };
+        });
+      });
+  }
+  function matchBoard(wish, rows) { // the board row that is probably the answer to a saved wish: needs two of our own keywords (or the only one) in the wish
+    var f = flatW(wish), best = null, bestN = 0;
+    rows.forEach(function (r) {
+      var kw = (r.kw || []).map(flatW).filter(Boolean), n = kw.filter(function (k) { return f.indexOf(k) >= 0; }).length;
+      if (kw.length && n >= Math.min(2, kw.length) && n > bestN) { best = r; bestN = n; }
+    });
+    return best;
+  }
+  function renderMine() {
+    var box = $("#req-mine"), list = $("#req-mine-list"); if (!box || !list) return;
+    var mine = myWishes(); if (!mine.length) { box.hidden = true; return; }
+    loadBoard().then(function (b) {
+      box.hidden = false;
+      list.innerHTML = '<ul class="req-board">' + mine.map(function (m) {
+        var hit = matchBoard(m.w, b.rows || []), tail = "";
+        if (hit) tail = ' <small>→ ' + (hit.status === "公開しました" && hit.series ? '<a href="/series/' + esc(hit.series) + '/">' + esc(hit.title) + "</a>" : esc(hit.title)) + "</small>";
+        return '<li><span class="req-state ' + (hit ? (hit.status === "公開しました" ? "done" : "wip") : "wait") + '">' + (hit ? esc(hit.status) : "受け付けました") + "</span> <b>" + esc(m.w) + "</b>" + tail + "</li>";
+      }).join("") + "</ul>";
+    });
+  }
+  function initRequest() {
+    var form = $("#req-form"); if (!form) return;
+    var input = $('[name="w"]', form), msg = $("#req-msg"), btn = $('button[type="submit"]', form);
+    var pre = new URLSearchParams(location.search).get("w"); if (pre) input.value = pre.slice(0, 60);
+    $$("[data-example]").forEach(function (c) { c.addEventListener("click", function () { input.value = c.getAttribute("data-example"); input.focus(); }); });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault(); msg.className = "req-msg"; msg.textContent = "";
+      var wish = input.value.trim();
+      loadRules().then(function (rules) {
+        var why = rules ? refuseW(rules, wish) : (wish.length < 2 ? "2文字以上で、書いてください。" : "");
+        if (why) { msg.className = "req-msg bad"; msg.textContent = why; return; }
+        btn.disabled = true;
+        return sendWish({ w: wish, u: $('[name="u"]', form).value, t: $('[name="t"]', form).value, s: "form" }).then(function (r) {
+          msg.className = "req-msg " + (r.ok ? "ok" : "bad"); msg.textContent = r.msg;
+          if (r.ok) { saveWish(wish); input.value = ""; renderMine(); }
+        });
+      }).then(function () { btn.disabled = false; }, function () { btn.disabled = false; });
+    });
+    renderMine();
+  }
+  function showMiss(list, text) { // after a search that found nothing: offer to send the words as a request (only when the visitor presses the button)
+    var old = $("#search-miss"); if (old) old.remove();
+    var w = String(text || "").trim(); if (!w) return;
+    var box = document.createElement("div"); box.id = "search-miss"; box.className = "miss";
+    box.innerHTML = "<p><b>「" + esc(w) + "」</b>の絵は、まだ、ありません。</p><p>つくってほしいときは、リクエストを送れます(送るのは、この言葉だけです)。</p>" +
+      '<p><button type="button" class="btn" data-miss>この絵を、リクエストする</button> <a href="/request/?w=' + encodeURIComponent(w.slice(0, 60)) + '">くわしく書く</a></p><p class="req-msg" role="status" aria-live="polite"></p>';
+    list.parentNode.insertBefore(box, list);
+    var b = $("[data-miss]", box), m = $(".req-msg", box);
+    b.addEventListener("click", function () {
+      b.disabled = true; m.className = "req-msg"; m.textContent = "";
+      loadRules().then(function (rules) {
+        var why = rules ? refuseW(rules, w) : "";
+        if (why) { m.className = "req-msg bad"; m.textContent = why; b.disabled = false; return; }
+        return sendWish({ w: w, s: "miss" }).then(function (r) { m.className = "req-msg " + (r.ok ? "ok" : "bad"); m.textContent = r.msg; if (r.ok) saveWish(w); else b.disabled = false; });
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () { initBg(); initCard(); initFav(); initSearch(); initFavPage(); initExport(); initZip(); initRequest(); });
 
 })();
