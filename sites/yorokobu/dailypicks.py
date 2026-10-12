@@ -143,6 +143,10 @@ def mood_path(e: dict, position: int = 0) -> str:
     return f"/assets/mood/{e['mood']}.webp"
 
 
+def mood_small_path(e: dict) -> str:
+    return f"/assets/mood/{e['mood']}-480.webp"
+
+
 def pick_mood(kind: str, seed: int) -> str:
     """The mood image key (kind-variant) for an entry of this kind: the variant alternates with `seed` (the entry's place in the day)."""
     return f"{KIND_KEY[kind]}-{seed % MOOD_VARIANTS + 1}"

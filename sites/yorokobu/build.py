@@ -33,6 +33,7 @@ from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu import numberlists as nm  # noqa: E402
 from sites.yorokobu import ranking as rk  # noqa: E402
 from sites.yorokobu import sales  # noqa: E402
+from sites.yorokobu import features as feats  # noqa: E402
 from sites.yorokobu import minepage  # noqa: E402
 from sites.yorokobu import concierge as ccbot  # noqa: E402   (build.concierge is the search box of the gift pages)
 from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
@@ -92,6 +93,22 @@ def strip_occasions(name: str) -> str:
 
 
 SPEC_ONLY = re.compile(r"[0-9０-９%％.\-+×x]+")
+
+
+LAZY = 'loading="lazy" decoding="async"'                                  # a picture below the first screen: loaded when the visitor comes near it
+EAGER = 'loading="eager" fetchpriority="high" decoding="async"'                 # what the visitor sees first: loaded at once, first
+
+
+def mood_img(name: str, alt: str, sizes: str, loading: str = "lazy", high: bool = False, width: int = 480, height: int = 320) -> str:
+    """A mood picture (assets/mood/<kind>-<n>.webp) with its 480-px copy first and the 960-px original for sharp or wide screens (srcset): the phones and the small tiles take about a third of the bytes."""
+    base = f"/assets/mood/{name}"
+    load = EAGER if high else f'loading="{loading}" decoding="async"'
+    return f'<img src="{base}-480.webp" srcset="{base}-480.webp 480w, {base}.webp 960w" sizes="{sizes}" alt="{esc(alt)}" width="{width}" height="{height}" {load}>'
+
+
+def thumb(url: str, px: int) -> str:
+    """The Rakuten picture at a smaller size (the thumbnail service takes _ex=<w>x<h>): small tiles do not need the 300-px one."""
+    return url.replace("_ex=300x300", f"_ex={px}x{px}") if "thumbnail.image.rakuten.co.jp" in url else url
 
 
 def short(name: str, limit: int = NAME_LIMIT) -> str:
@@ -189,7 +206,8 @@ def page(cfg, preview, **kw):
     kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", "")) + breadcrumb_ld(cfg, kw.get("body", ""))   # the pictures the page uses (only those), the breadcrumb data
     site = {**SITE, "nav": ([("今日のおすすめ", "/picks/", "/picks/")] if PICKS_ON else []) + SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])
                               + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
-    head_extra = FONTS + kw.pop("head_extra", "") + sale_script + '<script src="/assets/mine.js" defer></script><script src="/assets/concierge.js" defer></script>'
+    pre = '<link rel="preconnect" href="https://thumbnail.image.rakuten.co.jp">' if "thumbnail.image.rakuten.co.jp" in kw.get("body", "") else ""
+    head_extra = FONTS + pre + kw.pop("head_extra", "") + sale_script + '<script src="/assets/mine.js" defer></script><script src="/assets/concierge.js" defer></script>'
     return layout(site, cfg, preview, scripts=True, head_extra=head_extra, **kw)
 
 
@@ -314,7 +332,28 @@ def search_link(cfg: dict, keyword: str) -> str:
     return rakuten_link(cfg, rakuten.search_url(keyword))
 
 
-def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, tier: str = "", kind: str = "") -> str:
+def point_end(it: dict):
+    """When the point multiplier of an item ends (Japan time), or None when it has none or is over (the shop's own announcement through the Rakuten API)."""
+    if not it.get("point_rate") or not it.get("point_end"):
+        return None
+    try:
+        end = datetime.fromisoformat(str(it["point_end"]).replace("/", "-")[:16]).replace(tzinfo=sales.JST)
+    except ValueError:
+        return None
+    now = SALE_NOW or datetime.now(sales.JST)
+    return end if end > now else None
+
+
+def point_badge(it: dict) -> str:
+    end = point_end(it)
+    if not end:
+        return ""
+    rate = it["point_rate"]
+    rate = int(rate) if float(rate).is_integer() else rate
+    return (f'<span class="tagx pt" title="楽天市場の表示です。対象の条件や上限は、商品ページでご確認ください。">ポイント{rate}倍({end.month}月{end.day}日まで)</span>')
+
+
+def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, tier: str = "", kind: str = "", eager: bool = False) -> str:
     url = rakuten.clean_item_url(it["url"])  # also unwraps data fetched before the API's redirect links were handled
     name = it.get("display") or rakuten.clean_title(it["name"])
     if own:
@@ -330,6 +369,9 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
         bits.append('<span class="tagx">ギフト対応</span>')
     if it.get("appoint"):
         bits.append('<span class="tagx">日付指定可</span>')
+    pt = point_badge(it)
+    if pt:
+        bits.append(pt)
     note = '<p class="own">運営者のショップ</p>' if own else ""
     if it.get("note"):  # the editors' one-line reason for picking this product
         note += f'<p class="pick-note"><b>{it.get("note_label") or "選んだ理由"}</b>{esc(it["note"])}</p>'
@@ -348,7 +390,7 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
     fav = (f'<button type="button" class="fav" aria-label="気になるリストに入れる" aria-pressed="false" data-name="{esc(short(name, 40))}" '
            f'data-price="{it["price"]}" data-url="{esc(url)}">♡</button>')
     return (f'<li class="item" {attrs}>{badge}{fav}<a class="item-img" href="{esc(href)}" rel="{rel}" target="_blank">'
-            f'<img src="{esc(it["image"])}" alt="{esc(short(name, 40))}" width="300" height="300" loading="lazy"></a>'
+            f'<img src="{esc(it["image"])}" alt="{esc(short(name, 40))}" width="300" height="300" {EAGER if eager else LAZY}></a>'
             f'<div class="item-body"><h3><a href="{esc(href)}" rel="{rel}" target="_blank">{esc(short(name))}</a></h3>'
             f'<p class="price">{yen(it["price"])}</p><p class="meta">{"".join(bits)}</p>{note}'
             f'<div class="item-btns">{buttons}</div></div></li>')
@@ -607,9 +649,22 @@ def top_picks(cfg: dict, d: dict, key: str, n: int = 4) -> str:
     shown = top_shown(d, key, n)
     if not shown:
         return ""
-    cards = "".join(item_card(cfg, it, rank=i + 1) for i, it in enumerate(shown))
+    cards = "".join(item_card(cfg, it, rank=i + 1, eager=i < 2) for i, it in enumerate(shown))       # the first two are what the visitor sees first: not lazy
     return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>種類のちがう、人気の{len(shown)}点</h2></div>'
             f'<ul class="items">{cards}</ul>{freshness(d)}</section>')
+
+
+def next_steps(d: dict, occasion: str = "", recipient: str = "") -> str:
+    """「迷ったときの、次の一歩」: what to do after reading a list of gifts, so that a visitor who is not ready to buy has a way to come back (the list, the memo, the sale day)."""
+    memo = f"/memo/?o={occasion}&amp;r={recipient}" if occasion and recipient else "/memo/"
+    sale_on = bool(SALE_EVENTS) and SALE_NOW is not None and any(sales.phase(e, SALE_NOW) for e in SALE_EVENTS)
+    steps = [("気になる商品に、♡をつける", "♡を押した商品は、「お気に入り」のページで、価格を見比べられます。このブラウザの中にだけ保存されます。", "/favorites/", "お気に入りを見る"),
+             ("だれかに、相談する", "候補の画面を、LINEやメールで送って、「どれがいい?」と聞けます。ページの共有ボタンから送れます。", "#share", "")]
+    steps.append(("贈る日を、登録する", "日にちを登録しておくと、近づいたときにお知らせの画面が出ます。カレンダーにも書き出せます。", memo, "たいせつな日メモを開く"))
+    if sale_on:
+        steps.append(("セールの日に、合わせて買う", "楽天市場とAmazonのセールの日程を、まとめています。候補を選んでおくと、その日に迷わず注文できます。", "/sale/", "セールの日程を見る"))
+    cells = "".join(f'<li><strong>{esc(t)}</strong><span>{esc(x)}</span>' + (f'<a class="btn btn-sub" href="{h}">{esc(label)}</a>' if label else "") + "</li>" for t, x, h, label in steps)
+    return f'<section class="block next-steps"><div class="sec-head"><span class="eyebrow">Next</span><h2>迷ったときの、次の一歩</h2></div><ol class="steps">{cells}</ol></section>'
 
 
 def related_section(cols: list[tuple[str, str]]) -> str:
@@ -771,6 +826,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 {proposals}
 {own_note}
 {browse}
+{next_steps(d, p["occasion"], p["recipient"])}
 {amazon_picks_section(cfg, c, p["occasion"], p["recipient"])}
 {concierge(cfg, d, p)}
 <section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(avoid, "warn")}</section>
@@ -829,6 +885,7 @@ def theme_page(d: dict, cfg: dict, preview: bool, t: dict) -> str:
 <div class="how"><h2><span class="scribble">選び方のポイント</span></h2><ol class="panel-grid one">{"".join(f"<li>{esc(x)}</li>" for x in t["how_to_choose"])}</ol></div></div></section>
 {proposals}
 {browse}
+{next_steps(d)}
 {concierge(cfg, d, t)}
 {avoid}
 <p style="margin-top:40px">{amazon}</p>
@@ -1259,7 +1316,7 @@ def mood_collage(today: date) -> str:
     for i in range(6):
         kind = kinds[(off + i * 2) % len(kinds)] if len(kinds) > 6 else kinds[i % len(kinds)]
         variant = (today.toordinal() + i) % dp.MOOD_VARIANTS + 1
-        cells += (f'<span class="cg"><img src="/assets/mood/{dp.KIND_KEY[kind]}-{variant}.webp" alt="" width="480" height="320" loading="eager">'
+        cells += (f'<span class="cg">{mood_img(f"{dp.KIND_KEY[kind]}-{variant}", "", "(max-width: 640px) 44vw, 220px", "eager", high=i < 2)}'
                   f'<span class="cg-kind">{esc(kind)}</span></span>')
     return f'<div class="collage" aria-hidden="true">{cells}</div>'
 
@@ -1830,6 +1887,8 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         for day in c.get("daily") or []:
             m, dd = int(day["date"][5:7]), int(day["date"][8:10])
             cards[f"og/picks/{day['date']}.png"] = ogimage.card(title="今日のおすすめギフト", tag=f"{m}月{dd}日 {day['theme']}", site=site, photo=day["amazon"][0]["mood"])
+        for fe in c.get("features") or []:
+            cards[f"og/pick/{fe['slug']}.png"] = ogimage.card(title=fe["title"], tag="くわしく読む", site=site, photo=mood_photo(fe["slug"]))
         for th in c["themes"]:
             cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]), site=site, photo=mood_photo(th["slug"]))
         for cid, ch in (d.get("_chart_cards") or {}).items():          # the data room's charts as pictures: a preview for sharing the page, a tall one to keep or send
@@ -1893,6 +1952,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
             pages[f"ranking/{slug}/index.html"] = ranking_page(d, cfg, preview, slug)
     pages.update(dataroom.build_pages(d, cfg, preview))
     pages.update(picksite.build_pages(d, cfg, preview))
+    pages.update(feats.build_pages(d, cfg, preview))
     pages.update(sales.build_pages(d, cfg, preview, SALE_EVENTS, SALE_HREF, SALE_NOW))
     ask_pages, ask_quiet = askpages.build_files(d, cfg, preview, today)
     pages.update(ask_pages)

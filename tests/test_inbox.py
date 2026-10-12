@@ -34,6 +34,19 @@ class TakeNewTest(unittest.TestCase):
         self.assertNotIn("ua", new[0])
         self.assertEqual(set(new[0]), set(inbox.FIELDS))
 
+    def test_a_last_line_that_is_still_being_written_is_taken_by_the_next_run_and_not_lost(self):
+        half = line(2)[:25]                                                      # the server was in the middle of writing it when the file was read
+        new, state = inbox.take_new("== f.jsonl\n" + line(1) + "\n" + half + "\n", {})
+        self.assertEqual([r["id"] for r in new], ["a1"])
+        self.assertEqual(state, {"f.jsonl": 1})                                  # the half line is not counted as taken
+        new, state = inbox.take_new("== f.jsonl\n" + line(1) + "\n" + line(2) + "\n", state)
+        self.assertEqual([r["id"] for r in new], ["a2"])
+        self.assertEqual(state, {"f.jsonl": 2})
+        # a broken line in the middle is skipped for good (the next lines would otherwise never be taken)
+        new, state = inbox.take_new("== g.jsonl\nnot json\n" + line(3) + "\n", {})
+        self.assertEqual([r["id"] for r in new], ["a3"])
+        self.assertEqual(state, {"g.jsonl": 2})
+
     def test_empty_dump_changes_nothing(self):
         self.assertEqual(inbox.take_new("", {"a": 3}), ([], {"a": 3}))
 

@@ -6,6 +6,8 @@
   var WEEKDAY = "日月火水木金土";             // Date#getUTCDay order
   var SOON_DAYS = 14, AHEAD_DAYS = 30, ORDER = { live: 0, entry: 1, soon: 2, ahead: 3 };
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  var HOSTS = ["hb.afl.rakuten.co.jp", "www.amazon.co.jp"];
+  function safe(u) { try { var x = new URL(String(u), location.origin); return x.protocol === "https:" && HOSTS.indexOf(x.hostname) >= 0 ? x.href : ""; } catch (e) { return ""; } }
   function jst(ms) { return new Date(ms + 9 * 3600000); }                // read with the getUTC* methods: the clock of Japan
   function dayNo(ms) { var d = jst(ms); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) / 86400000; }
   function label(ms) {
@@ -48,7 +50,7 @@
   }
   function item(x) {
     return '<p class="sale-item sale-' + x.m.phase + '" data-id="' + esc(x.e.id) + '"><span class="sale-tag">' + esc(x.m.tag) + '</span><span class="sale-short">' + esc(x.m.short) + '</span><span class="sale-text">' + esc(x.m.text) + "</span>" +
-      '<a class="btn sale-btn" href="' + esc(x.e.href) + '" rel="sponsored nofollow noopener" target="_blank">' + esc(x.m.cta) + "</a></p>";
+      '<a class="btn sale-btn" href="' + esc(safe(x.e.href)) + '" rel="sponsored nofollow noopener" target="_blank">' + esc(x.m.cta) + "</a></p>";
   }
   function render(events, now) { return choose(events, now).map(item).join(""); }
   // closing the bar is remembered for a day, per event and per phase (a sale that starts later is news again)
@@ -78,6 +80,6 @@
       bar.querySelector(".sale-in").appendChild(b);
     }
   }
-  window.YorokobuSale = { message: message, choose: choose, render: render };
+  window.YorokobuSale = { message: message, choose: choose, render: render, safe: safe };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

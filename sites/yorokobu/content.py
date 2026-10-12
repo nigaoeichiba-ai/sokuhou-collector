@@ -67,6 +67,11 @@ def _fallback_ideas(p: dict) -> list[dict]:
     return out
 
 
+def _load_features(content_dir: Path) -> list[dict]:
+    from sites.yorokobu import features
+    return features.load(content_dir / "features")
+
+
 def load(content_dir: Path = CONTENT_DIR) -> dict:
     occasions = _read(content_dir, "occasions.json")["occasions"]
     recipients = _read(content_dir, "recipients.json")["recipients"]
@@ -128,7 +133,7 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     return {"messages": messages, "etiquette": etiquette, "amazon": amazon, "amazon_checked": amazon_checked, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
             "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "themes": themes,
             "theme": theme, "theme_groups": groups, "articles": articles,
-            "stats": _load_stats(content_dir), "surveys": _load_surveys(content_dir), "ask": _load_ask(content_dir), "daily": _load_daily(content_dir), "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
+            "stats": _load_stats(content_dir), "surveys": _load_surveys(content_dir), "ask": _load_ask(content_dir), "daily": _load_daily(content_dir), "features": _load_features(content_dir), "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
 
 
 def _load_daily(content_dir: Path) -> list[dict]:

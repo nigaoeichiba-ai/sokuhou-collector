@@ -18,8 +18,19 @@ from pathlib import Path
 ID = re.compile(r"^[A-Za-z0-9_-]{22}$")
 OPT = re.compile(r"^[a-z0-9]{1,12}$")
 STAT = re.compile(r"^(dock\.[a-z0-9]{1,8}\.[a-z0-9_-]{1,32}|pop\.[ra]\.[A-Za-z0-9._:-]{3,64}|cq\.[a-z]{1,6}\.[a-z0-9_-]{1,32})$")
-VOICE_UNSAFE = re.compile(r"[0-9０-９]{7,}|@|＠|https?:|www\.|〒|[0-9]{3}-[0-9]{4}")
+VOICE_UNSAFE = None
 ENDPOINT = re.compile(r"^https://([A-Za-z0-9-]+\.)*(googleapis\.com|push\.services\.mozilla\.com|mozaws\.net|push\.apple\.com|notify\.windows\.com)(:\d+)?/")
+
+
+def looks_personal(text: str) -> bool:
+    """The twin of looks_personal() in the PHP receiver."""
+    import unicodedata
+    n = unicodedata.normalize("NFKC", text)
+    n = re.sub("[\u2010-\u2015\u2212\u30fc\uff0d\uff70\u2043]", "-", n)
+    return bool(re.search(r"[0-9](?:[\s\-./()・,]*[0-9]){6,}", n) or re.search("@|\uff20|https?:|www\\.|\u3012|ftp:", n)
+                or re.search(r"[a-z0-9][a-z0-9-]*\.(?:com|net|org|jp|info|biz|io|me|tv|co|ne|app|dev)(?:[/\s.]|$)", n, re.I)
+                or re.search(r"(?:\bat\b|アットマーク|アット).{0,30}(?:\bdot\b|ドット)", n, re.I)
+                or re.search("(?:都|道|府|県).{0,12}(?:市|区|町|村|郡)", n) or re.search(r"[0-9]+\s*(?:丁目|番地)|[0-9]+\s*番\s*[0-9]*\s*号", n))
 
 
 class Store:
@@ -132,7 +143,7 @@ class Store:
             t = re.sub(r"\s+", " ", t).strip()
             if not 2 <= len(t) <= 80:
                 return 400, None
-            if VOICE_UNSAFE.search(t):
+            if looks_personal(t):
                 return 422, None
             self.voices.append({"kind": kind, "message": t})
             self.bump(["cq.voice." + kind])

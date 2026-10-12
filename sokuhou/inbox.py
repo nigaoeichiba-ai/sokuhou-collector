@@ -40,18 +40,24 @@ def parse_raw(raw: str) -> dict[str, list[str]]:
 
 
 def take_new(raw: str, state: dict) -> tuple[list[dict], dict]:
-    """The messages of `raw` that the state has not seen (as dicts with only the known fields), and the new state."""
+    """The messages of `raw` that the state has not seen (as dicts with only the known fields), and the new state.  A last line that does not parse is a line still being
+    written on the server: it is not counted as taken, so the next run takes it whole."""
     out, new_state = [], dict(state)
     for name, lines in parse_raw(raw).items():
         done = int(new_state.get(name, 0))
-        for line in lines[done:]:
+        taken = done
+        for i, line in enumerate(lines[done:], start=done):
             try:
                 rec = json.loads(line)
             except json.JSONDecodeError:
+                if i == len(lines) - 1:
+                    break
+                taken = i + 1
                 continue
+            taken = i + 1
             if isinstance(rec, dict) and rec.get("message"):
                 out.append({k: rec.get(k, "") for k in FIELDS})
-        new_state[name] = max(done, len(lines))
+        new_state[name] = max(done, taken)
     return out, new_state
 
 

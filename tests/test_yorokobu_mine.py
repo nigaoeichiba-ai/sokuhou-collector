@@ -121,6 +121,21 @@ async function load(url) {
     w.localStorage.removeItem('yorokobu.pop');
     Object.defineProperty(w.navigator, 'doNotTrack', { value: '1', configurable: true });
     const n3 = calls.length; w.YorokobuMine.press(a); out.dnt_added = calls.length - n3;
+    // links that come from a data file go only to the shops' hosts
+    out.safe = ['javascript:alert(1)', 'https://evil.example.com/x', 'https://hb.afl.rakuten.co.jp/hgc/x', 'http://www.amazon.co.jp/s?k=a', 'https://www.amazon.co.jp/s?k=a', 'data:text/html,x'].map(u => w.YorokobuMine.safeUrl(u));
+    // Do Not Track in the other spellings
+    for (const v of ['yes']) {
+      w.localStorage.removeItem('yorokobu.pop');
+      Object.defineProperty(w.navigator, 'doNotTrack', { value: v, configurable: true });
+      const n4 = calls.length; w.YorokobuMine.press(a); out['dnt_' + v] = calls.length - n4;
+    }
+    Object.defineProperty(w.navigator, 'doNotTrack', { value: null, configurable: true });
+    // without localStorage the once-a-day rule still holds inside the page
+    const n5 = calls.length;
+    const realSet = w.Storage.prototype.setItem; w.Storage.prototype.setItem = function () { throw new Error('private window'); };
+    w.localStorage.removeItem('yorokobu.pop');
+    const other = d.querySelectorAll('li.item[data-code]')[1].querySelector('a.btn'); w.YorokobuMine.press(other); w.YorokobuMine.press(other);
+    out.nostorage_calls = calls.length - n5; w.Storage.prototype.setItem = realSet;
     // the header heart
     w.localStorage.setItem('yorokobu.favs', JSON.stringify([{ code: code, name: 'x', price: '1' }]));
     out.fav_link_before = !!d.querySelector('header.site .fav-link');
@@ -180,6 +195,11 @@ async function load(url) {
     def test_a_scripted_click_and_do_not_track_count_nothing(self):
         self.assertEqual(self.out["scripted_added"], 0)
         self.assertEqual(self.out["dnt_added"], 0)
+        self.assertEqual(self.out["dnt_yes"], 0)                            # the older spelling of the setting counts too
+
+    def test_links_from_a_data_file_are_drawn_only_when_they_go_to_a_shop_and_the_daily_rule_holds_without_storage(self):
+        self.assertEqual(self.out["safe"], ["", "", "https://hb.afl.rakuten.co.jp/hgc/x", "", "https://www.amazon.co.jp/s?k=a", ""])
+        self.assertEqual(self.out["nostorage_calls"], 1)                    # pressed twice in a private window: counted once
 
     def test_the_favourites_page_shows_saved_and_recent_products_and_what_is_gone(self):
         o = self.out

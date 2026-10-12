@@ -12,6 +12,13 @@
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function yen(n) { return "¥" + Number(n).toLocaleString("ja-JP"); }
+  // a link that comes from a data file (the products of /list/items.json) is drawn only when it goes to a shop of ours: https and a known host
+  var HOSTS = ["hb.afl.rakuten.co.jp", "item.rakuten.co.jp", "search.rakuten.co.jp", "www.amazon.co.jp"];
+  function safeUrl(u) {
+    try { var x = new URL(String(u), location.origin); return x.protocol === "https:" && HOSTS.indexOf(x.hostname) >= 0 ? x.href : ""; } catch (e) { return ""; }
+  }
+  function dnt() { return navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || window.doNotTrack === "1" || navigator.msDoNotTrack === "1"; }
+  var memDone = {};                                                      // the once-a-day rule when localStorage is not available
   function dayKey() { var d = new Date(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); }
 
   // ---- the key of a product for the counter: rakuten item codes ("shop:1000123") and Amazon ASINs, in the form the counter accepts
@@ -22,11 +29,12 @@
     return null;
   }
   function beacon(key) {
-    if (!key || navigator.doNotTrack === "1" || navigator.webdriver) return;
+    if (!key || dnt() || navigator.webdriver) return;
     var st = read(POP, {});
     var today = dayKey();
     if (st.day !== today) st = { day: today, done: [] };
-    if (st.done.indexOf(key) >= 0 || st.done.length >= 40) return;           // once per product and day; a person does not press forty products a day
+    if (memDone[key] === today || st.done.indexOf(key) >= 0 || st.done.length >= 40) return;     // once per product and day; a person does not press forty products a day
+    memDone[key] = today;
     st.done.push(key);
     write(POP, st);
     try { fetch("/api/ask.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ v: 1, op: "stat", k: [key] }), keepalive: true }).catch(function () {}); } catch (e) { /* not counted */ }
@@ -66,6 +74,7 @@
 
   // ---- /favorites/
   function card(it, extra) {
+    it = Object.assign({}, it, { u: safeUrl(it.u), a: safeUrl(it.a), i: safeUrl(it.i) || "" });
     var rel = ' rel="sponsored nofollow noopener" target="_blank"';
     var attrs = ' data-code="' + esc(it.code || "") + '"' + (it.asin ? ' data-asin="' + esc(it.asin) + '"' : "") + ' data-price="' + esc(it.p || "") + '"';
     return '<li class="item"' + attrs + '><a class="item-img" href="' + esc(it.u) + '"' + rel + '><img src="' + esc(it.i) + '" alt="' + esc(it.n) + '" width="300" height="300" loading="lazy"></a>' +
@@ -115,6 +124,6 @@
     var root = $("#myitems");
     if (root) favorites(root);
   }
-  window.YorokobuMine = { counterKey: counterKey, press: press };
+  window.YorokobuMine = { counterKey: counterKey, press: press, safeUrl: safeUrl };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

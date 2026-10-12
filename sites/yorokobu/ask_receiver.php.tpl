@@ -82,6 +82,20 @@ function survey($dir, $id) {
 }
 function owns($meta, $key) { return $meta !== null && idok($key) && isset($meta['kh']) && hash_equals((string)$meta['kh'], hash('sha256', $key)); }
 
+// A sentence that looks like personal information: refused (the page also says so, but this is the check that counts).  The text is first made plain: full-width digits and
+// letters to half-width, every dash, minus and long-vowel mark to '-', so that 090-1234-5678, ０９０ー１２３４ー５６７８ and 090 1234 5678 are all a phone number.
+function looks_personal($t) {
+    $n = function_exists('mb_convert_kana') ? mb_convert_kana($t, 'asKV', 'UTF-8') : $t;
+    $n = (string)preg_replace('/[\x{2010}-\x{2015}\x{2212}\x{30FC}\x{FF0D}\x{FF70}\x{2043}]/u', '-', $n);
+    if (preg_match('/[0-9](?:[\s\-.\/()・,]*[0-9]){6,}/u', $n) === 1) { return true; }          // seven digits in a run (separators between them allowed): a phone number, a postal code
+    if (preg_match('/@|\x{FF20}|https?:|www\.|\x{3012}|ftp:/u', $n) === 1) { return true; } // a mail address, a link, 〒
+    if (preg_match('/[a-z0-9][a-z0-9-]*\.(?:com|net|org|jp|info|biz|io|me|tv|co|ne|app|dev)(?:[\/\s.]|$)/iu', $n) === 1) { return true; }   // a domain without http
+    if (preg_match('/(?:\bat\b|アットマーク|アット).{0,30}(?:\bdot\b|ドット)/iu', $n) === 1) { return true; }    // taro at example dot com
+    if (preg_match('/(?:都|道|府|県).{0,12}(?:市|区|町|村|郡)/u', $n) === 1) { return true; }              // a prefecture and a city: an address
+    if (preg_match('/[0-9]+\s*(?:丁目|番地)|[0-9]+\s*番\s*[0-9]*\s*号/u', $n) === 1) { return true; }                          // 3丁目, 5番地, 1番2号
+    return false;
+}
+
 if ($op === 'new') {                                                                  // a person makes a survey: its id (public, in the link) and secret key (kept on the person's device)
     limit($dir, 'new', 20);
     $id = $d['id'] ?? ''; $key = $d['key'] ?? '';
@@ -233,7 +247,7 @@ if ($op === 'voice') {                                                          
     $t = trim((string)preg_replace('/\s+/u', ' ', $t));
     $n = function_exists('mb_strlen') ? mb_strlen($t, 'UTF-8') : strlen($t);
     if ($n < 2 || $n > 80) { out(400); }
-    if (preg_match('/[0-9０-９]{7,}|@|＠|https?:|www\.|〒|[0-9]{3}-[0-9]{4}/u', $t) === 1) { out(422); }       // a phone number, an address, a mail address or a link: refused, not stored
+    if (looks_personal($t)) { out(422); }                                              // a phone number, an address, a mail address or a link: refused, not stored
     $vd = $dir . '/voice';
     if (!is_dir($vd) && !@mkdir($vd, 0700, true)) { out(503); }
     $f = $vd . '/v-' . date('Ym') . '.jsonl';

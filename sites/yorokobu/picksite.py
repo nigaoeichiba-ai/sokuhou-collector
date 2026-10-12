@@ -40,7 +40,7 @@ def _facts(e: dict) -> str:
             '<ul class="pick-check">' + "".join(f"<li>{esc(x)}</li>" for x in e["check"]) + "</ul>")
 
 
-def rakuten_card(cfg: dict, d: dict, e: dict, eid: str, n: int) -> str | None:
+def rakuten_card(cfg: dict, d: dict, e: dict, eid: str, n: int, more: str = "") -> str | None:
     B = _b()
     live = d.get("daily_items", {}).get(e["code"])
     if live is not None and not live.get("available", True):
@@ -60,23 +60,23 @@ def rakuten_card(cfg: dict, d: dict, e: dict, eid: str, n: int) -> str | None:
     other = (f'<a class="btn" href="{esc(B.amazon_url(cfg, B.amazon_query(e["name"])))}" rel="sponsored nofollow noopener" target="_blank" '
              f'aria-label="Amazonで同じ商品を探す">Amazonで探す</a>') if cfg.get("amazon_tracking_id") else ""
     return (f'<article class="pick" id="{eid}" data-code="{esc(e["code"])}"><a class="pick-img" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
-            f'<img src="{esc(img)}" alt="{esc(e["name"])}" width="300" height="300" loading="lazy"></a>'
+            f'<img src="{esc(img)}" alt="{esc(e["name"])}" width="300" height="300" {B.EAGER if n == 1 else B.LAZY}></a>'
             f'<div class="pick-body"><p class="pick-meta"><span class="pick-no">{n}</span><span class="tag">{esc(e["kind"])}</span><span class="pick-scene">{esc(e["scene"])}</span></p>'
             f'<h3>{esc(e["headline"])}</h3><p class="pick-name">{esc(e["name"])}</p><p class="pick-sum">{esc(e["summary"])}</p>{_chips(e["for"])}{_facts(e)}{price}'
-            f'<div class="item-btns"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">楽天市場で見る</a>{other}</div></div></article>')
+            f'<div class="item-btns"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">楽天市場で見る</a>{other}</div>{more}</div></article>')
 
 
-def amazon_card(cfg: dict, d: dict, e: dict, eid: str, n: int) -> str:
+def amazon_card(cfg: dict, d: dict, e: dict, eid: str, n: int, more: str = "") -> str:
     B = _b()
     href = B.amazon_dp(cfg, e["asin"])
     rk = B.search_link(cfg, B.amazon_query(e["name"]))
     return (f'<article class="pick" id="{eid}" data-asin="{esc(e["asin"])}"><a class="pick-img mood" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
-            f'<img src="{dp.mood_path(e)}" alt="{esc(e["name"])}の商品写真ではなく、贈る場面を表したイメージ" width="480" height="320" loading="lazy"><span class="img-note">イメージ画像</span></a>'
+            f'{B.mood_img(e["mood"], e["name"] + "の商品写真ではなく、贈る場面を表したイメージ", "(max-width: 640px) 100vw, 360px")}<span class="img-note">イメージ画像</span></a>'
             f'<div class="pick-body"><p class="pick-meta"><span class="pick-no">{n}</span><span class="tag">{esc(e["kind"])}</span><span class="pick-scene">{esc(e["scene"])}</span></p>'
             f'<h3>{esc(e["headline"])}</h3><p class="pick-name">{esc(e["name"])}</p><p class="pick-sum">{esc(e["summary"])}</p>{_chips(e["for"])}{_facts(e)}'
             f'<p class="pick-price"><small>価格・在庫は、Amazonのページでご確認ください。</small></p>'
             f'<div class="item-btns"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">Amazonで見る</a>'
-            f'<a class="btn" href="{esc(rk)}" rel="sponsored nofollow noopener" target="_blank" aria-label="楽天市場で同じ商品を探す">楽天市場で探す</a></div></div></article>')
+            f'<a class="btn" href="{esc(rk)}" rel="sponsored nofollow noopener" target="_blank" aria-label="楽天市場で同じ商品を探す">楽天市場で探す</a></div>{more}</div></article>')
 
 
 def _entries(day: dict) -> dict[str, tuple[str, dict]]:
@@ -86,6 +86,7 @@ def _entries(day: dict) -> dict[str, tuple[str, dict]]:
 
 
 def highlight_tiles(day: dict, d: dict, cfg: dict) -> str:
+    B = _b()
     ents = _entries(day)
     tiles = ""
     for h in day["highlights"]:
@@ -93,8 +94,8 @@ def highlight_tiles(day: dict, d: dict, cfg: dict) -> str:
         if store == "amazon" and not cfg.get("amazon_tracking_id"):
             continue                                                       # no Associates ID, no Amazon link: such a product is not shown
         live = d.get("daily_items", {}).get(e.get("code", ""))
-        img = (live["image"] if live else e.get("img")) if store == "rakuten" else dp.mood_path(e)
-        tiles += (f'<li><a class="pick-hl" href="{day_path(day["date"])}#{h["ref"]}"><img src="{esc(img)}" alt="" width="120" height="120" loading="lazy">'
+        img = B.thumb((live["image"] if live else e.get("img")), 128) if store == "rakuten" else dp.mood_small_path(e)
+        tiles += (f'<li><a class="pick-hl" href="{day_path(day["date"])}#{h["ref"]}"><img src="{esc(img)}" alt="" width="120" height="120" loading="eager" decoding="async">'
                   f'<span><b class="hl-tag">{esc(h["tag"])}</b><strong>{esc(e["headline"])}</strong><small>{esc(e["name"][:34])}</small></span></a></li>')
     return f'<ul class="pick-hls">{tiles}</ul>'
 
@@ -103,14 +104,19 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
     B = _b()
     iso = day["date"]
     r_cards, a_cards, shown = [], [], []
+    fx = {f["ref"]: f for f in (d["c"].get("features") or []) if f["date"] == iso}
+
+    def more(ref):
+        f = fx.get(ref)
+        return f'<p class="pick-more"><a href="/pick/{esc(f["slug"])}/">この商品を、くわしく読む(仕様・価格の位置・渡し方)</a></p>' if f else ""
     for i, e in enumerate(day["rakuten"], 1):
-        c = rakuten_card(cfg, d, e, f"r{i}", len(r_cards) + 1)
+        c = rakuten_card(cfg, d, e, f"r{i}", len(r_cards) + 1, more(f"r{i}"))
         if c:
             r_cards.append(c)
             shown.append((f"r{i}", e))
     for i, e in enumerate(day["amazon"], 1):
         if cfg.get("amazon_tracking_id"):
-            a_cards.append(amazon_card(cfg, d, e, f"a{i}", i))
+            a_cards.append(amazon_card(cfg, d, e, f"a{i}", i, more(f"a{i}")))
             shown.append((f"a{i}", e))
     total = len(r_cards) + len(a_cards)
     h1 = f"今日のおすすめギフト{total}選 {date_label(iso)}" if newest else f"{date_label(iso, True)}のおすすめギフト{total}選"
@@ -133,10 +139,12 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
 {B.pr_quiet(cfg)}
 <p class="pick-theme"><span class="eyebrow">Today's theme</span>{esc(day["theme"])}</p>
 <section class="block pick-top"><div class="sec-head"><h2>今日の注目3点</h2></div>{highlight_tiles(day, d, cfg)}</section>
+{_b().feats.teaser(cfg, d, d["c"].get("features") or [], iso)}
 <nav class="chips pick-toc" aria-label="このページの内容"><a href="#rakuten">楽天市場の{len(r_cards)}点</a>{f'<a href="#amazon">Amazonの{len(a_cards)}点</a>' if a_cards else ""}<a href="#policy">選び方</a></nav>
 <section class="block" id="rakuten"><div class="sec-head"><span class="eyebrow">Rakuten</span><h2>楽天市場で選ぶ{len(r_cards)}点</h2></div><div class="pick-list">{"".join(r_cards)}</div>
 {B.freshness(d) if live_any else ""}</section>
 {f'<section class="block" id="amazon"><div class="sec-head"><span class="eyebrow">Amazon</span><h2>Amazonで選ぶ{len(a_cards)}点</h2>{az_note}</div><div class="pick-list">{"".join(a_cards)}</div></section>' if a_cards else ""}
+{B.next_steps(d)}
 <section class="block" id="policy"><div class="sec-head"><h2>このページの選び方</h2></div><p class="notice">{esc(POLICY)}</p></section>
 {B.share_bar(cfg, day_path(iso), f"{h1}: {day['theme']}", "このページを、だれかに・自分に送る", hint=True)}
 {nav}
@@ -154,6 +162,7 @@ def hub_page(d: dict, cfg: dict, preview: bool, days: list[dict]) -> str:
 {B.pr_quiet(cfg)}
 <section class="block"><div class="sec-head"><span class="eyebrow">Latest</span><h2>{esc(date_label(latest["date"]))}のおすすめ: {esc(latest["theme"])}</h2></div>
 {highlight_tiles(latest, d, cfg)}<p class="more"><a class="btn" href="{day_path(latest["date"])}">すべて見る</a></p></section>
+{_b().feats.teaser(cfg, d, d["c"].get("features") or [], None, 4)}
 {_b().minepage.section(d, cfg)}
 <section class="block"><div class="sec-head"><h2>これまでのおすすめ</h2></div><ul class="tiles wide">{rows}</ul></section>
 <section class="block"><div class="sec-head"><h2>選び方</h2></div><p class="notice">{esc(POLICY)}</p></section>"""
@@ -185,4 +194,5 @@ def home_block(d: dict, cfg: dict) -> str:
 
 def feed_entries(d: dict, cfg: dict) -> list[tuple[str, str, str, str]]:
     base = cfg["site_url"].rstrip("/")
-    return [(x["date"], f'今日のおすすめギフト {date_label(x["date"])}: {x["theme"]}', f"{base}{day_path(x['date'])}", x["lede"]) for x in (d["c"].get("daily") or [])]
+    rows = [(x["date"], f'今日のおすすめギフト {date_label(x["date"])}: {x["theme"]}', f"{base}{day_path(x['date'])}", x["lede"]) for x in (d["c"].get("daily") or [])]
+    return rows + _b().feats.feed_entries(d, cfg)
