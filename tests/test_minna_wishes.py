@@ -11,7 +11,7 @@ from sites.minna import build, factory, wishes
 ORDINARY = [
     "こたつでみかんを食べるひつじ", "ファンタジーのドラゴン", "ナチュラルな花かんむり", "グローバルな会議のイラスト", "ワンピースを着た女の子", "ラーメンのナルト", "にもつを運ぶ猫",
     "家に帰ろうとしている犬", "日本人の家族が食卓をかこむ", "アップルパイとりんご", "運動会のフレーム", "ハロウィンのかぼちゃのライン", "リアルなカエル", "おじいちゃんとおばあちゃんのおでかけ",
-    "お歳暮のお礼状に添える絵", "雪だるまとこたつ", "うさぎの餅つき", "ねこのお弁当", "サッカーをする子ども", "ヘアカットをする美容師", "裸足で走る子ども", "テロップ付きのニュース番組",
+    "お歳暮のお礼状に添える絵", "天皇誕生日のカレンダー", "殺し文句の吹き出し", "雪だるまとこたつ", "うさぎの餅つき", "ねこのお弁当", "サッカーをする子ども", "ヘアカットをする美容師", "裸足で走る子ども", "テロップ付きのニュース番組",
     "スタンプをおす手", "マリンブルーの海", "お正月の鏡もち", "ドラマのワンシーンのような夕焼け",
 ]
 
@@ -31,7 +31,7 @@ class Refusals(unittest.TestCase):
 
     def test_katakana_and_hiragana_are_one_word(self):
         self.assertEqual(wishes.refusal("ぴかちゅう")[0], "ip")
-        self.assertEqual(wishes.refusal("ＰＯＫＥＭＯＮ".lower())[0], "")          # the Latin spelling is not in the list: the triage by hand sees it
+        self.assertEqual(wishes.refusal("ＰＯＫＥＭＯＮ")[0], "ip")                  # full-width Latin letters are folded and the common English spellings are in the list
         self.assertEqual(wishes.refusal("ＶＴｕｂｅｒ")[0], "ip")                  # full-width letters are folded
 
     def test_adult_violence_personal_and_length(self):
@@ -42,6 +42,14 @@ class Refusals(unittest.TestCase):
         self.assertEqual(wishes.refusal("a@b.co")[0], "personal")
         self.assertEqual(wishes.refusal("あ")[0], "length")
         self.assertEqual(wishes.refusal("あ" * 61)[0], "length")
+
+    def test_spellings_that_try_to_slip_past_are_caught(self):
+        for w in ("ポ・ケ・モン", "ポケ​モン", "ポ ケ モ ン", "pokemon", "Mickey", "ドラえもーん", "ディ-ズ-ニ-", "pac-man", "ＨＥＬＬＯ ＫＩＴＴＹ"):
+            self.assertNotEqual(wishes.refusal(w)[0], "", w)
+
+    def test_hyphens_survive_for_the_personal_data_patterns(self):
+        self.assertEqual(wishes.refusal("03-1234-5678")[0], "personal")
+        self.assertEqual(wishes.refusal("０３－１２３４－５６７８")[0], "personal")
 
     def test_trial_words_are_marked(self):
         self.assertEqual(wishes.refusal("動作確認 ひつじ")[0], "test")
@@ -63,11 +71,11 @@ class ClientRules(unittest.TestCase):
         cr = wishes.client_rules()
 
         def verdict(w):
-            f = wishes.flat(w)
+            f, fk = wishes.flat(w), wishes.flat_keep(w)
             for g in cr["groups"]:
                 if any(t in f for t in g["terms"]):
                     return g["k"]
-            return "personal" if any(re.search(p, f, re.I) for p in cr["personal"]) else ""
+            return "personal" if any(re.search(p, fk, re.I) for p in cr["personal"]) else ""
         for w in [*ORDINARY, "ピカチュウ", "ぐでたま", "スタバ", "全裸", "死体", "https://a.b/", "03-1111-2222", "まねして描いて"]:
             self.assertEqual(verdict(w), wishes.refusal(w)[0] if wishes.refusal(w)[0] not in ("length", "test") else "", w)
 
@@ -88,6 +96,24 @@ class Receiver(unittest.TestCase):
         rules = json.loads(raw)
         self.assertEqual(rules, wishes.client_rules())
         self.assertIn("'https://minna-no-illust.com'", php)
+
+    def test_php_checks_the_sender_counts_under_one_lock_and_needs_mbstring(self):
+        php = build.request_php(self.cfg)
+        self.assertIn("function same_site", php)
+        self.assertIn("HTTP_REFERER", php)
+        self.assertNotRegex(php, r"\$origin !== ''")                                     # no 'no Origin header is fine'
+        self.assertIn("function bump_counter", php)
+        self.assertIn("flock($fh, LOCK_EX)", php)
+        self.assertIn("function_exists('mb_convert_kana')", php)
+        self.assertNotRegex(php, r"file_put_contents\(\$rate")                           # the old read-then-write counter is gone
+
+    def test_php_separator_class_covers_every_separator_python_removes(self):
+        php = build.request_php(self.cfg)
+        line = next(l for l in php.splitlines() if l.startswith("$flat = preg_replace("))
+        chars = line.replace("\\", "")
+        for c in wishes.SEPARATORS:
+            self.assertIn(c, chars, c)
+        self.assertIn(r"\x{200B}-\x{200D}", php)                                    # zero-width characters are removed on the server too
 
     def test_php_keeps_what_the_design_promises(self):
         php = build.request_php(self.cfg)
@@ -121,6 +147,28 @@ class Ledger(unittest.TestCase):
         self.assertEqual({r["id"]: r["status"] for r in ledger}, {"Raaaa1111": "new", "Rbbbb2222": "declined", "Rdddd4444": "test"})
         self.assertEqual(wishes.add_new([self.rec("aaaa1111", "こたつのひつじ")], ledger), [])
         self.assertEqual(ledger[0]["use"], "年賀状")
+
+    def test_a_long_letter_is_judged_too(self):
+        ledger = []
+        wishes.add_new([{"id": "g1111111", "at": "2026-10-12T09:00:00+09:00", "site": "minna", "kind": "イラストのリクエスト", "message": "ピカチュウの絵をください。" + "あ" * 300, "email": "", "page": ""},
+                        {"id": "g2222222", "at": "2026-10-12T09:00:00+09:00", "site": "minna", "kind": "イラストのリクエスト", "message": "ひつじのイラストをお願いします。" + "あ" * 300 + " 連絡先は 090-1234-5678 です", "email": "", "page": ""},
+                        {"id": "g3333333", "at": "2026-10-12T09:00:00+09:00", "site": "minna", "kind": "イラストのリクエスト", "message": "ひつじがこたつでみかんを食べるイラストを、年賀状に使いたいので、描いてください。" + "あ" * 300, "email": "", "page": ""}], ledger)
+        self.assertEqual([(r["status"], r["auto"]) for r in ledger], [("declined", "ip"), ("declined", "personal"), ("new", "")])
+
+    def test_reading_does_not_print_the_wording(self):
+        import io
+        from contextlib import redirect_stdout
+        ledger = []
+        wishes.add_new([{"id": "h1111111", "at": "2026-10-12T09:00:00+09:00", "site": "minna", "kind": "request", "message": "ひみつのことばXYZ", "email": "", "page": "q:u=;t=;s=form"}], ledger)
+        with tempfile.TemporaryDirectory() as d:
+            lp = Path(d) / "ledger.jsonl"
+            wishes.write_ledger(ledger, lp)
+            buf = io.StringIO()
+            with mock.patch.object(wishes, "LEDGER", lp), redirect_stdout(buf):
+                wishes.main(["list"])
+                self.assertNotIn("ひみつのことばXYZ", buf.getvalue())
+                wishes.main(["list", "--show"])
+                self.assertIn("ひみつのことばXYZ", buf.getvalue())
 
     def test_long_form_requests_are_taken_as_letters(self):
         ledger = []

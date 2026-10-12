@@ -27,6 +27,7 @@
     ctx.putImageData(out, 0, 0);
   }
   function status(t) { $("#nu-msg").textContent = t; }
+  function pushUndo() { if (st.undo.length >= UNDO) st.undo.shift(); st.undo.push(st.fill.slice()); }   // the one place that keeps the undo list short (a fill and a reset both use it)
 
   // the pixels within r of a line (a square window, two passes)
   function thicken(L, W, H, r) {
@@ -163,7 +164,7 @@
 
   // buttons
   $("#nu-undo").addEventListener("click", function () { if (st.undo.length) { st.fill = st.undo.pop(); render(); status("ひとつ、もどしました。"); } else status("もどせるものは、ありません。"); });
-  $("#nu-reset").addEventListener("click", function () { if (!st.L) return; st.undo.push(st.fill.slice()); st.fill = new Uint32Array(st.W * st.H); render(); status("まっしろに、もどしました(「ひとつ、もどす」で、元にもどせます)。"); });
+  $("#nu-reset").addEventListener("click", function () { if (!st.L) return; pushUndo(); st.fill = new Uint32Array(st.W * st.H); render(); status("まっしろに、もどしました(「ひとつ、もどす」で、元にもどせます)。"); });
   $("#nu-save").addEventListener("click", function () {
     if (!st.L) return;
     canvas.toBlob(function (b) { var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "nurie-" + st.id + ".png"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000); status("保存しました。"); }, "image/png");
@@ -179,8 +180,8 @@
 
   // the pictures to choose from: every line drawing of the library
   fetch("/data/items.json").then(function (r) { return r.json(); }).then(function (rows) {
-    var lines = rows.filter(function (r) { return r[4] === "lineart"; });
-    $("#nu-list").innerHTML = '<ul class="nu-list">' + lines.map(function (r) { return '<li><button type="button" class="nu-pickbtn" data-id="' + r[0] + '" data-title="' + esc(r[1]) + '"><span class="checker"><img src="/thumbs/' + r[0] + '.webp" alt="" width="120" height="' + Math.round(120 * r[7] / r[6]) + '" loading="lazy"></span><b>' + esc(r[1]) + "</b></button></li>"; }).join("") + "</ul>";
+    var lines = rows.filter(function (r) { return r[4] === "lineart" && /^[a-z0-9][a-z0-9-]*$/.test(r[0]); });
+    $("#nu-list").innerHTML = '<ul class="nu-list">' + lines.map(function (r) { return '<li><button type="button" class="nu-pickbtn" data-id="' + esc(r[0]) + '" data-title="' + esc(r[1]) + '"><span class="checker"><img src="/thumbs/' + esc(r[0]) + '.webp" alt="" width="120" height="' + Math.round(120 * r[7] / r[6]) + '" loading="lazy"></span><b>' + esc(r[1]) + "</b></button></li>"; }).join("") + "</ul>";
     $("#nu-count").textContent = lines.length + "点";
     var first = new URLSearchParams(location.search).get("id");
     if (first) { var hit = lines.filter(function (r) { return r[0] === first; })[0]; if (hit) load(hit[0], hit[1]); }

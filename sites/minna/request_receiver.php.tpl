@@ -16,11 +16,31 @@ $ALL_PER_DAY = 400;         // wishes per day, all senders
 $KEEP_DAYS = 400;           // a month's file older than this is deleted
 
 function out($code, $data) { http_response_code($code); echo json_encode($data, JSON_UNESCAPED_UNICODE); exit; }
+// the whole check rests on a Japanese normalisation: without these functions a word would not be compared the way the rules were written, so nothing is accepted
+if (!function_exists('mb_strlen') || !function_exists('mb_convert_kana') || !function_exists('mb_strtolower')) { out(503, array('error' => 'mbstring')); }
 if (!is_array($RULES)) { out(503, array('error' => 'rules')); }
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') { out(405, array('error' => 'method')); }
-$origin = (string)($_SERVER['HTTP_ORIGIN'] ?? '');
-$oh = (string)parse_url($origin, PHP_URL_HOST); $sh = (string)parse_url($SITE_URL, PHP_URL_HOST);
-if ($origin !== '' && $oh !== $sh) { out(403, array('error' => 'origin')); }   // the pages of this site only
+// only the pages of this site: the Origin header, or (when a browser sends none) the Referer, must be this site's own address (same scheme and host)
+function same_site($url, $site) {
+    if ($url === '') { return false; }
+    $u = parse_url($url); $s = parse_url($site);
+    return is_array($u) && is_array($s) && isset($u['scheme'], $u['host'], $s['scheme'], $s['host'])
+        && strtolower($u['scheme']) === strtolower($s['scheme']) && strtolower($u['host']) === strtolower($s['host']);
+}
+if (!same_site((string)($_SERVER['HTTP_ORIGIN'] ?? ''), $SITE_URL) && !same_site((string)($_SERVER['HTTP_REFERER'] ?? ''), $SITE_URL)) { out(403, array('error' => 'origin')); }
+// a counter file that is read, checked and written under one lock (two requests at the same moment cannot both pass the last free place); null = the limit is reached, false = it could not be kept
+function bump_counter($path, $limit) {
+    $fh = @fopen($path, 'c+');
+    if (!$fh) { return false; }
+    if (!flock($fh, LOCK_EX)) { fclose($fh); return false; }
+    rewind($fh);
+    $n = (int)stream_get_contents($fh);
+    if ($n >= $limit) { flock($fh, LOCK_UN); fclose($fh); return null; }
+    ftruncate($fh, 0); rewind($fh); fwrite($fh, (string)($n + 1)); fflush($fh);
+    flock($fh, LOCK_UN); fclose($fh);
+    @chmod($path, 0600);
+    return true;
+}
 $raw = file_get_contents('php://input', false, null, 0, 1001);
 if ($raw === false || strlen($raw) > 1000) { out(413, array('error' => 'size')); }
 $d = json_decode($raw, true);
@@ -29,16 +49,18 @@ $w = trim(preg_replace('/[\x00-\x1f\x7f<>"\'&\\\\]/u', '', $d['w']));
 $use = (isset($d['u']) && is_string($d['u']) && in_array($d['u'], $USES, true)) ? $d['u'] : '';
 $touch = (isset($d['t']) && is_string($d['t']) && in_array($d['t'], $TOUCHES, true)) ? $d['t'] : '';
 $src = (isset($d['s']) && is_string($d['s']) && in_array($d['s'], array('form', 'miss', 'plus'), true)) ? $d['s'] : 'form';
-$len = function_exists('mb_strlen') ? mb_strlen($w, 'UTF-8') : strlen($w);
+$len = mb_strlen($w, 'UTF-8');
 if ($len < (int)$RULES['min'] || $len > (int)$RULES['max']) { out(422, array('error' => 'length')); }
-// the same comparison as the page: full-width letters to half-width, katakana to hiragana, no spaces, lower case
-$flat = function_exists('mb_convert_kana') ? mb_convert_kana($w, 'KVcas', 'UTF-8') : $w;
-$flat = function_exists('mb_strtolower') ? mb_strtolower($flat, 'UTF-8') : strtolower($flat);
-$flat = preg_replace('/\s+/u', '', $flat);
+// the same comparison as the page: full-width letters to half-width, katakana to hiragana, lower case; then no spaces or zero-width characters ($keep, for the personal-data patterns, which need
+// hyphens and dots) and no long-vowel marks or punctuation either ($flat, for the words)
+$keep = mb_convert_kana($w, 'KVcas', 'UTF-8');
+$keep = mb_strtolower($keep, 'UTF-8');
+$keep = preg_replace('/[\s\x{200B}-\x{200D}\x{FEFF}]+/u', '', $keep);
+$flat = preg_replace('/[ー・･·_\-‐‑–—.,、。\'"!！?？:：;；\/|]+/u', '', $keep);
 foreach ($RULES['groups'] as $g) {
     foreach ($g['terms'] as $t) { if ($t !== '' && strpos($flat, $t) !== false) { out(422, array('error' => $g['k'])); } }
 }
-foreach ($RULES['personal'] as $p) { if (@preg_match('~' . str_replace('~', '\~', $p) . '~iu', $flat) === 1) { out(422, array('error' => 'personal')); } }
+foreach ($RULES['personal'] as $p) { if (@preg_match('~' . str_replace('~', '\~', $p) . '~iu', $keep) === 1) { out(422, array('error' => 'personal')); } }
 if (strpos($w, '動作確認') === 0) { $src = 'test'; }
 $site = dirname(__DIR__, 2);                       // public_html/api/q.php -> <site folder>
 $dir = $site . '/inbox';
@@ -47,13 +69,12 @@ if (!is_dir($dir) && !@mkdir($dir, 0700, true)) { out(503, array('error' => 'sto
 $ip = (string)($_SERVER['REMOTE_ADDR'] ?? '');
 $who = substr(hash('sha256', $ip . '|' . date('Y-m-d') . '|' . basename($site) . '|req'), 0, 16);
 $rate = $dir . '/qrate-' . date('Ymd') . '-' . $who;
-$r = is_file($rate) ? (int)file_get_contents($rate) : 0;
-if ($r >= (int)$RULES['day']) { out(429, array('error' => 'rate')); }
 $all = $dir . '/qall-' . date('Ymd');
-$n = is_file($all) ? (int)file_get_contents($all) : 0;
-if ($n >= $ALL_PER_DAY) { out(429, array('error' => 'full')); }
-@file_put_contents($rate, (string)($r + 1), LOCK_EX);
-@file_put_contents($all, (string)($n + 1), LOCK_EX);
+$a = bump_counter($all, $ALL_PER_DAY);
+if ($a === null) { out(429, array('error' => 'full')); }
+$r = bump_counter($rate, (int)$RULES['day']);
+if ($r === null) { out(429, array('error' => 'rate')); }
+if ($a === false || $r === false) { out(503, array('error' => 'storage')); }
 foreach ((glob($dir . '/qrate-*') ?: array()) as $f) { if (strpos($f, '/qrate-' . date('Ymd') . '-') === false) { @unlink($f); } }
 foreach ((glob($dir . '/qall-*') ?: array()) as $f) { if (substr($f, -8) !== date('Ymd')) { @unlink($f); } }
 foreach ((glob($dir . '/req-*.jsonl') ?: array()) as $f) {
