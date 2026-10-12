@@ -36,13 +36,13 @@ def in_tier(price: int, tier: dict | None) -> bool:
 
 
 def pick(items: list[dict], tier: dict | None, filters: dict, limit: int | None = None, per_shop: int = 2,
-         recipient: str | None = None, exclude: set | None = None, must: list[str] | None = None) -> list[dict]:
+         recipient: str | None = None, exclude: set | None = None, must: list[str] | None = None, never: list[str] | None = None) -> list[dict]:
     """Best items of one tier (None = any price): unique by item code, at most `per_shop` from one shop, highest score first.
     With `must` (an idea's words) only products of that kind count."""
     limit = limit or filters["max_per_list"]
     seen, per, out = set(exclude or ()), {}, []
     for relaxed in (False, True):
-        for it in sorted((i for i in items if usable(i, filters, recipient, relaxed) and in_tier(i["price"], tier) and relevance.fits_idea(i["name"], must)),
+        for it in sorted((i for i in items if usable(i, filters, recipient, relaxed) and in_tier(i["price"], tier) and relevance.fits_idea(i["name"], must, never)),
                          key=lambda i: (-score(i), i["price"])):
             if it["code"] in seen or per.get(it["shop_code"], 0) >= per_shop:
                 continue

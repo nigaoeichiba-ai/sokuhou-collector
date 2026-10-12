@@ -148,5 +148,30 @@ class ThemeMustTest(unittest.TestCase):
         self.assertNotIn("粉末スープ", [i["label"] for i in t["ideas"]])
 
 
+class NeverWordsTest(unittest.TestCase):
+    def theme_idea(self, slug, label):
+        t = next(x for x in content.load()["themes"] if x["slug"] == slug)
+        return next(i for i in t["ideas"] if i["label"] == label)
+
+    def test_an_idea_can_name_words_of_things_that_only_sound_like_it(self):
+        self.assertTrue(relevance.fits_idea("洗濯ピンチ 20個 帽子", ["洗濯ピンチ"]))
+        self.assertFalse(relevance.fits_idea("洗濯ピンチ 20個 帽子", ["洗濯ピンチ"], ["帽子"]))
+        self.assertTrue(relevance.fits_idea("洗濯ピンチ 20個", ["洗濯ピンチ"], ["帽子"]))
+
+    def test_the_windy_laundry_page_leaves_out_a_boston_bag_an_eco_bag_and_a_hat_hanger(self):
+        bag, pinch = self.theme_idea("windy-balcony-laundry", "洗濯バッグ"), self.theme_idea("windy-balcony-laundry", "強力ピンチ")
+        for title in ("ボストンバッグ 大容量 防水 100L 旅行バック ランドリーバッグ", "LOQI ローキー エコバッグ トートバッグ 手提げ袋 ランドリーバッグ"):
+            self.assertFalse(relevance.fits_idea(title, bag["must"], bag["not"]), title)
+        self.assertTrue(relevance.fits_idea("AWAT シャカシャカウォッシュバッグ 6L 洗濯袋 携帯用", bag["must"], bag["not"]))
+        self.assertFalse(relevance.fits_idea("帽子収納 2個 帽子ハンガー 洗濯ばさみ付き", pinch["must"], pinch["not"]))
+
+    def test_a_never_list_has_to_be_short_words(self):
+        with self.assertRaises(build.BuildError):
+            content.check_must({"must": ["a"], "not": []}, "x")
+        with self.assertRaises(build.BuildError):
+            content.check_must({"must": ["a"], "not": "帽子"}, "x")
+        content.check_must({"must": ["a"], "not": ["帽子"]}, "x")
+
+
 if __name__ == "__main__":
     unittest.main()
