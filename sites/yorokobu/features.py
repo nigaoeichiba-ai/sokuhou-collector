@@ -390,6 +390,53 @@ def ingest(src: Path, mapping: dict[str, str], size: int = 768, quality: int = 8
     return done
 
 
+def _data() -> dict:
+    """The build's data (content + the stored Rakuten items), for the commands that look at the pools."""
+    B = _b()
+    cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
+    # the day's products are fetched on the deploy server; here the newest stored copy in out/ is enough to see the pools (the live prices of the day are not needed for the pool)
+    stored = sorted((B.ROOT / "out").glob("yorokobu_items*.json"), key=lambda p: p.stat().st_mtime, reverse=True)
+    return B.prepare(ct.load(), json.loads(stored[0].read_text(encoding="utf-8")) if stored else None, cfg)
+
+
+def candidates(d: dict, day_iso: str | None = None) -> list[str]:
+    """The Rakuten products of a day's picks that have no article yet, with how many products of the same kind the site has (a chart needs MIN_POOL)."""
+    days = sorted((d["c"].get("daily") or []), key=lambda x: x["date"], reverse=True)
+    day = next((x for x in days if day_iso in (None, x["date"])), None)
+    if not day:
+        return ["no daily page for that date"]
+    done = {(f["date"], f["ref"]) for f in d["c"].get("features") or []}
+    used = {entry_of(next((x for x in days if x["date"] == f["date"]), None), f["ref"]).get("code") for f in d["c"].get("features") or []
+            if entry_of(next((x for x in days if x["date"] == f["date"]), None), f["ref"])}
+    kinds = kind_of(d)
+    from sites.yorokobu import dataroom
+    allp = dataroom.all_products(d)
+    out = [f"day {day['date']} (theme: {day['theme']})"]
+    for n, e in enumerate(day["rakuten"], 1):
+        ref = f"r{n}"
+        live = d.get("daily_items", {}).get(e["code"])
+        pool_n = sum(1 for p in allp if kinds.get(p["code"]) == e["kind"])
+        flags = []
+        if (day["date"], ref) in done or e["code"] in used:
+            flags.append("ALREADY HAS AN ARTICLE")
+        if live is not None and not live.get("available", True):
+            flags.append("not on sale now")
+        if pool_n < MIN_POOL:
+            flags.append(f"kind pool {pool_n} < {MIN_POOL}: only a compare-words pool can give a chart")
+        out.append(f"{ref}  {e['code']}  kind={e['kind']}  kind-pool={pool_n}  {e['name'][:48]}" + (f"   [{'; '.join(flags)}]" if flags else ""))
+    return out
+
+
+def chart_report(d: dict, f: dict) -> str:
+    day = next((x for x in d["c"].get("daily") or [] if x["date"] == f["date"]), None)
+    entry = entry_of(day, f["ref"])
+    if not entry:
+        return "no entry"
+    pl, how = pool(d, f, entry["kind"])
+    st = stats(pl, d.get("daily_items", {}).get(entry.get("code", "")) if f["ref"].startswith("r") else None)
+    return f"chart: {'yes' if st else 'NO (too few products)'}, {len(pl)} products ({how})"
+
+
 def main(argv: list[str] | None = None) -> int:
     import argparse
     import sys
@@ -399,17 +446,26 @@ def main(argv: list[str] | None = None) -> int:
     i.add_argument("--src", type=Path, required=True)
     i.add_argument("--map", nargs="+", required=True, help="prefix=slug ...")
     sub.add_parser("check")
+    cd = sub.add_parser("candidates")
+    cd.add_argument("--day", default=None)
     a = ap.parse_args(argv)
     if a.cmd == "ingest":
         for line in ingest(a.src, dict(m.split("=", 1) for m in a.map)):
             print(line)
         return 0
-    c = ct.load()
+    if a.cmd == "candidates":
+        print("\n".join(candidates(_data(), a.day)))
+        return 0
+    d = _data()
+    c = d["c"]
     days = {x["date"]: x for x in (c.get("daily") or [])}
     bad = 0
     for f in c["features"]:
         errs = problems(f, entry_of(days.get(f["date"]), f["ref"]))
-        print(f"{f['slug']}: {len(''.join(prose(f)))} characters" + (", OK" if not errs else ""))
+        rep = chart_report(d, f)
+        if "NO" in rep:
+            errs.append(f"{f['slug']}: {rep}; change compare.words or choose another product")
+        print(f"{f['slug']}: {len(''.join(prose(f)))} characters, {rep}" + (", OK" if not errs else ""))
         for e in errs:
             print("  -", e)
         bad += bool(errs)
