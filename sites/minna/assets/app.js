@@ -127,6 +127,7 @@
   }
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
   function cardHtml(r) {
+    if (!safeSlug(r[0])) return "";
     var w = Math.min(r[6], 360), h = Math.round(r[7] * w / r[6]);
     return '<li class="ic"><a class="illust-card" href="/illust/' + r[0] + '/"><span class="checker"><img src="/thumbs/' + r[0] + '.webp" alt="' + esc(r[1]) + '" width="' + w + '" height="' + h + '" loading="lazy"></span><b>' + esc(r[1]) + '</b></a>' +
       '<button class="fav" type="button" data-fav="' + r[0] + '" aria-pressed="false" aria-label="お気に入りに入れる">♡</button></li>';
@@ -224,7 +225,7 @@
     loadAssist().then(function (d) {
       var pg = pagesFor(words, idx, d.pages); if (!pg.length || $("#search-pages")) return;
       var box = document.createElement("div"); box.id = "search-pages"; box.className = "miss";
-      box.innerHTML = "<p><b>こんなページも、あります</b></p><ul class=\"as-links\">" + pg.map(function (p) { return '<li><a href="' + esc(p.u) + '">' + esc(p.n) + "</a><small>" + esc(p.t || "") + "</small></li>"; }).join("") + "</ul>";
+      box.innerHTML = "<p><b>こんなページも、あります</b></p><ul class=\"as-links\">" + pg.map(function (p) { return '<li><a href="' + esc(safeLocal(p.u)) + '">' + esc(p.n) + "</a><small>" + esc(p.t || "") + "</small></li>"; }).join("") + "</ul>";
       list.parentNode.insertBefore(box, list);
     });
   }
@@ -350,15 +351,18 @@
   var REQ_KEY = "minna-wishes", rulesP = null, boardP = null;
   function loadRules() { if (!rulesP) rulesP = fetch("/data/request-rules.json").then(function (r) { return r.json(); }).catch(function () { return null; }); return rulesP; }
   function loadBoard() { if (!boardP) boardP = fetch("/data/request-board.json").then(function (r) { return r.json(); }).catch(function () { return { rows: [] }; }); return boardP; }
-  function flatW(s) {
-    return String(s || "").normalize("NFKC").toLowerCase().replace(/[ァ-ヶ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 96); }).replace(/\s+/g, "");
+  function flatK(s) { // NFKC, lower case, katakana -> hiragana, spaces and zero-width characters out (hyphens stay: the personal-data patterns need them)
+    return String(s || "").normalize("NFKC").toLowerCase().replace(/[ァ-ヶ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 96); }).replace(/[\s\u200b-\u200d\ufeff]+/g, "");
   }
+  function flatW(s) { return flatK(s).replace(/[ー・･·_\-‐‑–—.,、。'"!！?？:：;；\/|]+/g, ""); } // and long-vowel marks and punctuation out: the form compared with the words
+  function safeLocal(u) { u = String(u || ""); return /^\/[A-Za-z0-9_\/?.=&%#-]*$/.test(u) ? u : "/"; } // site data goes into links only as a path of this site
+  function safeSlug(s) { s = String(s || ""); return /^[a-z0-9][a-z0-9-]*$/.test(s) ? s : ""; }
   function refuseW(rules, text) { // "" when the wish may be sent, else the sentence to show (the same rules as api/q.php)
     var w = String(text || "").replace(/[\u0000-\u001f\u007f<>"'&\\]/g, "").trim();
     if (w.length < rules.min || w.length > rules.max) return rules.min + "〜" + rules.max + "文字で、書いてください。";
-    var f = flatW(w), i, j, g;
+    var f = flatW(w), fk = flatK(w), i, j, g;
     for (i = 0; i < rules.groups.length; i++) { g = rules.groups[i]; for (j = 0; j < g.terms.length; j++) { if (g.terms[j] && f.indexOf(g.terms[j]) >= 0) return rules.reasons[g.k] + "。"; } }
-    for (i = 0; i < rules.personal.length; i++) { try { if (new RegExp(rules.personal[i], "i").test(f)) return rules.reasons.personal + "。"; } catch (e) { /* a pattern this browser cannot read: the server still checks */ } }
+    for (i = 0; i < rules.personal.length; i++) { try { if (new RegExp(rules.personal[i], "i").test(fk)) return rules.reasons.personal + "。"; } catch (e) { /* a pattern this browser cannot read: the server still checks */ } }
     return "";
   }
   function myWishes() { try { var a = JSON.parse(localStorage.getItem(REQ_KEY) || "[]"); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
@@ -393,7 +397,7 @@
       box.hidden = false;
       list.innerHTML = '<ul class="req-board">' + mine.map(function (m) {
         var hit = matchBoard(m.w, b.rows || []), tail = "";
-        if (hit) tail = ' <small>→ ' + (hit.status === "公開しました" && hit.series ? '<a href="/series/' + esc(hit.series) + '/">' + esc(hit.title) + "</a>" : esc(hit.title)) + "</small>";
+        if (hit) tail = ' <small>→ ' + (hit.status === "公開しました" && safeSlug(hit.series) ? '<a href="/series/' + safeSlug(hit.series) + '/">' + esc(hit.title) + "</a>" : esc(hit.title)) + "</small>";
         return '<li><span class="req-state ' + (hit ? (hit.status === "公開しました" ? "done" : "wip") : "wait") + '">' + (hit ? esc(hit.status) : "受け付けました") + "</span> <b>" + esc(m.w) + "</b>" + tail + "</li>";
       }).join("") + "</ul>";
     });
@@ -453,7 +457,7 @@
   }
 
   // what the helper panel (assist.js, loaded when it is first opened) shares with this file
-  window.minnaApp = { pagesFor: pagesFor, loadAssist: loadAssist, norm: norm, esc: esc, loadIndex: loadIndex, loadSyn: loadSyn, loadVocab: loadVocab, searchAll: searchAll, cardHtml: cardHtml, loadRules: loadRules, refuseW: refuseW, sendWish: sendWish, saveWish: saveWish, paintFavs: paintFavs };
+  window.minnaApp = { safeLocal: safeLocal, safeSlug: safeSlug, pagesFor: pagesFor, loadAssist: loadAssist, norm: norm, esc: esc, loadIndex: loadIndex, loadSyn: loadSyn, loadVocab: loadVocab, searchAll: searchAll, cardHtml: cardHtml, loadRules: loadRules, refuseW: refuseW, sendWish: sendWish, saveWish: saveWish, paintFavs: paintFavs };
   function initAssist() {
     var b = document.getElementById("assist-open"); if (!b) return;
     b.addEventListener("click", function () {

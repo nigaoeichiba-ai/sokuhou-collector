@@ -2,7 +2,7 @@
 
     python -m sites.minna.wishes check "<a wish>"          # ok / why it is refused (the same rules as the request box and api/q.php)
     python -m sites.minna.wishes read [--mark] [--all]      # decrypt the new requests (data/inbox/minna-*.p7m) and add them to the ledger
-    python -m sites.minna.wishes list [--status new]        # the ledger, newest last
+    python -m sites.minna.wishes list [--status new] [--show]   # the ledger, newest last (the wording only with --show)
     python -m sites.minna.wishes decide ID accepted|declined|merged [--note TEXT]
     python -m sites.minna.wishes spec ID --title JA --en ENGLISH [--slug S] [--touch T] [--genre G] [--subject JA]   # write specs/req-<date>-<slug>.json (6 variations, drawn first)
     python -m sites.minna.wishes published ID SERIES        # the series is live: the ledger and the board say so
@@ -48,31 +48,41 @@ def load_rules(path: Path = RULES_FILE) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def flat(text: str) -> str:
-    """NFKC, lower case, katakana -> hiragana, no spaces: the form in which a wish is compared with the rules."""
+SEPARATORS = "ー・･·_-‐‑–—.,、。'\"!！?？:：;；/|"
+_SEP = re.compile(r"[\s\u200b-\u200d\ufeff" + re.escape(SEPARATORS) + "]+")
+_ZW = re.compile(r"[\s\u200b-\u200d\ufeff]+")
+
+
+def flat_keep(text: str) -> str:
+    """NFKC, lower case, katakana -> hiragana, spaces and zero-width characters removed (hyphens and dots stay): the form the personal-data patterns run on."""
     t = unicodedata.normalize("NFKC", text or "").lower()
     t = "".join(chr(ord(c) - 0x60) if "ァ" <= c <= "ヶ" else c for c in t)
-    return re.sub(r"\s+", "", t)
+    return _ZW.sub("", t)
+
+
+def flat(text: str) -> str:
+    """flat_keep, then long-vowel marks and punctuation removed too: the form in which a wish is compared with the terms (ポ・ケ・モン and ドラえもーん are caught)."""
+    return _SEP.sub("", flat_keep(text))
 
 
 def clean(text: str) -> str:
     return re.sub(r"[\x00-\x1f\x7f<>\"'&\\]", "", text or "").strip()
 
 
-def refusal(text: str, rules: dict | None = None) -> tuple[str, str]:
-    """('', '') when the wish may be drawn, else (reason key, the sentence shown to the visitor)."""
+def refusal(text: str, rules: dict | None = None, check_length: bool = True) -> tuple[str, str]:
+    """('', '') when the wish may be drawn, else (reason key, the sentence shown to the visitor).  A long letter is judged without the length limit."""
     rules = rules or load_rules()
     w = clean(text)
-    if not rules["min_length"] <= len(w) <= rules["max_length"]:
+    if check_length and not rules["min_length"] <= len(w) <= rules["max_length"]:
         return "length", f"{rules['min_length']}〜{rules['max_length']}文字で、書いてください"
     if w.startswith(TEST_PREFIX):
         return "test", ""
-    f = flat(w)
+    f, fk = flat(w), flat_keep(w)
     for key in KINDS_BLOCK:
         group = rules[key]
         if any(flat(t) and flat(t) in f for t in group["terms"]):
             return key, group["reason"]
-    if any(re.search(p, f, re.I) for p in rules["personal"]["regex"]):
+    if any(re.search(p, fk, re.I) for p in rules["personal"]["regex"]):
         return "personal", rules["personal"]["reason"]
     return "", ""
 
@@ -125,7 +135,7 @@ def to_row(rec: dict, rules: dict | None = None) -> dict | None:
     else:
         return None
     wish = clean(str(rec.get("message", "")))[:2000 if src == "letter" else 200]
-    why, _ = refusal(wish[:200], rules) if src != "letter" else ("", "")
+    why, _ = refusal(wish, rules, check_length=(src != "letter"))          # a long letter is judged on all of its text, without the length limit
     row = {"id": f"R{str(rec.get('id', ''))[:8]}", "at": rec.get("at", ""), "wish": wish, "use": extra.get("u", ""), "touch": extra.get("t", ""), "src": src,
            "status": "test" if why == "test" else ("declined" if why else "new"), "auto": why, "note": "", "series": "", "title": "", "public": False}
     if src == "plus" and row["status"] == "new":      # "私もほしい" on a board row: a vote for a title we wrote, nothing to judge
@@ -163,7 +173,7 @@ def cmd_read(a: argparse.Namespace) -> int:
     print(f"{len(added)} new request(s) from {len(new_files)} file(s); ledger has {len(ledger)}")
     for r in added:
         flag = f" [auto: {r['auto']}]" if r["auto"] else ""
-        print(f"  {r['id']} {r['src']:6} {r['use'] or '-':8} {r['touch'] or '-':8} {r['wish'][:70]}{flag}")
+        print(f"  {r['id']} {r['src']:6} {r['use'] or '-':8} {r['touch'] or '-':8} len={len(r['wish'])}{flag}")       # the wording is not printed here: `list --show` does that, on purpose
     return 0
 
 
@@ -171,7 +181,8 @@ def cmd_list(a: argparse.Namespace) -> int:
     for r in read_ledger():
         if a.status and r["status"] != a.status:
             continue
-        print(f"{r['id']} {r['at'][:10]} {r['status']:9} {r['src']:6} {r['wish'][:60]}  {('-> ' + r['series']) if r['series'] else ''}")
+        wording = r["wish"][:60] if a.show else f"len={len(r['wish'])}"
+        print(f"{r['id']} {r['at'][:10]} {r['status']:9} {r['src']:6} {wording}  {('-> ' + r['series']) if r['series'] else ''}")
     return 0
 
 
@@ -340,7 +351,7 @@ def main(argv=None) -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     c = sub.add_parser("check"); c.add_argument("wish")
     r = sub.add_parser("read"); r.add_argument("--mark", action="store_true"); r.add_argument("--all", action="store_true")
-    ls = sub.add_parser("list"); ls.add_argument("--status", default="")
+    ls = sub.add_parser("list"); ls.add_argument("--status", default=""); ls.add_argument("--show", action="store_true", help="print the visitors' wording (needed to judge; never copy it into the repository, a log or a report)")
     d = sub.add_parser("decide"); d.add_argument("id"); d.add_argument("decision", choices=["accepted", "declined", "merged"]); d.add_argument("--note", default=""); d.add_argument("--title", default="", help="with accepted: the general title shown on the board")
     s = sub.add_parser("spec"); s.add_argument("id"); s.add_argument("--title", required=True); s.add_argument("--en", required=True); s.add_argument("--slug", default="")
     s.add_argument("--touch", default="kawaii"); s.add_argument("--genre", default="animals"); s.add_argument("--subject", default="")

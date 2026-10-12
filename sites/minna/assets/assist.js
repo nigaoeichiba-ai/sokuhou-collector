@@ -23,7 +23,7 @@
   var NOTHING_LEFT = /(したい|します|お願い|おねがい|できますか|できる|ですか|です|ます|ほしい|欲しい|使える|使って|いいですか|大丈夫|ですか|を|が|は|の|に|で|と|か|\s|[?？。、!！])/g;
   var BLOCKED = "既存のキャラクター・商品名・実在の人物・特定の作家の絵は、扱っていません(リクエストも、お受けできません)。オリジナルの動物や人物のイラストなら、さがせます。";
   function miniCards(rows, n) {
-    return '<div class="as-cards">' + rows.slice(0, n).map(function (r) {
+    return '<div class="as-cards">' + rows.filter(function (r) { return A.safeSlug(r[0]); }).slice(0, n).map(function (r) {
       return '<a class="as-card" href="/illust/' + r[0] + '/"><span class="checker"><img src="/thumbs/' + r[0] + '.webp" alt="" width="64" height="64" loading="lazy"></span><small>' + esc(r[1]) + "</small></a>";
     }).join("") + "</div>";
   }
@@ -89,9 +89,9 @@
   function answer(text, d, idx, vocab) {
     {
       var f = norm(text), ans = faqFor(f, d.faq), words = norm(strip(text)).split(/\s+/).filter(Boolean);
-      if (ans) say("bot", esc(ans.a) + (ans.u ? '<br><a href="' + esc(ans.u) + '">' + esc(ans.l || "くわしく") + "</a>" : ""));
+      if (ans) say("bot", esc(ans.a) + (ans.u ? '<br><a href="' + esc(A.safeLocal(ans.u)) + '">' + esc(ans.l || "くわしく") + "</a>" : ""));
       var pg = A.pagesFor(words, idx, d.pages);
-      if (pg.length) say("bot", "こんなページも、あります。<ul class=\"as-links\">" + pg.map(function (p) { return '<li><a href="' + esc(p.u) + '">' + esc(p.n) + "</a><small>" + esc(p.t || "") + "</small></li>"; }).join("") + "</ul>");
+      if (pg.length) say("bot", "こんなページも、あります。<ul class=\"as-links\">" + pg.map(function (p) { return '<li><a href="' + esc(A.safeLocal(p.u)) + '">' + esc(p.n) + "</a><small>" + esc(p.t || "") + "</small></li>"; }).join("") + "</ul>");
       if (ans) { // an answer was given: look for pictures only if the rest of the sentence names something the library knows
         var left = norm(strip(text)).replace(new RegExp(ans.k.map(function (k) { return norm(k).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }).join("|"), "g"), "").replace(NOTHING_LEFT, "");
         if (!splitPhrase(left, vocab).length) return;
@@ -103,7 +103,7 @@
     return Object.keys(vocab).filter(function (t) { return s.indexOf(t) >= 0; });
   }
   function build() {
-    panel = el("section", "assist"); panel.id = "assist-panel"; panel.setAttribute("role", "dialog"); panel.setAttribute("aria-label", "お手伝い"); panel.hidden = true;
+    panel = el("section", "assist"); panel.id = "assist-panel"; panel.setAttribute("role", "dialog"); panel.setAttribute("aria-modal", "true"); panel.setAttribute("aria-label", "お手伝い"); panel.hidden = true;
     panel.innerHTML = '<header><b>お手伝い</b><button type="button" class="as-x" aria-label="とじる">×</button></header><div class="as-log" role="log" aria-live="polite"></div>' +
       '<form class="as-form"><input type="text" name="m" maxlength="80" placeholder="さがしたいものを、書いてください" autocomplete="off" aria-label="メッセージ"><button class="btn" type="submit">送る</button></form>' +
       '<p class="as-note">ここに書いた言葉は、この端末の中だけで使われます。リクエストを送るボタンを押したときだけ、その言葉を送ります。</p>';
@@ -111,7 +111,16 @@
     log = $(".as-log", panel); input = $("input", panel);
     $(".as-x", panel).addEventListener("click", close);
     $(".as-form", panel).addEventListener("submit", function (e) { e.preventDefault(); var v = input.value; input.value = ""; handle(v); });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !panel.hidden) close(); });
+    document.addEventListener("keydown", function (e) {
+      if (panel.hidden) return;
+      if (e.key === "Escape") { close(); return; }
+      if (e.key !== "Tab") return;                                   // Tab stays inside the panel while it is open
+      var f = Array.prototype.slice.call(panel.querySelectorAll("button:not([disabled]), input, a[href]")).filter(function (x) { return x.offsetParent !== null; });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && (document.activeElement === first || !panel.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && (document.activeElement === last || !panel.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+    });
     say("bot", "こんにちは。さがしている絵や、知りたいことを、教えてください。");
     loadData().then(function (d) {
       chips((d.chips || []).map(function (c) { return [c, function () { handle(c); }]; }));
