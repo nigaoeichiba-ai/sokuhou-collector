@@ -53,9 +53,16 @@ OCCASION_WORDS = ("誕生日", "母の日", "父の日", "敬老の日", "クリ
                   "お中元", "御中元", "ハロウィン", "お年賀", "入学祝い", "卒業祝い", "就職祝い", "新築祝い", "長寿祝い", "還暦祝い", "引越し祝い", "快気祝い", "お見舞い")
 
 
+# Occasions held in the cold season, and goods that are only for summer
+WINTER_OCCASIONS = ("oseibo", "year-end-gathering", "christmas", "new-year")
+SUMMER_ONLY = ("夏用", "甚平", "甚兵衛", "浴衣", "水着", "うちわ", "団扇", "かき氷", "夏向け", "夏物")
+
+
 def fits_occasion(name: str, occasion: str, occasion_name: str = "") -> bool:
     """False when the title is made for a different, narrower occasion than the page's.  A title that names this page's own occasion, or that
     lists three or more occasions (keyword stuffing: a generic gift), is fine; one that names only another narrow occasion is not."""
+    if occasion in WINTER_OCCASIONS and any(w in name for w in SUMMER_ONLY):
+        return False                                # a summer garment on a year-end page (the grandfather's 甚平, weekly review 2026-10-12)
     if occasion_name and occasion_name in name:
         return True
     own = OCCASION_ONLY.get(occasion, ())
