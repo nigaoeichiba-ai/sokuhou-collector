@@ -223,7 +223,7 @@ ul.warn li::before { content: "!"; position: absolute; left: .85em; top: .85em; 
 .top-picks .items { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
 
 /* gift pages: proposals, filters */
-.proposals, .browse { margin-top: 60px; }
+.proposals, .browse, .rest { margin-top: 60px; }
 .sec-title { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 18px; }
 .sec-title h2 { margin: 0; font-size: clamp(1.2rem, 3vw, 1.55rem); }
 .sec-lead { margin: -4px 0 14px; color: var(--muted); font-size: .92rem; }

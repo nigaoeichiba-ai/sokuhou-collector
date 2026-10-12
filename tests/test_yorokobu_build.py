@@ -7,6 +7,7 @@ from pathlib import Path
 
 from sites.yorokobu import build, content
 from sokuhou.sitekit import BuildError
+from tests.yorokobu_data import rich_boyfriend
 
 FIX = Path(__file__).parent / "fixtures" / "yorokobu"
 CFG = {"site_url": "https://yorokobu-present.com", "site_name": "よろこぶプレゼント", "operator_name": "テスト運営",
@@ -23,6 +24,8 @@ class BuildTest(unittest.TestCase):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name) / "site"
         cls.files = build.render_site(cls.c, cls.items, CFG, cls.out, release=True, today=TODAY)
+        cls.rich_out = Path(cls.tmp.name) / "rich"           # the same with a boyfriend page that has more products than fit into its first four
+        build.render_site(cls.c, rich_boyfriend(cls.items), CFG, cls.rich_out, release=True, today=TODAY)
 
     @classmethod
     def tearDownClass(cls):
@@ -70,7 +73,7 @@ class BuildTest(unittest.TestCase):
         self.assertIn("Supported by Rakuten Developers", self.read("index.html"))
 
     def test_the_sommelier_proposes_kinds_of_gift_with_a_reason_and_a_search_link(self):
-        html = self.read("gift/birthday-boyfriend/index.html")
+        html = (self.rich_out / "gift/birthday-boyfriend/index.html").read_text(encoding="utf-8")
         self.assertIn("おすすめの贈り方", html)
         for text in ("毎日使う財布", "毎日使う小物は、使うたびに思い出してもらえます。"):
             self.assertIn(text, html)
@@ -79,11 +82,11 @@ class BuildTest(unittest.TestCase):
         self.assertIn("search.rakuten.co.jp%2Fsearch%2Fmall%2F", html)
 
     def test_filters_sorting_and_the_concierge_are_on_the_page(self):
-        html = self.read("gift/birthday-boyfriend/index.html")
+        html = self.read("gift/birthday-mother/index.html")        # the mother page keeps one product in the list (the three of the boyfriend page all fit into the first four)
         for needle in ('id="browse"', "data-sort", "data-ship", 'data-filter="tier"', 'data-filter="type"', 'class="kw-form"', 'data-trk="yorokobu"'):
             self.assertIn(needle, html)
         self.assertIn('data-tier="under3000"', html)
-        self.assertIn('data-tier="3000-5000"', html)
+        self.assertLess(html.index('id="browse"'), html.index('class="items grid-all"'))      # the filters stand before the cards they work on
 
     def test_products_for_the_wrong_person_are_not_shown(self):
         mother = self.read("gift/birthday-mother/index.html")
@@ -307,9 +310,8 @@ class ThemeTest(unittest.TestCase):
         self.assertIn("気持ちから選ぶ", hub)
         page = (self.out / "theme" / "beauty" / "index.html").read_text(encoding="utf-8")
         self.assertIn("美容に興味がある人へのプレゼント", page)
-        self.assertIn("おすすめの贈り方", page)
+        self.assertIn("まず見たい", page)             # the three products of the fixture all fit into the first four, so there is no card of a proposal
         self.assertIn('class="item"', page)
-        self.assertIn("楽天市場で「フェイスローラー ギフト」をもっと見る", page)
         sitemap = (self.out / "sitemap.xml").read_text(encoding="utf-8")
         self.assertIn("/theme/thanks-daily/", sitemap)
 

@@ -7657,25 +7657,8 @@
    ]
   },
   {
-   "picks": [
-    {
-     "code": "ohkini:10016060",
-     "note": "綿麻の甚平上下セット"
-    },
-    {
-     "code": "kuwanoshinken:10000621",
-     "note": "久留米織の甚平ルームウェア"
-    },
-    {
-     "code": "lohaslife:10002392",
-     "note": "しじら織りの甚平上下セット"
-    }
-   ],
-   "backups": [
-    "hashbaby:10000338",
-    "kimonomachi:10066733",
-    "kuwanoshinken:10000531"
-   ]
+   "picks": [],
+   "backups": []
   },
   {
    "picks": [],

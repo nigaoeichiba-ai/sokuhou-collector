@@ -56,16 +56,20 @@
   function initBrowse() {
     var sec = $("#browse");
     if (!sec) return;
-    var list = $(".grid-all", sec), items = $$("li.item", list), count = $(".count", sec), empty = $(".empty", sec);
-    if (!list) return;
+    // the filters work on the cards of the proposals and the list of the rest (a product stands in one of them; the first four are left as they are)
+    var page = $("main") || document;
+    var list = $(".grid-all", page), count = $(".count", sec), empty = $(".empty", sec);
+    var all = $$(".proposals li.item, .grid-all li.item", page);
+    var items = list ? $$("li.item", list) : [];
     var state = { tier: "", type: "", ship: false, gift: false, sort: "rank" };
     items.forEach(function (el, i) { el.setAttribute("data-order", i); });
     function num(el, k) { return Number(el.getAttribute("data-" + k)); }
+    function fits(el) {
+      return (!state.tier || el.getAttribute("data-tier") === state.tier) && (!state.type || el.getAttribute("data-type") === state.type) &&
+        (!state.ship || el.getAttribute("data-ship") === "1") && (!state.gift || el.getAttribute("data-gift") === "1");
+    }
     function apply() {
-      var shown = items.filter(function (el) {
-        return (!state.tier || el.getAttribute("data-tier") === state.tier) && (!state.type || el.getAttribute("data-type") === state.type) &&
-          (!state.ship || el.getAttribute("data-ship") === "1") && (!state.gift || el.getAttribute("data-gift") === "1");
-      });
+      all.forEach(function (el) { el.hidden = !fits(el); });
       var key = {
         "rank": function (a, b) { return num(a, "order") - num(b, "order"); },
         "reviews": function (a, b) { return num(b, "reviews") - num(a, "reviews"); },
@@ -73,10 +77,16 @@
         "price-asc": function (a, b) { return num(a, "price") - num(b, "price"); },
         "price-desc": function (a, b) { return num(b, "price") - num(a, "price"); }
       }[state.sort];
-      items.forEach(function (el) { el.hidden = shown.indexOf(el) < 0; });
-      shown.sort(key).forEach(function (el) { list.appendChild(el); });
-      count.textContent = shown.length + "点を表示中";
-      empty.hidden = shown.length > 0;
+      if (list) items.slice().sort(key).forEach(function (el) { list.appendChild(el); });
+      // a card of a proposal, or a whole block, with nothing left to show is hidden
+      $$(".idea", page).forEach(function (a) { a.hidden = !$$("li.item", a).some(function (el) { return !el.hidden; }); });
+      var pr = $(".proposals", page);
+      if (pr) pr.hidden = !$$("li.item", pr).some(function (el) { return !el.hidden; });
+      var rs = $(".rest", page);
+      if (rs) rs.hidden = !items.some(function (el) { return !el.hidden; });
+      var n = all.filter(function (el) { return !el.hidden; }).length;
+      count.textContent = n + "点を表示中";
+      empty.hidden = n > 0;
     }
     $$(".chipset", sec).forEach(function (set) {
       var name = set.getAttribute("data-filter");
@@ -88,7 +98,8 @@
         apply();
       });
     });
-    $("[data-sort]", sec).addEventListener("change", function (e) { state.sort = e.target.value; apply(); });
+    var sortSel = $("[data-sort]", page);
+    if (sortSel) sortSel.addEventListener("change", function (e) { state.sort = e.target.value; apply(); });
     $("[data-ship]", sec).addEventListener("change", function (e) { state.ship = e.target.checked; apply(); });
     $("[data-gift]", sec).addEventListener("change", function (e) { state.gift = e.target.checked; apply(); });
     var m = /[?&]b=([^&#]+)/.exec(location.search); // preset from ?b=<budget>
