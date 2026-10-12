@@ -212,6 +212,143 @@ def joetsu_reader(page_url: str = JOETSU_PAGE):
     return read
 
 
+# ---------------------------------------------------------------- round 2: more municipalities (2026-10-13)
+
+TSURUOKA_PAGE = "https://www.city.tsuruoka.lg.jp/anzen/kuma/kuma08.html"
+NANYO_PAGE = "http://www.city.nanyo.yamagata.jp/saigai/5126"
+SHIRATAKA_PAGE = "https://www.town.shirataka.lg.jp/2403.htm"
+SANJO_PAGE = "https://www.city.sanjo.niigata.jp/soshiki/keizaibu/nourinka/kumanikannsurukoto/2391.html"
+MINANO_PAGE = "https://www.town.minano.saitama.jp/section/kankou/12181/"
+HANNO_PAGE = "https://www.city.hanno.lg.jp/kurashi_seikatsukankyo/bosai_saigaiengo_kikikanri/kumanikannsurujoho/8564.html"
+
+
+def table_rows(html: str) -> list[list[str]]:
+    """Every table row of the page as a list of cell texts (header cells included)."""
+    out = []
+    for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", html, re.S):
+        cells = [clean(c) for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", tr, re.S)]
+        if cells:
+            out.append(cells)
+    return out
+
+
+def _month_day(text: str):
+    m = re.fullmatch(r"(\d{1,2})月(\d{1,2})日", text.strip())
+    return (int(m.group(1)), int(m.group(2))) if m else None
+
+
+def parse_tsuruoka(html: str) -> list[dict]:
+    """Tsuruoka City: monthly tables (No., date, time, place [PDF link], area, status)."""
+    fy = fy_year_from_heading(html)
+    out = []
+    for c in table_rows(html):
+        if len(c) < 6 or not c[0].isdigit() or not _month_day(c[1]):
+            continue
+        month, day = _month_day(c[1])
+        place = re.sub(r"[（(]PDF[：:][^）)]*[）)]", "", c[3]).strip()
+        out.append(_record(day_in_fy(fy, month, day), "鶴岡市", place, kind_of(c[5]), kumalib.fullwidth_to_int(c[5])))
+    if not out:
+        raise CorroboratedError("Tsuruoka: no rows")
+    return out
+
+
+def parse_nanyo(html: str) -> list[dict]:
+    """Nanyo City: one table for the calendar year '令和8年' (No., date, time, place, size, sign)."""
+    years = [int(x) for x in re.findall(r"令和\s*(\d+)\s*年(?!度)", unicodedata.normalize("NFKC", html))]
+    if not years:
+        raise CorroboratedError("Nanyo: no '令和N年' on the page")
+    year = ERA_REIWA_OFFSET + max(years)
+    out = []
+    for c in table_rows(html):
+        if len(c) < 4 or not c[0].isdigit() or not _month_day(c[1]):
+            continue
+        month, day = _month_day(c[1])
+        try:
+            out.append(_record(date(year, month, day), "南陽市", c[3], "目撃", None))
+        except ValueError as e:
+            raise CorroboratedError(f"Nanyo: impossible date {c[1]}") from e
+    if not out:
+        raise CorroboratedError("Nanyo: no rows")
+    return out
+
+
+def parse_shirataka(html: str) -> list[dict]:
+    """Shirataka Town: one table (No., 'M/D', time, district, content, map link) under '令和8年度'."""
+    fy = fy_year_from_heading(html)
+    out = []
+    for c in table_rows(html):
+        m = re.fullmatch(r"(\d{1,2})/(\d{1,2})", c[1]) if len(c) >= 5 else None
+        if not m or not c[0].isdigit():
+            continue
+        out.append(_record(day_in_fy(fy, int(m.group(1)), int(m.group(2))), "白鷹町", c[3], kind_of(c[4]), None))
+    if not out:
+        raise CorroboratedError("Shirataka: no rows")
+    return out
+
+
+def parse_sanjo(html: str) -> list[dict]:
+    """Sanjo City: three tables (No., '令和8年9月17日', place, time, number of bears, injury, class, status)."""
+    out = []
+    for c in table_rows(html):
+        if len(c) < 7 or not c[0].replace(" ", "").isdigit():
+            continue
+        m = re.fullmatch(r"令和\s*(\d+)年\s*(\d+)月\s*(\d+)日", c[1])
+        if not m:
+            continue
+        out.append(_record(reiwa_day(int(m.group(1)), int(m.group(2)), int(m.group(3))), "三条市", c[2], kind_of(c[6]), kumalib.fullwidth_to_int(c[4] + "頭") if c[4].isdigit() else None))
+    if not out:
+        raise CorroboratedError("Sanjo: no rows")
+    return out
+
+
+def parse_hanno(html: str) -> list[dict]:
+    """Hanno City: tables (No., date and time, place, landmark); the page also lists neighbouring areas, which are not Hanno's."""
+    out = []
+    for c in table_rows(html):
+        if len(c) < 3 or not c[0].isdigit():
+            continue
+        m = re.match(r"令和\s*(\d+)年\s*(\d+)月\s*(\d+)日", c[1])
+        if not m or not c[2].startswith("飯能市"):
+            continue
+        out.append(_record(reiwa_day(int(m.group(1)), int(m.group(2)), int(m.group(3))), "飯能市", " ".join(c[2:]), "目撃", None))
+    if not out:
+        raise CorroboratedError("Hanno: no rows")
+    return out
+
+
+def parse_minano(html: str) -> list[dict]:
+    """Minano Town: areas ('金沢地内') as headings or bold lines, then '令和8年6月13日' with the place on the next line."""
+    out = []
+    area = None
+    after_date = None                      # the date waiting for its place line
+    lines = [clean(x) for x in re.split(r"<br\s*/?>|</p>|</h\d>|</li>|</div>", html)]
+    for line in lines:
+        if not line:
+            continue
+        m = re.fullmatch(r"令和\s*(\d+)年\s*(\d+)月\s*(\d+)日", line)
+        if m:
+            if after_date:                 # a date with no place line of its own
+                out.append(_record(after_date, "皆野町", area or "", "目撃", None))
+            after_date = reiwa_day(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+            continue
+        if after_date:
+            if len(line) <= 60:
+                out.append(_record(after_date, "皆野町", f"{area} {line}" if area else line, "目撃", None))
+            after_date = None
+            continue
+        if re.fullmatch(r"\S{1,8}地内", line):
+            area = line
+    if after_date:
+        out.append(_record(after_date, "皆野町", area or "", "目撃", None))
+    if not out:
+        raise CorroboratedError("Minano: no rows")
+    return out
+
+
+PARSERS_ROUND2 = {"tsuruoka": (TSURUOKA_PAGE, parse_tsuruoka), "nanyo": (NANYO_PAGE, parse_nanyo), "shirataka": (SHIRATAKA_PAGE, parse_shirataka),
+                  "sanjo": (SANJO_PAGE, parse_sanjo), "minano": (MINANO_PAGE, parse_minano), "hanno": (HANNO_PAGE, parse_hanno)}
+
+
 # ---------------------------------------------------------------- the match
 
 def confirm(prefecture_rows: list[tuple[date | None, object]], records: list[dict], norm_city=lambda c: str(c)) -> list[dict]:

@@ -1,7 +1,7 @@
 """新潟県(クマの出没情報・件数だけを保存する)。
 
 新潟県は、データの再利用の許可を明示していない(県サイトの著作権の案内は、無断の転載・複製を認めていない)。だから、市町村・日付・件数だけを取り出して、月別・市町村別に集計し、
-場所・座標・自由記述は、取得も保存もしない(ただし2026-10-13のオーナーの方針で、上越市が自分のページ(PDF)にも載せている目撃は、2つの公開情報が一致したものとして、出典を示さずに場所つきで保存する。`corroborated.py`)(`outFields` は日付と市町村の列だけ、`returnGeometry=false`)。
+場所・座標・自由記述は、取得も保存もしない(ただし2026-10-13のオーナーの方針で、上越市(PDF)・三条市が自分のページにも載せている目撃は、2つの公開情報が一致したものとして、出典を示さずに場所つきで保存する。`corroborated.py`)(`outFields` は日付と市町村の列だけ、`returnGeometry=false`)。
 取得元: 新潟県の公式ページが埋め込む ArcGIS の公開 Web マップ(下の WEBMAP_ID)が指す、FeatureServer のレイヤー。
 サービス名は毎年変わるので、レイヤーの住所は固定せず、Web マップから探す(1つに決まらなければ、保存せずに例外にする)。
 """
@@ -35,8 +35,8 @@ def collect(fetch=None, sleep=None, now=None) -> dict:
     nap = sleep or time.sleep
 
     def confirm(result, rows, today, fetch_fn):
-        """Joetsu City's own list (a PDF behind its page) is read too; the sightings the prefecture also lists are stored with their place."""
-        return corroborated.attach(result, rows, [corroborated.joetsu_reader()], fetch_fn, today, lambda: nap(arcgis_counts.PAUSE))
+        """Joetsu City's list (a PDF behind its page) and Sanjo City's page are read too; the sightings the prefecture also lists are stored with their place."""
+        return corroborated.attach(result, rows, [corroborated.joetsu_reader(), corroborated.html_reader(corroborated.SANJO_PAGE, corroborated.parse_sanjo)], fetch_fn, today, lambda: nap(arcgis_counts.PAUSE))
 
     return arcgis_counts.collect_counts(
         source="niigata", prefecture="新潟県", webmap_id=WEBMAP_ID, layer_pattern=LAYER_PATTERN, date_field=DATE_FIELD, city_field=CITY_FIELD,

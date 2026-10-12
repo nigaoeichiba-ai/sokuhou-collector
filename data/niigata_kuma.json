@@ -16,11 +16,32 @@
    "place": "三和区北代地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-09-28",
+   "place": "下保内"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "目撃",
    "observed_at": "2026-09-27",
    "place": "吉川区稲古地内"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-09-17",
+   "place": "下大浦"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-15",
+   "place": "曲谷"
   },
   {
    "city": "上越市",
@@ -128,6 +149,13 @@
    "place": "直江津区大字虫生岩戸地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-18",
+   "place": "鹿峠"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "目撃",
@@ -140,6 +168,20 @@
    "kind": "目撃",
    "observed_at": "2026-07-16",
    "place": "板倉区菰立地内"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-13",
+   "place": "中飯田"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-12",
+   "place": "滝谷"
   },
   {
    "city": "上越市",
@@ -156,6 +198,13 @@
    "place": "高士区大字東京田地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-08",
+   "place": "福岡"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "目撃",
@@ -170,11 +219,25 @@
    "place": "直江津区大字虫生岩戸地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-04",
+   "place": "大平"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "目撃",
    "observed_at": "2026-07-04",
    "place": "中郷区藤沢地内"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "荻堀上"
   },
   {
    "city": "上越市",
@@ -198,11 +261,32 @@
    "place": "高士区大字下曽根地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "花渕"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "楢山"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "その他",
    "observed_at": "2026-06-29",
    "place": "吉川区山方地内"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "新屋"
   },
   {
    "city": "上越市",
@@ -217,6 +301,13 @@
    "kind": "目撃",
    "observed_at": "2026-06-27",
    "place": "直江津区大字五智国分地内"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-26",
+   "place": "荻堀上"
   },
   {
    "city": "上越市",
@@ -247,6 +338,13 @@
    "place": "浦川原区釜淵地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-23",
+   "place": "楢山"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "目撃",
@@ -259,6 +357,13 @@
    "kind": "目撃",
    "observed_at": "2026-06-22",
    "place": "浦川原区長走地内"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-06-21",
+   "place": "篭場"
   },
   {
    "city": "上越市",
@@ -275,11 +380,32 @@
    "place": "浦川原区小谷島地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-21",
+   "place": "上飯田"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "北五百川"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "目撃",
    "observed_at": "2026-06-18",
    "place": "中郷区藤沢地内"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "大谷地"
   },
   {
    "city": "上越市",
@@ -324,6 +450,13 @@
    "place": "谷浜・桑取区大字北谷地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "上谷地"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "目撃",
@@ -331,11 +464,25 @@
    "place": "金谷区大字滝寺地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-06-11",
+   "place": "小長沢"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "目撃",
    "observed_at": "2026-06-11",
    "place": "安塚区須川地内"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "栗山"
   },
   {
    "city": "上越市",
@@ -357,6 +504,13 @@
    "kind": "目撃",
    "observed_at": "2026-06-09",
    "place": "名立区丸田地内"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-06-08",
+   "place": "高安寺"
   },
   {
    "city": "上越市",
@@ -450,6 +604,13 @@
    "place": "吉川区山直海地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-28",
+   "place": "小滝"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "目撃",
@@ -478,6 +639,13 @@
    "place": "金谷区大字向橋地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "小滝"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "目撃",
@@ -497,6 +665,13 @@
    "kind": "目撃",
    "observed_at": "2026-05-23",
    "place": "板倉区田井地内"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "新屋"
   },
   {
    "city": "上越市",
@@ -618,6 +793,13 @@
    "place": "吉川区東寺地内"
   },
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-14",
+   "place": "月岡"
+  },
+  {
    "city": "上越市",
    "count": 1,
    "kind": "目撃",
@@ -630,13 +812,28 @@
    "kind": "目撃",
    "observed_at": "2026-04-11",
    "place": "清里区弥生地内"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-04-09",
+   "place": "上飯田"
+  },
+  {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-09",
+   "place": "上保内"
   }
  ],
  "corroborated_on": {
+  "三条市": "2026-10-13",
   "上越市": "2026-10-13"
  },
  "credit": "出典: 新潟県「にいがたクマ出没マップ」(https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、新潟県のページでご確認ください)",
- "fetched_at": "2026-10-13T05:44:20.402362+09:00",
+ "fetched_at": "2026-10-13T05:50:03.020498+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
