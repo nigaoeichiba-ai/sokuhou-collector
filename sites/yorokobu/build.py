@@ -498,7 +498,9 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
     shown_ideas: set[int] = set()
     cards_html = ""
     for i, idea in enumerate(ideas):
-        mine = [it for it in idea["items"] if it["code"] not in used][:4]
+        # the products whose idea word stands near the front of the title come first; one that only lists the word far behind (keyword stuffing) comes after them
+        fresh = [it for it in idea["items"] if it["code"] not in used]
+        mine = sorted(fresh, key=lambda it: not relevance.fits_head(it["name"], idea.get("must")))[:4]
         if len(mine) < MIN_IDEA_ITEMS:
             continue
         shown_ideas.add(i)
