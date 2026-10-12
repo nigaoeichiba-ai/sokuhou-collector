@@ -380,5 +380,28 @@ class Votes(unittest.TestCase):
         self.assertIn("3人が、ほしいと言いました", html)
 
 
+class Pickup(unittest.TestCase):
+    def test_files_are_found_on_origin_even_when_the_working_folder_was_not_pulled(self):
+        names = ["data/inbox/minna-req-20261012-0232.p7m", "data/inbox/yorokobu-20261009-2256.p7m", "data/inbox/state.json", "data/inbox/minna-20261008-0355.p7m"]
+        out = chr(10).join(names).encode("utf-8")
+        with mock.patch.object(wishes.subprocess, "run", side_effect=[mock.Mock(stdout=b""), mock.Mock(stdout=out)]):
+            self.assertEqual(wishes.remote_inbox_names(), ["minna-20261008-0355.p7m", "minna-req-20261012-0232.p7m"])
+
+    def test_a_failing_git_does_not_stop_the_reading(self):
+        with mock.patch.object(wishes.subprocess, "run", side_effect=OSError("no git")):
+            self.assertEqual(wishes.remote_inbox_names(), [])
+
+    def test_a_file_missing_locally_is_read_from_origin(self):
+        calls = []
+
+        def fake_decrypt(path, key=None):
+            calls.append(Path(path).name)
+            return [{"id": "zzzz9999", "at": "2026-10-12T09:00:00+09:00", "site": "minna", "kind": "request", "message": "ひつじ", "email": "", "page": "q:u=;t=;s=form"}]
+        with mock.patch.object(wishes.subprocess, "run", return_value=mock.Mock(stdout=b"ciphertext")), mock.patch.object(wishes.inbox, "decrypt", side_effect=fake_decrypt):
+            recs = wishes.decrypt_named("minna-req-notlocal-0000.p7m")
+        self.assertEqual(calls, ["minna-req-notlocal-0000.p7m"])
+        self.assertEqual(recs[0]["id"], "zzzz9999")
+
+
 if __name__ == "__main__":
     unittest.main()
