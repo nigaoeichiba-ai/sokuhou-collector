@@ -36,6 +36,18 @@ SPOKEN = [
 ]
 
 
+# (first day, how it repeats, today, the next turn): a weekly day keeps its weekday, a monthly day its day of the month (a short month takes its last day)
+REPEAT_NEXT = [
+    ("2026-10-05", "week", "2026-10-12", "2026-10-12"), ("2026-10-05", "week", "2026-10-13", "2026-10-19"), ("2026-10-12", "week", "2026-10-12", "2026-10-12"),
+    ("2026-12-01", "week", "2026-10-12", "2026-12-01"),                                           # not begun yet: its first day
+    ("2026-01-31", "month", "2026-02-10", "2026-02-28"), ("2026-01-31", "month", "2026-03-01", "2026-03-31"), ("2026-01-31", "month", "2026-04-01", "2026-04-30"),
+    ("2026-01-31", "month", "2028-02-10", "2028-02-29"), ("2026-01-25", "month", "2026-10-26", "2026-11-25"), ("2026-01-25", "month", "2026-10-25", "2026-10-25"),
+    ("2025-12-15", "month", "2026-01-01", "2026-01-15"),                                          # across a new year
+]
+REPEAT_ON = [("2026-01-31", "month", "2026-02-28", True), ("2026-01-31", "month", "2026-02-27", False), ("2026-10-05", "week", "2026-10-19", True),
+             ("2026-10-05", "week", "2026-10-18", False), ("2026-10-05", "week", "2026-09-28", False), ("2026-10-05", "month", "2026-09-05", False)]   # never before the first day
+
+
 PAGE = """<!doctype html><meta charset="utf-8"><script src="%(core)s"></script><script src="%(ics)s"></script><pre id="out">pending</pre><script src="%(app)s"></script>
 <script>
 (function () {
@@ -49,6 +61,9 @@ PAGE = """<!doctype html><meta charset="utf-8"><script src="%(core)s"></script><
   res.wareki = V.wareki.map(function (c) { return C.warekiToYear(c.era, c.n); });
   res.weeks = V.weeks.map(function (c) { return C.weeksText(c.n); });
   res.wdl = V.weekdays_left.map(function (c) { return C.weekdaysLeft(P(c.today), c.weekday); });
+  res.repNext = %(rep_next)s.map(function (c) { return C.iso(C.repNext(P(c[0]), c[1], P(c[2]))); });
+  res.repOn = %(rep_on)s.map(function (c) { return C.repOn(P(c[0]), c[1], P(c[2])); });
+  res.repTurns = [C.repTurns(P('2026-01-31'), 'month', P('2026-02-01'), P('2026-06-30')).map(C.iso), C.repTurns(P('2026-10-05'), 'week', P('2026-10-12'), P('2026-11-02')).map(C.iso), C.repTurns(P('2026-10-05'), 'week', P('2026-12-12'), P('2026-12-01')).map(C.iso)];
   res.bad = ['2026-02-30', '2026-13-01', 'abc', '2026-1-1'].map(function (s) { return P(s); });
   res.spoken = %(spoken)s.map(function (c) { return C.parseSpoken(c[0], c[1], [2026, 10, 9]); });
   res.ics = ICS.build([{ uid: 'e-abc', title: 'テスト, 試験; 申込\\n締切', date: [2026, 11, 20], alarm: 'morning' },
@@ -98,7 +113,7 @@ class CoreInChrome(unittest.TestCase):
     def setUpClass(cls):
         with tempfile.TemporaryDirectory() as td:
             page = Path(td) / "t.html"
-            page.write_text(PAGE % {"core": (ASSETS / "core.js").as_uri(), "ics": (ASSETS / "ics.js").as_uri(), "app": (ASSETS / "app.js").as_uri(), "vectors": json.dumps(VECTORS), "spoken": json.dumps([c[:2] for c in SPOKEN], ensure_ascii=False)}, encoding="utf-8")
+            page.write_text(PAGE % {"core": (ASSETS / "core.js").as_uri(), "ics": (ASSETS / "ics.js").as_uri(), "app": (ASSETS / "app.js").as_uri(), "vectors": json.dumps(VECTORS), "rep_next": json.dumps([c[:3] for c in REPEAT_NEXT]), "rep_on": json.dumps([c[:3] for c in REPEAT_ON]), "spoken": json.dumps([c[:2] for c in SPOKEN], ensure_ascii=False)}, encoding="utf-8")
             prof = Path(td) / "prof"
             r = subprocess.run([find_chrome(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-sandbox", f"--user-data-dir={prof}", "--virtual-time-budget=4000",
                                 "--dump-dom", page.as_uri() + "?today=2026-10-08"], capture_output=True, timeout=120)
@@ -128,6 +143,14 @@ class CoreInChrome(unittest.TestCase):
     def test_a_date_typed_or_dictated_as_words_is_read_the_way_it_was_said(self):
         for (text, p, want), got in zip(SPOKEN, self.res["spoken"]):
             self.assertEqual(got, want, f"{text!r} ({p})")
+
+    def test_a_weekly_or_monthly_day_finds_its_next_turn(self):
+        self.assertEqual(self.res["repNext"], [c[3] for c in REPEAT_NEXT])
+        self.assertEqual(self.res["repOn"], [c[3] for c in REPEAT_ON])
+        t = self.res["repTurns"]
+        self.assertEqual(t[0], ["2026-02-28", "2026-03-31", "2026-04-30", "2026-05-31", "2026-06-30"])
+        self.assertEqual(t[1], ["2026-10-12", "2026-10-19", "2026-10-26", "2026-11-02"])
+        self.assertEqual(t[2], [])
 
     def test_invalid_dates_are_rejected(self):
         self.assertEqual(self.res["bad"], [None, None, None, None])

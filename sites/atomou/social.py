@@ -3,7 +3,7 @@
     python -m sites.atomou.social [--today YYYY-MM-DD] [--out FILE] [--post]
 
 Every day it picks up to three posts from the verified, public catalogue (never a quiet day, never anything of a visitor):
-  - a count: a day that is 1, 7, 30 or 100 days away ("「共通テスト」まで、あと100日。出典つきの公式の日付です。"),
+  - a count: a day that is 1, 7, 30 or 100 days away ("「共通テスト」まで、あと100日。日数は「あと何日、もう何日」で数えています。"),
   - a field: the next dates of one field (a different one each day),
   - on Mondays: the main dates of the coming week.
 It writes them as Markdown (the workflow shows it on the run's summary page, so the owner can paste a post by hand) and, with --post, sends them to the accounts whose
@@ -53,8 +53,8 @@ def public_days(entries: list[dict], today: date) -> list[dict]:
 def count_post(e: dict, today: date, base: str) -> str:
     n = (date.fromisoformat(e["date"]) - today).days
     if n == 1:
-        return f"明日、{_md(e)}は「{_short(e['title'])}」です。\n出典つきの公式の日付です。\n{base}/e/{e['id']}/"
-    return f"「{_short(e['title'])}」まで、あと{n}日。{_md(e)}です。\n出典つきの公式の日付です。\n{base}/e/{e['id']}/"
+        return f"明日、{_md(e)}は「{_short(e['title'])}」です。\n日数は「あと何日、もう何日」で数えています。\n{base}/e/{e['id']}/"
+    return f"「{_short(e['title'])}」まで、あと{n}日。{_md(e)}です。\n日数は「あと何日、もう何日」で数えています。\n{base}/e/{e['id']}/"
 
 
 def field_post(subject: str, rows: list[dict], base: str) -> str:
@@ -97,7 +97,7 @@ def pick(entries: list[dict], today: date, base: str) -> list[dict]:
 SNS_CAPTION = {
     "instagram": "プロフィールのリンクから、カードを開けます。",
     "tiktok": "リンクはプロフィールに。",
-    "youtube": "くわしい日付と出典はこちら:",
+    "youtube": "くわしい日付はこちら:",
 }
 
 
@@ -128,7 +128,7 @@ def asset_kit(posts: list[dict], entries: list[dict], today: date, out_dir: Path
             written.append(f.name)
         cap = [f"## {e['title']}(あと{n}日)", ""]
         for name, tail in SNS_CAPTION.items():
-            cap += [f"**{name}**: 「{_short(e['title'], 30)}」まで、あと{n}日。{date_text}。出典つきの公式の日付です。{tail} {base}/e/{e['id']}/", ""]
+            cap += [f"**{name}**: 「{_short(e['title'], 30)}」まで、あと{n}日。{date_text}。日数は「あと何日、もう何日」で数えています。{tail} {base}/e/{e['id']}/", ""]
         (out_dir / f"{today.isoformat()}-{e['id']}-captions.md").write_text(chr(10).join(cap), encoding="utf-8")
         written.append(f"{today.isoformat()}-{e['id']}-captions.md")
     return written

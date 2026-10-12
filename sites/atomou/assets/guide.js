@@ -42,7 +42,7 @@
     home: ['「速報」は、公式の発表を数分おきに集めた見出しです。リンク先の公式ページで確かめてください。', '「さがす」に言葉を入れると、日付が出ます。例: 年賀状', 'カードの「予定に入れる」を押すと、カレンダーに入ります。', '好きな分野とお住まいの地域を選ぶと、ホームが自分向けになります。', '上のほうの「ホームをカスタマイズ」で、部品の表示・非表示や並べ替えができます。'],
     search: ['言葉を短く入れると、見つかりやすくなります。', 'ジャンルを選ぶと、その下に中分類・小分類が出て、さらに絞れます。', '見つからない言葉は、そのまま自分の日として記録できます。'],
     category: ['上の中分類を押すと絞れます。選ぶと、小分類(題材)が出ます。', 'カードの「予定に入れる」で、自分の予定帳に入ります。', 'ページの下から、このジャンルの日をカレンダーアプリで購読できます。'],
-    event: ['出典と確認日が載っています。公式の日付を、確かめてから使えます。', '「予定に入れる」で、自分の予定帳に入ります。', '共有のアイコンで、LINE・X・リンクのコピーなどで送れます。「カードにして送る」では、ひとこと付きのカードを作れます。', 'Google カレンダー・Outlook・ファイルで、ふだんのカレンダーアプリにも入れられます。'],
+    event: ['日付と、公式ページへのリンク(あれば)が載っています。カードの日付は間違っていることがあります。', '「予定に入れる」で、自分の予定帳に入ります。', '共有のアイコンで、LINE・X・リンクのコピーなどで送れます。「カードにして送る」では、ひとこと付きのカードを作れます。', 'Google カレンダー・Outlook・ファイルで、ふだんのカレンダーアプリにも入れられます。'],
     my: ['記録した日と、予定に入れた日が並びます。', '通知をオンにすると、予定の日にお知らせが届きます。', 'カレンダーのファイル(.ics)の取り込み・書き出しと、バックアップができます。', '機種変更の前に、バックアップを書き出してください。'],
     plan: ['メモは、書くと自動で保存されます。', '「やること」に、何日前までに何をするかを書きます。期限の日は、カレンダーとホームに出ます。', '「知らせ」で、あと何日の知らせを選べます。この日の知らせは、スイッチで止められます。', '友だちに送るときは、下の共有のアイコンを使います。'],
     add: ['まず、いつの日かを選びます。日付は、年月日・年と月だけ・年だけ、から選べます。', 'つぎに、どんな日かを選びます。文字で入力することもできます。', '「明日 19時 デート」のように、1行で入れることもできます。', '保存したあとで、メモとやることを足せます。'],
@@ -170,7 +170,14 @@
     btn = document.createElement('button');
     btn.type = 'button'; btn.className = 'guide-btn'; btn.setAttribute('aria-label', 'このページのヒントを見る'); btn.innerHTML = '<span aria-hidden="true">?</span> ヒント';
     btn.addEventListener('click', openHints);
-    document.body.appendChild(btn);   // wide screens: a button at the bottom right
+    document.body.appendChild(btn);   // the very narrow phones: a button that floats
+    var nav = document.querySelector('header.site nav');   // wide screens: in the menu at the top, where the eye already is (a button in the corner of a wide window was out of sight)
+    if (nav) {
+      var nb = document.createElement('button');
+      nb.type = 'button'; nb.className = 'guide-nav'; nb.setAttribute('aria-label', 'このページのヒントを見る'); nb.innerHTML = '<span aria-hidden="true">?</span> ヒント';
+      nb.addEventListener('click', openHints);
+      nav.appendChild(nb);
+    }
     var icons = document.querySelector('.hicons');   // phones: in the header, next to search (a floating button covered calendar days and card buttons)
     if (icons) {
       var hb = document.createElement('button');

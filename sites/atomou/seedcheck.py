@@ -2,6 +2,9 @@
 
     python sites/atomou/seedcheck.py --out seed_x.json cand_1.json cand_2.json [--past-days 400] [--ahead-days 730] [--no-render]
 
+Two kinds of ground (2026-10-12, owner): "basis": "official" (default) is one official page; "basis": "press" is two reports of different companies (source_url + source_url2, each with its
+quote), each page checked the same way.  Nothing about the source is shown on a card; both are kept in the data for the checking robot.
+
 A candidate is accepted only when: the schema is complete (and a 'day', 'month' or 'year' precision is named), the date is inside the window (the past too: the site counts
 "もう○日" as well as "あと○日"), the title is new, the source page can be fetched, and the page's text contains the quote (normalised) with the day in it (a month for
 precision 'month', a year for 'year').  A page that does not show the quote to a plain request (the date is put there by a script) is shown to Chrome and read again, as a person's
@@ -98,6 +101,15 @@ def render(url: str, chrome: str | None = None) -> str:
     return text_of(r.stdout.decode("utf-8", "replace")) if r.returncode == 0 else ""
 
 
+TWO_PART = {"co", "or", "ne", "go", "ac", "ed", "ad", "gr", "lg"}
+
+
+def reg_domain(url: str) -> str:
+    """The company's own domain (news.yahoo.co.jp and headlines.yahoo.co.jp are one company; asahi.com and yahoo.co.jp are two)."""
+    parts = (urlparse(url).hostname or "").lower().split(".")
+    return ".".join(parts[-3:] if len(parts) >= 3 and parts[-1] == "jp" and parts[-2] in TWO_PART else parts[-2:])
+
+
 def quote_has_date(c: dict, precision: str) -> bool:
     return text_has_date(c["date"], c["source_quote"], precision)
 
@@ -175,8 +187,12 @@ def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int 
             why = "duplicate"
         elif c.get("date_end") and not (c["date"] <= c["date_end"] <= ("2100-12-31" if c.get("keep") else hi)):
             why = "bad date_end"
-        elif any(re.search(r"[<>{}\\]", v) for k, v in c.items() if k not in ("source_url", "history_url") and isinstance(v, str)):
+        elif any(re.search(r"[<>{}\\]", v) for k, v in c.items() if k not in ("source_url", "source_url2", "official_url", "history_url") and isinstance(v, str)):
             why = "markup"
+        elif c.get("basis") == "press" and (not str(c.get("source_url2") or "").startswith("https://") or not c.get("source_quote2") or reg_domain(c["source_url2"]) == reg_domain(c["source_url"])):
+            why = "press needs a second report of another company (source_url2, source_quote2)"
+        elif c.get("basis") == "press" and c.get("estimated"):
+            why = "an estimate rests on an official page"
         elif c.get("estimated"):
             hist = [h for h in (c.get("history") or []) if re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(h))]
             if not (c.get("typical") and c.get("series") and hist):
@@ -191,7 +207,7 @@ def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int 
     pages: dict[str, str] = {}
     if page_of is None:
         byhost = defaultdict(list)
-        for u in sorted({c["source_url"] for c in todo} | {c["history_url"] for c in todo if str(c.get("history_url") or "").startswith("https://")}):
+        for u in sorted({c["source_url"] for c in todo} | {c["source_url2"] for c in todo if c.get("basis") == "press"} | {c["history_url"] for c in todo if str(c.get("history_url") or "").startswith("https://")}):
             byhost[urlparse(u).netloc].append(u)
 
         def job(item):
@@ -235,14 +251,34 @@ def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int 
             shown = render_of(c["source_url"])
             if shown and nq in norm(shown):
                 found, via = True, "browser"
-        if not found and len(str(c.get("seen_in_browser") or "")) >= 10:
+        if not found and c.get("basis") != "press" and len(str(c.get("seen_in_browser") or "")) >= 10:
             # the date is in a picture (or drawn by the page) and a person looked at the page in a browser: what was seen is written down in this field
             found, via = True, "eyes"
         if not found:
             rejected.append((c["title"], "quote not on the page"))
             continue
+        if c.get("basis") == "press":
+            page2 = page_of(c["source_url2"]) or ""
+            n2 = norm(c["source_quote2"])
+            if page2.startswith("ERR") or not page2:
+                rejected.append((c["title"], "second report: fetch failed: " + page2[:60]))
+                continue
+            if len(n2) < 4 or not text_has_date(c["date"], c["source_quote2"], prec):
+                rejected.append((c["title"], "second report: the quote does not contain the date"))
+                continue
+            if n2 not in norm(page2) and not (render_of(c["source_url2"]) and n2 in norm(render_of(c["source_url2"]))):
+                rejected.append((c["title"], "second report: quote not on the page"))
+                continue
         item = {k: v for k, v in c.items() if not k.startswith("_")}
         item["source_quote"] = item["source_quote"][:60]
+        if c.get("basis") == "press":
+            item["source_quote2"] = str(item["source_quote2"])[:60]
+        else:
+            for k in ("source_url2", "source_quote2"):
+                item.pop(k, None)
+        item["basis"] = "press" if c.get("basis") == "press" else "official"
+        if not str(item.get("official_url") or "").startswith("https://"):
+            item.pop("official_url", None)
         if est:
             item["history"] = hist_ok
             item.pop("history_url", None)
@@ -255,7 +291,7 @@ def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int 
         item.setdefault("date_end", None)
         item["precision"] = prec
         item.setdefault("note", "")
-        how = {"http": "出典ページの本文で、日付を機械的に確かめた。", "browser": "出典ページをブラウザで表示して、日付を確かめた。", "eyes": "出典ページをブラウザで開いて、画面で日付を確かめた。"}[via]
+        how = {"http": ("2つの報道ページの本文で、日付を機械的に確かめた。" if c.get("basis") == "press" else "出典ページの本文で、日付を機械的に確かめた。"), "browser": "出典ページをブラウザで表示して、日付を確かめた。", "eyes": "出典ページをブラウザで開いて、画面で日付を確かめた。"}[via]
         item.pop("seen_in_browser", None)
         item["note"] = (item["note"] + (" " if item["note"] else "") + how).strip()
         ok.append(item)

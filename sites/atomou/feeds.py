@@ -64,7 +64,7 @@ def ics_feed(name: str, description: str, entries: list[dict], base: str, now: d
         d = date.fromisoformat(e["date"])
         last = date.fromisoformat(e.get("date_end") or e["date"])
         url = f"{base}/e/{e['id']}/"
-        detail = f"詳しい日付と出典: {url}"
+        detail = f"詳しい日付: {url}"
         lines += ["BEGIN:VEVENT", f"UID:{e['id']}@atomou.com", f"DTSTAMP:{stamp}", f"SUMMARY:{_esc(e['title'])}",
                   f"DTSTART;VALUE=DATE:{d.strftime('%Y%m%d')}", f"DTEND;VALUE=DATE:{(last + timedelta(days=1)).strftime('%Y%m%d')}", "TRANSP:TRANSPARENT",
                   f"DESCRIPTION:{_esc(detail)}", f"URL:{url}", f"CATEGORIES:{_esc(e['group'])}", "END:VEVENT"]
@@ -79,9 +79,9 @@ def feed_pages(live: list[dict], groups: list[str], slugs: dict[str, str], base:
     for g in groups:
         rows = [e for e in usable if e["group"] == g]
         if rows:
-            pages[f"{FEED_DIR}/{slugs[g]}.ics"] = ics_feed(f"あと何日、もう何日 {g}", f"{g}の公式の日付(出典と確認日つき)。" + _note(rows), rows, base, now)
+            pages[f"{FEED_DIR}/{slugs[g]}.ics"] = ics_feed(f"あと何日、もう何日 {g}", f"{g}の日付。" + _note(rows), rows, base, now)
     if usable:
-        pages[f"{FEED_DIR}/all.ics"] = ics_feed("あと何日、もう何日 すべての日付", "締切・試験・大会・お祭りなど、公式の日付(出典と確認日つき)。" + _note(usable), usable, base, now)
+        pages[f"{FEED_DIR}/all.ics"] = ics_feed("あと何日、もう何日 すべての日付", "締切・試験・大会・お祭りなどの日付。" + _note(usable), usable, base, now)
     return pages
 
 

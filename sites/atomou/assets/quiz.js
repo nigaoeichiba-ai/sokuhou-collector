@@ -68,7 +68,7 @@
       if (!list.length) return null;
       var c = list[C.toDays(t[0], t[1], t[2]) % list.length], d = C.parse(c.date), w = C.weekday(d);
       return { q: '「' + c.title + '」の日(' + md(d) + ')は、何曜日?', ans: WD[w] + '曜日', wrong: WD.filter(function (x, i) { return i !== w; }).map(function (x) { return x + '曜日'; }),
-        why: md(d) + 'は' + WD[w] + '曜日です。出典と確認した日は、日付のページにあります。', link: '/e/' + c.id + '/' };
+        why: md(d) + 'は' + WD[w] + '曜日です。くわしくは、日付のページにあります。', link: '/e/' + c.id + '/' };
     }
   };
   var ORDER = ['holiday', 'sat', 'doy', 'xmas', 'plus100', 'nextmonth', 'term', 'card'];

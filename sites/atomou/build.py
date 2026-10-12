@@ -57,7 +57,7 @@ SITE = {
     "nav": [("さがす", "/search/", "/search/"), ("カレンダー", "/calendar/", "/calendar/"), ("記録する", "/add/", "/add/"), ("マイページ", "/my/", "/my/")],
     "glyph": "",
     "assets": HERE / "assets",
-    "source_html": '公式の日付には、出典と確認日を載せています。<a href="/manual/">説明書</a> | <a href="/manual/#guide">使い方</a> | <a href="/use/">こんな時に</a> | <a href="/skins/">きせかえ</a>',
+    "source_html": 'カードの日付は間違っていることがあります。<a href="/manual/">説明書</a> | <a href="/manual/#guide">使い方</a> | <a href="/use/">こんな時に</a> | <a href="/skins/">きせかえ</a>',
 }
 WD = "月火水木金土日"
 _TODAY = date.today()   # set by build_pages: the date the static counts on the cards are worked out for (the browser recounts at once)
@@ -93,7 +93,7 @@ PUSH_BOX = '''<h2 id="push">この端末で受け取る通知</h2>
 </div>
 '''
 
-MEMBER_BOX = '''<h2 id="member">会員(無料)</h2>
+MEMBER_BOX = '''<h2 id="member">あともうメンバー(会員・無料)</h2>
 <div class="panel" id="member-box" hidden><div class="m-body"><p class="muted">読み込み中…</p></div></div>
 '''
 
@@ -410,6 +410,14 @@ def sort_select(sel_id: str) -> str:
     return f'<label class="sortsel"><span class="vh">並べ替え</span><select id="{sel_id}" class="mine-sort" aria-label="並べ替え">{opts}</select></label>'
 
 
+def member_line(cfg: dict) -> str:
+    """One sentence about the free membership, for the first screen (the number of first-come places is the sum of the tiers in config.json)."""
+    if not members_on(cfg):
+        return "登録なしで、無料で使えます。"
+    n = sum(int(t.get("size") or 0) for t in cfg.get("member_tiers") or [])
+    return "登録なしで、一部の機能を無料で使えます。「あともうメンバー」(無料)に登録すると、" + (f"先着{n}名は" if n else "") + "すべての機能を使えます。"
+
+
 def home_page(c: Ctx) -> str:
     live = live_entries(c.entries, c.today)
     first = diverse(live, 6)
@@ -421,18 +429,18 @@ def home_page(c: Ctx) -> str:
 <h2 id="intro-h">はじめての方へ</h2>
 <p class="intro-lead">試験や締切までの日数も、記念日からの日数も、ここで数えられます。</p>
 <ol class="intro-steps">
-<li><b>さがす</b><span>試験・締切・大会・お祭りなど、公式の日付が見つかります(出典つき)</span></li>
+<li><b>さがす</b><span>試験・締切・大会・お祭りなど、いろいろな日付が見つかります</span></li>
 <li><b>記録する</b><span>記念日や予定など、大切な日を1行で記録できます</span></li>
 <li><b>知らせる</b><span>あと何日かがひと目で分かります。カレンダーへの追加や通知は、必要なときだけ使えます。</span></li>
 </ol>
-<p class="intro-note">登録なしで、無料で使えます。</p>
+<p class="intro-note">{esc(member_line(c.cfg))}</p>
 <p class="intro-btns"><button type="button" class="btn" data-intro="start">30秒で使い方を見る</button> <button type="button" class="btn ghost" data-intro="close">すぐ使う</button></p>
-<p class="hint">この案内は、画面右下の「? ヒント」や、ページ下の「使い方」から、いつでも見直せます。</p>
+<p class="hint">この案内は、画面上の「? ヒント」や、ページ下の「使い方」から、いつでも見直せます。</p>
 </section>
 <p class="setup-redo" id="setup-redo" hidden><button type="button" class="btn small ghost">ジャンルを選び直す</button></p>
 <section class="hero"><h1>{esc(CATCH)}</h1>
 <div class="hero-cta" id="hero-cta" hidden>
-<p class="hero-note">登録なしで、無料で使えます。</p>
+<p class="hero-note">あなたの大切な日や予定を記録して、近づいたらスマホやパソコンに知らせます。{esc(member_line(c.cfg))}</p>
 <p class="hero-btns"><a class="btn" href="/add/">大切な日を記録する</a> <a class="btn ghost" href="/interests/">好きな分野から探す</a></p>
 <nav class="chiprow" aria-label="残せる日の例"><a class="chip" href="/add/?kind=anniversary">記念日</a><a class="chip" href="/add/?kind=birthday">誕生日</a><a class="chip" href="/add/?kind=until">楽しみな日・期限</a><a class="chip" href="/add/?kind=memorial">大切な日</a></nav>
 </div></section>
@@ -460,8 +468,8 @@ def home_page(c: Ctx) -> str:
 <div id="int-wrap" hidden><div class="cards" id="int-grid"></div><p class="hint" id="int-miss"></p></div>
 </section>
 <section id="region" data-block="region" data-title="お住まいの地域の日" hidden>
-<div class="head-row"><h2 id="reg-title">お住まいの地域の日</h2><div class="grow"><a class="btn small ghost" href="/interests/#region">地域を選ぶ</a></div></div>
-<p class="hint" id="reg-none" hidden>お住まいの都道府県を選ぶと、その地域の日が、ここに並びます。<a href="/interests/#region">選んでみる</a></p>
+<div class="head-row"><h2 id="reg-title">お住まいの地域の日</h2><div class="grow"><a class="btn small ghost" href="/interests/#region-pick">地域を選ぶ</a></div></div>
+<p class="hint" id="reg-none" hidden>お住まいの都道府県を選ぶと、その地域の日が、ここに並びます。<a href="/interests/#region-pick">選んでみる</a></p>
 <div id="reg-wrap" hidden><div class="cards" id="reg-grid"></div><p class="hint" id="reg-more"></p></div>
 </section>
 <section data-block="search" data-title="さがす">
@@ -575,7 +583,7 @@ def search_page(c: Ctx) -> str:
 
 def my_page(c: Ctx) -> str:
     sync_html = ""
-    push_html = PUSH_BOX if c.cfg.get("vapid_public") else ""
+    push_html = PUSH_BOX.replace("<h2", "<h3", 1).replace("</h2>", "</h3>", 1) if c.cfg.get("vapid_public") else ""
     member_html = MEMBER_BOX if members_on(c.cfg) else ""
     gcal_html = ""
     if c.cfg.get("google_client_id"):
@@ -586,38 +594,54 @@ def my_page(c: Ctx) -> str:
                      '<p><button type="button" class="btn" id="gcal-send">Google カレンダーに送る</button> <button type="button" class="btn small ghost" id="gcal-unlink" hidden>Google カレンダーから消す</button></p></div>\n')
         sync_html = ('<div id="sync-box" hidden><p id="sync">Google アカウントでつなぐと、記録した日を自分の Google ドライブに保存して、別の端末に引き継げます。'
                      '<a href="/privacy/#google">詳しく</a></p><p><button type="button" class="btn" id="sync-now">Google アカウントで同期する</button></p></div>\n')
+    def h3(box: str) -> str:   # a part made elsewhere has its own h2; under a group of this page it is a smaller heading
+        return box.replace("<h2", "<h3", 1).replace("</h2>", "</h3>", 1)
+    if c.cfg.get("google_client_id"):
+        gcal_html = h3(gcal_html)
     body = f"""{crumbs([("トップ", "/"), ("マイページ", None)])}
 <h1>マイページ</h1>
-<p class="lead muted">記録した日と、予定に入れた日がここに並びます。</p>
-<div class="panel" id="my-empty" hidden><p>まだ記録がありません。忘れたくない日を記録すると、ここに表示されます。</p><p><a class="btn" href="/add/">日を記録する</a> <a class="btn ghost" href="/search/">公式の日付をさがす</a></p></div>
-<details class="panel move" id="move-box"><summary id="backup-h">別の端末へ移す・バックアップ</summary>
-<p>機種変更や、パソコンとスマホで見るときは、ここから。記録はこの端末に保存されています。</p>
-{sync_html}<p class="move-btns"><button type="button" class="btn" id="backup">ファイルに書き出す</button> <label class="btn ghost" for="restore">ファイルから読み込む</label><input class="vh" type="file" id="restore" accept="application/json,.json"></p>
-<p class="hint">書き出したファイルを、自分あてにLINEやメールで送ると、新しい端末で開いて読み込めます。名前やメモも入るので、送り先に気をつけてください。</p>
-</details>
+<p class="lead muted">記録した日を見て、整えるページです。記録はこの端末に保存されています。</p>
+<nav class="chiprow my-index" aria-label="このページの項目"><a class="chip" href="#cards">自分のカード</a><a class="chip" href="#notice">通知・カレンダー</a><a class="chip" href="#move">引き継ぎ・バックアップ</a><a class="chip" href="#settings">設定</a></nav>
+<h2 id="cards">自分のカード</h2>
+<div class="panel" id="my-empty" hidden><p>まだ記録がありません。忘れたくない日を記録すると、ここに並びます。</p><p><a class="btn" href="/add/">日を記録する</a> <a class="btn ghost" href="/search/">日付をさがす</a></p></div>
 <div class="head-row" id="my-tools" hidden><div class="grow" style="margin-left:0">{sort_select("my-sort")}<label class="sortsel" id="my-find-wrap" hidden><span class="vh">題名で探す</span><input type="search" id="my-find" placeholder="題名で探す" autocomplete="off" maxlength="40"></label><button type="button" class="btn small ghost" id="reorder" aria-pressed="false">手で動かす</button></div></div>
 <div class="cards" id="my-grid" data-save-order="1"></div>
-<h2>設定</h2>
-<div class="panel">
-<div class="field"><label class="lab" for="p-big"><input type="checkbox" id="p-big"> 文字を大きくする</label></div>
-<div class="field"><label for="p-alarm">通知の時間(通知・カレンダーに入れるとき)</label>
-<select id="p-alarm"><option value="morning">当日の朝</option><option value="eve">前日の夜</option><option value="week">1週間前の朝</option><option value="none">なし</option></select></div>
-<div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する(個人は特定されません。<a href="/privacy/#stats">詳しい説明</a>)</label></div>
-<p><a href="/skins/">きせかえ</a></p>
-<p><a href="/?edit=1">ホームをカスタマイズ(部品の表示・並べ替え)</a></p>
-<p><a href="/?intro=1">はじめての方へ(このサイトの説明)を見る</a></p>
-<p><button type="button" class="btn small ghost" data-guide="start">使い方を見る</button></p>
-</div>
-{member_html}<div id="tier-box"></div><section id="shared-box" hidden></section>{push_html}<h2>他のカレンダーアプリに入れる</h2>
+<h2 id="notice">通知・カレンダー</h2>
+<p class="lead muted">日が近づいたときの知らせと、ほかのカレンダーアプリへの入れ方です。</p>
+{push_html}<h3 id="cal-apps">カレンダーアプリに入れる</h3>
 <div class="panel"><p>iPhone の「カレンダー」や Google カレンダーに取り込めるファイルを作れます。1件ずつ作るときは、予定の詳細から。</p>
 <p><button type="button" class="btn small ghost" id="ics-all">すべての予定をファイルにする</button></p></div>
-{gcal_html}<h2 id="ical-h">ほかのカレンダーから取り込む</h2>
+{gcal_html}<h3 id="ical-h">ほかのカレンダーから取り込む</h3>
 <div class="panel"><p>Google カレンダーなどから書き出した .ics のファイルを、この予定帳に入れられます。</p>
 <details class="more"><summary>Google カレンダーからの書き出し方</summary><ol><li>パソコンで Google カレンダーを開きます。</li><li>右上の歯車から「設定」を開きます。</li><li>「インポート/エクスポート」の「エクスポート」を押します。</li><li>ダウンロードした ZIP を開き、中の .ics のファイルを、下から選びます。</li></ol></details>
 <p><label class="btn small ghost" for="ical-file">.ics のファイルを選ぶ</label><input class="vh" type="file" id="ical-file" accept=".ics,text/calendar"></p><div id="ical-out" aria-live="polite"></div></div>
+<h2 id="move">引き継ぎ・バックアップ</h2>
+<div class="panel move" id="move-box"><p id="backup-h"><b>記録は、この端末だけに保存されています。</b>機種変更や、パソコンとスマホで同じ記録を見るときは、次の手順で移します。</p>
+<ol class="steps"><li>いまの端末で「ファイルに書き出す」を押します。</li><li>書き出したファイルを、自分あてにLINEやメールで送ります。</li><li>新しい端末でこのページを開き、「ファイルから読み込む」で選びます。</li></ol>
+{sync_html}<p class="move-btns"><button type="button" class="btn" id="backup">ファイルに書き出す</button> <label class="btn ghost" for="restore">ファイルから読み込む</label><input class="vh" type="file" id="restore" accept="application/json,.json"></p>
+<p class="hint">名前やメモも入るので、送り先に気をつけてください。</p></div>
+{member_html}<div id="tier-box"></div><section id="shared-box" hidden></section>
+<h2 id="settings">設定</h2>
+<div class="panel">
+<h3 class="set-h">ホームに出すもの</h3>
+<p class="hint">使わないものは、オフにするとホームから消えます。いつでも戻せます。</p>
+<div class="switches" id="feat-list"></div>
+<p class="move-btns"><button type="button" class="btn small ghost" id="feat-own">自分のカードだけ使う</button> <button type="button" class="btn small ghost" id="feat-all">すべて使う</button></p>
+<h3 class="set-h">見え方</h3>
+<div class="field"><label class="lab" for="p-big"><input type="checkbox" id="p-big"> 文字を大きくする</label></div>
+<p><a href="/skins/" data-back="マイページ">きせかえ(色や形を選ぶ)</a></p>
+<p><a href="/?edit=1" data-back="マイページ">ホームの部品の並べ替え</a></p>
+<h3 class="set-h">通知の時間</h3>
+<div class="field"><label for="p-alarm">標準の時間(通知・カレンダーに入れるとき)</label>
+<select id="p-alarm"><option value="morning">当日の朝</option><option value="eve">前日の夜</option><option value="week">1週間前の朝</option><option value="none">なし</option></select>
+<p class="hint">新しく記録するカードの標準になります。カードごとに変えるときは、記録するときの「この日の知らせ」か、各カードの「修正」で選びます。</p></div>
+<h3 class="set-h">そのほか</h3>
+<div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する</label><p class="hint">どの機能がどれだけ使われたかを、件数だけで数えます。個人は特定されません。<a href="/privacy/#stats" data-back="マイページ">詳しい説明</a></p></div>
+<p><a href="/?intro=1" data-back="マイページ">はじめての方へ(このサイトの説明)</a> <button type="button" class="btn small ghost" data-guide="start">使い方を見る</button></p>
+</div>
 <h2 id="wipe-h">この端末の記録を消す</h2>
 <div class="panel">
-<p>この端末に保存されている記録と設定を、すべて消します。元に戻せません。消す前に、上の「ファイルに書き出す」で控えを作れます。</p>
+<p>この端末に保存されている記録と設定を、すべて消します。元に戻せません。消す前に、「引き継ぎ・バックアップ」でファイルに書き出して、控えを作れます。</p>
 <p><button type="button" class="btn small ghost" id="wipe">すべて消す</button></p>
 </div>
 <noscript><p class="notice">マイページには JavaScript が必要です。</p></noscript>"""
@@ -666,7 +690,7 @@ def skins_page(c: Ctx) -> str:
 <div id="season" class="season" hidden></div>
 <p class="lead muted">選ぶと、すぐ変わります。標準は「ベーシック」。</p>
 <h2>見え方</h2>
-<p class="hint">左から、これから来る日、過ぎた日、大切な日(静かな表示)です。</p>
+<p class="hint">左から、これから来る日、過ぎた日、大切な日です。</p>
 <div class="cards">{"".join(card_html(s, own=True, actions=False, link=False) for s in samples)}</div>
 <h2>選ぶ</h2>
 <p><label class="chip" for="skin-auto"><input type="checkbox" id="skin-auto"> 端末が暗い設定のときは、暗い配色にする</label></p>
@@ -702,7 +726,12 @@ def use_page(c: Ctx, u: dict) -> str:
     cat = u["catalog"]
     if cat:
         g = cat.get("group")
-        acts.append(f'<a class="btn ghost" href="/c/{GROUP_SLUG[g]}/">公式の日付を見る</a>' if g in GROUP_SLUG else "")
+        pool = [_hay(e) for e in live_entries(c.entries, c.today)]
+        hit = next((t for t in cat.get("tags", []) if any(all(w in h for w in _norm(t).split(" ")) for h in pool)), "")   # the first word of the case that finds days (the search page answers it the same way)
+        if hit:
+            acts.append(f'<a class="btn ghost" href="/search/?q={quote(hit)}">日付をさがす</a>')
+        elif g in GROUP_SLUG:
+            acts.append(f'<a class="btn ghost" href="/c/{GROUP_SLUG[g]}/">日付をさがす</a>')
         tags = "".join(f'<a class="chip" href="/search/?q={quote(t)}">{esc(t)}</a>' for t in cat.get("tags", []))
         if tags:
             parts.append(f'<p class="small muted">探す言葉</p><div class="chips">{tags}</div>')
@@ -744,7 +773,7 @@ def google_calendar_url(e: dict, page_url: str) -> str:
     """The address that opens Google Calendar's own form with the day filled in (a whole day: the end date is the day after).  The page address goes into the details, so the day leads back here."""
     d = date.fromisoformat(e["date"])
     last = date.fromisoformat(e.get("date_end") or e["date"]) + timedelta(days=1)
-    detail = f"詳しい日付と出典: {page_url}"
+    detail = f"詳しい日付: {page_url}"
     return ("https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + quote(e["title"]) + "&dates=" + d.strftime("%Y%m%d") + "/" + last.strftime("%Y%m%d")
             + "&details=" + quote(detail) + "&ctz=Asia%2FTokyo")
 
@@ -754,7 +783,7 @@ def outlook_calendar_url(e: dict, page_url: str) -> str:
     d = date.fromisoformat(e["date"])
     last = date.fromisoformat(e.get("date_end") or e["date"]) + timedelta(days=1)
     return ("https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=" + quote(e["title"]) + "&startdt=" + d.isoformat()
-            + "&enddt=" + last.isoformat() + "&allday=true&body=" + quote(f"詳しい日付と出典: {page_url}"))
+            + "&enddt=" + last.isoformat() + "&allday=true&body=" + quote(f"詳しい日付: {page_url}"))
 
 
 SHARE_ICONS = {
@@ -778,7 +807,7 @@ def share_block(c: Ctx, e: dict) -> str:
     """Icons to send a public day to somebody (LINE, X, the link, a picture, the phone's share sheet) in one thin row.  share.js fills in today's count; the links work without it."""
     page_url = f"{str(c.cfg['site_url']).rstrip('/')}/e/{e['id']}/"
     fmt = fmt_date(e["date"], e["precision"])
-    text = f"「{e['title']}」({fmt})。出典つきの公式の日付です。"
+    text = f"「{e['title']}」({fmt})。日数は「あと何日、もう何日」で数えています。"
     line = "https://line.me/R/msg/text/?" + quote(text + chr(10) + page_url)
     x = "https://twitter.com/intent/tweet?text=" + quote(text) + "&url=" + quote(page_url, safe="")
     return (f'<div class="share share-row" aria-label="人に送る" data-title="{esc(e["title"])}" data-date="{e["date"]}" data-p="{e["precision"]}" data-url="{esc(page_url)}">'
@@ -787,8 +816,15 @@ def share_block(c: Ctx, e: dict) -> str:
             + f'<a class="share-more" href="/card/#from=c:{e["id"]}" title="ひとこと・やることを足したカードにして送ります">カードにして送る</a></div>')
 
 
-VERIFY_LABELS = {"ok": "確認済", "fixed": "訂正済", "old": "再確認中", "pending": "未発表"}
+VERIFY_LABELS = {"ok": "確認済", "press": "報道で確認", "fixed": "訂正済", "old": "再確認中", "pending": "未発表"}
 EVENT_LD_KINDS = ("開催", "決勝", "極大")   # kinds that are real events a person can go to (the others get the page markup only)
+
+
+def official_link(e: dict) -> str:
+    """The page of the organizer, maker or office behind a day, when it is known: shown as the link "公式ページ".  None when it was not found easily.
+    A day taken from reports has no such link unless one was found (official_url)."""
+    u = e.get("official_url") or (e.get("source_url") if e.get("basis", "official") == "official" else "")
+    return u if str(u).startswith("https://") else ""
 
 
 def verify_badge(e: dict) -> tuple[str, str]:
@@ -799,8 +835,10 @@ def verify_badge(e: dict) -> tuple[str, str]:
     if e.get("corrected_on"):
         return "fixed", f"{fmt_date(e['corrected_on'])}に、日付を訂正しました。"
     if e.get("status") == "old_checked":
-        return "old", f"最後に確かめたのは{fmt_date(e['checked_on'])}です。公式ページで、もう一度確かめています。"
-    return "ok", f"{fmt_date(e['checked_on'])}に、公式ページで確かめました。"
+        return "old", "もう一度、確かめています。"
+    if e.get("basis") == "press":
+        return "press", "複数の報道で確かめました。公式の発表は、まだ確かめていません。"
+    return "ok", ""
 
 
 def page_ld(c: Ctx, e: dict, url: str) -> str:
@@ -849,29 +887,27 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
         hist = (f'<h2>これまでの日付</h2><p class="small muted">公式のページで確かめた、過去の日付です。</p>'
                 f'<div class="tablewrap"><table class="info-table"><tbody>{rows}</tbody></table></div>')
     vkey, vtext = verify_badge(e)
-    vrow = f'<p class="vrow"><span class="vbadge vb-{vkey}" data-vbadge>{VERIFY_LABELS[vkey]}</span> <span class="small muted" data-vtext>{esc(vtext)}</span></p>'
+    vrow = (f'<p class="vrow"><span class="vbadge vb-{vkey}" data-vbadge>{VERIFY_LABELS[vkey]}</span> <span class="small muted" data-vtext>{esc(vtext)}</span> '
+            + (f' <a class="small" href="{esc(official_link(e))}" rel="noopener nofollow" target="_blank">公式ページ</a>' if official_link(e) else "") + "</p>")
+    gcal_btn = (' <a class="btn small ghost" href="' + esc(google_calendar_url(e, str(c.cfg['site_url']).rstrip('/') + '/e/' + e['id'] + '/')) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a>') if e["precision"] == "day" and not est else ""
+    copy_link = f'<a class="btn small ghost" href="/add/?title={quote(e["title"])}&amp;date={e["date"]}">自分のカードにコピー</a>'
     page_url = f"{str(c.cfg['site_url']).rstrip('/')}/e/{e['id']}/"
     log = "".join(f"<li><time datetime=\"{x['on']}\">{esc(fmt_date(x['on']))}</time> {esc(x['text'])}</li>" for x in e.get("changes") or [])
-    log_html = (f"<dt>更新の記録</dt><dd><ul class=\"changes\">{log}</ul></dd>" if log else "")
     fix_link = f'<a class="btn small ghost" href="/contact/?kind=date&amp;page={quote(page_url, safe="")}">日付の間違いを知らせる</a>'
     same = [] if quiet else sorted((r for r in live if r["subject"] == e["subject"] and r["id"] != e["id"] and not r["quiet"]), key=lambda r: (r["date"], r["id"]))[:6]
     body = crumbs([("トップ", "/"), (e["group"], f"/c/{GROUP_SLUG[e['group']]}/")] + ([(e["mid"], f"/c/{GROUP_SLUG[e['group']]}/#m={quote(e['mid'])}")] if e.get("mid") and e["mid"] != catalog.MID_OTHER else []) + [(e["title"], None)]) + f"""
 <h1>{esc(e['title'])}</h1>
-{card_html(e, big=True, link=False)}
+<div class="ev-card">{card_html(e, big=True, link=False)}</div>
 {vrow}
-{'<p class="small muted">上のカードの日数は、今日の日付をもとに数えています。</p>' if art else f'<p>{esc(sentence)}<span class="small muted">上のカードの日数は、今日の日付をもとに数えています。</span></p>'}
-<p class="small muted src-line">出典: <a href="#src">{esc(host(e['source_url']))}</a>(確認日 {esc(e['checked_on'])})</p>
+<p class="ev-acts"><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを追加</a>{gcal_btn}</p>
+{"" if quiet else share_block(c, e)}
+{'' if art else f'<p>{esc(sentence)}</p>'}
 {art}
 {hist}
-{'<p class="notice quiet">この日は、静かにお知らせします。</p>' if quiet else ""}
-<h2 id="src">出典と確認日</h2>
-<dl class="info"><dt>出典</dt><dd><a href="{esc(e['source_url'])}" rel="noopener nofollow" target="_blank">{esc(host(e['source_url']))}</a></dd>
-<dt>確認日</dt><dd>{esc(e['checked_on'])}</dd>{f"<dt>出典の文</dt><dd>{esc(e['source_quote'])}</dd>" if e.get('source_quote') else ""}<dt>掲載</dt><dd>{esc(e['added'])}</dd>{log_html}</dl>
+{("<h2 id=\"src\">更新の記録</h2><ul class=\"changes\">" + log + "</ul>") if log else ""}
 <p class="fix-line">{fix_link}</p>
-<p class="small muted">日付や時刻は変わることがあります。出典の公式ページで、最新の情報をご確認ください。</p>
-<p><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを追加</a> <a class="btn small ghost" href="/add/?title={quote(e['title'])}&amp;date={e['date']}">自分の予定として記録する</a>{(' <a class="btn small ghost" href="' + esc(google_calendar_url(e, str(c.cfg['site_url']).rstrip('/') + '/e/' + e['id'] + '/')) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a>') if e["precision"] == "day" and not est else ""}</p>
-{"" if quiet else share_block(c, e)}
-{"" if quiet else '<p class="int-line"><button type="button" class="btn small ghost" data-int-toggle="' + esc(e["subject"]) + '">「' + esc(e["subject"]) + '」を好きな分野に入れる</button> <a class="small" href="/interests/">好きな分野を選ぶ</a></p>'}
+<p class="small muted">カードの日付は間違っていることがあります。日付や時刻は変わることもあります。日数は、お使いの端末の今日の日付で数えています。</p>
+<p class="ev-more">{copy_link}{"" if quiet else ' <button type="button" class="btn small ghost" data-int-toggle="' + esc(e["subject"]) + '">「' + esc(e["subject"]) + '」を好きな分野に入れる</button>'}</p>
 {f'<details class="more"><summary>ほかのカレンダーアプリに入れる</summary><p class="hint">Outlook は下のボタンから入れられます。iPhone の「カレンダー」、Yahoo!カレンダー、TimeTree などには、ファイルを作って取り込みます。</p><p><a class="btn small ghost" href="{esc(outlook_calendar_url(e, str(c.cfg["site_url"]).rstrip("/") + "/e/" + e["id"] + "/"))}" target="_blank" rel="noopener">Outlookに追加</a> <button type="button" class="btn small ghost" data-ics-for="c:{e["id"]}">ファイルを作る</button></p></details>' if e["precision"] == "day" and not est else ""}
 {(f'<h2>同じ「{esc(e["subject"])}」の日</h2><p class="saveall"><button type="button" class="btn small" data-saveall="{",".join([e["id"]] + [r["id"] for r in same])}">この日を含む{len(same) + 1}件をまとめて予定に入れる</button></p><div class="cards">' + "".join(card_html(r) for r in same) + "</div>") if same else ""}
 {('<h2>同じジャンルの日</h2><div class="cards">' + "".join(card_html(r) for r in rel) + "</div>") if rel else ""}
@@ -881,7 +917,7 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
         fmt, end = e["typical"] + "(予想)", ""
     title = f"{e['title']}{suffix} {fmt} | {NAME}"
     place = (e.get("place") or "").strip()
-    desc = f"{e['title']}は{fmt}{end}" + (f"、{place}" if place and place not in ("全国", "地域") else "") + "。" + (f"{guide['about'].split('。')[0]}。" if guide else "") + "出典と確認日つき。あと何日かを数えて、予定に入れられます。"
+    desc = f"{e['title']}は{fmt}{end}" + (f"、{place}" if place and place not in ("全国", "地域") else "") + "。" + (f"{guide['about'].split('。')[0]}。" if guide else "") + "あと何日かを数えて、予定に入れられます。"
     html = c.page(f"/e/{e['id']}/", title, desc, body + page_ld(c, e, page_url), "event", noindex=not indexable, og=og_path(e))
     return strip_ads(html) if quiet or not e.get("ad_ok", True) else html
 
@@ -933,13 +969,13 @@ def topics_page(c: Ctx, live: list[dict]) -> str:
         return f'<h2>{esc(title)}</h2><p class="hint">{esc(note)}</p><div class="cards">' + "".join(card_html(e) for e in rows) + "</div>"
     body = f"""{crumbs([("トップ", "/"), ("最新・トピックス", None)])}
 <h1>最新・トピックス</h1>
-<p class="lead muted">いま近い日と、新しく加わった日です。載せるのは、公式の発表ページで日付を確かめられた日だけです。出典と確認日は、各日のページにあります。</p>
+<p class="lead muted">いま近い日と、新しく加わった日です。載せるのは、日付を確かめられた日です。カードの日付は間違っていることがあります。</p>
 <section id="live-t" hidden><h2>速報(公式の発表)</h2><p class="hint">公式のフィードから、数分おきに集めた見出しです。あなたの言葉に合うものが先に並びます。日付や内容は、リンク先の公式ページで確かめてください。</p><ul class="live-list" id="live-list-t"><li class="muted">読み込み中…</li></ul></section>
 {block("今週と来週の日", "今日から14日以内の日です。近い順です。", soon)}
 {block("新しく加わった日", "この30日に加わった日です。新しい順です。", fresh)}
 {'<p class="empty">いまは、ご案内できる新しい日がありません。</p>' if not soon and not fresh else ""}
 <p class="hint">探している日が載っていないときは、<a href="/contact/?kind=request">リクエスト</a>から知らせてください。確かめられたものから、追加していきます。</p>"""
-    return c.page("/topics/", f"最新・トピックス | {NAME}", "いま近い日と、新しく加わった日。公式の発表ページで日付を確かめられた日だけを載せています。", body, "topics")
+    return c.page("/topics/", f"最新・トピックス | {NAME}", "いま近い日と、新しく加わった日。日付を確かめられた日を載せています。", body, "topics")
 
 
 def manual_page(c: Ctx) -> str:
@@ -954,7 +990,7 @@ def manual_page(c: Ctx) -> str:
         return f'<span class="btn small sample{" ghost" if ghost else ""}" aria-hidden="true">{label}</span>'
 
     qa = [
-        ("料金はかかりますか？", "無料です。会員登録なしで使えます。会員(無料)になると、メール通知と先着の特典を使えます。"),
+        ("料金はかかりますか？", "無料です。会員登録なしで使えます。あともうメンバー(無料の会員)になると、メール通知と先着の特典を使えます。"),
         ("入力した内容は、ほかの人に見えますか？", "見えません。予定・メモ・やることは、お使いの端末の中だけにあり、当サイトのサーバーには送りません。"),
         ("予定の前に、お知らせは来ますか？", "マイページの「この端末で受け取る通知」をオンにすると、予定の当日の朝か前日の夜に、この端末へ通知が届きます(iPhone はホーム画面に追加してから)。会員はメールでも受け取れます。他のカレンダーアプリの通知を使うときは、予定の詳細の「他のカレンダーアプリに入れる」でファイルを作って取り込みます。"),
         ("「やること」とは何ですか？", "予定の何日前までに何をするかを書く欄です。たとえば「試験の1週間前: 願書を出す」。期限の日がカレンダーとホームに表示され、チェックすると完了になります。"),
@@ -963,8 +999,8 @@ def manual_page(c: Ctx) -> str:
         ("日数はどう数えますか？", "今日を0日とします。明日は「あと1日」、昨日は「もう1日」、当日は「今日」です。"),
         ("2月29日はどう数えますか？", "うるう年でない年は、2月28日として数えます。"),
         ("文字が小さくて読みにくい。", "マイページの「設定」で「文字を大きくする」にチェックを入れます。「きせかえ」の「大きな文字」「ハイコントラスト」も読みやすい設定です。"),
-        ("日付が間違っているようです。", "公式の日付は変わることがあります。カードの「詳細」に出典と確認日があります。誤りは<a href=\"/contact/\">お問い合わせ</a>からお知らせください。"),
-        ("大切な人を思う日も入れられますか？", "入れられます。「大切な日」を選ぶと、静かな表示で記録されます。広告は表示しません。"),
+        ("日付が間違っているようです。", "日付は変わることがあります。カードの日付は間違っていることもあります。誤りは<a href=\"/contact/\">お問い合わせ</a>からお知らせください。"),
+        ("大切な人を思う日も入れられますか？", "入れられます。「大切な日」を選んで記録してください。知らせは、ふだんは出ません。"),
         ("入れた日を消すには？", "マイページかカレンダーからその予定を開き、「消す」を押します。すべて消すときは、マイページの「すべて消す」。"),
     ]
     qa_html = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in qa)
@@ -972,14 +1008,14 @@ def manual_page(c: Ctx) -> str:
 <div class="manual">
 <h1>使い方</h1>
 <p class="lead">「あと何日、もう何日」の使い方です。画面のガイドは、実際のボタンを指しながら案内します。</p>
-<p id="guide"><button type="button" class="btn" data-guide="start">ガイドを見る</button> <span class="hint">各ページ右下の「ガイド」からも見られます。</span></p>
+<p id="guide"><button type="button" class="btn" data-guide="start">ガイドを見る</button> <span class="hint">各ページ上部の「? ヒント」からも見られます。</span></p>
 
 <h2>できること</h2>
 <ul class="big-list">
 <li><b>日付を数える。</b>過ぎた日からの日数も、これから来る日までの日数も、すぐに分かります。</li>
 <li><b>カレンダーとして使える。</b>デート・会議・記念日を入れて、月の表示と一覧で確認できます。予定ごとに、メモと「何日前までにやること」を書けます。</li>
 <li><b>通知を受け取れる。</b>予定の当日の朝か前日の夜に、この端末へ通知が届きます。</li>
-<li><b>公式の日付を使える。</b>締切・試験・大会・お祭りの日付を、公式の発表で確認して載せています。「予定に入れる」を押すと、自分のカレンダーに追加されます。</li>
+<li><b>公式の日付を使える。</b>締切・試験・大会・お祭りの日付を、公式の発表や報道で確認して載せています。「予定に入れる」を押すと、自分のカレンダーに追加されます。</li>
 </ul>
 
 <h2>はじめて使うとき</h2>
@@ -1018,7 +1054,7 @@ def manual_page(c: Ctx) -> str:
 <h2>ボタン</h2>
 <dl class="info big-dl">
 <dt>{btn("☆ 予定に入れる")}</dt><dd>公式の日付を自分のカレンダーに入れます。入ると「★ 予定に入っています」に変わり、もう一度押すと外れます。</dd>
-<dt>{btn("詳細", True)}</dt><dd>出典(元のページ)と確認日を開きます。</dd>
+<dt>{btn("詳細", True)}</dt><dd>その日のページを開きます(日付の説明と、公式ページへのリンク)。</dd>
 <dt>{btn("開く")}</dt><dd>自分の予定の詳細を開きます。名前や日付の修正、メモと「やること」の記入もここから。</dd>
 <dt>{btn("消す", True)}</dt><dd>自分の予定を消します。</dd>
 <dt>{btn("シャッフル")}</dt><dd>ホームのカードを、別の日に入れ替えます。</dd>
@@ -1227,11 +1263,11 @@ def legal(c: Ctx) -> dict:
     return legal_pages(
         site, cfg, c.preview,
         purpose="記録した日について、あと何日、もう何日かを数え、カレンダーで見られるようにすること。締切・試験・大会・お祭りの公式の日付を、ワンタップで予定に入れられるようにすること。",
-        sources_html="各日付のページに、出典(官公庁・主催者の公式ページ)と確認日を載せています。",
-        update_text="公式の発表をもとに、随時確認・追加します。",
-        disclaimer_html="<p>日付は公式の発表をもとに確認していますが、変更や中止になることがあります。申し込みや手続きの前に、出典の公式ページで確認してください。当サイトの情報をもとにした行動の結果について、当サイトは責任を負いません。</p>"
+        sources_html="公式の発表や報道などをもとに集めています。公式ページが分かる日付には、そのページへのリンクを付けています。",
+        update_text="公式の発表や報道をもとに、随時確認・追加します。",
+        disclaimer_html="<p>カードの日付は間違っていることがあります。日付は、公式の発表や報道をもとに確認していますが、変更や中止になることもあります。申し込みや手続きの前に、公式の情報で確認してください。当サイトの情報をもとにした行動の結果について、当サイトは責任を負いません。</p>"
                         "<p>「あと○日」「もう○日」は、お使いの端末の日付をもとに、ブラウザの中で数えています。端末の日付がずれていると、数字もずれます。</p>",
-        contact_notice="日付の誤りのご指摘は、ページの名前と、正しい日付の出典(アドレス)を添えていただけると、早く確認できます。",
+        contact_notice="日付の誤りのご指摘は、ページの名前と、正しい日付がわかるページのアドレスを添えていただけると、早く確認できます。",
         input_note=("<h2>この端末に保存する情報</h2>"
                     "<p>記録した日(名前・日付・時刻・メモ・やること・設定)と、予定に入れた日の一覧、選んだ好きな分野は、お使いのブラウザの中(localStorage)だけに保存します。当サイトのサーバーには送りません。"
                     "ブラウザのデータを消すと記録も消えます。バックアップはマイページの「ファイルに書き出す」で作れます。</p>"
@@ -1282,20 +1318,20 @@ def kyou_page(c: Ctx, md: str, items: list[tuple[int, dict, bool]], prev_next: t
     cards = "".join(card_html(e) for _, e in upcoming if not e["quiet"])[:200000]
     rows = []
     for y, e, h in sorted(past, key=lambda t: (-t[0], t[1]["title"])):
-        rows.append(f'<li><span class="y">{y}年</span> <a href="/e/{e["id"]}/">{esc(e["title"])}</a>{"<small> 静かな日</small>" if e["quiet"] else ""}</li>')
-    quiet_up = "".join(f'<li><span class="y">{y}年</span> <a href="/e/{e["id"]}/">{esc(e["title"])}</a><small> 静かな日</small></li>' for y, e in upcoming if e["quiet"])
+        rows.append(f'<li><span class="y">{y}年</span> <a href="/e/{e["id"]}/">{esc(e["title"])}</a>{"<small> 大切な日</small>" if e["quiet"] else ""}</li>')
+    quiet_up = "".join(f'<li><span class="y">{y}年</span> <a href="/e/{e["id"]}/">{esc(e["title"])}</a><small> 大切な日</small></li>' for y, e in upcoming if e["quiet"])
     n = len(items)
     pn = "".join(f'<a class="chip" href="/kyou/{x}/">{int(x[:2])}月{int(x[3:])}日</a>' for x in prev_next if x)
     body = crumbs([("トップ", "/"), ("今日は何の日", "/kyou/"), (f"{m}月{d}日", None)]) + f"""
 <h1>{m}月{d}日は何の日</h1>
-<p class="lead muted">{m}月{d}日にある日付を、年ごとにまとめました。出典つきの公式の日付だけです。</p>
+<p class="lead muted">{m}月{d}日にある日付を、年ごとにまとめました。</p>
 {('<h2>これからの' + str(m) + '月' + str(d) + '日</h2><div class="cards" id="kyou-list">' + cards + '</div>') if cards else ''}
 {('<ul class="kyou-rows">' + quiet_up + '</ul>') if quiet_up else ''}
 {('<h2>過ぎた' + str(m) + '月' + str(d) + '日</h2><ul class="kyou-rows" id="kyou-past">' + "".join(rows) + '</ul>') if rows else ''}
 <nav class="chiprow" aria-label="ほかの日"><a class="chip" href="/kyou/">今日は何の日(一覧)</a>{pn}</nav>"""
     title = f"{m}月{d}日は何の日？ {n}件の日付 | {NAME}"
     names = "、".join(e["title"] for _, e, _h in items[:3])
-    desc = f"{m}月{d}日にある日付: {names}など{n}件。出典と確認日つきで、あと何日か、もう何日かも数えられます。"[:150]
+    desc = f"{m}月{d}日にある日付: {names}など{n}件。あと何日か、もう何日かも数えられます。"[:150]
     # Policy (Codex's reading of Google's and AdSense's rules, 2026-10-11): a page per month and day is a short list, so at launch none of them is indexed and none carries an ad.
     # config.json "kyou_date_min_items" (0 = none) is the number of days a date needs before it may be indexed; raise it step by step once Search Console shows the detail pages are indexed well.
     need = int(c.cfg.get("kyou_date_min_items") or 0)
@@ -1324,7 +1360,7 @@ def kyou_index(c: Ctx, days: dict[str, list]) -> str:
 {specials.special_links(c.today)}
 <p class="lead muted">この日付にどんな日があるかを、月と日ごとに調べられます。数字は、その日にある日付の件数です。</p>
 {"".join(months)}"""
-    return c.page("/kyou/", f"今日は何の日 月日からさがす | {NAME}", "今日は何の日か、月と日から調べられます。出典つきの公式の日付だけを集め、あと何日か、もう何日かも数えられます。", body, "kyou")
+    return c.page("/kyou/", f"今日は何の日 月日からさがす | {NAME}", "今日は何の日か、月と日から調べられます。あと何日か、もう何日かも数えられます。", body, "kyou")
 
 
 # ---------- 今日の1問 (/quiz/) ----------
@@ -1338,7 +1374,7 @@ def quiz_page(c: Ctx) -> str:
 <h1>今日の1問</h1>
 <p class="lead muted">日付から決まる、1日1問の小さな問題です。答えには、かならず理由がつきます。</p>
 <section class="panel quiz" id="quiz" data-hol="{esc(json.dumps(hol, ensure_ascii=False))}" data-terms="{esc(json.dumps(terms, ensure_ascii=False))}"><p class="muted">今日の問題を用意しています…</p></section>
-<p class="hint">問題は、お使いの端末の日付から決まります。答えた結果は、この端末の中にだけ残り、当サイトには送りません。静かに残したい日は、出題しません。</p>"""
+<p class="hint">問題は、お使いの端末の日付から決まります。答えた結果は、この端末の中にだけ残り、当サイトには送りません。大切な日は、出題しません。</p>"""
     return c.page("/quiz/", f"今日の1問 | {NAME}", "日付から決まる、1日1問の小さな問題。答えには理由がつきます。", body, "quiz", noindex=True)
 
 
@@ -1386,7 +1422,7 @@ def new_page(c: Ctx, live: list[dict]) -> str:
 <div class="cards" id="pop-grid"></div><p class="muted" id="pop-none">読み込み中…</p></section>
 <h2>新しく載せた日</h2>
 {blocks}"""
-    return c.page("/new/", f"新着・人気の日 | {NAME}", "最近載せた日付と、予定に入れた人が多い日付。出典と確認日つきの公式の日付だけです。", body, "new")
+    return c.page("/new/", f"新着・人気の日 | {NAME}", "最近載せた日付と、予定に入れた人が多い日付です。", body, "new")
 
 
 def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> dict:

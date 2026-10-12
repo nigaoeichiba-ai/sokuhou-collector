@@ -21,6 +21,7 @@
     return o;
   }
   var P = params();
+  var SHOWCAP = P.today && +P.limit > 60 ? +P.limit : 60;   // how many results the search page lists (the tests raise it, to compare whole lists)
   var SUBCAP = P.today && +P.cap >= 3 ? +P.cap : 24;   // how many small chips before the rest become one "その他" (the tests lower it)
   var TODAY = (function () {
     var p = P.today && /^\d{4}-\d{2}-\d{2}$/.test(P.today) ? C.parse(P.today) : null;
@@ -44,7 +45,7 @@
     if (!/^[A-Za-z0-9_-]{1,40}$/.test(id) || !d) return null;
     var kind = oneOf(e.kind, KIND_IDS, 'memo');
     return { id: id, title: String(e.title == null ? '' : e.title).slice(0, 80), date: C.iso(d), precision: oneOf(e.precision, ['day', 'month', 'year'], 'day'), kind: kind,
-      quiet: !!e.quiet || kind === 'memorial', yearly: !!e.yearly, every100: !!e.every100, alarm: oneOf(e.alarm, ['', 'morning', 'eve', 'week', 'none'], ''),   // '' = follow the setting on the my page
+      quiet: !!e.quiet || kind === 'memorial', yearly: !!e.yearly && !(e.repeat === 'week' || e.repeat === 'month'), repeat: oneOf(e.repeat, ['', 'week', 'month'], ''), every100: !!e.every100, alarm: oneOf(e.alarm, ['', 'morning', 'eve', 'week', 'none'], ''),   // '' = follow the setting on the my page
       pin: e.pin === true, time: /^([01]\d|2[0-3]):[0-5]\d$/.test(String(e.time)) ? e.time : '', created: /^\d{4}-\d{2}-\d{2}$/.test(String(e.created)) ? e.created : '' };
   }
   function cleanNotes(n) {  // memo and "do this N days before" tasks, per day (key c:<catalogue id> or m:<own id>)
@@ -239,13 +240,24 @@
     var c = occ(d, today[0]);
     return C.cmp(c, today) < 0 ? occ(d, today[0] + 1) : c;
   }
+  var REP_WORD = { week: '毎週', month: '毎月', year: '毎年' };
+  function repOf(e) { return e && (e.repeat === 'week' || e.repeat === 'month') ? e.repeat : ''; }   // a day that comes round every week or every month (a yearly one is e.yearly)
+  function rruleOf(e) {   // the repeat as a calendar file writes it; the 29th and 30th are left to the calendar app (a month without them is skipped there)
+    var d = C.parse(e.date), r = repOf(e);
+    if (!d || !r) return '';
+    return r === 'week' ? 'FREQ=WEEKLY' : 'FREQ=MONTHLY;BYMONTHDAY=' + (d[2] === 31 ? '-1' : d[2]);
+  }
+  function shownDate(e) {   // the day a card counts to: a repeating day's next turn, otherwise its own date
+    var d = C.parse(e.date), r = repOf(e);
+    return d && r && e.precision === 'day' ? C.iso(C.repNext(d, r, TODAY)) : e.date;
+  }
   function nextRound(d, today, step) {
     var n = C.totalDays(d, today), k = Math.max(1, Math.ceil(n / step));
     return { n: k * step, date: C.addDays(d, k * step) };
   }
   function nextLines(e, today) {  // the milestones under a personal day
     var out = [], d = C.parse(e.date);
-    if (!d || e.precision !== 'day' || C.totalDays(d, today) <= 0) return out;
+    if (!d || e.precision !== 'day' || repOf(e) || C.totalDays(d, today) <= 0) return out;
     function when(a, label) {
       var r = C.countdown(a, today, 'day');
       return label + ' ' + a[1] + '月' + a[2] + '日・' + (r.dir === 'today' ? '今日' : r.big);
@@ -266,7 +278,7 @@
   function lastYearly(d, today) { var c = occ(d, today[0]); return C.cmp(c, today) > 0 ? occ(d, today[0] - 1) : c; }
   function tipFor(e, today) {
     var d = C.parse(e.date);
-    if (!d || e.precision !== 'day' || C.totalDays(d, today) <= 0) return '';
+    if (!d || e.precision !== 'day' || repOf(e) || C.totalDays(d, today) <= 0) return '';
     var next, left, passed;
     if (e.kind === 'memorial') {
       next = nextYearly(d, today); left = C.totalDays(today, next);
@@ -301,17 +313,17 @@
   }
   function ownItem(e) {
     var k = KINDS[e.kind] || KINDS.memo;
-    return { key: 'm:' + e.id, id: e.id, title: e.title, date: e.date, p: e.precision || 'day', g: k.g, kind: k.t, quiet: !!e.quiet, own: true, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, pin: !!e.pin, kid: e.kind, created: e.created || '' };
+    return { key: 'm:' + e.id, id: e.id, title: e.title, date: e.date, p: e.precision || 'day', rep: repOf(e), next: shownDate(e), g: k.g, kind: k.t, quiet: !!e.quiet, own: true, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, pin: !!e.pin, kid: e.kind, created: e.created || '' };
   }
   function cardHtml(it) {
-    var h = '<article class="card' + (it.quiet ? ' quiet' : '') + (it.pin ? ' pinned' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.date) + '" data-p="' + H(it.p) + '"' + (it.est ? ' data-est="1"' : '') +
+    var h = '<article class="card' + (it.quiet ? ' quiet' : '') + (it.pin ? ' pinned' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.rep ? it.next : it.date) + '" data-p="' + H(it.p) + '"' + (it.est ? ' data-est="1"' : '') +
       (it.g ? ' data-g="' + it.g + '"' : '') + (it.cat ? ' data-cat="' + H(it.cat) + '"' : '') + (it.cat && it.sub ? ' data-sub="' + H(it.sub) + '"' : '') + '>';
     h += '<div class="c-top">' + (it.g ? '<span class="mark m' + it.g + '" data-g="' + it.g + '" aria-hidden="true"></span>' : '') + '<span class="badge">' + H(it.kind) + '</span>' +
       (it.what ? '<span class="what">' + H(it.what) + '</span>' : '') +
       (it.own ? '<button type="button" class="pin" data-act="pin" aria-pressed="' + (it.pin ? 'true' : 'false') + '" aria-label="' + (it.pin ? 'ピン留めを外す' : 'ピン留めする(先頭に表示)') + '">' + (it.pin ? '★' : '☆') + '</button>' : '') + '</div>';
     h += '<p class="c-count"><span class="word"></span><span class="num"></span><span class="rel"></span></p><p class="c-sub"></p>';
     h += '<h3 class="c-title">' + (it.href ? '<a href="' + H(it.href) + '">' + H(it.title) + '</a>' : H(it.title)) + '</h3>';
-    h += '<p class="c-date">' + H(it.est && it.typical ? it.typical : fmtDate(it.date, it.p)) + (it.time ? ' ' + H(it.time) : '') + (it.kword ? ' ' + H(it.kword) : '') +
+    h += '<p class="c-date">' + H(it.est && it.typical ? it.typical : fmtDate(it.rep ? it.next : it.date, it.p)) + (it.rep ? ' ' + H(REP_WORD[it.rep]) : '') + (it.time ? ' ' + H(it.time) : '') + (it.kword ? ' ' + H(it.kword) : '') +
       (it.place && it.place !== '全国' ? '<span class="pl"><b>' + (['改定', '終了', '施行', '改正', '締切'].indexOf(it.kind) >= 0 ? '対象地域' : '場所') + '</b>' + H(it.place) + '</span>' : '') + '</p>';
     if (it.own) h += '<div class="c-next"></div>';
     h += '<div class="c-act">';
@@ -394,7 +406,7 @@
 
   /* ---------- order / drag ---------- */
   function rank(it) {   // without a hand-made order: the day that comes next first (a yearly day by its next turn), then past days, the most recent first
-    var a = C.parse(it.date);
+    var a = C.parse(it.rep ? it.next : it.date);
     if (!a) return 5e5;
     var d = C.totalDays(TODAY, a);
     if (it.yearly) return C.totalDays(TODAY, nextYearly(a, TODAY));
@@ -533,9 +545,9 @@
     if (key.indexOf('m:') === 0) {
       var e = findEntry(key.slice(2));
       if (!e) return;
-      ev = { uid: 'm-' + e.id, title: e.title, date: d, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm, reminds: (S.notes[key] && S.notes[key].remind) || [] };
+      ev = { uid: 'm-' + e.id, title: e.title, date: C.parse(e.date), time: e.time || '', yearly: !!e.yearly, rrule: rruleOf(e), every100: !!e.every100, alarm: e.alarm || S.prefs.alarm, reminds: (S.notes[key] && S.notes[key].remind) || [] };
     } else {
-      ev = { uid: 'e-' + key.slice(2), title: title, date: d, alarm: S.prefs.alarm, reminds: (S.notes[key] && S.notes[key].remind) || [], note: '詳しい日付と出典: ' + location.origin + '/e/' + key.slice(2) + '/' };
+      ev = { uid: 'e-' + key.slice(2), title: title, date: d, alarm: S.prefs.alarm, reminds: (S.notes[key] && S.notes[key].remind) || [], note: '詳しい日付: ' + location.origin + '/e/' + key.slice(2) + '/' };
       if (S.saved.indexOf(key.slice(2)) < 0) { S.saved.push(key.slice(2)); persist(); fillCard(card); }
       var g = card.getAttribute('data-g');
       if (g && CONF.groups[g - 1]) { bump(CONF.groups[g - 1]); persist(); }
@@ -1144,7 +1156,7 @@
       });
       hits = sortPublic(hits, pubMode());
       clearTimeout(statT); statT = setTimeout(function () { if (terms.length) stat(hits.length ? 'act:search_hit' : 'act:search_miss'); }, 1500);
-      var shown = hits.slice(0, 60);
+      var shown = hits.slice(0, SHOWCAP);
       render(out, shown.map(catItem));
       info.textContent = hits.length ? hits.length + '件' + (hits.length > 60 ? '(近い順に60件)' : '') : '';
       var none = $('#none');
@@ -1244,7 +1256,7 @@
     S.entries.forEach(function (e) {
       var d = C.parse(e.date);
       if (!d || e.precision !== 'day') return;
-      var ev = { uid: 'm-' + e.id, title: e.title, date: d, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, alarm: e.alarm || S.prefs.alarm };
+      var ev = { uid: 'm-' + e.id, title: e.title, date: d, time: e.time || '', yearly: !!e.yearly, rrule: rruleOf(e), every100: !!e.every100, alarm: e.alarm || S.prefs.alarm };
       if (withReminds) ev.reminds = (S.notes['m:' + e.id] && S.notes['m:' + e.id].remind) || [];
       evs.push(ev);
     });
@@ -1309,8 +1321,40 @@
     var fi = $('#my-find'), q = fi ? norm(fi.value) : '';
     $$('#my-grid .card').forEach(function (card) { card.hidden = !!q && norm(card.getAttribute('data-title')).indexOf(q) < 0; });
   }
+  var FEATS = [   // what the home page shows, in four switches (the parts are those of the "ホームの部品" panel)
+    { id: 'own', t: '自分のカードと今日の予定', blocks: ['todo', 'mine'] },
+    { id: 'live', t: '速報(公式の発表)', blocks: ['live'] },
+    { id: 'pub', t: '公式の日付(ジャンル・検索・好きな分野・地域・もうすぐの日)', blocks: ['search', 'cats', 'interests', 'region', 'soon'] },
+    { id: 'read', t: '読みもの(今日の数字・こんな時に)', blocks: ['daily', 'usecases'] }
+  ];
+  function wireFeatures() {
+    var ul = $('#feat-list');
+    if (!ul) return;
+    function isOn(f) { var h = blockPrefs().hidden; return f.blocks.some(function (k) { return h.indexOf(k) < 0; }); }
+    function setFeat(f, on) {
+      var bp = blockPrefs(), h = bp.hidden.filter(function (k) { return f.blocks.indexOf(k) < 0; });
+      if (!on) f.blocks.forEach(function (k) { h.push(k); });
+      S.prefs.blocks = { order: bp.order, hidden: h };
+    }
+    function draw() {
+      ul.innerHTML = FEATS.map(function (f) {
+        var on = isOn(f);
+        return '<div class="sw-row"><span class="sw-t">' + H(f.t) + '</span><button type="button" class="switch" role="switch" aria-checked="' + (on ? 'true' : 'false') + '" data-feat="' + f.id + '" aria-label="' + H(f.t) + '">' + (on ? 'オン' : 'オフ') + '</button></div>';
+      }).join('');
+    }
+    draw();
+    ul.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-feat]') : null;
+      if (!b) return;
+      var f = FEATS.filter(function (x) { return x.id === b.getAttribute('data-feat'); })[0], on = !isOn(f);
+      setFeat(f, on); persist(); draw(); stat('act:feat_' + f.id + (on ? '_on' : '_off'));
+      var nb = $('[data-feat="' + f.id + '"]', ul); if (nb) nb.focus();
+    });
+    $('#feat-own').addEventListener('click', function () { FEATS.forEach(function (f) { setFeat(f, f.id === 'own'); }); persist(); draw(); stat('act:feat_own_only'); toast('ホームには、自分のカードと今日の予定だけを出します。'); });
+    $('#feat-all').addEventListener('click', function () { var bp = blockPrefs(); S.prefs.blocks = { order: bp.order, hidden: [] }; persist(); draw(); stat('act:feat_all'); toast('すべて出します。'); });
+  }
   function pageMy() {
-    renderMy(); wireSort('my-sort', renderMy);
+    renderMy(); wireSort('my-sort', renderMy); wireFeatures();
     var fd = $('#my-find'); if (fd) fd.addEventListener('input', applyFind);
     var mv = $('#move-box');
     if (mv && (location.hash === '#backup-h' || location.hash === '#sync')) mv.open = true;   // a link to the transfer part opens it
@@ -1424,31 +1468,54 @@
   })();
 
   /* ---------- add ---------- */
+  var ALARM_WORD = { morning: '当日の朝', eve: '前日の夜', week: '1週間前の朝', none: 'なし' };
+  var TASK_BEFORE = [[0, '当日'], [1, '1日前'], [2, '2日前'], [3, '3日前'], [7, '1週間前'], [14, '2週間前'], [30, '1か月前']];
   function pageAdd() {
-    var root = $('#wizard'), st = { kind: '', p: 'day', applied: '' };
+    var root = $('#wizard'), st = { kind: '', p: 'day', mode: 'ymd', applied: '', rep: '', repTouched: false, ready: false, nudged: false };
+    var MODES = [['ymd', '年月日'], ['t0', '今日'], ['t1', '明日'], ['t2', '明後日'], ['w1', '1週間後'], ['m1', '1か月後'], ['y1', '1年後'], ['month', '年と月だけ'], ['year', '年だけ']];
+    var REPS = [['', 'しない'], ['week', '毎週'], ['month', '毎月'], ['year', '毎年']];
+    var REP_NOTE = { '': '1回だけの日です。',
+      week: '毎週、同じ曜日に来ます。カードには、次の日まであと何日かが出ます。',
+      month: '毎月、同じ日付に来ます(その日がない月は、月の最後の日)。カードには、次の日まであと何日かが出ます。',
+      year: '毎年、同じ月日に来ます。誕生日や記念日に向いています。カードに、次の誕生日・記念日までの日数も出ます。' };
     root.innerHTML =
-      '<section id="s1"><h2>1. 記録したい日</h2><div class="seg" role="group" aria-label="日付の入れ方">' +
-      '<button type="button" class="chip" id="f-today">今日</button>' +
-      '<button type="button" class="chip" data-p="day" aria-pressed="true">年月日</button><button type="button" class="chip" data-p="month" aria-pressed="false">年と月だけ</button>' +
-      '<button type="button" class="chip" data-p="year" aria-pressed="false">年だけ</button></div>' +
-      '<div class="field"><label for="f-day" id="lab-date">日付を選ぶ</label><input type="date" id="f-day" min="0100-01-01" max="2200-12-31">' +
+      '<section id="s1"><h2>1. 日付</h2><div class="seg" role="group" aria-label="日付の選び方">' + MODES.map(function (m) {
+        return '<button type="button" class="chip" data-mode="' + m[0] + '" aria-pressed="' + (m[0] === 'ymd' ? 'true' : 'false') + '">' + m[1] + '</button>';
+      }).join('') + '</div>' +
+      '<div class="field"><label for="f-day" id="lab-date">日付</label><input type="date" id="f-day" min="0100-01-01" max="2200-12-31">' +
       '<input type="month" id="f-month" hidden placeholder="2026-10"><input type="number" id="f-year" hidden inputmode="numeric" min="1" max="2200" placeholder="例 1990"></div>' +
-      '<div class="field"><label for="f-say">文字で日付を入力する</label><input type="text" id="f-say" autocomplete="off" maxlength="30" placeholder="12月25日 / 2027年3月3日 / 明日">' +
-      '<p class="hint" id="say-note" aria-live="polite"></p>' + micHint() + '</div>' +
-      '<p class="hint" id="h-approx" hidden>年や月までの日付は、「約」つきで数えます。</p><p class="err" id="e-date" role="alert"></p>' +
-      '<div id="live" class="live" hidden aria-live="polite"></div></section>' +
+      '<p class="date-line" id="date-line" hidden aria-live="polite"></p>' +
+      '<p class="hint" id="h-approx" hidden>年や月までの日付は、「約」つきで数えます。</p><p class="err" id="e-date" role="alert"></p></section>' +
       '<section id="s2" hidden><h2>2. どんな日ですか</h2><div class="tiles" role="group" aria-label="日の種類">' + Object.keys(KINDS).map(function (k) {
-        return '<button type="button" class="tile" data-kind="' + k + '" aria-pressed="false"><span>' + H(KINDS[k].t) + '</span><br><small class="muted">' + H(KINDS[k].d) + '</small></button>';
-      }).join('') + '</div><div class="chips" id="f-words"></div>' +
-      '<div class="field"><label for="f-title">文字で入力する(例: 結婚記念日)</label><input type="text" id="f-title" maxlength="40" autocomplete="off">' + micHint() + '</div></section>' +
-      '<section id="s3" hidden><h2>3. 時刻・くり返し</h2>' +
+        return '<button type="button" class="tile" data-kind="' + k + '" aria-pressed="false"><span>' + H(KINDS[k].t) + '</span></button>';
+      }).join('') + '</div><p class="hint" id="kind-d" hidden></p><div class="chips" id="f-words"></div>' +
+      '<div class="field"><label for="f-title">名前(例: 結婚記念日)</label><input type="text" id="f-title" maxlength="40" autocomplete="off">' + micHint() + '</div></section>' +
+      '<section id="s3" hidden><h2>3. くり返し・時刻・知らせ</h2>' +
       '<div class="field" id="f-timebox" hidden><label for="f-time">時刻(任意)</label><input type="time" id="f-time"></div>' +
-      '<label class="chip" id="l-yearly"><input type="checkbox" id="f-yearly"> 毎年くり返す</label> <label class="chip" id="l-100"><input type="checkbox" id="f-100"> 100日ごとの節目も入れる</label>' +
-      '<p class="hint">記録したあと、メモとやることを書けます。</p></section>' +
-      '<p id="quiet-note" class="notice quiet" hidden>静かに記録できます。広告は表示しません。</p>' +
-      '<p><button type="button" class="btn" id="f-save" hidden>この日を記録する</button></p>';
+      '<div class="field" role="group" aria-labelledby="rep-lab"><span class="lab" id="rep-lab">くり返し</span><div class="seg">' + REPS.map(function (r) {
+        return '<button type="button" class="chip" data-rep="' + r[0] + '" aria-pressed="' + (r[0] === '' ? 'true' : 'false') + '">' + r[1] + '</button>';
+      }).join('') + '</div><p class="hint" id="rep-note"></p></div>' +
+      '<div class="field" id="f-100box"><label class="chip" id="l-100"><input type="checkbox" id="f-100"> 100日ごとの節目も入れる</label><p class="hint">100日目、200日目…の日が、カレンダーに入ります。</p></div>' +
+      '<div class="field" id="f-alarmbox"><label for="f-alarm">この日の知らせ(通知・カレンダー)</label><select id="f-alarm"><option value="">設定に合わせる(' + (ALARM_WORD[S.prefs.alarm] || '当日の朝') + ')</option>' +
+      '<option value="morning">当日の朝</option><option value="eve">前日の夜</option><option value="week">1週間前の朝</option><option value="none">なし</option></select></div></section>' +
+      '<section id="s4" hidden><h2>4. メモ・やること(任意)</h2>' +
+      '<div class="field"><label for="f-memo">メモ</label><textarea id="f-memo" rows="3" maxlength="600" placeholder="持ち物、場所、思い出など"></textarea></div>' +
+      '<div class="field" id="f-taskbox"><label for="f-task">やること</label><div class="x-task"><input type="text" id="f-task" maxlength="80" placeholder="例: 店を予約する" autocomplete="off">' +
+      '<select id="f-before" aria-label="いつまでに">' + TASK_BEFORE.map(function (b) { return '<option value="' + b[0] + '"' + (b[0] === 7 ? ' selected' : '') + '>' + b[1] + '</option>'; }).join('') + '</select></div>' +
+      '<p class="hint">期限の日は、カレンダーとホームに出ます。2つ目からは、記録したあとの画面で足せます。</p></div></section>' +
+      '<section id="s5" hidden><h2>プレビュー</h2><p class="hint">記録すると、このように表示されます。</p><div id="live" class="live" aria-live="polite"></div>' +
+      '<p><button type="button" class="btn" id="f-save">この日を記録する</button></p></section>';
     var $f = function (id) { return document.getElementById(id); };
-    function show(id, on) { $f(id).hidden = !on; }
+    function reveal(id, on) {   // a part comes up as soon as what it needs is there; the first one that comes up is brought into view (no scrolling by hand)
+      var el = $f(id);
+      if (!el || el.hidden === !on) return;
+      el.hidden = !on;
+      if (on && st.ready && !st.nudged) {
+        st.nudged = true;
+        var r = el.getBoundingClientRect();
+        if (r.top > window.innerHeight * 0.5 && window.scrollBy) window.scrollBy({ top: r.top - 96, behavior: calm ? 'auto' : 'smooth' });
+      }
+    }
     function readDate() {
       var d = null, v;
       if (st.p === 'day') { v = $f('f-day').value; d = v ? C.parse(v) : null; }
@@ -1466,78 +1533,88 @@
       return (window.AtomouQuick && window.AtomouQuick.kindOf && window.AtomouQuick.kindOf(t)) || 'memo';
     }
     function titleNow() { var t = typed(); return t || (kindNow() ? KINDS[kindNow()].t : ''); }
-    function applyKind(k) {   // what the kind sets: the name suggestions and the two boxes
+    function setRep(r) {
+      st.rep = r;
+      $$('[data-rep]', root).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-rep') === r ? 'true' : 'false'); });
+      $f('rep-note').textContent = REP_NOTE[r] || '';
+    }
+    function applyKind(k) {   // what the kind sets: the name suggestions, how it repeats, the 100-day box
       if (st.applied === k) return;
       st.applied = k;
       var kd = KINDS[k];
-      $f('f-yearly').checked = !!(kd && kd.yearly); $f('f-100').checked = !!(kd && kd.r100);
+      if (!st.repTouched) setRep(kd && kd.yearly ? 'year' : '');
+      $f('f-100').checked = !!(kd && kd.r100);
       $f('f-words').innerHTML = kd ? kd.words.map(function (w) { return '<button type="button" class="chip" data-word="' + H(w) + '">' + H(w) + '</button>'; }).join('') : '';
     }
+    function show(id, on) { $f(id).hidden = !on; }
     function update() {
-      var d = readDate(), kind = kindNow(), k = KINDS[kind] || {};
-      show('s2', !!d || !!st.kind);
+      var d = readDate(), kind = kindNow(), k = KINDS[kind] || {}, day = st.p === 'day', rep = day && (st.rep === 'week' || st.rep === 'month') ? st.rep : '';
+      st.nudged = false;
+      reveal('s2', !!d || !!st.kind);
       $$('[data-kind]', root).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-kind') === kind ? 'true' : 'false'); });
       applyKind(kind);
-      show('s3', !!d && !!kind && st.p === 'day');
-      show('live', !!d); show('f-save', !!d && !!kind);
-      show('quiet-note', !!k.quiet);
-      show('l-100', !k.quiet && !k.time && st.p === 'day');
-      show('f-timebox', !!k.time && st.p === 'day');
-      if (!d) { $f('e-date').textContent = ''; return; }
-      var r = C.countdown(d, TODAY, st.p);
-      var live = $f('live'), name = titleNow();
+      var kd = $f('kind-d'); kd.hidden = !kind; kd.textContent = kind ? (kind === 'memo' ? 'どんな日でも記録できます。' : '例: ' + k.d) : '';
+      reveal('s3', !!d && !!kind && day);
+      reveal('s4', !!d && !!kind);
+      reveal('s5', !!d && !!kind);
+      $f('f-100box').hidden = !(!k.quiet && !k.time && day && !rep);
+      $f('f-timebox').hidden = !(k.time && day);
+      $f('f-alarmbox').hidden = !(day && !k.quiet);
+      $f('f-taskbox').hidden = !day;
+      $f('rep-note').textContent = REP_NOTE[st.rep] || '';
+      var line = $f('date-line');
+      if (!d) { $f('e-date').textContent = ''; line.hidden = true; $f('live').innerHTML = ''; return; }
+      var r0 = C.countdown(d, TODAY, st.p);
+      line.hidden = false;
+      line.innerHTML = H(fmtDate(C.iso(d), st.p)) + ' <b class="' + (r0.dir === 'mou' ? 'mou' : 'ato') + '">' + H(r0.big) + '</b>' +
+        (r0.dir === 'mou' ? ' <span class="tag">過去</span>' : r0.dir === 'ato' ? ' <span class="tag">予定</span>' : '');
+      var dd = rep ? C.repNext(d, rep, TODAY) : d, r = C.countdown(dd, TODAY, st.p), live = $f('live'), name = titleNow();
       live.className = 'live' + (r.dir === 'mou' ? ' mou' : '');
-      live.innerHTML = (name ? '<div>' + H(name) + '</div>' : '') + '<div class="big">' + H(r.big) + '</div>' + (r.sub ? '<div class="muted">合計 ' + H(r.sub) + '</div>' : '') +
-        '<div class="muted">' + H(fmtDate(C.iso(d), st.p)) + '</div>';
+      live.innerHTML = (name ? '<div class="lv-name">' + H(name) + '</div>' : '') + '<div class="big">' + H(r.big) + '</div>' + (r.sub ? '<div class="muted">合計 ' + H(r.sub) + '</div>' : '') +
+        '<div class="muted">' + H(fmtDate(C.iso(dd), st.p)) + (rep ? ' ' + REP_WORD[rep] : day && st.rep === 'year' ? ' 毎年' : '') + (k.time && day && /^\d{2}:\d{2}$/.test($f('f-time').value) ? ' ' + H($f('f-time').value) : '') + '</div>';
     }
     function setKind(k) { st.kind = st.kind === k ? '' : k; update(); }
-    function say() {
-      var v = $f('f-say').value, note = $f('say-note'), d;
-      if (!v.trim()) { note.textContent = ''; return; }
-      d = C.parseSpoken(v, st.p, TODAY);
-      if (!d) { note.textContent = st.p === 'day' ? '読み取れませんでした。年月日で入力してください(例: 12月25日)。' : st.p === 'month' ? '読み取れませんでした。年と月で入力してください(例: 2026年10月)。' : '読み取れませんでした。年で入力してください(例: 1990年)。'; return; }
-      if (st.p === 'day') $f('f-day').value = C.iso(d);
-      else if (st.p === 'month') $f('f-month').value = String(d[0]).padStart(4, '0') + '-' + String(d[1]).padStart(2, '0');
-      else $f('f-year').value = d[0];
-      note.textContent = '→ ' + fmtDate(C.iso(d), st.p);
-      update();
-    }
-    function setP(p) {
-      st.p = p;
-      $$('[data-p]', root).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-p') === p ? 'true' : 'false'); });
+    function paintModes() { $$('[data-mode]', root).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === st.mode ? 'true' : 'false'); }); }
+    function setMode(m) {
+      var p = m === 'month' || m === 'year' ? m : 'day', pick = m === 't0' ? TODAY : m === 't1' ? C.addDays(TODAY, 1) : m === 't2' ? C.addDays(TODAY, 2) : m === 'w1' ? C.addDays(TODAY, 7) :
+        m === 'm1' ? C.addMonths(TODAY, 1) : m === 'y1' ? C.addMonths(TODAY, 12) : null;
+      st.mode = m; st.p = p; paintModes();
       $f('f-day').hidden = p !== 'day'; $f('f-month').hidden = p !== 'month'; $f('f-year').hidden = p !== 'year';
       $f('lab-date').setAttribute('for', p === 'day' ? 'f-day' : p === 'month' ? 'f-month' : 'f-year');
-      $f('lab-date').textContent = p === 'day' ? '日付を選ぶ' : p === 'month' ? '年と月(例 2026-10)' : '年(例 1990)';
+      $f('lab-date').textContent = p === 'day' ? '日付' : p === 'month' ? '年と月(例 2026-10)' : '年(例 1990)';
       $f('h-approx').hidden = p === 'day';
-      $f('f-say').value = ''; $f('say-note').textContent = '';
+      if (pick) $f('f-day').value = C.iso(pick);
       update();
     }
     root.addEventListener('click', function (ev) {
       var t = ev.target.closest('button');
       if (!t) return;
       if (t.hasAttribute('data-kind')) setKind(t.getAttribute('data-kind'));
-      else if (t.hasAttribute('data-p')) setP(t.getAttribute('data-p'));
-      else if (t.id === 'f-today') { setP('day'); $f('f-day').value = C.iso(TODAY); update(); }
+      else if (t.hasAttribute('data-mode')) setMode(t.getAttribute('data-mode'));
+      else if (t.hasAttribute('data-rep')) { st.repTouched = true; setRep(t.getAttribute('data-rep')); update(); }
       else if (t.hasAttribute('data-word')) {
         var w = t.getAttribute('data-word'), cur = $f('f-title').value;
         $f('f-title').value = (w.charAt(0) === 'の' && cur) ? cur + w : w; update();
       }
       else if (t.id === 'f-save') save();
     });
-    $f('f-say').addEventListener('input', say);
-    ['f-day', 'f-month', 'f-year'].forEach(function (id) { $f(id).addEventListener('input', function () { $f('f-say').value = ''; $f('say-note').textContent = ''; }); });
+    ['f-day', 'f-month', 'f-year'].forEach(function (id) {
+      $f(id).addEventListener('input', function () { if (st.mode !== 'ymd' && st.mode !== 'month' && st.mode !== 'year') { st.mode = 'ymd'; paintModes(); } });
+    });
     ['f-day', 'f-month', 'f-year', 'f-title', 'f-time'].forEach(function (id) { $f(id).addEventListener('input', update); $f(id).addEventListener('change', update); });
     function save() {
       var d = readDate(), kind = kindNow();
       if (!d) { $f('e-date').textContent = '日付を入れてください。'; return; }
       if (!kind) return;
-      var k = KINDS[kind], e = {
-        id: uid(), title: titleNow(), date: C.iso(d), precision: st.p, kind: kind, quiet: !!k.quiet,
-        yearly: st.p === 'day' && $f('f-yearly').checked, every100: st.p === 'day' && !k.quiet && !k.time && $f('f-100').checked, alarm: k.quiet ? 'none' : '', created: C.iso(TODAY),
-        time: k.time && st.p === 'day' && /^\d{2}:\d{2}$/.test($f('f-time').value) ? $f('f-time').value : ''
+      var k = KINDS[kind], day = st.p === 'day', rep = day && (st.rep === 'week' || st.rep === 'month') ? st.rep : '', e = {
+        id: uid(), title: titleNow(), date: C.iso(d), precision: st.p, kind: kind, quiet: !!k.quiet, yearly: day && st.rep === 'year', repeat: rep,
+        every100: !$f('f-100box').hidden && $f('f-100').checked, alarm: k.quiet ? 'none' : (day ? $f('f-alarm').value : ''), created: C.iso(TODAY),
+        time: k.time && day && /^\d{2}:\d{2}$/.test($f('f-time').value) ? $f('f-time').value : ''
       };
       if (window.AtomouApp && window.AtomouApp.tier && window.AtomouApp.tier.blocked(1) && !k.quiet) return;   // a free planner is full (the reason is shown)
+      var memo = $f('f-memo').value.trim().slice(0, 600), task = day ? $f('f-task').value.trim().slice(0, 80) : '';
       S.entries.push(e); stat('act:add:' + e.kind);
+      if (memo || task) S.notes['m:' + e.id] = { memo: memo, tasks: task ? [{ id: Math.random().toString(36).slice(2, 8), before: +$f('f-before').value || 0, text: task, done: false }] : [], remind: [], remindSlot: 'm', mute: false };
       if (!persist()) return;  // storage blocked: stay on the form (the toast explains) instead of leaving and losing what was typed
       location.href = '/plan/?key=m:' + e.id + '&new=1';
     }
@@ -1545,7 +1622,9 @@
     if (P.title) { $f('f-title').value = P.title; }
     var when = P.date && C.parse(P.date) ? C.parse(P.date) : whenToken(P.when);
     if (when) { if (!st.kind && !typed()) st.kind = 'memo'; $f('f-day').value = C.iso(when); }
+    setRep('');
     update();
+    st.ready = true;
     wireMic();
   }
 
@@ -1699,6 +1778,34 @@
       upd(); r.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd);
     });
   }
+  /* ---------- 戻る: a link that takes the visitor away from a page they were working in (a link marked data-back, or any link in the middle of the my page) leaves a note,
+     and the next page has a button to go back (the browser's back button was the only way, and it was not found) ---------- */
+  (function () {
+    var KEYB = 'atomou.back', NAMES = { '/my/': 'マイページ', '/plan/': '予定の詳細', '/add/': '記録ページ', '/': 'ホーム' };
+    function read() { try { return JSON.parse(sessionStorage.getItem(KEYB) || 'null'); } catch (e) { return null; } }
+    function write(v) { try { if (v) sessionStorage.setItem(KEYB, JSON.stringify(v)); else sessionStorage.removeItem(KEYB); } catch (e) { /* the bar is a convenience */ } }
+    function bare(u) { return String(u).split('#')[0].split('?')[0]; }
+    document.addEventListener('click', function (ev) {
+      var a = ev.target.closest ? ev.target.closest('a[href]') : null;
+      if (!a || ev.defaultPrevented || ev.ctrlKey || ev.metaKey || ev.shiftKey || a.target === '_blank') return;
+      var href = a.getAttribute('href') || '';
+      if (href.charAt(0) !== '/' || href.charAt(1) === '/' || bare(href) === location.pathname) return;
+      if (!(a.hasAttribute('data-back') || (page === 'my' && a.closest('main')))) return;
+      write({ u: location.pathname + location.search + location.hash, l: a.getAttribute('data-back') || NAMES[location.pathname] || 'もとのページ', t: Date.now() });
+    }, true);
+    var b = read(), main = document.querySelector('main');
+    write(null);
+    if (!b || !main || Date.now() - (+b.t || 0) > 600000 || !/^\/[^\s"<>\/][^\s"<>]*$|^\/$/.test(String(b.u)) || bare(b.u) === location.pathname) return;
+    var bar = document.createElement('p'), link;
+    bar.className = 'back-bar';
+    bar.innerHTML = '<a class="btn small ghost" href="' + H(b.u) + '">← ' + H(String(b.l).slice(0, 20)) + 'に戻る</a>';
+    link = bar.firstChild;
+    link.addEventListener('click', function (ev) {   // back in the history when we came from there: the page is as it was left
+      var ref = ''; try { ref = document.referrer ? new URL(document.referrer).pathname : ''; } catch (e) { ref = ''; }
+      if (ref && ref === bare(b.u) && history.length > 1) { ev.preventDefault(); history.back(); }
+    });
+    main.insertBefore(bar, main.firstChild);
+  })();
   prefillContact();
   applyPrefs();
   hydrate(document);
@@ -1721,7 +1828,7 @@
   else if (page === 'new') pageNew();
   else if (page === 'interests') pageInterests();
   window.AtomouApp = { toggleSave: toggleSave, picked: picked, pickCount: pickCount, regionHits: regionHits, interestHits: interestHits, matchCat: matchCat, catItem2: catItem,  C: C, ICS: ICS, CONF: CONF, P: P, TODAY: TODAY, page: page, $: $, $$: $$, H: H, state: function () { return S; }, setState: function (x) { S = x; }, persist: persist, stat: stat, toast: toast, toastAct: toastAct,
-    loadCatalog: loadCatalog, catItem: catItem, ownItem: ownItem, cardHtml: cardHtml, hydrate: hydrate, fillCard: fillCard, fmtDate: fmtDate, wd: wd, occ: occ, nextYearly: nextYearly, KINDS: KINDS,
+    loadCatalog: loadCatalog, catItem: catItem, ownItem: ownItem, cardHtml: cardHtml, hydrate: hydrate, fillCard: fillCard, fmtDate: fmtDate, wd: wd, occ: occ, nextYearly: nextYearly, repOf: repOf, rruleOf: rruleOf, shownDate: shownDate, REP_WORD: REP_WORD, KINDS: KINDS,
     findEntry: findEntry, uid: uid, icsFor: icsFor, removeEntry: removeEntry, normalize: normalize, tipFor: tipFor, nextLines: nextLines, applyPrefs: applyPrefs, setPin: setPin, sortMode: sortMode, sortItems: sortItems, myItems: myItems };
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !P.today) {
     window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () { /* the site works without it */ }); });

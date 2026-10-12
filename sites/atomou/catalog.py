@@ -96,7 +96,9 @@ def _d(s) -> date | None:
 
 
 def entry_id(item: dict) -> str:
-    key = f"{item.get('source_url', '')}|{item.get('date', '')}|{item.get('kind', '')}" + ("|estimate" if item.get("estimated") else "")   # an estimate and the official day it gives way to are two entries
+    key = f"{item.get('source_url', '')}|{item.get('date', '')}|{item.get('kind', '')}" + ("|estimate" if item.get("estimated") else "")
+    if item.get("basis") == "press":
+        key += "|" + str(item.get("title", "")).strip()   # a list article carries many days of one kind on one date: the title tells them apart (an official day keeps its id when the title is edited)   # an estimate and the official day it gives way to are two entries
     return hashlib.sha1(key.encode("utf-8")).hexdigest()[:10]
 
 
@@ -222,7 +224,9 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
             "weekday": WEEKDAYS[d.weekday()], "kind": it["kind"], "category": it["category"], "group": group, "mid": (it.get("mid") if it.get("mid") in MID_NAMES.get(group, ()) else mid_for(group, subject, it["category"])), "region": it.get("region") or None,
             "subject": subject, "what": what, "place": place,
             "tags": tags_for(it, group), "sensitivity": sens, "quiet": quiet, "ad_ok": bool(it.get("ad_ok", True)) and not quiet,
-            "son_toku": bool(it.get("son_toku")), "source_url": it["source_url"], "source_quote": (it.get("source_quote") or "")[:60] or None,
+            "son_toku": bool(it.get("son_toku")), "source_url": it["source_url"], "basis": "press" if it.get("basis") == "press" else "official",
+            "official_url": str(it.get("official_url")) if str(it.get("official_url") or "").startswith("https://") else "",
+            "source_quote": (it.get("source_quote") or "")[:60] or None,
             "checked_on": it["checked_on"], "added": _added(it), "status": ("ended" if last < today else ("old_checked" if (today - checked).days > STALE_DAYS else "active")),
             "publish_on": max(date(2000, 1, 1), d - timedelta(days=lead)).isoformat(),
             "corrected_on": _day_or_empty(it.get("corrected_on")), "changes": _changes(it.get("changes")),

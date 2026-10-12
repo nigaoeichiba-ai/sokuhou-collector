@@ -147,8 +147,7 @@ class Pages(BuildOnce):
         self.assertIn(">詳細</a>", card)
         self.assertNotIn("カレンダーに入れる", card)
         page = self.rel[f"e/{e['id']}/index.html"]
-        self.assertIn("出典", page)  # the source and the check date live on the detail page
-        self.assertIn("確認日", page)
+        self.assertIn("公式ページ</a>", page)  # an official page is linked on the detail page (no source table, no check date any more)
         self.assertIn("メモ・やることを追加", page)
 
     def test_home_has_the_todays_list_block_first(self):
@@ -221,7 +220,6 @@ class Pages(BuildOnce):
         quiet = [e for e in self.entries if e["quiet"]]
         for e in quiet[:10]:
             page = self.rel[f"e/{e['id']}/index.html"]
-            self.assertIn("この日は、静かにお知らせします", page)
             self.assertNotIn("同じジャンルの日", page)
             self.assertIn('class="card quiet', page)
 
@@ -241,15 +239,15 @@ class Pages(BuildOnce):
         self.assertIn('href="/?intro=1"', my)                      # the my page: the introduction and the guide again
         self.assertIn('data-guide="start"', my)
 
-    def test_the_source_and_check_date_are_also_shown_right_under_the_card(self):
+    def test_the_badge_and_the_official_page_link_sit_right_under_the_card(self):   # no source table and no check date any more (owner, 2026-10-12)
         e = self.entries[0]
         page = self.rel[f"e/{e['id']}/index.html"]
-        line = re.search(r'<p class="small muted src-line">(.*?)</p>', page)
+        line = re.search(r'<p class="vrow">(.*?)</p>', page)
         self.assertIsNotNone(line)
-        self.assertIn(e["checked_on"], line.group(1))
-        self.assertIn('href="#src"', line.group(1))
-        self.assertIn('<h2 id="src">', page)
-        self.assertLess(page.index("src-line"), page.index("<h2 id=\"src\">"))     # the proof sits above the long text, not only below it
+        self.assertIn("vbadge", line.group(1))
+        self.assertNotIn(e["checked_on"], re.sub(r"(?s)<script.*?</script>", "", page))     # (the page markup for search engines keeps its dates)
+        self.assertIn(f'href="{e["source_url"]}"', line.group(1))     # an official source is the link "公式ページ"
+        self.assertIn("公式ページ</a>", line.group(1))
 
     def test_use_case_pages_do_not_say_notices_are_missing(self):
         for k, v in self.rel.items():
@@ -263,7 +261,7 @@ class Pages(BuildOnce):
             ids = re.search(r'data-saveall="([^"]+)"', v).group(1).split(",")
             self.assertTrue(all(re.fullmatch(r"[0-9a-f]{10}", i) for i in ids))
             self.assertIn(f"この日を含む{len(ids)}件をまとめて予定に入れる", v)
-        quiet = [v for kk, v in self.rel.items() if kk.startswith("e/") and isinstance(v, str) and "この日は、静かにお知らせします" in v]
+        quiet = [v for kk, v in self.rel.items() if kk.startswith("e/") and isinstance(v, str) and 'class="card quiet' in v]
         self.assertTrue(all("data-saveall" not in v for v in quiet))     # a quiet day leads nowhere else
 
     def test_the_home_page_puts_the_visitors_own_days_before_the_search(self):
@@ -313,7 +311,7 @@ class Pages(BuildOnce):
                 self.assertNotIn(i, quiet_ids, k)
                 self.assertNotIn(i, month_ids, k)
         self.assertIn("calendar.google.com/calendar/r?cid=webcal", self.rel["c/exams/index.html"])
-        self.assertIn("DESCRIPTION:詳しい日付と出典: https://", feeds_["cal/all.ics"])
+        self.assertIn("DESCRIPTION:詳しい日付: https://", feeds_["cal/all.ics"])
 
     def test_a_public_day_has_its_own_share_picture_and_a_quiet_one_does_not(self):
         from sites.atomou import ogimage
@@ -403,12 +401,12 @@ class Pages(BuildOnce):
                     core = tok.replace("☆ ", "").replace("★ ", "")
                     self.assertTrue(core in src or tok in examples, f"{u['slug']}: 『{tok}』 is not on any screen")
 
-    def test_event_pages_state_source_and_check_date(self):
+    def test_event_pages_link_the_official_page_and_say_the_date_may_be_wrong(self):   # the source table and the check date were taken off (owner, 2026-10-12)
         e = self.entries[0]
         page = self.rel[f"e/{e['id']}/index.html"]
         self.assertIn(e["source_url"].replace("&", "&amp;"), page)
-        self.assertIn(e["checked_on"], page)
-        self.assertIn("公式ページで、最新の情報をご確認ください", page)
+        self.assertNotIn(e["checked_on"], re.sub(r"(?s)<script.*?</script>", "", page))
+        self.assertIn("カードの日付は間違っていることがあります", page)
 
     def test_privacy_policy_says_where_personal_days_live(self):
         p = self.rel["privacy/index.html"]
@@ -702,7 +700,7 @@ class AppInChrome(BuildOnce):
         (fx / "rc.json").write_text(json.dumps({"v": 1, "changed": [e["id"]]}), encoding="utf-8")
         dom = html.unescape(self.dom(f"/e/{e['id']}/", "&recheck=/fixtures/rc.json"))
         self.assertIn('class="notice rc-note"', dom)
-        self.assertIn("出典のページで、この日付が見つかりませんでした", dom)
+        self.assertIn("公式ページで、この日付が見つかりませんでした", dom)
         self.assertIn("再確認中", dom)
         from sites.atomou.build import GROUP_SLUG
         dom = html.unescape(self.dom(f"/c/{GROUP_SLUG[e['group']]}/", "&recheck=/fixtures/rc.json"))
