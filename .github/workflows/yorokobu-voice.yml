@@ -35,6 +35,7 @@ jobs:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
         run: |
+          trap 'rm -f raw_voice.txt new_voice.jsonl' EXIT      # the plain text of the sentences is gone from the runner whatever happens
           if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then
             echo "XSERVER_SSH_KEY / XSERVER_HOST / XSERVER_USER are not all set; nothing to do"
             exit 0

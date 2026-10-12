@@ -184,6 +184,24 @@ def _range(e: dict) -> str:
     return f"{label(s)} から {label(t)} まで"
 
 
+MIN_POINT_ITEMS = 4
+
+
+def points_section(d: dict, cfg: dict) -> str:
+    """The gifts of the site that carry a shop's point multiplier right now (the number and the end are what Rakuten shows for the item; none is invented): four or more, else nothing."""
+    B = _b()
+    from sites.yorokobu import dataroom
+    items = [i for i in dataroom.all_products(d) if B.point_end(i) and i.get("available", True)]
+    if len(items) < MIN_POINT_ITEMS:
+        return ""
+    items.sort(key=lambda i: (-float(i["point_rate"]), -B.score(i), i["code"]))
+    cards = "".join(B.item_card(cfg, i) for i in items[:12])
+    return (f'<section class="block"><div class="sec-head"><span class="eyebrow">Point up</span><h2>いま、ポイント倍率が付いている贈り物</h2>'
+            f'<p class="sec-lead">当サイトで取り上げた商品のうち、楽天市場が倍率と終了の日時を表示しているものです({esc(d["fetched_label"])}時点)。'
+            f'倍率の対象になる条件や、ポイントの上限は、商品ページで確かめてください。エントリーが必要な場合があります。</p></div>'
+            f'<ul class="items">{cards}</ul>{B.freshness(d)}</section>')
+
+
 def sale_page(d: dict, cfg: dict, preview: bool, events: list[dict], href: dict[str, str], now: datetime) -> str:
     B = _b()
     open_ = [e for e in events if _dt(e["end"]) >= now.astimezone(JST)]
@@ -209,6 +227,7 @@ def sale_page(d: dict, cfg: dict, preview: bool, events: list[dict], href: dict[
 <div class="crumbs-wrap">{B.crumbs([("トップ", "/"), ("セールの日程", None)])}</div>
 {B.pr_quiet(cfg)}
 <section class="block"><div class="sec-head"><h2>いまの、そしてこれからのセール</h2></div>{f'<div class="sale-cards">{cards}</div>' if cards else '<p class="notice">いま発表されているセールはありません。決まりしだい、ここに載せます。</p>'}</section>
+{points_section(d, cfg)}
 <section class="block"><div class="sec-head"><h2>プレゼントを、セールで買うときの順番</h2></div>{steps}
 <ul class="plain sale-links">{pick_link}<li><a href="/memo/">贈る日を登録して、忘れないようにする(たいせつな日メモ)</a></li></ul></section>
 <section class="block"><p class="notice">日程は、各店が発表した内容です。変更になることがあるため、購入の前に、各店の公式ページで確かめてください。当サイトは、各店の公式ページへのリンクを紹介し、購入されると報酬が支払われることがあります。</p></section>"""

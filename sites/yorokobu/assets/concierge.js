@@ -89,21 +89,28 @@
     return out;
   }
 
+  function dnt() { return navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || window.doNotTrack === "1" || navigator.msDoNotTrack === "1"; }
   // ---------------------------------------------------------------- counting (anonymous: a key per kind of question, nothing else)
   var sent = {};
   function count(keys) {
-    if (navigator.doNotTrack === "1" || navigator.webdriver) return;
+    if (dnt() || navigator.webdriver) return;
     keys = keys.filter(function (k) { return /^cq\.[a-z]{1,6}\.[a-z0-9_-]{1,32}$/.test(k) && !sent[k]; });
     if (!keys.length) return;
     keys.forEach(function (k) { sent[k] = 1; });
     try { fetch("/api/ask.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ v: 1, op: "stat", k: keys }), keepalive: true }).catch(function () {}); } catch (e) { /* not counted */ }
   }
   // text only when asked for (a button that says so); the same checks as the server
-  var UNSAFE = /[0-9０-９]{7,}|@|＠|https?:|www\.|〒|\d{3}-\d{4}/;
+  // the same rules as the server's (which is the check that counts): plain text first (NFKC, every dash alike), then phone numbers, mail, links, addresses
+  function unsafe(text) {
+    var n = String(text).normalize("NFKC").replace(/[\u2010-\u2015\u2212\u30FC\uFF0D\uFF70\u2043]/g, "-");
+    return /[0-9](?:[\s\-.\/()・,]*[0-9]){6,}/.test(n) || /@|https?:|www\.|\u3012|ftp:/.test(n) ||
+      /[a-z0-9][a-z0-9-]*\.(?:com|net|org|jp|info|biz|io|me|tv|co|ne|app|dev)(?:[\/\s.]|$)/i.test(n) || /(?:\bat\b|アットマーク|アット).{0,30}(?:\bdot\b|ドット)/i.test(n) ||
+      /(?:都|道|府|県).{0,12}(?:市|区|町|村|郡)/.test(n) || /[0-9]+\s*(?:丁目|番地)|[0-9]+\s*番\s*[0-9]*\s*号/.test(n);
+  }
   function sendVoice(kind, text, done) {
     text = String(text || "").replace(/\s+/g, " ").trim();
     if (text.length < 2 || text.length > 80) return done("2〜80字で書いてください。");
-    if (UNSAFE.test(text)) return done("電話番号・住所・メールアドレス・リンクのように見える部分があります。個人の情報は、書かないでください。");
+    if (unsafe(text)) return done("電話番号・住所・メールアドレス・リンクのように見える部分があります。個人の情報は、書かないでください。");
     fetch("/api/ask.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ v: 1, op: "voice", k: kind, t: text }) })
       .then(function (r) { done(r.ok ? "" : "送れませんでした。時間をおいて、もう一度お試しください。", r.ok); }).catch(function () { done("送れませんでした。"); });
   }

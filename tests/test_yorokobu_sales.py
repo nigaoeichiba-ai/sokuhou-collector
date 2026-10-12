@@ -157,6 +157,16 @@ class BarBehaviourTest(unittest.TestCase):
         self.assertTrue(o["after_close"])
         self.assertEqual(o["stored"], ["a:soon", "r:live"])
 
+    def test_links_of_the_bar_go_only_to_the_shops_hosts(self):
+        o = self.run_page(at("2026-10-13T12:00"), "out.safe = [YorokobuSale.safe('javascript:alert(1)'), YorokobuSale.safe('https://evil.example.com/'), YorokobuSale.safe('https://www.amazon.co.jp/primeappreciation?tag=x'), YorokobuSale.safe('https://hb.afl.rakuten.co.jp/hgc/a')]")
+        self.assertEqual(o["safe"], ["", "", "https://www.amazon.co.jp/primeappreciation?tag=x", "https://hb.afl.rakuten.co.jp/hgc/a"])
+
+    def test_a_sale_lasts_to_the_end_of_its_last_minute(self):
+        real = [e for e in sales.load() if e["id"] == "rakuten-marathon-2026-10"][0]
+        self.assertEqual(sales.phase(real, at("2026-10-17T09:59")), "live")
+        self.assertEqual(sales.phase(real, datetime.fromisoformat("2026-10-17T09:59:30+09:00")), "live")        # 9:59:30 is still 9時59分
+        self.assertIsNone(sales.phase(real, at("2026-10-17T10:00")))
+
     def test_a_bar_whose_events_are_all_over_hides_itself_and_a_closed_one_stays_closed(self):
         o = self.run_page(at("2026-10-25T12:00"), "out.hidden = bar.hidden")
         self.assertTrue(o["hidden"])
@@ -193,6 +203,21 @@ class PagesTest(unittest.TestCase):
         self.assertNotIn("sale-bar", self.read("about/index.html"))
         self.assertNotIn("sale-bar", self.read("privacy/index.html"))
 
+    def test_a_gift_page_ends_with_next_steps_and_offers_the_sale_only_while_one_is_on_or_near(self):
+        gift = self.read("gift/birthday-mother/index.html")
+        self.assertIn("迷ったときの、次の一歩", gift)
+        self.assertIn('href="/favorites/"', gift)
+        self.assertIn('href="/memo/?o=birthday&amp;r=mother"', gift)
+        self.assertIn("セールの日に、合わせて買う", gift)
+        self.assertIn("迷ったときの、次の一歩", self.read("picks/2026-10-11/index.html") if (self.root / "picks").exists() else "迷ったときの、次の一歩")
+        items = json.loads((FIX / "items.json").read_text(encoding="utf-8"))
+        with tempfile.TemporaryDirectory() as t:
+            out = Path(t) / "s"
+            build.render_site(content.load(FIX), items, CFG, out, release=True, today=date(2026, 5, 3))
+            far = (out / "gift" / "birthday-mother" / "index.html").read_text(encoding="utf-8")
+            self.assertIn("迷ったときの、次の一歩", far)
+            self.assertNotIn("セールの日に、合わせて買う", far)
+
     def test_the_sale_page_lists_the_announced_events_with_their_source_date_and_is_in_the_sitemap(self):
         html = self.read("sale/index.html")
         for text in ("お買い物マラソン", "プライム感謝祭", "確認日 2026-10-12", "10月14日(水)20時 から 10月17日(土)9時59分 まで", "エントリー"):
@@ -224,6 +249,48 @@ class PagesTest(unittest.TestCase):
             bar = re.search(r'<aside class="sale-bar".*?</aside>', home, re.S).group(0)
             self.assertNotIn("amazon.co.jp", bar)
             self.assertIn("お買い物マラソン", bar)
+
+
+class PointsTest(unittest.TestCase):
+    def render(self, today: date, n_points: int) -> Path:
+        from tests.yorokobu_data import rich_boyfriend
+        items = rich_boyfriend(json.loads((FIX / "items.json").read_text(encoding="utf-8")))
+        seen = 0
+        for idea in items["pairs"]["birthday-boyfriend"]["ideas"]:
+            for it in idea["items"]:
+                if seen < n_points:
+                    it["point_rate"], it["point_end"] = 5, "2026-10-17 09:59"
+                    seen += 1
+        tmp = tempfile.mkdtemp(prefix="points_")
+        self.addCleanup(shutil.rmtree, tmp, True)
+        build.render_site(content.load(FIX), items, CFG, Path(tmp) / "s", release=True, today=today)
+        return Path(tmp) / "s"
+
+    def test_a_multiplier_the_shop_announced_shows_on_the_cards_and_in_a_list_on_the_sale_page(self):
+        out = self.render(date(2026, 10, 15), 6)
+        sale = (out / "sale" / "index.html").read_text(encoding="utf-8")
+        self.assertIn("いま、ポイント倍率が付いている贈り物", sale)
+        self.assertIn("ポイント5倍(10月17日まで)", sale)
+        self.assertIn("楽天市場が倍率と終了の日時を表示しているもの", sale)
+        gift = (out / "gift" / "birthday-boyfriend" / "index.html").read_text(encoding="utf-8")
+        self.assertIn("ポイント5倍(10月17日まで)", gift)
+
+    def test_an_ended_multiplier_and_a_short_list_say_nothing_on_the_sale_page(self):
+        out = self.render(date(2026, 10, 18), 6)                                  # the end was 10-17 9:59
+        self.assertNotIn("ポイント倍率", (out / "sale" / "index.html").read_text(encoding="utf-8"))
+        self.assertNotIn("ポイント5倍", (out / "gift" / "birthday-boyfriend" / "index.html").read_text(encoding="utf-8"))
+        out = self.render(date(2026, 10, 15), 3)                                  # three are not a list: the badges stay, the section does not
+        self.assertNotIn("いま、ポイント倍率が付いている贈り物", (out / "sale" / "index.html").read_text(encoding="utf-8"))
+        self.assertIn("ポイント5倍(10月17日まで)", (out / "gift" / "birthday-boyfriend" / "index.html").read_text(encoding="utf-8"))
+
+    def test_the_api_fields_become_a_multiplier_only_with_a_rate_of_two_or_more_and_an_end(self):
+        from sokuhou import rakuten
+        base = {"itemName": "ギフト タオル セット 箱入り", "itemUrl": "https://item.rakuten.co.jp/s/x/", "itemPrice": 2500, "mediumImageUrls": [{"imageUrl": "https://thumbnail.image.rakuten.co.jp/a.jpg"}], "itemCode": "s:1"}
+        self.assertNotIn("point_rate", rakuten.normalize(base))
+        self.assertNotIn("point_rate", rakuten.normalize({**base, "pointRate": 1, "pointRateEndTime": "2026-10-17 09:59"}))
+        self.assertNotIn("point_rate", rakuten.normalize({**base, "pointRate": 5}))
+        got = rakuten.normalize({**base, "pointRate": 5, "pointRateEndTime": "2026-10-17 09:59"})
+        self.assertEqual((got["point_rate"], got["point_end"]), (5, "2026-10-17 09:59"))
 
 
 if __name__ == "__main__":

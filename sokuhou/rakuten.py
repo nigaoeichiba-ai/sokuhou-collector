@@ -145,6 +145,16 @@ def clean_title(name: str) -> str:
     return out if len(out) >= 8 else " ".join(name.split())
 
 
+def _points(item: dict) -> dict:
+    """The point multiplier a shop has put on an item, with the time it ends (the API leaves both out when there is none): {"point_rate": 5, "point_end": "2026-10-17 09:59"};
+    nothing when the rate is 1 or the end is missing (a multiplier without an end is not shown as a campaign)."""
+    rate = _num(item.get("pointRate"), 1)
+    end = str(item.get("pointRateEndTime") or "").strip()
+    if rate < 2 or not end:
+        return {}
+    return {"point_rate": int(rate) if float(rate).is_integer() else rate, "point_end": end}
+
+
 def normalize(item: dict) -> dict | None:
     """The few fields the site needs; None when the item cannot be shown (no price, link or image)."""
     item = item.get("Item", item)  # formatVersion 1 wraps each item
@@ -168,6 +178,7 @@ def normalize(item: dict) -> dict | None:
         "free_shipping": int(_num(item.get("postageFlag"), 1)) == 0,
         "gift": int(_num(item.get("giftFlag"))) == 1,
         "appoint": int(_num(item.get("appointDeliveryDateFlag"))) == 1,
+        **_points(item),
     }
 
 

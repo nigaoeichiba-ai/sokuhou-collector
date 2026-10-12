@@ -167,16 +167,20 @@ class ServerTwinTest(unittest.TestCase):
         self.assertEqual(ok[0], 204)
         self.assertEqual(s.voices, [{"kind": "miss", "message": "もっと小さな花を贈りたい"}])
         self.assertEqual(s.stats.get("cq.voice.miss"), 1)
-        for text in ("電話は09012345678です", "a@example.com まで", "https://example.com を見て", "〒520-0031 大津市", "x", "あ" * 81, "050-1234 のこと"):
+        for text in ("電話は09012345678です", "a@example.com まで", "https://example.com を見て", "〒520-0031 大津市", "x", "あ" * 81, "050-1234 のこと",
+                     "０９０ー１２３４ー５６７８", "090 1234 5678", "090・1234・5678", "東京都渋谷区神南1-2-3", "大阪市北区梅田３丁目１番１号", "example.com/foo", "taro at example dot com",
+                     "taro＠example.com", "０９０‐１２３４‐５６７８", "(090) 1234-5678"):
             code = s.handle({"v": 1, "op": "voice", "k": "miss", "t": text})[0]
             self.assertIn(code, (400, 422), text)
+        for fine in ("母の日に、5000円くらいの花", "3000〜5000円で探しています", "1番人気のものがいい", "10000円以内で", "京都のお菓子がいい", "70代の父に", "第3位まで知りたい"):
+            self.assertEqual(s.handle({"v": 1, "op": "voice", "k": "miss", "t": fine})[0], 204, fine)
         self.assertEqual(s.handle({"v": 1, "op": "voice", "k": "free", "t": "こんにちは"})[0], 400)       # a kind the page does not use
-        self.assertEqual(len(s.voices), 1)
+        self.assertEqual(len(s.voices), 1 + 7)                      # the sentences that were fine are kept too
 
     def test_the_php_receiver_has_the_same_voice_checks(self):
         php = (Path(build.__file__).parent / "ask_receiver.php.tpl").read_text(encoding="utf-8")
-        for needle in ("$op === 'voice'", "limit($dir, 'voice', 12)", "array('miss', 'why', 'need', 'other')", r"[0-9０-９]{7,}|@|＠|https?:|www\.|〒|[0-9]{3}-[0-9]{4}", "$n < 2 || $n > 80",
-                       "filesize($f) > 1048576", "cq\\.[a-z]{1,6}\\.[a-z0-9_-]{1,32}", "0600"):
+        for needle in ("$op === 'voice'", "limit($dir, 'voice', 12)", "array('miss', 'why', 'need', 'other')", "$n < 2 || $n > 80",
+                       "filesize($f) > 1048576", "cq\\.[a-z]{1,6}\\.[a-z0-9_-]{1,32}", "0600", "function looks_personal", "mb_convert_kana", "if (looks_personal($t))"):
             self.assertIn(needle, php)
         self.assertNotIn("REMOTE_ADDR'] ?? '') . '|' . $t", php)           # the address is never written next to the text
         self.assertNotIn("'ip'", php)
