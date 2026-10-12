@@ -676,3 +676,23 @@ a.chip { display: inline-block; text-decoration: none; }
 .as-form .btn { padding: .4em 1em; font-size: .9rem; }
 .as-note { margin: 0; padding: 0 14px 10px; font-size: .7rem; color: var(--muted); line-height: 1.6; }
 @media (max-width: 480px) { .assist { left: 8px; right: 8px; width: auto; bottom: 58px; } .assist-open { left: 8px; bottom: 8px; } }
+
+/* online colouring */
+.nu-stage { margin: 18px 0 28px; }
+.nu-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 280px); gap: 18px; align-items: start; }
+#nu-canvas { width: 100%; height: auto; max-width: 560px; background: #fff; border: var(--line); border-radius: 16px; box-shadow: var(--shadow-s); touch-action: manipulation; cursor: crosshair; }
+.nu-palette { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 10px; }
+.nu-c { aspect-ratio: 1; border: var(--line2); border-radius: 50%; cursor: pointer; padding: 0; }
+.nu-c.on { outline: 3px solid var(--ink); outline-offset: 2px; transform: scale(1.1); }
+.nu-own { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-size: .85rem; font-weight: 700; }
+.nu-own input { width: 48px; height: 32px; padding: 0; border: var(--line2); border-radius: 8px; background: none; }
+.nu-btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+.nu-btns .btn { padding: .4em 1em; font-size: .9rem; }
+.nu-list { list-style: none; margin: 10px 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(130px, 100%), 1fr)); gap: 10px; }
+.nu-pickbtn { width: 100%; display: grid; gap: 4px; justify-items: center; padding: 6px; background: #fff; border: var(--line2); border-radius: 14px; cursor: pointer; font: inherit; color: inherit; }
+.nu-pickbtn:hover { background: var(--yellow-s); }
+.nu-pickbtn img { max-width: 100%; height: auto; display: block; }
+.nu-pickbtn b { font-size: .75rem; line-height: 1.3; }
+.nu-printbox { display: none; }
+@media (max-width: 640px) { .nu-wrap { grid-template-columns: minmax(0, 1fr); } }
+@media print { body.nu-printing > *:not(.nu-printbox) { display: none !important; } body.nu-printing .nu-printbox { display: block !important; } .nu-printbox img { width: 100%; max-height: 100vh; object-fit: contain; } }
