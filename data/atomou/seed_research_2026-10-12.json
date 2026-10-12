@@ -696,7 +696,18 @@
     "verified": true,
     "son_toku": false,
     "region": "東大阪市花園ラグビー場",
-    "note": "出典ページの本文で、日付を機械的に確かめた。"
+    "note": "出典ページの本文で、日付を機械的に確かめた。",
+    "press2": [
+      {
+        "url": "https://news.web.nhk/newsweb/na/na-k10015021071000",
+        "quote": "桐蔭学園が3連覇 京都成章 初優勝ならず 2026年1月7日"
+      },
+      {
+        "url": "https://higashiosaka.keizai.biz/headline/2353/",
+        "quote": "第105回全国高校ラグビー大会決勝試合が1月7日、東大阪市花園ラグビー場"
+      }
+    ],
+    "press2_verified": true
   },
   {
     "title": "第106回全国高等学校ラグビーフットボール大会 開幕",

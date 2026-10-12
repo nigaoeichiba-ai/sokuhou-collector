@@ -3021,7 +3021,18 @@
     "verified": true,
     "son_toku": false,
     "region": "トゥイッケナム・スタジアム",
-    "note": "出典ページの本文で、日付を機械的に確かめた。"
+    "note": "出典ページの本文で、日付を機械的に確かめた。",
+    "press2": [
+      {
+        "url": "https://spocale.com/blog/?p=159714",
+        "quote": "11月14日（土） イングランド 11月21日（土） スコットランド"
+      },
+      {
+        "url": "https://www.jsports.co.jp/search/ondemand/?genre=rugby&group=japan_rugby",
+        "quote": "イングランド vs. 日本 配信期間：11月14日（土）深夜1:10～"
+      }
+    ],
+    "press2_verified": true
   },
   {
     "title": "ラグビー日本代表 対スコットランド代表(エディンバラ)",
@@ -3045,7 +3056,18 @@
     "verified": true,
     "son_toku": false,
     "region": "マレーフィールド",
-    "note": "出典ページの本文で、日付を機械的に確かめた。"
+    "note": "出典ページの本文で、日付を機械的に確かめた。",
+    "press2": [
+      {
+        "url": "https://spocale.com/blog/?p=159714",
+        "quote": "11月14日（土） イングランド 11月21日（土） スコットランド"
+      },
+      {
+        "url": "https://leadrugby.com/archives/10170",
+        "quote": "11月21日（土）23:10 スコットランド vs 日本"
+      }
+    ],
+    "press2_verified": true
   },
   {
     "title": "ラグビー日本代表 対アイルランド代表",

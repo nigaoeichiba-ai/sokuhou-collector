@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+from urllib.parse import urlparse
 from collections import Counter
 from datetime import date, timedelta
 from pathlib import Path
@@ -57,6 +58,24 @@ GROUP_OF_FILE = {"seed_tax_law": G_MONEY, "seed_consumer": G_SHOP, "seed_exams":
                  "seed_otaku_astro": G_HOBBY, "seed_regional": G_TRIP}
 # the names the seed files used before a rename: an explicit "group" written with an old name still finds its genre
 LEGACY_GROUP = {"手続き・お金": G_MONEY, "買い物・サービス": G_SHOP, "天文・暦": G_SKY, "空・季節": G_SKY, "通信・IT・アプリ": G_IT, "暮らし・健康・グルメ": G_LIFE, "おでかけ・地域": G_TRIP}
+
+
+TWO_PART = {"co", "or", "ne", "go", "ac", "ed", "ad", "gr", "lg"}
+
+
+def _reg(url: str) -> str:
+    parts = (urlparse(str(url)).hostname or "").lower().split(".")
+    return ".".join(parts[-3:] if len(parts) >= 3 and parts[-1] == "jp" and parts[-2] in TWO_PART else parts[-2:])
+
+
+def press2_ok(item: dict) -> bool:
+    """The day was also found, and checked on the pages, in two reports of two other companies (item["press2"] = [{"url", "quote"}, ...], set by the check, never written by hand):
+    then a source whose terms keep us from carrying its information in the calendar files is not the only ground of the day."""
+    rows = item.get("press2")
+    if not item.get("press2_verified") or not isinstance(rows, list) or len(rows) < 2:
+        return False
+    doms = {_reg(r.get("url", "")) for r in rows if isinstance(r, dict) and str(r.get("url", "")).startswith("https://")}
+    return len(doms) >= 2 and _reg(item.get("source_url", "")) not in doms
 
 
 def _load_taxonomy() -> dict:
@@ -224,7 +243,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
             "weekday": WEEKDAYS[d.weekday()], "kind": it["kind"], "category": it["category"], "group": group, "mid": (it.get("mid") if it.get("mid") in MID_NAMES.get(group, ()) else mid_for(group, subject, it["category"])), "region": it.get("region") or None,
             "subject": subject, "what": what, "place": place,
             "tags": tags_for(it, group), "sensitivity": sens, "quiet": quiet, "ad_ok": bool(it.get("ad_ok", True)) and not quiet,
-            "son_toku": bool(it.get("son_toku")), "source_url": it["source_url"], "basis": "press" if it.get("basis") == "press" else "official",
+            "son_toku": bool(it.get("son_toku")), "press2": press2_ok(it), "source_url": it["source_url"], "basis": "press" if it.get("basis") == "press" else "official",
             "official_url": str(it.get("official_url")) if str(it.get("official_url") or "").startswith("https://") else "",
             "source_quote": (it.get("source_quote") or "")[:60] or None,
             "checked_on": it["checked_on"], "added": _added(it), "status": ("ended" if last < today else ("old_checked" if (today - checked).days > STALE_DAYS else "active")),
