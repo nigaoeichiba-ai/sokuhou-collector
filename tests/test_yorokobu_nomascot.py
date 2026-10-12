@@ -66,7 +66,7 @@ class NoMascotTest(unittest.TestCase):
 
     def test_the_old_wording_that_belonged_to_the_characters_is_gone(self):
         for rel, html in self.pages():
-            for word in ("ソムリエ", "ナビゲーター", "コンシェルジュ", "ギフトマップ"):
+            for word in ("ソムリエ", "ナビゲーター", "ギフトマップ"):      # (コンシェルジュ is the owner's own word for the counter of 2026-10-12: no character, a plain button and a panel)
                 self.assertNotIn(word, html, f"{rel}: {word}")
 
 

@@ -1,0 +1,73 @@
+name: yorokobu-voice
+
+# yorokobu-present.com: copies the sentences that visitors chose to send from the 贈り物コンシェルジュ (api/ask.php op "voice" keeps them in <site folder>/ask/voice/v-YYYYMM.jsonl:
+# the sentence, the time, a random id; no address, no name) into data/inbox/yorokobu-voice-<stamp>.p7m ENCRYPTED (the repository is public: a sentence may hold anything a person typed).
+# Only the owner's PC holds the private key (~/.sokuhou/inbox_private.pem); the routine reads them there with `python -m sites.yorokobu.voice read --mark` and `analyze`.
+# Needs the repository secrets XSERVER_SSH_KEY, XSERVER_HOST and XSERVER_USER (the same ones the deploy job uses).
+
+on:
+  schedule:
+    - cron: "41 */6 * * *"   # minute 41: not on the hour, when the deploys and the other timers connect to the same server
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-commit
+  cancel-in-progress: false
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Copy the new sentences (encrypted)
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then
+            echo "XSERVER_SSH_KEY / XSERVER_HOST / XSERVER_USER are not all set; nothing to do"
+            exit 0
+          fi
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver
+          chmod 600 ~/.ssh/id_xserver
+          for try in 1 2 3 4 5 6; do   # the key scan sometimes comes back empty for a moment
+            ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+            [ -s ~/.ssh/known_hosts ] && break
+            sleep $((try * 5))
+          done
+          stamp=$(date -u +%Y%m%d-%H%M)
+          mkdir -p data/inbox
+          if ! ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes -o ConnectTimeout=20 "$USER_ID@$HOST" \
+               "cd \"\$HOME/yorokobu-present.com/ask/voice\" 2>/dev/null && for f in v-*.jsonl; do if [ -f \"\$f\" ]; then echo \"== voice-\$f\"; cat \"\$f\"; fi; done; true" > raw_voice.txt; then
+            echo "ssh failed; skipped (the next run takes the same lines)"
+            exit 0
+          fi
+          python -m sokuhou.inbox new --site yorokobu-voice --raw raw_voice.txt --state data/inbox/state.json --out new_voice.jsonl
+          if [ -s new_voice.jsonl ]; then
+            openssl smime -encrypt -aes256 -binary -in new_voice.jsonl -out "data/inbox/yorokobu-voice-$stamp.p7m" -outform DER sokuhou/inbox_cert.pem
+          fi
+          rm -f raw_voice.txt new_voice.jsonl
+      - name: Commit
+        run: |
+          git config user.name "sokuhou-bot"
+          git config user.email "sokuhou-bot@users.noreply.github.com"
+          git add data/inbox
+          if git diff --cached --quiet; then
+            echo "no new sentences"
+          else
+            git commit -m "data: yorokobu concierge sentences (encrypted)"
+            git pull --rebase origin main
+            git push
+          fi

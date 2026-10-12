@@ -1,0 +1,285 @@
+{
+ "_note": "The words the 贈り物コンシェルジュ (assets/concierge.js) knows besides the names of the events and people the site has. Edit here to teach it a new way of saying something; `topics` is the first question's menu. A word may not be a part of a longer word that means something else (カレ is not here: カレー).",
+ "occasion_words": {
+  "birthday": [
+   "バースデー",
+   "誕生祝い",
+   "お誕生日",
+   "誕プレ"
+  ],
+  "mothers-day": [],
+  "fathers-day": [],
+  "respect-for-aged-day": [
+   "敬老"
+  ],
+  "christmas": [
+   "クリスマス",
+   "xmas"
+  ],
+  "valentine": [
+   "バレンタイン"
+  ],
+  "white-day": [
+   "ホワイトデー",
+   "ホワイトデイ"
+  ],
+  "wedding-gift": [
+   "結婚祝",
+   "ご結婚",
+   "結婚のお祝い"
+  ],
+  "wedding-anniversary": [
+   "結婚記念"
+  ],
+  "birth-gift": [
+   "出産祝",
+   "出産のお祝い",
+   "出産"
+  ],
+  "school-entrance": [
+   "入学"
+  ],
+  "graduation": [
+   "卒業"
+  ],
+  "coming-of-age": [
+   "成人祝",
+   "成人式",
+   "成人"
+  ],
+  "new-job": [
+   "就職",
+   "入社",
+   "新社会人"
+  ],
+  "promotion": [
+   "昇進",
+   "栄転",
+   "昇格"
+  ],
+  "retirement": [
+   "退職",
+   "定年"
+  ],
+  "farewell": [
+   "送別",
+   "異動",
+   "転勤"
+  ],
+  "housewarming": [
+   "引っ越し",
+   "引越し",
+   "新築"
+  ],
+  "longevity": [
+   "還暦",
+   "古希",
+   "喜寿",
+   "傘寿",
+   "米寿",
+   "長寿"
+  ],
+  "oseibo": [
+   "歳暮"
+  ],
+  "ochugen": [
+   "中元"
+  ],
+  "year-end-gathering": [
+   "年末年始",
+   "お正月",
+   "正月"
+  ],
+  "homecoming": [
+   "帰省",
+   "手土産",
+   "てみやげ"
+  ],
+  "thanks": [
+   "お礼",
+   "お世話になった",
+   "感謝"
+  ]
+ },
+ "recipient_words": {
+  "boyfriend": [
+   "彼氏",
+   "ボーイフレンド",
+   "彼ピ"
+  ],
+  "girlfriend": [
+   "彼女",
+   "ガールフレンド"
+  ],
+  "husband": [
+   "旦那",
+   "だんな",
+   "主人",
+   "夫"
+  ],
+  "wife": [
+   "奥さん",
+   "おくさん",
+   "嫁",
+   "妻"
+  ],
+  "father": [
+   "お父さん",
+   "父親",
+   "親父",
+   "パパ",
+   "父"
+  ],
+  "mother": [
+   "お母さん",
+   "母親",
+   "ママ",
+   "母"
+  ],
+  "grandfather": [
+   "おじいちゃん",
+   "おじいさん",
+   "じいじ",
+   "祖父"
+  ],
+  "grandmother": [
+   "おばあちゃん",
+   "おばあさん",
+   "ばあば",
+   "祖母"
+  ],
+  "friend-female": [
+   "女友達",
+   "女友だち",
+   "女性の友人"
+  ],
+  "friend-male": [
+   "男友達",
+   "男友だち",
+   "男性の友人"
+  ],
+  "colleague": [
+   "同僚",
+   "職場の仲間",
+   "会社の人"
+  ],
+  "boss": [
+   "上司",
+   "部長",
+   "課長",
+   "目上の人"
+  ],
+  "teacher": [
+   "先生",
+   "担任"
+  ],
+  "baby": [
+   "赤ちゃん",
+   "ベビー",
+   "乳児",
+   "新生児"
+  ],
+  "toddler": [
+   "幼児",
+   "幼稚園",
+   "保育園"
+  ],
+  "child": [
+   "小学生",
+   "子ども",
+   "子供",
+   "息子",
+   "娘"
+  ],
+  "teen": [
+   "中学生",
+   "高校生",
+   "中高生",
+   "10代"
+  ],
+  "in-laws": [
+   "義理の両親",
+   "義理の母",
+   "義理の父",
+   "義両親",
+   "義父母",
+   "義父",
+   "義母"
+  ]
+ },
+ "ambiguous_recipients": {
+  "友達": [
+   "friend-female",
+   "friend-male"
+  ],
+  "友人": [
+   "friend-female",
+   "friend-male"
+  ],
+  "友だち": [
+   "friend-female",
+   "friend-male"
+  ],
+  "祖父母": [
+   "grandfather",
+   "grandmother"
+  ],
+  "両親": [
+   "father",
+   "mother"
+  ],
+  "恋人": [
+   "boyfriend",
+   "girlfriend"
+  ],
+  "カップル": [
+   "boyfriend",
+   "girlfriend"
+  ]
+ },
+ "topics": [
+  {
+   "id": "who",
+   "label": "贈る相手が、まだ決まっていない",
+   "reply": "贈る相手によって、選び方が変わります。どなたに贈りますか。"
+  },
+  {
+   "id": "what",
+   "label": "何を贈ればいいか、わからない",
+   "reply": "相手の好みがわからないときは、次の3つが手がかりになります。どれも、入力は選ぶだけです。"
+  },
+  {
+   "id": "budget",
+   "label": "予算の目安を知りたい",
+   "reply": "予算の目安は、贈る日と相手で変わります。まず、どなたに贈りますか。"
+  },
+  {
+   "id": "urgent",
+   "label": "贈る日が近くて、急いでいる",
+   "reply": "急ぐときは、届く日と日付指定を、商品ページで先に確かめます。贈る相手が決まっていれば、候補をしぼれます。どなたに贈りますか。"
+  },
+  {
+   "id": "manners",
+   "label": "マナー・のし・お返しを知りたい",
+   "reply": "どの日の贈り物か、教えてください。時期・のし・失礼にならない選び方を、読みものにまとめています。"
+  },
+  {
+   "id": "sale",
+   "label": "セールやポイントで、お得に買いたい",
+   "reply": "楽天市場とAmazonが発表したセールの日程を、まとめています。"
+  },
+  {
+   "id": "other",
+   "label": "そのほか(書いて伝える)",
+   "reply": "下の欄に、お困りのことを書いてください。読み取れたものは、ページをご案内します。"
+  }
+ ],
+ "why": [
+  "違う種類のものが見たい",
+  "予算に合わなかった",
+  "相手に合わなかった",
+  "マナーや時期を知りたい",
+  "届く日が知りたい",
+  "そのほか"
+ ]
+}

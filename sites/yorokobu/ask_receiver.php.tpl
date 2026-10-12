@@ -213,16 +213,35 @@ if ($op === 'sub') {                                                            
     out(204);
 }
 
-if ($op === 'stat') {                                                                 // counters: how often an option of the 診断ドック was chosen, and how often a product's shop button was pressed (pop.r.<rakuten item code> / pop.a.<ASIN>; nothing else)
+if ($op === 'stat') {                                                                 // counters: how often an option of the 診断ドック was chosen, and how often a product's shop button was pressed (pop.r.<rakuten item code> / pop.a.<ASIN>), and what kinds of question the 贈り物コンシェルジュ is asked (cq.<kind>.<value>; nothing else)
     limit($dir, 'stat', 80);
     $ks = is_array($d['k'] ?? null) ? $d['k'] : array();
     $keys = array();
     foreach ($ks as $k) {
         if (count($keys) >= 40) { break; }
-        if (is_string($k) && preg_match('/^(dock\.[a-z0-9]{1,8}\.[a-z0-9_-]{1,32}|pop\.[ra]\.[A-Za-z0-9._:-]{3,64})$/', $k) === 1) { $keys[$k] = true; }
+        if (is_string($k) && preg_match('/^(dock\.[a-z0-9]{1,8}\.[a-z0-9_-]{1,32}|pop\.[ra]\.[A-Za-z0-9._:-]{3,64}|cq\.[a-z]{1,6}\.[a-z0-9_-]{1,32})$/', $k) === 1) { $keys[$k] = true; }
     }
     if (!$keys) { out(400); }
     bump($dir, array_keys($keys));
+    out(204);
+}
+
+if ($op === 'voice') {                                                                // the concierge: a sentence the visitor chose to send (80 characters at most; read by the operator through the encrypted inbox)
+    limit($dir, 'voice', 12);
+    $kind = $d['k'] ?? ''; $t = $d['t'] ?? '';
+    if (!is_string($kind) || !in_array($kind, array('miss', 'why', 'need', 'other'), true) || !is_string($t)) { out(400); }
+    $t = trim((string)preg_replace('/\s+/u', ' ', $t));
+    $n = function_exists('mb_strlen') ? mb_strlen($t, 'UTF-8') : strlen($t);
+    if ($n < 2 || $n > 80) { out(400); }
+    if (preg_match('/[0-9０-９]{7,}|@|＠|https?:|www\.|〒|[0-9]{3}-[0-9]{4}/u', $t) === 1) { out(422); }       // a phone number, an address, a mail address or a link: refused, not stored
+    $vd = $dir . '/voice';
+    if (!is_dir($vd) && !@mkdir($vd, 0700, true)) { out(503); }
+    $f = $vd . '/v-' . date('Ym') . '.jsonl';
+    if (is_file($f) && filesize($f) > 1048576) { out(503); }                          // a month's file stays small
+    $line = json_encode(array('id' => bin2hex(random_bytes(6)), 'at' => date('c'), 'site' => 'yorokobu', 'kind' => $kind, 'message' => $t), JSON_UNESCAPED_UNICODE);
+    if ($line === false || @file_put_contents($f, $line . "\n", FILE_APPEND | LOCK_EX) === false) { out(503); }
+    @chmod($f, 0600);
+    bump($dir, array('cq.voice.' . $kind));
     out(204);
 }
 

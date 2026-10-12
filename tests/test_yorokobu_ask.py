@@ -102,7 +102,7 @@ class AskServerTest(unittest.TestCase):
         for needle in ("hash_equals(", "hash('sha256', $key)", "idok(", "limit($dir, 'new', 20)", "limit($dir, 'ans', 60)", "limit($dir, 'read', 600)", "limit($dir, 'sub', 40)", "limit($dir, 'stat', 80)",
                        ">= 40) { $code = 429; }", "!isset($ASK[$q])", "in_array($x, $ASK[$q]['o'], true)", "count($c) > (int)$ASK[$q]['max']", "count($a) > 12", "strlen($raw) > 16384",
                        "$p['watch'] = $keep;", ">= 3000) { out(503); }", "if (!$watch) { @unlink($file); out(204); }", "$m['c'] < $cut", "array_slice($files, 0, 300)",
-                       "'/^(dock\\.[a-z0-9]{1,8}\\.[a-z0-9_-]{1,32}|pop\\.[ra]\\.[A-Za-z0-9._:-]{3,64})$/'", "googleapis\\.com|push\\.services\\.mozilla\\.com", "if (!owns($meta, $x['key'] ?? ''))", "mt_rand(1, 40)", "120 * 86400", "if (flock($h, LOCK_EX)) {"):
+                       "'/^(dock\\.[a-z0-9]{1,8}\\.[a-z0-9_-]{1,32}|pop\\.[ra]\\.[A-Za-z0-9._:-]{3,64}|cq\\.[a-z]{1,6}\\.[a-z0-9_-]{1,32})$/'", "googleapis\\.com|push\\.services\\.mozilla\\.com", "if (!owns($meta, $x['key'] ?? ''))", "mt_rand(1, 40)", "120 * 86400", "if (flock($h, LOCK_EX)) {"):
             self.assertIn(needle, p, needle)
         self.assertEqual(p.count("REMOTE_ADDR"), 1)                                    # the address is only used for the daily hash of the limit
         self.assertNotIn("HTTP_USER_AGENT", p)
