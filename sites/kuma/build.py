@@ -250,7 +250,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <p><a href="/emergency/">緊急銃猟と死亡事故の一覧</a></p>
 {news_block}<h2>クマに出会わないために</h2>
 <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">{guides}</div>
-<div class="pictos"><img src="/assets/img/pictogram-bell-radio-spray.webp" alt="音の出るもの、ラジオ、クマ撃退スプレーを携帯する、という対策のイラスト" width="800" height="450" loading="lazy"><img src="/assets/img/pictogram-slow-retreat.webp" alt="クマに出会ったときは、慌てず、ゆっくり後退する、というイラスト" width="800" height="450" loading="lazy"></div>
+<div class="pictos"><figure><a href="/guide/prepare/"><img src="/assets/img/pictogram-bell-radio-spray.webp" alt="音の出るもの、ラジオ、クマ撃退スプレーを携帯する、という対策のイラスト" width="800" height="450" loading="lazy"></a><figcaption><strong>出会わないための備え</strong>: 音の出るもの(鈴など)とラジオで、人の存在を知らせ、クマ撃退スプレーを持つ。<a href="/guide/prepare/">備えのガイド</a></figcaption></figure><figure><a href="/guide/encounter/"><img src="/assets/img/pictogram-slow-retreat.webp" alt="クマに出会ったときは、慌てず、ゆっくり後退する、というイラスト" width="800" height="450" loading="lazy"></a><figcaption><strong>出会ってしまったら</strong>: 背を向けず、あわてず、クマから目を離さずに、ゆっくり後退する。走って逃げない。<a href="/guide/encounter/">出会ったときの行動</a></figcaption></figure></div>
 <p><a href="/notify/">更新を通知で受け取る方法</a></p>
 <p class="notice">人身被害は、{fy_label(inj_max)}が、{n(inj[inj_max][1])}人で、表にある平成20年度以降で最も多くなっています。{CAUTION}</p>"""
     return page(cfg, preview, scripts=True, path="/", title=f"クマ出没速報 | 都道府県別の出没件数・人身被害・緊急銃猟(環境省の速報値)",

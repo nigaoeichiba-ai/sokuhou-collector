@@ -68,6 +68,16 @@ class KumaSiteTest(unittest.TestCase):
         for text in ("50,801件", "20,513", "約2.5倍", "216件・238人(うち死亡13人)", "17,362件"):
             self.assertIn(text, html)
 
+    def test_the_two_pictograms_on_the_home_page_have_a_visible_caption_and_link_to_their_guide(self):
+        html = self.read("index.html")
+        figs = re.findall(r'<figure><a href="(/guide/[a-z]+/)"><img [^>]*pictogram[^>]*></a><figcaption>(.*?)</figcaption></figure>', html, re.S)
+        self.assertEqual([f[0] for f in figs], ["/guide/prepare/", "/guide/encounter/"])
+        self.assertIn("鈴など", figs[0][1])
+        self.assertIn("走って逃げない", figs[1][1])
+        for href, _ in figs:
+            self.assertIn(href.strip("/") + "/index.html", self.files)
+        self.assertEqual(len(re.findall(r"<img [^>]*pictogram", html)), len(figs))      # no picture without its caption
+
     def test_ranking_matches_the_press_top_five(self):
         html = self.read("ranking/sightings/index.html")
         rows = re.findall(r'<tr><td>(\d+)</td><td><a href="/([a-z]+)/">', html)
