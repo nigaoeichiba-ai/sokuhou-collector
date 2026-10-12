@@ -118,8 +118,8 @@ def run(entries: list[dict], state: dict, today: date, now: datetime | None = No
     now = now or datetime.now(timezone.utc)
     by_url: dict[str, list[dict]] = {}
     for e in entries:
-        if e.get("status") == "ended" or not str(e.get("source_url", "")).startswith("https://"):
-            continue
+        if e.get("status") == "ended" or not str(e.get("source_url", "")).startswith("https://") or e.get("basis") == "press":
+            continue   # a day taken from reports: the articles come and go, so there is no page to stand on (the day is looked at again by the research)
         by_url.setdefault(e["source_url"], []).append(e)
     due = []
     for url, es in by_url.items():

@@ -54,6 +54,24 @@ class Checking(unittest.TestCase):
         self.assertEqual((len(ok), bad), (1, []))
         self.assertIn("ブラウザ", ok[0]["note"])
 
+    def test_a_day_from_two_reports_of_different_companies_passes_and_one_report_or_one_company_does_not(self):   # 2026-10-12 (owner): reports count when no official page is at hand
+        pages = {**PAGES, "https://news-a.example/x": "新作の発売日は 2026年11月6日(金) と発表", "https://news-b.example/y": "11月6日(金)に発売される新作", "https://www.news-a.example/z": "2026年11月6日(金)発売"}
+        base = dict(basis="press", source_url="https://news-a.example/x", source_quote="2026年11月6日(金) と発表", source_url2="https://news-b.example/y", source_quote2="11月6日(金)に発売される")
+        ok, bad = seedcheck.check([cand(**base)], TODAY, existing=set(), page_of=pages.get, render_of=lambda u: "")
+        self.assertEqual((len(ok), bad), (1, []))
+        self.assertEqual((ok[0]["basis"], ok[0]["source_url2"]), ("press", "https://news-b.example/y"))
+        for why, change in (
+            ("press needs a second report of another company (source_url2, source_quote2)", dict(source_url2="")),
+            ("press needs a second report of another company (source_url2, source_quote2)", dict(source_url2="https://www.news-a.example/z", source_quote2="2026年11月6日(金)発売")),   # the same company twice
+            ("second report: the quote does not contain the date", dict(source_quote2="発売される新作")),
+            ("second report: quote not on the page", dict(source_quote2="11月6日(金)に発売される予定")),
+            ("quote not on the page", dict(source_quote="2026年11月6日(金) と発表します")),
+        ):
+            ok, bad = seedcheck.check([cand(**{**base, **change})], TODAY, existing=set(), page_of=pages.get, render_of=lambda u: "")
+            self.assertEqual((ok, bad[0][1]), ([], why), why)
+        ok, bad = seedcheck.check([cand(**{**base, "seen_in_browser": "画面で日付を確かめた(2026年11月6日)", "source_quote": "2026年11月6日(金) と発表します"})], TODAY, existing=set(), page_of=pages.get, render_of=lambda u: "")
+        self.assertEqual((ok, bad[0][1]), ([], "quote not on the page"))   # a report cannot be "seen in a browser": both pages are read by the machine
+
     def test_labels_and_groups_are_checked_like_the_catalogue_tests_do(self):
         self.assertEqual(run([cand(subject="とても長い題名のシリーズ名です")])[1][0][1], "subject must be 2-10 characters")
         self.assertEqual(run([cand(what="短い")])[1][0][1], "what must be 4-16 characters")

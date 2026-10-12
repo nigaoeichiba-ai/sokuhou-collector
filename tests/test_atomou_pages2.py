@@ -102,11 +102,12 @@ class DayPageTest(Built):
         return json.loads(m.group(1))["@graph"]
 
     def test_badge_sentence_and_log(self):
-        ok = next(e for e in self.entries if not e.get("estimated") and not e.get("corrected_on") and e["status"] != "old_checked")
+        ok = next(e for e in self.entries if not e.get("estimated") and not e.get("corrected_on") and e["status"] != "old_checked" and e.get("basis") != "press")
         self.assertIn('vb-ok" data-vbadge>確認済', self.page(ok))
         est = next(e for e in self.entries if e.get("estimated"))
         self.assertIn('vb-pending" data-vbadge>未発表', self.page(est))
-        self.assertIn("<dt>掲載</dt>", self.page(ok))
+        self.assertNotIn("<dt>掲載</dt>", self.page(ok))      # the source table is gone (owner, 2026-10-12)
+        self.assertEqual(build.verify_badge({**ok, "basis": "press"})[0], "press")      # a day taken from reports (its page: tests/test_atomou_sources.py)
 
     def test_the_four_states(self):
         base = next(e for e in self.entries if not e.get("estimated"))

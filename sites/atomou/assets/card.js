@@ -255,7 +255,7 @@
     box.innerHTML = '<div id="x-card">' + cardHtml(card) + '</div>' +
       '<p class="x-actions"><button type="button" class="btn" id="x-add">自分の予定帳に入れる</button> ' + calLinks(card) + '</p>' +
       '<p class="hint" id="x-added" aria-live="polite"></p>' +
-      '<p class="x-actions"><button type="button" class="btn small ghost" id="x-edit">このカードを修正して、自分のカードにする</button> <a class="btn small ghost" href="/card/">新しいカードを作る</a>' + (card.e ? ' <a class="btn small ghost" href="/e/' + H(card.e) + '/">この日の公式ページ(出典つき)</a>' : '') + '</p>' +
+      '<p class="x-actions"><button type="button" class="btn small ghost" id="x-edit">このカードを修正して、自分のカードにする</button> <a class="btn small ghost" href="/card/">新しいカードを作る</a>' + (card.e ? ' <a class="btn small ghost" href="/e/' + H(card.e) + '/">この日のページ</a>' : '') + '</p>' +
       sharedViewHtml() + shareHtml() +
       '<p class="small muted">このカードの内容は、リンクを作った人が書いたものです。当サイトは内容を確認していません。心当たりのないカードや、不審なお願いが書かれたカードは、開かずに閉じてください。</p>';
     wireShare(card);

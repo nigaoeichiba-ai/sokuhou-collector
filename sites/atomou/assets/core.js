@@ -190,7 +190,33 @@ if (typeof window !== 'undefined' && window.addEventListener) {
     return (future.length ? future : found).slice(0, 8);
   }
 
-  var api = { extractDays: extractDays, parseSpoken: parseSpoken, isLeap: isLeap, dim: dim, valid: valid, toDays: toDays, fromDays: fromDays, parse: parse, iso: iso, cmp: cmp, addDays: addDays, addMonths: addMonths,
+  /* A day that comes round every week or every month (a first turn, then the same weekday / the same day of the month; a month without that day takes its last day).
+     repNext: the first turn that is today or later.  repOn: is the day x one of its turns?  repTurns: the turns from a to b (both ends included). */
+  function repNext(d, rep, today) {
+    if (cmp(d, today) >= 0) return d;
+    if (rep === 'week') return addDays(d, Math.ceil(totalDays(d, today) / 7) * 7);
+    if (rep !== 'month') return d;
+    var k = (today[0] - d[0]) * 12 + (today[1] - d[1]), c = addMonths(d, k);
+    return cmp(c, today) < 0 ? addMonths(d, k + 1) : c;
+  }
+  function repOn(d, rep, x) {
+    if (cmp(x, d) < 0) return false;
+    if (rep === 'week') return totalDays(d, x) % 7 === 0;
+    if (rep === 'month') return cmp(addMonths(d, (x[0] - d[0]) * 12 + (x[1] - d[1])), x) === 0;
+    return cmp(x, d) === 0;
+  }
+  function repTurns(d, rep, a, b) {
+    var out = [], x = repNext(d, rep, a), k = 0;
+    while (cmp(x, b) <= 0 && out.length < 400) {
+      out.push(x);
+      if (rep === 'week') x = addDays(x, 7);
+      else if (rep === 'month') { k = (x[0] - d[0]) * 12 + (x[1] - d[1]) + 1; x = addMonths(d, k); }
+      else break;
+    }
+    return out;
+  }
+
+  var api = { repNext: repNext, repOn: repOn, repTurns: repTurns, extractDays: extractDays, parseSpoken: parseSpoken, isLeap: isLeap, dim: dim, valid: valid, toDays: toDays, fromDays: fromDays, parse: parse, iso: iso, cmp: cmp, addDays: addDays, addMonths: addMonths,
     totalDays: totalDays, ymd: ymd, nextThousand: nextThousand, dayOfYear: dayOfYear, fiscalYear: fiscalYear, warekiToYear: warekiToYear, countdown: countdown, group: group, weeksText: weeksText, weekday: weekday, weekdaysLeft: weekdaysLeft };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.AtomouCore = api;

@@ -135,7 +135,7 @@ def december_page(c, entries: list[dict]) -> str:
 <section class="day-now" id="day-now" aria-live="polite"></section>
 {"".join(days)}
 <h2>ご利用の前に</h2>
-<p class="small muted">各日の詳しいページに、出典の公式ページと確認日があります。税や制度の期限は、申し込みや手続きの前に、出典の公式ページで確かめてください。祝日と二十四節気の日付は、それぞれ<a href="/kyou/holidays-{y}/">{y}年の祝日と連休</a>、<a href="/kyou/season/">季節の便り</a>のもとと同じです。</p>"""
+<p class="small muted">カードの日付は間違っていることがあります。税や制度の期限は、申し込みや手続きの前に、公式の情報で確かめてください。祝日と二十四節気の日付は、それぞれ<a href="/kyou/holidays-{y}/">{y}年の祝日と連休</a>、<a href="/kyou/season/">季節の便り</a>のもとと同じです。</p>"""
     return c.page("/kyou/december/", f"{y}年12月の日めくり 1日ごとの公式の日 | {B.NAME}", f"{y}年12月1日から31日まで、期限・開始・節目の公式の日を、1日ごとに。あと何日かも分かります。", body, SPECIAL_KIND)
 
 

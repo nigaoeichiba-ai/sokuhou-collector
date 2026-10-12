@@ -49,7 +49,7 @@ class SetupCopyTest(unittest.TestCase):
     def test_the_hint_button_exists_while_the_setup_is_open(self):
         css = read("style.css")
         self.assertNotIn(".intro-open .guide-btn{display:none}", css)
-        self.assertIn("画面右下の「? ヒント」", read("setup.js"))
+        self.assertIn("画面上の「? ヒント」", read("setup.js"))
 
     def test_the_guide_button_is_called_hint(self):
         self.assertIn("ヒント", read("guide.js"))
@@ -64,10 +64,10 @@ class AddPageCopyTest(unittest.TestCase):
 
     def test_steps_and_kinds(self):
         app = read("app.js")
-        a, b, c = (app.index(x) for x in ("1. 記録したい日", "2. どんな日ですか", "3. 時刻・くり返し"))
+        a, b, c = (app.index(x) for x in ("1. 日付", "2. どんな日ですか", "3. くり返し・時刻・知らせ"))
         self.assertLess(a, b)
         self.assertLess(b, c)
-        for label in ("今日", "年月日", "年と月だけ", "年だけ", "文字で日付を入力する"):
+        for label in ("今日", "明日", "明後日", "1週間後", "1か月後", "1年後", "年月日", "年と月だけ", "年だけ", "毎週", "毎月", "毎年"):
             self.assertIn(label, app)
         m = re.search(r"var KINDS = \{(.*?)\n  \};", app, re.S)
         names = re.findall(r"t: '([^']+)'", m.group(1))
@@ -87,7 +87,7 @@ class AddPageCopyTest(unittest.TestCase):
             self.assertNotIn("いつの日ですか", text, u["slug"])
             self.assertNotIn("大切な人を思う日』", text, u["slug"])
             kind = [i for i, s in enumerate(steps) if "『どんな日ですか』" in s]
-            date = [i for i, s in enumerate(steps) if "『記録したい日』" in s]
+            date = [i for i, s in enumerate(steps) if "『日付』" in s]
             if kind:
                 self.assertTrue(date, u["slug"])
                 self.assertLess(date[0], kind[0], f"{u['slug']}: the date comes first now")

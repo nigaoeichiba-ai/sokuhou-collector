@@ -35,7 +35,7 @@
     var priv = box.getAttribute('data-private') === '1', url = priv ? location.origin + '/' : (box.getAttribute('data-url') || pageUrl());
     if (box.getAttribute('data-nolink') === '1') return { text: words(box), url: '' };   // sent as words only (the plus plan): no signature, no link
     if (box.hasAttribute('data-text')) return { text: words(box), url: url };
-    return { text: words(box) + (priv ? '\n日数は「あと何日、もう何日」で数えています。' : '\n出典つきの公式の日付です。'), url: url };
+    return { text: words(box) + (priv ? '\n日数は「あと何日、もう何日」で数えています。' : '\n日数は「あと何日、もう何日」で数えています。'), url: url };
   }
 
   function lineUrl(m) { return 'https://line.me/R/msg/text/?' + enc(m.text + (m.url ? '\n' + m.url : '')); }

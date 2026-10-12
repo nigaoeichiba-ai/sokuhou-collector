@@ -144,7 +144,7 @@
       };
       if (e.title === KINDS[kind].t && txt.value.trim() === '') e.title = k.t;
       if (src && txt.value === src.title) e.title = src.title.slice(0, 80);   // the title is kept as it was (not read again as a date and a time)
-      if (src) { e.yearly = !!src.yearly; e.every100 = !!src.every100; e.alarm = k.quiet ? 'none' : (src.alarm || e.alarm); }
+      if (src) { e.yearly = !!src.yearly; e.repeat = src.repeat === 'week' || src.repeat === 'month' ? src.repeat : ''; e.every100 = !!src.every100; e.alarm = k.quiet ? 'none' : (src.alarm || e.alarm); }
       if (A.tier && A.tier.blocked(1) && !k.quiet) return;
       st.entries.push(e); A.stat('act:add:' + kind); A.stat('act:quick');
       if (src) { cloneNotes(src.id, e.id); A.stat('act:copy'); }

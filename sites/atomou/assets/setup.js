@@ -94,7 +94,7 @@
         '<p class="hint">カードの例です(見本で、記録はされません)。</p>' + exampleCards() +
         '<nav class="chiprow wrap" aria-label="入れてみる日"><a class="chip" href="/add/?kind=birthday" data-setup="add">誕生日</a><a class="chip" href="/add/?kind=anniversary" data-setup="add">記念日</a><a class="chip" href="/add/?kind=event" data-setup="add">予定</a><a class="chip" href="/add/?kind=until" data-setup="add">楽しみな日・期限</a></nav>' +
         '<p class="intro-btns"><button type="button" class="btn" data-setup="done">はじめる</button> <button type="button" class="btn ghost" data-setup="back">戻る</button></p>' +
-        '<p class="hint">使い方は、画面右下の「? ヒント」からいつでも見られます。</p>';
+        '<p class="hint">使い方は、画面上の「? ヒント」からいつでも見られます。</p>';
     }
     box.innerHTML = h;
     if (step === 3) Array.prototype.forEach.call(box.querySelectorAll('.eg-cards .card'), function (card) {

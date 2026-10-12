@@ -148,13 +148,12 @@ async function setSort(f, id, v) { var d = f.contentDocument, s = d.getElementBy
   d.querySelector('[data-plan-act="copy"]').click(); await wait(500);
   out.copyFour = { sheet: !!d.querySelector('.sheet') };
   f.remove();
-  // 9. the my page: the transfer part is folded at the top, before the cards
+  // 9. the my page: the transfer part has a heading of its own (not folded), after the cards; the index at the top leads to it
   seed(null); f = await open('/my/'); d = f.contentDocument;
   var mv = d.getElementById('move-box');
-  out.move = { tag: mv.tagName, open: mv.open, top: ytop(d, mv), gridTop: ytop(d, d.getElementById('my-grid')), summary: mv.querySelector('summary').textContent.trim(), backup: !!mv.querySelector('#backup'), restore: !!mv.querySelector('#restore'), wipeInside: !!mv.querySelector('#wipe'), wipeExists: !!d.getElementById('wipe'),
+  out.move = { tag: mv.tagName, open: mv.open, top: ytop(d, mv), gridTop: ytop(d, d.getElementById('my-grid')), heading: d.getElementById('move').textContent.trim(), folded: !!mv.closest('details'), index: [].map.call(d.querySelectorAll('.my-index a'), function (a) { return a.getAttribute('href'); }), steps: mv.querySelectorAll('.steps li').length, backup: !!mv.querySelector('#backup'), restore: !!mv.querySelector('#restore'), wipeInside: !!mv.querySelector('#wipe'), wipeExists: !!d.getElementById('wipe'),
     reorder: d.getElementById('reorder').textContent.trim() };
   f.remove();
-  f = await open('/my/#backup-h'); d = f.contentDocument; out.moveOpened = d.getElementById('move-box').open; f.remove();
   // 10. the quick-add sheet: the microphone, the chips
   seed(null); f = await open('/'); d = f.contentDocument;
   d.querySelector('.tabbar a[href="/add/"]').click(); await wait(600);
@@ -318,17 +317,17 @@ class Usability(unittest.TestCase):
         self.assertIn("無料プランで書けるカードは、いま5枚までです", self.res["copyFull"]["toast"])
         self.assertTrue(self.res["copyFour"]["sheet"])
 
-    def test_the_transfer_part_is_folded_at_the_top_of_the_my_page(self):
+    def test_the_transfer_part_is_in_the_open_with_a_heading_and_steps(self):   # it was folded, and the owner did not see that it could be opened
         m = self.res["move"]
-        self.assertEqual((m["tag"], m["open"]), ("DETAILS", False))
-        self.assertLess(m["top"], m["gridTop"])
-        self.assertLess(m["top"], 260)                      # it was 3655
-        self.assertEqual(m["summary"], "別の端末へ移す・バックアップ")
+        self.assertEqual((m["tag"], m["folded"]), ("DIV", False))
+        self.assertGreater(m["top"], m["gridTop"])
+        self.assertEqual(m["heading"], "引き継ぎ・バックアップ")
+        self.assertEqual(m["index"], ["#cards", "#notice", "#move", "#settings"])
+        self.assertEqual(m["steps"], 3)
         self.assertTrue(m["backup"] and m["restore"])
         self.assertFalse(m["wipeInside"])                   # "delete everything" is not next to the transfer buttons
         self.assertTrue(m["wipeExists"])
         self.assertEqual(m["reorder"], "手で動かす")
-        self.assertTrue(self.res["moveOpened"])             # a link to #backup-h opens it
 
     def test_the_quick_sheet_has_the_microphone_and_the_chips(self):
         q = self.res["quick"]

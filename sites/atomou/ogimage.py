@@ -76,7 +76,7 @@ def card(*, title: str, date_text: str, field: str, colour: tuple) -> bytes:
     d = ImageDraw.Draw(img)
     d.rectangle([0, 0, 28, H], fill=colour)
     pad = 90
-    head = "あと何日、もう何日  /  出典と確認日つきの公式の日付"
+    head = "あと何日、もう何日  /  いろいろな日付をカードに"
     d.text((pad, 96), head, font=_fit(d, head, path, 34, W - pad - 70), fill=MUTED, anchor="ls")
     tf = _fit(d, title[:60], path, 68, W - pad - 70, floor=44)
     rows = _lines(d, title, tf, W - pad - 70, 3)

@@ -34,6 +34,7 @@
   function baseOf(it) {  // the date the tasks count back from (a yearly day: its next turn)
     var d = C.parse(it.date);
     if (!d || it.p !== 'day') return null;
+    if (it.rep) return C.repNext(d, it.rep, TODAY);   // a weekly or monthly day: its next turn
     return it.yearly ? A.nextYearly(d, TODAY) : d;
   }
   function eventsOn(items, d) {
@@ -41,7 +42,7 @@
     items.forEach(function (it) {
       var dd = C.parse(it.date);
       if (!dd || it.p !== 'day') return;
-      if (C.cmp(dd, d) === 0 || (it.yearly && d[0] > dd[0] && C.cmp(A.occ(dd, d[0]), d) === 0)) out.push(it);
+      if (C.cmp(dd, d) === 0 || (it.yearly && d[0] > dd[0] && C.cmp(A.occ(dd, d[0]), d) === 0) || (it.rep && C.repOn(dd, it.rep, d))) out.push(it);
       else if (it.every100 && !it.quiet) {   // the 100-day marks (100, 200, ...) of a day
         var n = C.totalDays(dd, d);
         if (n >= 100 && n % 100 === 0) out.push(Object.assign({}, it, { title: it.title + ' から' + n + '日', mark: n }));
@@ -175,6 +176,7 @@
   function nextMilestone(e) {   // right after saving: when the day comes round next, so there is a reason to open the page again
     var d = e && e.precision === 'day' ? C.parse(e.date) : null;
     if (!d) return '';
+    if (A.repOf(e)) return '次は、' + A.fmtDate(C.iso(C.repNext(d, A.repOf(e), TODAY)), 'day') + 'です。';
     var gone = C.toDays(TODAY[0], TODAY[1], TODAY[2]) - C.toDays(d[0], d[1], d[2]), next;
     if (e.every100 && gone >= 0) { var n = (Math.floor(gone / 100) + 1) * 100; return '次の100日ごとの節目は、' + n + '日目の' + A.fmtDate(C.iso(C.addDays(d, n)), 'day') + 'です。'; }
     if (e.yearly) {
@@ -188,7 +190,7 @@
 
   // "週で見る": how many weeks and days there are to a day (or since it), and one cell for each week.  Not for a quiet day.  A day with more than 26 years behind it or 2 years ahead gets the words only.
   function weeksSection(item) {
-    var d = item.p === 'day' && !item.quiet ? C.parse(item.date) : null;
+    var d = item.p === 'day' && !item.quiet ? C.parse(item.rep ? item.next : item.date) : null;
     if (!d) return '';
     var n = C.totalDays(TODAY, d), m = Math.abs(n);
     if (!m) return '';
@@ -224,7 +226,7 @@
         '<button type="button" class="btn small ghost" data-plan-act="del">消す</button></div>';
     }
     function shiftRow(e) {   // a plan that moved: one tap puts it a day, a week or a month later
-      if (!e || e.precision !== 'day' || e.yearly || ['event', 'until', 'memo'].indexOf(e.kind) < 0) return '';
+      if (!e || e.precision !== 'day' || e.yearly || A.repOf(e) || ['event', 'until', 'memo'].indexOf(e.kind) < 0) return '';
       return '<p class="shift" id="shift-row"><span class="lab">日付をずらす</span> <button type="button" class="chip" data-shift="d1">+1日</button><button type="button" class="chip" data-shift="w1">+1週間</button><button type="button" class="chip" data-shift="m1">+1か月</button></p>';
     }
     function arrange() {   // the order on the page: the card, its actions, sending it, correcting it, then the notices, tasks and memo, the weeks, the files for other calendars
@@ -246,7 +248,7 @@
         var allowed = function (r) { return !T || T.remindAllowed(r); };
         h += '<section class="plan-sec" id="remind"><h2>知らせ</h2>' +
           '<p><label class="lab" for="r-on"><input type="checkbox" id="r-on"' + (nn.mute ? '' : ' checked') + '> この日の知らせを出す(オフにすると、この日の知らせはすべて止まります)</label></p>' +
-          (item.quiet ? '<p class="hint">静かに残す日です。知らせは、必要なときだけ、ご自分で選んでオンにしてください。ふだんは出しません。</p>' : '') +
+          (item.quiet ? '<p class="hint">大切な日です。知らせは、ふだんは出しません。必要なときだけ、ご自分で選んでオンにしてください。</p>' : '') +
           '<h3 class="x-h3">あと何日の知らせ</h3><p class="hint">日にちが近づくたびに、知らせます。通知をオンにしているときに届きます。カレンダーのファイルにも入ります。</p><div class="chiprow">' +
           [100, 60, 30, 14, 7, 3, 1].map(function (r) {
             var ok = allowed(r);
@@ -273,7 +275,12 @@
         else h += '<div class="field"><label for="e-date">年(例 1990)</label><input type="number" id="e-date" inputmode="numeric" min="1" max="2200" value="' + H(String(e.date).slice(0, 4)) + '"></div>';
         h += '<div class="field"><label for="e-say">文字で日付を入力する</label><input type="text" id="e-say" autocomplete="off" maxlength="30" placeholder="' + (e.precision === 'day' ? '12月25日 / 2027年3月3日' : e.precision === 'month' ? '2026年10月' : '1990年') + '"><p class="hint" id="e-say-note" aria-live="polite"></p>' + mic() + '</div>';
         if (e.kind === 'event' && e.precision === 'day') h += '<div class="field"><label for="e-time">時刻</label><input type="time" id="e-time" value="' + H(e.time || '') + '"></div>';
-        if (e.precision === 'day') h += '<div class="field"><label class="lab" for="e-yearly"><input type="checkbox" id="e-yearly"' + (e.yearly ? ' checked' : '') + '> 毎年くり返す</label></div>';
+        if (e.precision === 'day') {
+          var curRep = A.repOf(e) || (e.yearly ? 'year' : '');
+          h += '<div class="field"><label for="e-rep">くり返し</label><select id="e-rep">' + [['', 'しない'], ['week', '毎週(同じ曜日)'], ['month', '毎月(同じ日付)'], ['year', '毎年(同じ月日)']].map(function (o) {
+            return '<option value="' + o[0] + '"' + (curRep === o[0] ? ' selected' : '') + '>' + o[1] + '</option>';
+          }).join('') + '</select><p class="hint">毎週・毎月は、カードに次の日までの日数が出ます。毎月は、その日がない月は月の最後の日です。</p></div>';
+        }
         if (e.precision === 'day' && !e.quiet && e.kind !== 'event') h += '<div class="field"><label class="lab" for="e-100"><input type="checkbox" id="e-100"' + (e.every100 ? ' checked' : '') + '> 100日ごとの節目も入れる</label></div>';
         h += '<div class="field"><label for="e-alarm">お知らせ</label><select id="e-alarm">' + [['', '設定に合わせる(マイページ)'], ['morning', '当日の朝'], ['eve', '前日の夜'], ['week', '1週間前の朝'], ['none', 'しない']].map(function (o) {
           return '<option value="' + o[0] + '"' + ((e.alarm || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>';
@@ -281,9 +288,9 @@
         h += '<p><button type="button" class="btn small" id="e-save">保存</button></p></section>';
       }
       if (item.p === 'day') {
-        var gurl = window.AtomouShare ? AtomouShare.googleUrl(item.title, item.date, own ? '' : '詳しい日付と出典: ' + location.origin + '/e/' + item.id + '/') : '';
+        var gurl = window.AtomouShare ? AtomouShare.googleUrl(item.title, item.date, own ? '' : '詳しい日付: ' + location.origin + '/e/' + item.id + '/') : '';
         h += '<details class="plan-sec more"><summary>他のカレンダーアプリに入れる</summary><p class="hint">Google カレンダーと Outlook には、下のボタンから入れられます。iPhone の「カレンダー」、Yahoo!カレンダー、TimeTree などには、ファイルを作って取り込みます。</p>' +
-          '<p>' + (gurl ? '<a class="btn small ghost" href="' + H(gurl) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a> <a class="btn small ghost" href="' + H(AtomouShare.outlookUrl(item.title, item.date, own ? '' : '詳しい日付と出典: ' + location.origin + '/e/' + item.id + '/')) + '" target="_blank" rel="noopener">Outlookに追加</a> ' : '') +
+          '<p>' + (gurl ? '<a class="btn small ghost" href="' + H(gurl) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a> <a class="btn small ghost" href="' + H(AtomouShare.outlookUrl(item.title, item.date, own ? '' : '詳しい日付: ' + location.origin + '/e/' + item.id + '/')) + '" target="_blank" rel="noopener">Outlookに追加</a> ' : '') +
           '<button type="button" class="btn small ghost" data-ics-for="' + H(key) + '">ファイルを作る</button></p></details>';
       }
       if (!(own && (!e || e.quiet))) {   // a day of one's own is sent as words and a picture only (no page to link to), without its title unless the box is ticked
@@ -379,8 +386,8 @@
           if (!nd) { A.toast('日付を確かめてください。'); return; }
           e.date = C.iso(nd);
         }
-        var yl = $('#e-yearly'); if (yl) e.yearly = yl.checked;
-        var h100 = $('#e-100'); if (h100) e.every100 = h100.checked;
+        var rp = $('#e-rep'); if (rp) { e.yearly = rp.value === 'year'; e.repeat = rp.value === 'week' || rp.value === 'month' ? rp.value : ''; if (e.repeat) e.every100 = false; }
+        var h100 = $('#e-100'); if (h100 && !e.repeat) e.every100 = h100.checked;
         var al = $('#e-alarm'); if (al) e.alarm = al.value;
         if (tm) e.time = /^([01]\d|2[0-3]):[0-5]\d$/.test(tm.value) ? tm.value : '';
         A.persist(); A.stat('act:plan_edit'); item = A.ownItem(e); render(); A.toast('保存しました。');

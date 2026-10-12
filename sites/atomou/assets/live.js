@@ -22,10 +22,10 @@
       var top = card.querySelector('.c-top');
       if (top) top.insertAdjacentHTML('beforeend', '<span class="badge warn">再確認中</span>');
       if (A.page === 'event' && card.classList.contains('big') && !$('.rc-note')) {
-        card.insertAdjacentHTML('beforebegin', '<p class="notice rc-note">出典のページで、この日付が見つかりませんでした。変わったかもしれません。出典の公式ページで確かめてください。</p>');
+        card.insertAdjacentHTML('beforebegin', '<p class="notice rc-note">公式ページで、この日付が見つかりませんでした。変わったかもしれません。公式の情報で確かめてください。</p>');
         var vb = $('[data-vbadge]'), vt = $('[data-vtext]');   // the page's badge says so as well
         if (vb) { vb.className = 'vbadge vb-old'; vb.textContent = '再確認中'; }
-        if (vt) vt.textContent = '出典のページで見つからなかったため、確かめ直しています。';
+        if (vt) vt.textContent = '公式ページで見つからなかったため、確かめ直しています。';
       }
     });
   }

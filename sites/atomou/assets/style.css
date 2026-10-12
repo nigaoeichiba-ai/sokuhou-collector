@@ -429,8 +429,8 @@ header.site .wrap{min-height:56px;padding-top:6px;padding-bottom:6px}
 .card:not(.big) .c-top .what{font-size:.85rem}
 .card:not(.big) .c-title{font-size:1.02rem;line-height:1.45;margin:0}
 .card:not(.big) .c-date{font-size:.9rem;margin:0;font-weight:600}
-.card:not(.big) .c-date .pl{display:inline-block;margin-left:.6em;padding-left:.6em;border-left:1px solid var(--line);color:var(--muted);font-weight:500}
-.card:not(.big) .c-date .pl b{color:var(--text);margin-right:.4em;font-weight:700}
+.card .c-date .pl{display:inline-block;margin-left:.6em;padding-left:.6em;border-left:1px solid var(--line);color:var(--muted);font-weight:500}
+.card .c-date .pl b{color:var(--text);margin-right:.4em;font-weight:700}
 .card:not(.big) .c-act{margin-top:6px;padding-top:0;gap:6px}
 .card:not(.big) .c-act .btn.small{min-height:44px;padding:0 14px;font-size:.88rem}   /* 44px: the smallest comfortable touch target (Codex skin review 2026-10-08) */
 .card:not(.big) .c-next{font-size:.82rem}
@@ -511,7 +511,7 @@ body{word-break:auto-phrase;text-wrap:pretty}
 .part-btns{display:flex;flex-wrap:wrap;gap:8px;margin:.6rem 0 0}
 /* how sure a day's page is about its date (確認済 / 訂正済 / 再確認中 / 未発表): every pair is one the skins already check */
 .vrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:.5rem 0}.vbadge{display:inline-block;padding:2px 12px;border-radius:999px;font-size:.85rem;font-weight:800;border:1.5px solid currentColor}
-.vb-ok,.vb-fixed{background:var(--ato-soft);color:var(--ato-ink)}.vb-old{background:var(--mou-soft);color:var(--mou-ink)}.vb-pending{background:var(--quiet-bg);color:var(--quiet-text)}
+.vb-ok,.vb-fixed,.vb-press{background:var(--ato-soft);color:var(--ato-ink)}.vb-old{background:var(--mou-soft);color:var(--mou-ink)}.vb-pending{background:var(--quiet-bg);color:var(--quiet-text)}
 .changes{margin:0;padding-left:1.1em}.fix-line{margin:.6rem 0}
 /* 今日は何の日 */
 .kyou-rows{list-style:none;margin:.4rem 0 1rem;padding:0;display:grid;gap:6px}.kyou-rows li{padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}.kyou-rows .y{display:inline-block;min-width:3.6em;font-weight:800;color:var(--ato-ink)}
@@ -522,3 +522,41 @@ body{word-break:auto-phrase;text-wrap:pretty}
 .cd{font-weight:800;color:var(--ato-ink);white-space:nowrap}.special-rows li{display:block}.special-links{list-style:none;margin:.4rem 0 1rem;padding:0;display:grid;gap:8px}.special-links a{display:grid;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);text-decoration:none}.special-links span{font-size:.85rem;color:var(--muted)}
 .term,.day{margin:0 0 .8rem;padding:6px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.term h3,.day h3{margin:.4rem 0 .3rem;font-size:1.05rem}.term.now,.day.now{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
 .season-now,.day-now{margin:.6rem 0 1rem;padding:8px 14px;border-radius:12px;background:var(--ato-soft);color:var(--ato-ink)}.season-now p,.day-now p{margin:.2rem 0}.big-cd{font-weight:800;font-size:1.2rem}
+
+/* the record page: the date line, the kinds without sub-lines, the preview */
+.date-line{margin:.5rem 0 0;font-weight:700;line-height:1.8}
+.date-line b{margin-left:.4em;font-size:1.25rem}
+.date-line b.mou{color:var(--mou)}.date-line b.ato{color:var(--ato)}
+.date-line .tag{display:inline-block;margin-left:.3em;padding:0 .6em;border:1px solid var(--line);border-radius:999px;font-size:.78rem;font-weight:700;color:var(--muted);vertical-align:.1em;background:var(--surface)}
+.wizard .tile{min-height:52px}
+.wizard #kind-d{margin:.5rem 0 0}
+.wizard .field .lab{display:block;font-weight:700;margin-bottom:.35rem}
+.wizard .live .lv-name{font-weight:700;margin-bottom:.2rem}
+.wizard #s5 h2{margin-bottom:.2rem}
+
+/* the hint button: in the top menu on wide screens (it floated in the corner of a wide window, out of sight); the floating one stays for the narrowest phones only */
+.guide-nav{display:none}
+@media (min-width:700px){
+  .guide-btn{display:none}
+  .guide-nav{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border:2px solid var(--accent);border-radius:10px;background:var(--surface);color:var(--accent);font:inherit;font-weight:800;cursor:pointer}
+  .guide-nav span{display:grid;place-items:center;width:22px;height:22px;border:2px solid currentColor;border-radius:50%;font-size:.8rem;line-height:1}
+}
+@media (max-width:359px){.guide-nav{display:none}}
+
+/* the my page: the index, the groups, the switches; the way back */
+.my-index{margin:.2rem 0 1rem}
+.my-index .chip{min-height:44px}
+.set-h{margin:1.2rem 0 .3rem;font-size:1.02rem}
+.set-h:first-child{margin-top:0}
+.switches{margin:.4rem 0 .6rem;display:grid;gap:8px}
+.switches .sw-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.switches .sw-t{min-width:0;overflow-wrap:anywhere;line-height:1.5}
+.switch{flex:none;min-width:84px;min-height:44px;padding:0 14px;border:2px solid var(--line);border-radius:999px;background:var(--surface);color:var(--muted);font:inherit;font-weight:800;cursor:pointer}
+.switch[aria-checked="true"]{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}
+.back-bar{margin:.6rem 0 0}
+.panel.move .steps{margin:.4rem 0 .8rem;padding-left:1.4rem}
+
+/* a day's page: the title is the page's heading above the card, so the card does not say it again; the actions sit together under the proof line */
+.ev-card .c-title{display:none}
+.ev-acts{margin:.5rem 0}
+.ev-more{margin:.8rem 0}

@@ -33,7 +33,7 @@ function seed(sort, extra) {
 async function run(mode, extra) {
   seed(mode, extra);
   var f = document.createElement('iframe'); f.style.cssText = 'width:375px;height:812px;border:0'; document.getElementById('host').appendChild(f);
-  await new Promise(function (res) { f.onload = res; f.src = '/search/?q=%E7%99%BA%E5%A3%B2&today=2026-10-12'; });
+  await new Promise(function (res) { f.onload = res; f.src = '/search/?q=%E7%99%BA%E5%A3%B2&today=2026-10-12&limit=2000'; });
   await wait(1500);
   var d = f.contentDocument, A = f.contentWindow.AtomouApp, cat = await A.loadCatalog(), by = {};
   cat.forEach(function (c) { by[c.id] = c; });
@@ -57,7 +57,7 @@ async function run(mode, extra) {
   // the choice made on the page is kept
   seed('soon');
   var f = document.createElement('iframe'); f.style.cssText = 'width:375px;height:812px;border:0'; document.getElementById('host').appendChild(f);
-  await new Promise(function (r) { f.onload = r; f.src = '/search/?q=%E7%99%BA%E5%A3%B2&today=2026-10-12'; }); await wait(1200);
+  await new Promise(function (r) { f.onload = r; f.src = '/search/?q=%E7%99%BA%E5%A3%B2&today=2026-10-12&limit=2000'; }); await wait(1200);
   var s = f.contentDocument.getElementById('pub-sort'); s.value = 'new'; s.dispatchEvent(new Event('change', { bubbles: true })); await wait(400);
   res.kept = JSON.parse(localStorage.getItem('atomou.v1')).prefs.sort;
   document.getElementById('out').textContent = JSON.stringify(res);
@@ -74,7 +74,7 @@ class SortPublic(unittest.TestCase):
         entries, _ = catalog.build_catalog(TODAY)
         pool = sorted((e for e in entries if "発売" in e["title"] and e["status"] != "ended" and not e["quiet"]), key=lambda e: (e["date"], e["title"]))
         assert len(pool) >= 12, len(pool)
-        cls.pop_ids = [pool[10]["id"], pool[0]["id"], pool[5]["id"]]       # the order of the file: the most put-in first (all of them are among the 37 days the search finds, so the cap of 60 cuts nothing)
+        cls.pop_ids = [pool[10]["id"], pool[0]["id"], pool[5]["id"]]       # the order of the file: the most put-in first (all of them are among the days the search finds, so the cap of 60 cuts nothing)
         cls.tmp = tempfile.TemporaryDirectory()
         site = Path(cls.tmp.name)
         build.write_pages(build.build_pages(CFG, release=True, today=TODAY), site)
@@ -101,7 +101,7 @@ class SortPublic(unittest.TestCase):
 
     def test_every_order_lists_the_same_days(self):
         base = sorted(self.ids("soon"))
-        self.assertEqual(len(base), 37)      # the 37 days the word 発売 finds (under the cap of 60)
+        self.assertGreater(len(base), 60)      # the page lists 60 at most; the harness lifts the cap (limit=2000), so every order shows all the days the word 発売 finds
         for k in ("new", "pop", "pick", "area", "pickNone", "areaNone"):
             self.assertEqual(sorted(self.ids(k)), base, k)
 
