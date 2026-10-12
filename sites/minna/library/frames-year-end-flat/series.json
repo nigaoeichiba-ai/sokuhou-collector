@@ -1,0 +1,227 @@
+{
+ "added": "2026-10-13",
+ "slug": "frames-year-end-flat",
+ "title": "年末年始の飾り枠",
+ "genre": "deco",
+ "touch": "flat",
+ "lead": "大みそか・餅つき・冬至・お歳暮・書き初めなど、12月から1月の飾り枠12点です。年末のお知らせや年賀状の枠に使えます。",
+ "tags": [
+  "フレーム",
+  "枠",
+  "大みそか",
+  "餅つき",
+  "冬至",
+  "お歳暮",
+  "書き初め",
+  "年末"
+ ],
+ "subject": "",
+ "season": {
+  "from": "11-20",
+  "to": "01-20"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "frames-year-end-flat-mochitsuki",
+   "file": "frames-year-end-flat-mochitsuki.webp",
+   "title": "餅つきのフレーム",
+   "desc": "餅つきのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "大みそか",
+    "餅つき",
+    "年末年始の飾り枠",
+    "餅つきのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 502,
+   "h": 503
+  },
+  {
+   "id": "frames-year-end-flat-touji",
+   "file": "frames-year-end-flat-touji.webp",
+   "title": "冬至のフレーム",
+   "desc": "冬至のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "大みそか",
+    "餅つき",
+    "冬至",
+    "年末年始の飾り枠",
+    "冬至のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 495,
+   "h": 495
+  },
+  {
+   "id": "frames-year-end-flat-oseibo",
+   "file": "frames-year-end-flat-oseibo.webp",
+   "title": "お歳暮のフレーム",
+   "desc": "お歳暮のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "大みそか",
+    "餅つき",
+    "お歳暮",
+    "年末年始の飾り枠",
+    "お歳暮のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 508,
+   "h": 485
+  },
+  {
+   "id": "frames-year-end-flat-kakizome",
+   "file": "frames-year-end-flat-kakizome.webp",
+   "title": "書き初めのフレーム",
+   "desc": "書き初めのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "大みそか",
+    "餅つき",
+    "書き初め",
+    "年末年始の飾り枠",
+    "書き初めのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 493,
+   "h": 494
+  },
+  {
+   "id": "frames-year-end-flat-hatsumode",
+   "file": "frames-year-end-flat-hatsumode.webp",
+   "title": "初詣のフレーム",
+   "desc": "初詣のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "大みそか",
+    "餅つき",
+    "年末年始の飾り枠",
+    "初詣のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 498,
+   "h": 485
+  },
+  {
+   "id": "frames-year-end-flat-kagamimochi",
+   "file": "frames-year-end-flat-kagamimochi.webp",
+   "title": "鏡餅のフレーム",
+   "desc": "鏡餅のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "大みそか",
+    "餅つき",
+    "年末年始の飾り枠",
+    "鏡餅のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 515,
+   "h": 503
+  },
+  {
+   "id": "frames-year-end-flat-otoshidama",
+   "file": "frames-year-end-flat-otoshidama.webp",
+   "title": "お年玉のフレーム",
+   "desc": "お年玉のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "大みそか",
+    "餅つき",
+    "年末年始の飾り枠",
+    "お年玉のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 530,
+   "h": 488
+  },
+  {
+   "id": "frames-year-end-flat-yukiguni",
+   "file": "frames-year-end-flat-yukiguni.webp",
+   "title": "雪景色のフレーム",
+   "desc": "雪景色のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "大みそか",
+    "餅つき",
+    "年末年始の飾り枠",
+    "雪景色のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 522,
+   "h": 480
+  },
+  {
+   "id": "frames-year-end-flat-kotatsu",
+   "file": "frames-year-end-flat-kotatsu.webp",
+   "title": "こたつと冬のフレーム",
+   "desc": "こたつと冬のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "大みそか",
+    "餅つき",
+    "年末年始の飾り枠",
+    "こたつと冬のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 529,
+   "h": 483
+  },
+  {
+   "id": "frames-year-end-flat-fukubukuro",
+   "file": "frames-year-end-flat-fukubukuro.webp",
+   "title": "福袋のフレーム",
+   "desc": "福袋のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "大みそか",
+    "餅つき",
+    "年末年始の飾り枠",
+    "福袋のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 520,
+   "h": 467
+  },
+  {
+   "id": "frames-year-end-flat-hatsuhinode",
+   "file": "frames-year-end-flat-hatsuhinode.webp",
+   "title": "初日の出のフレーム",
+   "desc": "初日の出のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "大みそか",
+    "餅つき",
+    "年末年始の飾り枠",
+    "初日の出のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 521,
+   "h": 503
+  }
+ ]
+}

@@ -1,0 +1,231 @@
+{
+ "added": "2026-10-13",
+ "slug": "otayori-headers-kawaii",
+ "title": "おたよりの見出し飾り",
+ "genre": "school",
+ "touch": "kawaii",
+ "lead": "おたよりやお知らせの見出しを飾るリボン・看板・雲形などの枠12点です。中があいているので、題名を重ねて使えます。",
+ "tags": [
+  "おたより",
+  "見出し",
+  "タイトル",
+  "リボン",
+  "園だより",
+  "お知らせ",
+  "枠"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "otayori-headers-kawaii-ribbon",
+   "file": "otayori-headers-kawaii-ribbon.webp",
+   "title": "リボンの見出し枠",
+   "desc": "リボンの見出し枠のゆるかわイラストです。",
+   "tags": [
+    "おたより",
+    "見出し",
+    "タイトル",
+    "リボン",
+    "枠",
+    "おたよりの見出し飾り",
+    "リボンの見出し枠",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 524,
+   "h": 381
+  },
+  {
+   "id": "otayori-headers-kawaii-cloud",
+   "file": "otayori-headers-kawaii-cloud.webp",
+   "title": "雲の見出し枠",
+   "desc": "雲の見出し枠のゆるかわイラストです。",
+   "tags": [
+    "おたより",
+    "見出し",
+    "タイトル",
+    "リボン",
+    "枠",
+    "おたよりの見出し飾り",
+    "雲の見出し枠",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 500,
+   "h": 408
+  },
+  {
+   "id": "otayori-headers-kawaii-scroll",
+   "file": "otayori-headers-kawaii-scroll.webp",
+   "title": "巻物の見出し枠",
+   "desc": "巻物の見出し枠のゆるかわイラストです。",
+   "tags": [
+    "おたより",
+    "見出し",
+    "タイトル",
+    "リボン",
+    "枠",
+    "おたよりの見出し飾り",
+    "巻物の見出し枠",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 527,
+   "h": 403
+  },
+  {
+   "id": "otayori-headers-kawaii-flowers",
+   "file": "otayori-headers-kawaii-flowers.webp",
+   "title": "花に囲まれた見出し枠",
+   "desc": "花に囲まれた見出し枠のゆるかわイラストです。",
+   "tags": [
+    "おたより",
+    "見出し",
+    "タイトル",
+    "リボン",
+    "枠",
+    "おたよりの見出し飾り",
+    "花に囲まれた見出し枠",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 515,
+   "h": 402
+  },
+  {
+   "id": "otayori-headers-kawaii-stars",
+   "file": "otayori-headers-kawaii-stars.webp",
+   "title": "星の見出し枠",
+   "desc": "星の見出し枠のゆるかわイラストです。",
+   "tags": [
+    "おたより",
+    "見出し",
+    "タイトル",
+    "リボン",
+    "枠",
+    "おたよりの見出し飾り",
+    "星の見出し枠",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 524,
+   "h": 403
+  },
+  {
+   "id": "otayori-headers-kawaii-leaf",
+   "file": "otayori-headers-kawaii-leaf.webp",
+   "title": "葉っぱの見出し枠",
+   "desc": "葉っぱの見出し枠のゆるかわイラストです。",
+   "tags": [
+    "おたより",
+    "見出し",
+    "タイトル",
+    "リボン",
+    "枠",
+    "おたよりの見出し飾り",
+    "葉っぱの見出し枠",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 519,
+   "h": 370
+  },
+  {
+   "id": "otayori-headers-kawaii-dots",
+   "file": "otayori-headers-kawaii-dots.webp",
+   "title": "水玉の見出し枠",
+   "desc": "水玉の見出し枠のゆるかわイラストです。",
+   "tags": [
+    "おたより",
+    "見出し",
+    "タイトル",
+    "リボン",
+    "枠",
+    "おたよりの見出し飾り",
+    "水玉の見出し枠",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 504,
+   "h": 366
+  },
+  {
+   "id": "otayori-headers-kawaii-pencil",
+   "file": "otayori-headers-kawaii-pencil.webp",
+   "title": "えんぴつの見出し枠",
+   "desc": "えんぴつの見出し枠のゆるかわイラストです。",
+   "tags": [
+    "おたより",
+    "見出し",
+    "タイトル",
+    "リボン",
+    "枠",
+    "おたよりの見出し飾り",
+    "えんぴつの見出し枠",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 508,
+   "h": 349
+  },
+  {
+   "id": "otayori-headers-kawaii-balloon",
+   "file": "otayori-headers-kawaii-balloon.webp",
+   "title": "風船の見出し枠",
+   "desc": "風船の見出し枠のゆるかわイラストです。",
+   "tags": [
+    "おたより",
+    "見出し",
+    "タイトル",
+    "リボン",
+    "枠",
+    "おたよりの見出し飾り",
+    "風船の見出し枠",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 519,
+   "h": 422
+  },
+  {
+   "id": "otayori-headers-kawaii-notebook",
+   "file": "otayori-headers-kawaii-notebook.webp",
+   "title": "ノートの見出し枠",
+   "desc": "ノートの見出し枠のゆるかわイラストです。",
+   "tags": [
+    "おたより",
+    "見出し",
+    "タイトル",
+    "リボン",
+    "枠",
+    "おたよりの見出し飾り",
+    "ノートの見出し枠",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 504,
+   "h": 361
+  },
+  {
+   "id": "otayori-headers-kawaii-badge",
+   "file": "otayori-headers-kawaii-badge.webp",
+   "title": "ワッペンの見出し枠",
+   "desc": "ワッペンの見出し枠のゆるかわイラストです。",
+   "tags": [
+    "おたより",
+    "見出し",
+    "タイトル",
+    "リボン",
+    "枠",
+    "おたよりの見出し飾り",
+    "ワッペンの見出し枠",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 521,
+   "h": 388
+  }
+ ]
+}

@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-13",
+ "slug": "realistic-fish-insects",
+ "title": "魚と昆虫の図鑑風イラスト",
+ "genre": "animals",
+ "touch": "realistic",
+ "lead": "メダカ・サケ・クワガタ・バッタなど、魚と昆虫を図鑑風のタッチで描いた素材12点です。理科の資料や自由研究、解説スライドに使えます。",
+ "tags": [
+  "図鑑",
+  "リアル",
+  "魚",
+  "昆虫",
+  "理科",
+  "自由研究",
+  "標本"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "realistic-fish-insects-medaka",
+   "file": "realistic-fish-insects-medaka.webp",
+   "title": "メダカ",
+   "desc": "メダカのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "メダカ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 482,
+   "h": 204
+  },
+  {
+   "id": "realistic-fish-insects-salmon",
+   "file": "realistic-fish-insects-salmon.webp",
+   "title": "サケ",
+   "desc": "サケのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "サケ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 546,
+   "h": 248
+  },
+  {
+   "id": "realistic-fish-insects-kuwagata",
+   "file": "realistic-fish-insects-kuwagata.webp",
+   "title": "クワガタ",
+   "desc": "クワガタのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "クワガタ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 524,
+   "h": 364
+  },
+  {
+   "id": "realistic-fish-insects-batta",
+   "file": "realistic-fish-insects-batta.webp",
+   "title": "バッタ",
+   "desc": "バッタのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "バッタ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 510,
+   "h": 371
+  },
+  {
+   "id": "realistic-fish-insects-tai",
+   "file": "realistic-fish-insects-tai.webp",
+   "title": "マダイ",
+   "desc": "マダイのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "マダイ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 541,
+   "h": 381
+  },
+  {
+   "id": "realistic-fish-insects-semi",
+   "file": "realistic-fish-insects-semi.webp",
+   "title": "セミ",
+   "desc": "セミのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "セミ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 529,
+   "h": 259
+  },
+  {
+   "id": "realistic-fish-insects-koi",
+   "file": "realistic-fish-insects-koi.webp",
+   "title": "ニシキゴイ",
+   "desc": "ニシキゴイのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "ニシキゴイ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 528,
+   "h": 291
+  },
+  {
+   "id": "realistic-fish-insects-kamakiri",
+   "file": "realistic-fish-insects-kamakiri.webp",
+   "title": "カマキリ",
+   "desc": "カマキリのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "カマキリ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 522,
+   "h": 460
+  },
+  {
+   "id": "realistic-fish-insects-ayu",
+   "file": "realistic-fish-insects-ayu.webp",
+   "title": "アユ",
+   "desc": "アユのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "アユ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 529,
+   "h": 240
+  },
+  {
+   "id": "realistic-fish-insects-suzumushi",
+   "file": "realistic-fish-insects-suzumushi.webp",
+   "title": "コオロギ",
+   "desc": "コオロギのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "コオロギ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 499,
+   "h": 411
+  },
+  {
+   "id": "realistic-fish-insects-kingyo",
+   "file": "realistic-fish-insects-kingyo.webp",
+   "title": "デメキン",
+   "desc": "デメキンのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "デメキン",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 508,
+   "h": 413
+  },
+  {
+   "id": "realistic-fish-insects-hotaru",
+   "file": "realistic-fish-insects-hotaru.webp",
+   "title": "ホタル",
+   "desc": "ホタルのリアル・図鑑風イラストです。",
+   "tags": [
+    "図鑑",
+    "リアル",
+    "魚",
+    "昆虫",
+    "魚と昆虫の図鑑風イラスト",
+    "ホタル",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 514,
+   "h": 359
+  }
+ ]
+}

@@ -1,0 +1,235 @@
+{
+ "added": "2026-10-13",
+ "slug": "trades-craftsmen-loose",
+ "title": "職人と現場の仕事",
+ "genre": "work",
+ "touch": "loose",
+ "lead": "大工・農家・漁師・パン職人・左官など、職人と現場の仕事をゆるい手描きのタッチで描いた人物素材12点です。求人や会社案内に使えます。",
+ "tags": [
+  "職人",
+  "大工",
+  "農家",
+  "漁師",
+  "仕事",
+  "求人",
+  "会社案内"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "trades-craftsmen-loose-carpenter",
+   "file": "trades-craftsmen-loose-carpenter.webp",
+   "title": "大工",
+   "desc": "大工のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 427,
+   "h": 518
+  },
+  {
+   "id": "trades-craftsmen-loose-farmer",
+   "file": "trades-craftsmen-loose-farmer.webp",
+   "title": "農家",
+   "desc": "農家のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 363,
+   "h": 507
+  },
+  {
+   "id": "trades-craftsmen-loose-fisher",
+   "file": "trades-craftsmen-loose-fisher.webp",
+   "title": "漁師",
+   "desc": "漁師のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 498,
+   "h": 493
+  },
+  {
+   "id": "trades-craftsmen-loose-baker",
+   "file": "trades-craftsmen-loose-baker.webp",
+   "title": "パン職人",
+   "desc": "パン職人のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "パン職人",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 456,
+   "h": 479
+  },
+  {
+   "id": "trades-craftsmen-loose-plasterer",
+   "file": "trades-craftsmen-loose-plasterer.webp",
+   "title": "左官",
+   "desc": "左官のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "左官",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 340,
+   "h": 500
+  },
+  {
+   "id": "trades-craftsmen-loose-potter",
+   "file": "trades-craftsmen-loose-potter.webp",
+   "title": "陶芸家",
+   "desc": "陶芸家のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "陶芸家",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 446,
+   "h": 456
+  },
+  {
+   "id": "trades-craftsmen-loose-tailor",
+   "file": "trades-craftsmen-loose-tailor.webp",
+   "title": "仕立て屋",
+   "desc": "仕立て屋のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "仕立て屋",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 441,
+   "h": 474
+  },
+  {
+   "id": "trades-craftsmen-loose-welder",
+   "file": "trades-craftsmen-loose-welder.webp",
+   "title": "溶接工",
+   "desc": "溶接工のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "溶接工",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 372,
+   "h": 473
+  },
+  {
+   "id": "trades-craftsmen-loose-chef",
+   "file": "trades-craftsmen-loose-chef.webp",
+   "title": "料理人",
+   "desc": "料理人のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "料理人",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 346,
+   "h": 493
+  },
+  {
+   "id": "trades-craftsmen-loose-gardener",
+   "file": "trades-craftsmen-loose-gardener.webp",
+   "title": "造園師",
+   "desc": "造園師のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "造園師",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 419,
+   "h": 483
+  },
+  {
+   "id": "trades-craftsmen-loose-electrician",
+   "file": "trades-craftsmen-loose-electrician.webp",
+   "title": "電気工事士",
+   "desc": "電気工事士のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "電気工事士",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 251,
+   "h": 508
+  },
+  {
+   "id": "trades-craftsmen-loose-mechanic",
+   "file": "trades-craftsmen-loose-mechanic.webp",
+   "title": "整備士",
+   "desc": "整備士のゆるい手書きイラストです。",
+   "tags": [
+    "職人",
+    "大工",
+    "農家",
+    "漁師",
+    "職人と現場の仕事",
+    "整備士",
+    "ゆるい手書き",
+    "仕事・ビジネス"
+   ],
+   "w": 349,
+   "h": 473
+  }
+ ]
+}
