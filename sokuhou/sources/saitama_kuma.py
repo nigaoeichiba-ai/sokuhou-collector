@@ -3,7 +3,7 @@
 埼玉県は、データの再利用の許可を明示していない(県サイトの著作権の案内は、転載に担当課の承認を求めている)。
 だから、「埼玉県ツキノワグマ出没マップ」の ArcGIS FeatureServer から、出没日(field_1)と市町村名(field_4)の2列だけを取り(`outFields`、`returnGeometry=false`)、
 メモリの中で月別・市町村別に数えて、件数と最新日だけを保存する。地名・概要・被害状況・自由記述・報告者などは、取得も保存もしない。
-ただし(2026-10-13・オーナーの方針)、秩父市(荒川地区)と小鹿野町が自分のページにも載せている出没(同じ市町・同じ日)は、2つの公開情報が一致したものとして、
+ただし(2026-10-13・オーナーの方針)、秩父市(荒川地区)・小鹿野町・皆野町・飯能市が自分のページにも載せている出没(同じ市町・同じ日)は、2つの公開情報が一致したものとして、
 市町のページにある日付・場所・種類を、出典を示さずに保存する(`corroborated.py`)。県の地名などは、いままでどおり取得も保存もしない。
 """
 from __future__ import annotations
@@ -54,7 +54,9 @@ def collect(now: datetime | None = None) -> dict:
         update_note=UPDATE_NOTE, page=PAGE, files=[LAYER], min_rows=MIN_ROWS, unparsed_limit=UNPARSED_LIMIT, empty_limit=EMPTY_CITY_LIMIT)
     # the sightings that a town's own page also lists (same municipality, same day) are stored with their place: two publications agree
     return corroborated.attach(result, rows, [corroborated.html_reader(corroborated.CHICHIBU_PAGE, corroborated.parse_chichibu),
-                                              corroborated.html_reader(corroborated.OGANO_PAGE, corroborated.parse_ogano)],
+                                              corroborated.html_reader(corroborated.OGANO_PAGE, corroborated.parse_ogano),
+                                              corroborated.html_reader(corroborated.MINANO_PAGE, corroborated.parse_minano),
+                                              corroborated.html_reader(corroborated.HANNO_PAGE, corroborated.parse_hanno)],
                                fetch, today, kumacounts.pause, kumacounts.norm_city)
 
 
