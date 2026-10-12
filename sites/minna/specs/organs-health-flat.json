@@ -1,0 +1,85 @@
+{
+ "slug": "organs-health-flat",
+ "title": "からだと臓器のアイコン",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "lead": "胃・心臓・肺・脳・歯・骨など、からだの部位と臓器を分かりやすく描いたアイコン12点です。健康だよりや説明資料に使えます。",
+ "tags": [
+  "胃腸",
+  "臓器",
+  "からだ",
+  "健康",
+  "医療",
+  "保健",
+  "説明資料"
+ ],
+ "subject_en": "Simple friendly anatomy icons, each ONE organ or body part, centred, flat colours, soft rounded shapes, not gory and not realistic, suitable for a health newsletter. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "stomach",
+   "胃",
+   "a simple stomach"
+  ],
+  [
+   "intestine",
+   "腸",
+   "coiled small and large intestines"
+  ],
+  [
+   "heart",
+   "心臓",
+   "a simple human heart organ with two vessels"
+  ],
+  [
+   "lungs",
+   "肺",
+   "a pair of lungs with a windpipe"
+  ],
+  [
+   "brain",
+   "脳",
+   "a brain seen from the side"
+  ],
+  [
+   "tooth",
+   "歯",
+   "a clean white molar tooth with shine marks"
+  ],
+  [
+   "bone",
+   "骨",
+   "a long bone with rounded ends"
+  ],
+  [
+   "liver",
+   "肝臓",
+   "a simple liver"
+  ],
+  [
+   "kidney",
+   "腎臓",
+   "a pair of kidney-bean shaped kidneys"
+  ],
+  [
+   "eye",
+   "目",
+   "a simple eye with eyelashes"
+  ],
+  [
+   "ear",
+   "耳",
+   "a simple human ear"
+  ],
+  [
+   "muscle",
+   "筋肉",
+   "a flexed arm showing a bicep muscle"
+  ]
+ ],
+ "exclude": [],
+ "priority": 2
+}

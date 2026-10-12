@@ -1,0 +1,85 @@
+{
+ "slug": "otayori-headers-kawaii",
+ "title": "おたよりの見出し飾り",
+ "subject": "",
+ "genre": "school",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "lead": "おたよりやお知らせの見出しを飾るリボン・看板・雲形などの枠12点です。中があいているので、題名を重ねて使えます。",
+ "tags": [
+  "おたより",
+  "見出し",
+  "タイトル",
+  "リボン",
+  "園だより",
+  "お知らせ",
+  "枠"
+ ],
+ "subject_en": "Decorative frames/borders with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, wide landscape, thick enough to hold text or a photo. Title banners for a newsletter heading, cute Japanese mascot style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "ribbon",
+   "リボンの見出し枠",
+   "a wide ribbon banner with curled ends, centre empty"
+  ],
+  [
+   "cloud",
+   "雲の見出し枠",
+   "a fluffy cloud-shaped title frame, centre empty"
+  ],
+  [
+   "signboard",
+   "木の看板の見出し枠",
+   "a wooden signboard on two short posts with small leaves, centre empty"
+  ],
+  [
+   "scroll",
+   "巻物の見出し枠",
+   "an unrolled paper scroll with rolled ends, centre empty"
+  ],
+  [
+   "flowers",
+   "花に囲まれた見出し枠",
+   "a rounded rectangle frame wreathed in small flowers, centre empty"
+  ],
+  [
+   "stars",
+   "星の見出し枠",
+   "a wide frame edged with stars and a crescent moon, centre empty"
+  ],
+  [
+   "leaf",
+   "葉っぱの見出し枠",
+   "a wide frame made of green leaves and berries, centre empty"
+  ],
+  [
+   "dots",
+   "水玉の見出し枠",
+   "a wide polka-dot patterned frame with a scalloped edge, centre empty"
+  ],
+  [
+   "pencil",
+   "えんぴつの見出し枠",
+   "a wide frame built from coloured pencils laid side by side, centre empty"
+  ],
+  [
+   "balloon",
+   "風船の見出し枠",
+   "a wide frame decorated with balloons and flags at the corners, centre empty"
+  ],
+  [
+   "notebook",
+   "ノートの見出し枠",
+   "a notebook page with a spiral binding and a memo tab, centre empty"
+  ],
+  [
+   "badge",
+   "ワッペンの見出し枠",
+   "a round-cornered patch badge with stitched edge, centre empty"
+  ]
+ ],
+ "exclude": [],
+ "priority": 1
+}
