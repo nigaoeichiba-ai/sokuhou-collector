@@ -1,0 +1,85 @@
+{
+ "slug": "check-status-icons-flat",
+ "title": "チェック・状態のアイコン",
+ "subject": "",
+ "genre": "icon",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "lead": "チェックマーク・丸・バツ・警告・ピン・しおりなど、資料やWebで状態を示すアイコン12点です。チェックリストや比較表に使えます。",
+ "tags": [
+  "チェックマーク",
+  "アイコン",
+  "丸",
+  "バツ",
+  "警告",
+  "チェックリスト",
+  "資料"
+ ],
+ "subject_en": "Simple status icons, each ONE bold symbol on its own round or square badge, centred, flat colours, high contrast, readable at small sizes. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "check-green",
+   "緑のチェックマーク",
+   "a thick green check mark on a round badge"
+  ],
+  [
+   "check-box",
+   "チェックボックス",
+   "a rounded square box with a blue check mark inside"
+  ],
+  [
+   "circle-ok",
+   "丸のマーク",
+   "a bold red circle mark (maru) on a white badge"
+  ],
+  [
+   "cross-ng",
+   "バツのマーク",
+   "a bold grey cross mark on a round badge"
+  ],
+  [
+   "warning",
+   "注意の三角",
+   "a yellow warning triangle with an exclamation dot symbol (no letters)"
+  ],
+  [
+   "info",
+   "情報のアイコン",
+   "a blue round badge with a lowercase-i shaped symbol made of shapes only"
+  ],
+  [
+   "pin",
+   "ピンのアイコン",
+   "a red map pin"
+  ],
+  [
+   "bookmark",
+   "しおりのアイコン",
+   "an orange bookmark ribbon"
+  ],
+  [
+   "thumbs",
+   "いいねのアイコン",
+   "a thumbs-up hand on a round badge"
+  ],
+  [
+   "bulb",
+   "ひらめきの電球",
+   "a glowing yellow light bulb"
+  ],
+  [
+   "flag",
+   "旗のアイコン",
+   "a red flag on a short pole"
+  ],
+  [
+   "target",
+   "目標のアイコン",
+   "an archery target with an arrow in the centre"
+  ]
+ ],
+ "exclude": [],
+ "priority": 2
+}

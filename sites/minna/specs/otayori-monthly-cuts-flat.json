@@ -1,0 +1,85 @@
+{
+ "slug": "otayori-monthly-cuts-flat",
+ "title": "おたよりの月別カット",
+ "subject": "",
+ "genre": "school",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "lead": "4月から3月まで、月ごとの行事と季節を表す小さなカット12点です。保育園や学校のおたよりの見出し横や余白に使えます。",
+ "tags": [
+  "おたより",
+  "園だより",
+  "月別",
+  "カット",
+  "保育園",
+  "学校",
+  "年間行事"
+ ],
+ "subject_en": "Small monthly vignette illustrations for a school newsletter, each ONE compact scene or object cluster for one month of the Japanese school year, centred, simple flat colours. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "apr",
+   "4月のカット(入園・桜)",
+   "cherry blossoms with a school bag and a yellow hat"
+  ],
+  [
+   "may",
+   "5月のカット(こいのぼり)",
+   "carp streamers and a small iris flower"
+  ],
+  [
+   "jun",
+   "6月のカット(梅雨)",
+   "an umbrella, rain boots and a hydrangea"
+  ],
+  [
+   "jul",
+   "7月のカット(七夕・水遊び)",
+   "a bamboo branch with paper strips and a small paddling pool"
+  ],
+  [
+   "aug",
+   "8月のカット(夏祭り)",
+   "a paper fan, a goldfish bowl and a firework"
+  ],
+  [
+   "sep",
+   "9月のカット(お月見・防災)",
+   "a moon with pampas grass and a rice-ball plate"
+  ],
+  [
+   "oct",
+   "10月のカット(運動会・秋)",
+   "a relay baton, a ribbon medal and autumn leaves"
+  ],
+  [
+   "nov",
+   "11月のカット(読書・紅葉)",
+   "an open picture book with fallen leaves and an acorn"
+  ],
+  [
+   "dec",
+   "12月のカット(クリスマス)",
+   "a small Christmas tree, a wreath and a gift box"
+  ],
+  [
+   "jan",
+   "1月のカット(お正月)",
+   "a kagami mochi rice cake, a pine decoration and a spinning top"
+  ],
+  [
+   "feb",
+   "2月のカット(節分)",
+   "a masu box of beans, a demon mask and a holly sprig"
+  ],
+  [
+   "mar",
+   "3月のカット(卒園・ひな祭り)",
+   "hina dolls, peach blossoms and a diploma tube"
+  ]
+ ],
+ "exclude": [],
+ "priority": 1
+}

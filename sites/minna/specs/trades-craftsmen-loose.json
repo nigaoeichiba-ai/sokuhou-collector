@@ -1,0 +1,85 @@
+{
+ "slug": "trades-craftsmen-loose",
+ "title": "職人と現場の仕事",
+ "subject": "",
+ "genre": "work",
+ "touch": "loose",
+ "title_fmt": "{ja}",
+ "lead": "大工・農家・漁師・パン職人・左官など、職人と現場の仕事をゆるい手描きのタッチで描いた人物素材12点です。求人や会社案内に使えます。",
+ "tags": [
+  "職人",
+  "大工",
+  "農家",
+  "漁師",
+  "仕事",
+  "求人",
+  "会社案内"
+ ],
+ "subject_en": "Loose hand-drawn style adults working at trades, each ONE person full body with their tools, centred, varied ages and genders, friendly natural faces. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "carpenter",
+   "大工",
+   "a carpenter planing a wooden board"
+  ],
+  [
+   "farmer",
+   "農家",
+   "a farmer holding a basket of vegetables in a field"
+  ],
+  [
+   "fisher",
+   "漁師",
+   "a fisher pulling a net on a small boat"
+  ],
+  [
+   "baker",
+   "パン職人",
+   "a baker taking bread out of an oven with a peel"
+  ],
+  [
+   "plasterer",
+   "左官",
+   "a plasterer smoothing a wall with a trowel"
+  ],
+  [
+   "potter",
+   "陶芸家",
+   "a potter shaping clay on a wheel"
+  ],
+  [
+   "tailor",
+   "仕立て屋",
+   "a tailor measuring cloth with a tape"
+  ],
+  [
+   "welder",
+   "溶接工",
+   "a welder in a mask working with sparks"
+  ],
+  [
+   "chef",
+   "料理人",
+   "a chef tossing food in a pan"
+  ],
+  [
+   "gardener",
+   "造園師",
+   "a gardener trimming a hedge with shears"
+  ],
+  [
+   "electrician",
+   "電気工事士",
+   "an electrician on a ladder working on wires"
+  ],
+  [
+   "mechanic",
+   "整備士",
+   "a mechanic checking a car engine"
+  ]
+ ],
+ "exclude": [],
+ "priority": 2
+}

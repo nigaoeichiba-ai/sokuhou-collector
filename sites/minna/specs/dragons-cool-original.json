@@ -1,0 +1,85 @@
+{
+ "slug": "dragons-cool-original",
+ "title": "ドラゴンのバリエーション",
+ "subject": "",
+ "genre": "animals",
+ "touch": "cool",
+ "title_fmt": "{ja}",
+ "lead": "西洋風・東洋風・幼いドラゴンなど、オリジナルデザインのドラゴン12点です。ポスター・ゲーム素材・アイコンに使えます。",
+ "tags": [
+  "ドラゴン",
+  "竜",
+  "龍",
+  "かっこいい",
+  "ファンタジー",
+  "ゲーム",
+  "オリジナル"
+ ],
+ "subject_en": "ORIGINAL dragon designs invented for this series, each ONE dragon centred, bold stylised shapes, thick dark outlines, saturated colours, strong silhouettes, dynamic poses. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "fire",
+   "火を吐くドラゴン",
+   "a red western dragon breathing fire, wings spread"
+  ],
+  [
+   "eastern",
+   "東洋の龍",
+   "a long serpentine eastern dragon in green and gold coiling through clouds"
+  ],
+  [
+   "baby",
+   "子どものドラゴン",
+   "a small baby dragon hatching from a cracked egg"
+  ],
+  [
+   "ice",
+   "氷のドラゴン",
+   "an icy blue dragon with crystal spines"
+  ],
+  [
+   "thunder",
+   "雷のドラゴン",
+   "a yellow and violet dragon wrapped in lightning"
+  ],
+  [
+   "forest",
+   "森のドラゴン",
+   "a green dragon covered in moss and leaves resting on a branch"
+  ],
+  [
+   "sea",
+   "海のドラゴン",
+   "a teal sea dragon with fins and a long wavy body"
+  ],
+  [
+   "armor",
+   "鎧のドラゴン",
+   "a heavily armoured grey dragon with horns, standing guard"
+  ],
+  [
+   "flying",
+   "飛ぶドラゴン",
+   "a dragon flying upward with wings fully open, seen from below"
+  ],
+  [
+   "head",
+   "ドラゴンの顔",
+   "a close-up roaring dragon head with horns and fangs"
+  ],
+  [
+   "night",
+   "夜のドラゴン",
+   "a dark purple dragon with glowing yellow eyes and star-like scales"
+  ],
+  [
+   "gold",
+   "金色のドラゴン",
+   "a golden dragon with a long mane, majestic pose"
+  ]
+ ],
+ "exclude": [],
+ "priority": 2
+}

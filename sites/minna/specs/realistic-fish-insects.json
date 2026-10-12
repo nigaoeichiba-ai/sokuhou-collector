@@ -1,0 +1,85 @@
+{
+ "slug": "realistic-fish-insects",
+ "title": "魚と昆虫の図鑑風イラスト",
+ "subject": "",
+ "genre": "animals",
+ "touch": "realistic",
+ "title_fmt": "{ja}",
+ "lead": "メダカ・サケ・クワガタ・バッタなど、魚と昆虫を図鑑風のタッチで描いた素材12点です。理科の資料や自由研究、解説スライドに使えます。",
+ "tags": [
+  "図鑑",
+  "リアル",
+  "魚",
+  "昆虫",
+  "理科",
+  "自由研究",
+  "標本"
+ ],
+ "subject_en": "Realistic natural-history illustration style, each ONE animal full body, side view, centred, accurate proportions and natural colours, soft shading. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "medaka",
+   "メダカ",
+   "a Japanese rice fish medaka swimming"
+  ],
+  [
+   "salmon",
+   "サケ",
+   "a silver salmon with a slightly hooked jaw"
+  ],
+  [
+   "kuwagata",
+   "クワガタ",
+   "a stag beetle with large mandibles"
+  ],
+  [
+   "batta",
+   "バッタ",
+   "a green grasshopper on all six legs"
+  ],
+  [
+   "tai",
+   "マダイ",
+   "a red sea bream"
+  ],
+  [
+   "semi",
+   "セミ",
+   "a cicada with clear veined wings"
+  ],
+  [
+   "koi",
+   "ニシキゴイ",
+   "a red and white koi carp"
+  ],
+  [
+   "kamakiri",
+   "カマキリ",
+   "a praying mantis with raised forelegs"
+  ],
+  [
+   "ayu",
+   "アユ",
+   "a sweetfish ayu with yellow spot behind the gill"
+  ],
+  [
+   "suzumushi",
+   "コオロギ",
+   "a field cricket with long antennae"
+  ],
+  [
+   "kingyo",
+   "デメキン",
+   "a bubble-eyed goldfish with flowing fins"
+  ],
+  [
+   "hotaru",
+   "ホタル",
+   "a firefly beetle with a glowing tail"
+  ]
+ ],
+ "exclude": [],
+ "priority": 2
+}

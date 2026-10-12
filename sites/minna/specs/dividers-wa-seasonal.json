@@ -1,0 +1,85 @@
+{
+ "slug": "dividers-wa-seasonal",
+ "title": "和柄の区切り線",
+ "subject": "",
+ "genre": "deco",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "lead": "麻の葉・青海波・市松などの和柄と、四季の花を使った横長の区切り線12点です。案内状や挨拶文の見出し下に使えます。",
+ "tags": [
+  "区切り線",
+  "ライン",
+  "和柄",
+  "飾り罫",
+  "青海波",
+  "市松",
+  "案内状"
+ ],
+ "subject_en": "Horizontal decorative divider lines, each ONE wide thin strip about 6:1 in shape, centred in its cell with space around, made of repeating small motifs along a line. Strips are separate and never touch each other. Traditional Japanese pattern style (washi colours, indigo, vermilion, gold). Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "asanoha",
+   "麻の葉の線",
+   "a divider of repeating asanoha hemp-leaf pattern in indigo"
+  ],
+  [
+   "seigaiha",
+   "青海波の線",
+   "a divider of seigaiha wave pattern in blue and cream"
+  ],
+  [
+   "ichimatsu",
+   "市松の線",
+   "a divider of ichimatsu checks in indigo and cream"
+  ],
+  [
+   "sakura",
+   "桜の線",
+   "a divider of cherry blossom petals along a thin branch"
+  ],
+  [
+   "ume",
+   "梅の線",
+   "a divider of plum blossoms along a branch"
+  ],
+  [
+   "kiku",
+   "菊の線",
+   "a divider of chrysanthemums with leaves"
+  ],
+  [
+   "momiji",
+   "もみじの線",
+   "a divider of red maple leaves"
+  ],
+  [
+   "matsu",
+   "松の線",
+   "a divider of pine needles and small cones"
+  ],
+  [
+   "kikko",
+   "亀甲の線",
+   "a divider of hexagonal kikko tortoise-shell pattern"
+  ],
+  [
+   "shippo",
+   "七宝の線",
+   "a divider of interlocking shippo circle pattern"
+  ],
+  [
+   "mizuhiki",
+   "水引の線",
+   "a divider of red and white mizuhiki cord knots"
+  ],
+  [
+   "kumo",
+   "雲の線",
+   "a divider of traditional swirling cloud motifs in gold and blue"
+  ]
+ ],
+ "exclude": [],
+ "priority": 1
+}

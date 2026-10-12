@@ -1,0 +1,84 @@
+{
+ "slug": "pixel-food-items",
+ "title": "食べ物のドット絵",
+ "subject": "",
+ "genre": "food",
+ "touch": "pixel",
+ "title_fmt": "{ja}",
+ "lead": "おにぎり・ラーメン・寿司・パンなど、食べ物をドット絵で描いた素材12点です。ゲームのアイテムやSNSのアイコンに使えます。",
+ "tags": [
+  "ドット絵",
+  "食べ物",
+  "ピクセル",
+  "レトロゲーム",
+  "アイテム",
+  "アイコン"
+ ],
+ "subject_en": "Retro pixel art food items, each ONE dish or food centred, crisp pixels and a 1-pixel dark outline around the whole shape, limited bright palette. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "onigiri",
+   "おにぎり",
+   "a rice ball with a nori strip"
+  ],
+  [
+   "ramen",
+   "ラーメン",
+   "a bowl of ramen with an egg and naruto"
+  ],
+  [
+   "sushi",
+   "お寿司",
+   "a salmon nigiri sushi"
+  ],
+  [
+   "bread",
+   "食パン",
+   "a slice of toasted bread with butter"
+  ],
+  [
+   "curry",
+   "カレーライス",
+   "a plate of curry and rice"
+  ],
+  [
+   "taiyaki",
+   "たい焼き",
+   "a taiyaki fish-shaped cake"
+  ],
+  [
+   "dango",
+   "三色団子",
+   "three-colour dango on a skewer"
+  ],
+  [
+   "omelet",
+   "オムライス",
+   "an omelette rice with ketchup"
+  ],
+  [
+   "pizza",
+   "ピザ",
+   "a slice of pizza with melted cheese"
+  ],
+  [
+   "parfait",
+   "パフェ",
+   "a tall parfait glass with cream and a cherry"
+  ],
+  [
+   "tempura",
+   "天ぷら",
+   "a plate of shrimp tempura"
+  ],
+  [
+   "tea",
+   "お茶と和菓子",
+   "a cup of green tea beside a wagashi sweet"
+  ]
+ ],
+ "exclude": [],
+ "priority": 3
+}
