@@ -275,5 +275,30 @@ class Nurie(unittest.TestCase):
         self.assertNotIn("/api/", js)
 
 
+class Specials(unittest.TestCase):
+    def test_every_special_names_real_series_guides_and_has_real_text(self):
+        import glob
+        from sites.minna import specials
+        slugs = {json.loads(Path(f).read_text(encoding="utf-8"))["slug"] for f in glob.glob(str(Path(build.__file__).parent / "library" / "*" / "series.json"))}
+        guide_slugs = {g["slug"] for g in json.loads((Path(build.__file__).parent / "content" / "guides.json").read_text(encoding="utf-8"))["guides"]}
+        seen = set()
+        for sp in specials.SPECIALS:
+            self.assertNotIn(sp["slug"], seen)
+            seen.add(sp["slug"])
+            for m in sp["match_series"]:
+                self.assertTrue(m.endswith("*") or m in slugs, f"{sp['slug']}: {m}")
+            for g in sp.get("guides", []):
+                self.assertIn(g, guide_slugs, f"{sp['slug']}: {g}")
+            self.assertGreaterEqual(len(sp["faq"]), 2 if sp["slug"] in ("otayori", "frames-lines", "bousai", "shichigosan", "business", "senior", "flowers") else 1)
+            self.assertGreaterEqual(sum(len(p) for p in sp["intro"]), 120 if sp["slug"] in ("otayori", "frames-lines", "bousai", "shichigosan", "business", "senior", "flowers") else 0, sp["slug"])
+
+    def test_the_disaster_page_does_not_pretend_to_be_official(self):
+        from sites.minna import specials
+        sp = next(s for s in specials.SPECIALS if s["slug"] == "bousai")
+        text = " ".join(sp["intro"]) + " ".join(a for _, a in sp["faq"])
+        self.assertIn("公式", text)
+        self.assertIn("代わりにはなりません", text)
+
+
 if __name__ == "__main__":
     unittest.main()
