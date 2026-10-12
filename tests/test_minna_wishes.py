@@ -192,5 +192,56 @@ class Page(unittest.TestCase):
         self.assertIn("rows", json.loads(files["data/request-board.json"]))
 
 
+class Assist(unittest.TestCase):
+    def jsnorm(self, w):
+        import unicodedata
+        t = unicodedata.normalize("NFKC", w).lower()
+        return "".join(chr(ord(c) - 0x60) if "ァ" <= c <= "ヶ" else c for c in t)
+
+    def test_synonym_groups_are_safe_to_match_as_substrings(self):
+        groups = json.loads((Path(build.__file__).parent / "content" / "synonyms.json").read_text(encoding="utf-8"))["groups"]
+        seen = {}
+        for g in groups:
+            for w in g:
+                n = self.jsnorm(w)
+                # the page looks for each word as a substring of titles and tags: a one-character word is only for the kanji of animals and a few plain nouns
+                self.assertTrue(len(n) >= 2 or w in "猫犬兎熊鳥魚蛙龍竜鬼愛桜羊暦枠", w)
+                if n in seen and seen[n] is not g:
+                    self.fail(f"{w} is in two groups: {seen[n][0]} and {g[0]}")
+                seen[n] = g
+            self.assertGreaterEqual(len({self.jsnorm(w) for w in g}), 2, g)
+
+    def test_every_page_has_the_helper_button_and_the_data_files_exist(self):
+        html = build.page({"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト"}, True, path="/x/", title="t", description="d", body="<h1>x</h1>")
+        self.assertIn('id="assist-open"', html)
+        self.assertIn('data-src="/assets/assist.js"', html)
+        self.assertTrue((Path(build.__file__).parent / "assets" / "assist.js").exists())
+
+    def test_assist_data_points_to_real_kinds_of_pages(self):
+        data = build.assist_data([], [{"slug": "g1", "title": "読みもの", "description": "せつめい"}], 2027, {"shojo": []})
+        urls = [p["u"] for p in data["pages"]]
+        self.assertIn("/guide/g1/", urls)
+        self.assertIn("/printables/shojo/", urls)
+        self.assertIn("/printables/calendar-2027/", urls)
+        for f in data["faq"]:
+            self.assertTrue(f["k"] and f["a"])
+            self.assertTrue(f.get("u", "/").startswith("/"))
+        self.assertIn("kawaii", data["touches"])
+
+    def test_the_helper_answers_match_the_licence_page(self):
+        faq = json.dumps(build.ASSIST_FAQ, ensure_ascii=False)
+        license_html = build.license_page({"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト"}, True)
+        for must in ("商用", "クレジット", "素材集", "商標"):
+            self.assertIn(must, faq)
+            self.assertIn(must, license_html)
+
+    def test_search_page_has_ways_in_and_the_data_it_needs(self):
+        html = build.search_page({"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト"}, True)
+        self.assertIn('id="search-chips"', html)
+        self.assertIn("/search/?q=", html)
+        files = build.request_data_files()
+        self.assertIn("data/request-rules.json", files)
+
+
 if __name__ == "__main__":
     unittest.main()

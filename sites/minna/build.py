@@ -270,11 +270,56 @@ SEARCH_FORM = ('<form class="hsearch" action="/search/" method="get" role="searc
                'aria-label="イラストをさがす" autocomplete="off"><button type="submit" aria-label="検索">さがす</button></form>')
 
 
+ASSIST_BUTTON = ('<button id="assist-open" class="assist-open" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="assist-panel" '
+                 'data-src="/assets/assist.js">お手伝い</button>')
+ASSIST_CHIPS = ["年賀状に使いたい", "印刷したい", "商用で使える?", "ぬりえをしたい", "リクエストしたい"]
+ASSIST_FAQ = [
+    {"k": ["商用", "会社", "広告", "お金をもらう", "仕事で"], "a": "はい、個人でも会社でも、無料で、商用でお使いいただけます。使う前の連絡も、点数の制限も、ありません。", "u": "/license/", "l": "利用について"},
+    {"k": ["クレジット", "表記", "著作権表示", "出典"], "a": "クレジット表示は、いりません。つけたい場合は、自由です。", "u": "/license/", "l": "利用について"},
+    {"k": ["登録", "ログイン", "会員", "アカウント"], "a": "登録も、ログインも、いりません。ダウンロードの回数の制限も、ありません。", "u": "/license/", "l": "利用について"},
+    {"k": ["加工", "色を変", "色変え", "大きさ", "サイズ", "編集", "トリミング"], "a": "色や大きさ、向きを変えたり、文字やほかの画像と組み合わせたりして、お使いいただけます。各イラストのページでは、背景の色と大きさを選んで、保存もできます。", "u": "/guide/tomei-png/", "l": "透明PNGの使い方"},
+    {"k": ["ダウンロード", "保存", "やり方", "使い方", "つかいかた"], "a": "イラストのページの「PNGでダウンロード」を押すと、保存できます。スマホで保存できないときは、画像を長押ししてください。", "u": "/guide/tomei-png/", "l": "透明PNGの使い方"},
+    {"k": ["透明", "背景", "白い"], "a": "イラストは、背景が透明のPNGです。どんな色の上にも、重ねられます。ページの「背景」ボタンで、重ねたときの見え方を確かめられます。", "u": "/guide/tomei-png/", "l": "透明PNGの使い方"},
+    {"k": ["印刷", "プリント", "a4", "はがき", "ハガキ", "pdf"], "a": "各イラストのページに、A4やはがきで印刷できるPDFがあります。ぬりえ、カレンダー、賞状、名札、時間割も、印刷できます。", "u": "/printables/", "l": "印刷できるもの"},
+    {"k": ["ai", "人工知能", "生成", "エーアイ"], "a": "イラストは、AIで生成し、人が選んで、整えています。既存のキャラクターや、実在の人物、特定の作家の画風を、まねる指示では、作っていません。", "u": "/license/", "l": "利用について"},
+    {"k": ["スタンプ", "転売", "販売", "売", "商標", "素材集", "再配布"], "a": "イラストそのものを、素材集として配布・販売することや、商標として登録すること、LINEスタンプなどに、そのまま使って販売することは、ご遠慮ください。加工して、ほかの作品に使うのは、問題ありません。", "u": "/license/", "l": "利用について"},
+    {"k": ["無料", "料金", "お金がかかる", "有料"], "a": "ずっと無料です。", "u": "/license/", "l": "利用について"},
+    {"k": ["似て", "取り下げ", "削除して", "著作権侵害", "問題がある"], "a": "似ているというご指摘は、お問い合わせから、お知らせください。確認して、必要な場合は、取り下げます。", "u": "/contact/", "l": "お問い合わせ"},
+    {"k": ["カード", "名前入り", "名入れ", "名前を入れ"], "a": "名前とひとことを入れて、どうぶつのカードを、画像で保存できます。入力した内容は、この端末の中だけで使われます。", "u": "/tool/card/", "l": "名前入りカードをつくる"},
+]
+
+
+def synonym_groups() -> list[list[str]]:
+    """content/synonyms.json (hand-made groups) plus content/demand_synonyms.json (pairs the weekly routine adds): what the search page and the helper treat as one word."""
+    groups = [list(g) for g in json.loads((HERE / "content" / "synonyms.json").read_text(encoding="utf-8"))["groups"]]
+    extra = HERE / "content" / "demand_synonyms.json"
+    if extra.exists():
+        groups += [[k, v] for k, v in json.loads(extra.read_text(encoding="utf-8")).items() if not k.startswith("_") and isinstance(v, str)]
+    return groups
+
+
+def assist_data(built, guides, year: int, kinds: dict) -> dict:
+    """data/assist.json: the pages the helper can point to, its short answers and the first buttons."""
+    pages = []
+    for sp, _sers, _its in built:
+        pages.append({"u": f"/special/{sp['slug']}/", "n": sp["name"], "k": [sp["title"]], "t": "特集"})
+    for g in guides:
+        pages.append({"u": f"/guide/{g['slug']}/", "n": g["title"], "k": [g.get("description", "")[:60]], "t": "読みもの"})
+    pages.append({"u": "/printables/", "n": "印刷できるもの(ぬりえ・カレンダー・賞状・名札・時間割)", "k": ["印刷", "プリント", "a4", "ぬりえ", "カレンダー", "賞状", "名札", "時間割"], "t": "印刷"})
+    pages.append({"u": f"/printables/calendar-{year}/", "n": f"{year}年のイラストカレンダー", "k": ["カレンダー", "月間", "年間", "印刷"], "t": "印刷"})
+    for kind in kinds:
+        pages.append({"u": f"/printables/{kind}/", "n": PRINT_COPY[kind][1], "k": [PRINT_COPY[kind][0]], "t": "印刷"})
+    pages.append({"u": "/tool/card/", "n": "名前入りのカードをつくる", "k": ["カード", "名前入り", "誕生日", "ありがとう", "おめでとう", "あけおめ"], "t": "ツール"})
+    pages.append({"u": "/request/", "n": "イラストのリクエスト", "k": ["リクエスト", "ほしい", "描いて", "ない"], "t": "リクエスト"})
+    pages.append({"u": "/new/", "n": "新着のセット", "k": ["新着", "新しい", "最近"], "t": "新着"})
+    return {"v": 1, "pages": pages, "faq": ASSIST_FAQ, "chips": ASSIST_CHIPS, "touches": {t[0]: t[1] for t in TOUCHES}}
+
+
 def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
     html = layout(SITE, cfg, preview, scripts=True, head_extra=FONTS, **kw)
     html = html.replace('<nav aria-label="メイン">', SEARCH_FORM + '<nav aria-label="メイン">', 1)
-    return html
+    return html.replace("</body>", ASSIST_BUTTON + "</body>", 1)
 
 
 def card(it: dict, lazy: bool = True) -> str:
@@ -837,14 +882,19 @@ def new_page(cfg, preview, series) -> str:
     return page(cfg, preview, path="/new/", title=f"新着のイラスト | {cfg['site_name']}", description="あたらしく追加したイラストのセットです。無料・商用OK・登録不要。", body=body)
 
 
+SEARCH_STARTS = ["年賀状", "お正月", "クリスマス", "ハロウィン", "ぬりえ", "フレーム", "飾り罫(ライン)", "おたより", "保育園", "運動会", "かわいい動物", "人物", "アイコン", "吹き出し", "リアル", "かっこいい"]
+
+
 def search_page(cfg, preview) -> str:
+    chip_links = "".join(f'<a class="chip" href="/search/?q={quote(w.split("(")[0], safe="")}">{esc(w)}</a>' for w in SEARCH_STARTS)
     gopts = '<option value="">ジャンル: すべて</option>' + "".join(f'<option value="{g[0]}">{esc(g[1])}</option>' for g in GENRES)
     topts = '<option value="">タッチ: すべて</option>' + "".join(f'<option value="{t[0]}">{esc(t[1])}</option>' for t in TOUCHES)
     body = f"""{crumbs([("トップ", "/"), ("さがす", None)])}
 <h1>イラストをさがす</h1>
 <form class="search-app" id="search-app" action="/search/" method="get" role="search"><input type="search" name="q" placeholder="ひつじ、年賀状、クリスマス、ぬりえ…" aria-label="キーワード" autocomplete="off">
 <select name="g" aria-label="ジャンル">{gopts}</select><select name="t" aria-label="タッチ">{topts}</select><button class="btn" type="submit">さがす</button></form>
-<p class="memo-note" id="search-status" role="status" aria-live="polite">キーワードを入れてください。ひらがな・カタカナは、どちらでも見つかります。</p>
+<p class="memo-note" id="search-status" role="status" aria-live="polite">キーワードを入れてください。ひらがな・カタカナ・似た言い方(塗り絵とぬりえ など)は、どちらでも見つかります。</p>
+<div id="search-chips" class="chips">{chip_links}</div>
 <ul class="illust-grid" id="search-results" aria-live="polite"></ul>
 <p style="text-align:center"><button class="btn" type="button" id="search-more" hidden>もっと見る</button></p>
 <noscript><p class="notice">さがす機能には、JavaScript が必要です。<a href="/illust/">イラスト一覧</a>からも、探せます。</p></noscript>"""
@@ -1052,6 +1102,8 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
             pages[f"files/{it['id']}-{k}.pdf"] = pdf_bytes(it["path"], k)
         pages[f"thumbs/{it['id']}.webp"] = thumb_bytes(it["path"])
     pages["data/items.json"] = search_index(items, series)
+    pages["data/synonyms.json"] = json.dumps({"v": 1, "groups": synonym_groups()}, ensure_ascii=False, separators=(",", ":"))
+    pages["data/assist.json"] = json.dumps(assist_data(built, guides, calendar_year(today), pr_kinds), ensure_ascii=False, separators=(",", ":"))
     pages["feed.xml"] = feed_xml(cfg, series, today)
     pages.update(legal_pages(
         SITE, cfg, preview,
