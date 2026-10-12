@@ -226,6 +226,8 @@ class AskPagesTest(unittest.TestCase):
         self.assertNotIn("よろこぶ", s)
         self.assertNotIn("yorokobu", s)
         self.assertNotIn('rel="icon" href="/favicon', s)                                # the gift-box icon would tell
+        self.assertNotIn("sale-bar", s)                                                  # the sale bar (an advertisement of the site's) never reaches the surprise page
+        self.assertNotIn("セール", s)
         o = self.read("ask/r/index.html")
         self.assertIn("プレゼント", o)                                                  # the open mode says it
         self.assertNotIn("かんたんなアンケート</h1>\n<p class=\"ask-lead\" data-lead>プレゼント", o)

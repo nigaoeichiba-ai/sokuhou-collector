@@ -1,0 +1,42 @@
+{
+ "_note": "Only events whose dates were read on the shop's own page (source, verified). Add an event when the shop announces it; a date guessed from earlier years is never put here. `after` is an optional sentence added to the banner.",
+ "events": [
+  {
+   "id": "amazon-prime-appreciation-presale-2026-10",
+   "store": "amazon",
+   "name": "プライム感謝祭の先行セール",
+   "start": "2026-10-13T00:00:00+09:00",
+   "end": "2026-10-15T23:59:00+09:00",
+   "url": "https://www.amazon.co.jp/primeappreciation",
+   "note": "Amazonプライム会員が対象のセールです。先行セールのあと、10月16日(金)0時から10月19日(月)23時59分まで、プライム感謝祭の本番があります。",
+   "after": "Amazonプライム会員が対象です。",
+   "source": "https://press.aboutamazon.com/jp/2026/9/prime-appreciation-sale-2026",
+   "verified": "2026-10-12"
+  },
+  {
+   "id": "amazon-prime-appreciation-2026-10",
+   "store": "amazon",
+   "name": "プライム感謝祭",
+   "start": "2026-10-16T00:00:00+09:00",
+   "end": "2026-10-19T23:59:00+09:00",
+   "url": "https://www.amazon.co.jp/primeappreciation",
+   "note": "Amazonプライム会員が対象のセールです。ポイントアップのキャンペーンは、エントリーが必要です。",
+   "after": "Amazonプライム会員が対象です。",
+   "source": "https://press.aboutamazon.com/jp/2026/9/prime-appreciation-sale-2026",
+   "verified": "2026-10-12"
+  },
+  {
+   "id": "rakuten-marathon-2026-10",
+   "store": "rakuten",
+   "name": "お買い物マラソン",
+   "entry_start": "2026-10-12T10:00:00+09:00",
+   "start": "2026-10-14T20:00:00+09:00",
+   "end": "2026-10-17T09:59:00+09:00",
+   "url": "https://event.rakuten.co.jp/campaign/point-up/marathon/",
+   "note": "ポイントアップはエントリーが必要です(エントリーは10月17日(土)9時59分まで)。対象になるお買い物の条件と、ポイントの上限は、楽天市場の公式ページで確かめてください。",
+   "after": "ポイントアップにはエントリーが必要です。",
+   "source": "https://event.rakuten.co.jp/campaign/point-up/marathon/",
+   "verified": "2026-10-12"
+  }
+ ]
+}

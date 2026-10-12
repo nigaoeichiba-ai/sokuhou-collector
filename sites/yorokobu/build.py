@@ -32,6 +32,7 @@ from sites.yorokobu import relevance  # noqa: E402
 from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu import numberlists as nm  # noqa: E402
 from sites.yorokobu import ranking as rk  # noqa: E402
+from sites.yorokobu import sales  # noqa: E402
 from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
 from sites.yorokobu.tools import (calc_page, gacha_data, gacha_page, gacha_pool, gift_map, persona_page, quiz_page, taboo_page, tools_hub_page)  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
@@ -146,6 +147,9 @@ def pr_lead(cfg: dict) -> str:
 RANKING_ON = False   # set by render_site: the nav and the home page link to /ranking/ only when that page is built
 DATA_ON = False      # the same for /data/ (the data room)
 PICKS_ON = False     # and for /picks/ (the daily picks)
+SALE_EVENTS: list = []   # the announced sales (content/sales.json) that have an affiliate link; set by render_site
+SALE_HREF: dict = {}     # event id -> the affiliate link to the shop's event page
+SALE_NOW = None          # the moment the sale bar is made for (the build's time, Japan)
 
 
 CRUMB_ITEM = re.compile(r'<a href="([^"]+)">([^<]+)</a>|<span>([^<]+)</span>')
@@ -169,12 +173,21 @@ def breadcrumb_ld(cfg: dict, body: str) -> str:
 def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
     amazon_links = kw.pop("amazon_links", False)                     # a page whose Amazon buttons are made by its script
-    if "pr-quiet" in kw.get("body", ""):
+    sale = kw.pop("sale", True)                                      # the sale bar: on the pages that carry a PR label (the bar is an advertisement too)
+    sale_script = ""
+    has_bar = False
+    if sale and SALE_EVENTS and SALE_NOW:                          # every page: the bar carries its own PR chip, and the page then gets the full notice at its foot
+        bar = sales.bar(SALE_EVENTS, SALE_NOW, SALE_HREF)
+        if bar:
+            kw["body"] = bar + kw["body"]
+            sale_script = '<script src="/assets/sale.js" defer></script>'
+            has_bar = True
+    if "pr-quiet" in kw.get("body", "") or has_bar:
         kw["body"] += pr_foot(cfg, amazon_links or "amazon.co.jp/" in kw["body"], "rakuten.co.jp/" in kw["body"] or amazon_links)
     kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", "")) + breadcrumb_ld(cfg, kw.get("body", ""))   # the pictures the page uses (only those), the breadcrumb data
     site = {**SITE, "nav": ([("今日のおすすめ", "/picks/", "/picks/")] if PICKS_ON else []) + SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])
                               + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
-    head_extra = FONTS + kw.pop("head_extra", "")
+    head_extra = FONTS + kw.pop("head_extra", "") + sale_script
     return layout(site, cfg, preview, scripts=True, head_extra=head_extra, **kw)
 
 
@@ -1774,6 +1787,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     if release and not (items and items.get("pairs")):
         raise BuildError("release build refused: no fetched products (run sites/yorokobu/fetch.py first)")
     preview = bool(missing)
+    fresh_clock = today is None                                         # the real clock (the daily build), not a date a test fixed
     today = today or datetime.now(timezone(timedelta(hours=9))).date()  # JST: the runner's clock is UTC, which showed "あと" one day too many from 00:00 to 09:00 JST
     d = prepare(c, items, cfg)
     d["cfg"], d["today"] = cfg, today
@@ -1782,6 +1796,10 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     RANKING_ON = bool(d["ranking"])
     DATA_ON = bool(dataroom.results(d))
     PICKS_ON = bool(c.get("daily"))
+    global SALE_EVENTS, SALE_HREF, SALE_NOW
+    all_sales = sales.load()
+    SALE_EVENTS, SALE_HREF = sales.hrefs(cfg, all_sales)
+    SALE_NOW = datetime.now(sales.JST) if fresh_clock else datetime(today.year, today.month, today.day, 12, tzinfo=sales.JST)
     if release:                                              # what a page says against what it shows (a line in the deploy log)
         from sites.yorokobu import consistency
         print(consistency.summary(consistency.audit(d)))
@@ -1872,6 +1890,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
             pages[f"ranking/{slug}/index.html"] = ranking_page(d, cfg, preview, slug)
     pages.update(dataroom.build_pages(d, cfg, preview))
     pages.update(picksite.build_pages(d, cfg, preview))
+    pages.update(sales.build_pages(d, cfg, preview, SALE_EVENTS, SALE_HREF, SALE_NOW))
     ask_pages, ask_quiet = askpages.build_files(d, cfg, preview, today)
     pages.update(ask_pages)
     if ask_pages:
