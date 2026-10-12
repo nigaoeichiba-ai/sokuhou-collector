@@ -753,7 +753,10 @@ footer.site .src { color: var(--muted); }
 .sale-steps { padding-left: 1.3em; }
 .sale-steps li { margin-bottom: .6em; }
 .sale-links { margin-top: 12px; }
+.sale-hero { margin: 18px 0 4px; border-radius: var(--r); overflow: hidden; background: #f4ecdd; }
+.sale-hero img { display: block; width: 100%; height: auto; aspect-ratio: 12 / 5; object-fit: cover; object-position: 50% 58%; }
 @media (max-width: 640px) {
+  .sale-hero img { aspect-ratio: 3 / 2; }
   .sale-bar { margin: 0 -16px; }
   .sale-in { padding: 8px 16px; flex-wrap: wrap; }
   .sale-more { margin-left: auto; }

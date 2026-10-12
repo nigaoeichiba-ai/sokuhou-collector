@@ -225,6 +225,18 @@ class PagesTest(unittest.TestCase):
         self.assertIn("/sale/", self.read("sitemap.xml"))
         self.assertNotIn("sale-bar", html)
 
+    def test_the_sale_page_has_its_drawn_picture_by_season_and_the_files_exist(self):
+        html = self.read("sale/index.html")
+        self.assertIn("/assets/sale/autumn-1200.webp", html)                    # built on 2026-10-12
+        self.assertEqual(html.count('class="sale-hero"'), 1)
+        self.assertIn('width="1200" height="800"', html)
+        for name in ("autumn", "winter"):
+            for w in (640, 1200):
+                self.assertTrue((self.root / "assets" / "sale" / f"{name}-{w}.webp").exists(), f"{name}-{w}")
+        winter = sales.hero(datetime(2026, 12, 3, 9, 0, tzinfo=sales.JST))
+        self.assertIn("/assets/sale/winter-1200.webp", winter)
+        self.assertNotIn("Amazon", html.split('class="sale-hero"')[1].split("</figure>")[0])         # no shop's banner or logo in the picture's own markup
+
     def test_without_events_there_is_no_bar_and_no_page_and_a_far_off_event_shows_no_bar_but_keeps_the_page(self):
         items = json.loads((FIX / "items.json").read_text(encoding="utf-8"))
         with tempfile.TemporaryDirectory() as t:
