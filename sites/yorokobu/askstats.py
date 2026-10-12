@@ -13,7 +13,7 @@ import re
 import sys
 from pathlib import Path
 
-KEY = re.compile(r"^(dock|ask)\.[a-z0-9]{1,8}\.[a-z0-9_-]{1,32}$")
+KEY = re.compile(r"^((dock|ask)\.[a-z0-9]{1,8}\.[a-z0-9_-]{1,32}|pop\.[ra]\.[A-Za-z0-9._:-]{3,64})$")
 MIN_SHOWN = 50          # the public page of the data room shows a counter only once at least this many answers / reports are behind it
 
 

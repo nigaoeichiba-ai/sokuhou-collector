@@ -17,7 +17,7 @@ from pathlib import Path
 
 ID = re.compile(r"^[A-Za-z0-9_-]{22}$")
 OPT = re.compile(r"^[a-z0-9]{1,12}$")
-STAT = re.compile(r"^dock\.[a-z0-9]{1,8}\.[a-z0-9_-]{1,32}$")
+STAT = re.compile(r"^(dock\.[a-z0-9]{1,8}\.[a-z0-9_-]{1,32}|pop\.[ra]\.[A-Za-z0-9._:-]{3,64})$")
 ENDPOINT = re.compile(r"^https://([A-Za-z0-9-]+\.)*(googleapis\.com|push\.services\.mozilla\.com|mozaws\.net|push\.apple\.com|notify\.windows\.com)(:\d+)?/")
 
 

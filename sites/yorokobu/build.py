@@ -33,6 +33,7 @@ from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu import numberlists as nm  # noqa: E402
 from sites.yorokobu import ranking as rk  # noqa: E402
 from sites.yorokobu import sales  # noqa: E402
+from sites.yorokobu import minepage  # noqa: E402
 from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
 from sites.yorokobu.tools import (calc_page, gacha_data, gacha_page, gacha_pool, gift_map, persona_page, quiz_page, taboo_page, tools_hub_page)  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
@@ -47,7 +48,7 @@ LOGO_MARK = ('<svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.
              '<rect x="8" y="16" width="20" height="12" rx="1.5" fill="#fff"/><rect x="6.5" y="12" width="23" height="5" rx="1.5" fill="#fff"/>'
              '<rect x="16.5" y="12" width="3" height="16" fill="#e8503f"/><path d="M18 12c-3-5-8-4-6.5-1.5 1 1.6 4 1.5 6.5 1.5zm0 0c3-5 8-4 6.5-1.5-1 1.6-4 1.5-6.5 1.5z" fill="#fff"/></svg>')
 SITE = {"nav": NAV[:2] + [("気持ちから", "/theme/", "/theme/"), ("診断・ツール", "/tool/", "/tool/")], "glyph": LOGO_MARK, "assets": HERE / "assets",
-        "source_html": SOURCE_HTML, "legal_extra": (("編集方針", "/policy/"),)}
+        "source_html": SOURCE_HTML, "legal_extra": (("編集方針", "/policy/"), ("お気に入り", "/favorites/"))}
 # months (1-12) in which an occasion is worth showing as "いまが贈りどき"; the rest are evergreen
 SEASON = {
     "mothers-day": (4, 5), "fathers-day": (5, 6), "respect-for-aged-day": (8, 9), "christmas": (11, 12),
@@ -187,7 +188,7 @@ def page(cfg, preview, **kw):
     kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", "")) + breadcrumb_ld(cfg, kw.get("body", ""))   # the pictures the page uses (only those), the breadcrumb data
     site = {**SITE, "nav": ([("今日のおすすめ", "/picks/", "/picks/")] if PICKS_ON else []) + SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])
                               + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
-    head_extra = FONTS + kw.pop("head_extra", "") + sale_script
+    head_extra = FONTS + kw.pop("head_extra", "") + sale_script + '<script src="/assets/mine.js" defer></script>'
     return layout(site, cfg, preview, scripts=True, head_extra=head_extra, **kw)
 
 
@@ -1803,6 +1804,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     if release:                                              # what a page says against what it shows (a line in the deploy log)
         from sites.yorokobu import consistency
         print(consistency.summary(consistency.audit(d)))
+    d["popstats"] = minepage.load_stats()
     d["numbers"] = nm.view(d["pairs"], c["filters"])
     d["gacha"] = gacha_data(d, cfg)
     cards: dict[str, bytes] = {}
@@ -1913,7 +1915,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
                          "<p>当サイトの運営者は、楽天市場で、似顔絵のショップも運営しています。そのショップの商品を紹介するときは、そのことを、ページ上に明示します。</p>"
                          "<p>当サイトは、楽天グループ株式会社が運営するものではありません。</p>"),
         contact_notice="商品の購入・配送・返品などのお問い合わせは、各販売店へお願いします。当サイトでは、商品の販売を行っていません。",
-        input_note=askpages.ASK_PRIVACY if c.get("ask") else "", finish=lambda s: s))
+        input_note=(askpages.ASK_PRIVACY if c.get("ask") else "") + minepage.COUNT_PRIVACY, finish=lambda s: s))
     pages["manifest.webmanifest"] = json.dumps(MANIFEST, ensure_ascii=False, indent=1)
     pages.update(cards)
     listed = dict(pages)                                   # the sitemap lists the pages that can be found by searching, not the shared-list page (noindex, built from a link)
@@ -1921,6 +1923,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages["list/index.html"] = list_page(d, cfg, preview)
         pages["list/items.json"] = json.dumps(SEEN, ensure_ascii=False, separators=(",", ":"))
     pages.update(ask_quiet)                                 # the other person's page and the results: not listed (noindex), built after the sitemap's list
+    pages["favorites/index.html"] = minepage.favorites_page(d, cfg, preview)    # one browser's own page: noindex, not in the sitemap
     pages.update(standard_files(listed, cfg, preview, d["fetched_date"]))
     pages.update(asset_pages(HERE / "assets"))
     write_pages(pages, out)

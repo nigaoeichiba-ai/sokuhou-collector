@@ -137,7 +137,7 @@
     var bar = document.createElement("div");
     bar.className = "fav-bar"; bar.hidden = true;
     bar.innerHTML = '<button type="button" class="fav-open">♥ 気になるリスト <b>0</b></button><div class="fav-panel" hidden><h3>気になるリスト</h3><ul></ul>' +
-      '<p class="fav-note">このブラウザにだけ保存されます。</p><div class="fav-actions"><a class="btn fav-line" target="_blank" rel="noopener">LINEで送る</a><a class="btn btn-sub fav-mail">メールで送る</a><button type="button" class="btn btn-sub fav-img">画像で保存</button><button type="button" class="btn btn-sub fav-copy">コピー</button></div>' +
+      '<p class="fav-note">このブラウザにだけ保存されます。<a href="/favorites/">お気に入りのページで見る</a></p><div class="fav-actions"><a class="btn fav-line" target="_blank" rel="noopener">LINEで送る</a><a class="btn btn-sub fav-mail">メールで送る</a><button type="button" class="btn btn-sub fav-img">画像で保存</button><button type="button" class="btn btn-sub fav-copy">コピー</button></div>' +
       '<p class="fav-note">自分のスマホに残すなら、LINEの送り先に自分のトークを選ぶか、メールで自分あてに送ります。画像は、スクリーンショットのように保存できます。</p></div>';
     document.body.appendChild(bar);
     var panel = $(".fav-panel", bar), ul = $("ul", panel);

@@ -763,3 +763,12 @@ footer.site .src { color: var(--muted); }
   .sale-item + .sale-item { display: none; }          /* on a phone one line: the other is on /sale/ */
 }
 @media print { .sale-bar { display: none !important; } }
+
+/* お気に入り (mine.js, /favorites/) */
+.fav-link { display: inline-flex; align-items: center; gap: .3em; white-space: nowrap; }
+.fav-link span { color: var(--accent); }
+.fav-n { display: inline-block; min-width: 1.5em; padding: 0 .4em; border-radius: 999px; background: var(--accent-s); color: var(--accent-d); font: 700 .74rem/1.6 var(--num); text-align: center; }
+.item.gone { padding: 16px; background: #fff; border: 1px dashed var(--line); border-radius: var(--r); }
+.fav-gone { margin: 0; font-size: .86rem; color: var(--muted); }
+.fav-rm { padding: .3em 1em; font-size: .8rem; }
+.pop-block .sec-lead { max-width: 46em; }
