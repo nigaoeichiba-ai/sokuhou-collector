@@ -19,7 +19,9 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 import sys
+import tempfile
 import unicodedata
 from collections import Counter
 from datetime import date, datetime
@@ -156,15 +158,40 @@ def add_new(records: list[dict], ledger: list[dict], rules: dict | None = None) 
     return added
 
 
+def remote_inbox_names() -> list[str]:
+    """The encrypted minna files on origin/main (after a fetch): the working folder is pulled only when nobody else has uncommitted edits, so a routine must not wait for that."""
+    try:
+        subprocess.run(["git", "fetch", "-q", "origin", "main"], cwd=ROOT, capture_output=True, timeout=120)
+        out = subprocess.run(["git", "ls-tree", "-r", "--name-only", "origin/main", "data/inbox"], cwd=ROOT, capture_output=True, timeout=60).stdout.decode("utf-8", "replace")
+    except (OSError, subprocess.SubprocessError):
+        return []
+    return sorted(Path(x).name for x in out.splitlines() if Path(x).name.startswith("minna-") and x.endswith(".p7m"))
+
+
+def decrypt_named(name: str) -> list[dict]:
+    """The records of data/inbox/<name>: from the working folder when it is there, else straight from origin/main."""
+    local = inbox.INBOX / name
+    if local.exists():
+        return inbox.decrypt(local)
+    blob = subprocess.run(["git", "show", f"origin/main:data/inbox/{name}"], cwd=ROOT, capture_output=True, timeout=60).stdout
+    if not blob:
+        raise RuntimeError(f"cannot read {name} from origin/main")
+    with tempfile.TemporaryDirectory() as d:
+        tmp = Path(d) / name
+        tmp.write_bytes(blob)
+        return inbox.decrypt(tmp)
+
+
 def cmd_read(a: argparse.Namespace) -> int:
     seen = set(json.loads(SEEN.read_text(encoding="utf-8"))) if SEEN.exists() and not a.all else set()
     ledger = read_ledger()
     new_files, added = [], []
-    for f in sorted(inbox.INBOX.glob("minna-*.p7m")):
-        if f.name in seen:
+    names = sorted({f.name for f in inbox.INBOX.glob("minna-*.p7m")} | set(remote_inbox_names()))
+    for name in names:
+        if name in seen:
             continue
-        added += add_new(inbox.decrypt(f), ledger)
-        new_files.append(f.name)
+        added += add_new(decrypt_named(name), ledger)
+        new_files.append(name)
     # the long form of /request/ goes through the daily contact inbox (yorokobu-style file names: <site>-<stamp>.p7m of inbox.yml carry only kind 'イラストのリクエスト' for minna)
     write_ledger(ledger)
     if a.mark and new_files:
@@ -221,9 +248,9 @@ def spec_for(title: str, en: str, slug: str, touch: str, genre: str, subject: st
     return {
         "slug": slug, "title": title, "subject": subject, "genre": genre, "touch": touch, "title_fmt": "{ja}",
         "subject_en": f"{en}. Six different compositions of the same idea, each ONE picture centred in its cell. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos. Original design only: no existing character, brand or real person.",
-        "lead": f"みなさんからのリクエストにこたえて描いた、「{title}」のイラストです。同じ場面を6つの構図で、そろえました。無料・商用OK・クレジット不要・透明PNG。",
+        "lead": f"リクエストをもとに制作した「{title}」のイラストです。同じ場面を6つの構図でそろえています。",
         "tags": ["リクエスト", *wish_tags], "season": None, "holes": False, "priority": 1,
-        "items": [[f"{n + 1:02d}-{k}", f"{title}({['メイン', 'アップ', 'にこにこ', 'おだやか', 'うごき', 'ひろめ'][n]})", f"{en} - {d}"] for n, (k, d) in enumerate(VARIATIONS)],
+        "items": [[f"{n + 1:02d}-{k}", f"{title}({['メイン', 'アップ', '笑顔', '穏やか', '動き', '引き'][n]})", f"{en} - {d}"] for n, (k, d) in enumerate(VARIATIONS)],
         "exclude": [],
     }
 

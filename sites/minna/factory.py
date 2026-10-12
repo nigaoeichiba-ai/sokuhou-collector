@@ -105,7 +105,7 @@ def item_title(spec: dict, it: list[str]) -> str:
 def item_record(spec: dict, it: list[str], w: int, h: int) -> dict:
     touch = TOUCH_BY_SLUG[spec["touch"]]
     title = item_title(spec, it)
-    desc = it[3] if len(it) > 3 and it[3] else f"{title}のイラスト。{touch[1]}のタッチ。"
+    desc = it[3] if len(it) > 3 and it[3] else f"{title}の{touch[1]}イラストです。"
     # a series of one character shares all its tags; a mixed series (twelve different animals, a set of icons) shares only its first four, broad tags,
     # and every other tag must appear in the item's own phrase - otherwise a search for "ひつじ" finds the cat of the Santa set
     own = spec["tags"] if spec["subject"] else [t for n, t in enumerate(spec["tags"]) if n < 4 or t in it[1] or t in item_title(spec, it)]
