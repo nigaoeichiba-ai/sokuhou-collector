@@ -168,14 +168,14 @@
     var ls = links();
     var kind = hasPair() ? "hit" : ls.length ? "part" : "miss";
     count(["cq.res." + kind]);
-    if (!ls.length) { bubble("うまく絞れませんでした。下の欄に、ひとことで書いてみてください(例: 母の日に、母へ 5000円くらい)。"); return feedback(false); }
-    var lead = hasPair() ? "ご相談の内容に合う、ページがあります。" : "近いページをご案内します。";
+    if (!ls.length) { bubble("うまく絞れませんでした。下の欄に一言で書いてみてください(例: 母の日に母へ 5000円くらい)。"); return feedback(false); }
+    var lead = hasPair() ? "ご相談の内容に合うページがあります。" : "近いページをご案内します。";
     bubble(esc(lead) + linkCards(ls));
     feedback(true);
   }
   function feedback(found) {
     if (fed) return; fed = true;
-    bubble("お探しの情報は、見つかりましたか。");
+    bubble("お探しの情報は見つかりましたか。");
     chips([{ label: "見つかった", y: 1 }, { label: "見つからない", y: 0 }], function (it) {
       count(["cq.fb." + (it.y ? "yes" : "no")]);
       if (it.y) return bubble("ありがとうございます。ほかにも、お困りのことがあれば、お知らせください。");
@@ -203,7 +203,7 @@
   }
   function begin() {
     state = fresh(); topic = ""; fed = false; log.innerHTML = "";
-    bubble("こんにちは。贈り物のご相談を、承ります。<br><b>どういったことで、お困りですか。</b>");
+    bubble("贈り物のご相談を承ります。<br><b>どういったことでお困りですか。</b>");
     chips(DATA.topics.map(function (t) { return { label: t.label, id: t.id, reply: t.reply }; }), function (t) { pickTopic(t); });
   }
   function pickTopic(t) {
@@ -249,7 +249,7 @@
       var q = raw.indexOf("ギフト") >= 0 || raw.indexOf("プレゼント") >= 0 ? raw : raw + " ギフト";
       var target = "https://search.rakuten.co.jp/search/mall/" + encodeURIComponent(q) + "/";
       var aff = DATA.aff.id ? "https://hb.afl.rakuten.co.jp/hgc/" + DATA.aff.id + "/" + (DATA.aff.trk || "") + "?pc=" + encodeURIComponent(target) + "&m=" + encodeURIComponent(target) : "";
-      bubble("うまく読み取れませんでした。「だれに」「どんな日に」「予算は」のうち、わかるものを、書き添えてください(例: 父の日に、父へ 5000円くらい)。" +
+      bubble("うまく読み取れませんでした。「だれに」「どんな日に」「予算は」のうち、わかるものを、書き添えてください(例: 父の日に父へ 5000円くらい)。" +
         (aff ? '<br>言葉のまま、楽天市場で探すこともできます。<div class="cc-links"><a class="cc-link" href="' + esc(aff) + '" target="_blank" rel="sponsored nofollow noopener"><b>「' + esc(raw.slice(0, 30)) + '」を楽天市場で探す</b><span>広告(PR)のリンクです。</span></a></div>' : ""));
       bubble("この言葉を、サイトの改善のために送ってもよければ、下の「送る」を押してください。");
       voiceBox("miss", "", raw.slice(0, 80));
@@ -264,7 +264,7 @@
     root.className = "cc"; root.innerHTML =
       '<button type="button" class="cc-open" aria-expanded="false" aria-controls="cc-panel"><span aria-hidden="true">?</span>贈り物の相談</button>' +
       '<section class="cc-panel" id="cc-panel" role="dialog" aria-label="贈り物コンシェルジュ" hidden><header><b>贈り物コンシェルジュ</b><button type="button" class="cc-close" aria-label="閉じる">×</button></header>' +
-      '<div class="cc-log" aria-live="polite"></div><form class="cc-form"><input type="text" maxlength="120" placeholder="ひとことで(例: 母の日に、母へ 5000円くらい)" aria-label="ご相談の内容"><button type="submit" class="btn">送る</button></form>' +
+      '<div class="cc-log" aria-live="polite"></div><form class="cc-form"><input type="text" maxlength="120" placeholder="一言で(例: 母の日に母へ 5000円くらい)" aria-label="ご相談の内容"><button type="submit" class="btn">送る</button></form>' +
       '<p class="cc-foot">規則と言葉のリストで案内しています。書いた内容は、「送る」を押した文章のほかは、この端末の外へ出ません。</p></section>';
     document.body.appendChild(root);
     opener = $(".cc-open", root); panel = $(".cc-panel", root); log = $(".cc-log", root); form = $(".cc-form", root); input = $("input", form);
