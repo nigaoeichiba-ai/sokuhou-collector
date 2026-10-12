@@ -128,6 +128,9 @@ def to_row(rec: dict, rules: dict | None = None) -> dict | None:
     why, _ = refusal(wish[:200], rules) if src != "letter" else ("", "")
     row = {"id": f"R{str(rec.get('id', ''))[:8]}", "at": rec.get("at", ""), "wish": wish, "use": extra.get("u", ""), "touch": extra.get("t", ""), "src": src,
            "status": "test" if why == "test" else ("declined" if why else "new"), "auto": why, "note": "", "series": "", "title": "", "public": False}
+    if src == "plus" and row["status"] == "new":      # "私もほしい" on a board row: a vote for a title we wrote, nothing to judge
+        row["status"] = "merged"
+        row["note"] = "vote"
     return row
 
 
@@ -182,9 +185,11 @@ def find(ledger: list[dict], rid: str) -> dict:
 def cmd_decide(a: argparse.Namespace) -> int:
     ledger = read_ledger()
     r = find(ledger, a.id)
-    r["status"] = a.decision if a.decision != "accepted" else "accepted"
+    r["status"] = a.decision
     if a.note:
         r["note"] = a.note
+    if a.decision == "accepted" and a.title:          # accepted for later: it stands on the board as "つくる予定", where visitors can say they want it too
+        r.update(title=a.title, public=True)
     write_ledger(ledger)
     print(r["id"], r["status"])
     return 0
@@ -253,15 +258,20 @@ def series_keywords(slug: str) -> list[str]:
 def board_rows(ledger: list[dict]) -> list[dict]:
     """What /request/ shows: only titles WE wrote, grouped by status, newest first; never a visitor's own words."""
     rows = {}
+    label = {"accepted": "つくる予定", "drawing": "つくっています", "published": "公開しました"}
+    rank = {"公開しました": 3, "つくっています": 2, "つくる予定": 1}
     for r in ledger:
-        if r.get("public") and r.get("title") and r["status"] in ("drawing", "published"):
+        if r.get("public") and r.get("title") and r["status"] in label:
             key = r["series"] or r["title"]
-            rows.setdefault(key, {"title": r["title"], "status": "公開しました" if r["status"] == "published" else "つくっています", "series": r["series"], "date": r["at"][:10], "asked": 0, "kw": series_keywords(r["series"])})
-            rows[key]["asked"] += 1
-            if r["status"] == "published":
-                rows[key]["status"] = "公開しました"
-    ordered = sorted(rows.values(), key=lambda x: x["date"], reverse=True)         # newest first, then the ones in the making on top
-    return sorted(ordered, key=lambda x: x["status"] != "つくっています")[:60]
+            row = rows.setdefault(key, {"title": r["title"], "status": label[r["status"]], "series": r["series"], "date": r["at"][:10], "asked": 0, "kw": series_keywords(r["series"])})
+            row["asked"] += 1
+            if rank[label[r["status"]]] > rank[row["status"]]:
+                row["status"] = label[r["status"]]
+    votes = Counter(flat(r["wish"]) for r in ledger if r.get("src") == "plus")        # "私もほしい": the visitor's click sends the board title itself
+    for row in rows.values():
+        row["asked"] += votes.get(flat(row["title"]), 0)
+    ordered = sorted(rows.values(), key=lambda x: x["date"], reverse=True)         # newest first; then in the making, then planned, then done
+    return sorted(ordered, key=lambda x: {"つくっています": 0, "つくる予定": 1, "公開しました": 2}[x["status"]])[:60]
 
 
 def cmd_board(a) -> int:
@@ -331,7 +341,7 @@ def main(argv=None) -> int:
     c = sub.add_parser("check"); c.add_argument("wish")
     r = sub.add_parser("read"); r.add_argument("--mark", action="store_true"); r.add_argument("--all", action="store_true")
     ls = sub.add_parser("list"); ls.add_argument("--status", default="")
-    d = sub.add_parser("decide"); d.add_argument("id"); d.add_argument("decision", choices=["accepted", "declined", "merged"]); d.add_argument("--note", default="")
+    d = sub.add_parser("decide"); d.add_argument("id"); d.add_argument("decision", choices=["accepted", "declined", "merged"]); d.add_argument("--note", default=""); d.add_argument("--title", default="", help="with accepted: the general title shown on the board")
     s = sub.add_parser("spec"); s.add_argument("id"); s.add_argument("--title", required=True); s.add_argument("--en", required=True); s.add_argument("--slug", default="")
     s.add_argument("--touch", default="kawaii"); s.add_argument("--genre", default="animals"); s.add_argument("--subject", default="")
     p = sub.add_parser("published"); p.add_argument("id"); p.add_argument("series")

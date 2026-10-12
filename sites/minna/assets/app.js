@@ -372,7 +372,23 @@
       }).join("") + "</ul>";
     });
   }
+  function initPlus() { // "私もほしい": one vote per browser for a title on the board (what is sent is our own title, nothing the visitor typed)
+    var KEY = "minna-plus", done = [];
+    try { done = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { done = []; }
+    $$("[data-plus]").forEach(function (b) {
+      var t = b.getAttribute("data-plus");
+      if (done.indexOf(t) >= 0) { b.disabled = true; b.textContent = "ありがとう"; return; }
+      b.addEventListener("click", function () {
+        b.disabled = true;
+        sendWish({ w: t, s: "plus" }).then(function (r) {
+          if (r.ok) { b.textContent = "ありがとう"; done.push(t); try { localStorage.setItem(KEY, JSON.stringify(done.slice(-50))); } catch (e) { /* private window */ } }
+          else { b.disabled = false; b.textContent = "あとで、もう一度"; }
+        });
+      });
+    });
+  }
   function initRequest() {
+    initPlus();
     var form = $("#req-form"); if (!form) return;
     var input = $('[name="w"]', form), msg = $("#req-msg"), btn = $('button[type="submit"]', form);
     var pre = new URLSearchParams(location.search).get("w"); if (pre) input.value = pre.slice(0, 60);

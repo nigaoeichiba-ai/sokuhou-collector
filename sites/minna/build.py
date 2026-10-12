@@ -968,8 +968,9 @@ def request_page(cfg: dict, preview: bool) -> str:
 
     def row(r):
         link = f'<a href="/series/{esc(r["series"])}/">{esc(r["title"])}</a>' if r.get("series") and r["status"] == "公開しました" else esc(r["title"])
-        asked = f'<small>{r["asked"]}人がほしいと言いました</small>' if r.get("asked", 0) > 1 else ""
-        return f'<li><span class="req-state {"done" if r["status"] == "公開しました" else "wip"}">{esc(r["status"])}</span> <b>{link}</b>{asked}</li>'
+        asked = f'<small>{r["asked"]}人が、ほしいと言いました</small>' if r.get("asked", 0) > 1 else ""
+        want = f' <button type="button" class="chip" data-plus="{esc(r["title"])}">私もほしい</button>' if r["status"] != "公開しました" else ""
+        return f'<li><span class="req-state {"done" if r["status"] == "公開しました" else "wip"}">{esc(r["status"])}</span> <b>{link}</b>{asked}{want}</li>'
     board_html = (f'<ul class="req-board">{"".join(row(r) for r in board)}</ul>' if board else
                   '<p class="memo-note">まだ、お答えしたリクエストは、ありません。最初のリクエストを、お待ちしています。</p>')
     body = f"""{crumbs([("トップ", "/"), ("リクエスト", None)])}
