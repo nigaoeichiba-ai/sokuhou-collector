@@ -136,6 +136,33 @@ class StatsTest(unittest.TestCase):
         self.assertEqual(sum(1 for _, _, me in rows if me), 1)
 
 
+class CandidatesTest(unittest.TestCase):
+    """The tool the daily routine uses to choose the next product and to see whether its chart will exist."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.c, cls.days = real()
+        items = with_musts(json.loads((FIX / "items.json").read_text(encoding="utf-8")), cls.c)
+        cls.d = build.prepare(cls.c, items, CFG)
+
+    def test_the_candidates_are_the_days_rakuten_products_and_the_ones_with_an_article_say_so(self):
+        out = features.candidates(self.d, "2026-10-12")
+        self.assertTrue(out[0].startswith("day 2026-10-12"))
+        rows = out[1:]
+        self.assertEqual(len(rows), len(self.days["2026-10-12"]["rakuten"]))
+        done = {f["ref"] for f in self.c["features"] if f["date"] == "2026-10-12"}
+        self.assertTrue(done)
+        for line in rows:
+            ref = line.split()[0]
+            self.assertEqual("ALREADY HAS AN ARTICLE" in line, ref in done, line)
+        self.assertEqual(features.candidates(self.d, "1999-01-01"), ["no daily page for that date"])
+
+    def test_the_chart_report_says_whether_the_pool_is_big_enough(self):
+        f = next(x for x in self.c["features"] if x["slug"] == "imabari-bath-towel")
+        self.assertRegex(features.chart_report(self.d, f), r"^chart: (yes|NO \(too few products\)), \d+ products")
+        self.assertEqual(features.chart_report(self.d, {**f, "date": "1999-01-01"}), "no entry")
+
+
 class PageTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
