@@ -5,7 +5,7 @@
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME cow character (kawaii mascot): a chubby black-and-white spotted calf with small horns, pink muzzle, floppy ears and a small bell on a red collar",
- "lead": "首の小さなベルと、白黒のぶちもようが目じるしの子うし。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "lead": "首の小さなベルと白黒のぶちもようが目印の子うし素材です。SNS、スライド、おたよりで表情のある案内に使えます。",
  "tags": [
   "うし",
   "牛",
@@ -18,17 +18,17 @@
  "items": [
   [
    "wave",
-   "手をふる",
+   "手を振る",
    "standing and waving one hand cheerfully"
   ],
   [
    "jump",
-   "とびはねる",
+   "飛び跳ねる",
    "jumping with joy, arms up, big smile"
   ],
   [
    "sleep",
-   "ねむる",
+   "眠る",
    "sleeping curled up peacefully with a tiny smile"
   ],
   [
@@ -38,22 +38,22 @@
   ],
   [
    "eat",
-   "もぐもぐ食べる",
+   "食べる",
    "happily eating fresh grass"
   ],
   [
    "heart",
-   "ハートをもつ",
+   "ハートを持つ",
    "holding a red heart with a happy smile"
   ],
   [
    "run",
-   "はしる",
+   "走る",
    "running fast with motion, determined happy face"
   ],
   [
    "surprised",
-   "おどろく",
+   "驚く",
    "surprised, wide round eyes, small round mouth, both hands raised"
   ],
   [
@@ -68,7 +68,7 @@
   ],
   [
    "angry",
-   "ぷんぷんおこる",
+   "怒る",
    "puffed-cheek angry pout with clenched fists, cute and not scary"
   ],
   [

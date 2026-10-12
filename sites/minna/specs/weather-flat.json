@@ -5,7 +5,7 @@
  "genre": "nature",
  "touch": "flat",
  "subject_en": "weather icons, each separate",
- "lead": "晴れ、くもり、雨、雪、かみなり、虹など、天気のアイコン12点。天気予報、お知らせ、イベントの雨天案内に。",
+ "lead": "晴れ、曇り、雨、雪などの天気アイコン12点です。天気予報、お知らせ、イベントの雨天案内に使えます。",
  "tags": [
   "天気",
   "晴れ",
@@ -26,7 +26,7 @@
   ],
   [
    "cloudy",
-   "くもり",
+   "曇り",
    "a fluffy cloud"
   ],
   [
@@ -41,7 +41,7 @@
   ],
   [
    "thunder",
-   "かみなり",
+   "雷",
    "a dark cloud with a lightning bolt"
   ],
   [
@@ -51,7 +51,7 @@
   ],
   [
    "sunnycloud",
-   "晴れのちくもり",
+   "晴れのち曇り",
    "a sun partially behind a cloud"
   ],
   [
@@ -61,12 +61,12 @@
   ],
   [
    "fog",
-   "きり",
+   "霧",
    "layers of fog lines with a cloud"
   ],
   [
    "typhoon",
-   "たいふう",
+   "台風",
    "a spiral typhoon symbol"
   ],
   [

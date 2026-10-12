@@ -4,7 +4,7 @@
  "title": "年越しとお正月の準備",
  "genre": "season",
  "touch": "wa",
- "lead": "除夜の鐘、年越しそば、しめ縄、鏡もち、初日の出。大みそかからお正月への和のイラスト12点。年末のおたよりや案内に。",
+ "lead": "除夜の鐘・年越しそば・しめ縄など、大みそかからお正月までの和風素材12点です。年末のおたよりや案内に使えます。",
  "tags": [
   "大みそか",
   "年越し",
@@ -25,7 +25,7 @@
    "id": "nenmatsu-wa-joya-bell",
    "file": "nenmatsu-wa-joya-bell.webp",
    "title": "除夜の鐘",
-   "desc": "除夜の鐘のイラスト。和風・和柄のタッチ。",
+   "desc": "除夜の鐘の和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",
@@ -42,7 +42,7 @@
    "id": "nenmatsu-wa-toshikoshi",
    "file": "nenmatsu-wa-toshikoshi.webp",
    "title": "年越しそば",
-   "desc": "年越しそばのイラスト。和風・和柄のタッチ。",
+   "desc": "年越しそばの和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",
@@ -60,7 +60,7 @@
    "id": "nenmatsu-wa-shimenawa",
    "file": "nenmatsu-wa-shimenawa.webp",
    "title": "しめ縄",
-   "desc": "しめ縄のイラスト。和風・和柄のタッチ。",
+   "desc": "しめ縄の和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",
@@ -77,7 +77,7 @@
    "id": "nenmatsu-wa-kagamimochi",
    "file": "nenmatsu-wa-kagamimochi.webp",
    "title": "鏡もち",
-   "desc": "鏡もちのイラスト。和風・和柄のタッチ。",
+   "desc": "鏡もちの和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",
@@ -95,7 +95,7 @@
    "id": "nenmatsu-wa-hatsuhinode",
    "file": "nenmatsu-wa-hatsuhinode.webp",
    "title": "初日の出",
-   "desc": "初日の出のイラスト。和風・和柄のタッチ。",
+   "desc": "初日の出の和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",
@@ -113,7 +113,7 @@
    "id": "nenmatsu-wa-kadomatsu",
    "file": "nenmatsu-wa-kadomatsu.webp",
    "title": "門松",
-   "desc": "門松のイラスト。和風・和柄のタッチ。",
+   "desc": "門松の和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",
@@ -130,15 +130,15 @@
   {
    "id": "nenmatsu-wa-osoji",
    "file": "nenmatsu-wa-osoji.webp",
-   "title": "大そうじの道具",
-   "desc": "大そうじの道具のイラスト。和風・和柄のタッチ。",
+   "title": "大掃除の道具",
+   "desc": "大掃除の道具の和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",
     "除夜の鐘",
     "しめ縄",
     "年越しとお正月の準備",
-    "大そうじの道具",
+    "大掃除の道具",
     "和風・和柄",
     "季節・行事"
    ],
@@ -149,7 +149,7 @@
    "id": "nenmatsu-wa-hatsuyume",
    "file": "nenmatsu-wa-hatsuyume.webp",
    "title": "初夢",
-   "desc": "初夢のイラスト。和風・和柄のタッチ。",
+   "desc": "初夢の和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",
@@ -167,7 +167,7 @@
    "id": "nenmatsu-wa-toshidama",
    "file": "nenmatsu-wa-toshidama.webp",
    "title": "年神さまの折り紙",
-   "desc": "年神さまの折り紙のイラスト。和風・和柄のタッチ。",
+   "desc": "年神さまの折り紙の和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",
@@ -185,7 +185,7 @@
    "id": "nenmatsu-wa-lantern-night",
    "file": "nenmatsu-wa-lantern-night.webp",
    "title": "大みそかの提灯",
-   "desc": "大みそかの提灯のイラスト。和風・和柄のタッチ。",
+   "desc": "大みそかの提灯の和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",
@@ -203,7 +203,7 @@
    "id": "nenmatsu-wa-new-calendar",
    "file": "nenmatsu-wa-new-calendar.webp",
    "title": "新しい暦",
-   "desc": "新しい暦のイラスト。和風・和柄のタッチ。",
+   "desc": "新しい暦の和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",
@@ -221,7 +221,7 @@
    "id": "nenmatsu-wa-hagoita",
    "file": "nenmatsu-wa-hagoita.webp",
    "title": "羽子板",
-   "desc": "羽子板のイラスト。和風・和柄のタッチ。",
+   "desc": "羽子板の和風・和柄イラストです。",
    "tags": [
     "大みそか",
     "年越し",

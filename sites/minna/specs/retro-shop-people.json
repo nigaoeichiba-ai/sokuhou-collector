@@ -6,7 +6,7 @@
  "touch": "retro",
  "title_fmt": "{ja}({subject})",
  "subject_en": "A Japanese man small-town shopkeeper in his 50s, short black hair with gray, green apron over cream shirt, brown trousers, retro Japanese poster-inspired flat colors, simple friendly face, no real period stereotype, no real person or existing character. Always the same face, hairstyle and outfit.",
- "lead": "商店街の仕事場面を、昭和レトロなポスター風カラーでまとめた素材です。地域店舗、買い物、販促、まち案内、観光記事に使えます。検索結果でも用途が伝わりやすいです。",
+ "lead": "商店街の仕事場面を昭和レトロなポスター風カラーで描いた人物素材です。地域店舗・買い物・販促・まち案内・観光記事に使えます。",
  "tags": [
   "人物",
   "商店街",
@@ -28,7 +28,7 @@
   ],
   [
    "noren",
-   "のれんを出す",
+   "暖簾を出す",
    "The shopkeeper hangs a plain shop curtain with no marks, no text or letters in the picture."
   ],
   [
@@ -53,12 +53,12 @@
   ],
   [
    "recommend",
-   "商品をすすめる",
+   "商品を勧める",
    "The shopkeeper gestures toward plain products on a counter, no text or letters in the picture."
   ],
   [
    "delivery-prep",
-   "配達準備する",
+   "配達準備をする",
    "The shopkeeper packs plain boxes into a cart, no text or letters in the picture."
   ],
   [
@@ -68,7 +68,7 @@
   ],
   [
    "sweeping",
-   "掃き掃除する",
+   "掃き掃除をする",
    "The shopkeeper sweeps the storefront with a broom, no text or letters in the picture."
   ],
   [
@@ -78,7 +78,7 @@
   ],
   [
    "closing-shop",
-   "閉店作業する",
+   "閉店作業をする",
    "The shopkeeper turns off a simple light and tidies the counter, no text or letters in the picture."
   ]
  ],

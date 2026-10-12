@@ -4,7 +4,7 @@
  "title": "お正月のアイコン シンプル",
  "genre": "eto",
  "touch": "flat",
- "lead": "お正月のモチーフを、すっきりしたフラットなタッチで12点。年賀状のワンポイント、あけおめのLINE画像、お知らせのバナーに使いやすい、シンプルなアイコンです。",
+ "lead": "門松・鏡もち・初日の出など、お正月のモチーフを描いたシンプルなアイコン12点です。年賀状や告知バナーに使えます。",
  "tags": [
   "お正月",
   "年賀状",
@@ -28,7 +28,7 @@
    "id": "newyear-objects-flat-kadomatsu",
    "file": "newyear-objects-flat-kadomatsu.webp",
    "title": "門松",
-   "desc": "門松のイラスト。シンプルフラットのタッチ。",
+   "desc": "門松のシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -46,7 +46,7 @@
    "id": "newyear-objects-flat-kagami",
    "file": "newyear-objects-flat-kagami.webp",
    "title": "鏡もち",
-   "desc": "鏡もちのイラスト。シンプルフラットのタッチ。",
+   "desc": "鏡もちのシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -64,7 +64,7 @@
    "id": "newyear-objects-flat-sunrise",
    "file": "newyear-objects-flat-sunrise.webp",
    "title": "初日の出",
-   "desc": "初日の出のイラスト。シンプルフラットのタッチ。",
+   "desc": "初日の出のシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -82,7 +82,7 @@
    "id": "newyear-objects-flat-daruma",
    "file": "newyear-objects-flat-daruma.webp",
    "title": "だるま",
-   "desc": "だるまのイラスト。シンプルフラットのタッチ。",
+   "desc": "だるまのシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -100,7 +100,7 @@
    "id": "newyear-objects-flat-hamaya",
    "file": "newyear-objects-flat-hamaya.webp",
    "title": "破魔矢",
-   "desc": "破魔矢のイラスト。シンプルフラットのタッチ。",
+   "desc": "破魔矢のシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -118,7 +118,7 @@
    "id": "newyear-objects-flat-osechi",
    "file": "newyear-objects-flat-osechi.webp",
    "title": "おせち",
-   "desc": "おせちのイラスト。シンプルフラットのタッチ。",
+   "desc": "おせちのシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -136,7 +136,7 @@
    "id": "newyear-objects-flat-kite",
    "file": "newyear-objects-flat-kite.webp",
    "title": "凧",
-   "desc": "凧のイラスト。シンプルフラットのタッチ。",
+   "desc": "凧のシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -154,7 +154,7 @@
    "id": "newyear-objects-flat-fan",
    "file": "newyear-objects-flat-fan.webp",
    "title": "扇",
-   "desc": "扇のイラスト。シンプルフラットのタッチ。",
+   "desc": "扇のシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -172,7 +172,7 @@
    "id": "newyear-objects-flat-envelope",
    "file": "newyear-objects-flat-envelope.webp",
    "title": "お年玉袋",
-   "desc": "お年玉袋のイラスト。シンプルフラットのタッチ。",
+   "desc": "お年玉袋のシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -190,7 +190,7 @@
    "id": "newyear-objects-flat-ume",
    "file": "newyear-objects-flat-ume.webp",
    "title": "梅の花",
-   "desc": "梅の花のイラスト。シンプルフラットのタッチ。",
+   "desc": "梅の花のシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -208,7 +208,7 @@
    "id": "newyear-objects-flat-crane",
    "file": "newyear-objects-flat-crane.webp",
    "title": "鶴",
-   "desc": "鶴のイラスト。シンプルフラットのタッチ。",
+   "desc": "鶴のシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -226,7 +226,7 @@
    "id": "newyear-objects-flat-bell",
    "file": "newyear-objects-flat-bell.webp",
    "title": "除夜の鐘",
-   "desc": "除夜の鐘のイラスト。シンプルフラットのタッチ。",
+   "desc": "除夜の鐘のシンプルフラットイラストです。",
    "tags": [
     "お正月",
     "年賀状",

@@ -6,7 +6,7 @@
  "touch": "kawaii",
  "title_fmt": "{ja}",
  "subject_en": "rainy season items and cute animals, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "かえる、かたつむり、てるてる坊主、あじさい。雨の日が楽しくなる、梅雨のイラスト12点。",
+ "lead": "かえる・かたつむり・てるてる坊主・あじさいを描いた梅雨の季節素材です。雨の日のお知らせや季節の掲示に使えます。",
  "tags": [
   "梅雨",
   "雨",
@@ -25,7 +25,7 @@
  "items": [
   [
    "frog-umbrella",
-   "かさをさすかえる",
+   "傘を差すかえる",
    "a cute green frog holding a leaf umbrella"
   ],
   [
@@ -45,12 +45,12 @@
   ],
   [
    "umbrella",
-   "赤いかさ",
+   "赤い傘",
    "a red umbrella with raindrops"
   ],
   [
    "boots",
-   "ながぐつ",
+   "長靴",
    "a pair of yellow rain boots in a puddle"
   ],
   [
@@ -65,7 +65,7 @@
   ],
   [
    "cat",
-   "かさをもつねこ",
+   "傘を持つねこ",
    "a cat under a big umbrella"
   ],
   [
@@ -75,12 +75,12 @@
   ],
   [
    "rainbow",
-   "雨あがりの虹",
+   "雨上がりの虹",
    "a small rainbow with a cloud"
   ],
   [
    "duck",
-   "あひるの雨あそび",
+   "あひるの雨遊び",
    "a duckling splashing in a puddle"
   ]
  ],

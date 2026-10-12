@@ -1,12 +1,12 @@
 {
  "slug": "tanabata-summer-kawaii",
- "title": "七夕・夏まつりのイラスト",
+ "title": "七夕・夏祭りのイラスト",
  "subject": "",
  "genre": "season",
  "touch": "kawaii",
  "title_fmt": "{ja}",
  "subject_en": "Tanabata and summer-festival items and cute animals in yukata, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "笹かざり、花火、金魚、浴衣のどうぶつ、かき氷。七夕と夏まつりのお知らせに使える12点。",
+ "lead": "笹飾り、花火、金魚、浴衣の動物、かき氷などを描いた素材12点です。七夕や夏祭りのお知らせに使えます。",
  "tags": [
   "七夕",
   "夏まつり",
@@ -26,7 +26,7 @@
  "items": [
   [
    "sasa",
-   "七夕のささかざり",
+   "七夕の笹飾り",
    "a bamboo branch with blank paper strips and paper decorations"
   ],
   [
@@ -71,7 +71,7 @@
   ],
   [
    "lantern",
-   "ちょうちん",
+   "提灯",
    "a row of red paper lanterns"
   ],
   [

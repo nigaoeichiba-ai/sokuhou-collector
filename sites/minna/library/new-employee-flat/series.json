@@ -4,7 +4,7 @@
  "title": "新入社員の毎日",
  "genre": "work",
  "touch": "flat",
- "lead": "名刺交換、電話対応、おじぎ、メモ、報連相など、新入社員の場面12点。研修資料や入社案内、マニュアルに。",
+ "lead": "名刺交換・電話対応・お辞儀・報連相など、新入社員の場面を描いた12点です。研修資料や入社案内、マニュアルに使えます。",
  "tags": [
   "新入社員",
   "新社会人",
@@ -23,7 +23,7 @@
    "id": "new-employee-flat-meishi",
    "file": "new-employee-flat-meishi.webp",
    "title": "名刺交換",
-   "desc": "名刺交換のイラスト。シンプルフラットのタッチ。",
+   "desc": "名刺交換のシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",
@@ -42,7 +42,7 @@
    "id": "new-employee-flat-denwa",
    "file": "new-employee-flat-denwa.webp",
    "title": "電話対応",
-   "desc": "電話対応のイラスト。シンプルフラットのタッチ。",
+   "desc": "電話対応のシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",
@@ -60,15 +60,15 @@
   {
    "id": "new-employee-flat-ojigi",
    "file": "new-employee-flat-ojigi.webp",
-   "title": "おじぎ",
-   "desc": "おじぎのイラスト。シンプルフラットのタッチ。",
+   "title": "お辞儀",
+   "desc": "お辞儀のシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",
     "ビジネス",
     "研修",
-    "おじぎ",
     "新入社員の毎日",
+    "お辞儀",
     "シンプルフラット",
     "仕事・ビジネス"
    ],
@@ -78,15 +78,15 @@
   {
    "id": "new-employee-flat-memo",
    "file": "new-employee-flat-memo.webp",
-   "title": "メモをとる",
-   "desc": "メモをとるのイラスト。シンプルフラットのタッチ。",
+   "title": "メモを取る",
+   "desc": "メモを取るのシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",
     "ビジネス",
     "研修",
     "新入社員の毎日",
-    "メモをとる",
+    "メモを取る",
     "シンプルフラット",
     "仕事・ビジネス"
    ],
@@ -97,7 +97,7 @@
    "id": "new-employee-flat-hourenso",
    "file": "new-employee-flat-hourenso.webp",
    "title": "上司に報告",
-   "desc": "上司に報告のイラスト。シンプルフラットのタッチ。",
+   "desc": "上司に報告のシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",
@@ -115,7 +115,7 @@
    "id": "new-employee-flat-pc",
    "file": "new-employee-flat-pc.webp",
    "title": "パソコン作業",
-   "desc": "パソコン作業のイラスト。シンプルフラットのタッチ。",
+   "desc": "パソコン作業のシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",
@@ -133,7 +133,7 @@
    "id": "new-employee-flat-kenshu",
    "file": "new-employee-flat-kenshu.webp",
    "title": "研修を受ける",
-   "desc": "研修を受けるのイラスト。シンプルフラットのタッチ。",
+   "desc": "研修を受けるのシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",
@@ -151,7 +151,7 @@
    "id": "new-employee-flat-onboard",
    "file": "new-employee-flat-onboard.webp",
    "title": "初出社",
-   "desc": "初出社のイラスト。シンプルフラットのタッチ。",
+   "desc": "初出社のシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",
@@ -169,7 +169,7 @@
    "id": "new-employee-flat-lunch",
    "file": "new-employee-flat-lunch.webp",
    "title": "ランチ",
-   "desc": "ランチのイラスト。シンプルフラットのタッチ。",
+   "desc": "ランチのシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",
@@ -187,7 +187,7 @@
    "id": "new-employee-flat-trouble",
    "file": "new-employee-flat-trouble.webp",
    "title": "困った顔",
-   "desc": "困った顔のイラスト。シンプルフラットのタッチ。",
+   "desc": "困った顔のシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",
@@ -204,15 +204,15 @@
   {
    "id": "new-employee-flat-ganbaru",
    "file": "new-employee-flat-ganbaru.webp",
-   "title": "がんばる",
-   "desc": "がんばるのイラスト。シンプルフラットのタッチ。",
+   "title": "頑張る",
+   "desc": "頑張るのシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",
     "ビジネス",
     "研修",
     "新入社員の毎日",
-    "がんばる",
+    "頑張る",
     "シンプルフラット",
     "仕事・ビジネス"
    ],
@@ -223,7 +223,7 @@
    "id": "new-employee-flat-kanpai",
    "file": "new-employee-flat-kanpai.webp",
    "title": "歓迎会",
-   "desc": "歓迎会のイラスト。シンプルフラットのタッチ。",
+   "desc": "歓迎会のシンプルフラットイラストです。",
    "tags": [
     "新入社員",
     "新社会人",

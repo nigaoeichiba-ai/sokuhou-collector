@@ -1,12 +1,12 @@
 {
  "slug": "coloring-christmas-lineart",
- "title": "クリスマスのぬりえ",
+ "title": "クリスマスの塗り絵",
  "subject": "",
  "genre": "season",
  "touch": "lineart",
  "title_fmt": "{ja}",
  "subject_en": "Coloring pages of Christmas items, each ONE big simple object or scene, centred, drawn with thick, clean, closed black outlines only and NOTHING filled in: the inside of every shape stays plain white. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
- "lead": "ツリー、サンタ、トナカイ、ブーツ、ケーキなど、クリスマスのぬりえ12点。線はくっきり太めで、小さな子どもでも塗りやすく、印刷してすぐ使えます。",
+ "lead": "ツリー・サンタ・トナカイ・ケーキなど、クリスマスの塗り絵12点です。家庭や教室の制作活動、季節のお知らせに使えます。",
  "tags": [
   "ぬりえ",
   "塗り絵",
@@ -29,7 +29,7 @@
   ],
   [
    "santa",
-   "サンタさん",
+   "サンタ",
    "a smiling Santa Claus standing with a sack"
   ],
   [
@@ -79,7 +79,7 @@
   ],
   [
    "house",
-   "ゆきの家",
+   "雪の家",
    "a cozy house with snow on the roof and a chimney"
   ]
  ],

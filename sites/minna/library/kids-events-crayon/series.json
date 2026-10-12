@@ -4,7 +4,7 @@
  "title": "保育園・幼稚園の行事",
  "genre": "school",
  "touch": "crayon",
- "lead": "遠足、防災訓練、お遊戯会、いも掘りなど、保育園・幼稚園の行事12点。おたよりや園の掲示物に。",
+ "lead": "遠足・防災訓練・お遊戯会・いも掘りなど、保育園や幼稚園の行事を描いた12点です。おたよりや園内掲示に使えます。",
  "tags": [
   "保育園",
   "幼稚園",
@@ -22,7 +22,7 @@
    "id": "kids-events-crayon-ensoku",
    "file": "kids-events-crayon-ensoku.webp",
    "title": "遠足",
-   "desc": "遠足のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "遠足のクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",
@@ -39,7 +39,7 @@
    "id": "kids-events-crayon-bousai",
    "file": "kids-events-crayon-bousai.webp",
    "title": "防災訓練",
-   "desc": "防災訓練のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "防災訓練のクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",
@@ -56,7 +56,7 @@
    "id": "kids-events-crayon-yuugi",
    "file": "kids-events-crayon-yuugi.webp",
    "title": "お遊戯会",
-   "desc": "お遊戯会のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "お遊戯会のクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",
@@ -74,7 +74,7 @@
    "id": "kids-events-crayon-imohori",
    "file": "kids-events-crayon-imohori.webp",
    "title": "いも掘り",
-   "desc": "いも掘りのイラスト。クレヨン・手描きのタッチ。",
+   "desc": "いも掘りのクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",
@@ -92,7 +92,7 @@
    "id": "kids-events-crayon-undokai",
    "file": "kids-events-crayon-undokai.webp",
    "title": "運動会",
-   "desc": "運動会のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "運動会のクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",
@@ -110,7 +110,7 @@
    "id": "kids-events-crayon-tamaire",
    "file": "kids-events-crayon-tamaire.webp",
    "title": "玉入れ",
-   "desc": "玉入れのイラスト。クレヨン・手描きのタッチ。",
+   "desc": "玉入れのクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",
@@ -128,7 +128,7 @@
    "id": "kids-events-crayon-hatsuhi",
    "file": "kids-events-crayon-hatsuhi.webp",
    "title": "お誕生日会",
-   "desc": "お誕生日会のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "お誕生日会のクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",
@@ -146,7 +146,7 @@
    "id": "kids-events-crayon-mochitsuki",
    "file": "kids-events-crayon-mochitsuki.webp",
    "title": "もちつき会",
-   "desc": "もちつき会のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "もちつき会のクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",
@@ -163,15 +163,15 @@
   {
    "id": "kids-events-crayon-nikki",
    "file": "kids-events-crayon-nikki.webp",
-   "title": "お絵かき",
-   "desc": "お絵かきのイラスト。クレヨン・手描きのタッチ。",
+   "title": "お絵描き",
+   "desc": "お絵描きのクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",
     "遠足",
     "防災訓練",
     "保育園・幼稚園の行事",
-    "お絵かき",
+    "お絵描き",
     "クレヨン・手描き",
     "学校・保育"
    ],
@@ -182,7 +182,7 @@
    "id": "kids-events-crayon-bus",
    "file": "kids-events-crayon-bus.webp",
    "title": "園バス",
-   "desc": "園バスのイラスト。クレヨン・手描きのタッチ。",
+   "desc": "園バスのクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",
@@ -199,15 +199,15 @@
   {
    "id": "kids-events-crayon-tsuyu",
    "file": "kids-events-crayon-tsuyu.webp",
-   "title": "どろんこ遊び",
-   "desc": "どろんこ遊びのイラスト。クレヨン・手描きのタッチ。",
+   "title": "泥んこ遊び",
+   "desc": "泥んこ遊びのクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",
     "遠足",
     "防災訓練",
     "保育園・幼稚園の行事",
-    "どろんこ遊び",
+    "泥んこ遊び",
     "クレヨン・手描き",
     "学校・保育"
    ],
@@ -218,7 +218,7 @@
    "id": "kids-events-crayon-sotsuen",
    "file": "kids-events-crayon-sotsuen.webp",
    "title": "卒園式",
-   "desc": "卒園式のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "卒園式のクレヨン・手描きイラストです。",
    "tags": [
     "保育園",
     "幼稚園",

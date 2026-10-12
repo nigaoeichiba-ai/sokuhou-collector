@@ -4,7 +4,7 @@
  "title": "バレンタインのイラスト",
  "genre": "season",
  "touch": "kawaii",
- "lead": "ハートのチョコ、ラッピング、手紙、ケーキ。バレンタインとホワイトデーのカードや告知に使える12点。",
+ "lead": "チョコレートやギフト、手紙などを描いた12点の素材です。バレンタインやホワイトデーのカード、告知に使えます。",
  "tags": [
   "バレンタイン",
   "チョコ",
@@ -25,7 +25,7 @@
    "id": "valentine-kawaii-choco-heart",
    "file": "valentine-kawaii-choco-heart.webp",
    "title": "ハートのチョコ",
-   "desc": "ハートのチョコのイラスト。ゆるかわのタッチ。",
+   "desc": "ハートのチョコのゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",
@@ -43,7 +43,7 @@
    "id": "valentine-kawaii-box",
    "file": "valentine-kawaii-box.webp",
    "title": "チョコの箱",
-   "desc": "チョコの箱のイラスト。ゆるかわのタッチ。",
+   "desc": "チョコの箱のゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",
@@ -61,7 +61,7 @@
    "id": "valentine-kawaii-letter",
    "file": "valentine-kawaii-letter.webp",
    "title": "ラブレター",
-   "desc": "ラブレターのイラスト。ゆるかわのタッチ。",
+   "desc": "ラブレターのゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",
@@ -79,7 +79,7 @@
    "id": "valentine-kawaii-cake",
    "file": "valentine-kawaii-cake.webp",
    "title": "ハートのケーキ",
-   "desc": "ハートのケーキのイラスト。ゆるかわのタッチ。",
+   "desc": "ハートのケーキのゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",
@@ -97,7 +97,7 @@
    "id": "valentine-kawaii-cookie",
    "file": "valentine-kawaii-cookie.webp",
    "title": "ハートのクッキー",
-   "desc": "ハートのクッキーのイラスト。ゆるかわのタッチ。",
+   "desc": "ハートのクッキーのゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",
@@ -115,7 +115,7 @@
    "id": "valentine-kawaii-bouquet",
    "file": "valentine-kawaii-bouquet.webp",
    "title": "小さな花束",
-   "desc": "小さな花束のイラスト。ゆるかわのタッチ。",
+   "desc": "小さな花束のゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",
@@ -133,7 +133,7 @@
    "id": "valentine-kawaii-cupcake",
    "file": "valentine-kawaii-cupcake.webp",
    "title": "カップケーキ",
-   "desc": "カップケーキのイラスト。ゆるかわのタッチ。",
+   "desc": "カップケーキのゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",
@@ -151,7 +151,7 @@
    "id": "valentine-kawaii-gift",
    "file": "valentine-kawaii-gift.webp",
    "title": "プレゼント",
-   "desc": "プレゼントのイラスト。ゆるかわのタッチ。",
+   "desc": "プレゼントのゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",
@@ -168,7 +168,7 @@
    "id": "valentine-kawaii-candy",
    "file": "valentine-kawaii-candy.webp",
    "title": "キャンディ",
-   "desc": "キャンディのイラスト。ゆるかわのタッチ。",
+   "desc": "キャンディのゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",
@@ -185,15 +185,15 @@
   {
    "id": "valentine-kawaii-bear",
    "file": "valentine-kawaii-bear.webp",
-   "title": "ハートをもつくま",
-   "desc": "ハートをもつくまのイラスト。ゆるかわのタッチ。",
+   "title": "ハートを持つくま",
+   "desc": "ハートを持つくまのゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",
     "ハート",
     "プレゼント",
     "バレンタインのイラスト",
-    "ハートをもつくま",
+    "ハートを持つくま",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -203,15 +203,15 @@
   {
    "id": "valentine-kawaii-cat",
    "file": "valentine-kawaii-cat.webp",
-   "title": "チョコをもつねこ",
-   "desc": "チョコをもつねこのイラスト。ゆるかわのタッチ。",
+   "title": "チョコを持つねこ",
+   "desc": "チョコを持つねこのゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",
     "ハート",
     "プレゼント",
     "バレンタインのイラスト",
-    "チョコをもつねこ",
+    "チョコを持つねこ",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -222,7 +222,7 @@
    "id": "valentine-kawaii-whitebox",
    "file": "valentine-kawaii-whitebox.webp",
    "title": "ホワイトデーのお返し",
-   "desc": "ホワイトデーのお返しのイラスト。ゆるかわのタッチ。",
+   "desc": "ホワイトデーのお返しのゆるかわイラストです。",
    "tags": [
     "バレンタイン",
     "チョコ",

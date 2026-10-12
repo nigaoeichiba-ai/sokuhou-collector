@@ -4,7 +4,7 @@
  "title": "お正月の飾り 和風",
  "genre": "eto",
  "touch": "wa",
- "lead": "門松、鏡もち、初日の出、鶴と亀、松竹梅、羽子板、凧、おせち、だるま、破魔矢まで。お正月の定番モチーフを、和風のタッチで18点そろえました。年賀状の飾りに。",
+ "lead": "門松・鏡もち・初日の出・鶴と亀など、お正月の定番モチーフ18点です。和風のタッチで年賀状や飾りに使えます。",
  "tags": [
   "お正月",
   "年賀状",
@@ -28,7 +28,7 @@
    "id": "newyear-objects-wa-kadomatsu",
    "file": "newyear-objects-wa-kadomatsu.webp",
    "title": "門松",
-   "desc": "門松のイラスト。和風・和柄のタッチ。",
+   "desc": "門松の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -45,7 +45,7 @@
    "id": "newyear-objects-wa-kagami",
    "file": "newyear-objects-wa-kagami.webp",
    "title": "鏡もち",
-   "desc": "鏡もちのイラスト。和風・和柄のタッチ。",
+   "desc": "鏡もちの和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -63,7 +63,7 @@
    "id": "newyear-objects-wa-hatsuhinode",
    "file": "newyear-objects-wa-hatsuhinode.webp",
    "title": "初日の出と富士山",
-   "desc": "初日の出と富士山のイラスト。和風・和柄のタッチ。",
+   "desc": "初日の出と富士山の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -82,7 +82,7 @@
    "id": "newyear-objects-wa-tsuru",
    "file": "newyear-objects-wa-tsuru.webp",
    "title": "鶴",
-   "desc": "鶴のイラスト。和風・和柄のタッチ。",
+   "desc": "鶴の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -100,7 +100,7 @@
    "id": "newyear-objects-wa-kame",
    "file": "newyear-objects-wa-kame.webp",
    "title": "亀",
-   "desc": "亀のイラスト。和風・和柄のタッチ。",
+   "desc": "亀の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -118,7 +118,7 @@
    "id": "newyear-objects-wa-shochikubai",
    "file": "newyear-objects-wa-shochikubai.webp",
    "title": "松竹梅",
-   "desc": "松竹梅のイラスト。和風・和柄のタッチ。",
+   "desc": "松竹梅の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -136,7 +136,7 @@
    "id": "newyear-objects-wa-hagoita",
    "file": "newyear-objects-wa-hagoita.webp",
    "title": "羽子板",
-   "desc": "羽子板のイラスト。和風・和柄のタッチ。",
+   "desc": "羽子板の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -154,7 +154,7 @@
    "id": "newyear-objects-wa-tako",
    "file": "newyear-objects-wa-tako.webp",
    "title": "凧",
-   "desc": "凧のイラスト。和風・和柄のタッチ。",
+   "desc": "凧の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -172,7 +172,7 @@
    "id": "newyear-objects-wa-osechi",
    "file": "newyear-objects-wa-osechi.webp",
    "title": "おせち料理",
-   "desc": "おせち料理のイラスト。和風・和柄のタッチ。",
+   "desc": "おせち料理の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -191,7 +191,7 @@
    "id": "newyear-objects-wa-daruma",
    "file": "newyear-objects-wa-daruma.webp",
    "title": "だるま",
-   "desc": "だるまのイラスト。和風・和柄のタッチ。",
+   "desc": "だるまの和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -209,7 +209,7 @@
    "id": "newyear-objects-wa-hamaya",
    "file": "newyear-objects-wa-hamaya.webp",
    "title": "破魔矢",
-   "desc": "破魔矢のイラスト。和風・和柄のタッチ。",
+   "desc": "破魔矢の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -227,7 +227,7 @@
    "id": "newyear-objects-wa-ema",
    "file": "newyear-objects-wa-ema.webp",
    "title": "絵馬",
-   "desc": "絵馬のイラスト。和風・和柄のタッチ。",
+   "desc": "絵馬の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -245,7 +245,7 @@
    "id": "newyear-objects-wa-shishimai",
    "file": "newyear-objects-wa-shishimai.webp",
    "title": "獅子舞",
-   "desc": "獅子舞のイラスト。和風・和柄のタッチ。",
+   "desc": "獅子舞の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -263,7 +263,7 @@
    "id": "newyear-objects-wa-senbazuru",
    "file": "newyear-objects-wa-senbazuru.webp",
    "title": "松の枝と扇",
-   "desc": "松の枝と扇のイラスト。和風・和柄のタッチ。",
+   "desc": "松の枝と扇の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -281,7 +281,7 @@
    "id": "newyear-objects-wa-nanten",
    "file": "newyear-objects-wa-nanten.webp",
    "title": "南天の実",
-   "desc": "南天の実のイラスト。和風・和柄のタッチ。",
+   "desc": "南天の実の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -299,7 +299,7 @@
    "id": "newyear-objects-wa-fukumame",
    "file": "newyear-objects-wa-fukumame.webp",
    "title": "お年玉袋",
-   "desc": "お年玉袋のイラスト。和風・和柄のタッチ。",
+   "desc": "お年玉袋の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -317,7 +317,7 @@
    "id": "newyear-objects-wa-mizuhiki",
    "file": "newyear-objects-wa-mizuhiki.webp",
    "title": "水引",
-   "desc": "水引のイラスト。和風・和柄のタッチ。",
+   "desc": "水引の和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",
@@ -335,7 +335,7 @@
    "id": "newyear-objects-wa-toshikoshi",
    "file": "newyear-objects-wa-toshikoshi.webp",
    "title": "年越しそば",
-   "desc": "年越しそばのイラスト。和風・和柄のタッチ。",
+   "desc": "年越しそばの和風・和柄イラストです。",
    "tags": [
     "お正月",
     "年賀状",

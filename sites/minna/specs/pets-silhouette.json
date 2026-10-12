@@ -7,7 +7,7 @@
  "title_fmt": "{ja}",
  "priority": 35,
  "subject_en": "Pet animal silhouettes, each a separate solid deep-navy (#24304A) shape in side view with a clearly readable outline; a tiny cut-out eye in warm cream (#FFF6E0) is allowed; no other colour, no gradients. The silhouette edge is crisp and closed.",
- "lead": "いぬ、ねこ、うさぎ、ハムスター、インコ、金魚。ペットショップや動物病院のお知らせ、看板、ピクトに使える、紺一色のシルエット12点。",
+ "lead": "いぬ・ねこ・うさぎ・ハムスター・インコ・金魚を紺一色で描いたシルエット素材です。ペットショップや動物病院のお知らせ、看板、ピクトに使えます。",
  "tags": [
   "ペット",
   "シルエット",
@@ -24,7 +24,7 @@
  "items": [
   [
    "dog-sit",
-   "おすわりするいぬ",
+   "座るいぬ",
    "a medium dog sitting in side view, ears up"
   ],
   [
@@ -34,12 +34,12 @@
   ],
   [
    "cat-sit",
-   "すわるねこ",
+   "座るねこ",
    "a cat sitting upright in side view, tail curled around the feet"
   ],
   [
    "cat-stretch",
-   "のびをするねこ",
+   "伸びをするねこ",
    "a cat stretching with its back arched"
   ],
   [

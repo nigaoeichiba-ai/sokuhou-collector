@@ -6,7 +6,7 @@
  "touch": "kawaii",
  "title_fmt": "{ja}",
  "subject_en": "moon-viewing items and cute white rabbits, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "お月見だんご、ススキ、満月、月を見るうさぎ。十五夜のお知らせや、秋の飾りにぴったりのイラスト12点です。",
+ "lead": "お月見だんご・ススキ・満月・月を見るうさぎを描いた秋の行事素材です。十五夜のお知らせや季節の飾りに使えます。",
  "tags": [
   "お月見",
   "十五夜",
@@ -25,7 +25,7 @@
  "items": [
   [
    "moon",
-   "まんまるの月",
+   "丸い月",
    "a big full moon with a few small stars"
   ],
   [
@@ -35,7 +35,7 @@
   ],
   [
    "susuki",
-   "ススキと花びん",
+   "ススキと花瓶",
    "pampas grass in a vase"
   ],
   [
@@ -70,7 +70,7 @@
   ],
   [
    "lantern",
-   "ちょうちん",
+   "提灯",
    "a round paper lantern"
   ],
   [

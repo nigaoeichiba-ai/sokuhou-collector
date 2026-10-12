@@ -1,12 +1,12 @@
 {
  "slug": "ouchi-cleaning-flat",
- "title": "大掃除・そうじのイラスト",
+ "title": "大掃除・掃除のイラスト",
  "subject": "",
  "genre": "life",
  "touch": "flat",
  "title_fmt": "{ja}",
  "subject_en": "Cleaning tools and chores, each a separate object, clean flat vector style with simple shapes and bright colours Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "ほうき、バケツ、雑巾、掃除機。年末の大掃除や日々の掃除のお知らせに使える12点。",
+ "lead": "ほうき・バケツ・雑巾・掃除機などを描いた掃除素材です。年末の大掃除や日々の掃除のお知らせに使えます。",
  "tags": [
   "大掃除",
   "そうじ",
@@ -58,12 +58,12 @@
   ],
   [
    "window",
-   "窓ふき",
+   "窓拭き",
    "a squeegee wiping a small window pane"
   ],
   [
    "laundry",
-   "せんたくもの",
+   "洗濯物",
    "a clothesline with a shirt and a towel"
   ],
   [
@@ -78,7 +78,7 @@
   ],
   [
    "sink",
-   "ぴかぴかの流し台",
+   "きれいな流し台",
    "a shiny kitchen sink with sparkles"
   ]
  ],

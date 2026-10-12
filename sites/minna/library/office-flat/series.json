@@ -4,7 +4,7 @@
  "title": "仕事・オフィスのアイコン",
  "genre": "work",
  "touch": "flat",
- "lead": "パソコン、書類、グラフ、電話、会議など、仕事まわりのアイコン12点。資料やサイト、チラシ、社内だよりにすぐ使えます。",
+ "lead": "パソコン・書類・グラフ・電話・会議など、仕事まわりのアイコン12点です。資料やサイト、社内文書に使えます。",
  "tags": [
   "ビジネス",
   "仕事",
@@ -24,7 +24,7 @@
    "id": "office-flat-laptop",
    "file": "office-flat-laptop.webp",
    "title": "ノートパソコン",
-   "desc": "ノートパソコンのイラスト。シンプルフラットのタッチ。",
+   "desc": "ノートパソコンのシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",
@@ -42,7 +42,7 @@
    "id": "office-flat-document",
    "file": "office-flat-document.webp",
    "title": "書類",
-   "desc": "書類のイラスト。シンプルフラットのタッチ。",
+   "desc": "書類のシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",
@@ -60,7 +60,7 @@
    "id": "office-flat-chart",
    "file": "office-flat-chart.webp",
    "title": "棒グラフ",
-   "desc": "棒グラフのイラスト。シンプルフラットのタッチ。",
+   "desc": "棒グラフのシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",
@@ -79,7 +79,7 @@
    "id": "office-flat-phone",
    "file": "office-flat-phone.webp",
    "title": "電話",
-   "desc": "電話のイラスト。シンプルフラットのタッチ。",
+   "desc": "電話のシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",
@@ -97,7 +97,7 @@
    "id": "office-flat-meeting",
    "file": "office-flat-meeting.webp",
    "title": "会議",
-   "desc": "会議のイラスト。シンプルフラットのタッチ。",
+   "desc": "会議のシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",
@@ -115,7 +115,7 @@
    "id": "office-flat-mail",
    "file": "office-flat-mail.webp",
    "title": "メール",
-   "desc": "メールのイラスト。シンプルフラットのタッチ。",
+   "desc": "メールのシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",
@@ -133,7 +133,7 @@
    "id": "office-flat-calendar",
    "file": "office-flat-calendar.webp",
    "title": "カレンダー",
-   "desc": "カレンダーのイラスト。シンプルフラットのタッチ。",
+   "desc": "カレンダーのシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",
@@ -151,7 +151,7 @@
    "id": "office-flat-idea",
    "file": "office-flat-idea.webp",
    "title": "アイデア",
-   "desc": "アイデアのイラスト。シンプルフラットのタッチ。",
+   "desc": "アイデアのシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",
@@ -169,7 +169,7 @@
    "id": "office-flat-target",
    "file": "office-flat-target.webp",
    "title": "目標",
-   "desc": "目標のイラスト。シンプルフラットのタッチ。",
+   "desc": "目標のシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",
@@ -187,7 +187,7 @@
    "id": "office-flat-handshake",
    "file": "office-flat-handshake.webp",
    "title": "握手",
-   "desc": "握手のイラスト。シンプルフラットのタッチ。",
+   "desc": "握手のシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",
@@ -205,7 +205,7 @@
    "id": "office-flat-clipboard",
    "file": "office-flat-clipboard.webp",
    "title": "チェックリスト",
-   "desc": "チェックリストのイラスト。シンプルフラットのタッチ。",
+   "desc": "チェックリストのシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",
@@ -223,7 +223,7 @@
    "id": "office-flat-coffee",
    "file": "office-flat-coffee.webp",
    "title": "コーヒーブレイク",
-   "desc": "コーヒーブレイクのイラスト。シンプルフラットのタッチ。",
+   "desc": "コーヒーブレイクのシンプルフラットイラストです。",
    "tags": [
     "ビジネス",
     "仕事",

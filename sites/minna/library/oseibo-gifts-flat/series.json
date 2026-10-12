@@ -4,7 +4,7 @@
  "title": "お歳暮の贈り物",
  "genre": "season",
  "touch": "flat",
- "lead": "ハム、ビール、みかん、洗剤、のしつきの箱など、お歳暮の贈り物6点。お礼状やお知らせ、特集ページに。",
+ "lead": "ハム・ビール・みかん・洗剤・のし付きの箱など、お歳暮の贈り物6点です。お礼状やお知らせ、特集ページに使えます。",
  "tags": [
   "お歳暮",
   "贈り物",
@@ -24,15 +24,15 @@
   {
    "id": "oseibo-gifts-flat-box",
    "file": "oseibo-gifts-flat-box.webp",
-   "title": "のしつきの箱",
-   "desc": "のしつきの箱のイラスト。シンプルフラットのタッチ。",
+   "title": "のし付きの箱",
+   "desc": "のし付きの箱のシンプルフラットイラストです。",
    "tags": [
     "お歳暮",
     "贈り物",
     "ギフト",
     "のし",
     "お歳暮の贈り物",
-    "のしつきの箱",
+    "のし付きの箱",
     "シンプルフラット",
     "季節・行事"
    ],
@@ -43,7 +43,7 @@
    "id": "oseibo-gifts-flat-ham",
    "file": "oseibo-gifts-flat-ham.webp",
    "title": "ハムの詰め合わせ",
-   "desc": "ハムの詰め合わせのイラスト。シンプルフラットのタッチ。",
+   "desc": "ハムの詰め合わせのシンプルフラットイラストです。",
    "tags": [
     "お歳暮",
     "贈り物",
@@ -61,7 +61,7 @@
    "id": "oseibo-gifts-flat-beer",
    "file": "oseibo-gifts-flat-beer.webp",
    "title": "ビールのセット",
-   "desc": "ビールのセットのイラスト。シンプルフラットのタッチ。",
+   "desc": "ビールのセットのシンプルフラットイラストです。",
    "tags": [
     "お歳暮",
     "贈り物",
@@ -79,7 +79,7 @@
    "id": "oseibo-gifts-flat-mikan",
    "file": "oseibo-gifts-flat-mikan.webp",
    "title": "みかんの箱",
-   "desc": "みかんの箱のイラスト。シンプルフラットのタッチ。",
+   "desc": "みかんの箱のシンプルフラットイラストです。",
    "tags": [
     "お歳暮",
     "贈り物",
@@ -97,7 +97,7 @@
    "id": "oseibo-gifts-flat-soap",
    "file": "oseibo-gifts-flat-soap.webp",
    "title": "洗剤のセット",
-   "desc": "洗剤のセットのイラスト。シンプルフラットのタッチ。",
+   "desc": "洗剤のセットのシンプルフラットイラストです。",
    "tags": [
     "お歳暮",
     "贈り物",
@@ -115,7 +115,7 @@
    "id": "oseibo-gifts-flat-sweets",
    "file": "oseibo-gifts-flat-sweets.webp",
    "title": "お菓子の詰め合わせ",
-   "desc": "お菓子の詰め合わせのイラスト。シンプルフラットのタッチ。",
+   "desc": "お菓子の詰め合わせのシンプルフラットイラストです。",
    "tags": [
     "お歳暮",
     "贈り物",

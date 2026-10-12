@@ -1,12 +1,12 @@
 {
  "slug": "fuyuyasumi-kids-crayon",
- "title": "冬休みのこどもたち",
+ "title": "冬休みの子どもたち",
  "subject": "",
  "genre": "school",
  "touch": "crayon",
  "title_fmt": "{ja}",
  "subject_en": "Winter-holiday children scenes with ONE cheerful child (round head, dot eyes, rosy cheeks, simple winter clothes), each a small complete scene with a few props, crayon hand-drawn style. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
- "lead": "冬休みの宿題、大そうじ、雪あそび、お年玉。冬休みのこどもの1日12場面。終業式のおたよりやしおりに。",
+ "lead": "冬休みの宿題・大掃除・雪遊び・お年玉など、子どもの一日を描いた12場面です。終業式のおたよりやしおりに使えます。",
  "tags": [
   "冬休み",
   "宿題",
@@ -33,17 +33,17 @@
   ],
   [
    "cleaning",
-   "おそうじを手伝う",
+   "掃除を手伝う",
    "a child wiping a window with a cloth and a bucket"
   ],
   [
    "snowman",
-   "雪だるまをつくる",
+   "雪だるまを作る",
    "a child rolling a large snowball next to a small snowman"
   ],
   [
    "sled",
-   "そりすべり",
+   "そり滑り",
    "a child sliding downhill on a sled with a scarf flying"
   ],
   [
@@ -68,7 +68,7 @@
   ],
   [
    "cards",
-   "かるたあそび",
+   "かるた遊び",
    "two children playing a card game on the floor"
   ],
   [
@@ -78,7 +78,7 @@
   ],
   [
    "sleepy",
-   "ねぼうの朝",
+   "寝坊の朝",
    "a child under a blanket with a sleepy face and a clock"
   ]
  ],

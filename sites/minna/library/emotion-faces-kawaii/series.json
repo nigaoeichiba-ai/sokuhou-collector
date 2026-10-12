@@ -4,7 +4,7 @@
  "title": "表情アイコン",
  "genre": "icon",
  "touch": "kawaii",
- "lead": "笑顔、泣き顔、おどろき、ねむい…。気持ちを伝える、まるい顔のアイコン12種類。LINEやSNS、アンケートに。",
+ "lead": "笑顔・泣き顔・驚き・眠気など、気持ちを伝える丸い顔のアイコン12種類です。LINEやSNS、アンケートに使えます。",
  "tags": [
   "表情",
   "顔",
@@ -23,7 +23,7 @@
    "id": "emotion-faces-kawaii-smile",
    "file": "emotion-faces-kawaii-smile.webp",
    "title": "にっこり",
-   "desc": "にっこりのイラスト。ゆるかわのタッチ。",
+   "desc": "にっこりのゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",
@@ -40,15 +40,15 @@
   {
    "id": "emotion-faces-kawaii-laugh",
    "file": "emotion-faces-kawaii-laugh.webp",
-   "title": "大わらい",
-   "desc": "大わらいのイラスト。ゆるかわのタッチ。",
+   "title": "大笑い",
+   "desc": "大笑いのゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",
     "アイコン",
     "感情",
     "表情アイコン",
-    "大わらい",
+    "大笑い",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -59,7 +59,7 @@
    "id": "emotion-faces-kawaii-wink",
    "file": "emotion-faces-kawaii-wink.webp",
    "title": "ウインク",
-   "desc": "ウインクのイラスト。ゆるかわのタッチ。",
+   "desc": "ウインクのゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",
@@ -77,7 +77,7 @@
    "id": "emotion-faces-kawaii-love",
    "file": "emotion-faces-kawaii-love.webp",
    "title": "ハートの目",
-   "desc": "ハートの目のイラスト。ゆるかわのタッチ。",
+   "desc": "ハートの目のゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",
@@ -94,15 +94,15 @@
   {
    "id": "emotion-faces-kawaii-surprise",
    "file": "emotion-faces-kawaii-surprise.webp",
-   "title": "びっくり",
-   "desc": "びっくりのイラスト。ゆるかわのタッチ。",
+   "title": "驚き",
+   "desc": "驚きのゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",
     "アイコン",
     "感情",
     "表情アイコン",
-    "びっくり",
+    "驚き",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -112,15 +112,15 @@
   {
    "id": "emotion-faces-kawaii-cry",
    "file": "emotion-faces-kawaii-cry.webp",
-   "title": "なきがお",
-   "desc": "なきがおのイラスト。ゆるかわのタッチ。",
+   "title": "泣き顔",
+   "desc": "泣き顔のゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",
     "アイコン",
     "感情",
+    "泣き顔",
     "表情アイコン",
-    "なきがお",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -130,15 +130,15 @@
   {
    "id": "emotion-faces-kawaii-angry",
    "file": "emotion-faces-kawaii-angry.webp",
-   "title": "おこった顔",
-   "desc": "おこった顔のイラスト。ゆるかわのタッチ。",
+   "title": "怒った顔",
+   "desc": "怒った顔のゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",
     "アイコン",
     "感情",
     "表情アイコン",
-    "おこった顔",
+    "怒った顔",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -148,15 +148,15 @@
   {
    "id": "emotion-faces-kawaii-sleepy",
    "file": "emotion-faces-kawaii-sleepy.webp",
-   "title": "ねむい",
-   "desc": "ねむいのイラスト。ゆるかわのタッチ。",
+   "title": "眠い",
+   "desc": "眠いのゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",
     "アイコン",
     "感情",
     "表情アイコン",
-    "ねむい",
+    "眠い",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -166,15 +166,15 @@
   {
    "id": "emotion-faces-kawaii-think",
    "file": "emotion-faces-kawaii-think.webp",
-   "title": "かんがえ中",
-   "desc": "かんがえ中のイラスト。ゆるかわのタッチ。",
+   "title": "考え中",
+   "desc": "考え中のゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",
     "アイコン",
     "感情",
     "表情アイコン",
-    "かんがえ中",
+    "考え中",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -184,15 +184,15 @@
   {
    "id": "emotion-faces-kawaii-cool",
    "file": "emotion-faces-kawaii-cool.webp",
-   "title": "かっこいい",
-   "desc": "かっこいいのイラスト。ゆるかわのタッチ。",
+   "title": "格好いい",
+   "desc": "格好いいのゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",
     "アイコン",
     "感情",
     "表情アイコン",
-    "かっこいい",
+    "格好いい",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -202,15 +202,15 @@
   {
    "id": "emotion-faces-kawaii-sick",
    "file": "emotion-faces-kawaii-sick.webp",
-   "title": "ぐあいがわるい",
-   "desc": "ぐあいがわるいのイラスト。ゆるかわのタッチ。",
+   "title": "具合が悪い",
+   "desc": "具合が悪いのゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",
     "アイコン",
     "感情",
     "表情アイコン",
-    "ぐあいがわるい",
+    "具合が悪い",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -221,7 +221,7 @@
    "id": "emotion-faces-kawaii-thanks",
    "file": "emotion-faces-kawaii-thanks.webp",
    "title": "ありがとう",
-   "desc": "ありがとうのイラスト。ゆるかわのタッチ。",
+   "desc": "ありがとうのゆるかわイラストです。",
    "tags": [
     "表情",
     "顔",

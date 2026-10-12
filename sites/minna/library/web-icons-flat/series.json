@@ -4,7 +4,7 @@
  "title": "お知らせ・Webのアイコン",
  "genre": "icon",
  "touch": "flat",
- "lead": "電話、メール、地図ピン、時計、カレンダー、検索、ホーム、ベル、ダウンロード。サイトのお知らせ、チラシの連絡先、スライドに使えるアイコン12点。",
+ "lead": "連絡先や検索、ダウンロードなどを表すWeb向けアイコン12点です。サイト、チラシ、スライドに使えます。",
  "tags": [
   "アイコン",
   "Web",
@@ -24,7 +24,7 @@
    "id": "web-icons-flat-phone",
    "file": "web-icons-flat-phone.webp",
    "title": "電話",
-   "desc": "電話のイラスト。シンプルフラットのタッチ。",
+   "desc": "電話のシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",
@@ -41,7 +41,7 @@
    "id": "web-icons-flat-mail",
    "file": "web-icons-flat-mail.webp",
    "title": "メール",
-   "desc": "メールのイラスト。シンプルフラットのタッチ。",
+   "desc": "メールのシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",
@@ -59,7 +59,7 @@
    "id": "web-icons-flat-map-pin",
    "file": "web-icons-flat-map-pin.webp",
    "title": "地図ピン",
-   "desc": "地図ピンのイラスト。シンプルフラットのタッチ。",
+   "desc": "地図ピンのシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",
@@ -78,7 +78,7 @@
    "id": "web-icons-flat-clock",
    "file": "web-icons-flat-clock.webp",
    "title": "時計",
-   "desc": "時計のイラスト。シンプルフラットのタッチ。",
+   "desc": "時計のシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",
@@ -96,7 +96,7 @@
    "id": "web-icons-flat-calendar",
    "file": "web-icons-flat-calendar.webp",
    "title": "カレンダー",
-   "desc": "カレンダーのイラスト。シンプルフラットのタッチ。",
+   "desc": "カレンダーのシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",
@@ -114,7 +114,7 @@
    "id": "web-icons-flat-search",
    "file": "web-icons-flat-search.webp",
    "title": "検索",
-   "desc": "検索のイラスト。シンプルフラットのタッチ。",
+   "desc": "検索のシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",
@@ -132,7 +132,7 @@
    "id": "web-icons-flat-home",
    "file": "web-icons-flat-home.webp",
    "title": "ホーム",
-   "desc": "ホームのイラスト。シンプルフラットのタッチ。",
+   "desc": "ホームのシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",
@@ -150,7 +150,7 @@
    "id": "web-icons-flat-bell",
    "file": "web-icons-flat-bell.webp",
    "title": "お知らせ",
-   "desc": "お知らせのイラスト。シンプルフラットのタッチ。",
+   "desc": "お知らせのシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",
@@ -167,7 +167,7 @@
    "id": "web-icons-flat-download",
    "file": "web-icons-flat-download.webp",
    "title": "ダウンロード",
-   "desc": "ダウンロードのイラスト。シンプルフラットのタッチ。",
+   "desc": "ダウンロードのシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",
@@ -185,7 +185,7 @@
    "id": "web-icons-flat-cart",
    "file": "web-icons-flat-cart.webp",
    "title": "カート",
-   "desc": "カートのイラスト。シンプルフラットのタッチ。",
+   "desc": "カートのシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",
@@ -203,7 +203,7 @@
    "id": "web-icons-flat-gear",
    "file": "web-icons-flat-gear.webp",
    "title": "設定",
-   "desc": "設定のイラスト。シンプルフラットのタッチ。",
+   "desc": "設定のシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",
@@ -221,7 +221,7 @@
    "id": "web-icons-flat-chat",
    "file": "web-icons-flat-chat.webp",
    "title": "チャット",
-   "desc": "チャットのイラスト。シンプルフラットのタッチ。",
+   "desc": "チャットのシンプルフラットイラストです。",
    "tags": [
     "アイコン",
     "Web",

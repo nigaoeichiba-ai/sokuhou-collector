@@ -4,7 +4,7 @@
  "title": "ジェンダーフリー職業素材",
  "genre": "work",
  "touch": "linecolor",
- "lead": "性別の固定観念に寄せず、さまざまな職業を線画カラーで示す素材です。採用、教育、公共資料、啓発コンテンツ、職業紹介に向きます。検索結果でも用途が伝わりやすいです。",
+ "lead": "性別の固定観念に寄せず、さまざまな職業を線画カラーで示す素材です。採用・教育・公共資料、職業紹介に使えます。",
  "tags": [
   "人物",
   "職業",
@@ -26,7 +26,7 @@
    "id": "gender-free-workers-civil-engineer",
    "file": "gender-free-workers-civil-engineer.webp",
    "title": "土木技術者(ジェンダーフリー職業素材)",
-   "desc": "土木技術者(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "desc": "土木技術者(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",
@@ -51,7 +51,7 @@
    "id": "gender-free-workers-pilot",
    "file": "gender-free-workers-pilot.webp",
    "title": "パイロット姿(ジェンダーフリー職業素材)",
-   "desc": "パイロット姿(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "desc": "パイロット姿(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",
@@ -76,7 +76,7 @@
    "id": "gender-free-workers-childcare-worker",
    "file": "gender-free-workers-childcare-worker.webp",
    "title": "保育士の見守り(ジェンダーフリー職業素材)",
-   "desc": "保育士の見守り(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "desc": "保育士の見守り(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",
@@ -101,7 +101,7 @@
    "id": "gender-free-workers-care-worker",
    "file": "gender-free-workers-care-worker.webp",
    "title": "介護士の支援(ジェンダーフリー職業素材)",
-   "desc": "介護士の支援(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "desc": "介護士の支援(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",
@@ -126,7 +126,7 @@
    "id": "gender-free-workers-scientist",
    "file": "gender-free-workers-scientist.webp",
    "title": "科学者の観察(ジェンダーフリー職業素材)",
-   "desc": "科学者の観察(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "desc": "科学者の観察(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",
@@ -151,7 +151,7 @@
    "id": "gender-free-workers-cooking-person",
    "file": "gender-free-workers-cooking-person.webp",
    "title": "料理をする人(ジェンダーフリー職業素材)",
-   "desc": "料理をする人(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "desc": "料理をする人(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",
@@ -176,7 +176,7 @@
    "id": "gender-free-workers-home-childcare",
    "file": "gender-free-workers-home-childcare.webp",
    "title": "育児をする人(ジェンダーフリー職業素材)",
-   "desc": "育児をする人(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "desc": "育児をする人(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",
@@ -201,7 +201,7 @@
    "id": "gender-free-workers-cleaning-person",
    "file": "gender-free-workers-cleaning-person.webp",
    "title": "掃除をする人(ジェンダーフリー職業素材)",
-   "desc": "掃除をする人(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "desc": "掃除をする人(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",
@@ -226,7 +226,7 @@
    "id": "gender-free-workers-candidate-speaker",
    "file": "gender-free-workers-candidate-speaker.webp",
    "title": "候補者が話す(ジェンダーフリー職業素材)",
-   "desc": "候補者が話す(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "desc": "候補者が話す(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",
@@ -250,8 +250,8 @@
   {
    "id": "gender-free-workers-tour-guide",
    "file": "gender-free-workers-tour-guide.webp",
-   "title": "観光案内する(ジェンダーフリー職業素材)",
-   "desc": "観光案内する(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "title": "観光案内をする(ジェンダーフリー職業素材)",
+   "desc": "観光案内をする(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",
@@ -265,7 +265,7 @@
     "ガイド",
     "ボランティア",
     "ジェンダーフリー職業素材",
-    "観光案内する",
+    "観光案内をする",
     "線画カラー",
     "仕事・ビジネス"
    ],
@@ -275,8 +275,8 @@
   {
    "id": "gender-free-workers-disaster-volunteer",
    "file": "gender-free-workers-disaster-volunteer.webp",
-   "title": "防災支援する(ジェンダーフリー職業素材)",
-   "desc": "防災支援する(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "title": "防災支援をする(ジェンダーフリー職業素材)",
+   "desc": "防災支援をする(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",
@@ -290,7 +290,7 @@
     "ガイド",
     "ボランティア",
     "ジェンダーフリー職業素材",
-    "防災支援する",
+    "防災支援をする",
     "線画カラー",
     "仕事・ビジネス"
    ],
@@ -301,7 +301,7 @@
    "id": "gender-free-workers-diy-person",
    "file": "gender-free-workers-diy-person.webp",
    "title": "DIYをする人(ジェンダーフリー職業素材)",
-   "desc": "DIYをする人(ジェンダーフリー職業素材)のイラスト。線画カラーのタッチ。",
+   "desc": "DIYをする人(ジェンダーフリー職業素材)の線画カラーイラストです。",
    "tags": [
     "人物",
     "職業",

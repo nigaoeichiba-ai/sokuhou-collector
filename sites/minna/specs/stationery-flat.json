@@ -1,11 +1,11 @@
 {
  "slug": "stationery-flat",
- "title": "文房具 シンプル",
+ "title": "文房具のシンプル素材",
  "subject": "",
  "genre": "school",
  "touch": "flat",
  "subject_en": "stationery items, each separate",
- "lead": "えんぴつ、消しゴム、はさみ、のりなど、文房具12点。新学期のおたよりや、学習プリント、掲示物に。",
+ "lead": "鉛筆、消しゴム、はさみ、ノートなどの文房具素材12点です。新学期のおたよりや学習プリントに使えます。",
  "tags": [
   "文房具",
   "えんぴつ",
@@ -19,7 +19,7 @@
  "items": [
   [
    "pencil",
-   "えんぴつ",
+   "鉛筆",
    "a yellow pencil"
   ],
   [
@@ -29,7 +29,7 @@
   ],
   [
    "ruler",
-   "じょうぎ",
+   "定規",
    "a ruler (blank ticks)"
   ],
   [
@@ -49,7 +49,7 @@
   ],
   [
    "colorpencils",
-   "色えんぴつ",
+   "色鉛筆",
    "a fan of coloured pencils"
   ],
   [
@@ -59,7 +59,7 @@
   ],
   [
    "pencilcase",
-   "ふでばこ",
+   "筆箱",
    "a pencil case"
   ],
   [
@@ -74,7 +74,7 @@
   ],
   [
    "clock",
-   "とけい",
+   "時計",
    "a round wall clock"
   ]
  ],

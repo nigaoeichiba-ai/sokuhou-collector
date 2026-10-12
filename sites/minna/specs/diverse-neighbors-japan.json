@@ -6,7 +6,7 @@
  "touch": "faceless",
  "title_fmt": "{ja}({subject})",
  "subject_en": "A diverse faceless resident cast living in Japan, varied skin tones, varied hair textures, modest everyday clothing in muted blue, green, beige and gray, rounded flat shapes, no facial features, no stereotypes, no real person or existing character. Always the same face, hairstyle and outfit.",
- "lead": "日本で暮らす多様な住民の場面を、顔なしフラットで穏やかに表す素材です。地域、行政、多文化共生、生活案内の記事に使えます。検索結果でも用途が伝わりやすいです。",
+ "lead": "日本で暮らす多様な住民の場面を、顔なしのフラットなタッチで描いた人物素材です。地域・行政・多文化共生・生活案内の記事に使えます。",
  "tags": [
   "人物",
   "地域",
@@ -23,7 +23,7 @@
  "items": [
   [
    "greeting",
-   "あいさつをする",
+   "挨拶をする",
    "One resident stands and gives a friendly greeting gesture, no text or letters in the picture."
   ],
   [
@@ -53,7 +53,7 @@
   ],
   [
    "directions",
-   "道をたずねる",
+   "道を尋ねる",
    "One resident points toward an empty direction space with a small question symbol, no text or letters in the picture."
   ],
   [

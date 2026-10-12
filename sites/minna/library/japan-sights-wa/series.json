@@ -4,7 +4,7 @@
  "title": "日本の名所のイラスト",
  "genre": "season",
  "touch": "wa",
- "lead": "富士山、鳥居、五重塔、お城など、日本らしい風景のモチーフ12点。観光案内や和風のデザインに。",
+ "lead": "富士山や鳥居、五重塔、お城など、日本らしい風景のモチーフ12点です。観光案内や和風のデザインに使えます。",
  "tags": [
   "観光",
   "富士山",
@@ -22,7 +22,7 @@
    "id": "japan-sights-wa-fuji",
    "file": "japan-sights-wa-fuji.webp",
    "title": "富士山",
-   "desc": "富士山のイラスト。和風・和柄のタッチ。",
+   "desc": "富士山の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",
@@ -39,7 +39,7 @@
    "id": "japan-sights-wa-torii",
    "file": "japan-sights-wa-torii.webp",
    "title": "鳥居",
-   "desc": "鳥居のイラスト。和風・和柄のタッチ。",
+   "desc": "鳥居の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",
@@ -57,7 +57,7 @@
    "id": "japan-sights-wa-pagoda",
    "file": "japan-sights-wa-pagoda.webp",
    "title": "五重塔",
-   "desc": "五重塔のイラスト。和風・和柄のタッチ。",
+   "desc": "五重塔の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",
@@ -74,7 +74,7 @@
    "id": "japan-sights-wa-castle",
    "file": "japan-sights-wa-castle.webp",
    "title": "お城",
-   "desc": "お城のイラスト。和風・和柄のタッチ。",
+   "desc": "お城の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",
@@ -92,7 +92,7 @@
    "id": "japan-sights-wa-bridge",
    "file": "japan-sights-wa-bridge.webp",
    "title": "太鼓橋",
-   "desc": "太鼓橋のイラスト。和風・和柄のタッチ。",
+   "desc": "太鼓橋の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",
@@ -109,15 +109,15 @@
   {
    "id": "japan-sights-wa-lantern",
    "file": "japan-sights-wa-lantern.webp",
-   "title": "石どうろう",
-   "desc": "石どうろうのイラスト。和風・和柄のタッチ。",
+   "title": "石灯籠",
+   "desc": "石灯籠の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",
     "神社",
     "五重塔",
     "日本の名所のイラスト",
-    "石どうろう",
+    "石灯籠",
     "和風・和柄",
     "季節・行事"
    ],
@@ -128,7 +128,7 @@
    "id": "japan-sights-wa-temple",
    "file": "japan-sights-wa-temple.webp",
    "title": "お寺",
-   "desc": "お寺のイラスト。和風・和柄のタッチ。",
+   "desc": "お寺の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",
@@ -146,7 +146,7 @@
    "id": "japan-sights-wa-garden",
    "file": "japan-sights-wa-garden.webp",
    "title": "日本庭園",
-   "desc": "日本庭園のイラスト。和風・和柄のタッチ。",
+   "desc": "日本庭園の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",
@@ -164,7 +164,7 @@
    "id": "japan-sights-wa-onsen",
    "file": "japan-sights-wa-onsen.webp",
    "title": "温泉",
-   "desc": "温泉のイラスト。和風・和柄のタッチ。",
+   "desc": "温泉の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",
@@ -182,7 +182,7 @@
    "id": "japan-sights-wa-boat",
    "file": "japan-sights-wa-boat.webp",
    "title": "屋形船",
-   "desc": "屋形船のイラスト。和風・和柄のタッチ。",
+   "desc": "屋形船の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",
@@ -200,7 +200,7 @@
    "id": "japan-sights-wa-train",
    "file": "japan-sights-wa-train.webp",
    "title": "電車と桜",
-   "desc": "電車と桜のイラスト。和風・和柄のタッチ。",
+   "desc": "電車と桜の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",
@@ -218,7 +218,7 @@
    "id": "japan-sights-wa-deer",
    "file": "japan-sights-wa-deer.webp",
    "title": "鹿と紅葉",
-   "desc": "鹿と紅葉のイラスト。和風・和柄のタッチ。",
+   "desc": "鹿と紅葉の和風・和柄イラストです。",
    "tags": [
     "観光",
     "富士山",

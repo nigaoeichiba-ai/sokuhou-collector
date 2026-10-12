@@ -6,7 +6,7 @@
  "touch": "flat",
  "title_fmt": "{ja}",
  "subject_en": "kitchen tools, each a separate object, flat Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "フライパン、鍋、包丁、まな板、菜箸など、料理のレシピやキッチン用品の紹介に使える12点。",
+ "lead": "フライパン・鍋・包丁・まな板・菜箸など、調理器具を描いた12点の素材です。レシピやキッチン用品の紹介に使えます。",
  "tags": [
   "料理",
   "調理器具",
@@ -26,7 +26,7 @@
   ],
   [
    "pot",
-   "なべ",
+   "鍋",
    "a cooking pot with a lid"
   ],
   [
@@ -41,7 +41,7 @@
   ],
   [
    "ladle",
-   "おたま",
+   "お玉",
    "a ladle"
   ],
   [
@@ -51,7 +51,7 @@
   ],
   [
    "bowl",
-   "ボウルとあわだて器",
+   "ボウルと泡立て器",
    "a bowl and a whisk"
   ],
   [

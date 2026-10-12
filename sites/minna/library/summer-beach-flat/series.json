@@ -4,7 +4,7 @@
  "title": "海・夏休みのイラスト",
  "genre": "season",
  "touch": "flat",
- "lead": "浮き輪、ビーチボール、ヤシの木、貝がらなど、海と夏休みのイラスト12点。",
+ "lead": "浮き輪、ビーチボール、ヤシの木、貝殻などを描いた夏の素材12点です。海や夏休みのお知らせに使えます。",
  "tags": [
   "夏",
   "海",
@@ -27,7 +27,7 @@
    "id": "summer-beach-flat-floatring",
    "file": "summer-beach-flat-floatring.webp",
    "title": "浮き輪",
-   "desc": "浮き輪のイラスト。シンプルフラットのタッチ。",
+   "desc": "浮き輪のシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",
@@ -44,7 +44,7 @@
    "id": "summer-beach-flat-beachball",
    "file": "summer-beach-flat-beachball.webp",
    "title": "ビーチボール",
-   "desc": "ビーチボールのイラスト。シンプルフラットのタッチ。",
+   "desc": "ビーチボールのシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",
@@ -63,7 +63,7 @@
    "id": "summer-beach-flat-palm",
    "file": "summer-beach-flat-palm.webp",
    "title": "ヤシの木",
-   "desc": "ヤシの木のイラスト。シンプルフラットのタッチ。",
+   "desc": "ヤシの木のシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",
@@ -80,15 +80,15 @@
   {
    "id": "summer-beach-flat-shell",
    "file": "summer-beach-flat-shell.webp",
-   "title": "貝がら",
-   "desc": "貝がらのイラスト。シンプルフラットのタッチ。",
+   "title": "貝殻",
+   "desc": "貝殻のシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",
     "夏休み",
     "浮き輪",
     "海・夏休みのイラスト",
-    "貝がら",
+    "貝殻",
     "シンプルフラット",
     "季節・行事"
    ],
@@ -99,7 +99,7 @@
    "id": "summer-beach-flat-starfish",
    "file": "summer-beach-flat-starfish.webp",
    "title": "ひとで",
-   "desc": "ひとでのイラスト。シンプルフラットのタッチ。",
+   "desc": "ひとでのシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",
@@ -117,7 +117,7 @@
    "id": "summer-beach-flat-sunglass",
    "file": "summer-beach-flat-sunglass.webp",
    "title": "サングラス",
-   "desc": "サングラスのイラスト。シンプルフラットのタッチ。",
+   "desc": "サングラスのシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",
@@ -135,7 +135,7 @@
    "id": "summer-beach-flat-strawhat",
    "file": "summer-beach-flat-strawhat.webp",
    "title": "麦わら帽子",
-   "desc": "麦わら帽子のイラスト。シンプルフラットのタッチ。",
+   "desc": "麦わら帽子のシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",
@@ -153,7 +153,7 @@
    "id": "summer-beach-flat-sunflower",
    "file": "summer-beach-flat-sunflower.webp",
    "title": "ひまわり",
-   "desc": "ひまわりのイラスト。シンプルフラットのタッチ。",
+   "desc": "ひまわりのシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",
@@ -171,7 +171,7 @@
    "id": "summer-beach-flat-icecream",
    "file": "summer-beach-flat-icecream.webp",
    "title": "アイスクリーム",
-   "desc": "アイスクリームのイラスト。シンプルフラットのタッチ。",
+   "desc": "アイスクリームのシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",
@@ -188,15 +188,15 @@
   {
    "id": "summer-beach-flat-sandcastle",
    "file": "summer-beach-flat-sandcastle.webp",
-   "title": "砂のお城",
-   "desc": "砂のお城のイラスト。シンプルフラットのタッチ。",
+   "title": "砂の城",
+   "desc": "砂の城のシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",
     "夏休み",
     "浮き輪",
     "海・夏休みのイラスト",
-    "砂のお城",
+    "砂の城",
     "シンプルフラット",
     "季節・行事"
    ],
@@ -207,7 +207,7 @@
    "id": "summer-beach-flat-umbrella",
    "file": "summer-beach-flat-umbrella.webp",
    "title": "ビーチパラソル",
-   "desc": "ビーチパラソルのイラスト。シンプルフラットのタッチ。",
+   "desc": "ビーチパラソルのシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",
@@ -226,7 +226,7 @@
    "id": "summer-beach-flat-ship",
    "file": "summer-beach-flat-ship.webp",
    "title": "ヨット",
-   "desc": "ヨットのイラスト。シンプルフラットのタッチ。",
+   "desc": "ヨットのシンプルフラットイラストです。",
    "tags": [
     "夏",
     "海",

@@ -377,7 +377,7 @@ class Votes(unittest.TestCase):
         self.assertIn("リクエストへの", html)
         self.assertIn('data-plus="予定のもの"', html)
         self.assertNotIn('data-plus="できたもの"', html)
-        self.assertIn("3人が、ほしいと言いました", html)
+        self.assertIn("3人が欲しいと言いました", html)
 
 
 class Pickup(unittest.TestCase):

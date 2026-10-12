@@ -6,7 +6,7 @@
  "touch": "loose",
  "title_fmt": "{ja}",
  "subject_en": "Hand-drawn loose-line illustrations of everyday household chores, each ONE person or scene centred in its cell, relaxed warm colours. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
- "lead": "ゴミ出し、分別、せんたく、そうじなど、家の当番の場面12点。町内のおしらせや家族の当番表に。",
+ "lead": "ゴミ出し・分別・洗濯・掃除など、家の当番の場面12点です。町内のお知らせや家庭の当番表に使えます。",
  "tags": [
   "ゴミ出し",
   "ごみ",
@@ -36,22 +36,22 @@
   ],
   [
    "kanbin",
-   "びんと缶",
+   "瓶と缶",
    "a crate of bottles and cans"
   ],
   [
    "sentaku",
-   "せんたく",
+   "洗濯",
    "a person hanging laundry on a line"
   ],
   [
    "souji",
-   "そうじ",
+   "掃除",
    "a person vacuuming a living room"
   ],
   [
    "mado",
-   "まどふき",
+   "窓拭き",
    "a person wiping a window"
   ],
   [
@@ -61,22 +61,22 @@
   ],
   [
    "cook",
-   "夕ごはんの支度",
+   "夕ご飯の支度",
    "a person cooking at the stove"
   ],
   [
    "dishes",
-   "食器あらい",
+   "食器洗い",
    "a person washing dishes"
   ],
   [
    "kids",
-   "お手伝いする子ども",
+   "手伝う子ども",
    "a child helping to set the table"
   ],
   [
    "tonari",
-   "近所へのあいさつ",
+   "近所への挨拶",
    "two neighbours greeting each other in front of houses"
   ]
  ],

@@ -1,12 +1,12 @@
 {
  "slug": "nenga-jimai-flat",
- "title": "年賀状じまい・ごあいさつ",
+ "title": "年賀状じまいの挨拶",
  "subject": "",
  "genre": "season",
  "touch": "flat",
  "title_fmt": "{ja}",
  "subject_en": "Gentle thank-you and farewell-greeting motifs for retiring from New Year cards, each a separate object, simple flat style in calm pastel colours. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters.",
- "lead": "年賀状じまいの挨拶状やシールに添える、感謝の小さなイラスト12点。やさしい色のフラットなタッチで、押しつけがましくない仕上がりです。",
+ "lead": "年賀状じまいの挨拶状やシールに添える、感謝を表す小さなイラスト12点です。落ち着いた色のフラットなタッチです。",
  "tags": [
   "年賀状じまい",
   "ごあいさつ",
@@ -54,7 +54,7 @@
   ],
   [
    "bow",
-   "おじぎ",
+   "お辞儀",
    "a simple bowing person seen from the side, faceless"
   ],
   [
@@ -64,7 +64,7 @@
   ],
   [
    "sunset",
-   "夕やけ",
+   "夕焼け",
    "a calm sunset over a small hill"
   ],
   [
@@ -79,7 +79,7 @@
   ],
   [
    "wave",
-   "手をふる",
+   "手を振る",
    "a hand waving goodbye gently"
   ]
  ],

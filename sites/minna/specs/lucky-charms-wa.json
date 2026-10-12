@@ -1,12 +1,12 @@
 {
  "slug": "lucky-charms-wa",
- "title": "縁起ものと和のこもの",
+ "title": "縁起物と和の小物",
  "subject": "",
  "genre": "eto",
  "touch": "wa",
  "title_fmt": "{ja}",
  "subject_en": "lucky charms and Japanese small goods, each a separate item, wa style Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "招き猫、だるま、お守り、絵馬など、縁起のよい和のモチーフ12点。お正月や商売のお知らせに。",
+ "lead": "招き猫・だるま・お守り・絵馬など、縁起のよい和のモチーフ12点です。お正月や商売のお知らせに使えます。",
  "tags": [
   "縁起物",
   "招き猫",
@@ -46,12 +46,12 @@
   ],
   [
    "crane",
-   "おりづる",
+   "折り鶴",
    "an origami crane"
   ],
   [
    "temari",
-   "てまり",
+   "手まり",
    "a temari ball"
   ],
   [
@@ -71,7 +71,7 @@
   ],
   [
    "lantern",
-   "ちょうちん",
+   "提灯",
    "a paper lantern"
   ],
   [

@@ -6,7 +6,7 @@
  "touch": "picturebook",
  "title_fmt": "{ja}",
  "subject_en": "Picture-book style scenes of autumn reading with original cute animal characters, soft textured colours, warm autumn palette, ONE scene per cell. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
- "lead": "ねこがページをめくる、くまが図書館で本を借りる。読書の秋の場面を、絵本のようなやさしいタッチで12点。図書だよりや読書感想文の案内に。",
+ "lead": "ねこやくまが本を読む場面を、絵本風のやさしいタッチで描いた読書素材です。図書だよりや読書感想文の案内に使えます。",
  "tags": [
   "読書の秋",
   "読書",
@@ -60,12 +60,12 @@
   ],
   [
    "shelf",
-   "本だな",
+   "本棚",
    "a cozy bookshelf with books, a plant and a lamp"
   ],
   [
    "stack",
-   "本のたば",
+   "本の束",
    "a tall stack of books with a bookmark and autumn leaves"
   ],
   [

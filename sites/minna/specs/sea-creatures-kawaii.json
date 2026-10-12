@@ -1,12 +1,12 @@
 {
  "slug": "sea-creatures-kawaii",
- "title": "うみのいきもの",
+ "title": "うみのいきものいろいろ",
  "subject": "",
  "genre": "animals",
  "touch": "kawaii",
  "title_fmt": "{ja}",
  "subject_en": "cute sea animals, one species per picture, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "さかな、たこ、かに、くらげ、イルカなど、海のいきものを12種類。水族館のお知らせや夏のおたよりに。",
+ "lead": "さかな、たこ、かに、くらげ、イルカなどの素材12種類です。水族館のお知らせや夏のおたよりに使えます。",
  "tags": [
   "魚",
   "さかな",
@@ -73,12 +73,12 @@
   ],
   [
    "clownfish",
-   "かくれクマノミふうの魚",
+   "かくれクマノミ風の魚",
    "a cute orange fish with white stripes"
   ],
   [
    "shark",
-   "ちいさなサメ",
+   "小さなサメ",
    "a cute small grey shark with a smile"
   ]
  ],

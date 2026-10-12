@@ -6,7 +6,7 @@
  "touch": "wa",
  "title_fmt": "{ja}",
  "subject_en": "Japanese landmarks drawn as generic motifs (not specific real buildings), each a separate item, wa style Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "富士山、鳥居、五重塔、お城など、日本らしい風景のモチーフ12点。観光案内や和風のデザインに。",
+ "lead": "富士山や鳥居、五重塔、お城など、日本らしい風景のモチーフ12点です。観光案内や和風のデザインに使えます。",
  "tags": [
   "観光",
   "富士山",
@@ -46,7 +46,7 @@
   ],
   [
    "lantern",
-   "石どうろう",
+   "石灯籠",
    "a stone lantern"
   ],
   [

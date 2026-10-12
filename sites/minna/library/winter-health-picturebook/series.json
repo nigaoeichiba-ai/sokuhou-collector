@@ -1,10 +1,10 @@
 {
  "added": "2026-10-09",
  "slug": "winter-health-picturebook",
- "title": "冬の健康・かぜ予防 絵本風",
+ "title": "冬の健康・風邪予防の絵本風イラスト",
  "genre": "school",
  "touch": "picturebook",
- "lead": "手洗い、うがい、マスク、早寝早起き、あたたかい服。保健だよりや園のおたより、教室の掲示に使える、冬の健康のイラスト12点。絵本のようなやさしいタッチ。",
+ "lead": "冬の健康管理や風邪予防を、絵本風のタッチで描いた12点の素材です。保健だよりや教室掲示に使えます。",
  "tags": [
   "健康",
   "かぜ予防",
@@ -28,15 +28,14 @@
   {
    "id": "winter-health-picturebook-handwash",
    "file": "winter-health-picturebook-handwash.webp",
-   "title": "手あらい",
-   "desc": "手あらいのイラスト。絵本風のタッチ。",
+   "title": "手洗い",
+   "desc": "手洗いの絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
-    "冬の健康・かぜ予防 絵本風",
-    "手あらい",
+    "冬の健康・風邪予防の絵本風イラスト",
     "絵本風",
     "学校・保育"
    ],
@@ -47,14 +46,14 @@
    "id": "winter-health-picturebook-gargle",
    "file": "winter-health-picturebook-gargle.webp",
    "title": "うがい",
-   "desc": "うがいのイラスト。絵本風のタッチ。",
+   "desc": "うがいの絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
     "うがい",
-    "冬の健康・かぜ予防 絵本風",
+    "冬の健康・風邪予防の絵本風イラスト",
     "絵本風",
     "学校・保育"
    ],
@@ -65,14 +64,14 @@
    "id": "winter-health-picturebook-mask",
    "file": "winter-health-picturebook-mask.webp",
    "title": "マスク",
-   "desc": "マスクのイラスト。絵本風のタッチ。",
+   "desc": "マスクの絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
     "マスク",
-    "冬の健康・かぜ予防 絵本風",
+    "冬の健康・風邪予防の絵本風イラスト",
     "絵本風",
     "学校・保育"
    ],
@@ -82,15 +81,15 @@
   {
    "id": "winter-health-picturebook-sleep",
    "file": "winter-health-picturebook-sleep.webp",
-   "title": "早ねはやおき",
-   "desc": "早ねはやおきのイラスト。絵本風のタッチ。",
+   "title": "早寝早起き",
+   "desc": "早寝早起きの絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
-    "冬の健康・かぜ予防 絵本風",
-    "早ねはやおき",
+    "冬の健康・風邪予防の絵本風イラスト",
+    "早寝早起き",
     "絵本風",
     "学校・保育"
    ],
@@ -100,15 +99,15 @@
   {
    "id": "winter-health-picturebook-warm-clothes",
    "file": "winter-health-picturebook-warm-clothes.webp",
-   "title": "あたたかい服",
-   "desc": "あたたかい服のイラスト。絵本風のタッチ。",
+   "title": "暖かい服",
+   "desc": "暖かい服の絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
-    "冬の健康・かぜ予防 絵本風",
-    "あたたかい服",
+    "冬の健康・風邪予防の絵本風イラスト",
+    "暖かい服",
     "絵本風",
     "学校・保育"
    ],
@@ -119,13 +118,13 @@
    "id": "winter-health-picturebook-breakfast",
    "file": "winter-health-picturebook-breakfast.webp",
    "title": "朝ごはん",
-   "desc": "朝ごはんのイラスト。絵本風のタッチ。",
+   "desc": "朝ごはんの絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
-    "冬の健康・かぜ予防 絵本風",
+    "冬の健康・風邪予防の絵本風イラスト",
     "朝ごはん",
     "絵本風",
     "学校・保育"
@@ -136,15 +135,15 @@
   {
    "id": "winter-health-picturebook-humidifier",
    "file": "winter-health-picturebook-humidifier.webp",
-   "title": "かしつき",
-   "desc": "かしつきのイラスト。絵本風のタッチ。",
+   "title": "加湿器",
+   "desc": "加湿器の絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
-    "冬の健康・かぜ予防 絵本風",
-    "かしつき",
+    "冬の健康・風邪予防の絵本風イラスト",
+    "加湿器",
     "絵本風",
     "学校・保育"
    ],
@@ -154,15 +153,15 @@
   {
    "id": "winter-health-picturebook-window",
    "file": "winter-health-picturebook-window.webp",
-   "title": "かんき",
-   "desc": "かんきのイラスト。絵本風のタッチ。",
+   "title": "換気",
+   "desc": "換気の絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
-    "冬の健康・かぜ予防 絵本風",
-    "かんき",
+    "冬の健康・風邪予防の絵本風イラスト",
+    "換気",
     "絵本風",
     "学校・保育"
    ],
@@ -173,13 +172,13 @@
    "id": "winter-health-picturebook-thermometer",
    "file": "winter-health-picturebook-thermometer.webp",
    "title": "体温計",
-   "desc": "体温計のイラスト。絵本風のタッチ。",
+   "desc": "体温計の絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
-    "冬の健康・かぜ予防 絵本風",
+    "冬の健康・風邪予防の絵本風イラスト",
     "体温計",
     "絵本風",
     "学校・保育"
@@ -190,15 +189,15 @@
   {
    "id": "winter-health-picturebook-cough",
    "file": "winter-health-picturebook-cough.webp",
-   "title": "せきエチケット",
-   "desc": "せきエチケットのイラスト。絵本風のタッチ。",
+   "title": "咳エチケット",
+   "desc": "咳エチケットの絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
-    "冬の健康・かぜ予防 絵本風",
-    "せきエチケット",
+    "冬の健康・風邪予防の絵本風イラスト",
+    "咳エチケット",
     "絵本風",
     "学校・保育"
    ],
@@ -208,15 +207,15 @@
   {
    "id": "winter-health-picturebook-vaccine",
    "file": "winter-health-picturebook-vaccine.webp",
-   "title": "予防せっしゅ",
-   "desc": "予防せっしゅのイラスト。絵本風のタッチ。",
+   "title": "予防接種",
+   "desc": "予防接種の絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
-    "冬の健康・かぜ予防 絵本風",
-    "予防せっしゅ",
+    "冬の健康・風邪予防の絵本風イラスト",
+    "予防接種",
     "絵本風",
     "学校・保育"
    ],
@@ -226,15 +225,15 @@
   {
    "id": "winter-health-picturebook-rest",
    "file": "winter-health-picturebook-rest.webp",
-   "title": "おうちで休む",
-   "desc": "おうちで休むのイラスト。絵本風のタッチ。",
+   "title": "家で休む",
+   "desc": "家で休むの絵本風イラストです。",
    "tags": [
     "健康",
     "かぜ予防",
     "インフルエンザ",
     "手洗い",
-    "冬の健康・かぜ予防 絵本風",
-    "おうちで休む",
+    "冬の健康・風邪予防の絵本風イラスト",
+    "家で休む",
     "絵本風",
     "学校・保育"
    ],

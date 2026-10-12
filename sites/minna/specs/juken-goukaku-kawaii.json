@@ -6,7 +6,7 @@
  "touch": "kawaii",
  "title_fmt": "{ja}",
  "subject_en": "Exam-season and good-luck items, each a separate object, kawaii soft style, friendly and encouraging, no text Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "鉛筆、絵馬、お守り、桜。受験生をはげますカードやお知らせに使える12点。",
+ "lead": "鉛筆・絵馬・お守り・桜など、受験や合格祈願に使える12点の素材です。応援カードやお知らせに使えます。",
  "tags": [
   "受験",
   "合格",
@@ -23,7 +23,7 @@
  "items": [
   [
    "pencil",
-   "えんぴつ",
+   "鉛筆",
    "a sharpened pencil with a small star on it"
   ],
   [
@@ -53,7 +53,7 @@
   ],
   [
    "clock",
-   "目ざまし時計",
+   "目覚まし時計",
    "a round alarm clock with bells"
   ],
   [
@@ -73,12 +73,12 @@
   ],
   [
    "student",
-   "がんばる子",
+   "頑張る子",
    "a cute child studying at a desk with a determined face"
   ],
   [
    "flag",
-   "合格のはた",
+   "合格の旗",
    "a pennant flag on a pole, blank, with confetti"
   ]
  ],

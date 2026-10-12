@@ -4,7 +4,7 @@
  "title": "ワンポイントシール",
  "genre": "icon",
  "touch": "kawaii",
- "lead": "ハート、星、花、雲など、手帳やカードのワンポイントに使えるシール風のイラスト12点。",
+ "lead": "ハート、星、花、雲などをシール風に描いた素材12点です。手帳、カード、案内物のワンポイントに使えます。",
  "tags": [
   "シール",
   "ステッカー",
@@ -22,7 +22,7 @@
    "id": "stickers-cute-kawaii-heart",
    "file": "stickers-cute-kawaii-heart.webp",
    "title": "ハート",
-   "desc": "ハートのイラスト。ゆるかわのタッチ。",
+   "desc": "ハートのゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",
@@ -39,7 +39,7 @@
    "id": "stickers-cute-kawaii-star",
    "file": "stickers-cute-kawaii-star.webp",
    "title": "星",
-   "desc": "星のイラスト。ゆるかわのタッチ。",
+   "desc": "星のゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",
@@ -56,8 +56,8 @@
   {
    "id": "stickers-cute-kawaii-flower",
    "file": "stickers-cute-kawaii-flower.webp",
-   "title": "お花",
-   "desc": "お花のイラスト。ゆるかわのタッチ。",
+   "title": "花",
+   "desc": "花のゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",
@@ -65,7 +65,6 @@
     "ハート",
     "花",
     "ワンポイントシール",
-    "お花",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -75,15 +74,15 @@
   {
    "id": "stickers-cute-kawaii-cloud",
    "file": "stickers-cute-kawaii-cloud.webp",
-   "title": "くも",
-   "desc": "くものイラスト。ゆるかわのタッチ。",
+   "title": "雲",
+   "desc": "雲のゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",
     "ワンポイント",
     "ハート",
     "ワンポイントシール",
-    "くも",
+    "雲",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -93,15 +92,15 @@
   {
    "id": "stickers-cute-kawaii-rainbow",
    "file": "stickers-cute-kawaii-rainbow.webp",
-   "title": "にじ",
-   "desc": "にじのイラスト。ゆるかわのタッチ。",
+   "title": "虹",
+   "desc": "虹のゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",
     "ワンポイント",
     "ハート",
     "ワンポイントシール",
-    "にじ",
+    "虹",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -112,7 +111,7 @@
    "id": "stickers-cute-kawaii-moon",
    "file": "stickers-cute-kawaii-moon.webp",
    "title": "月",
-   "desc": "月のイラスト。ゆるかわのタッチ。",
+   "desc": "月のゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",
@@ -130,7 +129,7 @@
    "id": "stickers-cute-kawaii-sun",
    "file": "stickers-cute-kawaii-sun.webp",
    "title": "太陽",
-   "desc": "太陽のイラスト。ゆるかわのタッチ。",
+   "desc": "太陽のゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",
@@ -148,7 +147,7 @@
    "id": "stickers-cute-kawaii-clover",
    "file": "stickers-cute-kawaii-clover.webp",
    "title": "四つ葉のクローバー",
-   "desc": "四つ葉のクローバーのイラスト。ゆるかわのタッチ。",
+   "desc": "四つ葉のクローバーのゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",
@@ -166,7 +165,7 @@
    "id": "stickers-cute-kawaii-cherry",
    "file": "stickers-cute-kawaii-cherry.webp",
    "title": "さくらんぼ",
-   "desc": "さくらんぼのイラスト。ゆるかわのタッチ。",
+   "desc": "さくらんぼのゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",
@@ -184,7 +183,7 @@
    "id": "stickers-cute-kawaii-ribbon",
    "file": "stickers-cute-kawaii-ribbon.webp",
    "title": "リボン",
-   "desc": "リボンのイラスト。ゆるかわのタッチ。",
+   "desc": "リボンのゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",
@@ -202,7 +201,7 @@
    "id": "stickers-cute-kawaii-sparkle",
    "file": "stickers-cute-kawaii-sparkle.webp",
    "title": "キラキラ",
-   "desc": "キラキラのイラスト。ゆるかわのタッチ。",
+   "desc": "キラキラのゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",
@@ -220,7 +219,7 @@
    "id": "stickers-cute-kawaii-drop",
    "file": "stickers-cute-kawaii-drop.webp",
    "title": "しずく",
-   "desc": "しずくのイラスト。ゆるかわのタッチ。",
+   "desc": "しずくのゆるかわイラストです。",
    "tags": [
     "シール",
     "ステッカー",

@@ -4,7 +4,7 @@
  "title": "梅雨のイラスト",
  "genre": "season",
  "touch": "kawaii",
- "lead": "かえる、かたつむり、てるてる坊主、あじさい。雨の日が楽しくなる、梅雨のイラスト12点。",
+ "lead": "かえる・かたつむり・てるてる坊主・あじさいを描いた梅雨の季節素材です。雨の日のお知らせや季節の掲示に使えます。",
  "tags": [
   "梅雨",
   "雨",
@@ -25,15 +25,16 @@
   {
    "id": "rainy-season-kawaii-frog-umbrella",
    "file": "rainy-season-kawaii-frog-umbrella.webp",
-   "title": "かさをさすかえる",
-   "desc": "かさをさすかえるのイラスト。ゆるかわのタッチ。",
+   "title": "傘を差すかえる",
+   "desc": "傘を差すかえるのゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
     "かえる",
     "かたつむり",
+    "傘",
     "梅雨のイラスト",
-    "かさをさすかえる",
+    "傘を差すかえる",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -44,7 +45,7 @@
    "id": "rainy-season-kawaii-snail",
    "file": "rainy-season-kawaii-snail.webp",
    "title": "かたつむり",
-   "desc": "かたつむりのイラスト。ゆるかわのタッチ。",
+   "desc": "かたつむりのゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
@@ -61,7 +62,7 @@
    "id": "rainy-season-kawaii-teruteru",
    "file": "rainy-season-kawaii-teruteru.webp",
    "title": "てるてる坊主",
-   "desc": "てるてる坊主のイラスト。ゆるかわのタッチ。",
+   "desc": "てるてる坊主のゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
@@ -79,7 +80,7 @@
    "id": "rainy-season-kawaii-hydrangea",
    "file": "rainy-season-kawaii-hydrangea.webp",
    "title": "あじさい",
-   "desc": "あじさいのイラスト。ゆるかわのタッチ。",
+   "desc": "あじさいのゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
@@ -96,15 +97,16 @@
   {
    "id": "rainy-season-kawaii-umbrella",
    "file": "rainy-season-kawaii-umbrella.webp",
-   "title": "赤いかさ",
-   "desc": "赤いかさのイラスト。ゆるかわのタッチ。",
+   "title": "赤い傘",
+   "desc": "赤い傘のゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
     "かえる",
     "かたつむり",
+    "傘",
     "梅雨のイラスト",
-    "赤いかさ",
+    "赤い傘",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -114,15 +116,15 @@
   {
    "id": "rainy-season-kawaii-boots",
    "file": "rainy-season-kawaii-boots.webp",
-   "title": "ながぐつ",
-   "desc": "ながぐつのイラスト。ゆるかわのタッチ。",
+   "title": "長靴",
+   "desc": "長靴のゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
     "かえる",
     "かたつむり",
     "梅雨のイラスト",
-    "ながぐつ",
+    "長靴",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -133,7 +135,7 @@
    "id": "rainy-season-kawaii-raincoat",
    "file": "rainy-season-kawaii-raincoat.webp",
    "title": "レインコートのひよこ",
-   "desc": "レインコートのひよこのイラスト。ゆるかわのタッチ。",
+   "desc": "レインコートのひよこのゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
@@ -151,7 +153,7 @@
    "id": "rainy-season-kawaii-cloud",
    "file": "rainy-season-kawaii-cloud.webp",
    "title": "雨雲",
-   "desc": "雨雲のイラスト。ゆるかわのタッチ。",
+   "desc": "雨雲のゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
@@ -168,15 +170,16 @@
   {
    "id": "rainy-season-kawaii-cat",
    "file": "rainy-season-kawaii-cat.webp",
-   "title": "かさをもつねこ",
-   "desc": "かさをもつねこのイラスト。ゆるかわのタッチ。",
+   "title": "傘を持つねこ",
+   "desc": "傘を持つねこのゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
     "かえる",
     "かたつむり",
+    "傘",
     "梅雨のイラスト",
-    "かさをもつねこ",
+    "傘を持つねこ",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -187,7 +190,7 @@
    "id": "rainy-season-kawaii-puddle",
    "file": "rainy-season-kawaii-puddle.webp",
    "title": "水たまり",
-   "desc": "水たまりのイラスト。ゆるかわのタッチ。",
+   "desc": "水たまりのゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
@@ -204,15 +207,15 @@
   {
    "id": "rainy-season-kawaii-rainbow",
    "file": "rainy-season-kawaii-rainbow.webp",
-   "title": "雨あがりの虹",
-   "desc": "雨あがりの虹のイラスト。ゆるかわのタッチ。",
+   "title": "雨上がりの虹",
+   "desc": "雨上がりの虹のゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
     "かえる",
     "かたつむり",
     "梅雨のイラスト",
-    "雨あがりの虹",
+    "雨上がりの虹",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -222,15 +225,15 @@
   {
    "id": "rainy-season-kawaii-duck",
    "file": "rainy-season-kawaii-duck.webp",
-   "title": "あひるの雨あそび",
-   "desc": "あひるの雨あそびのイラスト。ゆるかわのタッチ。",
+   "title": "あひるの雨遊び",
+   "desc": "あひるの雨遊びのゆるかわイラストです。",
    "tags": [
     "梅雨",
     "雨",
     "かえる",
     "かたつむり",
     "梅雨のイラスト",
-    "あひるの雨あそび",
+    "あひるの雨遊び",
     "ゆるかわ",
     "季節・行事"
    ],

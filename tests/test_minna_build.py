@@ -49,7 +49,7 @@ class MinnaBuildTest(unittest.TestCase):
             self.assertGreaterEqual(len({i["series"] for i in users}), 2)
             self.assertNotIn(" ", tag)
             html = self.read(build.tag_url(tag).strip("/") + "/index.html")
-            self.assertIn(f"{len(users)}点あつめました", html)
+            self.assertIn(f"{len(users)}点集めました", html)
             self.assertIn("<h1>「" + tag + "」のイラスト</h1>", html)
         for rare in ("イラスト", "かわいい"):
             self.assertNotIn(rare, tags)
@@ -79,11 +79,15 @@ class MinnaBuildTest(unittest.TestCase):
         self.assertEqual(im.mode, "RGBA")
         self.assertLess(im.getpixel((0, 0))[3], 255)       # the corner is transparent
 
-    def test_detail_page_has_downloads_licence_ai_note_and_image_markup(self):
+    def test_detail_page_has_downloads_licence_and_image_markup_and_does_not_shout_about_ai(self):
         html = self.read("illust/season-christmas/index.html")
-        for needle in ('download="season-christmas.png"', "ずっと無料・商用OK・クレジット不要", "AIで生成し、人が選んで、整えたもの", '"@type": "ImageObject"',
+        for needle in ('download="season-christmas.png"', "ずっと無料・商用OK・クレジット不要", '"@type": "ImageObject"',
                        '"license": "https://minna-no-illust.com/license/"', "/files/season-christmas.png", 'class="bgsw"'):
             self.assertIn(needle, html)
+        # owner decision 2026-10-12: the AI explanation is on the licence page (and the about/privacy sources), not on every picture and not in the footer
+        for gone in ("ai-note", "AIで生成し", "生成AI"):
+            self.assertNotIn(gone, html)
+        self.assertIn("生成AIで制作", self.read("license/index.html"))
 
     def test_the_indexnow_key_file_is_published_at_the_site_root(self):
         self.assertIn("0123456789abcdef0123456789abcdef.txt", self.files)

@@ -4,7 +4,7 @@
  "title": "昭和の理容師のポーズ集",
  "genre": "people",
  "touch": "retro",
- "lead": "昭和の理容師のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "lead": "昭和の理容師の仕事場面をレトロなタッチで描いた12点です。店舗案内やチラシ、接客資料に使えます。",
  "tags": [
   "人物",
   "イラスト",
@@ -22,8 +22,8 @@
   {
    "id": "barber-retro-01-holding-scissors-up",
    "file": "barber-retro-01-holding-scissors-up.webp",
-   "title": "はさみで切る(昭和の理容師)",
-   "desc": "はさみで切る(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "title": "ハサミで切る(昭和の理容師)",
+   "desc": "ハサミで切る(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -33,7 +33,7 @@
     "昭和",
     "レトロ",
     "商店街",
-    "はさみで切る",
+    "ハサミで切る",
     "昭和レトロ"
    ],
    "w": 318,
@@ -42,8 +42,8 @@
   {
    "id": "barber-retro-02-holding-comb-up",
    "file": "barber-retro-02-holding-comb-up.webp",
-   "title": "くしでとかす(昭和の理容師)",
-   "desc": "くしでとかす(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "title": "櫛でとかす(昭和の理容師)",
+   "desc": "櫛でとかす(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -53,7 +53,7 @@
     "昭和",
     "レトロ",
     "商店街",
-    "くしでとかす",
+    "櫛でとかす",
     "昭和レトロ"
    ],
    "w": 274,
@@ -63,7 +63,7 @@
    "id": "barber-retro-03-holding-hair-dryer",
    "file": "barber-retro-03-holding-hair-dryer.webp",
    "title": "ドライヤー(昭和の理容師)",
-   "desc": "ドライヤー(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "desc": "ドライヤー(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -83,7 +83,7 @@
    "id": "barber-retro-04-smiling-arms-open",
    "file": "barber-retro-04-smiling-arms-open.webp",
    "title": "笑顔で迎える(昭和の理容師)",
-   "desc": "笑顔で迎える(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "desc": "笑顔で迎える(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -103,7 +103,7 @@
    "id": "barber-retro-05-bowing-politely",
    "file": "barber-retro-05-bowing-politely.webp",
    "title": "お辞儀(昭和の理容師)",
-   "desc": "お辞儀(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "desc": "お辞儀(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -123,7 +123,7 @@
    "id": "barber-retro-06-holding-mirror",
    "file": "barber-retro-06-holding-mirror.webp",
    "title": "手鏡を持つ(昭和の理容師)",
-   "desc": "手鏡を持つ(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "desc": "手鏡を持つ(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -143,7 +143,7 @@
    "id": "barber-retro-07-hips-proud-pose",
    "file": "barber-retro-07-hips-proud-pose.webp",
    "title": "ポーズを決める(昭和の理容師)",
-   "desc": "ポーズを決める(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "desc": "ポーズを決める(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -163,7 +163,7 @@
    "id": "barber-retro-08-holding-out-folded",
    "file": "barber-retro-08-holding-out-folded.webp",
    "title": "タオルを渡す(昭和の理容師)",
-   "desc": "タオルを渡す(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "desc": "タオルを渡す(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -183,7 +183,7 @@
    "id": "barber-retro-09-sweeping-broom",
    "file": "barber-retro-09-sweeping-broom.webp",
    "title": "ほうきで掃除(昭和の理容師)",
-   "desc": "ほうきで掃除(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "desc": "ほうきで掃除(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -203,7 +203,7 @@
    "id": "barber-retro-10-thinking-finger-chin",
    "file": "barber-retro-10-thinking-finger-chin.webp",
    "title": "考える(昭和の理容師)",
-   "desc": "考える(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "desc": "考える(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -223,7 +223,7 @@
    "id": "barber-retro-11-talking-black-rotary",
    "file": "barber-retro-11-talking-black-rotary.webp",
    "title": "電話(昭和の理容師)",
-   "desc": "電話(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "desc": "電話(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -242,8 +242,8 @@
   {
    "id": "barber-retro-12-arms-crossed-smug",
    "file": "barber-retro-12-arms-crossed-smug.webp",
-   "title": "腕組みでドヤ顔(昭和の理容師)",
-   "desc": "腕組みでドヤ顔(昭和の理容師)のイラスト。昭和レトロのタッチ。",
+   "title": "腕組みで得意顔(昭和の理容師)",
+   "desc": "腕組みで得意顔(昭和の理容師)の昭和レトロイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -253,7 +253,7 @@
     "昭和",
     "レトロ",
     "商店街",
-    "腕組みでドヤ顔",
+    "腕組みで得意顔",
     "昭和レトロ"
    ],
    "w": 229,

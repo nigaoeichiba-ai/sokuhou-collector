@@ -34,6 +34,7 @@ async function load(url) {
     const px = ctx.getImageData(5, 5, 1, 1).data; out.corner = [px[0], px[1], px[2]];                    // the chosen colour
     const mid = ctx.getImageData(540, 700, 1, 1).data; out.has_character = !(mid[0] === 255 && mid[1] === 214 && mid[2] === 224);
     out.size = [c.width, c.height];
+    w.HTMLAnchorElement.prototype.click = function () {};                                                // the save button also starts a file download: not in a test (it hangs headless Chrome and fills the Downloads folder)
     d.querySelector('[data-save]').click(); await wait(1500);
     const img = d.querySelector('.card-img'); out.saved_visible = !img.hidden; out.saved_src = img.src.slice(0, 22);
     f = await load('/illust/season-christmas/'); d = f.contentDocument;

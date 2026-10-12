@@ -15,7 +15,7 @@
     });
   }
 
-  var TITLES = { birthday: "おたんじょうび おめでとう", thanks: "いつも ありがとう", congrats: "おめでとう", cheer: "おうえん してるよ", newyear: "あけまして おめでとう" };
+  var TITLES = { birthday: "お誕生日おめでとう", thanks: "いつもありがとうございます", congrats: "おめでとうございます", cheer: "応援しています", newyear: "あけましておめでとうございます" };
   var imgCache = {};
   function loadImg(src) {
     return new Promise(function (resolve) {
@@ -225,7 +225,7 @@
     loadAssist().then(function (d) {
       var pg = pagesFor(words, idx, d.pages); if (!pg.length || $("#search-pages")) return;
       var box = document.createElement("div"); box.id = "search-pages"; box.className = "miss";
-      box.innerHTML = "<p><b>こんなページも、あります</b></p><ul class=\"as-links\">" + pg.map(function (p) { return '<li><a href="' + esc(safeLocal(p.u)) + '">' + esc(p.n) + "</a><small>" + esc(p.t || "") + "</small></li>"; }).join("") + "</ul>";
+      box.innerHTML = "<p><b>関連ページがあります</b></p><ul class=\"as-links\">" + pg.map(function (p) { return '<li><a href="' + esc(safeLocal(p.u)) + '">' + esc(p.n) + "</a><small>" + esc(p.t || "") + "</small></li>"; }).join("") + "</ul>";
       list.parentNode.insertBefore(box, list);
     });
   }
@@ -250,11 +250,11 @@
         var om = $("#search-miss"); if (om) om.remove();
         showPages(list, res.words, synIdx);
         var chips = $("#search-chips"); if (chips) chips.hidden = !!(res.words.length || g.value || t.value);
-        if (!res.words.length && !g.value && !t.value) { hits = []; status.textContent = "キーワードを入れてください。ひらがな・カタカナ・似た言い方(塗り絵とぬりえ など)は、どちらでも見つかります。"; list.innerHTML = ""; more.hidden = true; return; }
+        if (!res.words.length && !g.value && !t.value) { hits = []; status.textContent = "キーワードを入力してください。ひらがな・カタカナ・似た言い方(塗り絵とぬりえ など)は、どちらでも検索できます。"; list.innerHTML = ""; more.hidden = true; return; }
         var sug = res.suggest.length ? ' もしかして: ' + res.suggest.map(function (s) { return '<a href="/search/?q=' + encodeURIComponent(s) + '">' + esc(s) + "</a>"; }).join("、") + "?" : "";
-        if (res.exact.length) { hits = res.exact; status.innerHTML = hits.length + "点、見つかりました。" + sug; }
-        else if (res.near.length) { hits = res.near; status.innerHTML = "ぴったりの絵は、ありませんでした。近いものを、" + Math.min(hits.length, 120) + "点、出しました。" + sug; }
-        else { hits = []; status.innerHTML = "見つかりませんでした。ほかの言葉で、さがしてみてください。" + sug; }
+        if (res.exact.length) { hits = res.exact; status.innerHTML = hits.length + "点見つかりました。" + sug; }
+        else if (res.near.length) { hits = res.near; status.innerHTML = "完全に一致するイラストはありませんでした。近い候補を" + Math.min(hits.length, 120) + "点表示します。" + sug; }
+        else { hits = []; status.innerHTML = "見つかりませんでした。別の言葉で検索してください。" + sug; }
         draw(true);
         if (!res.exact.length && res.words.length) showMiss(list, q.value);
       });
@@ -271,7 +271,7 @@
     loadIndex().then(function (rows) {
       var f = favs(), by = {}; rows.forEach(function (r) { by[r[0]] = r; });
       var hits = f.map(function (id) { return by[id]; }).filter(Boolean);
-      status.textContent = hits.length ? hits.length + "点、お気に入りに入っています。" : "まだ、お気に入りはありません。イラストの♡を押すと、ここに並びます。";
+      status.textContent = hits.length ? hits.length + "点がお気に入りに入っています。" : "お気に入りはまだありません。イラストの♡を押すとここに追加されます。";
       list.innerHTML = hits.map(cardHtml).join(""); paintFavs();
     });
   }
@@ -300,14 +300,14 @@
           var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = box.getAttribute("data-name") + (o.size === "orig" ? "" : "-" + o.size) + "." + (o.fmt === "jpg" ? "jpg" : "png");
           document.body.appendChild(a); a.click(); a.remove(); msg.textContent = "保存しました。";
         }, type, 0.92);
-      }).catch(function () { msg.textContent = "保存できませんでした。ダウンロードのボタンを、お使いください。"; });
+      }).catch(function () { msg.textContent = "保存できませんでした。ダウンロードボタンを使用してください。"; });
     });
     $("[data-copy]", box).addEventListener("click", function () {
       var o = opts();
-      if (!navigator.clipboard || !window.ClipboardItem) { msg.textContent = "このブラウザでは、コピーできません。保存を、お使いください。"; return; }
+      if (!navigator.clipboard || !window.ClipboardItem) { msg.textContent = "このブラウザではコピーできません。保存を使用してください。"; return; }
       loadImage(box.getAttribute("data-src")).then(function (im) {
         render(im, { fmt: "png", bg: o.bg, size: o.size }).toBlob(function (b) {
-          navigator.clipboard.write([new ClipboardItem({ "image/png": b })]).then(function () { msg.textContent = "コピーしました。貼りつけて、使えます。"; }, function () { msg.textContent = "コピーできませんでした。"; });
+          navigator.clipboard.write([new ClipboardItem({ "image/png": b })]).then(function () { msg.textContent = "コピーしました。貼り付けて使えます。"; }, function () { msg.textContent = "コピーできませんでした。"; });
         }, "image/png");
       });
     });
@@ -336,12 +336,12 @@
   function initZip() {
     $$("[data-zip]").forEach(function (b) {
       b.addEventListener("click", function () {
-        var urls = JSON.parse(b.getAttribute("data-files")), label = b.textContent; b.disabled = true; b.textContent = "まとめています…";
+        var urls = JSON.parse(b.getAttribute("data-files")), label = b.textContent; b.disabled = true; b.textContent = "準備しています…";
         Promise.all(urls.map(function (u) { return fetch(u).then(function (r) { return r.arrayBuffer(); }).then(function (a) { return { name: u.split("/").pop(), data: new Uint8Array(a) }; }); }))
           .then(function (files) {
             var a = document.createElement("a"); a.href = URL.createObjectURL(zip(files)); a.download = b.getAttribute("data-name") + ".zip"; document.body.appendChild(a); a.click(); a.remove();
             b.textContent = "保存しました"; setTimeout(function () { b.textContent = label; b.disabled = false; }, 2500);
-          }).catch(function () { b.textContent = "うまく、まとめられませんでした"; setTimeout(function () { b.textContent = label; b.disabled = false; }, 2500); });
+          }).catch(function () { b.textContent = "まとめて保存できませんでした"; setTimeout(function () { b.textContent = label; b.disabled = false; }, 2500); });
       });
     });
   }
@@ -359,7 +359,7 @@
   function safeSlug(s) { s = String(s || ""); return /^[a-z0-9][a-z0-9-]*$/.test(s) ? s : ""; }
   function refuseW(rules, text) { // "" when the wish may be sent, else the sentence to show (the same rules as api/q.php)
     var w = String(text || "").replace(/[\u0000-\u001f\u007f<>"'&\\]/g, "").trim();
-    if (w.length < rules.min || w.length > rules.max) return rules.min + "〜" + rules.max + "文字で、書いてください。";
+    if (w.length < rules.min || w.length > rules.max) return rules.min + "〜" + rules.max + "文字で入力してください。";
     var f = flatW(w), fk = flatK(w), i, j, g;
     for (i = 0; i < rules.groups.length; i++) { g = rules.groups[i]; for (j = 0; j < g.terms.length; j++) { if (g.terms[j] && f.indexOf(g.terms[j]) >= 0) return rules.reasons[g.k] + "。"; } }
     for (i = 0; i < rules.personal.length; i++) { try { if (new RegExp(rules.personal[i], "i").test(fk)) return rules.reasons.personal + "。"; } catch (e) { /* a pattern this browser cannot read: the server still checks */ } }
@@ -369,16 +369,16 @@
   function saveWish(w) {
     try { var a = myWishes().filter(function (x) { return x.w !== w; }); a.unshift({ w: w, at: new Date().toISOString().slice(0, 10) }); localStorage.setItem(REQ_KEY, JSON.stringify(a.slice(0, 20))); } catch (e) { /* private window: the request itself still works */ }
   }
-  var SEND_ERR = { rate: "きょうは、たくさん送っていただきました。あしたまた、お願いします。", full: "いま、受け付けが、たてこんでいます。すこし、まってください。" };
+  var SEND_ERR = { rate: "本日は送信数が上限に達しました。明日もう一度お願いします。", full: "現在受付が混み合っています。少し時間を置いてください。" };
   function sendWish(payload) { // -> { ok, msg }
     return fetch("/api/q.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.assign({ v: 1 }, payload)) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok === true, err: d.error || "" }; }); })
       .catch(function () { return { ok: false, err: "net" }; })
       .then(function (res) {
-        if (res.ok) return { ok: true, msg: "受け付けました。ありがとうございます。つくれるものは、順番に描いて、公開します(お約束は、できません)。" };
+        if (res.ok) return { ok: true, msg: "受け付けました。ありがとうございます。作成できるものは順番に制作し公開します(公開をお約束するものではありません)。" };
         return loadRules().then(function (rules) {
           var why = rules && rules.reasons && rules.reasons[res.err];
-          return { ok: false, msg: why ? why + "。" : (SEND_ERR[res.err] || "いま、送れませんでした。しばらくして、もう一度、お願いします。") };
+          return { ok: false, msg: why ? why + "。" : (SEND_ERR[res.err] || "現在送信できません。時間を置いてもう一度お願いします。") };
         });
       });
   }
@@ -407,12 +407,12 @@
     try { done = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { done = []; }
     $$("[data-plus]").forEach(function (b) {
       var t = b.getAttribute("data-plus");
-      if (done.indexOf(t) >= 0) { b.disabled = true; b.textContent = "ありがとう"; return; }
+      if (done.indexOf(t) >= 0) { b.disabled = true; b.textContent = "受付済み"; return; }
       b.addEventListener("click", function () {
         b.disabled = true;
         sendWish({ w: t, s: "plus" }).then(function (r) {
-          if (r.ok) { b.textContent = "ありがとう"; done.push(t); try { localStorage.setItem(KEY, JSON.stringify(done.slice(-50))); } catch (e) { /* private window */ } }
-          else { b.disabled = false; b.textContent = "あとで、もう一度"; }
+          if (r.ok) { b.textContent = "受付済み"; done.push(t); try { localStorage.setItem(KEY, JSON.stringify(done.slice(-50))); } catch (e) { /* private window */ } }
+          else { b.disabled = false; b.textContent = "後でもう一度"; }
         });
       });
     });
@@ -427,7 +427,7 @@
       e.preventDefault(); msg.className = "req-msg"; msg.textContent = "";
       var wish = input.value.trim();
       loadRules().then(function (rules) {
-        var why = rules ? refuseW(rules, wish) : (wish.length < 2 ? "2文字以上で、書いてください。" : "");
+        var why = rules ? refuseW(rules, wish) : (wish.length < 2 ? "2文字以上で入力してください。" : "");
         if (why) { msg.className = "req-msg bad"; msg.textContent = why; return; }
         btn.disabled = true;
         return sendWish({ w: wish, u: $('[name="u"]', form).value, t: $('[name="t"]', form).value, s: "form" }).then(function (r) {
@@ -442,8 +442,8 @@
     var old = $("#search-miss"); if (old) old.remove();
     var w = String(text || "").trim(); if (!w) return;
     var box = document.createElement("div"); box.id = "search-miss"; box.className = "miss";
-    box.innerHTML = "<p><b>「" + esc(w) + "」</b>の絵は、まだ、ありません。</p><p>つくってほしいときは、リクエストを送れます(送るのは、この言葉だけです)。</p>" +
-      '<p><button type="button" class="btn" data-miss>この絵を、リクエストする</button> <a href="/request/?w=' + encodeURIComponent(w.slice(0, 60)) + '">くわしく書く</a></p><p class="req-msg" role="status" aria-live="polite"></p>';
+    box.innerHTML = "<p><b>「" + esc(w) + "」</b>のイラストはまだありません。</p><p>必要な場合はリクエストを送信できます(送信するのはこの言葉だけです)。</p>" +
+      '<p><button type="button" class="btn" data-miss>このイラストをリクエストする</button> <a href="/request/?w=' + encodeURIComponent(w.slice(0, 60)) + '">詳しく書く</a></p><p class="req-msg" role="status" aria-live="polite"></p>';
     list.parentNode.insertBefore(box, list);
     var b = $("[data-miss]", box), m = $(".req-msg", box);
     b.addEventListener("click", function () {
@@ -464,7 +464,7 @@
       if (window.minnaAssist) { window.minnaAssist.toggle(); return; }
       b.disabled = true; var sc = document.createElement("script"); sc.src = b.getAttribute("data-src");
       sc.onload = function () { b.disabled = false; window.minnaAssist.toggle(); };
-      sc.onerror = function () { b.disabled = false; b.textContent = "いま、ひらけません"; };
+      sc.onerror = function () { b.disabled = false; b.textContent = "現在開けません"; };
       document.head.appendChild(sc);
     });
   }

@@ -4,7 +4,7 @@
  "title": "お月見のイラスト",
  "genre": "season",
  "touch": "kawaii",
- "lead": "お月見だんご、ススキ、満月、月を見るうさぎ。十五夜のお知らせや、秋の飾りにぴったりのイラスト12点です。",
+ "lead": "お月見だんご・ススキ・満月・月を見るうさぎを描いた秋の行事素材です。十五夜のお知らせや季節の飾りに使えます。",
  "tags": [
   "お月見",
   "十五夜",
@@ -25,15 +25,15 @@
   {
    "id": "otsukimi-kawaii-moon",
    "file": "otsukimi-kawaii-moon.webp",
-   "title": "まんまるの月",
-   "desc": "まんまるの月のイラスト。ゆるかわのタッチ。",
+   "title": "丸い月",
+   "desc": "丸い月のゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",
     "月",
     "うさぎ",
     "お月見のイラスト",
-    "まんまるの月",
+    "丸い月",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -44,7 +44,7 @@
    "id": "otsukimi-kawaii-dango",
    "file": "otsukimi-kawaii-dango.webp",
    "title": "お月見だんご",
-   "desc": "お月見だんごのイラスト。ゆるかわのタッチ。",
+   "desc": "お月見だんごのゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",
@@ -62,8 +62,8 @@
   {
    "id": "otsukimi-kawaii-susuki",
    "file": "otsukimi-kawaii-susuki.webp",
-   "title": "ススキと花びん",
-   "desc": "ススキと花びんのイラスト。ゆるかわのタッチ。",
+   "title": "ススキと花瓶",
+   "desc": "ススキと花瓶のゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",
@@ -71,7 +71,7 @@
     "うさぎ",
     "ススキ",
     "お月見のイラスト",
-    "ススキと花びん",
+    "ススキと花瓶",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -82,7 +82,7 @@
    "id": "otsukimi-kawaii-rabbit-look",
    "file": "otsukimi-kawaii-rabbit-look.webp",
    "title": "月を見るうさぎ",
-   "desc": "月を見るうさぎのイラスト。ゆるかわのタッチ。",
+   "desc": "月を見るうさぎのゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",
@@ -100,7 +100,7 @@
    "id": "otsukimi-kawaii-rabbit-mochi",
    "file": "otsukimi-kawaii-rabbit-mochi.webp",
    "title": "もちをつくうさぎ",
-   "desc": "もちをつくうさぎのイラスト。ゆるかわのタッチ。",
+   "desc": "もちをつくうさぎのゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",
@@ -118,7 +118,7 @@
    "id": "otsukimi-kawaii-rabbit-dango",
    "file": "otsukimi-kawaii-rabbit-dango.webp",
    "title": "だんごを食べるうさぎ",
-   "desc": "だんごを食べるうさぎのイラスト。ゆるかわのタッチ。",
+   "desc": "だんごを食べるうさぎのゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",
@@ -137,7 +137,7 @@
    "id": "otsukimi-kawaii-crescent",
    "file": "otsukimi-kawaii-crescent.webp",
    "title": "三日月",
-   "desc": "三日月のイラスト。ゆるかわのタッチ。",
+   "desc": "三日月のゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",
@@ -155,7 +155,7 @@
    "id": "otsukimi-kawaii-tea",
    "file": "otsukimi-kawaii-tea.webp",
    "title": "おだんごとお茶",
-   "desc": "おだんごとお茶のイラスト。ゆるかわのタッチ。",
+   "desc": "おだんごとお茶のゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",
@@ -174,7 +174,7 @@
    "id": "otsukimi-kawaii-cloud",
    "file": "otsukimi-kawaii-cloud.webp",
    "title": "月と雲",
-   "desc": "月と雲のイラスト。ゆるかわのタッチ。",
+   "desc": "月と雲のゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",
@@ -191,15 +191,15 @@
   {
    "id": "otsukimi-kawaii-lantern",
    "file": "otsukimi-kawaii-lantern.webp",
-   "title": "ちょうちん",
-   "desc": "ちょうちんのイラスト。ゆるかわのタッチ。",
+   "title": "提灯",
+   "desc": "提灯のゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",
     "月",
     "うさぎ",
     "お月見のイラスト",
-    "ちょうちん",
+    "提灯",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -210,7 +210,7 @@
    "id": "otsukimi-kawaii-sweets",
    "file": "otsukimi-kawaii-sweets.webp",
    "title": "栗と芋のおかし",
-   "desc": "栗と芋のおかしのイラスト。ゆるかわのタッチ。",
+   "desc": "栗と芋のおかしのゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",
@@ -228,7 +228,7 @@
    "id": "otsukimi-kawaii-rabbits-two",
    "file": "otsukimi-kawaii-rabbits-two.webp",
    "title": "月見をするうさぎ",
-   "desc": "月見をするうさぎのイラスト。ゆるかわのタッチ。",
+   "desc": "月見をするうさぎのゆるかわイラストです。",
    "tags": [
     "お月見",
     "十五夜",

@@ -6,7 +6,7 @@
  "touch": "kawaii",
  "title_fmt": "{ja}",
  "subject_en": "cute original dinosaurs inspired by famous species, friendly smiles, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "ティラノサウルスふう、トリケラトプスふうなど、かわいい恐竜12種類。子ども向けの掲示に。",
+ "lead": "ティラノサウルス風、トリケラトプス風などの恐竜12種類です。掲示物や学習資料に使えます。",
  "tags": [
   "恐竜",
   "きょうりゅう",
@@ -20,42 +20,42 @@
  "items": [
   [
    "trex",
-   "ティラノサウルスふう",
+   "ティラノサウルス風",
    "a cute tyrannosaur-like dinosaur"
   ],
   [
    "tricera",
-   "トリケラトプスふう",
+   "トリケラトプス風",
    "a cute three-horned dinosaur"
   ],
   [
    "stego",
-   "ステゴサウルスふう",
+   "ステゴサウルス風",
    "a cute plated dinosaur"
   ],
   [
    "bronto",
-   "ブラキオサウルスふう",
+   "ブラキオサウルス風",
    "a cute long-necked dinosaur"
   ],
   [
    "ptera",
-   "プテラノドンふう",
+   "プテラノドン風",
    "a cute flying reptile with wings"
   ],
   [
    "ankylo",
-   "アンキロサウルスふう",
+   "アンキロサウルス風",
    "a cute armoured dinosaur"
   ],
   [
    "raptor",
-   "ラプトルふう",
+   "ラプトル風",
    "a cute small feathered dinosaur"
   ],
   [
    "egg",
-   "たまごから生まれる",
+   "卵から生まれる",
    "a baby dinosaur hatching from an egg"
   ],
   [
@@ -65,7 +65,7 @@
   ],
   [
    "footprint",
-   "あしあと",
+   "足跡",
    "dinosaur footprints"
   ],
   [
@@ -75,7 +75,7 @@
   ],
   [
    "plesio",
-   "海のきょうりゅうふう",
+   "海のきょうりゅう風",
    "a cute long-necked sea reptile"
   ]
  ],

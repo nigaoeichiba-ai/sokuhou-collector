@@ -5,7 +5,7 @@
  "genre": "eto",
  "touch": "kawaii",
  "subject_en": "the SAME sheep character (kawaii mascot): a super-fluffy cloud-like cream-white wool body made of big scallops, a small round face in soft peach-beige, tiny curled tan horns and little dark-brown hooves, wearing a small red-and-gold haori jacket for New Year",
- "lead": "2027年(令和9年)の干支は未(ひつじ)。ふわふわのひつじが、お正月の行事や遊びを楽しむ12のイラストです。年賀状・LINEのあけおめ・お知らせのカードに、そのまま使えます。",
+ "lead": "2027年(令和9年)の干支、未(ひつじ)をお正月行事と遊びで描いた12点です。年賀状や新春のお知らせに使えます。",
  "tags": [
   "未年",
   "ひつじ",
@@ -25,7 +25,7 @@
  "items": [
   [
    "bow",
-   "あいさつするひつじ(年賀状)",
+   "挨拶するひつじ(年賀状)",
    "bowing politely with hands together in greeting, holding nothing, cheerful closed eyes"
   ],
   [
@@ -35,12 +35,12 @@
   ],
   [
    "hagoita",
-   "羽子板をもつひつじ",
+   "羽子板を持つひつじ",
    "holding a decorative battledore paddle (hagoita) with a plain blank design and a shuttlecock"
   ],
   [
    "kagami",
-   "鏡もちをかかえるひつじ",
+   "鏡もちを抱えるひつじ",
    "hugging a big kagami-mochi (two stacked round rice cakes with a small orange on top) with a delighted face"
   ],
   [
@@ -50,7 +50,7 @@
   ],
   [
    "hamaya",
-   "破魔矢をもつひつじ",
+   "破魔矢を持つひつじ",
    "holding a hamaya (shrine arrow with small bell) and an omamori charm, serious but cute face"
   ],
   [
@@ -70,17 +70,17 @@
   ],
   [
    "daruma",
-   "だるまをもつひつじ",
+   "だるまを持つひつじ",
    "holding a red daruma doll with one eye painted, determined cheerful face"
   ],
   [
    "fukubukuro",
-   "福袋をもつひつじ",
+   "福袋を持つひつじ",
    "carrying a big colourful lucky bag (fukubukuro) over the shoulder, sparkling eyes"
   ],
   [
    "otoshidama",
-   "お年玉をわたすひつじ",
+   "お年玉を渡すひつじ",
    "holding out a small decorative red envelope (pochibukuro, no text) with both hands, kind smile"
   ]
  ],

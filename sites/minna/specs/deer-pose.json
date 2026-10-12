@@ -5,7 +5,7 @@
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME deer character (kawaii mascot): a slim light-brown fawn with white spots on its back, small antlers with tiny pink flowers growing on them, and a white tail patch",
- "lead": "角に小さな花がさいた、白い水玉もようのこじか。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "lead": "角の小さな花と白い水玉もようが目印のこじか素材です。SNS、スライド、おたよりで表情のある案内に使えます。",
  "tags": [
   "しか",
   "鹿",
@@ -18,17 +18,17 @@
  "items": [
   [
    "wave",
-   "手をふる",
+   "手を振る",
    "standing and waving one hand cheerfully"
   ],
   [
    "jump",
-   "とびはねる",
+   "飛び跳ねる",
    "jumping with joy, arms up, big smile"
   ],
   [
    "sleep",
-   "ねむる",
+   "眠る",
    "sleeping curled up peacefully with a tiny smile"
   ],
   [
@@ -38,22 +38,22 @@
   ],
   [
    "eat",
-   "もぐもぐ食べる",
+   "食べる",
    "happily eating fresh leaves"
   ],
   [
    "heart",
-   "ハートをもつ",
+   "ハートを持つ",
    "holding a red heart with a happy smile"
   ],
   [
    "run",
-   "はしる",
+   "走る",
    "running fast with motion, determined happy face"
   ],
   [
    "surprised",
-   "おどろく",
+   "驚く",
    "surprised, wide round eyes, small round mouth, both hands raised"
   ],
   [
@@ -68,7 +68,7 @@
   ],
   [
    "angry",
-   "ぷんぷんおこる",
+   "怒る",
    "puffed-cheek angry pout with clenched fists, cute and not scary"
   ],
   [

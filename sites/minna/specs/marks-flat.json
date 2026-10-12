@@ -5,7 +5,7 @@
  "genre": "icon",
  "touch": "flat",
  "subject_en": "marks and symbols, each separate, bold simple shapes",
- "lead": "ハート、星、矢印、チェック、ビックリマークなど、資料やチラシ、SNS画像に使いやすい、わかりやすいマーク12点。",
+ "lead": "ハート・星・矢印・チェックマークなど、資料やチラシ、SNS画像に使える12点のアイコンです。",
  "tags": [
   "マーク",
   "矢印",
@@ -41,12 +41,12 @@
   ],
   [
    "exclam",
-   "ビックリマーク",
+   "感嘆符",
    "a red exclamation mark in a rounded badge (shape only)"
   ],
   [
    "question",
-   "ハテナ",
+   "疑問符",
    "a blue question mark shape in a badge"
   ],
   [
@@ -56,12 +56,12 @@
   ],
   [
    "circle",
-   "まるマーク",
+   "丸マーク",
    "a red hollow circle (maru) mark"
   ],
   [
    "sparkle",
-   "キラキラ",
+   "輝き",
    "three four-point sparkles in yellow"
   ],
   [
@@ -71,7 +71,7 @@
   ],
   [
    "new",
-   "ニューマーク",
+   "NEWマーク",
    "a starburst badge, blank inside"
   ],
   [

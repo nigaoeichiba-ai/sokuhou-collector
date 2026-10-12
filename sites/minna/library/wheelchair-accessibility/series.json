@@ -1,10 +1,10 @@
 {
  "added": "2026-10-07",
  "slug": "wheelchair-accessibility",
- "title": "車いすバリアフリー行動",
+ "title": "車いすのバリアフリー行動",
  "genre": "people",
  "touch": "silhouette",
- "lead": "車いす利用者の移動や相談場面を、読み取りやすいシルエットで描く素材です。バリアフリー、交通、施設案内、福祉記事に使えます。検索結果でも用途が伝わりやすいです。",
+ "lead": "車いす利用者の移動や相談場面を、読み取りやすいシルエットで描いた素材です。交通、施設案内、福祉記事に使えます。",
  "tags": [
   "人物",
   "車いす",
@@ -26,7 +26,7 @@
    "id": "wheelchair-accessibility-self-propelling",
    "file": "wheelchair-accessibility-self-propelling.webp",
    "title": "自走して進む(車いすバリアフリー行動)",
-   "desc": "自走して進む(車いすバリアフリー行動)のイラスト。シルエットのタッチ。",
+   "desc": "自走して進む(車いすバリアフリー行動)のシルエットイラストです。",
    "tags": [
     "人物",
     "車いす",
@@ -50,7 +50,7 @@
    "id": "wheelchair-accessibility-using-ramp",
    "file": "wheelchair-accessibility-using-ramp.webp",
    "title": "スロープを使う(車いすバリアフリー行動)",
-   "desc": "スロープを使う(車いすバリアフリー行動)のイラスト。シルエットのタッチ。",
+   "desc": "スロープを使う(車いすバリアフリー行動)のシルエットイラストです。",
    "tags": [
     "人物",
     "車いす",
@@ -73,8 +73,8 @@
   {
    "id": "wheelchair-accessibility-elevator",
    "file": "wheelchair-accessibility-elevator.webp",
-   "title": "エレベーター待ち(車いすバリアフリー行動)",
-   "desc": "エレベーター待ち(車いすバリアフリー行動)のイラスト。シルエットのタッチ。",
+   "title": "エレベーターを待つ(車いすバリアフリー行動)",
+   "desc": "エレベーターを待つ(車いすバリアフリー行動)のシルエットイラストです。",
    "tags": [
     "人物",
     "車いす",
@@ -88,7 +88,7 @@
     "買い物",
     "支援",
     "車いすバリアフリー行動",
-    "エレベーター待ち",
+    "エレベーターを待つ",
     "シルエット"
    ],
    "w": 477,
@@ -98,7 +98,7 @@
    "id": "wheelchair-accessibility-desk-work",
    "file": "wheelchair-accessibility-desk-work.webp",
    "title": "机で作業する(車いすバリアフリー行動)",
-   "desc": "机で作業する(車いすバリアフリー行動)のイラスト。シルエットのタッチ。",
+   "desc": "机で作業する(車いすバリアフリー行動)のシルエットイラストです。",
    "tags": [
     "人物",
     "車いす",
@@ -122,7 +122,7 @@
    "id": "wheelchair-accessibility-boarding-bus",
    "file": "wheelchair-accessibility-boarding-bus.webp",
    "title": "バスに乗る(車いすバリアフリー行動)",
-   "desc": "バスに乗る(車いすバリアフリー行動)のイラスト。シルエットのタッチ。",
+   "desc": "バスに乗る(車いすバリアフリー行動)のシルエットイラストです。",
    "tags": [
     "人物",
     "車いす",
@@ -146,7 +146,7 @@
    "id": "wheelchair-accessibility-shopping",
    "file": "wheelchair-accessibility-shopping.webp",
    "title": "買い物をする(車いすバリアフリー行動)",
-   "desc": "買い物をする(車いすバリアフリー行動)のイラスト。シルエットのタッチ。",
+   "desc": "買い物をする(車いすバリアフリー行動)のシルエットイラストです。",
    "tags": [
     "人物",
     "車いす",
@@ -170,7 +170,7 @@
    "id": "wheelchair-accessibility-service-counter",
    "file": "wheelchair-accessibility-service-counter.webp",
    "title": "窓口で相談する(車いすバリアフリー行動)",
-   "desc": "窓口で相談する(車いすバリアフリー行動)のイラスト。シルエットのタッチ。",
+   "desc": "窓口で相談する(車いすバリアフリー行動)のシルエットイラストです。",
    "tags": [
     "人物",
     "車いす",
@@ -193,8 +193,8 @@
   {
    "id": "wheelchair-accessibility-rainy-day",
    "file": "wheelchair-accessibility-rainy-day.webp",
-   "title": "雨の日に移動(車いすバリアフリー行動)",
-   "desc": "雨の日に移動(車いすバリアフリー行動)のイラスト。シルエットのタッチ。",
+   "title": "雨の日に移動する(車いすバリアフリー行動)",
+   "desc": "雨の日に移動する(車いすバリアフリー行動)のシルエットイラストです。",
    "tags": [
     "人物",
     "車いす",
@@ -208,7 +208,7 @@
     "買い物",
     "支援",
     "車いすバリアフリー行動",
-    "雨の日に移動",
+    "雨の日に移動する",
     "シルエット"
    ],
    "w": 345,
@@ -218,7 +218,7 @@
    "id": "wheelchair-accessibility-talking-friend",
    "file": "wheelchair-accessibility-talking-friend.webp",
    "title": "友人と話す(車いすバリアフリー行動)",
-   "desc": "友人と話す(車いすバリアフリー行動)のイラスト。シルエットのタッチ。",
+   "desc": "友人と話す(車いすバリアフリー行動)のシルエットイラストです。",
    "tags": [
     "人物",
     "車いす",
@@ -242,7 +242,7 @@
    "id": "wheelchair-accessibility-asking-assist",
    "file": "wheelchair-accessibility-asking-assist.webp",
    "title": "助けを求める(車いすバリアフリー行動)",
-   "desc": "助けを求める(車いすバリアフリー行動)のイラスト。シルエットのタッチ。",
+   "desc": "助けを求める(車いすバリアフリー行動)のシルエットイラストです。",
    "tags": [
     "人物",
     "車いす",
@@ -266,7 +266,7 @@
    "id": "wheelchair-accessibility-confident-moving",
    "file": "wheelchair-accessibility-confident-moving.webp",
    "title": "笑顔風に進む(車いすバリアフリー行動)",
-   "desc": "笑顔風に進む(車いすバリアフリー行動)のイラスト。シルエットのタッチ。",
+   "desc": "笑顔風に進む(車いすバリアフリー行動)のシルエットイラストです。",
    "tags": [
     "人物",
     "車いす",
