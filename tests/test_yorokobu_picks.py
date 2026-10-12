@@ -199,8 +199,10 @@ class PagesTest(unittest.TestCase):
 
     def test_the_page_says_how_the_text_was_made_and_does_not_claim_to_have_tried_the_products(self):
         html = self.read("picks/2026-10-11/index.html")
-        self.assertIn("実際に使って試した感想ではありません", html)
-        self.assertIn("そのまま載せていません", html)
+        self.assertIn("自分たちの言葉でまとめたものです", html)
+        self.assertNotIn("実際に使って試した感想ではありません", html)            # the owner asked to delete that sentence (2026-10-12)
+        self.assertNotIn("実際に使ってみた", html)                                   # ... but a page never says it was tried
+        self.assertNotIn("使ってみました", html)
         self.assertIn("Amazonのアソシエイトとして", html)                      # the Associates sentence is on a page with Amazon links
         self.assertIn('class="pr-chip"', html)
 
