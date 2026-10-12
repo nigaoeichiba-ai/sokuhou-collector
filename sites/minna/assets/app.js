@@ -205,6 +205,29 @@
     });
     return res;
   }
+  var assistP = null;
+  function loadAssist() { // /data/assist.json: the pages worth pointing to (themes, guides, printables, tools), the helper's answers and buttons
+    if (!assistP) assistP = fetch("/data/assist.json").then(function (r) { return r.json(); }).catch(function () { return { pages: [], faq: [], touches: {}, chips: [] }; });
+    return assistP;
+  }
+  function pagesFor(words, idx, pages) { // up to three pages (not pictures) that name what was typed
+    var scored = [];
+    pages.forEach(function (p) {
+      var hay = norm(p.n + " " + (p.k || []).join(" ")), n = words.filter(function (w) { return w.length >= 2 && (idx[w] || [w]).some(function (a) { return hay.indexOf(a) >= 0; }); }).length;
+      if (n) scored.push([n, p]);
+    });
+    return scored.sort(function (a, b) { return b[0] - a[0]; }).slice(0, 3).map(function (x) { return x[1]; });
+  }
+  function showPages(list, words, idx) {
+    var old = $("#search-pages"); if (old) old.remove();
+    if (!words.length) return;
+    loadAssist().then(function (d) {
+      var pg = pagesFor(words, idx, d.pages); if (!pg.length || $("#search-pages")) return;
+      var box = document.createElement("div"); box.id = "search-pages"; box.className = "miss";
+      box.innerHTML = "<p><b>こんなページも、あります</b></p><ul class=\"as-links\">" + pg.map(function (p) { return '<li><a href="' + esc(p.u) + '">' + esc(p.n) + "</a><small>" + esc(p.t || "") + "</small></li>"; }).join("") + "</ul>";
+      list.parentNode.insertBefore(box, list);
+    });
+  }
   function initSearch() {
     var app = $("#search-app"); if (!app) return;
     var list = $("#search-results"), status = $("#search-status"), more = $("#search-more"), q = $('[name="q"]', app), g = $('[name="g"]', app), t = $('[name="t"]', app);
@@ -218,10 +241,13 @@
       more.hidden = shown >= hits.length; paintFavs();
     }
     function run() {
+      var synIdx = null;
       Promise.all([loadIndex(), loadSyn()]).then(function (v) {
+        synIdx = v[1];
         return loadVocab().then(function (vocab) { return searchAll(v[0], v[1], vocab, q.value, g.value, t.value); });
       }).then(function (res) {
         var om = $("#search-miss"); if (om) om.remove();
+        showPages(list, res.words, synIdx);
         var chips = $("#search-chips"); if (chips) chips.hidden = !!(res.words.length || g.value || t.value);
         if (!res.words.length && !g.value && !t.value) { hits = []; status.textContent = "キーワードを入れてください。ひらがな・カタカナ・似た言い方(塗り絵とぬりえ など)は、どちらでも見つかります。"; list.innerHTML = ""; more.hidden = true; return; }
         var sug = res.suggest.length ? ' もしかして: ' + res.suggest.map(function (s) { return '<a href="/search/?q=' + encodeURIComponent(s) + '">' + esc(s) + "</a>"; }).join("、") + "?" : "";
@@ -427,7 +453,7 @@
   }
 
   // what the helper panel (assist.js, loaded when it is first opened) shares with this file
-  window.minnaApp = { norm: norm, esc: esc, loadIndex: loadIndex, loadSyn: loadSyn, loadVocab: loadVocab, searchAll: searchAll, cardHtml: cardHtml, loadRules: loadRules, refuseW: refuseW, sendWish: sendWish, saveWish: saveWish, paintFavs: paintFavs };
+  window.minnaApp = { pagesFor: pagesFor, loadAssist: loadAssist, norm: norm, esc: esc, loadIndex: loadIndex, loadSyn: loadSyn, loadVocab: loadVocab, searchAll: searchAll, cardHtml: cardHtml, loadRules: loadRules, refuseW: refuseW, sendWish: sendWish, saveWish: saveWish, paintFavs: paintFavs };
   function initAssist() {
     var b = document.getElementById("assist-open"); if (!b) return;
     b.addEventListener("click", function () {
