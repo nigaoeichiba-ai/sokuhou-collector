@@ -4,7 +4,7 @@
  "title": "読書の秋",
  "genre": "life",
  "touch": "picturebook",
- "lead": "ねこがページをめくる、くまが図書館で本を借りる。読書の秋の場面を、絵本のようなやさしいタッチで12点。図書だよりや読書感想文の案内に。",
+ "lead": "ねこやくまが本を読む場面を、絵本風のやさしいタッチで描いた読書素材です。図書だよりや読書感想文の案内に使えます。",
  "tags": [
   "読書の秋",
   "読書",
@@ -26,7 +26,7 @@
    "id": "reading-autumn-picturebook-cat-read",
    "file": "reading-autumn-picturebook-cat-read.webp",
    "title": "木の下で読むねこ",
-   "desc": "木の下で読むねこのイラスト。絵本風のタッチ。",
+   "desc": "木の下で読むねこの絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
@@ -34,7 +34,7 @@
     "図書館",
     "木の下で読むねこ",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 509,
    "h": 517
@@ -43,7 +43,7 @@
    "id": "reading-autumn-picturebook-bear-library",
    "file": "reading-autumn-picturebook-bear-library.webp",
    "title": "図書館のくま",
-   "desc": "図書館のくまのイラスト。絵本風のタッチ。",
+   "desc": "図書館のくまの絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
@@ -51,7 +51,7 @@
     "図書館",
     "図書館のくま",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 517,
    "h": 520
@@ -60,7 +60,7 @@
    "id": "reading-autumn-picturebook-rabbit-lamp",
    "file": "reading-autumn-picturebook-rabbit-lamp.webp",
    "title": "ランプで読むうさぎ",
-   "desc": "ランプで読むうさぎのイラスト。絵本風のタッチ。",
+   "desc": "ランプで読むうさぎの絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
@@ -68,7 +68,7 @@
     "図書館",
     "ランプで読むうさぎ",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 509,
    "h": 465
@@ -77,7 +77,7 @@
    "id": "reading-autumn-picturebook-owl-books",
    "file": "reading-autumn-picturebook-owl-books.webp",
    "title": "本を読むふくろう",
-   "desc": "本を読むふくろうのイラスト。絵本風のタッチ。",
+   "desc": "本を読むふくろうの絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
@@ -85,7 +85,7 @@
     "図書館",
     "本を読むふくろう",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 504,
    "h": 502
@@ -94,7 +94,7 @@
    "id": "reading-autumn-picturebook-fox-tea",
    "file": "reading-autumn-picturebook-fox-tea.webp",
    "title": "お茶と本のきつね",
-   "desc": "お茶と本のきつねのイラスト。絵本風のタッチ。",
+   "desc": "お茶と本のきつねの絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
@@ -102,7 +102,7 @@
     "図書館",
     "お茶と本のきつね",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 509,
    "h": 498
@@ -111,7 +111,7 @@
    "id": "reading-autumn-picturebook-child-bench",
    "file": "reading-autumn-picturebook-child-bench.webp",
    "title": "ベンチで読む子",
-   "desc": "ベンチで読む子のイラスト。絵本風のタッチ。",
+   "desc": "ベンチで読む子の絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
@@ -119,7 +119,7 @@
     "図書館",
     "ベンチで読む子",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 501,
    "h": 505
@@ -128,7 +128,7 @@
    "id": "reading-autumn-picturebook-mouse-tiny",
    "file": "reading-autumn-picturebook-mouse-tiny.webp",
    "title": "小さな本のねずみ",
-   "desc": "小さな本のねずみのイラスト。絵本風のタッチ。",
+   "desc": "小さな本のねずみの絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
@@ -136,7 +136,7 @@
     "図書館",
     "小さな本のねずみ",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 296,
    "h": 473
@@ -144,16 +144,16 @@
   {
    "id": "reading-autumn-picturebook-shelf",
    "file": "reading-autumn-picturebook-shelf.webp",
-   "title": "本だな",
-   "desc": "本だなのイラスト。絵本風のタッチ。",
+   "title": "本棚",
+   "desc": "本棚の絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
     "本",
     "図書館",
-    "本だな",
+    "本棚",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 420,
    "h": 502
@@ -161,16 +161,16 @@
   {
    "id": "reading-autumn-picturebook-stack",
    "file": "reading-autumn-picturebook-stack.webp",
-   "title": "本のたば",
-   "desc": "本のたばのイラスト。絵本風のタッチ。",
+   "title": "本の束",
+   "desc": "本の束の絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
     "本",
     "図書館",
-    "本のたば",
+    "本の束",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 444,
    "h": 483
@@ -179,7 +179,7 @@
    "id": "reading-autumn-picturebook-picnic",
    "file": "reading-autumn-picturebook-picnic.webp",
    "title": "読書ピクニック",
-   "desc": "読書ピクニックのイラスト。絵本風のタッチ。",
+   "desc": "読書ピクニックの絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
@@ -187,7 +187,7 @@
     "図書館",
     "読書ピクニック",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 536,
    "h": 467
@@ -196,7 +196,7 @@
    "id": "reading-autumn-picturebook-bookmark",
    "file": "reading-autumn-picturebook-bookmark.webp",
    "title": "しおり",
-   "desc": "しおりのイラスト。絵本風のタッチ。",
+   "desc": "しおりの絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
@@ -204,7 +204,7 @@
     "図書館",
     "しおり",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 455,
    "h": 367
@@ -213,7 +213,7 @@
    "id": "reading-autumn-picturebook-night",
    "file": "reading-autumn-picturebook-night.webp",
    "title": "夜の読書",
-   "desc": "夜の読書のイラスト。絵本風のタッチ。",
+   "desc": "夜の読書の絵本風イラストです。",
    "tags": [
     "読書の秋",
     "読書",
@@ -221,7 +221,7 @@
     "図書館",
     "夜の読書",
     "絵本風",
-    "くらし・もの"
+    "暮らし・物"
    ],
    "w": 515,
    "h": 474

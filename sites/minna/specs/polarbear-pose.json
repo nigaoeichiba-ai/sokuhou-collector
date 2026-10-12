@@ -5,7 +5,7 @@
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME polarbear character (kawaii mascot): a fluffy white polar bear cub with a dark-blue-grey nose, small round ears with icy-blue insides and light-blue toe pads",
- "lead": "耳の中とあしの裏が氷のような水色の、ふわふわの白いくま。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "lead": "耳の中と足の裏が水色のしろくまのポーズ素材です。手を振る・眠る・走るなどの表情違いを、SNSやスライドの挿絵に使えます。",
  "tags": [
   "しろくま",
   "白熊",
@@ -19,17 +19,17 @@
  "items": [
   [
    "wave",
-   "手をふる",
+   "手を振る",
    "standing and waving one hand cheerfully"
   ],
   [
    "jump",
-   "とびはねる",
+   "跳びはねる",
    "jumping with joy, arms up, big smile"
   ],
   [
    "sleep",
-   "ねむる",
+   "眠る",
    "sleeping curled up peacefully with a tiny smile"
   ],
   [
@@ -39,22 +39,22 @@
   ],
   [
    "eat",
-   "もぐもぐ食べる",
+   "食べる",
    "happily eating a frozen fish ice-pop"
   ],
   [
    "heart",
-   "ハートをもつ",
+   "ハートを持つ",
    "holding a red heart with a happy smile"
   ],
   [
    "run",
-   "はしる",
+   "走る",
    "running fast with motion, determined happy face"
   ],
   [
    "surprised",
-   "おどろく",
+   "驚く",
    "surprised, wide round eyes, small round mouth, both hands raised"
   ],
   [
@@ -64,12 +64,12 @@
   ],
   [
    "sad",
-   "しょんぼりする",
+   "落ち込む",
    "sitting sadly with teary eyes and drooping posture, still cute"
   ],
   [
    "angry",
-   "ぷんぷんおこる",
+   "怒る",
    "puffed-cheek angry pout with clenched fists, cute and not scary"
   ],
   [

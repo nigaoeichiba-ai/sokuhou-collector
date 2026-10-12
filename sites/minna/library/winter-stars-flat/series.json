@@ -4,7 +4,7 @@
  "title": "冬の星空と星座",
  "genre": "nature",
  "touch": "flat",
- "lead": "オリオン、おおいぬ、すばる、流れ星、天体望遠鏡。冬の夜空を楽しむイラスト12点。天体観察のおたよりやポスターに。",
+ "lead": "冬の星座や月、天体観察の道具をまとめた12点の素材です。天体観察のおたよりやポスターに使えます。",
  "tags": [
   "星空",
   "星座",
@@ -24,7 +24,7 @@
    "id": "winter-stars-flat-orion",
    "file": "winter-stars-flat-orion.webp",
    "title": "オリオン座",
-   "desc": "オリオン座のイラスト。シンプルフラットのタッチ。",
+   "desc": "オリオン座のシンプルフラットイラストです。",
    "tags": [
     "星空",
     "星座",
@@ -42,7 +42,7 @@
    "id": "winter-stars-flat-canis",
    "file": "winter-stars-flat-canis.webp",
    "title": "おおいぬ座",
-   "desc": "おおいぬ座のイラスト。シンプルフラットのタッチ。",
+   "desc": "おおいぬ座のシンプルフラットイラストです。",
    "tags": [
     "星空",
     "星座",
@@ -60,7 +60,7 @@
    "id": "winter-stars-flat-pleiades",
    "file": "winter-stars-flat-pleiades.webp",
    "title": "すばる",
-   "desc": "すばるのイラスト。シンプルフラットのタッチ。",
+   "desc": "すばるのシンプルフラットイラストです。",
    "tags": [
     "星空",
     "星座",
@@ -78,7 +78,7 @@
    "id": "winter-stars-flat-shooting",
    "file": "winter-stars-flat-shooting.webp",
    "title": "流れ星",
-   "desc": "流れ星のイラスト。シンプルフラットのタッチ。",
+   "desc": "流れ星のシンプルフラットイラストです。",
    "tags": [
     "星空",
     "星座",
@@ -96,7 +96,7 @@
    "id": "winter-stars-flat-telescope",
    "file": "winter-stars-flat-telescope.webp",
    "title": "天体望遠鏡",
-   "desc": "天体望遠鏡のイラスト。シンプルフラットのタッチ。",
+   "desc": "天体望遠鏡のシンプルフラットイラストです。",
    "tags": [
     "星空",
     "星座",
@@ -113,15 +113,15 @@
   {
    "id": "winter-stars-flat-crescent",
    "file": "winter-stars-flat-crescent.webp",
-   "title": "三日月とお星さま",
-   "desc": "三日月とお星さまのイラスト。シンプルフラットのタッチ。",
+   "title": "三日月と星",
+   "desc": "三日月と星のシンプルフラットイラストです。",
    "tags": [
     "星空",
     "星座",
     "冬",
     "オリオン",
     "冬の星空と星座",
-    "三日月とお星さま",
+    "三日月と星",
     "シンプルフラット",
     "花・自然"
    ],
@@ -132,7 +132,7 @@
    "id": "winter-stars-flat-full-moon",
    "file": "winter-stars-flat-full-moon.webp",
    "title": "満月",
-   "desc": "満月のイラスト。シンプルフラットのタッチ。",
+   "desc": "満月のシンプルフラットイラストです。",
    "tags": [
     "星空",
     "星座",
@@ -150,7 +150,7 @@
    "id": "winter-stars-flat-planet",
    "file": "winter-stars-flat-planet.webp",
    "title": "土星",
-   "desc": "土星のイラスト。シンプルフラットのタッチ。",
+   "desc": "土星のシンプルフラットイラストです。",
    "tags": [
     "星空",
     "星座",
@@ -168,7 +168,7 @@
    "id": "winter-stars-flat-rocket",
    "file": "winter-stars-flat-rocket.webp",
    "title": "ロケット",
-   "desc": "ロケットのイラスト。シンプルフラットのタッチ。",
+   "desc": "ロケットのシンプルフラットイラストです。",
    "tags": [
     "星空",
     "星座",
@@ -186,7 +186,7 @@
    "id": "winter-stars-flat-star-chart",
    "file": "winter-stars-flat-star-chart.webp",
    "title": "星座早見盤",
-   "desc": "星座早見盤のイラスト。シンプルフラットのタッチ。",
+   "desc": "星座早見盤のシンプルフラットイラストです。",
    "tags": [
     "星空",
     "星座",

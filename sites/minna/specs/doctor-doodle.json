@@ -1,6 +1,6 @@
 {
  "slug": "doctor-doodle",
- "title": "お医者さんのポーズ集",
+ "title": "医師のポーズ集",
  "subject": "お医者さん",
  "genre": "life",
  "touch": "loose",
@@ -16,7 +16,7 @@
   "診察",
   "手書き"
  ],
- "lead": "お医者さんのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "lead": "お医者さんを12のポーズ・場面で描いた人物素材です。医療案内・資料・チラシ・スライドに並べて使えます。",
  "items": [
   [
    "01-holding-stethoscope-chest",
@@ -45,7 +45,7 @@
   ],
   [
    "06-pointing-side-index",
-   "指さし",
+   "指差し",
    "pointing to the side with one index finger extended"
   ],
   [

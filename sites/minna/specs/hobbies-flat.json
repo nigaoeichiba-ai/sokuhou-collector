@@ -1,12 +1,12 @@
 {
  "slug": "hobbies-flat",
- "title": "趣味・おでかけのイラスト",
+ "title": "趣味・外出のイラスト",
  "subject": "",
  "genre": "life",
  "touch": "flat",
  "title_fmt": "{ja}",
  "subject_en": "hobby and weekend icons, each a separate object, flat Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "キャンプ、釣り、カメラ、読書、ガーデニングなど、趣味と週末のイラスト12点。",
+ "lead": "キャンプや釣り、カメラ、読書、ガーデニングなど、趣味と週末の素材12点です。余暇の案内や記事に使えます。",
  "tags": [
   "趣味",
   "キャンプ",
@@ -26,7 +26,7 @@
   ],
   [
    "fishing",
-   "釣りざお",
+   "釣り竿",
    "a fishing rod and a fish"
   ],
   [
@@ -46,7 +46,7 @@
   ],
   [
    "luggage",
-   "旅行かばん",
+   "旅行鞄",
    "a suitcase with a hat"
   ],
   [
@@ -56,7 +56,7 @@
   ],
   [
    "bonfire",
-   "たき火",
+   "焚き火",
    "a campfire with marshmallows"
   ],
   [
@@ -76,7 +76,7 @@
   ],
   [
    "knit",
-   "あみもの",
+   "編み物",
    "a ball of yarn and knitting needles"
   ]
  ],

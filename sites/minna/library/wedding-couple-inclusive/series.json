@@ -1,10 +1,10 @@
 {
  "added": "2026-10-07",
  "slug": "wedding-couple-inclusive",
- "title": "カップル結婚の素材",
+ "title": "結婚するカップルの素材",
  "genre": "people",
  "touch": "faceless",
- "lead": "結婚や新生活の場面を、顔なしのおしゃれなフラットタッチで表す素材です。式場、手続き、暮らし準備、家族向け案内の記事に使えます。検索結果でも用途が伝わりやすいです。",
+ "lead": "結婚や新生活の場面を、顔のないフラットなタッチで描いた素材です。式場案内や手続き、家族向けの記事に使えます。",
  "tags": [
   "人物",
   "カップル",
@@ -26,7 +26,7 @@
    "id": "wedding-couple-inclusive-walking-side",
    "file": "wedding-couple-inclusive-walking-side.webp",
    "title": "並んで歩く(カップル結婚の素材)",
-   "desc": "並んで歩く(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "並んで歩く(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",
@@ -50,7 +50,7 @@
    "id": "wedding-couple-inclusive-ring-looking",
    "file": "wedding-couple-inclusive-ring-looking.webp",
    "title": "指輪を眺める(カップル結婚の素材)",
-   "desc": "指輪を眺める(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "指輪を眺める(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",
@@ -74,7 +74,7 @@
    "id": "wedding-couple-inclusive-blank-form",
    "file": "wedding-couple-inclusive-blank-form.webp",
    "title": "届出を持つ(カップル結婚の素材)",
-   "desc": "届出を持つ(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "届出を持つ(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",
@@ -98,7 +98,7 @@
    "id": "wedding-couple-inclusive-photo-pose",
    "file": "wedding-couple-inclusive-photo-pose.webp",
    "title": "写真撮影する(カップル結婚の素材)",
-   "desc": "写真撮影する(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "写真撮影する(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",
@@ -122,7 +122,7 @@
    "id": "wedding-couple-inclusive-planning",
    "file": "wedding-couple-inclusive-planning.webp",
    "title": "相談して座る(カップル結婚の素材)",
-   "desc": "相談して座る(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "相談して座る(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",
@@ -146,7 +146,7 @@
    "id": "wedding-couple-inclusive-bouquet",
    "file": "wedding-couple-inclusive-bouquet.webp",
    "title": "花束を持つ(カップル結婚の素材)",
-   "desc": "花束を持つ(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "花束を持つ(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",
@@ -170,7 +170,7 @@
    "id": "wedding-couple-inclusive-cake-ceremony",
    "file": "wedding-couple-inclusive-cake-ceremony.webp",
    "title": "ケーキに向かう(カップル結婚の素材)",
-   "desc": "ケーキに向かう(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "ケーキに向かう(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",
@@ -194,7 +194,7 @@
    "id": "wedding-couple-inclusive-family-greeting",
    "file": "wedding-couple-inclusive-family-greeting.webp",
    "title": "家族へ挨拶する(カップル結婚の素材)",
-   "desc": "家族へ挨拶する(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "家族へ挨拶する(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",
@@ -217,8 +217,8 @@
   {
    "id": "wedding-couple-inclusive-new-home",
    "file": "wedding-couple-inclusive-new-home.webp",
-   "title": "新生活を準備(カップル結婚の素材)",
-   "desc": "新生活を準備(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "title": "新生活の準備(カップル結婚の素材)",
+   "desc": "新生活の準備(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",
@@ -232,7 +232,7 @@
     "相談",
     "お祝い",
     "カップル結婚の素材",
-    "新生活を準備",
+    "新生活の準備",
     "顔なしミニマル"
    ],
    "w": 291,
@@ -242,7 +242,7 @@
    "id": "wedding-couple-inclusive-calm-discussion",
    "file": "wedding-couple-inclusive-calm-discussion.webp",
    "title": "落ち着いて話す(カップル結婚の素材)",
-   "desc": "落ち着いて話す(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "落ち着いて話す(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",
@@ -266,7 +266,7 @@
    "id": "wedding-couple-inclusive-celebration",
    "file": "wedding-couple-inclusive-celebration.webp",
    "title": "お祝いを受ける(カップル結婚の素材)",
-   "desc": "お祝いを受ける(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "お祝いを受ける(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",
@@ -290,7 +290,7 @@
    "id": "wedding-couple-inclusive-happy-standing",
    "file": "wedding-couple-inclusive-happy-standing.webp",
    "title": "並んで立つ(カップル結婚の素材)",
-   "desc": "並んで立つ(カップル結婚の素材)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "並んで立つ(カップル結婚の素材)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "カップル",

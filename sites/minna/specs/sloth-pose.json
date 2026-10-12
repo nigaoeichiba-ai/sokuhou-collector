@@ -5,7 +5,7 @@
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME sloth character (kawaii mascot): a shaggy beige-brown sloth with a dark eye-mask pattern giving it a gentle smile, long curved claws and a sleepy relaxed look",
- "lead": "ゆったり笑っているような顔と、長いつめが特ちょうのなまけもの。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "lead": "なまけものの表情とポーズをそろえた素材12点です。SNS投稿、スライド、おたよりの挿絵に使えます。",
  "tags": [
   "なまけもの",
   "ナマケモノ",
@@ -17,17 +17,17 @@
  "items": [
   [
    "wave",
-   "手をふる",
+   "手を振る",
    "standing and waving one hand cheerfully"
   ],
   [
    "jump",
-   "とびはねる",
+   "跳びはねる",
    "jumping with joy, arms up, big smile"
   ],
   [
    "sleep",
-   "ねむる",
+   "眠る",
    "sleeping curled up peacefully with a tiny smile"
   ],
   [
@@ -37,22 +37,22 @@
   ],
   [
    "eat",
-   "もぐもぐ食べる",
+   "食べる",
    "happily eating a leaf"
   ],
   [
    "heart",
-   "ハートをもつ",
+   "ハートを持つ",
    "holding a red heart with a happy smile"
   ],
   [
    "run",
-   "はしる",
+   "走る",
    "running fast with motion, determined happy face"
   ],
   [
    "surprised",
-   "おどろく",
+   "驚く",
    "surprised, wide round eyes, small round mouth, both hands raised"
   ],
   [
@@ -67,7 +67,7 @@
   ],
   [
    "angry",
-   "ぷんぷんおこる",
+   "怒る",
    "puffed-cheek angry pout with clenched fists, cute and not scary"
   ],
   [

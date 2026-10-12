@@ -4,7 +4,7 @@
  "title": "赤ちゃん（クレヨン）のポーズ集",
  "genre": "people",
  "touch": "crayon",
- "lead": "赤ちゃんのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "lead": "赤ちゃんの動きや表情をクレヨン風のタッチで描いた12点です。子育て資料やチラシ、スライド、おたよりに使えます。",
  "tags": [
   "人物",
   "イラスト",
@@ -22,8 +22,8 @@
   {
    "id": "baby-crayon-01-crawling-knees-side",
    "file": "baby-crayon-01-crawling-knees-side.webp",
-   "title": "ハイハイ(赤ちゃん)",
-   "desc": "ハイハイ(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "title": "はいはい(赤ちゃん)",
+   "desc": "はいはい(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -32,7 +32,7 @@
     "育児",
     "クレヨン",
     "手書き",
-    "ハイハイ",
+    "はいはい",
     "クレヨン・手描き"
    ],
    "w": 465,
@@ -41,8 +41,8 @@
   {
    "id": "baby-crayon-02-sitting-upright-smiling",
    "file": "baby-crayon-02-sitting-upright-smiling.webp",
-   "title": "お座り(赤ちゃん)",
-   "desc": "お座り(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "title": "座る(赤ちゃん)",
+   "desc": "座る(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -51,7 +51,7 @@
     "育児",
     "クレヨン",
     "手書き",
-    "お座り",
+    "座る",
     "クレヨン・手描き"
    ],
    "w": 320,
@@ -61,7 +61,7 @@
    "id": "baby-crayon-03-laughing-arms-up",
    "file": "baby-crayon-03-laughing-arms-up.webp",
    "title": "笑って両手を上げる(赤ちゃん)",
-   "desc": "笑って両手を上げる(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "笑って両手を上げる(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -80,7 +80,7 @@
    "id": "baby-crayon-04-crying-tears-mouth",
    "file": "baby-crayon-04-crying-tears-mouth.webp",
    "title": "泣く(赤ちゃん)",
-   "desc": "泣く(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "泣く(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -99,7 +99,7 @@
    "id": "baby-crayon-05-lying-its-back",
    "file": "baby-crayon-05-lying-its-back.webp",
    "title": "眠る(赤ちゃん)",
-   "desc": "眠る(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "眠る(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -117,8 +117,8 @@
   {
    "id": "baby-crayon-06-standing-unsteadily-arms",
    "file": "baby-crayon-06-standing-unsteadily-arms.webp",
-   "title": "よちよち立ち(赤ちゃん)",
-   "desc": "よちよち立ち(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "title": "不安定に立つ(赤ちゃん)",
+   "desc": "不安定に立つ(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -127,7 +127,7 @@
     "育児",
     "クレヨン",
     "手書き",
-    "よちよち立ち",
+    "不安定に立つ",
     "クレヨン・手描き"
    ],
    "w": 415,
@@ -137,7 +137,7 @@
    "id": "baby-crayon-07-taking-small-wobbling",
    "file": "baby-crayon-07-taking-small-wobbling.webp",
    "title": "歩く(赤ちゃん)",
-   "desc": "歩く(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "歩く(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -156,7 +156,7 @@
    "id": "baby-crayon-08-holding-spoon-fist",
    "file": "baby-crayon-08-holding-spoon-fist.webp",
    "title": "離乳食を食べる(赤ちゃん)",
-   "desc": "離乳食を食べる(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "離乳食を食べる(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -175,7 +175,7 @@
    "id": "baby-crayon-09-sucking-thumb-looking",
    "file": "baby-crayon-09-sucking-thumb-looking.webp",
    "title": "指しゃぶり(赤ちゃん)",
-   "desc": "指しゃぶり(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "指しゃぶり(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -194,7 +194,7 @@
    "id": "baby-crayon-10-yawning-tiny-fist",
    "file": "baby-crayon-10-yawning-tiny-fist.webp",
    "title": "あくび(赤ちゃん)",
-   "desc": "あくび(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "desc": "あくび(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -212,8 +212,8 @@
   {
    "id": "baby-crayon-11-waving-small",
    "file": "baby-crayon-11-waving-small.webp",
-   "title": "バイバイ(赤ちゃん)",
-   "desc": "バイバイ(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "title": "手を振る(赤ちゃん)",
+   "desc": "手を振る(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -222,7 +222,7 @@
     "育児",
     "クレヨン",
     "手書き",
-    "バイバイ",
+    "手を振る",
     "クレヨン・手描き"
    ],
    "w": 349,
@@ -231,8 +231,8 @@
   {
    "id": "baby-crayon-12-arms-raised-upward",
    "file": "baby-crayon-12-arms-raised-upward.webp",
-   "title": "抱っこをせがむ(赤ちゃん)",
-   "desc": "抱っこをせがむ(赤ちゃん)のイラスト。クレヨン・手描きのタッチ。",
+   "title": "抱っこを求める(赤ちゃん)",
+   "desc": "抱っこを求める(赤ちゃん)のクレヨン・手描きイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -241,7 +241,7 @@
     "育児",
     "クレヨン",
     "手書き",
-    "抱っこをせがむ",
+    "抱っこを求める",
     "クレヨン・手描き"
    ],
    "w": 388,

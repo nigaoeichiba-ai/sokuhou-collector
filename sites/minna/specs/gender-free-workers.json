@@ -6,7 +6,7 @@
  "touch": "linecolor",
  "title_fmt": "{ja}({subject})",
  "subject_en": "A gender-neutral Japanese worker cast with varied short and medium hairstyles, practical uniforms in blue, gray, white and green, no exaggerated gender traits, clean line-and-color style with thin navy outline and light fills, inclusive public-information posture, no real person or existing character. Always the same face, hairstyle and outfit.",
- "lead": "性別の固定観念に寄せず、さまざまな職業を線画カラーで示す素材です。採用、教育、公共資料、啓発コンテンツ、職業紹介に向きます。検索結果でも用途が伝わりやすいです。",
+ "lead": "性別の固定観念に寄せず、さまざまな職業を線画カラーで示す素材です。採用・教育・公共資料、職業紹介に使えます。",
  "tags": [
   "人物",
   "職業",
@@ -68,12 +68,12 @@
   ],
   [
    "tour-guide",
-   "観光案内する",
+   "観光案内をする",
    "One worker gestures toward a blank map board, no text or letters in the picture."
   ],
   [
    "disaster-volunteer",
-   "防災支援する",
+   "防災支援をする",
    "One worker carries a plain supply box with a vest, no text or letters in the picture."
   ],
   [

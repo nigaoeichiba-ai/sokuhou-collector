@@ -6,7 +6,7 @@
  "touch": "chibi",
  "title_fmt": "{ja}({subject})",
  "subject_en": "A Japanese high-school boy student with short black hair, navy blazer uniform, white shirt, gray slacks, dark school bag, slightly chibi 3-head proportion, clean flat anime-light style, friendly and non-romantic, no real person or existing character. Always the same face, hairstyle and outfit.",
- "lead": "学生生活と進路の場面を、ちびキャラ寄りの親しみやすいタッチで描く素材です。学校、塾、進路情報、受験案内の記事に合います。検索結果でも用途が伝わりやすいです。",
+ "lead": "学生生活と進路の場面を、親しみやすいタッチで描いた人物素材です。学校・塾・進路情報・受験案内の記事に使えます。",
  "tags": [
   "人物",
   "学生",
@@ -23,7 +23,7 @@
  "items": [
   [
    "going-school",
-   "登校して歩く",
+   "登校する",
    "The student walks in side view carrying a school bag, no text or letters in the picture."
   ],
   [
@@ -53,7 +53,7 @@
   ],
   [
    "interview-practice",
-   "面接練習する",
+   "面接練習をする",
    "The student sits upright on a chair facing an empty chair, no text or letters in the picture."
   ],
   [

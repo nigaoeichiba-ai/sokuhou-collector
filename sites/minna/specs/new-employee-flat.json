@@ -6,7 +6,7 @@
  "touch": "flat",
  "title_fmt": "{ja}",
  "subject_en": "A young Japanese new employee, short black hair, light skin, navy suit, white shirt, dot eyes, smiling, flat business illustration, 4-head-tall; the same person on every cell. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
- "lead": "名刺交換、電話対応、おじぎ、メモ、報連相など、新入社員の場面12点。研修資料や入社案内、マニュアルに。",
+ "lead": "名刺交換・電話対応・お辞儀・報連相など、新入社員の場面を描いた12点です。研修資料や入社案内、マニュアルに使えます。",
  "tags": [
   "新入社員",
   "新社会人",
@@ -32,12 +32,12 @@
   ],
   [
    "ojigi",
-   "おじぎ",
+   "お辞儀",
    "bowing politely"
   ],
   [
    "memo",
-   "メモをとる",
+   "メモを取る",
    "taking notes in a notebook while listening"
   ],
   [
@@ -72,7 +72,7 @@
   ],
   [
    "ganbaru",
-   "がんばる",
+   "頑張る",
    "making a determined fist pose"
   ],
   [

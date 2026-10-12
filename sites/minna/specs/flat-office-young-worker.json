@@ -6,7 +6,7 @@
  "touch": "flat",
  "title_fmt": "{ja}({subject})",
  "subject_en": "A friendly Japanese woman office worker in her late 20s, short black hair, navy blazer, white shirt, beige trousers, simple flat vector style with no outline, 4.5-head proportion, warm neutral palette, no real person or existing character. Always the same face, hairstyle and outfit.",
- "lead": "若手会社員のよく使う所作を、清潔なフラットタッチでそろえた人物素材です。ビジネス資料や採用、社内案内、研修ページに使いやすい構成です。検索結果でも用途が伝わりやすいです。",
+ "lead": "若手会社員の挨拶・PC作業・案内などを、清潔なフラットタッチで描いた人物素材です。ビジネス資料や研修ページに使えます。",
  "tags": [
   "人物",
   "会社員",
@@ -33,12 +33,12 @@
   ],
   [
    "pointing-guide",
-   "指さし案内する",
+   "指差し案内する",
    "The office worker stands in side view and points toward an empty space for guidance, no text or letters in the picture."
   ],
   [
    "agree-pose",
-   "了解ポーズする",
+   "了解ポーズをする",
    "The office worker smiles and makes a simple agreement gesture near the chest, no text or letters in the picture."
   ],
   [
@@ -68,7 +68,7 @@
   ],
   [
    "deep-bow",
-   "丁寧にお辞儀",
+   "丁寧にお辞儀する",
    "The office worker makes a deeper formal bow from a three-quarter view, no text or letters in the picture."
   ],
   [

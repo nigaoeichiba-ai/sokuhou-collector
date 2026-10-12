@@ -4,7 +4,7 @@
  "title": "天気のアイコン",
  "genre": "nature",
  "touch": "flat",
- "lead": "晴れ、くもり、雨、雪、かみなり、虹など、天気のアイコン12点。天気予報、お知らせ、イベントの雨天案内に。",
+ "lead": "晴れ、曇り、雨、雪などの天気アイコン12点です。天気予報、お知らせ、イベントの雨天案内に使えます。",
  "tags": [
   "天気",
   "晴れ",
@@ -24,7 +24,7 @@
    "id": "weather-flat-sunny",
    "file": "weather-flat-sunny.webp",
    "title": "晴れ",
-   "desc": "晴れのイラスト。シンプルフラットのタッチ。",
+   "desc": "晴れのシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",
@@ -40,15 +40,15 @@
   {
    "id": "weather-flat-cloudy",
    "file": "weather-flat-cloudy.webp",
-   "title": "くもり",
-   "desc": "くもりのイラスト。シンプルフラットのタッチ。",
+   "title": "曇り",
+   "desc": "曇りのシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",
     "雨",
     "雪",
-    "くもり",
     "天気のアイコン",
+    "曇り",
     "シンプルフラット",
     "花・自然"
    ],
@@ -59,7 +59,7 @@
    "id": "weather-flat-rain",
    "file": "weather-flat-rain.webp",
    "title": "雨",
-   "desc": "雨のイラスト。シンプルフラットのタッチ。",
+   "desc": "雨のシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",
@@ -76,7 +76,7 @@
    "id": "weather-flat-snow",
    "file": "weather-flat-snow.webp",
    "title": "雪",
-   "desc": "雪のイラスト。シンプルフラットのタッチ。",
+   "desc": "雪のシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",
@@ -92,15 +92,15 @@
   {
    "id": "weather-flat-thunder",
    "file": "weather-flat-thunder.webp",
-   "title": "かみなり",
-   "desc": "かみなりのイラスト。シンプルフラットのタッチ。",
+   "title": "雷",
+   "desc": "雷のシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",
     "雨",
     "雪",
-    "かみなり",
     "天気のアイコン",
+    "雷",
     "シンプルフラット",
     "花・自然"
    ],
@@ -111,7 +111,7 @@
    "id": "weather-flat-rainbow",
    "file": "weather-flat-rainbow.webp",
    "title": "虹",
-   "desc": "虹のイラスト。シンプルフラットのタッチ。",
+   "desc": "虹のシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",
@@ -128,16 +128,15 @@
   {
    "id": "weather-flat-sunnycloud",
    "file": "weather-flat-sunnycloud.webp",
-   "title": "晴れのちくもり",
-   "desc": "晴れのちくもりのイラスト。シンプルフラットのタッチ。",
+   "title": "晴れのち曇り",
+   "desc": "晴れのち曇りのシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",
     "雨",
     "雪",
-    "くもり",
     "天気のアイコン",
-    "晴れのちくもり",
+    "晴れのち曇り",
     "シンプルフラット",
     "花・自然"
    ],
@@ -148,7 +147,7 @@
    "id": "weather-flat-wind",
    "file": "weather-flat-wind.webp",
    "title": "風",
-   "desc": "風のイラスト。シンプルフラットのタッチ。",
+   "desc": "風のシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",
@@ -165,15 +164,15 @@
   {
    "id": "weather-flat-fog",
    "file": "weather-flat-fog.webp",
-   "title": "きり",
-   "desc": "きりのイラスト。シンプルフラットのタッチ。",
+   "title": "霧",
+   "desc": "霧のシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",
     "雨",
     "雪",
     "天気のアイコン",
-    "きり",
+    "霧",
     "シンプルフラット",
     "花・自然"
    ],
@@ -183,15 +182,15 @@
   {
    "id": "weather-flat-typhoon",
    "file": "weather-flat-typhoon.webp",
-   "title": "たいふう",
-   "desc": "たいふうのイラスト。シンプルフラットのタッチ。",
+   "title": "台風",
+   "desc": "台風のシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",
     "雨",
     "雪",
     "天気のアイコン",
-    "たいふう",
+    "台風",
     "シンプルフラット",
     "花・自然"
    ],
@@ -202,7 +201,7 @@
    "id": "weather-flat-moon",
    "file": "weather-flat-moon.webp",
    "title": "夜空と月",
-   "desc": "夜空と月のイラスト。シンプルフラットのタッチ。",
+   "desc": "夜空と月のシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",
@@ -220,7 +219,7 @@
    "id": "weather-flat-umbrella",
    "file": "weather-flat-umbrella.webp",
    "title": "傘マーク",
-   "desc": "傘マークのイラスト。シンプルフラットのタッチ。",
+   "desc": "傘マークのシンプルフラットイラストです。",
    "tags": [
     "天気",
     "晴れ",

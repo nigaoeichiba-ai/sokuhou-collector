@@ -4,7 +4,7 @@
  "title": "ドット絵の町の人のポーズ集",
  "genre": "people",
  "touch": "pixel",
- "lead": "ドット絵の町の人のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "lead": "ドット絵の町の人を12のポーズ・場面でそろえた人物素材です。同じ人物・同じタッチで、資料やチラシ、スライドに並べて使えます。",
  "tags": [
   "人物",
   "イラスト",
@@ -23,7 +23,7 @@
    "id": "pixel-townsperson-01-standing-facing-front",
    "file": "pixel-townsperson-01-standing-facing-front.webp",
    "title": "正面で立つ(ドット絵の町の人)",
-   "desc": "正面で立つ(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "正面で立つ(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -42,7 +42,7 @@
    "id": "pixel-townsperson-02-walking-facing-right",
    "file": "pixel-townsperson-02-walking-facing-right.webp",
    "title": "右向きで歩く(ドット絵の町の人)",
-   "desc": "右向きで歩く(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "右向きで歩く(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -61,7 +61,7 @@
    "id": "pixel-townsperson-03-walking-facing-left",
    "file": "pixel-townsperson-03-walking-facing-left.webp",
    "title": "左向きで歩く(ドット絵の町の人)",
-   "desc": "左向きで歩く(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "左向きで歩く(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -80,7 +80,7 @@
    "id": "pixel-townsperson-04-standing-facing-away",
    "file": "pixel-townsperson-04-standing-facing-away.webp",
    "title": "後ろ向きで立つ(ドット絵の町の人)",
-   "desc": "後ろ向きで立つ(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "後ろ向きで立つ(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -99,7 +99,7 @@
    "id": "pixel-townsperson-05-waving",
    "file": "pixel-townsperson-05-waving.webp",
    "title": "手を振る(ドット絵の町の人)",
-   "desc": "手を振る(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "手を振る(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -118,7 +118,7 @@
    "id": "pixel-townsperson-06-running-facing-right",
    "file": "pixel-townsperson-06-running-facing-right.webp",
    "title": "走る(ドット絵の町の人)",
-   "desc": "走る(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "走る(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -137,7 +137,7 @@
    "id": "pixel-townsperson-07-jumping-arms-up",
    "file": "pixel-townsperson-07-jumping-arms-up.webp",
    "title": "ジャンプ(ドット絵の町の人)",
-   "desc": "ジャンプ(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "ジャンプ(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -156,7 +156,7 @@
    "id": "pixel-townsperson-08-surprised-arms-raised",
    "file": "pixel-townsperson-08-surprised-arms-raised.webp",
    "title": "驚く(ドット絵の町の人)",
-   "desc": "驚く(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "驚く(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -175,7 +175,7 @@
    "id": "pixel-townsperson-09-cheering-arms-up",
    "file": "pixel-townsperson-09-cheering-arms-up.webp",
    "title": "喜ぶ(ドット絵の町の人)",
-   "desc": "喜ぶ(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "喜ぶ(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -194,7 +194,7 @@
    "id": "pixel-townsperson-10-sitting-sleeping",
    "file": "pixel-townsperson-10-sitting-sleeping.webp",
    "title": "座って居眠り(ドット絵の町の人)",
-   "desc": "座って居眠り(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "座って居眠り(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -213,7 +213,7 @@
    "id": "pixel-townsperson-11-thinking-chin",
    "file": "pixel-townsperson-11-thinking-chin.webp",
    "title": "考える(ドット絵の町の人)",
-   "desc": "考える(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "考える(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -232,7 +232,7 @@
    "id": "pixel-townsperson-12-bowing",
    "file": "pixel-townsperson-12-bowing.webp",
    "title": "お辞儀(ドット絵の町の人)",
-   "desc": "お辞儀(ドット絵の町の人)のイラスト。ドット絵のタッチ。",
+   "desc": "お辞儀(ドット絵の町の人)のドット絵イラストです。",
    "tags": [
     "人物",
     "イラスト",

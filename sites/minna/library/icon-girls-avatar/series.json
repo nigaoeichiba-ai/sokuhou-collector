@@ -4,7 +4,7 @@
  "title": "女の子のアイコン",
  "genre": "icon",
  "touch": "kawaii",
- "lead": "ボブ、ポニーテール、おだんごなど、いろいろな髪型の女の子のアイコン12点。SNSやLINEのアイコンに。",
+ "lead": "ボブやポニーテール、おだんごなど、髪型の違う女の子のアイコン12点です。SNSやプロフィール画像に使えます。",
  "tags": [
   "アイコン",
   "女の子",
@@ -21,7 +21,7 @@
    "id": "icon-girls-avatar-bob",
    "file": "icon-girls-avatar-bob.webp",
    "title": "ボブの女の子",
-   "desc": "ボブの女の子のイラスト。ゆるかわのタッチ。",
+   "desc": "ボブの女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
@@ -39,7 +39,7 @@
    "id": "icon-girls-avatar-pony",
    "file": "icon-girls-avatar-pony.webp",
    "title": "ポニーテールの女の子",
-   "desc": "ポニーテールの女の子のイラスト。ゆるかわのタッチ。",
+   "desc": "ポニーテールの女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
@@ -56,15 +56,15 @@
   {
    "id": "icon-girls-avatar-odango",
    "file": "icon-girls-avatar-odango.webp",
-   "title": "おだんごヘアの女の子",
-   "desc": "おだんごヘアの女の子のイラスト。ゆるかわのタッチ。",
+   "title": "お団子ヘアの女の子",
+   "desc": "お団子ヘアの女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
     "SNS",
     "LINE",
     "女の子のアイコン",
-    "おだんごヘアの女の子",
+    "お団子ヘアの女の子",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -75,7 +75,7 @@
    "id": "icon-girls-avatar-twin",
    "file": "icon-girls-avatar-twin.webp",
    "title": "ツインテールの女の子",
-   "desc": "ツインテールの女の子のイラスト。ゆるかわのタッチ。",
+   "desc": "ツインテールの女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
@@ -93,7 +93,7 @@
    "id": "icon-girls-avatar-long",
    "file": "icon-girls-avatar-long.webp",
    "title": "ロングヘアの女の子",
-   "desc": "ロングヘアの女の子のイラスト。ゆるかわのタッチ。",
+   "desc": "ロングヘアの女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
@@ -110,15 +110,15 @@
   {
    "id": "icon-girls-avatar-curly",
    "file": "icon-girls-avatar-curly.webp",
-   "title": "くるくるカールの女の子",
-   "desc": "くるくるカールの女の子のイラスト。ゆるかわのタッチ。",
+   "title": "カールヘアの女の子",
+   "desc": "カールヘアの女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
     "SNS",
     "LINE",
     "女の子のアイコン",
-    "くるくるカールの女の子",
+    "カールヘアの女の子",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -129,7 +129,7 @@
    "id": "icon-girls-avatar-short",
    "file": "icon-girls-avatar-short.webp",
    "title": "ショートヘアの女の子",
-   "desc": "ショートヘアの女の子のイラスト。ゆるかわのタッチ。",
+   "desc": "ショートヘアの女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
@@ -146,15 +146,15 @@
   {
    "id": "icon-girls-avatar-cap",
    "file": "icon-girls-avatar-cap.webp",
-   "title": "ぼうしの女の子",
-   "desc": "ぼうしの女の子のイラスト。ゆるかわのタッチ。",
+   "title": "帽子の女の子",
+   "desc": "帽子の女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
     "SNS",
     "LINE",
     "女の子のアイコン",
-    "ぼうしの女の子",
+    "帽子の女の子",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -164,15 +164,15 @@
   {
    "id": "icon-girls-avatar-glasses",
    "file": "icon-girls-avatar-glasses.webp",
-   "title": "めがねの女の子",
-   "desc": "めがねの女の子のイラスト。ゆるかわのタッチ。",
+   "title": "眼鏡の女の子",
+   "desc": "眼鏡の女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
     "SNS",
     "LINE",
     "女の子のアイコン",
-    "めがねの女の子",
+    "眼鏡の女の子",
     "ゆるかわ",
     "アイコン・マーク"
    ],
@@ -183,7 +183,7 @@
    "id": "icon-girls-avatar-ribbon",
    "file": "icon-girls-avatar-ribbon.webp",
    "title": "リボンの女の子",
-   "desc": "リボンの女の子のイラスト。ゆるかわのタッチ。",
+   "desc": "リボンの女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
@@ -201,7 +201,7 @@
    "id": "icon-girls-avatar-scarf",
    "file": "icon-girls-avatar-scarf.webp",
    "title": "マフラーの女の子",
-   "desc": "マフラーの女の子のイラスト。ゆるかわのタッチ。",
+   "desc": "マフラーの女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
@@ -218,15 +218,15 @@
   {
    "id": "icon-girls-avatar-flower",
    "file": "icon-girls-avatar-flower.webp",
-   "title": "お花のかざりの女の子",
-   "desc": "お花のかざりの女の子のイラスト。ゆるかわのタッチ。",
+   "title": "花の飾りの女の子",
+   "desc": "花の飾りの女の子のゆるかわイラストです。",
    "tags": [
     "アイコン",
     "女の子",
     "SNS",
     "LINE",
     "女の子のアイコン",
-    "お花のかざりの女の子",
+    "花の飾りの女の子",
     "ゆるかわ",
     "アイコン・マーク"
    ],

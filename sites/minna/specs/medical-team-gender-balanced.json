@@ -1,12 +1,12 @@
 {
  "slug": "medical-team-gender-balanced",
- "title": "医療チーム男女差分",
+ "title": "医療チームの男女差分",
  "subject": "医療チーム男女差分",
  "genre": "life",
  "touch": "lineart",
  "title_fmt": "{ja}({subject})",
  "subject_en": "A small gender-balanced Japanese medical cast: female doctor with black ponytail, male nurse with short black hair, and pharmacist with glasses, white and pale teal uniforms, coloring-page line art with black outline only, calm soft faces, no real person or existing character. Always the same face, hairstyle and outfit.",
- "lead": "医療現場の基本動作を、ぬりえにも使える線画タッチでそろえた素材です。診療、服薬、受付、感染対策、院内案内の説明に向いています。検索結果でも用途が伝わりやすいです。",
+ "lead": "医療現場の基本動作を、線画タッチでそろえた12点の人物素材です。診療・服薬・受付・感染対策の説明に使えます。",
  "tags": [
   "人物",
   "医療",
@@ -53,12 +53,12 @@
   ],
   [
    "chart-entry",
-   "カルテを入力",
+   "カルテを入力する",
    "One medical worker sits at a computer with a blank screen, no text or letters in the picture."
   ],
   [
    "wheelchair-assist",
-   "車いすを介助",
+   "車いすを介助する",
    "One nurse stands behind a simple wheelchair with no seated person, no text or letters in the picture."
   ],
   [
@@ -73,7 +73,7 @@
   ],
   [
    "team-discussion",
-   "チームで相談",
+   "チームで相談する",
    "Two medical workers stand clearly separated beside a blank clipboard, no text or letters in the picture."
   ],
   [

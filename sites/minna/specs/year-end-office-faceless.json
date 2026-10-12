@@ -6,7 +6,7 @@
  "touch": "faceless",
  "title_fmt": "{ja}",
  "subject_en": "Year-end workplace scenes with faceless office workers (plain heads, muted clothing), each a small complete scene with a few props. Include no company names. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
- "lead": "大掃除、請求書、仕事納めのあいさつ、忘年会。年末の職場の場面12点。社内報や資料、ブログに。",
+ "lead": "大掃除・請求書・仕事納めの挨拶・忘年会など、年末の職場場面12点の素材です。社内報や資料、ブログに使えます。",
  "tags": [
   "仕事納め",
   "年末",
@@ -23,7 +23,7 @@
  "items": [
   [
    "cleaning",
-   "デスクの大そうじ",
+   "デスクの大掃除",
    "a person wiping a desk with a cloth next to a box of tidied items"
   ],
   [
@@ -38,7 +38,7 @@
   ],
   [
    "greeting",
-   "年末のあいさつ",
+   "年末の挨拶",
    "two people bowing politely to each other"
   ],
   [
@@ -53,7 +53,7 @@
   ],
   [
    "review",
-   "一年をふりかえる",
+   "一年を振り返る",
    "a person at a whiteboard with a simple rising line chart"
   ],
   [
@@ -63,7 +63,7 @@
   ],
   [
    "gift",
-   "お歳暮をおくる",
+   "お歳暮を贈る",
    "a person holding a wrapped gift box with a ribbon"
   ],
   [

@@ -1,13 +1,13 @@
 {
  "slug": "winter-health-picturebook",
- "title": "冬の健康・かぜ予防 絵本風",
+ "title": "冬の健康・風邪予防の絵本風イラスト",
  "subject": "",
  "genre": "school",
  "touch": "picturebook",
  "title_fmt": "{ja}",
  "priority": 16,
  "subject_en": "Winter health and cold-prevention scenes for school and nursery newsletters, each a separate small scene with ONE friendly child (about 3.5-head proportion, round face, simple clothes) or a single object. Picture-book style with soft rounded closed outlines in warm brown-grey, clearly darker than the fill; light parts (masks, tissue, snow, milk) are warm cream (#FFF6E0) or tinted, never pure white. No letters.",
- "lead": "手洗い、うがい、マスク、早寝早起き、あたたかい服。保健だよりや園のおたより、教室の掲示に使える、冬の健康のイラスト12点。絵本のようなやさしいタッチ。",
+ "lead": "冬の健康管理や風邪予防を、絵本風のタッチで描いた12点の素材です。保健だよりや教室掲示に使えます。",
  "tags": [
   "健康",
   "かぜ予防",
@@ -29,7 +29,7 @@
  "items": [
   [
    "handwash",
-   "手あらい",
+   "手洗い",
    "a child washing hands at a small sink with soap bubbles"
   ],
   [
@@ -44,12 +44,12 @@
   ],
   [
    "sleep",
-   "早ねはやおき",
+   "早寝早起き",
    "a child asleep in bed with a moon-and-star blanket"
   ],
   [
    "warm-clothes",
-   "あたたかい服",
+   "暖かい服",
    "a child in a coat, knitted hat, mittens and scarf"
   ],
   [
@@ -59,12 +59,12 @@
   ],
   [
    "humidifier",
-   "かしつき",
+   "加湿器",
    "a small humidifier with gentle steam"
   ],
   [
    "window",
-   "かんき",
+   "換気",
    "a child opening a window with fresh air swirls"
   ],
   [
@@ -74,17 +74,17 @@
   ],
   [
    "cough",
-   "せきエチケット",
+   "咳エチケット",
    "a child covering the mouth with an elbow"
   ],
   [
    "vaccine",
-   "予防せっしゅ",
+   "予防接種",
    "a child with a small bandage on the arm, brave smile"
   ],
   [
    "rest",
-   "おうちで休む",
+   "家で休む",
    "a child resting on a sofa with a blanket and a mug"
   ]
  ],

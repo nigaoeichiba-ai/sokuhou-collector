@@ -1,11 +1,11 @@
 {
  "slug": "fox-pose",
- "title": "きつねのポーズいろいろ",
+ "title": "きつねのポーズ集",
  "subject": "きつね",
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME fox character (kawaii mascot): a very big fluffy orange tail with a cream tip and large triangular ears with dark-brown tips, cream chest and cheeks",
- "lead": "大きなふさふさのしっぽと、先が茶色の三角の耳が目じるしのきつね。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "lead": "大きなしっぽと三角の耳が目印のきつね素材12点です。ポーズや表情があり、SNS画像やスライド、おたよりに使えます。",
  "tags": [
   "きつね",
   "狐",
@@ -18,42 +18,42 @@
  "items": [
   [
    "proud",
-   "えらそうに立つ",
+   "偉そうに立つ",
    "standing proud"
   ],
   [
    "dash",
-   "かけぬける",
+   "駆け抜ける",
    "dashing forward"
   ],
   [
    "sit",
-   "しっぽをまいてすわる",
+   "しっぽを巻いて座る",
    "sitting with tail wrapped around"
   ],
   [
    "point",
-   "ウインクして指さす",
+   "ウインクして指差す",
    "winking and pointing"
   ],
   [
    "sleep",
-   "まるまってねむる",
+   "丸まって眠る",
    "sleeping curled up"
   ],
   [
    "amazed",
-   "おどろいて手をあげる",
+   "驚いて手を上げる",
    "surprised with raised arms"
   ],
   [
    "run",
-   "はしる",
+   "走る",
    "running fast with motion, determined happy face"
   ],
   [
    "surprised",
-   "おどろく",
+   "驚く",
    "surprised, wide round eyes, small round mouth, both hands raised"
   ],
   [
@@ -63,17 +63,17 @@
   ],
   [
    "sad",
-   "しょんぼりする",
+   "落ち込む",
    "sitting sadly with teary eyes and drooping posture, still cute"
   ],
   [
    "angry",
-   "ぷんぷんおこる",
+   "怒る",
    "puffed-cheek angry pout with clenched fists, cute and not scary"
   ],
   [
    "cheer",
-   "ガッツポーズする",
+   "ガッツポーズをする",
    "fist-pump cheering pose with sparkling eyes"
   ]
  ],

@@ -5,7 +5,7 @@
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME sheep character (kawaii mascot): a super-fluffy cloud-like cream-white wool body made of big scallops, a small round face in soft peach-beige, tiny curled tan horns and little dark-brown hooves",
- "lead": "雲のようにふわふわの毛と、くるんと巻いた角が目じるしのひつじ。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。 3枚目は、ハイタッチ・かんがえる・本をよむ・プレゼント・かさ・うたう。",
+ "lead": "ひつじの表情とポーズをそろえた素材18点です。SNS投稿、スライド、季節のおたよりに使えます。",
  "tags": [
   "ひつじ",
   "羊",
@@ -19,17 +19,17 @@
  "items": [
   [
    "wave",
-   "手をふる",
+   "手を振る",
    "standing and waving"
   ],
   [
    "jump",
-   "とびはねる",
+   "跳びはねる",
    "jumping with joy"
   ],
   [
    "sleep",
-   "ねむる",
+   "眠る",
    "sleeping curled up"
   ],
   [
@@ -39,22 +39,22 @@
   ],
   [
    "eat",
-   "はっぱを食べる",
+   "葉っぱを食べる",
    "eating a green leaf with sparkling eyes"
   ],
   [
    "heart",
-   "ハートをもつ",
+   "ハートを持つ",
    "holding a small red heart"
   ],
   [
    "run",
-   "はしる",
+   "走る",
    "running fast with motion, determined happy face"
   ],
   [
    "surprised",
-   "おどろく",
+   "驚く",
    "surprised, wide round eyes, small round mouth, both hands raised"
   ],
   [
@@ -69,7 +69,7 @@
   ],
   [
    "angry",
-   "ぷんぷんおこる",
+   "怒る",
    "puffed-cheek angry pout with clenched fists, cute and not scary"
   ],
   [
@@ -84,12 +84,12 @@
   ],
   [
    "think",
-   "かんがえる",
+   "考える",
    "tilting head with a hoof on the chin, puzzled"
   ],
   [
    "read",
-   "本をよむ",
+   "本を読む",
    "sitting and reading an open book"
   ],
   [
@@ -99,12 +99,12 @@
   ],
   [
    "umbrella",
-   "かさをさす",
+   "傘を差す",
    "standing under a small open umbrella"
   ],
   [
    "sing",
-   "うたう",
+   "歌う",
    "singing happily with a few music notes"
   ]
  ],

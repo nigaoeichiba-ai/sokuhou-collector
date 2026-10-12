@@ -1,11 +1,11 @@
 {
  "slug": "speech-bubbles-kawaii",
- "title": "ふきだし かわいい",
+ "title": "吹き出しのイラスト",
  "subject": "",
  "genre": "deco",
  "touch": "kawaii",
  "subject_en": "blank speech bubbles of different shapes, white fill with a brown outline and a pop colour accent, text area EMPTY (no letters)",
- "lead": "LINE風の会話や、スライド・漫画・説明画像に使える、中が空の吹き出し12点。丸い、ギザギザ、ハート型、雲型など、気持ちに合わせて選べます。",
+ "lead": "会話、スライド、漫画、説明画像に使える吹き出し素材12点です。形を選んで文字入れできます。",
  "tags": [
   "ふきだし",
   "吹き出し",
@@ -20,7 +20,7 @@
  "items": [
   [
    "round",
-   "まるい吹き出し",
+   "丸い吹き出し",
    "a round speech bubble with a small tail"
   ],
   [
@@ -30,12 +30,12 @@
   ],
   [
    "cloud",
-   "もこもこ吹き出し(考え中)",
+   "雲形の吹き出し(考え中)",
    "a cloud-shaped thought bubble with small circles"
   ],
   [
    "spiky",
-   "ギザギザ吹き出し(さけぶ)",
+   "ギザギザ吹き出し(叫ぶ)",
    "a spiky starburst speech bubble"
   ],
   [
@@ -45,7 +45,7 @@
   ],
   [
    "drip",
-   "ふるえる吹き出し",
+   "震える吹き出し",
    "a wavy-edged shaky speech bubble"
   ],
   [
@@ -60,7 +60,7 @@
   ],
   [
    "double",
-   "ふたつの吹き出し",
+   "2つの吹き出し",
    "two overlapping speech bubbles, one white and one yellow"
   ],
   [
@@ -75,7 +75,7 @@
   ],
   [
    "pop",
-   "ぽわんと吹き出し",
+   "浮かぶ吹き出し",
    "a soft blobby speech bubble with tiny sparkles"
   ]
  ],

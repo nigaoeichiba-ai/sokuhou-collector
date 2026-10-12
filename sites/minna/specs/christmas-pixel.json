@@ -6,7 +6,7 @@
  "touch": "pixel",
  "title_fmt": "{ja}",
  "subject_en": "Christmas items, each a separate object, retro 16-bit pixel art with clearly visible square pixels, limited palette of red, green, gold and white-cream Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "ツリー、サンタ、プレゼント、雪だるまをドット絵で描いた12点。ゲームふうのクリスマスカードに。",
+ "lead": "ツリー・サンタ・プレゼント・雪だるまなど、クリスマスモチーフ12点をドット絵で描いた素材です。ゲーム風のカードやバナーに使えます。",
  "tags": [
   "クリスマス",
   "ドット絵",
@@ -28,7 +28,7 @@
   ],
   [
    "santa",
-   "サンタさん",
+   "サンタ",
    "a Santa Claus character, original design"
   ],
   [
@@ -48,7 +48,7 @@
   ],
   [
    "sock",
-   "くつした",
+   "靴下",
    "a red Christmas stocking"
   ],
   [
@@ -73,7 +73,7 @@
   ],
   [
    "star",
-   "ほし",
+   "星",
    "a gold star"
   ],
   [
@@ -82,5 +82,7 @@
    "a lit candle with holly"
   ]
  ],
- "exclude": ["wreath"]
+ "exclude": [
+  "wreath"
+ ]
 }

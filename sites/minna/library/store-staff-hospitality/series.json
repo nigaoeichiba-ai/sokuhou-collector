@@ -1,10 +1,10 @@
 {
  "added": "2026-10-07",
  "slug": "store-staff-hospitality",
- "title": "接客スタッフ基本素材",
+ "title": "接客スタッフの基本素材",
  "genre": "work",
  "touch": "kawaii",
- "lead": "接客スタッフの基本動作を、ゆるかわな太線タッチでそろえた素材です。店舗案内、サービス説明、求人ページ、接遇研修に使いやすい内容です。検索結果でも用途が伝わりやすいです。",
+ "lead": "接客スタッフの基本動作を太線タッチで描いた素材です。店舗案内、サービス説明、求人ページ、接遇研修に使えます。",
  "tags": [
   "人物",
   "接客",
@@ -26,7 +26,7 @@
    "id": "store-staff-hospitality-welcome",
    "file": "store-staff-hospitality-welcome.webp",
    "title": "迎えて挨拶する(接客スタッフ基本素材)",
-   "desc": "迎えて挨拶する(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "迎えて挨拶する(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",
@@ -51,7 +51,7 @@
    "id": "store-staff-hospitality-cashier",
    "file": "store-staff-hospitality-cashier.webp",
    "title": "レジで対応する(接客スタッフ基本素材)",
-   "desc": "レジで対応する(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "レジで対応する(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",
@@ -76,7 +76,7 @@
    "id": "store-staff-hospitality-product-guide",
    "file": "store-staff-hospitality-product-guide.webp",
    "title": "商品を案内する(接客スタッフ基本素材)",
-   "desc": "商品を案内する(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "商品を案内する(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",
@@ -101,7 +101,7 @@
    "id": "store-staff-hospitality-bowing",
    "file": "store-staff-hospitality-bowing.webp",
    "title": "丁寧にお辞儀(接客スタッフ基本素材)",
-   "desc": "丁寧にお辞儀(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "丁寧にお辞儀(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",
@@ -126,7 +126,7 @@
    "id": "store-staff-hospitality-phone-reservation",
    "file": "store-staff-hospitality-phone-reservation.webp",
    "title": "電話予約を聞く(接客スタッフ基本素材)",
-   "desc": "電話予約を聞く(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "電話予約を聞く(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",
@@ -151,7 +151,7 @@
    "id": "store-staff-hospitality-complaint-support",
    "file": "store-staff-hospitality-complaint-support.webp",
    "title": "困りごと対応(接客スタッフ基本素材)",
-   "desc": "困りごと対応(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "困りごと対応(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",
@@ -176,7 +176,7 @@
    "id": "store-staff-hospitality-cleaning",
    "file": "store-staff-hospitality-cleaning.webp",
    "title": "店内を清掃する(接客スタッフ基本素材)",
-   "desc": "店内を清掃する(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "店内を清掃する(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",
@@ -201,7 +201,7 @@
    "id": "store-staff-hospitality-stock-check",
    "file": "store-staff-hospitality-stock-check.webp",
    "title": "在庫を確認する(接客スタッフ基本素材)",
-   "desc": "在庫を確認する(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "在庫を確認する(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",
@@ -226,7 +226,7 @@
    "id": "store-staff-hospitality-gift-wrapping",
    "file": "store-staff-hospitality-gift-wrapping.webp",
    "title": "包装を整える(接客スタッフ基本素材)",
-   "desc": "包装を整える(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "包装を整える(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",
@@ -251,7 +251,7 @@
    "id": "store-staff-hospitality-multilingual-guide",
    "file": "store-staff-hospitality-multilingual-guide.webp",
    "title": "案内板を示す(接客スタッフ基本素材)",
-   "desc": "案内板を示す(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "案内板を示す(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",
@@ -276,7 +276,7 @@
    "id": "store-staff-hospitality-tablet-order",
    "file": "store-staff-hospitality-tablet-order.webp",
    "title": "注文端末を使う(接客スタッフ基本素材)",
-   "desc": "注文端末を使う(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "注文端末を使う(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",
@@ -301,7 +301,7 @@
    "id": "store-staff-hospitality-seeing-off",
    "file": "store-staff-hospitality-seeing-off.webp",
    "title": "笑顔で見送る(接客スタッフ基本素材)",
-   "desc": "笑顔で見送る(接客スタッフ基本素材)のイラスト。ゆるかわのタッチ。",
+   "desc": "笑顔で見送る(接客スタッフ基本素材)のゆるかわイラストです。",
    "tags": [
     "人物",
     "接客",

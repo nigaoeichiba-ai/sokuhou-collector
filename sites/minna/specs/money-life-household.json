@@ -6,7 +6,7 @@
  "touch": "stick",
  "title_fmt": "{ja}({subject})",
  "subject_en": "A Japanese man adult in his 40s, short black hair, orange sweater, navy pants, simple stick-figure style with friendly round head and minimal body lines, expressive but not exaggerated, no real person or existing character. Always the same face, hairstyle and outfit.",
- "lead": "家計やお金の悩みを、軽い棒人間タッチでわかりやすく示す素材です。節約、相談、物価、投資入門、生活防衛の記事に使えます。検索結果でも用途が伝わりやすいです。",
+ "lead": "家計やお金の悩みを、軽い棒人間タッチで示す12点の人物素材です。節約・相談・物価・投資入門・生活防衛の記事に使えます。",
  "tags": [
   "人物",
   "家計",
@@ -23,7 +23,7 @@
  "items": [
   [
    "budget-book",
-   "家計簿をつける",
+   "家計簿を付ける",
    "The adult sits at a table and writes in a blank budget notebook, no text or letters in the picture."
   ],
   [

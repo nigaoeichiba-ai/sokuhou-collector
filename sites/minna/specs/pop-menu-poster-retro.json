@@ -6,7 +6,7 @@
  "touch": "retro",
  "title_fmt": "{ja}",
  "subject_en": "Showa-era retro shop decorations, each ONE separate piece centred in its cell: bold price-tag shapes, starburst badges, ribbon banners and menu board frames with an EMPTY centre of plain white so it becomes transparent. Limited vintage palette of red, mustard yellow, teal and cream. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
- "lead": "お店のポップ、メニュー枠、ポスター枠、値札、星形のバッジなど、昭和レトロな飾り12点。中があいている枠は、文字や写真をのせてそのまま使えます。",
+ "lead": "店舗のポップ・メニュー枠・ポスター枠・値札などを昭和レトロなタッチで描いた飾り素材です。文字や写真を載せる枠として使えます。",
  "tags": [
   "ポップ",
   "メニュー",
@@ -22,12 +22,12 @@
  "items": [
   [
    "menu-board",
-   "メニューの黒板風の枠",
+   "黒板風のメニュー枠",
    "a menu board frame with a wooden border and small flowers in the corners, centre empty"
   ],
   [
    "menu-scroll",
-   "メニューの巻物風の枠",
+   "巻物風のメニュー枠",
    "a menu frame shaped like a paper scroll with ribbon ties, centre empty"
   ],
   [
@@ -37,7 +37,7 @@
   ],
   [
    "pop-starburst",
-   "ポップの星形",
+   "星形のポップ",
    "a starburst badge shape with a zigzag edge, centre empty"
   ],
   [
@@ -52,17 +52,17 @@
   ],
   [
    "pop-balloon",
-   "ふきだし風のポップ",
+   "吹き出し風のポップ",
    "a bold comic-style speech burst shape, centre empty"
   ],
   [
    "pop-sale-flag",
-   "旗かざりのポップ",
+   "旗飾りのポップ",
    "a string of triangle pennant flags in red, yellow and teal"
   ],
   [
    "pop-circle",
-   "まるいポップ",
+   "丸いポップ",
    "a round badge with a scalloped edge, centre empty"
   ],
   [
@@ -72,7 +72,7 @@
   ],
   [
    "pop-notice",
-   "おしらせの枠",
+   "お知らせの枠",
    "a notice board frame with a pin and a tape strip at the top, centre empty"
   ],
   [

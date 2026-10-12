@@ -5,7 +5,7 @@
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME whale character (kawaii mascot): a round sky-blue whale with a pale belly with soft stripes, tiny flippers and a water spout shaped like a heart",
- "lead": "ハートの形のしおふきが目じるしの、まるい青いくじら。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "lead": "くじらの表情と動きをまとめたポーズ素材です。SNS、スライド、おたよりのアクセントに使えます。",
  "tags": [
   "くじら",
   "鯨",
@@ -19,17 +19,17 @@
  "items": [
   [
    "wave",
-   "手をふる",
+   "手を振る",
    "standing and waving one hand cheerfully"
   ],
   [
    "jump",
-   "とびはねる",
+   "飛び跳ねる",
    "jumping with joy, arms up, big smile"
   ],
   [
    "sleep",
-   "ねむる",
+   "眠る",
    "sleeping curled up peacefully with a tiny smile"
   ],
   [
@@ -39,22 +39,22 @@
   ],
   [
    "eat",
-   "もぐもぐ食べる",
+   "食べる",
    "happily eating plankton snacks"
   ],
   [
    "heart",
-   "ハートをもつ",
+   "ハートを持つ",
    "holding a red heart with a happy smile"
   ],
   [
    "run",
-   "はしる",
+   "走る",
    "running fast with motion, determined happy face"
   ],
   [
    "surprised",
-   "おどろく",
+   "驚く",
    "surprised, wide round eyes, small round mouth, both hands raised"
   ],
   [
@@ -64,12 +64,12 @@
   ],
   [
    "sad",
-   "しょんぼりする",
+   "落ち込む",
    "sitting sadly with teary eyes and drooping posture, still cute"
   ],
   [
    "angry",
-   "ぷんぷんおこる",
+   "怒る",
    "puffed-cheek angry pout with clenched fists, cute and not scary"
   ],
   [

@@ -4,7 +4,7 @@
  "title": "ゆるい親子の日常素材",
  "genre": "people",
  "touch": "loose",
- "lead": "親子の日常場面を、ゆるい手書きタッチでやさしく描く素材です。育児、保育、暮らし、地域のお知らせ、家庭向け案内に使いやすいシリーズです。検索結果でも用途が伝わりやすいです。",
+ "lead": "親子の日常場面を、手書き風のゆるいタッチで描いた12点の素材です。育児・保育・暮らしや地域のお知らせに使えます。",
  "tags": [
   "人物",
   "親子",
@@ -26,7 +26,7 @@
    "id": "loose-parent-child-walking-together",
    "file": "loose-parent-child-walking-together.webp",
    "title": "並んで歩く(ゆるい親子の日常素材)",
-   "desc": "並んで歩く(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "desc": "並んで歩く(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",
@@ -49,8 +49,8 @@
   {
    "id": "loose-parent-child-carrying-child",
    "file": "loose-parent-child-carrying-child.webp",
-   "title": "子どもを抱っこ(ゆるい親子の日常素材)",
-   "desc": "子どもを抱っこ(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "title": "子どもを抱く(ゆるい親子の日常素材)",
+   "desc": "子どもを抱く(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",
@@ -64,7 +64,7 @@
     "絵本",
     "登園",
     "ゆるい親子の日常素材",
-    "子どもを抱っこ",
+    "子どもを抱く",
     "ゆるい手書き"
    ],
    "w": 286,
@@ -74,7 +74,7 @@
    "id": "loose-parent-child-reading-book",
    "file": "loose-parent-child-reading-book.webp",
    "title": "絵本を読む(ゆるい親子の日常素材)",
-   "desc": "絵本を読む(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "desc": "絵本を読む(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",
@@ -98,7 +98,7 @@
    "id": "loose-parent-child-pushing-stroller",
    "file": "loose-parent-child-pushing-stroller.webp",
    "title": "ベビーカーを押す(ゆるい親子の日常素材)",
-   "desc": "ベビーカーを押す(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "desc": "ベビーカーを押す(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",
@@ -122,7 +122,7 @@
    "id": "loose-parent-child-daycare-walk",
    "file": "loose-parent-child-daycare-walk.webp",
    "title": "登園へ向かう(ゆるい親子の日常素材)",
-   "desc": "登園へ向かう(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "desc": "登園へ向かう(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",
@@ -146,7 +146,7 @@
    "id": "loose-parent-child-eating-meal",
    "file": "loose-parent-child-eating-meal.webp",
    "title": "ごはんを食べる(ゆるい親子の日常素材)",
-   "desc": "ごはんを食べる(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "desc": "ごはんを食べる(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",
@@ -170,7 +170,7 @@
    "id": "loose-parent-child-comforting-child",
    "file": "loose-parent-child-comforting-child.webp",
    "title": "泣く子をなだめる(ゆるい親子の日常素材)",
-   "desc": "泣く子をなだめる(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "desc": "泣く子をなだめる(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",
@@ -194,7 +194,7 @@
    "id": "loose-parent-child-playing-blocks",
    "file": "loose-parent-child-playing-blocks.webp",
    "title": "積み木で遊ぶ(ゆるい親子の日常素材)",
-   "desc": "積み木で遊ぶ(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "desc": "積み木で遊ぶ(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",
@@ -218,7 +218,7 @@
    "id": "loose-parent-child-clinic-visit",
    "file": "loose-parent-child-clinic-visit.webp",
    "title": "予防接種へ行く(ゆるい親子の日常素材)",
-   "desc": "予防接種へ行く(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "desc": "予防接種へ行く(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",
@@ -242,7 +242,7 @@
    "id": "loose-parent-child-shopping-together",
    "file": "loose-parent-child-shopping-together.webp",
    "title": "買い物に行く(ゆるい親子の日常素材)",
-   "desc": "買い物に行く(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "desc": "買い物に行く(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",
@@ -266,7 +266,7 @@
    "id": "loose-parent-child-homework-help",
    "file": "loose-parent-child-homework-help.webp",
    "title": "宿題を見守る(ゆるい親子の日常素材)",
-   "desc": "宿題を見守る(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "desc": "宿題を見守る(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",
@@ -290,7 +290,7 @@
    "id": "loose-parent-child-bedtime-routine",
    "file": "loose-parent-child-bedtime-routine.webp",
    "title": "寝かしつける(ゆるい親子の日常素材)",
-   "desc": "寝かしつける(ゆるい親子の日常素材)のイラスト。ゆるい手書きのタッチ。",
+   "desc": "寝かしつける(ゆるい親子の日常素材)のゆるい手書きイラストです。",
    "tags": [
     "人物",
     "親子",

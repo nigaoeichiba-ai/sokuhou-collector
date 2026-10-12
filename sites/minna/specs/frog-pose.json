@@ -1,11 +1,11 @@
 {
  "slug": "frog-pose",
- "title": "かえるのポーズいろいろ",
+ "title": "かえるのポーズ集",
  "subject": "かえる",
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME frog character (kawaii mascot): a bright-green round frog with big eyes on top of its head, a wide smile, pale belly and a small green lily-pad hat",
- "lead": "ハスの葉っぱの帽子と、まんまるの目がチャームポイントのかえる。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "lead": "ハスの葉の帽子と丸い目が特徴のかえる素材12点です。ポーズや表情があり、SNS画像やスライド、おたよりに使えます。",
  "tags": [
   "かえる",
   "蛙",
@@ -18,17 +18,17 @@
  "items": [
   [
    "wave",
-   "手をふる",
+   "手を振る",
    "standing and waving one hand cheerfully"
   ],
   [
    "jump",
-   "とびはねる",
+   "飛び跳ねる",
    "jumping with joy, arms up, big smile"
   ],
   [
    "sleep",
-   "ねむる",
+   "眠る",
    "sleeping curled up peacefully with a tiny smile"
   ],
   [
@@ -38,22 +38,22 @@
   ],
   [
    "eat",
-   "もぐもぐ食べる",
+   "食べる",
    "happily eating a fly-shaped cookie"
   ],
   [
    "heart",
-   "ハートをもつ",
+   "ハートを持つ",
    "holding a red heart with a happy smile"
   ],
   [
    "run",
-   "はしる",
+   "走る",
    "running fast with motion, determined happy face"
   ],
   [
    "surprised",
-   "おどろく",
+   "驚く",
    "surprised, wide round eyes, small round mouth, both hands raised"
   ],
   [
@@ -63,17 +63,17 @@
   ],
   [
    "sad",
-   "しょんぼりする",
+   "落ち込む",
    "sitting sadly with teary eyes and drooping posture, still cute"
   ],
   [
    "angry",
-   "ぷんぷんおこる",
+   "怒る",
    "puffed-cheek angry pout with clenched fists, cute and not scary"
   ],
   [
    "cheer",
-   "ガッツポーズする",
+   "ガッツポーズをする",
    "fist-pump cheering pose with sparkling eyes"
   ]
  ],

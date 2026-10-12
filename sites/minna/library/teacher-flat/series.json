@@ -4,7 +4,7 @@
  "title": "先生（女性）のポーズ集",
  "genre": "school",
  "touch": "flat",
- "lead": "先生のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "lead": "女性の先生を12のポーズで描いた素材です。学校プリント、授業資料、教育サービスの案内に使えます。",
  "tags": [
   "人物",
   "イラスト",
@@ -23,7 +23,7 @@
    "id": "teacher-flat-01-three-quarter-back",
    "file": "teacher-flat-01-three-quarter-back.webp",
    "title": "黒板に書く（斜め後ろ）(先生)",
-   "desc": "黒板に書く（斜め後ろ）(先生)のイラスト。シンプルフラットのタッチ。",
+   "desc": "黒板に書く（斜め後ろ）(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -43,7 +43,7 @@
    "id": "teacher-flat-02-pointing-side-index",
    "file": "teacher-flat-02-pointing-side-index.webp",
    "title": "指さし(先生)",
-   "desc": "指さし(先生)のイラスト。シンプルフラットのタッチ。",
+   "desc": "指さし(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -63,7 +63,7 @@
    "id": "teacher-flat-03-holding-thick-book",
    "file": "teacher-flat-03-holding-thick-book.webp",
    "title": "教科書を持つ(先生)",
-   "desc": "教科書を持つ(先生)のイラスト。シンプルフラットのタッチ。",
+   "desc": "教科書を持つ(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -83,7 +83,7 @@
    "id": "teacher-flat-04-raised-greeting-big",
    "file": "teacher-flat-04-raised-greeting-big.webp",
    "title": "笑顔で挨拶(先生)",
-   "desc": "笑顔で挨拶(先生)のイラスト。シンプルフラットのタッチ。",
+   "desc": "笑顔で挨拶(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -103,7 +103,7 @@
    "id": "teacher-flat-05-cupped-behind-ear",
    "file": "teacher-flat-05-cupped-behind-ear.webp",
    "title": "質問を促す(先生)",
-   "desc": "質問を促す(先生)のイラスト。シンプルフラットのタッチ。",
+   "desc": "質問を促す(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -122,8 +122,8 @@
   {
    "id": "teacher-flat-06-clapping-happily",
    "file": "teacher-flat-06-clapping-happily.webp",
-   "title": "拍手でほめる(先生)",
-   "desc": "拍手でほめる(先生)のイラスト。シンプルフラットのタッチ。",
+   "title": "拍手で褒める(先生)",
+   "desc": "拍手で褒める(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -132,7 +132,7 @@
     "学校",
     "授業",
     "女性",
-    "拍手でほめる",
+    "拍手で褒める",
     "シンプルフラット",
     "学校・保育"
    ],
@@ -143,7 +143,7 @@
    "id": "teacher-flat-07-thinking-chin",
    "file": "teacher-flat-07-thinking-chin.webp",
    "title": "考える(先生)",
-   "desc": "考える(先生)のイラスト。シンプルフラットのタッチ。",
+   "desc": "考える(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -163,7 +163,7 @@
    "id": "teacher-flat-08-cheek-troubled-sweat",
    "file": "teacher-flat-08-cheek-troubled-sweat.webp",
    "title": "困る(先生)",
-   "desc": "困る(先生)のイラスト。シンプルフラットのタッチ。",
+   "desc": "困る(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -183,7 +183,7 @@
    "id": "teacher-flat-09-bowing-politely",
    "file": "teacher-flat-09-bowing-politely.webp",
    "title": "保護者にお辞儀(先生)",
-   "desc": "保護者にお辞儀(先生)のイラスト。シンプルフラットのタッチ。",
+   "desc": "保護者にお辞儀(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -203,7 +203,7 @@
    "id": "teacher-flat-10-holding-whistle-cord",
    "file": "teacher-flat-10-holding-whistle-cord.webp",
    "title": "ホイッスルを持つ(先生)",
-   "desc": "ホイッスルを持つ(先生)のイラスト。シンプルフラットのタッチ。",
+   "desc": "ホイッスルを持つ(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -223,7 +223,7 @@
    "id": "teacher-flat-11-sitting-writing-paper",
    "file": "teacher-flat-11-sitting-writing-paper.webp",
    "title": "採点する(先生)",
-   "desc": "採点する(先生)のイラスト。シンプルフラットのタッチ。",
+   "desc": "採点する(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -243,7 +243,7 @@
    "id": "teacher-flat-12-fist-pump",
    "file": "teacher-flat-12-fist-pump.webp",
    "title": "ガッツポーズ(先生)",
-   "desc": "ガッツポーズ(先生)のイラスト。シンプルフラットのタッチ。",
+   "desc": "ガッツポーズ(先生)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "イラスト",

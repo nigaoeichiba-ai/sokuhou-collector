@@ -4,7 +4,7 @@
  "title": "冬至・ゆず湯のイラスト",
  "genre": "season",
  "touch": "kawaii",
- "lead": "かぼちゃ、ゆず湯、小豆がゆ、こんにゃく。12月22日ごろの冬至の行事を、12点にまとめました。給食だよりや保健だより、デイサービスの掲示に。",
+ "lead": "冬至の行事に関わる食べ物や場面をまとめた12点の素材です。給食だより、保健だより、施設掲示に使えます。",
  "tags": [
   "冬至",
   "ゆず湯",
@@ -25,7 +25,7 @@
    "id": "touji-yuzu-kawaii-yuzu",
    "file": "touji-yuzu-kawaii-yuzu.webp",
    "title": "ゆず",
-   "desc": "ゆずのイラスト。ゆるかわのタッチ。",
+   "desc": "ゆずのゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
@@ -43,7 +43,7 @@
    "id": "touji-yuzu-kawaii-yuzuyu",
    "file": "touji-yuzu-kawaii-yuzuyu.webp",
    "title": "ゆず湯",
-   "desc": "ゆず湯のイラスト。ゆるかわのタッチ。",
+   "desc": "ゆず湯のゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
@@ -60,7 +60,7 @@
    "id": "touji-yuzu-kawaii-kabocha",
    "file": "touji-yuzu-kawaii-kabocha.webp",
    "title": "かぼちゃ",
-   "desc": "かぼちゃのイラスト。ゆるかわのタッチ。",
+   "desc": "かぼちゃのゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
@@ -76,15 +76,15 @@
   {
    "id": "touji-yuzu-kawaii-kabocha-ni",
    "file": "touji-yuzu-kawaii-kabocha-ni.webp",
-   "title": "かぼちゃの煮もの",
-   "desc": "かぼちゃの煮もののイラスト。ゆるかわのタッチ。",
+   "title": "かぼちゃの煮物",
+   "desc": "かぼちゃの煮物のゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
     "かぼちゃ",
     "12月",
     "冬至・ゆず湯のイラスト",
-    "かぼちゃの煮もの",
+    "かぼちゃの煮物",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -95,7 +95,7 @@
    "id": "touji-yuzu-kawaii-azuki",
    "file": "touji-yuzu-kawaii-azuki.webp",
    "title": "小豆がゆ",
-   "desc": "小豆がゆのイラスト。ゆるかわのタッチ。",
+   "desc": "小豆がゆのゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
@@ -113,7 +113,7 @@
    "id": "touji-yuzu-kawaii-konnyaku",
    "file": "touji-yuzu-kawaii-konnyaku.webp",
    "title": "こんにゃく",
-   "desc": "こんにゃくのイラスト。ゆるかわのタッチ。",
+   "desc": "こんにゃくのゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
@@ -130,15 +130,15 @@
   {
    "id": "touji-yuzu-kawaii-sun",
    "file": "touji-yuzu-kawaii-sun.webp",
-   "title": "いちばん短い昼",
-   "desc": "いちばん短い昼のイラスト。ゆるかわのタッチ。",
+   "title": "一番短い昼",
+   "desc": "一番短い昼のゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
     "かぼちゃ",
     "12月",
     "冬至・ゆず湯のイラスト",
-    "いちばん短い昼",
+    "一番短い昼",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -149,7 +149,7 @@
    "id": "touji-yuzu-kawaii-night",
    "file": "touji-yuzu-kawaii-night.webp",
    "title": "長い夜",
-   "desc": "長い夜のイラスト。ゆるかわのタッチ。",
+   "desc": "長い夜のゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
@@ -167,7 +167,7 @@
    "id": "touji-yuzu-kawaii-towel",
    "file": "touji-yuzu-kawaii-towel.webp",
    "title": "タオルとあひる",
-   "desc": "タオルとあひるのイラスト。ゆるかわのタッチ。",
+   "desc": "タオルとあひるのゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
@@ -185,7 +185,7 @@
    "id": "touji-yuzu-kawaii-kotatsu",
    "file": "touji-yuzu-kawaii-kotatsu.webp",
    "title": "こたつ",
-   "desc": "こたつのイラスト。ゆるかわのタッチ。",
+   "desc": "こたつのゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
@@ -202,15 +202,15 @@
   {
    "id": "touji-yuzu-kawaii-nanakusa",
    "file": "touji-yuzu-kawaii-nanakusa.webp",
-   "title": "冬至の食べもの",
-   "desc": "冬至の食べもののイラスト。ゆるかわのタッチ。",
+   "title": "冬至の食べ物",
+   "desc": "冬至の食べ物のゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
     "かぼちゃ",
     "12月",
     "冬至・ゆず湯のイラスト",
-    "冬至の食べもの",
+    "冬至の食べ物",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -220,15 +220,15 @@
   {
    "id": "touji-yuzu-kawaii-scarf",
    "file": "touji-yuzu-kawaii-scarf.webp",
-   "title": "あったか冬じたく",
-   "desc": "あったか冬じたくのイラスト。ゆるかわのタッチ。",
+   "title": "暖かい冬支度",
+   "desc": "暖かい冬支度のゆるかわイラストです。",
    "tags": [
     "冬至",
     "ゆず湯",
     "かぼちゃ",
     "12月",
     "冬至・ゆず湯のイラスト",
-    "あったか冬じたく",
+    "暖かい冬支度",
     "ゆるかわ",
     "季節・行事"
    ],

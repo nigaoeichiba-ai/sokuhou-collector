@@ -6,7 +6,7 @@
  "touch": "kawaii",
  "title_fmt": "{ja}",
  "subject_en": "Cute lunch-box foods, each a single separate item with a tiny simple face on it where natural: onigiri rice balls, side dishes, bento boxes, a thermos. Food items only, no people. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
- "lead": "おにぎり、おかずいろいろ、お弁当箱、水筒。遠足、ピクニック、毎日のお弁当に使える食べものイラスト12点。",
+ "lead": "おにぎりやおかず、お弁当箱、水筒などを描いた食べ物素材12点です。遠足や昼食案内、献立表に使えます。",
  "tags": [
   "お弁当",
   "おにぎり",
@@ -25,7 +25,7 @@
   ],
   [
    "onigiri-round",
-   "まるいおにぎり",
+   "丸いおにぎり",
    "a round onigiri rice ball with sesame seeds on top"
   ],
   [
@@ -50,7 +50,7 @@
   ],
   [
    "thermos",
-   "すいとう",
+   "水筒",
    "a small bottle-shaped thermos with a cup lid"
   ],
   [
@@ -70,7 +70,7 @@
   ],
   [
    "furoshiki",
-   "お弁当づつみ",
+   "お弁当包み",
    "a lunch box wrapped in a knotted cloth with a simple dot pattern"
   ],
   [

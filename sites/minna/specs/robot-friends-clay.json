@@ -1,12 +1,12 @@
 {
  "slug": "robot-friends-clay",
- "title": "オリジナルのロボット仲間",
+ "title": "オリジナルロボットいろいろ",
  "subject": "",
  "genre": "animals",
  "touch": "clay",
  "title_fmt": "{ja}",
  "subject_en": "ORIGINAL friendly robot characters invented for this series (not any existing robot or franchise), each a separate chubby robot with a distinct silhouette, a simple glowing face screen and one signature pastel colour each. Matte clay look. Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text.",
- "lead": "まんまるロボ、掃除ロボ、花を育てるロボ。どこにもいない、オリジナルのやさしいロボット12体。ゲームやイベントのキャラに。",
+ "lead": "掃除、園芸、料理などをテーマにしたロボット素材12点です。ゲームやイベント告知のキャラクターに使えます。",
  "tags": [
   "ロボット",
   "オリジナルキャラ",
@@ -25,22 +25,22 @@
   ],
   [
    "cleaner",
-   "そうじロボ",
+   "掃除ロボ",
    "a flat disc-shaped yellow cleaning robot with a small brush and a happy face"
   ],
   [
    "gardener",
-   "お花ロボ",
+   "花ロボ",
    "a pink robot with a watering can arm and a flower growing on its head"
   ],
   [
    "cook",
-   "おりょうりロボ",
+   "料理ロボ",
    "a white-blue robot with a chef hat and a ladle hand"
   ],
   [
    "umbrella",
-   "かさロボ",
+   "傘ロボ",
    "a small blue robot whose head is an umbrella"
   ],
   [
@@ -65,17 +65,17 @@
   ],
   [
    "book",
-   "本よみロボ",
+   "本読みロボ",
    "a green robot with an open book for a chest"
   ],
   [
    "music",
-   "おんがくロボ",
+   "音楽ロボ",
    "a coral robot with a speaker belly and musical note antennae"
   ],
   [
    "sleepy",
-   "ねむねむロボ",
+   "眠るロボ",
    "a grey-blue robot with half-closed screen eyes and a blanket scarf"
   ]
  ],

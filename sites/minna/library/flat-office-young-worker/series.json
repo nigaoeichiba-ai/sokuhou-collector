@@ -4,7 +4,7 @@
  "title": "若手会社員のポーズ集",
  "genre": "work",
  "touch": "flat",
- "lead": "若手会社員のよく使う所作を、清潔なフラットタッチでそろえた人物素材です。ビジネス資料や採用、社内案内、研修ページに使いやすい構成です。検索結果でも用途が伝わりやすいです。",
+ "lead": "若手会社員の挨拶・PC作業・案内などを、清潔なフラットタッチで描いた人物素材です。ビジネス資料や研修ページに使えます。",
  "tags": [
   "人物",
   "会社員",
@@ -26,7 +26,7 @@
    "id": "flat-office-young-worker-greeting-bow",
    "file": "flat-office-young-worker-greeting-bow.webp",
    "title": "挨拶して立つ(若手会社員)",
-   "desc": "挨拶して立つ(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "desc": "挨拶して立つ(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",
@@ -51,7 +51,7 @@
    "id": "flat-office-young-worker-laptop-work",
    "file": "flat-office-young-worker-laptop-work.webp",
    "title": "ノートPC作業(若手会社員)",
-   "desc": "ノートPC作業(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "desc": "ノートPC作業(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",
@@ -75,8 +75,8 @@
   {
    "id": "flat-office-young-worker-pointing-guide",
    "file": "flat-office-young-worker-pointing-guide.webp",
-   "title": "指さし案内する(若手会社員)",
-   "desc": "指さし案内する(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "title": "指差し案内する(若手会社員)",
+   "desc": "指差し案内する(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",
@@ -90,7 +90,7 @@
     "挨拶",
     "仕事",
     "若手会社員",
-    "指さし案内する",
+    "指差し案内する",
     "シンプルフラット",
     "仕事・ビジネス"
    ],
@@ -100,8 +100,8 @@
   {
    "id": "flat-office-young-worker-agree-pose",
    "file": "flat-office-young-worker-agree-pose.webp",
-   "title": "了解ポーズする(若手会社員)",
-   "desc": "了解ポーズする(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "title": "了解ポーズをする(若手会社員)",
+   "desc": "了解ポーズをする(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",
@@ -115,7 +115,7 @@
     "挨拶",
     "仕事",
     "若手会社員",
-    "了解ポーズする",
+    "了解ポーズをする",
     "シンプルフラット",
     "仕事・ビジネス"
    ],
@@ -126,7 +126,7 @@
    "id": "flat-office-young-worker-worried-thinking",
    "file": "flat-office-young-worker-worried-thinking.webp",
    "title": "困って考える(若手会社員)",
-   "desc": "困って考える(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "desc": "困って考える(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",
@@ -151,7 +151,7 @@
    "id": "flat-office-young-worker-presentation",
    "file": "flat-office-young-worker-presentation.webp",
    "title": "発表して説明(若手会社員)",
-   "desc": "発表して説明(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "desc": "発表して説明(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",
@@ -176,7 +176,7 @@
    "id": "flat-office-young-worker-phone-call",
    "file": "flat-office-young-worker-phone-call.webp",
    "title": "電話で話す(若手会社員)",
-   "desc": "電話で話す(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "desc": "電話で話す(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",
@@ -201,7 +201,7 @@
    "id": "flat-office-young-worker-holding-documents",
    "file": "flat-office-young-worker-holding-documents.webp",
    "title": "資料を持って立つ(若手会社員)",
-   "desc": "資料を持って立つ(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "desc": "資料を持って立つ(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",
@@ -226,7 +226,7 @@
    "id": "flat-office-young-worker-success-pose",
    "file": "flat-office-young-worker-success-pose.webp",
    "title": "達成を喜ぶ(若手会社員)",
-   "desc": "達成を喜ぶ(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "desc": "達成を喜ぶ(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",
@@ -250,8 +250,8 @@
   {
    "id": "flat-office-young-worker-deep-bow",
    "file": "flat-office-young-worker-deep-bow.webp",
-   "title": "丁寧にお辞儀(若手会社員)",
-   "desc": "丁寧にお辞儀(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "title": "丁寧にお辞儀する(若手会社員)",
+   "desc": "丁寧にお辞儀する(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",
@@ -265,7 +265,7 @@
     "挨拶",
     "仕事",
     "若手会社員",
-    "丁寧にお辞儀",
+    "丁寧にお辞儀する",
     "シンプルフラット",
     "仕事・ビジネス"
    ],
@@ -276,7 +276,7 @@
    "id": "flat-office-young-worker-hurrying-walk",
    "file": "flat-office-young-worker-hurrying-walk.webp",
    "title": "急いで歩く(若手会社員)",
-   "desc": "急いで歩く(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "desc": "急いで歩く(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",
@@ -301,7 +301,7 @@
    "id": "flat-office-young-worker-coffee-break",
    "file": "flat-office-young-worker-coffee-break.webp",
    "title": "休憩でコーヒー(若手会社員)",
-   "desc": "休憩でコーヒー(若手会社員)のイラスト。シンプルフラットのタッチ。",
+   "desc": "休憩でコーヒー(若手会社員)のシンプルフラットイラストです。",
    "tags": [
     "人物",
     "会社員",

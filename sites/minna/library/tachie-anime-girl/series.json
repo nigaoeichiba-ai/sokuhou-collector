@@ -1,10 +1,10 @@
 {
  "added": "2026-10-07",
  "slug": "tachie-anime-girl",
- "title": "立ち絵キャラ（表情差分つき）のポーズ集",
+ "title": "立ち絵キャラ（表情差分付き）のポーズ集",
  "genre": "people",
  "touch": "animesoft",
- "lead": "立ち絵キャラのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "lead": "立ち絵キャラの表情差分とポーズを12点そろえた素材です。会話画面、解説記事、スライドに使えます。",
  "tags": [
   "人物",
   "イラスト",
@@ -23,7 +23,7 @@
    "id": "tachie-anime-girl-01-standing-front-facing",
    "file": "tachie-anime-girl-01-standing-front-facing.webp",
    "title": "通常(立ち絵キャラ)",
-   "desc": "通常(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "desc": "通常(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -43,7 +43,7 @@
    "id": "tachie-anime-girl-02-same-pose-smiling",
    "file": "tachie-anime-girl-02-same-pose-smiling.webp",
    "title": "笑顔(立ち絵キャラ)",
-   "desc": "笑顔(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "desc": "笑顔(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -63,7 +63,7 @@
    "id": "tachie-anime-girl-03-same-pose-surprised",
    "file": "tachie-anime-girl-03-same-pose-surprised.webp",
    "title": "驚き(立ち絵キャラ)",
-   "desc": "驚き(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "desc": "驚き(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -83,7 +83,7 @@
    "id": "tachie-anime-girl-04-same-pose-troubled",
    "file": "tachie-anime-girl-04-same-pose-troubled.webp",
    "title": "困り(立ち絵キャラ)",
-   "desc": "困り(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "desc": "困り(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -102,8 +102,8 @@
   {
    "id": "tachie-anime-girl-05-same-pose-pouting",
    "file": "tachie-anime-girl-05-same-pose-pouting.webp",
-   "title": "ぷんぷん怒り(立ち絵キャラ)",
-   "desc": "ぷんぷん怒り(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "title": "怒り(立ち絵キャラ)",
+   "desc": "怒り(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -113,7 +113,7 @@
     "アニメ風",
     "女の子",
     "キャラクター",
-    "ぷんぷん怒り",
+    "怒り",
     "アニメ風(立ち絵)"
    ],
    "w": 165,
@@ -123,7 +123,7 @@
    "id": "tachie-anime-girl-06-same-pose-sad",
    "file": "tachie-anime-girl-06-same-pose-sad.webp",
    "title": "悲しい(立ち絵キャラ)",
-   "desc": "悲しい(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "desc": "悲しい(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -143,7 +143,7 @@
    "id": "tachie-anime-girl-07-bowing-politely",
    "file": "tachie-anime-girl-07-bowing-politely.webp",
    "title": "お辞儀(立ち絵キャラ)",
-   "desc": "お辞儀(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "desc": "お辞儀(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -163,7 +163,7 @@
    "id": "tachie-anime-girl-08-pointing-side-index",
    "file": "tachie-anime-girl-08-pointing-side-index.webp",
    "title": "指さし(立ち絵キャラ)",
-   "desc": "指さし(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "desc": "指さし(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -183,7 +183,7 @@
    "id": "tachie-anime-girl-09-chin-thinking",
    "file": "tachie-anime-girl-09-chin-thinking.webp",
    "title": "考える(立ち絵キャラ)",
-   "desc": "考える(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "desc": "考える(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -203,7 +203,7 @@
    "id": "tachie-anime-girl-10-waving-smile",
    "file": "tachie-anime-girl-10-waving-smile.webp",
    "title": "手を振る(立ち絵キャラ)",
-   "desc": "手を振る(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "desc": "手を振る(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -223,7 +223,7 @@
    "id": "tachie-anime-girl-11-clapping-happily",
    "file": "tachie-anime-girl-11-clapping-happily.webp",
    "title": "拍手(立ち絵キャラ)",
-   "desc": "拍手(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "desc": "拍手(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -243,7 +243,7 @@
    "id": "tachie-anime-girl-12-seen-from-behind",
    "file": "tachie-anime-girl-12-seen-from-behind.webp",
    "title": "後ろ姿(立ち絵キャラ)",
-   "desc": "後ろ姿(立ち絵キャラ)のイラスト。アニメ風(立ち絵)のタッチ。",
+   "desc": "後ろ姿(立ち絵キャラ)のアニメ風(立ち絵)イラストです。",
    "tags": [
     "人物",
     "イラスト",

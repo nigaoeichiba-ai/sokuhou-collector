@@ -4,7 +4,7 @@
  "title": "旅館の女将（おもてなし）のポーズ集",
  "genre": "people",
  "touch": "wa",
- "lead": "旅館の女将のイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "lead": "旅館の女将のイラストを、12のポーズ・場面でそろえました。宿泊案内や接客資料、チラシ、スライドに使えます。",
  "tags": [
   "人物",
   "イラスト",
@@ -24,7 +24,7 @@
    "id": "omotenashi-wa-01-standing-bow-joined",
    "file": "omotenashi-wa-01-standing-bow-joined.webp",
    "title": "立ってお辞儀(旅館の女将)",
-   "desc": "立ってお辞儀(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "desc": "立ってお辞儀(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -45,7 +45,7 @@
    "id": "omotenashi-wa-02-welcoming-open",
    "file": "omotenashi-wa-02-welcoming-open.webp",
    "title": "両手でお出迎え(旅館の女将)",
-   "desc": "両手でお出迎え(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "desc": "両手でお出迎え(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -66,7 +66,7 @@
    "id": "omotenashi-wa-03-gesturing-open-guide",
    "file": "omotenashi-wa-03-gesturing-open-guide.webp",
    "title": "手で案内(旅館の女将)",
-   "desc": "手で案内(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "desc": "手で案内(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -87,7 +87,7 @@
    "id": "omotenashi-wa-04-holding-simple-tray",
    "file": "omotenashi-wa-04-holding-simple-tray.webp",
    "title": "お盆にお茶を載せる(旅館の女将)",
-   "desc": "お盆にお茶を載せる(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "desc": "お盆にお茶を載せる(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -108,7 +108,7 @@
    "id": "omotenashi-wa-05-kneeling-seiza-bowing",
    "file": "omotenashi-wa-05-kneeling-seiza-bowing.webp",
    "title": "正座で三つ指の礼(旅館の女将)",
-   "desc": "正座で三つ指の礼(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "desc": "正座で三つ指の礼(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -129,7 +129,7 @@
    "id": "omotenashi-wa-06-kneeling-seiza-smiling",
    "file": "omotenashi-wa-06-kneeling-seiza-smiling.webp",
    "title": "笑顔で正座(旅館の女将)",
-   "desc": "笑顔で正座(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "desc": "笑顔で正座(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -150,7 +150,7 @@
    "id": "omotenashi-wa-07-holding-folded-fan",
    "file": "omotenashi-wa-07-holding-folded-fan.webp",
    "title": "扇子を持つ(旅館の女将)",
-   "desc": "扇子を持つ(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "desc": "扇子を持つ(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -170,8 +170,8 @@
   {
    "id": "omotenashi-wa-08-waving-goodbye-raised",
    "file": "omotenashi-wa-08-waving-goodbye-raised.webp",
-   "title": "手を振ってお見送り(旅館の女将)",
-   "desc": "手を振ってお見送り(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "title": "手を振って見送る(旅館の女将)",
+   "desc": "手を振って見送る(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -182,7 +182,7 @@
     "着物",
     "観光",
     "和風",
-    "手を振ってお見送り",
+    "手を振って見送る",
     "和風・和柄"
    ],
    "w": 209,
@@ -192,7 +192,7 @@
    "id": "omotenashi-wa-09-walking-holding-simple",
    "file": "omotenashi-wa-09-walking-holding-simple.webp",
    "title": "傘をさして歩く(旅館の女将)",
-   "desc": "傘をさして歩く(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "desc": "傘をさして歩く(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -213,7 +213,7 @@
    "id": "omotenashi-wa-10-beckoning-smiling",
    "file": "omotenashi-wa-10-beckoning-smiling.webp",
    "title": "手招き(旅館の女将)",
-   "desc": "手招き(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "desc": "手招き(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -233,8 +233,8 @@
   {
    "id": "omotenashi-wa-11-pointing-side-extended",
    "file": "omotenashi-wa-11-pointing-side-extended.webp",
-   "title": "指さしで説明(旅館の女将)",
-   "desc": "指さしで説明(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "title": "指差しで説明(旅館の女将)",
+   "desc": "指差しで説明(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -245,7 +245,7 @@
     "着物",
     "観光",
     "和風",
-    "指さしで説明",
+    "指差しで説明",
     "和風・和柄"
    ],
    "w": 299,
@@ -255,7 +255,7 @@
    "id": "omotenashi-wa-12-cheek-troubled",
    "file": "omotenashi-wa-12-cheek-troubled.webp",
    "title": "困り顔(旅館の女将)",
-   "desc": "困り顔(旅館の女将)のイラスト。和風・和柄のタッチ。",
+   "desc": "困り顔(旅館の女将)の和風・和柄イラストです。",
    "tags": [
     "人物",
     "イラスト",

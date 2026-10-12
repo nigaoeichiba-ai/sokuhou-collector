@@ -1,13 +1,13 @@
 {
  "slug": "oshogatsu-asobi-crayon",
- "title": "お正月あそび クレヨン",
+ "title": "お正月遊び クレヨン",
  "subject": "",
  "genre": "season",
  "touch": "crayon",
  "title_fmt": "{ja}",
  "priority": 12,
  "subject_en": "Traditional Japanese New Year games and toys, each a separate object, drawn in a warm crayon style with bright childlike colours. Every object has a closed, clearly darker outline; light parts (paper, rice cakes) are warm cream (#FFF6E0) or tinted, never pure white. No letters or characters on the cards, kites or paper.",
- "lead": "こま、たこ、はねつき、かるた、ふくわらい、けん玉。園や学校のおたより1月号、お正月の遊びの説明、すごろくの素材に使える、クレヨンのタッチの12点。",
+ "lead": "こま・凧揚げ・羽根つき・かるたなど、お正月遊びをクレヨンのタッチで描いた12点です。園や学校のおたより、遊びの説明に使えます。",
  "tags": [
   "お正月",
   "お正月あそび",
@@ -34,7 +34,7 @@
   ],
   [
    "tako",
-   "たこあげ",
+   "凧揚げ",
    "a traditional square Japanese kite with a red sun design and a long tail (no letters)"
   ],
   [
@@ -79,12 +79,12 @@
   ],
   [
    "mochitsuki",
-   "もちつき",
+   "餅つき",
    "a wooden mortar with a rice cake and a mallet"
   ],
   [
    "kakizome",
-   "書きぞめ",
+   "書き初め",
    "a brush and an ink stone beside a blank sheet of cream paper"
   ]
  ],

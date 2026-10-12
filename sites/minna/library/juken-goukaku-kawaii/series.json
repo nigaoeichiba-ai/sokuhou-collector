@@ -4,7 +4,7 @@
  "title": "受験・合格祈願のイラスト",
  "genre": "school",
  "touch": "kawaii",
- "lead": "鉛筆、絵馬、お守り、桜。受験生をはげますカードやお知らせに使える12点。",
+ "lead": "鉛筆・絵馬・お守り・桜など、受験や合格祈願に使える12点の素材です。応援カードやお知らせに使えます。",
  "tags": [
   "受験",
   "合格",
@@ -23,15 +23,15 @@
   {
    "id": "juken-goukaku-kawaii-pencil",
    "file": "juken-goukaku-kawaii-pencil.webp",
-   "title": "えんぴつ",
-   "desc": "えんぴつのイラスト。ゆるかわのタッチ。",
+   "title": "鉛筆",
+   "desc": "鉛筆のゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
     "合格祈願",
     "絵馬",
     "受験・合格祈願のイラスト",
-    "えんぴつ",
+    "鉛筆",
     "ゆるかわ",
     "学校・保育"
    ],
@@ -42,7 +42,7 @@
    "id": "juken-goukaku-kawaii-ema",
    "file": "juken-goukaku-kawaii-ema.webp",
    "title": "絵馬",
-   "desc": "絵馬のイラスト。ゆるかわのタッチ。",
+   "desc": "絵馬のゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
@@ -59,7 +59,7 @@
    "id": "juken-goukaku-kawaii-omamori",
    "file": "juken-goukaku-kawaii-omamori.webp",
    "title": "合格のお守り",
-   "desc": "合格のお守りのイラスト。ゆるかわのタッチ。",
+   "desc": "合格のお守りのゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
@@ -78,7 +78,7 @@
    "id": "juken-goukaku-kawaii-sakura",
    "file": "juken-goukaku-kawaii-sakura.webp",
    "title": "咲いた桜",
-   "desc": "咲いた桜のイラスト。ゆるかわのタッチ。",
+   "desc": "咲いた桜のゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
@@ -96,7 +96,7 @@
    "id": "juken-goukaku-kawaii-desk",
    "file": "juken-goukaku-kawaii-desk.webp",
    "title": "勉強机",
-   "desc": "勉強机のイラスト。ゆるかわのタッチ。",
+   "desc": "勉強机のゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
@@ -115,7 +115,7 @@
    "id": "juken-goukaku-kawaii-book",
    "file": "juken-goukaku-kawaii-book.webp",
    "title": "参考書",
-   "desc": "参考書のイラスト。ゆるかわのタッチ。",
+   "desc": "参考書のゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
@@ -132,15 +132,15 @@
   {
    "id": "juken-goukaku-kawaii-clock",
    "file": "juken-goukaku-kawaii-clock.webp",
-   "title": "目ざまし時計",
-   "desc": "目ざまし時計のイラスト。ゆるかわのタッチ。",
+   "title": "目覚まし時計",
+   "desc": "目覚まし時計のゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
     "合格祈願",
     "絵馬",
     "受験・合格祈願のイラスト",
-    "目ざまし時計",
+    "目覚まし時計",
     "ゆるかわ",
     "学校・保育"
    ],
@@ -151,7 +151,7 @@
    "id": "juken-goukaku-kawaii-hachimaki",
    "file": "juken-goukaku-kawaii-hachimaki.webp",
    "title": "はちまき",
-   "desc": "はちまきのイラスト。ゆるかわのタッチ。",
+   "desc": "はちまきのゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
@@ -169,7 +169,7 @@
    "id": "juken-goukaku-kawaii-daruma",
    "file": "juken-goukaku-kawaii-daruma.webp",
    "title": "だるま",
-   "desc": "だるまのイラスト。ゆるかわのタッチ。",
+   "desc": "だるまのゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
@@ -187,7 +187,7 @@
    "id": "juken-goukaku-kawaii-eraser",
    "file": "juken-goukaku-kawaii-eraser.webp",
    "title": "消しゴム",
-   "desc": "消しゴムのイラスト。ゆるかわのタッチ。",
+   "desc": "消しゴムのゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
@@ -204,15 +204,15 @@
   {
    "id": "juken-goukaku-kawaii-student",
    "file": "juken-goukaku-kawaii-student.webp",
-   "title": "がんばる子",
-   "desc": "がんばる子のイラスト。ゆるかわのタッチ。",
+   "title": "頑張る子",
+   "desc": "頑張る子のゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
     "合格祈願",
     "絵馬",
     "受験・合格祈願のイラスト",
-    "がんばる子",
+    "頑張る子",
     "ゆるかわ",
     "学校・保育"
    ],
@@ -222,15 +222,15 @@
   {
    "id": "juken-goukaku-kawaii-flag",
    "file": "juken-goukaku-kawaii-flag.webp",
-   "title": "合格のはた",
-   "desc": "合格のはたのイラスト。ゆるかわのタッチ。",
+   "title": "合格の旗",
+   "desc": "合格の旗のゆるかわイラストです。",
    "tags": [
     "受験",
     "合格",
     "合格祈願",
     "絵馬",
     "受験・合格祈願のイラスト",
-    "合格のはた",
+    "合格の旗",
     "ゆるかわ",
     "学校・保育"
    ],

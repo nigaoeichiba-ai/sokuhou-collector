@@ -4,7 +4,7 @@
  "title": "入学・入園のイラスト",
  "genre": "school",
  "touch": "kawaii",
- "lead": "ランドセル、さくらの校門、園児の帽子、上ばき、名札、チューリップ。入学・入園のお知らせ、4月のおたより、お祝いのカードに使える12点。",
+ "lead": "ランドセル・さくらの校門・園児の帽子など、入学・入園の春の素材12点です。お知らせや4月のおたより、お祝いカードに使えます。",
  "tags": [
   "入学",
   "入園",
@@ -28,7 +28,7 @@
    "id": "nyugaku-spring-kawaii-randoseru",
    "file": "nyugaku-spring-kawaii-randoseru.webp",
    "title": "ランドセル",
-   "desc": "ランドセルのイラスト。ゆるかわのタッチ。",
+   "desc": "ランドセルのゆるかわイラストです。",
    "tags": [
     "入学",
     "入園",
@@ -46,7 +46,7 @@
    "id": "nyugaku-spring-kawaii-randoseru-boy",
    "file": "nyugaku-spring-kawaii-randoseru-boy.webp",
    "title": "ランドセルの男の子",
-   "desc": "ランドセルの男の子のイラスト。ゆるかわのタッチ。",
+   "desc": "ランドセルの男の子のゆるかわイラストです。",
    "tags": [
     "入学",
     "入園",
@@ -65,7 +65,7 @@
    "id": "nyugaku-spring-kawaii-enji-hat",
    "file": "nyugaku-spring-kawaii-enji-hat.webp",
    "title": "園児の帽子",
-   "desc": "園児の帽子のイラスト。ゆるかわのタッチ。",
+   "desc": "園児の帽子のゆるかわイラストです。",
    "tags": [
     "入学",
     "入園",
@@ -82,15 +82,15 @@
   {
    "id": "nyugaku-spring-kawaii-uwabaki",
    "file": "nyugaku-spring-kawaii-uwabaki.webp",
-   "title": "上ばき",
-   "desc": "上ばきのイラスト。ゆるかわのタッチ。",
+   "title": "上履き",
+   "desc": "上履きのゆるかわイラストです。",
    "tags": [
     "入学",
     "入園",
     "入学式",
     "入園式",
     "入学・入園のイラスト",
-    "上ばき",
+    "上履き",
     "ゆるかわ",
     "学校・保育"
    ],
@@ -101,7 +101,7 @@
    "id": "nyugaku-spring-kawaii-nafuda",
    "file": "nyugaku-spring-kawaii-nafuda.webp",
    "title": "名札",
-   "desc": "名札のイラスト。ゆるかわのタッチ。",
+   "desc": "名札のゆるかわイラストです。",
    "tags": [
     "入学",
     "入園",
@@ -119,7 +119,7 @@
    "id": "nyugaku-spring-kawaii-tulip",
    "file": "nyugaku-spring-kawaii-tulip.webp",
    "title": "チューリップ",
-   "desc": "チューリップのイラスト。ゆるかわのタッチ。",
+   "desc": "チューリップのゆるかわイラストです。",
    "tags": [
     "入学",
     "入園",
@@ -137,7 +137,7 @@
    "id": "nyugaku-spring-kawaii-sakura-branch",
    "file": "nyugaku-spring-kawaii-sakura-branch.webp",
    "title": "さくらの枝",
-   "desc": "さくらの枝のイラスト。ゆるかわのタッチ。",
+   "desc": "さくらの枝のゆるかわイラストです。",
    "tags": [
     "入学",
     "入園",
@@ -156,7 +156,7 @@
    "id": "nyugaku-spring-kawaii-ceremony-flower",
    "file": "nyugaku-spring-kawaii-ceremony-flower.webp",
    "title": "お祝いの花",
-   "desc": "お祝いの花のイラスト。ゆるかわのタッチ。",
+   "desc": "お祝いの花のゆるかわイラストです。",
    "tags": [
     "入学",
     "入園",
@@ -173,15 +173,15 @@
   {
    "id": "nyugaku-spring-kawaii-bento",
    "file": "nyugaku-spring-kawaii-bento.webp",
-   "title": "はじめてのお弁当",
-   "desc": "はじめてのお弁当のイラスト。ゆるかわのタッチ。",
+   "title": "初めてのお弁当",
+   "desc": "初めてのお弁当のゆるかわイラストです。",
    "tags": [
     "入学",
     "入園",
     "入学式",
     "入園式",
     "入学・入園のイラスト",
-    "はじめてのお弁当",
+    "初めてのお弁当",
     "ゆるかわ",
     "学校・保育"
    ],

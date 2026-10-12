@@ -19,7 +19,8 @@ sys.path.insert(0, str(HERE.parents[1]))
 from sites.minna import factory  # noqa: E402
 
 MAX_LEAD = 130
-MAX_COMMAS = 2
+MAX_COMMAS = 4                       # per sentence: a list of motifs (晴れ、曇り、雨、雪) is not the habit this review is about
+AI_TOPIC = {"ai-dx-office-helper"}   # a series that is about AI itself may name it
 
 
 def export(out: Path, chunk: int) -> int:
@@ -50,7 +51,7 @@ def problems(old: dict, new: dict) -> list[str]:
     if bool(old["subject"]) != bool(new["subject"]):
         bad.append("subject emptied or filled")
     text = new["title"] + new["lead"] + "".join(i[1] for i in new["items"])
-    if re.search(r"\bAI\b|ＡＩ|生成|人が選んで", text):
+    if old["slug"] not in AI_TOPIC and re.search(r"\bAI\b|ＡＩ|生成|人が選んで", text):
         bad.append("mentions AI/generation")
     if len(new["lead"]) > MAX_LEAD:
         bad.append(f"lead longer than {MAX_LEAD} characters")

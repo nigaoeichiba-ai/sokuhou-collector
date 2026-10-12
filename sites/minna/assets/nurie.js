@@ -64,7 +64,7 @@
 
   function load(id, title) {
     var img = new Image();
-    status("よみこんでいます…");
+    status("読み込んでいます…");
     img.onload = function () {
       var s = Math.min(2, MAXW / img.naturalWidth, MAXH / img.naturalHeight);
       st.W = canvas.width = Math.round(img.naturalWidth * s); st.H = canvas.height = Math.round(img.naturalHeight * s);
@@ -82,13 +82,13 @@
       }
       st.bar = best.bar; st.seal = best.seal; st.leaky = best.share > 0.03;
       st.undo = []; st.id = id; st.title = title || id; render();
-      canvas.setAttribute("aria-label", st.title + "のぬりえ。色をえらんで、ぬりたい場所を、タップします。");
+      canvas.setAttribute("aria-label", st.title + "の塗り絵。色を選び、塗りたい場所をタップします。");
       stage.hidden = false; $("#nu-title").textContent = st.title;
       var u = new URL(location.href); u.searchParams.set("id", id); history.replaceState(null, "", u);
-      status(st.leaky ? "この絵は、線に切れ目があり、色が、外にはみ出すことがあります。そのときは「ひとつ、もどす」を、おしてください。" : "色をえらんで、ぬりたい場所を、タップしてください。");
+      status(st.leaky ? "この絵は線に切れ目があり、色が外にはみ出すことがあります。その場合は「ひとつ戻す」を押してください。" : "色を選び、塗りたい場所をタップしてください。");
       stage.scrollIntoView({ behavior: "smooth", block: "start" });
     };
-    img.onerror = function () { status("この絵を、よみこめませんでした。ほかの絵を、えらんでください。"); };
+    img.onerror = function () { status("この絵を読み込めませんでした。別の絵を選んでください。"); };
     img.src = "/files/" + id + ".webp";
   }
 
@@ -151,20 +151,20 @@
     if (!st.L) return;
     var rc = canvas.getBoundingClientRect(), x = Math.floor((e.clientX - rc.left) * st.W / rc.width), y = Math.floor((e.clientY - rc.top) * st.H / rc.height);
     if (x < 0 || y < 0 || x >= st.W || y >= st.H) return;
-    if (fillAt(x, y, pack(st.color))) { render(); status("ぬりました。つづけて、ぬれます。"); } else status("線の上は、ぬれません。線の中を、タップしてください。");
+    if (fillAt(x, y, pack(st.color))) { render(); status("塗りました。続けて塗れます。"); } else status("線の上は塗れません。線の内側をタップしてください。");
   });
 
   // palette
   var pal = $("#nu-palette");
-  pal.innerHTML = COLORS.map(function (c, n) { return '<button type="button" class="nu-c' + (n === 0 ? " on" : "") + '" style="background:' + c + '" data-c="' + c + '" aria-label="' + (c === "#ffffff" ? "白(けしごむ)" : "色 " + (n + 1)) + '"></button>'; }).join("") +
-    '<label class="nu-own">じぶんの色<input type="color" value="#ff4d6d" aria-label="好きな色"></label>';
+  pal.innerHTML = COLORS.map(function (c, n) { return '<button type="button" class="nu-c' + (n === 0 ? " on" : "") + '" style="background:' + c + '" data-c="' + c + '" aria-label="' + (c === "#ffffff" ? "白(消しゴム)" : "色 " + (n + 1)) + '"></button>'; }).join("") +
+    '<label class="nu-own">自分の色<input type="color" value="#ff4d6d" aria-label="好きな色"></label>';
   function choose(c) { st.color = c; $$(".nu-c", pal).forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-c") === c); }); }
   pal.addEventListener("click", function (e) { var b = e.target.closest(".nu-c"); if (b) choose(b.getAttribute("data-c")); });
   $(".nu-own input", pal).addEventListener("input", function (e) { choose(e.target.value); });
 
   // buttons
-  $("#nu-undo").addEventListener("click", function () { if (st.undo.length) { st.fill = st.undo.pop(); render(); status("ひとつ、もどしました。"); } else status("もどせるものは、ありません。"); });
-  $("#nu-reset").addEventListener("click", function () { if (!st.L) return; pushUndo(); st.fill = new Uint32Array(st.W * st.H); render(); status("まっしろに、もどしました(「ひとつ、もどす」で、元にもどせます)。"); });
+  $("#nu-undo").addEventListener("click", function () { if (st.undo.length) { st.fill = st.undo.pop(); render(); status("ひとつ戻しました。"); } else status("戻せる操作はありません。"); });
+  $("#nu-reset").addEventListener("click", function () { if (!st.L) return; pushUndo(); st.fill = new Uint32Array(st.W * st.H); render(); status("白紙に戻しました(「ひとつ戻す」で元に戻せます)。"); });
   $("#nu-save").addEventListener("click", function () {
     if (!st.L) return;
     canvas.toBlob(function (b) { var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "nurie-" + st.id + ".png"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000); status("保存しました。"); }, "image/png");
@@ -185,7 +185,7 @@
     $("#nu-count").textContent = lines.length + "点";
     var first = new URLSearchParams(location.search).get("id");
     if (first) { var hit = lines.filter(function (r) { return r[0] === first; })[0]; if (hit) load(hit[0], hit[1]); }
-  }).catch(function () { $("#nu-list").innerHTML = "<p>絵の一覧を、よみこめませんでした。時間をおいて、もう一度、ひらいてください。</p>"; });
+  }).catch(function () { $("#nu-list").innerHTML = "<p>絵の一覧を読み込めませんでした。時間を置いてもう一度開いてください。</p>"; });
   $("#nu-list").addEventListener("click", function (e) { var b = e.target.closest(".nu-pickbtn"); if (b) load(b.getAttribute("data-id"), b.getAttribute("data-title")); });
   window.minnaNurie = { _state: st, _fillAt: fillAt, _render: render, _pack: pack };   // for the page's own checks
 })();

@@ -1,10 +1,10 @@
 {
  "added": "2026-10-12",
  "slug": "nature-reality-creatures",
- "title": "リアルな生きもの図鑑",
+ "title": "リアルな生き物図鑑",
  "genre": "animals",
  "touch": "realistic",
- "lead": "カエル、メダカ、カブトムシ、トンボなど、図鑑のようなリアルな生きもの12点。自由研究や掲示物に。",
+ "lead": "カエル・メダカ・カブトムシなど、図鑑風のリアルな生き物12点です。自由研究や掲示物に使えます。",
  "tags": [
   "リアル",
   "図鑑",
@@ -22,16 +22,16 @@
    "id": "nature-reality-creatures-frog",
    "file": "nature-reality-creatures-frog.webp",
    "title": "アマガエル",
-   "desc": "アマガエルのイラスト。リアル・図鑑風のタッチ。",
+   "desc": "アマガエルのリアル・図鑑風イラストです。",
    "tags": [
     "リアル",
     "図鑑",
     "カエル",
     "昆虫",
-    "リアルな生きもの図鑑",
+    "リアルな生き物図鑑",
     "アマガエル",
     "リアル・図鑑風",
-    "どうぶつ"
+    "動物"
    ],
    "w": 445,
    "h": 380
@@ -40,16 +40,16 @@
    "id": "nature-reality-creatures-bullfrog",
    "file": "nature-reality-creatures-bullfrog.webp",
    "title": "ウシガエル",
-   "desc": "ウシガエルのイラスト。リアル・図鑑風のタッチ。",
+   "desc": "ウシガエルのリアル・図鑑風イラストです。",
    "tags": [
     "リアル",
     "図鑑",
     "カエル",
     "昆虫",
-    "リアルな生きもの図鑑",
+    "リアルな生き物図鑑",
     "ウシガエル",
     "リアル・図鑑風",
-    "どうぶつ"
+    "動物"
    ],
    "w": 483,
    "h": 393
@@ -58,16 +58,16 @@
    "id": "nature-reality-creatures-medaka",
    "file": "nature-reality-creatures-medaka.webp",
    "title": "メダカ",
-   "desc": "メダカのイラスト。リアル・図鑑風のタッチ。",
+   "desc": "メダカのリアル・図鑑風イラストです。",
    "tags": [
     "リアル",
     "図鑑",
     "カエル",
     "昆虫",
-    "リアルな生きもの図鑑",
+    "リアルな生き物図鑑",
     "メダカ",
     "リアル・図鑑風",
-    "どうぶつ"
+    "動物"
    ],
    "w": 501,
    "h": 242
@@ -76,16 +76,16 @@
    "id": "nature-reality-creatures-koi",
    "file": "nature-reality-creatures-koi.webp",
    "title": "コイ",
-   "desc": "コイのイラスト。リアル・図鑑風のタッチ。",
+   "desc": "コイのリアル・図鑑風イラストです。",
    "tags": [
     "リアル",
     "図鑑",
     "カエル",
     "昆虫",
-    "リアルな生きもの図鑑",
+    "リアルな生き物図鑑",
     "コイ",
     "リアル・図鑑風",
-    "どうぶつ"
+    "動物"
    ],
    "w": 503,
    "h": 302
@@ -94,52 +94,34 @@
    "id": "nature-reality-creatures-beetle",
    "file": "nature-reality-creatures-beetle.webp",
    "title": "カブトムシ",
-   "desc": "カブトムシのイラスト。リアル・図鑑風のタッチ。",
+   "desc": "カブトムシのリアル・図鑑風イラストです。",
    "tags": [
     "リアル",
     "図鑑",
     "カエル",
     "昆虫",
-    "リアルな生きもの図鑑",
+    "リアルな生き物図鑑",
     "カブトムシ",
     "リアル・図鑑風",
-    "どうぶつ"
+    "動物"
    ],
    "w": 513,
    "h": 442
   },
   {
-   "id": "nature-reality-creatures-stagbeetle",
-   "file": "nature-reality-creatures-stagbeetle.webp",
-   "title": "クワガタ",
-   "desc": "クワガタのイラスト。リアル・図鑑風のタッチ。",
-   "tags": [
-    "リアル",
-    "図鑑",
-    "カエル",
-    "昆虫",
-    "リアルな生きもの図鑑",
-    "クワガタ",
-    "リアル・図鑑風",
-    "どうぶつ"
-   ],
-   "w": 497,
-   "h": 417
-  },
-  {
    "id": "nature-reality-creatures-dragonfly",
    "file": "nature-reality-creatures-dragonfly.webp",
    "title": "アキアカネ",
-   "desc": "アキアカネのイラスト。リアル・図鑑風のタッチ。",
+   "desc": "アキアカネのリアル・図鑑風イラストです。",
    "tags": [
     "リアル",
     "図鑑",
     "カエル",
     "昆虫",
-    "リアルな生きもの図鑑",
+    "リアルな生き物図鑑",
     "アキアカネ",
     "リアル・図鑑風",
-    "どうぶつ"
+    "動物"
    ],
    "w": 510,
    "h": 421
@@ -148,16 +130,16 @@
    "id": "nature-reality-creatures-butterfly",
    "file": "nature-reality-creatures-butterfly.webp",
    "title": "アゲハチョウ",
-   "desc": "アゲハチョウのイラスト。リアル・図鑑風のタッチ。",
+   "desc": "アゲハチョウのリアル・図鑑風イラストです。",
    "tags": [
     "リアル",
     "図鑑",
     "カエル",
     "昆虫",
-    "リアルな生きもの図鑑",
+    "リアルな生き物図鑑",
     "アゲハチョウ",
     "リアル・図鑑風",
-    "どうぶつ"
+    "動物"
    ],
    "w": 495,
    "h": 405
@@ -166,52 +148,34 @@
    "id": "nature-reality-creatures-ladybug",
    "file": "nature-reality-creatures-ladybug.webp",
    "title": "テントウムシ",
-   "desc": "テントウムシのイラスト。リアル・図鑑風のタッチ。",
+   "desc": "テントウムシのリアル・図鑑風イラストです。",
    "tags": [
     "リアル",
     "図鑑",
     "カエル",
     "昆虫",
-    "リアルな生きもの図鑑",
+    "リアルな生き物図鑑",
     "テントウムシ",
     "リアル・図鑑風",
-    "どうぶつ"
+    "動物"
    ],
    "w": 356,
    "h": 379
   },
   {
-   "id": "nature-reality-creatures-grasshopper",
-   "file": "nature-reality-creatures-grasshopper.webp",
-   "title": "バッタ",
-   "desc": "バッタのイラスト。リアル・図鑑風のタッチ。",
-   "tags": [
-    "リアル",
-    "図鑑",
-    "カエル",
-    "昆虫",
-    "リアルな生きもの図鑑",
-    "バッタ",
-    "リアル・図鑑風",
-    "どうぶつ"
-   ],
-   "w": 546,
-   "h": 391
-  },
-  {
    "id": "nature-reality-creatures-salmon",
    "file": "nature-reality-creatures-salmon.webp",
    "title": "サケ",
-   "desc": "サケのイラスト。リアル・図鑑風のタッチ。",
+   "desc": "サケのリアル・図鑑風イラストです。",
    "tags": [
     "リアル",
     "図鑑",
     "カエル",
     "昆虫",
-    "リアルな生きもの図鑑",
+    "リアルな生き物図鑑",
     "サケ",
     "リアル・図鑑風",
-    "どうぶつ"
+    "動物"
    ],
    "w": 557,
    "h": 252
@@ -220,16 +184,16 @@
    "id": "nature-reality-creatures-crayfish",
    "file": "nature-reality-creatures-crayfish.webp",
    "title": "ザリガニ",
-   "desc": "ザリガニのイラスト。リアル・図鑑風のタッチ。",
+   "desc": "ザリガニのリアル・図鑑風イラストです。",
    "tags": [
     "リアル",
     "図鑑",
     "カエル",
     "昆虫",
-    "リアルな生きもの図鑑",
+    "リアルな生き物図鑑",
     "ザリガニ",
     "リアル・図鑑風",
-    "どうぶつ"
+    "動物"
    ],
    "w": 414,
    "h": 491

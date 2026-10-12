@@ -4,7 +4,7 @@
  "title": "顔なしサラリーマンのポーズ集",
  "genre": "work",
  "touch": "faceless",
- "lead": "顔なしサラリーマンのイラストを、12のポーズ・場面でそろえました。同じ人物・同じタッチなので、資料やチラシ、スライド、おたよりに並べて使えます。無料・商用OK・透過PNG。",
+ "lead": "顔なしサラリーマンの動作や表情を、同じ人物とタッチでそろえた12点です。ビジネス資料や記事に使えます。",
  "tags": [
   "人物",
   "イラスト",
@@ -25,7 +25,7 @@
    "id": "biz-faceless-man-01-bowing-politely-degrees",
    "file": "biz-faceless-man-01-bowing-politely-degrees.webp",
    "title": "お辞儀(顔なしサラリーマン)",
-   "desc": "お辞儀(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "お辞儀(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -48,7 +48,7 @@
    "id": "biz-faceless-man-02-deep-degree-apology",
    "file": "biz-faceless-man-02-deep-degree-apology.webp",
    "title": "深い謝罪のお辞儀(顔なしサラリーマン)",
-   "desc": "深い謝罪のお辞儀(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "深い謝罪のお辞儀(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -71,7 +71,7 @@
    "id": "biz-faceless-man-03-arms-crossed-head",
    "file": "biz-faceless-man-03-arms-crossed-head.webp",
    "title": "腕組みで考える(顔なしサラリーマン)",
-   "desc": "腕組みで考える(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "腕組みで考える(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -93,8 +93,8 @@
   {
    "id": "biz-faceless-man-04-pointing-forward-index",
    "file": "biz-faceless-man-04-pointing-forward-index.webp",
-   "title": "指さし(顔なしサラリーマン)",
-   "desc": "指さし(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "title": "指差し(顔なしサラリーマン)",
+   "desc": "指差し(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -106,7 +106,7 @@
     "顔なし",
     "謝罪",
     "営業",
-    "指さし",
+    "指差し",
     "顔なしミニマル",
     "仕事・ビジネス"
    ],
@@ -117,7 +117,7 @@
    "id": "biz-faceless-man-05-talking-smartphone-ear",
    "file": "biz-faceless-man-05-talking-smartphone-ear.webp",
    "title": "電話(顔なしサラリーマン)",
-   "desc": "電話(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "電話(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -140,7 +140,7 @@
    "id": "biz-faceless-man-06-walking-side-view",
    "file": "biz-faceless-man-06-walking-side-view.webp",
    "title": "歩く（横向き）(顔なしサラリーマン)",
-   "desc": "歩く（横向き）(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "歩く（横向き）(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -163,7 +163,7 @@
    "id": "biz-faceless-man-07-running-hurry-side",
    "file": "biz-faceless-man-07-running-hurry-side.webp",
    "title": "走る(顔なしサラリーマン)",
-   "desc": "走る(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "走る(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -185,8 +185,8 @@
   {
    "id": "biz-faceless-man-08-sitting-plain-chair",
    "file": "biz-faceless-man-08-sitting-plain-chair.webp",
-   "title": "座ってPC(顔なしサラリーマン)",
-   "desc": "座ってPC(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "title": "座ってPCを使う(顔なしサラリーマン)",
+   "desc": "座ってPCを使う(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -198,7 +198,7 @@
     "顔なし",
     "謝罪",
     "営業",
-    "座ってPC",
+    "座ってPCを使う",
     "顔なしミニマル",
     "仕事・ビジネス"
    ],
@@ -208,8 +208,8 @@
   {
    "id": "biz-faceless-man-09-welcoming-arms-open",
    "file": "biz-faceless-man-09-welcoming-arms-open.webp",
-   "title": "両手で歓迎(顔なしサラリーマン)",
-   "desc": "両手で歓迎(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "title": "両手で迎える(顔なしサラリーマン)",
+   "desc": "両手で迎える(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -221,7 +221,7 @@
     "顔なし",
     "謝罪",
     "営業",
-    "両手で歓迎",
+    "両手で迎える",
     "顔なしミニマル",
     "仕事・ビジネス"
    ],
@@ -232,7 +232,7 @@
    "id": "biz-faceless-man-10-shoulders-dropped-head",
    "file": "biz-faceless-man-10-shoulders-dropped-head.webp",
    "title": "落ち込む(顔なしサラリーマン)",
-   "desc": "落ち込む(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "落ち込む(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -255,7 +255,7 @@
    "id": "biz-faceless-man-11-fist-pump-body",
    "file": "biz-faceless-man-11-fist-pump-body.webp",
    "title": "ガッツポーズ(顔なしサラリーマン)",
-   "desc": "ガッツポーズ(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "ガッツポーズ(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",
@@ -278,7 +278,7 @@
    "id": "biz-faceless-man-12-seen-from-behind",
    "file": "biz-faceless-man-12-seen-from-behind.webp",
    "title": "後ろ姿で遠くを見る(顔なしサラリーマン)",
-   "desc": "後ろ姿で遠くを見る(顔なしサラリーマン)のイラスト。顔なしミニマルのタッチ。",
+   "desc": "後ろ姿で遠くを見る(顔なしサラリーマン)の顔なしミニマルイラストです。",
    "tags": [
     "人物",
     "イラスト",

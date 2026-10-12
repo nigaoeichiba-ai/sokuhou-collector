@@ -1,11 +1,11 @@
 {
  "slug": "horse-pose",
- "title": "うまのポーズいろいろ",
+ "title": "うまのポーズ集",
  "subject": "うま",
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME horse character (kawaii mascot): a light-brown pony with a long flowing cream mane, a white star on its forehead, cream socks and a cream tail",
- "lead": "おでこの白い星と、なびくクリーム色のたてがみが特ちょうの子うま。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。",
+ "lead": "うまの表情や動きを、親しみやすいタッチで描いたポーズ素材です。SNSアイコンやおたよりに使えます。",
  "tags": [
   "うま",
   "馬",
@@ -18,17 +18,17 @@
  "items": [
   [
    "wave",
-   "手をふる",
+   "手を振る",
    "standing and waving one hand cheerfully"
   ],
   [
    "jump",
-   "とびはねる",
+   "跳びはねる",
    "jumping with joy, arms up, big smile"
   ],
   [
    "sleep",
-   "ねむる",
+   "眠る",
    "sleeping curled up peacefully with a tiny smile"
   ],
   [
@@ -38,22 +38,22 @@
   ],
   [
    "eat",
-   "もぐもぐ食べる",
+   "食べる",
    "happily eating a carrot"
   ],
   [
    "heart",
-   "ハートをもつ",
+   "ハートを持つ",
    "holding a red heart with a happy smile"
   ],
   [
    "run",
-   "はしる",
+   "走る",
    "running fast with motion, determined happy face"
   ],
   [
    "surprised",
-   "おどろく",
+   "驚く",
    "surprised, wide round eyes, small round mouth, both hands raised"
   ],
   [
@@ -63,12 +63,12 @@
   ],
   [
    "sad",
-   "しょんぼりする",
+   "落ち込む",
    "sitting sadly with teary eyes and drooping posture, still cute"
   ],
   [
    "angry",
-   "ぷんぷんおこる",
+   "怒る",
    "puffed-cheek angry pout with clenched fists, cute and not scary"
   ],
   [

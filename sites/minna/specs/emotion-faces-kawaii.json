@@ -6,7 +6,7 @@
  "touch": "kawaii",
  "title_fmt": "{ja}",
  "subject_en": "round yellow cartoon faces with simple expressions, no body, each a separate item, kawaii Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "笑顔、泣き顔、おどろき、ねむい…。気持ちを伝える、まるい顔のアイコン12種類。LINEやSNS、アンケートに。",
+ "lead": "笑顔・泣き顔・驚き・眠気など、気持ちを伝える丸い顔のアイコン12種類です。LINEやSNS、アンケートに使えます。",
  "tags": [
   "表情",
   "顔",
@@ -27,7 +27,7 @@
   ],
   [
    "laugh",
-   "大わらい",
+   "大笑い",
    "laughing with tears of joy"
   ],
   [
@@ -42,37 +42,37 @@
   ],
   [
    "surprise",
-   "びっくり",
+   "驚き",
    "wide eyes and an open mouth"
   ],
   [
    "cry",
-   "なきがお",
+   "泣き顔",
    "crying with big tears"
   ],
   [
    "angry",
-   "おこった顔",
+   "怒った顔",
    "puffed cheeks angry face"
   ],
   [
    "sleepy",
-   "ねむい",
+   "眠い",
    "a sleepy face with a bubble"
   ],
   [
    "think",
-   "かんがえ中",
+   "考え中",
    "a thinking face with a hand on the chin"
   ],
   [
    "cool",
-   "かっこいい",
+   "格好いい",
    "a face with sunglasses"
   ],
   [
    "sick",
-   "ぐあいがわるい",
+   "具合が悪い",
    "a face with a thermometer"
   ],
   [

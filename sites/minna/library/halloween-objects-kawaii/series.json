@@ -4,7 +4,7 @@
  "title": "ハロウィンのイラスト",
  "genre": "season",
  "touch": "kawaii",
- "lead": "かぼちゃ、おばけ、コウモリ、まほうの帽子など、こわくない、かわいいハロウィンのイラスト12点。パーティーの案内やお店の飾りに。",
+ "lead": "かぼちゃ、おばけ、コウモリ、魔女の帽子など、ハロウィンの定番モチーフ12点です。案内や店頭装飾に使えます。",
  "tags": [
   "ハロウィン",
   "かぼちゃ",
@@ -26,7 +26,7 @@
    "id": "halloween-objects-kawaii-pumpkin",
    "file": "halloween-objects-kawaii-pumpkin.webp",
    "title": "ジャック・オ・ランタン",
-   "desc": "ジャック・オ・ランタンのイラスト。ゆるかわのタッチ。",
+   "desc": "ジャック・オ・ランタンのゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",
@@ -44,7 +44,7 @@
    "id": "halloween-objects-kawaii-ghost",
    "file": "halloween-objects-kawaii-ghost.webp",
    "title": "おばけ",
-   "desc": "おばけのイラスト。ゆるかわのタッチ。",
+   "desc": "おばけのゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",
@@ -61,7 +61,7 @@
    "id": "halloween-objects-kawaii-bat",
    "file": "halloween-objects-kawaii-bat.webp",
    "title": "コウモリ",
-   "desc": "コウモリのイラスト。ゆるかわのタッチ。",
+   "desc": "コウモリのゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",
@@ -78,7 +78,7 @@
    "id": "halloween-objects-kawaii-witchhat",
    "file": "halloween-objects-kawaii-witchhat.webp",
    "title": "魔女の帽子",
-   "desc": "魔女の帽子のイラスト。ゆるかわのタッチ。",
+   "desc": "魔女の帽子のゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",
@@ -97,7 +97,7 @@
    "id": "halloween-objects-kawaii-candy",
    "file": "halloween-objects-kawaii-candy.webp",
    "title": "キャンディ",
-   "desc": "キャンディのイラスト。ゆるかわのタッチ。",
+   "desc": "キャンディのゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",
@@ -114,15 +114,15 @@
   {
    "id": "halloween-objects-kawaii-cauldron",
    "file": "halloween-objects-kawaii-cauldron.webp",
-   "title": "まほうのおなべ",
-   "desc": "まほうのおなべのイラスト。ゆるかわのタッチ。",
+   "title": "魔法の鍋",
+   "desc": "魔法の鍋のゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",
     "おばけ",
     "コウモリ",
     "ハロウィンのイラスト",
-    "まほうのおなべ",
+    "魔法の鍋",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -133,7 +133,7 @@
    "id": "halloween-objects-kawaii-spider",
    "file": "halloween-objects-kawaii-spider.webp",
    "title": "くも",
-   "desc": "くものイラスト。ゆるかわのタッチ。",
+   "desc": "くものゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",
@@ -151,7 +151,7 @@
    "id": "halloween-objects-kawaii-cat",
    "file": "halloween-objects-kawaii-cat.webp",
    "title": "黒ねこ",
-   "desc": "黒ねこのイラスト。ゆるかわのタッチ。",
+   "desc": "黒ねこのゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",
@@ -169,7 +169,7 @@
    "id": "halloween-objects-kawaii-moon",
    "file": "halloween-objects-kawaii-moon.webp",
    "title": "三日月",
-   "desc": "三日月のイラスト。ゆるかわのタッチ。",
+   "desc": "三日月のゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",
@@ -186,15 +186,15 @@
   {
    "id": "halloween-objects-kawaii-castle",
    "file": "halloween-objects-kawaii-castle.webp",
-   "title": "おばけやしき",
-   "desc": "おばけやしきのイラスト。ゆるかわのタッチ。",
+   "title": "お化け屋敷",
+   "desc": "お化け屋敷のゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",
     "おばけ",
     "コウモリ",
     "ハロウィンのイラスト",
-    "おばけやしき",
+    "お化け屋敷",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -204,15 +204,15 @@
   {
    "id": "halloween-objects-kawaii-broom",
    "file": "halloween-objects-kawaii-broom.webp",
-   "title": "ほうき",
-   "desc": "ほうきのイラスト。ゆるかわのタッチ。",
+   "title": "箒",
+   "desc": "箒のゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",
     "おばけ",
     "コウモリ",
     "ハロウィンのイラスト",
-    "ほうき",
+    "箒",
     "ゆるかわ",
     "季節・行事"
    ],
@@ -223,7 +223,7 @@
    "id": "halloween-objects-kawaii-trick",
    "file": "halloween-objects-kawaii-trick.webp",
    "title": "お菓子のバケツ",
-   "desc": "お菓子のバケツのイラスト。ゆるかわのタッチ。",
+   "desc": "お菓子のバケツのゆるかわイラストです。",
    "tags": [
     "ハロウィン",
     "かぼちゃ",

@@ -160,8 +160,8 @@ def certificate_page(illustration: Path, font_path: str):
     d.text((LAND_W // 2, 330), "賞　状", font=_font(font_path, 250), fill=brown, anchor="mm")
     d.line([(420, 640), (1500, 640)], fill=brown, width=5)
     d.text((1560, 640), "さん", font=_font(font_path, 90), fill=brown, anchor="lm")
-    d.text((LAND_W // 2, 800), "あなたは　いつも　とても　がんばりました", font=_font(font_path, 80), fill=brown, anchor="mm")
-    d.text((LAND_W // 2, 930), "よって　ここに　ほめたたえます", font=_font(font_path, 80), fill=brown, anchor="mm")
+    d.text((LAND_W // 2, 800), "あなたの　努力をたたえ", font=_font(font_path, 80), fill=brown, anchor="mm")
+    d.text((LAND_W // 2, 930), "ここに　賞します", font=_font(font_path, 80), fill=brown, anchor="mm")
     d.text((900, 1240), "　　　　年　　　月　　　日", font=_font(font_path, 70), fill=brown, anchor="mm")
     d.line([(1250, 1420), (2050, 1420)], fill=brown, width=4)
     d.text((2090, 1420), "より", font=_font(font_path, 70), fill=brown, anchor="lm")
@@ -184,9 +184,9 @@ def nametag_page(illustration: Path, font_path: str):
             d.rectangle([x, y, x + cw, y + ch], outline=(150, 150, 150), width=2)         # cut line
             d.rounded_rectangle([x + 16, y + 16, x + cw - 16, y + ch - 16], radius=26, outline=(91, 58, 41), width=5, fill=(255, 252, 240))
             _paste_fit(page, illustration, (x + 30, y + 30, x + 30 + ch - 60, y + ch - 30))
-            d.text((x + ch + 10, y + 70), "なまえ", font=_font(font_path, 36), fill=(120, 100, 90))
+            d.text((x + ch + 10, y + 70), "名前", font=_font(font_path, 36), fill=(120, 100, 90))
             d.line([(x + ch + 10, y + ch - 90), (x + cw - 40, y + ch - 90)], fill=(91, 58, 41), width=4)
-    d.text((PAGE_W // 2, PAGE_H - 30), "minna-no-illust.com  切りとって、つかってね", font=_font(font_path, 28), fill=(140, 120, 105), anchor="mm")
+    d.text((PAGE_W // 2, PAGE_H - 30), "minna-no-illust.com  切り取って使えます", font=_font(font_path, 28), fill=(140, 120, 105), anchor="mm")
     return page
 
 
@@ -195,8 +195,8 @@ def timetable_page(illustration: Path, font_path: str):
     page = Image.new("RGB", (LAND_W, LAND_H), (255, 253, 247))
     d = ImageDraw.Draw(page)
     brown = (91, 58, 41)
-    d.text((110, 100), "じかんわり", font=_font(font_path, 150), fill=brown)
-    d.text((1250, 190), "なまえ", font=_font(font_path, 56), fill=brown, anchor="lm")
+    d.text((110, 100), "時間割", font=_font(font_path, 150), fill=brown)
+    d.text((1250, 190), "名前", font=_font(font_path, 56), fill=brown, anchor="lm")
     d.line([(1420, 215), (2160, 215)], fill=brown, width=4)
     _paste_fit(page, illustration, (780, 40, 1180, 330))
     days = "月火水木金"

@@ -4,7 +4,7 @@
  "title": "ドット絵のクリスマス",
  "genre": "season",
  "touch": "pixel",
- "lead": "ツリー、サンタ、プレゼント、雪だるまをドット絵で描いた12点。ゲームふうのクリスマスカードに。",
+ "lead": "ツリー・サンタ・プレゼント・雪だるまなど、クリスマスモチーフ12点をドット絵で描いた素材です。ゲーム風のカードやバナーに使えます。",
  "tags": [
   "クリスマス",
   "ドット絵",
@@ -24,7 +24,7 @@
    "id": "christmas-pixel-tree",
    "file": "christmas-pixel-tree.webp",
    "title": "クリスマスツリー",
-   "desc": "クリスマスツリーのイラスト。ドット絵のタッチ。",
+   "desc": "クリスマスツリーのドット絵イラストです。",
    "tags": [
     "クリスマス",
     "ドット絵",
@@ -40,15 +40,14 @@
   {
    "id": "christmas-pixel-santa",
    "file": "christmas-pixel-santa.webp",
-   "title": "サンタさん",
-   "desc": "サンタさんのイラスト。ドット絵のタッチ。",
+   "title": "サンタ",
+   "desc": "サンタのドット絵イラストです。",
    "tags": [
     "クリスマス",
     "ドット絵",
     "サンタ",
     "ツリー",
     "ドット絵のクリスマス",
-    "サンタさん",
     "季節・行事"
    ],
    "w": 416,
@@ -58,7 +57,7 @@
    "id": "christmas-pixel-gift",
    "file": "christmas-pixel-gift.webp",
    "title": "プレゼント",
-   "desc": "プレゼントのイラスト。ドット絵のタッチ。",
+   "desc": "プレゼントのドット絵イラストです。",
    "tags": [
     "クリスマス",
     "ドット絵",
@@ -75,7 +74,7 @@
    "id": "christmas-pixel-snowman",
    "file": "christmas-pixel-snowman.webp",
    "title": "雪だるま",
-   "desc": "雪だるまのイラスト。ドット絵のタッチ。",
+   "desc": "雪だるまのドット絵イラストです。",
    "tags": [
     "クリスマス",
     "ドット絵",
@@ -92,7 +91,7 @@
    "id": "christmas-pixel-reindeer",
    "file": "christmas-pixel-reindeer.webp",
    "title": "トナカイ",
-   "desc": "トナカイのイラスト。ドット絵のタッチ。",
+   "desc": "トナカイのドット絵イラストです。",
    "tags": [
     "クリスマス",
     "ドット絵",
@@ -108,15 +107,15 @@
   {
    "id": "christmas-pixel-sock",
    "file": "christmas-pixel-sock.webp",
-   "title": "くつした",
-   "desc": "くつしたのイラスト。ドット絵のタッチ。",
+   "title": "靴下",
+   "desc": "靴下のドット絵イラストです。",
    "tags": [
     "クリスマス",
     "ドット絵",
     "サンタ",
     "ツリー",
     "ドット絵のクリスマス",
-    "くつした",
+    "靴下",
     "季節・行事"
    ],
    "w": 401,
@@ -126,7 +125,7 @@
    "id": "christmas-pixel-bell",
    "file": "christmas-pixel-bell.webp",
    "title": "ベル",
-   "desc": "ベルのイラスト。ドット絵のタッチ。",
+   "desc": "ベルのドット絵イラストです。",
    "tags": [
     "クリスマス",
     "ドット絵",
@@ -143,7 +142,7 @@
    "id": "christmas-pixel-candy",
    "file": "christmas-pixel-candy.webp",
    "title": "キャンディケイン",
-   "desc": "キャンディケインのイラスト。ドット絵のタッチ。",
+   "desc": "キャンディケインのドット絵イラストです。",
    "tags": [
     "クリスマス",
     "ドット絵",
@@ -160,7 +159,7 @@
    "id": "christmas-pixel-cake",
    "file": "christmas-pixel-cake.webp",
    "title": "クリスマスケーキ",
-   "desc": "クリスマスケーキのイラスト。ドット絵のタッチ。",
+   "desc": "クリスマスケーキのドット絵イラストです。",
    "tags": [
     "クリスマス",
     "ドット絵",
@@ -176,15 +175,15 @@
   {
    "id": "christmas-pixel-star",
    "file": "christmas-pixel-star.webp",
-   "title": "ほし",
-   "desc": "ほしのイラスト。ドット絵のタッチ。",
+   "title": "星",
+   "desc": "星のドット絵イラストです。",
    "tags": [
     "クリスマス",
     "ドット絵",
     "サンタ",
     "ツリー",
     "ドット絵のクリスマス",
-    "ほし",
+    "星",
     "季節・行事"
    ],
    "w": 422,
@@ -194,7 +193,7 @@
    "id": "christmas-pixel-candle",
    "file": "christmas-pixel-candle.webp",
    "title": "キャンドル",
-   "desc": "キャンドルのイラスト。ドット絵のタッチ。",
+   "desc": "キャンドルのドット絵イラストです。",
    "tags": [
     "クリスマス",
     "ドット絵",

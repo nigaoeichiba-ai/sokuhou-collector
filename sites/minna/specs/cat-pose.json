@@ -5,7 +5,7 @@
  "genre": "animals",
  "touch": "kawaii",
  "subject_en": "the SAME cat character (kawaii mascot): a chubby cat with a patched face: cream fur with brown patches around both eyes meeting on the forehead in a small heart shape, white muzzle, short striped brown tail ending in a cream tip",
- "lead": "目のまわりのぶちと、おでこのハートもようがトレードマークの、まるっこいねこ。手をふる、ねむる、ありがとう、ぷんぷんなど、いろいろなポーズと表情がそろっています。LINEやSNS、スライド、おたよりに、そのまま使えます。 3枚目は、ハイタッチ・かんがえる・本をよむ・プレゼント・かさ・うたう。",
+ "lead": "ハート模様のあるねこの、挨拶・食事・睡眠などのポーズ素材です。SNS画像やスライド、おたよりに使えます。",
  "tags": [
   "ねこ",
   "猫",
@@ -18,17 +18,17 @@
  "items": [
   [
    "wave",
-   "手をふる",
+   "手を振る",
    "standing and waving one hand cheerfully"
   ],
   [
    "jump",
-   "とびはねる",
+   "飛び跳ねる",
    "jumping with joy, arms up, big smile"
   ],
   [
    "sleep",
-   "ねむる",
+   "眠る",
    "sleeping curled up peacefully with a tiny smile"
   ],
   [
@@ -38,22 +38,22 @@
   ],
   [
    "eat",
-   "もぐもぐ食べる",
+   "食べる",
    "happily eating a small grilled fish"
   ],
   [
    "heart",
-   "ハートをもつ",
+   "ハートを持つ",
    "holding a red heart with a happy smile"
   ],
   [
    "run",
-   "はしる",
+   "走る",
    "running fast with motion, determined happy face"
   ],
   [
    "surprised",
-   "おどろく",
+   "驚く",
    "surprised, wide round eyes, small round mouth, both hands raised"
   ],
   [
@@ -68,7 +68,7 @@
   ],
   [
    "angry",
-   "ぷんぷんおこる",
+   "怒る",
    "puffed-cheek angry pout with clenched fists, cute and not scary"
   ],
   [
@@ -83,12 +83,12 @@
   ],
   [
    "think",
-   "かんがえる",
+   "考える",
    "tilting head with a paw on the chin, puzzled"
   ],
   [
    "read",
-   "本をよむ",
+   "本を読む",
    "sitting and reading an open book"
   ],
   [
@@ -98,12 +98,12 @@
   ],
   [
    "umbrella",
-   "かさをさす",
+   "傘を差す",
    "standing under a small open umbrella"
   ],
   [
    "sing",
-   "うたう",
+   "歌う",
    "singing happily with a few music notes"
   ]
  ],

@@ -6,7 +6,7 @@
  "touch": "flat",
  "title_fmt": "{ja}",
  "subject_en": "health and medical icons, each a separate object, flat Outlines are closed and darker than the fill; light parts are warm cream (#FFF6E0) or tinted, never pure white.",
- "lead": "体温計、マスク、手洗い、薬、聴診器など、健康と医療のアイコン12点。院内掲示や健康だよりに。",
+ "lead": "体温計やマスク、手洗い、薬、聴診器など、健康と医療のアイコン12点です。院内掲示や健康だよりに使えます。",
  "tags": [
   "健康",
   "医療",
@@ -37,7 +37,7 @@
   ],
   [
    "pill",
-   "くすり",
+   "薬",
    "capsules and a pill bottle"
   ],
   [
@@ -47,7 +47,7 @@
   ],
   [
    "bandage",
-   "ばんそうこう",
+   "絆創膏",
    "adhesive bandages"
   ],
   [
@@ -62,12 +62,12 @@
   ],
   [
    "toothbrush",
-   "歯みがき",
+   "歯磨き",
    "a toothbrush and toothpaste"
   ],
   [
    "apple",
-   "バランスのよい食事",
+   "バランスの良い食事",
    "a plate with vegetables and rice"
   ],
   [
