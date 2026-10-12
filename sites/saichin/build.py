@@ -500,8 +500,8 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。</p>"""
     return finish(layout(
         cfg, preview, path=f"/{r['slug']}/",
-        title=f"{r['name']}の最低賃金は{yen(r['amount'])}({d['label']}) 発効日と過去の推移",
-        description=f"{r['name']}の{d['label']}の最低賃金は{yen(r['amount'])}(+{r['raise']}円)。発効日は{jp_date(r['effective_date'])}。過去の推移と月給の目安も掲載しています。",
+        title=f"{r['name']}の最低賃金の推移と現在額 {yen(r['amount'])}({d['label']})・発効日",
+        description=f"{r['name']}の最低賃金の推移を、{r['history'][0]['label']}から{r['history'][-1]['label']}まで年度別に掲載。{d['label']}は{yen(r['amount'])}(+{r['raise']}円)、発効日は{jp_date(r['effective_date'])}。月給の目安も載せています。",
         body=body,
     ), d)
 
