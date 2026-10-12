@@ -43,9 +43,7 @@ SITE = {
     "assets": HERE / "assets",
     "source_html": "イラストは、AIで生成し、人が選んで、整えています。",
 }
-FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Mochiy+Pop+One'
-         '&family=Zen+Maru+Gothic:wght@500;700;900&display=swap">\n<meta name="theme-color" content="#2fd09b">\n')
+FONTS = '<meta name="theme-color" content="#2fd09b">\n'      # no Web fonts: the system's Japanese fonts (the Google ones were 122 files, about 1.5 MB, on every page)
 USES = {
     "animals": ["LINEやSNSの返信に", "スライドの、ひとこと解説に", "ブログの、吹き出しの横に", "保育園・学校の、おたよりに"],
     "eto": ["年賀状・ごあいさつ状に", "LINEの「あけおめ」画像に", "お店や会社の、新年のお知らせに", "保育園・学校の、1月のおたよりに"],
@@ -270,6 +268,25 @@ SEARCH_FORM = ('<form class="hsearch" action="/search/" method="get" role="searc
                'aria-label="イラストをさがす" autocomplete="off"><button type="submit" aria-label="検索">さがす</button></form>')
 
 
+def tune_images(html: str, eager: int = 5) -> str:
+    """Only the first few pictures of a page are fetched at once (the logo and the first cards); every other picture waits until it is near the screen, and none blocks the page while it decodes.
+    A special page used to start 8 pictures per heading: 63 pictures, 1.5 MB, before anyone scrolled."""
+    n = 0
+
+    def one(m: re.Match) -> str:
+        nonlocal n
+        tag = m.group(0)
+        n += 1
+        if "decoding=" not in tag:
+            tag = tag[:-1].rstrip("/ ") + ' decoding="async">'
+        if n > eager:
+            tag = re.sub(r"\sloading=(\"?)eager\1", "", tag)
+            if "loading=" not in tag:
+                tag = tag[:-1] + ' loading="lazy">'
+        return tag
+    return re.sub(r"<img\b[^>]*>", one, html)
+
+
 ASSIST_BUTTON = ('<button id="assist-open" class="assist-open" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="assist-panel" '
                  'data-src="/assets/assist.js">お手伝い</button>')
 ASSIST_CHIPS = ["年賀状に使いたい", "印刷したい", "商用で使える?", "ぬりえをしたい", "リクエストしたい"]
@@ -321,7 +338,7 @@ def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
     html = layout(SITE, cfg, preview, scripts=True, head_extra=FONTS, **kw)
     html = html.replace('<nav aria-label="メイン">', SEARCH_FORM + '<nav aria-label="メイン">', 1)
-    return html.replace("</body>", ASSIST_BUTTON + "</body>", 1)
+    return tune_images(html.replace("</body>", ASSIST_BUTTON + "</body>", 1))
 
 
 def card(it: dict, lazy: bool = True) -> str:
@@ -820,7 +837,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
         pv, nx = s["items"][idx - 1], s["items"][(idx + 1) % len(s["items"])]
         prev_next = f'<nav class="prevnext" aria-label="同じセットの前後"><a href="/illust/{pv["id"]}/" rel="prev">← {esc(pv["title"])}</a><a href="/illust/{nx["id"]}/" rel="next">{esc(nx["title"])} →</a></nav>'
     body = f"""{crumbs([("トップ", "/"), (g, f"/genre/{it['genre']}/"), (s["title"], s["url"]), (it["title"], None)])}
-<div class="detail"><div class="preview"><div class="checker big" id="bgbox"><img id="mainimg" src="/files/{it['id']}.png" alt="{esc(it['title'])}" width="{it['w']}" height="{it['h']}"></div>
+<div class="detail"><div class="preview"><div class="checker big" id="bgbox"><img id="mainimg" src="/files/{it['id']}.webp" alt="{esc(it['title'])}" width="{it['w']}" height="{it['h']}" fetchpriority="high"></div>
 <div class="bgsw" aria-label="背景の色を変えて見る"><button type="button" data-bg="" class="on">すかし</button><button type="button" data-bg="#ffffff">白</button><button type="button" data-bg="#ffc93c">黄</button><button type="button" data-bg="#ffd6e0">桃</button><button type="button" data-bg="#d9f1ff">空</button><button type="button" data-bg="#2b1b14">黒</button></div></div>
 <div class="info"><h1>{esc(it['title'])}</h1><p class="lead">{esc(it['desc'])}</p>
 <p class="dl"><a class="btn big" href="/files/{it['id']}.png" download="{it['id']}.png">PNG(透明)をダウンロード</a>
@@ -971,8 +988,9 @@ def request_page(cfg: dict, preview: bool) -> str:
         asked = f'<small>{r["asked"]}人が、ほしいと言いました</small>' if r.get("asked", 0) > 1 else ""
         want = f' <button type="button" class="chip" data-plus="{esc(r["title"])}">私もほしい</button>' if r["status"] != "公開しました" else ""
         return f'<li><span class="req-state {"done" if r["status"] == "公開しました" else "wip"}">{esc(r["status"])}</span> <b>{link}</b>{asked}{want}</li>'
-    board_html = (f'<ul class="req-board">{"".join(row(r) for r in board)}</ul>' if board else
-                  '<p class="memo-note">まだ、お答えしたリクエストは、ありません。最初のリクエストを、お待ちしています。</p>')
+    # the board is shown only once something has really been answered: no empty promise
+    board_section = (f'''<section><h2><span class="scribble">リクエストへの、お答え</span></h2>
+<p>いただいたリクエストから、ほかの方にも、役に立つものを、選んで、描いています。つくっているもの、公開したものを、ここに並べます。</p><ul class="req-board">{"".join(row(r) for r in board)}</ul></section>''' if board else "")
     body = f"""{crumbs([("トップ", "/"), ("リクエスト", None)])}
 <h1>こんなイラストが、ほしい</h1>
 <p class="lead">「こんな場面の、イラストが、ほしい」を、ひとことで、送ってください。つくれるものは、順番に描いて、このサイトに公開します。早ければ、翌日です。</p>
@@ -988,8 +1006,7 @@ def request_page(cfg: dict, preview: bool) -> str:
 <p class="req-small">送った言葉は、イラストを選ぶために、集計して使います。住所・メールアドレス・名前は、聞きません。送った内容は、この端末にも、記録されます(「あなたのリクエスト」に出ます)。<a href="/privacy/">プライバシーポリシー</a></p>
 </section>
 <section id="req-mine" class="req-mine" hidden><h2><span class="scribble">あなたのリクエスト</span></h2><p class="memo-note">この端末から送ったリクエストと、そのあとの様子です(この端末の中だけに、記録されています)。</p><div id="req-mine-list"></div></section>
-<section><h2><span class="scribble">リクエストへの、お答え</span></h2>
-<p>いただいたリクエストから、ほかの方にも、役に立つものを、選んで、描いています。つくっているもの、公開したものを、ここに並べます。</p>{board_html}</section>
+{board_section}
 <section><h2><span class="scribble">お受けできないもの</span></h2>
 <ul class="warn"><li>既存のキャラクター・商品名・会社のロゴ(「ポケモン」「ミッキー」など)。かわりに、<b>オリジナルの</b>、似た雰囲気のキャラクターなら、お受けできます。</li>
 <li>実在の人物、似顔絵、特定の作家の絵を、まねるもの。</li><li>暴力・性的な内容、法律や公序良俗に反するもの、個人を特定できる情報。</li></ul>
