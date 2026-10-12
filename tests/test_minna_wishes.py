@@ -300,5 +300,35 @@ class Specials(unittest.TestCase):
         self.assertIn("代わりにはなりません", text)
 
 
+class Votes(unittest.TestCase):
+    def test_plus_votes_count_for_the_title_and_planned_rows_stand_on_the_board(self):
+        ledger = []
+        wishes.add_new([{"id": "aaaa1111", "at": "2026-10-12T09:00:00+09:00", "site": "minna", "kind": "request", "message": "運動会のフレーム", "email": "", "page": "q:u=;t=;s=form"}], ledger)
+        ledger[0].update(status="accepted", title="運動会のフレーム", public=True)
+        for n in range(3):
+            wishes.add_new([{"id": f"bbbb000{n}", "at": "2026-10-13T09:00:00+09:00", "site": "minna", "kind": "request", "message": "運動会のフレーム", "email": "", "page": "q:u=;t=;s=plus"}], ledger)
+        self.assertEqual([r["status"] for r in ledger], ["accepted", "merged", "merged", "merged"])
+        rows = wishes.board_rows(ledger)
+        self.assertEqual((rows[0]["title"], rows[0]["status"], rows[0]["asked"]), ("運動会のフレーム", "つくる予定", 4))
+
+    def test_decide_with_a_title_puts_it_on_the_board(self):
+        with tempfile.TemporaryDirectory() as d:
+            ledger = Path(d) / "ledger.jsonl"
+            wishes.write_ledger([{"id": "R1", "at": "2026-10-12T09:00:00+09:00", "wish": "こたつのひつじ", "use": "", "touch": "", "src": "form", "status": "new", "auto": "", "note": "", "series": "", "title": "", "public": False}], ledger)
+            with mock.patch.object(wishes, "LEDGER", ledger):
+                wishes.main(["decide", "R1", "accepted", "--title", "こたつのひつじ"])
+                self.assertEqual(wishes.board_rows(wishes.read_ledger())[0]["status"], "つくる予定")
+
+    def test_the_board_has_a_want_button_only_on_rows_not_done(self):
+        board = {"v": 1, "updated": "", "rows": [
+            {"title": "予定のもの", "status": "つくる予定", "series": "", "date": "2026-10-12", "asked": 3, "kw": []},
+            {"title": "できたもの", "status": "公開しました", "series": "req-x", "date": "2026-10-12", "asked": 1, "kw": []}]}
+        with mock.patch.object(build, "request_board", return_value=board):
+            html = build.request_page({"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト", "contact_own": True, "contact_kinds": ["イラストのリクエスト", "その他"]}, True)
+        self.assertIn('data-plus="予定のもの"', html)
+        self.assertNotIn('data-plus="できたもの"', html)
+        self.assertIn("3人が、ほしいと言いました", html)
+
+
 if __name__ == "__main__":
     unittest.main()
