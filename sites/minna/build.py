@@ -41,7 +41,7 @@ SITE = {
     "nav": list(BASE_NAV),
     "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">',
     "assets": HERE / "assets",
-    "source_html": "個人でも商用でも、無料でお使いいただけます。",
+    "source_html": "個人でも商用でも無料でお使いいただけます。",
 }
 FONTS = '<meta name="theme-color" content="#2fd09b">\n'      # no Web fonts: the system's Japanese fonts (the Google ones were 122 files, about 1.5 MB, on every page)
 USES = {
@@ -287,8 +287,11 @@ def tune_images(html: str, eager: int = 5) -> str:
     return re.sub(r"<img\b[^>]*>", one, html)
 
 
-ASSIST_BUTTON = ('<button id="assist-open" class="assist-open" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="assist-panel" '
-                 'data-src="/assets/assist.js">案内</button>')
+ASSIST_BUTTON = ('<div id="assist-nudge" class="assist-nudge" hidden><button type="button" class="n-go" data-assist-open>探しているイラストを、案内がお手伝いします</button>'
+                 '<button type="button" class="n-x" aria-label="閉じる">×</button></div>'
+                 '<button id="assist-open" class="assist-open" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="assist-panel" data-src="/assets/assist.js">'
+                 '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>'
+                 '<path d="M7 9h10M7 12.5h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span class="t">探しものの案内</span></button>')
 ASSIST_CHIPS = ["年賀状に使いたい", "印刷したい", "商用で使えますか", "ぬりえを使いたい", "リクエストしたい"]
 ASSIST_FAQ = [
     {"k": ["商用", "会社", "広告", "お金をもらう", "仕事で"], "a": "はい。個人でも会社でも、無料で商用利用できます。使う前の連絡も点数制限もありません。", "u": "/license/", "l": "利用について"},
@@ -298,7 +301,7 @@ ASSIST_FAQ = [
     {"k": ["ダウンロード", "保存", "やり方", "使い方"], "a": "イラストのページで「PNGでダウンロード」を押すと保存できます。スマホで保存できないときは画像を長押ししてください。", "u": "/guide/tomei-png/", "l": "透明PNGの使い方"},
     {"k": ["透明", "背景", "白い"], "a": "イラストは背景が透明のPNGです。ページの背景ボタンで、色の上に重ねたときの見え方を確認できます。", "u": "/guide/tomei-png/", "l": "透明PNGの使い方"},
     {"k": ["印刷", "プリント", "a4", "はがき", "ハガキ", "pdf"], "a": "各イラストのページに、A4やはがきで印刷できるPDFがあります。ぬりえ、カレンダー、賞状、名札、時間割も印刷できます。", "u": "/printables/", "l": "印刷できるもの"},
-    {"k": ["ai", "人工知能", "生成", "エーアイ"], "a": "イラストは生成AIで制作し、人が選別・調整しています。", "u": "/license/", "l": "利用について"},
+    {"k": ["ai", "人工知能", "生成", "エーアイ"], "a": "イラストは生成AIが制作しています。", "u": "/license/", "l": "利用について"},
     {"k": ["スタンプ", "転売", "販売", "売", "商標", "素材集", "再配布"], "a": "イラストそのものを素材集として配布・販売すること、商標登録すること、LINEスタンプなどでそのまま販売することはご遠慮ください。加工して他の作品に使うことは問題ありません。", "u": "/license/", "l": "利用について"},
     {"k": ["無料", "料金", "お金がかかる", "有料"], "a": "ずっと無料です。", "u": "/license/", "l": "利用について"},
     {"k": ["似て", "取り下げ", "削除して", "著作権侵害", "問題がある"], "a": "似ているというご指摘は、お問い合わせからお知らせください。確認し、必要な場合は取り下げます。", "u": "/contact/", "l": "お問い合わせ"},
@@ -633,15 +636,15 @@ def pr_box(cfg: dict, heading: str, rows: list[tuple[str, str]]) -> str:
 
 # ------------------------------------------------------------------ pages
 def hero_collage(items: list[dict]) -> str:
-    want = ["sheep-pose-wave", "fox-pose-proud", "eto-sheep-kawaii-kagami", "cat-pose-wave", "dog-pose-jump", "christmas-animals-kawaii-bear", "bear-pose-heart", "rabbit-pose-thanks",
-            "eto-sheep-kawaii-kite", "panda-pose-eat", "penguin-pose-wave", "season-christmas", "r-joy"]
+    # one picture per touch (watercolour, Japanese, realistic, duotone, flat line, picture book): shows the range of the library, not one cute character
+    want = ["cafe-drinks-watercolor-coffee", "japan-sights-wa-fuji", "realistic-animals-pets-dog", "telework-duotone-01-sitting-cross-legged",
+            "gender-free-workers-civil-engineer", "camping-picturebook-tent"]
     by = {i["id"]: i for i in items}
-    chosen = [by[w] for w in want if w in by][:5]
-    if len(chosen) < 5:
-        chosen += [i for i in items if i not in chosen][: 5 - len(chosen)]
-    pos = ["a", "b", "c", "d", "e"]
-    return "".join(f'<img class="hc {pos[n]}" src="/thumbs/{c["id"]}.webp" alt="{esc(c["title"])}" width="{min(c["w"], 360)}" height="{round(c["h"] * min(c["w"], 360) / c["w"])}">'
-                   for n, c in enumerate(chosen))
+    chosen = [by[w] for w in want if w in by][:6]
+    if len(chosen) < 6:
+        chosen += [i for i in items if i not in chosen][: 6 - len(chosen)]
+    return "".join(f'<img class="hc" src="/thumbs/{c["id"]}.webp" alt="{esc(c["title"])}" width="{min(c["w"], 360)}" height="{round(c["h"] * min(c["w"], 360) / c["w"])}">'
+                   for c in chosen)
 
 
 def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], today: date, printable_thumbs: list[str] | None = None) -> str:
@@ -674,7 +677,8 @@ def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], 
 <h1><span class="nb">すぐに使える</span><br><span class="nb"><em>商用OK</em>のイラスト素材</span></h1>
 <p class="lead">動物・年賀状・行事・食べ物・フレームまで、{len(items)}点。ダウンロードしてすぐに使えます。クレジット表示も点数制限もありません。</p>
 <form class="hero-search" action="/search/" method="get" role="search"><input type="search" name="q" placeholder="ひつじ、年賀状、クリスマス、ぬりえ…" aria-label="イラストを探す" autocomplete="off"><button class="btn" type="submit">探す</button></form>
-<p class="hero-cta"><a class="btn big" href="/illust/">イラストを見る</a><a class="btn big btn-sub" href="/tool/card/">カードをつくる</a></p></div>
+<p class="hero-cta"><a class="btn big" href="/illust/">イラストを見る</a><a class="btn big btn-sub" href="/tool/card/">カードをつくる</a></p>
+<p class="hero-help">探しているものが決まっていない場合は <button type="button" class="linkbtn" data-assist-open>案内に相談する</button></p></div>
 <div class="hero-art collage">{hero_collage(items)}</div></div></section>
 {licence_box()}
 {season_html}
@@ -683,7 +687,7 @@ def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], 
 <section style="margin-top:50px"><div class="sec-head"><h2>新しい<span class="scribble">セット</span></h2><p>同じキャラクター・同じタッチで揃っています。</p></div>{set_grid(newest)}
 <p style="text-align:center"><a class="btn" href="/new/">新着をもっと見る</a></p></section>
 <section style="margin-top:50px"><div class="sec-head"><h2>タッチから<span class="scribble">選ぶ</span></h2><p>同じ絵でもタッチが違うと、雰囲気が変わります。</p></div><ul class="touch-grid">{ttiles}</ul></section>
-<section class="band yellow dots scallop" style="margin-top:56px"><div class="in"><div class="sec-head"><h2>名前やひとことを入れて、<span class="scribble">カードにする</span></h2><p>誕生日、ありがとう、お祝いのカードを、その場で作って画像で保存できます。</p></div>
+<section class="band yellow dots scallop" style="margin-top:56px"><div class="in"><div class="sec-head"><h2>名前やひとことを入れて<span class="scribble">カードにする</span></h2><p>お祝いのカードを作って画像で保存できます。</p></div>
 <p style="text-align:center"><a class="btn big" href="/tool/card/">カードをつくる</a></p></div></section>
 <section style="margin-top:50px"><div class="sec-head"><h2>みんなのイラストの<span class="scribble">特徴</span></h2></div>
 <ul class="promise"><li><b>登録なし</b><span>ログインも会員登録も不要です。</span></li><li><b>制限なし</b><span>ダウンロード回数も利用点数も自由です。</span></li><li><b>商用OK</b><span>会社のチラシやお店のポップにも使えます。</span></li><li><b>加工OK</b><span>色や大きさを変えて使えます。</span></li></ul></section>"""
@@ -1029,6 +1033,7 @@ def tool_page(cfg: dict, preview: bool, items: list[dict], series: list[dict]) -
 <div class="card-form"><label>カードの種類<select name="tpl"><option value="birthday">誕生日</option><option value="thanks">ありがとう</option><option value="congrats">おめでとう</option><option value="cheer">応援</option><option value="newyear">あけましておめでとう</option></select></label>
 <label>宛名(相手)<input type="text" name="to" maxlength="14" placeholder="例: ハナコさん"></label>
 <label>ひとこと<textarea name="msg" maxlength="60" rows="3" placeholder="例: いつもありがとうございます。今日はゆっくり過ごしてください。"></textarea></label>
+<div class="ai-box" hidden><button type="button" class="btn btn-sub" data-ai-msg>ひとことの案を出す</button><span class="ai-note" role="status" aria-live="polite">Chromeに内蔵のAIで、この端末の中で作ります(無料)。</span><div class="ai-opts"></div></div>
 <label>名前(差出人)<input type="text" name="from" maxlength="14" placeholder="例: タロウ"></label>
 <label>キャラクター<select name="char">{opts}</select></label>
 <label>色<select name="color"><option value="#ffc93c">たまご色</option><option value="#ffd6e0">さくら色</option><option value="#d9f1ff">空色</option><option value="#d7f7ea">ミント色</option></select></label>
@@ -1171,7 +1176,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     pages.update(legal_pages(
         SITE, cfg, preview,
         purpose="個人でも商用でも無料で使えるイラストを公開し、名前入りのカードを簡単に作れるようにすること。",
-        sources_html="イラストは生成AIで制作し、人が選別・調整しています。キャラクターは当サイトのオリジナルです。",
+        sources_html="イラストは生成AIが制作しています。キャラクターは当サイトのオリジナルです。",
         update_text="イラストは順次追加します。",
         disclaimer_html=("<p>イラストの利用によって生じた問題について、当サイトは責任を負いません。ご利用条件は、<a href=\"/license/\">利用について</a>をご覧ください。</p>"
                          "<p>既存のキャラクター・実在の人物・特定の作家の画風をまねる指示では作っていません。似ているというご指摘があればお問い合わせください。</p>"),

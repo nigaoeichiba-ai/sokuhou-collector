@@ -265,6 +265,32 @@ class Assist(unittest.TestCase):
         self.assertIn('id="assist-open"', html)
         self.assertIn('data-src="/assets/assist.js"', html)
         self.assertTrue((Path(build.__file__).parent / "assets" / "assist.js").exists())
+        # where the eye is: a labelled button, and a one-time nudge that is hidden until the script shows it
+        self.assertIn('<span class="t">探しものの案内</span>', html)
+        self.assertRegex(html, r'<div id="assist-nudge"[^>]*\bhidden\b')
+        self.assertIn("data-assist-open", html)
+
+    def test_the_helper_and_the_card_maker_use_the_browsers_own_model_only_when_it_is_there(self):
+        root = Path(build.__file__).parent / "assets"
+        app, assist = (root / "app.js").read_text(encoding="utf-8"), (root / "assist.js").read_text(encoding="utf-8")
+        # offered only after the browser says the model is there; nothing is sent to a server; the model's text is never run as markup
+        self.assertIn('typeof LanguageModel === "undefined"', app)
+        self.assertIn("responseConstraint", app)
+        self.assertNotIn("innerHTML", app[app.index("function initCardAI"):app.index("// ---------- favourites")])
+        self.assertIn('if (st === "unavailable") return;', assist)
+        ai = assist[assist.index("function aiSearch"):assist.index("function offerAI")]
+        self.assertIn("refuseW", ai)                       # the words the model chose go through the same wish rules
+        self.assertNotIn("innerHTML", ai)
+        self.assertNotIn("fetch(", ai)
+        html = build.tool_page({"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト"}, True, [], [])
+        self.assertRegex(html, r'<div class="ai-box" hidden>')
+
+    def test_the_top_picture_shows_the_range_of_touches_not_one_character(self):
+        items = [{"id": i, "title": i, "w": 360, "h": 360} for i in ["cafe-drinks-watercolor-coffee", "japan-sights-wa-fuji", "realistic-animals-pets-dog",
+                                                                      "telework-duotone-01-sitting-cross-legged", "gender-free-workers-civil-engineer", "camping-picturebook-tent"]]
+        html = build.hero_collage(items)
+        self.assertEqual(html.count("<img"), 6)
+        self.assertNotIn("sheep-pose", html)
 
     def test_assist_data_points_to_real_kinds_of_pages(self):
         data = build.assist_data([], [{"slug": "g1", "title": "読みもの", "description": "せつめい"}], 2027, {"shojo": []})

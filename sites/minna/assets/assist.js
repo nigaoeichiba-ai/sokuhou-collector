@@ -1,11 +1,13 @@
-// みんなのイラスト: the helper panel ("お手伝い"). It runs in this browser: what is typed here is only compared with the site's own lists (the illustrations, the pages, the answers
+// みんなのイラスト: the helper panel ("案内"). It runs in this browser: what is typed here is only compared with the site's own lists (the illustrations, the pages, the answers
 // in data/assist.json) and is not sent anywhere, except when the visitor presses a request button (then the same one short wish goes to api/q.php, like the request box).
-// No AI model is needed; rules and word lists only.  Loaded the first time the button is pressed (app.js: initAssist).
+// Rules and word lists do the work.  Where the browser has its own model (Chrome's built-in Gemini Nano) the visitor may switch on "AI" to have a sentence turned into search words;
+// that model runs on this device, its output is only used as search words (checked against the same wish rules) and never shown as free text.
+// Loaded the first time the button is pressed (app.js: initAssist).
 (function () {
   "use strict";
   var A = window.minnaApp; if (!A) return;
   var $ = function (s, r) { return (r || document).querySelector(s); };
-  var esc = A.esc, norm = A.norm, panel = null, log = null, input = null, opener = document.getElementById("assist-open"), dataP = null, asking = false;
+  var esc = A.esc, norm = A.norm, panel = null, log = null, input = null, opener = document.getElementById("assist-open"), dataP = null, asking = false, aiOn = false;
   var FILLER = /(ください|下さい|ほしいです|ほしい|欲しい|さがしています|さがして|探しています|探して|ありますか|ありませんか|ないですか|教えてください|教えて|おしえて|使いたいです|使いたい|つかいたい|のイラスト|イラスト|いらすと|の絵|絵が|絵を|絵|かわいい|可愛い|おしゃれな|おしゃれ|無料の|無料|フリー素材|フリー|素材|に使えます|に使える|使えます|使える|に使って|使って)/g;
   var REQ = /(リクエスト|描いてほしい|描いて欲しい|描いてください|作ってほしい|作ってください|つくってほしい)/;
 
@@ -96,15 +98,48 @@
         var left = norm(strip(text)).replace(new RegExp(ans.k.map(function (k) { return norm(k).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }).join("|"), "g"), "").replace(NOTHING_LEFT, "");
         if (!splitPhrase(left, vocab).length) return;
       }
-      return search(text);
+      return aiOn ? aiSearch(text) : search(text);
     }
+  }
+  var AI_SCHEMA = { type: "object", properties: { keywords: { type: "array", items: { type: "string" }, maxItems: 4 }, touch: { type: "string" } }, required: ["keywords", "touch"] };
+  function aiSystem(d) {
+    var tl = Object.keys(d.touches || {}).map(function (k) { return k + "=" + d.touches[k]; }).join("、");
+    return "あなたはイラスト素材サイトの検索の補助です。利用者の文章から、イラストを探すための日本語の検索語を最大4つ取り出して keywords に入れます。" +
+      "動物・人物・場面・季節・行事・用途などの一般的な名詞にします。「イラスト」「素材」「かわいい」「無料」のような語は入れません。文章に無い物を足しません。" +
+      "絵柄(タッチ)の指定があれば、次のIDのうち1つを touch に入れ、無ければ空文字にします: " + tl + "。";
+  }
+  function aiSearch(text) { // the model only turns the sentence into words; the search itself is the same as without it
+    var note = say("bot", "言葉の意味をくみ取っています…");
+    return loadData().then(function (d) {
+      return A.aiAsk("search", aiSystem(d), text, AI_SCHEMA, function (x) { note.textContent = "AIを準備しています… " + Math.round(x * 100) + "%"; }).then(function (r) {
+        var kw = (r && Array.isArray(r.keywords) ? r.keywords : []).map(function (k) { return String(k).replace(/[<>\s]+/g, " ").trim().slice(0, 16); }).filter(Boolean).slice(0, 4);
+        if (!kw.length) throw new Error("none");
+        var t = r && typeof r.touch === "string" && d.touches[r.touch] ? r.touch : "", q = kw.join(" ");
+        return A.loadRules().then(function (rules) {
+          var why = rules ? A.refuseW(rules, q) : "";
+          if (why && /お受けできません/.test(why)) { note.textContent = BLOCKED; return; }
+          note.textContent = "「" + q + "」" + (t ? "(" + d.touches[t] + ")" : "") + "で探しました。";
+          return search(q, t);
+        });
+      });
+    }).catch(function () { note.textContent = "AIを使えませんでした。通常の検索で探します。"; return search(text); });
+  }
+  function offerAI() { // only where the browser has its own model
+    A.aiState().then(function (st) {
+      if (st === "unavailable") return;
+      chips([["AIで言葉の意味をくみ取る(無料)", function () {
+        aiOn = true;
+        say("bot", "Chromeに内蔵されたAIを使います。入力した文章はこの端末の中で処理され、送信されません。" + (st === "available" ? "" : "初回はAIの準備に数分かかることがあります。") + "文章で入力してください(例: 保育園のお便りに使う秋の絵)。");
+        input.focus();
+      }]]);
+    });
   }
   function splitPhrase(s, vocab) { // the known words that fit in s (the same idea as the search page; a copy here keeps assist.js independent of app.js internals)
     return Object.keys(vocab).filter(function (t) { return s.indexOf(t) >= 0; });
   }
   function build() {
-    panel = el("section", "assist"); panel.id = "assist-panel"; panel.setAttribute("role", "dialog"); panel.setAttribute("aria-modal", "true"); panel.setAttribute("aria-label", "お手伝い"); panel.hidden = true;
-    panel.innerHTML = '<header><b>お手伝い</b><button type="button" class="as-x" aria-label="閉じる">×</button></header><div class="as-log" role="log" aria-live="polite"></div>' +
+    panel = el("section", "assist"); panel.id = "assist-panel"; panel.setAttribute("role", "dialog"); panel.setAttribute("aria-modal", "true"); panel.setAttribute("aria-label", "案内"); panel.hidden = true;
+    panel.innerHTML = '<header><b>案内</b><button type="button" class="as-x" aria-label="閉じる">×</button></header><div class="as-log" role="log" aria-live="polite"></div>' +
       '<form class="as-form"><input type="text" name="m" maxlength="80" placeholder="検索したいものを入力してください" autocomplete="off" aria-label="メッセージ"><button class="btn" type="submit">送る</button></form>' +
       '<p class="as-note">ここに入力した言葉は、この端末内でのみ使われます。リクエストを送るボタンを押した場合だけ、その言葉を送信します。</p>';
     document.body.appendChild(panel);
@@ -124,6 +159,7 @@
     say("bot", "こんにちは。探しているイラストや知りたいことを入力してください。");
     loadData().then(function (d) {
       chips((d.chips || []).map(function (c) { return [c, function () { handle(c); }]; }));
+      offerAI();
     });
   }
   function open() { if (!panel) build(); panel.hidden = false; opener.setAttribute("aria-expanded", "true"); input.focus(); }
