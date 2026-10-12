@@ -17,7 +17,8 @@ from pathlib import Path
 
 ID = re.compile(r"^[A-Za-z0-9_-]{22}$")
 OPT = re.compile(r"^[a-z0-9]{1,12}$")
-STAT = re.compile(r"^(dock\.[a-z0-9]{1,8}\.[a-z0-9_-]{1,32}|pop\.[ra]\.[A-Za-z0-9._:-]{3,64})$")
+STAT = re.compile(r"^(dock\.[a-z0-9]{1,8}\.[a-z0-9_-]{1,32}|pop\.[ra]\.[A-Za-z0-9._:-]{3,64}|cq\.[a-z]{1,6}\.[a-z0-9_-]{1,32})$")
+VOICE_UNSAFE = re.compile(r"[0-9０-９]{7,}|@|＠|https?:|www\.|〒|[0-9]{3}-[0-9]{4}")
 ENDPOINT = re.compile(r"^https://([A-Za-z0-9-]+\.)*(googleapis\.com|push\.services\.mozilla\.com|mozaws\.net|push\.apple\.com|notify\.windows\.com)(:\d+)?/")
 
 
@@ -29,6 +30,7 @@ class Store:
         self.subs: dict[str, dict] = {}
         self.stats: dict[str, int] = {}
         self.calls: list[tuple[str, dict]] = []
+        self.voices: list[dict] = []
 
     def bump(self, keys):
         for k in keys:
@@ -122,6 +124,18 @@ class Store:
             if not keys:
                 return 400, None
             self.bump(keys)
+            return 204, None
+        if op == "voice":
+            kind, t = d.get("k"), d.get("t")
+            if kind not in ("miss", "why", "need", "other") or not isinstance(t, str):
+                return 400, None
+            t = re.sub(r"\s+", " ", t).strip()
+            if not 2 <= len(t) <= 80:
+                return 400, None
+            if VOICE_UNSAFE.search(t):
+                return 422, None
+            self.voices.append({"kind": kind, "message": t})
+            self.bump(["cq.voice." + kind])
             return 204, None
         return 400, None
 

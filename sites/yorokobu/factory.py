@@ -75,7 +75,22 @@ def status() -> None:
           f"groups {len(c['theme_groups'])}, curated pages {len(picks)}")
 
 
-def brief(kind: str, n: int, out: Path, answer: Path, offset: int = 0) -> None:
+NL = chr(10)
+
+
+def demand_text(path: Path | None) -> str:
+    """The most wanted words of the demand queue (demand.py: autocomplete, Search Console, the concierge) as a block for a brief; empty without a queue file."""
+    if not path or not Path(path).exists():
+        return ""
+    lines = [l.strip() for l in Path(path).read_text(encoding="utf-8").splitlines() if l.startswith("- ") and ("回" in l or ":" in l)]
+    if not lines:
+        return ""
+    head = ("REAL SEARCH DEMAND (words people search or typed on the site; answer these first where it fits the task, using their exact words in the queries and keywords; "
+            "never copy a sentence of a visitor):")
+    return NL + head + NL + NL.join(lines[:25]) + NL
+
+
+def brief(kind: str, n: int, out: Path, answer: Path, offset: int = 0, demand: Path | None = None) -> None:
     c = _load()
     if kind == "themes":
         covered = "\n".join(f"- {t['slug']} | {t['name']} | queries: {', '.join(i['query'] for i in t['ideas'])}" for t in c["themes"])
@@ -84,7 +99,7 @@ def brief(kind: str, n: int, out: Path, answer: Path, offset: int = 0) -> None:
                 f"with surprising, useful angles no other gift site offers (not the usual rankings and occasion lists). THEME pages start from a feeling, a situation, a problem, "
                 f"an interest or a constraint instead of an occasion; each shows 4 product ideas that editors then fill with real products.\n\n"
                 f"WRITE {n} NEW theme pages that are clearly different from every covered one below (different angle, different products, different queries).\n"
-                f"Existing groups:\n{_groups_text(c)}\n{INSPIRATION}\nFORMAT:{THEME_SPEC}\nCOVERED THEMES (do not repeat; do not reuse these queries):\n{covered}\n{RULES}")
+                f"Existing groups:\n{_groups_text(c)}\n{INSPIRATION}{demand_text(demand)}\nFORMAT:{THEME_SPEC}\nCOVERED THEMES (do not repeat; do not reuse these queries):\n{covered}\n{RULES}")
     elif kind == "messages":
         todo = [o for o in c["occasions"] if o["slug"] not in c["messages"]][offset:offset + n]
         listing = "\n".join(f"- {o['slug']} | {o['name']} | {o['timing']}" for o in todo)
@@ -100,7 +115,7 @@ def brief(kind: str, n: int, out: Path, answer: Path, offset: int = 0) -> None:
                 f"practical, specific, written like a thoughtful Japanese editor (not SEO filler): how to ask about someone's taste without being obvious, how to hand a gift over, "
                 f"what to write on a card, sending to someone far away, workplace gift manners, returning a gift, handling a gift you dislike, budget thinking, wrapping and noshi basics, "
                 f"making a small gift feel special, gifts for people who say 'nothing needed', and anything else a person planning a gift would truly want to know.\n\n"
-                f"WRITE {n} NEW articles on topics clearly different from the covered ones.\nFORMAT:{ARTICLE_SPEC}\nEXISTING ARTICLES (do not repeat):\n{covered}\n\n"
+                f"WRITE {n} NEW articles on topics clearly different from the covered ones.{demand_text(demand)}\nFORMAT:{ARTICLE_SPEC}\nEXISTING ARTICLES (do not repeat):\n{covered}\n\n"
                 f"THEME PAGES you may link to (use ONLY these slugs):\n{themes}\n{RULES}")
     out.write_text(text, encoding="utf-8", newline="\n")
     print(f"brief written to {out}; Codex must write {answer}")
@@ -219,6 +234,7 @@ def main() -> None:
     b.add_argument("--n", type=int, default=5)
     b.add_argument("--out", type=Path, required=True)
     b.add_argument("--answer", type=Path, required=True)
+    b.add_argument("--demand", type=Path, default=None, help="the demand queue (demand.py QUEUE.md): its most wanted words are added to a themes / articles brief")
     b.add_argument("--offset", type=int, default=0, help="messages only: skip this many of the occasions still without messages (to run several Codex batches in parallel)")
     m = sub.add_parser("merge")
     m.add_argument("kind", choices=["themes", "articles", "messages"])
@@ -232,7 +248,7 @@ def main() -> None:
     if a.cmd == "status":
         status()
     elif a.cmd == "brief":
-        brief(a.kind, a.n, a.out, a.answer, a.offset)
+        brief(a.kind, a.n, a.out, a.answer, a.offset, a.demand)
     elif a.cmd == "retry":
         retry_brief(a.kind, a.file, a.out)
     else:

@@ -34,6 +34,7 @@ from sites.yorokobu import numberlists as nm  # noqa: E402
 from sites.yorokobu import ranking as rk  # noqa: E402
 from sites.yorokobu import sales  # noqa: E402
 from sites.yorokobu import minepage  # noqa: E402
+from sites.yorokobu import concierge as ccbot  # noqa: E402   (build.concierge is the search box of the gift pages)
 from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
 from sites.yorokobu.tools import (calc_page, gacha_data, gacha_page, gacha_pool, gift_map, persona_page, quiz_page, taboo_page, tools_hub_page)  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
@@ -188,7 +189,7 @@ def page(cfg, preview, **kw):
     kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", "")) + breadcrumb_ld(cfg, kw.get("body", ""))   # the pictures the page uses (only those), the breadcrumb data
     site = {**SITE, "nav": ([("今日のおすすめ", "/picks/", "/picks/")] if PICKS_ON else []) + SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])
                               + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
-    head_extra = FONTS + kw.pop("head_extra", "") + sale_script + '<script src="/assets/mine.js" defer></script>'
+    head_extra = FONTS + kw.pop("head_extra", "") + sale_script + '<script src="/assets/mine.js" defer></script><script src="/assets/concierge.js" defer></script>'
     return layout(site, cfg, preview, scripts=True, head_extra=head_extra, **kw)
 
 
@@ -1915,7 +1916,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
                          "<p>当サイトの運営者は、楽天市場で、似顔絵のショップも運営しています。そのショップの商品を紹介するときは、そのことを、ページ上に明示します。</p>"
                          "<p>当サイトは、楽天グループ株式会社が運営するものではありません。</p>"),
         contact_notice="商品の購入・配送・返品などのお問い合わせは、各販売店へお願いします。当サイトでは、商品の販売を行っていません。",
-        input_note=(askpages.ASK_PRIVACY if c.get("ask") else "") + minepage.COUNT_PRIVACY, finish=lambda s: s))
+        input_note=(askpages.ASK_PRIVACY if c.get("ask") else "") + minepage.COUNT_PRIVACY + ccbot.PRIVACY, finish=lambda s: s))
     pages["manifest.webmanifest"] = json.dumps(MANIFEST, ensure_ascii=False, indent=1)
     pages.update(cards)
     listed = dict(pages)                                   # the sitemap lists the pages that can be found by searching, not the shared-list page (noindex, built from a link)
@@ -1923,6 +1924,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages["list/index.html"] = list_page(d, cfg, preview)
         pages["list/items.json"] = json.dumps(SEEN, ensure_ascii=False, separators=(",", ":"))
     pages.update(ask_quiet)                                 # the other person's page and the results: not listed (noindex), built after the sitemap's list
+    pages["concierge-data.json"] = ccbot.data(d, cfg, finder_map(d))     # what the corner counter reads (assets/concierge.js)
     pages["favorites/index.html"] = minepage.favorites_page(d, cfg, preview)    # one browser's own page: noindex, not in the sitemap
     pages.update(standard_files(listed, cfg, preview, d["fetched_date"]))
     pages.update(asset_pages(HERE / "assets"))
