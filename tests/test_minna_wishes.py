@@ -231,8 +231,9 @@ class Spec(unittest.TestCase):
 class Page(unittest.TestCase):
     def test_request_page_has_the_box_the_board_and_the_refusals(self):
         html = build.request_page({"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト", "contact_own": True, "contact_kinds": ["イラストのリクエスト", "その他"]}, True)
-        for needle in ('id="req-form"', 'name="w"', 'maxlength="60"', "お受けできないもの", "リクエストへの、お答え", 'id="req-mine"', "プライバシーポリシー"):
+        for needle in ('id="req-form"', 'name="w"', 'maxlength="60"', "お受けできないもの", 'id="req-mine"', "プライバシーポリシー"):
             self.assertIn(needle, html)
+        self.assertNotIn("リクエストへの", html)                 # nothing has been answered yet: the board is not shown at all, not even as an empty promise
 
     def test_data_files_carry_the_rules_and_the_board(self):
         files = build.request_data_files()
@@ -373,6 +374,7 @@ class Votes(unittest.TestCase):
             {"title": "できたもの", "status": "公開しました", "series": "req-x", "date": "2026-10-12", "asked": 1, "kw": []}]}
         with mock.patch.object(build, "request_board", return_value=board):
             html = build.request_page({"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト", "contact_own": True, "contact_kinds": ["イラストのリクエスト", "その他"]}, True)
+        self.assertIn("リクエストへの", html)
         self.assertIn('data-plus="予定のもの"', html)
         self.assertNotIn('data-plus="できたもの"', html)
         self.assertIn("3人が、ほしいと言いました", html)
