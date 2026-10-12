@@ -59,6 +59,8 @@ class CurateTest(unittest.TestCase):
         self.assertFalse(fits_occasion("名入れ刺繍 ポーチ 母子手帳 ケース 出産祝い", "birthday"))
         self.assertTrue(fits_occasion("お歳暮 2026 スイーツ ギフト", "oseibo"))
         self.assertTrue(fits_occasion("名入れ ポーチ 誕生日 クリスマス ギフト", "birthday"))
+        self.assertFalse(fits_occasion("甚平 メンズ 夏用 寝巻き パジャマ", "year-end-gathering"))      # summer goods on a winter page (weekly review 2026-10-12)
+        self.assertTrue(fits_occasion("甚平 メンズ 夏用 寝巻き パジャマ", "birthday"))
 
 
 class RepairTest(unittest.TestCase):
