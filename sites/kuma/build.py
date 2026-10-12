@@ -24,6 +24,7 @@ from sites.kuma import charts, content, digest  # noqa: E402
 from sites.kuma import captures as captures_mod  # noqa: E402
 from sites.kuma import cite as cite_mod  # noqa: E402
 from sites.kuma import finder as finder_mod  # noqa: E402
+from sites.kuma import lastmod as lastmod_mod  # noqa: E402
 from sites.kuma import official as official_mod  # noqa: E402
 from sites.kuma import season as season_mod  # noqa: E402
 from sites.kuma import live as live_mod  # noqa: E402
@@ -690,7 +691,7 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None,
                 prefs: dict | None = None, today: date | None = None,
-                captures: dict | None = None) -> list[str]:
+                captures: dict | None = None, update_lastmod: bool = False) -> list[str]:
     global SITE
     missing = missing_config(cfg)
     if release and missing:
@@ -783,6 +784,14 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         input_note="",
         finish=lambda s: s))
     pages.update(standard_files(pages, cfg, preview, max([d["fetched_date"]] + [src["fetched_date"] for src in d.get("live_prefs", [])])))   # the newest of the ministry and the municipal sources
+    render_day = today or datetime.now(JST).date()
+    if update_lastmod:
+        for rel in lastmod_mod.update_static(pages, render_day):
+            print(f"lastmod: the text of {rel} changed; dated {render_day.isoformat()}")
+    dates, static_changed = lastmod_mod.compute(pages, d, d.get("lv"), render_day)
+    pages["sitemap.xml"] = lastmod_mod.apply(pages["sitemap.xml"], dates, cfg["site_url"].rstrip("/"))
+    if static_changed:      # the stored hash is out of date: these pages get today's date until `build.py --update-lastmod` is run and the file committed
+        print("lastmod: static pages whose text differs from sites/kuma/lastmod_static.json: " + ", ".join(static_changed), file=sys.stderr)
     pages.update(asset_pages(HERE / "assets"))
     write_pages(pages, out)
     return sorted(pages)
@@ -791,6 +800,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--release", action="store_true")
+    ap.add_argument("--update-lastmod", action="store_true", help="store the hashes and today's date of the static pages whose text changed (sites/kuma/lastmod_static.json)")
     ap.add_argument("--out", default=str(HERE / "dist"))
     ap.add_argument("--data", default=str(ROOT / "data"), help="folder with the collected data/*.json (default: the repository's data/)")
     args = ap.parse_args()
@@ -804,7 +814,7 @@ def main() -> None:
     links_file = HERE / "links.json"
     links = json.loads(links_file.read_text(encoding="utf-8")) if links_file.exists() else {}
     try:
-        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, prefs=prefs, captures=captures)
+        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, prefs=prefs, captures=captures, update_lastmod=args.update_lastmod)
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {args.out}")
