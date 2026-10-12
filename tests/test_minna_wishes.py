@@ -243,5 +243,37 @@ class Assist(unittest.TestCase):
         self.assertIn("data/request-rules.json", files)
 
 
+class Nurie(unittest.TestCase):
+    cfg = {"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト"}
+
+    def test_every_element_the_script_looks_for_is_on_the_page(self):
+        html = build.nurie_page(self.cfg, True, [])
+        js = (Path(build.__file__).parent / "assets" / "nurie.js").read_text(encoding="utf-8")
+        wanted = set(re.findall(r'\$\("#([a-z-]+)"\)', js)) | {"nurie-app"}
+        for i in wanted:
+            self.assertIn(f'id="{i}"', html, i)
+        self.assertIn('<script src="/assets/nurie.js" defer></script>', html)
+        self.assertIn("FAQPage", html)
+
+    def test_the_page_is_in_the_menu_and_the_card_maker_keeps_its_own_entry(self):
+        labels = {n[0]: n for n in build.BASE_NAV}
+        self.assertEqual(labels["ぬりえ"][1], "/tool/nurie/")
+        self.assertNotEqual(labels["カードをつくる"][2], labels["ぬりえ"][2])
+        self.assertFalse(labels["ぬりえ"][1].startswith(labels["カードをつくる"][2]))
+
+    def test_a_line_drawing_has_a_button_to_colour_it_and_other_pictures_do_not(self):
+        cfg = json.loads((Path(build.__file__).parent / "config.json").read_text(encoding="utf-8"))
+        items, series = build.load_data()
+        line = next(i for i in items if i["touch"] == "lineart")
+        other = next(i for i in items if i["touch"] != "lineart")
+        self.assertIn(f'/tool/nurie/?id={line["id"]}', build.illust_page(cfg, True, line, items, series, []))
+        self.assertNotIn("/tool/nurie/?id=", build.illust_page(cfg, True, other, items, series, []))
+
+    def test_the_page_does_not_send_anything(self):
+        js = (Path(build.__file__).parent / "assets" / "nurie.js").read_text(encoding="utf-8")
+        self.assertNotRegex(js, r"XMLHttpRequest|sendBeacon|method:\s*[\"']POST")
+        self.assertNotIn("/api/", js)
+
+
 if __name__ == "__main__":
     unittest.main()

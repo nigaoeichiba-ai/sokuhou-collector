@@ -36,7 +36,7 @@ PER_PAGE = 60
 MIN_TAG = 12            # a keyword page exists only with at least this many items from at least two sets
 MAX_TAG_PAGES = 150
 MIN_CROSS = 12          # a genre x touch page exists only with at least this many items
-BASE_NAV = [("イラスト", "/illust/", "/illust/"), ("特集", "/special/", "/special/"), ("読みもの", "/guide/", "/guide/"), ("印刷", "/printables/", "/printables/"), ("カードをつくる", "/tool/card/", "/tool/"), ("リクエスト", "/request/", "/request/")]
+BASE_NAV = [("イラスト", "/illust/", "/illust/"), ("特集", "/special/", "/special/"), ("読みもの", "/guide/", "/guide/"), ("印刷", "/printables/", "/printables/"), ("ぬりえ", "/tool/nurie/", "/tool/nurie/"), ("カードをつくる", "/tool/card/", "/tool/card/"), ("リクエスト", "/request/", "/request/")]
 SITE = {
     "nav": list(BASE_NAV),
     "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">',
@@ -285,6 +285,7 @@ ASSIST_FAQ = [
     {"k": ["スタンプ", "転売", "販売", "売", "商標", "素材集", "再配布"], "a": "イラストそのものを、素材集として配布・販売することや、商標として登録すること、LINEスタンプなどに、そのまま使って販売することは、ご遠慮ください。加工して、ほかの作品に使うのは、問題ありません。", "u": "/license/", "l": "利用について"},
     {"k": ["無料", "料金", "お金がかかる", "有料"], "a": "ずっと無料です。", "u": "/license/", "l": "利用について"},
     {"k": ["似て", "取り下げ", "削除して", "著作権侵害", "問題がある"], "a": "似ているというご指摘は、お問い合わせから、お知らせください。確認して、必要な場合は、取り下げます。", "u": "/contact/", "l": "お問い合わせ"},
+    {"k": ["ぬりえをし", "塗り絵をし", "色をぬ", "色を塗", "ぬってみ", "オンラインぬりえ"], "a": "ブラウザの上で、色をぬれます。絵と色をえらんで、ぬりたい場所を、タップします。ぬった絵は、保存も印刷もできます。", "u": "/tool/nurie/", "l": "オンラインぬりえ"},
     {"k": ["カード", "名前入り", "名入れ", "名前を入れ"], "a": "名前とひとことを入れて、どうぶつのカードを、画像で保存できます。入力した内容は、この端末の中だけで使われます。", "u": "/tool/card/", "l": "名前入りカードをつくる"},
 ]
 
@@ -309,6 +310,7 @@ def assist_data(built, guides, year: int, kinds: dict) -> dict:
     pages.append({"u": f"/printables/calendar-{year}/", "n": f"{year}年のイラストカレンダー", "k": ["カレンダー", "月間", "年間", "印刷"], "t": "印刷"})
     for kind in kinds:
         pages.append({"u": f"/printables/{kind}/", "n": PRINT_COPY[kind][1], "k": [PRINT_COPY[kind][0]], "t": "印刷"})
+    pages.append({"u": "/tool/nurie/", "n": "オンラインぬりえ(ブラウザで色をぬる)", "k": ["ぬりえ", "塗り絵", "色をぬる", "オンライン", "保存", "印刷"], "t": "ツール"})
     pages.append({"u": "/tool/card/", "n": "名前入りのカードをつくる", "k": ["カード", "名前入り", "誕生日", "ありがとう", "おめでとう", "あけおめ"], "t": "ツール"})
     pages.append({"u": "/request/", "n": "イラストのリクエスト", "k": ["リクエスト", "ほしい", "描いて", "ない"], "t": "リクエスト"})
     pages.append({"u": "/new/", "n": "新着のセット", "k": ["新着", "新しい", "最近"], "t": "新着"})
@@ -824,6 +826,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 <p class="dl"><a class="btn big" href="/files/{it['id']}.png" download="{it['id']}.png">PNG(透明)をダウンロード</a>
 <a class="btn btn-sub" href="/files/{it['id']}.webp" download="{it['id']}.webp">WebP</a>
 {''.join(f'<a class="btn btn-sub" href="/files/{it["id"]}-{k}.pdf" download="{it["id"]}-{k}.pdf">{"A4で印刷(PDF)" if k == "a4" else "はがきサイズで印刷(PDF)"}</a>' for k in pdf_kinds(it))}
+{f'<a class="btn btn-sub" href="/tool/nurie/?id={it["id"]}">オンラインでぬる</a>' if it["touch"] == "lineart" else ""}
 <button class="btn btn-sub fav-big" type="button" data-fav="{it['id']}" aria-pressed="false">♡ お気に入り</button></p>
 <p class="meta">サイズ: {it['w']}×{it['h']}px(透明な背景) ・ セット: <a href="{s['url']}">{esc(s['title'])}</a> ・ タッチ: <a href="/touch/{it['touch']}/">{esc(t)}</a> ・ ジャンル: <a href="/genre/{it['genre']}/">{esc(g)}</a></p>
 <details class="export" data-src="/files/{it['id']}.png" data-name="{it['id']}"><summary>背景や大きさを変えて保存する</summary>
@@ -1018,6 +1021,47 @@ def tool_page(cfg: dict, preview: bool, items: list[dict], series: list[dict]) -
                 description="名前とひとことを入れて、どうぶつのカードを画像で保存。誕生日・ありがとう・おめでとう・あけおめ。無料で、すぐにつくれます。", body=body)
 
 
+NURIE_FAQ = [
+    ("色をぬった絵は、保存できますか?", "「保存」を押すと、PNG画像として保存できます。スマホでは、保存のあと、写真(ダウンロード)に入ります。"),
+    ("印刷できますか?", "「印刷」を押すと、ぬった絵を、そのまま印刷できます。紙の大きさは、プリンターの設定で、A4などを選んでください。"),
+    ("色が、はみ出します。", "線が切れている所があると、色が、外へ広がることがあります。「もどす」で、ひとつ前に戻れます。"),
+    ("ぬった絵は、商用で使えますか?", "はい。元のイラストと同じく、無料で、商用でもお使いいただけます。くわしくは「利用について」をご覧ください。"),
+    ("ぬった内容は、送信されますか?", "いいえ。色をぬる作業は、お使いのブラウザの中だけで行い、当サイトには、送信されません。"),
+]
+
+
+def nurie_page(cfg: dict, preview: bool, series: list[dict]) -> str:
+    lines = [s for s in series if s["touch"] == "lineart" and s["items"]]
+    faq = "".join(f"<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>" for q, a in NURIE_FAQ)
+    ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in NURIE_FAQ]}, ensure_ascii=False)
+    body = f"""{crumbs([("トップ", "/"), ("オンラインぬりえ", None)])}
+<h1>オンラインぬりえ</h1>
+<p class="lead">ブラウザの上で、色をぬれます。絵をえらんで、色をえらんで、ぬりたい場所を、タップするだけ。ぬった絵は、保存も、印刷も、できます。無料・登録不要です。</p>
+{licence_box()}
+<section id="nurie-app" class="nu-app">
+<section id="nu-stage" class="nu-stage" hidden aria-labelledby="nu-title">
+<h2 id="nu-title"><span class="scribble">ぬりえ</span></h2>
+<div class="nu-wrap"><canvas id="nu-canvas" width="10" height="10" role="img" aria-label="ぬりえ"></canvas>
+<div class="nu-side"><p class="memo-note">1. 色をえらぶ</p><div id="nu-palette" class="nu-palette"></div>
+<p class="memo-note">2. ぬりたい場所を、タップ</p>
+<p class="nu-btns"><button type="button" class="btn btn-sub" id="nu-undo">ひとつ、もどす</button><button type="button" class="btn btn-sub" id="nu-reset">まっしろに</button></p>
+<p class="nu-btns"><button type="button" class="btn big" id="nu-save">画像で保存</button><button type="button" class="btn btn-sub" id="nu-print">印刷</button><button type="button" class="btn btn-sub" id="nu-other">ほかの絵</button></p>
+<p class="req-msg" id="nu-msg" role="status" aria-live="polite">絵をえらんでください。</p></div></div>
+</section>
+<section id="nu-pick"><h2><span class="scribble">ぬりたい絵を、えらぶ</span> <small id="nu-count"></small></h2>
+<p class="memo-note">線だけで描いた絵です。えらぶと、上で、ぬれます。</p><div id="nu-list"></div></section>
+</section>
+<div id="nu-printbox" class="nu-printbox" hidden aria-hidden="true"></div>
+<noscript><p class="notice">オンラインぬりえには、JavaScript が必要です。印刷して、ぬりたいときは、<a href="/printables/">印刷できるもの</a>から、どうぞ。</p></noscript>
+<section><h2><span class="scribble">ぬりえの絵(セットから、さがす)</span></h2>{set_grid(lines)}</section>
+<section style="margin-top:44px"><h2><span class="scribble">よくある、しつもん</span></h2><div class="faq">{faq}</div></section>
+<p>紙に印刷してぬる、A4の<a href="/special/nurie/">ぬりえの特集</a>や、<a href="/guide/nurie-insatsu/">ぬりえの印刷のしかた</a>も、あります。</p>
+<script type="application/ld+json">{ld}</script>
+<script src="/assets/nurie.js" defer></script>"""
+    return page(cfg, preview, path="/tool/nurie/", title=f"オンラインぬりえ 無料・登録不要・保存と印刷OK | {cfg['site_name']}",
+                description="ブラウザの上で、色をぬれるぬりえ。絵と色をえらんで、タップするだけ。ぬった絵は画像で保存も印刷もできます。無料・登録不要・商用OK。", body=body)
+
+
 def sitemap_images(cfg: dict, items: list[dict]) -> str:
     base = cfg["site_url"].rstrip("/")
     rows = "".join(f"<url><loc>{esc(base)}/illust/{i['id']}/</loc><image:image><image:loc>{esc(base)}/files/{i['id']}.png</image:loc><image:title>{esc(i['title'])}</image:title></image:image></url>\n" for i in items)
@@ -1069,6 +1113,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     pages["api/q.php"] = request_php(cfg)
     pages.update(request_data_files())
     pages["tool/card/index.html"] = tool_page(cfg, preview, items, series)
+    pages["tool/nurie/index.html"] = nurie_page(cfg, preview, series)
     pages["search/index.html"] = search_page(cfg, preview)
     pages["favorites/index.html"] = favorites_page(cfg, preview)
     pages["new/index.html"] = new_page(cfg, preview, series)
