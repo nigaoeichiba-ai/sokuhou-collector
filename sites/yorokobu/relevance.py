@@ -23,6 +23,15 @@ MEMORIAL = ("香典", "お供え", "仏壇", "線香", "法事", "法要", "供�
 ADULT_ONLY = ("アダルト", "大人のおもちゃ", "セクシー", "ランジェリー", "下着")
 
 
+HEAD_LIMIT = 50      # about what a card shows of a title
+
+
+def _head(name: str, limit: int = HEAD_LIMIT) -> str:
+    """The front of a title as a card shows it: the shop's bracketed sales words taken off, cut at `limit` characters."""
+    import re
+    return " ".join(re.sub(r"[【\[（(][^】\]）)]*[】\]）)]", " ", name).split())[:limit]
+
+
 def fits(name: str, recipient: str | None) -> bool:
     gender, age = PROFILE.get(recipient, (None, "adult"))
     if any(w in name for w in MEMORIAL + ADULT_ONLY):
@@ -31,6 +40,12 @@ def fits(name: str, recipient: str | None) -> bool:
     if gender == "f" and any(w in name for w in FOR_MEN) and not unisex:
         return False
     if gender == "m" and any(w in name for w in FOR_WOMEN) and not unisex:
+        return False
+    # what a card shows is the front of the title: a title that opens "女性用 レディース ..." reads as made for women even when the shop writes ユニセックス further back
+    head = _head(name)
+    if gender == "m" and any(w in head for w in FOR_WOMEN) and not any(w in head for w in FOR_MEN + UNISEX):
+        return False
+    if gender == "f" and any(w in head for w in FOR_MEN) and not any(w in head for w in FOR_WOMEN + UNISEX):
         return False
     if age in ("adult", "senior", "teen") and any(w in name for w in FOR_KIDS) and "大人" not in name:
         return False

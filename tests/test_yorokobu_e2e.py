@@ -16,6 +16,7 @@ from datetime import date
 from pathlib import Path
 
 from sites.yorokobu import build, content
+from tests.yorokobu_data import rich_boyfriend
 
 FIX = Path(__file__).parent / "fixtures" / "yorokobu"
 CHROME = next((p for p in (r"C:\Program Files\Google\Chrome\Application\chrome.exe", r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
@@ -30,7 +31,10 @@ async function load(url) {
   const f = document.createElement('iframe'); f.style.width = '1200px'; f.style.height = '900px'; document.body.appendChild(f);
   await new Promise(r => { f.onload = r; f.src = url; }); await wait(300); return f;
 }
-const vis = (d) => [...d.querySelectorAll('.grid-all li.item')].filter(li => !li.hidden).map(li => li.getAttribute('data-code'));
+const rows = (d, sel) => [...d.querySelectorAll(sel)].filter(li => !li.hidden).map(li => ({code: li.getAttribute('data-code'), price: Number(li.getAttribute('data-price')), reviews: Number(li.getAttribute('data-reviews')),
+  rating: Number(li.getAttribute('data-rating')), type: li.getAttribute('data-type'), tier: li.getAttribute('data-tier'), ship: li.getAttribute('data-ship'), gift: li.getAttribute('data-gift')}));
+const vis = (d) => rows(d, '.proposals li.item, .grid-all li.item').map(r => r.code);        // what the filters work on: the cards of the proposals and the list of the rest
+const grid = (d) => rows(d, '.grid-all li.item');
 (async () => {
   try {
     // 1. the finder
@@ -53,21 +57,33 @@ const vis = (d) => [...d.querySelectorAll('.grid-all li.item')].filter(li => !li
     await wait(800);
     out.after_submit = f.contentWindow.location.pathname + f.contentWindow.location.search;
     d = f.contentDocument;
-    out.preset_visible = vis(d);                          // ?b=3000-5000 preselects that budget
+    out.preset_rows = rows(d, '.proposals li.item, .grid-all li.item');            // ?b=3000-5000 preselects that budget
+    out.top_codes = [...d.querySelectorAll('.top-picks li.item')].map(li => li.getAttribute('data-code'));
+    out.top_hidden_by_filter = [...d.querySelectorAll('.top-picks li.item')].some(li => li.hidden);
     // 2. filters and sorting
     const set = d.querySelector('.chipset[data-filter="tier"]');
     set.querySelector('.chipbtn[data-v=""]').click();
-    out.all_visible = vis(d);
+    out.all_rows = rows(d, '.proposals li.item, .grid-all li.item');
+    out.all_dom_codes = [...d.querySelectorAll('.proposals li.item, .grid-all li.item')].map(li => li.getAttribute('data-code'));
     const sel = d.querySelector('[data-sort]'); sel.value = 'price-desc'; sel.dispatchEvent(new f.contentWindow.Event('change'));
-    out.price_desc = vis(d);
+    out.price_desc = grid(d);
     sel.value = 'reviews'; sel.dispatchEvent(new f.contentWindow.Event('change'));
-    out.reviews_first = vis(d)[0];
+    out.reviews = grid(d);
     sel.value = 'price-asc'; sel.dispatchEvent(new f.contentWindow.Event('change'));
-    out.price_asc = vis(d);
+    out.price_asc = grid(d);
     d.querySelector('.chipset[data-filter="type"] .chipbtn[data-v="思い出・名入れ"]').click();
-    out.type_filter = vis(d);
+    out.type_rows = rows(d, '.proposals li.item, .grid-all li.item');
     d.querySelector('.chipset[data-filter="type"] .chipbtn[data-v=""]').click();
     out.count_text = d.querySelector('.count').textContent;
+    d.querySelector('input[data-ship]').click();
+    out.ship_rows = rows(d, '.proposals li.item, .grid-all li.item');
+    out.empty_hidden_with_ship = d.querySelector('.empty').hidden;
+    d.querySelector('input[data-ship]').click();
+    d.querySelector('.chipset[data-filter="tier"] .chipbtn[data-v="under3000"]').click();
+    d.querySelector('.chipset[data-filter="type"] .chipbtn[data-v="思い出・名入れ"]').click();
+    out.none_rows = rows(d, '.proposals li.item, .grid-all li.item');
+    out.empty_shown_when_none = !d.querySelector('.empty').hidden;
+    out.proposals_hidden_when_none = d.querySelector('.proposals') ? d.querySelector('.proposals').hidden : null;
     // 3. a budget the page does not have: nothing breaks, everything stays visible
     f = await load('/gift/birthday-mother/?b=3000-5000'); d = f.contentDocument;
     out.unavailable_budget = vis(d);
@@ -172,7 +188,7 @@ class BrowserTest(unittest.TestCase):
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.root = Path(cls.tmp.name)
-        items = json.loads((FIX / "items.json").read_text(encoding="utf-8"))
+        items = rich_boyfriend(json.loads((FIX / "items.json").read_text(encoding="utf-8")))
         build.render_site(content.load(FIX), items, CFG, cls.root, release=True, today=date(2026, 5, 3))
         (cls.root / "e2e.html").write_text(f'<!doctype html><meta charset="utf-8"><pre id="out"></pre><script>{SCENARIO}</script>', encoding="utf-8")
         handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(cls.root))
@@ -211,17 +227,33 @@ class BrowserTest(unittest.TestCase):
         self.assertIn("選んでください", o["message_when_empty"])
 
     def test_finder_goes_to_the_page_with_the_budget_preselected(self):
-        self.assertEqual(self.out["after_submit"], "/gift/birthday-boyfriend/?b=3000-5000")
-        self.assertEqual(self.out["preset_visible"], ["a3"])          # only the 3,000-5,000 yen product
-        self.assertEqual(sorted(self.out["all_visible"]), ["a1", "a2", "a3"])
+        o = self.out
+        self.assertEqual(o["after_submit"], "/gift/birthday-boyfriend/?b=3000-5000")
+        self.assertTrue(o["preset_rows"])
+        self.assertTrue(all(r["tier"] == "3000-5000" for r in o["preset_rows"]), o["preset_rows"])   # only that budget is left of the cards and the list
+        self.assertFalse(o["top_hidden_by_filter"])                      # the first four are the page's head: the filters leave them as they are
+        self.assertEqual(sorted(r["code"] for r in o["all_rows"]), sorted(o["all_dom_codes"]))     # "all" shows every card of the cards and the list
+        self.assertGreater(len(o["all_rows"]), len(o["preset_rows"]))
+        self.assertFalse(set(o["top_codes"]) & set(o["all_dom_codes"]))  # a product stands in one place only
 
     def test_sorting_and_type_filter(self):
         o = self.out
-        self.assertEqual(o["price_desc"], ["a3", "a1", "a2"])
-        self.assertEqual(o["price_asc"], ["a2", "a1", "a3"])
-        self.assertEqual(o["reviews_first"], "a2")
-        self.assertEqual(o["type_filter"], ["a3"])
-        self.assertEqual(o["count_text"], "3点を表示中")
+        prices = [r["price"] for r in o["price_desc"]]
+        self.assertGreaterEqual(len(prices), 2)
+        self.assertEqual(prices, sorted(prices, reverse=True))
+        self.assertEqual([r["price"] for r in o["price_asc"]], sorted(prices))
+        reviews = [r["reviews"] for r in o["reviews"]]
+        self.assertEqual(reviews, sorted(reviews, reverse=True))
+        self.assertTrue(o["type_rows"] and all(r["type"] == "思い出・名入れ" for r in o["type_rows"]))
+        self.assertEqual(o["count_text"], f'{len(o["all_rows"])}点を表示中')
+        self.assertTrue(o["ship_rows"] and all(r["ship"] == "1" for r in o["ship_rows"]))
+        self.assertTrue(o["empty_hidden_with_ship"])
+
+    def test_a_filter_with_no_match_says_so_and_hides_the_empty_blocks(self):
+        o = self.out
+        self.assertEqual(o["none_rows"], [])
+        self.assertTrue(o["empty_shown_when_none"])
+        self.assertTrue(o["proposals_hidden_when_none"])
 
     def test_a_budget_the_page_does_not_have_changes_nothing(self):
         self.assertTrue(self.out["no_such_chip"])

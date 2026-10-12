@@ -492,9 +492,21 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
         return {**it, "curated": True} if it.get("note") else it
     union = [noted(i) for i in union]
     ideas = [{**idea, "items": [noted(i) for i in idea["items"]]} for idea in ideas]
-    grid_items = list(union)
+    # a product has ONE place on the page: the first four ("まず見たい"), then the cards of the proposals, then the list of what is left
+    # (the same photo three times in one scroll reads as padding); the filter below works on all three
+    used = {it["code"] for it in top_shown(d, key)}
+    shown_ideas: set[int] = set()
+    cards_html = ""
+    for i, idea in enumerate(ideas):
+        mine = [it for it in idea["items"] if it["code"] not in used][:4]
+        if len(mine) < MIN_IDEA_ITEMS:
+            continue
+        shown_ideas.add(i)
+        used.update(it["code"] for it in mine)
+        cards_html += idea_card(cfg, {**idea, "items": mine}, i, c["filters"]["tiers"])
+    grid_items = [it for it in union if it["code"] not in used]
     # the proposals (sommelier)
-    proposals = "".join(idea_card(cfg, idea, i, c["filters"]["tiers"]) for i, idea in enumerate(ideas) if len(idea["items"]) >= MIN_IDEA_ITEMS)
+    proposals = cards_html
     if proposals:
         proposals = (f'<section class="proposals"><div class="sec-title"><span class="tag">おすすめの贈り方</span><h2>{esc(heading)}</h2></div>'
                      f'<div class="idea-grid">{proposals}</div></section>')
@@ -505,26 +517,33 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
     if own:
         li += item_card(cfg, own, own=True, tier=tier_of(own["price"], c["filters"]["tiers"]), kind="思い出・名入れ")
     tier_btns = "".join(f'<button type="button" class="chipbtn" data-v="{t["slug"]}">{esc(t["label"])}</button>'
-                        for t in c["filters"]["tiers"] if any(in_tier(i["price"], t) for i in grid_items))
+                        for t in c["filters"]["tiers"] if any(in_tier(i["price"], t) for i in union))
     type_btns = "".join(f'<button type="button" class="chipbtn" data-v="{esc(t)}">{esc(t)}</button>' for t in all_types)
-    browse = ""
-    if grid_items:
-        browse = f"""<section class="browse" id="browse"><div class="sec-title"><span class="tag">絞り込み</span><h2>条件で絞って比べる</h2></div>
-{bird_say("navi-map", "予算や種類を選ぶと、ぴったりのものだけを表示します。並べかえもできます。", "navigator")}
+    sort_ctl = ('''<div class="ctl row"><label>ならびかえ <select data-sort><option value="rank">おすすめ順</option><option value="reviews">レビュー件数が多い順</option>
+<option value="rating">評価が高い順</option><option value="price-asc">価格が安い順</option><option value="price-desc">価格が高い順</option></select></label></div>'''
+                if len(grid_items) + (1 if own else 0) >= 2 else "")
+    controls = rest = ""
+    if union:
+        # the filters sit BEFORE the cards they work on (the cards of the proposals and the list of the rest; the first four are not filtered)
+        controls = f"""<section class="browse" id="browse"><div class="sec-title"><span class="tag">絞り込み</span><h2>条件で絞って比べる</h2></div>
+{bird_say("navi-map", "予算や種類を選ぶと、下の商品から、ぴったりのものだけを表示します。", "navigator")}
 <div class="controls">
 <div class="ctl"><b>予算</b><div class="chipset" data-filter="tier"><button type="button" class="chipbtn on" data-v="">すべて</button>{tier_btns}</div></div>
 {f'<div class="ctl"><b>種類</b><div class="chipset" data-filter="type"><button type="button" class="chipbtn on" data-v="">すべて</button>{type_btns}</div></div>' if type_btns else ''}
-<div class="ctl row"><label>並べかえ <select data-sort><option value="rank">おすすめ順</option><option value="reviews">レビュー件数が多い順</option>
-<option value="rating">評価が高い順</option><option value="price-asc">価格が安い順</option><option value="price-desc">価格が高い順</option></select></label>
-<label class="chk"><input type="checkbox" data-ship> 送料無料</label><label class="chk"><input type="checkbox" data-gift> ギフト対応</label></div></div>
+<div class="ctl row"><label class="chk"><input type="checkbox" data-ship> 送料無料</label><label class="chk"><input type="checkbox" data-gift> ギフト対応</label></div></div>
 <p class="count" aria-live="polite"></p>
-<ul class="items grid-all">{li}</ul>
-<p class="empty" hidden>この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。</p>
-{freshness(d)}</section>"""
+<p class="empty" hidden>この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。</p></section>"""
+        if li:
+            rest = (f'<section class="rest"><div class="sec-title"><span class="tag">ほかにも</span><h2>ほかの商品</h2></div>{sort_ctl}'
+                    f'<ul class="items grid-all">{li}</ul>{freshness(d)}</section>')
+        elif not proposals:
+            rest = freshness(d)
+        else:
+            rest = ""
     else:
-        browse = '<section class="browse"><p class="notice">いま表示できる商品がありません。下の入力欄から、楽天市場で探してください。</p></section>'
-    gm = gift_map(key, ideas, d["c"]["map_tags"], {i for i, idea in enumerate(ideas) if len(idea["items"]) >= MIN_IDEA_ITEMS})
-    return proposals + gm, browse, own
+        rest = '<section class="browse"><p class="notice">いま表示できる商品がありません。下の入力欄から、楽天市場で探してください。</p></section>'
+    gm = gift_map(key, ideas, d["c"]["map_tags"], shown_ideas)
+    return controls + proposals + gm, rest, own
 
 
 def spread(groups: list[list[dict]], n: int, per_shop: int = 2) -> list[dict]:
@@ -557,10 +576,19 @@ def kinds_of(d: dict, keys: list[str]) -> list[list[dict]]:
     return [sorted(v.values(), key=lambda i: (-score(i), i["code"])) for k, v in sorted(by.items(), key=lambda kv: TYPE_ORDER.index(kv[0]) if kv[0] in TYPE_ORDER else 99)]
 
 
+def top_shown(d: dict, key: str, n: int = 4) -> list[dict]:
+    """The products of 「まず見たい」 on a page (none when there are fewer than three: a row of two is not a head)."""
+    # a product leads the page only when the word of its idea stands near the front of its title ("パスケース リール付き ..."): the word far behind is
+    # often one of the keywords a shop stuffed in (an eco bag that lists "ランドリー", a plum wine made by a maker named 布袋), and it is not what the idea is about
+    groups = [sorted((it for it in idea["items"] if relevance.fits_head(it["name"], idea.get("must"))), key=lambda i: -score(i)) for idea in pair_items(d, key)[0]]
+    shown = spread(groups, n)
+    return shown if len(shown) >= 3 else []
+
+
 def top_picks(cfg: dict, d: dict, key: str, n: int = 4) -> str:
     """The first thing under a gift page's head: the products people look at first, before any explanation (a visitor came for the gifts)."""
-    shown = spread([sorted(idea["items"], key=lambda i: -score(i)) for idea in pair_items(d, key)[0]], n)
-    if len(shown) < 3:
+    shown = top_shown(d, key, n)
+    if not shown:
         return ""
     cards = "".join(item_card(cfg, it, rank=i + 1) for i, it in enumerate(shown))
     return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>種類のちがう、人気の{len(shown)}点</h2></div>'
@@ -840,21 +868,31 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
                 description=o["blurb"][:110], body=body, og_image=og_for(f"occasion/{o['slug']}"))
 
 
-def like_items(d: dict, r: dict, i: int, n: int = 4) -> list[dict]:
+def like_items(d: dict, r: dict, i: int, n: int = 4, skip: frozenset | set = frozenset()) -> list[dict]:
     """The products under line `i` of 「喜ばれやすいもの」: those fetched for that line, or (data without them) the products of this person's pages whose titles are of that kind."""
     row = (r.get("like_rows") or [None] * (i + 1))[i]
     if not row:
         return []
     got = (d.get("likes") or {}).get(r["slug"], [])
     if i < len(got) and got[i]:
-        return got[i][:n]
+        return [it for it in got[i] if it["code"] not in skip][:n]
     pool: dict[str, dict] = {}
     for p in d["c"]["pairs"]:
         if p["recipient"] == r["slug"]:
             for it in pair_items(d, ct.pair_key(p))[2]:
                 if relevance.fits_idea(it["name"], row["must"]):
                     pool.setdefault(it["code"], it)
-    return spread([sorted(pool.values(), key=lambda it: (-score(it), it["code"]))], n)
+    return spread([sorted((it for it in pool.values() if it["code"] not in skip), key=lambda it: (-score(it), it["code"]))], n)
+
+
+def like_rows_items(d: dict, r: dict) -> list[list[dict]]:
+    """The products under each line of 「喜ばれやすいもの」, a product under one line only."""
+    out, seen = [], set()
+    for i in range(len(r.get("like_rows") or [])):
+        items = like_items(d, r, i, skip=seen)
+        seen.update(it["code"] for it in items)
+        out.append(items)
+    return out
 
 
 def likes_section(d: dict, cfg: dict, r: dict) -> str:
@@ -863,8 +901,9 @@ def likes_section(d: dict, cfg: dict, r: dict) -> str:
     if not rows:
         return f'<ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in r["likes"])}</ol>'
     out = ""
+    per_row = like_rows_items(d, r)
     for i, (text, row) in enumerate(zip(r["likes"], rows)):
-        items = like_items(d, r, i)
+        items = per_row[i]
         cards = f'<ul class="items mini">{"".join(item_card(cfg, it) for it in items)}</ul>' if items else ""
         q = row["queries"][0]
         btns = f'<a class="btn" href="{esc(search_link(cfg, q))}" rel="sponsored nofollow noopener" target="_blank">楽天市場で「{esc(q)}」を探す</a>'
@@ -880,7 +919,8 @@ def recipient_page(d: dict, cfg: dict, preview: bool, r: dict) -> str:
     c = d["c"]
     pairs = [p for p in c["pairs"] if p["recipient"] == r["slug"]]
     cards = "".join(tile(f'/gift/{ct.pair_key(p)}/', "occasion", p["occasion"], c["occ"][p["occasion"]]["name"], p["title"].split(" ")[0]) for p in pairs)
-    featured = spread(kinds_of(d, [ct.pair_key(p) for p in pairs]), 6)
+    above = {it["code"] for row in like_rows_items(d, r) for it in row}      # already shown under 「喜ばれやすいもの」
+    featured = spread([[it for it in g if it["code"] not in above] for g in kinds_of(d, [ct.pair_key(p) for p in pairs])], 6)
     shown = (f'<section style="margin-top:50px"><h2><span class="scribble">種類のちがう、選ばれている贈り物</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
     color = COLORS[list(c["rec"]).index(r["slug"]) % 4]
     head = head_band(color, ic_wrap("recipient", r["slug"]), f'{esc(r["name"])}への<wbr>プレゼント', r["blurb"], single=True, mascot="r-sparkle")
@@ -1694,7 +1734,8 @@ def prepare(c: dict, items: dict | None, cfg: dict) -> dict:
         def ok(i, k=k):
             return usable(i, c["filters"], owner.get(k), relaxed=True)
         if "ideas" in v:                                   # each idea keeps only products of its own kind (its must-words), and a budget list only what an idea shows
-            ideas = [{**idea, "items": [i for i in idea["items"] if ok(i) and relevance.fits_idea(i["name"], must_of.get((k, idea["label"])) or must_at.get((k, n)) or idea.get("must"))]}
+            musts = [must_of.get((k, idea["label"])) or must_at.get((k, n)) or idea.get("must") for n, idea in enumerate(v["ideas"])]
+            ideas = [{**idea, "must": musts[n], "items": [i for i in idea["items"] if ok(i) and relevance.fits_idea(i["name"], musts[n])]}
                      for n, idea in enumerate(v["ideas"])]
             shown = {i["code"] for idea in ideas for i in idea["items"]}
             pairs[k] = {"ideas": ideas, "tiers": {t: [i for i in lst if ok(i) and i["code"] in shown] for t, lst in v["tiers"].items()}}
