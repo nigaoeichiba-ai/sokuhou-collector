@@ -168,7 +168,7 @@ GROUPS: dict[str, list[Source]] = {
         Source("niigata_kuma", niigata_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("yamagata_kuma", yamagata_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("aomori_kuma", aomori_kuma.collect, check_counts_bear, corroborated.carry_over),
-        Source("nara_kuma", nara_kuma.collect, check_counts_bear),
+        Source("nara_kuma", nara_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("saitama_kuma", saitama_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("otsu_kuma", otsu_kuma.collect, check_counts_bear),
     ],

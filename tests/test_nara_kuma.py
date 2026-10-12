@@ -44,7 +44,7 @@ def _server(features, asked=None, extra=None):
         if asked is not None:
             asked.append(url)
         q = {k: v[0] for k, v in parse_qs(urlparse(url).query).items()}
-        assert q["returnGeometry"] == "false" and q["outFields"] == "field_9,field_6" and q["f"] == "json", q
+        assert q["returnGeometry"] == "false" and q["outFields"] == "field_9,field_6,field_7,field_4,field_10,field_14" and q["f"] == "json", q
         off, n = int(q["resultOffset"]), int(q["resultRecordCount"])
         page = [{"attributes": dict(f["attributes"], **(extra or {}))} for f in features[off:off + n]]
         return json.dumps({"features": page, **({"exceededTransferLimit": True} if off + n < len(features) else {})}).encode()
@@ -113,16 +113,33 @@ class NaraKumaTest(unittest.TestCase):
         self.assertEqual(out["municipalities"], self.out["municipalities"])
         self.assertTrue(all("orderByFields=objectid" in u for u in asked))
 
-    def test_the_stored_data_has_no_place_position_or_free_text(self):
-        extra = {"field_7": "SECRET_OAZA", "field_11": "SECRET_TEXT 090-1234-5678", "field_13": 34.5, "mail": "a@example.com"}
+    def test_the_stored_data_has_the_place_of_each_row_but_no_position_or_free_text(self):
+        """Other publications carry this same list (owner's rule 2026-10-13): the 大字, the kind and the number are stored; the free text, the position and the mail are not."""
+        extra = {"field_7": "OAZA名", "field_4": "目撃", "field_10": 2, "field_11": "SECRET_TEXT 090-1234-5678", "field_13": 34.5, "mail": "a@example.com"}
         out = _collect(extra=extra)
         self.assertEqual(out["municipalities"], self.out["municipalities"])
         text = json.dumps(out, ensure_ascii=False)
         for secret in ("SECRET", "34.5", "example.com", "090-"):
             self.assertNotIn(secret, text)
-        self.assertFalse(_keys(out) & FORBIDDEN_KEYS)
+        self.assertFalse(_keys(out) & (FORBIDDEN_KEYS - {"place"}))
         self.assertEqual({k for m in out["municipalities"].values() for k in m}, {"monthly", "latest"})
-        run.check_counts_bear(None, self.out)
+        recs = out["corroborated"]
+        self.assertTrue(recs)
+        self.assertEqual({k for r in recs for k in r}, {"observed_at", "city", "place", "kind", "count"})
+        self.assertTrue(all(r["place"] == "OAZA名" and r["count"] == 2 and r["kind"] == "目撃" for r in recs))
+        self.assertEqual([r["observed_at"] for r in recs], sorted((r["observed_at"] for r in recs), reverse=True))
+        self.assertLessEqual(len(recs), out["total_fy"])
+        run.check_counts_bear(None, out)
+
+    def test_a_row_without_a_place_is_not_listed_and_a_bear_like_animal_is_marked(self):
+        feats = [{"attributes": {"field_9": int(datetime(2026, 10, 7, 9, 0, tzinfo=JST).timestamp() * 1000), "field_6": "十津川村", "field_7": "", "field_14": "クマ"}},
+                 {"attributes": {"field_9": int(datetime(2026, 10, 6, 9, 0, tzinfo=JST).timestamp() * 1000), "field_6": "十津川村", "field_7": "高滝", "field_14": "クマらしき", "field_10": 1}}]
+        out = _collect(feats)
+        self.assertEqual([(r["observed_at"], r["place"]) for r in out["corroborated"]], [("2026-10-06", "高滝(クマらしき動物)")])
+        self.assertEqual(out["total_fy"], 2)                 # both are still counted
+
+    def test_the_fixture_without_places_stores_no_records(self):
+        self.assertNotIn("corroborated", self.out)
 
     def test_bad_dates_and_future_dates_are_counted_as_unparsed(self):
         future = int(datetime(2026, 10, 20, 9, 0, tzinfo=JST).timestamp() * 1000)

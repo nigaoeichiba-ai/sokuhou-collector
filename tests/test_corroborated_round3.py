@@ -122,5 +122,22 @@ class HirakawaCreditTest(unittest.TestCase):
         self.assertNotIn("公共データ利用規約", self.build("福島市"))
 
 
+@unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
+class CoverageWordingTest(unittest.TestCase):
+    def page(self, raw):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.dict(live_mod.LIVE_SOURCES, {"fukushima": COUNTS_META}):
+            build.render_site(make_raw(), CFG, Path(tmp) / "s", release=True, prefs={"fukushima": raw, "yamaguchi": _yamaguchi()}, today=TODAY)
+            return (Path(tmp) / "s" / "live" / "fukushima" / "index.html").read_text(encoding="utf-8")
+
+    def test_it_says_which_municipalities_have_places_unless_they_all_do(self):
+        some = counts_with_records()
+        self.assertIn("場所まで載せているのは、福島市の分だけで、ほかの市町村の目撃は、上の件数にだけ含まれます", self.page(some))
+        every = counts_with_records()
+        every["corroborated"] = every["corroborated"] + [{"observed_at": "2026-09-02", "city": "会津若松市", "place": "町北町", "kind": "目撃", "count": None}]
+        html = self.page(every)
+        self.assertIn("すべての市町村の分です", html)
+        self.assertNotIn("ほかの市町村の目撃は、上の件数にだけ", html)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -504,8 +504,11 @@ def counts_page(page, d: dict, c: dict, today: date, links: dict) -> str:
     if recs:
         cities = "・".join(dict.fromkeys(x["city"] for x in recs))
         shown = [{"at": x["observed_at"], "city": x["city"], "place": x["place"], "kind": x["kind"]} for x in recs[:RECENT_ROWS]]
+        all_covered = {x[0] for x in c["munis"]} <= {x["city"] for x in recs}
+        place_scope = ("上の市町村別の件数の、すべての市町村の分です。" if all_covered else
+                       f"場所まで載せているのは、{esc(cities)}の分だけで、ほかの市町村の目撃は、上の件数にだけ含まれます。")
         confirmed = f"""<h2>場所まで確認できた最新の目撃({fy_label(cur)})</h2>
-<p>複数の公開情報で一致を確認できた目撃だけを、新しい順に載せています({n(len(recs))}件)。場所まで載せているのは、{esc(cities)}の分だけで、ほかの市町村の目撃は、上の件数にだけ含まれます。</p>
+<p>複数の公開情報で一致を確認できた目撃だけを、新しい順に載せています({n(len(recs))}件)。{place_scope}</p>
 {record_rows(shown)}
 <p class="notice">直近{n(len(shown))}件です。確認できなかった目撃は、ここに載せていません(件数には含まれます)。</p>
 """

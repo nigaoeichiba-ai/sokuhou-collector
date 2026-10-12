@@ -1,7 +1,959 @@
 {
  "as_of": "2026-10-08",
+ "corroborated": [
+  {
+   "city": "川上村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-08",
+   "place": "白川渡"
+  },
+  {
+   "city": "五條市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-07",
+   "place": "西吉野町江出"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-07",
+   "place": "玉垣内"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-07",
+   "place": "平谷"
+  },
+  {
+   "city": "山添村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-07",
+   "place": "峰寺"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-07",
+   "place": "小橡"
+  },
+  {
+   "city": "川上村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-07",
+   "place": "北塩谷"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-06",
+   "place": "高滝"
+  },
+  {
+   "city": "曽爾村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-06",
+   "place": "小長尾"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-06",
+   "place": "内原"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-03",
+   "place": "滝川"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-03",
+   "place": "シオカラ谷"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-02",
+   "place": "風屋"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-01",
+   "place": "高津"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-01",
+   "place": "西原"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-01",
+   "place": "池峰"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-01",
+   "place": "旭"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-30",
+   "place": "野尻"
+  },
+  {
+   "city": "吉野町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-30",
+   "place": "南国栖"
+  },
+  {
+   "city": "野迫川村",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-28",
+   "place": "弓手原"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-27",
+   "place": "下池原"
+  },
+  {
+   "city": "下北山村",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-09-27",
+   "place": "上池原"
+  },
+  {
+   "city": "下北山村",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-09-26",
+   "place": "池峰"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-26",
+   "place": "寺垣内"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-25",
+   "place": "西大台"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-25",
+   "place": "寺垣内"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-24",
+   "place": "尾鷲辻"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-24",
+   "place": "寺垣内"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-23",
+   "place": "小橡"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-22",
+   "place": "西原"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-21",
+   "place": "西原"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-21",
+   "place": "寺垣内"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-20",
+   "place": "西原"
+  },
+  {
+   "city": "御杖村",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-09-20",
+   "place": "菅野"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-19",
+   "place": "西原"
+  },
+  {
+   "city": "五條市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-19",
+   "place": "大塔町阪本"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-18",
+   "place": "シオカラ谷"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-17",
+   "place": "白川"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-11",
+   "place": "牛石ヶ原"
+  },
+  {
+   "city": "川上村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-10",
+   "place": "上多古"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-05",
+   "place": "長殿"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-04",
+   "place": "山手（片谷橋）"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-01",
+   "place": "沼田原"
+  },
+  {
+   "city": "川上村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-31",
+   "place": "伯母谷"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-30",
+   "place": "牛石ヶ原"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-30",
+   "place": "大蛇嵓分岐"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-27",
+   "place": "牛石ヶ原"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-25",
+   "place": "大蛇嵓分岐"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-25",
+   "place": "大蛇嵓分岐"
+  },
+  {
+   "city": "下市町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-24",
+   "place": "西山"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-08-23",
+   "place": "牛石ヶ原"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-23",
+   "place": "小橡"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-23",
+   "place": "大蛇嵓"
+  },
+  {
+   "city": "川上村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-21",
+   "place": "上多古"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-20",
+   "place": "牛石ヶ原"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-18",
+   "place": "西大台ガレ場"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-11",
+   "place": "東大台上道水場"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "牛石ヶ原"
+  },
+  {
+   "city": "五條市",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-08-10",
+   "place": "大塔町惣谷"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-07",
+   "place": "牛石ヶ原"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-07",
+   "place": "湯之原"
+  },
+  {
+   "city": "川上村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-05",
+   "place": "武木"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-04",
+   "place": "牛石ヶ原"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-04",
+   "place": "牛石ヶ原"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-08-03",
+   "place": "尾鷲辻"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-08-02",
+   "place": "尾鷲辻"
+  },
+  {
+   "city": "川上村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-02",
+   "place": "伯母谷"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-01",
+   "place": "正木峠"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-30",
+   "place": "大蛇嵓"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-27",
+   "place": "大蛇嵓"
+  },
+  {
+   "city": "野迫川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-23",
+   "place": "北今西"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-22",
+   "place": "大蛇嵓"
+  },
+  {
+   "city": "川上村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-22",
+   "place": "上谷"
+  },
+  {
+   "city": "下北山村",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-21",
+   "place": "寺垣内"
+  },
+  {
+   "city": "川上村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-21",
+   "place": "上谷"
+  },
+  {
+   "city": "下北山村",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-20",
+   "place": "寺垣内"
+  },
+  {
+   "city": "吉野町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "飯貝"
+  },
+  {
+   "city": "御杖村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "神末(クマらしき動物)"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "上池原"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "上池原"
+  },
+  {
+   "city": "黒滝村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-18",
+   "place": "槙尾"
+  },
+  {
+   "city": "東吉野村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "小川"
+  },
+  {
+   "city": "五條市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "大塔町惣谷"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-16",
+   "place": "西大台"
+  },
+  {
+   "city": "大台ヶ原",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-15",
+   "place": "中道"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-14",
+   "place": "寺垣内"
+  },
+  {
+   "city": "天理市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-12",
+   "place": "福住町(クマらしき動物)"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-12",
+   "place": "寺垣内"
+  },
+  {
+   "city": "東吉野村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-11",
+   "place": "狭戸"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "白川"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-08",
+   "place": "玉置川"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-08",
+   "place": "小橡"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-08",
+   "place": "下池原"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-08",
+   "place": "下池原"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "下池原"
+  },
+  {
+   "city": "野迫川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-06",
+   "place": "北股"
+  },
+  {
+   "city": "川上村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "伯母谷"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "下池原"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "痕跡",
+   "observed_at": "2026-07-01",
+   "place": "小橡"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-30",
+   "place": "小橡"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-30",
+   "place": "大台ヶ原"
+  },
+  {
+   "city": "下北山村",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-30",
+   "place": "佐田"
+  },
+  {
+   "city": "吉野町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "国栖"
+  },
+  {
+   "city": "下北山村",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-29",
+   "place": "佐田"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-23",
+   "place": "西原"
+  },
+  {
+   "city": "上北山村",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-23",
+   "place": "河合"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-22",
+   "place": "白川"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-22",
+   "place": "上池原"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-21",
+   "place": "佐田"
+  },
+  {
+   "city": "宇陀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-20",
+   "place": "弁財天"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-20",
+   "place": "寺垣内"
+  },
+  {
+   "city": "野迫川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-20",
+   "place": "北股"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-19",
+   "place": "上桑原"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "上池原"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "西原"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "その他",
+   "observed_at": "2026-06-17",
+   "place": "寺垣内"
+  },
+  {
+   "city": "下北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "下桑原"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "旭"
+  },
+  {
+   "city": "山添村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "的野(クマらしき動物)"
+  },
+  {
+   "city": "川上村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-09",
+   "place": "井戸"
+  },
+  {
+   "city": "黒滝村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-31",
+   "place": "中戸"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "那知合"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-15",
+   "place": "白川"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-13",
+   "place": "神下"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-10",
+   "place": "旭"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-09",
+   "place": "旭"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-09",
+   "place": "旭"
+  },
+  {
+   "city": "上北山村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-06",
+   "place": "西原"
+  },
+  {
+   "city": "十津川村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-04",
+   "place": "風屋"
+  },
+  {
+   "city": "御杖村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-22",
+   "place": "菅野(クマらしき動物)"
+  },
+  {
+   "city": "御杖村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-07",
+   "place": "神末(クマらしき動物)"
+  },
+  {
+   "city": "大淀町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-03",
+   "place": "馬佐(クマらしき動物)"
+  },
+  {
+   "city": "五條市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-03",
+   "place": "大塔町"
+  }
+ ],
+ "corroborated_on": {
+  "上北山村": "2026-10-13",
+  "下北山村": "2026-10-13",
+  "下市町": "2026-10-13",
+  "五條市": "2026-10-13",
+  "十津川村": "2026-10-13",
+  "吉野町": "2026-10-13",
+  "大台ヶ原": "2026-10-13",
+  "大淀町": "2026-10-13",
+  "天理市": "2026-10-13",
+  "宇陀市": "2026-10-13",
+  "山添村": "2026-10-13",
+  "川上村": "2026-10-13",
+  "御杖村": "2026-10-13",
+  "曽爾村": "2026-10-13",
+  "東吉野村": "2026-10-13",
+  "野迫川村": "2026-10-13",
+  "黒滝村": "2026-10-13"
+ },
  "credit": "出典: 奈良県「ツキノワグマ出没情報」(https://www.pref.nara.jp/n118/p043003.html)の公開データから、地域別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、奈良県のページでご確認ください)",
- "fetched_at": "2026-10-08T19:40:39.095621+09:00",
+ "fetched_at": "2026-10-13T06:54:46.607076+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
