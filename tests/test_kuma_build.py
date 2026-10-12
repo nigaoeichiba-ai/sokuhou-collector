@@ -365,6 +365,14 @@ class LiveSectionTest(unittest.TestCase):
     def read(self, rel):
         return (self.out / rel).read_text(encoding="utf-8")
 
+    def test_sitemap_lastmod_is_the_newest_data_date_of_any_source(self):
+        """It was the ministry's date only, so newer municipal sightings left every lastmod days old (weekly review 2026-10-12)."""
+        raw = dict(self.raw, fetched_at="2026-10-06T06:20:00+09:00")                  # a day older than the Yamaguchi rows (fetched 2026-10-07)
+        with tempfile.TemporaryDirectory() as tmp:
+            build.render_site(raw, CFG, Path(tmp) / "s", release=True, prefs={"yamaguchi": _yamaguchi()}, today=date(2026, 10, 7))
+            stamps = set(re.findall(r"<lastmod>([^<]+)</lastmod>", (Path(tmp) / "s" / "sitemap.xml").read_text(encoding="utf-8")))
+        self.assertEqual(stamps, {"2026-10-07"})
+
     def test_city_slug_is_stable_ascii_and_never_collides_within_a_prefecture(self):
         self.assertEqual(live_mod.city_slug("yamaguchi", "岩国市"), live_mod.city_slug("yamaguchi", "岩国市"))
         self.assertRegex(live_mod.city_slug("yamaguchi", "岩国市"), r"^m-[0-9a-f]{6}$")
