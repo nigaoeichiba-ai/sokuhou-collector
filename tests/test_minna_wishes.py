@@ -330,11 +330,12 @@ class Nurie(unittest.TestCase):
         self.assertIn('<script src="/assets/nurie.js" defer></script>', html)
         self.assertIn("FAQPage", html)
 
-    def test_the_page_is_in_the_menu_and_the_card_maker_keeps_its_own_entry(self):
+    def test_the_tools_have_one_menu_entry_and_the_colouring_page_is_listed_there(self):
         labels = {n[0]: n for n in build.BASE_NAV}
-        self.assertEqual(labels["ぬりえ"][1], "/tool/nurie/")
-        self.assertNotEqual(labels["カードをつくる"][2], labels["ぬりえ"][2])
-        self.assertFalse(labels["ぬりえ"][1].startswith(labels["カードをつくる"][2]))
+        self.assertEqual(labels["つくる"][1], "/tool/")
+        self.assertTrue("/tool/nurie/".startswith(labels["つくる"][2]))
+        self.assertIn("/tool/nurie/", [u for u, _n, _d in build.TOOLS])
+        self.assertIn("/tool/card/", [u for u, _n, _d in build.TOOLS])
 
     def test_a_line_drawing_has_a_button_to_colour_it_and_other_pictures_do_not(self):
         cfg = json.loads((Path(build.__file__).parent / "config.json").read_text(encoding="utf-8"))
