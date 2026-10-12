@@ -61,7 +61,7 @@ function read_json($file) {
     $r = is_file($file) ? json_decode((string)@file_get_contents($file), true) : null;
     return is_array($r) ? $r : null;
 }
-// Counters: {"key": count} per month; keys are short lowercase words with dots; at most 3000 different keys.
+// Counters: {"key": count} per month; keys are short lowercase words with dots; at most 6000 different keys.
 function bump($dir, $keys) {
     $f = $dir . '/stats/' . date('Y-m') . '.json';
     $h = @fopen($f, 'c+');
@@ -70,7 +70,7 @@ function bump($dir, $keys) {
         $cur = json_decode((string)stream_get_contents($h), true);
         if (!is_array($cur)) { $cur = array(); }
         foreach ($keys as $k) {
-            if (isset($cur[$k])) { $cur[$k] = (int)$cur[$k] + 1; } elseif (count($cur) < 3000) { $cur[$k] = 1; }
+            if (isset($cur[$k])) { $cur[$k] = (int)$cur[$k] + 1; } elseif (count($cur) < 6000) { $cur[$k] = 1; }
         }
         ftruncate($h, 0); rewind($h); fwrite($h, json_encode($cur)); fflush($h); flock($h, LOCK_UN);
     }
@@ -213,13 +213,13 @@ if ($op === 'sub') {                                                            
     out(204);
 }
 
-if ($op === 'stat') {                                                                 // counters of the 診断ドック: how often an option was chosen (nothing else)
+if ($op === 'stat') {                                                                 // counters: how often an option of the 診断ドック was chosen, and how often a product's shop button was pressed (pop.r.<rakuten item code> / pop.a.<ASIN>; nothing else)
     limit($dir, 'stat', 80);
     $ks = is_array($d['k'] ?? null) ? $d['k'] : array();
     $keys = array();
     foreach ($ks as $k) {
         if (count($keys) >= 40) { break; }
-        if (is_string($k) && preg_match('/^dock\.[a-z0-9]{1,8}\.[a-z0-9_-]{1,32}$/', $k) === 1) { $keys[$k] = true; }
+        if (is_string($k) && preg_match('/^(dock\.[a-z0-9]{1,8}\.[a-z0-9_-]{1,32}|pop\.[ra]\.[A-Za-z0-9._:-]{3,64})$/', $k) === 1) { $keys[$k] = true; }
     }
     if (!$keys) { out(400); }
     bump($dir, array_keys($keys));

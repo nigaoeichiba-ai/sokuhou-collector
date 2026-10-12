@@ -59,7 +59,7 @@ def rakuten_card(cfg: dict, d: dict, e: dict, eid: str, n: int) -> str | None:
         price = '<p class="pick-price"><small>価格・在庫は、販売ページでご確認ください。</small></p>'
     other = (f'<a class="btn" href="{esc(B.amazon_url(cfg, B.amazon_query(e["name"])))}" rel="sponsored nofollow noopener" target="_blank" '
              f'aria-label="Amazonで同じ商品を探す">Amazonで探す</a>') if cfg.get("amazon_tracking_id") else ""
-    return (f'<article class="pick" id="{eid}"><a class="pick-img" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
+    return (f'<article class="pick" id="{eid}" data-code="{esc(e["code"])}"><a class="pick-img" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
             f'<img src="{esc(img)}" alt="{esc(e["name"])}" width="300" height="300" loading="lazy"></a>'
             f'<div class="pick-body"><p class="pick-meta"><span class="pick-no">{n}</span><span class="tag">{esc(e["kind"])}</span><span class="pick-scene">{esc(e["scene"])}</span></p>'
             f'<h3>{esc(e["headline"])}</h3><p class="pick-name">{esc(e["name"])}</p><p class="pick-sum">{esc(e["summary"])}</p>{_chips(e["for"])}{_facts(e)}{price}'
@@ -70,7 +70,7 @@ def amazon_card(cfg: dict, d: dict, e: dict, eid: str, n: int) -> str:
     B = _b()
     href = B.amazon_dp(cfg, e["asin"])
     rk = B.search_link(cfg, B.amazon_query(e["name"]))
-    return (f'<article class="pick" id="{eid}"><a class="pick-img mood" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
+    return (f'<article class="pick" id="{eid}" data-asin="{esc(e["asin"])}"><a class="pick-img mood" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
             f'<img src="{dp.mood_path(e)}" alt="{esc(e["name"])}の商品写真ではなく、贈る場面を表したイメージ" width="480" height="320" loading="lazy"><span class="img-note">イメージ画像</span></a>'
             f'<div class="pick-body"><p class="pick-meta"><span class="pick-no">{n}</span><span class="tag">{esc(e["kind"])}</span><span class="pick-scene">{esc(e["scene"])}</span></p>'
             f'<h3>{esc(e["headline"])}</h3><p class="pick-name">{esc(e["name"])}</p><p class="pick-sum">{esc(e["summary"])}</p>{_chips(e["for"])}{_facts(e)}'
@@ -154,6 +154,7 @@ def hub_page(d: dict, cfg: dict, preview: bool, days: list[dict]) -> str:
 {B.pr_quiet(cfg)}
 <section class="block"><div class="sec-head"><span class="eyebrow">Latest</span><h2>{esc(date_label(latest["date"]))}のおすすめ: {esc(latest["theme"])}</h2></div>
 {highlight_tiles(latest, d, cfg)}<p class="more"><a class="btn" href="{day_path(latest["date"])}">すべて見る</a></p></section>
+{_b().minepage.section(d, cfg)}
 <section class="block"><div class="sec-head"><h2>これまでのおすすめ</h2></div><ul class="tiles wide">{rows}</ul></section>
 <section class="block"><div class="sec-head"><h2>選び方</h2></div><p class="notice">{esc(POLICY)}</p></section>"""
     return B.page(cfg, preview, path="/picks/", title=f"毎日の、おすすめギフト | {cfg['site_name']}", description=lead, body=body)
