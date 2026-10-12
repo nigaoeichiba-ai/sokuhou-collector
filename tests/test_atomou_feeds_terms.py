@@ -31,6 +31,16 @@ class Feedable(unittest.TestCase):
         for url in ("https://www.jfa.jp/x", "https://notrugby-japan.jp/x", "https://example.jp/jtta.or.jp"):
             self.assertTrue(feeds.feedable(day(source_url=url)), url)       # a similar name is not the site; the name in a path is not the host
 
+    def test_a_day_of_those_sites_is_in_when_two_reports_of_other_companies_have_it(self):   # the owner, 2026-10-13: a name and a date are facts
+        url = "https://www.rugby-japan.jp/news/1/"
+        self.assertTrue(feeds.feedable(day(source_url=url, press2=True)))
+        self.assertFalse(feeds.feedable(day(source_url=url, press2=False)))
+        ok = {"source_url": url, "press2_verified": True, "press2": [{"url": "https://a.example/x"}, {"url": "https://www.b.example.co.jp/y"}]}
+        self.assertTrue(catalog.press2_ok(ok))
+        for bad in ({**ok, "press2_verified": False}, {**ok, "press2": ok["press2"][:1]}, {**ok, "press2": [{"url": "https://a.example/x"}, {"url": "https://www.a.example/z"}]},
+                    {**ok, "press2": [{"url": "https://www.rugby-japan.jp/other"}, {"url": "https://a.example/x"}]}, {**ok, "press2": "yes"}):
+            self.assertFalse(catalog.press2_ok(bad), bad)     # not checked; one report; one company twice; the same company as the source
+
     def test_an_estimate_a_quiet_day_and_a_month_are_out(self):
         self.assertFalse(feeds.feedable(day(estimated=True)))
         self.assertFalse(feeds.feedable(day(quiet=True)))

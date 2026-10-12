@@ -522,7 +522,18 @@
     "ad_ok": true,
     "son_toku": false,
     "note": "出典ページの本文で日付を機械的に確かめた(2026-10-10)。",
-    "verified": true
+    "verified": true,
+    "press2": [
+      {
+        "url": "https://world-tt.com/blog/news/archives/317327",
+        "quote": "10/11～15 国民スポーツ大会 青森／カクヒログループスーパーアリーナ"
+      },
+      {
+        "url": "https://takkyu-navi.jp/news/detail/5316",
+        "quote": "＜国民スポーツ大会＞ ・10/11～15 ・青森／カクヒログループスーパーアリーナ"
+      }
+    ],
+    "press2_verified": true
   },
   {
     "title": "2026年全日本卓球選手権大会(団体の部)",
@@ -543,7 +554,18 @@
     "ad_ok": true,
     "son_toku": false,
     "note": "出典ページの本文で日付を機械的に確かめた(2026-10-10)。",
-    "verified": true
+    "verified": true,
+    "press2": [
+      {
+        "url": "https://world-tt.com/blog/news/archives/317327",
+        "quote": "10/23～25 全日本選手権（団体の部） 宮崎／宮崎市総合体育館"
+      },
+      {
+        "url": "https://takkyu-navi.jp/news/detail/5316",
+        "quote": "＜全日本選手権（団体の部）＞ ・10/23～25 ・宮崎／宮崎市総合体育館"
+      }
+    ],
+    "press2_verified": true
   },
   {
     "title": "2026年全日本卓球選手権大会(カデットの部)",
@@ -564,7 +586,18 @@
     "ad_ok": true,
     "son_toku": false,
     "note": "出典ページの本文で日付を機械的に確かめた(2026-10-10)。",
-    "verified": true
+    "verified": true,
+    "press2": [
+      {
+        "url": "https://world-tt.com/blog/news/archives/317327",
+        "quote": "11/6～8 全日本選手権（カデットの部） 群馬／高崎アリーナ"
+      },
+      {
+        "url": "https://takkyu-navi.jp/news/detail/5316",
+        "quote": "＜全日本選手権（カデットの部）＞ ・11/6～8 ・群馬／高崎アリーナ"
+      }
+    ],
+    "press2_verified": true
   },
   {
     "title": "2027年全日本卓球選手権大会(ジュニアの部)",
@@ -585,7 +618,18 @@
     "ad_ok": true,
     "son_toku": false,
     "note": "出典ページの本文で日付を機械的に確かめた(2026-10-10)。",
-    "verified": true
+    "verified": true,
+    "press2": [
+      {
+        "url": "https://world-tt.com/blog/news/archives/317327",
+        "quote": "【1/15～17】 全日本選手権（ジュニアの部） 【兵庫】"
+      },
+      {
+        "url": "https://takkyu-navi.jp/news/detail/5316",
+        "quote": "＜全日本選手権（ジュニアの部）＞ ・【2027/1/15～17】"
+      }
+    ],
+    "press2_verified": true
   },
   {
     "title": "2027年全日本卓球選手権大会(一般の部)",
@@ -606,7 +650,18 @@
     "ad_ok": true,
     "son_toku": false,
     "note": "出典ページの本文で日付を機械的に確かめた(2026-10-10)。",
-    "verified": true
+    "verified": true,
+    "press2": [
+      {
+        "url": "https://world-tt.com/blog/news/archives/317327",
+        "quote": "1/19～24 天皇杯・皇后杯 全日本選手権（一般の部） 東京／東京体育館"
+      },
+      {
+        "url": "https://takkyu-navi.jp/news/detail/5316",
+        "quote": "＜天皇杯・皇后杯 全日本選手権（一般の部）＞ ・2027/1/19～1/24"
+      }
+    ],
+    "press2_verified": true
   },
   {
     "title": "日本バレーボールリーグ(Vリーグ)2026-27シーズン開幕",

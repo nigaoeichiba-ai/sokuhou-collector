@@ -11,7 +11,8 @@ from datetime import date, timedelta
 from urllib.parse import urlparse
 
 FEED_DIR = "cal"
-# sites whose terms forbid using the information commercially (read 2026-10-12, docs/terms_ics_feeds_2026-10-12.md): their days are not put in the feeds
+# sites whose terms forbid using the information commercially (read 2026-10-12, docs/terms_ics_feeds_2026-10-12.md): their days are not put in the feeds -- unless the day (a name and a date: a fact)
+# was also found in two reports of other sites (the entry says so: press2), which is how the owner decided it on 2026-10-13
 NO_FEED_DOMAINS = ("rugby-japan.jp", "jtta.or.jp")
 CAO_NOTE = "祝日の日付は、内閣府「国民の祝日について」(公共データ利用規約 第1.0版)をもとに、法律の定めから当サイトで計算したものです。"
 
@@ -45,7 +46,8 @@ def _host(e: dict) -> str:
 def feedable(e: dict) -> bool:
     """A whole day, not a quiet one, not an estimate (a guessed day must not look like a fixed one in someone's calendar), not from a site whose terms forbid the use."""
     host = _host(e)
-    return e["precision"] == "day" and not e["quiet"] and not e.get("estimated") and not any(host == d or host.endswith("." + d) for d in NO_FEED_DOMAINS)
+    forbidden = any(host == d or host.endswith("." + d) for d in NO_FEED_DOMAINS)
+    return e["precision"] == "day" and not e["quiet"] and not e.get("estimated") and (not forbidden or bool(e.get("press2")))
 
 
 def _note(entries: list[dict]) -> str:

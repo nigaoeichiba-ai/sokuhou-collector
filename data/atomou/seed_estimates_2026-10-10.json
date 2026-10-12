@@ -81,7 +81,18 @@
     "sensitivity": "none",
     "ad_ok": true,
     "son_toku": false,
-    "region": "大阪府 花園ラグビー場"
+    "region": "大阪府 花園ラグビー場",
+    "press2": [
+      {
+        "url": "https://mainichi.jp/rugby-highschool/hanazono106/",
+        "quote": "第106回全国高校ラグビー（花園）は12月27日開幕予定。"
+      },
+      {
+        "url": "https://news.yahoo.co.jp/articles/bb79b966531b609c0977ed8af62eb68572cd6e8a",
+        "quote": "優勝チームは12月27日から大阪府の東大阪市花園ラグビー場で開かれる全国大会に出場する。"
+      }
+    ],
+    "press2_verified": true
   },
   {
     "title": "全国高校ラグビー(花園) 決勝",
