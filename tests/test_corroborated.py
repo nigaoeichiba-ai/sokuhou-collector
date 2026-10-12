@@ -213,7 +213,8 @@ class AttachTest(unittest.TestCase):
         out = co.attach(dict(base), self.PREF, self.PAGES, self.fetch, TODAY)
         self.assertEqual([(r["observed_at"], r["place"]) for r in out["corroborated"]],
                          [("2026-10-05", "大多新田字村添地内"), ("2026-10-02", "大字下宝沢地内の農地"), ("2026-09-29", "坂野辺新田字西狢山地内")])
-        self.assertEqual({k: v for k, v in out.items() if k != "corroborated"}, base)
+        self.assertEqual({k: v for k, v in out.items() if k not in ("corroborated", "corroborated_on")}, base)
+        self.assertEqual(out["corroborated_on"], {"山形市": "2026-10-12", "酒田市": "2026-10-12"})
         for r in out["corroborated"]:
             self.assertEqual(set(r), co.STORED_FIELDS)
 
@@ -232,6 +233,48 @@ class AttachTest(unittest.TestCase):
         with redirect_stderr(io.StringIO()):
             self.assertNotIn("corroborated", co.attach({}, [], self.PAGES, self.fetch, TODAY))
             self.assertNotIn("corroborated", co.attach({}, self.PREF, self.PAGES, lambda url: b"<html>maintenance</html>", TODAY))
+
+
+class CarryOverTest(unittest.TestCase):
+    def rec(self, day, city, place="p"):
+        return {"observed_at": day, "city": city, "place": place, "kind": "目撃", "count": None}
+
+    def pack(self, fetched, records=None, on=None):
+        out = {"fetched_at": fetched + "T06:30:00+09:00"}
+        if records:
+            out["corroborated"] = records
+            out["corroborated_on"] = on
+        return out
+
+    def test_a_city_whose_page_failed_today_keeps_its_recent_records_and_the_others_are_fresh(self):
+        old = self.pack("2026-10-12", [self.rec("2026-10-09", "酒田市"), self.rec("2026-10-02", "山形市")], {"酒田市": "2026-10-12", "山形市": "2026-10-12"})
+        new = self.pack("2026-10-13", [self.rec("2026-10-02", "山形市"), self.rec("2026-10-12", "山形市", "q")], {"山形市": "2026-10-13"})
+        got = co.carry_over(old, new)
+        self.assertEqual([(r["city"], r["observed_at"]) for r in got["corroborated"]], [("山形市", "2026-10-12"), ("酒田市", "2026-10-09"), ("山形市", "2026-10-02")])
+        self.assertEqual(got["corroborated_on"], {"酒田市": "2026-10-12", "山形市": "2026-10-13"})
+
+    def test_every_page_failed_keeps_yesterdays_records(self):
+        old = self.pack("2026-10-12", [self.rec("2026-10-09", "上越市")], {"上越市": "2026-10-12"})
+        got = co.carry_over(old, self.pack("2026-10-13"))
+        self.assertEqual([r["city"] for r in got["corroborated"]], ["上越市"])
+
+    def test_a_page_that_stays_unreadable_stops_being_shown_after_three_days(self):
+        old = self.pack("2026-10-09", [self.rec("2026-10-08", "上越市")], {"上越市": "2026-10-09"})
+        self.assertIn("corroborated", co.carry_over(old, self.pack("2026-10-12")))              # 3 days: still kept
+        self.assertNotIn("corroborated", co.carry_over(old, self.pack("2026-10-13")))           # 4 days: gone
+
+    def test_nothing_to_carry_when_there_was_nothing_before(self):
+        new = self.pack("2026-10-13")
+        self.assertEqual(co.carry_over(None, new), new)
+        self.assertEqual(co.carry_over({"fetched_at": "x"}, new), new)
+
+    def test_the_kuma_sources_use_it_and_the_daily_job_installs_pypdf(self):
+        by_name = {s.name: s for s in run.GROUPS["kuma"]}
+        for name in ("niigata_kuma", "yamagata_kuma", "saitama_kuma"):
+            self.assertIs(by_name[name].merge, co.carry_over, name)
+        workflow = (Path(__file__).resolve().parents[1] / ".github" / "workflows" / "kuma-live.yml").read_text(encoding="utf-8")
+        self.assertIn("pip install --quiet -r requirements.txt", workflow)
+        self.assertIn("pypdf", (Path(__file__).resolve().parents[1] / "requirements.txt").read_text(encoding="utf-8"))
 
 
 class StoreCheckTest(unittest.TestCase):
