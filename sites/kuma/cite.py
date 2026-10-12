@@ -36,7 +36,7 @@ def source_rows(d: dict, lv: dict) -> list[dict]:
         meta = LIVE_SOURCES.get(c["key"], {})
         out.append({"key": c["key"], "pref": c["pref"], "name": c["name"], "mode": "counts", "count": c["total"], "latest": c["latest"],
                     "fetched": c["fetched"], "page": c["page"], "note": c["note"], "scope": meta.get("scope", ""), "license": NO_LICENSE_TEXT,
-                    "months": {int(m): v for m, v in c["monthly"].items()}})
+                    "months": {int(m): v for m, v in c["monthly"].items()}, "confirmed": len(c.get("records") or [])})
     out.sort(key=lambda r: pf.SHORT.index(r["pref"]))
     return out
 
@@ -84,8 +84,12 @@ def cite_page(page, d: dict, lv: dict, cfg: dict, base: str) -> str:
     src_table = table(
         ["取得元", "載せ方", f"{fy_label(cur)}の件数", "最新の日付", "取得日", "利用条件", "取得元の更新"],
         [[f'<a href="{esc(r["page"])}" rel="noopener" target="_blank">{esc(r["name"])}</a>' + (f"<br><small>{esc(r['scope'])}のみ</small>" if r["scope"] and not r["scope"].endswith("のみ") else (f"<br><small>{esc(r['scope'])}</small>" if r["scope"] else "")),
-          "記録(一覧・市町村・CSV)" if r["mode"] == "records" else "件数のみ", n(r["count"]), md(r["latest"]), md(r["fetched"]), esc(r["license"]), esc(r["note"])]
+          "記録(一覧・市町村・CSV)" if r["mode"] == "records" else ("件数(場所は、確認できた目撃だけ)" if r.get("confirmed") else "件数のみ"), n(r["count"]), md(r["latest"]), md(r["fetched"]), esc(r["license"]), esc(r["note"])]
          for r in rows])
+    n_conf = sum(r.get("confirmed", 0) for r in rows)
+    confirmed_text = (f"件数だけの取得元のうち、<strong>複数の公開情報で一致を確認できた目撃({n(n_conf)}件)は、場所も載せています</strong>(同じ目撃が、2つ以上の公開情報にあるものだけです。確認できなかった目撃は、件数にだけ含まれます)。"
+                      if n_conf else "")
+    count_tail = "を載せています" if n_conf else "だけを載せています"
     cmp_rows, items, months = ministry_rows(d, rows)
     same = sum(1 for x in items if x["env"] == x["ours"])
     same_text = f"のうち、<strong>{n(same)}都道府県は、1件も違いません</strong>(同じ元データを数えているとみられます)" if same else ""
@@ -116,7 +120,7 @@ def cite_page(page, d: dict, lv: dict, cfg: dict, base: str) -> str:
 <h1>データの出典・数え方・引用のしかた</h1>
 <p class="lead">このサイトの数字が、どこから来て、どう数えられ、どこまで信頼できるかを、公開します。報道・研究・自治体の資料に、お使いいただいて構いません。使うときは、下の「引用のしかた」のとおり、出典を書いてください。基準日: {jp_date(today.isoformat())}(このページは、データが更新されるたびに作り直します)。</p>
 <h2>1. 取得元の一覧({n(len(rows))}か所)</h2>
-<p>当サイトは、<strong>自治体・国などの公式の公開データだけ</strong>を使っています。報道・SNS・住民の投稿・他のサイトが集めたデータは、使っていません。再利用の許可が明示されている{n(n_rec)}か所は、詳しい記録(一覧・市町村ページ・地図・CSV)まで載せ、許可が明示されていない{n(n_cnt)}か所は、市町村・月・件数・最新の日付だけを載せています(大津市のように、市のページが公開している情報でも、許可が明示されていなければ、件数だけです)。環境省の出没件数と人身被害の資料(速報値)は、<a href="/ranking/sightings/">都道府県ランキング</a>などで使っています。</p>
+<p>当サイトは、<strong>自治体・国などの公式の公開データだけ</strong>を使っています。報道・SNS・住民の投稿・他のサイトが集めたデータは、使っていません。再利用の許可が明示されている{n(n_rec)}か所は、詳しい記録(一覧・市町村ページ・地図・CSV)まで載せ、許可が明示されていない{n(n_cnt)}か所は、市町村・月・件数・最新の日付{count_tail}(大津市のように、市のページが公開している情報でも、許可が明示されていなければ、件数だけです)。{confirmed_text}環境省の出没件数と人身被害の資料(速報値)は、<a href="/ranking/sightings/">都道府県ランキング</a>などで使っています。</p>
 {src_table}
 <p class="notice">{esc(RATE_LIMIT_TEXT)}。「取得日」は、当サイトが取得元を確認した日です。各取得元の出典の書き方は、各ページの末尾にあります。{csv_note}</p>
 {covered}

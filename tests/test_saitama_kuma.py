@@ -8,7 +8,7 @@ from unittest import mock
 from urllib.parse import parse_qs, urlparse
 
 from sokuhou import run
-from sokuhou.sources import kumacounts, kumalib
+from sokuhou.sources import corroborated, kumacounts, kumalib
 from sokuhou.sources import saitama_kuma as kuma
 
 FIX = Path(__file__).parent / "fixtures"
@@ -66,6 +66,17 @@ def _keys(obj, found=None):
             found.add(k)
             _keys(v, found)
     return found
+
+
+_NO_CITY_PAGES = mock.patch.object(corroborated, "attach", lambda result, *a, **k: result)     # these tests are about the counts; the confirmed records are tested in test_corroborated.py
+
+
+def setUpModule():
+    _NO_CITY_PAGES.start()
+
+
+def tearDownModule():
+    _NO_CITY_PAGES.stop()
 
 
 class SaitamaKumaTest(unittest.TestCase):

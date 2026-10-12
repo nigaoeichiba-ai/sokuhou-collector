@@ -8,7 +8,7 @@ from pathlib import Path
 from unittest import mock
 
 from sokuhou import run
-from sokuhou.sources import kumacounts, kumalib
+from sokuhou.sources import corroborated, kumacounts, kumalib
 from sokuhou.sources import yamagata_kuma as kuma
 
 FIX = Path(__file__).parent / "fixtures"
@@ -50,6 +50,17 @@ def _keys(obj, found=None):
 def _parse(data=None, **patch):
     with mock.patch.object(kuma, "MIN_ROWS", patch.pop("min_rows", 1)):
         return kuma.parse(data if data is not None else _csv(), "https://example.invalid/20261004_kemonote-cleaned.csv", TODAY)
+
+
+_NO_CITY_PAGES = mock.patch.object(corroborated, "attach", lambda result, *a, **k: result)     # these tests are about the counts; the confirmed records are tested in test_corroborated.py
+
+
+def setUpModule():
+    _NO_CITY_PAGES.start()
+
+
+def tearDownModule():
+    _NO_CITY_PAGES.stop()
 
 
 class YamagataKumaTest(unittest.TestCase):
