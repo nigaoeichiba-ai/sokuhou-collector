@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-13",
+ "slug": "dragons-cool-original",
+ "title": "ドラゴンのバリエーション",
+ "genre": "animals",
+ "touch": "cool",
+ "lead": "西洋風・東洋風・幼いドラゴンなど、オリジナルデザインのドラゴン12点です。ポスター・ゲーム素材・アイコンに使えます。",
+ "tags": [
+  "ドラゴン",
+  "竜",
+  "龍",
+  "かっこいい",
+  "ファンタジー",
+  "ゲーム",
+  "オリジナル"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "dragons-cool-original-fire",
+   "file": "dragons-cool-original-fire.webp",
+   "title": "火を吐くドラゴン",
+   "desc": "火を吐くドラゴンのポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "火を吐くドラゴン",
+    "ポップ",
+    "動物"
+   ],
+   "w": 540,
+   "h": 499
+  },
+  {
+   "id": "dragons-cool-original-eastern",
+   "file": "dragons-cool-original-eastern.webp",
+   "title": "東洋の龍",
+   "desc": "東洋の龍のポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "東洋の龍",
+    "ポップ",
+    "動物"
+   ],
+   "w": 491,
+   "h": 533
+  },
+  {
+   "id": "dragons-cool-original-baby",
+   "file": "dragons-cool-original-baby.webp",
+   "title": "子どものドラゴン",
+   "desc": "子どものドラゴンのポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "子どものドラゴン",
+    "ポップ",
+    "動物"
+   ],
+   "w": 417,
+   "h": 489
+  },
+  {
+   "id": "dragons-cool-original-ice",
+   "file": "dragons-cool-original-ice.webp",
+   "title": "氷のドラゴン",
+   "desc": "氷のドラゴンのポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "氷のドラゴン",
+    "ポップ",
+    "動物"
+   ],
+   "w": 531,
+   "h": 524
+  },
+  {
+   "id": "dragons-cool-original-thunder",
+   "file": "dragons-cool-original-thunder.webp",
+   "title": "雷のドラゴン",
+   "desc": "雷のドラゴンのポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "雷のドラゴン",
+    "ポップ",
+    "動物"
+   ],
+   "w": 514,
+   "h": 534
+  },
+  {
+   "id": "dragons-cool-original-forest",
+   "file": "dragons-cool-original-forest.webp",
+   "title": "森のドラゴン",
+   "desc": "森のドラゴンのポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "森のドラゴン",
+    "ポップ",
+    "動物"
+   ],
+   "w": 518,
+   "h": 517
+  },
+  {
+   "id": "dragons-cool-original-sea",
+   "file": "dragons-cool-original-sea.webp",
+   "title": "海のドラゴン",
+   "desc": "海のドラゴンのポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "海のドラゴン",
+    "ポップ",
+    "動物"
+   ],
+   "w": 514,
+   "h": 526
+  },
+  {
+   "id": "dragons-cool-original-armor",
+   "file": "dragons-cool-original-armor.webp",
+   "title": "鎧のドラゴン",
+   "desc": "鎧のドラゴンのポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "鎧のドラゴン",
+    "ポップ",
+    "動物"
+   ],
+   "w": 524,
+   "h": 529
+  },
+  {
+   "id": "dragons-cool-original-flying",
+   "file": "dragons-cool-original-flying.webp",
+   "title": "飛ぶドラゴン",
+   "desc": "飛ぶドラゴンのポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "飛ぶドラゴン",
+    "ポップ",
+    "動物"
+   ],
+   "w": 540,
+   "h": 555
+  },
+  {
+   "id": "dragons-cool-original-head",
+   "file": "dragons-cool-original-head.webp",
+   "title": "ドラゴンの顔",
+   "desc": "ドラゴンの顔のポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "ドラゴンの顔",
+    "ポップ",
+    "動物"
+   ],
+   "w": 530,
+   "h": 532
+  },
+  {
+   "id": "dragons-cool-original-night",
+   "file": "dragons-cool-original-night.webp",
+   "title": "夜のドラゴン",
+   "desc": "夜のドラゴンのポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "夜のドラゴン",
+    "ポップ",
+    "動物"
+   ],
+   "w": 507,
+   "h": 523
+  },
+  {
+   "id": "dragons-cool-original-gold",
+   "file": "dragons-cool-original-gold.webp",
+   "title": "金色のドラゴン",
+   "desc": "金色のドラゴンのポップイラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "龍",
+    "かっこいい",
+    "ドラゴンのバリエーション",
+    "金色のドラゴン",
+    "ポップ",
+    "動物"
+   ],
+   "w": 520,
+   "h": 536
+  }
+ ]
+}

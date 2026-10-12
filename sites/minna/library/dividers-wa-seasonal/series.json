@@ -1,0 +1,240 @@
+{
+ "added": "2026-10-13",
+ "slug": "dividers-wa-seasonal",
+ "title": "和柄の区切り線",
+ "genre": "deco",
+ "touch": "wa",
+ "lead": "麻の葉・青海波・市松などの和柄と、四季の花を使った横長の区切り線12点です。案内状や挨拶文の見出し下に使えます。",
+ "tags": [
+  "区切り線",
+  "ライン",
+  "和柄",
+  "飾り罫",
+  "青海波",
+  "市松",
+  "案内状"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "dividers-wa-seasonal-asanoha",
+   "file": "dividers-wa-seasonal-asanoha.webp",
+   "title": "麻の葉の線",
+   "desc": "麻の葉の線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "和柄の区切り線",
+    "麻の葉の線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 516,
+   "h": 108
+  },
+  {
+   "id": "dividers-wa-seasonal-seigaiha",
+   "file": "dividers-wa-seasonal-seigaiha.webp",
+   "title": "青海波の線",
+   "desc": "青海波の線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "青海波",
+    "和柄の区切り線",
+    "青海波の線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 515,
+   "h": 105
+  },
+  {
+   "id": "dividers-wa-seasonal-ichimatsu",
+   "file": "dividers-wa-seasonal-ichimatsu.webp",
+   "title": "市松の線",
+   "desc": "市松の線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "市松",
+    "和柄の区切り線",
+    "市松の線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 516,
+   "h": 88
+  },
+  {
+   "id": "dividers-wa-seasonal-sakura",
+   "file": "dividers-wa-seasonal-sakura.webp",
+   "title": "桜の線",
+   "desc": "桜の線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "和柄の区切り線",
+    "桜の線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 516,
+   "h": 132
+  },
+  {
+   "id": "dividers-wa-seasonal-ume",
+   "file": "dividers-wa-seasonal-ume.webp",
+   "title": "梅の線",
+   "desc": "梅の線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "和柄の区切り線",
+    "梅の線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 516,
+   "h": 129
+  },
+  {
+   "id": "dividers-wa-seasonal-kiku",
+   "file": "dividers-wa-seasonal-kiku.webp",
+   "title": "菊の線",
+   "desc": "菊の線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "和柄の区切り線",
+    "菊の線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 516,
+   "h": 144
+  },
+  {
+   "id": "dividers-wa-seasonal-momiji",
+   "file": "dividers-wa-seasonal-momiji.webp",
+   "title": "もみじの線",
+   "desc": "もみじの線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "和柄の区切り線",
+    "もみじの線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 500,
+   "h": 128
+  },
+  {
+   "id": "dividers-wa-seasonal-matsu",
+   "file": "dividers-wa-seasonal-matsu.webp",
+   "title": "松の線",
+   "desc": "松の線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "和柄の区切り線",
+    "松の線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 475,
+   "h": 144
+  },
+  {
+   "id": "dividers-wa-seasonal-kikko",
+   "file": "dividers-wa-seasonal-kikko.webp",
+   "title": "亀甲の線",
+   "desc": "亀甲の線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "和柄の区切り線",
+    "亀甲の線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 503,
+   "h": 109
+  },
+  {
+   "id": "dividers-wa-seasonal-shippo",
+   "file": "dividers-wa-seasonal-shippo.webp",
+   "title": "七宝の線",
+   "desc": "七宝の線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "和柄の区切り線",
+    "七宝の線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 506,
+   "h": 103
+  },
+  {
+   "id": "dividers-wa-seasonal-mizuhiki",
+   "file": "dividers-wa-seasonal-mizuhiki.webp",
+   "title": "水引の線",
+   "desc": "水引の線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "和柄の区切り線",
+    "水引の線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 486,
+   "h": 117
+  },
+  {
+   "id": "dividers-wa-seasonal-kumo",
+   "file": "dividers-wa-seasonal-kumo.webp",
+   "title": "雲の線",
+   "desc": "雲の線の和風・和柄イラストです。",
+   "tags": [
+    "区切り線",
+    "ライン",
+    "和柄",
+    "飾り罫",
+    "和柄の区切り線",
+    "雲の線",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 507,
+   "h": 129
+  }
+ ]
+}

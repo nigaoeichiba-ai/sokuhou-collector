@@ -84,6 +84,8 @@
    "a frame with a rising sun over waves and cranes, centre empty"
   ]
  ],
- "exclude": [],
+ "exclude": [
+  "omisoka"
+ ],
  "priority": 1
 }

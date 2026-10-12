@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-13",
+ "slug": "check-status-icons-flat",
+ "title": "チェック・状態のアイコン",
+ "genre": "icon",
+ "touch": "flat",
+ "lead": "チェックマーク・丸・バツ・警告・ピン・しおりなど、資料やWebで状態を示すアイコン12点です。チェックリストや比較表に使えます。",
+ "tags": [
+  "チェックマーク",
+  "アイコン",
+  "丸",
+  "バツ",
+  "警告",
+  "チェックリスト",
+  "資料"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "check-status-icons-flat-check-green",
+   "file": "check-status-icons-flat-check-green.webp",
+   "title": "緑のチェックマーク",
+   "desc": "緑のチェックマークのシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "緑のチェックマーク",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 439,
+   "h": 436
+  },
+  {
+   "id": "check-status-icons-flat-check-box",
+   "file": "check-status-icons-flat-check-box.webp",
+   "title": "チェックボックス",
+   "desc": "チェックボックスのシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "チェックボックス",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 427,
+   "h": 409
+  },
+  {
+   "id": "check-status-icons-flat-circle-ok",
+   "file": "check-status-icons-flat-circle-ok.webp",
+   "title": "丸のマーク",
+   "desc": "丸のマークのシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "丸のマーク",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 447,
+   "h": 439
+  },
+  {
+   "id": "check-status-icons-flat-cross-ng",
+   "file": "check-status-icons-flat-cross-ng.webp",
+   "title": "バツのマーク",
+   "desc": "バツのマークのシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "バツのマーク",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 450,
+   "h": 447
+  },
+  {
+   "id": "check-status-icons-flat-warning",
+   "file": "check-status-icons-flat-warning.webp",
+   "title": "注意の三角",
+   "desc": "注意の三角のシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "注意の三角",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 477,
+   "h": 416
+  },
+  {
+   "id": "check-status-icons-flat-info",
+   "file": "check-status-icons-flat-info.webp",
+   "title": "情報のアイコン",
+   "desc": "情報のアイコンのシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "情報のアイコン",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 450,
+   "h": 449
+  },
+  {
+   "id": "check-status-icons-flat-pin",
+   "file": "check-status-icons-flat-pin.webp",
+   "title": "ピンのアイコン",
+   "desc": "ピンのアイコンのシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "ピンのアイコン",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 445,
+   "h": 439
+  },
+  {
+   "id": "check-status-icons-flat-bookmark",
+   "file": "check-status-icons-flat-bookmark.webp",
+   "title": "しおりのアイコン",
+   "desc": "しおりのアイコンのシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "しおりのアイコン",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 446,
+   "h": 440
+  },
+  {
+   "id": "check-status-icons-flat-thumbs",
+   "file": "check-status-icons-flat-thumbs.webp",
+   "title": "いいねのアイコン",
+   "desc": "いいねのアイコンのシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "いいねのアイコン",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 448,
+   "h": 442
+  },
+  {
+   "id": "check-status-icons-flat-bulb",
+   "file": "check-status-icons-flat-bulb.webp",
+   "title": "ひらめきの電球",
+   "desc": "ひらめきの電球のシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "ひらめきの電球",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 447,
+   "h": 440
+  },
+  {
+   "id": "check-status-icons-flat-flag",
+   "file": "check-status-icons-flat-flag.webp",
+   "title": "旗のアイコン",
+   "desc": "旗のアイコンのシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "旗のアイコン",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 447,
+   "h": 440
+  },
+  {
+   "id": "check-status-icons-flat-target",
+   "file": "check-status-icons-flat-target.webp",
+   "title": "目標のアイコン",
+   "desc": "目標のアイコンのシンプルフラットイラストです。",
+   "tags": [
+    "チェックマーク",
+    "アイコン",
+    "丸",
+    "バツ",
+    "チェック・状態のアイコン",
+    "目標のアイコン",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 449,
+   "h": 444
+  }
+ ]
+}

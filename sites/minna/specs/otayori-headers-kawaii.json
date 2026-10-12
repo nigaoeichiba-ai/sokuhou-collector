@@ -80,6 +80,8 @@
    "a round-cornered patch badge with stitched edge, centre empty"
   ]
  ],
- "exclude": [],
+ "exclude": [
+  "signboard"
+ ],
  "priority": 1
 }

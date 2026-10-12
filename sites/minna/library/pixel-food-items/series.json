@@ -1,0 +1,213 @@
+{
+ "added": "2026-10-13",
+ "slug": "pixel-food-items",
+ "title": "食べ物のドット絵",
+ "genre": "food",
+ "touch": "pixel",
+ "lead": "おにぎり・ラーメン・寿司・パンなど、食べ物をドット絵で描いた素材12点です。ゲームのアイテムやSNSのアイコンに使えます。",
+ "tags": [
+  "ドット絵",
+  "食べ物",
+  "ピクセル",
+  "レトロゲーム",
+  "アイテム",
+  "アイコン"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "pixel-food-items-onigiri",
+   "file": "pixel-food-items-onigiri.webp",
+   "title": "おにぎり",
+   "desc": "おにぎりのドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "おにぎり"
+   ],
+   "w": 406,
+   "h": 370
+  },
+  {
+   "id": "pixel-food-items-ramen",
+   "file": "pixel-food-items-ramen.webp",
+   "title": "ラーメン",
+   "desc": "ラーメンのドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "ラーメン"
+   ],
+   "w": 489,
+   "h": 433
+  },
+  {
+   "id": "pixel-food-items-sushi",
+   "file": "pixel-food-items-sushi.webp",
+   "title": "お寿司",
+   "desc": "お寿司のドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "お寿司"
+   ],
+   "w": 449,
+   "h": 307
+  },
+  {
+   "id": "pixel-food-items-bread",
+   "file": "pixel-food-items-bread.webp",
+   "title": "食パン",
+   "desc": "食パンのドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "食パン"
+   ],
+   "w": 394,
+   "h": 406
+  },
+  {
+   "id": "pixel-food-items-curry",
+   "file": "pixel-food-items-curry.webp",
+   "title": "カレーライス",
+   "desc": "カレーライスのドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "カレーライス"
+   ],
+   "w": 509,
+   "h": 367
+  },
+  {
+   "id": "pixel-food-items-taiyaki",
+   "file": "pixel-food-items-taiyaki.webp",
+   "title": "たい焼き",
+   "desc": "たい焼きのドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "たい焼き"
+   ],
+   "w": 464,
+   "h": 357
+  },
+  {
+   "id": "pixel-food-items-dango",
+   "file": "pixel-food-items-dango.webp",
+   "title": "三色団子",
+   "desc": "三色団子のドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "三色団子"
+   ],
+   "w": 412,
+   "h": 423
+  },
+  {
+   "id": "pixel-food-items-omelet",
+   "file": "pixel-food-items-omelet.webp",
+   "title": "オムライス",
+   "desc": "オムライスのドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "オムライス"
+   ],
+   "w": 562,
+   "h": 328
+  },
+  {
+   "id": "pixel-food-items-pizza",
+   "file": "pixel-food-items-pizza.webp",
+   "title": "ピザ",
+   "desc": "ピザのドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "ピザ"
+   ],
+   "w": 443,
+   "h": 426
+  },
+  {
+   "id": "pixel-food-items-parfait",
+   "file": "pixel-food-items-parfait.webp",
+   "title": "パフェ",
+   "desc": "パフェのドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "パフェ"
+   ],
+   "w": 310,
+   "h": 552
+  },
+  {
+   "id": "pixel-food-items-tempura",
+   "file": "pixel-food-items-tempura.webp",
+   "title": "天ぷら",
+   "desc": "天ぷらのドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "天ぷら"
+   ],
+   "w": 536,
+   "h": 452
+  },
+  {
+   "id": "pixel-food-items-tea",
+   "file": "pixel-food-items-tea.webp",
+   "title": "お茶と和菓子",
+   "desc": "お茶と和菓子のドット絵イラストです。",
+   "tags": [
+    "ドット絵",
+    "食べ物",
+    "ピクセル",
+    "レトロゲーム",
+    "食べ物のドット絵",
+    "お茶と和菓子"
+   ],
+   "w": 481,
+   "h": 406
+  }
+ ]
+}
