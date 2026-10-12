@@ -54,12 +54,16 @@ class InTheBuild(unittest.TestCase):
         cls.entries, _ = catalog.build_catalog(TODAY)
 
     def test_no_event_of_the_two_sites_or_of_an_estimate_is_in_any_feed(self):
-        bad = {e["id"] for e in self.entries if e.get("estimated") or any(d in (e.get("source_url") or "") for d in feeds.NO_FEED_DOMAINS)}
+        # an estimate is never in a feed; a day of the two sites is in only when two reports of other sites have it (press2, checked on the pages)
+        bad = {e["id"] for e in self.entries if e.get("estimated") or (any(d in (e.get("source_url") or "") for d in feeds.NO_FEED_DOMAINS) and not e.get("press2"))}
         self.assertTrue(bad)        # the catalogue does have such days: the check is not empty
         for k, v in self.pages.items():
             if k.startswith("cal/") and k.endswith(".ics"):
                 for i in bad:
                     self.assertNotIn(f"UID:{i}@", v, k)
+        back = [e for e in self.entries if e.get("press2") and any(d in (e.get("source_url") or "") for d in feeds.NO_FEED_DOMAINS) and feeds.feedable(e) and e["status"] != "ended" and e["date"] > TODAY.isoformat()]
+        self.assertTrue(back)
+        self.assertIn(f"UID:{back[0]['id']}@", self.pages["cal/all.ics"])      # the checked ones are back
 
     def test_the_feed_with_holidays_names_the_cabinet_office(self):
         all_ics = self.pages["cal/all.ics"]
