@@ -1,7 +1,921 @@
 {
  "as_of": "2026-10-06",
+ "corroborated": [
+  {
+   "city": "小野町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-06",
+   "place": "浮金字北ノ山"
+  },
+  {
+   "city": "白河市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-05",
+   "place": "関辺油久保"
+  },
+  {
+   "city": "大玉村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-04",
+   "place": "玉井上額沢"
+  },
+  {
+   "city": "伊達市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-04",
+   "place": "梁川町舟生深沢"
+  },
+  {
+   "city": "大玉村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-03",
+   "place": "玉井袖窪"
+  },
+  {
+   "city": "猪苗代町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-01",
+   "place": "翁沢字畑田"
+  },
+  {
+   "city": "二本松市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-26",
+   "place": "油井字鞍石山地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-23",
+   "place": "松川町字杉内地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-20",
+   "place": "松川町水原字狼ヶ森地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-17",
+   "place": "平石字信夫隠地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-09-16",
+   "place": "飯坂町中野字朴沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-11",
+   "place": "在庭坂字渡辺地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-06",
+   "place": "平石字蛇石地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-05",
+   "place": "二子塚字庄司地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-02",
+   "place": "飯野町青木字登堀地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-30",
+   "place": "平石字湯ヶ原地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-08-28",
+   "place": "渡利字金畑地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-26",
+   "place": "渡利字平内町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-25",
+   "place": "郷野目字宝来町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-25",
+   "place": "渡利字岩崎町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-25",
+   "place": "松川町水原字南沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-25",
+   "place": "山口字高森地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-23",
+   "place": "荒井字地蔵原丙地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-23",
+   "place": "松川町金沢字西高槻地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-18",
+   "place": "桜本字玉南地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-17",
+   "place": "荒井字地蔵原庚地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-12",
+   "place": "松川町金沢字堀切地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "飯坂町中野字二ツ小屋地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-09",
+   "place": "松川町水原字南沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-09",
+   "place": "在庭坂字沢目地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-09",
+   "place": "上野寺字西原地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-07",
+   "place": "土湯温泉町字坂ノ上 地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-03",
+   "place": "上鳥渡字山根地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-02",
+   "place": "松川町浅川字百合ケ窪地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-01",
+   "place": "土湯温泉町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-27",
+   "place": "在庭坂字元五十須場地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "飯坂町湯野字作道地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "土湯温泉町字天沼地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-15",
+   "place": "町庭坂字矢細工地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-11",
+   "place": "飯坂町湯野字的場地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-11",
+   "place": "飯坂町湯野字新湯地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "松川町水原字室沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "庄野字抜分地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "飯坂町湯野字道録神地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "荒井字横塚地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "土湯温泉町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-07-06",
+   "place": "松川町金沢字長峯地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-04",
+   "place": "下野寺字遠原地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "在庭坂字松原地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "在庭坂字宇津山地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "飯坂町平野字坊下地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "荒井字掃部新田地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "荒井字川石田地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "土湯温泉町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "土湯温泉町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-27",
+   "place": "庄野字北日ノ倉地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "荒井字横塚地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "飯坂町茂庭字獅々内地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "飯坂町中野字二ツ小屋地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "上名倉字染北地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-23",
+   "place": "松川町字下新田地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-20",
+   "place": "松川町水原字南沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-19",
+   "place": "庄野字抜分地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "土湯温泉町字横道地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-06-16",
+   "place": "黒岩字諏訪山地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "在庭坂字陣ケ前地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "松川町水原字南沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-14",
+   "place": "飯坂町中野字二ツ小屋地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "松川町関谷字藤窪地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "松川町水原字南沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "南向台三丁目地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "上野寺字上平場地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-06-11",
+   "place": "舟場町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "土湯温泉町字西ノ道地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-06-10",
+   "place": "黒岩字諏訪山地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-10",
+   "place": "飯坂町湯野字蟹沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "松川町水原字室沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-09",
+   "place": "笹木野字上中島地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-09",
+   "place": "町庭坂字長林地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-09",
+   "place": "土湯温泉町字天沼地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "黒岩字学壇地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "町庭坂字内町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-08",
+   "place": "南沢又字西原地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-07",
+   "place": "在庭坂字志津山地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-07",
+   "place": "南沢又字水門下地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-06-06",
+   "place": "南沢又字桜内地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-05",
+   "place": "笹木野字払川添地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "笹木野字払川添地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-06-04",
+   "place": "町庭坂字湯町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-06-03",
+   "place": "町庭坂字割石地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-03",
+   "place": "松川町浅川字波渡地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-02",
+   "place": "笹木野字金谷前地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "笹木野字天竺田地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-06-02",
+   "place": "町庭坂字湯町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "飯坂町中野字二ッ小屋地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "笹木野字立田地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-31",
+   "place": "松川町水原字平赤坂地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-28",
+   "place": "笹木野字小針道地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-28",
+   "place": "土船字北谷地地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-27",
+   "place": "松川町水原字平赤坂地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-27",
+   "place": "土湯温泉町字横道地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "土湯温泉町字堤ヶ平地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "立子山字本内地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "飯坂町字中ノ内地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "飯坂町中野字円部地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-21",
+   "place": "大笹生字上ノ町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-21",
+   "place": "土湯温泉町字天沼地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-16",
+   "place": "大森字西表地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-15",
+   "place": "松川町浅川字六斗内地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-05-14",
+   "place": "立子山字田屋地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-12",
+   "place": "町庭坂字湯町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-12",
+   "place": "松川町字天王原地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-09",
+   "place": "松川町水原字南沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-09",
+   "place": "佐原字竹ノ森地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-07",
+   "place": "飯坂町湯野字東山地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-05",
+   "place": "松川町水原字南沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-04",
+   "place": "土湯温泉町字日向地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-02",
+   "place": "飯坂町東湯野字上岡地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-02",
+   "place": "仁井田字下川原地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-28",
+   "place": "仁井田字西下川原地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-27",
+   "place": "平石字上原地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-26",
+   "place": "桜本字会沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-22",
+   "place": "土湯温泉町字横道地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-04-21",
+   "place": "御山字羽山地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-17",
+   "place": "土湯温泉町地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-16",
+   "place": "立子山字東西地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-14",
+   "place": "飯坂町茂庭字屶振山地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-04-12",
+   "place": "松川町字石合前地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-01",
+   "place": "飯坂町平野字上川原地内"
+  }
+ ],
+ "corroborated_on": {
+  "二本松市": "2026-10-13",
+  "伊達市": "2026-10-13",
+  "大玉村": "2026-10-13",
+  "小野町": "2026-10-13",
+  "猪苗代町": "2026-10-13",
+  "白河市": "2026-10-13",
+  "福島市": "2026-10-13"
+ },
  "credit": "出典: 福島県「福島県クマ目撃マップ」(https://www.pref.fukushima.lg.jp/sec/16035b/tukinowaguma-mokugeki.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、福島県のページでご確認ください)",
- "fetched_at": "2026-10-07T22:30:35.297119+09:00",
+ "fetched_at": "2026-10-13T06:27:26.197732+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {

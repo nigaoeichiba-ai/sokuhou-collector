@@ -7,6 +7,7 @@ from unittest import mock
 from urllib.parse import parse_qs, unquote, urlparse
 
 from sokuhou import run
+from sokuhou.sources import corroborated
 from sokuhou.sources import aomori_kuma as kuma
 from sokuhou.sources import kumacounts, kumalib
 
@@ -59,6 +60,17 @@ def _keys(obj, found=None):
             found.add(k)
             _keys(v, found)
     return found
+
+
+_NO_CITY_PAGES = mock.patch.object(corroborated, "attach", lambda result, *a, **k: result)     # these tests are about the counts; the confirmed records are tested in test_corroborated*.py
+
+
+def setUpModule():
+    _NO_CITY_PAGES.start()
+
+
+def tearDownModule():
+    _NO_CITY_PAGES.stop()
 
 
 class AomoriKumaTest(unittest.TestCase):

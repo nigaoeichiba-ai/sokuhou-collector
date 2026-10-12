@@ -14,6 +14,7 @@ from unittest import mock
 from urllib.parse import parse_qs, urlparse
 
 from sokuhou import run
+from sokuhou.sources import corroborated
 from sokuhou.sources import arcgis_counts, kumalib
 from sokuhou.sources import fukushima_kuma as kuma
 
@@ -63,6 +64,17 @@ def naive_counts(fx):
         cities[(f"R{fy - 2018:02d}", names.get(str(r["attributes"][C]), r["attributes"][C]))] += 1
         latest = max(latest, f"{t.tm_year}-{t.tm_mon:02d}-{t.tm_mday:02d}")
     return monthly, cities, latest
+
+
+_NO_CITY_PAGES = mock.patch.object(corroborated, "attach", lambda result, *a, **k: result)     # these tests are about the counts; the confirmed records are tested in test_corroborated*.py
+
+
+def setUpModule():
+    _NO_CITY_PAGES.start()
+
+
+def tearDownModule():
+    _NO_CITY_PAGES.stop()
 
 
 class FukushimaKumaTest(unittest.TestCase):

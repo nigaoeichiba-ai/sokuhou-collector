@@ -1,7 +1,7 @@
 """福島県(クマの出没情報・件数だけを保存する)。
 
 福島県は、データの再利用の許可を明示していない(県サイトの著作権の案内は、無断の転用・引用を認めていない)。だから、市町村・日付・件数だけを取り出して、月別・市町村別に集計し、
-場所・座標・自由記述は、取得も保存もしない(`outFields` は日付と市町村の列だけ、`returnGeometry=false`)。
+場所・座標・自由記述は、取得も保存もしない(ただし2026-10-13のオーナーの方針で、福島市と福島テレビの記事にも載っている目撃は、2つの公開情報が一致したものとして、出典を示さずに場所つきで保存する。`corroborated.py`。`outFields` は日付と市町村の列だけ、`returnGeometry=false`)。
 取得元: 福島県の公式ページが埋め込む ArcGIS の公開 Web マップ(下の WEBMAP_ID)が指す、FeatureServer のレイヤー。
 サービス名は毎年変わるので、レイヤーの住所は固定せず、Web マップから探す(1つに決まらなければ、保存せずに例外にする)。
 """
@@ -9,8 +9,9 @@ from __future__ import annotations
 
 import json
 import sys
+import time
 
-from sokuhou.sources import arcgis_counts
+from sokuhou.sources import arcgis_counts, corroborated
 
 PAGE = "https://www.pref.fukushima.lg.jp/sec/16035b/tukinowaguma-mokugeki.html"
 WEBMAP_ID = "8624f0116bcf45c58c1205097eb629ae"
@@ -31,10 +32,18 @@ class FukushimaKumaSourceError(arcgis_counts.ArcgisCountsError):
 
 def collect(fetch=None, sleep=None, now=None) -> dict:
     kw = {"sleep": sleep} if sleep else {}
+    nap = sleep or time.sleep
+
+    def confirm(result, rows, today, fetch_fn):
+        """Fukushima City's own list and the local TV station's bear stories (from the police press releases) are read too; the sightings the
+        prefecture also lists are stored with their place (2026-10-13, two publications agree)."""
+        return corroborated.attach(result, rows, [corroborated.html_reader(corroborated.FUKUSHIMA_CITY_PAGE, corroborated.parse_fukushima_city),
+                                                  corroborated.ftv_reader(today)], fetch_fn, today, lambda: nap(arcgis_counts.PAUSE))
+
     return arcgis_counts.collect_counts(
         source="fukushima", prefecture="福島県", webmap_id=WEBMAP_ID, layer_pattern=LAYER_PATTERN, date_field=DATE_FIELD, city_field=CITY_FIELD,
         page=PAGE, credit=CREDIT, update_note=UPDATE_NOTE, min_rows=MIN_ROWS, unparsed_limit=UNPARSED_LIMIT, empty_city_limit=EMPTY_CITY_LIMIT,
-        error=FukushimaKumaSourceError, fetch=fetch, now=now, **kw)
+        error=FukushimaKumaSourceError, fetch=fetch, now=now, corroborate=confirm, **kw)
 
 
 if __name__ == "__main__":
