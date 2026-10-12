@@ -860,7 +860,7 @@ def special_page(cfg, preview, sp: dict, sers: list[dict], its: list[dict], toda
 <h1>{esc(sp['title'])}</h1>{intro}<p class="meta">全{len(its)}点 ・ {len(sers)}セット</p>{licence_box()}
 <section><h2><span class="scribble">つかいかた</span></h2><ol class="howto">{steps}</ol></section>
 {sections}
-{guide_box(guides_for('eto' if sp['slug'] == 'nenga-2027' else 'season', 'kawaii', list(guides), 3))}
+{guide_box([g for g in guides if g['slug'] in sp['guides']] if sp.get('guides') else guides_for('eto' if sp['slug'] == 'nenga-2027' else 'season', 'kawaii', list(guides), 3))}
 <section style="margin-top:44px"><h2><span class="scribble">よくある、しつもん</span></h2><div class="faq">{faq}</div></section>
 {pr_box(cfg, *SPECIAL_PR[sp['slug']]) if sp['slug'] in SPECIAL_PR else ""}{share(cfg, f"/special/{sp['slug']}/", sp['title'])}
 <script type="application/ld+json">{ld}</script>"""
