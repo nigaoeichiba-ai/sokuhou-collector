@@ -36,7 +36,7 @@ PER_PAGE = 60
 MIN_TAG = 12            # a keyword page exists only with at least this many items from at least two sets
 MAX_TAG_PAGES = 150
 MIN_CROSS = 12          # a genre x touch page exists only with at least this many items
-BASE_NAV = [("イラスト", "/illust/", "/illust/"), ("特集", "/special/", "/special/"), ("読みもの", "/guide/", "/guide/"), ("印刷", "/printables/", "/printables/"), ("ぬりえ", "/tool/nurie/", "/tool/nurie/"), ("カードをつくる", "/tool/card/", "/tool/card/"), ("リクエスト", "/request/", "/request/")]
+BASE_NAV = [("イラスト", "/illust/", "/illust/"), ("特集", "/special/", "/special/"), ("用途", "/use/", "/use/"), ("読みもの", "/guide/", "/guide/"), ("印刷", "/printables/", "/printables/"), ("つくる", "/tool/", "/tool/"), ("リクエスト", "/request/", "/request/")]
 SITE = {
     "nav": list(BASE_NAV),
     "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">',
@@ -307,6 +307,8 @@ ASSIST_FAQ = [
     {"k": ["似て", "取り下げ", "削除して", "著作権侵害", "問題がある"], "a": "似ているというご指摘は、お問い合わせからお知らせください。確認し、必要な場合は取り下げます。", "u": "/contact/", "l": "お問い合わせ"},
     {"k": ["ぬりえをし", "塗り絵をし", "色をぬ", "色を塗", "ぬってみ", "オンラインぬりえ"], "a": "ブラウザ上で色を塗れます。絵と色を選び、塗りたい場所をタップします。塗った絵は保存も印刷もできます。", "u": "/tool/nurie/", "l": "オンラインぬりえ"},
     {"k": ["カード", "名前入り", "名入れ", "名前を入れ"], "a": "名前とひとことを入れて、動物のカードを画像で保存できます。入力した内容はこの端末の中だけで使われます。", "u": "/tool/card/", "l": "名前入りカードをつくる"},
+    {"k": ["カレンダーを作", "カレンダー作", "カレンダーメーカー", "カレンダーをつく", "月間カレンダー", "祝日つき"], "a": "好きなイラストで、年と月を選んだカレンダーを作れます。祝日入りで、画像として保存でき、そのまま印刷もできます。", "u": "/tool/calendar/", "l": "カレンダーをつくる"},
+    {"k": ["名札", "席札", "賞状", "名前入り印刷", "ネームプレート", "ネームタグ"], "a": "名前を入れた名札(A4に8枚)、二つ折りの席札、賞状を作れます。入力した内容はこの端末の中だけで使われます。", "u": "/tool/nametag/", "l": "名前入りの名札・賞状をつくる"},
 ]
 
 
@@ -319,7 +321,7 @@ def synonym_groups() -> list[list[str]]:
     return groups
 
 
-def assist_data(built, guides, year: int, kinds: dict) -> dict:
+def assist_data(built, guides, year: int, kinds: dict, use_hubs: list | None = None) -> dict:
     """data/assist.json: the pages the helper can point to, its short answers and the first buttons."""
     pages = []
     for sp, _sers, _its in built:
@@ -331,6 +333,11 @@ def assist_data(built, guides, year: int, kinds: dict) -> dict:
     for kind in kinds:
         pages.append({"u": f"/printables/{kind}/", "n": PRINT_COPY[kind][1], "k": [PRINT_COPY[kind][0]], "t": "印刷"})
     pages.append({"u": "/tool/nurie/", "n": "オンラインぬりえ(ブラウザで色を塗る)", "k": ["ぬりえ", "塗り絵", "色を塗る", "オンライン", "保存", "印刷"], "t": "ツール"})
+    for h in use_hubs or []:
+        pages.append({"u": f"/use/{h['slug']}/", "n": f"{h['name']}に使えるイラスト", "k": h["words"][:8], "t": "用途"})
+    pages.append({"u": "/tool/", "n": "つくる(カード・カレンダー・名札・賞状・ぬりえ)", "k": ["つくる", "作る", "ツール", "メーカー", "カレンダー", "名札", "席札", "賞状", "カード", "ぬりえ"], "t": "ツール"})
+    pages.append({"u": "/tool/calendar/", "n": "カレンダーをつくる(イラスト入り・祝日つき)", "k": ["カレンダー", "月間", "祝日", "印刷", "壁掛け", "メーカー"], "t": "ツール"})
+    pages.append({"u": "/tool/nametag/", "n": "名前入りの名札・席札・賞状をつくる", "k": ["名札", "ネームプレート", "席札", "賞状", "名前入り", "印刷", "ネームタグ"], "t": "ツール"})
     pages.append({"u": "/tool/card/", "n": "名前入りカードをつくる", "k": ["カード", "名前入り", "誕生日", "ありがとう", "おめでとう", "あけおめ"], "t": "ツール"})
     pages.append({"u": "/request/", "n": "イラストのリクエスト", "k": ["リクエスト", "欲しい", "描いて", "ない"], "t": "リクエスト"})
     pages.append({"u": "/new/", "n": "新着のセット", "k": ["新着", "新しい", "最近"], "t": "新着"})
@@ -647,7 +654,7 @@ def hero_collage(items: list[dict]) -> str:
                    for c in chosen)
 
 
-def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], today: date, printable_thumbs: list[str] | None = None) -> str:
+def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], today: date, printable_thumbs: list[str] | None = None, use_hubs: list[dict] | None = None) -> str:
     genres_present = [g for g in GENRES if any(i["genre"] == g[0] for i in items)]
     gtiles = ""
     for slug, name, desc, _ in genres_present:
@@ -668,6 +675,10 @@ def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], 
         season_html = f'<section style="margin-top:44px"><div class="sec-head"><h2>今使える<span class="scribble">特集</span></h2><p>季節の行事にすぐ使えるイラストです。</p></div><ul class="special-grid">{cards}</ul></section>'
     newest = sorted(series, key=lambda s: (s["added"], s["slug"]), reverse=True)
     newest = [s for s in newest if not s["legacy"]][:8] or newest[:8]
+    use_html = ""
+    if use_hubs:
+        use_html = ('<section style="margin-top:44px"><div class="sec-head"><h2>用途から<span class="scribble">探す</span></h2><p>使う場面ごとに、イラストをまとめました。</p></div><nav class="chips">'
+                    + "".join(f'<a href="/use/{h["slug"]}/">{esc(h["name"])}</a>' for h in use_hubs) + "</nav></section>")
     print_html = ""
     if printable_thumbs:
         thumbs = "".join(f'<img src="{t}" alt="" width="110" height="156" loading="lazy">' for t in printable_thumbs[:4])
@@ -682,6 +693,7 @@ def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], 
 <div class="hero-art collage">{hero_collage(items)}</div></div></section>
 {licence_box()}
 {season_html}
+{use_html}
 <section style="margin-top:44px"><div class="sec-head"><h2>ジャンルから<span class="scribble">探す</span></h2></div><ul class="genre-grid">{gtiles}</ul></section>
 {print_html}
 <section style="margin-top:50px"><div class="sec-head"><h2>新しい<span class="scribble">セット</span></h2><p>同じキャラクター・同じタッチで揃っています。</p></div>{set_grid(newest)}
@@ -1044,6 +1056,123 @@ def tool_page(cfg: dict, preview: bool, items: list[dict], series: list[dict]) -
                 description="名前とひとことを入れて、動物のカードを画像で保存。誕生日・ありがとう・おめでとう・新年のあいさつ。無料ですぐに作れます。", body=body)
 
 
+def use_pages(cfg: dict, preview: bool, series: list[dict], built: list, guides: list) -> tuple[dict, list[dict]]:
+    """/use/ and /use/<slug>/: the hubs of usehubs.HUBS that have at least three sets; also returns those hubs (with their sets) for the home page and the helper."""
+    from sites.minna import usehubs
+    sp_by = {sp["slug"]: sp for sp, _s, _i in built}
+    g_by = {g["slug"]: g for g in guides}
+    tool_by = {u: (n, d) for u, n, d in TOOLS}
+    pages: dict = {}
+    live = []
+    for h in usehubs.HUBS:
+        sers = usehubs.rank_series(h["words"], series, 12)
+        if len(sers) < 3:
+            continue
+        n_items = sum(len(s["items"]) for s in sers)
+        intro = "".join(f"<p>{esc(t)}</p>" for t in h["intro"])
+        points = "".join(f"<li><b>{esc(a)}</b><span>{esc(b)}</span></li>" for a, b in h["points"])
+        links = "".join(f'<li><a href="/special/{s}/">{esc(sp_by[s]["name"])}の特集</a></li>' for s in h["specials"] if s in sp_by)
+        links += "".join(f'<li><a href="/guide/{g}/">{esc(g_by[g]["title"])}</a></li>' for g in h["guides"] if g in g_by)
+        links += "".join(f'<li><a href="{t}">{esc(tool_by[t][0])}</a></li>' for t in h["tools"] if t in tool_by)
+        related = f'<section style="margin-top:44px"><h2><span class="scribble">あわせて見る</span></h2><ul class="plain use-links">{links}</ul></section>' if links else ""
+        q = h["words"][0]
+        body = f"""{crumbs([("トップ", "/"), ("用途から探す", "/use/"), (h["name"], None)])}
+<h1>{esc(h["name"])}に使えるイラスト</h1>{intro}{licence_box()}
+<section><h2><span class="scribble">使うときのポイント</span></h2><ul class="promise">{points}</ul></section>
+<section style="margin-top:44px"><h2><span class="scribble">おすすめのセット</span></h2><p class="meta">{len(sers)}セット・{n_items}点。ほかのイラストは<a href="/search/?q={esc(q)}">「{esc(q)}」で検索</a>できます。</p>{set_grid(sers)}</section>
+{related}"""
+        pages[f"use/{h['slug']}/index.html"] = page(cfg, preview, path=f"/use/{h['slug']}/", title=f"{h['name']}に使える無料イラスト 商用OK | {cfg['site_name']}",
+                                                       description=f"{h['short']}に使える、無料・商用OK・登録不要のイラスト素材。{len(sers)}セット{n_items}点から選べます。", body=body)
+        live.append({**h, "sets": sers, "n": n_items})
+    cards = "".join(f'<li><a class="tool-card" href="/use/{h["slug"]}/"><b>{esc(h["name"])}</b><span>{esc(h["short"])}({len(h["sets"])}セット)</span></a></li>' for h in live)
+    body = f"""{crumbs([("トップ", "/"), ("用途から探す", None)])}
+<h1>用途から探す</h1><p class="lead">チラシ、おたより、資料、SNSなど、使う場面ごとにイラストをまとめました。すべて無料・商用OK・クレジット不要です。</p>
+<ul class="tool-grid">{cards}</ul>{licence_box()}"""
+    pages["use/index.html"] = page(cfg, preview, path="/use/", title=f"用途から探す チラシ・おたより・資料・SNS | {cfg['site_name']}",
+                                   description="チラシ、年賀状、園や学校のおたより、社内資料、SNS、医療・介護、教材、名前入りの印刷物など、使う場面ごとに無料・商用OKのイラストを探せます。", body=body)
+    return pages, live
+
+
+MAKER_FAQ = {
+    "calendar": [
+        ("祝日は入っていますか?", "入っています。法律で定められた祝日と振替休日、国民の休日を、年ごとに計算して表示します。年によって祝日が変わることがあるため、大切な予定の確認には公式の暦も参照してください。"),
+        ("印刷はどうすればいいですか?", "「印刷」を押すと、A4縦のページとして印刷できます。プリンターの設定で用紙をA4、倍率を100%にしてください。画像として保存して、別のソフトで使うこともできます。"),
+        ("商用で使えますか?", "このサイトのイラストと同じく、個人でも商用でも無料で使えます。作ったカレンダーを配布・販売する場合の条件は、利用について のページをご覧ください。"),
+    ],
+    "nametag": [
+        ("入力した名前は送信されますか?", "送信されません。名前も文面も、この端末のブラウザの中だけで使われます。"),
+        ("席札はどのように使いますか?", "A4に1枚印刷し、中央の線で山型に折ると、向かい合う両側から名前が読めます。"),
+        ("名札のサイズはどのくらいですか?", "A4に8枚の面付けで、1枚はおよそ95×66mmです。点線に沿って切ってください。"),
+    ],
+}
+
+
+def maker_page(cfg: dict, preview: bool, kind: str) -> str:
+    chips = "".join(f'<button type="button" class="chip" data-q="{esc(q)}">{esc(q)}</button>' for q in ("ひつじ", "ねこ", "いぬ", "花", "季節", "仕事", "シンプル"))
+    if kind == "calendar":
+        title, path = "カレンダーをつくる", "/tool/calendar/"
+        h1, lead = "カレンダーをつくる", "好きなイラストで、年と月を選んだA4のカレンダーを作れます。祝日入りで、画像として保存でき、そのまま印刷もできます。無料・登録不要です。"
+        opts = ('<label>年<select name="year"></select></label><label>月<select name="month"></select></label>'
+                '<label>週の始まり<select name="start"><option value="sun">日曜日</option><option value="mon">月曜日</option></select></label>'
+                '<label class="chk"><input type="checkbox" name="adj" checked> 前後の月の日付を薄く表示する</label>')
+        desc = "好きなイラストで、祝日入りのA4カレンダーを作れます。年と月を選び、画像として保存・印刷できます。無料・登録不要・商用OK。"
+    else:
+        title, path = "名前入りの名札・席札・賞状をつくる", "/tool/nametag/"
+        h1, lead = "名前入りの名札・席札・賞状をつくる", "名前を入れて、A4に印刷できる名札(8枚)・二つ折りの席札・賞状を作れます。入力した内容はこの端末の中だけで使われます。無料・登録不要です。"
+        opts = ('<label>種類<select name="tpl"><option value="tag8">名札(A4に8枚)</option><option value="seat">席札(二つ折り)</option><option value="cert">賞状</option></select></label>'
+                '<label>名前<input type="text" name="name" maxlength="16" placeholder="例: 山田 太郎"></label>'
+                '<label data-for="tag8 seat">所属など(任意)<input type="text" name="sub" maxlength="20" placeholder="例: 営業部"></label>'
+                '<label>書体<select name="face"><option value="sans">ゴシック体</option><option value="serif">明朝体</option></select></label>'
+                '<label data-for="cert">文面<textarea name="body" maxlength="120" rows="3" placeholder="例: あなたは優れた成績を収めました。ここにその功績をたたえ、賞状を贈ります。"></textarea></label>'
+                '<label data-for="cert">日付<input type="text" name="date" maxlength="24"></label>'
+                '<label data-for="cert">贈る人・団体<input type="text" name="from" maxlength="30" placeholder="例: ○○委員会"></label>')
+        desc = "名前を入れた名札(A4に8枚)・二つ折りの席札・賞状を、イラスト入りで作れます。画像として保存・印刷できます。無料・登録不要・商用OK。"
+    faq = MAKER_FAQ[kind]
+    faq_html = "".join(f"<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>" for q, a in faq)
+    ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}, ensure_ascii=False)
+    body = f"""{crumbs([("トップ", "/"), ("つくる", "/tool/"), (title, None)])}
+<h1>{h1}</h1>
+<p class="lead">{lead}</p>
+{licence_box()}
+<section id="maker-app" class="mk-app" data-kind="{kind}">
+<div class="mk-cols"><div class="mk-side">
+<form id="mk-opts" class="mk-opts" onsubmit="return false"><h2 class="mk-h">1. 内容を決める</h2>{opts}</form>
+<h2 class="mk-h">2. イラストを選ぶ</h2>
+<form id="mk-search" class="mk-search" role="search"><input type="search" name="q" placeholder="例: ひつじ、花、仕事" aria-label="イラストを探す" autocomplete="off"><button class="btn" type="submit">探す</button></form>
+<p class="mk-chips">{chips}</p><p class="memo-note" id="mk-count" role="status" aria-live="polite"></p><div id="mk-list" class="mk-list"></div>
+</div><div class="mk-main"><canvas id="mk-canvas" width="10" height="10" role="img" aria-label="できあがりのプレビュー"></canvas>
+<p class="nu-btns"><button type="button" class="btn big" id="mk-save">画像で保存</button><button type="button" class="btn btn-sub" id="mk-print">印刷</button></p>
+<p class="req-msg" id="mk-msg" role="status" aria-live="polite">イラストを選ぶと、プレビューに入ります。</p></div></div>
+</section>
+<div id="mk-printbox" class="nu-printbox" hidden aria-hidden="true"></div>
+<noscript><p class="notice">この機能にはJavaScriptが必要です。印刷だけなら、<a href="/printables/">印刷できるもの</a>から選べます。</p></noscript>
+<section style="margin-top:44px"><h2><span class="scribble">よくある質問</span></h2><div class="faq">{faq_html}</div></section>
+<p><a href="/tool/">ほかのつくる機能</a> ・ <a href="/printables/">印刷できるもの(PDF)</a></p>
+<script type="application/ld+json">{ld}</script>
+<script src="/assets/maker.js" defer></script>"""
+    return page(cfg, preview, path=path, title=f"{title} 無料・印刷OK・登録不要 | {cfg['site_name']}", description=desc, body=body)
+
+
+TOOLS = [
+    ("/tool/calendar/", "カレンダーをつくる", "好きなイラストで、祝日入りのA4カレンダー。年と月を選んで保存・印刷できます。"),
+    ("/tool/nametag/", "名札・席札・賞状をつくる", "名前を入れて、A4に印刷できる名札(8枚)、二つ折りの席札、賞状を作れます。"),
+    ("/tool/card/", "名前入りカードをつくる", "名前とひとことを入れて、お祝いのカードを画像で保存できます。"),
+    ("/tool/nurie/", "オンラインぬりえ", "線画を選んで、ブラウザ上で色を塗れます。保存も印刷もできます。"),
+    ("/printables/", "印刷できるもの(PDF)", "カレンダー、ぬりえ、賞状、名札、時間割をA4のPDFで印刷できます。"),
+    ("/request/", "イラストをリクエストする", "サイトにないイラストを希望できます。選んで制作し、公開します。"),
+]
+
+
+def tools_page(cfg: dict, preview: bool) -> str:
+    cards = "".join(f'<li><a class="tool-card" href="{u}"><b>{esc(n)}</b><span>{esc(d)}</span></a></li>' for u, n, d in TOOLS)
+    body = f"""{crumbs([("トップ", "/"), ("つくる", None)])}
+<h1>つくる</h1><p class="lead">サイトのイラストで、カレンダー・名札・賞状・カードを作れます。入力した内容はこの端末の中だけで使われ、送信されません。すべて無料・登録不要です。</p>
+<ul class="tool-grid">{cards}</ul>
+{licence_box()}"""
+    return page(cfg, preview, path="/tool/", title=f"イラストでつくる カレンダー・名札・賞状・カード | {cfg['site_name']}",
+                description="サイトのイラストで、カレンダー、名札、席札、賞状、名前入りカード、ぬりえを作れます。無料・登録不要・商用OK。", body=body)
+
+
 NURIE_FAQ = [
     ("色を塗った絵は保存できますか?", "「保存」を押すとPNG画像として保存できます。スマホでは保存後、写真(ダウンロード)に入ります。"),
     ("印刷できますか?", "「印刷」を押すと、塗った絵をそのまま印刷できます。紙の大きさはプリンターの設定でA4などを選んでください。"),
@@ -1124,7 +1253,9 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     cal_files, cal_themes = build_calendars(items, today)
     pr_files, pr_kinds = build_printables(items)
     SITE["nav"] = [n for n in BASE_NAV if (built or n[1] != "/special/") and (guides or n[1] != "/guide/") and (cal_themes or n[1] != "/printables/")]
-    pages: dict[str, str | bytes] = {"index.html": index_page(cfg, preview, items, series, today, [m["img"] for m in cal_themes[0]["months"][:4]] if cal_themes else None)}
+    use_files, use_live = use_pages(cfg, preview, series, built, guides)
+    pages: dict[str, str | bytes] = {"index.html": index_page(cfg, preview, items, series, today, [m["img"] for m in cal_themes[0]["months"][:4]] if cal_themes else None, use_live)}
+    pages.update(use_files)
     pages.update(illust_hub(cfg, preview, items, series))
     pages.update(genre_pages(cfg, preview, items, series))
     pages.update(touch_pages(cfg, preview, items, series))
@@ -1137,6 +1268,9 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     pages.update(request_data_files())
     pages["tool/card/index.html"] = tool_page(cfg, preview, items, series)
     pages["tool/nurie/index.html"] = nurie_page(cfg, preview, series)
+    pages["tool/index.html"] = tools_page(cfg, preview)
+    pages["tool/calendar/index.html"] = maker_page(cfg, preview, "calendar")
+    pages["tool/nametag/index.html"] = maker_page(cfg, preview, "nametag")
     pages["search/index.html"] = search_page(cfg, preview)
     pages["favorites/index.html"] = favorites_page(cfg, preview)
     pages["new/index.html"] = new_page(cfg, preview, series)
@@ -1171,7 +1305,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         pages[f"thumbs/{it['id']}.webp"] = thumb_bytes(it["path"])
     pages["data/items.json"] = search_index(items, series)
     pages["data/synonyms.json"] = json.dumps({"v": 1, "groups": synonym_groups()}, ensure_ascii=False, separators=(",", ":"))
-    pages["data/assist.json"] = json.dumps(assist_data(built, guides, calendar_year(today), pr_kinds), ensure_ascii=False, separators=(",", ":"))
+    pages["data/assist.json"] = json.dumps(assist_data(built, guides, calendar_year(today), pr_kinds, use_live), ensure_ascii=False, separators=(",", ":"))
     pages["feed.xml"] = feed_xml(cfg, series, today)
     pages.update(legal_pages(
         SITE, cfg, preview,
