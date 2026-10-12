@@ -107,6 +107,78 @@ class ParsersTest(unittest.TestCase):
         self.assertIn("令和8年度クマ", co.decode(page))
 
 
+JOETSU_PAGE_HTML = """<html><body><h1>クマ目撃情報</h1>
+<a href="/uploaded/attachment/290470.pdf">令和8年度：90件 [PDFファイル／186KB]</a>
+<a href="/uploaded/attachment/284333.pdf">令和7年度：101件 [PDFファイル／205KB]</a>
+<a href="/uploaded/attachment/268866.pdf">令和7年(1月から3月まで)：6件 [PDFファイル／72KB]</a></body></html>"""
+
+JOETSU_TEXT = """№ 目撃月日 目撃時刻 目撃地域自治区 目撃場所 目撃時の状況
+90 10月7日(水) 午前6時6分頃 清里区 寺脇地内 清里区寺脇地内の小竹橋付近で、体長約100センチメートルのクマ1頭を目撃したとの通報
+が、清里区総合事務所にありました。
+89 10月5日(月) 午前5時50分頃 三和区 北代地内 三和区北代地内の市道北代山高津線上で、体長100センチメートルほどのクマ1頭を目撃し
+たとの通報が、三和区総合事務所にありました。
+78 7月22日(水) 午前8時15分頃 三和区 錦地内
+三和区錦地内、三和スポーツセンターから南に200ｍ付近の市道井ノ口錦線上で、体長100
+センチメートルほどのクマらしき動物1頭を目撃したとの通報が、午前8時30分頃、三和区総
+合事務所にありました。
+クマの目撃情報（令和8年度）
+2 4月12日(日) 午前10時頃 柿崎区 旭平地内
+柿崎区旭平地内の吟田川付近で、体長約120センチメートルのクマ1頭を目撃したとの通報
+が、柿崎区総合事務所にありました。"""
+
+
+class JoetsuTest(unittest.TestCase):
+    def test_the_pdf_of_the_newest_fiscal_year_is_found_on_the_page(self):
+        self.assertEqual(co.joetsu_pdf_url(JOETSU_PAGE_HTML), "https://www.city.joetsu.niigata.jp/uploaded/attachment/290470.pdf")
+
+    def test_a_pdf_on_another_host_or_a_page_without_one_is_refused(self):
+        with self.assertRaises(co.CorroboratedError):
+            co.joetsu_pdf_url(JOETSU_PAGE_HTML.replace('href="/uploaded/attachment/290470.pdf"', 'href="https://evil.example/290470.pdf"'))
+        with self.assertRaises(co.CorroboratedError):
+            co.joetsu_pdf_url("<html>お知らせ</html>")
+
+    def test_the_text_is_read_row_by_row_even_when_the_status_runs_over_lines(self):
+        got = [(r["observed_at"], r["place"], r["kind"], r["count"]) for r in co.parse_joetsu_text(JOETSU_TEXT)]
+        self.assertEqual(got, [("2026-10-07", "清里区寺脇地内", "目撃", 1), ("2026-10-05", "三和区北代地内", "目撃", 1),
+                               ("2026-07-22", "三和区錦地内", "目撃", 1), ("2026-04-12", "柿崎区旭平地内", "目撃", 1)])
+
+    def test_text_without_rows_or_without_a_fiscal_year_is_refused(self):
+        with self.assertRaises(co.CorroboratedError):
+            co.parse_joetsu_text("令和8年度 お知らせ")
+        with self.assertRaises(co.CorroboratedError):
+            co.parse_joetsu_text(JOETSU_TEXT.replace("令和8年度", ""))
+
+    def test_the_reader_goes_from_the_page_to_the_pdf_and_waits_between_the_two(self):
+        asked, naps = [], []
+        def fetch(url):
+            asked.append(url)
+            return JOETSU_PAGE_HTML.encode("utf-8")
+        with mock.patch.object(co, "pdf_text", return_value=JOETSU_TEXT):
+            got = co.joetsu_reader()(fetch, lambda: naps.append(1))
+        self.assertEqual(len(got), 4)
+        self.assertEqual(asked, [co.JOETSU_PAGE, "https://www.city.joetsu.niigata.jp/uploaded/attachment/290470.pdf"])
+        self.assertEqual(naps, [1])
+
+
+class NiigataHookTest(unittest.TestCase):
+    def test_the_prefecture_rows_reach_the_match_with_the_same_reading_as_the_counts(self):
+        from sokuhou.sources import arcgis_counts
+        ms = lambda day: int(__import__("datetime").datetime(*day, 12, tzinfo=kumalib.JST).timestamp() * 1000)     # noqa: E731
+        raw = [(ms((2026, 10, 7)), "7"), (None, "7"), (ms((2026, 10, 5)), "9"), (ms((2026, 10, 5)), "99")]
+        got = arcgis_counts.matching_rows(raw, prefecture="新潟県", names={"7": "上越市", "9": "新潟県長岡市"})
+        self.assertEqual(got, [(d("2026-10-07"), "上越市"), (d("2026-10-05"), "長岡市")])         # no date / an unknown code: left out
+
+    def test_niigata_reads_joetsu_citys_list_through_the_hook(self):
+        from sokuhou.sources import arcgis_counts, niigata_kuma
+        seen = {}
+        def fake(**kw):
+            seen.update(kw)
+            return kw["corroborate"]({"mode": "counts"}, [(d("2026-10-07"), "上越市")], TODAY, lambda url: b"")
+        with mock.patch.object(arcgis_counts, "collect_counts", fake),                 mock.patch.object(co, "joetsu_reader", lambda: (lambda fetch, pause: co.parse_joetsu_text(JOETSU_TEXT))):
+            out = niigata_kuma.collect(sleep=lambda s: None)
+        self.assertEqual([r["place"] for r in out["corroborated"]], ["清里区寺脇地内"])
+
+
 class ConfirmTest(unittest.TestCase):
     REC = [{"observed_at": "2026-10-05", "city": "酒田市", "place": "a", "kind": "目撃", "count": 1},
            {"observed_at": "2026-10-05", "city": "酒田市", "place": "b", "kind": "目撃", "count": 1},
@@ -130,7 +202,7 @@ class ConfirmTest(unittest.TestCase):
 
 
 class AttachTest(unittest.TestCase):
-    PAGES = [("https://sakata.example/", co.parse_sakata), ("https://yamagata-city.example/", co.parse_yamagata_city)]
+    PAGES = [co.html_reader("https://sakata.example/", co.parse_sakata), co.html_reader("https://yamagata-city.example/", co.parse_yamagata_city)]
     PREF = [(d("2026-10-05"), "酒田市"), (d("2026-10-02"), "山形市"), (d("2026-09-29"), "酒田市")]
 
     def fetch(self, url):

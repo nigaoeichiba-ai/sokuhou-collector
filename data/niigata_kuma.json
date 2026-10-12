@@ -1,7 +1,639 @@
 {
  "as_of": "2026-10-09",
+ "corroborated": [
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-07",
+   "place": "清里区寺脇地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-05",
+   "place": "三和区北代地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-27",
+   "place": "吉川区稲古地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-21",
+   "place": "牧区宮口地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-18",
+   "place": "柿崎区山谷地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-16",
+   "place": "吉川区町田地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-12",
+   "place": "板倉区上関田地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-12",
+   "place": "中郷区市屋地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-30",
+   "place": "吉川区東田中地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-30",
+   "place": "三和区大地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-24",
+   "place": "名立区大菅地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-23",
+   "place": "安塚区行野地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-22",
+   "place": "三和区錦地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-21",
+   "place": "直江津区大字虫生岩戸地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-21",
+   "place": "牧区宮口地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-21",
+   "place": "和田区大字寺町地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-20",
+   "place": "直江津区大字虫生岩戸地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-20",
+   "place": "直江津区大字虫生岩戸地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "名立区大字名立大町地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-16",
+   "place": "板倉区菰立地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-11",
+   "place": "直江津区五智6丁目地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "高士区大字東京田地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-08",
+   "place": "保倉区大字駒林地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "直江津区大字虫生岩戸地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-04",
+   "place": "中郷区藤沢地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "和田区大字西田中地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "保倉区大字駒林地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-30",
+   "place": "高士区大字下曽根地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "その他",
+   "observed_at": "2026-06-29",
+   "place": "吉川区山方地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "三和区神田地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-27",
+   "place": "直江津区大字五智国分地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-26",
+   "place": "浦川原区長走地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-26",
+   "place": "大島区菖蒲地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "浦川原区釜淵地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-23",
+   "place": "浦川原区釜淵地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-22",
+   "place": "牧区坪山地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-22",
+   "place": "浦川原区長走地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-21",
+   "place": "浦川原区有島地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "その他",
+   "observed_at": "2026-06-21",
+   "place": "浦川原区小谷島地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "中郷区藤沢地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "牧区倉下地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "柿崎区東横山地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "柿崎区平沢地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "吉川区原之町地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "津有区戸野目古新田地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "谷浜・桑取区大字北谷地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "金谷区大字滝寺地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "安塚区須川地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "柿崎区黒岩地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-09",
+   "place": "清里区鈴倉地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-09",
+   "place": "名立区丸田地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "その他",
+   "observed_at": "2026-06-07",
+   "place": "金谷区大字灰塚地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-07",
+   "place": "金谷区大字中田原地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-07",
+   "place": "谷浜・桑取区西戸野地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-07",
+   "place": "牧区柳島地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-06",
+   "place": "吉川区泉地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-05",
+   "place": "吉川区小苗代地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "安塚区高沢地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "吉川区東鳥越地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-03",
+   "place": "名立区赤野俣地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-30",
+   "place": "谷浜・桑取区大字吉浦地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-30",
+   "place": "名立区車路地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-30",
+   "place": "中郷区藤沢地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-29",
+   "place": "吉川区山直海地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-28",
+   "place": "和田区大字寺町地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-28",
+   "place": "三和区桑曽根地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "金谷区寺町2丁目地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "金谷区大字向橋地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-24",
+   "place": "浦川原区小谷島地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-24",
+   "place": "板倉区中之宮地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "板倉区田井地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "中郷区宮野原地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "浦川原区坪野地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "板倉区釜塚地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "板倉区米増地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "保倉区大字青野地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-16",
+   "place": "中郷区藤沢地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-09",
+   "place": "牧区坪山地内"
+  },
+  {
+   "city": "上越市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-08",
+   "place": "牧区切光地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-07",
+   "place": "金谷区大字大貫地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-05",
+   "place": "板倉区菰立地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-01",
+   "place": "板倉区釜塚地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-23",
+   "place": "板倉区機織地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "その他",
+   "observed_at": "2026-04-22",
+   "place": "名立区西蒲生田地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-21",
+   "place": "金谷区大字下馬場地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-20",
+   "place": "金谷区大字大貫地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-19",
+   "place": "名立区大菅地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-17",
+   "place": "吉川区東寺地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-12",
+   "place": "柿崎区旭平地内"
+  },
+  {
+   "city": "上越市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-11",
+   "place": "清里区弥生地内"
+  }
+ ],
  "credit": "出典: 新潟県「にいがたクマ出没マップ」(https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、新潟県のページでご確認ください)",
- "fetched_at": "2026-10-09T19:39:32.808744+09:00",
+ "fetched_at": "2026-10-13T05:37:39.067177+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
