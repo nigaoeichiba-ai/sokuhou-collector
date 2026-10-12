@@ -164,6 +164,54 @@ def parse_ogano(html: str) -> list[dict]:
     return out
 
 
+JOETSU_PAGE = "https://www.city.joetsu.niigata.jp/soshiki/kankyo/kinkyuzi-bear.html"
+JOETSU_HEAD = re.compile(r"^\s*(\d+)\s+(\d{1,2})月(\d{1,2})日\([^)]*\)\s+\S+\s+(\S+?区)\s+(\S+)", re.M)
+
+
+def joetsu_pdf_url(html: str, page_url: str = JOETSU_PAGE) -> str:
+    """The PDF of the newest fiscal year ('令和8年度:90件 [PDFファイル]') on Joetsu City's page; its address changes with every update."""
+    from urllib.parse import urljoin, urlparse
+    best = None
+    for href, label in re.findall(r'<a[^>]+href="([^"]+\.pdf)"[^>]*>(.*?)</a>', html, re.S):
+        m = re.match(r"令和\s*(\d+)\s*年度", clean(label))
+        if m and (best is None or int(m.group(1)) > best[0]):
+            best = (int(m.group(1)), urljoin(page_url, href))
+    if best is None:
+        raise CorroboratedError("no PDF of a fiscal year on the page")
+    if urlparse(best[1]).netloc != urlparse(page_url).netloc:
+        raise CorroboratedError(f"the PDF is not on the city's host: {best[1]}")
+    return best[1]
+
+
+def parse_joetsu_text(text: str) -> list[dict]:
+    """Joetsu City's list (text of its PDF): '№ 月日 時刻 地域自治区 場所 状況' per sighting, the status text running over several lines."""
+    text = unicodedata.normalize("NFKC", text)
+    fy = fy_year_from_heading(text)
+    heads = list(JOETSU_HEAD.finditer(text))
+    out = []
+    for i, m in enumerate(heads):
+        body = text[m.end(): heads[i + 1].start() if i + 1 < len(heads) else len(text)]
+        out.append(_record(day_in_fy(fy, int(m.group(2)), int(m.group(3))), "上越市", m.group(4) + m.group(5), kind_of(body), kumalib.fullwidth_to_int(body)))
+    if not out:
+        raise CorroboratedError("Joetsu: no rows")
+    return out
+
+
+def pdf_text(body: bytes) -> str:
+    import io
+    from pypdf import PdfReader
+    return chr(10).join(p.extract_text() or "" for p in PdfReader(io.BytesIO(body)).pages)
+
+
+def joetsu_reader(page_url: str = JOETSU_PAGE):
+    def read(fetch, pause):
+        pdf = joetsu_pdf_url(decode(fetch(page_url)), page_url)
+        pause()
+        return parse_joetsu_text(pdf_text(fetch(pdf)))
+    read.label = page_url
+    return read
+
+
 # ---------------------------------------------------------------- the match
 
 def confirm(prefecture_rows: list[tuple[date | None, object]], records: list[dict], norm_city=lambda c: str(c)) -> list[dict]:
@@ -189,12 +237,20 @@ def current_year(records: list[dict], today: date) -> list[dict]:
 STORED_FIELDS = {"observed_at", "city", "place", "kind", "count"}
 
 
-def attach(result: dict, prefecture_rows, pages: list[tuple[str, object]], fetch, today: date, pause=lambda: None,
+def html_reader(url: str, parser):
+    """A reader of one static HTML page: read(fetch, pause) -> records."""
+    def read(fetch, pause):
+        return parser(decode(fetch(url)))
+    read.label = url
+    return read
+
+
+def attach(result: dict, prefecture_rows, readers: list, fetch, today: date, pause=lambda: None,
            norm_city=lambda c: str(c)) -> dict:
     """Adds `corroborated` (the confirmed records, newest first) to a counts package.  Nothing is added when nothing could be confirmed;
     the problems of single pages are printed to stderr (the run goes on: the counts do not depend on these pages)."""
     import sys
-    records, errors = collect_records(prefecture_rows, pages, fetch, today, pause, norm_city)
+    records, errors = collect_records(prefecture_rows, readers, fetch, today, pause, norm_city)
     for e in errors:
         print(f"corroborated: {e}", file=sys.stderr)
     if records:
@@ -202,18 +258,19 @@ def attach(result: dict, prefecture_rows, pages: list[tuple[str, object]], fetch
     return result
 
 
-def collect_records(prefecture_rows, pages: list[tuple[str, object]], fetch, today: date, pause=lambda: None,
+def collect_records(prefecture_rows, readers: list, fetch, today: date, pause=lambda: None,
                     norm_city=lambda c: str(c)) -> tuple[list[dict], list[str]]:
-    """pages: (url, parser).  (what the prefecture also lists in the current fiscal year, [one message per page that could not be read]).
+    """readers: functions read(fetch, pause) -> records, each with a `label`.  Returns (what the prefecture also lists in the current
+    fiscal year, [one message per reader that failed]).
 
-    A page that fails is skipped (its municipality shows no records that day); if every page fails the caller stores no records at all."""
+    A reader that fails is skipped (its municipality shows no records that day); if every reader fails the caller stores no records at all."""
     found: list[dict] = []
     errors: list[str] = []
-    for i, (url, parser) in enumerate(pages):
+    for i, read in enumerate(readers):
         if i:
             pause()
         try:
-            found += parser(decode(fetch(url)))
+            found += read(fetch, pause)
         except Exception as e:  # noqa: BLE001 - a municipality's page may change or be down; the counts must not depend on it
-            errors.append(f"{url}: {type(e).__name__}: {e}")
+            errors.append(f"{getattr(read, 'label', read)}: {type(e).__name__}: {e}")
     return current_year(confirm(prefecture_rows, found, norm_city), today), errors

@@ -53,8 +53,8 @@ def collect(now: datetime | None = None) -> dict:
         rows, error=SaitamaKumaSourceError, today=today, source="saitama", credit=CREDIT,
         update_note=UPDATE_NOTE, page=PAGE, files=[LAYER], min_rows=MIN_ROWS, unparsed_limit=UNPARSED_LIMIT, empty_limit=EMPTY_CITY_LIMIT)
     # the sightings that a town's own page also lists (same municipality, same day) are stored with their place: two publications agree
-    return corroborated.attach(result, rows, [(corroborated.CHICHIBU_PAGE, corroborated.parse_chichibu),
-                                              (corroborated.OGANO_PAGE, corroborated.parse_ogano)],
+    return corroborated.attach(result, rows, [corroborated.html_reader(corroborated.CHICHIBU_PAGE, corroborated.parse_chichibu),
+                                              corroborated.html_reader(corroborated.OGANO_PAGE, corroborated.parse_ogano)],
                                fetch, today, kumacounts.pause, kumacounts.norm_city)
 
 

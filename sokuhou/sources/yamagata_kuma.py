@@ -92,8 +92,8 @@ def collect(now: datetime | None = None) -> dict:
     today = kumacounts.today_jst(now)
     result = parse(data, url, today)
     # the sightings that a municipality's own page also lists (same city, same day) are stored with their place: two publications agree
-    return corroborated.attach(result, read_rows(data), [(corroborated.SAKATA_PAGE, corroborated.parse_sakata),
-                                                          (corroborated.YAMAGATA_CITY_PAGE, corroborated.parse_yamagata_city)],
+    return corroborated.attach(result, read_rows(data), [corroborated.html_reader(corroborated.SAKATA_PAGE, corroborated.parse_sakata),
+                                                          corroborated.html_reader(corroborated.YAMAGATA_CITY_PAGE, corroborated.parse_yamagata_city)],
                                fetch, today, kumacounts.pause, kumacounts.norm_city)
 
 

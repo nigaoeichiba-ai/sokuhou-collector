@@ -151,9 +151,21 @@ def aggregate(raw_rows: list[tuple[object, object]], *, prefecture: str, names: 
                                   unparsed=unparsed + empty)
 
 
+def matching_rows(raw_rows: list[tuple[object, object]], *, prefecture: str, names: dict[str, str]) -> list[tuple[date, str]]:
+    """(date, municipality) of every row with a readable date and a municipality: what a municipality's own page is matched against
+    (sokuhou/sources/corroborated.py).  The same reading as `aggregate`; nothing else of a row is kept."""
+    out = []
+    for raw_day, raw_city in raw_rows:
+        d = _day(raw_day) if raw_day is not None else None
+        city = norm_city(names.get(str(raw_city), "" if names else str(raw_city or "")), prefecture)
+        if d is not None and city:
+            out.append((d, city))
+    return out
+
+
 def collect_counts(*, source: str, prefecture: str, webmap_id: str, layer_pattern: str, date_field: str, city_field: str, page: str,
                    credit: str, update_note: str, min_rows: int, unparsed_limit: float, empty_city_limit: float,
-                   error: type[ArcgisCountsError], fetch=None, sleep=time.sleep, now: datetime | None = None) -> dict:
+                   error: type[ArcgisCountsError], fetch=None, sleep=time.sleep, now: datetime | None = None, corroborate=None) -> dict:
     fetch = fetch or kumalib.polite_fetch
     today = (now or datetime.now(kumalib.JST)).astimezone(kumalib.JST).date()
     webmap = _json(fetch(f"{PORTAL}{webmap_id}/data?f=json"), error, "web map")
@@ -163,5 +175,8 @@ def collect_counts(*, source: str, prefecture: str, webmap_id: str, layer_patter
     since = window_start(today)
     sleep(PAUSE)
     raw = fetch_rows(layer, date_field=date_field, city_field=city_field, oid=oid, since=since, fetch=fetch, sleep=sleep, error=error)
-    return aggregate(raw, prefecture=prefecture, names=names, today=today, since=since, min_rows=min_rows, unparsed_limit=unparsed_limit,
-                     empty_city_limit=empty_city_limit, source=source, credit=credit, update_note=update_note, page=page, layer=layer, error=error)
+    result = aggregate(raw, prefecture=prefecture, names=names, today=today, since=since, min_rows=min_rows, unparsed_limit=unparsed_limit,
+                       empty_city_limit=empty_city_limit, source=source, credit=credit, update_note=update_note, page=page, layer=layer, error=error)
+    if corroborate:         # corroborate(result, [(date, municipality)], today, fetch) adds the sightings that a municipality's own page also lists
+        result = corroborate(result, matching_rows(raw, prefecture=prefecture, names=names), today, fetch)
+    return result
