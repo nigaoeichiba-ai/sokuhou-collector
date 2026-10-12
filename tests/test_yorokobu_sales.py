@@ -205,18 +205,18 @@ class PagesTest(unittest.TestCase):
 
     def test_a_gift_page_ends_with_next_steps_and_offers_the_sale_only_while_one_is_on_or_near(self):
         gift = self.read("gift/birthday-mother/index.html")
-        self.assertIn("迷ったときの、次の一歩", gift)
+        self.assertIn("迷ったときの次の一歩", gift)
         self.assertIn('href="/favorites/"', gift)
         self.assertIn('href="/memo/?o=birthday&amp;r=mother"', gift)
-        self.assertIn("セールの日に、合わせて買う", gift)
-        self.assertIn("迷ったときの、次の一歩", self.read("picks/2026-10-11/index.html") if (self.root / "picks").exists() else "迷ったときの、次の一歩")
+        self.assertIn("セールの日に合わせて買う", gift)
+        self.assertIn("迷ったときの次の一歩", self.read("picks/2026-10-11/index.html") if (self.root / "picks").exists() else "迷ったときの次の一歩")
         items = json.loads((FIX / "items.json").read_text(encoding="utf-8"))
         with tempfile.TemporaryDirectory() as t:
             out = Path(t) / "s"
             build.render_site(content.load(FIX), items, CFG, out, release=True, today=date(2026, 5, 3))
             far = (out / "gift" / "birthday-mother" / "index.html").read_text(encoding="utf-8")
-            self.assertIn("迷ったときの、次の一歩", far)
-            self.assertNotIn("セールの日に、合わせて買う", far)
+            self.assertIn("迷ったときの次の一歩", far)
+            self.assertNotIn("セールの日に合わせて買う", far)
 
     def test_the_sale_page_lists_the_announced_events_with_their_source_date_and_is_in_the_sitemap(self):
         html = self.read("sale/index.html")
@@ -269,7 +269,7 @@ class PointsTest(unittest.TestCase):
     def test_a_multiplier_the_shop_announced_shows_on_the_cards_and_in_a_list_on_the_sale_page(self):
         out = self.render(date(2026, 10, 15), 6)
         sale = (out / "sale" / "index.html").read_text(encoding="utf-8")
-        self.assertIn("いま、ポイント倍率が付いている贈り物", sale)
+        self.assertIn("いまポイント倍率が付いている贈り物", sale)
         self.assertIn("ポイント5倍(10月17日まで)", sale)
         self.assertIn("楽天市場が倍率と終了の日時を表示しているもの", sale)
         gift = (out / "gift" / "birthday-boyfriend" / "index.html").read_text(encoding="utf-8")
@@ -280,7 +280,7 @@ class PointsTest(unittest.TestCase):
         self.assertNotIn("ポイント倍率", (out / "sale" / "index.html").read_text(encoding="utf-8"))
         self.assertNotIn("ポイント5倍", (out / "gift" / "birthday-boyfriend" / "index.html").read_text(encoding="utf-8"))
         out = self.render(date(2026, 10, 15), 3)                                  # three are not a list: the badges stay, the section does not
-        self.assertNotIn("いま、ポイント倍率が付いている贈り物", (out / "sale" / "index.html").read_text(encoding="utf-8"))
+        self.assertNotIn("いまポイント倍率が付いている贈り物", (out / "sale" / "index.html").read_text(encoding="utf-8"))
         self.assertIn("ポイント5倍(10月17日まで)", (out / "gift" / "birthday-boyfriend" / "index.html").read_text(encoding="utf-8"))
 
     def test_the_api_fields_become_a_multiplier_only_with_a_rate_of_two_or_more_and_an_end(self):

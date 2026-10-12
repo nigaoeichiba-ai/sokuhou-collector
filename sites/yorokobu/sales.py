@@ -196,7 +196,7 @@ def points_section(d: dict, cfg: dict) -> str:
         return ""
     items.sort(key=lambda i: (-float(i["point_rate"]), -B.score(i), i["code"]))
     cards = "".join(B.item_card(cfg, i) for i in items[:12])
-    return (f'<section class="block"><div class="sec-head"><span class="eyebrow">Point up</span><h2>いま、ポイント倍率が付いている贈り物</h2>'
+    return (f'<section class="block"><div class="sec-head"><span class="eyebrow">Point up</span><h2>いまポイント倍率が付いている贈り物</h2>'
             f'<p class="sec-lead">当サイトで取り上げた商品のうち、楽天市場が倍率と終了の日時を表示しているものです({esc(d["fetched_label"])}時点)。'
             f'倍率の対象になる条件や、ポイントの上限は、商品ページで確かめてください。エントリーが必要な場合があります。</p></div>'
             f'<ul class="items">{cards}</ul>{B.freshness(d)}</section>')
@@ -223,15 +223,15 @@ def sale_page(d: dict, cfg: dict, preview: bool, events: list[dict], href: dict[
         "<li><b>先に、候補を選んでおく。</b>始まってから探すと、時間が足りません。<a href='/for/'>相手から</a>や<a href='/occasion/'>イベントから</a>探して、気になるものをリストに入れておきます。</li>"
         "<li><b>エントリーと条件を、確かめる。</b>ポイントアップは、エントリーが必要な場合があります。対象の条件と上限は、各店の公式ページに書かれています。</li>"
         "<li><b>のし・ラッピング・日付指定を、確かめる。</b>店ごとに違います。商品ページで、先に見ておきます。</li></ol>")
-    body = f"""{B.head_band("yellow", "", "セールの日程と、贈り物を買うタイミング", "楽天市場とAmazonが発表した、お得に買える日をまとめています。始まる前に候補を選んでおくと、その日に迷わず注文できます。", single=True)}
+    body = f"""{B.head_band("yellow", "", "セールの日程と贈り物を買うタイミング", "楽天市場とAmazonが発表した、お得に買える日をまとめています。始まる前に候補を選んでおくと、その日に迷わず注文できます。", single=True)}
 <div class="crumbs-wrap">{B.crumbs([("トップ", "/"), ("セールの日程", None)])}</div>
 {B.pr_quiet(cfg)}
-<section class="block"><div class="sec-head"><h2>いまの、そしてこれからのセール</h2></div>{f'<div class="sale-cards">{cards}</div>' if cards else '<p class="notice">いま発表されているセールはありません。決まりしだい、ここに載せます。</p>'}</section>
+<section class="block"><div class="sec-head"><h2>いまとこれからのセール</h2></div>{f'<div class="sale-cards">{cards}</div>' if cards else '<p class="notice">いま発表されているセールはありません。決まりしだい、ここに載せます。</p>'}</section>
 {points_section(d, cfg)}
-<section class="block"><div class="sec-head"><h2>プレゼントを、セールで買うときの順番</h2></div>{steps}
+<section class="block"><div class="sec-head"><h2>プレゼントをセールで買うときの順番</h2></div>{steps}
 <ul class="plain sale-links">{pick_link}<li><a href="/memo/">贈る日を登録して、忘れないようにする(たいせつな日メモ)</a></li></ul></section>
 <section class="block"><p class="notice">日程は、各店が発表した内容です。変更になることがあるため、購入の前に、各店の公式ページで確かめてください。当サイトは、各店の公式ページへのリンクを紹介し、購入されると報酬が支払われることがあります。</p></section>"""
-    return B.page(cfg, preview, path="/sale/", title=f"セールの日程と、贈り物を買うタイミング | {cfg['site_name']}", description="楽天市場のお買い物マラソン、Amazonのプライム感謝祭など、お得に買える日と、プレゼントを選ぶ順番をまとめました。", body=body, amazon_links=any(e["store"] == "amazon" for e in open_), sale=False)
+    return B.page(cfg, preview, path="/sale/", title=f"セールの日程と贈り物を買うタイミング | {cfg['site_name']}", description="楽天市場のお買い物マラソン、Amazonのプライム感謝祭など、お得に買える日と、プレゼントを選ぶ順番をまとめました。", body=body, amazon_links=any(e["store"] == "amazon" for e in open_), sale=False)
 
 
 def build_pages(d: dict, cfg: dict, preview: bool, events: list[dict], href: dict[str, str], now: datetime) -> dict[str, str]:

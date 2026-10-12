@@ -18,7 +18,7 @@ from pathlib import Path
 
 from sites.yorokobu import content as ct
 from sites.yorokobu import dailypicks as dp
-from sites.yorokobu import quality, relevance
+from sites.yorokobu import commas, quality, relevance
 from sokuhou.sitekit import BuildError, crumbs, esc
 
 HERE = Path(__file__).resolve().parent
@@ -30,6 +30,7 @@ SLUG = re.compile(r"[a-z0-9]+(-[a-z0-9]+)*")
 # what an editor who has not used the product must not write (a made-up use is a made-up review), besides dailypicks.BANNED
 EXPERIENCE = ["使ってみ", "試してみ", "試した", "食べてみ", "飲んでみ", "着てみ", "買ってみ", "購入してみ", "開けてみ", "実際に使", "実際に食べ", "実際に飲", "私は", "わたしは", "我が家", "うちでは", "編集部で試", "検証した"]
 PANELS = 4
+MAX_COMMAS = 3.9                  # 読点 per 100 characters of the editorial text (natural writing is about 2.5-3.5; the first drafts had 4-5)
 
 
 def _b():
@@ -132,6 +133,8 @@ def problems(f: dict, entry: dict | None, img_dir: Path | None = None) -> list[s
     for w in dp.BANNED + EXPERIENCE:
         if w in text:
             out.append(f"{slug}: banned word {w} (an advertisement's claim, or a made-up use)")
+    if commas.density("".join(prose(f))) > MAX_COMMAS:
+        out.append(f"{slug}: too many 読点 ({commas.density(''.join(prose(f))):.1f} per 100 characters; the limit is {MAX_COMMAS}): python -m sites.yorokobu.commas apply <file>")
     for s in prose(f):                                            # each item on its own (they are not one run of text)
         out += [x for x in quality.language_problems(s, slug) if "too many" not in x]
     if "".join(prose(f)).count("やすい") > quality.MAX_YASUI * 2:
@@ -226,7 +229,7 @@ def _chart_price(d: dict, f: dict, pl: list[dict], how: str, st: dict) -> str:
     where = f"、この商品は{dataroom.yen(price)}で、安いほうから数えて約{round(st['below'])}%の位置です" if price else ""
     cap = (f"{how}({st['n']}点、{d['fetched_label']}時点)の価格の分布。中央値は{dataroom.yen(st['median'])}、真ん中の半分は{dataroom.yen(st['q1'])}〜{dataroom.yen(st['q3'])}です{where}。"
            f"当サイトが取り上げた商品の数字で、楽天市場の全体ではありません。")
-    return dataroom.figure(d, "同じ種類の商品の、価格の位置", f'<div class="hb">{body}</div>', esc(cap),
+    return dataroom.figure(d, "同じ種類の商品の価格の位置", f'<div class="hb">{body}</div>', esc(cap),
                            dataroom.table(["価格帯", "商品数"], [[lab, str(n)] for lab, n, _ in rows]))
 
 
@@ -296,7 +299,7 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
                  f'<span class="img-note">イメージ画像</span></a>')
     charts = ""
     if st:
-        charts = f'<section class="block" id="position"><div class="sec-head"><h2>同じ種類の中での、位置</h2></div>{_chart_price(d, f, pl, how, st)}{_chart_facts(d, f, st)}</section>'
+        charts = f'<section class="block" id="position"><div class="sec-head"><h2>同じ種類の中での位置</h2></div>{_chart_price(d, f, pl, how, st)}{_chart_facts(d, f, st)}</section>'
     notice = '<p class="notice">この商品は、いま販売ページで取り扱いがないと表示されています。下の「代わりの候補」をご覧ください。</p>' if unavailable else ""
     specs = "".join(f"<tr><th>{esc(r['k'])}</th><td>{esc(r['v'])}</td></tr>" for r in f["specs"])
     reading = "".join(f"<h3>{esc(r['h'])}</h3><p>{esc(r['p'])}</p>" for r in f["reading"])
@@ -307,24 +310,24 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
     ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": f["title"], "datePublished": f["date"], "dateModified": f["verified"], "inLanguage": "ja",
                      "author": {"@type": "Organization", "name": cfg["operator_name"]}, "mainEntityOfPage": url_abs}, ensure_ascii=False)
     body = f"""{B.head_band("yellow", "", esc(f["title"]), f["catch"], single=True)}
-<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("毎日のおすすめ", "/picks/"), (dp_label(f["date"]), f"/picks/{f['date']}/"), ("くわしく読む", None)])}</div>
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("毎日のおすすめ", "/picks/"), (dp_label(f["date"]), f"/picks/{f['date']}/"), ("詳しく読む", None)])}</div>
 {B.pr_quiet(cfg)}
 {notice}
 <section class="feat-top"><div class="feat-hero">{photo}<div class="feat-sum"><p class="eyebrow">30秒でわかる結論</p>{_list(f["verdict"], "feat-verdict")}{price}<div class="item-btns">{buy}{other_btn}</div></div></div></section>
-<section class="block"><div class="sec-head"><h2>合う相手と、避けたい相手</h2></div><div class="cols feat-who"><div><h3>合う相手</h3>{_list(f["who"]["yes"], "feat-yes")}</div><div><h3>避けたい相手・場面</h3>{_list(f["who"]["no"], "feat-no")}</div></div></section>
-<section class="block"><div class="sec-head"><h2>仕様を、ひとつずつ読む</h2></div><div class="tablewrap"><table class="feat-specs"><tbody>{specs}</tbody></table></div>
+<section class="block"><div class="sec-head"><h2>合う相手と避けたい相手</h2></div><div class="cols feat-who"><div><h3>合う相手</h3>{_list(f["who"]["yes"], "feat-yes")}</div><div><h3>避けたい相手・場面</h3>{_list(f["who"]["no"], "feat-no")}</div></div></section>
+<section class="block"><div class="sec-head"><h2>仕様を一つずつ読む</h2></div><div class="tablewrap"><table class="feat-specs"><tbody>{specs}</tbody></table></div>
 <p class="sec-lead">仕様は、商品ページとメーカーの公開情報で、{esc(f["verified"].replace("-", "年", 1).replace("-", "月", 1) + "日")}に確かめました。</p>{reading}</section>
-<section class="block"><div class="sec-head"><h2>よい点と、気になる点</h2></div><div class="cols"><div><h3>よい点</h3>{_list(f["good"], "feat-yes")}</div><div><h3>気になる点</h3>{_list(f["care"], "feat-no")}</div></div></section>
+<section class="block"><div class="sec-head"><h2>良い点と気になる点</h2></div><div class="cols"><div><h3>よい点</h3>{_list(f["good"], "feat-yes")}</div><div><h3>気になる点</h3>{_list(f["care"], "feat-no")}</div></div></section>
 {charts}
 <section class="block"><div class="sec-head"><h2>渡し方</h2></div><ol class="feat-give">{"".join(f"<li>{esc(x)}</li>" for x in f["give"])}</ol></section>
-<section class="block feat-scene"><div class="sec-head"><span class="eyebrow">{esc(f["scene"]["label"])}</span><h2>渡す場面を、思い浮かべる</h2></div>{_manga(f)}<p>{esc(f["scene"]["text"])}</p><p class="feat-react"><b>想定される反応</b>{esc(f["scene"]["reaction"])}</p>
+<section class="block feat-scene"><div class="sec-head"><span class="eyebrow">{esc(f["scene"]["label"])}</span><h2>渡す場面を思い浮かべる</h2></div>{_manga(f)}<p>{esc(f["scene"]["text"])}</p><p class="feat-react"><b>想定される反応</b>{esc(f["scene"]["reaction"])}</p>
 <p class="sec-lead">この場面と漫画は、読む人が想像しやすいように編集部がつくった例です。実際の贈り物の感想や、購入者の声ではありません。</p></section>
 <section class="block"><div class="sec-head"><h2>代わりの候補</h2></div>{_alts(cfg, d, day, f["alts"])}</section>
 <section class="block"><div class="sec-head"><h2>よくある質問</h2></div>{faq}</section>
 <section class="block feat-cta"><p class="more">{buy}{other_btn}<a class="btn btn-sub" href="/memo/">贈る日を登録する</a></p></section>
 {B.share_bar(cfg, path(f), f"{f['title']}: {f['catch']}", "このページを、だれかに・自分に送る", hint=True)}
 <section class="block"><div class="sec-head"><h2>この記事について</h2></div><p class="notice">商品の仕様、メーカーなどの公開情報、当サイトが集めた商品のデータをもとに、編集部が、贈り物としての選びやすさを読み解いています。価格・在庫は、販売ページでご確認ください。</p><ul class="plain feat-ev">{ev}</ul></section>
-{f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの、くわしく読む記事</span></h2><ul class="plain">{more}</ul></section>' if more else ""}
+{f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの、詳しく読む記事</span></h2><ul class="plain">{more}</ul></section>' if more else ""}
 <script type="application/ld+json">{ld}</script>"""
     return B.page(cfg, preview, path=path(f), title=f"{f['title']} | {cfg['site_name']}", description=f["catch"] + " " + f["verdict"][0][:70], body=body, og_image=B.og_for(f"pick/{f['slug']}"),
                   amazon_links=bool(cfg.get("amazon_tracking_id")))
@@ -336,12 +339,12 @@ def dp_label(iso: str) -> str:
 
 
 def teaser(cfg: dict, d: dict, feats: list[dict], day_iso: str | None = None, limit: int = 3) -> str:
-    """The block 「くわしく読む」 on the picks pages: the newest features."""
+    """The block 「詳しく読む」 on the picks pages: the newest features."""
     shown = [f for f in feats if day_iso is None or f["date"] == day_iso][:limit]
     if not shown:
         return ""
     cells = "".join(f'<li><a class="tile wide" href="{path(f)}"><span><b>{esc(f["title"])}</b><small>{esc(f["catch"])}</small></span></a></li>' for f in shown)
-    return f'<section class="block"><div class="sec-head"><span class="eyebrow">Read more</span><h2>くわしく読む</h2><p class="sec-lead">1つの商品を、仕様・価格の位置・渡し方まで掘り下げた記事です。</p></div><ul class="tiles wide">{cells}</ul></section>'
+    return f'<section class="block"><div class="sec-head"><span class="eyebrow">Read more</span><h2>詳しく読む</h2><p class="sec-lead">1つの商品を、仕様・価格の位置・渡し方まで掘り下げた記事です。</p></div><ul class="tiles wide">{cells}</ul></section>'
 
 
 def build_pages(d: dict, cfg: dict, preview: bool) -> dict[str, str]:

@@ -1,4 +1,4 @@
-"""/favorites/ (お気に入り and 最近チェックした商品, drawn in the browser from what this browser kept: assets/mine.js) and the block 「当サイトで、よく押されている商品」.
+"""/favorites/ (お気に入り and 最近チェックした商品, drawn in the browser from what this browser kept: assets/mine.js) and the block 「当サイトでよく押されている商品」.
 
 The block is made from the counters of the pressed shop buttons (api/ask.php op "stat", keys pop.r.<rakuten item code> / pop.a.<ASIN>, merged into
 data/yorokobu_ask_stats.json by the daily workflow).  It is shown only when there is enough behind it: a few presses are one person's curiosity, not a ranking.
@@ -64,7 +64,7 @@ def section(d: dict, cfg: dict, stats: dict | None = None) -> str:
     if not items:
         return ""
     cards = "".join(B.item_card(cfg, it) for it in items)
-    return ('<section class="block pop-block"><div class="sec-head"><span class="eyebrow">Pressed most</span><h2>当サイトで、よく押されている商品</h2>'
+    return ('<section class="block pop-block"><div class="sec-head"><span class="eyebrow">Pressed most</span><h2>当サイトでよく押されている商品</h2>'
             '<p class="sec-lead">商品のショップへのボタンが、当サイトで多く押された順です。購入された数や、品質を表すものではありません。'
             '誰が押したかは記録せず、同じ人の1日の重複は数えないようにしていますが、目安として見てください。</p></div>'
             f'<ul class="items">{cards}</ul>{B.freshness(d)}</section>')
@@ -75,7 +75,7 @@ def favorites_page(d: dict, cfg: dict, preview: bool) -> str:
     latest = (d["c"].get("daily") or [None])[0]
     starts = (f'<a class="btn" href="/picks/{latest["date"]}/">今日のおすすめを見る</a>' if latest else "") + '<a class="btn btn-sub" href="/for/">相手から探す</a>'
     lead = "気になった商品を、あとで見直せます。このブラウザの中だけに保存され、当サイトのサーバーには送りません。"
-    body = f"""{B.head_band("sky", "", "お気に入りと、最近チェックした商品", lead, single=True)}
+    body = f"""{B.head_band("sky", "", "お気に入りと最近チェックした商品", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("お気に入り", None)])}</div>
 {B.pr_quiet(cfg)}
 <div id="myitems" data-src="/list/items.json">
@@ -91,7 +91,7 @@ def favorites_page(d: dict, cfg: dict, preview: bool) -> str:
 {section(d, cfg)}
 <noscript><p class="notice">このページは、JavaScript が使える環境でお使いください。</p></noscript>
 <p class="notice">保存した内容は、このブラウザにだけあります。ブラウザのデータを消すと、なくなります。</p>"""
-    html = B.page(cfg, preview, path="/favorites/", title=f"お気に入りと、最近チェックした商品 | {cfg['site_name']}", description=lead, body=body,
+    html = B.page(cfg, preview, path="/favorites/", title=f"お気に入りと最近チェックした商品 | {cfg['site_name']}", description=lead, body=body,
                   amazon_links=bool(cfg.get("amazon_tracking_id")))
     return html.replace("<head>", '<head>\n<meta name="robots" content="noindex,follow">', 1)         # a page of one browser's own: not for the search results
 

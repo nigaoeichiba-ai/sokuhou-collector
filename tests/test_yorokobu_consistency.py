@@ -204,7 +204,7 @@ class PagesTest(unittest.TestCase):
             codes = re.findall(r'data-code="([^"]+)"', top)
             owners = {next(i["label"] for i in have if any(x["code"] == c for x in i["items"])) for c in codes}
             self.assertGreaterEqual(len(owners), 2, key)
-            self.assertIn("種類のちがう、人気の", top)
+            self.assertIn("種類の違う人気の", top)
 
     def test_an_idea_with_a_single_product_is_not_shown_as_a_proposal(self):
         items = copy.deepcopy(self.items)

@@ -100,6 +100,15 @@ class GateTest(unittest.TestCase):
             out = features.problems(self.f, self.entry, img_dir=Path(t))
             self.assertTrue(any("need at least 512x512" in x for x in out), out)
 
+    def test_text_with_a_comma_after_every_phrase_is_refused_and_the_light_pass_fixes_it(self):
+        from sites.yorokobu import commas
+        heavy = lambda f: f["reading"][0].__setitem__("p", f["reading"][0]["p"] + "渡す日と、食べる日を、先に、決めて、相手に、伝えて、おきます、" * 12 + "。")
+        out = self.mutated(heavy)
+        self.assertTrue(any("too many 読点" in x for x in out), out[:2])
+        self.assertEqual(commas.lighten("注文の前に渡す日と、食べる日を、決めて相手に伝えます。"), "注文の前に渡す日と食べる日を決めて相手に伝えます。")
+        self.assertEqual(commas.lighten("卒業、入学、退職、転職、引っ越しなどに使えます。"), "卒業、入学、退職、転職、引っ越しなどに使えます。")      # a list keeps its commas
+        self.assertEqual(commas.lighten("のしは付けられますが、包装紙は使えません。"), "のしは付けられますが、包装紙は使えません。")        # a clause break stays
+
     def test_the_sources_have_to_be_https_links_with_labels(self):
         out = self.mutated(lambda f: f["evidence"].__setitem__(0, {"label": "x", "url": "http://example.com"}))
         self.assertTrue(any("evidence" in x for x in out))
@@ -153,7 +162,7 @@ class PageTest(unittest.TestCase):
     def test_each_feature_has_a_page_with_the_sections_the_reader_needs(self):
         for f in self.c["features"]:
             html = self.read(f"pick/{f['slug']}/index.html")
-            for needle in ("30秒でわかる結論", "合う相手と、避けたい相手", "仕様を、ひとつずつ読む", "よい点と、気になる点", "渡し方", "想定の場面", "代わりの候補", "よくある質問", "この記事について"):
+            for needle in ("30秒でわかる結論", "合う相手と避けたい相手", "仕様を一つずつ読む", "良い点と気になる点", "渡し方", "想定の場面", "代わりの候補", "よくある質問", "この記事について"):
                 self.assertIn(needle, html, f"{f['slug']}: {needle}")
             self.assertEqual(html.count('class="mg-cell"'), 4)
             self.assertIn("実際の贈り物の感想や、購入者の声ではありません", html)               # the scene says it is made up
@@ -183,14 +192,14 @@ class PageTest(unittest.TestCase):
             build.render_site(self.c, items, CFG, Path(t) / "s", release=True, today=date(2026, 10, 13))
             html = (Path(t) / "s" / "pick" / f["slug"] / "index.html").read_text(encoding="utf-8")
         self.assertIn("楽天市場の全体ではありません", html)
-        self.assertIn("同じ種類の商品の、価格の位置", html)
+        self.assertIn("同じ種類の商品の価格の位置", html)
         self.assertRegex(html, r"\d+点、2026年")                      # how many products are behind the chart, and the date
 
     def test_the_daily_page_and_the_hub_lead_to_the_features_and_the_feed_lists_them(self):
         f = self.c["features"][0]
         day = self.read(f"picks/{f['date']}/index.html")
         self.assertIn(f'href="/pick/{f["slug"]}/"', day)
-        self.assertIn("くわしく読む", day)
+        self.assertIn("詳しく読む", day)
         self.assertIn(f'/pick/{f["slug"]}/', self.read("picks/index.html"))
         self.assertIn(f'/pick/{f["slug"]}/', self.read("sitemap.xml"))
         feed = self.read("feed.xml")

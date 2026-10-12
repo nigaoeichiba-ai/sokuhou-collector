@@ -521,13 +521,13 @@ def finder_map(d: dict) -> dict:
     return out
 
 
-def concierge(cfg: dict, d: dict, p: dict | None, heading: str = "ひとこと入れて探す") -> str:
+def concierge(cfg: dict, d: dict, p: dict | None, heading: str = "一言入れて探す") -> str:
     kws = (p or {}).get("keywords", [])[:8]
     chips = "".join(f'<li><a href="{esc(search_link(cfg, k))}" rel="sponsored nofollow noopener" target="_blank">{esc(k)}</a></li>' for k in kws)
     ctx = esc(" ".join(x for x in [(p or {}).get("recipient_keyword", "")] if x))
     return f"""<section class="concierge band-soft" id="concierge"><div class="concierge-in">
 <div class="concierge-body"><h2>{heading}</h2>
-<p>その人について、ひとこと教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。</p>
+<p>その人について、一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。</p>
 <form class="kw-form" data-aff="{esc(cfg['rakuten_affiliate_id'])}" data-trk="{esc(cfg.get('rakuten_tracking_id') or '')}" data-ctx="{ctx}">
 <input type="search" name="q" placeholder="例: ガーデニングが好きな60代" aria-label="その人のこと、ほしいもの">
 <button type="submit" class="btn">楽天市場で探す</button></form>
@@ -650,21 +650,21 @@ def top_picks(cfg: dict, d: dict, key: str, n: int = 4) -> str:
     if not shown:
         return ""
     cards = "".join(item_card(cfg, it, rank=i + 1, eager=i < 2) for i, it in enumerate(shown))       # the first two are what the visitor sees first: not lazy
-    return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>種類のちがう、人気の{len(shown)}点</h2></div>'
+    return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>種類の違う人気の{len(shown)}点</h2></div>'
             f'<ul class="items">{cards}</ul>{freshness(d)}</section>')
 
 
 def next_steps(d: dict, occasion: str = "", recipient: str = "") -> str:
-    """「迷ったときの、次の一歩」: what to do after reading a list of gifts, so that a visitor who is not ready to buy has a way to come back (the list, the memo, the sale day)."""
+    """「迷ったときの次の一歩」: what to do after reading a list of gifts, so that a visitor who is not ready to buy has a way to come back (the list, the memo, the sale day)."""
     memo = f"/memo/?o={occasion}&amp;r={recipient}" if occasion and recipient else "/memo/"
     sale_on = bool(SALE_EVENTS) and SALE_NOW is not None and any(sales.phase(e, SALE_NOW) for e in SALE_EVENTS)
-    steps = [("気になる商品に、♡をつける", "♡を押した商品は、「お気に入り」のページで、価格を見比べられます。このブラウザの中にだけ保存されます。", "/favorites/", "お気に入りを見る"),
-             ("だれかに、相談する", "候補の画面を、LINEやメールで送って、「どれがいい?」と聞けます。ページの共有ボタンから送れます。", "#share", "")]
-    steps.append(("贈る日を、登録する", "日にちを登録しておくと、近づいたときにお知らせの画面が出ます。カレンダーにも書き出せます。", memo, "たいせつな日メモを開く"))
+    steps = [("気になる商品に♡をつける", "♡を押した商品は、「お気に入り」のページで、価格を見比べられます。このブラウザの中にだけ保存されます。", "/favorites/", "お気に入りを見る"),
+             ("誰かに相談する", "候補の画面を、LINEやメールで送って、「どれがいい?」と聞けます。ページの共有ボタンから送れます。", "#share", "")]
+    steps.append(("贈る日を登録する", "日にちを登録しておくと、近づいたときにお知らせの画面が出ます。カレンダーにも書き出せます。", memo, "たいせつな日メモを開く"))
     if sale_on:
-        steps.append(("セールの日に、合わせて買う", "楽天市場とAmazonのセールの日程を、まとめています。候補を選んでおくと、その日に迷わず注文できます。", "/sale/", "セールの日程を見る"))
+        steps.append(("セールの日に合わせて買う", "楽天市場とAmazonのセールの日程を、まとめています。候補を選んでおくと、その日に迷わず注文できます。", "/sale/", "セールの日程を見る"))
     cells = "".join(f'<li><strong>{esc(t)}</strong><span>{esc(x)}</span>' + (f'<a class="btn btn-sub" href="{h}">{esc(label)}</a>' if label else "") + "</li>" for t, x, h, label in steps)
-    return f'<section class="block next-steps"><div class="sec-head"><span class="eyebrow">Next</span><h2>迷ったときの、次の一歩</h2></div><ol class="steps">{cells}</ol></section>'
+    return f'<section class="block next-steps"><div class="sec-head"><span class="eyebrow">Next</span><h2>迷ったときの次の一歩</h2></div><ol class="steps">{cells}</ol></section>'
 
 
 def related_section(cols: list[tuple[str, str]]) -> str:
@@ -697,7 +697,7 @@ def quick_section(c: dict, slug: str) -> str:
     name = c["occ"][slug]["name"]
     if e.get("budget"):
         rows = "".join(f'<tr><th scope="row">{esc(r["to"])}</th><td>{esc(r["range"])}</td><td>{esc(r.get("note", ""))}</td></tr>' for r in e["budget"])
-        money = f'<div class="tablewrap"><table class="quick-table"><thead><tr><th>贈る相手</th><th>金額の目安</th><th>ひとこと</th></tr></thead><tbody>{rows}</tbody></table></div>'
+        money = f'<div class="tablewrap"><table class="quick-table"><thead><tr><th>贈る相手</th><th>金額の目安</th><th>一言</th></tr></thead><tbody>{rows}</tbody></table></div>'
     else:
         money = f'<p>{esc(e["budget_note"])}</p>'
     n = e["noshi"]
@@ -922,7 +922,7 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
     pairs = [p for p in c["pairs"] if p["occasion"] == o["slug"]]
     cards = "".join(tile(f'/gift/{ct.pair_key(p)}/', "recipient", p["recipient"], f'{c["rec"][p["recipient"]]["name"]}へ', p["title"].split(" ")[0]) for p in pairs)
     featured = spread(kinds_of(d, [ct.pair_key(p) for p in pairs]), 6)
-    shown = (f'<section style="margin-top:50px"><h2><span class="scribble">種類のちがう、選ばれている贈り物</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
+    shown = (f'<section style="margin-top:50px"><h2><span class="scribble">種類の違う選ばれている贈り物</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
     color = COLORS[list(c["occ"]).index(o["slug"]) % 4]
     head = head_band(color, ic_wrap("occasion", o["slug"]), f'{esc(o["name"])}の<wbr>プレゼント', o["blurb"], single=True, mascot=OCC_MASCOT.get(o["slug"], "b-wink"))
     body = f"""{head}
@@ -995,7 +995,7 @@ def recipient_page(d: dict, cfg: dict, preview: bool, r: dict) -> str:
     cards = "".join(tile(f'/gift/{ct.pair_key(p)}/', "occasion", p["occasion"], c["occ"][p["occasion"]]["name"], p["title"].split(" ")[0]) for p in pairs)
     above = {it["code"] for row in like_rows_items(d, r) for it in row}      # already shown under 「喜ばれやすいもの」
     featured = spread([[it for it in g if it["code"] not in above] for g in kinds_of(d, [ct.pair_key(p) for p in pairs])], 6)
-    shown = (f'<section style="margin-top:50px"><h2><span class="scribble">種類のちがう、選ばれている贈り物</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
+    shown = (f'<section style="margin-top:50px"><h2><span class="scribble">種類の違う選ばれている贈り物</span></h2>{item_grid(cfg, featured)}{freshness(d)}</section>' if featured else "")
     color = COLORS[list(c["rec"]).index(r["slug"]) % 4]
     head = head_band(color, ic_wrap("recipient", r["slug"]), f'{esc(r["name"])}への<wbr>プレゼント', r["blurb"], single=True, mascot="r-sparkle")
     body = f"""{head}
@@ -1511,7 +1511,7 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 
 # ---------------------------------------------------------------- メッセージ例文集 (ready-to-copy card messages per occasion; from messages.json)
 
-STYLE_LABEL = {"丁寧": "ていねい", "やわらかい": "やわらかく", "ひとこと": "ひとこと"}
+STYLE_LABEL = {"丁寧": "ていねい", "やわらかい": "やわらかく", "一言": "一言"}
 
 
 def message_hub_page(d: dict, cfg: dict, preview: bool) -> str:
@@ -1543,7 +1543,7 @@ def message_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 {pr_with_amazon(cfg)}
 <p class="sec-lead">気に入った文の「コピー」を押すと、そのまま貼りつけられます。相手との関係に合わせて、言葉を少し変えると、さらに気持ちが伝わります。</p>
 {sets}
-<section style="margin-top:44px"><h2><span class="scribble">最後に添える、ひとこと</span></h2><ul class="msg-list">{closing}</ul></section>
+<section style="margin-top:44px"><h2><span class="scribble">最後に添える、一言</span></h2><ul class="msg-list">{closing}</ul></section>
 <section class="avoid" style="margin-top:44px"><h2><span class="scribble">言葉を選ぶときの、気をつけたいこと</span></h2>{ul(m["manners"], "warn")}</section>
 <section style="margin-top:44px"><h2><span class="scribble">贈るものを、探す</span></h2>
 <p><a class="btn" href="/occasion/{slug}/">{esc(o["name"])}のプレゼントを探す</a></p>{guide_link(c, slug)}</section>
@@ -1888,7 +1888,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
             m, dd = int(day["date"][5:7]), int(day["date"][8:10])
             cards[f"og/picks/{day['date']}.png"] = ogimage.card(title="今日のおすすめギフト", tag=f"{m}月{dd}日 {day['theme']}", site=site, photo=day["amazon"][0]["mood"])
         for fe in c.get("features") or []:
-            cards[f"og/pick/{fe['slug']}.png"] = ogimage.card(title=fe["title"], tag="くわしく読む", site=site, photo=mood_photo(fe["slug"]))
+            cards[f"og/pick/{fe['slug']}.png"] = ogimage.card(title=fe["title"], tag="詳しく読む", site=site, photo=mood_photo(fe["slug"]))
         for th in c["themes"]:
             cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]), site=site, photo=mood_photo(th["slug"]))
         for cid, ch in (d.get("_chart_cards") or {}).items():          # the data room's charts as pictures: a preview for sharing the page, a tall one to keep or send

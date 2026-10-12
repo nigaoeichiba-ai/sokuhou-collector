@@ -85,7 +85,8 @@ function owns($meta, $key) { return $meta !== null && idok($key) && isset($meta[
 // A sentence that looks like personal information: refused (the page also says so, but this is the check that counts).  The text is first made plain: full-width digits and
 // letters to half-width, every dash, minus and long-vowel mark to '-', so that 090-1234-5678, ０９０ー１２３４ー５６７８ and 090 1234 5678 are all a phone number.
 function looks_personal($t) {
-    $n = function_exists('mb_convert_kana') ? mb_convert_kana($t, 'asKV', 'UTF-8') : $t;
+    $n = strtr($t, array('０' => '0', '１' => '1', '２' => '2', '３' => '3', '４' => '4', '５' => '5', '６' => '6', '７' => '7', '８' => '8', '９' => '9', '　' => ' ', '＠' => '@'));      // full-width digits first, so that the check also works where mbstring is missing
+    if (function_exists('mb_convert_kana')) { $n = mb_convert_kana($n, 'asKV', 'UTF-8'); }
     $n = (string)preg_replace('/[\x{2010}-\x{2015}\x{2212}\x{30FC}\x{FF0D}\x{FF70}\x{2043}]/u', '-', $n);
     if (preg_match('/[0-9](?:[\s\-.\/()・,]*[0-9]){6,}/u', $n) === 1) { return true; }          // seven digits in a run (separators between them allowed): a phone number, a postal code
     if (preg_match('/@|\x{FF20}|https?:|www\.|\x{3012}|ftp:/u', $n) === 1) { return true; } // a mail address, a link, 〒
