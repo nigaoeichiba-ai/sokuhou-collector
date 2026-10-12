@@ -14,7 +14,7 @@ from calendar import monthrange
 from datetime import date, datetime
 from urllib.parse import quote
 
-from sokuhou.sources import kumacounts
+from sokuhou.sources import corroborated, kumacounts
 
 PAGE = "https://kumalog-aomori.info/"
 API = "https://kumalog-aomori.info/api/ver1/sightings/post_list_external"
@@ -85,9 +85,13 @@ def collect(now: datetime | None = None) -> dict:
         rows, _skipped = read_rows(fetch(url_for(start, end)))
         for rid, day, city in rows:
             by_id[rid] = (day, city)
-    return kumacounts.build_counts(
-        list(by_id.values()), error=AomoriKumaSourceError, today=today, source="aomori", credit=CREDIT, update_note=UPDATE_NOTE, page=PAGE,
+    rows = list(by_id.values())
+    result = kumacounts.build_counts(
+        rows, error=AomoriKumaSourceError, today=today, source="aomori", credit=CREDIT, update_note=UPDATE_NOTE, page=PAGE,
         files=[API], min_rows=MIN_ROWS, unparsed_limit=UNPARSED_LIMIT, empty_limit=EMPTY_CITY_LIMIT)
+    # Hirakawa City's own list (public data licence 1.0: the page names it) confirms the sightings it also lists (same city, same day)
+    return corroborated.attach(result, rows, [corroborated.html_reader(corroborated.HIRAKAWA_PAGE, corroborated.parse_hirakawa)],
+                               fetch, today, kumacounts.pause, kumacounts.norm_city)
 
 
 if __name__ == "__main__":

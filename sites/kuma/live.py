@@ -460,6 +460,8 @@ def data_page(page, d: dict, lv: dict, base: str) -> str:
 CONFIRMED_NOTE = ("このサイトでは、件数と最新の日付を載せ、場所は、複数の公開情報で一致を確認できた目撃だけを載せています。それ以外の目撃の場所は、公式のページでご確認ください。"
                   "掲載しているのは、公開されている情報から、このサイトが項目を抽出し、集計・照合したもので、{name}が作成・保証したものではありません。"
                   "日付や市町村が読めない行の割合の検査など、検算は、このサイトで行っています。掲載の中止をご希望の場合は、<a href=\"/contact/\">お問い合わせ</a>からご連絡ください。")
+# a city whose own data carries a licence that asks for a credit keeps it (owner, 2026-10-13: credits required by a licence stay)
+CITY_CREDITS = {"平川市": "平川市の記録は、平川市のデータ(公共データ利用規約・第1.0版)を、当サイトが加工して作成しました。"}
 COUNTS_NOTE = ("このサイトでは、件数と最新の日付だけを載せています。場所などの詳しい記録は、公式のページでご確認ください。"
                "掲載しているのは、公開されている情報から、このサイトが項目を抽出し、市町村別・月別に集計したもので、{name}が作成・保証したものではありません。"
                "日付や市町村が読めない行の割合の検査など、集計の検算は、このサイトで行っています。掲載の中止をご希望の場合は、<a href=\"/contact/\">お問い合わせ</a>からご連絡ください。")
@@ -510,6 +512,7 @@ def counts_page(page, d: dict, c: dict, today: date, links: dict) -> str:
     where_html = (f"<p>ここに載せていない目撃の、いつ・どこで出たかの記録は、<a href=\"{esc(c['page'])}\" rel=\"noopener\" target=\"_blank\">{esc(c['name'])}の公式ページ</a>でご確認ください。</p>" if recs else
                   f"<p>いつ・どこで出たかの記録は、<a href=\"{esc(c['page'])}\" rel=\"noopener\" target=\"_blank\">{esc(c['name'])}の公式ページ</a>でご確認ください。</p>")
     note_text = (CONFIRMED_NOTE if recs else COUNTS_NOTE).format(name=esc(c['name']))
+    note_text += "".join(v for k, v in CITY_CREDITS.items() if any(x["city"] == k for x in recs))
     body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", "/live/"), (pname, None)])}
 <h1>{esc(pname)}のクマの目撃・出没の件数({fy_label(cur)}・{esc(c['name'])})</h1>
 <p class="lead">{esc(c['name'])}が公表している{fy_label(cur)}の記録は、{n(c['total'])}件です。最新は{md(c['latest'])}({ago_text(c['latest'], today)})の分です。市町村別・月別の件数を載せています{'。場所は、確認できた目撃だけ載せています' if recs else ''}。</p>

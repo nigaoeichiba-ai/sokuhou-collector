@@ -14,7 +14,7 @@ import html as htmllib
 import re
 import unicodedata
 from collections import Counter
-from datetime import date
+from datetime import date, datetime
 
 from sokuhou.sources import kumalib
 
@@ -347,6 +347,130 @@ def parse_minano(html: str) -> list[dict]:
 
 PARSERS_ROUND2 = {"tsuruoka": (TSURUOKA_PAGE, parse_tsuruoka), "nanyo": (NANYO_PAGE, parse_nanyo), "shirataka": (SHIRATAKA_PAGE, parse_shirataka),
                   "sanjo": (SANJO_PAGE, parse_sanjo), "minano": (MINANO_PAGE, parse_minano), "hanno": (HANNO_PAGE, parse_hanno)}
+
+
+# ---------------------------------------------------------------- round 3: Fukushima City, Hirakawa City, Fukushima TV (2026-10-13)
+
+FUKUSHIMA_CITY_PAGE = "https://www.city.fukushima.fukushima.jp/soshiki/6/1025/3/17619.html"
+HIRAKAWA_PAGE = "https://www.city.hirakawa.lg.jp/kurashi/sumai/doubutsu/kumasyutsubotsu.html"
+FTV_ROOT = "https://www.fukushima-tv.co.jp/localnews/"
+FTV_DAYS = 21                 # day lists read per run (the station keeps about a month); older stories of this kind drop out of the table
+FTV_MAX_ARTICLES = 40
+
+
+def parse_fukushima_city(html: str) -> list[dict]:
+    """Fukushima City: one table (No., '令和8年9月23日(水曜日) 12時30分', place + a map link, remarks)."""
+    out = []
+    for c in table_rows(html):
+        if len(c) < 3 or not c[0].isdigit():
+            continue
+        m = re.match(r"令和\s*(\d+)年\s*(\d+)月\s*(\d+)日", c[1])
+        if not m:
+            continue
+        note = c[3] if len(c) > 3 else ""
+        place = re.sub(r"\s*\(獣マップへリンク\)\s*$", "", c[2]).strip()
+        out.append(_record(reiwa_day(int(m.group(1)), int(m.group(2)), int(m.group(3))), "福島市", place, kind_of(note) if note else "目撃", None))
+    if not out:
+        raise CorroboratedError("Fukushima City: no rows")
+    return out
+
+
+def parse_hirakawa(html: str) -> list[dict]:
+    """Hirakawa City: one table (kind, '令和8年4月15日', time, place, detail); crop damage is a damage record, not a sighting."""
+    out = []
+    for c in table_rows(html):
+        if len(c) < 5:
+            continue
+        m = re.fullmatch(r"令和\s*(\d+)年\s*(\d+)月\s*(\d+)日", c[1])
+        if not m:
+            continue
+        kind = "目撃" if c[0] == "目撃" else ("被害" if "被害" in c[0] else kind_of(c[0] + c[4]))
+        out.append(_record(reiwa_day(int(m.group(1)), int(m.group(2)), int(m.group(3))), "平川市", c[3], kind, kumalib.fullwidth_to_int(c[4])))
+    if not out:
+        raise CorroboratedError("Hirakawa: no rows")
+    return out
+
+
+def ftv_article_links(day_html: str) -> list[str]:
+    """The addresses of the '【熊出没】' stories on one day's list of Fukushima TV."""
+    out = []
+    for href, inner in re.findall(r'href="(https://www\.fukushima-tv\.co\.jp/localnews/\d{4}/\d{2}/\d+\.html)"[^>]*>(.*?)</a>', day_html, re.S):
+        if "【熊出没】" in clean(inner) and href not in out:
+            out.append(href)
+    return out
+
+
+def parse_ftv_article(html: str, url: str) -> list[dict]:
+    """One story: '【熊出没】10月3日(土)・4日(日)福島県のクマ目撃情報', then '【大玉村】' and bullets '・玉井袖窪 3日午前5時ごろ ...' (the day prefix only in
+    a story of several days).  A bullet that cannot be dated is left out."""
+    ym = re.search(r"/localnews/(\d{4})/(\d{2})/", url)
+    if not ym:
+        raise CorroboratedError("Fukushima TV: unexpected address")
+    titles = [clean(t) for t in re.findall(r"【熊出没】[^<\n]*", html)]
+    title = max(titles, key=len, default="")
+    head = re.match(r"【熊出没】(.*?)福島県", title)
+    if not head:
+        raise CorroboratedError("Fukushima TV: no title")
+    days, month = [], None
+    for m in re.finditer(r"(?:(\d{1,2})月)?(\d{1,2})日", head.group(1)):
+        month = int(m.group(1)) if m.group(1) else month
+        if month:
+            days.append((month, int(m.group(2))))
+    if not days:
+        raise CorroboratedError("Fukushima TV: no date in the title")
+    year = int(ym.group(1)) - (1 if days[0][0] > int(ym.group(2)) + 6 else 0)
+    body = re.sub(r"<script.*?</script>|<style.*?</style>", "", html, flags=re.S)
+    lines = [clean(x) for x in re.split(r"<br\s*/?>|</p>|</div>|</li>", body)]
+    city, out = None, []
+    for line in lines:
+        m = re.fullmatch(r"【([^】]+[市町村])】", line)
+        if m:
+            city = m.group(1)
+            continue
+        if not line.startswith("・") or not city:
+            continue
+        b = re.match(r"・\s*(\S+)\s+(?:(\d{1,2})日)?(.*)$", line)
+        if not b:
+            continue
+        if b.group(2):
+            pick = [md_ for md_ in days if md_[1] == int(b.group(2))]
+            when = pick[0] if pick else None
+        else:
+            when = days[0] if len(days) == 1 else None
+        if when is None:
+            continue
+        try:
+            day = date(year, when[0], when[1])
+        except ValueError:
+            continue
+        rest = b.group(3)
+        out.append(_record(day, city, b.group(1), "痕跡" if re.search(r"痕跡|足跡|フン|糞", rest) else "目撃", kumalib.fullwidth_to_int(rest)))
+    return out
+
+
+def ftv_reader(today: date | None = None, days: int = FTV_DAYS):
+    """Fukushima TV: the day lists of the last `days` days (the stories are dated by their own title), then each '【熊出没】' story once."""
+    def read(fetch, pause):
+        from datetime import timedelta
+        end = today or datetime.now(kumalib.JST).date()
+        links: list[str] = []
+        for i in range(days):
+            d = end - timedelta(days=i)
+            pause()
+            try:
+                page = decode(fetch(f"{FTV_ROOT}{d.year}/{d.month:02d}/{d.day:02d}/"))
+            except Exception:  # noqa: BLE001 - a day without a list (or a failed request) is only a missing day
+                continue
+            links += [u for u in ftv_article_links(page) if u not in links]
+        if len(links) > FTV_MAX_ARTICLES:
+            raise CorroboratedError(f"Fukushima TV: {len(links)} stories in {days} days (more than {FTV_MAX_ARTICLES}): the page has changed?")
+        out: list[dict] = []
+        for u in links:
+            pause()
+            out += parse_ftv_article(decode(fetch(u)), u)
+        return out
+    read.label = FTV_ROOT
+    return read
 
 
 # ---------------------------------------------------------------- the match

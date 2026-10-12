@@ -1,7 +1,229 @@
 {
- "as_of": "2026-10-08",
+ "as_of": "2026-10-12",
+ "corroborated": [
+  {
+   "city": "平川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-30",
+   "place": "碇ヶ関樋ヶ沢"
+  },
+  {
+   "city": "平川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-27",
+   "place": "碇ヶ関樋の口"
+  },
+  {
+   "city": "平川市",
+   "count": null,
+   "kind": "被害",
+   "observed_at": "2026-08-20",
+   "place": "葛川大川添"
+  },
+  {
+   "city": "平川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-14",
+   "place": "碇ヶ関鯨森"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-13",
+   "place": "碇ヶ関岩井"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-13",
+   "place": "碇ヶ関古懸不動沢"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-12",
+   "place": "碇ヶ関阿原"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-05",
+   "place": "碇ヶ関水溜"
+  },
+  {
+   "city": "平川市",
+   "count": null,
+   "kind": "被害",
+   "observed_at": "2026-08-04",
+   "place": "碇ヶ関古懸大面"
+  },
+  {
+   "city": "平川市",
+   "count": null,
+   "kind": "被害",
+   "observed_at": "2026-07-23",
+   "place": "碇ヶ関久吉下一通"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "碇ヶ関船岡"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-15",
+   "place": "小国深沢"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-05",
+   "place": "碇ヶ関外白沢"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "碇ヶ関久吉蕷ヶ平"
+  },
+  {
+   "city": "平川市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "碇ヶ関久吉二ノ渡"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-23",
+   "place": "碇ヶ関古懸清野沢"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "碇ヶ関久吉二ノ渡"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "新館駒泊"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-27",
+   "place": "碇ヶ関久吉程ヶ平"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "町居南田"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "新屋町北鶉野"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "唐竹芦毛沢"
+  },
+  {
+   "city": "平川市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-05-21",
+   "place": "沖館永田"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-11",
+   "place": "碇ヶ関相沢"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-09",
+   "place": "新館東山"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-09",
+   "place": "尾崎稲元"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-09",
+   "place": "尾崎浅井"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-09",
+   "place": "尾崎木戸口"
+  },
+  {
+   "city": "平川市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-30",
+   "place": "広船山下"
+  },
+  {
+   "city": "平川市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-22",
+   "place": "碇ヶ関古懸四戸橋"
+  },
+  {
+   "city": "平川市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-04-15",
+   "place": "碇ヶ関古懸三ツ森"
+  }
+ ],
+ "corroborated_on": {
+  "平川市": "2026-10-13"
+ },
  "credit": "出典: 青森県「くまログあおもり」(https://kumalog-aomori.info/)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、くまログあおもりでご確認ください。青森県が作成したものではありません)",
- "fetched_at": "2026-10-08T19:40:37.424164+09:00",
+ "fetched_at": "2026-10-13T06:28:10.799735+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
@@ -11,7 +233,7 @@
    "3": 18
   },
   "R08": {
-   "10": 7,
+   "10": 8,
    "4": 86,
    "5": 185,
    "6": 161,
@@ -297,6 +519,14 @@
     }
    }
   },
+  "板柳町": {
+   "latest": "2026-10-12",
+   "monthly": {
+    "R08": {
+     "10": 1
+    }
+   }
+  },
   "横浜町": {
    "latest": "2026-09-23",
    "monthly": {
@@ -408,7 +638,7 @@
  "source": "aomori",
  "source_file": "https://kumalog-aomori.info/api/ver1/sightings/post_list_external",
  "source_page": "https://kumalog-aomori.info/",
- "total_fy": 765,
+ "total_fy": 766,
  "unparsed": 0,
  "update_note": "青森県が、ほぼ随時更新します。住民の投稿のうち、県が確認していないもの(未確認)は数えていないため、投稿から数日たって、件数が増えることがあります。件数は、目撃のほか、痕跡や人身被害の報告を含みます"
 }

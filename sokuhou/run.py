@@ -164,10 +164,10 @@ GROUPS: dict[str, list[Source]] = {
         Source("ishikari_kuma", ishikari_kuma.collect, check_pref_bear),   # the city's own open data, CC BY 4.0, no approval needed
         Source("toyama_kuma", toyama_kuma.collect, check_pref_bear),   # the prefecture's written permission (2026-10-06): records, no coordinates
         # no explicit licence: counts only (municipality, month, count, latest date), see kumalib.package_counts
-        Source("fukushima_kuma", fukushima_kuma.collect, check_counts_bear),
+        Source("fukushima_kuma", fukushima_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("niigata_kuma", niigata_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("yamagata_kuma", yamagata_kuma.collect, check_counts_bear, corroborated.carry_over),
-        Source("aomori_kuma", aomori_kuma.collect, check_counts_bear),
+        Source("aomori_kuma", aomori_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("nara_kuma", nara_kuma.collect, check_counts_bear),
         Source("saitama_kuma", saitama_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("otsu_kuma", otsu_kuma.collect, check_counts_bear),
