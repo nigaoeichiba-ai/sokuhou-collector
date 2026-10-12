@@ -782,7 +782,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         contact_notice="クマの目撃や被害の通報は、お住まいの市町村、または警察(110番)へお願いします。このサイトでは、通報や個別の相談を受け付けていません。掲載内容(データの誤り、掲載の中止のご依頼など)は、種類を選んで、ご連絡ください。",
         input_note="",
         finish=lambda s: s))
-    pages.update(standard_files(pages, cfg, preview, d["fetched_date"]))
+    pages.update(standard_files(pages, cfg, preview, max([d["fetched_date"]] + [src["fetched_date"] for src in d.get("live_prefs", [])])))   # the newest of the ministry and the municipal sources
     pages.update(asset_pages(HERE / "assets"))
     write_pages(pages, out)
     return sorted(pages)
