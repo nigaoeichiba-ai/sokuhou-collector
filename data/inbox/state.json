@@ -3,17 +3,17 @@
   "words-202610.jsonl": 3
  },
  "kuma": {
-  "2026-10.jsonl": 3
+  "2026-10.jsonl": 4
  },
  "minna": {
-  "2026-10.jsonl": 2,
+  "2026-10.jsonl": 3,
   "req-202610.jsonl": 8
  },
  "saichin": {
-  "2026-10.jsonl": 3
+  "2026-10.jsonl": 5
  },
  "yorokobu": {
-  "2026-10.jsonl": 4
+  "2026-10.jsonl": 5
  },
  "yorokobu-voice": {}
 }
