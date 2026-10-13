@@ -78,7 +78,7 @@ LIVE_SOURCES.update({
                     "monthly_label": "クマの目撃の場所のお知らせ", "as_of_text": "最新の記録は{d}の分までです"},
     "nagano": {"pref": "長野", "scope": "長野市のみ", "name": "長野県長野市", "label": "長野市・市の公式データを集計(件数。場所は確認できた目撃だけ)",
                "monthly_label": "目撃のほか、痕跡(出没)の報告を含む", "as_of_text": "最新の記録は{d}の分までです(市の更新は月1回)"},
-    "higumap": {"pref": "北海道", "scope": "ひぐまっぷに参加する市町村のみ", "name": "北海道の市町村(ひぐまっぷ)", "label": "各市町村が「ひぐまっぷ」で公開している情報を集計(件数のみ)",
+    "higumap": {"pref": "北海道", "scope": "道内の一部の市町村のみ", "no_source": True, "name": "北海道の市町村", "label": "複数の公開情報で一致を確認できた市町村の件数",
                 "monthly_label": "目撃のほか、痕跡や捕獲などの報告を含む", "as_of_text": "最新の記録は{d}の分までです"},
     "otsu": {"pref": "滋賀", "scope": "大津市のみ", "name": "滋賀県大津市", "label": "大津市・市の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や錯誤捕獲の報告を含む",
              "as_of_text": "最新の記録は{d}の分までです"},
@@ -320,6 +320,17 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
                 body=body, alternates=((f"{pname}の最新の目撃", f"/live/{slug}/feed.xml"),))
 
 
+NO_SOURCE_NOTE = ("複数の公開情報で一致を確認できた市町村の分だけを載せています。公開されている情報から、このサイトが項目を抽出し、市町村別・月別に集計したもので、各市町村が作成・保証したものではありません。"
+                  "日付や市町村が読めない行の割合の検査など、集計の検算は、このサイトで行っています。掲載の中止をご希望の場合は、<a href=\"/contact/\">お問い合わせ</a>からご連絡ください。")
+
+
+def extra_counts_note(c: dict) -> str:
+    if LIVE_SOURCES.get(c["key"], {}).get("no_source"):          # published as a widely known fact: no source, no link (owner, 2026-10-13)
+        return f'<p class="notice">{NO_SOURCE_NOTE}取得日: {jp_date(c["fetched"])}。{esc(c["note"])}。</p>'
+    return (f'<p class="notice">出典: <a href="{esc(c["page"])}" rel="noopener" target="_blank">{esc(c["name"])}の公開ページ</a>。{COUNTS_NOTE.format(name=esc(c["name"]))}'
+            f'取得日: {jp_date(c["fetched"])}。{esc(c["note"])}。</p>')
+
+
 def extra_counts_html(extras: list[dict], today: date) -> str:
     """Counts-only sources of a prefecture that also has a record page: municipality table and month table, each with its source and note."""
     out = ""
@@ -331,7 +342,7 @@ def extra_counts_html(extras: list[dict], today: date) -> str:
 <p>{esc(c['name'])}が公開している{fy_label(cur)}の記録は、{n(c['total'])}件(上の記録とは別の市町村の分)です。最新は{md(c['latest'])}({ago_text(c['latest'], today)})の分です。件数と最新の日付だけを載せています。</p>
 {table(["市町村", "件数", "最新の日付"], rows)}
 {table(["月", "件数"], [[f"{m}月", n(v)] for m, v in mc.items()])}
-<p class="notice">出典: <a href="{esc(c['page'])}" rel="noopener" target="_blank">{esc(c['name'])}の公開ページ</a>。{COUNTS_NOTE.format(name=esc(c['name']))}取得日: {jp_date(c['fetched'])}。{esc(c['note'])}。</p>
+{extra_counts_note(c)}
 """
     return out
 

@@ -36,7 +36,7 @@ def source_rows(d: dict, lv: dict) -> list[dict]:
         meta = LIVE_SOURCES.get(c["key"], {})
         out.append({"key": c["key"], "pref": c["pref"], "name": c["name"], "mode": "counts", "count": c["total"], "latest": c["latest"],
                     "fetched": c["fetched"], "page": c["page"], "note": c["note"], "scope": meta.get("scope", ""), "license": NO_LICENSE_TEXT,
-                    "months": {int(m): v for m, v in c["monthly"].items()}, "confirmed": len(c.get("records") or [])})
+                    "months": {int(m): v for m, v in c["monthly"].items()}, "confirmed": len(c.get("records") or []), "no_source": bool(meta.get("no_source"))})
     out.sort(key=lambda r: pf.SHORT.index(r["pref"]))
     return out
 
@@ -83,7 +83,7 @@ def cite_page(page, d: dict, lv: dict, cfg: dict, base: str) -> str:
     n_cnt = sum(1 for r in rows if r["mode"] == "counts")
     src_table = table(
         ["取得元", "載せ方", f"{fy_label(cur)}の件数", "最新の日付", "取得日", "利用条件", "取得元の更新"],
-        [[f'<a href="{esc(r["page"])}" rel="noopener" target="_blank">{esc(r["name"])}</a>' + (f"<br><small>{esc(r['scope'])}のみ</small>" if r["scope"] and not r["scope"].endswith("のみ") else (f"<br><small>{esc(r['scope'])}</small>" if r["scope"] else "")),
+        [[(esc(r["name"]) if r.get("no_source") else f'<a href="{esc(r["page"])}" rel="noopener" target="_blank">{esc(r["name"])}</a>') + (f"<br><small>{esc(r['scope'])}のみ</small>" if r["scope"] and not r["scope"].endswith("のみ") else (f"<br><small>{esc(r['scope'])}</small>" if r["scope"] else "")),
           "記録(一覧・市町村・CSV)" if r["mode"] == "records" else ("件数(場所は、確認できた目撃だけ)" if r.get("confirmed") else "件数のみ"), n(r["count"]), md(r["latest"]), md(r["fetched"]), esc(r["license"]), esc(r["note"])]
          for r in rows])
     n_conf = sum(r.get("confirmed", 0) for r in rows)
