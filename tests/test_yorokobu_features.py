@@ -84,8 +84,9 @@ class GateTest(unittest.TestCase):
         self.assertTrue(any("scene needs a label that says it is made up" in x for x in out), out)
 
     def test_four_panels_each_with_an_existing_image_of_enough_pixels(self):
-        out = self.mutated(lambda f: f["manga"]["panels"].pop())
-        self.assertTrue(any("manga needs 4 panels" in x for x in out))
+        out = self.mutated(lambda f: f["manga"].__setitem__("panels", []))
+        self.assertTrue(any("manga needs 1-4 pictures" in x for x in out))
+        self.assertFalse(any("manga needs" in x for x in self.mutated(lambda f: f["manga"]["panels"].pop())), "three pictures are allowed")
         out = self.mutated(lambda f: f["manga"]["panels"][0].__setitem__("img", "none.webp"))
         self.assertTrue(any("none.webp is missing" in x for x in out))
         with tempfile.TemporaryDirectory() as t:
