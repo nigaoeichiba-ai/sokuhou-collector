@@ -152,7 +152,34 @@ def text_has_date(iso: str, text: str, precision: str = "day") -> bool:
         return norm(f"{m}月") in qn or bool(re.search(rf"{y}[/.]{m}\b", q))
     en = MONTHS_EN[m - 1]
     forms = [f"{m}月{d}日", f"{m}/{d}", f"{y}年{m}月{d}日", f"{y}.{m}.{d}", f"{y}/{m}/{d}", f"{m}.{d}", f"{d} {en} {y}", f"{en} {d}, {y}", f"{en} {d} {y}", f"{d} {en[:3]} {y}", f"{en[:3]} {d}, {y}", f"{d} {en}", f"{en} {d}", f"{d} {en[:3]}", f"{en[:3]} {d}", f"{d}th {en}", f"{d}th of {en}"]
-    return any(norm(x).lower() in qn.lower() for x in forms) or bool(re.search(rf"{d}日|{d}[(（]", q))
+    forms += [f"{y}.{m:02d}.{d:02d}", f"{y}-{m:02d}-{d:02d}"]
+    return any(norm(x).lower() in qn.lower() for x in forms) or bool(re.search(rf"{d}日|{d}[(（]", q)) or foreign_day(d, m, q)
+
+
+MONTHS_OTHER = {  # Spanish and German month names (the sports pages of Spain and Germany write the day in them)
+    1: ("enero", "januar"), 2: ("febrero", "februar"), 3: ("marzo", "märz"), 4: ("abril", "april"), 5: ("mayo", "mai"), 6: ("junio", "juni"),
+    7: ("julio", "juli"), 8: ("agosto", "august"), 9: ("septiembre", "september"), 10: ("octubre", "oktober"), 11: ("noviembre", "november"), 12: ("diciembre", "dezember")}
+
+
+def foreign_day(d: int, m: int, text: str) -> bool:
+    """The day is one of a written range ('13/14 October', '13-14 October', 'Dec. 4-5', 'Dec. 8 and/or Dec. 9', 'Oct. 20'), or is written with a dotted month ('Sept. 26'), or in Spanish
+    or German ('25 de octubre', '22. Mai').  The month must be the right one and the number a whole number (13 is not in '113/114 October')."""
+    en = MONTHS_EN[m - 1].lower()
+    t = text.lower()
+    names = [en] + list(MONTHS_OTHER[m])
+    short = f"{en[:3]}(?:t)?\\.?" if en[:3] == "sep" else f"{en[:3]}\\.?"
+    sep = r"\s*(?:/|-|–|&|and/or|and|y|und)\s*"
+    num = r"(?<![\d])(\d{1,2})(?:st|nd|rd|th)?(?![\d])"
+    for nm in names:
+        for mt in re.finditer(rf"{num}\.?{sep}{num}\.?\s+(?:de\s+|of\s+)?{nm}\b", t):
+            if d in (int(mt.group(1)), int(mt.group(2))):
+                return True
+        if re.search(rf"(?<![\d]){d}(?:st|nd|rd|th)?\.?\s+(?:de\s+|of\s+)?{nm}\b", t):
+            return True
+    for mt in re.finditer(rf"\b(?:{short}|{en})\s*{num}(?:{sep}(?:(?:{short}|{en})\s*)?{num})?", t):
+        if d in [int(g) for g in mt.groups() if g]:
+            return True
+    return False
 
 
 def check(cands: list[dict], today: date, past_days: int = 400, ahead_days: int = 730, existing: set | None = None, page_of=None, render_of=None, use_render: bool = True) -> tuple[list[dict], list[tuple]]:
