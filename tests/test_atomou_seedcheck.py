@@ -97,6 +97,17 @@ class Checking(unittest.TestCase):
         ok, bad = seedcheck.check([c], TODAY, existing=set(), page_of=pages.get, render_of=lambda u: "")
         self.assertEqual((len(ok), bad), (1, []))
 
+    def test_dates_of_foreign_pages_are_read_as_ranges_and_in_other_languages_but_only_for_the_right_day_and_month(self):
+        has = seedcheck.text_has_date
+        for iso, text in (("2026-10-13", "Matchday 2: 13/14 October 2026"), ("2026-10-14", "Matchday 2: 13/14 October 2026"), ("2026-12-04", "Dec. 4-5: NBA Cup"),
+                          ("2026-12-09", "Dec. 8 and/or Dec. 9: NBA Cup"), ("2027-09-26", "Sunday, Sept. 26."), ("2026-10-25", "el 25 de octubre de 2026"),
+                          ("2027-05-22", "34. Spieltag: 22. Mai 2027"), ("2026-10-03", "2026.10.03 MORE"), ("2027-03-17", "Round of 16: 9/10 & 16/17 March 2027")):
+            self.assertTrue(has(iso, text), (iso, text))
+        for iso, text in (("2026-10-15", "Matchday 2: 13/14 October 2026"), ("2026-10-13", "Matchday 2: 113/114 October 2026"), ("2026-11-13", "Matchday 2: 13/14 October 2026"),
+                          ("2026-12-06", "Dec. 4-5: NBA Cup"), ("2026-12-25", "Dec. 26: NBA Christmas"), ("2027-09-26", "Sunday, Oct. 26."),
+                          ("2026-10-26", "el 25 de octubre de 2026"), ("2027-05-23", "34. Spieltag: 22. Mai 2027")):
+            self.assertFalse(has(iso, text), (iso, text))
+
 
 if __name__ == "__main__":
     unittest.main()
