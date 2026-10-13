@@ -1,5 +1,5 @@
 {
- "as_of": "2026-10-09",
+ "as_of": "2026-10-11",
  "corroborated": [
   {
    "city": "上越市",
@@ -277,7 +277,7 @@
   {
    "city": "上越市",
    "count": 1,
-   "kind": "その他",
+   "kind": "目撃",
    "observed_at": "2026-06-29",
    "place": "吉川区山方地内"
   },
@@ -375,7 +375,7 @@
   {
    "city": "上越市",
    "count": 1,
-   "kind": "その他",
+   "kind": "目撃",
    "observed_at": "2026-06-21",
    "place": "浦川原区小谷島地内"
   },
@@ -515,7 +515,7 @@
   {
    "city": "上越市",
    "count": 1,
-   "kind": "その他",
+   "kind": "目撃",
    "observed_at": "2026-06-07",
    "place": "金谷区大字灰塚地内"
   },
@@ -760,7 +760,7 @@
   {
    "city": "上越市",
    "count": 1,
-   "kind": "その他",
+   "kind": "目撃",
    "observed_at": "2026-04-22",
    "place": "名立区西蒲生田地内"
   },
@@ -833,7 +833,7 @@
   "上越市": "2026-10-13"
  },
  "credit": "出典: 新潟県「にいがたクマ出没マップ」(https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、新潟県のページでご確認ください)",
- "fetched_at": "2026-10-13T05:50:03.020498+09:00",
+ "fetched_at": "2026-10-13T11:36:21.498953+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
@@ -843,7 +843,7 @@
    "3": 15
   },
   "R08": {
-   "10": 13,
+   "10": 14,
    "4": 67,
    "5": 161,
    "6": 218,
@@ -1081,10 +1081,10 @@
    }
   },
   "胎内市": {
-   "latest": "2026-10-08",
+   "latest": "2026-10-11",
    "monthly": {
     "R08": {
-     "10": 1,
+     "10": 2,
      "4": 4,
      "5": 7,
      "6": 11,
@@ -1188,7 +1188,7 @@
  "source": "niigata",
  "source_file": "https://services6.arcgis.com/SKz58fvdFlaEB35q/arcgis/rest/services/survey123_08d14b98657b47309b868f49602375c8_results/FeatureServer/0",
  "source_page": "https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html",
- "total_fy": 682,
+ "total_fy": 683,
  "unparsed": 0,
  "update_note": "新潟県が、ほぼ毎日更新します。最新の記録は、更新時点から遅れます。件数は、クマの目撃のほか、痕跡や人身被害の報告を含みます"
 }
