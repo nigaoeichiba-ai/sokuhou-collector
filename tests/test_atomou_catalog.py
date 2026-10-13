@@ -44,7 +44,6 @@ class CatalogRules(unittest.TestCase):
             "必須の項目なし": item(source_url=""),
             "出典が https でない": item(source_url="http://example.go.jp/x"),
             "日付が不正": item(date="2026-13-40"),
-            "終了して30日超": item(date="2026-08-01"),
             "除外リスト": item(title="ヒトラーの記念日"),
         }
         for reason, it in bad.items():

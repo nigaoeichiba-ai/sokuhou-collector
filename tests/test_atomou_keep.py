@@ -31,9 +31,13 @@ def build(items):
 class Keeping(unittest.TestCase):
     def test_an_old_day_is_hidden_unless_it_is_kept(self):
         entries, rejects = build([item("昔の短い知らせ", "2026-05-01"), item("パリ五輪の開会式", "2024-07-26", keep=True)])
-        self.assertEqual([e["title"] for e in entries], ["パリ五輪の開会式"])
-        self.assertEqual(rejects["終了して30日超"], 1)
-        self.assertEqual((entries[0]["status"], entries[0]["keep"]), ("ended", True))
+        by = {e["title"]: e for e in entries}
+        self.assertEqual(set(by), {"パリ五輪の開会式", "昔の短い知らせ"})        # the old short notice is not dropped any more: it is in the archive (owner, 2026-10-13)
+        self.assertTrue(by["昔の短い知らせ"]["archived"])
+        self.assertFalse(by["パリ五輪の開会式"]["archived"])
+        self.assertEqual([e["title"] for e in catalog.public_json(entries)], ["パリ五輪の開会式"])       # not in the lists
+        self.assertEqual([e["title"] for e in catalog.archive_json(entries)], ["昔の短い知らせ"])
+        self.assertEqual((by["パリ五輪の開会式"]["status"], by["パリ五輪の開会式"]["keep"]), ("ended", True))
 
     def test_a_kept_past_day_is_still_indexable_and_public_and_a_short_one_is_not_kept(self):
         entries, _ = build([item("パリ五輪の開会式", "2024-07-26", keep=True), item("先月の知らせ", "2026-09-20")])

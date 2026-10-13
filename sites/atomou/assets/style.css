@@ -560,3 +560,25 @@ body{word-break:auto-phrase;text-wrap:pretty}
 .ev-card .c-title{display:none}
 .ev-acts{margin:.5rem 0}
 .ev-more{margin:.8rem 0}
+
+/* the archive switch on the search page, the result on a finished day's page */
+.arch-row{margin:.4rem 0}
+.result{margin:1.2rem 0;padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.result h2{margin:0 0 .5rem;font-size:1.15rem}
+.result .info{margin:.2rem 0 .8rem}
+
+/* 特集: a long reading made from numbers */
+.ft-meta{margin:.2rem 0 .6rem}
+.ft-sec{margin:1.6rem 0}
+.ft-view{padding:12px 16px;border-left:4px solid var(--accent);background:var(--surface2);border-radius:0 var(--radius) var(--radius) 0}
+.ft-tag{display:inline-block;margin:0 0 .4rem;padding:1px 10px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-size:.78rem;font-weight:800}
+.ft-how{margin-top:.5rem}
+.ft-table th,.ft-table td{padding:6px 10px;vertical-align:top;white-space:normal}
+.ft-card{margin:.6rem 0}
+.ft-chart{margin:1rem 0}
+.ft-chart figcaption{font-weight:700;margin-bottom:.3rem}
+.bars{width:100%;height:auto;max-width:640px}
+.bars .bl{font-size:20px;fill:var(--text)}
+.bars .bv{font-size:19px;fill:var(--muted)}
+.bars .bar{fill:var(--accent)}
+.ev-feature{margin:.5rem 0}

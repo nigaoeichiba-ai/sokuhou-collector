@@ -1,0 +1,3352 @@
+{
+ "meta": {
+  "作成日": "2026-10-13",
+  "目的": "atomou 特集『箱根駅伝2027(第103回)』用の数字と事実(評価・予想・文章なし)",
+  "検証": "各 src の quote は取得したページ本文(HTMLはタグ除去、PDFはpypdf抽出)に空白と『|』を除いて部分一致することを自作スクリプトで確認。全277件中277件一致、不一致0件。",
+  "不一致一覧": [],
+  "主な根拠": [
+   "https://hakone-ekiden.jp/ (東京箱根間往復大学駅伝競走公式サイト=関東学連・読売新聞社)",
+   "https://www.kgrr.org/",
+   "https://izumo-ekiden.jp/ (出雲市・日本学連)",
+   "http://daigaku-ekiden.com/ (日本学連・朝日新聞社)",
+   "https://www.yomiuri.co.jp/hakone-ekiden/ (読売新聞オンライン)"
+  ],
+  "注意": [
+   "クォートの『|』は表のセル区切りを自作の抽出で入れたもの。原文ではセルが別々",
+   "PDFの引用はpypdf抽出の文字列(空白の入り方が原文PDFと異なることがある)",
+   "読売の出雲記事の数字は『速報値』と明記(2:05:55と2:05:56の表記ゆれあり)。公式PDF(izumo-ekiden.jp record2026.pdf)の2:05:56を採用",
+   "全て2026-10-13時点。予選会(10/17)・全日本(11/1)・箱根本戦のチームエントリー(12月)はこれから"
+  ]
+ },
+ "race_basics": {
+  "回": 103,
+  "日程": [
+   "2027-01-02",
+   "2027-01-03"
+  ],
+  "往路": "2027-01-02(土)",
+  "復路": "2027-01-03(日)",
+  "日程_src": {
+   "url": "https://hakone-ekiden.jp/_assets/2026/103hakoneyosen_yoko.pdf",
+   "quote": "2027 年1 月 2 日（土）・3 日（日）の第103 回東京箱根間往復大学駅伝競走",
+   "quote_verified": true
+  },
+  "出場チーム数": 21,
+  "出場チーム数_内訳": "前年シード10校+予選会通過10校+関東学生連合(参考扱い)",
+  "出場チーム数_src": {
+   "url": "https://hakone-ekiden.jp/about/",
+   "quote": "合計21チームが出場します",
+   "quote_verified": true
+  },
+  "内訳_src": {
+   "url": "https://hakone-ekiden.jp/about/",
+   "quote": "前年大会でシード権を獲得した上位10校と、10月の予選会を通過した10校",
+   "quote_verified": true
+  },
+  "連合_src": {
+   "url": "https://hakone-ekiden.jp/about/",
+   "quote": "関東学生連合チームは予選会を通過しなかった大学の記録上位者から選ばれます",
+   "quote_verified": true
+  },
+  "区間エントリー": "12月29日に1~10区の10名と補欠6名",
+  "区間エントリー_src": {
+   "url": "https://hakone-ekiden.jp/about/",
+   "quote": "12月29日に1区から10区までの10名と補欠枠6名の区間エントリー",
+   "quote_verified": true
+  }
+ },
+ "course": [
+  {
+   "区間": "1区",
+   "名": "大手町〜鶴見",
+   "距離_km": 21.3,
+   "url": "https://hakone-ekiden.jp/course/",
+   "quote": "往路：1区 距離：21.3km",
+   "quote_verified": true,
+   "name_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "大手町〜鶴見（21.3km）",
+    "quote_verified": true
+   },
+   "record_top5_to_r102": [
+    {
+     "順位": 1,
+     "記録": "1.00.28",
+     "氏名": "青木 瑠郁",
+     "大学": "國學院大",
+     "学年": 4,
+     "回": 102
+    },
+    {
+     "順位": 2,
+     "記録": "1.00.37",
+     "氏名": "藤田 大智",
+     "大学": "中央大",
+     "学年": 3,
+     "回": 102
+    },
+    {
+     "順位": 3,
+     "記録": "1.00.40",
+     "氏名": "吉居 大和",
+     "大学": "中央大",
+     "学年": 2,
+     "回": 98
+    },
+    {
+     "順位": 4,
+     "記録": "1.00.43",
+     "氏名": "松井 海斗",
+     "大学": "東洋大",
+     "学年": 2,
+     "回": 102
+    },
+    {
+     "順位": 5,
+     "記録": "1.00.45",
+     "氏名": "近田 陽路",
+     "大学": "中央学院大",
+     "学年": 4,
+     "回": 102
+    }
+   ],
+   "record_top1_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "1.00.28 | 青木 瑠郁 | 國學院大",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "2区",
+   "名": "鶴見〜戸塚",
+   "距離_km": 23.1,
+   "url": "https://hakone-ekiden.jp/course/",
+   "quote": "往路：花の2区 距離：23.1km",
+   "quote_verified": true,
+   "name_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "鶴見〜戸塚（23.1km）",
+    "quote_verified": true
+   },
+   "record_top5_to_r102": [
+    {
+     "順位": 1,
+     "記録": "1.05.09",
+     "氏名": "V. キムタイ",
+     "大学": "城西大",
+     "学年": 4,
+     "回": 102
+    },
+    {
+     "順位": 2,
+     "記録": "1.05.31",
+     "氏名": "R. エティーリ",
+     "大学": "東京国際大",
+     "学年": 2,
+     "回": 101
+    },
+    {
+     "順位": 3,
+     "記録": "1.05.42",
+     "氏名": "S. キップケメイ",
+     "大学": "日本大",
+     "学年": 3,
+     "回": 102
+    },
+    {
+     "順位": 4,
+     "記録": "1.05.43",
+     "氏名": "吉田 響",
+     "大学": "創価大",
+     "学年": 4,
+     "回": 101
+    },
+    {
+     "順位": 4,
+     "記録": "1.05.43",
+     "氏名": "B. キピエゴ",
+     "大学": "山梨学院大",
+     "学年": 3,
+     "回": 102
+    }
+   ],
+   "record_top1_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "1.05.09 | V. キムタイ | 城西大",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "3区",
+   "名": "戸塚〜平塚",
+   "距離_km": 21.4,
+   "url": "https://hakone-ekiden.jp/course/",
+   "quote": "往路：3区 距離：21.4km",
+   "quote_verified": true,
+   "name_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "戸塚〜平塚（21.4km）",
+    "quote_verified": true
+   },
+   "record_top5_to_r102": [
+    {
+     "順位": 1,
+     "記録": "59.25",
+     "氏名": "Y. ヴィンセント",
+     "大学": "東京国際大",
+     "学年": 1,
+     "回": 96
+    },
+    {
+     "順位": 2,
+     "記録": "59.47",
+     "氏名": "太田 蒼生",
+     "大学": "青山学院大",
+     "学年": 3,
+     "回": 100
+    },
+    {
+     "順位": 3,
+     "記録": "1.00.08",
+     "氏名": "本間 颯",
+     "大学": "中央大",
+     "学年": 3,
+     "回": 102
+    },
+    {
+     "順位": 4,
+     "記録": "1.00.13",
+     "氏名": "佐藤 圭汰",
+     "大学": "駒澤大",
+     "学年": 2,
+     "回": 100
+    },
+    {
+     "順位": 5,
+     "記録": "1.00.51",
+     "氏名": "S. ムチーニ",
+     "大学": "創価大",
+     "学年": 2,
+     "回": 101
+    },
+    {
+     "順位": 5,
+     "記録": "1.00.51",
+     "氏名": "帰山 侑大",
+     "大学": "駒澤大",
+     "学年": 4,
+     "回": 102
+    }
+   ],
+   "record_top1_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "59.25 | Y. ヴィンセント | 東京国際大",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "4区",
+   "名": "平塚〜小田原",
+   "距離_km": 20.9,
+   "url": "https://hakone-ekiden.jp/course/",
+   "quote": "往路：4区 距離：20.9km",
+   "quote_verified": true,
+   "name_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "平塚〜小田原（20.9km）",
+    "quote_verified": true
+   },
+   "record_top5_to_r102": [
+    {
+     "順位": 1,
+     "記録": "1.00.00",
+     "氏名": "Y. ヴィンセント",
+     "大学": "東京国際大",
+     "学年": 4,
+     "回": 99
+    },
+    {
+     "順位": 2,
+     "記録": "1.00.01",
+     "氏名": "鈴木 琉胤",
+     "大学": "早稲田大",
+     "学年": 1,
+     "回": 102
+    },
+    {
+     "順位": 3,
+     "記録": "1.00.24",
+     "氏名": "太田 蒼生",
+     "大学": "青山学院大",
+     "学年": 4,
+     "回": 101
+    },
+    {
+     "順位": 4,
+     "記録": "1.00.30",
+     "氏名": "吉田 祐也",
+     "大学": "青山学院大",
+     "学年": 4,
+     "回": 96
+    },
+    {
+     "順位": 5,
+     "記録": "1.00.37",
+     "氏名": "岡田 開成",
+     "大学": "中央大",
+     "学年": 2,
+     "回": 102
+    }
+   ],
+   "record_top1_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "1.00.00 | Y. ヴィンセント | 東京国際大",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "5区",
+   "名": "小田原〜芦ノ湖",
+   "距離_km": 20.8,
+   "url": "https://hakone-ekiden.jp/course/",
+   "quote": "往路：5区 距離：20.8km",
+   "quote_verified": true,
+   "name_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "小田原〜芦ノ湖（20.8km）",
+    "quote_verified": true
+   },
+   "record_top5_to_r102": [
+    {
+     "順位": 1,
+     "記録": "1.07.16",
+     "氏名": "黒田 朝日",
+     "大学": "青山学院大",
+     "学年": 4,
+     "回": 102
+    },
+    {
+     "順位": 2,
+     "記録": "1.09.11",
+     "氏名": "若林 宏樹",
+     "大学": "青山学院大",
+     "学年": 4,
+     "回": 101
+    },
+    {
+     "順位": 3,
+     "記録": "1.09.14",
+     "氏名": "山本 唯翔",
+     "大学": "城西大",
+     "学年": 4,
+     "回": 100
+    },
+    {
+     "順位": 4,
+     "記録": "1.09.28",
+     "氏名": "斎藤 将也",
+     "大学": "城西大",
+     "学年": 4,
+     "回": 102
+    },
+    {
+     "順位": 5,
+     "記録": "1.09.31",
+     "氏名": "工藤 慎作",
+     "大学": "早稲田大",
+     "学年": 2,
+     "回": 101
+    }
+   ],
+   "record_top1_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "1.07.16 | 黒田 朝日 | 青山学院大",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "6区",
+   "名": "芦ノ湖〜小田原",
+   "距離_km": 20.8,
+   "url": "https://hakone-ekiden.jp/course/",
+   "quote": "復路：6区 距離：20.8km",
+   "quote_verified": true,
+   "name_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "芦ノ湖〜小田原（20.8km）",
+    "quote_verified": true
+   },
+   "record_top5_to_r102": [
+    {
+     "順位": 1,
+     "記録": "56.47",
+     "氏名": "野村 昭夢",
+     "大学": "青山学院大",
+     "学年": 4,
+     "回": 101
+    },
+    {
+     "順位": 2,
+     "記録": "56.48",
+     "氏名": "小池 莉希",
+     "大学": "創価大",
+     "学年": 3,
+     "回": 102
+    },
+    {
+     "順位": 3,
+     "記録": "56.50",
+     "氏名": "伊藤 蒼唯",
+     "大学": "駒澤大",
+     "学年": 4,
+     "回": 102
+    },
+    {
+     "順位": 4,
+     "記録": "57.15",
+     "氏名": "石川 浩輝",
+     "大学": "青山学院大",
+     "学年": 1,
+     "回": 102
+    },
+    {
+     "順位": 5,
+     "記録": "57.17",
+     "氏名": "館澤 亨次",
+     "大学": "東海大",
+     "学年": 4,
+     "回": 96
+    }
+   ],
+   "record_top1_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "56.47 | 野村 昭夢 | 青山学院大",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "7区",
+   "名": "小田原〜平塚",
+   "距離_km": 21.3,
+   "url": "https://hakone-ekiden.jp/course/",
+   "quote": "復路：7区 距離：21.3km",
+   "quote_verified": true,
+   "name_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "小田原〜平塚（21.3km）",
+    "quote_verified": true
+   },
+   "record_top5_to_r102": [
+    {
+     "順位": 1,
+     "記録": "1.00.43",
+     "氏名": "佐藤 圭汰",
+     "大学": "駒澤大",
+     "学年": 3,
+     "回": 101
+    },
+    {
+     "順位": 2,
+     "記録": "1.00.54",
+     "氏名": "高山 豪起",
+     "大学": "國學院大",
+     "学年": 4,
+     "回": 102
+    },
+    {
+     "順位": 3,
+     "記録": "1.01.40",
+     "氏名": "阿部 弘輝",
+     "大学": "明治大",
+     "学年": 4,
+     "回": 96
+    },
+    {
+     "順位": 4,
+     "記録": "1.02.16",
+     "氏名": "林 奎介",
+     "大学": "青山学院大",
+     "学年": 3,
+     "回": 94
+    },
+    {
+     "順位": 5,
+     "記録": "1.02.21",
+     "氏名": "辻原 輝",
+     "大学": "國學院大",
+     "学年": 2,
+     "回": 101
+    },
+    {
+     "順位": 5,
+     "記録": "1.02.21",
+     "氏名": "吉岡 大翔",
+     "大学": "順天堂大",
+     "学年": 2,
+     "回": 101
+    },
+    {
+     "順位": 5,
+     "記録": "1.02.21",
+     "氏名": "玉目 陸",
+     "大学": "順天堂大",
+     "学年": 2,
+     "回": 102
+    }
+   ],
+   "record_top1_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "1.00.43 | 佐藤 圭汰 | 駒澤大",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "8区",
+   "名": "平塚〜戸塚",
+   "距離_km": 21.4,
+   "url": "https://hakone-ekiden.jp/course/",
+   "quote": "復路：8区 距離：21.4km",
+   "quote_verified": true,
+   "name_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "平塚〜戸塚（21.4km）",
+    "quote_verified": true
+   },
+   "record_top5_to_r102": [
+    {
+     "順位": 1,
+     "記録": "1.03.45",
+     "氏名": "塩出 翔太",
+     "大学": "青山学院大",
+     "学年": 4,
+     "回": 102
+    },
+    {
+     "順位": 2,
+     "記録": "1.03.49",
+     "氏名": "小松 陽平",
+     "大学": "東海大",
+     "学年": 3,
+     "回": 95
+    },
+    {
+     "順位": 3,
+     "記録": "1.03.59",
+     "氏名": "大保 海士",
+     "大学": "明治大",
+     "学年": 4,
+     "回": 97
+    },
+    {
+     "順位": 4,
+     "記録": "1.04.01",
+     "氏名": "飯國 新太",
+     "大学": "國學院大",
+     "学年": 2,
+     "回": 102
+    },
+    {
+     "順位": 5,
+     "記録": "1.04.04",
+     "氏名": "永原 颯磨",
+     "大学": "順天堂大",
+     "学年": 2,
+     "回": 102
+    }
+   ],
+   "record_top1_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "1.03.45 | 塩出 翔太 | 青山学院大",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "9区",
+   "名": "戸塚〜鶴見",
+   "距離_km": 23.1,
+   "url": "https://hakone-ekiden.jp/course/",
+   "quote": "復路：9区 距離：23.1km",
+   "quote_verified": true,
+   "name_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "戸塚〜鶴見（23.1km）",
+    "quote_verified": true
+   },
+   "record_top5_to_r102": [
+    {
+     "順位": 1,
+     "記録": "1.07.15",
+     "氏名": "中村 唯翔",
+     "大学": "青山学院大",
+     "学年": 3,
+     "回": 98
+    },
+    {
+     "順位": 2,
+     "記録": "1.07.27",
+     "氏名": "岸本 大紀",
+     "大学": "青山学院大",
+     "学年": 4,
+     "回": 99
+    },
+    {
+     "順位": 3,
+     "記録": "1.07.38",
+     "氏名": "佐藤 有一",
+     "大学": "青山学院大",
+     "学年": 4,
+     "回": 102
+    },
+    {
+     "順位": 4,
+     "記録": "1.07.45",
+     "氏名": "小平 敦之",
+     "大学": "早稲田大",
+     "学年": 3,
+     "回": 102
+    },
+    {
+     "順位": 5,
+     "記録": "1.07.53",
+     "氏名": "野田 顕臣",
+     "大学": "國學院大",
+     "学年": 1,
+     "回": 102
+    }
+   ],
+   "record_top1_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "1.07.15 | 中村 唯翔 | 青山学院大",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "10区",
+   "名": "鶴見〜大手町",
+   "距離_km": 23.0,
+   "url": "https://hakone-ekiden.jp/course/",
+   "quote": "復路：10区 距離：23.0km",
+   "quote_verified": true,
+   "name_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "鶴見〜大手町（23.0km）",
+    "quote_verified": true
+   },
+   "record_top5_to_r102": [
+    {
+     "順位": 1,
+     "記録": "1.07.31",
+     "氏名": "佐藤 圭汰",
+     "大学": "駒澤大",
+     "学年": 4,
+     "回": 102
+    },
+    {
+     "順位": 2,
+     "記録": "1.07.50",
+     "氏名": "中倉 啓敦",
+     "大学": "青山学院大",
+     "学年": 3,
+     "回": 98
+    },
+    {
+     "順位": 3,
+     "記録": "1.07.59",
+     "氏名": "折田 壮太",
+     "大学": "青山学院大",
+     "学年": 2,
+     "回": 102
+    },
+    {
+     "順位": 4,
+     "記録": "1.08.20",
+     "氏名": "山本 悠",
+     "大学": "順天堂大",
+     "学年": 2,
+     "回": 102
+    },
+    {
+     "順位": 5,
+     "記録": "1.08.27",
+     "氏名": "小河原 陽琉",
+     "大学": "青山学院大",
+     "学年": 1,
+     "回": 101
+    }
+   ],
+   "record_top1_src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/ranking/",
+    "quote": "1.07.31 | 佐藤 圭汰 | 駒澤大",
+    "quote_verified": true
+   }
+  }
+ ],
+ "course_total": {
+  "全長_km": 217.1,
+  "往路_km": 107.5,
+  "復路_km": 109.6,
+  "区間数": 10,
+  "src": {
+   "url": "https://hakone-ekiden.jp/about/",
+   "quote": "往路５区間（107.5Km）、復路５区間（109.6Km）の合計10区間（217.1Km）",
+   "quote_verified": true
+  }
+ },
+ "course_elevation": [
+  {
+   "項目": "5区 国道1号最高地点の標高 874m(16km付近)",
+   "値_m": 874,
+   "src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/",
+    "quote": "標高874mの最高地点を通過すると、そこからの3kmは下りになる",
+    "quote_verified": true
+   }
+  },
+  {
+   "項目": "5区 高低差 800m以上",
+   "値_m": 800,
+   "note": "本文は『800m以上』(下限)",
+   "src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/",
+    "quote": "高低差800m以上の天下の険を登る",
+    "quote_verified": true
+   }
+  },
+  {
+   "項目": "2区 権太坂 約1.5kmで約30m上る",
+   "src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/",
+    "quote": "約1.5kmで30mほど上る",
+    "quote_verified": true
+   }
+  },
+  {
+   "項目": "3区 遊行寺坂 約1kmで約40m下る",
+   "src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/",
+    "quote": "約1kmで40mほど下る急坂だ",
+    "quote_verified": true
+   }
+  },
+  {
+   "項目": "8区 遊行寺坂 1kmで約40m上る",
+   "src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/",
+    "quote": "1kmで約40m上る急坂だ",
+    "quote_verified": true
+   }
+  },
+  {
+   "項目": "9区 権太坂 約2kmで40m上る",
+   "src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/",
+    "quote": "約2kmで40m上る",
+    "quote_verified": true
+   }
+  },
+  {
+   "項目": "10区 六郷橋 300mほどで10m近く上る",
+   "src": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/",
+    "quote": "300mほどで10m近く上り",
+    "quote_verified": true
+   }
+  }
+ ],
+ "course_start_time": {
+  "往路スタート": "8:00(読売新聞社前)",
+  "src": {
+   "url": "https://www.yomiuri.co.jp/hakone-ekiden/course/",
+   "quote": "読売新聞社前 8:00スタート",
+   "quote_verified": true
+  }
+ },
+ "seeds_103": {
+  "校": [
+   "青山学院大学",
+   "國學院大學",
+   "順天堂大学",
+   "早稲田大学",
+   "中央大学",
+   "駒澤大学",
+   "城西大学",
+   "創価大学",
+   "帝京大学",
+   "日本大学"
+  ],
+  "説明": "第102回上位10校=第103回シード権。表記は公式表の原文のまま",
+  "src": [
+   {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "1 青山学院大学 | 10時間37分34秒 | 1 5時間18分8秒",
+    "quote_verified": true
+   },
+   {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "2 國學院大學 | 10時間40分7秒 | 4 5時間20分2秒",
+    "quote_verified": true
+   },
+   {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "3 順天堂大学 | 10時間43分55秒 | 6 5時間21分49秒",
+    "quote_verified": true
+   },
+   {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "4 早稲田大学 | 10時間44分29秒 | 2 5時間18分26秒",
+    "quote_verified": true
+   },
+   {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "5 中央大学 | 10時間44分31秒 | 3 5時間19分44秒",
+    "quote_verified": true
+   },
+   {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "6 駒澤大学 | 10時間44分50秒 | 7 5時間23分0秒",
+    "quote_verified": true
+   },
+   {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "7 城西大学 | 10時間46分17秒 | 5 5時間20分20秒",
+    "quote_verified": true
+   },
+   {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "8 創価大学 | 10時間51分40秒 | 8 5時間24分2秒",
+    "quote_verified": true
+   },
+   {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "9 帝京大学 | 10時間53分15秒 | 17 5時間30分25秒",
+    "quote_verified": true
+   },
+   {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "10 日本大学 | 10時間53分56秒 | 9 5時間25分0秒",
+    "quote_verified": true
+   },
+   {
+    "url": "https://hakone-ekiden.jp/about/",
+    "quote": "前年大会でシード権を獲得した上位10校",
+    "quote_verified": true
+   }
+  ]
+ },
+ "yosenkai": {
+  "r103": {
+   "回": 103,
+   "日": "2026-10-17(土)",
+   "スタート": "8:30(予定)",
+   "場所": "陸上自衛隊立川駐屯地〜立川市街地〜国営昭和記念公園",
+   "距離": "ハーフマラソン21.0975km",
+   "選考": "各校上位10名の合計タイム上位10校+関東学生連合",
+   "出走": "エントリー10〜16名/出走10〜12名",
+   "参加資格記録": "10000m 34分00秒以内 または ハーフ73分00秒以内(2025/1/1以降の公認記録)",
+   "src_day": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/103hakoneyosen_yoko.pdf",
+    "quote": "2026 年10 月17 日（土） 8 時30 分スタート（予定）",
+    "quote_verified": true
+   },
+   "src_place": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/103hakoneyosen_yoko.pdf",
+    "quote": "陸上自衛隊立川駐屯地～立川市街地～国営昭和記念公園",
+    "quote_verified": true
+   },
+   "src_select": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/103hakoneyosen_yoko.pdf",
+    "quote": "各校上位 10 名の合計タイムにより 10 校を選び",
+    "quote_verified": true
+   },
+   "出場校数": 45,
+   "src_count": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261005-GYT1T00364/",
+    "quote": "予選会に、４５チームがエントリーしたと発表した",
+    "quote_verified": true
+   },
+   "src_entry16": {
+    "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261005-GYT1T00228/",
+    "quote": "各校のエントリー選手数は「最大１４人」から「最大１６人」に拡大",
+    "quote_verified": true
+   },
+   "src_qual": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/103hakoneyosen_yoko.pdf",
+    "quote": "10000m 34 分 00 秒以内またはハーフマラソン73 分 00 秒以内の公認記録",
+    "quote_verified": true
+   },
+   "note": "2026-10-13時点では未開催。結果は10/17以降"
+  },
+  "r102": {
+   "回": 102,
+   "日": "2025-10-18(土)",
+   "src_day": {
+    "url": "https://www.hakone-ekiden.jp/_assets/2025/4b9d8eba71ef43cd420d18d1546f7c8d8e8ba630.pdf",
+    "quote": "測定区分:ﾄﾗﾝｽﾎﾟﾝﾀﾞｰ 2025-10-18 08:30",
+    "quote_verified": true
+   },
+   "出場校数": 41,
+   "チーム成績": [
+    {
+     "順位": 1,
+     "大学": "中央学院大学",
+     "合計タイム": "10:32:23",
+     "合計タイム_原文": "10時間32分23秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "1 中央学院大学 10時間32分23秒",
+      "quote_verified": true
+     }
+    },
+    {
+     "順位": 2,
+     "大学": "順天堂大学",
+     "合計タイム": "10:32:35",
+     "合計タイム_原文": "10時間32分35秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "2 順天堂大学 10時間32分35秒",
+      "quote_verified": true
+     }
+    },
+    {
+     "順位": 3,
+     "大学": "山梨学院大学",
+     "合計タイム": "10:32:44",
+     "合計タイム_原文": "10時間32分44秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "3 山梨学院大学 10時間32分44秒",
+      "quote_verified": true
+     }
+    },
+    {
+     "順位": 4,
+     "大学": "日本大学",
+     "合計タイム": "10:32:57",
+     "合計タイム_原文": "10時間32分57秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "4 日本大学 10時間32分57秒",
+      "quote_verified": true
+     }
+    },
+    {
+     "順位": 5,
+     "大学": "東海大学",
+     "合計タイム": "10:34:07",
+     "合計タイム_原文": "10時間34分07秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "5 東海大学 10時間34分07秒",
+      "quote_verified": true
+     }
+    },
+    {
+     "順位": 6,
+     "大学": "東京農業大学",
+     "合計タイム": "10:34:59",
+     "合計タイム_原文": "10時間34分59秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "6 東京農業大学 10時間34分59秒",
+      "quote_verified": true
+     }
+    },
+    {
+     "順位": 7,
+     "大学": "神奈川大学",
+     "合計タイム": "10:36:07",
+     "合計タイム_原文": "10時間36分07秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "7 神奈川大学 10時間36分07秒",
+      "quote_verified": true
+     }
+    },
+    {
+     "順位": 8,
+     "大学": "大東文化大学",
+     "合計タイム": "10:36:12",
+     "合計タイム_原文": "10時間36分12秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "8 大東文化大学 10時間36分12秒",
+      "quote_verified": true
+     }
+    },
+    {
+     "順位": 9,
+     "大学": "日本体育大学",
+     "合計タイム": "10:36:14",
+     "合計タイム_原文": "10時間36分14秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "9 日本体育大学 10時間36分14秒",
+      "quote_verified": true
+     }
+    },
+    {
+     "順位": 10,
+     "大学": "立教大学",
+     "合計タイム": "10:36:56",
+     "合計タイム_原文": "10時間36分56秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "10 立教大学 10時間36分56秒",
+      "quote_verified": true
+     }
+    },
+    {
+     "順位": 11,
+     "大学": "法政大学",
+     "合計タイム": "10:37:13",
+     "合計タイム_原文": "10時間37分13秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "11 法政大学 10時間37分13秒",
+      "quote_verified": true
+     }
+    },
+    {
+     "順位": 12,
+     "大学": "明治大学",
+     "合計タイム": "10:38:54",
+     "合計タイム_原文": "10時間38分54秒",
+     "src": {
+      "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+      "quote": "12 明治大学 10時間38分54秒",
+      "quote_verified": true
+     }
+    }
+   ],
+   "通過校": [
+    "中央学院大学",
+    "順天堂大学",
+    "山梨学院大学",
+    "日本大学",
+    "東海大学",
+    "東京農業大学",
+    "神奈川大学",
+    "大東文化大学",
+    "日本体育大学",
+    "立教大学"
+   ],
+   "通過ライン_10位": {
+    "大学": "立教大学",
+    "合計": "10:36:56"
+   },
+   "11位": {
+    "大学": "法政大学",
+    "合計": "10:37:13",
+    "10位との差_秒": 17
+   },
+   "src_last": {
+    "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+    "quote": "41 埼玉大学 12時間12分23秒",
+    "quote_verified": true
+   },
+   "src_title": {
+    "url": "https://www.hakone-ekiden.jp/_assets/2025/6b6d44f5d04bfd409fa5cbacfe78bf6a512f4c67.pdf",
+    "quote": "チーム成績 2025/10/18",
+    "quote_verified": true
+   },
+   "出場校数_note": "チーム成績表の行数(成績のあるチーム)。未出走・棄権校の扱いは未確認"
+  }
+ },
+ "r102_table": [
+  {
+   "順位": 1,
+   "大学": "青山学院大学",
+   "総合": "10:37:34",
+   "総合_原文": "10時間37分34秒",
+   "往路順位": 1,
+   "往路": "5:18:08",
+   "復路順位": 1,
+   "復路": "5:19:26",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "1 青山学院大学 | 10時間37分34秒 | 1 5時間18分8秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "1 5時間18分8秒 | 1 5時間19分26秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 2,
+   "大学": "國學院大學",
+   "総合": "10:40:07",
+   "総合_原文": "10時間40分7秒",
+   "往路順位": 4,
+   "往路": "5:20:02",
+   "復路順位": 2,
+   "復路": "5:20:05",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "2 國學院大學 | 10時間40分7秒 | 4 5時間20分2秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "4 5時間20分2秒 | 2 5時間20分5秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 3,
+   "大学": "順天堂大学",
+   "総合": "10:43:55",
+   "総合_原文": "10時間43分55秒",
+   "往路順位": 6,
+   "往路": "5:21:49",
+   "復路順位": 4,
+   "復路": "5:22:06",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "3 順天堂大学 | 10時間43分55秒 | 6 5時間21分49秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "6 5時間21分49秒 | 4 5時間22分6秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 4,
+   "大学": "早稲田大学",
+   "総合": "10:44:29",
+   "総合_原文": "10時間44分29秒",
+   "往路順位": 2,
+   "往路": "5:18:26",
+   "復路順位": 8,
+   "復路": "5:26:03",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "4 早稲田大学 | 10時間44分29秒 | 2 5時間18分26秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "2 5時間18分26秒 | 8 5時間26分3秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 5,
+   "大学": "中央大学",
+   "総合": "10:44:31",
+   "総合_原文": "10時間44分31秒",
+   "往路順位": 3,
+   "往路": "5:19:44",
+   "復路順位": 6,
+   "復路": "5:24:47",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "5 中央大学 | 10時間44分31秒 | 3 5時間19分44秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "3 5時間19分44秒 | 6 5時間24分47秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 6,
+   "大学": "駒澤大学",
+   "総合": "10:44:50",
+   "総合_原文": "10時間44分50秒",
+   "往路順位": 7,
+   "往路": "5:23:00",
+   "復路順位": 3,
+   "復路": "5:21:50",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "6 駒澤大学 | 10時間44分50秒 | 7 5時間23分0秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "7 5時間23分0秒 | 3 5時間21分50秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 7,
+   "大学": "城西大学",
+   "総合": "10:46:17",
+   "総合_原文": "10時間46分17秒",
+   "往路順位": 5,
+   "往路": "5:20:20",
+   "復路順位": 7,
+   "復路": "5:25:57",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "7 城西大学 | 10時間46分17秒 | 5 5時間20分20秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "5 5時間20分20秒 | 7 5時間25分57秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 8,
+   "大学": "創価大学",
+   "総合": "10:51:40",
+   "総合_原文": "10時間51分40秒",
+   "往路順位": 8,
+   "往路": "5:24:02",
+   "復路順位": 13,
+   "復路": "5:27:38",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "8 創価大学 | 10時間51分40秒 | 8 5時間24分2秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "8 5時間24分2秒 | 13 5時間27分38秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 9,
+   "大学": "帝京大学",
+   "総合": "10:53:15",
+   "総合_原文": "10時間53分15秒",
+   "往路順位": 17,
+   "往路": "5:30:25",
+   "復路順位": 5,
+   "復路": "5:22:50",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "9 帝京大学 | 10時間53分15秒 | 17 5時間30分25秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "17 5時間30分25秒 | 5 5時間22分50秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 10,
+   "大学": "日本大学",
+   "総合": "10:53:56",
+   "総合_原文": "10時間53分56秒",
+   "往路順位": 9,
+   "往路": "5:25:00",
+   "復路順位": 16,
+   "復路": "5:28:56",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "10 日本大学 | 10時間53分56秒 | 9 5時間25分0秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "9 5時間25分0秒 | 16 5時間28分56秒",
+    "quote_verified": true
+   }
+  }
+ ],
+ "r102_other": {
+  "関東学生連合(参考)": {
+   "総合": "10:57:35",
+   "往路": "5:32:02",
+   "復路": "5:25:33",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "参考 関東学生連合 | 10時間57分35秒",
+    "quote_verified": true
+   }
+  }
+ },
+ "r102_stage_winners": [
+  {
+   "区間": "1区",
+   "氏名": "青木 瑠郁",
+   "大学": "國學院大學",
+   "タイム": "1:00:28",
+   "タイム_原文": "1時間0分28秒",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record03.php?tn=106&uid=98",
+    "quote": "1 | 1 | 青木 瑠郁 | 1時間0分28秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "2区",
+   "氏名": "キムタイ",
+   "大学": "城西大学",
+   "タイム": "1:05:09",
+   "タイム_原文": "1時間5分9秒",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record03.php?tn=106&uid=22",
+    "quote": "2 | 1 | キムタイ | 1時間5分9秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "3区",
+   "氏名": "本間 颯",
+   "大学": "中央大学",
+   "タイム": "1:00:08",
+   "タイム_原文": "1時間0分8秒",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record03.php?tn=106&uid=28",
+    "quote": "3 | 1 | 本間 颯 | 1時間0分8秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "4区",
+   "氏名": "鈴木 琉胤",
+   "大学": "早稲田大学",
+   "タイム": "1:00:01",
+   "タイム_原文": "1時間0分1秒",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record03.php?tn=106&uid=50",
+    "quote": "4 | 1 | 鈴木 琉胤 | 1時間0分1秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "5区",
+   "氏名": "黒田 朝日",
+   "大学": "青山学院大学",
+   "タイム": "1:07:16",
+   "タイム_原文": "1時間7分16秒",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record03.php?tn=106&uid=11",
+    "quote": "5 | 1 | 黒田 朝日 | 1時間7分16秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "6区",
+   "氏名": "小池 莉希",
+   "大学": "創価大学",
+   "タイム": "0:56:48",
+   "タイム_原文": "0時間56分48秒",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record03.php?tn=106&uid=92",
+    "quote": "6 | 1 | 小池 莉希 | 0時間56分48秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "7区",
+   "氏名": "高山 豪起",
+   "大学": "國學院大學",
+   "タイム": "1:00:54",
+   "タイム_原文": "1時間0分54秒",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record03.php?tn=106&uid=98",
+    "quote": "7 | 1 | 高山 豪起 | 1時間0分54秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "8区",
+   "氏名": "塩出 翔太",
+   "大学": "青山学院大学",
+   "タイム": "1:03:45",
+   "タイム_原文": "1時間3分45秒",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record03.php?tn=106&uid=11",
+    "quote": "8 | 1 | 塩出 翔太 | 1時間3分45秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "9区",
+   "氏名": "佐藤 有一",
+   "大学": "青山学院大学",
+   "タイム": "1:07:38",
+   "タイム_原文": "1時間7分38秒",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record03.php?tn=106&uid=11",
+    "quote": "9 | 1 | 佐藤 有一 | 1時間7分38秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "区間": "10区",
+   "氏名": "佐藤 圭汰",
+   "大学": "駒澤大学",
+   "タイム": "1:07:31",
+   "タイム_原文": "1時間7分31秒",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record03.php?tn=106&uid=19",
+    "quote": "10 | 1 | 佐藤 圭汰 | 1時間7分31秒",
+    "quote_verified": true
+   }
+  }
+ ],
+ "r102_stage_winners_note": "区間順位1位=区間賞。関東学生連合は参考扱いのため除外。公式『大学別選手一覧』ページから抽出。同順位の重複は複数行で出る",
+ "r102_table_all20": [
+  {
+   "順位": 1,
+   "大学": "青山学院大学",
+   "総合": "10:37:34",
+   "総合_原文": "10時間37分34秒",
+   "往路順位": 1,
+   "往路": "5:18:08",
+   "復路順位": 1,
+   "復路": "5:19:26",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "1 青山学院大学 | 10時間37分34秒 | 1 5時間18分8秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "1 5時間18分8秒 | 1 5時間19分26秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 2,
+   "大学": "國學院大學",
+   "総合": "10:40:07",
+   "総合_原文": "10時間40分7秒",
+   "往路順位": 4,
+   "往路": "5:20:02",
+   "復路順位": 2,
+   "復路": "5:20:05",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "2 國學院大學 | 10時間40分7秒 | 4 5時間20分2秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "4 5時間20分2秒 | 2 5時間20分5秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 3,
+   "大学": "順天堂大学",
+   "総合": "10:43:55",
+   "総合_原文": "10時間43分55秒",
+   "往路順位": 6,
+   "往路": "5:21:49",
+   "復路順位": 4,
+   "復路": "5:22:06",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "3 順天堂大学 | 10時間43分55秒 | 6 5時間21分49秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "6 5時間21分49秒 | 4 5時間22分6秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 4,
+   "大学": "早稲田大学",
+   "総合": "10:44:29",
+   "総合_原文": "10時間44分29秒",
+   "往路順位": 2,
+   "往路": "5:18:26",
+   "復路順位": 8,
+   "復路": "5:26:03",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "4 早稲田大学 | 10時間44分29秒 | 2 5時間18分26秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "2 5時間18分26秒 | 8 5時間26分3秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 5,
+   "大学": "中央大学",
+   "総合": "10:44:31",
+   "総合_原文": "10時間44分31秒",
+   "往路順位": 3,
+   "往路": "5:19:44",
+   "復路順位": 6,
+   "復路": "5:24:47",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "5 中央大学 | 10時間44分31秒 | 3 5時間19分44秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "3 5時間19分44秒 | 6 5時間24分47秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 6,
+   "大学": "駒澤大学",
+   "総合": "10:44:50",
+   "総合_原文": "10時間44分50秒",
+   "往路順位": 7,
+   "往路": "5:23:00",
+   "復路順位": 3,
+   "復路": "5:21:50",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "6 駒澤大学 | 10時間44分50秒 | 7 5時間23分0秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "7 5時間23分0秒 | 3 5時間21分50秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 7,
+   "大学": "城西大学",
+   "総合": "10:46:17",
+   "総合_原文": "10時間46分17秒",
+   "往路順位": 5,
+   "往路": "5:20:20",
+   "復路順位": 7,
+   "復路": "5:25:57",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "7 城西大学 | 10時間46分17秒 | 5 5時間20分20秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "5 5時間20分20秒 | 7 5時間25分57秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 8,
+   "大学": "創価大学",
+   "総合": "10:51:40",
+   "総合_原文": "10時間51分40秒",
+   "往路順位": 8,
+   "往路": "5:24:02",
+   "復路順位": 13,
+   "復路": "5:27:38",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "8 創価大学 | 10時間51分40秒 | 8 5時間24分2秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "8 5時間24分2秒 | 13 5時間27分38秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 9,
+   "大学": "帝京大学",
+   "総合": "10:53:15",
+   "総合_原文": "10時間53分15秒",
+   "往路順位": 17,
+   "往路": "5:30:25",
+   "復路順位": 5,
+   "復路": "5:22:50",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "9 帝京大学 | 10時間53分15秒 | 17 5時間30分25秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "17 5時間30分25秒 | 5 5時間22分50秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 10,
+   "大学": "日本大学",
+   "総合": "10:53:56",
+   "総合_原文": "10時間53分56秒",
+   "往路順位": 9,
+   "往路": "5:25:00",
+   "復路順位": 16,
+   "復路": "5:28:56",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "10 日本大学 | 10時間53分56秒 | 9 5時間25分0秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "9 5時間25分0秒 | 16 5時間28分56秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 11,
+   "大学": "中央学院大学",
+   "総合": "10:54:51",
+   "総合_原文": "10時間54分51秒",
+   "往路順位": 11,
+   "往路": "5:26:22",
+   "復路順位": 14,
+   "復路": "5:28:29",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "11 中央学院大学 | 10時間54分51秒 | 11 5時間26分22秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "11 5時間26分22秒 | 14 5時間28分29秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 12,
+   "大学": "東海大学",
+   "総合": "10:55:01",
+   "総合_原文": "10時間55分1秒",
+   "往路順位": 10,
+   "往路": "5:26:10",
+   "復路順位": 15,
+   "復路": "5:28:51",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "12 東海大学 | 10時間55分1秒 | 10 5時間26分10秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "10 5時間26分10秒 | 15 5時間28分51秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 13,
+   "大学": "神奈川大学",
+   "総合": "10:55:09",
+   "総合_原文": "10時間55分9秒",
+   "往路順位": 14,
+   "往路": "5:28:25",
+   "復路順位": 10,
+   "復路": "5:26:44",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "13 神奈川大学 | 10時間55分9秒 | 14 5時間28分25秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "14 5時間28分25秒 | 10 5時間26分44秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 14,
+   "大学": "東洋大学",
+   "総合": "10:56:27",
+   "総合_原文": "10時間56分27秒",
+   "往路順位": 15,
+   "往路": "5:28:55",
+   "復路順位": 12,
+   "復路": "5:27:32",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "14 東洋大学 | 10時間56分27秒 | 15 5時間28分55秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "15 5時間28分55秒 | 12 5時間27分32秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 15,
+   "大学": "日本体育大学",
+   "総合": "10:56:42",
+   "総合_原文": "10時間56分42秒",
+   "往路順位": 16,
+   "往路": "5:30:04",
+   "復路順位": 9,
+   "復路": "5:26:38",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "15 日本体育大学 | 10時間56分42秒 | 16 5時間30分4秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "16 5時間30分4秒 | 9 5時間26分38秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 16,
+   "大学": "東京国際大学",
+   "総合": "10:58:16",
+   "総合_原文": "10時間58分16秒",
+   "往路順位": 19,
+   "往路": "5:30:45",
+   "復路順位": 11,
+   "復路": "5:27:31",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "16 東京国際大学 | 10時間58分16秒 | 19 5時間30分45秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "19 5時間30分45秒 | 11 5時間27分31秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 17,
+   "大学": "山梨学院大学",
+   "総合": "10:58:20",
+   "総合_原文": "10時間58分20秒",
+   "往路順位": 12,
+   "往路": "5:27:28",
+   "復路順位": 17,
+   "復路": "5:30:52",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "17 山梨学院大学 | 10時間58分20秒 | 12 5時間27分28秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "12 5時間27分28秒 | 17 5時間30分52秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 18,
+   "大学": "東京農業大学",
+   "総合": "11:01:12",
+   "総合_原文": "11時間1分12秒",
+   "往路順位": 13,
+   "往路": "5:28:02",
+   "復路順位": 19,
+   "復路": "5:33:10",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "18 東京農業大学 | 11時間1分12秒 | 13 5時間28分2秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "13 5時間28分2秒 | 19 5時間33分10秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 19,
+   "大学": "大東文化大学",
+   "総合": "11:04:57",
+   "総合_原文": "11時間4分57秒",
+   "往路順位": 18,
+   "往路": "5:30:43",
+   "復路順位": 20,
+   "復路": "5:34:14",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "19 大東文化大学 | 11時間4分57秒 | 18 5時間30分43秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "18 5時間30分43秒 | 20 5時間34分14秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 20,
+   "大学": "立教大学",
+   "総合": "11:05:58",
+   "総合_原文": "11時間5分58秒",
+   "往路順位": 20,
+   "往路": "5:33:05",
+   "復路順位": 18,
+   "復路": "5:32:53",
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "20 立教大学 | 11時間5分58秒 | 20 5時間33分5秒",
+    "quote_verified": true
+   },
+   "src_fuku": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "20 5時間33分5秒 | 18 5時間32分53秒",
+    "quote_verified": true
+   }
+  }
+ ],
+ "past_winners": [
+  {
+   "回": 102,
+   "年": 2026,
+   "優勝校": "青山学院大学",
+   "優勝タイム": "10:37:34",
+   "優勝タイム_原文": "10時間37分34秒",
+   "往路タイム": "5:18:08",
+   "復路タイム": "5:19:26",
+   "往路優勝校": "青山学院大学",
+   "復路優勝校": "青山学院大学",
+   "2位校": "國學院大學",
+   "2位タイム": "10:40:07",
+   "差_秒": 153,
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record05.php",
+    "quote": "102回 | 2026年 | 青山学院大学 | 10時間37分34秒",
+    "quote_verified": true
+   },
+   "src_2nd": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=106",
+    "quote": "2 國學院大學 | 10時間40分7秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "回": 101,
+   "年": 2025,
+   "優勝校": "青山学院大学",
+   "優勝タイム": "10:41:19",
+   "優勝タイム_原文": "10時間41分19秒",
+   "往路タイム": "5:20:01",
+   "復路タイム": "5:21:18",
+   "往路優勝校": "青山学院大学",
+   "復路優勝校": "駒澤大学",
+   "2位校": "駒澤大学",
+   "2位タイム": "10:44:07",
+   "差_秒": 168,
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record05.php",
+    "quote": "101回 | 2025年 | 青山学院大学 | 10時間41分19秒",
+    "quote_verified": true
+   },
+   "src_2nd": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=104",
+    "quote": "2 駒澤大学 | 10時間44分7秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "回": 100,
+   "年": 2024,
+   "優勝校": "青山学院大学",
+   "優勝タイム": "10:41:25",
+   "優勝タイム_原文": "10時間41分25秒",
+   "往路タイム": "5:18:13",
+   "復路タイム": "5:23:12",
+   "往路優勝校": "青山学院大学",
+   "復路優勝校": "青山学院大学",
+   "2位校": "駒澤大学",
+   "2位タイム": "10:48:00",
+   "差_秒": 395,
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record05.php",
+    "quote": "100回 | 2024年 | 青山学院大学 | 10時間41分25秒",
+    "quote_verified": true
+   },
+   "src_2nd": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=103",
+    "quote": "2 駒澤大学 | 10時間48分0秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "回": 99,
+   "年": 2023,
+   "優勝校": "駒澤大学",
+   "優勝タイム": "10:47:11",
+   "優勝タイム_原文": "10時間47分11秒",
+   "往路タイム": "5:23:10",
+   "復路タイム": "5:24:01",
+   "往路優勝校": "駒澤大学",
+   "復路優勝校": "駒澤大学",
+   "2位校": "中央大学",
+   "2位タイム": "10:48:53",
+   "差_秒": 102,
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record05.php",
+    "quote": "99回 | 2023年 | 駒澤大学 | 10時間47分11秒",
+    "quote_verified": true
+   },
+   "src_2nd": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=102",
+    "quote": "2 中央大学 | 10時間48分53秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "回": 98,
+   "年": 2022,
+   "優勝校": "青山学院大学",
+   "優勝タイム": "10:43:42",
+   "優勝タイム_原文": "10時間43分42秒",
+   "往路タイム": "5:22:06",
+   "復路タイム": "5:21:36",
+   "往路優勝校": "青山学院大学",
+   "復路優勝校": "青山学院大学",
+   "2位校": "順天堂大学",
+   "2位タイム": "10:54:33",
+   "差_秒": 651,
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record05.php",
+    "quote": "98回 | 2022年 | 青山学院大学 | 10時間43分42秒",
+    "quote_verified": true
+   },
+   "src_2nd": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=101",
+    "quote": "2 順天堂大学 | 10時間54分33秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "回": 97,
+   "年": 2021,
+   "優勝校": "駒澤大学",
+   "優勝タイム": "10:56:04",
+   "優勝タイム_原文": "10時間56分4秒",
+   "往路タイム": "5:30:29",
+   "復路タイム": "5:25:35",
+   "往路優勝校": "創価大学",
+   "復路優勝校": "青山学院大学",
+   "2位校": "創価大学",
+   "2位タイム": "10:56:56",
+   "差_秒": 52,
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record05.php",
+    "quote": "97回 | 2021年 | 駒澤大学 | 10時間56分4秒",
+    "quote_verified": true
+   },
+   "src_2nd": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=99",
+    "quote": "2 創価大学 | 10時間56分56秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "回": 96,
+   "年": 2020,
+   "優勝校": "青山学院大学",
+   "優勝タイム": "10:45:23",
+   "優勝タイム_原文": "10時間45分23秒",
+   "往路タイム": "5:21:16",
+   "復路タイム": "5:24:07",
+   "往路優勝校": "青山学院大学",
+   "復路優勝校": "東海大学",
+   "2位校": "東海大学",
+   "2位タイム": "10:48:25",
+   "差_秒": 182,
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record05.php",
+    "quote": "96回 | 2020年 | 青山学院大学 | 10時間45分23秒",
+    "quote_verified": true
+   },
+   "src_2nd": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=96",
+    "quote": "2 東海大学 | 10時間48分25秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "回": 95,
+   "年": 2019,
+   "優勝校": "東海大学",
+   "優勝タイム": "10:52:09",
+   "優勝タイム_原文": "10時間52分9秒",
+   "往路タイム": "5:27:45",
+   "復路タイム": "5:24:24",
+   "往路優勝校": "東洋大学",
+   "復路優勝校": "青山学院大学",
+   "2位校": "青山学院大学",
+   "2位タイム": "10:55:50",
+   "差_秒": 221,
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record05.php",
+    "quote": "95回 | 2019年 | 東海大学 | 10時間52分9秒",
+    "quote_verified": true
+   },
+   "src_2nd": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=95",
+    "quote": "2 青山学院大学 | 10時間55分50秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "回": 94,
+   "年": 2018,
+   "優勝校": "青山学院大学",
+   "優勝タイム": "10:57:39",
+   "優勝タイム_原文": "10時間57分39秒",
+   "往路タイム": "5:29:05",
+   "復路タイム": "5:28:34",
+   "往路優勝校": "東洋大学",
+   "復路優勝校": "青山学院大学",
+   "2位校": "東洋大学",
+   "2位タイム": "11:02:32",
+   "差_秒": 293,
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record05.php",
+    "quote": "94回 | 2018年 | 青山学院大学 | 10時間57分39秒",
+    "quote_verified": true
+   },
+   "src_2nd": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=94",
+    "quote": "2 東洋大学 | 11時間2分32秒",
+    "quote_verified": true
+   }
+  },
+  {
+   "回": 93,
+   "年": 2017,
+   "優勝校": "青山学院大学",
+   "優勝タイム": "11:04:10",
+   "優勝タイム_原文": "11時間4分10秒",
+   "往路タイム": "5:33:45",
+   "復路タイム": "5:30:25",
+   "往路優勝校": "青山学院大学",
+   "復路優勝校": "青山学院大学",
+   "2位校": "東洋大学",
+   "2位タイム": "11:11:31",
+   "差_秒": 441,
+   "src": {
+    "url": "https://hakone-ekiden.jp/record/record05.php",
+    "quote": "93回 | 2017年 | 青山学院大学 | 11時間4分10秒",
+    "quote_verified": true
+   },
+   "src_2nd": {
+    "url": "https://hakone-ekiden.jp/record/record02.php?tn=93",
+    "quote": "2 東洋大学 | 11時間11分31秒",
+    "quote_verified": true
+   }
+  }
+ ],
+ "big3_winners_10y": {
+  "列": "年 出雲 全日本 箱根",
+  "note": "年は秋シーズンの年(箱根は翌1月)。2020年の出雲はコロナ禍で中止",
+  "items": [
+   {
+    "原文": "２５年 国学院大 駒沢大 青山学院大",
+    "src": {
+     "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00238/",
+     "quote": "２５年 国学院大 駒沢大 青山学院大",
+     "quote_verified": true
+    }
+   },
+   {
+    "原文": "２４年 国学院大 国学院大 青山学院大",
+    "src": {
+     "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00238/",
+     "quote": "２４年 国学院大 国学院大 青山学院大",
+     "quote_verified": true
+    }
+   },
+   {
+    "原文": "２３年 駒沢大 駒沢大 青山学院大",
+    "src": {
+     "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00238/",
+     "quote": "２３年 駒沢大 駒沢大 青山学院大",
+     "quote_verified": true
+    }
+   },
+   {
+    "原文": "２２年 駒沢大 駒沢大 駒沢大（三冠）",
+    "src": {
+     "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00238/",
+     "quote": "２２年 駒沢大 駒沢大 駒沢大（三冠）",
+     "quote_verified": true
+    }
+   },
+   {
+    "原文": "２１年 東京国際大 駒沢大 青山学院大",
+    "src": {
+     "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00238/",
+     "quote": "２１年 東京国際大 駒沢大 青山学院大",
+     "quote_verified": true
+    }
+   },
+   {
+    "原文": "２０年 － 駒沢大 駒沢大",
+    "src": {
+     "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00238/",
+     "quote": "２０年 － 駒沢大 駒沢大",
+     "quote_verified": true
+    }
+   },
+   {
+    "原文": "１９年 国学院大 東海大 青山学院大",
+    "src": {
+     "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00238/",
+     "quote": "１９年 国学院大 東海大 青山学院大",
+     "quote_verified": true
+    }
+   },
+   {
+    "原文": "１８年 青山学院大 青山学院大 東海大",
+    "src": {
+     "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00238/",
+     "quote": "１８年 青山学院大 青山学院大 東海大",
+     "quote_verified": true
+    }
+   },
+   {
+    "原文": "１７年 東海大 神奈川大 青山学院大",
+    "src": {
+     "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00238/",
+     "quote": "１７年 東海大 神奈川大 青山学院大",
+     "quote_verified": true
+    }
+   },
+   {
+    "原文": "１６年 青山学院大 青山学院大 青山学院大（三冠）",
+    "src": {
+     "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00238/",
+     "quote": "１６年 青山学院大 青山学院大 青山学院大（三冠）",
+     "quote_verified": true
+    }
+   }
+  ]
+ },
+ "izumo_2026": [
+  {
+   "順位": 1,
+   "No": 7,
+   "チーム": "早稲田大学",
+   "タイム": "2:05:56",
+   "src": {
+    "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+    "quote": "7 早稲田大学 2:05:56",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 2,
+   "No": 5,
+   "チーム": "國學院大學",
+   "タイム": "2:06:54",
+   "src": {
+    "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+    "quote": "5 國學院大學 2:06:54",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 3,
+   "No": 21,
+   "チーム": "アイビーリーグ選抜",
+   "タイム": "2:07:24",
+   "src": {
+    "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+    "quote": "21 アイビーリーグ選抜 2:07:24",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 4,
+   "No": 6,
+   "チーム": "順天堂大学",
+   "タイム": "2:07:33",
+   "src": {
+    "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+    "quote": "6 順天堂大学 2:07:33",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 5,
+   "No": 8,
+   "チーム": "中央大学",
+   "タイム": "2:07:36",
+   "src": {
+    "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+    "quote": "8 中央大学 2:07:36",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 6,
+   "No": 12,
+   "チーム": "帝京大学",
+   "タイム": "2:07:41",
+   "src": {
+    "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+    "quote": "12 帝京大学 2:07:41",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 7,
+   "No": 9,
+   "チーム": "駒澤大学",
+   "タイム": "2:07:45",
+   "src": {
+    "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+    "quote": "9 駒澤大学 2:07:45",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 8,
+   "No": 13,
+   "チーム": "日本大学",
+   "タイム": "2:08:15",
+   "src": {
+    "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+    "quote": "13 日本大学 2:08:15",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 9,
+   "No": 11,
+   "チーム": "創価大学",
+   "タイム": "2:08:31",
+   "src": {
+    "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+    "quote": "11 創価大学 2:08:31",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 10,
+   "No": 10,
+   "チーム": "城西大学",
+   "タイム": "2:09:22",
+   "src": {
+    "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+    "quote": "10 城西大学 2:09:22",
+    "quote_verified": true
+   }
+  }
+ ],
+ "izumo_2026_extra": {
+  "青山学院大学(第102回箱根優勝校)": {
+   "順位": 11,
+   "タイム": "2:09:53",
+   "src": {
+    "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+    "quote": "4 青山学院大学 2:09:53",
+    "quote_verified": true
+   }
+  },
+  "note": "前回箱根優勝の青学は11位(関東勢最下位)。報道(読売)は『速報値』と明記、上は公式PDFの数字"
+ },
+ "izumo_2026_meta": {
+  "回": 38,
+  "日": "2026-10-12",
+  "スタート": "9:10",
+  "コース": "出雲大社正面鳥居前〜出雲ドーム前 6区間45.1km",
+  "前大会記録": "駒澤大学 2:07:51 (第35回)",
+  "出場": "22チーム",
+  "src_day": {
+   "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+   "quote": "令和8年10月12日(月) 9時10分スタート",
+   "quote_verified": true
+  },
+  "src_old_record": {
+   "url": "https://izumo-ekiden.jp/assets/pdf/record2026.pdf",
+   "quote": "大会記録(45.1km)： 駒澤大学 2:07:51 【第35回】",
+   "quote_verified": true
+  }
+ },
+ "izumo_2026_stage_best": {
+  "src": {
+   "url": "https://www.yomiuri.co.jp/sports/etc/20261012-GYT1T00182/",
+   "quote": "【区間最高】▽１区（８キロ）鈴木大翔（駒大）２２分４２秒",
+   "quote_verified": true
+  },
+  "items": [
+   {
+    "区間": "1区(8.0km)",
+    "氏名": "鈴木 大翔",
+    "大学": "駒澤大学",
+    "タイム": "22:42"
+   },
+   {
+    "区間": "2区(5.8km)",
+    "氏名": "本田 桜二郎",
+    "大学": "早稲田大学",
+    "タイム": "15:42"
+   },
+   {
+    "区間": "3区(8.5km)",
+    "氏名": "シャドラック・キップケメイ",
+    "大学": "日本大学",
+    "タイム": "22:56",
+    "note": "区間新"
+   },
+   {
+    "区間": "4区(6.2km)",
+    "氏名": "新妻 遼己",
+    "大学": "早稲田大学",
+    "タイム": "17:10",
+    "note": "区間新"
+   },
+   {
+    "区間": "5区(6.4km)",
+    "氏名": "山口 竣平",
+    "大学": "早稲田大学",
+    "タイム": "17:35",
+    "note": "区間新"
+   },
+   {
+    "区間": "6区(10.2km)",
+    "氏名": "工藤 慎作",
+    "大学": "早稲田大学",
+    "タイム": "29:00"
+   }
+  ],
+  "src_rest": [
+   {
+    "url": "https://www.yomiuri.co.jp/sports/etc/20261012-GYT1T00182/",
+    "quote": "▽３区（８・５キロ）シャドラック・キップケメイ（日大）２２分５６秒＝区間新",
+    "quote_verified": true
+   },
+   {
+    "url": "https://www.yomiuri.co.jp/sports/etc/20261012-GYT1T00182/",
+    "quote": "▽６区（１０・２キロ）工藤慎作（早大）２９分００秒",
+    "quote_verified": true
+   }
+  ]
+ },
+ "izumo_2026_entry_avg": {
+  "note": "出雲駅伝2026の大会資料にある出場チーム平均タイム(上位6人、留学生2人エントリーの場合は上位1人のみ)。報道は上位3校のみ記載",
+  "5000m": [
+   {
+    "順位": 1,
+    "大学": "中央大",
+    "平均": "13:26.59"
+   },
+   {
+    "順位": 2,
+    "大学": "早稲田大",
+    "平均": "13:27.29"
+   },
+   {
+    "順位": 3,
+    "大学": "青山学院大",
+    "平均": "13:34.66"
+   }
+  ],
+  "10000m": [
+   {
+    "順位": 1,
+    "大学": "中央大",
+    "平均": "27:52.54"
+   },
+   {
+    "順位": 2,
+    "大学": "青山学院大",
+    "平均": "28:11.90"
+   },
+   {
+    "順位": 3,
+    "大学": "國學院大",
+    "平均": "28:15.01"
+   }
+  ],
+  "src_5000": {
+   "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00268/",
+   "quote": "〈１〉中央大＝１３分２６秒５９〈２〉早稲田大１３分２７秒２９〈３〉青山学院大＝１３分３４秒６６",
+   "quote_verified": true
+  },
+  "src_10000": {
+   "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00268/",
+   "quote": "〈１〉中央大＝２７分５２秒５４〈２〉青山学院大＝２８分１１秒９０〈３〉国学院大＝２８分１５秒０１",
+   "quote_verified": true
+  },
+  "src_def": {
+   "url": "https://www.yomiuri.co.jp/hakone-ekiden/news/20261006-GYT1T00268/",
+   "quote": "平均タイム（上位６人、外国人留学生が２人エントリーされているチームは記録が上位の１人が対象）",
+   "quote_verified": true
+  }
+ },
+ "izumo_2025_top3": [
+  {
+   "順位": 1,
+   "チーム": "國學院大學",
+   "タイム": "2:09:12",
+   "src": {
+    "url": "https://www.izumo-ekiden.jp/37/record/record.html",
+    "quote": "國學院大學 | 2:09:12",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 2,
+   "チーム": "早稲田大学",
+   "タイム": "2:09:50",
+   "src": {
+    "url": "https://www.izumo-ekiden.jp/37/record/record.html",
+    "quote": "早稲田大学 | 2:09:50",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 3,
+   "チーム": "創価大学",
+   "タイム": "2:10:05",
+   "src": {
+    "url": "https://www.izumo-ekiden.jp/37/record/record.html",
+    "quote": "創価大学 | 2:10:05",
+    "quote_verified": true
+   }
+  }
+ ],
+ "zenkoku_2025_top3": [
+  {
+   "順位": 1,
+   "チーム": "駒澤大",
+   "タイム": "5:06:53",
+   "src": {
+    "url": "http://daigaku-ekiden.com/files/2025_result.pdf",
+    "quote": "1 2 駒澤大 5:06:53",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 2,
+   "チーム": "中央大",
+   "タイム": "5:08:54",
+   "src": {
+    "url": "http://daigaku-ekiden.com/files/2025_result.pdf",
+    "quote": "2 11 中央大 5:08:54",
+    "quote_verified": true
+   }
+  },
+  {
+   "順位": 3,
+   "チーム": "青山学院大",
+   "タイム": "5:09:28",
+   "src": {
+    "url": "http://daigaku-ekiden.com/files/2025_result.pdf",
+    "quote": "3 3 青山学院大 5:09:28",
+    "quote_verified": true
+   }
+  }
+ ],
+ "zenkoku_2026": {
+  "回": 58,
+  "日": "2026-11-01(日)",
+  "スタート": "8:10",
+  "コース": "名古屋・熱田神宮→三重県・伊勢神宮内宮宇治橋前 8区間106.8km",
+  "出場": "シード8校+全国8地区の代表17校+日本学連選抜・東海学連選抜の計27チーム",
+  "src": {
+   "url": "http://daigaku-ekiden.com/",
+   "quote": "第58回全日本大学駅伝 本大会 2026年11月1日(日)午前8時10分スタート",
+   "quote_verified": true
+  },
+  "src_course": {
+   "url": "http://daigaku-ekiden.com/",
+   "quote": "名古屋・熱田神宮→三重県・伊勢神宮内宮宇治橋前 8区間106.8km",
+   "quote_verified": true
+  },
+  "src_teams": {
+   "url": "http://daigaku-ekiden.com/",
+   "quote": "シード8校と全国8地区の代表17校、日本学連選抜・東海学連選抜の計27チームが出場",
+   "quote_verified": true
+  },
+  "出場校": [
+   {
+    "No": 1,
+    "大学": "駒澤大学",
+    "地区": "関東",
+    "出場回数": "31大会連続33回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "駒澤大学 | 関東 | 31大会連続33回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 2,
+    "大学": "中央大学",
+    "地区": "関東",
+    "出場回数": "6大会連続33回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "中央大学 | 関東 | 6大会連続33回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 3,
+    "大学": "青山学院大学",
+    "地区": "関東",
+    "出場回数": "14大会連続16回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "青山学院大学 | 関東 | 14大会連続16回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 4,
+    "大学": "國學院大學",
+    "地区": "関東",
+    "出場回数": "12大会連続14回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "國學院大學 | 関東 | 12大会連続14回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 5,
+    "大学": "早稲田大学",
+    "地区": "関東",
+    "出場回数": "20大会連続32回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "早稲田大学 | 関東 | 20大会連続32回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 6,
+    "大学": "帝京大学",
+    "地区": "関東",
+    "出場回数": "4大会連続18回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "帝京大学 | 関東 | 4大会連続18回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 7,
+    "大学": "創価大学",
+    "地区": "関東",
+    "出場回数": "5大会連続5回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "創価大学 | 関東 | 5大会連続5回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 8,
+    "大学": "順天堂大学",
+    "地区": "関東",
+    "出場回数": "2大会連続30回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "順天堂大学 | 関東 | 2大会連続30回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 9,
+    "大学": "札幌学院大学",
+    "地区": "北海道",
+    "出場回数": "9大会連続33回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "札幌学院大学 | 北海道 | 9大会連続33回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 10,
+    "大学": "東北大学",
+    "地区": "東北",
+    "出場回数": "2大会ぶり18回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "東北大学 | 東北 | 2大会ぶり18回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 11,
+    "大学": "日本大学",
+    "地区": "関東",
+    "出場回数": "2大会連続44回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "日本大学 | 関東 | 2大会連続44回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 12,
+    "大学": "東海大学",
+    "地区": "関東",
+    "出場回数": "13大会連続39回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "東海大学 | 関東 | 13大会連続39回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 13,
+    "大学": "大東文化大学",
+    "地区": "関東",
+    "出場回数": "5大会連続47回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "大東文化大学 | 関東 | 5大会連続47回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 14,
+    "大学": "神奈川大学",
+    "地区": "関東",
+    "出場回数": "2大会ぶり20回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "神奈川大学 | 関東 | 2大会ぶり20回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 15,
+    "大学": "東洋大学",
+    "地区": "関東",
+    "出場回数": "2大会ぶり33回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "東洋大学 | 関東 | 2大会ぶり33回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 16,
+    "大学": "中央学院大学",
+    "地区": "関東",
+    "出場回数": "2大会連続18回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "中央学院大学 | 関東 | 2大会連続18回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 17,
+    "大学": "山梨学院大学",
+    "地区": "関東",
+    "出場回数": "6大会ぶり32回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "山梨学院大学 | 関東 | 6大会ぶり32回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 18,
+    "大学": "信州大学",
+    "地区": "北信越",
+    "出場回数": "2大会連続17回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "信州大学 | 北信越 | 2大会連続17回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 19,
+    "大学": "愛知工業大学",
+    "地区": "東海",
+    "出場回数": "4大会ぶり20回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "愛知工業大学 | 東海 | 4大会ぶり20回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 20,
+    "大学": "京都産業大学",
+    "地区": "関西",
+    "出場回数": "2大会ぶり50回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "京都産業大学 | 関西 | 2大会ぶり50回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 21,
+    "大学": "大阪経済大学",
+    "地区": "関西",
+    "出場回数": "6大会連続28回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "大阪経済大学 | 関西 | 6大会連続28回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 22,
+    "大学": "関西学院大学",
+    "地区": "関西",
+    "出場回数": "2大会連続15回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "関西学院大学 | 関西 | 2大会連続15回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 23,
+    "大学": "立命館大学",
+    "地区": "関西",
+    "出場回数": "2大会ぶり37回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "立命館大学 | 関西 | 2大会ぶり37回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 24,
+    "大学": "広島経済大学",
+    "地区": "中国四国",
+    "出場回数": "2大会連続25回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "広島経済大学 | 中国四国 | 2大会連続25回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 25,
+    "大学": "志學館大学",
+    "地区": "九州",
+    "出場回数": "2大会連続2回目",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "志學館大学 | 九州 | 2大会連続2回目",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 26,
+    "大学": "日本学連選抜チーム",
+    "地区": null,
+    "出場回数": "オープン参加",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "日本学連選抜チーム | オープン参加",
+     "quote_verified": true
+    }
+   },
+   {
+    "No": 27,
+    "大学": "東海学連選抜チーム",
+    "地区": null,
+    "出場回数": "オープン参加",
+    "src": {
+     "url": "http://daigaku-ekiden.com/syutsujyou/index.html",
+     "quote": "東海学連選抜チーム | オープン参加",
+     "quote_verified": true
+    }
+   }
+  ],
+  "出場校_note": "公式『出場校紹介』ページ(27チーム=シード8校+地区代表17校+オープン参加2)。シード8校は第57回(2025)上位8校"
+ },
+ "ten_k_avg": [
+  {
+   "rank": 1,
+   "大学": "山梨学院大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "28:50.91",
+   "avg_sec": 1730.91,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "7.山梨学院大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 2,
+   "大学": "法政大学",
+   "entrants": 16,
+   "with10000m": 15,
+   "avg_10000m_top10": "28:54.84",
+   "avg_sec": 1734.84,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "11.法政大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 3,
+   "大学": "中央学院大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "28:55.32",
+   "avg_sec": 1735.32,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "1.中央学院大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 4,
+   "大学": "東海大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "28:57.64",
+   "avg_sec": 1737.64,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "2.東海大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 5,
+   "大学": "東京国際大学",
+   "entrants": 16,
+   "with10000m": 15,
+   "avg_10000m_top10": "29:02.61",
+   "avg_sec": 1742.61,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "6.東京国際大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 6,
+   "大学": "大東文化大学",
+   "entrants": 16,
+   "with10000m": 14,
+   "avg_10000m_top10": "29:04.12",
+   "avg_sec": 1744.12,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "9.大東文化大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 7,
+   "大学": "東洋大学",
+   "entrants": 16,
+   "with10000m": 15,
+   "avg_10000m_top10": "29:05.95",
+   "avg_sec": 1745.95,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "4.東洋大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 8,
+   "大学": "神奈川大学",
+   "entrants": 16,
+   "with10000m": 13,
+   "avg_10000m_top10": "29:09.52",
+   "avg_sec": 1749.52,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "3.神奈川大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 9,
+   "大学": "日本体育大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "29:12.65",
+   "avg_sec": 1752.65,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "5.日本体育大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 10,
+   "大学": "専修大学",
+   "entrants": 16,
+   "with10000m": 15,
+   "avg_10000m_top10": "29:16.18",
+   "avg_sec": 1756.18,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "13.専修大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 11,
+   "大学": "立教大学",
+   "entrants": 16,
+   "with10000m": 13,
+   "avg_10000m_top10": "29:16.58",
+   "avg_sec": 1756.58,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "10.立教大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 12,
+   "大学": "明治大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "29:19.48",
+   "avg_sec": 1759.48,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "12.明治大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 13,
+   "大学": "駿河台大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "29:20.29",
+   "avg_sec": 1760.29,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "15.駿河台大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 14,
+   "大学": "国士舘大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "29:24.74",
+   "avg_sec": 1764.74,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "19.国士舘大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 15,
+   "大学": "流通経済大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "29:25.31",
+   "avg_sec": 1765.31,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "25.流通経済大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 16,
+   "大学": "東京農業大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "29:28.29",
+   "avg_sec": 1768.29,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "8.東京農業大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 17,
+   "大学": "拓殖大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "29:30.31",
+   "avg_sec": 1770.31,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "17.拓殖大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 18,
+   "大学": "麗澤大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "29:34.80",
+   "avg_sec": 1774.8,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "21.麗澤大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 19,
+   "大学": "日本薬科大学",
+   "entrants": 16,
+   "with10000m": 14,
+   "avg_10000m_top10": "29:38.73",
+   "avg_sec": 1778.73,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "14.日本薬科大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 20,
+   "大学": "芝浦工業大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "29:41.94",
+   "avg_sec": 1781.94,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "18.芝浦工業大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 21,
+   "大学": "武蔵野学院大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "29:51.05",
+   "avg_sec": 1791.05,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "26.武蔵野学院大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 22,
+   "大学": "関東学院大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "30:03.93",
+   "avg_sec": 1803.93,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "29.関東学院大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 23,
+   "大学": "明治学院大学",
+   "entrants": 16,
+   "with10000m": 15,
+   "avg_10000m_top10": "30:07.75",
+   "avg_sec": 1807.75,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "22.明治学院大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 24,
+   "大学": "筑波大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "30:07.95",
+   "avg_sec": 1807.95,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "16.筑波大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 25,
+   "大学": "育英大学",
+   "entrants": 16,
+   "with10000m": 15,
+   "avg_10000m_top10": "30:10.02",
+   "avg_sec": 1810.02,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "31.育英大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 26,
+   "大学": "亜細亜大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "30:16.87",
+   "avg_sec": 1816.87,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "27.亜細亜大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 27,
+   "大学": "立正大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "30:22.87",
+   "avg_sec": 1822.87,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "32.立正大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 28,
+   "大学": "上武大学",
+   "entrants": 15,
+   "with10000m": 15,
+   "avg_10000m_top10": "30:28.40",
+   "avg_sec": 1828.4,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "20.上武大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 29,
+   "大学": "平成国際大学",
+   "entrants": 16,
+   "with10000m": 13,
+   "avg_10000m_top10": "30:30.62",
+   "avg_sec": 1830.62,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "24.平成国際大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 30,
+   "大学": "東京経済大学",
+   "entrants": 16,
+   "with10000m": 15,
+   "avg_10000m_top10": "30:37.99",
+   "avg_sec": 1837.99,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "28.東京経済大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 31,
+   "大学": "桜美林大学",
+   "entrants": 16,
+   "with10000m": 15,
+   "avg_10000m_top10": "30:41.79",
+   "avg_sec": 1841.79,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "23.桜美林大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 32,
+   "大学": "慶應義塾大学",
+   "entrants": 15,
+   "with10000m": 14,
+   "avg_10000m_top10": "30:58.10",
+   "avg_sec": 1858.1,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "30.慶應義塾大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 33,
+   "大学": "清和大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "31:23.15",
+   "avg_sec": 1883.15,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "35.清和大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 34,
+   "大学": "東京大学大学院",
+   "entrants": 16,
+   "with10000m": 14,
+   "avg_10000m_top10": "31:27.75",
+   "avg_sec": 1887.75,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "34.東京大学大学院",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 35,
+   "大学": "国際武道大学",
+   "entrants": 14,
+   "with10000m": 14,
+   "avg_10000m_top10": "31:49.68",
+   "avg_sec": 1909.68,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "33.国際武道大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 36,
+   "大学": "湘南工科大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "31:57.12",
+   "avg_sec": 1917.12,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "37.湘南工科大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 37,
+   "大学": "東京理科大学",
+   "entrants": 16,
+   "with10000m": 15,
+   "avg_10000m_top10": "32:31.16",
+   "avg_sec": 1951.16,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "38.東京理科大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 38,
+   "大学": "東京大学",
+   "entrants": 16,
+   "with10000m": 16,
+   "avg_10000m_top10": "32:33.86",
+   "avg_sec": 1953.86,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "36.東京大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 39,
+   "大学": "千葉大学",
+   "entrants": 15,
+   "with10000m": 13,
+   "avg_10000m_top10": "32:46.77",
+   "avg_sec": 1966.77,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "39.千葉大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 40,
+   "大学": "防衛大学校",
+   "entrants": 11,
+   "with10000m": 10,
+   "avg_10000m_top10": "32:50.64",
+   "avg_sec": 1970.64,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "42.防衛大学校",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 41,
+   "大学": "一橋大学",
+   "entrants": 13,
+   "with10000m": 12,
+   "avg_10000m_top10": "33:07.23",
+   "avg_sec": 1987.23,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "40.一橋大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 42,
+   "大学": "埼玉大学",
+   "entrants": 16,
+   "with10000m": 15,
+   "avg_10000m_top10": "33:15.86",
+   "avg_sec": 1995.86,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "41.埼玉大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 43,
+   "大学": "横浜国立大学",
+   "entrants": 12,
+   "with10000m": 12,
+   "avg_10000m_top10": "33:21.66",
+   "avg_sec": 2001.66,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "43.横浜国立大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 44,
+   "大学": "高崎経済大学",
+   "entrants": 10,
+   "with10000m": 10,
+   "avg_10000m_top10": "33:28.18",
+   "avg_sec": 2008.18,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "44.高崎経済大学",
+    "quote_verified": true
+   }
+  },
+  {
+   "rank": 45,
+   "大学": "東京都立大学",
+   "entrants": 11,
+   "with10000m": 11,
+   "avg_10000m_top10": "33:39.10",
+   "avg_sec": 2019.1,
+   "src": {
+    "url": "https://hakone-ekiden.jp/_assets/2026/0add1f674987cadef0e1621261c9c7195d1bcf40.pdf",
+    "quote": "45.東京都立大学",
+    "quote_verified": true
+   }
+  }
+ ],
+ "ten_k_avg_note": "関東学連公式『第103回予選会エントリー一覧(10月5日時点)』PDFの『10000m資格記録』欄(2025/1/1以降の公認ベスト)から、各校エントリー(最大16人)のうち10000m記録を持つ上位10人の平均を自分で計算(100分の1秒まで)。予選会45校のみ。シード10校(青学・國學院・順天堂・早稲田・中央・駒澤・城西・創価・帝京・日大)は未発表(箱根本戦のチームエントリーは12月)。公式の発表集計ではなく計算値。",
+ "notes": "【取れなかった/まだ無い】(1) 第103回予選会の通過校・結果: 2026-10-17開催のため未発表(null)。(2) 全日本大学駅伝2026の結果: 11/1開催のため未発表。出場27チームの一覧(zenkoku_2026.出場校)と日程は公式サイトにあり。(3) シード10校(第102回上位10校)の1万m上位10人平均: 公式・報道ともまだ無い(箱根本戦のチームエントリー=12月)。代わりに、予選会45校のエントリー一覧(10/5時点)の10000m資格記録から自分で計算した上位10人平均(ten_k_avg)と、出雲駅伝2026の大会資料の上位6人平均の上位3校(izumo_2026_entry_avg)を付けた。ten_k_avgは計算値で、留学生も含む。公式の集計ではない。(4) 高低差(標高差)の全区間の数字: 公式・読売とも図(画像)で、本文の数字は5区の最高点標高874mと『高低差800m以上』、坂の一部(course_elevation)のみ。(5) 第102回予選会の出場校数: チーム成績表の行数(41)で、報道の『42チーム』とは別集計の可能性(棄権・未出走校の扱いは未確認)。【数字の読み方の注意】(a) hakone-ekiden.jp/course/ のコース別『歴代記録ランキング』は第101回までで更新されていない(5区は黒田朝日1:07:16の第102回記録が入っていない)ので不採用。区間記録は読売の『区間記録歴代ベスト5(第102回まで)』(course[].record_top5_to_r102)を採用。(b) 第102回は区間賞=各校の『区間順位1位』を公式の大学別ページから抽出(関東学生連合は参考扱いで除外)。(c) 年の対応: 第93回=2017年 ... 第102回=2026年(開催は各1月)。(d) 第103回の出場21チーム=前年シード10校+予選会通過10校+関東学生連合(参考扱い)。(e) 出雲2026: 22チーム出場(アイビーリーグ選抜・中国四国学連選抜を含む)。上位は2:05:56(大会新)の早稲田大、58秒差で國學院大。前大会記録は駒澤大2:07:51(第35回)。"
+}
