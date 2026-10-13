@@ -29,7 +29,7 @@ MIN_TEXT = 2400                    # characters of editorial text for a page to 
 SLUG = re.compile(r"[a-z0-9]+(-[a-z0-9]+)*")
 # what an editor who has not used the product must not write (a made-up use is a made-up review), besides dailypicks.BANNED
 EXPERIENCE = ["使ってみ", "試してみ", "試した", "食べてみ", "飲んでみ", "着てみ", "買ってみ", "購入してみ", "開けてみ", "実際に使", "実際に食べ", "実際に飲", "私は", "わたしは", "我が家", "うちでは", "編集部で試", "検証した"]
-PANELS = 4
+PANELS = 4                        # at most; an article may carry 1-4 pictures (a single illustration or mood image, a pair, a strip of three, or four panels)
 MAX_COMMAS = 3.9                  # 読点 per 100 characters of the editorial text (natural writing is about 2.5-3.5; the first drafts had 4-5)
 
 
@@ -100,8 +100,8 @@ def problems(f: dict, entry: dict | None, img_dir: Path | None = None) -> list[s
     if not (sc.get("label") and 120 <= len(sc.get("text", "")) <= 480 and 40 <= len(sc.get("reaction", "")) <= 220) or "つくった" not in sc["label"] + sc["text"] and "想定" not in sc["label"]:
         out.append(f"{slug}: scene needs a label that says it is made up (想定), text 120-480 and reaction 40-220 characters")
     m = f["manga"]
-    if len(m.get("panels", [])) != PANELS or any(not (p.get("img") and 20 <= len(p.get("alt", "")) <= 90 and 6 <= len(p.get("cap", "")) <= 44) for p in m["panels"]):
-        out.append(f"{slug}: manga needs {PANELS} panels (img, alt 20-90, cap 6-44 characters)")
+    if not 1 <= len(m.get("panels", [])) <= PANELS or any(not (p.get("img") and 20 <= len(p.get("alt", "")) <= 90 and 6 <= len(p.get("cap", "")) <= 44) for p in m["panels"]):
+        out.append(f"{slug}: manga needs 1-{PANELS} pictures (img, alt 20-90, cap 6-44 characters)")
     else:
         base = (img_dir or IMG_DIR) / slug
         for p in m["panels"]:
@@ -117,7 +117,7 @@ def problems(f: dict, entry: dict | None, img_dir: Path | None = None) -> list[s
             except Exception:                                   # no Pillow here: the size is not checked
                 pass
         if sum((base / p["img"]).stat().st_size for p in m["panels"] if (base / p["img"]).exists()) > 1_000_000:
-            out.append(f"{slug}: the four panels are over 1 MB together")
+            out.append(f"{slug}: the pictures are over 1 MB together")
     c = f["compare"]
     if not (c.get("words") and c.get("label")):
         out.append(f"{slug}: compare needs words and a label")
@@ -250,7 +250,7 @@ def _manga(f: dict) -> str:
     m = f["manga"]
     cells = "".join(f'<figure class="mg-cell"><img src="/assets/features/{esc(f["slug"])}/{esc(p["img"])}" alt="{esc(p["alt"])}" width="768" height="768" loading="lazy" decoding="async"><figcaption>{esc(p["cap"])}</figcaption></figure>'
                     for p in m["panels"])
-    return f'<div class="mg" role="group" aria-label="{esc(m["title"])}">{cells}</div>'
+    return f'<div class="mg mg-n{len(m["panels"])}" role="group" aria-label="{esc(m["title"])}">{cells}</div>'
 
 
 def _alts(cfg: dict, d: dict, day: dict, refs: list[str]) -> str:
