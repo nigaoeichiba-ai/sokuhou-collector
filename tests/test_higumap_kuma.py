@@ -33,8 +33,8 @@ def page(cid, name):
 
 SITE = {
     "/recent/pmCityList": json.dumps(["11", "12", "13", "14", "15"]),
-    "/map/11/2026": page(1, "旭川市"), "/map/reportsJson?cityId=1&fiscalYear=2026": json.dumps(reports((2026, 4, 3), (2026, 4, 9), (2026, 10, 11), (2026, 6, 1))),
-    "/map/12/2026": page(2, "鹿部町"), "/map/reportsJson?cityId=2&fiscalYear=2026": json.dumps(reports((2026, 10, 1), (2026, 10, 1))),
+    "/map/11/2026": page(1, "士別市"), "/map/reportsJson?cityId=1&fiscalYear=2026": json.dumps(reports((2026, 4, 3), (2026, 4, 9), (2026, 10, 11), (2026, 6, 1))),
+    "/map/12/2026": page(2, "釧路市"), "/map/reportsJson?cityId=2&fiscalYear=2026": json.dumps(reports((2026, 10, 1), (2026, 10, 1))),
     "/map/13/2026": page(3, "美唄市"), "/map/reportsJson?cityId=3&fiscalYear=2026": json.dumps(reports((2026, 8, 26))),          # counted by sorachi_kuma
     "/map/14/2026": page(4, "南富良野町"), "/map/reportsJson?cityId=4&fiscalYear=2026": json.dumps(reports((2026, 5, 5), undated=6)),      # mostly without a date
     "/map/15/2026": page(5, "弟子屈町"), "/map/reportsJson?cityId=5&fiscalYear=2026": json.dumps(reports()),
@@ -61,16 +61,19 @@ class HigumapKumaTest(unittest.TestCase):
 
     def test_each_municipality_is_counted_by_month_from_its_own_list(self):
         m = self.out["municipalities"]
-        self.assertEqual(m["旭川市"], {"monthly": {"R08": {"4": 2, "6": 1, "10": 1}}, "latest": "2026-10-11"})
-        self.assertEqual(m["鹿部町"]["monthly"]["R08"], {"10": 2})
+        self.assertEqual(m["士別市"], {"monthly": {"R08": {"4": 2, "6": 1, "10": 1}}, "latest": "2026-10-11"})
+        self.assertEqual(m["釧路市"]["monthly"]["R08"], {"10": 2})
         self.assertEqual((self.out["mode"], self.out["source"], self.out["fy_current"], self.out["total_fy"], self.out["as_of"]), ("counts", "higumap", "R08", 6, "2026-10-11"))
 
     def test_the_four_towns_sorachi_already_covers_and_the_undated_or_empty_ones_are_left_out(self):
-        self.assertEqual(sorted(self.out["municipalities"]), ["旭川市", "鹿部町"])
+        self.assertEqual(sorted(self.out["municipalities"]), ["士別市", "釧路市"])
+        self.assertTrue(kuma.IN_SORACHI.isdisjoint(kuma.CONFIRMED))
 
-    def test_a_municipality_whose_own_publication_could_not_be_confirmed_is_left_out(self):
+    def test_a_municipality_not_confirmed_by_two_publications_is_left_out(self):
         site = {**SITE, "/map/12/2026": page(2, "北斗市")}
-        self.assertEqual(sorted(collect(site)["municipalities"]), ["旭川市"])
+        self.assertEqual(sorted(collect(site)["municipalities"]), ["士別市"])
+        self.assertIn("士別市", kuma.CONFIRMED)
+        self.assertNotIn("北斗市", kuma.CONFIRMED)
 
     def test_only_dates_are_kept_no_position_and_no_text(self):
         flat = json.dumps(self.out, ensure_ascii=False)
@@ -82,7 +85,7 @@ class HigumapKumaTest(unittest.TestCase):
         log = []
         collect(log=log)
         self.assertTrue(all(u.startswith("https://higumap.info/") for u in log))
-        self.assertEqual(sum("reportsJson" in u for u in log), 4)       # the town sorachi covers is not asked for its list
+        self.assertEqual(sum("reportsJson" in u for u in log), 2)       # only the confirmed towns are asked for their list
 
     def test_a_changed_page_or_list_stores_nothing(self):
         with self.assertRaises(kuma.HigumapKumaSourceError):
@@ -126,15 +129,27 @@ class HokkaidoPageTest(unittest.TestCase):
 
     def test_the_record_page_carries_the_counts_with_their_source_and_the_scope_in_the_title(self):
         html = (self.out / "live/hokkaido/index.html").read_text(encoding="utf-8")
-        self.assertIn("ひぐまっぷ", re.search(r"<title>(.*?)</title>", html).group(1))
+        self.assertIn("道内の一部の市町村", re.search(r"<title>(.*?)</title>", html).group(1))
         flat = self.text("live/hokkaido/index.html")
-        for word in ("旭川市", "鹿部町", "北海道の市町村(ひぐまっぷ)の件数", "作成・保証したものではありません"):
+        for word in ("士別市", "釧路市", "北海道の市町村の件数", "作成・保証したものではありません"):
             self.assertIn(word, flat)
         self.assertNotIn("南富良野町", flat)
 
+    def test_the_counts_name_no_source_and_carry_no_link_to_one(self):
+        html = (self.out / "live/hokkaido/index.html").read_text(encoding="utf-8")
+        section = html[html.index("北海道の市町村の件数"):]
+        section = section[:section.index("</p>", section.index("作成・保証したものではありません"))]
+        self.assertNotIn("higumap", section.lower())
+        self.assertNotIn("ひぐまっぷ", section)
+        self.assertNotIn("href=\"http", section)
+        for rel in ("cite/index.html", "live/index.html", "hokkaido/index.html", "about/index.html"):
+            page = (self.out / rel).read_text(encoding="utf-8")
+            self.assertNotIn("higumap", page.lower(), rel)
+            self.assertNotIn("ひぐまっぷ", page, rel)
+
     def test_there_is_no_second_page_for_the_same_address_and_the_ministrys_page_links_to_it(self):
         self.assertEqual([f for f in self.files if f.startswith("live/hokkaido/") and f.endswith("index.html") and f.count("/") == 2], ["live/hokkaido/index.html"])
-        self.assertIn("北海道の市町村(ひぐまっぷ)が公表している件数", self.text("hokkaido/index.html"))
+        self.assertIn("北海道の市町村が公表している件数", self.text("hokkaido/index.html"))
 
     def test_the_site_checker_passes(self):
         self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])

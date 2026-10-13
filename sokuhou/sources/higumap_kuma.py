@@ -1,12 +1,16 @@
-"""北海道のヒグマ出没(ひぐまっぷに参加する市町村の分。月別の件数だけを保存する)。
+"""北海道のヒグマ出没(複数の公開情報で一致を確認できた市町村の分。月別の件数だけを保存し、出典は載せない)。
 
 北海道は、全道の出没件数を集計・公表していない(環境省の表の北海道は「-」)。市町村は、それぞれのサイトで出没情報を公開しており、
-道内の60あまりの市町村は、同じ仕組み「ひぐまっぷ」(https://higumap.info/ 、ダッピスタジオ合同会社)で、地図つきの一覧を公開している。
-このアダプタは、その公開マップが画面の描画に使っている一覧(日付・位置・ひと言の内容)から、市町村ごとの日付だけを読んで数える。位置・内容は保存しない。
-日付を載せていない市町村(南富良野町・美瑛町・森町)は、数えない。空知総合振興局が載せている4市町(美唄市・芦別市・新十津川町・浦臼町)は、
-sorachi_kuma と二重にならないよう除く。
-運営は民間のダッピスタジオ合同会社で、市町村が自分で登録する。2026-10-13 の照合: 道の「市町村ヒグマ関連情報リンク集」と市町村の公式ページが、ひぐまっぷを自分の公開手段として案内している市町村
-(55のうち49)と、市の公式ページに別の一覧があって件数が一致した4市(士別70/70・苫小牧44/44・千歳41/41・釧路27/27)だけを数える。確認できなかった5市町(NOT_CONFIRMED)は除く。1回に約130回のアクセス(市町村ごとに2回)で、間隔をあける。
+道内の60あまりの市町村は、同じ仕組み「ひぐまっぷ」(https://higumap.info/ 、民間のダッピスタジオ合同会社。市町村が自分で登録する)で、地図つきの一覧を公開している。
+このアダプタは、その公開マップが画面の描画に使っている一覧(日付・位置・ひと言)から、市町村ごとの日付だけを読んで数える。位置・内容は保存しない。
+
+載せるのは CONFIRMED の市町村だけ(オーナーの方針 2026-10-13「2媒体以上に同じ内容があれば、広く公開された事実として掲載する。出典・リンクは記載しない」)。
+2026-10-13 の確認: (1) 市町村の公式ページ(または道の「市町村ヒグマ関連情報リンク集」)が、ひぐまっぷを自分の公開手段として案内している、かつ
+(2) 市の公式ページに別の一覧があって件数が一致した(士別70/70・苫小牧44/44・千歳41/41・釧路27/27)、または競合の KumaWatch の直近1年・90日の件数と、
+差が max(3, 15%) 以内(手作業で1回だけ照合。競合へ毎日アクセスはしない)。一致しなかった市町村は載せない。
+新しい市町村を足すときは、同じ確認をして CONFIRMED に入れる(docs/KUMA_HOKKAIDO_CHIBA_2026-10-13.md の手順)。
+空知総合振興局が載せている4市町(美唄市・芦別市・新十津川町・浦臼町)は、sorachi_kuma と二重にならないよう除く。日付を載せない市町村は数えない。
+1回に約130アクセス(市町村ごとに2回)で、間隔をあける。
 """
 from __future__ import annotations
 
@@ -20,15 +24,16 @@ from sokuhou.sources import kumacounts, kumalib
 
 ROOT = "https://higumap.info"
 PAGE = ROOT + "/recent"
-CREDIT = ("出典: ひぐまっぷ(https://higumap.info/ )で各市町村が公開しているヒグマの出没情報から、月別の件数を、当サイトが集計して作成"
-          "(各市町村が作成したものではありません)")
+CREDIT = "複数の公開情報で一致を確認できた市町村の分を、公開されている情報から、当サイトが月別に集計して作成(各市町村が作成したものではありません)"
 UPDATE_NOTE = ("各市町村が、情報が入るたびに(ほぼ随時)更新します。最新の記録は、更新時点から遅れます。件数は、目撃のほか、痕跡や捕獲などの報告を含みます。"
-               "ひぐまっぷに参加していない市町村や、日付を載せていない市町村は、含まれません")
+               "道内の一部の市町村の分だけで、道全体の件数ではありません")
 IN_SORACHI = frozenset({"美唄市", "芦別市", "新十津川町", "浦臼町"})      # already counted, with their places, by sorachi_kuma
 MIN_ROWS = 300
 UNPARSED_LIMIT = 0.05
 EMPTY_LIMIT = 0.02
-NOT_CONFIRMED = frozenset({"七飯町", "北斗市", "東川町", "寿都町", "長万部町"})     # no official page of the municipality could be tied to its Higumap map (2026-10-13)
+CONFIRMED = frozenset({       # towns whose two publications agree (checked by hand on 2026-10-13, see the docstring)
+    "せたな町", "上ノ国町", "中川町", "千歳市", "厚岸町", "厚沢部町", "厚真町", "名寄市", "士別市", "安平町", "当麻町", "恵庭市", "愛別町", "木古内町", "松前町",
+    "標茶町", "池田町", "津別町", "滝上町", "紋別市", "置戸町", "興部町", "苫小牧市", "訓子府町", "釧路市", "鶴居村", "黒松内町"})
 UNDATED_SHARE = 0.5          # a municipality whose reports mostly carry no date is not counted at all
 
 
@@ -90,7 +95,7 @@ def collect(now=None, fetch_fn=None, pause=None) -> dict:
     for mid in ids:
         pause()
         cid, name = city_of_page(fetch_fn(f"{ROOT}/map/{mid}/{year}").decode("utf-8", "replace"))
-        if name in IN_SORACHI or name in NOT_CONFIRMED or name in seen or not kumacounts.is_municipality(name):
+        if name in IN_SORACHI or name not in CONFIRMED or name in seen or not kumacounts.is_municipality(name):
             continue
         pause()
         got, undated = days(fetch_fn(f"{ROOT}/map/reportsJson?cityId={cid}&fiscalYear={year}"))
