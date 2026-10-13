@@ -1,0 +1,145 @@
+{
+  "v": 1,
+  "checked": "2026-10-13",
+  "note": "大手メディアが公開している RSS(2026-10-13 に、この環境から実際に取れたもの)。見出しは『手がかり』であって出典ではない。結果・日付は、主催者のページと別の会社のページで確かめ、自分の言葉で書く(sites/atomou/rssfeed.py)。company は記事を出した会社(Yahoo!ニュースの配信ページでも、元の会社名)。同じ会社は1か所と数える。NHK の RSS は 2026-08-09 で更新が止まっている(使わない。NHK の記事は news.web.nhk のページを直接開く)。取れなかった/404: スポーツナビ(RSS なし。ページは直接開ける)、読売、スポニチ本体、産経、東京、日経、デイリー、報知、時事の Yahoo 配信。",
+  "sources": [
+    {
+      "id": "asahi-sports",
+      "company": "朝日新聞",
+      "kind": "sports",
+      "url": "https://www.asahi.com/rss/asahi/sports.rdf"
+    },
+    {
+      "id": "mainichi-sports",
+      "company": "毎日新聞",
+      "kind": "sports",
+      "url": "https://mainichi.jp/rss/etc/mainichi-sports.rss"
+    },
+    {
+      "id": "jiji-ranking",
+      "company": "時事通信",
+      "kind": "general",
+      "url": "https://www.jiji.com/rss/ranking.rdf"
+    },
+    {
+      "id": "kyodo-yahoo",
+      "company": "共同通信",
+      "kind": "general",
+      "url": "https://news.yahoo.co.jp/rss/media/kyodonews/all.xml"
+    },
+    {
+      "id": "nikkan-yahoo",
+      "company": "日刊スポーツ",
+      "kind": "sports",
+      "url": "https://news.yahoo.co.jp/rss/media/nksports/all.xml"
+    },
+    {
+      "id": "sponichi-yahoo",
+      "company": "スポーツニッポン",
+      "kind": "sports",
+      "url": "https://news.yahoo.co.jp/rss/media/spnannex/all.xml"
+    },
+    {
+      "id": "sanspo-yahoo",
+      "company": "サンケイスポーツ",
+      "kind": "sports",
+      "url": "https://news.yahoo.co.jp/rss/media/sanspo/all.xml"
+    },
+    {
+      "id": "fullcount-yahoo",
+      "company": "Full-Count",
+      "kind": "sports",
+      "url": "https://news.yahoo.co.jp/rss/media/fullcount/all.xml"
+    },
+    {
+      "id": "footballchannel-yahoo",
+      "company": "フットボールチャンネル",
+      "kind": "sports",
+      "url": "https://news.yahoo.co.jp/rss/media/footballc/all.xml"
+    },
+    {
+      "id": "number-yahoo",
+      "company": "Number",
+      "kind": "sports",
+      "url": "https://news.yahoo.co.jp/rss/media/number/all.xml"
+    },
+    {
+      "id": "encount-yahoo",
+      "company": "ENCOUNT",
+      "kind": "entertainment",
+      "url": "https://news.yahoo.co.jp/rss/media/encount/all.xml"
+    },
+    {
+      "id": "mdpr-yahoo",
+      "company": "モデルプレス",
+      "kind": "entertainment",
+      "url": "https://news.yahoo.co.jp/rss/media/mdpr/all.xml"
+    },
+    {
+      "id": "soccerking",
+      "company": "サッカーキング",
+      "kind": "sports",
+      "url": "https://www.soccer-king.jp/feed"
+    },
+    {
+      "id": "autosport",
+      "company": "オートスポーツweb",
+      "kind": "sports",
+      "url": "https://www.as-web.jp/feed"
+    },
+    {
+      "id": "baseballchannel",
+      "company": "ベースボールチャンネル",
+      "kind": "sports",
+      "url": "https://www.baseballchannel.jp/feed/"
+    },
+    {
+      "id": "itmedia",
+      "company": "ITmedia",
+      "kind": "tech",
+      "url": "https://rss.itmedia.co.jp/rss/2.0/itmedia_all.xml"
+    },
+    {
+      "id": "yahoo-sports",
+      "company": "Yahoo!ニュース",
+      "kind": "sports",
+      "url": "https://news.yahoo.co.jp/rss/topics/sports.xml"
+    },
+    {
+      "id": "yahoo-domestic",
+      "company": "Yahoo!ニュース",
+      "kind": "general",
+      "url": "https://news.yahoo.co.jp/rss/topics/domestic.xml"
+    },
+    {
+      "id": "yahoo-business",
+      "company": "Yahoo!ニュース",
+      "kind": "business",
+      "url": "https://news.yahoo.co.jp/rss/topics/business.xml"
+    },
+    {
+      "id": "yahoo-entertainment",
+      "company": "Yahoo!ニュース",
+      "kind": "entertainment",
+      "url": "https://news.yahoo.co.jp/rss/topics/entertainment.xml"
+    },
+    {
+      "id": "yahoo-world",
+      "company": "Yahoo!ニュース",
+      "kind": "world",
+      "url": "https://news.yahoo.co.jp/rss/topics/world.xml"
+    },
+    {
+      "id": "yahoo-it",
+      "company": "Yahoo!ニュース",
+      "kind": "tech",
+      "url": "https://news.yahoo.co.jp/rss/topics/it.xml"
+    },
+    {
+      "id": "yahoo-science",
+      "company": "Yahoo!ニュース",
+      "kind": "science",
+      "url": "https://news.yahoo.co.jp/rss/topics/science.xml"
+    }
+  ]
+}
