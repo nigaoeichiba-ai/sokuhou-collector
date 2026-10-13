@@ -1133,10 +1133,10 @@
     return limit ? hits.slice(0, limit) : hits;
   }
   function pageSearch() {
-    var q = $('#q'), out = $('#results'), info = $('#found'), st = { g: P.g || '', m: P.m || '', s: P.s || '', t: P.t === '1' }, cat = [], statT, topSubs = {};
+    var q = $('#q'), out = $('#results'), info = $('#found'), st = { g: P.g || '', m: P.m || '', s: P.s || '', t: P.t === '1', a: P.a === '1' }, cat = [], arch = null, statT, topSubs = {};
     q.value = P.q || '';
     function sync() {
-      var u = '/search/?' + [q.value ? 'q=' + encodeURIComponent(q.value) : '', st.g ? 'g=' + st.g : '', st.g && st.m ? 'm=' + encodeURIComponent(st.m) : '', st.g && st.m && st.s ? 's=' + encodeURIComponent(st.s) : '', st.t ? 't=1' : ''].filter(Boolean).join('&');
+      var u = '/search/?' + [q.value ? 'q=' + encodeURIComponent(q.value) : '', st.g ? 'g=' + st.g : '', st.g && st.m ? 'm=' + encodeURIComponent(st.m) : '', st.g && st.m && st.s ? 's=' + encodeURIComponent(st.s) : '', st.t ? 't=1' : '', st.a ? 'a=1' : ''].filter(Boolean).join('&');
       try { history.replaceState(null, '', u.replace(/\?$/, '')); } catch (e) { /* ignore */ }
     }
     function run() {
@@ -1145,8 +1145,8 @@
       var tb = $('#f-son'); if (tb) tb.setAttribute('aria-pressed', st.t ? 'true' : 'false');
       var gi = CONF.slugs.indexOf(st.g);
       levels(gi);   // first: it drops a middle or small choice the catalogue does not have (a broken address), then the list is made
-      var hits = cat.filter(function (c) {
-        if (c.status === 'ended' && !c.keep) return false;
+      var hits = (st.a && arch ? cat.concat(arch) : cat).filter(function (c) {
+        if (c.status === 'ended' && !c.keep && !st.a) return false;   // the finished days (the archive) are found only when it is asked for
         if (gi >= 0 && c.group !== CONF.groups[gi]) return false;
         if (gi >= 0 && st.m && c.mid !== st.m) return false;
         if (gi >= 0 && st.m && st.s && (st.s === '*' ? topSubs[c.subject] : c.subject !== st.s)) return false;
@@ -1200,7 +1200,13 @@
     $$('[data-g-chip]').forEach(function (b) { b.addEventListener('click', function () { st.g = b.getAttribute('data-g-chip'); st.m = ''; st.s = ''; run(); }); });
     var tb = $('#f-son');
     if (tb) tb.addEventListener('click', function () { st.t = !st.t; run(); });
-    loadCatalog().then(function (c) { cat = c || []; if (!c) info.textContent = '読み込めませんでした。しばらくして開き直してください。'; run(); wirePub(run); });
+    var ab = $('#f-arch');   // 終わった日も含める: the archive is a file of its own, read when it is asked for
+    function wantArchive() {
+      if (!st.a || arch) { run(); return; }
+      fetch('/assets/archive.json?v=' + encodeURIComponent(CONF.v)).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; }).then(function (j) { arch = j || []; stat('act:archive_on'); run(); });
+    }
+    if (ab) { ab.checked = st.a; ab.addEventListener('change', function () { st.a = ab.checked; wantArchive(); }); }
+    loadCatalog().then(function (c) { cat = c || []; if (!c) info.textContent = '読み込めませんでした。しばらくして開き直してください。'; wantArchive(); wirePub(run); });
   }
 
 

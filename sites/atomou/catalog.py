@@ -19,7 +19,8 @@ ROOT = Path(__file__).resolve().parents[2]
 SEED_DIR = ROOT / "data" / "atomou"
 WEEKDAYS = "月火水木金土日"
 STALE_DAYS = 90        # a date checked longer ago than this is shown as "確認日が古い"
-KEEP_AFTER_DAYS = 30   # a finished event keeps its page (as "もう○日") this long; after that it is hidden and not indexed
+KEEP_AFTER_DAYS = 30   # a finished event stays in the lists (as "もう○日") this long; after that it is in the ARCHIVE: its page is there, it is found with "終わった日も含める", it is not in the lists
+                       # and not indexed -- until a result is written for it (a result page is indexable)
 LEAD = {"締切": 45, "試験日": 45, "施行": 45, "改定": 45}
 LEAD_DEFAULT = 60       # days before the date that the page may be indexed
 QUIET = ("grief", "disaster", "medical", "legal")
@@ -189,10 +190,40 @@ def load_seeds(seed_dir: Path = SEED_DIR) -> list[tuple[str, dict]]:
     return out
 
 
+RESULT_KEYS = ("text", "facts", "written_on", "source_url", "source_quote", "source_url2", "source_quote2")
+
+
+def result_ok(r: dict, today: date | None = None) -> bool:
+    """A result of a finished day (data/atomou/result_*.json): facts and a few sentences of our own words, checked on two pages of two companies (resultcheck.py sets "verified").
+    The page of the day shows it, and a day with a result may be found by search engines."""
+    if not isinstance(r, dict) or r.get("verified") is not True or any(not r.get(k) for k in RESULT_KEYS):
+        return False
+    facts, text = r["facts"], str(r["text"])
+    if not (60 <= len(text) <= 1200) or not isinstance(facts, list) or not 3 <= len(facts) <= 14:
+        return False
+    if any(not (isinstance(f, list) and len(f) == 2 and 1 <= len(str(f[0])) <= 12 and 1 <= len(str(f[1])) <= 60) for f in facts):
+        return False
+    if _reg(r["source_url"]) == _reg(r["source_url2"]) or not str(r["source_url"]).startswith("https://") or not str(r["source_url2"]).startswith("https://"):
+        return False
+    w = _d(r["written_on"])
+    return w is not None and (today is None or w <= today)
+
+
+def load_results(seed_dir: Path = SEED_DIR, today: date | None = None) -> dict:
+    """{(title, date): result} from the files data/atomou/result_*.json (a list of {title, date, text, facts, ...})."""
+    out = {}
+    for path in sorted(seed_dir.glob("result_*.json")):
+        for it in json.loads(path.read_text(encoding="utf-8")):
+            if result_ok(it, today):
+                out[(str(it["title"]).strip(), it["date"])] = {k: (it[k] if k != "text" else str(it[k]).strip()) for k in RESULT_KEYS}
+    return out
+
+
 def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None = None) -> tuple[list[dict], Counter]:
     block = blocklist if blocklist is not None else (json.loads((seed_dir / "blocklist.json").read_text(encoding="utf-8"))
                                                        if (seed_dir / "blocklist.json").exists() else {"keywords": []})
     entries, rejects, seen, seen_days = [], Counter(), set(), set()
+    results = load_results(seed_dir, today)
     for base, it in load_seeds(seed_dir):
         if not it.get("verified"):
             rejects["未確認"] += 1
@@ -213,9 +244,9 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
         end = _d(it.get("date_end")) if it.get("date_end") else None
         last = end or d
         keep = bool(it.get("keep"))        # a day people look for long after it (a big event, a history day, a yearly event) is never hidden; a new product or a short notice is, after KEEP_AFTER_DAYS
-        if last < today - timedelta(days=KEEP_AFTER_DAYS) and not keep:
-            rejects["終了して30日超"] += 1
-            continue
+        archived = last < today - timedelta(days=KEEP_AFTER_DAYS) and not keep
+        if archived:
+            rejects["アーカイブ(終了して30日超)"] += 1      # counted, not dropped
         group = (it.get("group") if it.get("group") in GROUPS else LEGACY_GROUP.get(it.get("group"))) or GROUP_OF_SUBJECT.get(str(it.get("subject") or "").strip()) or GROUP_OF_CATEGORY.get(it["category"]) or GROUP_OF_FILE.get(base)
         if not group:
             rejects["ジャンル不明"] += 1
@@ -248,7 +279,8 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
             "source_quote": (it.get("source_quote") or "")[:60] or None,
             "checked_on": it["checked_on"], "added": _added(it), "status": ("ended" if last < today else ("old_checked" if (today - checked).days > STALE_DAYS else "active")),
             "publish_on": max(date(2000, 1, 1), d - timedelta(days=lead)).isoformat(),
-            "corrected_on": _day_or_empty(it.get("corrected_on")), "changes": _changes(it.get("changes")),
+            "corrected_on": _day_or_empty(it.get("corrected_on")), "changes": _changes(it.get("changes")), "archived": archived,
+            "result": results.get((str(it["title"]).strip(), it["date"])),
         })
     # an estimate ("例年12月31日ごろ") stands only until the official day of that cycle is known: a confirmed entry of the same series (the key names the cycle: "kouhaku-2026") takes its place
     confirmed = {e["series"] for e in entries if e["series"] and not e["estimated"]}
@@ -271,10 +303,18 @@ def indexable_ids(entries: list[dict], today: date, launch: date, per_week: int 
     allowed = per_week * weeks
     eligible = [e for e in entries if (e["status"] == "active" or e.get("keep")) and e["publish_on"] <= today.isoformat()]     # a kept day is searched for after it has passed too
     eligible.sort(key=lambda e: (e["date"], e["title"]))
-    return {e["id"] for e in eligible[:allowed]}
+    return {e["id"] for e in eligible[:allowed]} | {e["id"] for e in entries if e.get("result")}     # a day with a result is a page worth finding: outside the allowance
+
+
+PUBLIC_KEYS = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "subject", "what", "place", "tags", "quiet", "ad_ok", "son_toku", "status", "added", "keep", "estimated", "typical")
+
+
+def archive_json(entries: list[dict]) -> list[dict]:
+    """The archived days (assets/archive.json): read by the search page only when "終わった日も含める" is ticked."""
+    return [{k: e[k] for k in PUBLIC_KEYS} for e in entries if e.get("archived")]
 
 
 def public_json(entries: list[dict]) -> list[dict]:
-    """The fields the browser needs (assets/catalog.json)."""
+    """The fields the browser needs (assets/catalog.json): the days that are not in the archive."""
     keys = ("id", "title", "date", "date_end", "precision", "weekday", "kind", "category", "group", "mid", "region", "subject", "what", "place", "tags", "quiet", "ad_ok", "son_toku", "status", "added", "keep", "estimated", "typical")
-    return [{k: e[k] for k in keys} for e in entries]
+    return [{k: e[k] for k in keys} for e in entries if not e.get("archived")]

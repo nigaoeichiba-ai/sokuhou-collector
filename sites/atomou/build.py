@@ -23,7 +23,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.atomou import articles, bizday, calendar_data, catalog, datecore, feeds, ogimage, skins, specials, usecases  # noqa: E402
+from sites.atomou import articles, bizday, calendar_data, catalog, datecore, feeds, features, ogimage, skins, specials, usecases  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
@@ -319,6 +319,7 @@ def strip_ads(html: str) -> str:
 class Ctx:
     def __init__(self, cfg: dict, preview: bool, today: date, entries: list[dict], skins_css: str):
         self.cfg, self.preview, self.today, self.entries = cfg, preview, today, entries
+        self.features: list[dict] = []     # the 特集 (data/atomou/features); set by build_pages
         self.shown = [g for g in catalog.GROUPS if any(e["group"] == g and e["status"] != "ended" for e in entries)]   # the genres that have a day to show
         self.cat_json = json.dumps(catalog.public_json(entries), ensure_ascii=False, separators=(",", ":"))
         self.skins_css = skins_css
@@ -421,7 +422,7 @@ def member_line(cfg: dict) -> str:
 def home_page(c: Ctx) -> str:
     live = live_entries(c.entries, c.today)
     first = diverse(live, 6)
-    chips = '<a class="chip" href="/topics/">最新・トピックス</a><a class="chip" href="/kyou/">今日は何の日</a><a class="chip" href="/new/">新着・人気</a><a class="chip" href="/quiz/">今日の1問</a><a class="chip" href="/region/">地域</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS) if g in c.shown)
+    chips = ('<a class="chip" href="/tokushu/">特集</a>' if c.features else '') + '<a class="chip" href="/topics/">最新・トピックス</a><a class="chip" href="/kyou/">今日は何の日</a><a class="chip" href="/new/">新着・人気</a><a class="chip" href="/quiz/">今日の1問</a><a class="chip" href="/region/">地域</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS) if g in c.shown)
     ucs = "".join(f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>'
                   for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
     body = f"""<section class="intro setup" id="setup" aria-labelledby="setup-h" hidden></section>
@@ -571,6 +572,7 @@ def search_page(c: Ctx) -> str:
 <p class="lead muted">言葉を入力するか、ジャンルを選んでください。</p>
 {search_form()}
 <div class="chips" role="group" aria-label="ジャンル">{chips}<button type="button" class="chip" id="f-son" aria-pressed="false">お金や手続きの日だけ</button></div>
+<p class="arch-row"><label class="lab" for="f-arch"><input type="checkbox" id="f-arch"> 終わった日も含める(アーカイブ)</label></p>
 <div class="chips" id="mid-chips" role="group" aria-label="中分類" hidden></div>
 <div class="chips" id="sub-chips" role="group" aria-label="小分類" hidden></div>
 {pub_sort_select()}
@@ -886,6 +888,13 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
         rows = "".join(f"<tr><th scope=\"row\">{int(h[:4])}年</th><td>{esc(fmt_date(h))}</td></tr>" for h in e["history"])
         hist = (f'<h2>これまでの日付</h2><p class="small muted">公式のページで確かめた、過去の日付です。</p>'
                 f'<div class="tablewrap"><table class="info-table"><tbody>{rows}</tbody></table></div>')
+    res = e.get("result")
+    result_html = ""
+    if res:
+        rows_ = "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in res["facts"])
+        paras = "".join(f"<p>{esc(p)}</p>" for p in str(res["text"]).split(chr(10)) if p.strip())
+        result_html = (f'<section class="result" id="result"><h2>結果</h2><dl class="info">{rows_}</dl>{paras}'
+                       f'<p class="small muted">{esc(fmt_date(res["written_on"]))}にまとめました。公式の発表をもとにしています。間違いに気づいたときは、<a href="/contact/?kind=date">お問い合わせ</a>からお知らせください。</p></section>')
     vkey, vtext = verify_badge(e)
     vrow = (f'<p class="vrow"><span class="vbadge vb-{vkey}" data-vbadge>{VERIFY_LABELS[vkey]}</span> <span class="small muted" data-vtext>{esc(vtext)}</span> '
             + (f' <a class="small" href="{esc(official_link(e))}" rel="noopener nofollow" target="_blank">公式ページ</a>' if official_link(e) else "") + "</p>")
@@ -900,7 +909,9 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
 <div class="ev-card">{card_html(e, big=True, link=False)}</div>
 {vrow}
 <p class="ev-acts"><a class="btn small" href="/plan/?key=c:{e['id']}">メモ・やることを追加</a>{gcal_btn}</p>
+{features.card_link(c.features, e['title'], e['date'])}
 {"" if quiet else share_block(c, e)}
+{result_html}
 {'' if art else f'<p>{esc(sentence)}</p>'}
 {art}
 {hist}
@@ -916,8 +927,12 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     if est and e.get("typical"):
         fmt, end = e["typical"] + "(予想)", ""
     title = f"{e['title']}{suffix} {fmt} | {NAME}"
+    if res:
+        title = f"{e['title']}の結果 {fmt} | {NAME}"
     place = (e.get("place") or "").strip()
     desc = f"{e['title']}は{fmt}{end}" + (f"、{place}" if place and place not in ("全国", "地域") else "") + "。" + (f"{guide['about'].split('。')[0]}。" if guide else "") + "あと何日かを数えて、予定に入れられます。"
+    if res:
+        desc = str(res["text"]).split(chr(10))[0][:110]
     html = c.page(f"/e/{e['id']}/", title, desc, body + page_ld(c, e, page_url), "event", noindex=not indexable, og=og_path(e))
     return strip_ads(html) if quiet or not e.get("ad_ok", True) else html
 
@@ -1435,6 +1450,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     preview = bool(missing) or not release
     entries, _rejects = catalog.build_catalog(today)
     c = Ctx(cfg, preview, today, entries, skins.css())
+    c.features = features.load_features()
     launch = date.fromisoformat(cfg.get("launch_date") or today.isoformat())
     index_ids = catalog.indexable_ids(entries, today, launch, int(cfg.get("index_per_week", 6)))
     live = live_entries(entries, today)
@@ -1456,6 +1472,16 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
         if not indexable:
             kyou_noindex.add(f"kyou/{md}/index.html")
     pages["new/index.html"] = new_page(c, live)
+    if c.features:      # 特集: long readings made from numbers; a feature that is not finished (準備中) is not found by search engines
+        pages["tokushu/index.html"] = features.features_index(c, c.features, NAME)
+        if not any(features.indexable(f) for f in c.features):
+            kyou_noindex.add("tokushu/index.html")
+        for f in c.features:
+            main_ = next((e for x in f.get("cards") or [] for e in entries if e["title"].strip() == str(x.get("title", "")).strip() and e["date"] == x.get("date")), None)
+            html_, idx_ = features.feature_page(c, f, NAME, card_html(main_, big=True, link=False) if main_ else "")
+            pages[f"tokushu/{f['slug']}/index.html"] = html_
+            if not idx_:
+                kyou_noindex.add(f"tokushu/{f['slug']}/index.html")
     pages["quiz/index.html"] = quiz_page(c)
     pages["rule/index.html"] = rule_page(c)
     pages.update(specials.special_pages(c, entries))      # 特集 under /kyou/: holidays, solar terms, December
@@ -1480,6 +1506,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
                   {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}]}, ensure_ascii=False, indent=1) + "\n"
     pages["sw.js"] = sw_js(c)
     pages["assets/catalog.json"] = c.cat_json
+    pages["assets/archive.json"] = json.dumps(catalog.archive_json(entries), ensure_ascii=False, separators=(",", ":"))   # the finished days: read by the search page when it is asked for
     pages["assets/skins.css"] = c.skins_css
     pages["assets/atomou.js"] = c.bundle
     pages.update(asset_pages(SITE["assets"]))
