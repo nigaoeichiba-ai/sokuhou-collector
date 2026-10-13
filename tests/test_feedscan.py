@@ -68,7 +68,7 @@ class DiscoverTest(unittest.TestCase):
 
 NOW = datetime(2026, 10, 13, 6, 30, tzinfo=kumalib.JST)
 REG = [{"id": "a", "name": "酒田市", "site": "https://c.example/", "feed": "https://c.example/rss.xml", "title": "酒田市"},
-       {"id": "b", "name": "秩父市", "site": "https://t.example/", "feed": "https://t.example/rdf.xml", "title": ""}]
+       {"id": "b", "name": "秩父市", "site": "https://town.example/", "feed": "https://t.example/rdf.xml", "title": ""}]
 
 
 class CollectTest(unittest.TestCase):
@@ -81,6 +81,16 @@ class CollectTest(unittest.TestCase):
         self.assertEqual(len(items), feedscan.KEEP_ITEMS)
         self.assertEqual([i["date"] for i in items], sorted((i["date"] for i in items), reverse=True))
         self.assertNotIn("古い", [i["title"] for i in items])
+
+    def test_an_intranet_or_foreign_link_is_dropped_from_the_stored_items(self):
+        self.assertTrue(feedscan.link_ok("https://www.town.shirataka.lg.jp/item/7345.htm", "https://www.town.shirataka.lg.jp/"))
+        self.assertTrue(feedscan.link_ok("https://sub.city.example/a", "https://city.example/"))
+        for bad in ("http://192.168.0.201/item/7345.htm#itemid7345", "http://localhost/x", "https://evil.example/a", "ftp://city.example/a", "https://notcity.example/a", ""):
+            self.assertFalse(feedscan.link_ok(bad, "https://city.example/"), bad)
+        body = ('<rss version="2.0"><channel><title>x</title><item><title>内部</title><link>http://192.168.0.201/a</link><pubDate>Tue, 13 Oct 2026 09:00:00 +0900</pubDate></item>'
+                '<item><title>外部に出せる</title><link>https://c.example/b</link><pubDate>Tue, 13 Oct 2026 09:00:00 +0900</pubDate></item></channel></rss>').encode()
+        out = feedscan.collect_feeds(REG[:1], lambda u: body, NOW, sleep=lambda s: None)
+        self.assertEqual([i["title"] for i in out["feeds"][0]["items"]], ["外部に出せる"])
 
     def test_a_feed_that_fails_is_listed_without_items_and_merge_fills_it_from_the_last_run(self):
         good = RDF.encode("utf-8")

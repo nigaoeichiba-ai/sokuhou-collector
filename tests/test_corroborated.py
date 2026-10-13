@@ -160,23 +160,13 @@ class JoetsuTest(unittest.TestCase):
         self.assertEqual(naps, [1])
 
 
-class NiigataHookTest(unittest.TestCase):
+class MatchingRowsTest(unittest.TestCase):
     def test_the_prefecture_rows_reach_the_match_with_the_same_reading_as_the_counts(self):
         from sokuhou.sources import arcgis_counts
         ms = lambda day: int(__import__("datetime").datetime(*day, 12, tzinfo=kumalib.JST).timestamp() * 1000)     # noqa: E731
         raw = [(ms((2026, 10, 7)), "7"), (None, "7"), (ms((2026, 10, 5)), "9"), (ms((2026, 10, 5)), "99")]
         got = arcgis_counts.matching_rows(raw, prefecture="新潟県", names={"7": "上越市", "9": "新潟県長岡市"})
         self.assertEqual(got, [(d("2026-10-07"), "上越市"), (d("2026-10-05"), "長岡市")])         # no date / an unknown code: left out
-
-    def test_niigata_reads_joetsu_citys_list_through_the_hook(self):
-        from sokuhou.sources import arcgis_counts, niigata_kuma
-        seen = {}
-        def fake(**kw):
-            seen.update(kw)
-            return kw["corroborate"]({"mode": "counts"}, [(d("2026-10-07"), "上越市")], TODAY, lambda url: b"")
-        with mock.patch.object(arcgis_counts, "collect_counts", fake),                 mock.patch.object(co, "joetsu_reader", lambda: (lambda fetch, pause: co.parse_joetsu_text(JOETSU_TEXT))):
-            out = niigata_kuma.collect(sleep=lambda s: None)
-        self.assertEqual([r["place"] for r in out["corroborated"]], ["清里区寺脇地内"])
 
 
 class ConfirmTest(unittest.TestCase):
@@ -270,7 +260,7 @@ class CarryOverTest(unittest.TestCase):
 
     def test_the_kuma_sources_use_it_and_the_daily_job_installs_pypdf(self):
         by_name = {s.name: s for s in run.GROUPS["kuma"]}
-        for name in ("niigata_kuma", "yamagata_kuma", "saitama_kuma"):
+        for name in ("yamagata_kuma", "saitama_kuma"):
             self.assertIs(by_name[name].merge, co.carry_over, name)
         workflow = (Path(__file__).resolve().parents[1] / ".github" / "workflows" / "kuma-live.yml").read_text(encoding="utf-8")
         self.assertIn("pip install --quiet -r requirements.txt", workflow)

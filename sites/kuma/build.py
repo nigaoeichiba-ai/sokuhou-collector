@@ -25,6 +25,7 @@ from sites.kuma import captures as captures_mod  # noqa: E402
 from sites.kuma import cite as cite_mod  # noqa: E402
 from sites.kuma import finder as finder_mod  # noqa: E402
 from sites.kuma import lastmod as lastmod_mod  # noqa: E402
+from sites.kuma import notices as notices_mod  # noqa: E402
 from sites.kuma import official as official_mod  # noqa: E402
 from sites.kuma import season as season_mod  # noqa: E402
 from sites.kuma import live as live_mod  # noqa: E402
@@ -220,6 +221,10 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
         items = "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
         news_block = (f'<h2>環境省の最近のお知らせ</h2>\n<ul class="link-list">{items}</ul>\n'
                       '<p><a href="/news/">お知らせの一覧</a></p>\n')
+    if d.get("muni_notices"):
+        mi = "".join(f'<li><a href="{esc(x["link"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}・{esc(x["publisher"])}</b></li>' for x in d["muni_notices"][:4])
+        news_block += (f'<h2>自治体の最近のクマ関連のお知らせ</h2>\n<ul class="link-list">{mi}</ul>\n'
+                       '<p><a href="/notices/">自治体のお知らせの一覧</a></p>\n')
     body = f"""<section class="hero hero--kuma">
 <div class="hero-copy">
 <p class="eyebrow">環境省の速報値(都道府県からの聞き取り)</p>
@@ -410,7 +415,7 @@ def news_page(d: dict, cfg: dict, preview: bool) -> str:
 <h1>環境省の、クマに関するお知らせ</h1>
 <p class="lead">環境省の「クマに関する各種情報・取組」のページに載っている、日付つきのお知らせ(大臣の談話・会見、自治体への事務連絡、講習会の案内など)を、新しい順に並べています。リンク先は、環境省のページです。</p>
 <ul class="link-list news-list">{rows}</ul>
-<p class="notice">題名は、環境省のページの表記のままです(日付の後ろにある発信元の記載は省いています)。このサイトでは、報道各社の記事は載せていません。お住まいの地域の最新の情報は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。</p>
+<p class="notice">題名は、環境省のページの表記のままです(日付の後ろにある発信元の記載は省いています)。このサイトでは、報道各社の記事は載せていません。お住まいの地域の最新の情報は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。{' 都道府県・市町村が自分のサイトで発表したお知らせは、<a href="/notices/">自治体のクマ関連のお知らせ</a>にあります。' if d.get("muni_notices") else ''}</p>
 <p class="notice">出典: <a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">環境省「クマに関する各種情報・取組」</a>を加工して作成。環境省が作成したものではありません。取得日: {jp_date(d['fetched_date'])}。</p>"""
     return page(cfg, preview, path="/news/", title="環境省のクマに関するお知らせ(新着)",
                 description="環境省が公表している、クマに関する大臣の談話・会見、自治体への事務連絡などの新着を、日付順に一覧にしています。", body=body)
@@ -691,7 +696,7 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None,
                 prefs: dict | None = None, today: date | None = None,
-                captures: dict | None = None, update_lastmod: bool = False) -> list[str]:
+                captures: dict | None = None, update_lastmod: bool = False, feeds: dict | None = None) -> list[str]:
     global SITE
     missing = missing_config(cfg)
     if release and missing:
@@ -699,6 +704,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     preview = bool(missing)
     d = prepare(raw)
     d["captures"] = captures_mod.prepare(captures)
+    d["muni_feeds"] = feeds
+    d["muni_notices"] = notices_mod.bear_notices(feeds)         # the bear notices of the municipalities' own feeds (sokuhou/feedscan.py)
     links = links or {}
     from sokuhou.sources import kumalib   # a source on the stop list is shown nowhere (list, counts, map, feed, CSV, digest, sources page)
     prefs = {k: v for k, v in (prefs or {}).items() if not kumalib.is_stopped(k)} or None
@@ -724,6 +731,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages["trend/index.html"] = trend_page(d, cfg, preview)
     pages["emergency/index.html"] = emergency_page(d, cfg, preview)
     pages["news/index.html"] = news_page(d, cfg, preview)
+    if d["muni_notices"]:
+        pages["notices/index.html"] = notices_mod.notices_page(lambda **kw: page(cfg, preview, **kw), d["muni_notices"], feeds)
     if any_live:
         lv = d["lv"]
         page_fn = lambda **kw: page(cfg, preview, **kw)  # noqa: E731
@@ -810,12 +819,14 @@ def main() -> None:
     raw = json.loads((data / "env_kuma.json").read_text(encoding="utf-8"))
     prefs = {k: json.loads((data / f"{k}_kuma.json").read_text(encoding="utf-8"))
              for k in live_mod.LIVE_SOURCES if (data / f"{k}_kuma.json").exists()}
+    feeds_file = data / "muni_feeds.json"
+    feeds = json.loads(feeds_file.read_text(encoding="utf-8")) if feeds_file.exists() else None
     cap_file = data / "env_capture_kuma.json"
     captures = json.loads(cap_file.read_text(encoding="utf-8")) if cap_file.exists() else None
     links_file = HERE / "links.json"
     links = json.loads(links_file.read_text(encoding="utf-8")) if links_file.exists() else {}
     try:
-        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, prefs=prefs, captures=captures, update_lastmod=args.update_lastmod)
+        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, prefs=prefs, captures=captures, update_lastmod=args.update_lastmod, feeds=feeds)
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {args.out}")

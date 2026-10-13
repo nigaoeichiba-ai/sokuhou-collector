@@ -49,6 +49,8 @@ LIVE_SOURCES = {
                  "monthly_label": "目撃のほか、痕跡などを含む(ヒグマの記録)", "as_of_text": "最新の記録は{d}の分までです"},
     "toyama": {"pref": "富山", "license": "富山県自然保護課の許可(2026年10月・出典表記は不要)", "name": "富山県", "label": "富山県・県の公式(クマっぷ。位置は載せていません)", "coords": False, "monthly_label": "目撃のほか、痕跡や人身被害の報告を含む",
                "as_of_text": "最新の記録は{d}の分までです"},
+    "niigata": {"pref": "新潟", "license": "新潟県環境対策課の許可(2026年10月・出典表記が必要)", "name": "新潟県", "label": "新潟県・県の公式(にいがたクマ出没マップ)",
+               "monthly_label": "目撃のほか、痕跡や人身被害の報告を含む", "as_of_text": "最新の記録は{d}の分までです"},
     "akita": {"pref": "秋田", "license": "CC BY 4.0", "name": "秋田県", "label": "秋田県・県の公式。オープンデータは月1回ほど更新", "monthly_label": "目撃のほか、痕跡などを含む(クマの記録のみ)",
               "as_of_text": "最新の記録は{d}の分までです"},
 }
@@ -56,8 +58,6 @@ LIVE_SOURCES = {
 LIVE_SOURCES.update({
     "fukushima": {"pref": "福島", "name": "福島県", "label": "福島県・県の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や被害の報告を含む",
                   "as_of_text": "最新の記録は{d}の分までです"},
-    "niigata": {"pref": "新潟", "name": "新潟県", "label": "新潟県・県の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や人身被害の報告を含む",
-                "as_of_text": "最新の記録は{d}の分までです"},
     "yamagata": {"pref": "山形", "name": "山形県", "label": "山形県・県の公式データを集計(件数のみ)", "monthly_label": "クマ目撃マップの報告(人身被害を含む)",
                  "as_of_text": "最新の記録は{d}の分までです"},
     "aomori": {"pref": "青森", "name": "青森県", "label": "青森県「くまログあおもり」を集計(件数のみ)", "monthly_label": "県が確認した報告のみ(目撃のほか、痕跡などを含む)",
@@ -74,6 +74,10 @@ LIVE_SOURCES.update({
                "as_of_text": "最新の記録は{d}の分までです"},
     "ishikawa": {"pref": "石川", "name": "石川県", "label": "石川県・県の公式データを集計(件数。場所は確認できた目撃だけ)", "monthly_label": "目撃の報告(クマらしき動物を含む)",
                "as_of_text": "最新の記録は{d}の分までです"},
+    "fukuchiyama": {"pref": "京都", "scope": "福知山市のみ", "name": "京都府福知山市", "label": "福知山市・市の公式データを集計(件数。場所は確認できた目撃だけ)",
+                    "monthly_label": "クマの目撃の場所のお知らせ", "as_of_text": "最新の記録は{d}の分までです"},
+    "nagano": {"pref": "長野", "scope": "長野市のみ", "name": "長野県長野市", "label": "長野市・市の公式データを集計(件数。場所は確認できた目撃だけ)",
+               "monthly_label": "目撃のほか、痕跡(出没)の報告を含む", "as_of_text": "最新の記録は{d}の分までです(市の更新は月1回)"},
     "otsu": {"pref": "滋賀", "scope": "大津市のみ", "name": "滋賀県大津市", "label": "大津市・市の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や錯誤捕獲の報告を含む",
              "as_of_text": "最新の記録は{d}の分までです"},
 })

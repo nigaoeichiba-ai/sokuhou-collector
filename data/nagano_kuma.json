@@ -1,0 +1,799 @@
+{
+ "as_of": "2026-09-28",
+ "corroborated": [
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-28",
+   "place": "松代 地蔵峠頂上東付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-23",
+   "place": "戸隠 砂田バス停西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-17",
+   "place": "戸隠 栃原中尾地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-13",
+   "place": "松代 松代温泉東側山沿い付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-13",
+   "place": "松代 地蔵峠19号カーブ付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-08",
+   "place": "大岡 芦ノ尻公衆トイレ付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-07",
+   "place": "松代 松代地震観測所付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-06",
+   "place": "大岡 芦沼池西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-06",
+   "place": "信州新町 栃久保上バス停付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-09-01",
+   "place": "戸隠 宝光社駐車場南付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-31",
+   "place": "鬼無里 東京二条地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-31",
+   "place": "大岡 道の駅大岡北付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-30",
+   "place": "大岡 旧芦沼倉庫前バス停付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-27",
+   "place": "鬼無里 田中地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-26",
+   "place": "松代 西条保育園付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-26",
+   "place": "大岡 芦沼北地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-25",
+   "place": "信州新町 宇内坂地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-18",
+   "place": "松代 赤柴遊園地東方向"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-12",
+   "place": "松代 西条小学校西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "浅川 北郷岩原バス停付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "戸隠 鏡池駐車場南付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-09",
+   "place": "松代 岩沢遊園地西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-09",
+   "place": "戸隠 戸隠高原浄化センター南付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-06",
+   "place": "戸隠 渦隈橋西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-06",
+   "place": "信州新町 水内神田水内公民館付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-05",
+   "place": "鬼無里 坂屋公民館南西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-05",
+   "place": "篠ノ井 湯ノ入神社城北東付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-03",
+   "place": "戸隠 上楠川地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-02",
+   "place": "戸隠 尾上西バス停付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-27",
+   "place": "戸隠 戸隠キャンプ場付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "大岡 和平区太田和地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-25",
+   "place": "戸隠 戸隠植物園内"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-24",
+   "place": "浅川 長野デューンズゴルフクラブ付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-23",
+   "place": "大岡 県道丸子信州新線芦野尻区から笹久区の間(佃見沢付近)"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-21",
+   "place": "大岡 池田地籍南付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-21",
+   "place": "信州新町 丸子信州新線南沢付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "篠ノ井 法輪寺西側の果樹園"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "戸隠 戸隠神社奥社付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-15",
+   "place": "小田切 平林地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-12",
+   "place": "芋井 一の鳥居公衆トイレ付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-12",
+   "place": "戸隠 諸沢バス停付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-06",
+   "place": "浅川 北郷体育館北西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "小田切 小田切神社付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "鬼無里 田之頭橋付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "豊野 向原組公会堂南付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-30",
+   "place": "豊野 宇佐美沢交差点北付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-30",
+   "place": "戸隠 東の沢地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-28",
+   "place": "鬼無里 原地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "篠ノ井 岡田古町公民館付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-27",
+   "place": "篠ノ井 有旅公民館北付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-27",
+   "place": "戸隠 上楠川地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-27",
+   "place": "七二会 笹平城跡北付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-26",
+   "place": "戸隠 奥社随神門付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "豊野 宇佐美沢交差点南付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "芋井 上ケ屋バス停付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "信州新町 栗屋栗尾口バス停付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-22",
+   "place": "鬼無里 田中地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-19",
+   "place": "戸隠 戸隠高原浄化センター付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "戸隠 戸隠祖山宮浦地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "浅川 畑山橋付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "浅川 中曽根大橋北付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-14",
+   "place": "松代 妻女山付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "鬼無里 土倉地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "松代 長野真田線豊栄浄水場西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-11",
+   "place": "戸隠 中社第2ペアリフト西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "戸隠 鏡池南東付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "松代 長野真田線豊栄浄水場西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-07",
+   "place": "若槻 三千寺南付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-07",
+   "place": "芋井 岩戸地区付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-07",
+   "place": "芋井 京田遊園地西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-06",
+   "place": "松代 岩野橋南西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-05",
+   "place": "第二 湯谷団地入口バス停付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "鬼無里 裾花区川浦地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-03",
+   "place": "芋井 大峰斎場北西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-06-03",
+   "place": "戸隠 中尾地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-03",
+   "place": "戸隠 そば博物館バス停東付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "更北 丹波島橋南詰東付近犀川河川敷"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-31",
+   "place": "戸隠 栃原谷沢付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-28",
+   "place": "芋井 大座法師池西側付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "若穂 保科郵便局付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-26",
+   "place": "松代 林正寺西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "信更 信更運動場南付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-05-25",
+   "place": "若穂 広徳寺北西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "松代 地蔵峠頂上付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "戸隠 豊岡キャンプ場西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "小田切 松島トンネル西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "浅川 浅川ダム展望広場駐車場付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "戸隠 上祖山区宮浦地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-21",
+   "place": "芋井 消防飯綱分署南西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "芋井 飯綱芋井線大座法師池西付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "松代 林道山の神線地蔵峠付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-18",
+   "place": "松代 豊栄交差点北付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-17",
+   "place": "芋井 柳沢池南付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-15",
+   "place": "芋井 大谷地湿原内"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-12",
+   "place": "若槻 田中交差点信号付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-08",
+   "place": "戸隠 荒倉キャンプ場付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-07",
+   "place": "芋井 バードライン大谷地湿原南付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-29",
+   "place": "松代 東寺尾公園北付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-27",
+   "place": "中条 持畔入口バス停付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-26",
+   "place": "浅川 ボブスレー・リュージュパークスパイラル北西"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-25",
+   "place": "戸隠 森林植物園〈ささやきの小径〉付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-24",
+   "place": "浅川 長野デューンゴルフクラブ付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-15",
+   "place": "豊野 川谷交差点の北側竹藪付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-14",
+   "place": "戸隠 火の御子社南水道施設付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-09",
+   "place": "豊野 五岳道路大久保池付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-08",
+   "place": "若穂 赤野田地籍付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-04-01",
+   "place": "信州新町 千原田団地付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-01",
+   "place": "中条 カリヤ山林内"
+  }
+ ],
+ "corroborated_on": {
+  "長野市": "2026-10-13"
+ },
+ "credit": "出典: 長野市「野生獣(クマなど)の出没」(https://www.city.nagano.nagano.jp/n162000/contents/p001080.html)の公開データから、月別の件数を、当サイトが集計して作成(長野市が作成したものではありません)",
+ "fetched_at": "2026-10-13T15:04:47.345032+09:00",
+ "fy_current": "R08",
+ "mode": "counts",
+ "monthly": {
+  "R08": {
+   "4": 11,
+   "5": 20,
+   "6": 32,
+   "7": 16,
+   "8": 19,
+   "9": 10
+  }
+ },
+ "municipalities": {
+  "長野市": {
+   "latest": "2026-09-28",
+   "monthly": {
+    "R08": {
+     "4": 11,
+     "5": 20,
+     "6": 32,
+     "7": 16,
+     "8": 19,
+     "9": 10
+    }
+   }
+  }
+ },
+ "source": "nagano",
+ "source_file": "https://www.city.nagano.nagano.jp/documents/3071/kuma_20260930.pdf",
+ "source_page": "https://www.city.nagano.nagano.jp/n162000/contents/p001080.html",
+ "total_fy": 108,
+ "unparsed": 0,
+ "update_note": "長野市が、月1回(締め日の1週間ほど後)に更新します。最新の記録は、更新時点から1か月ほど遅れます。件数は、市役所・支所に寄せられた目撃と、足跡や被害などの痕跡(出没)の報告です"
+}

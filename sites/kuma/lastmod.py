@@ -119,6 +119,8 @@ def compute(pages: dict, d: dict, lv: dict | None, today: date, stored: dict | N
             out[url] = d["sight_updated"]
         elif head == "emergency":
             out[url] = emergency_date(d) or mins
+        elif head == "notices":
+            out[url] = max((x["date"] for x in d.get("muni_notices", [])), default=mins)
         elif head == "news":
             out[url] = d["notices"][0]["date"] if d.get("notices") else mins
         elif len(parts) == 1 and head in d["by_slug"]:
