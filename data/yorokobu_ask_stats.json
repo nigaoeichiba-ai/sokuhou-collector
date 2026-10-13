@@ -1,0 +1,50 @@
+{
+ "months": {
+  "2026-10": {
+   "ask.mode.o": 1,
+   "ask.n.all": 1,
+   "ask.new.o": 1,
+   "ask.q1.home": 1,
+   "ask.q2.coffee": 1,
+   "ask.q3.sweet": 1,
+   "ask.q4.beauty": 1,
+   "ask.q5.useful": 1,
+   "ask.q6.natural": 1,
+   "ask.q7.consume": 1,
+   "ask.q8.scent": 1,
+   "ask.q9.b2000": 1,
+   "dock.age.30s": 1,
+   "dock.budget.none": 1,
+   "dock.days.none": 1,
+   "dock.gender.f": 1,
+   "dock.n.all": 1,
+   "dock.occ.birthday": 1,
+   "dock.top.cozy_home": 1,
+   "dock.type.alone-time": 1,
+   "dock.type.practical-steady": 1
+  }
+ },
+ "total": {
+  "ask.mode.o": 1,
+  "ask.n.all": 1,
+  "ask.new.o": 1,
+  "ask.q1.home": 1,
+  "ask.q2.coffee": 1,
+  "ask.q3.sweet": 1,
+  "ask.q4.beauty": 1,
+  "ask.q5.useful": 1,
+  "ask.q6.natural": 1,
+  "ask.q7.consume": 1,
+  "ask.q8.scent": 1,
+  "ask.q9.b2000": 1,
+  "dock.age.30s": 1,
+  "dock.budget.none": 1,
+  "dock.days.none": 1,
+  "dock.gender.f": 1,
+  "dock.n.all": 1,
+  "dock.occ.birthday": 1,
+  "dock.top.cozy_home": 1,
+  "dock.type.alone-time": 1,
+  "dock.type.practical-steady": 1
+ }
+}
