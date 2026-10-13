@@ -13,6 +13,11 @@
    "ask.q7.consume": 1,
    "ask.q8.scent": 1,
    "ask.q9.b2000": 1,
+   "cq.bud.5000-10000": 1,
+   "cq.need.who": 1,
+   "cq.occ.christmas": 1,
+   "cq.rec.girlfriend": 1,
+   "cq.res.hit": 1,
    "dock.age.30s": 1,
    "dock.budget.none": 1,
    "dock.days.none": 1,
@@ -21,7 +26,9 @@
    "dock.occ.birthday": 1,
    "dock.top.cozy_home": 1,
    "dock.type.alone-time": 1,
-   "dock.type.practical-steady": 1
+   "dock.type.practical-steady": 1,
+   "pop.a.B00TYDVCWE": 1,
+   "pop.r.bellevie-harima:10013197": 1
   }
  },
  "total": {
@@ -37,6 +44,11 @@
   "ask.q7.consume": 1,
   "ask.q8.scent": 1,
   "ask.q9.b2000": 1,
+  "cq.bud.5000-10000": 1,
+  "cq.need.who": 1,
+  "cq.occ.christmas": 1,
+  "cq.rec.girlfriend": 1,
+  "cq.res.hit": 1,
   "dock.age.30s": 1,
   "dock.budget.none": 1,
   "dock.days.none": 1,
@@ -45,6 +57,8 @@
   "dock.occ.birthday": 1,
   "dock.top.cozy_home": 1,
   "dock.type.alone-time": 1,
-  "dock.type.practical-steady": 1
+  "dock.type.practical-steady": 1,
+  "pop.a.B00TYDVCWE": 1,
+  "pop.r.bellevie-harima:10013197": 1
  }
 }
