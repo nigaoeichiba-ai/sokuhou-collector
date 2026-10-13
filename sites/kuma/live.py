@@ -66,6 +66,8 @@ LIVE_SOURCES.update({
              "as_of_text": "最新の記録は{d}の分までです"},
     "saitama": {"pref": "埼玉", "name": "埼玉県", "label": "埼玉県・県の公式データを集計(件数のみ)", "monthly_label": "市町村が県に報告した出没の件数",
                 "as_of_text": "最新の記録は{d}の分までです"},
+    "gunma": {"pref": "群馬", "name": "群馬県", "label": "群馬県・県の公式データを集計(件数。場所は確認できた目撃だけ)", "monthly_label": "目撃のほか、痕跡の報告を含む",
+              "as_of_text": "最新の記録は{d}の分までです"},
     "otsu": {"pref": "滋賀", "scope": "大津市のみ", "name": "滋賀県大津市", "label": "大津市・市の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や錯誤捕獲の報告を含む",
              "as_of_text": "最新の記録は{d}の分までです"},
 })
