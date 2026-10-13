@@ -1,0 +1,86 @@
+{
+ "slug": "nyugaku-congrats-flat",
+ "title": "入学・進級のお祝い",
+ "subject": "",
+ "genre": "school",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "lead": "入学式・ランドセル・桜・新しい教室など、入学と進級のお祝いの場面12点です。入学おめでとうのカードや案内状に使えます。",
+ "tags": [
+  "入学",
+  "入学おめでとう",
+  "進級",
+  "入学式",
+  "ランドセル",
+  "桜",
+  "新学期"
+ ],
+ "subject_en": "Flat illustration of school entrance celebrations in Japan, each ONE small scene, centred, spring colours, friendly natural faces. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": {
+  "from": "03-01",
+  "to": "04-20"
+ },
+ "holes": false,
+ "items": [
+  [
+   "ceremony",
+   "入学式",
+   "a child in a suit and a parent walking under cherry blossoms"
+  ],
+  [
+   "randoseru",
+   "ランドセル",
+   "a red school backpack with a yellow cover"
+  ],
+  [
+   "photo",
+   "校門で記念写真",
+   "a family photo in front of a school gate"
+  ],
+  [
+   "desk",
+   "新しい教室",
+   "a classroom desk with a name tag and a new pencil case"
+  ],
+  [
+   "flowers",
+   "祝いの花",
+   "a bouquet with a ribbon"
+  ],
+  [
+   "pencil",
+   "新しい文房具",
+   "pencils, an eraser and a notebook"
+  ],
+  [
+   "junior",
+   "中学の制服",
+   "a student in a junior-high uniform with a bag"
+  ],
+  [
+   "highschool",
+   "高校の制服",
+   "a student in a high-school blazer"
+  ],
+  [
+   "university",
+   "大学の入学",
+   "a young adult with a tote bag walking on campus"
+  ],
+  [
+   "kindergarten",
+   "入園",
+   "a child with a yellow hat and a small bag"
+  ],
+  [
+   "sakura",
+   "桜の花びら",
+   "a branch of cherry blossoms with falling petals"
+  ],
+  [
+   "clap",
+   "拍手でお祝い",
+   "classmates clapping and smiling"
+  ]
+ ]
+}

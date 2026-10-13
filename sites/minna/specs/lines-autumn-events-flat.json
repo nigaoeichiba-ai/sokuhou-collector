@@ -1,0 +1,85 @@
+{
+ "slug": "lines-autumn-events-flat",
+ "title": "秋の行事の飾り罫",
+ "subject": "",
+ "genre": "deco",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "lead": "お月見・ハロウィン・運動会・紅葉・きのこ・七五三など、秋の行事の区切り線12点です。見出しの下やおたよりの区切りに使える横長素材です。",
+ "tags": [
+  "区切り線",
+  "ライン",
+  "飾り罫",
+  "お月見",
+  "ハロウィン",
+  "運動会",
+  "きのこ",
+  "紅葉",
+  "七五三"
+ ],
+ "subject_en": "Horizontal decorative divider lines, each ONE wide thin strip about 6:1 in shape, centred in its cell with space around, made of repeating small motifs along a line. Strips are separate and never touch each other. Flat style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "tsukimi",
+   "お月見の線",
+   "a line of moons, pampas grass and dango"
+  ],
+  [
+   "halloween",
+   "ハロウィンの線",
+   "a line of pumpkins, bats and stars"
+  ],
+  [
+   "undokai",
+   "運動会の線",
+   "a line of small flags and ribbons"
+  ],
+  [
+   "momiji",
+   "紅葉の線",
+   "a line of maple leaves"
+  ],
+  [
+   "kinoko",
+   "きのこの線",
+   "a line of mushrooms and leaves"
+  ],
+  [
+   "shichigosan",
+   "七五三の線",
+   "a line of candy bags and pine"
+  ],
+  [
+   "kuri",
+   "栗の線",
+   "a line of chestnuts"
+  ],
+  [
+   "dokusho",
+   "読書の秋の線",
+   "a line of small books"
+  ],
+  [
+   "ichou",
+   "銀杏の線",
+   "a line of ginkgo leaves"
+  ],
+  [
+   "donguri",
+   "どんぐりの線",
+   "a line of acorns"
+  ],
+  [
+   "shogatsu",
+   "お正月の線",
+   "a line of pine, bamboo and plum"
+  ],
+  [
+   "fuyujitaku",
+   "冬支度の線",
+   "a line of mittens, scarves and snowflakes"
+  ]
+ ]
+}

@@ -1,0 +1,83 @@
+{
+ "slug": "bento-side-dishes-flat",
+ "title": "お弁当のおかず",
+ "subject": "",
+ "genre": "food",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "lead": "卵焼き・唐揚げ・ウインナー・ミニトマトなど、お弁当の定番のおかず12点です。メニュー表やレシピ、給食だよりに使えます。",
+ "tags": [
+  "お弁当",
+  "おかず",
+  "卵焼き",
+  "唐揚げ",
+  "給食",
+  "レシピ",
+  "メニュー"
+ ],
+ "subject_en": "Flat illustration of bento side dishes, each ONE dish or item centred, appetising colours. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "tamagoyaki",
+   "卵焼き",
+   "sliced rolled omelette"
+  ],
+  [
+   "karaage",
+   "唐揚げ",
+   "three fried chicken pieces"
+  ],
+  [
+   "sausage",
+   "タコさんウインナー",
+   "octopus-shaped sausages"
+  ],
+  [
+   "tomato",
+   "ミニトマト",
+   "three cherry tomatoes with stems"
+  ],
+  [
+   "broccoli",
+   "ブロッコリー",
+   "boiled broccoli florets"
+  ],
+  [
+   "kinpira",
+   "きんぴらごぼう",
+   "a small serving of kinpira burdock"
+  ],
+  [
+   "salmon",
+   "焼き鮭",
+   "a grilled salmon fillet"
+  ],
+  [
+   "hamburg",
+   "ミニハンバーグ",
+   "small hamburger steaks with sauce"
+  ],
+  [
+   "ebifry",
+   "エビフライ",
+   "two fried prawns"
+  ],
+  [
+   "potatosalad",
+   "ポテトサラダ",
+   "a cup of potato salad"
+  ],
+  [
+   "ume",
+   "梅干しごはん",
+   "white rice with a pickled plum"
+  ],
+  [
+   "bentobox",
+   "お弁当箱",
+   "an open bento box filled with rice and side dishes"
+  ]
+ ]
+}
