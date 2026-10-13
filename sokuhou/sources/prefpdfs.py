@@ -111,3 +111,21 @@ def read_pdf_rows(page: str, fetch, link_kwargs: dict, parser, pause) -> tuple[l
     url = pdf_link(html, page, **link_kwargs)
     pause()
     return parser(co.pdf_text(fetch(url))), url
+
+
+def parse_nagano_city(text: str) -> list[dict]:
+    """Nagano City's monthly PDF: '107 9月23日 14時50分 戸隠 砂田バス停西付 近 目撃 路上に…' (the place and the status can run over lines; '出没' = traces)."""
+    text = unicodedata.normalize("NFKC", text)
+    fy = co.fy_year_from_heading(text)
+    heads = list(re.finditer(r"^\s*(\d+)\s+(\d{1,2})月(\d{1,2})日\s+(\S+)\s+(\S+)\s+", text, re.M))
+    out = []
+    for i, m in enumerate(heads):
+        body = text[m.end(): heads[i + 1].start() if i + 1 < len(heads) else len(text)]
+        s = re.search(r"(目撃|出没)", body)
+        if not s:
+            continue
+        loc = re.sub(r"\s+", "", body[: s.start()])
+        out.append(co._record(_day(fy, int(m.group(2)), int(m.group(3))), "長野市", f"{m.group(5)} {loc}".strip(), "目撃" if s.group(1) == "目撃" else "痕跡", None))
+    if not out:
+        raise PdfListError("Nagano City: no rows")
+    return out

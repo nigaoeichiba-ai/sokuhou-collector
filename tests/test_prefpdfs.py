@@ -5,7 +5,7 @@ from unittest import mock
 
 from sokuhou import run
 from sokuhou.sources import corroborated, kumacounts, kumalib, prefpdfs
-from sokuhou.sources import ishikawa_kuma, kanagawa_kuma, shizuoka_kuma
+from sokuhou.sources import ishikawa_kuma, kanagawa_kuma, nagano_kuma, shizuoka_kuma
 
 NOW = datetime(2026, 10, 13, 6, 30, tzinfo=kumalib.JST)
 
@@ -53,6 +53,23 @@ PAGE_HTML = """<html><a href="/a/261005kuma.pdf">【NEW】令和8年度クマ出
 <a href="/a/r7kumamap.pdf">令和7年度クマ出没情報 (PDF 72.0KB)</a><a href="https://other.example/x.pdf">令和8年度クマ出没情報 (PDF)</a></html>"""
 
 
+NAGANO = """令和8年10月7日
+令和8年度　長野市役所・支所に寄せられた目撃等情報件数（令和 8年9月30日時点）
+累計 108件
+日付 時刻
+1 4月1日 10時30分 中条 カリヤ山林内 目撃 山林内に入って行っ た
+2 4月1日 23時30分 信州新町 千原田団地付近 出没 深夜に鳴き声が聞こえ た
+9 4月26日 14時00分 浅川 ボブスレー・リュージュパークス パ
+イラル北西 目撃 飯綱高原第３グランド付近から山 に
+入って行った
+106 9月17日 不明 戸隠 栃原中尾地籍付 近 出没 檻に入って中の餌を食べ 、
+天井の穴から逃げた痕跡を確認し た
+107 9月23日 14時50分 戸隠 砂田バス停西付 近 目撃 路上に落ちたクルミを食べてい た"""
+
+NAGANO_PAGE = """<html><a href="/documents/3071/kuma_20260930.pdf">令和8年9月30日現在のツキノワグマの目撃出没情報(PDF:119KB)</a>
+<a href="/documents/3071/ino_20260930.pdf">令和8年9月30日現在のイノシシなどの目撃出没情報(PDF:110KB)</a>
+<a href="/documents/3071/kuma20260331.pdf">令和7年度クマ出没情報(PDF:385KB)</a></html>"""
+
 def tup(rows):
     return [(r["observed_at"], r["city"], r["place"], r["kind"], r["count"]) for r in rows]
 
@@ -96,6 +113,14 @@ class ParseTest(unittest.TestCase):
         self.assertIn(("2026-10-01", "小松市", "小松市中海町地内", "目撃", 1), got)
         self.assertEqual(len(got), 6)                                    # 'どこかの村内' is not a municipality of the prefecture: left out
 
+    def test_nagano_city_joins_a_place_that_runs_over_lines_and_calls_a_trace_a_trace(self):
+        got = tup(prefpdfs.parse_nagano_city(NAGANO))
+        self.assertEqual(got, [("2026-04-01", "長野市", "中条 カリヤ山林内", "目撃", None), ("2026-04-01", "長野市", "信州新町 千原田団地付近", "痕跡", None),
+                               ("2026-04-26", "長野市", "浅川 ボブスレー・リュージュパークスパイラル北西", "目撃", None),
+                               ("2026-09-17", "長野市", "戸隠 栃原中尾地籍付近", "痕跡", None), ("2026-09-23", "長野市", "戸隠 砂田バス停西付近", "目撃", None)])
+        with self.assertRaises(prefpdfs.PdfListError):
+            prefpdfs.parse_nagano_city("令和8年度 お知らせ")
+
     def test_text_without_rows_is_refused(self):
         for fn in (lambda: prefpdfs.parse_shizuoka("お知らせ", 2026), lambda: prefpdfs.parse_kanagawa("お知らせ", 2026), lambda: prefpdfs.parse_ishikawa("お知らせ")):
             with self.assertRaises(prefpdfs.PdfListError):
@@ -133,13 +158,19 @@ class AdapterTest(unittest.TestCase):
         self.assertEqual(out["total_fy"], 5)
         self.assertEqual(len(out["corroborated"]), 5)                                                  # the February row is not in this fiscal year's table
 
+    def test_nagano_city_picks_this_years_bear_pdf_among_the_boar_and_old_ones(self):
+        out = self.run_adapter(nagano_kuma, NAGANO_PAGE, NAGANO)
+        self.assertEqual((out["source"], out["total_fy"]), ("nagano", 5))
+        self.assertTrue(out["source_file"].endswith("/kuma_20260930.pdf"))
+        self.assertEqual(len(out["corroborated"]), 5)
+
     def test_too_few_rows_stores_nothing(self):
         with self.assertRaises(prefpdfs.PdfListError):
             self.run_adapter(kanagawa_kuma, PAGE_HTML.replace("261005kuma", "kuma_r8_1013"), KANAGAWA, rows_min=50)
 
     def test_the_three_are_registered_with_the_carry_over(self):
         by_name = {s.name: s for s in run.GROUPS["kuma"]}
-        for n in ("shizuoka_kuma", "kanagawa_kuma", "ishikawa_kuma"):
+        for n in ("shizuoka_kuma", "kanagawa_kuma", "ishikawa_kuma", "nagano_kuma"):
             self.assertIs(by_name[n].merge, corroborated.carry_over, n)
 
 

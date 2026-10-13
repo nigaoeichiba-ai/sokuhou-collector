@@ -1,0 +1,759 @@
+{
+ "as_of": "2026-10-11",
+ "corroborated": [
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-11",
+   "place": "福知山市字夷"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-09",
+   "place": "福知山市字野花"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-06",
+   "place": "福知山市字大門"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-05",
+   "place": "福知山市大江町尾藤(尾藤口)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-28",
+   "place": "福知山市字立原"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-25",
+   "place": "福知山市大字報恩寺(多谷)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-25",
+   "place": "福知山市夜久野町畑(金尾)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-22",
+   "place": "福知山市夜久野町畑(金尾)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-13",
+   "place": "福知山市夜久野町畑(金尾)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-13",
+   "place": "福知山市夜久野町畑(柿本)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-11",
+   "place": "福知山市大江町佛性寺"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-11",
+   "place": "福知山市三和町下川合"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-10",
+   "place": "福知山市字一ノ宮"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-09",
+   "place": "福知山市三和町辻"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-05",
+   "place": "福知山市字夷"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-03",
+   "place": "福知山市字田野(田野山田)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-28",
+   "place": "福知山市字上小田(六十内)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-28",
+   "place": "福知山市夜久野町畑〔今里〕"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-28",
+   "place": "福知山市夜久野町畑(稲垣)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-27",
+   "place": "福知山市三和町岼"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-21",
+   "place": "福知山市夜久野町畑(柿本)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-19",
+   "place": "福知山市夜久野町畑(金尾)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-15",
+   "place": "福知山市大江町高津江"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-14",
+   "place": "福知山市大江町高津江"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-11",
+   "place": "福知山市夜久野町畑(西谷)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "福知山市字行積"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-05",
+   "place": "福知山市大江町北有路"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-03",
+   "place": "福知山市大江町南山"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-29",
+   "place": "福知山市猪崎"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-28",
+   "place": "福知山市長田段"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-28",
+   "place": "福知山市大江町高津江"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "福知山市字長田"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "福知山市大江町公庄"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "福知山市夜久野町畑(金尾)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-21",
+   "place": "福知山市字榎原(口榎原)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-20",
+   "place": "福知山市大江町河守(下町)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "福知山市大江町南有路(南二)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "福知山市三和町大身"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-14",
+   "place": "福知山市字上小田(十三丘)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-11",
+   "place": "福知山市大江町二俣(二俣二)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-10",
+   "place": "福知山市字榎原(口榎原)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-10",
+   "place": "福知山市大江町二俣(二俣二)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "福知山市大江町佛性寺"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-06",
+   "place": "福知山市字下天津"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-04",
+   "place": "福知山市字榎原"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "福知山市字堀(荒木)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "福知山市字喜多"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "福知山市字川北"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "福知山市字喜多"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-26",
+   "place": "福知山市字喜多"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "福知山市字日尾"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "福知山市字安井"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "福知山市字大呂"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-22",
+   "place": "福知山市字大門"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-21",
+   "place": "福知山市字猪崎"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-19",
+   "place": "福知山市字大門"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-19",
+   "place": "福知山市大江町二箇上"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "福知山市字上小田"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "福知山市字大呂"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "福知山市大江町内宮"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "福知山市大字私市"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "福知山市大江町天田内"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "福知山市大江町南山西部"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "福知山市字荒河(下荒河)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "福知山市大江町内宮"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "福知山市大江町佛性寺"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "福知山市字下佐々木"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "福知山市天座"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "福知山市大江町公庄"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-09",
+   "place": "大江町在田"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "福知山市大江町常津"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-06",
+   "place": "福知山市字榎原(口榎原)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-03",
+   "place": "福知山市字前田"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-03",
+   "place": "福知山市大江町日藤"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "福知山市字新庄"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-30",
+   "place": "福知山市大門"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-30",
+   "place": "福知山市大門"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-29",
+   "place": "福知山市雲原"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-29",
+   "place": "福知山市大江町二箇下"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-27",
+   "place": "福知山市大江町天田内"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "福知山市字半田"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "福知山市小牧"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-24",
+   "place": "福知山市天座"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "福知山市天座"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "福知山市大江町天田内"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-17",
+   "place": "福知山市一尾"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-16",
+   "place": "福知山市夜久野町日置"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-14",
+   "place": "福知山市大江町南有路(南三)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-14",
+   "place": "福知山市大江町内宮"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-14",
+   "place": "福知山市大江町佛性寺"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-13",
+   "place": "大江町高津江"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-12",
+   "place": "福知山市瘤木"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-12",
+   "place": "福知山市夜久野町畑(西谷)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-11",
+   "place": "福知山市大江町千原"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-08",
+   "place": "福知山市夜久野町千原(上千原)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-06",
+   "place": "福知山市字榎原(口榎原)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-05",
+   "place": "福知山市大字山野口"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-29",
+   "place": "福知山市夜久野町井田"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-26",
+   "place": "福知山市三和町大身"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-19",
+   "place": "福知山市三和町大身"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-13",
+   "place": "福知山市夜久野町井田"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-08",
+   "place": "福知山市大江町南山"
+  }
+ ],
+ "corroborated_on": {
+  "福知山市": "2026-10-13"
+ },
+ "credit": "出典: 福知山市「熊出没情報」(https://www.city.fukuchiyama.lg.jp/soshiki/27/2615.html)の公開データから、月別の件数を、当サイトが集計して作成(福知山市が作成したものではありません)",
+ "fetched_at": "2026-10-13T15:03:37.910245+09:00",
+ "fy_current": "R08",
+ "mode": "counts",
+ "monthly": {
+  "R08": {
+   "10": 4,
+   "4": 5,
+   "5": 22,
+   "6": 28,
+   "7": 19,
+   "8": 12,
+   "9": 12
+  }
+ },
+ "municipalities": {
+  "福知山市": {
+   "latest": "2026-10-11",
+   "monthly": {
+    "R08": {
+     "10": 4,
+     "4": 5,
+     "5": 22,
+     "6": 28,
+     "7": 19,
+     "8": 12,
+     "9": 12
+    }
+   }
+  }
+ },
+ "source": "fukuchiyama",
+ "source_file": "https://www.city.fukuchiyama.lg.jp/soshiki/27/2615.html",
+ "source_page": "https://www.city.fukuchiyama.lg.jp/soshiki/27/2615.html",
+ "total_fy": 102,
+ "unparsed": 0,
+ "update_note": "福知山市が、目撃のたびに(ほぼ随時)更新します。最新の記録は、更新時点から遅れます。件数は、クマの目撃の場所のお知らせです"
+}

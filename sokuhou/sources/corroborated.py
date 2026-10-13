@@ -473,6 +473,66 @@ def ftv_reader(today: date | None = None, days: int = FTV_DAYS):
     return read
 
 
+# ---------------------------------------------------------------- round 5: Fukuchiyama City (Kyoto), monthly pages (2026-10-13)
+
+FUKUCHIYAMA_PAGE = "https://www.city.fukuchiyama.lg.jp/soshiki/27/2615.html"
+
+
+def fukuchiyama_month_links(top_html: str, era: int, base: str = FUKUCHIYAMA_PAGE) -> list[str]:
+    """The monthly pages of fiscal year Reiwa `era` on the city's list page ('令和8年度目撃情報' then '・4月目撃情報' ...), up to the next fiscal year's heading."""
+    from urllib.parse import urljoin, urlparse
+    text = unicodedata.normalize("NFKC", top_html)
+    start = text.find(f"令和{era}年度目撃情報")
+    if start < 0:
+        raise CorroboratedError(f"Fukuchiyama: no '令和{era}年度目撃情報' on the page")
+    nxt = re.search(r"令和\d+年度目撃情報", text[start + 8:])
+    block = text[start: start + 8 + nxt.start()] if nxt else text[start:]
+    out = []
+    for href, label in re.findall(r'<a[^>]+href="([^"]+)"[^>]*>(.*?)</a>', block, re.S):
+        if re.search(r"\d{1,2}月目撃情報", clean(label)):
+            u = urljoin(base, href)
+            if urlparse(u).netloc == urlparse(base).netloc and u not in out:
+                out.append(u)
+    if not out:
+        raise CorroboratedError("Fukuchiyama: no monthly pages")
+    return out
+
+
+def parse_fukuchiyama_month(html: str) -> list[dict]:
+    """One monthly page: '熊出没情報〔令和8年10月分〕' and a table of ('5日(月曜日)', place with a PDF note)."""
+    m = re.search(r"令和\s*(\d+)年\s*(\d+)月分", unicodedata.normalize("NFKC", html))
+    if not m:
+        raise CorroboratedError("Fukuchiyama: no month in the title")
+    era, month = int(m.group(1)), int(m.group(2))
+    out = []
+    for c in table_rows(html):
+        d = re.match(r"(\d{1,2})日", c[0]) if len(c) >= 2 else None
+        place = re.sub(r"\s*\[PDF[^\]]*\]", "", c[1]).strip() if d else ""
+        if not d or not place:
+            continue
+        year = ERA_REIWA_OFFSET + era
+        out.append(_record(date(year, month, int(d.group(1))), "福知山市", place, "目撃", None))
+    return out
+
+
+def fukuchiyama_reader(era: int):
+    """The city's list page, then each monthly page of the fiscal year (a month that cannot be read is skipped)."""
+    def read(fetch, pause):
+        links = fukuchiyama_month_links(decode(fetch(FUKUCHIYAMA_PAGE)), era)
+        out: list[dict] = []
+        for u in links:
+            pause()
+            try:
+                out += parse_fukuchiyama_month(decode(fetch(u)))
+            except Exception:  # noqa: BLE001 - one month down must not hide the others
+                continue
+        if not out:
+            raise CorroboratedError("Fukuchiyama: no rows in any month")
+        return out
+    read.label = FUKUCHIYAMA_PAGE
+    return read
+
+
 # ---------------------------------------------------------------- the match
 
 def confirm(prefecture_rows: list[tuple[date | None, object]], records: list[dict], norm_city=lambda c: str(c)) -> list[dict]:

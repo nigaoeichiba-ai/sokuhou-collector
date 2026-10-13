@@ -179,6 +179,14 @@ def feed_id(url: str) -> str:
     return hashlib.sha1(url.encode("utf-8")).hexdigest()[:10]
 
 
+def link_ok(link: str, site: str) -> bool:
+    """An item's link must be a public address on the publisher's own site (a feed sometimes carries an intranet address such as http://192.168.0.1/...)."""
+    host, own = urlparse(link).netloc.split(":")[0].lower(), urlparse(site).netloc.lower().removeprefix("www.")
+    if urlparse(link).scheme not in ("http", "https") or not host or re.fullmatch(r"[\d.]+", host) or "." not in host:
+        return False
+    return host.removeprefix("www.") == own or host.endswith("." + own)
+
+
 def recent(items: list[dict], today: date) -> list[dict]:
     lo = date.fromordinal(today.toordinal() - KEEP_DAYS).isoformat()
     return [i for i in items if i["date"] and lo <= i["date"] <= today.isoformat()][:KEEP_ITEMS]
@@ -197,7 +205,7 @@ def collect_feeds(registry: list[dict], fetch=None, now: datetime | None = None,
             sleep(pause)
         try:
             feed = parse_feed(fetch(r["feed"]))
-            items = recent(feed["items"], today)
+            items = recent([i for i in feed["items"] if link_ok(i["link"], r["site"])], today)
             out.append({**r, "ok": True, "items": items})
         except Exception:  # noqa: BLE001 - one site down is normal
             failed += 1
