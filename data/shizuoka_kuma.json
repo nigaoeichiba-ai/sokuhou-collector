@@ -1,0 +1,921 @@
+{
+ "as_of": "2026-10-02",
+ "corroborated": [
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-02",
+   "place": "内房"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-02",
+   "place": "入島"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-02",
+   "place": "上柚野"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-01",
+   "place": "西山"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-30",
+   "place": "猪之頭"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-30",
+   "place": "東藤川"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-29",
+   "place": "上柚野"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-28",
+   "place": "入島"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-28",
+   "place": "上柚野"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-27",
+   "place": "入島"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-24",
+   "place": "羽鮒"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-23",
+   "place": "奥泉"
+  },
+  {
+   "city": "熱海市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-18",
+   "place": "日金町"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "捕獲",
+   "observed_at": "2026-09-16",
+   "place": "中平 9/16捕獲"
+  },
+  {
+   "city": "御殿場市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-13",
+   "place": "印野"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-12",
+   "place": "奥泉"
+  },
+  {
+   "city": "静岡市清水区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-12",
+   "place": "大内"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-11",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-11",
+   "place": "入島"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-10",
+   "place": "小長井"
+  },
+  {
+   "city": "熱海市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-09",
+   "place": "伊豆山 岩戸山ハイキングコース"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-09-01",
+   "place": "井川"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-31",
+   "place": "内房"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-30",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-29",
+   "place": "羽鮒"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-29",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "浜松市天竜区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-29",
+   "place": "春野町気田 人身被害あり(軽傷)"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-28",
+   "place": "内房"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-27",
+   "place": "山宮"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-22",
+   "place": "渡"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-18",
+   "place": "中平"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-07",
+   "place": "中平"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-05",
+   "place": "下泉"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-02",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-29",
+   "place": "有東木"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-27",
+   "place": "横沢"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "羽鮒"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-26",
+   "place": "上長尾"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-23",
+   "place": "有東木"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-18",
+   "place": "羽鮒"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-16",
+   "place": "井川"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-14",
+   "place": "羽鮒"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-13",
+   "place": "安居山"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-10",
+   "place": "星山"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "有東木"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-06",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "熱海市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-05",
+   "place": "伊豆山 岩戸山山頂付近"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-01",
+   "place": "奥泉"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-30",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "山宮"
+  },
+  {
+   "city": "静岡市清水区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "宍原"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "内房"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "人穴"
+  },
+  {
+   "city": "小山町",
+   "count": null,
+   "kind": "捕獲",
+   "observed_at": "2026-06-25",
+   "place": "柳島 6/25捕獲"
+  },
+  {
+   "city": "小山町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-22",
+   "place": "湯船"
+  },
+  {
+   "city": "小山町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "湯船"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "上柚野"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "犬間"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-14",
+   "place": "梅地"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "麓"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "猪之頭"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "大岩"
+  },
+  {
+   "city": "小山町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-07",
+   "place": "小山 6/7交通事故死確認"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "須山 越前岳登山道"
+  },
+  {
+   "city": "小山町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "生土"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "富士市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-30",
+   "place": "須津"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-27",
+   "place": "東藤川 富士城地区"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "須山"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "上長尾"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "須山 越前岳の南側"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "須山 十里木高原駐車場付近"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "長貫"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-24",
+   "place": "須山 十里木高原駐車場付近"
+  },
+  {
+   "city": "富士市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-24",
+   "place": "桑崎"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "浜松市浜名区",
+   "count": null,
+   "kind": "捕獲",
+   "observed_at": "2026-05-23",
+   "place": "引佐町狩宿 5/23捕獲"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "千福が丘 千福が丘中央公園付近"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "千福が丘 千福が丘中央公園付近"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "北山"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "須山 富士裾野工業団地付近"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "須山 富士裾野工業団地付近"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "須山 富士裾野工業団地付近"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "須山 大野路交差点付近"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "須山 大野路交差点付近"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "須山 大野路交差点付近"
+  },
+  {
+   "city": "浜松市浜名区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "引佐町狩宿"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-21",
+   "place": "須山 富士裾野工業団地付近"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-21",
+   "place": "須山 富士裾野工業団地付近"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "須山 十里木高原付近"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "須山 十里木高原付近"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "須山 十里木アシタカツツジ原生群落駐車場"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "内房"
+  },
+  {
+   "city": "浜松市浜名区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "引佐町狩宿"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-18",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-16",
+   "place": "須山 十里木水ヶ塚公園登山道入り口付近"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-16",
+   "place": "山本"
+  },
+  {
+   "city": "裾野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-12",
+   "place": "須山 十里木越前岳登山道"
+  },
+  {
+   "city": "浜松市浜名区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-05-01",
+   "place": "引佐町谷沢"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-27",
+   "place": "杉田"
+  },
+  {
+   "city": "浜松市天竜区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-18",
+   "place": "水窪町奥領家"
+  },
+  {
+   "city": "浜松市浜名区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-13",
+   "place": "引佐町的場"
+  },
+  {
+   "city": "川根本町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-07",
+   "place": "千頭(沢間区内)"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-07",
+   "place": "内房"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-06",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-02",
+   "place": "粟倉"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-02",
+   "place": "猪之頭"
+  }
+ ],
+ "corroborated_on": {
+  "富士宮市": "2026-10-13",
+  "富士市": "2026-10-13",
+  "小山町": "2026-10-13",
+  "川根本町": "2026-10-13",
+  "御殿場市": "2026-10-13",
+  "浜松市天竜区": "2026-10-13",
+  "浜松市浜名区": "2026-10-13",
+  "熱海市": "2026-10-13",
+  "裾野市": "2026-10-13",
+  "静岡市清水区": "2026-10-13",
+  "静岡市葵区": "2026-10-13"
+ },
+ "credit": "出典: 静岡県「クマ出没情報」(https://www.pref.shizuoka.jp/kurashikankyo/shizenkankyo/wild/1017680.html)の公開データから、市町村別・月別の件数を、当サイトが集計して作成(静岡県が作成したものではありません)",
+ "fetched_at": "2026-10-13T13:24:03.546487+09:00",
+ "fy_current": "R08",
+ "mode": "counts",
+ "monthly": {
+  "R08": {
+   "10": 4,
+   "4": 8,
+   "5": 33,
+   "6": 19,
+   "7": 16,
+   "8": 12,
+   "9": 18
+  }
+ },
+ "municipalities": {
+  "富士宮市": {
+   "latest": "2026-10-02",
+   "monthly": {
+    "R08": {
+     "10": 3,
+     "4": 4,
+     "5": 4,
+     "6": 7,
+     "7": 5,
+     "8": 4,
+     "9": 4
+    }
+   }
+  },
+  "富士市": {
+   "latest": "2026-05-30",
+   "monthly": {
+    "R08": {
+     "5": 2
+    }
+   }
+  },
+  "小山町": {
+   "latest": "2026-06-25",
+   "monthly": {
+    "R08": {
+     "6": 5
+    }
+   }
+  },
+  "川根本町": {
+   "latest": "2026-09-30",
+   "monthly": {
+    "R08": {
+     "4": 1,
+     "5": 2,
+     "6": 2,
+     "7": 2,
+     "8": 1,
+     "9": 4
+    }
+   }
+  },
+  "御殿場市": {
+   "latest": "2026-09-13",
+   "monthly": {
+    "R08": {
+     "9": 1
+    }
+   }
+  },
+  "浜松市天竜区": {
+   "latest": "2026-08-29",
+   "monthly": {
+    "R08": {
+     "4": 1,
+     "8": 1
+    }
+   }
+  },
+  "浜松市浜名区": {
+   "latest": "2026-05-23",
+   "monthly": {
+    "R08": {
+     "4": 1,
+     "5": 4
+    }
+   }
+  },
+  "熱海市": {
+   "latest": "2026-09-18",
+   "monthly": {
+    "R08": {
+     "7": 1,
+     "9": 2
+    }
+   }
+  },
+  "裾野市": {
+   "latest": "2026-06-04",
+   "monthly": {
+    "R08": {
+     "5": 19,
+     "6": 1
+    }
+   }
+  },
+  "静岡市清水区": {
+   "latest": "2026-09-12",
+   "monthly": {
+    "R08": {
+     "6": 1,
+     "9": 1
+    }
+   }
+  },
+  "静岡市葵区": {
+   "latest": "2026-10-02",
+   "monthly": {
+    "R08": {
+     "10": 1,
+     "4": 1,
+     "5": 2,
+     "6": 3,
+     "7": 8,
+     "8": 6,
+     "9": 6
+    }
+   }
+  }
+ },
+ "source": "shizuoka",
+ "source_file": "https://www.pref.shizuoka.jp/_res/projects/default_project/_page_/001/017/680/261005kuma.pdf",
+ "source_page": "https://www.pref.shizuoka.jp/kurashikankyo/shizenkankyo/wild/1017680.html",
+ "total_fy": 110,
+ "unparsed": 0,
+ "update_note": "静岡県が、不定期(ほぼ週1回)に更新します。最新の記録は、更新時点から遅れます。件数は、クマの目撃の報告です"
+}

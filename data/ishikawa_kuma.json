@@ -1,0 +1,1638 @@
+{
+ "as_of": "2026-10-05",
+ "corroborated": [
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-05",
+   "place": "羽咋市柴垣町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-03",
+   "place": "加賀市田尻町地内"
+  },
+  {
+   "city": "七尾市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-03",
+   "place": "七尾市鵜浦町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-02",
+   "place": "加賀市日谷町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-01",
+   "place": "小松市中海町地内"
+  },
+  {
+   "city": "七尾市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-29",
+   "place": "七尾市黒崎町"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-26",
+   "place": "小松市里川町地内"
+  },
+  {
+   "city": "七尾市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-25",
+   "place": "七尾市小島町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-24",
+   "place": "加賀市栄谷町地内"
+  },
+  {
+   "city": "七尾市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-24",
+   "place": "七尾市松百町地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-22",
+   "place": "羽咋市東的場町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "その他",
+   "observed_at": "2026-09-19",
+   "place": "能美市仏大寺町地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-11",
+   "place": "羽咋市千里浜町地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-10",
+   "place": "羽咋市千里浜町地内"
+  },
+  {
+   "city": "宝達志水町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-08",
+   "place": "宝達志水町子浦地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-05",
+   "place": "羽咋市千里浜町地内"
+  },
+  {
+   "city": "金沢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-29",
+   "place": "金沢市湯谷原町地内"
+  },
+  {
+   "city": "七尾市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-29",
+   "place": "七尾市能登島須曽町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-28",
+   "place": "加賀市山中温泉上原町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-28",
+   "place": "加賀市大聖寺今出町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-24",
+   "place": "加賀市熊坂町(大聖寺西町)地内"
+  },
+  {
+   "city": "加賀市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-08-15",
+   "place": "加賀市大聖寺地方町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-10",
+   "place": "白山市瀬戸地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-07",
+   "place": "白山市釜清水町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-05",
+   "place": "能美市湯屋町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-03",
+   "place": "能美市仏大寺町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-08-01",
+   "place": "能美市仏大寺町地内"
+  },
+  {
+   "city": "小松市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-08-01",
+   "place": "小松市千木野町"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-31",
+   "place": "白山市上野町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-29",
+   "place": "白山市平加町地内"
+  },
+  {
+   "city": "宝達志水町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-29",
+   "place": "宝達志水町走入地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-25",
+   "place": "羽咋市福水町地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-25",
+   "place": "羽咋市柳田町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-24",
+   "place": "白山市尾添地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-23",
+   "place": "白山市下吉野地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-22",
+   "place": "白山市上吉野地内"
+  },
+  {
+   "city": "宝達志水町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-21",
+   "place": "宝達志水町東間地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "能美市旭台地内"
+  },
+  {
+   "city": "小松市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-19",
+   "place": "小松市中ノ峠町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-17",
+   "place": "能美市仏大寺町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-16",
+   "place": "加賀市大聖寺西町地内"
+  },
+  {
+   "city": "中能登町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-16",
+   "place": "中能登町久江地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-15",
+   "place": "能美市緑が丘地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-15",
+   "place": "白山市平加町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-11",
+   "place": "能美市徳山町地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-10",
+   "place": "津幡町津幡地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-10",
+   "place": "津幡町倉見地内"
+  },
+  {
+   "city": "中能登町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-10",
+   "place": "中能登町二宮地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "白山市河内町吉岡地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "津幡町倉見地内"
+  },
+  {
+   "city": "宝達志水町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-09",
+   "place": "宝達志水町河原地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-08",
+   "place": "羽咋市神子原町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-08",
+   "place": "白山市釜清水町地内"
+  },
+  {
+   "city": "七尾市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-08",
+   "place": "七尾市大泊町地内"
+  },
+  {
+   "city": "能美市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "能美市緑が丘地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-07",
+   "place": "津幡町清水地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-06",
+   "place": "能美市長滝町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-05",
+   "place": "能美市松が岡地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-04",
+   "place": "羽咋市柳田町地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-04",
+   "place": "津幡町清水地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-04",
+   "place": "加賀市奥谷町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "白山市下吉谷町地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-03",
+   "place": "津幡町緑が丘地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-02",
+   "place": "白山市西佐良町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-02",
+   "place": "白山市吉野地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-07-02",
+   "place": "白山市上吉野地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-30",
+   "place": "小松市金平町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-30",
+   "place": "加賀市大聖寺岡町地内"
+  },
+  {
+   "city": "かほく市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-30",
+   "place": "かほく市内高松地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-29",
+   "place": "白山市上吉野地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-28",
+   "place": "白山市釜清水町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-27",
+   "place": "白山市下吉野地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-26",
+   "place": "加賀市南郷町地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-25",
+   "place": "津幡町小熊地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "加賀市熊坂町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "加賀市大聖寺地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "加賀市南郷町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-24",
+   "place": "加賀市南郷町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-23",
+   "place": "白山市下吉谷町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-22",
+   "place": "加賀市南郷町地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-19",
+   "place": "羽咋市神子原町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-19",
+   "place": "白山市下野町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "能美市辰口町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "能美市粟生町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "能美市上開発町地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "羽咋市千石町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-18",
+   "place": "加賀市大聖寺下福田町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "白山市市原地内"
+  },
+  {
+   "city": "小松市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-06-17",
+   "place": "小松市岩渕町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-17",
+   "place": "小松市上八里町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "白山市長屋町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "白山市女原地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "その他",
+   "observed_at": "2026-06-16",
+   "place": "小松市上八里町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-16",
+   "place": "加賀市田尻町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "白山市美川永代町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-15",
+   "place": "白山市女原地内"
+  },
+  {
+   "city": "金沢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-14",
+   "place": "金沢市角間町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-14",
+   "place": "加賀市山中温泉薬師町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "能美市上開発町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "加賀市山中温泉白山町地内"
+  },
+  {
+   "city": "かほく市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-13",
+   "place": "かほく市多田地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "白山市東二口地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "津幡町谷内地内(御門池付近)"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "津幡町下矢田地内(森林公園矢"
+  },
+  {
+   "city": "七尾市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-12",
+   "place": "七尾市三室町地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "羽咋市柴垣町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-11",
+   "place": "白山市吉野地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "その他",
+   "observed_at": "2026-06-11",
+   "place": "小松市蓮代寺町地内"
+  },
+  {
+   "city": "金沢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "金沢市田上町地内"
+  },
+  {
+   "city": "金沢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "金沢市北陽台地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "能美市徳山町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "能美市岩内町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "白山市瀬戸地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "白山市上吉谷町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "小松市里川町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "小松市木場町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "加賀市黒崎町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-10",
+   "place": "加賀市大聖寺藤ノ木町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-09",
+   "place": "白山市桑島地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-09",
+   "place": "加賀市栄谷町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "白山市釜清水町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "小松市馬場町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "小松市埴田町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-08",
+   "place": "小松市今江町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-06",
+   "place": "加賀市白鳥町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-05",
+   "place": "能美市和気町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "能美市和気町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "小松市八里台町地内"
+  },
+  {
+   "city": "宝達志水町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-04",
+   "place": "宝達志水町上田出地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-03",
+   "place": "加賀市細坪町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "小松市下八里町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-02",
+   "place": "加賀市高尾町地内"
+  },
+  {
+   "city": "宝達志水町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "宝達志水町針山地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "加賀市山中温泉荒谷町地内"
+  },
+  {
+   "city": "七尾市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-06-01",
+   "place": "七尾市沢野町地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-31",
+   "place": "津幡町緑が丘地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-31",
+   "place": "津幡町津幡地区"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-31",
+   "place": "津幡町津幡地区"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-31",
+   "place": "津幡町津幡地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-31",
+   "place": "津幡町杉瀬地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-31",
+   "place": "小松市東山町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-30",
+   "place": "能美市和気町地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-30",
+   "place": "羽咋市福水町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-30",
+   "place": "加賀市小菅波町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-29",
+   "place": "能美市徳山町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-29",
+   "place": "能美市上開発町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-29",
+   "place": "白山市河原山町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-29",
+   "place": "白山市東二口地内"
+  },
+  {
+   "city": "金沢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-28",
+   "place": "金沢市宮野町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-28",
+   "place": "能美市和気町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-27",
+   "place": "白山市杉森町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-27",
+   "place": "白山市下吉谷町地内"
+  },
+  {
+   "city": "金沢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "金沢市別所町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-26",
+   "place": "能美市和気町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "能美市和光台地内"
+  },
+  {
+   "city": "宝達志水町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-25",
+   "place": "宝達志水町向瀬地内"
+  },
+  {
+   "city": "金沢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "金沢市薬師町地内"
+  },
+  {
+   "city": "金沢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "金沢市下涌波町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "能美市岩内町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "白山市鶴来朝日町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-23",
+   "place": "白山市白峰地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "能美市来丸町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "能美市和気町地内"
+  },
+  {
+   "city": "羽咋市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "羽咋市神子原町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "加賀市高尾町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-22",
+   "place": "加賀市山代温泉地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-21",
+   "place": "能美市和光台地内"
+  },
+  {
+   "city": "金沢市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "金沢市宮野町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "能美市緑が丘地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "能美市湯谷町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "能美市松が岡地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "能美市和気町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "白山市河内町口直海地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-20",
+   "place": "加賀市山中温泉我谷町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "加賀市直下町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "加賀市熊坂町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "加賀市大聖寺錦町地内"
+  },
+  {
+   "city": "かほく市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-19",
+   "place": "かほく市内高松地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-18",
+   "place": "能美市湯谷町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-18",
+   "place": "白山市河内町口直海地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "その他",
+   "observed_at": "2026-05-18",
+   "place": "白山市河内町口直海地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-18",
+   "place": "小松市津波倉町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 3,
+   "kind": "目撃",
+   "observed_at": "2026-05-18",
+   "place": "小松市林町地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-17",
+   "place": "能美市湯谷墓苑地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-17",
+   "place": "津幡町鳥屋根地内"
+  },
+  {
+   "city": "能美市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-16",
+   "place": "能美市湯谷墓苑地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-16",
+   "place": "小松市上八里町地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-16",
+   "place": "加賀市南郷町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-15",
+   "place": "白山市河内町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-15",
+   "place": "小松市里川町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-15",
+   "place": "小松市上八里町地内"
+  },
+  {
+   "city": "七尾市",
+   "count": 2,
+   "kind": "その他",
+   "observed_at": "2026-05-14",
+   "place": "七尾市鵜浦町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-13",
+   "place": "白山市中島町地内"
+  },
+  {
+   "city": "小松市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-13",
+   "place": "小松市木場町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-10",
+   "place": "白山市味智の郷地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-06",
+   "place": "白山市東二口地内"
+  },
+  {
+   "city": "宝達志水町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-06",
+   "place": "宝達志水町宝達地内"
+  },
+  {
+   "city": "かほく市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-06",
+   "place": "かほく市内高松地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-05-05",
+   "place": "加賀市奥谷町地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-28",
+   "place": "津幡町刈安地区内"
+  },
+  {
+   "city": "津幡町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-04-28",
+   "place": "津幡町俱利伽羅地区内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-27",
+   "place": "白山市仏師ケ野町地内"
+  },
+  {
+   "city": "津幡町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-26",
+   "place": "津幡町倶利伽羅地区内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-24",
+   "place": "加賀市熊坂町地内"
+  },
+  {
+   "city": "中能登町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-21",
+   "place": "中能登町大槻地内"
+  },
+  {
+   "city": "加賀市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-13",
+   "place": "加賀市熊坂町地内"
+  },
+  {
+   "city": "白山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-11",
+   "place": "白山市河内町板尾地内"
+  },
+  {
+   "city": "小松市",
+   "count": 2,
+   "kind": "目撃",
+   "observed_at": "2026-04-06",
+   "place": "小松市那谷町地内"
+  },
+  {
+   "city": "宝達志水町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-04-06",
+   "place": "宝達志水町小川地内"
+  }
+ ],
+ "corroborated_on": {
+  "かほく市": "2026-10-13",
+  "七尾市": "2026-10-13",
+  "中能登町": "2026-10-13",
+  "加賀市": "2026-10-13",
+  "宝達志水町": "2026-10-13",
+  "小松市": "2026-10-13",
+  "津幡町": "2026-10-13",
+  "白山市": "2026-10-13",
+  "羽咋市": "2026-10-13",
+  "能美市": "2026-10-13",
+  "金沢市": "2026-10-13"
+ },
+ "credit": "出典: 石川県「クマ出没記録(目撃情報)」(https://www.pref.ishikawa.lg.jp/sizen/kuma/r7mokugeki.html)の公開データから、市町村別・月別の件数を、当サイトが集計して作成(石川県が作成したものではありません)",
+ "fetched_at": "2026-10-13T13:23:55.215377+09:00",
+ "fy_current": "R08",
+ "mode": "counts",
+ "monthly": {
+  "R07": {
+   "2": 1
+  },
+  "R08": {
+   "10": 5,
+   "4": 10,
+   "5": 64,
+   "6": 69,
+   "7": 38,
+   "8": 12,
+   "9": 11
+  }
+ },
+ "municipalities": {
+  "かほく市": {
+   "latest": "2026-06-30",
+   "monthly": {
+    "R08": {
+     "5": 2,
+     "6": 2
+    }
+   }
+  },
+  "七尾市": {
+   "latest": "2026-10-03",
+   "monthly": {
+    "R08": {
+     "10": 1,
+     "5": 1,
+     "6": 2,
+     "7": 1,
+     "8": 1,
+     "9": 3
+    }
+   }
+  },
+  "中能登町": {
+   "latest": "2026-07-16",
+   "monthly": {
+    "R08": {
+     "4": 1,
+     "7": 2
+    }
+   }
+  },
+  "加賀市": {
+   "latest": "2026-10-03",
+   "monthly": {
+    "R08": {
+     "10": 2,
+     "4": 2,
+     "5": 9,
+     "6": 18,
+     "7": 2,
+     "8": 4,
+     "9": 1
+    }
+   }
+  },
+  "宝達志水町": {
+   "latest": "2026-09-08",
+   "monthly": {
+    "R08": {
+     "4": 1,
+     "5": 2,
+     "6": 2,
+     "7": 3,
+     "9": 1
+    }
+   }
+  },
+  "小松市": {
+   "latest": "2026-10-01",
+   "monthly": {
+    "R08": {
+     "10": 1,
+     "4": 1,
+     "5": 7,
+     "6": 12,
+     "7": 1,
+     "8": 1,
+     "9": 1
+    }
+   }
+  },
+  "津幡町": {
+   "latest": "2026-07-10",
+   "monthly": {
+    "R08": {
+     "4": 3,
+     "5": 6,
+     "6": 3,
+     "7": 6
+    }
+   }
+  },
+  "白山市": {
+   "latest": "2026-08-10",
+   "monthly": {
+    "R08": {
+     "4": 2,
+     "5": 13,
+     "6": 16,
+     "7": 12,
+     "8": 2
+    }
+   }
+  },
+  "羽咋市": {
+   "latest": "2026-10-05",
+   "monthly": {
+    "R08": {
+     "10": 1,
+     "5": 2,
+     "6": 3,
+     "7": 4,
+     "9": 4
+    }
+   }
+  },
+  "能美市": {
+   "latest": "2026-09-19",
+   "monthly": {
+    "R07": {
+     "2": 1
+    },
+    "R08": {
+     "5": 17,
+     "6": 8,
+     "7": 7,
+     "8": 3,
+     "9": 1
+    }
+   }
+  },
+  "金沢市": {
+   "latest": "2026-08-29",
+   "monthly": {
+    "R08": {
+     "5": 5,
+     "6": 3,
+     "8": 1
+    }
+   }
+  }
+ },
+ "source": "ishikawa",
+ "source_file": "https://www.pref.ishikawa.lg.jp/sizen/kuma/documents/261007mokugeki.pdf",
+ "source_page": "https://www.pref.ishikawa.lg.jp/sizen/kuma/r7mokugeki.html",
+ "total_fy": 209,
+ "unparsed": 0,
+ "update_note": "石川県が、ほぼ週1回更新します。最新の記録は、更新時点から遅れます。件数は、クマの目撃(クマらしき動物を含む)の報告です"
+}

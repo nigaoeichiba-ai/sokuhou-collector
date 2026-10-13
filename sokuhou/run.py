@@ -21,6 +21,8 @@ from sokuhou.sources import (
     env_kuma,
     fukushima_kuma,
     gunma_kuma,
+    ishikawa_kuma,
+    kanagawa_kuma,
     estat_wage,
     ishikari_kuma,
     jgrants,
@@ -32,6 +34,7 @@ from sokuhou.sources import (
     otsu_fire,
     otsu_kuma,
     saitama_kuma,
+    shizuoka_kuma,
     sorachi_kuma,
     toyama_kuma,
     yamagata_kuma,
@@ -173,6 +176,9 @@ GROUPS: dict[str, list[Source]] = {
         Source("saitama_kuma", saitama_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("otsu_kuma", otsu_kuma.collect, check_counts_bear),
         Source("gunma_kuma", gunma_kuma.collect, check_counts_bear, corroborated.carry_over),    # the prefecture's list is carried by several other sites: rows stored with their place
+        Source("shizuoka_kuma", shizuoka_kuma.collect, check_counts_bear, corroborated.carry_over),
+        Source("kanagawa_kuma", kanagawa_kuma.collect, check_counts_bear, corroborated.carry_over),
+        Source("ishikawa_kuma", ishikawa_kuma.collect, check_counts_bear, corroborated.carry_over),
         # the RSS / Atom feeds of municipalities and prefectures (registry: data/muni_feeds_registry.json): the bear items feed this site, the rest is shared with the other projects
         Source("muni_feeds", feedscan.collect, feedscan.check_feeds, feedscan.merge_feeds),
     ],
