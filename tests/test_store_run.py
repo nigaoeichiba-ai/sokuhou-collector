@@ -161,6 +161,7 @@ class CliTest(unittest.TestCase):
             "ishikawa_kuma",
             "fukuchiyama_kuma",
             "nagano_kuma",
+            "higumap_kuma",
             "muni_feeds",
             "otsu_fire",
         })
@@ -168,7 +169,7 @@ class CliTest(unittest.TestCase):
     def test_municipal_bear_sources_run_in_the_kuma_group_so_the_daily_run_does_not_collect_them_twice(self):
         kuma = {s.name for s in run.GROUPS["kuma"]}
         self.assertEqual(kuma, {"miyagi_kuma", "akita_kuma", "yamaguchi_kuma", "okayama_kuma", "yamanashi_kuma", "sorachi_kuma", "ishikari_kuma", "otsu_kuma",
-                          "fukushima_kuma", "niigata_kuma", "toyama_kuma", "yamagata_kuma", "aomori_kuma", "nara_kuma", "saitama_kuma", "gunma_kuma", "shizuoka_kuma", "kanagawa_kuma", "ishikawa_kuma", "fukuchiyama_kuma", "nagano_kuma", "muni_feeds"})
+                          "fukushima_kuma", "niigata_kuma", "toyama_kuma", "yamagata_kuma", "aomori_kuma", "nara_kuma", "saitama_kuma", "gunma_kuma", "shizuoka_kuma", "kanagawa_kuma", "ishikawa_kuma", "fukuchiyama_kuma", "nagano_kuma", "higumap_kuma", "muni_feeds"})
         self.assertFalse(kuma & {s.name for s in run.GROUPS["daily"]})
 
 

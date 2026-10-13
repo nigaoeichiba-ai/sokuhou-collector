@@ -78,6 +78,8 @@ LIVE_SOURCES.update({
                     "monthly_label": "クマの目撃の場所のお知らせ", "as_of_text": "最新の記録は{d}の分までです"},
     "nagano": {"pref": "長野", "scope": "長野市のみ", "name": "長野県長野市", "label": "長野市・市の公式データを集計(件数。場所は確認できた目撃だけ)",
                "monthly_label": "目撃のほか、痕跡(出没)の報告を含む", "as_of_text": "最新の記録は{d}の分までです(市の更新は月1回)"},
+    "higumap": {"pref": "北海道", "scope": "ひぐまっぷに参加する市町村のみ", "name": "北海道の市町村(ひぐまっぷ)", "label": "各市町村が「ひぐまっぷ」で公開している情報を集計(件数のみ)",
+                "monthly_label": "目撃のほか、痕跡や捕獲などの報告を含む", "as_of_text": "最新の記録は{d}の分までです"},
     "otsu": {"pref": "滋賀", "scope": "大津市のみ", "name": "滋賀県大津市", "label": "大津市・市の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や錯誤捕獲の報告を含む",
              "as_of_text": "最新の記録は{d}の分までです"},
 })
@@ -277,9 +279,10 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
     keys = sorted({r["src"] for r in rows})
     names = "・".join(infos[k]["name"] for k in keys)
     note = kind_note(infos, slug)
-    scopes = [LIVE_SOURCES[k]["scope"] for k in keys if LIVE_SOURCES.get(k, {}).get("scope")]
+    extras = [c for c in lv["counts"] if c["slug"] == slug]          # counts-only sources of the same prefecture: a section below the records
+    scopes = [LIVE_SOURCES[k]["scope"] for k in keys + [c["key"] for c in extras] if LIVE_SOURCES.get(k, {}).get("scope")]
     # a prefecture page that covers only part of the prefecture says so (every source scoped: all the scopes, e.g. "空知管内の24市町、石狩市のみ")
-    scope = "、".join(s.removesuffix("のみ") for s in scopes) + "のみ" if scopes and len(scopes) == len(keys) else ""
+    scope = "、".join(s.removesuffix("のみ") for s in scopes) + "のみ" if scopes and len(scopes) == len(keys) + len(extras) else ""
     pname_s = f"{pname}({scope})" if scope else pname
     city_rows = []
     for city, cr in sorted(cities.items(), key=lambda kv: (-len(kv[1]), kv[0])):
@@ -308,13 +311,29 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
 {record_rows(rows[:RECENT_ROWS], with_city_link=True, by_slug_cities=lv["by_pref"])}
 <p class="notice">直近{min(RECENT_ROWS, len(rows))}件です。{CAUTION}</p>
 <h2>月別の記録</h2>
-{month_blocks}<p><a href="/map/?pref={slug}">{esc(pname)}の目撃を地図で見る</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
+{month_blocks}{extra_counts_html(extras, today)}<p><a href="/map/?pref={slug}">{esc(pname)}の目撃を地図で見る</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
 {('<h2>' + esc(pname) + 'の公式の出没情報</h2>' + off_html) if off_html else ''}
 <p><a href="/live/{slug}/feed.xml">{esc(pname)}の最新の目撃(フィード)</a>を、フィードリーダーに登録すると、新しい記録が公表されるたびに届きます。</p>
 {source_notes(infos, keys)}"""
     return page(path=f"/live/{slug}/", title=f"{pname_s}のクマの目撃情報({fy_label(cur)}・最新{n(len(rows))}件・市町村別)",
                 description=f"{pname_s}の{fy_label(cur)}のクマの目撃情報{n(len(rows))}件を、新しい順・市町村別に一覧にしています。最新は{md(rows[0]['at'][:10])}の{place_text(rows[0]['city'], rows[0]['place'])}です。",
                 body=body, alternates=((f"{pname}の最新の目撃", f"/live/{slug}/feed.xml"),))
+
+
+def extra_counts_html(extras: list[dict], today: date) -> str:
+    """Counts-only sources of a prefecture that also has a record page: municipality table and month table, each with its source and note."""
+    out = ""
+    for c in extras:
+        cur = c["fy"]
+        mc = {m: c["monthly"][str(m)] for m in FY_MONTHS if c["monthly"].get(str(m))}
+        rows = [[esc(city), n(k), md(latest)] for city, k, latest in c["munis"]]
+        out += f"""<h2>{esc(c['name'])}の件数({fy_label(cur)})</h2>
+<p>{esc(c['name'])}が公開している{fy_label(cur)}の記録は、{n(c['total'])}件(上の記録とは別の市町村の分)です。最新は{md(c['latest'])}({ago_text(c['latest'], today)})の分です。件数と最新の日付だけを載せています。</p>
+{table(["市町村", "件数", "最新の日付"], rows)}
+{table(["月", "件数"], [[f"{m}月", n(v)] for m, v in mc.items()])}
+<p class="notice">出典: <a href="{esc(c['page'])}" rel="noopener" target="_blank">{esc(c['name'])}の公開ページ</a>。{COUNTS_NOTE.format(name=esc(c['name']))}取得日: {jp_date(c['fetched'])}。{esc(c['note'])}。</p>
+"""
+    return out
 
 
 def city_page(page, d: dict, lv: dict, slug: str, city: str, links: dict) -> str:

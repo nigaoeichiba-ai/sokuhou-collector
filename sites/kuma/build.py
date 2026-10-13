@@ -51,6 +51,17 @@ CAUTION = ("環境省が都道府県から聞き取った<strong>速報値</stro
            "出没数は、<strong>都道府県ごとに異なる方法</strong>で取りまとめられているため、都道府県どうしの数の大小は、そのまま比べられません。")
 
 
+# Prefectures whose row in the ministry's table is "-": why (checked against the sources named in the text, 2026-10-13)
+NO_COUNT_WHY = {
+    "千葉": '<p>千葉県には、野生のツキノワグマが生息していないとされています。環境省の資料は、ツキノワグマの生息地を「千葉県を除く本州と四国の一部地域」と書いています'
+          '(<a href="https://www.env.go.jp/nature/choju/docs/docs5-4a/pdfs/chpt4.pdf" rel="noopener" target="_blank">環境省「クマ類の生態と現状」</a>)。'
+          'そのため、出没件数の表に数値がありません。</p>',
+    "北海道": '<p>北海道は、道全体の出没件数をまとめた表を、道のサイトに載せていません。道のサイトは、市町村ごとの出没情報へのリンク集を用意し、'
+            '「市町村で提供しているヒグマの出没に関する情報は、すべての出没を網羅するものではありません」と、注意を書いています'
+            '(<a href="https://www.pref.hokkaido.lg.jp/ks/skn/higuma/joho.html" rel="noopener" target="_blank">北海道「市町村ヒグマ関連情報リンク集」</a>)。'
+            'そのため、環境省の表でも「-」になっています。このサイトでは、市町村が公開している情報が読めた分だけを、下に載せています。</p>',
+}
+
 def rank_of(values: dict) -> dict:
     """1 = largest; ties share a rank; None is left out."""
     have = {k: v for k, v in values.items() if v is not None}
@@ -438,7 +449,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
 {charts.lines([{"label": fy_label(y), "values": r["monthly"][y], "cls": c, "strong": y == cur} for y, c in zip((prev, done, cur), ("c1", "c3", "c4"))], [f"{m}月" for m in d["months"]], title=f"{r['name']}の月別の出没件数", desc=f"{r['name']}の月別の出没件数", uid="p")}
 {table(["年度"] + [f"{m}月" for m in d["months"]] + ["合計"], [[fy_label(y)] + [n(r["monthly"][y][i]) for i in range(12)] + [n(r["total"][y])] for y in reversed(d["years"])])}"""
     else:
-        sight = f"<p>環境省の出没件数の表には、{esc(r['name'])}の数値がありません(「-」)。人身被害の件数は、下に載せています。</p>"
+        sight = f"<p>環境省の出没件数の表には、{esc(r['name'])}の数値がありません(「-」)。人身被害の件数は、下に載せています。</p>{NO_COUNT_WHY.get(r['short'], '')}"
     emg_html = ("<ul class='mini-list'>" + "".join(f'<li>{md(c["date"])} {esc(c["place"])}<b>{esc(c["species"])}</b></li>' for c in emg) + "</ul>") if emg else f"<p>環境省の{fy_label(cur)}の一覧には、{esc(r['name'])}の事例はありません(環境省が把握する事例に限ります)。</p>"
     fat_html = ("<ul class='mini-list'>" + "".join(f'<li>{jp_date(i["date"])} {esc(i["place"])}<b>{i["victims"]}人</b></li>' for i in sorted(fat, key=lambda i: i["date"], reverse=True)) + "</ul>") if fat else f"<p>環境省の資料(令和7・8年度)には、{esc(r['name'])}の死亡事故はありません。</p>"
     live_block = ""
@@ -451,7 +462,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
     cap_html = captures_mod.pref_block(d["captures"], r["short"], r["name"])
     for c in d["live_counts"]:
         if c["pref"] == r["short"]:
-            live_block = (f'<h2>{c["name"]}が公表している件数</h2>\n<p>{fy_label(c["fy"])}は{n(c["total"])}件で、最新は{md(c["latest"])}の分です。件数だけを載せています。</p>\n'
+            live_block += (f'<h2>{c["name"]}が公表している件数</h2>\n<p>{fy_label(c["fy"])}は{n(c["total"])}件で、最新は{md(c["latest"])}の分です。件数だけを載せています。</p>\n'
                           f'<p><a href="/live/{r["slug"]}/">市町村別・月別の件数</a></p>\n')
     nav = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in d["rows"] if x is not r)
     mates = [x for x in d["rows"] if x is not r and x["region_slug"] == r["region_slug"]]
@@ -743,8 +754,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
                 if live_mod.city_has_page(rows):
                     pages[f"live/{slug}/{live_mod.city_slug(slug, city)}/index.html"] = live_mod.city_page(page_fn, d, lv, slug, city, links)
         for c in lv["counts"]:
-            if c["slug"] in lv["by_pref"]:
-                raise BuildError(f"{c['slug']} has both a record source and a counts-only source")
+            if c["slug"] in lv["by_pref"]:         # the prefecture has a record page: the counts are a section of it (live.pref_live_page)
+                continue
             pages[f"live/{c['slug']}/index.html"] = live_mod.counts_page(page_fn, d, c, lv["today"], links)
         pages["live/feed.xml"] = live_mod.feed_xml(lv, cfg)
         for slug in lv["by_pref"]:

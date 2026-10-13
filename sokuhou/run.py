@@ -22,6 +22,7 @@ from sokuhou.sources import (
     fukuchiyama_kuma,
     fukushima_kuma,
     gunma_kuma,
+    higumap_kuma,
     ishikawa_kuma,
     kanagawa_kuma,
     estat_wage,
@@ -183,6 +184,7 @@ GROUPS: dict[str, list[Source]] = {
         Source("ishikawa_kuma", ishikawa_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("fukuchiyama_kuma", fukuchiyama_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("nagano_kuma", nagano_kuma.collect, check_counts_bear, corroborated.carry_over),
+        Source("higumap_kuma", higumap_kuma.collect, check_counts_bear),     # Hokkaido: the municipalities that publish on Higumap, counts by month only
         # the RSS / Atom feeds of municipalities and prefectures (registry: data/muni_feeds_registry.json): the bear items feed this site, the rest is shared with the other projects
         Source("muni_feeds", feedscan.collect, feedscan.check_feeds, feedscan.merge_feeds),
     ],
