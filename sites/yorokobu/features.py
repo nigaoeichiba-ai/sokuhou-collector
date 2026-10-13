@@ -25,7 +25,7 @@ HERE = Path(__file__).resolve().parent
 DIR = HERE / "content" / "features"
 IMG_DIR = HERE / "assets" / "features"
 MIN_POOL = 8                       # products behind a chart; fewer and the chart says nothing
-MIN_TEXT = 2400                    # characters of editorial text for a page to be indexed
+MIN_TEXT = 2300                    # characters of editorial text for a page to be indexed (with the light 読点 of the wording pass, 2400 was about 2300)
 SLUG = re.compile(r"[a-z0-9]+(-[a-z0-9]+)*")
 # what an editor who has not used the product must not write (a made-up use is a made-up review), besides dailypicks.BANNED
 EXPERIENCE = ["使ってみ", "試してみ", "試した", "食べてみ", "飲んでみ", "着てみ", "買ってみ", "購入してみ", "開けてみ", "実際に使", "実際に食べ", "実際に飲", "私は", "わたしは", "我が家", "うちでは", "編集部で試", "検証した"]
@@ -89,8 +89,8 @@ def problems(f: dict, entry: dict | None, img_dir: Path | None = None) -> list[s
             out.append(f"{slug}: who.{k} needs 2-4 phrases of 8-70 characters")
     if not 4 <= len(f["specs"]) <= 9 or any(not (r.get("k") and r.get("v")) for r in f["specs"]):
         out.append(f"{slug}: specs needs 4-9 rows of {{k, v}}")
-    if not 3 <= len(f["reading"]) <= 5 or any(not (14 <= len(r.get("h", "")) <= 34 and 150 <= len(r.get("p", "")) <= 520) for r in f["reading"]):
-        out.append(f"{slug}: reading needs 3-5 blocks (heading 14-34, text 150-520 characters)")
+    if not 3 <= len(f["reading"]) <= 5 or any(not (14 <= len(r.get("h", "")) <= 34 and 140 <= len(r.get("p", "")) <= 520) for r in f["reading"]):
+        out.append(f"{slug}: reading needs 3-5 blocks (heading 14-34, text 140-520 characters)")
     for k, lo, hi in (("good", 3, 4), ("care", 3, 4)):
         if not lo <= len(f[k]) <= hi or any(not 30 <= len(x) <= 140 for x in f[k]):
             out.append(f"{slug}: {k} needs {lo}-{hi} sentences of 30-140 characters")
@@ -226,9 +226,9 @@ def _chart_price(d: dict, f: dict, pl: list[dict], how: str, st: dict) -> str:
     top = max(n for _, n, _ in rows) or 1
     body = "".join(f'<div class="hb-row{" me" if me else ""}"><span class="hb-l">{esc(lab)}</span><span class="hb-track"><i class="hb-fill {"s2" if me else "s1"}" style="width:{n / top * 100:.1f}%"></i></span>'
                    f'<span class="hb-v">{n}点{"　← この商品" if me else ""}</span></div>' for lab, n, me in rows)
-    where = f"、この商品は{dataroom.yen(price)}で、安いほうから数えて約{round(st['below'])}%の位置です" if price else ""
+    where = f"、この商品は{dataroom.yen(price)}で安いほうから数えて約{round(st['below'])}%の位置です" if price else ""
     cap = (f"{how}({st['n']}点、{d['fetched_label']}時点)の価格の分布。中央値は{dataroom.yen(st['median'])}、真ん中の半分は{dataroom.yen(st['q1'])}〜{dataroom.yen(st['q3'])}です{where}。"
-           f"当サイトが取り上げた商品の数字で、楽天市場の全体ではありません。")
+           f"当サイトが取り上げた商品の数字で楽天市場の全体ではありません。")
     return dataroom.figure(d, "同じ種類の商品の価格の位置", f'<div class="hb">{body}</div>', esc(cap),
                            dataroom.table(["価格帯", "商品数"], [[lab, str(n)] for lab, n, _ in rows]))
 
@@ -242,8 +242,8 @@ def _chart_facts(d: dict, f: dict, st: dict) -> str:
         mine = [f"送料無料: {'はい' if me['free_shipping'] else 'いいえ'}", f"ギフト対応: {'はい' if me.get('gift') else '表示なし'}",
                 f"楽天の評価 {me['rating']:.2f}({me['reviews']:,}件)" if me["reviews"] else "楽天のレビュー: まだありません"]
         note = f' この商品は、{"、".join(mine)}(楽天市場の表示。{d["fetched_label"]}時点)。'
-    cap = f"同じ種類の{st['n']}点のうち、送料無料・ギフト対応の割合。レビュー件数の中央値は{st['reviews']:,.0f}件" + (f"、評価の中央値は{st['rating']:.2f}" if st["rating"] else "") + f"です。{note}"
-    return dataroom.figure(d, "送料と、ギフト対応", dataroom.hbars(rows, top=100), esc(cap))
+    cap = f"同じ種類の{st['n']}点のうち送料無料・ギフト対応の割合。レビュー件数の中央値は{st['reviews']:,.0f}件" + (f"、評価の中央値は{st['rating']:.2f}" if st["rating"] else "") + f"です。{note}"
+    return dataroom.figure(d, "送料とギフト対応", dataroom.hbars(rows, top=100), esc(cap))
 
 
 def _manga(f: dict) -> str:
@@ -287,20 +287,21 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
         me = live
         pl, how = pool(d, f, entry["kind"])
         st = stats(pl, me)
-        photo = f'<a class="feat-photo" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"><img src="{esc(img)}" alt="{esc(entry["name"])}" width="600" height="600" loading="eager" fetchpriority="high" decoding="async"></a>'
+        photo = (f'<div class="imgbox"><a class="feat-photo" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"><img src="{esc(img)}" alt="{esc(entry["name"])}" width="600" height="600" loading="eager" fetchpriority="high" decoding="async"></a>'
+                 f'{B.fav_button(entry["code"], B.short(entry["name"], 40), live["price"] if live else None, url)}</div>')
     else:
         href = B.amazon_dp(cfg, entry["asin"])
         buy = f'<a class="btn big" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">Amazonで見る</a>'
         other_btn = f'<a class="btn btn-sub" href="{esc(B.search_link(cfg, B.amazon_query(entry["name"])))}" rel="sponsored nofollow noopener" target="_blank">楽天市場で探す</a>'
-        price = '<p class="pick-price"><small>価格・在庫・購入者の評価は、Amazonのページでご確認ください。</small></p>'
+        price = '<p class="pick-price"><small>価格・在庫・購入者の評価はAmazonのページでご確認ください。</small></p>'
         pl, how = pool(d, f, entry["kind"])
         st = stats(pl, None)
-        photo = (f'<a class="feat-photo mood" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">{B.mood_img(entry["mood"], entry["name"] + "の商品写真ではなく、贈る場面を表したイメージ", "(max-width: 760px) 100vw, 480px", "eager", high=True)}'
-                 f'<span class="img-note">イメージ画像</span></a>')
+        photo = (f'<div class="imgbox mood"><a class="feat-photo mood" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">{B.mood_img(entry["mood"], entry["name"] + "の商品写真ではなく、贈る場面を表したイメージ", "(max-width: 760px) 100vw, 480px", "eager", high=True)}'
+                 f'<span class="img-note">イメージ画像</span></a>{B.fav_button("a:" + entry["asin"], B.short(entry["name"], 40), None, href)}</div>')
     charts = ""
     if st:
         charts = f'<section class="block" id="position"><div class="sec-head"><h2>同じ種類の中での位置</h2></div>{_chart_price(d, f, pl, how, st)}{_chart_facts(d, f, st)}</section>'
-    notice = '<p class="notice">この商品は、いま販売ページで取り扱いがないと表示されています。下の「代わりの候補」をご覧ください。</p>' if unavailable else ""
+    notice = '<p class="notice">この商品はいま販売ページで取り扱いがないと表示されています。下の「代わりの候補」をご覧ください。</p>' if unavailable else ""
     specs = "".join(f"<tr><th>{esc(r['k'])}</th><td>{esc(r['v'])}</td></tr>" for r in f["specs"])
     reading = "".join(f"<h3>{esc(r['h'])}</h3><p>{esc(r['p'])}</p>" for r in f["reading"])
     faq = "".join(f"<details class='faq'><summary>{esc(q['q'])}</summary><p>{esc(q['a'])}</p></details>" for q in f["faq"])
@@ -316,18 +317,18 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
 <section class="feat-top"><div class="feat-hero">{photo}<div class="feat-sum"><p class="eyebrow">30秒でわかる結論</p>{_list(f["verdict"], "feat-verdict")}{price}<div class="item-btns">{buy}{other_btn}</div></div></div></section>
 <section class="block"><div class="sec-head"><h2>合う相手と避けたい相手</h2></div><div class="cols feat-who"><div><h3>合う相手</h3>{_list(f["who"]["yes"], "feat-yes")}</div><div><h3>避けたい相手・場面</h3>{_list(f["who"]["no"], "feat-no")}</div></div></section>
 <section class="block"><div class="sec-head"><h2>仕様を一つずつ読む</h2></div><div class="tablewrap"><table class="feat-specs"><tbody>{specs}</tbody></table></div>
-<p class="sec-lead">仕様は、商品ページとメーカーの公開情報で、{esc(f["verified"].replace("-", "年", 1).replace("-", "月", 1) + "日")}に確かめました。</p>{reading}</section>
+<p class="sec-lead">仕様は商品ページとメーカーの公開情報で、{esc(f["verified"].replace("-", "年", 1).replace("-", "月", 1) + "日")}に確かめました。</p>{reading}</section>
 <section class="block"><div class="sec-head"><h2>良い点と気になる点</h2></div><div class="cols"><div><h3>よい点</h3>{_list(f["good"], "feat-yes")}</div><div><h3>気になる点</h3>{_list(f["care"], "feat-no")}</div></div></section>
 {charts}
 <section class="block"><div class="sec-head"><h2>渡し方</h2></div><ol class="feat-give">{"".join(f"<li>{esc(x)}</li>" for x in f["give"])}</ol></section>
 <section class="block feat-scene"><div class="sec-head"><span class="eyebrow">{esc(f["scene"]["label"])}</span><h2>渡す場面を思い浮かべる</h2></div>{_manga(f)}<p>{esc(f["scene"]["text"])}</p><p class="feat-react"><b>想定される反応</b>{esc(f["scene"]["reaction"])}</p>
-<p class="sec-lead">この場面と漫画は、読む人が想像しやすいように編集部がつくった例です。実際の贈り物の感想や、購入者の声ではありません。</p></section>
+<p class="sec-lead">この場面と漫画は読む人が想像しやすいように編集部がつくった例です。実際の贈り物の感想や購入者の声ではありません。</p></section>
 <section class="block"><div class="sec-head"><h2>代わりの候補</h2></div>{_alts(cfg, d, day, f["alts"])}</section>
 <section class="block"><div class="sec-head"><h2>よくある質問</h2></div>{faq}</section>
 <section class="block feat-cta"><p class="more">{buy}{other_btn}<a class="btn btn-sub" href="/memo/">贈る日を登録する</a></p></section>
-{B.share_bar(cfg, path(f), f"{f['title']}: {f['catch']}", "このページを、だれかに・自分に送る", hint=True)}
-<section class="block"><div class="sec-head"><h2>この記事について</h2></div><p class="notice">商品の仕様、メーカーなどの公開情報、当サイトが集めた商品のデータをもとに、編集部が、贈り物としての選びやすさを読み解いています。価格・在庫は、販売ページでご確認ください。</p><ul class="plain feat-ev">{ev}</ul></section>
-{f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの、詳しく読む記事</span></h2><ul class="plain">{more}</ul></section>' if more else ""}
+{B.share_bar(cfg, path(f), f"{f['title']}: {f['catch']}", "このページをだれかに・自分に送る", hint=True)}
+<section class="block"><div class="sec-head"><h2>この記事について</h2></div><p class="notice">商品の仕様、メーカーなどの公開情報、当サイトが集めた商品のデータをもとに編集部が、贈り物としての選びやすさを読み解いています。価格・在庫は販売ページでご確認ください。</p><ul class="plain feat-ev">{ev}</ul></section>
+{f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの詳しく読む記事</span></h2><ul class="plain">{more}</ul></section>' if more else ""}
 <script type="application/ld+json">{ld}</script>"""
     return B.page(cfg, preview, path=path(f), title=f"{f['title']} | {cfg['site_name']}", description=f["catch"] + " " + f["verdict"][0][:70], body=body, og_image=B.og_for(f"pick/{f['slug']}"),
                   amazon_links=bool(cfg.get("amazon_tracking_id")))
@@ -344,7 +345,7 @@ def teaser(cfg: dict, d: dict, feats: list[dict], day_iso: str | None = None, li
     if not shown:
         return ""
     cells = "".join(f'<li><a class="tile wide" href="{path(f)}"><span><b>{esc(f["title"])}</b><small>{esc(f["catch"])}</small></span></a></li>' for f in shown)
-    return f'<section class="block"><div class="sec-head"><span class="eyebrow">Read more</span><h2>詳しく読む</h2><p class="sec-lead">1つの商品を、仕様・価格の位置・渡し方まで掘り下げた記事です。</p></div><ul class="tiles wide">{cells}</ul></section>'
+    return f'<section class="block"><div class="sec-head"><span class="eyebrow">Read more</span><h2>詳しく読む</h2><p class="sec-lead">1つの商品を仕様・価格の位置・渡し方まで掘り下げた記事です。</p></div><ul class="tiles wide">{cells}</ul></section>'
 
 
 def build_pages(d: dict, cfg: dict, preview: bool) -> dict[str, str]:

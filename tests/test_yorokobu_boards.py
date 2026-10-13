@@ -101,7 +101,7 @@ class BoardsTest(unittest.TestCase):
     # ------------------------------------------------------------ the pages
     def test_a_board_shows_the_numbers_the_sentences_the_sources_and_the_way_to_the_products(self):
         html = self.read("data/birthday-survey/index.html")
-        for text in ("3秒でわかる", "17,643円", "恋人への平均予算", "わかったこと", "調べた調査", "株式会社アイディエーション", "見かたの注意", "この予算で、探す"):
+        for text in ("3秒でわかる", "17,643円", "恋人への平均予算", "わかったこと", "調べた調査", "株式会社アイディエーション", "見かたの注意", "この予算で探す"):
             self.assertIn(text, html, text)
         self.assertIn("https://prtimes.jp/main/html/rd/p/000000031.000030222.html", html)           # the source link
         self.assertIn("880人", html)
@@ -116,7 +116,7 @@ class BoardsTest(unittest.TestCase):
 
     def test_the_occasion_and_pair_pages_lead_into_the_board_and_show_its_first_numbers(self):
         occ = self.read("occasion/birthday/index.html")
-        self.assertIn("みんなはいくらで何を贈る?", occ)
+        self.assertIn("みんなはいくらで何を贈る？", occ)
         self.assertIn('href="/data/birthday-survey/"', occ)
         self.assertEqual(occ.count('<ul class="stat-tiles">'), 1)
         self.assertIn("17,643円", occ)
@@ -129,7 +129,7 @@ class BoardsTest(unittest.TestCase):
 
     def test_a_board_for_no_occasion_has_no_shop_section(self):
         html = self.read("data/gift-feelings/index.html")
-        self.assertNotIn("この予算で、探す", html)
+        self.assertNotIn("この予算で探す", html)
         self.assertNotIn('<li class="item"', html)
         self.assertIn("35.4%", html)
 

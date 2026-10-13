@@ -65,7 +65,7 @@ def section(d: dict, cfg: dict, stats: dict | None = None) -> str:
         return ""
     cards = "".join(B.item_card(cfg, it) for it in items)
     return ('<section class="block pop-block"><div class="sec-head"><span class="eyebrow">Pressed most</span><h2>当サイトでよく押されている商品</h2>'
-            '<p class="sec-lead">商品のショップへのボタンが、当サイトで多く押された順です。購入された数や、品質を表すものではありません。'
+            '<p class="sec-lead">商品のショップへのボタンが、当サイトで多く押された順です。購入された数や品質を表すものではありません。'
             '誰が押したかは記録せず、同じ人の1日の重複は数えないようにしていますが、目安として見てください。</p></div>'
             f'<ul class="items">{cards}</ul>{B.freshness(d)}</section>')
 
@@ -74,30 +74,30 @@ def favorites_page(d: dict, cfg: dict, preview: bool) -> str:
     B = _b()
     latest = (d["c"].get("daily") or [None])[0]
     starts = (f'<a class="btn" href="/picks/{latest["date"]}/">今日のおすすめを見る</a>' if latest else "") + '<a class="btn btn-sub" href="/for/">相手から探す</a>'
-    lead = "気になった商品を、あとで見直せます。このブラウザの中だけに保存され、当サイトのサーバーには送りません。"
+    lead = "気になった商品をあとで見直せます。このブラウザの中だけに保存され、当サイトのサーバーには送りません。"
     body = f"""{B.head_band("sky", "", "お気に入りと最近チェックした商品", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("お気に入り", None)])}</div>
 {B.pr_quiet(cfg)}
 <div id="myitems" data-src="/list/items.json">
 <section class="block"><div class="sec-head"><h2>気になるリスト(<span id="my-favs-n">0</span>点)</h2></div>
-<div id="my-favs-empty"><p>まだ、入っていません。商品カードの「♡」を押すと、ここに入ります。</p><p class="more">{starts}</p></div>
+<div id="my-favs-empty"><p>まだ、入っていません。商品カードの「♡」を押すとここに入ります。</p><p class="more">{starts}</p></div>
 <div id="my-favs-wrap" hidden><ul class="items" id="my-favs" aria-live="polite"></ul>
 <p class="more"><button type="button" class="btn" id="my-send">このリストを送る</button><a class="btn btn-sub" href="/memo/">贈る日を登録する</a></p>
-<p class="fav-note">別のスマホやパソコンで見るときは、「このリストを送る」で作ったリンクを、自分に送ってください。価格と在庫は、販売ページでご確認ください。</p></div></section>
+<p class="fav-note">別のスマホやパソコンで見るときは、「このリストを送る」で作ったリンクを自分に送ってください。価格と在庫は販売ページでご確認ください。</p></div></section>
 <section class="block"><div class="sec-head"><h2>最近チェックした商品</h2></div>
-<p id="my-recent-empty">商品のボタンを押すと、ここに最近の10点ほどが並びます。</p>
+<p id="my-recent-empty">商品のボタンを押すとここに最近の10点ほどが並びます。</p>
 <div id="my-recent-wrap" hidden><ul class="items" id="my-recent" aria-live="polite"></ul><p class="more"><button type="button" class="btn btn-sub" id="my-recent-clear">履歴を消す</button></p></div></section>
 </div>
 {section(d, cfg)}
-<noscript><p class="notice">このページは、JavaScript が使える環境でお使いください。</p></noscript>
-<p class="notice">保存した内容は、このブラウザにだけあります。ブラウザのデータを消すと、なくなります。</p>"""
+<noscript><p class="notice">このページはJavaScript が使える環境でお使いください。</p></noscript>
+<p class="notice">保存した内容はこのブラウザにだけあります。ブラウザのデータを消すとなくなります。</p>"""
     html = B.page(cfg, preview, path="/favorites/", title=f"お気に入りと最近チェックした商品 | {cfg['site_name']}", description=lead, body=body,
                   amazon_links=bool(cfg.get("amazon_tracking_id")))
     return html.replace("<head>", '<head>\n<meta name="robots" content="noindex,follow">', 1)         # a page of one browser's own: not for the search results
 
 
 COUNT_PRIVACY = ("<h2>商品のボタンが押された回数</h2>"
-                 "<p>商品のショップへのボタンが押されると、その商品が押された回数を、1つ数えます。数えるのは、商品ごとの回数だけです。押した人、ブラウザ、IPアドレス、時刻は記録しません。"
-                 "同じブラウザでは、1つの商品につき1日1回までです。ブラウザの「トラッキングしない」設定がオンのときは、数えません。"
-                 "この回数は、当サイトで多く押された商品を紹介するときと、サイトの改善に使います。"
-                 "また、最近チェックした商品と、気になるリストは、お使いのブラウザの中にだけ保存され、サーバーには送りません。</p>")
+                 "<p>商品のショップへのボタンが押されるとその商品が押された回数を1つ数えます。数えるのは商品ごとの回数だけです。押した人、ブラウザ、IPアドレス、時刻は記録しません。"
+                 "同じブラウザでは1つの商品につき1日1回までです。ブラウザの「トラッキングしない」設定がオンのときは、数えません。"
+                 "この回数は当サイトで多く押された商品を紹介するときとサイトの改善に使います。"
+                 "また、最近チェックした商品と気になるリストは、お使いのブラウザの中にだけ保存され、サーバーには送りません。</p>")

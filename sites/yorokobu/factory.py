@@ -22,6 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
+from sites.yorokobu import commas  # noqa: E402
 from sites.yorokobu import content as ct  # noqa: E402
 from sites.yorokobu import quality  # noqa: E402
 
@@ -149,7 +150,7 @@ def problems_themes(c: dict, items: list[dict], extra_groups: list[dict]) -> lis
 
 def merge_themes(answer: dict, today: date) -> tuple[int, list[str]]:
     c = _load()
-    items = answer.get("themes", [])
+    items = commas.walk(answer.get("themes", []), commas.lighten)       # the wording rule (no needless 読点) is applied here, not left to a retry
     extra = answer.get("new_groups", [])
     probs = problems_themes(c, items, extra)
     if probs:
@@ -180,7 +181,7 @@ def merge_themes(answer: dict, today: date) -> tuple[int, list[str]]:
 
 def merge_articles(answer: dict, today: date) -> tuple[int, list[str]]:
     c = _load()
-    items = answer.get("articles", [])
+    items = commas.walk(answer.get("articles", []), commas.lighten)
     theme_slugs = {t["slug"] for t in c["themes"]}
     known = {a["slug"] for a in c["articles"]}
     probs: list[str] = []
@@ -202,7 +203,7 @@ def merge_articles(answer: dict, today: date) -> tuple[int, list[str]]:
 
 def merge_messages(answer: dict, today: date) -> tuple[int, list[str]]:
     c = _load()
-    items = answer.get("messages", [])
+    items = commas.walk(answer.get("messages", []), commas.lighten)
     occ = {o["slug"] for o in c["occasions"]}
     known = set(c["messages"])
     probs: list[str] = []

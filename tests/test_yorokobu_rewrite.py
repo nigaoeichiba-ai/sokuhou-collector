@@ -10,25 +10,25 @@ from sites.yorokobu import rewrite
 
 
 class AcceptTest(unittest.TestCase):
-    OLD = "選びやすいです。渡しやすいです。使いやすいです。持ち帰りやすいです。3つの品を、2週間前までに確認します。"
+    OLD = "選びやすいです。渡しやすいです。使いやすいです。持ち帰りやすいです。3つの品を2週間前までに確認します。"
 
     def test_a_better_text_with_the_same_numbers_is_accepted(self):
-        new = "手に取りやすい小ぶりな品です。薄型なので渡すときに場所を取りません。毎日使えて、持ち帰りも楽です。3つの品を、2週間前までに確認します。"
+        new = "手に取りやすい小ぶりな品です。薄型なので渡すときに場所を取りません。毎日使えて持ち帰りも楽です。3つの品を2週間前までに確認します。"
         self.assertEqual(rewrite.accept(self.OLD, new, "x"), [])
 
     def test_each_kind_of_bad_answer_is_refused(self):
         cases = {
-            "numbers differ": "手に取りやすい小ぶりな品です。薄型なので渡すときに場所を取りません。毎日使えて持ち帰りも楽です。4つの品を、2週間前までに確認します。",
+            "numbers differ": "手に取りやすい小ぶりな品です。薄型なので渡すときに場所を取りません。毎日使えて持ち帰りも楽です。4つの品を2週間前までに確認します。",
             "length": "小ぶりな品です。",
             "comma after every": "手に取って、渡して、選んで、使って、持ち帰って、確認します。3つの品を、2週間前に、確認します。を、に、で、が、も、へ。",
-            "internal word": "ソムリエが選んだ薄型の品です。薄型なので渡すときに場所を取りません。毎日使えて持ち帰りも楽です。3つの品を、2週間前までに確認します。",
+            "internal word": "ソムリエが選んだ薄型の品です。薄型なので渡すときに場所を取りません。毎日使えて持ち帰りも楽です。3つの品を2週間前までに確認します。",
             "unchanged": self.OLD,
         }
         for label, new in cases.items():
             self.assertTrue(rewrite.accept(self.OLD, new, "x"), label)
 
     def test_a_new_forbidden_word_is_refused_but_one_the_old_text_had_is_not_the_new_texts_fault(self):
-        new = "最高に使いやすい品です。薄型なので渡すときに場所を取りません。毎日使えて持ち帰りも楽です。3つの品を、2週間前までに確認します。"
+        new = "最高に使いやすい品です。薄型なので渡すときに場所を取りません。毎日使えて持ち帰りも楽です。3つの品を2週間前までに確認します。"
         self.assertTrue(any("forbidden" in w for w in rewrite.accept(self.OLD, new, "x")))
 
     def test_a_rewrite_that_is_not_better_than_the_old_text_is_refused(self):

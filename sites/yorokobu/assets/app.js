@@ -138,20 +138,24 @@
     bar.className = "fav-bar"; bar.hidden = true;
     bar.innerHTML = '<button type="button" class="fav-open">♥ 気になるリスト <b>0</b></button><div class="fav-panel" hidden><h3>気になるリスト</h3><ul></ul>' +
       '<p class="fav-note">このブラウザにだけ保存されます。<a href="/favorites/">お気に入りのページで見る</a></p><div class="fav-actions"><a class="btn fav-line" target="_blank" rel="noopener">LINEで送る</a><a class="btn btn-sub fav-mail">メールで送る</a><button type="button" class="btn btn-sub fav-img">画像で保存</button><button type="button" class="btn btn-sub fav-copy">コピー</button></div>' +
-      '<p class="fav-note">自分のスマホに残すなら、LINEの送り先に自分のトークを選ぶか、メールで自分あてに送ります。画像は、スクリーンショットのように保存できます。</p></div>';
+      '<p class="fav-note">自分のスマホに残すなら、LINEの送り先に自分のトークを選ぶか、メールで自分あてに送ります。画像はスクリーンショットのように保存できます。</p></div>';
     document.body.appendChild(bar);
     var panel = $(".fav-panel", bar), ul = $("ul", panel);
     var MAX_SEND = 12;                                      // a list sent as text, link or picture is the first twelve (the shared-list page shows twelve)
+    // an Amazon product is kept as "a:<ASIN>" with its own link and no price (Amazon's rules); a Rakuten product by its item code
+    function amazon(x) { return String(x.code).indexOf("a:") === 0; }
+    function priceOf(x) { return x.price ? "¥" + Number(x.price).toLocaleString() : ""; }
     function text() {
-      var lines = favs.slice(0, MAX_SEND).map(function (x) { return "・" + x.name + "(¥" + Number(x.price).toLocaleString() + ")"; });
+      var lines = favs.slice(0, MAX_SEND).map(function (x) { return "・" + x.name + (x.price ? "(" + priceOf(x) + ")" : ""); });
       return "贈り物の候補です。どれが合うか、意見をください。\n" + lines.join("\n") + "\n" + listUrl();
     }
-    function listUrl() { return location.origin + "/list/?c=" + favs.slice(0, MAX_SEND).map(function (x) { return encodeURIComponent(x.code); }).join(","); }
+    function listUrl() {                                     // the shared-list page knows the Rakuten products only
+      var codes = favs.filter(function (x) { return !amazon(x); }).slice(0, MAX_SEND).map(function (x) { return encodeURIComponent(x.code); });
+      return codes.length ? location.origin + "/list/?c=" + codes.join(",") : location.origin + "/";
+    }
     function paint() {
-      $$(".item").forEach(function (li) {
-        var b = $(".fav", li);
-        if (!b) return;
-        var on = has(li.getAttribute("data-code"));
+      buttons.forEach(function (b) {
+        var on = has(b.getAttribute("data-code"));
         b.classList.toggle("on", on); b.textContent = on ? "♥" : "♡"; b.setAttribute("aria-pressed", on ? "true" : "false");
       });
     }
@@ -162,7 +166,7 @@
       favs.forEach(function (x) {
         var li = document.createElement("li");
         li.innerHTML = '<span></span><button type="button" aria-label="外す">×</button>';
-        $("span", li).textContent = x.name + " ¥" + Number(x.price).toLocaleString();
+        $("span", li).textContent = x.name + (x.price ? " " + priceOf(x) : "");
         $("button", li).addEventListener("click", function () { favs = favs.filter(function (y) { return y.code !== x.code; }); save(); paint(); render(); });
         ul.appendChild(li);
       });
@@ -171,9 +175,9 @@
     }
     buttons.forEach(function (b) {
       b.addEventListener("click", function () {
-        var code = b.closest(".item").getAttribute("data-code");
+        var code = b.getAttribute("data-code");
         if (has(code)) favs = favs.filter(function (x) { return x.code !== code; });
-        else favs.push({ code: code, name: b.getAttribute("data-name"), price: b.getAttribute("data-price") });
+        else favs.push({ code: code, name: b.getAttribute("data-name"), price: b.getAttribute("data-price") || "", url: code.indexOf("a:") === 0 ? b.getAttribute("data-url") || "" : "" });
         save(); paint(); render();
       });
     });
@@ -197,7 +201,7 @@
       list.forEach(function (x, i) {
         var y = headH + i * rowH;
         g.strokeStyle = "#f2e9db"; g.lineWidth = 2; g.beginPath(); g.moveTo(pad, y); g.lineTo(W - pad, y); g.stroke();
-        var price = "¥" + Number(x.price).toLocaleString();
+        var price = priceOf(x);
         g.font = "700 32px " + FONT; var pw = g.measureText(price).width;
         g.font = "400 31px " + FONT; g.fillStyle = "#2b2621";
         var name = String(x.name);
@@ -367,7 +371,7 @@
       if (!data.fixed[e.occ]) lines.push("RRULE:FREQ=YEARLY");
       lines.push("SUMMARY:" + icsEscape(title), "DESCRIPTION:" + icsEscape(title + "。贈り物の候補を見る: " + url), "URL:" + url, "TRANSP:TRANSPARENT");
       [21, 7].forEach(function (n) {
-        lines.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsEscape(title + "まで" + (n === 21 ? "3週間" : "1週間") + "。贈り物を選びませんか?"), "TRIGGER:-P" + n + "D", "END:VALARM");
+        lines.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsEscape(title + "まで" + (n === 21 ? "3週間" : "1週間") + "。贈り物を選びませんか？"), "TRIGGER:-P" + n + "D", "END:VALARM");
       });
       lines.push("END:VEVENT");
     });
@@ -378,7 +382,7 @@
     var nd = nextDate(e, data.fixed, now); if (!nd) return "#";
     var start = addDays(nd, -21), url = data.base + giftHref(e, data.pairs), title = label(e, data.names);
     var q = "action=TEMPLATE&text=" + encodeURIComponent(title + "まで3週間。贈り物を選ぼう") + "&dates=" + ymd(start) + "/" + ymd(addDays(start, 1)) +
-      "&details=" + encodeURIComponent(title + "(" + (nd.getMonth() + 1) + "月" + nd.getDate() + "日)の贈り物を、そろそろ考えませんか?\n" + url) + (data.fixed[e.occ] ? "" : "&recur=" + encodeURIComponent("RRULE:FREQ=YEARLY"));
+      "&details=" + encodeURIComponent(title + "(" + (nd.getMonth() + 1) + "月" + nd.getDate() + "日)の贈り物をそろそろ考えませんか？\n" + url) + (data.fixed[e.occ] ? "" : "&recur=" + encodeURIComponent("RRULE:FREQ=YEARLY"));
     return "https://calendar.google.com/calendar/render?" + q;
   }
   function download(name, text) {
@@ -396,7 +400,7 @@
     function onOcc() {
       var occ = form.elements.occ.value, fx = data.fixed[occ];
       when.hidden = !!fx; form.elements.date.required = !fx;
-      if (fx) { var nd = nextDate({ occ: occ }, data.fixed); fixedNote.textContent = "この日は毎年、日付が決まっています。次は " + (nd.getMonth() + 1) + "月" + nd.getDate() + "日です。"; fixedNote.hidden = false; }
+      if (fx) { var nd = nextDate({ occ: occ }, data.fixed); fixedNote.textContent = "この日は毎年日付が決まっています。次は " + (nd.getMonth() + 1) + "月" + nd.getDate() + "日です。"; fixedNote.hidden = false; }
       else fixedNote.hidden = true;
     }
     form.elements.occ.addEventListener("change", onOcc);
@@ -420,7 +424,7 @@
         var g = document.createElement("a"); g.href = googleHref(r.e, data, now); g.target = "_blank"; g.rel = "noopener"; g.textContent = "Googleカレンダー"; acts.appendChild(g);
         var ic = document.createElement("button"); ic.type = "button"; ic.textContent = ".ics(iPhoneなど)"; ic.addEventListener("click", function () { download("tasetsunahi.ics", buildIcs([r.e], data, now)); }); acts.appendChild(ic);
         var line = document.createElement("a"); line.target = "_blank"; line.rel = "noopener"; line.textContent = "LINEで相談";
-        line.href = "https://line.me/R/share?text=" + encodeURIComponent(label(r.e, data.names) + "まで" + (r.n === 0 ? "きょう" : "あと" + r.n + "日") + "。そろそろ一緒に考えない?\n" + data.base + giftHref(r.e, data.pairs)); acts.appendChild(line);
+        line.href = "https://line.me/R/share?text=" + encodeURIComponent(label(r.e, data.names) + "まで" + (r.n === 0 ? "きょう" : "あと" + r.n + "日") + "。そろそろ一緒に考えない？\n" + data.base + giftHref(r.e, data.pairs)); acts.appendChild(line);
         var del = document.createElement("button"); del.type = "button"; del.textContent = "削除";
         del.addEventListener("click", function () { memoSave(memoLoad().filter(function (x) { return x.id !== r.e.id; })); render(); }); acts.appendChild(del);
         list.appendChild(li);
@@ -477,7 +481,7 @@
         var okOcc = !occ || !li.getAttribute("data-occ") || occs.indexOf(occ) >= 0;
         li.hidden = !(okName && okOcc); if (!li.hidden) shown++;
       });
-      msg.textContent = (term || occ) ? (shown ? shown + "件、見つかりました。" : "大きな注意点は見つかりませんでした。相手の事情に合わせて確認してください。") : "下のリストから、品の名前でしぼりこめます。";
+      msg.textContent = (term || occ) ? (shown ? shown + "件、見つかりました。" : "大きな注意点は見つかりませんでした。相手の事情に合わせて確認してください。") : "下のリストから品の名前でしぼりこめます。";
     }
     q.addEventListener("input", run); o.addEventListener("change", run);
     var pre = new URLSearchParams(location.search).get("q"); if (pre) { q.value = pre; run(); }
@@ -510,7 +514,7 @@
     }
     function spin() {
       var p = pool();
-      if (!p.length) { msg.textContent = "その組み合わせの商品は、まだありません。ほかの予算を選んでみてください。"; out.textContent = ""; return; }
+      if (!p.length) { msg.textContent = "その組み合わせの商品はまだありません。ほかの予算を選んでみてください。"; out.textContent = ""; return; }
       var pick = p[Math.floor(Math.random() * p.length)], guard = 0;
       while (p.length > 1 && pick[3] === last && guard++ < 8) pick = p[Math.floor(Math.random() * p.length)];
       last = pick[3]; msg.textContent = "条件に合う商品を1点、選びました。"; show(pick);
@@ -518,7 +522,7 @@
     function ready() { form.addEventListener("submit", function (e) { e.preventDefault(); spin(); }); }
     msg.textContent = "準備しています…";
     fetch(root.getAttribute("data-src")).then(function (r) { return r.json(); }).then(function (j) { data = j; msg.textContent = ""; ready(); },
-      function () { msg.textContent = "うまく読み込めませんでした。時間をおいて、もう一度お試しください。"; });
+      function () { msg.textContent = "うまく読み込めませんでした。時間をおいてもう一度お試しください。"; });
   }
 
   function initCalc() {
@@ -533,7 +537,7 @@
       var run2 = function () {
         var t = parseFloat(tot.value) || 0, p = Math.max(1, parseInt(ppl.value, 10) || 1), e = Math.ceil(t / p / 10) * 10;
         each.textContent = "一人 " + yen(e);
-        note.textContent = p + "人で、合計 " + yen(e * p) + " になります(10円単位に切り上げ)。";
+        note.textContent = p + "人で合計 " + yen(e * p) + " になります(10円単位に切り上げ)。";
       };
       tot.addEventListener("input", run2); ppl.addEventListener("input", run2); run2();
     }

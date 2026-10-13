@@ -4,8 +4,8 @@ from pathlib import Path
 
 from sites.yorokobu import factory, quality
 
-GOOD = ("通勤バッグに入る薄型のポーチなら、職場で渡しても持ち帰れます。小物の整理にも使えるので、毎日の出番があります。"
-        "個包装の焼き菓子は、家族で分けられて、余っても翌日に回せます。")
+GOOD = ("通勤バッグに入る薄型のポーチなら、職場で渡しても持ち帰れます。小物の整理にも使えるので毎日の出番があります。"
+        "個包装の焼き菓子は家族で分けられて余っても翌日に回せます。")
 
 
 class LanguageGateTest(unittest.TestCase):

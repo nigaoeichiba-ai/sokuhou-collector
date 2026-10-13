@@ -261,7 +261,7 @@ class AskPagesTest(unittest.TestCase):
 
     def test_the_privacy_page_describes_what_the_survey_stores(self):
         p = self.read("privacy/index.html")
-        for needle in ('id="ask"', "鍵を一方向に変換した値", "120日", "通知の宛先", "GitHub Actions", "回数を、だれのものか分からない形で数えます"):
+        for needle in ('id="ask"', "鍵を一方向に変換した値", "120日", "通知の宛先", "GitHub Actions", "回数をだれのものか分からない形で数えます"):
             self.assertIn(needle, p, needle)
 
     def test_the_tools_page_and_the_service_worker(self):

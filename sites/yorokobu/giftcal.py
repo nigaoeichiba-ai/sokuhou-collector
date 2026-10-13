@@ -65,7 +65,7 @@ def ics(base_url: str, years: list[int], stamp: str, occasion_names: dict[str, s
             url = f"{base_url.rstrip('/')}/occasion/{d['slug']}/"
             for kind, day, summary, note in (
                 ("start", d["start"], f"{d['label']}まで3週間。贈り物を選びはじめよう",
-                 f"{d['label']}({d['when']})の贈り物を、そろそろ考えませんか?\n選び方とおすすめ: {url}"),
+                 f"{d['label']}({d['when']})の贈り物をそろそろ考えませんか？\n選び方とおすすめ: {url}"),
                 ("day", d["date"], f"{d['label']}", f"{d['label']}です。\n選び方とおすすめ: {url}"),
             ):
                 lines += ["BEGIN:VEVENT", f"UID:{d['slug']}-{kind}-{y}@yorokobu-present.com", f"DTSTAMP:{stamp}",

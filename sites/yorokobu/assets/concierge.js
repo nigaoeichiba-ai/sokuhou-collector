@@ -7,6 +7,7 @@
   var state = { occ: "", rec: "", tier: "", askedRec: false, askedOcc: false, askedTier: false, done: false };
   var root, panel, log, form, input, opener;
   function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
 
   // ---------------------------------------------------------------- reading a sentence
@@ -81,11 +82,11 @@
     if (hasPair()) {
       var tiers = DATA.pairs[pairKey()] || [];
       var q = state.tier && tiers.indexOf(state.tier) >= 0 ? "?b=" + encodeURIComponent(state.tier) + "#browse" : "";
-      out.push({ href: "/gift/" + pairKey() + "/" + q, title: nameOf(DATA.occ, state.occ) + " × " + nameOf(DATA.rec, state.rec) + "の贈り物", note: q ? "予算に合うものを、先に表示します。" : "迷ったときは、先頭の4点から。" });
-    } else if (state.occ) out.push({ href: "/occasion/" + state.occ + "/", title: nameOf(DATA.occ, state.occ) + "のプレゼント", note: "相手を選んで、おすすめを見られます。" });
-    else if (state.rec) out.push({ href: "/for/" + state.rec + "/", title: nameOf(DATA.rec, state.rec) + "へのプレゼント", note: "喜ばれやすいものと、イベント別のおすすめ。" });
-    if (state.occ && DATA.guides.indexOf(state.occ) >= 0) out.push({ href: "/guide/" + state.occ + "/", title: nameOf(DATA.occ, state.occ) + "の読みもの", note: "いつまでに、何を、どう渡すか。" });
-    if (state.occ && state.rec) out.push({ href: "/memo/?o=" + state.occ + "&r=" + state.rec, title: "この日を忘れないように、登録する", note: "たいせつな日メモ(このブラウザの中だけ)。" });
+      out.push({ href: "/gift/" + pairKey() + "/" + q, title: nameOf(DATA.occ, state.occ) + " × " + nameOf(DATA.rec, state.rec) + "の贈り物", note: q ? "予算に合うものを先に表示します。" : "迷ったときは先頭の4点から。" });
+    } else if (state.occ) out.push({ href: "/occasion/" + state.occ + "/", title: nameOf(DATA.occ, state.occ) + "のプレゼント", note: "相手を選んでおすすめを見られます。" });
+    else if (state.rec) out.push({ href: "/for/" + state.rec + "/", title: nameOf(DATA.rec, state.rec) + "へのプレゼント", note: "喜ばれやすいものとイベント別のおすすめ。" });
+    if (state.occ && DATA.guides.indexOf(state.occ) >= 0) out.push({ href: "/guide/" + state.occ + "/", title: nameOf(DATA.occ, state.occ) + "の読みもの", note: "いつまでに何をどう渡すか。" });
+    if (state.occ && state.rec) out.push({ href: "/memo/?o=" + state.occ + "&r=" + state.rec, title: "この日を忘れないように登録する", note: "たいせつな日メモ(このブラウザの中だけ)。" });
     return out;
   }
 
@@ -110,9 +111,9 @@
   function sendVoice(kind, text, done) {
     text = String(text || "").replace(/\s+/g, " ").trim();
     if (text.length < 2 || text.length > 80) return done("2〜80字で書いてください。");
-    if (unsafe(text)) return done("電話番号・住所・メールアドレス・リンクのように見える部分があります。個人の情報は、書かないでください。");
+    if (unsafe(text)) return done("電話番号・住所・メールアドレス・リンクのように見える部分があります。個人の情報は書かないでください。");
     fetch("/api/ask.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ v: 1, op: "voice", k: kind, t: text }) })
-      .then(function (r) { done(r.ok ? "" : "送れませんでした。時間をおいて、もう一度お試しください。", r.ok); }).catch(function () { done("送れませんでした。"); });
+      .then(function (r) { done(r.ok ? "" : "送れませんでした。時間をおいてもう一度お試しください。", r.ok); }).catch(function () { done("送れませんでした。"); });
   }
 
   // ---------------------------------------------------------------- the conversation
@@ -150,7 +151,7 @@
   }
   function askTier() {
     var tiers = hasPair() ? (DATA.pairs[pairKey()] || []) : DATA.tiers.map(function (t) { return t.s; });
-    bubble("ご予算は、どのくらいですか。");
+    bubble("ご予算はどのくらいですか。");
     chips(DATA.tiers.filter(function (t) { return tiers.indexOf(t.s) >= 0; }).map(function (t) { return { label: t.l, s: t.s }; }).concat([{ label: "決めていない", s: "" }]),
       function (it) { state.tier = it.s; if (it.s) count(["cq.bud." + it.s]); next(); });
   }
@@ -178,7 +179,7 @@
     bubble("お探しの情報は見つかりましたか。");
     chips([{ label: "見つかった", y: 1 }, { label: "見つからない", y: 0 }], function (it) {
       count(["cq.fb." + (it.y ? "yes" : "no")]);
-      if (it.y) return bubble("ありがとうございます。ほかにも、お困りのことがあれば、お知らせください。");
+      if (it.y) return bubble("ありがとうございます。ほかにもお困りのことがあれば、お知らせください。");
       bubble("よろしければ、どのような情報がほしかったか、教えてください。選ぶだけでも、書いても構いません。送らなくても、そのままお使いいただけます。");
       chips(DATA.why.map(function (w, i) { return { label: w, i: i }; }), function (w) {
         count(["cq.why.w" + w.i]);
@@ -189,7 +190,7 @@
   function voiceBox(kind, placeholder, preset) {
     var d = document.createElement("form"); d.className = "cc-voice";
     d.innerHTML = '<input type="text" maxlength="80" placeholder="' + esc(placeholder) + '" aria-label="' + esc(placeholder) + '"><button type="submit" class="btn btn-sub">送る</button>' +
-      '<p class="cc-note">送った文章は、サイトの改善だけに使います。名前・連絡先・住所は、書かないでください。送らずに閉じても、そのままお使いいただけます。</p><p class="cc-err" role="alert" hidden></p>';
+      '<p class="cc-note">送った文章はサイトの改善だけに使います。名前・連絡先・住所は書かないでください。送らずに閉じても、そのままお使いいただけます。</p><p class="cc-err" role="alert" hidden></p>';
     if (preset) d.querySelector("input").value = preset;
     d.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -209,10 +210,10 @@
   function pickTopic(t) {
     topic = t.id; count(["cq.need." + t.id]);
     if (t.id === "other") { bubble(esc(t.reply)); input.focus(); return; }
-    if (t.id === "sale") { bubble(esc(t.reply) + linkCards([{ href: "/sale/", title: "セールの日程と、買うタイミング", note: "お買い物マラソン・プライム感謝祭など" }])); return feedback(true); }
+    if (t.id === "sale") { bubble(esc(t.reply) + linkCards([{ href: "/sale/", title: "セールの日程と買うタイミング", note: "お買い物マラソン・プライム感謝祭など" }])); return feedback(true); }
     if (t.id === "what") {
-      bubble(esc(t.reply) + linkCards([{ href: "/ask/", title: "それとなく、ほしいものを聞く", note: "相手に送るアンケート。答えは選ぶだけ。" }, { href: "/dock/", title: "贈り物ドック", note: "相手のことを入れると、結果票でおすすめを返します。" },
-        { href: "/tool/", title: "診断・ツール", note: "タイプ診断や、ガチャなど。" }]));
+      bubble(esc(t.reply) + linkCards([{ href: "/ask/", title: "それとなく、ほしいものを聞く", note: "相手に送るアンケート。答えは選ぶだけ。" }, { href: "/dock/", title: "贈り物ドック", note: "相手のことを入れると結果票でおすすめを返します。" },
+        { href: "/tool/", title: "診断・ツール", note: "タイプ診断やガチャなど。" }]));
       return feedback(true);
     }
     if (t.id === "manners") { bubble(esc(t.reply)); state.askedRec = true; return next(); }
@@ -226,14 +227,14 @@
     if (state.done) { state = fresh(); topic = ""; fed = false; }            // the last question was answered: a new sentence is a new question
     var r = read(raw);
     if (r.intent) count(["cq.need." + r.intent]);
-    if (r.intent === "sale") { bubble("セールの日程を、まとめています。" + linkCards([{ href: "/sale/", title: "セールの日程と、買うタイミング", note: "お買い物マラソン・プライム感謝祭など" }])); return feedback(true); }
+    if (r.intent === "sale") { bubble("セールの日程をまとめています。" + linkCards([{ href: "/sale/", title: "セールの日程と買うタイミング", note: "お買い物マラソン・プライム感謝祭など" }])); return feedback(true); }
     if (r.occ) { state.occ = r.occ; count(["cq.occ." + r.occ]); }
     if (r.rec) { state.rec = r.rec; count(["cq.rec." + r.rec]); }
     if (r.tier) { state.tier = r.tier; state.askedTier = true; count(["cq.bud." + r.tier]); }
     if (r.intent === "manners") { topic = "manners"; state.askedRec = true; }
     if (r.intent === "urgent" || r.intent === "what") topic = r.intent;
     if (r.amb && !state.rec) {
-      bubble(esc("「" + r.amb.word + "」は、どちらでしょうか。"));
+      bubble(esc("「" + r.amb.word + "」はどちらでしょうか。"));
       state.askedRec = true;
       chips(r.amb.slugs.map(function (s) { return { label: nameOf(DATA.rec, s), s: s }; }), function (it) { state.rec = it.s; count(["cq.rec." + it.s]); next(); });
       return;
@@ -241,7 +242,7 @@
     if (!state.occ && !state.rec && r.theme) {
       count(["cq.res.theme"]);
       var tn = nameOf(DATA.themes.map(function (t) { return { s: t.s, n: t.n }; }), r.theme);
-      bubble("「" + esc(tn) + "」のページがあります。" + linkCards([{ href: "/theme/" + r.theme + "/", title: tn, note: "気持ちや興味から選んだ、贈り物の例。" }]));
+      bubble("「" + esc(tn) + "」のページがあります。" + linkCards([{ href: "/theme/" + r.theme + "/", title: tn, note: "気持ちや興味から選んだ贈り物の例。" }]));
       return feedback(true);
     }
     if (!state.occ && !state.rec) {
@@ -251,7 +252,7 @@
       var aff = DATA.aff.id ? "https://hb.afl.rakuten.co.jp/hgc/" + DATA.aff.id + "/" + (DATA.aff.trk || "") + "?pc=" + encodeURIComponent(target) + "&m=" + encodeURIComponent(target) : "";
       bubble("うまく読み取れませんでした。「だれに」「どんな日に」「予算は」のうち、わかるものを、書き添えてください(例: 父の日に父へ 5000円くらい)。" +
         (aff ? '<br>言葉のまま、楽天市場で探すこともできます。<div class="cc-links"><a class="cc-link" href="' + esc(aff) + '" target="_blank" rel="sponsored nofollow noopener"><b>「' + esc(raw.slice(0, 30)) + '」を楽天市場で探す</b><span>広告(PR)のリンクです。</span></a></div>' : ""));
-      bubble("この言葉を、サイトの改善のために送ってもよければ、下の「送る」を押してください。");
+      bubble("この言葉をサイトの改善のために送ってもよければ、下の「送る」を押してください。");
       voiceBox("miss", "", raw.slice(0, 80));
       return feedback(false);
     }
@@ -265,22 +266,46 @@
       '<button type="button" class="cc-open" aria-expanded="false" aria-controls="cc-panel"><span aria-hidden="true">?</span>贈り物の相談</button>' +
       '<section class="cc-panel" id="cc-panel" role="dialog" aria-label="贈り物コンシェルジュ" hidden><header><b>贈り物コンシェルジュ</b><button type="button" class="cc-close" aria-label="閉じる">×</button></header>' +
       '<div class="cc-log" aria-live="polite"></div><form class="cc-form"><input type="text" maxlength="120" placeholder="一言で(例: 母の日に母へ 5000円くらい)" aria-label="ご相談の内容"><button type="submit" class="btn">送る</button></form>' +
-      '<p class="cc-foot">規則と言葉のリストで案内しています。書いた内容は、「送る」を押した文章のほかは、この端末の外へ出ません。</p></section>';
+      '<p class="cc-foot">規則と言葉のリストで案内しています。書いた内容は「送る」を押した文章のほかはこの端末の外へ出ません。</p></section>';
     document.body.appendChild(root);
     opener = $(".cc-open", root); panel = $(".cc-panel", root); log = $(".cc-log", root); form = $(".cc-form", root); input = $("input", form);
-    opener.addEventListener("click", toggle);
+    opener.addEventListener("click", function () { toggle(); });
     $(".cc-close", root).addEventListener("click", function () { toggle(false); });
+    // any button of the page that says 相談 (the card on the top page) opens the same panel; they are drawn only when this script runs
+    $$("[data-cc-open]").forEach(function (b) { b.hidden = false; var box = b.closest("[data-cc-box]"); if (box) box.hidden = false; });
+    document.addEventListener("click", function (e) {
+      var t = e.target.closest && e.target.closest("[data-cc-open]");
+      if (t) { e.preventDefault(); toggle(true); }
+    });
+    nudge();
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !panel.hidden) toggle(false); });
     form.addEventListener("submit", function (e) { e.preventDefault(); var v = input.value; input.value = ""; if (DATA) onText(v); });
+  }
+  // one quiet line above the button, once a week per browser, a few seconds after the page is shown; it goes away when the panel is opened or it is closed
+  var NUDGE = "yorokobu.ccnudge", WEEK = 7 * 24 * 3600 * 1000;
+  function seen() { try { return Number(localStorage.getItem(NUDGE) || 0); } catch (e) { return 0; } }
+  function mark() { try { localStorage.setItem(NUDGE, String(Date.now())); } catch (e) { /* private window: shown again next time */ } }
+  function nudge() {
+    if (Date.now() - seen() < WEEK || /^\/(favorites|privacy|about|policy|contact)\//.test(location.pathname)) return;
+    setTimeout(function () {
+      if (!root || !panel.hidden || $(".cc-nudge", root)) return;
+      var n = document.createElement("div");
+      n.className = "cc-nudge";
+      n.innerHTML = '<p>贈り物のことでお困りですか？<br><small>選ぶだけで候補が見つかります</small></p><button type="button" class="cc-nudge-x" aria-label="閉じる">×</button>';
+      root.insertBefore(n, opener);
+      $(".cc-nudge-x", n).addEventListener("click", function () { n.remove(); mark(); });
+      mark();
+    }, 5000);
   }
   function toggle(open) {
     open = typeof open === "boolean" ? open : panel.hidden;
     panel.hidden = !open; opener.setAttribute("aria-expanded", open ? "true" : "false"); root.classList.toggle("on", open);
+    if (open) { var nd = $(".cc-nudge", root); if (nd) nd.remove(); mark(); }
     if (!open) return;
     if (!DATA) {
       if (!loading) loading = fetch("/concierge-data.json").then(function (r) { if (!r.ok) throw new Error("data"); return r.json(); });
       log.innerHTML = '<div class="cc-msg cc-bot">読み込んでいます…</div>';
-      loading.then(function (d) { DATA = d; begin(); }).catch(function () { log.innerHTML = '<div class="cc-msg cc-bot">読み込めませんでした。時間をおいて、もう一度お試しください。</div>'; loading = null; });
+      loading.then(function (d) { DATA = d; begin(); }).catch(function () { log.innerHTML = '<div class="cc-msg cc-bot">読み込めませんでした。時間をおいてもう一度お試しください。</div>'; loading = null; });
     }
   }
   window.YorokobuConcierge = { read: function (t) { return read(t); }, setData: function (d) { DATA = d; }, yenOf: yenOf };

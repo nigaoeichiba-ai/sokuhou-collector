@@ -13,8 +13,8 @@ from sites.yorokobu import dailypicks as dp
 from sokuhou.sitekit import crumbs, esc
 
 STORE_NAME = {"rakuten": "楽天市場", "amazon": "Amazon"}
-POLICY = ("掲載する商品は、贈り物として渡しやすいこと、商品ページで仕様と注意事項が確認できること、購入者の声に大きな不満が目立たないことを基準に、毎日選んでいます。"
-          "文章は、商品ページの仕様、メーカーなどの公開情報、購入者の声の傾向を読んで、自分たちの言葉でまとめたものです。")
+POLICY = ("掲載する商品は贈り物として渡しやすいこと、商品ページで仕様と注意事項が確認できること、購入者の声に大きな不満が目立たないことを基準に毎日選んでいます。"
+          "文章は商品ページの仕様、メーカーなどの公開情報、購入者の声の傾向を読んで、自分たちの言葉でまとめたものです。")
 
 
 def _b():
@@ -56,11 +56,12 @@ def rakuten_card(cfg: dict, d: dict, e: dict, eid: str, n: int, more: str = "") 
         B.SEEN[e["code"]] = {"n": B.short(e["name"], 60), "p": live["price"], "i": live["image"], "u": href,
                              "a": B.amazon_url(cfg, B.amazon_query(e["name"])) if cfg.get("amazon_tracking_id") else ""}
     else:
-        price = '<p class="pick-price"><small>価格・在庫は、販売ページでご確認ください。</small></p>'
+        price = '<p class="pick-price"><small>価格・在庫は販売ページでご確認ください。</small></p>'
     other = (f'<a class="btn" href="{esc(B.amazon_url(cfg, B.amazon_query(e["name"])))}" rel="sponsored nofollow noopener" target="_blank" '
              f'aria-label="Amazonで同じ商品を探す">Amazonで探す</a>') if cfg.get("amazon_tracking_id") else ""
-    return (f'<article class="pick" id="{eid}" data-code="{esc(e["code"])}"><a class="pick-img" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
-            f'<img src="{esc(img)}" alt="{esc(e["name"])}" width="300" height="300" {B.EAGER if n == 1 else B.LAZY}></a>'
+    fav = B.fav_button(e["code"], B.short(e["name"], 40), live["price"] if live else None, url)
+    return (f'<article class="pick" id="{eid}" data-code="{esc(e["code"])}"><div class="imgbox"><a class="pick-img" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
+            f'<img src="{esc(img)}" alt="{esc(e["name"])}" width="300" height="300" {B.EAGER if n == 1 else B.LAZY}></a>{fav}</div>'
             f'<div class="pick-body"><p class="pick-meta"><span class="pick-no">{n}</span><span class="tag">{esc(e["kind"])}</span><span class="pick-scene">{esc(e["scene"])}</span></p>'
             f'<h3>{esc(e["headline"])}</h3><p class="pick-name">{esc(e["name"])}</p><p class="pick-sum">{esc(e["summary"])}</p>{_chips(e["for"])}{_facts(e)}{price}'
             f'<div class="item-btns"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">楽天市場で見る</a>{other}</div>{more}</div></article>')
@@ -70,11 +71,12 @@ def amazon_card(cfg: dict, d: dict, e: dict, eid: str, n: int, more: str = "") -
     B = _b()
     href = B.amazon_dp(cfg, e["asin"])
     rk = B.search_link(cfg, B.amazon_query(e["name"]))
-    return (f'<article class="pick" id="{eid}" data-asin="{esc(e["asin"])}"><a class="pick-img mood" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
-            f'{B.mood_img(e["mood"], e["name"] + "の商品写真ではなく、贈る場面を表したイメージ", "(max-width: 640px) 100vw, 360px")}<span class="img-note">イメージ画像</span></a>'
+    fav = B.fav_button("a:" + e["asin"], B.short(e["name"], 40), None, href)
+    return (f'<article class="pick" id="{eid}" data-asin="{esc(e["asin"])}"><div class="imgbox mood"><a class="pick-img mood" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
+            f'{B.mood_img(e["mood"], e["name"] + "の商品写真ではなく、贈る場面を表したイメージ", "(max-width: 640px) 100vw, 360px")}<span class="img-note">イメージ画像</span></a>{fav}</div>'
             f'<div class="pick-body"><p class="pick-meta"><span class="pick-no">{n}</span><span class="tag">{esc(e["kind"])}</span><span class="pick-scene">{esc(e["scene"])}</span></p>'
             f'<h3>{esc(e["headline"])}</h3><p class="pick-name">{esc(e["name"])}</p><p class="pick-sum">{esc(e["summary"])}</p>{_chips(e["for"])}{_facts(e)}'
-            f'<p class="pick-price"><small>価格・在庫は、Amazonのページでご確認ください。</small></p>'
+            f'<p class="pick-price"><small>価格・在庫はAmazonのページでご確認ください。</small></p>'
             f'<div class="item-btns"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">Amazonで見る</a>'
             f'<a class="btn" href="{esc(rk)}" rel="sponsored nofollow noopener" target="_blank" aria-label="楽天市場で同じ商品を探す">楽天市場で探す</a></div>{more}</div></article>')
 
@@ -108,7 +110,7 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
 
     def more(ref):
         f = fx.get(ref)
-        return f'<p class="pick-more"><a href="/pick/{esc(f["slug"])}/">この商品を、詳しく読む(仕様・価格の位置・渡し方)</a></p>' if f else ""
+        return f'<p class="pick-more"><a href="/pick/{esc(f["slug"])}/">この商品を詳しく読む(仕様・価格の位置・渡し方)</a></p>' if f else ""
     for i, e in enumerate(day["rakuten"], 1):
         c = rakuten_card(cfg, d, e, f"r{i}", len(r_cards) + 1, more(f"r{i}"))
         if c:
@@ -121,8 +123,8 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
     total = len(r_cards) + len(a_cards)
     h1 = f"今日のおすすめギフト{total}選 {date_label(iso)}" if newest else f"{date_label(iso, True)}のおすすめギフト{total}選"
     live_any = any(d.get("daily_items", {}).get(e["code"]) for e in day["rakuten"])
-    az_note = ('<p class="sec-lead">Amazonの商品は、規約により、価格と商品の写真を載せていません。写真は、贈る場面を表したイメージです。'
-               '価格・在庫・購入者の評価は、Amazonのページでご確認ください。</p>') if cfg.get("amazon_tracking_id") else ""
+    az_note = ('<p class="sec-lead">Amazonの商品は規約により価格と商品の写真を載せていません。写真は贈る場面を表したイメージです。'
+               '価格・在庫・購入者の評価はAmazonのページでご確認ください。</p>') if cfg.get("amazon_tracking_id") else ""
     nav = ""
     if prev_day or next_day:
         nav = ('<p class="more">' + (f'<a class="btn btn-sub" href="{day_path(prev_day)}">{date_label(prev_day)}のおすすめ</a>' if prev_day else "")
@@ -146,7 +148,7 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
 {f'<section class="block" id="amazon"><div class="sec-head"><span class="eyebrow">Amazon</span><h2>Amazonで選ぶ{len(a_cards)}点</h2>{az_note}</div><div class="pick-list">{"".join(a_cards)}</div></section>' if a_cards else ""}
 {B.next_steps(d)}
 <section class="block" id="policy"><div class="sec-head"><h2>このページの選び方</h2></div><p class="notice">{esc(POLICY)}</p></section>
-{B.share_bar(cfg, day_path(iso), f"{h1}: {day['theme']}", "このページを、だれかに・自分に送る", hint=True)}
+{B.share_bar(cfg, day_path(iso), f"{h1}: {day['theme']}", "このページをだれかに・自分に送る", hint=True)}
 {nav}
 <script type="application/ld+json">{ld}</script><script type="application/ld+json">{ld2}</script>"""
     return B.page(cfg, preview, path=day_path(iso), title=f"{h1}|{day['theme']} | {cfg['site_name']}", description=day["lede"][:110], body=body, og_image=B.og_for(f"picks/{iso}"))
@@ -156,8 +158,8 @@ def hub_page(d: dict, cfg: dict, preview: bool, days: list[dict]) -> str:
     B = _b()
     latest = days[0]
     rows = "".join(f'<li><a class="tile wide" href="{day_path(x["date"])}"><span><b>{esc(date_label(x["date"], True))}</b><small>{esc(x["theme"])}</small></span></a></li>' for x in days[:60])
-    lead = "楽天市場とAmazonから、毎日10点ずつ。商品ページと購入者の声の傾向を読んで、渡す場面と、確かめたい点まで、自分たちの言葉でまとめています。"
-    body = f"""{B.head_band("yellow", "", "毎日の、おすすめギフト", lead, single=True)}
+    lead = "楽天市場とAmazonから毎日10点ずつ。商品ページと購入者の声の傾向を読んで、渡す場面と確かめたい点まで自分たちの言葉でまとめています。"
+    body = f"""{B.head_band("yellow", "", "毎日のおすすめギフト", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("毎日のおすすめ", None)])}</div>
 {B.pr_quiet(cfg)}
 <section class="block"><div class="sec-head"><span class="eyebrow">Latest</span><h2>{esc(date_label(latest["date"]))}のおすすめ: {esc(latest["theme"])}</h2></div>
@@ -166,7 +168,7 @@ def hub_page(d: dict, cfg: dict, preview: bool, days: list[dict]) -> str:
 {_b().minepage.section(d, cfg)}
 <section class="block"><div class="sec-head"><h2>これまでのおすすめ</h2></div><ul class="tiles wide">{rows}</ul></section>
 <section class="block"><div class="sec-head"><h2>選び方</h2></div><p class="notice">{esc(POLICY)}</p></section>"""
-    return B.page(cfg, preview, path="/picks/", title=f"毎日の、おすすめギフト | {cfg['site_name']}", description=lead, body=body)
+    return B.page(cfg, preview, path="/picks/", title=f"毎日のおすすめギフト | {cfg['site_name']}", description=lead, body=body)
 
 
 def build_pages(d: dict, cfg: dict, preview: bool) -> dict[str, str]:
@@ -188,7 +190,7 @@ def home_block(d: dict, cfg: dict) -> str:
         return ""
     day = days[0]
     return (f'<section class="block"><div class="sec-head"><span class="eyebrow">Today\'s picks</span><h2>今日のおすすめ: {esc(day["theme"])}</h2>'
-            f'<p>{"楽天市場とAmazonから10点ずつ。" if cfg.get("amazon_tracking_id") else "楽天市場から10点。"}{esc(date_label(day["date"]))}の商品を、1点ずつ調べて、まとめました。</p></div>'
+            f'<p>{"楽天市場とAmazonから10点ずつ。" if cfg.get("amazon_tracking_id") else "楽天市場から10点。"}{esc(date_label(day["date"]))}の商品を1点ずつ調べてまとめました。</p></div>'
             f'{highlight_tiles(day, d, cfg)}<p class="more"><a class="btn" href="{day_path(day["date"])}">すべて見る</a><a class="btn btn-sub" href="/picks/">過去のおすすめ</a></p></section>')
 
 

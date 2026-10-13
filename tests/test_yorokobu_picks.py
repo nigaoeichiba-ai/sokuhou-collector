@@ -100,7 +100,7 @@ class GateTest(unittest.TestCase):
 
     def test_childish_tone_and_machine_phrasing_use_the_site_wide_style_gate(self):
         d = day()
-        d["amazon"][2]["summary"] = d["amazon"][2]["summary"] + "ぜんぶそろっていて、わくわくします。"
+        d["amazon"][2]["summary"] = d["amazon"][2]["summary"] + "ぜんぶそろっていてわくわくします。"
         self.assertTrue(any("childish tone" in p for p in dp.problems(d)))
 
     def test_codes_asins_kinds_and_mood_images_are_checked(self):
@@ -139,7 +139,7 @@ class PagesTest(unittest.TestCase):
         t = Path(cls.tmp.name)
         cls.d = day()
         older = {**copy.deepcopy(cls.d), "date": "2026-10-10"}
-        older["theme"] = "前の日のテーマを、別の言葉で言い表したもの"
+        older["theme"] = "前の日のテーマを別の言葉で言い表したもの"
         cls.out = render(t, [cls.d, older], live_items(cls.d))
 
     @classmethod
@@ -240,7 +240,7 @@ class PagesTest(unittest.TestCase):
             r_part = html.split('id="amazon"')[0].split('id="rakuten"')[1]
             self.assertEqual(r_part.count('<article class="pick"'), 10)
             self.assertNotIn("¥", r_part)
-            self.assertIn("価格・在庫は、販売ページでご確認ください。", r_part)
+            self.assertIn("価格・在庫は販売ページでご確認ください。", r_part)
             self.assertIn(self.d["rakuten"][0]["img"], r_part)
 
     def test_without_an_associates_id_the_amazon_part_is_left_out_instead_of_breaking_the_build(self):

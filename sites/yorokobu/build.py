@@ -158,9 +158,9 @@ def amazon_query(name: str, limit: int = 30) -> str:
 
 
 def pr_lead(cfg: dict) -> str:
-    return ('<p class="pr-lead"><span class="pr-note">PR</span>このページには、広告(楽天アフィリエイト'
+    return ('<p class="pr-lead"><span class="pr-note">PR</span>このページには広告(楽天アフィリエイト'
             + ('・Amazonアソシエイト' if cfg.get("amazon_tracking_id") else "")
-            + ')のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。</p>')
+            + ')のリンクが含まれます。リンク先で購入されると運営者に報酬が支払われることがあります。</p>')
 
 
 RANKING_ON = False   # set by render_site: the nav and the home page link to /ranking/ only when that page is built
@@ -215,7 +215,7 @@ SW_JS = """// The service worker of よろこぶプレゼント: only to show th
 self.addEventListener('install', function () { self.skipWaiting(); });
 self.addEventListener('activate', function (e) { e.waitUntil(self.clients.claim()); });
 self.addEventListener('push', function (e) {
-  e.waitUntil(self.registration.showNotification('アンケートに、新しい回答が届きました', { body: 'タップすると、結果を見られます。', icon: '/assets/icon-192.png', tag: 'yorokobu-ask', data: { url: '/ask/mine/' } }));
+  e.waitUntil(self.registration.showNotification('アンケートに、新しい回答が届きました', { body: 'タップすると結果を見られます。', icon: '/assets/icon-192.png', tag: 'yorokobu-ask', data: { url: '/ask/mine/' } }));
 });
 self.addEventListener('notificationclick', function (e) {
   e.notification.close();
@@ -235,7 +235,7 @@ def og_for(name: str) -> str:
     return f"/og/{name}.png" if name in OG else "/assets/img/og.webp"
 
 
-def share_bar(cfg: dict, path: str, text: str, label: str = "この候補、誰かに相談する", hint: bool = False) -> str:
+def share_bar(cfg: dict, path: str, text: str, label: str = "この候補を誰かに相談する", hint: bool = False) -> str:
     """LINE / mail / X / copy-link buttons (and the phone's own share sheet, shown by the script when there is one).  The shared text carries our page URL only,
     never an affiliate link.  `hint` adds the line that says how to send the page to oneself (a note for later on the phone)."""
     url = cfg["site_url"].rstrip("/") + path
@@ -243,7 +243,7 @@ def share_bar(cfg: dict, path: str, text: str, label: str = "この候補、誰�
     line = "https://line.me/R/share?text=" + quote(both, safe="")
     x = "https://twitter.com/intent/tweet?text=" + quote(text, safe="") + "&url=" + quote(url, safe="")
     mail = "mailto:?subject=" + quote(text, safe="") + "&body=" + quote(both, safe="")
-    note = '<p class="share-hint">あとで見返すなら、LINEの送り先に自分のトークを選ぶか、メールで自分あてに送っておくと、スマホで開けます。</p>' if hint else ""
+    note = '<p class="share-hint">あとで見返すなら、LINEの送り先に自分のトークを選ぶか、メールで自分あてに送っておくとスマホで開けます。</p>' if hint else ""
     return (f'<div class="share"><span class="share-label">{esc(label)}</span>'
             f'<a class="share-btn line" href="{esc(line)}" target="_blank" rel="noopener">LINEで送る</a>'
             f'<a class="share-btn mail" href="{esc(mail)}">メールで送る</a>'
@@ -266,7 +266,7 @@ def ul(items: list[str], cls: str = "") -> str:
 INK = "#2b1b14"
 PALETTE = {"pink": "#ff4d6d", "yellow": "#ffc93c", "sky": "#38bdf8", "mint": "#2fd09b", "lilac": "#a78bfa", "orange": "#ff8a3d", "white": "#ffffff"}
 MANIFEST = {
-    "name": "よろこぶプレゼント", "short_name": "よろこぶ", "description": "イベントと贈る相手から、喜ばれるプレゼントを選べるサイト。大切な日のメモ・カレンダーつき。",
+    "name": "よろこぶプレゼント", "short_name": "よろこぶ", "description": "イベントと贈る相手から喜ばれるプレゼントを選べるサイト。大切な日のメモ・カレンダーつき。",
     "start_url": "/?from=home", "scope": "/", "display": "standalone", "lang": "ja", "background_color": "#fbf6ee", "theme_color": "#fbf6ee",
     "icons": [{"src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png"},
               {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}],
@@ -350,7 +350,7 @@ def point_badge(it: dict) -> str:
         return ""
     rate = it["point_rate"]
     rate = int(rate) if float(rate).is_integer() else rate
-    return (f'<span class="tagx pt" title="楽天市場の表示です。対象の条件や上限は、商品ページでご確認ください。">ポイント{rate}倍({end.month}月{end.day}日まで)</span>')
+    return (f'<span class="tagx pt" title="楽天市場の表示です。対象の条件や上限は商品ページでご確認ください。">ポイント{rate}倍({end.month}月{end.day}日まで)</span>')
 
 
 def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, tier: str = "", kind: str = "", eager: bool = False) -> str:
@@ -387,13 +387,19 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
     attrs = (f'data-code="{esc(it["code"])}" data-price="{it["price"]}" data-reviews="{it["reviews"]}" data-rating="{it["rating"]}" '
              f'data-ship="{1 if it["free_shipping"] else 0}" data-gift="{1 if it.get("gift") else 0}" data-tier="{esc(tier)}" data-type="{esc(kind)}" '
              f'data-rank="{rank or 0}"')
-    fav = (f'<button type="button" class="fav" aria-label="気になるリストに入れる" aria-pressed="false" data-name="{esc(short(name, 40))}" '
-           f'data-price="{it["price"]}" data-url="{esc(url)}">♡</button>')
+    fav = fav_button(it["code"], short(name, 40), it["price"], url)
     return (f'<li class="item" {attrs}>{badge}{fav}<a class="item-img" href="{esc(href)}" rel="{rel}" target="_blank">'
             f'<img src="{esc(it["image"])}" alt="{esc(short(name, 40))}" width="300" height="300" {EAGER if eager else LAZY}></a>'
             f'<div class="item-body"><h3><a href="{esc(href)}" rel="{rel}" target="_blank">{esc(short(name))}</a></h3>'
             f'<p class="price">{yen(it["price"])}</p><p class="meta">{"".join(bits)}</p>{note}'
             f'<div class="item-btns">{buttons}</div></div></li>')
+
+
+def fav_button(code: str, name: str, price: int | None = None, url: str = "") -> str:
+    """The ♡ on a product's picture (assets/app.js keeps the list in this browser).  A Rakuten product is kept by its item code; an Amazon one as "a:<ASIN>" with its own link and no price."""
+    p = f' data-price="{price}"' if price else ""
+    return (f'<button type="button" class="fav" aria-label="気になるリストに入れる" aria-pressed="false" data-code="{esc(code)}" data-name="{esc(name)}"{p} '
+            f'data-url="{esc(url)}">♡</button>')
 
 
 def item_grid(cfg: dict, items: list[dict], cls: str = "items") -> str:
@@ -433,8 +439,8 @@ def pr_foot(cfg: dict, amazon: bool = False, rakuten: bool = True) -> str:
     """The full notice at the bottom of a page; it names each programme only when the page really has a link to it."""
     amazon = amazon and bool(cfg.get("amazon_tracking_id"))
     names = "・".join((["楽天アフィリエイト"] if rakuten or not amazon else []) + (["Amazonアソシエイト"] if amazon else []))
-    prices = '掲載している価格・レビューは、楽天市場の情報です。Amazonの価格は、リンク先でご確認ください。' if amazon and rakuten else ""
-    return ('<aside class="pr-foot"><b>広告について</b>このページには、広告(' + names + ')のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。商品の選び方は、<a href="/policy/">編集方針</a>に書いています。' + prices
+    prices = '掲載している価格・レビューは楽天市場の情報です。Amazonの価格はリンク先でご確認ください。' if amazon and rakuten else ""
+    return ('<aside class="pr-foot"><b>広告について</b>このページには広告(' + names + ')のリンクが含まれます。リンク先で購入されると運営者に報酬が支払われることがあります。商品の選び方は、<a href="/policy/">編集方針</a>に書いています。' + prices
             + (amazon_disclosure(cfg) if amazon else "") + '</aside>')
 
 
@@ -504,7 +510,7 @@ def bird_say(img: str, text: str, cls: str = "") -> str:
 
 def idea_card(cfg: dict, idea: dict, i: int, tiers: list[dict]) -> str:
     cards = "".join(item_card(cfg, it, tier=tier_of(it["price"], tiers), kind=idea["type"]) for it in idea["items"][:4])
-    body = f'<ul class="items mini">{cards}</ul>' if cards else '<p class="notice">この種類の商品は、いま見つかりませんでした。下のリンクから楽天市場で探せます。</p>'
+    body = f'<ul class="items mini">{cards}</ul>' if cards else '<p class="notice">この種類の商品はいま見つかりませんでした。下のリンクから楽天市場で探せます。</p>'
     return (f'<article class="idea" id="idea-{i}"><header><span class="type">{esc(idea["type"])}</span><h3>{esc(idea["label"])}</h3></header>'
             f'{bird_say(SOMMELIER_IMGS[i % 4], esc(idea["why"]), "sommelier")}{body}'
             f'<p class="idea-more"><a href="{esc(search_link(cfg, idea["query"]))}" rel="sponsored nofollow noopener" target="_blank">'
@@ -527,9 +533,9 @@ def concierge(cfg: dict, d: dict, p: dict | None, heading: str = "一言入れ�
     ctx = esc(" ".join(x for x in [(p or {}).get("recipient_keyword", "")] if x))
     return f"""<section class="concierge band-soft" id="concierge"><div class="concierge-in">
 <div class="concierge-body"><h2>{heading}</h2>
-<p>その人について、一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。</p>
+<p>その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。</p>
 <form class="kw-form" data-aff="{esc(cfg['rakuten_affiliate_id'])}" data-trk="{esc(cfg.get('rakuten_tracking_id') or '')}" data-ctx="{ctx}">
-<input type="search" name="q" placeholder="例: ガーデニングが好きな60代" aria-label="その人のこと、ほしいもの">
+<input type="search" name="q" placeholder="例: ガーデニングが好きな60代" aria-label="その人のこと・ほしいもの">
 <button type="submit" class="btn">楽天市場で探す</button></form>
 <ul class="kw-chips">{chips}</ul></div></div></section>"""
 
@@ -585,7 +591,7 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
     if union:
         # the filters sit BEFORE the cards they work on (the cards of the proposals and the list of the rest; the first four are not filtered)
         controls = f"""<section class="browse" id="browse"><div class="sec-title"><span class="tag">絞り込み</span><h2>条件で絞って比べる</h2></div>
-{bird_say("navi-map", "予算や種類を選ぶと、下の商品から、ぴったりのものだけを表示します。", "navigator")}
+{bird_say("navi-map", "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。", "navigator")}
 <div class="controls">
 <div class="ctl"><b>予算</b><div class="chipset" data-filter="tier"><button type="button" class="chipbtn on" data-v="">すべて</button>{tier_btns}</div></div>
 {f'<div class="ctl"><b>種類</b><div class="chipset" data-filter="type"><button type="button" class="chipbtn on" data-v="">すべて</button>{type_btns}</div></div>' if type_btns else ''}
@@ -600,7 +606,7 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
         else:
             rest = ""
     else:
-        rest = '<section class="browse"><p class="notice">いま表示できる商品がありません。下の入力欄から、楽天市場で探してください。</p></section>'
+        rest = '<section class="browse"><p class="notice">いま表示できる商品がありません。下の入力欄から楽天市場で探してください。</p></section>'
     gm = gift_map(key, ideas, d["c"]["map_tags"], shown_ideas)
     return controls + proposals + gm, rest, own
 
@@ -658,11 +664,11 @@ def next_steps(d: dict, occasion: str = "", recipient: str = "") -> str:
     """「迷ったときの次の一歩」: what to do after reading a list of gifts, so that a visitor who is not ready to buy has a way to come back (the list, the memo, the sale day)."""
     memo = f"/memo/?o={occasion}&amp;r={recipient}" if occasion and recipient else "/memo/"
     sale_on = bool(SALE_EVENTS) and SALE_NOW is not None and any(sales.phase(e, SALE_NOW) for e in SALE_EVENTS)
-    steps = [("気になる商品に♡をつける", "♡を押した商品は、「お気に入り」のページで、価格を見比べられます。このブラウザの中にだけ保存されます。", "/favorites/", "お気に入りを見る"),
-             ("誰かに相談する", "候補の画面を、LINEやメールで送って、「どれがいい?」と聞けます。ページの共有ボタンから送れます。", "#share", "")]
-    steps.append(("贈る日を登録する", "日にちを登録しておくと、近づいたときにお知らせの画面が出ます。カレンダーにも書き出せます。", memo, "たいせつな日メモを開く"))
+    steps = [("気になる商品に♡をつける", "♡を押した商品は「お気に入り」のページで価格を見比べられます。このブラウザの中にだけ保存されます。", "/favorites/", "お気に入りを見る"),
+             ("誰かに相談する", "候補の画面をLINEやメールで送って「どれがいい？」と聞けます。ページの共有ボタンから送れます。", "#share", "")]
+    steps.append(("贈る日を登録する", "日にちを登録しておくと近づいたときにお知らせの画面が出ます。カレンダーにも書き出せます。", memo, "たいせつな日メモを開く"))
     if sale_on:
-        steps.append(("セールの日に合わせて買う", "楽天市場とAmazonのセールの日程を、まとめています。候補を選んでおくと、その日に迷わず注文できます。", "/sale/", "セールの日程を見る"))
+        steps.append(("セールの日に合わせて買う", "楽天市場とAmazonのセールの日程をまとめています。候補を選んでおくとその日に迷わず注文できます。", "/sale/", "セールの日程を見る"))
     cells = "".join(f'<li><strong>{esc(t)}</strong><span>{esc(x)}</span>' + (f'<a class="btn btn-sub" href="{h}">{esc(label)}</a>' if label else "") + "</li>" for t, x, h, label in steps)
     return f'<section class="block next-steps"><div class="sec-head"><span class="eyebrow">Next</span><h2>迷ったときの次の一歩</h2></div><ol class="steps">{cells}</ol></section>'
 
@@ -704,10 +710,10 @@ def quick_section(c: dict, slug: str) -> str:
     if n.get("applicable"):
         noshi = f'<p><b>表書き</b> {esc(n["omote"])}<br><b>水引</b> {esc(n["mizuhiki"])}</p>' + (f'<p>{esc(n["note"])}</p>' if n.get("note") else "")
     else:
-        noshi = '<p>のしは、付けなくてもかまいません。</p>' + (f'<p>{esc(n["note"])}</p>' if n.get("note") else "")
+        noshi = '<p>のしは付けなくてもかまいません。</p>' + (f'<p>{esc(n["note"])}</p>' if n.get("note") else "")
     back = f'<div class="qcard"><h3>お返しの目安</h3><p>{esc(e["return_gift"])}</p></div>' if e.get("return_gift") else ""
     src = "、".join(f'<a href="{esc(s["url"])}" rel="nofollow noopener" target="_blank">{esc(s["name"])}</a>' + (f'({s["year"]}年)' if s.get("year") else "") for s in e["sources"])
-    return (f'<section class="quick" id="quick"><h2><span class="scribble">{esc(name)}の、贈る前の早見表</span></h2>'
+    return (f'<section class="quick" id="quick"><h2><span class="scribble">{esc(name)}の贈る前の早見表</span></h2>'
             f'<div class="quick-grid"><div class="qcard wide"><h3>金額の目安</h3>{money}</div>'
             f'<div class="qcard"><h3>贈る時期</h3><p>{esc(e["timing"])}</p></div>'
             f'<div class="qcard"><h3>のし(表書き・水引)</h3>{noshi}</div>'
@@ -750,9 +756,9 @@ def amazon_picks_section(cfg: dict, c: dict, occasion: str, recipient: str | Non
         return ""
     cards = "".join(amazon_pick_card(cfg, p) for p in picks)
     return (f'<section class="amazon-picks" style="margin-top:50px"><h2><span class="scribble">Amazonで見つけた贈り物</span></h2>'
-            f'<p class="sec-lead">Amazonの売れ筋ランキングから、この場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。</p>'
+            f'<p class="sec-lead">Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。</p>'
             f'<ul class="apicks">{cards}</ul>'
-            f'<p class="more"><a class="btn btn-sub" href="/amazon/">Amazonで選ぶ贈り物を、すべて見る</a></p></section>')
+            f'<p class="more"><a class="btn btn-sub" href="/amazon/">Amazonで選ぶ贈り物をすべて見る</a></p></section>')
 
 
 def amazon_hub_page(d: dict, cfg: dict, preview: bool) -> str:
@@ -762,14 +768,14 @@ def amazon_hub_page(d: dict, cfg: dict, preview: bool) -> str:
         kinds.setdefault(p["kind"], []).append(p)
     blocks = "".join(f'<section style="margin-top:40px"><h2><span class="scribble">{esc(k)}</span></h2><ul class="apicks">{"".join(amazon_pick_card(cfg, p) for p in ps)}</ul></section>'
                      for k, ps in kinds.items())
-    lead = "Amazonの売れ筋ランキングから、贈り物に選びやすい商品を、人の手で選びました。楽天市場の商品と並べて、見比べてください。"
-    body = f"""{head_band("sky", "", "Amazonで選ぶ、<wbr>贈り物", lead, single=True)}
+    lead = "Amazonの売れ筋ランキングから贈り物に選びやすい商品を人の手で選びました。楽天市場の商品と並べて見比べてください。"
+    body = f"""{head_band("sky", "", "Amazonで選ぶ<wbr>贈り物", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("Amazonで選ぶ贈り物", None)])}</div>
 {pr_quiet(cfg)}
 <p class="sec-lead">ここに載せているのは、Amazonの「グルメギフト」「Amazonデバイス」「ギフトカード」の売れ筋ランキングで確かめた商品です(確認日: {esc(c["amazon_checked"])})。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。</p>
 {blocks}
 <p class="memo-note" style="margin-top:36px">イベントや相手から探すなら、<a href="/occasion/">イベントから探す</a>、<a href="/for/">相手から探す</a>へ。</p>"""
-    return page(cfg, preview, path="/amazon/", title=f"Amazonで選ぶ、贈り物 | {cfg['site_name']}", description=lead, body=body)
+    return page(cfg, preview, path="/amazon/", title=f"Amazonで選ぶ贈り物 | {cfg['site_name']}", description=lead, body=body)
 
 
 # ---------------------------------------------------------------- 共有リスト (/list/?c=code,code: what a friend sent; the data is list/items.json)
@@ -782,10 +788,10 @@ def list_page(d: dict, cfg: dict, preview: bool) -> str:
 <section id="sharedlist" class="sharedlist" data-src="/list/items.json">
 <p class="list-msg" role="status" aria-live="polite">候補を読み込んでいます。</p>
 <ul class="items" id="list-items" aria-live="polite"></ul>
-<noscript><p class="notice">このページは、JavaScript が使える環境でお使いください。</p></noscript>
+<noscript><p class="notice">このページはJavaScript が使える環境でお使いください。</p></noscript>
 <p class="more"><a class="btn" href="/">自分でも、プレゼントを探す</a></p>
 </section>
-<p class="notice">商品の価格・在庫・レビューは、取得した時点の情報です。購入前に、販売ページでご確認ください。</p>"""
+<p class="notice">商品の価格・在庫・レビューは取得した時点の情報です。購入前に販売ページでご確認ください。</p>"""
     html = page(cfg, preview, path="/list/", title=f"贈り物の候補 | {cfg['site_name']}", description=lead, body=body, amazon_links=bool(cfg.get("amazon_tracking_id")))
     return html.replace("<head>", '<head>\n<meta name="robots" content="noindex,nofollow">', 1)
 
@@ -832,7 +838,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 <section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(avoid, "warn")}</section>
 {guide_link(c, p["occasion"])}
 <p style="margin-top:40px">{amazon}</p>
-{related_section([(f"{occ['name']}の、ほかの相手", links(related_occ)), (f"{rec['name']}への、ほかのイベント", links(related_rec))])}"""
+{related_section([(f"{occ['name']}のほかの相手", links(related_occ)), (f"{rec['name']}へのほかのイベント", links(related_rec))])}"""
     return page(cfg, preview, path=f"/gift/{key}/", title=f"{p['title']} | {cfg['site_name']}", description=p["lead"][:110], body=body,
                 og_image=og_for(f"gift/{key}"))
 
@@ -889,7 +895,7 @@ def theme_page(d: dict, cfg: dict, preview: bool, t: dict) -> str:
 {concierge(cfg, d, t)}
 {avoid}
 <p style="margin-top:40px">{amazon}</p>
-{f'<section class="related" style="margin-top:40px"><h2><span class="scribble">{esc(group["name"])}、ほかのテーマ</span></h2><ul class="plain cols2 chips">{other}</ul></section>' if other else ""}"""
+{f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの{esc(group["name"])}テーマ</span></h2><ul class="plain cols2 chips">{other}</ul></section>' if other else ""}"""
     return page(cfg, preview, path=f"/theme/{t['slug']}/", title=f"{t['title']} | {cfg['site_name']}", description=t["lead"][:110], body=body,
                 og_image=og_for(f"theme/{t['slug']}"))
 
@@ -902,17 +908,17 @@ def theme_hub_page(d: dict, cfg: dict, preview: bool) -> str:
         if ts:
             sections += (f'<section style="margin-top:44px"><h2><span class="scribble">{esc(g["name"])}</span></h2><p class="sec-lead">{esc(g["blurb"])}</p>'
                          f'<ul class="tiles">{"".join(theme_tile(t) for t in ts)}</ul></section>')
-    lead = "贈りたい気持ちや、相手の好きなことから、プレゼントを探します。イベントや相手が決まっていなくても、ここから始められます。"
-    body = f"""{head_band("lilac", '', "気持ち・興味から、<wbr>プレゼントを探す", lead, single=True)}
+    lead = "贈りたい気持ちや相手の好きなことからプレゼントを探します。イベントや相手が決まっていなくても、ここから始められます。"
+    body = f"""{head_band("lilac", '', "気持ち・興味から<wbr>プレゼントを探す", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("気持ち・興味から探す", None)])}</div>
 {pr_quiet(cfg)}{sections}"""
-    return page(cfg, preview, path="/theme/", title=f"気持ち・興味から、プレゼントを探す | {cfg['site_name']}", description=lead, body=body)
+    return page(cfg, preview, path="/theme/", title=f"気持ち・興味からプレゼントを探す | {cfg['site_name']}", description=lead, body=body)
 
 
 def msg_link(c: dict, occasion: str) -> str:
     if occasion not in c["messages"]:
         return ""
-    return (f'<section style="margin-top:44px"><h2><span class="scribble">添えるメッセージに、迷ったら</span></h2>'
+    return (f'<section style="margin-top:44px"><h2><span class="scribble">添えるメッセージに迷ったら</span></h2>'
             f'<p><a class="btn btn-sub" href="/message/{occasion}/">{esc(c["occ"][occasion]["name"])}のメッセージ例文を見る</a></p></section>')
 
 
@@ -932,12 +938,12 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
 {dataroom.occasion_teaser(d, o["slug"])}
 <section style="margin-top:40px" class="cols">{"" if c.get("etiquette", {}).get(o["slug"]) else f'<div><h2><span class="scribble">贈る時期の目安</span></h2><p>{esc(o["timing"])}</p></div>'}
 <div><h2><span class="scribble">選ぶポイント</span></h2><ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in o["tips"])}</ol></div></section>
-<section style="margin-top:50px"><h2><span class="scribble">相手を選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
+<section style="margin-top:50px"><h2><span class="scribble">相手を選んでおすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}
 {msg_link(c, o["slug"])}<section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>
 {guide_link(c, o["slug"])}
 {amazon_picks_section(cfg, c, o["slug"])}
-{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "のプレゼントを、Amazonで探す")}"""
+{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "のプレゼントをAmazonで探す")}"""
     return page(cfg, preview, path=f"/occasion/{o['slug']}/", title=f"{o['name']}のプレゼント 選び方と相手別のおすすめ | {cfg['site_name']}",
                 description=o["blurb"][:110], body=body, og_image=og_for(f"occasion/{o['slug']}"))
 
@@ -1003,9 +1009,9 @@ def recipient_page(d: dict, cfg: dict, preview: bool, r: dict) -> str:
 {pr_quiet(cfg)}
 <section style="margin-top:40px"><h2><span class="scribble">喜ばれやすいもの</span></h2>{likes_section(d, cfg, r)}{freshness(d) if r.get("like_rows") else ""}</section>
 <section class="avoid" style="margin-top:40px"><h2><span class="scribble">避けたいもの</span></h2>{ul(r["avoid"], "warn")}</section>
-<section style="margin-top:50px"><h2><span class="scribble">イベントを選んで、おすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
+<section style="margin-top:50px"><h2><span class="scribble">イベントを選んでおすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}
-{amazon_more(cfg, r["name"] + " プレゼント", r["name"] + "へのプレゼントを、Amazonで探す")}"""
+{amazon_more(cfg, r["name"] + " プレゼント", r["name"] + "へのプレゼントをAmazonで探す")}"""
     return page(cfg, preview, path=f"/for/{r['slug']}/", title=f"{r['name']}へのプレゼント イベント別のおすすめ | {cfg['site_name']}",
                 description=r["blurb"][:110], body=body, og_image=og_for(f"for/{r['slug']}"))
 
@@ -1014,10 +1020,10 @@ def hub_page(d: dict, cfg: dict, preview: bool, kind: str) -> str:
     c = d["c"]
     if kind == "occasion":
         rows = "".join(tile(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"], o["season"]) for o in c["occasions"])
-        title, h1, lead, path, color = "イベントから探す", "イベントから、<wbr>プレゼントを探す", "贈るきっかけを選ぶと、相手ごとのおすすめが見つかります。", "/occasion/", "pink"
+        title, h1, lead, path, color = "イベントから探す", "イベントから<wbr>プレゼントを探す", "贈るきっかけを選ぶと相手ごとのおすすめが見つかります。", "/occasion/", "pink"
     else:
         rows = "".join(tile(f'/for/{r["slug"]}/', "recipient", r["slug"], r["name"]) for r in c["recipients"])
-        title, h1, lead, path, color = "贈る相手から探す", "贈る相手から、<wbr>プレゼントを探す", "贈る相手を選ぶと、イベントごとのおすすめが見つかります。", "/for/", "sky"
+        title, h1, lead, path, color = "贈る相手から探す", "贈る相手から<wbr>プレゼントを探す", "贈る相手を選ぶとイベントごとのおすすめが見つかります。", "/for/", "sky"
     body = f"""{head_band(color, f'', h1, lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (title, None)])}</div>
 <section style="margin-top:34px"><ul class="tiles">{rows}</ul></section>"""
@@ -1078,18 +1084,18 @@ def memo_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <p class="memo-fixed" hidden></p>
 <button type="submit" class="btn">この日を登録</button>
 </form>
-<p class="memo-note">入力した内容は、<b>この端末のブラウザだけに保存され、送信されません</b>。端末やブラウザを変えると、見られなくなります。</p>
+<p class="memo-note">入力した内容は、<b>この端末のブラウザだけに保存され、送信されません</b>。端末やブラウザを変えると見られなくなります。</p>
 </div>
 <div class="memo-list-wrap"><h2><span class="scribble">登録した日</span></h2>
 <ul class="memo-list" aria-live="polite"></ul>
-<p class="memo-empty">まだ登録がありません。左のフォームから、大切な日を、登録してみましょう。</p>
+<p class="memo-empty">まだ登録がありません。左のフォームから大切な日を登録してみましょう。</p>
 <p class="memo-all" hidden><button type="button" class="btn btn-sub" data-all-ics>すべてカレンダーに追加(.ics)</button></p>
 </div>
 </section>
 <section class="calendar-teaser" style="margin-top:50px"><h2><span class="scribble">みんなの贈りどき</span></h2>
 <p>母の日、父の日、クリスマスなど日付が決まっている贈りどきは、<a href="/calendar/">贈りどきカレンダー</a>からまとめてカレンダーに入れられます。</p></section>"""
     return page(cfg, preview, path="/memo/", title=f"たいせつな日メモ 贈り忘れを防ぐリマインダー | {cfg['site_name']}",
-                description="大切な人の誕生日や記念日を登録して、3週間前と1週間前に、カレンダーの通知で、贈り物の準備をお知らせ。登録は不要、入力した内容は端末の中だけに保存されます。",
+                description="大切な人の誕生日や記念日を登録して、3週間前と1週間前にカレンダーの通知で、贈り物の準備をお知らせ。登録は不要、入力した内容は端末の中だけに保存されます。",
                 body=body, og_image=og_for("default"))
 
 
@@ -1110,18 +1116,18 @@ def calendar_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
     feed = cfg["site_url"].rstrip("/") + "/calendar/yorokobu-gift-days.ics"
     webcal = "webcal://" + feed.split("://", 1)[1]
     google = "https://calendar.google.com/calendar/r?cid=" + quote(webcal, safe="")
-    head = head_band("pink", f'{ic_wrap("occasion", "oseibo")}', "贈りどきカレンダー", "母の日、父の日、クリスマスなど日付が決まっている贈りどきを、カレンダーに入れておけます。3週間前には、選びはじめの予定も入ります。", single=True, mascot="b-sparkle")
+    head = head_band("pink", f'{ic_wrap("occasion", "oseibo")}', "贈りどきカレンダー", "母の日、父の日、クリスマスなど日付が決まっている贈りどきをカレンダーに入れておけます。3週間前には選びはじめの予定も入ります。", single=True, mascot="b-sparkle")
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("贈りどきカレンダー", None)])}</div>
 <section><h2><span class="scribble">カレンダーに入れる</span></h2>
 <p class="cal-actions"><a class="btn" href="{esc(google)}" target="_blank" rel="noopener">Googleカレンダーに追加</a>
 <a class="btn btn-sub" href="{esc(webcal)}">iPhone・Macに追加</a>
 <a class="btn btn-sub" href="/calendar/yorokobu-gift-days.ics" download>.icsを保存</a></p>
-<p class="memo-note">どれも無料で、登録は不要です。カレンダーの更新の反映には、時間がかかる場合があります。</p></section>
+<p class="memo-note">どれも無料で登録は不要です。カレンダーの更新の反映には時間がかかる場合があります。</p></section>
 <section style="margin-top:36px"><h2><span class="scribble">日にちの一覧</span></h2>{blocks}
 <p class="memo-note">誕生日や結婚記念日など、人によって違う日は、<a href="/memo/">たいせつな日メモ</a>に登録できます。月ごとに見るなら<a href="/month/">月ごとの贈りどき</a>へ。</p></section>"""
     return page(cfg, preview, path="/calendar/", title=f"贈りどきカレンダー {today.year}・{today.year + 1} 母の日・父の日・クリスマスの日にち | {cfg['site_name']}",
-                description="母の日・父の日・敬老の日・クリスマス・お歳暮などの贈りどきの日にちと、選びはじめの目安(3週間前)の一覧。GoogleカレンダーやiPhoneに、まとめて追加できます。",
+                description="母の日・父の日・敬老の日・クリスマス・お歳暮などの贈りどきの日にちと選びはじめの目安(3週間前)の一覧。GoogleカレンダーやiPhoneにまとめて追加できます。",
                 body=body, og_image=og_for("default"))
 
 
@@ -1149,12 +1155,12 @@ def guide_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (o["name"], f"/occasion/{slug}/"), ("読みもの", None)])}</div>
 {pr_with_amazon(cfg)}
 <article class="guide">{secs}
-<section class="g-sec"><h2><span class="scribble">贈る前の、チェックリスト</span></h2><ul class="checklist">{checks}</ul></section>
+<section class="g-sec"><h2><span class="scribble">贈る前のチェックリスト</span></h2><ul class="checklist">{checks}</ul></section>
 <section class="g-sec"><h2><span class="scribble">よくある質問</span></h2>{faq}</section></article>
-{share_bar(cfg, f"/guide/{slug}/", f"{g['title']}", "この記事を、だれかに送る")}
-<section class="related" style="margin-top:44px"><h2><span class="scribble">{esc(o["name"])}の贈り物を、選ぶ</span></h2>
+{share_bar(cfg, f"/guide/{slug}/", f"{g['title']}", "この記事をだれかに送る")}
+<section class="related" style="margin-top:44px"><h2><span class="scribble">{esc(o["name"])}の贈り物を選ぶ</span></h2>
 <ul class="plain">{links}</ul><p style="margin-top:14px"><a class="btn btn-sub" href="/occasion/{slug}/">{esc(o["name"])}のおすすめを見る</a></p></section>
-{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "の贈り物を、Amazonで探す")}
+{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "の贈り物をAmazonで探す")}
 <script type="application/ld+json">{ld}</script>"""
     return page(cfg, preview, path=f"/guide/{slug}/", title=f"{g['title']} | {cfg['site_name']}", description=g["intro"][:110], body=body, og_image=og_for(f"occasion/{slug}"))
 
@@ -1180,8 +1186,8 @@ def article_page(d: dict, cfg: dict, preview: bool, a: dict) -> str:
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("読みもの", "/read/"), (a["title"], None)])}</div>
 <p class="meta-date">{esc(a["date"])} 公開</p>
 <article class="guide">{secs}{checks}<section class="g-sec"><h2><span class="scribble">よくある質問</span></h2>{faq}</section></article>
-{share_bar(cfg, f"/read/{a['slug']}/", a["title"], "この記事を、だれかに送る")}
-{f'<section class="related" style="margin-top:44px"><h2><span class="scribble">贈り物を、探してみる</span></h2><ul class="plain cols2 chips">{rel}</ul></section>' if rel else ""}
+{share_bar(cfg, f"/read/{a['slug']}/", a["title"], "この記事をだれかに送る")}
+{f'<section class="related" style="margin-top:44px"><h2><span class="scribble">贈り物を探してみる</span></h2><ul class="plain cols2 chips">{rel}</ul></section>' if rel else ""}
 <script type="application/ld+json">{ld}</script><script type="application/ld+json">{faq_ld}</script>"""
     return page(cfg, preview, path=f"/read/{a['slug']}/", title=f"{a['title']} | {cfg['site_name']}", description=a["lead"][:110], body=body, og_image=og_for(f"read/{a['slug']}"))
 
@@ -1218,7 +1224,7 @@ def whats_new(d: dict, n: int = 6) -> str:
     if not rows:
         return ""
     lis = "".join(f'<li><a href="{u}"><span class="new-kind">{k}</span><b>{esc(t)}</b><small>{esc(day)}</small></a></li>' for day, u, t, k in rows)
-    return f'<section class="whatsnew block"><div class="sec-head"><span class="eyebrow">New</span><h2>新しく追加した、ページ</h2></div><ul class="newlist">{lis}</ul><p class="more"><a class="btn btn-sub" href="/read/">読みものを、ぜんぶ見る</a></p></section>'
+    return f'<section class="whatsnew block"><div class="sec-head"><span class="eyebrow">New</span><h2>新しく追加したページ</h2></div><ul class="newlist">{lis}</ul><p class="more"><a class="btn btn-sub" href="/read/">読みものをぜんぶ見る</a></p></section>'
 
 
 def season_occasions(c: dict, today: date) -> list[dict]:
@@ -1236,9 +1242,9 @@ def finder(d: dict) -> str:
     bud = "".join(f'<option value="{t["slug"]}">{esc(t["label"])}</option>' for t in c["filters"]["tiers"])
     fmap = esc(json.dumps(finder_map(d), separators=(",", ":")))
     return (f'<form class="finder" action="/occasion/" method="get" data-map="{fmap}">'
-            f'<p class="finder-title">いますぐ、探す</p>'
-            f'<div class="finder-row"><select name="r" aria-label="贈る相手"><option value="">だれ</option>{rec}</select><span>に、</span>'
-            f'<select name="o" aria-label="イベント"><option value="">どんな日</option>{occ}</select><span>の贈り物を、</span>'
+            f'<p class="finder-title">いますぐ探す</p>'
+            f'<div class="finder-row"><select name="r" aria-label="贈る相手"><option value="">だれ</option>{rec}</select><span>に</span>'
+            f'<select name="o" aria-label="イベント"><option value="">どんな日</option>{occ}</select><span>の贈り物を</span>'
             f'<select name="b" aria-label="予算"><option value="">予算は決めない</option>{bud}</select><span>で</span>'
             f'<button type="submit">さがす</button></div>'
             f'<p class="finder-msg" role="status" hidden></p></form>')
@@ -1250,8 +1256,8 @@ def ranking_band(d: dict) -> str:
     if not (rv or nv):
         return ""
     btns = ('<a class="btn" href="/ranking/">いま売れている商品</a>' if rv else "") + ('<a class="btn btn-sub" href="/numbers/">数字で選ぶ</a>' if nv else "")
-    return ('<section class="block"><div class="sec-head"><span class="eyebrow">Ranking</span><h2>数字から、選ぶ</h2>'
-            '<p>楽天市場で、ジャンル別・世代別に、いま売れている商品(毎日更新)。レビュー件数や評価など、数字の条件で集めた商品の一覧も、あります。</p></div>'
+    return ('<section class="block"><div class="sec-head"><span class="eyebrow">Ranking</span><h2>数字から選ぶ</h2>'
+            '<p>楽天市場でジャンル別・世代別にいま売れている商品(毎日更新)。レビュー件数や評価など、数字の条件で集めた商品の一覧もあります。</p></div>'
             f'<p class="more">{btns}</p></section>')
 
 
@@ -1261,8 +1267,8 @@ def data_band(d: dict) -> str:
     if not rows:
         return ""
     cards = "".join(f'<li><a class="finding" href="{p}"><b>{esc(t)}</b><span>{esc(f)}</span></a></li>' for p, t, f in rows)
-    return ('<section class="block"><div class="sec-head"><span class="eyebrow">Data</span><h2>数字で見る、贈り物</h2>'
-            '<p>プレゼントの価格や予算を、商品のデータと国の統計で、グラフにしました。毎日、更新しています。</p></div>'
+    return ('<section class="block"><div class="sec-head"><span class="eyebrow">Data</span><h2>数字で見る贈り物</h2>'
+            '<p>プレゼントの価格や予算を商品のデータと国の統計でグラフにしました。毎日、更新しています。</p></div>'
             f'<ul class="findings">{cards}</ul><p class="more"><a class="btn btn-sub" href="/data/">データ室を見る</a></p></section>')
 
 
@@ -1271,7 +1277,7 @@ def budget_block(d: dict) -> str:
     if not tiers:
         return ""
     chips = "".join(f'<li><a href="/budget/{x["slug"]}/">{esc(budget_title(x))}</a></li>' for x, _ in tiers)
-    return ('<section class="block"><div class="sec-head"><span class="eyebrow">Budget</span><h2>予算から、探す</h2><p>いくらまでかけるかが決まっていれば、ここから。</p></div>'
+    return ('<section class="block"><div class="sec-head"><span class="eyebrow">Budget</span><h2>予算から探す</h2><p>いくらまでかけるかが決まっていれば、ここから。</p></div>'
             f'<ul class="plain cols2 chips budget-chips">{chips}</ul></section>')
 
 
@@ -1339,23 +1345,30 @@ def tool_tile(href: str, glyph: str, name: str, small: str) -> str:
     return f'<li><a class="tile tool-tile" href="{href}"><span class="ic-wrap">{icons.glyph(glyph, 30)}</span><span><b>{esc(name)}</b><small>{esc(small)}</small></span></a></li>'
 
 
+def cc_banner() -> str:
+    """The card on the top page that opens the concierge panel (assets/concierge.js draws it: without the script a button would do nothing, so it stays hidden)."""
+    return ('<section class="block cc-wrap" data-cc-box hidden><div class="cc-banner"><span class="cc-banner-ic">' + icons.glyph("chat-circle-text", 28) + '</span>'
+            '<div class="cc-banner-t"><h2>贈り物のことでお困りではありませんか？</h2><p>相手や予算を選ぶだけで候補のページをご案内します。言葉で書いても大丈夫です。</p></div>'
+            '<button type="button" class="btn big" data-cc-open hidden>相談してみる</button></div></section>')
+
+
 def home_tools(d: dict) -> str:
     c = d["c"]
     rows = []
     if d["gacha"]:
-        rows.append(tool_tile("/tool/gacha/", "dice-five", "おまかせ提案", "条件を選ぶと、1点だけ提案します"))
+        rows.append(tool_tile("/tool/gacha/", "dice-five", "おまかせ提案", "条件を選ぶと1点だけ提案します"))
     if c.get("ask"):
-        rows.append(tool_tile("/dock/", "list-checks", "贈り物ドック", "相手のことを入れると、診断の結果票を返します"))
-        rows.append(tool_tile("/ask/", "chat-circle-text", "ほしいものを聞く", "好みを、それとなく聞くアンケートを作る"))
-    rows.append(tool_tile("/memo/", "calendar-heart", "たいせつな日メモ", "誕生日や記念日を、3週間前にお知らせ"))
+        rows.append(tool_tile("/dock/", "list-checks", "贈り物ドック", "相手のことを入れると診断の結果票を返します"))
+        rows.append(tool_tile("/ask/", "chat-circle-text", "ほしいものを聞く", "好みをそれとなく聞くアンケートを作る"))
+    rows.append(tool_tile("/memo/", "calendar-heart", "たいせつな日メモ", "誕生日や記念日を3週間前にお知らせ"))
     if c["persona"]:
-        rows.append(tool_tile("/diagnosis/", "sparkle", "プレゼント診断", "相手のタイプから、合う贈り物を"))
+        rows.append(tool_tile("/diagnosis/", "sparkle", "プレゼント診断", "相手のタイプから合う贈り物を"))
     if c["taboo"]:
-        rows.append(tool_tile("/tool/taboo/", "shield-check", "縁起・マナーチェック", "贈る前に、避けたい品を確かめる"))
-    rows.append(tool_tile("/tool/calc/", "currency-jpy", "お返し・割り勘の計算", "お返しの目安と、人数での割り勘"))
-    rows.append(tool_tile("/calendar/", "calendar-check", "贈りどきカレンダー", "母の日やクリスマスを、カレンダーに"))
-    return (f'<section class="block"><div class="sec-head"><span class="eyebrow">Tools</span><h2>迷ったときの、道具</h2>'
-            f'<p>決めきれないときは、ここから。気になった商品に♡を付けると、友人や家族に、1つのリンクで送れます。</p></div>'
+        rows.append(tool_tile("/tool/taboo/", "shield-check", "縁起・マナーチェック", "贈る前に避けたい品を確かめる"))
+    rows.append(tool_tile("/tool/calc/", "currency-jpy", "お返し・割り勘の計算", "お返しの目安と人数での割り勘"))
+    rows.append(tool_tile("/calendar/", "calendar-check", "贈りどきカレンダー", "母の日やクリスマスをカレンダーに"))
+    return (f'<section class="block"><div class="sec-head"><span class="eyebrow">Tools</span><h2>迷ったときに</h2>'
+            f'<p>決めきれないときはここから。気になった商品に♡を付けると友人や家族に1つのリンクで送れます。</p></div>'
             f'<ul class="tiles wide">{"".join(rows)}</ul></section>')
 
 
@@ -1364,7 +1377,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
     c = d["c"]
     rail_items = daily_mix(d, today, 10, salt=1)
     season = "".join(season_tile(o, today) for o in season_occasions(c, today)[:6])
-    month_more = (f'<p class="more"><a class="btn btn-sub" href="/month/{today.month}/">{today.month}月の贈りどきを、すべて見る</a></p>'
+    month_more = (f'<p class="more"><a class="btn btn-sub" href="/month/{today.month}/">{today.month}月の贈りどきをすべて見る</a></p>'
                   if today.month in month_pages(c, today) else "")
     occ = "".join(round_chip(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"]) for o in c["occasions"])
     rec = "".join(round_chip(f'/for/{r["slug"]}/', "recipient", r["slug"], r["name"]) for r in c["recipients"])
@@ -1373,38 +1386,39 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
     theme_band = ""
     if d["live_themes"]:
         picks = [x for g in c["theme_groups"] for x in [t for t in d["live_themes"] if t["group"] == g["slug"]][:4]]
-        theme_band = (f'<section class="block"><div class="sec-head"><span class="eyebrow">Themes</span><h2>気持ち・興味から、探す</h2>'
-                      f'<p>イベントが決まっていなくても大丈夫。贈りたい気持ちや、相手の好きなことから。</p></div>'
-                      f'<ul class="tiles">{"".join(theme_tile(x) for x in picks)}</ul><p class="more"><a class="btn btn-sub" href="/theme/">テーマを、すべて見る</a></p></section>')
+        theme_band = (f'<section class="block"><div class="sec-head"><span class="eyebrow">Themes</span><h2>気持ち・興味から探す</h2>'
+                      f'<p>イベントが決まっていなくても大丈夫。贈りたい気持ちや相手の好きなことから。</p></div>'
+                      f'<ul class="tiles">{"".join(theme_tile(x) for x in picks)}</ul><p class="more"><a class="btn btn-sub" href="/theme/">テーマをすべて見る</a></p></section>')
     rail = ""
     if rail_items:
         cards = "".join(item_card(cfg, it, rank=None) for it in rail_items)
-        rail = (f'<section class="block"><div class="sec-head"><div><span class="eyebrow">Today</span><h2>今日の、贈り物の候補</h2>'
-                f'<p>毎日、入れ替わります。ジャンルがかたよらないように、評価の高い商品を選んでいます。</p></div></div>'
+        rail = (f'<section class="block"><div class="sec-head"><div><span class="eyebrow">Today</span><h2>今日の贈り物の候補</h2>'
+                f'<p>毎日、入れ替わります。ジャンルがかたよらないように評価の高い商品を選んでいます。</p></div></div>'
                 f'<ul class="rail">{cards}</ul>{freshness(d)}</section>')
     hero_cls = "hero"
     body = f"""<section class="{hero_cls}">
 <div class="hero-text">
-<h1><span class="nb">よろこばれるプレゼント、</span><br><span class="nb"><em>見つかります。</em></span></h1>
-<p class="lead">イベントと贈る相手から、喜ばれやすい選び方と、おすすめの商品が見つかります。</p>
+<h1><span class="nb">よろこばれるプレゼントが</span><br><span class="nb"><em>見つかります。</em></span></h1>
+<p class="lead">イベントと贈る相手から喜ばれやすい選び方とおすすめの商品が見つかります。</p>
 {finder(d)}
 </div>
 {mood_collage(today)}
 </section>
 {pr_quiet(cfg)}
+{cc_banner()}
 {picksite.home_block(d, cfg)}
 <section id="memo-strip" class="memo-strip block" data-json="{esc(json.dumps(memo_data(d, cfg, today), ensure_ascii=False, separators=(",", ":")))}"><div class="memo-strip-in">
-<div><span class="eyebrow">Countdown</span><h2>贈りどきまで、あと何日?</h2>{countdown_chips(c, today)}<p class="more"><a class="btn btn-sub" href="/calendar/">贈りどきカレンダー</a></p></div></div></section>
-<section class="block"><div class="sec-head"><span class="eyebrow">Now</span><h2>いま、準備したいイベント</h2><p>これから迎えるイベントのプレゼントを、先取りで。</p></div>
+<div><span class="eyebrow">Countdown</span><h2>贈りどきまであと何日？</h2>{countdown_chips(c, today)}<p class="more"><a class="btn btn-sub" href="/calendar/">贈りどきカレンダー</a></p></div></div></section>
+<section class="block"><div class="sec-head"><span class="eyebrow">Now</span><h2>そろそろ準備したいイベント</h2><p>これから迎えるイベントのプレゼントを先取りで。</p></div>
 <ul class="tiles wide">{season}</ul>{month_more}</section>
-<section class="block"><div class="sec-head"><span class="eyebrow">For whom</span><h2>だれに、贈りますか?</h2></div>
+<section class="block"><div class="sec-head"><span class="eyebrow">For whom</span><h2>だれに贈りますか？</h2></div>
 <ul class="chip-grid round">{rec}</ul></section>
 {budget_block(d)}
-<section class="block"><div class="sec-head"><span class="eyebrow">Occasions</span><h2>どんな日に、贈りますか?</h2></div>
+<section class="block"><div class="sec-head"><span class="eyebrow">Occasions</span><h2>どんな日に贈りますか？</h2></div>
 <ul class="chip-grid">{occ}</ul></section>
 {rail}
 {home_tools(d)}
-<section class="block"><div class="sec-head"><span class="eyebrow">Popular</span><h2>まず見たい、おすすめページ</h2></div>
+<section class="block"><div class="sec-head"><span class="eyebrow">Popular</span><h2>まず見たいおすすめページ</h2></div>
 <ul class="plain cols2 chips">{pop}</ul></section>
 {whats_new(d)}
 {data_band(d)}
@@ -1412,10 +1426,10 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 {message_band(d)}
 {theme_band}
 <section class="about-home"><h2>このサイトについて</h2>
-<p>「何を贈ればいいか分からない」というときに、<strong>イベント</strong>と<strong>贈る相手</strong>から、選び方のポイントと商品の例を探せるサイトです。</p>
-<p>商品の価格・在庫は、毎日、楽天市場の情報にあわせて更新しています。選び方や文章の作り方は、<a href="/policy/">編集方針</a>に書いています。</p></section>"""
-    return page(cfg, preview, path="/", title=f"{cfg['site_name']} イベントと相手から、喜ばれるプレゼントを探す",
-                description="誕生日・母の日・クリスマスなど、イベントと贈る相手から、喜ばれやすいプレゼントの選び方と、おすすめの商品が見つかります。", body=body,
+<p>「何を贈ればいいか分からない」というときに、<strong>イベント</strong>と<strong>贈る相手</strong>から選び方のポイントと商品の例を探せるサイトです。</p>
+<p>商品の価格・在庫は毎日、楽天市場の情報にあわせて更新しています。選び方や文章の作り方は、<a href="/policy/">編集方針</a>に書いています。</p></section>"""
+    return page(cfg, preview, path="/", title=f"{cfg['site_name']} イベントと相手から喜ばれるプレゼントを探す",
+                description="誕生日・母の日・クリスマスなど、イベントと贈る相手から喜ばれやすいプレゼントの選び方とおすすめの商品が見つかります。", body=body,
                 og_image=og_for("default"))
 
 
@@ -1444,29 +1458,29 @@ def ranking_hub_page(d: dict, cfg: dict, preview: bool) -> str:
         return out
     genre_tiles, people_tiles = tiles_of("genre"), tiles_of("people")
     genre_block = (f'<section style="margin-top:34px"><h2><span class="scribble">ジャンルから選ぶ</span></h2>'
-                   f'<p class="sec-lead">贈り物の定番ジャンルごとに、いま売れている商品です。</p><ul class="tiles wide">{genre_tiles}</ul></section>') if genre_tiles else ""
+                   f'<p class="sec-lead">贈り物の定番ジャンルごとにいま売れている商品です。</p><ul class="tiles wide">{genre_tiles}</ul></section>') if genre_tiles else ""
     people_block = (f'<section style="margin-top:34px"><h2><span class="scribble">世代と性別から選ぶ</span></h2>'
                     f'<p class="sec-lead">その世代・性別でよく売れている商品です(日用品や贈り物に向かない商品は除いています)。</p><ul class="tiles wide">{people_tiles}</ul></section>') if people_tiles else ""
     rise = ""
     if rv["risers"]:
-        rows = [(it, f'{lab}で、前日より{g}つ順位アップ', "急上昇") for lab, slug, it, g in rv["risers"]]
-        rise = (f'<section style="margin-top:44px"><h2><span class="scribble">きのうより、順位を上げた商品</span></h2>'
-                f'<p class="sec-lead">年代・性別ごとのランキングで、前日より順位が上がった商品のなかから、上がり幅の大きい順に並べています。</p>'
+        rows = [(it, f'{lab}で前日より{g}つ順位アップ', "急上昇") for lab, slug, it, g in rv["risers"]]
+        rise = (f'<section style="margin-top:44px"><h2><span class="scribble">きのうより順位を上げた商品</span></h2>'
+                f'<p class="sec-lead">年代・性別ごとのランキングで、前日より順位が上がった商品のなかから上がり幅の大きい順に並べています。</p>'
                 f'{ranking_grid(cfg, rows)}</section>')
     else:
-        rise = ('<section style="margin-top:44px"><h2><span class="scribble">きのうより、順位を上げた商品</span></h2>'
-                '<p class="sec-lead">順位の変化は、毎日のランキングが2日分たまってから表示します。</p></section>')
-    lead = "楽天市場のランキングをもとに、ジャンル別・年代別・性別ごとに、いま売れている商品を紹介します。前日より順位が上がった商品や、はじめてランクインした商品も、毎日更新します。"
-    body = f"""{head_band("yellow", '', "いま売れている、<wbr>ランキング", lead, single=True)}
+        rise = ('<section style="margin-top:44px"><h2><span class="scribble">きのうより順位を上げた商品</span></h2>'
+                '<p class="sec-lead">順位の変化は毎日のランキングが2日分たまってから表示します。</p></section>')
+    lead = "楽天市場のランキングをもとにジャンル別・年代別・性別ごとにいま売れている商品を紹介します。前日より順位が上がった商品やはじめてランクインした商品も毎日更新します。"
+    body = f"""{head_band("yellow", '', "いま売れている<wbr>ランキング", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("いま売れている", None)])}</div>
 {pr_quiet(cfg)}
-<p class="sec-lead">{esc(day)}のランキングです。ランキングは、楽天市場の売れ行きにもとづく数字で、贈り物として選ばれた順位ではありません。
-トイレットペーパーや飲料など、ふだんの買い物の商品と、このサイトの基準に合わない商品は、除いています。</p>
+<p class="sec-lead">{esc(day)}のランキングです。ランキングは楽天市場の売れ行きにもとづく数字で、贈り物として選ばれた順位ではありません。
+トイレットペーパーや飲料など、ふだんの買い物の商品とこのサイトの基準に合わない商品は、除いています。</p>
 {genre_block}
 {people_block}
 {rise}
 {freshness({**d, "fetched_label": day})}"""
-    return page(cfg, preview, path="/ranking/", title=f"いま売れている、世代別ランキング | {cfg['site_name']}", description=lead, body=body)
+    return page(cfg, preview, path="/ranking/", title=f"いま売れている世代別ランキング | {cfg['site_name']}", description=lead, body=body)
 
 
 def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
@@ -1477,11 +1491,11 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
     f = sg["facts"]
     facts = ""
     if f:
-        facts = (f'<p class="sec-lead">{esc(day)}のランキング上位から、条件に合う{f["n"]}点の、価格の中央値は{yen(f["median"])}です。'
+        facts = (f'<p class="sec-lead">{esc(day)}のランキング上位から条件に合う{f["n"]}点の価格の中央値は{yen(f["median"])}です。'
                  f'3,000円以下が{f["le3000"]}点、10,000円以上が{f["ge10000"]}点、いちばん安いのは{yen(f["min"])}、いちばん高いのは{yen(f["max"])}です。</p>')
     blocks = ""
     if sg["risers"]:
-        blocks += (f'<section style="margin-top:40px"><h2><span class="scribble">きのうより、順位を上げた</span></h2>'
+        blocks += (f'<section style="margin-top:40px"><h2><span class="scribble">きのうより順位を上げた</span></h2>'
                    f'{ranking_grid(cfg, [(it, f"前日より{g}つ順位アップ(現在{it["rank"]}位)", "急上昇") for it, g in sg["risers"]])}</section>')
     if sg["entered"]:
         blocks += (f'<section style="margin-top:40px"><h2><span class="scribble">はじめてのランクイン</span></h2>'
@@ -1489,18 +1503,18 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
                    f'{ranking_grid(cfg, [(it, f"前日は圏外。現在{it["rank"]}位", "新顔") for it in sg["entered"]])}</section>')
     if sg["stay"]:
         blocks += (f'<section style="margin-top:40px"><h2><span class="scribble">ランクインし続けている</span></h2>'
-                   f'<p class="sec-lead">毎日のランキング上位{sg["depth"]}位に、3日以上続けて入っている商品です(記録は{sg["days"]}日分)。</p>'
+                   f'<p class="sec-lead">毎日のランキング上位{sg["depth"]}位に3日以上続けて入っている商品です(記録は{sg["days"]}日分)。</p>'
                    f'{ranking_grid(cfg, [(it, f"{n}日連続でランクイン(現在{it["rank"]}位)", "ロングヒット") for it, n in sg["stay"]])}</section>')
     others = "".join(f'<li><a href="/ranking/{o}/">{esc(rv["segments"][o]["label"])}</a></li>' for o in rv["order"] if o != slug)
-    body = f"""{head_band("yellow", '', f"{esc(sg['label'])}{part}、<wbr>いま売れている商品", f"楽天市場で、{sg['label']}{'に' if part == 'に' else 'で'}売れている商品の上位です({day}のランキング)。", single=True)}
+    body = f"""{head_band("yellow", '', f"{esc(sg['label'])}{part}<wbr>いま売れている商品", f"楽天市場で、{sg['label']}{'に' if part == 'に' else 'で'}売れている商品の上位です({day}のランキング)。", single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("いま売れている", "/ranking/"), (sg["label"], None)])}</div>
 {pr_quiet(cfg)}
 {facts}
 {blocks}
 <section style="margin-top:40px"><h2><span class="scribble">ランキング(上位)</span></h2>
-<p class="sec-lead">順位は、楽天市場のランキングの順位です(上位{sg["depth"]}位のなかから、商品名で贈り物向きと分かるものだけを、載せています。ふだんの買い物の商品などは、除いているため、順位に欠けがあります)。</p>
+<p class="sec-lead">順位は楽天市場のランキングの順位です(上位{sg["depth"]}位のなかから商品名で贈り物向きと分かるものだけを載せています。ふだんの買い物の商品などは除いているため、順位に欠けがあります)。</p>
 {ranking_grid(cfg, [(it, f"現在{it['rank']}位", "順位") for it in sg["items"]])}</section>
-{amazon_more(cfg, sg["label"] + (" プレゼント" if sg["kind"] == "people" else " ギフト"), sg["label"] + ("への" if sg["kind"] == "people" else "の") + "贈り物を、Amazonで探す")}
+{amazon_more(cfg, sg["label"] + (" プレゼント" if sg["kind"] == "people" else " ギフト"), sg["label"] + ("への" if sg["kind"] == "people" else "の") + "贈り物をAmazonで探す")}
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの世代・性別</span></h2><ul class="plain cols2 chips">{others}</ul></section>' if others else ""}
 {freshness({**d, "fetched_label": day})}"""
     return page(cfg, preview, path=f"/ranking/{slug}/", title=f"{sg['label']}{part}、いま売れている商品 | {cfg['site_name']}",
@@ -1518,11 +1532,11 @@ def message_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     c = d["c"]
     tiles = "".join(tile(f'/message/{o["slug"]}/', "occasion", o["slug"], f'{o["name"]}のメッセージ', f'{len(c["messages"][o["slug"]]["sets"])}人分の例文')
                     for o in c["occasions"] if o["slug"] in c["messages"])
-    lead = "プレゼントに添える一言や、カードに書くメッセージを、イベントと贈る相手ごとに集めました。気に入った文を、そのままコピーして使えます。"
-    body = f"""{head_band("pink", '', "プレゼントに添える、<wbr>メッセージ例文集", lead, single=True)}
+    lead = "プレゼントに添える一言やカードに書くメッセージをイベントと贈る相手ごとに集めました。気に入った文をそのままコピーして使えます。"
+    body = f"""{head_band("pink", '', "プレゼントに添える<wbr>メッセージ例文集", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("メッセージ例文集", None)])}</div>
 <section style="margin-top:34px"><h2><span class="scribble">イベントをえらぶ</span></h2><ul class="tiles">{tiles}</ul></section>"""
-    return page(cfg, preview, path="/message/", title=f"プレゼントに添える、メッセージ例文集 | {cfg['site_name']}", description=lead, body=body)
+    return page(cfg, preview, path="/message/", title=f"プレゼントに添えるメッセージ例文集 | {cfg['site_name']}", description=lead, body=body)
 
 
 def message_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
@@ -1541,13 +1555,13 @@ def message_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
     body = f"""{head_band("pink", ic_wrap("occasion", slug), f'{esc(o["name"])}の<wbr>メッセージ例文集', lead, single=True, mascot=OCC_MASCOT.get(slug, "b-wink"))}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("メッセージ例文集", "/message/"), (o["name"], None)])}</div>
 {pr_with_amazon(cfg)}
-<p class="sec-lead">気に入った文の「コピー」を押すと、そのまま貼りつけられます。相手との関係に合わせて、言葉を少し変えると、さらに気持ちが伝わります。</p>
+<p class="sec-lead">気に入った文の「コピー」を押すとそのまま貼りつけられます。相手との関係に合わせて言葉を少し変えるとさらに気持ちが伝わります。</p>
 {sets}
-<section style="margin-top:44px"><h2><span class="scribble">最後に添える、一言</span></h2><ul class="msg-list">{closing}</ul></section>
-<section class="avoid" style="margin-top:44px"><h2><span class="scribble">言葉を選ぶときの、気をつけたいこと</span></h2>{ul(m["manners"], "warn")}</section>
-<section style="margin-top:44px"><h2><span class="scribble">贈るものを、探す</span></h2>
+<section style="margin-top:44px"><h2><span class="scribble">最後に添える一言</span></h2><ul class="msg-list">{closing}</ul></section>
+<section class="avoid" style="margin-top:44px"><h2><span class="scribble">言葉を選ぶときの気をつけたいこと</span></h2>{ul(m["manners"], "warn")}</section>
+<section style="margin-top:44px"><h2><span class="scribble">贈るものを探す</span></h2>
 <p><a class="btn" href="/occasion/{slug}/">{esc(o["name"])}のプレゼントを探す</a></p>{guide_link(c, slug)}</section>
-{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "に贈るものを、Amazonで探す")}
+{amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "に贈るものをAmazonで探す")}
 {related}"""
     return page(cfg, preview, path=f"/message/{slug}/", title=f"{o['name']}のメッセージ例文集 | {cfg['site_name']}", description=lead[:110], body=body,
                 og_image=og_for(f"occasion/{slug}"))
@@ -1556,8 +1570,8 @@ def message_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 def message_band(d: dict) -> str:
     if not d["c"]["messages"]:
         return ""
-    return ('<section class="block"><div class="sec-head"><span class="eyebrow">Messages</span><h2>添える言葉に、迷ったら</h2>'
-            '<p>誕生日、母の日、クリスマスなど、プレゼントに添えるメッセージの例文を、相手ごとにまとめました。コピーしてそのまま使えます。</p></div>'
+    return ('<section class="block"><div class="sec-head"><span class="eyebrow">Messages</span><h2>添える言葉に迷ったら</h2>'
+            '<p>誕生日、母の日、クリスマスなど、プレゼントに添えるメッセージの例文を相手ごとにまとめました。コピーしてそのまま使えます。</p></div>'
             '<p class="more"><a class="btn btn-sub" href="/message/">メッセージ例文集を見る</a></p></section>')
 
 
@@ -1567,16 +1581,16 @@ def numbers_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     nv = d["numbers"]
     tiles = "".join(f'<li><a class="tile wide" href="/numbers/{L["slug"]}/"><span><b>{esc(L["title"])}</b><small>{esc(L["short"])}({L["total"]}点)</small></span></a></li>'
                     for L in nv["lists"])
-    lead = "レビューの件数・評価・価格などの数字を条件に、プレゼントの候補を並べました。迷ったときの目安にしてください。"
+    lead = "レビューの件数・評価・価格などの数字を条件にプレゼントの候補を並べました。迷ったときの目安にしてください。"
     to_ranking = '<p class="more"><a class="btn btn-sub" href="/ranking/">いま売れている商品も見る</a></p>' if d.get("ranking") else ""
-    body = f"""{head_band("sky", '', "数字で選ぶ、<wbr>プレゼント", lead, single=True)}
+    body = f"""{head_band("sky", '', "数字で選ぶ<wbr>プレゼント", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("数字で選ぶ", None)])}</div>
 {pr_quiet(cfg)}
-<p class="sec-lead">このサイトで紹介している商品{nv["pool"]}点のなかから、数字の条件に合うものを集めています。レビューは購入した人の感想です。商品の品質や、贈った相手が喜ぶことを保証するものではありません。</p>
+<p class="sec-lead">このサイトで紹介している商品{nv["pool"]}点のなかから数字の条件に合うものを集めています。レビューは購入した人の感想です。商品の品質や贈った相手が喜ぶことを保証するものではありません。</p>
 <section style="margin-top:34px"><h2><span class="scribble">条件をえらぶ</span></h2><ul class="tiles wide">{tiles}</ul></section>
 {to_ranking}
 {freshness(d)}"""
-    return page(cfg, preview, path="/numbers/", title=f"数字で選ぶ、プレゼント | {cfg['site_name']}", description=lead, body=body)
+    return page(cfg, preview, path="/numbers/", title=f"数字で選ぶプレゼント | {cfg['site_name']}", description=lead, body=body)
 
 
 def numbers_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
@@ -1584,14 +1598,14 @@ def numbers_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
     L = next(x for x in nv["lists"] if x["slug"] == slug)
     others = "".join(f'<li><a href="/numbers/{o["slug"]}/">{esc(o["title"])}</a></li>' for o in nv["lists"] if o["slug"] != slug)
     shown = len(L["items"])
-    more = f"(条件に合う{L['total']}点のうち、上位{shown}点)" if L["total"] > shown else f"({L['total']}点)"
+    more = f"(条件に合う{L['total']}点のうち上位{shown}点)" if L["total"] > shown else f"({L['total']}点)"
     set_keep()
     body = f"""{head_band("sky", '', esc(L["title"]), L["says"], single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("数字で選ぶ", "/numbers/"), (L["title"], None)])}</div>
 {pr_quiet(cfg)}
-<p class="sec-lead">条件に合う商品の、いまの数字です{more}。レビューは購入した人の感想で、品質を保証するものではありません。</p>
+<p class="sec-lead">条件に合う商品のいまの数字です{more}。レビューは購入した人の感想で品質を保証するものではありません。</p>
 <section style="margin-top:30px">{item_grid(cfg, L["items"])}</section>
-{amazon_more(cfg, "プレゼント ギフト 人気", "プレゼントを、Amazonで探す")}
+{amazon_more(cfg, "プレゼント ギフト 人気", "プレゼントをAmazonで探す")}
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの条件</span></h2><ul class="plain cols2 chips">{others}</ul></section>' if others else ""}
 {freshness(d)}"""
     return page(cfg, preview, path=f"/numbers/{slug}/", title=f"{L['title']} | {cfg['site_name']}", description=L["says"][:110], body=body)
@@ -1631,22 +1645,22 @@ def month_page(d: dict, cfg: dict, preview: bool, m: int, today: date, months: l
     head_row = "<thead><tr><th>日にち</th><th>贈りどき</th><th>選びはじめ(3週間前)</th></tr></thead>"
     sec = ""
     if tiles:
-        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月に、準備したいイベント</span></h2><ul class="tiles wide">{tiles}</ul></section>'
+        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月に準備したいイベント</span></h2><ul class="tiles wide">{tiles}</ul></section>'
     if rows:
         sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月にある、日にちの決まった贈りどき</span></h2><div class="tablewrap"><table class="gift-days">{head_row}<tbody>{rows}</tbody></table></div></section>'
     if srows:
-        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月に、選びはじめたい贈りどき</span></h2><p>翌月以降の贈りどきのうち、選びはじめの目安(3週間前)が{m}月に入るものです。</p><div class="tablewrap"><table class="gift-days">{head_row}<tbody>{srows}</tbody></table></div></section>'
+        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月に選びはじめたい贈りどき</span></h2><p>翌月以降の贈りどきのうち選びはじめの目安(3週間前)が{m}月に入るものです。</p><div class="tablewrap"><table class="gift-days">{head_row}<tbody>{srows}</tbody></table></div></section>'
     i = months.index(m)
     prev_m, next_m = months[i - 1], months[(i + 1) % len(months)]
     nav = (f'<p class="more"><a class="btn btn-sub" href="/month/{prev_m}/">{prev_m}月</a> <a class="btn btn-sub" href="/month/">月ごとの一覧</a> '
            f'<a class="btn btn-sub" href="/month/{next_m}/">{next_m}月</a></p>')
-    lead = f"{m}月に準備したいプレゼントのイベントと、日付が決まっている贈りどき、選びはじめの目安をまとめています。"
+    lead = f"{m}月に準備したいプレゼントのイベントと日付が決まっている贈りどき、選びはじめの目安をまとめています。"
     head = head_band(COLORS[m % 4], ic_wrap("occasion", mc["occ"][0]["slug"]) if mc["occ"] else "", f"{m}月の<wbr>贈りどき", lead, single=True, mascot="b-sparkle")
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("月ごとの贈りどき", "/month/"), (f"{m}月", None)])}</div>
 {pr_with_amazon(cfg)}
 {sec}
-{amazon_more(cfg, (mc["occ"][0]["name"] + " プレゼント") if mc["occ"] else "プレゼント ギフト", ((mc["occ"][0]["name"] + "の") if mc["occ"] else "") + "プレゼントを、Amazonで探す")}
+{amazon_more(cfg, (mc["occ"][0]["name"] + " プレゼント") if mc["occ"] else "プレゼント ギフト", ((mc["occ"][0]["name"] + "の") if mc["occ"] else "") + "プレゼントをAmazonで探す")}
 <p class="memo-note" style="margin-top:36px">日付は{mc["y"]}年のものです(毎年、新しい年の日付に更新します)。誕生日や記念日など、人によって違う日は、<a href="/memo/">たいせつな日メモ</a>に登録できます。カレンダーに入れるなら<a href="/calendar/">贈りどきカレンダー</a>へ。</p>
 {nav}"""
     return page(cfg, preview, path=f"/month/{m}/", title=f"{m}月の贈りどき 準備したいプレゼントのイベント | {cfg['site_name']}", description=lead, body=body,
@@ -1727,7 +1741,7 @@ def budget_page(d: dict, cfg: dict, preview: bool, tier: dict, pool: list, tiers
         counts[k] = counts.get(k, 0) + 1
     top = sorted(counts, key=lambda k: -counts[k])[:3]
     prices = sorted(it["price"] for it, _ in pool)
-    note = (f"当サイトで取り上げている商品のうち、{tier['label']}の価格帯から、種類がかたよらないように{len(pool)}点を選びました。"
+    note = (f"当サイトで取り上げている商品のうち、{tier['label']}の価格帯から種類がかたよらないように{len(pool)}点を選びました。"
             f"いちばん多い種類は、{ ' と '.join(top[:2]) }です。価格の中央値は{yen(prices[len(prices) // 2])}です。")
     cards = "".join(item_card(cfg, it, kind=k) for it, k in pool)
     others = "".join(f'<li><a href="/budget/{x["slug"]}/">{esc(budget_title(x))}</a></li>' for x, _ in tiers if x["slug"] != tier["slug"])
@@ -1735,47 +1749,47 @@ def budget_page(d: dict, cfg: dict, preview: bool, tier: dict, pool: list, tiers
     amazon = ""
     if cfg.get("amazon_tracking_id"):
         amazon = (f'<p class="more"><a class="btn" href="{esc(amazon_url(cfg, "プレゼント ギフト", tier.get("min") or None, tier.get("max")))}" rel="sponsored nofollow noopener" target="_blank">'
-                  f'{esc(name)}の贈り物を、Amazonで探す</a></p>')
+                  f'{esc(name)}の贈り物をAmazonで探す</a></p>')
     lead = f"{name}で贈れる、プレゼントの候補です。贈る相手やイベントが決まっていなくても、この予算から選べます。"
-    body = f"""{head_band("yellow", "", f"{esc(name)}で贈る、<wbr>プレゼント", lead, single=True)}
+    body = f"""{head_band("yellow", "", f"{esc(name)}で贈る<wbr>プレゼント", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("予算から探す", "/budget/"), (name, None)])}</div>
 {pr_quiet(cfg)}
 <p class="sec-lead" style="margin-top:18px">{esc(note)}</p>
 <section style="margin-top:26px"><ul class="items">{cards}</ul>{freshness(d)}</section>
 {amazon}
 <section class="block"><div class="sec-head"><h2>ほかの予算から探す</h2></div><ul class="plain cols2 chips">{others}</ul></section>
-<section class="block"><div class="sec-head"><h2>イベントから、{esc(tier['label'])}で探す</h2><p>イベントのページでは、予算で絞り込めます。</p></div><ul class="chip-grid">{occ}</ul></section>"""
+<section class="block"><div class="sec-head"><h2>イベントから、{esc(tier['label'])}で探す</h2><p>イベントのページでは予算で絞り込めます。</p></div><ul class="chip-grid">{occ}</ul></section>"""
     return page(cfg, preview, path=f"/budget/{tier['slug']}/", title=f"{name}で贈る、プレゼントのおすすめ | {cfg['site_name']}", description=lead, body=body)
 
 
 def budget_hub_page(d: dict, cfg: dict, preview: bool, tiers: list) -> str:
     rows = "".join(f'<li><a class="tile wide" href="/budget/{x["slug"]}/"><span><b>{esc(budget_title(x))}</b><small>{len(pool)}点から選べます</small></span></a></li>' for x, pool in tiers)
-    lead = "予算から、プレゼントを探します。贈る相手やイベントが決まっていなくても、いくらまでかけるかが決まっていれば、ここから始められます。"
-    body = f"""{head_band("sky", "", "予算から、<wbr>プレゼントを探す", lead, single=True)}
+    lead = "予算からプレゼントを探します。贈る相手やイベントが決まっていなくても、いくらまでかけるかが決まっていれば、ここから始められます。"
+    body = f"""{head_band("sky", "", "予算から<wbr>プレゼントを探す", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("予算から探す", None)])}</div>
 <section style="margin-top:34px"><ul class="tiles wide">{rows}</ul></section>"""
-    return page(cfg, preview, path="/budget/", title=f"予算から、プレゼントを探す | {cfg['site_name']}", description=lead, body=body)
+    return page(cfg, preview, path="/budget/", title=f"予算からプレゼントを探す | {cfg['site_name']}", description=lead, body=body)
 
 
 # ---------------------------------------------------------------- 編集方針 (how products are chosen, how the text is made, how numbers are used: written down, and true)
 
 def policy_page(d: dict, cfg: dict, preview: bool) -> str:
     op = esc(cfg.get("operator_name") or "運営者")
-    lead = "よろこぶプレゼントが、どのように商品を選び、文章を書き、数字を扱っているかを、まとめています。"
+    lead = "よろこぶプレゼントが、どのように商品を選び、文章を書き、数字を扱っているかをまとめています。"
     secs = [
-        ("運営", f'<p>運営は{op}です(<a href="/about/">運営者情報</a>)。ご意見や、内容の誤りのご指摘は、<a href="/contact/">お問い合わせ</a>から受け付けています。</p>'),
-        ("載せる商品の選び方", "<ul><li>贈り物として渡しやすい品であること(日用品や、相手の年齢に合わない品は除きます)。</li>"
-         "<li>商品ページで、仕様と注意事項が確かめられること。</li><li>購入者の評価が、一定の水準を満たしていること。</li>"
-         "<li>同じ店の商品に、かたよらないこと。</li></ul><p>広告の報酬の有無や大小で、載せる商品や順番を決めることはしません。</p>"),
-        ("文章の作り方", "<p>商品の説明は、商品ページの仕様、メーカーなどの公開情報、購入者の声の傾向を読んで、自分たちの言葉でまとめています。"
-         "商品ページやレビューの文章を、そのまま載せることはしません。確かめられないことは、書かないようにしています。</p>"),
-        ("毎日のおすすめ", '<p><a href="/picks/">毎日のおすすめ</a>では、楽天市場とAmazonから10点ずつを選び、渡す場面と、贈る前に確かめたい点まで書いています。'
-         "公開前に、数字や言い回しを、別の目でも確かめています。</p>"),
-        ("価格と画像", "<p>楽天市場の商品の価格・在庫・画像・評価は、楽天ウェブサービスから、毎日、取得し直しています。"
-         "Amazonの商品は、規約により、価格・評価・商品の写真を載せていません。写真の代わりに、贈る場面を表したイメージ画像を使い、その旨を明記しています。</p>"),
-        ("数字と統計", '<p><a href="/data/">データ室</a>の数字は、出典を明記しています。「当サイトの商品」と書いてあるものは、当サイトで取り上げた商品の集計で、市場全体ではありません。</p>'),
+        ("運営", f'<p>運営は{op}です(<a href="/about/">運営者情報</a>)。ご意見や内容の誤りのご指摘は、<a href="/contact/">お問い合わせ</a>から受け付けています。</p>'),
+        ("載せる商品の選び方", "<ul><li>贈り物として渡しやすい品であること(日用品や相手の年齢に合わない品は除きます)。</li>"
+         "<li>商品ページで仕様と注意事項が確かめられること。</li><li>購入者の評価が、一定の水準を満たしていること。</li>"
+         "<li>同じ店の商品にかたよらないこと。</li></ul><p>広告の報酬の有無や大小で載せる商品や順番を決めることはしません。</p>"),
+        ("文章の作り方", "<p>商品の説明は商品ページの仕様、メーカーなどの公開情報、購入者の声の傾向を読んで、自分たちの言葉でまとめています。"
+         "商品ページやレビューの文章をそのまま載せることはしません。確かめられないことは書かないようにしています。</p>"),
+        ("毎日のおすすめ", '<p><a href="/picks/">毎日のおすすめ</a>では楽天市場とAmazonから10点ずつを選び、渡す場面と贈る前に確かめたい点まで書いています。'
+         "公開前に数字や言い回しを別の目でも確かめています。</p>"),
+        ("価格と画像", "<p>楽天市場の商品の価格・在庫・画像・評価は、楽天ウェブサービスから毎日、取得し直しています。"
+         "Amazonの商品は、規約により、価格・評価・商品の写真を載せていません。写真の代わりに贈る場面を表したイメージ画像を使い、その旨を明記しています。</p>"),
+        ("数字と統計", '<p><a href="/data/">データ室</a>の数字は出典を明記しています。「当サイトの商品」と書いてあるものは、当サイトで取り上げた商品の集計で、市場全体ではありません。</p>'),
         ("広告について", "<p>当サイトは、楽天アフィリエイトとAmazonアソシエイトに参加しています。リンク先で購入されると、運営者に報酬が支払われることがあります。広告のあるページには、「PR」と表示しています。</p>"),
-        ("訂正", "<p>誤りが分かったときは、速やかに直します。お気づきの点は、お問い合わせからお知らせください。</p>"),
+        ("訂正", "<p>誤りが分かったときは速やかに直します。お気づきの点はお問い合わせからお知らせください。</p>"),
         ("アイコン", '<p>アイコンには、<a href="https://phosphoricons.com/" rel="noopener" target="_blank">Phosphor Icons</a>(MITライセンス)を使っています。</p>'),
     ]
     if not PICKS_ON:
@@ -1870,7 +1884,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     SEEN.clear()
     if ogimage.available():
         site = cfg["site_name"]
-        cards["og/default.png"] = ogimage.card(title="よろこばれるプレゼント、見つかります。", tag="イベントと相手から", site=site, photo=mood_photo("default"))
+        cards["og/default.png"] = ogimage.card(title="よろこばれるプレゼントが見つかります。", tag="イベントと相手から", site=site, photo=mood_photo("default"))
         for o in c["occasions"]:
             cards[f"og/occasion/{o['slug']}.png"] = ogimage.card(title=f"{o['name']}のプレゼント", tag="選び方と相手別", site=site, photo=mood_photo(o["slug"]))
         for r in c["recipients"]:
@@ -1968,14 +1982,14 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages[f"gift/{ct.pair_key(p)}/index.html"] = pair_page(d, cfg, preview, p)
     pages.update(legal_pages(
         SITE, cfg, preview,
-        purpose="イベントと贈る相手から、プレゼントの選び方と、商品の例を、探しやすく整理して、贈り物選びに役立てていただくこと。",
-        sources_html='商品の名前・価格・画像・レビュー・販売ページのリンクは、<a href="https://webservice.rakuten.co.jp/" rel="noopener" target="_blank">楽天ウェブサービス</a>(楽天市場)の情報を使っています。選び方などの文章は、当サイトの編集方針にもとづいて作成しています。',
-        update_text="商品の価格・在庫は、毎日、楽天市場の情報にあわせて更新します。各ページに取得した日付を表示します。",
-        disclaimer_html=("<p>商品の価格・在庫・送料・レビューは、取得した時点の情報で、販売ページと異なる場合があります。購入前に、必ず、販売ページでご確認ください。"
-                         "当サイトは、商品の品質や、贈った相手が喜ぶことを保証するものではありません。</p>"
-                         "<p>当サイトの運営者は、楽天市場で、似顔絵のショップも運営しています。そのショップの商品を紹介するときは、そのことを、ページ上に明示します。</p>"
-                         "<p>当サイトは、楽天グループ株式会社が運営するものではありません。</p>"),
-        contact_notice="商品の購入・配送・返品などのお問い合わせは、各販売店へお願いします。当サイトでは、商品の販売を行っていません。",
+        purpose="イベントと贈る相手からプレゼントの選び方と商品の例を探しやすく整理して、贈り物選びに役立てていただくこと。",
+        sources_html='商品の名前・価格・画像・レビュー・販売ページのリンクは、<a href="https://webservice.rakuten.co.jp/" rel="noopener" target="_blank">楽天ウェブサービス</a>(楽天市場)の情報を使っています。選び方などの文章は当サイトの編集方針にもとづいて作成しています。',
+        update_text="商品の価格・在庫は毎日、楽天市場の情報にあわせて更新します。各ページに取得した日付を表示します。",
+        disclaimer_html=("<p>商品の価格・在庫・送料・レビューは、取得した時点の情報で、販売ページと異なる場合があります。購入前に必ず、販売ページでご確認ください。"
+                         "当サイトは商品の品質や、贈った相手が喜ぶことを保証するものではありません。</p>"
+                         "<p>当サイトの運営者は楽天市場で似顔絵のショップも運営しています。そのショップの商品を紹介するときはそのことをページ上に明示します。</p>"
+                         "<p>当サイトは楽天グループ株式会社が運営するものではありません。</p>"),
+        contact_notice="商品の購入・配送・返品などのお問い合わせは、各販売店へお願いします。当サイトでは商品の販売を行っていません。",
         input_note=(askpages.ASK_PRIVACY if c.get("ask") else "") + minepage.COUNT_PRIVACY + ccbot.PRIVACY, finish=lambda s: s))
     pages["manifest.webmanifest"] = json.dumps(MANIFEST, ensure_ascii=False, indent=1)
     pages.update(cards)

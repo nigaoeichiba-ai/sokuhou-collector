@@ -15,7 +15,7 @@ CFG = {"site_url": "https://yorokobu-present.com", "site_name": "よろこぶプ
 
 
 def line(tag: str) -> str:
-    return f"{tag}、いつも気にかけてくれてありがとう。これからも、あなたらしく元気に過ごしてね。"
+    return f"{tag}、いつも気にかけてくれてありがとう。これからもあなたらしく元気に過ごしてね。"
 
 
 def good_set(to="母へ", style="丁寧", tag="a"):
@@ -23,11 +23,11 @@ def good_set(to="母へ", style="丁寧", tag="a"):
 
 
 def good_entry(occasion="birthday", **over):
-    m = {"occasion": occasion, "intro": "誕生日のメッセージは、長く書くより、その人らしさがひとつ入っているほうが心に残ります。相手との距離に合わせて言葉を選び、短くても気持ちがきちんと伝わる文を、そのまま使える形で集めました。",
+    m = {"occasion": occasion, "intro": "誕生日のメッセージは、長く書くより、その人らしさがひとつ入っているほうが心に残ります。相手との距離に合わせて言葉を選び、短くても気持ちがきちんと伝わる文をそのまま使える形で集めました。",
          "sets": [good_set("母へ", "丁寧", "a"), good_set("友人へ", "やわらかい", "b"), good_set("職場の先輩へ", "丁寧", "c"),
                   good_set("恋人へ", "やわらかい", "d"), good_set("家族みんなへ", "ひとこと", "e")],
-         "manners": ["年齢や見た目に触れる言葉は、相手によっては重く感じられるので避けます。", "長い文より、短くても具体的な思い出をひとつ添えるほうが伝わります。",
-                     "忙しい相手には、返事を求める言い方をしないようにします。"],
+         "manners": ["年齢や見た目に触れる言葉は相手によっては重く感じられるので避けます。", "長い文より短くても具体的な思い出をひとつ添えるほうが伝わります。",
+                     "忙しい相手には返事を求める言い方をしないようにします。"],
          "closing": ["体に気をつけてね。", "また会える日を楽しみにしています。", "よい一年になりますように。"]}
     m.update(over)
     return m
@@ -78,7 +78,7 @@ class QualityTest(unittest.TestCase):
 
     def test_the_word_saikou_is_fine_in_a_message(self):
         m = good_entry()
-        m["sets"][0]["lines"][0] = "お母さんは、私にとって最高の先生です。いつも本当にありがとう。これからも元気でいてね。"
+        m["sets"][0]["lines"][0] = "お母さんは私にとって最高の先生です。いつも本当にありがとう。これからも元気でいてね。"
         self.assertEqual(self.probs(m), [])
 
 
@@ -183,7 +183,7 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(html.count('class="msg-text"'), 15 + 3)                  # 5 sets x 3 messages + 3 closing phrases
         self.assertEqual(html.count("data-copy hidden"), 15 + 3)
         self.assertIn("母へ", html)
-        self.assertIn("言葉を選ぶときの、気をつけたいこと", html)
+        self.assertIn("言葉を選ぶときの気をつけたいこと", html)
         import re as _re
         body = _re.sub(r'<aside class="sale-bar".*?</aside>', "", html, flags=_re.S)  # (the slim sale bar is on every page and says PR itself)
         self.assertNotIn("hb.afl.rakuten.co.jp", body)                            # a pure reading page: no product link of its own

@@ -152,13 +152,13 @@ def build(suggestions: dict[str, int], gsc: list[dict], lex: Lexicon) -> dict:
 
 
 def queue_md(q: dict, voice_gaps: list[tuple[str, int]] | None = None) -> str:
-    lines = [f"# よろこぶプレゼント 需要のキュー ({q['date']})", "", f"サジェスト {q['suggestions']}語を、サイトの辞書で読んだ結果。上から順に対応する。", ""]
+    lines = [f"# よろこぶプレゼント 需要のキュー ({q['date']})", "", f"サジェスト {q['suggestions']}語をサイトの辞書で読んだ結果。上から順に対応する。", ""]
     lines += ["## 1. ページが無い「イベント × 相手」(pairs.json に足す候補)"]
     lines += [f"- {p['key']}: {p['n']}回(例: {p['example']})" for p in q["pairs"][:20]] or ["- なし"]
     lines += ["", "## 2. サイトが知らない言葉(テーマ・案・concierge.json の言い換え語の候補)"]
     lines += [f"- {w['word']}: {w['n']}回(例: {w['example']})" for w in q["words"][:30]] or ["- なし"]
     if voice_gaps:
-        lines += ["", "## 3. コンシェルジュに送られた文章の、サイトに無い言葉(回数のみ)"] + [f"- {w}: {n}" for w, n in voice_gaps[:20]]
+        lines += ["", "## 3. コンシェルジュに送られた文章のサイトに無い言葉(回数のみ)"] + [f"- {w}: {n}" for w, n in voice_gaps[:20]]
     g = q["gsc"]
     if g:
         lines += ["", "## 4. Search Console の検索語(表示回数の多い順)", "| 検索語 | 表示 | クリック | 順位 | 状態 |", "|---|---|---|---|---|"]
