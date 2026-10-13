@@ -40,6 +40,22 @@ class FormTest(unittest.TestCase):
         self.assertNotIn("REMOTE_ADDR'] ?? ''), 'email", php)   # the address is only ever hashed
         self.assertNotRegex(php, r"'ip'\s*=>")
 
+    def test_english_solicitation_spam_is_dropped_before_it_is_stored_or_mailed(self):
+        import re
+        php = contactform.send_php(CFG)
+        self.assertLess(php.index("\\p{Hiragana}"), php.index("file_put_contents($inbox"))
+        self.assertLess(php.index("\\p{Hiragana}"), php.index("@mail($to,"))
+        words = re.search(r'preg_match\("/(search index[^"]*?)/i"', php).group(1)
+        jp = re.compile(r"[぀-ヿ一-鿿]")
+        spam = ["Hello\n\nInclude example.com in Google's Search Index to show up in online search results!",
+                "Hi,\n\nDo you have any plans to revamp your website? Website Design & Development, SEO and more."]
+        for s in spam:
+            self.assertFalse(jp.search(s))                                                   # no Japanese: dropped by the first test
+        self.assertTrue(re.search(words, "Include a site in Google's Search Index", re.I))   # a solicitation phrase is dropped even with a Japanese word beside it
+        real = "最低賃金の表で、沖縄県の金額が古いようです。"
+        self.assertTrue(jp.search(real))
+        self.assertFalse(re.search(words, real, re.I))                                       # a real report passes both tests
+
     def test_a_kind_with_a_quote_cannot_break_the_php_string(self):
         php = contactform.send_php({**CFG, "contact_kinds": ["it's", "b"]})
         self.assertIn(r"it\'s", php)
