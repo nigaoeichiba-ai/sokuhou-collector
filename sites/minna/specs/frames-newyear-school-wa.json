@@ -1,0 +1,85 @@
+{
+ "slug": "frames-newyear-school-wa",
+ "title": "お正月と学校行事のフレーム",
+ "subject": "",
+ "genre": "deco",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "lead": "お正月・成人式・節分・ひな祭りから入学・卒業まで、和風のフレーム12点です。年賀状や式典の案内、掲示物に使えます。",
+ "tags": [
+  "フレーム",
+  "枠",
+  "お正月",
+  "和風",
+  "節分",
+  "ひな祭り",
+  "入学",
+  "卒業",
+  "年賀状"
+ ],
+ "subject_en": "Decorative frames/borders with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, landscape or square, thick enough to hold text or a photo, decorated with the motifs of the theme. Japanese traditional style with washi colours and gold accents. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "shogatsu",
+   "お正月のフレーム",
+   "frame with pine, bamboo, plum and a rising sun"
+  ],
+  [
+   "kadomatsu",
+   "門松のフレーム",
+   "frame of kadomatsu pine decorations and shimenawa"
+  ],
+  [
+   "hagoita",
+   "羽子板のフレーム",
+   "frame with hagoita paddles and shuttlecocks"
+  ],
+  [
+   "seijin",
+   "成人式のフレーム",
+   "frame with furisode kimono patterns and flowers"
+  ],
+  [
+   "setsubun",
+   "節分のフレーム",
+   "frame with beans, oni masks and holly sardine"
+  ],
+  [
+   "hinamatsuri",
+   "ひな祭りのフレーム",
+   "frame with peach blossoms and hishi-mochi"
+  ],
+  [
+   "nyugaku",
+   "入学のフレーム",
+   "frame with cherry blossoms and a red school bag"
+  ],
+  [
+   "sotsugyo",
+   "卒業のフレーム",
+   "frame with cherry blossoms, a diploma tube and a ribbon"
+  ],
+  [
+   "ume",
+   "梅のフレーム",
+   "frame of plum blossom branches"
+  ],
+  [
+   "tsuru",
+   "鶴のフレーム",
+   "frame of cranes and clouds"
+  ],
+  [
+   "asanoha",
+   "麻の葉のフレーム",
+   "frame with a hemp-leaf pattern border"
+  ],
+  [
+   "seigaiha",
+   "青海波のフレーム",
+   "frame with a wave pattern border"
+  ]
+ ]
+}

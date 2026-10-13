@@ -1,0 +1,84 @@
+{
+ "slug": "parents-family-faceless",
+ "title": "父と母のいる暮らし",
+ "subject": "",
+ "genre": "life",
+ "touch": "faceless",
+ "title_fmt": "{ja}",
+ "lead": "お父さん・お母さんの家事・仕事・送り迎えなどの場面12点です。父の日・母の日のカードや、家庭向けの資料に使えます。",
+ "tags": [
+  "父",
+  "母",
+  "お父さん",
+  "お母さん",
+  "家族",
+  "家事",
+  "育児",
+  "ありがとう"
+ ],
+ "subject_en": "Faceless style (no facial features at all, smooth oval face), flat simple shapes, each ONE parent figure with a small child or a household object, full body, centred, varied ages and skin tones. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "mother-cook",
+   "料理をする母",
+   "a mother cooking at a stove in an apron"
+  ],
+  [
+   "father-cook",
+   "料理をする父",
+   "a father cooking at a stove in an apron"
+  ],
+  [
+   "mother-hug",
+   "子どもを抱く母",
+   "a mother hugging a small child"
+  ],
+  [
+   "father-shoulder",
+   "肩車をする父",
+   "a father carrying a child on his shoulders"
+  ],
+  [
+   "mother-work",
+   "仕事に向かう母",
+   "a mother in a jacket with a work bag and a small child's hand"
+  ],
+  [
+   "father-work",
+   "仕事に向かう父",
+   "a father in a suit with a briefcase"
+  ],
+  [
+   "mother-laundry",
+   "洗濯物を干す母",
+   "a mother hanging laundry"
+  ],
+  [
+   "father-clean",
+   "掃除をする父",
+   "a father with a vacuum cleaner"
+  ],
+  [
+   "mother-reading",
+   "絵本を読む母",
+   "a mother reading a picture book to a child"
+  ],
+  [
+   "father-bike",
+   "自転車の父",
+   "a father riding a bicycle with a child seat"
+  ],
+  [
+   "thanks-mother",
+   "母にありがとう",
+   "a child handing flowers to a mother"
+  ],
+  [
+   "thanks-father",
+   "父にありがとう",
+   "a child handing a card to a father"
+  ]
+ ]
+}

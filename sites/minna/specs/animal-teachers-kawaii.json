@@ -1,0 +1,83 @@
+{
+ "slug": "animal-teachers-kawaii",
+ "title": "動物の先生",
+ "subject": "",
+ "genre": "school",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "lead": "ねこ・くま・うさぎ・ふくろうなど、動物の先生が授業をする場面12点です。園や教室の掲示物、学習資料に使えます。",
+ "tags": [
+  "先生",
+  "動物",
+  "教室",
+  "授業",
+  "園",
+  "掲示",
+  "学習"
+ ],
+ "subject_en": "Original kawaii animal characters as teachers, each ONE animal standing upright in teacher clothes and doing a classroom task, centred, friendly. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "cat-board",
+   "黒板に書くねこ先生",
+   "a cat teacher writing on a blackboard with chalk, no letters"
+  ],
+  [
+   "bear-book",
+   "本を読むくま先生",
+   "a bear teacher reading a book to the class"
+  ],
+  [
+   "rabbit-sing",
+   "歌を教えるうさぎ先生",
+   "a rabbit teacher with a music note stick"
+  ],
+  [
+   "owl-glasses",
+   "眼鏡のふくろう先生",
+   "an owl teacher in round glasses holding a pointer"
+  ],
+  [
+   "dog-sports",
+   "体育のいぬ先生",
+   "a dog teacher in a track suit blowing a whistle"
+  ],
+  [
+   "fox-art",
+   "図工のきつね先生",
+   "a fox teacher holding a paintbrush and palette"
+  ],
+  [
+   "panda-lunch",
+   "給食のパンダ先生",
+   "a panda teacher serving lunch"
+  ],
+  [
+   "sheep-nap",
+   "お昼寝を見守るひつじ先生",
+   "a sheep teacher with a blanket"
+  ],
+  [
+   "squirrel-science",
+   "理科のりす先生",
+   "a squirrel teacher holding a magnifier"
+  ],
+  [
+   "penguin-pool",
+   "プールのペンギン先生",
+   "a penguin teacher with a swim ring"
+  ],
+  [
+   "elephant-bus",
+   "送迎のぞう先生",
+   "an elephant teacher waving beside a small bus"
+  ],
+  [
+   "tanuki-bell",
+   "ベルを鳴らすたぬき先生",
+   "a tanuki teacher ringing a hand bell"
+  ]
+ ]
+}

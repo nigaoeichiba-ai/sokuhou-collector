@@ -1,0 +1,86 @@
+{
+ "slug": "frames-autumn-events-flat",
+ "title": "秋の行事のフレーム",
+ "subject": "",
+ "genre": "deco",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "lead": "七五三・お月見・ハロウィン・運動会・紅葉・きのこなど、秋の行事と味覚のフレーム12点です。おたよりや写真の枠、掲示物に使えます。",
+ "tags": [
+  "フレーム",
+  "枠",
+  "七五三",
+  "お月見",
+  "ハロウィン",
+  "運動会",
+  "紅葉",
+  "きのこ",
+  "秋の味覚",
+  "おたより"
+ ],
+ "subject_en": "Decorative frames/borders with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, landscape or square, thick enough to hold text or a photo, decorated with the motifs of the theme. Flat colourful style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "shichigosan",
+   "七五三のフレーム",
+   "frame with chitose-ame candy bags, pine and crane motifs"
+  ],
+  [
+   "tsukimi",
+   "お月見のフレーム",
+   "frame with a full moon, pampas grass and dango"
+  ],
+  [
+   "halloween",
+   "ハロウィンのフレーム",
+   "frame with pumpkins, bats and candy"
+  ],
+  [
+   "undokai",
+   "運動会のフレーム",
+   "frame with flags, ribbons, a baton and medals"
+  ],
+  [
+   "momiji",
+   "紅葉のフレーム",
+   "frame made of red and orange maple leaves"
+  ],
+  [
+   "kinoko",
+   "きのこのフレーム",
+   "frame of forest mushrooms and fallen leaves"
+  ],
+  [
+   "akinomikaku",
+   "秋の味覚のフレーム",
+   "frame with persimmons, chestnuts, sweet potatoes and pears"
+  ],
+  [
+   "dokusho",
+   "読書の秋のフレーム",
+   "frame of stacked books, bookmarks and autumn leaves"
+  ],
+  [
+   "ichou",
+   "銀杏のフレーム",
+   "frame of yellow ginkgo leaves and ginkgo nuts"
+  ],
+  [
+   "kuri",
+   "栗のフレーム",
+   "frame of chestnuts and chestnut burrs"
+  ],
+  [
+   "kabocha",
+   "かぼちゃのフレーム",
+   "frame of pumpkins and vines"
+  ],
+  [
+   "donguri",
+   "どんぐりのフレーム",
+   "frame of acorns and oak leaves"
+  ]
+ ]
+}
