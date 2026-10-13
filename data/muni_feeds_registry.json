@@ -1,0 +1,492 @@
+[
+ {
+  "id": "43d35c50cd",
+  "name": "秩父市",
+  "site": "https://www.city.chichibu.lg.jp/",
+  "feed": "https://www.city.chichibu.lg.jp/services/rdf/rss10/1070.xml",
+  "title": ""
+ },
+ {
+  "id": "0edf26b8c1",
+  "name": "秩父市",
+  "site": "https://www.city.chichibu.lg.jp/",
+  "feed": "https://www.city.chichibu.lg.jp/services/rdf/rss10/1141.xml",
+  "title": ""
+ },
+ {
+  "id": "040ca84a2c",
+  "name": "福島市",
+  "site": "https://www.city.fukushima.fukushima.jp/",
+  "feed": "https://www.city.fukushima.fukushima.jp/cgi-bin/feed.php?siteNew=1&displayRange=90",
+  "title": ""
+ },
+ {
+  "id": "c1f31b7fdc",
+  "name": "飯能市",
+  "site": "https://www.city.hanno.lg.jp/",
+  "feed": "https://www.city.hanno.lg.jp/cgi-bin/feed.php?siteNew=1&displayCount=5&displayRange=90&includeShortcut=1",
+  "title": ""
+ },
+ {
+  "id": "5d3d58f58a",
+  "name": "上越市",
+  "site": "https://www.city.joetsu.niigata.jp/",
+  "feed": "https://www.city.joetsu.niigata.jp/rss/10/list3.xml",
+  "title": ""
+ },
+ {
+  "id": "7a6f5696ac",
+  "name": "上越市",
+  "site": "https://www.city.joetsu.niigata.jp/",
+  "feed": "https://www.city.joetsu.niigata.jp/rss/10/list1.xml",
+  "title": ""
+ },
+ {
+  "id": "d2f7a64002",
+  "name": "上越市",
+  "site": "https://www.city.joetsu.niigata.jp/",
+  "feed": "https://www.city.joetsu.niigata.jp/rss/10/list14.xml",
+  "title": ""
+ },
+ {
+  "id": "7d53437fff",
+  "name": "上越市",
+  "site": "https://www.city.joetsu.niigata.jp/",
+  "feed": "https://www.city.joetsu.niigata.jp/rss/10/list13.xml",
+  "title": ""
+ },
+ {
+  "id": "bfa9fcfd10",
+  "name": "上越市",
+  "site": "https://www.city.joetsu.niigata.jp/",
+  "feed": "https://www.city.joetsu.niigata.jp/rss/10/list6.xml",
+  "title": ""
+ },
+ {
+  "id": "558ca567f4",
+  "name": "大津市",
+  "site": "https://www.city.otsu.lg.jp/",
+  "feed": "https://www.city.otsu.lg.jp/cgi-bin/feed.php?categoryNo=19&includeShortcut=1",
+  "title": ""
+ },
+ {
+  "id": "13ff42458c",
+  "name": "酒田市",
+  "site": "https://www.city.sakata.lg.jp/",
+  "feed": "https://www.city.sakata.lg.jp/rss_news.xml",
+  "title": "酒田市"
+ },
+ {
+  "id": "8ca186d80a",
+  "name": "札幌市",
+  "site": "https://www.city.sapporo.jp/",
+  "feed": "https://www.city.sapporo.jp/new/shinchaku.xml",
+  "title": ""
+ },
+ {
+  "id": "60f6b45e4d",
+  "name": "札幌市",
+  "site": "https://www.city.sapporo.jp/",
+  "feed": "https://www.city.sapporo.jp/boshu/boshuu.xml",
+  "title": ""
+ },
+ {
+  "id": "1e3d98150c",
+  "name": "札幌市",
+  "site": "https://www.city.sapporo.jp/",
+  "feed": "https://www.city.sapporo.jp/somu/koho/hodo/houdou.xml",
+  "title": ""
+ },
+ {
+  "id": "d6f2ca92ac",
+  "name": "鶴岡市",
+  "site": "https://www.city.tsuruoka.lg.jp/",
+  "feed": "https://www.city.tsuruoka.lg.jp/rss_news.xml",
+  "title": "鶴岡市公式ホームページ"
+ },
+ {
+  "id": "00a04cea3e",
+  "name": "東京都環境局",
+  "site": "https://www.kankyo.metro.tokyo.lg.jp/",
+  "feed": "https://www.kankyo.metro.tokyo.lg.jp/index.html/-/asset_publisher/cjyx/rss",
+  "title": "報道発表"
+ },
+ {
+  "id": "04e5fba846",
+  "name": "東京都環境局",
+  "site": "https://www.kankyo.metro.tokyo.lg.jp/",
+  "feed": "https://www.kankyo.metro.tokyo.lg.jp/index.html/-/asset_publisher/dnfq/rss",
+  "title": "トピックス"
+ },
+ {
+  "id": "0f4f738af7",
+  "name": "愛媛県庁",
+  "site": "https://www.pref.ehime.jp/",
+  "feed": "https://www.pref.ehime.jp/rss/20/list6.xml",
+  "title": "愛媛県庁RSS(注目情報)"
+ },
+ {
+  "id": "0909f1c174",
+  "name": "愛媛県庁",
+  "site": "https://www.pref.ehime.jp/",
+  "feed": "https://www.pref.ehime.jp/rss/20/list1.xml",
+  "title": "愛媛県庁RSS(新着更新情報)"
+ },
+ {
+  "id": "a45b4a76e5",
+  "name": "愛媛県庁",
+  "site": "https://www.pref.ehime.jp/",
+  "feed": "https://www.pref.ehime.jp/rss/20/list5.xml",
+  "title": "愛媛県庁RSS(報道発表)"
+ },
+ {
+  "id": "38db2808d3",
+  "name": "愛媛県庁",
+  "site": "https://www.pref.ehime.jp/",
+  "feed": "https://www.pref.ehime.jp/rss/20/list7.xml",
+  "title": "愛媛県庁RSS(イベント情報)"
+ },
+ {
+  "id": "bac993d813",
+  "name": "福島県庁",
+  "site": "https://www.pref.fukushima.lg.jp/",
+  "feed": "https://www.pref.fukushima.lg.jp/rss/10/list6.xml",
+  "title": ""
+ },
+ {
+  "id": "d02ea5db63",
+  "name": "福島県庁",
+  "site": "https://www.pref.fukushima.lg.jp/",
+  "feed": "https://www.pref.fukushima.lg.jp/rss/10/list1.xml",
+  "title": ""
+ },
+ {
+  "id": "5af5c7924f",
+  "name": "福島県庁",
+  "site": "https://www.pref.fukushima.lg.jp/",
+  "feed": "https://www.pref.fukushima.lg.jp/rss/10/list10.xml",
+  "title": ""
+ },
+ {
+  "id": "38dbe4a6c5",
+  "name": "福島県庁",
+  "site": "https://www.pref.fukushima.lg.jp/",
+  "feed": "https://www.pref.fukushima.lg.jp/rss/10/list13.xml",
+  "title": ""
+ },
+ {
+  "id": "447406bf4b",
+  "name": "群馬県庁",
+  "site": "https://www.pref.gunma.jp/",
+  "feed": "https://www.pref.gunma.jp/rss/10/list1.xml",
+  "title": ""
+ },
+ {
+  "id": "1046e7741a",
+  "name": "北海道庁",
+  "site": "https://www.pref.hokkaido.lg.jp/",
+  "feed": "https://www.pref.hokkaido.lg.jp/news/rss.xml",
+  "title": "新着情報一覧 - 北海道のホームページ"
+ },
+ {
+  "id": "913b65eba1",
+  "name": "北海道庁",
+  "site": "https://www.pref.hokkaido.lg.jp/",
+  "feed": "https://www.pref.hokkaido.lg.jp/news/oshirase/rss.xml",
+  "title": "お知らせ - 北海道のホームページ"
+ },
+ {
+  "id": "42dbb88dcd",
+  "name": "北海道庁",
+  "site": "https://www.pref.hokkaido.lg.jp/",
+  "feed": "https://www.pref.hokkaido.lg.jp/news/joseiseido/rss.xml",
+  "title": "助成制度 - 北海道のホームページ"
+ },
+ {
+  "id": "16850411d1",
+  "name": "北海道庁",
+  "site": "https://www.pref.hokkaido.lg.jp/",
+  "feed": "https://www.pref.hokkaido.lg.jp/news/nyusatsu/rss.xml",
+  "title": "入札情報 - 北海道のホームページ"
+ },
+ {
+  "id": "9b4527622b",
+  "name": "石川県庁",
+  "site": "https://www.pref.ishikawa.lg.jp/",
+  "feed": "https://www.pref.ishikawa.lg.jp/shinchaku/shinchaku.xml",
+  "title": ""
+ },
+ {
+  "id": "32f98afda5",
+  "name": "神奈川県庁",
+  "site": "https://www.pref.kanagawa.jp/",
+  "feed": "https://www.pref.kanagawa.jp/emergency/emergency.xml",
+  "title": ""
+ },
+ {
+  "id": "69c49f27b9",
+  "name": "三重県庁",
+  "site": "https://www.pref.mie.lg.jp/",
+  "feed": "https://www.pref.mie.lg.jp/app/rss/new_rss",
+  "title": ""
+ },
+ {
+  "id": "b46d6a0d93",
+  "name": "三重県庁",
+  "site": "https://www.pref.mie.lg.jp/",
+  "feed": "https://www.pref.mie.lg.jp/app/rss/hodo_rss",
+  "title": ""
+ },
+ {
+  "id": "03d9cc0c47",
+  "name": "宮城県庁",
+  "site": "https://www.pref.miyagi.jp/",
+  "feed": "https://www.pref.miyagi.jp/juyo/juyo.xml",
+  "title": ""
+ },
+ {
+  "id": "7edd3dfd32",
+  "name": "宮城県庁",
+  "site": "https://www.pref.miyagi.jp/",
+  "feed": "https://www.pref.miyagi.jp/chumoku/chumoku.xml",
+  "title": ""
+ },
+ {
+  "id": "4af0c557fb",
+  "name": "宮城県庁",
+  "site": "https://www.pref.miyagi.jp/",
+  "feed": "https://www.pref.miyagi.jp/shinchaku/shinchaku.xml",
+  "title": ""
+ },
+ {
+  "id": "8cf6d47573",
+  "name": "宮城県庁",
+  "site": "https://www.pref.miyagi.jp/",
+  "feed": "https://www.pref.miyagi.jp/release/release.xml",
+  "title": ""
+ },
+ {
+  "id": "896b665b69",
+  "name": "宮城県庁",
+  "site": "https://www.pref.miyagi.jp/",
+  "feed": "https://www.pref.miyagi.jp/site/newsclip/shinchaku/shinchaku.xml",
+  "title": ""
+ },
+ {
+  "id": "2ca61107a9",
+  "name": "長野県庁",
+  "site": "https://www.pref.nagano.lg.jp/",
+  "feed": "https://www.pref.nagano.lg.jp/kinkyu/kinkyu.xml",
+  "title": ""
+ },
+ {
+  "id": "7686c83e8f",
+  "name": "長野県庁",
+  "site": "https://www.pref.nagano.lg.jp/",
+  "feed": "https://www.pref.nagano.lg.jp/chumoku/chumoku.xml",
+  "title": ""
+ },
+ {
+  "id": "c71ab54be9",
+  "name": "長野県庁",
+  "site": "https://www.pref.nagano.lg.jp/",
+  "feed": "https://www.pref.nagano.lg.jp/kensei/koho/pressreleases/pressreleases.xml",
+  "title": ""
+ },
+ {
+  "id": "a6493782d8",
+  "name": "奈良県庁",
+  "site": "https://www.pref.nara.lg.jp/",
+  "feed": "https://www.pref.nara.lg.jp/kinkyu/kinkyu.xml",
+  "title": ""
+ },
+ {
+  "id": "4a498b3ea7",
+  "name": "奈良県庁",
+  "site": "https://www.pref.nara.lg.jp/",
+  "feed": "https://www.pref.nara.lg.jp/chumoku/chumoku.xml",
+  "title": ""
+ },
+ {
+  "id": "4573043bcc",
+  "name": "奈良県庁",
+  "site": "https://www.pref.nara.lg.jp/",
+  "feed": "https://www.pref.nara.lg.jp/press/press.xml",
+  "title": ""
+ },
+ {
+  "id": "96f2ab737b",
+  "name": "新潟県庁",
+  "site": "https://www.pref.niigata.lg.jp/",
+  "feed": "https://www.pref.niigata.lg.jp/rss/10/list1.xml",
+  "title": ""
+ },
+ {
+  "id": "3e98598ed8",
+  "name": "新潟県庁",
+  "site": "https://www.pref.niigata.lg.jp/",
+  "feed": "https://www.pref.niigata.lg.jp/rss/10/list2.xml",
+  "title": ""
+ },
+ {
+  "id": "54b48fa859",
+  "name": "新潟県庁",
+  "site": "https://www.pref.niigata.lg.jp/",
+  "feed": "https://www.pref.niigata.lg.jp/rss/10/list7.xml",
+  "title": ""
+ },
+ {
+  "id": "be33458b6b",
+  "name": "岡山県庁",
+  "site": "https://www.pref.okayama.jp/",
+  "feed": "https://www.pref.okayama.jp/rss/10/list1.xml",
+  "title": ""
+ },
+ {
+  "id": "0e9c1e89be",
+  "name": "大阪府庁",
+  "site": "https://www.pref.osaka.lg.jp/",
+  "feed": "https://www.pref.osaka.lg.jp/kinkyu/kinkyu.xml",
+  "title": ""
+ },
+ {
+  "id": "18aa8131aa",
+  "name": "大阪府庁",
+  "site": "https://www.pref.osaka.lg.jp/",
+  "feed": "https://www.pref.osaka.lg.jp/shinchaku/shinchaku.xml",
+  "title": ""
+ },
+ {
+  "id": "96f29671f5",
+  "name": "埼玉県庁",
+  "site": "https://www.pref.saitama.lg.jp/",
+  "feed": "https://www.pref.saitama.lg.jp/news/news.xml",
+  "title": ""
+ },
+ {
+  "id": "6642d06a67",
+  "name": "島根県庁",
+  "site": "https://www.pref.shimane.lg.jp/",
+  "feed": "https://www.pref.shimane.lg.jp/top_news.rdf",
+  "title": "島根県 RSS (新着情報(すべて表示))"
+ },
+ {
+  "id": "bc8c604790",
+  "name": "静岡県庁",
+  "site": "https://www.pref.shizuoka.jp/",
+  "feed": "https://www.pref.shizuoka.jp/news.rss",
+  "title": "静岡県公式ホームページ"
+ },
+ {
+  "id": "0330a26da3",
+  "name": "栃木県庁",
+  "site": "https://www.pref.tochigi.lg.jp/",
+  "feed": "https://www.pref.tochigi.lg.jp/c05/kensei/kouhou/hp/shinchaku.xml",
+  "title": ""
+ },
+ {
+  "id": "c550743874",
+  "name": "栃木県庁",
+  "site": "https://www.pref.tochigi.lg.jp/",
+  "feed": "https://www.pref.tochigi.lg.jp/kensei/kouhou/houdou/houdou.xml",
+  "title": ""
+ },
+ {
+  "id": "36e527bdb1",
+  "name": "富山県庁",
+  "site": "https://www.pref.toyama.jp/",
+  "feed": "https://www.pref.toyama.jp/emergency.xml",
+  "title": ""
+ },
+ {
+  "id": "a021ab61f9",
+  "name": "富山県庁",
+  "site": "https://www.pref.toyama.jp/",
+  "feed": "https://www.pref.toyama.jp/shinchaku/shinchaku.xml",
+  "title": ""
+ },
+ {
+  "id": "fc650911fc",
+  "name": "富山県庁",
+  "site": "https://www.pref.toyama.jp/",
+  "feed": "https://www.pref.toyama.jp/kensei/kouhou/houdou/press.xml",
+  "title": ""
+ },
+ {
+  "id": "5f4649899f",
+  "name": "山形県庁",
+  "site": "https://www.pref.yamagata.jp/",
+  "feed": "https://www.pref.yamagata.jp/chumoku/chuumoku.xml",
+  "title": ""
+ },
+ {
+  "id": "dfc68e1133",
+  "name": "山形県庁",
+  "site": "https://www.pref.yamagata.jp/",
+  "feed": "https://www.pref.yamagata.jp/shinchaku/shinchaku.xml",
+  "title": ""
+ },
+ {
+  "id": "d30ebc39d1",
+  "name": "山形県庁",
+  "site": "https://www.pref.yamagata.jp/",
+  "feed": "https://www.pref.yamagata.jp/houdou/press.xml",
+  "title": ""
+ },
+ {
+  "id": "b8b67aaaa4",
+  "name": "山口県庁",
+  "site": "https://www.pref.yamaguchi.lg.jp/",
+  "feed": "https://www.pref.yamaguchi.lg.jp/rss/10/list5.xml",
+  "title": ""
+ },
+ {
+  "id": "45940eb73e",
+  "name": "山口県庁",
+  "site": "https://www.pref.yamaguchi.lg.jp/",
+  "feed": "https://www.pref.yamaguchi.lg.jp/rss/10/list6.xml",
+  "title": ""
+ },
+ {
+  "id": "c786a51b48",
+  "name": "山梨県庁",
+  "site": "https://www.pref.yamanashi.jp/",
+  "feed": "https://www.pref.yamanashi.jp/kinkyu.xml",
+  "title": ""
+ },
+ {
+  "id": "494ae75c09",
+  "name": "山梨県庁",
+  "site": "https://www.pref.yamanashi.jp/",
+  "feed": "https://www.pref.yamanashi.jp/shinchaku/shinchaku.xml",
+  "title": ""
+ },
+ {
+  "id": "269e7f230c",
+  "name": "山梨県庁",
+  "site": "https://www.pref.yamanashi.jp/",
+  "feed": "https://www.pref.yamanashi.jp/release/release.xml",
+  "title": ""
+ },
+ {
+  "id": "137fbb2725",
+  "name": "山梨県庁",
+  "site": "https://www.pref.yamanashi.jp/",
+  "feed": "https://www.pref.yamanashi.jp/top_saiyo.xml",
+  "title": ""
+ },
+ {
+  "id": "8f2bc07769",
+  "name": "白鷹町",
+  "site": "https://www.town.shirataka.lg.jp/",
+  "feed": "https://www.town.shirataka.lg.jp/services/rdf/rss10/1097.xml",
+  "title": ""
+ },
+ {
+  "id": "7b12eed6cb",
+  "name": "白鷹町",
+  "site": "https://www.town.shirataka.lg.jp/",
+  "feed": "https://www.town.shirataka.lg.jp/services/rdf/rss10/1099.xml",
+  "title": ""
+ }
+]
