@@ -38,7 +38,7 @@ def form_html(cfg: dict, *, default_kind: str = "", message_hint: str = "", page
     return f"""{STYLE}
 <form class="cf" action="/contact/send.php" method="post" accept-charset="UTF-8">
 <label>お問い合わせの種類<select name="kind" required>{opts}</select></label>
-<label>ご用件<small>5文字以上、2000文字以内。</small><textarea name="message" required minlength="5" maxlength="2000" placeholder="{esc(message_hint)}"></textarea></label>
+<label>ご用件<small>日本語で、5文字以上、2000文字以内。</small><textarea name="message" required minlength="5" maxlength="2000" placeholder="{esc(message_hint)}"></textarea></label>
 {page}
 <label>お返事がほしいときのメールアドレス<small>省略できます。いただいても、お返事できないことがあります。</small><input type="email" name="email" maxlength="200" autocomplete="email"></label>
 <div class="cf-hp" aria-hidden="true"><label>この欄は空のままにしてください<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
@@ -89,6 +89,9 @@ $len = preg_match_all('/./us', $message);
 if ($len < 5) { fail(400, 'ご用件を、5文字以上で書いてください。'); }
 if ($len > 2000) { fail(400, 'ご用件は、2000文字以内でお願いします。'); }
 if (preg_match_all('~https?://~i', $message) > 2) { fail(400, 'リンクは、2つまでにしてください。'); }
+// Solicitation spam ("get your site into Google's index", web-design offers) is in English and passes the honeypot: a message with no Japanese
+// character at all, or with a typical solicitation phrase, looks successful but is neither stored nor mailed.
+if (!preg_match('/[\p{Hiragana}\p{Katakana}\p{Han}]/u', $message) || preg_match("/search index|search engine|backlink|web ?design|seo (service|expert)|guest post|google'?s? (search )?(index|ranking)/i", $message)) { header('Location: __THANKS__', true, 303); exit; }
 $email = trim((string)($_POST['email'] ?? ''));
 if ($email !== '' && (strlen($email) > 200 || !filter_var($email, FILTER_VALIDATE_EMAIL))) { fail(400, 'メールアドレスの形式を確認してください。'); }
 $page = clip(trim((string)($_POST['page'] ?? '')), 200);
