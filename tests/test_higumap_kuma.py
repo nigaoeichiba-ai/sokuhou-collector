@@ -68,6 +68,10 @@ class HigumapKumaTest(unittest.TestCase):
     def test_the_four_towns_sorachi_already_covers_and_the_undated_or_empty_ones_are_left_out(self):
         self.assertEqual(sorted(self.out["municipalities"]), ["旭川市", "鹿部町"])
 
+    def test_a_municipality_whose_own_publication_could_not_be_confirmed_is_left_out(self):
+        site = {**SITE, "/map/12/2026": page(2, "北斗市")}
+        self.assertEqual(sorted(collect(site)["municipalities"]), ["旭川市"])
+
     def test_only_dates_are_kept_no_position_and_no_text(self):
         flat = json.dumps(self.out, ensure_ascii=False)
         for word in ('"lat"', '"lng"', "popupLabel", "witnessFlg", "sightings", "places"):

@@ -4,7 +4,9 @@
 道内の60あまりの市町村は、同じ仕組み「ひぐまっぷ」(https://higumap.info/ 、ダッピスタジオ合同会社)で、地図つきの一覧を公開している。
 このアダプタは、その公開マップが画面の描画に使っている一覧(日付・位置・ひと言の内容)から、市町村ごとの日付だけを読んで数える。位置・内容は保存しない。
 日付を載せていない市町村(南富良野町・美瑛町・森町)は、数えない。空知総合振興局が載せている4市町(美唄市・芦別市・新十津川町・浦臼町)は、
-sorachi_kuma と二重にならないよう除く。1回に約130回のアクセス(市町村ごとに2回)で、間隔をあける。
+sorachi_kuma と二重にならないよう除く。
+運営は民間のダッピスタジオ合同会社で、市町村が自分で登録する。2026-10-13 の照合: 道の「市町村ヒグマ関連情報リンク集」と市町村の公式ページが、ひぐまっぷを自分の公開手段として案内している市町村
+(55のうち49)と、市の公式ページに別の一覧があって件数が一致した4市(士別70/70・苫小牧44/44・千歳41/41・釧路27/27)だけを数える。確認できなかった5市町(NOT_CONFIRMED)は除く。1回に約130回のアクセス(市町村ごとに2回)で、間隔をあける。
 """
 from __future__ import annotations
 
@@ -26,6 +28,7 @@ IN_SORACHI = frozenset({"美唄市", "芦別市", "新十津川町", "浦臼町"
 MIN_ROWS = 300
 UNPARSED_LIMIT = 0.05
 EMPTY_LIMIT = 0.02
+NOT_CONFIRMED = frozenset({"七飯町", "北斗市", "東川町", "寿都町", "長万部町"})     # no official page of the municipality could be tied to its Higumap map (2026-10-13)
 UNDATED_SHARE = 0.5          # a municipality whose reports mostly carry no date is not counted at all
 
 
@@ -87,7 +90,7 @@ def collect(now=None, fetch_fn=None, pause=None) -> dict:
     for mid in ids:
         pause()
         cid, name = city_of_page(fetch_fn(f"{ROOT}/map/{mid}/{year}").decode("utf-8", "replace"))
-        if name in IN_SORACHI or name in seen or not kumacounts.is_municipality(name):
+        if name in IN_SORACHI or name in NOT_CONFIRMED or name in seen or not kumacounts.is_municipality(name):
             continue
         pause()
         got, undated = days(fetch_fn(f"{ROOT}/map/reportsJson?cityId={cid}&fiscalYear={year}"))
