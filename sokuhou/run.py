@@ -20,6 +20,7 @@ from sokuhou.sources import (
     env_capture_kuma,
     env_kuma,
     fukushima_kuma,
+    gunma_kuma,
     estat_wage,
     ishikari_kuma,
     jgrants,
@@ -171,6 +172,7 @@ GROUPS: dict[str, list[Source]] = {
         Source("nara_kuma", nara_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("saitama_kuma", saitama_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("otsu_kuma", otsu_kuma.collect, check_counts_bear),
+        Source("gunma_kuma", gunma_kuma.collect, check_counts_bear, corroborated.carry_over),    # the prefecture's list is carried by several other sites: rows stored with their place
         # the RSS / Atom feeds of municipalities and prefectures (registry: data/muni_feeds_registry.json): the bear items feed this site, the rest is shared with the other projects
         Source("muni_feeds", feedscan.collect, feedscan.check_feeds, feedscan.merge_feeds),
     ],
