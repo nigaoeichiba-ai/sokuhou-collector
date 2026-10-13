@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-11T00:13:52.060743+00:00",
+ "fetched_at": "2026-10-13T02:34:06.503427+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -37,18 +37,6 @@
    "target_area_search": "東京都",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "農林水産物認証取得支援事業（水産認証取得支援事業）補助金"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-12T14:59:00.000Z",
-   "acceptance_start_datetime": "2022-09-15T09:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0W2x000007Cos5EAC",
-   "id": "a0W2x000007Cos5EAC",
-   "institution_name": null,
-   "name": "S-00003073",
-   "subsidy_max_limit": 150000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "［第六回以降］事業再構築補助金（共同申請者）"
   },
   {
    "acceptance_end_datetime": "2124-03-31T08:30:00.000Z",
@@ -97,18 +85,6 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "［第十一回］事業再構築補助金（交付申請等）"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-12T15:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-02T00:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0W5h00000UcWrwEAF",
-   "id": "a0W5h00000UcWrwEAF",
-   "institution_name": null,
-   "name": "S-00004124",
-   "subsidy_max_limit": 0,
-   "target_area_search": "東京都",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "東京都専門医認定支援事業補助金"
   },
   {
    "acceptance_end_datetime": "2026-10-16T14:59:00.000Z",
@@ -2041,7 +2017,19 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "［第十三回］事業再構築補助金_GX進出類型（交付申請等）"
+  },
+  {
+   "acceptance_end_datetime": "2026-10-30T08:00:00.000Z",
+   "acceptance_start_datetime": "2026-09-30T15:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003oIxhUAE",
+   "id": "a0WfQ000003oIxhUAE",
+   "institution_name": "中小企業等海外展開支援事業費補助金（海外出願支援事業）",
+   "name": "S-00009969",
+   "subsidy_max_limit": 3000000,
+   "target_area_search": "島根県",
+   "target_number_of_employees": "300名以下",
+   "title": "【島根県】令和8年度_中小企業等海外展開支援事業費補助金（海外出願支援事業）（第６回公募）"
   }
  ],
- "total": 170
+ "total": 169
 }
