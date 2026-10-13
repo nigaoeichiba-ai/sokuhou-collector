@@ -54,28 +54,28 @@
     if (budget && ref) {
       var r = budget / ref.med; sBudget = r >= 0.8 && r <= 1.6 ? 100 : r < 0.8 ? clamp(Math.round(100 - (0.8 - r) / 0.8 * 100), 30, 100) : clamp(Math.round(100 - (r - 1.6) * 10), 70, 100);
       cBudget = "予算" + yen(budget) + "は、" + ref.label + "(" + ref.n + "点)の価格の中央値" + yen(ref.med) + "の" + (Math.round(r * 100) / 100) + "倍です。真ん中の半分の商品は、" + yen(ref.p25) + "〜" + yen(ref.p75) + "です。";
-      if (r < 0.8) cBudget += " 予算より安い商品が多い価格帯です。選べる商品は、少なめになります。"; else if (r > 1.6) cBudget += " 予算に余裕があります。少し良いものも選べます。";
-      if (occ && occ.facts.length) cBudget += " 調査では「" + occ.facts[0] + "」です(くわしくは、データ室)。";
-    } else if (budget) { sBudget = null; cBudget = "予算" + yen(budget) + "を、比べる商品の数字が足りないため、点数にはしていません。"; }
+      if (r < 0.8) cBudget += " 予算より安い商品が多い価格帯です。選べる商品は少なめになります。"; else if (r > 1.6) cBudget += " 予算に余裕があります。少し良いものも選べます。";
+      if (occ && occ.facts.length) cBudget += " 調査では「" + occ.facts[0] + "」です(くわしくはデータ室)。";
+    } else if (budget) { sBudget = null; cBudget = "予算" + yen(budget) + "を比べる商品の数字が足りないため、点数にはしていません。"; }
     else cBudget = "予算が入力されていないため、点数にはしていません。";
     out.rows.push({ key: "budget", name: "予算", value: budget ? yen(budget) : "—", score: sBudget, comment: cBudget });
     // 2. time
     var sTime = null, cTime;
     if (days === null) cTime = "渡したい日が入力されていないため、点数にはしていません。";
-    else if (days < 0) { sTime = 10; cTime = "渡したい日が、すぎています。遅れてもよいお祝いかどうかを確かめて、選びなおしてください。"; }
+    else if (days < 0) { sTime = 10; cTime = "渡したい日が、すぎています。遅れてもよいお祝いかどうかを確かめて選びなおしてください。"; }
     else { sTime = days >= 28 ? 100 : days >= 21 ? 95 : days >= 14 ? 80 : days >= 7 ? 60 : days >= 3 ? 40 : 20;
-      cTime = "渡したい日まで、あと" + days + "日。" + (days >= 21 ? "余裕があります。じっくり選べます。" : days >= 14 ? "まだ余裕があります。日付指定の商品は、早めの注文が安心です。" : days >= 7 ? "選ぶ時間は、あまり長くありません。届くまでの日数を、商品ページで確かめてください。" : "お急ぎです。翌日配送の商品や、受け取りやすい形を優先してください。"); }
+      cTime = "渡したい日まであと" + days + "日。" + (days >= 21 ? "余裕があります。じっくり選べます。" : days >= 14 ? "まだ余裕があります。日付指定の商品は早めの注文が安心です。" : days >= 7 ? "選ぶ時間はあまり長くありません。届くまでの日数を商品ページで確かめてください。" : "お急ぎです。翌日配送の商品や受け取りやすい形を優先してください。"); }
     out.rows.push({ key: "time", name: "時期の余裕", value: days === null ? "—" : (days < 0 ? "すぎている" : "あと" + days + "日"), score: sTime, comment: cTime });
     // 3. what is known about the person
     var nInt = (inp.interests || []).length, nTy = (inp.types || []).length, nAv = (inp.avoid || []).length;
     var info = Math.min(60, 15 * nInt) + (nTy ? 15 : 0) + (inp.age ? 8 : 0) + (inp.gender ? 5 : 0) + (nAv ? 12 : 0);
     info = Math.min(100, info);
     out.rows.push({ key: "info", name: "相手の情報量", value: "興味" + nInt + "・タイプ" + nTy + "・避けたい" + nAv, score: info,
-      comment: info >= 70 ? "手がかりが、そろっています。" : info >= 40 ? "手がかりは、ある程度あります。興味を1つ足すと、候補がしぼれます。" : "手がかりが少ない状態です。食べもの・飲みものなどの消えものが、無難です。" });
+      comment: info >= 70 ? "手がかりが、そろっています。" : info >= 40 ? "手がかりはある程度あります。興味を1つ足すと候補がしぼれます。" : "手がかりが少ない状態です。食べもの・飲みものなどの消えものが、無難です。" });
     // 4. how clear the favourite is
     var clarity, cClar;
-    if (top.length >= 3) { var gap = (top[0].score - top[2].score) / top[0].score; clarity = Math.round(40 + 60 * gap); cClar = "1位の点が" + fmt(top[0].score) + "、3位が" + fmt(top[2].score) + "です。" + (gap >= 0.4 ? "好みの方向が、はっきりしています。" : "候補の差が小さく、決め手に欠けます。相手に、それとなく聞けると確実です。"); }
-    else if (top.length) { clarity = 50; cClar = "候補になった種類が" + top.length + "つです。手がかりを足すと、比べられます。"; }
+    if (top.length >= 3) { var gap = (top[0].score - top[2].score) / top[0].score; clarity = Math.round(40 + 60 * gap); cClar = "1位の点が" + fmt(top[0].score) + "、3位が" + fmt(top[2].score) + "です。" + (gap >= 0.4 ? "好みの方向が、はっきりしています。" : "候補の差が小さく、決め手に欠けます。相手にそれとなく聞けると確実です。"); }
+    else if (top.length) { clarity = 50; cClar = "候補になった種類が" + top.length + "つです。手がかりを足すと比べられます。"; }
     else { clarity = null; cClar = "候補になる手がかりがありません。興味やタイプを選んでみてください。"; }
     out.rows.push({ key: "clarity", name: "好みの手がかり", value: top.length ? top.length + "種類" : "—", score: clarity, comment: cClar });
     // 5. how unlikely it is to go wrong
@@ -83,20 +83,20 @@
     if (top.length) {
       var avg = top.reduce(function (a, t) { return a + data.groups[t.id].risk; }, 0) / top.length, adj = Math.max(0.05, avg - info / 100 * 0.15);
       sRisk = Math.round(100 * (1 - adj));
-      cRisk = "1位の「" + data.groups[top[0].id].label + "」で起こりやすい失敗は、" + data.groups[top[0].id].risk_note + "。(編集部の目安で、統計ではありません)";
+      cRisk = "1位の「" + data.groups[top[0].id].label + "」で起こりやすい失敗は、" + data.groups[top[0].id].risk_note + "。(編集部の目安で統計ではありません)";
     } else cRisk = "候補がないため、点数にはしていません。";
     out.rows.push({ key: "risk", name: "外しにくさ", value: sRisk === null ? "—" : sRisk + "点", score: sRisk, comment: cRisk });
     // overall
     var tot = 0, wsum = 0; out.rows.forEach(function (row) { if (row.score !== null) { tot += row.score * W[row.key]; wsum += W[row.key]; } });
     out.total = wsum ? Math.round(tot / wsum) : null;
     out.grade = out.total === null ? "—" : out.total >= 85 ? "A" : out.total >= 70 ? "B" : out.total >= 55 ? "C" : out.total >= 40 ? "D" : "E";
-    out.verdict = { A: "準備が、よく整っています。候補の中から選べば、外しにくい状態です。", B: "おおむね、準備ができています。足りないところを補えば、さらに選びやすくなります。", C: "もう少し、手がかりを足すと、選びやすくなります。", D: "手がかりか、時間が足りない状態です。無理に好みを当てず、無難な選び方をおすすめします。", E: "判断の材料が、かなり少ない状態です。まず、相手の好みを、それとなく聞いてみてください。" }[out.grade] || "入力が少ないため、総合評価は出せません。";
+    out.verdict = { A: "準備が、よく整っています。候補の中から選べば、外しにくい状態です。", B: "おおむね、準備ができています。足りないところを補えば、さらに選びやすくなります。", C: "もう少し、手がかりを足すと選びやすくなります。", D: "手がかりか、時間が足りない状態です。無理に好みを当てず、無難な選び方をおすすめします。", E: "判断の材料が、かなり少ない状態です。まず相手の好みをそれとなく聞いてみてください。" }[out.grade] || "入力が少ないため、総合評価は出せません。";
     out.rows.forEach(function (row) { row.eval = row.score === null ? "—" : row.score >= 75 ? "◎" : row.score >= 50 ? "○" : "△"; row.cls = row.score === null ? "mid" : row.score >= 75 ? "" : row.score >= 50 ? "mid" : "low"; });
     // notes
     var notes = [];
-    if ((inp.avoid || []).indexOf("allergy") >= 0) notes.push("食物アレルギーがある相手です。食べものは、原材料の表示を必ず確かめてください。");
-    if (zero.alcohol && inp.age === "u20") notes.push("20歳未満の相手には、お酒を勧めません。");
-    if (inp.age === "60s" || inp.age === "70s") notes.push("軽くて扱いやすい品が向きます。細かい文字や、複雑な操作の品は、避けると安心です。");
+    if ((inp.avoid || []).indexOf("allergy") >= 0) notes.push("食物アレルギーがある相手です。食べものは原材料の表示を必ず確かめてください。");
+    if (zero.alcohol && inp.age === "u20") notes.push("20歳未満の相手にはお酒を勧めません。");
+    if (inp.age === "60s" || inp.age === "70s") notes.push("軽くて扱いやすい品が向きます。細かい文字や複雑な操作の品は避けると安心です。");
     if (inp.memo) notes.push("メモ: " + inp.memo);
     if (!occ) notes.push("贈る目的が決まっていないため、イベント向けの数字は使っていません。");
     out.notes = notes;
@@ -120,7 +120,7 @@
       return '<tr><th scope="row">' + esc(r.name) + '</th><td class="num" data-h="入力・数値">' + esc(r.value) + '</td><td class="num" data-h="点数">' + (r.score === null ? "—" : r.score) + '</td><td data-h="評価"><span class="ev ' + r.cls + '">' + r.eval + '</span></td><td>' + esc(r.comment) + "</td></tr>";
     }).join("") + "</tbody></table>";
     h += "<h3>おすすめの種類(上位3つ)</h3>";
-    if (!rep.top.length) h += '<p class="sheet-note">候補になる手がかりがありません。興味やタイプを選んで、もう一度診断してください。</p>';
+    if (!rep.top.length) h += '<p class="sheet-note">候補になる手がかりがありません。興味やタイプを選んでもう一度診断してください。</p>';
     rep.top.forEach(function (t, i) {
       var g = data.groups[t.id], rg = rec && rec.groups[t.id], reasons = (t.why || []).slice();
       var lines = reasonsOf(inp, rep, t, data);
@@ -128,7 +128,7 @@
         (rg && Rec ? Rec.block(rg, { max: rep.budget ? Math.round(rep.budget * 1.15) : null, gender: inp.gender, n: 4 }) : "") + "</div>";
     });
     h += '<div class="sheet-note"><b>備考</b><ul>' + (rep.notes.length ? rep.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") : "<li>特記事項はありません。</li>") + "</ul></div>";
-    h += '<p class="sheet-note">計算のしかたは、ページ下の「診断のしくみ」に書いています。「外しにくさ」と、タイプの好みは編集部の目安で、統計ではありません。価格・在庫は' + esc(rec ? rec.fresh : "") + "時点の情報です。</p>";
+    h += '<p class="sheet-note">計算のしかたはページ下の「診断のしくみ」に書いています。「外しにくさ」とタイプの好みは編集部の目安で統計ではありません。価格・在庫は' + esc(rec ? rec.fresh : "") + "時点の情報です。</p>";
     h += '<div class="sheet-tools"><button type="button" class="btn" data-print>印刷する</button><button type="button" class="btn btn-sub" data-img>画像で保存</button><button type="button" class="btn btn-sub" data-copy>結果をコピー</button>' + links(rep, inp) + "</div></article>";
     box.innerHTML = h; box.hidden = false;
     $("[data-print]", box).onclick = function () { window.print(); };
@@ -145,8 +145,8 @@
     if ((inp.interests || []).indexOf(t.id) >= 0) lines.push("選んだ「興味があるもの」に入っています。");
     (inp.types || []).forEach(function (slug) { data.types.forEach(function (ty) { if (ty.slug === slug && ty.w[t.id]) lines.push("タイプ「" + ty.name + "」が好む傾向があります(編集部の目安)。"); }); });
     ((rep.occ && OCC_BONUS[rep.occ.slug]) || []).forEach(function (b) { if (b.g === t.id) lines.push("調査: " + b.why + "。"); });
-    if (g.range) lines.push("当サイトの" + g.label + "の商品(" + g.range.n + "点)は、価格の中央値が" + yen(g.range.med) + "、真ん中の半分が" + yen(g.range.p25) + "〜" + yen(g.range.p75) + "です。" +
-      (rep.budget ? (rep.budget >= g.range.p25 ? "予算は、この範囲に届いています。" : "予算が、この価格帯より低めです。小さな品を選ぶ必要があります。") : ""));
+    if (g.range) lines.push("当サイトの" + g.label + "の商品(" + g.range.n + "点)は価格の中央値が" + yen(g.range.med) + "、真ん中の半分が" + yen(g.range.p25) + "〜" + yen(g.range.p75) + "です。" +
+      (rep.budget ? (rep.budget >= g.range.p25 ? "予算はこの範囲に届いています。" : "予算が、この価格帯より低めです。小さな品を選ぶ必要があります。") : ""));
     lines.push("起こりやすい失敗: " + g.risk_note + "(編集部の目安)。");
     return lines;
   }
@@ -194,12 +194,12 @@
 
   function init(root) {
     var form = $(".dock-form", root), box = $(".dock-report", root), data = null, rec = null;
-    Promise.all([fetch(root.getAttribute("data-src")).then(function (r) { return r.json(); }), window.YorokobuRec.load(root.getAttribute("data-rec"))]).then(function (x) { data = x[0]; rec = x[1]; }).catch(function () { box.hidden = false; box.innerHTML = '<p class="notice">データを読み込めませんでした。時間をおいて、もう一度お試しください。</p>'; });
+    Promise.all([fetch(root.getAttribute("data-src")).then(function (r) { return r.json(); }), window.YorokobuRec.load(root.getAttribute("data-rec"))]).then(function (x) { data = x[0]; rec = x[1]; }).catch(function () { box.hidden = false; box.innerHTML = '<p class="notice">データを読み込めませんでした。時間をおいてもう一度お試しください。</p>'; });
     function limitChecks(name, max) { $$("input[name=" + name + "]", form).forEach(function (x) { x.addEventListener("change", function () { var on = $$("input[name=" + name + "]:checked", form); $$("input[name=" + name + "]", form).forEach(function (y) { y.disabled = !y.checked && on.length >= max; }); }); }); }
     limitChecks("type", 2); limitChecks("int", 5);
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      if (!data) { box.hidden = false; box.innerHTML = '<p class="notice">データを読み込んでいます。少し待ってから、もう一度押してください。</p>'; return; }
+      if (!data) { box.hidden = false; box.innerHTML = '<p class="notice">データを読み込んでいます。少し待ってからもう一度押してください。</p>'; return; }
       var inp = readInput(form), d = new Date(), ts = d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
       var rep = diagnose(inp, data, rec, ts); renderReport(box, rep, inp, data, rec);
       var okc = $("input[name=count]", form);

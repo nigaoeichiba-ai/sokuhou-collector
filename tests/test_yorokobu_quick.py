@@ -49,7 +49,7 @@ class QuickSheetTest(unittest.TestCase):
     def test_the_occasion_page_starts_with_the_sheet_and_names_its_sources(self):
         html = self.read("occasion/mothers-day/index.html")
         self.assertIn('id="quick"', html)
-        self.assertIn("母の日の、贈る前の早見表", html)
+        self.assertIn("母の日の贈る前の早見表", html)
         self.assertIn("3,000〜5,000円", html)
         self.assertIn("母の日/感謝", html)                                   # the noshi wording
         self.assertIn("5月の第2日曜日に届くよう", html)                        # the timing, in place of the generic one
@@ -63,7 +63,7 @@ class QuickSheetTest(unittest.TestCase):
         html = self.read("occasion/birthday/index.html")
         self.assertIn("誕生日に決まった相場はありません", html)
         self.assertNotIn('class="quick-table"', html)
-        self.assertIn("のしは、付けなくてもかまいません", html)
+        self.assertIn("のしは付けなくてもかまいません", html)
 
     def test_an_occasion_without_data_keeps_its_old_page(self):
         def only_mothers_day(d): d["occasions"] = d["occasions"][1:]

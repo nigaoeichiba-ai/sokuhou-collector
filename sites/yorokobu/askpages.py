@@ -27,7 +27,7 @@ MIN_POOL = 8            # fewer products than this in a group (or an occasion): 
 
 # How risky a kind of gift is to get wrong (a share, 0-1): the thing that goes wrong with it is named.  An editors' estimate, shown as such, never as a statistic.
 RISK = {
-    "coffee_tea": (0.15, "好みの豆・茶葉が分かれる"), "sweets": (0.20, "甘さの好みと、食物アレルギー"), "gourmet": (0.25, "味の好みと、食物アレルギー"),
+    "coffee_tea": (0.15, "好みの豆・茶葉が分かれる"), "sweets": (0.20, "甘さの好みと食物アレルギー"), "gourmet": (0.25, "味の好みと食物アレルギー"),
     "alcohol": (0.30, "飲むかどうかで大きく分かれる"), "bath_care": (0.30, "香りの好みが分かれる"), "beauty": (0.50, "肌に合うか、色や香りの好み"),
     "cozy_home": (0.25, "色と手ざわりの好み"), "kitchen": (0.20, "すでに持っている可能性"), "stationery": (0.20, "筆記具や手帳のこだわり"),
     "fashion_small": (0.35, "色とデザインの好み"), "accessory": (0.50, "デザインとサイズの好み"), "gadget": (0.40, "すでに持っている・機種が合わない"),
@@ -158,14 +158,14 @@ def ask_page(d: dict, cfg: dict, preview: bool) -> str:
     B = _b()
     ask = d["c"]["ask"]
     data = {"q": _public_questions(ask, False), "intro": ask["intro"], "base": cfg["site_url"].rstrip("/")}
-    lead = "好みや、ほしいものを、それとなく聞くためのアンケートを作ります。リンクを送るだけ。答えは選ぶだけで、送ったあと、結果とおすすめがここで見られます。"
+    lead = "好みやほしいものをそれとなく聞くためのアンケートを作ります。リンクを送るだけ。答えは選ぶだけで送ったあと結果とおすすめがここで見られます。"
     qs = "".join(f'<li>{esc(q["open"])}</li>' for q in ask["questions"])
-    body = f"""{B.head_band("sky", "", "それとなく、<wbr>ほしいものを聞く", lead, single=True)}
+    body = f"""{B.head_band("sky", "", "それとなく<wbr>ほしいものを聞く", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("ほしいものを聞く", None)])}</div>
 <section class="ask-make" id="ask-make" data-json="{_json(data)}">
 <h2><span class="scribble">1. どちらで聞きますか</span></h2>
 <div class="ask-modes" role="radiogroup" aria-label="聞き方">
-<label class="ask-mode"><input type="radio" name="mode" value="o" checked><span><b>プレゼントのために、と伝えて聞く</b><small>「プレゼントを選ぶ参考にしたい」と伝えて、好みを聞きます。相手に頼んで答えてもらう、ふつうの聞き方です。</small></span></label>
+<label class="ask-mode"><input type="radio" name="mode" value="o" checked><span><b>プレゼントのためにと伝えて聞く</b><small>「プレゼントを選ぶ参考にしたい」と伝えて好みを聞きます。相手に頼んで答えてもらう、ふつうの聞き方です。</small></span></label>
 <label class="ask-mode"><input type="radio" name="mode" value="s"><span><b>サプライズにしたい。好みの調査として聞く</b><small>贈り物とは書かず、「最近の好み」を聞くアンケートにします。うそは書きません。ただ、リンクのアドレスには、このサイトの名前(present)が見えます。</small></span></label>
 </div>
 <h2 style="margin-top:28px"><span class="scribble">2. リンクを作る</span></h2>
@@ -175,20 +175,20 @@ def ask_page(d: dict, cfg: dict, preview: bool) -> str:
 <p class="ask-lab">相手に送るリンク</p>
 <p><input class="ask-link" type="text" readonly aria-label="アンケートのリンク"></p>
 <div class="share"><button type="button" class="share-btn copy-link">リンクをコピー</button><a class="share-btn line" target="_blank" rel="noopener" data-line>LINEで送る</a><a class="share-btn mail" data-mail>メールで送る</a><button type="button" class="share-btn native" hidden data-native>共有する</button><button type="button" class="share-btn" data-qr>QRコード</button></div>
-<p class="ask-note ask-secret" hidden>サプライズにするときの注意: リンクのアドレスや、LINEで見える表示には、「yorokobu-present.com」と出ます。「present」の文字から、気づかれることがあります。</p>
+<p class="ask-note ask-secret" hidden>サプライズにするときの注意: リンクのアドレスやLINEで見える表示には、「yorokobu-present.com」と出ます。「present」の文字から気づかれることがあります。</p>
 <p class="ask-lab" style="margin-top:18px">添える一言の例</p>
 <p class="ask-say"></p>
 <p class="more"><a class="btn" data-mine href="/ask/mine/">回答を見る(結果ページ)</a></p>
-<p class="ask-note">回答が届いたら知らせてほしいときは、結果ページで「この端末で通知を受け取る」を押してください。結果ページのアドレスをスマホに送っておくと、スマホでも見られます。</p>
+<p class="ask-note">回答が届いたら知らせてほしいときは、結果ページで「この端末で通知を受け取る」を押してください。結果ページのアドレスをスマホに送っておくとスマホでも見られます。</p>
 </div>
 </section>
-<section class="data-notes"><h2>聞く内容(9つ)</h2><ol class="ask-qlist">{qs}</ol><p class="chart-note">どれも、選ぶだけです。答えたくない質問は、とばせます。自由に書く欄はありません。</p></section>
+<section class="data-notes"><h2>聞く内容(9つ)</h2><ol class="ask-qlist">{qs}</ol><p class="chart-note">どれも選ぶだけです。答えたくない質問はとばせます。自由に書く欄はありません。</p></section>
 <section class="data-notes"><h2>取り扱い</h2><ul>
-<li>聞く相手の名前や連絡先は、入力しません。相手が答えるのは、選択肢のどれを選んだか、だけです。</li>
-<li>回答は、作った人が持つ「鍵」を使ったときだけ読めます。鍵は、この端末のブラウザに保存されます。</li>
-<li>1つのアンケートに届くのは、40人の回答までです。作ってから120日たつと、回答といっしょに自動で消えます。</li>
+<li>聞く相手の名前や連絡先は入力しません。相手が答えるのは選択肢のどれを選んだか、だけです。</li>
+<li>回答は作った人が持つ「鍵」を使ったときだけ読めます。鍵はこの端末のブラウザに保存されます。</li>
+<li>1つのアンケートに届くのは40人の回答までです。作ってから120日たつと回答といっしょに自動で消えます。</li>
 <li>くわしくは、<a href="/privacy/#ask">プライバシーポリシー</a>に書いています。</li></ul></section>
-<p class="notice" style="margin-top:34px">回答の読み取りと、おすすめの表示は、このページを作った端末のブラウザで行います。</p>"""
+<p class="notice" style="margin-top:34px">回答の読み取りとおすすめの表示は、このページを作った端末のブラウザで行います。</p>"""
     return B.page(cfg, preview, path="/ask/", title=f"それとなく、ほしいものを聞く | {cfg['site_name']}", description=lead, body=body, amazon_links=bool(cfg.get("amazon_tracking_id")),
                   head_extra=f'{B.FONTS}<script src="/assets/ask.js" defer></script>')
 
@@ -217,7 +217,7 @@ def respond_page(d: dict, cfg: dict, mode: str) -> str:
 <p class="ask-lead" data-lead>読み込んでいます…</p>
 <form class="ask-form" hidden></form>
 <p class="ask-msg" role="status" aria-live="polite" hidden></p>
-<noscript><p class="notice">このアンケートは、JavaScript が使える環境でお使いください。</p></noscript>
+<noscript><p class="notice">このアンケートはJavaScript が使える環境でお使いください。</p></noscript>
 <p class="ask-foot"><a href="/privacy/#ask">回答の取り扱いについて</a></p>
 </main>
 </body>
@@ -230,7 +230,7 @@ def mine_page(d: dict, cfg: dict, preview: bool) -> str:
     ask = d["c"]["ask"]
     data = {"q": _public_questions(ask, True), "interests": {k: v["label"] for k, v in ask["interests"].items()}, "base": cfg["site_url"].rstrip("/"),
             "vapid": cfg.get("vapid_public") or ""}
-    lead = "作ったアンケートの回答が、ここに集まります。質問ごとの集計と、回答に合わせたおすすめの商品を見られます。"
+    lead = "作ったアンケートの回答が、ここに集まります。質問ごとの集計と回答に合わせたおすすめの商品を見られます。"
     body = f"""{B.head_band("mint", "", "アンケートの結果を見る", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("ほしいものを聞く", "/ask/"), ("結果を見る", None)])}</div>
 {B.pr_quiet(cfg)}
@@ -238,9 +238,9 @@ def mine_page(d: dict, cfg: dict, preview: bool) -> str:
 <p class="ask-msg" role="status" aria-live="polite">読み込んでいます…</p>
 <div class="ask-list"></div>
 <div class="ask-detail" hidden></div>
-<noscript><p class="notice">このページは、JavaScript が使える環境でお使いください。</p></noscript>
+<noscript><p class="notice">このページはJavaScript が使える環境でお使いください。</p></noscript>
 </section>
-<section class="data-notes"><h2>見かたの注意</h2><p>回答が少ないうちは、1人の答えが集計を大きく動かします。参考として見てください。表示する商品は、当サイトで取り上げている楽天市場の商品です(価格・在庫は取得した時点のもので、{esc(d["fetched_label"])}時点)。</p></section>
+<section class="data-notes"><h2>見かたの注意</h2><p>回答が少ないうちは1人の答えが集計を大きく動かします。参考として見てください。表示する商品は、当サイトで取り上げている楽天市場の商品です(価格・在庫は取得した時点のもので、{esc(d["fetched_label"])}時点)。</p></section>
 <p class="more"><a class="btn btn-sub" href="/ask/">新しいアンケートを作る</a></p>"""
     html = B.page(cfg, preview, path="/ask/mine/", title=f"アンケートの結果 | {cfg['site_name']}", description=lead, body=body, amazon_links=bool(cfg.get("amazon_tracking_id")),
                   head_extra=f'{B.FONTS}<script src="/assets/rec.js" defer></script><script src="/assets/ask.js" defer></script>')
@@ -253,7 +253,7 @@ def dock_page(d: dict, cfg: dict, preview: bool, data: dict) -> str:
     occ = "".join(f'<option value="{esc(o["slug"])}">{esc(o["name"])}</option>' for o in c["occasions"])
     types = "".join(f'<label class="chk"><input type="checkbox" name="type" value="{esc(t["slug"])}"> {esc(t["name"])}<small>{esc(t["tagline"])}</small></label>' for t in data["types"])
     ints = "".join(f'<label class="chk"><input type="checkbox" name="int" value="{esc(k)}"> {esc(g["label"])}</label>' for k, g in data["groups"].items())
-    lead = "贈りたい相手のことを、わかる範囲で入力してください。健康診断の結果票のように、項目ごとの数値と評価、総合評価、おすすめの種類と理由を、お返しします。"
+    lead = "贈りたい相手のことをわかる範囲で入力してください。健康診断の結果票のように項目ごとの数値と評価、総合評価、おすすめの種類と理由をお返しします。"
     avoid = "".join(f'<label class="chk"><input type="checkbox" name="avoid" value="{k}"> {lab}</label>' for k, lab in
                     (("scent", "香りが強いもの"), ("sweet", "甘いもの"), ("alcohol", "お酒"), ("allergy", "食物アレルギーがある"), ("bulky", "場所をとるもの"), ("flashy", "派手なデザイン")))
     body = f"""{B.head_band("pink", "", "贈り物ドック", lead, single=True)}
@@ -271,17 +271,17 @@ def dock_page(d: dict, cfg: dict, preview: bool, data: dict) -> str:
 <fieldset><legend>3. 好み</legend>
 <div class="dock-group"><b>興味があるもの(5つまで)</b><div class="dock-checks">{ints}</div></div>
 <div class="dock-group"><b>苦手・避けたいもの</b><div class="dock-checks">{avoid}</div></div></fieldset>
-<fieldset><legend>4. 予算と、そのほか</legend>
+<fieldset><legend>4. 予算とそのほか</legend>
 <label>予算(円)<input type="number" name="budget" min="500" max="500000" step="100" inputmode="numeric" placeholder="例: 5000"></label>
 <label>そのほか、気になること(この端末の中だけで使い、結果票に写します)<input type="text" name="memo" maxlength="80" placeholder="例: 引っ越したばかり"></label></fieldset>
-<p><label class="chk dock-count"><input type="checkbox" name="count" checked> 選んだ項目を、回数だけ数えて、サイトの改善に使ってもよい(だれの回答か分かりません。入力した文字や日付は、送りません。外すこともできます)</label></p>
+<p><label class="chk dock-count"><input type="checkbox" name="count" checked> 選んだ項目を回数だけ数えて、サイトの改善に使ってもよい(だれの回答か分かりません。入力した文字や日付は送りません。外すこともできます)</label></p>
 <p><button type="submit" class="btn big">診断する</button></p>
 </form>
 <div class="dock-report" hidden></div>
-<noscript><p class="notice">この診断は、JavaScript を使います。</p></noscript>
+<noscript><p class="notice">この診断はJavaScript を使います。</p></noscript>
 </section>
-<section class="data-notes"><h2>診断のしくみ</h2><p>点数は、次の5項目の加重平均です。予算(25%)・時期(20%)・相手についての情報量(20%)・好みの手がかり(20%)・外しにくさ(15%)。予算は、当サイトの商品の価格や、調査の数字と比べます。「外しにくさ」と、性格タイプの好みは、編集部の目安で、統計ではありません。入力は、この端末の中で計算し、サーバーへは送りません。サイトの改善のために、選んだ項目の「回数だけ」を、だれの回答か分からない形で数えています(結果票の下に説明があります)。</p></section>"""
-    return B.page(cfg, preview, path="/dock/", title=f"贈り物ドック 相手のことを入力して、おすすめを診断 | {cfg['site_name']}", description=lead[:110], body=body,
+<section class="data-notes"><h2>診断のしくみ</h2><p>点数は次の5項目の加重平均です。予算(25%)・時期(20%)・相手についての情報量(20%)・好みの手がかり(20%)・外しにくさ(15%)。予算は当サイトの商品の価格や調査の数字と比べます。「外しにくさ」と性格タイプの好みは編集部の目安で統計ではありません。入力はこの端末の中で計算し、サーバーへは送りません。サイトの改善のために選んだ項目の「回数だけ」を、だれの回答か分からない形で数えています(結果票の下に説明があります)。</p></section>"""
+    return B.page(cfg, preview, path="/dock/", title=f"贈り物ドック 相手のことを入力しておすすめを診断 | {cfg['site_name']}", description=lead[:110], body=body,
                   amazon_links=bool(cfg.get("amazon_tracking_id")), head_extra=f'{B.FONTS}<script src="/assets/rec.js" defer></script><script src="/assets/dock.js" defer></script>')
 
 
@@ -303,9 +303,9 @@ def build_files(d: dict, cfg: dict, preview: bool, today: date) -> tuple[dict, d
 
 ASK_PRIVACY = (
     '<h2 id="ask">アンケート機能(ほしいものを聞く・贈り物ドック)</h2>'
-    '<p>「ほしいものを聞く」では、アンケートを作った人のブラウザで作った、アンケートの番号と、結果を読むための鍵を使います。鍵は、作った人のブラウザにだけ保存されます。サーバーには、鍵を一方向に変換した値だけが残り、鍵そのものは残りません。</p>'
-    '<p>回答する人が送るのは、選んだ選択肢の番号と、送信した日時だけです。名前・連絡先・自由に書く欄は、ありません。回答は、鍵を持つ人(アンケートを作った人)だけが読めます。アンケートと回答は、作ってから120日たつと消えます(消去は、新しいアンケートが作られるときに行うため、少し遅れることがあります)。作った人は、結果ページから、いつでも消せます。</p>'
-    '<p>回答が届いたときの通知は、結果ページで「この端末で通知を受け取る」を押したときだけ使います。このとき、ブラウザが作った通知の宛先(購読情報)と、アンケートの番号を、サーバーに保存します。通知には、回答の内容を含みません。通知を止める、または、アンケートを消すと、削除します。通知の送信は、GitHub Actions(GitHub, Inc.)の送信プログラムが、サーバーの購読情報を読んで行います。</p>'
-    '<p>不正な大量送信を防ぐため、送信元のアドレスから作った、その日だけ有効な値(アドレスそのものではありません)を、一時的に保存します。</p>'
-    '<p>「贈り物ドック」に入力した内容は、お使いの端末の中だけで計算し、送りません。結果の前のチェックボックスにチェックがあるときだけ、選んだ項目の名前(たとえば「興味: コーヒー・お茶」)ごとの回数を、だれのものか分からない形で数えます。入力した文字、メモ、日付は、送りません。数えた回数は、質問や診断の改善に使い、匿名の集計として、データ室に載せることがあります。</p>'
+    '<p>「ほしいものを聞く」では、アンケートを作った人のブラウザで作った、アンケートの番号と結果を読むための鍵を使います。鍵は作った人のブラウザにだけ保存されます。サーバーには鍵を一方向に変換した値だけが残り、鍵そのものは残りません。</p>'
+    '<p>回答する人が送るのは選んだ選択肢の番号と送信した日時だけです。名前・連絡先・自由に書く欄はありません。回答は鍵を持つ人(アンケートを作った人)だけが読めます。アンケートと回答は、作ってから120日たつと消えます(消去は、新しいアンケートが作られるときに行うため、少し遅れることがあります)。作った人は結果ページからいつでも消せます。</p>'
+    '<p>回答が届いたときの通知は、結果ページで「この端末で通知を受け取る」を押したときだけ使います。このとき、ブラウザが作った通知の宛先(購読情報)とアンケートの番号をサーバーに保存します。通知には回答の内容を含みません。通知を止める、またはアンケートを消すと削除します。通知の送信は、GitHub Actions(GitHub, Inc.)の送信プログラムが、サーバーの購読情報を読んで行います。</p>'
+    '<p>不正な大量送信を防ぐため、送信元のアドレスから作った、その日だけ有効な値(アドレスそのものではありません)を一時的に保存します。</p>'
+    '<p>「贈り物ドック」に入力した内容は、お使いの端末の中だけで計算し、送りません。結果の前のチェックボックスにチェックがあるときだけ、選んだ項目の名前(たとえば「興味: コーヒー・お茶」)ごとの回数をだれのものか分からない形で数えます。入力した文字、メモ、日付は送りません。数えた回数は質問や診断の改善に使い、匿名の集計として、データ室に載せることがあります。</p>'
 )

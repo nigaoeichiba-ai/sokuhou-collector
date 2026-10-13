@@ -10,21 +10,21 @@ from sites.yorokobu import relevance
 
 # slug, title, one line for the hub, rule on a product, sort key (smaller first), the sentence that says exactly what the rule is
 LISTS = [
-    {"slug": "reviews-10000", "title": "レビュー1万件以上の、実績のある商品", "short": "1万件以上のレビューが集まっている、定番の商品",
+    {"slug": "reviews-10000", "title": "レビュー1万件以上の実績のある商品", "short": "1万件以上のレビューが集まっている定番の商品",
      "rule": lambda i: i["reviews"] >= 10000 and i["rating"] >= 4.3, "sort": lambda i: (-i["reviews"], -i["rating"]),
-     "says": "レビュー件数が10,000件以上で、レビュー平均が4.3以上の商品を、レビュー件数の多い順に並べています。"},
-    {"slug": "reviews-3000", "title": "レビュー3,000件以上の、たくさん選ばれている商品", "short": "3,000〜9,999件のレビューがある商品",
+     "says": "レビュー件数が10,000件以上で、レビュー平均が4.3以上の商品をレビュー件数の多い順に並べています。"},
+    {"slug": "reviews-3000", "title": "レビュー3,000件以上のたくさん選ばれている商品", "short": "3,000〜9,999件のレビューがある商品",
      "rule": lambda i: 3000 <= i["reviews"] < 10000 and i["rating"] >= 4.3, "sort": lambda i: (-i["reviews"], -i["rating"]),
-     "says": "レビュー件数が3,000件以上10,000件未満で、レビュー平均が4.3以上の商品を、レビュー件数の多い順に並べています。"},
-    {"slug": "reviews-1000", "title": "レビュー1,000件以上の、評価の安定した商品", "short": "1,000〜2,999件のレビューがある商品",
+     "says": "レビュー件数が3,000件以上10,000件未満で、レビュー平均が4.3以上の商品をレビュー件数の多い順に並べています。"},
+    {"slug": "reviews-1000", "title": "レビュー1,000件以上の評価の安定した商品", "short": "1,000〜2,999件のレビューがある商品",
      "rule": lambda i: 1000 <= i["reviews"] < 3000 and i["rating"] >= 4.3, "sort": lambda i: (-i["reviews"], -i["rating"]),
-     "says": "レビュー件数が1,000件以上3,000件未満で、レビュー平均が4.3以上の商品を、レビュー件数の多い順に並べています。"},
+     "says": "レビュー件数が1,000件以上3,000件未満で、レビュー平均が4.3以上の商品をレビュー件数の多い順に並べています。"},
     {"slug": "hidden-gems", "title": "まだ知られていない、評価の高い商品", "short": "レビューは少なめでも、平均が4.7以上の商品",
      "rule": lambda i: 30 <= i["reviews"] <= 300 and i["rating"] >= 4.7, "sort": lambda i: (-i["rating"], -i["reviews"]),
-     "says": "レビュー件数が30件以上300件以下で、レビュー平均が4.7以上の商品を、評価の高い順に並べています。件数が少ないぶん、数字は動きやすい点に、ご注意ください。"},
-    {"slug": "cheap-and-loved", "title": "2,000円以下で、評価の高い商品", "short": "2,000円以下で、レビュー300件以上・平均4.6以上",
+     "says": "レビュー件数が30件以上300件以下で、レビュー平均が4.7以上の商品を評価の高い順に並べています。件数が少ないぶん、数字は動きやすい点にご注意ください。"},
+    {"slug": "cheap-and-loved", "title": "2,000円以下で評価の高い商品", "short": "2,000円以下でレビュー300件以上・平均4.6以上",
      "rule": lambda i: i["price"] <= 2000 and i["reviews"] >= 300 and i["rating"] >= 4.6, "sort": lambda i: (-i["reviews"], -i["rating"]),
-     "says": "価格が2,000円以下で、レビュー件数が300件以上、レビュー平均が4.6以上の商品を、レビュー件数の多い順に並べています。"},
+     "says": "価格が2,000円以下で、レビュー件数が300件以上、レビュー平均が4.6以上の商品をレビュー件数の多い順に並べています。"},
 ]
 MIN_ITEMS = 6      # a list shorter than this has no page
 MAX_ITEMS = 36

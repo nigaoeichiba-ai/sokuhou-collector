@@ -77,7 +77,7 @@ class RealContentSiteCheckTest(unittest.TestCase):
                     self.assertEqual(card.count('class="btn"'), 2, rel)             # the same button style: neither is the "sub" one
                     self.assertNotIn("btn-sub", card, rel)
                 if "楽天市場で見る" in html:
-                    self.assertIn("Amazonの価格は、リンク先でご確認ください", html, rel)    # the prices shown are Rakuten's
+                    self.assertIn("Amazonの価格はリンク先でご確認ください", html, rel)    # the prices shown are Rakuten's
             self.assertGreater(cards, 20, cards)
             self.assertGreater(pages_with_amazon, 100, pages_with_amazon)
 

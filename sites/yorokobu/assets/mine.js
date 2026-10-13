@@ -81,9 +81,16 @@
       '<div class="item-body"><h3><a href="' + esc(it.u) + '"' + rel + ">" + esc(it.n) + '</a></h3><p class="price">' + yen(it.p) + "</p>" + (extra || "") +
       '<div class="item-btns"><a class="btn" href="' + esc(it.u) + '"' + rel + '>楽天市場で見る</a>' + (it.a ? '<a class="btn" href="' + esc(it.a) + '"' + rel + ' aria-label="Amazonで同じ商品を探す">Amazonで探す</a>' : "") + "</div></div></li>";
   }
+  function amazonCard(x, extra) {                       // an Amazon product kept with ♡: its name and the Amazon link it had (no price, no picture: Amazon's rules)
+    var u = safeUrl(x.url), asin = String(x.code).slice(2);
+    if (!u || !/^[A-Z0-9]{10}$/.test(asin)) return plain({ name: x.name, price: "" });
+    var rel = ' rel="sponsored nofollow noopener" target="_blank"';
+    return '<li class="item item-az" data-asin="' + esc(asin) + '"><div class="item-body"><h3><a href="' + esc(u) + '"' + rel + ">" + esc(x.name) + '</a></h3><p class="fav-gone">価格・在庫はAmazonのページでご確認ください。</p>' +
+      (extra || "") + '<div class="item-btns"><a class="btn" href="' + esc(u) + '"' + rel + '>Amazonで見る</a></div></div></li>';
+  }
   function plain(x) {                                   // a product that is no longer on the site: its name and the price it had, and a search
     return '<li class="item gone"><div class="item-body"><h3>' + esc(x.name) + "</h3>" + (x.price ? '<p class="price">' + yen(x.price) + '<small>(保存したときの価格)</small></p>' : "") +
-      '<p class="fav-gone">いまのサイトには載っていません。商品名で、探してみてください。</p></div></li>';
+      '<p class="fav-gone">いまのサイトには載っていません。商品名で探してみてください。</p></div></li>';
   }
   function favorites(root) {
     var db = {};
@@ -94,6 +101,7 @@
       favBox.innerHTML = favs.length ? favs.map(function (x) {
         var it = db[x.code];
         var rm = '<button type="button" class="btn btn-sub fav-rm" data-code="' + esc(x.code) + '">リストから外す</button>';
+        if (String(x.code).indexOf("a:") === 0) return amazonCard(x, rm);
         return it ? card({ code: x.code, n: it.n, p: it.p, i: it.i, u: it.u, a: it.a }, rm) : plain({ name: x.name, price: x.price });
       }).join("") : "";
       $("#my-favs-empty").hidden = favs.length > 0;

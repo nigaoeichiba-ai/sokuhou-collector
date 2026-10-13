@@ -32,9 +32,9 @@
     var days = dayNo(s) - dayNo(now);
     var short = label(s) + "から " + name;
     var tag = days === 0 ? "きょう" : days === 1 ? "あす" : days + "日後";
-    if (ph === "entry") return { phase: ph, tag: tag, short: short, text: label(s) + "から" + store + "の" + name + "です。エントリーは受付中です。それまでに贈り物を選んでおくと、お得なタイミングで買えます。" + after, cta: name + "の詳細を見る" };
-    if (ph === "soon") return { phase: ph, tag: tag, short: short, text: label(s) + "から" + store + "の" + name + "を開催します。それまでに贈り物を選んでおくと、お得なタイミングで買えます。" + after, cta: name + "の詳細を見る" };
-    return { phase: ph, tag: "開催予定", short: short, text: label(s) + "から" + store + "の" + name + "を開催します。日付が決まっている贈り物は、その日に合わせて買うのも一案です。" + after, cta: name + "の詳細を見る" };
+    if (ph === "entry") return { phase: ph, tag: tag, short: short, text: label(s) + "から" + store + "の" + name + "です。エントリーは受付中です。それまでに贈り物を選んでおくとお得なタイミングで買えます。" + after, cta: name + "の詳細を見る" };
+    if (ph === "soon") return { phase: ph, tag: tag, short: short, text: label(s) + "から" + store + "の" + name + "を開催します。それまでに贈り物を選んでおくとお得なタイミングで買えます。" + after, cta: name + "の詳細を見る" };
+    return { phase: ph, tag: "開催予定", short: short, text: label(s) + "から" + store + "の" + name + "を開催します。日付が決まっている贈り物はその日に合わせて買うのも一案です。" + after, cta: name + "の詳細を見る" };
   }
   // at most one per shop: the one on now (the earliest to end), else the nearest coming one; two at most
   function choose(events, now, limit) {
@@ -70,7 +70,7 @@
     bar.hidden = false;
     if (!bar.querySelector(".sale-close")) {
       var b = document.createElement("button");
-      b.type = "button"; b.className = "sale-close"; b.setAttribute("aria-label", "このお知らせを、きょうは閉じる"); b.textContent = "×";
+      b.type = "button"; b.className = "sale-close"; b.setAttribute("aria-label", "このお知らせをきょうは閉じる"); b.textContent = "×";
       b.addEventListener("click", function () {
         var o = closed();
         shown.forEach(function (x) { o[x.e.id + ":" + x.m.phase] = Date.now() + DAY; });

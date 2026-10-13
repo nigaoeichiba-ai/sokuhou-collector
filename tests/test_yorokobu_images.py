@@ -103,7 +103,7 @@ class PageTest(unittest.TestCase):
         html = self.read(f"pick/{f['slug']}/index.html")
         hero = self.imgs(html, r'<a class="feat-photo.*?</a>')[0]
         self.assertIn('fetchpriority="high"', hero)
-        mg = self.imgs(html, r'<div class="mg".*?</div>')
+        mg = self.imgs(html, r'<div class="mg[ "].*?</div>')
         self.assertEqual(len(mg), 4)
         self.assertTrue(all('loading="lazy"' in i and 'decoding="async"' in i for i in mg))
 

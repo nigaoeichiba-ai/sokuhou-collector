@@ -7,6 +7,8 @@ from __future__ import annotations
 
 import re
 
+from sites.yorokobu import commas
+
 FORBIDDEN_WORDS = ["調査", "%", "％", "人気", "ランキング", "No.1", "必ず", "絶対", "最高", "楽天", "アフィリ", "AI", "1位"]
 TEMPLATE_PHRASES = ["視点を合わせると", "生活の中で出番がある", "節目に、相手をよく見て", "迷ったら普段の使い方に近いもの",
                     "好みが分からないときは高価さより", "使う場面が浮かぶ品なら", "候補を絞りやすくなります"]
@@ -42,6 +44,8 @@ def language_problems(blob: str, slug: str, casual: bool = False) -> list[str]:
             out.append(f"{slug}: a comma after every short phrase: {s[:30]}")
         if len(s) > MAX_SENTENCE:
             out.append(f"{slug}: sentence of {len(s)} characters (split it): {s[:30]}")
+        if len(s) <= commas.SHORT_PHRASE and commas.lighten(s) != s:
+            out.append(f"{slug}: a short sentence needs no 読点 (python -m sites.yorokobu.commas apply <file> takes them out): {s[:30]}")
     if blob.count("やすい") > MAX_YASUI or blob.count("やすいです。") > 2:
         out.append(f"{slug}: too many 〜やすい ({blob.count('やすい')}); name the concrete reason instead (分けられる, 持ち帰れる, 保管できる)")
     return out
@@ -156,8 +160,8 @@ def message_problems(m: dict, occasion_slugs: set[str], known: set[str] | None =
             lines_seen.append(ln)
     if len(set(lines_seen)) != len(lines_seen):
         out.append(f"{slug}: a message appears twice")
-    if not 3 <= len(m["manners"]) <= 4 or any(not 28 <= len(x) <= 110 for x in m["manners"]):
-        out.append(f"{slug}: manners need 3-4 items of 28-110 chars")
+    if not 3 <= len(m["manners"]) <= 4 or any(not 24 <= len(x) <= 110 for x in m["manners"]):
+        out.append(f"{slug}: manners need 3-4 items of 24-110 chars")
     if not 3 <= len(m["closing"]) <= 5 or any(not 5 <= len(x) <= 28 for x in m["closing"]):
         out.append(f"{slug}: closing needs 3-5 phrases of 5-28 chars")
     blob = " ".join([m["intro"], *m["manners"], *m["closing"], *[ln for s in m["sets"] for ln in s.get("lines", [])], *[s.get("to", "") for s in m["sets"]]])

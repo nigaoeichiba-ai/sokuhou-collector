@@ -33,7 +33,7 @@
   function block(group, o) {
     o = o || {};
     var items = pick(group, o), rel = ' rel="sponsored nofollow noopener" target="_blank"';
-    var cards = items.length ? '<ul class="items mini">' + items.map(card).join("") + "</ul>" : '<p class="ask-none">この予算に合う商品は、今日の商品データには見つかりませんでした。下のボタンから、探せます。</p>';
+    var cards = items.length ? '<ul class="items mini">' + items.map(card).join("") + "</ul>" : '<p class="ask-none">この予算に合う商品は今日の商品データには見つかりませんでした。下のボタンから探せます。</p>';
     var btns = '<a class="btn" href="' + esc(group.r) + '"' + rel + '>楽天市場で「' + esc(group.q) + '」を探す</a>' + (group.a ? '<a class="btn" href="' + esc(amazon(group, o)) + '"' + rel + '>Amazonで探す</a>' : "");
     return cards + '<p class="more">' + btns + "</p>";
   }

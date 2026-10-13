@@ -306,11 +306,11 @@ class BuildTest(unittest.TestCase):
 
     def test_what_changed_since_yesterday_is_shown_with_true_numbers(self):
         html = self.read("ranking/f20/index.html")
-        self.assertIn("きのうより、順位を上げた", html)
+        self.assertIn("きのうより順位を上げた", html)
         self.assertIn("前日より5つ順位アップ(現在1位)", html)
         hub = self.read("ranking/index.html")
-        self.assertIn("きのうより、順位を上げた商品", hub)
-        self.assertIn("20代女性で、前日より5つ順位アップ", hub)
+        self.assertIn("きのうより順位を上げた商品", hub)
+        self.assertIn("20代女性で前日より5つ順位アップ", hub)
 
     def test_daily_necessities_are_not_shown(self):
         self.assertNotIn("トイレットペーパー", self.read("ranking/f20/index.html"))
@@ -337,9 +337,9 @@ class BuildTest(unittest.TestCase):
             out = Path(tmp) / "s"
             build.render_site(self.c, self.items, CFG, out, release=True, today=date(2026, 10, 7), ranking=s)
             g = (out / "ranking/g-sweets/index.html").read_text(encoding="utf-8")
-            self.assertIn("スイーツ・お菓子の、<wbr>いま売れている商品", g)
+            self.assertIn("スイーツ・お菓子の<wbr>いま売れている商品", g)
             f = (out / "ranking/f20/index.html").read_text(encoding="utf-8")
-            self.assertIn("20代女性に、<wbr>いま売れている商品", f)
+            self.assertIn("20代女性に<wbr>いま売れている商品", f)
             hub = (out / "ranking/index.html").read_text(encoding="utf-8")
             self.assertIn("ジャンルから選ぶ", hub)
             self.assertIn("世代と性別から選ぶ", hub)
