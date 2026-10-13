@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from sokuhou import store
+from sokuhou import feedscan, store
 from sokuhou.sources import kumalib
 from sokuhou.sources import (
     akita_kuma,
@@ -171,6 +171,8 @@ GROUPS: dict[str, list[Source]] = {
         Source("nara_kuma", nara_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("saitama_kuma", saitama_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("otsu_kuma", otsu_kuma.collect, check_counts_bear),
+        # the RSS / Atom feeds of municipalities and prefectures (registry: data/muni_feeds_registry.json): the bear items feed this site, the rest is shared with the other projects
+        Source("muni_feeds", feedscan.collect, feedscan.check_feeds, feedscan.merge_feeds),
     ],
     "frequent": [
         Source("otsu_fire", otsu_fire.collect, check_fire, store.merge_incidents),
