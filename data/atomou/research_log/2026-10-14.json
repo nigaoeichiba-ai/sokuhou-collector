@@ -1,23 +1,60 @@
 {
   "date": "2026-10-14",
   "weekday": "水",
-  "words": {"users": 0, "explored": 24, "target": 50, "note": "利用者の登録ワード0件。RSS手がかり(Apple TV・ロッテ映画・日本代表ブラジル戦ほか)と今日のテーマで検索。目標50に届かず(サブエージェント1体制限のため)。Wikipedia閲覧数は未実施"},
-  "rss": {"headlines_kept": 649, "feeds": 23, "failed": []},
+  "words": {
+    "users": 0,
+    "explored": 24,
+    "target": 50,
+    "note": "利用者の登録ワード0件。RSS手がかり(Apple TV・ロッテ映画・日本代表ブラジル戦ほか)と今日のテーマで検索。目標50に届かず(サブエージェント1体制限のため)。Wikipedia閲覧数は未実施"
+  },
+  "rss": {
+    "headlines_kept": 649,
+    "feeds": 23,
+    "failed": []
+  },
   "searches": 21,
   "fetches_note": "サブエージェント自己申告で手元の確認約45回(seedcheck内の取得は別)",
   "candidates": 77,
   "cards": 43,
   "cards_ratio": 1.8,
   "cards_ratio_note": "候補単位。前日と単純比較できない。次回のワード数目標は据え置き",
-  "rejected": {"final_seedcheck": [{"reason": "duplicate (東宝映画・国家公務員試験・HIMEHINAなど)", "n": 7}, {"reason": "subject/what の字数(直して通過)", "n": 6}]},
+  "rejected": {
+    "final_seedcheck": [
+      {
+        "reason": "duplicate (東宝映画・国家公務員試験・HIMEHINAなど)",
+        "n": 7
+      },
+      {
+        "reason": "subject/what の字数(直して通過)",
+        "n": 6
+      }
+    ]
+  },
   "queries": [
-    {"q": "企業・主催者の一覧ページ(東宝ラインナップ・東京都美術館・IPA試験日程・NPB要項)を直接取得", "official_hits": "多数", "card": true},
-    {"q": "PR TIMES の企業リリース(allowed_domains: prtimes.jp)", "official_hits": "多数", "card": true},
-    {"q": "サービス終了のお知らせ(企業・公的機関)", "official_hits": "多数", "card": true}
+    {
+      "q": "企業・主催者の一覧ページ(東宝ラインナップ・東京都美術館・IPA試験日程・NPB要項)を直接取得",
+      "official_hits": "多数",
+      "card": true
+    },
+    {
+      "q": "PR TIMES の企業リリース(allowed_domains: prtimes.jp)",
+      "official_hits": "多数",
+      "card": true
+    },
+    {
+      "q": "サービス終了のお知らせ(企業・公的機関)",
+      "official_hits": "多数",
+      "card": true
+    }
   ],
-  "failed_words": ["大相撲九州場所の初日(sumo.or.jp で日付本文が取れず)", "JFA ブラジル戦の公式原文", "ダイヤ改正(公式の確定情報なし)", "選挙"],
+  "failed_words": [
+    "大相撲九州場所の初日(sumo.or.jp で日付本文が取れず)",
+    "JFA ブラジル戦の公式原文",
+    "ダイヤ改正(公式の確定情報なし)",
+    "選挙"
+  ],
   "injections": [],
-  "results_written": 0,
-  "results_note": "結果を書く作業は今日は未実施(時間と枠の都合)。results_queue の待ちは40日分残り",
+  "results_written": 1,
+  "results_note": "なでしこジャパン対ドイツ(10/13)の結果ページを1件。NHKと東京新聞(共同)の本文で resultcheck 通過。全テスト(904件)は結果ファイル追加前に実行、追加後は catalog/seedcheck のみ再実行。残り11日分は未着手",
   "ideas": "docs/ideas/2026-10-14.md(3案。Codex は未実行)"
 }
