@@ -1,6 +1,12 @@
 {
- "fetched_at": "2026-10-14T14:26:37.695986+09:00",
+ "fetched_at": "2026-10-15T07:41:22.628879+09:00",
  "incidents": [
+  {
+   "kind": "救助事故",
+   "place": "大津市湖城が丘付近",
+   "started_at": "2026-10-15T07:38:00+09:00",
+   "status": "reported"
+  },
   {
    "kind": "自火報作動",
    "place": "大津市大将軍一丁目付近",
@@ -162,7 +168,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": true,
+ "no_active_incident": false,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
