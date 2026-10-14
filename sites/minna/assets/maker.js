@@ -1,5 +1,5 @@
-// みんなのイラスト: the print makers ("カレンダー" and "名前入り印刷": name tags, seat cards, certificates).
-// A page is drawn on a canvas (A4, 150 dpi) in this browser from an illustration of the library and what is typed here; it can be saved as a PNG or printed.
+// みんなのイラスト: the print makers ("カレンダー", "名前入り印刷": name tags, seat cards, certificates, and the 年賀状 on a postcard).
+// A page is drawn on a canvas (A4 at 150 dpi; a postcard, 100 x 148 mm, at 300 dpi) in this browser from an illustration of the library and what is typed here; it can be saved as a PNG or printed.
 // Nothing typed here leaves the browser.  Uses the search of app.js (window.minnaApp) to pick the illustration.
 // (app.js defines window.minnaApp when it runs; this file is loaded before it, so the work starts at DOMContentLoaded.)
 (function () {
@@ -10,6 +10,7 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var kind = root.getAttribute("data-kind");
   var W = 1240, H = 1754;                                       // A4 portrait at 150 dpi
+  if (kind === "nenga") { W = 1181; H = 1748; }                 // a postcard (100 x 148 mm) at 300 dpi
   var SANS = '"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic","Meiryo","Noto Sans JP","Noto Sans CJK JP",system-ui,sans-serif';
   var SERIF = '"Hiragino Mincho ProN","Yu Mincho","MS PMincho","Noto Serif JP","Noto Serif CJK JP",serif';
   var INK = "#26211d", TEAL = "#1f6f67";
@@ -48,6 +49,11 @@
     Array.from(text).forEach(function (ch) { if (ch === "\n") { lines.push(line); line = ""; return; } if (ctx.measureText(line + ch).width > maxW && line) { lines.push(line); line = ch; } else line += ch; });
     if (line) lines.push(line);
     return lines;
+  }
+  function wrapSentences(text, maxW) {                          // one sentence at a time, so a line does not break in the middle of a phrase when the sentence fits
+    var out = [];
+    (text.match(/[^。]+。?/g) || []).forEach(function (s) { wrapLines(s, maxW).forEach(function (l) { out.push(l); }); });
+    return out;
   }
   function val(name) { var e = $('[name="' + name + '"]', root); return e ? e.value : ""; }
   function clean(s, n) { return String(s || "").replace(/[\u0000-\u001f\u007f]/g, "").trim().slice(0, n); }
@@ -133,7 +139,27 @@
     ctx.textAlign = "left";
   }
 
-  var drawNow = { calendar: drawCalendar, nametag: function () { return val("tpl") === "cert" ? drawCert() : drawTags(); } }[kind];
+  // ---------- 年賀状 (the message side of a postcard: a greeting, the date, a picture, a message and the sender)
+  function drawNenga() {
+    var M = 96, col = val("color") || "#b3261e", serif = val("face") !== "sans", FACE = serif ? SERIF : SANS;
+    var greet = val("greet") || "あけましておめでとうございます", date = clean(val("date"), 20), body = clean(val("body"), 90), from = clean(val("from"), 24);
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+    if ($('[name="frame"]', root).checked) { ctx.strokeStyle = col; ctx.lineWidth = 4; ctx.strokeRect(60, 60, W - 120, H - 120); }
+    ctx.textAlign = "center"; ctx.textBaseline = "alphabetic"; ctx.fillStyle = col;
+    var gf = "800 {px}px " + FACE, gp = fitText(greet, gf, W - 2 * M - 20, greet.length <= 4 ? 170 : 110, 44); ctx.font = gf.replace("{px}", gp);
+    ctx.fillText(greet, W / 2, 250);
+    if (date) { ctx.fillStyle = INK; ctx.font = "600 44px " + FACE; ctx.fillText(date, W / 2, 330); }
+    var top = 390, bottom = H - 130, picH = 640, textTop = top, picTop = top, textH = bottom - top - picH - 20;
+    if (val("pos") === "bottom") { picTop = bottom - picH; } else { textTop = top + picH + 20; }
+    drawImg(img, M, picTop, W - 2 * M, picH);
+    ctx.fillStyle = INK; ctx.font = "500 46px " + FACE;
+    var lines = wrapSentences(body, W - 2 * M - 40).slice(0, 5), lh = 74, y = textTop + 70;
+    lines.forEach(function (l, i) { ctx.fillText(l, W / 2, y + i * lh); });
+    if (from) { ctx.textAlign = "right"; var fp = fitText(from, "700 {px}px " + FACE, W - 2 * M - 40, 56, 30); ctx.font = "700 " + fp + "px " + FACE; ctx.fillText(from, W - M - 20, textTop + textH - 10); }
+    ctx.textAlign = "left";
+  }
+
+  var drawNow = { nenga: drawNenga, calendar: drawCalendar, nametag: function () { return val("tpl") === "cert" ? drawCert() : drawTags(); } }[kind];
   var timer = 0;
   function redraw() { clearTimeout(timer); timer = setTimeout(function () { try { drawNow(); } catch (e) { msg.textContent = "表示できませんでした。入力を確かめてください。"; } }, 80); }
 
@@ -171,7 +197,7 @@
     var sync = function () { $$("[data-for]", root).forEach(function (e) { e.hidden = e.getAttribute("data-for").split(" ").indexOf(tpl.value) < 0; }); };
     tpl.addEventListener("change", sync); sync();
   }
-  function fileName() { return kind === "calendar" ? "calendar-" + val("year") + "-" + pad(+val("month")) + ".png" : "print-" + val("tpl") + ".png"; }
+  function fileName() { if (kind === "nenga") return "nengajo.png"; return kind === "calendar" ? "calendar-" + val("year") + "-" + pad(+val("month")) + ".png" : "print-" + val("tpl") + ".png"; }
   $("#mk-save").addEventListener("click", function () {
     drawNow();
     canvas.toBlob(function (b) { var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = fileName(); document.body.appendChild(a); a.click(); a.remove(); msg.textContent = "保存しました。"; }, "image/png");
@@ -180,7 +206,9 @@
     drawNow();
     var box = $("#mk-printbox"); box.innerHTML = '<img alt="印刷するページ" src="' + canvas.toDataURL("image/png") + '">'; box.hidden = false;
     document.body.classList.add("nu-printing");
-    var im = $("img", box), done = function () { window.print(); document.body.classList.remove("nu-printing"); box.hidden = true; box.innerHTML = ""; };
+    var pageStyle = null;
+    if (kind === "nenga") { pageStyle = document.createElement("style"); pageStyle.textContent = "@page{size:100mm 148mm;margin:0}"; document.head.appendChild(pageStyle); }      // the postcard size, if the printer offers it
+    var im = $("img", box), done = function () { window.print(); document.body.classList.remove("nu-printing"); box.hidden = true; box.innerHTML = ""; if (pageStyle) pageStyle.remove(); };
     if (im.complete) done(); else im.onload = done;
   });
 
@@ -190,11 +218,14 @@
     for (var y = now.getFullYear() - 1; y <= now.getFullYear() + 4; y++) { var o = document.createElement("option"); o.value = y; o.textContent = y + "年"; ys.appendChild(o); }
     for (var m = 1; m <= 12; m++) { var o2 = document.createElement("option"); o2.value = m; o2.textContent = m + "月"; ms.appendChild(o2); }
     ys.value = now.getFullYear(); ms.value = now.getMonth() + 1;
+  } else if (kind === "nenga") {
+    var nd = new Date(), ny = nd.getMonth() >= 8 ? nd.getFullYear() + 1 : nd.getFullYear();      // from September on, the coming New Year
+    $('[name="date"]', root).value = ny >= 2019 ? "令和" + (ny - 2018) + "年 元旦" : ny + "年 元旦";
   } else {
     var dt = new Date(); $('[name="date"]', root).value = dt.getFullYear() + "年" + (dt.getMonth() + 1) + "月" + dt.getDate() + "日";
   }
   drawNow();
-  $('[name="q"]', root).value = "ひつじ"; search();
+  $('[name="q"]', root).value = kind === "nenga" ? "年賀状" : "ひつじ"; search();
   window.minnaMaker = { holidays: holidays, redraw: drawNow };
   }
   if (document.readyState === "complete") main(); else document.addEventListener("DOMContentLoaded", main);

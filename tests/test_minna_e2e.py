@@ -55,6 +55,12 @@ async function load(url) {
       const sel = d.querySelector('[name="tpl"]'); sel.value = tpl; d.querySelector('[name="name"]').value = '山田 太郎'; sel.dispatchEvent(new w.Event('change')); await wait(500);
       const cv = d.getElementById('mk-canvas'); out.tag[tpl] = { ink: ink(cv, 0, cv.height), msg: d.getElementById('mk-msg').textContent, cert_fields_hidden: d.querySelector('[data-for="cert"]').hidden };
     }
+    // the postcard maker: a greeting, a message and a sender are drawn, and it is a 100 x 148 mm page at 300 dpi
+    f = await load('/tool/nenga/'); d = f.contentDocument; w = f.contentWindow; await wait(1500);
+    d.querySelector('#mk-list button').click(); await wait(1500);
+    d.querySelector('[name="from"]').value = '山田 太郎'; d.querySelector('[name="from"]').dispatchEvent(new w.Event('input')); await wait(500);
+    const nc = d.getElementById('mk-canvas'), colored = (cv, y0, h) => { const x = cv.getContext('2d').getImageData(0, y0, cv.width, h).data; let n = 0; for (let i = 0; i < x.length; i += 4) if (x[i] < 235 || x[i + 1] < 235 || x[i + 2] < 235) n++; return n; };      // the greeting is in a colour, not black
+    out.nenga = { size: [nc.width, nc.height], msg: d.getElementById('mk-msg').textContent, date: d.querySelector('[name="date"]').value, head_ink: colored(nc, 150, 130), body_ink: ink(nc, 420, 1000) };
     // phone width: the header links must stay readable (not squeezed into one-character-wide columns)
     {
       const f2 = document.createElement('iframe'); f2.style.width = '300px'; f2.style.height = '800px'; document.body.appendChild(f2);
@@ -127,6 +133,14 @@ class MinnaBrowserTest(unittest.TestCase):
             self.assertGreater(tag[tpl]["ink"], 3000, tpl)
         self.assertFalse(tag["cert"]["cert_fields_hidden"])
         self.assertTrue(self.out["tag"]["tag8"]["cert_fields_hidden"])
+
+    def test_new_year_card_maker_draws_a_postcard(self):
+        n = self.out["nenga"]
+        self.assertEqual(n["size"], [1181, 1748])
+        self.assertIn("選んだイラスト", n["msg"])
+        self.assertRegex(n["date"], r"^令和\d+年 元旦$")
+        self.assertGreater(n["head_ink"], 800)          # the greeting
+        self.assertGreater(n["body_ink"], 3000)         # the picture and the message
 
     def test_background_switcher(self):
         self.assertEqual(self.out["bg_dark"], "rgb(43, 27, 20)")
