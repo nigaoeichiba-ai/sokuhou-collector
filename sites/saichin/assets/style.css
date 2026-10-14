@@ -325,3 +325,5 @@ h2::before { background:linear-gradient(var(--accent),#10b981); width:8px; borde
   #chk-out { border:1px solid #000; background:#fff; }
 }
 .hint-link { margin:10px 0 0; font-size:.88rem; color:var(--muted); }
+
+.quote { margin:8px 0 14px; padding:10px 14px; border-left:4px solid var(--brand); border-radius:8px; background:var(--card); overflow-wrap:anywhere; font-size:.92rem; }

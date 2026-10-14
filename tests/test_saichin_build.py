@@ -40,10 +40,10 @@ class PreviewBuildTest(BuildTestBase):
         from sites.saichin import ogimage
         from sokuhou.sitekit import asset_files
         n_assets = len(asset_files(Path(__file__).parent.parent / 'sites' / 'saichin' / 'assets'))
-        expected = 75 + n_assets + 2 + 1 + 1 + 1 + 48 + (48 if ogimage.available() else 0)  # 74 + the asset files (css, js, svg, images) + 2 root copies (favicon.ico, apple-touch-icon.png), feed.xml, feed/dates.xml, notify page, 48 calendars, share cards (default + 47 prefectures)
+        expected = 79 + n_assets + 2 + 1 + 1 + 1 + 48 + (48 if ogimage.available() else 0)  # 74 + the asset files (css, js, svg, images) + 2 root copies (favicon.ico, apple-touch-icon.png), feed.xml, feed/dates.xml, notify page, 48 calendars, share cards (default + 47 prefectures)
         self.assertEqual(len(self.files), expected)
         html_pages = [f for f in self.files if f.endswith('.html')]
-        self.assertEqual(len(html_pages), 1 + 47 + 8 + 3 + 2 + 1 + 1 + 6 + 3 + 1)  # home, prefectures, areas, rankings, calendar+history, notify, shortfall checker, guides, legal, 404
+        self.assertEqual(len(html_pages), 1 + 47 + 8 + 3 + 2 + 1 + 1 + 2 + 6 + 3 + 1)  # home, prefectures, areas, rankings, calendar+history, notify, shortfall checker, data+cite, guides, legal, 404
         for rel in ("index.html", "shiga/index.html", "okinawa/index.html", "about/index.html",
                     "privacy/index.html", "contact/index.html", "404.html", "sitemap.xml", "robots.txt"):
             self.assertIn(rel, self.files)
@@ -94,10 +94,11 @@ class PreviewBuildTest(BuildTestBase):
     def test_history_is_contiguous_and_ordered(self):
         tokyo = next(r for r in build.prepare(_raw())["rows"] if r["short"] == "東京")
         labels = [h["label"] for h in tokyo["history"]]
-        self.assertEqual(labels[0], "平成28年度")
+        self.assertEqual(labels[0], "平成14年度")           # the whole workbook, not only the last 11 years
         self.assertEqual(labels[-1], "令和8年度")
         self.assertIn("令和元年度", labels)
-        self.assertEqual(len(labels), 11)
+        self.assertEqual(len(labels), 25)
+        self.assertEqual([h["fy"] for h in tokyo["history"]], list(range(2002, 2027)))
 
     def test_index_links_resolve_and_embedded_json_is_valid(self):
         text = self.read(self.out, "index.html")
@@ -111,7 +112,7 @@ class PreviewBuildTest(BuildTestBase):
 
     def test_sitemap_lists_every_page(self):
         locs = re.findall(r"<loc>(.*?)</loc>", self.read(self.out, "sitemap.xml"))
-        self.assertEqual(len(locs), 72)  # every html page except 404
+        self.assertEqual(len(locs), 74)  # every html page except 404
         self.assertIn("https://saichin-sokuho.com/shiga/", locs)
 
     def test_privacy_page_has_the_ad_disclosures(self):
@@ -179,7 +180,8 @@ class ReleaseBuildTest(BuildTestBase):
             if rel.endswith(".html"):
                 text = self.read(out, rel)
                 self.assertNotIn("(未設定)", text, rel)
-                self.assertNotIn("@", text, rel)
+                visible = re.sub(r'<script type="application/ld\+json">.*?</script>', "", text, flags=re.S)       # schema.org keys are "@context", "@type": not addresses
+                self.assertNotIn("@", visible, rel)
         self.assertIn('href="/contact/">お問い合わせフォーム', self.read(out, "about/index.html"))
         self.assertIn("お問い合わせフォーム</a>からお願いします", self.read(out, "privacy/index.html"))
 
