@@ -245,6 +245,16 @@ def series_of(item: dict, series: list[dict]) -> dict:
     return next(s for s in series if s["slug"] == item["series"])
 
 
+def series_use(s: dict) -> str:
+    """The sentence of the set's lead that says what it is for ("…に使えます。"), or "" when the lead has none."""
+    sents = re.findall(r"[^。]+。", s.get("lead", ""))
+    return sents[-1] if len(sents) >= 2 and "使え" in sents[-1] else ""
+
+
+def is_pose_set(s: dict) -> bool:
+    return not s["legacy"] and "ポーズ" in s["title"]
+
+
 def genre_name(slug: str) -> str:
     return GENRE_BY_SLUG[slug][1]
 
@@ -321,7 +331,7 @@ def synonym_groups() -> list[list[str]]:
     return groups
 
 
-def assist_data(built, guides, year: int, kinds: dict, use_hubs: list | None = None) -> dict:
+def assist_data(built, guides, year: int, kinds: dict, use_hubs: list | None = None, has_pose: bool = False) -> dict:
     """data/assist.json: the pages the helper can point to, its short answers and the first buttons."""
     pages = []
     for sp, _sers, _its in built:
@@ -335,6 +345,8 @@ def assist_data(built, guides, year: int, kinds: dict, use_hubs: list | None = N
     pages.append({"u": "/tool/nurie/", "n": "オンラインぬりえ(ブラウザで色を塗る)", "k": ["ぬりえ", "塗り絵", "色を塗る", "オンライン", "保存", "印刷"], "t": "ツール"})
     for h in use_hubs or []:
         pages.append({"u": f"/use/{h['slug']}/", "n": f"{h['name']}に使えるイラスト", "k": h["words"][:8], "t": "用途"})
+    if has_pose:
+        pages.append({"u": "/pose/", "n": "ポーズ集(動物・人物のポーズ違いのイラスト)", "k": ["ポーズ", "表情", "差分", "動物", "いろいろ", "立つ", "座る"], "t": "ポーズ"})
     pages.append({"u": "/tool/", "n": "つくる(カード・カレンダー・名札・賞状・ぬりえ)", "k": ["つくる", "作る", "ツール", "メーカー", "カレンダー", "名札", "席札", "賞状", "カード", "ぬりえ"], "t": "ツール"})
     pages.append({"u": "/tool/calendar/", "n": "カレンダーをつくる(イラスト入り・祝日つき)", "k": ["カレンダー", "月間", "祝日", "印刷", "壁掛け", "メーカー"], "t": "ツール"})
     pages.append({"u": "/tool/nametag/", "n": "名前入りの名札・席札・賞状をつくる", "k": ["名札", "ネームプレート", "席札", "賞状", "名前入り", "印刷", "ネームタグ"], "t": "ツール"})
@@ -654,7 +666,7 @@ def hero_collage(items: list[dict]) -> str:
                    for c in chosen)
 
 
-def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], today: date, printable_thumbs: list[str] | None = None, use_hubs: list[dict] | None = None) -> str:
+def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], today: date, printable_thumbs: list[str] | None = None, use_hubs: list[dict] | None = None, has_pose: bool = False) -> str:
     genres_present = [g for g in GENRES if any(i["genre"] == g[0] for i in items)]
     gtiles = ""
     for slug, name, desc, _ in genres_present:
@@ -678,7 +690,7 @@ def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], 
     use_html = ""
     if use_hubs:
         use_html = ('<section style="margin-top:44px"><div class="sec-head"><h2>用途から<span class="scribble">探す</span></h2><p>使う場面ごとに、イラストをまとめました。</p></div><nav class="chips">'
-                    + "".join(f'<a href="/use/{h["slug"]}/">{esc(h["name"])}</a>' for h in use_hubs) + "</nav></section>")
+                    + "".join(f'<a href="/use/{h["slug"]}/">{esc(h["name"])}</a>' for h in use_hubs) + ('<a href="/pose/">ポーズ集</a>' if has_pose else "") + "</nav></section>")
     print_html = ""
     if printable_thumbs:
         thumbs = "".join(f'<img src="{t}" alt="" width="110" height="156" loading="lazy">' for t in printable_thumbs[:4])
@@ -803,6 +815,17 @@ def touch_pages(cfg, preview, items, series) -> dict:
     return out
 
 
+def uses_html(s: dict, generic: list[str]) -> str:
+    """<li>s of the 用途例: what this set is for first, then the usual ones of its genre."""
+    first = series_use(s)
+    head = f"<li><b>このセット:</b> {esc(first)}</li>" if first else ""
+    return head + "".join(f"<li>{esc(u)}</li>" for u in generic)
+
+
+def pose_note(s: dict) -> str:
+    return '<p class="meta" style="margin-top:32px">ほかの動物や人物のポーズは、<a href="/pose/">ポーズ集の一覧</a>から探せます。</p>' if is_pose_set(s) else ""
+
+
 def series_page(cfg, preview, s: dict, items, series, og: bool, guides=()) -> str:
     base = cfg["site_url"].rstrip("/")
     g, t = genre_name(s["genre"]), touch_name(s["touch"])
@@ -816,8 +839,8 @@ def series_page(cfg, preview, s: dict, items, series, og: bool, guides=()) -> st
 <p class="meta">{len(s['items'])}点 ・ タッチ: <a href="/touch/{s['touch']}/">{esc(t)}</a> ・ ジャンル: <a href="/genre/{s['genre']}/">{esc(g)}</a></p>
 <p class="dl"><button type="button" class="btn big" data-zip data-name="{s['slug']}" data-files='{esc(files)}'>セットをまとめて保存(ZIP)</button> <span class="memo-note">ブラウザの中でまとめます。ログインは不要です。</span></p>
 {licence_box()}{grid(s['items'])}
-<section style="margin-top:44px"><h2><span class="scribble">用途例</span></h2><ul class="check">{''.join(f'<li>{esc(u)}</li>' for u in USES[s['genre']])}</ul></section>
-{share(cfg, s['url'], s['title'] + '(無料・商用OKのイラスト)')}
+<section style="margin-top:44px"><h2><span class="scribble">用途例</span></h2><ul class="check">{uses_html(s, USES[s['genre']])}</ul></section>
+{pose_note(s)}{share(cfg, s['url'], s['title'] + '(無料・商用OKのイラスト)')}
 {('<section style="margin-top:44px"><h2><span class="scribble">他の' + esc(g) + 'のセット</span></h2>' + set_grid(same_genre) + '</section>') if same_genre else ''}
 {guide_box(guides_for(s['genre'], s['touch'], list(guides)))}
 <script type="application/ld+json">{ld}</script>"""
@@ -842,7 +865,8 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
     mates = [x for x in s["items"] if x["id"] != it["id"]]
     mates = (s["items"][idx + 1:] + s["items"][:idx])[:8]
     others = [x for x in items if x["genre"] == it["genre"] and x["series"] != it["series"]][:4]
-    uses = "".join(f"<li>{esc(u)}</li>" for u in USES[it["genre"]])
+    uses = uses_html(s, USES[it["genre"]])
+    use_line = series_use(s)
     tags = "".join(f'<li><a href="{tag_url(x)}">{esc(x)}</a></li>' if x in SITE.get("tags", ()) else f'<li>{esc(x)}</li>' for x in it["tags"])
     ld = json.dumps({"@context": "https://schema.org", "@type": "ImageObject", "contentUrl": f"{base}/files/{it['id']}.png", "name": it["title"],
                      "description": it["desc"], "license": f"{base}/license/", "acquireLicensePage": f"{base}/license/",
@@ -856,6 +880,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 <div class="detail"><div class="preview"><div class="checker big" id="bgbox"><img id="mainimg" src="/files/{it['id']}.webp" alt="{esc(it['title'])}" width="{it['w']}" height="{it['h']}" fetchpriority="high"></div>
 <div class="bgsw" aria-label="背景色を確認する"><button type="button" data-bg="" class="on">透明</button><button type="button" data-bg="#ffffff">白</button><button type="button" data-bg="#ffc93c">黄</button><button type="button" data-bg="#ffd6e0">桃</button><button type="button" data-bg="#d9f1ff">空</button><button type="button" data-bg="#2b1b14">黒</button></div></div>
 <div class="info"><h1>{esc(it['title'])}</h1><p class="lead">{esc(it['desc'])}</p>
+<p class="meta">「<a href="{s['url']}">{esc(s['title'])}</a>」{len(s['items'])}点のうちの1点です。{esc(use_line)}</p>
 <p class="dl"><a class="btn big" href="/files/{it['id']}.png" download="{it['id']}.png">PNG(透明)をダウンロード</a>
 <a class="btn btn-sub" href="/files/{it['id']}.webp" download="{it['id']}.webp">WebP</a>
 {''.join(f'<a class="btn btn-sub" href="/files/{it["id"]}-{k}.pdf" download="{it["id"]}-{k}.pdf">{"A4で印刷(PDF)" if k == "a4" else "はがきサイズで印刷(PDF)"}</a>' for k in pdf_kinds(it))}
@@ -878,7 +903,8 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 {guide_box(guides_for(it['genre'], it['touch'], list(guides)))}
 <script type="application/ld+json">{ld}</script>"""
     return page(cfg, preview, path=f"/illust/{it['id']}/", title=f"{it['title']} 無料・商用OKのイラスト | {cfg['site_name']}",
-                description=f"{it['desc']}{t}のタッチ。無料・商用OK・クレジット不要の透明PNG。"[:150], body=body, og_image=f"/thumbs/{it['id']}.webp")
+                description=(f"{it['title']}のイラスト。{s['title']}の1点です。{use_line}無料・商用OK・クレジット不要の透明PNG。" if use_line
+                             else f"{it['desc']}{t}のタッチ。無料・商用OK・クレジット不要の透明PNG。")[:150], body=body, og_image=f"/thumbs/{it['id']}.webp")
 
 
 def special_page(cfg, preview, sp: dict, sers: list[dict], its: list[dict], today: date, guides=()) -> str:
@@ -1093,6 +1119,29 @@ def use_pages(cfg: dict, preview: bool, series: list[dict], built: list, guides:
     return pages, live
 
 
+def pose_page(cfg: dict, preview: bool, series: list[dict]) -> tuple[str, list[dict]]:
+    """/pose/: every set of poses (animals, workers, family and so on) in one place, grouped by genre; returns the page and the sets."""
+    sets = sorted((s for s in series if is_pose_set(s) and s["items"]), key=lambda s: (s["genre"], s["slug"]))
+    groups: dict[str, list[dict]] = {}
+    for s in sets:
+        groups.setdefault(s["genre"], []).append(s)
+    order = sorted(groups, key=lambda g: (-len(groups[g]), g))
+    n_items = sum(len(s["items"]) for s in sets)
+    secs = "".join(f'<section style="margin-top:44px" id="pose-{g}"><h2><span class="scribble">{esc(genre_name(g))}のポーズ</span></h2>'
+                   f'<p class="meta">{len(groups[g])}セット・{sum(len(s["items"]) for s in groups[g])}点</p>{set_grid(groups[g])}</section>' for g in order)
+    jump = "".join(f'<a href="#pose-{g}">{esc(genre_name(g))}</a>' for g in order)
+    body = f"""{crumbs([("トップ", "/"), ("ポーズ集", None)])}
+<h1>ポーズ集のイラスト</h1>
+<p class="lead">同じキャラクターが、立つ、座る、笑う、驚く、歩くなど、さまざまなポーズをとったイラストを集めました。{len(sets)}セット・{n_items}点。無料・商用OK・クレジット不要です。</p>
+<p>1つのセットは同じキャラクターでそろっているので、スライドや資料、おたよりの中で、場面に合わせて表情やポーズを使い分けられます。背景は透明なPNGです。</p>
+{licence_box()}
+<nav class="chips" aria-label="ジャンル">{jump}</nav>
+{secs}"""
+    html = page(cfg, preview, path="/pose/", title=f"ポーズ集のイラスト 動物・人物のポーズいろいろ 無料・商用OK | {cfg['site_name']}",
+                description=f"動物や人物のポーズ違いのイラスト{n_items}点({len(sets)}セット)。無料・商用OK・登録不要の透明PNGで、スライドやSNS、おたよりの表情差分に使えます。", body=body)
+    return html, sets
+
+
 MAKER_FAQ = {
     "calendar": [
         ("祝日は入っていますか?", "入っています。法律で定められた祝日と振替休日、国民の休日を、年ごとに計算して表示します。年によって祝日が変わることがあるため、大切な予定の確認には公式の暦も参照してください。"),
@@ -1254,8 +1303,11 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     pr_files, pr_kinds = build_printables(items)
     SITE["nav"] = [n for n in BASE_NAV if (built or n[1] != "/special/") and (guides or n[1] != "/guide/") and (cal_themes or n[1] != "/printables/")]
     use_files, use_live = use_pages(cfg, preview, series, built, guides)
-    pages: dict[str, str | bytes] = {"index.html": index_page(cfg, preview, items, series, today, [m["img"] for m in cal_themes[0]["months"][:4]] if cal_themes else None, use_live)}
+    pose_html, pose_sets = pose_page(cfg, preview, series)
+    pages: dict[str, str | bytes] = {"index.html": index_page(cfg, preview, items, series, today, [m["img"] for m in cal_themes[0]["months"][:4]] if cal_themes else None, use_live, len(pose_sets) >= 3)}
     pages.update(use_files)
+    if len(pose_sets) >= 3:
+        pages["pose/index.html"] = pose_html
     pages.update(illust_hub(cfg, preview, items, series))
     pages.update(genre_pages(cfg, preview, items, series))
     pages.update(touch_pages(cfg, preview, items, series))
@@ -1305,7 +1357,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         pages[f"thumbs/{it['id']}.webp"] = thumb_bytes(it["path"])
     pages["data/items.json"] = search_index(items, series)
     pages["data/synonyms.json"] = json.dumps({"v": 1, "groups": synonym_groups()}, ensure_ascii=False, separators=(",", ":"))
-    pages["data/assist.json"] = json.dumps(assist_data(built, guides, calendar_year(today), pr_kinds, use_live), ensure_ascii=False, separators=(",", ":"))
+    pages["data/assist.json"] = json.dumps(assist_data(built, guides, calendar_year(today), pr_kinds, use_live, len(pose_sets) >= 3), ensure_ascii=False, separators=(",", ":"))
     pages["feed.xml"] = feed_xml(cfg, series, today)
     pages.update(legal_pages(
         SITE, cfg, preview,
