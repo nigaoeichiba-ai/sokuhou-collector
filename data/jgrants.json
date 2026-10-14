@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-13T02:34:06.503427+00:00",
+ "fetched_at": "2026-10-14T00:16:51.333593+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -2029,7 +2029,19 @@
    "target_area_search": "島根県",
    "target_number_of_employees": "300名以下",
    "title": "【島根県】令和8年度_中小企業等海外展開支援事業費補助金（海外出願支援事業）（第６回公募）"
+  },
+  {
+   "acceptance_end_datetime": "2027-07-31T14:59:00.000Z",
+   "acceptance_start_datetime": "2026-10-08T15:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003n4bqUAA",
+   "id": "a0WfQ000003n4bqUAA",
+   "institution_name": "臨床研修費等補助金",
+   "name": "S-00009968",
+   "subsidy_max_limit": 0,
+   "target_area_search": "東京都",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "令和８年度臨床研修費等補助金（歯科医師）"
   }
  ],
- "total": 169
+ "total": 170
 }
