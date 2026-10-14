@@ -53,6 +53,33 @@ class Hubs(unittest.TestCase):
         self.assertEqual(set(files), {"use/index.html"})
 
 
+class SetSpecificText(unittest.TestCase):
+    def test_series_use_is_the_use_sentence_of_the_lead(self):
+        self.assertEqual(build.series_use({"lead": "水彩風の素材です。体操教室の案内に使えます。"}), "体操教室の案内に使えます。")
+        self.assertEqual(build.series_use({"lead": "ひとことだけ。"}), "")
+        self.assertEqual(build.series_use({"lead": "素材です。色が違います。"}), "")      # no 使え: not a use sentence
+
+    def test_picture_page_names_its_set_and_what_it_is_for(self):
+        items, series = build.load_data()
+        s = next(x for x in series if not x["legacy"] and build.series_use(x))
+        it = s["items"][0]
+        html = build.illust_page({**CFG, "operator_name": "テスト"}, True, it, items, series)
+        self.assertIn(build.series_use(s), html)
+        self.assertIn("このセット:", html)
+        self.assertIn(f"{len(s['items'])}点のうちの1点です", html)
+
+    def test_pose_hub_lists_every_pose_set_and_the_sets_link_back(self):
+        items, series = build.load_data()
+        html, sets = build.pose_page(CFG, True, series)
+        self.assertGreaterEqual(len(sets), 10)
+        for s in sets:
+            self.assertIn(f'href="{s["url"]}"', html)
+            self.assertIn("ポーズ", s["title"])
+        self.assertIn('href="/pose/"', build.series_page(CFG, True, sets[0], items, series, og=False))
+        plain = next(x for x in series if not build.is_pose_set(x))
+        self.assertNotIn('href="/pose/"', build.series_page(CFG, True, plain, items, series, og=False))
+
+
 class Makers(unittest.TestCase):
     def test_nav_has_the_hub_and_the_tools(self):
         hrefs = [n[1] for n in build.BASE_NAV]
