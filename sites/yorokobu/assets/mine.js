@@ -14,8 +14,12 @@
   function yen(n) { return "¥" + Number(n).toLocaleString("ja-JP"); }
   // a link that comes from a data file (the products of /list/items.json) is drawn only when it goes to a shop of ours: https and a known host
   var HOSTS = ["hb.afl.rakuten.co.jp", "item.rakuten.co.jp", "search.rakuten.co.jp", "www.amazon.co.jp"];
+  var IMG_HOSTS = ["thumbnail.image.rakuten.co.jp", "image.rakuten.co.jp"];     // Rakuten's own picture hosts (no Amazon picture is ever kept)
   function safeUrl(u) {
     try { var x = new URL(String(u), location.origin); return x.protocol === "https:" && HOSTS.indexOf(x.hostname) >= 0 ? x.href : ""; } catch (e) { return ""; }
+  }
+  function safeImg(u) {
+    try { var x = new URL(String(u), location.origin); return x.protocol === "https:" && IMG_HOSTS.indexOf(x.hostname) >= 0 ? x.href : ""; } catch (e) { return ""; }
   }
   function dnt() { return navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || window.doNotTrack === "1" || navigator.msDoNotTrack === "1"; }
   var memDone = {};                                                      // the once-a-day rule when localStorage is not available
@@ -74,7 +78,7 @@
 
   // ---- /favorites/
   function card(it, extra) {
-    it = Object.assign({}, it, { u: safeUrl(it.u), a: safeUrl(it.a), i: safeUrl(it.i) || "" });
+    it = Object.assign({}, it, { u: safeUrl(it.u), a: safeUrl(it.a), i: safeImg(it.i) });
     var rel = ' rel="sponsored nofollow noopener" target="_blank"';
     var attrs = ' data-code="' + esc(it.code || "") + '"' + (it.asin ? ' data-asin="' + esc(it.asin) + '"' : "") + ' data-price="' + esc(it.p || "") + '"';
     return '<li class="item"' + attrs + '><a class="item-img" href="' + esc(it.u) + '"' + rel + '><img src="' + esc(it.i) + '" alt="' + esc(it.n) + '" width="300" height="300" loading="lazy"></a>' +
@@ -132,6 +136,6 @@
     var root = $("#myitems");
     if (root) favorites(root);
   }
-  window.YorokobuMine = { counterKey: counterKey, press: press, safeUrl: safeUrl };
+  window.YorokobuMine = { counterKey: counterKey, press: press, safeUrl: safeUrl, safeImg: safeImg };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

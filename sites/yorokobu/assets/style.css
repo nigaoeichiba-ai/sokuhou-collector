@@ -303,6 +303,7 @@ ul.warn li::before { content: "!"; position: absolute; left: .85em; top: .85em; 
 
 /* note / pr */
 .pr-quiet { display: flex; align-items: center; gap: .6em; margin: 14px 0 0; font-size: .74rem; color: var(--muted); }
+.pr-quiet + .block { margin-top: 22px; }
 .pr-chip { display: inline-block; padding: 0 .6em; border: 1px solid var(--muted); border-radius: 6px; background: transparent; color: var(--muted); font-weight: 700; font-size: .66rem; letter-spacing: .06em; line-height: 1.6; }
 .pr-foot { margin: 48px 0 0; padding: 1em 0 0; border-top: 1px solid var(--line); font-size: .78rem; line-height: 1.85; color: var(--muted); }
 .pr-foot b { display: block; margin-bottom: .2em; color: var(--ink2); }

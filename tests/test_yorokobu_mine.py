@@ -145,6 +145,8 @@ async function load(url) {
     out.fav_cards = d.querySelectorAll('#my-favs li.item').length;
     out.fav_has_buttons = d.querySelectorAll('#my-favs a.btn[rel~="sponsored"]').length;
     out.recent_cards = d.querySelectorAll('#my-recent li.item').length;
+    out.card_imgs = [...d.querySelectorAll('#my-favs li.item img, #my-recent li.item img')].map(i => i.getAttribute('src'));
+    out.safe_img = ['https://thumbnail.image.rakuten.co.jp/@0_mall/s/a.jpg?_ex=300x300', 'https://image.rakuten.co.jp/s/a.jpg', 'http://thumbnail.image.rakuten.co.jp/a.jpg', 'https://m.media-amazon.com/images/I/a.jpg', 'https://evil.example.com/a.jpg', 'javascript:alert(1)'].map(u => w.YorokobuMine.safeImg(u));
     out.empty_hidden = d.querySelector('#my-favs-empty').hidden;
     out.fav_n = d.querySelector('#my-favs-n').textContent;
     out.header_link = (d.querySelector('header.site .fav-link') || {}).textContent;
@@ -205,6 +207,9 @@ async function load(url) {
         o = self.out
         self.assertEqual(o["fav_cards"], 1)
         self.assertGreaterEqual(o["fav_has_buttons"], 1)
+        self.assertGreaterEqual(len(o["card_imgs"]), 2)           # a saved and a recent product: each card shows its Rakuten picture (a card without one showed only its alt text)
+        self.assertTrue(all(x.startswith("https://thumbnail.image.rakuten.co.jp/") for x in o["card_imgs"]), o["card_imgs"])
+        self.assertEqual(o["safe_img"], ["https://thumbnail.image.rakuten.co.jp/@0_mall/s/a.jpg?_ex=300x300", "https://image.rakuten.co.jp/s/a.jpg", "", "", "", ""])   # Rakuten's picture hosts only, over https; never an Amazon picture
         self.assertEqual(o["recent_cards"], 1)                    # the one that is still on the site (the other one has no picture or price to show)
         self.assertTrue(o["empty_hidden"])
         self.assertEqual(o["fav_n"], "1")

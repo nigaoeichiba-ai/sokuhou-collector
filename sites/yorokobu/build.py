@@ -434,7 +434,7 @@ def pr_with_amazon(cfg: dict) -> str:
 
 def pr_quiet(cfg: dict) -> str:
     """A one-line label at the top of the page (the full text sits in the footer of every page)."""
-    return '<p class="pr-quiet"><span class="pr-chip" title="広告を含みます" aria-label="広告を含みます">PR</span></p>'
+    return '<p class="pr-quiet"><span class="pr-chip">PR</span><span class="pr-text">このページには広告を含みます</span></p>'
 
 
 def pr_foot(cfg: dict, amazon: bool = False, rakuten: bool = True) -> str:
