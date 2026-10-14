@@ -817,10 +817,12 @@ def touch_pages(cfg, preview, items, series) -> dict:
 
 
 def uses_html(s: dict, generic: list[str]) -> str:
-    """<li>s of the 用途例: what this set is for first, then the usual ones of its genre."""
+    """<li>s of the 用途例: what this very set is for (the sentence of its own lead).  The genre's stock list is only a fallback for the sets that have no such sentence
+    (the original sets), because a list shared by a whole genre ends up wrong for many of its sets (a nurse is not "引っ越し・住まいの案内に")."""
     first = series_use(s)
-    head = f"<li><b>このセット:</b> {esc(first)}</li>" if first else ""
-    return head + "".join(f"<li>{esc(u)}</li>" for u in generic)
+    if first:
+        return f"<li>{esc(first)}</li>"
+    return "".join(f"<li>{esc(u)}</li>" for u in generic)
 
 
 def pose_note(s: dict) -> str:
@@ -866,6 +868,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
     mates = [x for x in s["items"] if x["id"] != it["id"]]
     mates = (s["items"][idx + 1:] + s["items"][:idx])[:8]
     others = [x for x in items if x["genre"] == it["genre"] and x["series"] != it["series"]][:4]
+    same_subject = [x for x in items if x["genre"] == it["genre"] and x["title"] == it["title"] and x["series"] != it["series"]][:6]
     uses = uses_html(s, USES[it["genre"]])
     use_line = series_use(s)
     tags = "".join(f'<li><a href="{tag_url(x)}">{esc(x)}</a></li>' if x in SITE.get("tags", ()) else f'<li>{esc(x)}</li>' for x in it["tags"])
@@ -886,6 +889,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 <a class="btn btn-sub" href="/files/{it['id']}.webp" download="{it['id']}.webp">WebP</a>
 {''.join(f'<a class="btn btn-sub" href="/files/{it["id"]}-{k}.pdf" download="{it["id"]}-{k}.pdf">{"A4で印刷(PDF)" if k == "a4" else "はがきサイズで印刷(PDF)"}</a>' for k in pdf_kinds(it))}
 {f'<a class="btn btn-sub" href="/tool/nurie/?id={it["id"]}">オンラインで塗る</a>' if it["touch"] == "lineart" else ""}
+{f'<a class="btn btn-sub" href="/tool/nenga/?id={it["id"]}">この絵で年賀状をつくる</a>' if it["genre"] == "eto" and it["touch"] != "lineart" else ""}
 <button class="btn btn-sub fav-big" type="button" data-fav="{it['id']}" aria-pressed="false">♡ お気に入り</button></p>
 <p class="meta">サイズ: {it['w']}×{it['h']}px(透明な背景) ・ セット: <a href="{s['url']}">{esc(s['title'])}</a> ・ タッチ: <a href="/touch/{it['touch']}/">{esc(t)}</a> ・ ジャンル: <a href="/genre/{it['genre']}/">{esc(g)}</a></p>
 <details class="export" data-src="/files/{it['id']}.png" data-name="{it['id']}"><summary>背景や大きさを変えて保存する</summary>
@@ -900,6 +904,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 <section><h2><span class="scribble">キーワード</span></h2><ul class="tagcloud">{tags}</ul></section>
 {share(cfg, f"/illust/{it['id']}/", f"{it['title']}(無料・商用OKのイラスト)")}
 <section style="margin-top:44px"><h2><span class="scribble">同じセットのイラスト</span></h2>{grid(mates)}</section>
+{('<section style="margin-top:44px"><h2><span class="scribble">同じ題材の別のタッチ</span></h2>' + grid(same_subject) + '</section>') if same_subject else ''}
 {('<section style="margin-top:44px"><h2><span class="scribble">他の' + esc(g) + 'のイラスト</span></h2>' + grid(others) + '</section>') if others else ''}
 {guide_box(guides_for(it['genre'], it['touch'], list(guides)))}
 <script type="application/ld+json">{ld}</script>"""

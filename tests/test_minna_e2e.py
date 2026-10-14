@@ -61,6 +61,8 @@ async function load(url) {
     d.querySelector('[name="from"]').value = '山田 太郎'; d.querySelector('[name="from"]').dispatchEvent(new w.Event('input')); await wait(500);
     const nc = d.getElementById('mk-canvas'), colored = (cv, y0, h) => { const x = cv.getContext('2d').getImageData(0, y0, cv.width, h).data; let n = 0; for (let i = 0; i < x.length; i += 4) if (x[i] < 235 || x[i + 1] < 235 || x[i + 2] < 235) n++; return n; };      // the greeting is in a colour, not black
     out.nenga = { size: [nc.width, nc.height], msg: d.getElementById('mk-msg').textContent, date: d.querySelector('[name="date"]').value, head_ink: colored(nc, 150, 130), body_ink: ink(nc, 420, 1000) };
+    f = await load('/tool/nenga/?id=season-christmas'); d = f.contentDocument; await wait(2500);
+    out.nenga_id = d.getElementById('mk-msg').textContent;
     // phone width: the header links must stay readable (not squeezed into one-character-wide columns)
     {
       const f2 = document.createElement('iframe'); f2.style.width = '300px'; f2.style.height = '800px'; document.body.appendChild(f2);
@@ -141,6 +143,10 @@ class MinnaBrowserTest(unittest.TestCase):
         self.assertRegex(n["date"], r"^令和\d+年 元旦$")
         self.assertGreater(n["head_ink"], 800)          # the greeting
         self.assertGreater(n["body_ink"], 3000)         # the picture and the message
+
+    def test_a_picture_page_can_send_its_picture_to_the_postcard_maker(self):
+        self.assertIn("選んだイラスト", self.out["nenga_id"])
+        self.assertNotIn("お正月のシマエナガ", self.out["nenga_id"])      # not the default first hit of the search
 
     def test_background_switcher(self):
         self.assertEqual(self.out["bg_dark"], "rgb(43, 27, 20)")

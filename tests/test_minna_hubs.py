@@ -65,8 +65,26 @@ class SetSpecificText(unittest.TestCase):
         it = s["items"][0]
         html = build.illust_page({**CFG, "operator_name": "テスト"}, True, it, items, series)
         self.assertIn(build.series_use(s), html)
-        self.assertIn("このセット:", html)
+        self.assertIn(f"<li>{build.series_use(s)}</li>", html)
+        self.assertNotIn(build.USES[s["genre"]][0], html)
         self.assertIn(f"{len(s['items'])}点のうちの1点です", html)
+
+    def test_new_year_pictures_lead_to_the_postcard_maker_and_other_pages_do_not(self):
+        items, series = build.load_data()
+        cfg = {**CFG, "operator_name": "テスト"}
+        eto = next(i for i in items if i["genre"] == "eto" and i["touch"] != "lineart")
+        self.assertIn(f'href="/tool/nenga/?id={eto["id"]}"', build.illust_page(cfg, True, eto, items, series))
+        other = next(i for i in items if i["genre"] == "food")
+        self.assertNotIn("/tool/nenga/?id=", build.illust_page(cfg, True, other, items, series))
+
+    def test_same_subject_in_another_touch_is_offered(self):
+        items, series = build.load_data()
+        cfg = {**CFG, "operator_name": "テスト"}
+        two = next(i for i in items if len({x["series"] for x in items if x["genre"] == i["genre"] and x["title"] == i["title"]}) > 1)
+        html = build.illust_page(cfg, True, two, items, series)
+        self.assertIn("同じ題材の別のタッチ", html)
+        single = next(i for i in items if len({x["series"] for x in items if x["genre"] == i["genre"] and x["title"] == i["title"]}) == 1)
+        self.assertNotIn("同じ題材の別のタッチ", build.illust_page(cfg, True, single, items, series))
 
     def test_pose_hub_lists_every_pose_set_and_the_sets_link_back(self):
         items, series = build.load_data()
