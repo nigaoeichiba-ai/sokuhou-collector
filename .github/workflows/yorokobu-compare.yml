@@ -1,0 +1,50 @@
+name: yorokobu-compare
+
+# Every day: the Rakuten Ichiba search results of each kind of gift in sites/yorokobu/content/compare.json (price, the shop's point multiplier, shipping, reviews), written to
+# data/yorokobu_compare.json for the page /compare/.  The commit touches only that file; a commit made with the workflow token starts no other workflow, so the pages change
+# at the next deploy (the daily one at 07:00 JST, or any push).  Needs RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY.
+
+on:
+  schedule:
+    - cron: "20 20 * * *"   # 05:20 JST: about 10 minutes, before the 07:00 deploy
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Own group (see yorokobu-ranking.yml): a request every 3 s (0.33/s) next to the deploy's fetch stays within the shared limit of the application ID.
+concurrency:
+  group: yorokobu-compare
+  cancel-in-progress: false
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Fetch the kinds of gift
+        env:
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+        run: |
+          if [ -z "$RAKUTEN_APP_ID" ] || [ -z "$RAKUTEN_ACCESS_KEY" ]; then
+            echo "the Rakuten secrets are not set; nothing to do"
+            exit 0
+          fi
+          python -m sites.yorokobu.compare_fetch --out data/yorokobu_compare.json
+      - name: Commit
+        run: |
+          git config user.name "sokuhou-bot"
+          git config user.email "sokuhou-bot@users.noreply.github.com"
+          git add data/yorokobu_compare.json
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "data: yorokobu compare snapshot"
+            git pull --rebase origin main
+            git push
+          fi

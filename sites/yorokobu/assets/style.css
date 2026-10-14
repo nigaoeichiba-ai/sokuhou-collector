@@ -870,3 +870,54 @@ footer.site .src { color: var(--muted); }
 .steps strong { font-family: var(--serif); font-size: 1rem; }
 .steps span { font-size: .84rem; line-height: 1.7; color: var(--ink2); }
 .steps .btn { align-self: flex-start; margin-top: 4px; padding: .35em 1.1em; font-size: .82rem; }
+
+/* 商品比較 (compare.py, /compare/<kind>/) */
+.cmp-sum { margin: 0 0 14px; color: var(--ink2); }
+.cmp-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.cmp-bar[hidden] { display: none; }
+.cmp-sort { padding: .4em 1.1em; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font: 600 .84rem var(--sans); cursor: pointer; }
+.cmp-sort[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-s); color: var(--accent-d); }
+.cmp-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.cmp-row { display: grid; grid-template-columns: 28px 84px minmax(0, 1fr) 108px 110px 74px 132px; align-items: center; gap: 14px; padding: 12px 16px; background: #fff; border: 1px solid var(--line2); border-radius: 16px; box-shadow: var(--shadow); }
+.cmp-no { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent-s); color: var(--accent-d); font: 700 .8rem var(--num); }
+.cmp-img { width: 84px; height: 84px; border-radius: 12px; overflow: hidden; background: var(--line2); }
+.cmp-img img { display: block; width: 84px; height: 84px; object-fit: cover; }
+.cmp-img .fav { top: 3px; right: 3px; width: 28px; height: 28px; font-size: .9rem; }
+.cmp-shop { margin: 0; font-size: .74rem; color: var(--muted); }
+.cmp-main h3 { margin: 2px 0 4px; font-size: .95rem; line-height: 1.55; }
+.cmp-main h3 a { color: var(--ink); text-decoration: none; }
+.cmp-tags { margin: 0; display: flex; flex-wrap: wrap; gap: 4px; }
+.cmp-num p { margin: 0; font-size: .82rem; color: var(--ink2); }
+.cmp-price b { font-size: 1.1rem; color: var(--ink); }
+.cmp-pt { color: var(--accent-d); }
+.cmp-score { position: relative; text-align: center; }
+.cmp-score b { display: block; font: 800 1.5rem/1.2 var(--num); }
+.cmp-score small { color: var(--muted); font-size: .7rem; }
+.cmp-score i { display: block; height: 4px; margin-top: 4px; border-radius: 4px; background: var(--accent); }
+.cmp-go .btn { display: block; padding: .5em .8em; text-align: center; font-size: .84rem; }
+.cmp-formula { margin: 18px 0 8px; padding: 12px 16px; background: #fff; border: 1px solid var(--line2); border-radius: 14px; }
+.cmp-formula summary { cursor: pointer; font-weight: 700; }
+.cmp-parts { margin: 10px 0; padding-left: 1.2em; font-size: .86rem; }
+.cmp-parts li { margin-bottom: .5em; }
+.cmp-parts b { display: block; }
+.cmp-note, .cmp-az { margin: 10px 0 0; font-size: .84rem; color: var(--ink2); }
+@media (max-width: 860px) {
+  .cmp-row { grid-template-columns: 26px 84px minmax(0, 1fr) 64px; row-gap: 8px; }
+  .cmp-no { grid-column: 1; grid-row: 1; }
+  .cmp-img { grid-column: 2; grid-row: 1; }
+  .cmp-main { grid-column: 3; grid-row: 1; }
+  .cmp-score { grid-column: 4; grid-row: 1; }
+  .cmp-num { grid-column: 1 / 3; grid-row: 2; }
+  .cmp-num.cmp-rev { grid-column: 3 / 5; grid-row: 2; }
+  .cmp-go { grid-column: 1 / -1; grid-row: 3; }
+}
+@media (max-width: 480px) {
+  .cmp-row { padding: 10px 12px; gap: 8px 10px; grid-template-columns: 26px 72px minmax(0, 1fr); }
+  .cmp-img, .cmp-img img { width: 72px; height: 72px; }
+  .cmp-score { grid-column: 1 / -1; grid-row: 2; text-align: left; }
+  .cmp-score b { display: inline; margin-right: 6px; }
+  .cmp-num { grid-column: 1 / -1; grid-row: 3; }
+  .cmp-num.cmp-rev { grid-column: 1 / -1; grid-row: 4; }
+  .cmp-go { grid-column: 1 / -1; grid-row: 5; }
+}
+@media print { .cmp-bar { display: none !important; } }
