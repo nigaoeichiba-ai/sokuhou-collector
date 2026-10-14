@@ -170,5 +170,29 @@ class PagesTest(unittest.TestCase):
         self.assertTrue(all(0 <= s <= 100 for s in scores))
 
 
+@unittest.skipUnless(compare.DATA.exists(), "data/yorokobu_compare.json has not been fetched yet")
+class RealDataTest(unittest.TestCase):
+    """The snapshot the daily workflow committed, through the same view and the site-wide checker the deploy runs."""
+
+    def test_the_real_snapshot_makes_sound_tables_and_pages(self):
+        from sokuhou import sitecheck
+        c = content.load()
+        raw = compare.load()
+        v = compare.view(raw, c["filters"])
+        self.assertTrue(v and len(v["groups"]) >= 10, "the real data gives tables for at least ten kinds")
+        for g in v["groups"]:
+            self.assertGreaterEqual(g["shops"], compare.MIN_SHOPS, g["slug"])
+            totals = [r["total"] for r in g["rows"]]
+            self.assertEqual(totals, sorted(totals, reverse=True), g["slug"])
+            self.assertTrue(all(r["price"] > 0 and r["url"].startswith("https://") for r in g["rows"]), g["slug"])
+        cfg = json.loads((Path(build.__file__).parent / "config.json").read_text(encoding="utf-8"))
+        items = with_musts(json.loads((FIX / "items.json").read_text(encoding="utf-8")), c)
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "site"
+            build.render_site(c, items, cfg, out, release=True, today=date(2026, 10, 14), compare_data=raw)
+            self.assertEqual(sitecheck.check_dir(out, cfg["site_url"]), [])
+            self.assertEqual(len(list((out / "compare").glob("*/index.html"))), len(v["groups"]))
+
+
 if __name__ == "__main__":
     unittest.main()
