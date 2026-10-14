@@ -32,6 +32,7 @@ from sites.yorokobu import relevance  # noqa: E402
 from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu import numberlists as nm  # noqa: E402
 from sites.yorokobu import compare  # noqa: E402
+from sites.yorokobu import amazonrank  # noqa: E402
 from sites.yorokobu import ranking as rk  # noqa: E402
 from sites.yorokobu import sales  # noqa: E402
 from sites.yorokobu import features as feats  # noqa: E402
@@ -1969,6 +1970,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         for slug in d["ranking"]["order"]:
             pages[f"ranking/{slug}/index.html"] = ranking_page(d, cfg, preview, slug)
     pages.update(compare.build_pages(d, cfg, preview))
+    pages.update(amazonrank.build_pages(d, cfg, preview))
     pages.update(dataroom.build_pages(d, cfg, preview))
     pages.update(picksite.build_pages(d, cfg, preview))
     pages.update(feats.build_pages(d, cfg, preview))
