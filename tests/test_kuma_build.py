@@ -419,6 +419,20 @@ class LiveSectionTest(unittest.TestCase):
         for part in ("直近30日は", "その前の30日(", "種別の内訳は、", "記録のあった日は", "記録を載せている"):
             self.assertIn(part, text)
 
+    def test_the_home_page_links_the_municipalities_with_the_most_records_in_the_last_30_days(self):
+        home = self.read("index.html")
+        self.assertIn("直近30日で記録が多い市町村", home)
+        section = home[home.index("直近30日で記録が多い市町村"):]
+        section = section[:section.index("</ul>")]
+        links = re.findall(r'<a href="(/live/[^"]+/)">[^<]+</a><b>直近30日 (\d+)件</b>', section)
+        self.assertTrue(links)
+        for href, k in links:
+            self.assertIn(href.strip("/") + "/index.html", self.files)       # every link goes to a page that exists
+            self.assertGreaterEqual(int(k), 1)
+        counts = [int(k) for _, k in links]
+        self.assertEqual(counts, sorted(counts, reverse=True))
+        self.assertIn("そのまま比べられません", home[home.index("直近30日で記録が多い市町村"):])
+
     def test_pages_state_what_the_numbers_are_not(self):
         html = self.read(self.iwakuni)
         self.assertIn("そのまま比べられません", html)
