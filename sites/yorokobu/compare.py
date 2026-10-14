@@ -21,7 +21,7 @@ import statistics
 from datetime import datetime
 from pathlib import Path
 
-from sites.yorokobu import relevance
+from sites.yorokobu import amazonrank, relevance
 from sites.yorokobu.picking import usable
 from sokuhou.sitekit import crumbs, esc
 
@@ -125,6 +125,16 @@ def view(raw: dict | None, filters: dict, cfg_groups: list[dict] | None = None) 
 
 # ---------------------------------------------------------------- pages
 
+def shaddy_url(cfg: dict) -> str:
+    """The affiliate link (A8.net) of シャディギフトモール; empty when the site has no id for it."""
+    m = cfg.get("shaddy_a8mat")
+    return f"https://px.a8.net/svt/ejp?a8mat={m}" if m else ""
+
+
+def shaddy_a(cfg: dict, text: str = "シャディギフトモール") -> str:
+    return f'<a href="{esc(shaddy_url(cfg))}" rel="sponsored nofollow noopener" target="_blank">{esc(text)}</a>'
+
+
 def path(slug: str | None = None) -> str:
     return "/compare/" if slug is None else f"/compare/{slug}/"
 
@@ -137,10 +147,60 @@ def formula_html() -> str:
             f'<li><b>レビュー {W_REVIEW}点</b>レビューの平均をこの表の中央値に{REVIEW_PRIOR}件分だけ寄せて見ます(件数の少ない満点が、件数の多い高評価を上回らないようにするためです)。平均{RATING_LO}で0点、{RATING_HI}で{W_REVIEW}点です。</li>'
             f'<li><b>送料 {W_SHIP}点</b>送料無料なら{W_SHIP}点です。</li>'
             f'<li><b>ギフト対応 {W_GIFT}点</b>ギフト包装などに対応しているショップなら{W_GIFT}点です。</li></ul>'
+            '<p>各商品の下の「ひとこと」と4本のバーは、この点数の元になった数字から書いています。商品を使った感想ではありません。バーは、それぞれの満点に対する割合です。</p>'
             '<p>同じ表の商品でも、大きさや内容量、セットの中身は違います。価格は中身をそろえた比較ではありません。商品ページで中身と届く日を確かめてください。</p></details>')
 
 
-def _row(cfg: dict, r: dict, n: int) -> str:
+def say(r: dict, rank: int, n: int, median_eff: int) -> str:
+    """The row's one-line reading, written from its own numbers (rank by real price among the n rows, the review count, shipping, gift wrapping).  It says what the score rests on; it is not an opinion of the product."""
+    gap = median_eff - r["effective"]
+    if rank == 1:
+        price = "実質価格はこの表でいちばん安い水準です。"
+    elif rank <= max(3, n // 3):
+        price = f"実質価格は安い方から{rank}番目です。"
+    elif rank > n - max(3, n // 3) and n >= 8:
+        price = "実質価格は表の中では高い方です。"
+    else:
+        price = "実質価格は表の中ほどです。"
+    if rank > 1 and abs(gap) >= 100:
+        price += f"中央値より{abs(gap):,}円{'安く' if gap > 0 else '高く'}なっています。"
+    rv, rt = r["reviews"], r["rating"]
+    if not rv:
+        review = "レビューはまだありません。"
+    elif rv < 10:
+        review = f"レビューは{rv}件と少なく評価は参考程度です。"
+    elif rv >= 100 and rt >= 4.5:
+        review = f"レビューは★{rt:.2f}で{rv:,}件と多く、評価が固まっています。"
+    elif rv >= 100 and rt < 4.0:
+        review = f"レビューは{rv:,}件あり、平均は★{rt:.2f}と低めです。"
+    elif rt >= 4.5:
+        review = f"レビューは★{rt:.2f}と高く、件数は{rv}件です。"
+    else:
+        review = f"レビューは★{rt:.2f}({rv}件)です。"
+    notes = []
+    if not r["free_shipping"]:
+        notes.append("送料は別にかかります")
+    if not r.get("gift"):
+        notes.append("ショップのギフト対応の表示はありません")
+    tail = ("。".join(notes) + "。") if notes else "送料無料でギフト対応の表示もあります。"
+    return price + review + tail
+
+
+def places(rows: list[dict]) -> dict[str, int]:
+    """The place of each row by real price (1 = cheapest); rows of the same price share a place."""
+    return {r["code"]: 1 + sum(1 for o in rows if o["effective"] < r["effective"]) for r in rows}
+
+
+def stat_html(r: dict) -> str:
+    """Four bars, one per part of the score, each as a share of its own maximum with the points written out (so the page does not rest on colour)."""
+    p, rv, sh, gf = r["parts"]
+    rows = (("実質価格", p, W_PRICE), ("レビュー", rv, W_REVIEW), ("送料", sh, W_SHIP), ("ギフト対応", gf, W_GIFT))
+    return '<ul class="cmp-stat" aria-label="総合点の内訳">' + "".join(
+        f'<li><span class="cmp-sl">{k}</span><span class="cmp-st"><i style="width:{round(v * 100 / m)}%"></i></span><span class="cmp-sv">{v}<small>/{m}</small></span></li>'
+        for k, v, m in rows) + "</ul>"
+
+
+def _row(cfg: dict, r: dict, n: int, rank: int = 0, total: int = 0, median_eff: int = 0) -> str:
     B = _b()
     href = B.rakuten_link(cfg, B.rakuten.clean_item_url(r["url"]))
     B.SEEN[r["code"]] = {"n": B.short(r["name"], 60), "p": r["price"], "i": r["image"], "u": href,
@@ -164,19 +224,25 @@ def _row(cfg: dict, r: dict, n: int) -> str:
             f'<div class="cmp-num">{price}</div>'
             f'<div class="cmp-num cmp-rev"><p>{stars}</p></div>'
             f'<div class="cmp-score" title="実質価格{p}・レビュー{rv}・送料{sh}・ギフト対応{gf}"><b>{r["total"]}</b><small>総合点</small><i style="width:{r["total"]}%"></i></div>'
-            f'<div class="cmp-go"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">楽天市場で見る</a></div></li>')
+            f'<div class="cmp-go"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">楽天市場で見る</a></div>'
+            f'<div class="cmp-why"><p class="cmp-say"><span class="cmp-cap">ひとこと</span>{esc(say(r, rank, total, median_eff))}</p>{stat_html(r)}</div></li>')
 
 
 def group_page(d: dict, cfg: dict, preview: bool, g: dict) -> str:
     B = _b()
     cv = d["compare"]
-    rows = "".join(_row(cfg, r, i) for i, r in enumerate(g["rows"], 1))
+    by_price = places(g["rows"])
+    med = int(statistics.median(r["effective"] for r in g["rows"]))
+    rows = "".join(_row(cfg, r, i, by_price[r["code"]], len(g["rows"]), med) for i, r in enumerate(g["rows"], 1))
     sort = "".join(f'<button type="button" class="cmp-sort" data-sort="{k}" aria-pressed="{"true" if k == "score" else "false"}">{esc(t)}</button>' for k, t in SORTS)
     lead = f"{g['label']}を楽天市場の{g['shops']}店・{g['n']}点で価格・ポイント・送料・レビューを並べて比べます。総合点の高い順に並べています。"
     az = ""
     if cfg.get("amazon_tracking_id"):
         az = (f'<p class="cmp-az">Amazonの価格はこの表には入っていません(Amazonの規約で価格を表示できるのは、Amazon自身が提供する方法に限られるためです)。'
-              f'同じ種類は<a href="{esc(B.amazon_url(cfg, g["label"] + " ギフト"))}" rel="sponsored nofollow noopener" target="_blank">Amazonで{esc(g["label"])}を探す</a>から確かめられます。</p>')
+              f'同じ種類は<a href="{esc(B.amazon_url(cfg, g["label"] + " ギフト"))}" rel="sponsored nofollow noopener" target="_blank">Amazonで{esc(g["label"])}を探す</a>から確かめられます。'
+              f'Amazonの商品は、価格のない<a href="{amazonrank.PATH}">編集部の採点ページ</a>に分けています。</p>')
+    if "shaddy" in g.get("mall", []) and shaddy_url(cfg):
+        az += f'<p class="cmp-az">ギフト専門店の{shaddy_a(cfg)}は、この表に入っていません。内祝いやお返しの品は、こちらからも探せます。</p>'
     camp = f"ポイント倍率が付いている商品は{g['campaign']}点です。" if g["campaign"] else ""
     summary = (f'<p class="cmp-sum">価格は{B.yen(g["min"])}〜{B.yen(g["max"])}(中央値{B.yen(g["median_price"])})です。{camp}</p>')
     others = "".join(f'<li><a href="{path(o["slug"])}">{esc(o["label"])}</a></li>' for o in cv["groups"] if o["slug"] != g["slug"])
@@ -203,15 +269,22 @@ def hub_page(d: dict, cfg: dict, preview: bool) -> str:
     cv = d["compare"]
     tiles = "".join(f'<li><a class="tile wide" href="{path(g["slug"])}"><span><b>{esc(g["label"])}</b><small>{g["n"]}点・{B.yen(g["min"])}〜{B.yen(g["max"])}</small></span></a></li>' for g in cv["groups"])
     lead = "同じ種類の贈り物を楽天市場のいくつものショップで、価格・ポイント・送料・レビューを並べて比べます。"
+    mall_items = ""
+    if cfg.get("amazon_tracking_id"):
+        mall_items += f'<li><a href="{amazonrank.PATH}">Amazonで選ぶ贈り物</a> 価格とレビューは載せられないため、当サイトの4項目の採点順に並べています。</li>'
+    if shaddy_url(cfg):
+        mall_items += f'<li>{shaddy_a(cfg)} 内祝いやお返しの品も探せるギフト専門店です。価格はこの比較に入っていません。</li>'
+    malls = f'<section class="block"><div class="sec-head"><h2>ほかのモールで探す</h2></div><ul class="plain">{mall_items}</ul></section>' if mall_items else ""
     body = f"""{B.head_band("sky", "", "商品比較", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("商品比較", None)])}</div>
 {B.pr_quiet(cfg)}
 <section class="block"><div class="sec-head"><h2>種類を選ぶ</h2><p class="sec-lead">楽天市場で{esc(cv['fetched_label'])}に調べた結果です。毎日更新しています。</p></div><ul class="tiles wide">{tiles}</ul></section>
+{malls}
 <section class="block"><div class="sec-head"><h2>この比較について</h2></div>
 <ul class="plain">
 <li>価格、ポイント倍率、送料、レビューは楽天市場が公開している情報です。調べた日時を各ページに載せています。</li>
 <li>総合点は実質価格・レビュー・送料・ギフト対応を足した、当サイトの計算です。式は各ページで確かめられます。商品の品質を評価した点数ではありません。</li>
-<li>いまは楽天市場の商品だけを比べています。Amazonは価格を表示できる条件が当サイトに合わないため、表には入れていません。</li>
+<li>いまは楽天市場の商品だけを比べています。Amazonは価格を表示できる条件が当サイトに合わないため、表には入れず、価格のない採点ページに分けています。</li>
 <li>同じ表の商品でも、大きさや内容量は違います。商品ページで中身と届く日を確かめてください。</li></ul></section>"""
     return B.page(cfg, preview, path=path(), title=f"商品比較(楽天市場の価格・ポイント・レビューを並べる) | {cfg['site_name']}", description=lead, body=body)
 

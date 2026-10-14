@@ -137,7 +137,8 @@ class PagesTest(unittest.TestCase):
         return ((root or self.root) / rel).read_text(encoding="utf-8")
 
     def test_without_data_there_are_no_pages_and_no_tile(self):
-        self.assertFalse((Path(self.none.name) / "compare").exists())
+        self.assertFalse((Path(self.none.name) / "compare" / "index.html").exists())
+        self.assertEqual([p.parent.name for p in (Path(self.none.name) / "compare").glob("*/index.html")], ["amazon"])       # the Amazon page does not need Rakuten's data
         self.assertNotIn("/compare/", self.read("index.html", Path(self.none.name)))
         self.assertNotIn("/compare/", self.read("tool/index.html", Path(self.none.name)))
 
@@ -191,7 +192,7 @@ class RealDataTest(unittest.TestCase):
             out = Path(tmp) / "site"
             build.render_site(c, items, cfg, out, release=True, today=date(2026, 10, 14), compare_data=raw)
             self.assertEqual(sitecheck.check_dir(out, cfg["site_url"]), [])
-            self.assertEqual(len(list((out / "compare").glob("*/index.html"))), len(v["groups"]))
+            self.assertEqual(len([p for p in (out / "compare").glob("*/index.html") if p.parent.name != "amazon"]), len(v["groups"]))
 
 
 if __name__ == "__main__":
