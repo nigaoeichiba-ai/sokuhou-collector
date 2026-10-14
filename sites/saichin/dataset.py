@@ -13,6 +13,13 @@ CSV_NAME = "minimum-wage.csv"
 JSON_NAME = "minimum-wage.json"
 PDL_URL = "https://www.digital.go.jp/resources/open_data/public_data_license_v1.0"
 MHLW_NOTICE_URL = "https://www.mhlw.go.jp/chosakuken/index.html"
+# Checks of the data against other sources, newest last.  Add a line when a new check is done (never edit an old one): the date, what was compared, the result.
+VERIFICATIONS = [
+    {"date": "2026-10-15", "what": "令和8年度の47都道府県の最低賃金・前年度の額・引上げ額・発効日を、厚生労働省「令和8年度地域別最低賃金全国一覧」(PDF)と照合",
+     "result": "47都道府県すべて一致"},
+]
+BUILD_CHECKS = ("毎回の作成のとき、次を確認し、1つでも満たさないときは公開しません: 全都道府県に全年度のデータがあること、"
+                "最低賃金が前の年度より下がっていないこと、全国加重平均が、その年度の最も低い県と最も高い県の間にあること。")
 COLUMNS = ["都道府県", "年度(西暦)", "年度(和暦)", "最低賃金(円)", "前年度からの引上げ(円)", "発効日", "全国順位", "発効日の補正(元の日付)"]
 
 
@@ -49,6 +56,7 @@ def json_text(d: dict, cfg: dict) -> str:
             "name": "厚生労働省「地域別最低賃金の全国一覧」(平成14年度から令和8年度までの地域別最低賃金改定状況)",
             "url": d["source_page"], "license": "公共データ利用規約(第1.0版)PDL1.0", "license_url": PDL_URL,
         },
+        "verification": {"checks": VERIFICATIONS, "every_build": BUILD_CHECKS},
         "processing": "このデータは、出典の表の各年度の額を、このサイトが都道府県ごとに並べ替え、引上げ額と全国順位(同額は同じ順位)を計算したものです。厚生労働省が作成したものではありません。",
         "published_by": {"name": cfg["site_name"], "url": base + "/"},
         "note": f"{last['label']}の額は、発効日より前でも、決まった新しい額です。発効日の前は、その県では1つ前の年度の額が適用されています。",
