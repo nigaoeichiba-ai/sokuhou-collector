@@ -289,7 +289,7 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
                   f'{n(r["ytd"][cur])}'] for r in rows]
         head = ["順位", "道府県", f"{fy_label(done)}", f"{fy_label(prev)}", "前年度との比", f"{fy_label(cur)}({month_range(d)})"]
         extra = bar_list([(pref_link(r), f'{n(r["total"][done])}件', r["total"][done]) for r in rows], 10)
-        h1, lead = "クマの出没件数ランキング", f"{fy_label(done)}の出没件数が多い順に、並べています。{'と'.join(r['name'] for r in d['rows'] if not r['has'])}は、環境省の表に数値がありません(「-」)ので、載せていません。"
+        h1, lead = "熊(クマ)の出没件数ランキング", f"{fy_label(done)}の出没件数が多い順に、並べています。{'と'.join(r['name'] for r in d['rows'] if not r['has'])}は、環境省の表に数値がありません(「-」)ので、載せていません。"
     elif kind == "change":
         extra = ""
         rows = sorted((r for r in d["rows"] if r["rank"]["change"]), key=lambda r: (r["rank"]["change"], r["name"]))
@@ -297,7 +297,7 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
                   f'{r["ytd"][cur] / r["ytd"][done] * 100:.0f}%'] for r in rows]
         lines = [[str(i + 1)] + ln[1:] for i, ln in enumerate(lines)]
         head = ["順位", "道府県", f"{fy_label(cur)}({month_range(d)})", f"{fy_label(done)}の同じ期間", "前年度の同じ期間に対する割合"]
-        h1 = "クマの出没件数 前年度の同じ期間との比較"
+        h1 = "熊(クマ)の出没件数 前年度の同じ期間との比較"
         lead = (f"{fy_label(cur)}の{month_range(d)}の出没件数が、{fy_label(done)}の同じ期間の何%にあたるかを、高い順に並べています。"
                 f"{fy_label(done)}の同じ期間が{d['base_floor']}件未満の道府県は、割合が不安定になるため、載せていません。")
         extra = ""
@@ -306,7 +306,7 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
         lines = [[str(r["rank"]["injured"]), pref_link(r), f'{n(r["inj"][done][0])}', f'{n(r["inj"][done][1])}', f'{n(r["inj"][done][2])}',
                   f'{n(r["injured7"])}'] for r in rows]
         head = ["順位", "道府県", f"{fy_label(done)} 件数", "人数", "死亡", f"令和元年度〜{fy_label(done)}の人数の合計"]
-        h1 = "クマによる人身被害ランキング"
+        h1 = "熊(クマ)による人身被害ランキング"
         lead = f"{fy_label(done)}の人身被害(人数)が多い順に、39道府県を並べています。人身被害は、出没件数と違って、全国で同じ基準(件数・人数・死亡者数)で数えられています。"
         extra = f'<p class="notice">人身被害の{fy_label(cur)}は、{d["inj_as_of"].replace("R08年", "令和8年")}の速報値で、全国で{n(d["inj"]["national"][cur][0])}件・{n(d["inj"]["national"][cur][1])}人(うち死亡{n(d["inj"]["national"][cur][2])}人)です。</p>'
     body = f"""{crumbs([("全国", "/"), ("ランキング", None)])}
