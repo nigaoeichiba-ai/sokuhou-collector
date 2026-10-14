@@ -443,10 +443,33 @@ def news_page(d: dict, cfg: dict, preview: bool) -> str:
                 description="環境省が公表している、クマに関する大臣の談話・会見、自治体への事務連絡などの新着を、日付順に一覧にしています。", body=body)
 
 
+def fatal_answer(d: dict, r: dict) -> str:
+    """"Did anyone die of bears in this prefecture?" answered only from the ministry's two lists and its injury statistics, always with their dates.
+    It never says that nothing happened: it says what the ministry's lists contain (or do not contain) as of their dates."""
+    done, cur, name = d["done"], d["cur"], r["name"]
+    when = f"{fy_label(done)}は{jp_date(d['fatal'][done]['as_of'])}時点、{fy_label(cur)}は{jp_date(d['fatal'][cur]['as_of'])}時点"
+    inc = sorted((i for y in (cur, done) for i in d["fatal"][y]["incidents"] if i["prefecture"] == name), key=lambda i: i["date"], reverse=True)
+    if inc:
+        people = sum(i["victims"] for i in inc)
+        first = (f"<p>環境省の死亡事故の一覧({when})に、{esc(name)}の死亡事故が{n(len(inc))}件({n(people)}人)載っています。</p>\n"
+                 "<ul class='mini-list'>" + "".join(f'<li>{jp_date(i["date"])}{"(被害者発見日)" if i["found_date"] else ""} {esc(i["place"])}<b>{i["victims"]}人</b></li>' for i in inc) + "</ul>")
+    else:
+        first = f"<p>環境省の死亡事故の一覧({when})には、{esc(name)}の死亡事故は載っていません。</p>"
+    years = d["inj"]["years"]
+    dead = [y for y in reversed(years) if r["inj"][y][2] > 0]
+    if dead:
+        shown = "、".join(f"{fy_or_h(y)}({n(r['inj'][y][2])}人)" for y in dead[:5])
+        more = f"、ほか{n(len(dead) - 5)}年度" if len(dead) > 5 else ""
+        stat_line = f"人身被害の統計(環境省・{esc(d['inj_as_of'].replace('R08年', '令和8年'))}まで)で、{fy_or_h(years[0])}以降に死亡者が出た年度は、{shown}{more}です。"
+    else:
+        stat_line = f"人身被害の統計(環境省・{esc(d['inj_as_of'].replace('R08年', '令和8年'))}まで)に、{fy_or_h(years[0])}以降の死亡者の記録はありません。"
+    return (f"<h2>{esc(name)}の熊(クマ)による死亡事故(環境省の資料)</h2>\n{first}\n<p>{stat_line}"
+            f"環境省の資料は、公表までに時間がかかります。直近の事故は、{esc(name)}・警察・市町村の発表で確認してください。</p>\n")
+
+
 def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
     done, cur, prev = d["done"], d["cur"], d["years"][-3]
     emg = [c for c in d["emergency"][cur]["cases"] if c["prefecture"] == r["name"]]
-    fat = [i for y in (cur, done) for i in d["fatal"][y]["incidents"] if i["prefecture"] == r["name"]]
     i_done = r["inj"][done]
     official = links.get(r["short"]) or []
     off_html = ("<ul class='link-list'>" + "".join(
@@ -462,7 +485,6 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
     else:
         sight = f"<p>環境省の出没件数の表には、{esc(r['name'])}の数値がありません(「-」)。人身被害の件数は、下に載せています。</p>{NO_COUNT_WHY.get(r['short'], '')}"
     emg_html = ("<ul class='mini-list'>" + "".join(f'<li>{md(c["date"])} {esc(c["place"])}<b>{esc(c["species"])}</b></li>' for c in emg) + "</ul>") if emg else f"<p>環境省の{fy_label(cur)}の一覧には、{esc(r['name'])}の事例はありません(環境省が把握する事例に限ります)。</p>"
-    fat_html = ("<ul class='mini-list'>" + "".join(f'<li>{jp_date(i["date"])} {esc(i["place"])}<b>{i["victims"]}人</b></li>' for i in sorted(fat, key=lambda i: i["date"], reverse=True)) + "</ul>") if fat else f"<p>環境省の資料(令和7・8年度)には、{esc(r['name'])}の死亡事故はありません。</p>"
     live_block = ""
     for src in d["live_prefs"]:
         if live_mod.LIVE_SOURCES[src["key"]]["pref"] == r["short"]:
@@ -484,15 +506,13 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
     body = f"""{crumbs([("全国", "/"), ("ランキング", "/ranking/sightings/"), (r["name"], None)])}
 <h1>{esc(r['name'])}のクマ出没({fy_label(done)}・環境省の速報値)</h1>
 <button class="btn-ghost" type="button" data-mypref-toggle data-slug="{r['slug']}" data-name="{esc(r['name'])}" aria-pressed="false" hidden>この県を「マイ都道府県」にする</button>
-{sight}
+{fatal_answer(d, r)}{sight}
 {live_block}<h2>人身被害</h2>
 <p>{fy_label(done)}は、{n(i_done[0])}件・{n(i_done[1])}人(うち死亡{n(i_done[2])}人)で、39道府県中{r['rank']['injured']}位(人数)でした。令和元年度から{fy_label(done)}までの7年間の合計は、{n(r['injured7'])}人です。</p>
 {charts.bars([y for y in d['inj']['years']], [r['inj'][y][1] for y in d['inj']['years']], title="人身被害の人数", desc=f"{r['name']}の人身被害の人数と死亡者数(平成20年度から)", uid="pi", marks=[r['inj'][y][2] for y in d['inj']['years']], marks_label="うち死亡者数")}
 {injuries_table(d, r)}
 <h2>{fy_label(cur)}の緊急銃猟</h2>
 {emg_html}
-<h2>クマによる死亡事故({fy_label(done)}・{fy_label(cur)})</h2>
-{fat_html}
 {cap_html}<h2>{esc(r['name'])}の公式の出没情報</h2>
 <p>いま近くで出ているかは、公式の情報で確認してください。</p>
 {off_html}
@@ -501,8 +521,8 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
 <ul class="pref-nav">{nav}</ul>
 <div class="next-box"><h2>次に見る</h2><ul><li><a href="/ranking/sightings/">{icon("chart")}出没件数ランキング</a></li><li><a href="/trend/">{icon("calendar")}月別の推移</a></li><li><a href="/emergency/">{icon("emergency")}緊急銃猟</a></li><li><a href="/guide/">{icon("guide")}クマへの対処法</a></li></ul></div>
 <p class="notice">{freshness(d)}</p>"""
-    return page(cfg, preview, scripts=True, path=f"/{r['slug']}/", title=f"{r['name']}のクマ出没・人身被害({fy_label(done)}・環境省の速報値)",
-                description=f"{r['name']}のクマの出没件数(月別)、人身被害、緊急銃猟、公式の出没情報への案内。環境省の速報値をもとにしています。", body=body)
+    return page(cfg, preview, scripts=True, path=f"/{r['slug']}/", title=f"{r['name']}の熊(クマ)出没・人身被害・死亡事故({fy_label(done)}・環境省の速報値)",
+                description=f"{r['name']}の熊(クマ)の出没件数(月別)、人身被害、死亡事故(環境省の一覧に載っているか、日付つきで)、緊急銃猟、公式の出没情報への案内。環境省の速報値をもとにしています。", body=body)
 
 
 def guide_hub(cfg: dict, preview: bool) -> str:
