@@ -1,7 +1,8 @@
 name: atomou-push
 
-# atomou.com: sends the push notifications of the day ("the site tells you").  Twice a day: the morning slot (07:00 JST = 22:00 UTC the
-# day before) and the evening slot (21:00 JST = 12:00 UTC).  GitHub's schedule can run some minutes late; that is fine for a reminder.
+# atomou.com: sends the push notifications of the day ("the site tells you").  Twice a day: the morning slot (09:00 JST = 00:00 UTC) and the
+# evening slot (18:00 JST = 09:00 UTC, "the day before").  Nothing is sent in the early morning or at night (push_send.py: only 08:00-21:00 JST).
+# GitHub's schedule can run some minutes late; that is fine for a reminder.
 # The subscription folder lives on the server outside the web root (~/atomou.com/push/, written by api/push.php).  This job copies it
 # over SSH (the same key the deploy uses), sends one content-free message per due subscription (sites/atomou/push_send.py), and deletes
 # on the server the subscriptions the push services declared dead.  Nothing about a subscription is printed: counts only.
@@ -11,9 +12,9 @@ name: atomou-push
 
 on:
   schedule:
-    - cron: "0 22 * * *"    # 07:00 JST: the morning slot
-    - cron: "0 12 * * *"    # 21:00 JST: the evening slot (the night before)
-    - cron: "37 * * * *"    # every hour: slot s, "a shared card you follow was changed" (sends only when a watched card has a newer version)
+    - cron: "0 0 * * *"     # 09:00 JST: the morning slot
+    - cron: "0 9 * * *"     # 18:00 JST: the evening slot (the day before)
+    - cron: "37 23,0-11 * * *"   # hourly from 08:37 to 20:37 JST: slot s, "a shared card you follow was changed" (sends only when a watched card has a newer version)
   workflow_dispatch:
     inputs:
       slot:
@@ -82,10 +83,10 @@ jobs:
           SCHEDULE: ${{ github.event.schedule }}
         run: |
           slot="$IN_SLOT"
-          if [ -z "$slot" ] && [ "$SCHEDULE" = "37 * * * *" ]; then slot=s; fi
+          if [ -z "$slot" ] && [ "$SCHEDULE" = "37 23,0-11 * * *" ]; then slot=s; fi
           if [ -z "$slot" ]; then
             h=$(TZ=Asia/Tokyo date +%H)
-            if [ "$h" -ge 15 ] || [ "$h" -lt 3 ]; then slot=e; else slot=m; fi
+            if [ "$h" -ge 15 ]; then slot=e; else slot=m; fi
           fi
           echo "slot=$slot" >> "$GITHUB_OUTPUT"
           echo "today=$(TZ=Asia/Tokyo date +%F)" >> "$GITHUB_OUTPUT"

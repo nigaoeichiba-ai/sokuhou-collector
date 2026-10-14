@@ -23,12 +23,15 @@
   function hm(t) { var m = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(t || ''); return m ? [+m[1], +m[2]] : null; }
   function wall(d, h, m) { var p = function (n) { return (n < 10 ? '0' : '') + n; }; return dateStr(d) + 'T' + p(h) + p(m) + '00'; }
   function dur(min) { var d = Math.floor(min / 1440), h = Math.floor(min % 1440 / 60), m = min % 60; return '-P' + (d ? d + 'D' : '') + (h || m ? 'T' + (h ? h + 'H' : '') + (m ? m + 'M' : '') : 'T0M'); }
-  // when the alert should come before an event that starts at minute t of its day: morning = 9:00 that day, eve = 21:00 the day before, week = 9:00 seven days before
-  function alertBefore(alarm, t) {
-    if (alarm === 'eve') return t + 180;
-    if (alarm === 'week') return 7 * 1440 - 540 + t;
-    return t > 540 ? t - 540 : 30;   // morning; an event earlier than that is announced 30 minutes before
+  // when the alert should come before an event that starts at minute t of its day.  Never in the early morning or at night: morning = 9:00 that day (an event before 9:30 is
+  // announced the evening before instead), eve = 18:00 the day before, week = 9:00 seven days before.  (The calendar of a person who put a time on a day gets the same hours.)
+  var AM = 540, EVE = -360, WEEK = -7 * 1440 + 540;   // minutes after 0:00 of the day of the event
+  function alertAt(alarm, t) {
+    if (alarm === 'eve') return EVE;
+    if (alarm === 'week') return WEEK;
+    return t >= AM + 30 ? AM : EVE;
   }
+  function alertBefore(alarm, t) { return t - alertAt(alarm, t); }
 
   // ev: {uid, title, date:[y,m,d], time:'HH:MM' (optional: then it is a one-hour event in Japan time, not an all-day one), yearly:bool, every100:bool, alarm:'morning'|'eve'|'week'|'none', note}
   function vevent(ev, now) {
@@ -42,7 +45,7 @@
     if (ev.note) L.push('DESCRIPTION:' + esc(ev.note));
     if (ev.alarm && ev.alarm !== 'none') {
       L.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(ev.title),
-        'TRIGGER:' + (t ? dur(alertBefore(ev.alarm, t[0] * 60 + t[1])) : (ev.alarm === 'eve' ? '-PT3H' : ev.alarm === 'week' ? '-P6DT15H' : 'PT9H')), 'END:VALARM');
+        'TRIGGER:' + (t ? dur(alertBefore(ev.alarm, t[0] * 60 + t[1])) : (ev.alarm === 'eve' ? '-PT6H' : ev.alarm === 'week' ? '-P6DT15H' : 'PT9H')), 'END:VALARM');
     }
     (ev.reminds || []).forEach(function (r) {   // "the days before" notices: 9:00 that many days earlier (an all-day event starts at 0:00)
       if (!(r >= 1)) return;

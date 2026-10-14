@@ -85,7 +85,7 @@ AddType application/manifest+json .webmanifest
 
 PUSH_BOX = '''<h2 id="push">この端末で受け取る通知</h2>
 <div class="panel" id="push-box" hidden>
-<p>予定の日ややることの期限に、この端末へ通知します。通知の時間は設定で選べます(当日の朝7時ごろ、または前日の夜21時ごろ)。サーバーに保存されるのは、通知に必要な日付だけです。予定の内容は、この端末に保存されます。<a href="/privacy/#push">詳しく</a></p>
+<p>予定の日ややることの期限に、この端末へ通知します。通知のタイミングは設定で選べます(当日の午前中は9時ごろ、前日は18時ごろ、一週間前は9時ごろ。早朝や夜には送りません)。サーバーに保存されるのは、通知に必要な日付だけです。予定の内容は、この端末に保存されます。<a href="/privacy/#push">詳しく</a></p>
 <p id="push-status" class="muted"></p>
 <p id="push-ios" class="hint" hidden>iPhone・iPad は、共有ボタンから「ホーム画面に追加」し、そのアイコンから開くと通知を使えます。</p>
 <p><button type="button" class="btn" id="push-on">この端末で通知を受け取る</button> <button type="button" class="btn ghost" id="push-off" hidden>通知を止める</button></p>
@@ -205,6 +205,8 @@ def count_parts(iso: str, precision: str) -> tuple[str, str, str, str, str]:
     word = big[:2] if big[:2] in ("あと", "もう") else ""
     t = r.get("total")
     rel = {1: "(明日)", 2: "(明後日)", -1: "(昨日)", -2: "(おととい)"}.get(t, "") if precision == "day" and t is not None else ""
+    if not rel and r["dir"] == "mou":
+        rel = "(過去)"                    # a day that has passed says so (the script does the same: fillCard)
     return r["dir"], word, big[len(word):], rel, (f"合計 {r['sub']}" if r.get("sub") else "")
 
 
@@ -446,8 +448,9 @@ def home_page(c: Ctx) -> str:
 <nav class="chiprow" aria-label="残せる日の例"><a class="chip" href="/add/?kind=anniversary">記念日</a><a class="chip" href="/add/?kind=birthday">誕生日</a><a class="chip" href="/add/?kind=until">楽しみな日・期限</a><a class="chip" href="/add/?kind=memorial">大切な日</a></nav>
 </div></section>
 <div id="season" class="season" hidden></div>
-<p class="custom-row"><button type="button" class="btn small ghost" id="custom-open" aria-expanded="false" aria-controls="custom">ホームをカスタマイズ</button></p>
-<section class="panel custom" id="custom" aria-labelledby="custom-h" hidden></section>
+<details class="panel home-parts" id="home-parts"><summary>ホームの表示(ON/OFFと並べ替え)</summary>
+<ul class="parts" id="parts" aria-live="off" aria-label="ホームの部品"></ul>
+<p class="hint">押すとON/OFF。つかんで動かすと並べ替え(スマホは長押しして動かす)。この端末にだけ保存されます。 <button type="button" class="btn small ghost" id="parts-reset">元に戻す</button></p></details>
 <div id="blocks">
 <section id="todo" data-block="todo" data-title="今日の予定・やること" hidden>
 <div class="head-row"><h2>今日の予定・やること</h2><div class="grow"><a class="btn small ghost" href="/calendar/">カレンダー</a></div></div>
@@ -466,12 +469,12 @@ def home_page(c: Ctx) -> str:
 <section id="interests" data-block="interests" data-title="好きな分野の日" hidden>
 <div class="head-row"><h2>好きな分野の日</h2><div class="grow"><a class="btn small ghost" href="/interests/">分野を選ぶ</a></div></div>
 <p class="hint" id="int-prompt" hidden>将棋、流星群、英検など、好きな分野を選ぶと、その分野の日がここに並びます。<a href="/interests/">選んでみる</a></p>
-<div id="int-wrap" hidden><div class="cards" id="int-grid"></div><p class="hint" id="int-miss"></p></div>
+<div id="int-wrap" hidden><div class="cards" id="int-grid" data-save-order="1"></div><p class="hint" id="int-miss"></p></div>
 </section>
 <section id="region" data-block="region" data-title="お住まいの地域の日" hidden>
-<div class="head-row"><h2 id="reg-title">お住まいの地域の日</h2><div class="grow"><a class="btn small ghost" href="/interests/#region-pick">地域を選ぶ</a></div></div>
+<div class="head-row"><h2 id="reg-title">お住まいの地域の日</h2><div class="grow"><button type="button" class="btn small ghost" id="reg-clear" hidden>地域を外す</button> <a class="btn small ghost" href="/interests/#region-pick">地域を選ぶ</a></div></div>
 <p class="hint" id="reg-none" hidden>お住まいの都道府県を選ぶと、その地域の日が、ここに並びます。<a href="/interests/#region-pick">選んでみる</a></p>
-<div id="reg-wrap" hidden><div class="cards" id="reg-grid"></div><p class="hint" id="reg-more"></p></div>
+<div id="reg-wrap" hidden><div class="cards" id="reg-grid" data-save-order="1"></div><p class="hint" id="reg-more"></p></div>
 </section>
 <section data-block="search" data-title="さがす">
 {search_form()}
@@ -542,7 +545,7 @@ def interests_page(c: Ctx, live: list[dict]) -> str:
 <h1>好きな分野を選ぶ</h1>
 <p class="lead muted">選んだ分野の日が、ホームにまとまって並びます。まだ日付のない分野(準備中)も選べます。</p>
 <div id="int-chosen"></div>
-<div class="field" id="region-pick"><label for="reg-select">お住まいの都道府県</label><select id="reg-select"><option value="">選ばない</option>{"".join(f'<option value="{p}">{p}</option>' for p in PREFECTURES)}</select>
+<div class="field" id="region-pick"><label for="reg-select">お住まいの都道府県</label><select id="reg-select" autocomplete="off" name="atomou-region-pick"><option value="">選ばない</option>{"".join(f'<option value="{p}">{p}</option>' for p in PREFECTURES)}</select>
 <p class="hint">選ぶと、その地域の日が、ホームの先頭近くに並びます。</p><p class="small muted" id="reg-note" aria-live="polite"></p></div>
 <div class="sbox"><form class="searchbox" id="int-form" role="search"><label class="vh" for="int-q">分野を探す・追加する</label>
 <input type="text" id="int-q" maxlength="24" autocomplete="off" placeholder="探す・追加する(例: 剣道、釣り、写真)" enterkeyhint="done"><button type="submit" class="sbtn" aria-label="追加">{ICONS['plus']}</button></form></div>
@@ -592,7 +595,7 @@ def my_page(c: Ctx) -> str:
         gcal_html = ('<h2 id="gcal-h">Google カレンダーに送る</h2>\n<div class="panel" id="gcal-box" hidden>'
                      '<p>記録した日と、予定に入れた日を、あなたの Google カレンダーに「あと何日、もう何日」という専用のカレンダーとして送れます。いつもの予定には触れません。<a href="/privacy/#google">詳しく</a></p>'
                      '<p class="muted">送るのは、ボタンを押したときだけです。送ったあとにこの予定帳で日を変えたり消したりしたときは、もう一度押してください。Google カレンダーの側で変えた内容は、ここには戻りません。'
-                     '時刻のない日の「当日の朝」の通知は、Google カレンダーでは、その日の午前0時になります。</p>'
+                     '時刻のない日の「当日の午前中」の通知は、Google カレンダーの仕組みで当日の朝にできないため、前日の18時になります。</p>'
                      '<p><button type="button" class="btn" id="gcal-send">Google カレンダーに送る</button> <button type="button" class="btn small ghost" id="gcal-unlink" hidden>Google カレンダーから消す</button></p></div>\n')
         sync_html = ('<div id="sync-box" hidden><p id="sync">Google アカウントでつなぐと、記録した日を自分の Google ドライブに保存して、別の端末に引き継げます。'
                      '<a href="/privacy/#google">詳しく</a></p><p><button type="button" class="btn" id="sync-now">Google アカウントで同期する</button></p></div>\n')
@@ -632,18 +635,19 @@ def my_page(c: Ctx) -> str:
 <h3 class="set-h">見え方</h3>
 <div class="field"><label class="lab" for="p-big"><input type="checkbox" id="p-big"> 文字を大きくする</label></div>
 <p><a href="/skins/" data-back="マイページ">きせかえ(色や形を選ぶ)</a></p>
-<p><a href="/?edit=1" data-back="マイページ">ホームの部品の並べ替え</a></p>
-<h3 class="set-h">通知の時間</h3>
-<div class="field"><label for="p-alarm">標準の時間(通知・カレンダーに入れるとき)</label>
-<select id="p-alarm"><option value="morning">当日の朝</option><option value="eve">前日の夜</option><option value="week">1週間前の朝</option><option value="none">なし</option></select>
-<p class="hint">新しく記録するカードの標準になります。カードごとに変えるときは、記録するときの「この日の知らせ」か、各カードの「修正」で選びます。</p></div>
+<h3 class="set-h">通知するタイミング</h3>
+<div class="field"><label for="p-alarm">標準のタイミング(通知・カレンダーに入れるとき)</label>
+<select id="p-alarm"><option value="morning">当日の午前中(8時〜12時)</option><option value="eve">前日</option><option value="week">一週間前</option><option value="none">なし</option></select>
+<p class="hint">新しく記録するカードの標準になります。カードごとに変えるときは、記録するときの「通知するタイミング」か、各カードの「修正」で選びます。通知は、当日の午前中は9時ごろ、前日は18時ごろ、一週間前は9時ごろに届きます。早朝や夜には送りません。</p></div>
 <h3 class="set-h">そのほか</h3>
 <div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する</label><p class="hint">どの機能がどれだけ使われたかを、件数だけで数えます。個人は特定されません。<a href="/privacy/#stats" data-back="マイページ">詳しい説明</a></p></div>
 <p><a href="/?intro=1" data-back="マイページ">はじめての方へ(このサイトの説明)</a> <button type="button" class="btn small ghost" data-guide="start">使い方を見る</button></p>
 </div>
 <h2 id="wipe-h">この端末の記録を消す</h2>
 <div class="panel">
-<p>この端末に保存されている記録と設定を、すべて消します。元に戻せません。消す前に、「引き継ぎ・バックアップ」でファイルに書き出して、控えを作れます。</p>
+<p>この端末に保存されている記録と設定を、すべて消します。元に戻せません。</p>
+<p><b>消す前に、ファイルに書き出して控えを作ってください。</b>書き出したファイルは、この端末でも別の端末でも、「ファイルから読み込む」で元に戻せます(<a href="#move">引き継ぎ・バックアップの説明</a>)。</p>
+<p class="move-btns"><button type="button" class="btn" id="backup2">先にファイルに書き出す</button></p>
 <p><button type="button" class="btn small ghost" id="wipe">すべて消す</button></p>
 </div>
 <noscript><p class="notice">マイページには JavaScript が必要です。</p></noscript>"""
@@ -691,6 +695,7 @@ def skins_page(c: Ctx) -> str:
 <h1>きせかえ</h1>
 <div id="season" class="season" hidden></div>
 <p class="lead muted">選ぶと、すぐ変わります。標準は「ベーシック」。</p>
+<p><button type="button" class="btn" id="skin-reset">ベーシック(標準)に戻す</button></p>
 <h2>見え方</h2>
 <p class="hint">左から、これから来る日、過ぎた日、大切な日です。</p>
 <div class="cards">{"".join(card_html(s, own=True, actions=False, link=False) for s in samples)}</div>
@@ -1007,7 +1012,7 @@ def manual_page(c: Ctx) -> str:
     qa = [
         ("料金はかかりますか？", "無料です。会員登録なしで使えます。あともうメンバー(無料の会員)になると、メール通知と先着の特典を使えます。"),
         ("入力した内容は、ほかの人に見えますか？", "見えません。予定・メモ・やることは、お使いの端末の中だけにあり、当サイトのサーバーには送りません。"),
-        ("予定の前に、お知らせは来ますか？", "マイページの「この端末で受け取る通知」をオンにすると、予定の当日の朝か前日の夜に、この端末へ通知が届きます(iPhone はホーム画面に追加してから)。会員はメールでも受け取れます。他のカレンダーアプリの通知を使うときは、予定の詳細の「他のカレンダーアプリに入れる」でファイルを作って取り込みます。"),
+        ("予定の前に、お知らせは来ますか？", "マイページの「この端末で受け取る通知」をオンにすると、予定の当日の午前中か前日(18時ごろ)に、この端末へ通知が届きます(iPhone はホーム画面に追加してから)。会員はメールでも受け取れます。他のカレンダーアプリの通知を使うときは、予定の詳細の「他のカレンダーアプリに入れる」でファイルを作って取り込みます。"),
         ("「やること」とは何ですか？", "予定の何日前までに何をするかを書く欄です。たとえば「試験の1週間前: 願書を出す」。期限の日がカレンダーとホームに表示され、チェックすると完了になります。"),
         ("機種変更をしたら、記録はどうなりますか？", "自動では引き継がれません。機種変更の前にマイページの「書き出す」でファイルを作り、新しい端末で「読み込む」を押します。マイページに Google アカウントでの引き継ぎが出ていれば、それも使えます。"),
         ("「あと」と「もう」の違いは？", "「あと」はこれから来る日まで、「もう」は過ぎた日からの日数です。"),
@@ -1029,7 +1034,7 @@ def manual_page(c: Ctx) -> str:
 <ul class="big-list">
 <li><b>日付を数える。</b>過ぎた日からの日数も、これから来る日までの日数も、すぐに分かります。</li>
 <li><b>カレンダーとして使える。</b>デート・会議・記念日を入れて、月の表示と一覧で確認できます。予定ごとに、メモと「何日前までにやること」を書けます。</li>
-<li><b>通知を受け取れる。</b>予定の当日の朝か前日の夜に、この端末へ通知が届きます。</li>
+<li><b>通知を受け取れる。</b>予定の当日の午前中か前日に、この端末へ通知が届きます。早朝や夜には送りません。</li>
 <li><b>公式の日付を使える。</b>締切・試験・大会・お祭りの日付を、公式の発表や報道で確認して載せています。「予定に入れる」を押すと、自分のカレンダーに追加されます。</li>
 </ul>
 
@@ -1223,7 +1228,7 @@ def terms_page(c: Ctx) -> str:
 <h2>3-2. 協力者のページ</h2>
 <p>紹介の人数と、採用されたご意見をもとに、毎月<a href="/thanks/">協力者のページ</a>で紹介します。無料期間の延長や称号を贈ります。載せる名前は、ご本人が公開に同意したペンネームだけです。順位や採用は当サイトが決め、その理由はお答えしないことがあります。</p>
 <h2>4. お知らせのメール</h2>
-<p>「メールでもお知らせする」をオンにした人にだけ、通知する日の朝か前日の夜にメールを送ります。届かないことや遅れることがあります。大切な手続きは、公式のページでも確かめてください。「毎週月曜の朝に、1週間の予定と、公式の日をまとめて受け取る」をオンにした人には、月曜の朝に、その週の予定と、公式の日をまとめた1通を送ります。</p>
+<p>「メールでもお知らせする」をオンにした人にだけ、通知する日の午前中か前日の夕方にメールを送ります。届かないことや遅れることがあります。大切な手続きは、公式のページでも確かめてください。「毎週月曜の朝に、1週間の予定と、公式の日をまとめて受け取る」をオンにした人には、月曜の朝に、その週の予定と、公式の日をまとめた1通を送ります。</p>
 <h2>5. してはいけないこと</h2>
 <p>他人のメールアドレスでの登録、当サイトの仕組みに負担をかける行為、法令や公序良俗に反する使い方はしないでください。これらがあったときは、会員の登録を止めることがあります。</p>
 <h2>6. 退会と記録の削除</h2>

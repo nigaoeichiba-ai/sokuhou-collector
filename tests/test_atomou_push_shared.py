@@ -139,7 +139,7 @@ class Wiring(unittest.TestCase):
 
     def test_workflow_runs_slot_s_hourly_and_writes_back(self):
         wf = (ROOT / ".github/workflows/atomou-push.yml").read_text(encoding="utf-8")
-        for needle in ('cron: "37 * * * *"', "server_versions.py", "server_mark_sent.py", "--versions versions.json", "notified.json"):
+        for needle in ('cron: "37 23,0-11 * * *"', "server_versions.py", "server_mark_sent.py", "--versions versions.json", "notified.json"):
             self.assertIn(needle, wf)
 
 

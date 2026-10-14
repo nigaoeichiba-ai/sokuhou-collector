@@ -98,6 +98,20 @@ class Sender(unittest.TestCase):
         self.assertEqual((counts["due"], counts["sent"], counts["failed"]), (2, 1, 1))
         self.assertEqual(sent[0]["Subject"], "【あと何日、もう何日】明日の予定: 明日 結婚記念日")
 
+    def test_no_mail_in_the_early_morning_or_at_night_and_the_schedule_keeps_to_the_day(self):
+        import re
+        for h in (0, 3, 7, 21, 23):
+            self.assertTrue(mail_send.quiet_now(h), h)
+        for h in (8, 9, 18, 20):
+            self.assertFalse(mail_send.quiet_now(h), h)
+        wf = (ROOT / ".github/workflows/atomou-mail.yml").read_text(encoding="utf-8")
+        crons = re.findall(r'cron:\s*"(\d+)\s+(\d+)\s+\*\s+\*\s+([\d*]+)"', wf)
+        self.assertEqual(len(crons), 3)
+        for mm, hh, _dow in crons:
+            jst = (int(hh) + 9) % 24
+            self.assertTrue(8 <= jst < 21, f"a mail run at {jst}:{mm} JST is in the quiet hours")
+
+
     def test_dry_run_counts_only(self):
         f = self.folder({"a" * 64: {"email": "a@example.com", "notices": {"on": True, "dates": [{"d": "2026-10-20", "s": "m", "t": "x"}]}}})
         self.assertEqual(mail_send.run(f, "2026-10-20", "m", CFG, dry_run=True)["sent"], 0)

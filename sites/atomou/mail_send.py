@@ -27,6 +27,18 @@ HERE = Path(__file__).resolve().parent
 NAME = "あと何日、もう何日"
 
 
+QUIET_FROM, QUIET_TO = 8, 21   # JST hours: mail goes out when 8 <= hour < 21 (the same rule as push_send.py)
+
+
+def hour_jst() -> int:
+    return datetime.now(ZoneInfo("Asia/Tokyo")).hour
+
+
+def quiet_now(hour: int) -> bool:
+    """Early morning and night (before 08:00, from 21:00 on): no mail."""
+    return not (QUIET_FROM <= hour < QUIET_TO)
+
+
 def today_jst() -> str:
     return datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d")
 
@@ -150,6 +162,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--slot", choices=("m", "e", "w"), required=True)
     ap.add_argument("--today", default=today_jst())
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--force", action="store_true", help="send even in the quiet hours (for a test only)")
     ap.add_argument("--check-smtp", action="store_true", help="only log in to the SMTP server and log out (no mail is sent)")
     a = ap.parse_args(argv)
     if a.check_smtp:
@@ -160,6 +173,9 @@ def main(argv: list[str] | None = None) -> int:
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
     if not cfg.get("member_mail_from"):
         print(json.dumps({"skipped": "member_mail_from is not set"}))
+        return 0
+    if quiet_now(hour_jst()) and not a.force and not a.dry_run:
+        print(json.dumps({"today": a.today, "slot": a.slot, "quiet_hours": True, "sent": 0}))     # no mail in the early morning or at night (a late or mistimed run)
         return 0
     counts = run(Path(a.dir), a.today, a.slot, cfg, dry_run=a.dry_run)
     print(json.dumps({"today": a.today, "slot": a.slot, **counts}))

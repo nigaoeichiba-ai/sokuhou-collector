@@ -107,13 +107,13 @@ class GcalInChrome(unittest.TestCase):
         self.assertEqual(e["recurrence"], ["RRULE:FREQ=YEARLY"])
         self.assertEqual(e["transparency"], "transparent")
         self.assertEqual(e["reminders"]["useDefault"], False)
-        # the evening before (21:00) = 180 minutes; the days before at 9:00: 7 days = 7*1440-540, 14 days = 14*1440-540
-        self.assertEqual([o["minutes"] for o in e["reminders"]["overrides"]], [180, 7 * 1440 - 540, 14 * 1440 - 540])
+        # the evening before (18:00) = 360 minutes; the days before at 9:00: 7 days = 7*1440-540, 14 days = 14*1440-540
+        self.assertEqual([o["minutes"] for o in e["reminders"]["overrides"]], [360, 7 * 1440 - 540, 14 * 1440 - 540])
         self.assertTrue(all(o["method"] == "popup" for o in e["reminders"]["overrides"]))
 
     def test_the_alert_settings(self):
-        # morning of the day: the API cannot say "after the start", so it is the start of the day; the evening before; the week before at 9:00; none
-        self.assertEqual(self.res["alarms"], [[0], [180], [9540], []])
+        # morning of the day: the API cannot say "after the start", and the start is midnight (never at night): the evening before at 18:00 stands in; the evening before; the week before at 9:00; none
+        self.assertEqual(self.res["alarms"], [[360], [360], [9540], []])
         self.assertEqual(self.res["many"], [9540, 1 * 1440 - 540, 2 * 1440 - 540, 3 * 1440 - 540, 4 * 1440 - 540])      # at most five; 40 days is past the 28 days the API takes
 
     def test_a_day_with_a_time_is_a_one_hour_event_in_japan_time_and_may_end_the_next_day(self):
@@ -122,7 +122,7 @@ class GcalInChrome(unittest.TestCase):
         self.assertEqual(t["end"], {"dateTime": "2027-05-04T00:30:00", "timeZone": "Asia/Tokyo"})
         self.assertEqual(t["transparency"], "opaque")
         self.assertEqual(t["reminders"]["overrides"], [{"method": "popup", "minutes": 23 * 60 + 30 - 540}])      # 9:00 of the day
-        self.assertEqual(self.res["timedEarly"]["reminders"]["overrides"], [{"method": "popup", "minutes": 30}])    # earlier than 9:00: 30 minutes before
+        self.assertEqual(self.res["timedEarly"]["reminders"]["overrides"], [{"method": "popup", "minutes": 8 * 60 + 360}])    # 08:00 is too early for a morning alert: the evening before at 18:00 (14 hours before)
 
     def test_leap_day_and_the_hundred_day_marks(self):
         self.assertEqual(self.res["leap"], ["RRULE:FREQ=YEARLY;BYMONTH=2;BYMONTHDAY=-1"])

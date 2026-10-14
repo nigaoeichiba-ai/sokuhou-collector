@@ -24,12 +24,12 @@
   function hm(t) { var m = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(t || ''); return m ? [+m[1], +m[2]] : null; }
   function p2(n) { return (n < 10 ? '0' : '') + n; }
 
-  // the alerts, in minutes before the start (the API takes 0 to 40320).  A day without a time starts at 0:00, so "the morning of the day" (9:00 after the start) cannot be said: it is
-  // the start of the day instead; the evening before (21:00) and the week before (9:00, 7 days earlier) are exact.
+  // the alerts, in minutes before the start (the API takes 0 to 40320).  A day without a time starts at 0:00, so "the morning of the day" (9:00 after the start) cannot be said, and the start
+  // itself is midnight (never sent at night): the morning alert of such a day is the evening before at 18:00, as is the "day before"; the week before (9:00, 7 days earlier) is exact.
   function overrides(ev, t) {
     var out = [], tm = t ? t[0] * 60 + t[1] : 0;
     if (ev.alarm && ev.alarm !== 'none') {
-      var m = t ? ICS.alertBefore(ev.alarm, tm) : (ev.alarm === 'eve' ? 180 : ev.alarm === 'week' ? 6 * 1440 + 900 : 0);
+      var m = t ? ICS.alertBefore(ev.alarm, tm) : (ev.alarm === 'week' ? 6 * 1440 + 900 : 360);
       out.push(m);
     }
     (ev.reminds || []).forEach(function (r) { if (r >= 1) out.push(r * 1440 + tm - 540); });   // 9:00, r days before
