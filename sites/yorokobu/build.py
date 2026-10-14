@@ -31,6 +31,7 @@ from sites.yorokobu import icons  # noqa: E402
 from sites.yorokobu import relevance  # noqa: E402
 from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu import numberlists as nm  # noqa: E402
+from sites.yorokobu import compare  # noqa: E402
 from sites.yorokobu import ranking as rk  # noqa: E402
 from sites.yorokobu import sales  # noqa: E402
 from sites.yorokobu import features as feats  # noqa: E402
@@ -1360,6 +1361,8 @@ def home_tools(d: dict) -> str:
     if c.get("ask"):
         rows.append(tool_tile("/dock/", "list-checks", "贈り物ドック", "相手のことを入れると診断の結果票を返します"))
         rows.append(tool_tile("/ask/", "chat-circle-text", "ほしいものを聞く", "好みをそれとなく聞くアンケートを作る"))
+    if d.get("compare"):
+        rows.append(tool_tile("/compare/", "chart-bar", "商品比較", "同じ種類の商品を楽天市場のショップで並べて比べる"))
     rows.append(tool_tile("/memo/", "calendar-heart", "たいせつな日メモ", "誕生日や記念日を3週間前にお知らせ"))
     if c["persona"]:
         rows.append(tool_tile("/diagnosis/", "sparkle", "プレゼント診断", "相手のタイプから合う贈り物を"))
@@ -1853,7 +1856,7 @@ def mood_photo(key: str) -> str:
     return f"{kinds[h % len(kinds)]}-{(h // 7) % dp.MOOD_VARIANTS + 1}"
 
 
-def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool = False, today: date | None = None, ranking: dict | None = None) -> list[str]:
+def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool = False, today: date | None = None, ranking: dict | None = None, compare_data: dict | None = None) -> list[str]:
     missing = missing_config(cfg)
     if release and missing:
         raise BuildError(f"release build refused: set {', '.join(missing)} in config.json")
@@ -1865,6 +1868,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     d = prepare(c, items, cfg)
     d["cfg"], d["today"] = cfg, today
     d["ranking"] = rk.view(ranking, c["filters"])
+    d["compare"] = compare.view(compare_data, c["filters"])
     global RANKING_ON, DATA_ON, PICKS_ON
     RANKING_ON = bool(d["ranking"])
     DATA_ON = bool(dataroom.results(d))
@@ -1964,6 +1968,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages["ranking/index.html"] = ranking_hub_page(d, cfg, preview)
         for slug in d["ranking"]["order"]:
             pages[f"ranking/{slug}/index.html"] = ranking_page(d, cfg, preview, slug)
+    pages.update(compare.build_pages(d, cfg, preview))
     pages.update(dataroom.build_pages(d, cfg, preview))
     pages.update(picksite.build_pages(d, cfg, preview))
     pages.update(feats.build_pages(d, cfg, preview))
@@ -2016,7 +2021,7 @@ def main() -> None:
     items_path = Path(a.items)
     items = json.loads(items_path.read_text(encoding="utf-8")) if items_path.exists() else None
     try:
-        files = render_site(ct.load(), items, cfg, Path(a.out), release=a.release, ranking=rk.load())
+        files = render_site(ct.load(), items, cfg, Path(a.out), release=a.release, ranking=rk.load(), compare_data=compare.load())
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {a.out}")
