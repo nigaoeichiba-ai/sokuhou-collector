@@ -1,0 +1,219 @@
+{
+ "added": "2026-10-14",
+ "slug": "realistic-sea-creatures",
+ "title": "海の生きものの図鑑風イラスト",
+ "genre": "animals",
+ "touch": "realistic",
+ "lead": "クジラ・シャチ・サメ・ウミガメなど、海の生きものを図鑑風のタッチで描いた素材12点です。理科の資料や水族館の案内に使えます。",
+ "tags": [
+  "クジラ",
+  "リアル",
+  "図鑑",
+  "海",
+  "水族館",
+  "理科",
+  "シャチ"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "realistic-sea-creatures-whale",
+   "file": "realistic-sea-creatures-whale.webp",
+   "title": "クジラ",
+   "desc": "クジラのリアル・図鑑風イラストです。",
+   "tags": [
+    "クジラ",
+    "リアル",
+    "図鑑",
+    "海",
+    "海の生きものの図鑑風イラスト",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 529,
+   "h": 315
+  },
+  {
+   "id": "realistic-sea-creatures-orca",
+   "file": "realistic-sea-creatures-orca.webp",
+   "title": "シャチ",
+   "desc": "シャチのリアル・図鑑風イラストです。",
+   "tags": [
+    "クジラ",
+    "リアル",
+    "図鑑",
+    "海",
+    "シャチ",
+    "海の生きものの図鑑風イラスト",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 527,
+   "h": 368
+  },
+  {
+   "id": "realistic-sea-creatures-turtle",
+   "file": "realistic-sea-creatures-turtle.webp",
+   "title": "ウミガメ",
+   "desc": "ウミガメのリアル・図鑑風イラストです。",
+   "tags": [
+    "クジラ",
+    "リアル",
+    "図鑑",
+    "海",
+    "海の生きものの図鑑風イラスト",
+    "ウミガメ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 514,
+   "h": 345
+  },
+  {
+   "id": "realistic-sea-creatures-dolphin",
+   "file": "realistic-sea-creatures-dolphin.webp",
+   "title": "イルカ",
+   "desc": "イルカのリアル・図鑑風イラストです。",
+   "tags": [
+    "クジラ",
+    "リアル",
+    "図鑑",
+    "海",
+    "海の生きものの図鑑風イラスト",
+    "イルカ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 523,
+   "h": 352
+  },
+  {
+   "id": "realistic-sea-creatures-manta",
+   "file": "realistic-sea-creatures-manta.webp",
+   "title": "マンタ",
+   "desc": "マンタのリアル・図鑑風イラストです。",
+   "tags": [
+    "クジラ",
+    "リアル",
+    "図鑑",
+    "海",
+    "海の生きものの図鑑風イラスト",
+    "マンタ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 501,
+   "h": 397
+  },
+  {
+   "id": "realistic-sea-creatures-octopus",
+   "file": "realistic-sea-creatures-octopus.webp",
+   "title": "タコ",
+   "desc": "タコのリアル・図鑑風イラストです。",
+   "tags": [
+    "クジラ",
+    "リアル",
+    "図鑑",
+    "海",
+    "海の生きものの図鑑風イラスト",
+    "タコ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 535,
+   "h": 469
+  },
+  {
+   "id": "realistic-sea-creatures-jellyfish",
+   "file": "realistic-sea-creatures-jellyfish.webp",
+   "title": "クラゲ",
+   "desc": "クラゲのリアル・図鑑風イラストです。",
+   "tags": [
+    "クジラ",
+    "リアル",
+    "図鑑",
+    "海",
+    "海の生きものの図鑑風イラスト",
+    "クラゲ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 423,
+   "h": 489
+  },
+  {
+   "id": "realistic-sea-creatures-seahorse",
+   "file": "realistic-sea-creatures-seahorse.webp",
+   "title": "タツノオトシゴ",
+   "desc": "タツノオトシゴのリアル・図鑑風イラストです。",
+   "tags": [
+    "クジラ",
+    "リアル",
+    "図鑑",
+    "海",
+    "海の生きものの図鑑風イラスト",
+    "タツノオトシゴ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 271,
+   "h": 479
+  },
+  {
+   "id": "realistic-sea-creatures-crab",
+   "file": "realistic-sea-creatures-crab.webp",
+   "title": "カニ",
+   "desc": "カニのリアル・図鑑風イラストです。",
+   "tags": [
+    "クジラ",
+    "リアル",
+    "図鑑",
+    "海",
+    "海の生きものの図鑑風イラスト",
+    "カニ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 522,
+   "h": 428
+  },
+  {
+   "id": "realistic-sea-creatures-seal",
+   "file": "realistic-sea-creatures-seal.webp",
+   "title": "アザラシ",
+   "desc": "アザラシのリアル・図鑑風イラストです。",
+   "tags": [
+    "クジラ",
+    "リアル",
+    "図鑑",
+    "海",
+    "海の生きものの図鑑風イラスト",
+    "アザラシ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 582,
+   "h": 309
+  },
+  {
+   "id": "realistic-sea-creatures-penguin",
+   "file": "realistic-sea-creatures-penguin.webp",
+   "title": "ペンギン",
+   "desc": "ペンギンのリアル・図鑑風イラストです。",
+   "tags": [
+    "クジラ",
+    "リアル",
+    "図鑑",
+    "海",
+    "海の生きものの図鑑風イラスト",
+    "ペンギン",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 303,
+   "h": 495
+  }
+ ]
+}

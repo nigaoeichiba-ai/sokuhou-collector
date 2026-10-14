@@ -79,5 +79,8 @@
    "ペンギン",
    "an emperor penguin"
   ]
+ ],
+ "exclude": [
+  "shark"
  ]
 }

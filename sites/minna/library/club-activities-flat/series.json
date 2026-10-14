@@ -1,0 +1,240 @@
+{
+ "added": "2026-10-14",
+ "slug": "club-activities-flat",
+ "title": "部活動の場面",
+ "genre": "school",
+ "touch": "flat",
+ "lead": "バレーボール・バスケットボール・吹奏楽・美術部など、中高生の部活動の場面12点です。学校案内や部員募集のポスターに使えます。",
+ "tags": [
+  "部活",
+  "部活動",
+  "バレー",
+  "バスケ",
+  "吹奏楽",
+  "中学生",
+  "高校生",
+  "部員募集"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "club-activities-flat-volleyball",
+   "file": "club-activities-flat-volleyball.webp",
+   "title": "バレーボール部",
+   "desc": "バレーボール部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "部活動の場面",
+    "バレーボール部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 415,
+   "h": 521
+  },
+  {
+   "id": "club-activities-flat-basketball",
+   "file": "club-activities-flat-basketball.webp",
+   "title": "バスケットボール部",
+   "desc": "バスケットボール部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "部活動の場面",
+    "バスケットボール部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 374,
+   "h": 494
+  },
+  {
+   "id": "club-activities-flat-brassband",
+   "file": "club-activities-flat-brassband.webp",
+   "title": "吹奏楽部",
+   "desc": "吹奏楽部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "吹奏楽",
+    "部活動の場面",
+    "吹奏楽部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 330,
+   "h": 503
+  },
+  {
+   "id": "club-activities-flat-art",
+   "file": "club-activities-flat-art.webp",
+   "title": "美術部",
+   "desc": "美術部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "部活動の場面",
+    "美術部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 414,
+   "h": 489
+  },
+  {
+   "id": "club-activities-flat-soccer",
+   "file": "club-activities-flat-soccer.webp",
+   "title": "サッカー部",
+   "desc": "サッカー部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "部活動の場面",
+    "サッカー部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 424,
+   "h": 478
+  },
+  {
+   "id": "club-activities-flat-baseball",
+   "file": "club-activities-flat-baseball.webp",
+   "title": "野球部",
+   "desc": "野球部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "部活動の場面",
+    "野球部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 429,
+   "h": 495
+  },
+  {
+   "id": "club-activities-flat-tabletennis",
+   "file": "club-activities-flat-tabletennis.webp",
+   "title": "卓球部",
+   "desc": "卓球部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "部活動の場面",
+    "卓球部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 429,
+   "h": 475
+  },
+  {
+   "id": "club-activities-flat-kendo",
+   "file": "club-activities-flat-kendo.webp",
+   "title": "剣道部",
+   "desc": "剣道部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "部活動の場面",
+    "剣道部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 317,
+   "h": 497
+  },
+  {
+   "id": "club-activities-flat-track",
+   "file": "club-activities-flat-track.webp",
+   "title": "陸上部",
+   "desc": "陸上部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "部活動の場面",
+    "陸上部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 387,
+   "h": 476
+  },
+  {
+   "id": "club-activities-flat-tea",
+   "file": "club-activities-flat-tea.webp",
+   "title": "茶道部",
+   "desc": "茶道部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "部活動の場面",
+    "茶道部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 438,
+   "h": 467
+  },
+  {
+   "id": "club-activities-flat-broadcast",
+   "file": "club-activities-flat-broadcast.webp",
+   "title": "放送部",
+   "desc": "放送部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "部活動の場面",
+    "放送部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 285,
+   "h": 528
+  },
+  {
+   "id": "club-activities-flat-science",
+   "file": "club-activities-flat-science.webp",
+   "title": "科学部",
+   "desc": "科学部のシンプルフラットイラストです。",
+   "tags": [
+    "部活",
+    "部活動",
+    "バレー",
+    "バスケ",
+    "部活動の場面",
+    "科学部",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 376,
+   "h": 514
+  }
+ ]
+}
