@@ -301,7 +301,7 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
         chart = charts.bars([f"{m}月" for m in mc], list(mc.values()), title=f"{i['name']}の月別の記録", desc=f"{i['name']}が公表した{fy_label(cur)}の記録の月別の件数", uid=f"m{k}") if len(mc) >= 2 else ""
         month_blocks += f"<h3>{esc(i['name'])}</h3>\n{chart}{month_table(mine)}\n"
     body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", "/live/"), (pname, None)])}
-<h1>{esc(pname_s)}のクマの目撃情報({fy_label(cur)}・{esc(names)}の公式)</h1>
+<h1>{esc(pname_s)}の熊(クマ)出没・目撃情報({fy_label(cur)}・{esc(names)}の公式)</h1>
 <p class="lead">{esc(names)}が公表している{fy_label(cur)}の記録は、{n(len(rows))}件です{('(' + esc(note) + ')') if note else ''}。市町村ごとの件数と、新しい順の記録を載せています。</p>
 {stats_html(len(rows), last30(rows, today), rows[0], today, cur)}
 {published}{after}<h2>市町村別の記録({fy_label(cur)})</h2>
@@ -315,8 +315,8 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
 {('<h2>' + esc(pname) + 'の公式の出没情報</h2>' + off_html) if off_html else ''}
 <p><a href="/live/{slug}/feed.xml">{esc(pname)}の最新の目撃(フィード)</a>を、フィードリーダーに登録すると、新しい記録が公表されるたびに届きます。</p>
 {source_notes(infos, keys)}"""
-    return page(path=f"/live/{slug}/", title=f"{pname_s}のクマの目撃情報({fy_label(cur)}・最新{n(len(rows))}件・市町村別)",
-                description=f"{pname_s}の{fy_label(cur)}のクマの目撃情報{n(len(rows))}件を、新しい順・市町村別に一覧にしています。最新は{md(rows[0]['at'][:10])}の{place_text(rows[0]['city'], rows[0]['place'])}です。",
+    return page(path=f"/live/{slug}/", title=f"{pname_s}の熊(クマ)出没・目撃情報【最新{md(rows[0]['at'][:10])}】{fy_label(cur)}・{n(len(rows))}件・市町村別",
+                description=f"{pname_s}の熊(クマ)の目撃情報を、新しい順・市町村別に一覧にしています。最新は{md(rows[0]['at'][:10])}の{place_text(rows[0]['city'], rows[0]['place'])}。{fy_label(cur)}は{n(len(rows))}件です。",
                 body=body, alternates=((f"{pname}の最新の目撃", f"/live/{slug}/feed.xml"),))
 
 
@@ -347,6 +347,33 @@ def extra_counts_html(extras: list[dict], today: date) -> str:
     return out
 
 
+def trend_html(slug: str, city: str, rows: list[dict], lv: dict, today: date) -> str:
+    """Sentences counted from this municipality's own records (each page gets its own numbers): the last 30 days against the 30 days before,
+    the kinds, the days with records, and the rank in the prefecture."""
+    pname = pref_name(slug)
+    recent = last30(rows, today)
+    lo, hi = (today - timedelta(days=59)).isoformat(), (today - timedelta(days=30)).isoformat()
+    prev = sum(1 for r in rows if lo <= r["at"][:10] <= hi)
+    if recent > prev:
+        cmp = f"その前の30日({n(prev)}件)より増えています"
+    elif recent < prev:
+        cmp = f"その前の30日({n(prev)}件)より減っています"
+    else:
+        cmp = f"その前の30日({n(prev)}件)と同じです"
+    kinds = Counter(r["kind"] for r in rows)
+    kind_text = "、".join(f"{k}{n(v)}件" for k, v in kinds.most_common(4))
+    days = len({r["at"][:10] for r in rows})
+    ranked = sorted(lv["by_pref"][slug].items(), key=lambda kv: (-len(kv[1]), kv[0]))
+    rank = next(i for i, (c, _) in enumerate(ranked, 1) if c == city)
+    items = [
+        f"<li>直近30日は{n(recent)}件で、{cmp}。</li>",
+        f"<li>種別の内訳は、{esc(kind_text)}です。</li>",
+        f"<li>記録のあった日は{n(days)}日です(最新は{md(rows[0]['at'][:10])})。</li>",
+        f"<li>{esc(pname)}で記録を載せている{n(len(ranked))}市町村のうち、記録の数は{n(rank)}位です。</li>",
+    ]
+    return "<ul>\n" + "\n".join(items) + "\n</ul>"
+
+
 def city_page(page, d: dict, lv: dict, slug: str, city: str, links: dict) -> str:
     infos, today = lv["infos"], lv["today"]
     cur = d["cur"]
@@ -364,10 +391,12 @@ def city_page(page, d: dict, lv: dict, slug: str, city: str, links: dict) -> str
     with_count = [r for r in rows if r["count"]]
     head_extra = ""
     body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", "/live/"), (pname, f"/live/{slug}/"), (city, None)])}
-<h1>{esc(city)}のクマの目撃情報({esc(pname)}・{fy_label(cur)})</h1>
+<h1>{esc(city)}の熊(クマ)出没・目撃情報({esc(pname)}・{fy_label(cur)})</h1>
 <p class="lead">{esc(pname)}{esc(city)}で、{esc('・'.join(infos[k]['name'] for k in keys))}が公表した{fy_label(cur)}の記録は{n(len(rows))}件で、直近30日は{n(recent)}件です。最新は{md(last['at'][:10])}({ago_text(last['at'], today)})の「{esc(last['place'])}」です。</p>
 {stats_html(len(rows), recent, last, today, cur)}
 <p class="alert">最新の記録: {md(last['at'][:10])}({ago_text(last['at'], today)}) {esc(place_text(city, last['place']))}({esc(last['kind'])})</p>
+<h2>{esc(city)}の傾向({fy_label(cur)})</h2>
+{trend_html(slug, city, rows, lv, today)}
 <h2>{esc(city)}の月別の記録</h2>
 <p>{fy_label(cur)}は、{peak_m}月が最も多く({n(mc[peak_m])}件)でした{('(' + esc(note) + ')') if note else ''}。</p>
 {chart}{month_table(rows)}
@@ -377,8 +406,8 @@ def city_page(page, d: dict, lv: dict, slug: str, city: str, links: dict) -> str
 <p><a href="/map/?pref={slug}&amp;city={esc(city)}">{esc(city)}の目撃を地図で見る</a> ・ <a href="/live/{slug}/">{esc(pname)}の目撃情報</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
 {('<h2>' + esc(pname) + 'のほかの市町村</h2>' + other_html) if other_html else ''}
 {source_notes(infos, keys)}"""
-    return page(path=city_url(slug, city), title=f"{city}のクマ出没・目撃情報({pname}・{fy_label(cur)}・{n(len(rows))}件)",
-                description=f"{pname}{city}のクマの目撃情報を、新しい順に一覧にしています。{fy_label(cur)}は{n(len(rows))}件(直近30日は{n(recent)}件)で、最新は{md(last['at'][:10])}です。",
+    return page(path=city_url(slug, city), title=f"{city}の熊(クマ)出没・目撃情報【最新{md(last['at'][:10])}】{pname}・{fy_label(cur)}・{n(len(rows))}件",
+                description=f"{pname}{city}の熊(クマ)の目撃情報を、新しい順に一覧にしています。最新は{md(last['at'][:10])}。{fy_label(cur)}は{n(len(rows))}件(直近30日は{n(recent)}件)です。",
                 body=body, alternates=(("最新の目撃", "/live/feed.xml"),))
 
 

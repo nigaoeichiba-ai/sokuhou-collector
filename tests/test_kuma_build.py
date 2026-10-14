@@ -409,8 +409,15 @@ class LiveSectionTest(unittest.TestCase):
         self.assertNotIn("前の年度の1月", html)
         self.assertLess(html.index("美川町根笠"), html.index("錦町広瀬"))
         self.assertLess(html.index("錦町広瀬"), html.index("柱野"))
-        self.assertIn("<h1>岩国市のクマの目撃情報(山口県・令和8年度)</h1>", html)
-        self.assertIn("<title>岩国市のクマ出没・目撃情報(山口県・令和8年度・4件)</title>", html)
+        self.assertIn("<h1>岩国市の熊(クマ)出没・目撃情報(山口県・令和8年度)</h1>", html)
+        title = re.search(r"<title>(.*?)</title>", html).group(1)
+        self.assertRegex(title, r"^岩国市の熊\(クマ\)出没・目撃情報【最新\d+月\d+日】山口県・令和8年度・4件")      # the searcher's word 熊, and the newest record's own date
+
+    def test_city_page_has_a_trend_section_counted_from_its_own_records(self):
+        text = re.sub(r"<[^>]+>", " ", self.read(self.iwakuni))
+        self.assertIn("岩国市の傾向(令和8年度)", text)
+        for part in ("直近30日は", "その前の30日(", "種別の内訳は、", "記録のあった日は", "記録を載せている"):
+            self.assertIn(part, text)
 
     def test_pages_state_what_the_numbers_are_not(self):
         html = self.read(self.iwakuni)
@@ -560,7 +567,7 @@ class SourceKeyIsNotThePrefectureTest(unittest.TestCase):
         self.assertIn(f"live/hokkaido/{live_mod.city_slug('hokkaido', '砂川市')}/index.html", self.files)
         self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
         self.assertIn("空知総合振興局", self.read("live/hokkaido/index.html"))
-        self.assertIn("<h1>北海道(空知管内の24市町のみ)のクマの目撃情報", self.read("live/hokkaido/index.html"))  # the page does not claim to cover all of Hokkaido
+        self.assertIn("<h1>北海道(空知管内の24市町のみ)の熊(クマ)出没・目撃情報", self.read("live/hokkaido/index.html"))  # the page does not claim to cover all of Hokkaido
 
 
 @unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
