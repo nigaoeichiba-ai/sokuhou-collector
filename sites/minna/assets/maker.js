@@ -226,6 +226,8 @@
   }
   drawNow();
   $('[name="q"]', root).value = kind === "nenga" ? "年賀状" : "ひつじ"; search();
+  var want = (location.search.match(/[?&]id=([^&]+)/) || [])[1];                                  // ?id=<picture>: a picture page sends its own picture here
+  if (want && A.safeSlug(want)) A.loadIndex().then(function (rows) { var r = rows.filter(function (x) { return x[0] === want; })[0]; if (r) pick(r); });
   window.minnaMaker = { holidays: holidays, redraw: drawNow };
   }
   if (document.readyState === "complete") main(); else document.addEventListener("DOMContentLoaded", main);
