@@ -138,6 +138,36 @@ class Sender(unittest.TestCase):
     def test_payload_carries_only_the_day_and_slot(self):
         self.assertEqual(push_send.payload("2026-10-20", "e"), {"v": 1, "d": "2026-10-20", "s": "e"})
 
+    def test_nothing_is_sent_in_the_early_morning_or_at_night(self):
+        for h in (0, 3, 5, 7, 21, 22, 23):
+            self.assertTrue(push_send.quiet_now(h), h)
+        for h in (8, 9, 12, 18, 20):
+            self.assertFalse(push_send.quiet_now(h), h)
+        _, s1 = browser_subscription()
+        f = self.folder({"a" * 64 + ".json": {**s1, "dates": [{"d": "2026-10-20", "s": "m"}]}})
+        out = io.StringIO()
+        real = push_send.hour_jst
+        try:
+            push_send.hour_jst = lambda: 3                                  # a run at 03:00 JST (a late or mistimed run)
+            from contextlib import redirect_stdout
+            with redirect_stdout(out):
+                push_send.main(["--dir", str(f), "--slot", "m", "--today", "2026-10-20"])
+        finally:
+            push_send.hour_jst = real
+        self.assertEqual(json.loads(out.getvalue())["sent"], 0)
+        self.assertTrue(json.loads(out.getvalue())["quiet_hours"])
+
+    def test_the_schedule_of_the_workflow_fires_only_between_eight_and_twenty_one_jst(self):
+        wf = (ROOT / ".github/workflows/atomou-push.yml").read_text(encoding="utf-8")
+        for mm, hh in re.findall(r'cron:\s*"(\d+)\s+([\d,\-]+)\s+\*\s+\*\s+\*"', wf):
+            hours = []
+            for part in hh.split(","):
+                a, _, b = part.partition("-")
+                hours += list(range(int(a), int(b or a) + 1))
+            for h in hours:
+                jst = (h + 9) % 24
+                self.assertTrue(8 <= jst < 21, f"a run at {jst}:{mm} JST is in the quiet hours")
+
     def test_dry_run_sends_nothing_and_needs_no_key(self):
         _, s1 = browser_subscription()
         f = self.folder({"a" * 64 + ".json": {**s1, "dates": [{"d": "2026-10-20", "s": "m"}]}})

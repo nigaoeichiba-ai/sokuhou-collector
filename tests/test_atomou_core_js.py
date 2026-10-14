@@ -161,7 +161,7 @@ class CoreInChrome(unittest.TestCase):
         lines = ics.split("\r\n")[:-1]
         self.assertTrue(all(len(l.encode("utf-8")) <= 75 for l in lines), "a line is longer than 75 octets")
         unfolded = ics.replace("\r\n ", "")
-        for key in ("DTSTART;VALUE=DATE:20261120", "DTEND;VALUE=DATE:20261121", "UID:e-abc@atomou.com", "TRIGGER:PT9H", "TRIGGER:-PT3H",
+        for key in ("DTSTART;VALUE=DATE:20261120", "DTEND;VALUE=DATE:20261121", "UID:e-abc@atomou.com", "TRIGGER:PT9H", "TRIGGER:-PT6H",
                     "RRULE:FREQ=YEARLY;BYMONTH=2;BYMONTHDAY=-1", "DTSTART;VALUE=DATE:20240608", "RRULE:FREQ=DAILY;INTERVAL=100;COUNT=60", "DTSTAMP:20261008T010203Z"):
             self.assertIn(key, unfolded)
         self.assertIn("SUMMARY:テスト\\, 試験\\; 申込\\n締切", unfolded)  # comma, semicolon and newline are escaped
@@ -177,10 +177,10 @@ class CoreInChrome(unittest.TestCase):
         self.assertIn("DTSTART;TZID=Asia/Tokyo:20261201T153000", ics)
         self.assertIn("DTEND;TZID=Asia/Tokyo:20261201T163000", ics)
         self.assertIn("TRIGGER:-PT6H30M", ics)               # 15:30 with the 9:00 morning alert
-        self.assertIn("TRIGGER:-PT30M", ics)                 # 07:00 is before 9:00: 30 minutes before
+        self.assertIn("TRIGGER:-PT13H", ics)                 # 07:00 is too early for a morning alert (no alert in the early morning): the evening before at 18:00, 13 hours before
         self.assertIn("DTSTART;TZID=Asia/Tokyo:20261203T233000", ics)
         self.assertIn("DTEND;TZID=Asia/Tokyo:20261204T003000", ics)   # across midnight
-        self.assertIn("TRIGGER:-P1DT2H30M", ics)             # the evening before at 21:00 for an event at 23:30: 26.5 hours
+        self.assertIn("TRIGGER:-P1DT5H30M", ics)             # the evening before at 18:00 for an event at 23:30: 29.5 hours
         self.assertIn("TRIGGER:-P7DT1H", ics)                # a week before at 9:00 for an event at 10:00: 7 days 1 hour
         self.assertIn("DTSTART;VALUE=DATE:20261205", ics)    # an invalid time stays all-day
         self.assertEqual(ics.count("BEGIN:VTIMEZONE"), 1)

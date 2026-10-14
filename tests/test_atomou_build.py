@@ -795,20 +795,19 @@ class AppInChrome(BuildOnce):
         self.assertIn("pathname === '/card/'", sw)
         self.assertIn("'/card/#share='", sw)
 
-    def test_home_customize_panel_lists_every_part_and_opens_from_the_top_button(self):
+    def test_home_has_a_switch_for_every_part_on_the_page_itself(self):
         top = self.dom("/")
-        self.assertIn('id="custom-open"', top)
-        self.assertRegex(top, r'id="custom"[^>]*hidden')                      # closed until the button is pressed
-        self.assertNotIn('class="block-bar"', top)
-        dom = self.dom("/?edit=1")
-        self.assertNotRegex(dom, r'id="custom"[^>]*hidden')
-        self.assertEqual(dom.count('data-p="grip"'), 10)    # todo, live, search, cats, daily, mine, interests, region, soon, usecases
-        self.assertEqual(dom.count('data-p="vis"'), 10)
+        self.assertNotIn('id="custom-open"', top)                              # no button to open a panel: the switches are on the home page
+        self.assertRegex(top, r'id="home-parts"[^>]*open')
+        self.assertEqual(len(re.findall(r'class="part( off)?"', top)), 10)                         # todo, live, search, cats, daily, mine, interests, region, soon, usecases
+        self.assertEqual(top.count('role="switch"'), 10)
+        self.assertNotIn('data-p="up"', top)                                   # the arrow buttons are gone: the frame is dragged
+        self.assertNotIn('data-p="down"', top)
 
     def test_no_uncaught_script_error_on_any_main_page(self):
         # 2026-10-08: /add/ threw "Cannot read properties of undefined (reading 'quiet')" before a kind was chosen; dump-dom cannot see the console,
         # so core.js writes every uncaught error on <html data-jserr> and this test reads it
-        for path in ("/", "/add/", "/calendar/", "/my/", "/search/", "/skins/", "/today/", "/plan/", "/use/", "/add/?quick=1", "/?edit=1"):
+        for path in ("/", "/add/", "/calendar/", "/my/", "/search/", "/skins/", "/today/", "/plan/", "/use/", "/add/?quick=1"):
             dom = self.dom(path)
             m = re.search(r'<html[^>]*data-jserr="([^"]*)"', dom)
             self.assertIsNone(m, f"{path}: {m.group(1) if m else ''}")

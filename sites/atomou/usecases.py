@@ -24,7 +24,7 @@ GROUPS_ORDER = [
 ]
 
 # shown as a caution where a day is meant to be noticed: notices are optional (the my page turns them on); without them the day shows on the home page and the calendar
-NO_PUSH = "通知は任意です。マイページでオンにすると、予定日の朝または前日の夜に通知します。オフのままでも、ホームの「今日の予定・やること」とカレンダーで確認できます"
+NO_PUSH = "通知は任意です。マイページでオンにすると、予定日の午前中または前日に通知します。オフのままでも、ホームの「今日の予定・やること」とカレンダーで確認できます"
 
 USECASES: list[dict] = [
     # ---------------------------------------------------------------- 記念日と家族

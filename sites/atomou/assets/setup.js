@@ -86,7 +86,7 @@
         '<p class="hint" id="pick-sum" aria-live="polite">' + (count() ? count() + '件を選んでいます。' : 'まだ選んでいません。') + '</p>' +
         '<p class="intro-btns"><button type="button" class="btn" data-setup="next"' + (count() ? '' : ' disabled') + '>次へ</button> <button type="button" class="btn ghost" data-setup="later">あとで選ぶ</button></p>';
     } else if (step === 2) {
-      h = head(2) + '<p class="intro-lead">お住まいの都道府県を選ぶと、そのエリアのイベントなど地域の情報が優先的に表示されます。(選ばなくても使えます)</p><div class="field"><label class="vh" for="setup-reg">都道府県</label><select id="setup-reg"><option value="">選ばない</option>' +
+      h = head(2) + '<p class="intro-lead">お住まいの都道府県を選ぶと、そのエリアのイベントなど地域の情報が優先的に表示されます。(選ばなくても使えます)</p><div class="field"><label class="vh" for="setup-reg">都道府県</label><select id="setup-reg" autocomplete="off" name="atomou-region-pick"><option value="">選ばない</option>' +
         (CONF.regions || []).map(function (r) { return '<option value="' + H(r) + '"' + (r === reg ? ' selected' : '') + '>' + H(r) + '</option>'; }).join('') + '</select></div>' +
         '<p class="intro-btns"><button type="button" class="btn" data-setup="next">次へ</button> <button type="button" class="btn ghost" data-setup="back">戻る</button></p>';
     } else {

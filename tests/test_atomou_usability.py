@@ -82,7 +82,7 @@ async function setSort(f, id, v) { var d = f.contentDocument, s = d.getElementBy
   // 1. the home page of someone with days of their own
   seed(null); f = await open('/'); d = f.contentDocument;
   out.home = { hero: !d.querySelector('.hero').hidden, mineTop: ytop(d, d.getElementById('mine')), firstCard: ytop(d, d.querySelector('#mine-grid .card')), cards: d.querySelectorAll('#mine-grid .card').length,
-    more: d.getElementById('mine-more').innerText.trim(), sort: d.getElementById('mine-sort').value, tools: !!d.querySelector('.home-tools #setup-redo') && !!d.querySelector('.home-tools .custom-row'),
+    more: d.getElementById('mine-more').innerText.trim(), sort: d.getElementById('mine-sort').value, tools: !!d.querySelector('.home-tools #setup-redo') && !!d.querySelector('#home-parts') && !d.querySelector('.home-tools #home-parts'),
     toolsAfter: !!(d.getElementById('blocks').compareDocumentPosition(d.querySelector('.home-tools')) & 4), todoHidden: d.getElementById('todo').hidden, titles: titlesOf(d, '#mine-grid') };
   out.homeFirstBlock = d.querySelector('#blocks > [data-block]:not([hidden])').id || d.querySelector('#blocks > [data-block]:not([hidden])').getAttribute('data-block');
   f.remove();
@@ -236,7 +236,7 @@ class Usability(unittest.TestCase):
         self.assertEqual(h["cards"], 5)
         self.assertIn("ほかの5件を見る", h["more"])
         self.assertEqual(h["sort"], "pin")
-        self.assertTrue(h["tools"] and h["toolsAfter"])                 # re-choose genres / season / customise: one row at the foot
+        self.assertTrue(h["tools"] and h["toolsAfter"])                 # re-choose genres / season: one row at the foot; the switches of the home parts stay at the top
         self.assertTrue(h["todoHidden"])                                # nothing today: the empty part is left out
         self.assertEqual(self.res["homeFirstBlock"], "mine")
         self.assertEqual(h["titles"], NEAR[:5])

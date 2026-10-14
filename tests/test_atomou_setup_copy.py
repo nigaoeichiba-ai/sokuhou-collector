@@ -64,7 +64,7 @@ class AddPageCopyTest(unittest.TestCase):
 
     def test_steps_and_kinds(self):
         app = read("app.js")
-        a, b, c = (app.index(x) for x in ("1. 日付", "2. どんな日ですか", "3. くり返し・時刻・知らせ"))
+        a, b, c = (app.index(x) for x in ("1. 日付", "2. どんな日ですか", "3. 設定"))
         self.assertLess(a, b)
         self.assertLess(b, c)
         for label in ("今日", "明日", "明後日", "1週間後", "1か月後", "1年後", "年月日", "年と月だけ", "年だけ", "毎週", "毎月", "毎年"):

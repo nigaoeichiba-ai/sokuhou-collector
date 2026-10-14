@@ -282,7 +282,7 @@
           }).join('') + '</select><p class="hint">毎週・毎月は、カードに次の日までの日数が出ます。毎月は、その日がない月は月の最後の日です。</p></div>';
         }
         if (e.precision === 'day' && !e.quiet && e.kind !== 'event') h += '<div class="field"><label class="lab" for="e-100"><input type="checkbox" id="e-100"' + (e.every100 ? ' checked' : '') + '> 100日ごとの節目も入れる</label></div>';
-        h += '<div class="field"><label for="e-alarm">お知らせ</label><select id="e-alarm">' + [['', '設定に合わせる(マイページ)'], ['morning', '当日の朝'], ['eve', '前日の夜'], ['week', '1週間前の朝'], ['none', 'しない']].map(function (o) {
+        h += '<div class="field"><label for="e-alarm">通知するタイミング</label><select id="e-alarm">' + [['', '設定に合わせる(マイページ)'], ['morning', '当日の午前中(8時〜12時)'], ['eve', '前日'], ['week', '一週間前'], ['none', 'なし']].map(function (o) {
           return '<option value="' + o[0] + '"' + ((e.alarm || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>';
         }).join('') + '</select></div>';
         h += '<p><button type="button" class="btn small" id="e-save">保存</button></p></section>';

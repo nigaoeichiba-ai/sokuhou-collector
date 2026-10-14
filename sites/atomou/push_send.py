@@ -6,7 +6,8 @@ The server holds, per subscription, only the endpoint, the two keys and the days
 no titles, no names.  The message itself carries nothing but the day and the slot; the service worker on the device looks up what
 that day means in its own local mirror and shows the notification text from there.  So the content of a reminder never leaves the device.
 
-Slots: m = morning (07:00 JST), e = evening (21:00 JST, "the night before").
+Slots: m = morning (09:00 JST, "the morning of the day"), e = evening (18:00 JST, "the day before"), s = hourly.  Never in the early morning or at night: a message is sent only from 08:00 to 21:00 JST
+(QUIET_FROM / QUIET_TO; a run outside those hours sends nothing and says so; --force is for a test).
 The private VAPID key comes from the environment (ATOMOU_VAPID_PRIVATE); the public key is in config.json.
 Output: counts only (never an endpoint), plus `gone.txt` in the folder: the file names whose subscription the push service declared dead (404/410),
 so that the workflow can delete them on the server.
@@ -24,7 +25,17 @@ from zoneinfo import ZoneInfo
 from sites.atomou import webpush
 
 SLOTS = ("m", "e", "s")   # s: a shared card the subscription watches has a version newer than the one announced (no date involved)
+QUIET_FROM, QUIET_TO = 8, 21   # JST hours: messages go out when 8 <= hour < 21
 SUBJECT = "https://atomou.com"   # RFC 8292: a contact for the push service (mailto: or https:)
+
+
+def hour_jst() -> int:
+    return datetime.now(ZoneInfo("Asia/Tokyo")).hour
+
+
+def quiet_now(hour: int) -> bool:
+    """Early morning and night (before 08:00, from 21:00 on): nothing is sent."""
+    return not (QUIET_FROM <= hour < QUIET_TO)
 
 
 def today_jst() -> str:
@@ -112,9 +123,13 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--slot", choices=SLOTS, required=True)
     ap.add_argument("--today", default=today_jst())
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--force", action="store_true", help="send even in the quiet hours (for a test only)")
     ap.add_argument("--versions", default="", help="slot s: a JSON file {card id: version} (what the server holds)")
     a = ap.parse_args(argv)
     versions = json.loads(Path(a.versions).read_text(encoding="utf-8")) if a.versions else {}
+    if quiet_now(hour_jst()) and not a.force and not a.dry_run:
+        print(json.dumps({"today": a.today, "slot": a.slot, "quiet_hours": True, "sent": 0}))     # a late or early run (the schedule can be late): nothing goes out
+        return 0
     counts = run(Path(a.dir), a.today, a.slot, os.environ.get("ATOMOU_VAPID_PRIVATE"), dry_run=a.dry_run, versions=versions)
     print(json.dumps({"today": a.today, "slot": a.slot, **counts}))
     return 0
