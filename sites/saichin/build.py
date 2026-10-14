@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import charts, content, ogimage, wage as wagelib  # noqa: E402
+from sites.saichin import charts, content, dataset, ogimage, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
@@ -42,6 +42,7 @@ REGIONS = [
 ]
 SOURCE_LABEL = "厚生労働省「地域別最低賃金の全国一覧」"
 WEEKLY_HOURS, WEEKS_PER_YEAR = 40, 52
+FIRST_FY = 2002   # 平成14年度: the first year of MHLW's history workbook; the prefecture pages show every year from here
 WEEKDAYS = "月火水木金土日"
 RANKINGS = {
     "high": ("高い順", "最低賃金が高い順", lambda r: (-r["amount"], r["name"])),
@@ -169,7 +170,7 @@ def prepare(raw: dict) -> dict:
         if not (500 <= new["amount"] <= 3000) or new["amount"] < prev["amount"]:
             raise BuildError(f"{p['name']}: implausible amount {new['amount']} (previous {prev['amount']})")
         history = []
-        for y in range(max(2002, fy - 10), fy + 1):
+        for y in range(FIRST_FY, fy + 1):
             cur, before = h.get(str(y)), h.get(str(y - 1))
             if cur:
                 eff_y = cur["effective_date"]
@@ -192,7 +193,7 @@ def prepare(raw: dict) -> dict:
         for y, v in p["history"].items():
             by_year.setdefault(y, []).append(v["amount"])
     for r, p in zip(rows, raw["prefectures"]):
-        for h, y in zip(r["history"], [str(y) for y in range(max(2002, fy - 10), fy + 1) if str(y) in p["history"]]):
+        for h, y in zip(r["history"], [str(y) for y in range(FIRST_FY, fy + 1) if str(y) in p["history"]]):
             h["rank"] = 1 + sum(1 for a in by_year[y] if a > h["amount"])
     amounts = [r["amount"] for r in rows]
     lo, hi = min(amounts), max(amounts)
@@ -248,7 +249,7 @@ def nav_html(path: str) -> str:
     return "".join(out)
 
 
-def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str, body: str, scripts: bool = True) -> str:
+def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str, body: str, scripts: bool = True, head_extra: str = "") -> str:
     base = cfg["site_url"].rstrip("/")
     name = esc(cfg["site_name"])
     robots = '<meta name="robots" content="noindex,nofollow">\n' if preview else ""
@@ -298,7 +299,7 @@ def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str,
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/style.css?v={ver}">
-{adsense}</head>
+{adsense}{head_extra}</head>
 <body>
 {banner}<header class="site"><div class="wrap">
 <a class="brand" href="/"><span class="logo" aria-hidden="true">&yen;</span>{name}</a>
@@ -446,6 +447,25 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
     ), d)
 
 
+def history_summary(d: dict, r: dict) -> str:
+    """Plain sentences about the whole history of one prefecture; every number comes from the table below it."""
+    h = r["history"]
+    first, last = h[0], h[-1]
+    years = last["fy"] - first["fy"]
+    up = last["amount"] - first["amount"]
+    big = max((x["raise"], x["fy"], x["label"]) for x in h if x["raise"] is not None)    # on a tie the later year
+    avg = {y["fy"]: y["avg"] for y in d["years"]}
+    nat_up = round(avg[last["fy"]]) - round(avg[first["fy"]])
+    name = esc(r["name"])
+    return (
+        f"{name}の最低賃金は、{esc(first['label'])}の{yen(first['amount'])}から、{esc(last['label'])}の{yen(last['amount'])}(決まった額)まで、"
+        f"{years}年間で{up:,}円({up / first['amount'] * 100:.1f}%)上がりました。1年あたりの平均は約{up / years:.0f}円です。"
+        f"1年の引上げ額が最も大きかったのは、{esc(big[2])}の+{big[0]}円です。"
+        f"同じ期間に、全国加重平均は{yen(round(avg[first['fy']]))}から{yen(round(avg[last['fy']]))}へ、+{nat_up:,}円上がっています。"
+        f"{name}の全国順位は、{esc(first['label'])}が47都道府県中{first['rank']}位、{esc(last['label'])}が{last['rank']}位です(同額は同じ順位)。"
+    )
+
+
 def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
     diff_avg = r["amount"] - round(d["avg"])
     diff_text = "全国加重平均と同じ額です" if diff_avg == 0 else f"全国加重平均より{abs(diff_avg)}円{'高い' if diff_avg > 0 else '低い'}額です"
@@ -462,7 +482,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
     )
     chart = charts.line(
         [(h["label"].replace("年度", "").replace("令和", "R").replace("平成", "H"), h["amount"]) for h in r["history"]],
-        title=f"{r['name']}の最低賃金の推移", desc=f"{r['history'][0]['label']}から{r['history'][-1]['label']}までの{r['name']}の最低賃金(円)の推移", label_every=2,
+        title=f"{r['name']}の最低賃金の推移", desc=f"{r['history'][0]['label']}から{r['history'][-1]['label']}までの{r['name']}の最低賃金(円)の推移", label_every=3,
     )
     mates = sorted((x for x in d["rows"] if x["region_slug"] == r["region_slug"] and x is not r), key=lambda x: -x["amount"])
     mate_html = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a><b>{yen(x["amount"])}</b></li>' for x in mates)
@@ -478,7 +498,8 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 </div>
 <h2>全国と比べると</h2>
 <p>{esc(r['name'])}の{esc(d['label'])}の最低賃金は{yen(r['amount'])}で、{diff_text}(全国加重平均 {yen(round(d['avg']))})。引上げ額の+{r['raise']}円は、47都道府県中{r['raise_rank']}位です。</p>
-<h2>最低賃金の推移</h2>
+<h2>最低賃金の推移({esc(r['history'][0]['label'])}から{esc(r['history'][-1]['label'])}まで)</h2>
+<p>{history_summary(d, r)}</p>
 {chart}
 <div class="tablewrap"><table><thead><tr><th>年度</th><th>最低賃金</th><th>前年度からの引上げ</th><th>全国順位</th><th>発効日</th></tr></thead><tbody>{hist}</tbody></table></div>
 {fixed_note}
@@ -497,7 +518,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <ul class="link-list"><li><a href="/guide/excluded/">最低賃金に含まれない賃金は?</a></li><li><a href="/guide/below/">最低賃金を下回っていたら?</a></li><li><a href="/calendar/">発効日カレンダー</a></li></ul>
 <h2>ほかの都道府県</h2>
 <ul class="pref-nav">{nav}</ul>
-<p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。</p>"""
+<p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。47都道府県の全年度のデータは、<a href="/data/">CSV・JSONでダウンロード</a>できます。引用するときは、<a href="/cite/">引用のしかた</a>をご覧ください。</p>"""
     return finish(layout(
         cfg, preview, path=f"/{r['slug']}/",
         title=f"{r['name']}の最低賃金の推移と現在額 {yen(r['amount'])}({d['label']})・発効日",
@@ -523,18 +544,29 @@ def area_hub_page(d: dict, cfg: dict, preview: bool) -> str:
                          description=f"{d['label']}の最低賃金を、北海道・東北、関東、中部、近畿、中国、四国、九州・沖縄の7つの地方別にまとめます。", body=body), d)
 
 
+def member_kinds(members: list[dict]) -> str:
+    """'1都6県', '2府5県', '9県': how many of each kind of prefecture a region has."""
+    out = ""
+    for suffix in "都道府県":
+        n = sum(1 for r in members if r["name"].endswith(suffix))
+        if n:
+            out += f"{n}{suffix}"
+    return out
+
+
 def area_page(d: dict, slug: str, rname: str, shorts: list[str], cfg: dict, preview: bool) -> str:
     members = sorted((r for r in d["rows"] if r["short"] in shorts), key=lambda r: (-r["amount"], r["name"]))
     hi, lo = members[0], members[-1]
     mean = sum(r["amount"] for r in members) / len(members)
     cards = "".join(pref_card(r) for r in members)
     rows = "".join(
-        f'<tr><td><a href="/{r["slug"]}/">{esc(r["name"])}</a></td><td>{yen(r["amount"])}</td><td>+{r["raise"]}円</td><td>{jp_date(r["effective_date"])}</td></tr>'
+        f'<tr><td><a href="/{r["slug"]}/">{esc(r["name"])}</a></td><td>{yen(r["amount"])}</td><td>{r["rank"]}位</td><td>+{r["raise"]}円</td><td>{jp_date(r["effective_date"])}</td></tr>'
         for r in members
     )
+    kinds = member_kinds(members)
     others = "".join(f'<li><a href="/area/{s}/">{esc(n)}</a></li>' for s, n, _ in REGIONS if s != slug)
     body = f"""{crumbs([("全国", "/"), ("地方別", "/area/"), (rname, None)])}
-<h1>{esc(rname)}の最低賃金({esc(d['label'])})</h1>
+<h1>{esc(rname)}{kinds}の最低賃金 一覧と順位({esc(d['label'])})</h1>
 <p class="lead">{esc(rname)}の{len(members)}都道府県の最低賃金です。最も高いのは{esc(hi['name'])}の{yen(hi['amount'])}、最も低いのは{esc(lo['name'])}の{yen(lo['amount'])}で、差は{hi['amount'] - lo['amount']}円です。</p>
 <div class="stats">
 <div class="stat strong"><span>最も高い</span><b>{yen(hi['amount'])}</b><span>{esc(hi['name'])}</span></div>
@@ -544,12 +576,12 @@ def area_page(d: dict, slug: str, rname: str, shorts: list[str], cfg: dict, prev
 <h2>都道府県別</h2>
 <div class="card-grid">{cards}</div>
 <h2>一覧表</h2>
-<div class="tablewrap"><table><thead><tr><th>都道府県</th><th>最低賃金</th><th>引上げ額</th><th>発効日</th></tr></thead><tbody>{rows}</tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>都道府県</th><th>最低賃金</th><th>全国順位</th><th>引上げ額</th><th>発効日</th></tr></thead><tbody>{rows}</tbody></table></div>
 <h2>ほかの地方</h2>
 <ul class="pref-nav">{others}</ul>
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。単純平均は、このサイトで計算した参考値です。</p>"""
-    return finish(layout(cfg, preview, path=f"/area/{slug}/", title=f"{rname}の最低賃金一覧({d['label']})",
-                         description=f"{rname}の最低賃金を一覧にします。最高は{hi['name']}の{yen(hi['amount'])}、最低は{lo['name']}の{yen(lo['amount'])}。発効日も掲載しています。", body=body), d)
+    return finish(layout(cfg, preview, path=f"/area/{slug}/", title=f"{rname}({kinds})の最低賃金一覧と順位({d['label']})",
+                         description=f"{rname}{kinds}の最低賃金を、高い順に一覧にします。最高は{hi['name']}の{yen(hi['amount'])}、最低は{lo['name']}の{yen(lo['amount'])}。全国順位・引上げ額・発効日も掲載しています。", body=body), d)
 
 
 WAGE_RANKINGS = {
@@ -778,6 +810,22 @@ def history_page(d: dict, cfg: dict, preview: bool) -> str:
                  f'<td>{yen(y["max"])}({esc(y["max_name"])})</td><td>{yen(y["min"])}({esc(y["min_name"])})</td></tr>')
         prev = y["avg"]
     first, last = ys[0], ys[-1]
+    risers = sorted(((r["history"][-1]["amount"] - r["history"][0]["amount"], r) for r in d["rows"]), key=lambda t: (-t[0], t[1]["name"]))
+    pref_rows = "".join(
+        f'<tr><td><a href="/{r["slug"]}/">{esc(r["name"])}</a></td><td>{yen(r["history"][0]["amount"])}</td><td>{yen(r["history"][-1]["amount"])}</td>'
+        f'<td>+{up:,}円</td><td>{up / r["history"][0]["amount"] * 100:.1f}%</td></tr>'
+        for up, r in risers
+    )
+    gap_first, gap_last = first["max"] - first["min"], last["max"] - last["min"]
+    pref_section = (
+        f'<h2>都道府県別の推移({esc(first["label"])}から{esc(last["label"])}まで)</h2>\n'
+        f'<p>{esc(first["label"])}から{esc(last["label"])}までに最も上がったのは{esc(risers[0][1]["name"])}の+{risers[0][0]:,}円、'
+        f'最も上がり方が小さかったのは{esc(risers[-1][1]["name"])}の+{risers[-1][0]:,}円です。'
+        f'最高額と最低額の差は、{esc(first["label"])}の{gap_first:,}円から、{esc(last["label"])}の{gap_last:,}円になりました。'
+        f'都道府県名を押すと、その県の年度別の推移を見られます。</p>\n'
+        f'<div class="tablewrap"><table><thead><tr><th>都道府県</th><th>{esc(first["label"])}</th><th>{esc(last["label"])}</th><th>上がった額</th><th>上昇率</th></tr></thead>'
+        f'<tbody>{pref_rows}</tbody></table></div>\n'
+    )
     body = f"""{crumbs([("全国", "/"), ("全国の推移", None)])}
 <h1>最低賃金の推移 {esc(first['label'])}〜{esc(last['label'])}</h1>
 <p class="lead">全国加重平均は、{esc(first['label'])}の{yen(round(first['avg']))}から、{esc(last['label'])}の{yen(round(last['avg']))}になりました。年度ごとの全国加重平均と、最高額・最低額の推移です。</p>
@@ -785,9 +833,101 @@ def history_page(d: dict, cfg: dict, preview: bool) -> str:
 {chart}
 <h2>年度別の一覧</h2>
 <div class="tablewrap"><table><thead><tr><th>年度</th><th>全国加重平均</th><th>前年度から</th><th>最高額</th><th>最低額</th></tr></thead><tbody>{rows}</tbody></table></div>
+{pref_section}<p class="notice">この表のデータは、<a href="/data/">CSV・JSONでダウンロード</a>できます。引用するときは、<a href="/cite/">引用のしかた</a>をご覧ください。</p>
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。出典の表にある各年度の額をもとに、このサイトで並べ替えました。グラフの縦軸は0から始まっていません。</p>"""
     return finish(layout(cfg, preview, path="/history/", title=f"最低賃金の推移 全国加重平均の年度別一覧({first['label']}〜{last['label']})",
                          description=f"{first['label']}から{last['label']}までの全国加重平均の最低賃金の推移を、グラフと年度別の表でまとめます。最高額・最低額も掲載。", body=body), d)
+
+
+def data_page(d: dict, cfg: dict, preview: bool) -> str:
+    first, last = d["rows"][0]["history"][0], d["rows"][0]["history"][-1]
+    n_rows = len(dataset.rows(d))
+    kb = lambda b: f"{max(1, round(len(b) / 1024))}KB"  # noqa: E731
+    csv_b, json_b = dataset.csv_bytes(d), dataset.json_text(d, cfg).encode("utf-8")
+    cols = "".join(f"<tr><td>{esc(c)}</td><td>{esc(m)}</td></tr>" for c, m in (
+        ("都道府県", "北海道・東京都・大阪府・京都府・各県の名前"),
+        ("年度(西暦)", "2025は令和7年度。年度は4月から翌年3月です"),
+        ("年度(和暦)", f"{first['label']}から{last['label']}まで"),
+        ("最低賃金(円)", "地域別最低賃金の時間額"),
+        ("前年度からの引上げ(円)", "その年度の額から前の年度の額を引いた値。最初の年度は空欄"),
+        ("発効日", "その額が適用される最初の日(出典の表の日付。補正したときは次の列に元の日付)"),
+        ("全国順位", "その年度の47都道府県の中での順位。同額は同じ順位"),
+        ("発効日の補正(元の日付)", "出典の表の日付が年度の範囲に入らないときだけ、元の日付を書きます(通常は空欄)"),
+    ))
+    body = f"""{crumbs([("全国", "/"), ("データ", None)])}
+<h1>最低賃金のデータ(CSV・JSON)</h1>
+<p class="lead">47都道府県の地域別最低賃金を、{esc(first['label'])}から{esc(last['label'])}まで年度別にそろえたデータです。無料で、表計算ソフトやプログラムに使えます。</p>
+<h2>ダウンロード</h2>
+<ul class="link-list">
+<li><a href="/data/{dataset.CSV_NAME}" download>CSV({kb(csv_b)})</a>: Excel やスプレッドシートで開けます(文字コードは UTF-8)。</li>
+<li><a href="/data/{dataset.JSON_NAME}" download>JSON({kb(json_b)})</a>: 出典・加工の説明・全国加重平均と、全データが入っています。</li>
+</ul>
+<p>どちらも同じ内容で、{n_rows:,}行(47都道府県 × {last['fy'] - first['fy'] + 1}年度)です。データの取得日は、{jp_date(d['fetched_date'])}です。</p>
+<h2>列の意味</h2>
+<div class="tablewrap"><table><thead><tr><th>列</th><th>意味</th></tr></thead><tbody>{cols}</tbody></table></div>
+<p class="notice">{esc(last['label'])}の額は、発効日より前でも、決まった新しい額です。発効日の前は、その県では1つ前の年度の額が適用されています。</p>
+<h2>出典と使うときの決まり</h2>
+<p>出典は、{esc(SOURCE_LABEL)}(<a href="{esc(d['source_page'])}" rel="noopener" target="_blank">厚生労働省のページ</a>)です。厚生労働省のページの内容は、特に断りがなければ、<a href="{dataset.PDL_URL}" rel="noopener" target="_blank">公共データ利用規約(第1.0版・PDL1.0)</a>のもとで使えます。使うときは、次の3つを守ってください。</p>
+<ol>
+<li>出典を書く(サイトの名前と、ページのURL)。</li>
+<li>編集・加工したことと、加工した人(このサイトの運営者)を、出典とは別に書く。</li>
+<li>国が作ったものであるかのように見せない。</li>
+</ol>
+<p>書き方の例は、<a href="/cite/">引用のしかた</a>にあります。</p>
+<p class="notice">このデータは、厚生労働省が作成したものではありません。数字に誤りを見つけたときは、<a href="/contact/">お問い合わせ</a>からご連絡ください。</p>"""
+    return finish(layout(
+        cfg, preview, path="/data/", title=f"最低賃金のデータ(CSV・JSON) 47都道府県・{first['label']}〜{last['label']} | {cfg['site_name']}",
+        description=f"47都道府県の地域別最低賃金を、{first['label']}から{last['label']}まで年度別にそろえたCSV・JSONです。引上げ額・発効日・全国順位つき。無料でダウンロードできます。",
+        body=body, head_extra=dataset.ld_script(d, cfg),
+    ), d)
+
+
+def cite_page(d: dict, cfg: dict, preview: bool) -> str:
+    base = cfg["site_url"].rstrip("/")
+    name = esc(cfg["site_name"])
+    example_full = (f"出典:「地域別最低賃金の全国一覧」(厚生労働省){d['source_page']} をもとに、{cfg['site_name']}({base}/)が加工して作成"
+                    f"(公共データ利用規約 第1.0版 PDL1.0 {dataset.PDL_URL} )。データの取得日:{jp_date(d['fetched_date'])}。")
+    example_short = f"出典:{cfg['site_name']}({base}/)。厚生労働省の公表資料を加工して作成。"
+    body = f"""{crumbs([("全国", "/"), ("引用のしかた", None)])}
+<h1>このサイトの数字の出どころと、引用のしかた</h1>
+<p class="lead">{name}の数字は、すべて厚生労働省の公表資料にもとづいています。ここでは、数字の出どころ、このサイトで計算している数字、記事やブログなどで使うときの書き方を説明します。</p>
+<h2>数字の出どころ</h2>
+<ul>
+<li>各都道府県の最低賃金と発効日、全国加重平均: <a href="{esc(d['source_page'])}" rel="noopener" target="_blank">厚生労働省「地域別最低賃金の全国一覧」</a>の、「平成14年度から令和8年度までの地域別最低賃金改定状況」(Excel)。</li>
+<li>平均賃金との比べ方(賃金の実態のページ): 厚生労働省「賃金構造基本統計調査」(政府統計の総合窓口 e-Stat)。</li>
+<li>最低賃金の対象になる賃金の決まり: 最低賃金法と、厚生労働省の最低賃金制度の説明(各解説ページに出典を載せています)。</li>
+</ul>
+<h2>このサイトで計算している数字</h2>
+<ul>
+<li><strong>引上げ額</strong>: その年度の額から、前の年度の額を引いた値です。</li>
+<li><strong>全国順位</strong>: その年度の47都道府県の中での順位です。同額は同じ順位にしています。</li>
+<li><strong>地方の単純平均</strong>: 地方の各都道府県の額の平均です(人数などの重みはつけていません)。全国加重平均は、厚生労働省が公表している値です。</li>
+<li><strong>月収・年収の目安</strong>: 時給 × 週の労働時間 × 52週で年収を出し、12で割って月収にしています。税・社会保険料・手当・賞与・祝日は含みません。</li>
+<li><strong>差額チェッカー</strong>: 厚生労働省の「あなたの賃金を比較チェック」の方法にもとづいて計算します。入力した内容は、送信も保存もしません。</li>
+</ul>
+<h2>基準日と更新</h2>
+<p>データの取得日は、各ページの下に書いています(いまは{jp_date(d['fetched_date'])})。毎日1回、厚生労働省の公表を取得して、ページを作り直しています。{esc(d['label'])}の額は、発効日より前でも、決まった新しい額です。発効日の前は、その県では1つ前の年度の額が適用されています。</p>
+<h2>使うときに書くこと</h2>
+<p>厚生労働省のページの内容は、特に断りがなければ、<a href="{dataset.PDL_URL}" rel="noopener" target="_blank">公共データ利用規約(第1.0版・PDL1.0)</a>のもとで使えます。このサイトの表やデータを使うときも、次の3つを書いてください。</p>
+<ol>
+<li>出典(サイトの名前とページのURL)。</li>
+<li>編集・加工したことと、加工した人。出典とは別に書きます。</li>
+<li>国が作ったものであるかのように見せないこと。</li>
+</ol>
+<h2>書き方の例</h2>
+<p><strong>くわしい書き方</strong>(資料や記事の末尾に):</p>
+<p class="quote">{esc(example_full)}</p>
+<p><strong>短い書き方</strong>(スライドの端やSNSに):</p>
+<p class="quote">{esc(example_short)}</p>
+<p>数字だけでなく、<a href="/data/">CSV・JSONのデータ</a>も、同じ決まりで使えます。</p>
+<h2>誤りを見つけたとき</h2>
+<p>数字や説明に誤りを見つけたときは、<a href="/contact/">お問い合わせ</a>からご連絡ください。確認して、直します。</p>
+<p class="notice">このサイトは、厚生労働省が運営しているものではありません。内容の確認日: {jp_date(d['fetched_date'])}。</p>"""
+    return finish(layout(
+        cfg, preview, path="/cite/", title=f"最低賃金の数字の出どころと引用のしかた | {cfg['site_name']}",
+        description="最低賃金速報の数字の出どころ(厚生労働省)、このサイトで計算している数字、記事やスライドで使うときの出典の書き方を説明します。データはCSV・JSONでも配布しています。",
+        body=body,
+    ), d)
 
 
 def guide_hub_page(d: dict, cfg: dict, preview: bool) -> str:
@@ -1077,6 +1217,10 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, wage: di
             pages[f"ranking/{kind}/index.html"] = wage_ranking_page(d, kind, cfg, preview)
     pages["calendar/index.html"] = calendar_page(d, cfg, preview)
     pages["history/index.html"] = history_page(d, cfg, preview)
+    pages["data/index.html"] = data_page(d, cfg, preview)
+    pages["cite/index.html"] = cite_page(d, cfg, preview)
+    pages[f"data/{dataset.CSV_NAME}"] = dataset.csv_bytes(d)
+    pages[f"data/{dataset.JSON_NAME}"] = dataset.json_text(d, cfg)
     pages["notify/index.html"] = notify_page(d, cfg, preview)
     pages["check/index.html"] = check_page(d, cfg, preview)
     pages["guide/index.html"] = guide_hub_page(d, cfg, preview)
