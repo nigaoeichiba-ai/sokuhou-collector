@@ -348,6 +348,7 @@ def assist_data(built, guides, year: int, kinds: dict, use_hubs: list | None = N
     if has_pose:
         pages.append({"u": "/pose/", "n": "ポーズ集(動物・人物のポーズ違いのイラスト)", "k": ["ポーズ", "表情", "差分", "動物", "いろいろ", "立つ", "座る"], "t": "ポーズ"})
     pages.append({"u": "/tool/", "n": "つくる(カード・カレンダー・名札・賞状・ぬりえ)", "k": ["つくる", "作る", "ツール", "メーカー", "カレンダー", "名札", "席札", "賞状", "カード", "ぬりえ"], "t": "ツール"})
+    pages.append({"u": "/tool/nenga/", "n": "年賀状をつくる(はがきサイズ・賀詞とひとこと入り)", "k": ["年賀状", "年賀", "はがき", "ハガキ", "賀詞", "お正月", "文面", "印刷", "テンプレート"], "t": "ツール"})
     pages.append({"u": "/tool/calendar/", "n": "カレンダーをつくる(イラスト入り・祝日つき)", "k": ["カレンダー", "月間", "祝日", "印刷", "壁掛け", "メーカー"], "t": "ツール"})
     pages.append({"u": "/tool/nametag/", "n": "名前入りの名札・席札・賞状をつくる", "k": ["名札", "ネームプレート", "席札", "賞状", "名前入り", "印刷", "ネームタグ"], "t": "ツール"})
     pages.append({"u": "/tool/card/", "n": "名前入りカードをつくる", "k": ["カード", "名前入り", "誕生日", "ありがとう", "おめでとう", "あけおめ"], "t": "ツール"})
@@ -921,7 +922,7 @@ def special_page(cfg, preview, sp: dict, sers: list[dict], its: list[dict], toda
 {sections}
 {guide_box([g for g in guides if g['slug'] in sp['guides']] if sp.get('guides') else guides_for('eto' if sp['slug'] == 'nenga-2027' else 'season', 'kawaii', list(guides), 3))}
 <section style="margin-top:44px"><h2><span class="scribble">よくある質問</span></h2><div class="faq">{faq}</div></section>
-{pr_box(cfg, *SPECIAL_PR[sp['slug']]) if sp['slug'] in SPECIAL_PR else ""}{share(cfg, f"/special/{sp['slug']}/", sp['title'])}
+{'<p class="meta" style="margin-top:32px">文字を入れて作るなら、<a href="/tool/nenga/">年賀状をつくる</a>(はがきサイズ・無料)もご利用ください。</p>' if sp['slug'] == 'nenga-2027' else ''}{pr_box(cfg, *SPECIAL_PR[sp['slug']]) if sp['slug'] in SPECIAL_PR else ""}{share(cfg, f"/special/{sp['slug']}/", sp['title'])}
 <script type="application/ld+json">{ld}</script>"""
     return page(cfg, preview, path=f"/special/{sp['slug']}/", title=f"{sp['title']} | {cfg['site_name']}", description=sp["description"][:150], body=body, og_image=f"/og/special-{sp['slug']}.webp")
 
@@ -1148,6 +1149,12 @@ MAKER_FAQ = {
         ("印刷はどうすればいいですか?", "「印刷」を押すと、A4縦のページとして印刷できます。プリンターの設定で用紙をA4、倍率を100%にしてください。画像として保存して、別のソフトで使うこともできます。"),
         ("商用で使えますか?", "このサイトのイラストと同じく、個人でも商用でも無料で使えます。作ったカレンダーを配布・販売する場合の条件は、利用について のページをご覧ください。"),
     ],
+    "nenga": [
+        ("入力した内容は送信されますか?", "送信されません。賀詞も文面も差出人も、この端末のブラウザの中だけで使われます。"),
+        ("印刷はどうすればいいですか?", "「印刷」を押し、用紙をはがき(100×148mm)、余白をなし、倍率を100%にします。年賀はがきに直接印刷するときは、プリンターの用紙の種類を「はがき」に設定してください。プリンターによっては、はがきの給紙の向きが異なります。最初は普通紙で試すと確実です。"),
+        ("宛名面も作れますか?", "このページで作るのは、文面(通信面)です。宛名面は、年賀状ソフトや郵便局の宛名印刷サービス、手書きで作成してください。"),
+        ("年賀状はいつまでに出せばいいですか?", "日本郵便の発表(2026年8月31日)では、2027年用の年賀状の引受開始は12月20日、元日にお届けするための差出日の目安は12月27日です。年賀はがきの販売は2026年11月2日から2027年1月15日までです。"),
+    ],
     "nametag": [
         ("入力した名前は送信されますか?", "送信されません。名前も文面も、この端末のブラウザの中だけで使われます。"),
         ("席札はどのように使いますか?", "A4に1枚印刷し、中央の線で山型に折ると、向かい合う両側から名前が読めます。"),
@@ -1158,7 +1165,20 @@ MAKER_FAQ = {
 
 def maker_page(cfg: dict, preview: bool, kind: str) -> str:
     chips = "".join(f'<button type="button" class="chip" data-q="{esc(q)}">{esc(q)}</button>' for q in ("ひつじ", "ねこ", "いぬ", "花", "季節", "仕事", "シンプル"))
-    if kind == "calendar":
+    if kind == "nenga":
+        chips = "".join(f'<button type="button" class="chip" data-q="{esc(q)}">{esc(q)}</button>' for q in ("年賀状", "ひつじ", "お正月", "和風", "鏡餅", "花"))
+        title, path = "年賀状をつくる", "/tool/nenga/"
+        h1, lead = "年賀状をつくる", "好きなイラストと賀詞、ひとことを入れて、はがきサイズの年賀状の文面を作れます。画像として保存でき、そのまま印刷もできます。入力した内容はこの端末の中だけで使われます。無料・登録不要です。"
+        opts = ('<label>賀詞<select name="greet"><option>あけましておめでとうございます</option><option>謹賀新年</option><option>迎春</option><option>賀正</option><option>HAPPY NEW YEAR</option></select></label>'
+                '<label>日付<input type="text" name="date" maxlength="20"></label>'
+                '<label>ひとこと<textarea name="body" maxlength="90" rows="3">旧年中はお世話になりました。本年もよろしくお願いいたします。</textarea></label>'
+                '<label>差出人(任意)<input type="text" name="from" maxlength="24" placeholder="例: 山田 太郎"></label>'
+                '<label>絵の位置<select name="pos"><option value="top">上</option><option value="bottom">下</option></select></label>'
+                '<label>色<select name="color"><option value="#b3261e">朱色</option><option value="#1f6f67">深緑</option><option value="#7a5a14">金茶</option><option value="#26211d">墨色</option></select></label>'
+                '<label>書体<select name="face"><option value="serif">明朝体</option><option value="sans">ゴシック体</option></select></label>'
+                '<label class="chk"><input type="checkbox" name="frame" checked> ふちどりの線を入れる</label>')
+        desc = "好きなイラストで、はがきサイズ(100×148mm)の年賀状の文面を作れます。賀詞とひとことを入れて、画像として保存・印刷できます。無料・登録不要・商用OK。"
+    elif kind == "calendar":
         title, path = "カレンダーをつくる", "/tool/calendar/"
         h1, lead = "カレンダーをつくる", "好きなイラストで、年と月を選んだA4のカレンダーを作れます。祝日入りで、画像として保存でき、そのまま印刷もできます。無料・登録不要です。"
         opts = ('<label>年<select name="year"></select></label><label>月<select name="month"></select></label>'
@@ -1203,6 +1223,7 @@ def maker_page(cfg: dict, preview: bool, kind: str) -> str:
 
 
 TOOLS = [
+    ("/tool/nenga/", "年賀状をつくる", "賀詞とひとことを入れて、はがきサイズの年賀状の文面を作れます。保存も印刷もできます。"),
     ("/tool/calendar/", "カレンダーをつくる", "好きなイラストで、祝日入りのA4カレンダー。年と月を選んで保存・印刷できます。"),
     ("/tool/nametag/", "名札・席札・賞状をつくる", "名前を入れて、A4に印刷できる名札(8枚)、二つ折りの席札、賞状を作れます。"),
     ("/tool/card/", "名前入りカードをつくる", "名前とひとことを入れて、お祝いのカードを画像で保存できます。"),
@@ -1322,6 +1343,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     pages["tool/nurie/index.html"] = nurie_page(cfg, preview, series)
     pages["tool/index.html"] = tools_page(cfg, preview)
     pages["tool/calendar/index.html"] = maker_page(cfg, preview, "calendar")
+    pages["tool/nenga/index.html"] = maker_page(cfg, preview, "nenga")
     pages["tool/nametag/index.html"] = maker_page(cfg, preview, "nametag")
     pages["search/index.html"] = search_page(cfg, preview)
     pages["favorites/index.html"] = favorites_page(cfg, preview)

@@ -89,7 +89,7 @@ class Makers(unittest.TestCase):
         self.assertEqual(len(prefixes), len(set(prefixes)))             # no two entries light up on the same page
 
     def test_maker_pages_load_their_script_and_keep_input_on_the_device(self):
-        for kind, path in (("calendar", "/tool/calendar/"), ("nametag", "/tool/nametag/")):
+        for kind, path in (("calendar", "/tool/calendar/"), ("nametag", "/tool/nametag/"), ("nenga", "/tool/nenga/")):
             html = build.maker_page(CFG, True, kind)
             self.assertIn('<script src="/assets/maker.js" defer></script>', html)
             self.assertIn(f'data-kind="{kind}"', html)
@@ -106,7 +106,7 @@ class Makers(unittest.TestCase):
     def test_the_helper_knows_the_new_pages(self):
         data = build.assist_data([], [], 2027, {}, [{"slug": "flyer", "name": "チラシ", "words": ["チラシ", "ポスター"]}])
         urls = [p["u"] for p in data["pages"]]
-        for u in ("/tool/", "/tool/calendar/", "/tool/nametag/", "/use/flyer/"):
+        for u in ("/tool/", "/tool/calendar/", "/tool/nametag/", "/tool/nenga/", "/use/flyer/"):
             self.assertIn(u, urls)
         faq_text = " ".join(" ".join(f["k"]) for f in data["faq"])
         self.assertIn("名札", faq_text)

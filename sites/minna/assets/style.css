@@ -785,6 +785,7 @@ header.site nav a[aria-current] { background: var(--brand); color: var(--ink); }
 .mk-list button { padding: 2px; border: 2px solid transparent; border-radius: 8px; background: #fff; cursor: pointer; }
 .mk-list button[aria-pressed="true"] { border-color: var(--pink); }
 .mk-list img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
+.mk-app[data-kind="nenga"] #mk-canvas { max-width: 420px; }
 #mk-canvas { width: 100%; height: auto; max-width: 620px; background: #fff; border: var(--line); border-radius: 8px; box-shadow: var(--shadow); }
 .tool-grid { list-style: none; margin: 22px 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); }
 .tool-card { display: grid; gap: 6px; height: 100%; padding: 16px 18px; background: #fff; border: var(--line); border-radius: 12px; color: var(--ink); text-decoration: none; }
