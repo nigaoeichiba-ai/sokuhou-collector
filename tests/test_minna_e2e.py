@@ -40,6 +40,7 @@ async function load(url) {
     f = await load('/illust/season-christmas/'); d = f.contentDocument;
     const box = d.querySelector('#bgbox'); d.querySelector('.bgsw button[data-bg="#2b1b14"]').click();
     out.bg_dark = box.style.backgroundColor; out.solid = box.classList.contains('solid');
+    const em = d.querySelector('[data-embed-code]'); out.embed_with = em.value; d.querySelector('[data-embed-credit]').click(); out.embed_without = em.value;
     d.querySelector('.bgsw button[data-bg=""]').click(); out.bg_reset = box.style.backgroundColor === '' && !box.classList.contains('solid');
 
     // the print makers: the holidays computed in the browser are the ones printables.py computes, and every kind of page is drawn
@@ -147,6 +148,11 @@ class MinnaBrowserTest(unittest.TestCase):
     def test_a_picture_page_can_send_its_picture_to_the_postcard_maker(self):
         self.assertIn("選んだイラスト", self.out["nenga_id"])
         self.assertNotIn("お正月のシマエナガ", self.out["nenga_id"])      # not the default first hit of the search
+
+    def test_embed_code_drops_the_source_link_when_unchecked(self):
+        self.assertIn("みんなのイラスト</a>", self.out["embed_with"])
+        self.assertNotIn("みんなのイラスト</a>", self.out["embed_without"])
+        self.assertIn("<img ", self.out["embed_without"])
 
     def test_background_switcher(self):
         self.assertEqual(self.out["bg_dark"], "rgb(43, 27, 20)")

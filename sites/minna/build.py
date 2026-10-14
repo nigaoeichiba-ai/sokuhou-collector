@@ -345,6 +345,7 @@ def assist_data(built, guides, year: int, kinds: dict, use_hubs: list | None = N
     pages.append({"u": "/tool/nurie/", "n": "オンラインぬりえ(ブラウザで色を塗る)", "k": ["ぬりえ", "塗り絵", "色を塗る", "オンライン", "保存", "印刷"], "t": "ツール"})
     for h in use_hubs or []:
         pages.append({"u": f"/use/{h['slug']}/", "n": f"{h['name']}に使えるイラスト", "k": h["words"][:8], "t": "用途"})
+    pages.append({"u": "/month/", "n": "月ごとのイラスト(おたより・掲示物に使える季節の素材)", "k": ["月ごと", "月別", "おたより", "掲示", "季節", "行事", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月", "1月", "2月", "3月"], "t": "季節"})
     if has_pose:
         pages.append({"u": "/pose/", "n": "ポーズ集(動物・人物のポーズ違いのイラスト)", "k": ["ポーズ", "表情", "差分", "動物", "いろいろ", "立つ", "座る"], "t": "ポーズ"})
     pages.append({"u": "/tool/", "n": "つくる(カード・カレンダー・名札・賞状・ぬりえ)", "k": ["つくる", "作る", "ツール", "メーカー", "カレンダー", "名札", "席札", "賞状", "カード", "ぬりえ"], "t": "ツール"})
@@ -860,6 +861,25 @@ def category_page(cfg, preview, s: dict, items, series) -> str:
     return page(cfg, preview, path=s["url"], title=f"{s['title']}のイラスト | {cfg['site_name']}", description=s["lead"][:110], body=body)
 
 
+def embed_codes(base: str, it: dict) -> tuple[str, str]:
+    """The HTML a blog or site can paste to show the picture: (with a source link, without).  The link is optional: the licence asks for no credit."""
+    w = min(it["w"], 480)
+    h = round(it["h"] * w / it["w"])
+    img = f'<img src="{base}/files/{it["id"]}.webp" alt="{it["title"]}" width="{w}" height="{h}" loading="lazy" style="max-width:100%;height:auto">'
+    return (f'<a href="{base}/illust/{it["id"]}/">{img}</a>\n<p style="font-size:.85em">イラスト: <a href="{base}/">みんなのイラスト</a></p>', img)
+
+
+def embed_box(base: str, it: dict) -> str:
+    with_c, without_c = embed_codes(base, it)
+    return f"""<details class="embed" data-embed data-with="{esc(with_c)}" data-without="{esc(without_c)}"><summary>ブログやサイトに貼る(埋め込みコード)</summary>
+<p class="memo-note">下のコードをブログやウェブサイトのHTMLに貼ると、このイラストが表示されます。出典リンクは任意です。付けていただけると助かりますが、必須ではありません。</p>
+<label class="chk"><input type="checkbox" data-embed-credit checked> 出典リンクを付ける(任意)</label>
+<textarea readonly rows="5" data-embed-code aria-label="埋め込みコード">{esc(with_c)}</textarea>
+<p><button type="button" class="btn" data-embed-copy>コードをコピー</button> <span class="memo-note" role="status" aria-live="polite" data-embed-msg></span></p>
+<p class="memo-note">当サイトの画像を直接表示する形です。長く使うときは、画像をダウンロードして、ご自身のサイトに置いてください。</p></details>
+"""
+
+
 def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
     base = cfg["site_url"].rstrip("/")
     s = series_of(it, series)
@@ -897,7 +917,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 <label>背景<select name="bg"><option value="">透明</option><option value="#ffffff">白</option><option value="#ffc93c">黄</option><option value="#ffd6e0">桃</option><option value="#d9f1ff">空</option><option value="#d7f7ea">ミント</option></select></label>
 <label>大きさ<select name="size"><option value="orig">そのまま</option><option value="sq1080">正方形 1080px(SNS・アイコン)</option><option value="wide">横 1280×720(サムネイル)</option><option value="hagaki">はがき(縦)300dpi</option></select></label></div>
 <p><button type="button" class="btn" data-export>この設定で保存</button> <button type="button" class="btn btn-sub" data-copy>画像をコピー</button> <span class="memo-note" role="status" aria-live="polite" data-export-msg></span></p></details>
-{licence_box()}
+{embed_box(base, it)}{licence_box()}
 </div></div>
 {prev_next}
 <section><h2><span class="scribble">用途例</span></h2><ul class="check">{uses}</ul></section>
@@ -1106,6 +1126,7 @@ def use_pages(cfg: dict, preview: bool, series: list[dict], built: list, guides:
         links = "".join(f'<li><a href="/special/{s}/">{esc(sp_by[s]["name"])}の特集</a></li>' for s in h["specials"] if s in sp_by)
         links += "".join(f'<li><a href="/guide/{g}/">{esc(g_by[g]["title"])}</a></li>' for g in h["guides"] if g in g_by)
         links += "".join(f'<li><a href="{t}">{esc(tool_by[t][0])}</a></li>' for t in h["tools"] if t in tool_by)
+        links += "".join(f'<li><a href="{u}">{esc(n)}</a></li>' for u, n in h.get("extra", []))
         related = f'<section style="margin-top:44px"><h2><span class="scribble">あわせて見る</span></h2><ul class="plain use-links">{links}</ul></section>' if links else ""
         q = h["words"][0]
         body = f"""{crumbs([("トップ", "/"), ("用途から探す", "/use/"), (h["name"], None)])}
@@ -1123,6 +1144,49 @@ def use_pages(cfg: dict, preview: bool, series: list[dict], built: list, guides:
     pages["use/index.html"] = page(cfg, preview, path="/use/", title=f"用途から探す チラシ・おたより・資料・SNS | {cfg['site_name']}",
                                    description="チラシ、年賀状、園や学校のおたより、社内資料、SNS、医療・介護、教材、名前入りの印刷物など、使う場面ごとに無料・商用OKのイラストを探せます。", body=body)
     return pages, live
+
+
+MONTH_ORDER = [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3]       # the school year
+
+
+def month_sets(series: list[dict], m: int, limit: int = 8) -> list[dict]:
+    """The sets whose season (the window the site gives each seasonal set) covers days of month m, those covering most of it first."""
+    days = (date(2027, m % 12 + 1, 1) - date(2027, m, 1)).days if m != 12 else 31
+    scored = []
+    for s in series:
+        if not s.get("season") or not s["items"]:
+            continue
+        n = sum(1 for d in range(1, days + 1) if model.in_season(s["season"], date(2027, m, d)))
+        if n:
+            scored.append((-n, s["slug"], s))
+    scored.sort(key=lambda x: (x[0], x[1]))
+    return [x[2] for x in scored[:limit]]
+
+
+def month_page(cfg: dict, preview: bool, series: list[dict]) -> tuple[str, int]:
+    """/month/: for each month of the school year the seasonal sets, with the pictures of them in one ZIP; returns the page and how many months have sets."""
+    secs, filled = "", 0
+    for m in MONTH_ORDER:
+        sers = month_sets(series, m)
+        if not sers:
+            continue
+        filled += 1
+        files = [f"/files/{i['id']}.png" for s in sers[:6] for i in s["items"][:3]]
+        secs += (f'<section style="margin-top:44px" id="m{m}"><h2><span class="scribble">{m}月</span></h2>'
+                 f'<p class="dl"><button type="button" class="btn" data-zip data-name="minna-{m}gatsu" data-files=\'{esc(json.dumps(files, separators=(",", ":")))}\'>この月の素材をまとめて保存(ZIP・{len(files)}点)</button> '
+                 f'<span class="memo-note">各セットの先頭の3点ずつです。ブラウザの中でまとめます。</span></p>{set_grid(sers)}</section>')
+    jump = "".join(f'<a href="#m{m}">{m}月</a>' for m in MONTH_ORDER if f'id="m{m}"' in secs)
+    body = f"""{crumbs([("トップ", "/"), ("月ごとのイラスト", None)])}
+<h1>月ごとのイラスト</h1>
+<p class="lead">園や学校のおたより、自治会や施設の掲示物、店頭のお知らせなどに使える季節のイラストを、月ごとにまとめました。4月から3月の順です。無料・商用OK・クレジット不要です。</p>
+<p>各セットの時期は、そのセットの内容に合わせて決めた目安です。行事の日付は年によって変わるので、案内の日付は必ずご自身で確認してください。</p>
+{licence_box()}
+<nav class="chips" aria-label="月">{jump}</nav>
+{secs}
+<p style="margin-top:44px"><a href="/use/otayori/">園・学校のおたより</a> ・ <a href="/tool/calendar/">カレンダーをつくる</a> ・ <a href="/tool/nametag/">名札・席札・賞状をつくる</a> ・ <a href="/printables/">印刷できるもの(PDF)</a></p>"""
+    html = page(cfg, preview, path="/month/", title=f"月ごとのイラスト おたより・掲示物に使える季節の素材 無料・商用OK | {cfg['site_name']}",
+                description="4月から3月まで、月ごとに使える季節のイラストをまとめました。園や学校のおたより、自治会や施設の掲示物に。無料・商用OK・登録不要で、月ごとのZIP保存もできます。", body=body)
+    return html, filled
 
 
 def pose_page(cfg: dict, preview: bool, series: list[dict]) -> tuple[str, list[dict]]:
@@ -1330,10 +1394,13 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     SITE["nav"] = [n for n in BASE_NAV if (built or n[1] != "/special/") and (guides or n[1] != "/guide/") and (cal_themes or n[1] != "/printables/")]
     use_files, use_live = use_pages(cfg, preview, series, built, guides)
     pose_html, pose_sets = pose_page(cfg, preview, series)
+    month_html, month_filled = month_page(cfg, preview, series)
     pages: dict[str, str | bytes] = {"index.html": index_page(cfg, preview, items, series, today, [m["img"] for m in cal_themes[0]["months"][:4]] if cal_themes else None, use_live, len(pose_sets) >= 3)}
     pages.update(use_files)
     if len(pose_sets) >= 3:
         pages["pose/index.html"] = pose_html
+    if month_filled >= 6:
+        pages["month/index.html"] = month_html
     pages.update(illust_hub(cfg, preview, items, series))
     pages.update(genre_pages(cfg, preview, items, series))
     pages.update(touch_pages(cfg, preview, items, series))

@@ -364,6 +364,16 @@
     });
   }
 
+  function initEmbed() {
+    var box = $("[data-embed]"); if (!box) return;
+    var ta = $("[data-embed-code]", box), cb = $("[data-embed-credit]", box), msg = $("[data-embed-msg]", box);
+    cb.addEventListener("change", function () { ta.value = box.getAttribute(cb.checked ? "data-with" : "data-without"); });
+    $("[data-embed-copy]", box).addEventListener("click", function () {
+      function fallback() { ta.select(); try { msg.textContent = document.execCommand("copy") ? "コピーしました。" : "選択しました。コピーしてください。"; } catch (e) { msg.textContent = "選択しました。コピーしてください。"; } }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(function () { msg.textContent = "コピーしました。"; }, fallback); else fallback();
+    });
+  }
+
   // ---------- ZIP of a set (store only, built in the browser)
   var CRC = (function () { var t = [], n, k, c; for (n = 0; n < 256; n++) { c = n; for (k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
   function crc32(u8) { var c = 0xffffffff; for (var i = 0; i < u8.length; i++) c = CRC[(c ^ u8[i]) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; }
@@ -531,6 +541,6 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function () { initBg(); initCard(); initFav(); initSearch(); initFavPage(); initExport(); initZip(); initRequest(); initAssist(); });
+  document.addEventListener("DOMContentLoaded", function () { initBg(); initCard(); initFav(); initSearch(); initFavPage(); initExport(); initEmbed(); initZip(); initRequest(); initAssist(); });
 
 })();

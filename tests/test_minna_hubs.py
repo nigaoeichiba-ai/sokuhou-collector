@@ -86,6 +86,34 @@ class SetSpecificText(unittest.TestCase):
         single = next(i for i in items if len({x["series"] for x in items if x["genre"] == i["genre"] and x["title"] == i["title"]}) == 1)
         self.assertNotIn("同じ題材の別のタッチ", build.illust_page(cfg, True, single, items, series))
 
+    def test_every_picture_page_has_embed_code_with_an_optional_source_link(self):
+        items, series = build.load_data()
+        cfg = {**CFG, "operator_name": "テスト"}
+        it = items[-1]
+        html = build.illust_page(cfg, True, it, items, series)
+        with_c, without_c = build.embed_codes("https://minna-no-illust.com", it)
+        self.assertIn("<textarea", html)
+        self.assertIn(f'src="https://minna-no-illust.com/files/{it["id"]}.webp"', with_c)
+        self.assertIn("みんなのイラスト</a>", with_c)               # the source link ...
+        self.assertNotIn("<a ", without_c)                           # ... is optional: the licence asks for no credit
+        self.assertNotIn("<script", with_c + without_c)
+        self.assertIn("必須ではありません", html)
+
+    def test_month_page_covers_the_school_year_with_zip_buttons(self):
+        items, series = build.load_data()
+        html, filled = build.month_page(CFG, True, series)
+        self.assertGreaterEqual(filled, 10)
+        self.assertEqual(html.count("data-zip"), filled)
+        for m in (4, 9, 12, 3):
+            sers = build.month_sets(series, m)
+            self.assertTrue(sers, m)
+            self.assertIn(f'id="m{m}"', html)
+        # a set only appears in a month its season covers
+        from datetime import date
+        from sites.minna import model
+        for s in build.month_sets(series, 12):
+            self.assertTrue(any(model.in_season(s["season"], date(2027, 12, d)) for d in range(1, 32)))
+
     def test_pose_hub_lists_every_pose_set_and_the_sets_link_back(self):
         items, series = build.load_data()
         html, sets = build.pose_page(CFG, True, series)
