@@ -152,7 +152,39 @@ def plausible_effective(name: str, fy: int, iso: str) -> tuple[str, str | None]:
     raise BuildError(f"{name}: effective date {iso} of fiscal year {fy} is outside {lo}..{hi} and cannot be corrected")
 
 
+def check_history(raw: dict) -> None:
+    """The invariants of the history workbook; a site built from data that breaks one is not published (the build fails, the live site stays as it was).
+
+    Every prefecture has every year from the workbook's first year to the latest (no gaps in the middle); an amount is a whole number of yen in a sane range, never lower than the year
+    before (a regional minimum wage has not been lowered in this period, so a drop is a misread cell); every year has a weighted national average that lies
+    between that year's lowest and highest prefecture.
+    """
+    fy = raw["latest_fiscal_year"]
+    first = min(int(y) for y in raw["fiscal_year_labels"])
+    years = list(range(first, fy + 1))
+    for p in raw["prefectures"]:
+        prev = None
+        for y in years:
+            h = p["history"].get(str(y))
+            if h is None:
+                raise BuildError(f"{p['name']}: the history has no entry for fiscal year {y}")
+            a = h["amount"]
+            if not isinstance(a, int) or isinstance(a, bool) or not 500 <= a <= 3000:
+                raise BuildError(f"{p['name']}: implausible amount {a!r} in fiscal year {y}")
+            if prev is not None and a < prev:
+                raise BuildError(f"{p['name']}: the amount fell from {prev} to {a} in fiscal year {y}")
+            prev = a
+    for y in years:
+        amounts = [p["history"][str(y)]["amount"] for p in raw["prefectures"]]
+        avg = raw["national_weighted_average"].get(str(y))
+        if avg is None:
+            raise BuildError(f"no weighted national average for fiscal year {y}")
+        if not min(amounts) <= avg <= max(amounts):
+            raise BuildError(f"fiscal year {y}: the weighted average {avg} is outside the prefectures' range {min(amounts)}..{max(amounts)}")
+
+
 def prepare(raw: dict) -> dict:
+    check_history(raw)
     fy = raw["latest_fiscal_year"]
     labels = raw["fiscal_year_labels"]
     region_of = {p: (slug, name) for slug, name, ps in REGIONS for p in ps}
@@ -854,6 +886,7 @@ def data_page(d: dict, cfg: dict, preview: bool) -> str:
         ("全国順位", "その年度の47都道府県の中での順位。同額は同じ順位"),
         ("発効日の補正(元の日付)", "出典の表の日付が年度の範囲に入らないときだけ、元の日付を書きます(通常は空欄)"),
     ))
+    ver_items = "".join(f"<li>{esc(jp_date(v['date']))}: {esc(v['what'])}。結果: {esc(v['result'])}。</li>\n" for v in dataset.VERIFICATIONS)
     body = f"""{crumbs([("全国", "/"), ("データ", None)])}
 <h1>最低賃金のデータ(CSV・JSON)</h1>
 <p class="lead">47都道府県の地域別最低賃金を、{esc(first['label'])}から{esc(last['label'])}まで年度別にそろえたデータです。無料で、表計算ソフトやプログラムに使えます。</p>
@@ -866,6 +899,10 @@ def data_page(d: dict, cfg: dict, preview: bool) -> str:
 <h2>列の意味</h2>
 <div class="tablewrap"><table><thead><tr><th>列</th><th>意味</th></tr></thead><tbody>{cols}</tbody></table></div>
 <p class="notice">{esc(last['label'])}の額は、発効日より前でも、決まった新しい額です。発効日の前は、その県では1つ前の年度の額が適用されています。</p>
+<h2>データの確認</h2>
+<ul>
+{ver_items}<li>{esc(dataset.BUILD_CHECKS)}</li>
+</ul>
 <h2>出典と使うときの決まり</h2>
 <p>出典は、{esc(SOURCE_LABEL)}(<a href="{esc(d['source_page'])}" rel="noopener" target="_blank">厚生労働省のページ</a>)です。厚生労働省のページの内容は、特に断りがなければ、<a href="{dataset.PDL_URL}" rel="noopener" target="_blank">公共データ利用規約(第1.0版・PDL1.0)</a>のもとで使えます。使うときは、次の3つを守ってください。</p>
 <ol>
