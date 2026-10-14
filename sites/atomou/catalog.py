@@ -219,6 +219,14 @@ def load_results(seed_dir: Path = SEED_DIR, today: date | None = None) -> dict:
     return out
 
 
+def load_merged(seed_dir: Path = SEED_DIR) -> list[dict]:
+    """[{date, drop, keep}] of data/atomou/merged.json: the same event under two titles (the one named in keep stays)."""
+    path = seed_dir / "merged.json"
+    if not path.exists():
+        return []
+    return [m for m in json.loads(path.read_text(encoding="utf-8")).get("merged", []) if all(isinstance(m.get(k), str) and m[k] for k in ("date", "drop", "keep")) and m["drop"] != m["keep"]]
+
+
 def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None = None) -> tuple[list[dict], Counter]:
     block = blocklist if blocklist is not None else (json.loads((seed_dir / "blocklist.json").read_text(encoding="utf-8"))
                                                        if (seed_dir / "blocklist.json").exists() else {"keywords": []})
@@ -291,6 +299,13 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
             continue
         kept.append(e)
     entries = kept
+    # one event listed under two titles (data/atomou/merged.json): the title named in "keep" stays, the other goes, but only when the kept one is there
+    merged = load_merged(seed_dir)
+    have = {(e["title"], e["date"]) for e in entries}
+    gone = {(m["drop"], m["date"]) for m in merged if (m["keep"], m["date"]) in have}
+    if gone:
+        rejects["統合(同じ出来事)"] += sum(1 for e in entries if (e["title"], e["date"]) in gone)
+        entries = [e for e in entries if (e["title"], e["date"]) not in gone]
     entries.sort(key=lambda e: (e["date"], e["title"]))
     return entries, rejects
 
