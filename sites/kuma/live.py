@@ -154,6 +154,18 @@ def last30(rows: list[dict], today: date) -> int:
     return sum(1 for r in rows if lo <= r["at"][:10] <= today.isoformat())
 
 
+def hot_cities(lv: dict, limit: int = 10) -> list[dict]:
+    """The municipalities with the most records in the last 30 days (only those that have a page of their own): for the home page's links."""
+    out = []
+    for slug, cities in lv["by_pref"].items():
+        for city, rows in cities.items():
+            k = last30(rows, lv["today"])
+            if k and city_has_page(rows):
+                out.append({"slug": slug, "city": city, "pref": pref_name(slug), "last30": k, "latest": rows[0]["at"][:10]})
+    out.sort(key=lambda x: (-x["last30"], x["latest"], x["city"]))
+    return out[:limit]
+
+
 def city_has_page(rows: list[dict]) -> bool:
     return len(rows) >= MIN_CITY_ROWS
 

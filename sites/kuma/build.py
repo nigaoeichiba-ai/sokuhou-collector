@@ -202,6 +202,16 @@ def page(cfg, preview, **kw):
 
 # ---------------------------------------------------------------- pages
 
+def hot_home(lv: dict) -> str:
+    """Home page: the municipalities with the most records in the last 30 days, each linked to its own page (counted from the stored records)."""
+    hot = live_mod.hot_cities(lv)
+    if not hot:
+        return ""
+    items = "".join(f'<li><a href="{live_mod.city_url(x["slug"], x["city"])}">{esc(x["pref"])}{esc(x["city"])}</a><b>直近30日 {n(x["last30"])}件</b></li>' for x in hot)
+    return (f'<h3>直近30日で記録が多い市町村</h3>\n<ul class="mini-list wide">{items}</ul>\n'
+            '<p class="notice">自治体ごとに、数える対象と更新の時期が違うため、件数の大小は、そのまま比べられません。</p>\n')
+
+
 def index_page(d: dict, cfg: dict, preview: bool) -> str:
     done, cur = d["done"], d["cur"]
     nat, inj = d["national"], d["inj"]["national"]
@@ -226,6 +236,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
                      f'<p class="alert">{fy_label(d["cur"])}は、自治体が公表した記録が{n(len(lv["records"]))}件(直近30日は{n(live_mod.last30(lv["records"], lv["today"]))}件)。'
                      f'最新は{md(lv["records"][0]["at"][:10])}({live_mod.ago_text(lv["records"][0]["at"], lv["today"])})です。</p>\n'
                      f'<ul class="mini-list wide">{items}</ul>\n'
+                     f'{hot_home(lv)}'
                      f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図で見る(現在地の近く)</a>{' / <a href="/digest/">週ごとのまとめ</a>' if d.get("has_digest") else ''}{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''} / <a href="/search/">市町村名から探す</a> / <a href="/official/">都道府県の公式の出没情報(リンク集)</a> / <a href="/cite/">データの出典・引用のしかた</a></p>\n')
     news_block = ""
     if d["notices"]:
