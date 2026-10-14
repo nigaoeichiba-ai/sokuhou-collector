@@ -943,3 +943,18 @@ footer.site .src { color: var(--muted); }
   .az-row .cmp-why { grid-row: 4; }
 }
 @media print { .cmp-bar { display: none !important; } }
+/* seasonal cheat sheets (/oseibo/ /nenga/) */
+.seas .g-sec { margin-top: 36px; }
+.seas-tbl { width: 100%; border-collapse: collapse; margin: 12px 0 8px; font-size: .92rem; background: #fff; border: 1px solid var(--line2); border-radius: 12px; overflow: hidden; }
+.seas-tbl th, .seas-tbl td { padding: .7em .9em; border-bottom: 1px solid var(--line2); text-align: left; vertical-align: top; line-height: 1.75; overflow-wrap: anywhere; }
+.seas-tbl thead th { background: var(--accent-s); color: var(--ink); font-size: .84rem; }
+.seas-tbl tbody th { width: 30%; font-weight: 700; color: var(--ink); }
+.seas-tbl tr:last-child th, .seas-tbl tr:last-child td { border-bottom: 0; }
+.seas-list { margin: 12px 0 8px; padding-left: 1.3em; line-height: 1.85; }
+.seas-list li { margin-bottom: .45em; }
+.seas-note { margin: 8px 0 0; font-size: .86rem; color: var(--ink2); line-height: 1.8; }
+.seas-from { margin: 6px 0 0; font-size: .78rem; color: var(--muted); }
+.seas-print { margin: 0 0 8px; }
+.seas .checklist { margin: 12px 0 8px; }
+@media (max-width: 480px) { .seas-tbl th, .seas-tbl td { padding: .6em .7em; font-size: .88rem; } .seas-tbl tbody th { width: 34%; } }
+@media print { .seas-more, .seas-hook, .seas-print { display: none !important; } .seas-tbl { border-color: #999; } .seas-tbl th, .seas-tbl td { border-color: #999; } .seas .g-sec { break-inside: avoid; } }
