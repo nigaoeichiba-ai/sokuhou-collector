@@ -1,0 +1,150 @@
+"""お歳暮・お年賀の特集 (/oseibo/ /oseibo/work/ /oseibo/thanks/ /nenga/): one-page cheat sheets that can be printed, each fact tied to the department-store page it was read on.
+
+Everything on these pages comes from content/seasonal/oseibo.json, whose `sources` are the pages (三越伊勢丹, 高島屋, 大丸松坂屋) opened and read in a real browser on `checked`.  A section names the
+sources it rests on; where the stores disagree (the months of お歳暮, 寒中御伺 or 寒中御見舞) the page shows each store's wording instead of picking one.  Nothing is written that the sources do
+not say, and the page says that customs differ by region and family.  The pages carry the Rakuten and Amazon search buttons like the other gift pages; no price or picture of a product is shown.
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from sokuhou.sitekit import crumbs, esc
+
+HERE = Path(__file__).resolve().parent
+
+
+def _b():
+    from sites.yorokobu import build
+    return build
+
+
+def load() -> dict:
+    return json.loads((HERE / "content" / "seasonal" / "oseibo.json").read_text(encoding="utf-8"))
+
+
+SOURCE_HOSTS = ("www.mistore.jp", "www.takashimaya.co.jp", "www.daimaru-matsuzakaya.jp")      # the stores whose pages were read; another host needs a human decision
+
+
+def problems(data: dict) -> list[str]:
+    """What must hold for the content (the build refuses to publish otherwise): every section says its sources, every source is a store page we read, tables are rectangular and without empty cells."""
+    out: list[str] = []
+    if not data.get("checked"):
+        out.append("no `checked` date")
+    srcs = data.get("sources", {})
+    for k, v in srcs.items():
+        host = v["url"].split("/")[2] if v.get("url", "").startswith("https://") else ""
+        if host not in SOURCE_HOSTS:
+            out.append(f"source {k}: host {host or v.get('url')!r} is not a store page that was read")
+        if not v.get("name") or not v.get("short"):
+            out.append(f"source {k}: no name")
+    for pg in data.get("pages", []):
+        for f in ("slug", "path", "title", "h1", "lead", "query", "sections", "related"):
+            if not pg.get(f):
+                out.append(f"{pg.get('slug', '?')}: missing {f}")
+        for s in pg.get("sections", []):
+            where = f"{pg.get('slug')}/{s.get('h')}"
+            if not s.get("h"):
+                out.append(f"{where}: no heading")
+            if not s.get("src"):
+                out.append(f"{where}: names no source")
+            for k in s.get("src", []):
+                if k not in srcs:
+                    out.append(f"{where}: unknown source {k}")
+            if not any(s.get(f) for f in ("p", "table", "list", "check")):
+                out.append(f"{where}: empty section")
+            t = s.get("table")
+            if t:
+                for r in t["rows"]:
+                    if len(r) != len(t["head"]) or any(not str(c).strip() for c in r):
+                        out.append(f"{where}: a table row with the wrong number of cells or an empty cell: {r}")
+    return out
+
+
+def paths() -> list[str]:
+    return [p["path"] for p in load()["pages"]]
+
+
+def _table(t: dict) -> str:
+    head = "".join(f"<th scope=\"col\">{esc(h)}</th>" for h in t["head"])
+    rows = "".join(f'<tr><th scope="row">{esc(r[0])}</th>' + "".join(f"<td>{esc(c)}</td>" for c in r[1:]) + "</tr>" for r in t["rows"])
+    return f'<div class="tablewrap"><table class="seas-tbl"><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table></div>'
+
+
+def _section(s: dict, sources: dict) -> str:
+    out = [f'<section class="g-sec"><h2><span class="scribble">{esc(s["h"])}</span></h2>']
+    out += [f"<p>{esc(p)}</p>" for p in s.get("p", [])]
+    if s.get("table"):
+        out.append(_table(s["table"]))
+    if s.get("list"):
+        out.append('<ul class="seas-list">' + "".join(f"<li>{esc(x)}</li>" for x in s["list"]) + "</ul>")
+    if s.get("check"):
+        out.append('<ul class="checklist">' + "".join(f'<li><label><input type="checkbox"> {esc(x)}</label></li>' for x in s["check"]) + "</ul>")
+    if s.get("note"):
+        out.append(f'<p class="seas-note">{esc(s["note"])}</p>')
+    names = []
+    for k in s.get("src", []):
+        n = sources[k]["short"]
+        if n not in names:
+            names.append(n)
+    if names:
+        out.append(f'<p class="seas-from">出典: {esc("・".join(names))}</p>')
+    out.append("</section>")
+    return "".join(out)
+
+
+def _sources(data: dict, used: list[str]) -> str:
+    items = "".join(
+        f'<li><a href="{esc(data["sources"][k]["url"])}" rel="noopener nofollow" target="_blank">{esc(data["sources"][k]["name"])}</a>'
+        + (f'({esc(data["sources"][k]["date"])})' if data["sources"][k]["date"] else "") + "</li>" for k in used)
+    y, m, d = data["checked"].split("-")
+    return (f'<section class="g-sec seas-srcs"><h2><span class="scribble">出典と確認日</span></h2><ul class="seas-list">{items}</ul>'
+            f'<p class="seas-note">{int(y)}年{int(m)}月{int(d)}日に、上のページを開いて読みました。しきたりには諸説があり、地域や家で違います。贈る相手の地域の習慣が分かるときは、それに合わせてください。</p></section>')
+
+
+def page(d: dict, cfg: dict, preview: bool, pg: dict, data: dict, known: set[str] | None = None) -> str:
+    B = _b()
+    used: list[str] = []
+    for s in pg["sections"]:
+        for k in s.get("src", []):
+            if k not in used:
+                used.append(k)
+    secs = "".join(_section(s, data["sources"]) for s in pg["sections"])
+    trail = [("トップ", "/")]
+    if pg["path"] not in ("/oseibo/", "/nenga/"):
+        trail.append(("お歳暮の早見表", "/oseibo/"))
+    trail.append((pg["h1"], None))
+    print_btn = '<p class="seas-print"><button type="button" class="btn btn-sub" data-print hidden>この早見表を印刷する</button></p>' if pg.get("print") else ""
+    own = {q["path"] for q in data["pages"]}
+    related = "".join(f'<li><a href="{esc(u)}">{esc(t)}</a></li>' for u, t in pg["related"]
+                      if known is None or u in own or u.strip("/") + "/index.html" in known)             # the site's other pages come and go with its products: a link only to a page this build has
+    buttons = f'<a class="btn" href="{esc(B.search_link(cfg, pg["query"]))}" rel="sponsored nofollow noopener" target="_blank">楽天市場で{esc(pg["query"])}を探す</a>'
+    if cfg.get("amazon_tracking_id"):
+        buttons += f'<a class="btn" href="{esc(B.amazon_url(cfg, pg["query"] + " ギフト"))}" rel="sponsored nofollow noopener" target="_blank">Amazonで{esc(pg["query"])}を探す</a>'
+    body = f"""{B.head_band("sky", "", esc(pg["h1"]), pg["lead"], single=True)}
+<div class="crumbs-wrap">{crumbs(trail)}</div>
+{B.pr_with_amazon(cfg)}
+<article class="guide seas">{print_btn}{secs}{_sources(data, used)}</article>
+<section class="related seas-more" style="margin-top:44px"><h2><span class="scribble">あわせて読む</span></h2><ul class="plain">{related}</ul>
+<p class="item-btns" style="margin-top:18px">{buttons}</p></section>
+<script src="/assets/seasonal.js" defer></script>"""
+    return B.page(cfg, preview, path=pg["path"], title=f"{pg['title']} | {cfg['site_name']}", description=pg["lead"][:110], body=body, amazon_links=bool(cfg.get("amazon_tracking_id")))
+
+
+def hook(occasion: str) -> str:
+    """A short block on the お歳暮 pages that leads to the cheat sheets (empty for every other occasion)."""
+    if occasion != "oseibo":
+        return ""
+    return ('<section class="seas-hook" style="margin-top:44px"><h2><span class="scribble">お歳暮の早見表</span></h2>'
+            '<p>時期・のし・金額を、百貨店3社の案内を読み比べて1枚にまとめています。印刷もできます。</p>'
+            '<ul class="plain"><li><a href="/oseibo/">お歳暮の早見表(時期・のし・金額)</a></li><li><a href="/oseibo/work/">職場のお歳暮チェックリスト</a></li>'
+            '<li><a href="/oseibo/thanks/">お歳暮をもらったら(お礼状とお返し)</a></li><li><a href="/nenga/">お年賀の早見表</a></li></ul></section>')
+
+
+def build_pages(d: dict, cfg: dict, preview: bool, known: dict | None = None) -> dict[str, str]:
+    data = load()
+    bad = problems(data)
+    if bad:
+        raise ValueError("seasonal content: " + "; ".join(bad))
+    keys = set(known) if known is not None else None
+    return {pg["path"].strip("/") + "/index.html": page(d, cfg, preview, pg, data, keys) for pg in data["pages"]}

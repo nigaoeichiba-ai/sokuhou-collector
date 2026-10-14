@@ -33,6 +33,7 @@ from sites.yorokobu import ogimage  # noqa: E402
 from sites.yorokobu import numberlists as nm  # noqa: E402
 from sites.yorokobu import compare  # noqa: E402
 from sites.yorokobu import amazonrank  # noqa: E402
+from sites.yorokobu import seasonal  # noqa: E402
 from sites.yorokobu import ranking as rk  # noqa: E402
 from sites.yorokobu import sales  # noqa: E402
 from sites.yorokobu import features as feats  # noqa: E402
@@ -839,6 +840,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 {concierge(cfg, d, p)}
 <section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(avoid, "warn")}</section>
 {guide_link(c, p["occasion"])}
+{seasonal.hook(p["occasion"])}
 <p style="margin-top:40px">{amazon}</p>
 {related_section([(f"{occ['name']}のほかの相手", links(related_occ)), (f"{rec['name']}へのほかのイベント", links(related_rec))])}"""
     return page(cfg, preview, path=f"/gift/{key}/", title=f"{p['title']} | {cfg['site_name']}", description=p["lead"][:110], body=body,
@@ -942,7 +944,7 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
 <div><h2><span class="scribble">選ぶポイント</span></h2><ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in o["tips"])}</ol></div></section>
 <section style="margin-top:50px"><h2><span class="scribble">相手を選んでおすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}
-{msg_link(c, o["slug"])}<section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>
+{msg_link(c, o["slug"])}{seasonal.hook(o["slug"])}<section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>
 {guide_link(c, o["slug"])}
 {amazon_picks_section(cfg, c, o["slug"])}
 {amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "のプレゼントをAmazonで探す")}"""
@@ -1160,6 +1162,7 @@ def guide_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 <section class="g-sec"><h2><span class="scribble">贈る前のチェックリスト</span></h2><ul class="checklist">{checks}</ul></section>
 <section class="g-sec"><h2><span class="scribble">よくある質問</span></h2>{faq}</section></article>
 {share_bar(cfg, f"/guide/{slug}/", f"{g['title']}", "この記事をだれかに送る")}
+{seasonal.hook(slug)}
 <section class="related" style="margin-top:44px"><h2><span class="scribble">{esc(o["name"])}の贈り物を選ぶ</span></h2>
 <ul class="plain">{links}</ul><p style="margin-top:14px"><a class="btn btn-sub" href="/occasion/{slug}/">{esc(o["name"])}のおすすめを見る</a></p></section>
 {amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "の贈り物をAmazonで探す")}
@@ -1987,6 +1990,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
         pages[f"guide/{slug}/index.html"] = guide_page(d, cfg, preview, slug)
     for p in c["pairs"]:
         pages[f"gift/{ct.pair_key(p)}/index.html"] = pair_page(d, cfg, preview, p)
+    pages.update(seasonal.build_pages(d, cfg, preview, pages))                  # after the pages it links to: a link to a page this build does not have is left out
     pages.update(legal_pages(
         SITE, cfg, preview,
         purpose="イベントと贈る相手からプレゼントの選び方と商品の例を探しやすく整理して、贈り物選びに役立てていただくこと。",
