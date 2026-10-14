@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.atomou import build, catalog, skins, usecases  # noqa: E402
+from sites.atomou import build, catalog, indexpolicy, skins, usecases  # noqa: E402
 from sokuhou import sitecheck  # noqa: E402
 from tests.test_atomou_core_js import find_chrome  # noqa: E402
 
@@ -36,7 +36,7 @@ class BuildOnce(unittest.TestCase):
         cls.prev = build.build_pages(CFG, release=False, today=TODAY)
         cls.entries, _ = catalog.build_catalog(TODAY)
         launch = date.fromisoformat(CFG["launch_date"])
-        cls.index_ids = catalog.indexable_ids(cls.entries, TODAY, launch, CFG["index_per_week"])
+        cls.index_ids = indexpolicy.indexable_ids(cls.entries, TODAY, launch, CFG["index_per_week"], lambda e: e["subject"] in build.GUIDES)
 
 
 class Pages(BuildOnce):
@@ -173,7 +173,9 @@ class Pages(BuildOnce):
             self.assertIn(f"/e/{i}/", sm)
 
     def test_indexing_allowance_is_respected(self):
-        self.assertLessEqual(len(self.index_ids), CFG["index_per_week"])  # launch week
+        weeks = (TODAY - date.fromisoformat(CFG["launch_date"])).days // 7 + 1
+        results = sum(1 for e in self.entries if e.get("result"))
+        self.assertLessEqual(len(self.index_ids), CFG["index_per_week"] * weeks + results)
 
     def test_sitecheck_passes_on_both_builds(self):
         for name, pages in (("release", self.rel), ("preview", self.prev)):

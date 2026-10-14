@@ -23,7 +23,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.atomou import articles, bizday, calendar_data, catalog, datecore, feeds, features, ogimage, skins, specials, usecases  # noqa: E402
+from sites.atomou import articles, bizday, calendar_data, catalog, datecore, feeds, features, indexpolicy, ogimage, skins, specials, usecases  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
@@ -1452,7 +1452,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     c = Ctx(cfg, preview, today, entries, skins.css())
     c.features = features.load_features()
     launch = date.fromisoformat(cfg.get("launch_date") or today.isoformat())
-    index_ids = catalog.indexable_ids(entries, today, launch, int(cfg.get("index_per_week", 6)))
+    index_ids = indexpolicy.indexable_ids(entries, today, launch, int(cfg.get("index_per_week", 60)), lambda e: e["subject"] in GUIDES)   # by the page's own content: sites/atomou/indexpolicy.py
     live = live_entries(entries, today)
     pages: dict[str, str | bytes] = {
         "index.html": home_page(c), "search/index.html": search_page(c), "interests/index.html": interests_page(c, live), "card/index.html": card_page(c), "my/index.html": my_page(c), "add/index.html": add_page(c),
