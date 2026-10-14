@@ -1,16 +1,16 @@
 {
- "as_of": "2026-10-09",
+ "as_of": "2026-10-13",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 1,
  "dates_after_as_of_by_month": {
   "10": 1
  },
- "fetched_at": "2026-10-09T19:39:09.242652+09:00",
+ "fetched_at": "2026-10-14T09:19:06.483490+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "1": 0,
-   "10": 39,
+   "10": 49,
    "11": 0,
    "12": 0,
    "2": 0,
@@ -31,6 +31,86 @@
    "kind": "目撃",
    "observed_at": "2026-10-29T15:20:00+09:00",
    "place": "駒場字上五仏",
+   "species": "クマ"
+  },
+  {
+   "city": "色麻町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-11T10:30:00+09:00",
+   "place": "色麻町大字新大原",
+   "species": "クマ"
+  },
+  {
+   "city": "色麻町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-10T14:30:00+09:00",
+   "place": "色麻町大字下新町北",
+   "species": "クマ"
+  },
+  {
+   "city": "色麻町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-10T00:30:00+09:00",
+   "place": "色麻町四竃字東原",
+   "species": "クマ"
+  },
+  {
+   "city": "富谷市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-09T15:30:00+09:00",
+   "place": "富谷日渡地内",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-09T15:15:00+09:00",
+   "place": "赤岩牧沢",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-09T09:48:00+09:00",
+   "place": "本吉町三島",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-09T07:30:00+09:00",
+   "place": "本吉町九多丸",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-08T20:20:00+09:00",
+   "place": "田中前",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-08T19:15:00+09:00",
+   "place": "幸町",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-08T18:20:00+09:00",
+   "place": "南が丘",
    "species": "クマ"
   },
   {
@@ -10683,7 +10763,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261009.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261013.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }
