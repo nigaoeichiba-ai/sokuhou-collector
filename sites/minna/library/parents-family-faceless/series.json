@@ -1,0 +1,241 @@
+{
+ "added": "2026-10-14",
+ "slug": "parents-family-faceless",
+ "title": "父と母のいる暮らし",
+ "genre": "life",
+ "touch": "faceless",
+ "lead": "お父さん・お母さんの家事・仕事・送り迎えなどの場面12点です。父の日・母の日のカードや、家庭向けの資料に使えます。",
+ "tags": [
+  "父",
+  "母",
+  "お父さん",
+  "お母さん",
+  "家族",
+  "家事",
+  "育児",
+  "ありがとう"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "parents-family-faceless-mother-cook",
+   "file": "parents-family-faceless-mother-cook.webp",
+   "title": "料理をする母",
+   "desc": "料理をする母の顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "父と母のいる暮らし",
+    "料理をする母",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 282,
+   "h": 486
+  },
+  {
+   "id": "parents-family-faceless-father-cook",
+   "file": "parents-family-faceless-father-cook.webp",
+   "title": "料理をする父",
+   "desc": "料理をする父の顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "父と母のいる暮らし",
+    "料理をする父",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 273,
+   "h": 491
+  },
+  {
+   "id": "parents-family-faceless-mother-hug",
+   "file": "parents-family-faceless-mother-hug.webp",
+   "title": "子どもを抱く母",
+   "desc": "子どもを抱く母の顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "父と母のいる暮らし",
+    "子どもを抱く母",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 223,
+   "h": 493
+  },
+  {
+   "id": "parents-family-faceless-father-shoulder",
+   "file": "parents-family-faceless-father-shoulder.webp",
+   "title": "肩車をする父",
+   "desc": "肩車をする父の顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "父と母のいる暮らし",
+    "肩車をする父",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 241,
+   "h": 509
+  },
+  {
+   "id": "parents-family-faceless-mother-work",
+   "file": "parents-family-faceless-mother-work.webp",
+   "title": "仕事に向かう母",
+   "desc": "仕事に向かう母の顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "父と母のいる暮らし",
+    "仕事に向かう母",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 334,
+   "h": 488
+  },
+  {
+   "id": "parents-family-faceless-father-work",
+   "file": "parents-family-faceless-father-work.webp",
+   "title": "仕事に向かう父",
+   "desc": "仕事に向かう父の顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "父と母のいる暮らし",
+    "仕事に向かう父",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 242,
+   "h": 510
+  },
+  {
+   "id": "parents-family-faceless-mother-laundry",
+   "file": "parents-family-faceless-mother-laundry.webp",
+   "title": "洗濯物を干す母",
+   "desc": "洗濯物を干す母の顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "父と母のいる暮らし",
+    "洗濯物を干す母",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 471,
+   "h": 469
+  },
+  {
+   "id": "parents-family-faceless-father-clean",
+   "file": "parents-family-faceless-father-clean.webp",
+   "title": "掃除をする父",
+   "desc": "掃除をする父の顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "父と母のいる暮らし",
+    "掃除をする父",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 457,
+   "h": 495
+  },
+  {
+   "id": "parents-family-faceless-mother-reading",
+   "file": "parents-family-faceless-mother-reading.webp",
+   "title": "絵本を読む母",
+   "desc": "絵本を読む母の顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "父と母のいる暮らし",
+    "絵本を読む母",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 405,
+   "h": 444
+  },
+  {
+   "id": "parents-family-faceless-father-bike",
+   "file": "parents-family-faceless-father-bike.webp",
+   "title": "自転車の父",
+   "desc": "自転車の父の顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "父と母のいる暮らし",
+    "自転車の父",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 473,
+   "h": 483
+  },
+  {
+   "id": "parents-family-faceless-thanks-mother",
+   "file": "parents-family-faceless-thanks-mother.webp",
+   "title": "母にありがとう",
+   "desc": "母にありがとうの顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "ありがとう",
+    "父と母のいる暮らし",
+    "母にありがとう",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 432,
+   "h": 454
+  },
+  {
+   "id": "parents-family-faceless-thanks-father",
+   "file": "parents-family-faceless-thanks-father.webp",
+   "title": "父にありがとう",
+   "desc": "父にありがとうの顔なしミニマルイラストです。",
+   "tags": [
+    "父",
+    "母",
+    "お父さん",
+    "お母さん",
+    "ありがとう",
+    "父と母のいる暮らし",
+    "父にありがとう",
+    "顔なしミニマル",
+    "暮らし・物"
+   ],
+   "w": 452,
+   "h": 472
+  }
+ ]
+}

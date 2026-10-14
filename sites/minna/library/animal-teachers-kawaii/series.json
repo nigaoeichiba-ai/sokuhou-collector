@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-14",
+ "slug": "animal-teachers-kawaii",
+ "title": "動物の先生",
+ "genre": "school",
+ "touch": "kawaii",
+ "lead": "ねこ・くま・うさぎ・ふくろうなど、動物の先生が授業をする場面12点です。園や教室の掲示物、学習資料に使えます。",
+ "tags": [
+  "先生",
+  "動物",
+  "教室",
+  "授業",
+  "園",
+  "掲示",
+  "学習"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "animal-teachers-kawaii-cat-board",
+   "file": "animal-teachers-kawaii-cat-board.webp",
+   "title": "黒板に書くねこ先生",
+   "desc": "黒板に書くねこ先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "黒板に書くねこ先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 501,
+   "h": 490
+  },
+  {
+   "id": "animal-teachers-kawaii-bear-book",
+   "file": "animal-teachers-kawaii-bear-book.webp",
+   "title": "本を読むくま先生",
+   "desc": "本を読むくま先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "本を読むくま先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 348,
+   "h": 490
+  },
+  {
+   "id": "animal-teachers-kawaii-rabbit-sing",
+   "file": "animal-teachers-kawaii-rabbit-sing.webp",
+   "title": "歌を教えるうさぎ先生",
+   "desc": "歌を教えるうさぎ先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "歌を教えるうさぎ先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 394,
+   "h": 514
+  },
+  {
+   "id": "animal-teachers-kawaii-owl-glasses",
+   "file": "animal-teachers-kawaii-owl-glasses.webp",
+   "title": "眼鏡のふくろう先生",
+   "desc": "眼鏡のふくろう先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "眼鏡のふくろう先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 437,
+   "h": 464
+  },
+  {
+   "id": "animal-teachers-kawaii-dog-sports",
+   "file": "animal-teachers-kawaii-dog-sports.webp",
+   "title": "体育のいぬ先生",
+   "desc": "体育のいぬ先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "体育のいぬ先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 381,
+   "h": 488
+  },
+  {
+   "id": "animal-teachers-kawaii-fox-art",
+   "file": "animal-teachers-kawaii-fox-art.webp",
+   "title": "図工のきつね先生",
+   "desc": "図工のきつね先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "図工のきつね先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 459,
+   "h": 493
+  },
+  {
+   "id": "animal-teachers-kawaii-panda-lunch",
+   "file": "animal-teachers-kawaii-panda-lunch.webp",
+   "title": "給食のパンダ先生",
+   "desc": "給食のパンダ先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "給食のパンダ先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 459,
+   "h": 491
+  },
+  {
+   "id": "animal-teachers-kawaii-sheep-nap",
+   "file": "animal-teachers-kawaii-sheep-nap.webp",
+   "title": "お昼寝を見守るひつじ先生",
+   "desc": "お昼寝を見守るひつじ先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "お昼寝を見守るひつじ先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 426,
+   "h": 505
+  },
+  {
+   "id": "animal-teachers-kawaii-squirrel-science",
+   "file": "animal-teachers-kawaii-squirrel-science.webp",
+   "title": "理科のりす先生",
+   "desc": "理科のりす先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "理科のりす先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 494,
+   "h": 484
+  },
+  {
+   "id": "animal-teachers-kawaii-penguin-pool",
+   "file": "animal-teachers-kawaii-penguin-pool.webp",
+   "title": "プールのペンギン先生",
+   "desc": "プールのペンギン先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "プールのペンギン先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 444,
+   "h": 464
+  },
+  {
+   "id": "animal-teachers-kawaii-elephant-bus",
+   "file": "animal-teachers-kawaii-elephant-bus.webp",
+   "title": "送迎のぞう先生",
+   "desc": "送迎のぞう先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "送迎のぞう先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 562,
+   "h": 473
+  },
+  {
+   "id": "animal-teachers-kawaii-tanuki-bell",
+   "file": "animal-teachers-kawaii-tanuki-bell.webp",
+   "title": "ベルを鳴らすたぬき先生",
+   "desc": "ベルを鳴らすたぬき先生のゆるかわイラストです。",
+   "tags": [
+    "先生",
+    "動物",
+    "教室",
+    "授業",
+    "動物の先生",
+    "ベルを鳴らすたぬき先生",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 489,
+   "h": 483
+  }
+ ]
+}

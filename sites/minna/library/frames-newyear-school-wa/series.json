@@ -1,0 +1,244 @@
+{
+ "added": "2026-10-14",
+ "slug": "frames-newyear-school-wa",
+ "title": "お正月と学校行事のフレーム",
+ "genre": "deco",
+ "touch": "wa",
+ "lead": "お正月・成人式・節分・ひな祭りから入学・卒業まで、和風のフレーム12点です。年賀状や式典の案内、掲示物に使えます。",
+ "tags": [
+  "フレーム",
+  "枠",
+  "お正月",
+  "和風",
+  "節分",
+  "ひな祭り",
+  "入学",
+  "卒業",
+  "年賀状"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "frames-newyear-school-wa-shogatsu",
+   "file": "frames-newyear-school-wa-shogatsu.webp",
+   "title": "お正月のフレーム",
+   "desc": "お正月のフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "お正月と学校行事のフレーム",
+    "お正月のフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 524,
+   "h": 483
+  },
+  {
+   "id": "frames-newyear-school-wa-kadomatsu",
+   "file": "frames-newyear-school-wa-kadomatsu.webp",
+   "title": "門松のフレーム",
+   "desc": "門松のフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "お正月と学校行事のフレーム",
+    "門松のフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 534,
+   "h": 467
+  },
+  {
+   "id": "frames-newyear-school-wa-hagoita",
+   "file": "frames-newyear-school-wa-hagoita.webp",
+   "title": "羽子板のフレーム",
+   "desc": "羽子板のフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "お正月と学校行事のフレーム",
+    "羽子板のフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 515,
+   "h": 483
+  },
+  {
+   "id": "frames-newyear-school-wa-seijin",
+   "file": "frames-newyear-school-wa-seijin.webp",
+   "title": "成人式のフレーム",
+   "desc": "成人式のフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "お正月と学校行事のフレーム",
+    "成人式のフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 531,
+   "h": 479
+  },
+  {
+   "id": "frames-newyear-school-wa-setsubun",
+   "file": "frames-newyear-school-wa-setsubun.webp",
+   "title": "節分のフレーム",
+   "desc": "節分のフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "節分",
+    "お正月と学校行事のフレーム",
+    "節分のフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 531,
+   "h": 470
+  },
+  {
+   "id": "frames-newyear-school-wa-hinamatsuri",
+   "file": "frames-newyear-school-wa-hinamatsuri.webp",
+   "title": "ひな祭りのフレーム",
+   "desc": "ひな祭りのフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "ひな祭り",
+    "お正月と学校行事のフレーム",
+    "ひな祭りのフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 529,
+   "h": 487
+  },
+  {
+   "id": "frames-newyear-school-wa-nyugaku",
+   "file": "frames-newyear-school-wa-nyugaku.webp",
+   "title": "入学のフレーム",
+   "desc": "入学のフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "入学",
+    "お正月と学校行事のフレーム",
+    "入学のフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 508,
+   "h": 478
+  },
+  {
+   "id": "frames-newyear-school-wa-sotsugyo",
+   "file": "frames-newyear-school-wa-sotsugyo.webp",
+   "title": "卒業のフレーム",
+   "desc": "卒業のフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "卒業",
+    "お正月と学校行事のフレーム",
+    "卒業のフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 485,
+   "h": 494
+  },
+  {
+   "id": "frames-newyear-school-wa-ume",
+   "file": "frames-newyear-school-wa-ume.webp",
+   "title": "梅のフレーム",
+   "desc": "梅のフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "お正月と学校行事のフレーム",
+    "梅のフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 508,
+   "h": 488
+  },
+  {
+   "id": "frames-newyear-school-wa-tsuru",
+   "file": "frames-newyear-school-wa-tsuru.webp",
+   "title": "鶴のフレーム",
+   "desc": "鶴のフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "お正月と学校行事のフレーム",
+    "鶴のフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 506,
+   "h": 495
+  },
+  {
+   "id": "frames-newyear-school-wa-asanoha",
+   "file": "frames-newyear-school-wa-asanoha.webp",
+   "title": "麻の葉のフレーム",
+   "desc": "麻の葉のフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "お正月と学校行事のフレーム",
+    "麻の葉のフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 494,
+   "h": 484
+  },
+  {
+   "id": "frames-newyear-school-wa-seigaiha",
+   "file": "frames-newyear-school-wa-seigaiha.webp",
+   "title": "青海波のフレーム",
+   "desc": "青海波のフレームの和風・和柄イラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "お正月",
+    "和風",
+    "お正月と学校行事のフレーム",
+    "青海波のフレーム",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 501,
+   "h": 484
+  }
+ ]
+}

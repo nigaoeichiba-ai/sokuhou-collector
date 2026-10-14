@@ -1,0 +1,239 @@
+{
+ "added": "2026-10-14",
+ "slug": "winter-prep-year-end-flat",
+ "title": "冬支度と年の瀬",
+ "genre": "season",
+ "touch": "flat",
+ "lead": "冬支度・餅つき・冬至・大掃除・大みそかなど、11月から12月の暮らしの素材12点です。おたよりや年末の案内に使えます。",
+ "tags": [
+  "冬支度",
+  "餅つき",
+  "冬至",
+  "大掃除",
+  "大みそか",
+  "年末",
+  "ゆず"
+ ],
+ "subject": "",
+ "season": {
+  "from": "11-10",
+  "to": "12-31"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "winter-prep-year-end-flat-fuyujitaku",
+   "file": "winter-prep-year-end-flat-fuyujitaku.webp",
+   "title": "冬支度",
+   "desc": "冬支度のシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "冬支度と年の瀬",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 496,
+   "h": 441
+  },
+  {
+   "id": "winter-prep-year-end-flat-mochitsuki",
+   "file": "winter-prep-year-end-flat-mochitsuki.webp",
+   "title": "餅つき",
+   "desc": "餅つきのシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "冬支度と年の瀬",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 481,
+   "h": 490
+  },
+  {
+   "id": "winter-prep-year-end-flat-toji",
+   "file": "winter-prep-year-end-flat-toji.webp",
+   "title": "冬至のゆず湯",
+   "desc": "冬至のゆず湯のシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "ゆず",
+    "冬支度と年の瀬",
+    "冬至のゆず湯",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 444,
+   "h": 433
+  },
+  {
+   "id": "winter-prep-year-end-flat-kabocha",
+   "file": "winter-prep-year-end-flat-kabocha.webp",
+   "title": "冬至のかぼちゃ",
+   "desc": "冬至のかぼちゃのシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "冬支度と年の瀬",
+    "冬至のかぼちゃ",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 469,
+   "h": 379
+  },
+  {
+   "id": "winter-prep-year-end-flat-osouji",
+   "file": "winter-prep-year-end-flat-osouji.webp",
+   "title": "大掃除",
+   "desc": "大掃除のシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "冬支度と年の瀬",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 471,
+   "h": 474
+  },
+  {
+   "id": "winter-prep-year-end-flat-toshikoshi",
+   "file": "winter-prep-year-end-flat-toshikoshi.webp",
+   "title": "年越しそば",
+   "desc": "年越しそばのシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "冬支度と年の瀬",
+    "年越しそば",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 477,
+   "h": 425
+  },
+  {
+   "id": "winter-prep-year-end-flat-joya",
+   "file": "winter-prep-year-end-flat-joya.webp",
+   "title": "除夜の鐘",
+   "desc": "除夜の鐘のシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "冬支度と年の瀬",
+    "除夜の鐘",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 502,
+   "h": 468
+  },
+  {
+   "id": "winter-prep-year-end-flat-nenga",
+   "file": "winter-prep-year-end-flat-nenga.webp",
+   "title": "年賀状の準備",
+   "desc": "年賀状の準備のシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "冬支度と年の瀬",
+    "年賀状の準備",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 459,
+   "h": 395
+  },
+  {
+   "id": "winter-prep-year-end-flat-kotatsu",
+   "file": "winter-prep-year-end-flat-kotatsu.webp",
+   "title": "こたつ",
+   "desc": "こたつのシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "冬支度と年の瀬",
+    "こたつ",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 540,
+   "h": 395
+  },
+  {
+   "id": "winter-prep-year-end-flat-nabe",
+   "file": "winter-prep-year-end-flat-nabe.webp",
+   "title": "鍋料理",
+   "desc": "鍋料理のシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "冬支度と年の瀬",
+    "鍋料理",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 524,
+   "h": 416
+  },
+  {
+   "id": "winter-prep-year-end-flat-scarf",
+   "file": "winter-prep-year-end-flat-scarf.webp",
+   "title": "マフラーと手袋",
+   "desc": "マフラーと手袋のシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "冬支度と年の瀬",
+    "マフラーと手袋",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 497,
+   "h": 473
+  },
+  {
+   "id": "winter-prep-year-end-flat-kagamimochi",
+   "file": "winter-prep-year-end-flat-kagamimochi.webp",
+   "title": "鏡餅",
+   "desc": "鏡餅のシンプルフラットイラストです。",
+   "tags": [
+    "冬支度",
+    "餅つき",
+    "冬至",
+    "大掃除",
+    "冬支度と年の瀬",
+    "鏡餅",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 482,
+   "h": 453
+  }
+ ]
+}

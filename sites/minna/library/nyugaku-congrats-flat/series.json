@@ -1,0 +1,241 @@
+{
+ "added": "2026-10-14",
+ "slug": "nyugaku-congrats-flat",
+ "title": "入学・進級のお祝い",
+ "genre": "school",
+ "touch": "flat",
+ "lead": "入学式・ランドセル・桜・新しい教室など、入学と進級のお祝いの場面12点です。入学おめでとうのカードや案内状に使えます。",
+ "tags": [
+  "入学",
+  "入学おめでとう",
+  "進級",
+  "入学式",
+  "ランドセル",
+  "桜",
+  "新学期"
+ ],
+ "subject": "",
+ "season": {
+  "from": "03-01",
+  "to": "04-20"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "nyugaku-congrats-flat-ceremony",
+   "file": "nyugaku-congrats-flat-ceremony.webp",
+   "title": "入学式",
+   "desc": "入学式のシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "入学・進級のお祝い",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 519,
+   "h": 508
+  },
+  {
+   "id": "nyugaku-congrats-flat-randoseru",
+   "file": "nyugaku-congrats-flat-randoseru.webp",
+   "title": "ランドセル",
+   "desc": "ランドセルのシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "ランドセル",
+    "入学・進級のお祝い",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 414,
+   "h": 433
+  },
+  {
+   "id": "nyugaku-congrats-flat-photo",
+   "file": "nyugaku-congrats-flat-photo.webp",
+   "title": "校門で記念写真",
+   "desc": "校門で記念写真のシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "入学・進級のお祝い",
+    "校門で記念写真",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 529,
+   "h": 507
+  },
+  {
+   "id": "nyugaku-congrats-flat-desk",
+   "file": "nyugaku-congrats-flat-desk.webp",
+   "title": "新しい教室",
+   "desc": "新しい教室のシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "入学・進級のお祝い",
+    "新しい教室",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 500,
+   "h": 453
+  },
+  {
+   "id": "nyugaku-congrats-flat-flowers",
+   "file": "nyugaku-congrats-flat-flowers.webp",
+   "title": "祝いの花",
+   "desc": "祝いの花のシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "入学・進級のお祝い",
+    "祝いの花",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 403,
+   "h": 495
+  },
+  {
+   "id": "nyugaku-congrats-flat-pencil",
+   "file": "nyugaku-congrats-flat-pencil.webp",
+   "title": "新しい文房具",
+   "desc": "新しい文房具のシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "入学・進級のお祝い",
+    "新しい文房具",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 487,
+   "h": 397
+  },
+  {
+   "id": "nyugaku-congrats-flat-junior",
+   "file": "nyugaku-congrats-flat-junior.webp",
+   "title": "中学の制服",
+   "desc": "中学の制服のシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "入学・進級のお祝い",
+    "中学の制服",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 243,
+   "h": 478
+  },
+  {
+   "id": "nyugaku-congrats-flat-highschool",
+   "file": "nyugaku-congrats-flat-highschool.webp",
+   "title": "高校の制服",
+   "desc": "高校の制服のシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "入学・進級のお祝い",
+    "高校の制服",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 235,
+   "h": 482
+  },
+  {
+   "id": "nyugaku-congrats-flat-university",
+   "file": "nyugaku-congrats-flat-university.webp",
+   "title": "大学の入学",
+   "desc": "大学の入学のシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "入学・進級のお祝い",
+    "大学の入学",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 527,
+   "h": 513
+  },
+  {
+   "id": "nyugaku-congrats-flat-kindergarten",
+   "file": "nyugaku-congrats-flat-kindergarten.webp",
+   "title": "入園",
+   "desc": "入園のシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "入学・進級のお祝い",
+    "入園",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 323,
+   "h": 455
+  },
+  {
+   "id": "nyugaku-congrats-flat-sakura",
+   "file": "nyugaku-congrats-flat-sakura.webp",
+   "title": "桜の花びら",
+   "desc": "桜の花びらのシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "桜",
+    "入学・進級のお祝い",
+    "桜の花びら",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 430,
+   "h": 450
+  },
+  {
+   "id": "nyugaku-congrats-flat-clap",
+   "file": "nyugaku-congrats-flat-clap.webp",
+   "title": "拍手でお祝い",
+   "desc": "拍手でお祝いのシンプルフラットイラストです。",
+   "tags": [
+    "入学",
+    "入学おめでとう",
+    "進級",
+    "入学式",
+    "入学・進級のお祝い",
+    "拍手でお祝い",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 508,
+   "h": 410
+  }
+ ]
+}

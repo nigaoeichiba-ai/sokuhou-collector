@@ -1,0 +1,246 @@
+{
+ "added": "2026-10-14",
+ "slug": "frames-autumn-events-flat",
+ "title": "秋の行事のフレーム",
+ "genre": "deco",
+ "touch": "flat",
+ "lead": "七五三・お月見・ハロウィン・運動会・紅葉・きのこなど、秋の行事と味覚のフレーム12点です。おたよりや写真の枠、掲示物に使えます。",
+ "tags": [
+  "フレーム",
+  "枠",
+  "七五三",
+  "お月見",
+  "ハロウィン",
+  "運動会",
+  "紅葉",
+  "きのこ",
+  "秋の味覚",
+  "おたより"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "frames-autumn-events-flat-shichigosan",
+   "file": "frames-autumn-events-flat-shichigosan.webp",
+   "title": "七五三のフレーム",
+   "desc": "七五三のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "秋の行事のフレーム",
+    "七五三のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 530,
+   "h": 492
+  },
+  {
+   "id": "frames-autumn-events-flat-tsukimi",
+   "file": "frames-autumn-events-flat-tsukimi.webp",
+   "title": "お月見のフレーム",
+   "desc": "お月見のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "秋の行事のフレーム",
+    "お月見のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 522,
+   "h": 511
+  },
+  {
+   "id": "frames-autumn-events-flat-halloween",
+   "file": "frames-autumn-events-flat-halloween.webp",
+   "title": "ハロウィンのフレーム",
+   "desc": "ハロウィンのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "ハロウィン",
+    "秋の行事のフレーム",
+    "ハロウィンのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 524,
+   "h": 499
+  },
+  {
+   "id": "frames-autumn-events-flat-undokai",
+   "file": "frames-autumn-events-flat-undokai.webp",
+   "title": "運動会のフレーム",
+   "desc": "運動会のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "運動会",
+    "秋の行事のフレーム",
+    "運動会のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 531,
+   "h": 476
+  },
+  {
+   "id": "frames-autumn-events-flat-momiji",
+   "file": "frames-autumn-events-flat-momiji.webp",
+   "title": "紅葉のフレーム",
+   "desc": "紅葉のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "紅葉",
+    "秋の行事のフレーム",
+    "紅葉のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 520,
+   "h": 486
+  },
+  {
+   "id": "frames-autumn-events-flat-kinoko",
+   "file": "frames-autumn-events-flat-kinoko.webp",
+   "title": "きのこのフレーム",
+   "desc": "きのこのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "きのこ",
+    "秋の行事のフレーム",
+    "きのこのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 523,
+   "h": 474
+  },
+  {
+   "id": "frames-autumn-events-flat-akinomikaku",
+   "file": "frames-autumn-events-flat-akinomikaku.webp",
+   "title": "秋の味覚のフレーム",
+   "desc": "秋の味覚のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "秋の味覚",
+    "秋の行事のフレーム",
+    "秋の味覚のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 524,
+   "h": 432
+  },
+  {
+   "id": "frames-autumn-events-flat-dokusho",
+   "file": "frames-autumn-events-flat-dokusho.webp",
+   "title": "読書の秋のフレーム",
+   "desc": "読書の秋のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "秋の行事のフレーム",
+    "読書の秋のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 513,
+   "h": 436
+  },
+  {
+   "id": "frames-autumn-events-flat-ichou",
+   "file": "frames-autumn-events-flat-ichou.webp",
+   "title": "銀杏のフレーム",
+   "desc": "銀杏のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "秋の行事のフレーム",
+    "銀杏のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 525,
+   "h": 435
+  },
+  {
+   "id": "frames-autumn-events-flat-kuri",
+   "file": "frames-autumn-events-flat-kuri.webp",
+   "title": "栗のフレーム",
+   "desc": "栗のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "秋の行事のフレーム",
+    "栗のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 524,
+   "h": 434
+  },
+  {
+   "id": "frames-autumn-events-flat-kabocha",
+   "file": "frames-autumn-events-flat-kabocha.webp",
+   "title": "かぼちゃのフレーム",
+   "desc": "かぼちゃのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "秋の行事のフレーム",
+    "かぼちゃのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 531,
+   "h": 440
+  },
+  {
+   "id": "frames-autumn-events-flat-donguri",
+   "file": "frames-autumn-events-flat-donguri.webp",
+   "title": "どんぐりのフレーム",
+   "desc": "どんぐりのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "七五三",
+    "お月見",
+    "秋の行事のフレーム",
+    "どんぐりのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 520,
+   "h": 434
+  }
+ ]
+}

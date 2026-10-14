@@ -1,0 +1,236 @@
+{
+ "added": "2026-10-14",
+ "slug": "bento-side-dishes-flat",
+ "title": "お弁当のおかず",
+ "genre": "food",
+ "touch": "flat",
+ "lead": "卵焼き・唐揚げ・ウインナー・ミニトマトなど、お弁当の定番のおかず12点です。メニュー表やレシピ、給食だよりに使えます。",
+ "tags": [
+  "お弁当",
+  "おかず",
+  "卵焼き",
+  "唐揚げ",
+  "給食",
+  "レシピ",
+  "メニュー"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "bento-side-dishes-flat-tamagoyaki",
+   "file": "bento-side-dishes-flat-tamagoyaki.webp",
+   "title": "卵焼き",
+   "desc": "卵焼きのシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 468,
+   "h": 396
+  },
+  {
+   "id": "bento-side-dishes-flat-karaage",
+   "file": "bento-side-dishes-flat-karaage.webp",
+   "title": "唐揚げ",
+   "desc": "唐揚げのシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 473,
+   "h": 429
+  },
+  {
+   "id": "bento-side-dishes-flat-sausage",
+   "file": "bento-side-dishes-flat-sausage.webp",
+   "title": "タコさんウインナー",
+   "desc": "タコさんウインナーのシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "タコさんウインナー",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 501,
+   "h": 425
+  },
+  {
+   "id": "bento-side-dishes-flat-tomato",
+   "file": "bento-side-dishes-flat-tomato.webp",
+   "title": "ミニトマト",
+   "desc": "ミニトマトのシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "ミニトマト",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 474,
+   "h": 415
+  },
+  {
+   "id": "bento-side-dishes-flat-broccoli",
+   "file": "bento-side-dishes-flat-broccoli.webp",
+   "title": "ブロッコリー",
+   "desc": "ブロッコリーのシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "ブロッコリー",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 494,
+   "h": 433
+  },
+  {
+   "id": "bento-side-dishes-flat-kinpira",
+   "file": "bento-side-dishes-flat-kinpira.webp",
+   "title": "きんぴらごぼう",
+   "desc": "きんぴらごぼうのシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "きんぴらごぼう",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 496,
+   "h": 432
+  },
+  {
+   "id": "bento-side-dishes-flat-salmon",
+   "file": "bento-side-dishes-flat-salmon.webp",
+   "title": "焼き鮭",
+   "desc": "焼き鮭のシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "焼き鮭",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 504,
+   "h": 264
+  },
+  {
+   "id": "bento-side-dishes-flat-hamburg",
+   "file": "bento-side-dishes-flat-hamburg.webp",
+   "title": "ミニハンバーグ",
+   "desc": "ミニハンバーグのシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "ミニハンバーグ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 515,
+   "h": 384
+  },
+  {
+   "id": "bento-side-dishes-flat-ebifry",
+   "file": "bento-side-dishes-flat-ebifry.webp",
+   "title": "エビフライ",
+   "desc": "エビフライのシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "エビフライ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 502,
+   "h": 479
+  },
+  {
+   "id": "bento-side-dishes-flat-potatosalad",
+   "file": "bento-side-dishes-flat-potatosalad.webp",
+   "title": "ポテトサラダ",
+   "desc": "ポテトサラダのシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "ポテトサラダ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 449,
+   "h": 396
+  },
+  {
+   "id": "bento-side-dishes-flat-ume",
+   "file": "bento-side-dishes-flat-ume.webp",
+   "title": "梅干しごはん",
+   "desc": "梅干しごはんのシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "梅干しごはん",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 450,
+   "h": 406
+  },
+  {
+   "id": "bento-side-dishes-flat-bentobox",
+   "file": "bento-side-dishes-flat-bentobox.webp",
+   "title": "お弁当箱",
+   "desc": "お弁当箱のシンプルフラットイラストです。",
+   "tags": [
+    "お弁当",
+    "おかず",
+    "卵焼き",
+    "唐揚げ",
+    "お弁当のおかず",
+    "お弁当箱",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 533,
+   "h": 410
+  }
+ ]
+}
