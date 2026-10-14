@@ -64,7 +64,7 @@ class InTheBuild(unittest.TestCase):
         self.assertIn("この特集は、公式の記録など数字と事実をもとに、当サイトが作った分析です", page)      # and the page says what it is
         self.assertIn('href="/tokushu/"', self.pages["index.html"])
         linked = [k for k, v in self.pages.items() if k.startswith("e/") and isinstance(v, str) and 'href="/tokushu/hakone-2027/"' in v]
-        self.assertGreaterEqual(len(linked), 5)                     # the cards of the race and its steps
+        self.assertGreaterEqual(len(linked), 4)                     # the cards of the race and its steps (the race, its qualifier, and the two races before it)
 
     def test_the_numbers_of_the_first_feature_are_the_checked_ones(self):
         f = json.loads((ROOT / "data/atomou/features/hakone-2027.json").read_text(encoding="utf-8"))
