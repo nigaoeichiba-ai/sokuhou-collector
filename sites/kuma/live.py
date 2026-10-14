@@ -26,6 +26,7 @@ from sokuhou import prefectures as pf
 from sokuhou.sitekit import crumbs, esc
 
 MIN_CITY_ROWS = 3        # a municipality with fewer records is listed on its prefecture page but has no page of its own
+INDEX_CITY_ROWS = 5      # a municipality page with fewer records stays for readers but asks search engines not to index it (noindex, left out of the sitemap): too thin, and Search Console listed such pages as "crawled - not indexed"
 RECENT_ROWS = 100        # rows listed on a prefecture page
 CITY_ROWS = 60           # rows listed on a municipality page
 FEED_ROWS = 60
@@ -323,7 +324,7 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
 {record_rows(rows[:RECENT_ROWS], with_city_link=True, by_slug_cities=lv["by_pref"])}
 <p class="notice">直近{min(RECENT_ROWS, len(rows))}件です。{CAUTION}</p>
 <h2>月別の記録</h2>
-{month_blocks}{extra_counts_html(extras, today)}<p><a href="/map/?pref={slug}">{esc(pname)}の目撃を地図で見る</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
+{month_blocks}{extra_counts_html(extras, today)}<p><a href="/map/?pref={slug}" rel="nofollow">{esc(pname)}の目撃を地図で見る</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
 {('<h2>' + esc(pname) + 'の公式の出没情報</h2>' + off_html) if off_html else ''}
 <p><a href="/live/{slug}/feed.xml">{esc(pname)}の最新の目撃(フィード)</a>を、フィードリーダーに登録すると、新しい記録が公表されるたびに届きます。</p>
 {source_notes(infos, keys)}"""
@@ -415,7 +416,7 @@ def city_page(page, d: dict, lv: dict, slug: str, city: str, links: dict) -> str
 <h2>新しい順の記録</h2>
 {record_rows(rows[:CITY_ROWS])}
 <p class="notice">{'直近' + str(CITY_ROWS) + '件です。' if len(rows) > CITY_ROWS else ''}{CAUTION}</p>
-<p><a href="/map/?pref={slug}&amp;city={esc(city)}">{esc(city)}の目撃を地図で見る</a> ・ <a href="/live/{slug}/">{esc(pname)}の目撃情報</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
+<p><a href="/map/?pref={slug}&amp;city={esc(city)}" rel="nofollow">{esc(city)}の目撃を地図で見る</a> ・ <a href="/live/{slug}/">{esc(pname)}の目撃情報</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
 {('<h2>' + esc(pname) + 'のほかの市町村</h2>' + other_html) if other_html else ''}
 {source_notes(infos, keys)}"""
     return page(path=city_url(slug, city), title=f"{city}の熊(クマ)出没・目撃情報【最新{md(last['at'][:10])}】{pname}・{fy_label(cur)}・{n(len(rows))}件",
