@@ -221,6 +221,8 @@ def main(argv: list[str]) -> int:
     print("changed:", ", ".join(changed) or "(none)")
     for name, msg in errors.items():
         print(f"FAILED {name}: {msg}", file=sys.stderr)
+        # a GitHub Actions annotation: it stays readable on the run page and through the public API (the step log needs a sign-in)
+        print(f"::error title=source failed ({name})::{msg[:300]}".replace(chr(10), " "), file=sys.stderr)
     return 1 if errors else 0
 
 
