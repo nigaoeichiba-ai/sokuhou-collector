@@ -658,10 +658,31 @@
      "place": "古座川町",
      "prefecture": "和歌山県",
      "species": "ツキノワグマ"
+    },
+    {
+     "date": "2026-10-09",
+     "no": 34,
+     "place": "丹波市",
+     "prefecture": "兵庫県",
+     "species": "ツキノワグマ"
+    },
+    {
+     "date": "2026-10-10",
+     "no": 35,
+     "place": "豊岡市",
+     "prefecture": "兵庫県",
+     "species": "ツキノワグマ"
+    },
+    {
+     "date": "2026-10-12",
+     "no": 36,
+     "place": "広島市",
+     "prefecture": "広島県",
+     "species": "ツキノワグマ"
     }
    ],
    "fy_start": 2026,
-   "updated": "2026-10-07"
+   "updated": "2026-10-13"
   }
  },
  "fatal": {
@@ -832,7 +853,7 @@
    ]
   }
  },
- "fetched_at": "2026-10-07T13:20:20.599574+09:00",
+ "fetched_at": "2026-10-14T09:16:48.422118+09:00",
  "injuries": {
   "as_of": "R08年8月末",
   "national": {
