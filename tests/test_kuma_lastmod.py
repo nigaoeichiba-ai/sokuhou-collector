@@ -30,7 +30,7 @@ class SitemapDatesTest(unittest.TestCase):
         cls.raw = make_raw()
         cls.prefs = {"miyagi": miyagi_rows(), "akita": AKITA, "yamaguchi": _yamaguchi(), "fukushima": _counts_raw()}
         cls.out = Path(cls.tmp.name) / "site"
-        with mock.patch.dict(live_mod.LIVE_SOURCES, {"fukushima": COUNTS_META}):
+        with mock.patch.dict(live_mod.LIVE_SOURCES, {"fukushima": COUNTS_META}), mock.patch.object(live_mod, "INDEX_CITY_ROWS", live_mod.MIN_CITY_ROWS):      # the fixtures' municipalities are all small: index them, so their dates can be checked
             cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, prefs=cls.prefs, today=BUILD_DAY)
         cls.dates = sitemap_dates(cls.out)
 

@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 from urllib.parse import quote
 import json
+import re
 import sys
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -201,6 +202,20 @@ def page(cfg, preview, **kw):
 
 
 # ---------------------------------------------------------------- pages
+
+def apply_index_policy(pages: dict, thin: set[str], preview: bool) -> None:
+    """What Search Console showed on 2026-10-15 (54 'alternate page' URLs were /map/?pref=...&city=..., and the 'crawled - not indexed' ones were mostly small
+    municipality pages): the map's parameter URLs are kept out of crawling; municipality pages with too few records are noindex and left out of the sitemap."""
+    if not preview and "robots.txt" in pages:
+        pages["robots.txt"] = pages["robots.txt"].replace("Allow: /\n", "Allow: /\nDisallow: /map/?\n", 1)      # the longer rule wins for these URLs
+    for rel in thin:
+        if '<meta name="robots"' not in pages[rel]:
+            pages[rel] = pages[rel].replace("<head>", '<head>\n<meta name="robots" content="noindex,follow">', 1)
+    if thin and "sitemap.xml" in pages:
+        for rel in thin:
+            loc = "/" + rel[: -len("index.html")]
+            pages["sitemap.xml"] = re.sub(r"<url><loc>[^<]*" + re.escape(loc) + r"</loc>[^\n]*</url>\n", "", pages["sitemap.xml"])
+
 
 def hot_home(lv: dict) -> str:
     """Home page: the municipalities with the most records in the last 30 days, each linked to its own page (counted from the stored records)."""
@@ -766,6 +781,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     SITE["source_html"] = SOURCE_HTML + (' 数字の出典・数え方・引用のしかたは、<a href="/cite/">こちら</a>。' if any_live else "")
     d["lv"] = live_mod.prepare_live(d, today or datetime.now(JST).date()) if any_live else None
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
+    thin_pages: set[str] = set()      # municipality pages too thin to index (live.INDEX_CITY_ROWS)
     for kind in ("sightings", "change", "injuries"):
         pages[f"ranking/{kind}/index.html"] = ranking_page(d, kind, cfg, preview)
     if d["captures"]:
@@ -783,7 +799,10 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
             pages[f"live/{slug}/index.html"] = live_mod.pref_live_page(page_fn, d, lv, slug, links)
             for city, rows in lv["by_pref"][slug].items():
                 if live_mod.city_has_page(rows):
-                    pages[f"live/{slug}/{live_mod.city_slug(slug, city)}/index.html"] = live_mod.city_page(page_fn, d, lv, slug, city, links)
+                    rel = f"live/{slug}/{live_mod.city_slug(slug, city)}/index.html"
+                    pages[rel] = live_mod.city_page(page_fn, d, lv, slug, city, links)
+                    if len(rows) < live_mod.INDEX_CITY_ROWS:
+                        thin_pages.add(rel)
         for c in lv["counts"]:
             if c["slug"] in lv["by_pref"]:         # the prefecture has a record page: the counts are a section of it (live.pref_live_page)
                 continue
@@ -836,6 +855,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         input_note="",
         finish=lambda s: s))
     pages.update(standard_files(pages, cfg, preview, max([d["fetched_date"]] + [src["fetched_date"] for src in d.get("live_prefs", [])])))   # the newest of the ministry and the municipal sources
+    apply_index_policy(pages, thin_pages, preview)
     render_day = today or datetime.now(JST).date()
     if update_lastmod:
         for rel in lastmod_mod.update_static(pages, render_day):
