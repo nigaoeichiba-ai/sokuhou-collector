@@ -1,0 +1,29 @@
+name: yorokobu-yahoo-probe
+
+# By hand only: prints the SHAPE of one Yahoo!ショッピング itemSearch response (field names, a short sample of each value) so the adapter in
+# sites/yorokobu/yahoo_fetch.py is written against the real response.  Stores nothing.  Needs YAHOO_CLIENT_ID (never printed).
+
+on:
+  workflow_dispatch:
+    inputs:
+      query:
+        description: "search words"
+        default: "お歳暮 ギフト"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Probe
+        env:
+          YAHOO_CLIENT_ID: ${{ secrets.YAHOO_CLIENT_ID }}
+          QUERY: ${{ github.event.inputs.query }}
+        run: python -m sites.yorokobu.yahoo_fetch --probe "$QUERY"
