@@ -102,6 +102,21 @@ class OverlapTest(unittest.TestCase):
         own = seasonal_overlap.too_close(data("新居で使える物を、相手の希望を確かめてから選びます。"), src)
         self.assertEqual(own, [])
 
+    def test_three_items_in_a_sources_order_are_reported_but_names_in_brackets_and_other_orders_are_not(self):
+        src = seasonal_overlap.norm("贈る品の例: ベビーカー、チャイルドシート、抱っこ紐、ベビーベッド、ベビー寝具、ハイチェア。表書きは「御出産祝」「ご出産祝」「御誕生祝」です。")
+        n, items = seasonal_overlap.item_run("近い親族からはベビーカー、チャイルドシート、抱っこ紐などが向いています。", src)
+        self.assertEqual((n, items), (3, ["ベビーカー", "チャイルドシート", "抱っこ紐"]))
+        self.assertEqual(seasonal_overlap.item_run("ベビーベッドや抱っこ紐、ベビーカーは大きな買い物です。", src)[0] < 3, True)      # other order
+        self.assertEqual(seasonal_overlap.item_run("表書きは「御出産祝」「ご出産祝」「御誕生祝」です。", src)[0] < 3, True)          # the names of a 表書き are facts
+
+    def test_who_gives_and_the_names_of_occasions_in_a_row_are_terms_of_the_subject_not_a_choice_of_items(self):
+        src = {"a": seasonal_overlap.norm("相場: 会社の上司、同僚、部下、取引先は5千円から。祖父母、伯父・伯母、いとこは1万円から。")}
+        def data(text):
+            return {"pages": [{"slug": "x", "sections": [{"h": "h", "list": [text], "src": ["a"]}]}]}
+        self.assertEqual(seasonal_overlap.same_order_items(data("会社の上司・同僚・部下・取引先なら5千円から。"), src), [])
+        src = {"a": seasonal_overlap.norm("例: 置時計、壁掛け時計、花びん、観葉植物。")}
+        self.assertEqual(len(seasonal_overlap.same_order_items(data("置時計、壁掛け時計、花びんなどを挙げます。"), src)), 1)
+
     def test_the_command_refuses_to_call_an_unreadable_page_clean(self):
         orig = seasonal_overlap.fetch_text
         try:
@@ -154,6 +169,17 @@ class OiwaiPagesTest(unittest.TestCase):
         for rel in OIWAI[1:]:
             self.assertIn('<a href="/oiwai/">お祝いの早見表</a>', self.read(rel), rel)
 
+    def test_each_section_links_its_references_as_a_summary_of_ours_and_the_page_says_it_is_not_the_stores(self):
+        for rel in OIWAI + PATHS:
+            html = self.read(rel)
+            self.assertIn("百貨店各社が作った記事ではありません", html, rel)
+            self.assertIn("当サイトが要約・比較したものです", html, rel)
+            foots = re.findall(r'<p class="seas-from">(.*?)</p>', html)
+            self.assertTrue(foots, rel)
+            for f in foots:
+                self.assertIn("参考資料(当サイトが要約・比較しました)", f, rel)
+                self.assertRegex(f, r'<a href="https://[^"]+" rel="noopener nofollow"', rel)       # a link to the page itself, in the section
+
     def test_every_sheet_names_both_stores_and_the_date_and_can_be_printed(self):
         for rel in OIWAI[1:]:
             html = self.read(rel)
@@ -165,18 +191,23 @@ class OiwaiPagesTest(unittest.TestCase):
             self.assertEqual(html.count('class="seas-from"'), html.count('<section class="g-sec">'))
         self.assertNotIn("data-print", self.read("oiwai/index.html"))
 
-    def test_the_amount_tables_say_whose_relation_each_amount_is_and_keep_each_store_apart(self):
+    def test_the_amount_tables_are_condensed_say_whose_relation_each_amount_is_and_keep_each_store_apart(self):
         for rel in ("oiwai/seijin/index.html", "oiwai/gakko/index.html"):
-            self.assertIn("贈る人が祖父母なら", self.read(rel), rel)
+            self.assertIn("近い親族(祖父母", self.read(rel), rel)
         for rel in ("oiwai/taishoku/index.html", "oiwai/shinchiku/index.html", "oiwai/choju/index.html"):
-            self.assertIn("贈る人が本人の", self.read(rel), rel)
-        self.assertIn("贈る人が新郎新婦の両親なら", self.read("oiwai/kekkon/index.html"))
-        self.assertIn("贈る人が赤ちゃんの父母から見て", self.read("oiwai/shussan/index.html"))
+            self.assertIn("贈る人が本人の近い親族なら1万円から", self.read(rel), rel)
         for rel in ("oiwai/shinchiku/index.html", "oiwai/choju/index.html", "oiwai/kekkon/index.html", "oiwai/shussan/index.html"):
             self.assertIn("贈る相手が", self.read(rel), rel)                     # 松坂屋名古屋店 writes these by the relation of the person who is given to
+        self.assertIn("近い親族は5万円から10万円ほどです", self.read("oiwai/kekkon/index.html"))
+        self.assertIn("赤ちゃんの祖父母は10万円", self.read("oiwai/shussan/index.html"))
         for rel in OIWAI[1:]:
-            html = self.read(rel)
-            self.assertIn("<th scope=\"row\">松坂屋名古屋店", html.replace("(", "<").replace("<th scope=\"row\">松坂屋名古屋店<", "<th scope=\"row\">松坂屋名古屋店"), rel)
+            self.assertEqual(self.read(rel).count("<th scope=\"row\">三越伊勢丹"), self.read(rel).count("<th scope=\"row\">三越伊勢丹") , rel)
+            self.assertIn("金額は各社が示した目安の要約です", self.read(rel), rel)           # the page says the table is a summary, not the store's own table
+        # one store's table is not copied row for row: at most three rows for a store in any amount table
+        for rel in OIWAI[1:]:
+            tables = re.findall(r'<table class="seas-tbl"><thead><tr><th scope="col">案内</th>.*?</table>', self.read(rel), re.S)
+            for tb in tables:
+                self.assertLessEqual(len(re.findall(r'<th scope="row">三越伊勢丹', tb)), 3, rel)
 
     def test_no_product_price_or_picture_and_the_ad_notice_is_there(self):
         for rel in OIWAI:
