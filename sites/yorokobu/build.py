@@ -160,7 +160,11 @@ def yahoo_url(cfg: dict, keyword: str) -> str:
 def yahoo_btn(cfg: dict, keyword: str, label: str, cls: str = "btn") -> str:
     u = yahoo_url(cfg, keyword)
     klass = f' class="{cls}"' if cls else ""
-    return f'<a{klass} href="{esc(u)}" rel="sponsored nofollow noopener" target="_blank">{esc(label)}</a>' if u else ""
+    if not u:
+        return ""
+    v = cfg["yahoo_vc"]
+    pixel = f'<img src="https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid={v["sid"]}&amp;pid={v["pid"]}" width="1" height="1" alt="" style="border:0">'      # the programme asks for its 1x1 impression counter with every link
+    return f'<a{klass} href="{esc(u)}" rel="sponsored nofollow noopener" target="_blank">{esc(label)}{pixel}</a>'
 
 
 def amazon_query(name: str, limit: int = 30) -> str:

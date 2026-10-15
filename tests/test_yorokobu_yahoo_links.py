@@ -37,6 +37,11 @@ class UrlTest(unittest.TestCase):
         self.assertIn('target="_blank"', b)
         self.assertIn("&amp;vc_url=", b)
 
+    def test_each_link_carries_the_programmes_impression_counter(self):
+        b = build.yahoo_btn(CFG_Y, "お歳暮", "x")
+        self.assertIn('<img src="https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3784606&amp;pid=892726918" width="1" height="1" alt=', b)
+        self.assertEqual(b.count("<a "), 1)
+
     def test_the_real_config_has_the_ids(self):
         cfg = json.loads((Path(build.__file__).parent / "config.json").read_text(encoding="utf-8"))
         self.assertEqual(cfg["yahoo_vc"], VC)
