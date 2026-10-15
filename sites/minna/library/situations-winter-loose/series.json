@@ -1,0 +1,243 @@
+{
+ "added": "2026-10-16",
+ "slug": "situations-winter-loose",
+ "title": "冬の日常の場面",
+ "genre": "life",
+ "touch": "loose",
+ "lead": "こたつ・雪かき・結露・マフラーなど、冬の暮らしの場面12点です。ブログ・スライド・社内報の挿絵に使えます。",
+ "tags": [
+  "冬",
+  "日常",
+  "あるある",
+  "くらし",
+  "こたつ",
+  "雪",
+  "ゆるい",
+  "人物",
+  "ブログ",
+  "スライド"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "situations-winter-loose-kotatsu",
+   "file": "situations-winter-loose-kotatsu.webp",
+   "title": "こたつで寝てしまう",
+   "desc": "こたつで寝てしまうのゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "こたつ",
+    "冬の日常の場面",
+    "こたつで寝てしまう",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 489,
+   "h": 272
+  },
+  {
+   "id": "situations-winter-loose-snow",
+   "file": "situations-winter-loose-snow.webp",
+   "title": "雪かき",
+   "desc": "雪かきのゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "雪",
+    "冬の日常の場面",
+    "雪かき",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 463,
+   "h": 422
+  },
+  {
+   "id": "situations-winter-loose-condensation",
+   "file": "situations-winter-loose-condensation.webp",
+   "title": "窓の結露を拭く",
+   "desc": "窓の結露を拭くのゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "冬の日常の場面",
+    "窓の結露を拭く",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 420,
+   "h": 410
+  },
+  {
+   "id": "situations-winter-loose-scarf",
+   "file": "situations-winter-loose-scarf.webp",
+   "title": "マフラーを巻く",
+   "desc": "マフラーを巻くのゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "冬の日常の場面",
+    "マフラーを巻く",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 366,
+   "h": 446
+  },
+  {
+   "id": "situations-winter-loose-static",
+   "file": "situations-winter-loose-static.webp",
+   "title": "静電気に驚く",
+   "desc": "静電気に驚くのゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "冬の日常の場面",
+    "静電気に驚く",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 349,
+   "h": 438
+  },
+  {
+   "id": "situations-winter-loose-heater",
+   "file": "situations-winter-loose-heater.webp",
+   "title": "ストーブにあたる",
+   "desc": "ストーブにあたるのゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "冬の日常の場面",
+    "ストーブにあたる",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 437,
+   "h": 370
+  },
+  {
+   "id": "situations-winter-loose-bath",
+   "file": "situations-winter-loose-bath.webp",
+   "title": "冷えた脚をあたためる",
+   "desc": "冷えた脚をあたためるのゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "冬の日常の場面",
+    "冷えた脚をあたためる",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 343,
+   "h": 500
+  },
+  {
+   "id": "situations-winter-loose-futon",
+   "file": "situations-winter-loose-futon.webp",
+   "title": "布団から出られない",
+   "desc": "布団から出られないのゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "冬の日常の場面",
+    "布団から出られない",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 456,
+   "h": 443
+  },
+  {
+   "id": "situations-winter-loose-nabe",
+   "file": "situations-winter-loose-nabe.webp",
+   "title": "鍋を囲む",
+   "desc": "鍋を囲むのゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "冬の日常の場面",
+    "鍋を囲む",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 452,
+   "h": 480
+  },
+  {
+   "id": "situations-winter-loose-commute",
+   "file": "situations-winter-loose-commute.webp",
+   "title": "冷たい朝の通勤",
+   "desc": "冷たい朝の通勤のゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "冬の日常の場面",
+    "冷たい朝の通勤",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 300,
+   "h": 493
+  },
+  {
+   "id": "situations-winter-loose-cold",
+   "file": "situations-winter-loose-cold.webp",
+   "title": "風邪でマスクをする",
+   "desc": "風邪でマスクをするのゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "冬の日常の場面",
+    "風邪でマスクをする",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 439,
+   "h": 444
+  },
+  {
+   "id": "situations-winter-loose-drink",
+   "file": "situations-winter-loose-drink.webp",
+   "title": "温かい飲み物",
+   "desc": "温かい飲み物のゆるい手書きイラストです。",
+   "tags": [
+    "冬",
+    "日常",
+    "あるある",
+    "くらし",
+    "冬の日常の場面",
+    "温かい飲み物",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 296,
+   "h": 440
+  }
+ ]
+}

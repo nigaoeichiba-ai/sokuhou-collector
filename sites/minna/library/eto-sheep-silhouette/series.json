@@ -1,0 +1,127 @@
+{
+ "added": "2026-10-16",
+ "slug": "eto-sheep-silhouette",
+ "title": "未年のひつじのシルエット",
+ "genre": "eto",
+ "touch": "silhouette",
+ "lead": "歩く・跳ぶ・休むなど、羊の姿をひとつの色で表したシルエット6点です。年賀状の図案、ロゴ、飾りに使えます。",
+ "tags": [
+  "シルエット",
+  "ひつじ",
+  "羊",
+  "未年",
+  "年賀状",
+  "影絵",
+  "ロゴ"
+ ],
+ "subject": "",
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "planned": 6,
+ "items": [
+  {
+   "id": "eto-sheep-silhouette-stand",
+   "file": "eto-sheep-silhouette-stand.webp",
+   "title": "立つ羊",
+   "desc": "立つ羊のシルエットイラストです。",
+   "tags": [
+    "シルエット",
+    "ひつじ",
+    "羊",
+    "未年",
+    "未年のひつじのシルエット",
+    "立つ羊",
+    "干支・年賀状"
+   ],
+   "w": 443,
+   "h": 384
+  },
+  {
+   "id": "eto-sheep-silhouette-walk",
+   "file": "eto-sheep-silhouette-walk.webp",
+   "title": "歩く羊",
+   "desc": "歩く羊のシルエットイラストです。",
+   "tags": [
+    "シルエット",
+    "ひつじ",
+    "羊",
+    "未年",
+    "未年のひつじのシルエット",
+    "歩く羊",
+    "干支・年賀状"
+   ],
+   "w": 454,
+   "h": 379
+  },
+  {
+   "id": "eto-sheep-silhouette-jump",
+   "file": "eto-sheep-silhouette-jump.webp",
+   "title": "跳ぶ羊",
+   "desc": "跳ぶ羊のシルエットイラストです。",
+   "tags": [
+    "シルエット",
+    "ひつじ",
+    "羊",
+    "未年",
+    "未年のひつじのシルエット",
+    "跳ぶ羊",
+    "干支・年賀状"
+   ],
+   "w": 492,
+   "h": 365
+  },
+  {
+   "id": "eto-sheep-silhouette-lie",
+   "file": "eto-sheep-silhouette-lie.webp",
+   "title": "休む羊",
+   "desc": "休む羊のシルエットイラストです。",
+   "tags": [
+    "シルエット",
+    "ひつじ",
+    "羊",
+    "未年",
+    "未年のひつじのシルエット",
+    "休む羊",
+    "干支・年賀状"
+   ],
+   "w": 441,
+   "h": 272
+  },
+  {
+   "id": "eto-sheep-silhouette-lamb",
+   "file": "eto-sheep-silhouette-lamb.webp",
+   "title": "子羊",
+   "desc": "子羊のシルエットイラストです。",
+   "tags": [
+    "シルエット",
+    "ひつじ",
+    "羊",
+    "未年",
+    "未年のひつじのシルエット",
+    "子羊",
+    "干支・年賀状"
+   ],
+   "w": 265,
+   "h": 265
+  },
+  {
+   "id": "eto-sheep-silhouette-pair",
+   "file": "eto-sheep-silhouette-pair.webp",
+   "title": "寄り添う親子の羊",
+   "desc": "寄り添う親子の羊のシルエットイラストです。",
+   "tags": [
+    "シルエット",
+    "ひつじ",
+    "羊",
+    "未年",
+    "未年のひつじのシルエット",
+    "寄り添う親子の羊",
+    "干支・年賀状"
+   ],
+   "w": 528,
+   "h": 336
+  }
+ ]
+}

@@ -1,0 +1,243 @@
+{
+ "added": "2026-10-16",
+ "slug": "forest-spirits-picturebook",
+ "title": "森の精霊",
+ "genre": "animals",
+ "touch": "picturebook",
+ "lead": "苔・どんぐり・きのこ・霧などから生まれた、オリジナルの森の精霊12体の素材です。絵本、ゲーム、雑貨のデザインに使えます。",
+ "tags": [
+  "精霊",
+  "森",
+  "オリジナルキャラ",
+  "ファンタジー",
+  "絵本",
+  "きのこ",
+  "どんぐり",
+  "苔",
+  "キャラクター"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "forest-spirits-picturebook-moss",
+   "file": "forest-spirits-picturebook-moss.webp",
+   "title": "苔の精",
+   "desc": "苔の精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "苔",
+    "森の精霊",
+    "苔の精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 422,
+   "h": 474
+  },
+  {
+   "id": "forest-spirits-picturebook-acorn",
+   "file": "forest-spirits-picturebook-acorn.webp",
+   "title": "どんぐりの精",
+   "desc": "どんぐりの精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "どんぐり",
+    "森の精霊",
+    "どんぐりの精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 368,
+   "h": 464
+  },
+  {
+   "id": "forest-spirits-picturebook-mushroom",
+   "file": "forest-spirits-picturebook-mushroom.webp",
+   "title": "きのこの精",
+   "desc": "きのこの精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "きのこ",
+    "森の精霊",
+    "きのこの精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 475,
+   "h": 441
+  },
+  {
+   "id": "forest-spirits-picturebook-fog",
+   "file": "forest-spirits-picturebook-fog.webp",
+   "title": "霧の精",
+   "desc": "霧の精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "森の精霊",
+    "霧の精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 421,
+   "h": 467
+  },
+  {
+   "id": "forest-spirits-picturebook-leaf",
+   "file": "forest-spirits-picturebook-leaf.webp",
+   "title": "木の葉の精",
+   "desc": "木の葉の精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "森の精霊",
+    "木の葉の精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 468,
+   "h": 446
+  },
+  {
+   "id": "forest-spirits-picturebook-stream",
+   "file": "forest-spirits-picturebook-stream.webp",
+   "title": "せせらぎの精",
+   "desc": "せせらぎの精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "森の精霊",
+    "せせらぎの精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 366,
+   "h": 452
+  },
+  {
+   "id": "forest-spirits-picturebook-root",
+   "file": "forest-spirits-picturebook-root.webp",
+   "title": "木の根の精",
+   "desc": "木の根の精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "森の精霊",
+    "木の根の精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 485,
+   "h": 498
+  },
+  {
+   "id": "forest-spirits-picturebook-firefly",
+   "file": "forest-spirits-picturebook-firefly.webp",
+   "title": "ほたるの精",
+   "desc": "ほたるの精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "森の精霊",
+    "ほたるの精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 318,
+   "h": 440
+  },
+  {
+   "id": "forest-spirits-picturebook-snow",
+   "file": "forest-spirits-picturebook-snow.webp",
+   "title": "雪の精",
+   "desc": "雪の精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "森の精霊",
+    "雪の精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 406,
+   "h": 443
+  },
+  {
+   "id": "forest-spirits-picturebook-flower",
+   "file": "forest-spirits-picturebook-flower.webp",
+   "title": "花の精",
+   "desc": "花の精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "森の精霊",
+    "花の精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 386,
+   "h": 492
+  },
+  {
+   "id": "forest-spirits-picturebook-stone",
+   "file": "forest-spirits-picturebook-stone.webp",
+   "title": "石の精",
+   "desc": "石の精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "森の精霊",
+    "石の精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 398,
+   "h": 489
+  },
+  {
+   "id": "forest-spirits-picturebook-wind",
+   "file": "forest-spirits-picturebook-wind.webp",
+   "title": "風の精",
+   "desc": "風の精の絵本風イラストです。",
+   "tags": [
+    "精霊",
+    "森",
+    "オリジナルキャラ",
+    "ファンタジー",
+    "森の精霊",
+    "風の精",
+    "絵本風",
+    "動物"
+   ],
+   "w": 400,
+   "h": 493
+  }
+ ]
+}
