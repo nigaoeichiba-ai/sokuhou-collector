@@ -308,7 +308,7 @@ def _yrow(cfg: dict, r: dict, n: int) -> str:
     p, rv, sh = r["parts"]
     return (f'<li class="yh-row"><span class="cmp-no">{n}</span>'
             f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p><h3><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">{esc(B.short(r["name"], 52))}</a></h3>'
-            f'<p class="yh-facts">{" ・ ".join(facts)}</p></div>'
+            f'<p class="yh-facts">{" ・ ".join(f'<span class="nb">{f}</span>' for f in facts)}</p></div>'
             f'<div class="cmp-score" title="価格{p}・レビュー{rv}・送料{sh}"><b>{r["total"]}</b><small>点数</small><i style="width:{r["total"]}%"></i></div>'
             f'<div class="cmp-go"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">Yahoo!ショッピングで見る{B.vc_pixel(cfg)}</a></div></li>')
 
