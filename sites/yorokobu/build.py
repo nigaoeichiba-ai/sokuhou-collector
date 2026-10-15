@@ -148,6 +148,21 @@ def amazon_more(cfg: dict, query: str, label: str) -> str:
             f'{esc(label)}</a></p></section>')
 
 
+def yahoo_url(cfg: dict, keyword: str) -> str:
+    """The Yahoo!ショッピング search page of `keyword` as a ValueCommerce affiliate link (the owner's site id and the free-text ad id; the target travels, encoded, in vc_url).  Empty without the ids."""
+    v = cfg.get("yahoo_vc")
+    if not v:
+        return ""
+    target = "https://shopping.yahoo.co.jp/search?p=" + quote(keyword, safe="")
+    return f"https://ck.jp.ap.valuecommerce.com/servlet/referral?sid={v['sid']}&pid={v['pid']}&vc_url={quote(target, safe='')}"
+
+
+def yahoo_btn(cfg: dict, keyword: str, label: str, cls: str = "btn") -> str:
+    u = yahoo_url(cfg, keyword)
+    klass = f' class="{cls}"' if cls else ""
+    return f'<a{klass} href="{esc(u)}" rel="sponsored nofollow noopener" target="_blank">{esc(label)}</a>' if u else ""
+
+
 def amazon_query(name: str, limit: int = 30) -> str:
     """The words to search Amazon for a product known by its Rakuten title: the product name at the front of the title, without the shop's brackets and
     sales words (a title of 60 characters finds nothing there, because every word has to match)."""
@@ -205,7 +220,8 @@ def page(cfg, preview, **kw):
             sale_script = '<script src="/assets/sale.js" defer></script>'
             has_bar = True
     if "pr-quiet" in kw.get("body", "") or has_bar:
-        kw["body"] += pr_foot(cfg, amazon_links or "amazon.co.jp/" in kw["body"], "rakuten.co.jp/" in kw["body"] or amazon_links)
+        more = tuple(n for n, mark in (("バリューコマース(Yahoo!ショッピング)", "ck.jp.ap.valuecommerce.com/"), ("A8.net", "px.a8.net/")) if mark in kw["body"])
+        kw["body"] += pr_foot(cfg, amazon_links or "amazon.co.jp/" in kw["body"], "rakuten.co.jp/" in kw["body"] or amazon_links, more)
     kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", "")) + breadcrumb_ld(cfg, kw.get("body", ""))   # the pictures the page uses (only those), the breadcrumb data
     site = {**SITE, "nav": ([("今日のおすすめ", "/picks/", "/picks/")] if PICKS_ON else []) + SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])
                               + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
@@ -438,10 +454,10 @@ def pr_quiet(cfg: dict) -> str:
     return '<p class="pr-quiet"><span class="pr-chip">PR</span><span class="pr-text">このページには広告を含みます</span></p>'
 
 
-def pr_foot(cfg: dict, amazon: bool = False, rakuten: bool = True) -> str:
-    """The full notice at the bottom of a page; it names each programme only when the page really has a link to it."""
+def pr_foot(cfg: dict, amazon: bool = False, rakuten: bool = True, others: tuple[str, ...] = ()) -> str:
+    """The full notice at the bottom of a page; it names each programme only when the page really has a link to it (`others`: the names of further programmes whose links the page carries)."""
     amazon = amazon and bool(cfg.get("amazon_tracking_id"))
-    names = "・".join((["楽天アフィリエイト"] if rakuten or not amazon else []) + (["Amazonアソシエイト"] if amazon else []))
+    names = "・".join((["楽天アフィリエイト"] if rakuten or not amazon else []) + (["Amazonアソシエイト"] if amazon else []) + list(others))
     prices = '掲載している価格・レビューは楽天市場の情報です。Amazonの価格はリンク先でご確認ください。' if amazon and rakuten else ""
     return ('<aside class="pr-foot"><b>広告について</b>このページには広告(' + names + ')のリンクが含まれます。リンク先で購入されると運営者に報酬が支払われることがあります。商品の選び方は、<a href="/policy/">編集方針</a>に書いています。' + prices
             + (amazon_disclosure(cfg) if amazon else "") + '</aside>')

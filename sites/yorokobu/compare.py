@@ -243,6 +243,8 @@ def group_page(d: dict, cfg: dict, preview: bool, g: dict) -> str:
               f'Amazonの商品は、価格のない<a href="{amazonrank.PATH}">編集部の採点ページ</a>に分けています。</p>')
     if "shaddy" in g.get("mall", []) and shaddy_url(cfg):
         az += f'<p class="cmp-az">ギフト専門店の{shaddy_a(cfg)}は、この表に入っていません。内祝いやお返しの品は、こちらからも探せます。</p>'
+    if B.yahoo_url(cfg, g["label"]):
+        az += f'<p class="cmp-az">ほかのモールの商品は、{B.yahoo_btn(cfg, g["label"] + " ギフト", "Yahoo!ショッピングで" + g["label"] + "を探す", "")}から探せます。この表にYahoo!ショッピングの価格は入っていません。</p>'
     camp = f"ポイント倍率が付いている商品は{g['campaign']}点です。" if g["campaign"] else ""
     summary = (f'<p class="cmp-sum">価格は{B.yen(g["min"])}〜{B.yen(g["max"])}(中央値{B.yen(g["median_price"])})です。{camp}</p>')
     others = "".join(f'<li><a href="{path(o["slug"])}">{esc(o["label"])}</a></li>' for o in cv["groups"] if o["slug"] != g["slug"])
@@ -272,6 +274,8 @@ def hub_page(d: dict, cfg: dict, preview: bool) -> str:
     mall_items = ""
     if cfg.get("amazon_tracking_id"):
         mall_items += f'<li><a href="{amazonrank.PATH}">Amazonで選ぶ贈り物</a> 価格とレビューは載せられないため、当サイトの4項目の採点順に並べています。</li>'
+    if B.yahoo_url(cfg, "ギフト"):
+        mall_items += f'<li>{B.yahoo_btn(cfg, "ギフト", "Yahoo!ショッピング", "")} 価格はこの比較に入っていません。同じ種類の商品を、リンク先で探せます。</li>'
     if shaddy_url(cfg):
         mall_items += f'<li>{shaddy_a(cfg)} 内祝いやお返しの品も探せるギフト専門店です。価格はこの比較に入っていません。</li>'
     malls = f'<section class="block"><div class="sec-head"><h2>ほかのモールで探す</h2></div><ul class="plain">{mall_items}</ul></section>' if mall_items else ""
