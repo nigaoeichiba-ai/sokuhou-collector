@@ -76,13 +76,64 @@ class ContentTest(unittest.TestCase):
 
 class LinksTest(unittest.TestCase):
     def test_a_link_to_a_page_the_build_does_not_have_is_left_out_and_the_own_pages_stay(self):
-        out = seasonal.build_pages({}, CFG, False, known={"guide/oseibo/index.html": ""})
+        out = seasonal.build_pages({}, CFG, False, known={"message/oseibo/index.html": ""})
         hub = out["oseibo/index.html"]
-        self.assertIn('href="/guide/oseibo/"', hub)                               # this one exists in the build
+        self.assertIn('href="/message/oseibo/"', hub)                               # this one exists in the build
         self.assertNotIn('href="/gift/oseibo-boss/"', hub)                       # a product-dependent page that is missing: no broken link
-        self.assertNotIn('href="/message/oseibo/"', hub)
+        self.assertNotIn('href="/gift/oseibo-in-laws/"', hub)
         for own in ("/oseibo/work/", "/oseibo/thanks/", "/nenga/"):
             self.assertIn(f'href="{own}"', hub)
+
+
+class MovedGuidesTest(unittest.TestCase):
+    """The reading guides of お歳暮, 年末年始の手土産 and 帰省・手土産 were folded into the sheets: no page, no link, a permanent redirect, and the sheet is there."""
+
+    MOVES = {"oseibo": "/oseibo/", "year-end-gathering": "/nenga/", "homecoming": "/nenga/"}
+
+    @classmethod
+    def setUpClass(cls):
+        cls.c = content.load()
+        items = with_musts(json.loads((FIX / "items.json").read_text(encoding="utf-8")), cls.c)
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.root = Path(cls.tmp.name)
+        build.render_site(cls.c, items, CFG, cls.root, release=True, today=date(2026, 10, 15))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def test_the_data_names_the_moves_and_the_guides_are_gone_from_the_content(self):
+        self.assertEqual(self.c["guide_moves"], self.MOVES)
+        for slug in self.MOVES:
+            self.assertNotIn(slug, self.c["guides"])
+            self.assertIn(slug, self.c["occ"])                                 # the occasion pages stay
+
+    def test_no_page_no_sitemap_entry_and_no_link_to_a_moved_guide(self):
+        sm = (self.root / "sitemap.xml").read_text(encoding="utf-8")
+        for slug in self.MOVES:
+            self.assertFalse((self.root / "guide" / slug / "index.html").exists(), slug)
+            self.assertNotIn(f"/guide/{slug}/", sm)
+        for p in self.root.rglob("*.html"):
+            html = p.read_text(encoding="utf-8")
+            for slug in self.MOVES:
+                self.assertNotIn(f'href="/guide/{slug}/"', html, f"{p.relative_to(self.root)} still links /guide/{slug}/")
+
+    def test_the_server_sends_a_permanent_redirect_to_the_sheet_after_the_https_rule(self):
+        ht = (self.root / ".htaccess").read_text(encoding="utf-8")
+        for slug, target in self.MOVES.items():
+            self.assertIn(f"RewriteRule ^guide/{slug}/?$ https://yorokobu-present.com{target} [R=301,L]\n", ht)
+            self.assertTrue((self.root / target.strip("/") / "index.html").exists(), target)
+        self.assertLess(ht.index("RewriteCond %{HTTPS} !on"), ht.index("guide/oseibo"))
+        self.assertTrue(ht.endswith("\n"))
+
+    def test_the_gift_pages_of_those_occasions_lead_to_the_sheets_instead(self):
+        self.assertIn('href="/nenga/"', (self.root / "occasion" / "year-end-gathering" / "index.html").read_text(encoding="utf-8"))
+        self.assertIn('href="/nenga/"', (self.root / "occasion" / "homecoming" / "index.html").read_text(encoding="utf-8"))
+
+    def test_a_redirect_to_a_page_the_build_does_not_have_is_refused(self):
+        with self.assertRaises(Exception) as ctx:
+            build.guide_redirects(CFG, {"oseibo": "/nowhere/"}, {"oseibo/index.html": ""})
+        self.assertIn("does not have", str(ctx.exception))
 
 
 class PagesTest(unittest.TestCase):
@@ -109,7 +160,7 @@ class PagesTest(unittest.TestCase):
             self.assertIn('rel="canonical"', html)
             self.assertIn("/" + rel.replace("index.html", ""), sm, rel)
         hub = self.read("oseibo/index.html")
-        for href in ("/oseibo/work/", "/oseibo/thanks/", "/nenga/", "/guide/oseibo/"):
+        for href in ("/oseibo/work/", "/oseibo/thanks/", "/nenga/"):
             self.assertIn(f'href="{href}"', hub, href)
 
     def test_every_page_names_its_store_pages_with_the_date_they_were_read(self):
@@ -138,7 +189,7 @@ class PagesTest(unittest.TestCase):
         self.assertIn('class="checklist"', self.read("oseibo/work/index.html"))
 
     def test_the_o_seibo_pages_of_the_site_lead_to_the_sheets_and_other_occasions_do_not(self):
-        for rel in ("occasion/oseibo/index.html", "guide/oseibo/index.html"):
+        for rel in ("occasion/oseibo/index.html",):
             self.assertIn('class="seas-hook"', self.read(rel), rel)
             self.assertIn('href="/oseibo/work/"', self.read(rel), rel)
         for slug in ("birthday", "ochugen"):

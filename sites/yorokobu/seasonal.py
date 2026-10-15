@@ -133,6 +133,10 @@ def page(d: dict, cfg: dict, preview: bool, pg: dict, data: dict, known: set[str
 
 def hook(occasion: str) -> str:
     """A short block on the お歳暮 pages that leads to the cheat sheets (empty for every other occasion)."""
+    if occasion in ("year-end-gathering", "homecoming"):                   # their reading guide was folded into the お年賀 sheet
+        return ('<section class="seas-hook" style="margin-top:44px"><h2><span class="scribble">お年賀の早見表</span></h2>'
+                '<p>年始のあいさつに持参する品の時期・金額・のしを、百貨店の案内から1枚にまとめています。</p>'
+                '<ul class="plain"><li><a href="/nenga/">お年賀の早見表(時期・金額・のし・避けたい品)</a></li></ul></section>')
     if occasion != "oseibo":
         return ""
     return ('<section class="seas-hook" style="margin-top:44px"><h2><span class="scribble">お歳暮の早見表</span></h2>'

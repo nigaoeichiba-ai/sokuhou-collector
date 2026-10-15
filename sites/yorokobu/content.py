@@ -123,6 +123,14 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     for slug, g in guides.items():
         if slug not in occ:
             raise BuildError(f"guide for unknown occasion {slug}")
+    moves_file = content_dir / "guide_moves.json"
+    guide_moves = json.loads(moves_file.read_text(encoding="utf-8"))["moves"] if moves_file.exists() else {}
+    for slug, target in guide_moves.items():                 # a guide folded into a fact sheet: no page of its own, a redirect to the sheet
+        if slug not in guides:
+            raise BuildError(f"guide_moves: there is no guide {slug}")
+        if not (target.startswith("/") and target.endswith("/")):
+            raise BuildError(f"guide_moves: {slug} must point to a path like /oseibo/, got {target!r}")
+        guides.pop(slug)
     groups = _load_groups(content_dir)
     themes = _load_themes(content_dir, rec, tiers, {g["slug"] for g in groups})
     theme = {t["slug"]: t for t in themes}
@@ -131,7 +139,7 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     etiquette = _load_etiquette(content_dir, occ)
     amazon, amazon_checked = _load_amazon(content_dir, occ, rec)
     return {"messages": messages, "etiquette": etiquette, "amazon": amazon, "amazon_checked": amazon_checked, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
-            "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "themes": themes,
+            "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "guide_moves": guide_moves, "themes": themes,
             "theme": theme, "theme_groups": groups, "articles": articles,
             "stats": _load_stats(content_dir), "surveys": _load_surveys(content_dir), "ask": _load_ask(content_dir), "daily": _load_daily(content_dir), "features": _load_features(content_dir), "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
 
