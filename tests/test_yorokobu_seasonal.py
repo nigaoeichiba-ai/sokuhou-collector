@@ -12,6 +12,11 @@ from tests.test_yorokobu_compare import CFG, FIX
 from tests.yorokobu_data import with_musts
 
 PATHS = ["oseibo/index.html", "oseibo/work/index.html", "oseibo/thanks/index.html", "nenga/index.html"]
+OIWAI = ["oiwai/index.html", "oiwai/seijin/index.html", "oiwai/gakko/index.html", "oiwai/taishoku/index.html", "oiwai/shinchiku/index.html", "oiwai/choju/index.html"]
+
+
+def by_slug(data, slug):
+    return next(pg for pg in data["pages"] if pg["slug"] == slug)
 
 
 def texts(data):
@@ -34,11 +39,12 @@ class ContentTest(unittest.TestCase):
     def test_the_checks_catch_a_section_without_source_an_unknown_source_a_foreign_host_and_a_ragged_table(self):
         data = seasonal.load()
         bad = copy.deepcopy(data)
-        bad["pages"][0]["sections"][0]["src"] = []
-        bad["pages"][0]["sections"][1]["src"] = ["nope"]
+        pg = by_slug(bad, "oseibo")
+        pg["sections"][0]["src"] = []
+        pg["sections"][1]["src"] = ["nope"]
         bad["sources"]["mi"]["url"] = "https://blog.example.com/seibo"
-        bad["pages"][0]["sections"][2].pop("list", None)
-        bad["pages"][0]["sections"][3]["table"]["rows"][0] = ["一般的な目安"]
+        pg["sections"][2].pop("list", None)
+        pg["sections"][3]["table"]["rows"][0] = ["一般的な目安"]
         found = " | ".join(seasonal.problems(bad))
         for needle in ("names no source", "unknown source nope", "is not a store page", "empty section", "wrong number of cells"):
             self.assertIn(needle, found, needle)
@@ -48,7 +54,7 @@ class ContentTest(unittest.TestCase):
         try:
             def broken():
                 d = copy.deepcopy(orig())
-                d["pages"][1]["sections"][0]["src"] = []
+                by_slug(d, "oseibo-work")["sections"][0]["src"] = []
                 return d
             seasonal.load = broken
             with self.assertRaises(ValueError):
@@ -68,7 +74,7 @@ class ContentTest(unittest.TestCase):
 
     def test_what_the_stores_disagree_on_is_shown_per_store(self):
         data = seasonal.load()
-        first = data["pages"][0]["sections"][0]["table"]["rows"]
+        first = by_slug(data, "oseibo")["sections"][0]["table"]["rows"]
         self.assertEqual([r[0] for r in first], ["三越伊勢丹", "高島屋", "大丸松坂屋"])
         self.assertIn("寒中御見舞", json.dumps(data, ensure_ascii=False))
         self.assertIn("寒中御伺", json.dumps(data, ensure_ascii=False))
@@ -85,10 +91,71 @@ class LinksTest(unittest.TestCase):
             self.assertIn(f'href="{own}"', hub)
 
 
+class OiwaiPagesTest(unittest.TestCase):
+    """The お祝い sheets: each amount says which store wrote it and whose relation it is, each page names its two stores, and nothing shows a product."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.c = content.load()
+        items = with_musts(json.loads((FIX / "items.json").read_text(encoding="utf-8")), cls.c)
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.root = Path(cls.tmp.name)
+        build.render_site(cls.c, items, CFG, cls.root, release=True, today=date(2026, 10, 15))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def read(self, rel):
+        return (self.root / rel).read_text(encoding="utf-8")
+
+    def test_the_hub_the_five_sheets_are_built_listed_and_linked_with_their_parent_in_the_crumbs(self):
+        sm = self.read("sitemap.xml")
+        for rel in OIWAI:
+            html = self.read(rel)
+            self.assertIn("/" + rel.replace("index.html", ""), sm, rel)
+            self.assertIn("<h1", html)
+        hub = self.read("oiwai/index.html")
+        for href in ("/oiwai/seijin/", "/oiwai/gakko/", "/oiwai/taishoku/", "/oiwai/shinchiku/", "/oiwai/choju/", "/oseibo/", "/nenga/"):
+            self.assertIn(f'href="{href}"', hub, href)
+        for rel in OIWAI[1:]:
+            self.assertIn('<a href="/oiwai/">お祝いの早見表</a>', self.read(rel), rel)
+
+    def test_every_sheet_names_both_stores_and_the_date_and_can_be_printed(self):
+        for rel in OIWAI[1:]:
+            html = self.read(rel)
+            self.assertIn("三越伊勢丹", html, rel)
+            self.assertIn("松坂屋名古屋店", html, rel)
+            self.assertIn("data-print hidden", html, rel)
+            self.assertIn("2026年10月15日に、上のページを開いて読みました", html, rel)
+            self.assertRegex(html, r'href="https://www\.(mistore\.jp|matsuzakaya\.co\.jp)/[^"]+" rel="noopener nofollow"')
+            self.assertEqual(html.count('class="seas-from"'), html.count('<section class="g-sec">'))
+        self.assertNotIn("data-print", self.read("oiwai/index.html"))
+
+    def test_the_amount_tables_say_whose_relation_each_amount_is_and_keep_each_store_apart(self):
+        for rel in ("oiwai/seijin/index.html", "oiwai/gakko/index.html"):
+            self.assertIn("贈る人が祖父母なら", self.read(rel), rel)
+        for rel in ("oiwai/taishoku/index.html", "oiwai/shinchiku/index.html", "oiwai/choju/index.html"):
+            self.assertIn("贈る相手が", self.read(rel), rel)
+        for rel in OIWAI[1:]:
+            html = self.read(rel)
+            self.assertIn("<th scope=\"row\">松坂屋名古屋店", html.replace("(", "<").replace("<th scope=\"row\">松坂屋名古屋店<", "<th scope=\"row\">松坂屋名古屋店"), rel)
+
+    def test_no_product_price_or_picture_and_the_ad_notice_is_there(self):
+        for rel in OIWAI:
+            html = self.read(rel)
+            body = re.sub(r"<[^>]+>", " ", html.split("<footer")[0])
+            self.assertIn('class="pr-chip"', html)
+            self.assertNotIn("thumbnail.image.rakuten.co.jp", html)
+            self.assertNotRegex(body, r"税込|¥")
+
+
 class MovedGuidesTest(unittest.TestCase):
     """The reading guides of お歳暮, 年末年始の手土産 and 帰省・手土産 were folded into the sheets: no page, no link, a permanent redirect, and the sheet is there."""
 
-    MOVES = {"oseibo": "/oseibo/", "year-end-gathering": "/nenga/", "homecoming": "/nenga/"}
+    MOVES = {"oseibo": "/oseibo/", "year-end-gathering": "/nenga/", "homecoming": "/nenga/",
+             "coming-of-age": "/oiwai/seijin/", "school-entrance": "/oiwai/gakko/", "graduation": "/oiwai/gakko/", "new-job": "/oiwai/gakko/",
+             "promotion": "/oiwai/taishoku/", "retirement": "/oiwai/taishoku/", "farewell": "/oiwai/taishoku/", "housewarming": "/oiwai/shinchiku/", "longevity": "/oiwai/choju/"}
 
     @classmethod
     def setUpClass(cls):
@@ -126,9 +193,11 @@ class MovedGuidesTest(unittest.TestCase):
         self.assertLess(ht.index("RewriteCond %{HTTPS} !on"), ht.index("guide/oseibo"))
         self.assertTrue(ht.endswith("\n"))
 
-    def test_the_gift_pages_of_those_occasions_lead_to_the_sheets_instead(self):
-        self.assertIn('href="/nenga/"', (self.root / "occasion" / "year-end-gathering" / "index.html").read_text(encoding="utf-8"))
-        self.assertIn('href="/nenga/"', (self.root / "occasion" / "homecoming" / "index.html").read_text(encoding="utf-8"))
+    def test_the_occasion_pages_of_every_moved_guide_lead_to_its_sheet_instead(self):
+        for slug, target in self.MOVES.items():
+            html = (self.root / "occasion" / slug / "index.html").read_text(encoding="utf-8")
+            self.assertIn(f'href="{target}"', html, slug)
+            self.assertIn('class="seas-hook"', html, slug)
 
     def test_a_redirect_to_a_page_the_build_does_not_have_is_refused(self):
         with self.assertRaises(Exception) as ctx:

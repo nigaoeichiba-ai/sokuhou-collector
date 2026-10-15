@@ -3,6 +3,15 @@
  "moves": {
   "oseibo": "/oseibo/",
   "year-end-gathering": "/nenga/",
-  "homecoming": "/nenga/"
+  "homecoming": "/nenga/",
+  "coming-of-age": "/oiwai/seijin/",
+  "school-entrance": "/oiwai/gakko/",
+  "graduation": "/oiwai/gakko/",
+  "new-job": "/oiwai/gakko/",
+  "promotion": "/oiwai/taishoku/",
+  "retirement": "/oiwai/taishoku/",
+  "farewell": "/oiwai/taishoku/",
+  "housewarming": "/oiwai/shinchiku/",
+  "longevity": "/oiwai/choju/"
  }
 }
