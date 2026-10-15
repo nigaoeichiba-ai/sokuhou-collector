@@ -46,7 +46,7 @@ class Client:
         self._last = 0.0
 
     def search(self, query: str, sort: str = "-score", start: int = 1, results: int = RESULTS) -> dict:
-        p = {"appid": self.client_id, "query": query, "results": results, "start": start, "sort": sort, "in_stock": "true", "image_size": 300}
+        p = {"appid": self.client_id, "query": query, "results": results, "start": start, "sort": sort, "in_stock": "true"}
         if self.vc:
             p["affiliate_type"] = "vc"
             p["affiliate_id"] = vc_affiliate_id(self.vc)
@@ -85,21 +85,21 @@ def normalize(h: dict) -> dict | None:
     ship = h.get("shipping") or {}
     pt = h.get("point") or {}
     seller = h.get("seller") or {}
-    base = int(_num(pt.get("amount")))
+    points = sum(int(_num(pt.get(k))) for k in ("amount", "bonusAmount", "lyLimitedBonusAmount"))     # a member's own points; the premium-member fields are left out
     return {
         "code": h.get("code") or url,
         "name": name,
         "price": price,
-        "url": url,
+        "url": url,                                              # already the affiliate link (affiliate_type=vc); used as it is
         "image": image,
         "shop": (seller.get("name") or "").strip(),
         "shop_code": seller.get("sellerId") or "",
         "reviews": int(_num(review.get("count"))),
         "rating": round(_num(review.get("rate")), 2),
         "available": bool(h.get("inStock", True)),
-        "free_shipping": int(_num(ship.get("code"), 0)) == 2,   # 2 = free (1 = by the shop's table, 3 = conditional); checked in the probe
-        "points": base,
-        "point_rate": round(base * 100 / price, 1) if price and base else 0,
+        "ship": int(_num(ship.get("code"), 1)),                  # 1 = not set, 2 = free, 3 = free under a condition (the real response, 2026-10-16)
+        "free_shipping": int(_num(ship.get("code"), 1)) == 2,
+        "points": points,
     }
 
 

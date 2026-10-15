@@ -28,6 +28,14 @@ from sokuhou.sitekit import crumbs, esc
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 DATA = ROOT / "data" / "yorokobu_compare.json"
+YAHOO_DATA = ROOT / "data" / "yorokobu_yahoo.json"
+Y_MIN_ITEMS, Y_MIN_SHOPS, Y_MAX_ROWS = 5, 3, 10
+YW_PRICE, YW_REVIEW, YW_SHIP = 45, 45, 10                  # the Yahoo! table's own score: the parts both malls have (Yahoo! has no gift-wrapping flag), so it is not comparable with the Rakuten score
+Y_MAX_AGE_DAYS = 2                                          # a Yahoo! file older than this next to the Rakuten file is not shown
+Y_BARRED = ("デルコンピュータ", "n-garden", "喜信堂", "モロゾフ", "園芸ネット", "ディノス", "オットージャパン", "セシール")   # the programme bars these stores' MyLinks (Morozoff: a set text only) or their images
+CREDIT = ('<!-- Begin Yahoo! JAPAN Web Services Attribution Snippet -->' + chr(10) +
+          '<span style="margin:15px 15px 15px 15px"><a href="https://developer.yahoo.co.jp/sitemap/">Web Services by Yahoo! JAPAN</a></span>' + chr(10) +
+          '<!-- End Yahoo! JAPAN Web Services Attribution Snippet -->')     # Yahoo! Developer Network's credit, as given (not to be changed)
 MIN_ITEMS = 8                  # products in a table (fewer says nothing)
 MIN_SHOPS = 3                  # shops in a table (one shop's catalogue is not a comparison)
 MAX_ROWS = 20
@@ -51,6 +59,10 @@ def load(path: Path | None = None) -> dict | None:
         return json.loads(p.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return None
+
+
+def load_yahoo(path: Path | None = None) -> dict | None:
+    return load(path or YAHOO_DATA)
 
 
 def groups() -> list[dict]:
@@ -94,7 +106,51 @@ def score_table(items: list[dict]) -> list[dict]:
     return out
 
 
-def view(raw: dict | None, filters: dict, cfg_groups: list[dict] | None = None) -> dict | None:
+def y_score(items: list[dict]) -> list[dict]:
+    """The Yahoo! table's score (0-100): price 45 (the display price, the cheapest gets all of it) + reviews 45 (as above) + free shipping 10.  Points are shown next to the price, not taken off it."""
+    prices = [i["price"] for i in items]
+    lo, hi = min(prices), max(prices)
+    rated = [i["rating"] for i in items if i["reviews"]]
+    prior = statistics.median(rated) if rated else 4.0
+    out = []
+    for it in items:
+        price_part = YW_PRICE * ((hi - it["price"]) / (hi - lo) if hi > lo else 1.0)
+        b = bayes(it["rating"], it["reviews"], prior)
+        review_part = YW_REVIEW * min(1.0, max(0.0, (b - RATING_LO) / (RATING_HI - RATING_LO)))
+        ship_part = YW_SHIP if it["free_shipping"] else 0
+        out.append({**it, "bayes": round(b, 2), "parts": (round(price_part), round(review_part), ship_part), "total": round(price_part + review_part + ship_part)})
+    out.sort(key=lambda r: (-r["total"], r["price"], r["code"]))
+    return out
+
+
+def y_view(raw: dict | None, rakuten_raw: dict, g: dict, filters: dict) -> dict | None:
+    """The Yahoo! table of one kind: its products that fit the kind and the site's rules (not the barred stores), at most PER_SHOP of a shop; None when there are too few, or when the file is not
+    from about the same time as the Rakuten one."""
+    if not raw:
+        return None
+    gap = abs((datetime.fromisoformat(raw["fetched_at"]) - datetime.fromisoformat(rakuten_raw["fetched_at"])).total_seconds()) / 86400
+    if gap > Y_MAX_AGE_DAYS:
+        return None
+    items, seen, per = [], set(), {}
+    for it in raw.get("groups", {}).get(g["slug"], []):
+        if it["code"] in seen or any(b in it["shop"] for b in Y_BARRED) or not usable(it, filters, None, relaxed=True) or not relevance.fits_head(it["name"], g["words"]):
+            continue
+        if per.get(it["shop_code"], 0) >= PER_SHOP:
+            continue
+        seen.add(it["code"])
+        per[it["shop_code"]] = per.get(it["shop_code"], 0) + 1
+        items.append(it)
+    if len(items) < Y_MIN_ITEMS or len({i["shop_code"] for i in items}) < Y_MIN_SHOPS:
+        return None
+    keep = {r["code"] for r in y_score(items)[:Y_MAX_ROWS]}
+    rows = y_score([it for it in items if it["code"] in keep])
+    prices = sorted(r["price"] for r in rows)
+    t = datetime.fromisoformat(raw["fetched_at"])
+    return {"rows": rows, "n": len(rows), "shops": len({r["shop_code"] for r in rows}), "min": prices[0], "max": prices[-1],
+            "fetched_label": f"{t.year}年{t.month}月{t.day}日 {t.hour}:{t.minute:02d}"}
+
+
+def view(raw: dict | None, filters: dict, cfg_groups: list[dict] | None = None, yahoo: dict | None = None) -> dict | None:
     """The tables to publish: per kind the products that fit the kind and the site's rules, at most PER_SHOP of a shop, scored; a kind with too few products or shops is left out."""
     if not raw:
         return None
@@ -116,7 +172,8 @@ def view(raw: dict | None, filters: dict, cfg_groups: list[dict] | None = None) 
         rows = score_table([it for it in items if it["code"] in keep])         # ... scored again among themselves: the table's numbers are places within the table, as the page says
         prices = sorted(r["price"] for r in rows)
         out.append({**g, "rows": rows, "n": len(rows), "shops": len({r["shop_code"] for r in rows}), "min": prices[0], "max": prices[-1],
-                    "median_price": int(statistics.median(prices)), "campaign": sum(1 for r in rows if r["points"])})
+                    "median_price": int(statistics.median(prices)), "campaign": sum(1 for r in rows if r["points"]),
+                    "yahoo": y_view(yahoo, raw, g, filters)})
     if not out:
         return None
     t = datetime.fromisoformat(raw["fetched_at"])
@@ -228,6 +285,48 @@ def _row(cfg: dict, r: dict, n: int, rank: int = 0, total: int = 0, median_eff: 
             f'<div class="cmp-why"><p class="cmp-say"><span class="cmp-cap">ひとこと</span>{esc(say(r, rank, total, median_eff))}</p>{stat_html(r)}</div></li>')
 
 
+SHIP_WORD = {2: "送料無料", 3: "条件つきで送料無料"}
+
+
+def y_formula_html() -> str:
+    return ('<details class="cmp-formula"><summary>この表の点数のつけ方</summary>'
+            f'<p>この表の点数は、次の3つの合計です(100点満点)。商品の品質を評価した点数ではありません。</p><ul class="cmp-parts">'
+            f'<li><b>価格 {YW_PRICE}点</b>表示価格が、この表の中で安いほど高くなります(いちばん安い商品が{YW_PRICE}点、いちばん高い商品が0点)。</li>'
+            f'<li><b>レビュー {YW_REVIEW}点</b>楽天の表と同じ見方です。レビューの平均を、この表の中央値に{REVIEW_PRIOR}件分だけ寄せて見ます。平均{RATING_LO}で0点、{RATING_HI}で{YW_REVIEW}点です。</li>'
+            f'<li><b>送料 {YW_SHIP}点</b>送料無料なら{YW_SHIP}点です。「条件つきで送料無料」は、送料無料には数えていません。</li></ul>'
+            '<p>Yahoo!ショッピングの情報には、ギフト対応を示す項目がありません。そのため楽天の表の総合点とは別の点数で、2つの表の点数は比べられません。'
+            'ポイントは、通常の会員に付く分(ストアの上乗せと期間限定をふくむ)を、価格とは別に書いています。価格から引いてはいません。</p></details>')
+
+
+def _yrow(cfg: dict, r: dict, n: int) -> str:
+    B = _b()
+    href = r["url"]                                                 # the API already made it the affiliate link; used as it is
+    facts = [f'<b class="cmp-price">{B.yen(r["price"])}</b>', SHIP_WORD.get(r["ship"], "送料はストアの設定によります")]
+    facts.append(f'<span class="stars">★{r["rating"]:.2f}</span>({r["reviews"]:,}件)' if r["reviews"] else "レビューなし")
+    if r["points"]:
+        facts.append(f'ポイント約{r["points"]:,}pt')
+    p, rv, sh = r["parts"]
+    return (f'<li class="yh-row"><span class="cmp-no">{n}</span>'
+            f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p><h3><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">{esc(B.short(r["name"], 52))}</a></h3>'
+            f'<p class="yh-facts">{" ・ ".join(facts)}</p></div>'
+            f'<div class="cmp-score" title="価格{p}・レビュー{rv}・送料{sh}"><b>{r["total"]}</b><small>点数</small><i style="width:{r["total"]}%"></i></div>'
+            f'<div class="cmp-go"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">Yahoo!ショッピングで見る{B.vc_pixel(cfg)}</a></div></li>')
+
+
+def y_section(cfg: dict, g: dict) -> str:
+    """The Yahoo! table below the Rakuten one: its own list and score (the two malls are not mixed), no pictures, the time it was taken, the credit the Developer Network asks for."""
+    y = g.get("yahoo")
+    if not y:
+        return ""
+    rows = "".join(_yrow(cfg, r, i) for i, r in enumerate(y["rows"], 1))
+    return (f'<section class="block yh" id="yahoo"><div class="sec-head"><h2>Yahoo!ショッピングの商品</h2>'
+            f'<p class="sec-lead">{esc(g["label"])}を、Yahoo!ショッピングの{y["shops"]}店・{y["n"]}点で並べています。楽天市場の表とは混ぜていません。</p></div>'
+            f'<ol class="yh-list">{rows}</ol>'
+            f'<p class="fresh">価格・在庫・送料・ポイントは{esc(y["fetched_label"])}時点の情報で、変わることがあります。購入前に、Yahoo!ショッピングの商品ページで確かめてください。</p>'
+            f'{y_formula_html()}'
+            f'<p class="cmp-note">この表はYahoo!ショッピングの検索結果から、当サイトの基準で選んだ商品です。ほかのモールやほかのストアの価格は入っていません。大きさや内容量、セットの中身は商品ごとに違います。</p></section>')
+
+
 def group_page(d: dict, cfg: dict, preview: bool, g: dict) -> str:
     B = _b()
     cv = d["compare"]
@@ -244,7 +343,10 @@ def group_page(d: dict, cfg: dict, preview: bool, g: dict) -> str:
     if "shaddy" in g.get("mall", []) and shaddy_url(cfg):
         az += f'<p class="cmp-az">ギフト専門店の{shaddy_a(cfg)}は、この表に入っていません。内祝いやお返しの品は、こちらからも探せます。</p>'
     if B.yahoo_url(cfg, g["label"]):
-        az += f'<p class="cmp-az">ほかのモールの商品は、{B.yahoo_btn(cfg, g["label"] + " ギフト", "Yahoo!ショッピングで" + g["label"] + "を探す", "")}から探せます。この表にYahoo!ショッピングの価格は入っていません。</p>'
+        if g.get("yahoo"):
+            az += f'<p class="cmp-az">Yahoo!ショッピングの商品は、この表には混ぜず、<a href="#yahoo">下の別の表</a>に載せています。ほかの商品は{B.yahoo_btn(cfg, g["label"] + " ギフト", "Yahoo!ショッピングで" + g["label"] + "を探す", "")}から探せます。</p>'
+        else:
+            az += f'<p class="cmp-az">ほかのモールの商品は、{B.yahoo_btn(cfg, g["label"] + " ギフト", "Yahoo!ショッピングで" + g["label"] + "を探す", "")}から探せます。この表にYahoo!ショッピングの価格は入っていません。</p>'
     camp = f"ポイント倍率が付いている商品は{g['campaign']}点です。" if g["campaign"] else ""
     summary = (f'<p class="cmp-sum">価格は{B.yen(g["min"])}〜{B.yen(g["max"])}(中央値{B.yen(g["median_price"])})です。{camp}</p>')
     others = "".join(f'<li><a href="{path(o["slug"])}">{esc(o["label"])}</a></li>' for o in cv["groups"] if o["slug"] != g["slug"])
@@ -260,8 +362,10 @@ def group_page(d: dict, cfg: dict, preview: bool, g: dict) -> str:
 <p class="cmp-note">この表は楽天市場の商品だけです。ほかのモールの商品やほかのショップの価格は入っていません。「最安」とは言えません。</p>
 {az}
 </section>
+{y_section(cfg, g)}
 <section class="block"><div class="sec-head"><h2>ほかの種類を比べる</h2></div><ul class="plain cols2 chips">{others}</ul></section>
-<script src="/assets/compare.js" defer></script>"""
+<script src="/assets/compare.js" defer></script>
+{CREDIT if g.get("yahoo") else ""}"""
     return B.page(cfg, preview, path=path(g["slug"]), title=f"{g['label']}を楽天市場で比べる(価格・ポイント・レビュー) | {cfg['site_name']}",
                   description=lead, body=body, amazon_links=bool(cfg.get("amazon_tracking_id")))
 
@@ -275,7 +379,7 @@ def hub_page(d: dict, cfg: dict, preview: bool) -> str:
     if cfg.get("amazon_tracking_id"):
         mall_items += f'<li><a href="{amazonrank.PATH}">Amazonで選ぶ贈り物</a> 価格とレビューは載せられないため、当サイトの4項目の採点順に並べています。</li>'
     if B.yahoo_url(cfg, "ギフト"):
-        mall_items += f'<li>{B.yahoo_btn(cfg, "ギフト", "Yahoo!ショッピング", "")} 価格はこの比較に入っていません。同じ種類の商品を、リンク先で探せます。</li>'
+        mall_items += f'<li>{B.yahoo_btn(cfg, "ギフト", "Yahoo!ショッピング", "")} ' + ("種類ごとのページに、別の表で載せています。" if any(g.get("yahoo") for g in cv["groups"]) else "価格はこの比較に入っていません。同じ種類の商品を、リンク先で探せます。") + '</li>'
     if shaddy_url(cfg):
         mall_items += f'<li>{shaddy_a(cfg)} 内祝いやお返しの品も探せるギフト専門店です。価格はこの比較に入っていません。</li>'
     malls = f'<section class="block"><div class="sec-head"><h2>ほかのモールで探す</h2></div><ul class="plain">{mall_items}</ul></section>' if mall_items else ""
@@ -288,7 +392,7 @@ def hub_page(d: dict, cfg: dict, preview: bool) -> str:
 <ul class="plain">
 <li>価格、ポイント倍率、送料、レビューは楽天市場が公開している情報です。調べた日時を各ページに載せています。</li>
 <li>総合点は実質価格・レビュー・送料・ギフト対応を足した、当サイトの計算です。式は各ページで確かめられます。商品の品質を評価した点数ではありません。</li>
-<li>いまは楽天市場の商品だけを比べています。Amazonは価格を表示できる条件が当サイトに合わないため、表には入れず、価格のない採点ページに分けています。</li>
+<li>{"表は楽天市場の商品です。Yahoo!ショッピングの商品は、種類ごとのページに、楽天の表とは混ぜずに別の表で載せています(点数のつけ方も別です)。" if any(g.get("yahoo") for g in cv["groups"]) else "いまは楽天市場の商品だけを比べています。"}Amazonは価格を表示できる条件が当サイトに合わないため、表には入れず、価格のない採点ページに分けています。</li>
 <li>同じ表の商品でも、大きさや内容量は違います。商品ページで中身と届く日を確かめてください。</li></ul></section>"""
     return B.page(cfg, preview, path=path(), title=f"商品比較(楽天市場の価格・ポイント・レビューを並べる) | {cfg['site_name']}", description=lead, body=body)
 

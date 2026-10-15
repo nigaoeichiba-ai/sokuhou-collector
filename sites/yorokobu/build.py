@@ -162,9 +162,13 @@ def yahoo_btn(cfg: dict, keyword: str, label: str, cls: str = "btn") -> str:
     klass = f' class="{cls}"' if cls else ""
     if not u:
         return ""
+    return f'<a{klass} href="{esc(u)}" rel="sponsored nofollow noopener" target="_blank">{esc(label)}{vc_pixel(cfg)}</a>'
+
+
+def vc_pixel(cfg: dict) -> str:
+    """The programme's 1x1 impression counter, which it asks to be placed with every link."""
     v = cfg["yahoo_vc"]
-    pixel = f'<img src="https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid={v["sid"]}&amp;pid={v["pid"]}" width="1" height="1" alt="" style="border:0">'      # the programme asks for its 1x1 impression counter with every link
-    return f'<a{klass} href="{esc(u)}" rel="sponsored nofollow noopener" target="_blank">{esc(label)}{pixel}</a>'
+    return f'<img src="https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid={v["sid"]}&amp;pid={v["pid"]}" width="1" height="1" alt="" style="border:0">'
 
 
 def amazon_query(name: str, limit: int = 30) -> str:
@@ -1893,7 +1897,7 @@ def guide_redirects(cfg: dict, moves: dict, pages: dict) -> str:
     return out
 
 
-def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool = False, today: date | None = None, ranking: dict | None = None, compare_data: dict | None = None) -> list[str]:
+def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool = False, today: date | None = None, ranking: dict | None = None, compare_data: dict | None = None, yahoo_data: dict | None = None) -> list[str]:
     missing = missing_config(cfg)
     if release and missing:
         raise BuildError(f"release build refused: set {', '.join(missing)} in config.json")
@@ -1905,7 +1909,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     d = prepare(c, items, cfg)
     d["cfg"], d["today"] = cfg, today
     d["ranking"] = rk.view(ranking, c["filters"])
-    d["compare"] = compare.view(compare_data, c["filters"])
+    d["compare"] = compare.view(compare_data, c["filters"], yahoo=yahoo_data)
     global RANKING_ON, DATA_ON, PICKS_ON
     RANKING_ON = bool(d["ranking"])
     DATA_ON = bool(dataroom.results(d))
@@ -2064,7 +2068,7 @@ def main() -> None:
     items_path = Path(a.items)
     items = json.loads(items_path.read_text(encoding="utf-8")) if items_path.exists() else None
     try:
-        files = render_site(ct.load(), items, cfg, Path(a.out), release=a.release, ranking=rk.load(), compare_data=compare.load())
+        files = render_site(ct.load(), items, cfg, Path(a.out), release=a.release, ranking=rk.load(), compare_data=compare.load(), yahoo_data=compare.load_yahoo())
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {a.out}")

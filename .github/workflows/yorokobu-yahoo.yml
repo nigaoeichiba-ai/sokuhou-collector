@@ -1,0 +1,49 @@
+name: yorokobu-yahoo
+
+# Every day: the Yahoo!ショッピング search results (Shopping Web API v3 itemSearch, links made affiliate links by the API itself) of each kind of gift in
+# sites/yorokobu/content/compare.json, written to data/yorokobu_yahoo.json for the Yahoo! tables of the pages under /compare/.  The commit touches only that file; a commit
+# made with the workflow token starts no other workflow, so the pages change at the next deploy.  Needs YAHOO_CLIENT_ID (never printed).
+# Runs after yorokobu-compare (05:20 JST), because a table is shown only when both files are from about the same time.
+
+on:
+  schedule:
+    - cron: "50 20 * * *"   # 05:50 JST: a minute or two, before the 07:00 deploy
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: yorokobu-yahoo
+  cancel-in-progress: false
+
+jobs:
+  yahoo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Fetch the kinds of gift
+        env:
+          YAHOO_CLIENT_ID: ${{ secrets.YAHOO_CLIENT_ID }}
+        run: |
+          if [ -z "$YAHOO_CLIENT_ID" ]; then
+            echo "YAHOO_CLIENT_ID is not set; nothing to do"
+            exit 0
+          fi
+          python -m sites.yorokobu.yahoo_fetch --out data/yorokobu_yahoo.json
+      - name: Commit
+        run: |
+          git config user.name "sokuhou-bot"
+          git config user.email "sokuhou-bot@users.noreply.github.com"
+          git add data/yorokobu_yahoo.json
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "data: yorokobu yahoo snapshot"
+            git pull --rebase origin main
+            git push
+          fi
