@@ -1524,8 +1524,9 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 {amazon_more(cfg, sg["label"] + (" プレゼント" if sg["kind"] == "people" else " ギフト"), sg["label"] + ("への" if sg["kind"] == "people" else "の") + "贈り物をAmazonで探す")}
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの世代・性別</span></h2><ul class="plain cols2 chips">{others}</ul></section>' if others else ""}
 {freshness({**d, "fetched_label": day})}"""
-    return page(cfg, preview, path=f"/ranking/{slug}/", title=f"{sg['label']}{part}、いま売れている商品 | {cfg['site_name']}",
+    html = page(cfg, preview, path=f"/ranking/{slug}/", title=f"{sg['label']}{part}、いま売れている商品 | {cfg['site_name']}",
                 description=f"楽天市場で{sg['label']}{'に' if part == 'に' else 'で'}売れている商品の上位。きのうより順位を上げた商品、はじめてランクインした商品も。{day}のランキングです。", body=body)
+    return html.replace("<head>", '<head>\n<meta name="robots" content="noindex,follow">', 1) if sg.get("thin") else html
 
 
 
@@ -2005,6 +2006,9 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     pages["manifest.webmanifest"] = json.dumps(MANIFEST, ensure_ascii=False, indent=1)
     pages.update(cards)
     listed = dict(pages)                                   # the sitemap lists the pages that can be found by searching, not the shared-list page (noindex, built from a link)
+    for slug, sg in ((d.get("ranking") or {}).get("segments") or {}).items():                  # a thin ranking page stays (no 404) but is not offered to the search engines
+        if sg.get("thin"):
+            listed.pop(f"ranking/{slug}/index.html", None)
     if SEEN:
         pages["list/index.html"] = list_page(d, cfg, preview)
         pages["list/items.json"] = json.dumps(SEEN, ensure_ascii=False, separators=(",", ":"))
