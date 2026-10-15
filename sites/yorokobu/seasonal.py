@@ -142,6 +142,7 @@ def page(d: dict, cfg: dict, preview: bool, pg: dict, data: dict, known: set[str
     buttons = f'<a class="btn" href="{esc(B.search_link(cfg, pg["query"]))}" rel="sponsored nofollow noopener" target="_blank">楽天市場で{esc(pg["query"])}を探す</a>'
     if cfg.get("amazon_tracking_id"):
         buttons += f'<a class="btn" href="{esc(B.amazon_url(cfg, pg["query"] + " ギフト"))}" rel="sponsored nofollow noopener" target="_blank">Amazonで{esc(pg["query"])}を探す</a>'
+    buttons += B.yahoo_btn(cfg, pg["query"] + " ギフト", f'Yahoo!ショッピングで{pg["query"]}を探す')
     body = f"""{B.head_band("sky", "", esc(pg["h1"]), pg["lead"], single=True)}
 <div class="crumbs-wrap">{crumbs(trail)}</div>
 {B.pr_with_amazon(cfg)}
