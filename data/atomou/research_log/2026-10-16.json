@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-16",
+  "weekday": "金",
+  "words": 0,
+  "rss": 646,
+  "searches": 3,
+  "candidates": 4,
+  "cards": 3,
+  "rejected": 1,
+  "rejected_reasons": {"duplicate": 1},
+  "queries": 3,
+  "failed_words": [],
+  "injections": 0,
+  "results_written": 0,
+  "ideas": "未実施",
+  "note": "RSSの手がかりから、ピクサー『水の都のネロ』(2027-03-19)、金曜ロードショー ムファサ(11/6)・モアナ2(11/13)を press 根拠で seedcheck 通過。KAITO EP は既出で duplicate。ワード数は目標に届かず、結果の記事・改善案・サブエージェント・Codexは未実施(縮小運転)。"
+}
