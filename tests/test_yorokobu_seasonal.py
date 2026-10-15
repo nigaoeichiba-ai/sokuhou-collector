@@ -136,7 +136,9 @@ class OiwaiPagesTest(unittest.TestCase):
         for rel in ("oiwai/seijin/index.html", "oiwai/gakko/index.html"):
             self.assertIn("贈る人が祖父母なら", self.read(rel), rel)
         for rel in ("oiwai/taishoku/index.html", "oiwai/shinchiku/index.html", "oiwai/choju/index.html"):
-            self.assertIn("贈る相手が", self.read(rel), rel)
+            self.assertIn("贈る人が本人の", self.read(rel), rel)
+        for rel in ("oiwai/shinchiku/index.html", "oiwai/choju/index.html"):
+            self.assertIn("贈る相手が", self.read(rel), rel)                     # 松坂屋名古屋店 writes these by the relation of the person who is given to
         for rel in OIWAI[1:]:
             html = self.read(rel)
             self.assertIn("<th scope=\"row\">松坂屋名古屋店", html.replace("(", "<").replace("<th scope=\"row\">松坂屋名古屋店<", "<th scope=\"row\">松坂屋名古屋店"), rel)
