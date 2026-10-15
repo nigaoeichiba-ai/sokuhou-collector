@@ -1861,6 +1861,17 @@ def mood_photo(key: str) -> str:
     return f"{kinds[h % len(kinds)]}-{(h // 7) % dp.MOOD_VARIANTS + 1}"
 
 
+def guide_redirects(cfg: dict, moves: dict, pages: dict) -> str:
+    """The server's permanent redirects (.htaccess) of the guides that were folded into a fact sheet; the sheet must be in the build, or the redirect would lead to a 404."""
+    out = ""
+    base = cfg["site_url"].rstrip("/")
+    for slug, target in sorted(moves.items()):
+        if target.strip("/") + "/index.html" not in pages:
+            raise BuildError(f"guide_moves: {slug} is sent to {target}, which this build does not have")
+        out += f"RewriteRule ^guide/{slug}/?$ {base}{target} [R=301,L]\n"
+    return out
+
+
 def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool = False, today: date | None = None, ranking: dict | None = None, compare_data: dict | None = None) -> list[str]:
     missing = missing_config(cfg)
     if release and missing:
@@ -2016,6 +2027,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     pages["concierge-data.json"] = ccbot.data(d, cfg, finder_map(d))     # what the corner counter reads (assets/concierge.js)
     pages["favorites/index.html"] = minepage.favorites_page(d, cfg, preview)    # one browser's own page: noindex, not in the sitemap
     pages.update(standard_files(listed, cfg, preview, d["fetched_date"]))
+    pages[".htaccess"] += guide_redirects(cfg, c.get("guide_moves") or {}, pages)
     pages.update(asset_pages(HERE / "assets"))
     write_pages(pages, out)
     return sorted(pages)

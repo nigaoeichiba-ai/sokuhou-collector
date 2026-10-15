@@ -1,0 +1,8 @@
+{
+ "note": "Guides that were folded into a fact sheet: the page /guide/<occasion>/ is no longer built, nothing links to it, and the server sends a permanent redirect (301) to the sheet.  The sheet must exist in the build.",
+ "moves": {
+  "oseibo": "/oseibo/",
+  "year-end-gathering": "/nenga/",
+  "homecoming": "/nenga/"
+ }
+}
