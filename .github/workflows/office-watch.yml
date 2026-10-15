@@ -1,0 +1,57 @@
+name: office-watch
+
+# Cloud watchdog (2026-10-15).  Works without the owner's PC: every 3 hours it reads the four live sites and the repository's commit list
+# (sokuhou/office_watch.py).  If something stopped (a site does not answer, the sitemap is stale, the daily "picks" page is stale, or no
+# commit from the owner's account for 36 hours = the PC-side routines stopped), it opens ONE issue assigned to the owner, so that GitHub's
+# own notification (mail / GitHub app) reaches the owner.  The issue is edited, not re-created, while the problem lasts, and closed when it is fixed.
+# No secrets are needed.  Run by hand with test=true to check that the notification arrives.
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"
+  workflow_dispatch:
+    inputs:
+      test:
+        description: "true = open a test issue (to check that the notification reaches the owner)"
+        required: false
+        default: "false"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: office-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ github.token }}
+      WATCH_TEST: ${{ github.event.inputs.test }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Look at the sites
+        run: python -m sokuhou.office_watch
+      - name: Open, update or close the issue
+        run: |
+          title="【見張り】サイトまたは定期実行の異常"
+          existing=$(gh issue list --state open --limit 50 --json number,title -q "map(select(.title==\"$title\"))[0].number // empty")
+          problems=$(python -c "import json;print(len(json.load(open('watch.json',encoding='utf-8'))['problems']))")
+          cat watch_report.md >> "$GITHUB_STEP_SUMMARY"
+          if [ "$problems" -gt 0 ]; then
+            if [ -n "$existing" ]; then
+              gh issue edit "$existing" --body-file watch_report.md
+              echo "updated issue #$existing"
+            else
+              gh issue create --title "$title" --body-file watch_report.md --assignee nigaoeichiba-ai
+            fi
+          elif [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "直ったことを確認しました(自動)。"
+          fi
