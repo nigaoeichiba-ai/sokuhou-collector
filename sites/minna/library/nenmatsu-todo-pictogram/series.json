@@ -1,0 +1,228 @@
+{
+ "added": "2026-10-16",
+ "slug": "nenmatsu-todo-pictogram",
+ "title": "年末の予定アイコン",
+ "genre": "icon",
+ "touch": "pictogram",
+ "lead": "大掃除・年賀状・帰省・忘年会など、年末にすることを表すアイコン12点です。社内連絡、回覧、チェックリストに使えます。",
+ "tags": [
+  "年末",
+  "アイコン",
+  "ピクトグラム",
+  "大掃除",
+  "年賀状",
+  "帰省",
+  "忘年会",
+  "仕事納め",
+  "チェックリスト",
+  "お知らせ"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "nenmatsu-todo-pictogram-cleaning",
+   "file": "nenmatsu-todo-pictogram-cleaning.webp",
+   "title": "大掃除",
+   "desc": "大掃除のピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "年末の予定アイコン",
+    "アイコン・マーク"
+   ],
+   "w": 408,
+   "h": 428
+  },
+  {
+   "id": "nenmatsu-todo-pictogram-nenga",
+   "file": "nenmatsu-todo-pictogram-nenga.webp",
+   "title": "年賀状",
+   "desc": "年賀状のピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "年賀状",
+    "年末の予定アイコン",
+    "アイコン・マーク"
+   ],
+   "w": 436,
+   "h": 299
+  },
+  {
+   "id": "nenmatsu-todo-pictogram-travel",
+   "file": "nenmatsu-todo-pictogram-travel.webp",
+   "title": "帰省",
+   "desc": "帰省のピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "帰省",
+    "年末の予定アイコン",
+    "アイコン・マーク"
+   ],
+   "w": 478,
+   "h": 423
+  },
+  {
+   "id": "nenmatsu-todo-pictogram-party",
+   "file": "nenmatsu-todo-pictogram-party.webp",
+   "title": "忘年会",
+   "desc": "忘年会のピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "忘年会",
+    "年末の予定アイコン",
+    "アイコン・マーク"
+   ],
+   "w": 424,
+   "h": 412
+  },
+  {
+   "id": "nenmatsu-todo-pictogram-shigotoosame",
+   "file": "nenmatsu-todo-pictogram-shigotoosame.webp",
+   "title": "仕事納め",
+   "desc": "仕事納めのピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "仕事納め",
+    "年末の予定アイコン",
+    "アイコン・マーク"
+   ],
+   "w": 523,
+   "h": 380
+  },
+  {
+   "id": "nenmatsu-todo-pictogram-shopping",
+   "file": "nenmatsu-todo-pictogram-shopping.webp",
+   "title": "年末の買い出し",
+   "desc": "年末の買い出しのピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "年末の予定アイコン",
+    "年末の買い出し",
+    "アイコン・マーク"
+   ],
+   "w": 466,
+   "h": 408
+  },
+  {
+   "id": "nenmatsu-todo-pictogram-tax",
+   "file": "nenmatsu-todo-pictogram-tax.webp",
+   "title": "年末調整",
+   "desc": "年末調整のピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "年末の予定アイコン",
+    "年末調整",
+    "アイコン・マーク"
+   ],
+   "w": 412,
+   "h": 385
+  },
+  {
+   "id": "nenmatsu-todo-pictogram-mailbox",
+   "file": "nenmatsu-todo-pictogram-mailbox.webp",
+   "title": "郵便ポスト",
+   "desc": "郵便ポストのピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "年末の予定アイコン",
+    "郵便ポスト",
+    "アイコン・マーク"
+   ],
+   "w": 270,
+   "h": 439
+  },
+  {
+   "id": "nenmatsu-todo-pictogram-calendar",
+   "file": "nenmatsu-todo-pictogram-calendar.webp",
+   "title": "カレンダー",
+   "desc": "カレンダーのピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "年末の予定アイコン",
+    "カレンダー",
+    "アイコン・マーク"
+   ],
+   "w": 453,
+   "h": 343
+  },
+  {
+   "id": "nenmatsu-todo-pictogram-bell",
+   "file": "nenmatsu-todo-pictogram-bell.webp",
+   "title": "除夜の鐘",
+   "desc": "除夜の鐘のピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "年末の予定アイコン",
+    "除夜の鐘",
+    "アイコン・マーク"
+   ],
+   "w": 463,
+   "h": 421
+  },
+  {
+   "id": "nenmatsu-todo-pictogram-soba",
+   "file": "nenmatsu-todo-pictogram-soba.webp",
+   "title": "年越しそば",
+   "desc": "年越しそばのピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "年末の予定アイコン",
+    "年越しそば",
+    "アイコン・マーク"
+   ],
+   "w": 441,
+   "h": 395
+  },
+  {
+   "id": "nenmatsu-todo-pictogram-gift",
+   "file": "nenmatsu-todo-pictogram-gift.webp",
+   "title": "お歳暮の手配",
+   "desc": "お歳暮の手配のピクトグラムイラストです。",
+   "tags": [
+    "年末",
+    "アイコン",
+    "ピクトグラム",
+    "大掃除",
+    "年末の予定アイコン",
+    "お歳暮の手配",
+    "アイコン・マーク"
+   ],
+   "w": 453,
+   "h": 265
+  }
+ ]
+}
