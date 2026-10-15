@@ -1,0 +1,57 @@
+{
+ "slug": "eto-sheep-silhouette",
+ "title": "未年のひつじのシルエット",
+ "subject": "",
+ "genre": "eto",
+ "touch": "silhouette",
+ "title_fmt": "{ja}",
+ "lead": "歩く・跳ぶ・休むなど、羊の姿をひとつの色で表したシルエット6点です。年賀状の図案、ロゴ、飾りに使えます。",
+ "tags": [
+  "シルエット",
+  "ひつじ",
+  "羊",
+  "未年",
+  "年賀状",
+  "影絵",
+  "ロゴ"
+ ],
+ "subject_en": "sheep silhouettes, each ONE sheep centred in its cell, fully readable shape with wool texture shown by the outline only. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "holes": false,
+ "items": [
+  [
+   "stand",
+   "立つ羊",
+   "a sheep standing, side view"
+  ],
+  [
+   "walk",
+   "歩く羊",
+   "a sheep walking, side view"
+  ],
+  [
+   "jump",
+   "跳ぶ羊",
+   "a sheep jumping with all legs lifted"
+  ],
+  [
+   "lie",
+   "休む羊",
+   "a sheep lying down with legs folded"
+  ],
+  [
+   "lamb",
+   "子羊",
+   "a small lamb standing, side view"
+  ],
+  [
+   "pair",
+   "寄り添う親子の羊",
+   "a sheep and a lamb standing close together"
+  ]
+ ],
+ "exclude": []
+}

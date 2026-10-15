@@ -1,0 +1,87 @@
+{
+ "slug": "situations-winter-loose",
+ "title": "冬の日常の場面",
+ "subject": "",
+ "genre": "life",
+ "touch": "loose",
+ "title_fmt": "{ja}",
+ "lead": "こたつ・雪かき・結露・マフラーなど、冬の暮らしの場面12点です。ブログ・スライド・社内報の挿絵に使えます。",
+ "tags": [
+  "冬",
+  "日常",
+  "あるある",
+  "くらし",
+  "こたつ",
+  "雪",
+  "ゆるい",
+  "人物",
+  "ブログ",
+  "スライド"
+ ],
+ "subject_en": "Winter everyday-life situations with ONE person (adult, short dark hair, simple clothes, dot eyes), each a small complete scene with a few props, loose hand-drawn style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "kotatsu",
+   "こたつで寝てしまう",
+   "a person asleep with the head sticking out of a kotatsu table"
+  ],
+  [
+   "snow",
+   "雪かき",
+   "a person shovelling snow in front of a house"
+  ],
+  [
+   "condensation",
+   "窓の結露を拭く",
+   "a person wiping a foggy window with a cloth"
+  ],
+  [
+   "scarf",
+   "マフラーを巻く",
+   "a person wrapping a thick scarf by the front door"
+  ],
+  [
+   "static",
+   "静電気に驚く",
+   "a person flinching as they touch a door handle, small spark"
+  ],
+  [
+   "heater",
+   "ストーブにあたる",
+   "a person warming hands in front of a small heater"
+  ],
+  [
+   "bath",
+   "冷えた脚をあたためる",
+   "a person soaking only feet in a basin of hot water"
+  ],
+  [
+   "futon",
+   "布団から出られない",
+   "a person curled up in a futon with only the head showing"
+  ],
+  [
+   "nabe",
+   "鍋を囲む",
+   "a person ladling a hot pot at a table"
+  ],
+  [
+   "commute",
+   "冷たい朝の通勤",
+   "a person walking in a puffy coat with breath visible"
+  ],
+  [
+   "cold",
+   "風邪でマスクをする",
+   "a person with a mask and a tissue box, feeling unwell"
+  ],
+  [
+   "drink",
+   "温かい飲み物",
+   "a person holding a steaming mug with both hands"
+  ]
+ ],
+ "exclude": []
+}

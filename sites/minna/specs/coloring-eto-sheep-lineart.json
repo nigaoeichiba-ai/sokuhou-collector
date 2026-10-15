@@ -1,0 +1,89 @@
+{
+ "slug": "coloring-eto-sheep-lineart",
+ "title": "未年のひつじのぬりえ",
+ "subject": "",
+ "genre": "eto",
+ "touch": "lineart",
+ "title_fmt": "{ja}",
+ "lead": "凧揚げ・餅つき・書き初めなどのお正月の場面にいる羊のぬりえ12点です。年賀状づくり、保育や介護の制作活動、印刷して使えます。",
+ "tags": [
+  "ぬりえ",
+  "塗り絵",
+  "ひつじ",
+  "羊",
+  "未年",
+  "年賀状",
+  "お正月",
+  "線画",
+  "印刷"
+ ],
+ "subject_en": "Coloring pages of a cute sheep in New Year scenes, each ONE small complete scene centred in its cell, plain white inside every shape.",
+ "season": {
+  "from": "10-01",
+  "to": "01-31"
+ },
+ "holes": false,
+ "items": [
+  [
+   "greeting",
+   "お辞儀をする羊",
+   "a sheep in a kimono bowing"
+  ],
+  [
+   "kakizome",
+   "書き初めをする羊",
+   "a sheep writing calligraphy with a big brush (no readable characters)"
+  ],
+  [
+   "mochi",
+   "餅つきの羊",
+   "a sheep pounding rice cake with a mallet"
+  ],
+  [
+   "soba",
+   "年越しそばの羊",
+   "a sheep eating a bowl of noodles"
+  ],
+  [
+   "hatsumode",
+   "初詣の羊",
+   "a sheep praying at a shrine gate"
+  ],
+  [
+   "sunrise",
+   "初日の出と羊",
+   "a sheep looking at the rising sun on a hill"
+  ],
+  [
+   "otoshidama",
+   "お年玉の羊",
+   "a sheep holding a small envelope"
+  ],
+  [
+   "kotatsu",
+   "こたつの羊",
+   "a sheep resting in a kotatsu with a mandarin orange"
+  ],
+  [
+   "card",
+   "年賀状を書く羊",
+   "a sheep writing a postcard at a desk"
+  ],
+  [
+   "daruma",
+   "だるまと羊",
+   "a sheep next to a big daruma doll"
+  ],
+  [
+   "tako",
+   "凧の羊",
+   "a sheep flying a kite in the wind"
+  ],
+  [
+   "lamb",
+   "子羊とお年玉",
+   "a lamb with a gift bag and a ribbon"
+  ]
+ ],
+ "exclude": []
+}
