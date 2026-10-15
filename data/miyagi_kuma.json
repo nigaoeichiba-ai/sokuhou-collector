@@ -1,16 +1,16 @@
 {
- "as_of": "2026-10-13",
+ "as_of": "2026-10-14",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 1,
  "dates_after_as_of_by_month": {
   "10": 1
  },
- "fetched_at": "2026-10-14T09:19:06.483490+09:00",
+ "fetched_at": "2026-10-15T08:55:33.585361+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "1": 0,
-   "10": 49,
+   "10": 71,
    "11": 0,
    "12": 0,
    "2": 0,
@@ -34,11 +34,131 @@
    "species": "クマ"
   },
   {
+   "city": "大郷町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-13T17:35:00+09:00",
+   "place": "東成田字長松沢山",
+   "species": "クマ"
+  },
+  {
+   "city": "登米市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-13T16:55:00+09:00",
+   "place": "迫町新田字上大田切地内",
+   "species": "クマ"
+  },
+  {
+   "city": "栗原市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-10-13T10:20:00+09:00",
+   "place": "花山字本沢木落　地内",
+   "species": "クマ"
+  },
+  {
+   "city": "大和町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-12T16:50:00+09:00",
+   "place": "宮床字上綱木",
+   "species": "クマ"
+  },
+  {
+   "city": "大衡村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-12T13:24:00+09:00",
+   "place": "大森地区　桔梗平",
+   "species": "クマ"
+  },
+  {
+   "city": "登米市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-12T06:05:00+09:00",
+   "place": "登米町日根牛地内（登米大橋付近）",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-11T21:50:00+09:00",
+   "place": "八日町",
+   "species": "クマ"
+  },
+  {
+   "city": "栗原市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-11T16:30:00+09:00",
+   "place": "栗駒沼倉耕英東　地内",
+   "species": "クマ"
+  },
+  {
+   "city": "大和町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-11T16:00:00+09:00",
+   "place": "宮床字上綱木",
+   "species": "クマ"
+  },
+  {
    "city": "色麻町",
    "count": 1,
    "kind": "目撃",
    "observed_at": "2026-10-11T10:30:00+09:00",
    "place": "色麻町大字新大原",
+   "species": "クマ"
+  },
+  {
+   "city": "名取市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-11T08:55:00+09:00",
+   "place": "相互台東一丁目",
+   "species": "クマ"
+  },
+  {
+   "city": "大衡村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-10T18:20:00+09:00",
+   "place": "衡下地区　団子沢地内",
+   "species": "クマ"
+  },
+  {
+   "city": "富谷市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-10T17:40:00+09:00",
+   "place": "一ノ関臑合山　地内",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-10T17:20:00+09:00",
+   "place": "八日町",
+   "species": "クマ"
+  },
+  {
+   "city": "栗原市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-10T17:00:00+09:00",
+   "place": "築館高田一丁目　地内",
+   "species": "クマ"
+  },
+  {
+   "city": "富谷市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-10T16:18:00+09:00",
+   "place": "上桜木二丁目　地内",
    "species": "クマ"
   },
   {
@@ -50,11 +170,59 @@
    "species": "クマ"
   },
   {
+   "city": "富谷市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-10T14:20:00+09:00",
+   "place": "富谷高屋敷　地内",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-10T06:47:00+09:00",
+   "place": "田谷",
+   "species": "クマ"
+  },
+  {
    "city": "色麻町",
    "count": 1,
    "kind": "目撃",
    "observed_at": "2026-10-10T00:30:00+09:00",
    "place": "色麻町四竃字東原",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-10T00:30:00+09:00",
+   "place": "赤岩港",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-09T22:25:00+09:00",
+   "place": "岩月",
+   "species": "クマ"
+  },
+  {
+   "city": "富谷市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-09T18:40:00+09:00",
+   "place": "大清水一丁目　地内",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市青葉区",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-09T16:30:00+09:00",
+   "place": "南吉成2丁目22-20",
    "species": "クマ"
   },
   {
@@ -167,6 +335,14 @@
    "kind": "目撃",
    "observed_at": "2026-10-07T13:00:00+09:00",
    "place": "大清水一丁目",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市青葉区",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-06T17:00:00+09:00",
+   "place": "熊ヶ根",
    "species": "クマ"
   },
   {
@@ -10763,7 +10939,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261013.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261014.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }
