@@ -4,7 +4,7 @@ data/yorokobu_yahoo.json.  The site build only READS this file (no network at bu
     python -m sites.yorokobu.yahoo_fetch --out data/yorokobu_yahoo.json            (needs YAHOO_CLIENT_ID; the workflow yorokobu-yahoo.yml runs it)
     python -m sites.yorokobu.yahoo_fetch --probe "お歳暮 ギフト"                    (prints the shape of one response: field names and a few values, never the ID)
 
-Rules read from the developer network (2026-10-15): one request a second per application ID; the credit (Web Services by Yahoo! JAPAN) must be shown on a page that shows
+Rules read from the developer network (2026-10-16): 30 requests a minute per application ID (a 429 means wait a minute); the credit (Web Services by Yahoo! JAPAN) must be shown on a page that shows
 the data; the application ID is a secret and appears in no log or file.  Item links are made affiliate links by the API itself (affiliate_type=vc + affiliate_id).
 """
 from __future__ import annotations
@@ -24,7 +24,8 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 JST = timezone(timedelta(hours=9))
 ENDPOINT = "https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch"
-REQUEST_GAP = 1.2               # the limit is one a second
+REQUEST_GAP = 2.2               # the limit is 30 requests a minute for each application ID (Developer Network notice of 2022-05-20; the 50,000 a day was abolished)
+RETRY_WAIT = 65                 # after a 429 (limit reached): a minute and a little, once
 RESULTS = 30
 KEEP = 40
 PASSES = (("-score", 1), ("-review_count", 1))
@@ -40,8 +41,8 @@ def vc_affiliate_id(vc: dict) -> str:
 
 
 class Client:
-    def __init__(self, client_id: str, vc: dict | None, min_interval: float = REQUEST_GAP):
-        self.client_id, self.vc, self.min_interval = client_id, vc, min_interval
+    def __init__(self, client_id: str, vc: dict | None, min_interval: float = REQUEST_GAP, retry_wait: float = RETRY_WAIT):
+        self.client_id, self.vc, self.min_interval, self.retry_wait = client_id, vc, min_interval, retry_wait
         self.calls = 0
         self._last = 0.0
 
@@ -50,20 +51,25 @@ class Client:
         if self.vc:
             p["affiliate_type"] = "vc"
             p["affiliate_id"] = vc_affiliate_id(self.vc)
-        wait = self._last + self.min_interval - time.monotonic()
-        if wait > 0:
-            time.sleep(wait)
-        self._last = time.monotonic()
-        self.calls += 1
-        req = urllib.request.Request(ENDPOINT + "?" + urllib.parse.urlencode(p), headers={"User-Agent": "yorokobu-present.com compare (contact via the site)"})
-        try:
-            with urllib.request.urlopen(req, timeout=30) as r:
-                return json.loads(r.read().decode("utf-8"))
-        except urllib.error.HTTPError as e:                      # the message never carries the URL (and so never the ID)
-            body = e.read().decode("utf-8", "replace")[:300].replace(self.client_id, "***")
-            raise YahooError(f"HTTP {e.code}: {body}") from None
-        except (urllib.error.URLError, TimeoutError, ValueError) as e:
-            raise YahooError(f"{type(e).__name__}") from None
+        url = ENDPOINT + "?" + urllib.parse.urlencode(p)
+        for attempt in (1, 2):
+            wait = self._last + self.min_interval - time.monotonic()
+            if wait > 0:
+                time.sleep(wait)
+            self._last = time.monotonic()
+            self.calls += 1
+            req = urllib.request.Request(url, headers={"User-Agent": "yorokobu-present.com compare (contact via the site)"})
+            try:
+                with urllib.request.urlopen(req, timeout=30) as r:
+                    return json.loads(r.read().decode("utf-8"))
+            except urllib.error.HTTPError as e:                      # the message never carries the URL (and so never the ID)
+                body = e.read().decode("utf-8", "replace")[:300].replace(self.client_id, "***")
+                if e.code == 429 and attempt == 1:
+                    time.sleep(self.retry_wait)
+                    continue
+                raise YahooError(f"HTTP {e.code}: {body}") from None
+            except (urllib.error.URLError, TimeoutError, ValueError) as e:
+                raise YahooError(f"{type(e).__name__}") from None
 
 
 def _num(v, default=0.0) -> float:
