@@ -7,15 +7,23 @@ from unittest import mock
 from sites.yorokobu import yahoo_fetch as Y
 
 VC = {"sid": "3784606", "pid": "892726918"}
-HIT = {"name": "ギフト 商品", "url": "https://shopping.yahoo.co.jp/products/x", "price": 2000, "code": "shop_item1", "inStock": True,
-       "image": {"medium": "https://item-shopping.c.yimg.jp/i/j/x"}, "review": {"count": 12, "rate": 4.5},
-       "shipping": {"code": 2}, "point": {"amount": 40}, "seller": {"name": "店", "sellerId": "shop"}}
+HIT = {"name": "ギフト 商品", "url": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&pid=892726918&vc_url=x", "price": 2000, "code": "shop_item1", "inStock": True,
+       "image": {"medium": "https://item-shopping.c.yimg.jp/i/g/x"}, "review": {"count": 12, "rate": 4.5},
+       "shipping": {"code": 2, "name": "送料無料"},
+       "point": {"amount": 20, "times": 1, "bonusAmount": 10, "lyLimitedBonusAmount": 30, "premiumAmount": 99, "premiumBonusAmount": 99},
+       "seller": {"name": "店", "sellerId": "shop"}}
 
 
 class NormalizeTest(unittest.TestCase):
     def test_fields(self):
         it = Y.normalize(HIT)
-        self.assertEqual((it["price"], it["reviews"], it["rating"], it["free_shipping"], it["point_rate"], it["shop"]), (2000, 12, 4.5, True, 2.0, "店"))
+        self.assertEqual((it["price"], it["reviews"], it["rating"], it["free_shipping"], it["ship"], it["shop"], it["shop_code"]), (2000, 12, 4.5, True, 2, "店", "shop"))
+        self.assertEqual(it["points"], 60)                                    # the member's own: base + store bonus + limited; the premium-member fields are not counted
+        self.assertTrue(it["url"].startswith("https://ck.jp.ap.valuecommerce.com/"))
+
+    def test_only_the_free_shipping_code_counts_as_free(self):
+        for code, free in ((1, False), (2, True), (3, False)):
+            self.assertEqual(Y.normalize({**HIT, "shipping": {"code": code}})["free_shipping"], free)
 
     def test_items_that_cannot_be_shown_are_dropped(self):
         for bad in ({**HIT, "price": 0}, {**HIT, "url": "http://x"}, {**HIT, "name": ""}):
