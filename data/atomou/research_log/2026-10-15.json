@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-15",
+  "weekday": "木",
+  "words": 0,
+  "rss": 642,
+  "searches": 6,
+  "candidates": 4,
+  "cards": 3,
+  "rejected": 1,
+  "rejected_reasons": {"duplicate": 1},
+  "queries": 6,
+  "failed_words": ["NPBジュニアトーナメント2026 開催日(検索結果なし)", "GT7 アップデート(検索結果なし)"],
+  "injections": 0,
+  "results_written": 0,
+  "ideas": "未実施(今日は日付調査を途中で縮小したため)",
+  "note": "RSSの手がかりから、櫻坂46 BACKS LIVE(12/15-16)、同Blu-ray BOX(2027-03-17)、ルンバ Monster(10/21)を press 根拠で seedcheck 通過。KEY TO LIT デビューは既出で duplicate。目標のワード数には届いていない。結果の記事、改善案、サブエージェント・Codexの利用は今日は未実施。"
+}
