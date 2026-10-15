@@ -958,3 +958,4 @@ footer.site .src { color: var(--muted); }
 .seas .checklist { margin: 12px 0 8px; }
 @media (max-width: 480px) { .seas-tbl th, .seas-tbl td { padding: .6em .7em; font-size: .88rem; } .seas-tbl tbody th { width: 34%; } }
 @media print { .seas-more, .seas-hook, .seas-print { display: none !important; } .seas-tbl { border-color: #999; } .seas-tbl th, .seas-tbl td { border-color: #999; } .seas .g-sec { break-inside: avoid; } }
+.seas-lead-note { margin: 0 0 14px; font-size: .84rem; color: var(--ink2); line-height: 1.8; }

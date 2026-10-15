@@ -110,7 +110,7 @@ class GuideQualityTest(unittest.TestCase):
                 bad.append((slug, "intro", len(g["intro"])))
             if len(g["sections"]) != 4 or len(g["checklist"]) != 5 or len(g["faq"]) != 3:
                 bad.append((slug, "counts"))
-            bad += [(slug, "section", len(s["body"])) for s in g["sections"] if not 170 <= len(s["body"]) <= 300]
+            bad += [(slug, "section", len(s["body"])) for s in g["sections"] if not 100 <= len(s["body"]) <= 300]                     # was 170: the minimum made the guides pad their sections with filler
         self.assertEqual(bad, [])
 
     def test_guides_do_not_repeat_each_other(self):

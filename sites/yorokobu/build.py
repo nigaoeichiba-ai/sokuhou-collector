@@ -1163,6 +1163,7 @@ def guide_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 <section class="g-sec"><h2><span class="scribble">よくある質問</span></h2>{faq}</section></article>
 {share_bar(cfg, f"/guide/{slug}/", f"{g['title']}", "この記事をだれかに送る")}
 {seasonal.hook(slug)}
+{dataroom.occasion_teaser(d, slug, compact=True)}
 <section class="related" style="margin-top:44px"><h2><span class="scribble">{esc(o["name"])}の贈り物を選ぶ</span></h2>
 <ul class="plain">{links}</ul><p style="margin-top:14px"><a class="btn btn-sub" href="/occasion/{slug}/">{esc(o["name"])}のおすすめを見る</a></p></section>
 {amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "の贈り物をAmazonで探す")}
