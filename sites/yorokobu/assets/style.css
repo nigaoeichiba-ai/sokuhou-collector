@@ -785,6 +785,14 @@ footer.site .src { color: var(--muted); }
 .cc-open:hover, .cc.on .cc-open { background: var(--accent-d); }
 @keyframes cc-ring { 0% { box-shadow: 0 8px 22px rgba(200, 60, 40, .38), 0 0 0 0 rgba(200, 60, 40, .45); } 70%, 100% { box-shadow: 0 8px 22px rgba(200, 60, 40, .38), 0 0 0 16px rgba(200, 60, 40, 0); } }
 @media (prefers-reduced-motion: reduce) { .cc-open { animation: none; } }
+/* on a phone the button is a small round mark (the words stay for screen readers): it must not cover what is being read; on a PC it stays the large labelled button */
+@media (max-width: 640px) {
+  .cc { left: 10px; bottom: 10px; }
+  .cc-open { justify-content: center; gap: 0; width: 38px; height: 38px; padding: 0; box-shadow: 0 3px 10px rgba(200, 60, 40, .3); animation: none; }
+  .cc-open span { width: auto; height: auto; background: transparent; color: #fff; font-size: 1.1rem; }
+  .cc-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .cc-nudge, .cc-panel { bottom: 48px; }
+}
 .cc-nudge { position: absolute; left: 0; bottom: 64px; display: flex; align-items: flex-start; gap: 6px; width: max-content; max-width: min(300px, calc(100vw - 28px)); padding: 10px 12px 10px 16px; background: #fff; border: 1px solid var(--line); border-radius: 16px 16px 16px 4px; box-shadow: var(--shadow-h); }
 .cc-nudge p { margin: 0; font-size: .9rem; font-weight: 700; line-height: 1.6; color: var(--ink); }
 .cc-nudge small { font-weight: 400; font-size: .78rem; color: var(--muted); }
@@ -962,7 +970,7 @@ footer.site .src { color: var(--muted); }
 
 .yh-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .yh-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) 74px 168px; align-items: center; gap: 14px; padding: 12px 16px; background: #fff; border: 1px solid var(--line2); border-radius: 16px; box-shadow: var(--shadow); }
-.yh-facts { margin: 0; font-size: .84rem; line-height: 1.7; color: var(--ink2); }
+.yh-facts { overflow-wrap: anywhere; margin: 0; font-size: .84rem; line-height: 1.7; color: var(--ink2); }
 .yh-facts .cmp-price { font-size: 1.05rem; color: var(--ink); }
 @media (max-width: 860px) {
   .yh-row { grid-template-columns: 26px minmax(0, 1fr) 64px; row-gap: 8px; }
@@ -970,4 +978,11 @@ footer.site .src { color: var(--muted); }
   .yh-row .cmp-main { grid-column: 2; grid-row: 1; }
   .yh-row .cmp-score { grid-column: 3; grid-row: 1; }
   .yh-row .cmp-go { grid-column: 1 / -1; grid-row: 2; }
+}
+@media (max-width: 420px) {
+  .yh-row { grid-template-columns: 26px minmax(0, 1fr); }
+  .yh-row .cmp-score { grid-column: 2; grid-row: 2; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; text-align: left; }
+  .yh-row .cmp-score b { display: inline; font-size: 1.3rem; }
+  .yh-row .cmp-score i { flex: 0 0 100%; margin-top: 4px; }
+  .yh-row .cmp-go { grid-row: 3; }
 }

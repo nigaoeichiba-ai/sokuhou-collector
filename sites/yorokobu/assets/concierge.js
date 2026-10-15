@@ -263,7 +263,7 @@
   function build() {
     root = document.createElement("div");
     root.className = "cc"; root.innerHTML =
-      '<button type="button" class="cc-open" aria-expanded="false" aria-controls="cc-panel"><span aria-hidden="true">?</span>贈り物の相談</button>' +
+      '<button type="button" class="cc-open" aria-expanded="false" aria-controls="cc-panel"><span aria-hidden="true">?</span><i class="cc-label">贈り物の相談</i></button>' +
       '<section class="cc-panel" id="cc-panel" role="dialog" aria-label="贈り物コンシェルジュ" hidden><header><b>贈り物コンシェルジュ</b><button type="button" class="cc-close" aria-label="閉じる">×</button></header>' +
       '<div class="cc-log" aria-live="polite"></div><form class="cc-form"><input type="text" maxlength="120" placeholder="一言で(例: 母の日に母へ 5000円くらい)" aria-label="ご相談の内容"><button type="submit" class="btn">送る</button></form>' +
       '<p class="cc-foot">規則と言葉のリストで案内しています。書いた内容は「送る」を押した文章のほかはこの端末の外へ出ません。</p></section>';

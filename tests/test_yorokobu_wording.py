@@ -123,6 +123,20 @@ class HeartTest(unittest.TestCase):
         self.assertRegex(css, r"\.cc-open \{[^}]*background: var\(--accent\)")                   # the corner button is filled, not a white pill
         self.assertIn("prefers-reduced-motion", css)
 
+    def test_the_corner_button_is_a_small_round_mark_on_a_phone_and_stays_large_and_labelled_on_a_pc(self):
+        base = Path(build.__file__).parent / "assets"
+        css = (base / "style.css").read_text(encoding="utf-8").replace("\r\n", "\n")
+        js = (base / "concierge.js").read_text(encoding="utf-8")
+        self.assertIn('<i class="cc-label">贈り物の相談</i>', js)                                 # the words stay in the page (screen readers); only drawn away on a phone
+        phone = re.search(r"@media \(max-width: 640px\) \{\n  \.cc \{.*?\n\}\n", css, re.S)
+        self.assertIsNotNone(phone)
+        block = phone.group(0)
+        self.assertRegex(block, r"\.cc-open \{[^}]*width: (3\d|4[0-4])px; height: (3\d|4[0-4])px")   # at most 44px, round
+        self.assertRegex(block, r"\.cc-label \{[^}]*clip: rect")
+        pc = re.search(r"^\.cc-open \{[^}]*\}", css, re.M).group(0)                              # outside the query: the big pill, unchanged
+        self.assertIn("padding: .8em 1.5em .8em 1.1em", pc)
+        self.assertNotIn("width: 38px", pc)
+
     def test_the_list_keeps_an_amazon_product_without_a_price_and_sends_only_the_rakuten_ones_as_a_link(self):
         js = (Path(build.__file__).parent / "assets" / "app.js").read_text(encoding="utf-8")
         self.assertIn('indexOf("a:") === 0', js)
