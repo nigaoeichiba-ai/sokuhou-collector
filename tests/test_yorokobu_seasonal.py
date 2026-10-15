@@ -7,12 +7,13 @@ import unittest
 from datetime import date
 from pathlib import Path
 
+from sites.yorokobu import seasonal_overlap
 from sites.yorokobu import build, content, quality, seasonal
 from tests.test_yorokobu_compare import CFG, FIX
 from tests.yorokobu_data import with_musts
 
 PATHS = ["oseibo/index.html", "oseibo/work/index.html", "oseibo/thanks/index.html", "nenga/index.html"]
-OIWAI = ["oiwai/index.html", "oiwai/seijin/index.html", "oiwai/gakko/index.html", "oiwai/taishoku/index.html", "oiwai/shinchiku/index.html", "oiwai/choju/index.html"]
+OIWAI = ["oiwai/index.html", "oiwai/seijin/index.html", "oiwai/gakko/index.html", "oiwai/taishoku/index.html", "oiwai/shinchiku/index.html", "oiwai/choju/index.html", "oiwai/kekkon/index.html", "oiwai/shussan/index.html"]
 
 
 def by_slug(data, slug):
@@ -80,6 +81,38 @@ class ContentTest(unittest.TestCase):
         self.assertIn("寒中御伺", json.dumps(data, ensure_ascii=False))
 
 
+class OverlapTest(unittest.TestCase):
+    """The rule that a sheet is in our own words: the measuring function finds a copied stretch and lets a rewritten sentence pass (offline; the real pages are read by the command)."""
+
+    SOURCE = "新築祝いは完成の報告から半月くらいまでに贈るようにしましょう。新居にふさわしいもの、相手が必要としているものを贈るとよいため、できれば相手に希望を聞いて用意したいものです。"
+
+    def test_the_longest_shared_run_is_found(self):
+        n, run = seasonal_overlap.longest_run(seasonal_overlap.norm("できれば相手に希望を聞いて用意したいものです。"), seasonal_overlap.norm(self.SOURCE))
+        self.assertEqual(run, "できれば相手に希望を聞いて用意したいものです。")
+        self.assertEqual(n, len(run))
+        self.assertLess(seasonal_overlap.longest_run("まったく別の文章です", self.SOURCE)[0], 6)
+
+    def test_a_copied_sentence_is_reported_and_the_same_fact_in_other_words_is_not(self):
+        def data(text):
+            return {"pages": [{"slug": "x", "sections": [{"h": "h", "list": [text], "src": ["a"]}]}]}
+        src = {"a": seasonal_overlap.norm(self.SOURCE)}
+        copied = seasonal_overlap.too_close(data("新居にふさわしいもの、相手が必要としているものを贈るとよいため、先に聞きます。"), src)
+        self.assertEqual(len(copied), 1)
+        self.assertGreaterEqual(copied[0][0], seasonal_overlap.MAX_RUN)
+        own = seasonal_overlap.too_close(data("新居で使える物を、相手の希望を確かめてから選びます。"), src)
+        self.assertEqual(own, [])
+
+    def test_the_command_refuses_to_call_an_unreadable_page_clean(self):
+        orig = seasonal_overlap.fetch_text
+        try:
+            def boom(url):
+                raise OSError("no network")
+            seasonal_overlap.fetch_text = boom
+            self.assertEqual(seasonal_overlap.main([]), 2)
+        finally:
+            seasonal_overlap.fetch_text = orig
+
+
 class LinksTest(unittest.TestCase):
     def test_a_link_to_a_page_the_build_does_not_have_is_left_out_and_the_own_pages_stay(self):
         out = seasonal.build_pages({}, CFG, False, known={"message/oseibo/index.html": ""})
@@ -116,7 +149,7 @@ class OiwaiPagesTest(unittest.TestCase):
             self.assertIn("/" + rel.replace("index.html", ""), sm, rel)
             self.assertIn("<h1", html)
         hub = self.read("oiwai/index.html")
-        for href in ("/oiwai/seijin/", "/oiwai/gakko/", "/oiwai/taishoku/", "/oiwai/shinchiku/", "/oiwai/choju/", "/oseibo/", "/nenga/"):
+        for href in ("/oiwai/seijin/", "/oiwai/gakko/", "/oiwai/taishoku/", "/oiwai/shinchiku/", "/oiwai/choju/", "/oiwai/kekkon/", "/oiwai/shussan/", "/oseibo/", "/nenga/"):
             self.assertIn(f'href="{href}"', hub, href)
         for rel in OIWAI[1:]:
             self.assertIn('<a href="/oiwai/">お祝いの早見表</a>', self.read(rel), rel)
@@ -137,7 +170,9 @@ class OiwaiPagesTest(unittest.TestCase):
             self.assertIn("贈る人が祖父母なら", self.read(rel), rel)
         for rel in ("oiwai/taishoku/index.html", "oiwai/shinchiku/index.html", "oiwai/choju/index.html"):
             self.assertIn("贈る人が本人の", self.read(rel), rel)
-        for rel in ("oiwai/shinchiku/index.html", "oiwai/choju/index.html"):
+        self.assertIn("贈る人が新郎新婦の両親なら", self.read("oiwai/kekkon/index.html"))
+        self.assertIn("贈る人が赤ちゃんの父母から見て", self.read("oiwai/shussan/index.html"))
+        for rel in ("oiwai/shinchiku/index.html", "oiwai/choju/index.html", "oiwai/kekkon/index.html", "oiwai/shussan/index.html"):
             self.assertIn("贈る相手が", self.read(rel), rel)                     # 松坂屋名古屋店 writes these by the relation of the person who is given to
         for rel in OIWAI[1:]:
             html = self.read(rel)
@@ -157,7 +192,8 @@ class MovedGuidesTest(unittest.TestCase):
 
     MOVES = {"oseibo": "/oseibo/", "year-end-gathering": "/nenga/", "homecoming": "/nenga/",
              "coming-of-age": "/oiwai/seijin/", "school-entrance": "/oiwai/gakko/", "graduation": "/oiwai/gakko/", "new-job": "/oiwai/gakko/",
-             "promotion": "/oiwai/taishoku/", "retirement": "/oiwai/taishoku/", "farewell": "/oiwai/taishoku/", "housewarming": "/oiwai/shinchiku/", "longevity": "/oiwai/choju/"}
+             "promotion": "/oiwai/taishoku/", "retirement": "/oiwai/taishoku/", "farewell": "/oiwai/taishoku/", "housewarming": "/oiwai/shinchiku/", "longevity": "/oiwai/choju/",
+             "wedding-gift": "/oiwai/kekkon/", "birth-gift": "/oiwai/shussan/"}
 
     @classmethod
     def setUpClass(cls):

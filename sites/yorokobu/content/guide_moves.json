@@ -12,6 +12,8 @@
   "retirement": "/oiwai/taishoku/",
   "farewell": "/oiwai/taishoku/",
   "housewarming": "/oiwai/shinchiku/",
-  "longevity": "/oiwai/choju/"
+  "longevity": "/oiwai/choju/",
+  "wedding-gift": "/oiwai/kekkon/",
+  "birth-gift": "/oiwai/shussan/"
  }
 }
