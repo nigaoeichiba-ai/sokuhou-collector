@@ -1,6 +1,6 @@
-"""お歳暮・お年賀の特集 (/oseibo/ /oseibo/work/ /oseibo/thanks/ /nenga/): one-page cheat sheets that can be printed, each fact tied to the department-store page it was read on.
+"""季節とお祝いの早見表 (/oseibo/ /nenga/ /oiwai/ ...): one-page cheat sheets that can be printed, each fact tied to the department-store page it was read on.
 
-Everything on these pages comes from content/seasonal/oseibo.json, whose `sources` are the pages (三越伊勢丹, 高島屋, 大丸松坂屋) opened and read in a real browser on `checked`.  A section names the
+Everything on these pages comes from the files content/seasonal/*.json, whose `sources` are the pages (三越伊勢丹, 高島屋, 大丸松坂屋, 松坂屋名古屋店) opened and read in a real browser on the file's `checked` date.  A section names the
 sources it rests on; where the stores disagree (the months of お歳暮, 寒中御伺 or 寒中御見舞) the page shows each store's wording instead of picking one.  Nothing is written that the sources do
 not say, and the page says that customs differ by region and family.  The pages carry the Rakuten and Amazon search buttons like the other gift pages; no price or picture of a product is shown.
 """
@@ -20,17 +20,40 @@ def _b():
 
 
 def load() -> dict:
-    return json.loads((HERE / "content" / "seasonal" / "oseibo.json").read_text(encoding="utf-8"))
+    """Every file of content/seasonal/ merged: sources (an id may not repeat), pages (each page remembers the date its file was checked), hooks (occasion -> the block that leads to its sheets)."""
+    out: dict = {"sources": {}, "pages": [], "hooks": {}, "checked": ""}
+    for f in sorted((HERE / "content" / "seasonal").glob("*.json")):
+        d = json.loads(f.read_text(encoding="utf-8"))
+        for k, v in d.get("sources", {}).items():
+            if k in out["sources"]:
+                raise ValueError(f"seasonal content: source id {k} is in two files")
+            out["sources"][k] = v
+        for pg in d.get("pages", []):
+            out["pages"].append({**pg, "checked": pg.get("checked") or d.get("checked", "")})
+        for k, v in d.get("hooks", {}).items():
+            if k in out["hooks"]:
+                raise ValueError(f"seasonal content: hook {k} is in two files")
+            out["hooks"][k] = v
+        out["checked"] = max(out["checked"], d.get("checked", ""))
+    return out
 
 
-SOURCE_HOSTS = ("www.mistore.jp", "www.takashimaya.co.jp", "www.daimaru-matsuzakaya.jp")      # the stores whose pages were read; another host needs a human decision
+SOURCE_HOSTS = ("www.mistore.jp", "www.takashimaya.co.jp", "www.daimaru-matsuzakaya.jp", "www.matsuzakaya.co.jp")      # the stores whose pages were read; another host needs a human decision
 
 
 def problems(data: dict) -> list[str]:
     """What must hold for the content (the build refuses to publish otherwise): every section says its sources, every source is a store page we read, tables are rectangular and without empty cells."""
     out: list[str] = []
-    if not data.get("checked"):
-        out.append("no `checked` date")
+    for pg in data.get("pages", []):
+        if not pg.get("checked"):
+            out.append(f"{pg.get('slug', '?')}: no `checked` date")
+    paths_ = {pg.get("path") for pg in data.get("pages", [])}
+    for occ, h in data.get("hooks", {}).items():
+        if not (h.get("title") and h.get("text") and h.get("links")):
+            out.append(f"hook {occ}: needs title, text and links")
+        for u, _t in h.get("links", []):
+            if u not in paths_:
+                out.append(f"hook {occ}: links to {u}, which is not a sheet")
     srcs = data.get("sources", {})
     for k, v in srcs.items():
         host = v["url"].split("/")[2] if v.get("url", "").startswith("https://") else ""
@@ -93,11 +116,11 @@ def _section(s: dict, sources: dict) -> str:
     return "".join(out)
 
 
-def _sources(data: dict, used: list[str]) -> str:
+def _sources(data: dict, used: list[str], checked: str) -> str:
     items = "".join(
         f'<li><a href="{esc(data["sources"][k]["url"])}" rel="noopener nofollow" target="_blank">{esc(data["sources"][k]["name"])}</a>'
         + (f'({esc(data["sources"][k]["date"])})' if data["sources"][k]["date"] else "") + "</li>" for k in used)
-    y, m, d = data["checked"].split("-")
+    y, m, d = checked.split("-")
     return (f'<section class="g-sec seas-srcs"><h2><span class="scribble">出典と確認日</span></h2><ul class="seas-list">{items}</ul>'
             f'<p class="seas-note">{int(y)}年{int(m)}月{int(d)}日に、上のページを開いて読みました。しきたりには諸説があり、地域や家で違います。贈る相手の地域の習慣が分かるときは、それに合わせてください。</p></section>')
 
@@ -111,8 +134,8 @@ def page(d: dict, cfg: dict, preview: bool, pg: dict, data: dict, known: set[str
                 used.append(k)
     secs = "".join(_section(s, data["sources"]) for s in pg["sections"])
     trail = [("トップ", "/")]
-    if pg["path"] not in ("/oseibo/", "/nenga/"):
-        trail.append(("お歳暮の早見表", "/oseibo/"))
+    if pg.get("parent"):                                                      # [path, name] of the page above this one
+        trail.append((pg["parent"][1], pg["parent"][0]))
     trail.append((pg["h1"], None))
     print_btn = '<p class="seas-print"><button type="button" class="btn btn-sub" data-print hidden>この早見表を印刷する</button></p>' if pg.get("print") else ""
     own = {q["path"] for q in data["pages"]}
@@ -124,7 +147,7 @@ def page(d: dict, cfg: dict, preview: bool, pg: dict, data: dict, known: set[str
     body = f"""{B.head_band("sky", "", esc(pg["h1"]), pg["lead"], single=True)}
 <div class="crumbs-wrap">{crumbs(trail)}</div>
 {B.pr_with_amazon(cfg)}
-<article class="guide seas">{print_btn}{secs}{_sources(data, used)}</article>
+<article class="guide seas">{print_btn}{secs}{_sources(data, used, pg["checked"])}</article>
 <section class="related seas-more" style="margin-top:44px"><h2><span class="scribble">あわせて読む</span></h2><ul class="plain">{related}</ul>
 <p class="item-btns" style="margin-top:18px">{buttons}</p></section>
 <script src="/assets/seasonal.js" defer></script>"""
@@ -132,17 +155,12 @@ def page(d: dict, cfg: dict, preview: bool, pg: dict, data: dict, known: set[str
 
 
 def hook(occasion: str) -> str:
-    """A short block on the お歳暮 pages that leads to the cheat sheets (empty for every other occasion)."""
-    if occasion in ("year-end-gathering", "homecoming"):                   # their reading guide was folded into the お年賀 sheet
-        return ('<section class="seas-hook" style="margin-top:44px"><h2><span class="scribble">お年賀の早見表</span></h2>'
-                '<p>年始のあいさつに持参する品の時期・金額・のしを、百貨店の案内から1枚にまとめています。</p>'
-                '<ul class="plain"><li><a href="/nenga/">お年賀の早見表(時期・金額・のし・避けたい品)</a></li></ul></section>')
-    if occasion != "oseibo":
+    """A short block on an occasion's own pages that leads to its sheets (empty when the occasion has none)."""
+    h = load()["hooks"].get(occasion)
+    if not h:
         return ""
-    return ('<section class="seas-hook" style="margin-top:44px"><h2><span class="scribble">お歳暮の早見表</span></h2>'
-            '<p>時期・のし・金額を、百貨店3社の案内を読み比べて1枚にまとめています。印刷もできます。</p>'
-            '<ul class="plain"><li><a href="/oseibo/">お歳暮の早見表(時期・のし・金額)</a></li><li><a href="/oseibo/work/">職場のお歳暮チェックリスト</a></li>'
-            '<li><a href="/oseibo/thanks/">お歳暮をもらったら(お礼状とお返し)</a></li><li><a href="/nenga/">お年賀の早見表</a></li></ul></section>')
+    links = "".join(f'<li><a href="{esc(u)}">{esc(t)}</a></li>' for u, t in h["links"])
+    return (f'<section class="seas-hook" style="margin-top:44px"><h2><span class="scribble">{esc(h["title"])}</span></h2><p>{esc(h["text"])}</p><ul class="plain">{links}</ul></section>')
 
 
 def build_pages(d: dict, cfg: dict, preview: bool, known: dict | None = None) -> dict[str, str]:
