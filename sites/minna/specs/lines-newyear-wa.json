@@ -1,0 +1,87 @@
+{
+ "slug": "lines-newyear-wa",
+ "title": "お正月の和の飾り罫",
+ "subject": "",
+ "genre": "deco",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "lead": "松竹梅・鶴亀・羽子板・だるまなど、お正月のモチーフを並べた区切り線12点です。年賀状の見出し下やおせちの案内の区切りに使える横長素材です。",
+ "tags": [
+  "区切り線",
+  "ライン",
+  "飾り罫",
+  "お正月",
+  "年賀状",
+  "松竹梅",
+  "鶴",
+  "亀",
+  "和風",
+  "おせち"
+ ],
+ "subject_en": "Horizontal decorative divider lines, each ONE wide thin strip about 6:1 in shape, centred in its cell with space around, made of repeating small motifs along a line. Strips are separate and never touch each other. Japanese traditional style with indigo, vermilion and gold. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "shochikubai",
+   "松竹梅の線",
+   "a line of pine, bamboo and plum blossoms"
+  ],
+  [
+   "tsurukame",
+   "鶴と亀の線",
+   "a line of cranes and turtles"
+  ],
+  [
+   "hagoita",
+   "羽子板の線",
+   "a line of hagoita paddles and shuttlecocks"
+  ],
+  [
+   "daruma",
+   "だるまの線",
+   "a line of small daruma dolls"
+  ],
+  [
+   "kadomatsu",
+   "門松の線",
+   "a line of kadomatsu pine decorations"
+  ],
+  [
+   "ume",
+   "梅の線",
+   "a line of plum blossoms on a branch"
+  ],
+  [
+   "mizuhiki",
+   "水引の線",
+   "a line of red and white mizuhiki knots"
+  ],
+  [
+   "seigaiha",
+   "青海波の線",
+   "a line of overlapping seigaiha wave patterns with small gold dots"
+  ],
+  [
+   "sensu",
+   "扇の線",
+   "a line of folded fans"
+  ],
+  [
+   "mochi",
+   "鏡餅の線",
+   "a line of small kagami-mochi with oranges"
+  ],
+  [
+   "fuji",
+   "初日の出の線",
+   "a line of rising sun and Mount Fuji silhouettes"
+  ],
+  [
+   "takara",
+   "宝尽くしの線",
+   "a line of auspicious treasures: coins, mallets and scrolls"
+  ]
+ ],
+ "exclude": []
+}

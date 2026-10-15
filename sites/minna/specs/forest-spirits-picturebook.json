@@ -1,0 +1,86 @@
+{
+ "slug": "forest-spirits-picturebook",
+ "title": "森の精霊",
+ "subject": "",
+ "genre": "animals",
+ "touch": "picturebook",
+ "title_fmt": "{ja}",
+ "lead": "苔・どんぐり・きのこ・霧などから生まれた、オリジナルの森の精霊12体の素材です。絵本、ゲーム、雑貨のデザインに使えます。",
+ "tags": [
+  "精霊",
+  "森",
+  "オリジナルキャラ",
+  "ファンタジー",
+  "絵本",
+  "きのこ",
+  "どんぐり",
+  "苔",
+  "キャラクター"
+ ],
+ "subject_en": "ORIGINAL gentle forest spirit creatures invented for this series (no existing character or franchise), each a small separate creature with a distinct silhouette, simple calm face and a natural material motif, one signature colour each. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "moss",
+   "苔の精",
+   "a round moss-green spirit with tiny leaves on its head"
+  ],
+  [
+   "acorn",
+   "どんぐりの精",
+   "a small spirit wearing an acorn cap hat"
+  ],
+  [
+   "mushroom",
+   "きのこの精",
+   "a spirit with a red spotted mushroom cap body"
+  ],
+  [
+   "fog",
+   "霧の精",
+   "a soft pale-blue misty spirit with a trailing tail"
+  ],
+  [
+   "leaf",
+   "木の葉の精",
+   "a spirit shaped like an orange maple leaf with little feet"
+  ],
+  [
+   "stream",
+   "せせらぎの精",
+   "a light-blue water droplet spirit with a ripple pattern"
+  ],
+  [
+   "root",
+   "木の根の精",
+   "a brown spirit with root-like legs and a mossy back"
+  ],
+  [
+   "firefly",
+   "ほたるの精",
+   "a small yellow glowing spirit with tiny wings"
+  ],
+  [
+   "snow",
+   "雪の精",
+   "a round pale spirit with snowflake ears"
+  ],
+  [
+   "flower",
+   "花の精",
+   "a spirit with a pink flower for a head"
+  ],
+  [
+   "stone",
+   "石の精",
+   "a grey rounded stone spirit with a little sprout on top"
+  ],
+  [
+   "wind",
+   "風の精",
+   "a pale green swirl spirit holding a dandelion puff"
+  ]
+ ],
+ "exclude": []
+}

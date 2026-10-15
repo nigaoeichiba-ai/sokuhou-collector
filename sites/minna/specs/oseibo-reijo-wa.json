@@ -1,0 +1,90 @@
+{
+ "slug": "oseibo-reijo-wa",
+ "title": "お歳暮・お礼状の飾り",
+ "subject": "",
+ "genre": "season",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "lead": "お歳暮のお礼状や贈答の挨拶状に添える、和のモチーフ12点です。封筒・水引・椿・南天などを、礼状やおたよりの飾りに使えます。",
+ "tags": [
+  "お歳暮",
+  "お礼状",
+  "礼状",
+  "贈答",
+  "水引",
+  "のし",
+  "椿",
+  "南天",
+  "挨拶状",
+  "年末"
+ ],
+ "subject_en": "Japanese gift-giving and thank-you-letter motifs, each a separate object centred in its cell, calm traditional colours. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": {
+  "from": "11-15",
+  "to": "12-31"
+ },
+ "holes": false,
+ "items": [
+  [
+   "envelope",
+   "白い封筒",
+   "a blank cream envelope sealed with a small red mizuhiki knot"
+  ],
+  [
+   "letter",
+   "巻紙の手紙",
+   "a rolled traditional Japanese letter scroll, blank, tied with a cord"
+  ],
+  [
+   "fude",
+   "筆と硯",
+   "a calligraphy brush resting on an inkstone"
+  ],
+  [
+   "mizuhiki",
+   "水引",
+   "a red and white mizuhiki decorative knot"
+  ],
+  [
+   "noshi",
+   "のし",
+   "a blank noshi paper ornament with folded gold-and-red decoration"
+  ],
+  [
+   "tsubaki",
+   "椿",
+   "a branch of red camellia flowers with green leaves"
+  ],
+  [
+   "nanten",
+   "南天",
+   "a branch of nandina with red berries"
+  ],
+  [
+   "matsu",
+   "松の枝",
+   "a pine branch with needles and a small cone"
+  ],
+  [
+   "furoshiki",
+   "風呂敷包み",
+   "a gift wrapped in a patterned furoshiki cloth"
+  ],
+  [
+   "giftbox",
+   "贈答用の箱",
+   "a gift box tied with a white and red cord"
+  ],
+  [
+   "tea",
+   "湯呑と茶菓子",
+   "a tea cup with a small Japanese sweet on a plate"
+  ],
+  [
+   "bow",
+   "お辞儀",
+   "a small simple character figure in kimono bowing politely, plain face, no features"
+  ]
+ ],
+ "exclude": []
+}

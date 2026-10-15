@@ -1,0 +1,88 @@
+{
+ "slug": "frames-winter-papercut",
+ "title": "冬の切り絵フレーム",
+ "subject": "",
+ "genre": "deco",
+ "touch": "papercut",
+ "title_fmt": "{ja}",
+ "lead": "雪の結晶・ヒイラギ・椿・南天・星空など、冬のモチーフを切り絵風に描いたフレーム12点です。おたより・カード・写真の枠に使えます。",
+ "tags": [
+  "フレーム",
+  "枠",
+  "冬",
+  "切り絵",
+  "雪",
+  "ヒイラギ",
+  "椿",
+  "南天",
+  "星空",
+  "カード",
+  "おたより"
+ ],
+ "subject_en": "Decorative frames/borders with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, landscape or square, thick enough to hold text or a photo, decorated with the motifs of the theme. Layered paper-cut style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "snowflake",
+   "雪の結晶のフレーム",
+   "frame made of large paper-cut snowflakes in pale blue and white-cream"
+  ],
+  [
+   "holly",
+   "ヒイラギのフレーム",
+   "frame of holly leaves and red berries"
+  ],
+  [
+   "tsubaki",
+   "椿のフレーム",
+   "frame of red camellia flowers and dark green leaves"
+  ],
+  [
+   "nanten",
+   "南天のフレーム",
+   "frame of nandina branches with red berries"
+  ],
+  [
+   "stars",
+   "星空のフレーム",
+   "frame of dark blue night sky with stars and a crescent moon"
+  ],
+  [
+   "pine",
+   "松ぼっくりのフレーム",
+   "frame of pine cones and pine needles"
+  ],
+  [
+   "snowman",
+   "雪だるまのフレーム",
+   "frame with small snowmen and snow mounds along the border"
+  ],
+  [
+   "mikan",
+   "みかんのフレーム",
+   "frame of mandarin oranges and leaves"
+  ],
+  [
+   "mittens",
+   "手袋のフレーム",
+   "frame of knitted mittens and scarves"
+  ],
+  [
+   "pinegrove",
+   "雪の森のフレーム",
+   "frame of snow-covered fir trees"
+  ],
+  [
+   "candle",
+   "キャンドルのフレーム",
+   "frame of candles and warm lights"
+  ],
+  [
+   "bells",
+   "ベルのフレーム",
+   "frame of golden bells and ribbons"
+  ]
+ ],
+ "exclude": []
+}
