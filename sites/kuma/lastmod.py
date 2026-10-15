@@ -96,7 +96,7 @@ def compute(pages: dict, d: dict, lv: dict | None, today: date, stored: dict | N
                 out[url] = today.isoformat()
                 changed.append(rel)
         elif not parts:
-            out[url] = max(mins, live_all)
+            out[url] = max(mins, live_all, max((x["date"] for x in d.get("research", [])), default=""))
         elif head == "live" and len(parts) == 2:
             out[url] = pref.get(parts[1], live_all or mins)
         elif head == "live" and len(parts) >= 3:
@@ -119,6 +119,9 @@ def compute(pages: dict, d: dict, lv: dict | None, today: date, stored: dict | N
             out[url] = d["sight_updated"]
         elif head == "emergency":
             out[url] = emergency_date(d) or mins
+        elif head == "research":
+            docs = {x["slug"]: x["date"] for x in d.get("research", [])}
+            out[url] = docs.get(parts[1], mins) if len(parts) > 1 else max(docs.values(), default=mins)
         elif head == "notices":
             out[url] = max((x["date"] for x in d.get("muni_notices", [])), default=mins)
         elif head == "news":

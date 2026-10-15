@@ -28,6 +28,7 @@ from sites.kuma import finder as finder_mod  # noqa: E402
 from sites.kuma import lastmod as lastmod_mod  # noqa: E402
 from sites.kuma import notices as notices_mod  # noqa: E402
 from sites.kuma import official as official_mod  # noqa: E402
+from sites.kuma import research as research_mod  # noqa: E402
 from sites.kuma import season as season_mod  # noqa: E402
 from sites.kuma import live as live_mod  # noqa: E402
 from sites.kuma.fmt import day_text, fy_label, fy_start, jp_date, md, n, ratio_text, table  # noqa: E402
@@ -262,6 +263,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
         mi = "".join(f'<li><a href="{esc(x["link"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}・{esc(x["publisher"])}</b></li>' for x in d["muni_notices"][:4])
         news_block += (f'<h2>自治体の最近のクマ関連のお知らせ</h2>\n<ul class="link-list">{mi}</ul>\n'
                        '<p><a href="/notices/">自治体のお知らせの一覧</a></p>\n')
+    news_block = research_mod.home_block(d.get("research") or []) + news_block
     body = f"""<section class="hero hero--kuma">
 <div class="hero-copy">
 <p class="eyebrow">環境省の速報値(都道府県からの聞き取り)</p>
@@ -753,7 +755,7 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None,
                 prefs: dict | None = None, today: date | None = None,
-                captures: dict | None = None, update_lastmod: bool = False, feeds: dict | None = None) -> list[str]:
+                captures: dict | None = None, update_lastmod: bool = False, feeds: dict | None = None, research: list | None = None) -> list[str]:
     global SITE
     missing = missing_config(cfg)
     if release and missing:
@@ -763,6 +765,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     d["captures"] = captures_mod.prepare(captures)
     d["muni_feeds"] = feeds
     d["muni_notices"] = notices_mod.bear_notices(feeds)         # the bear notices of the municipalities' own feeds (sokuhou/feedscan.py)
+    d["research"] = research or []                              # the research notes (sites/kuma/research/*.json, see research.py)
+    research_mod.check(d["research"], ROOT)
     links = links or {}
     from sokuhou.sources import kumalib   # a source on the stop list is shown nowhere (list, counts, map, feed, CSV, digest, sources page)
     prefs = {k: v for k, v in (prefs or {}).items() if not kumalib.is_stopped(k)} or None
@@ -789,6 +793,10 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages["trend/index.html"] = trend_page(d, cfg, preview)
     pages["emergency/index.html"] = emergency_page(d, cfg, preview)
     pages["news/index.html"] = news_page(d, cfg, preview)
+    if d["research"]:
+        pages["research/index.html"] = research_mod.hub_page(lambda **kw: page(cfg, preview, **kw), d["research"], has_live=any_live, has_digest=bool(dig["weeks"]))
+        for doc in d["research"]:
+            pages[f"research/{doc['slug']}/index.html"] = research_mod.research_page(lambda **kw: page(cfg, preview, **kw), doc, d["research"])
     if d["muni_notices"]:
         pages["notices/index.html"] = notices_mod.notices_page(lambda **kw: page(cfg, preview, **kw), d["muni_notices"], feeds)
     if any_live:
@@ -888,7 +896,8 @@ def main() -> None:
     links_file = HERE / "links.json"
     links = json.loads(links_file.read_text(encoding="utf-8")) if links_file.exists() else {}
     try:
-        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, prefs=prefs, captures=captures, update_lastmod=args.update_lastmod, feeds=feeds)
+        files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, prefs=prefs, captures=captures, update_lastmod=args.update_lastmod, feeds=feeds,
+                            research=research_mod.load())
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {args.out}")
