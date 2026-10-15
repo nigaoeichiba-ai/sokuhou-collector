@@ -204,6 +204,18 @@ def shown(item: dict, filters: dict, strict: bool = True, recipient: str | None 
     return relevance.fits(name, recipient)
 
 
+HOLD_MIN = 4       # a page that was big enough stays published down to this many products ...
+HOLD_DAYS = 14     # ... for this many days of history: the count of gift-like products of a genre moves around the minimum, and a page that is there one day and a 404 the next has been seen by the search engines
+
+
+def was_full(segment: dict, min_items: int) -> bool:
+    h = segment.get("history") or {}
+    if not h:
+        return False
+    cutoff = (date.fromisoformat(max(h)) - timedelta(days=HOLD_DAYS)).isoformat()          # by the calendar, not by the number of entries kept
+    return any(len(h[d]) >= min_items for d in h if d >= cutoff)
+
+
 def view(store: dict | None, filters: dict, min_items: int = 8) -> dict | None:
     """What the pages need: per segment the shown products (with their real Rakuten place), the price facts, and today's movers; plus the
     biggest risers of all segments.  None when there is no usable data (the site then has no ranking pages)."""
@@ -215,11 +227,12 @@ def view(store: dict | None, filters: dict, min_items: int = 8) -> dict | None:
             continue
         strict = SEGMENTS[slug].get("strict", True)
         items = [it for it in s.get("items", []) if shown(it, filters, strict, SEGMENTS[slug].get("recipient"))][:KEEP]
-        if len(items) < min_items:
+        if len(items) < min_items and not (len(items) >= HOLD_MIN and was_full(s, min_items)):
             continue
         mv = movers(s)
         ok = {it["code"]: it for it in items}
         segs[slug] = {
+            "thin": len(items) < min_items,                                            # kept only so the address does not turn into a 404: not for the search engines (noindex, not in the sitemap)
             "slug": slug, "label": SEGMENTS[slug]["label"], "kind": SEGMENTS[slug]["kind"], "date": s.get("date") or store.get("updated"), "items": items, "facts": price_facts(items),
             "depth": int(s.get("depth") or PLACES),
             "days": mv["days"],

@@ -258,8 +258,22 @@ class ViewTest(unittest.TestCase):
         v = ranking.view(store, content.load()["filters"])
         for slug in (v or {"order": []})["order"]:
             sg = v["segments"][slug]
-            self.assertGreaterEqual(len(sg["items"]), 8)
+            self.assertGreaterEqual(len(sg["items"]), ranking.HOLD_MIN)
             self.assertTrue(all(i["price"] > 0 and i["url"].startswith("https://") for i in sg["items"]))
+
+    def test_a_page_that_was_big_enough_stays_while_it_has_a_few_products_so_it_never_flickers_into_a_404(self):
+        s = ranking.update(None, {"f20": day(codes(9))}, date(2026, 10, 1))
+        s = ranking.update(s, {"f20": day(codes(5))}, date(2026, 10, 2))             # 9 yesterday, 5 today: still published
+        self.assertEqual(len(ranking.view(s, FILTERS)["segments"]["f20"]["items"]), 5)
+        s = ranking.update(None, {"f20": day(codes(5))}, date(2026, 10, 1))
+        s = ranking.update(s, {"f20": day(codes(5))}, date(2026, 10, 2))             # never had eight: no page
+        self.assertIsNone(ranking.view(s, FILTERS))
+        s = ranking.update(None, {"f20": day(codes(9))}, date(2026, 10, 1))
+        s = ranking.update(s, {"f20": day(codes(3))}, date(2026, 10, 2))             # down to three: too thin even for a page that was big
+        self.assertIsNone(ranking.view(s, FILTERS))
+        s = ranking.update(None, {"f20": day(codes(9))}, date(2026, 9, 1))
+        s = ranking.update(s, {"f20": day(codes(5))}, date(2026, 9, 1) + timedelta(days=ranking.HOLD_DAYS + 3))   # the big day is older than the hold: gone
+        self.assertIsNone(ranking.view(s, FILTERS))
 
     def test_a_segment_with_too_few_products_has_no_page_and_no_data_means_no_ranking(self):
         s = ranking.update(None, {"f20": day(codes(5))}, date(2026, 10, 1))
@@ -371,3 +385,35 @@ class BuildTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ThinPageTest(unittest.TestCase):
+    """A genre that had enough products and has only a few today keeps its page (no 404 for what the search engines saw) but is offered to nobody: noindex and not in the sitemap."""
+
+    @classmethod
+    def setUpClass(cls):
+        c = content.load(FIX)
+        items = json.loads((FIX / "items.json").read_text(encoding="utf-8"))
+        s = ranking.update(None, {"f20": day(codes(16)), "m40": day(codes(10, "q"))}, date(2026, 10, 6))
+        store = ranking.update(s, {"f20": day(codes(16)), "m40": day(codes(5, "q"))}, date(2026, 10, 7))
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.out = Path(cls.tmp.name) / "site"
+        build.render_site(c, items, CFG, cls.out, release=True, today=date(2026, 10, 7), ranking=store)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+        build.RANKING_ON = False
+
+    def test_the_thin_page_exists_with_noindex_and_is_not_in_the_sitemap_while_the_full_one_is_ordinary(self):
+        thin = (self.out / "ranking/m40/index.html").read_text(encoding="utf-8")
+        full = (self.out / "ranking/f20/index.html").read_text(encoding="utf-8")
+        self.assertIn('<meta name="robots" content="noindex,follow">', thin)
+        self.assertNotIn("noindex", full)
+        sitemap = (self.out / "sitemap.xml").read_text(encoding="utf-8")
+        self.assertNotIn("/ranking/m40/", sitemap)
+        self.assertIn("/ranking/f20/", sitemap)
+
+    def test_the_site_checker_accepts_it(self):
+        problems = sitecheck.check_dir(self.out, CFG["site_url"], skip=("lists",))
+        self.assertEqual([p for p in problems if "ranking" in p], [], problems[:10])
