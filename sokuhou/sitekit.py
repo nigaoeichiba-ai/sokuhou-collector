@@ -90,6 +90,8 @@ def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, descr
     base = cfg["site_url"].rstrip("/")
     name = esc(cfg["site_name"])
     robots = '<meta name="robots" content="noindex,nofollow">\n' if preview else ""
+    if og_image and not preview:   # Discover / large previews. Named googlebot so the name="robots" checks that add noindex still work
+        robots += '<meta name="googlebot" content="max-image-preview:large">\n'
     banner = ('<div class="preview">プレビュー版です。運営者情報などが未設定のため、検索エンジンには公開されません。</div>\n'
               if preview else "")
     adsense = ""
