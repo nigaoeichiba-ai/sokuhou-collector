@@ -42,9 +42,25 @@ class ClientTest(unittest.TestCase):
                 c.search("お歳暮")
         self.assertNotIn("SECRETID123", str(cm.exception))
 
-    def test_requests_are_spaced(self):
+    def test_requests_stay_under_30_a_minute(self):
         c = Y.Client("id", VC)
-        self.assertGreaterEqual(c.min_interval, 1.0)
+        self.assertGreaterEqual(c.min_interval, 2.0)                          # 60 / 30
+
+    def test_a_429_is_waited_out_once_then_the_request_is_repeated(self):
+        c = Y.Client("SECRETID123", VC, min_interval=0, retry_wait=0)
+        limit = urllib.error.HTTPError("https://x/", 429, "slow", {}, BytesIO(b'{"Status":429}'))
+        ok = mock.MagicMock()
+        ok.__enter__.return_value.read.return_value = b'{"hits":[]}'
+        with mock.patch("urllib.request.urlopen", side_effect=[limit, ok]):
+            self.assertEqual(c.search("x"), {"hits": []})
+        self.assertEqual(c.calls, 2)
+
+    def test_a_second_429_is_an_error(self):
+        c = Y.Client("SECRETID123", VC, min_interval=0, retry_wait=0)
+        errs = [urllib.error.HTTPError("https://x/", 429, "slow", {}, BytesIO(b"{}")) for _ in range(2)]
+        with mock.patch("urllib.request.urlopen", side_effect=errs):
+            with self.assertRaises(Y.YahooError):
+                c.search("x")
 
 
 if __name__ == "__main__":
