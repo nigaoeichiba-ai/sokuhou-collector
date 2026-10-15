@@ -150,8 +150,10 @@ def main() -> None:
     if a.probe:
         r = client.search(a.probe, results=3)
         print(json.dumps({k: shape(v) for k, v in r.items() if k != "hits"}, ensure_ascii=False, indent=1))
-        for h in (r.get("hits") or [])[:2]:
-            print(json.dumps(shape(h), ensure_ascii=False, indent=1))
+        for h in (r.get("hits") or [])[:2]:                       # one line a field, so a log viewer shows all of it
+            for k, v in h.items():
+                print(f"{k}: {json.dumps(shape(v), ensure_ascii=False, separators=(',', ':'))}")
+            print("--")
         return
     gs = json.loads((HERE / "content" / "compare.json").read_text(encoding="utf-8"))["groups"]
     gs = gs[: a.limit] if a.limit else gs
