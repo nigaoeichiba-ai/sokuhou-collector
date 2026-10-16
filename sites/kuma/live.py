@@ -252,9 +252,9 @@ def hub_page(page, d: dict, lv: dict) -> str:
 <ul class="mini-list">{pref_links}</ul>
 <h2>取得元と、更新の状況</h2>
 {table(["取得元", f"{fy_label(cur)}の記録", "最新", "更新について"], src_rows)}
-{counts_section(lv)}<p class="notice">再利用の許可が明示されている取得元は、詳しい記録を載せ、明示されていない取得元は、件数と最新の日付を載せています{'(複数の公開情報で一致を確認できた目撃は、場所も載せています)' if any(c.get('records') for c in lv.get('counts') or []) else '(場所などの詳しい記録は、公式のページへ)'}。載っていない地域は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。取得は、1日1回、自動で行っています。取得元・数え方・引用のしかたは、<a href="/cite/">データの出典・引用のしかた</a>を、各都道府県の公式のページへのリンクは、<a href="/official/">リンク集</a>を、市町村の名前で探すときは、<a href="/search/">市町村名から探す</a>をご覧ください。</p>"""
+{counts_section(lv)}<p class="notice">再利用の許可が明示されている取得元は、詳しい記録を載せています。明示されていない取得元は、件数と最新の日付だけです{'(複数の公開情報で一致を確認できた目撃は、場所も載せています)' if any(c.get('records') for c in lv.get('counts') or []) else '(場所などの詳しい記録は、公式のページへ)'}。載っていない地域は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。取得は、1日1回、自動で行っています。取得元・数え方・引用のしかたは、<a href="/cite/">データの出典・引用のしかた</a>を、各都道府県の公式のページへのリンクは、<a href="/official/">リンク集</a>を、市町村の名前で探すときは、<a href="/search/">市町村名から探す</a>をご覧ください。</p>"""
     return page(path="/live/", title=f"クマの最新の目撃情報(自治体の公式・{len(infos)}か所・{fy_label(cur)})",
-                description=f"{'・'.join(i['name'] for i in infos.values())}が公表しているクマの目撃情報を、新しい順に一覧にしています。{fy_label(cur)}の記録は{n(len(recs))}件です。",
+                description=f"{'・'.join(i['name'] for i in infos.values())}が公表しているクマの目撃情報を新しい順に一覧にしています。{fy_label(cur)}の記録は{n(len(recs))}件です。",
                 body=body, alternates=(("最新の目撃", "/live/feed.xml"),))
 
 
@@ -315,7 +315,7 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
         month_blocks += f"<h3>{esc(i['name'])}</h3>\n{chart}{month_table(mine)}\n"
     body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", "/live/"), (pname, None)])}
 <h1>{esc(pname_s)}の熊(クマ)出没・目撃情報({fy_label(cur)}・{esc(names)}の公式)</h1>
-<p class="lead">{esc(names)}が公表している{fy_label(cur)}の記録は、{n(len(rows))}件です{('(' + esc(note) + ')') if note else ''}。市町村ごとの件数と、新しい順の記録を載せています。</p>
+<p class="lead">{esc(names)}が公表している{fy_label(cur)}の記録は、{n(len(rows))}件です{('(' + esc(note) + ')') if note else ''}。市町村ごとの件数と新しい順の記録を載せています。</p>
 {stats_html(len(rows), last30(rows, today), rows[0], today, cur)}
 {published}{after}<h2>市町村別の記録({fy_label(cur)})</h2>
 {table(["市町村", "記録", "直近30日", "最新"], city_rows)}
@@ -420,7 +420,7 @@ def city_page(page, d: dict, lv: dict, slug: str, city: str, links: dict) -> str
 {('<h2>' + esc(pname) + 'のほかの市町村</h2>' + other_html) if other_html else ''}
 {source_notes(infos, keys)}"""
     return page(path=city_url(slug, city), title=f"{city}の熊(クマ)出没・目撃情報【最新{md(last['at'][:10])}】{pname}・{fy_label(cur)}・{n(len(rows))}件",
-                description=f"{pname}{city}の熊(クマ)の目撃情報を、新しい順に一覧にしています。最新は{md(last['at'][:10])}。{fy_label(cur)}は{n(len(rows))}件(直近30日は{n(recent)}件)です。",
+                description=f"{pname}{city}の熊(クマ)の目撃情報を新しい順に一覧にしています。最新は{md(last['at'][:10])}。{fy_label(cur)}は{n(len(rows))}件(直近30日は{n(recent)}件)です。",
                 body=body, alternates=(("最新の目撃", "/live/feed.xml"),))
 
 
@@ -589,7 +589,7 @@ def counts_page(page, d: dict, c: dict, today: date, links: dict) -> str:
         cities = "・".join(dict.fromkeys(x["city"] for x in recs))
         shown = [{"at": x["observed_at"], "city": x["city"], "place": x["place"], "kind": x["kind"]} for x in recs[:RECENT_ROWS]]
         all_covered = {x[0] for x in c["munis"]} <= {x["city"] for x in recs}
-        place_scope = ("上の市町村別の件数の、すべての市町村の分です。" if all_covered else
+        place_scope = ("上の市町村別の件数に出ているすべての市町村の分です。" if all_covered else
                        f"場所まで載せているのは、{esc(cities)}の分だけで、ほかの市町村の目撃は、上の件数にだけ含まれます。")
         confirmed = f"""<h2>場所まで確認できた最新の目撃({fy_label(cur)})</h2>
 <p>複数の公開情報で一致を確認できた目撃だけを、新しい順に載せています({n(len(recs))}件)。{place_scope}</p>
