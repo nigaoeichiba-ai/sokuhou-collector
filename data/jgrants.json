@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-14T00:16:51.333593+00:00",
+ "fetched_at": "2026-10-16T21:15:37.168951+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -85,18 +85,6 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "［第十一回］事業再構築補助金（交付申請等）"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-16T14:59:00.000Z",
-   "acceptance_start_datetime": "2026-09-17T05:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0W5h00000ZueXcEAJ",
-   "id": "a0W5h00000ZueXcEAJ",
-   "institution_name": null,
-   "name": "S-00004742",
-   "subsidy_max_limit": 5000000,
-   "target_area_search": "東京都",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "ドローンを活用したツアー造成支援補助金"
   },
   {
    "acceptance_end_datetime": "2030-05-30T15:00:00.000Z",
@@ -193,18 +181,6 @@
    "target_area_search": "東京都",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "東京都環境保全資金融資あっせん"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-16T03:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-07T01:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDKZFMA5",
-   "id": "a0WJ200000CDKZFMA5",
-   "institution_name": null,
-   "name": "S-00006173",
-   "subsidy_max_limit": 0,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和８年度_グリーンスローモビリティ等導入促進事業（二次公募）"
   },
   {
    "acceptance_end_datetime": "2027-02-28T14:59:00.000Z",
@@ -915,6 +891,18 @@
    "title": "【長野県茅野市】製造業等労務環境改善・競争力強化促進補助金"
   },
   {
+   "acceptance_end_datetime": "2027-02-15T14:59:00.000Z",
+   "acceptance_start_datetime": "2026-10-16T05:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003Bf7lUAC",
+   "id": "a0WfQ000003Bf7lUAC",
+   "institution_name": "東京都介護・障害福祉サービス等事業所における育業・介護休業等両立支援事業費補助金",
+   "name": "S-00009818",
+   "subsidy_max_limit": 0,
+   "target_area_search": "東京都",
+   "target_number_of_employees": "300名以下",
+   "title": "令和８年度介護・障害福祉サービス等事業所における育業・介護休業等両立支援事業費補助金"
+  },
+  {
    "acceptance_end_datetime": "2027-03-17T14:59:00.000Z",
    "acceptance_start_datetime": "2026-03-31T15:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDY1kMAH",
@@ -973,30 +961,6 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "令和７年度補正 業務産業用蓄電システム導入支援事業"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-16T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-16T08:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDeYyMAL",
-   "id": "a0WJ200000CDeYyMAL",
-   "institution_name": "小規模事業者持続化補助金＜一般型 災害支援枠＞",
-   "name": "S-00009814",
-   "subsidy_max_limit": 2000000,
-   "target_area_search": "熊本県",
-   "target_number_of_employees": "20名以下",
-   "title": "⼩規模事業者持続化補助⾦＜⼀般型 災害支援枠（令和8年熊本地震）＞1次公募【商⼯会地区】"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-16T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-07-27T08:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDWp3MAH",
-   "id": "a0WJ200000CDWp3MAH",
-   "institution_name": "小規模事業者持続化補助金＜一般型 災害支援枠＞",
-   "name": "S-00007741",
-   "subsidy_max_limit": 2000000,
-   "target_area_search": "石川県",
-   "target_number_of_employees": "20名以下",
-   "title": "⼩規模事業者持続化補助⾦＜⼀般型 災害⽀援枠（令和６年能登半島地震等）＞10次公募【商⼯会地区】"
   },
   {
    "acceptance_end_datetime": "2026-11-27T15:00:00.000Z",
@@ -1563,30 +1527,6 @@
    "title": "高度安全機械等導入支援補助金"
   },
   {
-   "acceptance_end_datetime": "2026-10-16T03:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-17T05:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDeZuMAL",
-   "id": "a0WJ200000CDeZuMAL",
-   "institution_name": "二酸化炭素排出抑制対策事業費等補助金",
-   "name": "S-00009816",
-   "subsidy_max_limit": 0,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和８年度データセンターのゼロエミッション化・レジリエンス強化促進事業（二次公募）"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-16T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-16T08:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDeToMAL",
-   "id": "a0WJ200000CDeToMAL",
-   "institution_name": "小規模事業者持続化補助金＜一般型 災害支援枠＞",
-   "name": "S-00009785",
-   "subsidy_max_limit": 2000000,
-   "target_area_search": "熊本県",
-   "target_number_of_employees": "20名以下",
-   "title": "小規模事業者持続化補助金＜一般型 災害支援枠（令和８年熊本地震）＞１次公募【商工会議所地区】"
-  },
-  {
    "acceptance_end_datetime": "2032-10-29T14:59:00.000Z",
    "acceptance_start_datetime": "2025-06-30T09:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDQEJMA5",
@@ -1899,18 +1839,6 @@
    "title": "令和８年度SDGsファイナンス支援事業補助金(ソーシャルボンド/ソーシャルローン)"
   },
   {
-   "acceptance_end_datetime": "2026-10-16T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-07-27T06:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDdALMA1",
-   "id": "a0WJ200000CDdALMA1",
-   "institution_name": "小規模事業者持続化補助金＜一般型 災害支援枠＞",
-   "name": "S-00009485",
-   "subsidy_max_limit": 2000000,
-   "target_area_search": "石川県",
-   "target_number_of_employees": "20名以下",
-   "title": "小規模事業者持続化補助金＜一般型 災害支援枠（令和６年能登半島地震等）＞１０次公募【商工会議所地区】"
-  },
-  {
    "acceptance_end_datetime": "2027-03-19T11:00:00.000Z",
    "acceptance_start_datetime": "2026-07-01T05:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDdABMA1",
@@ -1959,30 +1887,6 @@
    "title": "休廃止鉱山鉱害防止等工事費補助金（令和８年度当初）【中部監督部】"
   },
   {
-   "acceptance_end_datetime": "2026-10-16T14:59:00.000Z",
-   "acceptance_start_datetime": "2026-08-30T15:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDUheMAH",
-   "id": "a0WJ200000CDUheMAH",
-   "institution_name": "訪問系介護サービス事業所に対する防犯機器等導入支援補助金",
-   "name": "S-00007197",
-   "subsidy_max_limit": 100000,
-   "target_area_search": "東京都",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和８年度訪問系介護サービス事業所に対する防犯機器等導入支援補助金"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-16T14:59:00.000Z",
-   "acceptance_start_datetime": "2026-08-30T15:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDUhfMAH",
-   "id": "a0WJ200000CDUhfMAH",
-   "institution_name": "訪問介護員等補助者同行支援補助金",
-   "name": "S-00007198",
-   "subsidy_max_limit": 0,
-   "target_area_search": "東京都",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和８年度訪問介護員等補助者同行支援補助金"
-  },
-  {
    "acceptance_end_datetime": "2026-10-28T03:00:00.000Z",
    "acceptance_start_datetime": "2026-10-08T01:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003iZLKUA2",
@@ -2019,6 +1923,18 @@
    "title": "［第十三回］事業再構築補助金_GX進出類型（交付申請等）"
   },
   {
+   "acceptance_end_datetime": "2027-01-29T07:30:00.000Z",
+   "acceptance_start_datetime": "2026-10-16T00:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDVn4MAH",
+   "id": "a0WJ200000CDVn4MAH",
+   "institution_name": "都城市農業資材等価格高騰緊急支援事業費補助金",
+   "name": "S-00007440",
+   "subsidy_max_limit": 1000000,
+   "target_area_search": "宮崎県",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "【畜産事業者向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
+  },
+  {
    "acceptance_end_datetime": "2026-10-30T08:00:00.000Z",
    "acceptance_start_datetime": "2026-09-30T15:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003oIxhUAE",
@@ -2041,7 +1957,19 @@
    "target_area_search": "東京都",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "令和８年度臨床研修費等補助金（歯科医師）"
+  },
+  {
+   "acceptance_end_datetime": "2027-01-29T07:30:00.000Z",
+   "acceptance_start_datetime": "2026-10-16T00:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDVn9MAH",
+   "id": "a0WJ200000CDVn9MAH",
+   "institution_name": "都城市農業資材等価格高騰緊急支援事業費補助金",
+   "name": "S-00007441",
+   "subsidy_max_limit": 1000000,
+   "target_area_search": "宮崎県",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 170
+ "total": 164
 }
