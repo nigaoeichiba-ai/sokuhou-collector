@@ -1,0 +1,84 @@
+{
+ "slug": "yokai-scroll-wa",
+ "title": "オリジナル妖怪の絵巻風イラスト",
+ "genre": "animals",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "holes": false,
+ "lead": "傘・提灯・古い道具などに宿る、オリジナルの妖怪12点です。和風の絵巻のタッチで描いています。イベントの告知や和風デザインに使えます。",
+ "tags": [
+  "妖怪",
+  "お化け",
+  "絵巻",
+  "和風",
+  "オリジナル",
+  "ハロウィン",
+  "お祭り"
+ ],
+ "subject_en": "Japanese picture-scroll (emakimono) style, each ONE ORIGINAL yokai character invented for this series, centred, ink outlines with soft mineral-pigment colours of indigo, vermilion, ochre and moss green, friendly and slightly humorous, no existing yokai names or copyrighted characters. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "items": [
+  [
+   "kasa",
+   "傘の妖怪",
+   "an old paper umbrella with one eye and one leg hopping"
+  ],
+  [
+   "chochin",
+   "提灯の妖怪",
+   "a paper lantern with a wide mouth and a long tongue"
+  ],
+  [
+   "kamado",
+   "かまどの妖怪",
+   "a round clay stove spirit with a smiling face and rising steam"
+  ],
+  [
+   "geta",
+   "下駄の妖怪",
+   "a wooden clog with tiny arms and a face on its strap"
+  ],
+  [
+   "kozuchi",
+   "小槌の妖怪",
+   "a small mallet with legs and a lucky grin"
+  ],
+  [
+   "tsubo",
+   "壺の妖怪",
+   "a pot with a lid for a hat and peeking eyes"
+  ],
+  [
+   "fude",
+   "筆の妖怪",
+   "a calligraphy brush walking on its bristles with ink drops"
+  ],
+  [
+   "byobu",
+   "屏風の妖怪",
+   "a folding screen with a face peeking from the panels"
+  ],
+  [
+   "kitsune-bi",
+   "狐火の精",
+   "a small fox-shaped flame spirit with a curling tail"
+  ],
+  [
+   "kappa-like",
+   "川の小さな妖怪",
+   "an original river creature with a plate-like head and a round shell, holding a lotus leaf"
+  ],
+  [
+   "yuki-onna-like",
+   "雪の精",
+   "an original snow spirit in a pale kimono-like robe with a swirling scarf"
+  ],
+  [
+   "neko-tail",
+   "ふた股の尾の猫",
+   "a cat spirit with two tails sitting on a roof tile"
+  ]
+ ],
+ "subject": "",
+ "season": null,
+ "exclude": []
+}

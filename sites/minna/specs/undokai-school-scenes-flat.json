@@ -1,0 +1,84 @@
+{
+ "slug": "undokai-school-scenes-flat",
+ "title": "運動会の場面（小学生）",
+ "genre": "school",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "holes": false,
+ "lead": "かけっこ・玉入れ・綱引き・リレーなど、小学校の運動会の場面を12点にまとめました。おたよりや行事予定の資料に使えます。",
+ "tags": [
+  "運動会",
+  "小学生",
+  "体育祭",
+  "かけっこ",
+  "リレー",
+  "おたより",
+  "学校行事"
+ ],
+ "subject_en": "Japanese elementary school sports day scenes, each ONE small scene of two to four children in white gym clothes with red or white caps, centred in its cell, flat style, simple round faces with dot eyes and a smile, no school logos. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "items": [
+  [
+   "kakekko",
+   "かけっこ",
+   "children running a footrace side by side toward a finish tape"
+  ],
+  [
+   "tamaire",
+   "玉入れ",
+   "children throwing red and white balls up toward a tall basket on a pole"
+  ],
+  [
+   "tsunahiki",
+   "綱引き",
+   "children pulling a thick rope in a tug of war, leaning back"
+  ],
+  [
+   "relay",
+   "リレー",
+   "a child passing a baton to the next runner"
+  ],
+  [
+   "ootama",
+   "大玉送り",
+   "children rolling a huge ball overhead along a line"
+  ],
+  [
+   "kibasen",
+   "騎馬戦",
+   "children forming a cavalry team with one rider wearing a red cap"
+  ],
+  [
+   "dance",
+   "ダンス",
+   "children dancing in a row with pom-poms raised"
+  ],
+  [
+   "oen",
+   "応援",
+   "children cheering with fans and a team flag"
+  ],
+  [
+   "junbi-taiso",
+   "準備体操",
+   "children doing warm-up stretches in a line"
+  ],
+  [
+   "hyoshodai",
+   "表彰台",
+   "three children standing on a podium with medals"
+  ],
+  [
+   "bento-lunch",
+   "お弁当の時間",
+   "a family sitting on a picnic sheet eating bento boxes"
+  ],
+  [
+   "tent-fan",
+   "観覧席",
+   "parents under a tent holding cameras and fans watching"
+  ]
+ ],
+ "subject": "",
+ "season": null,
+ "exclude": []
+}

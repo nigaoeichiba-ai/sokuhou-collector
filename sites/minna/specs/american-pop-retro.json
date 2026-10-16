@@ -1,0 +1,84 @@
+{
+ "slug": "american-pop-retro",
+ "title": "アメリカンポップの素材",
+ "genre": "deco",
+ "touch": "retro",
+ "title_fmt": "{ja}",
+ "holes": false,
+ "lead": "ドット柄・星・稲妻・ダイナー風の小物など、アメリカンポップ調の飾り素材12点です。ポスターやチラシ、店舗の掲示に使えます。",
+ "tags": [
+  "アメリカンポップ",
+  "ポップ",
+  "コミック",
+  "レトロ",
+  "ダイナー",
+  "ポスター",
+  "チラシ"
+ ],
+ "subject_en": "1950s-60s American pop-art comic style, each ONE separate object centred in its cell, bold black outlines, halftone dot shading, limited palette of red, yellow, blue, teal and cream. Original shapes, no brand marks. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "items": [
+  [
+   "burst",
+   "吹き出し型の爆発",
+   "a jagged comic explosion burst in yellow and red with halftone dots, blank inside"
+  ],
+  [
+   "lightning",
+   "稲妻",
+   "a bold lightning bolt in yellow with a blue outline and dot shading"
+  ],
+  [
+   "star-badge",
+   "星のバッジ",
+   "a big five-point star badge in red and blue with a halftone ring"
+  ],
+  [
+   "burger",
+   "ハンバーガー",
+   "a pop-art hamburger with lettuce and cheese"
+  ],
+  [
+   "milkshake",
+   "ミルクシェイク",
+   "a tall milkshake glass with a striped straw and a cherry"
+  ],
+  [
+   "jukebox",
+   "ジュークボックス",
+   "a rounded retro jukebox with glowing arches"
+  ],
+  [
+   "cola-bottle",
+   "ガラスのボトル",
+   "a generic glass soda bottle with a plain blank label and bubbles"
+  ],
+  [
+   "sneaker",
+   "スニーカー",
+   "a high-top sneaker with stripes, plain with no logo"
+  ],
+  [
+   "car",
+   "クラシックカー",
+   "a rounded 1950s convertible car, side view, no badge"
+  ],
+  [
+   "vinyl",
+   "レコード盤",
+   "a vinyl record with a plain red label and music notes"
+  ],
+  [
+   "sunglasses",
+   "サングラス",
+   "pointed cat-eye sunglasses with sparkles"
+  ],
+  [
+   "rocket",
+   "ロケット",
+   "a retro toy rocket with fins and flames"
+  ]
+ ],
+ "subject": "",
+ "season": null,
+ "exclude": []
+}
