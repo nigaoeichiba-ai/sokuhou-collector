@@ -98,6 +98,7 @@ def normalize(h: dict) -> dict | None:
         "price": price,
         "url": url,                                              # already the affiliate link (affiliate_type=vc); used as it is
         "image": image,
+        "image_small": ((h.get("image") or {}).get("small") or "").strip(),
         "shop": (seller.get("name") or "").strip(),
         "shop_code": seller.get("sellerId") or "",
         "reviews": int(_num(review.get("count"))),

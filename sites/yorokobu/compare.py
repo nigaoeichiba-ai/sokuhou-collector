@@ -286,6 +286,13 @@ def _row(cfg: dict, r: dict, n: int, rank: int = 0, total: int = 0, median_eff: 
 
 
 SHIP_WORD = {2: "送料無料", 3: "条件つきで送料無料"}
+Y_IMG_HOST = "https://item-shopping.c.yimg.jp/"            # the product photos Yahoo! serves; shown where they are (the programme: not saved on our side), at the size the API gives (not resized)
+
+
+def y_image(r: dict) -> str:
+    """The 76x76 product photo of the item (the API's `small`), or "" when it has none from Yahoo!'s own image host.  Older data files hold the 146px one: its twin is the same path under /i/c/."""
+    u = r.get("image_small") or (r.get("image") or "").replace("/i/g/", "/i/c/")
+    return u if u.startswith(Y_IMG_HOST) and "/i/c/" in u else ""
 
 
 def y_formula_html() -> str:
@@ -306,9 +313,11 @@ def _yrow(cfg: dict, r: dict, n: int) -> str:
     if r["points"]:
         facts.append(f'ポイント約{r["points"]:,}pt')
     p, rv, sh = r["parts"]
-    return (f'<li class="yh-row"><span class="cmp-no">{n}</span>'
+    img = y_image(r)
+    pic = (f'<a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"><img src="{esc(img)}" alt="{esc(B.short(r["name"], 40))}" width="76" height="76" {B.LAZY}></a>' if img else "")
+    return (f'<li class="yh-row"><span class="cmp-no">{n}</span><div class="yh-img">{pic}</div>'
             f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p><h3><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">{esc(B.short(r["name"], 52))}</a></h3>'
-            f'<p class="yh-facts">{" ・ ".join(f'<span class="nb">{f}</span>' for f in facts)}</p></div>'
+            f'<p class="yh-facts">{" ・ ".join(f'<span class="yh-f">{f}</span>' for f in facts)}</p></div>'
             f'<div class="cmp-score" title="価格{p}・レビュー{rv}・送料{sh}"><b>{r["total"]}</b><small>点数</small><i style="width:{r["total"]}%"></i></div>'
             f'<div class="cmp-go"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">Yahoo!ショッピングで見る{B.vc_pixel(cfg)}</a></div></li>')
 
