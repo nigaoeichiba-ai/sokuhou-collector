@@ -969,19 +969,25 @@ footer.site .src { color: var(--muted); }
 .seas-lead-note { margin: 0 0 14px; font-size: .84rem; color: var(--ink2); line-height: 1.8; }
 
 .yh-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-.yh-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) 74px 168px; align-items: center; gap: 14px; padding: 12px 16px; background: #fff; border: 1px solid var(--line2); border-radius: 16px; box-shadow: var(--shadow); }
+.yh-row { display: grid; grid-template-columns: 28px 76px minmax(0, 1fr) 74px 168px; align-items: center; gap: 14px; padding: 12px 16px; background: #fff; border: 1px solid var(--line2); border-radius: 16px; box-shadow: var(--shadow); }
+.yh-img { width: 76px; height: 76px; border-radius: 10px; overflow: hidden; background: var(--line2); }
+.yh-img img { display: block; width: 76px; height: 76px; }
 .yh-facts { overflow-wrap: anywhere; margin: 0; font-size: .84rem; line-height: 1.7; color: var(--ink2); }
 .yh-facts .cmp-price { font-size: 1.05rem; color: var(--ink); }
 @media (max-width: 860px) {
-  .yh-row { grid-template-columns: 26px minmax(0, 1fr) 64px; row-gap: 8px; }
+  .yh-row { grid-template-columns: 26px 76px minmax(0, 1fr) 64px; row-gap: 8px; }
   .yh-row .cmp-no { grid-column: 1; grid-row: 1; }
-  .yh-row .cmp-main { grid-column: 2; grid-row: 1; }
-  .yh-row .cmp-score { grid-column: 3; grid-row: 1; }
+  .yh-img { grid-column: 2; grid-row: 1; }
+  .yh-row .cmp-main { grid-column: 3; grid-row: 1; }
+  .yh-row .cmp-score { grid-column: 4; grid-row: 1; }
   .yh-row .cmp-go { grid-column: 1 / -1; grid-row: 2; }
 }
 @media (max-width: 420px) {
-  .yh-row { grid-template-columns: 26px minmax(0, 1fr); }
-  .yh-row .cmp-score { grid-column: 2; grid-row: 2; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; text-align: left; }
+  .yh-row { position: relative; grid-template-columns: 76px minmax(0, 1fr); }
+  .yh-row .cmp-no { position: absolute; left: 8px; top: 8px; z-index: 1; width: 22px; height: 22px; background: #fff; border: 1px solid var(--line); font-size: .72rem; }
+  .yh-img { grid-column: 1; grid-row: 1; }
+  .yh-row .cmp-main { grid-column: 2; grid-row: 1; }
+  .yh-row .cmp-score { grid-column: 1 / -1; grid-row: 2; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; text-align: left; }
   .yh-row .cmp-score b { display: inline; font-size: 1.3rem; }
   .yh-row .cmp-score i { flex: 0 0 100%; margin-top: 4px; }
   .yh-row .cmp-go { grid-row: 3; }
