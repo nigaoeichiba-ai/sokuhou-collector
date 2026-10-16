@@ -123,8 +123,8 @@ class PagesTest(unittest.TestCase):
     def paths(self):
         return ["shogatsu/index.html"] + [f"shogatsu/{a['slug']}/index.html" for a in DATA["articles"]]
 
-    def test_the_landing_page_and_the_six_articles_are_built(self):
-        self.assertEqual(len(DATA["articles"]), 6)
+    def test_the_landing_page_and_the_ten_articles_are_built(self):
+        self.assertEqual(len(DATA["articles"]), 10)
         for p in self.paths():
             html = self.read(p)
             self.assertEqual(html.count("<h1"), 1, p)
@@ -158,7 +158,7 @@ class PagesTest(unittest.TestCase):
             kinds = [json.loads(b).get("@type") for b in blocks]
             self.assertIn("Article", kinds, p)
             art = next(json.loads(b) for b in blocks if json.loads(b).get("@type") == "Article")
-            self.assertRegex(art["image"], r"^https://yorokobu-present\.com/assets/shogatsu/shogatsu-[a-z]+-og\.webp$")
+            self.assertRegex(art["image"], r"^https://yorokobu-present\.com/assets/shogatsu/shogatsu-[a-z-]+-og\.webp$")
             self.assertEqual(art["dateModified"], "2026-10-17")
             self.assertIn('property="og:image"', self.read(p))
 
@@ -168,13 +168,16 @@ class PagesTest(unittest.TestCase):
             self.assertIn(f"<th scope=\"row\">{cell}</th>", hub, cell)
         art = self.read("shogatsu/itsumade/index.html")
         self.assertIn("1月9日(土)", art)
+        kan = self.read("shogatsu/kanchu-mimai/index.html")
+        for cell in ("1月8日(金)", "1月16日(土)", "2月4日ごろ"):
+            self.assertIn(f"<th scope=\"row\">{cell}</th>", kan, cell)
 
     def test_the_pages_are_listed_for_search_engines_and_the_feed_and_the_new_strip(self):
         sitemap = self.read("sitemap.xml")
         for p in ["/shogatsu/"] + [f"/shogatsu/{a['slug']}/" for a in DATA["articles"]]:
             self.assertIn(f"https://yorokobu-present.com{p}</loc>", sitemap, p)
         feed = self.read("feed.xml")
-        self.assertEqual(sum(f"/shogatsu/" in e for e in feed.split("<entry>")), 7)
+        self.assertEqual(sum(f"/shogatsu/" in e for e in feed.split("<entry>")), 11)
         home = self.read("index.html")
         self.assertIn('href="/shogatsu/"', home)
         self.assertIn("お正月の特集", home)
