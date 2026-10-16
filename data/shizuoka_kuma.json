@@ -1,6 +1,97 @@
 {
- "as_of": "2026-10-02",
+ "as_of": "2026-10-15",
  "corroborated": [
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-15",
+   "place": "下柚野"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-14",
+   "place": "梅ヶ島"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-14",
+   "place": "井川"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-12",
+   "place": "有東木"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-10",
+   "place": "内房"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-09",
+   "place": "青木平"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-09",
+   "place": "羽鮒"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-09",
+   "place": "渡"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-09",
+   "place": "沼久保"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-09",
+   "place": "外神"
+  },
+  {
+   "city": "富士宮市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-08",
+   "place": "粟倉"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-07",
+   "place": "森腰"
+  },
+  {
+   "city": "静岡市葵区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-06",
+   "place": "梅ヶ島"
+  },
   {
    "city": "富士宮市",
    "count": null,
@@ -773,25 +864,25 @@
   }
  ],
  "corroborated_on": {
-  "富士宮市": "2026-10-16",
-  "富士市": "2026-10-16",
-  "小山町": "2026-10-16",
-  "川根本町": "2026-10-16",
-  "御殿場市": "2026-10-16",
-  "浜松市天竜区": "2026-10-16",
-  "浜松市浜名区": "2026-10-16",
-  "熱海市": "2026-10-16",
-  "裾野市": "2026-10-16",
-  "静岡市清水区": "2026-10-16",
-  "静岡市葵区": "2026-10-16"
+  "富士宮市": "2026-10-17",
+  "富士市": "2026-10-17",
+  "小山町": "2026-10-17",
+  "川根本町": "2026-10-17",
+  "御殿場市": "2026-10-17",
+  "浜松市天竜区": "2026-10-17",
+  "浜松市浜名区": "2026-10-17",
+  "熱海市": "2026-10-17",
+  "裾野市": "2026-10-17",
+  "静岡市清水区": "2026-10-17",
+  "静岡市葵区": "2026-10-17"
  },
  "credit": "出典: 静岡県「クマ出没情報」(https://www.pref.shizuoka.jp/kurashikankyo/shizenkankyo/wild/1017680.html)の公開データから、市町村別・月別の件数を、当サイトが集計して作成(静岡県が作成したものではありません)",
- "fetched_at": "2026-10-16T08:44:39.504800+09:00",
+ "fetched_at": "2026-10-17T06:19:14.212535+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
   "R08": {
-   "10": 4,
+   "10": 17,
    "4": 8,
    "5": 33,
    "6": 19,
@@ -802,10 +893,10 @@
  },
  "municipalities": {
   "富士宮市": {
-   "latest": "2026-10-02",
+   "latest": "2026-10-15",
    "monthly": {
     "R08": {
-     "10": 3,
+     "10": 10,
      "4": 4,
      "5": 4,
      "6": 7,
@@ -898,10 +989,10 @@
    }
   },
   "静岡市葵区": {
-   "latest": "2026-10-02",
+   "latest": "2026-10-14",
    "monthly": {
     "R08": {
-     "10": 1,
+     "10": 7,
      "4": 1,
      "5": 2,
      "6": 3,
@@ -913,9 +1004,9 @@
   }
  },
  "source": "shizuoka",
- "source_file": "https://www.pref.shizuoka.jp/_res/projects/default_project/_page_/001/017/680/261005kuma.pdf",
+ "source_file": "https://www.pref.shizuoka.jp/_res/projects/default_project/_page_/001/017/680/261016kuma.pdf",
  "source_page": "https://www.pref.shizuoka.jp/kurashikankyo/shizenkankyo/wild/1017680.html",
- "total_fy": 110,
+ "total_fy": 123,
  "unparsed": 0,
  "update_note": "静岡県が、不定期(ほぼ週1回)に更新します。最新の記録は、更新時点から遅れます。件数は、クマの目撃の報告です"
 }
