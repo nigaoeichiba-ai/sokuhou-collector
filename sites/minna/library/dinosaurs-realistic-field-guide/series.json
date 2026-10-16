@@ -1,0 +1,93 @@
+{
+ "added": "2026-10-17",
+ "slug": "dinosaurs-realistic-field-guide",
+ "title": "恐竜の図鑑風イラスト",
+ "genre": "animals",
+ "touch": "realistic",
+ "lead": "ティラノサウルス・トリケラトプス・ステゴサウルスなど、恐竜を図鑑風のタッチで描いた素材12点です。理科の資料や展示の案内に使えます。",
+ "tags": [
+  "恐竜",
+  "リアル",
+  "図鑑",
+  "ティラノサウルス",
+  "トリケラトプス",
+  "博物館",
+  "理科"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "dinosaurs-realistic-field-guide-trex",
+   "file": "dinosaurs-realistic-field-guide-trex.webp",
+   "title": "ティラノサウルス",
+   "desc": "ティラノサウルスのリアル・図鑑風イラストです。",
+   "tags": [
+    "恐竜",
+    "リアル",
+    "図鑑",
+    "ティラノサウルス",
+    "恐竜の図鑑風イラスト",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 529,
+   "h": 381
+  },
+  {
+   "id": "dinosaurs-realistic-field-guide-triceratops",
+   "file": "dinosaurs-realistic-field-guide-triceratops.webp",
+   "title": "トリケラトプス",
+   "desc": "トリケラトプスのリアル・図鑑風イラストです。",
+   "tags": [
+    "恐竜",
+    "リアル",
+    "図鑑",
+    "ティラノサウルス",
+    "トリケラトプス",
+    "恐竜の図鑑風イラスト",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 509,
+   "h": 374
+  },
+  {
+   "id": "dinosaurs-realistic-field-guide-stegosaurus",
+   "file": "dinosaurs-realistic-field-guide-stegosaurus.webp",
+   "title": "ステゴサウルス",
+   "desc": "ステゴサウルスのリアル・図鑑風イラストです。",
+   "tags": [
+    "恐竜",
+    "リアル",
+    "図鑑",
+    "ティラノサウルス",
+    "恐竜の図鑑風イラスト",
+    "ステゴサウルス",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 552,
+   "h": 371
+  },
+  {
+   "id": "dinosaurs-realistic-field-guide-ankylosaurus",
+   "file": "dinosaurs-realistic-field-guide-ankylosaurus.webp",
+   "title": "アンキロサウルス",
+   "desc": "アンキロサウルスのリアル・図鑑風イラストです。",
+   "tags": [
+    "恐竜",
+    "リアル",
+    "図鑑",
+    "ティラノサウルス",
+    "恐竜の図鑑風イラスト",
+    "アンキロサウルス",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 555,
+   "h": 306
+  }
+ ]
+}

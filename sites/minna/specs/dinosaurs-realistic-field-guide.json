@@ -80,5 +80,14 @@
  ],
  "subject": "",
  "season": null,
- "exclude": []
+ "exclude": [
+  "allosaurus",
+  "brachiosaurus",
+  "mammoth",
+  "parasaurolophus",
+  "plesiosaur",
+  "pteranodon",
+  "spinosaurus",
+  "velociraptor"
+ ]
 }

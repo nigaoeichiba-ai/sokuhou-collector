@@ -80,5 +80,9 @@
  ],
  "subject": "",
  "season": null,
- "exclude": []
+ "exclude": [
+  "cola-bottle",
+  "lightning",
+  "milkshake"
+ ]
 }

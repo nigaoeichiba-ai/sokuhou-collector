@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-17",
+ "slug": "undokai-school-scenes-flat",
+ "title": "運動会の場面（小学生）",
+ "genre": "school",
+ "touch": "flat",
+ "lead": "かけっこ・玉入れ・綱引き・リレーなど、小学校の運動会の場面を12点にまとめました。おたよりや行事予定の資料に使えます。",
+ "tags": [
+  "運動会",
+  "小学生",
+  "体育祭",
+  "かけっこ",
+  "リレー",
+  "おたより",
+  "学校行事"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "undokai-school-scenes-flat-kakekko",
+   "file": "undokai-school-scenes-flat-kakekko.webp",
+   "title": "かけっこ",
+   "desc": "かけっこのシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "運動会の場面（小学生）",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 522,
+   "h": 358
+  },
+  {
+   "id": "undokai-school-scenes-flat-tamaire",
+   "file": "undokai-school-scenes-flat-tamaire.webp",
+   "title": "玉入れ",
+   "desc": "玉入れのシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "運動会の場面（小学生）",
+    "玉入れ",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 509,
+   "h": 461
+  },
+  {
+   "id": "undokai-school-scenes-flat-tsunahiki",
+   "file": "undokai-school-scenes-flat-tsunahiki.webp",
+   "title": "綱引き",
+   "desc": "綱引きのシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "運動会の場面（小学生）",
+    "綱引き",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 523,
+   "h": 286
+  },
+  {
+   "id": "undokai-school-scenes-flat-relay",
+   "file": "undokai-school-scenes-flat-relay.webp",
+   "title": "リレー",
+   "desc": "リレーのシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "リレー",
+    "運動会の場面（小学生）",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 504,
+   "h": 341
+  },
+  {
+   "id": "undokai-school-scenes-flat-ootama",
+   "file": "undokai-school-scenes-flat-ootama.webp",
+   "title": "大玉送り",
+   "desc": "大玉送りのシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "運動会の場面（小学生）",
+    "大玉送り",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 501,
+   "h": 478
+  },
+  {
+   "id": "undokai-school-scenes-flat-kibasen",
+   "file": "undokai-school-scenes-flat-kibasen.webp",
+   "title": "騎馬戦",
+   "desc": "騎馬戦のシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "運動会の場面（小学生）",
+    "騎馬戦",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 353,
+   "h": 486
+  },
+  {
+   "id": "undokai-school-scenes-flat-dance",
+   "file": "undokai-school-scenes-flat-dance.webp",
+   "title": "ダンス",
+   "desc": "ダンスのシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "運動会の場面（小学生）",
+    "ダンス",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 504,
+   "h": 356
+  },
+  {
+   "id": "undokai-school-scenes-flat-oen",
+   "file": "undokai-school-scenes-flat-oen.webp",
+   "title": "応援",
+   "desc": "応援のシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "運動会の場面（小学生）",
+    "応援",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 468,
+   "h": 415
+  },
+  {
+   "id": "undokai-school-scenes-flat-junbi-taiso",
+   "file": "undokai-school-scenes-flat-junbi-taiso.webp",
+   "title": "準備体操",
+   "desc": "準備体操のシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "運動会の場面（小学生）",
+    "準備体操",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 518,
+   "h": 340
+  },
+  {
+   "id": "undokai-school-scenes-flat-hyoshodai",
+   "file": "undokai-school-scenes-flat-hyoshodai.webp",
+   "title": "表彰台",
+   "desc": "表彰台のシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "運動会の場面（小学生）",
+    "表彰台",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 461,
+   "h": 419
+  },
+  {
+   "id": "undokai-school-scenes-flat-bento-lunch",
+   "file": "undokai-school-scenes-flat-bento-lunch.webp",
+   "title": "お弁当の時間",
+   "desc": "お弁当の時間のシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "運動会の場面（小学生）",
+    "お弁当の時間",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 589,
+   "h": 352
+  },
+  {
+   "id": "undokai-school-scenes-flat-tent-fan",
+   "file": "undokai-school-scenes-flat-tent-fan.webp",
+   "title": "観覧席",
+   "desc": "観覧席のシンプルフラットイラストです。",
+   "tags": [
+    "運動会",
+    "小学生",
+    "体育祭",
+    "かけっこ",
+    "運動会の場面（小学生）",
+    "観覧席",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 504,
+   "h": 437
+  }
+ ]
+}

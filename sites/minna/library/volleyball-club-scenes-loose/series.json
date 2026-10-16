@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-17",
+ "slug": "volleyball-club-scenes-loose",
+ "title": "バレーボール部の場面",
+ "genre": "school",
+ "touch": "loose",
+ "lead": "サーブ・レシーブ・スパイク・ブロックなど、バレーボール部の練習と試合の場面12点です。部活動の案内や部員募集の資料に使えます。",
+ "tags": [
+  "バレーボール",
+  "バレー",
+  "部活",
+  "スポーツ",
+  "練習",
+  "試合",
+  "部員募集"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "volleyball-club-scenes-loose-serve",
+   "file": "volleyball-club-scenes-loose-serve.webp",
+   "title": "サーブ",
+   "desc": "サーブのゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "バレーボール部の場面",
+    "サーブ",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 335,
+   "h": 532
+  },
+  {
+   "id": "volleyball-club-scenes-loose-receive",
+   "file": "volleyball-club-scenes-loose-receive.webp",
+   "title": "レシーブ",
+   "desc": "レシーブのゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "バレーボール部の場面",
+    "レシーブ",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 496,
+   "h": 286
+  },
+  {
+   "id": "volleyball-club-scenes-loose-toss",
+   "file": "volleyball-club-scenes-loose-toss.webp",
+   "title": "トス",
+   "desc": "トスのゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "バレーボール部の場面",
+    "トス",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 284,
+   "h": 533
+  },
+  {
+   "id": "volleyball-club-scenes-loose-spike",
+   "file": "volleyball-club-scenes-loose-spike.webp",
+   "title": "スパイク",
+   "desc": "スパイクのゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "バレーボール部の場面",
+    "スパイク",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 450,
+   "h": 507
+  },
+  {
+   "id": "volleyball-club-scenes-loose-block",
+   "file": "volleyball-club-scenes-loose-block.webp",
+   "title": "ブロック",
+   "desc": "ブロックのゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "バレーボール部の場面",
+    "ブロック",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 474,
+   "h": 510
+  },
+  {
+   "id": "volleyball-club-scenes-loose-libero",
+   "file": "volleyball-club-scenes-loose-libero.webp",
+   "title": "リベロ",
+   "desc": "リベロのゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "バレーボール部の場面",
+    "リベロ",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 477,
+   "h": 346
+  },
+  {
+   "id": "volleyball-club-scenes-loose-huddle",
+   "file": "volleyball-club-scenes-loose-huddle.webp",
+   "title": "円陣",
+   "desc": "円陣のゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "バレーボール部の場面",
+    "円陣",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 452,
+   "h": 463
+  },
+  {
+   "id": "volleyball-club-scenes-loose-highfive",
+   "file": "volleyball-club-scenes-loose-highfive.webp",
+   "title": "ハイタッチ",
+   "desc": "ハイタッチのゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "バレーボール部の場面",
+    "ハイタッチ",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 422,
+   "h": 433
+  },
+  {
+   "id": "volleyball-club-scenes-loose-practice",
+   "file": "volleyball-club-scenes-loose-practice.webp",
+   "title": "練習",
+   "desc": "練習のゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "練習",
+    "バレーボール部の場面",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 560,
+   "h": 416
+  },
+  {
+   "id": "volleyball-club-scenes-loose-manager",
+   "file": "volleyball-club-scenes-loose-manager.webp",
+   "title": "マネージャー",
+   "desc": "マネージャーのゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "バレーボール部の場面",
+    "マネージャー",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 435,
+   "h": 477
+  },
+  {
+   "id": "volleyball-club-scenes-loose-scoreboard",
+   "file": "volleyball-club-scenes-loose-scoreboard.webp",
+   "title": "得点板",
+   "desc": "得点板のゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "バレーボール部の場面",
+    "得点板",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 510,
+   "h": 389
+  },
+  {
+   "id": "volleyball-club-scenes-loose-trophy",
+   "file": "volleyball-club-scenes-loose-trophy.webp",
+   "title": "優勝",
+   "desc": "優勝のゆるい手書きイラストです。",
+   "tags": [
+    "バレーボール",
+    "バレー",
+    "部活",
+    "スポーツ",
+    "バレーボール部の場面",
+    "優勝",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 482,
+   "h": 520
+  }
+ ]
+}
