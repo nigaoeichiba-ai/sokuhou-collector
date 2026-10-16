@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 DATA = HERE / "content" / "shogatsu.json"
 IMG = HERE / "assets" / "shogatsu"
 PATH = "/shogatsu/"
-ALLOWED_HOSTS = seasonal.SOURCE_HOSTS + ("www8.cao.go.jp",)
+ALLOWED_HOSTS = seasonal.SOURCE_HOSTS + ("www8.cao.go.jp", "trends.google.com")      # the Cabinet Office (holidays) and Google Trends (the site's own measurement of searches, read in a browser)
 WEEKDAY = "月火水木金土日"
 DIGIT = re.compile(r"[0-9０-９]")
 YEAR = re.compile(r"20\d\d年")
@@ -152,6 +152,11 @@ def _weekdays(t: dict, year: int) -> dict:
     return {**t, "rows": rows}
 
 
+def _count(n: int) -> str:
+    """A small number in the words of a sentence: 一つ ... 九つ, 十."""
+    return {1: "一つ", 2: "二つ", 3: "三つ", 4: "四つ", 5: "五つ", 6: "六つ", 7: "七つ", 8: "八つ", 9: "九つ", 10: "十"}.get(n, str(n))
+
+
 def _fig(img: dict, eager: bool = False) -> str:
     B = _b()
     f = img["file"]
@@ -269,7 +274,7 @@ def hub_page(d: dict, cfg: dict, preview: bool, data: dict, known: set[str] | No
 {B.pr_with_amazon(cfg)}
 {_meta(data)}
 {_fig(h["image"], eager=True)}
-<section class="block shg-pick"><div class="sec-head"><h2>場面から読む</h2><p class="sec-lead">お正月の訪問と贈り物について、場面ごとに6つの記事にまとめています。</p></div>{_cards(data)}</section>
+<section class="block shg-pick"><div class="sec-head"><h2>場面から読む</h2><p class="sec-lead">お正月の訪問と贈り物について、場面ごとに{_count(len(data["articles"]))}の記事にまとめています。</p></div>{_cards(data)}</section>
 <article class="guide seas shg">{_sections(h, data)}{faq_html}{_sources(h, data)}</article>
 {f'<section class="related seas-more" style="margin-top:34px"><h2><span class="scribble">贈るものを探す</span></h2><ul class="plain">{finds}</ul></section>' if finds else ""}
 <section class="seas-more" style="margin-top:30px"><p class="item-btns">{_buttons(cfg, h["query"])}</p></section>
