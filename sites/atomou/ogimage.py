@@ -40,14 +40,19 @@ def available() -> bool:
     return find_font() is not None
 
 
-def _fit(draw, text: str, path: str, size: int, max_w: int, floor: int = 28):
+@functools.lru_cache(maxsize=64)
+def _font(path: str, size: int):   # opening the font file for every try took 14 s of a build
     from PIL import ImageFont
+    return ImageFont.truetype(path, size)
+
+
+def _fit(draw, text: str, path: str, size: int, max_w: int, floor: int = 28):
     while size > floor:
-        font = ImageFont.truetype(path, size)
+        font = _font(path, size)
         if draw.textlength(text, font=font) <= max_w:
             return font
         size -= 4
-    return ImageFont.truetype(path, floor)
+    return _font(path, floor)
 
 
 def _lines(draw, text: str, font, max_w: int, rows: int) -> list[str]:
@@ -88,7 +93,7 @@ def card(*, title: str, date_text: str, field: str, colour: tuple) -> bytes:
     d.text((pad, H - 62), field, font=_fit(d, field, path, 34, W - pad - 420), fill=MUTED, anchor="ls")
     d.text((W - 70, H - 62), "atomou.com", font=_fit(d, "atomou.com", path, 32, 300), fill=MUTED, anchor="rs")
     buf = io.BytesIO()
-    img.save(buf, format="PNG", optimize=True)
+    img.save(buf, format="PNG", compress_level=6)
     return buf.getvalue()
 
 

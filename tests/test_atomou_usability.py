@@ -279,7 +279,7 @@ class Usability(unittest.TestCase):
         self.assertEqual(p["bar"], ["修正", "コピー", "☆ ピン留め", "消す"])
         self.assertEqual(p["editHeading"], "修正")
         self.assertLess(p["barTop"], 520)
-        self.assertLess(p["shareTop"], 620)                 # it was at 2377
+        self.assertLess(p["shareTop"], 700)                 # it was at 2377; 620 until the "where" bar went on top (+55px), and CI's Linux fonts measured 635 (deploy #256, 2026-10-16)
         self.assertLess(p["editTop"], 840)                  # it was at 1537: about the first screen (812)
         self.assertEqual(p["shift"], ["+1日", "+1週間", "+1か月"])
 

@@ -54,6 +54,9 @@ def main() -> int:
     ap.add_argument("--site", help="a project name from OWNED, another site (shared tests + this one's), or 'core'")
     ap.add_argument("--strict", action="store_true", help="CI: a test may be skipped only for a reason listed in ALLOWED_SKIPS; any other skip (a missing library, font or tool) fails the run")
     a = ap.parse_args()
+    if a.site in (None, "atomou"):   # atomou's tests build the same 7,800-page site again and again: one build per distinct arguments (it was 45 to 80 minutes in CI)
+        from tests import test_atomou_buildcache
+        test_atomou_buildcache.install()
     suite = build(a.site)
     print(f"running {suite.countTestCases()} tests" + (f" for {a.site}" if a.site else ""))
     result = unittest.TextTestRunner(verbosity=1).run(suite)
