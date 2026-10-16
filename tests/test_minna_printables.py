@@ -6,21 +6,15 @@ from datetime import date
 from pathlib import Path
 
 from sites.minna import build
+from tests.test_minna_sitecache import shared_site
 
-CFG = {"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト", "operator_name": "テスト運営", "contact_own": True, "adsense_pub_id": None}
 
 
 class PrintablesTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.tmp = tempfile.TemporaryDirectory()
-        cls.out = Path(cls.tmp.name) / "site"
-        cls.files = build.render_site(CFG, cls.out, release=True, today=date(2026, 10, 7))
+        cls.out, cls.files = shared_site()                      # one build for the page, print and browser tests (tests/test_minna_sitecache.py)
         cls.items, _ = build.load_data()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.tmp.cleanup()
 
     def test_pdf_kinds_follow_touch_and_genre(self):
         by = {i["id"]: i for i in self.items}
@@ -83,34 +77,29 @@ class CalendarBuildTest(unittest.TestCase):
         from sites.minna import printables
         if not printables.find_font():
             self.skipTest("no Japanese font on this machine (CI installs one)")
-        tmp = tempfile.TemporaryDirectory()
-        try:
-            out = Path(tmp.name) / "site"
-            files = build.render_site(CFG, out, release=True, today=date(2026, 10, 7))
-            self.assertIn("printables/calendar-2027/index.html", files)
-            self.assertIn("printables/index.html", files)
-            html = (out / "printables" / "calendar-2027" / "index.html").read_text(encoding="utf-8")
-            for rel in ("files/calendar/2027-hitsuji-01.pdf", "files/calendar/2027-hitsuji-12.pdf", "files/calendar/2027-hitsuji-all.pdf", "files/calendar/2027-dobutsu-06.pdf"):
-                self.assertIn(rel, files)
-                self.assertIn("/" + rel, html)
-                self.assertTrue((out / rel).read_bytes().startswith(b"%PDF"))
-            self.assertGreater((out / "files/calendar/2027-hitsuji-all.pdf").stat().st_size, (out / "files/calendar/2027-hitsuji-01.pdf").stat().st_size * 6)
-            # a different build date picks the right year: before September it is this year
-            for kind in ("shojo", "nafuda", "jikanwari"):
-                self.assertIn(f"printables/{kind}/index.html", files)
-                page_html = (out / "printables" / kind / "index.html").read_text(encoding="utf-8")
-                links = re.findall(r'href="(/files/printables/[^"]+\.pdf)"', page_html)
-                self.assertGreaterEqual(len(links), 6, kind)
-                for ln in links:
-                    self.assertTrue((out / ln.lstrip("/")).read_bytes().startswith(b"%PDF"), ln)
-            hub = (out / "printables" / "index.html").read_text(encoding="utf-8")
-            for kind in ("shojo", "nafuda", "jikanwari"):
-                self.assertIn(f"/printables/{kind}/", hub)
-            self.assertIn("/printables/", (out / "index.html").read_text(encoding="utf-8"))      # the home page points to the print corner
-            self.assertEqual(build.calendar_year(date(2026, 8, 31)), 2026)
-            self.assertEqual(build.calendar_year(date(2026, 9, 1)), 2027)
-        finally:
-            tmp.cleanup()
+        out, files = shared_site()
+        self.assertIn("printables/calendar-2027/index.html", files)
+        self.assertIn("printables/index.html", files)
+        html = (out / "printables" / "calendar-2027" / "index.html").read_text(encoding="utf-8")
+        for rel in ("files/calendar/2027-hitsuji-01.pdf", "files/calendar/2027-hitsuji-12.pdf", "files/calendar/2027-hitsuji-all.pdf", "files/calendar/2027-dobutsu-06.pdf"):
+            self.assertIn(rel, files)
+            self.assertIn("/" + rel, html)
+            self.assertTrue((out / rel).read_bytes().startswith(b"%PDF"))
+        self.assertGreater((out / "files/calendar/2027-hitsuji-all.pdf").stat().st_size, (out / "files/calendar/2027-hitsuji-01.pdf").stat().st_size * 6)
+        # a different build date picks the right year: before September it is this year
+        for kind in ("shojo", "nafuda", "jikanwari"):
+            self.assertIn(f"printables/{kind}/index.html", files)
+            page_html = (out / "printables" / kind / "index.html").read_text(encoding="utf-8")
+            links = re.findall(r'href="(/files/printables/[^"]+\.pdf)"', page_html)
+            self.assertGreaterEqual(len(links), 6, kind)
+            for ln in links:
+                self.assertTrue((out / ln.lstrip("/")).read_bytes().startswith(b"%PDF"), ln)
+        hub = (out / "printables" / "index.html").read_text(encoding="utf-8")
+        for kind in ("shojo", "nafuda", "jikanwari"):
+            self.assertIn(f"/printables/{kind}/", hub)
+        self.assertIn("/printables/", (out / "index.html").read_text(encoding="utf-8"))      # the home page points to the print corner
+        self.assertEqual(build.calendar_year(date(2026, 8, 31)), 2026)
+        self.assertEqual(build.calendar_year(date(2026, 9, 1)), 2027)
 
 
 if __name__ == "__main__":

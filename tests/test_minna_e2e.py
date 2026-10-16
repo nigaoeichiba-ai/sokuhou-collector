@@ -12,9 +12,9 @@ from datetime import date
 from pathlib import Path
 
 from sites.minna import build
+from tests.test_minna_sitecache import shared_site
 from tests.test_yorokobu_e2e import CHROME, run_chrome
 
-CFG = {"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト", "operator_name": "テスト", "contact_form_url": "https://example.com/f", "adsense_pub_id": None}
 
 SCENARIO = r"""
 const out = {};
@@ -82,13 +82,22 @@ async function load(url) {
 class MinnaBrowserTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.tmp = tempfile.TemporaryDirectory()
-        root = Path(cls.tmp.name)
-        build.render_site(CFG, root, release=True, today=date(2026, 10, 7))
-        (root / "e2e.html").write_text(f'<!doctype html><meta charset="utf-8"><pre id="out"></pre><script>{SCENARIO}</script>', encoding="utf-8")
+        root, _files = shared_site()                            # the build is shared and read only: the scenario page is served by a route, not written into it
+        scenario = f'<!doctype html><meta charset="utf-8"><pre id="out"></pre><script>{SCENARIO}</script>'.encode("utf-8")
+
         class Quiet(http.server.SimpleHTTPRequestHandler):
             def log_message(self, *a, **k):
                 pass
+
+            def do_GET(self):
+                if self.path.split("?")[0] == "/e2e.html":
+                    self.send_response(200)
+                    self.send_header("Content-Type", "text/html; charset=utf-8")
+                    self.send_header("Content-Length", str(len(scenario)))
+                    self.end_headers()
+                    self.wfile.write(scenario)
+                else:
+                    super().do_GET()
         handler = functools.partial(Quiet, directory=str(root))
         cls.server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
         threading.Thread(target=cls.server.serve_forever, daemon=True).start()
@@ -99,7 +108,6 @@ class MinnaBrowserTest(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.server.shutdown()
-        cls.tmp.cleanup()
 
     def test_card_maker_draws_and_saves(self):
         o = self.out
