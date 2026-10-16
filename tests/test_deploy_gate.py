@@ -11,18 +11,24 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 BASH = shutil.which("bash")
 
 
 def gate_script() -> str:
-    wf = yaml.safe_load((ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8"))
-    for job in wf["jobs"].values():
-        for step in job["steps"]:
-            if step.get("id") == "gate":
-                return step["run"]
+    """The shell script of the Gate step, read from the workflow text (PyYAML is not a dependency of the CI)."""
+    lines = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8").splitlines()
+    for i, line in enumerate(lines):
+        if line.strip() == "id: gate":
+            j = next(k for k in range(i, len(lines)) if lines[k].strip() == "run: |")
+            indent = len(lines[j]) - len(lines[j].lstrip())
+            body = []
+            for l2 in lines[j + 1:]:
+                if l2.strip() and len(l2) - len(l2.lstrip()) <= indent:
+                    break
+                body.append(l2[indent + 2:] if l2.strip() else "")
+            return "\n".join(body)
     raise AssertionError("no Gate step")
 
 
