@@ -75,5 +75,80 @@ class OfficeWatchTest(unittest.TestCase):
         self.assertIn("通知のテスト", text)
 
 
+def served_all(sha="a" * 40):
+    return {"saichin": sha, "kuma": sha, "yorokobu": sha, "minna": sha}
+
+
+def commit(minutes_ago, *files):
+    return {"sha": "c" * 40, "time": NOW - dt.timedelta(minutes=minutes_ago), "files": list(files)}
+
+
+def run(status="completed", event="push", minutes_ago=10):
+    return {"status": status, "event": event, "created": NOW - dt.timedelta(minutes=minutes_ago)}
+
+
+class DeployLagTest(unittest.TestCase):
+    def lag(self, commits, runs=(), served=None):
+        return w.deploy_lag(NOW, served if served is not None else served_all(), lambda sha: commits, list(runs))
+
+    def test_nothing_after_the_live_commit_is_fine(self):
+        r = self.lag([])
+        self.assertEqual((r["problems"], r["heal"]), ([], []))
+        self.assertEqual(len(r["ok"]), 4)
+
+    def test_a_young_change_is_a_normal_wait(self):
+        r = self.lag([commit(30, "sites/minna/series.json")])
+        self.assertEqual(r["problems"], [])
+
+    def test_an_old_unpublished_change_is_reported_and_deployed_again(self):
+        r = self.lag([commit(200, "sites/minna/series.json")])
+        self.assertEqual(r["heal"], ["minna"])
+        self.assertTrue(any("minna-no-illust.com" in p and "200 分前" in p for p in r["problems"]))
+
+    def test_the_lost_update_of_2026_10_16(self):
+        # minna's commit is 3 hours old; the newest commit (a few minutes old) touches only yorokobu: minna must be found and yorokobu must not be blamed
+        r = self.lag([commit(180, "sites/minna/library/x/series.json"), commit(5, "sites/yorokobu/compare.py")])
+        self.assertEqual(r["heal"], ["minna"])
+        self.assertFalse(any("yorokobu-present.com" in p for p in r["problems"]))
+
+    def test_other_sites_files_do_not_count_for_this_site(self):
+        r = self.lag([commit(500, "sites/yorokobu/compare.py")])
+        self.assertTrue(any("yorokobu-present.com" in p for p in r["problems"]))
+        self.assertFalse(any("minna-no-illust.com" in p or "kuma-sokuho.com" in p for p in r["problems"]))
+        self.assertEqual(r["heal"], ["yorokobu"])
+
+    def test_a_shared_file_concerns_every_site(self):
+        r = self.lag([commit(500, "sokuhou/sitekit.py")])
+        self.assertEqual(sorted(r["heal"]), ["kuma", "minna", "saichin", "yorokobu"])
+
+    def test_files_that_do_not_start_a_deploy_are_ignored(self):
+        r = self.lag([commit(500, "docs/x.md", "README.md")])
+        self.assertEqual((r["problems"], r["heal"]), ([], []))
+
+    def test_no_new_deploy_while_one_is_running_or_waiting(self):
+        r = self.lag([commit(200, "sites/minna/a")], runs=[run("in_progress", minutes_ago=40)])
+        self.assertEqual(r["heal"], [])
+        self.assertTrue(r["problems"])
+
+    def test_no_new_deploy_right_after_a_manual_one(self):
+        r = self.lag([commit(200, "sites/minna/a")], runs=[run("completed", "workflow_dispatch", minutes_ago=60)])
+        self.assertEqual(r["heal"], [])
+        self.assertTrue(r["problems"])
+
+    def test_a_deploy_run_that_runs_too_long_is_reported(self):
+        r = self.lag([], runs=[run("in_progress", minutes_ago=200)])
+        self.assertTrue(any("deploy-sites の実行が 200 分" in p for p in r["problems"]))
+
+    def test_unreadable_things_are_never_counted_as_fine(self):
+        r = w.deploy_lag(NOW, {"saichin": None, "kuma": "b" * 40, "yorokobu": "b" * 40, "minna": "b" * 40}, lambda sha: None, [])
+        self.assertEqual((r["problems"], r["heal"], r["ok"]), ([], [], []))
+        self.assertEqual(len(r["unverified"]), 4)
+
+    def test_the_report_names_the_sites_that_were_deployed_again(self):
+        r = w.check(NOW, get=make_get(), commits=HUMAN, deploy=self.lag([commit(200, "sites/minna/a")]))
+        self.assertEqual(r["heal"], ["minna"])
+        self.assertIn("自動で再公開を依頼しました", w.report(r, NOW))
+
+
 if __name__ == "__main__":
     unittest.main()
