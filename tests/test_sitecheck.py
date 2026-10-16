@@ -126,3 +126,34 @@ class CheckerTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class LightLiveCheckTest(unittest.TestCase):
+    """The light live check of a content-only deploy (deploy.yml fast lane): home page + new pages + a fixed-size random sample."""
+
+    def urls(self, n=300):
+        return ["https://x.test/"] + [f"https://x.test/illust/{i}/" for i in range(n)]
+
+    def test_new_pages_and_the_home_page_are_always_checked(self):
+        urls = self.urls()
+        prev = set(urls[:-5])                      # the last five are new
+        picked = sitecheck.light_selection(urls, 20, prev)
+        self.assertIn("https://x.test/", picked)
+        for u in urls[-5:]:
+            self.assertIn(u, picked)
+        self.assertEqual(len(picked), 1 + 5 + 20)
+
+    def test_the_sample_is_small_and_repeatable(self):
+        urls = self.urls(3000)
+        a = sitecheck.light_selection(urls, 150, set(urls))
+        self.assertEqual(a, sitecheck.light_selection(urls, 150, set(urls)))
+        self.assertEqual(len(a), 151)
+        self.assertLess(len(a), len(urls) / 10)
+
+    def test_a_small_site_is_checked_completely(self):
+        urls = self.urls(10)
+        self.assertCountEqual(sitecheck.light_selection(urls, 200, set(urls)), urls)
+
+    def test_without_a_previous_sitemap_nothing_is_called_new(self):
+        urls = self.urls(500)
+        self.assertEqual(len(sitecheck.light_selection(urls, 50, None)), 51)

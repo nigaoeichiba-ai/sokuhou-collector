@@ -283,8 +283,21 @@ def _get(url: str, timeout: int = 30, retries: int = 2) -> tuple[int, bytes]:
     return last
 
 
-def check_live(base: str, workers: int = 8, probes: tuple[str, ...] = ()) -> tuple[list[str], int]:
+def light_selection(urls: list[str], sample: int, prev_urls: set[str] | None = None) -> list[str]:
+    """The pages of a LIGHT live check: the home page, every page that is new since the previous deploy, and `sample` others picked at random (the same pick for the same site size).
+    Used only for content-only deploys (deploy.yml, fast lane): the real build was already checked page by page, and the full live check runs in the daily full deploy."""
+    import random
+    prev_urls = prev_urls or set()
+    new = [u for u in urls if u not in prev_urls] if prev_urls else []
+    home = [u for u in urls if urlparse(u).path in ("", "/")]
+    rest = [u for u in urls if u not in set(new) and u not in set(home)]
+    picked = random.Random(len(urls)).sample(rest, min(sample, len(rest)))
+    return list(dict.fromkeys(home + new + picked))
+
+
+def check_live(base: str, workers: int = 8, probes: tuple[str, ...] = (), sample: int | None = None, prev_urls: set[str] | None = None) -> tuple[list[str], int]:
     """The deployed site: every sitemap URL answers 200 and obeys the page rules; every internal link on those pages answers 200.
+    With `sample` (the light check of a content-only deploy) only the home page, the new pages and `sample` random pages are fetched.
     Returns (problems, number of pages fetched).  Used right after a deploy (a failure rolls the site back) and by the weekly review."""
     import tempfile
     from concurrent.futures import ThreadPoolExecutor
@@ -302,6 +315,10 @@ def check_live(base: str, workers: int = 8, probes: tuple[str, ...] = ()) -> tup
     problems: list[str] = []
     if not urls:
         return ["[sitemap] the live sitemap lists no pages"], 0
+    all_urls = urls
+    if sample is not None:
+        urls = light_selection(urls, sample, prev_urls)
+        print(f"light live check: {len(urls)} of {len(all_urls)} pages (the home page, the new pages and {sample} random ones)")
     host = urlparse(base).netloc
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
@@ -343,7 +360,7 @@ def check_live(base: str, workers: int = 8, probes: tuple[str, ...] = ()) -> tup
                     path = d + path
                 full = base + path + (("?" + u.query) if u.query and "." in path.rsplit("/", 1)[-1] else "")
                 targets.setdefault(full, rel)
-        known = {u for u in urls}
+        known = {u for u in all_urls}
         todo = [t for t in targets if t not in known]
         with ThreadPoolExecutor(workers) as ex:
             res = list(ex.map(lambda t: _get(t)[0], todo))
@@ -366,9 +383,17 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--live", action="store_true", help="check the deployed site at --base instead of a folder")
     ap.add_argument("--probe", action="append", default=[], help="an extra path that must answer 200 (with --live)")
     ap.add_argument("--max", type=int, default=60, help="print at most this many problems")
+    ap.add_argument("--sample", type=int, default=None, help="with --live: a LIGHT check (home page, pages new since --prev, and this many random pages); for content-only deploys")
+    ap.add_argument("--prev", help="with --sample: the sitemap.xml of the previous deploy (its URLs are not 'new')")
     a = ap.parse_args(argv)
     if a.live:
-        problems, n = check_live(a.base, probes=tuple(a.probe))
+        prev_urls = None
+        if a.prev:
+            try:
+                prev_urls = set(re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", Path(a.prev).read_text(encoding="utf-8", errors="replace")))
+            except OSError:
+                prev_urls = None
+        problems, n = check_live(a.base, probes=tuple(a.probe), sample=a.sample, prev_urls=prev_urls)
         if problems:
             print(f"LIVE CHECK FAILED: {len(problems)} problem(s) in {n} pages of {a.base}")
             for pr in problems[: a.max]:
