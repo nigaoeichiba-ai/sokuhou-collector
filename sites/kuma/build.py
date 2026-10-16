@@ -58,9 +58,9 @@ NO_COUNT_WHY = {
     "千葉": '<p>千葉県には、野生のツキノワグマが生息していないとされています。環境省の資料は、ツキノワグマの生息地を「千葉県を除く本州と四国の一部地域」と書いています'
           '(<a href="https://www.env.go.jp/nature/choju/docs/docs5-4a/pdfs/chpt4.pdf" rel="noopener" target="_blank">環境省「クマ類の生態と現状」</a>)。'
           'そのため、出没件数の表に数値がありません。</p>',
-    "北海道": '<p>北海道は、道全体の出没件数をまとめた表を、道のサイトに載せていません。道のサイトは、市町村ごとの出没情報へのリンク集を用意し、'
-            '「市町村で提供しているヒグマの出没に関する情報は、すべての出没を網羅するものではありません」と、注意を書いています'
+    "北海道": '<p>北海道は、道全体の出没件数をまとめた表を、道のサイトに載せていません。道のサイトには、市町村ごとの出没情報のリンク集があります'
             '(<a href="https://www.pref.hokkaido.lg.jp/ks/skn/higuma/joho.html" rel="noopener" target="_blank">北海道「市町村ヒグマ関連情報リンク集」</a>)。'
+            '注意書きは「市町村で提供しているヒグマの出没に関する情報は、すべての出没を網羅するものではありません」です。'
             'そのため、環境省の表でも「-」になっています。このサイトでは、市町村が公開している情報が読めた分だけを、下に載せています。</p>',
 }
 
@@ -126,8 +126,8 @@ def month_range(d: dict) -> str:
 
 def freshness(d: dict) -> str:
     emg = d["emergency"][d["cur"]]
-    return (f"最新の公表: 出没件数は{d['latest_month']}月分まで({jp_date(d['sight_updated'])}更新)、"
-            f"人身被害は{d['inj_as_of'].replace('R08年', '令和8年')}({jp_date(d['inj_updated'])}更新)、"
+    return (f"最新の公表: 出没件数は{d['latest_month']}月分まで({jp_date(d['sight_updated'])}更新)。"
+            f"人身被害は{d['inj_as_of'].replace('R08年', '令和8年')}({jp_date(d['inj_updated'])}更新)。"
             f"緊急銃猟は{md(emg['cases'][-1]['date'])}分まで({jp_date(emg['updated'])}更新)。"
             "環境省は、出没件数を翌月末ごろ、人身被害を翌月の第1週に掲載します。")
 
@@ -452,7 +452,7 @@ def news_page(d: dict, cfg: dict, preview: bool) -> str:
         f'<span>{jp_date(x["date"])}</span></li>' for i, x in enumerate(d["notices"]))
     body = f"""{crumbs([("全国", "/"), ("環境省のお知らせ", None)])}
 <h1>環境省の、クマに関するお知らせ</h1>
-<p class="lead">環境省の「クマに関する各種情報・取組」のページに載っている、日付つきのお知らせ(大臣の談話・会見、自治体への事務連絡、講習会の案内など)を、新しい順に並べています。リンク先は、環境省のページです。</p>
+<p class="lead">環境省の「クマに関する各種情報・取組」のページに載っている、日付つきのお知らせを、新しい順に並べました。大臣の談話・会見、自治体への事務連絡、講習会の案内などです。リンク先は、環境省のページです。</p>
 <ul class="link-list news-list">{rows}</ul>
 <p class="notice">題名は、環境省のページの表記のままです(日付の後ろにある発信元の記載は省いています)。このサイトでは、報道各社の記事は載せていません。お住まいの地域の最新の情報は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。{' 都道府県・市町村が自分のサイトで発表したお知らせは、<a href="/notices/">自治体のクマ関連のお知らせ</a>にあります。' if d.get("muni_notices") else ''}</p>
 <p class="notice">出典: <a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">環境省「クマに関する各種情報・取組」</a>を加工して作成。環境省が作成したものではありません。取得日: {jp_date(d['fetched_date'])}。</p>"""

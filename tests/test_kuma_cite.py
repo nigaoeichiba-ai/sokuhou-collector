@@ -117,7 +117,7 @@ class CitePageTest(unittest.TestCase):
 
     def test_the_ministry_comparison_uses_the_same_months_and_only_whole_prefectures_with_data(self):
         text = text_of(self.read("cite/index.html"))
-        self.assertIn("同じ期間(令和8年度の4月〜7月)", text)
+        self.assertIn("期間は同じ(令和8年度の4月〜7月)", text)
         self.assertIn("比べられる2都道府県のうち、1都道府県は、1件も違いません", text.replace(" ", ""))
         self.assertRegex(text, r"宮城県 記録 5 5 同じ")                   # the same figure on both sides
         self.assertRegex(text, r"秋田県 記録 10 8 80%")
