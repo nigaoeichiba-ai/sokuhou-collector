@@ -360,14 +360,35 @@ def _end3(s: str) -> str:
     return t[-3:]
 
 
+LINK_SEP = re.compile(r" [/|｜] |　[/|｜]　")
+
+
+def is_item_run(s: str) -> bool:
+    """A run of items, not a sentence: links or names joined by " / " " | " "・", "label: A、B、C…", a date-log entry's list.  Length is not a problem there."""
+    n = len(re.sub(r"\s+", "", s))
+    if len(LINK_SEP.findall(s)) >= 2 and not s.endswith("。"):                 # a table of contents made of links
+        return True
+    if s.count("・") >= 6:
+        return True
+    commas = s.count("、")
+    if commas >= 5 and n / (commas + 1) <= 15:
+        return True
+    return bool(re.match(r"^[^:：。]{1,20}[:：]\s*", s) and commas >= 2)        # "1月3日にある日付: A、B、C…など4件。"
+
+
+def prose_length(s: str) -> int:
+    """Characters that count toward a long sentence: a quoted title or name is one unit, and a log entry's date prefix is not text."""
+    s = re.sub(r"^\d{4}年\d{1,2}月\d{1,2}日[:：]\s*", "", s)
+    s = re.sub(r"[「『][^」』]*[」』]", "「」", s)
+    return len(re.sub(r"\s+", "", s))
+
+
 def f_long(block: Block, sents: list[str], prof: dict) -> list[str]:
     out = []
     if block.kind not in ("para", "item", "meta"):
         return out
     for s in sents:
-        n = len(re.sub(r"\s+", "", s))
-        listy = (s.count("、") >= 5 and n / (s.count("、") + 1) <= 15) or s.count("・") >= 6 or (": " in s and s.count("、") >= 3)         # a run of short items (names of prefectures ...) is a list, not a run-on
-        if n > prof["long"] and not listy and not s.startswith(("参考", "出典")) and s.count("「") < 3 and (SENT_END.search(s) or block.kind == "para"):         # a long label without a full stop is a product name or a title, not prose
+        if prose_length(s) > prof["long"] and not is_item_run(s) and not s.startswith(("参考", "出典")) and s.count("「") < 3 and (SENT_END.search(s) or block.kind == "para"):         # a long label without a full stop is a product name or a title, not prose
             out.append(s)
     return out
 
@@ -650,7 +671,7 @@ def check_blocks(blocks: list[Block], path: str, site: str | None = None, min_le
                     record(r, b, b.text)
             elif r.fn is not None:
                 for ex in r.fn(b, sents, prof):
-                    level = "high" if r.id == LONG_HIGH and len(re.sub(r"\s+", "", ex)) > prof["very_long"] else None
+                    level = "high" if r.id == LONG_HIGH and prose_length(ex) > prof["very_long"] else None
                     record(r, b, ex, level)
     if not exempt:
         for rid, words, need in (("pet_verb", PET_VERB, 3), ("pet_abstract", PET_ABSTRACT, 5)):

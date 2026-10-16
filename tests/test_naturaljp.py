@@ -109,6 +109,27 @@ class NaturalTextIsLeftAlone(unittest.TestCase):
         self.assertNotIn("long_sentence", ids(pref, "kuma"))
         self.assertNotIn("noun_chain", ids("雇用保険の新給付「教育訓練休暇給付金」の創設は2025年10月1日(水)です。", "atomou"))
 
+    def test_a_run_of_links_or_names_is_not_a_long_sentence(self):
+        toc = "自治体の目撃情報の一覧 / 地図で見る(現在地の近く) / 週ごとのまとめ / データ(CSV) / 市町村名から探す / 都道府県の公式の出没情報(リンク集) / データの出典・引用のしかた"
+        self.assertGreater(nj.prose_length(toc), nj.profile("kuma")["long"])                      # long enough to be caught if it were a sentence
+        self.assertNotIn("long_sentence", ids(toc, "kuma"))
+        self.assertNotIn("long_sentence", ids_html(f"<div>{toc}</div>", "kuma"))
+        links = "".join(f'<a href="/{i}/">{t}</a> / ' for i, t in enumerate(toc.split(" / ")))[:-3]
+        self.assertNotIn("long_sentence", ids_html(f"<div>{links}</div>", "kuma"))                 # the same as real links
+        for sep in (" | ", " ／ ".replace("／", "/"), "・"):
+            self.assertNotIn("long_sentence", ids(sep.join(["自治体の目撃情報の一覧", "地図で見る(現在地の近く)", "週ごとのまとめ", "データ(CSV)", "市町村名から探す", "都道府県の公式の出没情報", "データの出典と引用のしかた"]), "kuma"))
+        log = "2026年10月15日: 令和8年度の47都道府県の最低賃金・前年度の額・引上げ額・発効日を、厚生労働省「令和8年度地域別最低賃金全国一覧」(PDF)と照合。"
+        self.assertNotIn("long_sentence", ids(log, "saichin"))                                    # a log entry: the date prefix and a quoted title are not text
+        events = "1月3日にある日付: 第79回ライスボウル(アメフト日本選手権)、筥崎宮 玉取祭(玉せせり) 2026、ハリウッド・フェスティバル・オーケストラ ニューイヤーコンサート2027 大阪など4件。"
+        self.assertNotIn("long_sentence", ids(events, "atomou"))                                  # a list after a label
+
+    def test_a_real_long_sentence_is_still_found_next_to_the_exemptions(self):
+        real = "最低賃金制度は、最低賃金法にもとづき、国が賃金の最低額を定め、使用者は、その最低賃金額以上の賃金を労働者に支払わなければならないとする制度であり、違反した使用者には罰則が定められています。"
+        self.assertIn("long_sentence", ids(real, "saichin"))
+        self.assertIn("long_sentence", ids("自治体の一覧 / 地図 / まとめ。" + real, "saichin"))        # a link run elsewhere in the block does not hide it
+        quoted = "厚生労働省の「令和8年度地域別最低賃金全国一覧」を見ると、前年度より多くの県で引上げ額が大きくなっていて、全国の加重平均も初めて千円を超えたことが分かるうえ、発効日も県ごとに違います。"
+        self.assertIn("long_sentence", ids(quoted, "saichin"))
+
     def test_a_single_hedge_or_one_importance_word_is_not_reported(self):
         self.assertEqual(ids("商品によっては到着が遅れる場合があります。", level="mid"), set())          # a density rule needs several
         self.assertEqual(ids("期限の確認が大切です。", level="mid"), set())
