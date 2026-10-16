@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-17",
+ "slug": "dragons-realistic-field-guide",
+ "title": "ドラゴンのリアル調イラスト",
+ "genre": "animals",
+ "touch": "realistic",
+ "lead": "西洋風・東洋風・幼体など、オリジナルのドラゴンを写実的なタッチで描いた素材12点です。ゲーム・小説の挿絵や資料に使えます。",
+ "tags": [
+  "ドラゴン",
+  "竜",
+  "リアル",
+  "ファンタジー",
+  "ゲーム",
+  "小説",
+  "オリジナル"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "dragons-realistic-field-guide-western-green",
+   "file": "dragons-realistic-field-guide-western-green.webp",
+   "title": "緑の西洋ドラゴン",
+   "desc": "緑の西洋ドラゴンのリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "緑の西洋ドラゴン",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 461,
+   "h": 438
+  },
+  {
+   "id": "dragons-realistic-field-guide-western-red",
+   "file": "dragons-realistic-field-guide-western-red.webp",
+   "title": "赤い西洋ドラゴン",
+   "desc": "赤い西洋ドラゴンのリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "赤い西洋ドラゴン",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 500,
+   "h": 455
+  },
+  {
+   "id": "dragons-realistic-field-guide-eastern-long",
+   "file": "dragons-realistic-field-guide-eastern-long.webp",
+   "title": "東洋の龍",
+   "desc": "東洋の龍のリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "東洋の龍",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 464,
+   "h": 464
+  },
+  {
+   "id": "dragons-realistic-field-guide-wyvern",
+   "file": "dragons-realistic-field-guide-wyvern.webp",
+   "title": "ワイバーン",
+   "desc": "ワイバーンのリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "ワイバーン",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 482,
+   "h": 478
+  },
+  {
+   "id": "dragons-realistic-field-guide-hatchling",
+   "file": "dragons-realistic-field-guide-hatchling.webp",
+   "title": "ドラゴンの幼体",
+   "desc": "ドラゴンの幼体のリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "ドラゴンの幼体",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 426,
+   "h": 393
+  },
+  {
+   "id": "dragons-realistic-field-guide-egg",
+   "file": "dragons-realistic-field-guide-egg.webp",
+   "title": "ドラゴンの卵",
+   "desc": "ドラゴンの卵のリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "ドラゴンの卵",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 463,
+   "h": 398
+  },
+  {
+   "id": "dragons-realistic-field-guide-ice-dragon",
+   "file": "dragons-realistic-field-guide-ice-dragon.webp",
+   "title": "氷のドラゴン",
+   "desc": "氷のドラゴンのリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "氷のドラゴン",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 518,
+   "h": 487
+  },
+  {
+   "id": "dragons-realistic-field-guide-sea-dragon",
+   "file": "dragons-realistic-field-guide-sea-dragon.webp",
+   "title": "海のドラゴン",
+   "desc": "海のドラゴンのリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "海のドラゴン",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 517,
+   "h": 504
+  },
+  {
+   "id": "dragons-realistic-field-guide-forest-dragon",
+   "file": "dragons-realistic-field-guide-forest-dragon.webp",
+   "title": "森のドラゴン",
+   "desc": "森のドラゴンのリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "森のドラゴン",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 520,
+   "h": 475
+  },
+  {
+   "id": "dragons-realistic-field-guide-skull",
+   "file": "dragons-realistic-field-guide-skull.webp",
+   "title": "ドラゴンの頭骨",
+   "desc": "ドラゴンの頭骨のリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "ドラゴンの頭骨",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 518,
+   "h": 424
+  },
+  {
+   "id": "dragons-realistic-field-guide-head",
+   "file": "dragons-realistic-field-guide-head.webp",
+   "title": "ドラゴンの頭部",
+   "desc": "ドラゴンの頭部のリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "ドラゴンの頭部",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 516,
+   "h": 514
+  },
+  {
+   "id": "dragons-realistic-field-guide-claw",
+   "file": "dragons-realistic-field-guide-claw.webp",
+   "title": "ドラゴンの爪",
+   "desc": "ドラゴンの爪のリアル・図鑑風イラストです。",
+   "tags": [
+    "ドラゴン",
+    "竜",
+    "リアル",
+    "ファンタジー",
+    "ドラゴンのリアル調イラスト",
+    "ドラゴンの爪",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 439,
+   "h": 505
+  }
+ ]
+}

@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-17",
+ "slug": "icon-animals-round-flat",
+ "title": "丸型アイコン用の動物",
+ "genre": "icon",
+ "touch": "flat",
+ "lead": "プロフィール画像やSNSのアイコンに使える、顔を中心にした動物の素材12点です。正面向きで、丸く切り抜いても収まる構図です。",
+ "tags": [
+  "アイコン",
+  "プロフィール",
+  "SNS",
+  "動物",
+  "丸型",
+  "アバター",
+  "顔"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "icon-animals-round-flat-neko",
+   "file": "icon-animals-round-flat-neko.webp",
+   "title": "ねこ",
+   "desc": "ねこのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "ねこ",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 421,
+   "h": 450
+  },
+  {
+   "id": "icon-animals-round-flat-inu",
+   "file": "icon-animals-round-flat-inu.webp",
+   "title": "いぬ",
+   "desc": "いぬのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "いぬ",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 497,
+   "h": 428
+  },
+  {
+   "id": "icon-animals-round-flat-usagi",
+   "file": "icon-animals-round-flat-usagi.webp",
+   "title": "うさぎ",
+   "desc": "うさぎのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "うさぎ",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 365,
+   "h": 500
+  },
+  {
+   "id": "icon-animals-round-flat-kuma",
+   "file": "icon-animals-round-flat-kuma.webp",
+   "title": "くま",
+   "desc": "くまのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "くま",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 418,
+   "h": 470
+  },
+  {
+   "id": "icon-animals-round-flat-kitsune",
+   "file": "icon-animals-round-flat-kitsune.webp",
+   "title": "きつね",
+   "desc": "きつねのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "きつね",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 437,
+   "h": 472
+  },
+  {
+   "id": "icon-animals-round-flat-panda",
+   "file": "icon-animals-round-flat-panda.webp",
+   "title": "パンダ",
+   "desc": "パンダのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "パンダ",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 415,
+   "h": 467
+  },
+  {
+   "id": "icon-animals-round-flat-tanuki",
+   "file": "icon-animals-round-flat-tanuki.webp",
+   "title": "たぬき",
+   "desc": "たぬきのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "たぬき",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 502,
+   "h": 443
+  },
+  {
+   "id": "icon-animals-round-flat-risu",
+   "file": "icon-animals-round-flat-risu.webp",
+   "title": "りす",
+   "desc": "りすのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "りす",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 446,
+   "h": 466
+  },
+  {
+   "id": "icon-animals-round-flat-fukuro",
+   "file": "icon-animals-round-flat-fukuro.webp",
+   "title": "ふくろう",
+   "desc": "ふくろうのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "ふくろう",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 430,
+   "h": 435
+  },
+  {
+   "id": "icon-animals-round-flat-penguin",
+   "file": "icon-animals-round-flat-penguin.webp",
+   "title": "ペンギン",
+   "desc": "ペンギンのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "ペンギン",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 430,
+   "h": 436
+  },
+  {
+   "id": "icon-animals-round-flat-kaeru",
+   "file": "icon-animals-round-flat-kaeru.webp",
+   "title": "かえる",
+   "desc": "かえるのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "かえる",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 399,
+   "h": 421
+  },
+  {
+   "id": "icon-animals-round-flat-hitsuji",
+   "file": "icon-animals-round-flat-hitsuji.webp",
+   "title": "ひつじ",
+   "desc": "ひつじのシンプルフラットイラストです。",
+   "tags": [
+    "アイコン",
+    "プロフィール",
+    "SNS",
+    "動物",
+    "丸型アイコン用の動物",
+    "ひつじ",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 521,
+   "h": 465
+  }
+ ]
+}

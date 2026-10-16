@@ -1,0 +1,241 @@
+{
+ "added": "2026-10-17",
+ "slug": "frames-mushroom-taste-flat",
+ "title": "きのこ・秋の味覚のフレーム",
+ "genre": "deco",
+ "touch": "flat",
+ "lead": "きのこ・栗・さつまいも・柿など、秋の味覚をあしらったフレーム12点です。食堂のお知らせやおたよりの枠に使えます。",
+ "tags": [
+  "フレーム",
+  "枠",
+  "きのこ",
+  "秋の味覚",
+  "栗",
+  "さつまいも",
+  "おたより",
+  "メニュー"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "frames-mushroom-taste-flat-kinoko-forest",
+   "file": "frames-mushroom-taste-flat-kinoko-forest.webp",
+   "title": "きのこの森のフレーム",
+   "desc": "きのこの森のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "きのこ・秋の味覚のフレーム",
+    "きのこの森のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 537,
+   "h": 411
+  },
+  {
+   "id": "frames-mushroom-taste-flat-shiitake",
+   "file": "frames-mushroom-taste-flat-shiitake.webp",
+   "title": "しいたけのフレーム",
+   "desc": "しいたけのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "きのこ・秋の味覚のフレーム",
+    "しいたけのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 456,
+   "h": 417
+  },
+  {
+   "id": "frames-mushroom-taste-flat-shimeji",
+   "file": "frames-mushroom-taste-flat-shimeji.webp",
+   "title": "しめじ・えのきのフレーム",
+   "desc": "しめじ・えのきのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "きのこ・秋の味覚のフレーム",
+    "しめじ・えのきのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 540,
+   "h": 418
+  },
+  {
+   "id": "frames-mushroom-taste-flat-fly-agaric",
+   "file": "frames-mushroom-taste-flat-fly-agaric.webp",
+   "title": "赤いきのこのフレーム",
+   "desc": "赤いきのこのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "きのこ・秋の味覚のフレーム",
+    "赤いきのこのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 514,
+   "h": 447
+  },
+  {
+   "id": "frames-mushroom-taste-flat-kuri",
+   "file": "frames-mushroom-taste-flat-kuri.webp",
+   "title": "栗のフレーム",
+   "desc": "栗のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "栗",
+    "きのこ・秋の味覚のフレーム",
+    "栗のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 514,
+   "h": 408
+  },
+  {
+   "id": "frames-mushroom-taste-flat-satsumaimo",
+   "file": "frames-mushroom-taste-flat-satsumaimo.webp",
+   "title": "さつまいものフレーム",
+   "desc": "さつまいものフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "さつまいも",
+    "きのこ・秋の味覚のフレーム",
+    "さつまいものフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 518,
+   "h": 452
+  },
+  {
+   "id": "frames-mushroom-taste-flat-kaki",
+   "file": "frames-mushroom-taste-flat-kaki.webp",
+   "title": "柿のフレーム",
+   "desc": "柿のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "きのこ・秋の味覚のフレーム",
+    "柿のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 507,
+   "h": 470
+  },
+  {
+   "id": "frames-mushroom-taste-flat-nashi-budo",
+   "file": "frames-mushroom-taste-flat-nashi-budo.webp",
+   "title": "梨とぶどうのフレーム",
+   "desc": "梨とぶどうのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "きのこ・秋の味覚のフレーム",
+    "梨とぶどうのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 517,
+   "h": 472
+  },
+  {
+   "id": "frames-mushroom-taste-flat-sanma",
+   "file": "frames-mushroom-taste-flat-sanma.webp",
+   "title": "さんまのフレーム",
+   "desc": "さんまのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "きのこ・秋の味覚のフレーム",
+    "さんまのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 514,
+   "h": 464
+  },
+  {
+   "id": "frames-mushroom-taste-flat-shinmai",
+   "file": "frames-mushroom-taste-flat-shinmai.webp",
+   "title": "新米のフレーム",
+   "desc": "新米のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "きのこ・秋の味覚のフレーム",
+    "新米のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 510,
+   "h": 522
+  },
+  {
+   "id": "frames-mushroom-taste-flat-matsutake",
+   "file": "frames-mushroom-taste-flat-matsutake.webp",
+   "title": "松茸のフレーム",
+   "desc": "松茸のフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "きのこ・秋の味覚のフレーム",
+    "松茸のフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 527,
+   "h": 525
+  },
+  {
+   "id": "frames-mushroom-taste-flat-aki-basket",
+   "file": "frames-mushroom-taste-flat-aki-basket.webp",
+   "title": "秋の収穫かごのフレーム",
+   "desc": "秋の収穫かごのフレームのシンプルフラットイラストです。",
+   "tags": [
+    "フレーム",
+    "枠",
+    "きのこ",
+    "秋の味覚",
+    "きのこ・秋の味覚のフレーム",
+    "秋の収穫かごのフレーム",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 529,
+   "h": 529
+  }
+ ]
+}
