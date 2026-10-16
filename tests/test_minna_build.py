@@ -6,23 +6,17 @@ from datetime import date
 from pathlib import Path
 
 from sites.minna import build
+from tests.test_minna_sitecache import SHARED_CFG, shared_site
 from sites.minna.catalog import CATEGORIES
 
-CFG = {"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト", "operator_name": "テスト運営", "contact_form_url": "https://example.com/form",
-       "adsense_pub_id": None, "indexnow_key": "0123456789abcdef0123456789abcdef"}
+CFG = SHARED_CFG
 
 
 class MinnaBuildTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.tmp = tempfile.TemporaryDirectory()
-        cls.out = Path(cls.tmp.name) / "site"
-        cls.files = build.render_site(CFG, cls.out, release=True, today=date(2026, 10, 7))
+        cls.out, cls.files = shared_site()                      # one build for the page, print and browser tests (tests/test_minna_sitecache.py)
         cls.items = build.load_catalog()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.tmp.cleanup()
 
     def read(self, rel):
         return (self.out / rel).read_text(encoding="utf-8")
@@ -114,13 +108,14 @@ class MinnaBuildTest(unittest.TestCase):
         self.assertTrue(all((self.out / c["src"].lstrip("/")).exists() for c in data["chars"]))
 
     def test_every_internal_link_resolves(self):
+        built = set(self.files)                                   # the list of what was built answers "is there such a file" without asking the disk 40,000 times
         bad = []
         for rel in self.files:
             if not rel.endswith(".html"):
                 continue
             for href in re.findall(r'(?:href|src)="(/[^"#?]*)', self.read(rel)):
                 tgt = href.lstrip("/") + ("index.html" if href.endswith("/") else "")
-                if tgt and not (self.out / tgt).exists():
+                if tgt and tgt not in built:
                     bad.append((rel, href))
         self.assertEqual(bad, [])
 
