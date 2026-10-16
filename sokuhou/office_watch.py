@@ -249,7 +249,7 @@ def report(result: dict, now: dt.datetime, test: bool = False) -> str:
     if result["unverified"]:
         lines += ["## 確認できなかったこと(問題なしとは扱っていません)", *[f"- {p}" for p in result["unverified"]], ""]
     lines += ["## 確認できたこと", *[f"- {p}" for p in result["ok"]], "",
-              "---", "GitHub Actions の office-watch(1時間ごと・デプロイのあと)が自動で書いています。直ったことを確認すると、自動で閉じます。",
+              "---", "GitHub Actions の office-watch(予約は毎時だが、GitHub が実際に動かすのは数時間に1回。デプロイのあとにも動く)が自動で書いています。直ったことを確認すると、自動で閉じます。",
               "パソコンが止まっていたときは、パソコンが起きれば定期実行が遅れて動きます。"]
     return "\n".join(lines) + "\n"
 
