@@ -464,8 +464,8 @@ PRINT_COPY = {
     "shojo": ("賞状テンプレート かわいい動物 無料・A4印刷", "動物の賞状", "子どもに渡す賞状を、A4に印刷して使えるテンプレートです。名前・日付・贈る人を手で書き入れます。",
               [("文字を入れられますか?", "手書きで書き入れる形です。名前の線、日付、「より」の線が空いています。"), ("どの大きさで印刷しますか?", "A4(横)です。プリンターの設定は「実際のサイズ」で、厚めの紙だと立派に仕上がります。")]),
     "nafuda": ("名札テンプレート かわいい動物 無料・A4印刷", "動物の名札", "切り取って使える名札です。1ページに10枚。名前を手書きして、ラミネートしたり、安全ピンやクリップを付けたりして使えます。",
-               [("何枚つくれますか?", "1ページに10枚です。同じ絵が10枚並びます。"), ("名前は書けますか?", "各名札に、名前を書く線があります。ペンで書き入れてください。")]),
-    "jikanwari": ("時間割テンプレート かわいい動物 無料・A4印刷", "動物の時間割", "月曜から金曜、1〜6時間目の時間割表です。教科を手書きして、机に貼ったり、ファイルに入れたりして使えます。",
+               [("何枚つくれますか?", "1ページに10枚です。同じ絵が10枚並びます。"), ("名前は書けますか?", "各名札に名前を書く線があります。ペンで書き入れてください。")]),
+    "jikanwari": ("時間割テンプレート かわいい動物 無料・A4印刷", "動物の時間割", "月曜から金曜、1〜6時間目の時間割表です。教科を手書きして、机に貼ったりファイルに入れたりして使えます。",
                   [("6時間目までですか?", "はい。1〜6時間目の表です。使わない時間は空欄のまま使えます。"), ("どの大きさで印刷しますか?", "A4(横)です。プリンターの設定で「実際のサイズ」を選んでください。")]),
 }
 
@@ -691,7 +691,7 @@ def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], 
     newest = [s for s in newest if not s["legacy"]][:8] or newest[:8]
     use_html = ""
     if use_hubs:
-        use_html = ('<section style="margin-top:44px"><div class="sec-head"><h2>用途から<span class="scribble">探す</span></h2><p>使う場面ごとに、イラストをまとめました。</p></div><nav class="chips">'
+        use_html = ('<section style="margin-top:44px"><div class="sec-head"><h2>用途から<span class="scribble">探す</span></h2><p>使う場面ごとにイラストをまとめました。</p></div><nav class="chips">'
                     + "".join(f'<a href="/use/{h["slug"]}/">{esc(h["name"])}</a>' for h in use_hubs) + ('<a href="/pose/">ポーズ集</a>' if has_pose else "") + "</nav></section>")
     print_html = ""
     if printable_thumbs:
@@ -959,7 +959,7 @@ def specials_hub(cfg, preview, built) -> str:
                   + "".join(f'<img src="/thumbs/{i["id"]}.webp" alt="" width="120" height="{round(i["h"] * 120 / i["w"])}" loading="lazy">' for i in its[:3])
                   + f'</span><b>{esc(sp["name"])}</b><small>{len(its)}点</small></a></li>')
     body = f"""{crumbs([("トップ", "/"), ("特集", None)])}
-<h1>特集</h1><p class="lead">季節の行事や、探されることの多いテーマごとに、イラストをまとめました。</p><ul class="special-grid">{cards}</ul>"""
+<h1>特集</h1><p class="lead">季節の行事や探されることの多いテーマごとにイラストをまとめました。</p><ul class="special-grid">{cards}</ul>"""
     return page(cfg, preview, path="/special/", title=f"特集 | {cfg['site_name']}", description="年賀状、クリスマス、冬、ハロウィン、ぬりえなど、テーマごとのイラスト特集。無料・商用OK。", body=body)
 
 
@@ -1061,7 +1061,7 @@ def request_page(cfg: dict, preview: bool) -> str:
 <p>いただいたリクエストから、他の方にも役立つものを選んで制作しています。制作中のもの、公開したものをここに並べます。</p><ul class="req-board">{"".join(row(r) for r in board)}</ul></section>''' if board else "")
     body = f"""{crumbs([("トップ", "/"), ("リクエスト", None)])}
 <h1>イラストのリクエスト</h1>
-<p class="lead">欲しいイラストの場面を、ひとことで送ってください。対応できるものは順番に制作し、このサイトに公開します。早ければ翌日です。</p>
+<p class="lead">欲しいイラストの場面をひとことで送ってください。対応できるものは順番に制作し、このサイトに公開します。早ければ翌日です。</p>
 <section id="req-app" class="req-app" aria-labelledby="req-h">
 <h2 id="req-h"><span class="scribble">ひとことでリクエスト</span></h2>
 <form id="req-form" novalidate>
@@ -1346,7 +1346,7 @@ def nurie_page(cfg: dict, preview: bool, series: list[dict]) -> str:
 <noscript><p class="notice">オンラインぬりえにはJavaScriptが必要です。印刷して塗りたいときは、<a href="/printables/">印刷できるもの</a>から選べます。</p></noscript>
 <section><h2><span class="scribble">ぬりえの絵(セットから探す)</span></h2>{set_grid(lines)}</section>
 <section style="margin-top:44px"><h2><span class="scribble">よくある質問</span></h2><div class="faq">{faq}</div></section>
-<p>紙に印刷して塗る、A4の<a href="/special/nurie/">ぬりえの特集</a>や、<a href="/guide/nurie-insatsu/">ぬりえの印刷方法</a>もあります。</p>
+<p>紙に印刷して塗るA4の<a href="/special/nurie/">ぬりえの特集</a>と<a href="/guide/nurie-insatsu/">ぬりえの印刷方法</a>もあります。</p>
 <script type="application/ld+json">{ld}</script>
 <script src="/assets/nurie.js" defer></script>"""
     return page(cfg, preview, path="/tool/nurie/", title=f"オンラインぬりえ 無料・登録不要・保存と印刷OK | {cfg['site_name']}",

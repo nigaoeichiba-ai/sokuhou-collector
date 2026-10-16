@@ -45,7 +45,7 @@ TOUCHES = [
     ("papercut", "切り絵・ペーパークラフト", "紙を切って重ねたような、切り絵風のタッチ。",
      "layered paper-cut craft illustration: flat coloured paper shapes stacked with soft thin drop shadows between layers only (no shadow outside the object), "
      "slightly rounded cut edges, bright colours, handmade charm, clean cut-out look."),
-    ("pixel", "ドット絵", "ゲーム画面のように、ドットで描いたタッチ。",
+    ("pixel", "ドット絵", "ゲーム画面のようにドットで描いたタッチ。",
      "retro pixel art, 64x64 style scaled up with crisp square pixels, limited palette, 1-pixel dark outline, no anti-aliasing blur, cute and readable."),
     ("clay", "ぷっくり立体風", "粘土やぬいぐるみのような、丸みのある立体風のタッチ。",
      "cute soft 3D clay/plush look: puffy rounded forms, matte surface, soft studio lighting with gentle highlights, subtle rounded shading ONLY on the object itself, "
@@ -72,7 +72,7 @@ TOUCHES = [
      "stick-figure style: round head, single-line limbs of equal thickness, black strokes with one accent colour per picture, expressive gestures, very simple, no shading, no shadow."),
     ("duotone", "ワンカラー", "紺の線と、ひとつのアクセント色でまとめたタッチ。",
      "two-tone fashionable illustration: dark navy line art, ONE teal accent colour on the clothing and small props, light skin tone, everything else white, minimal and stylish, about 5-head proportion, no gradients, no shadow."),
-    ("animesoft", "アニメ風(立ち絵)", "柔らかい塗りの、立ち絵向けアニメ風タッチ。",
+    ("animesoft", "アニメ風(立ち絵)", "柔らかい塗りで描く、立ち絵向けのアニメ風タッチ。",
      "clean friendly anime-style full-body standing portrait: soft cel shading, simple large eyes, about 6.5-head proportion, front-facing or three-quarter, consistent outfit, wholesome and non-suggestive, no shadow on the ground."),
     ("silhouette", "シルエット", "ひとつの色で形を見せる、シルエットのタッチ。",
      "solid single-colour silhouette illustration (deep navy #24304A) with crisp edges and a clearly readable outline shape; "
