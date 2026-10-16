@@ -54,6 +54,9 @@ class DeployGateTest(unittest.TestCase):
         return self.git("rev-parse", "HEAD")
 
     def run_gate(self, site, before, after, served=None):
+        return "go=true" in self.gate_output(site, before, after, served)
+
+    def gate_output(self, site, before, after, served=None):
         if served is None:
             (self.live / "deployed-sha.txt").unlink(missing_ok=True)
         else:
@@ -65,7 +68,7 @@ class DeployGateTest(unittest.TestCase):
                "URL": self.live.as_uri(), "GITHUB_OUTPUT": str(out), "ATOMOU_PUBLIC": "true", "DEMO_USER": "d", "DEMO_PASS": "p"}
         r = subprocess.run([BASH, "-c", gate_script()], cwd=self.repo, env=env, capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stderr)
-        return "go=true" in out.read_text(encoding="utf-8")
+        return out.read_text(encoding="utf-8")
 
     def test_push_of_another_sites_files_skips_this_site_when_the_live_site_is_current(self):
         minna = self.commit("sites/minna/series.json", "minna")
@@ -106,6 +109,49 @@ class DeployGateTest(unittest.TestCase):
         self.assertTrue(self.run_gate("minna", before, after, served=before))
 
 
+    def fast(self, site, before, after, served):
+        return "fast=true" in self.gate_output(site, before, after, served)
+
+    def test_fast_lane_only_for_minna_content(self):
+        before = self.git("rev-parse", "HEAD")
+        series = self.commit("sites/minna/library/new-series/series.json", "series")
+        self.assertTrue(self.fast("minna", before, series, before))
+        spec = self.commit("sites/minna/specs/new-series.json", "spec")
+        self.assertTrue(self.fast("minna", before, spec, before))     # the diff from the live commit covers both commits
+        guide = self.commit("sites/minna/content/guide.md", "guide text")
+        self.assertTrue(self.fast("minna", before, guide, before))
+
+    def test_fast_lane_never_for_code_templates_tests_or_shared_files(self):
+        for path in ("sites/minna/build.py", "sites/minna/assets/style.css", "tests/test_minna_x.py", "sokuhou/sitekit.py", "requirements.txt"):
+            before = self.git("rev-parse", "HEAD")
+            self.commit("sites/minna/library/s/series.json", "series")
+            after = self.commit(path, path)
+            self.assertFalse(self.fast("minna", before, after, before), path)
+
+    def test_fast_lane_is_only_for_minna(self):
+        before = self.git("rev-parse", "HEAD")
+        after = self.commit("sites/yorokobu/content/x.md", "yorokobu content")
+        for site in ("yorokobu", "kuma", "saichin"):
+            self.assertFalse(self.fast(site, before, after, before), site)
+
+    def test_a_push_of_other_sites_files_next_to_minna_content_is_still_fast(self):
+        before = self.git("rev-parse", "HEAD")
+        self.commit("sites/minna/library/s/series.json", "series")
+        after = self.commit("sites/yorokobu/compare.py", "yorokobu code")
+        self.assertTrue(self.fast("minna", before, after, before))
+
+    def test_no_fast_lane_without_a_push(self):
+        before = self.git("rev-parse", "HEAD")
+        after = self.commit("sites/minna/library/s/series.json", "series")
+        out = self.tmp / "o2.txt"
+        out.write_text("", encoding="utf-8")
+        env = {**os.environ, "KEY": "k", "HOST": "h", "USER_ID": "u", "MINNA": "true", "SITE": "minna", "EVENT": "schedule", "ONLY": "", "BEFORE": "", "AFTER": after,
+               "URL": self.live.as_uri(), "GITHUB_OUTPUT": str(out)}
+        subprocess.run([BASH, "-c", gate_script()], cwd=self.repo, env=env, capture_output=True, text=True, check=True)
+        text = out.read_text(encoding="utf-8")
+        self.assertIn("go=true", text)
+        self.assertIn("fast=false", text)
+
     def test_the_watchdog_applies_the_same_ownership_rules_as_the_gate(self):
         from sokuhou import office_watch
         paths = ["sites/minna/a.json", "sites/yorokobu/b.py", "sites/kuma/c.py", "sites/saichin/d.py", "tests/test_kuma_x.py", "tests/test_foo_kuma.py",
@@ -122,6 +168,10 @@ class DeployWorkflowWritesTheShaTest(unittest.TestCase):
     def test_the_build_publishes_the_commit_it_was_built_from(self):
         text = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
         self.assertIn('echo "$GITHUB_SHA" > release/deployed-sha.txt', text)
+        # the fast lane skips exactly the unit tests and shrinks the live check; nothing else
+        self.assertIn("steps.gate.outputs.go == 'true' && steps.gate.outputs.fast != 'true'", text)
+        self.assertIn("--sample 150 --prev prev_sitemap.xml", text)
+        self.assertEqual(text.count("steps.gate.outputs.fast != 'true'"), 1)
         self.assertIn('"$URL/deployed-sha.txt"', text)
 
 
