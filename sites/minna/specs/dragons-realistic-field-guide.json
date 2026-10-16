@@ -1,0 +1,84 @@
+{
+ "slug": "dragons-realistic-field-guide",
+ "title": "ドラゴンのリアル調イラスト",
+ "genre": "animals",
+ "touch": "realistic",
+ "title_fmt": "{ja}",
+ "holes": false,
+ "lead": "西洋風・東洋風・幼体など、オリジナルのドラゴンを写実的なタッチで描いた素材12点です。ゲーム・小説の挿絵や資料に使えます。",
+ "tags": [
+  "ドラゴン",
+  "竜",
+  "リアル",
+  "ファンタジー",
+  "ゲーム",
+  "小説",
+  "オリジナル"
+ ],
+ "subject_en": "Realistic natural-history style rendering of ORIGINAL dragon designs invented for this series, each ONE dragon full body centred, detailed scales and anatomy, natural muted colours, soft shading. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "items": [
+  [
+   "western-green",
+   "緑の西洋ドラゴン",
+   "a four-legged green western dragon standing with folded wings"
+  ],
+  [
+   "western-red",
+   "赤い西洋ドラゴン",
+   "a red western dragon with spread wings, mouth closed"
+  ],
+  [
+   "eastern-long",
+   "東洋の龍",
+   "a long serpentine eastern dragon with whiskers coiled through clouds"
+  ],
+  [
+   "wyvern",
+   "ワイバーン",
+   "a two-legged wyvern with bat-like wings perched on a rock"
+  ],
+  [
+   "hatchling",
+   "ドラゴンの幼体",
+   "a small dragon hatchling sitting beside a cracked egg"
+  ],
+  [
+   "egg",
+   "ドラゴンの卵",
+   "a large speckled dragon egg resting in a nest of straw"
+  ],
+  [
+   "ice-dragon",
+   "氷のドラゴン",
+   "a pale blue dragon with frosty scales and spiky crest"
+  ],
+  [
+   "sea-dragon",
+   "海のドラゴン",
+   "a finned sea dragon swimming with a long body"
+  ],
+  [
+   "forest-dragon",
+   "森のドラゴン",
+   "a moss-covered brown dragon with leaf-like frills lying down"
+  ],
+  [
+   "skull",
+   "ドラゴンの頭骨",
+   "a fossilised dragon skull with horns, side view"
+  ],
+  [
+   "head",
+   "ドラゴンの頭部",
+   "a close portrait of a dragon head with horns and an amber eye"
+  ],
+  [
+   "claw",
+   "ドラゴンの爪",
+   "a dragon's clawed foot gripping a stone"
+  ]
+ ],
+ "subject": "",
+ "season": null,
+ "exclude": []
+}

@@ -1,0 +1,84 @@
+{
+ "slug": "icon-animals-round-flat",
+ "title": "丸型アイコン用の動物",
+ "genre": "icon",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "holes": false,
+ "lead": "プロフィール画像やSNSのアイコンに使える、顔を中心にした動物の素材12点です。正面向きで、丸く切り抜いても収まる構図です。",
+ "tags": [
+  "アイコン",
+  "プロフィール",
+  "SNS",
+  "動物",
+  "丸型",
+  "アバター",
+  "顔"
+ ],
+ "subject_en": "Flat style avatar icons, each ONE animal face and shoulders, front view, centred, compact round silhouette that fits inside a circle, simple dot eyes, a soft solid colour fill. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "items": [
+  [
+   "neko",
+   "ねこ",
+   "a cat face with pointed ears"
+  ],
+  [
+   "inu",
+   "いぬ",
+   "a dog face with floppy ears"
+  ],
+  [
+   "usagi",
+   "うさぎ",
+   "a rabbit face with long upright ears"
+  ],
+  [
+   "kuma",
+   "くま",
+   "a bear face with small round ears"
+  ],
+  [
+   "kitsune",
+   "きつね",
+   "a fox face with pointed ears and a white muzzle"
+  ],
+  [
+   "panda",
+   "パンダ",
+   "a panda face with dark eye patches"
+  ],
+  [
+   "tanuki",
+   "たぬき",
+   "a tanuki face with a striped tail curling near the shoulder"
+  ],
+  [
+   "risu",
+   "りす",
+   "a squirrel face with big front teeth and a tail behind the head"
+  ],
+  [
+   "fukuro",
+   "ふくろう",
+   "an owl face with big round eyes"
+  ],
+  [
+   "penguin",
+   "ペンギン",
+   "a penguin face with a small orange beak"
+  ],
+  [
+   "kaeru",
+   "かえる",
+   "a frog face with bulging eyes"
+  ],
+  [
+   "hitsuji",
+   "ひつじ",
+   "a sheep face with a curly wool cap"
+  ]
+ ],
+ "subject": "",
+ "season": null,
+ "exclude": []
+}

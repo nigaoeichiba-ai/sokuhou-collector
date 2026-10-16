@@ -1,0 +1,84 @@
+{
+ "slug": "dinosaurs-realistic-field-guide",
+ "title": "恐竜の図鑑風イラスト",
+ "genre": "animals",
+ "touch": "realistic",
+ "title_fmt": "{ja}",
+ "holes": false,
+ "lead": "ティラノサウルス・トリケラトプス・ステゴサウルスなど、恐竜を図鑑風のタッチで描いた素材12点です。理科の資料や展示の案内に使えます。",
+ "tags": [
+  "恐竜",
+  "リアル",
+  "図鑑",
+  "ティラノサウルス",
+  "トリケラトプス",
+  "博物館",
+  "理科"
+ ],
+ "subject_en": "Realistic natural-history illustration style, each ONE dinosaur full body, side or three-quarter view, centred, scientifically plausible proportions, natural earthy colours, soft shading. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "items": [
+  [
+   "trex",
+   "ティラノサウルス",
+   "a Tyrannosaurus rex standing with jaws closed"
+  ],
+  [
+   "triceratops",
+   "トリケラトプス",
+   "a Triceratops with three horns and a large frill"
+  ],
+  [
+   "stegosaurus",
+   "ステゴサウルス",
+   "a Stegosaurus with back plates and tail spikes"
+  ],
+  [
+   "brachiosaurus",
+   "ブラキオサウルス",
+   "a Brachiosaurus with a long neck raised"
+  ],
+  [
+   "velociraptor",
+   "ヴェロキラプトル",
+   "a feathered Velociraptor in a running pose"
+  ],
+  [
+   "ankylosaurus",
+   "アンキロサウルス",
+   "an Ankylosaurus with armour plates and a tail club"
+  ],
+  [
+   "spinosaurus",
+   "スピノサウルス",
+   "a Spinosaurus with a tall sail on its back"
+  ],
+  [
+   "pteranodon",
+   "プテラノドン",
+   "a Pteranodon gliding with wings spread"
+  ],
+  [
+   "plesiosaur",
+   "プレシオサウルス",
+   "a Plesiosaurus swimming with flippers"
+  ],
+  [
+   "parasaurolophus",
+   "パラサウロロフス",
+   "a Parasaurolophus with a long head crest"
+  ],
+  [
+   "allosaurus",
+   "アロサウルス",
+   "an Allosaurus in a walking pose"
+  ],
+  [
+   "mammoth",
+   "マンモス",
+   "a woolly mammoth with long curved tusks"
+  ]
+ ],
+ "subject": "",
+ "season": null,
+ "exclude": []
+}

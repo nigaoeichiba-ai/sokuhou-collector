@@ -1,0 +1,84 @@
+{
+ "slug": "volleyball-club-scenes-loose",
+ "title": "バレーボール部の場面",
+ "genre": "school",
+ "touch": "loose",
+ "title_fmt": "{ja}",
+ "holes": false,
+ "lead": "サーブ・レシーブ・スパイク・ブロックなど、バレーボール部の練習と試合の場面12点です。部活動の案内や部員募集の資料に使えます。",
+ "tags": [
+  "バレーボール",
+  "バレー",
+  "部活",
+  "スポーツ",
+  "練習",
+  "試合",
+  "部員募集"
+ ],
+ "subject_en": "Hand-drawn loose-line style, each ONE volleyball scene with one to three players in plain team uniforms (no numbers, no logos), centred in its cell, energetic natural poses, simple faces. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "items": [
+  [
+   "serve",
+   "サーブ",
+   "a player tossing the ball up before a serve"
+  ],
+  [
+   "receive",
+   "レシーブ",
+   "a player diving low to receive the ball with joined arms"
+  ],
+  [
+   "toss",
+   "トス",
+   "a setter pushing the ball up with both hands overhead"
+  ],
+  [
+   "spike",
+   "スパイク",
+   "a player jumping high and striking the ball over the net"
+  ],
+  [
+   "block",
+   "ブロック",
+   "two players jumping with arms raised at the net to block"
+  ],
+  [
+   "libero",
+   "リベロ",
+   "a player in a different coloured jersey sliding to save a ball"
+  ],
+  [
+   "huddle",
+   "円陣",
+   "six players in a circle with arms around shoulders"
+  ],
+  [
+   "highfive",
+   "ハイタッチ",
+   "two players high-fiving after a point"
+  ],
+  [
+   "practice",
+   "練習",
+   "players lined up doing receive drills with a coach throwing balls"
+  ],
+  [
+   "manager",
+   "マネージャー",
+   "a team manager carrying a ball cart and a water bottle"
+  ],
+  [
+   "scoreboard",
+   "得点板",
+   "a flip scoreboard with blank numbers beside a referee stand"
+  ],
+  [
+   "trophy",
+   "優勝",
+   "players holding a trophy and a team flag overhead"
+  ]
+ ],
+ "subject": "",
+ "season": null,
+ "exclude": []
+}

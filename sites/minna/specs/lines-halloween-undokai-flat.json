@@ -1,0 +1,85 @@
+{
+ "slug": "lines-halloween-undokai-flat",
+ "title": "ハロウィン・運動会・秋の飾り罫",
+ "genre": "deco",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "holes": false,
+ "lead": "ハロウィン・運動会・きのこ・紅葉の区切り線12点です。見出しの下やおたよりの区切りに使える横長素材です。",
+ "tags": [
+  "区切り線",
+  "ライン",
+  "飾り罫",
+  "ハロウィン",
+  "運動会",
+  "きのこ",
+  "紅葉",
+  "おたより"
+ ],
+ "subject_en": "Horizontal decorative divider lines, each ONE wide thin strip about 6:1 in shape, centred in its cell with space around, made of repeating small motifs along a line. Strips are separate and never touch each other. Flat style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "items": [
+  [
+   "hw-pumpkin",
+   "ハロウィンのかぼちゃの線",
+   "a divider of small orange pumpkins connected by a green vine"
+  ],
+  [
+   "hw-bats",
+   "ハロウィンのコウモリの線",
+   "a divider of small purple bats flying in a row with tiny stars"
+  ],
+  [
+   "hw-candy",
+   "ハロウィンのキャンディの線",
+   "a divider of wrapped candies and lollipops in orange and purple"
+  ],
+  [
+   "hw-ghost",
+   "ハロウィンのおばけの線",
+   "a divider of small friendly ghosts holding hands along a wavy line"
+  ],
+  [
+   "ud-flags",
+   "運動会の万国旗の線",
+   "a divider of a string of colourful triangular flags"
+  ],
+  [
+   "ud-ribbon",
+   "運動会のリボンの線",
+   "a divider of red and white ribbons with small medals"
+  ],
+  [
+   "ud-ball",
+   "運動会の玉入れの線",
+   "a divider of red and white balls scattered along a line with small baskets"
+  ],
+  [
+   "ud-track",
+   "運動会のトラックの線",
+   "a divider shaped like a running track with lane lines and small runners as simple dots"
+  ],
+  [
+   "kinoko-line",
+   "きのこの線",
+   "a divider of small mushrooms of various kinds along a line of moss"
+  ],
+  [
+   "momiji-line",
+   "紅葉の線",
+   "a divider of red and orange maple leaves along a thin branch"
+  ],
+  [
+   "ginkgo-line",
+   "いちょうの線",
+   "a divider of yellow ginkgo leaves along a thin line"
+  ],
+  [
+   "acorn-line",
+   "どんぐりの線",
+   "a divider of acorns and oak leaves in a row"
+  ]
+ ],
+ "subject": "",
+ "season": null,
+ "exclude": []
+}

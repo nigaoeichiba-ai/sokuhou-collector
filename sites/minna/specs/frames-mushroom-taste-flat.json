@@ -1,0 +1,85 @@
+{
+ "slug": "frames-mushroom-taste-flat",
+ "title": "きのこ・秋の味覚のフレーム",
+ "genre": "deco",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "holes": true,
+ "lead": "きのこ・栗・さつまいも・柿など、秋の味覚をあしらったフレーム12点です。食堂のお知らせやおたよりの枠に使えます。",
+ "tags": [
+  "フレーム",
+  "枠",
+  "きのこ",
+  "秋の味覚",
+  "栗",
+  "さつまいも",
+  "おたより",
+  "メニュー"
+ ],
+ "subject_en": "Decorative frames/borders with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, landscape or square, thick enough to hold text or a photo. Flat colourful style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "items": [
+  [
+   "kinoko-forest",
+   "きのこの森のフレーム",
+   "a frame of assorted mushrooms and fallen leaves along the border, centre empty"
+  ],
+  [
+   "shiitake",
+   "しいたけのフレーム",
+   "a frame made of shiitake mushrooms and green leaves, centre empty"
+  ],
+  [
+   "shimeji",
+   "しめじ・えのきのフレーム",
+   "a frame of clustered shimeji and enoki mushrooms with small ferns, centre empty"
+  ],
+  [
+   "fly-agaric",
+   "赤いきのこのフレーム",
+   "a frame with red toadstools with white dots, acorns and moss at the corners, centre empty"
+  ],
+  [
+   "kuri",
+   "栗のフレーム",
+   "a frame with chestnuts in burrs and brown leaves, centre empty"
+  ],
+  [
+   "satsumaimo",
+   "さつまいものフレーム",
+   "a frame made of purple sweet potatoes cut open to show yellow flesh and vines, centre empty"
+  ],
+  [
+   "kaki",
+   "柿のフレーム",
+   "a frame with orange persimmons hanging on branches with leaves, centre empty"
+  ],
+  [
+   "nashi-budo",
+   "梨とぶどうのフレーム",
+   "a frame with pears and purple grape bunches on a vine, centre empty"
+  ],
+  [
+   "sanma",
+   "さんまのフレーム",
+   "a frame of grilled saury fish with lemon slices and radish, centre empty"
+  ],
+  [
+   "shinmai",
+   "新米のフレーム",
+   "a frame with ears of rice, a rice bowl and rice bales, centre empty"
+  ],
+  [
+   "matsutake",
+   "松茸のフレーム",
+   "a frame with matsutake mushrooms and pine needles, centre empty"
+  ],
+  [
+   "aki-basket",
+   "秋の収穫かごのフレーム",
+   "a frame made of a wicker basket overflowing with autumn produce at the bottom edge and leaves along the sides, centre empty"
+  ]
+ ],
+ "subject": "",
+ "season": null,
+ "exclude": []
+}
