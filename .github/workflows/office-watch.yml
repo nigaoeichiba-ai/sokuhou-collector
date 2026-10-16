@@ -1,14 +1,19 @@
 name: office-watch
 
-# Cloud watchdog (2026-10-15).  Works without the owner's PC: every 3 hours it reads the four live sites and the repository's commit list
+# Cloud watchdog (2026-10-15).  Works without the owner's PC: every hour, and right after every deploy-sites run, it reads the four live sites and the repository's commit list
 # (sokuhou/office_watch.py).  If something stopped (a site does not answer, the sitemap is stale, the daily "picks" page is stale, or no
 # commit from the owner's account for 36 hours = the PC-side routines stopped), it opens ONE issue assigned to the owner, so that GitHub's
 # own notification (mail / GitHub app) reaches the owner.  The issue is edited, not re-created, while the problem lasts, and closed when it is fixed.
+# Since 2026-10-16 it also finds a change that was committed but is not live after 2 hours (each site publishes the commit it was built from, /deployed-sha.txt) and
+# starts deploy-sites again for that site only (the "heal" step; at most once in 3 hours, never while a deploy is running).
 # No secrets are needed.  Run by hand with test=true to check that the notification arrives.
 
 on:
   schedule:
-    - cron: "17 */3 * * *"
+    - cron: "17 * * * *"
+  workflow_run:
+    workflows: ["deploy-sites"]
+    types: [completed]
   workflow_dispatch:
     inputs:
       test:
@@ -19,6 +24,7 @@ on:
 permissions:
   contents: read
   issues: write
+  actions: write
 
 concurrency:
   group: office-watch
@@ -39,6 +45,12 @@ jobs:
           python-version: "3.13"
       - name: Look at the sites
         run: python -m sokuhou.office_watch
+      - name: Deploy again what was committed but is not live (only the sites the watchdog named)
+        run: |
+          for site in $(python -c "import json;print(' '.join(json.load(open('watch.json',encoding='utf-8')).get('heal',[])))"); do
+            echo "deploying $site again"
+            gh workflow run deploy.yml -f only="$site" -f deploy=true
+          done
       - name: Open, update or close the issue
         run: |
           title="【見張り】サイトまたは定期実行の異常"

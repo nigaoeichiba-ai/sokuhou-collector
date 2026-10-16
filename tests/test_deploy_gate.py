@@ -106,6 +106,18 @@ class DeployGateTest(unittest.TestCase):
         self.assertTrue(self.run_gate("minna", before, after, served=before))
 
 
+    def test_the_watchdog_applies_the_same_ownership_rules_as_the_gate(self):
+        from sokuhou import office_watch
+        paths = ["sites/minna/a.json", "sites/yorokobu/b.py", "sites/kuma/c.py", "sites/saichin/d.py", "tests/test_kuma_x.py", "tests/test_foo_kuma.py",
+                 "tests/test_otsu_bear.py", "data/yorokobu_x.json", "data/atomou/x.json", "data/other.json", "data/foo_kuma.json", "sokuhou/sources/a_kuma.py",
+                 "sokuhou/sitekit.py", "tests/fixtures/kuma_x/a.txt", "tests/test_minna_a.py", "requirements.txt", "tests/test_misc.py"]
+        for path in paths:
+            before = self.git("rev-parse", "HEAD")
+            after = self.commit(path, path)
+            for site in ("saichin", "kuma", "yorokobu", "minna"):
+                self.assertEqual(self.run_gate(site, before, after, served=before), office_watch.touches(site, [path]), f"{site} {path}")
+
+
 class DeployWorkflowWritesTheShaTest(unittest.TestCase):
     def test_the_build_publishes_the_commit_it_was_built_from(self):
         text = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
