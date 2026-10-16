@@ -34,6 +34,7 @@ from sites.yorokobu import numberlists as nm  # noqa: E402
 from sites.yorokobu import compare  # noqa: E402
 from sites.yorokobu import amazonrank  # noqa: E402
 from sites.yorokobu import seasonal  # noqa: E402
+from sites.yorokobu import shogatsu  # noqa: E402
 from sites.yorokobu import ranking as rk  # noqa: E402
 from sites.yorokobu import sales  # noqa: E402
 from sites.yorokobu import features as feats  # noqa: E402
@@ -864,7 +865,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 {concierge(cfg, d, p)}
 <section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(avoid, "warn")}</section>
 {guide_link(c, p["occasion"])}
-{seasonal.hook(p["occasion"])}
+{seasonal.hook(p["occasion"])}{shogatsu.hook(p["occasion"])}
 <p style="margin-top:40px">{amazon}</p>
 {related_section([(f"{occ['name']}のほかの相手", links(related_occ)), (f"{rec['name']}へのほかのイベント", links(related_rec))])}"""
     return page(cfg, preview, path=f"/gift/{key}/", title=f"{p['title']} | {cfg['site_name']}", description=p["lead"][:110], body=body,
@@ -968,7 +969,7 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
 <div><h2><span class="scribble">選ぶポイント</span></h2><ol class="panel-grid" style="grid-template-columns:1fr">{"".join(f"<li>{esc(x)}</li>" for x in o["tips"])}</ol></div></section>
 <section style="margin-top:50px"><h2><span class="scribble">相手を選んでおすすめを見る</span></h2><ul class="tiles">{cards}</ul></section>
 {shown}
-{msg_link(c, o["slug"])}{seasonal.hook(o["slug"])}<section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>
+{msg_link(c, o["slug"])}{seasonal.hook(o["slug"])}{shogatsu.hook(o["slug"])}<section class="avoid" style="margin-top:48px"><h2><span class="scribble">避けたほうがよいこと</span></h2>{ul(o["avoid"], "warn")}</section>
 {guide_link(c, o["slug"])}
 {amazon_picks_section(cfg, c, o["slug"])}
 {amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "のプレゼントをAmazonで探す")}"""
@@ -1186,7 +1187,7 @@ def guide_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 <section class="g-sec"><h2><span class="scribble">贈る前のチェックリスト</span></h2><ul class="checklist">{checks}</ul></section>
 <section class="g-sec"><h2><span class="scribble">よくある質問</span></h2>{faq}</section></article>
 {share_bar(cfg, f"/guide/{slug}/", f"{g['title']}", "この記事をだれかに送る")}
-{seasonal.hook(slug)}
+{seasonal.hook(slug)}{shogatsu.hook(slug)}
 {dataroom.occasion_teaser(d, slug, compact=True)}
 <section class="related" style="margin-top:44px"><h2><span class="scribble">{esc(o["name"])}の贈り物を選ぶ</span></h2>
 <ul class="plain">{links}</ul><p style="margin-top:14px"><a class="btn btn-sub" href="/occasion/{slug}/">{esc(o["name"])}のおすすめを見る</a></p></section>
@@ -1238,6 +1239,7 @@ def feed_xml(d: dict, cfg: dict) -> str:
     items = [(a["date"], a["title"], f"{base}/read/{a['slug']}/", a["lead"]) for a in d["c"]["articles"]]
     items += [(t.get("added") or d["fetched_date"], t["title"], f"{base}/theme/{t['slug']}/", t["lead"]) for t in d["live_themes"] if t.get("added")]
     items += picksite.feed_entries(d, cfg)
+    items += [(day, t, f"{base}{u}", lead) for day, u, t, lead in shogatsu.rows()]
     items = sorted(items, reverse=True)[:40]
     entries = "".join(f"<entry><title>{esc(t)}</title><link href=\"{esc(u)}\"/><id>{esc(u)}</id><updated>{day}T00:00:00+09:00</updated><summary>{esc(s[:140])}</summary></entry>\n"
                       for day, t, u, s in items)
@@ -1250,11 +1252,13 @@ def whats_new(d: dict, n: int = 6) -> str:
     c = d["c"]
     rows = [(a["date"], f'/read/{a["slug"]}/', a["title"], "読みもの") for a in c["articles"]]
     rows += [(t["added"], f'/theme/{t["slug"]}/', t["title"], "テーマ") for t in d["live_themes"] if t.get("added")]
+    rows += [shogatsu.hub_row()]
     rows = sorted(rows, reverse=True)[:n]
     if not rows:
         return ""
     lis = "".join(f'<li><a href="{u}"><span class="new-kind">{k}</span><b>{esc(t)}</b><small>{esc(day)}</small></a></li>' for day, u, t, k in rows)
-    return f'<section class="whatsnew block"><div class="sec-head"><span class="eyebrow">New</span><h2>新しく追加したページ</h2></div><ul class="newlist">{lis}</ul><p class="more"><a class="btn btn-sub" href="/read/">読みものをぜんぶ見る</a></p></section>'
+    more = '<p class="more"><a class="btn btn-sub" href="/read/">読みものをぜんぶ見る</a></p>' if c["articles"] else ""      # the reading hub exists only when there are articles
+    return f'<section class="whatsnew block"><div class="sec-head"><span class="eyebrow">New</span><h2>新しく追加したページ</h2></div><ul class="newlist">{lis}</ul>{more}</section>'
 
 
 def season_occasions(c: dict, today: date) -> list[dict]:
@@ -1443,6 +1447,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <div><span class="eyebrow">Countdown</span><h2>贈りどきまであと何日？</h2>{countdown_chips(c, today)}<p class="more"><a class="btn btn-sub" href="/calendar/">贈りどきカレンダー</a></p></div></div></section>
 <section class="block"><div class="sec-head"><span class="eyebrow">Now</span><h2>そろそろ準備したいイベント</h2><p>これから迎えるイベントのプレゼントを先取りで。</p></div>
 <ul class="tiles wide">{season}</ul>{month_more}</section>
+{shogatsu.home_band(today)}
 <section class="block"><div class="sec-head"><span class="eyebrow">For whom</span><h2>だれに贈りますか？</h2></div>
 <ul class="chip-grid round">{rec}</ul></section>
 {budget_block(d)}
@@ -2028,6 +2033,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     for p in c["pairs"]:
         pages[f"gift/{ct.pair_key(p)}/index.html"] = pair_page(d, cfg, preview, p)
     pages.update(seasonal.build_pages(d, cfg, preview, pages))                  # after the pages it links to: a link to a page this build does not have is left out
+    pages.update(shogatsu.build_pages(d, cfg, preview, pages))                  # likewise: the New Year feature links to sheets and tables that may not be in a fixture build
     pages.update(legal_pages(
         SITE, cfg, preview,
         purpose="イベントと贈る相手からプレゼントの選び方と商品の例を探しやすく整理して、贈り物選びに役立てていただくこと。",
