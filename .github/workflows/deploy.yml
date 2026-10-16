@@ -126,6 +126,7 @@ jobs:
           ONLY: ${{ github.event.inputs.only }}
           BEFORE: ${{ github.event.before }}
           AFTER: ${{ github.sha }}
+          URL: ${{ matrix.url }}
         run: |
           go=true
           if [ -n "$ONLY" ] && [ "$ONLY" != "$SITE" ]; then
@@ -134,8 +135,19 @@ jobs:
           fi
           # A push that only touches another site's own files (sites/yorokobu, sites/minna and their tests) does not redeploy this site.
           # Anything shared (the collector, kit, workflows, data, other tests) redeploys every site; on any doubt the site is deployed.
-          if [ "$EVENT" = "push" ] && [ -n "$BEFORE" ] && ! echo "$BEFORE" | grep -qE '^0+$'; then
-            if files=$(git diff --name-only "$BEFORE" "$AFTER" 2>/dev/null) && [ -n "$files" ]; then
+          # What the push changed is not enough: while this site's previous job runs, GitHub keeps only the newest waiting job of the group and cancels the
+          # older one, and the newest push may not touch this site (2026-10-16: minna's +9 series was cancelled that way and skipped by the next run).
+          # So the comparison starts at the commit the LIVE site was built from (the build writes it to /deployed-sha.txt); no such file or an unknown commit: the push's own BEFORE.
+          BASE="$BEFORE"
+          if [ "$EVENT" = "push" ] && [ "$SITE" != "atomou" ]; then
+            served=$(curl -fsS --max-time 20 "$URL/deployed-sha.txt" 2>/dev/null | tr -d '[:space:]' || true)
+            if echo "$served" | grep -qE '^[0-9a-f]{40}$' && git cat-file -e "${served}^{commit}" 2>/dev/null; then
+              BASE="$served"
+              echo "the live $SITE was built from ${served:0:10}: this run compares with that commit, not only with the push before"
+            fi
+          fi
+          if [ "$EVENT" = "push" ] && [ -n "$BASE" ] && ! echo "$BASE" | grep -qE '^0+$'; then
+            if files=$(git diff --name-only "$BASE" "$AFTER" 2>/dev/null) && [ -n "$files" ]; then
               relevant=0
               while IFS= read -r f; do
                 case "$f" in
@@ -221,6 +233,7 @@ jobs:
           test -f release/.htaccess
           test "$(find release -name '*.html' | wc -l)" -ge "$MIN_PAGES"
           if [ "$MIN_CARDS" -gt 0 ]; then test "$(ls release/og | wc -l)" -ge "$MIN_CARDS"; fi   # share cards were drawn (the CJK font was found)
+          echo "$GITHUB_SHA" > release/deployed-sha.txt   # the next push's gate reads it from the live site (see the Gate step); a public commit id of this public repository
           du -sh release
       - name: Site check (every link, the sitemap, headings, tables, empty sections of the REAL build; a problem stops the deploy)
         if: steps.gate.outputs.go == 'true'
