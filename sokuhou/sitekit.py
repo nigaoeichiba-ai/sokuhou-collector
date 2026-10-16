@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import hashlib
 import html
+import os
 import re
 from pathlib import Path
 
@@ -54,13 +55,34 @@ def asset_pages(assets: Path) -> dict:
     return out
 
 
+_VERSIONS: dict[str, tuple[tuple[str, ...], tuple, str]] = {}
+
+
+def _stamp(paths: tuple[str, ...]) -> tuple:
+    return tuple((st.st_mtime_ns, st.st_size) for st in map(os.stat, paths))
+
+
 def asset_version(assets: Path) -> str:
-    """Short content hash of the assets; part of their URLs so browsers and server caches never serve stale ones."""
+    """Short content hash of the assets; part of their URLs so browsers and server caches never serve stale ones.
+    Every page asks for it, and reading all the files for each of 4,800 pages took two minutes of a build (2026-10-16): the hash is kept while no file or
+    folder under the assets has changed its modification time or size (a new or removed file changes its folder's time)."""
+    key = str(assets)
+    hit = _VERSIONS.get(key)
+    if hit is not None:
+        try:
+            if _stamp(hit[0]) == hit[1]:
+                return hit[2]
+        except OSError:
+            pass
+    folders = [assets] + sorted(p for p in assets.rglob("*") if p.is_dir())
+    files = asset_files(assets)
     h = hashlib.sha1()
-    for a in asset_files(assets):
+    for a in files:
         h.update(a.relative_to(assets).as_posix().encode("utf-8"))
         h.update(a.read_bytes())
-    return h.hexdigest()[:8]
+    paths = tuple(str(p) for p in folders + files)
+    _VERSIONS[key] = (paths, _stamp(paths), h.hexdigest()[:8])
+    return _VERSIONS[key][2]
 
 
 def missing_config(cfg: dict) -> list[str]:

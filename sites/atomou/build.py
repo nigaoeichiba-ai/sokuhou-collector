@@ -10,6 +10,8 @@ A build without --release is a preview (noindex, robots.txt disallows everything
 from __future__ import annotations
 
 import argparse
+import bisect
+import functools
 import hashlib
 import json
 import re
@@ -868,7 +870,18 @@ def page_ld(c: Ctx, e: dict, url: str) -> str:
     return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False).replace("</", "<\\/") + "</script>"
 
 
-def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
+@functools.lru_cache(maxsize=None)
+def _day(iso: str) -> date:   # each event page looks at every other day of the catalog: parse each date once (the build was 45 s slower)
+    return date.fromisoformat(iso)
+
+
+def near_pool(live: list[dict]) -> tuple[list[int], list[dict]]:
+    """The days that can be 'the days around' another one (not quiet, a day not a month), in date order: built once for all the event pages, not again for each."""
+    pool = sorted((r for r in live if not r["quiet"] and r["precision"] == "day"), key=lambda r: _day(r["date"]).toordinal())
+    return [_day(r["date"]).toordinal() for r in pool], pool
+
+
+def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict], pool: tuple[list[int], list[dict]] | None = None) -> str:
     quiet = e["quiet"]
     today = c.today
     d = date.fromisoformat(e["date"])
@@ -877,9 +890,14 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict]) -> str:
     fmt = fmt_date(e["date"], e["precision"])
     end = f"〜{fmt_date(e['date_end'])}" if e.get("date_end") else ""
     rel = [] if quiet else [r for r in live if r["group"] == e["group"] and r["id"] != e["id"] and not r["quiet"]][:4]
-    near = [] if quiet or e["precision"] != "day" else sorted(
-        (r for r in live if r["id"] != e["id"] and not r["quiet"] and r["precision"] == "day" and r not in rel and abs((date.fromisoformat(r["date"]) - d).days) <= 10),
-        key=lambda r: (abs((date.fromisoformat(r["date"]) - d).days), r["date"], r["id"]))[:4]   # the days around it: a reason to look at the next page
+    if quiet or e["precision"] != "day":
+        near = []
+    else:
+        ords, items = pool or near_pool(live)
+        rel_ids = {r["id"] for r in rel}
+        lo, hi = bisect.bisect_left(ords, d.toordinal() - 10), bisect.bisect_right(ords, d.toordinal() + 10)
+        near = sorted((r for r in items[lo:hi] if r["id"] != e["id"] and r["id"] not in rel_ids),
+                      key=lambda r: (abs((_day(r["date"]) - d).days), r["date"], r["id"]))[:4]   # the days around it: a reason to look at the next page
     est = bool(e.get("estimated"))
     sentence = (f"{e['title']}は、{fmt}{end}です。" if e["precision"] == "day" else f"{e['title']}は、{fmt}です。") + (
         f"{today.year}年{today.month}月{today.day}日の時点で、{word}。" if e["precision"] == "day" else "")
@@ -1492,8 +1510,9 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     pages.update(specials.special_pages(c, entries))      # 特集 under /kyou/: holidays, solar terms, December
     pages.update(og_pages(live))      # og/<id>.png: the picture a chat app shows for a day's link
     pages.update(feeds.feed_pages(live, catalog.GROUPS, GROUP_SLUG, str(cfg["site_url"]).rstrip("/"), today))   # cal/<genre>.ics, cal/all.ics: the days as a calendar to subscribe to
+    pool = near_pool(live)
     for e in entries:
-        pages[f"e/{e['id']}/index.html"] = event_page(c, e, e["id"] in index_ids, live)
+        pages[f"e/{e['id']}/index.html"] = event_page(c, e, e["id"] in index_ids, live, pool)
     pages.update(legal(c))
     pages["api/e.php"] = stats_php()
     pages["api/s.php"] = share_php(cfg)
