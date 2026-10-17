@@ -169,16 +169,13 @@ class OiwaiPagesTest(unittest.TestCase):
         for rel in OIWAI[1:]:
             self.assertIn('<a href="/oiwai/">お祝いの早見表</a>', self.read(rel), rel)
 
-    def test_each_section_links_its_references_as_a_summary_of_ours_and_the_page_says_it_is_not_the_stores(self):
+    def test_a_sheet_has_one_short_notice_at_its_foot_and_no_reference_line_in_each_section(self):
         for rel in OIWAI + PATHS:
             html = self.read(rel)
-            self.assertIn("百貨店各社が作った記事ではありません", html, rel)
-            self.assertIn("当サイトが要約・比較したものです", html, rel)
-            foots = re.findall(r'<p class="seas-from">(.*?)</p>', html)
-            self.assertTrue(foots, rel)
-            for f in foots:
-                self.assertIn("参考資料(当サイトが要約・比較しました)", f, rel)
-                self.assertRegex(f, r'<a href="https://[^"]+" rel="noopener nofollow"', rel)       # a link to the page itself, in the section
+            self.assertNotIn("seas-from", html, rel)                                      # the per-section reference lines are gone
+            self.assertNotIn("seas-lead-note", html, rel)
+            self.assertEqual(html.count("出典先を要約・比較したものです"), 1, rel)             # the same notice, once
+            self.assertIn("しきたりには諸説があり、地域や家で違います", html, rel)
 
     def test_every_sheet_names_both_stores_and_the_date_and_can_be_printed(self):
         for rel in OIWAI[1:]:
@@ -186,9 +183,8 @@ class OiwaiPagesTest(unittest.TestCase):
             self.assertIn("三越伊勢丹", html, rel)
             self.assertIn("松坂屋名古屋店", html, rel)
             self.assertIn("data-print hidden", html, rel)
-            self.assertIn("2026年10月15日に、上のページを開いて読みました", html, rel)
+            self.assertIn("出典(確認日 2026年10月15日)", html, rel)
             self.assertRegex(html, r'href="https://www\.(mistore\.jp|matsuzakaya\.co\.jp)/[^"]+" rel="noopener nofollow"')
-            self.assertEqual(html.count('class="seas-from"'), html.count('<section class="g-sec">'))
         self.assertNotIn("data-print", self.read("oiwai/index.html"))
 
     def test_the_amount_tables_are_condensed_say_whose_relation_each_amount_is_and_keep_each_store_apart(self):
@@ -304,11 +300,9 @@ class PagesTest(unittest.TestCase):
     def test_every_page_names_its_store_pages_with_the_date_they_were_read(self):
         for rel in PATHS:
             html = self.read(rel)
-            self.assertIn("出典と確認日", html)
-            self.assertIn("2026年10月15日に、上のページを開いて読みました", html)
+            self.assertIn("出典(確認日 2026年10月15日)", html)
             self.assertRegex(html, r'href="https://www\.(mistore\.jp|takashimaya\.co\.jp|daimaru-matsuzakaya\.jp)/[^"]+" rel="noopener nofollow"')
             self.assertIn("しきたりには諸説があり", html)
-            self.assertEqual(html.count('class="seas-from"'), html.count('<section class="g-sec">'))     # every section says where it comes from
 
     def test_every_table_sits_in_the_scroll_wrapper_the_site_checker_asks_for(self):
         for rel in PATHS:

@@ -194,10 +194,7 @@ def _sources(pg: dict, data: dict) -> str:
     items = "".join(
         f'<li><a href="{esc(data["sources"][k]["url"])}" rel="noopener nofollow" target="_blank">{esc(data["sources"][k]["name"])}</a>'
         + (f'({esc(data["sources"][k]["date"])})' if data["sources"][k].get("date") else "") + "</li>" for k in used)
-    y, m, d = data["checked"].split("-")
-    return (f'<section class="g-sec seas-srcs"><h2><span class="scribble">出典と確認日</span></h2><ul class="seas-list">{items}</ul>'
-            f'<p class="seas-note">{int(y)}年{int(m)}月{int(d)}日に、上のページを開いて読みました。この記事の説明は、それらの案内を要約・比較し、当サイトの考え方を足したものです。'
-            "商品を実際に試して書いたものではありません。しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときは、それに合わせてください。</p></section>")
+    return seasonal.sources_block(items, data["checked"], "記事")
 
 
 def _buttons(cfg: dict, query: str) -> str:
@@ -232,12 +229,10 @@ def _ld(cfg: dict, a: dict, path: str, data: dict) -> str:
 
 
 def _meta(data: dict, a: dict | None = None) -> str:
-    y, m, d = data["checked"].split("-")
-    pub = ""
-    if a:
-        py, pm, pd = a["date"].split("-")
-        pub = f"{int(py)}年{int(pm)}月{int(pd)}日 公開 ・ "
-    return f'<p class="shg-meta">{pub}出典の確認 {int(y)}年{int(m)}月{int(d)}日 ・ 百貨店の公開案内などをもとに、当サイトが要約・比較しています</p>'
+    if not a:
+        return ""
+    py, pm, pd = a["date"].split("-")
+    return f'<p class="shg-meta">{int(py)}年{int(pm)}月{int(pd)}日 公開</p>'
 
 
 def article_page(d: dict, cfg: dict, preview: bool, a: dict, data: dict, known: set[str] | None) -> str:

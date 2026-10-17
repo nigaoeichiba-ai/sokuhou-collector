@@ -105,20 +105,30 @@ def _section(s: dict, sources: dict) -> str:
         out.append('<ul class="checklist">' + "".join(f'<li><label><input type="checkbox"> {esc(x)}</label></li>' for x in s["check"]) + "</ul>")
     if s.get("note"):
         out.append(f'<p class="seas-note">{esc(s["note"])}</p>')
-    links = "・".join(f'<a href="{esc(sources[k]["url"])}" rel="noopener nofollow" target="_blank">{esc(sources[k].get("label") or sources[k]["short"])}</a>' for k in s.get("src", []))
-    if links:
-        out.append(f'<p class="seas-from">参考資料(当サイトが要約・比較しました): {links}</p>')
     out.append("</section>")
     return "".join(out)
+
+
+SOURCE_NOTE = "しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときは、それに合わせてください。"
+
+
+def sources_note(subject: str = "記事", own_view: bool = True) -> str:
+    """The one notice at the foot of every page that rests on sources (the same words everywhere): what the page is, and that customs differ."""
+    core = f"この{subject}は、出典先を要約・比較し、当サイトの考え方を足したものです。" if own_view else f"この{subject}は、出典先を要約・比較したものです。"
+    return core + SOURCE_NOTE
+
+
+def sources_block(items_html: str, checked: str, subject: str = "記事", own_view: bool = True) -> str:
+    y, m, d = checked.split("-")
+    return (f'<section class="g-sec seas-srcs"><h2><span class="scribble">出典(確認日 {int(y)}年{int(m)}月{int(d)}日)</span></h2><ul class="seas-list">{items_html}</ul>'
+            f'<p class="seas-note">{esc(sources_note(subject, own_view))}</p></section>')
 
 
 def _sources(data: dict, used: list[str], checked: str) -> str:
     items = "".join(
         f'<li><a href="{esc(data["sources"][k]["url"])}" rel="noopener nofollow" target="_blank">{esc(data["sources"][k]["name"])}</a>'
         + (f'({esc(data["sources"][k]["date"])})' if data["sources"][k]["date"] else "") + "</li>" for k in used)
-    y, m, d = checked.split("-")
-    return (f'<section class="g-sec seas-srcs"><h2><span class="scribble">出典と確認日</span></h2><ul class="seas-list">{items}</ul>'
-            f'<p class="seas-note">{int(y)}年{int(m)}月{int(d)}日に、上のページを開いて読みました。しきたりには諸説があり、地域や家で違います。贈る相手の地域の習慣が分かるときは、それに合わせてください。</p></section>')
+    return sources_block(items, checked, "早見表", own_view=False)
 
 
 def page(d: dict, cfg: dict, preview: bool, pg: dict, data: dict, known: set[str] | None = None) -> str:
@@ -133,8 +143,6 @@ def page(d: dict, cfg: dict, preview: bool, pg: dict, data: dict, known: set[str
     if pg.get("parent"):                                                      # [path, name] of the page above this one
         trail.append((pg["parent"][1], pg["parent"][0]))
     trail.append((pg["h1"], None))
-    y, m, dd = pg["checked"].split("-")
-    note = f'<p class="seas-lead-note">各百貨店の公開案内を{int(y)}年{int(m)}月{int(dd)}日に確認し、当サイトが要約・比較したものです。百貨店各社が作った記事ではありません。</p>'
     print_btn = '<p class="seas-print"><button type="button" class="btn btn-sub" data-print hidden>この早見表を印刷する</button></p>' if pg.get("print") else ""
     own = {q["path"] for q in data["pages"]}
     related = "".join(f'<li><a href="{esc(u)}">{esc(t)}</a></li>' for u, t in pg["related"]
@@ -146,7 +154,7 @@ def page(d: dict, cfg: dict, preview: bool, pg: dict, data: dict, known: set[str
     body = f"""{B.head_band("sky", "", esc(pg["h1"]), pg["lead"], single=True)}
 <div class="crumbs-wrap">{crumbs(trail)}</div>
 {B.pr_with_amazon(cfg)}
-<article class="guide seas">{note}{print_btn}{secs}{_sources(data, used, pg["checked"])}</article>
+<article class="guide seas">{print_btn}{secs}{_sources(data, used, pg["checked"])}</article>
 <section class="related seas-more" style="margin-top:44px"><h2><span class="scribble">あわせて読む</span></h2><ul class="plain">{related}</ul>
 <p class="item-btns" style="margin-top:18px">{buttons}</p></section>
 <script src="/assets/seasonal.js" defer></script>"""

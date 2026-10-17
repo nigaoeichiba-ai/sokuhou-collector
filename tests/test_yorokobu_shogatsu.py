@@ -134,9 +134,10 @@ class PagesTest(unittest.TestCase):
     def test_each_page_names_its_sources_with_links_and_says_it_did_not_try_the_products(self):
         for p in self.paths():
             html = self.read(p)
-            self.assertIn("出典と確認日", html, p)
-            self.assertIn("2026年10月17日に、上のページを開いて読みました", html, p)
-            self.assertIn("商品を実際に試して書いたものではありません", html, p)
+            self.assertIn("出典(確認日 2026年10月17日)", html, p)
+            self.assertEqual(html.count("この記事は、出典先を要約・比較し、当サイトの考え方を足したものです。しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときは、それに合わせてください。"), 1, p)   # the one notice
+            self.assertNotIn("seas-from", html, p)
+            self.assertNotIn("上のページを開いて読みました", html, p)
             self.assertRegex(html, r'<a href="https://www\.(mistore|takashimaya|daimaru-matsuzakaya)[^"]*" rel="noopener nofollow" target="_blank">', p)
 
     def test_the_pictures_exist_have_their_size_and_only_the_first_is_loaded_with_priority(self):
