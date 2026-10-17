@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "_about": "The site register: every site the deploy publishes, in one place (2026-10-18). deploy.yml's plan job, the deploy gate (which sites a push redeploys), tests/run_tests.py (whose tests are whose) and the watchdog (sokuhou/office_watch.py) all read THIS file; see sites-docs DEPLOY_REDESIGN_100SITES.md. Only public facts here (domains, build commands, check thresholds): nothing private and no product data. A new site is one more entry below plus sites/<name>/build.py.",
+  "defaults": {
+    "min_pages": 20,
+    "min_cards": 0,
+    "probe": "/sitemap.xml",
+    "needs_var": false,
+    "live_sha": true,
+    "watch": true,
+    "group": "deploy-{name}",
+    "timeout_minutes": 90,
+    "build": "python sites/{name}/build.py --release --out release",
+    "own": ["sites/{name}/*", "tests/test_{name}*", "tests/fixtures/{name}/*", "data/{name}*", "data/style/rewrites/{name}.json"]
+  },
+  "ignore": [
+    "data/style/judged/*", "data/style/examples.json", "data/style/learned_rules.json", "data/style/lexicon/*", "data/style/suggest_cache.json",
+    "data/style/edited/*", "data/style/editor_prompt_ja.md"
+  ],
+  "sites": [
+    {"name": "saichin", "domain": "saichin-sokuho.com", "marker": "最低賃金速報", "min_pages": 70, "min_cards": 48, "probe": "/calendar/all.ics",
+     "owns": ["data/minwage.json", "data/estat_wage.json"],
+     "core_tests": true},
+    {"name": "kuma", "domain": "kuma-sokuho.com", "marker": "クマ出没速報", "min_pages": 100, "probe": "/feed.xml", "needs_var": true,
+     "owns": ["tests/test_*_kuma.py", "tests/test_otsu_bear.py", "tests/fixtures/*kuma*", "tests/fixtures/otsu_bear*", "data/*_kuma.json", "data/otsu_bear.json",
+              "sokuhou/sources/*_kuma.py", "sokuhou/sources/otsu_bear.py"]},
+    {"name": "yorokobu", "domain": "yorokobu-present.com", "marker": "よろこぶプレゼント", "min_pages": 120, "needs_var": true, "group": "rakuten-api",
+     "build": "python sites/yorokobu/build.py --release --out release --items out/yorokobu_items.json"},
+    {"name": "minna", "domain": "minna-no-illust.com", "marker": "みんなのイラスト", "min_pages": 90, "probe": "/sitemap-images.xml", "needs_var": true,
+     "fast_lane": ["sites/minna/library/*", "sites/minna/specs/*", "sites/minna/content/*"]},
+    {"name": "atomou", "domain": "atomou.com", "marker": "あと何日、もう何日", "min_pages": 60, "needs_var": true, "live_sha": false, "watch": false,
+     "build": "python sites/atomou/build.py {env:ATOMOU_BUILD_FLAG} --out release", "probe": "{env:ATOMOU_PROBE}"}
+  ]
+}
