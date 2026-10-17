@@ -221,7 +221,7 @@ class WhoseIsIt(PlanBase):
         self.assertEqual([i["site"] for i in inc], ["yorokobu"])
         y = inc[0]
         self.assertEqual((y["dir"], y["url"].startswith("file:"), y["min_pages"], y["marker"], y["probe"], y["group"]),
-                         ("yorokobu-present.com", True, 120, "よろこぶプレゼント", "/sitemap.xml", "rakuten-api"))
+                         ("yorokobu-present.com", True, 120, "よろこぶプレゼント", "/sitemap.xml", "deploy-yorokobu"))   # its own group: GitHub keeps one waiting job per group and cancels an older waiting one, so a shared rakuten-api group let other waiters cancel the yorokobu deploy again and again (2026-10-18)
         self.assertEqual(y["build"], "python sites/yorokobu/build.py --release --out release --items out/yorokobu_items.json")
 
 

@@ -93,6 +93,12 @@ class RegisterTest(unittest.TestCase):
             with self.assertRaises(deployplan.RegistryError):
                 deployplan.load_registry(p)
 
+    def test_every_site_has_a_group_of_its_own(self):
+        # one waiting job per concurrency group survives; a group shared between sites (or with a data workflow) lets one cancel another's waiting deploy
+        groups = [s["group"] for s in self.reg["sites"].values()]
+        self.assertEqual(len(set(groups)), len(groups), groups)
+        self.assertNotIn("rakuten-api", groups)
+
     def test_a_new_site_is_one_entry(self):
         import tempfile
         raw = json.loads(json.dumps(self.raw))
