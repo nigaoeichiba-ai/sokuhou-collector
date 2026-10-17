@@ -115,6 +115,34 @@ class TheGatesStay(unittest.TestCase):
         self.assertIn("go=false", gate[gate.index('LIVE_ONLY" = "true"'):])
 
 
+class NoMallDataInTheGitHubCache(unittest.TestCase):
+    """Owner rule 2026-10-17: what the Rakuten / Yahoo! / Amazon APIs give is never kept where the public can reach it - not in git, not in a log, not in the Actions cache
+    or an artifact of this public repository.  Until 2026-10-18 the deploy kept out/yorokobu_items.json in actions/cache."""
+
+    def test_no_workflow_caches_or_uploads_mall_data(self):
+        for f in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
+            text = f.read_text(encoding="utf-8")
+            for step in re.split(chr(10) + "      - ", text):
+                if "actions/cache" in step or "upload-artifact" in step:
+                    low = step.lower()
+                    for word in ("yorokobu", "rakuten", "yahoo", "items.json", "ranking", "compare", "candidates"):
+                        self.assertNotIn(word, low, f"{f.name}: a cache or artifact step mentions {word!r}: {step[:120]!r}")
+
+    def test_the_deploy_keeps_todays_products_in_the_servers_private_folder_instead(self):
+        self.assertNotIn("actions/cache", TEXT)
+        pull = block("Today's products from the server's private folder")
+        self.assertIn("yorokobu-private", pull)
+        self.assertIn("matrix.site == 'yorokobu'", pull)
+        self.assertGreater(index_of("Today's products from the server's private folder"), index_of("SSH setup"))
+        fetch = block("Fetch products")
+        self.assertIn("steps.items.outputs.found != 'true'", fetch)
+        keep = block("Keep the fetched products in the server's private folder")
+        self.assertIn("steps.gate.outputs.really == 'true'", keep)      # a check run changes nothing on the server
+        self.assertIn("chmod 600", keep)
+        self.assertLess(index_of("Fetch products"), index_of("Keep the fetched products"))
+        self.assertLess(index_of("Keep the fetched products"), index_of("Build (release)"))
+
+
 class OtherSessionsSteps(unittest.TestCase):
     def test_the_yorokobu_private_product_data_step_is_still_there_after_the_tests_and_before_the_upload(self):
         # lost once on 2026-10-18 when a copy of this file was put back over a newer one: a step another session adds must survive a rewrite of the workflow
