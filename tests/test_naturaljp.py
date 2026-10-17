@@ -159,9 +159,9 @@ class EveryRuleHasItsOwnExample(unittest.TestCase):
 
     def test_each_rules_bad_example_is_caught(self):
         for r in nj.R:
-            if r.scope == "heading":
-                blocks = [nj.Block("heading", r.bad.split(": ", 1)[-1], 1, "txt")]
-            elif r.scope == "page":
+            if r.scope in ("heading", "headlike"):
+                blocks = [nj.Block("heading", r.bad.split(": ", 1)[-1], i + 1, "txt") for i in range(max(r.min_per_page, 1))]
+            elif r.scope in ("page", "site"):
                 continue                                                                       # page-level rules have their own tests below
             else:
                 reps = max(r.min_per_page, 6)

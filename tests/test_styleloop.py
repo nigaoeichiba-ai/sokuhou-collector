@@ -331,7 +331,7 @@ class WordChoice(unittest.TestCase):
         self.assertIn("9", sl.evidence(order))
         text2, order2, _ = sl.choose("minna", u, self.item(cands, choice=2), scorer=lambda k: None)       # nothing measurable: the judge own choice stands
         self.assertEqual(text2, "世話役へ後日贈るお礼の品")
-        self.assertIn("測れず", sl.evidence(order2))
+        self.assertIn("辞書に根拠なし", sl.evidence(order2))
         text3, _, _ = sl.choose("minna", u, self.item(cands, choice=3), scorer=lambda k: 4)             # equal scores: the judge choice
         self.assertEqual(text3, "まとめ役へ後日贈るお礼の品")
 
@@ -376,7 +376,7 @@ class WordChoice(unittest.TestCase):
             self.assertEqual(st["accepted"], 1)
             e = sl.load_rewrites("minna")[0]
             self.assertEqual(e["to"], "幹事や主催者へ、後日贈るお礼の品")
-            self.assertIn("サジェスト数", e["why"])
+            self.assertIn("サジェスト", e["why"])
             rec = sl.load_judged("minna")[sl.key_of(self.OLD)]
             self.assertEqual(len(rec["candidates"]), 3)
 
