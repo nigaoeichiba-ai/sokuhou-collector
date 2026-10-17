@@ -310,6 +310,60 @@ class Attribution(unittest.TestCase):
         self.assertNotIn("参考(このページの元の本文", pe.claims_prompt("yorokobu", [("元", "後")]))
 
 
+class Production(unittest.TestCase):
+    """The editor reads the PRODUCTION page (a local build shows sample products); general katakana words are free to replace, brands and product words are not; edits of edits compose."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        p = mock.patch.object(sl, "DATA", Path(self.tmp.name) / "style")
+        p.start()
+        self.addCleanup(p.stop)
+
+    def test_the_pages_to_edit_are_decided_by_the_production_page_and_an_unreadable_one_is_skipped(self):
+        body = "".join(f"<p>これは本文の{i}番目の段落で、三十字を超える長さの文章として数えられるように書いています。</p>" for i in range(4))
+        page = f"<html><head><title>題</title></head><body><main><h1>題</h1>{body}</main></body></html>"
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            for rel in ("guide/a/index.html", "guide/b/index.html", "guide/c/index.html"):
+                (root / rel).parent.mkdir(parents=True, exist_ok=True)
+                (root / rel).write_text(page, encoding="utf-8")
+
+            def fetch(site, rel):
+                if rel.startswith("guide/b"):
+                    raise OSError("404")                                   # not deployed yet
+                if rel.startswith("guide/c"):
+                    return page.replace("本文の0番目", "本文の一番目")        # production differs from the local build: production is what is edited
+                return page
+            got = dict(pe.next_pages("yorokobu", root, 5, fetch=fetch))
+            self.assertEqual(sorted(got), ["guide/a/index.html", "guide/c/index.html"])
+            self.assertIn("本文の一番目", got["guide/c/index.html"])
+            self.assertEqual(pe.next_pages("yorokobu", root, 5, fetch=lambda s, r: (_ for _ in ()).throw(OSError("down"))), [])         # nothing readable: nothing edited, not guessed
+
+    def test_the_command_line_says_not_measured_when_there_is_no_public_site(self):
+        import contextlib
+        import io
+        with contextlib.redirect_stdout(io.StringIO()) as out:
+            rc = sl.main(["edit", "--site", "atomou", "--next", "1"])
+        self.assertEqual(rc, 1)
+        self.assertIn("not measured", out.getvalue())
+
+    def test_general_katakana_words_may_be_replaced_but_brands_and_product_words_may_not(self):
+        self.assertEqual(sl.check_rewrite("ギフトプレゼントの選び方", "贈り物の選び方", "yorokobu", "heading"), [])
+        self.assertEqual(sl.check_rewrite("贈るタイミングとサイトの案内", "贈る時期と案内", None, "heading"), [])
+        for old, new, word in (("ステンレスのマグを贈る", "金属のマグを贈る", "ステンレス"), ("リンドールの詰め合わせ", "チョコの詰め合わせ", "リンドール"), ("タオルの選び方", "手ぬぐいの選び方", "タオル"),
+                               ("Amazonで探す", "ネットで探す", "Amazon"), ("「ほのぼの便り」を読む", "便りを読む", "ほのぼの便り")):
+            bad = sl.check_rewrite(old, new, None, "heading")
+            self.assertTrue(any("names" in b and word in b for b in bad), (old, bad))
+
+    def test_an_edit_of_an_edited_text_is_composed_into_one_line_from_the_original(self):
+        sl.add_entry("yorokobu", "ギフトプレゼントの選び方", "贈り物の選び方", force=True, today="2026-10-16")
+        ok, _ = sl.add_entry("yorokobu", "贈り物の選び方", "贈り物の選び方と相場", force=True, today="2026-10-17")
+        self.assertTrue(ok)
+        e = sl.load_rewrites("yorokobu")
+        self.assertEqual([(x["from"], x["to"], x["prev"]) for x in e], [("ギフトプレゼントの選び方", "贈り物の選び方と相場", "贈り物の選び方")])
+
+
 class RewriterWithManyLongLines(unittest.TestCase):
     def test_a_long_original_is_found_inside_a_longer_text_and_many_lines_stay_fast(self):
         entries = [{"from": f"これは{i}番目の長い原文で、書き直される予定の段落です。", "to": f"{i}番目の段落です。"} for i in range(800)]

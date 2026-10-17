@@ -225,9 +225,16 @@ def digits(s: str) -> list[str]:
     return re.findall(r"\d+(?:[.,]\d+)*", s) + KANJI_NUM.findall(IDIOM_NUM.sub("", s))      # kanji numerals count, but not those inside everyday words (一言・一歩・十分)
 
 
+# General katakana words (not names, not product words): an editor may replace them (ギフトプレゼント -> 贈り物).  Brands, product materials and categories (ステンレス, タオル, レンジ) stay protected.
+GENERIC_KATAKANA = ("ギフト", "プレゼント", "ポスト", "タイミング", "サイト", "ページ", "セット", "メッセージ", "カード", "マナー", "ルール", "アイテム", "ポイント", "ケース", "タイプ", "イメージ",
+                    "テーマ", "メリット", "デメリット", "ニーズ", "サポート", "ソリューション", "ベネフィット", "シーン", "バランス", "ペース", "スタイル", "チェック", "リスト", "ガイド", "ポイント")
+_GENERIC_RUN = re.compile("(?:" + "|".join(sorted(set(GENERIC_KATAKANA), key=len, reverse=True)) + ")+")
+
+
 def protected_tokens(s: str) -> Counter:
     s2 = unicodedata.normalize("NFKC", s)
-    return Counter(LATIN.findall(s2)) + Counter(KATAKANA.findall(s)) + Counter(QUOTED.findall(s))
+    kata = [t for t in KATAKANA.findall(s) if not _GENERIC_RUN.fullmatch(t)]
+    return Counter(LATIN.findall(s2)) + Counter(kata) + Counter(QUOTED.findall(s))
 
 
 def hira_ratio(s: str) -> float:
@@ -331,6 +338,14 @@ def add_entry(site: str, old: str, new: str, by: str = "codex", why: str = "", k
     entries = load_rewrites(site)
     if any(e["from"] == old for e in entries):
         return False, ["already in the dictionary"]
+    for e in entries:                                          # the text being edited is already the result of a dictionary line: compose (original -> newest wording)
+        if norm(e["to"]) == old:
+            e["prev"] = e["to"]
+            e["to"] = new
+            e["why"] = why or e.get("why", "")
+            e["rechecked"] = today or dt.date.today().isoformat()
+            save_rewrites(site, entries)
+            return True, []
     entries.append({"from": old, "to": new, "kind": kind, "by": by, "why": why, "added": today or dt.date.today().isoformat(), **({"forced": True} if force else {}), **({} if small_edit else {"edit": True})})
     save_rewrites(site, entries)
     return True, []
@@ -931,7 +946,7 @@ def main(argv: list[str] | None = None) -> int:
     e.add_argument("--site", required=True)
     e.add_argument("--page", help="a page of the built site, e.g. guide/ochugen/index.html")
     e.add_argument("--next", type=int, default=0, help="the next N pages never edited (or whose text changed)")
-    e.add_argument("--build", help="the built folder (default: out/naturaljp/<site>, built on first use)")
+    e.add_argument("--build", help="a folder built WITH THE REAL DATA (default: the production site is read; a build made on this PC shows sample products and is not a safe input)")
     e.add_argument("--dry", action="store_true", help="print the prompt and change nothing")
     e.add_argument("--no-accept", action="store_true", help="check the edits and report them, but do not put them into the dictionary")
     s = sub.add_parser("source")
@@ -952,11 +967,27 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if ok else 1
     if args.cmd == "edit":
         from sokuhou import pageedit
-        build = Path(args.build) if args.build else nj.built_dir(args.site)
-        if args.page:
-            pages = [(args.page, nj.published_text((build / args.page).read_text(encoding="utf-8"), args.site))]
-        else:
-            pages = pageedit.next_pages(args.site, build, args.next or 1)
+        if args.build:
+            build = Path(args.build)
+            if args.page:
+                pages = [(args.page, nj.published_text((build / args.page).read_text(encoding="utf-8"), args.site))]
+            else:
+                pages = pageedit.next_pages(args.site, build, args.next or 1)
+        else:                                                    # production: the pages visitors get
+            if args.site not in pageedit.LIVE:
+                print(f"{args.site} has no public site to read: not measured (use --build with a folder built from real data)")
+                return 1
+            build = nj.built_dir(args.site)                      # only the list of page paths comes from the local build
+            if args.page:
+                try:
+                    pages = [(args.page, pageedit.fetch_live(args.site, args.page))]
+                except Exception as ex:
+                    print(f"{args.page}: the production page could not be read ({ex}): not measured")
+                    return 1
+            else:
+                pages = pageedit.next_pages(args.site, build, args.next or 1, fetch=pageedit.fetch_live)
+                if not pages:
+                    print("no page to edit (all edited and unchanged, or not readable on the production site)")
         failed = False
         done = pageedit.load_edited(args.site)
         for rel, raw in pages:
