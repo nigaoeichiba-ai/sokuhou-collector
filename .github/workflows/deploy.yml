@@ -212,6 +212,13 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk
           python -m pip install --quiet pillow -r requirements.txt
+      - name: Private mall data (Rakuten / Yahoo! results, taken from the server's private folder; they are never in the repository - see sites/yorokobu/privatedata.py)
+        if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu'
+        env:
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sites.yorokobu.privatedata pull
       - name: Unit tests (skipped in the fast lane, because the committing session ran them and the daily full deploy runs them again)
         if: steps.gate.outputs.go == 'true' && steps.gate.outputs.fast != 'true'
         run: CI=true python tests/run_tests.py --strict --site ${{ matrix.site }}   # the shared tests and this site's own; another project's failing tests cannot block this deploy
