@@ -55,6 +55,12 @@ class GateTest(unittest.TestCase):
         out = self.mutated(lambda f: f["scene"].__setitem__("reaction", f["scene"]["reaction"] + "食べてみたところ好評でした。"))
         self.assertTrue(any("banned word" in x for x in out))
 
+    def test_the_evidence_may_not_link_a_shops_product_page(self):
+        out = self.mutated(lambda f: f["evidence"].append({"label": "販売ページ(楽天市場)", "url": "https://item.rakuten.co.jp/shop/a1/"}))
+        self.assertTrue(any("must not link a shop's product page" in x for x in out))               # a negative test: the gate catches it
+        self.assertEqual(self.mutated(lambda f: f["evidence"].append({"label": "販売ページ(楽天市場)"})), [])         # a label alone is fine
+        self.assertTrue(all("item.rakuten.co.jp" not in str(e.get("url", "")) for f in self.c["features"] for e in f["evidence"]))
+
     def test_an_advertisement_claim_is_refused(self):
         for word in ("絶対", "最高", "間違いなく", "話題の"):
             out = self.mutated(lambda f, w=word: f["verdict"].__setitem__(0, f["verdict"][0] + w))
