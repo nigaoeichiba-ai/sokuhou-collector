@@ -197,11 +197,29 @@ class Editing(unittest.TestCase):
                 (root / rel).write_text(f"<html><head><title>題</title></head><body><main><h1>題</h1>{body}</main></body></html>", encoding="utf-8")
             got = [r for r, _ in pe.next_pages("yorokobu", root, 5)]
             self.assertEqual(sorted(got), ["guide/a/index.html", "guide/b/index.html"])          # the legal page is never edited
+            (root / "picks/2026-10-17").mkdir(parents=True, exist_ok=True)
+            (root / "picks/2026-10-17/index.html").write_text((root / "guide/a/index.html").read_text(encoding="utf-8"), encoding="utf-8")
+            self.assertNotIn("picks/2026-10-17/index.html", [r for r, _ in pe.next_pages("yorokobu", root, 9)])      # a daily page is written again tomorrow: fixed in the writer prompt, not by the dictionary
             raw = (root / "guide/a/index.html").read_text(encoding="utf-8")
             pe.save_edited("yorokobu", {"guide/a/index.html": {"hash": pe.content_hash(pe.page_units(raw)), "date": "2026-10-17"}})
             self.assertEqual([r for r, _ in pe.next_pages("yorokobu", root, 5)], ["guide/b/index.html"])
             (root / "guide/a/index.html").write_text(raw.replace("本文の0番目", "本文の九番目"), encoding="utf-8")           # the text changed: edited again
             self.assertIn("guide/a/index.html", [r for r, _ in pe.next_pages("yorokobu", root, 5)])
+
+
+class LongPage(unittest.TestCase):
+    def test_a_heading_that_comes_with_every_part_is_edited_and_counted_once(self):
+        body = "".join(f"<h2>見出し{i}</h2>" + "".join(f"<p>これは{i}番目の節の{j}番目の段落で、内容があります。</p>" for j in range(30)) for i in range(4))
+        raw = f"<html><head><title>長いページ</title></head><body><main><h1>長いページの題</h1>{body}</main></body></html>"
+        units = pe.page_units(raw)
+        title_id = next(u.id for u in units if u.kind == "heading" and u.text == "長いページの題")
+
+        def run(prompt):
+            return json.dumps({"diagnosis": [], "edits": [{"id": title_id, "after": "長いページの題を具体的に", "why": "題"}], "deleted": [], "needs_check": [], "structure_suggestions": [], "unchanged_count": 0}, ensure_ascii=False)
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "DATA", Path(d) / "style"):
+            rep = pe.edit_page("yorokobu", "x/index.html", raw, runner=run, accept=False)
+        self.assertGreater(len(pe.chunks(units)), 1)
+        self.assertEqual(len(rep["accepted"]), 1)
 
 
 class Paragraphs(unittest.TestCase):
