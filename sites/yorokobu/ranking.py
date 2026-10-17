@@ -286,7 +286,7 @@ def main() -> None:
     if not (app and key):
         sys.exit("RAKUTEN_APP_ID / RAKUTEN_ACCESS_KEY are not set")
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
-    client = rakuten.Client(app, key, cfg["site_url"].rstrip("/") + "/", affiliate_id=cfg.get("rakuten_affiliate_id"), min_interval=REQUEST_GAP)
+    client = rakuten.Client(app, key, cfg["site_url"].rstrip("/") + "/", affiliate_id=None, min_interval=REQUEST_GAP)
     now = datetime.now(JST)
     fresh = collect(client, now)
     if not any(fresh.values()):

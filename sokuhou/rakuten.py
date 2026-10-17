@@ -152,7 +152,6 @@ def normalize(item: dict) -> dict | None:
     item = item.get("Item", item)  # formatVersion 1 wraps each item
     name = clean_title((item.get("itemName") or "").strip())
     url = item.get("itemUrl") or ""                                 # as the API gave it
-    aff = item.get("affiliateUrl") or ""                            # the affiliate link the API made for our affiliate ID: used as it is, never rebuilt
     price = int(_num(item.get("itemPrice")))
     image = _first_image(item)
     if not (name and url.startswith("https://") and price > 0 and image):
@@ -162,7 +161,6 @@ def normalize(item: dict) -> dict | None:
         "name": name,
         "price": price,
         "url": url,
-        **({"aff": aff} if aff.startswith("https://") else {}),
         "image": image,
         "shop": (item.get("shopName") or "").strip(),
         "shop_code": item.get("shopCode") or "",
