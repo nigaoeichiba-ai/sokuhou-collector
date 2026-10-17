@@ -1,11 +1,13 @@
 {
- "fetched_at": "2026-10-18T06:52:34.716030+09:00",
+ "fetched_at": "2026-10-18T07:22:34.868315+09:00",
  "incidents": [
   {
    "kind": "自火報作動",
    "place": "大津市際川四丁目付近",
+   "resolved_at": "2026-10-18T07:19:00+09:00",
+   "result": "非火災と判明",
    "started_at": "2026-10-18T06:50:00+09:00",
-   "status": "reported"
+   "status": "resolved"
   },
   {
    "kind": "山岳救助",
@@ -200,7 +202,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": false,
+ "no_active_incident": true,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
