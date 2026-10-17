@@ -1,8 +1,10 @@
 name: yorokobu-ranking
 
+# [2026-10-17: the result is no longer committed to the public repository (the Rakuten terms bar keeping API data where many people can read it): it goes to the server's private
+# folder, sites/yorokobu/privatedata.py, and the deploy takes it from there.]
 # Every day: today's Rakuten Ichiba sales ranking of the gift genres and of the age/sex groups (about 40 lists x 4 pages), merged into data/yorokobu_ranking.json
 # together with a 45-day history of the places, so the site can show what rose, what is new and what stays (sites/yorokobu/ranking.py).
-# The commit touches only data/yorokobu_ranking.json; a commit made with the workflow token starts no other workflow, so the pages change at the next deploy (the daily one at 07:00 JST, or any push).  Needs RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY.
+# Nothing is committed (the file only goes to the private folder); data/yorokobu_ranking.json; the pages change at the next deploy (the daily one at 07:00 JST, or any push).  Needs RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY.
 
 on:
   schedule:
@@ -10,7 +12,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 # Own group, NOT the deploy's `rakuten-api`: GitHub keeps only ONE waiting run per group and cancels an older waiting run when a newer one arrives,
 # so a push cancelled a waiting ranking run (seen on 2026-10-07).  Ranking and deploy therefore run side by side without waiting for each other.  The shared
@@ -23,12 +25,18 @@ concurrency:
 jobs:
   ranking:
     runs-on: ubuntu-latest
-    timeout-minutes: 60   # about 160 requests at one every 12 s (32 minutes) plus the commit
+    timeout-minutes: 60   # about 160 requests at one every 12 s (32 minutes) plus the upload
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
+      - name: Take the earlier file from the private folder
+        env:
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sites.yorokobu.privatedata pull yorokobu_ranking.json
       - name: Fetch today's ranking
         env:
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
@@ -39,15 +47,9 @@ jobs:
             exit 0
           fi
           python -m sites.yorokobu.ranking --out data/yorokobu_ranking.json
-      - name: Commit
-        run: |
-          git config user.name "sokuhou-bot"
-          git config user.email "sokuhou-bot@users.noreply.github.com"
-          git add data/yorokobu_ranking.json
-          if git diff --cached --quiet; then
-            echo "no changes"
-          else
-            git commit -m "data: yorokobu ranking snapshot"
-            git pull --rebase origin main
-            git push
-          fi
+      - name: Store the result privately (the server's private folder, never the repository)
+        env:
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sites.yorokobu.privatedata push yorokobu_ranking.json

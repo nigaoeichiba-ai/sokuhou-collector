@@ -1,7 +1,9 @@
 name: yorokobu-yahoo
 
+# [2026-10-17: the result is no longer committed to the public repository (the Rakuten terms bar keeping API data where many people can read it): it goes to the server's private
+# folder, sites/yorokobu/privatedata.py, and the deploy takes it from there.]
 # Every day: the Yahoo!ショッピング search results (Shopping Web API v3 itemSearch, links made affiliate links by the API itself) of each kind of gift in
-# sites/yorokobu/content/compare.json, written to data/yorokobu_yahoo.json for the Yahoo! tables of the pages under /compare/.  The commit touches only that file; a commit
+# sites/yorokobu/content/compare.json, written to data/yorokobu_yahoo.json for the Yahoo! tables of the pages under /compare/.  Nothing is committed (the file only goes to the private folder); that file; a commit
 # made with the workflow token starts no other workflow, so the pages change at the next deploy.  Needs YAHOO_CLIENT_ID (never printed).
 # Runs after yorokobu-compare (05:20 JST), because a table is shown only when both files are from about the same time.
 
@@ -11,7 +13,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: yorokobu-yahoo
@@ -35,15 +37,9 @@ jobs:
             exit 0
           fi
           python -m sites.yorokobu.yahoo_fetch --out data/yorokobu_yahoo.json
-      - name: Commit
-        run: |
-          git config user.name "sokuhou-bot"
-          git config user.email "sokuhou-bot@users.noreply.github.com"
-          git add data/yorokobu_yahoo.json
-          if git diff --cached --quiet; then
-            echo "no changes"
-          else
-            git commit -m "data: yorokobu yahoo snapshot"
-            git pull --rebase origin main
-            git push
-          fi
+      - name: Store the result privately (the server's private folder, never the repository)
+        env:
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sites.yorokobu.privatedata push yorokobu_yahoo.json

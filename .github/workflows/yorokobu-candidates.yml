@@ -1,7 +1,7 @@
 name: yorokobu-candidates
 
 # Collects the shortlist of products per page and idea for the editors (Claude and Codex) to choose real picks from.
-# Runs by hand or every Sunday (new pages only: pages that already have a shortlist keep it); it commits data/yorokobu_candidates.json
+# Runs by hand or every Sunday (new pages only: pages that already have a shortlist keep it); it stores data/yorokobu_candidates.json privately
 # (about 3 MB) and changes nothing on the live site.  Run it by hand with "all" ticked to redo every page.
 # Needs the repository secrets RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY (already set for the deploy job).
 
@@ -16,7 +16,7 @@ on:
         default: false
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: rakuten-api   # shared with the yorokobu deploy job: one application ID, one request per second
@@ -31,6 +31,12 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
+      - name: Take the earlier file from the private folder
+        env:
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sites.yorokobu.privatedata pull yorokobu_candidates.json
       - name: Collect the shortlist
         env:
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
@@ -41,15 +47,9 @@ jobs:
           else
             python -m sites.yorokobu.fetch --candidates --new-only --out data/yorokobu_candidates.json
           fi
-      - name: Commit
-        run: |
-          git config user.name "sokuhou-bot"
-          git config user.email "sokuhou-bot@users.noreply.github.com"
-          git add data/yorokobu_candidates.json
-          if git diff --cached --quiet; then
-            echo "no changes"
-          else
-            git commit -m "data: yorokobu candidate shortlist"
-            git pull --rebase origin main
-            git push
-          fi
+      - name: Store the result privately (the server's private folder, never the repository)
+        env:
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sites.yorokobu.privatedata push yorokobu_candidates.json

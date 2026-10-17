@@ -1,7 +1,9 @@
 name: yorokobu-compare
 
+# [2026-10-17: the result is no longer committed to the public repository (the Rakuten terms bar keeping API data where many people can read it): it goes to the server's private
+# folder, sites/yorokobu/privatedata.py, and the deploy takes it from there.]
 # Every day: the Rakuten Ichiba search results of each kind of gift in sites/yorokobu/content/compare.json (price, the shop's point multiplier, shipping, reviews), written to
-# data/yorokobu_compare.json for the page /compare/.  The commit touches only that file; a commit made with the workflow token starts no other workflow, so the pages change
+# data/yorokobu_compare.json for the page /compare/.  Nothing is committed (the file only goes to the private folder); that file; a commit made with the workflow token starts no other workflow, so the pages change
 # at the next deploy (the daily one at 07:00 JST, or any push).  Needs RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY.
 
 on:
@@ -10,7 +12,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 # Own group (see yorokobu-ranking.yml): a request every 3 s (0.33/s) next to the deploy's fetch stays within the shared limit of the application ID.
 concurrency:
@@ -36,15 +38,9 @@ jobs:
             exit 0
           fi
           python -m sites.yorokobu.compare_fetch --out data/yorokobu_compare.json
-      - name: Commit
-        run: |
-          git config user.name "sokuhou-bot"
-          git config user.email "sokuhou-bot@users.noreply.github.com"
-          git add data/yorokobu_compare.json
-          if git diff --cached --quiet; then
-            echo "no changes"
-          else
-            git commit -m "data: yorokobu compare snapshot"
-            git pull --rebase origin main
-            git push
-          fi
+      - name: Store the result privately (the server's private folder, never the repository)
+        env:
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sites.yorokobu.privatedata push yorokobu_compare.json
