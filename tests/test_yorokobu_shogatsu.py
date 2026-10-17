@@ -123,8 +123,8 @@ class PagesTest(unittest.TestCase):
     def paths(self):
         return ["shogatsu/index.html"] + [f"shogatsu/{a['slug']}/index.html" for a in DATA["articles"]]
 
-    def test_the_landing_page_and_the_ten_articles_are_built(self):
-        self.assertEqual(len(DATA["articles"]), 10)
+    def test_the_landing_page_and_the_thirteen_articles_are_built(self):
+        self.assertEqual(len(DATA["articles"]), 13)
         for p in self.paths():
             html = self.read(p)
             self.assertEqual(html.count("<h1"), 1, p)
@@ -135,10 +135,12 @@ class PagesTest(unittest.TestCase):
         for p in self.paths():
             html = self.read(p)
             self.assertIn("出典(確認日 2026年10月17日)", html, p)
-            self.assertEqual(html.count("この記事は、出典先を要約・比較し、当サイトの考え方を足したものです。しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときは、それに合わせてください。"), 1, p)   # the one notice
+            own = p.split("/")[1].startswith("otoshidama")
+            first = "この記事は、当サイトの考え方をまとめたものです。制度や検索の動きは、出典を示したものだけを載せています。" if own else "この記事は、出典先を要約・比較し、当サイトの考え方を足したものです。"
+            self.assertEqual(html.count(first + "しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときは、それに合わせてください。"), 1, p)   # the one notice
             self.assertNotIn("seas-from", html, p)
             self.assertNotIn("上のページを開いて読みました", html, p)
-            self.assertRegex(html, r'<a href="https://www\.(mistore|takashimaya|daimaru-matsuzakaya)[^"]*" rel="noopener nofollow" target="_blank">', p)
+            self.assertRegex(html, r'<a href="https://(www\.(mistore|takashimaya|daimaru-matsuzakaya|nta)|trends\.google)[^"]*" rel="noopener nofollow" target="_blank">', p)
 
     def test_the_pictures_exist_have_their_size_and_only_the_first_is_loaded_with_priority(self):
         for p in self.paths():
@@ -178,7 +180,7 @@ class PagesTest(unittest.TestCase):
         for p in ["/shogatsu/"] + [f"/shogatsu/{a['slug']}/" for a in DATA["articles"]]:
             self.assertIn(f"https://yorokobu-present.com{p}</loc>", sitemap, p)
         feed = self.read("feed.xml")
-        self.assertEqual(sum(f"/shogatsu/" in e for e in feed.split("<entry>")), 11)
+        self.assertEqual(sum(f"/shogatsu/" in e for e in feed.split("<entry>")), 14)
         home = self.read("index.html")
         self.assertIn('href="/shogatsu/"', home)
         self.assertIn("お正月の特集", home)
@@ -205,6 +207,62 @@ class PagesTest(unittest.TestCase):
             html = self.read(p)
             self.assertRegex(html, r'class="btn" href="https://hb\.afl\.rakuten\.co\.jp/[^"]+" rel="sponsored nofollow noopener" target="_blank">楽天市場で', p)
             self.assertIn("ck.jp.ap.valuecommerce.com", html, p)
+
+
+class OtoshidamaTest(unittest.TestCase):
+    """The otoshidama articles are the site's own view: they need only one source, say no market price, and send readers to comparison tables only when those pages exist."""
+    SLUGS = ("otoshidama-kawari", "otoshidama-kaumono", "otoshidama-watashikata")
+
+    def arts(self):
+        return {a["slug"]: a for a in DATA["articles"]}
+
+    def test_the_three_articles_exist_and_are_own_basis(self):
+        for s in self.SLUGS:
+            self.assertEqual(self.arts()[s].get("basis"), "own", s)
+
+    def test_an_own_article_with_no_source_is_found_and_one_that_is_not_own_needs_two(self):
+        def none(d):
+            a = [x for x in d["articles"] if x["slug"] == "otoshidama-kawari"][0]
+            for sec in a["sections"]:
+                sec["src"] = []
+                sec.pop("note", None)
+                sec["p"] = [re.sub(r"[0-9０-９]", "", x) for x in sec.get("p", [])]
+            for f in a["faq"]:
+                f["src"] = []
+        self.assertTrue(any("otoshidama-kawari: rests on fewer than two sources" in p for p in mutated(none)))
+
+        def not_own(d):                                                   # kaumono rests on one source (the site's own search measurement): fine only as an own article
+            a = [x for x in d["articles"] if x["slug"] == "otoshidama-kaumono"][0]
+            del a["basis"]
+        self.assertTrue(any("otoshidama-kaumono: rests on fewer than two sources" in p for p in mutated(not_own)))
+
+    def test_no_article_gives_a_market_price_for_otoshidama(self):
+        for s in self.SLUGS:
+            a = self.arts()[s]
+            text = json.dumps(a, ensure_ascii=False)
+            self.assertNotRegex(text, r"[0-9,]+円", s)                            # no amount of money anywhere
+            self.assertIn("載せていません", text, s)                                 # and each says so
+
+    def test_the_tax_sentence_names_the_agency_and_does_not_claim_otoshidama_is_listed(self):
+        a = self.arts()["otoshidama-kawari"]
+        ans = [f["a"] for f in a["faq"] if "贈与税" in f["q"]][0]
+        self.assertIn("国税庁", ans)
+        self.assertIn("お年玉という言葉はそこに出てきません", ans)
+        self.assertIn("nta", [k for f in a["faq"] for k in f.get("src", [])])
+
+    def test_the_comparison_links_appear_only_for_pages_that_exist(self):
+        sec = [s for s in self.arts()["otoshidama-kawari"]["sections"] if s.get("kinds")][0]
+        self.assertEqual(shogatsu._kinds(sec, set()), "")
+        html = shogatsu._kinds(sec, {"compare/baby-toy/index.html"})
+        self.assertIn('href="/compare/baby-toy/"', html)
+        self.assertNotIn("/compare/board-game/", html)
+
+    def test_every_compare_kind_named_by_an_article_is_defined(self):
+        labels = {g["slug"] for g in json.loads((Path(shogatsu.__file__).parent / "content" / "compare.json").read_text(encoding="utf-8"))["groups"]}
+        for a in DATA["articles"]:
+            for sec in a["sections"]:
+                for k in sec.get("kinds", []):
+                    self.assertIn(k["slug"], labels, a["slug"])
 
 
 if __name__ == "__main__":

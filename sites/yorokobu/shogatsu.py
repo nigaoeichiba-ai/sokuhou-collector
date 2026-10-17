@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 DATA = HERE / "content" / "shogatsu.json"
 IMG = HERE / "assets" / "shogatsu"
 PATH = "/shogatsu/"
-ALLOWED_HOSTS = seasonal.SOURCE_HOSTS + ("www8.cao.go.jp", "trends.google.com")      # the Cabinet Office (holidays) and Google Trends (the site's own measurement of searches, read in a browser)
+ALLOWED_HOSTS = seasonal.SOURCE_HOSTS + ("www8.cao.go.jp", "trends.google.com", "www.nta.go.jp")      # the Cabinet Office (holidays), Google Trends (the site's own measurement of searches, read in a browser) and the National Tax Agency (gift tax)
 WEEKDAY = "月火水木金土日"
 DIGIT = re.compile(r"[0-9０-９]")
 YEAR = re.compile(r"20\d\d年")
@@ -51,6 +51,7 @@ def _section_texts(s: dict) -> list[str]:
     t = s.get("table")
     if t:
         out += list(t["head"]) + [str(c) for r in t["rows"] for c in r]
+    out += [k.get("note", "") for k in s.get("kinds", [])]
     return [str(x) for x in out]
 
 
@@ -103,7 +104,7 @@ def problems(data: dict, img_dir: Path = IMG) -> list[str]:
             where = f"{label}/{s.get('h')}"
             if not s.get("h"):
                 out.append(f"{where}: no heading")
-            if not any(s.get(f) for f in ("p", "table", "list", "check")):
+            if not any(s.get(f) for f in ("p", "table", "list", "check", "kinds")):
                 out.append(f"{where}: empty section")
             _check_text(where, _section_texts(s), s.get("src", []), srcs, out)
             t = s.get("table")
@@ -135,7 +136,7 @@ def problems(data: dict, img_dir: Path = IMG) -> list[str]:
             out.append(f"article {slug}: query (the search words of the buttons)")
         blocks(f"article {slug}", a)
         used = {k for s in a.get("sections", []) for k in s.get("src", [])} | {k for f in a.get("faq", []) for k in f.get("src", [])}
-        if len(used) < 2:
+        if len(used) < (1 if a.get("basis") == "own" else 2):
             out.append(f"article {slug}: rests on fewer than two sources")
     return out
 
@@ -165,9 +166,23 @@ def _fig(img: dict, eager: bool = False) -> str:
             f'sizes="(max-width: 760px) 100vw, 720px" alt="{esc(img["alt"])}" width="{img["w"]}" height="{img["h"]}" {load}></figure>')
 
 
-def _sections(pg: dict, data: dict) -> str:
+def _kinds(s: dict, known: set[str] | None) -> str:
+    """A section that sends the reader to the comparison tables (/compare/<kind>/): only the kinds whose page exists; nothing at all when none does."""
+    labels = {g["slug"]: g["label"] for g in json.loads((HERE / "content" / "compare.json").read_text(encoding="utf-8"))["groups"]}
+    items = "".join(f'<li><a href="/compare/{esc(k["slug"])}/">{esc(labels[k["slug"]])}を比べる</a> {esc(k["note"])}</li>'
+                    for k in s["kinds"] if known is None or f"compare/{k['slug']}/index.html" in known)
+    if not items:
+        return ""
+    lead = "".join(f"<p>{esc(p)}</p>" for p in s.get("p", []))
+    return f'<section class="g-sec"><h2><span class="scribble">{esc(s["h"])}</span></h2>{lead}<ul class="seas-list">{items}</ul></section>'
+
+
+def _sections(pg: dict, data: dict, known: set[str] | None = None) -> str:
     out = []
     for s in pg["sections"]:
+        if s.get("kinds"):
+            out.append(_kinds(s, known))
+            continue
         if s.get("calendar"):
             s = {**s, "table": _weekdays(s["table"], data["year"])}
         out.append(seasonal._section(s, data["sources"]))
@@ -194,7 +209,7 @@ def _sources(pg: dict, data: dict) -> str:
     items = "".join(
         f'<li><a href="{esc(data["sources"][k]["url"])}" rel="noopener nofollow" target="_blank">{esc(data["sources"][k]["name"])}</a>'
         + (f'({esc(data["sources"][k]["date"])})' if data["sources"][k].get("date") else "") + "</li>" for k in used)
-    return seasonal.sources_block(items, data["checked"], "記事")
+    return seasonal.sources_block(items, data["checked"], "記事", own_basis=pg.get("basis") == "own")
 
 
 def _buttons(cfg: dict, query: str) -> str:
@@ -246,7 +261,7 @@ def article_page(d: dict, cfg: dict, preview: bool, a: dict, data: dict, known: 
 {B.pr_with_amazon(cfg)}
 {_meta(data, a)}
 {_fig(a["image"], eager=True)}
-<article class="guide seas shg">{_sections(a, data)}{faq_html}{_sources(a, data)}</article>
+<article class="guide seas shg">{_sections(a, data, known)}{faq_html}{_sources(a, data)}</article>
 {B.share_bar(cfg, path, a["title"], "この記事をだれかに送る")}
 <section class="related seas-more" style="margin-top:44px"><h2><span class="scribble">お正月の特集のほかの記事</span></h2>{_cards(data, a["slug"])}
 <p style="margin-top:14px"><a class="btn btn-sub" href="{PATH}">お正月の特集のトップへ</a></p></section>
