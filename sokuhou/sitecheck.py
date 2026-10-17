@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+import threading
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urldefrag, urlparse
@@ -193,8 +194,9 @@ def sitemap_urls(root: Path) -> list[str]:
     return out
 
 
-def check_dir(root: Path, base: str, require_sitemap: bool = True, skip: tuple[str, ...] = ()) -> list[str]:
-    """Problems found in a built folder, each as '[rule] page: message'.  skip names rules to leave out (see the module docstring)."""
+def check_dir(root: Path, base: str, require_sitemap: bool = True, skip: tuple[str, ...] = (), links_out: dict | None = None) -> list[str]:
+    """Problems found in a built folder, each as '[rule] page: message'.  skip names rules to leave out (see the module docstring).
+    With `links_out` (the live check) the links of every page are handed back as {page: [(tag, ref)]} and not looked up in the folder when the 'links' rule is skipped: the live check resolves them against the live site."""
     root = Path(root)
     found: list[tuple[str, str]] = []
 
@@ -224,8 +226,10 @@ def check_dir(root: Path, base: str, require_sitemap: bool = True, skip: tuple[s
                 add("head", f"{rel}: no canonical URL")
             elif host and urlparse(pg.canonical).netloc.lower() != host.lower():
                 add("head", f"{rel}: canonical points to another host: {pg.canonical}")
+        if links_out is not None:
+            links_out[rel] = pg.links
         seen: set[str] = set()
-        for tag, ref in pg.links:
+        for tag, ref in ([] if (links_out is not None and "links" in skip) else pg.links):
             target = _local(root, base, rel, ref)
             if target is None or ref in seen:
                 continue
@@ -264,24 +268,110 @@ def check_dir(root: Path, base: str, require_sitemap: bool = True, skip: tuple[s
     return [f"[{r}] {m}" for r, m in found if r not in skip]
 
 
-def _get(url: str, timeout: int = 30, retries: int = 2) -> tuple[int, bytes]:
+_tls = threading.local()   # one set of kept-alive connections per worker thread (urllib opened a new TCP+TLS connection for every request: about 0.9 s each from a US runner to a Japanese server)
+_all: list = []   # every connection opened, so that check_live can close them all at the end
+_all_lock = threading.Lock()
+_UA = {"User-Agent": "Mozilla/5.0 (sitecheck; +owner's own site)"}
+_REDIRECTS = (301, 302, 303, 307, 308)
+
+
+def _connection(scheme: str, netloc: str, timeout: int):
+    import http.client
+    conns = getattr(_tls, "conns", None)
+    if conns is None:
+        conns = _tls.conns = {}
+    c = conns.get((scheme, netloc))
+    if c is None:
+        cls = http.client.HTTPSConnection if scheme == "https" else http.client.HTTPConnection
+        c = conns[(scheme, netloc)] = cls(netloc, timeout=timeout)
+        with _all_lock:
+            _all.append(c)
+    return c
+
+
+def close_connections() -> None:
+    """Close every kept-alive connection of every worker thread (they would otherwise wait for the garbage collector)."""
+    with _all_lock:
+        conns, _all[:] = list(_all), []
+    for c in conns:
+        try:
+            c.close()
+        except OSError:
+            pass
+    if hasattr(_tls, "conns"):
+        _tls.conns.clear()
+
+
+def _drop(scheme: str, netloc: str) -> None:
+    c = getattr(_tls, "conns", {}).pop((scheme, netloc), None)
+    if c is not None:
+        try:
+            c.close()
+        except OSError:
+            pass
+
+
+def _once(method: str, url: str, timeout: int) -> tuple[int, bytes, str]:
+    """One request on this thread's kept-alive connection; a stale connection (the server closed it between two requests) is opened again once.
+    Returns (status, body, Location header).  Raises OSError / http.client.HTTPException when the server cannot be reached."""
+    import http.client
+    u = urlparse(url)
+    target = (u.path or "/") + (("?" + u.query) if u.query else "")
+    for attempt in (0, 1):
+        c = _connection(u.scheme, u.netloc, timeout)
+        try:
+            c.request(method, target, headers=_UA)
+            r = c.getresponse()
+            body = r.read()
+            if r.will_close:
+                _drop(u.scheme, u.netloc)
+            return r.status, (body if method == "GET" else b""), r.getheader("Location", "") or ""
+        except (OSError, http.client.HTTPException):
+            _drop(u.scheme, u.netloc)
+            if attempt == 1:
+                raise
+    raise OSError("unreachable")
+
+
+def _fetch(url: str, timeout: int = 30, method: str = "GET") -> tuple[int, bytes]:
+    """One answer after up to 5 redirects (as urllib followed them)."""
+    from urllib.parse import urljoin
+    for _ in range(6):
+        status, body, loc = _once(method, url, timeout)
+        if status in _REDIRECTS and loc:
+            url = urljoin(url, loc)
+            continue
+        return status, body
+    return 0, b""
+
+
+def _get(url: str, timeout: int = 30, retries: int = 2, method: str = "GET") -> tuple[int, bytes]:
     import time
-    import urllib.error
-    import urllib.request
     last = (0, b"")
     for i in range(retries + 1):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (sitecheck; +owner's own site)"})
-            with urllib.request.urlopen(req, timeout=timeout) as r:
-                return r.status, r.read()
-        except urllib.error.HTTPError as e:
-            last = (e.code, b"")
-            if e.code < 500:
-                return last
+            status, body = _fetch(url, timeout, method)
+            if status < 500:
+                return status, body
+            last = (status, b"")
         except Exception:
             last = (0, b"")
         time.sleep(1 + i)
     return last
+
+
+def _is_page(url: str) -> bool:
+    """A link target that is a page (read with GET); anything with another file extension is an asset (checked with HEAD)."""
+    last = urlparse(url).path.rsplit("/", 1)[-1]
+    return "." not in last or last.endswith((".html", ".htm"))
+
+
+def _status_of(url: str) -> int:
+    """The status a link target answers: GET for pages; HEAD for images, scripts, styles and the like, and when HEAD does not say 200 (some servers refuse it) GET decides."""
+    if _is_page(url):
+        return _get(url)[0]
+    code = _get(url, method="HEAD")[0]
+    return code if code == 200 else _get(url)[0]
 
 
 def light_selection(urls: list[str], sample: int, prev_urls: set[str] | None = None) -> list[str]:
@@ -296,12 +386,22 @@ def light_selection(urls: list[str], sample: int, prev_urls: set[str] | None = N
     return list(dict.fromkeys(home + new + picked))
 
 
-def check_live(base: str, workers: int = 8, probes: tuple[str, ...] = (), sample: int | None = None, prev_urls: set[str] | None = None) -> tuple[list[str], int]:
+def check_live(base: str, workers: int = 24, probes: tuple[str, ...] = (), sample: int | None = None, prev_urls: set[str] | None = None) -> tuple[list[str], int]:
+    """See _check_live; the kept-alive connections are closed whatever happens."""
+    try:
+        return _check_live(base, workers, probes, sample, prev_urls)
+    finally:
+        close_connections()
+
+
+def _check_live(base: str, workers: int, probes: tuple[str, ...] = (), sample: int | None = None, prev_urls: set[str] | None = None) -> tuple[list[str], int]:
     """The deployed site: every sitemap URL answers 200 and obeys the page rules; every internal link on those pages answers 200.
     With `sample` (the light check of a content-only deploy) only the home page, the new pages and `sample` random pages are fetched.
     Returns (problems, number of pages fetched).  Used right after a deploy (a failure rolls the site back) and by the weekly review."""
     import tempfile
+    import time
     from concurrent.futures import ThreadPoolExecutor
+    t0 = time.monotonic()
     base = base.rstrip("/")
     code, body = _get(base + "/sitemap.xml")
     if code != 200:
@@ -325,6 +425,7 @@ def check_live(base: str, workers: int = 8, probes: tuple[str, ...] = (), sample
         root = Path(tmp)
         with ThreadPoolExecutor(workers) as ex:
             got = list(ex.map(_get, urls))
+        t_pages = time.monotonic()
         for u, (code, body) in zip(urls, got):
             path = urlparse(u).path
             if urlparse(u).netloc.lower() != host.lower():
@@ -342,11 +443,11 @@ def check_live(base: str, workers: int = 8, probes: tuple[str, ...] = (), sample
             f.parent.mkdir(parents=True, exist_ok=True)
             f.write_bytes(body)
         # page rules on the mirrored pages; links are resolved against the live site below, not the mirror
-        problems += check_dir(root, base, skip=("links", "sitemap"))
+        page_links: dict[str, list] = {}
+        problems += check_dir(root, base, skip=("links", "sitemap"), links_out=page_links)
         targets: dict[str, str] = {}
-        for f in sorted(root.rglob("*.html")):
-            rel = f.relative_to(root).as_posix()
-            for tag, ref in parse(f).links:
+        for rel in sorted(page_links):
+            for tag, ref in page_links[rel]:
                 t = ref.strip()
                 if not t or t.startswith(SKIP_SCHEMES) or t.startswith("#") or t.startswith("//"):
                     continue
@@ -363,8 +464,9 @@ def check_live(base: str, workers: int = 8, probes: tuple[str, ...] = (), sample
                 targets.setdefault(full, rel)
         known = {u for u in all_urls}
         todo = [t for t in targets if t not in known]
+        t_parse = time.monotonic()
         with ThreadPoolExecutor(workers) as ex:
-            res = list(ex.map(lambda t: _get(t)[0], todo))
+            res = list(ex.map(_status_of, todo))
         for t, code in zip(todo, res):
             if code != 200:
                 problems.append(f"[links] {targets[t]}: {t} answered {code}")
@@ -372,6 +474,8 @@ def check_live(base: str, workers: int = 8, probes: tuple[str, ...] = (), sample
         c, _ = _get(base + pr)
         if c != 200:
             problems.append(f"[probe] {base}{pr} answered {c}")
+    t_end = time.monotonic()
+    print(f"live check timing: {len(urls)} pages in {t_pages - t0:.0f} s, page rules and link list {t_parse - t_pages:.0f} s, {len(todo)} link targets in {t_end - t_parse:.0f} s, {workers} workers")
     return problems, len(urls)
 
 
@@ -384,6 +488,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--live", action="store_true", help="check the deployed site at --base instead of a folder")
     ap.add_argument("--probe", action="append", default=[], help="an extra path that must answer 200 (with --live)")
     ap.add_argument("--max", type=int, default=60, help="print at most this many problems")
+    ap.add_argument("--workers", type=int, default=24, help="with --live: parallel requests (each worker keeps one connection open)")
     ap.add_argument("--sample", type=int, default=None, help="with --live: a LIGHT check (home page, pages new since --prev, and this many random pages); for content-only deploys")
     ap.add_argument("--prev", help="with --sample: the sitemap.xml of the previous deploy (its URLs are not 'new')")
     a = ap.parse_args(argv)
@@ -394,7 +499,7 @@ def main(argv: list[str] | None = None) -> int:
                 prev_urls = set(re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", Path(a.prev).read_text(encoding="utf-8", errors="replace")))
             except OSError:
                 prev_urls = None
-        problems, n = check_live(a.base, probes=tuple(a.probe), sample=a.sample, prev_urls=prev_urls)
+        problems, n = check_live(a.base, workers=a.workers, probes=tuple(a.probe), sample=a.sample, prev_urls=prev_urls)
         if problems:
             print(f"LIVE CHECK FAILED: {len(problems)} problem(s) in {n} pages of {a.base}")
             for pr in problems[: a.max]:
