@@ -6,3 +6,12 @@ out/
 dist/
 release/
 *.zip
+
+# Owner rule 2026-10-17: mall (Rakuten/Yahoo!/Amazon) API data and other private data never go into this public repo.
+# They live in the server's private folder (~/yorokobu-private/) or on Dropbox. See 副業/CLAUDE.md.
+data/yorokobu_ranking.json
+data/yorokobu_compare.json
+data/yorokobu_yahoo.json
+data/yorokobu_candidates.json
+private/
+*-private/
