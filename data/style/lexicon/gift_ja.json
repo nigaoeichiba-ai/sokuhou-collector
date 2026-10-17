@@ -136,7 +136,7 @@
   {"avoid": "個性派ギフト", "prefer": ["ユニークギフト"], "source": "観察: 楽天ハブのタグ", "evidence": ["E3"], "status": "observed"},
   {"avoid": "金券・カタログ(テーマ名)", "prefer": ["カタログギフト", "ギフト券"], "source": "観察: 楽天・リンベル・無印", "evidence": ["E3", "D41", "E7"], "status": "observed"},
   {"avoid": "冷蔵庫いらず / 宅配箱サイズ / ポスト便向き", "prefer": ["常温で持ち運べる手土産", "宅配ボックスに入る大きさ", "メール便で届くギフト(楽天の商品名・店舗案内で使用)"], "source": "観察: 実物はこの形で書く(『メール便』は楽天ハブの商品名で確認)", "evidence": ["E3"], "status": "observed"},
-  {"avoid": "約320mlという容量を使う場面に置いてみる(節の見出し)", "prefer": ["容量は約320ml。飲みきりやすい大きさ"], "source": "観察: 動作ではなく事実を見出しに", "evidence": ["E7"], "status": "observed"},
+  {"avoid": "約320mlという容量を使う場面に置いてみる(節の見出し)", "prefer": ["容量は約320mlの小さめサイズ"], "source": "観察: 動作ではなく事実を見出しに", "evidence": ["E7"], "status": "observed"},
   {"avoid": "幅広いシーン / さまざまな場面", "prefer": ["職場への手土産にも、実家への贈り物にも"], "source": "公用文の解説(ぼかしを避ける)+STYLE_GUIDE_JA.md", "evidence": ["P1"], "status": "observed"},
   {"avoid": "つまらないものですが", "prefer": ["心ばかりですが(手紙・口頭で、相手による)", "お口に合えばうれしいです"], "source": "観察: 西武は失礼と感じる人がいると明記", "evidence": ["D30"], "status": "observed"}
  ],
