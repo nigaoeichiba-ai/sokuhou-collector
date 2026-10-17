@@ -211,13 +211,52 @@ def tidy(site: str, after: str) -> str:
     return after
 
 
+# the careful ways of saying things that an editor must not turn into flat statements ("場合があります" -> "です")
+HEDGE = re.compile(r"場合があります|場合もあります|とされ|と言われ|かもしれ|ことがあります|ことも|目安|一般的|傾向|ようです|可能性|前後|ほど|ことが多い|がち|多くの")
+CLAIM_KINDS = ("para", "item", "note")
+
+
+def hedges(text: str) -> int:
+    return len(HEDGE.findall(text))
+
+
+def claims_prompt(site: str, pairs: list[tuple[str, str]]) -> str:
+    items = [{"id": i + 1, "before": a, "after": b} for i, (a, b) in enumerate(pairs)]
+    return f"""あなたは日本語の校閲者です。サイト({site})の本文の書き直し(before→after)が、元の意味を保っているかを一組ずつ確かめてください。見るのは次の3つだけです。
+- added_claim: 元に無い断定・理由・事実・一般化が足されていないか(元の文から読み取れない「〜だから」「〜に向く」「〜できる」などを含む)。
+- hedge_removed: 「場合があります」「とされています」「かもしれません」「ことがあります」「目安」「一般的」「ほど」「前後」のような控えめな言い方が消えて、言い切りになっていないか。
+- condition_dropped: 元の条件(いつ・誰に・どの場合・どこで・どれくらい)が落ちていないか。
+いずれも、少しでも当てはまれば true にして、problem に一言で書く。文章の良し悪しは判定しない。
+出力: JSONだけ(前後に説明を書かない)。形式: {{"items":[{{"id":1,"added_claim":false,"hedge_removed":false,"condition_dropped":false,"problem":""}}]}}
+入力:
+{json.dumps(items, ensure_ascii=False)}
+"""
+
+
+def check_claims(site: str, pairs: list[tuple[str, str]], runner) -> dict[int, str]:
+    """{index (1-based): problem} for the rewritings that add a statement, lose a hedge or drop a condition.  A rewriting the checker did not answer about is a problem too."""
+    answer = sl.parse_judgement(runner(claims_prompt(site, pairs)), len(pairs))
+    out = {}
+    for i in range(1, len(pairs) + 1):
+        it = answer.get(i)
+        if it is None:
+            out[i] = "the claims check gave no answer"
+        elif it.get("added_claim") or it.get("hedge_removed") or it.get("condition_dropped"):
+            kinds = [k for k, f in (("added claim", "added_claim"), ("hedge removed", "hedge_removed"), ("condition dropped", "condition_dropped")) if it.get(f)]
+            out[i] = f"{'/'.join(kinds)}: {str(it.get('problem', ''))[:80]}"
+    return out
+
+
 def check_edit(site: str, unit: PageUnit, after: str) -> list[str]:
     """The invariants for an editor's rewrite of one unit.  A page edit may change a paragraph a lot, so the 'small edit' limit of the sentence mode is not applied."""
     kind = {"title": "heading", "heading": "heading", "button": "heading", "label": "heading"}.get(unit.kind, "para")
-    return sl.check_rewrite(unit.text, sl.norm(after), site, kind, small_edit=False)
+    problems = sl.check_rewrite(unit.text, sl.norm(after), site, kind, small_edit=False)
+    if unit.kind in CLAIM_KINDS and hedges(after) < hedges(unit.text):
+        problems.append(f"careful wording removed (hedges {hedges(unit.text)} -> {hedges(after)})")
+    return problems
 
 
-def edit_page(site: str, rel: str, raw: str, runner=None, today: str | None = None, accept: bool = True, dry: bool = False) -> dict:
+def edit_page(site: str, rel: str, raw: str, runner=None, today: str | None = None, accept: bool = True, dry: bool = False, verifier=None) -> dict:
     """Edit one page (one Codex call per chunk).  Returns the report; the accepted edits are in the dictionary unless dry."""
     today = today or dt.date.today().isoformat()
     runner = runner or sl.run_codex
@@ -225,6 +264,7 @@ def edit_page(site: str, rel: str, raw: str, runner=None, today: str | None = No
     report = {"page": rel, "date": today, "hash": content_hash(units), "units": len(units), "diagnosis": [], "accepted": [], "rejected": [], "deleted": [], "needs_check": [],
               "structure_suggestions": [], "unchanged": 0, "failed": ""}
     by_id = {u.id: u for u in units}
+    passed: list[tuple[PageUnit, str, str]] = []             # edits that passed the invariants; the claims check comes next
     for chunk in chunks(units):
         if dry:
             report["prompt"] = build_prompt(site, rel, chunk)
@@ -255,12 +295,27 @@ def edit_page(site: str, rel: str, raw: str, runner=None, today: str | None = No
             if problems:
                 report["rejected"].append({"text": u.text[:60], "after": after[:80], "problems": problems})
                 continue
-            if accept and not dry:
-                ok, why = sl.add_entry(site, u.text, after, by="editor", why=str(e.get("why", ""))[:60], kind="note" if u.kind in ("para", "item", "note") else "heading", today=today, small_edit=False)
-                if not ok and why != ["already in the dictionary"]:
-                    report["rejected"].append({"text": u.text[:60], "problems": why})
-                    continue
-            report["accepted"].append({"kind": u.kind, "from": u.text, "to": after, "why": str(e.get("why", ""))[:60]})
+            passed.append((u, after, str(e.get("why", ""))[:60]))
+    # the second look at the paragraphs: no statement added, no careful wording lost, no condition dropped (a separate Codex call; if it fails, no paragraph is taken)
+    long_ = [(u, a, w) for u, a, w in passed if u.kind in CLAIM_KINDS and len(u.text) >= 20]
+    claim_problems: dict[int, str] = {}
+    if long_:
+        try:
+            claim_problems = check_claims(site, [(u.text, a) for u, a, _ in long_], verifier or runner)
+        except Exception as ex:
+            claim_problems = {i: f"the claims check failed ({str(ex)[:60]}): not taken" for i in range(1, len(long_) + 1)}
+            report["claims_check_failed"] = str(ex)[:120]
+    bad = {id(long_[i - 1][0]): msg for i, msg in claim_problems.items()}
+    for u, after, why in passed:
+        if id(u) in bad:
+            report["rejected"].append({"text": u.text[:60], "after": after[:80], "problems": [bad[id(u)]]})
+            continue
+        if accept and not dry:
+            ok, why_ = sl.add_entry(site, u.text, after, by="editor", why=why, kind="note" if u.kind in CLAIM_KINDS else "heading", today=today, small_edit=False)
+            if not ok and why_ != ["already in the dictionary"]:
+                report["rejected"].append({"text": u.text[:60], "problems": why_})
+                continue
+        report["accepted"].append({"kind": u.kind, "from": u.text, "to": after, "why": why})
     return report
 
 
