@@ -16,6 +16,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -23,6 +24,7 @@ DATA = ROOT / "data"
 REMOTE_DIR = "yorokobu-private"                    # in the SSH user's home, beside public_html: nothing in it is served
 FILES = ("yorokobu_compare.json", "yorokobu_yahoo.json", "yorokobu_ranking.json", "yorokobu_candidates.json")
 BUILD_FILES = ("yorokobu_items_db.json", "yorokobu_gacha_db.json", "yorokobu_rec_db.json")            # made by the build and only pushed (api/items.php reads them); a pull of everything does not fetch them
+WAIT = (0, 10, 30)                                 # seconds before the 1st, 2nd and 3rd try: a connection that fails at once (ssh 255, seen on 2026-10-18 for all four files in two deploys) is tried again after a pause
 PORT = os.environ.get("SSH_PORT", "10022")
 
 
@@ -61,6 +63,7 @@ def run(action: str, names: list[str]) -> int:
         for n in names:
             local = DATA / n
             for attempt in range(3):
+                time.sleep(WAIT[attempt])
                 if action == "push":
                     if not local.exists():
                         print(f"privatedata: {n} is not here; skipped")
