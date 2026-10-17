@@ -6,8 +6,8 @@ from unittest import mock
 
 from sites.yorokobu import yahoo_fetch as Y
 
-VC = {"sid": "3784606", "pid": "892726918"}
-HIT = {"name": "ギフト 商品", "url": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&pid=892726918&vc_url=x", "price": 2000, "code": "shop_item1", "inStock": True,
+VC = {"sid": "3784606", "pid": "892728268"}
+HIT = {"name": "ギフト 商品", "url": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&pid=892728268&vc_url=x", "price": 2000, "code": "shop_item1", "inStock": True,
        "image": {"medium": "https://item-shopping.c.yimg.jp/i/g/x"}, "review": {"count": 12, "rate": 4.5},
        "shipping": {"code": 2, "name": "送料無料"},
        "point": {"amount": 20, "times": 1, "bonusAmount": 10, "lyLimitedBonusAmount": 30, "premiumAmount": 99, "premiumBonusAmount": 99},
@@ -32,7 +32,7 @@ class NormalizeTest(unittest.TestCase):
 
 class ClientTest(unittest.TestCase):
     def test_the_affiliate_id_is_the_referral_link_up_to_vc_url(self):
-        self.assertEqual(Y.vc_affiliate_id(VC), "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&pid=892726918&vc_url=")
+        self.assertEqual(Y.vc_affiliate_id(VC), "http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&pid=892728268&vc_url=")
 
     def test_an_error_never_carries_the_client_id(self):
         c = Y.Client("SECRETID123", VC, min_interval=0)

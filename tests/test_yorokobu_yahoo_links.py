@@ -11,7 +11,7 @@ from sites.yorokobu import build, compare_fetch, content
 from tests.test_yorokobu_compare import CFG, FIX, item
 from tests.yorokobu_data import with_musts
 
-VC = {"sid": "3784606", "pid": "892726918"}
+VC = {"sid": "3784606", "pid": "892728268"}
 CFG_Y = {**CFG, "yahoo_vc": VC}
 
 
@@ -21,7 +21,7 @@ class UrlTest(unittest.TestCase):
         p = urlparse(u)
         self.assertEqual((p.scheme, p.netloc, p.path), ("https", "ck.jp.ap.valuecommerce.com", "/servlet/referral"))
         q = parse_qs(p.query)
-        self.assertEqual((q["sid"], q["pid"]), (["3784606"], ["892726918"]))
+        self.assertEqual((q["sid"], q["pid"]), (["3784606"], ["892728268"]))
         target = q["vc_url"][0]
         self.assertTrue(target.startswith("https://shopping.yahoo.co.jp/search?p="))        # a page the programme allows as a link target
         self.assertEqual(unquote(urlparse(target).query), "p=お歳暮 ギフト")
@@ -39,7 +39,7 @@ class UrlTest(unittest.TestCase):
 
     def test_each_link_carries_the_programmes_impression_counter(self):
         b = build.yahoo_btn(CFG_Y, "お歳暮", "x")
-        self.assertIn('<img src="https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3784606&amp;pid=892726918" width="1" height="1" alt=', b)
+        self.assertIn('<img src="https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3784606&amp;pid=892728268" width="1" height="1" alt=', b)
         self.assertEqual(b.count("<a "), 1)
 
     def test_the_real_config_has_the_ids(self):
@@ -71,7 +71,7 @@ class PagesTest(unittest.TestCase):
 
     def test_the_sheets_and_the_comparison_pages_offer_yahoo_and_say_that_no_yahoo_price_is_in_the_table(self):
         for rel in ("oseibo/index.html", "nenga/index.html", "oiwai/seijin/index.html", "oiwai/kekkon/index.html"):
-            self.assertRegex(self.read(rel), r'href="https://ck\.jp\.ap\.valuecommerce\.com/servlet/referral\?sid=3784606&amp;pid=892726918&amp;vc_url=[^"]+" rel="sponsored nofollow noopener"', rel)
+            self.assertRegex(self.read(rel), r'href="https://ck\.jp\.ap\.valuecommerce\.com/servlet/referral\?sid=3784606&amp;pid=892728268&amp;vc_url=[^"]+" rel="sponsored nofollow noopener"', rel)
         t = self.read("compare/tumbler/index.html")
         self.assertIn("この表にYahoo!ショッピングの価格は入っていません", t)
         self.assertIn("valuecommerce.com", t)
