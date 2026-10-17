@@ -18,11 +18,35 @@ class AffiliateTest(unittest.TestCase):
     def test_box_with_both_programmes(self):
         html = build.pr_box({**BASE, **IDS}, "年賀状づくりに", [("年賀状の印刷サービス", "年賀状 印刷 2027")])
         self.assertIn('class="pr-note">PR<', html)
-        self.assertEqual(html.count('rel="sponsored noopener nofollow"'), 2)
-        self.assertIn("hb.afl.rakuten.co.jp/hgc/aaaa.bbbb.cccc.dddd/minna?pc=", html)
+        self.assertEqual(html.count('rel="nofollow sponsored noopener"'), 2)
+        self.assertIn("hb.afl.rakuten.co.jp/hgc/aaaa.bbbb.cccc.dddd/?pc=", html)
         self.assertIn("tag=amazonmacs-22", html)
         self.assertIn("適格販売により収入を得ています", html)
         self.assertIn("広告(楽天アフィリエイト・Amazonアソシエイト)", html)
+
+    def test_links_are_exactly_what_the_programmes_give_and_nothing_is_added(self):
+        """AFFILIATE_RULES.md 3b: Rakuten .../hgc/[id]/?pc=[URL]&m=[URL] (no tracking id), Amazon only k and tag, and the tag only href, target and rel."""
+        import html as htmllib
+        import re
+        from urllib.parse import parse_qs, urlsplit
+        html = build.pr_box({**BASE, **IDS}, "年賀状づくりに", [("年賀状の印刷サービス", "年賀状 印刷 2027"), ("インク", "プリンター インク")])
+        tags = re.findall(r"<a ([^>]*)>(?:楽天市場|Amazon)で見る</a>", html)
+        self.assertEqual(len(tags), 4)
+        for attrs in tags:
+            self.assertEqual(sorted(re.findall(r'([a-z-]+)="', attrs)), ["href", "rel", "target"])       # no class, aria-label, data-* ...
+            self.assertIn('target="_blank"', attrs)
+            self.assertIn('rel="nofollow sponsored noopener"', attrs)
+            url = urlsplit(htmllib.unescape(re.search(r'href="([^"]+)"', attrs).group(1)))
+            q = parse_qs(url.query)
+            if url.netloc == "hb.afl.rakuten.co.jp":
+                self.assertEqual(url.path, "/hgc/aaaa.bbbb.cccc.dddd/")                                  # nothing after the id
+                self.assertEqual(sorted(q), ["m", "pc"])
+                self.assertEqual(q["pc"], q["m"])
+            else:
+                self.assertEqual(url.netloc, "www.amazon.co.jp")
+                self.assertEqual(sorted(q), ["k", "tag"])                                                # no other parameter
+                self.assertEqual(q["tag"], ["amazonmacs-22"])
+        self.assertNotIn("minna?", html)
 
     def test_only_rakuten_does_not_claim_amazon(self):
         html = build.pr_box({**BASE, "rakuten_affiliate_id": "aaaa.bbbb.cccc.dddd"}, "x", [("a", "kw")])

@@ -643,11 +643,12 @@ def pr_box(cfg: dict, heading: str, rows: list[tuple[str, str]]) -> str:
     for label, kw in rows:
         links = ""
         if cfg.get("rakuten_affiliate_id"):
-            url = rakuten.affiliate_link(cfg["rakuten_affiliate_id"], cfg.get("rakuten_tracking_id"), rakuten.search_url(kw))
-            links += f'<a class="btn btn-sub" href="{esc(url)}" rel="sponsored noopener nofollow" target="_blank">楽天市場で見る</a>'
+            # Rakuten's own form, nothing added: .../hgc/[affiliate id]/?pc=[URL]&m=[URL] (no tracking id after the id; AFFILIATE_RULES.md 3b)
+            url = rakuten.affiliate_link(cfg["rakuten_affiliate_id"], None, rakuten.search_url(kw))
+            links += f'<a href="{esc(url)}" target="_blank" rel="nofollow sponsored noopener">楽天市場で見る</a>'
         if cfg.get("amazon_tracking_id"):
             url = f"https://www.amazon.co.jp/s?k={quote(kw, safe='')}&tag={quote(cfg['amazon_tracking_id'], safe='')}"
-            links += f'<a class="btn btn-sub" href="{esc(url)}" rel="sponsored noopener nofollow" target="_blank">Amazonで見る</a>'
+            links += f'<a href="{esc(url)}" target="_blank" rel="nofollow sponsored noopener">Amazonで見る</a>'
         items += f'<li><b>{esc(label)}</b><span>{links}</span></li>'
     note = ("このボックスには、広告(" + "・".join(x for x in ("楽天アフィリエイト" if cfg.get("rakuten_affiliate_id") else "", "Amazonアソシエイト" if cfg.get("amazon_tracking_id") else "") if x)
             + ")のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。")
