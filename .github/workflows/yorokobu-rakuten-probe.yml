@@ -1,0 +1,29 @@
+name: yorokobu-rakuten-probe
+
+# One-off, by hand: calls the Rakuten Ichiba search and ranking APIs a few times and prints the SHAPES of the links and picture URLs they return (no IDs, no names),
+# so the site can use the API's own affiliate link and picture URLs as they are (sites/yorokobu/rakuten_probe.py).  Needs RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: yorokobu-rakuten-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Look at the answers
+        env:
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+        run: python -m sites.yorokobu.rakuten_probe
