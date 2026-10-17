@@ -209,10 +209,14 @@ jobs:
           if [ "$reached" != 1 ]; then
             echo "unreachable=true" >> "$GITHUB_OUTPUT"
             # diagnostics for later (which address this runner has, whether other ports of the server answer): nothing secret, the host name is masked in the log
-            echo "runner address: $(curl -s --max-time 5 https://api.ipify.org || echo unknown)"
-            for port in "$SSH_PORT" 22 443; do
-              if timeout 5 bash -c "exec 3<>/dev/tcp/$HOST/$port" 2> /dev/null; then echo "tcp port $port: answers"; else echo "tcp port $port: no answer"; fi
+            addr=$(curl -s --max-time 5 https://api.ipify.org || echo unknown)
+            echo "runner address: $addr"
+            row="| $(date -u +%FT%TZ) | $SITE | $addr |"
+            for port in "$SSH_PORT" 443 21 990; do   # 22 is closed on this server in any case; 21 and 990 (FTP, FTPS) are the only other way in, should SSH stay cut off
+              if timeout 5 bash -c "exec 3<>/dev/tcp/$HOST/$port" 2> /dev/null; then echo "tcp port $port: answers"; row="$row $port yes |"; else echo "tcp port $port: no answer"; row="$row $port no |"; fi
             done
+            echo "REACH $row"
+            echo "$row" >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
       - name: Private mall data (Rakuten / Yahoo! results, taken from the server's private folder; they are never in the repository - see sites/yorokobu/privatedata.py)
@@ -446,6 +450,18 @@ jobs:
               rm -rf .deploy_failed
             "
             exit 1
+          fi
+      - name: How long the change waited (written to the run summary - the time from the oldest change this deploy publishes to the site being live and checked)
+        if: steps.gate.outputs.go == 'true' && steps.gate.outputs.really == 'true'
+        env:
+          SINCE: ${{ matrix.since }}
+          SITE: ${{ matrix.site }}
+        run: |
+          now=$(date +%s)
+          if [ "${SINCE:-0}" -gt 0 ]; then
+            echo "- **$SITE is live $(( (now - SINCE) / 60 )) minutes after its oldest waiting change was committed**" | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- $SITE is live (a manual or daily run: no waiting change to measure)" | tee -a "$GITHUB_STEP_SUMMARY"
           fi
       - name: IndexNow submit (tells Bing and the other IndexNow engines which pages are new or changed; it never fails or rolls back a deploy)
         if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou' && steps.gate.outputs.really == 'true'

@@ -139,6 +139,35 @@ class NoMallDataInTheGitHubCache(unittest.TestCase):
         self.assertNotIn("Keep the fetched products", TEXT)    # the daily yorokobu-items workflow is the only writer of the file
 
 
+class NeverStuck(unittest.TestCase):
+    """Owner, 2026-10-18: a change must not stay off the live site for hours because a run was cancelled, replaced or lost.  The reasons it cannot (and the tests that hold them):
+    every site has a group of its own and no job is cancelled while it runs; a waiting job replaced by a newer one loses nothing, because the plan compares with the commit the
+    live site was built from (tests/test_deploy_plan.py: the lost update of 2026-10-16); and the watchdog starts a stale site again by itself (tests/test_office_watch.py)."""
+
+    def test_no_running_deploy_is_ever_cancelled(self):
+        self.assertNotIn("cancel-in-progress: true", TEXT)
+        self.assertIn("cancel-in-progress: false", TEXT)
+
+    def test_the_watchdog_runs_twice_an_hour_and_after_every_deploy_and_starts_only_the_stale_site(self):
+        wd = (ROOT / ".github" / "workflows" / "office-watch.yml").read_text(encoding="utf-8")
+        self.assertIn('cron: "17,47 * * * *"', wd)
+        self.assertIn('workflows: ["deploy-sites"]', wd)
+        self.assertIn('gh workflow run deploy.yml -f only="$site" -f deploy=true', wd)
+
+    def test_the_wait_of_every_published_change_is_written_to_the_run_summary(self):
+        b = block("How long the change waited")
+        self.assertIn("GITHUB_STEP_SUMMARY", b)
+        self.assertIn("steps.gate.outputs.really == 'true'", b)
+        self.assertGreater(index_of("How long the change waited"), index_of("Verify the live site"))
+        self.assertIn("since", (ROOT / "sokuhou" / "deployplan.py").read_text(encoding="utf-8"))
+
+    def test_when_the_server_is_cut_off_the_ports_that_could_still_be_a_way_in_are_recorded(self):
+        b = block("SSH setup")
+        for port in ('"$SSH_PORT" 443 21 990',):
+            self.assertIn(port, b)
+        self.assertIn("REACH", b)
+
+
 class OtherSessionsSteps(unittest.TestCase):
     def test_the_yorokobu_private_product_data_step_is_still_there_after_the_tests_and_before_the_upload(self):
         # lost once on 2026-10-18 when a copy of this file was put back over a newer one: a step another session adds must survive a rewrite of the workflow

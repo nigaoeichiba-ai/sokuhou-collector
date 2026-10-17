@@ -5,12 +5,12 @@ name: office-watch
 # commit from the owner's account for 36 hours = the PC-side routines stopped), it opens ONE issue assigned to the owner, so that GitHub's
 # own notification (mail / GitHub app) reaches the owner.  The issue is edited, not re-created, while the problem lasts, and closed when it is fixed.
 # Since 2026-10-16 it also finds a change that was committed but is not live after 2 hours (each site publishes the commit it was built from, /deployed-sha.txt) and
-# starts deploy-sites again for that site only (the "heal" step; at most once in 3 hours, never while a deploy is running).
+# starts deploy-sites again for that site only (the "heal" step: only when no job of THAT site is running or waiting; after a failed deploy of it the next try waits 10, 20, 40, 60, 90, 120 minutes and after 6 failures in a row it stops and says in the issue which step failed).
 # No secrets are needed.  Run by hand with test=true to check that the notification arrives.
 
 on:
   schedule:
-    - cron: "17 * * * *"
+    - cron: "17,47 * * * *"   # twice an hour (2026-10-18): a site must not stay behind main; the watchdog also runs after every deploy run (workflow_run below)
   workflow_run:
     workflows: ["deploy-sites"]
     types: [completed]
