@@ -1,0 +1,70 @@
+# Read-only access-log report: counts only (no IP, no full user agent, no query string, no request line).
+# Run by hand (workflow_dispatch only). The repository and this log are public, so sokuhou/accesslog.py
+# prints aggregates and nothing else. The server connection is the one deploy.yml uses (same secrets).
+name: accesslog
+on:
+  workflow_dispatch:
+    inputs:
+      sites:
+        description: "Space-separated site folders on the server (default: the four sites)"
+        type: string
+        default: "saichin-sokuho.com kuma-sokuho.com yorokobu-present.com minna-no-illust.com"
+
+permissions:
+  contents: read
+
+env:
+  SSH_PORT: "10022"
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: python -m unittest tests.test_accesslog
+      - name: SSH setup
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver
+          chmod 600 ~/.ssh/id_xserver
+          printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 15' '  StrictHostKeyChecking accept-new' > ~/.ssh/config
+          chmod 600 ~/.ssh/config
+          ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /dev/null || true
+          reached=0
+          for try in 1 2 3 4 5 6; do
+            if ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" true 2> /dev/null; then reached=1; break; fi
+            echo "server not reachable (attempt $try)"
+            sleep $((try * 10))
+          done
+          [ "$reached" = 1 ]
+      - name: Where the logs are (names and sizes only)
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+          SITES: ${{ inputs.sites }}
+        run: |
+          for s in $SITES; do
+            echo "== $s"
+            ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+              "cd \"\$HOME/$s\" 2>/dev/null || { echo 'no site folder'; exit 0; }; echo 'folders:'; ls -d */ 2>/dev/null | tr '\n' ' '; echo; if [ -d log ]; then echo 'log/:'; ls -l --time-style=+%Y-%m-%d log 2>/dev/null | awk 'NR>1{print \$5, \$6, \$7}' | head -40; else echo 'no log folder'; fi" || echo "ssh failed"
+          done
+      - name: Aggregate (counts only)
+        env:
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+          SITES: ${{ inputs.sites }}
+        run: |
+          for s in $SITES; do
+            ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+              "cd \"\$HOME/$s/log\" 2>/dev/null || exit 0; for f in \$(ls | grep -i access | sort); do case \"\$f\" in *.gz) zcat \"\$f\";; *) cat \"\$f\";; esac; done" \
+              | python -m sokuhou.accesslog --site "$s" || echo "no report for $s"
+          done
