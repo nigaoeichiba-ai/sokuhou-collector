@@ -87,7 +87,7 @@ AddType application/manifest+json .webmanifest
 
 PUSH_BOX = '''<h2 id="push">この端末で受け取る通知</h2>
 <div class="panel" id="push-box" hidden>
-<p>予定の日ややることの期限に、この端末へ通知します。通知のタイミングは設定で選べます(当日の午前中は9時ごろ、前日は18時ごろ、一週間前は9時ごろ。早朝や夜には送りません)。サーバーに保存されるのは、通知に必要な日付だけです。予定の内容は、この端末に保存されます。<a href="/privacy/#push">詳しく</a></p>
+<p>予定の日ややることの期限にこの端末へ通知します。通知のタイミングは設定で選べます(当日の午前中は9時ごろ、前日は18時ごろ、一週間前は9時ごろ。早朝や夜には送りません)。サーバーに保存されるのは、通知に必要な日付だけです。予定の内容は、この端末に保存されます。<a href="/privacy/#push">詳しく</a></p>
 <p id="push-status" class="muted"></p>
 <p id="push-ios" class="hint" hidden>iPhone・iPad は、共有ボタンから「ホーム画面に追加」し、そのアイコンから開くと通知を使えます。</p>
 <p><button type="button" class="btn" id="push-on">この端末で通知を受け取る</button> <button type="button" class="btn ghost" id="push-off" hidden>通知を止める</button></p>
@@ -432,7 +432,7 @@ def home_page(c: Ctx) -> str:
     body = f"""<section class="intro setup" id="setup" aria-labelledby="setup-h" hidden></section>
 <section class="intro" id="intro" aria-labelledby="intro-h" hidden>
 <h2 id="intro-h">はじめての方へ</h2>
-<p class="intro-lead">試験や締切までの日数も、記念日からの日数も、ここで数えられます。</p>
+<p class="intro-lead">試験や締切までの日数も記念日からの日数もここで数えられます。</p>
 <ol class="intro-steps">
 <li><b>さがす</b><span>試験・締切・大会・お祭りなど、いろいろな日付が見つかります</span></li>
 <li><b>記録する</b><span>記念日や予定など、大切な日を1行で記録できます</span></li>
@@ -460,7 +460,7 @@ def home_page(c: Ctx) -> str:
 </section>
 <section id="live" data-block="live" data-title="速報(公式の発表)" hidden>
 <div class="head-row"><h2>速報</h2><div class="grow"><a class="btn small ghost" href="/topics/">もっと見る</a></div></div>
-<p class="hint">公式の発表を、数分おきに集めています。日付や内容は、リンク先の公式ページで確かめてください。</p>
+<p class="hint">公式の発表を数分おきに集めています。日付や内容は、リンク先の公式ページで確かめてください。</p>
 <ul class="live-list" id="live-list"><li class="muted">読み込み中…</li></ul>
 </section>
 <section id="mine" data-block="mine" data-title="記録した日" hidden>
@@ -566,7 +566,7 @@ def card_page(c: Ctx) -> str:
     body = f"""{crumbs([("トップ", "/"), ("カードを作って送る", None)])}
 <h1>カードを作って送る</h1>
 <div id="card-box"><noscript><p class="notice">カードを作るには JavaScript が必要です。</p></noscript></div>"""
-    return c.page("/card/", f"カードを作って送る | {NAME}", "日付・ひとこと・やることを入れたカードを、リンクや画像で送れます。受け取った人は、1タップで自分の予定帳に入れられます。", body, "card", noindex=True)
+    return c.page("/card/", f"カードを作って送る | {NAME}", "日付・ひとこと・やることを入れたカードをリンクや画像で送れます。受け取った人は、1タップで自分の予定帳に入れられます。", body, "card", noindex=True)
 
 
 def search_page(c: Ctx) -> str:
@@ -642,18 +642,18 @@ def my_page(c: Ctx) -> str:
 <select id="p-alarm"><option value="morning">当日の午前中(8時〜12時)</option><option value="eve">前日</option><option value="week">一週間前</option><option value="none">なし</option></select>
 <p class="hint">新しく記録するカードの標準になります。カードごとに変えるときは、記録するときの「通知するタイミング」か、各カードの「修正」で選びます。通知は、当日の午前中は9時ごろ、前日は18時ごろ、一週間前は9時ごろに届きます。早朝や夜には送りません。</p></div>
 <h3 class="set-h">そのほか</h3>
-<div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する</label><p class="hint">どの機能がどれだけ使われたかを、件数だけで数えます。個人は特定されません。<a href="/privacy/#stats" data-back="マイページ">詳しい説明</a></p></div>
+<div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する</label><p class="hint">どの機能がどれだけ使われたかを件数だけで数えます。個人は特定されません。<a href="/privacy/#stats" data-back="マイページ">詳しい説明</a></p></div>
 <p><a href="/?intro=1" data-back="マイページ">はじめての方へ(このサイトの説明)</a> <button type="button" class="btn small ghost" data-guide="start">使い方を見る</button></p>
 </div>
 <h2 id="wipe-h">この端末の記録を消す</h2>
 <div class="panel">
-<p>この端末に保存されている記録と設定を、すべて消します。元に戻せません。</p>
+<p>この端末に保存されている記録と設定をすべて消します。元に戻せません。</p>
 <p><b>消す前に、ファイルに書き出して控えを作ってください。</b>書き出したファイルは、この端末でも別の端末でも、「ファイルから読み込む」で元に戻せます(<a href="#move">引き継ぎ・バックアップの説明</a>)。</p>
 <p class="move-btns"><button type="button" class="btn" id="backup2">先にファイルに書き出す</button></p>
 <p><button type="button" class="btn small ghost" id="wipe">すべて消す</button></p>
 </div>
 <noscript><p class="notice">マイページには JavaScript が必要です。</p></noscript>"""
-    return c.page("/my/", f"マイページ | {NAME}", "記録した日と、予定に入れた日の一覧です。", body, "my", noindex=True)
+    return c.page("/my/", f"マイページ | {NAME}", "記録した日と予定に入れた日の一覧です。", body, "my", noindex=True)
 
 
 def add_page(c: Ctx) -> str:
@@ -661,7 +661,7 @@ def add_page(c: Ctx) -> str:
 <h1>日付を記録する</h1>
 <p class="lead muted">未来の予定や過去の思い出など、忘れたくない日を記録し、その日が近づいたら思い出せるように通知設定ができます。</p>
 <div id="wizard" class="wizard"><noscript><p class="notice">日付の記録には JavaScript が必要です。</p></noscript></div>"""
-    return c.page("/add/", f"日付を記録する | {NAME}", "記念日・誕生日・はじめた日・命日を、選ぶだけで記録できます。あと何日、もう何日かをその場で数えます。", body, "add")
+    return c.page("/add/", f"日付を記録する | {NAME}", "記念日・誕生日・はじめた日・命日を選ぶだけで記録できます。あと何日、もう何日かをその場で数えます。", body, "add")
 
 
 def calendar_page(c: Ctx) -> str:
@@ -953,7 +953,11 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict], pool: tuple[l
     if res:
         title = f"{e['title']}の結果 {fmt} | {NAME}"
     place = (e.get("place") or "").strip()
-    desc = f"{e['title']}は{fmt}{end}" + (f"、{place}" if place and place not in ("全国", "地域") else "") + "。" + (f"{guide['about'].split('。')[0]}。" if guide else "") + "あと何日かを数えて、予定に入れられます。"
+    where = f"、{place}" if place and place not in ("全国", "地域") else ""
+    first = f"{e['title']}は{fmt}{end}{where}。"
+    if len(re.sub(r"\s+", "", first)) > 85:   # a long official name: the name, then the date, as two sentences
+        first = f"{e['title']}。日付は{fmt}{end}{where}です。"
+    desc = first + (f"{guide['about'].split('。')[0]}。" if guide else "") + "あと何日かを数えて、予定に入れられます。"
     if res:
         desc = str(res["text"]).split(chr(10))[0][:110]
     html = c.page(f"/e/{e['id']}/", title, desc, body + page_ld(c, e, page_url), "event", noindex=not indexable, og=og_path(e))
@@ -992,7 +996,7 @@ def region_hub_page(c: Ctx) -> str:
 <p class="small muted" id="reg-found" aria-live="polite">&nbsp;</p>
 <div class="cards" id="reg-cards"></div>
 <noscript>{rows}</noscript>"""
-    return c.page("/region/", f"地域の日 | {NAME}", "北海道から沖縄まで、都道府県ごとに、その地域で開かれる日と、制度の日を探せます。", body, "regionhub")
+    return c.page("/region/", f"地域の日 | {NAME}", "北海道から沖縄まで、都道府県ごとにその地域で開かれる日と制度の日を探せます。", body, "regionhub")
 
 
 def topics_page(c: Ctx, live: list[dict]) -> str:
@@ -1007,13 +1011,13 @@ def topics_page(c: Ctx, live: list[dict]) -> str:
         return f'<h2>{esc(title)}</h2><p class="hint">{esc(note)}</p><div class="cards">' + "".join(card_html(e) for e in rows) + "</div>"
     body = f"""{crumbs([("トップ", "/"), ("最新・トピックス", None)])}
 <h1>最新・トピックス</h1>
-<p class="lead muted">いま近い日と、新しく加わった日です。載せるのは、日付を確かめられた日です。カードの日付は間違っていることがあります。</p>
+<p class="lead muted">いま近い日と新しく加わった日です。載せるのは、日付を確かめられた日です。カードの日付は間違っていることがあります。</p>
 <section id="live-t" hidden><h2>速報(公式の発表)</h2><p class="hint">公式のフィードから、数分おきに集めた見出しです。あなたの言葉に合うものが先に並びます。日付や内容は、リンク先の公式ページで確かめてください。</p><ul class="live-list" id="live-list-t"><li class="muted">読み込み中…</li></ul></section>
 {block("今週と来週の日", "今日から14日以内の日です。近い順です。", soon)}
 {block("新しく加わった日", "この30日に加わった日です。新しい順です。", fresh)}
 {'<p class="empty">いまは、ご案内できる新しい日がありません。</p>' if not soon and not fresh else ""}
 <p class="hint">探している日が載っていないときは、<a href="/contact/?kind=request">リクエスト</a>から知らせてください。確かめられたものから、追加していきます。</p>"""
-    return c.page("/topics/", f"最新・トピックス | {NAME}", "いま近い日と、新しく加わった日。日付を確かめられた日を載せています。", body, "topics")
+    return c.page("/topics/", f"最新・トピックス | {NAME}", "いま近い日と新しく加わった日。日付を確かめられた日を載せています。", body, "topics")
 
 
 def manual_page(c: Ctx) -> str:
@@ -1050,9 +1054,9 @@ def manual_page(c: Ctx) -> str:
 
 <h2>できること</h2>
 <ul class="big-list">
-<li><b>日付を数える。</b>過ぎた日からの日数も、これから来る日までの日数も、すぐに分かります。</li>
+<li><b>日付を数える。</b>過ぎた日からの日数もこれから来る日までの日数もすぐに分かります。</li>
 <li><b>カレンダーとして使える。</b>デート・会議・記念日を入れて、月の表示と一覧で確認できます。予定ごとに、メモと「何日前までにやること」を書けます。</li>
-<li><b>通知を受け取れる。</b>予定の当日の午前中か前日に、この端末へ通知が届きます。早朝や夜には送りません。</li>
+<li><b>通知を受け取れる。</b>予定の当日の午前中か前日にこの端末へ通知が届きます。早朝や夜には送りません。</li>
 <li><b>公式の日付を使える。</b>締切・試験・大会・お祭りの日付を、公式の発表や報道で確認して載せています。「予定に入れる」を押すと、自分のカレンダーに追加されます。</li>
 </ul>
 
@@ -1092,10 +1096,10 @@ def manual_page(c: Ctx) -> str:
 <h2>ボタン</h2>
 <dl class="info big-dl">
 <dt>{btn("☆ 予定に入れる")}</dt><dd>公式の日付を自分のカレンダーに入れます。入ると「★ 予定に入っています」に変わり、もう一度押すと外れます。</dd>
-<dt>{btn("詳細", True)}</dt><dd>その日のページを開きます(日付の説明と、公式ページへのリンク)。</dd>
+<dt>{btn("詳細", True)}</dt><dd>その日のページを開きます(日付の説明と公式ページへのリンク)。</dd>
 <dt>{btn("開く")}</dt><dd>自分の予定の詳細を開きます。名前や日付の修正、メモと「やること」の記入もここから。</dd>
 <dt>{btn("消す", True)}</dt><dd>自分の予定を消します。</dd>
-<dt>{btn("シャッフル")}</dt><dd>ホームのカードを、別の日に入れ替えます。</dd>
+<dt>{btn("シャッフル")}</dt><dd>ホームのカードを別の日に入れ替えます。</dd>
 <dt>{btn("並べ替え", True)}</dt><dd>カードの順をボタンで変えます。ドラッグ(スマホは長押し)でも動かせます。</dd>
 <dt>{btn("さがす")}</dt><dd>言葉で日付を探します。「年賀状」「流星群」のように入れます。</dd>
 <dt>{btn("きせかえ", True)}</dt><dd>色や形、文字の大きさを変えます。季節のきせかえもあります。</dd>
@@ -1132,7 +1136,7 @@ def today_page(c: Ctx) -> str:
 
     body = f"""{crumbs([("トップ", "/"), ("今日の数字", None)])}
 <h1>今日の数字</h1>
-<p class="lead muted">年末や年度末までの日数と、その準備の目安です。選ぶと、その日までの日数を記録できます。</p>
+<p class="lead muted">年末や年度末までの日数とその準備の目安です。選ぶと、その日までの日数を記録できます。</p>
 <section id="today"><h2>今日は {n("today")}</h2>
 <p>数字は、お使いの端末の日付で数えています。</p></section>
 
@@ -1169,7 +1173,7 @@ def today_page(c: Ctx) -> str:
 {more([("禁煙", "/use/quit-smoking/"), ("習慣", "/use/habit-streak/")])}
 </section>
 <p>当てはまらないときは、<a href="/add/">自分で日付を記録</a>できます。</p>"""
-    return c.page("/today/", f"今日の数字 | {NAME}", "年末まであと何日、来年まであと何日、年度末まであと何日。入学や引っ越しの準備を、自分の日として残せます。", body, "today")
+    return c.page("/today/", f"今日の数字 | {NAME}", "年末まであと何日、来年まであと何日、年度末まであと何日。入学や引っ越しの準備を自分の日として残せます。", body, "today")
 
 
 SW_PUSH = """// push: the message says only which day and slot (m = morning, e = the evening before); the text comes from the mirror that push.js keeps in the cache
@@ -1273,7 +1277,7 @@ LEGAL_WORDING = [
     ("当サイトには、商品やサービスの紹介リンク(アフィリエイトリンク)が含まれる場合があります。該当するページには、広告であることを明示します。リンク先で商品が購入されると、当サイトの運営者に報酬が支払われることがあります。", "当サイトには、商品やサービスを紹介するリンク(アフィリエイトリンク)が含まれることがあります。該当するページには、広告であることを書いています。リンク先で商品が購入されると、運営者に報酬が支払われることがあります。"),
     ("</a>に記載しています。</p>", "</a>に載せています。</p>"),
     ("このポリシーは、必要に応じて見直し、変更する場合があります。変更後の内容は、このページに掲載した時点から効力を持ちます。", "このポリシーは、必要に応じて見直し、変更することがあります。変更後の内容は、このページに載せた時点から有効です。"),
-    ("データの誤りのご指摘、ご意見・ご要望は、次からお送りください。内容によっては、お返事に日数がかかることや、お返事できないことがあります。", "データの誤りのご指摘、ご意見・ご要望は、次のフォームからお送りください。内容によっては、返信に日数がかかることや、返信できないことがあります。"),
+    ("データの誤りのご指摘、ご意見・ご要望は、次からお送りください。内容によっては、お返事に日数がかかることや、お返事できないことがあります。", "データの誤りのご指摘、ご意見・ご要望は、次のフォームからお送りください。内容によっては、返信に日数がかかることや返信できないことがあります。"),
     ("の内容に同意したものとみなします。いただいた内容は、サイトの改善と、お返事のためだけに使います。", "に同意したものとして扱います。いただいた内容は、サイトの改善と返信のためだけに使います。"),
 ]
 
@@ -1302,8 +1306,8 @@ def legal(c: Ctx) -> dict:
         site, cfg, c.preview,
         purpose="記録した日について、あと何日、もう何日かを数え、カレンダーで見られるようにすること。締切・試験・大会・お祭りの公式の日付を、ワンタップで予定に入れられるようにすること。",
         sources_html="公式の発表や報道などをもとに集めています。公式ページが分かる日付には、そのページへのリンクを付けています。",
-        update_text="公式の発表や報道をもとに、随時確認・追加します。",
-        disclaimer_html="<p>カードの日付は間違っていることがあります。日付は、公式の発表や報道をもとに確認していますが、変更や中止になることもあります。申し込みや手続きの前に、公式の情報で確認してください。当サイトの情報をもとにした行動の結果について、当サイトは責任を負いません。</p>"
+        update_text="公式の発表や報道をもとに随時確認・追加します。",
+        disclaimer_html="<p>カードの日付は間違っていることがあります。日付は、公式の発表や報道をもとに確認していますが、変更や中止になることもあります。申し込みや手続きの前に公式の情報で確認してください。当サイトの情報をもとにした行動の結果について、当サイトは責任を負いません。</p>"
                         "<p>「あと○日」「もう○日」は、お使いの端末の日付をもとに、ブラウザの中で数えています。端末の日付がずれていると、数字もずれます。</p>",
         contact_notice="日付の誤りのご指摘は、ページの名前と、正しい日付がわかるページのアドレスを添えていただけると、早く確認できます。",
         input_note=("<h2>この端末に保存する情報</h2>"
@@ -1362,14 +1366,18 @@ def kyou_page(c: Ctx, md: str, items: list[tuple[int, dict, bool]], prev_next: t
     pn = "".join(f'<a class="chip" href="/kyou/{x}/">{int(x[:2])}月{int(x[3:])}日</a>' for x in prev_next if x)
     body = crumbs([("トップ", "/"), ("今日は何の日", "/kyou/"), (f"{m}月{d}日", None)]) + f"""
 <h1>{m}月{d}日は何の日</h1>
-<p class="lead muted">{m}月{d}日にある日付を、年ごとにまとめました。</p>
+<p class="lead muted">{m}月{d}日にある日付を年ごとにまとめました。</p>
 {('<h2>これからの' + str(m) + '月' + str(d) + '日</h2><div class="cards" id="kyou-list">' + cards + '</div>') if cards else ''}
 {('<ul class="kyou-rows">' + quiet_up + '</ul>') if quiet_up else ''}
 {('<h2>過ぎた' + str(m) + '月' + str(d) + '日</h2><ul class="kyou-rows" id="kyou-past">' + "".join(rows) + '</ul>') if rows else ''}
 <nav class="chiprow" aria-label="ほかの日"><a class="chip" href="/kyou/">今日は何の日(一覧)</a>{pn}</nav>"""
     title = f"{m}月{d}日は何の日？ {n}件の日付 | {NAME}"
-    names = "、".join(e["title"] for _, e, _h in items[:3])
-    desc = f"{m}月{d}日にある日付: {names}など{n}件。あと何日か、もう何日かも数えられます。"[:150]
+    head, tail, chosen = f"{m}月{d}日にある日付: ", f"など{n}件。", []
+    for _, e, _h in items[:3]:   # the names as long as the sentence stays short (90 characters is where it reads as one long breath)
+        if len(re.sub(r"\s+", "", head + "、".join(chosen + [e["title"]]) + tail)) > 85:
+            break
+        chosen.append(e["title"])
+    desc = (head + "、".join(chosen) + tail if chosen else f"{m}月{d}日にある日付は{n}件です。") + "あと何日か、もう何日かも数えられます。"
     # Policy (Codex's reading of Google's and AdSense's rules, 2026-10-11): a page per month and day is a short list, so at launch none of them is indexed and none carries an ad.
     # config.json "kyou_date_min_items" (0 = none) is the number of days a date needs before it may be indexed; raise it step by step once Search Console shows the detail pages are indexed well.
     need = int(c.cfg.get("kyou_date_min_items") or 0)
@@ -1396,7 +1404,7 @@ def kyou_index(c: Ctx, days: dict[str, list]) -> str:
 <section class="kyou-today" id="kyou-today" aria-live="polite"><p class="muted">今日の日付を調べています…</p></section>
 {year_left_block(c.today)}
 {specials.special_links(c.today)}
-<p class="lead muted">この日付にどんな日があるかを、月と日ごとに調べられます。数字は、その日にある日付の件数です。</p>
+<p class="lead muted">この日付にどんな日があるかを月と日ごとに調べられます。数字は、その日にある日付の件数です。</p>
 {"".join(months)}"""
     return c.page("/kyou/", f"今日は何の日 月日からさがす | {NAME}", "今日は何の日か、月と日から調べられます。あと何日か、もう何日かも数えられます。", body, "kyou")
 
@@ -1455,12 +1463,12 @@ def new_page(c: Ctx, live: list[dict]) -> str:
     blocks = "".join(f'<h3>{esc(fmt_date(a))}に載せた日</h3><div class="cards">{"".join(card_html(e) for e in v)}</div>' for a, v in groups.items())
     body = crumbs([("トップ", "/"), ("新着・人気", None)]) + f"""
 <h1>新着・人気の日</h1>
-<p class="lead muted">新しく載せた日と、予定に入れた人が多い日です。{esc(fmt_date(c.today.isoformat()))}時点で、新しく載せた日は{len(fresh)}件を並べています。</p>
+<p class="lead muted">新しく載せた日と予定に入れた人が多い日です。{esc(fmt_date(c.today.isoformat()))}時点で、新しく載せた日は{len(fresh)}件を並べています。</p>
 <section id="pop"><h2>人気の日</h2><p class="hint">この30日間に、予定に入れた人が多い順です(人数は出しません)。サーバーが1時間おきに数え直し、3人以上が選んだ日だけを並べます。</p>
 <div class="cards" id="pop-grid"></div><p class="muted" id="pop-none">読み込み中…</p></section>
 <h2>新しく載せた日</h2>
 {blocks}"""
-    return c.page("/new/", f"新着・人気の日 | {NAME}", "最近載せた日付と、予定に入れた人が多い日付です。", body, "new")
+    return c.page("/new/", f"新着・人気の日 | {NAME}", "最近載せた日付と予定に入れた人が多い日付です。", body, "new")
 
 
 def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> dict:
