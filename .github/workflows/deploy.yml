@@ -236,49 +236,14 @@ jobs:
           rm -f "$RUNNER_TEMP/tests.rc"
           setsid nohup bash -c 'CI=true python tests/run_tests.py --strict --site "$0"; echo $? > "$1/tests.rc"' "$SITE" "$RUNNER_TEMP" > "$RUNNER_TEMP/tests.log" 2>&1 < /dev/null &
           echo "unit tests started in $T"   # the shared tests and this site's own; another project's failing tests cannot block this deploy
-      - name: Today's products from the server's private folder (the products are fetched once a day and kept there, so a code push does not refetch; NOT in the GitHub cache, the repository is public)
-        id: items
+      - name: Fetch products (yorokobu-items.yml fetches them every day and keeps them in the server's private folder, which the step 'Private mall data' above has pulled; this adds only the day's editorial difference, a few API calls; without a fresh file it fetches everything, which takes about 40 minutes)
         if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu'
-        env:
-          HOST: ${{ secrets.XSERVER_HOST }}
-          USER_ID: ${{ secrets.XSERVER_USER }}
-        run: |
-          # the name changes with the day and with the editorial files that decide which products are fetched, so new picks, themes, ideas and daily picks show up on the next deploy
-          day=$(TZ=Asia/Tokyo date +%F)
-          files=$(ls sites/yorokobu/content/picks.json sites/yorokobu/content/themes.json sites/yorokobu/content/ideas.json sites/yorokobu/content/recipients.json sites/yorokobu/content/daily/*.json 2> /dev/null | sort)
-          hash=$(cat $files | sha256sum | cut -c1-16)
-          name="items-v8-$day-$hash.json"
-          echo "name=$name" >> "$GITHUB_OUTPUT"
-          mkdir -p out
-          if ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" "cat \"\$HOME/yorokobu-private/$name\"" > out/yorokobu_items.json 2> /dev/null && [ -s out/yorokobu_items.json ]; then
-            echo "found=true" >> "$GITHUB_OUTPUT"
-            echo "today's products were taken from the server's private folder ($name)"
-          else
-            rm -f out/yorokobu_items.json
-            echo "found=false" >> "$GITHUB_OUTPUT"
-            echo "no products kept for $name yet: they are fetched now"
-          fi
-      - name: Fetch products
-        if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu' && steps.items.outputs.found != 'true'
         env:
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
           RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
         run: |
-          if [ -f sites/yorokobu/content/picks.json ]; then
-            python -m sites.yorokobu.refresh --out out/yorokobu_items.json
-          else
-            python -m sites.yorokobu.fetch --out out/yorokobu_items.json
-          fi
-      - name: Keep the fetched products in the server's private folder (a real run only; files of earlier days are removed after three days)
-        if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu' && steps.items.outputs.found != 'true' && steps.gate.outputs.really == 'true'
-        env:
-          HOST: ${{ secrets.XSERVER_HOST }}
-          USER_ID: ${{ secrets.XSERVER_USER }}
-          NAME: ${{ steps.items.outputs.name }}
-        run: |
-          test -s out/yorokobu_items.json
-          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
-            "set -e; mkdir -p \"\$HOME/yorokobu-private\"; chmod 700 \"\$HOME/yorokobu-private\"; cat > \"\$HOME/yorokobu-private/$NAME.part\"; mv \"\$HOME/yorokobu-private/$NAME.part\" \"\$HOME/yorokobu-private/$NAME\"; chmod 600 \"\$HOME/yorokobu-private/$NAME\"; find \"\$HOME/yorokobu-private\" -name 'items-v*.json' -mtime +3 -delete" < out/yorokobu_items.json
+          mkdir -p out
+          python -m sites.yorokobu.items_fresh || python -m sites.yorokobu.refresh --out out/yorokobu_items.json
       - name: Build (release)
         if: steps.gate.outputs.go == 'true'
         env:
