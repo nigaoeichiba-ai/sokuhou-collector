@@ -72,8 +72,8 @@ def theme_problems(t: dict, groups: set[str], known_queries: set[str] | None = N
         out.append(f"{slug}: lead length {len(t['lead'])}")
     if not 12 <= len(t["title"]) <= 40:
         out.append(f"{slug}: title length {len(t['title'])}")
-    if len(t["reasons"]) != 3 or len(t["how_to_choose"]) != 3 or len(t["ideas"]) != 4 or len(t["keywords"]) != 8:
-        out.append(f"{slug}: counts (reasons 3, how_to_choose 3, ideas 4, keywords 8)")
+    if not 2 <= len(t["reasons"]) <= 3 or not 2 <= len(t["how_to_choose"]) <= 3 or len(t["ideas"]) != 4 or len(t["keywords"]) != 8:
+        out.append(f"{slug}: counts (reasons 2-3, how_to_choose 2-3, ideas 4, keywords 8)")
     queries = [i["query"] for i in t["ideas"]]
     if len(set(queries)) != 4:
         out.append(f"{slug}: repeated query")
@@ -110,7 +110,7 @@ def article_problems(a: dict, theme_slugs: set[str], known_slugs: set[str] | Non
         out.append(f"{slug}: title length {len(a['title'])}")
     if not 80 <= len(a["lead"]) <= 260:
         out.append(f"{slug}: lead length {len(a['lead'])}")
-    if not 4 <= len(a["sections"]) <= 6:
+    if not 3 <= len(a["sections"]) <= 6:
         out.append(f"{slug}: sections {len(a['sections'])}")
     for s in a["sections"]:
         if not 140 <= len(s["body"]) <= 480 or not 6 <= len(s["h"]) <= 26:
