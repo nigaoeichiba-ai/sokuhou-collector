@@ -191,9 +191,8 @@ ul.warn li::before { content: "!"; position: absolute; left: .85em; top: .85em; 
 .items { list-style: none; padding: 0; margin: 0; display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 .item { position: relative; display: flex; flex-direction: column; background: #fff; border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; transition: transform .2s, box-shadow .2s; }
 .item:hover { transform: translateY(-3px); box-shadow: var(--shadow-h); }
-.item-img { display: block; aspect-ratio: 1; background: var(--line2); overflow: hidden; }
-.item-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
-.item:hover .item-img img { transform: scale(1.04); }
+.item-img { display: block; width: min(128px, calc(100% - 16px)); aspect-ratio: 1; margin: 16px auto 0; background: var(--line2); border-radius: 12px; overflow: hidden; }   /* Rakuten's picture is 128px: shown at most that size, never enlarged */
+.item-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .item .rank { position: absolute; top: 10px; left: 10px; z-index: 2; width: 28px; height: 28px; line-height: 28px; text-align: center; border-radius: 50%; background: #fff; color: var(--ink); font: 700 .85rem/28px var(--num); box-shadow: 0 1px 4px rgba(0, 0, 0, .18); }
 .item .fav, .imgbox .fav { position: absolute; top: 8px; right: 8px; z-index: 3; width: 38px; height: 38px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .95); color: var(--accent); font-size: 1.15rem; line-height: 1; cursor: pointer; box-shadow: 0 1px 4px rgba(0, 0, 0, .15); }
 .item .fav.on, .imgbox .fav.on { background: var(--accent); color: #fff; }
@@ -201,6 +200,7 @@ ul.warn li::before { content: "!"; position: absolute; left: .85em; top: .85em; 
 .item-body { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px 16px; flex: 1; }
 .item-body h3 { font-family: var(--sans); font-weight: 500; font-size: .9rem; line-height: 1.6; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .item-body h3 a { color: var(--ink); text-decoration: none; }
+.item-blurb { font-family: var(--sans); font-weight: 500; font-size: .9rem; line-height: 1.6; margin: 0; color: var(--ink); overflow-wrap: anywhere; }
 .price { margin: 0; font: 700 1.4rem/1.3 var(--num); color: var(--ink); font-variant-numeric: tabular-nums; }
 .meta { margin: 0; font-size: .76rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; }
 .stars { color: #b7791f; font-weight: 700; }
@@ -239,7 +239,7 @@ ul.warn li::before { content: "!"; position: absolute; left: .85em; top: .85em; 
 .items.mini .item { box-shadow: none; border: 1px solid var(--line2); border-radius: 12px; }
 .items.mini .item:hover { box-shadow: var(--shadow); }
 .items.mini .item-body { padding: 8px 8px 10px; gap: 3px; }
-.items.mini .item-body h3 { font-size: .72rem; line-height: 1.45; -webkit-line-clamp: 3; }
+.items.mini .item-body h3, .items.mini .item-blurb { font-size: .72rem; line-height: 1.45; -webkit-line-clamp: 3; }
 .items.mini .price { font-size: 1rem; }
 .items.mini .meta { font-size: .66rem; }
 .items.mini .btn { font-size: .72rem; padding: .35em .4em; }
@@ -438,8 +438,8 @@ main.wrap > h1:first-child { margin-top: 36px; }
 .gacha-form select { width: 100%; }
 .gacha-msg { margin: 14px 2px; font-weight: 500; min-height: 1.6em; }
 .gacha-card { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 22px; padding: 20px; background: #fff; border-radius: 22px; box-shadow: var(--shadow); }
-.gacha-card img { width: 100%; height: auto; border-radius: 14px; display: block; }
-.gacha-body h2 { margin: 0 0 6px; font-size: 1.1rem; overflow-wrap: anywhere; }
+.gacha-card img { width: 100%; max-width: 128px; height: auto; border-radius: 14px; display: block; }   /* never past the 128px Rakuten gives */
+.gacha-body h2, .gacha-name { margin: 0 0 6px; font-size: 1.1rem; font-weight: 500; overflow-wrap: anywhere; }
 .gacha-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .list-msg { font-weight: 700; margin: 16px 0 8px; }
 .sharedlist .items { margin-top: 10px; }
@@ -542,6 +542,7 @@ a.hb-l:hover { text-decoration: underline; }
 .pick-img { position: relative; display: block; align-self: start; border-radius: 14px; overflow: hidden; background: var(--line2); }
 .pick-img img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
 .pick-img.mood img { aspect-ratio: 3 / 2; }
+.pick-img:not(.mood), .feat-photo:not(.mood) { width: min(160px, 100%); }   /* a Rakuten picture: 128px given, shown at 160px at most */
 .img-note { position: absolute; left: 8px; bottom: 8px; padding: .05em .7em; border-radius: 999px; background: rgba(255, 255, 255, .92); font-size: .68rem; color: var(--ink2); }
 .pick-body { min-width: 0; }
 .pick-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 6px; font-size: .78rem; color: var(--muted); }
@@ -895,6 +896,7 @@ footer.site .src { color: var(--muted); }
 .cmp-shop { margin: 0; font-size: .74rem; color: var(--muted); }
 .cmp-main h3 { margin: 2px 0 4px; font-size: .95rem; line-height: 1.55; }
 .cmp-main h3 a { color: var(--ink); text-decoration: none; }
+.cmp-blurb { margin: 2px 0 4px; font-size: .95rem; line-height: 1.55; color: var(--ink); overflow-wrap: anywhere; }
 .cmp-tags { margin: 0; display: flex; flex-wrap: wrap; gap: 4px; }
 .cmp-num p { margin: 0; font-size: .82rem; color: var(--ink2); }
 .cmp-price b { font-size: 1.1rem; color: var(--ink); }

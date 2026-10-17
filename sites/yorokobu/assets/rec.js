@@ -20,9 +20,9 @@
   }
   function card(it) {
     var rel = ' rel="sponsored nofollow noopener" target="_blank"';
-    return '<li class="item"><a class="item-img" href="' + esc(it.u) + '"' + rel + '><img src="' + esc(it.i) + '" alt="' + esc(it.n) + '" width="300" height="300" loading="lazy"></a>' +
-      '<div class="item-body"><h3><a href="' + esc(it.u) + '"' + rel + '>' + esc(it.n) + '</a></h3><p class="price">' + yen(it.p) + '</p>' +
-      '<div class="item-btns"><a class="btn" href="' + esc(it.u) + '"' + rel + '>楽天市場で見る</a>' + (it.a ? '<a class="btn" href="' + esc(it.a) + '"' + rel + ' aria-label="Amazonで同じ商品を探す">Amazonで探す</a>' : "") + '</div></div></li>';
+    return '<li class="item"><a class="item-img" href="' + esc(it.u) + '"' + rel + '><img src="' + esc(it.i) + '" alt="' + esc(it.n || "楽天市場の商品ページ") + '" width="128" height="128" loading="lazy"></a>' +
+      '<div class="item-body">' + (it.n ? '<p class="item-blurb">' + esc(it.n) + '</p>' : "") + '<p class="price">' + yen(it.p) + '</p>' +
+      '<div class="item-btns"><a class="btn" href="' + esc(it.u) + '"' + rel + '>楽天市場で見る</a></div></div></li>';
   }
   function amazon(group, o) {
     if (!group.a) return "";

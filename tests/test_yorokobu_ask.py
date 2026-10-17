@@ -247,7 +247,7 @@ class AskPagesTest(unittest.TestCase):
         for gid, g in rec["groups"].items():
             for it in g["items"]:
                 self.assertTrue(it["u"].startswith("https://hb.afl.rakuten.co.jp/"), gid)
-                owners.setdefault((it["n"], it["p"]), []).append(gid)
+                owners.setdefault((it["u"], it["p"]), []).append(gid)
         self.assertTrue(all(len(v) == 1 for v in owners.values()), "a product is listed under one group only")
         self.assertGreaterEqual(sum(1 for g in rec["groups"].values() if g["items"]), 3)       # (the fixture has few shops, and a shop gives two products at most)
         dock = json.loads(self.read("dock/data.json"))

@@ -130,7 +130,7 @@ def gacha_pool(d: dict) -> dict:
         union.sort(key=lambda i: -B.score(i))
         tiers = {}
         for t in c["filters"]["tiers"]:
-            rows = [[B.short(i["name"], 44), i["price"], i["image"], B.rakuten.clean_item_url(i["url"]), i["reviews"], int(round(i["rating"] * 10))]
+            rows = [[B.blurb_line(i), i["price"], B.thumb(i["image"], 128), B.rakuten.clean_item_url(i["url"]), i["reviews"], int(round(i["rating"] * 10))]
                     for i in union if B.in_tier(i["price"], t)][:GACHA_PER_COMBO]
             if rows:
                 tiers[t["slug"]] = rows

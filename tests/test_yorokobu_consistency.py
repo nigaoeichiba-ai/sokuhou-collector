@@ -59,6 +59,7 @@ class MustTest(unittest.TestCase):
                 self.assertEqual(len(row["queries"]), 3, r["slug"])
                 self.assertGreaterEqual(len(row["must"]), 3, r["slug"])
 
+    @unittest.skipUnless((build.ROOT / "data" / "yorokobu_candidates.json").exists(), "the candidates are in the private store (privatedata.py), not in the repository: this run did not pull them")
     def test_the_words_pass_the_products_that_were_curated_for_the_idea(self):
         """The candidates the editors chose from (real titles of an earlier fetch): the curated picks are of their idea's kind, nearly always."""
         cand = json.loads((build.ROOT / "data" / "yorokobu_candidates.json").read_text(encoding="utf-8"))["pairs"]
@@ -184,13 +185,13 @@ class PagesTest(unittest.TestCase):
             self.assertIn(f"種類{n - 1}", block)
             self.assertIn(f"検索{n - 1}a", block)                                              # the search of the line (one button each for Rakuten and Amazon would need an ID)
             self.assertIn("楽天市場で「", block)
-            names = re.findall(r'<div class="item-body"><h3><a[^>]*>(.*?)</a>', block)
+            cards = re.findall(r'<li class="item"[^>]*>(.*?)</li>', block, re.S)
             if n == 1:
-                self.assertTrue(names)
+                self.assertTrue(cards)
             if n == 2:
-                self.assertEqual(names, [])                                                    # nothing of that kind: no unrelated products, the search stays
-            for name in names:
-                self.assertIn("語0", name)
+                self.assertEqual(cards, [])                                                    # nothing of that kind: no unrelated products, the search stays
+            for card in cards:
+                self.assertIn('class="item-blurb">語0', card)                                  # the page's text shows the kind of every product (the site's word, from the line's must-words)
 
     def test_the_first_products_of_a_page_are_of_different_kinds(self):
         d = build.prepare(self.c, self.items, CFG)

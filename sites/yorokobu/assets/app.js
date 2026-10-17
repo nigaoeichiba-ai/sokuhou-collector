@@ -244,13 +244,12 @@
         n++;
         var li = document.createElement("li"); li.className = "item";
         var a1 = document.createElement("a"); a1.className = "item-img"; a1.href = it.u; a1.target = "_blank"; a1.rel = "sponsored nofollow noopener";
-        var img = document.createElement("img"); img.src = it.i; img.alt = it.n; img.width = 300; img.height = 300; img.loading = "lazy"; a1.appendChild(img);
+        var img = document.createElement("img"); img.src = it.i; img.alt = it.n || "楽天市場の商品ページ"; img.width = 128; img.height = 128; img.loading = "lazy"; a1.appendChild(img);
         var body = document.createElement("div"); body.className = "item-body";
-        var h3 = document.createElement("h3"); var a2 = document.createElement("a"); a2.href = it.u; a2.target = "_blank"; a2.rel = "sponsored nofollow noopener"; a2.textContent = it.n; h3.appendChild(a2);
+        var h3 = document.createElement("p"); h3.className = "item-blurb"; h3.textContent = it.n || "";
         var pr = document.createElement("p"); pr.className = "price"; pr.textContent = "¥" + Number(it.p).toLocaleString();
         var btns = document.createElement("div"); btns.className = "item-btns";
         var b1 = document.createElement("a"); b1.className = "btn"; b1.href = it.u; b1.target = "_blank"; b1.rel = "sponsored nofollow noopener"; b1.textContent = "楽天市場で見る"; btns.appendChild(b1);
-        if (it.a) { var b2 = document.createElement("a"); b2.className = "btn"; b2.href = it.a; b2.target = "_blank"; b2.rel = "sponsored nofollow noopener"; b2.textContent = "Amazonで探す"; btns.appendChild(b2); }
         body.appendChild(h3); body.appendChild(pr); body.appendChild(btns);
         li.appendChild(a1); li.appendChild(body); ul.appendChild(li);
       });
@@ -502,9 +501,9 @@
       out.textContent = "";
       var card = el("div", "gacha-card"), a = el("a", "gacha-img"), img = document.createElement("img");
       a.href = link(it[3]); a.rel = "sponsored nofollow noopener"; a.target = "_blank";
-      img.src = it[2]; img.alt = it[0]; img.width = 300; img.height = 300; a.appendChild(img);
+      img.src = it[2]; img.alt = it[0] || "楽天市場の商品ページ"; img.width = 128; img.height = 128; a.appendChild(img);
       var body = el("div", "gacha-body");
-      body.appendChild(el("h2", "", it[0]));
+      if (it[0]) body.appendChild(el("p", "gacha-name", it[0]));
       body.appendChild(el("p", "price", yen(it[1])));
       if (it[4]) body.appendChild(el("p", "meta", "★" + (it[5] / 10).toFixed(1) + "(" + it[4].toLocaleString("ja-JP") + "件)"));
       var buy = el("a", "btn", "楽天市場で見る"); buy.href = a.href; buy.rel = a.rel; buy.target = "_blank";

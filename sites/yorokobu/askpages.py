@@ -100,9 +100,8 @@ def rec_data(d: dict, cfg: dict) -> dict | None:
             if shops.get(it["shop_code"], 0) >= 2:
                 continue
             shops[it["shop_code"]] = shops.get(it["shop_code"], 0) + 1
-            name = B.rakuten.clean_title(it["name"])
-            items.append({"n": B.short(name, 60), "p": it["price"], "i": it["image"], "u": B.rakuten_link(cfg, B.rakuten.clean_item_url(it["url"])),
-                          "a": B.amazon_url(cfg, B.amazon_query(name)) if cfg.get("amazon_tracking_id") else "", "g": gender_mark(it["name"])})
+            items.append({"n": B.blurb_line(it), "p": it["price"], "i": B.thumb(it["image"], 128), "u": B.rakuten_link(cfg, B.rakuten.clean_item_url(it["url"])),
+                          "g": gender_mark(it["name"])})
             if len(items) >= REC_ITEMS:
                 break
         groups[gid] = {"label": spec["label"], "kind": spec["kind"], "items": items if len(items) >= MIN_REC_ITEMS else [], "range": quartiles([i["price"] for i in xs]),

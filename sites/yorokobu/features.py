@@ -274,20 +274,18 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
     if f["ref"].startswith("r"):
         url = B.rakuten.clean_item_url(live["url"] if live else entry["url"])
         href = B.rakuten_link(cfg, url)
-        img = (live["image"] if live else entry["img"]).replace("_ex=300x300", "_ex=600x600")
+        img = B.thumb(live["image"] if live else entry["img"], 128)                       # Rakuten gives 128px: shown at most that size (CSS), never enlarged
         buy = f'<a class="btn big" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">楽天市場で見る</a>'
-        other_btn = (f'<a class="btn btn-sub" href="{esc(B.amazon_url(cfg, B.amazon_query(entry["name"])))}" rel="sponsored nofollow noopener" target="_blank">Amazonで探す</a>'
-                     if cfg.get("amazon_tracking_id") else "")
+        other_btn = ""                                                                    # a Rakuten product part carries Rakuten's link only (terms Article 8)
         price = ""
         if live:
             stars = f'<span class="stars">★{live["rating"]:.1f}</span>({live["reviews"]:,}件・楽天市場のレビュー)' if live["reviews"] else ""
             price = (f'<p class="pick-price">{B.yen(live["price"])}<small>{stars}{"・送料無料" if live["free_shipping"] else ""}<br>楽天市場の{esc(d["fetched_label"])}時点の情報</small></p>')
-            B.SEEN[entry["code"]] = {"n": B.short(entry["name"], 60), "p": live["price"], "i": live["image"], "u": href,
-                                     "a": B.amazon_url(cfg, B.amazon_query(entry["name"])) if cfg.get("amazon_tracking_id") else ""}
+            B.SEEN[entry["code"]] = {"n": B.short(entry["name"], 60), "p": live["price"], "i": B.thumb(live["image"], 128), "u": href}
         me = live
         pl, how = pool(d, f, entry["kind"])
         st = stats(pl, me)
-        photo = (f'<div class="imgbox"><a class="feat-photo" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"><img src="{esc(img)}" alt="{esc(entry["name"])}" width="600" height="600" loading="eager" fetchpriority="high" decoding="async"></a>'
+        photo = (f'<div class="imgbox"><a class="feat-photo" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"><img src="{esc(img)}" alt="{esc(entry["name"])}" width="128" height="128" loading="eager" fetchpriority="high" decoding="async"></a>'
                  f'{B.fav_button(entry["code"], B.short(entry["name"], 40), live["price"] if live else None, url)}</div>')
     else:
         href = B.amazon_dp(cfg, entry["asin"])

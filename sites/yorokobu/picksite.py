@@ -53,15 +53,13 @@ def rakuten_card(cfg: dict, d: dict, e: dict, eid: str, n: int, more: str = "") 
         stars = f'<span class="stars">★{live["rating"]:.1f}</span>({live["reviews"]:,}件)' if live["reviews"] else ""
         price = (f'<p class="pick-price">{B.yen(live["price"])}<small>{stars}{"・送料無料" if live["free_shipping"] else ""}'
                  f'<br>楽天市場の{esc(d["fetched_label"])}時点の情報</small></p>')
-        B.SEEN[e["code"]] = {"n": B.short(e["name"], 60), "p": live["price"], "i": live["image"], "u": href,
-                             "a": B.amazon_url(cfg, B.amazon_query(e["name"])) if cfg.get("amazon_tracking_id") else ""}
+        B.SEEN[e["code"]] = {"n": B.short(e["name"], 60), "p": live["price"], "i": B.thumb(live["image"], 128), "u": href}
     else:
         price = '<p class="pick-price"><small>価格・在庫は販売ページでご確認ください。</small></p>'
-    other = (f'<a class="btn" href="{esc(B.amazon_url(cfg, B.amazon_query(e["name"])))}" rel="sponsored nofollow noopener" target="_blank" '
-             f'aria-label="Amazonで同じ商品を探す">Amazonで探す</a>') if cfg.get("amazon_tracking_id") else ""
+    other = ""                                                                            # a Rakuten product part carries Rakuten's link only (terms Article 8)
     fav = B.fav_button(e["code"], B.short(e["name"], 40), live["price"] if live else None, url)
     return (f'<article class="pick" id="{eid}" data-code="{esc(e["code"])}"><div class="imgbox"><a class="pick-img" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
-            f'<img src="{esc(img)}" alt="{esc(e["name"])}" width="300" height="300" {B.EAGER if n == 1 else B.LAZY}></a>{fav}</div>'
+            f'<img src="{esc(B.thumb(img, 128))}" alt="{esc(e["name"])}" width="128" height="128" {B.EAGER if n == 1 else B.LAZY}></a>{fav}</div>'
             f'<div class="pick-body"><p class="pick-meta"><span class="pick-no">{n}</span><span class="tag">{esc(e["kind"])}</span><span class="pick-scene">{esc(e["scene"])}</span></p>'
             f'<h3>{esc(e["headline"])}</h3><p class="pick-name">{esc(e["name"])}</p><p class="pick-sum">{esc(e["summary"])}</p>{_chips(e["for"])}{_facts(e)}{price}'
             f'<div class="item-btns"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">楽天市場で見る</a>{other}</div>{more}</div></article>')

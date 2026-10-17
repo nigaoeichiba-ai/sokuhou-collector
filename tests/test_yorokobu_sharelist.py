@@ -40,7 +40,7 @@ class ShareListDataTest(unittest.TestCase):
         cls.tmp.cleanup()
         build.RANKING_ON = False
 
-    def test_the_data_file_has_every_product_the_pages_show_with_its_two_shop_links(self):
+    def test_the_data_file_has_every_product_the_pages_show_with_its_rakuten_link(self):
         db = json.loads((self.out / "list/items.json").read_text(encoding="utf-8"))
         shown = set()
         for f in self.out.rglob("*.html"):
@@ -50,7 +50,7 @@ class ShareListDataTest(unittest.TestCase):
         self.assertLessEqual(len(own), 2, own)
         for code, it in list(db.items())[:50]:
             self.assertTrue(it["u"].startswith("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/yorokobu?pc="), code)
-            self.assertIn("tag=amazonmacs-22", it["a"], code)
+            self.assertNotIn("a", it, code)                                             # no other mall's link in the Rakuten data
             self.assertTrue(it["i"].startswith("https://"), code)
             self.assertGreater(it["p"], 0)
 
@@ -91,7 +91,7 @@ const wait = (ms) => new Promise(r => setTimeout(r, ms));
     const cards = [...d.querySelectorAll('#list-items .item')];
     out.cards = cards.length;
     out.msg = d.querySelector('.list-msg').textContent;
-    out.first = cards[0] && {name: cards[0].querySelector('h3').textContent, price: cards[0].querySelector('.price').textContent,
+    out.first = cards[0] && {name: (cards[0].querySelector('.item-blurb') || {}).textContent || '', price: cards[0].querySelector('.price').textContent,
                              buttons: [...cards[0].querySelectorAll('.btn')].map(a => ({t: a.textContent, href: a.href, rel: a.rel}))};
     out.scroll = d.documentElement.scrollWidth;
     const g = document.createElement('iframe'); g.style.width = '300px'; g.style.height = '900px'; document.body.appendChild(g);
@@ -141,9 +141,8 @@ class ShareListBrowserTest(unittest.TestCase):
         self.assertEqual(o["cards"], o["codes"], o)                         # the unknown code is skipped, the known ones are shown
         self.assertEqual(o["msg"], f"{o['codes']}点の候補です。")
         b = o["first"]["buttons"]
-        self.assertEqual([x["t"] for x in b], ["楽天市場で見る", "Amazonで探す"])
+        self.assertEqual([x["t"] for x in b], ["楽天市場で見る"])                       # a Rakuten part has Rakuten's link only (terms Article 8)
         self.assertTrue(b[0]["href"].startswith("https://hb.afl.rakuten.co.jp/"))
-        self.assertIn("tag=amazonmacs-22", b[1]["href"])
         self.assertTrue(all("sponsored" in x["rel"] for x in b))
         self.assertTrue(o["first"]["price"].startswith("¥"))
 

@@ -52,10 +52,10 @@
     var card = a && a.closest && a.closest("[data-code], [data-asin]");
     if (!card) return false;
     var code = card.getAttribute("data-code") || "", asin = card.getAttribute("data-asin") || "";
-    var h = $("h3", card), nameEl = $(".pick-name", card);
-    var name = ((nameEl && nameEl.textContent) || (h && h.textContent) || "").trim().slice(0, 80);
+    var h = $(".item-blurb", card) || $("h3", card), nameEl = $(".pick-name", card);
+    var name = ((nameEl && nameEl.textContent) || (h && h.textContent) || "").trim().slice(0, 80) || "気になる品";      // the site's words of the product, or none for one it cannot describe
     var price = card.getAttribute("data-price") || "";
-    if (name && (code || asin)) remember({ id: asin ? "a:" + asin : "r:" + code, code: code, asin: asin, name: name, price: price, t: Date.now() });
+    if (code || asin) remember({ id: asin ? "a:" + asin : "r:" + code, code: code, asin: asin, name: name, price: price, t: Date.now() });
     beacon(counterKey(code, asin));
     return true;
   }
@@ -81,9 +81,9 @@
     it = Object.assign({}, it, { u: safeUrl(it.u), a: safeUrl(it.a), i: safeImg(it.i) });
     var rel = ' rel="sponsored nofollow noopener" target="_blank"';
     var attrs = ' data-code="' + esc(it.code || "") + '"' + (it.asin ? ' data-asin="' + esc(it.asin) + '"' : "") + ' data-price="' + esc(it.p || "") + '"';
-    return '<li class="item"' + attrs + '><a class="item-img" href="' + esc(it.u) + '"' + rel + '><img src="' + esc(it.i) + '" alt="' + esc(it.n) + '" width="300" height="300" loading="lazy"></a>' +
-      '<div class="item-body"><h3><a href="' + esc(it.u) + '"' + rel + ">" + esc(it.n) + '</a></h3><p class="price">' + yen(it.p) + "</p>" + (extra || "") +
-      '<div class="item-btns"><a class="btn" href="' + esc(it.u) + '"' + rel + '>楽天市場で見る</a>' + (it.a ? '<a class="btn" href="' + esc(it.a) + '"' + rel + ' aria-label="Amazonで同じ商品を探す">Amazonで探す</a>' : "") + "</div></div></li>";
+    return '<li class="item"' + attrs + '><a class="item-img" href="' + esc(it.u) + '"' + rel + '><img src="' + esc(it.i) + '" alt="' + esc(it.n || "楽天市場の商品ページ") + '" width="128" height="128" loading="lazy"></a>' +
+      '<div class="item-body">' + (it.n ? '<p class="item-blurb">' + esc(it.n) + "</p>" : "") + '<p class="price">' + yen(it.p) + "</p>" + (extra || "") +
+      '<div class="item-btns"><a class="btn" href="' + esc(it.u) + '"' + rel + '>楽天市場で見る</a>' + "</div></div></li>";
   }
   function amazonCard(x, extra) {                       // an Amazon product kept with ♡: its name and the Amazon link it had (no price, no picture: Amazon's rules)
     var u = safeUrl(x.url), asin = String(x.code).slice(2);
@@ -93,8 +93,8 @@
       (extra || "") + '<div class="item-btns"><a class="btn" href="' + esc(u) + '"' + rel + '>Amazonで見る</a></div></div></li>';
   }
   function plain(x) {                                   // a product that is no longer on the site: its name and the price it had, and a search
-    return '<li class="item gone"><div class="item-body"><h3>' + esc(x.name) + "</h3>" + (x.price ? '<p class="price">' + yen(x.price) + '<small>(保存したときの価格)</small></p>' : "") +
-      '<p class="fav-gone">いまのサイトには載っていません。商品名で探してみてください。</p></div></li>';
+    return '<li class="item gone"><div class="item-body"><p class="item-blurb">' + esc(x.name || "") + "</p>" + (x.price ? '<p class="price">' + yen(x.price) + '<small>(保存したときの価格)</small></p>' : "") +
+      '<p class="fav-gone">いまのサイトには載っていません。</p></div></li>';
   }
   function favorites(root) {
     var db = {};
