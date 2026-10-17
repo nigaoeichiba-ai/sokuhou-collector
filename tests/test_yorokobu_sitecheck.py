@@ -53,7 +53,7 @@ class RealContentSiteCheckTest(unittest.TestCase):
                     checked += 1
             self.assertGreater(checked, 60, checked)
 
-    def test_every_product_card_has_a_rakuten_and_an_amazon_button_of_the_same_weight_and_every_page_with_an_amazon_link_says_so(self):
+    def test_every_product_card_has_the_rakuten_button_only_and_every_page_with_an_amazon_link_says_so(self):
         import re
         cfg = {**json.loads((SITE / "config.json").read_text(encoding="utf-8")), "amazon_tracking_id": "amazonmacs-22"}
         items = with_musts(json.loads((HERE / "fixtures" / "yorokobu" / "items.json").read_text(encoding="utf-8")), content.load())
@@ -73,9 +73,10 @@ class RealContentSiteCheckTest(unittest.TestCase):
                 for card in re.findall(r'<li class="item" .*?</li>', html, flags=re.S):
                     cards += 1
                     self.assertIn("楽天市場で見る", card, rel)
-                    self.assertIn("Amazonで探す", card, rel)                       # the same product, on both shops
-                    self.assertEqual(card.count('class="btn"'), 2, rel)             # the same button style: neither is the "sub" one
+                    self.assertNotIn("amazon.co.jp", card, rel)                      # a Rakuten part carries Rakuten's link only (terms Article 8): Amazon is linked from a part of its own
+                    self.assertEqual(card.count('class="btn"'), 1, rel)
                     self.assertNotIn("btn-sub", card, rel)
+                    self.assertNotRegex(card, r"<h3><a ", rel)                      # the words of a card are not a link: the picture is
                 if "楽天市場で見る" in html:
                     self.assertIn("Amazonの価格はリンク先でご確認ください", html, rel)    # the prices shown are Rakuten's
             self.assertGreater(cards, 20, cards)

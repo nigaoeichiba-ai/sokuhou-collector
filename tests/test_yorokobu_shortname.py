@@ -51,14 +51,13 @@ class NameTest(unittest.TestCase):
         finally:
             shortname._DICT = None
 
-    def test_the_card_keeps_the_shops_full_title_in_the_title_attribute(self):
-        t = "お菓子 おしゃれ 高級 プレゼント 凛菓 ティラミス 詰め合わせ"
-        self.assertEqual(build.orig_title(t), f' title="{t}"')
-        self.assertEqual(build.short(t), "凛菓 ティラミス 詰め合わせ")
+    def test_build_short_is_for_the_sites_own_names_only_a_shops_product_gets_blurb_py(self):
+        self.assertEqual(build.short("お菓子 おしゃれ 高級 プレゼント 凛菓 ティラミス 詰め合わせ"), "凛菓 ティラミス 詰め合わせ")
 
     def test_a_size_or_a_count_of_the_title_is_kept_after_the_product(self):
         self.assertEqual(shortname.short_name("ポーチ シンプル 軽量 レディース 化粧品 コスメ 整理 収納 容量 3L"), "ポーチ レディース 化粧品 コスメ 3L")
 
+    @unittest.skipUnless((ROOT / "data" / "yorokobu_compare.json").exists(), "the Rakuten data is in the private store (privatedata.py), not in the repository")
     def test_over_the_real_data_the_names_are_short_and_use_no_search_words(self):
         data = json.loads((ROOT / "data" / "yorokobu_compare.json").read_text(encoding="utf-8"))
         names = [i["name"] for g in data["groups"].values() for i in g]

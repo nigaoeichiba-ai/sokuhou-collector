@@ -257,11 +257,11 @@ def stat_html(r: dict) -> str:
         for k, v, m in rows) + "</ul>"
 
 
-def _row(cfg: dict, r: dict, n: int, rank: int = 0, total: int = 0, median_eff: int = 0) -> str:
+def _row(cfg: dict, r: dict, n: int, rank: int = 0, total: int = 0, median_eff: int = 0, g: dict | None = None) -> str:
     B = _b()
     href = B.rakuten_link(cfg, B.rakuten.clean_item_url(r["url"]))
-    B.SEEN[r["code"]] = {"n": B.short(r["name"], code=r["code"]), "p": r["price"], "i": r["image"], "u": href,
-                         "a": B.amazon_url(cfg, B.amazon_query(r["name"])) if cfg.get("amazon_tracking_id") else ""}
+    line = B.blurb_line(r, g["label"] if g else None, g["words"] if g else None)
+    B.SEEN[r["code"]] = {"n": line, "p": r["price"], "i": B.thumb(r["image"], 128), "u": href}
     tags = ""
     if r["free_shipping"]:
         tags += '<span class="tagx">送料無料</span>'
@@ -273,11 +273,11 @@ def _row(cfg: dict, r: dict, n: int, rank: int = 0, total: int = 0, median_eff: 
         price += f'<p class="cmp-pt">ポイント約{r["points"]:,}pt<br>実質 {B.yen(r["effective"])}</p>'
     stars = f'<span class="stars">★{r["rating"]:.2f}</span>({r["reviews"]:,}件)' if r["reviews"] else "レビューなし"
     attrs = (f'data-code="{esc(r["code"])}" data-price="{r["effective"]}" data-rating="{r["bayes"]}" data-points="{r["points"]}" data-score="{r["total"]}" data-order="{n}"')
-    fav = B.fav_button(r["code"], B.short(r["name"], code=r["code"]), r["price"], B.rakuten.clean_item_url(r["url"]))
+    fav = B.fav_button(r["code"], line or "気になる品", r["price"], B.rakuten.clean_item_url(r["url"]))
     p, rv, sh, gf = r["parts"]
     return (f'<li class="cmp-row" {attrs}><span class="cmp-no">{n}</span>'
-            f'<div class="imgbox cmp-img"><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"{B.orig_title(r["name"])}><img src="{esc(B.thumb(r["image"], 128))}" alt="{esc(B.short(r["name"], code=r["code"]))}" width="84" height="84" {B.LAZY}></a>{fav}</div>'
-            f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p><h3><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"{B.orig_title(r["name"])}>{esc(B.short(r["name"], code=r["code"]))}</a></h3><p class="cmp-tags">{tags}</p></div>'
+            f'<div class="imgbox cmp-img"><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"><img src="{esc(B.thumb(r["image"], 128))}" alt="{esc(line or "楽天市場の商品ページ")}" width="84" height="84" {B.LAZY}></a>{fav}</div>'
+            f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p>{f'<p class="cmp-blurb">{esc(line)}</p>' if line else ""}<p class="cmp-tags">{tags}</p></div>'
             f'<div class="cmp-num">{price}</div>'
             f'<div class="cmp-num cmp-rev"><p>{stars}</p></div>'
             f'<div class="cmp-score" title="実質価格{p}・レビュー{rv}・送料{sh}・ギフト対応{gf}"><b>{r["total"]}</b><small>総合点</small><i style="width:{r["total"]}%"></i></div>'
@@ -305,7 +305,7 @@ def y_formula_html() -> str:
             'ポイントは、通常の会員に付く分(ストアの上乗せと期間限定をふくむ)を、価格とは別に書いています。価格から引いてはいません。</p></details>')
 
 
-def _yrow(cfg: dict, r: dict, n: int) -> str:
+def _yrow(cfg: dict, r: dict, n: int, g: dict | None = None) -> str:
     B = _b()
     href = r["url"]                                                 # the API already made it the affiliate link; used as it is
     facts = [f'<b class="cmp-price">{B.yen(r["price"])}</b>', SHIP_WORD.get(r["ship"], "送料はストアの設定によります")]
@@ -314,9 +314,10 @@ def _yrow(cfg: dict, r: dict, n: int) -> str:
         facts.append(f'ポイント約{r["points"]:,}pt')
     p, rv, sh = r["parts"]
     img = y_image(r)
-    pic = (f'<a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"{B.orig_title(r["name"])}><img src="{esc(img)}" alt="{esc(B.short(r["name"], code=r["code"]))}" width="76" height="76" {B.LAZY}></a>' if img else "")
+    line = B.blurb_line(r, g["label"] if g else None, g["words"] if g else None)
+    pic = (f'<a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"><img src="{esc(img)}" alt="{esc(line or "Yahoo!ショッピングの商品ページ")}" width="76" height="76" {B.LAZY}></a>' if img else "")
     return (f'<li class="yh-row"><span class="cmp-no">{n}</span><div class="yh-img">{pic}</div>'
-            f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p><h3><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"{B.orig_title(r["name"])}>{esc(B.short(r["name"], code=r["code"]))}</a></h3>'
+            f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p>{f'<p class="cmp-blurb">{esc(line)}</p>' if line else ""}'
             f'<p class="yh-facts">{" ・ ".join(f'<span class="yh-f">{f}</span>' for f in facts)}</p></div>'
             f'<div class="cmp-score" title="価格{p}・レビュー{rv}・送料{sh}"><b>{r["total"]}</b><small>点数</small><i style="width:{r["total"]}%"></i></div>'
             f'<div class="cmp-go"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">Yahoo!ショッピングで見る{B.vc_pixel(cfg)}</a></div></li>')
@@ -327,7 +328,7 @@ def y_section(cfg: dict, g: dict) -> str:
     y = g.get("yahoo")
     if not y:
         return ""
-    rows = "".join(_yrow(cfg, r, i) for i, r in enumerate(y["rows"], 1))
+    rows = "".join(_yrow(cfg, r, i, g) for i, r in enumerate(y["rows"], 1))
     return (f'<section class="block yh" id="yahoo"><div class="sec-head"><h2>Yahoo!ショッピングの商品</h2>'
             f'<p class="sec-lead">{esc(g["label"])}を、Yahoo!ショッピングの{y["shops"]}店・{y["n"]}点で並べています。楽天市場の表とは混ぜていません。</p></div>'
             f'<ol class="yh-list">{rows}</ol>'
@@ -341,7 +342,7 @@ def group_page(d: dict, cfg: dict, preview: bool, g: dict) -> str:
     cv = d["compare"]
     by_price = places(g["rows"])
     med = int(statistics.median(r["effective"] for r in g["rows"]))
-    rows = "".join(_row(cfg, r, i, by_price[r["code"]], len(g["rows"]), med) for i, r in enumerate(g["rows"], 1))
+    rows = "".join(_row(cfg, r, i, by_price[r["code"]], len(g["rows"]), med, g) for i, r in enumerate(g["rows"], 1))
     sort = "".join(f'<button type="button" class="cmp-sort" data-sort="{k}" aria-pressed="{"true" if k == "score" else "false"}">{esc(t)}</button>' for k, t in SORTS)
     lead = f"{g['label']}を楽天市場の{g['shops']}店・{g['n']}点で価格・ポイント・送料・レビューを並べて比べます。総合点の高い順に並べています。"
     az = ""
@@ -369,8 +370,8 @@ def group_page(d: dict, cfg: dict, preview: bool, g: dict) -> str:
 {B.freshness({**d, "fetched_label": cv["fetched_label"]})}
 {formula_html()}
 <p class="cmp-note">この表は楽天市場の商品だけです。ほかのモールの商品やほかのショップの価格は入っていません。「最安」とは言えません。</p>
-{az}
 </section>
+{f'<section class="block cmp-other" id="other-malls">{az}</section>' if az else ""}
 {y_section(cfg, g)}
 <section class="block"><div class="sec-head"><h2>ほかの種類を比べる</h2></div><ul class="plain cols2 chips">{others}</ul></section>
 <script src="/assets/compare.js" defer></script>

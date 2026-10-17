@@ -91,7 +91,7 @@ const wait = (ms) => new Promise(r => setTimeout(r, ms));
     for (const t of ts) {
       form.elements.t.value = t; form.querySelector('button[type="submit"]').click(); await wait(200);
       const card = d.querySelector('.gacha-card');
-      if (card) { shown = {title: card.querySelector('h2').textContent, href: card.querySelector('a.btn').href, rel: card.querySelector('a.btn').rel, price: card.querySelector('.price').textContent}; break; }
+      if (card) { shown = {title: (card.querySelector('.gacha-name') || {}).textContent || '', href: card.querySelector('a.btn').href, rel: card.querySelector('a.btn').rel, price: card.querySelector('.price').textContent}; break; }
     }
     out.card = shown;
     out.msg = d.querySelector('.gacha-msg').textContent;

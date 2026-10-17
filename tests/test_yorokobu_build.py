@@ -90,9 +90,9 @@ class BuildTest(unittest.TestCase):
 
     def test_products_for_the_wrong_person_are_not_shown(self):
         mother = self.read("gift/birthday-mother/index.html")
-        self.assertIn("テスト商品b1", mother)
-        self.assertNotIn("メンズ", mother.split('<ul class="items grid-all">')[1])   # a men's wallet never appears on a mother's page
-        self.assertNotIn("本革 メンズ 長財布", mother)
+        grid = mother.split('<ul class="items grid-all">')[1]
+        self.assertIn('data-code="b1"', mother)                                    # (a card shows the site's words, not the shop's title: the product is told by its code)
+        self.assertNotIn('data-code="bm"', grid)                                   # a men's wallet never appears on a mother's page
 
     def test_own_shop_appears_only_as_a_plain_labelled_card_where_it_fits(self):
         bf = self.read("gift/birthday-boyfriend/index.html")

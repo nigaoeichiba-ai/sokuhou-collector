@@ -22,7 +22,7 @@ sys.path.insert(0, str(ROOT))
 if __name__ == "__main__":
     sys.modules.setdefault("sites.yorokobu.build", sys.modules[__name__])   # tools.py and dataroom.py import this module lazily: they must get THIS one (its nav flags), not a second copy
 
-from sites.yorokobu import shortname, content as ct  # noqa: E402
+from sites.yorokobu import blurb as _blurb, shortname, content as ct  # noqa: E402
 from sites.yorokobu import dataroom  # noqa: E402
 from sites.yorokobu import picksite  # noqa: E402
 from sites.yorokobu import askpages  # noqa: E402
@@ -47,7 +47,7 @@ from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs,
                              missing_config, standard_files, write_pages)
 
 SOURCE_HTML = ('商品の情報は楽天ウェブサービスを利用して取得しています。 '
-               '<a href="https://webservice.rakuten.co.jp/" target="_blank">Supported by Rakuten Developers</a>')  # the credit HTML is prescribed: use as is
+               '<a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>')  # the credit HTML is prescribed: use as is
 NAV = [("イベントから", "/occasion/", "/occasion/"), ("相手から", "/for/", "/for/"), ("季節の贈り物", "/#season", "/season-none/")]
 # the logo mark: a gift box in the site's pink (the bird mascots were taken out on 2026-10-09: "as long as the mascot is there, the childishness stays")
 LOGO_MARK = ('<svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="36" height="36" rx="9" fill="#e8503f"/>'
@@ -121,9 +121,9 @@ def short(name: str, limit: int = NAME_LIMIT, code: str | None = None, keep: lis
     return shortname.short_name(strip_occasions(name), code=code, keep=keep)
 
 
-def orig_title(name: str) -> str:
-    """The shop's own title, kept on the card as the title attribute of its links (the programmes' terms allow product information to be altered only as the company determines)."""
-    return f' title="{esc(" ".join(name.split()))}"'
+def blurb_line(it: dict, kind: str | None = None, must: list[str] | None = None) -> str:
+    """The words a card shows instead of the shop's product name (blurb.py): the site's own one or two words of what the product is; '' when it cannot say."""
+    return _blurb.blurb(strip_occasions(it["name"]), it.get("code"), kind, must)
 
 
 def amazon_url(cfg: dict, query: str, low: int | None = None, high: int | None = None) -> str:
@@ -394,22 +394,21 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
     note = '<p class="own">運営者のショップ</p>' if own else ""
     if it.get("note"):  # the editors' one-line reason for picking this product
         note += f'<p class="pick-note"><b>{it.get("note_label") or "選んだ理由"}</b>{esc(it["note"])}</p>'
+    line = short(name) if own else blurb_line(it, must=must)         # the operator's own product keeps its name; a shop's product gets the site's words
     if not own:
-        SEEN[it["code"]] = {"n": short(name, code=it["code"]), "p": it["price"], "i": it["image"], "u": href,
-                            "a": amazon_url(cfg, amazon_query(name)) if cfg.get("amazon_tracking_id") else ""}
+        SEEN[it["code"]] = {"n": line, "p": it["price"], "i": thumb(it["image"], 128), "u": href}
     label = "ショップで見る" if own else "楽天市場で見る"
-    buttons = f'<a class="btn" href="{esc(href)}" rel="{rel}" target="_blank">{label}</a>'
-    if not own and cfg.get("amazon_tracking_id"):          # the same product, looked for on Amazon: one button each, the same size and colour
-        buttons += (f'<a class="btn" href="{esc(amazon_url(cfg, amazon_query(name)))}" rel="sponsored nofollow noopener" target="_blank" '
-                    f'aria-label="Amazonで同じ商品を探す">Amazonで探す</a>')
+    buttons = f'<a class="btn" href="{esc(href)}" rel="{rel}" target="_blank">{label}</a>'                  # a Rakuten part has Rakuten's link only (terms Article 8): other malls are linked from their own parts
     badge = f'<span class="rank r{rank}">{rank}</span>' if rank and rank <= 3 and not own else ""
     attrs = (f'data-code="{esc(it["code"])}" data-price="{it["price"]}" data-reviews="{it["reviews"]}" data-rating="{it["rating"]}" '
              f'data-ship="{1 if it["free_shipping"] else 0}" data-gift="{1 if it.get("gift") else 0}" data-tier="{esc(tier)}" data-type="{esc(kind)}" '
              f'data-rank="{rank or 0}"')
-    fav = fav_button(it["code"], short(name, code=it["code"]), it["price"], url)
-    return (f'<li class="item" {attrs}>{badge}{fav}<a class="item-img" href="{esc(href)}" rel="{rel}" target="_blank"{orig_title(name)}>'
-            f'<img src="{esc(it["image"])}" alt="{esc(short(name, code=it["code"], keep=must))}" width="300" height="300" {EAGER if eager else LAZY}></a>'
-            f'<div class="item-body"><h3><a href="{esc(href)}" rel="{rel}" target="_blank"{orig_title(name)}>{esc(short(name, code=it["code"], keep=must))}</a></h3>'
+    fav = fav_button(it["code"], line or "気になる品", it["price"], url)
+    words = (f'<h3>{esc(line)}</h3>' if own else f'<p class="item-blurb">{esc(line)}</p>') if line else ""
+    img = thumb(it["image"], 128)                                                                     # the picture as the API gives it (128px), shown by CSS at 128px: never enlarged
+    return (f'<li class="item" {attrs}>{badge}{fav}<a class="item-img" href="{esc(href)}" rel="{rel}" target="_blank">'
+            f'<img src="{esc(img)}" alt="{esc(line or "楽天市場の商品ページ")}" width="128" height="128" {EAGER if eager else LAZY}></a>'
+            f'<div class="item-body">{words}'
             f'<p class="price">{yen(it["price"])}</p><p class="meta">{"".join(bits)}</p>{note}'
             f'<div class="item-btns">{buttons}</div></div></li>')
 
@@ -1008,8 +1007,6 @@ def likes_section(d: dict, cfg: dict, r: dict) -> str:
         cards = f'<ul class="items mini">{"".join(item_card(cfg, it, must=row.get("must")) for it in items)}</ul>' if items else ""
         q = row["queries"][0]
         btns = f'<a class="btn" href="{esc(search_link(cfg, q))}" rel="sponsored nofollow noopener" target="_blank">楽天市場で「{esc(q)}」を探す</a>'
-        if cfg.get("amazon_tracking_id"):
-            btns += f'<a class="btn" href="{esc(amazon_url(cfg, q))}" rel="sponsored nofollow noopener" target="_blank">Amazonで探す</a>'
         out += (f'<li class="like-row" id="like-{i + 1}"><div class="like-head"><span class="like-n">{i + 1}</span><div><h3>{esc(row["title"])}</h3><p>{esc(text)}</p></div></div>'
                 f'{cards}<p class="more">{btns}</p></li>')
     return f'<ol class="like-rows">{out}</ol>'
@@ -1483,7 +1480,7 @@ def ranking_hub_page(d: dict, cfg: dict, preview: bool) -> str:
                 continue
             first = sg["items"][0]
             out += (f'<li><a class="tile wide" href="/ranking/{slug}/"><span><b>{esc(sg["label"])}</b>'
-                    f'<small>{first["rank"]}位: {esc(short(first.get("display") or first["name"], 24))}</small></span></a></li>')
+                    f'<small>{first["rank"]}位{(": " + esc(blurb_line(first))) if blurb_line(first) else ""}</small></span></a></li>')
         return out
     genre_tiles, people_tiles = tiles_of("genre"), tiles_of("people")
     genre_block = (f'<section style="margin-top:34px"><h2><span class="scribble">ジャンルから選ぶ</span></h2>'
@@ -1541,7 +1538,7 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 {facts}
 {blocks}
 <section style="margin-top:40px"><h2><span class="scribble">ランキング(上位)</span></h2>
-<p class="sec-lead">順位は楽天市場のランキングの順位です(上位{sg["depth"]}位のなかから商品名で贈り物向きと分かるものだけを載せています。ふだんの買い物の商品などは除いているため、順位に欠けがあります)。</p>
+<p class="sec-lead">順位は楽天市場のランキングの順位です(上位{sg["depth"]}位のなかから、贈り物向きと分かるものだけを載せています。ふだんの買い物の商品などは除いているため、順位に欠けがあります)。</p>
 {ranking_grid(cfg, [(it, f"現在{it['rank']}位", "順位") for it in sg["items"]])}</section>
 {amazon_more(cfg, sg["label"] + (" プレゼント" if sg["kind"] == "people" else " ギフト"), sg["label"] + ("への" if sg["kind"] == "people" else "の") + "贈り物をAmazonで探す")}
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの世代・性別</span></h2><ul class="plain cols2 chips">{others}</ul></section>' if others else ""}
@@ -2029,7 +2026,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     pages.update(legal_pages(
         SITE, cfg, preview,
         purpose="イベントと贈る相手からプレゼントの選び方と商品の例を探しやすく整理して、贈り物選びに役立てていただくこと。",
-        sources_html='商品の名前・価格・画像・レビュー・販売ページのリンクは、<a href="https://webservice.rakuten.co.jp/" rel="noopener" target="_blank">楽天ウェブサービス</a>(楽天市場)の情報を使っています。選び方などの文章は当サイトの編集方針にもとづいて作成しています。',
+        sources_html='商品の価格・画像・レビュー・販売ページのリンクは、<a href="https://webservice.rakuten.co.jp/" rel="noopener" target="_blank">楽天ウェブサービス</a>(楽天市場)の情報を使っています。選び方などの文章は当サイトの編集方針にもとづいて作成しています。',
         update_text="商品の価格・在庫は毎日、楽天市場の情報にあわせて更新します。各ページに取得した日付を表示します。",
         disclaimer_html=("<p>商品の価格・在庫・送料・レビューは、取得した時点の情報で、販売ページと異なる場合があります。購入前に必ず、販売ページでご確認ください。"
                          "当サイトは商品の品質や、贈った相手が喜ぶことを保証するものではありません。</p>"
