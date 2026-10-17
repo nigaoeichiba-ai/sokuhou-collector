@@ -115,6 +115,16 @@ class TheGatesStay(unittest.TestCase):
         self.assertIn("go=false", gate[gate.index('LIVE_ONLY" = "true"'):])
 
 
+class OtherSessionsSteps(unittest.TestCase):
+    def test_the_yorokobu_private_product_data_step_is_still_there_after_the_tests_and_before_the_upload(self):
+        # lost once on 2026-10-18 when a copy of this file was put back over a newer one: a step another session adds must survive a rewrite of the workflow
+        i = index_of("Private product data for api/items.php")
+        self.assertGreater(i, index_of("Unit tests result"))
+        self.assertLess(i, index_of("Upload and switch"))
+        self.assertIn("matrix.site == 'yorokobu'", block("Private product data for api/items.php"))
+        self.assertIn("steps.gate.outputs.really == 'true'", block("Private product data for api/items.php"))
+
+
 class RealRunOrCheck(unittest.TestCase):
     def test_one_flag_decides_whether_the_server_is_changed_and_every_changing_step_reads_it(self):
         gate = block("Gate")

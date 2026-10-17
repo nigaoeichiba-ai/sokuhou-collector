@@ -353,6 +353,13 @@ jobs:
         if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou' && steps.gate.outputs.really == 'true'
         continue-on-error: true
         run: python -m sokuhou.indexnow snapshot --base ${{ matrix.url }} --out prev_sitemap.xml
+      - name: Private product data for api/items.php (the favourites, shared lists, gacha and answer pages ask it for a few products at a time; the files are never public, they stay in the server's private folder)
+        if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu' && steps.gate.outputs.really == 'true'
+        env:
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sites.yorokobu.privatedata push yorokobu_items_db.json yorokobu_gacha_db.json yorokobu_rec_db.json
       - name: Upload and switch
         id: upload
         if: steps.gate.outputs.go == 'true' && steps.gate.outputs.really == 'true'
