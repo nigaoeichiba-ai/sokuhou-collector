@@ -782,6 +782,50 @@ def check_blocks(blocks: list[Block], path: str, site: str | None = None, min_le
     return hits
 
 
+_CARD_OPEN = re.compile(r"<(li|article|div|table)\b([^>]*)>", re.I)
+_CARD_CLASSES = {"item", "sale-item"}
+
+
+def strip_cards(raw: str) -> str:
+    """Take the shops' product cards (li.item, .sale-item) and tables out of a page: a product title, a shop title, a price or a shop's description is somebody else's data (the Rakuten and Yahoo!
+    terms: not kept in our public repository).  They are not read for style, not sent to the judge or the editor, and never stored."""
+    out, i = [], 0
+    while True:
+        m = _CARD_OPEN.search(raw, i)
+        if not m:
+            out.append(raw[i:])
+            return "".join(out)
+        name = m.group(1).lower()
+        cls = re.search(r'class="([^"]*)"', m.group(2))
+        card = name == "table" or bool(cls and _CARD_CLASSES & set(cls.group(1).split()))
+        if not card:
+            out.append(raw[i:m.end()])
+            i = m.end()
+            continue
+        depth, j = 1, m.end()
+        tag = re.compile(rf"<(/?){name}\b[^>]*>", re.I)
+        end = None
+        while depth:
+            t = tag.search(raw, j)
+            if not t:
+                break
+            depth += -1 if t.group(1) else 1
+            j = t.end()
+            if depth == 0:
+                end = j
+        if end is None:                                          # unbalanced: leave it as it is rather than cut the page
+            out.append(raw[i:m.end()])
+            i = m.end()
+            continue
+        out.append(raw[i:m.start()])
+        i = end
+
+
+def for_reading(raw: str, site: str | None) -> str:
+    """The page as it is read for style, judged and edited: the published text, without the shops' data (yorokobu has product cards and product tables)."""
+    return strip_cards(raw) if site == "yorokobu" else raw
+
+
 _published_rw: dict = {}
 
 
@@ -813,7 +857,7 @@ def check_file(path: Path, site: str | None, rel: str | None = None, **kw) -> li
     except (OSError, UnicodeDecodeError):
         return []
     if ext in (".html", ".htm"):
-        blocks = blocks_from_html(published_text(raw, site))
+        blocks = blocks_from_html(for_reading(published_text(raw, site), site))
     elif ext == ".json":
         blocks = blocks_from_json(raw)
     elif ext in (".md", ".txt"):
