@@ -103,17 +103,6 @@ def _first_image(item: dict) -> str:
     return ""
 
 
-def page_url(item_url: str) -> str:
-    """The Ichiba page of a product, for the places that need the page itself (the ♡ keeps it, the spec's link formula takes it as `pc`).  The API's `itemUrl` is sometimes already a redirect
-    (hb.afl.rakuten.co.jp/hgc/<ID>/?pc=<the page>&...): then the page is its `pc` value, cut out and not changed.  Any other URL is returned as it is."""
-    parts = urllib.parse.urlsplit(item_url)
-    if parts.netloc == "hb.afl.rakuten.co.jp":
-        pc = urllib.parse.parse_qs(parts.query).get("pc", [""])[0]
-        if pc.startswith("https://"):
-            return pc
-    return item_url
-
-
 def _num(v, default=0.0) -> float:
     try:
         return float(v)
@@ -151,7 +140,7 @@ def normalize(item: dict) -> dict | None:
     """The few fields the site needs; None when the item cannot be shown (no price, link or image)."""
     item = item.get("Item", item)  # formatVersion 1 wraps each item
     name = clean_title((item.get("itemName") or "").strip())
-    url = item.get("itemUrl") or ""                                 # as the API gave it
+    url = item.get("itemUrl") or ""                                 # as the API gave it (asked without our affiliate ID, it is the product's own page); never changed
     price = int(_num(item.get("itemPrice")))
     image = _first_image(item)
     if not (name and url.startswith("https://") and price > 0 and image):

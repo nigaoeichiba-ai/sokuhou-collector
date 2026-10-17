@@ -84,15 +84,23 @@ class UrlAndTitleTest(unittest.TestCase):
         n = rakuten.normalize({**raw_item("a1", 2000), "itemUrl": url, "affiliateUrl": self.WRAPPED})
         self.assertEqual(n["url"], url)                              # not cleaned of its tracking
         self.assertNotIn("aff", n)
+        self.assertFalse(hasattr(rakuten, "clean_item_url") or hasattr(rakuten, "sized_image") or hasattr(rakuten, "page_url"))
 
     def test_promotions_are_dropped_from_titles(self):
         raw = "クーポン有10/4/20時〜10/9/1:59 名入れ ギフト 財布 ベルト 【送料無料】 ≪540円で世界に一つ≫ 刻印"
         self.assertEqual(rakuten.clean_title(raw), "名入れ ギフト 財布 ベルト 刻印")
         self.assertEqual(rakuten.clean_title("【ポイント10倍】短い"), "【ポイント10倍】短い")  # nothing meaningful left: keep the original
 
-    def test_page_url_cuts_the_page_out_of_a_redirect_and_changes_nothing_else(self):
-        self.assertEqual(rakuten.page_url(self.WRAPPED), "https://item.rakuten.co.jp/akuse-one/sai109-a/")
-        self.assertEqual(rakuten.page_url("https://item.rakuten.co.jp/s/x/?rafcid=wsc_i_ra_0123"), "https://item.rakuten.co.jp/s/x/?rafcid=wsc_i_ra_0123")
+    def test_the_link_is_the_specs_formula_over_the_item_url_as_given_with_nothing_after_the_id(self):
+        from sites.yorokobu import build
+        cfg = {"rakuten_affiliate_id": "OUR.ID", "rakuten_tracking_id": "trk"}
+        page = "https://item.rakuten.co.jp/akuse-one/sai109-a/?rafcid=wsc_i_ra_0123"
+        it = rakuten.normalize({**raw_item("a1", 2000), "itemUrl": page})
+        card = build.item_card(cfg, it)
+        self.assertIn('<a href="https://hb.afl.rakuten.co.jp/hgc/OUR.ID/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fakuse-one%2Fsai109-a%2F%3Frafcid%3Dwsc_i_ra_0123" target="_blank" rel="nofollow sponsored noopener">', card)
+        self.assertNotIn("&amp;m=", card)                                      # no m=: there is no mobile URL to give
+        self.assertNotIn("trk", card)
+        self.assertEqual(build.search_link(cfg, "ギフト"), "https://hb.afl.rakuten.co.jp/hgc/OUR.ID/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2582%25AE%25E3%2583%2595%25E3%2583%2588%2F")
 
 
 class ClientTest(unittest.TestCase):

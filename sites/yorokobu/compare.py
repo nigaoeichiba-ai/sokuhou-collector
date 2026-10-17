@@ -188,8 +188,14 @@ def shaddy_url(cfg: dict) -> str:
     return f"https://px.a8.net/svt/ejp?a8mat={m}" if m else ""
 
 
-def shaddy_a(cfg: dict, text: str = "シャディギフトモール") -> str:
-    return f'<a href="{esc(shaddy_url(cfg))}" target="_blank" rel="nofollow sponsored noopener">{esc(text)}</a>'
+A8_TEXT = "【シャディ公式】内祝や、お返しも！ギフト専門店【シャディギフトモール】"          # the words of the code A8 gave: never shortened
+
+
+def shaddy_a(cfg: dict) -> str:
+    """A8's text ad exactly as A8 gave it: the link (href and rel="nofollow" only) with its own words, and the 1x1 counter image right after it."""
+    m = cfg["shaddy_a8mat"]
+    return (f'<span class="a8-link"><a href="{esc(shaddy_url(cfg))}" rel="nofollow">{A8_TEXT}</a>'
+            f'<img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat={esc(m)}" alt=""></span>')
 
 
 def path(slug: str | None = None) -> str:
@@ -273,7 +279,7 @@ def _row(cfg: dict, r: dict, n: int, rank: int = 0, total: int = 0, median_eff: 
         price += f'<p class="cmp-pt">ポイント約{r["points"]:,}pt<br>実質 {B.yen(r["effective"])}</p>'
     stars = f'<span class="stars">★{r["rating"]:.2f}</span>({r["reviews"]:,}件)' if r["reviews"] else "レビューなし"
     attrs = (f'data-code="{esc(r["code"])}" data-price="{r["effective"]}" data-rating="{r["bayes"]}" data-points="{r["points"]}" data-score="{r["total"]}" data-order="{n}"')
-    fav = B.fav_button(r["code"], line or "気になる品", r["price"], B.rakuten.page_url(r["url"]))
+    fav = B.fav_button(r["code"], line or "気になる品", r["price"], r["url"])
     p, rv, sh, gf = r["parts"]
     return (f'<li class="cmp-row" {attrs}><span class="cmp-no">{n}</span>'
             f'<div class="imgbox cmp-img"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener"><img src="{esc(r["image"])}" alt="{esc(line or "楽天市場の商品ページ")}"></a>{fav}</div>'
@@ -351,7 +357,7 @@ def group_page(d: dict, cfg: dict, preview: bool, g: dict) -> str:
               f'同じ種類は<a href="{esc(B.amazon_url(cfg, g["label"] + " ギフト"))}" target="_blank" rel="nofollow sponsored noopener">Amazonで{esc(g["label"])}を探す</a>から確かめられます。'
               f'Amazonの商品は、価格のない<a href="{amazonrank.PATH}">編集部の採点ページ</a>に分けています。</p>')
     if "shaddy" in g.get("mall", []) and shaddy_url(cfg):
-        az += f'<p class="cmp-az">ギフト専門店の{shaddy_a(cfg)}は、この表に入っていません。内祝いやお返しの品は、こちらからも探せます。</p>'
+        az += f'<p class="cmp-az">{shaddy_a(cfg)} この表に入っていません。</p>'
     if B.yahoo_url(cfg, g["label"]):
         if g.get("yahoo"):
             az += f'<p class="cmp-az">Yahoo!ショッピングの商品は、この表には混ぜず、<a href="#yahoo">下の別の表</a>に載せています。ほかの商品は{B.yahoo_btn(cfg, g["label"] + " ギフト", "Yahoo!ショッピングで" + g["label"] + "を探す", "")}から探せます。</p>'
@@ -391,7 +397,7 @@ def hub_page(d: dict, cfg: dict, preview: bool) -> str:
     if B.yahoo_url(cfg, "ギフト"):
         mall_items += f'<li>{B.yahoo_btn(cfg, "ギフト", "Yahoo!ショッピング", "")} ' + ("種類ごとのページに、別の表で載せています。" if any(g.get("yahoo") for g in cv["groups"]) else "価格はこの比較に入っていません。同じ種類の商品を、リンク先で探せます。") + '</li>'
     if shaddy_url(cfg):
-        mall_items += f'<li>{shaddy_a(cfg)} 内祝いやお返しの品も探せるギフト専門店です。価格はこの比較に入っていません。</li>'
+        mall_items += f'<li>{shaddy_a(cfg)} 価格はこの比較に入っていません。</li>'
     malls = f'<section class="block"><div class="sec-head"><h2>ほかのモールで探す</h2></div><ul class="plain">{mall_items}</ul></section>' if mall_items else ""
     body = f"""{B.head_band("sky", "", "商品比較", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("商品比較", None)])}</div>
