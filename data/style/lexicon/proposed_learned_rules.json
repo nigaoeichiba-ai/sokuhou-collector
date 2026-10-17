@@ -1,0 +1,11 @@
+{
+ "_note": "natural-ja-tool への規則の候補(learned_rules.json の形式)。patterns は 2026-10-17 の yorokobu の content(articles・guides・themes の題と節の見出し 499件)で当てて数えた。見出し(kind=heading)にだけ当てる前提。本文には当てない。昇格するかは natural-ja-tool が判断。",
+ "rules": [
+  {"id": "heading_negation_frame", "pattern": "(?:押しつけ|押し付け|乱さ|邪魔し|困らせ|奪わ|気を遣わせ|気をつかわせ|重くなら|重く見せ|重くし)(?:ない|ず)", "why": "見出しが『〜しない/〜せず』の否定形。実物(楽天・百貨店の約60見出し)に無い。品名・相手・場面を入れた『〜の選び方』『〜に贈る〇〇』に", "scope": "heading", "level": "mid", "hits_in_yorokobu_headings": 18, "false_positive_note": "18件すべてAIの否定形の題。『〜ない』一般には当てない(『使う場所を限定しない』のように普通の助言の見出しもあるため)"},
+  {"id": "heading_mood_subtitle", "pattern": "(?:静かに|そっと|涼しく)(?:届ける|祝う|支える|整える|贈る)|(?:基本作法|作法|心得|心配り)$", "why": "見出し・副題の雰囲気語。副題は中身(選び方・相場・時期)で", "scope": "heading", "level": "mid", "hits_in_yorokobu_headings": 8, "false_positive_note": "8件すべて該当。『作法』が本物のマナー解説の語として入る見出しは例外になりうる"},
+  {"id": "heading_action_verb", "pattern": "^.{2,16}(?:を整える|を整えて|に置いてみる|を見る|を弱める|を決める)$", "why": "節の見出しが動作の言い方。中身(名詞・事実)にすると、見出しだけで分かる", "scope": "heading", "level": "low", "hits_in_yorokobu_headings": 26, "false_positive_note": "『最初に枠を決める』『渡す役を決める』など、動作でも通じるものを含む。1つずつ拾うより、ページ内に3件以上あるときだけ報告する(密度の規則)"},
+  {"id": "heading_negation_density", "pattern": null, "why": "密度の規則(パターンでなく集計): 1サイトの見出し・題のうち『〜ない/〜せず』で終わるものが10%を超えたら報告", "scope": "site", "level": "mid", "measured": "yorokobu 64/499 = 13%(記事題だけだと 18/44 = 41%)。楽天の約60見出しは目視0"},
+  {"id": "list_same_tail", "pattern": null, "why": "密度の規則: 同じ種類のカード・箇条書きが5項目以上あり、その説明文の末尾4字が80%以上同じなら報告", "scope": "list", "level": "low", "measured": "minna『タッチから選ぶ』22項目中21項目が『〜のタッチ。』、atomou『確かめておきたいこと』3項目が全部『〜で確かめる』"},
+  {"id": "compound_theme_coinage", "pattern": "^(?:帰省軽やか|義実家控えめ|持ち寄り後|少額上手|日時合わせ|夜型の朝|ごめんね軽く|冷蔵庫いらず|立ち仕事後)$", "why": "テーマ名の造語。実物の呼び名(〜の手土産・〜への贈り物)に。新しい造語は、検索か実物でそのまま使われているか確かめてから", "scope": "label", "level": "mid", "hits_in_yorokobu_headings": 9, "note": "固定の語の一覧なので、新しい造語には効かない。判定(Codex)の見本として examples に入れる方が汎用的"}
+ ]
+}

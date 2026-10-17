@@ -1,0 +1,44 @@
+{
+ "_meta": {
+  "site": "minna-no-illust.com",
+  "purpose": "フリーのイラスト素材サイトの言葉選びの根拠。素材サイト4社が実際に使っている語と、利用条件の書き方。",
+  "how_to_use": "言い直し案は候補を3つ以上出し、この表と sources.json で選ぶ。読者はWeb・イラスト・出版のプロと個人。",
+  "copyright": "他社の文は保存していない。語・使い方・出典だけ。",
+  "confirmed": "2026-10-17",
+  "method_note": "いらすとや・イラストAC・ぱくたそ・ちびむすドリルの15ページ(読めた14・一部1)。作品ページは各サイト1作品のみ。プロ向け有料素材サイトは見ていない。いらすとや・ちびむすドリルの robots.txt は内容が返らず未確認。"
+ },
+ "terms": [
+  {"term": "無料で使えます / 無料でダウンロード", "role": "素材が無料。会員の話とは分ける", "evidence": ["minna-acillust-about", "minna-irasutoya-terms"], "strength": "medium"},
+  {"term": "商用利用可能(利用規約の範囲)", "role": "許可と範囲を一言で", "evidence": ["minna-acillust-top"], "strength": "medium"},
+  {"term": "個人、法人、商用、非商用問わず", "role": "用途を並べて広く認める", "evidence": ["minna-irasutoya-terms"], "strength": "medium"},
+  {"term": "商用利用可能ですが商品化は不可", "role": "許可と限界を同じ文に", "evidence": ["minna-pakutaso-commercial"], "strength": "medium"},
+  {"term": "クレジット表記不要", "role": "体言止めで短く", "evidence": ["minna-acillust-top"], "strength": "medium"},
+  {"term": "必須ではありません(推奨)", "role": "否定から入り、推奨で結ぶ", "evidence": ["minna-pakutaso-userpolicy"], "strength": "weak"},
+  {"term": "巻末にクレジットを掲載してください", "role": "出版向けの条件の書き方", "evidence": ["minna-pakutaso-faq"], "strength": "weak"},
+  {"term": "商品化", "role": "素材が主体の販売物。『改変して使う』と別に言う", "evidence": ["minna-pakutaso-userpolicy", "minna-acillust-terms"], "strength": "medium"},
+  {"term": "二次配布 / 再配布", "role": "素材そのものを他人が取れる形にすること", "evidence": ["minna-pakutaso-userpolicy", "minna-acillust-terms"], "strength": "medium"},
+  {"term": "登録不要", "role": "ダウンロードの前提を短く", "evidence": ["minna-pakutaso-top"], "strength": "medium"},
+  {"term": "季節の祝日・行事 / 年中行事", "role": "カテゴリ名", "evidence": ["minna-irasutoya-top", "minna-acillust-top"], "strength": "weak"},
+  {"term": "〇〇のイラスト / 〇〇のキャラクター", "role": "作品タイトル。人物は(男性)を括弧で", "evidence": ["minna-irasutoya-work"], "strength": "weak"},
+  {"term": "〜のイラストです。", "role": "説明は1文・約30字(1ページの観察)", "evidence": ["minna-irasutoya-work"], "strength": "weak"},
+  {"term": "〜について", "role": "規約の見出しをそろえる", "evidence": ["minna-happylilac-userpolicy"], "strength": "weak"},
+  {"term": "〜できます / 〜できません", "role": "規約の可否の言い切り", "evidence": ["minna-pakutaso-userpolicy", "minna-acillust-terms"], "strength": "medium"}
+ ],
+ "faq_and_terms_forms": [
+  "FAQ: Q → 可否を一言 → 条件 → 規約へのリンク(ぱくたそ)",
+  "規約: 見出し(名詞)→ 一言の要点 → 可否 → ただし書き。許可から入り、限界は『ただし』で後ろ",
+  "線の引き方は例で示す: 表紙・ジャケットは主体が別なので可、素材が主体の商品(ケース・カレンダー・写真集)は不可(ぱくたそ)",
+  "いらすとやの規約は短い名詞の見出し+箇条書き。禁止は『お断りします』とやわらげる。イラストACは『ものとします』『禁止します』の契約調"
+ ],
+ "season_event_nouns_observed": {
+  "irasutoya": ["お正月", "節分", "ひな祭り", "お花見", "こどもの日", "七夕", "お月見", "ハロウィン", "クリスマス"],
+  "ac_illust": ["年賀状", "お正月", "謹賀新年", "干支", "節分", "バレンタインデー", "雛祭り", "卒業式", "入学式", "運動会", "七夕", "花火", "夏祭り", "ハロウィン", "クリスマス"],
+  "note": "『雛祭り』『ひな祭り』の表記は実物でも割れている。サイト内で統一する"
+ },
+ "site_vs_real_notes_2026-10-17": [
+  "トップの文は実物に近い: 『ずっと無料・商用OK・登録不要』『ダウンロードしてすぐに使えます』『クレジット表示も点数制限もありません』は、イラストAC・ぱくたその言い方と同じ型。",
+  "『タッチから選ぶ』の22項目の説明のうち21項目が『〜のタッチ。』で終わる。実物の素材サイトは、カテゴリ説明を毎回同じ名詞で閉じない。語尾を替えるか、説明を『何が描かれるか』に絞る。",
+  "『案内に相談する』は実物の素材サイトには無い言い方(今回の15ページでは出なかった)。『相談』『質問』『お問い合わせ』のどれが自然かを直すときに検索で確かめる。",
+  "『138点そろっています』『12点そろっています』は、点数を先に・動詞を後に言う型で、実物(イラストACの『〇〇点』表示)と違和感はない。"
+ ]
+}

@@ -1,0 +1,1400 @@
+{
+ "_meta": {
+  "purpose": "辞書(lexicon/*.json)の evidence が指す出典の一覧。確認日と、どこまで読めたかを残す。『読めなかった』を『読んだ』と書かないための台帳。",
+  "status_values": {
+   "read": "主要部分を本文で読んだ",
+   "partial": "先頭や一部だけ、または集計だけ",
+   "search-summary-only": "検索結果の要約・要約モデル経由の整理だけ。本文は直接読んでいない",
+   "unreadable": "読めなかった/取得しなかった"
+  },
+  "id_prefixes": {
+   "D": "百貨店・ギフト専門店(research_A の番号)",
+   "P": "文章のプロ(research_B の番号)",
+   "E": "大手EC・暮らしの店(本セッションが直接読んだ)",
+   "SS": "検索要約のみ",
+   "kuma-/saichin-/minna-/atomou-": "各サイト領域(research_C)",
+   "owner": "オーナーの訂正(STYLE_LEARNINGS.md 表A)"
+  },
+  "copyright": "他社の文は保存していない。URL・ページの種類・確認日・読めた範囲だけ。",
+  "robots_note": "楽天(event/item)・無印・北欧、暮らしの道具店・三越・大丸松坂屋・西武・東急・ギフトモールは取得前に robots.txt を確認し、対象外のパスだけを読んだ。NHK放送文化研究所は robots.txt が AI クローラを禁止しているため取得しなかった。シャディの /siteinfo/guide/ と /campaign/ も禁止のため取得しなかった。"
+ },
+ "sources": {
+  "D1": {
+   "group": "百貨店・ギフト専門店",
+   "url": "mistore.jp/gifts/seibo/seibo_message",
+   "what": "三越伊勢丹 お歳暮の送付状ガイド",
+   "status": "read",
+   "status_text": "読めた(約4300字)",
+   "note": "確認日 2026-10-17(以下同じ)",
+   "confirmed": "2026-10-17"
+  },
+  "D2": {
+   "group": "百貨店・ギフト専門店",
+   "url": "mistore.jp/gifts/thanks_wedding",
+   "what": "結婚内祝いのカテゴリ一覧",
+   "status": "partial",
+   "status_text": "一部(記事題と目次のみ)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D3": {
+   "group": "百貨店・ギフト専門店",
+   "url": "mistore.jp/gifts/thanks_wedding/thanks_wedding_manner/",
+   "what": "結婚内祝いのマナーガイド",
+   "status": "partial",
+   "status_text": "一部(約8200字中、先頭4500字を目視。語数は全文)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D4": {
+   "group": "百貨店・ギフト専門店",
+   "url": "mistore.jp/gifts/birthday/birthday_manner/",
+   "what": "誕生日プレゼントの選び方",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D5": {
+   "group": "百貨店・ギフト専門店",
+   "url": "mistore.jp/gifts/chugen/",
+   "what": "お中元の特集+マナー",
+   "status": "partial",
+   "status_text": "一部(8100字中、先頭3500字を目視)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D6": {
+   "group": "百貨店・ギフト専門店",
+   "url": "mistore.jp/gifts/omimai/",
+   "what": "病気のお見舞い特集",
+   "status": "partial",
+   "status_text": "一部(6100字中、先頭3500字を目視)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D7": {
+   "group": "百貨店・ギフト専門店",
+   "url": "mistore.jp/gifts/life",
+   "what": "三越 ライフ(ギフト)",
+   "status": "unreadable",
+   "status_text": "読めず",
+   "note": "WebFetch が接続エラー。ブラウザでは再試行していない",
+   "confirmed": "2026-10-17"
+  },
+  "D8": {
+   "group": "百貨店・ギフト専門店",
+   "url": "takashimaya.co.jp/.../wintergift/617723/",
+   "what": "高島屋 センスのいいお歳暮特集(記事)",
+   "status": "read",
+   "status_text": "読めた(約5200字)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D9": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../wintergift/624553/",
+   "what": "お歳暮の相場・相手別",
+   "status": "partial",
+   "status_text": "一部(7000字中、先頭3600字を目視)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D10": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../wintergift/601024/",
+   "what": "「帰歳暮」の記事",
+   "status": "partial",
+   "status_text": "一部(5250字中、約3000字を目視)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D11": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../wintergift/606140/",
+   "what": "お年賀とは(記事)",
+   "status": "partial",
+   "status_text": "一部(6100字中、約3800字を目視)",
+   "note": "最初の取得は空で、再読み込みして読めた",
+   "confirmed": "2026-10-17"
+  },
+  "D12": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../story/professional/FA17174/",
+   "what": "義父義母の本音(調査記事、2019年)",
+   "status": "partial",
+   "status_text": "一部(5600字中、約4200字を目視)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D13": {
+   "group": "百貨店・ギフト専門店",
+   "url": "takashimaya.co.jp/shopping/gift/keiro/",
+   "what": "敬老の日特集",
+   "status": "partial",
+   "status_text": "一部(4300字、冒頭のメニュー部分を飛ばして目視)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D14": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../shopping/gift/611424/",
+   "what": "センスのいい手みやげ(商品一覧)",
+   "status": "partial",
+   "status_text": "一部(一覧)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D15": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../shopping/gift/syussanuchiiwai/",
+   "what": "出産内祝いの総合ページ",
+   "status": "partial",
+   "status_text": "一部(約3800字)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D16": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../shopping/product.html?p_cd=0002514179",
+   "what": "商品ページ(洋菓子)",
+   "status": "read",
+   "status_text": "読めた(上部)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D17": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../shopping/product.html?p_cd=0002514143",
+   "what": "商品ページ(洋菓子)",
+   "status": "read",
+   "status_text": "読めた(上部)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D18": {
+   "group": "百貨店・ギフト専門店",
+   "url": "daimaru-matsuzakaya.jp/gift/",
+   "what": "大丸松坂屋 ギフトトップ",
+   "status": "partial",
+   "status_text": "一部(WebFetch の要約経由。全体約26万字中、先頭10万字ぶんだけ)",
+   "note": "要約なので語は短い語のみ採用",
+   "confirmed": "2026-10-17"
+  },
+  "D19": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../gift/gaju-o/",
+   "what": "賀寿(長寿のお祝い)",
+   "status": "partial",
+   "status_text": "一部(上部約3800字)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D20": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../gift/kaiki-u/",
+   "what": "快気祝い",
+   "status": "partial",
+   "status_text": "一部(上部約3800字)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D21": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../gift/syussan-u/",
+   "what": "出産内祝い",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D22": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../gift/okoden/",
+   "what": "香典返し",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D23": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../gift/Tokushu.html",
+   "what": "ギフト特集の一覧",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D24": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../oseibo/",
+   "what": "お歳暮・冬ギフト 2026",
+   "status": "partial",
+   "status_text": "一部(上部約3000字)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D25": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../keirou/",
+   "what": "敬老の日(2026年は終了、コラム目次が残る)",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "特集本体は読めず",
+   "confirmed": "2026-10-17"
+  },
+  "D26": {
+   "group": "百貨店・ギフト専門店",
+   "url": "edepart.sogo-seibu.jp/feature/wintergift06",
+   "what": "e.デパート 全国お届け可のお歳暮",
+   "status": "partial",
+   "status_text": "一部(商品一覧のみ)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D27": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../feature/wgt04",
+   "what": "お歳暮 子供がいる家庭向け",
+   "status": "partial",
+   "status_text": "一部(商品一覧のみ)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D28": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../feature/wintergiftread3",
+   "what": "お歳暮ののしの種類・書き方",
+   "status": "partial",
+   "status_text": "一部(5100字中、約3500字を目視)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D29": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../list/column",
+   "what": "コラム一覧(見出しが大量に並ぶ)",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D30": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../feature/foodread6",
+   "what": "お礼の菓子折り(コラム)",
+   "status": "partial",
+   "status_text": "一部(7100字中、約3300字を目視)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D31": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../feature/foodcolumn003",
+   "what": "年始の挨拶の手土産(コラム)",
+   "status": "partial",
+   "status_text": "一部(9600字中、約3300字を目視)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D32": {
+   "group": "百貨店・ギフト専門店",
+   "url": "tokyu-dept.co.jp/ec/cmTopPage.html",
+   "what": "東急 ネットショッピング トップ",
+   "status": "read",
+   "status_text": "読めた(案内・目次)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D33": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../ec/oseibo_knowledge04.html",
+   "what": "お歳暮の選び方(記事)",
+   "status": "read",
+   "status_text": "読めた(約3600字)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D34": {
+   "group": "百貨店・ギフト専門店",
+   "url": ".../ec/gaju_manners.html",
+   "what": "賀寿のギフトマナー",
+   "status": "read",
+   "status_text": "読めた(約2200字)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D35": {
+   "group": "百貨店・ギフト専門店",
+   "url": "web.hh-online.jp(阪急)",
+   "what": "阪急のお歳暮・手みやげ記事",
+   "status": "unreadable",
+   "status_text": "**読めず**",
+   "note": "ブラウザも WebFetch も 503。URL は検索で見つけた分のみ",
+   "confirmed": "2026-10-17"
+  },
+  "D36": {
+   "group": "百貨店・ギフト専門店",
+   "url": "shaddy.jp/(トップ)",
+   "what": "シャディ ギフトモール トップ",
+   "status": "partial",
+   "status_text": "一部(ナビ中心)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D37": {
+   "group": "百貨店・ギフト専門店",
+   "url": "shaddy.jp/shussanuchiiwai/aite/",
+   "what": "出産内祝い 贈る相手から選ぶ",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "相手の呼び方の宝庫",
+   "confirmed": "2026-10-17"
+  },
+  "D38": {
+   "group": "百貨店・ギフト専門店",
+   "url": "shaddy.jp/kaiki/manner/",
+   "what": "快気祝いのマナー",
+   "status": "partial",
+   "status_text": "一部(5400字中、約3000字を目視)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D39": {
+   "group": "百貨店・ギフト専門店",
+   "url": "shaddy.jp/seibo/",
+   "what": "お歳暮・冬ギフト 2026(商品説明つき)",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D40": {
+   "group": "百貨店・ギフト専門店",
+   "url": "shaddy.jp/keirou/",
+   "what": "敬老の日特集 2026",
+   "status": "partial",
+   "status_text": "一部(9300字中、約2600字を目視)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D41": {
+   "group": "百貨店・ギフト専門店",
+   "url": "ringbell.co.jp/.../category/birth_fc.html",
+   "what": "リンベル 内祝い・お祝いカタログ",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D42": {
+   "group": "百貨店・ギフト専門店",
+   "url": "ringbell.co.jp/.../category/memorial.html",
+   "what": "法要・香典返しカタログ",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D43": {
+   "group": "百貨店・ギフト専門店",
+   "url": "ringbell.co.jp/.../hellobaby/",
+   "what": "出産祝い専用カタログ",
+   "status": "partial",
+   "status_text": "一部(口コミは利用者の文)",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D44": {
+   "group": "百貨店・ギフト専門店",
+   "url": "ringbell.co.jp/robots.txt(404 ページ)",
+   "what": "404 の文面(水引の説明になっている)",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "文体の参考のみ",
+   "confirmed": "2026-10-17"
+  },
+  "D45": {
+   "group": "百貨店・ギフト専門店",
+   "url": "giftmall.co.jp/(トップ)",
+   "what": "ギフトモール(モール型)",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D46": {
+   "group": "百貨店・ギフト専門店",
+   "url": "giftmall.co.jp/okaeshi/",
+   "what": "内祝い・お返しのランキング",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "商品名はキーワードの羅列",
+   "confirmed": "2026-10-17"
+  },
+  "D47": {
+   "group": "百貨店・ギフト専門店",
+   "url": "giftmall.co.jp/celebratesixty/",
+   "what": "還暦祝いのランキング",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "D48": {
+   "group": "百貨店・ギフト専門店",
+   "url": "store.shopping.yahoo.co.jp/harmonick/9602.html",
+   "what": "ハーモニック公式(Yahoo店) カタログ商品ページ",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "ハーモニック自社サイトは見つからず(検索で出たのは Yahoo 店のみ)",
+   "confirmed": "2026-10-17"
+  },
+  "D49": {
+   "group": "百貨店・ギフト専門店",
+   "url": "item.rakuten.co.jp/bellevie-harima/10013195/",
+   "what": "ソムリエ@ギフト(楽天) カタログ商品ページ",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "用途・相手のキーワードを大量に列挙するページ",
+   "confirmed": "2026-10-17"
+  },
+  "D-articles": {
+   "group": "百貨店・ギフト専門店",
+   "what": "D1〜D34のうち散文のある記事・特集(三越5・高島屋6・西武3・東急2・シャディ2など)の総称",
+   "status": "partial",
+   "confirmed": "2026-10-17"
+  },
+  "P1": {
+   "group": "文章のプロ",
+   "url": "https://www.bunka.go.jp/seisaku/bunkashingikai/kokugo/hokoku/pdf/93731901_01.pdf",
+   "what": "文化審議会「公用文作成の考え方」(建議+解説、令和4年1月)",
+   "status": "read",
+   "status_text": "読めた(通読ではなく、符号・用語・文体・標題見出し・文の書き方・構成の各節を読んだ)",
+   "note": "WebFetch は文字化け。保存した PDF を `pdftotext` で抽出して読んだ。約23万字のうち上記の節",
+   "confirmed": "2026-10-17"
+  },
+  "P2": {
+   "group": "文章のプロ",
+   "url": "https://www.bunka.go.jp/koho_hodo_oshirase/hodohappyo/93650001.html",
+   "what": "同・発表ページ",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "公用文を3分類し、解説・広報等は親しみやすい表記を認める、と説明",
+   "confirmed": "2026-10-17"
+  },
+  "P3": {
+   "group": "文章のプロ",
+   "url": "https://salon.mainichi-kotoba.jp/archives/98988",
+   "what": "毎日ことばplus: 校閲記者の語の選び方(貯金を「取り崩す」)",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "辞書の記述と使用実態で判断。重言・読点の記述なし",
+   "confirmed": "2026-10-17"
+  },
+  "P4": {
+   "group": "文章のプロ",
+   "url": "https://salon.mainichi-kotoba.jp/?p=84585",
+   "what": "同: 校閲記者の迷いの実例",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "近道やコツはない、調べて納得して判断、が結論",
+   "confirmed": "2026-10-17"
+  },
+  "P5": {
+   "group": "文章のプロ",
+   "url": "https://salon.mainichi-kotoba.jp/?p=264182",
+   "what": "同: 学べるゲラ105",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "解説は有料会員限定で読めず",
+   "confirmed": "2026-10-17"
+  },
+  "P6": {
+   "group": "文章のプロ",
+   "url": "https://salon.mainichi-kotoba.jp/?p=257158",
+   "what": "同: 学べるゲラ97",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "同上。「意味のねじれに気づく」とだけ",
+   "confirmed": "2026-10-17"
+  },
+  "P7": {
+   "group": "文章のプロ",
+   "url": "https://salon.mainichi-kotoba.jp/?p=203813",
+   "what": "同: 学べるゲラ(主語と述語)",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "同上",
+   "confirmed": "2026-10-17"
+  },
+  "P8": {
+   "group": "文章のプロ",
+   "url": "https://president.jp/articles/-/75208",
+   "what": "毎日新聞校閲センター: 「違和感を感じる」を校閲でどう扱うか",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "記事の第1回の途中まで",
+   "confirmed": "2026-10-17"
+  },
+  "P9": {
+   "group": "文章のプロ",
+   "url": "https://www.lifehacker.jp/article/2312_book_to_read-1363/",
+   "what": "『校閲記者も迷う日本語表現』書評",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "書評(二次)。違和感・使用実態・辞書・媒体の基準を分けて見る",
+   "confirmed": "2026-10-17"
+  },
+  "P10": {
+   "group": "文章のプロ",
+   "url": "https://www.lifehacker.jp/article/2401_book_to_read-1395/",
+   "what": "前田安正(元朝日新聞校閲)『接続詞のコツ』書評",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "書評(二次)",
+   "confirmed": "2026-10-17"
+  },
+  "P11": {
+   "group": "文章のプロ",
+   "url": "https://townwork.net/magazine/?p=43927",
+   "what": "前田安正による志望動機の添削",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "校閲者の直し方が最も具体的に出ている",
+   "confirmed": "2026-10-17"
+  },
+  "P12": {
+   "group": "文章のプロ",
+   "url": "https://gendai.media/articles/-/39059",
+   "what": "牧野洋: 新聞の「さん」と「氏」",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "人の指し方の実態",
+   "confirmed": "2026-10-17"
+  },
+  "P13": {
+   "group": "文章のプロ",
+   "url": "https://realsound.jp/book/2022/09/post-1127283_2.html",
+   "what": "校正者・牟田都子インタビュー",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "姿勢の話が中心。語の直し方の技術は少ない",
+   "confirmed": "2026-10-17"
+  },
+  "P14": {
+   "group": "文章のプロ",
+   "url": "https://serai.jp/?p=1093822",
+   "what": "牟田都子の書評記事",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "同上",
+   "confirmed": "2026-10-17"
+  },
+  "P15": {
+   "group": "文章のプロ",
+   "url": "https://www.advertimes.com/20140214/article147091/",
+   "what": "宣伝会議: 校閲者・栁下恭平のコラム",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "書き方の技法はなく、「読む技術」の話",
+   "confirmed": "2026-10-17"
+  },
+  "P16": {
+   "group": "文章のプロ",
+   "url": "https://www.advertimes.com/?p=397217",
+   "what": "宣伝会議: 審査員(岩崎亜矢)のおすすめコピー本",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "ボディコピーは読み飛ばされる前提で書く、など",
+   "confirmed": "2026-10-17"
+  },
+  "P17": {
+   "group": "文章のプロ",
+   "url": "https://www.advertimes.com/20181030/article279494/",
+   "what": "宣伝会議賞セミナー(横澤宏一郎)",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "1ページ目のみ",
+   "confirmed": "2026-10-17"
+  },
+  "P18": {
+   "group": "文章のプロ",
+   "url": "https://www.advertimes.com/?p=472369",
+   "what": "宣伝会議: 電通コピーライター三島邦彦のインタビュー",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "短く、共感、単語の組み合わせで新しさ",
+   "confirmed": "2026-10-17"
+  },
+  "P19": {
+   "group": "文章のプロ",
+   "url": "https://www.advertimes.com/20190828/article297568/",
+   "what": "宣伝会議: 中村禎の本の紹介",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "書く力より選ぶ力",
+   "confirmed": "2026-10-17"
+  },
+  "P20": {
+   "group": "文章のプロ",
+   "url": "https://www.advertimes.com/20240509/article458700/2/",
+   "what": "谷山雅計の本(増補新版)の紹介",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "書き方の中身は紹介されていない",
+   "confirmed": "2026-10-17"
+  },
+  "P21": {
+   "group": "文章のプロ",
+   "url": "https://www.advertimes.com/?p=205560",
+   "what": "谷山雅計の質問回答本の紹介",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "同上",
+   "confirmed": "2026-10-17"
+  },
+  "P22": {
+   "group": "文章のプロ",
+   "url": "https://www.lifehacker.jp/article/121018book-to-read/",
+   "what": "谷山『広告コピーってこう書くんだ!読本』書評",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "企画書の話が中心。文章の技法は薄い",
+   "confirmed": "2026-10-17"
+  },
+  "P23": {
+   "group": "文章のプロ",
+   "url": "https://nie.jp/newspaper/feature/",
+   "what": "日本新聞協会 NIE: 新聞文章の特徴",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "5W1H、逆三角形、見出しは整理記者、用字用語",
+   "confirmed": "2026-10-17"
+  },
+  "P24": {
+   "group": "文章のプロ",
+   "url": "https://nie.jp/child/challenge/step3.html",
+   "what": "同: 新聞づくり(見出しのつけ方)",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "見出し10字以内の目安など",
+   "confirmed": "2026-10-17"
+  },
+  "P25": {
+   "group": "文章のプロ",
+   "url": "https://nie.jp/movie/movie01.html",
+   "what": "同: 記者が教える見出しのつけ方(動画)",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "動画で、文字の説明なし",
+   "confirmed": "2026-10-17"
+  },
+  "P26": {
+   "group": "文章のプロ",
+   "url": "https://webtan.impress.co.jp/n/2021/04/16/39827",
+   "what": "Yahoo!ニュース トピックスの見出し文字数変更",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "13.5→14.5文字、調査の方法と結果",
+   "confirmed": "2026-10-17"
+  },
+  "P27": {
+   "group": "文章のプロ",
+   "url": "https://www.yakuji.co.jp/?p=117397",
+   "what": "薬事日報コラム: 新聞記事のリードの読みにくさ",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "筆者は署名なし",
+   "confirmed": "2026-10-17"
+  },
+  "P28": {
+   "group": "文章のプロ",
+   "url": "https://dxmagazine.jp/?p=16850",
+   "what": "白鳥和生(元日経記者): 逆三角形の作り方",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "P29": {
+   "group": "文章のプロ",
+   "url": "https://dxmagazine.jp/?p=16811",
+   "what": "白鳥和生: 書き出しの工夫",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "P30": {
+   "group": "文章のプロ",
+   "url": "https://www.lifehacker.jp/article/130207book-to-read/",
+   "what": "竹内政明『「編集手帳」の文章術』書評",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "書評(二次)。書き出し・結びの話が出る",
+   "confirmed": "2026-10-17"
+  },
+  "P31": {
+   "group": "文章のプロ",
+   "url": "https://www.flierinc.com/summary/1695",
+   "what": "松林薫(元日経)『記者式文章術』の要約",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "有料部分あり",
+   "confirmed": "2026-10-17"
+  },
+  "P32": {
+   "group": "文章のプロ",
+   "url": "https://president.jp/articles/-/119779",
+   "what": "飯田一史『文章からAIくささを消す方法』の抜粋",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "無料で読める範囲のみ。ブラックリストの全体は読めず",
+   "confirmed": "2026-10-17"
+  },
+  "P33": {
+   "group": "文章のプロ",
+   "url": "https://president.jp/articles/-/48760",
+   "what": "石戸諭: ネット記事の見出しと新聞の見出しの違い",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "1ページ目のみ。5分類の中身は読めず",
+   "confirmed": "2026-10-17"
+  },
+  "P34": {
+   "group": "文章のプロ",
+   "url": "https://diamond.jp/articles/-/291685",
+   "what": "古賀史健: 語尾・文末・リズム",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "",
+   "confirmed": "2026-10-17"
+  },
+  "P35": {
+   "group": "文章のプロ",
+   "url": "https://diamond.jp/articles/-/293532",
+   "what": "古賀史健: 比喩の役割と注意(『取材・執筆・推敲』抜粋)",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "「続く」で終わる",
+   "confirmed": "2026-10-17"
+  },
+  "P36": {
+   "group": "文章のプロ",
+   "url": "https://diamond.jp/articles/-/293538",
+   "what": "古賀史健: 比喩を遠くへ転がす方法",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "同上",
+   "confirmed": "2026-10-17"
+  },
+  "P37": {
+   "group": "文章のプロ",
+   "url": "https://diamond.jp/articles/-/291514",
+   "what": "古賀史健: 慣用表現・ありふれた表現を避ける訓練",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "同上",
+   "confirmed": "2026-10-17"
+  },
+  "P38": {
+   "group": "文章のプロ",
+   "url": "https://diamond.jp/articles/-/293016",
+   "what": "古賀史健: 名文より悪文から学ぶ",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "同上",
+   "confirmed": "2026-10-17"
+  },
+  "P39": {
+   "group": "文章のプロ",
+   "url": "https://diamond.jp/articles/-/270620",
+   "what": "古賀史健: わかりやすさと読者の理解力",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "1ページ目のみ",
+   "confirmed": "2026-10-17"
+  },
+  "P40": {
+   "group": "文章のプロ",
+   "url": "https://diamond.jp/articles/-/291466",
+   "what": "古賀史健: 読者としての自分",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "同上",
+   "confirmed": "2026-10-17"
+  },
+  "P41": {
+   "group": "文章のプロ",
+   "url": "https://diamond.jp/articles/-/290596",
+   "what": "神田昌典ほか: 見出しの「ターゲット指定」",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "販売用コピーの文脈",
+   "confirmed": "2026-10-17"
+  },
+  "P42": {
+   "group": "文章のプロ",
+   "url": "https://note.com/shuppan_zenya/n/nfa83ae3ec367",
+   "what": "編集者・高橋ピクト: 見出しの付け方",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "生活実用書の編集者",
+   "confirmed": "2026-10-17"
+  },
+  "P43": {
+   "group": "文章のプロ",
+   "url": "https://note.com/monogaku/n/na38bc85f8305",
+   "what": "ものかき大学: 書き出し24型",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "Webライティング講座の公式。10年目のライター",
+   "confirmed": "2026-10-17"
+  },
+  "P44": {
+   "group": "文章のプロ",
+   "url": "https://www2.ninjal.ac.jp/past-publications/publication/catalogue/shin_kotoba_series/11_19/pages/kotoba17k1/index.html",
+   "what": "国立国語研究所: 言葉の「正しさ」",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "語の違和感は場面と人で変わる",
+   "confirmed": "2026-10-17"
+  },
+  "P45": {
+   "group": "文章のプロ",
+   "url": "https://scrapbox.io/silloi-books/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%81%AE%E4%BD%9C%E6%96%87%E6%8A%80%E8%A1%93",
+   "what": "本多勝一『日本語の作文技術』の読書メモ",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "目次と紹介のみ。各規則の中身は読めず",
+   "confirmed": "2026-10-17"
+  },
+  "P46": {
+   "group": "文章のプロ",
+   "url": "https://toyokeizai.net/articles/-/574847",
+   "what": "文章術の名著の書評(オバタカズユキ)",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "3冊分のみ無料",
+   "confirmed": "2026-10-17"
+  },
+  "P47": {
+   "group": "文章のプロ",
+   "url": "https://toyokeizai.net/articles/-/566118",
+   "what": "佐藤優: 井上ひさしに学ぶ日本語",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "本文の大半が有料で、書き方の中身は読めず",
+   "confirmed": "2026-10-17"
+  },
+  "P48": {
+   "group": "文章のプロ",
+   "url": "https://www.tkgje.jp/entries/04000/04440_midashi.html",
+   "what": "辞書の「見出し」項目",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "字数・文体の記述なし",
+   "confirmed": "2026-10-17"
+  },
+  "P49": {
+   "group": "文章のプロ",
+   "url": "https://ja.wikipedia.org/wiki/見出し , /体言止め",
+   "what": "Wikipedia",
+   "status": "read",
+   "status_text": "読めた",
+   "note": "薄い。体言止めは強調と余韻、とだけ",
+   "confirmed": "2026-10-17"
+  },
+  "P50": {
+   "group": "文章のプロ",
+   "url": "https://gendai.media/articles/-/153432",
+   "what": "NHK文研・塩田雄大の本の抜粋",
+   "status": "partial",
+   "status_text": "一部",
+   "note": "導入の問いまで。結論は読めず",
+   "confirmed": "2026-10-17"
+  },
+  "P-unread-1": {
+   "group": "文章のプロ",
+   "what": "NHK放送文化研究所(www.nhk.or.jp / bunken.nhk.or.jp)",
+   "status": "unreadable",
+   "status_text": "**取得せず**",
+   "note": "WebFetch が拒否。robots.txt を確認すると、ClaudeBot / anthropic-ai などの AI クローラを全面禁止(`Disallow: /`)していた。規則に従い、迂回して読まなかった",
+   "confirmed": "2026-10-17"
+  },
+  "P-unread-2": {
+   "group": "文章のプロ",
+   "what": "谷崎潤一郎『文章読本』(青空文庫)",
+   "status": "unreadable",
+   "status_text": "読めず",
+   "note": "青空文庫では「作業中」で、図書カードが公開されていない(作品ID 59991)。要点は書けない",
+   "confirmed": "2026-10-17"
+  },
+  "P-unread-3": {
+   "group": "文章のプロ",
+   "what": "三島由紀夫『文章読本』、井上ひさし『自家製 文章読本』",
+   "status": "unreadable",
+   "status_text": "読めず",
+   "note": "原典は著作権の保護期間内。研究論文の PDF 2本も、本文が取れなかった(1本は見出しだけ、1本は転送先の期限つき URL を追わなかった)",
+   "confirmed": "2026-10-17"
+  },
+  "P-unread-4": {
+   "group": "文章のプロ",
+   "what": "https://catalog.lib.kyushu-u.ac.jp/opac_download_md/1784628/p033.pdf (社説の見出しの日中対照)",
+   "status": "unreadable",
+   "status_text": "読めず",
+   "note": "PDF の文字が化けた(IPAGothic の文字集合を読めず)",
+   "confirmed": "2026-10-17"
+  },
+  "P-unread-5": {
+   "group": "文章のプロ",
+   "what": "https://www.nie.jp/report/selected/2011/pdf/pdf_p/native/p_native_16.pdf、cms.nerima-tky.ed.jp/.../65500.pdf",
+   "status": "unreadable",
+   "status_text": "読めず",
+   "note": "PDF が化けた",
+   "confirmed": "2026-10-17"
+  },
+  "P-unread-6": {
+   "group": "文章のプロ",
+   "what": "https://toyokeizai.net/articles/-/450328 (前田安正の主語述語の記事)",
+   "status": "unreadable",
+   "status_text": "読めず",
+   "note": "本文が出ず、導入だけ",
+   "confirmed": "2026-10-17"
+  },
+  "P-unread-7": {
+   "group": "文章のプロ",
+   "what": "https://webtan.impress.co.jp/e/2009/02/13/4988 (記者ハンドブック関連)",
+   "status": "unreadable",
+   "status_text": "読めず",
+   "note": "403",
+   "confirmed": "2026-10-17"
+  },
+  "P-unread-8": {
+   "group": "文章のプロ",
+   "what": "https://company.iwate-np.co.jp/.../kakikata.pdf、jam-union.or.jp の記者講座資料",
+   "status": "unreadable",
+   "status_text": "読めず",
+   "note": "404",
+   "confirmed": "2026-10-17"
+  },
+  "P-unread-9": {
+   "group": "文章のプロ",
+   "what": "共同通信『記者ハンドブック』本体、宣伝会議のコピーライター養成講座の教材、『ことばのハンドブック』",
+   "status": "unreadable",
+   "status_text": "読めず",
+   "note": "公開ページがない(書籍・講座)。字数規定は確認できていない",
+   "confirmed": "2026-10-17"
+  },
+  "P-unread-10": {
+   "group": "文章のプロ",
+   "what": "神田ふみ氏の解説",
+   "status": "unreadable",
+   "status_text": "見つけられず",
+   "note": "検索で該当する公開記事を特定できなかった",
+   "confirmed": "2026-10-17"
+  },
+  "E1": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://event.rakuten.co.jp/keirou/guide/ranking/",
+   "what": "楽天市場 敬老の日ギフト 20選(ガイド)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "E2": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://event.rakuten.co.jp/oseibo/guide/partner/",
+   "what": "楽天市場 お歳暮を贈る相手・マナー",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "E3": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://event.rakuten.co.jp/gift/",
+   "what": "楽天市場 おくりものナビ(ハブ)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "E4": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://event.rakuten.co.jp/gift/manner/uchiiwai/",
+   "what": "楽天市場 内祝いのマナー・金額相場",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "E5": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://event.rakuten.co.jp/gift/manner/ ほか約20ページ(誕生日・出産祝い・内祝い・退職・就職・新築・還暦・お見舞い・快気・香典返し・プチギフト・結婚内祝い・入学、お歳暮/お中元ガイド3)",
+   "what": "楽天市場 おくりものナビ・お歳暮・お中元の約20ページ(見出しと語の出現数の集計。8ページは文の長さの集計)",
+   "status": "partial",
+   "confirmed": "2026-10-17"
+  },
+  "E6": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://www.muji.com/jp/ja/shop/046712/articles/muji-staff/1539270",
+   "what": "無印良品 広島アルパーク店のギフト紹介(店舗スタッフ記事)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "E7": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://item.rakuten.co.jp/bruno-official/6760884/",
+   "what": "楽天市場 商品ページ(BRUNO 蓋つきマグ)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "E8": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://www.amazon.co.jp/b?node=13480441051",
+   "what": "Amazon.co.jp 冬ギフト・冬グルメ 特集(先頭のカテゴリ名と商品名のみ)",
+   "status": "partial",
+   "confirmed": "2026-10-17"
+  },
+  "E9": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://zexy.net/article/app000000951/",
+   "what": "ゼクシィ 結婚式の友人・幹事へのお礼(WebFetch の整理を読んだ。本文は直接読んでいない)",
+   "status": "search-summary-only",
+   "confirmed": "2026-10-17"
+  },
+  "E10": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://hokuohkurashi.com/",
+   "what": "北欧、暮らしの道具店 ホーム(見出しと説明)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "E11": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://hokuohkurashi.com/note/recommended_gift",
+   "what": "北欧、暮らしの道具店 おすすめギフトアイテム",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "E12": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "url": "https://event.rakuten.co.jp/robots.txt と https://item.rakuten.co.jp/robots.txt",
+   "what": "楽天 robots.txt(特集・商品ページは取得可)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "SS1": {
+   "group": "検索結果の要約のみ(本文は読んでいない)",
+   "what": "幹事へのお礼 プレゼント(検索結果の要約。専用記事は上位に無かった)",
+   "status": "search-summary-only",
+   "confirmed": "2026-10-17"
+  },
+  "SS2": {
+   "group": "検索結果の要約のみ(本文は読んでいない)",
+   "what": "主催者・ホストへのお礼の手土産(検索結果の要約)",
+   "status": "search-summary-only",
+   "confirmed": "2026-10-17"
+  },
+  "SS3": {
+   "group": "検索結果の要約のみ(本文は読んでいない)",
+   "what": "敬老の日 誰に贈るか(検索結果の要約。『呼び方』は確認できなかった)",
+   "status": "search-summary-only",
+   "confirmed": "2026-10-17"
+  },
+  "SS4": {
+   "group": "検索結果の要約のみ(本文は読んでいない)",
+   "what": "消えものギフトとは(検索結果の要約)",
+   "status": "search-summary-only",
+   "confirmed": "2026-10-17"
+  },
+  "SS5": {
+   "group": "検索結果の要約のみ(本文は読んでいない)",
+   "what": "義実家への手土産・帰省(検索結果の要約)",
+   "status": "search-summary-only",
+   "confirmed": "2026-10-17"
+  },
+  "E-unread": {
+   "group": "大手EC・暮らしの店(本セッション)",
+   "what": "ロフト・東急ハンズ・ZOZO・ニトリのギフト特集、Amazon の商品ページ・レビュー、阪急(503)",
+   "status": "unreadable",
+   "status_text": "検索で特集ページに到達できなかった/取得していない",
+   "confirmed": "2026-10-17"
+  },
+  "E-site": {
+   "group": "MACS 自サイト(診断の対象)",
+   "what": "kuma-sokuho.com・saichin-sokuho.com・minna-no-illust.com・atomou.com のトップと一部ページ(ブラウザで読んだ)、sites/yorokobu/content/*.json(作業フォルダ)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "kuma-env": {
+   "group": "kuma",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort12/effort12.html",
+   "what": "環境省 クマ類の情報ページ",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "kuma-nagano-pref": {
+   "group": "kuma",
+   "url": "https://www.pref.nagano.lg.jp/shinrin/happyou/20260603press.html",
+   "what": "長野県 出没注意報の発表",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "kuma-sakigake3": {
+   "group": "kuma",
+   "url": "https://www.sakigake.jp/news/article/20260729AK0056/ ほか2本(20251019AK0004, 20251022AK0017)",
+   "what": "秋田魁新報 クマ記事3本",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "kuma-miyagi-chuuihou": {
+   "group": "kuma",
+   "url": "https://www.pref.miyagi.jp/release/2026/kumachuihoutomiya1.html",
+   "what": "宮城県 注意報の発表",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "kuma-miyagi-mokugeki": {
+   "group": "kuma",
+   "url": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
+   "what": "宮城県 目撃等情報マップ",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "kuma-nagano-city": {
+   "group": "kuma",
+   "url": "https://www.city.nagano.nagano.jp/soshiki/inoshika/116254.html",
+   "what": "長野市 注意喚起ページ",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "kuma-akita-hokaku": {
+   "group": "kuma",
+   "url": "https://www.pref.akita.lg.jp/pages/archive/96304",
+   "what": "秋田県 捕獲速報",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "kuma-akita-dog": {
+   "group": "kuma",
+   "url": "https://www.pref.akita.lg.jp/pages/archive/92918",
+   "what": "秋田県 愛犬をクマから守る",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "kuma-akita-front": {
+   "group": "kuma",
+   "url": "https://www.pref.akita.lg.jp/front",
+   "what": "秋田県 トップのクマ表示",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "kuma-hokkaido": {
+   "group": "kuma",
+   "url": "https://www.pref.hokkaido.lg.jp/ks/skn/108365.html",
+   "what": "北海道庁 ヒグマ警報・注意報",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "kuma-unread": {
+   "group": "kuma",
+   "url": "環境省 出没対応マニュアルPDF・富山県警報PDF・長野市月次PDF・秋田/岩手の一部URL・テレビ局記事・NHK",
+   "what": "読めなかったもの",
+   "status": "unreadable",
+   "confirmed": "2026-10-17"
+  },
+  "saichin-mhlw-toshin": {
+   "group": "saichin",
+   "url": "https://www.mhlw.go.jp/stf/newpage_75950.html",
+   "what": "厚労省 令和8年度の答申の発表",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "saichin-jil": {
+   "group": "saichin",
+   "url": "https://www.jil.go.jp/kokunai/blt/backnumber/2026/10/special_03.html",
+   "what": "労働政策研究・研修機構 特集",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "saichin-tokyo-roudou": {
+   "group": "saichin",
+   "url": "https://jsite.mhlw.go.jp/tokyo-roudoukyoku/ 20260901 報道発表",
+   "what": "東京労働局 報道発表",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "saichin-suginami": {
+   "group": "saichin",
+   "url": "https://www.city.suginami.tokyo.jp/s121/news/22206.html",
+   "what": "杉並区 お知らせ",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "saichin-hello-tokyo": {
+   "group": "saichin",
+   "url": "https://jsite.mhlw.go.jp/tokyo-hellowork/ saichin_080914",
+   "what": "ハローワーク 事業主向け",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "saichin-hojyokin": {
+   "group": "saichin",
+   "url": "https://hojyokin-portal.jp/columns/saitei_chingin",
+   "what": "補助金ポータルの解説(労働者向けの文は要約経由)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "saichin-unread": {
+   "group": "saichin",
+   "url": "NHK・一般紙の最低賃金記事",
+   "what": "読めなかったもの",
+   "status": "unreadable",
+   "confirmed": "2026-10-17"
+  },
+  "minna-irasutoya-top": {
+   "group": "minna",
+   "url": "https://www.irasutoya.com/",
+   "what": "いらすとや トップ",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "minna-irasutoya-terms": {
+   "group": "minna",
+   "url": "https://www.irasutoya.com/p/terms.html",
+   "what": "いらすとや ご利用規定",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "minna-irasutoya-work": {
+   "group": "minna",
+   "url": "https://www.irasutoya.com/2018/10/blog-post_890.html",
+   "what": "いらすとや 作品ページ(1作品)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "minna-acillust-top": {
+   "group": "minna",
+   "url": "https://www.ac-illust.com/",
+   "what": "イラストAC トップ",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "minna-acillust-about": {
+   "group": "minna",
+   "url": "https://www.ac-illust.com/main/about.php",
+   "what": "イラストAC とは",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "minna-acillust-terms": {
+   "group": "minna",
+   "url": "https://www.ac-illust.com/main/terms.php",
+   "what": "イラストAC 利用規約",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "minna-pakutaso-top": {
+   "group": "minna",
+   "url": "https://www.pakutaso.com/",
+   "what": "ぱくたそ トップ",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "minna-pakutaso-userpolicy": {
+   "group": "minna",
+   "url": "https://www.pakutaso.com/userpolicy.html",
+   "what": "ぱくたそ 利用規約",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "minna-pakutaso-commercial": {
+   "group": "minna",
+   "url": "https://www.pakutaso.com/commercial-use.html",
+   "what": "ぱくたそ 商用利用について",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "minna-pakutaso-faq": {
+   "group": "minna",
+   "url": "https://www.pakutaso.com/faq-post-18.html",
+   "what": "ぱくたそ FAQ(装丁)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "minna-happylilac-userpolicy": {
+   "group": "minna",
+   "url": "https://www.happylilac.net/userpolicy.html",
+   "what": "ちびむすドリル 利用規約(見出しのみ)",
+   "status": "partial",
+   "confirmed": "2026-10-17"
+  },
+  "atomou-luft": {
+   "group": "atomou",
+   "url": "https://www.luft.co.jp/cgi/days-time.php",
+   "what": "経過日数計算",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "atomou-kcalc": {
+   "group": "atomou",
+   "url": "https://k-calc.com/ja/calculator/dday",
+   "what": "D-DAY計算",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "atomou-bestcalendar": {
+   "group": "atomou",
+   "url": "https://bestcalendar.jp/tools/countdown",
+   "what": "カウントダウン",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "atomou-curythm": {
+   "group": "atomou",
+   "url": "https://curythm.com/blog/kisanbi-toha/",
+   "what": "起算日とは(解説)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "atomou-nao-faq": {
+   "group": "atomou",
+   "url": "https://www.nao.ac.jp/faq/a0301.html",
+   "what": "国立天文台 FAQ(春分・秋分)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "atomou-cao": {
+   "group": "atomou",
+   "url": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html",
+   "what": "内閣府 国民の祝日",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "atomou-zatsuneta": {
+   "group": "atomou",
+   "url": "https://zatsuneta.com/archives/109231.html",
+   "what": "秋分の解説",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "atomou-netlab": {
+   "group": "atomou",
+   "url": "https://netlab.click/todayis/1018",
+   "what": "何の日 日別ページ(民間まとめ)",
+   "status": "read",
+   "confirmed": "2026-10-17"
+  },
+  "atomou-kinenbi": {
+   "group": "atomou",
+   "url": "https://www.kinenbi.gr.jp/",
+   "what": "日本記念日協会(10月17日分のみ)",
+   "status": "partial",
+   "confirmed": "2026-10-17"
+  },
+  "atomou-unread": {
+   "group": "atomou",
+   "url": "カシオ計算サイト・国立天文台 暦Wiki(文字化け)・暦要項(一部文字化け)",
+   "what": "読めなかった/一部",
+   "status": "unreadable",
+   "confirmed": "2026-10-17"
+  }
+ }
+}

@@ -1,0 +1,134 @@
+{
+ "_meta": {
+  "purpose": "全サイト共通。『AIの文に見える形』と、プロ・実物がその代わりにしていること。語の置き換えでなく、型と動きの表。",
+  "how_to_use": "判定(styleloop の Codex 判定)の参照資料と、規則の候補(learned_rules)の根拠に使う。各行の evidence は sources.json の id。",
+  "confirmed": "2026-10-17",
+  "strength_legend": {"strong": "複数の実物・解説で確認", "medium": "1〜2の実物・解説", "weak": "解説1件、または観察のみ", "owner": "オーナーの訂正"}
+ },
+ "patterns": [
+  {
+   "id": "negative_heading",
+   "looks_like_ai": "題が『〜しない』『〜せず』『〜すぎない』で終わる。例の形(自作): 相手の朝を押しつけない贈り方",
+   "what_pros_do": "品名・相手・場面を入れた名詞止めか、用途の『〜に』。避けたいことは本文で理由つきに書く",
+   "fix_examples_self_made": [["夜型の人へ朝を押しつけない贈り方", "夜型の人に贈る、朝の支度が楽になる品"], ["引っ越し祝いを重くしない選び方", "引っ越し祝いの相場と、荷物にならない品"]],
+   "evidence": ["E5", "E11", "P1", "P42"],
+   "strength": "medium",
+   "measure": "yorokobu 記事題 18/44、楽天の約60見出しで目視0"
+  },
+  {
+   "id": "mood_subtitle",
+   "looks_like_ai": "副題が雰囲気語: 静かに・そっと・作法・心得・心配り・涼しく整える",
+   "what_pros_do": "副題に数字か条件を置く。『贈り方と相場』『時期・金額・のし』",
+   "fix_examples_self_made": [["お歳暮の贈り物 一年の感謝を静かに届ける", "お歳暮の贈り方 時期・相場・のし"], ["卒業祝いの贈り物 門出を静かに祝う基本作法", "卒業祝いの相場と、選び方の基本"]],
+   "evidence": ["E5", "D-articles", "P1"],
+   "strength": "medium"
+  },
+  {
+   "id": "action_heading",
+   "looks_like_ai": "節の見出しが動作: 〜を整える・〜を見る・〜に置いてみる・〜を考える",
+   "what_pros_do": "節の見出しは中身の名詞か事実。『金額相場』『容量は約320ml』",
+   "fix_examples_self_made": [["名前の扱いを整える", "のしと名前の書き方"], ["お返しの負担を見る", "お返しは要らない、と先に伝える"]],
+   "evidence": ["E5", "P1", "P42"],
+   "strength": "medium"
+  },
+  {
+   "id": "hedge_everywhere",
+   "looks_like_ai": "どこにでも保険: 〜と言えるでしょう、〜を示唆している、留意が必要、〜ことが知られている、場合によっては",
+   "what_pros_do": "慣習・相場は『〜が一般的です』『〜とされています』(出典つきの一般論)に限る。判断は言い切る。確かめていない数字は書かない",
+   "fix_examples_self_made": [["個包装が適していると言えるでしょう", "個包装が向いています。配る手間がかかりません"]],
+   "evidence": ["P32", "P34", "E5"],
+   "strength": "strong"
+  },
+  {
+   "id": "abstract_noun_in_place_of_fact",
+   "looks_like_ai": "負担・気遣い・配慮・自然・安心・丁寧・整える を、中身を言わずに使う(yorokobu の抽象語密度は楽天のサンプルの数倍)",
+   "what_pros_do": "数・品名・期日・条件を足す。感想には理由を一つ付ける",
+   "fix_examples_self_made": [["相手の負担にならない贈り物", "お返しを考えさせない、2,000円前後の個包装の菓子"], ["自然に伝わる", "手渡しのときに一言添える"]],
+   "evidence": ["P1", "P11", "P41", "P42", "E5", "E1"],
+   "strength": "strong",
+   "measure": "yorokobu: 負担 6.4/1万字(楽天サンプル 2.2)、整え 4.9(0)、自然 4.5(0)"
+  },
+  {
+   "id": "template_slots",
+   "looks_like_ai": "中身の量に関わらず、理由3・選び方3・避ける2、各4〜5節、各節 140〜320字、のように枠を埋める",
+   "what_pros_do": "骨組みは読み手の問いの順(いつ→いくら→どう渡す→避ける→選ぶ)。節ごとに量が違う。無い節は書かない",
+   "evidence": ["E5", "D-articles", "P1"],
+   "strength": "medium",
+   "measure": "yorokobu: themes 135/135 が 3/3/2、articles 44/44 が 4〜5節"
+  },
+  {
+   "id": "uniform_rhythm",
+   "looks_like_ai": "文が短く均一(標準偏差11.8)、ます/です以外の文末が2%、4文以上の段落の65%で同じ文末が3つ以上続く",
+   "what_pros_do": "長短を混ぜる。体言止め・誘いかけ・短い断定を挟む。ただし禁止規則にはしない(あえて続ける手もある)",
+   "evidence": ["P1", "P34", "E5"],
+   "strength": "medium",
+   "measure": "楽天ガイドは標準偏差17.1、その他の文末22%(8ページ・536文)"
+  },
+  {
+   "id": "describer_phrases_for_people",
+   "looks_like_ai": "人を『〜した人』『〜な人』『年長の家族』と説明で呼ぶ",
+   "what_pros_do": "続柄・役割の名前: 幹事・主催者・ホスト・上司・取引先・両親・義両親・祖父母・おじいちゃん、おばあちゃん",
+   "evidence": ["owner", "E2", "E9", "D12", "D37"],
+   "strength": "owner",
+   "note": "プロの解説書は見つからなかった。根拠は実物の使われ方とオーナーの訂正"
+  },
+  {
+   "id": "bare_abstract_noun_for_thing",
+   "looks_like_ai": "贈る物を『お礼』『サポート』『対応』『贈り物』だけで言う",
+   "what_pros_do": "お礼の品・お礼状・お礼の一言のどれかを言う",
+   "evidence": ["owner", "E5", "D38"],
+   "strength": "owner"
+  },
+  {
+   "id": "compound_coinage",
+   "looks_like_ai": "名詞を連ねた造語(帰省軽やか・義実家控えめ・持ち寄り後・少額上手・価格の位置・受け取りの規則)",
+   "what_pros_do": "実物の呼び名(手土産・プチギフト・義実家への〜・相場・決まり)。造語を作るときは、検索や実物でそのまま使われているかを先に調べる",
+   "evidence": ["E3", "D31", "owner"],
+   "strength": "medium"
+  },
+  {
+   "id": "mood_words_without_object",
+   "looks_like_ai": "雰囲気語(そっと・寄り添う・心地よい)を具体物なしで使う",
+   "what_pros_do": "具体物に付けて1ページに1〜2回。『それは何をするのか』を書く",
+   "fix_examples_self_made": [["暮らしにそっと寄り添う一品", "朝の洗面所で片手で使える一品"]],
+   "evidence": ["P35", "P37", "E11"],
+   "strength": "medium",
+   "note": "『寄り添う』は語として禁止しない(北欧、暮らしの道具店も具体物に付けて使う)"
+  },
+  {
+   "id": "fixed_intro_outro",
+   "looks_like_ai": "予告(本記事では〜解説します)、結びの定型(いかがでしたか・ぜひ参考に・まとめ)",
+   "what_pros_do": "最初に結論か具体。結びは次にすることか、しなくてよいことを一つ",
+   "fix_examples_self_made": [["いかがでしたか。ぜひ参考にしてみてください。", "ご不明なら、のしの有無は店に聞くと早いです。"]],
+   "evidence": ["P1", "P30", "P32"],
+   "strength": "medium",
+   "note": "楽天・百貨店の読み物は『まとめ』と誘いかけで結ぶ。SEO・販売の型なので、真似しない"
+  },
+  {
+   "id": "repeat_same_tail_in_a_list",
+   "looks_like_ai": "20項目の説明が全部『〜のタッチ。』、箇条書き3項目が全部『〜で確かめる』",
+   "what_pros_do": "説明の終わりを毎回同じ名詞・動詞で閉じない。何が描かれるか、何を確かめるかの中身で書く",
+   "evidence": ["P1", "P34", "minna-irasutoya-work"],
+   "strength": "weak",
+   "measure": "minna『タッチから選ぶ』22項目中21項目が『〜のタッチ。』、atomou 個別ページの『確かめておきたいこと』3項目が全部『確かめる』"
+  },
+  {
+   "id": "avoid_without_reason",
+   "looks_like_ai": "『避けます』『控えます』『慎重にします』だけで終わる行",
+   "what_pros_do": "避ける品とその理由を組で書く(刃物は縁を切る意味、など)",
+   "fix_examples_self_made": [["香りの強いものは控えます。", "香水やアロマは好みが分かれるので、相手の好みを聞いてから選びます。"]],
+   "evidence": ["E2", "D33", "P1"],
+   "strength": "medium"
+  }
+ ],
+ "headline_length": {
+  "finding": "新聞実習の目安は10字以内、Yahoo!ニュースは14.5文字に増やした(短さより理解を優先)。日本語サイトの見出しは15字前後が一つの基準。サイトの題・見出しは、中身が分かれば20〜30字でもよいが、30字を超える題は短くできないかを見る",
+  "evidence": ["P24", "P26"],
+  "strength": "weak"
+ },
+ "notation": {
+  "kana_vs_kanji": "公用文の解説は、広報では副詞・接続詞(おおむね・たくさん・いろいろ・また・さらに・ただし)を仮名に、述語は訓読みの動詞を勧める。サイトの『漢字にできる語は漢字に』(minna/yorokobu のオーナー指示)は、名詞・動詞の話。副詞は仮名でよい",
+  "evidence": ["P1"],
+  "strength": "medium"
+ }
+}

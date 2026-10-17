@@ -1,0 +1,185 @@
+{
+ "_note": "natural-ja-tool が data/style/examples.json に統合するための候補(自作の前後の例)。実物の使われ方に沿った言い直しで、数字・固有名・リンクは変えていない。by は lexicon-research。統合前に styleloop check で不変条件を通すこと。事実を足していない(『人気』などの新しい主張なし)。",
+ "examples": [
+  {
+   "before": "夜型の人へ朝を押しつけない贈り方",
+   "after": "夜型の人に贈る、朝の支度が楽になる品",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "否定形の題。勧める形に。実物の見出し(約60)に否定形は無い"
+  },
+  {
+   "before": "退職する人へ重くならない餞別の整え方",
+   "after": "退職する人への餞別の選び方",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "否定形+『整え方』。『〜の選び方』は楽天・百貨店で定着"
+  },
+  {
+   "before": "結婚祝いの贈り物 新生活を邪魔しない心配り",
+   "after": "結婚祝いの贈り物 選び方と相場",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "雰囲気の副題。副題は中身(選び方・相場)にする"
+  },
+  {
+   "before": "お歳暮の贈り物 一年の感謝を静かに届ける",
+   "after": "お歳暮の贈り物 一年の感謝を伝える贈り方",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "『静かに届ける』は雰囲気語。実物の見出しは名詞止め(マナー・相場・のし)"
+  },
+  {
+   "before": "入学祝いの贈り物 新生活をそっと支えるコツ",
+   "after": "入学祝いの贈り物 選ぶときのコツ",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "『そっと支える』は雰囲気語"
+  },
+  {
+   "before": "卒業祝いの贈り物 門出を静かに祝う基本作法",
+   "after": "卒業祝いの贈り物 選ぶときの基本",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "『作法』『静かに祝う』。実物は『マナー』『基本』"
+  },
+  {
+   "before": "名前の扱いを整える",
+   "after": "のしと名前の書き方",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "節の見出しが動作(整える)。中身の名詞にする"
+  },
+  {
+   "before": "最初に枠を決める",
+   "after": "最初に目的と予算を決める",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "『枠』が何を指すか分からない。決めるものを言う"
+  },
+  {
+   "before": "お返しの負担を見る",
+   "after": "お返しの手間を考える",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "『負担を見る』は不自然。抽象語『負担』を具体に(手間)"
+  },
+  {
+   "before": "約320mlという容量を使う場面に置いてみる",
+   "after": "容量は約320ml。飲みきりやすい大きさ",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "節の見出しは動作でなく事実を入れる"
+  },
+  {
+   "before": "帰省軽やか",
+   "after": "帰省の手土産",
+   "kind": "label",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "テーマ名の造語。実物の呼び名は『〜の手土産』(百貨店・楽天)"
+  },
+  {
+   "before": "義実家控えめ",
+   "after": "義実家への贈り物",
+   "kind": "label",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "造語。『義実家』は実物で使われる(楽天の相場見出し・西武)"
+  },
+  {
+   "before": "持ち寄り後",
+   "after": "集まりのあとに贈るお礼の品",
+   "kind": "label",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "造語。何をする場面か分かる形に"
+  },
+  {
+   "before": "少額上手",
+   "after": "気軽に贈れる贈り物",
+   "kind": "label",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "造語。『プチギフト』も実物で定着"
+  },
+  {
+   "before": "日時合わせ",
+   "after": "日時を指定できるギフト",
+   "kind": "label",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "造語。実物は『日時指定』"
+  },
+  {
+   "before": "無難ギフト",
+   "after": "好みが分からない相手へのギフト",
+   "kind": "label",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "『無難』は消極的に聞こえる。場面で言う"
+  },
+  {
+   "before": "個性派ギフト",
+   "after": "ユニークなギフト",
+   "kind": "label",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "楽天おくりものナビのタグが『ユニークギフト』"
+  },
+  {
+   "before": "香りの強いものは控えます。",
+   "after": "香水やアロマは好みを聞いてから選びます。",
+   "kind": "description",
+   "site": "yorokobu",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "避ける品は理由とセットで(楽天『刃物は縁を切る意味』型)"
+  },
+  {
+   "before": "確かめておきたいこと",
+   "after": "確認すること",
+   "kind": "heading",
+   "site": "atomou",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "短く。実物の暦サイトの見出しは名詞止め"
+  },
+  {
+   "before": "熊(クマ)の目撃は、県の中でどれくらい特定の市町村に集まっているか",
+   "after": "クマの目撃情報は、県内のどの市町村に多いか",
+   "kind": "heading",
+   "site": "kuma",
+   "by": "lexicon-research",
+   "date": "2026-10-17",
+   "why": "報道・行政は『クマ』と片仮名。長い問いは短くする(新聞の見出しは15字前後)"
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+{
+ "_meta": {
+  "site": "kuma-sokuho.com",
+  "purpose": "クマ出没速報の言葉選びの根拠。役所・報道が実際に使っている語と、その使い分け。",
+  "how_to_use": "言い直し案を出す側(人・AI)は、候補を3つ以上出し、この表と sources.json の実物の使われ方で選ぶ。思いついた言い回しをそのまま入れない。",
+  "copyright": "他社の文は保存していない。語(おおむね10字まで)・使い方・出典だけ。型の例は自作。",
+  "confirmed": "2026-10-17",
+  "method_note": "13ページのうち大半は WebFetch の要約経由で、語の有無は取りこぼしがありうる。環境省マニュアル・富山県警報PDFは読めておらず、国の公式な定義は未確認。",
+  "evidence_keys": "sources.json の id"
+ },
+ "terms": [
+  {"term": "目撃", "role": "人が見た1件ごとの通報", "use": "目撃情報・目撃件数・目撃される", "not": "1件ごとを『出没』と呼ばない", "evidence": ["kuma-sakigake3", "kuma-miyagi-mokugeki", "kuma-nagano-city"], "strength": "medium"},
+  {"term": "出没", "role": "状況(数日続く)や制度名", "use": "出没が相次ぐ・出没注意報・出没警報・出没件数(環境省の集計名)", "not": "自治体ごとに意味が違う。宮城県は目撃等情報と分け、長野市は痕跡のみを出没とする(抜粋)。サイト内で『目撃』『出没』『痕跡』を定義してから使う", "evidence": ["kuma-sakigake3", "kuma-nagano-pref", "kuma-miyagi-chuuihou", "kuma-miyagi-mokugeki", "kuma-nagano-city"], "strength": "medium"},
+  {"term": "痕跡", "role": "足跡・フン・爪痕など。目撃と並べる", "use": "目撃・痕跡", "evidence": ["kuma-miyagi-mokugeki"], "strength": "medium"},
+  {"term": "目撃等情報", "role": "目撃と痕跡をまとめた呼び名(宮城県)", "evidence": ["kuma-miyagi-mokugeki"], "strength": "weak"},
+  {"term": "人身被害", "role": "行政・集計の語。個別の事故記事の本文では使わない", "use": "人身被害件数・人数", "alt_in_news": "襲われ・けが人・けが人はいなかった", "evidence": ["kuma-env", "kuma-nagano-pref", "kuma-sakigake3"], "strength": "medium"},
+  {"term": "捕獲", "role": "数量の語", "use": "捕獲頭数・許可捕獲数・捕獲速報", "evidence": ["kuma-akita-hokaku", "kuma-env"], "strength": "medium"},
+  {"term": "発出 / 発令", "role": "注意報・警報を出す側の動詞。どちらかに統一する", "use": "発出は長野県・北海道、発令は宮城県・秋田県", "evidence": ["kuma-nagano-pref", "kuma-hokkaido", "kuma-miyagi-chuuihou", "kuma-akita-front"], "strength": "medium"},
+  {"term": "相次ぐ", "role": "複数件の見出しの動詞", "use": "目撃相次ぐ", "evidence": ["kuma-sakigake3"], "strength": "medium"},
+  {"term": "けが人はいなかった", "role": "被害なしの書き方", "evidence": ["kuma-sakigake3"], "strength": "weak"},
+  {"term": "午前6時15分ごろ / 午後5時現在", "role": "時刻は『ごろ』、状況は『現在』", "evidence": ["kuma-sakigake3"], "strength": "weak"},
+  {"term": "〜署によると", "role": "情報源を文の中で明示", "evidence": ["kuma-sakigake3"], "strength": "weak"},
+  {"term": "前年同期 / 過去5年間の平均", "role": "比較は基準を書く", "evidence": ["kuma-sakigake3"], "strength": "weak"},
+  {"term": "2頭 / 体長約1メートル", "role": "数え方・大きさ", "evidence": ["kuma-sakigake3"], "strength": "weak"},
+  {"term": "引き返す", "role": "痕跡を見つけたときの行動", "evidence": ["kuma-nagano-city"], "strength": "weak"},
+  {"term": "市街地 / 住宅地 / 人里", "role": "場所の呼び方。『生活圏』は行政の発表向け", "evidence": ["kuma-sakigake3", "kuma-nagano-city", "kuma-nagano-pref"], "strength": "weak"}
+ ],
+ "calls_to_action": [
+  {"form": "〜しましょう", "strength_of_request": "軽い推奨", "evidence": ["kuma-nagano-city", "kuma-miyagi-mokugeki", "kuma-akita-dog"]},
+  {"form": "〜してください / 〜しないでください", "strength_of_request": "具体的な指示。禁止は否定形", "evidence": ["kuma-akita-dog"]},
+  {"form": "〜お願いします / ご注意ください", "strength_of_request": "行政の発表の依頼", "evidence": ["kuma-nagano-pref", "kuma-miyagi-chuuihou"]},
+  {"form": "命令形(〜せよ)", "strength_of_request": "見当たらなかった(要約を見た範囲)", "evidence": []}
+ ],
+ "headline_forms": [
+  {"form": "地名+主語(数)+出来事の動詞", "example_self_made": "〇〇市の住宅地でクマ目撃相次ぐ", "where": "報道"},
+  {"form": "地域+制度名+動詞", "example_self_made": "〇〇地域にクマ出没注意報を発出します", "where": "行政"},
+  {"form": "名詞止め+年度・日付", "example_self_made": "令和8年度 クマ目撃等情報", "where": "行政"}
+ ],
+ "format_conventions": [
+  "全角数字(報道)/半角数字(行政、サイトでは半角でそろえる)",
+  "日付は月日で。比較には基準年を書く",
+  "初出は市+町+町名、2回目から町名だけ(報道)",
+  "情報の限界は一覧の注で一言(『地図の位置は実際とずれることがあります』型)"
+ ],
+ "site_vs_real_notes_2026-10-17": [
+  "サイトの『熊(クマ)』と『クマ』が混在している(例: 研究ノートの題は『熊(クマ)』、本文は『クマ』)。報道・行政は『クマ』が主。片仮名でそろえる案。",
+  "『通わせない』(家の周りの対策の見出しの説明)は、今回の調査で確認した13ページには出なかった。『寄せつけない』だけで足りるかを、直すときに検索で確かめる。",
+  "『目撃』『出没』『痕跡』の定義がサイト内にあるかを確認(自治体ごとに意味が違うため、定義の一文を『データの出典』ページに置くのが望ましい)。"
+ ]
+}

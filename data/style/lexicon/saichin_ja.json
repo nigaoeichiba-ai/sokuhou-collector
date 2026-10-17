@@ -1,0 +1,44 @@
+{
+ "_meta": {
+  "site": "saichin-sokuho.com",
+  "purpose": "最低賃金速報の言葉選びの根拠。厚労省・労働局・解説が実際に使っている語と段階ごとの使い分け。",
+  "how_to_use": "言い直し案は候補を3つ以上出し、この表と sources.json で選ぶ。法令・制度の語は意味を変えない。",
+  "copyright": "他社の文は保存していない。語・使い方・出典だけ。",
+  "confirmed": "2026-10-17",
+  "method_note": "9ページ(読めた8・一部1)。NHK・一般紙は取得できず読んでいない。補助金ポータルの労働者向けの文は要約経由で原文未確認。"
+ },
+ "stage_terms": [
+  {"term": "目安", "stage": "中央の審議会が7月に示す参考額(ランク別)", "evidence": ["saichin-mhlw-toshin", "saichin-jil"], "strength": "medium"},
+  {"term": "答申", "stage": "各地方の審議会が出した結果。『答申された』", "evidence": ["saichin-mhlw-toshin", "saichin-jil"], "strength": "medium"},
+  {"term": "改正", "stage": "労働局長が決める県ごとの最低賃金(東京労働局・杉並区)", "evidence": ["saichin-tokyo-roudou", "saichin-suginami"], "strength": "medium"},
+  {"term": "改定", "stage": "全体の見直し。改定額・改定状況(厚労省・JIL)", "evidence": ["saichin-mhlw-toshin", "saichin-jil"], "strength": "medium"},
+  {"term": "発効", "stage": "新しい額が効く日。順次発効・発効予定(厚労省・JIL・ハローワーク)", "alt": "効力発生(東京労働局)", "evidence": ["saichin-mhlw-toshin", "saichin-jil", "saichin-hello-tokyo", "saichin-tokyo-roudou"], "strength": "medium"}
+ ],
+ "word_choices": [
+  {"pair": "引上げ / 引き上げ", "finding": "官公庁系(厚労省・東京労働局・ハローワーク・専門紙見出し)は『引上げ』。JILの本文と補助金ポータルは『引き上げ』。東京労働局は見出し『引上げ』・本文『引き上げ』と揺れる", "rule_for_site": "サイト内でどちらかに統一する(現在のサイトは『引上げ額』表記)", "evidence": ["saichin-mhlw-toshin", "saichin-jil", "saichin-hojyokin", "saichin-tokyo-roudou"], "strength": "medium"},
+  {"pair": "時間額 / 時給", "finding": "制度の文書は『時間額』(労働局・ハローワーク)。働く人向けの文・見出しは『時給』(専門紙見出し・JIL本文・ポータル)", "rule_for_site": "表の列や制度の説明は『時間額』、読者への呼びかけ・見出しは『時給』", "evidence": ["saichin-tokyo-roudou", "saichin-hello-tokyo", "saichin-jil", "saichin-hojyokin"], "strength": "medium"}
+ ],
+ "number_and_date_forms": [
+  "金額は 1,177円 とカンマ(厚労省・JIL・ハローワーク。専門紙の見出しだけカンマなし)",
+  "引上げ額は差額で『54円』。範囲は『54円～65円』(波ダッシュ)",
+  "前年は括弧で併記『(昨年度1,121円)』",
+  "割合は全角％で小数1桁",
+  "日付は和暦+曜日『令和8年9月3日(木)』。月日だけなら年は略せる(JIL)"
+ ],
+ "headline_forms": [
+  {"form": "結果を主語にした一文", "where": "厚労省"},
+  {"form": "金額と結論を先に", "where": "東京労働局"},
+  {"form": "数字入りで『〜に』で結ぶ", "where": "JIL"},
+  {"form": "〇〇を改正します(日付)", "where": "杉並区"}
+ ],
+ "reader_calls": [
+  {"form": "ご確認ください / ご注意ください", "to": "事業者", "evidence": ["saichin-hello-tokyo", "saichin-tokyo-roudou"]},
+  {"form": "最低賃金法違反となります(事実で書く)", "to": "事業者", "evidence": ["saichin-tokyo-roudou"], "note": "検索抜粋"},
+  {"form": "確認しましょう", "to": "労働者", "evidence": ["saichin-hojyokin"], "note": "要約経由。原文確認が必要"}
+ ],
+ "site_vs_real_notes_2026-10-17": [
+  "サイトの語は概ね実物と一致している: 発効・引上げ額・全国加重平均・時給。",
+  "サイトの『発効済み』は、実物の『発効』『順次発効』に沿った自然な派生。問題なし(実物に『発効済み』そのものがあるかは確かめていない)。",
+  "『最低賃金のきほん』は、サイト内の他の見出し(『最低賃金とは?』)と漢字・かなの方針をそろえるかを判断(実物では『基本』『について』の見出しが多い)。"
+ ]
+}
