@@ -1,6 +1,12 @@
 {
- "fetched_at": "2026-10-16T14:36:20.381843+09:00",
+ "fetched_at": "2026-10-17T15:22:35.083965+09:00",
  "incidents": [
+  {
+   "kind": "山岳救助",
+   "place": "大津市葛川坊村町付近",
+   "started_at": "2026-10-17T15:21:00+09:00",
+   "status": "reported"
+  },
   {
    "kind": "救助事故",
    "place": "大津市皇子が丘二丁目付近",
@@ -186,7 +192,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": true,
+ "no_active_incident": false,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
