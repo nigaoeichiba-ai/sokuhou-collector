@@ -1,0 +1,40 @@
+{
+ "_meta": {
+  "site": "atomou.com",
+  "purpose": "『あと何日、もう何日』の言葉選びの根拠。日数計算サービス・暦の解説・記念日サイトが実際に使っている語。",
+  "how_to_use": "言い直し案は候補を3つ以上出し、この表と sources.json で選ぶ。読者は中学生以上。ひらがなを増やさない・分かち書きしない。",
+  "copyright": "他社の文は保存していない。語・使い方・出典だけ。",
+  "confirmed": "2026-10-17",
+  "method_note": "13ページ(読めた9・一部4)。カシオ計算サイトと国立天文台の暦Wikiは読めず。日本記念日協会は10月17日分のみ。語の有無は要約経由で粗い。"
+ },
+ "counting_terms": [
+  {"term": "あと〇日", "role": "当日を数えない差", "evidence": ["atomou-bestcalendar", "atomou-kcalc"], "strength": "medium"},
+  {"term": "〇〇まで17日", "role": "『あと』なしの名詞+まで+数字", "evidence": ["atomou-bestcalendar"], "strength": "weak"},
+  {"term": "〇日目", "role": "当日を1日目に数えるとき。記念日・生後日数", "evidence": ["atomou-kcalc"], "strength": "medium"},
+  {"term": "開始日 / 終了日", "role": "一般向けの入力欄の語", "evidence": ["atomou-luft", "atomou-kcalc"], "strength": "medium"},
+  {"term": "経過日数", "role": "結果の見出し", "evidence": ["atomou-luft"], "strength": "weak"},
+  {"term": "起算日", "role": "法律・期限の話に限る。一般向けは『開始日』が多い(3ページ中1ページ)", "plain_rewording": "初日は数えません / 翌日から1日目です / 当日を1日目とします", "evidence": ["atomou-curythm"], "strength": "weak"},
+  {"term": "当日を含める / 含めない", "role": "『初日算入/不算入』を使わずに言う一般向けの言い方", "evidence": ["atomou-luft", "atomou-kcalc"], "strength": "medium"}
+ ],
+ "calendar_terms": [
+  {"term": "春分 / 春分日 / 春分の日", "role": "節気 / その日 / 祝日", "evidence": ["atomou-nao-faq"], "strength": "medium"},
+  {"term": "二十四節気 / 節気", "role": "分類名 / 略", "evidence": ["atomou-zatsuneta"], "strength": "weak"},
+  {"term": "9月23日頃", "role": "年で動く日は『頃』", "evidence": ["atomou-zatsuneta"], "strength": "weak"},
+  {"term": "〇月第〇月曜日", "role": "動く祝日", "evidence": ["atomou-cao"], "strength": "medium"},
+  {"term": "〇〇の日", "role": "記念日名。対象+の日", "evidence": ["atomou-kinenbi", "atomou-netlab"], "strength": "medium"},
+  {"term": "〜とされています", "role": "由来が諸説あるときの結び", "evidence": ["atomou-netlab"], "strength": "weak"},
+  {"term": "〇〇とは？ / 〇月〇日は何の日？", "role": "解説の見出し", "evidence": ["atomou-curythm", "atomou-netlab"], "strength": "weak"}
+ ],
+ "date_forms": [
+  "曜日は全角括弧に一字『(火)』『3月21日(日)』(暦要項)",
+  "年は公的機関が和暦先『令和9年(2027)』、民間は西暦先『2027年(令和9年)』(6ページの傾向、全体を代表しない)",
+  "時刻は24時間制『23時10分』(暦要項)",
+  "記念日の説明は約100〜200字: 日付の由来(語呂・数字)→制定者→一言。主要な記念日のみ(netlab、1サイトの傾向)"
+ ],
+ "site_vs_real_notes_2026-10-17": [
+  "カードの数え方(『あと〇日』『もう〇日』)は実物の『あと〇日』と一致。『もう〇日』は経過日数の言い方で、実物では『経過』『〇日目』が多い。『もう』は読者に意味が通る口語。変える必要はない(判断材料のみ)。",
+  "個別ページの節見出し『〜の概要』『日付の詳細』『〜の日程の見方』『確かめておきたいこと』が、全ページに同じ順で入る。『概要』は自然な語だが、確認した日数計算・暦のサイトの解説は『〇〇とは？』『日程』のような短い見出しで、全ページ同じ型の節見出しは見なかった(13ページの範囲)。ページごとに必要な節だけにする案。",
+  "『確かめておきたいこと』の箇条書き3項目が全部『〜で確かめる』で終わる(共通テストのページの観察)。同じ動詞の連続は避ける。",
+  "トップの文『それぞれの日まであと何日かがひと目で分かります』は自然。『もうすぐの日』の見出しの下に、すでに過ぎた日のカードが並んでいた(2026-10-17 閲覧時)。見出しと中身の不一致なので、担当に報告する(文章でなく表示の不具合の可能性)。"
+ ]
+}
