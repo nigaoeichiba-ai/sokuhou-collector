@@ -66,6 +66,13 @@ class GateTest(unittest.TestCase):
         d["highlights"][1]["ref"] = d["highlights"][0]["ref"]
         self.assertTrue(any("highlights" in p for p in dp.problems(d)))
 
+    def test_a_rakuten_entry_may_not_store_the_shops_data_only_the_item_code(self):
+        for field, value in (("name", "ティラミス 詰め合わせ"), ("url", "https://item.rakuten.co.jp/shop/a/"), ("img", "https://thumbnail.image.rakuten.co.jp/@0_mall/s/a.jpg"), ("price", 1000)):
+            d = day()
+            d["rakuten"][0][field] = value
+            self.assertTrue(any("must not be stored" in p and field in p for p in dp.problems(d)), field)         # a negative test: the gate catches each field
+        self.assertTrue(all("code" in e and not any(k in e for k in dp.MALL_FIELDS) for e in day()["rakuten"]))
+
     def test_absolute_claims_medical_words_and_hype_are_refused(self):
         for word in ("絶対に喜ばれます", "必ず届きます", "日本一の味", "疲れが改善します", "大人気の一品"):
             d = day()
