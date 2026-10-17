@@ -1,0 +1,86 @@
+{
+ "slug": "space-planets-flat",
+ "title": "宇宙と太陽系の星",
+ "subject": "",
+ "genre": "nature",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Space illustrations, each ONE separate object or small scene centred in its cell: planets, rocket, moon surface, astronaut, satellite; flat style on a plain white cell, no dark space background Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "太陽系の惑星・ロケット・月面・宇宙飛行士など、宇宙の素材12点です。理科の資料や科学イベントのお知らせに使えます。",
+ "tags": [
+  "宇宙",
+  "惑星",
+  "太陽系",
+  "ロケット",
+  "月",
+  "宇宙飛行士",
+  "理科"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "sun",
+   "太陽",
+   "a round orange sun with short rays"
+  ],
+  [
+   "earth",
+   "地球",
+   "planet Earth with blue oceans and green land"
+  ],
+  [
+   "moon",
+   "月",
+   "a cratered moon in pale yellow"
+  ],
+  [
+   "mars",
+   "火星",
+   "a reddish planet Mars with dark patches"
+  ],
+  [
+   "saturn",
+   "土星",
+   "Saturn with a wide ring"
+  ],
+  [
+   "jupiter",
+   "木星",
+   "Jupiter with horizontal brown and cream bands"
+  ],
+  [
+   "rocket",
+   "ロケット",
+   "a rocket launching with flames and smoke"
+  ],
+  [
+   "astronaut",
+   "宇宙飛行士",
+   "an astronaut in a white suit floating with a tether"
+  ],
+  [
+   "satellite",
+   "人工衛星",
+   "a satellite with two solar panels"
+  ],
+  [
+   "telescope",
+   "天体望遠鏡",
+   "a telescope on a tripod"
+  ],
+  [
+   "comet",
+   "彗星",
+   "a comet with a long tail"
+  ],
+  [
+   "lunar",
+   "月面の探査車",
+   "a small rover on a moon surface with a flag"
+  ]
+ ],
+ "exclude": [
+  "lunar"
+ ]
+}

@@ -1,0 +1,86 @@
+{
+ "slug": "digital-safety-icons-flat",
+ "title": "スマホとネットの安全",
+ "subject": "",
+ "genre": "icon",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Simple flat icon-style illustrations about online safety, each ONE separate object centred in its cell, bold shapes with a limited palette of blue, orange and cream; symbols only, no readable text Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "スマホ・鍵・盾・警告など、ネットの安全や情報管理を表すアイコン12点の素材です。社内研修の資料や注意喚起のページに使えます。",
+ "tags": [
+  "セキュリティ",
+  "スマホ",
+  "パスワード",
+  "詐欺",
+  "ネット",
+  "注意喚起",
+  "アイコン"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "phone-lock",
+   "ロックされたスマホ",
+   "a smartphone with a padlock on its screen"
+  ],
+  [
+   "shield",
+   "守りの盾",
+   "a shield with a check mark"
+  ],
+  [
+   "key",
+   "鍵",
+   "an old-fashioned key with a round head"
+  ],
+  [
+   "warning",
+   "警告の三角",
+   "a warning triangle with an exclamation mark"
+  ],
+  [
+   "fish",
+   "釣り針のメール",
+   "an envelope hanging from a fishing hook"
+  ],
+  [
+   "password",
+   "パスワード入力",
+   "a small box with a row of dots and a cursor"
+  ],
+  [
+   "wifi",
+   "Wi-Fi の電波",
+   "a wifi signal symbol with a small padlock"
+  ],
+  [
+   "backup",
+   "バックアップ",
+   "a cloud with an arrow pointing up"
+  ],
+  [
+   "eye",
+   "見張りの目",
+   "a magnifying glass over a keyhole"
+  ],
+  [
+   "update",
+   "更新の矢印",
+   "two circular arrows around a small gear"
+  ],
+  [
+   "block",
+   "遮断の手",
+   "a raised palm inside a circle with a bar"
+  ],
+  [
+   "people",
+   "共有の相手",
+   "three simple person icons connected by lines"
+  ]
+ ],
+ "exclude": [
+  "key"
+ ]
+}

@@ -1,0 +1,88 @@
+{
+ "slug": "school-visit-parents-flat",
+ "title": "授業参観と保護者会",
+ "subject": "",
+ "genre": "school",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "School parent-visit scenes in a flat style: classroom, desks, teacher, parents; each a small complete scene, people with simple faces Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "授業参観・保護者会・個人面談など、学校行事の場面12点の素材です。学校だよりや保護者向けの資料に使えます。",
+ "tags": [
+  "授業参観",
+  "保護者会",
+  "面談",
+  "学校行事",
+  "教室",
+  "保護者"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "visit",
+   "授業参観",
+   "parents standing along the back wall of a classroom watching a lesson"
+  ],
+  [
+   "hand",
+   "手を挙げる児童",
+   "a pupil raising a hand at a desk while the teacher points"
+  ],
+  [
+   "meeting",
+   "保護者会",
+   "a teacher speaking to seated parents in a classroom"
+  ],
+  [
+   "interview",
+   "個人面談",
+   "a teacher and a parent sitting at a desk across from each other"
+  ],
+  [
+   "shoes",
+   "来客用スリッパ",
+   "a row of visitor slippers by a school entrance"
+  ],
+  [
+   "desk-name",
+   "名前の札の席",
+   "a child's desk with a blank folded name card on it"
+  ],
+  [
+   "handout",
+   "配布プリント",
+   "a teacher handing a sheet of paper to a parent"
+  ],
+  [
+   "reception",
+   "受付の机",
+   "a reception desk with a pen, a clipboard and a visitor badge"
+  ],
+  [
+   "hall",
+   "廊下の掲示",
+   "a school corridor wall with children's drawings pinned up"
+  ],
+  [
+   "chair",
+   "保護者用の椅子",
+   "rows of chairs for parents in a school gym"
+  ],
+  [
+   "camera",
+   "写真を撮る保護者",
+   "a parent holding up a smartphone to take a photo"
+  ],
+  [
+   "walk",
+   "校門を出る親子",
+   "a parent and a child walking out of a school gate together"
+  ]
+ ],
+ "exclude": [
+  "desk-name",
+  "hand",
+  "interview",
+  "visit"
+ ]
+}

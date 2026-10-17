@@ -1,0 +1,84 @@
+{
+ "slug": "trains-stations-flat",
+ "title": "電車と駅の風景",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Train and station illustrations, each ONE separate object or small scene centred in its cell; generic trains with no company marks, flat style Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "電車・ホーム・改札・車内の場面など、鉄道にまつわる素材12点です。通勤や旅行の案内、地域の資料に使えます。",
+ "tags": [
+  "電車",
+  "駅",
+  "鉄道",
+  "ホーム",
+  "改札",
+  "通勤",
+  "旅行"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "train",
+   "走る電車",
+   "a commuter train running on a track, side view"
+  ],
+  [
+   "platform",
+   "駅のホーム",
+   "a station platform with a waiting line and a train arriving"
+  ],
+  [
+   "gate",
+   "改札を通る",
+   "a person tapping a card at a ticket gate"
+  ],
+  [
+   "inside",
+   "混み合う車内",
+   "a train interior with passengers holding straps"
+  ],
+  [
+   "seat",
+   "座席で眠る",
+   "a person asleep on a train seat"
+  ],
+  [
+   "ticket",
+   "きっぷ",
+   "a train ticket with a perforated edge"
+  ],
+  [
+   "bullet",
+   "新幹線風の高速列車",
+   "a long white high-speed train with a pointed nose"
+  ],
+  [
+   "local",
+   "ローカル線の一両電車",
+   "a single-car train in a rural field"
+  ],
+  [
+   "crossing",
+   "踏切",
+   "a railroad crossing with lowered bars and warning lights"
+  ],
+  [
+   "bento",
+   "駅弁",
+   "a boxed lunch with a string-tied lid"
+  ],
+  [
+   "map",
+   "路線図",
+   "a simple route map with coloured lines and station dots"
+  ],
+  [
+   "conductor",
+   "車掌",
+   "a conductor in a uniform and cap signalling with a hand"
+  ]
+ ],
+ "exclude": []
+}

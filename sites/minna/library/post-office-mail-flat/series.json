@@ -1,0 +1,188 @@
+{
+ "added": "2026-10-18",
+ "slug": "post-office-mail-flat",
+ "title": "郵便とはがき",
+ "genre": "life",
+ "touch": "flat",
+ "lead": "ポスト・はがき・切手・配達など、郵便にまつわる素材12点です。年賀状や発送のお知らせの飾りに使えます。",
+ "tags": [
+  "郵便",
+  "はがき",
+  "ポスト",
+  "切手",
+  "配達",
+  "年賀状",
+  "手紙"
+ ],
+ "subject": "",
+ "season": {
+  "from": "11-20",
+  "to": "12-31"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "post-office-mail-flat-postbox",
+   "file": "post-office-mail-flat-postbox.webp",
+   "title": "赤いポスト",
+   "desc": "赤いポストのシンプルフラットイラストです。",
+   "tags": [
+    "郵便",
+    "はがき",
+    "ポスト",
+    "切手",
+    "郵便とはがき",
+    "赤いポスト",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 258,
+   "h": 438
+  },
+  {
+   "id": "post-office-mail-flat-postcard",
+   "file": "post-office-mail-flat-postcard.webp",
+   "title": "はがき",
+   "desc": "はがきのシンプルフラットイラストです。",
+   "tags": [
+    "郵便",
+    "はがき",
+    "ポスト",
+    "切手",
+    "郵便とはがき",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 440,
+   "h": 344
+  },
+  {
+   "id": "post-office-mail-flat-stamp",
+   "file": "post-office-mail-flat-stamp.webp",
+   "title": "切手",
+   "desc": "切手のシンプルフラットイラストです。",
+   "tags": [
+    "郵便",
+    "はがき",
+    "ポスト",
+    "切手",
+    "郵便とはがき",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 437,
+   "h": 201
+  },
+  {
+   "id": "post-office-mail-flat-letter",
+   "file": "post-office-mail-flat-letter.webp",
+   "title": "封筒の手紙",
+   "desc": "封筒の手紙のシンプルフラットイラストです。",
+   "tags": [
+    "郵便",
+    "はがき",
+    "ポスト",
+    "切手",
+    "手紙",
+    "郵便とはがき",
+    "封筒の手紙",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 423,
+   "h": 287
+  },
+  {
+   "id": "post-office-mail-flat-scooter",
+   "file": "post-office-mail-flat-scooter.webp",
+   "title": "配達のバイク",
+   "desc": "配達のバイクのシンプルフラットイラストです。",
+   "tags": [
+    "郵便",
+    "はがき",
+    "ポスト",
+    "切手",
+    "配達",
+    "郵便とはがき",
+    "配達のバイク",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 464,
+   "h": 394
+  },
+  {
+   "id": "post-office-mail-flat-carrier",
+   "file": "post-office-mail-flat-carrier.webp",
+   "title": "郵便を配る人",
+   "desc": "郵便を配る人のシンプルフラットイラストです。",
+   "tags": [
+    "郵便",
+    "はがき",
+    "ポスト",
+    "切手",
+    "郵便とはがき",
+    "郵便を配る人",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 400,
+   "h": 522
+  },
+  {
+   "id": "post-office-mail-flat-stack",
+   "file": "post-office-mail-flat-stack.webp",
+   "title": "年賀状の束",
+   "desc": "年賀状の束のシンプルフラットイラストです。",
+   "tags": [
+    "郵便",
+    "はがき",
+    "ポスト",
+    "切手",
+    "年賀状",
+    "郵便とはがき",
+    "年賀状の束",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 439,
+   "h": 337
+  },
+  {
+   "id": "post-office-mail-flat-parcel",
+   "file": "post-office-mail-flat-parcel.webp",
+   "title": "小包",
+   "desc": "小包のシンプルフラットイラストです。",
+   "tags": [
+    "郵便",
+    "はがき",
+    "ポスト",
+    "切手",
+    "郵便とはがき",
+    "小包",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 428,
+   "h": 391
+  },
+  {
+   "id": "post-office-mail-flat-sort",
+   "file": "post-office-mail-flat-sort.webp",
+   "title": "仕分けの棚",
+   "desc": "仕分けの棚のシンプルフラットイラストです。",
+   "tags": [
+    "郵便",
+    "はがき",
+    "ポスト",
+    "切手",
+    "郵便とはがき",
+    "仕分けの棚",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 448,
+   "h": 383
+  }
+ ]
+}

@@ -1,0 +1,240 @@
+{
+ "added": "2026-10-18",
+ "slug": "kotatsu-mikan-loose",
+ "title": "こたつとみかんの冬",
+ "genre": "life",
+ "touch": "loose",
+ "lead": "こたつ・みかん・毛布・湯たんぽなど、家で過ごす冬の場面12点の素材です。冬のお知らせやブログの挿し絵に使えます。",
+ "tags": [
+  "こたつ",
+  "みかん",
+  "冬",
+  "家",
+  "暖房",
+  "湯たんぽ"
+ ],
+ "subject": "",
+ "season": {
+  "from": "11-15",
+  "to": "02-15"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "kotatsu-mikan-loose-kotatsu",
+   "file": "kotatsu-mikan-loose-kotatsu.webp",
+   "title": "こたつでくつろぐ",
+   "desc": "こたつでくつろぐのゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "こたつとみかんの冬",
+    "こたつでくつろぐ",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 499,
+   "h": 447
+  },
+  {
+   "id": "kotatsu-mikan-loose-mikan",
+   "file": "kotatsu-mikan-loose-mikan.webp",
+   "title": "みかんを剥く",
+   "desc": "みかんを剥くのゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "こたつとみかんの冬",
+    "みかんを剥く",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 487,
+   "h": 449
+  },
+  {
+   "id": "kotatsu-mikan-loose-mikan-bowl",
+   "file": "kotatsu-mikan-loose-mikan-bowl.webp",
+   "title": "みかんの籠",
+   "desc": "みかんの籠のゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "こたつとみかんの冬",
+    "みかんの籠",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 434,
+   "h": 342
+  },
+  {
+   "id": "kotatsu-mikan-loose-sleep",
+   "file": "kotatsu-mikan-loose-sleep.webp",
+   "title": "こたつで寝る",
+   "desc": "こたつで寝るのゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "こたつとみかんの冬",
+    "こたつで寝る",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 499,
+   "h": 392
+  },
+  {
+   "id": "kotatsu-mikan-loose-cat",
+   "file": "kotatsu-mikan-loose-cat.webp",
+   "title": "こたつの猫",
+   "desc": "こたつの猫のゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "こたつとみかんの冬",
+    "こたつの猫",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 534,
+   "h": 363
+  },
+  {
+   "id": "kotatsu-mikan-loose-tea",
+   "file": "kotatsu-mikan-loose-tea.webp",
+   "title": "あたたかいお茶",
+   "desc": "あたたかいお茶のゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "こたつとみかんの冬",
+    "あたたかいお茶",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 379,
+   "h": 395
+  },
+  {
+   "id": "kotatsu-mikan-loose-hotwater",
+   "file": "kotatsu-mikan-loose-hotwater.webp",
+   "title": "湯たんぽ",
+   "desc": "湯たんぽのゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "湯たんぽ",
+    "こたつとみかんの冬",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 309,
+   "h": 426
+  },
+  {
+   "id": "kotatsu-mikan-loose-blanket",
+   "file": "kotatsu-mikan-loose-blanket.webp",
+   "title": "毛布にくるまる",
+   "desc": "毛布にくるまるのゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "こたつとみかんの冬",
+    "毛布にくるまる",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 513,
+   "h": 453
+  },
+  {
+   "id": "kotatsu-mikan-loose-heater",
+   "file": "kotatsu-mikan-loose-heater.webp",
+   "title": "ストーブ",
+   "desc": "ストーブのゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "こたつとみかんの冬",
+    "ストーブ",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 307,
+   "h": 469
+  },
+  {
+   "id": "kotatsu-mikan-loose-socks",
+   "file": "kotatsu-mikan-loose-socks.webp",
+   "title": "あたたかい靴下",
+   "desc": "あたたかい靴下のゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "こたつとみかんの冬",
+    "あたたかい靴下",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 396,
+   "h": 425
+  },
+  {
+   "id": "kotatsu-mikan-loose-window",
+   "file": "kotatsu-mikan-loose-window.webp",
+   "title": "曇った窓",
+   "desc": "曇った窓のゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "こたつとみかんの冬",
+    "曇った窓",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 406,
+   "h": 378
+  },
+  {
+   "id": "kotatsu-mikan-loose-tv",
+   "file": "kotatsu-mikan-loose-tv.webp",
+   "title": "家族のテレビ時間",
+   "desc": "家族のテレビ時間のゆるい手書きイラストです。",
+   "tags": [
+    "こたつ",
+    "みかん",
+    "冬",
+    "家",
+    "こたつとみかんの冬",
+    "家族のテレビ時間",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 559,
+   "h": 411
+  }
+ ]
+}

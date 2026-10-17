@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-18",
+ "slug": "kids-fullbody-loose",
+ "title": "男の子と女の子の全身",
+ "genre": "people",
+ "touch": "loose",
+ "lead": "走る・座る・手を振るなど、子どもの全身のポーズ12点の素材です。園だよりや学校の資料、絵本風の挿し絵に使えます。",
+ "tags": [
+  "男の子",
+  "女の子",
+  "全身",
+  "子ども",
+  "ポーズ",
+  "手書き"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "kids-fullbody-loose-boy-run",
+   "file": "kids-fullbody-loose-boy-run.webp",
+   "title": "走る男の子",
+   "desc": "走る男の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "走る男の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 343,
+   "h": 498
+  },
+  {
+   "id": "kids-fullbody-loose-girl-run",
+   "file": "kids-fullbody-loose-girl-run.webp",
+   "title": "走る女の子",
+   "desc": "走る女の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "走る女の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 374,
+   "h": 473
+  },
+  {
+   "id": "kids-fullbody-loose-boy-wave",
+   "file": "kids-fullbody-loose-boy-wave.webp",
+   "title": "手を振る男の子",
+   "desc": "手を振る男の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "手を振る男の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 317,
+   "h": 515
+  },
+  {
+   "id": "kids-fullbody-loose-girl-wave",
+   "file": "kids-fullbody-loose-girl-wave.webp",
+   "title": "手を振る女の子",
+   "desc": "手を振る女の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "手を振る女の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 376,
+   "h": 499
+  },
+  {
+   "id": "kids-fullbody-loose-boy-sit",
+   "file": "kids-fullbody-loose-boy-sit.webp",
+   "title": "座る男の子",
+   "desc": "座る男の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "座る男の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 312,
+   "h": 470
+  },
+  {
+   "id": "kids-fullbody-loose-girl-sit",
+   "file": "kids-fullbody-loose-girl-sit.webp",
+   "title": "座る女の子",
+   "desc": "座る女の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "座る女の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 333,
+   "h": 446
+  },
+  {
+   "id": "kids-fullbody-loose-boy-jump",
+   "file": "kids-fullbody-loose-boy-jump.webp",
+   "title": "ジャンプする男の子",
+   "desc": "ジャンプする男の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "ジャンプする男の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 305,
+   "h": 433
+  },
+  {
+   "id": "kids-fullbody-loose-girl-jump",
+   "file": "kids-fullbody-loose-girl-jump.webp",
+   "title": "ジャンプする女の子",
+   "desc": "ジャンプする女の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "ジャンプする女の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 310,
+   "h": 410
+  },
+  {
+   "id": "kids-fullbody-loose-boy-bag",
+   "file": "kids-fullbody-loose-boy-bag.webp",
+   "title": "ランドセルの男の子",
+   "desc": "ランドセルの男の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "ランドセルの男の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 239,
+   "h": 462
+  },
+  {
+   "id": "kids-fullbody-loose-girl-bag",
+   "file": "kids-fullbody-loose-girl-bag.webp",
+   "title": "ランドセルの女の子",
+   "desc": "ランドセルの女の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "ランドセルの女の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 270,
+   "h": 442
+  },
+  {
+   "id": "kids-fullbody-loose-boy-point",
+   "file": "kids-fullbody-loose-boy-point.webp",
+   "title": "指をさす男の子",
+   "desc": "指をさす男の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "指をさす男の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 305,
+   "h": 463
+  },
+  {
+   "id": "kids-fullbody-loose-girl-think",
+   "file": "kids-fullbody-loose-girl-think.webp",
+   "title": "考える女の子",
+   "desc": "考える女の子のゆるい手書きイラストです。",
+   "tags": [
+    "男の子",
+    "女の子",
+    "全身",
+    "子ども",
+    "男の子と女の子の全身",
+    "考える女の子",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 256,
+   "h": 442
+  }
+ ]
+}

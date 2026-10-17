@@ -1,0 +1,219 @@
+{
+ "added": "2026-10-18",
+ "slug": "space-planets-flat",
+ "title": "宇宙と太陽系の星",
+ "genre": "nature",
+ "touch": "flat",
+ "lead": "太陽系の惑星・ロケット・月面・宇宙飛行士など、宇宙の素材12点です。理科の資料や科学イベントのお知らせに使えます。",
+ "tags": [
+  "宇宙",
+  "惑星",
+  "太陽系",
+  "ロケット",
+  "月",
+  "宇宙飛行士",
+  "理科"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "space-planets-flat-sun",
+   "file": "space-planets-flat-sun.webp",
+   "title": "太陽",
+   "desc": "太陽のシンプルフラットイラストです。",
+   "tags": [
+    "宇宙",
+    "惑星",
+    "太陽系",
+    "ロケット",
+    "宇宙と太陽系の星",
+    "太陽",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 445,
+   "h": 446
+  },
+  {
+   "id": "space-planets-flat-earth",
+   "file": "space-planets-flat-earth.webp",
+   "title": "地球",
+   "desc": "地球のシンプルフラットイラストです。",
+   "tags": [
+    "宇宙",
+    "惑星",
+    "太陽系",
+    "ロケット",
+    "宇宙と太陽系の星",
+    "地球",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 387,
+   "h": 387
+  },
+  {
+   "id": "space-planets-flat-moon",
+   "file": "space-planets-flat-moon.webp",
+   "title": "月",
+   "desc": "月のシンプルフラットイラストです。",
+   "tags": [
+    "宇宙",
+    "惑星",
+    "太陽系",
+    "ロケット",
+    "月",
+    "宇宙と太陽系の星",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 389,
+   "h": 385
+  },
+  {
+   "id": "space-planets-flat-mars",
+   "file": "space-planets-flat-mars.webp",
+   "title": "火星",
+   "desc": "火星のシンプルフラットイラストです。",
+   "tags": [
+    "宇宙",
+    "惑星",
+    "太陽系",
+    "ロケット",
+    "宇宙と太陽系の星",
+    "火星",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 387,
+   "h": 387
+  },
+  {
+   "id": "space-planets-flat-saturn",
+   "file": "space-planets-flat-saturn.webp",
+   "title": "土星",
+   "desc": "土星のシンプルフラットイラストです。",
+   "tags": [
+    "宇宙",
+    "惑星",
+    "太陽系",
+    "ロケット",
+    "宇宙と太陽系の星",
+    "土星",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 616,
+   "h": 376
+  },
+  {
+   "id": "space-planets-flat-jupiter",
+   "file": "space-planets-flat-jupiter.webp",
+   "title": "木星",
+   "desc": "木星のシンプルフラットイラストです。",
+   "tags": [
+    "宇宙",
+    "惑星",
+    "太陽系",
+    "ロケット",
+    "宇宙と太陽系の星",
+    "木星",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 395,
+   "h": 394
+  },
+  {
+   "id": "space-planets-flat-rocket",
+   "file": "space-planets-flat-rocket.webp",
+   "title": "ロケット",
+   "desc": "ロケットのシンプルフラットイラストです。",
+   "tags": [
+    "宇宙",
+    "惑星",
+    "太陽系",
+    "ロケット",
+    "宇宙と太陽系の星",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 485,
+   "h": 523
+  },
+  {
+   "id": "space-planets-flat-astronaut",
+   "file": "space-planets-flat-astronaut.webp",
+   "title": "宇宙飛行士",
+   "desc": "宇宙飛行士のシンプルフラットイラストです。",
+   "tags": [
+    "宇宙",
+    "惑星",
+    "太陽系",
+    "ロケット",
+    "宇宙飛行士",
+    "宇宙と太陽系の星",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 523,
+   "h": 508
+  },
+  {
+   "id": "space-planets-flat-satellite",
+   "file": "space-planets-flat-satellite.webp",
+   "title": "人工衛星",
+   "desc": "人工衛星のシンプルフラットイラストです。",
+   "tags": [
+    "宇宙",
+    "惑星",
+    "太陽系",
+    "ロケット",
+    "宇宙と太陽系の星",
+    "人工衛星",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 517,
+   "h": 441
+  },
+  {
+   "id": "space-planets-flat-telescope",
+   "file": "space-planets-flat-telescope.webp",
+   "title": "天体望遠鏡",
+   "desc": "天体望遠鏡のシンプルフラットイラストです。",
+   "tags": [
+    "宇宙",
+    "惑星",
+    "太陽系",
+    "ロケット",
+    "宇宙と太陽系の星",
+    "天体望遠鏡",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 426,
+   "h": 505
+  },
+  {
+   "id": "space-planets-flat-comet",
+   "file": "space-planets-flat-comet.webp",
+   "title": "彗星",
+   "desc": "彗星のシンプルフラットイラストです。",
+   "tags": [
+    "宇宙",
+    "惑星",
+    "太陽系",
+    "ロケット",
+    "宇宙と太陽系の星",
+    "彗星",
+    "シンプルフラット",
+    "花・自然"
+   ],
+   "w": 531,
+   "h": 450
+  }
+ ]
+}

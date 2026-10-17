@@ -1,0 +1,91 @@
+{
+ "slug": "post-office-mail-flat",
+ "title": "郵便とはがき",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Postal items, each ONE separate object or small scene centred in its cell: red post box, postcards, stamps, letters, a delivery scooter; generic design with no marks or logos, flat style Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "ポスト・はがき・切手・配達など、郵便にまつわる素材12点です。年賀状や発送のお知らせの飾りに使えます。",
+ "tags": [
+  "郵便",
+  "はがき",
+  "ポスト",
+  "切手",
+  "配達",
+  "年賀状",
+  "手紙"
+ ],
+ "season": {
+  "from": "11-20",
+  "to": "12-31"
+ },
+ "holes": false,
+ "items": [
+  [
+   "postbox",
+   "赤いポスト",
+   "a round red street post box"
+  ],
+  [
+   "postcard",
+   "はがき",
+   "a blank postcard lying slightly tilted"
+  ],
+  [
+   "stamp",
+   "切手",
+   "a sheet of three small blank stamps with a perforated edge"
+  ],
+  [
+   "letter",
+   "封筒の手紙",
+   "a sealed envelope with a small heart-shaped seal"
+  ],
+  [
+   "scooter",
+   "配達のバイク",
+   "a red delivery scooter with a box on the back"
+  ],
+  [
+   "carrier",
+   "郵便を配る人",
+   "a person in a cap delivering letters from a shoulder bag"
+  ],
+  [
+   "mailbox",
+   "家のポスト",
+   "a small mailbox on a gate post with letters sticking out"
+  ],
+  [
+   "stack",
+   "年賀状の束",
+   "a bundle of postcards tied with a string"
+  ],
+  [
+   "write",
+   "はがきを書く",
+   "a person writing a postcard at a desk with a pen"
+  ],
+  [
+   "parcel",
+   "小包",
+   "a wrapped parcel tied with string"
+  ],
+  [
+   "airmail",
+   "航空便",
+   "an envelope with a paper airplane next to it"
+  ],
+  [
+   "sort",
+   "仕分けの棚",
+   "a wall of mail sorting slots with letters in them"
+  ]
+ ],
+ "exclude": [
+  "airmail",
+  "mailbox",
+  "write"
+ ]
+}

@@ -1,0 +1,86 @@
+{
+ "slug": "kotatsu-mikan-loose",
+ "title": "こたつとみかんの冬",
+ "subject": "",
+ "genre": "life",
+ "touch": "loose",
+ "title_fmt": "{ja}",
+ "subject_en": "Cozy winter home scenes in a loose hand-drawn style: kotatsu table, mandarin oranges, blankets; people with simple faces, each a small complete scene Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "こたつ・みかん・毛布・湯たんぽなど、家で過ごす冬の場面12点の素材です。冬のお知らせやブログの挿し絵に使えます。",
+ "tags": [
+  "こたつ",
+  "みかん",
+  "冬",
+  "家",
+  "暖房",
+  "湯たんぽ"
+ ],
+ "season": {
+  "from": "11-15",
+  "to": "02-15"
+ },
+ "holes": false,
+ "items": [
+  [
+   "kotatsu",
+   "こたつでくつろぐ",
+   "a person with a blanket sitting at a kotatsu table"
+  ],
+  [
+   "mikan",
+   "みかんを剥く",
+   "a person peeling a mandarin orange at a table"
+  ],
+  [
+   "mikan-bowl",
+   "みかんの籠",
+   "a basket piled with mandarin oranges"
+  ],
+  [
+   "sleep",
+   "こたつで寝る",
+   "a person lying asleep with legs under a kotatsu"
+  ],
+  [
+   "cat",
+   "こたつの猫",
+   "a cat curled up on a kotatsu blanket"
+  ],
+  [
+   "tea",
+   "あたたかいお茶",
+   "a hot cup of tea with steam on a tray"
+  ],
+  [
+   "hotwater",
+   "湯たんぽ",
+   "a hot water bottle with a knitted cover"
+  ],
+  [
+   "blanket",
+   "毛布にくるまる",
+   "a person wrapped in a thick blanket on a sofa"
+  ],
+  [
+   "heater",
+   "ストーブ",
+   "an old round kerosene heater with a kettle on top"
+  ],
+  [
+   "socks",
+   "あたたかい靴下",
+   "a pair of thick striped socks"
+  ],
+  [
+   "window",
+   "曇った窓",
+   "a fogged-up window with snow falling outside"
+  ],
+  [
+   "tv",
+   "家族のテレビ時間",
+   "a family of three sitting together in front of a television"
+  ]
+ ],
+ "exclude": []
+}

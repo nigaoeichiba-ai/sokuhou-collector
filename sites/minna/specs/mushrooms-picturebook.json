@@ -1,0 +1,86 @@
+{
+ "slug": "mushrooms-picturebook",
+ "title": "きのこの森の図鑑",
+ "subject": "",
+ "genre": "nature",
+ "touch": "picturebook",
+ "title_fmt": "{ja}",
+ "subject_en": "Mushrooms, each ONE separate mushroom or small cluster centred in its cell, storybook watercolor-and-pencil style, with a little moss or leaf at the base; ten edible types and two decorative toadstools Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "しいたけ・まいたけ・ベニテングタケ風の絵など、きのこ12点を絵本のタッチで描いた素材です。秋の資料や食の記事に使えます。",
+ "tags": [
+  "きのこ",
+  "キノコ",
+  "しいたけ",
+  "秋",
+  "森",
+  "絵本"
+ ],
+ "season": {
+  "from": "09-20",
+  "to": "11-30"
+ },
+ "holes": false,
+ "items": [
+  [
+   "shiitake",
+   "しいたけ",
+   "two shiitake mushrooms with brown caps"
+  ],
+  [
+   "shimeji",
+   "しめじ",
+   "a cluster of shimeji mushrooms with grey-brown caps"
+  ],
+  [
+   "enoki",
+   "えのき",
+   "a bunch of white enoki mushrooms with thin stems"
+  ],
+  [
+   "maitake",
+   "まいたけ",
+   "a ruffled maitake mushroom cluster"
+  ],
+  [
+   "eringi",
+   "エリンギ",
+   "two thick eringi mushrooms"
+  ],
+  [
+   "matsutake",
+   "まつたけ",
+   "two matsutake mushrooms with a pine needle"
+  ],
+  [
+   "nameko",
+   "なめこ",
+   "a small group of glossy nameko mushrooms"
+  ],
+  [
+   "champignon",
+   "マッシュルーム",
+   "three round white button mushrooms, one cut in half"
+  ],
+  [
+   "toadstool",
+   "赤い毒きのこ",
+   "a red toadstool with cream-coloured dots on its cap"
+  ],
+  [
+   "blue",
+   "青いきのこ",
+   "a decorative blue fantasy toadstool with glowing spots"
+  ],
+  [
+   "forest",
+   "きのこの生えた切り株",
+   "a tree stump covered with small mushrooms"
+  ],
+  [
+   "basket",
+   "きのこ狩りの籠",
+   "a woven basket full of mixed mushrooms"
+  ]
+ ],
+ "exclude": []
+}
