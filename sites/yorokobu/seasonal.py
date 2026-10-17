@@ -112,16 +112,22 @@ def _section(s: dict, sources: dict) -> str:
 SOURCE_NOTE = "しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときは、それに合わせてください。"
 
 
-def sources_note(subject: str = "記事", own_view: bool = True) -> str:
-    """The one notice at the foot of every page that rests on sources (the same words everywhere): what the page is, and that customs differ."""
+OWN_BASIS = "この記事は、当サイトの考え方をまとめたものです。制度や検索の動きは、出典を示したものだけを載せています。"
+
+
+def sources_note(subject: str = "記事", own_view: bool = True, own_basis: bool = False) -> str:
+    """The one notice at the foot of every page that rests on sources (the same words everywhere): what the page is, and that customs differ.
+    own_basis: an article that is the site's own view and cites a source only for a figure or a rule (the otoshidama articles)."""
+    if own_basis:
+        return OWN_BASIS + SOURCE_NOTE
     core = f"この{subject}は、出典先を要約・比較し、当サイトの考え方を足したものです。" if own_view else f"この{subject}は、出典先を要約・比較したものです。"
     return core + SOURCE_NOTE
 
 
-def sources_block(items_html: str, checked: str, subject: str = "記事", own_view: bool = True) -> str:
+def sources_block(items_html: str, checked: str, subject: str = "記事", own_view: bool = True, own_basis: bool = False) -> str:
     y, m, d = checked.split("-")
     return (f'<section class="g-sec seas-srcs"><h2><span class="scribble">出典(確認日 {int(y)}年{int(m)}月{int(d)}日)</span></h2><ul class="seas-list">{items_html}</ul>'
-            f'<p class="seas-note">{esc(sources_note(subject, own_view))}</p></section>')
+            f'<p class="seas-note">{esc(sources_note(subject, own_view, own_basis))}</p></section>')
 
 
 def _sources(data: dict, used: list[str], checked: str) -> str:
