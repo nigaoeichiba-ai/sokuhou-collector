@@ -306,6 +306,7 @@ def edit_page(site: str, rel: str, raw: str, runner=None, today: str | None = No
     report = {"page": rel, "date": today, "hash": content_hash(units), "units": len(units), "diagnosis": [], "accepted": [], "rejected": [], "deleted": [], "needs_check": [],
               "structure_suggestions": [], "unchanged": 0, "failed": ""}
     by_id = {u.id: u for u in units}
+    handled: set[str] = set()
     passed: list[tuple[PageUnit, str, str]] = []             # edits that passed the invariants; the claims check comes next
     for chunk in chunks(units):
         if dry:
@@ -327,6 +328,10 @@ def edit_page(site: str, rel: str, raw: str, runner=None, today: str | None = No
                 report["deleted"].append(by_id[did].text[:100])
         for e in d.get("edits", []):
             u = by_id.get(e.get("id")) if isinstance(e, dict) else None
+            if u is not None and u.id in handled:
+                continue                                          # a heading that came with every part of a long page: once
+            if u is not None:
+                handled.add(u.id)
             after = tidy(site, str(e.get("after", ""))) if u else ""
             if u is None or not after:
                 continue
@@ -361,13 +366,17 @@ def edit_page(site: str, rel: str, raw: str, runner=None, today: str | None = No
     return report
 
 
+# pages that are written again every day by a routine, or are made of shop data: an edit there is a treadmill (the next day brings new text); the fix belongs in the writer's prompt
+NOT_EDITED = {"yorokobu": re.compile(r"^(?:picks|ranking|compare|ask|budget)/")}
+
+
 def next_pages(site: str, build: Path, n: int) -> list[tuple[str, str]]:
     """The next pages to edit: editorial pages (several editable paragraphs) never edited, or whose text changed since; oldest first."""
     done = load_edited(site)
     cand = []
     for f in nj.walk_files(build, (".html", ".htm")):
         rel = str(f.relative_to(build)).replace("\\", "/")
-        if nj.EXEMPT_PATH.search(rel):
+        if nj.EXEMPT_PATH.search(rel) or (site in NOT_EDITED and NOT_EDITED[site].search(rel)):
             continue
         raw = nj.published_text(f.read_text(encoding="utf-8"), site)
         units = page_units(raw)
