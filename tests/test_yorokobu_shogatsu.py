@@ -64,14 +64,15 @@ class GateTest(unittest.TestCase):
             d["hub"]["image"]["alt"] = ""
         self.assertTrue(any("image needs" in p for p in mutated(noalt)))
 
-    def test_an_article_resting_on_one_source_is_found(self):
-        def f(d):
+    def test_a_page_may_rest_on_no_source_when_it_has_no_number_and_a_number_still_needs_one(self):
+        def none(d):
             a = d["articles"][5]
-            for s in a["sections"]:
-                s["src"] = [k for k in s.get("src", [])][:1] and ["tk"]
-            for q in a["faq"]:
-                q["src"] = ["tk"] if q.get("src") else []
-        self.assertTrue(any("fewer than two sources" in p for p in mutated(f)))
+            for s in a["sections"] + a["faq"]:
+                s.pop("src", None)
+                if "p" in s:
+                    s["p"] = [re.sub(r"[0-9０-９]", "", x) for x in s["p"]]
+        self.assertFalse(any("rests on fewer" in p for p in mutated(none)))                      # no gate asks for a number of sources
+        self.assertTrue(any("without a source" in p for p in mutated(lambda d: d["articles"][5]["sections"][0].update(src=[], p=["金額は3,000円です。"]))))
 
     def test_a_ragged_or_empty_table_cell_and_a_calendar_without_sources_are_found(self):
         def ragged(d):
@@ -220,28 +221,13 @@ class OtoshidamaTest(unittest.TestCase):
         for s in self.SLUGS:
             self.assertEqual(self.arts()[s].get("basis"), "own", s)
 
-    def test_an_own_article_with_no_source_is_found_and_one_that_is_not_own_needs_two(self):
-        def none(d):
-            a = [x for x in d["articles"] if x["slug"] == "otoshidama-kawari"][0]
-            for sec in a["sections"]:
-                sec["src"] = []
-                sec.pop("note", None)
-                sec["p"] = [re.sub(r"[0-9０-９]", "", x) for x in sec.get("p", [])]
-            for f in a["faq"]:
-                f["src"] = []
-        self.assertTrue(any("otoshidama-kawari: rests on fewer than two sources" in p for p in mutated(none)))
-
-        def not_own(d):                                                   # kaumono rests on one source (the site's own search measurement): fine only as an own article
-            a = [x for x in d["articles"] if x["slug"] == "otoshidama-kaumono"][0]
-            del a["basis"]
-        self.assertTrue(any("otoshidama-kaumono: rests on fewer than two sources" in p for p in mutated(not_own)))
-
     def test_no_article_gives_a_market_price_for_otoshidama(self):
         for s in self.SLUGS:
             a = self.arts()[s]
             text = json.dumps(a, ensure_ascii=False)
             self.assertNotRegex(text, r"[0-9,]+円", s)                            # no amount of money anywhere
-            self.assertIn("載せていません", text, s)                                 # and each says so
+            self.assertNotIn("出典が見つ", text, s)                                  # and no page says that a source is missing: what cannot be checked is left out
+            self.assertNotIn("確かめられる出典", text, s)
 
     def test_the_tax_sentence_names_the_agency_and_does_not_claim_otoshidama_is_listed(self):
         a = self.arts()["otoshidama-kawari"]

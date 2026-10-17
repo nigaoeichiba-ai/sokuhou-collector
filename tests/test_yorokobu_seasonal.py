@@ -47,8 +47,19 @@ class ContentTest(unittest.TestCase):
         pg["sections"][2].pop("list", None)
         pg["sections"][3]["table"]["rows"][0] = ["一般的な目安"]
         found = " | ".join(seasonal.problems(bad))
-        for needle in ("names no source", "unknown source nope", "is not a store page", "empty section", "wrong number of cells"):
+        for needle in ("a number or date without a source", "unknown source nope", "is not a store page", "empty section", "wrong number of cells"):
             self.assertIn(needle, found, needle)
+
+    def test_the_foot_list_has_one_link_for_each_organization(self):
+        srcs = {"a": {"name": "三越伊勢丹 A", "short": "三越伊勢丹", "url": "https://www.mistore.jp/a", "date": ""},
+                "b": {"name": "三越伊勢丹 B", "short": "三越伊勢丹", "url": "https://www.mistore.jp/b", "date": ""},
+                "c": {"name": "高島屋 C", "short": "高島屋", "url": "https://www.takashimaya.co.jp/c", "date": ""}}
+        html = seasonal.source_items(["a", "b", "c"], srcs)
+        self.assertEqual(html.count("<li>"), 2)
+        self.assertIn("三越伊勢丹 A</a>ほか", html)
+        self.assertNotIn("https://www.mistore.jp/b", html)
+        self.assertEqual(seasonal.source_items([], srcs), "")
+        self.assertNotIn("<ul", seasonal.sources_block("", "2026-10-17"))                      # no source used: only the short sentence
 
     def test_the_build_refuses_bad_content(self):
         orig = seasonal.load

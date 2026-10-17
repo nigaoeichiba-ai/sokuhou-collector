@@ -7,6 +7,7 @@ not say, and the page says that customs differ by region and family.  The pages 
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from sokuhou.sitekit import crumbs, esc
@@ -69,8 +70,8 @@ def problems(data: dict) -> list[str]:
             where = f"{pg.get('slug')}/{s.get('h')}"
             if not s.get("h"):
                 out.append(f"{where}: no heading")
-            if not s.get("src"):
-                out.append(f"{where}: names no source")
+            if not s.get("src") and _DIGIT.search(_YEAR.sub("", _text(s))):
+                out.append(f"{where}: a number or date without a source")             # a source is for numbers, dates, rules and a store's own view; the rest of a page needs none
             for k in s.get("src", []):
                 if k not in srcs:
                     out.append(f"{where}: unknown source {k}")
@@ -82,6 +83,20 @@ def problems(data: dict) -> list[str]:
                     if len(r) != len(t["head"]) or any(not str(c).strip() for c in r):
                         out.append(f"{where}: a table row with the wrong number of cells or an empty cell: {r}")
     return out
+
+
+_DIGIT = re.compile(r"[0-9０-９]")
+_YEAR = re.compile(r"20\d\d年")
+
+
+def _text(s: dict) -> str:
+    out = [*s.get("p", []), *s.get("list", []), *s.get("check", [])]
+    if s.get("note"):
+        out.append(s["note"])
+    tb = s.get("table")
+    if tb:
+        out += list(tb["head"]) + [str(c) for r in tb["rows"] for c in r]
+    return "".join(map(str, out))
 
 
 def paths() -> list[str]:
@@ -124,17 +139,31 @@ def sources_note(subject: str = "記事", own_view: bool = True, own_basis: bool
     return core + SOURCE_NOTE
 
 
+def source_items(used: list[str], sources: dict) -> str:
+    """The foot list: ONE link for each organization (the page of it that the page cites most), "ほか" after it when the page also rests on other pages of the same one.
+    A page that is full of links reads as a list of links: the text names the store, the foot gives one place to look."""
+    groups: dict[str, list[str]] = {}
+    for k in used:
+        groups.setdefault(sources[k].get("short") or k, []).append(k)
+    out = []
+    for keys in groups.values():
+        v = sources[keys[0]]
+        out.append(f'<li><a href="{esc(v["url"])}" rel="noopener nofollow" target="_blank">{esc(v["name"])}</a>'
+                   + (f'({esc(v["date"])})' if v.get("date") else "") + ("ほか" if len(keys) > 1 else "") + "</li>")
+    return "".join(out)
+
+
 def sources_block(items_html: str, checked: str, subject: str = "記事", own_view: bool = True, own_basis: bool = False) -> str:
+    """The notice at the foot of a page.  A page that uses a source gets the list and the notice; a page that uses none gets only the one short sentence that customs differ."""
+    if not items_html:
+        return f'<section class="g-sec seas-srcs"><p class="seas-note">{esc(SOURCE_NOTE)}</p></section>'
     y, m, d = checked.split("-")
     return (f'<section class="g-sec seas-srcs"><h2><span class="scribble">出典(確認日 {int(y)}年{int(m)}月{int(d)}日)</span></h2><ul class="seas-list">{items_html}</ul>'
             f'<p class="seas-note">{esc(sources_note(subject, own_view, own_basis))}</p></section>')
 
 
 def _sources(data: dict, used: list[str], checked: str) -> str:
-    items = "".join(
-        f'<li><a href="{esc(data["sources"][k]["url"])}" rel="noopener nofollow" target="_blank">{esc(data["sources"][k]["name"])}</a>'
-        + (f'({esc(data["sources"][k]["date"])})' if data["sources"][k]["date"] else "") + "</li>" for k in used)
-    return sources_block(items, checked, "早見表", own_view=False)
+    return sources_block(source_items(used, data["sources"]), checked, "早見表", own_view=False)
 
 
 def page(d: dict, cfg: dict, preview: bool, pg: dict, data: dict, known: set[str] | None = None) -> str:
