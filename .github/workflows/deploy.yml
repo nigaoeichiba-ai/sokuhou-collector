@@ -338,7 +338,7 @@ jobs:
         if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         continue-on-error: true
         run: python -m sokuhou.indexnow snapshot --base ${{ matrix.url }} --out prev_sitemap.xml
-      - name: Private product data for api/items.php (the favourites, shared lists, gacha and answer pages ask it for a few products at a time; the files are never public: the server's private folder)
+      - name: Private product data for api/items.php (the favourites, shared lists, gacha and answer pages ask it for a few products at a time; the files are never public, they stay in the server's private folder)
         if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         env:
           XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
