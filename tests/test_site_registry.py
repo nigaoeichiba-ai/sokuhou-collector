@@ -9,7 +9,7 @@ from sokuhou import deployplan
 
 ROOT = Path(__file__).resolve().parents[1]
 ENTRY_KEYS = {"name", "domain", "marker", "min_pages", "min_cards", "probe", "needs_var", "live_sha", "watch", "group", "timeout_minutes", "build", "own", "owns",
-              "fast_lane", "dir", "url", "core_tests"}
+              "fast_lane", "dir", "url", "core_tests", "lag_minutes"}
 SECRETISH = ("password", "secret", "token", "api_key", "apikey", "private key")
 
 

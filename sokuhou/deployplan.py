@@ -174,6 +174,22 @@ def decide(name: str, site: dict, *, event: str, only: str, before: str, after: 
     return {"files": files, "why_base": why_base, "base": base}
 
 
+def oldest_waiting(name: str, reg: dict, base: str, after: str, changed: set[str] | None, cwd: Path = ROOT) -> int:
+    """The commit time (epoch seconds) of the oldest change after `base` that concerns the site; 0 when it cannot be told.  The deploy reports how long that change waited."""
+    out = _git("log", "--format=@@%ct", "--name-only", f"{base}..{after}", cwd=cwd)
+    if out.returncode != 0:
+        return 0
+    oldest, cur, files = 0, 0, []
+    for line in out.stdout.splitlines() + ["@@0"]:
+        if line.startswith("@@"):
+            if cur and relevant_files(name, files, reg, changed):
+                oldest = cur if not oldest else min(oldest, cur)
+            cur, files = int(line[2:] or 0), []
+        elif line.strip():
+            files.append(line.strip())
+    return oldest
+
+
 def plan(reg: dict, *, event: str, only: str, before: str, after: str, cwd: Path = ROOT, fetch_served=True) -> dict:
     """{'include': [matrix entries], 'decisions': {site: {...}}}"""
     if only and only not in reg["sites"]:
@@ -199,11 +215,13 @@ def plan(reg: dict, *, event: str, only: str, before: str, after: str, cwd: Path
                 d = {"go": False, "fast": False, "why": f"{d['why_base']}: only other sites' files changed"}
             else:
                 fast = is_fast(site, rel)
-                d = {"go": True, "fast": fast, "why": f"{d['why_base']}: {len(rel)} of {len(d['files'])} changed files concern it" + (" (content only: fast lane)" if fast else "")}
+                since = oldest_waiting(n, reg, d["base"], after, changed, cwd)
+                waited = f", oldest waiting change {max(0, int(__import__('time').time()) - since) // 60} min old" if since else ""
+                d = {"go": True, "fast": fast, "since": since, "why": f"{d['why_base']}: {len(rel)} of {len(d['files'])} changed files concern it{waited}" + (" (content only: fast lane)" if fast else "")}
         decisions[n] = d
         if d["go"]:
             include.append({"site": n, "dir": site["dir"], "url": site["url"], "build": site["build"], "min_pages": site["min_pages"], "min_cards": site["min_cards"],
-                            "marker": site["marker"], "probe": site["probe"], "group": site["group"], "fast": d["fast"], "timeout": site["timeout_minutes"]})
+                            "marker": site["marker"], "probe": site["probe"], "group": site["group"], "fast": d["fast"], "timeout": site["timeout_minutes"], "since": d.get("since", 0)})
     return {"include": include, "decisions": decisions}
 
 

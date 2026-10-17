@@ -126,12 +126,14 @@ class GateScenarios(PlanBase):
         after = self.commit("sites/minna/series.json", "minna")
         self.assertTrue(self.go("minna", before, after, served=before))
 
-    def test_the_live_commit_of_atomou_is_never_asked_for(self):
-        # atomou's live site is behind a password: its /deployed-sha.txt cannot be read, so the push's own BEFORE is the base
+    def test_atomou_is_compared_with_its_live_commit_too_when_that_can_be_read(self):
+        # while the demo is behind a password /deployed-sha.txt answers 401: then the push's own BEFORE is the base (an unreadable file only means the fallback)
         self.commit("sites/atomou/a.py", "atomou")
         before = self.head()
         after = self.commit("sites/yorokobu/x.py", "yorokobu only")
-        self.assertFalse(self.go("atomou", before, after, served="0123456789abcdef0123456789abcdef01234567"))
+        self.assertFalse(self.go("atomou", before, after, served=before))
+        self.serve("atomou", None)
+        self.assertFalse(self.go("atomou", before, after, served=None))
 
 
 class FastLane(PlanBase):
@@ -223,6 +225,25 @@ class WhoseIsIt(PlanBase):
         self.assertEqual((y["dir"], y["url"].startswith("file:"), y["min_pages"], y["marker"], y["probe"], y["group"]),
                          ("yorokobu-present.com", True, 120, "よろこぶプレゼント", "/sitemap.xml", "deploy-yorokobu"))   # its own group: GitHub keeps one waiting job per group and cancels an older waiting one, so a shared rakuten-api group let other waiters cancel the yorokobu deploy again and again (2026-10-18)
         self.assertEqual(y["build"], "python sites/yorokobu/build.py --release --out release --items out/yorokobu_items.json")
+
+
+class WaitMeasured(PlanBase):
+    def test_the_matrix_carries_the_commit_time_of_the_oldest_waiting_change(self):
+        live = self.commit("sites/minna/old.json", "live minna")
+        first = self.commit("sites/minna/a.json", "first minna change")
+        self.commit("sites/yorokobu/x.py", "another site in between")
+        after = self.commit("sites/minna/b.json", "second minna change")
+        first_time = int(self.git("show", "-s", "--format=%ct", first))
+        res = self.plan(live, after, served=live)
+        inc = {i["site"]: i for i in res["include"]}
+        self.assertEqual(inc["minna"]["since"], first_time)     # the change that has waited longest, not the newest
+        self.assertTrue(inc["yorokobu"]["since"] > 0)
+        self.assertIn("oldest waiting change", res["decisions"]["minna"]["why"])
+
+    def test_a_manual_run_has_no_waiting_change_to_measure(self):
+        before = self.head()
+        after = self.commit("sites/minna/a.json", "minna")
+        self.assertEqual([i["since"] for i in self.plan(before, after, event="workflow_dispatch", only="minna")["include"]], [0])
 
 
 class RegisterChanges(PlanBase):

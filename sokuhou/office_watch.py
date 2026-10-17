@@ -36,7 +36,8 @@ UA = {"User-Agent": "Mozilla/5.0 (compatible; MACS-office-watch/1.0)"}
 # --- deploy lag (the same ownership rules as the Gate step of deploy.yml; test_office_watch checks that the two agree) ---
 LAG_MINUTES = 120
 STUCK_RUN_MINUTES = 150
-REDISPATCH_HOURS = 3
+BACKOFF_MINUTES = (10, 20, 40, 60, 90, 120)   # the wait before the next automatic try, after the 1st, 2nd, ... failed deploy of a site in a row
+MAX_FAILURES_IN_A_ROW = 6
 REGISTER = deployplan.load_registry()   # data/sites.json: the ownership rules are the plan's of deploy.yml, one place (2026-10-18)
 DEPLOY_SITES = {name: site["domain"] for name, site in REGISTER["sites"].items() if site.get("watch", True)}   # atomou is behind a password: nothing to read
 DEPLOY_TRIGGERS = deployplan.SKIPPABLE
@@ -82,12 +83,48 @@ def touches(site: str, files: list[str]) -> bool:
     return deployplan.touches(site, files, REGISTER, changed_entries=set())
 
 
+def lag_minutes(site: str) -> int:
+    return int(REGISTER["sites"][site].get("lag_minutes", LAG_MINUTES))
+
+
+def site_state(site: str, runs: list) -> dict:
+    """What the recent deploy runs say about one site: is a job of it running or waiting, how many of its deploys failed in a row (newest first, a success ends the count,
+    cancelled and skipped jobs say nothing), when the last of them failed and in which step.  A run without job detail that is active may be this site's: then it counts as busy."""
+    busy, streak, counting, last_fail, cause = False, 0, True, None, ""
+    for r in runs:
+        jobs = r.get("jobs")
+        if jobs is None:
+            if r["status"] in ACTIVE:
+                busy = True
+            continue
+        for j in jobs:
+            if j["site"] != site:
+                continue
+            if j["status"] in ACTIVE:
+                busy = True
+            elif counting and j.get("conclusion") == "failure":
+                streak += 1
+                last_fail = last_fail or j.get("completed")
+                cause = cause or j.get("failed_step", "")
+            elif counting and j.get("conclusion") == "success":
+                counting = False
+    return {"busy": busy, "streak": streak, "last_fail": last_fail, "cause": cause}
+
+
+def backoff_minutes(streak: int) -> int:
+    return BACKOFF_MINUTES[min(streak, len(BACKOFF_MINUTES)) - 1] if streak > 0 else 0
+
+
 def deploy_lag(now: dt.datetime, served: dict, commits_after, runs: list) -> dict:
     """served: {site: commit id the live site was built from, or None}; commits_after(sha) -> [{'sha','time','files'}] oldest first, or None when unreadable;
-    runs: [{'status','event','created'}] of deploy-sites, newest first.  Returns problems / unverified / ok / heal (the sites to deploy again)."""
-    out = {"problems": [], "unverified": [], "ok": [], "heal": []}
+    runs: [{'status','event','created','jobs'?}] of deploy-sites, newest first (jobs: [{'site','status','conclusion','completed','failed_step'}]).
+
+    The guarantee (owner, 2026-10-18): no site stays behind main for long.  A site is stale when a change that concerns it is older than its limit (2 hours, yorokobu 3: the
+    register's lag_minutes) and the live commit is still older.  A stale site is deployed again, that site only, when no job of it is running or waiting; after a failed deploy of
+    it the next try waits 10, 20, 40, 60, 90, 120 minutes, and after 6 failures in a row nothing more is started: that is reported with the step that failed.
+    Returns problems / unverified / ok / heal (the sites to deploy again) / stale (one record per stale site, for the log)."""
+    out = {"problems": [], "unverified": [], "ok": [], "heal": [], "stale": []}
     active = [r for r in runs if r["status"] in ACTIVE]
-    recent_manual = [r for r in runs if r["event"] == "workflow_dispatch" and (now - r["created"]).total_seconds() < REDISPATCH_HOURS * 3600]
     for r in active:
         mins = (now - r["created"]).total_seconds() / 60
         if r["status"] == "in_progress" and mins > STUCK_RUN_MINUTES:
@@ -107,25 +144,38 @@ def deploy_lag(now: dt.datetime, served: dict, commits_after, runs: list) -> dic
             continue
         oldest = min(c["time"] for c in waiting)
         age = (now - oldest).total_seconds() / 60
-        if age <= LAG_MINUTES:
-            out["ok"].append(f"{domain}: 公開待ちの変更が {len(waiting)} 件(最古で {age:.0f} 分前。{LAG_MINUTES} 分までは通常の待ち)")
+        limit = lag_minutes(site)
+        if age <= limit:
+            out["ok"].append(f"{domain}: 公開待ちの変更が {len(waiting)} 件(最古で {age:.0f} 分前。{limit} 分までは通常の待ち)")
             continue
-        out["problems"].append(f"{domain}: 公開されていない変更が {len(waiting)} 件あり、最古は {age:.0f} 分前です(目安は {LAG_MINUTES} 分まで)")
-        if active:
-            out["unverified"].append(f"{domain}: デプロイが実行中または待機中のため、自動の再公開はまだ行いません")
-        elif recent_manual:
-            out["unverified"].append(f"{domain}: {REDISPATCH_HOURS} 時間以内に手動のデプロイがあったため、自動の再公開は行いません。それでも公開されない場合は、原因があります")
+        st = site_state(site, runs)
+        why = f"最後の失敗: {st['cause']}" if st["cause"] else "最後の失敗の記録なし"
+        out["problems"].append(f"{domain}: 公開されていない変更が {len(waiting)} 件あり、最古は {age:.0f} 分前です(目安は {limit} 分まで。連続失敗 {st['streak']} 回。{why})")
+        record = {"site": site, "domain": domain, "waiting": len(waiting), "age_minutes": round(age), "limit_minutes": limit, "busy": st["busy"],
+                  "failures_in_a_row": st["streak"], "last_failure": st["cause"], "action": ""}
+        if st["busy"]:
+            record["action"] = "wait: a job of this site is running or waiting"
+            out["unverified"].append(f"{domain}: このサイトのデプロイが実行中または待機中のため、自動の再公開はまだ行いません")
+        elif st["streak"] >= MAX_FAILURES_IN_A_ROW:
+            record["action"] = "gave up: failed %d times in a row" % st["streak"]
+            out["problems"].append(f"{domain}: 自動の再公開は {st['streak']} 回続けて失敗したので、これ以上は行いません。{why}。人の確認が必要です")
+        elif st["streak"] and st["last_fail"] and (now - st["last_fail"]).total_seconds() / 60 < backoff_minutes(st["streak"]):
+            wait = backoff_minutes(st["streak"]) - (now - st["last_fail"]).total_seconds() / 60
+            record["action"] = f"cool down: next try in {wait:.0f} minutes"
+            out["unverified"].append(f"{domain}: 直前のデプロイが失敗(連続 {st['streak']} 回)したため、あと {wait:.0f} 分あけてから再公開します")
         else:
+            record["action"] = "deploy again"
             out["heal"].append(site)
+        out["stale"].append(record)
     return out
 
 
 def check(now: dt.datetime, get=fetch, commits=None, deploy=None) -> dict:
     """Return {'problems': [...], 'unverified': [...], 'ok': [...]}.  `get`, `commits` and `deploy` (the result of deploy_lag) are replaced in the tests."""
     today = now.astimezone(JST).date()
-    out = {"problems": [], "unverified": [], "ok": [], "heal": []}
+    out = {"problems": [], "unverified": [], "ok": [], "heal": [], "stale": []}
     if deploy is not None:
-        for k in ("problems", "unverified", "ok", "heal"):
+        for k in ("problems", "unverified", "ok", "heal", "stale"):
             out[k].extend(deploy[k])
 
     for site in SITES:
@@ -218,12 +268,34 @@ def make_commits_after(token: str | None):
     return commits_after
 
 
+def _parse_time(text: str | None):
+    return dt.datetime.fromisoformat(text.replace("Z", "+00:00")) if text else None
+
+
 def read_runs(token: str | None) -> list[dict]:
+    """The recent deploy-sites runs with the jobs of each (the site of a job comes from its name 'deploy (site, domain, ...)'; the step that failed is kept)."""
     try:
         data = _api(f"/repos/{REPO}/actions/workflows/deploy.yml/runs?per_page=20", token)
     except (OSError, ValueError):
         return []
-    return [{"status": r["status"], "event": r["event"], "created": dt.datetime.fromisoformat(r["created_at"].replace("Z", "+00:00"))} for r in data.get("workflow_runs", [])]
+    runs = []
+    for i, r in enumerate(data.get("workflow_runs", [])):
+        row = {"status": r["status"], "event": r["event"], "created": _parse_time(r["created_at"]), "jobs": None}
+        if i < 14 or r["status"] in ACTIVE:
+            try:
+                jobs = []
+                for j in _api(f"/repos/{REPO}/actions/runs/{r['id']}/jobs?per_page=100", token).get("jobs", []):
+                    m = re.match(r"deploy \((\w+),", j.get("name", ""))
+                    if not m:
+                        continue
+                    failed = next((s["name"] for s in j.get("steps", []) if s.get("conclusion") == "failure"), "")
+                    jobs.append({"site": m.group(1), "status": j["status"], "conclusion": j.get("conclusion"), "completed": _parse_time(j.get("completed_at")),
+                                 "failed_step": re.sub(r"\s*\(.*", "", failed)[:60]})
+                row["jobs"] = jobs
+            except (OSError, ValueError, KeyError):
+                row["jobs"] = None
+        runs.append(row)
+    return runs
 
 
 def report(result: dict, now: dt.datetime, test: bool = False) -> str:
@@ -234,6 +306,9 @@ def report(result: dict, now: dt.datetime, test: bool = False) -> str:
         lines += ["## おかしいところ", *[f"- {p}" for p in result["problems"]], ""]
     if result.get("heal"):
         lines += ["## 自動で再公開を依頼しました", *[f"- {DEPLOY_SITES[h]}(deploy-sites を、このサイトだけ、実際に公開する設定で起動)" for h in result["heal"]], ""]
+    if result.get("stale"):
+        lines += ["## 公開が遅れているサイト(記録)", "| サイト | 最古の未公開の変更 | 目安 | 連続失敗 | 最後の失敗の工程 | 見張りの判断 |", "|---|---|---|---|---|---|",
+                  *[f"| {x['domain']} | {x['age_minutes']} 分前({x['waiting']} 件) | {x['limit_minutes']} 分 | {x['failures_in_a_row']} | {x['last_failure'] or '-'} | {x['action']} |" for x in result["stale"]], ""]
     if result["unverified"]:
         lines += ["## 確認できなかったこと(問題なしとは扱っていません)", *[f"- {p}" for p in result["unverified"]], ""]
     lines += ["## 確認できたこと", *[f"- {p}" for p in result["ok"]], "",
