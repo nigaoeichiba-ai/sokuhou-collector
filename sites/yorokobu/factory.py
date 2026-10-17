@@ -39,13 +39,13 @@ Angles to draw from (these are only seeds; invent new ones, combine them, go bey
 - kinds of gifts: 手作りキット, 長く使える道具, 一生モノ, 日用品の上質版, 地域の名産, 家族で分けられる物, 写真や名前が入る物
 """
 THEME_SPEC = """
-{"themes":[{"slug":"ascii-lowercase-hyphens","group":"<an existing group slug, or a NEW one you also describe in "new_groups">","name":"short name 4-12 chars","title":"page title 14-34 chars","lead":"110-220 chars, concrete, calm editorial voice","reasons":["3 items, 38-120 chars"],"how_to_choose":["3 items, 28-110 chars"],"avoid":["2 items 20-70 chars"],"recipient":null,"ideas":[{"label":"2-12 chars","type":"one of: 実用品|食べもの・飲みもの|ファッション小物|癒し・リラックス|思い出・名入れ|体験・お出かけ|趣味・ホビー|おもしろ・サプライズ|子ども向け","query":"Rakuten keyword search, 2-5 words, concrete product nouns plus a gift word","why":"40-90 chars"}],"keywords":["8 short search words"],"tiers":["choose 3-5 of: under3000, 3000-5000, 5000-10000, 10000-20000, over20000"],"map":[[x,y],[x,y],[x,y],[x,y]]}],
+{"themes":[{"slug":"ascii-lowercase-hyphens","group":"<an existing group slug, or a NEW one you also describe in "new_groups">","name":"short name 4-12 chars","title":"page title 14-34 chars","lead":"110-220 chars, concrete, calm editorial voice","reasons":["2-3 items, 38-120 chars, only as many as there is something real to say"],"how_to_choose":["2-3 items, 28-110 chars, same"],"avoid":["2 items 20-70 chars"],"recipient":null,"ideas":[{"label":"2-12 chars","type":"one of: 実用品|食べもの・飲みもの|ファッション小物|癒し・リラックス|思い出・名入れ|体験・お出かけ|趣味・ホビー|おもしろ・サプライズ|子ども向け","query":"Rakuten keyword search, 2-5 words, concrete product nouns plus a gift word","why":"40-90 chars"}],"keywords":["8 short search words"],"tiers":["choose 3-5 of: under3000, 3000-5000, 5000-10000, 10000-20000, over20000"],"map":[[x,y],[x,y],[x,y],[x,y]]}],
  "new_groups":[{"slug":"ascii","name":"group name","blurb":"one sentence, 30-70 chars"}]}
 "map" places each of the 4 ideas (same order) on the gift map: x from -2 (used up at once: food, drink, consumable) to 2 (lasts for years), y from -2 (classic, safe) to 2 (unusual, characterful); halves allowed; use the full range and do not put all four at one place.
-Exactly 4 ideas per theme (4 DIFFERENT product kinds across price levels), 3 reasons, 3 how_to_choose, 8 keywords. "recipient" is null unless the theme clearly implies one of boyfriend|girlfriend|husband|wife|father|mother|grandfather|grandmother|friend-female|friend-male|colleague|boss|teacher|baby|toddler|child|teen|in-laws. "new_groups" may be empty.
+Exactly 4 ideas per theme (4 DIFFERENT product kinds across price levels), 2 or 3 reasons, 2 or 3 how_to_choose (only as many as there is something real to say), 8 keywords. "recipient" is null unless the theme clearly implies one of boyfriend|girlfriend|husband|wife|father|mother|grandfather|grandmother|friend-female|friend-male|colleague|boss|teacher|baby|toddler|child|teen|in-laws. "new_groups" may be empty.
 """
 ARTICLE_SPEC = """
-{"articles":[{"slug":"ascii-lowercase-hyphens","title":"title 18-40 chars, natural, specific","lead":"110-230 chars","sections":[{"h":"heading 8-22 chars","body":"200-420 chars, concrete: situations, wording to use, what to do and avoid"} x 4-5],"checklist":["3-6 short action items, 12-34 chars"],"faq":[{"q":"14-34 chars","a":"60-140 chars"} x 2-3],"themes":["2-4 slugs chosen ONLY from the theme list below, the ones a reader would want next"]}]}
+{"articles":[{"slug":"ascii-lowercase-hyphens","title":"title 18-40 chars, natural, specific","lead":"110-230 chars","sections":[{"h":"heading 8-22 chars","body":"200-420 chars, concrete: situations, wording to use, what to do and avoid"} x 3-5, only as many sections as there is something to say],"checklist":["3-6 short action items, 12-34 chars"],"faq":[{"q":"14-34 chars","a":"60-140 chars"} x 2-3],"themes":["2-4 slugs chosen ONLY from the theme list below, the ones a reader would want next"]}]}
 Do not write a "date" field (it is added automatically).
 """
 MESSAGE_SPEC = """
@@ -53,7 +53,26 @@ MESSAGE_SPEC = """
 Messages must be usable as they are: they may address the person only as "あなた" or by relation (お母さん, 先輩), never with a placeholder or a name. Do not mention the gift's brand or price. Different sets must sound different (not the same sentence with the relation swapped).
 """
 RULES = """
-LENGTH CALIBRATION: past answers were consistently about 30% SHORTER than requested because characters are hard to count. Aim for the upper half of every range (write about 40% more than feels necessary), then check a few fields by counting.
+## 書き方の基本(書く前に読む。お手本: `sokuhou-sites/docs/STYLE_MODELS_JA.md`)
+あなたは、その道20年の編集者として書く。読み手は、決めたい・知りたい人で、早く答えが欲しい。
+
+1. 記事・節の書き出しの一文に、結論か数字か品名を入れる。「本記事では」は書かない。(ボタンやラベルは、短く中身が分かる言葉に。)
+2. 抽象語(負担・気遣い・配慮・自然・安心・整える・さまざま・最適)を使いたくなったら、その中身を書く。数、品名、期日、条件、使う場面。中身が分からなければ、その文は書かない。
+3. 勧める文を先に書く。避ける話は、理由を添えて後ろに置く。「避けます」「控えます」だけで終えない。
+4. 慣習や相場は「〜が一般的です」。根拠のある判断は言い切る。根拠がなければ書かない。「〜と言えるでしょう」「〜を示唆している」は使わない。
+5. 人は役割・続柄で呼ぶ(幹事・主催者・上司・取引先・義両親・おじいちゃん、おばあちゃん)。「〜した人」「年長の家族」は使わない。物は具体名で(お礼の品・お礼状)。
+6. 題と見出しは、読んで中身が分かる言葉にする。名詞止め、用途の「〜に」、数字。否定形(〜しない・〜せず)と、雰囲気の副題(静かに・そっと・作法・心得)は使わない。
+7. 文の長さと文末を替える。同じ文末が3回続いたら、順序を替えるか短い断定を混ぜる。一文に論点は一つ。
+8. 雰囲気語(そっと・寄り添う)は事実に替える。使うなら、具体物に付けて1ページに1〜2回まで。
+9. 体験を装わない。確かめた事実と基準を言い切る。確かめていない数字・仕様・「人気」は書かない。
+10. 結びは、次にすることか、しなくてよいことを一つ。「いかがでしたか」「まとめ」は付けない。
+11. 枠を埋めるために書かない。理由が2つしかなければ2つでよい。無い節は作らない。
+12. 書いたら声に出して読む。引っかかる所は直す。
+13. 与えられた数字・固有名・出典・法的な意味は変えない。事実を足さない。
+
+迷ったら、STYLE_MODELS_JA.md の自分のジャンルの○の例に近い方を選ぶ。語は `sokuhou-collector/data/style/lexicon/` の辞書で引く(`weak` は決め手にしない)。
+
+LENGTH: the ranges are limits, not targets. Write as much as the content needs and no more: if there are only two reasons, write two; never pad a field or invent a section to reach a number. A field below its minimum needs more concrete detail (a number, a product kind, a condition, a scene), never filler. State as fact only what is checked; a number, spec or "popular" you did not check is left out.
 JAPANESE STYLE (the readers are adults who choose a gift calmly: 20s-60s, family, partners, colleagues; never write for teenagers): polite です・ます, never ね/よ/選んでね/見つけたよ/ぜんぶ; a comma (、) only where the meaning breaks, never after every short phrase (NG 「3週間前に、カレンダーで、お知らせします」, OK 「3週間前にカレンダーでお知らせします」); most sentences 35-75 characters, split anything over 90; do not end reasons with 「〜しやすい」 (at most 4 times in one item, at most 2 sentences ending 「〜やすいです。」): say the concrete reason (分けられる, 持ち帰れる, 保管できる); each reason names a use scene, a concrete feature of the product and, where there is one, a caution; do not use the editors' jargon 切り口, ソムリエ, ナビゲーター, 見立て, ギフトマップ, コンシェルジュ, ガチャ; no 「よく読まれている」「人気」 without a basis.
 HARD RULES: polite です・ます Japanese with varied sentence length; no statistics, surveys, rankings, "調査", "人気", "売れ筋"; no guarantees ("必ず", "絶対", "最高"); no brand or shop names; never mention Rakuten, Amazon, affiliates or AI; no medical or cosmetic-effect claims; no emojis; no stacked abstract nouns; never coin compound words nobody says (年長の家族, 年配の家族, 年上の家族: say 祖父母, 両親, 年配の方, 親戚); no flowery verbs (寄り添う, そっと, 華やぐ) and no catch-all verbs (整える, 無理なく, 扱いやすい: say the concrete thing instead, at most once per page); each item reads differently, and nothing may repeat sentences of the existing pages. Products must be physical things you can find on a Japanese shopping site (no tickets, bookings or services). There is no python in your sandbox that you can rely on: count characters yourself while writing.
 """

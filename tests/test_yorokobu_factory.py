@@ -124,5 +124,17 @@ class QualityTest(unittest.TestCase):
         self.assertEqual(quality.repeated_sentences([s, "別の文。" + s]), [s.rstrip("。")])
 
 
+class RulesTest(unittest.TestCase):
+    def test_the_writer_basics_come_first_and_nothing_asks_to_write_more_than_the_content_needs(self):
+        r = factory.RULES.strip()
+        self.assertTrue(r.startswith("## 書き方の基本"))
+        self.assertIn("結論か数字か品名", r)
+        self.assertIn("枠を埋めるために書かない", r)
+        self.assertNotIn("40% more", factory.RULES)                                           # the old padding instruction
+        self.assertNotIn("upper half", factory.RULES)
+        self.assertIn("not targets", factory.RULES)
+        self.assertNotIn("Exactly 4 ideas per theme (4 DIFFERENT product kinds across price levels), 3 reasons", factory.THEME_SPEC)
+
+
 if __name__ == "__main__":
     unittest.main()

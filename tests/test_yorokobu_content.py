@@ -135,7 +135,7 @@ class ThemeQualityTest(unittest.TestCase):
             bad += [(t["slug"], w) for w in FORBIDDEN_WORDS + TEMPLATE_PHRASES if w in blob]
             if not 75 <= len(t["lead"]) <= 260:
                 bad.append((t["slug"], "lead", len(t["lead"])))
-            if len(t["reasons"]) != 3 or len(t["how_to_choose"]) != 3 or len(t["ideas"]) != 4 or len(t["keywords"]) != 8:
+            if not 2 <= len(t["reasons"]) <= 3 or not 2 <= len(t["how_to_choose"]) <= 3 or len(t["ideas"]) != 4 or len(t["keywords"]) != 8:
                 bad.append((t["slug"], "counts"))
             if len({i["query"] for i in t["ideas"]}) != 4:
                 bad.append((t["slug"], "repeated query"))
