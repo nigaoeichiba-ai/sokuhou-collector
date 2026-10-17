@@ -117,6 +117,11 @@ class CheckerTest(unittest.TestCase):
         self.assertTrue(any("[images]" in x for x in self.problems(good('<img src="/month/index.html">'))))
         self.assertEqual(self.problems(good('<img alt="x" hidden>')), [])
 
+    def test_the_affiliate_counter_pixel_is_taken_as_its_code_gives_it_but_other_images_still_need_an_alt(self):
+        pixel = '<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=1&pid=2" height="1" width="1" border="0">'
+        self.assertEqual(self.problems(good(pixel)), [])
+        self.assertTrue(any("[images]" in x for x in self.problems(good('<img src="//ad.example.test/servlet/gifbanner?sid=1" height="1" width="1">'))))
+
     def test_skipped_rules_are_left_out(self):
         self.assertEqual(self.problems(good("<ul></ul>"), skip=("lists",)), [])
 

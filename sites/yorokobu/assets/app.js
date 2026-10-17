@@ -236,7 +236,7 @@
     var msg = $(".list-msg", root), ul = $("#list-items", root);
     var codes = (new URLSearchParams(location.search).get("c") || "").split(",").map(function (c) { try { return decodeURIComponent(c); } catch (e) { return ""; } }).filter(Boolean).slice(0, 12);
     if (!codes.length) { msg.textContent = "候補が指定されていません。"; return; }
-    fetch(root.getAttribute("data-src")).then(function (r) { return r.json(); }).then(function (db) {
+    fetch(root.getAttribute("data-src") + "?c=" + codes.map(encodeURIComponent).join(",")).then(function (r) { if (!r.ok) throw new Error("items"); return r.json(); }).then(function (db) {
       var n = 0;
       codes.forEach(function (c) {
         var it = Object.prototype.hasOwnProperty.call(db, c) ? db[c] : null;
@@ -492,8 +492,7 @@
   // ---------------------------------------------------------------- おまかせガチャ: one product at random (data is fetched when the page opens)
   function initGacha() {
     var root = $("#gacha"); if (!root) return;
-    var form = $(".gacha-form", root), msg = $(".gacha-msg", root), out = $(".gacha-out", root), data = null, last = "";
-    function pool() { var r = form.elements.r.value, t = form.elements.t.value; return (data && data.rec[r] && data.rec[r].tiers[t]) || []; }
+    var form = $(".gacha-form", root), msg = $(".gacha-msg", root), out = $(".gacha-out", root), last = "", busy = false;
     function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; }
     function show(it) {
       out.textContent = "";
@@ -510,16 +509,17 @@
       body.appendChild(row); card.appendChild(pic); card.appendChild(body); out.appendChild(card);
     }
     function spin() {
-      var p = pool();
-      if (!p.length) { msg.textContent = "その組み合わせの商品はまだありません。ほかの予算を選んでみてください。"; out.textContent = ""; return; }
-      var pick = p[Math.floor(Math.random() * p.length)], guard = 0;
-      while (p.length > 1 && pick[3] === last && guard++ < 8) pick = p[Math.floor(Math.random() * p.length)];
-      last = pick[3]; msg.textContent = "条件に合う商品を1点、選びました。"; show(pick);
+      if (busy) return;
+      busy = true;
+      var q = "?r=" + encodeURIComponent(form.elements.r.value) + "&t=" + encodeURIComponent(form.elements.t.value) + (last ? "&x=" + encodeURIComponent(last) : "");
+      fetch(root.getAttribute("data-src") + q).then(function (r) { if (!r.ok) throw new Error("gacha"); return r.json(); }).then(function (j) {
+        busy = false;
+        var pick = j && j.row;
+        if (!pick) { msg.textContent = "その組み合わせの商品はまだありません。ほかの予算を選んでみてください。"; out.textContent = ""; return; }
+        last = pick[3]; msg.textContent = "条件に合う商品を1点、選びました。"; show(pick);
+      }, function () { busy = false; msg.textContent = "うまく読み込めませんでした。時間をおいてもう一度お試しください。"; });
     }
-    function ready() { form.addEventListener("submit", function (e) { e.preventDefault(); spin(); }); }
-    msg.textContent = "準備しています…";
-    fetch(root.getAttribute("data-src")).then(function (r) { return r.json(); }).then(function (j) { data = j; msg.textContent = ""; ready(); },
-      function () { msg.textContent = "うまく読み込めませんでした。時間をおいてもう一度お試しください。"; });
+    form.addEventListener("submit", function (e) { e.preventDefault(); spin(); });
   }
 
   function initCalc() {

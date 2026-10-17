@@ -116,12 +116,13 @@ class PagesTest(unittest.TestCase):
         sec = self.section(self.read("compare/tumbler/index.html"))
         for i in range(1, 9):
             self.assertIn(f"https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&amp;pid=892728268&amp;vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Fshop{i}%2Fitem{i}.html", sec)
-        self.assertEqual(sec.count('rel="nofollow sponsored noopener"'), 16)                  # the photo and the button of each row (the words of a row are not a link)
-        self.assertEqual(sec.count("servlet/gifbanner?sid=3784606&amp;pid=892728268"), 8)
+        self.assertEqual(sec.count('rel="nofollow">'), 16)                  # the photo and the button of each row (the words of a row are not a link): the programme's code, rel="nofollow" only
+        self.assertNotIn("sponsored", sec)
+        self.assertEqual(sec.count("servlet/gifbanner?sid=3784606&amp;pid=892728268"), 16)          # the counter inside every link, before its text or picture
 
     def test_the_pictures_are_the_products_own_photos_from_yahoos_image_host_at_the_size_given_and_nothing_else(self):
         sec = self.section(self.read("compare/tumbler/index.html"))
-        imgs = re.findall(r"<img [^>]*>", re.sub(r'<img src="https://ad\.jp\.ap\.valuecommerce\.com[^>]*>', "", sec))      # the programme's 1x1 counters are not pictures
+        imgs = re.findall(r"<img [^>]*>", re.sub(r'<img src="//ad\.jp\.ap\.valuecommerce\.com[^>]*>', "", sec))      # the programme's 1x1 counters are not pictures
         self.assertEqual(len(imgs), 8)
         for im in imgs:
             self.assertRegex(im, r'src="https://item-shopping\.c\.yimg\.jp/i/g/shop\d_item"')                      # the photo URL as the API gave it (never rewritten)

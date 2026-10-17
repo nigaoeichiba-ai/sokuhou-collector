@@ -43,25 +43,22 @@ def _facts(e: dict) -> str:
 def rakuten_card(cfg: dict, d: dict, e: dict, eid: str, n: int, more: str = "") -> str | None:
     B = _b()
     live = d.get("daily_items", {}).get(e["code"])
-    if live is not None and not live.get("available", True):
-        return None                                                      # sold out or gone: not shown (nobody can buy it)
-    url = live["url"] if live else e["url"]
+    if live is None or not live.get("available", True):
+        return None                                                      # not found by the API today, or sold out: not shown (the shop's data is not stored here, so there is nothing to show without it)
+    url = live["url"]
     href = B.rakuten_link(cfg, url)
-    img = live["image"] if live else e["img"]
-    price = ""
-    if live:
-        stars = f'<span class="stars">★{live["rating"]:.1f}</span>({live["reviews"]:,}件)' if live["reviews"] else ""
-        price = (f'<p class="pick-price">{B.yen(live["price"])}<small>{stars}{"・送料無料" if live["free_shipping"] else ""}'
-                 f'<br>楽天市場の{esc(d["fetched_label"])}時点の情報</small></p>')
-        B.SEEN[e["code"]] = {"n": B.short(e["name"], 60), "p": live["price"], "i": live["image"], "u": href}
-    else:
-        price = '<p class="pick-price"><small>価格・在庫は販売ページでご確認ください。</small></p>'
+    img = live["image"]
+    line = B.blurb_line(live)                                            # the site's own words (never the shop's name)
+    stars = f'<span class="stars">★{live["rating"]:.1f}</span>({live["reviews"]:,}件)' if live["reviews"] else ""
+    price = (f'<p class="pick-price">{B.yen(live["price"])}<small>{stars}{"・送料無料" if live["free_shipping"] else ""}'
+             f'<br>楽天市場の{esc(d["fetched_label"])}時点の情報</small></p>')
+    B.SEEN[e["code"]] = {"n": line, "p": live["price"], "i": live["image"], "u": href}
     other = ""                                                                            # a Rakuten product part carries Rakuten's link only (terms Article 8)
-    fav = B.fav_button(e["code"], B.short(e["name"], 40), live["price"] if live else None, url)
+    fav = B.fav_button(e["code"], line or "気になる品", live["price"], url)
     return (f'<article class="pick" id="{eid}" data-code="{esc(e["code"])}"><div class="imgbox"><div class="pick-img"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">'
-            f'<img src="{esc(img)}" alt="{esc(e["name"])}"></a></div>{fav}</div>'
+            f'<img src="{esc(img)}" alt="{esc(line or "楽天市場の商品ページ")}"></a></div>{fav}</div>'
             f'<div class="pick-body"><p class="pick-meta"><span class="pick-no">{n}</span><span class="tag">{esc(e["kind"])}</span><span class="pick-scene">{esc(e["scene"])}</span></p>'
-            f'<h3>{esc(e["headline"])}</h3><p class="pick-name">{esc(e["name"])}</p><p class="pick-sum">{esc(e["summary"])}</p>{_chips(e["for"])}{_facts(e)}{price}'
+            f'<h3>{esc(e["headline"])}</h3>{f'<p class="pick-name">{esc(line)}</p>' if line else ""}<p class="pick-sum">{esc(e["summary"])}</p>{_chips(e["for"])}{_facts(e)}{price}'
             f'<div class="item-btns"><span class="btn"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">楽天市場で見る</a></span>{other}</div>{more}</div></article>')
 
 
@@ -94,10 +91,13 @@ def highlight_tiles(day: dict, d: dict, cfg: dict) -> str:
         if store == "amazon" and not cfg.get("amazon_tracking_id"):
             continue                                                       # no Associates ID, no Amazon link: such a product is not shown
         live = d.get("daily_items", {}).get(e.get("code", ""))
-        img = (live["image"] if live else e.get("img")) if store == "rakuten" else dp.mood_small_path(e)
+        if store == "rakuten" and (live is None or not live.get("available", True)):
+            continue                                                       # the shop's picture comes from today's API answer only
+        img = live["image"] if store == "rakuten" else dp.mood_small_path(e)
+        small = B.blurb_line(live) if store == "rakuten" else e["name"][:34]
         attrs = "" if store == "rakuten" else ' width="120" height="120" loading="eager" decoding="async"'            # a shop's picture is src and alt only; the site's own picture says its size
         tiles += (f'<li><a class="pick-hl" href="{day_path(day["date"])}#{h["ref"]}"><img src="{esc(img)}" alt=""{attrs}>'
-                  f'<span><b class="hl-tag">{esc(h["tag"])}</b><strong>{esc(e["headline"])}</strong><small>{esc(e["name"][:34])}</small></span></a></li>')
+                  f'<span><b class="hl-tag">{esc(h["tag"])}</b><strong>{esc(e["headline"])}</strong>{f'<small>{esc(small)}</small>' if small else ""}</span></a></li>')
     return f'<ul class="pick-hls">{tiles}</ul>'
 
 

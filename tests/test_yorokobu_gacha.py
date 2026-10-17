@@ -10,6 +10,7 @@ import unittest
 from datetime import date
 from pathlib import Path
 
+from tests import items_mock
 from sites.yorokobu import build, content
 from sokuhou import sitecheck
 from tests.test_yorokobu_e2e import CHROME, run_chrome
@@ -33,14 +34,21 @@ class GachaDataTest(unittest.TestCase):
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = render(Path(cls.tmp.name))
+        cls.private = dict(build.PRIVATE)                                    # the files left for the server's private folder
 
     @classmethod
     def tearDownClass(cls):
         cls.tmp.cleanup()
         build.RANKING_ON = False
 
+    def test_the_products_are_a_private_file_not_a_public_one(self):
+        self.assertFalse((self.out / "tool/gacha/items.json").exists())
+        self.assertFalse((self.out / "list/items.json").exists())
+        self.assertIn("yorokobu_gacha_db.json", self.private)
+        self.assertTrue((self.out / "api/items.php").exists())
+
     def test_the_data_file_lists_products_per_recipient_and_budget_without_repeats(self):
-        data = json.loads((self.out / "tool/gacha/items.json").read_text(encoding="utf-8"))
+        data = json.loads(self.private["yorokobu_gacha_db.json"])
         self.assertGreaterEqual(len(data["rec"]), 2)
         for slug, r in data["rec"].items():
             self.assertTrue(r["name"])
@@ -58,7 +66,7 @@ class GachaDataTest(unittest.TestCase):
     def test_every_product_sits_in_the_budget_it_is_filed_under(self):
         c = content.load(FIX)
         tiers = {t["slug"]: t for t in c["filters"]["tiers"]}
-        data = json.loads((self.out / "tool/gacha/items.json").read_text(encoding="utf-8"))
+        data = json.loads(self.private["yorokobu_gacha_db.json"])
         for r in data["rec"].values():
             for tier, rows in r["tiers"].items():
                 for row in rows:
@@ -67,7 +75,7 @@ class GachaDataTest(unittest.TestCase):
 
     def test_the_page_has_the_form_the_notice_the_disclaimer_and_is_linked_from_the_tools_hub(self):
         html = (self.out / "tool/gacha/index.html").read_text(encoding="utf-8")
-        for needle in ('id="gacha"', 'data-src="/tool/gacha/items.json"', 'data-aff="aaaa1111.bbbb2222.cccc3333.dddd4444"', 'name="r"', 'name="t"', "1点、提案してもらう",
+        for needle in ('id="gacha"', 'data-src="/api/items.php"', 'data-aff="aaaa1111.bbbb2222.cccc3333.dddd4444"', 'name="r"', 'name="t"', "1点、提案してもらう",
                        'aria-label="広告を含みます">PR</span>', "価格・在庫は2026年10月7日"):
             self.assertIn(needle, html)
         self.assertIn('href="/tool/gacha/"', (self.out / "tool/index.html").read_text(encoding="utf-8"))
@@ -89,21 +97,21 @@ const wait = (ms) => new Promise(r => setTimeout(r, ms));
     const ts = [...form.elements.t.options].map(o => o.value);
     let shown = null;
     for (const t of ts) {
-      form.elements.t.value = t; form.querySelector('button[type="submit"]').click(); await wait(200);
+      form.elements.t.value = t; form.querySelector('button[type="submit"]').click(); await wait(400);
       const card = d.querySelector('.gacha-card');
       if (card) { shown = {title: (card.querySelector('.gacha-name') || {}).textContent || '', href: card.querySelector('.btn > a').href, rel: card.querySelector('.btn > a').rel, price: card.querySelector('.price').textContent}; break; }
     }
     out.card = shown;
     out.msg = d.querySelector('.gacha-msg').textContent;
     const again = d.querySelector('.gacha-actions button'); out.again = !!again;
-    if (again) { again.click(); await wait(100); out.after = !!d.querySelector('.gacha-card'); }
+    if (again) { again.click(); await wait(400); out.after = !!d.querySelector('.gacha-card'); }
     out.scroll = d.documentElement.scrollWidth;
     // the same on a 300px phone: the card must not push the page sideways
     const g = document.createElement('iframe'); g.style.width = '300px'; g.style.height = '900px'; document.body.appendChild(g);
     await new Promise(r => { g.onload = r; g.src = '/tool/gacha/'; }); await wait(800);
     const d2 = g.contentDocument, f2 = d2.querySelector('.gacha-form');
     f2.elements.r.value = out.recipients[0];
-    for (const t of [...f2.elements.t.options].map(o => o.value)) { f2.elements.t.value = t; f2.querySelector('button[type="submit"]').click(); await wait(200); if (d2.querySelector('.gacha-card')) break; }
+    for (const t of [...f2.elements.t.options].map(o => o.value)) { f2.elements.t.value = t; f2.querySelector('button[type="submit"]').click(); await wait(400); if (d2.querySelector('.gacha-card')) break; }
     out.card300 = !!d2.querySelector('.gacha-card'); out.scroll300 = d2.documentElement.scrollWidth;
   } catch (e) { out.error = String(e); }
   document.getElementById('out').textContent = JSON.stringify(out);
@@ -120,11 +128,7 @@ class GachaBrowserTest(unittest.TestCase):
         root = render(Path(cls.tmp.name))
         (root / "e2e.html").write_text(f'<!doctype html><meta charset="utf-8"><pre id="out"></pre><script>{SCENARIO}</script>', encoding="utf-8")
 
-        class Quiet(http.server.SimpleHTTPRequestHandler):
-            def log_message(self, *a, **k):
-                pass
-        cls.server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(Quiet, directory=str(root)))
-        threading.Thread(target=cls.server.serve_forever, daemon=True).start()
+        cls.server = items_mock.serve(root)                              # a static server that also answers api/items.php from the build's private files
         dom = run_chrome(f"http://127.0.0.1:{cls.server.server_address[1]}/e2e.html")
         m = re.search(r'<pre id="out">(.*?)</pre>', dom, re.S)
         if not m:

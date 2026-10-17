@@ -11,6 +11,7 @@ import unittest
 from datetime import date
 from pathlib import Path
 
+from tests import items_mock
 from sites.yorokobu import build, content
 from sokuhou import sitecheck
 from tests.test_yorokobu_e2e import CHROME, run_chrome
@@ -34,6 +35,7 @@ class ShareListDataTest(unittest.TestCase):
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = render(Path(cls.tmp.name))
+        cls.private = dict(build.PRIVATE)                                    # the files left for the server's private folder
 
     @classmethod
     def tearDownClass(cls):
@@ -41,7 +43,8 @@ class ShareListDataTest(unittest.TestCase):
         build.RANKING_ON = False
 
     def test_the_data_file_has_every_product_the_pages_show_with_its_rakuten_link(self):
-        db = json.loads((self.out / "list/items.json").read_text(encoding="utf-8"))
+        self.assertFalse((self.out / "list/items.json").exists())                      # not a public file: api/items.php gives a few products at a time
+        db = json.loads(self.private["yorokobu_items_db.json"])
         shown = set()
         for f in self.out.rglob("*.html"):
             shown |= set(re.findall(r'<li class="item" data-code="([^"]+)"', f.read_text(encoding="utf-8")))
@@ -60,7 +63,7 @@ class ShareListDataTest(unittest.TestCase):
         self.assertNotIn("/list/", (self.out / "sitemap.xml").read_text(encoding="utf-8"))
         self.assertIn("Amazonのアソシエイトとして", html)                 # its Amazon buttons are made by the script, the notice is there anyway
         self.assertIn("楽天アフィリエイト・Amazonアソシエイト", html)
-        self.assertIn('data-src="/list/items.json"', html)
+        self.assertIn('data-src="/api/items.php"', html)
         self.assertEqual([p for p in sitecheck.check_dir(self.out, CFG["site_url"], skip=("lists",)) if "list" in p], [])
 
     def test_the_share_bar_offers_the_phones_own_share_sheet_and_the_script_knows_both(self):
@@ -82,8 +85,7 @@ const out = {};
 const wait = (ms) => new Promise(r => setTimeout(r, ms));
 (async () => {
   try {
-    const db = await (await fetch('/list/items.json')).json();
-    const codes = Object.keys(db).slice(0, 3);
+    const codes = CODES.slice(0, 3);
     out.codes = codes.length;
     const f = document.createElement('iframe'); f.style.width = '1000px'; f.style.height = '900px'; document.body.appendChild(f);
     await new Promise(r => { f.onload = r; f.src = '/list/?c=' + codes.map(encodeURIComponent).join(',') + ',no-such-code'; }); await wait(900);
@@ -116,13 +118,9 @@ class ShareListBrowserTest(unittest.TestCase):
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()
         root = render(Path(cls.tmp.name))
-        (root / "e2e.html").write_text(f'<!doctype html><meta charset="utf-8"><pre id="out"></pre><script>{SCENARIO}</script>', encoding="utf-8")
+        (root / "e2e.html").write_text(f'<!doctype html><meta charset="utf-8"><pre id="out"></pre><script>const CODES = {json.dumps(list(json.loads(build.PRIVATE["yorokobu_items_db.json"])))};{SCENARIO}</script>', encoding="utf-8")
 
-        class Quiet(http.server.SimpleHTTPRequestHandler):
-            def log_message(self, *a, **k):
-                pass
-        cls.server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(Quiet, directory=str(root)))
-        threading.Thread(target=cls.server.serve_forever, daemon=True).start()
+        cls.server = items_mock.serve(root)                              # a static server that also answers api/items.php from the build's private files
         dom = run_chrome(f"http://127.0.0.1:{cls.server.server_address[1]}/e2e.html")
         m = re.search(r'<pre id="out">(.*?)</pre>', dom, re.S)
         if not m:

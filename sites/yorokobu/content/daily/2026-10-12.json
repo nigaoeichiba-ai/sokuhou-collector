@@ -19,7 +19,6 @@
  "rakuten": [
   {
    "code": "maochan:10000047",
-   "name": "菓匠もりん 和栗モンブラン／安納芋モンブラン",
    "kind": "食べもの・飲みもの",
    "headline": "和栗か安納芋か。冷凍で届く、ひとり分のモンブラン",
    "summary": "和栗と安納芋の2種からどちらか1台を選ぶモンブランです。箱は約15×14×5cmで、原材料には栗クリームのほか、小倉餡や栗の甘露煮が並びます。冷凍で届き、食べる前に冷蔵庫で解凍します。",
@@ -37,13 +36,10 @@
     "手提げ袋・のし紙: 有料で別に購入"
    ],
    "scene": "秋のお礼に",
-   "img": "https://thumbnail.image.rakuten.co.jp/@0_mall/maochan/cabinet/shohin/montblanc/mb_1000.jpg?_ex=300x300",
-   "url": "https://item.rakuten.co.jp/maochan/mcs-g1/",
    "verified": "2026-10-12"
   },
   {
    "code": "hanayoshi:10000511",
-   "name": "花由 そのままブーケ 花瓶いらずの花束",
    "kind": "癒し・リラックス",
    "headline": "花瓶がなくても飾れる、秋の色を集めた花束",
    "summary": "花瓶を用意しなくても、そのまま置いて飾れる花束です。サイズはリトル、キュート、フレンチの3段階で、いちばん大きいフレンチは直径約23cm、高さ約25cmです。",
@@ -61,13 +57,10 @@
     "花材: 入荷状況により変わる"
    ],
    "scene": "お祝いの花に",
-   "img": "https://thumbnail.image.rakuten.co.jp/@0_mall/hanayoshi/cabinet/bouquet/kisb0801_26mn_au8.jpg?_ex=300x300",
-   "url": "https://item.rakuten.co.jp/hanayoshi/sb0801/",
    "verified": "2026-10-12"
   },
   {
    "code": "marle-tokyo:10000084",
-   "name": "MARLE TOKYO ペイズリー柄の大判ストール 130×130cm",
    "kind": "ファッション小物",
    "headline": "130cm四方の大判。肩にも膝にも使えるペイズリーのストール",
    "summary": "ヘリンボーン織りの生地にペイズリー柄を合わせた、130×130cmの正方形のストールです。ポリエステル100%で約200g、縁は手巻き仕上げ。折りたためるので旅行の荷物にも入ります。",
@@ -85,13 +78,10 @@
     "色柄: 商品ページで選ぶ"
    ],
    "scene": "秋の羽織りの贈り物",
-   "img": "https://thumbnail.image.rakuten.co.jp/@0_mall/marle-tokyo/cabinet/11910243/12548511/x6031.jpg?_ex=300x300",
-   "url": "https://item.rakuten.co.jp/marle-tokyo/pj001/",
    "verified": "2026-10-12"
   },
   {
    "code": "shunsake:10000367",
-   "name": "會津ほまれ 純米大吟醸入り 日本酒飲み比べセット 720ml×5本",
    "kind": "食べもの・飲みもの",
    "headline": "福島・喜多方の蔵元直営。純米大吟醸入りの5本飲み比べ",
    "summary": "福島県喜多方の蔵元、ほまれ酒造の直営店が組む、720ml瓶5本の飲み比べです。看板銘柄の純米大吟醸「極」が2本入り、ほかの銘柄は時期により変わることがあります。",
@@ -109,13 +99,10 @@
     "発送: ゆうパック、AM10時までの注文は通常当日発送"
    ],
    "scene": "晩酌の贈り物に",
-   "img": "https://thumbnail.image.rakuten.co.jp/@0_mall/shunsake/cabinet/tokuteimeishoshu01/nomikurabe_set/kiwami720x6_set/720mlx5_item.jpg?_ex=300x300",
-   "url": "https://item.rakuten.co.jp/shunsake/kiwami720x6_set/",
    "verified": "2026-10-12"
   },
   {
    "code": "maisondumiel:10000009",
-   "name": "メゾン・デュ・ミエル マカダミア キャラメルサンド",
    "kind": "食べもの・飲みもの",
    "headline": "直径5cmほどの個包装。名古屋の菓子店のキャラメルサンド",
    "summary": "バター香るサブレで、チョコ、キャラメル、マカダミアナッツをはさんだ菓子です。5個入と10個入があり、ひとつずつの個包装は直径約5cm、高さ約3.8cm。名古屋の菓子店が作っています。",
@@ -133,13 +120,10 @@
     "原材料: チョコレート・マカダミア・生クリーム・小麦・卵など"
    ],
    "scene": "職場の差し入れ",
-   "img": "https://thumbnail.image.rakuten.co.jp/@0_mall/maisondumiel/cabinet/cr/kago/caramelsand_kago_01.jpg?_ex=300x300",
-   "url": "https://item.rakuten.co.jp/maisondumiel/caramelsand5/",
    "verified": "2026-10-12"
   },
   {
    "code": "mogoog:10000034",
-   "name": "もぐーぐ。 魅惑のきなこ大豆 405g(135g×3袋)",
    "kind": "食べもの・飲みもの",
    "headline": "きな粉をまとった豆菓子。チャック付き3袋を分けて渡せる",
    "summary": "きな粉をまぶした大豆の豆菓子が、135gずつ3袋で合計405g入ります。袋はチャック付きで、箱入りの改まった贈り物ではなく、職場や家族への差し入れ向きです。",
@@ -157,13 +141,10 @@
     "アレルゲン: 小麦、大豆"
    ],
    "scene": "お茶の時間の差し入れ",
-   "img": "https://thumbnail.image.rakuten.co.jp/@0_mall/mogoog/cabinet/08301095/knkdz-3-01s.jpg?_ex=300x300",
-   "url": "https://item.rakuten.co.jp/mogoog/knkdz-435/",
    "verified": "2026-10-12"
   },
   {
    "code": "1ststreet:10021843",
-   "name": "TEKLA(テクラ) ストライプのタオルハンカチ 30×30cm",
    "kind": "実用品",
    "headline": "30cm四方のオーガニックコットン。ループ付きのタオルハンカチ",
    "summary": "30×30cmのパイル地のタオルで重さは約60gです。ストライプの色が15種類ほど並び、ハンカチにも手拭きにも使えます。1枚単位で買える販売ページです。",
@@ -181,13 +162,10 @@
     "販売単位: タオル1枚"
    ],
    "scene": "ちょっとしたお礼に",
-   "img": "https://thumbnail.image.rakuten.co.jp/@0_mall/1ststreet/cabinet/531/ttstrip3030.jpg?_ex=300x300",
-   "url": "https://item.rakuten.co.jp/1ststreet/ttstrip3030/",
    "verified": "2026-10-12"
   },
   {
    "code": "bruno-official:10000887",
-   "name": "BRUNO 蓋つきステンレスマグ short 320ml",
    "kind": "実用品",
    "headline": "320mlの小ぶりな蓋つきマグ。机の上で冷めにくい",
    "summary": "ステンレスの真空二重構造で容量は約0.32L、重さは約250gです。取っ手とフタが付き、仕事机でも自宅でも、飲みものの温度を保ちたい場面に向きます。",
@@ -205,13 +183,10 @@
     "素材: ステンレス鋼、フタはポリプロピレンなど"
    ],
    "scene": "仕事机のお供に",
-   "img": "https://thumbnail.image.rakuten.co.jp/@0_mall/bruno-official/cabinet/item/2026_1/6760884_main5.jpg?_ex=300x300",
-   "url": "https://item.rakuten.co.jp/bruno-official/6760884/",
    "verified": "2026-10-12"
   },
   {
    "code": "import-luxy:10000047",
-   "name": "Arpe(アルペ) ポリエステルのタオル 4サイズ",
    "kind": "実用品",
    "headline": "ポリエステル100%のタオル。ハンカチからビッグバスまで4サイズ",
    "summary": "スペイン生産のタオルブランドArpeのポリエステル100%のタオルです。ハンカチ、フェイスタオル、バスタオル、ビッグバスタオルの4サイズがあります。",
@@ -229,13 +204,10 @@
     "フェイスタオルにはフック付き"
    ],
    "scene": "ジム通いの人へ",
-   "img": "https://thumbnail.image.rakuten.co.jp/@0_mall/import-luxy/cabinet/06814711/imgrc0141112477.jpg?_ex=300x300",
-   "url": "https://item.rakuten.co.jp/import-luxy/arpe-to/",
    "verified": "2026-10-12"
   },
   {
    "code": "jsy-ma:10000286",
-   "name": "MOREAGE 今治タオル 甘撚りロングパイルのバスタオル 2〜4枚セット",
    "kind": "実用品",
    "headline": "今治のバスタオル。通常と大判、2〜4枚のセットから選ぶ",
    "summary": "綿100%、日本製の今治タオルで甘撚り糸のロングパイルです。通常は60×120cmで約375g、大判は70×140cmで約510gです。2枚、3枚、4枚のセットがあります。",
@@ -253,8 +225,6 @@
     "セット: 2枚・3枚・4枚から選ぶ"
    ],
    "scene": "新築や結婚のお祝い",
-   "img": "https://thumbnail.image.rakuten.co.jp/@0_mall/jsy-ma/cabinet/sale_thum/imgrc0111811206.jpg?_ex=300x300",
-   "url": "https://item.rakuten.co.jp/jsy-ma/10508/",
    "verified": "2026-10-12"
   }
  ],

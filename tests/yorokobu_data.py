@@ -32,3 +32,13 @@ def rich_boyfriend(items: dict) -> dict:
                 "shop": f"店{shop}", "shop_code": shop, "reviews": reviews, "rating": rating, "free_shipping": ship, "gift": gift}
         base[1 if code in ("e8", "e9") else 0]["items"].append(item)
     return out
+
+
+def live_daily(c: dict) -> dict:
+    out = {}
+    for day in c["daily"]:
+        for e in day["rakuten"]:
+            out[e["code"]] = {"code": e["code"], "name": f"{e['kind']} テスト商品 {e['code']}", "price": 2980, "url": "https://item.rakuten.co.jp/" + e["code"].replace(":", "/") + "/",
+                              "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/" + e["code"].replace(":", "/") + ".jpg?_ex=128x128", "shop": "s", "shop_code": "s", "reviews": 120, "rating": 4.5,
+                              "available": True, "free_shipping": True, "gift": True, "appoint": False}
+    return out

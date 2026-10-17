@@ -14,6 +14,7 @@ import sys
 import threading
 from functools import partial
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 
 ID = re.compile(r"^[A-Za-z0-9_-]{22}$")
 OPT = re.compile(r"^[a-z0-9]{1,12}$")
@@ -151,12 +152,27 @@ class Store:
         return 400, None
 
 
-def serve(root: Path, port: int = 0, allow: dict | None = None) -> tuple[http.server.ThreadingHTTPServer, Store]:
+def serve(root: Path, port: int = 0, allow: dict | None = None, items_db: dict | None = None) -> tuple[http.server.ThreadingHTTPServer, Store]:
     store = Store(allow)
 
     class Handler(http.server.SimpleHTTPRequestHandler):
         def log_message(self, *a, **k):
             pass
+
+        def do_GET(self):
+            u = urlsplit(self.path)
+            if u.path != "/api/items.php" or items_db is None:
+                return super().do_GET()
+            from sites.yorokobu import itemsserver                              # the Python twin of api/items.php
+            code, out = itemsserver.answer({k: v[0] for k, v in parse_qs(u.query).items()}, {k: items_db.get(k, {}) for k in itemsserver.PRIVATE_FILES})
+            data = json.dumps(out, ensure_ascii=False).encode("utf-8") if out is not None else b""
+            self.send_response(code)
+            if data:
+                self.send_header("Content-Type", "application/json; charset=UTF-8")
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            if data:
+                self.wfile.write(data)
 
         def do_POST(self):
             if self.path != "/api/ask.php":

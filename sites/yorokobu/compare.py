@@ -321,12 +321,12 @@ def _yrow(cfg: dict, r: dict, n: int, g: dict | None = None) -> str:
     p, rv, sh = r["parts"]
     img = y_image(r)
     line = B.blurb_line(r, g["label"] if g else None, g["words"] if g else None)
-    pic = (f'<a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener"><img src="{esc(img)}" alt="{esc(line or "Yahoo!ショッピングの商品ページ")}"></a>' if img else "")
+    pic = B.vc_a(cfg, href, f'<img src="{esc(img)}" alt="{esc(line or "Yahoo!ショッピングの商品ページ")}">') if img else ""
     return (f'<li class="yh-row"><span class="cmp-no">{n}</span><div class="yh-img">{pic}</div>'
             f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p>{f'<p class="cmp-blurb">{esc(line)}</p>' if line else ""}'
             f'<p class="yh-facts">{" ・ ".join(f'<span class="yh-f">{f}</span>' for f in facts)}</p></div>'
             f'<div class="cmp-score" title="価格{p}・レビュー{rv}・送料{sh}"><b>{r["total"]}</b><small>点数</small><i style="width:{r["total"]}%"></i></div>'
-            f'<div class="cmp-go"><span class="btn"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">Yahoo!ショッピングで見る{B.vc_pixel(cfg)}</a></span></div></li>')
+            f'<div class="cmp-go"><span class="btn">{B.vc_a(cfg, href, "Yahoo!ショッピングで見る")}</span></div></li>')
 
 
 def y_section(cfg: dict, g: dict) -> str:

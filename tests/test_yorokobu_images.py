@@ -8,7 +8,7 @@ from datetime import date
 from pathlib import Path
 
 from sites.yorokobu import build, content, make_mood_small
-from tests.yorokobu_data import rich_boyfriend, with_musts
+from tests.yorokobu_data import live_daily, rich_boyfriend, with_musts
 
 FIX = Path(__file__).parent / "fixtures" / "yorokobu"
 CFG = {"site_url": "https://yorokobu-present.com", "site_name": "よろこぶプレゼント", "operator_name": "テスト", "contact_form_url": "https://example.com/f",
@@ -48,6 +48,7 @@ class PageTest(unittest.TestCase):
     def setUpClass(cls):
         cls.c = content.load()
         items = with_musts(rich_boyfriend(json.loads((FIX / "items.json").read_text(encoding="utf-8"))), cls.c)
+        items["daily"] = live_daily(cls.c)
         cls.tmp = tempfile.TemporaryDirectory()
         cls.root = Path(cls.tmp.name)
         build.render_site(cls.c, items, CFG, cls.root, release=True, today=date(2026, 10, 13))
@@ -66,7 +67,7 @@ class PageTest(unittest.TestCase):
         return re.findall(r"<img [^>]*>", html)
 
     def test_a_shops_picture_tag_has_a_src_and_an_alt_and_nothing_else(self):
-        for rel in ("gift/birthday-boyfriend/index.html", "picks/2026-10-12/index.html", "index.html"):
+        for rel in ("gift/birthday-boyfriend/index.html", "picks/2026-10-12/index.html", "pick/montblanc-morin/index.html"):
             shop = [i for i in self.imgs(self.read(rel)) if "thumbnail.image.rakuten" in i or "image.rakuten" in i]
             self.assertTrue(shop, rel)
             for i in shop:

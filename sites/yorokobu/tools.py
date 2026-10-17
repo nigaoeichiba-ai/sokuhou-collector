@@ -156,7 +156,7 @@ def gacha_page(d: dict, cfg: dict, preview: bool, pool: dict, tiers: list[dict])
     body = f"""{B.head_band("sky", '', "おまかせで<wbr>1点提案します", lead, single=True, mascot="b-joy")}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("おまかせ提案", None)])}</div>
 {B.pr_quiet(cfg)}
-<section id="gacha" class="gacha" data-src="/tool/gacha/items.json" data-aff="{esc(cfg["rakuten_affiliate_id"])}">
+<section id="gacha" class="gacha" data-src="/api/items.php" data-aff="{esc(cfg["rakuten_affiliate_id"])}">
 <form class="gacha-form" onsubmit="return false"><label>贈る相手<select name="r">{rec}</select></label>
 <label>予算<select name="t">{bud}</select></label>
 <button type="submit" class="btn big">1点、提案してもらう</button></form>
