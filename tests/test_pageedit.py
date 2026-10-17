@@ -258,6 +258,40 @@ class Paragraphs(unittest.TestCase):
         self.assertFalse(any("added_claim" in p for p in run.prompts))
 
 
+class Attribution(unittest.TestCase):
+    """The desk rule: who says it and under what condition may not be lost; a reason ('…からです') may not be added."""
+
+    def test_the_wording_may_change_but_the_attribution_and_the_conditions_may_not_go(self):
+        old = "賞味期限の短い品は、相手に「早く食べなければ」と思わせてしまうため、保存に気をつかわなくてよい、賞味期限の長めの品が勧められています。"
+        flat = "賞味期限が短い品は相手に「早く食べなければ」と思わせます。賞味期限が長く、保存に手間のかからない品が向きます。"
+        self.assertIn("attribution removed (1 -> 0)", pe.lost_wording(old, flat))
+        same = "賞味期限の短い品は、相手に「早く食べなければ」と思わせるため、保存しやすい賞味期限の長めの品が勧められています。"
+        self.assertEqual(pe.lost_wording(old, same), [])
+        self.assertEqual(pe.lost_wording("案内では、通常はのし紙なしでも構いません。", "案内によると、通常はのし紙なしでも構いません。"), [])                  # 案内では -> 案内によると: allowed
+        self.assertEqual(pe.lost_wording("チョコレートは移動が長いときは注意が必要とされています。", "チョコレートは移動が長いときは温度に気をつけるとされています。"), [])
+        self.assertIn("attribution removed (1 -> 0)", pe.lost_wording("温度の影響を受けやすく、注意が必要とされています。", "温度に気をつけます。"))
+        self.assertIn("condition removed (1 -> 0)", pe.lost_wording("遅れた場合は、暑中御見舞にします。", "暑中御見舞にします。"))
+        self.assertIn("careful wording removed (1 -> 0)", pe.lost_wording("届くまでに数日かかることがあります。", "届くまでに数日かかります。"))
+
+    def test_an_added_reason_is_refused(self):
+        self.assertIn("a reason was added (…からです)", pe.lost_wording("個包装の品が向きます。", "個包装の品が向きます。分けやすいからです。"))
+        self.assertEqual(pe.lost_wording("分けやすいからです。", "分けやすいからです。"), [])
+
+    def test_check_edit_applies_these_to_paragraphs_only(self):
+        units = pe.page_units(PAGE)
+        para = next(x for x in units if x.text.startswith("お中元の時期は地域で"))
+        flat = "お中元を贈る時期には地域差があります。関東では七月上旬から中旬、関西では七月中旬から八月中旬です。"
+        self.assertTrue(any("removed" in p for p in pe.check_edit("yorokobu", para, flat)))
+        head = next(x for x in units if x.text == "地域の時期に合わせる")
+        self.assertEqual(pe.check_edit("yorokobu", head, "地域別 お中元の時期"), [])
+
+    def test_the_claims_check_gets_the_page_text_as_context_and_the_new_rules(self):
+        p = pe.claims_prompt("yorokobu", [("元", "後")], "ページの本文です。")
+        for needle in ("参考(このページの元の本文", "ページの本文です。", "元の段落にもページの本文にも書かれていない理由", "としています」を「とされています」に変えるのは可", "帰属"):
+            self.assertIn(needle, p)
+        self.assertNotIn("参考(このページの元の本文", pe.claims_prompt("yorokobu", [("元", "後")]))
+
+
 class RewriterWithManyLongLines(unittest.TestCase):
     def test_a_long_original_is_found_inside_a_longer_text_and_many_lines_stay_fast(self):
         entries = [{"from": f"これは{i}番目の長い原文で、書き直される予定の段落です。", "to": f"{i}番目の段落です。"} for i in range(800)]
