@@ -10,14 +10,14 @@ from sites.yorokobu import build, compare, compare_fetch, content
 from tests.test_yorokobu_compare import CFG, FIX, item
 from tests.yorokobu_data import with_musts
 
-CFG_Y = {**CFG, "yahoo_vc": {"sid": "3784606", "pid": "892726918"}}
+CFG_Y = {**CFG, "yahoo_vc": {"sid": "3784606", "pid": "892728268"}}
 CREDIT_LINK = '<a href="https://developer.yahoo.co.jp/sitemap/">Web Services by Yahoo! JAPAN</a>'
 RAKUTEN_AT = "2026-10-14T05:40:00+09:00"
 
 
 def yitem(i, shop=None, price=None, reviews=40, rating=4.5, ship=2, name=None, points=0):
     return {"code": f"shop{i}_item", "name": name or f"タンブラー ギフト {i}", "price": price or 2000 + 300 * i,
-            "url": f"https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&pid=892726918&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Fshop{i}%2Fitem{i}.html",
+            "url": f"https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&pid=892728268&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Fshop{i}%2Fitem{i}.html",
             "image": f"https://item-shopping.c.yimg.jp/i/g/shop{i}_item", "shop": shop or f"ストア{i}", "shop_code": f"shop{i}",
             "reviews": reviews, "rating": rating, "available": True, "ship": ship, "free_shipping": ship == 2, "points": points}
 
@@ -115,9 +115,9 @@ class PagesTest(unittest.TestCase):
     def test_each_row_links_the_response_url_as_it_is_with_the_counter(self):
         sec = self.section(self.read("compare/tumbler/index.html"))
         for i in range(1, 9):
-            self.assertIn(f"https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&amp;pid=892726918&amp;vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Fshop{i}%2Fitem{i}.html", sec)
+            self.assertIn(f"https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&amp;pid=892728268&amp;vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Fshop{i}%2Fitem{i}.html", sec)
         self.assertEqual(sec.count('rel="sponsored nofollow noopener"'), 16)                  # the photo and the button of each row (the words of a row are not a link)
-        self.assertEqual(sec.count("servlet/gifbanner?sid=3784606&amp;pid=892726918"), 8)
+        self.assertEqual(sec.count("servlet/gifbanner?sid=3784606&amp;pid=892728268"), 8)
 
     def test_the_pictures_are_the_products_own_photos_from_yahoos_image_host_at_the_size_given_and_nothing_else(self):
         sec = self.section(self.read("compare/tumbler/index.html"))
