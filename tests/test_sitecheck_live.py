@@ -17,10 +17,11 @@ from sokuhou import sitecheck
 class Server:
     """A tiny site.  `routes` maps a path to (status, body); `head_status` overrides what HEAD answers for a path; `close_after` closes a connection after that many requests."""
 
-    def __init__(self, routes, head_status=None, close_after=0, flaky=None, redirects=None):
+    def __init__(self, routes, head_status=None, close_after=0, flaky=None, redirects=None, limited=None):
         self.routes, self.head_status, self.close_after = routes, head_status or {}, close_after
         self.flaky = dict(flaky or {})          # path -> number of 500 answers before the real one
         self.redirects = redirects or {}        # path -> location
+        self.limited = dict(limited or {})      # path -> number of 429 answers (with Retry-After: 1) before the real one
         self.connections = 0
         self.requests = []
         outer = self
@@ -43,6 +44,13 @@ class Server:
                 if path in outer.redirects:
                     self.send_response(301)
                     self.send_header("Location", outer.redirects[path])
+                    self.send_header("Content-Length", "0")
+                    self.end_headers()
+                    return
+                if outer.limited.get(path, 0) > 0:
+                    outer.limited[path] -= 1
+                    self.send_response(429)
+                    self.send_header("Retry-After", "1")
                     self.send_header("Content-Length", "0")
                     self.end_headers()
                     return
@@ -183,6 +191,17 @@ class LiveCheckTest(unittest.TestCase):
         srv2 = site(flaky={"/p1/": 99})
         problems, _ = self.run_check(srv2)
         self.assertTrue(any("/p1/" in p and "500" in p for p in problems), problems)
+
+    def test_too_many_requests_is_waited_out_not_reported_as_a_broken_page(self):
+        # Xserver answered 429 to about 1% of the first fast live check of minna (2026-10-18); the page itself was fine
+        srv = site(pages=6, limited={"/p1/": 2, "/p2/": 1, "/img/a.png": 3})
+        problems, n = self.run_check(srv)
+        self.assertEqual((problems, n), ([], 6))
+
+    def test_a_page_that_keeps_answering_429_is_reported_after_the_waits(self):
+        srv = site(limited={"/p1/": 99})
+        problems, _ = self.run_check(srv)
+        self.assertTrue(any("/p1/" in p and "429" in p for p in problems), problems)
 
     def test_a_page_that_breaks_the_page_rules_is_reported_from_the_live_copy(self):
         srv = site()
