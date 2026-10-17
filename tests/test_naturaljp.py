@@ -218,6 +218,26 @@ class ReadingHtml(unittest.TestCase):
         self.assertIn("hedge_deshou", ids("「楽しいクリスマスになりますように」と書くのがよいと言えるでしょう。", "minna"))
         self.assertIn("md_leftover", ids_html("<blockquote>**重要**です。</blockquote>"))                  # a leftover mark is a leftover anywhere
 
+    def test_an_official_name_leading_a_dated_sentence_is_not_style(self):
+        names = ["STPR Family Festival!! 2026 東京ドーム公演", "一番くじ すみっコぐらし 発売", "岩手県東日本大震災津波追悼式", "ゲーム『シナモロール ～わくわくカフェライフだもん！』サービス終了",
+                 "第7回 かがよふあかり 竹灯籠", "Hey! Say! JUMP アルバム『Juliet』発売", "第40回臨床工学技士国家試験 合格発表"]
+        for site in ("atomou", "kuma"):
+            for name in names:
+                for tail in ("は2026年11月3日(火)、東京都。", "は、2026年11月3日(火)です。2026年10月17日の時点で、あと17日です。"):
+                    self.assertEqual(ids(name + tail, site), set(), (site, name, tail))
+                    self.assertEqual(ids_html(f"<p>{name}{tail}</p>", site), set(), (site, name, tail))
+
+    def test_the_same_shapes_in_the_writers_own_prose_are_still_found(self):
+        self.assertIn("noun_chain", ids("岩手県東日本大震災津波追悼式実施要項改定状況確認作業を毎年ここにまとめています。", "atomou"))
+        self.assertIn("spaced_writing", ids("あと 何日 で 来るかを 数えて 予定に 入れる 日です。", "atomou"))
+        self.assertIn("exclaim", ids("予定を入れられます。便利です！今すぐ使えます！", "atomou"))
+        self.assertIn("flowery", ids("わくわくする毎日を、そっと支えます。", "atomou"))
+        self.assertEqual(ids("正式名称は全日本大学女子駅伝対校選手権大会です。", "atomou"), set())             # stating an official name
+        # the name is masked, the rest of the sentence is still judged
+
+        self.assertIn("hedge_deshou", ids("ハイキュー!!展 挑戦者たちは2026年10月30日に開幕し、混み合うと言えるでしょう。", "atomou"))
+        self.assertIn("pet_verb", ids(chr(10).join(["時期と量を整えます。", "迷う相手には早めに手配すると整います。", "在宅できる日を聞くと整います。"]), "atomou"))
+
     def test_a_line_break_inside_japanese_text_is_not_a_space(self):
         blocks = nj.blocks_from_html("<p>あと\n何日\nで来る日です。あと\n何日\nで来る日です。</p>")
         self.assertEqual(blocks[0].text, "あと何日で来る日です。あと何日で来る日です。")
