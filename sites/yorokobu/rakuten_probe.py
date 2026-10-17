@@ -83,6 +83,21 @@ def main() -> int:
         print(f"-- items with only the small (64px) picture: {len(only_small)}; with no picture: {len(none)}")
         same = sum(1 for r in raws if r.get("affiliateUrl") and r.get("itemUrl") and r["affiliateUrl"] == r["itemUrl"])
         print(f"-- items whose affiliateUrl equals itemUrl: {same}")
+    # does the link carry OUR affiliate ID?  (asked three ways; the ID itself is never printed)
+    print("== which ID is in the link")
+    ours = aff.split(".")
+    for label, kw in (("with affiliateId=ours", {"affiliateId": aff}), ("without affiliateId", {})):
+        c2 = rakuten.Client(app, key, referer=cfg["site_url"].rstrip("/") + "/", affiliate_id=None, min_interval=1.5)
+        try:
+            raws = [r.get("Item", r) for r in c2.search(keyword="ハンドクリーム ギフト", hits=10, **kw)]
+        except rakuten.RakutenError as e:
+            print(label, str(e)[:100])
+            continue
+        links = [r.get("affiliateUrl") or "" for r in raws]
+        ids = [urllib.parse.urlsplit(u).path.split("/")[2] if u.count("/") > 3 else "" for u in links]
+        print(f"{label}: {len(links)} links; carry our whole ID: {sum(aff in u for u in links)}; carry any part of our ID: {sum(any(x in u for x in ours) for u in links)}; "
+              f"distinct IDs in the links: {len(set(ids))}; ID shape: {sorted({re.sub(r'[a-z]', 'a', re.sub(r'[0-9]', '9', i)) for i in ids})[:3]}; "
+              f"rafcid present: {sum('rafcid=' in u for u in links)}")
     return 0
 
 
