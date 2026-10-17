@@ -118,9 +118,16 @@ def looks_like_third_party(text: str, kind: str = "para") -> bool:
 def page_units(raw: str) -> list[PageUnit]:
     p = _Page()
     p.feed(raw)
-    out = []
+    from collections import Counter
+    count = Counter((k, t) for k, t, _ in p.units)
+    out, seen = [], set()
     for i, (kind, text, editable) in enumerate(p.units, 1):
-        out.append(PageUnit(f"u{i}", kind, text, editable and not looks_like_third_party(text, kind)))
+        if count[(kind, text)] > 1:
+            if (kind, text) in seen:
+                continue                                  # the same text again (a template card): shown once
+            seen.add((kind, text))
+        # a text that repeats three times or more on one page is a template (card headings, labels): it is fixed in the template, not by a page edit
+        out.append(PageUnit(f"u{i}", kind, text, editable and not looks_like_third_party(text, kind) and count[(kind, text)] < 3))
     return out
 
 

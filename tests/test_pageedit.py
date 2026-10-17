@@ -59,6 +59,17 @@ class Units(unittest.TestCase):
         for skipped in ("トップ", "運営者情報編集方針", "おかげさまで、今年もたのしくすごせました。"):
             self.assertNotIn(skipped, texts)                                        # menus, footers and quoted examples are not the page's own prose
 
+    def test_a_text_that_repeats_on_the_page_is_shown_once_and_a_template_repeat_is_not_editable(self):
+        cards = "".join("<h3>酒器 おすすめ品1 ギフトセット</h3>" for _ in range(4)) + "<h3>お返しの選び方</h3><h3>お返しの選び方</h3>"
+        u = pe.page_units(f"<html><head><title>題</title></head><body><main><h1>題</h1>{cards}</main></body></html>")
+        by = {}
+        for x in u:
+            by.setdefault(x.text, []).append(x)
+        self.assertEqual(len(by["酒器 おすすめ品1 ギフトセット"]), 1)
+        self.assertFalse(by["酒器 おすすめ品1 ギフトセット"][0].editable)          # four times: a template
+        self.assertEqual(len(by["お返しの選び方"]), 1)
+        self.assertTrue(by["お返しの選び方"][0].editable)                           # twice: a heading that happens to repeat; shown once, editable
+
     def test_a_long_page_is_cut_at_a_heading_and_every_part_keeps_the_headings(self):
         body = "".join(f"<h2>見出し{i}</h2>" + "".join(f"<p>これは{i}番目の節の{j}番目の段落で、内容があります。</p>" for j in range(30)) for i in range(4))
         units = pe.page_units(f"<html><head><title>長いページ</title></head><body><main>{body}</main></body></html>")
