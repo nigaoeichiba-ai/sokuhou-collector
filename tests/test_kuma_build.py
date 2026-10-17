@@ -526,7 +526,7 @@ class GoodsTest(unittest.TestCase):
         cls.raw = raw_data()
         cls.raw["notices"] = []
         cls.tmp = tempfile.TemporaryDirectory()
-        cfg = {**CFG, "rakuten_affiliate_id": "aaaa1111.bbbb2222.cccc3333.dddd4444", "rakuten_tracking_id": "kuma-top",
+        cfg = {**CFG, "rakuten_affiliate_id": "aaaa1111.bbbb2222.cccc3333.dddd4444",
                "amazon_tracking_id": "amazonmacs-22"}
         cls.out = Path(cls.tmp.name) / "site"
         build.render_site(cls.raw, cfg, cls.out, release=True)
@@ -541,9 +541,9 @@ class GoodsTest(unittest.TestCase):
 
     def test_links_carry_the_ids_and_are_marked_sponsored(self):
         html = self.read("goods/index.html")
-        self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/kuma-top?pc=", html)
+        self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc=", html)
         self.assertIn("https://www.amazon.co.jp/s?k=%E3%82%AF%E3%83%9E%E9%88%B4&amp;tag=amazonmacs-22", html)
-        self.assertEqual(html.count('rel="sponsored nofollow noopener"'), 12)  # six goods x two shops
+        self.assertEqual(html.count('target="_blank" rel="nofollow sponsored noopener">'), 12)  # six goods x two shops
         self.assertEqual(html.count("楽天市場で探す"), 6)
         self.assertEqual(html.count("Amazonで探す"), 6)
 
