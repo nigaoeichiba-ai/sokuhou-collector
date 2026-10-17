@@ -98,21 +98,25 @@ class ReviewBuild(unittest.TestCase):
         self.assertIn('href="/e/', home)
 
     def test_the_deploy_ssh_setup_survives_a_dropped_key_scan(self):
-        # runs 90, 91 and 97 lost the server for minutes (it drops simultaneous connections): each site starts at its own offset, the job waits for the server and records the host key itself
+        # runs 90, 91 and 97 lost the server for minutes: the job records the host key itself and waits for the server; since 2026-10-18 it waits for about a minute (not 10), has no fixed
+        # per-site offset (the 0 to 160 seconds were most of the 45 to 167 s "SSH setup" of every run), and an unreachable server starts the site again on another runner
         wf = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
-        start = wf.index("      - name: SSH setup\n")
-        run = wf[start: wf.index("\n      - name:", start + 10)]
+        start = wf.index("      - name: SSH setup")
+        run = wf[start: wf.index(chr(10) + "      - name:", start + 10)]
         self.assertIn("ConnectionAttempts 2", run)
-        self.assertIn("server not reachable (attempt", run)   # it waits for the server (run 97: one job could not connect for 5 minutes)
-        self.assertIn('[ "$reached" = 1 ]', run)
+        self.assertIn("server not reachable (attempt", run)
+        self.assertIn('[ "$reached" != 1 ]', run)
         self.assertIn("StrictHostKeyChecking accept-new", run)
         self.assertNotIn("test -s ~/.ssh/known_hosts", run)   # an empty scan no longer fails the job
+        self.assertNotIn("ssh-keyscan", run)
+        self.assertNotIn("sleep \"$off\"", run)
+        self.assertIn("for try in 1 2 3;", run)
 
     def test_the_deploy_job_has_the_review_switch_and_hides_the_demo_behind_its_password(self):
         wf = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
         self.assertIn("vars.ATOMOU_REVIEW == 'true' && '--review'", wf)
         self.assertIn('[ "$ATOMOU_PUBLIC" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }', wf)   # no password, no atomou deploy, review copy or not
-        self.assertIn("vars.ATOMOU_PUBLIC != 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)", wf)   # the password file is written in both modes
+        self.assertIn("vars.ATOMOU_PUBLIC != 'true' && steps.gate.outputs.really == 'true'", wf)   # the password file is written in both modes (a real run, demo or review copy)
         self.assertIn("python sites/atomou/build.py --demo-sub --out demo_build", wf)
         self.assertIn('for d in demo demo.atomou.com; do mkdir -p "release/$d"; cp -a demo_build/. "release/$d/"; done', wf)   # either folder name can be the subdomain's document root
         self.assertIn('hidden=$(curl -s -o /dev/null -w \'%{http_code}\' "$URL$p")', wf)

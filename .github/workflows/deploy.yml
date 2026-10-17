@@ -1,6 +1,8 @@
 name: deploy-sites
 
-# Builds each site and uploads it to Xserver over SSH (one job per site).
+# Builds each site and uploads it to Xserver over SSH (one job per site that has something to publish).
+# The PLAN job (sokuhou/deployplan.py, reading the site register data/sites.json) decides which sites those are; a site with nothing to do costs no runner.
+# A new site is one entry in data/sites.json (docs DEPLOY_REDESIGN_100SITES.md); the matrix, the ownership of files, the tests of a site and the watchdog all follow from it.
 # Needs three repository secrets, all created by the owner (never by Claude):
 #   XSERVER_SSH_KEY   the private key file from Xserver's SSH settings (whole file, passphrase-free)
 #   XSERVER_HOST      e.g. sv8477.xserver.jp
@@ -37,9 +39,17 @@ on:
         type: boolean
         default: false
       only:
-        description: "Only this site (saichin, kuma, yorokobu, minna, atomou); empty = every site (kuma-live.yml uses it after each data collection)"
+        description: "Only this site (a name from data/sites.json); empty = every site (kuma-live.yml uses it after each data collection)"
         type: string
         default: ""
+      live_only:
+        description: "Only run the full live check of the sites' real pages (read-only: no build, no tests, no SSH, nothing is changed); measures the check without a deploy"
+        type: boolean
+        default: false
+      attempt:
+        description: "Set by the workflow itself: the number of the try when a site is started again because the server did not answer (1, 2, 3)"
+        type: string
+        default: "1"
 
 permissions:
   contents: read
@@ -48,63 +58,53 @@ env:
   SSH_PORT: "10022"
 
 jobs:
-  deploy:
+  plan:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      count: ${{ steps.plan.outputs.count }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0   # the plan compares with the commit each live site was built from
+      - name: Plan (which sites have something to publish; the reasons are in the run summary)
+        id: plan
+        env:
+          EVENT: ${{ github.event_name }}
+          ONLY: ${{ github.event.inputs.only }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          # atomou is a DEMO until ATOMOU_PUBLIC is "true"; while ATOMOU_REVIEW is "true" and ATOMOU_PUBLIC is not, the small review copy is the site
+          ATOMOU_BUILD_FLAG: ${{ vars.ATOMOU_PUBLIC == 'true' && '--release' || (vars.ATOMOU_REVIEW == 'true' && '--review' || '') }}
+          ATOMOU_PROBE: ${{ vars.ATOMOU_PUBLIC != 'true' && vars.ATOMOU_REVIEW == 'true' && '/c/exams/' || '/assets/catalog.json' }}
+        run: python3 -m sokuhou.deployplan plan
+
+  deploy:
+    needs: plan
+    if: needs.plan.outputs.count != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ matrix.timeout }}
+    permissions:
+      contents: read
+      actions: write   # only to start this site again on another runner when the server did not answer (the last step)
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - site: saichin
-            dir: saichin-sokuho.com
-            url: https://saichin-sokuho.com
-            build: python sites/saichin/build.py --release --out release
-            min_pages: 70
-            min_cards: 48
-            marker: 最低賃金速報
-            probe: /calendar/all.ics
-          - site: kuma
-            dir: kuma-sokuho.com
-            url: https://kuma-sokuho.com
-            build: python sites/kuma/build.py --release --out release
-            min_pages: 100
-            min_cards: 0
-            marker: クマ出没速報
-            probe: /feed.xml
-          - site: yorokobu
-            dir: yorokobu-present.com
-            url: https://yorokobu-present.com
-            build: python sites/yorokobu/build.py --release --out release --items out/yorokobu_items.json
-            min_pages: 120
-            min_cards: 0
-            marker: よろこぶプレゼント
-            probe: /sitemap.xml
-          - site: minna
-            dir: minna-no-illust.com
-            url: https://minna-no-illust.com
-            build: python sites/minna/build.py --release --out release
-            min_pages: 90
-            min_cards: 0
-            marker: みんなのイラスト
-            probe: /sitemap-images.xml
-          - site: atomou
-            dir: atomou.com
-            url: https://atomou.com
-            build: python sites/atomou/build.py ${{ vars.ATOMOU_PUBLIC == 'true' && '--release' || (vars.ATOMOU_REVIEW == 'true' && '--review' || '') }} --out release
-            min_pages: 60
-            min_cards: 0
-            marker: あと何日、もう何日
-            probe: ${{ vars.ATOMOU_PUBLIC != 'true' && vars.ATOMOU_REVIEW == 'true' && '/c/exams/' || '/assets/catalog.json' }}
+      max-parallel: 10   # a wave of many sites (a change to something shared) does not take all 20 runners of the repository, nor open dozens of SSH connections at once
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     concurrency:
       # sites that call the Rakuten API share one queue (one application ID, about one request per second), so two such jobs never run at once
-      group: ${{ matrix.site == 'yorokobu' && 'rakuten-api' || format('deploy-{0}', matrix.site) }}
+      group: ${{ matrix.group }}
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 0   # the gate below looks at which files a push changed
+          fetch-depth: 0   # the unit tests run in a second work tree of this checkout (see "Unit tests" below)
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements.txt
       - name: Gate (secrets, and the kuma switch)
         id: gate
         env:
@@ -122,64 +122,15 @@ jobs:
           RK_APP: ${{ secrets.RAKUTEN_APP_ID }}
           RK_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           SITE: ${{ matrix.site }}
+          FAST: ${{ matrix.fast }}
+          LIVE_ONLY: ${{ inputs.live_only }}
           EVENT: ${{ github.event_name }}
-          ONLY: ${{ github.event.inputs.only }}
-          BEFORE: ${{ github.event.before }}
-          AFTER: ${{ github.sha }}
-          URL: ${{ matrix.url }}
+          DEPLOY_INPUT: ${{ inputs.deploy }}
+          CHECK_ONLY: ${{ vars.DEPLOY_CHECK_ONLY }}
         run: |
+          # Which sites have something to publish was decided by the plan job (sokuhou/deployplan.py): this job exists because its site has.  What is left here is whether the
+          # secrets and switches allow it.
           go=true
-          if [ -n "$ONLY" ] && [ "$ONLY" != "$SITE" ]; then
-            echo "this run is for $ONLY only; $SITE is skipped"
-            go=false
-          fi
-          # A push that only touches another site's own files (sites/yorokobu, sites/minna and their tests) does not redeploy this site.
-          # Anything shared (the collector, kit, workflows, data, other tests) redeploys every site; on any doubt the site is deployed.
-          # What the push changed is not enough: while this site's previous job runs, GitHub keeps only the newest waiting job of the group and cancels the
-          # older one, and the newest push may not touch this site (2026-10-16: minna's +9 series was cancelled that way and skipped by the next run).
-          # So the comparison starts at the commit the LIVE site was built from (the build writes it to /deployed-sha.txt); no such file or an unknown commit: the push's own BEFORE.
-          BASE="$BEFORE"
-          if [ "$EVENT" = "push" ] && [ "$SITE" != "atomou" ]; then
-            served=$(curl -fsS --max-time 20 "$URL/deployed-sha.txt" 2>/dev/null | tr -d '[:space:]' || true)
-            if echo "$served" | grep -qE '^[0-9a-f]{40}$' && git cat-file -e "${served}^{commit}" 2>/dev/null; then
-              BASE="$served"
-              echo "the live $SITE was built from ${served:0:10}: this run compares with that commit, not only with the push before"
-            fi
-          fi
-          fast=false
-          if [ "$EVENT" = "push" ] && [ -n "$BASE" ] && ! echo "$BASE" | grep -qE '^0+$'; then
-            if files=$(git diff --name-only "$BASE" "$AFTER" 2>/dev/null) && [ -n "$files" ]; then
-              relevant=0
-              fastok=1
-              while IFS= read -r f; do
-                case "$f" in
-                  sites/yorokobu/*|tests/test_yorokobu*|tests/fixtures/yorokobu/*|data/yorokobu*) owner=yorokobu ;;
-                  data/style/rewrites/yorokobu.json) owner=yorokobu ;;
-                  data/style/rewrites/minna.json) owner=minna ;;
-                  data/style/rewrites/atomou.json) owner=atomou ;;
-                  data/style/rewrites/kuma.json) owner=kuma ;;
-                  data/style/rewrites/saichin.json) owner=saichin ;;
-                  data/style/judged/*|data/style/examples.json|data/style/learned_rules.json|data/style/lexicon/*|data/style/suggest_cache.json|data/style/edited/*|data/style/editor_prompt_ja.md) owner=none ;;   # the judge's notes and models: they change no published text
-                  sites/minna/*|tests/test_minna*) owner=minna ;;
-                  sites/atomou/*|tests/test_atomou*|tests/fixtures/atomou/*|data/atomou/*) owner=atomou ;;
-                  sites/kuma/*|tests/test_kuma*|tests/test_*_kuma.py|tests/test_otsu_bear.py|tests/fixtures/*kuma*|tests/fixtures/otsu_bear*|data/*_kuma.json|data/otsu_bear.json|sokuhou/sources/*_kuma.py|sokuhou/sources/otsu_bear.py) owner=kuma ;;
-                  *) owner=shared ;;
-                esac
-                if [ "$owner" = "shared" ] || [ "$owner" = "$SITE" ]; then
-                  relevant=1
-                  # fast lane (minna only): the push changed nothing but the illustrations, their specs and the guides' text (no code, no template, no test, nothing shared)
-                  case "$f" in sites/minna/library/*|sites/minna/specs/*|sites/minna/content/*) ;; *) fastok=0 ;; esac
-                fi
-              done <<< "$files"
-              if [ "$relevant" = "0" ]; then
-                echo "this push only changed other sites' files; $SITE is skipped"
-                go=false
-              elif [ "$SITE" = "minna" ] && [ "$fastok" = "1" ]; then
-                fast=true
-                echo "fast lane: only minna's illustrations, specs or guide text changed; the unit tests and the full live check are left to the daily full deploy"
-              fi
-            fi
-          fi
           if [ -z "$KEY" ] || [ -z "$HOST" ] || [ -z "$USER_ID" ]; then
             echo "XSERVER_SSH_KEY / XSERVER_HOST / XSERVER_USER are not all set; nothing to do"
             go=false
@@ -204,14 +155,66 @@ jobs:
             echo "atomou is still a demo and ATOMOU_DEMO_USER / ATOMOU_DEMO_PASSWORD are not set: it is not deployed unprotected; the atomou site is skipped"
             go=false
           fi
+          # Does this run change the server?  A manual run only when "Really deploy" is ticked; a push or the daily run always, unless the repository variable DEPLOY_CHECK_ONLY is "true"
+          # (the pause switch: the runs build, test and prove the SSH login, but publish nothing; a manual run with "Really deploy" still publishes, so a site can be tried by hand)
+          really=false
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            [ "$DEPLOY_INPUT" = "true" ] && really=true
+          elif [ "$CHECK_ONLY" != "true" ]; then
+            really=true
+          fi
+          live=false
+          if [ "$LIVE_ONLY" = "true" ]; then
+            echo "live_only: only the live check of the real pages runs"
+            live=true
+            go=false
+          fi
           echo "go=$go" >> "$GITHUB_OUTPUT"
-          echo "fast=$fast" >> "$GITHUB_OUTPUT"
+          echo "fast=$FAST" >> "$GITHUB_OUTPUT"
+          echo "live=$live" >> "$GITHUB_OUTPUT"
+          echo "really=$really" >> "$GITHUB_OUTPUT"
+          if [ "$really" != "true" ] && [ "$go" = "true" ]; then echo "CHECK ONLY: nothing on the server will be changed by this run"; fi
+      - name: Live check only (read-only, the real pages of the live site are fetched and checked, nothing is built, tested or changed)
+        if: steps.gate.outputs.live == 'true' && matrix.site != 'atomou'
+        run: python -m sokuhou.sitecheck --live --base ${{ matrix.url }} --probe "${{ matrix.probe }}"
       - name: Fonts and Pillow for the share cards, and the PDF reader
         if: steps.gate.outputs.go == 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk
           python -m pip install --quiet pillow -r requirements.txt
+      - name: SSH setup (first thing, before the long steps, a server that does not answer from this runner is found in about a minute, not after the tests)
+        id: ssh
+        if: steps.gate.outputs.go == 'true'
+        env:
+          KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          HOST: ${{ secrets.XSERVER_HOST }}
+          USER_ID: ${{ secrets.XSERVER_USER }}
+          SITE: ${{ matrix.site }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_xserver
+          chmod 600 ~/.ssh/id_xserver
+          sleep $((RANDOM % 8))   # a wave of sites does not knock on the server in the same second (it drops simultaneous connections); no fixed per-site wait any more (it was 0 to 160 s)
+          # one connection for the whole job (ControlMaster): every later ssh and tar of this job reuses it; a host key that is not known yet is accepted on first contact
+          printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 10' '  StrictHostKeyChecking accept-new' '  ServerAliveInterval 15' '  ServerAliveCountMax 4' \
+            '  ControlMaster auto' '  ControlPath ~/.ssh/cm-%C' '  ControlPersist 30m' > ~/.ssh/config
+          chmod 600 ~/.ssh/config
+          reached=0
+          for try in 1 2 3; do   # about 75 seconds at most; a longer blackout of this runner (15 minutes, seen on 2026-10-17) is not waited for: this site starts again on another runner (last step)
+            if ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" true 2> /tmp/ssh.err; then reached=1; break; fi
+            echo "server not reachable (attempt $try): $(head -c 160 /tmp/ssh.err | tr -s '[:space:]' ' ')"
+            sleep $((try * 5))
+          done
+          if [ "$reached" != 1 ]; then
+            echo "unreachable=true" >> "$GITHUB_OUTPUT"
+            # diagnostics for later (which address this runner has, whether other ports of the server answer): nothing secret, the host name is masked in the log
+            echo "runner address: $(curl -s --max-time 5 https://api.ipify.org || echo unknown)"
+            for port in "$SSH_PORT" 22 443; do
+              if timeout 5 bash -c "exec 3<>/dev/tcp/$HOST/$port" 2> /dev/null; then echo "tcp port $port: answers"; else echo "tcp port $port: no answer"; fi
+            done
+            exit 1
+          fi
       - name: Private mall data (Rakuten / Yahoo! results, taken from the server's private folder; they are never in the repository - see sites/yorokobu/privatedata.py)
         if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu'
         env:
@@ -219,9 +222,20 @@ jobs:
           XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
           XSERVER_USER: ${{ secrets.XSERVER_USER }}
         run: python -m sites.yorokobu.privatedata pull
-      - name: Unit tests (skipped in the fast lane, because the committing session ran them and the daily full deploy runs them again)
+      - name: Unit tests, started now and read later (skipped in the fast lane, because the committing session ran them and the daily full deploy runs them again)
         if: steps.gate.outputs.go == 'true' && steps.gate.outputs.fast != 'true'
-        run: CI=true python tests/run_tests.py --strict --site ${{ matrix.site }}   # the shared tests and this site's own; another project's failing tests cannot block this deploy
+        env:
+          SITE: ${{ matrix.site }}
+        run: |
+          # The tests run beside the build and the checks below, in a second work tree of this checkout (git worktree + the git-ignored files already here, e.g. yorokobu's private data),
+          # so that nothing they write (out/, caches, release/) meets what the build reads.  The step "Unit tests result" waits for them and stops the job if they failed, before the server is touched.
+          T="$RUNNER_TEMP/testtree"
+          git worktree add --detach "$T" HEAD > /dev/null
+          git ls-files -z --others --ignored --exclude-standard | grep -zv -e '^out/' -e '^release/' -e '^demo_build/' -e '__pycache__' | xargs -0 -r cp --parents -t "$T"
+          cd "$T"
+          rm -f "$RUNNER_TEMP/tests.rc"
+          setsid nohup bash -c 'CI=true python tests/run_tests.py --strict --site "$0"; echo $? > "$1/tests.rc"' "$SITE" "$RUNNER_TEMP" > "$RUNNER_TEMP/tests.log" 2>&1 < /dev/null &
+          echo "unit tests started in $T"   # the shared tests and this site's own; another project's failing tests cannot block this deploy
       - name: Today's date (the products are fetched once a day and cached, so a code push does not refetch)
         if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu'
         run: echo "DAY=$(TZ=Asia/Tokyo date +%F)" >> "$GITHUB_ENV"
@@ -280,41 +294,42 @@ jobs:
           test -f demo_build/.htaccess
           # the panel does not show a subdomain's document root: Xserver's default is public_html/<host name>, the owner's note says public_html/demo; both get the demo (both behind the password)
           for d in demo demo.atomou.com; do mkdir -p "release/$d"; cp -a demo_build/. "release/$d/"; done
-      - name: SSH setup
-        if: steps.gate.outputs.go == 'true'
-        env:
-          KEY: ${{ secrets.XSERVER_SSH_KEY }}
-          HOST: ${{ secrets.XSERVER_HOST }}
-          USER_ID: ${{ secrets.XSERVER_USER }}
-          SITE: ${{ matrix.site }}
-        run: |
-          mkdir -p ~/.ssh && chmod 700 ~/.ssh
-          printf '%s\n' "$KEY" > ~/.ssh/id_xserver
-          chmod 600 ~/.ssh/id_xserver
-          case "$SITE" in atomou) off=0;; kuma) off=40;; minna) off=80;; saichin) off=120;; yorokobu) off=160;; *) off=$((RANDOM % 160));; esac
-          sleep "$off"   # the five site jobs finish their tests together and the server drops simultaneous connections (run 97: one job could not connect for 5 minutes), so each site starts at its own fixed offset
-          # a host key that the scan could not fetch is accepted on first contact (the scan is the same trust, taken from the same network)
-          printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 15' '  StrictHostKeyChecking accept-new' > ~/.ssh/config
-          chmod 600 ~/.ssh/config
-          ssh-keyscan -T 10 -p "$SSH_PORT" "$HOST" >> ~/.ssh/known_hosts 2> /tmp/keyscan.err || true
-          reached=0
-          for try in 1 2 3 4 5 6 7 8 9 10; do   # wait until the server answers: up to about 10 minutes, with growing pauses
-            if ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" true 2> /tmp/ssh.err; then reached=1; break; fi
-            echo "server not reachable (attempt $try): $(head -c 160 /tmp/ssh.err | tr -s '[:space:]' ' ')"
-            sleep $((try * 12))
-          done
-          [ "$reached" = 1 ]
       - name: Check the server (read only)
+        id: servercheck
         if: steps.gate.outputs.go == 'true'
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
           SITE_DIR: ${{ matrix.dir }}
         run: |
-          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
-            "set -e; cd \"\$HOME/$SITE_DIR\"; pwd; test -d public_html; command -v tar >/dev/null; ls -d public_html*"
+          # also what the server has to say about itself, for the limits of a server with many sites (disk, files, rsync): printed, never a reason to fail
+          rc=0
+          for try in 1 2 3; do
+            rc=0
+            ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
+              "set -e; cd \"\$HOME/$SITE_DIR\"; pwd; test -d public_html; command -v tar >/dev/null; ls -d public_html*; (df -h \"\$HOME\" | tail -n 1; df -i \"\$HOME\" | tail -n 1; du -sh public_html .deploy_prev 2>/dev/null; command -v rsync || echo 'rsync: none') || true" && break || rc=$?
+            [ "$rc" = 255 ] || break   # 255 is ssh's own: no connection; anything else is the server's answer (a missing folder) and a second try would say the same
+            echo "server not reachable (attempt $try)"
+            sleep $((try * 5))
+          done
+          if [ "$rc" != 0 ]; then
+            [ "$rc" = 255 ] && echo "unreachable=true" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+      - name: Unit tests result (the tests started above ran beside the build; a failure stops the job here, before the server is changed)
+        if: steps.gate.outputs.go == 'true' && steps.gate.outputs.fast != 'true'
+        run: |
+          waited=0
+          while [ ! -f "$RUNNER_TEMP/tests.rc" ]; do
+            sleep 5
+            waited=$((waited + 5))
+            if [ "$waited" -gt 3000 ]; then echo "the unit tests did not finish in 50 minutes after the build"; tail -n 40 "$RUNNER_TEMP/tests.log"; exit 1; fi
+          done
+          echo "the tests finished $waited seconds after the build and its checks"
+          cat "$RUNNER_TEMP/tests.log"
+          [ "$(cat "$RUNNER_TEMP/tests.rc")" = 0 ]
       - name: Demo password file for atomou (outside public_html; the preview build asks for it)
-        if: steps.gate.outputs.go == 'true' && matrix.site == 'atomou' && vars.ATOMOU_PUBLIC != 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+        if: steps.gate.outputs.go == 'true' && matrix.site == 'atomou' && vars.ATOMOU_PUBLIC != 'true' && steps.gate.outputs.really == 'true'
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
@@ -335,24 +350,19 @@ jobs:
           done
           for d in release/demo release/demo.atomou.com; do if [ -d "$d" ]; then grep -q "AuthUserFile" "$d/.htaccess"; fi; done
       - name: IndexNow previous sitemap (the live one, kept before the new build replaces it; a failure only means nothing is sent afterwards)
-        if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+        if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou' && steps.gate.outputs.really == 'true'
         continue-on-error: true
         run: python -m sokuhou.indexnow snapshot --base ${{ matrix.url }} --out prev_sitemap.xml
-      - name: Private product data for api/items.php (the favourites, shared lists, gacha and answer pages ask it for a few products at a time; the files are never public, they stay in the server's private folder)
-        if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
-        env:
-          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
-          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
-          XSERVER_USER: ${{ secrets.XSERVER_USER }}
-        run: python -m sites.yorokobu.privatedata push yorokobu_items_db.json yorokobu_gacha_db.json yorokobu_rec_db.json
       - name: Upload and switch
-        if: steps.gate.outputs.go == 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+        id: upload
+        if: steps.gate.outputs.go == 'true' && steps.gate.outputs.really == 'true'
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
           SITE_DIR: ${{ matrix.dir }}
         run: |
           set -euo pipefail
+          rc=0
           tar -C release -czf - . | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" "
             set -e
             cd \"\$HOME/$SITE_DIR\"
@@ -368,9 +378,14 @@ jobs:
             rm -rf .deploy_prev
             mv public_html .deploy_prev
             mv .deploy_next public_html
-          "
+          " || rc=$?
+          if [ "$rc" != 0 ]; then
+            # 255 is ssh's own: the connection was lost.  The switch is the last command of the script, so a lost connection leaves the live site as it was (only .deploy_next is half written)
+            [ "$rc" = 255 ] && echo "unreachable=true" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
       - name: Verify the live site, roll back if it is wrong
-        if: steps.gate.outputs.go == 'true' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+        if: steps.gate.outputs.go == 'true' && steps.gate.outputs.really == 'true'
         env:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
@@ -440,6 +455,19 @@ jobs:
             exit 1
           fi
       - name: IndexNow submit (tells Bing and the other IndexNow engines which pages are new or changed; it never fails or rolls back a deploy)
-        if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+        if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou' && steps.gate.outputs.really == 'true'
         continue-on-error: true
         run: python -m sokuhou.indexnow submit --root release --base ${{ matrix.url }} --prev prev_sitemap.xml
+      - name: Start this site again on another runner (the server did not answer from this one - on 2026-10-17 a runner was cut off for about 15 minutes while other runners were connected; a new job is a new runner)
+        if: failure() && (steps.ssh.outputs.unreachable == 'true' || steps.servercheck.outputs.unreachable == 'true' || steps.upload.outputs.unreachable == 'true')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SITE: ${{ matrix.site }}
+          ATTEMPT: ${{ inputs.attempt || '1' }}
+          REALLY: ${{ steps.gate.outputs.really }}
+        run: |
+          # the new run is a manual run of this site only; it compares nothing with a push, it builds the newest main.  At most 3 tries; after that the hourly watchdog (office-watch) takes over.
+          if [ "$ATTEMPT" -ge 3 ]; then echo "this was try $ATTEMPT: not starting again; the watchdog will"; exit 0; fi
+          sleep 90
+          gh workflow run deploy.yml --ref "$GITHUB_REF_NAME" -f only="$SITE" -f deploy="$REALLY" -f attempt="$((ATTEMPT + 1))"
+          echo "started $SITE again (try $((ATTEMPT + 1)))"
