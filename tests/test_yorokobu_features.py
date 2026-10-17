@@ -227,7 +227,10 @@ class PageTest(unittest.TestCase):
         f = self.c["features"][0]
         day = self.read(f"picks/{f['date']}/index.html")
         self.assertIn(f'href="/pick/{f["slug"]}/"', day)
-        self.assertIn("詳しく読む", day)
+        self.assertIn("<h2>注目の商品</h2>", day)
+        self.assertIn("気になる商品をくわしく調べました。", day)
+        self.assertNotIn("詳しく読む", day)
+        self.assertNotIn("掘り下げた記事", day)
         self.assertIn(f'/pick/{f["slug"]}/', self.read("picks/index.html"))
         self.assertIn(f'/pick/{f["slug"]}/', self.read("sitemap.xml"))
         feed = self.read("feed.xml")

@@ -311,7 +311,7 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
     ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": f["title"], "datePublished": f["date"], "dateModified": f["verified"], "inLanguage": "ja",
                      "author": {"@type": "Organization", "name": cfg["operator_name"]}, "mainEntityOfPage": url_abs}, ensure_ascii=False)
     body = f"""{B.head_band("yellow", "", esc(f["title"]), f["catch"], single=True)}
-<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("毎日のおすすめ", "/picks/"), (dp_label(f["date"]), f"/picks/{f['date']}/"), ("詳しく読む", None)])}</div>
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("毎日のおすすめ", "/picks/"), (dp_label(f["date"]), f"/picks/{f['date']}/"), ("注目の商品", None)])}</div>
 {B.pr_quiet(cfg)}
 {notice}
 <section class="feat-top"><div class="feat-hero">{photo}<div class="feat-sum"><p class="eyebrow">30秒でわかる結論</p>{_list(f["verdict"], "feat-verdict")}{price}<div class="item-btns">{buy}{other_btn}</div></div></div></section>
@@ -328,7 +328,7 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
 <section class="block feat-cta"><p class="more">{buy}{other_btn}<a class="btn btn-sub" href="/memo/">贈る日を登録する</a></p></section>
 {B.share_bar(cfg, path(f), f"{f['title']}: {f['catch']}", "このページをだれかに・自分に送る", hint=True)}
 <section class="block"><div class="sec-head"><h2>この記事について</h2></div><p class="notice">商品の仕様、メーカーなどの公開情報、当サイトが集めた商品のデータをもとに編集部が、贈り物としての選びやすさを読み解いています。価格・在庫は販売ページでご確認ください。</p><ul class="plain feat-ev">{ev}</ul></section>
-{f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの詳しく読む記事</span></h2><ul class="plain">{more}</ul></section>' if more else ""}
+{f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの注目の商品</span></h2><ul class="plain">{more}</ul></section>' if more else ""}
 <script type="application/ld+json">{ld}</script>"""
     return B.page(cfg, preview, path=path(f), title=f"{f['title']} | {cfg['site_name']}", description=f["catch"] + " " + f["verdict"][0][:70], body=body, og_image=B.og_for(f"pick/{f['slug']}"),
                   amazon_links=bool(cfg.get("amazon_tracking_id")))
@@ -340,12 +340,12 @@ def dp_label(iso: str) -> str:
 
 
 def teaser(cfg: dict, d: dict, feats: list[dict], day_iso: str | None = None, limit: int = 3) -> str:
-    """The block 「詳しく読む」 on the picks pages: the newest features."""
+    """The block 「注目の商品」 on the picks pages: the newest features."""
     shown = [f for f in feats if day_iso is None or f["date"] == day_iso][:limit]
     if not shown:
         return ""
     cells = "".join(f'<li><a class="tile wide" href="{path(f)}"><span><b>{esc(f["title"])}</b><small>{esc(f["catch"])}</small></span></a></li>' for f in shown)
-    return f'<section class="block"><div class="sec-head"><span class="eyebrow">Read more</span><h2>詳しく読む</h2><p class="sec-lead">1つの商品を仕様・価格の位置・渡し方まで掘り下げた記事です。</p></div><ul class="tiles wide">{cells}</ul></section>'
+    return f'<section class="block"><div class="sec-head"><span class="eyebrow">Read more</span><h2>注目の商品</h2><p class="sec-lead">気になる商品をくわしく調べました。</p></div><ul class="tiles wide">{cells}</ul></section>'
 
 
 def build_pages(d: dict, cfg: dict, preview: bool) -> dict[str, str]:

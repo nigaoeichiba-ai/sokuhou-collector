@@ -1952,7 +1952,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
             m, dd = int(day["date"][5:7]), int(day["date"][8:10])
             cards[f"og/picks/{day['date']}.png"] = ogimage.card(title="今日のおすすめギフト", tag=f"{m}月{dd}日 {day['theme']}", site=site, photo=day["amazon"][0]["mood"])
         for fe in c.get("features") or []:
-            cards[f"og/pick/{fe['slug']}.png"] = ogimage.card(title=fe["title"], tag="詳しく読む", site=site, photo=mood_photo(fe["slug"]))
+            cards[f"og/pick/{fe['slug']}.png"] = ogimage.card(title=fe["title"], tag="注目の商品", site=site, photo=mood_photo(fe["slug"]))
         for th in c["themes"]:
             cards[f"og/theme/{th['slug']}.png"] = ogimage.card(title=th["title"], tag=next(g["name"] for g in c["theme_groups"] if g["slug"] == th["group"]), site=site, photo=mood_photo(th["slug"]))
         for cid, ch in (d.get("_chart_cards") or {}).items():          # the data room's charts as pictures: a preview for sharing the page, a tall one to keep or send

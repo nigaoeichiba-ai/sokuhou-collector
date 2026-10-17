@@ -110,7 +110,7 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
 
     def more(ref):
         f = fx.get(ref)
-        return f'<p class="pick-more"><a href="/pick/{esc(f["slug"])}/">この商品を詳しく読む(仕様・価格の位置・渡し方)</a></p>' if f else ""
+        return f'<p class="pick-more"><a href="/pick/{esc(f["slug"])}/">この商品をくわしく調べた記事を読む</a></p>' if f else ""
     for i, e in enumerate(day["rakuten"], 1):
         c = rakuten_card(cfg, d, e, f"r{i}", len(r_cards) + 1, more(f"r{i}"))
         if c:
