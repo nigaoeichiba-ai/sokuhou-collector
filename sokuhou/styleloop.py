@@ -875,7 +875,7 @@ def main(argv: list[str] | None = None) -> int:
         if name == "judge":
             s.add_argument("--batches", type=int, default=3)
             s.add_argument("--accept", action="store_true", help="put the rewordings that pass the checks into the dictionary")
-            s.add_argument("--no-suggest", action="store_true", help="do not look at search suggestions (the judge's own choice)")
+            s.add_argument("--suggest", action="store_true", help="also compare the candidates by search suggestions (off by default: the owner wants no one-by-one outside checks)")
             s.add_argument("--sentences", action="store_true", help="also ask about the body sentences that naturaljp finds suspicious (mid and high)")
         if name in ("extract", "flags"):
             s.add_argument("--limit", type=int, default=40)
@@ -900,7 +900,7 @@ def main(argv: list[str] | None = None) -> int:
     rj.add_argument("--scope", choices=["dictionary", "proposed"], default="dictionary")
     rj.add_argument("--batches", type=int, default=3)
     rj.add_argument("--accept", action="store_true")
-    rj.add_argument("--no-suggest", action="store_true")
+    rj.add_argument("--suggest", action="store_true")
     s = sub.add_parser("source")
     s.add_argument("--site", required=True)
     s.add_argument("--dry", action="store_true")
@@ -922,7 +922,7 @@ def main(argv: list[str] | None = None) -> int:
         print("OK: passes every check" if not bad else "NOT accepted: " + "; ".join(bad))
         return 1 if bad else 0
     if args.cmd == "rejudge":
-        st = judge(rejudge_units(args.site, args.scope), args.site, args.batches, args.accept, scorer=None if args.no_suggest else suggest_score,
+        st = judge(rejudge_units(args.site, args.scope), args.site, args.batches, args.accept, scorer=suggest_score if args.suggest else None,
                    force=True, replace=args.scope == "dictionary")
         print(json.dumps(st, ensure_ascii=False))
         return 1 if st.get("failed_batches") else 0
@@ -977,7 +977,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "judge":
         if args.sentences:
             units = {**sentence_units(root, site), **units}
-        st = judge(units, site or "", args.batches, args.accept, scorer=None if args.no_suggest else suggest_score)
+        st = judge(units, site or "", args.batches, args.accept, scorer=suggest_score if args.suggest else None)
         print(json.dumps(st, ensure_ascii=False))
         return 1 if st.get("failed_batches") else 0
     return 2
