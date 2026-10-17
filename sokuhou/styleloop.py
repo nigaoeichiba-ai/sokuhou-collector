@@ -53,6 +53,7 @@ class Unit:
     pages: int = 0
     example: str = ""         # a page that shows it
     kinds: set = field(default_factory=set)
+    current: str = ""         # a rewording already in the dictionary (a re-check asks whether it is the best one)
 
 
 def norm(s: str) -> str:
@@ -173,6 +174,12 @@ HEAVY = [
     ("coined_label", r"ソムリエ|ナビゲーター|見立て|ギフトマップ|ガチャ|コンシェルジュ|ナレッジ|ソリューション", "内輪の語・取って付けたような外来語"),
     ("noun_pile_heading", r"^(?:[^のはがをにでと、。]+の){3,}[^の、。]+$", "名詞を「の」でつないだだけの見出し"),
     ("child_tone", r"て(?:ね|くださいね)[。！!]?$|だよ[。！!]?$|しよう[。！!]?$", "子どもに話しかける口調"),
+    ("person_phrase", r"[^、。\s]{1,10}(?:を|に)?(?:開いた|開いてくれた|してくれた|くれた|くださった|手伝ってくれた|招いた|呼んだ|迎えた|企画した|用意した|世話をした|世話してくれた)人",
+     "人を説明で指している(〜を開いた人)。幹事・主催者・まとめ役・世話役・ホスト・担当者のような役割の名前で言えないか"),
+    ("bare_noun", r"(?:贈る|渡す|添える|届ける|返す|選ぶ)(?:お礼|お返し|感謝|気持ち|対応|サポート)$|^(?:お礼|対応|サポート|お返し)$",
+     "単独の抽象名詞。何を指すか分からない(お礼の品・お礼状・お礼の言葉・お礼の金額のどれか)"),
+    ("verb_modifies_noun", r"(?:労う|ねぎらう|気遣う|もてなす|励ます|喜ばせる)(?:贈り方|選び方|方法|渡し方|やり方|ギフト)",
+     "動詞が名詞(贈り方)にかかる言い方。何が何をするかが分かる形に(〜への、〜の品)"),
     ("mechanical_phrase", r"詳細はこちら$|こちらをご覧ください$|ご確認ください$|をご紹介します?$|を解説します?$|について解説$", "どのサイトにもある定型の案内文"),
 ]
 _HEAVY = [(rid, re.compile(p), why) for rid, p, why in HEAVY]
@@ -204,7 +211,7 @@ KANJI_NUM = re.compile(r"[一二三四五六七八九十百千万億]+")
 LATIN = re.compile(r"[A-Za-z][A-Za-z0-9&'.+\-]*")
 KATAKANA = re.compile(r"[ァ-ヴー]{3,}")
 QUOTED = re.compile(r"[「『][^」』]+[」』]")
-NEW_CLAIMS = ("試し", "使ってみ", "実際に使", "検証", "保証", "必ず", "最安", "No.1", "日本一", "絶対", "医師", "専門家", "1位", "一位")
+NEW_CLAIMS = ("人気", "よく読まれ", "売れて", "定番", "喜ばれ", "試し", "使ってみ", "実際に使", "検証", "保証", "必ず", "最安", "No.1", "日本一", "絶対", "医師", "専門家", "1位", "一位")
 EMOJI = re.compile("[\U0001F300-\U0001FAFF✨❗]")
 ALLOW_DROP = {"ソムリエ", "ナビゲーター", "ギフトマップ", "ガチャ", "コンシェルジュ", "ナレッジ", "ソリューション"}     # coined words the owner or the style guide asked to replace
 
@@ -468,18 +475,30 @@ SITE_STYLE = {
 }
 
 
+def principles() -> list[str]:
+    try:
+        return json.loads((DATA / "examples.json").read_text(encoding="utf-8")).get("principles", [])
+    except (OSError, ValueError):
+        return []
+
+
 def judge_prompt(site: str, batch: list[Unit]) -> str:
     ex = [e for e in examples()]
     ex_txt = "\n".join(f"- 「{e['before']}」→「{e['after']}」({e['site']}・{e['kind']}。{e.get('why', '')})" for e in ex)
-    items = [{"id": i + 1, "kind": u.kind, "text": u.text} for i, u in enumerate(batch)]
+    items = [{"id": i + 1, "kind": u.kind, "text": u.text, **({"current": u.current} if u.current else {})} for i, u in enumerate(batch)]
+    pr = chr(10).join(f"{i}. {p}" for i, p in enumerate(principles(), 1))
     return f"""あなたは日本語の校閲者です。次の「短い言葉」(見出し・ボタン・ラベル・メニュー・タイトル・説明文・代替テキスト)が、日本語のサイトの文言として自然かを一つずつ判定してください。
 サイト: {site}。{SITE_STYLE.get(site, '')}
 基準: ふつうの人がその場面で自然に言うか。堅い複合語(掘り下げる・〜の位置)、翻訳調、お役所の言い回し、内輪の編集語、名詞をつないだだけの見出し、AIが作ったような決まり文句は不自然。短く、ふつうの言葉で。自然なら直さない(自然なものを無理に変えない)。
 オーナーが実際に直した例(必ず見本にすること):
 {ex_txt}
+語の選び方の基本(オーナーの指示。文法より前に、基本の自然な語を選ぶ):
+{pr}
+見るところ: (a) 人を説明で言っていないか(〜を開いた人、〜してくれた人)。役割の名前に替えられないか。(b) 単独の抽象名詞(お礼・贈り物・対応・サポート)が、何を指すか曖昧でないか。(c) 名詞を動詞にかける言い方や、名詞だけの連なりでないか。
 直すのは不自然な部分だけ。自然な語や言い回しは残し、できるだけ少ない変更にする(全体を書き換えない)。
 守ること: 意味・事実・数字・日付・固有名(作品名・商品名・店名・イベント名・人名・地名)・「」の引用・英字・カタカナの名前は変えない。新しい主張や体験(試した・必ず・最安など)を足さない。直し案は元の言葉と同じ程度の長さにする。
-出力: JSONだけ(前後に説明を書かない)。形式: {{"items":[{{"id":1,"natural":true,"better":"","why":"","confidence":""}}]}}。natural が false のときだけ better に直し案、why に一言の理由、confidence に "high"(誰が読んでも不自然・直し案のほうが明らかによい)か "low"(好みの差)。固有名・データ由来の名前、画面の読み上げ用の標準的な語(パンくず 等)は natural:true。
+直し案の作り方: 最初に思いついた1案で決めない。同じ意味で言い方の違う候補を3つ以上考え(item に current があれば、それも候補の1つに入れる)、その中から、実際によく使われる自然な言い方を選ぶ。各候補に key(その候補の特徴が出る、検索で打つような短い語句。例「幹事 お礼 品」)を付ける。
+出力: JSONだけ(前後に説明を書かない)。形式: {{"items":[{{"id":1,"natural":true,"candidates":[{{"text":"","key":""}}],"choice":1,"why":"","confidence":""}}]}}。natural が false のときだけ candidates(3つ以上)・choice(選んだ候補の番号)・why(選んだ理由を一言)・confidence("high"=誰が読んでも不自然で、選んだ案のほうが明らかによい、"low"=好みの差)を書く。固有名・データ由来の名前、画面の読み上げ用の標準的な語(パンくず 等)は natural:true。
 入力:
 {json.dumps(items, ensure_ascii=False)}
 """
@@ -489,7 +508,8 @@ def verify_prompt(site: str, pairs: list[tuple[str, str]]) -> str:
     items = [{"id": i + 1, "before": a, "after": b} for i, (a, b) in enumerate(pairs)]
     return f"""あなたは日本語の校閲者です。サイト({site})の文言の直し案が、元の文言と同じ意味・同じ事実のままか、一つずつ確かめてください。
 同じ意味でない例: 内容が変わる・足される・減る(数字、条件、対象、注意点、出典を含む)、別の物の言い方になる、トーンが大きく変わる、かえって不自然になる。語を言い換えただけで意味が同じなら true。
-出力: JSONだけ。形式: {{"items":[{{"id":1,"same_meaning":true,"natural":true,"problem":""}}]}}。same_meaning は意味が同じか、natural は直し案が自然な日本語か。
+あわせて、語の選び方も見る: 人を説明で言っていないか(〜を開いた人 → 幹事・主催者などの役割の名前)、単独の抽象名詞(お礼・贈り物・対応)が何を指すか曖昧でないか、名詞を動詞にかける言い方でないか、より適切でふつうに使われる言葉がないか。
+出力: JSONだけ。形式: {{"items":[{{"id":1,"same_meaning":true,"natural":true,"word_choice_ok":true,"problem":""}}]}}。same_meaning は意味が同じか、natural は直し案が自然な日本語か、word_choice_ok は語の選び方が適切か(より良い言葉があれば false にして problem に書く)。
 入力:
 {json.dumps(items, ensure_ascii=False)}
 """
@@ -499,7 +519,7 @@ def verify(site: str, pairs: list[tuple[str, str]], runner=None) -> dict[int, bo
     """A second look at the rewordings that passed the checks: same meaning AND natural.  Anything not answered is not accepted."""
     runner = runner or run_codex
     answer = parse_judgement(runner(verify_prompt(site, pairs)), len(pairs))
-    return {i: bool(it.get("same_meaning")) and bool(it.get("natural", True)) for i, it in answer.items()}
+    return {i: bool(it.get("same_meaning")) and bool(it.get("natural", True)) and bool(it.get("word_choice_ok", True)) for i, it in answer.items()}
 
 
 def run_codex(prompt: str, timeout: int = 900) -> str:
@@ -566,11 +586,92 @@ def protected_name(text: str) -> bool:
     return not re.search(rf"[ぁ-ん{nj.KANJI}]", text) or bool(re.match(r"^[\d\s.,:/\-年月日()（）]+$", text))
 
 
-def judge(units: dict[str, Unit], site: str, batches: int = 3, accept: bool = False, runner=run_codex, today: str | None = None, verifier=None) -> dict:
+SUGGEST_CACHE = "suggest_cache.json"
+
+
+def fetch_suggest(query: str) -> list[str]:
+    """Google's search suggestions for a phrase (public, no key).  What people type is the nearest thing to 'which wording is in use' that can be measured here."""
+    import urllib.parse
+    import urllib.request
+    url = "https://www.google.com/complete/search?client=firefox&hl=ja&q=" + urllib.parse.quote(query)
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=10) as r:
+        data = json.loads(r.read().decode("utf-8", errors="replace"))
+    return [x for x in data[1] if isinstance(x, str)]
+
+
+def suggest_score(key: str, fetch=None, today: str | None = None) -> int | None:
+    """How many suggestions the phrase gets, plus one for each that starts with it (1-20).  None = no evidence (no network, empty key, or nobody types a phrase this specific).  Cached in data/style/."""
+    key = norm(key)
+    if not key:
+        return None
+    cache_file = DATA / SUGGEST_CACHE
+    try:
+        cache = json.loads(cache_file.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        cache = {}
+    if key in cache:
+        return cache[key][0] or None
+    try:
+        sug = (fetch or fetch_suggest)(key)
+    except Exception:
+        return None
+    score = len(sug) + sum(1 for x in sug if x.startswith(key))
+    cache[key] = [score, today or dt.date.today().isoformat()]
+    cache_file.parent.mkdir(parents=True, exist_ok=True)
+    cache_file.write_text(json.dumps(cache, ensure_ascii=False, indent=0, sort_keys=True) + chr(10), encoding="utf-8")
+    return score or None                                           # no suggestion at all says nothing (a long phrase nobody types as it is): not a zero
+
+
+def choose(site: str, u: Unit, it: dict, scorer=None) -> tuple[str | None, list[dict], list[str]]:
+    """From the judge's candidates (3 or more asked for): the ones that pass the checks, then the one people actually use (suggestions), else the judge's own choice.
+    Returns (chosen text or None, all candidates with their score/problems, the reasons the first was refused when none passed)."""
+    raw = it.get("candidates")
+    if not raw and (it.get("better") or "").strip():
+        raw = [{"text": it["better"], "key": ""}]
+    cands = []
+    for c in raw or []:
+        if isinstance(c, dict) and (c.get("text") or "").strip():
+            cands.append({"text": norm(c["text"]), "key": norm(c.get("key") or "")})
+    if not cands:
+        return None, [], ["no candidates"]
+    first = it.get("choice") if isinstance(it.get("choice"), int) and 1 <= it["choice"] <= len(cands) else 1
+    order = [cands[first - 1]] + [c for i, c in enumerate(cands, 1) if i != first]
+    problems_first: list[str] = []
+    passing = []
+    for c in order:
+        probs = check_rewrite(u.text, c["text"], site, u.kind)
+        c["problems"] = probs
+        if probs:
+            problems_first = problems_first or probs
+        else:
+            passing.append(c)
+    if not passing:
+        return None, order, problems_first
+    for c in passing:
+        c["score"] = scorer(c["key"]) if scorer and c["key"] else None
+    measured = [c for c in passing if c.get("score") is not None]
+    best = max(measured, key=lambda c: c["score"]) if len(measured) >= 2 and len({c["score"] for c in measured}) > 1 else passing[0]
+    return best["text"], order, []
+
+
+def evidence(cands: list[dict]) -> str:
+    if len(cands) < 2:
+        return "候補が1つだけ(語の使われ方は比べていない)"
+    parts = []
+    for c in cands:
+        sc = c.get("score")
+        parts.append(f"{c['text'][:24]}({'×' if c.get('problems') else ('測れず' if sc is None else sc)})")
+    return "候補とサジェスト数: " + " / ".join(parts)
+
+
+def judge(units: dict[str, Unit], site: str, batches: int = 3, accept: bool = False, runner=run_codex, today: str | None = None, verifier=None,
+          scorer=None, force: bool = False, replace: bool = False) -> dict:
+    """Ask about the texts not asked before (force: ask again about these units; replace: a better wording than the dictionary line replaces it)."""
     today = today or dt.date.today().isoformat()
     judged = load_judged(site)
     stats = Counter()
-    todo = pending_units(units, site, judged)
+    todo = sorted(units.values(), key=lambda u: priority(u, site)) if force else pending_units(units, site, judged)
     for b in range(batches):
         batch = todo[b * BATCH:(b + 1) * BATCH]
         if not batch:
@@ -587,22 +688,26 @@ def judge(units: dict[str, Unit], site: str, batches: int = 3, accept: bool = Fa
             if it is None:
                 stats["unanswered"] += 1
                 continue
-            if it.get("natural", True) or not (it.get("better") or "").strip():
+            if it.get("natural", True) and not u.current:
                 judged[key_of(u.text)] = {"text": u.text, "natural": True, "at": today}
                 stats["natural"] += 1
                 continue
-            better = norm(it["better"])
-            problems = check_rewrite(u.text, better, site, u.kind)
-            rec = {"text": u.text, "natural": False, "better": better, "why": it.get("why", ""), "at": today, "kind": u.kind, "confidence": str(it.get("confidence", ""))}
-            if problems:
-                rec["status"] = "rejected"
-                rec["problems"] = problems
+            text, cands, problems = choose(site, u, it, scorer)
+            rec = {"text": u.text, "natural": False, "at": today, "kind": u.kind, "confidence": str(it.get("confidence", "")),
+                   "candidates": [{k: v for k, v in c.items() if k in ("text", "key", "score", "problems")} for c in cands]}
+            if text is None:
+                rec.update(better=cands[0]["text"] if cands else "", why=it.get("why", ""), status="rejected", problems=problems or ["no usable candidate"])
                 stats["rejected"] += 1
-            elif accept and rec["confidence"].lower() == "high":
-                candidates.append((u, rec, it))
             else:
-                rec["status"] = "proposed"
-                stats["proposed"] += 1
+                rec.update(better=text, why=((it.get("why", "") + " / " if it.get("why") else "") + evidence(cands)).strip())
+                if u.current and text == norm(u.current):
+                    rec["status"] = "kept"
+                    stats["kept"] += 1
+                elif accept and rec["confidence"].lower() == "high":
+                    candidates.append((u, rec, it))
+                else:
+                    rec["status"] = "proposed"
+                    stats["proposed"] += 1
             judged[key_of(u.text)] = rec
         if candidates:
             try:
@@ -613,16 +718,41 @@ def judge(units: dict[str, Unit], site: str, batches: int = 3, accept: bool = Fa
                 stats["error"] = str(e)[:200]
             for i, (u, rec, it) in enumerate(candidates, 1):
                 if same.get(i):
-                    ok, _ = add_entry(site, u.text, rec["better"], by="codex", why=rec["why"], kind=u.kind, today=today)
-                    rec["status"] = "accepted" if ok else "duplicate"
-                    stats["accepted" if ok else "duplicate"] += 1
+                    if replace and u.current:
+                        entries = load_rewrites(site)
+                        for e in entries:
+                            if e["from"] == norm(u.text):
+                                e["prev"] = e["to"]
+                                e["to"] = rec["better"]
+                                e["why"] = rec["why"]
+                                e["rechecked"] = today
+                        save_rewrites(site, entries)
+                        rec["status"] = "replaced"
+                        stats["replaced"] += 1
+                    else:
+                        ok, _ = add_entry(site, u.text, rec["better"], by="codex", why=rec["why"], kind=u.kind, today=today)
+                        rec["status"] = "accepted" if ok else "duplicate"
+                        stats["accepted" if ok else "duplicate"] += 1
                 else:
                     rec["status"] = "proposed"
-                    rec["problems"] = ["not confirmed by the second look (meaning or naturalness)"]
+                    rec["problems"] = ["not confirmed by the second look (meaning, naturalness or word choice)"]
                     stats["proposed"] += 1
         save_judged(site, judged)
     stats["pending_after"] = max(0, len(todo) - batches * BATCH)
     return dict(stats)
+
+
+def rejudge_units(site: str, scope: str) -> dict[str, Unit]:
+    """The units of a re-check: every line of the dictionary (is its rewording the best one?) or every held proposal (is there a good rewording now?)."""
+    units: dict[str, Unit] = {}
+    if scope == "dictionary":
+        for e in load_rewrites(site):
+            units[e["from"]] = Unit(e.get("kind", "heading"), e["from"], 0, "", {e.get("kind", "heading")}, current=e["to"])
+    else:
+        for rec in load_judged(site).values():
+            if not rec.get("natural", True) and rec.get("status") in ("proposed", "rejected"):
+                units[rec["text"]] = Unit(rec.get("kind", "heading"), rec["text"], 0, "", {rec.get("kind", "heading")})
+    return units
 
 
 # --------------------------------------------------------------------------------------------------------------------------------- the source (sites/<name>/)
@@ -745,6 +875,7 @@ def main(argv: list[str] | None = None) -> int:
         if name == "judge":
             s.add_argument("--batches", type=int, default=3)
             s.add_argument("--accept", action="store_true", help="put the rewordings that pass the checks into the dictionary")
+            s.add_argument("--no-suggest", action="store_true", help="do not look at search suggestions (the judge's own choice)")
             s.add_argument("--sentences", action="store_true", help="also ask about the body sentences that naturaljp finds suspicious (mid and high)")
         if name in ("extract", "flags"):
             s.add_argument("--limit", type=int, default=40)
@@ -759,6 +890,17 @@ def main(argv: list[str] | None = None) -> int:
     a.add_argument("--why", default="")
     a.add_argument("--kind", default="heading")
     a.add_argument("--force", action="store_true", help="skip the checks (an owner's own correction)")
+    c = sub.add_parser("check", help="the same checks for a rewording a person (or another session) proposes")
+    c.add_argument("--site", required=True)
+    c.add_argument("--from", dest="old", required=True)
+    c.add_argument("--to", required=True)
+    c.add_argument("--kind", default="heading")
+    rj = sub.add_parser("rejudge", help="ask again: is the dictionary line the best wording / is there a good wording for a held proposal")
+    rj.add_argument("--site", required=True)
+    rj.add_argument("--scope", choices=["dictionary", "proposed"], default="dictionary")
+    rj.add_argument("--batches", type=int, default=3)
+    rj.add_argument("--accept", action="store_true")
+    rj.add_argument("--no-suggest", action="store_true")
     s = sub.add_parser("source")
     s.add_argument("--site", required=True)
     s.add_argument("--dry", action="store_true")
@@ -775,6 +917,15 @@ def main(argv: list[str] | None = None) -> int:
         ok, why = add_entry(args.site, args.old, args.to, args.by, args.why, args.kind, args.force)
         print("added" if ok else f"not added: {why}")
         return 0 if ok else 1
+    if args.cmd == "check":
+        bad = check_rewrite(norm(args.old), norm(args.to), args.site, args.kind)
+        print("OK: passes every check" if not bad else "NOT accepted: " + "; ".join(bad))
+        return 1 if bad else 0
+    if args.cmd == "rejudge":
+        st = judge(rejudge_units(args.site, args.scope), args.site, args.batches, args.accept, scorer=None if args.no_suggest else suggest_score,
+                   force=True, replace=args.scope == "dictionary")
+        print(json.dumps(st, ensure_ascii=False))
+        return 1 if st.get("failed_batches") else 0
     if args.cmd == "source":
         if args.revert:
             print(f"restored {revert_source(args.site)} file(s)")
@@ -826,7 +977,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "judge":
         if args.sentences:
             units = {**sentence_units(root, site), **units}
-        st = judge(units, site or "", args.batches, args.accept)
+        st = judge(units, site or "", args.batches, args.accept, scorer=None if args.no_suggest else suggest_score)
         print(json.dumps(st, ensure_ascii=False))
         return 1 if st.get("failed_batches") else 0
     return 2

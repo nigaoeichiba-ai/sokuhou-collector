@@ -1,15 +1,120 @@
 {
  "_note": "Owner corrections and rewrites the owner approved: the model examples for the judge (sokuhou/styleloop.py). Add one line per correction; keep STYLE_LEARNINGS.md (the human table) in step. No visitor messages, no personal data.",
  "examples": [
-  {"before": "詳しく読む", "after": "注目の商品", "kind": "heading", "site": "yorokobu", "by": "owner", "date": "2026-10-17", "why": "見出しは短く、ふつうの言葉で"},
-  {"before": "1つの商品を仕様・価格の位置・渡し方まで掘り下げた記事です。", "after": "気になる商品をくわしく調べました。", "kind": "description", "site": "yorokobu", "by": "owner", "date": "2026-10-17", "why": "「掘り下げた」「〜の位置」のような堅い複合語を使わない"},
-  {"before": "参考資料(当サイトが要約・比較しました): 大丸松坂屋・高島屋・三越伊勢丹", "after": "この記事は、出典先を要約・比較し、当サイトの考え方を足したものです。しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときは、それに合わせてください。", "kind": "note", "site": "yorokobu", "by": "owner", "date": "2026-10-17", "why": "出典の注意書きは全記事共通の短い文を、ページの最後に1か所"},
-  {"before": "しぼりこめます", "after": "絞り込めます", "kind": "label", "site": "minna", "by": "owner", "date": "2026-10-12", "why": "漢字にできる語は漢字に"},
-  {"before": "どうぶつ・たべもの", "after": "動物・食べ物", "kind": "label", "site": "minna", "by": "owner", "date": "2026-10-12", "why": "漢字にできる語は漢字に"},
-  {"before": "ダウンロードして、すぐに使えます。クレジット表示も、点数の制限も、ありません。", "after": "ダウンロードしてすぐに使えます。クレジット表示も点数の制限もありません。", "kind": "description", "site": "minna", "by": "owner", "date": "2026-10-12", "why": "読点は意味の切れ目だけ"},
-  {"before": "選んでね", "after": "選んでください", "kind": "label", "site": "yorokobu", "by": "style-guide", "date": "2026-10-09", "why": "おとなの読者に子どもへの口調を使わない"},
-  {"before": "ソムリエの、おすすめ", "after": "編集部の提案", "kind": "heading", "site": "yorokobu", "by": "style-guide", "date": "2026-10-09", "why": "内輪の語・読点の入れすぎ"},
-  {"before": "母への母の日プレゼント選び方", "after": "母の日に母へ贈るプレゼントの選び方", "kind": "heading", "site": "yorokobu", "by": "style-guide", "date": "2026-10-09", "why": "助詞を省かない・同じ語を重ねない"},
-  {"before": "切り口から、プレゼントを探す", "after": "テーマからプレゼントを探す", "kind": "heading", "site": "yorokobu", "by": "style-guide", "date": "2026-10-09", "why": "内輪の編集語を使わない・読点を取る"}
+  {
+   "before": "詳しく読む",
+   "after": "注目の商品",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "owner",
+   "date": "2026-10-17",
+   "why": "見出しは短く、ふつうの言葉で"
+  },
+  {
+   "before": "1つの商品を仕様・価格の位置・渡し方まで掘り下げた記事です。",
+   "after": "気になる商品をくわしく調べました。",
+   "kind": "description",
+   "site": "yorokobu",
+   "by": "owner",
+   "date": "2026-10-17",
+   "why": "「掘り下げた」「〜の位置」のような堅い複合語を使わない"
+  },
+  {
+   "before": "参考資料(当サイトが要約・比較しました): 大丸松坂屋・高島屋・三越伊勢丹",
+   "after": "この記事は、出典先を要約・比較し、当サイトの考え方を足したものです。しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときは、それに合わせてください。",
+   "kind": "note",
+   "site": "yorokobu",
+   "by": "owner",
+   "date": "2026-10-17",
+   "why": "出典の注意書きは全記事共通の短い文を、ページの最後に1か所"
+  },
+  {
+   "before": "しぼりこめます",
+   "after": "絞り込めます",
+   "kind": "label",
+   "site": "minna",
+   "by": "owner",
+   "date": "2026-10-12",
+   "why": "漢字にできる語は漢字に"
+  },
+  {
+   "before": "どうぶつ・たべもの",
+   "after": "動物・食べ物",
+   "kind": "label",
+   "site": "minna",
+   "by": "owner",
+   "date": "2026-10-12",
+   "why": "漢字にできる語は漢字に"
+  },
+  {
+   "before": "ダウンロードして、すぐに使えます。クレジット表示も、点数の制限も、ありません。",
+   "after": "ダウンロードしてすぐに使えます。クレジット表示も点数の制限もありません。",
+   "kind": "description",
+   "site": "minna",
+   "by": "owner",
+   "date": "2026-10-12",
+   "why": "読点は意味の切れ目だけ"
+  },
+  {
+   "before": "選んでね",
+   "after": "選んでください",
+   "kind": "label",
+   "site": "yorokobu",
+   "by": "style-guide",
+   "date": "2026-10-09",
+   "why": "おとなの読者に子どもへの口調を使わない"
+  },
+  {
+   "before": "ソムリエの、おすすめ",
+   "after": "編集部の提案",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "style-guide",
+   "date": "2026-10-09",
+   "why": "内輪の語・読点の入れすぎ"
+  },
+  {
+   "before": "母への母の日プレゼント選び方",
+   "after": "母の日に母へ贈るプレゼントの選び方",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "style-guide",
+   "date": "2026-10-09",
+   "why": "助詞を省かない・同じ語を重ねない"
+  },
+  {
+   "before": "切り口から、プレゼントを探す",
+   "after": "テーマからプレゼントを探す",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "style-guide",
+   "date": "2026-10-09",
+   "why": "内輪の編集語を使わない・読点を取る"
+  },
+  {
+   "before": "集まりを開いた人へ後日そっと労う贈り方",
+   "after": "幹事や主催者へ、後日贈るお礼の品",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "owner",
+   "date": "2026-10-17",
+   "why": "人は役割の名前で言う(幹事・主催者・まとめ役)。雰囲気語「そっと」は外す。名詞を動詞にかける「労う贈り方」を避ける"
+  },
+  {
+   "before": "集まりを開いた人へ、後日贈るお礼",
+   "after": "幹事や主催者へ、後日贈るお礼の品",
+   "kind": "heading",
+   "site": "yorokobu",
+   "by": "owner",
+   "date": "2026-10-17",
+   "why": "「お礼」だけでは言葉・手紙・金一封のどれか分からない。贈るものは「お礼の品」と具体的に。これは直し案としてダメな例(after が正しい直し)"
+  }
+ ],
+ "principles": [
+  "人を指す言葉は、説明(〜を開いた人・〜してくれた人)でなく、役割の名前(幹事・主催者・まとめ役・世話役・ホスト・担当者・参加者・贈る相手)で言う。場面で語を選ぶ(会社の飲み会=幹事、親族の集まり=主催者、地域の行事=世話役)。",
+  "贈るもの・渡すものは具体的な名詞で言う。「お礼」「贈り物」「対応」「サポート」だけでは何を指すか分からない。お礼の品・お礼状・お礼の言葉・お礼の金額、のどれかを言う。",
+  "言い直しは、同じ意味の言い方を3つ以上考えて、実際によく使われる語を選ぶ。最初に思いついた案をそのまま使わない。",
+  "名詞を動詞にかける言い方(労う贈り方)や、名詞だけの連なりは避け、何が何をするかが分かる形にする。",
+  "雰囲気語(そっと・寄り添う・華やぎ)は事実に替える。"
  ]
 }

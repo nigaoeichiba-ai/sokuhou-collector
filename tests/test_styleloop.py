@@ -68,6 +68,10 @@ class Invariants(unittest.TestCase):
         self.assertTrue(any("markup" in b for b in sl.check_rewrite("この商品の特徴", "<b>この商品</b>の特徴", None)))
         self.assertEqual(sl.check_rewrite("詳しく読む", "詳しく読む", None), ["empty or unchanged"])
 
+    def test_a_popularity_claim_may_not_be_added_by_a_rewording(self):
+        self.assertTrue(any("claim" in b for b in sl.check_rewrite("種類の違う選ばれている贈り物", "種類が違う人気の贈り物", None)))
+        self.assertEqual(sl.check_rewrite("人気の贈り物", "人気の贈り物をまとめました", None), [])                # already there: not a new claim
+
     def test_words_the_owner_asked_to_replace_may_go(self):
         self.assertEqual(sl.check_rewrite("ソムリエの提案", "編集部の提案", "yorokobu", "heading"), [])
 
@@ -272,6 +276,135 @@ class DeployWiring(unittest.TestCase):
         self.assertIn("python -m sokuhou.styleloop apply release --site ${{ matrix.site }} --fail-open", block)
         self.assertNotIn("continue-on-error", block)
         self.assertNotIn(": ", lines[i].split("name:", 1)[1])                       # a ': ' in a plain YAML scalar would break the whole workflow
+
+
+class WordChoice(unittest.TestCase):
+    """The owner lesson of 2026-10-17: name a person by a role, name the thing given, offer 3+ wordings and pick the one in use."""
+    OLD = "集まりを開いた人へ後日そっと労う贈り方"
+
+    def test_the_two_owner_corrections_are_models_and_the_principles_are_in_both_prompts(self):
+        befores = [e["before"] for e in sl.examples()]
+        self.assertIn(self.OLD, befores)
+        self.assertIn("集まりを開いた人へ、後日贈るお礼", befores)
+        p = sl.judge_prompt("yorokobu", [sl.Unit("heading", self.OLD)])
+        for word in ("幹事", "お礼の品", "3つ以上", "key", "役割の名前", "単独の抽象名詞", "名詞を動詞にかける"):
+            self.assertIn(word, p)
+        v = sl.verify_prompt("yorokobu", [(self.OLD, "x")])
+        for word in ("役割の名前", "抽象名詞", "word_choice_ok"):
+            self.assertIn(word, v)
+
+    def test_the_rules_find_the_three_shapes(self):
+        def flags(t):
+            return {r for r, _ in sl.short_flags(sl.Unit("heading", t))}
+        self.assertIn("person_phrase", flags("集まりを開いた人へ"))
+        self.assertIn("person_phrase", flags("手伝ってくれた人にお礼"))
+        self.assertIn("bare_noun", flags("後日贈るお礼"))
+        self.assertIn("verb_modifies_noun", flags("後日そっと労う贈り方"))
+        self.assertEqual(flags("幹事や主催者へ、後日贈るお礼の品"), set())
+        self.assertEqual(flags("お礼の品の選び方"), set())
+
+    def test_the_answer_the_owner_corrected_is_refused_and_the_owners_own_wording_passes(self):
+        bad = sl.check_rewrite(self.OLD, "集まりを開いた人へ、後日贈るお礼", None, "heading")
+        self.assertTrue(any("short-text rules" in b for b in bad), bad)
+        self.assertEqual(sl.check_rewrite(self.OLD, "幹事や主催者へ、後日贈るお礼の品", None, "heading"), [])
+        self.assertTrue(any("short-text" in b for b in sl.check_rewrite("幹事への贈り物", "集まりを開いてくれた人への贈り物", None, "heading")))   # a role turned back into an explanation
+
+    def test_a_person_can_ask_the_same_question_from_the_command_line(self):
+        import contextlib
+        import io
+        with contextlib.redirect_stdout(io.StringIO()) as out:
+            rc_bad = sl.main(["check", "--site", "yorokobu", "--from", self.OLD, "--to", "集まりを開いた人へ、後日贈るお礼"])
+            rc_ok = sl.main(["check", "--site", "minna", "--from", "しぼりこめます", "--to", "絞り込めます", "--kind", "label"])
+        self.assertEqual((rc_bad, rc_ok), (1, 0))
+        self.assertIn("NOT accepted", out.getvalue())
+
+    def item(self, cands, choice=1):
+        return {"id": 1, "natural": False, "candidates": [{"text": t, "key": k} for t, k in cands], "choice": choice, "why": "役割の名前に", "confidence": "high"}
+
+    def test_the_wording_in_use_wins_and_the_reason_says_so(self):
+        u = sl.Unit("heading", self.OLD)
+        cands = [("幹事や主催者へ、後日贈るお礼の品", "幹事 お礼 品"), ("世話役へ後日贈るお礼の品", "世話役 お礼 品"), ("まとめ役へ後日贈るお礼の品", "まとめ役 お礼 品")]
+        scores = {"幹事 お礼 品": 9, "世話役 お礼 品": 2, "まとめ役 お礼 品": 0}
+        text, order, problems = sl.choose("minna", u, self.item(cands, choice=2), scorer=scores.get)
+        self.assertEqual(text, "幹事や主催者へ、後日贈るお礼の品")                       # the judge preferred #2; people type #1 more
+        self.assertIn("幹事や主催者へ", sl.evidence(order))
+        self.assertIn("9", sl.evidence(order))
+        text2, order2, _ = sl.choose("minna", u, self.item(cands, choice=2), scorer=lambda k: None)       # nothing measurable: the judge own choice stands
+        self.assertEqual(text2, "世話役へ後日贈るお礼の品")
+        self.assertIn("測れず", sl.evidence(order2))
+        text3, _, _ = sl.choose("minna", u, self.item(cands, choice=3), scorer=lambda k: 4)             # equal scores: the judge choice
+        self.assertEqual(text3, "まとめ役へ後日贈るお礼の品")
+
+    def test_candidates_that_fail_the_checks_never_win_whatever_they_score(self):
+        u = sl.Unit("heading", self.OLD)
+        cands = [("集まりを開いた人へ、後日贈るお礼", "お礼"), ("幹事へ後日贈るお礼の品", "幹事 お礼 品")]
+        text, order, _ = sl.choose("minna", u, self.item(cands), scorer=lambda k: 20 if k == "お礼" else 1)
+        self.assertEqual(text, "幹事へ後日贈るお礼の品")
+        none, order, problems = sl.choose("minna", u, self.item(cands[:1]), scorer=lambda k: 20)
+        self.assertIsNone(none)
+        self.assertTrue(problems)
+
+    def test_suggestions_are_cached_and_a_failure_is_not_a_score(self):
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "DATA", Path(d) / "style"):
+            calls = []
+
+            def fetch(q):
+                calls.append(q)
+                return ["幹事 お礼 品", "幹事 お礼 品 予算"]
+            self.assertEqual(sl.suggest_score("幹事 お礼", fetch=fetch), 4)
+            self.assertEqual(sl.suggest_score("幹事 お礼", fetch=fetch), 4)
+            self.assertEqual(calls, ["幹事 お礼"])
+
+            def down(q):
+                raise OSError("offline")
+            self.assertIsNone(sl.suggest_score("世話役 お礼", fetch=down))
+            self.assertIsNone(sl.suggest_score("", fetch=fetch))
+            self.assertIsNone(sl.suggest_score("母の日 ほかに贈る人", fetch=lambda q: []))                    # a long phrase nobody types as it is: no evidence, not a zero
+            self.assertIsNone(sl.suggest_score("母の日 ほかに贈る人", fetch=fetch))                          # (and the empty answer is cached)
+
+    def test_judge_records_the_candidates_and_the_evidence(self):
+        answers = {self.OLD: {"natural": False, "candidates": [{"text": "幹事や主催者へ、後日贈るお礼の品", "key": "幹事 お礼 品"}, {"text": "世話役へ後日贈るお礼の品", "key": "世話役 お礼 品"},
+                                                             {"text": "ホストへ後日贈るお礼の品", "key": "ホスト お礼 品"}], "choice": 2, "why": "役割の名前に", "confidence": "high"}}
+
+        def run(prompt):
+            asked = json.loads(prompt.rsplit("入力:" + chr(10), 1)[1])
+            if "同じ意味・同じ事実のままか" in prompt:
+                return json.dumps({"items": [{"id": a["id"], "same_meaning": True, "natural": True, "word_choice_ok": True} for a in asked]}, ensure_ascii=False)
+            return json.dumps({"items": [{"id": a["id"], **answers[a["text"]]} for a in asked]}, ensure_ascii=False)
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "DATA", Path(d) / "style"):
+            st = sl.judge({self.OLD: sl.Unit("heading", self.OLD, 2)}, "minna", batches=1, accept=True, runner=run, scorer={"幹事 お礼 品": 8, "世話役 お礼 品": 3, "ホスト お礼 品": 1}.get)
+            self.assertEqual(st["accepted"], 1)
+            e = sl.load_rewrites("minna")[0]
+            self.assertEqual(e["to"], "幹事や主催者へ、後日贈るお礼の品")
+            self.assertIn("サジェスト数", e["why"])
+            rec = sl.load_judged("minna")[sl.key_of(self.OLD)]
+            self.assertEqual(len(rec["candidates"]), 3)
+
+    def test_rejudge_replaces_a_dictionary_line_only_when_a_better_checked_wording_is_confirmed(self):
+        old, cur = "母の日のほかの相手", "母の日に贈るほかの相手"
+
+        def run_factory(choice_text, same=True):
+            def run(prompt):
+                asked = json.loads(prompt.rsplit("入力:" + chr(10), 1)[1])
+                if "同じ意味・同じ事実のままか" in prompt:
+                    return json.dumps({"items": [{"id": a["id"], "same_meaning": same, "natural": True, "word_choice_ok": True} for a in asked]}, ensure_ascii=False)
+                self.assertIn(asked[0]["current"], (cur, "父の日に贈るほかの相手"))             # the line in the dictionary is offered as a candidate
+                return json.dumps({"items": [{"id": a["id"], "natural": False, "candidates": [{"text": a["current"], "key": "a"}, {"text": choice_text, "key": "b"}, {"text": "母の日にほかに贈る相手", "key": "c"}],
+                                              "choice": 2, "why": "語順", "confidence": "high"} for a in asked]}, ensure_ascii=False)
+            return run
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "DATA", Path(d) / "style"):
+            sl.add_entry("yorokobu", old, cur, force=True, today="2026-10-17")
+            units = sl.rejudge_units("yorokobu", "dictionary")
+            self.assertEqual(units[old].current, cur)
+            st = sl.judge(units, "yorokobu", batches=1, accept=True, runner=run_factory("母の日にほかに贈る相手"), force=True, replace=True)
+            self.assertEqual(st["replaced"], 1)
+            e = sl.load_rewrites("yorokobu")[0]
+            self.assertEqual((e["to"], e["prev"]), ("母の日にほかに贈る相手", cur))
+            sl.add_entry("yorokobu", "父の日のほかの相手", "父の日に贈るほかの相手", force=True, today="2026-10-17")      # the second look refuses: the line stays as it was
+            units = {"父の日のほかの相手": sl.rejudge_units("yorokobu", "dictionary")["父の日のほかの相手"]}
+            st = sl.judge(units, "yorokobu", batches=1, accept=True, runner=run_factory("父の日にほかに贈る相手", same=False), force=True, replace=True)
+            self.assertEqual(st.get("replaced", 0), 0)
+            self.assertEqual({x["from"]: x["to"] for x in sl.load_rewrites("yorokobu")}["父の日のほかの相手"], "父の日に贈るほかの相手")
 
 
 class Judge(unittest.TestCase):
