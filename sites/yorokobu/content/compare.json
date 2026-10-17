@@ -32,12 +32,12 @@
   {"slug": "eco-bag", "label": "エコバッグ", "query": "エコバッグ ギフト", "words": ["エコバッグ"]},
   {"slug": "photo-frame", "label": "写真立て", "query": "写真立て ギフト", "words": ["写真立て", "フォトフレーム"]},
   {"slug": "catalog-gift", "label": "カタログギフト", "query": "カタログギフト", "words": ["カタログ"], "mall": ["shaddy"]},
-  {"slug": "baby-toy", "label": "赤ちゃん向けのおもちゃ", "query": "赤ちゃん おもちゃ ギフト 出産祝い 1歳", "words": ["おもちゃ", "積み木", "ラトル", "ぬいぐるみ"]},
-  {"slug": "kids-stationery", "label": "子ども向けの文具セット", "query": "文房具 セット ギフト 子供", "words": ["文具", "文房具", "ペンケース", "筆箱", "色鉛筆"]},
-  {"slug": "board-game", "label": "ボードゲーム", "query": "ボードゲーム ファミリー ギフト", "words": ["ボードゲーム", "カードゲーム"]},
-  {"slug": "kids-sweets", "label": "子ども向けのお菓子詰め合わせ", "query": "お菓子 詰め合わせ 子供 ギフト", "words": ["お菓子", "菓子"]},
+  {"slug": "baby-toy", "recipient": "baby", "label": "赤ちゃん向けのおもちゃ", "query": "赤ちゃん おもちゃ ギフト 出産祝い 1歳", "words": ["おもちゃ", "積み木", "ラトル", "ぬいぐるみ"]},
+  {"slug": "kids-stationery", "recipient": "child", "label": "子ども向けの文具セット", "query": "文房具 セット ギフト 子供", "words": ["文具", "文房具", "ペンケース", "筆箱", "色鉛筆"]},
+  {"slug": "board-game", "recipient": "child", "label": "ボードゲーム", "query": "ボードゲーム 子供 家族", "words": ["ボードゲーム", "カードゲーム"]},
+  {"slug": "kids-sweets", "recipient": "child", "label": "子ども向けのお菓子詰め合わせ", "query": "お菓子 詰め合わせ 子供 ギフト", "words": ["お菓子", "菓子"]},
   {"slug": "earphones", "label": "イヤホン", "query": "ワイヤレスイヤホン", "words": ["イヤホン"]},
-  {"slug": "piggy-bank", "label": "貯金箱", "query": "貯金箱 子供", "words": ["貯金箱"]},
+  {"slug": "piggy-bank", "recipient": "child", "label": "貯金箱", "query": "貯金箱 子供", "words": ["貯金箱"]},
   {"slug": "pochibukuro", "label": "ポチ袋", "query": "ポチ袋 セット", "words": ["ポチ袋", "ぽち袋", "お年玉袋"]}
  ]
 }

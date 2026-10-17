@@ -73,6 +73,14 @@ class ViewTest(unittest.TestCase):
         ok = self.view([item(i) for i in range(1, 15)])
         self.assertTrue(ok and ok["groups"][0]["n"] >= compare.MIN_ITEMS)
 
+    def test_a_kind_for_children_keeps_the_products_made_for_children_and_the_adult_default_drops_them(self):
+        kids = [item(i, name=f"ベビー おもちゃ 積み木 {i}") for i in range(1, 15)]
+        raw = raw_with(kids, "toy")
+        adult = {"slug": "toy", "label": "おもちゃ", "query": "おもちゃ", "words": ["おもちゃ"]}
+        self.assertIsNone(compare.view(raw, FILTERS, [adult]))                                   # 「ベビー」 is for babies: an adult-gift table leaves it out
+        v = compare.view(raw, FILTERS, [{**adult, "recipient": "baby"}])
+        self.assertTrue(v and v["groups"][0]["n"] >= compare.MIN_ITEMS)                          # the kind that says it is for a baby keeps them
+
     def test_products_of_another_kind_ads_and_one_shops_flood_are_not_in_the_table(self):
         items = [item(i) for i in range(1, 10)] + [item(20, name="マグカップ ギフト 陶器"), item(21, name="ジャンク タンブラー", price=900)]
         items += [{**item(30 + k), "shop_code": "flood", "shop": "あふれる店", "code": f"flood:{k}"} for k in range(8)]
