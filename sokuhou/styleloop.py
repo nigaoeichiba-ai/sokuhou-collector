@@ -31,6 +31,7 @@ from dataclasses import dataclass, field
 from html.parser import HTMLParser
 from pathlib import Path
 
+from sokuhou import lexicon
 from sokuhou import naturaljp as nj
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -261,6 +262,9 @@ def check_rewrite(old: str, new: str, site: str | None = None, kind: str = "head
         bad.append(f"too much shorter ({n_old} -> {n_new})")
     if long_kind and n_old > 20 and difflib.SequenceMatcher(None, old, new).ratio() < 0.5:
         bad.append("not a small edit: the sentence was rewritten")
+    back = [w for w in lexicon.owner_avoided(site) if w in new and w not in old]
+    if back:
+        bad.append(f"wording the owner asked us to avoid: {back}")
     # the rewording must not be unnatural by our own rules
     old_rules = {h.rule for h in nj.check_text(old, site, min_level="mid")}
     new_rules = {h.rule for h in nj.check_text(new, site, min_level="mid")} - old_rules
@@ -487,17 +491,21 @@ def judge_prompt(site: str, batch: list[Unit]) -> str:
     ex_txt = "\n".join(f"- 「{e['before']}」→「{e['after']}」({e['site']}・{e['kind']}。{e.get('why', '')})" for e in ex)
     items = [{"id": i + 1, "kind": u.kind, "text": u.text, **({"current": u.current} if u.current else {})} for i, u in enumerate(batch)]
     pr = chr(10).join(f"{i}. {p}" for i, p in enumerate(principles(), 1))
+    ref = lexicon.reference(site)
+    ref_txt = (f'''実際によく使われる言い方(大手EC・百貨店・文章のプロの実物から作った辞書。理屈で作った言い換え表ではない。「弱=決め手にしない」の語は参考だけにする):
+{ref}
+''' if ref else "")
     return f"""あなたは日本語の校閲者です。次の「短い言葉」(見出し・ボタン・ラベル・メニュー・タイトル・説明文・代替テキスト)が、日本語のサイトの文言として自然かを一つずつ判定してください。
 サイト: {site}。{SITE_STYLE.get(site, '')}
 基準: ふつうの人がその場面で自然に言うか。堅い複合語(掘り下げる・〜の位置)、翻訳調、お役所の言い回し、内輪の編集語、名詞をつないだだけの見出し、AIが作ったような決まり文句は不自然。短く、ふつうの言葉で。自然なら直さない(自然なものを無理に変えない)。
 オーナーが実際に直した例(必ず見本にすること):
 {ex_txt}
-語の選び方の基本(オーナーの指示。文法より前に、基本の自然な語を選ぶ):
+{ref_txt}語の選び方の基本(オーナーの指示。文法より前に、基本の自然な語を選ぶ):
 {pr}
 見るところ: (a) 人を説明で言っていないか(〜を開いた人、〜してくれた人)。役割の名前に替えられないか。(b) 単独の抽象名詞(お礼・贈り物・対応・サポート)が、何を指すか曖昧でないか。(c) 名詞を動詞にかける言い方や、名詞だけの連なりでないか。
 直すのは不自然な部分だけ。自然な語や言い回しは残し、できるだけ少ない変更にする(全体を書き換えない)。
 守ること: 意味・事実・数字・日付・固有名(作品名・商品名・店名・イベント名・人名・地名)・「」の引用・英字・カタカナの名前は変えない。新しい主張や体験(試した・必ず・最安など)を足さない。直し案は元の言葉と同じ程度の長さにする。
-直し案の作り方: 最初に思いついた1案で決めない。同じ意味で言い方の違う候補を3つ以上考え(item に current があれば、それも候補の1つに入れる)、その中から、実際によく使われる自然な言い方を選ぶ。各候補に key(その候補の特徴が出る、検索で打つような短い語句。例「幹事 お礼 品」)を付ける。
+直し案の作り方: 最初に思いついた1案で決めない。同じ意味で言い方の違う候補を3つ以上考え(item に current があれば、それも候補の1つに入れる)、その中から、上の辞書にある言い方(実物で確かめてあるもの)を優先して選ぶ。辞書にない言い方を使うときは、ふつうに使われているか自分で確かめられる範囲で選び、why に書く。各候補に key(その候補の特徴が出る、検索で打つような短い語句。例「幹事 お礼 品」)を付ける。
 出力: JSONだけ(前後に説明を書かない)。形式: {{"items":[{{"id":1,"natural":true,"candidates":[{{"text":"","key":""}}],"choice":1,"why":"","confidence":""}}]}}。natural が false のときだけ candidates(3つ以上)・choice(選んだ候補の番号)・why(選んだ理由を一言)・confidence("high"=誰が読んでも不自然で、選んだ案のほうが明らかによい、"low"=好みの差)を書く。固有名・データ由来の名前、画面の読み上げ用の標準的な語(パンくず 等)は natural:true。
 入力:
 {json.dumps(items, ensure_ascii=False)}
@@ -649,6 +657,11 @@ def choose(site: str, u: Unit, it: dict, scorer=None) -> tuple[str | None, list[
     if not passing:
         return None, order, problems_first
     for c in passing:
+        c["lex"] = lexicon.support(site, c["text"])
+    top = max(c["lex"] for c in passing)
+    if len({c["lex"] for c in passing}) > 1:                                  # the wording the real texts use wins over one they do not
+        passing = [c for c in passing if c["lex"] == top]
+    for c in passing:
         c["score"] = scorer(c["key"]) if scorer and c["key"] else None
     measured = [c for c in passing if c.get("score") is not None]
     best = max(measured, key=lambda c: c["score"]) if len(measured) >= 2 and len({c["score"] for c in measured}) > 1 else passing[0]
@@ -661,8 +674,9 @@ def evidence(cands: list[dict]) -> str:
     parts = []
     for c in cands:
         sc = c.get("score")
-        parts.append(f"{c['text'][:24]}({'×' if c.get('problems') else ('測れず' if sc is None else sc)})")
-    return "候補とサジェスト数: " + " / ".join(parts)
+        lex = c.get("lex")
+        parts.append(f"{c['text'][:24]}({'×' if c.get('problems') else ('辞書' + format(lex, '+d') if lex else '辞書に根拠なし')}{'' if sc is None else ',サジェスト' + str(sc)})")
+    return "候補(実物の辞書での根拠): " + " / ".join(parts)
 
 
 def judge(units: dict[str, Unit], site: str, batches: int = 3, accept: bool = False, runner=run_codex, today: str | None = None, verifier=None,
@@ -694,7 +708,7 @@ def judge(units: dict[str, Unit], site: str, batches: int = 3, accept: bool = Fa
                 continue
             text, cands, problems = choose(site, u, it, scorer)
             rec = {"text": u.text, "natural": False, "at": today, "kind": u.kind, "confidence": str(it.get("confidence", "")),
-                   "candidates": [{k: v for k, v in c.items() if k in ("text", "key", "score", "problems")} for c in cands]}
+                   "candidates": [{k: v for k, v in c.items() if k in ("text", "key", "score", "lex", "problems")} for c in cands]}
             if text is None:
                 rec.update(better=cands[0]["text"] if cands else "", why=it.get("why", ""), status="rejected", problems=problems or ["no usable candidate"])
                 stats["rejected"] += 1

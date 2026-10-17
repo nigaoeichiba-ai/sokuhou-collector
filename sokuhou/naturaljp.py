@@ -360,6 +360,34 @@ add(id="dash_heavy", level="low", pattern=rx(r"[—―─]{1,2}"), min_per_page=
 add(id="conclusion_heading", level="low", pattern=rx(r"^(?:まとめ|結論|結論として|おわりに|最後に|総括|最後に)$"), scope="heading",
     why="「まとめ」「結論」の見出しは、どの記事にも付ける型。本文を繰り返すだけのまとめになりやすい。", fix="まとめを書くなら、見出しに中身を入れる(「迷ったらこの3つ」)。短い記事なら付けない。",
     bad="見出し: まとめ", good="見出し: 迷ったらこの3品から")
+add(id="heading_negation_frame", level="mid", scope="heading",
+    pattern=rx(r"(?:押しつけ|押し付け|乱さ|邪魔し|困らせ|奪わ|気を遣わせ|気をつかわせ|重くなら|重く見せ|重くし)(?:ない|ず)"),
+    why="題・見出しが「〜しない」「〜せず」の否定形で終わる。大手ECや百貨店の見出しにはほぼ無い型で、AIの文に多い。避けたいことは見出しでなく本文で、理由つきで書く。",
+    fix="品名・相手・場面を入れた名詞止めか用途の「〜に」にする(「〜の選び方」「〜に贈る〇〇」「〜の手土産」)。",
+    bad="夜型の人へ朝を押しつけない贈り方", good="夜型の人に贈る、朝の支度が楽になる品")
+add(id="heading_mood_subtitle", level="mid", scope="heading",
+    pattern=rx(r"(?:静かに|そっと|涼しく)(?:届ける|祝う|支える|整える|贈る)|(?:基本作法|作法|心得|心配り)$"),
+    why="見出し・副題が雰囲気語(静かに・そっと・作法・心得・心配り)。何が書いてあるか分からない。",
+    fix="副題に数字か条件を置く(「贈り方と相場」「時期・金額・のし」)。本物のマナー解説の語としての「作法」は例外になりうる。",
+    bad="お歳暮の贈り物 一年の感謝を静かに届ける", good="お歳暮の贈り方 時期・相場・のし")
+add(id="heading_action_verb", level="low", scope="heading", min_per_page=3,
+    pattern=rx(r"^.{2,16}(?:を整える|を整えて|に置いてみる|を見る|を弱める|を決める)$"),
+    why="節の見出しが動作の言い方(〜を整える・〜を決める)。ページに3本以上あると、中身でなく手順の型で題をつけている。",
+    fix="見出しを中身(名詞・事実)にする。見出しだけで何が分かるかを見る。",
+    bad="見出し: 包みを整える", good="見出し: 包み方とのしの基本")
+add(id="compound_theme_coinage", level="mid", scope="headlike",
+    pattern=rx(r"^(?:帰省軽やか|義実家控えめ|持ち寄り後|少額上手|日時合わせ|夜型の朝|ごめんね軽く|冷蔵庫いらず|立ち仕事後)$"),
+    why="テーマ名の造語。実物では使われていない呼び名で、読者は何のことか分からない。",
+    fix="実物の呼び名にする(〜の手土産・〜への贈り物・〜に贈る〇〇)。新しい造語は、検索か実物でそのまま使われているか確かめてから。",
+    bad="帰省軽やか", good="帰省の手土産")
+add(id="heading_negation_density", level="mid", scope="site", fn=None,
+    why="見出し・題のうち「〜しない/〜せず」で終わるものが、1サイトの10%を超えた(実物の見出しでは目視0)。否定形で題をつける型が量産されている。",
+    fix="見出しを、品名・相手・場面を入れた「〜の選び方」「〜に贈る〇〇」に。避けたいことは本文で理由つきに。",
+    bad="(サイト全体の集計)", good="(サイト全体の集計)")
+add(id="list_same_tail", level="low", scope="page", fn=None,
+    why="同じ種類の項目が5つ以上続き、説明の末尾4字が80%以上同じ(〜のタッチ。〜で確かめる)。型に当てはめて量産した並びに見える。",
+    fix="項目ごとに、その項目だけの事実(数字・条件)を先に書く。末尾を無理にそろえない。",
+    bad="(連続する項目の集計)", good="(連続する項目の集計)")
 add(id="first_next_last", level="low", pattern=rx(r"(?:まず|はじめに|最初に)[、,][^。]*。.*?(?:次に|つぎに)[、,][^。]*。.*?(?:最後に|そして)[、,]"), scope="block",
     why="「まず・次に・最後に」を機械的に並べる展開。小論文の型で、手順でない説明では不自然。", fix="手順なら番号つきの一覧に。手順でなければ、大事な順に並べて接続語を減らす。",
     bad="まず、予算を決めます。次に、相手を考えます。最後に、日付を確認します。", good="予算と相手を決めたら、届く日だけ確認してください。")
@@ -637,6 +665,8 @@ def _sentence_hits(kind: str, sent: str, site: str | None, prof: dict) -> list[t
             continue
         if r.scope == "heading" and kind != "heading":
             continue
+        if r.scope == "headlike" and kind not in ("heading", "label", "item"):
+            continue
         if r.scope == "body" and kind == "heading":
             continue
         if kind in ("label", "item") and not SENT_END.search(sent) and r.scope == "body":     # a label, a button or a product name is not prose
@@ -659,8 +689,11 @@ def mask_quotes(text: str) -> str:
     return NAME_LEAD.sub(lambda m: "〔名〕" if len(m.group(1)) >= 4 and m.group(1).count("、") <= 1 else m.group(0), text)
 
 
-def check_blocks(blocks: list[Block], path: str, site: str | None = None, min_level: str = "low", only: Iterable[str] | None = None, md: bool = False) -> list[Hit]:
+def check_blocks(blocks: list[Block], path: str, site: str | None = None, min_level: str = "low", only: Iterable[str] | None = None, md: bool = False,
+                 heads_out: list | None = None) -> list[Hit]:
     prof = profile(site)
+    if heads_out is not None and not EXEMPT_PATH.search(path):
+        heads_out += [b.text for b in blocks if b.kind == "heading"]
     only = set(only or ())
     exempt = bool(EXEMPT_PATH.search(path))
     hits: list[Hit] = []
@@ -713,6 +746,20 @@ def check_blocks(blocks: list[Block], path: str, site: str | None = None, min_le
             r = RULES[rid]
             if (not only or rid in only) and rule_active(r, site, prof) and LEVEL_RANK[r.level] >= LEVEL_RANK[min_level] and want(r):
                 hits += check_pets(blocks, path, rid, words, need)
+    # list_same_tail: five or more list items in a row whose last four letters are (80%+) the same
+    r = RULES["list_same_tail"]
+    if (not only or r.id in only) and not exempt and rule_active(r, site, prof) and LEVEL_RANK[r.level] >= LEVEL_RANK[min_level]:
+        run: list[Block] = []
+        for b in blocks + [Block("end", "", 0)]:
+            if b.kind in ("item", "para") and SENT_END.search(b.text) and len(b.text) <= 120:
+                run.append(b)
+                continue
+            if len(run) >= 5:
+                tails = Counter(SENT_END.sub("", x.text)[-4:] for x in run)
+                tail, n = tails.most_common(1)[0]
+                if len(tail) == 4 and n / len(run) >= 0.8 and not tail.endswith(("ます", "です", "ました", "でした", "ません")):          # polite endings are the language, not a template
+                    hits.append(Hit(path, run[0].line, r.id, r.level, f"…{tail}（{len(run)}項目中{n}項目が同じ終わり方）: {run[0].text[:50]}"))
+            run = []
     # heading template: four or more headings (h2/h3) that end with the same 3+ letters
     if (not only or "heading_template" in only) and not exempt and rule_active(RULES["heading_template"], site, prof) and LEVEL_RANK["low"] >= LEVEL_RANK[min_level]:
         heads = [b for b in blocks if b.kind == "heading" and len(b.text) >= 6]
@@ -794,11 +841,29 @@ def walk_files(root: Path, exts: tuple[str, ...]) -> Iterable[Path]:
 def check_path(root: Path, site: str | None, exts: tuple[str, ...] = (".html", ".htm"), **kw) -> tuple[list[Hit], int]:
     hits: list[Hit] = []
     n = 0
+    heads: list[str] = []
     base = root if root.is_dir() else root.parent
     for f in walk_files(root, exts):
         n += 1
-        hits += check_file(f, site, rel=str(f.relative_to(base)).replace("\\", "/"), **kw)
+        hits += check_file(f, site, rel=str(f.relative_to(base)).replace("\\", "/"), heads_out=heads, **kw)
+    hits += site_hits(heads, site, kw.get("min_level", "low"), kw.get("only"))
     return hits, n
+
+
+NEGATIVE_END = re.compile(r"(?:ない|ず|ないで)$")
+
+
+def site_hits(headings: list[str], site: str | None, min_level: str = "low", only: Iterable[str] | None = None) -> list[Hit]:
+    """Rules about the whole site: the share of headings (each once) that end in a negation."""
+    r = RULES["heading_negation_density"]
+    if (only and r.id not in only) or LEVEL_RANK[r.level] < LEVEL_RANK[min_level] or not rule_active(r, site, profile(site)):
+        return []
+    uniq = {re.sub(r"[。！？!?]+$", "", h.strip()) for h in headings}
+    uniq = {h for h in uniq if len(h) >= 6}
+    neg = sorted(h for h in uniq if NEGATIVE_END.search(h))
+    if len(uniq) >= 20 and len(neg) / len(uniq) > 0.10:
+        return [Hit("(サイト全体)", 0, r.id, r.level, f"見出し{len(uniq)}本中{len(neg)}本({len(neg) * 100 // len(uniq)}%)が否定形で終わる。例: {neg[0][:40]}")]
+    return []
 
 
 # --------------------------------------------------------------------------------------------------------------------------------- sites: where the published text is
