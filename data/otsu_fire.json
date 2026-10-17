@@ -1,6 +1,12 @@
 {
- "fetched_at": "2026-10-17T17:07:35.949174+09:00",
+ "fetched_at": "2026-10-18T06:52:34.716030+09:00",
  "incidents": [
+  {
+   "kind": "自火報作動",
+   "place": "大津市際川四丁目付近",
+   "started_at": "2026-10-18T06:50:00+09:00",
+   "status": "reported"
+  },
   {
    "kind": "山岳救助",
    "place": "大津市葛川坊村町付近",
@@ -194,7 +200,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": true,
+ "no_active_incident": false,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
