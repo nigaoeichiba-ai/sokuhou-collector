@@ -128,19 +128,15 @@ class NoMallDataInTheGitHubCache(unittest.TestCase):
                     for word in ("yorokobu", "rakuten", "yahoo", "items.json", "ranking", "compare", "candidates"):
                         self.assertNotIn(word, low, f"{f.name}: a cache or artifact step mentions {word!r}: {step[:120]!r}")
 
-    def test_the_deploy_keeps_todays_products_in_the_servers_private_folder_instead(self):
+    def test_the_deploy_takes_the_products_from_the_private_folder_and_fetches_only_when_they_are_missing(self):
         self.assertNotIn("actions/cache", TEXT)
-        pull = block("Today's products from the server's private folder")
-        self.assertIn("yorokobu-private", pull)
-        self.assertIn("matrix.site == 'yorokobu'", pull)
-        self.assertGreater(index_of("Today's products from the server's private folder"), index_of("SSH setup"))
+        self.assertNotIn("Restore today's products", TEXT)
         fetch = block("Fetch products")
-        self.assertIn("steps.items.outputs.found != 'true'", fetch)
-        keep = block("Keep the fetched products in the server's private folder")
-        self.assertIn("steps.gate.outputs.really == 'true'", keep)      # a check run changes nothing on the server
-        self.assertIn("chmod 600", keep)
-        self.assertLess(index_of("Fetch products"), index_of("Keep the fetched products"))
-        self.assertLess(index_of("Keep the fetched products"), index_of("Build (release)"))
+        self.assertIn("matrix.site == 'yorokobu'", fetch)
+        self.assertIn("python -m sites.yorokobu.items_fresh || python -m sites.yorokobu.refresh --out out/yorokobu_items.json", fetch)
+        self.assertGreater(index_of("Fetch products"), index_of("Private mall data"))   # the private pull (which brings yorokobu_items.json) comes first
+        self.assertLess(index_of("Fetch products"), index_of("Build (release)"))
+        self.assertNotIn("Keep the fetched products", TEXT)    # the daily yorokobu-items workflow is the only writer of the file
 
 
 class OtherSessionsSteps(unittest.TestCase):
