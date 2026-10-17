@@ -125,8 +125,10 @@ def problems(f: dict, entry: dict | None, img_dir: Path | None = None) -> list[s
         out.append(f"{slug}: faq needs 3-5 questions (10-60) with answers (40-260 characters)")
     if not 2 <= len(f["alts"]) <= 4:
         out.append(f"{slug}: alts needs 2-4 refs")
-    if not f["evidence"] or any(not str(e.get("url", "")).startswith("https://") or not e.get("label") for e in f["evidence"]):
-        out.append(f"{slug}: evidence needs labelled https links (the pages the specification was read on)")
+    if not f["evidence"] or any(not e.get("label") or (e.get("url") and not str(e["url"]).startswith("https://")) for e in f["evidence"]):
+        out.append(f"{slug}: evidence needs labels (the pages the specification was read on), each with an https link where the page is not a shop's product page")
+    if any(dp.MALL_URL.search(str(e.get("url", ""))) for e in f["evidence"]):
+        out.append(f"{slug}: evidence must not link a shop's product page (the repository is public; a mall URL is the shop's data): give the label only")
     text = "".join(prose(f))
     if len(text) < MIN_TEXT:
         out.append(f"{slug}: {len(text)} characters of text (need {MIN_TEXT}; a thin page is not published)")
@@ -272,21 +274,20 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
     live = d.get("daily_items", {}).get(entry.get("code", "")) if f["ref"].startswith("r") else None
     unavailable = bool(live is not None and not live.get("available", True))
     if f["ref"].startswith("r"):
-        url = live["url"] if live else entry["url"]
+        url = live["url"]                                                                  # the shop's data is today's API answer only (a feature whose product the API does not find is not built: see build.py)
         href = B.rakuten_link(cfg, url)
-        img = live["image"] if live else entry["img"]                                      # the picture as the API gave it; its size on the page is the CSS's
+        img = live["image"]                                                                # the picture as the API gave it; its size on the page is the CSS's
+        line = B.blurb_line(live)
         buy = f'<span class="btn big"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">楽天市場で見る</a></span>'
         other_btn = ""                                                                    # a Rakuten product part carries Rakuten's link only (terms Article 8)
-        price = ""
-        if live:
-            stars = f'<span class="stars">★{live["rating"]:.1f}</span>({live["reviews"]:,}件・楽天市場のレビュー)' if live["reviews"] else ""
-            price = (f'<p class="pick-price">{B.yen(live["price"])}<small>{stars}{"・送料無料" if live["free_shipping"] else ""}<br>楽天市場の{esc(d["fetched_label"])}時点の情報</small></p>')
-            B.SEEN[entry["code"]] = {"n": B.short(entry["name"], 60), "p": live["price"], "i": live["image"], "u": href}
+        stars = f'<span class="stars">★{live["rating"]:.1f}</span>({live["reviews"]:,}件・楽天市場のレビュー)' if live["reviews"] else ""
+        price = (f'<p class="pick-price">{B.yen(live["price"])}<small>{stars}{"・送料無料" if live["free_shipping"] else ""}<br>楽天市場の{esc(d["fetched_label"])}時点の情報</small></p>')
+        B.SEEN[entry["code"]] = {"n": line, "p": live["price"], "i": live["image"], "u": href}
         me = live
         pl, how = pool(d, f, entry["kind"])
         st = stats(pl, me)
-        photo = (f'<div class="imgbox"><div class="feat-photo"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener"><img src="{esc(img)}" alt="{esc(entry["name"])}"></a></div>'
-                 f'{B.fav_button(entry["code"], B.short(entry["name"], 40), live["price"] if live else None, url)}</div>')
+        photo = (f'<div class="imgbox"><div class="feat-photo"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener"><img src="{esc(img)}" alt="{esc(line or "楽天市場の商品ページ")}"></a></div>'
+                 f'{B.fav_button(entry["code"], line or "気になる品", live["price"], url)}</div>')
     else:
         href = B.amazon_dp(cfg, entry["asin"])
         buy = f'<span class="btn big"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">Amazonで見る</a></span>'
@@ -299,11 +300,12 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
     charts = ""
     if st:
         charts = f'<section class="block" id="position"><div class="sec-head"><h2>同じ種類の中での位置</h2></div>{_chart_price(d, f, pl, how, st)}{_chart_facts(d, f, st)}</section>'
+    alts = _alts(cfg, d, day, f["alts"])                                              # none of the alternatives found by the API today: no heading either
     notice = '<p class="notice">この商品はいま販売ページで取り扱いがないと表示されています。下の「代わりの候補」をご覧ください。</p>' if unavailable else ""
     specs = "".join(f"<tr><th>{esc(r['k'])}</th><td>{esc(r['v'])}</td></tr>" for r in f["specs"])
     reading = "".join(f"<h3>{esc(r['h'])}</h3><p>{esc(r['p'])}</p>" for r in f["reading"])
     faq = "".join(f"<details class='faq'><summary>{esc(q['q'])}</summary><p>{esc(q['a'])}</p></details>" for q in f["faq"])
-    ev = "".join(f'<li><a href="{esc(e["url"])}" rel="noopener nofollow" target="_blank">{esc(e["label"])}</a></li>' for e in f["evidence"])
+    ev = "".join((f'<li><a href="{esc(e["url"])}" rel="noopener nofollow" target="_blank">{esc(e["label"])}</a></li>' if e.get("url") else f'<li>{esc(e["label"])}</li>') for e in f["evidence"])
     more = "".join(f'<li><a href="{path(o)}">{esc(o["title"])}</a></li>' for o in others[:4])
     url_abs = cfg["site_url"].rstrip("/") + path(f)
     ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": f["title"], "datePublished": f["date"], "dateModified": f["verified"], "inLanguage": "ja",
@@ -321,7 +323,7 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
 <section class="block"><div class="sec-head"><h2>渡し方</h2></div><ol class="feat-give">{"".join(f"<li>{esc(x)}</li>" for x in f["give"])}</ol></section>
 <section class="block feat-scene"><div class="sec-head"><span class="eyebrow">{esc(f["scene"]["label"])}</span><h2>渡す場面を思い浮かべる</h2></div>{_manga(f)}<p>{esc(f["scene"]["text"])}</p><p class="feat-react"><b>想定される反応</b>{esc(f["scene"]["reaction"])}</p>
 <p class="sec-lead">この場面と漫画は読む人が想像しやすいように編集部がつくった例です。実際の贈り物の感想や購入者の声ではありません。</p></section>
-<section class="block"><div class="sec-head"><h2>代わりの候補</h2></div>{_alts(cfg, d, day, f["alts"])}</section>
+{f'<section class="block"><div class="sec-head"><h2>代わりの候補</h2></div>{alts}</section>' if alts else ""}
 <section class="block"><div class="sec-head"><h2>よくある質問</h2></div>{faq}</section>
 <section class="block feat-cta"><p class="more">{buy}{other_btn}<a class="btn btn-sub" href="/memo/">贈る日を登録する</a></p></section>
 {B.share_bar(cfg, path(f), f"{f['title']}: {f['catch']}", "このページをだれかに・自分に送る", hint=True)}
@@ -422,7 +424,7 @@ def candidates(d: dict, day_iso: str | None = None) -> list[str]:
             flags.append("not on sale now")
         if pool_n < MIN_POOL:
             flags.append(f"kind pool {pool_n} < {MIN_POOL}: only a compare-words pool can give a chart")
-        out.append(f"{ref}  {e['code']}  kind={e['kind']}  kind-pool={pool_n}  {e['name'][:48]}" + (f"   [{'; '.join(flags)}]" if flags else ""))
+        out.append(f"{ref}  {e['code']}  kind={e['kind']}  kind-pool={pool_n}" + (f"   [{'; '.join(flags)}]" if flags else ""))
     return out
 
 

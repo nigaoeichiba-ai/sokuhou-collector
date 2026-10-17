@@ -83,7 +83,8 @@ class Page(HTMLParser):
         if tag in ("img", "script", "source", "iframe", "video", "audio") and a.get("src"):
             self.links.append((tag, a["src"]))
         if tag == "img":
-            if "alt" not in a or (not a.get("src") and "hidden" not in a):     # a hidden <img> is filled in by script
+            counter = "valuecommerce.com/servlet/gifbanner" in a.get("src", "")      # the affiliate programme's 1x1 counter is used exactly as its code gives it (no alt)
+            if not counter and ("alt" not in a or (not a.get("src") and "hidden" not in a)):     # a hidden <img> is filled in by script
                 self.imgs_bad += 1
         if tag == "table" and "tablewrap" not in " ".join(self.stack):
             self.tables_outside += 1

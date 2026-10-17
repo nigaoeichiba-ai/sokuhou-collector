@@ -17,6 +17,7 @@ import json
 from datetime import date
 
 from sites.yorokobu import giftcal, relevance
+from sites.yorokobu import itemsserver
 from sites.yorokobu.askserver import ask_php
 from sokuhou.sitekit import crumbs, esc
 
@@ -104,7 +105,7 @@ def rec_data(d: dict, cfg: dict) -> dict | None:
                           "g": gender_mark(it["name"])})
             if len(items) >= REC_ITEMS:
                 break
-        groups[gid] = {"label": spec["label"], "kind": spec["kind"], "items": items if len(items) >= MIN_REC_ITEMS else [], "range": quartiles([i["price"] for i in xs]),
+        groups[gid] = {"id": gid, "label": spec["label"], "kind": spec["kind"], "items": items if len(items) >= MIN_REC_ITEMS else [], "range": quartiles([i["price"] for i in xs]),
                        "q": spec["queries"][0], "r": B.search_link(cfg, spec["queries"][0]),
                        "a": B.amazon_url(cfg, spec["queries"][0]) if cfg.get("amazon_tracking_id") else ""}
     tiers = [t["slug"] for t, _ in B.budget_tiers(d)]
@@ -292,6 +293,12 @@ def build_files(d: dict, cfg: dict, preview: bool, today: date) -> tuple[dict, d
     pages: dict[str, str] = {"ask/index.html": ask_page(d, cfg, preview), "api/ask.php": ask_php(cfg, d["c"]["ask"])}
     quiet: dict[str, str] = {"ask/r/index.html": respond_page(d, cfg, "open"), "ask/s/index.html": respond_page(d, cfg, "secret"), "ask/mine/index.html": mine_page(d, cfg, preview)}
     if rec:
+        B = _b()
+        private = {}
+        for gid, g in rec["groups"].items():                                 # the products are not in the public file: api/items.php gives them a few at a time
+            private[gid] = g.pop("items")
+            g["n_items"] = len(private[gid])
+        B.PRIVATE[itemsserver.PRIVATE_FILES["rec"]] = json.dumps(private, ensure_ascii=False, separators=(",", ":"))
         pages["ask/rec.json"] = json.dumps(rec, ensure_ascii=False, separators=(",", ":"))
         dd = dock_data(d, cfg, rec, today)
         if dd:

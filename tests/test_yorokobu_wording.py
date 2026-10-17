@@ -8,7 +8,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 from sites.yorokobu import build, commas, content
-from tests.yorokobu_data import with_musts
+from tests.yorokobu_data import live_daily, with_musts
 
 FIX = Path(__file__).parent / "fixtures" / "yorokobu"
 CFG = {"site_url": "https://yorokobu-present.com", "site_name": "よろこぶプレゼント", "operator_name": "テスト", "contact_form_url": "https://example.com/f",
@@ -46,6 +46,7 @@ class LightWordingTest(unittest.TestCase):
     def setUpClass(cls):
         cls.c = content.load()
         items = with_musts(json.loads((FIX / "items.json").read_text(encoding="utf-8")), cls.c)
+        items["daily"] = live_daily(cls.c)
         cls.tmp = tempfile.TemporaryDirectory()
         cls.root = Path(cls.tmp.name)
         build.render_site(cls.c, items, CFG, cls.root, release=True, today=date(2026, 10, 13))
@@ -85,6 +86,7 @@ class HeartTest(unittest.TestCase):
     def setUpClass(cls):
         cls.c = content.load()
         items = with_musts(json.loads((FIX / "items.json").read_text(encoding="utf-8")), cls.c)
+        items["daily"] = live_daily(cls.c)
         cls.tmp = tempfile.TemporaryDirectory()
         cls.root = Path(cls.tmp.name)
         build.render_site(cls.c, items, CFG, cls.root, release=True, today=date(2026, 10, 13))

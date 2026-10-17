@@ -8,7 +8,7 @@ from datetime import date
 from pathlib import Path
 
 from sites.yorokobu import build, content, features
-from tests.yorokobu_data import with_musts
+from tests.yorokobu_data import live_daily, with_musts
 
 FIX = Path(__file__).parent / "fixtures" / "yorokobu"
 CFG = {"site_url": "https://yorokobu-present.com", "site_name": "よろこぶプレゼント", "operator_name": "テスト", "contact_form_url": "https://example.com/f",
@@ -144,6 +144,7 @@ class CandidatesTest(unittest.TestCase):
     def setUpClass(cls):
         cls.c, cls.days = real()
         items = with_musts(json.loads((FIX / "items.json").read_text(encoding="utf-8")), cls.c)
+        items["daily"] = live_daily(cls.c)                                  # what today's API lookup gives for the item codes of the content (the content keeps only the codes)
         cls.d = build.prepare(cls.c, items, CFG)
 
     def test_the_candidates_are_the_days_rakuten_products_and_the_ones_with_an_article_say_so(self):
@@ -169,12 +170,7 @@ class PageTest(unittest.TestCase):
     def setUpClass(cls):
         cls.c, cls.days = real()
         items = with_musts(json.loads((FIX / "items.json").read_text(encoding="utf-8")), cls.c)
-        daily = {}
-        for f in cls.c["features"]:
-            e = features.entry_of(cls.days[f["date"]], f["ref"])
-            if f["ref"].startswith("r"):
-                daily[e["code"]] = {"code": e["code"], "name": e["name"], "price": 2980, "url": e["url"], "image": e["img"], "shop": "s", "shop_code": "s", "reviews": 120, "rating": 4.5,
-                                    "available": True, "free_shipping": True, "gift": True, "appoint": False}
+        daily = live_daily(cls.c)
         items["daily"] = daily
         cls.tmp = tempfile.TemporaryDirectory()
         cls.root = Path(cls.tmp.name)
@@ -214,7 +210,7 @@ class PageTest(unittest.TestCase):
         items = with_musts(rich_boyfriend(json.loads((FIX / "items.json").read_text(encoding="utf-8"))), self.c)     # nine products of the kind 実用品: enough for a chart
         f = next(x for x in self.c["features"] if x["slug"] == "bruno-lid-mug")
         e = features.entry_of(self.days[f["date"]], f["ref"])
-        items["daily"] = {e["code"]: {"code": e["code"], "name": e["name"], "price": 2980, "url": e["url"], "image": e["img"], "shop": "s", "shop_code": "s", "reviews": 120, "rating": 4.5,
+        items["daily"] = {e["code"]: {"code": e["code"], "name": f"{e['kind']} テスト商品 {e['code']}", "price": 2980, "url": "https://item.rakuten.co.jp/" + e["code"].replace(":", "/") + "/", "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/" + e["code"].replace(":", "/") + ".jpg?_ex=128x128", "shop": "s", "shop_code": "s", "reviews": 120, "rating": 4.5,
                                       "available": True, "free_shipping": True, "gift": True, "appoint": False}}
         with tempfile.TemporaryDirectory() as t:
             build.render_site(self.c, items, CFG, Path(t) / "s", release=True, today=date(2026, 10, 13))
@@ -241,7 +237,7 @@ class PageTest(unittest.TestCase):
         items = with_musts(json.loads((FIX / "items.json").read_text(encoding="utf-8")), c)
         f = c["features"][0]
         e = features.entry_of(days[f["date"]], f["ref"])
-        items["daily"] = {e["code"]: {"code": e["code"], "name": e["name"], "price": 2980, "url": e["url"], "image": e["img"], "shop": "s", "shop_code": "s", "reviews": 0, "rating": 0,
+        items["daily"] = {e["code"]: {"code": e["code"], "name": f"{e['kind']} テスト商品 {e['code']}", "price": 2980, "url": "https://item.rakuten.co.jp/" + e["code"].replace(":", "/") + "/", "image": "https://thumbnail.image.rakuten.co.jp/@0_mall/" + e["code"].replace(":", "/") + ".jpg?_ex=128x128", "shop": "s", "shop_code": "s", "reviews": 0, "rating": 0,
                                       "available": False, "free_shipping": False, "gift": False, "appoint": False}}
         with tempfile.TemporaryDirectory() as t:
             build.render_site(c, items, CFG, Path(t) / "s", release=True, today=date(2026, 10, 13))

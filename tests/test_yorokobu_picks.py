@@ -29,7 +29,7 @@ def live_items(d: dict, sold_out: tuple[str, ...] = ()) -> dict:
     out = {}
     for i, e in enumerate(d["rakuten"]):
         shop, num = e["code"].split(":")
-        it = rakuten.normalize(raw_item(num, 3000 + i * 500, shop=shop, reviews=100 + i, rating=4.5, name=f"{e['name']} 楽天の表記"))
+        it = rakuten.normalize(raw_item(num, 3000 + i * 500, shop=shop, reviews=100 + i, rating=4.5, name=f"{e['kind']} テスト商品{i} 楽天の表記"))
         it["code"] = e["code"]
         it["available"] = e["code"] not in sold_out
         out[e["code"]] = it
@@ -233,15 +233,14 @@ class PagesTest(unittest.TestCase):
             self.assertNotIn("塚田商店", html)
             self.assertIn("今日のおすすめギフト19選", html)
 
-    def test_without_a_lookup_the_card_keeps_the_saved_picture_and_shows_no_price(self):
+    def test_without_a_lookup_no_card_of_the_shop_is_shown_because_nothing_of_it_is_stored(self):
         with tempfile.TemporaryDirectory() as tmp:
             out = render(Path(tmp), [self.d], None)
             html = (out / "picks/2026-10-11/index.html").read_text(encoding="utf-8")
-            r_part = html.split('id="amazon"')[0].split('id="rakuten"')[1]
-            self.assertEqual(r_part.count('<article class="pick"'), 10)
-            self.assertNotIn("¥", r_part)
-            self.assertIn("価格・在庫は販売ページでご確認ください。", r_part)
-            self.assertIn(self.d["rakuten"][0]["img"], r_part)         # the picture URL as it was saved, unchanged
+            self.assertNotIn("item.rakuten.co.jp", html)
+            self.assertNotIn("thumbnail.image.rakuten", html)
+            self.assertEqual(html.split('id="amazon"')[0].count('<article class="pick"'), 0)        # the Rakuten part has no card: the content file keeps only the item code
+            self.assertEqual(sorted(k for k in self.d["rakuten"][0] if k in dp.MALL_FIELDS), [])
 
     def test_without_an_associates_id_the_amazon_part_is_left_out_instead_of_breaking_the_build(self):
         global CFG

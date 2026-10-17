@@ -23,6 +23,9 @@ RAKUTEN_N = AMAZON_N = 10
 KIND_KEY = {"実用品": "practical", "食べもの・飲みもの": "food", "ファッション小物": "fashion", "癒し・リラックス": "relax", "思い出・名入れ": "memory",
             "体験・お出かけ": "outing", "趣味・ホビー": "hobby", "おもしろ・サプライズ": "surprise", "子ども向け": "kids"}
 MOOD_VARIANTS = 2
+MALL_URL = re.compile(r"item\.rakuten\.co\.jp/[A-Za-z0-9_.-]+/[A-Za-z0-9_.%-]+|thumbnail\.image\.rakuten\.co\.jp/@0_mall/|item-shopping\.c\.yimg\.jp/"
+                      r"|store\.shopping\.yahoo\.co\.jp/[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+|amazon\.co\.jp/(?:dp|gp/product)/B0[A-Z0-9]{8}")   # a shop's product or picture URL
+MALL_FIELDS = ("name", "url", "img", "image", "price", "shop", "shop_code", "reviews", "rating")   # what the shop's API gives: never stored in a public file (only the item code is)
 COPY_RUN = 14          # a stretch of this many characters shared with the shop's page counts as copied
 # claims a shop may make and an editor may not: absolute words, medical effects, "the most", and the hype of an advertisement
 BANNED = ["絶対", "必ず", "No.1", "No１", "ナンバーワン", "最安", "日本一", "世界一", "最高", "完璧", "全員", "誰でも", "間違いなく", "大人気", "爆売れ", "話題の",
@@ -87,10 +90,14 @@ def problems(day: dict, sources: dict[str, str] | None = None, sizes: tuple[int,
 def _entry_problems(d: str, store: str, eid: str, e: dict, source: str) -> list[str]:
     at = f"{d} {eid}"
     out = []
-    need = ("name", "kind", "headline", "summary", "for", "good", "care", "check", "scene", "verified") + (("code", "img", "url") if store == "rakuten" else ("asin", "maker", "mood"))
+    need = ("kind", "headline", "summary", "for", "good", "care", "check", "scene", "verified") + (("code",) if store == "rakuten" else ("name", "asin", "maker", "mood"))
     miss = [f for f in need if not e.get(f)]
     if miss:
         return [f"{at}: missing {', '.join(miss)}"]
+    if store == "rakuten":
+        stored = [f for f in MALL_FIELDS if f in e]
+        if stored:
+            return [f"{at}: {', '.join(stored)} must not be stored here (the repository is public and these are the shop's data): keep only the item code; the build reads the rest from the API"]
     if e["kind"] not in KIND_KEY:
         out.append(f"{at}: unknown kind {e['kind']}")
     if store == "rakuten" and not re.fullmatch(r"[a-z0-9_\-]+:\d+", e["code"]):

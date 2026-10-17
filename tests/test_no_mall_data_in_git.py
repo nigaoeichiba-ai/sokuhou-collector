@@ -11,15 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 # files that still hold Rakuten product URLs and are being moved out (2026-10-17). Remove each line when the file is clean.
-KNOWN_PENDING = {
-    "sites/yorokobu/content/daily/2026-10-11.json", "sites/yorokobu/content/daily/2026-10-12.json", "sites/yorokobu/content/daily/2026-10-13.json",
-    "sites/yorokobu/content/daily/2026-10-14.json", "sites/yorokobu/content/daily/2026-10-15.json", "sites/yorokobu/content/daily/2026-10-16.json",
-    "sites/yorokobu/content/daily/2026-10-17.json",
-    "sites/yorokobu/content/features/bruno-lid-mug.json", "sites/yorokobu/content/features/imabari-bath-towel.json",
-    "sites/yorokobu/content/features/iwachu-tetsubin-7.json", "sites/yorokobu/content/features/jomalone-discovery.json",
-    "sites/yorokobu/content/features/miel-red-cookie-can.json", "sites/yorokobu/content/features/montblanc-morin.json",
-    "sites/yorokobu/content/features/timemore-c5-grinder.json",
-}
+KNOWN_PENDING = set()   # nothing is pending any more (2026-10-17: the daily picks and the features keep only the item code; the shop's data is read from the API at build time)
 
 MIN_HITS = 1   # one mall product URL in a data file is already mall data
 MALL = re.compile(

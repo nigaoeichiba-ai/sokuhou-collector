@@ -11,6 +11,7 @@ import unittest
 from datetime import date
 from pathlib import Path
 
+from tests import items_mock
 from sites.yorokobu import askpages, askserver, askstats, ask_push, build, content, ogimage, relevance, webpush
 from sokuhou import sitecheck
 from sokuhou.sitekit import BuildError
@@ -198,6 +199,7 @@ class AskPagesTest(unittest.TestCase):
         cls.items = ask_items(c)
         cls.root = Path(cls.tmp.name) / "site"
         build.render_site(c, cls.items, CFG, cls.root, release=True, today=date(2026, 10, 12))
+        cls.private = dict(build.PRIVATE)                                    # the files left for the server's private folder
 
     @classmethod
     def tearDownClass(cls):
@@ -243,13 +245,17 @@ class AskPagesTest(unittest.TestCase):
         rec = json.loads(self.read("ask/rec.json"))
         ask = content.load()["ask"]
         self.assertEqual(set(rec["groups"]), set(ask["interests"]))
+        self.assertTrue(all("items" not in g for g in rec["groups"].values()), "the public file holds no product")
+        priv = json.loads(self.private["yorokobu_rec_db.json"])                      # the products are in the private file api/items.php reads
+        self.assertEqual(set(priv), set(rec["groups"]))
         owners = {}
-        for gid, g in rec["groups"].items():
-            for it in g["items"]:
+        for gid, items in priv.items():
+            self.assertEqual(rec["groups"][gid]["n_items"], len(items))
+            for it in items:
                 self.assertTrue(it["u"].startswith("https://hb.afl.rakuten.co.jp/"), gid)
                 owners.setdefault((it["u"], it["p"]), []).append(gid)
         self.assertTrue(all(len(v) == 1 for v in owners.values()), "a product is listed under one group only")
-        self.assertGreaterEqual(sum(1 for g in rec["groups"].values() if g["items"]), 3)       # (the fixture has few shops, and a shop gives two products at most)
+        self.assertGreaterEqual(sum(1 for items in priv.values() if items), 3)       # (the fixture has few shops, and a shop gives two products at most)
         dock = json.loads(self.read("dock/data.json"))
         self.assertEqual(len(dock["occasions"]), 24)
         self.assertEqual(len(dock["types"]), 8)
@@ -393,7 +399,7 @@ class AskBrowserTest(unittest.TestCase):
         root = Path(cls.tmp.name) / "site"
         build.render_site(c, ask_items(c), CFG, root, release=True, today=date(2026, 10, 12))
         (root / "e2e.html").write_text(f'<!doctype html><meta charset="utf-8"><pre id="out"></pre><script>{SCENARIO}</script>', encoding="utf-8")
-        cls.server, cls.store = ask_mock.serve(root, 0, askserver.allowlist(c["ask"]))
+        cls.server, cls.store = ask_mock.serve(root, 0, askserver.allowlist(c["ask"]), items_mock.private_from_build())
         dom = run_chrome(f"http://127.0.0.1:{cls.server.server_address[1]}/e2e.html")
         m = re.search(r'<pre id="out">(.*?)</pre>', dom, re.S)
         if not m:

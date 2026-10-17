@@ -38,6 +38,7 @@ from sites.yorokobu import shogatsu  # noqa: E402
 from sites.yorokobu import ranking as rk  # noqa: E402
 from sites.yorokobu import sales  # noqa: E402
 from sites.yorokobu import features as feats  # noqa: E402
+from sites.yorokobu import itemsserver  # noqa: E402
 from sites.yorokobu import minepage  # noqa: E402
 from sites.yorokobu import concierge as ccbot  # noqa: E402   (build.concierge is the search box of the gift pages)
 from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
@@ -140,21 +141,26 @@ def yahoo_url(cfg: dict, keyword: str) -> str:
     if not v:
         return ""
     target = "https://shopping.yahoo.co.jp/search?p=" + quote(keyword, safe="")
-    return f"https://ck.jp.ap.valuecommerce.com/servlet/referral?sid={v['sid']}&pid={v['pid']}&vc_url={quote(target, safe='')}"
+    return f"//ck.jp.ap.valuecommerce.com/servlet/referral?sid={v['sid']}&pid={v['pid']}&vc_url={quote(target, safe='')}"          # the protocol-relative form of the code the programme gave
 
 
 def yahoo_btn(cfg: dict, keyword: str, label: str, cls: str = "btn") -> str:
     u = yahoo_url(cfg, keyword)
     if not u:
         return ""
-    link = f'<a href="{esc(u)}" target="_blank" rel="nofollow sponsored noopener">{esc(label)}</a>{vc_pixel(cfg)}'
+    link = vc_a(cfg, u, esc(label))
     return f'<span class="{cls}">{link}</span>' if cls else link
 
 
 def vc_pixel(cfg: dict) -> str:
-    """The programme's 1x1 impression counter, which it asks to be placed with every link."""
+    """The programme's 1x1 impression counter, in the form of the code it gave: src, height, width, border in this order, nothing else, protocol-relative."""
     v = cfg["yahoo_vc"]
-    return f'<img src="https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid={v["sid"]}&amp;pid={v["pid"]}" width="1" height="1" alt="" style="border:0">'
+    return f'<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid={v["sid"]}&amp;pid={v["pid"]}" height="1" width="1" border="0">'
+
+
+def vc_a(cfg: dict, href: str, inner: str) -> str:
+    """A ValueCommerce link as the programme's code writes it: <a href rel="nofollow"> with the 1x1 counter first inside it, then the text (or the picture)."""
+    return f'<a href="{esc(href)}" rel="nofollow">{vc_pixel(cfg)}{inner}</a>'
 
 
 def amazon_query(name: str, limit: int = 30) -> str:
@@ -240,7 +246,8 @@ self.addEventListener('notificationclick', function (e) {
 });
 """
 
-SEEN: dict = {}   # every product a page showed (code -> name, price, image, links): the data file of the shared-list page
+SEEN: dict = {}   # every product a page showed (code -> name, price, image, links): the data behind api/items.php (a private file: the shops' data is not a public file)
+PRIVATE: dict = {}   # file name -> text of the files the build leaves for the server's private folder (items, gacha and rec data of api/items.php); main() writes them to data/
 OG: set = set()   # the share-card images drawn in this build ("gift/<key>", "occasion/<slug>", "for/<slug>", "default")
 
 
@@ -805,7 +812,7 @@ def list_page(d: dict, cfg: dict, preview: bool) -> str:
     body = f"""{head_band("sky", "", "贈り物の候補", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("贈り物の候補", None)])}</div>
 {pr_quiet(cfg)}
-<section id="sharedlist" class="sharedlist" data-src="/list/items.json">
+<section id="sharedlist" class="sharedlist" data-src="/api/items.php">
 <p class="list-msg" role="status" aria-live="polite">候補を読み込んでいます。</p>
 <ul class="items" id="list-items" aria-live="polite"></ul>
 <noscript><p class="notice">このページはJavaScript が使える環境でお使いください。</p></noscript>
@@ -1863,6 +1870,10 @@ def prepare(c: dict, items: dict | None, cfg: dict) -> dict:
         spec = (rec_by.get(slug) or {}).get("like_rows") or []
         likes[slug] = [[i for i in lst if usable(i, c["filters"], slug, relaxed=True) and relevance.fits_idea(i["name"], spec[n]["must"] if n < len(spec) else None)]
                        for n, lst in enumerate(rows)]
+    live_daily = items.get("daily", {})                        # the shop's data of the daily picks and the features is today's API answer only (the content files keep the item code): no answer, no feature
+    days_by = {x["date"]: x for x in c.get("daily") or []}
+    if c.get("features"):
+        c = {**c, "features": [f for f in c["features"] if not f["ref"].startswith("r") or (feats.entry_of(days_by.get(f["date"]), f["ref"]) or {}).get("code") in live_daily]}
     d = {"c": c, "pairs": pairs, "likes": likes, "portrait": items.get("portrait", []), "fetched_label": label, "site_name": cfg["site_name"],
          "fetched_date": (f or date.today().isoformat())[:10], "daily_items": items.get("daily", {}), "site_url": cfg["site_url"]}
     if items.get("pairs"):
@@ -1922,6 +1933,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     cards: dict[str, bytes] = {}
     OG.clear()
     SEEN.clear()
+    PRIVATE.clear()
     if ogimage.available():
         site = cfg["site_name"]
         cards["og/default.png"] = ogimage.card(title="よろこばれるプレゼントが見つかります。", tag="イベントと相手から", site=site, photo=mood_photo("default"))
@@ -1978,7 +1990,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     if d["gacha"]:
         gp = json.loads(d["gacha"])
         pages["tool/gacha/index.html"] = gacha_page(d, cfg, preview, gp["rec"], gp["tiers"])
-        pages["tool/gacha/items.json"] = d["gacha"]
+        PRIVATE[itemsserver.PRIVATE_FILES["gacha"]] = d["gacha"]                              # not a public file: api/items.php gives one product at a time
     if c["taboo"]:
         pages["tool/taboo/index.html"] = taboo_page(d, cfg, preview)
     if c["persona"]:
@@ -2043,7 +2055,8 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
             listed.pop(f"ranking/{slug}/index.html", None)
     if SEEN:
         pages["list/index.html"] = list_page(d, cfg, preview)
-        pages["list/items.json"] = json.dumps(SEEN, ensure_ascii=False, separators=(",", ":"))
+        PRIVATE[itemsserver.PRIVATE_FILES["items"]] = json.dumps(SEEN, ensure_ascii=False, separators=(",", ":"))
+    pages["api/items.php"] = itemsserver.items_php(cfg)
     pages.update(ask_quiet)                                 # the other person's page and the results: not listed (noindex), built after the sitemap's list
     pages["concierge-data.json"] = ccbot.data(d, cfg, finder_map(d))     # what the corner counter reads (assets/concierge.js)
     pages["favorites/index.html"] = minepage.favorites_page(d, cfg, preview)    # one browser's own page: noindex, not in the sitemap
@@ -2067,6 +2080,10 @@ def main() -> None:
         files = render_site(ct.load(), items, cfg, Path(a.out), release=a.release, ranking=rk.load(), compare_data=compare.load(), yahoo_data=compare.load_yahoo())
     except BuildError as e:
         sys.exit(str(e))
+    if PRIVATE:
+        (ROOT / "data").mkdir(exist_ok=True)
+        for name, text in PRIVATE.items():                                  # git-ignored (data/.gitignore); the deploy copies them to the server's private folder
+            (ROOT / "data" / name).write_text(text, encoding="utf-8")
     print(f"built {len(files)} files into {a.out}")
 
 

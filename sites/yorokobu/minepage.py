@@ -78,7 +78,7 @@ def favorites_page(d: dict, cfg: dict, preview: bool) -> str:
     body = f"""{B.head_band("sky", "", "お気に入りと最近チェックした商品", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("お気に入り", None)])}</div>
 {B.pr_quiet(cfg)}
-<div id="myitems" data-src="/list/items.json">
+<div id="myitems" data-src="/api/items.php">
 <section class="block"><div class="sec-head"><h2>気になるリスト(<span id="my-favs-n">0</span>点)</h2></div>
 <div id="my-favs-empty"><p>まだ、入っていません。商品カードの「♡」を押すとここに入ります。</p><p class="more">{starts}</p></div>
 <div id="my-favs-wrap" hidden><ul class="items" id="my-favs" aria-live="polite"></ul>

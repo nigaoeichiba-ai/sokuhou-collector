@@ -120,7 +120,13 @@
       var n = $("#my-favs-n"); if (n) n.textContent = favs.length;
     }
     $("#my-recent-clear").addEventListener("click", function () { write(RECENT, []); paint(); });
-    fetch(root.getAttribute("data-src")).then(function (r) { return r.json(); }).then(function (d) { db = d || {}; paint(); }).catch(function () { paint(); });
+    // the products behind the saved and the recent codes come from api/items.php, a few at a time (not a public list of all products)
+    var codes = [];
+    read(FAV, []).concat(read(RECENT, [])).forEach(function (x) { if (x && x.code && String(x.code).indexOf("a:") !== 0 && codes.indexOf(x.code) < 0) codes.push(x.code); });
+    var parts = []; for (var k = 0; k < codes.length; k += 24) parts.push(codes.slice(k, k + 24));
+    Promise.all(parts.map(function (ps) {
+      return fetch(root.getAttribute("data-src") + "?c=" + ps.map(encodeURIComponent).join(",")).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; });
+    })).then(function (rs) { rs.forEach(function (d) { Object.keys(d || {}).forEach(function (c) { db[c] = d[c]; }); }); paint(); }).catch(function () { paint(); });
     // the list sent as a link (the same address /list/ reads); sharing is the one the page offers
     var send = $("#my-send");
     if (send) send.addEventListener("click", function () {

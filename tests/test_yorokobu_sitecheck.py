@@ -11,7 +11,7 @@ from datetime import date
 from pathlib import Path
 
 from sites.yorokobu import build, content
-from tests.yorokobu_data import with_musts
+from tests.yorokobu_data import live_daily, with_musts
 from sokuhou import sitecheck
 
 HERE = Path(__file__).parent
@@ -24,6 +24,7 @@ class RealContentSiteCheckTest(unittest.TestCase):
         cfg = json.loads((SITE / "config.json").read_text(encoding="utf-8"))
         c = content.load()
         items = with_musts(json.loads((HERE / "fixtures" / "yorokobu" / "items.json").read_text(encoding="utf-8")), c)
+        items["daily"] = live_daily(content.load())
         for day in DATES:
             with self.subTest(day=day.isoformat()), tempfile.TemporaryDirectory() as tmp:
                 out = Path(tmp) / "site"
@@ -35,6 +36,7 @@ class RealContentSiteCheckTest(unittest.TestCase):
     def test_pages_without_a_product_list_carry_the_amazon_search_the_pr_label_and_a_footer_naming_only_amazon(self):
         cfg = {**json.loads((SITE / "config.json").read_text(encoding="utf-8")), "amazon_tracking_id": "amazonmacs-22"}
         items = with_musts(json.loads((HERE / "fixtures" / "yorokobu" / "items.json").read_text(encoding="utf-8")), content.load())
+        items["daily"] = live_daily(content.load())
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "site"
             build.render_site(content.load(), items, cfg, out, release=True, today=DATES[0])
@@ -57,6 +59,7 @@ class RealContentSiteCheckTest(unittest.TestCase):
         import re
         cfg = {**json.loads((SITE / "config.json").read_text(encoding="utf-8")), "amazon_tracking_id": "amazonmacs-22"}
         items = with_musts(json.loads((HERE / "fixtures" / "yorokobu" / "items.json").read_text(encoding="utf-8")), content.load())
+        items["daily"] = live_daily(content.load())
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "site"
             build.render_site(content.load(), items, cfg, out, release=True, today=DATES[0])

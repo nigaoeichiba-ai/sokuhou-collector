@@ -10,6 +10,7 @@ import unittest
 from datetime import date
 from pathlib import Path
 
+from tests import items_mock
 from sites.yorokobu import build, content, minepage
 from tests import ask_mock
 from tests.test_yorokobu_e2e import CHROME, run_chrome
@@ -84,7 +85,7 @@ class PagesTest(unittest.TestCase):
         html = self.read("favorites/index.html")
         self.assertIn('content="noindex,follow"', html)
         self.assertIn('id="myitems"', html)
-        self.assertIn('data-src="/list/items.json"', html)
+        self.assertIn('data-src="/api/items.php"', html)
         self.assertNotIn("/favorites/", self.read("sitemap.xml"))
 
     def test_the_privacy_page_says_what_is_counted(self):
@@ -168,10 +169,7 @@ async function load(url) {
         items = json.loads(re.sub(r'"code": "([^"]+)"', lambda m: '"code": "t:' + m.group(1) + '"', raw))              # item codes as Rakuten writes them ("shop:number")
         build.render_site(content.load(FIX), items, CFG, cls.root, release=True, today=date(2026, 5, 3))
         (cls.root / "e2e.html").write_text(f'<!doctype html><meta charset="utf-8"><pre id="out"></pre><script>{cls.SCENARIO}</script>', encoding="utf-8")
-        handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(cls.root))
-        handler.log_message = lambda *a, **k: None
-        cls.server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
-        threading.Thread(target=cls.server.serve_forever, daemon=True).start()
+        cls.server = items_mock.serve(cls.root)                          # a static server that also answers api/items.php from the build's private files
         dom = run_chrome(f"http://127.0.0.1:{cls.server.server_address[1]}/e2e.html")
         m = re.search(r'<pre id="out">(.*?)</pre>', dom, re.S)
         if not m:
