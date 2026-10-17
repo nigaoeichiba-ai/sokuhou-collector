@@ -263,7 +263,7 @@ def article_page(d: dict, cfg: dict, preview: bool, a: dict, data: dict, known: 
 {_fig(a["image"], eager=True)}
 <article class="guide seas shg">{_sections(a, data, known)}{faq_html}{_sources(a, data)}</article>
 {B.share_bar(cfg, path, a["title"], "この記事をだれかに送る")}
-<section class="related seas-more" style="margin-top:44px"><h2><span class="scribble">お正月の特集のほかの記事</span></h2>{_cards(data, a["slug"])}
+<section class="related seas-more" style="margin-top:44px"><h2><span class="scribble">お正月特集のほかの記事</span></h2>{_cards(data, a["slug"])}
 <p style="margin-top:14px"><a class="btn btn-sub" href="{PATH}">お正月の特集のトップへ</a></p></section>
 {f'<section class="related seas-more" style="margin-top:34px"><h2><span class="scribble">あわせて読む</span></h2><ul class="plain">{related}</ul></section>' if related else ""}
 <section class="seas-more" style="margin-top:30px"><p class="item-btns">{_buttons(cfg, a["query"])}</p></section>
