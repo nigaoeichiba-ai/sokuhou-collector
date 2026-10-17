@@ -442,24 +442,6 @@
    "note": "",
    "confirmed": "2026-10-17"
   },
-  "D48": {
-   "group": "百貨店・ギフト専門店",
-   "url": "store.shopping.yahoo.co.jp/harmonick/9602.html",
-   "what": "ハーモニック公式(Yahoo店) カタログ商品ページ",
-   "status": "partial",
-   "status_text": "一部",
-   "note": "ハーモニック自社サイトは見つからず(検索で出たのは Yahoo 店のみ)",
-   "confirmed": "2026-10-17"
-  },
-  "D49": {
-   "group": "百貨店・ギフト専門店",
-   "url": "item.rakuten.co.jp/bellevie-harima/10013195/",
-   "what": "ソムリエ@ギフト(楽天) カタログ商品ページ",
-   "status": "partial",
-   "status_text": "一部",
-   "note": "用途・相手のキーワードを大量に列挙するページ",
-   "confirmed": "2026-10-17"
-  },
   "D-articles": {
    "group": "百貨店・ギフト専門店",
    "what": "D1〜D34のうち散文のある記事・特集(三越5・高島屋6・西武3・東急2・シャディ2など)の総称",
