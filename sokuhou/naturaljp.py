@@ -57,6 +57,7 @@ class Hit:
     level: str
     sentence: str
     note: str = ""   # e.g. "3 on this page"
+    full: str = ""   # the whole sentence (sentence is cut for display)
 
 
 @dataclass
@@ -595,7 +596,7 @@ def check_pets(blocks: list[Block], path: str, rule_id: str, words: dict[str, st
         for sent in sentences(mask_quotes(b.text)) or [b.text]:
             for name, pat in words.items():
                 if re.search(pat, sent):
-                    found[name].append(Hit(path, b.line, rule_id, RULES[rule_id].level, sent if len(sent) <= 110 else sent[:107] + "…"))
+                    found[name].append(Hit(path, b.line, rule_id, RULES[rule_id].level, sent if len(sent) <= 110 else sent[:107] + "…", full=sent))
     for name, lst in found.items():
         uniq = {h.sentence: h for h in lst}
         if len(lst) >= need:
@@ -676,7 +677,7 @@ def check_blocks(blocks: list[Block], path: str, site: str | None = None, min_le
         return not (pat and re.search(pat, path))
 
     def record(rule: Rule, block: Block, sent: str, level: str | None = None):
-        per_rule[rule.id].append(Hit(path, block.line, rule.id, level or rule.level, sent if len(sent) <= 110 else sent[:107] + "…"))
+        per_rule[rule.id].append(Hit(path, block.line, rule.id, level or rule.level, sent if len(sent) <= 110 else sent[:107] + "…", full=sent))
 
     for orig in blocks:
         # a long quoted example (a greeting, a sample sentence) is not the writer's own prose: its words are not judged; a blockquote is not judged at all
@@ -801,6 +802,11 @@ def built_dir(site: str, rebuild: bool = False, base: Path | None = None) -> Pat
         r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace")
         if r.returncode != 0 or not (out / "index.html").exists():
             raise SystemExit(f"build of {site} failed (no built folder to read): {(r.stdout + r.stderr)[-400:]}")
+        try:                                        # what is published is the build with the rewrite dictionary applied (sokuhou.styleloop)
+            from sokuhou import styleloop
+            styleloop.apply_dir(out, site)
+        except ImportError:
+            pass
     return out
 
 
