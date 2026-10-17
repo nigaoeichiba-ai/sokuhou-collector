@@ -133,7 +133,7 @@ def y_view(raw: dict | None, rakuten_raw: dict, g: dict, filters: dict) -> dict 
         return None
     items, seen, per = [], set(), {}
     for it in raw.get("groups", {}).get(g["slug"], []):
-        if it["code"] in seen or any(b in it["shop"] for b in Y_BARRED) or not usable(it, filters, None, relaxed=True) or not relevance.fits_head(it["name"], g["words"]):
+        if it["code"] in seen or any(b in it["shop"] for b in Y_BARRED) or not usable(it, filters, g.get("recipient"), relaxed=True) or not relevance.fits_head(it["name"], g["words"]):
             continue
         if per.get(it["shop_code"], 0) >= PER_SHOP:
             continue
@@ -159,7 +159,7 @@ def view(raw: dict | None, filters: dict, cfg_groups: list[dict] | None = None, 
     for g in gs:
         items, seen, per = [], set(), {}
         for it in raw.get("groups", {}).get(g["slug"], []):
-            if it["code"] in seen or not usable(it, filters, None, relaxed=True) or not relevance.fits_head(it["name"], g["words"]):
+            if it["code"] in seen or not usable(it, filters, g.get("recipient"), relaxed=True) or not relevance.fits_head(it["name"], g["words"]):
                 continue
             if per.get(it["shop_code"], 0) >= PER_SHOP:
                 continue
