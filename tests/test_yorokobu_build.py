@@ -137,7 +137,7 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(bad, [])
 
     def test_names_are_shortened_and_escaped(self):
-        self.assertEqual(build.short("x" * 100, 10), "x" * 9 + "…")
+        self.assertEqual(build.short("x" * 100, 10), "x" * 100)                              # never cut with an ellipsis: a single word is kept whole
         self.assertEqual(build.short("  a   b  "), "a b")
 
     def test_every_page_has_its_own_share_card_and_share_buttons(self):
@@ -242,17 +242,18 @@ class NameCleanupTest(unittest.TestCase):
     def test_other_occasions_are_dropped_and_the_pages_own_is_kept(self):
         raw = "＼楽天スーパーSALE／ 敬老の日 ミニブーケ 誕生日 プレゼント 花 父の日 ハロウィン"
         build.set_keep("誕生日")
-        shown = build.short(raw)
+        shown = build.strip_occasions(raw)                                                   # (the card's short name drops every occasion word: shortname.py)
         self.assertIn("誕生日", shown)
         self.assertNotIn("敬老の日", shown)
         self.assertNotIn("ハロウィン", shown)
         self.assertNotIn("＼", shown)
         build.set_keep()
-        self.assertNotIn("誕生日", build.short(raw))
+        self.assertNotIn("誕生日", build.strip_occasions(raw))
+        self.assertEqual(build.short(raw), "ミニブーケ 花")
 
     def test_extra_occasion_words_and_shop_promotions_are_dropped(self):
         build.set_keep("昇進祝い")
-        shown = build.short("卒業記念品 名入れ 1個から 父 プレゼント 昇進祝い 夫 メンズ ボールペン")
+        shown = build.strip_occasions("卒業記念品 名入れ 1個から 父 プレゼント 昇進祝い 夫 メンズ ボールペン")
         self.assertIn("昇進祝い", shown)
         self.assertNotIn("卒業記念品", shown)
         build.set_keep()
@@ -263,10 +264,10 @@ class NameCleanupTest(unittest.TestCase):
 
     def test_a_shorter_word_does_not_cut_the_pages_own_word(self):
         build.set_keep("卒業祝い")
-        self.assertIn("卒業祝い", build.short("卒業祝い 名入れ ボールペン 卒業記念品 ギフト 男性 女性"))
+        self.assertIn("卒業祝い", build.strip_occasions("卒業祝い 名入れ ボールペン 卒業記念品 ギフト 男性 女性"))
 
     def test_a_title_that_would_shrink_to_nothing_stays_as_it_is(self):
-        self.assertEqual(build.short("敬老の日 画像送信サービス"), "敬老の日 画像送信サービス")
+        self.assertEqual(build.strip_occasions("敬老の日 画像送信サービス"), "敬老の日 画像送信サービス")
 
 
 class FooterNoticeTest(unittest.TestCase):
