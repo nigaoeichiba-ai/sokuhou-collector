@@ -61,7 +61,7 @@ def main() -> None:
     if not (app_id and key):
         sys.exit("RAKUTEN_APP_ID / RAKUTEN_ACCESS_KEY are not set")
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
-    client = rakuten.Client(app_id, key, referer=cfg["site_url"].rstrip("/") + "/", affiliate_id=cfg.get("rakuten_affiliate_id"), min_interval=REQUEST_GAP)
+    client = rakuten.Client(app_id, key, referer=cfg["site_url"].rstrip("/") + "/", affiliate_id=None, min_interval=REQUEST_GAP)
     gs = groups()[: a.limit] if a.limit else groups()
     data = fetch(client, gs)
     out = Path(a.out)

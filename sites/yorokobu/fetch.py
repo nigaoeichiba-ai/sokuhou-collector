@@ -230,7 +230,7 @@ def main() -> None:
     if not (app_id and key):
         sys.exit("RAKUTEN_APP_ID / RAKUTEN_ACCESS_KEY are not set")
     cfg = json.loads((ROOT / "sites" / "yorokobu" / "config.json").read_text(encoding="utf-8"))
-    client = rakuten.Client(app_id, key, referer=cfg["site_url"].rstrip("/") + "/", affiliate_id=cfg.get("rakuten_affiliate_id"))
+    client = rakuten.Client(app_id, key, referer=cfg["site_url"].rstrip("/") + "/", affiliate_id=None)
     existing = None
     if a.candidates and a.new_only and Path(a.out).exists():
         existing = json.loads(Path(a.out).read_text(encoding="utf-8"))

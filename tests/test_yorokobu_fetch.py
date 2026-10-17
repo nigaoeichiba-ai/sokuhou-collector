@@ -79,29 +79,16 @@ class UrlAndTitleTest(unittest.TestCase):
     WRAPPED = ("https://hb.afl.rakuten.co.jp/hgc/g00qk1uo.hgz7e6c9.g00qk1uo.hgz7f5ea/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fakuse-one%2Fsai109-a%2F"
                "&m=http%3A%2F%2Fm.rakuten.co.jp%2Fakuse-one%2Fi%2F10014842%2F&rafcid=wsc_i_is_APP")
 
-    def test_the_apis_link_and_item_url_are_kept_exactly_as_given(self):
-        n = rakuten.normalize({**raw_item("a1", 2000), "itemUrl": self.WRAPPED, "affiliateUrl": self.WRAPPED})
-        self.assertEqual(n["url"], self.WRAPPED)                      # not unwrapped, not cleaned of its tracking
-        self.assertEqual(n["aff"], self.WRAPPED)
-        self.assertNotIn("aff", rakuten.normalize({**raw_item("a2", 2000), "affiliateUrl": ""}))
-        self.assertFalse(hasattr(rakuten, "clean_item_url") or hasattr(rakuten, "sized_image"))
+    def test_the_item_url_is_kept_exactly_as_given_and_no_affiliate_link_is_stored(self):
+        url = "https://item.rakuten.co.jp/s/x/?rafcid=wsc_i_ra_0123"
+        n = rakuten.normalize({**raw_item("a1", 2000), "itemUrl": url, "affiliateUrl": self.WRAPPED})
+        self.assertEqual(n["url"], url)                              # not cleaned of its tracking
+        self.assertNotIn("aff", n)
 
     def test_promotions_are_dropped_from_titles(self):
         raw = "クーポン有10/4/20時〜10/9/1:59 名入れ ギフト 財布 ベルト 【送料無料】 ≪540円で世界に一つ≫ 刻印"
         self.assertEqual(rakuten.clean_title(raw), "名入れ ギフト 財布 ベルト 刻印")
         self.assertEqual(rakuten.clean_title("【ポイント10倍】短い"), "【ポイント10倍】短い")  # nothing meaningful left: keep the original
-
-    def test_the_build_uses_the_apis_link_exactly_as_given_and_the_specs_formula_only_without_one(self):
-        from sites.yorokobu import build
-        cfg = {"rakuten_affiliate_id": "OUR.ID"}
-        page = "https://item.rakuten.co.jp/akuse-one/sai109-a/"
-        it = rakuten.normalize({**raw_item("a1", 2000), "itemUrl": self.WRAPPED, "affiliateUrl": self.WRAPPED})     # the API's per-shop ID is not the ID of the config: still used as given
-        card = build.item_card(cfg, it)
-        self.assertIn(f'<a href="{self.WRAPPED.replace("&", "&amp;")}" target="_blank" rel="nofollow sponsored noopener">', card)      # nothing added, nothing taken out
-        self.assertNotIn("hgc/OUR.ID", card)
-        self.assertIn(f'data-url="{page}"', card)                                                                        # the ♡ keeps the page, cut out of the redirect
-        old = {k: v for k, v in it.items() if k != "aff"}                  # saved before the site kept the field
-        self.assertIn("hgc/OUR.ID/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fakuse-one%2Fsai109-a%2F&amp;m=https%3A%2F%2Fitem.rakuten.co.jp%2Fakuse-one%2Fsai109-a%2F", build.item_card(cfg, old))
 
     def test_page_url_cuts_the_page_out_of_a_redirect_and_changes_nothing_else(self):
         self.assertEqual(rakuten.page_url(self.WRAPPED), "https://item.rakuten.co.jp/akuse-one/sai109-a/")
