@@ -645,10 +645,8 @@ GOODS = [
 
 def rakuten_url(cfg: dict, target: str) -> str:
     """Rakuten Affiliate link to a Rakuten Ichiba page (here: a search results page, so it never goes stale)."""
-    aid, tid = cfg["rakuten_affiliate_id"], cfg.get("rakuten_tracking_id")
     enc = quote(target, safe="")
-    path = f"{aid}/{tid}" if tid else f"{aid}/"
-    return f"https://hb.afl.rakuten.co.jp/hgc/{path}?pc={enc}&m={enc}"
+    return f"https://hb.afl.rakuten.co.jp/hgc/{cfg['rakuten_affiliate_id']}/?pc={enc}&m={enc}"      # the formula of the Rakuten Web Service spec: nothing after the ID, no tracking ID
 
 
 def amazon_url(cfg: dict, query: str) -> str:
@@ -663,10 +661,10 @@ def goods_page(d: dict, cfg: dict, preview: bool) -> str:
         pts = "".join(f"<li>{esc(p)}</li>" for p in g["points"])
         cards += (f'<div class="goods-card"><h3>{esc(g["title"])}</h3><ul>{pts}</ul>'
                   f'<p style="margin:0;font-size:.88rem"><a href="/guide/{g["guide"][0]}/">{esc(g["guide"][1])}</a>を読む</p>'
-                  f'<a class="btn" href="{esc(rakuten_url(cfg, target))}" rel="sponsored nofollow noopener" target="_blank">'
-                  f'<span class="pr-note">PR</span>楽天市場で探す</a>'
-                  + (f'<a class="btn btn-amazon" href="{esc(amazon_url(cfg, g["query"]))}" rel="sponsored nofollow noopener" target="_blank">'
-                     f'<span class="pr-note">PR</span>Amazonで探す</a>' if cfg.get("amazon_tracking_id") else "")
+                  f'<div class="goods-cta"><a href="{esc(rakuten_url(cfg, target))}" target="_blank" rel="nofollow sponsored noopener">'
+                  f'<span class="pr-note">PR</span>楽天市場で探す</a></div>'
+                  + (f'<div class="goods-cta goods-cta-amazon"><a href="{esc(amazon_url(cfg, g["query"]))}" target="_blank" rel="nofollow sponsored noopener">'
+                     f'<span class="pr-note">PR</span>Amazonで探す</a></div>' if cfg.get("amazon_tracking_id") else "")
                   + '</div>')
     body = f"""{crumbs([("全国", "/"), ("クマ対策グッズ", None)])}
 <h1>クマ対策のグッズ</h1>
