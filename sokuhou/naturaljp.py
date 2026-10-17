@@ -46,6 +46,7 @@ class Block:
     text: str
     line: int
     src: str = "html"
+    quoted: bool = False   # inside a <blockquote>: an example text (a greeting, a sample message), not the site's own voice
 
 
 @dataclass
@@ -112,6 +113,9 @@ KIND_OF = {"h1": "heading", "h2": "heading", "h3": "heading", "h4": "heading", "
 FIXUPS = (("Yahoo!", "Yahoo"), ("YAHOO!", "YAHOO"), ("Yahoo！", "Yahoo"))        # a brand name with a "!" is not an exclamation (and does not end a sentence)
 
 
+LEAD_TAGS = {"b", "strong", "span", "small", "em", "i"}      # inline tags: a title in one of them, followed at once by another, is a separate text
+
+
 def clean_space(s: str) -> str:
     for a, b in FIXUPS:
         s = s.replace(a, b)
@@ -129,13 +133,15 @@ class _Html(HTMLParser):
         self.kind = "label"
         self.line = 1
         self.in_title = False
+        self.after_inline = False       # an inline element (b, span ...) has just closed with no text after it
 
     def flush(self):
         t = clean_space("".join(self.buf))
         self.buf = []
         if t and re.search(rf"[{JP}]", t):
-            self.blocks.append(Block(self.kind, t, self.line))
+            self.blocks.append(Block(self.kind, t, self.line, quoted="blockquote" in self.stack))
         self.kind, self.line = "label", self.getpos()[0]
+        self.after_inline = False
 
     def handle_starttag(self, tag, attrs):
         if tag == "meta":
@@ -152,6 +158,10 @@ class _Html(HTMLParser):
             self.flush()
             self.kind = KIND_OF.get(tag, "label")
             self.line = self.getpos()[0]
+        elif tag in LEAD_TAGS and self.after_inline and self.buf and not SENT_END.search("".join(self.buf).strip()):
+            kind = self.kind
+            self.flush()                                  # <li><b>Title</b><span>Body</span></li>: the title and the body are two texts
+            self.kind = kind
         if tag not in ("br", "hr", "img", "input", "link", "meta"):
             self.stack.append(tag)
 
@@ -165,6 +175,8 @@ class _Html(HTMLParser):
             return
         if tag in BLOCK_TAGS or (tag == "a" and any(t in self.stack for t in ("nav", "footer", "header", "li"))):
             self.flush()
+        elif tag in LEAD_TAGS:
+            self.after_inline = True
         if tag in self.stack:
             while self.stack and self.stack.pop() != tag:
                 pass
@@ -172,6 +184,8 @@ class _Html(HTMLParser):
     def handle_data(self, data):
         if self.skip:
             return
+        if data.strip():
+            self.after_inline = False
         if not self.buf:
             self.line = self.getpos()[0]
             if self.in_title:
@@ -573,9 +587,9 @@ def check_pets(blocks: list[Block], path: str, rule_id: str, words: dict[str, st
     out: list[Hit] = []
     found: dict[str, list[Hit]] = defaultdict(list)
     for b in blocks:
-        if b.kind in ("heading", "meta") or (b.kind in ("label", "item") and not SENT_END.search(b.text)):
+        if b.quoted or b.kind in ("heading", "meta") or (b.kind in ("label", "item") and not SENT_END.search(b.text)):
             continue
-        for sent in sentences(b.text) or [b.text]:
+        for sent in sentences(mask_quotes(b.text)) or [b.text]:
             for name, pat in words.items():
                 if re.search(pat, sent):
                     found[name].append(Hit(path, b.line, rule_id, RULES[rule_id].level, sent if len(sent) <= 110 else sent[:107] + "…"))
@@ -631,6 +645,10 @@ def _sentence_hits(kind: str, sent: str, site: str | None, prof: dict) -> list[t
     return out
 
 
+def mask_quotes(text: str) -> str:
+    return re.sub(r"[「『][^」』]{8,}[」』]", "「…」", text)
+
+
 def check_blocks(blocks: list[Block], path: str, site: str | None = None, min_level: str = "low", only: Iterable[str] | None = None, md: bool = False) -> list[Hit]:
     prof = profile(site)
     only = set(only or ())
@@ -651,11 +669,13 @@ def check_blocks(blocks: list[Block], path: str, site: str | None = None, min_le
     def record(rule: Rule, block: Block, sent: str, level: str | None = None):
         per_rule[rule.id].append(Hit(path, block.line, rule.id, level or rule.level, sent if len(sent) <= 110 else sent[:107] + "…"))
 
-    for b in blocks:
+    for orig in blocks:
+        # a long quoted example (a greeting, a sample sentence) is not the writer's own prose: its words are not judged; a blockquote is not judged at all
+        b = Block(orig.kind, mask_quotes(orig.text), orig.line, orig.src, orig.quoted)
         sents = sentences(b.text) or [b.text]
         # regex rules per sentence
         for s in sents:
-            for rid, _ in _sentence_hits(b.kind, s, site, prof):
+            for rid, _ in ([] if orig.quoted else _sentence_hits(b.kind, s, site, prof)):
                 r = RULES[rid]
                 if r.scope == "body" and b.kind == "heading":
                     continue
@@ -666,8 +686,13 @@ def check_blocks(blocks: list[Block], path: str, site: str | None = None, min_le
         for r in R:
             if not want(r) or not rule_active(r, site, prof):
                 continue
-            if r.pattern is not None and r.scope in ("block", "any"):
-                if r.pattern.search(b.text) and not (r.id == "md_leftover" and b.src == "md"):
+            if r.scope == "any":
+                if r.pattern.search(orig.text) and not (r.id == "md_leftover" and orig.src == "md"):
+                    record(r, orig, orig.text)
+            elif orig.quoted:
+                continue
+            elif r.pattern is not None and r.scope == "block":
+                if r.pattern.search(b.text):
                     record(r, b, b.text)
             elif r.fn is not None:
                 for ex in r.fn(b, sents, prof):
