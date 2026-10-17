@@ -1,0 +1,26 @@
+name: yorokobu-private-seed
+
+# One-off (2026-10-17): copies the four data files that are still in the repository (data/yorokobu_compare|yahoo|ranking|candidates.json) to the server's private folder
+# (sites/yorokobu/privatedata.py), BEFORE they are removed from the repository, so that the deploy finds them there.  Delete this workflow after it has run once.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Copy the files to the private folder
+        env:
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sites.yorokobu.privatedata push
