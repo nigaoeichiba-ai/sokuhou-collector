@@ -6,8 +6,3 @@ out/
 dist/
 release/
 *.zip
-# what the Rakuten / Yahoo! APIs give is kept in the server's private folder (sites/yorokobu/privatedata.py), never in this public repository
-data/yorokobu_compare.json
-data/yorokobu_yahoo.json
-data/yorokobu_ranking.json
-data/yorokobu_candidates.json
