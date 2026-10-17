@@ -116,9 +116,9 @@ def looks_like_third_party(text: str, kind: str = "para") -> bool:
     return sl.protected_name(text) or "★" in text or "¥" in text or text.count(" ") >= spaces or bool(re.match(r"^[\d,.\s円%％()（）/\-〜~]+$", text))
 
 
-def page_units(raw: str) -> list[PageUnit]:
+def page_units(raw: str, site: str | None = "yorokobu") -> list[PageUnit]:
     p = _Page()
-    p.feed(raw)
+    p.feed(nj.for_reading(raw, site))
     from collections import Counter
     count = Counter((k, t) for k, t, _ in p.units)
     out, seen = [], set()
@@ -302,7 +302,7 @@ def edit_page(site: str, rel: str, raw: str, runner=None, today: str | None = No
     """Edit one page (one Codex call per chunk).  Returns the report; the accepted edits are in the dictionary unless dry."""
     today = today or dt.date.today().isoformat()
     runner = runner or sl.run_codex
-    units = page_units(raw)
+    units = page_units(raw, site)
     report = {"page": rel, "date": today, "hash": content_hash(units), "units": len(units), "diagnosis": [], "accepted": [], "rejected": [], "deleted": [], "needs_check": [],
               "structure_suggestions": [], "unchanged": 0, "failed": ""}
     by_id = {u.id: u for u in units}
@@ -367,7 +367,7 @@ def edit_page(site: str, rel: str, raw: str, runner=None, today: str | None = No
 
 
 # pages that are written again every day by a routine, or are made of shop data: an edit there is a treadmill (the next day brings new text); the fix belongs in the writer's prompt
-NOT_EDITED = {"yorokobu": re.compile(r"^(?:picks|ranking|compare|ask|budget)/")}
+NOT_EDITED = {"yorokobu": re.compile(r"^(?:picks|ranking|compare|ask|budget|pick)/")}       # pick/: a product article built around one shop product's data
 
 
 LIVE = {"yorokobu": "https://yorokobu-present.com", "kuma": "https://kuma-sokuho.com", "saichin": "https://saichin-sokuho.com", "minna": "https://minna-no-illust.com"}       # atomou: behind a password
@@ -416,7 +416,7 @@ def next_pages(site: str, build: Path, n: int, fetch=None) -> list[tuple[str, st
         if nj.EXEMPT_PATH.search(rel) or (site in NOT_EDITED and NOT_EDITED[site].search(rel)):
             continue
         raw = nj.published_text(f.read_text(encoding="utf-8"), site)
-        units = page_units(raw)
+        units = page_units(raw, site)
         body = [u for u in units if u.editable and u.kind in ("para", "item") and len(u.text) >= 30]
         if len(body) < 3:
             continue
@@ -435,7 +435,7 @@ def next_pages(site: str, build: Path, n: int, fetch=None) -> list[tuple[str, st
             live = fetch(site, rel)
         except Exception:
             continue
-        units = page_units(live)
+        units = page_units(live, site)
         if len([u for u in units if u.editable and u.kind in ("para", "item") and len(u.text) >= 30]) < 3:
             continue
         if prev and prev.get("hash") == content_hash(units):

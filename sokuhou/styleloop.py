@@ -151,7 +151,7 @@ def extract_units(root: Path, site: str | None = None) -> dict[str, Unit]:
         if nj.EXEMPT_PATH.search(rel):
             continue
         try:
-            raw = nj.published_text(f.read_text(encoding="utf-8"), site)         # the units of what is published (the dictionary applied): an old fix is not asked about again
+            raw = nj.for_reading(nj.published_text(f.read_text(encoding="utf-8"), site), site)         # what is published (the dictionary applied), without the shops' data
         except (OSError, UnicodeDecodeError):
             continue
         seen = set()
@@ -329,9 +329,14 @@ def save_rewrites(site: str, entries: list[dict]) -> None:
     f.write_text(json.dumps({"_note": "exact original -> rewording, applied after the build by sokuhou.styleloop (delete a line to undo it)", "entries": entries}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
 
+SHOP_URL = re.compile(r"rakuten\.co\.jp|shopping\.yahoo|image\.rakuten|thumbnail\.image|placehold|amazon\.co\.jp|amzn\.")
+
+
 def add_entry(site: str, old: str, new: str, by: str = "codex", why: str = "", kind: str = "heading", force: bool = False, today: str | None = None,
               small_edit: bool = True) -> tuple[bool, list[str]]:
     old, new = norm(old), norm(new)
+    if SHOP_URL.search(old) or SHOP_URL.search(new):
+        return False, ["a shop's address or image is the shop's data: never stored"]
     problems = [] if force else check_rewrite(old, new, site, kind, small_edit=small_edit)
     if problems:
         return False, problems

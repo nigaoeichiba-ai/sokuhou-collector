@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
+from sokuhou import naturaljp as nj
 from sokuhou import pageedit as pe
 from sokuhou import styleloop as sl
 
@@ -362,6 +363,53 @@ class Production(unittest.TestCase):
         self.assertTrue(ok)
         e = sl.load_rewrites("yorokobu")
         self.assertEqual([(x["from"], x["to"], x["prev"]) for x in e], [("ギフトプレゼントの選び方", "贈り物の選び方と相場", "贈り物の選び方")])
+
+
+CARD_PAGE = """<html><head><title>贈り物の選び方 | よろこぶプレゼント</title></head><body><main><h1>贈り物の選び方</h1>
+<p>三千円前後で、職場で分けやすい個包装の品を選ぶと、受け取る側も困りません。</p>
+<ul class="items"><li class="item" data-code="x:1" data-name="【送料無料】ロールクッキー 40本 福岡 菓子店 ギフト 個包装 詰め合わせ スイーツ"><a class="item-img" href="https://hb.afl.rakuten.co.jp/hgc/x?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshop%2Fa%2F" title="【送料無料】ロールクッキー 40本 福岡 菓子店"><img src="https://thumbnail.image.rakuten.co.jp/@0_mall/shop/a.jpg" alt="ロールクッキー 40本 福岡 菓子店 ギフト"></a><div class="item-body"><b>発酵バターを使った生地でクリームを巻いた、福岡の菓子店のロールクッキーです。</b><span>1,500円</span></div></li></ul>
+<table><tr><th>商品</th><td>福岡の菓子店のロールクッキー40本入り 税込み1,500円 送料無料</td></tr></table>
+<p>贈る前に、日持ちと個数を確かめておきます。</p></main></body></html>"""
+
+
+class ShopData(unittest.TestCase):
+    """The shops' data (product titles, shop titles, descriptions, prices, addresses, images) is not read for style, not sent to the judge or the editor, and never stored."""
+
+    def test_cards_and_tables_are_cut_out_before_anything_reads_the_page(self):
+        stripped = nj.strip_cards(CARD_PAGE)
+        for gone in ("ロールクッキー", "1,500円", "rakuten", "福岡"):
+            self.assertNotIn(gone, stripped)
+        self.assertIn("三千円前後で", stripped)
+        self.assertIn("贈る前に、日持ちと個数を確かめておきます。", stripped)
+        self.assertEqual(nj.for_reading(CARD_PAGE, "minna"), CARD_PAGE)                         # only yorokobu has the shops' cards
+
+    def test_the_editor_the_judge_and_the_style_check_never_see_a_product_card(self):
+        texts = [u.text for u in pe.page_units(CARD_PAGE, "yorokobu")]
+        self.assertTrue(texts)
+        self.assertFalse(any("ロールクッキー" in t or "1,500円" in t for t in texts))
+        prompt = pe.build_prompt("yorokobu", "gift/x/index.html", pe.page_units(CARD_PAGE, "yorokobu"))
+        self.assertNotIn("ロールクッキー", prompt)
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "gift" / "x" / "index.html"
+            f.parent.mkdir(parents=True)
+            f.write_text(CARD_PAGE, encoding="utf-8")
+            units = sl.extract_units(Path(d), "yorokobu")
+            self.assertFalse(any("ロールクッキー" in t for t in units))
+            self.assertFalse(any("ロールクッキー" in h.sentence for h in nj.check_file(f, "yorokobu")))
+
+    def test_a_product_article_is_not_page_edited_and_a_shop_address_is_never_put_into_the_dictionary(self):
+        self.assertTrue(pe.NOT_EDITED["yorokobu"].search("pick/bruno-lid-mug/index.html"))
+        self.assertFalse(pe.NOT_EDITED["yorokobu"].search("guide/ochugen/index.html"))
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "DATA", Path(d) / "style"):
+            ok, why = sl.add_entry("yorokobu", "https://item.rakuten.co.jp/shop/a/ を見る", "商品を見る", force=True)
+            self.assertFalse(ok)
+            self.assertEqual(sl.load_rewrites("yorokobu"), [])
+
+    def test_the_stored_data_has_no_shop_address_or_image(self):
+        for sub in ("judged", "edited", "rewrites"):
+            for f in (sl.DATA / sub).glob("*.json"):
+                self.assertFalse(sl.SHOP_URL.search(f.read_text(encoding="utf-8")), f"{f.name}: a shop address or image is stored")
+        self.assertFalse(sl.SHOP_URL.search((sl.DATA / "examples.json").read_text(encoding="utf-8")))
 
 
 class AcceptedDoc(unittest.TestCase):
