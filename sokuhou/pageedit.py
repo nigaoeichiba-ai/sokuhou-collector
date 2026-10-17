@@ -370,7 +370,21 @@ def edit_page(site: str, rel: str, raw: str, runner=None, today: str | None = No
 NOT_EDITED = {"yorokobu": re.compile(r"^(?:picks|ranking|compare|ask|budget)/")}
 
 
-def next_pages(site: str, build: Path, n: int) -> list[tuple[str, str]]:
+LIVE = {"yorokobu": "https://yorokobu-present.com", "kuma": "https://kuma-sokuho.com", "saichin": "https://saichin-sokuho.com", "minna": "https://minna-no-illust.com"}       # atomou: behind a password
+
+
+def fetch_live(site: str, rel: str) -> str:
+    """The page as visitors get it (already with the dictionary of the last deploy).  A local build made without the shops' data shows sample products, so the editor reads this instead."""
+    import urllib.request
+    if site not in LIVE:
+        raise RuntimeError(f"{site} has no public site to read")
+    url = LIVE[site] + "/" + (rel[:-len("index.html")] if rel.endswith("index.html") else rel)
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (editing our own site)"})
+    with urllib.request.urlopen(req, timeout=20) as r:
+        return r.read().decode("utf-8", errors="replace")
+
+
+def next_pages(site: str, build: Path, n: int, fetch=None) -> list[tuple[str, str]]:
     """The next pages to edit: editorial pages (several editable paragraphs) never edited, or whose text changed since; oldest first."""
     done = load_edited(site)
     cand = []
@@ -383,10 +397,25 @@ def next_pages(site: str, build: Path, n: int) -> list[tuple[str, str]]:
         body = [u for u in units if u.editable and u.kind in ("para", "item") and len(u.text) >= 30]
         if len(body) < 3:
             continue
-        h = content_hash(units)
         prev = done.get(rel)
-        if prev and prev.get("hash") == h:
+        if not fetch and prev and prev.get("hash") == content_hash(units):
             continue
-        cand.append((prev.get("date", "") if prev else "", -len(body), rel, raw))
-    cand.sort()
-    return [(rel, raw) for _, _, rel, raw in cand[:n]]
+        cand.append((prev.get("date", "") if prev else "", -len(body), rel, raw, prev))
+    cand.sort(key=lambda c: c[:3])
+    if not fetch:
+        return [(rel, raw) for _, _, rel, raw, _ in cand[:n]]
+    out = []
+    for _, _, rel, _, prev in cand:                              # the production page decides: not deployed (yet) or not readable = skipped, not guessed
+        if len(out) >= n:
+            break
+        try:
+            live = fetch(site, rel)
+        except Exception:
+            continue
+        units = page_units(live)
+        if len([u for u in units if u.editable and u.kind in ("para", "item") and len(u.text) >= 30]) < 3:
+            continue
+        if prev and prev.get("hash") == content_hash(units):
+            continue
+        out.append((rel, live))
+    return out
