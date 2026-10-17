@@ -60,9 +60,9 @@ class StoreTest(unittest.TestCase):
             self.assertFalse((Path(td) / "yorokobu_yahoo.json").exists())
 
     def test_the_four_files_are_ignored_by_git_and_not_tracked(self):
-        ignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
+        ignore = (ROOT / "data" / ".gitignore").read_text(encoding="utf-8")         # (data/ is on the auto-push's list of folders; the top .gitignore is not)
         for n in privatedata.FILES:
-            self.assertIn(f"data/{n}", ignore)
+            self.assertIn(n, ignore.split())
         out = subprocess.run(["git", "ls-files", "data"], cwd=ROOT, capture_output=True, text=True).stdout
         for n in privatedata.FILES:
             self.assertNotIn(f"data/{n}", out, "the API data is in the public repository")
