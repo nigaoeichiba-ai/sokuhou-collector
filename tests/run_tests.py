@@ -17,6 +17,8 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:   # `python tests/run_tests.py` puts tests/ first on the path, not the repository root: "from tests import ..." needs the root (CI failed on this, 2026-10-17)
+    sys.path.insert(0, str(ROOT))
 OWNED = {"atomou": ["test_atomou*"], "yorokobu": ["test_yorokobu*"], "minna": ["test_minna*"], "kuma": ["test_kuma*", "test_*_kuma", "test_otsu_bear*"]}
 # the only skips CI accepts: the browser tests that are run on the owner's PC (CI measures the real build with sokuhou.layoutcheck instead)
 ALLOWED_SKIPS = ("browser checks run locally",)
