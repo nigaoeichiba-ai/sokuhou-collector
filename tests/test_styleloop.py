@@ -147,10 +147,11 @@ class Dictionary(unittest.TestCase):
             (site / "privacy").mkdir()
             (site / "privacy" / "index.html").write_text(PAGE, encoding="utf-8")
             hits = sl.apply_dir(site, "yorokobu")
-            self.assertGreaterEqual(sum(hits.values()), 5)
+            self.assertGreaterEqual(hits["replacements"], 5)
+            self.assertEqual((hits["pages"], hits["skipped_entries"], hits["skipped_files"]), (1, 0, 0))
             self.assertIn("注目の商品", (site / "index.html").read_text(encoding="utf-8"))
             self.assertEqual((site / "privacy" / "index.html").read_text(encoding="utf-8"), PAGE)      # legal page untouched
-            self.assertEqual(sl.apply_dir(site, "minna"), {})                                          # another site's dictionary is not used
+            self.assertEqual(sl.apply_dir(site, "minna")["replacements"], 0)                                          # another site's dictionary is not used
 
     def test_add_refuses_what_the_checks_refuse(self):
         with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "DATA", Path(d) / "style"):
@@ -158,6 +159,119 @@ class Dictionary(unittest.TestCase):
             self.assertFalse(ok)
             self.assertEqual(sl.load_rewrites("minna"), [])
             self.assertTrue(sl.add_entry("minna", "価格は3,000円から", "価格は3,500円から", force=True)[0])      # an owner's own correction may be forced
+
+
+class FailOpen(unittest.TestCase):
+    """The deploy step: whatever is wrong with the dictionary, the page keeps its own text and the run does not fail."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.patch = mock.patch.object(sl, "DATA", Path(self.tmp.name) / "style")
+        self.patch.start()
+        self.addCleanup(self.patch.stop)
+        self.site = Path(self.tmp.name) / "site"
+        self.site.mkdir()
+        (self.site / "index.html").write_text(PAGE, encoding="utf-8")
+
+    def run_cli(self, *extra):
+        import contextlib, io
+        with contextlib.redirect_stdout(io.StringIO()) as out:
+            rc = sl.main(["apply", str(self.site), "--site", "yorokobu", *extra])
+        return rc, out.getvalue()
+
+    def test_an_empty_or_missing_dictionary_does_nothing(self):
+        rc, out = self.run_cli("--fail-open")
+        self.assertEqual(rc, 0)
+        self.assertEqual((self.site / "index.html").read_text(encoding="utf-8"), PAGE)
+        self.assertIn("dictionary lines=0", out)
+
+    def test_a_few_lines_are_applied_and_counted(self):
+        sl.add_entry("yorokobu", "詳しく読む", "注目の商品", force=True)
+        rc, out = self.run_cli("--fail-open")
+        self.assertEqual(rc, 0)
+        self.assertIn("dictionary lines=1 usable=1 skipped=0 pages changed=1", out)
+        self.assertNotIn("注目の商品", out)                                                  # the log carries counts, never the wording
+
+    def test_a_line_that_breaks_a_check_today_is_left_out_with_a_warning(self):
+        f = sl.rewrites_path("yorokobu")
+        f.parent.mkdir(parents=True)
+        f.write_text(json.dumps({"entries": [{"from": "価格は3,000円から", "to": "価格は3,500円から", "kind": "heading", "added": "2026-10-17", "by": "codex"}]}, ensure_ascii=False), encoding="utf-8")
+        (self.site / "index.html").write_text("<h1>価格は3,000円から</h1>", encoding="utf-8")
+        rc, out = self.run_cli("--fail-open")
+        self.assertEqual(rc, 0)
+        self.assertEqual((self.site / "index.html").read_text(encoding="utf-8"), "<h1>価格は3,000円から</h1>")
+        self.assertIn("::warning::styleloop", out)
+        self.assertIn("skipped=1", out)
+
+    def test_a_broken_dictionary_file_changes_nothing_and_does_not_fail_the_run(self):
+        f = sl.rewrites_path("yorokobu")
+        f.parent.mkdir(parents=True)
+        f.write_text("{ not json", encoding="utf-8")
+        rc, out = self.run_cli("--fail-open")
+        self.assertEqual(rc, 0)
+        self.assertIn("not valid JSON", out)
+        self.assertEqual((self.site / "index.html").read_text(encoding="utf-8"), PAGE)
+
+    def test_a_rewording_text_is_escaped_so_it_can_never_become_markup(self):
+        sl.add_entry("yorokobu", "詳しく読む", "<b>注目</b>の商品", force=True)
+        self.run_cli("--fail-open")
+        out = (self.site / "index.html").read_text(encoding="utf-8")
+        self.assertIn("&lt;b&gt;注目&lt;/b&gt;の商品", out)
+        self.assertEqual(sl.TAGS.findall(out), sl.TAGS.findall(PAGE))
+
+    def test_the_structure_guard_keeps_a_page_whose_markup_or_link_would_change(self):
+        sl.add_entry("yorokobu", "詳しく読む", "注目の商品", force=True)
+        for broken in (PAGE.replace("</h1>", "</h1><hr>").replace("注目の商品", "注目の商品"), PAGE.replace('href="/a/"', 'href="/evil/"')):
+            with mock.patch.object(sl.Rewriter, "page", return_value=broken):
+                rc, out = self.run_cli("--fail-open")
+            self.assertEqual(rc, 0)
+            self.assertEqual((self.site / "index.html").read_text(encoding="utf-8"), PAGE)
+            self.assertIn("left alone=1", out)
+
+    def test_an_exception_inside_the_step_is_a_warning_with_fail_open(self):
+        with mock.patch.object(sl, "apply_dir", side_effect=RuntimeError("boom")):
+            rc, out = self.run_cli("--fail-open")
+            self.assertEqual(rc, 0)
+            self.assertIn("::warning::", out)
+            rc2, _ = self.run_cli()
+            self.assertEqual(rc2, 1)                                                       # without the flag a failure is a failure (for the keeper's own runs)
+
+    def test_naturaljp_reads_the_published_text_so_a_fixed_sentence_is_no_longer_reported(self):
+        from sokuhou import naturaljp as nj
+        nj._published_rw.clear()
+        page = "<html><body><p>それでは、さっそく見ていきましょう。</p><p>ふつうの文です。</p></body></html>"
+        (self.site / "page.html").write_text(page, encoding="utf-8")
+        before = [h.rule for h in nj.check_file(self.site / "page.html", "yorokobu")]
+        self.assertIn("lets_go", before)
+        sl.add_entry("yorokobu", "それでは、さっそく見ていきましょう。", "まず予算を決めます。", force=True)
+        nj._published_rw.clear()
+        after = [h.rule for h in nj.check_file(self.site / "page.html", "yorokobu")]
+        self.assertNotIn("lets_go", after)
+        nj._published_rw.clear()
+
+
+class DeployWiring(unittest.TestCase):
+    """The step in .github/workflows/deploy.yml: after the build, before the checks that can stop a deploy, and fail-open."""
+
+    def lines(self):
+        return (sl.ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8").splitlines()
+
+    def test_the_dictionary_step_sits_between_the_build_and_the_site_check(self):
+        names = [l.strip() for l in self.lines() if l.strip().startswith("- name:")]
+        i = next(k for k, n in enumerate(names) if n.startswith("- name: Natural-wording dictionary"))
+        self.assertTrue(names[i - 1].startswith("- name: Build (release)"), names[i - 1])
+        self.assertTrue(names[i + 1].startswith("- name: Site check"), names[i + 1])
+        self.assertTrue(names[i + 2].startswith("- name: Phone-width layout check"), names[i + 2])
+
+    def test_the_step_is_fail_open_and_runs_only_when_the_site_is_deployed(self):
+        lines = self.lines()
+        i = next(k for k, l in enumerate(lines) if "Natural-wording dictionary" in l)
+        block = chr(10).join(lines[i:i + 3])
+        self.assertIn("steps.gate.outputs.go == 'true'", block)
+        self.assertIn("python -m sokuhou.styleloop apply release --site ${{ matrix.site }} --fail-open", block)
+        self.assertNotIn("continue-on-error", block)
+        self.assertNotIn(": ", lines[i].split("name:", 1)[1])                       # a ': ' in a plain YAML scalar would break the whole workflow
 
 
 class Judge(unittest.TestCase):
