@@ -613,7 +613,7 @@ def area_page(d: dict, slug: str, rname: str, shorts: list[str], cfg: dict, prev
 <ul class="pref-nav">{others}</ul>
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。単純平均は、このサイトで計算した参考値です。</p>"""
     return finish(layout(cfg, preview, path=f"/area/{slug}/", title=f"{rname}({kinds})の最低賃金一覧と順位({d['label']})",
-                         description=f"{rname}{kinds}の最低賃金を、高い順に一覧にします。最高は{hi['name']}の{yen(hi['amount'])}、最低は{lo['name']}の{yen(lo['amount'])}。全国順位・引上げ額・発効日も掲載しています。", body=body), d)
+                         description=f"{rname}{kinds}の最低賃金を高い順に並べました。最高は{hi['name']}の{yen(hi['amount'])}、最低は{lo['name']}の{yen(lo['amount'])}。全国順位・引上げ額・発効日も掲載しています。", body=body), d)
 
 
 WAGE_RANKINGS = {
@@ -753,7 +753,7 @@ def calendar_page(d: dict, cfg: dict, preview: bool) -> str:
 {sections}
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。発効日が決まる仕組みは、<a href="/guide/how-decided/">最低賃金はどう決まる?</a>をご覧ください。</p>"""
     return finish(layout(cfg, preview, path="/calendar/", title=f"最低賃金の発効日カレンダー({d['label']}) 日付順の一覧",
-                         description=f"{d['label']}の最低賃金の発効日を、日付順に一覧にします。{len(days)}日に分かれて、都道府県ごとに順次発効します。", body=body), d)
+                         description=f"{d['label']}の最低賃金の発効日を日付順に並べました。{len(days)}日に分かれて、都道府県ごとに順次発効します。", body=body), d)
 
 
 CHECK_EXCLUDED = [
@@ -775,7 +775,7 @@ def check_page(d: dict, cfg: dict, preview: bool) -> str:
     )
     body = f"""{crumbs([("全国", "/"), ("差額チェッカー", None)])}
 <h1>最低賃金の差額チェッカー</h1>
-<p class="lead">時給・日給・月給から、最低賃金を下回っていないかを確かめ、下回っているときは、1か月・1年でいくら足りないかを計算します。手当の除外と、新しい額への改定(発効日)も反映します。</p>
+<p class="lead">時給・日給・月給から、最低賃金を下回っていないかを確かめます。下回っているときは、1か月・1年でいくら足りないかを計算します。手当の除外も、新しい額への改定(発効日)も反映します。</p>
 <form id="chk-form" class="box js-only" hidden onsubmit="return false">
 <div class="form-grid"><label>勤務地の都道府県<select id="chk-pref" aria-label="勤務地の都道府県"></select></label></div>
 <fieldset><legend>賃金の形</legend>
@@ -801,9 +801,9 @@ def check_page(d: dict, cfg: dict, preview: bool) -> str:
 <h2>使い方</h2>
 <ol>
 <li>勤務地の都道府県と、賃金の形(時給・日給・月給)を選びます。</li>
-<li>給与明細の金額と、1日の所定労働時間、年間の所定労働日数を入れます。</li>
-<li>月給・日給の場合は、<a href="/guide/excluded/">最低賃金の対象にならない手当</a>(通勤手当、残業代など)を、それぞれの欄に入れます。対象にならない分は、計算から除かれます。</li>
-<li>結果の表で、最低賃金との差と、足りない場合の月額・年額を確かめます。改定前の額と、改定後の額(発効日以降)を、並べて表示します。</li>
+<li>給与明細の金額、1日の所定労働時間、年間の所定労働日数を入れます。</li>
+<li>月給・日給の場合は、<a href="/guide/excluded/">最低賃金の対象にならない手当</a>(通勤手当、残業代など)があれば、それぞれの欄に入れます。対象にならない分は、計算から除かれます。</li>
+<li>結果の表で、最低賃金との差と、足りない場合の月額・年額を確かめます。改定前の額と改定後の額(発効日以降)が並んで表示されます。</li>
 </ol>
 
 <h2>計算の考え方</h2>
@@ -823,7 +823,7 @@ def check_page(d: dict, cfg: dict, preview: bool) -> str:
 <script type="application/json" id="data">{data}</script>"""
     return finish(layout(
         cfg, preview, path="/check/", title=f"最低賃金の差額チェッカー 時給・日給・月給から不足額を計算 | {cfg['site_name']}",
-        description="時給・日給・月給から、最低賃金を下回っていないかを確かめ、足りない額を1か月・1年で計算します。手当の除外と、新しい額への改定にも対応。入力は送信されません。",
+        description="時給・日給・月給から、最低賃金を下回っていないかを確かめ、足りない額を1か月・1年で計算します。手当の除外にも新しい額への改定にも対応。入力は送信されません。",
         body=body,
     ), d)
 
@@ -860,13 +860,13 @@ def history_page(d: dict, cfg: dict, preview: bool) -> str:
     )
     body = f"""{crumbs([("全国", "/"), ("全国の推移", None)])}
 <h1>最低賃金の推移 {esc(first['label'])}〜{esc(last['label'])}</h1>
-<p class="lead">全国加重平均は、{esc(first['label'])}の{yen(round(first['avg']))}から、{esc(last['label'])}の{yen(round(last['avg']))}になりました。年度ごとの全国加重平均と、最高額・最低額の推移です。</p>
+<p class="lead">全国加重平均は、{esc(first['label'])}の{yen(round(first['avg']))}から、{esc(last['label'])}の{yen(round(last['avg']))}になりました。年度ごとの全国加重平均と最高額・最低額の推移です。</p>
 <h2>全国加重平均の推移</h2>
 {chart}
 <h2>年度別の一覧</h2>
 <div class="tablewrap"><table><thead><tr><th>年度</th><th>全国加重平均</th><th>前年度から</th><th>最高額</th><th>最低額</th></tr></thead><tbody>{rows}</tbody></table></div>
 {pref_section}<p class="notice">この表のデータは、<a href="/data/">CSV・JSONでダウンロード</a>できます。引用するときは、<a href="/cite/">引用のしかた</a>をご覧ください。</p>
-<p class="notice">データの取得日: {jp_date(d['fetched_date'])}。出典の表にある各年度の額をもとに、このサイトで並べ替えました。グラフの縦軸は0から始まっていません。</p>"""
+<p class="notice">データの取得日: {jp_date(d['fetched_date'])}。出典の表にある各年度の額を、このサイトで並べ替えました。グラフの縦軸は0から始まっていません。</p>"""
     return finish(layout(cfg, preview, path="/history/", title=f"最低賃金の推移 全国加重平均の年度別一覧({first['label']}〜{last['label']})",
                          description=f"{first['label']}から{last['label']}までの全国加重平均の最低賃金の推移を、グラフと年度別の表でまとめます。最高額・最低額も掲載。", body=body), d)
 
@@ -893,7 +893,7 @@ def data_page(d: dict, cfg: dict, preview: bool) -> str:
 <h2>ダウンロード</h2>
 <ul class="link-list">
 <li><a href="/data/{dataset.CSV_NAME}" download>CSV({kb(csv_b)})</a>: Excel やスプレッドシートで開けます(文字コードは UTF-8)。</li>
-<li><a href="/data/{dataset.JSON_NAME}" download>JSON({kb(json_b)})</a>: 出典・加工の説明・全国加重平均と、全データが入っています。</li>
+<li><a href="/data/{dataset.JSON_NAME}" download>JSON({kb(json_b)})</a>: 出典、加工の説明、全国加重平均、全データが入っています。</li>
 </ul>
 <p>どちらも同じ内容で、{n_rows:,}行(47都道府県 × {last['fy'] - first['fy'] + 1}年度)です。データの取得日は、{jp_date(d['fetched_date'])}です。</p>
 <h2>列の意味</h2>
@@ -906,7 +906,7 @@ def data_page(d: dict, cfg: dict, preview: bool) -> str:
 <h2>出典と使うときの決まり</h2>
 <p>出典は、{esc(SOURCE_LABEL)}(<a href="{esc(d['source_page'])}" rel="noopener" target="_blank">厚生労働省のページ</a>)です。厚生労働省のページの内容は、特に断りがなければ、<a href="{dataset.PDL_URL}" rel="noopener" target="_blank">公共データ利用規約(第1.0版・PDL1.0)</a>のもとで使えます。使うときは、次の3つを守ってください。</p>
 <ol>
-<li>出典を書く(サイトの名前と、ページのURL)。</li>
+<li>出典を書く(サイトの名前とページのURL)。</li>
 <li>編集・加工したことと、加工した人(このサイトの運営者)を、出典とは別に書く。</li>
 <li>国が作ったものであるかのように見せない。</li>
 </ol>
@@ -927,7 +927,7 @@ def cite_page(d: dict, cfg: dict, preview: bool) -> str:
     example_short = f"出典:{cfg['site_name']}({base}/)。厚生労働省の公表資料を加工して作成。"
     body = f"""{crumbs([("全国", "/"), ("引用のしかた", None)])}
 <h1>このサイトの数字の出どころと、引用のしかた</h1>
-<p class="lead">{name}の数字は、すべて厚生労働省の公表資料にもとづいています。ここでは、数字の出どころ、このサイトで計算している数字、記事やブログなどで使うときの書き方を説明します。</p>
+<p class="lead">{name}の数字は、すべて厚生労働省の公表資料にもとづいています。出どころ、このサイトで計算している数字、記事やブログなどで使うときの書き方は、下に書きました。</p>
 <h2>数字の出どころ</h2>
 <ul>
 <li>各都道府県の最低賃金と発効日、全国加重平均: <a href="{esc(d['source_page'])}" rel="noopener" target="_blank">厚生労働省「地域別最低賃金の全国一覧」</a>の、「平成14年度から令和8年度までの地域別最低賃金改定状況」(Excel)。</li>
@@ -945,7 +945,7 @@ def cite_page(d: dict, cfg: dict, preview: bool) -> str:
 <h2>基準日と更新</h2>
 <p>データの取得日は、各ページの下に書いています(いまは{jp_date(d['fetched_date'])})。毎日1回、厚生労働省の公表を取得して、ページを作り直しています。{esc(d['label'])}の額は、発効日より前でも、決まった新しい額です。発効日の前は、その県では1つ前の年度の額が適用されています。</p>
 <h2>使うときに書くこと</h2>
-<p>厚生労働省のページの内容は、特に断りがなければ、<a href="{dataset.PDL_URL}" rel="noopener" target="_blank">公共データ利用規約(第1.0版・PDL1.0)</a>のもとで使えます。このサイトの表やデータを使うときも、次の3つを書いてください。</p>
+<p>厚生労働省のページの内容は、特に断りがなければ、<a href="{dataset.PDL_URL}" rel="noopener" target="_blank">公共データ利用規約(第1.0版・PDL1.0)</a>のもとで使えます。このサイトの表やデータを使うときも次の3つを書いてください。</p>
 <ol>
 <li>出典(サイトの名前とページのURL)。</li>
 <li>編集・加工したことと、加工した人。出典とは別に書きます。</li>
@@ -956,7 +956,7 @@ def cite_page(d: dict, cfg: dict, preview: bool) -> str:
 <p class="quote">{esc(example_full)}</p>
 <p><strong>短い書き方</strong>(スライドの端やSNSに):</p>
 <p class="quote">{esc(example_short)}</p>
-<p>数字だけでなく、<a href="/data/">CSV・JSONのデータ</a>も、同じ決まりで使えます。</p>
+<p>数字だけでなく<a href="/data/">CSV・JSONのデータ</a>も同じ決まりで使えます。</p>
 <h2>誤りを見つけたとき</h2>
 <p>数字や説明に誤りを見つけたときは、<a href="/contact/">お問い合わせ</a>からご連絡ください。確認して、直します。</p>
 <p class="notice">このサイトは、厚生労働省が運営しているものではありません。内容の確認日: {jp_date(d['fetched_date'])}。</p>"""
@@ -1057,7 +1057,7 @@ def contact_page(d: dict, cfg: dict, preview: bool) -> str:
     body = contact_body(cfg, "個別の労働条件や、賃金に関する法律相談にはお答えできません。お近くの都道府県労働局や労働基準監督署へご相談ください。",
                         message_hint="例: ○○県の最低賃金が、公表されている額と違っています。")
     return finish(layout(cfg, preview, path="/contact/", title=f"お問い合わせ | {cfg['site_name']}",
-                         description="最低賃金速報へのお問い合わせ先です。データの誤りのご指摘、ご意見・ご要望を、フォームで受け付けています。", body=body, scripts=False), d)
+                         description="最低賃金速報へのお問い合わせ先です。データの誤りのご指摘やご意見・ご要望は、フォームで受け付けています。", body=body, scripts=False), d)
 
 
 def not_found_page(d: dict, cfg: dict, preview: bool) -> str:

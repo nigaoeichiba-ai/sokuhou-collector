@@ -73,7 +73,7 @@ class AreaAndHistoryPagesTest(SiteFixture):
         page = self.read("area/kanto/index.html")
         self.assertIn("<title>関東(1都6県)の最低賃金一覧と順位(", page)
         self.assertIn("<h1>関東1都6県の最低賃金 一覧と順位(", page)
-        self.assertIn("関東1都6県の最低賃金を、高い順に一覧にします", re.search(r'<meta name="description" content="([^"]*)"', page).group(1))
+        self.assertIn("関東1都6県の最低賃金を高い順に並べました", re.search(r'<meta name="description" content="([^"]*)"', page).group(1))
         table = re.search(r"<th>都道府県</th><th>最低賃金</th><th>全国順位</th>.*?</table>", page, re.S).group(0)
         rows = re.findall(r'<tr><td><a href="/([a-z]+)/">[^<]*</a></td><td>[^<]*</td><td>(\d+)位</td>', table)
         by_slug = {r["slug"]: r["rank"] for r in self.d["rows"]}
@@ -165,7 +165,7 @@ class DataVerificationTest(SiteFixture):
         self.assertIn("<h2>データの確認</h2>", page)
         self.assertIn("2026年10月15日: 令和8年度の47都道府県の最低賃金", page)
         self.assertIn("47都道府県すべて一致", page)
-        self.assertIn("1つでも満たさないときは公開しません", page)
+        self.assertIn("1つでも満たさなければ公開しません", page)
         data = json.loads((self.out / "data" / "minimum-wage.json").read_text(encoding="utf-8"))
         self.assertEqual(data["verification"]["checks"][0]["date"], "2026-10-15")
         self.assertIn("公開しません", data["verification"]["every_build"])
