@@ -406,7 +406,7 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
     fav = fav_button(it["code"], line or "気になる品", it["price"], url)
     words = (f'<h3>{esc(line)}</h3>' if own else f'<p class="item-blurb">{esc(line)}</p>') if line else ""
     img = thumb(it["image"], 128)                                                                     # the picture as the API gives it (128px), shown by CSS at 128px: never enlarged
-    return (f'<li class="item" {attrs}>{badge}{fav}<a class="item-img" href="{esc(href)}" rel="{rel}" target="_blank">'
+    return (f'<li class="item" {attrs}><div class="item-top">{badge}{fav}</div><a class="item-img" href="{esc(href)}" rel="{rel}" target="_blank">'
             f'<img src="{esc(img)}" alt="{esc(line or "楽天市場の商品ページ")}" width="128" height="128" {EAGER if eager else LAZY}></a>'
             f'<div class="item-body">{words}'
             f'<p class="price">{yen(it["price"])}</p><p class="meta">{"".join(bits)}</p>{note}'
