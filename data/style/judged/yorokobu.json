@@ -1,0 +1,1813 @@
+{
+"00358963a596": {
+"at": "2026-10-17",
+"better": "派手さはなくても毎日机のそばに置ける贈り物です。",
+"confidence": "high",
+"kind": "sentence",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "派手な驚きはなくても毎日の机のそばにそっと残る贈り物です。",
+"why": "「派手な驚き」が不自然"
+},
+"0061461a5ee4": {
+"at": "2026-10-17",
+"natural": true,
+"text": "写真立て"
+},
+"0124d7d31cbe": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Amazonで同じ商品を探す"
+},
+"024e0e86338d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "この記事について"
+},
+"037db1a16cab": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.29"
+},
+"0548f0bb4141": {
+"at": "2026-10-17",
+"better": "入学祝いのメッセージは、入学式の2〜3週間前までに届く贈り物に添えると、新生活の準備を応援する気持ちが伝わりやすくなります。新しい環境への期待と少しの不安に寄り添い、子どもにも家族にも読みやすい言葉にします。",
+"confidence": "high",
+"kind": "description",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "入学祝いのメッセージは、入学式の2〜3週間前までに届く贈り物へ添えると、準備の応援として受け取ってもらいやすくなります。新しい環境への期待と少しの不安に寄り添い、子どもにも家族にも読みやすい言葉にします。",
+"why": "「贈り物へ添える」「準備の応援として受け取る」が不自然です"
+},
+"055e922cbfd8": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.64"
+},
+"05de1cab5f00": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.32"
+},
+"05ed8846589c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "よくある質問"
+},
+"0701e0d52fcb": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.58"
+},
+"070b875a6a26": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Amazonで見る"
+},
+"07b698462680": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.23"
+},
+"07cb31468df9": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.39"
+},
+"08ba2d24d56f": {
+"at": "2026-10-17",
+"natural": true,
+"text": "雛祭り・端午の節句"
+},
+"090a2613ee3d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "楽天市場で見る"
+},
+"09a6ca7392ec": {
+"at": "2026-10-17",
+"natural": true,
+"text": "条件で絞って比べる"
+},
+"0a3a764ffca6": {
+"at": "2026-10-17",
+"natural": true,
+"text": "このサイトについて"
+},
+"0aa0a551472d": {
+"at": "2026-10-17",
+"better": "祖母の誕生日に贈るなら、箱を開けた瞬間の華やかさとその後の扱いやすさを両方考えたいです。花、和菓子、軽いストールは部屋で過ごす時間や近所への外出に合い、孫からの気持ちも素直に届きます。写真を撮る予定があるなら顔映りのよい色を選びます。",
+"confidence": "high",
+"kind": "description",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "祖母の誕生日に贈るなら、箱を開けた瞬間の華やかさとその後の扱いやすさを両方見たいです。花、和菓子、軽いストールは、部屋で過ごす時間や近所への外出に寄り添い、孫からの気持ちも素直に届きます。写真を撮る予定があるなら、色が顔",
+"why": "文が途中で切れ、「寄り添い」も抽象的です"
+},
+"0b93717c542b": {
+"at": "2026-10-17",
+"better": "文具セットなら新学期の筆箱が少し楽しみになり、図鑑や腕時計は「自分で調べる」「時間を見る」きっかけになります。",
+"confidence": "high",
+"kind": "sentence",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "文具セットなら新学期の筆箱が少し楽しみになり、図鑑や腕時計は「自分で調べる」「時間を見る」年頃の背中をそっと押せます。",
+"why": "「年頃の背中を押す」が不自然"
+},
+"0caf62cf76e2": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.51"
+},
+"0e9ea7f65df0": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ぬいぐるみ・人形"
+},
+"0fa8ddbcfd98": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.71"
+},
+"0fe549333288": {
+"at": "2026-10-17",
+"better": "種類の違う人気商品4点",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "種類の違う人気の4点",
+"why": "「人気の4点」では何の4点か分かりにくい"
+},
+"0fe7e3239b8e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.83"
+},
+"0ff433033727": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.94"
+},
+"101022579eb8": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.10"
+},
+"108f1aa17cd0": {
+"at": "2026-10-17",
+"better": "送別・異動で贈るほかの相手",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"status": "accepted",
+"text": "送別・異動の贈り物のほかの相手",
+"why": "「の」が重なっています"
+},
+"117a602a0be7": {
+"at": "2026-10-17",
+"natural": true,
+"text": "成人祝いのメッセージ"
+},
+"1188728625cd": {
+"at": "2026-10-17",
+"natural": true,
+"text": "気をつけたいこと"
+},
+"12704d898b33": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.20"
+},
+"13179cedcdac": {
+"at": "2026-10-17",
+"natural": true,
+"text": "結婚祝いのメッセージ"
+},
+"13b3660abb15": {
+"at": "2026-10-17",
+"natural": true,
+"text": "出産祝いのメッセージ"
+},
+"140d1e680d7f": {
+"at": "2026-10-17",
+"natural": true,
+"text": "就職・入社祝いのメッセージ"
+},
+"156eafa8a712": {
+"at": "2026-10-17",
+"natural": true,
+"text": "相手を選んでおすすめを見る"
+},
+"1579a8d1084f": {
+"at": "2026-10-17",
+"natural": true,
+"text": "この表の点数のつけ方"
+},
+"15bdba925314": {
+"at": "2026-10-17",
+"better": "小学生へのクリスマスプレゼントは、包みを開けたあと冬休みにすぐ使えるものが似合います。文具セットなら新学期に使うのが少し楽しみになり、図鑑や腕時計は「自分で調べる」「時間を見る」年頃に合います。家族でツリーの前に置くなら誰への贈り物か分かるようにしておきます。",
+"confidence": "high",
+"kind": "description",
+"natural": false,
+"problems": [
+"names / quoted words lost: ['クリスマス']"
+],
+"status": "rejected",
+"text": "小学生へのクリスマスは、包みを開けたあと冬休みにすぐ使えるものが似合います。文具セットなら新学期の筆箱が少し楽しみになり、図鑑や腕時計は「自分で調べる」「時間を見る」年頃の背中をそっと押せます。家族でツリーの前に置くなら",
+"why": "文が途中で切れ、「小学生へのクリスマス」も不自然です"
+},
+"1668a638d97d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.77"
+},
+"17d77501a245": {
+"at": "2026-10-17",
+"natural": true,
+"text": "折りたたみ傘"
+},
+"1936241b4523": {
+"at": "2026-10-17",
+"better": "母の日に贈るほかの相手",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"status": "accepted",
+"text": "母の日のほかの相手",
+"why": "贈る相手だと分かる言い方が自然です"
+},
+"19464491a6d3": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.60"
+},
+"1bd966066218": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.67"
+},
+"1bf1182e6ea8": {
+"at": "2026-10-17",
+"natural": true,
+"text": "株式会社クロス・マーケティング「バレンタインデーに関する調査(2026年)」"
+},
+"1bf808fbe349": {
+"at": "2026-10-17",
+"natural": true,
+"text": "楽天市場で探す"
+},
+"1c16b9d2a803": {
+"at": "2026-10-17",
+"natural": true,
+"text": "日程"
+},
+"1c8a61aeef53": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.87"
+},
+"1d0576353b59": {
+"at": "2026-10-17",
+"natural": true,
+"text": "この比較について"
+},
+"1dc268b5486d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "日本酒"
+},
+"1e2237b33b29": {
+"at": "2026-10-17",
+"natural": true,
+"text": "リンツ リンドール 11種類アソートをAmazonで見る"
+},
+"1ed3a55b4ba2": {
+"at": "2026-10-17",
+"natural": true,
+"text": "編集方針"
+},
+"1f1a7e31ee65": {
+"at": "2026-10-17",
+"better": "父の日の贈り物 相手の好みに合わせた選び方",
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"short-text rules find: ['noun_pile_heading']"
+],
+"status": "rejected",
+"text": "父の日の贈り物 好みに寄り添う静かな選び方",
+"why": "「好みに寄り添う静かな選び方」が抽象的です"
+},
+"1f7f8cd75111": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.76"
+},
+"20f1899fab3c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.78"
+},
+"213f514d1a67": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Yahoo!ショッピングで見る"
+},
+"2176c0f9deff": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ほかの世代・性別"
+},
+"21c9a5b71977": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Amazonのプライム感謝祭を見る"
+},
+"276cc78c13b2": {
+"at": "2026-10-17",
+"natural": true,
+"text": "香水・フレグランス"
+},
+"276dbc7ad2f2": {
+"at": "2026-10-17",
+"better": "祖母の長寿祝いは赤い色や年齢を前面に出すより、家族で囲む席を華やかにする贈り物が似合います。",
+"confidence": "high",
+"kind": "sentence",
+"natural": false,
+"status": "accepted",
+"text": "祖母の長寿祝いは赤い色や年齢を前面に出すより、家族で囲む席にそっと華やぎを足す贈り物が似合います。",
+"why": "「華やぎを足す」が不自然"
+},
+"27e0146f82e1": {
+"at": "2026-10-17",
+"natural": true,
+"text": "例: ガーデニングが好きな60代"
+},
+"284588a083b9": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ヨックモック シガール詰め合わせ"
+},
+"2874fcadf7d2": {
+"at": "2026-10-17",
+"natural": true,
+"text": "各種スイーツ・お菓子セット"
+},
+"28c126505a14": {
+"at": "2026-10-17",
+"natural": true,
+"text": "選ぶポイント"
+},
+"28d1e0a41efb": {
+"at": "2026-10-17",
+"natural": true,
+"text": "気になるリストに入れる"
+},
+"28fb990d417d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Amazonで見つけた贈り物"
+},
+"2941dba5f6a6": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.17"
+},
+"296dad2d7230": {
+"at": "2026-10-17",
+"natural": true,
+"text": "お気に入り"
+},
+"29f099f6679a": {
+"at": "2026-10-17",
+"better": "贈り物にするには包装を自分で用意する必要があります。小さな瓶なので薄い紙で包んでカードを添えるだけでも整った印象になります。立派な箱に入った贈り物と比べると贈る側に手間がかかります。この点を知らずに注文すると渡す直前に困ります。",
+"confidence": "high",
+"kind": "sentence",
+"natural": false,
+"status": "accepted",
+"text": "贈り物としては包装を自分で用意する必要があります。小さな瓶なので、薄い紙で包んでカードを添えるだけでも、整った印象になります。立派な箱に入った贈り物と比べると手間は贈る側に回ります。この点を知らずに注文すると渡す直前に困ります。",
+"why": "「手間は贈る側に回る」が不自然"
+},
+"2bf54b78c3f3": {
+"at": "2026-10-17",
+"natural": true,
+"text": "寝具"
+},
+"2c0ade9ea29e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.27"
+},
+"2c98291ec252": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.14"
+},
+"2ceeb0577df9": {
+"at": "2026-10-17",
+"natural": true,
+"text": "バッグ・小物・ブランド雑貨"
+},
+"2d2fbfe601dd": {
+"at": "2026-10-17",
+"natural": true,
+"text": "入学祝いのメッセージ"
+},
+"2fe09561a8b3": {
+"at": "2026-10-17",
+"natural": true,
+"text": "インテリア小物・置物"
+},
+"31ceb585a70e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "母の日のメッセージ"
+},
+"323d35b18d86": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.79"
+},
+"32c56605501d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.62"
+},
+"32d6d463cfe6": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.53"
+},
+"331b093acfda": {
+"at": "2026-10-17",
+"natural": true,
+"text": "紅茶"
+},
+"343404364403": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.92"
+},
+"344da3b958de": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.69"
+},
+"34a1e4f7c3e7": {
+"at": "2026-10-17",
+"natural": true,
+"text": "銀座千疋屋 銀座フルーツクーヘン 8個入"
+},
+"35573a7ba0b6": {
+"at": "2026-10-17",
+"natural": true,
+"text": "メールで送る"
+},
+"361ddb956f5c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "運営者情報"
+},
+"373cc2093d8c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.22"
+},
+"38c1d8814bf8": {
+"at": "2026-10-17",
+"better": "総合点の付け方",
+"confidence": "high",
+"kind": "label",
+"natural": false,
+"status": "accepted",
+"text": "総合点のつけ方",
+"why": "漢字にできる語は漢字にします"
+},
+"38d2a19e1d51": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.55"
+},
+"3abeb7b1a4a7": {
+"at": "2026-10-17",
+"natural": true,
+"text": "メッセージ例文集"
+},
+"3c9892bc7a55": {
+"at": "2026-10-17",
+"natural": true,
+"text": "インテリア・寝具・収納"
+},
+"3d63b022192e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "並べ替え"
+},
+"3d99037f3e62": {
+"at": "2026-10-17",
+"natural": true,
+"text": "編集部の採点ページ"
+},
+"3f091d1e42e9": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビューが高い順"
+},
+"3fe9ac5f05cd": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.75"
+},
+"4311cce5f534": {
+"at": "2026-10-17",
+"natural": true,
+"text": "実質価格が安い順"
+},
+"4431796b9017": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.61"
+},
+"446d0b7d4046": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ホワイトデーのメッセージ"
+},
+"44ff6d3faaff": {
+"at": "2026-10-17",
+"natural": true,
+"text": "お問い合わせ"
+},
+"472b0c51bda2": {
+"at": "2026-10-17",
+"natural": true,
+"text": "銀座千疋屋 銀座フルーツクーヘン 8個入をAmazonで見る"
+},
+"476868990e5d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ヨックモック シガール詰め合わせをAmazonで見る"
+},
+"481a47b9b433": {
+"at": "2026-10-17",
+"natural": true,
+"text": "広告を含みます"
+},
+"48e4f6c3116f": {
+"at": "2026-10-17",
+"natural": true,
+"text": "出産祝い・ギフト"
+},
+"49d35714be2c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "日本酒・焼酎"
+},
+"4ab8a9d003bc": {
+"at": "2026-10-17",
+"natural": true,
+"text": "コーヒー・お茶用品"
+},
+"4adb6df07d0d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.41"
+},
+"4c8f60f4e674": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.40"
+},
+"4d3f775f9c7c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "クリスマスのメッセージ"
+},
+"5063efc3fb48": {
+"at": "2026-10-17",
+"natural": true,
+"text": "最後に添える一言"
+},
+"5089c94693a1": {
+"at": "2026-10-17",
+"better": "Amazonで選べる贈り物をすべて見る",
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "Amazonで選ぶ贈り物をすべて見る",
+"why": "「Amazonで選ぶ贈り物」は修飾関係が不自然"
+},
+"50f0430148cf": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.31"
+},
+"50f67f259590": {
+"at": "2026-10-17",
+"natural": true,
+"text": "株式会社アイディエーション「クリスマスプレゼントに関する調査」"
+},
+"51fa7ae91c8e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.49"
+},
+"52a5f340c17f": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.12"
+},
+"52bcb02e0ace": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Amazonで探す"
+},
+"536ba0266bf8": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.80"
+},
+"5420def7ef75": {
+"at": "2026-10-17",
+"natural": true,
+"text": "よろこぶプレゼント"
+},
+"5504122c0a4c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.07"
+},
+"5768a02ea9ee": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.43"
+},
+"5a5639438579": {
+"at": "2026-10-17",
+"natural": true,
+"text": "クッキー・焼き菓子"
+},
+"5a8e218ad206": {
+"at": "2026-10-17",
+"natural": true,
+"text": "腕時計"
+},
+"5ac952561b9b": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 3.95"
+},
+"5b6a94dc3a29": {
+"at": "2026-10-17",
+"natural": true,
+"text": "回答の取り扱いについて"
+},
+"5b9fe4c8ba5b": {
+"at": "2026-10-17",
+"natural": true,
+"text": "LINEで送る"
+},
+"5d1559b240cf": {
+"at": "2026-10-17",
+"natural": true,
+"text": "和菓子"
+},
+"5ec5f07412e3": {
+"at": "2026-10-17",
+"natural": true,
+"text": "3,000円以内"
+},
+"5f81abdbe1ca": {
+"at": "2026-10-17",
+"better": "財布や名入れペンは仕事中に、タンブラーは通勤や在宅勤務中に、入浴剤は子どもが寝た後の短い休憩に使えます。",
+"confidence": "high",
+"kind": "sentence",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "財布や名入れペンなら仕事中に、タンブラーなら通勤や在宅勤務中に、入浴剤なら子どもが寝た後の短い休憩に寄り添えます。",
+"why": "「休憩に寄り添う」が抽象的"
+},
+"5f903025394d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.05"
+},
+"61bec3b97e45": {
+"at": "2026-10-17",
+"better": "おすすめの和菓子ギフトセット4",
+"confidence": "high",
+"kind": "alt",
+"natural": false,
+"status": "accepted",
+"text": "和菓子 おすすめ品4 ギフトセット",
+"why": "名詞を並べただけで不自然です"
+},
+"61d77b406f14": {
+"at": "2026-10-17",
+"better": "おすすめの和菓子ギフトセット1",
+"confidence": "high",
+"kind": "alt",
+"natural": false,
+"status": "accepted",
+"text": "和菓子 おすすめ品1 ギフトセット",
+"why": "名詞を並べただけで不自然です"
+},
+"61dac5071bd3": {
+"at": "2026-10-17",
+"better": "おすすめのタンブラーギフトセット1",
+"confidence": "high",
+"kind": "alt",
+"natural": false,
+"problems": [
+"names / quoted words lost: ['タンブラー', 'ギフトセット']"
+],
+"status": "rejected",
+"text": "タンブラー おすすめ品1 ギフトセット",
+"why": "名詞を並べただけで不自然です"
+},
+"61de9eb8b366": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.42"
+},
+"61eb6133f102": {
+"at": "2026-10-17",
+"natural": true,
+"text": "美容・コスメ・香水"
+},
+"6469b4ac6f86": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ギフト対応"
+},
+"67c3d62002c7": {
+"at": "2026-10-17",
+"natural": true,
+"text": "年末年始の集まりのメッセージ"
+},
+"6829d5b865e8": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.97"
+},
+"69052bb91407": {
+"at": "2026-10-17",
+"natural": true,
+"text": "リンツ リンドール 11種類アソート"
+},
+"692fc057a2cc": {
+"at": "2026-10-17",
+"natural": true,
+"text": "箸"
+},
+"6a9e4d6ccf07": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.63"
+},
+"6be9c6c450df": {
+"at": "2026-10-17",
+"natural": true,
+"text": "お歳暮のメッセージ"
+},
+"6cc9c76623af": {
+"at": "2026-10-17",
+"better": "お正月特集のほかの記事",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"status": "accepted",
+"text": "お正月の特集のほかの記事",
+"why": "「の」が重なっています"
+},
+"6d1b3aed35ca": {
+"at": "2026-10-17",
+"better": "年末年始の集まりで贈るほかの相手",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"status": "accepted",
+"text": "年末年始の集まりのほかの相手",
+"why": "助詞が足りず意味を取りにくいです"
+},
+"6d8798889c4e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.33"
+},
+"6f3b159b09c7": {
+"at": "2026-10-17",
+"natural": true,
+"text": "選び方のポイント"
+},
+"6f48cfad8a9a": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.95"
+},
+"6f63d1a21ca7": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.38"
+},
+"70f790360bba": {
+"at": "2026-10-17",
+"better": "義実家には相手が気をつかわない2,000〜3,000円ほどが相場とされています。年末年始のような特別な時期は5,000円ほどでもよく、帰省が頻繁なら2,000円以下でもかまわないとされています。",
+"confidence": "high",
+"kind": "sentence",
+"natural": false,
+"status": "accepted",
+"text": "義実家には、相手が気をつかわない2,000〜3,000円ほどが相場とされ、年末年始のような特別な時期は5,000円ほどでもよい、帰省が頻繁なら2,000円以下でもかまわない、とされています。",
+"why": "一文が長く読点の使い方も不自然"
+},
+"712d09b86cb8": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.50"
+},
+"716a6eed71f4": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.13"
+},
+"7306dc6b13d1": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.84"
+},
+"739217d069bc": {
+"at": "2026-10-17",
+"natural": true,
+"text": "10,000〜20,000円"
+},
+"743b85b54893": {
+"at": "2026-10-17",
+"natural": true,
+"text": "2. 相手について"
+},
+"75a92ad90c90": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Kindle 16GB 最新モデルをAmazonで見る"
+},
+"75d4e01445f6": {
+"at": "2026-10-17",
+"natural": true,
+"text": "50代以上女性"
+},
+"75f3896e353e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.88"
+},
+"765f92377795": {
+"at": "2026-10-17",
+"natural": true,
+"text": "財布"
+},
+"76f65b337f69": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.15"
+},
+"796d029b0c7d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.48"
+},
+"7a82c24d03df": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.08"
+},
+"7afa17ec9193": {
+"at": "2026-10-17",
+"better": "取引先への年始の手土産 相場・渡す時期・受け取りの決まり",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"status": "accepted",
+"text": "取引先への年始の手土産 相場・渡す時期・受け取りの規則",
+"why": "「受け取りの規則」がお役所的です"
+},
+"7b9359109843": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.25"
+},
+"7bdd59e4c4b8": {
+"at": "2026-10-17",
+"natural": true,
+"text": "卒業祝いのメッセージ"
+},
+"7ee1be7a062c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.57"
+},
+"7efa709e3c91": {
+"at": "2026-10-17",
+"natural": true,
+"text": "贈るものを探す"
+},
+"7f6ff8648f8b": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Amazon eギフトカード(金額指定可)をAmazonで見る"
+},
+"7fd4f51d42b5": {
+"at": "2026-10-17",
+"better": "並び替え",
+"confidence": "high",
+"kind": "label",
+"natural": false,
+"status": "accepted",
+"text": "ならびかえ",
+"why": "漢字にできる一般的な語は漢字にする"
+},
+"8062954c2f03": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.73"
+},
+"808ab0a035e7": {
+"at": "2026-10-17",
+"natural": true,
+"text": "食器・カトラリー・グラス"
+},
+"80a9628e7a1f": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ほかのイベントのメッセージ"
+},
+"817c03749ae3": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.98"
+},
+"818537ac3a5f": {
+"at": "2026-10-17",
+"natural": true,
+"text": "総合点が高い順"
+},
+"8222de42f253": {
+"at": "2026-10-17",
+"better": "湯呑みは朝や就寝前のお茶に使え、母が一人でほっとするときにも重宝します。",
+"confidence": "high",
+"kind": "sentence",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "湯呑みは朝茶や就寝前のお茶に使えるため、母が一人でほっとする時間に静かに寄り添える品です。",
+"why": "「静かに寄り添える」が抽象的"
+},
+"82b52d11bd8a": {
+"at": "2026-10-17",
+"natural": true,
+"text": "避けたほうがよいこと"
+},
+"8302987797dc": {
+"at": "2026-10-17",
+"natural": true,
+"text": "商品比較"
+},
+"84f836c8b15e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ベビー向けおもちゃ"
+},
+"85f12c60ec43": {
+"at": "2026-10-17",
+"natural": true,
+"text": "一言入れて探す"
+},
+"867fdc663cf9": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.93"
+},
+"8998ac89b98b": {
+"at": "2026-10-17",
+"natural": true,
+"text": "20,000円以上"
+},
+"8a77388eac18": {
+"at": "2026-10-17",
+"natural": true,
+"text": "敬老の日のメッセージ"
+},
+"8abbb2ba4cc5": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.96"
+},
+"8cb3ca798c71": {
+"at": "2026-10-17",
+"better": "おすすめの腕時計ギフトセット1",
+"confidence": "high",
+"kind": "alt",
+"natural": false,
+"status": "accepted",
+"text": "腕時計 おすすめ品1 ギフトセット",
+"why": "名詞を並べただけで不自然です"
+},
+"8d59b594509c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.37"
+},
+"8d8ece03084e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "結婚記念日のメッセージ"
+},
+"8dc3c6731f83": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.36"
+},
+"8dfa09ec0e3e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "あわせて読みたい"
+},
+"8e92d38904ed": {
+"at": "2026-10-17",
+"natural": true,
+"text": "知育玩具・学習玩具"
+},
+"8f1f79ed5a44": {
+"at": "2026-10-17",
+"natural": true,
+"text": "診断・ツール"
+},
+"8f96d92fe556": {
+"at": "2026-10-17",
+"natural": true,
+"text": "50代以上男性"
+},
+"912163d7dcb6": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ブールミッシュ グランリュクス 8種21個入りをAmazonで見る"
+},
+"9145ff2f6a3a": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.34"
+},
+"9239cf37acd5": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.18"
+},
+"930c67aee5cc": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.19"
+},
+"939ba549ad14": {
+"at": "2026-10-17",
+"natural": true,
+"text": "気持ちから"
+},
+"93b408d99491": {
+"at": "2026-10-17",
+"natural": true,
+"text": "父の日.jp「父の日ギフトの予算に関する調査」"
+},
+"941e9a4ed259": {
+"at": "2026-10-17",
+"better": "この商品を詳しく見る(仕様・価格・渡し方)",
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "この商品を詳しく読む(仕様・価格の位置・渡し方)",
+"why": "「価格の位置」が不自然です"
+},
+"956344f98d65": {
+"at": "2026-10-17",
+"natural": true,
+"text": "イベントから"
+},
+"96b97196f6f4": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.54"
+},
+"985d1350e15e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "その人のこと・ほしいもの"
+},
+"989e504c905b": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 3.93"
+},
+"999b59cb5a8f": {
+"at": "2026-10-17",
+"better": "同じ種類の商品と価格を比べる",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "同じ種類の商品の価格の位置",
+"why": "「価格の位置」が不自然です"
+},
+"99e75ab54c54": {
+"at": "2026-10-17",
+"better": "花や和菓子は部屋で楽しめ、軽いストールは近所への外出にも使えます。孫からの気持ちも伝わります。",
+"confidence": "high",
+"kind": "sentence",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "花、和菓子、軽いストールは、部屋で過ごす時間や近所への外出に寄り添い、孫からの気持ちも素直に届きます。",
+"why": "品物と使う場面の対応が曖昧"
+},
+"9a2fd0c20942": {
+"at": "2026-10-17",
+"natural": true,
+"text": "迷ったときの次の一歩"
+},
+"9afd7e87b451": {
+"at": "2026-10-17",
+"natural": true,
+"text": "下の別の表"
+},
+"9c8cb1f24013": {
+"at": "2026-10-17",
+"natural": true,
+"text": "添えるメッセージに迷ったら"
+},
+"9de9cea32c27": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ポイントが多い順"
+},
+"9ef335bc0f22": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.74"
+},
+"9f1176c63406": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ほかの種類を比べる"
+},
+"a03b1f25d6f0": {
+"at": "2026-10-17",
+"natural": true,
+"text": "相手から"
+},
+"a0ade9abb020": {
+"at": "2026-10-17",
+"natural": true,
+"text": "データ室"
+},
+"a0d9e6235153": {
+"at": "2026-10-17",
+"natural": true,
+"text": "パンくず"
+},
+"a26e68ffb6c0": {
+"at": "2026-10-17",
+"natural": true,
+"text": "お気に入りを見る"
+},
+"a2df962e3265": {
+"at": "2026-10-17",
+"natural": true,
+"text": "実用品"
+},
+"a3cb88ba8849": {
+"at": "2026-10-17",
+"better": "この時期の検索傾向",
+"confidence": "low",
+"kind": "label",
+"natural": false,
+"status": "proposed",
+"text": "この時期の検索の動き",
+"why": "「検索の動き」が曖昧です"
+},
+"a46bcf4231ba": {
+"at": "2026-10-17",
+"natural": true,
+"text": "靴下"
+},
+"a5e7741f2015": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Yahoo!ショッピングの商品"
+},
+"a655fd041585": {
+"at": "2026-10-17",
+"better": "この人は自分のペースを取り戻せる時間をとても大切にします。にぎやかな物より部屋で静かに使える物や、ひと息つける贈り物が似合います。気配りが伝わる控えめな特別感を好むタイプです。予定を急かさずに使えるものなら受け取りやすいでしょう。",
+"confidence": "high",
+"kind": "description",
+"natural": false,
+"problems": [
+"yorokobu commas rule"
+],
+"status": "rejected",
+"text": "この人は自分のペースを取り戻せる時間をとても大切にします。にぎやかすぎる物より部屋で静かに使えたり、ひと息つけたりする贈り物が似合います。気配りがそっと伝わる控えめな特別感に弱いタイプです。予定を急かさないものだと受け取",
+"why": "文が途中で切れ、「弱いタイプ」もくだけすぎています"
+},
+"a72ddba554c2": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.82"
+},
+"a8d9d099246d": {
+"at": "2026-10-17",
+"better": "名入れペンは新しい部署でも手帳や書類を書くときに使える小さな記念品です。",
+"confidence": "high",
+"kind": "sentence",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "名入れペンは新しい部署で手帳や書類に向かうときに使える、仕事に寄り添う小さな記念品です。",
+"why": "「仕事に寄り添う」が抽象的"
+},
+"a924d13e2af3": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.81"
+},
+"aa4ab8affe6a": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.91"
+},
+"aa5b23f5c8a6": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.24"
+},
+"aaa4e8451a0e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "花・観葉植物"
+},
+"ab0e9793ba89": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.52"
+},
+"ac1698090643": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.16"
+},
+"ad227076b780": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.89"
+},
+"ad6f982f6665": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.72"
+},
+"adcbc44183a0": {
+"at": "2026-10-17",
+"natural": true,
+"text": "たいせつな日メモを開く"
+},
+"ae3c0990585c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.44"
+},
+"ae9b138141c7": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Kindle 16GB 最新モデル"
+},
+"aec9ed333722": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.30"
+},
+"aed15a19be94": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ちょっとしたお礼のメッセージ"
+},
+"af5dfd7061e5": {
+"at": "2026-10-17",
+"natural": true,
+"text": "はじめてのランクイン"
+},
+"af8b5d3abfdd": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.45"
+},
+"b15b9375d50b": {
+"at": "2026-10-17",
+"natural": true,
+"text": "3,000〜5,000円"
+},
+"b3872fd80535": {
+"at": "2026-10-17",
+"natural": true,
+"text": "今治タオル"
+},
+"b6ec462113c0": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.01"
+},
+"b8b1d052127c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ほかの商品"
+},
+"b8b8ef0cb1b1": {
+"at": "2026-10-17",
+"better": "言葉を選ぶときに気をつけたいこと",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"status": "accepted",
+"text": "言葉を選ぶときの気をつけたいこと",
+"why": "助詞のつながりが不自然です"
+},
+"b975414ef9ef": {
+"at": "2026-10-17",
+"natural": true,
+"text": "父の日のメッセージ"
+},
+"b9aad99fb4b7": {
+"at": "2026-10-17",
+"natural": true,
+"text": "焼き菓子"
+},
+"ba7fdfd8760f": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.21"
+},
+"bd1477183742": {
+"at": "2026-10-17",
+"natural": true,
+"text": "昇進・栄転祝いのメッセージ"
+},
+"bf9ed9e39b02": {
+"at": "2026-10-17",
+"better": "父の日に贈るほかの相手",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"status": "accepted",
+"text": "父の日のほかの相手",
+"why": "贈る相手だと分かる言い方が自然です"
+},
+"c088610c58e5": {
+"at": "2026-10-17",
+"natural": true,
+"text": "楽天市場のお買い物マラソンを見る"
+},
+"c0ab28dace84": {
+"at": "2026-10-17",
+"natural": true,
+"text": "入浴剤"
+},
+"c0ea27df1f79": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.00"
+},
+"c15ccc4dc740": {
+"at": "2026-10-17",
+"natural": true,
+"text": "すべて"
+},
+"c499b97f2807": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.47"
+},
+"c4ad6306145d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "お中元のメッセージ"
+},
+"c559c819bfd5": {
+"at": "2026-10-17",
+"better": "昨日より順位が上がった商品",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "きのうより順位を上げた",
+"why": "何が順位を上げたのか分かりにくい"
+},
+"c72636ccb846": {
+"at": "2026-10-17",
+"natural": true,
+"text": "セールの日程を見る"
+},
+"c7ae0cc67709": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.90"
+},
+"c889de1652d5": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.85"
+},
+"c9ecefe70715": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.70"
+},
+"cb73af4b9e34": {
+"at": "2026-10-17",
+"natural": true,
+"text": "喜ばれやすい理由"
+},
+"cccc500acdce": {
+"at": "2026-10-17",
+"natural": true,
+"text": "5,000〜10,000円"
+},
+"ce3209632d08": {
+"at": "2026-10-17",
+"natural": true,
+"text": "いま売れている"
+},
+"ce864c68a2d2": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.68"
+},
+"d11a26717b9f": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.56"
+},
+"d25277380d51": {
+"at": "2026-10-17",
+"natural": true,
+"text": "共有する"
+},
+"d4023efaff7f": {
+"at": "2026-10-17",
+"natural": true,
+"text": "調査の数字をくわしく見る(データ室)"
+},
+"d4078683ad44": {
+"at": "2026-10-17",
+"better": "楽天市場の表示です。適用条件や上限は商品ページでご確認ください。",
+"confidence": "high",
+"kind": "aria",
+"natural": false,
+"status": "accepted",
+"text": "楽天市場の表示です。対象の条件や上限は商品ページでご確認ください。",
+"why": "「対象の条件」が不自然です"
+},
+"d49e7da05f8d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "読みもの"
+},
+"d563264a5ca3": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.86"
+},
+"d5ad7e503b4e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.66"
+},
+"d5dc098b9c82": {
+"at": "2026-10-17",
+"better": "よく選ばれているさまざまな贈り物",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "種類の違う選ばれている贈り物",
+"why": "修飾語のつながりが不自然です"
+},
+"d6eecd78e5f1": {
+"at": "2026-10-17",
+"natural": true,
+"text": "帰省・手土産のメッセージ"
+},
+"d719a57b52ed": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.04"
+},
+"d8b7d182b8bd": {
+"at": "2026-10-17",
+"natural": true,
+"text": "今日のおすすめ"
+},
+"d97a95b5caef": {
+"at": "2026-10-17",
+"better": "湯呑みは朝や就寝前のお茶に使え、母が一人でほっとするときにも重宝します。",
+"confidence": "high",
+"kind": "sentence",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "湯呑みは、朝茶や就寝前のお茶に使えるため、母が一人でほっとする時間に静かに寄り添える品です。",
+"why": "読点が多く表現も抽象的"
+},
+"d9901177fef2": {
+"at": "2026-10-17",
+"better": "この人はまだ知らない世界に触れるきっかけを楽しめます。定番でも少し使い方が新しいものや、開けた瞬間に試したくなるものが合います。失敗を避けるより新しい発見がある贈り物にわくわくしやすい人です。小さく始められるものなら気負わず楽しめます。",
+"confidence": "high",
+"kind": "description",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "この人はまだ知らない世界に触れるきっかけを面白がれます。定番でも少し使い方が新しいもの、開けた瞬間に試したくなるものが好相性。失敗を避けるより軽やかな発見がある贈り物にわくわくしやすい人です。小さく始められる形なら、気負",
+"why": "文が途中で切れ、抽象的な表現もあります"
+},
+"da835ed16e5b": {
+"at": "2026-10-17",
+"better": "おすすめのタオルギフトセット1",
+"confidence": "high",
+"kind": "alt",
+"natural": false,
+"problems": [
+"names / quoted words lost: ['タオルセット', 'ギフトセット']"
+],
+"status": "rejected",
+"text": "タオルセット おすすめ品1 ギフトセット",
+"why": "名詞を並べただけで不自然です"
+},
+"dbb631a3d6da": {
+"at": "2026-10-17",
+"better": "集まりを開いた人へ後日贈るねぎらいの品 | よろこぶプレゼント",
+"confidence": "high",
+"kind": "title",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "集まりを開いた人へ後日そっと労う贈り方 | よろこぶプレゼント",
+"why": "「そっと労う贈り方」が抽象的です"
+},
+"dfe7e47d127b": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ブールミッシュ グランリュクス 8種21個入り"
+},
+"e00cc63be0f3": {
+"at": "2026-10-17",
+"better": "敬老の日に贈るほかの相手",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"status": "accepted",
+"text": "敬老の日のほかの相手",
+"why": "贈る相手だと分かる言い方が自然です"
+},
+"e024624dbf39": {
+"at": "2026-10-17",
+"better": "ランキング上位",
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"status": "accepted",
+"text": "ランキング(上位)",
+"why": "かっこ書きが不自然"
+},
+"e1e22a195b5b": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.06"
+},
+"e23c231a9983": {
+"at": "2026-10-17",
+"better": "2026年10月15日のおすすめギフト20選|毎日の暮らしに役立つ実用的な贈り物 | よろこぶプレゼント",
+"confidence": "high",
+"kind": "title",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "2026年10月15日のおすすめギフト20選|毎日の暮らしにそっと役立つ実用の贈り物 | よろこぶプレゼント",
+"why": "「実用の贈り物」が不自然です"
+},
+"e2b2e43b2331": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.65"
+},
+"e3ba7e9f7839": {
+"at": "2026-10-17",
+"natural": true,
+"text": "引っ越し・新築祝いのメッセージ"
+},
+"e3ec10bd6eab": {
+"at": "2026-10-17",
+"natural": true,
+"text": "送料無料"
+},
+"e73b1e6aa3f0": {
+"at": "2026-10-17",
+"natural": true,
+"text": "スイーツ・お菓子"
+},
+"e7d3b010d7a6": {
+"at": "2026-10-17",
+"natural": true,
+"text": "スマホで開く(QR)"
+},
+"e85ac87c27a0": {
+"at": "2026-10-17",
+"natural": true,
+"text": "バレンタインのメッセージ"
+},
+"e8ce9068acd1": {
+"at": "2026-10-17",
+"natural": true,
+"text": "キッチン用品・食器・調理器具"
+},
+"eae50ed1eb58": {
+"at": "2026-10-17",
+"better": "夫の誕生日には家族全体で使うものではなく、本人の一日が少し楽になる品を中心に選びます。財布や名入れペンは仕事中に、タンブラーは通勤や在宅勤務中に、入浴剤は子どもが寝た後の短い休憩に役立ちます。平日の動きを思い浮かべると選びやすくなります。",
+"confidence": "high",
+"kind": "description",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "夫の誕生日には家族全体で使うものではなく、本人の一日が少し楽になる品を中心に考えたいです。財布や名入れペンなら仕事中に、タンブラーなら通勤や在宅勤務中に、入浴剤なら子どもが寝た後の短い休憩に寄り添えます。平日の動きを思い",
+"why": "文が途中で切れ、「寄り添えます」も抽象的です"
+},
+"ec4cd30b697e": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.11"
+},
+"ee4f1868730b": {
+"at": "2026-10-17",
+"natural": true,
+"text": "出典と確認日"
+},
+"ef38914a04c4": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.99"
+},
+"efb8b5c2ec54": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.46"
+},
+"f12e31f7b04c": {
+"at": "2026-10-17",
+"better": "この日をたいせつな日メモに登録",
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "この日を忘れない(たいせつな日メモに登録)",
+"why": "リンクで行う操作が直接伝わる形にする"
+},
+"f18b5b23f78f": {
+"at": "2026-10-17",
+"natural": true,
+"text": "ランクインし続けている"
+},
+"f1d308372a6d": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.09"
+},
+"f2ae70a95a06": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 3.90"
+},
+"f39509ef6070": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.28"
+},
+"f8863514b48c": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Xで共有"
+},
+"fa93262d4785": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.35"
+},
+"fbb34c8d8d49": {
+"at": "2026-10-17",
+"natural": true,
+"text": "リンクをコピー"
+},
+"fbe07ab0e256": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 5.00"
+},
+"fc7f214d89f1": {
+"at": "2026-10-17",
+"natural": true,
+"text": "Amazon eギフトカード(金額指定可)"
+},
+"fc85645ceda0": {
+"at": "2026-10-17",
+"better": "この人は相手を先に考えて自分の希望を控えめに伝えがちです。高価なものより負担なく受け取れて暮らしの中で役立つものが向いています。小さな気づかいが伝わるとあとから何度も温かく思い出してもらえます。",
+"confidence": "high",
+"kind": "description",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning or naturalness)"
+],
+"status": "proposed",
+"text": "この人は相手を先に考えて自分の希望を控えめに伝えがちです。高価さを前面に出すより負担なく受け取れて、暮らしの中でそっと役立つものが安心。小さな気づかいが伝わるとあとから何度も温かく思い出してくれます。",
+"why": "「高価さを前面に出す」「ものが安心」が堅く不自然です"
+},
+"fd214078bdb1": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.59"
+},
+"fd648fa9d2dd": {
+"at": "2026-10-17",
+"better": "祖母の長寿祝いは赤い色や年齢を前面に出すより、家族で囲む席に華やかさを添える贈り物が合います。花、和菓子、薄手のストールなら写真にも残り、持ち帰りや収納の負担も少なくて済みます。離れて暮らす孫からなら当日の電話や手紙も一緒に贈れます。",
+"confidence": "high",
+"kind": "description",
+"natural": false,
+"problems": [
+"numbers differ: ['一'] -> []"
+],
+"status": "rejected",
+"text": "祖母の長寿祝いは赤い色や年齢を前面に出すより、家族で囲む席にそっと華やぎを足す贈り物が似合います。花、和菓子、薄手のストールなら写真にも残り、持ち帰りや収納の負担も小さめです。離れて暮らす孫からなら、当日の電話や手紙も一",
+"why": "文が途中で切れ、「そっと華やぎを足す」も抽象的です"
+},
+"fe085d1d4334": {
+"at": "2026-10-17",
+"natural": true,
+"text": "レビュー平均 4.26"
+}
+}
