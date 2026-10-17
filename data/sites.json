@@ -24,7 +24,7 @@
     {"name": "kuma", "domain": "kuma-sokuho.com", "marker": "クマ出没速報", "min_pages": 100, "probe": "/feed.xml", "needs_var": true,
      "owns": ["tests/test_*_kuma.py", "tests/test_otsu_bear.py", "tests/fixtures/*kuma*", "tests/fixtures/otsu_bear*", "data/*_kuma.json", "data/otsu_bear.json",
               "sokuhou/sources/*_kuma.py", "sokuhou/sources/otsu_bear.py"]},
-    {"name": "yorokobu", "domain": "yorokobu-present.com", "marker": "よろこぶプレゼント", "min_pages": 120, "needs_var": true, "group": "rakuten-api",
+    {"name": "yorokobu", "domain": "yorokobu-present.com", "marker": "よろこぶプレゼント", "min_pages": 120, "needs_var": true,
      "build": "python sites/yorokobu/build.py --release --out release --items out/yorokobu_items.json"},
     {"name": "minna", "domain": "minna-no-illust.com", "marker": "みんなのイラスト", "min_pages": 90, "probe": "/sitemap-images.xml", "needs_var": true,
      "fast_lane": ["sites/minna/library/*", "sites/minna/specs/*", "sites/minna/content/*"]},
