@@ -1,0 +1,4 @@
+{
+ "note": "The name a card shows for one shop item, where the rules of shortname.py cannot read the shop's title: {\"names\": {\"<item code>\": \"<brand + product, words of the shop's own title only>\"}}. Empty until a title needs it.",
+ "names": {}
+}

@@ -22,7 +22,7 @@ sys.path.insert(0, str(ROOT))
 if __name__ == "__main__":
     sys.modules.setdefault("sites.yorokobu.build", sys.modules[__name__])   # tools.py and dataroom.py import this module lazily: they must get THIS one (its nav flags), not a second copy
 
-from sites.yorokobu import content as ct  # noqa: E402
+from sites.yorokobu import shortname, content as ct  # noqa: E402
 from sites.yorokobu import dataroom  # noqa: E402
 from sites.yorokobu import picksite  # noqa: E402
 from sites.yorokobu import askpages  # noqa: E402
@@ -115,24 +115,15 @@ def thumb(url: str, px: int) -> str:
     return url.replace("_ex=300x300", f"_ex={px}x{px}") if "thumbnail.image.rakuten.co.jp" in url else url
 
 
-def short(name: str, limit: int = NAME_LIMIT) -> str:
-    """A title for a card: the shop's keyword string without its repeats ("折りたたみ" then "折りたたみ傘"), cut at a word boundary, never in the middle of a word."""
-    name = strip_occasions(name)
-    kept: list[str] = []
-    for t in name.split():
-        if SPEC_ONLY.fullmatch(t) or any(t in k for k in kept):
-            continue
-        kept = [k for k in kept if k not in t] + [t]                  # a later, more specific word replaces the plainer one before it
-    text = " ".join(kept) or name
-    if len(text) <= limit:
-        return text
-    out = ""
-    for t in text.split(" "):
-        nxt = f"{out} {t}".strip()
-        if len(nxt) > limit - 1:
-            break
-        out = nxt
-    return (out or text[: limit - 1].rstrip()) + "…"
+def short(name: str, limit: int = NAME_LIMIT, code: str | None = None, keep: list[str] | None = None) -> str:
+    """The product's name in a few words for a card (shortname.py: brand and product, a size or a count; no promotion, occasion or search words; never cut with "…").
+    `limit` is kept for the callers that still pass one; the name is the same everywhere."""
+    return shortname.short_name(strip_occasions(name), code=code, keep=keep)
+
+
+def orig_title(name: str) -> str:
+    """The shop's own title, kept on the card as the title attribute of its links (the programmes' terms allow product information to be altered only as the company determines)."""
+    return f' title="{esc(" ".join(name.split()))}"'
 
 
 def amazon_url(cfg: dict, query: str, low: int | None = None, high: int | None = None) -> str:
@@ -381,7 +372,7 @@ def point_badge(it: dict) -> str:
     return (f'<span class="tagx pt" title="楽天市場の表示です。対象の条件や上限は商品ページでご確認ください。">ポイント{rate}倍({end.month}月{end.day}日まで)</span>')
 
 
-def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, tier: str = "", kind: str = "", eager: bool = False) -> str:
+def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, tier: str = "", kind: str = "", eager: bool = False, must: list[str] | None = None) -> str:
     url = rakuten.clean_item_url(it["url"])  # also unwraps data fetched before the API's redirect links were handled
     name = it.get("display") or rakuten.clean_title(it["name"])
     if own:
@@ -404,7 +395,7 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
     if it.get("note"):  # the editors' one-line reason for picking this product
         note += f'<p class="pick-note"><b>{it.get("note_label") or "選んだ理由"}</b>{esc(it["note"])}</p>'
     if not own:
-        SEEN[it["code"]] = {"n": short(name, 60), "p": it["price"], "i": it["image"], "u": href,
+        SEEN[it["code"]] = {"n": short(name, code=it["code"]), "p": it["price"], "i": it["image"], "u": href,
                             "a": amazon_url(cfg, amazon_query(name)) if cfg.get("amazon_tracking_id") else ""}
     label = "ショップで見る" if own else "楽天市場で見る"
     buttons = f'<a class="btn" href="{esc(href)}" rel="{rel}" target="_blank">{label}</a>'
@@ -415,10 +406,10 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
     attrs = (f'data-code="{esc(it["code"])}" data-price="{it["price"]}" data-reviews="{it["reviews"]}" data-rating="{it["rating"]}" '
              f'data-ship="{1 if it["free_shipping"] else 0}" data-gift="{1 if it.get("gift") else 0}" data-tier="{esc(tier)}" data-type="{esc(kind)}" '
              f'data-rank="{rank or 0}"')
-    fav = fav_button(it["code"], short(name, 40), it["price"], url)
-    return (f'<li class="item" {attrs}>{badge}{fav}<a class="item-img" href="{esc(href)}" rel="{rel}" target="_blank">'
-            f'<img src="{esc(it["image"])}" alt="{esc(short(name, 40))}" width="300" height="300" {EAGER if eager else LAZY}></a>'
-            f'<div class="item-body"><h3><a href="{esc(href)}" rel="{rel}" target="_blank">{esc(short(name))}</a></h3>'
+    fav = fav_button(it["code"], short(name, code=it["code"]), it["price"], url)
+    return (f'<li class="item" {attrs}>{badge}{fav}<a class="item-img" href="{esc(href)}" rel="{rel}" target="_blank"{orig_title(name)}>'
+            f'<img src="{esc(it["image"])}" alt="{esc(short(name, code=it["code"], keep=must))}" width="300" height="300" {EAGER if eager else LAZY}></a>'
+            f'<div class="item-body"><h3><a href="{esc(href)}" rel="{rel}" target="_blank"{orig_title(name)}>{esc(short(name, code=it["code"], keep=must))}</a></h3>'
             f'<p class="price">{yen(it["price"])}</p><p class="meta">{"".join(bits)}</p>{note}'
             f'<div class="item-btns">{buttons}</div></div></li>')
 
@@ -537,7 +528,7 @@ def bird_say(img: str, text: str, cls: str = "") -> str:
 
 
 def idea_card(cfg: dict, idea: dict, i: int, tiers: list[dict]) -> str:
-    cards = "".join(item_card(cfg, it, tier=tier_of(it["price"], tiers), kind=idea["type"]) for it in idea["items"][:4])
+    cards = "".join(item_card(cfg, it, tier=tier_of(it["price"], tiers), kind=idea["type"], must=idea.get("must")) for it in idea["items"][:4])
     body = f'<ul class="items mini">{cards}</ul>' if cards else '<p class="notice">この種類の商品はいま見つかりませんでした。下のリンクから楽天市場で探せます。</p>'
     return (f'<article class="idea" id="idea-{i}"><header><span class="type">{esc(idea["type"])}</span><h3>{esc(idea["label"])}</h3></header>'
             f'{bird_say(SOMMELIER_IMGS[i % 4], esc(idea["why"]), "sommelier")}{body}'
@@ -606,7 +597,8 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
     # the filterable list
     all_types = [t for t in TYPE_ORDER if any(idea["type"] == t and idea["items"] for idea in ideas)]
     idea_type = {it["code"]: idea["type"] for idea in ideas for it in idea["items"]}
-    li = "".join(item_card(cfg, it, rank=None, tier=tier_of(it["price"], c["filters"]["tiers"]), kind=idea_type.get(it["code"], "")) for it in grid_items)
+    idea_must = {it["code"]: idea.get("must") for idea in ideas for it in idea["items"]}
+    li = "".join(item_card(cfg, it, rank=None, tier=tier_of(it["price"], c["filters"]["tiers"]), kind=idea_type.get(it["code"], ""), must=idea_must.get(it["code"])) for it in grid_items)
     if own:
         li += item_card(cfg, own, own=True, tier=tier_of(own["price"], c["filters"]["tiers"]), kind="思い出・名入れ")
     tier_btns = "".join(f'<button type="button" class="chipbtn" data-v="{t["slug"]}">{esc(t["label"])}</button>'
@@ -1013,7 +1005,7 @@ def likes_section(d: dict, cfg: dict, r: dict) -> str:
     per_row = like_rows_items(d, r)
     for i, (text, row) in enumerate(zip(r["likes"], rows)):
         items = per_row[i]
-        cards = f'<ul class="items mini">{"".join(item_card(cfg, it) for it in items)}</ul>' if items else ""
+        cards = f'<ul class="items mini">{"".join(item_card(cfg, it, must=row.get("must")) for it in items)}</ul>' if items else ""
         q = row["queries"][0]
         btns = f'<a class="btn" href="{esc(search_link(cfg, q))}" rel="sponsored nofollow noopener" target="_blank">楽天市場で「{esc(q)}」を探す</a>'
         if cfg.get("amazon_tracking_id"):

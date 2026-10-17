@@ -260,7 +260,7 @@ def stat_html(r: dict) -> str:
 def _row(cfg: dict, r: dict, n: int, rank: int = 0, total: int = 0, median_eff: int = 0) -> str:
     B = _b()
     href = B.rakuten_link(cfg, B.rakuten.clean_item_url(r["url"]))
-    B.SEEN[r["code"]] = {"n": B.short(r["name"], 60), "p": r["price"], "i": r["image"], "u": href,
+    B.SEEN[r["code"]] = {"n": B.short(r["name"], code=r["code"]), "p": r["price"], "i": r["image"], "u": href,
                          "a": B.amazon_url(cfg, B.amazon_query(r["name"])) if cfg.get("amazon_tracking_id") else ""}
     tags = ""
     if r["free_shipping"]:
@@ -273,11 +273,11 @@ def _row(cfg: dict, r: dict, n: int, rank: int = 0, total: int = 0, median_eff: 
         price += f'<p class="cmp-pt">ポイント約{r["points"]:,}pt<br>実質 {B.yen(r["effective"])}</p>'
     stars = f'<span class="stars">★{r["rating"]:.2f}</span>({r["reviews"]:,}件)' if r["reviews"] else "レビューなし"
     attrs = (f'data-code="{esc(r["code"])}" data-price="{r["effective"]}" data-rating="{r["bayes"]}" data-points="{r["points"]}" data-score="{r["total"]}" data-order="{n}"')
-    fav = B.fav_button(r["code"], B.short(r["name"], 40), r["price"], B.rakuten.clean_item_url(r["url"]))
+    fav = B.fav_button(r["code"], B.short(r["name"], code=r["code"]), r["price"], B.rakuten.clean_item_url(r["url"]))
     p, rv, sh, gf = r["parts"]
     return (f'<li class="cmp-row" {attrs}><span class="cmp-no">{n}</span>'
-            f'<div class="imgbox cmp-img"><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"><img src="{esc(B.thumb(r["image"], 128))}" alt="{esc(B.short(r["name"], 40))}" width="84" height="84" {B.LAZY}></a>{fav}</div>'
-            f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p><h3><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">{esc(B.short(r["name"], 52))}</a></h3><p class="cmp-tags">{tags}</p></div>'
+            f'<div class="imgbox cmp-img"><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"{B.orig_title(r["name"])}><img src="{esc(B.thumb(r["image"], 128))}" alt="{esc(B.short(r["name"], code=r["code"]))}" width="84" height="84" {B.LAZY}></a>{fav}</div>'
+            f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p><h3><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"{B.orig_title(r["name"])}>{esc(B.short(r["name"], code=r["code"]))}</a></h3><p class="cmp-tags">{tags}</p></div>'
             f'<div class="cmp-num">{price}</div>'
             f'<div class="cmp-num cmp-rev"><p>{stars}</p></div>'
             f'<div class="cmp-score" title="実質価格{p}・レビュー{rv}・送料{sh}・ギフト対応{gf}"><b>{r["total"]}</b><small>総合点</small><i style="width:{r["total"]}%"></i></div>'
@@ -314,9 +314,9 @@ def _yrow(cfg: dict, r: dict, n: int) -> str:
         facts.append(f'ポイント約{r["points"]:,}pt')
     p, rv, sh = r["parts"]
     img = y_image(r)
-    pic = (f'<a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"><img src="{esc(img)}" alt="{esc(B.short(r["name"], 40))}" width="76" height="76" {B.LAZY}></a>' if img else "")
+    pic = (f'<a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"{B.orig_title(r["name"])}><img src="{esc(img)}" alt="{esc(B.short(r["name"], code=r["code"]))}" width="76" height="76" {B.LAZY}></a>' if img else "")
     return (f'<li class="yh-row"><span class="cmp-no">{n}</span><div class="yh-img">{pic}</div>'
-            f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p><h3><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">{esc(B.short(r["name"], 52))}</a></h3>'
+            f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p><h3><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"{B.orig_title(r["name"])}>{esc(B.short(r["name"], code=r["code"]))}</a></h3>'
             f'<p class="yh-facts">{" ・ ".join(f'<span class="yh-f">{f}</span>' for f in facts)}</p></div>'
             f'<div class="cmp-score" title="価格{p}・レビュー{rv}・送料{sh}"><b>{r["total"]}</b><small>点数</small><i style="width:{r["total"]}%"></i></div>'
             f'<div class="cmp-go"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">Yahoo!ショッピングで見る{B.vc_pixel(cfg)}</a></div></li>')
