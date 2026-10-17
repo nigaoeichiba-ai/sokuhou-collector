@@ -45,5 +45,27 @@ class AccessLogTest(unittest.TestCase):
         self.assertEqual((r["lines"], r["parsed"]), (2, 1))
 
 
+class XserverSampleTest(unittest.TestCase):
+    """Apache 'combined' lines as the server writes them: IPv6 client, '-' size, percent-encoded Japanese path."""
+
+    SAMPLE = [
+        '2001:db8::1 - - [17/Oct/2026:06:01:02 +0900] "GET /%E5%AE%AE%E5%9F%8E/ HTTP/2.0" 200 - "https://www.google.com/" "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) Safari/604.1"',
+        '198.51.100.9 - - [17/Oct/2026:06:01:03 +0900] "GET /ranking/ HTTP/1.1" 304 0 "https://search.yahoo.co.jp/" "Mozilla/5.0 Firefox/130.0"',
+        '198.51.100.10 - - [17/Oct/2026:06:01:04 +0900] "GET /robots.txt HTTP/1.1" 200 120 "-" "Mozilla/5.0 (compatible; Googlebot/2.1)"',
+        '198.51.100.11 - - [17/Oct/2026:06:01:05 +0900] "-" 408 - "-" "-"',
+    ]
+
+    def test_sample_is_read_and_reported(self):
+        r = accesslog.aggregate(self.SAMPLE * 3, "kuma-sokuho.com")
+        self.assertEqual(r["parsed"], 9)  # the 408 line without a request is reported as unparsed, not hidden
+        self.assertEqual(r["lines"], 12)
+        self.assertEqual(r["human_views"], 6)
+        self.assertEqual((r["first"], r["last"]), ("2026-10-17", "2026-10-17"))
+        out = accesslog.render(r, "kuma-sokuho.com")
+        self.assertIn("Google 3", out)
+        self.assertIn("Yahoo! 3", out)
+        self.assertNotIn("2001:db8", out)
+
+
 if __name__ == "__main__":
     unittest.main()
