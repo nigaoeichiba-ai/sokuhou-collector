@@ -343,9 +343,9 @@ def rakuten_link(cfg: dict, target: str) -> str:
 
 
 def item_href(cfg: dict, it: dict) -> str:
-    """A Rakuten product's link: the `affiliateUrl` the API gave, as it is.  Only a product saved before the site kept that field (no `aff`) gets the spec's formula over its item URL."""
-    aff = it.get("aff") or ""
-    return aff if cfg["rakuten_affiliate_id"] in aff else rakuten_link(cfg, rakuten.page_url(it["url"]))
+    """A Rakuten product's link: the `affiliateUrl` the API gave for our affiliate ID, as it is.  (The API puts its own per-shop form of the ID in it, not the ID of config.json, and gives no
+    ID at all when none is sent: the string is the API's and is never rebuilt.)  Only a product saved before the site kept that field (no `aff`) gets the spec's formula over its page."""
+    return it.get("aff") or rakuten_link(cfg, rakuten.page_url(it["url"]))
 
 
 def search_link(cfg: dict, keyword: str) -> str:
