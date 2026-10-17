@@ -1,0 +1,239 @@
+{
+ "added": "2026-10-18",
+ "slug": "trains-stations-flat",
+ "title": "電車と駅の風景",
+ "genre": "life",
+ "touch": "flat",
+ "lead": "電車・ホーム・改札・車内の場面など、鉄道にまつわる素材12点です。通勤や旅行の案内、地域の資料に使えます。",
+ "tags": [
+  "電車",
+  "駅",
+  "鉄道",
+  "ホーム",
+  "改札",
+  "通勤",
+  "旅行"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "trains-stations-flat-train",
+   "file": "trains-stations-flat-train.webp",
+   "title": "走る電車",
+   "desc": "走る電車のシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "電車と駅の風景",
+    "走る電車",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 497,
+   "h": 256
+  },
+  {
+   "id": "trains-stations-flat-platform",
+   "file": "trains-stations-flat-platform.webp",
+   "title": "駅のホーム",
+   "desc": "駅のホームのシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "電車と駅の風景",
+    "駅のホーム",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 488,
+   "h": 437
+  },
+  {
+   "id": "trains-stations-flat-gate",
+   "file": "trains-stations-flat-gate.webp",
+   "title": "改札を通る",
+   "desc": "改札を通るのシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "改札",
+    "電車と駅の風景",
+    "改札を通る",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 464,
+   "h": 445
+  },
+  {
+   "id": "trains-stations-flat-inside",
+   "file": "trains-stations-flat-inside.webp",
+   "title": "混み合う車内",
+   "desc": "混み合う車内のシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "電車と駅の風景",
+    "混み合う車内",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 492,
+   "h": 463
+  },
+  {
+   "id": "trains-stations-flat-seat",
+   "file": "trains-stations-flat-seat.webp",
+   "title": "座席で眠る",
+   "desc": "座席で眠るのシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "電車と駅の風景",
+    "座席で眠る",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 402,
+   "h": 467
+  },
+  {
+   "id": "trains-stations-flat-ticket",
+   "file": "trains-stations-flat-ticket.webp",
+   "title": "きっぷ",
+   "desc": "きっぷのシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "電車と駅の風景",
+    "きっぷ",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 480,
+   "h": 320
+  },
+  {
+   "id": "trains-stations-flat-bullet",
+   "file": "trains-stations-flat-bullet.webp",
+   "title": "新幹線風の高速列車",
+   "desc": "新幹線風の高速列車のシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "電車と駅の風景",
+    "新幹線風の高速列車",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 521,
+   "h": 255
+  },
+  {
+   "id": "trains-stations-flat-local",
+   "file": "trains-stations-flat-local.webp",
+   "title": "ローカル線の一両電車",
+   "desc": "ローカル線の一両電車のシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "電車と駅の風景",
+    "ローカル線の一両電車",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 469,
+   "h": 321
+  },
+  {
+   "id": "trains-stations-flat-crossing",
+   "file": "trains-stations-flat-crossing.webp",
+   "title": "踏切",
+   "desc": "踏切のシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "電車と駅の風景",
+    "踏切",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 466,
+   "h": 318
+  },
+  {
+   "id": "trains-stations-flat-bento",
+   "file": "trains-stations-flat-bento.webp",
+   "title": "駅弁",
+   "desc": "駅弁のシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "電車と駅の風景",
+    "駅弁",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 466,
+   "h": 328
+  },
+  {
+   "id": "trains-stations-flat-map",
+   "file": "trains-stations-flat-map.webp",
+   "title": "路線図",
+   "desc": "路線図のシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "電車と駅の風景",
+    "路線図",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 449,
+   "h": 309
+  },
+  {
+   "id": "trains-stations-flat-conductor",
+   "file": "trains-stations-flat-conductor.webp",
+   "title": "車掌",
+   "desc": "車掌のシンプルフラットイラストです。",
+   "tags": [
+    "電車",
+    "駅",
+    "鉄道",
+    "ホーム",
+    "電車と駅の風景",
+    "車掌",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 265,
+   "h": 487
+  }
+ ]
+}

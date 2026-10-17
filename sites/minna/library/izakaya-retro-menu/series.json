@@ -1,0 +1,235 @@
+{
+ "added": "2026-10-18",
+ "slug": "izakaya-retro-menu",
+ "title": "居酒屋の定番料理",
+ "genre": "food",
+ "touch": "retro",
+ "lead": "焼き鳥・もつ鍋・枝豆・だし巻き卵など、居酒屋の定番料理12点を昭和風のタッチで描いた素材です。メニューや店内の掲示に使えます。",
+ "tags": [
+  "居酒屋",
+  "焼き鳥",
+  "もつ鍋",
+  "枝豆",
+  "おつまみ",
+  "メニュー",
+  "昭和"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "izakaya-retro-menu-yakitori",
+   "file": "izakaya-retro-menu-yakitori.webp",
+   "title": "焼き鳥",
+   "desc": "焼き鳥の昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 507,
+   "h": 407
+  },
+  {
+   "id": "izakaya-retro-menu-motsunabe",
+   "file": "izakaya-retro-menu-motsunabe.webp",
+   "title": "もつ鍋",
+   "desc": "もつ鍋の昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 591,
+   "h": 450
+  },
+  {
+   "id": "izakaya-retro-menu-edamame",
+   "file": "izakaya-retro-menu-edamame.webp",
+   "title": "枝豆",
+   "desc": "枝豆の昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 467,
+   "h": 387
+  },
+  {
+   "id": "izakaya-retro-menu-dashimaki",
+   "file": "izakaya-retro-menu-dashimaki.webp",
+   "title": "だし巻き卵",
+   "desc": "だし巻き卵の昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "だし巻き卵",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 544,
+   "h": 377
+  },
+  {
+   "id": "izakaya-retro-menu-karaage",
+   "file": "izakaya-retro-menu-karaage.webp",
+   "title": "唐揚げ",
+   "desc": "唐揚げの昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "唐揚げ",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 531,
+   "h": 428
+  },
+  {
+   "id": "izakaya-retro-menu-sashimi",
+   "file": "izakaya-retro-menu-sashimi.webp",
+   "title": "刺身の盛り合わせ",
+   "desc": "刺身の盛り合わせの昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "刺身の盛り合わせ",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 537,
+   "h": 439
+  },
+  {
+   "id": "izakaya-retro-menu-beer",
+   "file": "izakaya-retro-menu-beer.webp",
+   "title": "生ビール",
+   "desc": "生ビールの昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "生ビール",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 405,
+   "h": 510
+  },
+  {
+   "id": "izakaya-retro-menu-sake",
+   "file": "izakaya-retro-menu-sake.webp",
+   "title": "熱燗",
+   "desc": "熱燗の昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "熱燗",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 432,
+   "h": 463
+  },
+  {
+   "id": "izakaya-retro-menu-agedashi",
+   "file": "izakaya-retro-menu-agedashi.webp",
+   "title": "揚げ出し豆腐",
+   "desc": "揚げ出し豆腐の昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "揚げ出し豆腐",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 542,
+   "h": 418
+  },
+  {
+   "id": "izakaya-retro-menu-gyoza",
+   "file": "izakaya-retro-menu-gyoza.webp",
+   "title": "焼き餃子",
+   "desc": "焼き餃子の昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "焼き餃子",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 531,
+   "h": 442
+  },
+  {
+   "id": "izakaya-retro-menu-hiyayakko",
+   "file": "izakaya-retro-menu-hiyayakko.webp",
+   "title": "冷奴",
+   "desc": "冷奴の昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "冷奴",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 499,
+   "h": 391
+  },
+  {
+   "id": "izakaya-retro-menu-chazuke",
+   "file": "izakaya-retro-menu-chazuke.webp",
+   "title": "お茶漬け",
+   "desc": "お茶漬けの昭和レトロイラストです。",
+   "tags": [
+    "居酒屋",
+    "焼き鳥",
+    "もつ鍋",
+    "枝豆",
+    "居酒屋の定番料理",
+    "お茶漬け",
+    "昭和レトロ",
+    "食べ物"
+   ],
+   "w": 520,
+   "h": 456
+  }
+ ]
+}

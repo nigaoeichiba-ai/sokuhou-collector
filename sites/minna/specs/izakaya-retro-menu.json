@@ -1,0 +1,84 @@
+{
+ "slug": "izakaya-retro-menu",
+ "title": "居酒屋の定番料理",
+ "subject": "",
+ "genre": "food",
+ "touch": "retro",
+ "title_fmt": "{ja}",
+ "subject_en": "Izakaya dishes, each ONE separate dish centred in its cell, Showa-era retro menu illustration style with slightly faded warm colours Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "焼き鳥・もつ鍋・枝豆・だし巻き卵など、居酒屋の定番料理12点を昭和風のタッチで描いた素材です。メニューや店内の掲示に使えます。",
+ "tags": [
+  "居酒屋",
+  "焼き鳥",
+  "もつ鍋",
+  "枝豆",
+  "おつまみ",
+  "メニュー",
+  "昭和"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "yakitori",
+   "焼き鳥",
+   "three skewers of grilled chicken on a plate"
+  ],
+  [
+   "motsunabe",
+   "もつ鍋",
+   "a clay pot of motsu hotpot with cabbage and chives"
+  ],
+  [
+   "edamame",
+   "枝豆",
+   "a small bowl of edamame in pods"
+  ],
+  [
+   "dashimaki",
+   "だし巻き卵",
+   "sliced rolled omelette on a rectangular plate with grated radish"
+  ],
+  [
+   "karaage",
+   "唐揚げ",
+   "a plate of fried chicken pieces with a lemon wedge"
+  ],
+  [
+   "sashimi",
+   "刺身の盛り合わせ",
+   "a sashimi platter with tuna, salmon and shiso leaf"
+  ],
+  [
+   "beer",
+   "生ビール",
+   "a frothy mug of draft beer"
+  ],
+  [
+   "sake",
+   "熱燗",
+   "a small sake flask and cup"
+  ],
+  [
+   "agedashi",
+   "揚げ出し豆腐",
+   "agedashi tofu in broth with green onion"
+  ],
+  [
+   "gyoza",
+   "焼き餃子",
+   "a plate of pan-fried gyoza with a dipping dish"
+  ],
+  [
+   "hiyayakko",
+   "冷奴",
+   "a block of chilled tofu with ginger and bonito flakes"
+  ],
+  [
+   "chazuke",
+   "お茶漬け",
+   "a bowl of ochazuke with pickled plum"
+  ]
+ ],
+ "exclude": []
+}

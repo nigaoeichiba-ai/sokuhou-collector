@@ -1,0 +1,220 @@
+{
+ "added": "2026-10-18",
+ "slug": "digital-safety-icons-flat",
+ "title": "スマホとネットの安全",
+ "genre": "icon",
+ "touch": "flat",
+ "lead": "スマホ・鍵・盾・警告など、ネットの安全や情報管理を表すアイコン12点の素材です。社内研修の資料や注意喚起のページに使えます。",
+ "tags": [
+  "セキュリティ",
+  "スマホ",
+  "パスワード",
+  "詐欺",
+  "ネット",
+  "注意喚起",
+  "アイコン"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "digital-safety-icons-flat-phone-lock",
+   "file": "digital-safety-icons-flat-phone-lock.webp",
+   "title": "ロックされたスマホ",
+   "desc": "ロックされたスマホのシンプルフラットイラストです。",
+   "tags": [
+    "セキュリティ",
+    "スマホ",
+    "パスワード",
+    "詐欺",
+    "スマホとネットの安全",
+    "ロックされたスマホ",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 260,
+   "h": 400
+  },
+  {
+   "id": "digital-safety-icons-flat-shield",
+   "file": "digital-safety-icons-flat-shield.webp",
+   "title": "守りの盾",
+   "desc": "守りの盾のシンプルフラットイラストです。",
+   "tags": [
+    "セキュリティ",
+    "スマホ",
+    "パスワード",
+    "詐欺",
+    "スマホとネットの安全",
+    "守りの盾",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 358,
+   "h": 406
+  },
+  {
+   "id": "digital-safety-icons-flat-warning",
+   "file": "digital-safety-icons-flat-warning.webp",
+   "title": "警告の三角",
+   "desc": "警告の三角のシンプルフラットイラストです。",
+   "tags": [
+    "セキュリティ",
+    "スマホ",
+    "パスワード",
+    "詐欺",
+    "スマホとネットの安全",
+    "警告の三角",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 422,
+   "h": 366
+  },
+  {
+   "id": "digital-safety-icons-flat-fish",
+   "file": "digital-safety-icons-flat-fish.webp",
+   "title": "釣り針のメール",
+   "desc": "釣り針のメールのシンプルフラットイラストです。",
+   "tags": [
+    "セキュリティ",
+    "スマホ",
+    "パスワード",
+    "詐欺",
+    "スマホとネットの安全",
+    "釣り針のメール",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 336,
+   "h": 415
+  },
+  {
+   "id": "digital-safety-icons-flat-password",
+   "file": "digital-safety-icons-flat-password.webp",
+   "title": "パスワード入力",
+   "desc": "パスワード入力のシンプルフラットイラストです。",
+   "tags": [
+    "セキュリティ",
+    "スマホ",
+    "パスワード",
+    "詐欺",
+    "スマホとネットの安全",
+    "パスワード入力",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 436,
+   "h": 316
+  },
+  {
+   "id": "digital-safety-icons-flat-wifi",
+   "file": "digital-safety-icons-flat-wifi.webp",
+   "title": "Wi-Fi の電波",
+   "desc": "Wi-Fi の電波のシンプルフラットイラストです。",
+   "tags": [
+    "セキュリティ",
+    "スマホ",
+    "パスワード",
+    "詐欺",
+    "スマホとネットの安全",
+    "Wi-Fi の電波",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 373,
+   "h": 390
+  },
+  {
+   "id": "digital-safety-icons-flat-backup",
+   "file": "digital-safety-icons-flat-backup.webp",
+   "title": "バックアップ",
+   "desc": "バックアップのシンプルフラットイラストです。",
+   "tags": [
+    "セキュリティ",
+    "スマホ",
+    "パスワード",
+    "詐欺",
+    "スマホとネットの安全",
+    "バックアップ",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 419,
+   "h": 360
+  },
+  {
+   "id": "digital-safety-icons-flat-eye",
+   "file": "digital-safety-icons-flat-eye.webp",
+   "title": "見張りの目",
+   "desc": "見張りの目のシンプルフラットイラストです。",
+   "tags": [
+    "セキュリティ",
+    "スマホ",
+    "パスワード",
+    "詐欺",
+    "スマホとネットの安全",
+    "見張りの目",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 375,
+   "h": 384
+  },
+  {
+   "id": "digital-safety-icons-flat-update",
+   "file": "digital-safety-icons-flat-update.webp",
+   "title": "更新の矢印",
+   "desc": "更新の矢印のシンプルフラットイラストです。",
+   "tags": [
+    "セキュリティ",
+    "スマホ",
+    "パスワード",
+    "詐欺",
+    "スマホとネットの安全",
+    "更新の矢印",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 373,
+   "h": 399
+  },
+  {
+   "id": "digital-safety-icons-flat-block",
+   "file": "digital-safety-icons-flat-block.webp",
+   "title": "遮断の手",
+   "desc": "遮断の手のシンプルフラットイラストです。",
+   "tags": [
+    "セキュリティ",
+    "スマホ",
+    "パスワード",
+    "詐欺",
+    "スマホとネットの安全",
+    "遮断の手",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 395,
+   "h": 394
+  },
+  {
+   "id": "digital-safety-icons-flat-people",
+   "file": "digital-safety-icons-flat-people.webp",
+   "title": "共有の相手",
+   "desc": "共有の相手のシンプルフラットイラストです。",
+   "tags": [
+    "セキュリティ",
+    "スマホ",
+    "パスワード",
+    "詐欺",
+    "スマホとネットの安全",
+    "共有の相手",
+    "シンプルフラット",
+    "アイコン・マーク"
+   ],
+   "w": 421,
+   "h": 365
+  }
+ ]
+}

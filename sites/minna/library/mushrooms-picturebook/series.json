@@ -1,0 +1,239 @@
+{
+ "added": "2026-10-18",
+ "slug": "mushrooms-picturebook",
+ "title": "きのこの森の図鑑",
+ "genre": "nature",
+ "touch": "picturebook",
+ "lead": "しいたけ・まいたけ・ベニテングタケ風の絵など、きのこ12点を絵本のタッチで描いた素材です。秋の資料や食の記事に使えます。",
+ "tags": [
+  "きのこ",
+  "キノコ",
+  "しいたけ",
+  "秋",
+  "森",
+  "絵本"
+ ],
+ "subject": "",
+ "season": {
+  "from": "09-20",
+  "to": "11-30"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "mushrooms-picturebook-shiitake",
+   "file": "mushrooms-picturebook-shiitake.webp",
+   "title": "しいたけ",
+   "desc": "しいたけの絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 527,
+   "h": 443
+  },
+  {
+   "id": "mushrooms-picturebook-shimeji",
+   "file": "mushrooms-picturebook-shimeji.webp",
+   "title": "しめじ",
+   "desc": "しめじの絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "しめじ",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 448,
+   "h": 436
+  },
+  {
+   "id": "mushrooms-picturebook-enoki",
+   "file": "mushrooms-picturebook-enoki.webp",
+   "title": "えのき",
+   "desc": "えのきの絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "えのき",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 470,
+   "h": 490
+  },
+  {
+   "id": "mushrooms-picturebook-maitake",
+   "file": "mushrooms-picturebook-maitake.webp",
+   "title": "まいたけ",
+   "desc": "まいたけの絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "まいたけ",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 504,
+   "h": 480
+  },
+  {
+   "id": "mushrooms-picturebook-eringi",
+   "file": "mushrooms-picturebook-eringi.webp",
+   "title": "エリンギ",
+   "desc": "エリンギの絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "エリンギ",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 471,
+   "h": 492
+  },
+  {
+   "id": "mushrooms-picturebook-matsutake",
+   "file": "mushrooms-picturebook-matsutake.webp",
+   "title": "まつたけ",
+   "desc": "まつたけの絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "まつたけ",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 485,
+   "h": 489
+  },
+  {
+   "id": "mushrooms-picturebook-nameko",
+   "file": "mushrooms-picturebook-nameko.webp",
+   "title": "なめこ",
+   "desc": "なめこの絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "なめこ",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 447,
+   "h": 430
+  },
+  {
+   "id": "mushrooms-picturebook-champignon",
+   "file": "mushrooms-picturebook-champignon.webp",
+   "title": "マッシュルーム",
+   "desc": "マッシュルームの絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "マッシュルーム",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 454,
+   "h": 390
+  },
+  {
+   "id": "mushrooms-picturebook-toadstool",
+   "file": "mushrooms-picturebook-toadstool.webp",
+   "title": "赤い毒きのこ",
+   "desc": "赤い毒きのこの絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "赤い毒きのこ",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 418,
+   "h": 442
+  },
+  {
+   "id": "mushrooms-picturebook-blue",
+   "file": "mushrooms-picturebook-blue.webp",
+   "title": "青いきのこ",
+   "desc": "青いきのこの絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "青いきのこ",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 447,
+   "h": 469
+  },
+  {
+   "id": "mushrooms-picturebook-forest",
+   "file": "mushrooms-picturebook-forest.webp",
+   "title": "きのこの生えた切り株",
+   "desc": "きのこの生えた切り株の絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "きのこの生えた切り株",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 476,
+   "h": 480
+  },
+  {
+   "id": "mushrooms-picturebook-basket",
+   "file": "mushrooms-picturebook-basket.webp",
+   "title": "きのこ狩りの籠",
+   "desc": "きのこ狩りの籠の絵本風イラストです。",
+   "tags": [
+    "きのこ",
+    "キノコ",
+    "しいたけ",
+    "秋",
+    "きのこの森の図鑑",
+    "きのこ狩りの籠",
+    "絵本風",
+    "花・自然"
+   ],
+   "w": 506,
+   "h": 496
+  }
+ ]
+}

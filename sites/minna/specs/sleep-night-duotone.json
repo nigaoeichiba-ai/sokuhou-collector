@@ -1,0 +1,84 @@
+{
+ "slug": "sleep-night-duotone",
+ "title": "夜と眠りの時間",
+ "subject": "",
+ "genre": "life",
+ "touch": "duotone",
+ "title_fmt": "{ja}",
+ "subject_en": "Night and sleep illustrations in a duotone palette (deep navy blue and warm yellow on cream), each ONE separate object or small scene centred in its cell Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "ベッド・枕・月・目覚まし時計など、夜と睡眠の素材12点です。健康や生活習慣の記事、夜のお知らせに使えます。",
+ "tags": [
+  "睡眠",
+  "夜",
+  "ベッド",
+  "枕",
+  "目覚まし",
+  "生活習慣",
+  "月"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "bed",
+   "ベッド",
+   "a bed with a pillow and a folded blanket"
+  ],
+  [
+   "pillow",
+   "枕",
+   "a plump pillow with a soft dent"
+  ],
+  [
+   "moon",
+   "三日月",
+   "a crescent moon with two small stars"
+  ],
+  [
+   "clock",
+   "目覚まし時計",
+   "an alarm clock with two bells on top"
+  ],
+  [
+   "sleeping",
+   "眠る人",
+   "a person sleeping in bed with a blanket pulled up"
+  ],
+  [
+   "lamp",
+   "ベッドサイドの灯り",
+   "a small bedside lamp glowing"
+  ],
+  [
+   "pajamas",
+   "パジャマ",
+   "a folded pair of striped pajamas"
+  ],
+  [
+   "teddy",
+   "寝床のぬいぐるみ",
+   "a stuffed bear sitting on a pillow"
+  ],
+  [
+   "window",
+   "夜の窓",
+   "a window showing a night sky with stars"
+  ],
+  [
+   "warm-milk",
+   "寝る前のホットミルク",
+   "a mug of warm milk with steam"
+  ],
+  [
+   "book",
+   "寝る前の読書",
+   "a person reading a book in bed with a lamp"
+  ],
+  [
+   "yawn",
+   "あくびをする人",
+   "a person yawning with a hand over the mouth"
+  ]
+ ],
+ "exclude": []
+}

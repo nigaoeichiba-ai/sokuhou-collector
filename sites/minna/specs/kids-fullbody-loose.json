@@ -1,0 +1,83 @@
+{
+ "slug": "kids-fullbody-loose",
+ "title": "男の子と女の子の全身",
+ "subject": "",
+ "genre": "people",
+ "touch": "loose",
+ "title_fmt": "{ja}",
+ "subject_en": "Full-body children (a boy and a girl alternately), loose hand-drawn style with simple faces, one child per cell, whole body visible from head to shoes, casual clothes Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "走る・座る・手を振るなど、子どもの全身のポーズ12点の素材です。園だよりや学校の資料、絵本風の挿し絵に使えます。",
+ "tags": [
+  "男の子",
+  "女の子",
+  "全身",
+  "子ども",
+  "ポーズ",
+  "手書き"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "boy-run",
+   "走る男の子",
+   "a boy running with arms swinging"
+  ],
+  [
+   "girl-run",
+   "走る女の子",
+   "a girl running with a ponytail flying"
+  ],
+  [
+   "boy-wave",
+   "手を振る男の子",
+   "a boy standing and waving one hand"
+  ],
+  [
+   "girl-wave",
+   "手を振る女の子",
+   "a girl standing and waving one hand"
+  ],
+  [
+   "boy-sit",
+   "座る男の子",
+   "a boy sitting cross-legged on the floor"
+  ],
+  [
+   "girl-sit",
+   "座る女の子",
+   "a girl sitting with knees hugged"
+  ],
+  [
+   "boy-jump",
+   "ジャンプする男の子",
+   "a boy jumping with both arms up"
+  ],
+  [
+   "girl-jump",
+   "ジャンプする女の子",
+   "a girl jumping with both arms up"
+  ],
+  [
+   "boy-bag",
+   "ランドセルの男の子",
+   "a boy walking with a school backpack"
+  ],
+  [
+   "girl-bag",
+   "ランドセルの女の子",
+   "a girl walking with a school backpack"
+  ],
+  [
+   "boy-point",
+   "指をさす男の子",
+   "a boy pointing forward with one finger"
+  ],
+  [
+   "girl-think",
+   "考える女の子",
+   "a girl with a hand on her chin, thinking"
+  ]
+ ],
+ "exclude": []
+}

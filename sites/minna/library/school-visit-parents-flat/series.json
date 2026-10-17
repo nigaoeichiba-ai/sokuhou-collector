@@ -1,0 +1,167 @@
+{
+ "added": "2026-10-18",
+ "slug": "school-visit-parents-flat",
+ "title": "授業参観と保護者会",
+ "genre": "school",
+ "touch": "flat",
+ "lead": "授業参観・保護者会・個人面談など、学校行事の場面12点の素材です。学校だよりや保護者向けの資料に使えます。",
+ "tags": [
+  "授業参観",
+  "保護者会",
+  "面談",
+  "学校行事",
+  "教室",
+  "保護者"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "school-visit-parents-flat-meeting",
+   "file": "school-visit-parents-flat-meeting.webp",
+   "title": "保護者会",
+   "desc": "保護者会のシンプルフラットイラストです。",
+   "tags": [
+    "授業参観",
+    "保護者会",
+    "面談",
+    "学校行事",
+    "保護者",
+    "授業参観と保護者会",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 531,
+   "h": 461
+  },
+  {
+   "id": "school-visit-parents-flat-shoes",
+   "file": "school-visit-parents-flat-shoes.webp",
+   "title": "来客用スリッパ",
+   "desc": "来客用スリッパのシンプルフラットイラストです。",
+   "tags": [
+    "授業参観",
+    "保護者会",
+    "面談",
+    "学校行事",
+    "授業参観と保護者会",
+    "来客用スリッパ",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 475,
+   "h": 341
+  },
+  {
+   "id": "school-visit-parents-flat-handout",
+   "file": "school-visit-parents-flat-handout.webp",
+   "title": "配布プリント",
+   "desc": "配布プリントのシンプルフラットイラストです。",
+   "tags": [
+    "授業参観",
+    "保護者会",
+    "面談",
+    "学校行事",
+    "授業参観と保護者会",
+    "配布プリント",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 478,
+   "h": 467
+  },
+  {
+   "id": "school-visit-parents-flat-reception",
+   "file": "school-visit-parents-flat-reception.webp",
+   "title": "受付の机",
+   "desc": "受付の机のシンプルフラットイラストです。",
+   "tags": [
+    "授業参観",
+    "保護者会",
+    "面談",
+    "学校行事",
+    "授業参観と保護者会",
+    "受付の机",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 462,
+   "h": 375
+  },
+  {
+   "id": "school-visit-parents-flat-hall",
+   "file": "school-visit-parents-flat-hall.webp",
+   "title": "廊下の掲示",
+   "desc": "廊下の掲示のシンプルフラットイラストです。",
+   "tags": [
+    "授業参観",
+    "保護者会",
+    "面談",
+    "学校行事",
+    "授業参観と保護者会",
+    "廊下の掲示",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 492,
+   "h": 483
+  },
+  {
+   "id": "school-visit-parents-flat-chair",
+   "file": "school-visit-parents-flat-chair.webp",
+   "title": "保護者用の椅子",
+   "desc": "保護者用の椅子のシンプルフラットイラストです。",
+   "tags": [
+    "授業参観",
+    "保護者会",
+    "面談",
+    "学校行事",
+    "保護者",
+    "授業参観と保護者会",
+    "保護者用の椅子",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 499,
+   "h": 482
+  },
+  {
+   "id": "school-visit-parents-flat-camera",
+   "file": "school-visit-parents-flat-camera.webp",
+   "title": "写真を撮る保護者",
+   "desc": "写真を撮る保護者のシンプルフラットイラストです。",
+   "tags": [
+    "授業参観",
+    "保護者会",
+    "面談",
+    "学校行事",
+    "保護者",
+    "授業参観と保護者会",
+    "写真を撮る保護者",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 291,
+   "h": 492
+  },
+  {
+   "id": "school-visit-parents-flat-walk",
+   "file": "school-visit-parents-flat-walk.webp",
+   "title": "校門を出る親子",
+   "desc": "校門を出る親子のシンプルフラットイラストです。",
+   "tags": [
+    "授業参観",
+    "保護者会",
+    "面談",
+    "学校行事",
+    "授業参観と保護者会",
+    "校門を出る親子",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 520,
+   "h": 450
+  }
+ ]
+}
