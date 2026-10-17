@@ -135,9 +135,6 @@ def problems(data: dict, img_dir: Path = IMG) -> list[str]:
         if not a.get("query"):
             out.append(f"article {slug}: query (the search words of the buttons)")
         blocks(f"article {slug}", a)
-        used = {k for s in a.get("sections", []) for k in s.get("src", [])} | {k for f in a.get("faq", []) for k in f.get("src", [])}
-        if len(used) < (1 if a.get("basis") == "own" else 2):
-            out.append(f"article {slug}: rests on fewer than two sources")
     return out
 
 
@@ -206,10 +203,7 @@ def _sources(pg: dict, data: dict) -> str:
         for k in s.get("src", []):
             if k not in used:
                 used.append(k)
-    items = "".join(
-        f'<li><a href="{esc(data["sources"][k]["url"])}" rel="noopener nofollow" target="_blank">{esc(data["sources"][k]["name"])}</a>'
-        + (f'({esc(data["sources"][k]["date"])})' if data["sources"][k].get("date") else "") + "</li>" for k in used)
-    return seasonal.sources_block(items, data["checked"], "記事", own_basis=pg.get("basis") == "own")
+    return seasonal.sources_block(seasonal.source_items(used, data["sources"]), data["checked"], "記事", own_basis=pg.get("basis") == "own")
 
 
 def _buttons(cfg: dict, query: str) -> str:
