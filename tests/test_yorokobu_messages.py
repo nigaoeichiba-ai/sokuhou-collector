@@ -183,7 +183,7 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(html.count('class="msg-text"'), 15 + 3)                  # 5 sets x 3 messages + 3 closing phrases
         self.assertEqual(html.count("data-copy hidden"), 15 + 3)
         self.assertIn("母へ", html)
-        self.assertIn("言葉を選ぶときの気をつけたいこと", html)
+        self.assertIn("言葉を選ぶときに気をつけたいこと", html)
         import re as _re
         body = _re.sub(r'<aside class="sale-bar".*?</aside>', "", html, flags=_re.S)  # (the slim sale bar is on every page and says PR itself)
         self.assertNotIn("hb.afl.rakuten.co.jp", body)                            # a pure reading page: no product link of its own

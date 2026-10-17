@@ -612,7 +612,7 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
     tier_btns = "".join(f'<button type="button" class="chipbtn" data-v="{t["slug"]}">{esc(t["label"])}</button>'
                         for t in c["filters"]["tiers"] if any(in_tier(i["price"], t) for i in union))
     type_btns = "".join(f'<button type="button" class="chipbtn" data-v="{esc(t)}">{esc(t)}</button>' for t in all_types)
-    sort_ctl = ('''<div class="ctl row"><label>ならびかえ <select data-sort><option value="rank">おすすめ順</option><option value="reviews">レビュー件数が多い順</option>
+    sort_ctl = ('''<div class="ctl row"><label>並び替え <select data-sort><option value="rank">おすすめ順</option><option value="reviews">レビュー件数が多い順</option>
 <option value="rating">評価が高い順</option><option value="price-asc">価格が安い順</option><option value="price-desc">価格が高い順</option></select></label></div>'''
                 if len(grid_items) + (1 if own else 0) >= 2 else "")
     controls = rest = ""
@@ -867,7 +867,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 {guide_link(c, p["occasion"])}
 {seasonal.hook(p["occasion"])}{shogatsu.hook(p["occasion"])}
 <p style="margin-top:40px">{amazon}</p>
-{related_section([(f"{occ['name']}のほかの相手", links(related_occ)), (f"{rec['name']}へのほかのイベント", links(related_rec))])}"""
+{related_section([(f"{occ['name']}に贈るほかの相手", links(related_occ)), (f"{rec['name']}へのほかのイベント", links(related_rec))])}"""
     return page(cfg, preview, path=f"/gift/{key}/", title=f"{p['title']} | {cfg['site_name']}", description=p["lead"][:110], body=body,
                 og_image=og_for(f"gift/{key}"))
 
@@ -1596,7 +1596,7 @@ def message_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 <p class="sec-lead">気に入った文の「コピー」を押すとそのまま貼りつけられます。相手との関係に合わせて言葉を少し変えるとさらに気持ちが伝わります。</p>
 {sets}
 <section style="margin-top:44px"><h2><span class="scribble">最後に添える一言</span></h2><ul class="msg-list">{closing}</ul></section>
-<section class="avoid" style="margin-top:44px"><h2><span class="scribble">言葉を選ぶときの気をつけたいこと</span></h2>{ul(m["manners"], "warn")}</section>
+<section class="avoid" style="margin-top:44px"><h2><span class="scribble">言葉を選ぶときに気をつけたいこと</span></h2>{ul(m["manners"], "warn")}</section>
 <section style="margin-top:44px"><h2><span class="scribble">贈るものを探す</span></h2>
 <p><a class="btn" href="/occasion/{slug}/">{esc(o["name"])}のプレゼントを探す</a></p>{guide_link(c, slug)}</section>
 {amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "に贈るものをAmazonで探す")}
