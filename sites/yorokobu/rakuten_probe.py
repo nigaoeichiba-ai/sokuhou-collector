@@ -93,6 +93,7 @@ def main() -> int:
         except rakuten.RakutenError as e:
             print(label, str(e)[:100])
             continue
+        print(f"{label}: itemUrl shapes:", dict(collections.Counter(shape(r.get("itemUrl") or "", aff) for r in raws)))
         links = [r.get("affiliateUrl") or "" for r in raws]
         ids = [urllib.parse.urlsplit(u).path.split("/")[2] if u.count("/") > 3 else "" for u in links]
         print(f"{label}: {len(links)} links; carry our whole ID: {sum(aff in u for u in links)}; carry any part of our ID: {sum(any(x in u for x in ours) for u in links)}; "
