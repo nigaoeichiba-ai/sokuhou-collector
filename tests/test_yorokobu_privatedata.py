@@ -1,7 +1,9 @@
 """楽天・Yahoo!のAPIの取得データは、公開リポジトリに置かず、サーバーの非公開の場所に置く (sites/yorokobu/privatedata.py)。"""
+import io
 import os
 import re
 import subprocess
+import tarfile
 import tempfile
 import unittest
 from pathlib import Path
@@ -14,18 +16,34 @@ ENV = {"XSERVER_SSH_KEY": "KEYDATA", "XSERVER_HOST": "h.example", "XSERVER_USER"
 
 
 class FakeRun:
-    def __init__(self, pull=None):
+    """The server as one ssh answer: a pull gets a tar of the requested files the server has; a push is a tar on stdin that is unpacked into a dict."""
+
+    def __init__(self, server=None, fail_first=0):
         self.calls = []
-        self.pull = pull or {}
+        self.server = dict(server or {})
+        self.fail_first = fail_first
 
     def __call__(self, cmd, **kw):
         self.calls.append((cmd, kw))
-        last = cmd[-1]
-        m = re.search(r"cat ~/yorokobu-private/(\S+)$", last)
-        if m and last.startswith("test -f"):
-            data = self.pull.get(m.group(1))
-            return subprocess.CompletedProcess(cmd, 0 if data is not None else 1, stdout=data or b"", stderr=b"")
-        return subprocess.CompletedProcess(cmd, 0, stdout=b"", stderr=b"")
+        if self.fail_first:
+            self.fail_first -= 1
+            return subprocess.CompletedProcess(cmd, 255, stdout=b"", stderr=b"")
+        remote = cmd[-1]
+        if kw.get("input") is not None:                                         # a push
+            with tarfile.open(fileobj=io.BytesIO(kw["input"]), mode="r:") as tf:
+                for m in tf:
+                    self.server[m.name] = tf.extractfile(m).read()
+            return subprocess.CompletedProcess(cmd, 0, stdout=b"", stderr=b"")
+        names = re.search(r"for n in ([^;]+);", remote).group(1).split()          # a pull: the files named and present
+        have = [n for n in names if n in self.server]
+        buf = io.BytesIO()
+        if have:
+            with tarfile.open(fileobj=buf, mode="w:") as tf:
+                for n in have:
+                    info = tarfile.TarInfo(n)
+                    info.size = len(self.server[n])
+                    tf.addfile(info, io.BytesIO(self.server[n]))
+        return subprocess.CompletedProcess(cmd, 0, stdout=buf.getvalue(), stderr=b"")
 
 
 class StoreTest(unittest.TestCase):
@@ -40,24 +58,60 @@ class StoreTest(unittest.TestCase):
         with mock.patch.dict(os.environ, ENV):
             self.assertEqual(privatedata.run("push", ["../../etc/passwd"]), 2)
 
-    def test_a_push_writes_to_a_folder_beside_public_html_and_is_not_readable_by_others(self):
+    def test_a_push_is_one_connection_into_a_folder_beside_public_html_mode_700_with_files_600(self):
         fake = FakeRun()
-        with tempfile.TemporaryDirectory() as td, mock.patch.dict(os.environ, ENV), mock.patch("subprocess.run", fake), mock.patch.object(privatedata, "DATA", Path(td)):
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict(os.environ, ENV), mock.patch("subprocess.run", fake), mock.patch.object(privatedata, "DATA", Path(td)),                 mock.patch.object(privatedata, "WAIT", (0, 0, 0)):
             (Path(td) / "yorokobu_compare.json").write_text("{}", encoding="utf-8")
-            self.assertEqual(privatedata.run("push", ["yorokobu_compare.json"]), 0)
-        cmds = [c[-1] for c, _ in fake.calls]
-        self.assertTrue(any("mkdir -p ~/yorokobu-private" in c and "chmod 700" in c for c in cmds), cmds)
-        up = [c for c in cmds if ".part" in c][0]
-        self.assertIn("~/yorokobu-private/yorokobu_compare.json", up)
-        self.assertIn("chmod 600", up)
-        self.assertTrue(all("public_html" not in c for c in cmds), cmds)                          # never a folder the web server serves
+            (Path(td) / "yorokobu_yahoo.json").write_text('{"y": 1}', encoding="utf-8")
+            self.assertEqual(privatedata.run("push", ["yorokobu_compare.json", "yorokobu_yahoo.json", "yorokobu_ranking.json"]), 0)
+        self.assertEqual(len(fake.calls), 1)                                                        # all the files travel in one connection
+        self.assertEqual(fake.server, {"yorokobu_compare.json": b"{}", "yorokobu_yahoo.json": b'{"y": 1}'})      # (a file that is not here is skipped)
+        remote = fake.calls[0][0][-1]
+        self.assertIn("mkdir -p ~/yorokobu-private", remote)
+        self.assertIn("chmod 700", remote)
+        self.assertIn("chmod 600", remote)
+        self.assertIn("mv -f", remote)                                                              # unpacked aside, then moved into place
+        self.assertNotIn("public_html", remote)                                                     # never a folder the web server serves
 
-    def test_a_pull_writes_the_file_and_skips_one_the_server_does_not_have_yet(self):
-        fake = FakeRun(pull={"yorokobu_ranking.json": b'{"a": 1}'})
-        with tempfile.TemporaryDirectory() as td, mock.patch.dict(os.environ, ENV), mock.patch("subprocess.run", fake), mock.patch.object(privatedata, "DATA", Path(td)):
+    def test_a_pull_is_one_connection_writes_the_files_and_skips_the_ones_the_server_does_not_have_yet(self):
+        fake = FakeRun(server={"yorokobu_ranking.json": b'{"a": 1}'})
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict(os.environ, ENV), mock.patch("subprocess.run", fake), mock.patch.object(privatedata, "DATA", Path(td)),                 mock.patch.object(privatedata, "WAIT", (0, 0, 0)):
             self.assertEqual(privatedata.run("pull", ["yorokobu_ranking.json", "yorokobu_yahoo.json"]), 0)
             self.assertEqual((Path(td) / "yorokobu_ranking.json").read_bytes(), b'{"a": 1}')
             self.assertFalse((Path(td) / "yorokobu_yahoo.json").exists())
+            self.assertEqual(len(fake.calls), 1)
+            fake2 = FakeRun()
+            with mock.patch("subprocess.run", fake2):
+                self.assertEqual(privatedata.run("pull", []), 0)                                    # nothing on the server yet: fine, and still one connection
+            self.assertEqual(len(fake2.calls), 1)
+
+    def test_a_pull_takes_only_the_files_it_asked_for_from_the_tar(self):
+        fake = FakeRun(server={"yorokobu_ranking.json": b"{}", "evil.sh": b"x"})
+        real = fake.__call__
+
+        def sneaky(cmd, **kw):                                                                     # a server that sends more than was asked for
+            out = real(cmd, **kw)
+            buf = io.BytesIO(out.stdout)
+            extra = io.BytesIO()
+            with tarfile.open(fileobj=extra, mode="w:") as tf:
+                for n, data in (("yorokobu_ranking.json", b"{}"), ("evil.sh", b"x"), ("../up.json", b"x")):
+                    info = tarfile.TarInfo(n)
+                    info.size = len(data)
+                    tf.addfile(info, io.BytesIO(data))
+            return subprocess.CompletedProcess(cmd, 0, stdout=extra.getvalue(), stderr=b"")
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict(os.environ, ENV), mock.patch("subprocess.run", sneaky), mock.patch.object(privatedata, "DATA", Path(td)),                 mock.patch.object(privatedata, "WAIT", (0, 0, 0)):
+            privatedata.run("pull", ["yorokobu_ranking.json"])
+            self.assertEqual(sorted(p.name for p in Path(td).iterdir()), ["yorokobu_ranking.json"])
+
+    def test_a_failed_connection_is_tried_again_after_a_pause_and_gives_up_after_three(self):
+        fake = FakeRun(server={"yorokobu_ranking.json": b"{}"}, fail_first=2)
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict(os.environ, ENV), mock.patch("subprocess.run", fake), mock.patch.object(privatedata, "DATA", Path(td)),                 mock.patch.object(privatedata, "WAIT", (0, 0, 0)):
+            self.assertEqual(privatedata.run("pull", ["yorokobu_ranking.json"]), 0)
+            self.assertEqual(len(fake.calls), 3)
+        dead = FakeRun(fail_first=9)
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict(os.environ, ENV), mock.patch("subprocess.run", dead), mock.patch.object(privatedata, "DATA", Path(td)),                 mock.patch.object(privatedata, "WAIT", (0, 0, 0)):
+            self.assertEqual(privatedata.run("pull", ["yorokobu_ranking.json"]), 1)
+            self.assertEqual(len(dead.calls), 3)
 
     def test_the_four_files_are_ignored_by_git_and_not_tracked(self):
         ignore = (ROOT / "data" / ".gitignore").read_text(encoding="utf-8")         # (data/ is on the auto-push's list of folders; the top .gitignore is not)
