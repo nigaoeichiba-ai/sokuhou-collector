@@ -384,6 +384,29 @@ def fetch_live(site: str, rel: str) -> str:
         return r.read().decode("utf-8", errors="replace")
 
 
+OFFICE_DOCS = sl.ROOT.parent / "sokuhou-sites" / "docs" / "office"          # outside git: only on the owner PC (the keeper runs there); absent in CI
+
+
+def append_accepted_doc(site: str, report: dict, today: str | None = None) -> Path | None:
+    """The desk reads what was taken: add the page's before -> after table to docs/office/STYLE_EDIT_ACCEPTED_<date>.md (paragraphs first)."""
+    if not OFFICE_DOCS.is_dir() or not report.get("accepted"):
+        return None
+    today = today or report.get("date") or dt.date.today().isoformat()
+    f = OFFICE_DOCS / f"STYLE_EDIT_ACCEPTED_{today}.md"
+    lines = [] if f.exists() else [f"# 採用した書き直し {today}(`edit --site {site} --next N --accept`。前→後。段落を先に)", ""]
+    acc = sorted(report["accepted"], key=lambda a: (a["kind"] not in CLAIM_KINDS, -len(a["from"])))
+    lines += [f"## {site}: {report['page']}(採用 {len(acc)}、却下 {len(report['rejected'])}、要確認 {len(report['needs_check'])}、削る提案 {len(report['deleted'])}、構成の提案 {len(report['structure_suggestions'])})", ""]
+    if report["needs_check"]:
+        lines += ["要確認: " + " / ".join(f"「{q['text'][:30]}」{q['question'][:70]}" for q in report["needs_check"][:8]), ""]
+    if report["structure_suggestions"]:
+        lines += ["構成の提案: " + " / ".join(x[:150] for x in report["structure_suggestions"][:4]), ""]
+    lines += ["| 種類 | 前 | 後 |", "|---|---|---|"]
+    lines += [f"| {a['kind']} | {a['from'][:240].replace('|', '/')} | {a['to'][:240].replace('|', '/')} |" for a in acc] + [""]
+    with open(f, "a", encoding="utf-8", newline="\n") as fh:
+        fh.write(chr(10).join(lines) + chr(10))
+    return f
+
+
 def next_pages(site: str, build: Path, n: int, fetch=None) -> list[tuple[str, str]]:
     """The next pages to edit: editorial pages (several editable paragraphs) never edited, or whose text changed since; oldest first."""
     done = load_edited(site)

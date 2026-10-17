@@ -364,6 +364,25 @@ class Production(unittest.TestCase):
         self.assertEqual([(x["from"], x["to"], x["prev"]) for x in e], [("ギフトプレゼントの選び方", "贈り物の選び方と相場", "贈り物の選び方")])
 
 
+class AcceptedDoc(unittest.TestCase):
+    def test_the_desk_gets_a_before_after_table_per_page_appended_to_the_days_file(self):
+        rep = {"page": "guide/x/index.html", "date": "2026-10-18", "accepted": [{"kind": "heading", "from": "前の見出し", "to": "後の見出し", "why": "x"},
+                                                                              {"kind": "para", "from": "前の段落です。" * 3, "to": "後の段落です。", "why": "x"}],
+               "rejected": [{}], "needs_check": [{"text": "洗う品は場面で良品", "question": "洗う品とは"}], "deleted": [], "structure_suggestions": ["入れ替える"]}
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(pe, "OFFICE_DOCS", Path(d)):
+            f = pe.append_accepted_doc("yorokobu", rep)
+            pe.append_accepted_doc("yorokobu", {**rep, "page": "guide/y/index.html"})
+            text = f.read_text(encoding="utf-8")
+            self.assertEqual(f.name, "STYLE_EDIT_ACCEPTED_2026-10-18.md")
+            self.assertEqual(text.count("# 採用した書き直し"), 1)                        # one title, a section per page
+            self.assertIn("## yorokobu: guide/x/index.html(採用 2", text)
+            self.assertIn("## yorokobu: guide/y/index.html", text)
+            self.assertLess(text.index("| para |"), text.index("| heading |"))              # paragraphs first
+            self.assertIn("洗う品は場面で良品", text)
+        with mock.patch.object(pe, "OFFICE_DOCS", Path("/no/such/folder")):                   # CI: no such folder: nothing is written, nothing fails
+            self.assertIsNone(pe.append_accepted_doc("yorokobu", rep))
+
+
 class RewriterWithManyLongLines(unittest.TestCase):
     def test_a_long_original_is_found_inside_a_longer_text_and_many_lines_stay_fast(self):
         entries = [{"from": f"これは{i}番目の長い原文で、書き直される予定の段落です。", "to": f"{i}番目の段落です。"} for i in range(800)]
