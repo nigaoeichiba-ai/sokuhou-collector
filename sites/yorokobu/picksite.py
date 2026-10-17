@@ -45,24 +45,24 @@ def rakuten_card(cfg: dict, d: dict, e: dict, eid: str, n: int, more: str = "") 
     live = d.get("daily_items", {}).get(e["code"])
     if live is not None and not live.get("available", True):
         return None                                                      # sold out or gone: not shown (nobody can buy it)
-    url = B.rakuten.clean_item_url(live["url"] if live else e["url"])
-    href = B.rakuten_link(cfg, url)
+    url = B.rakuten.page_url(live["url"] if live else e["url"])
+    href = B.item_href(cfg, live) if live else B.rakuten_link(cfg, url)
     img = live["image"] if live else e["img"]
     price = ""
     if live:
         stars = f'<span class="stars">★{live["rating"]:.1f}</span>({live["reviews"]:,}件)' if live["reviews"] else ""
         price = (f'<p class="pick-price">{B.yen(live["price"])}<small>{stars}{"・送料無料" if live["free_shipping"] else ""}'
                  f'<br>楽天市場の{esc(d["fetched_label"])}時点の情報</small></p>')
-        B.SEEN[e["code"]] = {"n": B.short(e["name"], 60), "p": live["price"], "i": B.thumb(live["image"], 128), "u": href}
+        B.SEEN[e["code"]] = {"n": B.short(e["name"], 60), "p": live["price"], "i": live["image"], "u": href}
     else:
         price = '<p class="pick-price"><small>価格・在庫は販売ページでご確認ください。</small></p>'
     other = ""                                                                            # a Rakuten product part carries Rakuten's link only (terms Article 8)
     fav = B.fav_button(e["code"], B.short(e["name"], 40), live["price"] if live else None, url)
-    return (f'<article class="pick" id="{eid}" data-code="{esc(e["code"])}"><div class="imgbox"><a class="pick-img" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
-            f'<img src="{esc(B.thumb(img, 128))}" alt="{esc(e["name"])}" width="128" height="128" {B.EAGER if n == 1 else B.LAZY}></a>{fav}</div>'
+    return (f'<article class="pick" id="{eid}" data-code="{esc(e["code"])}"><div class="imgbox"><div class="pick-img"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">'
+            f'<img src="{esc(img)}" alt="{esc(e["name"])}"></a></div>{fav}</div>'
             f'<div class="pick-body"><p class="pick-meta"><span class="pick-no">{n}</span><span class="tag">{esc(e["kind"])}</span><span class="pick-scene">{esc(e["scene"])}</span></p>'
             f'<h3>{esc(e["headline"])}</h3><p class="pick-name">{esc(e["name"])}</p><p class="pick-sum">{esc(e["summary"])}</p>{_chips(e["for"])}{_facts(e)}{price}'
-            f'<div class="item-btns"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">楽天市場で見る</a>{other}</div>{more}</div></article>')
+            f'<div class="item-btns"><span class="btn"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">楽天市場で見る</a></span>{other}</div>{more}</div></article>')
 
 
 def amazon_card(cfg: dict, d: dict, e: dict, eid: str, n: int, more: str = "") -> str:
@@ -70,13 +70,13 @@ def amazon_card(cfg: dict, d: dict, e: dict, eid: str, n: int, more: str = "") -
     href = B.amazon_dp(cfg, e["asin"])
     rk = B.search_link(cfg, B.amazon_query(e["name"]))
     fav = B.fav_button("a:" + e["asin"], B.short(e["name"], 40), None, href)
-    return (f'<article class="pick" id="{eid}" data-asin="{esc(e["asin"])}"><div class="imgbox mood"><a class="pick-img mood" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">'
-            f'{B.mood_img(e["mood"], e["name"] + "の商品写真ではなく、贈る場面を表したイメージ", "(max-width: 640px) 100vw, 360px")}<span class="img-note">イメージ画像</span></a>{fav}</div>'
+    return (f'<article class="pick" id="{eid}" data-asin="{esc(e["asin"])}"><div class="imgbox mood"><div class="pick-img mood"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">'
+            f'{B.mood_img(e["mood"], e["name"] + "の商品写真ではなく、贈る場面を表したイメージ", "(max-width: 640px) 100vw, 360px")}<span class="img-note">イメージ画像</span></a></div>{fav}</div>'
             f'<div class="pick-body"><p class="pick-meta"><span class="pick-no">{n}</span><span class="tag">{esc(e["kind"])}</span><span class="pick-scene">{esc(e["scene"])}</span></p>'
             f'<h3>{esc(e["headline"])}</h3><p class="pick-name">{esc(e["name"])}</p><p class="pick-sum">{esc(e["summary"])}</p>{_chips(e["for"])}{_facts(e)}'
             f'<p class="pick-price"><small>価格・在庫はAmazonのページでご確認ください。</small></p>'
-            f'<div class="item-btns"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">Amazonで見る</a>'
-            f'<a class="btn" href="{esc(rk)}" rel="sponsored nofollow noopener" target="_blank" aria-label="楽天市場で同じ商品を探す">楽天市場で探す</a></div>{more}</div></article>')
+            f'<div class="item-btns"><span class="btn"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">Amazonで見る</a></span>'
+            f'<span class="btn"><a href="{esc(rk)}" target="_blank" rel="nofollow sponsored noopener">楽天市場で探す</a></span></div>{more}</div></article>')
 
 
 def _entries(day: dict) -> dict[str, tuple[str, dict]]:
@@ -94,8 +94,9 @@ def highlight_tiles(day: dict, d: dict, cfg: dict) -> str:
         if store == "amazon" and not cfg.get("amazon_tracking_id"):
             continue                                                       # no Associates ID, no Amazon link: such a product is not shown
         live = d.get("daily_items", {}).get(e.get("code", ""))
-        img = B.thumb((live["image"] if live else e.get("img")), 128) if store == "rakuten" else dp.mood_small_path(e)
-        tiles += (f'<li><a class="pick-hl" href="{day_path(day["date"])}#{h["ref"]}"><img src="{esc(img)}" alt="" width="120" height="120" loading="eager" decoding="async">'
+        img = (live["image"] if live else e.get("img")) if store == "rakuten" else dp.mood_small_path(e)
+        attrs = "" if store == "rakuten" else ' width="120" height="120" loading="eager" decoding="async"'            # a shop's picture is src and alt only; the site's own picture says its size
+        tiles += (f'<li><a class="pick-hl" href="{day_path(day["date"])}#{h["ref"]}"><img src="{esc(img)}" alt=""{attrs}>'
                   f'<span><b class="hl-tag">{esc(h["tag"])}</b><strong>{esc(e["headline"])}</strong><small>{esc(e["name"][:34])}</small></span></a></li>')
     return f'<ul class="pick-hls">{tiles}</ul>'
 

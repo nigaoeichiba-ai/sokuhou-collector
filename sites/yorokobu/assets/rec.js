@@ -19,22 +19,22 @@
     return items.slice(0, o.n || 4);
   }
   function card(it) {
-    var rel = ' rel="sponsored nofollow noopener" target="_blank"';
-    return '<li class="item"><a class="item-img" href="' + esc(it.u) + '"' + rel + '><img src="' + esc(it.i) + '" alt="' + esc(it.n || "楽天市場の商品ページ") + '" width="128" height="128" loading="lazy"></a>' +
+    var rel = ' target="_blank" rel="nofollow sponsored noopener"';
+    return '<li class="item"><div class="item-img"><a href="' + esc(it.u) + '"' + rel + '><img src="' + esc(it.i) + '" alt="' + esc(it.n || "楽天市場の商品ページ") + '"></a></div>' +
       '<div class="item-body">' + (it.n ? '<p class="item-blurb">' + esc(it.n) + '</p>' : "") + '<p class="price">' + yen(it.p) + '</p>' +
-      '<div class="item-btns"><a class="btn" href="' + esc(it.u) + '"' + rel + '>楽天市場で見る</a></div></div></li>';
+      '<div class="item-btns"><span class="btn"><a href="' + esc(it.u) + '"' + rel + '>楽天市場で見る</a></span></div></div></li>';
   }
   function amazon(group, o) {
     if (!group.a) return "";
     o = o || {};
-    return group.a + (o.min ? "&low-price=" + o.min : "") + (o.max ? "&high-price=" + o.max : "");
+    return group.a;                                                    // Amazon's own form of a link: the keyword and the tag only
   }
   // a block for one group: its products (within the price) and one button each for the Rakuten and the Amazon search
   function block(group, o) {
     o = o || {};
-    var items = pick(group, o), rel = ' rel="sponsored nofollow noopener" target="_blank"';
+    var items = pick(group, o), rel = ' target="_blank" rel="nofollow sponsored noopener"';
     var cards = items.length ? '<ul class="items mini">' + items.map(card).join("") + "</ul>" : '<p class="ask-none">この予算に合う商品は今日の商品データには見つかりませんでした。下のボタンから探せます。</p>';
-    var btns = '<a class="btn" href="' + esc(group.r) + '"' + rel + '>楽天市場で「' + esc(group.q) + '」を探す</a>' + (group.a ? '<a class="btn" href="' + esc(amazon(group, o)) + '"' + rel + '>Amazonで探す</a>' : "");
+    var btns = '<span class="btn"><a href="' + esc(group.r) + '"' + rel + '>楽天市場で「' + esc(group.q) + '」を探す</a></span>' + (group.a ? '<span class="btn"><a href="' + esc(amazon(group, o)) + '"' + rel + '>Amazonで探す</a></span>' : "");
     return cards + '<p class="more">' + btns + "</p>";
   }
   window.YorokobuRec = { load: load, pick: pick, card: card, block: block, esc: esc, yen: yen };

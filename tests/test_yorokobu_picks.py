@@ -180,7 +180,7 @@ class PagesTest(unittest.TestCase):
         self.assertEqual(r_part.count(">Amazonで探す<"), 0)                   # a Rakuten part carries Rakuten's link only (terms Article 8): Amazon's products are in their own part below
         self.assertEqual(a_part.count(">Amazonで見る<"), 10)
         self.assertEqual(a_part.count(">楽天市場で探す<"), 10)
-        self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/yorokobu?pc=", r_part)
+        self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc=", r_part)
         self.assertIn("tag=amazonmacs-22", a_part)
         self.assertIn("https://www.amazon.co.jp/dp/B00UG9X98U?tag=amazonmacs-22", a_part)
 
@@ -241,7 +241,7 @@ class PagesTest(unittest.TestCase):
             self.assertEqual(r_part.count('<article class="pick"'), 10)
             self.assertNotIn("¥", r_part)
             self.assertIn("価格・在庫は販売ページでご確認ください。", r_part)
-            self.assertIn(self.d["rakuten"][0]["img"].replace("_ex=300x300", "_ex=128x128"), r_part)         # the picture as Rakuten gives it (128px)
+            self.assertIn(self.d["rakuten"][0]["img"], r_part)         # the picture URL as it was saved, unchanged
 
     def test_without_an_associates_id_the_amazon_part_is_left_out_instead_of_breaking_the_build(self):
         global CFG

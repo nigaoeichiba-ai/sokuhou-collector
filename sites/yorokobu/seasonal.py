@@ -182,9 +182,9 @@ def page(d: dict, cfg: dict, preview: bool, pg: dict, data: dict, known: set[str
     own = {q["path"] for q in data["pages"]}
     related = "".join(f'<li><a href="{esc(u)}">{esc(t)}</a></li>' for u, t in pg["related"]
                       if known is None or u in own or u.strip("/") + "/index.html" in known)             # the site's other pages come and go with its products: a link only to a page this build has
-    buttons = f'<a class="btn" href="{esc(B.search_link(cfg, pg["query"]))}" rel="sponsored nofollow noopener" target="_blank">楽天市場で{esc(pg["query"])}を探す</a>'
+    buttons = f'<span class="btn"><a href="{esc(B.search_link(cfg, pg["query"]))}" target="_blank" rel="nofollow sponsored noopener">楽天市場で{esc(pg["query"])}を探す</a></span>'
     if cfg.get("amazon_tracking_id"):
-        buttons += f'<a class="btn" href="{esc(B.amazon_url(cfg, pg["query"] + " ギフト"))}" rel="sponsored nofollow noopener" target="_blank">Amazonで{esc(pg["query"])}を探す</a>'
+        buttons += f'<span class="btn"><a href="{esc(B.amazon_url(cfg, pg["query"] + " ギフト"))}" target="_blank" rel="nofollow sponsored noopener">Amazonで{esc(pg["query"])}を探す</a></span>'
     buttons += B.yahoo_btn(cfg, pg["query"] + " ギフト", f'Yahoo!ショッピングで{pg["query"]}を探す')
     body = f"""{B.head_band("sky", "", esc(pg["h1"]), pg["lead"], single=True)}
 <div class="crumbs-wrap">{crumbs(trail)}</div>

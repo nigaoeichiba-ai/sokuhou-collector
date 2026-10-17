@@ -116,7 +116,7 @@ class PagesTest(unittest.TestCase):
         sec = self.section(self.read("compare/tumbler/index.html"))
         for i in range(1, 9):
             self.assertIn(f"https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&amp;pid=892728268&amp;vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Fshop{i}%2Fitem{i}.html", sec)
-        self.assertEqual(sec.count('rel="sponsored nofollow noopener"'), 16)                  # the photo and the button of each row (the words of a row are not a link)
+        self.assertEqual(sec.count('rel="nofollow sponsored noopener"'), 16)                  # the photo and the button of each row (the words of a row are not a link)
         self.assertEqual(sec.count("servlet/gifbanner?sid=3784606&amp;pid=892728268"), 8)
 
     def test_the_pictures_are_the_products_own_photos_from_yahoos_image_host_at_the_size_given_and_nothing_else(self):
@@ -124,15 +124,15 @@ class PagesTest(unittest.TestCase):
         imgs = re.findall(r"<img [^>]*>", re.sub(r'<img src="https://ad\.jp\.ap\.valuecommerce\.com[^>]*>', "", sec))      # the programme's 1x1 counters are not pictures
         self.assertEqual(len(imgs), 8)
         for im in imgs:
-            self.assertRegex(im, r'src="https://item-shopping\.c\.yimg\.jp/i/c/shop\d_item"')                      # the 76px photo (the 146px path in the file is turned into it)
-            self.assertIn('width="76" height="76"', im)                                                           # drawn at the size the API gives: not resized
+            self.assertRegex(im, r'src="https://item-shopping\.c\.yimg\.jp/i/g/shop\d_item"')                      # the photo URL as the API gave it (never rewritten)
+            self.assertRegex(im, r'^<img src="[^"]+" alt="[^"]*">$')                                               # src and alt only: the 76px is the CSS of its box (.yh-img), the file is the API's
             self.assertNotIn("style=", im)
         self.assertNotIn("s.yimg.jp", sec)                                                                         # no Yahoo! logo, banner or page image
         self.assertNotIn("/images/", sec)
 
     def test_y_image_takes_only_photos_from_yahoos_image_host(self):
         self.assertEqual(compare.y_image({"image_small": "https://item-shopping.c.yimg.jp/i/c/a_b"}), "https://item-shopping.c.yimg.jp/i/c/a_b")
-        self.assertEqual(compare.y_image({"image": "https://item-shopping.c.yimg.jp/i/g/a_b"}), "https://item-shopping.c.yimg.jp/i/c/a_b")
+        self.assertEqual(compare.y_image({"image": "https://item-shopping.c.yimg.jp/i/g/a_b"}), "https://item-shopping.c.yimg.jp/i/g/a_b")           # no small one: the given one, unchanged
         for bad in ({"image": ""}, {"image": "https://s.yimg.jp/images/shp/logo.png"}, {"image": "https://example.test/i/g/x"}, {"image_small": "http://item-shopping.c.yimg.jp/i/c/x"}, {}):
             self.assertEqual(compare.y_image(bad), "", bad)
 

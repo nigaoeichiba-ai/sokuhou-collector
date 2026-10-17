@@ -196,7 +196,7 @@ class PagesTest(unittest.TestCase):
         self.assertIn('id="sale-bar"', home)
         self.assertIn('src="/assets/sale.js"', home)
         bar = re.search(r'<aside class="sale-bar".*?</aside>', home, re.S).group(0)
-        self.assertIn("hb.afl.rakuten.co.jp/hgc/AFF.ID/trk", bar)
+        self.assertIn("hb.afl.rakuten.co.jp/hgc/AFF.ID/?pc=", bar)
         self.assertIn("https://www.amazon.co.jp/primeappreciation?tag=test-22", bar)
         self.assertIn('class="pr-chip"', bar)
         self.assertIn("Amazonのアソシエイトとして", home)                      # the page that carries an Amazon link has the Associates sentence

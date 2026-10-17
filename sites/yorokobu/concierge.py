@@ -83,7 +83,7 @@ def data(d: dict, cfg: dict, finder: dict) -> str:
         "topics": raw["topics"],
         "why": raw["why"],
         "sale": True,
-        "aff": {"id": cfg.get("rakuten_affiliate_id", ""), "trk": cfg.get("rakuten_tracking_id") or ""},
+        "aff": {"id": cfg.get("rakuten_affiliate_id", "")},
     }
     return json.dumps(out, ensure_ascii=False, separators=(",", ":"))
 

@@ -189,7 +189,7 @@ def shaddy_url(cfg: dict) -> str:
 
 
 def shaddy_a(cfg: dict, text: str = "シャディギフトモール") -> str:
-    return f'<a href="{esc(shaddy_url(cfg))}" rel="sponsored nofollow noopener" target="_blank">{esc(text)}</a>'
+    return f'<a href="{esc(shaddy_url(cfg))}" target="_blank" rel="nofollow sponsored noopener">{esc(text)}</a>'
 
 
 def path(slug: str | None = None) -> str:
@@ -259,9 +259,9 @@ def stat_html(r: dict) -> str:
 
 def _row(cfg: dict, r: dict, n: int, rank: int = 0, total: int = 0, median_eff: int = 0, g: dict | None = None) -> str:
     B = _b()
-    href = B.rakuten_link(cfg, B.rakuten.clean_item_url(r["url"]))
+    href = B.item_href(cfg, r)
     line = B.blurb_line(r, g["label"] if g else None, g["words"] if g else None)
-    B.SEEN[r["code"]] = {"n": line, "p": r["price"], "i": B.thumb(r["image"], 128), "u": href}
+    B.SEEN[r["code"]] = {"n": line, "p": r["price"], "i": r["image"], "u": href}
     tags = ""
     if r["free_shipping"]:
         tags += '<span class="tagx">送料無料</span>'
@@ -273,15 +273,15 @@ def _row(cfg: dict, r: dict, n: int, rank: int = 0, total: int = 0, median_eff: 
         price += f'<p class="cmp-pt">ポイント約{r["points"]:,}pt<br>実質 {B.yen(r["effective"])}</p>'
     stars = f'<span class="stars">★{r["rating"]:.2f}</span>({r["reviews"]:,}件)' if r["reviews"] else "レビューなし"
     attrs = (f'data-code="{esc(r["code"])}" data-price="{r["effective"]}" data-rating="{r["bayes"]}" data-points="{r["points"]}" data-score="{r["total"]}" data-order="{n}"')
-    fav = B.fav_button(r["code"], line or "気になる品", r["price"], B.rakuten.clean_item_url(r["url"]))
+    fav = B.fav_button(r["code"], line or "気になる品", r["price"], B.rakuten.page_url(r["url"]))
     p, rv, sh, gf = r["parts"]
     return (f'<li class="cmp-row" {attrs}><span class="cmp-no">{n}</span>'
-            f'<div class="imgbox cmp-img"><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"><img src="{esc(B.thumb(r["image"], 128))}" alt="{esc(line or "楽天市場の商品ページ")}" width="84" height="84" {B.LAZY}></a>{fav}</div>'
+            f'<div class="imgbox cmp-img"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener"><img src="{esc(r["image"])}" alt="{esc(line or "楽天市場の商品ページ")}"></a>{fav}</div>'
             f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p>{f'<p class="cmp-blurb">{esc(line)}</p>' if line else ""}<p class="cmp-tags">{tags}</p></div>'
             f'<div class="cmp-num">{price}</div>'
             f'<div class="cmp-num cmp-rev"><p>{stars}</p></div>'
             f'<div class="cmp-score" title="実質価格{p}・レビュー{rv}・送料{sh}・ギフト対応{gf}"><b>{r["total"]}</b><small>総合点</small><i style="width:{r["total"]}%"></i></div>'
-            f'<div class="cmp-go"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">楽天市場で見る</a></div>'
+            f'<div class="cmp-go"><span class="btn"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">楽天市場で見る</a></span></div>'
             f'<div class="cmp-why"><p class="cmp-say"><span class="cmp-cap">ひとこと</span>{esc(say(r, rank, total, median_eff))}</p>{stat_html(r)}</div></li>')
 
 
@@ -290,9 +290,9 @@ Y_IMG_HOST = "https://item-shopping.c.yimg.jp/"            # the product photos 
 
 
 def y_image(r: dict) -> str:
-    """The 76x76 product photo of the item (the API's `small`), or "" when it has none from Yahoo!'s own image host.  Older data files hold the 146px one: its twin is the same path under /i/c/."""
-    u = r.get("image_small") or (r.get("image") or "").replace("/i/g/", "/i/c/")
-    return u if u.startswith(Y_IMG_HOST) and "/i/c/" in u else ""
+    """The product photo of the item as the API gave it (its `image_small`, 76x76; the `image` of a file that has no small one), or "" when it is not from Yahoo!'s own image host.  The URL is never changed."""
+    u = r.get("image_small") or r.get("image") or ""
+    return u if u.startswith(Y_IMG_HOST) else ""
 
 
 def y_formula_html() -> str:
@@ -315,12 +315,12 @@ def _yrow(cfg: dict, r: dict, n: int, g: dict | None = None) -> str:
     p, rv, sh = r["parts"]
     img = y_image(r)
     line = B.blurb_line(r, g["label"] if g else None, g["words"] if g else None)
-    pic = (f'<a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank"><img src="{esc(img)}" alt="{esc(line or "Yahoo!ショッピングの商品ページ")}" width="76" height="76" {B.LAZY}></a>' if img else "")
+    pic = (f'<a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener"><img src="{esc(img)}" alt="{esc(line or "Yahoo!ショッピングの商品ページ")}"></a>' if img else "")
     return (f'<li class="yh-row"><span class="cmp-no">{n}</span><div class="yh-img">{pic}</div>'
             f'<div class="cmp-main"><p class="cmp-shop">{esc(r["shop"])}</p>{f'<p class="cmp-blurb">{esc(line)}</p>' if line else ""}'
             f'<p class="yh-facts">{" ・ ".join(f'<span class="yh-f">{f}</span>' for f in facts)}</p></div>'
             f'<div class="cmp-score" title="価格{p}・レビュー{rv}・送料{sh}"><b>{r["total"]}</b><small>点数</small><i style="width:{r["total"]}%"></i></div>'
-            f'<div class="cmp-go"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">Yahoo!ショッピングで見る{B.vc_pixel(cfg)}</a></div></li>')
+            f'<div class="cmp-go"><span class="btn"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">Yahoo!ショッピングで見る{B.vc_pixel(cfg)}</a></span></div></li>')
 
 
 def y_section(cfg: dict, g: dict) -> str:
@@ -348,7 +348,7 @@ def group_page(d: dict, cfg: dict, preview: bool, g: dict) -> str:
     az = ""
     if cfg.get("amazon_tracking_id"):
         az = (f'<p class="cmp-az">Amazonの価格はこの表には入っていません(Amazonの規約で価格を表示できるのは、Amazon自身が提供する方法に限られるためです)。'
-              f'同じ種類は<a href="{esc(B.amazon_url(cfg, g["label"] + " ギフト"))}" rel="sponsored nofollow noopener" target="_blank">Amazonで{esc(g["label"])}を探す</a>から確かめられます。'
+              f'同じ種類は<a href="{esc(B.amazon_url(cfg, g["label"] + " ギフト"))}" target="_blank" rel="nofollow sponsored noopener">Amazonで{esc(g["label"])}を探す</a>から確かめられます。'
               f'Amazonの商品は、価格のない<a href="{amazonrank.PATH}">編集部の採点ページ</a>に分けています。</p>')
     if "shaddy" in g.get("mall", []) and shaddy_url(cfg):
         az += f'<p class="cmp-az">ギフト専門店の{shaddy_a(cfg)}は、この表に入っていません。内祝いやお返しの品は、こちらからも探せます。</p>'

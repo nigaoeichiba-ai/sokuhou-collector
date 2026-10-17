@@ -262,7 +262,7 @@ class BrowserTest(unittest.TestCase):
 
     def test_concierge_opens_a_rakuten_search_through_our_affiliate_id(self):
         url = self.out["concierge_url"]
-        self.assertTrue(url.startswith("https://hb.afl.rakuten.co.jp/hgc/AFF.ID/trk?pc="))
+        self.assertTrue(url.startswith("https://hb.afl.rakuten.co.jp/hgc/AFF.ID/?pc="))
         self.assertIn("%25E3%2582%25AC%25E3%2583%25BC%25E3%2583%2587%25E3%2583%258B%25E3%2583%25B3%25E3%2582%25B0", url)   # ガーデニング, double-encoded in pc
         self.assertIn("%2520%25E3%2582%25AE%25E3%2583%2595%25E3%2583%2588", url)                                              # " ギフト" was appended
 

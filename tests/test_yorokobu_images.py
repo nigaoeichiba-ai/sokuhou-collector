@@ -39,10 +39,8 @@ class HelperTest(unittest.TestCase):
         self.assertIn('loading="lazy" decoding="async"', h)
         self.assertIn('fetchpriority="high"', build.mood_img("food-1", "x", "100vw", "eager", high=True))
 
-    def test_the_rakuten_picture_is_asked_for_in_the_size_a_small_place_needs(self):
-        url = "https://thumbnail.image.rakuten.co.jp/@0_mall/s/cabinet/a.jpg?_ex=300x300"
-        self.assertEqual(build.thumb(url, 128), url.replace("300x300", "128x128"))
-        self.assertEqual(build.thumb("https://example.com/a.jpg?_ex=300x300", 128), "https://example.com/a.jpg?_ex=300x300")      # only that host takes the parameter
+    def test_the_site_has_no_helper_that_rewrites_a_shops_picture_url(self):
+        self.assertFalse(hasattr(build, "thumb"))                                      # the picture URL is the API's, as given
 
 
 class PageTest(unittest.TestCase):
@@ -67,14 +65,12 @@ class PageTest(unittest.TestCase):
             html = m.group(0) if m else ""
         return re.findall(r"<img [^>]*>", html)
 
-    def test_the_first_two_of_a_pages_first_products_are_not_lazy_and_the_rest_are(self):
-        html = self.read("gift/birthday-boyfriend/index.html")
-        top = self.imgs(html, r'<section class="top-picks".*?</section>')
-        self.assertGreaterEqual(len(top), 3)
-        self.assertTrue(all('loading="eager"' in i and 'fetchpriority="high"' in i for i in top[:2]), top[:2])
-        self.assertTrue(all('loading="lazy"' in i for i in top[2:]), top[2:])
-        everything = [i for i in self.imgs(html) if "thumbnail.image.rakuten" in i or "item.rakuten" in i or "image.rakuten" in i]
-        self.assertTrue(all("decoding=\"async\"" in i for i in everything))
+    def test_a_shops_picture_tag_has_a_src_and_an_alt_and_nothing_else(self):
+        for rel in ("gift/birthday-boyfriend/index.html", "picks/2026-10-12/index.html", "index.html"):
+            shop = [i for i in self.imgs(self.read(rel)) if "thumbnail.image.rakuten" in i or "image.rakuten" in i]
+            self.assertTrue(shop, rel)
+            for i in shop:
+                self.assertRegex(i, r'^<img src="[^"]+"( alt="[^"]*")?>$', (rel, i))              # nothing is added to what the API gave (the look is the CSS of the box around it)
 
     def test_the_connection_to_the_picture_host_is_opened_early_on_pages_with_products(self):
         self.assertIn('<link rel="preconnect" href="https://thumbnail.image.rakuten.co.jp">', self.read("gift/birthday-boyfriend/index.html"))
@@ -93,24 +89,20 @@ class PageTest(unittest.TestCase):
         self.assertTrue(moods and all("srcset=" in i and "-480.webp" in i and 'loading="lazy"' in i for i in moods), moods[:1])
         tiles = self.imgs(day, r'<ul class="pick-hls">.*?</ul>')
         self.assertTrue(tiles)
-        self.assertFalse(any("_ex=300x300" in i for i in tiles))                    # the 84-px tiles do not carry the 300-px pictures
-        self.assertTrue(all('loading="eager"' in i for i in tiles))
-        first = self.imgs(day, r'<div class="pick-list">.*?</article>')[0]
-        self.assertIn("fetchpriority", first)                                        # the first product of the day is what the page opens with
 
     def test_the_feature_page_loads_its_product_picture_first_and_its_drawings_late(self):
         f = self.c["features"][0]
         html = self.read(f"pick/{f['slug']}/index.html")
-        hero = self.imgs(html, r'<a class="feat-photo.*?</a>')[0]
-        self.assertIn('fetchpriority="high"', hero)
+        hero = self.imgs(html, r'<div class="feat-photo.*?</a>')[0]
+        self.assertRegex(hero, r'^<img src="[^"]+" alt="[^"]*">$')                    # the shop's picture: src and alt only
         mg = self.imgs(html, r'<div class="mg[ "].*?</div>')
         self.assertEqual(len(mg), 4)
         self.assertTrue(all('loading="lazy"' in i and 'decoding="async"' in i for i in mg))
 
-    def test_every_picture_says_its_size_so_that_nothing_jumps(self):
+    def test_every_picture_of_the_sites_own_says_its_size_so_that_nothing_jumps(self):
         for rel in ("index.html", "gift/birthday-boyfriend/index.html", "picks/2026-10-12/index.html"):
             for i in self.imgs(self.read(rel)):
-                if "ic duo" in i:
+                if "ic duo" in i or "image.rakuten" in i or "yimg.jp" in i or "valuecommerce" in i:       # a shop's picture is as the shop gave it: its box in the CSS has the size
                     continue
                 self.assertRegex(i, r'width="\d+"', f"{rel}: {i[:80]}")
                 self.assertRegex(i, r'height="\d+"', f"{rel}: {i[:80]}")

@@ -42,8 +42,9 @@ class BuildTest(unittest.TestCase):
 
     def test_products_link_through_the_affiliate_id_and_are_marked(self):
         html = self.read("gift/birthday-boyfriend/index.html")
-        self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/yorokobu?pc=", html)
-        self.assertIn('rel="sponsored nofollow noopener"', html)
+        self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc=", html)             # nothing after the ID
+        self.assertNotRegex(html, r"hgc/aaaa1111[^\"]*/[A-Za-z]+\?pc=")        # no tracking name after the ID
+        self.assertIn('target="_blank" rel="nofollow sponsored noopener"', html)
         self.assertIn("楽天市場で見る", html)
         self.assertIn('<span class="pr-chip">PR</span><span class="pr-text">このページには広告を含みます</span>', html)          # a short label before any product link ...
         self.assertLess(html.index('class="pr-chip"'), html.index('class="item"'))
@@ -83,7 +84,7 @@ class BuildTest(unittest.TestCase):
 
     def test_filters_sorting_and_the_concierge_are_on_the_page(self):
         html = self.read("gift/birthday-mother/index.html")        # the mother page keeps one product in the list (the three of the boyfriend page all fit into the first four)
-        for needle in ('id="browse"', "data-sort", "data-ship", 'data-filter="tier"', 'data-filter="type"', 'class="kw-form"', 'data-trk="yorokobu"'):
+        for needle in ('id="browse"', "data-sort", "data-ship", 'data-filter="tier"', 'data-filter="type"', 'class="kw-form"'):
             self.assertIn(needle, html)
         self.assertIn('data-tier="under3000"', html)
         self.assertLess(html.index('id="browse"'), html.index('class="items grid-all"'))      # the filters stand before the cards they work on
@@ -100,7 +101,7 @@ class BuildTest(unittest.TestCase):
         mother = self.read("gift/birthday-mother/index.html")
         self.assertIn("運営者のショップ", mother)
         self.assertIn("https://item.rakuten.co.jp/2gaoe/p1/", mother)
-        self.assertNotIn("hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/yorokobu?pc=https%3A%2F%2Fitem.rakuten.co.jp%2F2gaoe", mother)
+        self.assertNotIn("hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2F2gaoe", mother)
         self.assertIn("手描きの似顔絵ギフト(誕生日に)", mother)
         self.assertNotIn("運営者のショップ", self.read("gift/mothers-day-mother/index.html"))   # no portrait_note there
 

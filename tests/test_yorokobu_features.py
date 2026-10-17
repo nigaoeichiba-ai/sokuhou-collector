@@ -195,7 +195,7 @@ class PageTest(unittest.TestCase):
             self.assertEqual(html.count('class="mg-cell"'), 4)
             self.assertIn("実際の贈り物の感想や購入者の声ではありません", html)               # the scene says it is made up
             self.assertIn('class="pr-chip"', html)
-            self.assertIn("hb.afl.rakuten.co.jp/hgc/AFF.ID/trk", html)
+            self.assertIn("hb.afl.rakuten.co.jp/hgc/AFF.ID/?pc=", html)
             self.assertIn(f"/assets/features/{f['slug']}/1.webp", html)
 
     def test_the_page_never_claims_a_use_or_shows_stars_as_its_own_review(self):

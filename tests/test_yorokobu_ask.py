@@ -332,7 +332,7 @@ async function sha(text) { const b = await crypto.subtle.digest('SHA-256', new T
     out.detail = { n: (det.querySelector('.ask-sum b') || {}).textContent, bars: det.querySelectorAll('.ask-aq').length, lines: [...det.querySelectorAll('.ask-lines li')].map(l => l.textContent),
                    rec_groups: det.querySelectorAll('.ask-recgroup').length, cards: det.querySelectorAll('.ask-recgroup li.item').length, push_btn: !!det.querySelector('[data-push]'), notice: (det.querySelector('.notice') || {}).textContent || '' };
     out.rec_prices_under_budget = [...det.querySelectorAll('.ask-recgroup li.item .price')].map(p => Number(p.textContent.replace(/[^0-9]/g, ''))).every(p => p <= 5000);
-    out.links_rel = [...det.querySelectorAll('.ask-recgroup a.btn')].every(a => /sponsored/.test(a.rel));
+    out.links_rel = [...det.querySelectorAll('.ask-recgroup .btn > a')].every(a => /sponsored/.test(a.rel));
     // the analysis as a pure function
     const data = JSON.parse(d.querySelector('#ask-mine').getAttribute('data-json'));
     const A = w.YorokobuAsk.analyze(data.q, data.interests, [{ a: { q2: ['alcohol'], q8: ['scent'], q9: ['b20000'] } }, { a: { q2: ['alcohol'], q4: ['beauty'], q8: ['scent'], q9: ['b10000'] } }, { a: { q2: ['tea'], q8: ['none'], q9: ['bmore'] } }]);

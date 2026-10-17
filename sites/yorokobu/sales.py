@@ -136,7 +136,7 @@ def js_data(events: list[dict], href: dict[str, str]) -> str:
 
 def _item(e: dict, m: dict, href: str) -> str:
     return (f'<p class="sale-item sale-{m["phase"]}" data-id="{esc(e["id"])}"><span class="sale-tag">{esc(m["tag"])}</span><span class="sale-short">{esc(m["short"])}</span><span class="sale-text">{esc(m["text"])}</span>'
-            f'<a class="btn sale-btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">{esc(m["cta"])}</a></p>')
+            f'<span class="btn sale-btn"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">{esc(m["cta"])}</a></span></p>')
 
 
 def bar(events: list[dict], now: datetime, href: dict[str, str]) -> str:
@@ -223,7 +223,7 @@ def sale_page(d: dict, cfg: dict, preview: bool, events: list[dict], href: dict[
         entry = f'<dt>エントリー</dt><dd>{esc(label(_dt(e["entry_start"])))} から</dd>' if e.get("entry_start") else ""
         cards += (f'<article class="sale-card sale-{ph}"><header><span class="sale-tag">{esc(tag)}</span><h3>{esc(STORE[e["store"]])} {esc(e["name"])}</h3></header>'
                   f'<dl class="sale-dl"><dt>期間</dt><dd>{esc(_range(e))}</dd>{entry}</dl><p>{esc(e["note"])}</p>'
-                  f'<p class="more"><a class="btn" href="{esc(href[e["id"]])}" rel="sponsored nofollow noopener" target="_blank">{esc(STORE[e["store"]])}の公式ページを見る</a></p>'
+                  f'<p class="more"><span class="btn"><a href="{esc(href[e["id"]])}" target="_blank" rel="nofollow sponsored noopener">{esc(STORE[e["store"]])}の公式ページを見る</a></span></p>'
                   f'<p class="sale-src">日程は、{esc(STORE[e["store"]])}の発表で確かめました(確認日 {esc(e["verified"])})。</p></article>')
     latest = (d["c"].get("daily") or [None])[0]
     pick_link = f'<li><a href="/picks/{latest["date"]}/">今日のおすすめギフト</a>で候補を先に選んでおく</li>' if latest else ""

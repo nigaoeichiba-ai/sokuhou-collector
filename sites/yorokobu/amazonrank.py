@@ -61,11 +61,11 @@ def _row(cfg: dict, axes: list[dict], e: dict, n: int) -> str:
     fav = B.fav_button("a:" + e["asin"], B.short(e["name"], 40), None, href)
     img = B.mood_img(e["mood"], e["name"] + "の商品写真ではなく、贈る場面を表したイメージ", "84px")
     return (f'<li class="cmp-row az-row" data-asin="{esc(e["asin"])}"><span class="cmp-no">{n}</span>'
-            f'<div class="imgbox cmp-img"><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">{img}</a>{fav}</div>'
-            f'<div class="cmp-main"><p class="cmp-shop">{esc(e["kind"])}</p><h3><a href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">{esc(e["headline"])}</a></h3>'
+            f'<div class="imgbox cmp-img"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">{img}</a>{fav}</div>'
+            f'<div class="cmp-main"><p class="cmp-shop">{esc(e["kind"])}</p><h3><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">{esc(e["headline"])}</a></h3>'
             f'<p class="cmp-shop">{esc(B.short(e["name"], 56))}</p></div>'
             f'<div class="cmp-score" title="編集点 {e["total"]}点"><b>{e["total"]}</b><small>編集点</small><i style="width:{e["total"]}%"></i></div>'
-            f'<div class="cmp-go"><a class="btn" href="{esc(href)}" rel="sponsored nofollow noopener" target="_blank">Amazonで見る</a></div>'
+            f'<div class="cmp-go"><span class="btn"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">Amazonで見る</a></span></div>'
             f'<div class="cmp-why"><div class="az-say"><p><span class="cmp-cap">いいところ</span>{esc(e["good"])}</p><p><span class="cmp-cap">気になるところ</span>{esc(e["care"])}</p></div>'
             f'{_bars(axes, e["marks"])}</div></li>')
 

@@ -110,7 +110,7 @@ def calc_page(d: dict, cfg: dict, preview: bool) -> str:
 GACHA_PER_COMBO = 12
 
 
-def gacha_pool(d: dict) -> dict:
+def gacha_pool(d: dict, cfg: dict) -> dict:
     """{recipient slug: {"name", "tiers": {tier slug: [[name, price, image, item url, reviews, rating x10], ...]}}} from the products already on the pages;
     only recipient/budget combinations with products are kept, best-scored first, each product once per combination."""
     B = _b()
@@ -130,7 +130,7 @@ def gacha_pool(d: dict) -> dict:
         union.sort(key=lambda i: -B.score(i))
         tiers = {}
         for t in c["filters"]["tiers"]:
-            rows = [[B.blurb_line(i), i["price"], B.thumb(i["image"], 128), B.rakuten.clean_item_url(i["url"]), i["reviews"], int(round(i["rating"] * 10))]
+            rows = [[B.blurb_line(i), i["price"], i["image"], B.item_href(cfg, i), i["reviews"], int(round(i["rating"] * 10))]
                     for i in union if B.in_tier(i["price"], t)][:GACHA_PER_COMBO]
             if rows:
                 tiers[t["slug"]] = rows
@@ -140,7 +140,7 @@ def gacha_pool(d: dict) -> dict:
 
 
 def gacha_data(d: dict, cfg: dict) -> str | None:
-    pool = gacha_pool(d)
+    pool = gacha_pool(d, cfg)
     if len(pool) < 2:
         return None
     c = d["c"]
@@ -156,7 +156,7 @@ def gacha_page(d: dict, cfg: dict, preview: bool, pool: dict, tiers: list[dict])
     body = f"""{B.head_band("sky", '', "おまかせで<wbr>1点提案します", lead, single=True, mascot="b-joy")}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("おまかせ提案", None)])}</div>
 {B.pr_quiet(cfg)}
-<section id="gacha" class="gacha" data-src="/tool/gacha/items.json" data-aff="{esc(cfg["rakuten_affiliate_id"])}" data-trk="{esc(cfg.get("rakuten_tracking_id") or "")}">
+<section id="gacha" class="gacha" data-src="/tool/gacha/items.json" data-aff="{esc(cfg["rakuten_affiliate_id"])}">
 <form class="gacha-form" onsubmit="return false"><label>贈る相手<select name="r">{rec}</select></label>
 <label>予算<select name="t">{bud}</select></label>
 <button type="submit" class="btn big">1点、提案してもらう</button></form>

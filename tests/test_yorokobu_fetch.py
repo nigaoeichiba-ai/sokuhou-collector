@@ -53,10 +53,10 @@ def client(transport, **kw):
 
 
 class NormalizeTest(unittest.TestCase):
-    def test_keeps_the_fields_the_site_needs_and_resizes_the_image(self):
+    def test_keeps_the_fields_the_site_needs_and_the_picture_url_as_given(self):
         n = rakuten.normalize(raw_item("a1", 3980))
         self.assertEqual((n["code"], n["price"], n["shop"], n["reviews"], n["rating"]), ("a1", 3980, "店s1", 50, 4.5))
-        self.assertTrue(n["image"].endswith("a1.jpg?_ex=300x300"))
+        self.assertTrue(n["image"].endswith("a1.jpg?_ex=128x128"))                                  # never rewritten
         self.assertTrue(n["free_shipping"] and n["available"] and n["gift"])
 
     def test_items_without_price_image_or_https_link_are_dropped(self):
@@ -66,7 +66,9 @@ class NormalizeTest(unittest.TestCase):
 
     def test_image_urls_may_be_objects(self):
         x = {**raw_item("a", 100), "mediumImageUrls": [{"imageUrl": "https://t/x.jpg?_ex=128x128"}]}
-        self.assertEqual(rakuten.normalize(x)["image"], "https://t/x.jpg?_ex=300x300")
+        self.assertEqual(rakuten.normalize(x)["image"], "https://t/x.jpg?_ex=128x128")
+        y = {**raw_item("a", 100), "mediumImageUrls": [], "smallImageUrls": [{"imageUrl": "https://t/s.jpg?_ex=64x64"}]}
+        self.assertEqual(rakuten.normalize(y)["image"], "https://t/s.jpg?_ex=64x64")                  # only a small one: that one, as it is
 
     def test_affiliate_link_with_and_without_a_tracking_id(self):
         self.assertTrue(rakuten.affiliate_link("A.B", "trk", "https://item.rakuten.co.jp/s/x/").startswith("https://hb.afl.rakuten.co.jp/hgc/A.B/trk?pc="))
@@ -77,24 +79,35 @@ class UrlAndTitleTest(unittest.TestCase):
     WRAPPED = ("https://hb.afl.rakuten.co.jp/hgc/g00qk1uo.hgz7e6c9.g00qk1uo.hgz7f5ea/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fakuse-one%2Fsai109-a%2F"
                "&m=http%3A%2F%2Fm.rakuten.co.jp%2Fakuse-one%2Fi%2F10014842%2F&rafcid=wsc_i_is_APP")
 
-    def test_the_apis_own_affiliate_redirect_is_unwrapped(self):
-        self.assertEqual(rakuten.clean_item_url(self.WRAPPED), "https://item.rakuten.co.jp/akuse-one/sai109-a/")
-        self.assertEqual(rakuten.clean_item_url("https://item.rakuten.co.jp/s/x/"), "https://item.rakuten.co.jp/s/x/")
-        self.assertEqual(rakuten.clean_item_url("https://item.rakuten.co.jp/s/x/?rafcid=wsc_i_ra_0123"), "https://item.rakuten.co.jp/s/x/")   # the API's own tracking is dropped
-        n = rakuten.normalize({**raw_item("a1", 2000), "itemUrl": self.WRAPPED})
-        self.assertEqual(n["url"], "https://item.rakuten.co.jp/akuse-one/sai109-a/")
+    def test_the_apis_link_and_item_url_are_kept_exactly_as_given(self):
+        n = rakuten.normalize({**raw_item("a1", 2000), "itemUrl": self.WRAPPED, "affiliateUrl": self.WRAPPED})
+        self.assertEqual(n["url"], self.WRAPPED)                      # not unwrapped, not cleaned of its tracking
+        self.assertEqual(n["aff"], self.WRAPPED)
+        self.assertNotIn("aff", rakuten.normalize({**raw_item("a2", 2000), "affiliateUrl": ""}))
+        self.assertFalse(hasattr(rakuten, "clean_item_url") or hasattr(rakuten, "sized_image"))
 
     def test_promotions_are_dropped_from_titles(self):
         raw = "クーポン有10/4/20時〜10/9/1:59 名入れ ギフト 財布 ベルト 【送料無料】 ≪540円で世界に一つ≫ 刻印"
         self.assertEqual(rakuten.clean_title(raw), "名入れ ギフト 財布 ベルト 刻印")
         self.assertEqual(rakuten.clean_title("【ポイント10倍】短い"), "【ポイント10倍】短い")  # nothing meaningful left: keep the original
 
-    def test_the_build_links_through_our_id_to_the_plain_item_page(self):
+    def test_the_build_uses_the_apis_link_as_it_is_when_it_carries_our_id_and_the_specs_formula_otherwise(self):
         from sites.yorokobu import build
-        cfg = {"rakuten_affiliate_id": "OUR.ID", "rakuten_tracking_id": "trk"}
-        card = build.item_card(cfg, {**rakuten.normalize(raw_item("a1", 2000)), "url": self.WRAPPED})
-        self.assertIn("https://hb.afl.rakuten.co.jp/hgc/OUR.ID/trk?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fakuse-one%2Fsai109-a%2F", card)
+        cfg = {"rakuten_affiliate_id": "OUR.ID"}
+        page = "https://item.rakuten.co.jp/akuse-one/sai109-a/"
+        ours = "https://hb.afl.rakuten.co.jp/hgc/OUR.ID/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fakuse-one%2Fsai109-a%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fakuse-one%2Fi%2F10014842%2F&rafcid=wsc_i_is_APP"
+        it = rakuten.normalize({**raw_item("a1", 2000), "itemUrl": page, "affiliateUrl": ours})
+        self.assertIn(f'<a href="{ours.replace("&", "&amp;")}" target="_blank" rel="nofollow sponsored noopener">', build.item_card(cfg, it))      # exactly as given: nothing added, nothing taken out
+        other = rakuten.normalize({**raw_item("a1", 2000), "itemUrl": self.WRAPPED, "affiliateUrl": self.WRAPPED})      # a link of another ID (the API's own)
+        card = build.item_card(cfg, other)
+        self.assertIn('href="https://hb.afl.rakuten.co.jp/hgc/OUR.ID/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fakuse-one%2Fsai109-a%2F&amp;m=https%3A%2F%2Fitem.rakuten.co.jp%2Fakuse-one%2Fsai109-a%2F"', card)
         self.assertNotIn("g00qk1uo", card)
+        old = {k: v for k, v in it.items() if k != "aff"}                  # saved before the site kept the field
+        self.assertIn("hgc/OUR.ID/?pc=", build.item_card(cfg, old))
+
+    def test_page_url_cuts_the_page_out_of_a_redirect_and_changes_nothing_else(self):
+        self.assertEqual(rakuten.page_url(self.WRAPPED), "https://item.rakuten.co.jp/akuse-one/sai109-a/")
+        self.assertEqual(rakuten.page_url("https://item.rakuten.co.jp/s/x/?rafcid=wsc_i_ra_0123"), "https://item.rakuten.co.jp/s/x/?rafcid=wsc_i_ra_0123")
 
 
 class ClientTest(unittest.TestCase):

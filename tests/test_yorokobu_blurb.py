@@ -85,19 +85,20 @@ class CardTest(unittest.TestCase):
         self.assertNotRegex(html, r"<h3><a ")                                              # no link on the words
         self.assertNotIn("ハンドクリーム ギフト", html)                                       # the shop's title is not on the card
         self.assertNotIn("title=", html)
-        self.assertIn("_ex=128x128", html)                                                  # the picture as the API gives it
-        self.assertIn('width="128" height="128"', html)
+        self.assertIn('<img src="https://thumbnail.image.rakuten.co.jp/x.jpg?_ex=300x300" alt=', html)    # the picture URL as it was given, and nothing else on the tag but alt
+        self.assertNotRegex(html, r"<img[^>]*(width|height|loading|decoding|fetchpriority)=")
         self.assertNotIn("amazon.co.jp", html)                                              # a Rakuten part has no link to another mall (terms Article 8)
-        self.assertEqual(len(re.findall(r'<a class="item-img" href="https://hb\.afl\.rakuten', html)), 1)
+        self.assertEqual(len(re.findall(r'<div class="item-img"><a href="https://hb\.afl\.rakuten[^"]*" target="_blank" rel="nofollow sponsored noopener"><img src', html)), 1)
+        self.assertNotRegex(html, r'<a [^>]*(class|aria-label|data-|title)=')                 # an affiliate link carries href, target and rel only
         self.assertIn('alt="ロクシタンのハンドクリーム(10ml)"', html)
 
     def test_the_rank_and_the_heart_are_a_row_above_the_picture_never_inside_its_link(self):
         html = build.item_card(self.cfg(), self.item(), rank=1)
-        top = re.search(r'<div class="item-top">(.*?)</div><a class="item-img"', html, re.S)
+        top = re.search(r'<div class="item-top">(.*?)</div><div class="item-img">', html, re.S)
         self.assertIsNotNone(top)
         self.assertIn('class="rank r1"', top.group(1))
         self.assertIn('class="fav"', top.group(1))
-        link = re.search(r'<a class="item-img".*?</a>', html, re.S).group(0)
+        link = re.search(r'<div class="item-img"><a .*?</a>', html, re.S).group(0)
         self.assertNotIn("rank", link)
         self.assertNotIn("fav", link)
         self.assertNotIn("<button", link)

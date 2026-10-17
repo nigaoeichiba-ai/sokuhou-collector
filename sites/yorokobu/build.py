@@ -110,11 +110,6 @@ def mood_img(name: str, alt: str, sizes: str, loading: str = "lazy", high: bool 
     return f'<img src="{base}-480.webp" srcset="{base}-480.webp 480w, {base}.webp 960w" sizes="{sizes}" alt="{esc(alt)}" width="{width}" height="{height}" {load}>'
 
 
-def thumb(url: str, px: int) -> str:
-    """The Rakuten picture at a smaller size (the thumbnail service takes _ex=<w>x<h>): small tiles do not need the 300-px one."""
-    return url.replace("_ex=300x300", f"_ex={px}x{px}") if "thumbnail.image.rakuten.co.jp" in url else url
-
-
 def short(name: str, limit: int = NAME_LIMIT, code: str | None = None, keep: list[str] | None = None) -> str:
     """The product's name in a few words for a card (shortname.py: brand and product, a size or a count; no promotion, occasion or search words; never cut with "…").
     `limit` is kept for the callers that still pass one; the name is the same everywhere."""
@@ -126,18 +121,17 @@ def blurb_line(it: dict, kind: str | None = None, must: list[str] | None = None)
     return _blurb.blurb(strip_occasions(it["name"]), it.get("code"), kind, must)
 
 
-def amazon_url(cfg: dict, query: str, low: int | None = None, high: int | None = None) -> str:
-    """Amazon.co.jp search results for a keyword (optionally within a price range), with the Associates tracking ID."""
-    price = (f"&low-price={low}" if low else "") + (f"&high-price={high}" if high else "")
-    return f"https://www.amazon.co.jp/s?k={quote(query, safe='')}{price}&tag={quote(cfg['amazon_tracking_id'], safe='')}"
+def amazon_url(cfg: dict, query: str) -> str:
+    """Amazon.co.jp search results for a keyword, with the Associates tracking ID: `k` and `tag` and nothing else (Amazon's own form of a link)."""
+    return f"https://www.amazon.co.jp/s?k={quote(query, safe='')}&tag={quote(cfg['amazon_tracking_id'], safe='')}"
 
 
 def amazon_more(cfg: dict, query: str, label: str) -> str:
     """The "Amazonで探す" button (an Amazon search for `query`) with the Associates notice; empty when no tracking ID is set.  Used on the pages that list no single product."""
     if not cfg.get("amazon_tracking_id"):
         return ""
-    return (f'<section style="margin-top:40px"><p class="more"><a class="btn" href="{esc(amazon_url(cfg, query))}" rel="sponsored nofollow noopener" target="_blank">'
-            f'{esc(label)}</a></p></section>')
+    return (f'<section style="margin-top:40px"><p class="more"><span class="btn"><a href="{esc(amazon_url(cfg, query))}" target="_blank" rel="nofollow sponsored noopener">'
+            f'{esc(label)}</a></span></p></section>')
 
 
 def yahoo_url(cfg: dict, keyword: str) -> str:
@@ -151,10 +145,10 @@ def yahoo_url(cfg: dict, keyword: str) -> str:
 
 def yahoo_btn(cfg: dict, keyword: str, label: str, cls: str = "btn") -> str:
     u = yahoo_url(cfg, keyword)
-    klass = f' class="{cls}"' if cls else ""
     if not u:
         return ""
-    return f'<a{klass} href="{esc(u)}" rel="sponsored nofollow noopener" target="_blank">{esc(label)}{vc_pixel(cfg)}</a>'
+    link = f'<a href="{esc(u)}" target="_blank" rel="nofollow sponsored noopener">{esc(label)}</a>{vc_pixel(cfg)}'
+    return f'<span class="{cls}">{link}</span>' if cls else link
 
 
 def vc_pixel(cfg: dict) -> str:
@@ -344,7 +338,14 @@ PORTRAIT_KEYS = {
 
 
 def rakuten_link(cfg: dict, target: str) -> str:
-    return rakuten.affiliate_link(cfg["rakuten_affiliate_id"], cfg.get("rakuten_tracking_id"), target)
+    """The affiliate link of the Rakuten Web Service spec for a page of Rakuten (a search, an event): .../hgc/<ID>/?pc=<URL>&m=<URL>, nothing after the ID."""
+    return rakuten.affiliate_link(cfg["rakuten_affiliate_id"], None, target)
+
+
+def item_href(cfg: dict, it: dict) -> str:
+    """A Rakuten product's link: the `affiliateUrl` the API gave, as it is.  Only a product saved before the site kept that field (no `aff`) gets the spec's formula over its item URL."""
+    aff = it.get("aff") or ""
+    return aff if cfg["rakuten_affiliate_id"] in aff else rakuten_link(cfg, rakuten.page_url(it["url"]))
 
 
 def search_link(cfg: dict, keyword: str) -> str:
@@ -373,12 +374,12 @@ def point_badge(it: dict) -> str:
 
 
 def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, tier: str = "", kind: str = "", eager: bool = False, must: list[str] | None = None) -> str:
-    url = rakuten.clean_item_url(it["url"])  # also unwraps data fetched before the API's redirect links were handled
+    url = rakuten.page_url(it["url"])                                           # the product's page (what the ♡ keeps); the link is item_href's
     name = it.get("display") or rakuten.clean_title(it["name"])
     if own:
         href, rel = url, "noopener"
     else:
-        href, rel = rakuten_link(cfg, url), "sponsored nofollow noopener"
+        href, rel = item_href(cfg, it), "nofollow sponsored noopener"
     bits = []
     if it["reviews"]:
         bits.append(f'<span class="stars" aria-label="レビュー平均 {it["rating"]:.2f}">★{it["rating"]:.1f}</span><span>({it["reviews"]:,}件)</span>')
@@ -396,18 +397,17 @@ def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, t
         note += f'<p class="pick-note"><b>{it.get("note_label") or "選んだ理由"}</b>{esc(it["note"])}</p>'
     line = short(name) if own else blurb_line(it, must=must)         # the operator's own product keeps its name; a shop's product gets the site's words
     if not own:
-        SEEN[it["code"]] = {"n": line, "p": it["price"], "i": thumb(it["image"], 128), "u": href}
+        SEEN[it["code"]] = {"n": line, "p": it["price"], "i": it["image"], "u": href}
     label = "ショップで見る" if own else "楽天市場で見る"
-    buttons = f'<a class="btn" href="{esc(href)}" rel="{rel}" target="_blank">{label}</a>'                  # a Rakuten part has Rakuten's link only (terms Article 8): other malls are linked from their own parts
+    buttons = f'<span class="btn"><a href="{esc(href)}" target="_blank" rel="{rel}">{label}</a></span>'                  # a Rakuten part has Rakuten's link only (terms Article 8): other malls are linked from their own parts
     badge = f'<span class="rank r{rank}">{rank}</span>' if rank and rank <= 3 and not own else ""
     attrs = (f'data-code="{esc(it["code"])}" data-price="{it["price"]}" data-reviews="{it["reviews"]}" data-rating="{it["rating"]}" '
              f'data-ship="{1 if it["free_shipping"] else 0}" data-gift="{1 if it.get("gift") else 0}" data-tier="{esc(tier)}" data-type="{esc(kind)}" '
              f'data-rank="{rank or 0}"')
     fav = fav_button(it["code"], line or "気になる品", it["price"], url)
     words = (f'<h3>{esc(line)}</h3>' if own else f'<p class="item-blurb">{esc(line)}</p>') if line else ""
-    img = thumb(it["image"], 128)                                                                     # the picture as the API gives it (128px), shown by CSS at 128px: never enlarged
-    return (f'<li class="item" {attrs}><div class="item-top">{badge}{fav}</div><a class="item-img" href="{esc(href)}" rel="{rel}" target="_blank">'
-            f'<img src="{esc(img)}" alt="{esc(line or "楽天市場の商品ページ")}" width="128" height="128" {EAGER if eager else LAZY}></a>'
+    return (f'<li class="item" {attrs}><div class="item-top">{badge}{fav}</div><div class="item-img"><a href="{esc(href)}" target="_blank" rel="{rel}">'
+            f'<img src="{esc(it["image"])}" alt="{esc(line or "楽天市場の商品ページ")}"></a></div>'
             f'<div class="item-body">{words}'
             f'<p class="price">{yen(it["price"])}</p><p class="meta">{"".join(bits)}</p>{note}'
             f'<div class="item-btns">{buttons}</div></div></li>')
@@ -531,7 +531,7 @@ def idea_card(cfg: dict, idea: dict, i: int, tiers: list[dict]) -> str:
     body = f'<ul class="items mini">{cards}</ul>' if cards else '<p class="notice">この種類の商品はいま見つかりませんでした。下のリンクから楽天市場で探せます。</p>'
     return (f'<article class="idea" id="idea-{i}"><header><span class="type">{esc(idea["type"])}</span><h3>{esc(idea["label"])}</h3></header>'
             f'{bird_say(SOMMELIER_IMGS[i % 4], esc(idea["why"]), "sommelier")}{body}'
-            f'<p class="idea-more"><a href="{esc(search_link(cfg, idea["query"]))}" rel="sponsored nofollow noopener" target="_blank">'
+            f'<p class="idea-more"><a href="{esc(search_link(cfg, idea["query"]))}" target="_blank" rel="nofollow sponsored noopener">'
             f'楽天市場で「{esc(idea["query"])}」をもっと見る</a></p></article>')
 
 
@@ -547,12 +547,12 @@ def finder_map(d: dict) -> dict:
 
 def concierge(cfg: dict, d: dict, p: dict | None, heading: str = "一言入れて探す") -> str:
     kws = (p or {}).get("keywords", [])[:8]
-    chips = "".join(f'<li><a href="{esc(search_link(cfg, k))}" rel="sponsored nofollow noopener" target="_blank">{esc(k)}</a></li>' for k in kws)
+    chips = "".join(f'<li><a href="{esc(search_link(cfg, k))}" target="_blank" rel="nofollow sponsored noopener">{esc(k)}</a></li>' for k in kws)
     ctx = esc(" ".join(x for x in [(p or {}).get("recipient_keyword", "")] if x))
     return f"""<section class="concierge band-soft" id="concierge"><div class="concierge-in">
 <div class="concierge-body"><h2>{heading}</h2>
 <p>その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。</p>
-<form class="kw-form" data-aff="{esc(cfg['rakuten_affiliate_id'])}" data-trk="{esc(cfg.get('rakuten_tracking_id') or '')}" data-ctx="{ctx}">
+<form class="kw-form" data-aff="{esc(cfg['rakuten_affiliate_id'])}" data-ctx="{ctx}">
 <input type="search" name="q" placeholder="例: ガーデニングが好きな60代" aria-label="その人のこと・ほしいもの">
 <button type="submit" class="btn">楽天市場で探す</button></form>
 <ul class="kw-chips">{chips}</ul></div></div></section>"""
@@ -759,7 +759,7 @@ def amazon_dp(cfg: dict, asin: str) -> str:
 def amazon_pick_card(cfg: dict, p: dict) -> str:
     return (f'<li class="apick"><div class="apick-body"><span class="type">{esc(p["kind"])}</span><h3>{esc(p["name"])}</h3>'
             f'<p class="apick-maker">{esc(p["maker"])}</p><p>{esc(p["why"])}</p></div>'
-            f'<a class="btn" href="{esc(amazon_dp(cfg, p["asin"]))}" rel="sponsored nofollow noopener" target="_blank" aria-label="{esc(p["name"])}をAmazonで見る">Amazonで見る</a></li>')
+            f'<span class="btn"><a href="{esc(amazon_dp(cfg, p["asin"]))}" target="_blank" rel="nofollow sponsored noopener">Amazonで見る</a></span></li>')
 
 
 def amazon_picks_for(c: dict, occasion: str, recipient: str | None = None, limit: int = 4) -> list[dict]:
@@ -833,8 +833,8 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 
     amazon = ""
     if cfg.get("amazon_tracking_id"):
-        amazon = (f'<p class="more"><a class="btn" href="{esc(amazon_url(cfg, p["queries"][0]))}" rel="sponsored nofollow noopener" target="_blank">'
-                  f'Amazonで探す</a></p>')
+        amazon = (f'<p class="more"><span class="btn"><a href="{esc(amazon_url(cfg, p["queries"][0]))}" target="_blank" rel="nofollow sponsored noopener">'
+                  f'Amazonで探す</a></span></p>')
     color = COLORS[list(c["occ"]).index(p["occasion"]) % 4]
     head = head_band(color, f'{ic_wrap("occasion", occ["slug"])}<span class="x">×</span>{ic_wrap("recipient", rec["slug"])}', esc(p["title"]), p["lead"],
                      mascot=OCC_MASCOT.get(p["occasion"], ("r-joy", "b-sparkle", "r-wink", "b-joy")[list(c["occ"]).index(p["occasion"]) % 4]))
@@ -899,8 +899,8 @@ def theme_page(d: dict, cfg: dict, preview: bool, t: dict) -> str:
     avoid = f'<section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(t["avoid"], "warn")}</section>' if t["avoid"] else ""
     amazon = ""
     if cfg.get("amazon_tracking_id"):
-        amazon = (f'<p class="more"><a class="btn" href="{esc(amazon_url(cfg, t["ideas"][0]["query"]))}" rel="sponsored nofollow noopener" target="_blank">'
-                  f'Amazonで探す</a></p>')
+        amazon = (f'<p class="more"><span class="btn"><a href="{esc(amazon_url(cfg, t["ideas"][0]["query"]))}" target="_blank" rel="nofollow sponsored noopener">'
+                  f'Amazonで探す</a></span></p>')
     head = head_band(color, theme_mark(t, 96), esc(t["title"]), t["lead"], single=True, mascot=mascot)
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("気持ち・興味から探す", "/theme/"), (t["name"], None)])}</div>
@@ -1006,7 +1006,7 @@ def likes_section(d: dict, cfg: dict, r: dict) -> str:
         items = per_row[i]
         cards = f'<ul class="items mini">{"".join(item_card(cfg, it, must=row.get("must")) for it in items)}</ul>' if items else ""
         q = row["queries"][0]
-        btns = f'<a class="btn" href="{esc(search_link(cfg, q))}" rel="sponsored nofollow noopener" target="_blank">楽天市場で「{esc(q)}」を探す</a>'
+        btns = f'<span class="btn"><a href="{esc(search_link(cfg, q))}" target="_blank" rel="nofollow sponsored noopener">楽天市場で「{esc(q)}」を探す</a></span>'
         out += (f'<li class="like-row" id="like-{i + 1}"><div class="like-head"><span class="like-n">{i + 1}</span><div><h3>{esc(row["title"])}</h3><p>{esc(text)}</p></div></div>'
                 f'{cards}<p class="more">{btns}</p></li>')
     return f'<ol class="like-rows">{out}</ol>'
@@ -1775,8 +1775,8 @@ def budget_page(d: dict, cfg: dict, preview: bool, tier: dict, pool: list, tiers
     occ = "".join(round_chip(f'/occasion/{o["slug"]}/', "occasion", o["slug"], o["name"]) for o in c["occasions"][:12])
     amazon = ""
     if cfg.get("amazon_tracking_id"):
-        amazon = (f'<p class="more"><a class="btn" href="{esc(amazon_url(cfg, "プレゼント ギフト", tier.get("min") or None, tier.get("max")))}" rel="sponsored nofollow noopener" target="_blank">'
-                  f'{esc(name)}の贈り物をAmazonで探す</a></p>')
+        amazon = (f'<p class="more"><span class="btn"><a href="{esc(amazon_url(cfg, "プレゼント ギフト"))}" target="_blank" rel="nofollow sponsored noopener">'
+                  f'{esc(name)}の贈り物をAmazonで探す</a></span></p>')
     lead = f"{name}で贈れる、プレゼントの候補です。贈る相手やイベントが決まっていなくても、この予算から選べます。"
     body = f"""{head_band("yellow", "", f"{esc(name)}で贈る<wbr>プレゼント", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("予算から探す", "/budget/"), (name, None)])}</div>

@@ -33,8 +33,9 @@ class UrlTest(unittest.TestCase):
 
     def test_the_button_is_marked_as_an_advertisement_link(self):
         b = build.yahoo_btn(CFG_Y, "お歳暮", "Yahoo!ショッピングで探す")
-        self.assertIn('rel="sponsored nofollow noopener"', b)
-        self.assertIn('target="_blank"', b)
+        self.assertIn('target="_blank" rel="nofollow sponsored noopener">', b)
+        self.assertTrue(b.startswith('<span class="btn"><a href="'))                             # the look is the box's: the link keeps only href, target, rel
+        self.assertNotIn("<a class=", b)
         self.assertIn("&amp;vc_url=", b)
 
     def test_each_link_carries_the_programmes_impression_counter(self):
@@ -71,7 +72,7 @@ class PagesTest(unittest.TestCase):
 
     def test_the_sheets_and_the_comparison_pages_offer_yahoo_and_say_that_no_yahoo_price_is_in_the_table(self):
         for rel in ("oseibo/index.html", "nenga/index.html", "oiwai/seijin/index.html", "oiwai/kekkon/index.html"):
-            self.assertRegex(self.read(rel), r'href="https://ck\.jp\.ap\.valuecommerce\.com/servlet/referral\?sid=3784606&amp;pid=892728268&amp;vc_url=[^"]+" rel="sponsored nofollow noopener"', rel)
+            self.assertRegex(self.read(rel), r'href="https://ck\.jp\.ap\.valuecommerce\.com/servlet/referral\?sid=3784606&amp;pid=892728268&amp;vc_url=[^"]+" target="_blank" rel="nofollow sponsored noopener"', rel)
         t = self.read("compare/tumbler/index.html")
         self.assertIn("この表にYahoo!ショッピングの価格は入っていません", t)
         self.assertIn("valuecommerce.com", t)
