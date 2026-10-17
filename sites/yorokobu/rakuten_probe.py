@@ -96,6 +96,9 @@ def main() -> int:
         print(f"{label}: itemUrl shapes:", dict(collections.Counter(shape(r.get("itemUrl") or "", aff) for r in raws)))
         links = [r.get("affiliateUrl") or "" for r in raws]
         ids = [urllib.parse.urlsplit(u).path.split("/")[2] if u.count("/") > 3 else "" for u in links]
+        pos = [sum(1 for i in ids if len(i.split(".")) == 4 and i.split(".")[k] == ours[k]) for k in range(len(ours))]
+        print(f"{label}: per position of the 4 parts, links whose part equals ours (position 1..4): {pos} of {len(ids)}; "
+              f"parts shared across the links per position (distinct values): {[len({i.split('.')[k] for i in ids if len(i.split('.')) == 4}) for k in range(4)]}")
         print(f"{label}: {len(links)} links; carry our whole ID: {sum(aff in u for u in links)}; carry any part of our ID: {sum(any(x in u for x in ours) for u in links)}; "
               f"distinct IDs in the links: {len(set(ids))}; ID shape: {sorted({re.sub(r'[a-z]', 'a', re.sub(r'[0-9]', '9', i)) for i in ids})[:3]}; "
               f"rafcid present: {sum('rafcid=' in u for u in links)}")
