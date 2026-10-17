@@ -109,6 +109,22 @@ class DeployGateTest(unittest.TestCase):
         for site in ("saichin", "kuma", "yorokobu", "minna"):
             self.assertTrue(self.run_gate(site, before, after, served=before), site)
 
+    def test_a_rewrite_dictionary_deploys_only_its_own_site_and_the_judges_notes_deploy_nothing(self):
+        before = self.git("rev-parse", "HEAD")
+        after = self.commit("data/style/rewrites/yorokobu.json", "dictionary")
+        self.assertTrue(self.run_gate("yorokobu", before, after, served=before))
+        for site in ("minna", "kuma", "saichin", "atomou"):
+            self.assertFalse(self.run_gate(site, before, after, served=before), site)
+        for path in ("data/style/judged/yorokobu.json", "data/style/examples.json", "data/style/learned_rules.json"):
+            before = self.git("rev-parse", "HEAD")
+            after = self.commit(path, path)
+            for site in ("saichin", "kuma", "yorokobu", "minna"):
+                self.assertFalse(self.run_gate(site, before, after, served=before), (path, site))
+        before = self.git("rev-parse", "HEAD")
+        after = self.commit("sokuhou/styleloop.py", "the tool itself is shared")
+        for site in ("saichin", "kuma", "yorokobu", "minna"):
+            self.assertTrue(self.run_gate(site, before, after, served=before), site)
+
     def test_own_files_deploy(self):
         before = self.git("rev-parse", "HEAD")
         after = self.commit("sites/minna/series.json", "minna")

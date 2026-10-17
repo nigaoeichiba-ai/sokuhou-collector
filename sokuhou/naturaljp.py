@@ -735,6 +735,30 @@ def check_blocks(blocks: list[Block], path: str, site: str | None = None, min_le
     return hits
 
 
+_published_rw: dict = {}
+
+
+def published_text(raw: str, site: str | None) -> str:
+    """What a visitor gets is the build with the site's rewrite dictionary applied (sokuhou.styleloop, run by the deploy).  Read that, so a rewording that is in the dictionary
+    stops being reported.  Fails open: no dictionary, a broken one or an import error means the text as built."""
+    if not site:
+        return raw
+    if site not in _published_rw:
+        try:
+            from sokuhou import styleloop
+            entries, _ = styleloop.usable_entries(site, warn=lambda m: None)
+            _published_rw[site] = styleloop.Rewriter(entries) if entries else None
+        except Exception:
+            _published_rw[site] = None
+    rw = _published_rw[site]
+    if rw is None:
+        return raw
+    try:
+        return rw.page(raw)
+    except Exception:
+        return raw
+
+
 def check_file(path: Path, site: str | None, rel: str | None = None, **kw) -> list[Hit]:
     ext = path.suffix.lower()
     try:
@@ -742,7 +766,7 @@ def check_file(path: Path, site: str | None, rel: str | None = None, **kw) -> li
     except (OSError, UnicodeDecodeError):
         return []
     if ext in (".html", ".htm"):
-        blocks = blocks_from_html(raw)
+        blocks = blocks_from_html(published_text(raw, site))
     elif ext == ".json":
         blocks = blocks_from_json(raw)
     elif ext in (".md", ".txt"):
@@ -802,11 +826,6 @@ def built_dir(site: str, rebuild: bool = False, base: Path | None = None) -> Pat
         r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace")
         if r.returncode != 0 or not (out / "index.html").exists():
             raise SystemExit(f"build of {site} failed (no built folder to read): {(r.stdout + r.stderr)[-400:]}")
-        try:                                        # what is published is the build with the rewrite dictionary applied (sokuhou.styleloop)
-            from sokuhou import styleloop
-            styleloop.apply_dir(out, site)
-        except ImportError:
-            pass
     return out
 
 

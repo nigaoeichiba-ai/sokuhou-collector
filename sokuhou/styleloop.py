@@ -149,7 +149,7 @@ def extract_units(root: Path, site: str | None = None) -> dict[str, Unit]:
         if nj.EXEMPT_PATH.search(rel):
             continue
         try:
-            raw = f.read_text(encoding="utf-8")
+            raw = nj.published_text(f.read_text(encoding="utf-8"), site)         # the units of what is published (the dictionary applied): an old fix is not asked about again
         except (OSError, UnicodeDecodeError):
             continue
         seen = set()
@@ -319,7 +319,7 @@ def add_entry(site: str, old: str, new: str, by: str = "codex", why: str = "", k
     entries = load_rewrites(site)
     if any(e["from"] == old for e in entries):
         return False, ["already in the dictionary"]
-    entries.append({"from": old, "to": new, "kind": kind, "by": by, "why": why, "added": today or dt.date.today().isoformat()})
+    entries.append({"from": old, "to": new, "kind": kind, "by": by, "why": why, "added": today or dt.date.today().isoformat(), **({"forced": True} if force else {})})
     save_rewrites(site, entries)
     return True, []
 
@@ -386,20 +386,68 @@ class Rewriter:
         return re.sub(r'([a-zA-Z\-]+)=(["\'])(.*?)\2', sub, tag)
 
 
-def apply_dir(root: Path, site: str, dry: bool = False) -> Counter:
-    entries = load_rewrites(site)
+TAGS = re.compile(r"<(/?[a-zA-Z][a-zA-Z0-9]*)")
+HREFS = re.compile(r"""(?:href|src|action)=["'][^"']*["']""")
+
+
+def usable_entries(site: str, warn=print) -> tuple[list[dict], int]:
+    """The dictionary lines that may be applied NOW: every line is checked again against the rules of today (numbers, names, claims, the site's rules), so a line that was
+    fine when it was written and is not any more (a rule got stricter) is left out.  An owner's own correction (forced) is applied as written."""
+    f = rewrites_path(site)
+    if f.exists():
+        try:
+            json.loads(f.read_text(encoding="utf-8"))
+        except ValueError as e:
+            warn(f"the dictionary of {site} is not valid JSON ({e}): nothing is applied")
+            return [], 0
+    ok, skipped = [], 0
+    for e in load_rewrites(site):
+        try:
+            problems = [] if e.get("forced") else check_rewrite(norm(e["from"]), norm(e["to"]), site, e.get("kind", "heading"))
+        except Exception as ex:                                        # a bug in a check must not stop a publish
+            problems = [f"check failed: {ex}"]
+        if problems:
+            skipped += 1
+            warn(f"a dictionary line of {site} is not applied ({'; '.join(problems)[:120]})")
+        else:
+            ok.append(e)
+    return ok, skipped
+
+
+def apply_dir(root: Path, site: str, dry: bool = False, warn=print) -> Counter:
+    """Rewrite the built HTML with the dictionary.  Fails open: whatever goes wrong with a line, a file or the whole dictionary, the page keeps its own text."""
+    stats: Counter = Counter()
+    entries, skipped = usable_entries(site, warn)
+    stats["entries"] = len(entries) + skipped
+    stats["skipped_entries"] = skipped
     if not entries:
-        return Counter()
+        return stats
     rw = Rewriter(entries)
     for f in nj.walk_files(root, (".html", ".htm")):
         rel = str(f.relative_to(root)).replace("\\", "/")
         if nj.EXEMPT_PATH.search(rel):
             continue
-        raw = f.read_text(encoding="utf-8")
-        new = rw.page(raw)
-        if new != raw and not dry:
-            f.write_text(new, encoding="utf-8", newline="")
-    return rw.hits
+        try:
+            raw = f.read_text(encoding="utf-8")
+            snapshot = Counter(rw.hits)
+            before = sum(rw.hits.values())
+            new = rw.page(raw)
+            if new == raw:
+                continue
+            if TAGS.findall(raw) != TAGS.findall(new) or HREFS.findall(raw) != HREFS.findall(new):         # a rewording may never change the markup or a link
+                warn(f"{rel}: the markup or a link would change; the page is left as it is")
+                stats["skipped_files"] += 1
+                rw.hits = snapshot
+                continue
+            stats["pages"] += 1
+            stats["replacements"] += sum(rw.hits.values()) - before
+            if not dry:
+                f.write_text(new, encoding="utf-8", newline="")
+        except Exception as ex:
+            warn(f"{rel}: not rewritten ({ex})")
+            stats["skipped_files"] += 1
+    stats["texts"] = len(rw.hits)
+    return stats
 
 
 # --------------------------------------------------------------------------------------------------------------------------------- the judge (Codex, read-only)
@@ -702,6 +750,7 @@ def main(argv: list[str] | None = None) -> int:
             s.add_argument("--limit", type=int, default=40)
         if name == "apply":
             s.add_argument("--dry", action="store_true")
+            s.add_argument("--fail-open", action="store_true", help="never fail: a problem is a warning and the page keeps its own text (the deploy uses this)")
     a = sub.add_parser("add")
     a.add_argument("--site", required=True)
     a.add_argument("--from", dest="old", required=True)
@@ -747,8 +796,15 @@ def main(argv: list[str] | None = None) -> int:
 
     root, site = resolve(args.target, args.site)
     if args.cmd == "apply":
-        hits = apply_dir(root, site or "", args.dry)
-        print(f"{sum(hits.values())} rewording(s) applied in {len(hits)} text(s) for {site}" + (" (dry run)" if args.dry else ""))
+        def warn(msg):
+            print(f"::warning::styleloop: {msg}")
+        try:
+            st = apply_dir(root, site or "", args.dry, warn)
+        except Exception as ex:                       # fail open: the publish goes on with the original text
+            warn(f"the rewrite step failed ({ex}); the site is published with its own text")
+            return 0 if args.fail_open else 1
+        print(f"styleloop apply site={site}: dictionary lines={st['entries']} usable={st['entries'] - st['skipped_entries']} skipped={st['skipped_entries']} "
+              f"pages changed={st['pages']} replacements={st['replacements']} files left alone={st['skipped_files']}" + (" (dry run)" if args.dry else ""))
         return 0
     units = extract_units(root, site)
     if args.cmd == "extract":
