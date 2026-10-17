@@ -201,6 +201,23 @@ class ReadingHtml(unittest.TestCase):
         self.assertIn("closing_ikaga", lines)                                                       # from the meta description
         self.assertTrue(any(h.line == 5 and h.rule == "closing_ikaga" for h in hits))                # the <p> on line 5
 
+    def test_a_title_and_its_body_in_one_item_are_two_texts(self):
+        html = "<ul><li><b>入力は端末の中だけ</b><span>名前も文面もブラウザの中だけで処理します。</span></li><li><b>A4で印刷</b><span>カレンダー、名札、賞状はA4で印刷できる大きさで作れます。</span></li></ul>"
+        texts = [b.text for b in nj.blocks_from_html(html)]
+        self.assertEqual(texts, ["入力は端末の中だけ", "名前も文面もブラウザの中だけで処理します。", "A4で印刷", "カレンダー、名札、賞状はA4で印刷できる大きさで作れます。"])
+        self.assertEqual(ids_html(html, "minna"), set())                                         # no phantom comma or repeated word across the join
+        self.assertEqual([b.text for b in nj.blocks_from_html("<p>これは<b>大事な</b>話です。</p>")], ["これは大事な話です。"])      # an emphasis inside a sentence stays in it
+
+    def test_a_long_quoted_example_is_not_judged_as_the_writers_own_prose(self):
+        text = "親しい人には「楽しいクリスマスになりますように」「寒い日が続きますので、あたたかくお過ごしください」「またゆっくり会える日を楽しみにしています」などが使いやすいです。"
+        self.assertEqual(ids(text, "minna", level="mid"), set())
+        letter = "「生活の形が少し変わりましたため、来年より年賀状でのご挨拶を失礼させていただくことにいたしました。」"
+        self.assertNotIn("sasete_itadaku", ids(letter + chr(10) + letter, "minna"))
+        self.assertEqual(ids_html("<blockquote><p>おかげさまで、今年もたのしくすごせました。ありがとうございます。させていただきます。させていただきます。</p></blockquote>", "minna"), set())
+        # the writer's own sentence next to a quote is still judged
+        self.assertIn("hedge_deshou", ids("「楽しいクリスマスになりますように」と書くのがよいと言えるでしょう。", "minna"))
+        self.assertIn("md_leftover", ids_html("<blockquote>**重要**です。</blockquote>"))                  # a leftover mark is a leftover anywhere
+
     def test_a_line_break_inside_japanese_text_is_not_a_space(self):
         blocks = nj.blocks_from_html("<p>あと\n何日\nで来る日です。あと\n何日\nで来る日です。</p>")
         self.assertEqual(blocks[0].text, "あと何日で来る日です。あと何日で来る日です。")
