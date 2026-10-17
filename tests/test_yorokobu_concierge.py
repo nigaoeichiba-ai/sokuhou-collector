@@ -238,7 +238,7 @@ async function load(url) {
     chip('誕生日').click(); await wait(100);
     out.tier_chips = [...d.querySelectorAll('.cc-chip:not(:disabled)')].map(b => b.textContent);
     chip('3,000円以内').click(); await wait(150);
-    out.link_hrefs = [...d.querySelectorAll('.cc-link')].map(a => a.getAttribute('href'));
+    out.link_hrefs = [...d.querySelectorAll('a.cc-link, .cc-link > a')].map(a => a.getAttribute('href'));
     chip('見つからない').click(); await wait(100);
     out.why_chips = [...d.querySelectorAll('.cc-chip:not(:disabled)')].length;
     chip('予算に合わなかった').click(); await wait(100);
@@ -252,8 +252,8 @@ async function load(url) {
     d.querySelector('.cc-open').click(); await wait(200);
     const before = calls.length;
     d.querySelector('.cc-form input').value = '金継ぎの器'; d.querySelector('.cc-form').dispatchEvent(new w.Event('submit', { cancelable: true })); await wait(200);
-    const aff = d.querySelector('.cc-link[rel~="sponsored"]');
-    out.miss_aff = aff ? aff.getAttribute('href').indexOf('hb.afl.rakuten.co.jp/hgc/AFF.ID/trk?pc=') > 0 : false;
+    const aff = d.querySelector('.cc-link > a[rel~="sponsored"]');
+    out.miss_aff = aff ? aff.getAttribute('href').indexOf('hb.afl.rakuten.co.jp/hgc/AFF.ID/?pc=') > 0 : false;
     out.miss_pr = aff ? aff.innerText.indexOf('広告(PR)') >= 0 : false;
     const vs = d.querySelectorAll('.cc-voice input'); const lastVoice = vs[vs.length - 1];
     out.preset = lastVoice.value;
@@ -264,7 +264,7 @@ async function load(url) {
     out.voice_calls_after_unsafe = calls.filter(c => c.op === 'voice').length;
     // a typed sentence that names the page
     d.querySelector('.cc-form input').value = '母の日に、母へ 3000円くらい'; d.querySelector('.cc-form').dispatchEvent(new w.Event('submit', { cancelable: true })); await wait(200);
-    out.typed_links = [...d.querySelectorAll('.cc-link')].map(a => a.getAttribute('href'));
+    out.typed_links = [...d.querySelectorAll('a.cc-link, .cc-link > a')].map(a => a.getAttribute('href'));
     // do not track: nothing is counted
     f = await load('/'); d = f.contentDocument; w = f.contentWindow;
     Object.defineProperty(w.navigator, 'doNotTrack', { value: '1', configurable: true });
@@ -272,7 +272,7 @@ async function load(url) {
     d.querySelector('.cc-open').click(); await wait(500);
     [...d.querySelectorAll('.cc-chip')].find(b => b.textContent.indexOf('セール') >= 0).click(); await wait(150);
     out.dnt_calls = calls2.length;
-    out.sale_link = [...d.querySelectorAll('.cc-link')].map(a => a.getAttribute('href'));
+    out.sale_link = [...d.querySelectorAll('a.cc-link, .cc-link > a')].map(a => a.getAttribute('href'));
   } catch (e) { out.error = String(e); }
   document.getElementById('out').textContent = JSON.stringify(out);
 })();

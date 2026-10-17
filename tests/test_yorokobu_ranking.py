@@ -312,8 +312,8 @@ class BuildTest(unittest.TestCase):
 
     def test_products_link_through_the_affiliate_id_with_the_pr_label_and_the_dated_disclaimer(self):
         html = self.read("ranking/f20/index.html")
-        self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/yorokobu?pc=", html)
-        self.assertIn('rel="sponsored nofollow noopener"', html)
+        self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc=", html)
+        self.assertIn('rel="nofollow sponsored noopener"', html)
         self.assertIn('aria-label="広告を含みます">PR</span>', html)
         self.assertIn("価格・在庫は2026年10月7日時点の情報です", html)
         self.assertNotIn("Amazonのアソシエイト", html)

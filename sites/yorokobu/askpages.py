@@ -100,7 +100,7 @@ def rec_data(d: dict, cfg: dict) -> dict | None:
             if shops.get(it["shop_code"], 0) >= 2:
                 continue
             shops[it["shop_code"]] = shops.get(it["shop_code"], 0) + 1
-            items.append({"n": B.blurb_line(it), "p": it["price"], "i": B.thumb(it["image"], 128), "u": B.rakuten_link(cfg, B.rakuten.clean_item_url(it["url"])),
+            items.append({"n": B.blurb_line(it), "p": it["price"], "i": it["image"], "u": B.item_href(cfg, it),
                           "g": gender_mark(it["name"])})
             if len(items) >= REC_ITEMS:
                 break

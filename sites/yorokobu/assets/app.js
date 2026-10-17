@@ -118,9 +118,9 @@
         var q = f.elements.q.value.replace(/\s+/g, " ").trim();
         if (!q) { f.elements.q.focus(); return; }
         if (!/ギフト|プレゼント|贈り物/.test(q)) q += " ギフト";
-        var aff = f.getAttribute("data-aff"), trk = f.getAttribute("data-trk");
+        var aff = f.getAttribute("data-aff");
         var target = "https://search.rakuten.co.jp/search/mall/" + encodeURIComponent(q) + "/";
-        var url = "https://hb.afl.rakuten.co.jp/hgc/" + aff + "/" + (trk || "") + "?pc=" + encodeURIComponent(target) + "&m=" + encodeURIComponent(target);
+        var url = "https://hb.afl.rakuten.co.jp/hgc/" + aff + "/?pc=" + encodeURIComponent(target) + "&m=" + encodeURIComponent(target);
         window.open(url, "_blank", "noopener");
       });
     });
@@ -243,15 +243,17 @@
         if (!it) return;
         n++;
         var li = document.createElement("li"); li.className = "item";
-        var a1 = document.createElement("a"); a1.className = "item-img"; a1.href = it.u; a1.target = "_blank"; a1.rel = "sponsored nofollow noopener";
-        var img = document.createElement("img"); img.src = it.i; img.alt = it.n || "楽天市場の商品ページ"; img.width = 128; img.height = 128; img.loading = "lazy"; a1.appendChild(img);
+        var pic = document.createElement("div"); pic.className = "item-img";
+        var a1 = document.createElement("a"); a1.href = it.u; a1.target = "_blank"; a1.rel = "nofollow sponsored noopener";
+        var img = document.createElement("img"); img.src = it.i; img.alt = it.n || "楽天市場の商品ページ"; a1.appendChild(img); pic.appendChild(a1);
         var body = document.createElement("div"); body.className = "item-body";
         var h3 = document.createElement("p"); h3.className = "item-blurb"; h3.textContent = it.n || "";
         var pr = document.createElement("p"); pr.className = "price"; pr.textContent = "¥" + Number(it.p).toLocaleString();
         var btns = document.createElement("div"); btns.className = "item-btns";
-        var b1 = document.createElement("a"); b1.className = "btn"; b1.href = it.u; b1.target = "_blank"; b1.rel = "sponsored nofollow noopener"; b1.textContent = "楽天市場で見る"; btns.appendChild(b1);
+        var b1w = document.createElement("span"); b1w.className = "btn";
+        var b1 = document.createElement("a"); b1.href = it.u; b1.target = "_blank"; b1.rel = "nofollow sponsored noopener"; b1.textContent = "楽天市場で見る"; b1w.appendChild(b1); btns.appendChild(b1w);
         body.appendChild(h3); body.appendChild(pr); body.appendChild(btns);
-        li.appendChild(a1); li.appendChild(body); ul.appendChild(li);
+        li.appendChild(pic); li.appendChild(body); ul.appendChild(li);
       });
       msg.textContent = n ? n + "点の候補です。" : "候補を表示できませんでした。商品が入れ替わった可能性があります。";
     }).catch(function () { msg.textContent = "候補を読み込めませんでした。"; });
@@ -492,24 +494,20 @@
     var root = $("#gacha"); if (!root) return;
     var form = $(".gacha-form", root), msg = $(".gacha-msg", root), out = $(".gacha-out", root), data = null, last = "";
     function pool() { var r = form.elements.r.value, t = form.elements.t.value; return (data && data.rec[r] && data.rec[r].tiers[t]) || []; }
-    function link(url) {
-      var aff = root.getAttribute("data-aff"), trk = root.getAttribute("data-trk"), e = encodeURIComponent(url);
-      return "https://hb.afl.rakuten.co.jp/hgc/" + aff + "/" + (trk || "") + "?pc=" + e + "&m=" + e;
-    }
     function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; }
     function show(it) {
       out.textContent = "";
-      var card = el("div", "gacha-card"), a = el("a", "gacha-img"), img = document.createElement("img");
-      a.href = link(it[3]); a.rel = "sponsored nofollow noopener"; a.target = "_blank";
-      img.src = it[2]; img.alt = it[0] || "楽天市場の商品ページ"; img.width = 128; img.height = 128; a.appendChild(img);
+      var card = el("div", "gacha-card"), pic = el("div", "gacha-img"), a = document.createElement("a"), img = document.createElement("img");
+      a.href = it[3]; a.target = "_blank"; a.rel = "nofollow sponsored noopener";                  // the link the API gave, as it is
+      img.src = it[2]; img.alt = it[0] || "楽天市場の商品ページ"; a.appendChild(img); pic.appendChild(a);
       var body = el("div", "gacha-body");
       if (it[0]) body.appendChild(el("p", "gacha-name", it[0]));
       body.appendChild(el("p", "price", yen(it[1])));
       if (it[4]) body.appendChild(el("p", "meta", "★" + (it[5] / 10).toFixed(1) + "(" + it[4].toLocaleString("ja-JP") + "件)"));
-      var buy = el("a", "btn", "楽天市場で見る"); buy.href = a.href; buy.rel = a.rel; buy.target = "_blank";
+      var buy = el("span", "btn"), buya = el("a", "", "楽天市場で見る"); buya.href = a.href; buya.target = "_blank"; buya.rel = a.rel; buy.appendChild(buya);
       var again = el("button", "btn btn-sub", "もういちど回す"); again.type = "button"; again.addEventListener("click", spin);
       var row = el("p", "gacha-actions"); row.appendChild(buy); row.appendChild(document.createTextNode(" ")); row.appendChild(again);
-      body.appendChild(row); card.appendChild(a); card.appendChild(body); out.appendChild(card);
+      body.appendChild(row); card.appendChild(pic); card.appendChild(body); out.appendChild(card);
     }
     function spin() {
       var p = pool();

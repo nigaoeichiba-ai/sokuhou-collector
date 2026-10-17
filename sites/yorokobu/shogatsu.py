@@ -208,9 +208,9 @@ def _sources(pg: dict, data: dict) -> str:
 
 def _buttons(cfg: dict, query: str) -> str:
     B = _b()
-    out = f'<a class="btn" href="{esc(B.search_link(cfg, query))}" rel="sponsored nofollow noopener" target="_blank">楽天市場で{esc(query)}を探す</a>'
+    out = f'<span class="btn"><a href="{esc(B.search_link(cfg, query))}" target="_blank" rel="nofollow sponsored noopener">楽天市場で{esc(query)}を探す</a></span>'
     if cfg.get("amazon_tracking_id"):
-        out += f'<a class="btn" href="{esc(B.amazon_url(cfg, query + " ギフト"))}" rel="sponsored nofollow noopener" target="_blank">Amazonで{esc(query)}を探す</a>'
+        out += f'<span class="btn"><a href="{esc(B.amazon_url(cfg, query + " ギフト"))}" target="_blank" rel="nofollow sponsored noopener">Amazonで{esc(query)}を探す</a></span>'
     return out + B.yahoo_btn(cfg, query + " ギフト", f"Yahoo!ショッピングで{query}を探す")
 
 

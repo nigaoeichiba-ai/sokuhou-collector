@@ -98,7 +98,7 @@ class HeartTest(unittest.TestCase):
         cards = re.findall(r'<article class="pick".*?</article>', day, re.S)
         self.assertGreaterEqual(len(cards), 10)
         for c in cards:
-            box = re.search(r'<div class="imgbox[^"]*">(.*?)</div>', c, re.S)
+            box = re.search(r'<div class="imgbox[^"]*">(.*?)</button></div>', c, re.S)
             self.assertTrue(box and 'class="fav"' in box.group(1), c[:120])               # the heart is inside the picture's own box
         self.assertTrue(any('data-code="a:' in c for c in cards), "an Amazon product is kept as a:<ASIN>")
         self.assertFalse(any('data-code="a:' in c and "data-price" in re.search(r'<button type="button" class="fav".*?</button>', c, re.S).group(0) for c in cards), "no price for an Amazon product")
@@ -106,7 +106,7 @@ class HeartTest(unittest.TestCase):
     def test_the_feature_page_and_the_gift_cards_carry_the_heart_too(self):
         f = self.c["features"][0]
         page = (self.root / "pick" / f["slug"] / "index.html").read_text(encoding="utf-8")
-        self.assertRegex(page, r'<div class="imgbox[^"]*"><a class="feat-photo.*?class="fav"')
+        self.assertRegex(page, r'<div class="imgbox[^"]*"><div class="feat-photo.*?class="fav"')
         gift = (self.root / "gift" / "birthday-mother" / "index.html").read_text(encoding="utf-8")
         self.assertGreaterEqual(gift.count('class="fav"'), 1)
         self.assertNotIn('class="fav"', (self.root / "about" / "index.html").read_text(encoding="utf-8"))

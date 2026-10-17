@@ -206,7 +206,7 @@ class PagesTest(unittest.TestCase):
     def test_the_buttons_are_search_links_with_the_affiliate_marks(self):
         for p in self.paths():
             html = self.read(p)
-            self.assertRegex(html, r'class="btn" href="https://hb\.afl\.rakuten\.co\.jp/[^"]+" rel="sponsored nofollow noopener" target="_blank">楽天市場で', p)
+            self.assertRegex(html, r'<span class="btn"><a href="https://hb\.afl\.rakuten\.co\.jp/[^"]+" target="_blank" rel="nofollow sponsored noopener">楽天市場で', p)
             self.assertIn("ck.jp.ap.valuecommerce.com", html, p)
 
 

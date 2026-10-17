@@ -147,7 +147,7 @@ class PagesTest(unittest.TestCase):
             self.assertFalse((Path(tmp) / "compare" / "amazon").exists())
 
     def test_the_gift_mall_link_is_an_a8_affiliate_link_on_the_hub_and_on_gift_kinds_only(self):
-        link = f'href="https://px.a8.net/svt/ejp?a8mat={A8}" rel="sponsored nofollow noopener" target="_blank"'
+        link = f'href="https://px.a8.net/svt/ejp?a8mat={A8}" target="_blank" rel="nofollow sponsored noopener"'
         self.assertIn(link, self.read("compare/index.html"))
         self.assertIn(link, self.read("compare/catalog-gift/index.html"))
         self.assertNotIn("px.a8.net", self.read("compare/tumbler/index.html"))          # a tumbler is not what the gift mall is for

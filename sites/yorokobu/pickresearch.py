@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from sites.yorokobu import dailypicks as dp  # noqa: E402
+from sokuhou import rakuten  # noqa: E402
 
 WORK = ROOT.parent / "sokuhou-sites" / "work" / "picks"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
@@ -46,7 +47,7 @@ def item_url(code: str, ranking: dict) -> str | None:
     for seg in ranking["segments"].values():
         for it in seg["items"]:
             if it["code"] == code:
-                return it["url"].split("?")[0]
+                return rakuten.page_url(it["url"]).split("?")[0]
     return None
 
 

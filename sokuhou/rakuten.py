@@ -17,7 +17,6 @@ from typing import Callable
 API_URL = "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701"
 RANKING_URL = "https://openapi.rakuten.co.jp/ichibaranking/api/IchibaItem/Ranking/20220601"
 USER_AGENT = "sokuhou-collector/0.1 (+https://github.com/nigaoeichiba-ai/sokuhou-collector)"
-IMAGE_SIZE = "300x300"
 
 
 class RakutenError(Exception):
@@ -95,18 +94,24 @@ class Client:
 
 
 def _first_image(item: dict) -> str:
+    """The picture URL exactly as the API gave it (the first of `mediumImageUrls`; of `smallImageUrls` when there is no medium one).  It is never rewritten: the size on the page is the CSS's."""
     for key in ("mediumImageUrls", "smallImageUrls"):
         for entry in item.get(key) or []:
             url = entry.get("imageUrl") if isinstance(entry, dict) else entry
             if url:
-                return sized_image(url)
+                return url
     return ""
 
 
-def sized_image(url: str) -> str:
-    """Rakuten thumbnails take a ?_ex=WxH size; the default 128px looks soft on cards."""
-    base = url.split("?", 1)[0]
-    return f"{base}?_ex={IMAGE_SIZE}"
+def page_url(item_url: str) -> str:
+    """The Ichiba page of a product, for the places that need the page itself (the ♡ keeps it, the spec's link formula takes it as `pc`).  The API's `itemUrl` is sometimes already a redirect
+    (hb.afl.rakuten.co.jp/hgc/<ID>/?pc=<the page>&...): then the page is its `pc` value, cut out and not changed.  Any other URL is returned as it is."""
+    parts = urllib.parse.urlsplit(item_url)
+    if parts.netloc == "hb.afl.rakuten.co.jp":
+        pc = urllib.parse.parse_qs(parts.query).get("pc", [""])[0]
+        if pc.startswith("https://"):
+            return pc
+    return item_url
 
 
 def _num(v, default=0.0) -> float:
@@ -114,19 +119,6 @@ def _num(v, default=0.0) -> float:
         return float(v)
     except (TypeError, ValueError):
         return default
-
-
-def clean_item_url(url: str) -> str:
-    """The API may return its own affiliate redirect (hb.afl.rakuten.co.jp ... ?pc=<item page>) instead of the item page.
-    Linking through it would hand the commission to Rakuten's ID, so unwrap it to the plain Ichiba item page."""
-    parts = urllib.parse.urlsplit(url)
-    if parts.netloc == "hb.afl.rakuten.co.jp":
-        target = urllib.parse.parse_qs(parts.query).get("pc", [""])[0]
-        if target.startswith("https://"):
-            return clean_item_url(target)
-    if parts.netloc == "item.rakuten.co.jp" and parts.query:        # the ranking API adds its own tracking (rafcid=...): it must not travel inside our affiliate link
-        return urllib.parse.urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))
-    return url
 
 
 _PROMO = [
@@ -159,7 +151,8 @@ def normalize(item: dict) -> dict | None:
     """The few fields the site needs; None when the item cannot be shown (no price, link or image)."""
     item = item.get("Item", item)  # formatVersion 1 wraps each item
     name = clean_title((item.get("itemName") or "").strip())
-    url = clean_item_url(item.get("itemUrl") or "")
+    url = item.get("itemUrl") or ""                                 # as the API gave it
+    aff = item.get("affiliateUrl") or ""                            # the affiliate link the API made for our affiliate ID: used as it is, never rebuilt
     price = int(_num(item.get("itemPrice")))
     image = _first_image(item)
     if not (name and url.startswith("https://") and price > 0 and image):
@@ -169,6 +162,7 @@ def normalize(item: dict) -> dict | None:
         "name": name,
         "price": price,
         "url": url,
+        **({"aff": aff} if aff.startswith("https://") else {}),
         "image": image,
         "shop": (item.get("shopName") or "").strip(),
         "shop_code": item.get("shopCode") or "",

@@ -50,7 +50,7 @@ class GachaDataTest(unittest.TestCase):
                 urls = [x[3] for x in rows]
                 self.assertEqual(len(urls), len(set(urls)), (slug, tier))
                 for name, price, image, url, reviews, rating10 in rows:
-                    self.assertTrue(url.startswith("https://") and "hb.afl.rakuten" not in url)    # the plain item page: the link is built on the page
+                    self.assertTrue(url.startswith("https://hb.afl.rakuten.co.jp/hgc/"))    # the affiliate link as it is (the API's, or the spec's formula for an old record): the page builds nothing
                     self.assertGreater(price, 0)
                     self.assertTrue(image.startswith("https://"))
         self.assertEqual({t["slug"] for t in data["tiers"]}, {t for r in data["rec"].values() for t in r["tiers"]})
@@ -91,7 +91,7 @@ const wait = (ms) => new Promise(r => setTimeout(r, ms));
     for (const t of ts) {
       form.elements.t.value = t; form.querySelector('button[type="submit"]').click(); await wait(200);
       const card = d.querySelector('.gacha-card');
-      if (card) { shown = {title: (card.querySelector('.gacha-name') || {}).textContent || '', href: card.querySelector('a.btn').href, rel: card.querySelector('a.btn').rel, price: card.querySelector('.price').textContent}; break; }
+      if (card) { shown = {title: (card.querySelector('.gacha-name') || {}).textContent || '', href: card.querySelector('.btn > a').href, rel: card.querySelector('.btn > a').rel, price: card.querySelector('.price').textContent}; break; }
     }
     out.card = shown;
     out.msg = d.querySelector('.gacha-msg').textContent;
@@ -142,7 +142,7 @@ class GachaBrowserTest(unittest.TestCase):
         self.assertNotIn("error", o)
         self.assertEqual(o["before"], 0)
         self.assertIsNotNone(o["card"], o)
-        self.assertTrue(o["card"]["href"].startswith("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/yorokobu?pc="))
+        self.assertTrue(o["card"]["href"].startswith("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc="))
         self.assertIn("sponsored", o["card"]["rel"])
         self.assertTrue(o["card"]["price"].endswith("円"))
         self.assertTrue(o["again"] and o["after"])

@@ -348,7 +348,7 @@ class PagesTest(unittest.TestCase):
             self.assertNotIn("thumbnail.image.rakuten.co.jp", html)
             self.assertNotIn("m.media-amazon.com", html)
             self.assertNotRegex(body, r"税込|¥")
-            self.assertRegex(html, r'class="btn" href="https://hb\.afl\.rakuten\.co\.jp/hgc/AFF\.ID/trk[^"]*" rel="sponsored nofollow noopener"')
+            self.assertRegex(html, r'<span class="btn"><a href="https://hb\.afl\.rakuten\.co\.jp/hgc/AFF\.ID/\?pc=[^"]*" target="_blank" rel="nofollow sponsored noopener"')
 
 
 if __name__ == "__main__":

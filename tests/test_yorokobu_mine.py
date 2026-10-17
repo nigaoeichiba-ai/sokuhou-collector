@@ -108,7 +108,7 @@ async function load(url) {
     let f = await load('/gift/birthday-boyfriend/'); let d = f.contentDocument, w = f.contentWindow;
     w.localStorage.clear();
     const calls = []; w.fetch = (u, o) => { calls.push([u, o && o.body]); return Promise.resolve({}); };
-    const a = d.querySelector('li.item[data-code] a.btn');
+    const a = d.querySelector('li.item[data-code] .btn > a');
     const code = a.closest('li.item').getAttribute('data-code');
     out.code = code;
     out.pressed = w.YorokobuMine.press(a);
@@ -134,7 +134,7 @@ async function load(url) {
     const n5 = calls.length;
     const realSet = w.Storage.prototype.setItem; w.Storage.prototype.setItem = function () { throw new Error('private window'); };
     w.localStorage.removeItem('yorokobu.pop');
-    const other = d.querySelectorAll('li.item[data-code]')[1].querySelector('a.btn'); w.YorokobuMine.press(other); w.YorokobuMine.press(other);
+    const other = d.querySelectorAll('li.item[data-code]')[1].querySelector('.btn > a'); w.YorokobuMine.press(other); w.YorokobuMine.press(other);
     out.nostorage_calls = calls.length - n5; w.Storage.prototype.setItem = realSet;
     // the header heart
     w.localStorage.setItem('yorokobu.favs', JSON.stringify([{ code: code, name: 'x', price: '1' }]));
@@ -143,7 +143,7 @@ async function load(url) {
     w.localStorage.setItem('yorokobu.recent', JSON.stringify([{ id: 'r:' + code, code: code, name: 'n', price: '1', t: 1 }, { id: 'r:nonexistent:1', code: 'nonexistent:1', name: '消えた商品', price: '1200', t: 2 }]));
     f = await load('/favorites/'); d = f.contentDocument; w = f.contentWindow;
     out.fav_cards = d.querySelectorAll('#my-favs li.item').length;
-    out.fav_has_buttons = d.querySelectorAll('#my-favs a.btn[rel~="sponsored"]').length;
+    out.fav_has_buttons = d.querySelectorAll('#my-favs .btn > a[rel~="sponsored"]').length;
     out.recent_cards = d.querySelectorAll('#my-recent li.item').length;
     out.card_imgs = [...d.querySelectorAll('#my-favs li.item img, #my-recent li.item img')].map(i => i.getAttribute('src'));
     out.safe_img = ['https://thumbnail.image.rakuten.co.jp/@0_mall/s/a.jpg?_ex=300x300', 'https://image.rakuten.co.jp/s/a.jpg', 'http://thumbnail.image.rakuten.co.jp/a.jpg', 'https://m.media-amazon.com/images/I/a.jpg', 'https://evil.example.com/a.jpg', 'javascript:alert(1)'].map(u => w.YorokobuMine.safeImg(u));

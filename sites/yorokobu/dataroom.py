@@ -441,9 +441,9 @@ def _shop_section(d: dict, b: dict) -> str:
         if len(picked) < 2:
             continue
         rt = _range_text(r["lo"], r["hi"])
-        btns = f'<a class="btn" href="{esc(B.search_link(cfg, r["query"]))}" rel="sponsored nofollow noopener" target="_blank">楽天市場で探す</a>'
+        btns = f'<span class="btn"><a href="{esc(B.search_link(cfg, r["query"]))}" target="_blank" rel="nofollow sponsored noopener">楽天市場で探す</a></span>'
         if cfg.get("amazon_tracking_id"):
-            btns += (f'<a class="btn" href="{esc(B.amazon_url(cfg, r["query"], r["lo"] or None, r["hi"]))}" rel="sponsored nofollow noopener" target="_blank">Amazonで探す({esc(rt)})</a>')
+            btns += (f'<span class="btn"><a href="{esc(B.amazon_url(cfg, r["query"]))}" target="_blank" rel="nofollow sponsored noopener">Amazonで探す({esc(rt)})</a></span>')
         out += (f'<div class="shop-range"><h3>{esc(r["label"])}</h3><ul class="items">{"".join(B.item_card(cfg, it) for it in picked)}</ul>'
                 f'<p class="more">{btns}</p></div>')
     B.set_keep()                                                      # (the words kept in titles belong to the page being built; not to the next one)

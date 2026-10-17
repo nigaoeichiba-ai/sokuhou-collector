@@ -162,7 +162,7 @@ class PagesTest(unittest.TestCase):
         for needle in ("総合点のつけ方", "実質価格", "2026年10月14日 5:40", "「最安」とは言えません", "価格・在庫は2026年10月14日 5:40時点の情報です", 'data-score=', 'data-points=', "/assets/compare.js"):
             self.assertIn(needle, html, needle)
         self.assertIn("ポイント約", html)                                         # the rows with a running multiplier say the points
-        self.assertEqual(len(re.findall(r'<li class="cmp-row"', html)), len(re.findall(r'class="btn" href="https://hb\.afl\.rakuten\.co\.jp/hgc/AFF\.ID/trk', html)))   # every row's button is the affiliate link
+        self.assertEqual(len(re.findall(r'<li class="cmp-row"', html)), len(re.findall(r'<span class="btn"><a href="https://hb\.afl\.rakuten\.co\.jp/hgc/AFF\.ID/\?pc=', html)))   # every row's button is the affiliate link
 
     def test_the_page_says_why_amazon_is_not_in_the_table_and_does_not_show_an_amazon_price(self):
         html = self.read(f"compare/{self.slug}/index.html")

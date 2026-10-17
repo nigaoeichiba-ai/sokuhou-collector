@@ -49,7 +49,7 @@ class ShareListDataTest(unittest.TestCase):
         self.assertGreaterEqual(len(db), 5)
         self.assertLessEqual(len(own), 2, own)
         for code, it in list(db.items())[:50]:
-            self.assertTrue(it["u"].startswith("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/yorokobu?pc="), code)
+            self.assertTrue(it["u"].startswith("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc="), code)
             self.assertNotIn("a", it, code)                                             # no other mall's link in the Rakuten data
             self.assertTrue(it["i"].startswith("https://"), code)
             self.assertGreater(it["p"], 0)
@@ -92,7 +92,7 @@ const wait = (ms) => new Promise(r => setTimeout(r, ms));
     out.cards = cards.length;
     out.msg = d.querySelector('.list-msg').textContent;
     out.first = cards[0] && {name: (cards[0].querySelector('.item-blurb') || {}).textContent || '', price: cards[0].querySelector('.price').textContent,
-                             buttons: [...cards[0].querySelectorAll('.btn')].map(a => ({t: a.textContent, href: a.href, rel: a.rel}))};
+                             buttons: [...cards[0].querySelectorAll('.btn > a')].map(a => ({t: a.textContent, href: a.href, rel: a.rel}))};
     out.scroll = d.documentElement.scrollWidth;
     const g = document.createElement('iframe'); g.style.width = '300px'; g.style.height = '900px'; document.body.appendChild(g);
     await new Promise(r => { g.onload = r; g.src = '/list/?c=' + codes.map(encodeURIComponent).join(','); }); await wait(900);

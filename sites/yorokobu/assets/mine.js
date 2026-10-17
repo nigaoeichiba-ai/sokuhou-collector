@@ -16,10 +16,10 @@
   var HOSTS = ["hb.afl.rakuten.co.jp", "item.rakuten.co.jp", "search.rakuten.co.jp", "www.amazon.co.jp"];
   var IMG_HOSTS = ["thumbnail.image.rakuten.co.jp", "image.rakuten.co.jp"];     // Rakuten's own picture hosts (no Amazon picture is ever kept)
   function safeUrl(u) {
-    try { var x = new URL(String(u), location.origin); return x.protocol === "https:" && HOSTS.indexOf(x.hostname) >= 0 ? x.href : ""; } catch (e) { return ""; }
+    try { var x = new URL(String(u), location.origin); return x.protocol === "https:" && HOSTS.indexOf(x.hostname) >= 0 ? String(u) : ""; } catch (e) { return ""; }       // the string as it came: only checked, never rewritten
   }
   function safeImg(u) {
-    try { var x = new URL(String(u), location.origin); return x.protocol === "https:" && IMG_HOSTS.indexOf(x.hostname) >= 0 ? x.href : ""; } catch (e) { return ""; }
+    try { var x = new URL(String(u), location.origin); return x.protocol === "https:" && IMG_HOSTS.indexOf(x.hostname) >= 0 ? String(u) : ""; } catch (e) { return ""; }
   }
   function dnt() { return navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || window.doNotTrack === "1" || navigator.msDoNotTrack === "1"; }
   var memDone = {};                                                      // the once-a-day rule when localStorage is not available
@@ -79,18 +79,18 @@
   // ---- /favorites/
   function card(it, extra) {
     it = Object.assign({}, it, { u: safeUrl(it.u), a: safeUrl(it.a), i: safeImg(it.i) });
-    var rel = ' rel="sponsored nofollow noopener" target="_blank"';
+    var rel = ' target="_blank" rel="nofollow sponsored noopener"';
     var attrs = ' data-code="' + esc(it.code || "") + '"' + (it.asin ? ' data-asin="' + esc(it.asin) + '"' : "") + ' data-price="' + esc(it.p || "") + '"';
-    return '<li class="item"' + attrs + '><a class="item-img" href="' + esc(it.u) + '"' + rel + '><img src="' + esc(it.i) + '" alt="' + esc(it.n || "楽天市場の商品ページ") + '" width="128" height="128" loading="lazy"></a>' +
+    return '<li class="item"' + attrs + '><div class="item-img"><a href="' + esc(it.u) + '"' + rel + '><img src="' + esc(it.i) + '" alt="' + esc(it.n || "楽天市場の商品ページ") + '"></a></div>' +
       '<div class="item-body">' + (it.n ? '<p class="item-blurb">' + esc(it.n) + "</p>" : "") + '<p class="price">' + yen(it.p) + "</p>" + (extra || "") +
-      '<div class="item-btns"><a class="btn" href="' + esc(it.u) + '"' + rel + '>楽天市場で見る</a>' + "</div></div></li>";
+      '<div class="item-btns"><span class="btn"><a href="' + esc(it.u) + '"' + rel + '>楽天市場で見る</a></span>' + "</div></div></li>";
   }
   function amazonCard(x, extra) {                       // an Amazon product kept with ♡: its name and the Amazon link it had (no price, no picture: Amazon's rules)
     var u = safeUrl(x.url), asin = String(x.code).slice(2);
     if (!u || !/^[A-Z0-9]{10}$/.test(asin)) return plain({ name: x.name, price: "" });
-    var rel = ' rel="sponsored nofollow noopener" target="_blank"';
+    var rel = ' target="_blank" rel="nofollow sponsored noopener"';
     return '<li class="item item-az" data-asin="' + esc(asin) + '"><div class="item-body"><h3><a href="' + esc(u) + '"' + rel + ">" + esc(x.name) + '</a></h3><p class="fav-gone">価格・在庫はAmazonのページでご確認ください。</p>' +
-      (extra || "") + '<div class="item-btns"><a class="btn" href="' + esc(u) + '"' + rel + '>Amazonで見る</a></div></div></li>';
+      (extra || "") + '<div class="item-btns"><span class="btn"><a href="' + esc(u) + '"' + rel + '>Amazonで見る</a></span></div></div></li>';
   }
   function plain(x) {                                   // a product that is no longer on the site: its name and the price it had, and a search
     return '<li class="item gone"><div class="item-body"><p class="item-blurb">' + esc(x.name || "") + "</p>" + (x.price ? '<p class="price">' + yen(x.price) + '<small>(保存したときの価格)</small></p>' : "") +
