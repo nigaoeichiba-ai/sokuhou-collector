@@ -949,6 +949,7 @@ def main(argv: list[str] | None = None) -> int:
     e.add_argument("--build", help="a folder built WITH THE REAL DATA (default: the production site is read; a build made on this PC shows sample products and is not a safe input)")
     e.add_argument("--dry", action="store_true", help="print the prompt and change nothing")
     e.add_argument("--no-accept", action="store_true", help="check the edits and report them, but do not put them into the dictionary")
+    e.add_argument("--accept", action="store_true", help="(the default) put the edits that pass every check into the dictionary")
     s = sub.add_parser("source")
     s.add_argument("--site", required=True)
     s.add_argument("--dry", action="store_true")
@@ -1006,6 +1007,9 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"  却下 「{r_['text']}」: {'; '.join(r_['problems'])[:100]}")
             if not rep_["failed"] and not args.no_accept:
                 done[rel] = {k: v for k, v in rep_.items() if k != "prompt"}
+                doc = pageedit.append_accepted_doc(args.site, rep_)
+                if doc:
+                    print(f"  → {doc.name} に前→後の表を追記")
         if not args.dry and not args.no_accept:
             pageedit.save_edited(args.site, done)
         return 1 if failed else 0
