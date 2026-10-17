@@ -217,7 +217,7 @@ EMOJI = re.compile("[\U0001F300-\U0001FAFF✨❗]")
 ALLOW_DROP = {"ソムリエ", "ナビゲーター", "ギフトマップ", "ガチャ", "コンシェルジュ", "ナレッジ", "ソリューション"}     # coined words the owner or the style guide asked to replace
 
 
-IDIOM_NUM = re.compile(r"一言|一歩|一番|一緒|一方|一部|一般|一度|一覧|一目|一切|唯一|万一|統一|同一|一体|一致|一時|一つ|ひとつ|十分|一律|一定|一斉|一括|一新|万全|千差万別")
+IDIOM_NUM = re.compile(r"一文|一行|一字|一通り|一言|一歩|一番|一緒|一方|一部|一般|一度|一覧|一目|一切|唯一|万一|統一|同一|一体|一致|一時|一つ|ひとつ|十分|一律|一定|一斉|一括|一新|万全|千差万別")
 
 
 def digits(s: str) -> list[str]:
@@ -235,7 +235,7 @@ def hira_ratio(s: str) -> float:
     return sum(1 for c in jp if "ぁ" <= c <= "ん") / len(jp) if jp else 0.0
 
 
-def check_rewrite(old: str, new: str, site: str | None = None, kind: str = "heading") -> list[str]:
+def check_rewrite(old: str, new: str, site: str | None = None, kind: str = "heading", small_edit: bool = True) -> list[str]:
     """Reasons a rewording is NOT accepted (empty list = accepted)."""
     bad: list[str] = []
     new = new.strip()
@@ -260,7 +260,7 @@ def check_rewrite(old: str, new: str, site: str | None = None, kind: str = "head
         bad.append(f"too much longer ({n_old} -> {n_new})")
     if n_new < n_old * 0.35 and n_old > 12:
         bad.append(f"too much shorter ({n_old} -> {n_new})")
-    if long_kind and n_old > 20 and difflib.SequenceMatcher(None, old, new).ratio() < 0.5:
+    if small_edit and long_kind and n_old > 20 and difflib.SequenceMatcher(None, old, new).ratio() < 0.5:
         bad.append("not a small edit: the sentence was rewritten")
     back = [w for w in lexicon.owner_avoided(site) if w in new and w not in old]
     if back:
@@ -322,15 +322,16 @@ def save_rewrites(site: str, entries: list[dict]) -> None:
     f.write_text(json.dumps({"_note": "exact original -> rewording, applied after the build by sokuhou.styleloop (delete a line to undo it)", "entries": entries}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
 
-def add_entry(site: str, old: str, new: str, by: str = "codex", why: str = "", kind: str = "heading", force: bool = False, today: str | None = None) -> tuple[bool, list[str]]:
+def add_entry(site: str, old: str, new: str, by: str = "codex", why: str = "", kind: str = "heading", force: bool = False, today: str | None = None,
+              small_edit: bool = True) -> tuple[bool, list[str]]:
     old, new = norm(old), norm(new)
-    problems = [] if force else check_rewrite(old, new, site, kind)
+    problems = [] if force else check_rewrite(old, new, site, kind, small_edit=small_edit)
     if problems:
         return False, problems
     entries = load_rewrites(site)
     if any(e["from"] == old for e in entries):
         return False, ["already in the dictionary"]
-    entries.append({"from": old, "to": new, "kind": kind, "by": by, "why": why, "added": today or dt.date.today().isoformat(), **({"forced": True} if force else {})})
+    entries.append({"from": old, "to": new, "kind": kind, "by": by, "why": why, "added": today or dt.date.today().isoformat(), **({"forced": True} if force else {}), **({} if small_edit else {"edit": True})})
     save_rewrites(site, entries)
     return True, []
 
@@ -340,9 +341,10 @@ class Rewriter:
 
     def __init__(self, entries: list[dict]):
         self.exact = {norm(e["from"]): e["to"] for e in entries}
-        long_ = {k: v for k, v in self.exact.items() if len(k) >= 12}
-        self.long_re = re.compile("|".join(re.escape(k) for k in sorted(long_, key=len, reverse=True))) if long_ else None
-        self.long = long_
+        self.long = {k: v for k, v in self.exact.items() if len(k) >= 12}
+        self.index: dict[str, list[str]] = {}
+        for k in sorted(self.long, key=len, reverse=True):
+            self.index.setdefault(k[:8], []).append(k)
         self.hits: Counter = Counter()
 
     def text(self, seg: str) -> str:
@@ -355,11 +357,21 @@ class Rewriter:
             lead = re.match(r"\s*", seg).group(0)
             trail = re.search(r"\s*$", seg).group(0)
             return lead + html.escape(self.exact[key], quote=False) + trail
-        if self.long_re and self.long_re.search(plain):
-            def sub(m):
-                self.hits[m.group(0)] += 1
-                return self.long[m.group(0)]
-            return html.escape(self.long_re.sub(sub, plain), quote=False)
+        if self.index and len(plain) >= 12:
+            out, i, changed = [], 0, False
+            while i < len(plain):
+                for k in self.index.get(plain[i:i + 8], ()) if i + 8 <= len(plain) else ():
+                    if plain.startswith(k, i):
+                        self.hits[k] += 1
+                        out.append(self.long[k])
+                        i += len(k)
+                        changed = True
+                        break
+                else:
+                    out.append(plain[i])
+                    i += 1
+            if changed:
+                return html.escape("".join(out), quote=False)
         return seg
 
     def attr(self, value: str) -> str:
@@ -414,7 +426,7 @@ def usable_entries(site: str, warn=print) -> tuple[list[dict], int]:
     ok, skipped = [], 0
     for e in load_rewrites(site):
         try:
-            problems = [] if e.get("forced") else check_rewrite(norm(e["from"]), norm(e["to"]), site, e.get("kind", "heading"))
+            problems = [] if e.get("forced") else check_rewrite(norm(e["from"]), norm(e["to"]), site, e.get("kind", "heading"), small_edit=not e.get("edit"))
         except Exception as ex:                                        # a bug in a check must not stop a publish
             problems = [f"check failed: {ex}"]
         if problems:
@@ -915,6 +927,13 @@ def main(argv: list[str] | None = None) -> int:
     rj.add_argument("--batches", type=int, default=3)
     rj.add_argument("--accept", action="store_true")
     rj.add_argument("--suggest", action="store_true")
+    e = sub.add_parser("edit", help="rewrite a whole page with one Codex call (the editor prompt); only the invariants are checked")
+    e.add_argument("--site", required=True)
+    e.add_argument("--page", help="a page of the built site, e.g. guide/ochugen/index.html")
+    e.add_argument("--next", type=int, default=0, help="the next N pages never edited (or whose text changed)")
+    e.add_argument("--build", help="the built folder (default: out/naturaljp/<site>, built on first use)")
+    e.add_argument("--dry", action="store_true", help="print the prompt and change nothing")
+    e.add_argument("--no-accept", action="store_true", help="check the edits and report them, but do not put them into the dictionary")
     s = sub.add_parser("source")
     s.add_argument("--site", required=True)
     s.add_argument("--dry", action="store_true")
@@ -931,6 +950,34 @@ def main(argv: list[str] | None = None) -> int:
         ok, why = add_entry(args.site, args.old, args.to, args.by, args.why, args.kind, args.force)
         print("added" if ok else f"not added: {why}")
         return 0 if ok else 1
+    if args.cmd == "edit":
+        from sokuhou import pageedit
+        build = Path(args.build) if args.build else nj.built_dir(args.site)
+        if args.page:
+            pages = [(args.page, nj.published_text((build / args.page).read_text(encoding="utf-8"), args.site))]
+        else:
+            pages = pageedit.next_pages(args.site, build, args.next or 1)
+        failed = False
+        done = pageedit.load_edited(args.site)
+        for rel, raw in pages:
+            rep_ = pageedit.edit_page(args.site, rel, raw, accept=not args.no_accept, dry=args.dry)
+            if args.dry:
+                print(rep_.get("prompt", ""))
+                continue
+            failed = failed or bool(rep_["failed"])
+            print(f"{rel}: units {rep_['units']}, accepted {len(rep_['accepted'])}, rejected {len(rep_['rejected'])}, deleted(proposal) {len(rep_['deleted'])}, "
+                  f"needs_check {len(rep_['needs_check'])}, structure {len(rep_['structure_suggestions'])}" + (f"  FAILED: {rep_['failed']}" if rep_["failed"] else ""))
+            for d in rep_["diagnosis"]:
+                print("  診断:", d)
+            for a_ in rep_["accepted"][:8]:
+                print(f"  [{a_['kind']}] 「{a_['from'][:50]}」→「{a_['to'][:50]}」 ({a_['why']})")
+            for r_ in rep_["rejected"][:5]:
+                print(f"  却下 「{r_['text']}」: {'; '.join(r_['problems'])[:100]}")
+            if not rep_["failed"] and not args.no_accept:
+                done[rel] = {k: v for k, v in rep_.items() if k != "prompt"}
+        if not args.dry and not args.no_accept:
+            pageedit.save_edited(args.site, done)
+        return 1 if failed else 0
     if args.cmd == "check":
         bad = check_rewrite(norm(args.old), norm(args.to), args.site, args.kind)
         print("OK: passes every check" if not bad else "NOT accepted: " + "; ".join(bad))

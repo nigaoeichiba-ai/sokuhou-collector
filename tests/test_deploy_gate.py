@@ -115,7 +115,7 @@ class DeployGateTest(unittest.TestCase):
         self.assertTrue(self.run_gate("yorokobu", before, after, served=before))
         for site in ("minna", "kuma", "saichin", "atomou"):
             self.assertFalse(self.run_gate(site, before, after, served=before), site)
-        for path in ("data/style/judged/yorokobu.json", "data/style/examples.json", "data/style/learned_rules.json", "data/style/lexicon/gift_ja.json", "data/style/lexicon/README.md", "data/style/suggest_cache.json"):
+        for path in ("data/style/judged/yorokobu.json", "data/style/examples.json", "data/style/learned_rules.json", "data/style/lexicon/gift_ja.json", "data/style/lexicon/README.md", "data/style/suggest_cache.json", "data/style/edited/yorokobu.json"):
             before = self.git("rev-parse", "HEAD")
             after = self.commit(path, path)
             for site in ("saichin", "kuma", "yorokobu", "minna"):
