@@ -5,7 +5,7 @@
     python tests/run_tests.py --site core     # the shared tests only (the daily data collection uses this)
 
 A project owns its tests by name: tests/test_<project>*.py and tests/fixtures/<project>/.  Everything else is shared and runs for every site.
-New project: add its name and pattern to OWNED.
+New project: add its entry to data/sites.json (the register); OWNED is derived from it.
 """
 from __future__ import annotations
 
@@ -19,7 +19,26 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:   # `python tests/run_tests.py` puts tests/ first on the path, not the repository root: "from tests import ..." needs the root (CI failed on this, 2026-10-17)
     sys.path.insert(0, str(ROOT))
-OWNED = {"atomou": ["test_atomou*"], "yorokobu": ["test_yorokobu*"], "minna": ["test_minna*"], "kuma": ["test_kuma*", "test_*_kuma", "test_otsu_bear*"]}
+
+
+def owned_patterns() -> tuple[dict[str, list[str]], set[str]]:
+    """{site: [test module patterns]} from the register's `own` patterns for tests/ (tests/test_kuma* -> test_kuma*, tests/test_otsu_bear.py -> test_otsu_bear),
+    and the sites whose tests also run in the `core` run (saichin: the daily data run has always run them)."""
+    from sokuhou import deployplan
+    out, core = {}, set()
+    for name, site in deployplan.load_registry(env={}).get("sites", {}).items():
+        if site.get("core_tests"):
+            core.add(name)
+        pats = []
+        for p in site["own"]:
+            if p.startswith("tests/test_"):
+                m = p[len("tests/"):]
+                pats.append(m[:-3] if m.endswith(".py") else m)
+        out[name] = pats
+    return out, core
+
+
+OWNED, IN_CORE = owned_patterns()
 # the only skips CI accepts: the browser tests that are run on the owner's PC (CI measures the real build with sokuhou.layoutcheck instead)
 ALLOWED_SKIPS = ("browser checks run locally",)
 
@@ -41,7 +60,7 @@ def module_of(test_id: str) -> str:
 def build(site: str | None) -> unittest.TestSuite:
     sys.path.insert(0, str(ROOT))
     found = unittest.TestLoader().discover(str(ROOT / "tests"), top_level_dir=str(ROOT))
-    skip = [p for name, pats in OWNED.items() if site is not None and name != site for p in pats]
+    skip = [p for name, pats in OWNED.items() if site is not None and name != site and not (site == "core" and name in IN_CORE) for p in pats]
     out = unittest.TestSuite()
     for t in flatten(found):
         module = module_of(t.id())

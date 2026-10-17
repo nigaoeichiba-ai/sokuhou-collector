@@ -16,12 +16,13 @@ What it could not read is listed as 確認できなかったこと and never cou
 from __future__ import annotations
 
 import datetime as dt
-import fnmatch
 import json
 import os
 import re
 import sys
 import urllib.request
+
+from sokuhou import deployplan
 
 JST = dt.timezone(dt.timedelta(hours=9))
 SITES = ["saichin-sokuho.com", "kuma-sokuho.com", "yorokobu-present.com", "minna-no-illust.com"]
@@ -36,15 +37,9 @@ UA = {"User-Agent": "Mozilla/5.0 (compatible; MACS-office-watch/1.0)"}
 LAG_MINUTES = 120
 STUCK_RUN_MINUTES = 150
 REDISPATCH_HOURS = 3
-DEPLOY_SITES = {"saichin": "saichin-sokuho.com", "kuma": "kuma-sokuho.com", "yorokobu": "yorokobu-present.com", "minna": "minna-no-illust.com"}
-OWNERS = (
-    ("yorokobu", ("sites/yorokobu/*", "tests/test_yorokobu*", "tests/fixtures/yorokobu/*", "data/yorokobu*")),
-    ("minna", ("sites/minna/*", "tests/test_minna*")),
-    ("atomou", ("sites/atomou/*", "tests/test_atomou*", "tests/fixtures/atomou/*", "data/atomou/*")),
-    ("kuma", ("sites/kuma/*", "tests/test_kuma*", "tests/test_*_kuma.py", "tests/test_otsu_bear.py", "tests/fixtures/*kuma*", "tests/fixtures/otsu_bear*",
-              "data/*_kuma.json", "data/otsu_bear.json", "sokuhou/sources/*_kuma.py", "sokuhou/sources/otsu_bear.py")),
-)
-DEPLOY_TRIGGERS = ("sites/", "sokuhou/", "data/", "tests/")
+REGISTER = deployplan.load_registry()   # data/sites.json: the ownership rules are the plan's of deploy.yml, one place (2026-10-18)
+DEPLOY_SITES = {name: site["domain"] for name, site in REGISTER["sites"].items() if site.get("watch", True)}   # atomou is behind a password: nothing to read
+DEPLOY_TRIGGERS = deployplan.SKIPPABLE
 ACTIVE = ("in_progress", "queued", "waiting", "pending", "requested")
 
 
@@ -78,20 +73,13 @@ def newest_japanese_date(html: str) -> dt.date | None:
 
 
 def owner_of(path: str) -> str:
-    for name, patterns in OWNERS:
-        if any(fnmatch.fnmatchcase(path, p) for p in patterns):
-            return name
-    return "shared"
+    return deployplan.owner_of(path, REGISTER)
 
 
 def touches(site: str, files: list[str]) -> bool:
-    """Does a push with these files redeploy `site`?  (what the push trigger and the Gate step of deploy.yml decide)"""
-    for f in files:
-        if not (f.startswith(DEPLOY_TRIGGERS) or f in ("requirements.txt", ".github/workflows/deploy.yml")):
-            continue
-        if owner_of(f) in ("shared", site):
-            return True
-    return False
+    """Does a push with these files redeploy `site`?  (what the push trigger and the plan of deploy.yml decide; a change of the register file itself is not counted
+    here: the plan publishes only the sites whose entry changed, which this list of file names cannot tell)"""
+    return deployplan.touches(site, files, REGISTER, changed_entries=set())
 
 
 def deploy_lag(now: dt.datetime, served: dict, commits_after, runs: list) -> dict:
