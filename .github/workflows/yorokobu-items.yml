@@ -1,0 +1,45 @@
+name: yorokobu-items
+
+# Every day, early: the page data of the whole site (the products of every page and idea, the editors' picks looked up again, the daily picks, the like lines): sites/yorokobu/refresh.py,
+# about 40 minutes of Rakuten API calls (one request a second).  The result is NOT committed and NOT put in the Actions cache (the repository is public, the Rakuten terms bar keeping
+# API data where many can read it): it goes to the server's private folder, sites/yorokobu/privatedata.py, and the deploy takes it from there (sites/yorokobu/items_fresh.py), topping up
+# what changed in the content since with a few calls.  Needs RAKUTEN_APP_ID and RAKUTEN_ACCESS_KEY.
+
+on:
+  schedule:
+    - cron: "0 17 * * *"   # 02:00 JST: done long before the editors' routines (06:00 on) and the 07:00 deploy
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# The same group as the deploy's own fetch used: one application ID, one request a second.
+concurrency:
+  group: rakuten-api
+  cancel-in-progress: false
+
+jobs:
+  items:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Fetch the page data
+        env:
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+        run: |
+          if [ -z "$RAKUTEN_APP_ID" ] || [ -z "$RAKUTEN_ACCESS_KEY" ]; then
+            echo "the Rakuten secrets are not set; nothing to do"
+            exit 0
+          fi
+          python -m sites.yorokobu.refresh --out data/yorokobu_items.json
+      - name: Store the result privately (the server's private folder, never the repository)
+        env:
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sites.yorokobu.privatedata push yorokobu_items.json

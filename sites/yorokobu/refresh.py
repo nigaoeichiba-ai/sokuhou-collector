@@ -54,8 +54,11 @@ def _queue(sel: dict) -> list[tuple[str, str]]:
     return out
 
 
-def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | None = None, now: datetime | None = None) -> dict:
+def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | None = None, now: datetime | None = None, keys: set[str] | None = None) -> dict:
+    """The page data of every page, or only of the pages named in `keys` (a top-up: the other parts of the file stay as they were; then only {"pairs": ...} comes back)."""
     pairs = ct.pages(c)[:limit_pairs] if limit_pairs else ct.pages(c)
+    if keys is not None:
+        pairs = [p for p in pairs if ct.pair_key(p) in keys]
     filters = c["filters"]
     total = sum(len(i.get("picks", [])) for p in pairs for i in picks.get(ct.pair_key(p), [])) or 1
     state = {"errors": 0}
@@ -110,6 +113,8 @@ def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | Non
         nonempty += bool(union)
     if pairs and nonempty < fetch.MIN_PAIR_SHARE * len(pairs):
         raise rakuten.RakutenError(f"only {nonempty} of {len(pairs)} pages have any product; not using this refresh")
+    if keys is not None:
+        return {"pairs": out_pairs}
     daily = {}                                            # the daily picks of the newest days: price, rating and picture as they are now
     for code in dp.rakuten_codes(c.get("daily") or []):
         it = get(code)
