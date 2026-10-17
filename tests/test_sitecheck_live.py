@@ -113,6 +113,7 @@ def site(extra_links="", pages=3, **server_kw):
 class LiveCheckTest(unittest.TestCase):
     def run_check(self, srv, **kw):
         self.addCleanup(srv.stop)
+        kw.setdefault("rate", 0)
         with mock.patch("time.sleep"):
             return sitecheck.check_live(srv.base, **kw)
 
@@ -232,6 +233,25 @@ class LiveCheckTest(unittest.TestCase):
         problems, n = self.run_check(srv, sample=5)
         self.assertEqual(problems, [])
         self.assertEqual(n, 6)    # the home page and 5 others
+
+    def test_the_requests_of_all_workers_are_spread_over_time(self):
+        clock = [100.0]
+        waits = []
+        sitecheck.set_rate(50)
+        try:
+            with mock.patch("time.monotonic", lambda: clock[0]), mock.patch("time.sleep", lambda w: waits.append(w)):
+                for _ in range(5):
+                    sitecheck._pace()           # five requests at the same instant
+        finally:
+            sitecheck.set_rate(0)
+        self.assertEqual(len(waits), 4)         # the first goes at once, the others 20 ms apart
+        self.assertAlmostEqual(waits[-1], 0.08, places=3)
+        self.assertAlmostEqual(sum(waits), 0.2, places=3)
+
+    def test_a_check_with_the_default_rate_still_finishes_and_a_rate_of_zero_is_no_limit(self):
+        srv = site(pages=5)
+        problems, n = self.run_check(srv, rate=50)
+        self.assertEqual((problems, n), ([], 5))
 
     def test_an_unreachable_server_is_reported_not_raised(self):
         with mock.patch("time.sleep"), mock.patch.object(sitecheck, "_once", side_effect=ConnectionRefusedError("refused")):
