@@ -24,9 +24,19 @@ PAGE = """<!doctype html><html><head><title>お中元の贈り物 夏の挨拶�
 <footer><p>運営者情報編集方針</p></footer></body></html>"""
 
 
-def fake(answer):
+def fake(answer, claims=None, claims_down=False):
+    """A fake Codex.  The claims check (a second call) says all is well unless `claims` maps the start of a before-text to the flags to raise."""
     def run(prompt):
         run.prompts.append(prompt)
+        if "added_claim" in prompt:
+            if claims_down:
+                raise RuntimeError("claims check down")
+            asked = json.loads(prompt.rsplit("入力:" + chr(10), 1)[1])
+            items = []
+            for a in asked:
+                flags = next((f for k, f in (claims or {}).items() if a["before"].startswith(k)), {})
+                items.append({"id": a["id"], "added_claim": False, "hedge_removed": False, "condition_dropped": False, "problem": "", **flags})
+            return json.dumps({"items": items}, ensure_ascii=False)
         return "了解しました。" + chr(10) + json.dumps(answer, ensure_ascii=False) + chr(10) + "以上。"
     run.prompts = []
     return run
@@ -98,7 +108,7 @@ class Editing(unittest.TestCase):
         para = next(x for x in self.units if x.text.startswith("お中元の時期は地域で"))
         edits = [
             {"id": self.id[h], "after": "お中元の贈り物 時期・品物・のし", "why": "具体語に"},
-            {"id": para.id, "after": "お中元の時期は地域で少し差があります。関東では七月上旬から中旬、関西では七月中旬から八月中旬が目安です。", "why": "目安に"},   # a big rewrite of a paragraph is fine
+            {"id": para.id, "after": "お中元の時期は地域で少し差があります。関東は七月上旬から中旬、関西は七月中旬から八月中旬を目安に考えることが多いです。", "why": "整理"},   # a big rewrite of a paragraph is fine
             {"id": self.id["地域の時期に合わせる"], "after": "地域別 お中元の時期は8月まで", "why": "数字を足した"},                          # a number out of nowhere
             {"id": self.id["PR このページには広告を含みます"], "after": "広告を含みます", "why": "x"},                               # not editable
             {"id": "u999", "after": "存在しない", "why": "x"},
@@ -122,7 +132,7 @@ class Editing(unittest.TestCase):
 
     def test_a_page_edit_survives_the_check_at_deploy_time_but_a_sentence_mode_rewrite_does_not_get_its_exemption(self):
         para = next(x for x in self.units if x.text.startswith("お中元の時期は地域で"))
-        new = "地域が違えば時期も違います。関東なら七月上旬から中旬、関西なら七月中旬から八月中旬が目安なので、相手の住まいを先に確かめてから手配しましょう。"
+        new = "七月上旬から中旬が関東、七月中旬から八月中旬が関西の目安とされることが多く、地域で時期が違うため、先に相手の住まいを確かめます。"
         pe.edit_page("yorokobu", "x/index.html", PAGE, runner=fake(self.answer(edits=[{"id": para.id, "after": new, "why": "整理"}])), today="2026-10-17")
         entries, skipped = sl.usable_entries("yorokobu", warn=lambda m: None)
         self.assertEqual((len(entries), skipped), (1, 0))
@@ -130,7 +140,7 @@ class Editing(unittest.TestCase):
 
     def test_the_comma_rule_of_yorokobu_is_applied_to_the_editors_text_not_held_against_it(self):
         para = next(x for x in self.units if x.text.startswith("お中元の時期は地域で"))
-        new = "お中元の時期は、地域で、少し差があります。関東では、七月上旬から中旬、関西では、七月中旬から八月中旬が目安です。"
+        new = "お中元の時期は、地域で、少し差があります。関東では、七月上旬から中旬、関西では、七月中旬から八月中旬を目安に考えることが多いです。"
         rep = pe.edit_page("yorokobu", "x/index.html", PAGE, runner=fake(self.answer(edits=[{"id": para.id, "after": new, "why": "x"}])), accept=False)
         self.assertEqual(len(rep["accepted"]), 1)
         self.assertNotIn("、地域で、", rep["accepted"][0]["to"])
@@ -164,6 +174,60 @@ class Editing(unittest.TestCase):
             self.assertEqual([r for r, _ in pe.next_pages("yorokobu", root, 5)], ["guide/b/index.html"])
             (root / "guide/a/index.html").write_text(raw.replace("本文の0番目", "本文の九番目"), encoding="utf-8")           # the text changed: edited again
             self.assertIn("guide/a/index.html", [r for r, _ in pe.next_pages("yorokobu", root, 5)])
+
+
+class Paragraphs(unittest.TestCase):
+    """The checks for a rewritten paragraph: no careful wording lost (counted by machine), nothing added or dropped (a second Codex call)."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        p = mock.patch.object(sl, "DATA", Path(self.tmp.name) / "style")
+        p.start()
+        self.addCleanup(p.stop)
+        self.units = pe.page_units(PAGE)
+        self.para = next(x for x in self.units if x.text.startswith("お中元の時期は地域で"))
+        self.good = "お中元を贈る時期には地域差があります。関東では七月上旬から中旬、関西では七月中旬から八月中旬を目安に考えることが多いです。"
+
+    def edit(self, after, **kw):
+        ans = {"diagnosis": [], "edits": [{"id": self.para.id, "after": after, "why": "整理"}], "deleted": [], "needs_check": [], "structure_suggestions": [], "unchanged_count": 0}
+        return pe.edit_page("yorokobu", "x/index.html", PAGE, runner=fake(ans, **kw), today="2026-10-17")
+
+    def test_a_clean_rewrite_is_taken_after_the_second_look(self):
+        rep = self.edit(self.good)
+        self.assertEqual(len(rep["accepted"]), 1)
+        self.assertEqual(len(sl.load_rewrites("yorokobu")), 1)
+
+    def test_hedges_are_counted_and_a_rewrite_with_fewer_is_refused_by_machine(self):
+        self.assertEqual(pe.hedges("関東では七月上旬から中旬を目安に考えることが多いです。場合があります。"), 3)
+        flat = "お中元を贈る時期には地域差があります。関東では七月上旬から中旬、関西では七月中旬から八月中旬です。"
+        rep = self.edit(flat)
+        self.assertEqual(rep["accepted"], [])
+        self.assertIn("careful wording removed", rep["rejected"][0]["problems"][0])
+        self.assertEqual(sl.load_rewrites("yorokobu"), [])
+
+    def test_the_second_look_refuses_an_added_claim_a_lost_hedge_or_a_dropped_condition(self):
+        for flag in ("added_claim", "hedge_removed", "condition_dropped"):
+            rep = self.edit(self.good, claims={"お中元の時期は": {flag: True, "problem": "元に無い"}})
+            self.assertEqual(rep["accepted"], [], flag)
+            self.assertIn(flag.split("_")[0], rep["rejected"][0]["problems"][0].replace(" ", "_"))
+            self.assertEqual(sl.load_rewrites("yorokobu"), [], flag)
+
+    def test_when_the_second_look_is_down_no_paragraph_is_taken_but_a_heading_still_is(self):
+        h = next(x for x in self.units if x.text == "地域の時期に合わせる")
+        ans = {"diagnosis": [], "edits": [{"id": self.para.id, "after": self.good, "why": "x"}, {"id": h.id, "after": "地域別 お中元の時期", "why": "見出し"}], "deleted": [], "needs_check": [],
+               "structure_suggestions": [], "unchanged_count": 0}
+        rep = pe.edit_page("yorokobu", "x/index.html", PAGE, runner=fake(ans, claims_down=True), today="2026-10-17")
+        self.assertEqual([a["to"] for a in rep["accepted"]], ["地域別 お中元の時期"])
+        self.assertTrue(rep["claims_check_failed"])
+        self.assertIn("not taken", rep["rejected"][0]["problems"][0])
+
+    def test_headings_and_buttons_are_not_sent_to_the_second_look(self):
+        h = next(x for x in self.units if x.text == "地域の時期に合わせる")
+        ans = {"diagnosis": [], "edits": [{"id": h.id, "after": "地域別 お中元の時期", "why": "見出し"}], "deleted": [], "needs_check": [], "structure_suggestions": [], "unchanged_count": 0}
+        run = fake(ans)
+        pe.edit_page("yorokobu", "x/index.html", PAGE, runner=run, today="2026-10-17")
+        self.assertFalse(any("added_claim" in p for p in run.prompts))
 
 
 class RewriterWithManyLongLines(unittest.TestCase):
