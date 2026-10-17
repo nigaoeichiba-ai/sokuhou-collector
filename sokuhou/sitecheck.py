@@ -273,6 +273,21 @@ _all: list = []   # every connection opened, so that check_live can close them a
 _all_lock = threading.Lock()
 _UA = {"User-Agent": "Mozilla/5.0 (sitecheck; +owner's own site)"}
 _REDIRECTS = (301, 302, 303, 307, 308)
+_penalty = {"until": 0.0}   # the server said "too many requests" (429): every worker waits until then (Xserver answered 429 to about 1% of the first fast live check of minna, 2026-10-18)
+_penalty_lock = threading.Lock()
+
+
+def _slow_down(seconds: float) -> None:
+    import time
+    with _penalty_lock:
+        _penalty["until"] = max(_penalty["until"], time.monotonic() + seconds)
+
+
+def _wait_penalty() -> None:
+    import time
+    wait = _penalty["until"] - time.monotonic()
+    if wait > 0:
+        time.sleep(min(wait, 30))
 
 
 def _connection(scheme: str, netloc: str, timeout: int):
@@ -318,6 +333,7 @@ def _once(method: str, url: str, timeout: int) -> tuple[int, bytes, str]:
     u = urlparse(url)
     target = (u.path or "/") + (("?" + u.query) if u.query else "")
     for attempt in (0, 1):
+        _wait_penalty()
         c = _connection(u.scheme, u.netloc, timeout)
         try:
             c.request(method, target, headers=_UA)
@@ -325,6 +341,9 @@ def _once(method: str, url: str, timeout: int) -> tuple[int, bytes, str]:
             body = r.read()
             if r.will_close:
                 _drop(u.scheme, u.netloc)
+            if r.status in (429, 503):
+                after = r.getheader("Retry-After", "") or ""
+                _slow_down(min(int(after), 30) if after.isdigit() else 2)
             return r.status, (body if method == "GET" else b""), r.getheader("Location", "") or ""
         except (OSError, http.client.HTTPException):
             _drop(u.scheme, u.netloc)
@@ -346,18 +365,29 @@ def _fetch(url: str, timeout: int = 30, method: str = "GET") -> tuple[int, bytes
 
 
 def _get(url: str, timeout: int = 30, retries: int = 2, method: str = "GET") -> tuple[int, bytes]:
+    """The answer for a URL.  A failure (no connection, a 5xx) is tried again `retries` more times; "too many requests" (429) is waited out and tried again up to 6 times
+    (all workers pause together, see _slow_down) - it says nothing about the page, only about the speed of the check."""
     import time
     last = (0, b"")
-    for i in range(retries + 1):
+    failures = limited = 0
+    while True:
         try:
             status, body = _fetch(url, timeout, method)
+            if status == 429:
+                limited += 1
+                if limited > 6:
+                    return 429, b""
+                time.sleep(min(2 ** limited, 30))
+                continue
             if status < 500:
                 return status, body
             last = (status, b"")
         except Exception:
             last = (0, b"")
-        time.sleep(1 + i)
-    return last
+        failures += 1
+        if failures > retries:
+            return last
+        time.sleep(failures)
 
 
 def _is_page(url: str) -> bool:
