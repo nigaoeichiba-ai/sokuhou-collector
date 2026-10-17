@@ -159,7 +159,7 @@ jobs:
                   data/style/rewrites/atomou.json) owner=atomou ;;
                   data/style/rewrites/kuma.json) owner=kuma ;;
                   data/style/rewrites/saichin.json) owner=saichin ;;
-                  data/style/judged/*|data/style/examples.json|data/style/learned_rules.json|data/style/lexicon/*|data/style/suggest_cache.json|data/style/edited/*) owner=none ;;   # the judge's notes and models: they change no published text
+                  data/style/judged/*|data/style/examples.json|data/style/learned_rules.json|data/style/lexicon/*|data/style/suggest_cache.json|data/style/edited/*|data/style/editor_prompt_ja.md) owner=none ;;   # the judge's notes and models: they change no published text
                   sites/minna/*|tests/test_minna*) owner=minna ;;
                   sites/atomou/*|tests/test_atomou*|tests/fixtures/atomou/*|data/atomou/*) owner=atomou ;;
                   sites/kuma/*|tests/test_kuma*|tests/test_*_kuma.py|tests/test_otsu_bear.py|tests/fixtures/*kuma*|tests/fixtures/otsu_bear*|data/*_kuma.json|data/otsu_bear.json|sokuhou/sources/*_kuma.py|sokuhou/sources/otsu_bear.py) owner=kuma ;;

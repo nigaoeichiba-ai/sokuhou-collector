@@ -42,6 +42,23 @@ def fake(answer, claims=None, claims_down=False):
     return run
 
 
+class PromptCopy(unittest.TestCase):
+    """The editor prompt is read from a copy inside the repository (CI has only the git checkout, not sokuhou-sites/docs)."""
+
+    def test_the_prompt_is_in_the_repository_and_nothing_outside_it_is_needed(self):
+        self.assertTrue(pe.EDITOR_PROMPT.is_file())
+        self.assertTrue(str(pe.EDITOR_PROMPT).startswith(str(sl.ROOT)))
+        t = pe.prompt_template()
+        for needle in ("20年働いてきた編集者", "{{UNITS}}", "{{SITE}}", "diagnosis", "structure_suggestions"):
+            self.assertIn(needle, t)
+        self.assertNotIn("=== ここから ===", t)
+
+    def test_where_the_research_document_exists_the_copy_is_its_block(self):
+        if pe.SOURCE_DOC.exists():                         # the owner PC; in CI the document does not exist and the copy above is what counts
+            m = pe.MARK.search(pe.SOURCE_DOC.read_text(encoding="utf-8"))
+            self.assertEqual(pe.EDITOR_PROMPT.read_text(encoding="utf-8").strip(), m.group(1).strip(), "run: python -m sokuhou.pageedit sync")
+
+
 class Units(unittest.TestCase):
     def test_the_displayed_text_in_order_with_what_can_be_replaced_exactly(self):
         u = pe.page_units(PAGE)

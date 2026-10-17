@@ -21,8 +21,9 @@ from pathlib import Path
 from sokuhou import naturaljp as nj
 from sokuhou import styleloop as sl
 
-DOCS = sl.ROOT.parent / "sokuhou-sites" / "docs"
-EDITOR_PROMPT = DOCS / "STYLE_EDITOR_PROMPT_JA.md"
+EDITOR_PROMPT = sl.DATA / "editor_prompt_ja.md"          # a COPY inside the repository (CI has only the git checkout); the source is sokuhou-sites/docs/STYLE_EDITOR_PROMPT_JA.md
+SOURCE_DOC = sl.ROOT.parent / "sokuhou-sites" / "docs" / "STYLE_EDITOR_PROMPT_JA.md"      # outside git: only on the owner PC
+MARK = re.compile(r"^=== ここから ===\s*$(.*?)^=== ここまで ===\s*$", re.S | re.M)
 MAX_UNITS = 90                      # one call: the title and every heading, plus up to this many body units
 
 CAPTURE = {"p", "li", "td", "th", "dd", "dt", "h1", "h2", "h3", "h4", "h5", "h6", "button", "label", "summary", "figcaption", "caption", "legend"}
@@ -158,10 +159,25 @@ def chunks(units: list[PageUnit]) -> list[list[PageUnit]]:
 
 def prompt_template() -> str:
     t = EDITOR_PROMPT.read_text(encoding="utf-8")
-    m = re.search(r"^=== ここから ===\s*$(.*?)^=== ここまで ===\s*$", t, re.S | re.M)
+    m = MARK.search(t)
+    return (m.group(1) if m else t).strip()                 # the repository copy is the block itself
+
+
+def sync_prompt() -> str:
+    """Copy the block between the marker lines of the research document into the repository (run after the document changes, then commit data/style/editor_prompt_ja.md)."""
+    m = MARK.search(SOURCE_DOC.read_text(encoding="utf-8"))
     if not m:
-        raise RuntimeError("the editor prompt has no 'ここから / ここまで' block")
-    return m.group(1).strip()
+        raise RuntimeError("the editor prompt document has no 'ここから / ここまで' block")
+    EDITOR_PROMPT.write_text(m.group(1).strip() + chr(10), encoding="utf-8", newline="\n")
+    return str(EDITOR_PROMPT)
+
+
+if __name__ == "__main__":
+    import sys
+    if sys.argv[1:] == ["sync"]:
+        print("copied to", sync_prompt())
+    else:
+        print("python -m sokuhou.pageedit sync")
 
 
 def page_kind(rel: str) -> str:
