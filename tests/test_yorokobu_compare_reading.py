@@ -130,7 +130,7 @@ class PagesTest(unittest.TestCase):
         self.assertEqual(totals, sorted(totals, reverse=True))
         for needle in ("編集点のつけ方", "購入者のレビューも入っていません", "価格・在庫・購入者の評価は、Amazonのページでご確認ください", "Amazonのアソシエイトとして"):
             self.assertIn(needle, html, needle)
-        self.assertEqual(len(re.findall(r'href="https://www\.amazon\.co\.jp/dp/[A-Z0-9]{10}\?tag=test-22"', html)), n * 3)       # image, title and button: the same link
+        self.assertEqual(len(re.findall(r'href="https://www\.amazon\.co\.jp/dp/[A-Z0-9]{10}/ref=nosim\?tag=test-22"', html)), n * 3)       # image, title and button: the same link
         text = re.sub(r"<[^>]+>", " ", html)
         self.assertNotIn("★", text)
         self.assertNotRegex(text, r"[0-9,]{3,}円")

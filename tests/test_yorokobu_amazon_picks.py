@@ -57,7 +57,7 @@ class AmazonPicksTest(unittest.TestCase):
     def test_the_hub_lists_every_pick_with_a_tagged_sponsored_link_and_the_notice(self):
         html = self.read("amazon/index.html")
         for p in self.c["amazon"]:
-            self.assertIn(f"https://www.amazon.co.jp/dp/{p['asin']}?tag=amazonmacs-22", html, p["asin"])
+            self.assertIn(f"https://www.amazon.co.jp/dp/{p['asin']}/ref=nosim?tag=amazonmacs-22", html, p["asin"])
         html = re.sub(r'<aside class="sale-bar".*?</aside>', "", html, flags=re.S)         # the sale bar's links are not picks
         self.assertEqual(html.count('rel="nofollow sponsored noopener"'), len(self.c["amazon"]))
         self.assertIn("Amazonのアソシエイトとして", html)

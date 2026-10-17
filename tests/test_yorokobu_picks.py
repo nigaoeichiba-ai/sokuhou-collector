@@ -182,7 +182,7 @@ class PagesTest(unittest.TestCase):
         self.assertEqual(a_part.count(">楽天市場で探す<"), 10)
         self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc=", r_part)
         self.assertIn("tag=amazonmacs-22", a_part)
-        self.assertIn("https://www.amazon.co.jp/dp/B00UG9X98U?tag=amazonmacs-22", a_part)
+        self.assertIn("https://www.amazon.co.jp/dp/B00UG9X98U/ref=nosim?tag=amazonmacs-22", a_part)
 
     def test_rakuten_cards_show_the_price_from_the_lookup_amazon_cards_show_none_and_say_the_picture_is_an_image(self):
         html = self.read("picks/2026-10-11/index.html")

@@ -753,7 +753,8 @@ def quick_pair_note(c: dict, p: dict) -> str:
 # ---------------------------------------------------------------- Amazonで見つけた贈り物 (hand-picked from Amazon's own best-seller lists; text and a link, no price, no picture)
 
 def amazon_dp(cfg: dict, asin: str) -> str:
-    return f"https://www.amazon.co.jp/dp/{asin}?tag={quote(cfg['amazon_tracking_id'], safe='')}"
+    """A single product's link in the form Amazon Associates Central shows for a text link: /dp/<ASIN>/ref=nosim?tag=<ID> (that form is named there as counting for direct product links)."""
+    return f"https://www.amazon.co.jp/dp/{asin}/ref=nosim?tag={quote(cfg['amazon_tracking_id'], safe='')}"
 
 
 def amazon_pick_card(cfg: dict, p: dict) -> str:
