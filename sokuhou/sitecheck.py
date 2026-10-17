@@ -283,6 +283,29 @@ def _slow_down(seconds: float) -> None:
         _penalty["until"] = max(_penalty["until"], time.monotonic() + seconds)
 
 
+_pace_state = {"interval": 0.0, "next": 0.0}   # requests per second over all workers: 0 = no limit
+
+
+def set_rate(per_second: float) -> None:
+    """Spread the requests of all workers evenly (a burst of 170 requests per second from one runner got 429 answers, and on 2026-10-18 several runners were cut off from the whole server soon after)."""
+    with _penalty_lock:
+        _pace_state["interval"] = 1.0 / per_second if per_second and per_second > 0 else 0.0
+        _pace_state["next"] = 0.0
+
+
+def _pace() -> None:
+    import time
+    with _penalty_lock:
+        if not _pace_state["interval"]:
+            return
+        now = time.monotonic()
+        slot = max(now, _pace_state["next"])
+        _pace_state["next"] = slot + _pace_state["interval"]
+        wait = slot - now
+    if wait > 0:
+        time.sleep(wait)
+
+
 def _wait_penalty() -> None:
     import time
     wait = _penalty["until"] - time.monotonic()
@@ -334,6 +357,7 @@ def _once(method: str, url: str, timeout: int) -> tuple[int, bytes, str]:
     target = (u.path or "/") + (("?" + u.query) if u.query else "")
     for attempt in (0, 1):
         _wait_penalty()
+        _pace()
         c = _connection(u.scheme, u.netloc, timeout)
         try:
             c.request(method, target, headers=_UA)
@@ -416,12 +440,14 @@ def light_selection(urls: list[str], sample: int, prev_urls: set[str] | None = N
     return list(dict.fromkeys(home + new + picked))
 
 
-def check_live(base: str, workers: int = 24, probes: tuple[str, ...] = (), sample: int | None = None, prev_urls: set[str] | None = None) -> tuple[list[str], int]:
+def check_live(base: str, workers: int = 24, probes: tuple[str, ...] = (), sample: int | None = None, prev_urls: set[str] | None = None, rate: float = 50) -> tuple[list[str], int]:
     """See _check_live; the kept-alive connections are closed whatever happens."""
+    set_rate(rate)
     try:
         return _check_live(base, workers, probes, sample, prev_urls)
     finally:
         close_connections()
+        set_rate(0)
 
 
 def _check_live(base: str, workers: int, probes: tuple[str, ...] = (), sample: int | None = None, prev_urls: set[str] | None = None) -> tuple[list[str], int]:
@@ -519,6 +545,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--probe", action="append", default=[], help="an extra path that must answer 200 (with --live)")
     ap.add_argument("--max", type=int, default=60, help="print at most this many problems")
     ap.add_argument("--workers", type=int, default=24, help="with --live: parallel requests (each worker keeps one connection open)")
+    ap.add_argument("--rate", type=float, default=50, help="with --live: at most this many requests per second in all (0 = no limit)")
     ap.add_argument("--sample", type=int, default=None, help="with --live: a LIGHT check (home page, pages new since --prev, and this many random pages); for content-only deploys")
     ap.add_argument("--prev", help="with --sample: the sitemap.xml of the previous deploy (its URLs are not 'new')")
     a = ap.parse_args(argv)
@@ -529,7 +556,7 @@ def main(argv: list[str] | None = None) -> int:
                 prev_urls = set(re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", Path(a.prev).read_text(encoding="utf-8", errors="replace")))
             except OSError:
                 prev_urls = None
-        problems, n = check_live(a.base, workers=a.workers, probes=tuple(a.probe), sample=a.sample, prev_urls=prev_urls)
+        problems, n = check_live(a.base, workers=a.workers, probes=tuple(a.probe), sample=a.sample, prev_urls=prev_urls, rate=a.rate)
         if problems:
             print(f"LIVE CHECK FAILED: {len(problems)} problem(s) in {n} pages of {a.base}")
             for pr in problems[: a.max]:
