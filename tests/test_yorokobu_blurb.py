@@ -91,6 +91,29 @@ class CardTest(unittest.TestCase):
         self.assertEqual(len(re.findall(r'<a class="item-img" href="https://hb\.afl\.rakuten', html)), 1)
         self.assertIn('alt="ロクシタンのハンドクリーム(10ml)"', html)
 
+    def test_the_rank_and_the_heart_are_a_row_above_the_picture_never_inside_its_link(self):
+        html = build.item_card(self.cfg(), self.item(), rank=1)
+        top = re.search(r'<div class="item-top">(.*?)</div><a class="item-img"', html, re.S)
+        self.assertIsNotNone(top)
+        self.assertIn('class="rank r1"', top.group(1))
+        self.assertIn('class="fav"', top.group(1))
+        link = re.search(r'<a class="item-img".*?</a>', html, re.S).group(0)
+        self.assertNotIn("rank", link)
+        self.assertNotIn("fav", link)
+        self.assertNotIn("<button", link)
+
+    def test_the_stylesheet_puts_nothing_over_a_product_picture_and_never_crops_it(self):
+        css = (ROOT / "sites" / "yorokobu" / "assets" / "style.css").read_text(encoding="utf-8")
+        for sel in (".item .rank", ".item .fav, .imgbox .fav", ".imgbox", ".cmp-img .fav"):
+            rule = re.search(re.escape(sel) + r" \{([^}]*)\}", css)
+            self.assertIsNotNone(rule, sel)
+            self.assertNotIn("position: absolute", rule.group(1), sel)
+        for sel in (".item-img img", ".cmp-img img", ".pick-img img", ".feat-photo img", ".pick-hl img"):
+            rule = re.search(re.escape(sel) + r" \{([^}]*)\}", css)
+            self.assertIsNotNone(rule, sel)
+            self.assertIn("object-fit: contain", rule.group(1), sel)
+        self.assertNotRegex(css, r"\.yh-row \.cmp-no \{[^}]*position: absolute")           # nor the Yahoo! row's number
+
     def test_a_product_the_site_cannot_describe_shows_the_picture_and_the_buttons_only(self):
         it = {**self.item(), "name": "さんご（花水引）1セット：20筋"}
         html = build.item_card(self.cfg(), it)
