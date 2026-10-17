@@ -502,6 +502,9 @@ def f_noun_chain(block: Block, sents: list[str], prof: dict) -> list[str]:
         if not s.endswith("。"):                                    # labels and glued menu items are not prose
             continue
         s = re.sub(r"[「『][^」』]*[」』]", "「」", s)                  # a quoted proper name is what it is
+        if s.startswith(("正式名称は", "正式名は")):                       # stating an official name
+            continue
+        s = re.sub(r"[一二三四五六七八九十]の(?=[酉卯辰午])", "", s)
         if re.search(rf"[{KANJI}]{{11,}}", s) or (len(re.findall("の", s)) >= 6 and len(s) <= 70):
             out.append(s)
     return out
@@ -645,8 +648,14 @@ def _sentence_hits(kind: str, sent: str, site: str | None, prof: dict) -> list[t
     return out
 
 
+NAME_LEAD = re.compile(r"(?:(?<=^)|(?<=[。！？]))([^。！？]{1,80}?)(?=は、?(?:\d{4}年|\d{1,2}月\d{1,2}日))")
+
+
 def mask_quotes(text: str) -> str:
-    return re.sub(r"[「『][^」』]{8,}[」』]", "「…」", text)
+    """A long quoted text is an example, not the writer's prose.  A name that leads a dated sentence ("<event name>は2026年…") is a proper name: its spaces, "!" and
+    kanji runs are the official spelling, not style.  Both are replaced by a short mark before the rules look at the text."""
+    text = re.sub(r"[「『][^」』]{8,}[」』]", "「…」", text)
+    return NAME_LEAD.sub(lambda m: "〔名〕" if len(m.group(1)) >= 4 and m.group(1).count("、") <= 1 else m.group(0), text)
 
 
 def check_blocks(blocks: list[Block], path: str, site: str | None = None, min_level: str = "low", only: Iterable[str] | None = None, md: bool = False) -> list[Hit]:
