@@ -338,14 +338,14 @@ PORTRAIT_KEYS = {
 
 
 def rakuten_link(cfg: dict, target: str) -> str:
-    """The affiliate link of the Rakuten Web Service spec for a page of Rakuten (a search, an event): .../hgc/<ID>/?pc=<URL>&m=<URL>, nothing after the ID."""
-    return rakuten.affiliate_link(cfg["rakuten_affiliate_id"], None, target)
+    """The affiliate link of the Rakuten Web Service spec: https://hb.afl.rakuten.co.jp/hgc/<our ID>/?pc=<the page>.  Nothing after the ID, no tracking ID, no other parameter, and no m= (there is
+    no separate mobile URL to give).  `target` is used as it is (a product's itemUrl as the API gave it)."""
+    return f"https://hb.afl.rakuten.co.jp/hgc/{cfg['rakuten_affiliate_id']}/?pc={quote(target, safe='')}"
 
 
 def item_href(cfg: dict, it: dict) -> str:
-    """A Rakuten product's link: the `affiliateUrl` the API gave for our affiliate ID, as it is.  (The API puts its own per-shop form of the ID in it, not the ID of config.json, and gives no
-    ID at all when none is sent: the string is the API's and is never rebuilt.)  Only a product saved before the site kept that field (no `aff`) gets the spec's formula over its page."""
-    return it.get("aff") or rakuten_link(cfg, rakuten.page_url(it["url"]))
+    """A Rakuten product's link: the spec's formula over the itemUrl the API gave, as it is."""
+    return rakuten_link(cfg, it["url"])
 
 
 def search_link(cfg: dict, keyword: str) -> str:
@@ -374,7 +374,7 @@ def point_badge(it: dict) -> str:
 
 
 def item_card(cfg: dict, it: dict, own: bool = False, rank: int | None = None, tier: str = "", kind: str = "", eager: bool = False, must: list[str] | None = None) -> str:
-    url = rakuten.page_url(it["url"])                                           # the product's page (what the ♡ keeps); the link is item_href's
+    url = it["url"]                                                             # the itemUrl as the API gave it (what the ♡ keeps); the link is item_href's
     name = it.get("display") or rakuten.clean_title(it["name"])
     if own:
         href, rel = url, "noopener"

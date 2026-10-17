@@ -120,7 +120,7 @@
         if (!/ギフト|プレゼント|贈り物/.test(q)) q += " ギフト";
         var aff = f.getAttribute("data-aff");
         var target = "https://search.rakuten.co.jp/search/mall/" + encodeURIComponent(q) + "/";
-        var url = "https://hb.afl.rakuten.co.jp/hgc/" + aff + "/?pc=" + encodeURIComponent(target) + "&m=" + encodeURIComponent(target);
+        var url = "https://hb.afl.rakuten.co.jp/hgc/" + aff + "/?pc=" + encodeURIComponent(target);
         window.open(url, "_blank", "noopener");
       });
     });

@@ -249,7 +249,7 @@
       count(["cq.res.miss"]);
       var q = raw.indexOf("ギフト") >= 0 || raw.indexOf("プレゼント") >= 0 ? raw : raw + " ギフト";
       var target = "https://search.rakuten.co.jp/search/mall/" + encodeURIComponent(q) + "/";
-      var aff = DATA.aff.id ? "https://hb.afl.rakuten.co.jp/hgc/" + DATA.aff.id + "/?pc=" + encodeURIComponent(target) + "&m=" + encodeURIComponent(target) : "";
+      var aff = DATA.aff.id ? "https://hb.afl.rakuten.co.jp/hgc/" + DATA.aff.id + "/?pc=" + encodeURIComponent(target) : "";
       bubble("うまく読み取れませんでした。「だれに」「どんな日に」「予算は」のうち、わかるものを、書き添えてください(例: 父の日に父へ 5000円くらい)。" +
         (aff ? '<br>言葉のまま、楽天市場で探すこともできます。<div class="cc-links"><div class="cc-link"><a href="' + esc(aff) + '" target="_blank" rel="nofollow sponsored noopener"><b>「' + esc(raw.slice(0, 30)) + '」を楽天市場で探す</b><span>広告(PR)のリンクです。</span></a></div></div>' : ""));
       bubble("この言葉をサイトの改善のために送ってもよければ、下の「送る」を押してください。");

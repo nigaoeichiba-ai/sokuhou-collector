@@ -272,8 +272,8 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
     live = d.get("daily_items", {}).get(entry.get("code", "")) if f["ref"].startswith("r") else None
     unavailable = bool(live is not None and not live.get("available", True))
     if f["ref"].startswith("r"):
-        url = B.rakuten.page_url(live["url"] if live else entry["url"])
-        href = B.item_href(cfg, live) if live else B.rakuten_link(cfg, url)
+        url = live["url"] if live else entry["url"]
+        href = B.rakuten_link(cfg, url)
         img = live["image"] if live else entry["img"]                                      # the picture as the API gave it; its size on the page is the CSS's
         buy = f'<span class="btn big"><a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">楽天市場で見る</a></span>'
         other_btn = ""                                                                    # a Rakuten product part carries Rakuten's link only (terms Article 8)

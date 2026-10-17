@@ -45,8 +45,8 @@ def rakuten_card(cfg: dict, d: dict, e: dict, eid: str, n: int, more: str = "") 
     live = d.get("daily_items", {}).get(e["code"])
     if live is not None and not live.get("available", True):
         return None                                                      # sold out or gone: not shown (nobody can buy it)
-    url = B.rakuten.page_url(live["url"] if live else e["url"])
-    href = B.item_href(cfg, live) if live else B.rakuten_link(cfg, url)
+    url = live["url"] if live else e["url"]
+    href = B.rakuten_link(cfg, url)
     img = live["image"] if live else e["img"]
     price = ""
     if live:
