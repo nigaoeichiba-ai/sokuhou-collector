@@ -235,30 +235,49 @@ def tidy(site: str, after: str) -> str:
 
 
 # the careful ways of saying things that an editor must not turn into flat statements ("場合があります" -> "です")
-HEDGE = re.compile(r"場合があります|場合もあります|とされ|と言われ|かもしれ|ことがあります|ことも|目安|一般的|傾向|ようです|可能性|前後|ほど|ことが多い|がち|多くの")
+HEDGE = re.compile(r"場合があります|場合もあります|とされ|と言われ|かもしれ|ことがあります|ことも|目安|一般的|傾向|ようです|可能性|前後|ほど|ことが多[いくかっ]|がち|多くの")
 CLAIM_KINDS = ("para", "item", "note")
+
+
+# who says it, and under what condition (a rewording may change the words, never drop the attribution or the condition)
+ATTRIB = re.compile(r"とされ|勧められ|と言われ|としてい|によると|案内では|案内によ|公式では|調査では|の案内で|と考えられ|という見方|とのこと")
+COND = re.compile(r"の場合|場合は|場合に|場合も|ときは|のときは|であれば|なら、|ことがあります|かもしれ|目安|前後|ほど|一般的|傾向|可能性|ことが多[いくかっ]|がち")
+REASON = re.compile(r"からです|ためです|からだ|ためだ|ので、?すぐ|だからです")
 
 
 def hedges(text: str) -> int:
     return len(HEDGE.findall(text))
 
 
-def claims_prompt(site: str, pairs: list[tuple[str, str]]) -> str:
+def lost_wording(old: str, new: str) -> list[str]:
+    """Reasons from counting: the attribution or the careful/conditional wording went down, or a reason ('…からです') was added."""
+    out = []
+    for name, pat in (("attribution", ATTRIB), ("careful wording", HEDGE), ("condition", COND)):
+        a, b = len(pat.findall(old)), len(pat.findall(new))
+        if b < a:
+            out.append(f"{name} removed ({a} -> {b})")
+    if len(REASON.findall(new)) > len(REASON.findall(old)):
+        out.append("a reason was added (…からです)")
+    return out
+
+
+def claims_prompt(site: str, pairs: list[tuple[str, str]], context: str = "") -> str:
     items = [{"id": i + 1, "before": a, "after": b} for i, (a, b) in enumerate(pairs)]
+    ctx = f"参考(このページの元の本文。理由や事実が、元の段落かここに書いてあるかを見る):{chr(10)}{context[:3000]}{chr(10)}" if context else ""
     return f"""あなたは日本語の校閲者です。サイト({site})の本文の書き直し(before→after)が、元の意味を保っているかを一組ずつ確かめてください。見るのは次の3つだけです。
-- added_claim: 元に無い断定・理由・事実・一般化が足されていないか(元の文から読み取れない「〜だから」「〜に向く」「〜できる」などを含む)。
-- hedge_removed: 「場合があります」「とされています」「かもしれません」「ことがあります」「目安」「一般的」「ほど」「前後」のような控えめな言い方が消えて、言い切りになっていないか。
+- added_claim: 元に無い断定・理由・事実・一般化が足されていないか(元の文から読み取れない「〜だから」「〜に向く」「〜できる」などを含む)。元の段落にもページの本文にも書かれていない理由を足したら true。足してよいのは、元の文から言える含意だけ。
+- hedge_removed: 「場合があります」「とされています」「と勧められています」「としています」「案内では」「かもしれません」「ことがあります」「目安」「一般的」「ほど」「前後」のような、出典の帰属・伝聞・控えめな言い方が消えて、言い切りになっていないか(「としています」を「とされています」に変えるのは可。「です」に変えて帰属を消すのは不可)。
 - condition_dropped: 元の条件(いつ・誰に・どの場合・どこで・どれくらい)が落ちていないか。
 いずれも、少しでも当てはまれば true にして、problem に一言で書く。文章の良し悪しは判定しない。
 出力: JSONだけ(前後に説明を書かない)。形式: {{"items":[{{"id":1,"added_claim":false,"hedge_removed":false,"condition_dropped":false,"problem":""}}]}}
-入力:
+{ctx}入力:
 {json.dumps(items, ensure_ascii=False)}
 """
 
 
-def check_claims(site: str, pairs: list[tuple[str, str]], runner) -> dict[int, str]:
+def check_claims(site: str, pairs: list[tuple[str, str]], runner, context: str = "") -> dict[int, str]:
     """{index (1-based): problem} for the rewritings that add a statement, lose a hedge or drop a condition.  A rewriting the checker did not answer about is a problem too."""
-    answer = sl.parse_judgement(runner(claims_prompt(site, pairs)), len(pairs))
+    answer = sl.parse_judgement(runner(claims_prompt(site, pairs, context)), len(pairs))
     out = {}
     for i in range(1, len(pairs) + 1):
         it = answer.get(i)
@@ -274,8 +293,8 @@ def check_edit(site: str, unit: PageUnit, after: str) -> list[str]:
     """The invariants for an editor's rewrite of one unit.  A page edit may change a paragraph a lot, so the 'small edit' limit of the sentence mode is not applied."""
     kind = {"title": "heading", "heading": "heading", "button": "heading", "label": "heading"}.get(unit.kind, "para")
     problems = sl.check_rewrite(unit.text, sl.norm(after), site, kind, small_edit=False)
-    if unit.kind in CLAIM_KINDS and hedges(after) < hedges(unit.text):
-        problems.append(f"careful wording removed (hedges {hedges(unit.text)} -> {hedges(after)})")
+    if unit.kind in CLAIM_KINDS:
+        problems += lost_wording(unit.text, after)
     return problems
 
 
@@ -324,7 +343,7 @@ def edit_page(site: str, rel: str, raw: str, runner=None, today: str | None = No
     claim_problems: dict[int, str] = {}
     if long_:
         try:
-            claim_problems = check_claims(site, [(u.text, a) for u, a, _ in long_], verifier or runner)
+            claim_problems = check_claims(site, [(u.text, a) for u, a, _ in long_], verifier or runner, " ".join(x.text for x in units if x.kind in ("para", "item", "note"))[:3000])
         except Exception as ex:
             claim_problems = {i: f"the claims check failed ({str(ex)[:60]}): not taken" for i in range(1, len(long_) + 1)}
             report["claims_check_failed"] = str(ex)[:120]
