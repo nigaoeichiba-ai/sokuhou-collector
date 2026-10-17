@@ -58,7 +58,7 @@ def holiday_page(c, y: int) -> str:
         for s in (cal.year_stats(x) for x in range(2020, y + 1)))
     body = B.crumbs([("トップ", "/"), ("今日は何の日", "/kyou/"), (f"{y}年の祝日と連休", None)]) + f"""
 <h1>{y}年の祝日と連休</h1>
-<p class="lead muted">{y}年の祝日と、3連休以上になる所、1日休むと連休が長くなる所を、まとめました。日付は、祝日法のきまりから数え直しています。</p>
+<p class="lead muted">{y}年の祝日と3連休以上になる所、1日休むと連休が長くなる所をまとめました。日付は、祝日法のきまりから数え直しています。</p>
 <div class="figures"><p><b>{len(hol)}</b><span>日の休み(祝日・振替休日)</span></p><p><b>{st["runs3"]}</b><span>回の3連休以上</span></p><p><b>{st["longest"]}</b><span>日の最長連休(土日・祝日だけ)</span></p><p><b>{st["overlap"]}</b><span>日の祝日が、土曜か日曜と重なる</span></p></div>
 <h2>{y}年の祝日</h2>
 <div class="tablewrap"><table class="info-table"><thead><tr><th scope="col">日付</th><th scope="col">名前</th><th scope="col">あと何日</th></tr></thead><tbody>{rows}</tbody></table></div>
@@ -77,7 +77,7 @@ def holiday_page(c, y: int) -> str:
 <h2>日付のもとになったもの</h2>
 <p class="small muted">国民の祝日は、「国民の祝日に関する法律」で決まっています。内閣府の<a href="{CAO}" rel="noopener nofollow" target="_blank">「国民の祝日について」</a>で公表されている内容をもとに、{OPERATOR}が、きまり(日付、月の第○月曜日、春分・秋分、振替休日、国民の休日)から数え直し、集計して作成しました。内閣府の発表と食いちがいがあるときは、内閣府の発表が正しいものです。</p>"""
     title = f"{y}年の祝日と連休 3連休以上・休みの取りどころ | {B.NAME}"
-    desc = f"{y}年の祝日は{len(hol)}日、3連休以上は{st['runs3']}回。1日休むと連休が長くなる所と、あと何日かも分かります。"[:150]
+    desc = f"{y}年の祝日は{len(hol)}日、3連休以上は{st['runs3']}回。1日休むと連休が長くなる所とあと何日かも分かります。"[:150]
     return c.page(f"/kyou/holidays-{y}/", title, desc, body, SPECIAL_KIND)
 
 
@@ -105,12 +105,12 @@ def season_page(c, entries: list[dict]) -> str:
         blocks.append(f'<h2>{y}年の二十四節気</h2>{"".join(li)}' + (f'<h3>{y}年の雑節</h3><ul class="kyou-rows special-rows">{zr}</ul>' if zr else ""))
     body = B.crumbs([("トップ", "/"), ("今日は何の日", "/kyou/"), ("季節の便り", None)]) + f"""
 <h1>季節の便り 二十四節気</h1>
-<p class="lead muted">二十四節気は、1年を24に分けた、季節の目安です。約15日ごとに、次の節気に替わります。</p>
+<p class="lead muted">二十四節気は、1年を24に分けた、季節の目安です。約15日ごとに次の節気に替わります。</p>
 <section class="season-now" id="season-now" aria-live="polite"><p class="muted">いまの節気を調べています…</p></section>
 {"".join(blocks)}
 <h2>日付のもとになったもの</h2>
 <p class="small muted">二十四節気と雑節の日付は、国立天文台 暦計算室の「暦要項」(<a href="{cal.solar_terms()['pages']['2026']}" rel="noopener nofollow" target="_blank">令和8年</a>・<a href="{cal.solar_terms()['pages']['2027']}" rel="noopener nofollow" target="_blank">令和9年</a>)をもとに、{OPERATOR}が整理して作成しました(時刻は中央標準時)。説明の文は、当サイトで書いたものです。来年の分は、国立天文台が2月に発表したあとに足します。</p>"""
-    return c.page("/kyou/season/", f"季節の便り 二十四節気の日付と、あと何日 | {B.NAME}", "二十四節気の日付と、次の節気まであと何日か。その頃にある公式の日も、あわせて見られます。", body, SPECIAL_KIND)
+    return c.page("/kyou/season/", f"季節の便り 二十四節気の日付と、あと何日 | {B.NAME}", "二十四節気の日付と次の節気まであと何日か。その頃にある公式の日もあわせて見られます。", body, SPECIAL_KIND)
 
 
 def december_page(c, entries: list[dict]) -> str:
@@ -135,7 +135,7 @@ def december_page(c, entries: list[dict]) -> str:
 <section class="day-now" id="day-now" aria-live="polite"></section>
 {"".join(days)}
 <h2>ご利用の前に</h2>
-<p class="small muted">カードの日付は間違っていることがあります。税や制度の期限は、申し込みや手続きの前に、公式の情報で確かめてください。祝日と二十四節気の日付は、それぞれ<a href="/kyou/holidays-{y}/">{y}年の祝日と連休</a>、<a href="/kyou/season/">季節の便り</a>のもとと同じです。</p>"""
+<p class="small muted">カードの日付は間違っていることがあります。税や制度の期限は、申し込みや手続きの前に公式の情報で確かめてください。祝日と二十四節気の日付は、それぞれ<a href="/kyou/holidays-{y}/">{y}年の祝日と連休</a>、<a href="/kyou/season/">季節の便り</a>のもとと同じです。</p>"""
     return c.page("/kyou/december/", f"{y}年12月の日めくり 1日ごとの公式の日 | {B.NAME}", f"{y}年12月1日から31日まで、期限・開始・節目の公式の日を、1日ごとに。あと何日かも分かります。", body, SPECIAL_KIND)
 
 
@@ -160,7 +160,7 @@ def pension_page(c) -> str:
 <p><a class="btn" href="/rule/?preset=pension">自分の予定に入れる(次の支払日を数える)</a></p>
 <h2>日付のもとになったもの</h2>
 <p class="small muted">支払日の決まりは、日本年金機構の「<a href="{bizday.PENSION_SOURCE}" rel="noopener nofollow" target="_blank">年金はいつ支払われますか。</a>」にある、偶数月の15日と、15日が土日・祝日のときの扱いです。このページの日付は、その決まりに、祝日法のきまりから数え直した祝日をあてはめて、{OPERATOR}が作成しました。対象の月は、「支払月の前月までの2か月分」として並べています。実際の支払日は、年金振込通知書や日本年金機構の案内で、かならず確かめてください。</p>"""
-    return c.page("/kyou/pension/", f"年金の支払日 {ys[0]}年・{ys[-1]}年の一覧 | {B.NAME}", "年金は偶数月の15日。15日が土日・祝日のときの支払日と、あと何日かを、2年分まとめました。", body, SPECIAL_KIND)
+    return c.page("/kyou/pension/", f"年金の支払日 {ys[0]}年・{ys[-1]}年の一覧 | {B.NAME}", "年金は偶数月の15日。15日が土日・祝日のときの支払日とあと何日かを2年分まとめました。", body, SPECIAL_KIND)
 
 
 def _md(n: int) -> str:
@@ -190,7 +190,7 @@ def pheno_page(c) -> str:
 <p class="lead muted">桜の開花・満開と、いちょうの黄葉、かえでの紅葉が、これまでの年に、いつごろだったかをまとめました。気象庁の観測の記録(1953年から{data["last"]}年)をもとにしています。<b>今年の開花の予想ではありません。</b></p>
 <section class="panel" id="pheno" data-last="{data["last"]}">
 <div class="field"><label for="ph-st">地点</label><select id="ph-st"><option value="東京">東京</option></select></div>
-<div id="ph-out" aria-live="polite"><p class="muted">地点を選ぶと、その地点の例年の日と、あと何日かが出ます。</p></div>
+<div id="ph-out" aria-live="polite"><p class="muted">地点を選ぶと、その地点の例年の日とあと何日かが出ます。</p></div>
 </section>
 <script type="application/json" id="ph-data">{blob}</script>
 <h2>主な地点の一覧</h2>
@@ -198,7 +198,7 @@ def pheno_page(c) -> str:
 {"".join(sections)}
 <h2>日付のもとになったもの</h2>
 <p class="small muted">出典: <a href="{data["source"]}" rel="noopener nofollow" target="_blank">気象庁ホームページ「生物季節観測の情報」</a>の累年値(さくらの開花・満開、いちょうの黄葉、かえでの紅葉)を加工して作成しました。平年は気象庁の値、直近10年の平均、いちばん早い日・遅い日は、{OPERATOR}が数え直したものです。いちばん早い日・遅い日は、その地点の桜やいちょう、かえでの観測すべてを数えているため、気象庁の最早・最晩と食いちがう地点があります。観測する地点や種目は変わることがあり、{data["last"]}年までの記録です。これは過去の記録であり、今年の開花や紅葉の時期を予想するものではありません。今年の状況は、気象庁などの発表で確かめてください。</p>"""
-    return c.page("/kyou/sakura/", "桜と紅葉の、例年の日 開花・満開・黄葉・紅葉 | " + B.NAME, "桜の開花と満開、いちょうの黄葉、かえでの紅葉の例年の日と、あと何日か。気象庁の観測の記録をもとに、地点ごとに。", body, SPECIAL_KIND)
+    return c.page("/kyou/sakura/", "桜と紅葉の、例年の日 開花・満開・黄葉・紅葉 | " + B.NAME, "桜の開花と満開、いちょうの黄葉、かえでの紅葉の例年の日とあと何日か。気象庁の観測の記録をもとに地点ごとに。", body, SPECIAL_KIND)
 
 
 def special_pages(c, entries: list[dict]) -> dict[str, str]:

@@ -59,9 +59,9 @@ class InTheBuild(unittest.TestCase):
         self.assertIn("tokushu/hakone-2027/index.html", self.pages)
         self.assertIn("tokushu/index.html", self.pages)
         page = self.pages["tokushu/hakone-2027/index.html"]
-        self.assertIn("箱根駅伝2027(第103回)を、数字から読む", page)
+        self.assertIn("箱根駅伝2027(第103回)を数字から読む", page)
         self.assertIn("当サイトの見方", page)                       # our view is marked
-        self.assertIn("この特集は、公式の記録など数字と事実をもとに、当サイトが作った分析です", page)      # and the page says what it is
+        self.assertIn("この特集は、公式の記録など数字と事実をもとに当サイトが作った分析です", page)      # and the page says what it is
         self.assertIn('href="/tokushu/"', self.pages["index.html"])
         linked = [k for k, v in self.pages.items() if k.startswith("e/") and isinstance(v, str) and 'href="/tokushu/hakone-2027/"' in v]
         self.assertGreaterEqual(len(linked), 4)                     # the cards of the race and its steps (the race, its qualifier, and the two races before it)

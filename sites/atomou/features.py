@@ -109,7 +109,7 @@ def feature_page(c, f: dict, name: str, top_card: str = "") -> tuple[str, bool]:
 <p class="ft-meta"><span class="vbadge vb-{"ok" if stage == "公開" else "pending"}">{esc(stage)}</span>{f' <span class="small muted">最終更新 {esc(updated)}</span>' if updated else ""}</p>
 {f'<div class="cards ft-card">{top_card}</div>' if top_card else ""}
 <p class="lead">{esc(f["lead"])}</p>
-<p class="small muted">この特集は、公式の記録など数字と事実をもとに、当サイトが作った分析です。「当サイトの見方」の部分は当サイトの見解で、断定ではありません。{esc(f["method"])}</p>
+<p class="small muted">この特集は、公式の記録など数字と事実をもとに当サイトが作った分析です。「当サイトの見方」の部分は当サイトの見解で、断定ではありません。{esc(f["method"])}</p>
 {"".join(section_html(s) for s in f["sections"])}
 {f'<h2>更新の記録</h2><ul class="changes">{log}</ul>' if log else ""}
 <p class="small muted">カードの日付や数字は、間違っていることがあります。間違いに気づいたときは、<a href="/contact/?kind=date">お問い合わせ</a>からお知らせください。</p>"""
@@ -121,9 +121,9 @@ def features_index(c, feats: list[dict], name: str) -> str:
     cards = "".join(f'<a class="uc" href="/tokushu/{f["slug"]}/"><b>{esc(f["title"])}</b><span>{esc(f["lead"][:60])}</span></a>' for f in feats if indexable(f) or True)
     body = crumbs([("トップ", "/"), ("特集", None)]) + f"""
 <h1>特集</h1>
-<p class="lead muted">大きな行事を、数字から読む特集です。日付のカードから、くわしい分析のページへ進めます。</p>
+<p class="lead muted">大きな行事を数字から読む特集です。日付のカードから、くわしい分析のページへ進めます。</p>
 <div class="uc-grid">{cards}</div>"""
-    return c.page("/tokushu/", f"特集 | {name}", "大きな行事を、公式の記録など数字をもとに読む特集。日程・結果・過去の記録を、あと何日、もう何日とともに。", body, "feature", noindex=not any(indexable(f) for f in feats))
+    return c.page("/tokushu/", f"特集 | {name}", "大きな行事を、公式の記録など数字をもとに読む特集。日程・結果・過去の記録をあと何日、もう何日とともに。", body, "feature", noindex=not any(indexable(f) for f in feats))
 
 
 def card_link(feats: list[dict], title: str, day: str) -> str:
