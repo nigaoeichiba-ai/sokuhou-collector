@@ -99,7 +99,7 @@ class WorkflowTest(unittest.TestCase):
         self.assertIn("contents: read", t)
         for bad in ("git push", "git add", "actions/cache", "upload-artifact"):
             self.assertNotIn(bad, t)
-        self.assertIn("rakuten-api", t)
+        self.assertIn("group: yorokobu-items", t)                              # not the deploy's group: it would cancel a waiting deploy
 
     def test_the_file_is_pulled_by_default_and_ignored_by_git(self):
         from sites.yorokobu import privatedata

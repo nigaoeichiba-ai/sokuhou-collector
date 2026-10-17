@@ -13,9 +13,10 @@ on:
 permissions:
   contents: read
 
-# The same group as the deploy's own fetch used: one application ID, one request a second.
+# Its own group (a run of the deploy's group that waits would be cancelled by this one).  One application ID allows one request a second: while a deploy still fetches by itself the two share
+# the limit and the client waits and retries on 429; once the deploy takes its data from here (items_fresh.py) there is only this one.
 concurrency:
-  group: rakuten-api
+  group: yorokobu-items
   cancel-in-progress: false
 
 jobs:
