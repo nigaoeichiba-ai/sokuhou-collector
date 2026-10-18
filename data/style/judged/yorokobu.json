@@ -43,6 +43,45 @@
 "natural": true,
 "text": "Amazonで同じ商品を探す"
 },
+"01eab2171e8f": {
+"at": "2026-10-18",
+"better": "ほかの興味から贈り物を探す",
+"candidates": [
+{
+"key": "相手 興味 テーマ",
+"lex": 0,
+"problems": [],
+"text": "相手の興味から選ぶほかのテーマ"
+},
+{
+"key": "興味 贈り物 探す",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "ほかの興味から贈り物を探す"
+},
+{
+"key": "興味に合う テーマ",
+"lex": 0,
+"problems": [],
+"text": "相手の興味に合うほかのテーマ"
+}
+],
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "ほかの相手の興味から選ぶテーマ",
+"why": "「ほかの相手の興味」では「ほかの」が相手にかかるように読めます。 / 候補(実物の辞書での根拠): 相手の興味から選ぶほかのテーマ(辞書に根拠なし) / ほかの興味から贈り物を探す(辞書+1) / 相手の興味に合うほかのテーマ(辞書に根拠なし)"
+},
+"0226e14e23e8": {
+"at": "2026-10-18",
+"natural": true,
+"text": "義父母への引っ越し祝いプレゼント"
+},
 "0241556984dc": {
 "at": "2026-10-17",
 "natural": true,
@@ -89,10 +128,52 @@
 "natural": true,
 "text": "この記事について"
 },
+"0330f40d5058": {
+"at": "2026-10-18",
+"better": "利き手に合わせた贈り物",
+"candidates": [
+{
+"key": "利き手 合わせた 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "利き手に合わせた贈り物"
+},
+{
+"key": "利き手 選ばない 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "利き手を選ばない贈り物"
+},
+{
+"key": "利き手 合う 品",
+"lex": 0,
+"problems": [],
+"text": "使う人の利き手に合う品"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "accepted",
+"text": "利き手配慮",
+"why": "「利き手配慮」は名詞をつないだ抽象的な造語です。 / 候補(実物の辞書での根拠): 利き手に合わせた贈り物(辞書+1) / 利き手を選ばない贈り物(辞書+1) / 使う人の利き手に合う品(辞書に根拠なし)"
+},
 "037db1a16cab": {
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 4.29"
+},
+"03ecad6c7145": {
+"at": "2026-10-18",
+"natural": true,
+"text": "月ごとの贈りどき"
+},
+"0436e7b41c25": {
+"at": "2026-10-18",
+"natural": true,
+"text": "女友達への出産祝いプレゼント"
 },
 "04d14dfe425c": {
 "at": "2026-10-17",
@@ -359,6 +440,41 @@
 "text": "送別・異動の贈り物のほかの相手",
 "why": "何をする相手なのかが明確です。 / 候補とサジェスト数: 送別・異動で贈るほかの相手(0) / 送別・異動で贈る相手(0) / 送別・異動の贈り物を渡すほかの相手(0)"
 },
+"115af46135fc": {
+"at": "2026-10-18",
+"better": "冷凍庫が小さい家への贈り物",
+"candidates": [
+{
+"key": "冷凍庫 小さい 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "冷凍庫が小さい家への贈り物"
+},
+{
+"key": "小さな冷凍庫 入れやすい品",
+"lex": 0,
+"problems": [],
+"text": "小さな冷凍庫に入れやすい品"
+},
+{
+"key": "冷凍庫 空き 少ない 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "冷凍庫の空きが少ない家への贈り物"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "冷凍庫小さめ",
+"why": "「冷凍庫小さめ」は助詞を省いた造語です。 / 候補(実物の辞書での根拠): 冷凍庫が小さい家への贈り物(辞書+1) / 小さな冷凍庫に入れやすい品(辞書に根拠なし) / 冷凍庫の空きが少ない家への贈り物(辞書+1)"
+},
 "117a602a0be7": {
 "at": "2026-10-17",
 "natural": true,
@@ -374,10 +490,49 @@
 "natural": true,
 "text": "レビュー平均 4.20"
 },
+"129bdd128974": {
+"at": "2026-10-18",
+"better": "日時指定できるギフト",
+"candidates": [
+{
+"key": "日時指定 ギフト",
+"lex": 3,
+"problems": [],
+"score": null,
+"text": "日時指定できるギフト"
+},
+{
+"key": "配達日時 指定 ギフト",
+"lex": 1,
+"problems": [],
+"text": "配達日時を指定できるギフト"
+},
+{
+"key": "受け取り日時 選べる 贈り物",
+"lex": 1,
+"problems": [],
+"text": "受け取り日時を選べる贈り物"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "日時合わせ",
+"why": "「日時合わせ」は一般的な配送条件の名前ではありません。 / 候補(実物の辞書での根拠): 日時指定できるギフト(辞書+3) / 配達日時を指定できるギフト(辞書+1) / 受け取り日時を選べる贈り物(辞書+1)"
+},
 "13179cedcdac": {
 "at": "2026-10-17",
 "natural": true,
 "text": "結婚祝いのメッセージ"
+},
+"13202af8ee6c": {
+"at": "2026-10-18",
+"natural": true,
+"text": "夜型の人の朝の支度が楽になる贈り物"
 },
 "13b3660abb15": {
 "at": "2026-10-17",
@@ -389,6 +544,11 @@
 "natural": true,
 "text": "就職・入社祝いのメッセージ"
 },
+"14ca40f76969": {
+"at": "2026-10-18",
+"natural": true,
+"text": "単身赴任"
+},
 "156eafa8a712": {
 "at": "2026-10-17",
 "natural": true,
@@ -398,6 +558,11 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "この表の点数のつけ方"
+},
+"1584298d872b": {
+"at": "2026-10-18",
+"natural": true,
+"text": "上司へ贈るお中元ギフト"
 },
 "15bdba925314": {
 "at": "2026-10-17",
@@ -440,10 +605,51 @@
 "natural": true,
 "text": "レビュー平均 4.77"
 },
+"175b4b210d0c": {
+"at": "2026-10-18",
+"natural": true,
+"text": "新米のパパやママの家事の手間を減らす贈り物 | よろこぶプレゼント"
+},
+"17b1c83cfe26": {
+"at": "2026-10-18",
+"natural": true,
+"text": "父への退職祝いプレゼント"
+},
 "17d77501a245": {
 "at": "2026-10-17",
 "natural": true,
 "text": "折りたたみ傘"
+},
+"1828d0e05d57": {
+"at": "2026-10-18",
+"better": "母に贈る帰省の手土産",
+"candidates": [
+{
+"key": "母 帰省の手土産",
+"lex": 4,
+"problems": [],
+"score": null,
+"text": "母に贈る帰省の手土産"
+},
+{
+"key": "母 帰省土産",
+"lex": 0,
+"problems": [],
+"text": "母への帰省土産"
+},
+{
+"key": "帰省時 母 手土産",
+"lex": 2,
+"problems": [],
+"text": "帰省時に母へ贈る手土産"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "accepted",
+"text": "母への帰省土産ギフト",
+"why": "「土産」と「ギフト」の重なりを避け、一般的な「帰省の手土産」を使いました。 / 候補(実物の辞書での根拠): 母に贈る帰省の手土産(辞書+4) / 母への帰省土産(辞書に根拠なし) / 帰省時に母へ贈る手土産(辞書+2)"
 },
 "18975c8ea5ee": {
 "at": "2026-10-17",
@@ -533,6 +739,11 @@
 "natural": true,
 "text": "お年賀の早見表(時期・金額・のし・避けたい品)"
 },
+"1b30bfa11c62": {
+"at": "2026-10-18",
+"natural": true,
+"text": "母への敬老の日プレゼント"
+},
 "1bd966066218": {
 "at": "2026-10-17",
 "natural": true,
@@ -563,15 +774,87 @@
 "natural": true,
 "text": "この比較について"
 },
+"1d8f40d784d1": {
+"at": "2026-10-18",
+"natural": true,
+"text": "父への敬老の日プレゼント"
+},
 "1dc268b5486d": {
 "at": "2026-10-17",
 "natural": true,
 "text": "日本酒"
 },
+"1ddc8b916e92": {
+"at": "2026-10-18",
+"better": "予算を抑えたプチギフト",
+"candidates": [
+{
+"key": "予算 少ない 贈り物",
+"lex": 1,
+"problems": [],
+"text": "予算が少ないときの贈り物"
+},
+{
+"key": "低予算 贈り物",
+"lex": 1,
+"problems": [],
+"text": "低予算で選ぶ贈り物"
+},
+{
+"key": "予算 抑える プチギフト",
+"lex": 3,
+"problems": [],
+"score": null,
+"text": "予算を抑えたプチギフト"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "少額上手",
+"why": "「少額上手」は実際には使われない造語です。 / 候補(実物の辞書での根拠): 予算が少ないときの贈り物(辞書+1) / 低予算で選ぶ贈り物(辞書+1) / 予算を抑えたプチギフト(辞書+3)"
+},
 "1ed3a55b4ba2": {
 "at": "2026-10-17",
 "natural": true,
 "text": "編集方針"
+},
+"1ef539068e55": {
+"at": "2026-10-18",
+"better": "コレクター",
+"candidates": [
+{
+"key": "コレクター",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "コレクター"
+},
+{
+"key": "収集 趣味 人",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "収集が趣味の人"
+},
+{
+"key": "集める 好きな人",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "集めるのが好きな人"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "accepted",
+"text": "集める人",
+"why": "「集める人」は何を指すか曖昧で、役割名の「コレクター」が自然です。 / 候補(実物の辞書での根拠): コレクター(辞書に根拠なし) / 収集が趣味の人(辞書に根拠なし) / 集めるのが好きな人(辞書に根拠なし)"
 },
 "1f1a7e31ee65": {
 "at": "2026-10-17",
@@ -606,6 +889,11 @@
 "text": "父の日の贈り物 好みに寄り添う静かな選び方",
 "why": "「好みに寄り添う静かな選び方」が曖昧で不自然なため / 候補とサジェスト数: 父の日の贈り物 好みに合う品の選び方(測れず) / 父の日の贈り物 好みに合わせた選び方(測れず) / 父の日に贈る品 好みに合うものの選び方(測れず)"
 },
+"1f1bf9b0e07e": {
+"at": "2026-10-18",
+"natural": true,
+"text": "新米のパパやママの家事の手間を減らす贈り物"
+},
 "1f7f8cd75111": {
 "at": "2026-10-17",
 "natural": true,
@@ -630,6 +918,40 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "ほかの世代・性別"
+},
+"218fef8440d7": {
+"at": "2026-10-18",
+"better": "試験前の応援ギフト",
+"candidates": [
+{
+"key": "試験前 応援ギフト",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "試験前の応援ギフト"
+},
+{
+"key": "試験前 応援の品",
+"lex": 0,
+"problems": [],
+"text": "試験前に贈る応援の品"
+},
+{
+"key": "試験前 プレゼント",
+"lex": 0,
+"problems": [],
+"text": "試験前に贈るプレゼント"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "試験前応援",
+"why": "名詞を連ねず、語の関係が分かる形にしました。 / 候補(実物の辞書での根拠): 試験前の応援ギフト(辞書+1) / 試験前に贈る応援の品(辞書に根拠なし) / 試験前に贈るプレゼント(辞書に根拠なし)"
 },
 "21b1defb362d": {
 "at": "2026-10-17",
@@ -702,6 +1024,39 @@
 "natural": true,
 "text": "ヨックモック シガール詰め合わせ"
 },
+"286e7a0dc64c": {
+"at": "2026-10-18",
+"better": "年度末に贈るお礼の品",
+"candidates": [
+{
+"key": "年度末 お礼の品",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "年度末に贈るお礼の品"
+},
+{
+"key": "年度末 お礼 品",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "年度末のお礼の品"
+},
+{
+"key": "年度末 感謝 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "年度末に感謝を伝える贈り物"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "accepted",
+"text": "年度末お礼",
+"why": "「年度末お礼」は名詞を連ねた表現で、「お礼」が品物かどうかも分かりません。 / 候補(実物の辞書での根拠): 年度末に贈るお礼の品(辞書+1) / 年度末のお礼の品(辞書+1) / 年度末に感謝を伝える贈り物(辞書+1)"
+},
 "28c126505a14": {
 "at": "2026-10-17",
 "natural": true,
@@ -731,6 +1086,42 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "キハチ 焼菓子ギフト 8種20個入をAmazonで見る"
+},
+"29c881c5bdb4": {
+"at": "2026-10-18",
+"better": "オンライン会議の身支度",
+"candidates": [
+{
+"key": "オンライン会議 身支度",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "オンライン会議の身支度"
+},
+{
+"key": "画面に映る 身支度",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "画面に映る前の身支度"
+},
+{
+"key": "オンライン会議 準備",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "オンライン会議の準備"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "画面前支度",
+"why": "「画面前支度」は一般的な場面名ではありません。 / 候補(実物の辞書での根拠): オンライン会議の身支度(辞書に根拠なし) / 画面に映る前の身支度(辞書に根拠なし) / オンライン会議の準備(辞書に根拠なし)"
 },
 "29f099f6679a": {
 "at": "2026-10-17",
@@ -792,6 +1183,37 @@
 "natural": true,
 "text": "父へ贈るお中元ギフト"
 },
+"2f96732781e0": {
+"at": "2026-10-18",
+"better": "ほかの気持ちで贈り物を探す",
+"candidates": [
+{
+"key": "気持ちから選ぶ テーマ",
+"lex": 0,
+"problems": [],
+"text": "気持ちから選ぶほかのテーマ"
+},
+{
+"key": "ほかの気持ち 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "ほかの気持ちで贈り物を探す"
+},
+{
+"key": "気持ち別 テーマ",
+"lex": 0,
+"problems": [],
+"text": "気持ち別のほかのテーマ"
+}
+],
+"confidence": "low",
+"kind": "heading",
+"natural": false,
+"status": "proposed",
+"text": "ほかの気持ちから選ぶテーマ",
+"why": "「ほかの気持ちから選ぶテーマ」は語のかかり方が分かりにくい表現です。 / 候補(実物の辞書での根拠): 気持ちから選ぶほかのテーマ(辞書に根拠なし) / ほかの気持ちで贈り物を探す(辞書+1) / 気持ち別のほかのテーマ(辞書に根拠なし)"
+},
 "2fe09561a8b3": {
 "at": "2026-10-17",
 "natural": true,
@@ -802,10 +1224,48 @@
 "natural": true,
 "text": "総合点の付け方"
 },
+"31c9dab71fd7": {
+"at": "2026-10-18",
+"better": "昼休みのレンジ待ち",
+"candidates": [
+{
+"key": "昼休み レンジ待ち",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "昼休みのレンジ待ち"
+},
+{
+"key": "電子レンジ 待つ 昼休み",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "電子レンジを待つ昼休み"
+},
+{
+"key": "昼 電子レンジ待ち",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "昼の電子レンジ待ち"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "accepted",
+"text": "レンジ待ち昼",
+"why": "名詞のつながりを明確にしました。 / 候補(実物の辞書での根拠): 昼休みのレンジ待ち(辞書に根拠なし) / 電子レンジを待つ昼休み(辞書に根拠なし) / 昼の電子レンジ待ち(辞書に根拠なし)"
+},
 "31ceb585a70e": {
 "at": "2026-10-17",
 "natural": true,
 "text": "母の日のメッセージ"
+},
+"31ee3f5acc1a": {
+"at": "2026-10-18",
+"natural": true,
+"text": "水筒の手入れ"
 },
 "323d35b18d86": {
 "at": "2026-10-17",
@@ -837,6 +1297,11 @@
 "natural": true,
 "text": "レビュー平均 4.69"
 },
+"34a1e4f7c3e7": {
+"at": "2026-10-18",
+"natural": true,
+"text": "銀座千疋屋 銀座フルーツクーヘン 8個入"
+},
 "35573a7ba0b6": {
 "at": "2026-10-17",
 "natural": true,
@@ -851,6 +1316,74 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 4.22"
+},
+"386aeb994be1": {
+"at": "2026-10-18",
+"better": "壁が薄い家への贈り物",
+"candidates": [
+{
+"key": "壁が薄い 部屋 暮らし",
+"lex": 0,
+"problems": [],
+"text": "壁が薄い部屋での暮らし"
+},
+{
+"key": "壁が薄い 家 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "壁が薄い家への贈り物"
+},
+{
+"key": "集合住宅 暮らし",
+"lex": 0,
+"problems": [],
+"text": "集合住宅での暮らし"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "薄壁暮らし",
+"why": "「薄壁暮らし」は普通には使わない造語です。 / 候補(実物の辞書での根拠): 壁が薄い部屋での暮らし(辞書に根拠なし) / 壁が薄い家への贈り物(辞書+1) / 集合住宅での暮らし(辞書に根拠なし)"
+},
+"3889a00af2e2": {
+"at": "2026-10-18",
+"better": "夜型の人への贈り物",
+"candidates": [
+{
+"key": "夜型の人 贈り物",
+"lex": 3,
+"problems": [],
+"score": null,
+"text": "夜型の人への贈り物"
+},
+{
+"key": "夜型 朝支度",
+"lex": 0,
+"problems": [],
+"text": "夜型の人の朝支度"
+},
+{
+"key": "朝の支度 楽 品",
+"lex": 0,
+"problems": [],
+"text": "朝の支度が楽になる品"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "夜型の朝",
+"why": "「夜型の朝」は実際の呼び名ではない造語です。 / 候補(実物の辞書での根拠): 夜型の人への贈り物(辞書+3) / 夜型の人の朝支度(辞書に根拠なし) / 朝の支度が楽になる品(辞書に根拠なし)"
 },
 "38c1d8814bf8": {
 "at": "2026-10-17",
@@ -887,6 +1420,47 @@
 "natural": true,
 "text": "レビュー平均 4.55"
 },
+"39e60f6e455d": {
+"at": "2026-10-18",
+"natural": true,
+"text": "健康習慣"
+},
+"3a9734bff673": {
+"at": "2026-10-18",
+"better": "バッグの中で物が見つからない",
+"candidates": [
+{
+"key": "バッグの中 見つからない",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "バッグの中で物が見つからない"
+},
+{
+"key": "バッグの底 小物",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "バッグの底の小物を探す"
+},
+{
+"key": "バッグ 小物整理",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "バッグの中の小物整理"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "バッグ底迷子",
+"why": "「バッグ底迷子」は造語のため、困りごとをそのまま表しました。 / 候補(実物の辞書での根拠): バッグの中で物が見つからない(辞書に根拠なし) / バッグの底の小物を探す(辞書に根拠なし) / バッグの中の小物整理(辞書に根拠なし)"
+},
 "3abeb7b1a4a7": {
 "at": "2026-10-17",
 "natural": true,
@@ -896,6 +1470,41 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "インテリア・寝具・収納"
+},
+"3d2920c5d13e": {
+"at": "2026-10-18",
+"better": "消えものギフトの選び方",
+"candidates": [
+{
+"key": "消えもの ギフト 選び方",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "消えものギフトの選び方"
+},
+{
+"key": "使うとなくなる 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "使うとなくなる贈り物の選び方"
+},
+{
+"key": "消えもの プレゼント 選び方",
+"lex": 0,
+"problems": [],
+"text": "消えものプレゼントの選び方"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "残らず楽しめる消えものプレゼント選び",
+"why": "「残らず楽しめる」が説明過多で、「プレゼント選び」も名詞が連なっています。 / 候補(実物の辞書での根拠): 消えものギフトの選び方(辞書+1) / 使うとなくなる贈り物の選び方(辞書+1) / 消えものプレゼントの選び方(辞書に根拠なし)"
 },
 "3d63b022192e": {
 "at": "2026-10-17",
@@ -1025,6 +1634,42 @@
 "natural": true,
 "text": "クリスマスのメッセージ"
 },
+"4df67ee330f9": {
+"at": "2026-10-18",
+"better": "ほかの季節や天気から選ぶ",
+"candidates": [
+{
+"key": "季節や天気から選ぶ",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "ほかの季節や天気から選ぶ"
+},
+{
+"key": "季節や天気で選ぶ",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "季節や天気で選ぶ"
+},
+{
+"key": "季節 天気 テーマ",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "ほかの季節と天気のテーマ"
+}
+],
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "ほかの季節と天気から選ぶテーマ",
+"why": "「から選ぶテーマ」のつながりを改め、並列には「や」を使いました。 / 候補(実物の辞書での根拠): ほかの季節や天気から選ぶ(辞書に根拠なし) / 季節や天気で選ぶ(辞書に根拠なし) / ほかの季節と天気のテーマ(辞書に根拠なし)"
+},
 "4e1a815007d1": {
 "at": "2026-10-17",
 "natural": true,
@@ -1075,10 +1720,20 @@
 "natural": true,
 "text": "株式会社アイディエーション「クリスマスプレゼントに関する調査」"
 },
+"51b4a246664a": {
+"at": "2026-10-18",
+"natural": true,
+"text": "常温"
+},
 "51fa7ae91c8e": {
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 4.49"
+},
+"51fd09143426": {
+"at": "2026-10-18",
+"natural": true,
+"text": "義父母への出産祝いプレゼント"
 },
 "52a5f340c17f": {
 "at": "2026-10-17",
@@ -1089,6 +1744,73 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "Amazonで探す"
+},
+"52d9a6e95ecc": {
+"at": "2026-10-18",
+"better": "ほかの条件で贈り物を探す",
+"candidates": [
+{
+"key": "条件から選ぶ テーマ",
+"lex": 0,
+"problems": [],
+"text": "条件から選ぶほかのテーマ"
+},
+{
+"key": "ほかの条件 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "ほかの条件で贈り物を探す"
+},
+{
+"key": "条件別 テーマ",
+"lex": 0,
+"problems": [],
+"text": "条件別のほかのテーマ"
+}
+],
+"confidence": "low",
+"kind": "heading",
+"natural": false,
+"status": "proposed",
+"text": "ほかの条件から選ぶテーマ",
+"why": "「ほかの条件から選ぶテーマ」は語のかかり方が分かりにくい表現です。 / 候補(実物の辞書での根拠): 条件から選ぶほかのテーマ(辞書に根拠なし) / ほかの条件で贈り物を探す(辞書+1) / 条件別のほかのテーマ(辞書に根拠なし)"
+},
+"5334a58c2ea9": {
+"at": "2026-10-18",
+"better": "ほかの困りごとから選ぶ",
+"candidates": [
+{
+"key": "困りごとから選ぶ",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "ほかの困りごとから選ぶ"
+},
+{
+"key": "困りごと別",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "困りごと別に選ぶ"
+},
+{
+"key": "困りごと テーマ",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "ほかの困りごとのテーマ"
+}
+],
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "ほかの困りごとから選ぶテーマ",
+"why": "「選ぶテーマ」のつながりが不自然なため、末尾を簡潔にしました。 / 候補(実物の辞書での根拠): ほかの困りごとから選ぶ(辞書に根拠なし) / 困りごと別に選ぶ(辞書に根拠なし) / ほかの困りごとのテーマ(辞書に根拠なし)"
 },
 "536ba0266bf8": {
 "at": "2026-10-17",
@@ -1143,15 +1865,100 @@
 "natural": true,
 "text": "数値の表を見る"
 },
+"56439967d463": {
+"at": "2026-10-18",
+"better": "メール便で届くギフト",
+"candidates": [
+{
+"key": "メール便 届く ギフト",
+"lex": 3,
+"problems": [],
+"score": null,
+"text": "メール便で届くギフト"
+},
+{
+"key": "ポスト 届く ギフト",
+"lex": 1,
+"problems": [],
+"text": "ポストに届くギフト"
+},
+{
+"key": "郵便受け 受け取れる ギフト",
+"lex": 1,
+"problems": [],
+"text": "郵便受けで受け取れるギフト"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "ポスト便向き",
+"why": "「ポスト便向き」は一般的な配送方法の名前ではありません。 / 候補(実物の辞書での根拠): メール便で届くギフト(辞書+3) / ポストに届くギフト(辞書+1) / 郵便受けで受け取れるギフト(辞書+1)"
+},
+"5644b54d3815": {
+"at": "2026-10-18",
+"natural": true,
+"text": "停電の夕方"
+},
 "5768a02ea9ee": {
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 4.43"
 },
+"57cffec11c5e": {
+"at": "2026-10-18",
+"better": "小さなお見舞いの品",
+"candidates": [
+{
+"key": "小さな お見舞いの品",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "小さなお見舞いの品"
+},
+{
+"key": "ちょっとした お見舞いの品",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "ちょっとしたお見舞いの品"
+},
+{
+"key": "お見舞い 贈る 品",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "お見舞いに贈る小さな品"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "小さなお見舞い",
+"why": "「お見舞い」だけでは訪問・言葉・品物のどれを指すか分かりません。 / 候補(実物の辞書での根拠): 小さなお見舞いの品(辞書に根拠なし) / ちょっとしたお見舞いの品(辞書に根拠なし) / お見舞いに贈る小さな品(辞書に根拠なし)"
+},
 "5a5639438579": {
 "at": "2026-10-17",
 "natural": true,
 "text": "クッキー・焼き菓子"
+},
+"5a5da3638aab": {
+"at": "2026-10-18",
+"natural": true,
+"text": "義父母へのお礼ギフト"
+},
+"5a79cafb96be": {
+"at": "2026-10-18",
+"natural": true,
+"text": "同僚への引っ越し祝いプレゼント"
 },
 "5a8e218ad206": {
 "at": "2026-10-17",
@@ -1162,6 +1969,40 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 3.95"
+},
+"5b068e9ec48e": {
+"at": "2026-10-18",
+"better": "立ち仕事をする人への贈り物",
+"candidates": [
+{
+"key": "立ち仕事 あと ケア",
+"lex": 0,
+"problems": [],
+"text": "立ち仕事のあとのケア"
+},
+{
+"key": "立ち仕事 あと 品",
+"lex": 0,
+"problems": [],
+"text": "立ち仕事のあとに使う品"
+},
+{
+"key": "立ち仕事 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "立ち仕事をする人への贈り物"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "立ち仕事後",
+"why": "「立ち仕事後」は助詞を省いた硬い言い方です。 / 候補(実物の辞書での根拠): 立ち仕事のあとのケア(辞書に根拠なし) / 立ち仕事のあとに使う品(辞書に根拠なし) / 立ち仕事をする人への贈り物(辞書+1)"
 },
 "5b6a94dc3a29": {
 "at": "2026-10-17",
@@ -1187,6 +2028,44 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "和菓子"
+},
+"5d77e071d118": {
+"at": "2026-10-18",
+"better": "発表会の帰り",
+"candidates": [
+{
+"key": "発表会の帰り",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "発表会の帰り"
+},
+{
+"key": "発表会から 帰り",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "発表会からの帰り"
+},
+{
+"key": "発表会 帰り道",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "発表会の帰り道"
+}
+],
+"confidence": "low",
+"kind": "link",
+"natural": false,
+"status": "proposed",
+"text": "発表会帰り",
+"why": "助詞の「の」を補うと自然です。 / 候補(実物の辞書での根拠): 発表会の帰り(辞書に根拠なし) / 発表会からの帰り(辞書に根拠なし) / 発表会の帰り道(辞書に根拠なし)"
+},
+"5deca531d448": {
+"at": "2026-10-18",
+"natural": true,
+"text": "義父母へ贈るお歳暮ギフト"
 },
 "5eb1ec5291c5": {
 "at": "2026-10-17",
@@ -1233,6 +2112,81 @@
 "natural": true,
 "text": "レビュー平均 4.05"
 },
+"60ef3ef84568": {
+"at": "2026-10-18",
+"natural": true,
+"text": "新しい靴"
+},
+"60f0e2b0b606": {
+"at": "2026-10-18",
+"better": "ハズさない手土産ギフト",
+"candidates": [
+{
+"key": "好みが分からない ギフト",
+"lex": 1,
+"problems": [],
+"text": "好みが分からない相手へのギフト"
+},
+{
+"key": "ハズさない 手土産",
+"lex": 5,
+"problems": [],
+"score": null,
+"text": "ハズさない手土産ギフト"
+},
+{
+"key": "好みを問わない ギフト",
+"lex": 1,
+"problems": [],
+"text": "好みを問わないギフト"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "無難ギフト",
+"why": "「無難」は消極的に聞こえるため、相手の状況を具体的にしました。 / 候補(実物の辞書での根拠): 好みが分からない相手へのギフト(辞書+1) / ハズさない手土産ギフト(辞書+5) / 好みを問わないギフト(辞書+1)"
+},
+"61a832cb9267": {
+"at": "2026-10-18",
+"better": "冷蔵庫に貼る伝言",
+"candidates": [
+{
+"key": "冷蔵庫に貼る 伝言",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "冷蔵庫に貼る伝言"
+},
+{
+"key": "冷蔵庫に残す 伝言",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "冷蔵庫に残す伝言"
+},
+{
+"key": "冷蔵庫 伝言メモ",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "冷蔵庫の伝言メモ"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "冷蔵庫伝言",
+"why": "名詞だけを連ねず、伝言をどうするのか分かる形にしました。 / 候補(実物の辞書での根拠): 冷蔵庫に貼る伝言(辞書に根拠なし) / 冷蔵庫に残す伝言(辞書に根拠なし) / 冷蔵庫の伝言メモ(辞書に根拠なし)"
+},
 "61de9eb8b366": {
 "at": "2026-10-17",
 "natural": true,
@@ -1243,20 +2197,99 @@
 "natural": true,
 "text": "美容・コスメ・香水"
 },
+"62b484a48837": {
+"at": "2026-10-18",
+"natural": true,
+"text": "同僚への結婚祝いプレゼント"
+},
 "64385efb8fa4": {
 "at": "2026-10-17",
 "natural": true,
 "text": "お正月の特集のトップへ"
+},
+"64478bab1627": {
+"at": "2026-10-18",
+"better": "ほかの相手への誕生日プレゼント",
+"candidates": [
+{
+"key": "ほかの相手 誕生日プレゼント",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "ほかの相手への誕生日プレゼント"
+},
+{
+"key": "誕生日プレゼント 贈る相手",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "誕生日プレゼントを贈るほかの相手"
+},
+{
+"key": "誕生日 贈る相手",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "誕生日に贈る相手をもっと見る"
+}
+],
+"confidence": "low",
+"kind": "heading",
+"natural": false,
+"status": "proposed",
+"text": "誕生日に贈るほかの相手",
+"why": "贈る物と相手の関係が分かる語順にしました。 / 候補(実物の辞書での根拠): ほかの相手への誕生日プレゼント(辞書に根拠なし) / 誕生日プレゼントを贈るほかの相手(辞書に根拠なし) / 誕生日に贈る相手をもっと見る(辞書に根拠なし)"
 },
 "6469b4ac6f86": {
 "at": "2026-10-17",
 "natural": true,
 "text": "ギフト対応"
 },
+"64f99dc9c0fc": {
+"at": "2026-10-18",
+"better": "書類の整理",
+"candidates": [
+{
+"key": "書類 整理",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "書類の整理"
+},
+{
+"key": "書類 整理用品",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "書類を整理する用品"
+},
+{
+"key": "書類 収納",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "書類の収納"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "書類迷子",
+"why": "「書類迷子」は意味を推測させる造語です。 / 候補(実物の辞書での根拠): 書類の整理(辞書に根拠なし) / 書類を整理する用品(辞書に根拠なし) / 書類の収納(辞書に根拠なし)"
+},
 "65335f4cc00d": {
 "at": "2026-10-17",
 "natural": true,
 "text": "同僚へのバレンタインギフト"
+},
+"654e0866162b": {
+"at": "2026-10-18",
+"natural": true,
+"text": "身に着ける"
 },
 "67c3d62002c7": {
 "at": "2026-10-17",
@@ -1273,10 +2306,20 @@
 "natural": true,
 "text": "気になるところ"
 },
+"69052bb91407": {
+"at": "2026-10-18",
+"natural": true,
+"text": "リンツ リンドール 11種類アソート"
+},
 "692fc057a2cc": {
 "at": "2026-10-17",
 "natural": true,
 "text": "箸"
+},
+"69dabec2a2f1": {
+"at": "2026-10-18",
+"natural": true,
+"text": "ゲーム・趣味"
 },
 "6a62d19a7d7b": {
 "at": "2026-10-17",
@@ -1297,6 +2340,11 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "お歳暮のメッセージ"
+},
+"6ca17e58f7a9": {
+"at": "2026-10-18",
+"natural": true,
+"text": "上司へのバレンタインギフト"
 },
 "6cc9c76623af": {
 "at": "2026-10-17",
@@ -1411,6 +2459,11 @@
 "text": "取引先への年始の手土産 相場・渡す時期・受け取りの決まり",
 "why": "「受け取りの決まり」は不自然なため、一般的な「受け取りのルール」に替えました。 / 候補(実物の辞書での根拠): 取引先への年始の手土産 相場・渡す時期・受け取り(辞書+4) / 取引先への年始の手土産 相場・時期・受け取りのル(辞書+4) / 取引先への年始の手土産 相場・渡す時期・受け取り(辞書+4)"
 },
+"6fd62bfc96bf": {
+"at": "2026-10-18",
+"natural": true,
+"text": "個包装"
+},
 "712d09b86cb8": {
 "at": "2026-10-17",
 "natural": true,
@@ -1426,6 +2479,42 @@
 "natural": true,
 "text": "レビュー平均 4.13"
 },
+"71b0f97dc582": {
+"at": "2026-10-18",
+"better": "よく運転する人",
+"candidates": [
+{
+"key": "よく運転する人",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "よく運転する人"
+},
+{
+"key": "運転 機会 多い人",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "運転する機会が多い人"
+},
+{
+"key": "車 よく運転する人",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "車をよく運転する人"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "運転多め",
+"why": "「運転多め」は語を省きすぎたくだけた表現です。 / 候補(実物の辞書での根拠): よく運転する人(辞書に根拠なし) / 運転する機会が多い人(辞書に根拠なし) / 車をよく運転する人(辞書に根拠なし)"
+},
 "72664303e964": {
 "at": "2026-10-17",
 "natural": true,
@@ -1436,10 +2525,61 @@
 "natural": true,
 "text": "レビュー平均 4.84"
 },
+"7357c87a7388": {
+"at": "2026-10-18",
+"natural": true,
+"text": "共有冷蔵庫"
+},
+"73ab27bcc396": {
+"at": "2026-10-18",
+"natural": true,
+"text": "父へ贈るお歳暮ギフト"
+},
+"7437c89bd090": {
+"at": "2026-10-18",
+"better": "片手で使える外出用品",
+"candidates": [
+{
+"key": "片手で使える 外出用品",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "片手で使える外出用品"
+},
+{
+"key": "外出先 片手",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "外出先で片手で使える物"
+},
+{
+"key": "片手で持てる 外出用品",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "片手で持てる外出用品"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "片手で外出",
+"why": "「片手で外出」では何が片手でできるのか分かりません。 / 候補(実物の辞書での根拠): 片手で使える外出用品(辞書に根拠なし) / 外出先で片手で使える物(辞書に根拠なし) / 片手で持てる外出用品(辞書に根拠なし)"
+},
 "743b85b54893": {
 "at": "2026-10-17",
 "natural": true,
 "text": "2. 相手について"
+},
+"7452a58f2f8a": {
+"at": "2026-10-18",
+"natural": true,
+"text": "料理好き"
 },
 "75a92ad90c90": {
 "at": "2026-10-17",
@@ -1476,10 +2616,59 @@
 "natural": true,
 "text": "レビュー平均 4.15"
 },
+"773ba4f0feaf": {
+"at": "2026-10-18",
+"natural": true,
+"text": "女友達への就職祝いプレゼント"
+},
+"77610be683b9": {
+"at": "2026-10-18",
+"natural": true,
+"text": "上司への退職祝いプレゼント"
+},
 "796d029b0c7d": {
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 4.48"
+},
+"79840b6d8206": {
+"at": "2026-10-18",
+"natural": true,
+"text": "ミニマル派"
+},
+"7a271bea5b34": {
+"at": "2026-10-18",
+"better": "集まりのあとに贈るお礼の品",
+"candidates": [
+{
+"key": "持ち寄り あと 贈る品",
+"lex": 0,
+"problems": [],
+"text": "持ち寄りのあとに贈る品"
+},
+{
+"key": "持ち寄り あと お礼の品",
+"lex": 1,
+"problems": [],
+"text": "持ち寄りのあとに贈るお礼の品"
+},
+{
+"key": "集まり あと お礼の品",
+"lex": 3,
+"problems": [],
+"score": null,
+"text": "集まりのあとに贈るお礼の品"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "持ち寄り後",
+"why": "「持ち寄り後」は助詞を省いた造語で、何をする場面か分かりません。 / 候補(実物の辞書での根拠): 持ち寄りのあとに贈る品(辞書に根拠なし) / 持ち寄りのあとに贈るお礼の品(辞書+1) / 集まりのあとに贈るお礼の品(辞書+3)"
 },
 "7a82c24d03df": {
 "at": "2026-10-17",
@@ -1516,6 +2705,39 @@
 "text": "取引先への年始の手土産 相場・渡す時期・受け取りの規則",
 "why": "「規則」より「決まり」が自然です。 / 候補とサジェスト数: 取引先への年始の手土産 相場・渡す時期・受け取り(0) / 取引先への年始の手土産 相場・渡す時期・受け取り(0) / 取引先への年始の手土産 相場・渡す時期・受け取り(0)"
 },
+"7b4f4e50582c": {
+"at": "2026-10-18",
+"better": "リモコンが見つからない",
+"candidates": [
+{
+"key": "リモコン 見つからない",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "リモコンが見つからない"
+},
+{
+"key": "リモコン 探す手間",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "リモコンを探す手間"
+},
+{
+"key": "リモコン 置き場所",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "リモコンの置き場所"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "accepted",
+"text": "リモコン迷子",
+"why": "「リモコン迷子」は造語のため、状況を普通の言葉で表しました。 / 候補(実物の辞書での根拠): リモコンが見つからない(辞書に根拠なし) / リモコンを探す手間(辞書に根拠なし) / リモコンの置き場所(辞書に根拠なし)"
+},
 "7b9359109843": {
 "at": "2026-10-17",
 "natural": true,
@@ -1525,6 +2747,40 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "卒業祝いのメッセージ"
+},
+"7c63d39d95ea": {
+"at": "2026-10-18",
+"better": "幹事や主催者へ後日贈るお礼の品",
+"candidates": [
+{
+"key": "幹事 主催者 お礼の品",
+"lex": 7,
+"problems": [],
+"score": null,
+"text": "幹事や主催者へ後日贈るお礼の品"
+},
+{
+"key": "主催者 後日 贈る品",
+"lex": 3,
+"problems": [],
+"text": "主催者へ後日贈る品"
+},
+{
+"key": "集まり あと 主催者 品",
+"lex": 3,
+"problems": [],
+"text": "集まりのあとに主催者へ贈る品"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "主催後休み",
+"why": "「主催後休み」は造語で、相手と贈る物も分かりません。 / 候補(実物の辞書での根拠): 幹事や主催者へ後日贈るお礼の品(辞書+7) / 主催者へ後日贈る品(辞書+3) / 集まりのあとに主催者へ贈る品(辞書+3)"
 },
 "7d55562cfb02": {
 "at": "2026-10-17",
@@ -1559,6 +2815,39 @@
 "text": "同僚への出産祝いプレゼント",
 "why": "「出産祝いプレゼント」は名詞が重なっているため / 候補(実物の辞書での根拠): 同僚への出産祝い(×) / 同僚に贈る出産祝い(×) / 同僚への出産祝いのプレゼント(辞書+2)"
 },
+"7d78781cbdb4": {
+"at": "2026-10-18",
+"better": "初対面の相手への手土産",
+"candidates": [
+{
+"key": "初対面 相手 手土産",
+"lex": 2,
+"problems": [],
+"score": null,
+"text": "初対面の相手への手土産"
+},
+{
+"key": "初めて会う人 手土産",
+"lex": 2,
+"problems": [],
+"score": null,
+"text": "初めて会う人への手土産"
+},
+{
+"key": "初対面 渡す 手土産",
+"lex": 2,
+"problems": [],
+"score": null,
+"text": "初対面で渡す手土産"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "accepted",
+"text": "初対面手土産",
+"why": "「初対面手土産」は助詞を省いた名詞の連なりです。 / 候補(実物の辞書での根拠): 初対面の相手への手土産(辞書+2) / 初めて会う人への手土産(辞書+2) / 初対面で渡す手土産(辞書+2)"
+},
 "7ee1be7a062c": {
 "at": "2026-10-17",
 "natural": true,
@@ -1573,6 +2862,40 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "Amazon eギフトカード(金額指定可)をAmazonで見る"
+},
+"7f8af51f09b6": {
+"at": "2026-10-18",
+"better": "お礼として贈る品",
+"candidates": [
+{
+"key": "お礼 品",
+"lex": 1,
+"problems": [],
+"text": "お礼の品"
+},
+{
+"key": "感謝 贈り物",
+"lex": 1,
+"problems": [],
+"text": "感謝を伝える贈り物"
+},
+{
+"key": "お礼 贈る品",
+"lex": 3,
+"problems": [],
+"score": null,
+"text": "お礼として贈る品"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "お礼",
+"why": "「お礼」だけでは品物・言葉・手紙のどれを指すか分かりません。 / 候補(実物の辞書での根拠): お礼の品(辞書+1) / 感謝を伝える贈り物(辞書+1) / お礼として贈る品(辞書+3)"
 },
 "7fd4f51d42b5": {
 "at": "2026-10-17",
@@ -1604,6 +2927,11 @@
 "text": "ならびかえ",
 "why": "画面の機能名として一般的な漢字表記です。 / 候補とサジェスト数: 並び替え(20) / 並べ替え(19) / 順番を変える(15)"
 },
+"80521820f9ae": {
+"at": "2026-10-18",
+"natural": true,
+"text": "出典(確認日 2026年10月15日)"
+},
 "8062954c2f03": {
 "at": "2026-10-17",
 "natural": true,
@@ -1623,6 +2951,11 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "Amazonギフトカード ボックス(金額指定可)をAmazonで見る"
+},
+"81586fe92bca": {
+"at": "2026-10-18",
+"natural": true,
+"text": "女友達への結婚祝いプレゼント"
 },
 "817c03749ae3": {
 "at": "2026-10-17",
@@ -1720,6 +3053,39 @@
 "natural": true,
 "text": "ベビー向けおもちゃ"
 },
+"855f5b3601ce": {
+"at": "2026-10-18",
+"better": "長時間の通勤",
+"candidates": [
+{
+"key": "長時間 通勤",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "長時間の通勤"
+},
+{
+"key": "通勤時間 長い人",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "通勤時間が長い人"
+},
+{
+"key": "長い 通勤時間",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "長い通勤時間"
+}
+],
+"confidence": "low",
+"kind": "link",
+"natural": false,
+"status": "proposed",
+"text": "長い通勤",
+"why": "時間の長さには「長時間の通勤」が自然です。 / 候補(実物の辞書での根拠): 長時間の通勤(辞書に根拠なし) / 通勤時間が長い人(辞書に根拠なし) / 長い通勤時間(辞書に根拠なし)"
+},
 "85f12c60ec43": {
 "at": "2026-10-17",
 "natural": true,
@@ -1761,6 +3127,41 @@
 "text": "送別・異動の贈り物のメッセージ",
 "why": "「贈り物のメッセージ」より、用途が明確な「贈り物に添えるメッセージ」が自然です。 / 候補(実物の辞書での根拠): 送別・異動の贈り物に添えるメッセージ(辞書+1) / 送別・異動で贈るメッセージ(辞書に根拠なし) / 送別・異動の際に添えるメッセージ(辞書に根拠なし)"
 },
+"88a8e6bfec46": {
+"at": "2026-10-18",
+"better": "少し豪華な贈り物",
+"candidates": [
+{
+"key": "奮発",
+"lex": 0,
+"problems": [],
+"text": "奮発"
+},
+{
+"key": "豪華 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "少し豪華な贈り物"
+},
+{
+"key": "予算 上げる 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "予算を上げた贈り物"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "ふんぱつ",
+"why": "大人向けのサイトでは、漢字にできる一般的な語は「奮発」と書くのが自然です。 / 候補(実物の辞書での根拠): 奮発(辞書に根拠なし) / 少し豪華な贈り物(辞書+1) / 予算を上げた贈り物(辞書+1)"
+},
 "8998ac89b98b": {
 "at": "2026-10-17",
 "natural": true,
@@ -1775,6 +3176,11 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 4.96"
+},
+"8af7e980e7d7": {
+"at": "2026-10-18",
+"natural": true,
+"text": "気持ち・興味から探す"
 },
 "8bd09d05f63c": {
 "at": "2026-10-17",
@@ -1904,10 +3310,46 @@
 "natural": true,
 "text": "イベントから"
 },
+"957b8ddd123c": {
+"at": "2026-10-18",
+"better": "父に贈る帰省の手土産",
+"candidates": [
+{
+"key": "父 帰省の手土産",
+"lex": 4,
+"problems": [],
+"score": null,
+"text": "父に贈る帰省の手土産"
+},
+{
+"key": "父 帰省土産",
+"lex": 0,
+"problems": [],
+"text": "父への帰省土産"
+},
+{
+"key": "帰省時 父 手土産",
+"lex": 2,
+"problems": [],
+"text": "帰省時に父へ贈る手土産"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "accepted",
+"text": "父への帰省土産ギフト",
+"why": "「土産」と「ギフト」の重なりを避け、一般的な「帰省の手土産」を使いました。 / 候補(実物の辞書での根拠): 父に贈る帰省の手土産(辞書+4) / 父への帰省土産(辞書に根拠なし) / 帰省時に父へ贈る手土産(辞書+2)"
+},
 "9580189bd6ef": {
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 3.98"
+},
+"964cce8077f2": {
+"at": "2026-10-18",
+"natural": true,
+"text": "日頃の感謝"
 },
 "9691d84afab3": {
 "at": "2026-10-17",
@@ -1997,6 +3439,44 @@
 "natural": true,
 "text": "迷ったときの次の一歩"
 },
+"9a45e659ba52": {
+"at": "2026-10-18",
+"better": "弁当作りの段取り",
+"candidates": [
+{
+"key": "弁当作り 段取り",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "弁当作りの段取り"
+},
+{
+"key": "弁当 作る手順",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "弁当を作る手順"
+},
+{
+"key": "弁当作り 準備",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "弁当作りの準備"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "accepted",
+"text": "弁当段取り",
+"why": "助詞を補い、何の段取りか分かる形にしました。 / 候補(実物の辞書での根拠): 弁当作りの段取り(辞書に根拠なし) / 弁当を作る手順(辞書に根拠なし) / 弁当作りの準備(辞書に根拠なし)"
+},
+"9ae02a858ec4": {
+"at": "2026-10-18",
+"natural": true,
+"text": "義父母への父の日プレゼント"
+},
 "9afd7e87b451": {
 "at": "2026-10-17",
 "natural": true,
@@ -2047,6 +3527,11 @@
 "natural": true,
 "text": "相手から"
 },
+"a072562a45df": {
+"at": "2026-10-18",
+"natural": true,
+"text": "母への退職祝いプレゼント"
+},
 "a0ade9abb020": {
 "at": "2026-10-17",
 "natural": true,
@@ -2076,6 +3561,11 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "実用品"
+},
+"a3ad72268422": {
+"at": "2026-10-18",
+"natural": true,
+"text": "美容ケア"
 },
 "a46bcf4231ba": {
 "at": "2026-10-17",
@@ -2135,6 +3625,11 @@
 "natural": true,
 "text": "レビュー平均 4.82"
 },
+"a8ad8ad0b04b": {
+"at": "2026-10-18",
+"natural": true,
+"text": "コーヒー・お茶"
+},
 "a8d9d099246d": {
 "at": "2026-10-17",
 "better": "名入れペンは新しい部署で手帳や書類に書き込むときに使える、実用的な小さな記念品です。",
@@ -2193,10 +3688,56 @@
 "natural": true,
 "text": "レビュー平均 4.52"
 },
+"ab2d1db0d953": {
+"at": "2026-10-18",
+"natural": true,
+"text": "義父母へ贈るお中元ギフト"
+},
 "ac1698090643": {
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 4.16"
+},
+"ac171671c324": {
+"at": "2026-10-18",
+"natural": true,
+"text": "女友達への引っ越し祝いプレゼント"
+},
+"ac988bb50ffc": {
+"at": "2026-10-18",
+"better": "あると便利な実用品の選び方",
+"candidates": [
+{
+"key": "便利な実用品 選び方",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "あると便利な実用品の選び方"
+},
+{
+"key": "役立つプレゼント 選び方",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "便利で役立つプレゼントの選び方"
+},
+{
+"key": "暮らしに役立つ 実用品",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "暮らしに役立つ実用品の選び方"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "あると便利で困らない実用プレゼント選び",
+"why": "否定形の「困らない」と名詞の連なりを避け、簡潔にしました。 / 候補(実物の辞書での根拠): あると便利な実用品の選び方(辞書に根拠なし) / 便利で役立つプレゼントの選び方(辞書に根拠なし) / 暮らしに役立つ実用品の選び方(辞書に根拠なし)"
 },
 "ad0c00154b1b": {
 "at": "2026-10-17",
@@ -2223,6 +3764,11 @@
 "natural": true,
 "text": "妻へのクリスマスプレゼント"
 },
+"ae3ab487e07c": {
+"at": "2026-10-18",
+"natural": true,
+"text": "上司へのお礼ギフト"
+},
 "ae3c0990585c": {
 "at": "2026-10-17",
 "natural": true,
@@ -2248,15 +3794,134 @@
 "natural": true,
 "text": "はじめてのランクイン"
 },
+"af7a70166511": {
+"at": "2026-10-18",
+"natural": true,
+"text": "消えもの"
+},
 "af8b5d3abfdd": {
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 4.45"
 },
+"b048903ea123": {
+"at": "2026-10-18",
+"better": "常温で持ち運べる手土産",
+"candidates": [
+{
+"key": "常温 持ち運べる 手土産",
+"lex": 4,
+"problems": [],
+"score": null,
+"text": "常温で持ち運べる手土産"
+},
+{
+"key": "常温 保存 贈り物",
+"lex": 1,
+"problems": [],
+"text": "常温で保存できる贈り物"
+},
+{
+"key": "冷蔵 不要 ギフト",
+"lex": 1,
+"problems": [],
+"text": "冷蔵しなくてもよいギフト"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "冷蔵庫いらず",
+"why": "「冷蔵庫いらず」より、保存や持ち運びの条件を具体的に示す言い方が自然です。 / 候補(実物の辞書での根拠): 常温で持ち運べる手土産(辞書+4) / 常温で保存できる贈り物(辞書+1) / 冷蔵しなくてもよいギフト(辞書+1)"
+},
+"b10d26ca8d52": {
+"at": "2026-10-18",
+"natural": true,
+"text": "日頃の感謝が伝わる気軽なプレゼントの選び方"
+},
+"b30a6ce7bca1": {
+"at": "2026-10-18",
+"better": "カタログギフト・ギフト券",
+"candidates": [
+{
+"key": "カタログギフト ギフト券",
+"problems": [
+"names / quoted words lost: ['カタログ']"
+],
+"text": "カタログギフト・ギフト券"
+},
+{
+"key": "ギフト券 カタログギフト",
+"problems": [
+"names / quoted words lost: ['カタログ']"
+],
+"text": "ギフト券・カタログギフト"
+},
+{
+"key": "カタログギフトやギフト券",
+"problems": [
+"names / quoted words lost: ['カタログ']"
+],
+"text": "カタログギフトやギフト券"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"names / quoted words lost: ['カタログ']"
+],
+"status": "rejected",
+"text": "金券・カタログ",
+"why": "実際に使われる商品分類の名前にしました。"
+},
 "b3872fd80535": {
 "at": "2026-10-17",
 "natural": true,
 "text": "今治タオル"
+},
+"b50469281e09": {
+"at": "2026-10-18",
+"natural": true,
+"text": "母への結婚記念日プレゼント"
+},
+"b54b698481c1": {
+"at": "2026-10-18",
+"better": "好みが分からない相手に贈る物",
+"candidates": [
+{
+"key": "好みが分からない 相手 贈る物",
+"lex": 2,
+"problems": [],
+"score": null,
+"text": "好みが分からない相手に贈る物"
+},
+{
+"key": "好みが分からない 相手 ギフト",
+"lex": 1,
+"problems": [],
+"text": "好みが分からない相手へのギフト"
+},
+{
+"key": "好みが分からない プレゼント選び",
+"lex": 0,
+"problems": [],
+"text": "好みが分からないときのプレゼント選び"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "好みが分からない相手へ無難に選ぶプレゼント",
+"why": "「無難に選ぶ」は消極的に聞こえるため、相手の状況をそのまま示します。 / 候補(実物の辞書での根拠): 好みが分からない相手に贈る物(辞書+2) / 好みが分からない相手へのギフト(辞書+1) / 好みが分からないときのプレゼント選び(辞書に根拠なし)"
 },
 "b5e9ee5fb23d": {
 "at": "2026-10-17",
@@ -2272,6 +3937,11 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 4.01"
+},
+"b70c12a9b936": {
+"at": "2026-10-18",
+"natural": true,
+"text": "お酒好き"
 },
 "b8571df6c856": {
 "at": "2026-10-17",
@@ -2343,6 +4013,16 @@
 "natural": true,
 "text": "レビュー平均 4.21"
 },
+"bae2782a2af3": {
+"at": "2026-10-18",
+"natural": true,
+"text": "彼氏へのクリスマスプレゼント"
+},
+"bb6cad1ea117": {
+"at": "2026-10-18",
+"natural": true,
+"text": "母へ贈るお歳暮ギフト"
+},
 "bcbe056a27d7": {
 "at": "2026-10-17",
 "natural": true,
@@ -2393,6 +4073,11 @@
 "natural": true,
 "text": "入浴剤"
 },
+"c0da84a2a2eb": {
+"at": "2026-10-18",
+"natural": true,
+"text": "贈り物を探してみる"
+},
 "c0ea27df1f79": {
 "at": "2026-10-17",
 "natural": true,
@@ -2402,6 +4087,11 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "すべて"
+},
+"c2fcd2cdffe0": {
+"at": "2026-10-18",
+"natural": true,
+"text": "夜型の人の朝の支度が楽になる贈り物 | よろこぶプレゼント"
 },
 "c3951ef2cc0e": {
 "at": "2026-10-17",
@@ -2455,6 +4145,11 @@
 "status": "proposed",
 "text": "きのうより順位を上げた",
 "why": "「順位を上げた」では商品などが意図して上げたように聞こえるため / 候補とサジェスト数: きのうより順位が上がった(測れず) / 昨日より順位が上がった商品(測れず) / 昨日から順位を上げた商品(測れず)"
+},
+"c6e407973caf": {
+"at": "2026-10-18",
+"natural": true,
+"text": "彼女へのクリスマスプレゼント"
 },
 "c72636ccb846": {
 "at": "2026-10-17",
@@ -2511,6 +4206,40 @@
 "natural": true,
 "text": "画像で保存"
 },
+"cf312b30c841": {
+"at": "2026-10-18",
+"better": "壊れにくい贈り物",
+"candidates": [
+{
+"key": "丈夫な品",
+"lex": 0,
+"problems": [],
+"text": "丈夫な品"
+},
+{
+"key": "長く使える物",
+"lex": 0,
+"problems": [],
+"text": "長く使える物"
+},
+{
+"key": "壊れにくい 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "壊れにくい贈り物"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "丈夫さ優先",
+"why": "「丈夫さ優先」は選定条件をそのまま名詞にした硬い表現です。 / 候補(実物の辞書での根拠): 丈夫な品(辞書に根拠なし) / 長く使える物(辞書に根拠なし) / 壊れにくい贈り物(辞書+1)"
+},
 "d11a26717b9f": {
 "at": "2026-10-17",
 "natural": true,
@@ -2520,6 +4249,11 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "共有する"
+},
+"d3803ad1fc7f": {
+"at": "2026-10-18",
+"natural": true,
+"text": "羊羹"
 },
 "d4023efaff7f": {
 "at": "2026-10-17",
@@ -2556,6 +4290,11 @@
 "text": "楽天市場の表示です。対象の条件や上限は商品ページでご確認ください。",
 "why": "「対象の条件」より「適用条件」が一般的です。 / 候補とサジェスト数: 楽天市場の表示です。適用条件や上限は商品ページで(0) / 楽天市場の表示です。対象となる条件や上限は商品ペ(0) / 楽天市場の表示です。利用条件や上限は商品ページで(0)"
 },
+"d475480653ac": {
+"at": "2026-10-18",
+"natural": true,
+"text": "義父母への長寿祝いプレゼント"
+},
 "d49e7da05f8d": {
 "at": "2026-10-17",
 "natural": true,
@@ -2565,6 +4304,11 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "同僚へのホワイトデーギフト"
+},
+"d4f744ba2472": {
+"at": "2026-10-18",
+"natural": true,
+"text": "あると便利"
 },
 "d563264a5ca3": {
 "at": "2026-10-17",
@@ -2691,6 +4435,47 @@
 "status": "proposed",
 "text": "この人はまだ知らない世界に触れるきっかけを面白がれます。定番でも少し使い方が新しいもの、開けた瞬間に試したくなるものが好相性。失敗を避けるより軽やかな発見がある贈り物にわくわくしやすい人です。小さく始められる形なら、気負",
 "why": "「好相性」「軽やかな発見」が不自然で末尾も途切れているため / 候補とサジェスト数: この人はまだ知らないものに触れることを楽しめます(測れず) / この人は知らなかったものに出会うきっかけを楽しめ(測れず) / この人は初めて知るものに触れることを楽しめます。(測れず)"
+},
+"da2ff77060ad": {
+"at": "2026-10-18",
+"natural": true,
+"text": "中高生へのクリスマスプレゼント"
+},
+"da6da92bade7": {
+"at": "2026-10-18",
+"better": "年齢に合わせたケア",
+"candidates": [
+{
+"key": "年齢に合わせた ケア",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "年齢に合わせたケア"
+},
+{
+"key": "年齢に応じた お手入れ",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "年齢に応じたお手入れ"
+},
+{
+"key": "エイジングケア",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "エイジングケア"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "年齢ケア習慣",
+"why": "「年齢ケア習慣」は名詞を重ねた造語に見えます。 / 候補(実物の辞書での根拠): 年齢に合わせたケア(辞書に根拠なし) / 年齢に応じたお手入れ(辞書に根拠なし) / エイジングケア(辞書に根拠なし)"
 },
 "dbb631a3d6da": {
 "at": "2026-10-17",
@@ -2827,6 +4612,16 @@
 "text": "ランキング(上位)",
 "why": "不要な括弧を外した一般的な表記です。 / 候補とサジェスト数: ランキング上位(20) / ランキングの上位(0) / 上位ランキング(13)"
 },
+"e0f39c2753d5": {
+"at": "2026-10-18",
+"natural": true,
+"text": "狭い洗面台"
+},
+"e1ad743c2a95": {
+"at": "2026-10-18",
+"natural": true,
+"text": "眠りと癒し"
+},
 "e1e22a195b5b": {
 "at": "2026-10-17",
 "natural": true,
@@ -2879,6 +4674,51 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "送料無料"
+},
+"e4788b954653": {
+"at": "2026-10-18",
+"better": "原材料を確認して選ぶ贈り物",
+"candidates": [
+{
+"key": "原材料 確認 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "原材料を確認して選ぶ贈り物"
+},
+{
+"key": "原材料 確かめる 品",
+"lex": 0,
+"problems": [],
+"text": "原材料を確かめて選ぶ品"
+},
+{
+"key": "原材料 見て選ぶ ギフト",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "原材料を見て選ぶギフト"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "原材料配慮",
+"why": "「原材料配慮」では何をするのか分からないため、確認して選ぶことを示します。 / 候補(実物の辞書での根拠): 原材料を確認して選ぶ贈り物(辞書+1) / 原材料を確かめて選ぶ品(辞書に根拠なし) / 原材料を見て選ぶギフト(辞書+1)"
+},
+"e4ec70e5f04a": {
+"at": "2026-10-18",
+"natural": true,
+"text": "植物と庭"
+},
+"e631704dc381": {
+"at": "2026-10-18",
+"natural": true,
+"text": "同僚への退職祝いプレゼント"
 },
 "e73b1e6aa3f0": {
 "at": "2026-10-17",
@@ -3069,6 +4909,39 @@
 "text": "この日を忘れない(たいせつな日メモに登録)",
 "why": "操作リンクとしては括弧を使わず一つの動作として示すほうが自然なため / 候補とサジェスト数: この日をたいせつな日メモに登録する(測れず) / たいせつな日メモに登録する(測れず) / この日をたいせつな日メモに残す(測れず)"
 },
+"f154cfc307e0": {
+"at": "2026-10-18",
+"better": "引っ越し前の整理",
+"candidates": [
+{
+"key": "引っ越し前 整理",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "引っ越し前の整理"
+},
+{
+"key": "引っ越し前 片づけ",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "引っ越し前の片づけ"
+},
+{
+"key": "引っ越し前 荷物 整理",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "引っ越し前に荷物を整理する"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "accepted",
+"text": "引越し前整理",
+"why": "「引越し前整理」は助詞を省いた硬い名詞の連なりです。 / 候補(実物の辞書での根拠): 引っ越し前の整理(辞書に根拠なし) / 引っ越し前の片づけ(辞書に根拠なし) / 引っ越し前に荷物を整理する(辞書に根拠なし)"
+},
 "f18b5b23f78f": {
 "at": "2026-10-17",
 "natural": true,
@@ -3084,6 +4957,42 @@
 "natural": true,
 "text": "イベントを選んでおすすめを見る"
 },
+"f21f51364164": {
+"at": "2026-10-18",
+"better": "ほかの場面で贈り物を探す",
+"candidates": [
+{
+"key": "場面から選ぶ テーマ",
+"lex": 0,
+"problems": [],
+"text": "場面から選ぶほかのテーマ"
+},
+{
+"key": "ほかの場面 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "ほかの場面で贈り物を探す"
+},
+{
+"key": "場面別 テーマ",
+"lex": 0,
+"problems": [],
+"text": "場面別のほかのテーマ"
+}
+],
+"confidence": "low",
+"kind": "heading",
+"natural": false,
+"status": "proposed",
+"text": "ほかの場面から選ぶテーマ",
+"why": "「ほかの場面から選ぶテーマ」は語のかかり方が分かりにくい表現です。 / 候補(実物の辞書での根拠): 場面から選ぶほかのテーマ(辞書に根拠なし) / ほかの場面で贈り物を探す(辞書+1) / 場面別のほかのテーマ(辞書に根拠なし)"
+},
+"f26751909f52": {
+"at": "2026-10-18",
+"natural": true,
+"text": "記憶に残る"
+},
 "f2a1d4f8c375": {
 "at": "2026-10-17",
 "natural": true,
@@ -3093,6 +5002,40 @@
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 3.90"
+},
+"f34ef26a6225": {
+"at": "2026-10-18",
+"better": "帰省の手土産",
+"candidates": [
+{
+"key": "帰省 手土産",
+"lex": 4,
+"problems": [],
+"score": null,
+"text": "帰省の手土産"
+},
+{
+"key": "帰省するとき 手土産",
+"lex": 2,
+"problems": [],
+"text": "帰省するときの手土産"
+},
+{
+"key": "実家 帰省 手土産",
+"lex": 2,
+"problems": [],
+"text": "実家へ帰省するときの手土産"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "帰省軽やか",
+"why": "「帰省軽やか」は意味を推測させる造語です。 / 候補(実物の辞書での根拠): 帰省の手土産(辞書+4) / 帰省するときの手土産(辞書+2) / 実家へ帰省するときの手土産(辞書+2)"
 },
 "f37f6266dcb1": {
 "at": "2026-10-17",
@@ -3104,15 +5047,98 @@
 "natural": true,
 "text": "レビュー平均 4.28"
 },
+"f4a1beeedc2f": {
+"at": "2026-10-18",
+"natural": true,
+"text": "同僚への卒業祝いプレゼント"
+},
+"f69b328f72fb": {
+"at": "2026-10-18",
+"better": "大人数で分ける贈り物",
+"candidates": [
+{
+"key": "大人数 配る 品",
+"lex": 0,
+"problems": [],
+"text": "大人数に配る品"
+},
+{
+"key": "大人数 分ける 贈り物",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "大人数で分ける贈り物"
+},
+{
+"key": "多くの人 配る ギフト",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "多くの人に配るギフト"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"not confirmed by the second look (meaning, naturalness or word choice)"
+],
+"status": "proposed",
+"text": "大人数配り",
+"why": "「大人数配り」は助詞を省いた造語です。 / 候補(実物の辞書での根拠): 大人数に配る品(辞書に根拠なし) / 大人数で分ける贈り物(辞書+1) / 多くの人に配るギフト(辞書+1)"
+},
+"f6f99854135b": {
+"at": "2026-10-18",
+"better": "ユニークなギフト",
+"candidates": [
+{
+"key": "ユニーク ギフト",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "ユニークなギフト"
+},
+{
+"key": "個性的 ギフト",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "個性的なギフト"
+},
+{
+"key": "ひと味違う ギフト",
+"lex": 1,
+"problems": [],
+"score": null,
+"text": "ひと味違うギフト"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "accepted",
+"text": "個性派ギフト",
+"why": "実際の商品分類では「ユニークなギフト」が使われています。 / 候補(実物の辞書での根拠): ユニークなギフト(辞書+1) / 個性的なギフト(辞書+1) / ひと味違うギフト(辞書+1)"
+},
 "f8863514b48c": {
 "at": "2026-10-17",
 "natural": true,
 "text": "Xで共有"
 },
+"f9b2c702f064": {
+"at": "2026-10-18",
+"natural": true,
+"text": "収納"
+},
 "fa93262d4785": {
 "at": "2026-10-17",
 "natural": true,
 "text": "レビュー平均 4.35"
+},
+"fb6bf95e2d0a": {
+"at": "2026-10-18",
+"natural": true,
+"text": "父への結婚記念日プレゼント"
 },
 "fbb34c8d8d49": {
 "at": "2026-10-17",
@@ -3172,6 +5198,11 @@
 "natural": true,
 "text": "金額の目安"
 },
+"fcd2bff80830": {
+"at": "2026-10-18",
+"natural": true,
+"text": "義父母への母の日プレゼント"
+},
 "fd214078bdb1": {
 "at": "2026-10-17",
 "natural": true,
@@ -3213,6 +5244,11 @@
 "status": "rejected",
 "text": "祖母の長寿祝いは赤い色や年齢を前面に出すより、家族で囲む席にそっと華やぎを足す贈り物が似合います。花、和菓子、薄手のストールなら写真にも残り、持ち帰りや収納の負担も小さめです。離れて暮らす孫からなら、当日の電話や手紙も一",
 "why": "「そっと華やぎを足す」が雰囲気だけの表現で末尾も途切れているため"
+},
+"fdd215cbb505": {
+"at": "2026-10-18",
+"natural": true,
+"text": "ブランド品"
 },
 "fdd57358356c": {
 "at": "2026-10-17",
@@ -3257,9 +5293,109 @@
 "text": "同僚への昇進祝いプレゼント",
 "why": "「昇進祝いプレゼント」は名詞が重なっているため / 候補(実物の辞書での根拠): 同僚への昇進祝い(×) / 同僚に贈る昇進祝い(×) / 同僚への昇進祝いのプレゼント(辞書+2)"
 },
+"fe58fd16a9f7": {
+"at": "2026-10-18",
+"better": "上司への送別ギフト",
+"candidates": [
+{
+"key": "上司 送別ギフト",
+"lex": 3,
+"problems": [],
+"score": null,
+"text": "上司への送別ギフト"
+},
+{
+"key": "上司 送別プレゼント",
+"lex": 2,
+"problems": [],
+"text": "上司への送別プレゼント"
+},
+{
+"key": "上司 送別の品",
+"lex": 2,
+"problems": [],
+"text": "上司に贈る送別の品"
+}
+],
+"confidence": "high",
+"kind": "heading",
+"natural": false,
+"status": "accepted",
+"text": "上司への送別ギフトプレゼント",
+"why": "同じ意味の「ギフト」と「プレゼント」が重なっています。 / 候補(実物の辞書での根拠): 上司への送別ギフト(辞書+3) / 上司への送別プレゼント(辞書+2) / 上司に贈る送別の品(辞書+2)"
+},
+"fe971a214952": {
+"at": "2026-10-18",
+"better": "暮らしに合わせて選ぶほかのテーマ",
+"candidates": [
+{
+"key": "暮らしに合わせて 選ぶ",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "暮らしに合わせて選ぶほかのテーマ"
+},
+{
+"key": "暮らしから選ぶ テーマ",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "暮らしから選ぶほかのテーマ"
+},
+{
+"key": "暮らし テーマ",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "ほかの暮らしのテーマ"
+}
+],
+"confidence": "low",
+"kind": "heading",
+"natural": false,
+"status": "proposed",
+"text": "ほかの暮らしから選ぶテーマ",
+"why": "「ほかの暮らしから選ぶテーマ」は語のかかり方が分かりにくい表現です。 / 候補(実物の辞書での根拠): 暮らしに合わせて選ぶほかのテーマ(辞書に根拠なし) / 暮らしから選ぶほかのテーマ(辞書に根拠なし) / ほかの暮らしのテーマ(辞書に根拠なし)"
+},
 "ff4cc956bfcb": {
 "at": "2026-10-17",
 "natural": true,
 "text": "父の日に父へ贈るプレゼント"
+},
+"ff76a3293c48": {
+"at": "2026-10-18",
+"better": "宅配ボックスに入る大きさ",
+"candidates": [
+{
+"key": "宅配ボックス 入る 大きさ",
+"problems": [
+"names / quoted words lost: ['サイズ']"
+],
+"text": "宅配ボックスに入る大きさ"
+},
+{
+"key": "宅配ボックス 入る ギフト",
+"problems": [
+"names / quoted words lost: ['サイズ']"
+],
+"text": "宅配ボックスに入るギフト"
+},
+{
+"key": "宅配ボックス 受け取れる 品",
+"problems": [
+"names / quoted words lost: ['サイズ']"
+],
+"text": "宅配ボックスで受け取れる品"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"problems": [
+"names / quoted words lost: ['サイズ']"
+],
+"status": "rejected",
+"text": "宅配箱サイズ",
+"why": "「宅配箱サイズ」は一般的な呼び名ではなく、何に入る大きさかも曖昧です。"
 }
 }
