@@ -180,6 +180,11 @@ class DerivedFilesCache(unittest.TestCase):
         self.assertIn("CACHE_PATH: ${{ matrix.cache_path }}", tests)
         self.assertIn('cp -a "$CACHE_PATH" "$T/$CACHE_PATH"', tests)       # their own copy: the build and the tests never write the same files
 
+class RunnerImage(unittest.TestCase):
+    def test_both_jobs_run_on_a_pinned_image_that_a_variable_can_change(self):
+        self.assertNotIn("runs-on: ubuntu-latest", TEXT)      # 'latest' moved to Ubuntu 26 on 2026-10-19: the gates (layoutcheck's fonts, Pillow, rsync) must not change by themselves
+        self.assertEqual(TEXT.count("runs-on: ${{ vars.DEPLOY_RUNNER || 'ubuntu-24.04' }}"), 2)
+
 class OtherSessionsSteps(unittest.TestCase):
     def test_the_yorokobu_private_product_data_step_is_still_there_after_the_tests_and_before_the_upload(self):
         # lost once on 2026-10-18 when a copy of this file was put back over a newer one: a step another session adds must survive a rewrite of the workflow

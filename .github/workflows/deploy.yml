@@ -59,7 +59,7 @@ env:
 
 jobs:
   plan:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.DEPLOY_RUNNER || 'ubuntu-24.04' }}   # pinned: the label ubuntu-latest moves to Ubuntu 26 on 2026-10-19 and Chrome's fonts (layoutcheck), Python/Pillow and rsync/ssh would change under the gates; to try a new image set the variable DEPLOY_RUNNER (e.g. ubuntu-26.04), then delete it
     timeout-minutes: 10
     outputs:
       matrix: ${{ steps.plan.outputs.matrix }}
@@ -83,7 +83,7 @@ jobs:
   deploy:
     needs: plan
     if: needs.plan.outputs.count != '0'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.DEPLOY_RUNNER || 'ubuntu-24.04' }}   # pinned: the label ubuntu-latest moves to Ubuntu 26 on 2026-10-19 and Chrome's fonts (layoutcheck), Python/Pillow and rsync/ssh would change under the gates; to try a new image set the variable DEPLOY_RUNNER (e.g. ubuntu-26.04), then delete it
     timeout-minutes: ${{ matrix.timeout }}
     permissions:
       contents: read
