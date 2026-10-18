@@ -242,7 +242,22 @@ def hira_ratio(s: str) -> float:
     return sum(1 for c in jp if "ぁ" <= c <= "ん") / len(jp) if jp else 0.0
 
 
-def check_rewrite(old: str, new: str, site: str | None = None, kind: str = "heading", small_edit: bool = True) -> list[str]:
+def added_words(old: str, new: str) -> list[str]:
+    """Nouns (2+ kanji or katakana) of the new text that the old text does not contain at all (judged: adding or dropping a word changes what the text says)."""
+    o = unicodedata.normalize("NFKC", old)
+    out = []
+    for m in re.finditer(r"[ァ-ヴー]{2,}|[一-龥]{2,}", unicodedata.normalize("NFKC", new)):
+        w = m.group(0)
+        if w not in o and not (any(c in o for c in w) if re.match(r"[一-龥]", w) else all(c in o for c in w)):
+            out.append(w)
+    # a single kanji tacked on to a word (お礼 -> お礼の品)
+    for m in re.finditer(r"の([一-龥])(?![一-龥])", unicodedata.normalize("NFKC", new)):
+        if m.group(1) not in o:
+            out.append(m.group(1))
+    return out
+
+
+def check_rewrite(old: str, new: str, site: str | None = None, kind: str = "heading", small_edit: bool = True, new_words: bool = True) -> list[str]:
     """Reasons a rewording is NOT accepted (empty list = accepted)."""
     bad: list[str] = []
     new = new.strip()
@@ -259,6 +274,9 @@ def check_rewrite(old: str, new: str, site: str | None = None, kind: str = "head
     for w in NEW_CLAIMS:
         if w in new and w not in old:
             bad.append(f"new claim: {w}")
+    added = added_words(old, new) if new_words and kind in ("para", "sentence", "note", "item") else []
+    if added:
+        bad.append(f"words added that the original does not have (information must not grow): {added}")
     if EMOJI.search(new) or (("!" in new or "！" in new) and not ("!" in old or "！" in old)):
         bad.append("emoji or exclamation added")
     n_old, n_new = len(old), len(new)
@@ -446,7 +464,7 @@ def usable_entries(site: str, warn=print) -> tuple[list[dict], int]:
     ok, skipped = [], 0
     for e in load_rewrites(site):
         try:
-            problems = [] if e.get("forced") else check_rewrite(norm(e["from"]), norm(e["to"]), site, e.get("kind", "heading"), small_edit=not e.get("edit"))
+            problems = [] if e.get("forced") else check_rewrite(norm(e["from"]), norm(e["to"]), site, e.get("kind", "heading"), small_edit=not e.get("edit"), new_words=not e.get("edit"))
         except Exception as ex:                                        # a bug in a check must not stop a publish
             problems = [f"check failed: {ex}"]
         if problems:
@@ -536,7 +554,7 @@ def judge_prompt(site: str, batch: list[Unit]) -> str:
 {pr}
 見るところ: (a) 人を説明で言っていないか(〜を開いた人、〜してくれた人)。役割の名前に替えられないか。(b) 単独の抽象名詞(お礼・贈り物・対応・サポート)が、何を指すか曖昧でないか。(c) 名詞を動詞にかける言い方や、名詞だけの連なりでないか。
 直すのは不自然な部分だけ。自然な語や言い回しは残し、できるだけ少ない変更にする(全体を書き換えない)。
-守ること: 意味・事実・数字・日付・固有名(作品名・商品名・店名・イベント名・人名・地名)・「」の引用・英字・カタカナの名前は変えない。新しい主張や体験(試した・必ず・最安など)を足さない。直し案は元の言葉と同じ程度の長さにする。
+守ること: 意味・事実・数字・日付・固有名(作品名・商品名・店名・イベント名・人名・地名)・「」の引用・英字・カタカナの名前は変えない。新しい主張や体験(試した・必ず・最安など)を足さない。言葉を足したり削ったりして情報を増減させる直し(例: お礼→お礼の品、あたたかい夜→あたたかなクリスマス)は不可。直し案は元の言葉と同じ程度の長さにする。
 直し案の作り方: 最初に思いついた1案で決めない。同じ意味で言い方の違う候補を3つ以上考え(item に current があれば、それも候補の1つに入れる)、その中から、上の辞書にある言い方(実物で確かめてあるもの)を優先して選ぶ。辞書にない言い方を使うときは、ふつうに使われているか自分で確かめられる範囲で選び、why に書く。各候補に key(その候補の特徴が出る、検索で打つような短い語句。例「幹事 お礼 品」)を付ける。
 出力: JSONだけ(前後に説明を書かない)。形式: {{"items":[{{"id":1,"natural":true,"candidates":[{{"text":"","key":""}}],"choice":1,"why":"","confidence":""}}]}}。natural が false のときだけ candidates(3つ以上)・choice(選んだ候補の番号)・why(選んだ理由を一言)・confidence("high"=誰が読んでも不自然で、選んだ案のほうが明らかによい、"low"=好みの差)を書く。固有名・データ由来の名前、画面の読み上げ用の標準的な語(パンくず 等)は natural:true。
 入力:
