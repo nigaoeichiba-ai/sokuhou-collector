@@ -63,6 +63,16 @@ SEASON = {
     "new-job": (3, 4), "promotion": (3, 4), "retirement": (2, 3), "farewell": (3, 4), "oseibo": (11, 12),
     "ochugen": (6, 7), "year-end-gathering": (11, 12), "homecoming": (7, 8, 12),
 }
+# months (1-12) in which a seasonal theme / reading article fits; shown on that month's page. Listed by hand: a page is not placed by guessing.
+THEME_MONTHS = {
+    "rainy-season-care": (6, 7), "typhoon-ready": (8, 9, 10), "pollen-season-outing": (2, 3, 4), "summer-carry-light": (7, 8, 9),
+    "night-walk-return": (11, 12, 1), "desk-cold-hands": (12, 1, 2), "closet-humidity-care": (6, 7), "dry-room-winter": (12, 1, 2),
+    "cold-drink-dry-desk": (7, 8, 9), "snowy-entry-reset": (12, 1, 2), "rainy-dog-walk": (6, 7),
+}
+ARTICLE_MONTHS = {
+    "storm-readiness-gift": (8, 9, 10), "retirement-sendoff-gift-light": (2, 3), "teacher-lesson-thanks-gift": (3,),
+    "adult-exam-support-gift": (1, 2), "new-neighbor-greeting-gift": (3, 4),
+}
 NAME_LIMIT = 44
 PORTRAIT_SHOWN = 2
 
@@ -1661,6 +1671,13 @@ def month_content(c: dict, m: int, today: date) -> dict:
     return {"m": m, "y": y, "days": days, "starts": starts, "occ": occ}
 
 
+def month_reads(d: dict, m: int) -> tuple[list[dict], list[dict]]:
+    """(themes, articles) listed for month m: only pages that exist in this build."""
+    themes = [t for t in d["live_themes"] if m in THEME_MONTHS.get(t["slug"], ())]
+    arts = [a for a in d["c"]["articles"] if m in ARTICLE_MONTHS.get(a["slug"], ())]
+    return themes, arts
+
+
 def month_pages(c: dict, today: date) -> list[int]:
     return [m for m in range(1, 13) if (lambda x: x["days"] or x["starts"] or x["occ"])(month_content(c, m, today))]
 
@@ -1685,6 +1702,11 @@ def month_page(d: dict, cfg: dict, preview: bool, m: int, today: date, months: l
         sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月にある、日にちの決まった贈りどき</span></h2><div class="tablewrap"><table class="gift-days">{head_row}<tbody>{rows}</tbody></table></div></section>'
     if srows:
         sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月に選びはじめたい贈りどき</span></h2><p>翌月以降の贈りどきのうち選びはじめの目安(3週間前)が{m}月に入るものです。</p><div class="tablewrap"><table class="gift-days">{head_row}<tbody>{srows}</tbody></table></div></section>'
+    themes, arts = month_reads(d, m)
+    if themes or arts:
+        items = "".join(f'<li><a href="/theme/{t["slug"]}/">{esc(t["title"])}</a></li>' for t in themes)
+        items += "".join(f'<li><a href="/read/{a["slug"]}/">{esc(a["title"])}</a></li>' for a in arts)
+        sec += f'<section style="margin-top:40px"><h2><span class="scribble">{m}月に読んでおきたいページ</span></h2><ul class="link-list">{items}</ul></section>'
     i = months.index(m)
     prev_m, next_m = months[i - 1], months[(i + 1) % len(months)]
     nav = (f'<p class="more"><a class="btn btn-sub" href="/month/{prev_m}/">{prev_m}月</a> <a class="btn btn-sub" href="/month/">月ごとの一覧</a> '

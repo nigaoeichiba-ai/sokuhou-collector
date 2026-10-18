@@ -70,3 +70,25 @@ class MonthTest(unittest.TestCase):
             hub = build.month_hub_page({"c": self.c}, CFG, False, today, months)
             for m in re.findall(r'href="/month/(\d+)/"', hub):
                 self.assertIn(int(m), months, (today, m))
+
+
+class MonthReadsTest(unittest.TestCase):
+    D = {"live_themes": [{"slug": "rainy-season-care", "title": "梅雨のテーマ"}, {"slug": "typhoon-ready", "title": "台風のテーマ"}],
+         "c": {"articles": [{"slug": "storm-readiness-gift", "title": "備えの記事"}, {"slug": "other", "title": "別の記事"}]}}
+
+    def test_only_listed_pages_of_that_month_are_returned(self):
+        themes, arts = build.month_reads(self.D, 6)
+        self.assertEqual([t["slug"] for t in themes], ["rainy-season-care"])
+        self.assertEqual(arts, [])
+        themes, arts = build.month_reads(self.D, 9)
+        self.assertEqual([t["slug"] for t in themes], ["typhoon-ready"])
+        self.assertEqual([a["slug"] for a in arts], ["storm-readiness-gift"])
+
+    def test_a_page_missing_from_the_build_is_not_listed(self):
+        themes, _ = build.month_reads({"live_themes": [], "c": {"articles": []}}, 6)
+        self.assertEqual(themes, [])
+
+    def test_mapping_slugs_exist_in_the_real_content(self):
+        c = content.load()
+        self.assertTrue(set(build.THEME_MONTHS) <= {t["slug"] for t in c["themes"]})
+        self.assertTrue(set(build.ARTICLE_MONTHS) <= {a["slug"] for a in c["articles"]})

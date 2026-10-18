@@ -727,7 +727,10 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
     for sk in cur:
         src = dig["sources"][sk]
         days = [x for x in src["days"] if ws <= x <= ws + timedelta(days=6)]
-        places += (f"<li>{esc(src['name'])}: {md(min(days).isoformat())}から{md(max(days).isoformat())}まで({n(len(days))}件)</li>" if days
+        tops, tc, named = digest.top_cities(src, key)
+        # only when every row of the week names a city, so "most" is not decided on a partial count
+        most = (f"。市町村別で最も多かったのは、{'・'.join(esc(c) for c in tops)}の{n(tc)}件" + ("ずつ" if len(tops) > 1 else "")) if tops and named == len(days) else ""
+        places += (f"<li>{esc(src['name'])}: {md(min(days).isoformat())}から{md(max(days).isoformat())}まで({n(len(days))}件){most}</li>" if days
                    else f"<li>{esc(src['name'])}: 記録なし</li>")
     ks = dig["weeks"]
     i = ks.index(key)
@@ -740,7 +743,7 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
 <h1>{week_range(key)}の、クマの目撃情報</h1>
 <p class="lead">{head}</p>
 {table(["自治体", "この週の件数", "前の週", "前の週との比較"], rows)}
-<h2>記録のあった日</h2>
+<h2>記録のあった日と、多かった市町村</h2>
 <ul>{places}</ul>
 <p>{" ・ ".join(links)} ・ <a href="/digest/">週ごとのまとめの一覧</a></p>
 <p class="notice">{DIGEST_NOTE}</p>

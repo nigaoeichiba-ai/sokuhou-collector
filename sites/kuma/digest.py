@@ -42,8 +42,10 @@ def pref_source(key: str, name: str, raw: dict) -> dict | None:
     as_of = date.fromisoformat(raw["as_of"])
     monthly = raw.get("monthly", {})
     per_month = Counter((d.year, d.month) for d in rows)  # every row, including any dated after as_of
+    cities = [(date.fromisoformat(r["observed_at"][:10]), (r.get("city") or "").strip())
+              for r in raw.get("sightings", []) if r.get("observed_at")]
     return {"key": key, "name": name, "days": [d for d in rows if d <= as_of], "as_of": as_of, "per_month": per_month,
-            "monthly": monthly, "note": ""}
+            "monthly": monthly, "note": "", "cities": [(d, c) for d, c in cities if d <= as_of and c]}
 
 
 def covers(src: dict, ws: date) -> bool:
@@ -88,3 +90,13 @@ def common_total(dig: dict, key: str) -> tuple[int, int | None, list[str]]:
     prev = dig["by_week"].get(prev_key(key), {})
     both = [k for k in cur if k in prev]
     return sum(cur[k] for k in both), (sum(prev[k] for k in both) if both else None), both
+
+
+def top_cities(src: dict, key: str) -> tuple[list[str], int, int]:
+    """The municipalities with the most rows in the week (all of them on a tie), their count, and how many rows name a city."""
+    ws = week_start(key)
+    cnt = Counter(c for d, c in src.get("cities", []) if ws <= d <= ws + timedelta(days=6))
+    if not cnt:
+        return [], 0, 0
+    top = max(cnt.values())
+    return sorted(c for c, v in cnt.items() if v == top), top, sum(cnt.values())
