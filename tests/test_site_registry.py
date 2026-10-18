@@ -9,7 +9,7 @@ from sokuhou import deployplan
 
 ROOT = Path(__file__).resolve().parents[1]
 ENTRY_KEYS = {"name", "domain", "marker", "min_pages", "min_cards", "probe", "needs_var", "live_sha", "watch", "group", "timeout_minutes", "build", "own", "owns",
-              "fast_lane", "dir", "url", "core_tests", "lag_minutes"}
+              "fast_lane", "dir", "url", "core_tests", "lag_minutes", "upload"}
 SECRETISH = ("password", "secret", "token", "api_key", "apikey", "private key")
 
 
@@ -92,6 +92,10 @@ class RegisterTest(unittest.TestCase):
             p.write_text(json.dumps({"sites": [e, dict(e)]}), encoding="utf-8")   # the same name twice
             with self.assertRaises(deployplan.RegistryError):
                 deployplan.load_registry(p)
+
+    def test_the_upload_mode_is_a_known_one(self):
+        for n, s in self.reg["sites"].items():
+            self.assertIn(s.get("upload", "auto"), ("auto", "rsync", "tar"), n)
 
     def test_every_site_has_a_group_of_its_own(self):
         # one waiting job per concurrency group survives; a group shared between sites (or with a data workflow) lets one cancel another's waiting deploy

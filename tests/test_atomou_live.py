@@ -187,8 +187,11 @@ class Wiring(unittest.TestCase):
         self.assertNotIn("git push", wf)
 
     def test_a_deploy_carries_the_live_folder_over(self):
-        dep = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
-        self.assertIn("cp -a " + chr(92) + '"public_html/' + chr(92) + '$d' + chr(92) + '" ' + chr(92) + '".deploy_next/' + chr(92) + '$d' + chr(92) + '"', dep)
+        # the upload (sokuhou/deployupload.py): rsync never deletes the live folders, the tar way copies them over
+        up = (ROOT / "sokuhou" / "deployupload.py").read_text(encoding="utf-8")
+        self.assertIn('CARRY = ("live", "demo/live", "demo.atomou.com/live")', up)
+        self.assertIn('"P /{d}/"', up.replace("f\"P /{d}/\"", '"P /{d}/"'))
+        self.assertIn("cp -a", up)
 
     def test_the_live_file_is_never_cached_by_the_browser(self):
         from sites.atomou import build
