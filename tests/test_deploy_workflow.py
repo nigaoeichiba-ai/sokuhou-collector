@@ -129,7 +129,8 @@ class NoMallDataInTheGitHubCache(unittest.TestCase):
                         self.assertNotIn(word, low, f"{f.name}: a cache or artifact step mentions {word!r}: {step[:120]!r}")
 
     def test_the_deploy_takes_the_products_from_the_private_folder_and_fetches_only_when_they_are_missing(self):
-        self.assertNotIn("actions/cache", TEXT)
+        self.assertEqual(TEXT.count("actions/cache"), 1)                       # only the derived files of a site's own pictures (a test below), never shop data
+        self.assertIn("actions/cache", block("Derived files kept between runs"))
         self.assertNotIn("Restore today's products", TEXT)
         fetch = block("Fetch products")
         self.assertIn("matrix.site == 'yorokobu'", fetch)
@@ -167,6 +168,17 @@ class NeverStuck(unittest.TestCase):
             self.assertIn(port, b)
         self.assertIn("REACH", b)
 
+
+class DerivedFilesCache(unittest.TestCase):
+    def test_a_site_with_a_cache_path_keeps_its_derived_files_and_the_tests_start_with_a_copy(self):
+        b = block("Derived files kept between runs")
+        self.assertIn("matrix.cache_path != ''", b)
+        self.assertIn("path: ${{ matrix.cache_path }}", b)
+        self.assertIn("restore-keys:", b)
+        self.assertLess(index_of("Derived files kept between runs"), index_of("Unit tests, started now"))
+        tests = block("Unit tests, started now")
+        self.assertIn("CACHE_PATH: ${{ matrix.cache_path }}", tests)
+        self.assertIn('cp -a "$CACHE_PATH" "$T/$CACHE_PATH"', tests)       # their own copy: the build and the tests never write the same files
 
 class OtherSessionsSteps(unittest.TestCase):
     def test_the_yorokobu_private_product_data_step_is_still_there_after_the_tests_and_before_the_upload(self):
