@@ -161,7 +161,7 @@ class Editing(unittest.TestCase):
 
     def test_a_page_edit_survives_the_check_at_deploy_time_but_a_sentence_mode_rewrite_does_not_get_its_exemption(self):
         para = next(x for x in self.units if x.text.startswith("お中元の時期は地域で"))
-        new = "七月上旬から中旬が関東、七月中旬から八月中旬が関西の目安とされることが多く、地域で時期が違うため、先に相手の住まいを確かめます。"
+        new = "七月上旬から中旬が関東、七月中旬から八月中旬が関西の目安とされることが多く、地域で時期が違うため、先に確かめます。"
         pe.edit_page("yorokobu", "x/index.html", PAGE, runner=fake(self.answer(edits=[{"id": para.id, "after": new, "why": "整理"}])), today="2026-10-17")
         entries, skipped = sl.usable_entries("yorokobu", warn=lambda m: None)
         self.assertEqual((len(entries), skipped), (1, 0))
