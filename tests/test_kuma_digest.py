@@ -104,3 +104,20 @@ class DigestPagesTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             files = build.render_site(raw, CFG, Path(tmp), release=True, prefs=None)
         self.assertFalse([f for f in files if f.startswith("digest/")])
+
+
+class TopCityTest(unittest.TestCase):
+    def test_most_rows_city_and_ties(self):
+        rows = [dict(row("2026-09-22"), city="B市"), dict(row("2026-09-23"), city="B市"), dict(row("2026-09-24"), city="C町"),
+                dict(row("2026-09-14"), city="A市")]
+        src = digest.pref_source("miyagi", "宮城県", pref(rows, {"9": 4}, "2026-10-04"))
+        self.assertEqual(digest.top_cities(src, "2026-W39"), (["B市"], 2, 3))
+        rows2 = [dict(row("2026-09-22"), city="B市"), dict(row("2026-09-23"), city="C町")]
+        src2 = digest.pref_source("miyagi", "宮城県", pref(rows2, {"9": 2}, "2026-10-04"))
+        self.assertEqual(digest.top_cities(src2, "2026-W39"), (["B市", "C町"], 1, 2))
+        self.assertEqual(digest.top_cities(src, "2026-W41"), ([], 0, 0))
+
+    def test_rows_after_as_of_are_not_counted(self):
+        rows = [dict(row("2026-09-22"), city="B市"), dict(row("2026-10-06"), city="Z市"), dict(row("2026-10-07"), city="Z市")]
+        src = digest.pref_source("miyagi", "宮城県", pref(rows, {"9": 1, "10": 2}, "2026-10-04"))
+        self.assertEqual(digest.top_cities(src, "2026-W41"), ([], 0, 0))
