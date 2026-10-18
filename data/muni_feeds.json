@@ -302,6 +302,12 @@
    "items": [
     {
      "date": "2026-10-19",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/chiikiiryou/hospital-setumei.html",
+     "summary": "令和2年度に策定した上越地域医療センター病院基本計画の改定案について説明します。",
+     "title": "上越地域医療センター病院の改築に関する市民説明会を開催しました"
+    },
+    {
+     "date": "2026-10-19",
      "link": "https://www.city.joetsu.niigata.jp/soshiki/yasuzuka-ku/shinryojo-yasuzuka.html",
      "summary": "安塚診療所の診療日",
      "title": "安塚診療所 診療カレンダー"
@@ -383,12 +389,6 @@
      "link": "https://www.city.joetsu.niigata.jp/site/syoku-iku/syokuiku-jusyou202606.html",
      "summary": "県立高田農業高等学校生物資源科農業生産コースが「第5回北陸農政局食育活動表彰」北陸農政局長賞を受賞しました。",
      "title": "県立高田農業高等学校生物資源科農業生産コースの活動が「第5回北陸農政局食育活動表彰」北陸農政局長賞を受賞しました"
-    },
-    {
-     "date": "2026-10-07",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/nougyoushinkou/nousakumotutounan.html",
-     "summary": "農作物が盗まれる被害が本県を含めた全国各地で相次いで発生しています。水稲や果樹などが本格的な収穫期を迎える中、丹精を込めて生産した農作物が盗難されないように注意しましょう。また、不審者や不審車両を見かけたら、110番通報をお願いします。​​",
-     "title": "農作物の盗難に注意しましょう"
     }
    ],
    "name": "上越市",
@@ -1400,6 +1400,12 @@
    "items": [
     {
      "date": "2026-10-19",
+     "link": "https://www.pref.fukushima.lg.jp/sec/01260a/soso-nyusatsukokoku.html",
+     "summary": "",
+     "title": "公共工事条件付一般競争入札公告(相双地方振興局出納室)"
+    },
+    {
+     "date": "2026-10-19",
      "link": "https://www.pref.fukushima.lg.jp/sec/01240a/buppin-index.html",
      "summary": "",
      "title": "物品に関する条件付一般競争入札公告(会津地方振興局出納室)"
@@ -1481,12 +1487,6 @@
      "link": "https://www.pref.fukushima.lg.jp/sec/11045b/r8gurakon.html",
      "summary": "第76回(令和8年度)福島県統計グラフコンクールの入選作品を掲載。",
      "title": "第76回(令和8年度)福島県統計グラフコンクール入選作品を公開しました。"
-    },
-    {
-     "date": "2026-10-16",
-     "link": "https://www.pref.fukushima.lg.jp/sec/11045b/18345.html",
-     "summary": "福島県統計グラフコンクールのお知らせを掲載",
-     "title": "福島県統計グラフコンクール"
     }
    ],
    "name": "福島県庁",
@@ -1498,6 +1498,12 @@
    "feed": "https://www.pref.fukushima.lg.jp/rss/10/list10.xml",
    "id": "5af5c7924f",
    "items": [
+    {
+     "date": "2026-10-19",
+     "link": "https://www.pref.fukushima.lg.jp/sec/01260a/soso-nyusatsukokoku.html",
+     "summary": "",
+     "title": "公共工事条件付一般競争入札公告(相双地方振興局出納室)"
+    },
     {
      "date": "2026-10-19",
      "link": "https://www.pref.fukushima.lg.jp/sec/01240a/buppin-index.html",
@@ -1581,12 +1587,6 @@
      "link": "https://www.pref.fukushima.lg.jp/sec/41310a/keiyakukekka-r8-9.html",
      "summary": "",
      "title": "令和8年9月契約結果 ※ 保原・二本松土木事務所を含む"
-    },
-    {
-     "date": "2026-10-16",
-     "link": "https://www.pref.fukushima.lg.jp/sec/32031a/rentalcar2026.html",
-     "summary": "",
-     "title": "「ふくしまアフターDCにおけるクーポン付きレンタカーキャンペーン準備事業」にかかる公募型プロポーザルの実施について"
     }
    ],
    "name": "福島県庁",
@@ -4335,5 +4335,5 @@
    "title": ""
   }
  ],
- "fetched_at": "2026-10-19T06:21:53.369644+09:00"
+ "fetched_at": "2026-10-19T08:18:47.032282+09:00"
 }
