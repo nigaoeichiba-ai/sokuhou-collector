@@ -204,6 +204,8 @@ class SshAndRestart(unittest.TestCase):
         self.assertIn("for try in 1 2 3;", b)
         self.assertIn('echo "unreachable=true" >> "$GITHUB_OUTPUT"', b)
         self.assertNotIn("sleep \"$off\"", b)
+        self.assertIn("sleep $((SLOT * 12 + RANDOM % 5))", b)      # the jobs of one run connect one after the other
+        self.assertIn("SLOT: ${{ matrix.slot }}", b)
         self.assertNotIn("off=$((RANDOM % 160))", b)
 
     def test_a_lost_connection_in_the_later_steps_is_told_apart_from_a_real_failure(self):
