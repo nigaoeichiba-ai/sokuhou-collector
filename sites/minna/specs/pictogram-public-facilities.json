@@ -1,0 +1,90 @@
+{
+ "slug": "pictogram-public-facilities",
+ "title": "公共施設のピクトグラム",
+ "subject": "",
+ "genre": "icon",
+ "touch": "pictogram",
+ "title_fmt": "{ja}",
+ "priority": 33,
+ "lead": "駅・病院・トイレ・エレベーターなど、公共施設を表すピクトグラム12点です。案内図やチラシに使えます。",
+ "tags": [
+  "ピクトグラム",
+  "案内",
+  "公共施設",
+  "トイレ",
+  "駅",
+  "病院",
+  "標識"
+ ],
+ "subject_en": "simple monochrome pictograms of public-facility signs in the style of Japanese public guidance symbols: bold geometric silhouettes in white-cream on a rounded square in deep blue, one clear symbol per item, very simple shapes. Each item is a separate small subject centred in its cell with space around, never touching another. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates, clouds) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "exclude": [
+  "bench",
+  "nursing",
+  "parking",
+  "wheelchair"
+ ],
+ "items": [
+  [
+   "toilet",
+   "トイレ",
+   "a standing person and a skirted person side by side"
+  ],
+  [
+   "elevator",
+   "エレベーター",
+   "a box with an up arrow and a down arrow and a tiny person"
+  ],
+  [
+   "stairs",
+   "階段",
+   "a person walking up a flight of steps"
+  ],
+  [
+   "hospital",
+   "病院",
+   "a cross inside a building outline"
+  ],
+  [
+   "station",
+   "駅",
+   "a front view of a train with two windows"
+  ],
+  [
+   "bus",
+   "バス停",
+   "a bus side view next to a pole"
+  ],
+  [
+   "info",
+   "案内所",
+   "a question mark on a round counter"
+  ],
+  [
+   "parking",
+   "駐車場",
+   "a car side view with a roof"
+  ],
+  [
+   "nursing",
+   "授乳室",
+   "an adult holding a baby"
+  ],
+  [
+   "exit",
+   "非常口",
+   "a running person heading to a door"
+  ],
+  [
+   "bench",
+   "休憩所",
+   "a bench with a tree"
+  ],
+  [
+   "wheelchair",
+   "車いす対応",
+   "a person seated in a wheelchair"
+  ]
+ ]
+}

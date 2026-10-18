@@ -1,0 +1,242 @@
+{
+ "added": "2026-10-19",
+ "slug": "duotone-night-reading",
+ "title": "夜の読書とカフェ",
+ "genre": "life",
+ "touch": "duotone",
+ "lead": "夜の読書や静かなカフェのひとときを、2色のタッチで12点描きました。書籍の紹介やカフェのメニューに使えます。",
+ "tags": [
+  "夜",
+  "読書",
+  "カフェ",
+  "コーヒー",
+  "本",
+  "2色",
+  "静か"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "duotone-night-reading-lamp",
+   "file": "duotone-night-reading-lamp.webp",
+   "title": "読書灯",
+   "desc": "読書灯のワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "夜の読書とカフェ",
+    "読書灯",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 483,
+   "h": 458
+  },
+  {
+   "id": "duotone-night-reading-cupbook",
+   "file": "duotone-night-reading-cupbook.webp",
+   "title": "コーヒーと本",
+   "desc": "コーヒーと本のワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "本",
+    "夜の読書とカフェ",
+    "コーヒーと本",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 496,
+   "h": 313
+  },
+  {
+   "id": "duotone-night-reading-window",
+   "file": "duotone-night-reading-window.webp",
+   "title": "夜の窓",
+   "desc": "夜の窓のワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "夜の読書とカフェ",
+    "夜の窓",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 442,
+   "h": 428
+  },
+  {
+   "id": "duotone-night-reading-bookshelf",
+   "file": "duotone-night-reading-bookshelf.webp",
+   "title": "本棚",
+   "desc": "本棚のワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "本",
+    "夜の読書とカフェ",
+    "本棚",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 453,
+   "h": 480
+  },
+  {
+   "id": "duotone-night-reading-armchair",
+   "file": "duotone-night-reading-armchair.webp",
+   "title": "安楽椅子",
+   "desc": "安楽椅子のワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "夜の読書とカフェ",
+    "安楽椅子",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 482,
+   "h": 472
+  },
+  {
+   "id": "duotone-night-reading-cat",
+   "file": "duotone-night-reading-cat.webp",
+   "title": "本の上の猫",
+   "desc": "本の上の猫のワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "本",
+    "夜の読書とカフェ",
+    "本の上の猫",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 502,
+   "h": 337
+  },
+  {
+   "id": "duotone-night-reading-candle",
+   "file": "duotone-night-reading-candle.webp",
+   "title": "ろうそく",
+   "desc": "ろうそくのワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "夜の読書とカフェ",
+    "ろうそく",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 361,
+   "h": 453
+  },
+  {
+   "id": "duotone-night-reading-teapot",
+   "file": "duotone-night-reading-teapot.webp",
+   "title": "ポットとカップ",
+   "desc": "ポットとカップのワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "夜の読書とカフェ",
+    "ポットとカップ",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 475,
+   "h": 388
+  },
+  {
+   "id": "duotone-night-reading-record",
+   "file": "duotone-night-reading-record.webp",
+   "title": "レコード",
+   "desc": "レコードのワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "夜の読書とカフェ",
+    "レコード",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 480,
+   "h": 450
+  },
+  {
+   "id": "duotone-night-reading-cafe",
+   "file": "duotone-night-reading-cafe.webp",
+   "title": "夜のカフェ",
+   "desc": "夜のカフェのワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "夜の読書とカフェ",
+    "夜のカフェ",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 489,
+   "h": 462
+  },
+  {
+   "id": "duotone-night-reading-notebook",
+   "file": "duotone-night-reading-notebook.webp",
+   "title": "ノートと万年筆",
+   "desc": "ノートと万年筆のワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "夜の読書とカフェ",
+    "ノートと万年筆",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 499,
+   "h": 380
+  },
+  {
+   "id": "duotone-night-reading-moonbook",
+   "file": "duotone-night-reading-moonbook.webp",
+   "title": "月と本",
+   "desc": "月と本のワンカラーイラストです。",
+   "tags": [
+    "夜",
+    "読書",
+    "カフェ",
+    "コーヒー",
+    "本",
+    "夜の読書とカフェ",
+    "月と本",
+    "ワンカラー",
+    "暮らし・物"
+   ],
+   "w": 461,
+   "h": 467
+  }
+ ]
+}

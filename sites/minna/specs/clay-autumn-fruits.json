@@ -1,0 +1,85 @@
+{
+ "slug": "clay-autumn-fruits",
+ "title": "秋の果物(粘土)",
+ "subject": "",
+ "genre": "food",
+ "touch": "clay",
+ "title_fmt": "{ja}",
+ "priority": 31,
+ "lead": "柿・梨・ぶどう・栗など、秋の果物と実りを粘土細工のタッチで12点描きました。秋のメニューや直売所の案内に使えます。",
+ "tags": [
+  "秋",
+  "果物",
+  "柿",
+  "ぶどう",
+  "梨",
+  "粘土",
+  "実り"
+ ],
+ "subject_en": "handmade clay (plasticine) figurines of fruits: soft rounded sculpted forms with visible fingerprint-smooth surface, bright natural colours, a gentle highlight, a slightly darker clay rim at the contour acting as the closed outline, no people. Each item is a separate small subject centred in its cell with space around, never touching another. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates, clouds) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "exclude": [],
+ "items": [
+  [
+   "kaki",
+   "柿",
+   "two orange persimmons with green calyx"
+  ],
+  [
+   "nashi",
+   "梨",
+   "two Japanese pears"
+  ],
+  [
+   "budo",
+   "ぶどう",
+   "a bunch of purple grapes with a leaf"
+  ],
+  [
+   "kuri",
+   "栗",
+   "three chestnuts, one in a spiky burr"
+  ],
+  [
+   "ringo",
+   "りんご",
+   "a red apple with a leaf"
+  ],
+  [
+   "imo",
+   "さつまいも",
+   "two sweet potatoes"
+  ],
+  [
+   "mikan",
+   "みかん",
+   "three mandarin oranges, one half peeled"
+  ],
+  [
+   "ichijiku",
+   "いちじく",
+   "two figs, one cut open"
+  ],
+  [
+   "lemon",
+   "レモン",
+   "a lemon with a leaf"
+  ],
+  [
+   "kiwi",
+   "キウイ",
+   "a kiwi fruit cut in half beside a whole one"
+  ],
+  [
+   "basket",
+   "果物かご",
+   "a small woven basket filled with mixed fruits"
+  ],
+  [
+   "momiji",
+   "実りと落ち葉",
+   "an acorn, a pine cone and two fallen leaves"
+  ]
+ ]
+}

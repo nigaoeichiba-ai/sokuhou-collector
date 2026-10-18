@@ -1,0 +1,202 @@
+{
+ "added": "2026-10-19",
+ "slug": "papercut-snow-town-winter",
+ "title": "雪の町と冬の遊び(切り絵)",
+ "genre": "season",
+ "touch": "papercut",
+ "lead": "雪の町、スキー、雪だるまなど、冬の景色と遊びを切り絵のタッチで12点描きました。冬のチラシや案内に使えます。",
+ "tags": [
+  "冬",
+  "雪",
+  "スキー",
+  "雪だるま",
+  "切り絵",
+  "雪景色"
+ ],
+ "subject": "",
+ "season": {
+  "from": "12-01",
+  "to": "02-28"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "papercut-snow-town-winter-snowman",
+   "file": "papercut-snow-town-winter-snowman.webp",
+   "title": "雪だるま",
+   "desc": "雪だるまの切り絵・ペーパークラフトイラストです。",
+   "tags": [
+    "冬",
+    "雪",
+    "スキー",
+    "雪だるま",
+    "雪の町と冬の遊び(切り絵)",
+    "切り絵・ペーパークラフト",
+    "季節・行事"
+   ],
+   "w": 453,
+   "h": 527
+  },
+  {
+   "id": "papercut-snow-town-winter-ski",
+   "file": "papercut-snow-town-winter-ski.webp",
+   "title": "スキー",
+   "desc": "スキーの切り絵・ペーパークラフトイラストです。",
+   "tags": [
+    "冬",
+    "雪",
+    "スキー",
+    "雪だるま",
+    "雪の町と冬の遊び(切り絵)",
+    "切り絵・ペーパークラフト",
+    "季節・行事"
+   ],
+   "w": 341,
+   "h": 519
+  },
+  {
+   "id": "papercut-snow-town-winter-sled",
+   "file": "papercut-snow-town-winter-sled.webp",
+   "title": "そり",
+   "desc": "そりの切り絵・ペーパークラフトイラストです。",
+   "tags": [
+    "冬",
+    "雪",
+    "スキー",
+    "雪だるま",
+    "雪の町と冬の遊び(切り絵)",
+    "そり",
+    "切り絵・ペーパークラフト",
+    "季節・行事"
+   ],
+   "w": 537,
+   "h": 332
+  },
+  {
+   "id": "papercut-snow-town-winter-house",
+   "file": "papercut-snow-town-winter-house.webp",
+   "title": "雪の家",
+   "desc": "雪の家の切り絵・ペーパークラフトイラストです。",
+   "tags": [
+    "冬",
+    "雪",
+    "スキー",
+    "雪だるま",
+    "雪の町と冬の遊び(切り絵)",
+    "雪の家",
+    "切り絵・ペーパークラフト",
+    "季節・行事"
+   ],
+   "w": 514,
+   "h": 484
+  },
+  {
+   "id": "papercut-snow-town-winter-pine",
+   "file": "papercut-snow-town-winter-pine.webp",
+   "title": "雪の木",
+   "desc": "雪の木の切り絵・ペーパークラフトイラストです。",
+   "tags": [
+    "冬",
+    "雪",
+    "スキー",
+    "雪だるま",
+    "雪の町と冬の遊び(切り絵)",
+    "雪の木",
+    "切り絵・ペーパークラフト",
+    "季節・行事"
+   ],
+   "w": 525,
+   "h": 506
+  },
+  {
+   "id": "papercut-snow-town-winter-mitten",
+   "file": "papercut-snow-town-winter-mitten.webp",
+   "title": "手袋と帽子",
+   "desc": "手袋と帽子の切り絵・ペーパークラフトイラストです。",
+   "tags": [
+    "冬",
+    "雪",
+    "スキー",
+    "雪だるま",
+    "雪の町と冬の遊び(切り絵)",
+    "手袋と帽子",
+    "切り絵・ペーパークラフト",
+    "季節・行事"
+   ],
+   "w": 447,
+   "h": 510
+  },
+  {
+   "id": "papercut-snow-town-winter-icicle",
+   "file": "papercut-snow-town-winter-icicle.webp",
+   "title": "つらら",
+   "desc": "つららの切り絵・ペーパークラフトイラストです。",
+   "tags": [
+    "冬",
+    "雪",
+    "スキー",
+    "雪だるま",
+    "雪の町と冬の遊び(切り絵)",
+    "つらら",
+    "切り絵・ペーパークラフト",
+    "季節・行事"
+   ],
+   "w": 478,
+   "h": 490
+  },
+  {
+   "id": "papercut-snow-town-winter-fire",
+   "file": "papercut-snow-town-winter-fire.webp",
+   "title": "ストーブ",
+   "desc": "ストーブの切り絵・ペーパークラフトイラストです。",
+   "tags": [
+    "冬",
+    "雪",
+    "スキー",
+    "雪だるま",
+    "雪の町と冬の遊び(切り絵)",
+    "ストーブ",
+    "切り絵・ペーパークラフト",
+    "季節・行事"
+   ],
+   "w": 340,
+   "h": 508
+  },
+  {
+   "id": "papercut-snow-town-winter-crystal",
+   "file": "papercut-snow-town-winter-crystal.webp",
+   "title": "雪の結晶",
+   "desc": "雪の結晶の切り絵・ペーパークラフトイラストです。",
+   "tags": [
+    "冬",
+    "雪",
+    "スキー",
+    "雪だるま",
+    "雪の町と冬の遊び(切り絵)",
+    "雪の結晶",
+    "切り絵・ペーパークラフト",
+    "季節・行事"
+   ],
+   "w": 516,
+   "h": 496
+  },
+  {
+   "id": "papercut-snow-town-winter-skate",
+   "file": "papercut-snow-town-winter-skate.webp",
+   "title": "スケート靴",
+   "desc": "スケート靴の切り絵・ペーパークラフトイラストです。",
+   "tags": [
+    "冬",
+    "雪",
+    "スキー",
+    "雪だるま",
+    "雪の町と冬の遊び(切り絵)",
+    "スケート靴",
+    "切り絵・ペーパークラフト",
+    "季節・行事"
+   ],
+   "w": 456,
+   "h": 491
+  }
+ ]
+}

@@ -1,0 +1,225 @@
+{
+ "added": "2026-10-19",
+ "slug": "onsen-trip-retro",
+ "title": "温泉旅行の小物と風景",
+ "genre": "life",
+ "touch": "retro",
+ "lead": "温泉旅行で出会う小物や風景を、昭和のポスター風のタッチで12点描きました。旅行のチラシや宿の案内に使えます。",
+ "tags": [
+  "温泉",
+  "旅行",
+  "旅館",
+  "昭和レトロ",
+  "湯けむり",
+  "浴衣"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "onsen-trip-retro-yukemuri",
+   "file": "onsen-trip-retro-yukemuri.webp",
+   "title": "湯けむりの露天風呂",
+   "desc": "湯けむりの露天風呂の昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "湯けむり",
+    "温泉旅行の小物と風景",
+    "湯けむりの露天風呂",
+    "暮らし・物"
+   ],
+   "w": 502,
+   "h": 458
+  },
+  {
+   "id": "onsen-trip-retro-yukata",
+   "file": "onsen-trip-retro-yukata.webp",
+   "title": "浴衣",
+   "desc": "浴衣の昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "浴衣",
+    "温泉旅行の小物と風景",
+    "暮らし・物"
+   ],
+   "w": 461,
+   "h": 448
+  },
+  {
+   "id": "onsen-trip-retro-geta",
+   "file": "onsen-trip-retro-geta.webp",
+   "title": "下駄",
+   "desc": "下駄の昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "温泉旅行の小物と風景",
+    "下駄",
+    "暮らし・物"
+   ],
+   "w": 487,
+   "h": 385
+  },
+  {
+   "id": "onsen-trip-retro-tamago",
+   "file": "onsen-trip-retro-tamago.webp",
+   "title": "温泉卵",
+   "desc": "温泉卵の昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "温泉旅行の小物と風景",
+    "温泉卵",
+    "暮らし・物"
+   ],
+   "w": 435,
+   "h": 378
+  },
+  {
+   "id": "onsen-trip-retro-manju",
+   "file": "onsen-trip-retro-manju.webp",
+   "title": "温泉まんじゅう",
+   "desc": "温泉まんじゅうの昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "温泉旅行の小物と風景",
+    "温泉まんじゅう",
+    "暮らし・物"
+   ],
+   "w": 506,
+   "h": 378
+  },
+  {
+   "id": "onsen-trip-retro-noren",
+   "file": "onsen-trip-retro-noren.webp",
+   "title": "のれん",
+   "desc": "のれんの昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "温泉旅行の小物と風景",
+    "のれん",
+    "暮らし・物"
+   ],
+   "w": 520,
+   "h": 376
+  },
+  {
+   "id": "onsen-trip-retro-towel",
+   "file": "onsen-trip-retro-towel.webp",
+   "title": "手ぬぐい",
+   "desc": "手ぬぐいの昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "温泉旅行の小物と風景",
+    "手ぬぐい",
+    "暮らし・物"
+   ],
+   "w": 487,
+   "h": 342
+  },
+  {
+   "id": "onsen-trip-retro-ryokan",
+   "file": "onsen-trip-retro-ryokan.webp",
+   "title": "旅館",
+   "desc": "旅館の昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "温泉旅行の小物と風景",
+    "暮らし・物"
+   ],
+   "w": 520,
+   "h": 458
+  },
+  {
+   "id": "onsen-trip-retro-milk",
+   "file": "onsen-trip-retro-milk.webp",
+   "title": "瓶の牛乳",
+   "desc": "瓶の牛乳の昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "温泉旅行の小物と風景",
+    "瓶の牛乳",
+    "暮らし・物"
+   ],
+   "w": 195,
+   "h": 412
+  },
+  {
+   "id": "onsen-trip-retro-pingpong",
+   "file": "onsen-trip-retro-pingpong.webp",
+   "title": "卓球",
+   "desc": "卓球の昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "温泉旅行の小物と風景",
+    "卓球",
+    "暮らし・物"
+   ],
+   "w": 495,
+   "h": 411
+  },
+  {
+   "id": "onsen-trip-retro-lantern",
+   "file": "onsen-trip-retro-lantern.webp",
+   "title": "ちょうちん",
+   "desc": "ちょうちんの昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "温泉旅行の小物と風景",
+    "ちょうちん",
+    "暮らし・物"
+   ],
+   "w": 253,
+   "h": 432
+  },
+  {
+   "id": "onsen-trip-retro-monkeys",
+   "file": "onsen-trip-retro-monkeys.webp",
+   "title": "湯につかる猿",
+   "desc": "湯につかる猿の昭和レトロイラストです。",
+   "tags": [
+    "温泉",
+    "旅行",
+    "旅館",
+    "昭和レトロ",
+    "温泉旅行の小物と風景",
+    "湯につかる猿",
+    "暮らし・物"
+   ],
+   "w": 550,
+   "h": 369
+  }
+ ]
+}

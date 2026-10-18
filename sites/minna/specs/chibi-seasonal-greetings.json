@@ -1,0 +1,85 @@
+{
+ "slug": "chibi-seasonal-greetings",
+ "title": "季節のあいさつ(二頭身)",
+ "subject": "",
+ "genre": "people",
+ "touch": "chibi",
+ "title_fmt": "{ja}",
+ "priority": 32,
+ "lead": "新年・お礼・お見舞いなど、季節のあいさつの場面を二頭身のキャラクターで12点描きました。挨拶状やおたよりの挿絵に使えます。",
+ "tags": [
+  "あいさつ",
+  "二頭身",
+  "お礼",
+  "年賀",
+  "お見舞い",
+  "ちびキャラ",
+  "季節"
+ ],
+ "subject_en": "the SAME two cute original chibi characters in turn (a boy with short black hair and a girl with a brown bob), two-heads-tall proportions, big head, small body, simple dot eyes, rosy cheeks, thick dark-brown closed outline, flat colours, plain clothes without any logo. Each item shows one or two of them. Each item is a separate small subject centred in its cell with space around, never touching another. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates, clouds) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "exclude": [],
+ "items": [
+  [
+   "newyear",
+   "新年のあいさつ",
+   "both bowing politely in winter coats beside a small pine decoration"
+  ],
+  [
+   "thanks",
+   "お礼",
+   "the girl bowing with a small gift box in both hands"
+  ],
+  [
+   "getwell",
+   "お見舞い",
+   "the boy holding a small bouquet"
+  ],
+  [
+   "summer",
+   "暑中見舞い",
+   "both holding a watermelon slice and a paper fan"
+  ],
+  [
+   "congrats",
+   "お祝い",
+   "both clapping with confetti"
+  ],
+  [
+   "welcome",
+   "ようこそ",
+   "the girl waving with one arm open"
+  ],
+  [
+   "goodbye",
+   "さようなら",
+   "the boy waving a hand"
+  ],
+  [
+   "sorry",
+   "ごめんなさい",
+   "both bowing deeply with a small sweat drop"
+  ],
+  [
+   "thankyou",
+   "ありがとう",
+   "the boy smiling with both hands raised"
+  ],
+  [
+   "cheers",
+   "乾杯",
+   "both holding juice glasses"
+  ],
+  [
+   "goodnight",
+   "おやすみ",
+   "the girl in pyjamas holding a pillow"
+  ],
+  [
+   "gift",
+   "プレゼント",
+   "the boy holding out a ribboned gift"
+  ]
+ ]
+}

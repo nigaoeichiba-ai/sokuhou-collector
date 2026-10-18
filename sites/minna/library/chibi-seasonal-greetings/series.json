@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-19",
+ "slug": "chibi-seasonal-greetings",
+ "title": "季節のあいさつ(二頭身)",
+ "genre": "people",
+ "touch": "chibi",
+ "lead": "新年・お礼・お見舞いなど、季節のあいさつの場面を二頭身のキャラクターで12点描きました。挨拶状やおたよりの挿絵に使えます。",
+ "tags": [
+  "あいさつ",
+  "二頭身",
+  "お礼",
+  "年賀",
+  "お見舞い",
+  "ちびキャラ",
+  "季節"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "chibi-seasonal-greetings-newyear",
+   "file": "chibi-seasonal-greetings-newyear.webp",
+   "title": "新年のあいさつ",
+   "desc": "新年のあいさつのちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "季節のあいさつ(二頭身)",
+    "新年のあいさつ",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 507,
+   "h": 440
+  },
+  {
+   "id": "chibi-seasonal-greetings-thanks",
+   "file": "chibi-seasonal-greetings-thanks.webp",
+   "title": "お礼",
+   "desc": "お礼のちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "季節のあいさつ(二頭身)",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 308,
+   "h": 438
+  },
+  {
+   "id": "chibi-seasonal-greetings-getwell",
+   "file": "chibi-seasonal-greetings-getwell.webp",
+   "title": "お見舞い",
+   "desc": "お見舞いのちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "お見舞い",
+    "季節のあいさつ(二頭身)",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 277,
+   "h": 476
+  },
+  {
+   "id": "chibi-seasonal-greetings-summer",
+   "file": "chibi-seasonal-greetings-summer.webp",
+   "title": "暑中見舞い",
+   "desc": "暑中見舞いのちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "季節のあいさつ(二頭身)",
+    "暑中見舞い",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 500,
+   "h": 453
+  },
+  {
+   "id": "chibi-seasonal-greetings-congrats",
+   "file": "chibi-seasonal-greetings-congrats.webp",
+   "title": "お祝い",
+   "desc": "お祝いのちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "季節のあいさつ(二頭身)",
+    "お祝い",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 495,
+   "h": 445
+  },
+  {
+   "id": "chibi-seasonal-greetings-welcome",
+   "file": "chibi-seasonal-greetings-welcome.webp",
+   "title": "ようこそ",
+   "desc": "ようこそのちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "季節のあいさつ(二頭身)",
+    "ようこそ",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 364,
+   "h": 456
+  },
+  {
+   "id": "chibi-seasonal-greetings-goodbye",
+   "file": "chibi-seasonal-greetings-goodbye.webp",
+   "title": "さようなら",
+   "desc": "さようならのちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "季節のあいさつ(二頭身)",
+    "さようなら",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 304,
+   "h": 480
+  },
+  {
+   "id": "chibi-seasonal-greetings-sorry",
+   "file": "chibi-seasonal-greetings-sorry.webp",
+   "title": "ごめんなさい",
+   "desc": "ごめんなさいのちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "季節のあいさつ(二頭身)",
+    "ごめんなさい",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 554,
+   "h": 428
+  },
+  {
+   "id": "chibi-seasonal-greetings-thankyou",
+   "file": "chibi-seasonal-greetings-thankyou.webp",
+   "title": "ありがとう",
+   "desc": "ありがとうのちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "季節のあいさつ(二頭身)",
+    "ありがとう",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 359,
+   "h": 483
+  },
+  {
+   "id": "chibi-seasonal-greetings-cheers",
+   "file": "chibi-seasonal-greetings-cheers.webp",
+   "title": "乾杯",
+   "desc": "乾杯のちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "季節のあいさつ(二頭身)",
+    "乾杯",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 515,
+   "h": 486
+  },
+  {
+   "id": "chibi-seasonal-greetings-goodnight",
+   "file": "chibi-seasonal-greetings-goodnight.webp",
+   "title": "おやすみ",
+   "desc": "おやすみのちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "季節のあいさつ(二頭身)",
+    "おやすみ",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 312,
+   "h": 483
+  },
+  {
+   "id": "chibi-seasonal-greetings-gift",
+   "file": "chibi-seasonal-greetings-gift.webp",
+   "title": "プレゼント",
+   "desc": "プレゼントのちびキャライラストです。",
+   "tags": [
+    "あいさつ",
+    "二頭身",
+    "お礼",
+    "年賀",
+    "季節のあいさつ(二頭身)",
+    "プレゼント",
+    "ちびキャラ",
+    "人物"
+   ],
+   "w": 292,
+   "h": 501
+  }
+ ]
+}
