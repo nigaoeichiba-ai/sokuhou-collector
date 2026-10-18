@@ -1,6 +1,12 @@
 {
- "fetched_at": "2026-10-18T16:22:34.701249+09:00",
+ "fetched_at": "2026-10-18T19:22:36.246480+09:00",
  "incidents": [
+  {
+   "kind": "自火報作動",
+   "place": "大津市大将軍一丁目付近",
+   "started_at": "2026-10-18T19:11:00+09:00",
+   "status": "reported"
+  },
   {
    "kind": "救助事故",
    "place": "大津市堅田二丁目付近",
@@ -210,7 +216,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": true,
+ "no_active_incident": false,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
