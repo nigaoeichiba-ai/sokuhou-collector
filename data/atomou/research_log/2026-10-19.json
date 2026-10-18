@@ -3,15 +3,17 @@
   "weekday": "月",
   "words": 0,
   "rss": 1140,
-  "searches": 5,
-  "candidates": 4,
-  "cards": 3,
-  "rejected": 1,
-  "rejected_reasons": {"same_company_second_source": "Yahoo!ニュース転載の2本は1か所扱い(じょうのにちじょう2、月のみの日付)。別会社のページが見つかるまで保留"},
+  "searches": 22,
+  "candidates": 18,
+  "cards": 15,
+  "rejected": 2,
+  "rejected_reasons": {
+    "same_company_second_source": "Yahoo!ニュース転載の2本は1か所扱い(じょうのにちじょう2、月のみの日付)。別会社のページが見つかるまで保留"
+  },
   "queries": 5,
   "failed_words": [],
   "injections": 0,
-  "results_written": 1,
-  "ideas": "docs/ideas/2026-10-19.md(3案。Codex照会は未実施)",
-  "note": "利用者ワード0件。RSSの手がかりから、うるう秒廃止(2027-05-20・keep)、auひかり料金改定(2027-01-01・公式)、ロッテ記録映画の公開(12/25)を作成。結果はMLB NLCS第4戦を1件(MLB.com日本語版+テレ東スポーツ)。サブエージェント・Codexは未実施(縮小運転)。"
+  "results_written": 2,
+  "ideas": "docs/ideas/2026-10-19.md(3案+Codex 5案)",
+  "note": "追加実行(窓口の指示)。Codex照会済み(gpt-5.6-sol)、サブエージェント1体(sonnet)で舞台・展覧会10件、じょうのにちじょう2とキリンチャレンジカップを別会社の2か所で確認、CSファイナルの結果1件。Wikipedia閲覧数ランキングは取得できず(404)。利用者ワード0件。"
 }
