@@ -1,11 +1,13 @@
 {
- "fetched_at": "2026-10-18T19:22:36.246480+09:00",
+ "fetched_at": "2026-10-18T19:37:38.489667+09:00",
  "incidents": [
   {
    "kind": "自火報作動",
    "place": "大津市大将軍一丁目付近",
+   "resolved_at": "2026-10-18T19:36:00+09:00",
+   "result": "非火災と判明",
    "started_at": "2026-10-18T19:11:00+09:00",
-   "status": "reported"
+   "status": "resolved"
   },
   {
    "kind": "救助事故",
@@ -216,7 +218,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": false,
+ "no_active_incident": true,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
