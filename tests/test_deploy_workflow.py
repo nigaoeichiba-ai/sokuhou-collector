@@ -209,10 +209,11 @@ class SshAndRestart(unittest.TestCase):
         self.assertNotIn("off=$((RANDOM % 160))", b)
 
     def test_a_lost_connection_in_the_later_steps_is_told_apart_from_a_real_failure(self):
-        for prefix in ("Check the server", "Upload and switch"):
-            b = block(prefix)
-            self.assertIn('"$rc" = 255', b, prefix)    # 255 is ssh's own exit code: the connection, not the command
-            self.assertIn('echo "unreachable=true" >> "$GITHUB_OUTPUT"', b, prefix)
+        b = block("Check the server")
+        self.assertIn('"$rc" = 255', b)    # 255 is ssh's own exit code: the connection, not the command
+        self.assertIn('echo "unreachable=true" >> "$GITHUB_OUTPUT"', b)
+        self.assertIn("python -m sokuhou.deployupload", block("Upload and switch"))      # which writes unreachable=true itself
+        self.assertIn("unreachable=true", (ROOT / "sokuhou" / "deployupload.py").read_text(encoding="utf-8"))
 
     def test_a_site_whose_server_did_not_answer_is_started_again_up_to_three_times_and_only_that_site(self):
         b = block("Start this site again")

@@ -360,30 +360,11 @@ jobs:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
           SITE_DIR: ${{ matrix.dir }}
+          UPLOAD: ${{ matrix.upload }}
         run: |
-          set -euo pipefail
-          rc=0
-          tar -C release -czf - . | ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" "
-            set -e
-            cd \"\$HOME/$SITE_DIR\"
-            rm -rf .deploy_next
-            mkdir .deploy_next
-            tar -xzf - -C .deploy_next
-            test -f .deploy_next/index.html
-            test -f .deploy_next/.htaccess
-            # atomou's live file (made every 10 minutes by atomou-live.yml) is not part of the build: it is carried over, so a deploy does not leave the app without it
-            for d in live demo/live demo.atomou.com/live; do
-              if [ -d \"public_html/\$d\" ]; then mkdir -p \".deploy_next/\$(dirname \$d)\"; cp -a \"public_html/\$d\" \".deploy_next/\$d\"; fi
-            done
-            rm -rf .deploy_prev
-            mv public_html .deploy_prev
-            mv .deploy_next public_html
-          " || rc=$?
-          if [ "$rc" != 0 ]; then
-            # 255 is ssh's own: the connection was lost.  The switch is the last command of the script, so a lost connection leaves the live site as it was (only .deploy_next is half written)
-            [ "$rc" = 255 ] && echo "unreachable=true" >> "$GITHUB_OUTPUT"
-            exit 1
-          fi
+          # sokuhou/deployupload.py: a hard-linked copy of the live folder, rsync of what differs by content, a second rsync (dry run) that must find nothing left, then the switch (the
+          # last command; a lost connection before it leaves the live site as it was and is reported as unreachable=true).  UPLOAD=tar (a site's "upload" in data/sites.json) sends it all as before.
+          python -m sokuhou.deployupload --dir "$SITE_DIR" --release release --mode "$UPLOAD"
       - name: Verify the live site, roll back if it is wrong
         if: steps.gate.outputs.go == 'true' && steps.gate.outputs.really == 'true'
         env:
