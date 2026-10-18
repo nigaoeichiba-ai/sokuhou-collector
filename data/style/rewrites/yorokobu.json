@@ -26,7 +26,8 @@
    "by": "editor",
    "why": "操作の言い方を簡潔に",
    "added": "2026-10-17",
-   "edit": true
+   "edit": true,
+   "scope": "template"
   },
   {
    "from": "お中元は地域差あり",
@@ -141,7 +142,8 @@
    "by": "editor",
    "why": "表記を見出しに統一",
    "added": "2026-10-17",
-   "edit": true
+   "edit": true,
+   "scope": "template"
   },
   {
    "from": "エプロンは働くことを連想するため、目上の人にはもっと働いてという意味に取る人もいます。説として気にする人がいます。",
@@ -239,7 +241,8 @@
    "kind": "heading",
    "by": "codex",
    "why": "かっこ書きが不自然",
-   "added": "2026-10-17"
+   "added": "2026-10-17",
+   "scope": "template"
   },
   {
    "from": "一人分の秋を冷凍で届けるモンブラン",
@@ -265,24 +268,6 @@
    "kind": "note",
    "by": "editor",
    "why": "確認元と日付を明確に",
-   "added": "2026-10-17",
-   "edit": true
-  },
-  {
-   "from": "仕様を一つずつ読む",
-   "to": "容量・重さ・保温などの仕様",
-   "kind": "heading",
-   "by": "editor",
-   "why": "動作より中身を示す",
-   "added": "2026-10-17",
-   "edit": true
-  },
-  {
-   "from": "代わりの候補",
-   "to": "ほかの実用品",
-   "kind": "heading",
-   "by": "editor",
-   "why": "掲載商品の関係を正す",
    "added": "2026-10-17",
    "edit": true
   },
@@ -463,7 +448,8 @@
    "by": "editor",
    "why": "項目の中身に合わせる",
    "added": "2026-10-17",
-   "edit": true
+   "edit": true,
+   "scope": "template"
   },
   {
    "from": "合う相手と避けたい相手",
@@ -472,7 +458,8 @@
    "by": "editor",
    "why": "自然な見出しにする",
    "added": "2026-10-17",
-   "edit": true
+   "edit": true,
+   "scope": "template"
   },
   {
    "from": "同じ種類の中での位置",
@@ -481,7 +468,8 @@
    "by": "editor",
    "why": "堅い複合語を外す",
    "added": "2026-10-17",
-   "edit": true
+   "edit": true,
+   "scope": "template"
   },
   {
    "from": "同じ種類の商品と比べた価格",
@@ -498,7 +486,8 @@
    "kind": "heading",
    "by": "codex",
    "why": "「価格の位置」が翻訳調で不自然なため / 候補とサジェスト数: 同じ種類の商品と比べた価格(測れず) / 同じ種類の商品の価格帯(測れず) / 同じ種類の商品との価格比較(測れず)",
-   "added": "2026-10-17"
+   "added": "2026-10-17",
+   "scope": "template"
   },
   {
    "from": "名入れは確認してから",
@@ -543,7 +532,8 @@
    "by": "editor",
    "why": "抽象語と読点を整理",
    "added": "2026-10-17",
-   "edit": true
+   "edit": true,
+   "scope": "template"
   },
   {
    "from": "商品券は同世代なら便利",
@@ -671,15 +661,6 @@
    "added": "2026-10-17"
   },
   {
-   "from": "数値の表を見る",
-   "to": "価格の分布を見る",
-   "kind": "heading",
-   "by": "editor",
-   "why": "表の内容を明示",
-   "added": "2026-10-17",
-   "edit": true
-  },
-  {
    "from": "数時間後も手にあたたかい",
    "to": "数時間かけて少しずつ飲む",
    "kind": "heading",
@@ -775,7 +756,8 @@
    "kind": "aria",
    "by": "codex",
    "why": "「対象の条件」が不自然です",
-   "added": "2026-10-17"
+   "added": "2026-10-17",
+   "scope": "template"
   },
   {
    "from": "母の日のほかの相手",
@@ -809,15 +791,6 @@
    "kind": "heading",
    "by": "editor",
    "why": "不自然な評価語を削る",
-   "added": "2026-10-17",
-   "edit": true
-  },
-  {
-   "from": "渡す場面を思い浮かべる",
-   "to": "在宅勤務の友人に贈る場面",
-   "kind": "heading",
-   "by": "editor",
-   "why": "想定場面を明示",
    "added": "2026-10-17",
    "edit": true
   },
@@ -1033,7 +1006,8 @@
    "kind": "label",
    "by": "codex",
    "why": "漢字にできる語は漢字にします",
-   "added": "2026-10-17"
+   "added": "2026-10-17",
+   "scope": "template"
   },
   {
    "from": "緑茶は慶事で注意",
@@ -1185,7 +1159,8 @@
    "by": "editor",
    "why": "重複文を短く自然に",
    "added": "2026-10-17",
-   "edit": true
+   "edit": true,
+   "scope": "template"
   },
   {
    "from": "赤い花はお見舞い配慮",
