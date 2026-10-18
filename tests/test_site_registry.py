@@ -9,7 +9,7 @@ from sokuhou import deployplan
 
 ROOT = Path(__file__).resolve().parents[1]
 ENTRY_KEYS = {"name", "domain", "marker", "min_pages", "min_cards", "probe", "needs_var", "live_sha", "watch", "group", "timeout_minutes", "build", "own", "owns",
-              "fast_lane", "dir", "url", "core_tests", "lag_minutes", "upload"}
+              "fast_lane", "dir", "url", "core_tests", "lag_minutes", "upload", "cache_path", "cache_files"}
 SECRETISH = ("password", "secret", "token", "api_key", "apikey", "private key")
 
 
@@ -96,6 +96,13 @@ class RegisterTest(unittest.TestCase):
     def test_the_upload_mode_is_a_known_one(self):
         for n, s in self.reg["sites"].items():
             self.assertIn(s.get("upload", "auto"), ("auto", "rsync", "tar"), n)
+
+    def test_a_cached_folder_is_a_derived_one_inside_out_and_never_a_mall_file(self):
+        for n, s in self.reg["sites"].items():
+            if s.get("cache_path"):
+                self.assertTrue(s["cache_path"].startswith("out/") and s.get("cache_files"), n)
+                self.assertNotIn("items", s["cache_path"] + s["cache_files"], n)
+                self.assertNotIn(n, ("yorokobu",), "a site that handles shop data keeps nothing in the GitHub cache")
 
     def test_every_site_has_a_group_of_its_own(self):
         # one waiting job per concurrency group survives; a group shared between sites (or with a data workflow) lets one cancel another's waiting deploy

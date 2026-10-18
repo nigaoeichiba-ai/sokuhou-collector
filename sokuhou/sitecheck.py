@@ -440,7 +440,7 @@ def light_selection(urls: list[str], sample: int, prev_urls: set[str] | None = N
     return list(dict.fromkeys(home + new + picked))
 
 
-def check_live(base: str, workers: int = 24, probes: tuple[str, ...] = (), sample: int | None = None, prev_urls: set[str] | None = None, rate: float = 50) -> tuple[list[str], int]:
+def check_live(base: str, workers: int = 24, probes: tuple[str, ...] = (), sample: int | None = None, prev_urls: set[str] | None = None, rate: float = 80) -> tuple[list[str], int]:
     """See _check_live; the kept-alive connections are closed whatever happens."""
     set_rate(rate)
     try:
@@ -545,7 +545,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--probe", action="append", default=[], help="an extra path that must answer 200 (with --live)")
     ap.add_argument("--max", type=int, default=60, help="print at most this many problems")
     ap.add_argument("--workers", type=int, default=24, help="with --live: parallel requests (each worker keeps one connection open)")
-    ap.add_argument("--rate", type=float, default=50, help="with --live: at most this many requests per second in all (0 = no limit)")
+    ap.add_argument("--rate", type=float, default=80, help="with --live: at most this many requests per second in all (0 = no limit)")
     ap.add_argument("--sample", type=int, default=None, help="with --live: a LIGHT check (home page, pages new since --prev, and this many random pages); for content-only deploys")
     ap.add_argument("--prev", help="with --sample: the sitemap.xml of the previous deploy (its URLs are not 'new')")
     a = ap.parse_args(argv)

@@ -223,7 +223,8 @@ def plan(reg: dict, *, event: str, only: str, before: str, after: str, cwd: Path
         if d["go"]:
             include.append({"site": n, "dir": site["dir"], "url": site["url"], "build": site["build"], "min_pages": site["min_pages"], "min_cards": site["min_cards"],
                             "marker": site["marker"], "probe": site["probe"], "group": site["group"], "fast": d["fast"], "timeout": site["timeout_minutes"], "since": d.get("since", 0),
-                            "slot": len(include) % SLOTS, "upload": site.get("upload", "auto")})
+                            "slot": len(include) % SLOTS, "upload": site.get("upload", "auto"),
+                            "cache_path": site.get("cache_path", ""), "cache_files": site.get("cache_files", "")})
     return {"include": include, "decisions": decisions}
 
 

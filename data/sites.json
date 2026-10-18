@@ -27,6 +27,7 @@
     {"name": "yorokobu", "domain": "yorokobu-present.com", "marker": "よろこぶプレゼント", "min_pages": 120, "needs_var": true, "lag_minutes": 180,
      "build": "python sites/yorokobu/build.py --release --out release --items out/yorokobu_items.json"},
     {"name": "minna", "domain": "minna-no-illust.com", "marker": "みんなのイラスト", "min_pages": 90, "probe": "/sitemap-images.xml", "needs_var": true,
+     "cache_path": "out/minna_cache", "cache_files": "sites/minna/library/**",
      "fast_lane": ["sites/minna/library/*", "sites/minna/specs/*", "sites/minna/content/*"]},
     {"name": "atomou", "domain": "atomou.com", "marker": "あと何日、もう何日", "min_pages": 60, "needs_var": true,
      "build": "python sites/atomou/build.py {env:ATOMOU_BUILD_FLAG} --out release", "probe": "{env:ATOMOU_PROBE}"}

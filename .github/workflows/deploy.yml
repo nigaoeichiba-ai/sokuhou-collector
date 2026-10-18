@@ -183,6 +183,14 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk
           python -m pip install --quiet pillow -r requirements.txt
+      - name: Derived files kept between runs (a site's own pictures resized and converted, public, never shop data, only for a site whose entry in data/sites.json names a cache_path)
+        if: steps.gate.outputs.go == 'true' && matrix.cache_path != ''
+        uses: actions/cache@v4
+        with:
+          path: ${{ matrix.cache_path }}
+          key: derived-${{ matrix.site }}-v1-${{ hashFiles(matrix.cache_files) }}
+          restore-keys: |
+            derived-${{ matrix.site }}-v1-
       - name: SSH setup (first thing, before the long steps, a server that does not answer from this runner is found in about a minute, not after the tests)
         id: ssh
         if: steps.gate.outputs.go == 'true'
@@ -233,12 +241,14 @@ jobs:
         if: steps.gate.outputs.go == 'true' && steps.gate.outputs.fast != 'true'
         env:
           SITE: ${{ matrix.site }}
+          CACHE_PATH: ${{ matrix.cache_path }}
         run: |
           # The tests run beside the build and the checks below, in a second work tree of this checkout (git worktree + the git-ignored files already here, e.g. yorokobu's private data),
           # so that nothing they write (out/, caches, release/) meets what the build reads.  The step "Unit tests result" waits for them and stops the job if they failed, before the server is touched.
           T="$RUNNER_TEMP/testtree"
           git worktree add --detach "$T" HEAD > /dev/null
           git ls-files -z --others --ignored --exclude-standard | grep -zv -e '^out/' -e '^release/' -e '^demo_build/' -e '__pycache__' | xargs -0 -r cp --parents -t "$T"
+          if [ -n "$CACHE_PATH" ] && [ -d "$CACHE_PATH" ]; then mkdir -p "$T/$(dirname "$CACHE_PATH")"; cp -a "$CACHE_PATH" "$T/$CACHE_PATH"; fi   # the tests start with the same derived files, in their own copy
           cd "$T"
           rm -f "$RUNNER_TEMP/tests.rc"
           setsid nohup bash -c 'CI=true python tests/run_tests.py --strict --site "$0"; echo $? > "$1/tests.rc"' "$SITE" "$RUNNER_TEMP" > "$RUNNER_TEMP/tests.log" 2>&1 < /dev/null &
