@@ -32,6 +32,7 @@ REGISTRY = ROOT / "data" / "sites.json"
 SHA = re.compile(r"[0-9a-f]{40}")
 ZEROS = re.compile(r"0+")
 NAME = re.compile(r"[a-z][a-z0-9]*")
+SLOTS = 10    # the jobs of one run connect to the server one after the other: slot * 12 seconds apart (see 'SSH setup' in deploy.yml); with max-parallel 10 the slots are the places in a wave
 SKIPPABLE = ("sites/", "sokuhou/", "data/", "tests/")   # what the push trigger of deploy.yml watches (besides requirements.txt and the workflow itself)
 
 
@@ -221,7 +222,8 @@ def plan(reg: dict, *, event: str, only: str, before: str, after: str, cwd: Path
         decisions[n] = d
         if d["go"]:
             include.append({"site": n, "dir": site["dir"], "url": site["url"], "build": site["build"], "min_pages": site["min_pages"], "min_cards": site["min_cards"],
-                            "marker": site["marker"], "probe": site["probe"], "group": site["group"], "fast": d["fast"], "timeout": site["timeout_minutes"], "since": d.get("since", 0)})
+                            "marker": site["marker"], "probe": site["probe"], "group": site["group"], "fast": d["fast"], "timeout": site["timeout_minutes"], "since": d.get("since", 0),
+                            "slot": len(include) % SLOTS})
     return {"include": include, "decisions": decisions}
 
 

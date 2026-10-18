@@ -191,11 +191,14 @@ jobs:
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
           SITE: ${{ matrix.site }}
+          SLOT: ${{ matrix.slot }}
         run: |
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "$KEY" > ~/.ssh/id_xserver
           chmod 600 ~/.ssh/id_xserver
-          sleep $((RANDOM % 8))   # a wave of sites does not knock on the server in the same second (it drops simultaneous connections); no fixed per-site wait any more (it was 0 to 160 s)
+          # The jobs of one run do not knock on the server in the same second: slot * 12 seconds apart (0 for a single site, up to 108 s in a wave of ten).  On 2026-10-18 at 08:21 JST three of five
+          # jobs that started together found the server unreachable on every port (10022, 443, 21, 990) from three different runner addresses, while the other two connected.
+          sleep $((SLOT * 12 + RANDOM % 5))
           # one connection for the whole job (ControlMaster): every later ssh and tar of this job reuses it; a host key that is not known yet is accepted on first contact
           printf '%s\n' 'Host *' '  ConnectionAttempts 2' '  ConnectTimeout 10' '  StrictHostKeyChecking accept-new' '  ServerAliveInterval 15' '  ServerAliveCountMax 4' \
             '  ControlMaster auto' '  ControlPath ~/.ssh/cm-%C' '  ControlPersist 30m' > ~/.ssh/config

@@ -246,6 +246,18 @@ class WaitMeasured(PlanBase):
         self.assertEqual([i["since"] for i in self.plan(before, after, event="workflow_dispatch", only="minna")["include"]], [0])
 
 
+class ConnectionSlots(PlanBase):
+    def test_the_sites_of_one_run_get_different_slots_and_a_single_site_goes_at_once(self):
+        before = self.head()
+        after = self.commit("sokuhou/sitekit.py", "shared")
+        slots = [i["slot"] for i in self.plan(before, after, served=before)["include"]]
+        self.assertEqual(slots, list(range(len(SITES))))
+        after2 = self.commit("sites/minna/a.json", "minna")
+        self.assertEqual([i["slot"] for i in self.plan(after, after2, served=after)["include"]], [0])
+
+    def test_slots_repeat_after_ten_so_that_a_wave_waits_at_most_two_minutes(self):
+        self.assertEqual(deployplan.SLOTS, 10)
+
 class RegisterChanges(PlanBase):
     def register(self, mutate):
         data = json.loads((ROOT / "data" / "sites.json").read_text(encoding="utf-8"))
