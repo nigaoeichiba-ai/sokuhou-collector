@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-19",
+ "slug": "clay-autumn-fruits",
+ "title": "秋の果物(粘土)",
+ "genre": "food",
+ "touch": "clay",
+ "lead": "柿・梨・ぶどう・栗など、秋の果物と実りを粘土細工のタッチで12点描きました。秋のメニューや直売所の案内に使えます。",
+ "tags": [
+  "秋",
+  "果物",
+  "柿",
+  "ぶどう",
+  "梨",
+  "粘土",
+  "実り"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "clay-autumn-fruits-kaki",
+   "file": "clay-autumn-fruits-kaki.webp",
+   "title": "柿",
+   "desc": "柿のぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "秋の果物(粘土)",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 488,
+   "h": 401
+  },
+  {
+   "id": "clay-autumn-fruits-nashi",
+   "file": "clay-autumn-fruits-nashi.webp",
+   "title": "梨",
+   "desc": "梨のぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "梨",
+    "秋の果物(粘土)",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 487,
+   "h": 421
+  },
+  {
+   "id": "clay-autumn-fruits-budo",
+   "file": "clay-autumn-fruits-budo.webp",
+   "title": "ぶどう",
+   "desc": "ぶどうのぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "秋の果物(粘土)",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 428,
+   "h": 482
+  },
+  {
+   "id": "clay-autumn-fruits-kuri",
+   "file": "clay-autumn-fruits-kuri.webp",
+   "title": "栗",
+   "desc": "栗のぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "秋の果物(粘土)",
+    "栗",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 476,
+   "h": 445
+  },
+  {
+   "id": "clay-autumn-fruits-ringo",
+   "file": "clay-autumn-fruits-ringo.webp",
+   "title": "りんご",
+   "desc": "りんごのぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "秋の果物(粘土)",
+    "りんご",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 415,
+   "h": 433
+  },
+  {
+   "id": "clay-autumn-fruits-imo",
+   "file": "clay-autumn-fruits-imo.webp",
+   "title": "さつまいも",
+   "desc": "さつまいものぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "秋の果物(粘土)",
+    "さつまいも",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 479,
+   "h": 412
+  },
+  {
+   "id": "clay-autumn-fruits-mikan",
+   "file": "clay-autumn-fruits-mikan.webp",
+   "title": "みかん",
+   "desc": "みかんのぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "秋の果物(粘土)",
+    "みかん",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 506,
+   "h": 443
+  },
+  {
+   "id": "clay-autumn-fruits-ichijiku",
+   "file": "clay-autumn-fruits-ichijiku.webp",
+   "title": "いちじく",
+   "desc": "いちじくのぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "秋の果物(粘土)",
+    "いちじく",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 483,
+   "h": 440
+  },
+  {
+   "id": "clay-autumn-fruits-lemon",
+   "file": "clay-autumn-fruits-lemon.webp",
+   "title": "レモン",
+   "desc": "レモンのぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "秋の果物(粘土)",
+    "レモン",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 452,
+   "h": 432
+  },
+  {
+   "id": "clay-autumn-fruits-kiwi",
+   "file": "clay-autumn-fruits-kiwi.webp",
+   "title": "キウイ",
+   "desc": "キウイのぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "秋の果物(粘土)",
+    "キウイ",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 502,
+   "h": 407
+  },
+  {
+   "id": "clay-autumn-fruits-basket",
+   "file": "clay-autumn-fruits-basket.webp",
+   "title": "果物かご",
+   "desc": "果物かごのぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "秋の果物(粘土)",
+    "果物かご",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 490,
+   "h": 488
+  },
+  {
+   "id": "clay-autumn-fruits-momiji",
+   "file": "clay-autumn-fruits-momiji.webp",
+   "title": "実りと落ち葉",
+   "desc": "実りと落ち葉のぷっくり立体風イラストです。",
+   "tags": [
+    "秋",
+    "果物",
+    "柿",
+    "ぶどう",
+    "実り",
+    "秋の果物(粘土)",
+    "実りと落ち葉",
+    "ぷっくり立体風",
+    "食べ物"
+   ],
+   "w": 489,
+   "h": 458
+  }
+ ]
+}

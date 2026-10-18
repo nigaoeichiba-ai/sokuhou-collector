@@ -1,0 +1,84 @@
+{
+ "slug": "hiking-trail-flat",
+ "title": "登山・ハイキングの道具と景色",
+ "subject": "",
+ "genre": "nature",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "priority": 30,
+ "lead": "登山・ハイキングで使う道具と、山道の景色を12点にまとめました。レジャー情報や観光案内、アウトドアの紹介に使えます。",
+ "tags": [
+  "登山",
+  "ハイキング",
+  "山",
+  "アウトドア",
+  "リュック",
+  "トレッキング"
+ ],
+ "subject_en": "Simple modern flat vector hiking illustrations in a palette of forest green, sky blue, warm orange and brown, with no people. Each item is a separate small subject centred in its cell with space around, never touching another. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates, clouds) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "exclude": [],
+ "items": [
+  [
+   "mountain",
+   "山並み",
+   "layered mountain range with a small peak in front"
+  ],
+  [
+   "rucksack",
+   "リュック",
+   "a big hiking backpack with a rolled mat on top"
+  ],
+  [
+   "boots",
+   "登山靴",
+   "a pair of sturdy hiking boots"
+  ],
+  [
+   "trailsign",
+   "道しるべ",
+   "a wooden direction post with two blank arrow boards"
+  ],
+  [
+   "thermos",
+   "水筒",
+   "a metal flask with a cup lid"
+  ],
+  [
+   "map",
+   "地図とコンパス",
+   "a folded paper map with a compass on it"
+  ],
+  [
+   "tent",
+   "テント",
+   "a small dome tent in a meadow"
+  ],
+  [
+   "bridge",
+   "吊り橋",
+   "a rope suspension bridge over a valley"
+  ],
+  [
+   "summit",
+   "山頂の旗",
+   "a small flag standing on a rocky summit"
+  ],
+  [
+   "waterfall",
+   "滝",
+   "a waterfall between green rocks"
+  ],
+  [
+   "hat",
+   "帽子と手袋",
+   "a brimmed hiking hat and a pair of gloves"
+  ],
+  [
+   "lunch",
+   "山のお弁当",
+   "a rice ball and a boiled egg on a bamboo leaf with a tin cup"
+  ]
+ ]
+}

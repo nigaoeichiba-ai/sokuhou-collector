@@ -1,0 +1,85 @@
+{
+ "slug": "duotone-night-reading",
+ "title": "夜の読書とカフェ",
+ "subject": "",
+ "genre": "life",
+ "touch": "duotone",
+ "title_fmt": "{ja}",
+ "priority": 33,
+ "lead": "読書灯・本棚・コーヒーなど、夜の読書とカフェの場面を紺と黄色の2色で12点描きました。書籍の紹介やカフェのメニューに使えます。",
+ "tags": [
+  "夜",
+  "読書",
+  "カフェ",
+  "コーヒー",
+  "本",
+  "2色",
+  "静か"
+ ],
+ "subject_en": "two-colour duotone illustration using only deep navy blue and warm yellow-cream, with the navy as the closed outline and large shapes, the yellow as lamp light and highlights, quiet night mood, no people. Each item is a separate small subject centred in its cell with space around, never touching another. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates, clouds) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "exclude": [],
+ "items": [
+  [
+   "lamp",
+   "読書灯",
+   "a desk lamp lighting an open book"
+  ],
+  [
+   "cupbook",
+   "コーヒーと本",
+   "a coffee cup on a saucer beside a stack of books"
+  ],
+  [
+   "window",
+   "夜の窓",
+   "a window with a crescent moon and curtains"
+  ],
+  [
+   "bookshelf",
+   "本棚",
+   "a tall bookshelf with a small ladder"
+  ],
+  [
+   "armchair",
+   "安楽椅子",
+   "an armchair with a folded blanket"
+  ],
+  [
+   "cat",
+   "本の上の猫",
+   "a sleeping cat curled on an open book"
+  ],
+  [
+   "candle",
+   "ろうそく",
+   "a candle in a holder"
+  ],
+  [
+   "teapot",
+   "ポットとカップ",
+   "a teapot with two cups"
+  ],
+  [
+   "record",
+   "レコード",
+   "a record player"
+  ],
+  [
+   "cafe",
+   "夜のカフェ",
+   "a small cafe front with a hanging lamp and a sign board with no writing"
+  ],
+  [
+   "notebook",
+   "ノートと万年筆",
+   "an open notebook with a fountain pen"
+  ],
+  [
+   "moonbook",
+   "月と本",
+   "a big moon behind a stack of books"
+  ]
+ ]
+}

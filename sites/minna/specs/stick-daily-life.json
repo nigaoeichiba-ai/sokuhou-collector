@@ -1,0 +1,84 @@
+{
+ "slug": "stick-daily-life",
+ "title": "棒人間の毎日",
+ "subject": "",
+ "genre": "life",
+ "touch": "stick",
+ "title_fmt": "{ja}",
+ "priority": 34,
+ "lead": "朝の支度から就寝まで、日常のひとこまを棒人間で12点描きました。資料や説明図にそのまま差し込めるシンプルな素材です。",
+ "tags": [
+  "棒人間",
+  "日常",
+  "暮らし",
+  "生活",
+  "シンプル",
+  "ピクトグラム風"
+ ],
+ "subject_en": "the SAME friendly stick figure in daily life: a round head in warm cream (#FFF6E0, never pure white) with a closed black outline, dot eyes and a simple mouth, body and limbs as thick uniform black lines, a single orange scarf as the only accent colour; props are drawn with the same thick black line and may use the same orange. Each item is a small scene with one figure. Each item is a separate small subject centred in its cell with space around, never touching another. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates, clouds) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "exclude": [],
+ "items": [
+  [
+   "wakeup",
+   "起きる",
+   "stretching both arms up next to a small bed"
+  ],
+  [
+   "brush",
+   "歯みがき",
+   "brushing teeth at a small sink"
+  ],
+  [
+   "breakfast",
+   "朝ごはん",
+   "eating at a small table with a bowl and a cup"
+  ],
+  [
+   "commute",
+   "通勤",
+   "walking with a bag toward the right"
+  ],
+  [
+   "train",
+   "電車に乗る",
+   "standing and holding a strap in a train car"
+  ],
+  [
+   "shopping",
+   "買い物",
+   "carrying a shopping basket"
+  ],
+  [
+   "cooking",
+   "料理",
+   "stirring a pot on a stove"
+  ],
+  [
+   "laundry",
+   "洗濯物を干す",
+   "hanging a shirt on a laundry line"
+  ],
+  [
+   "phone",
+   "電話",
+   "talking on a phone"
+  ],
+  [
+   "reading",
+   "読書",
+   "sitting and reading a book"
+  ],
+  [
+   "bath",
+   "お風呂",
+   "sitting in a bathtub with only the head and shoulders visible"
+  ],
+  [
+   "sleep",
+   "ねむる",
+   "lying in bed under a blanket"
+  ]
+ ]
+}

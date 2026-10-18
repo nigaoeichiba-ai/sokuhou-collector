@@ -1,0 +1,157 @@
+{
+ "added": "2026-10-19",
+ "slug": "pictogram-public-facilities",
+ "title": "公共施設のピクトグラム",
+ "genre": "icon",
+ "touch": "pictogram",
+ "lead": "駅・病院・トイレ・エレベーターなど、公共施設を表すピクトグラム12点です。案内図やチラシに使えます。",
+ "tags": [
+  "ピクトグラム",
+  "案内",
+  "公共施設",
+  "トイレ",
+  "駅",
+  "病院",
+  "標識"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "pictogram-public-facilities-toilet",
+   "file": "pictogram-public-facilities-toilet.webp",
+   "title": "トイレ",
+   "desc": "トイレのピクトグラムイラストです。",
+   "tags": [
+    "ピクトグラム",
+    "案内",
+    "公共施設",
+    "トイレ",
+    "公共施設のピクトグラム",
+    "アイコン・マーク"
+   ],
+   "w": 417,
+   "h": 416
+  },
+  {
+   "id": "pictogram-public-facilities-elevator",
+   "file": "pictogram-public-facilities-elevator.webp",
+   "title": "エレベーター",
+   "desc": "エレベーターのピクトグラムイラストです。",
+   "tags": [
+    "ピクトグラム",
+    "案内",
+    "公共施設",
+    "トイレ",
+    "公共施設のピクトグラム",
+    "エレベーター",
+    "アイコン・マーク"
+   ],
+   "w": 416,
+   "h": 416
+  },
+  {
+   "id": "pictogram-public-facilities-stairs",
+   "file": "pictogram-public-facilities-stairs.webp",
+   "title": "階段",
+   "desc": "階段のピクトグラムイラストです。",
+   "tags": [
+    "ピクトグラム",
+    "案内",
+    "公共施設",
+    "トイレ",
+    "公共施設のピクトグラム",
+    "階段",
+    "アイコン・マーク"
+   ],
+   "w": 416,
+   "h": 416
+  },
+  {
+   "id": "pictogram-public-facilities-hospital",
+   "file": "pictogram-public-facilities-hospital.webp",
+   "title": "病院",
+   "desc": "病院のピクトグラムイラストです。",
+   "tags": [
+    "ピクトグラム",
+    "案内",
+    "公共施設",
+    "トイレ",
+    "病院",
+    "公共施設のピクトグラム",
+    "アイコン・マーク"
+   ],
+   "w": 415,
+   "h": 416
+  },
+  {
+   "id": "pictogram-public-facilities-station",
+   "file": "pictogram-public-facilities-station.webp",
+   "title": "駅",
+   "desc": "駅のピクトグラムイラストです。",
+   "tags": [
+    "ピクトグラム",
+    "案内",
+    "公共施設",
+    "トイレ",
+    "駅",
+    "公共施設のピクトグラム",
+    "アイコン・マーク"
+   ],
+   "w": 416,
+   "h": 416
+  },
+  {
+   "id": "pictogram-public-facilities-bus",
+   "file": "pictogram-public-facilities-bus.webp",
+   "title": "バス停",
+   "desc": "バス停のピクトグラムイラストです。",
+   "tags": [
+    "ピクトグラム",
+    "案内",
+    "公共施設",
+    "トイレ",
+    "公共施設のピクトグラム",
+    "バス停",
+    "アイコン・マーク"
+   ],
+   "w": 415,
+   "h": 416
+  },
+  {
+   "id": "pictogram-public-facilities-info",
+   "file": "pictogram-public-facilities-info.webp",
+   "title": "案内所",
+   "desc": "案内所のピクトグラムイラストです。",
+   "tags": [
+    "ピクトグラム",
+    "案内",
+    "公共施設",
+    "トイレ",
+    "公共施設のピクトグラム",
+    "案内所",
+    "アイコン・マーク"
+   ],
+   "w": 455,
+   "h": 453
+  },
+  {
+   "id": "pictogram-public-facilities-exit",
+   "file": "pictogram-public-facilities-exit.webp",
+   "title": "非常口",
+   "desc": "非常口のピクトグラムイラストです。",
+   "tags": [
+    "ピクトグラム",
+    "案内",
+    "公共施設",
+    "トイレ",
+    "公共施設のピクトグラム",
+    "非常口",
+    "アイコン・マーク"
+   ],
+   "w": 455,
+   "h": 453
+  }
+ ]
+}

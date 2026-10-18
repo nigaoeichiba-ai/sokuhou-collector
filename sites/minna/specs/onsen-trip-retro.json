@@ -1,0 +1,84 @@
+{
+ "slug": "onsen-trip-retro",
+ "title": "温泉旅行の小物と風景",
+ "subject": "",
+ "genre": "life",
+ "touch": "retro",
+ "title_fmt": "{ja}",
+ "priority": 32,
+ "lead": "温泉旅行で出会う小物や風景を、昭和のポスター風のタッチで12点描きました。旅行のチラシや宿の案内に使えます。",
+ "tags": [
+  "温泉",
+  "旅行",
+  "旅館",
+  "昭和レトロ",
+  "湯けむり",
+  "浴衣"
+ ],
+ "subject_en": "Showa-era retro Japanese poster style: slightly muted warm palette (mustard, teal, vermilion, cream), thick dark-brown outline, flat colour with a little halftone dot shading, no people. Each item is a separate small subject centred in its cell with space around, never touching another. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates, clouds) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "season": null,
+ "holes": false,
+ "exclude": [],
+ "items": [
+  [
+   "yukemuri",
+   "湯けむりの露天風呂",
+   "an open-air stone bath with rising steam and a wooden bucket"
+  ],
+  [
+   "yukata",
+   "浴衣",
+   "a folded cotton yukata with an obi belt"
+  ],
+  [
+   "geta",
+   "下駄",
+   "a pair of wooden geta sandals"
+  ],
+  [
+   "tamago",
+   "温泉卵",
+   "a hot spring egg in a small bowl"
+  ],
+  [
+   "manju",
+   "温泉まんじゅう",
+   "three steamed buns on a small plate"
+  ],
+  [
+   "noren",
+   "のれん",
+   "a blank indigo shop curtain hanging from a rod"
+  ],
+  [
+   "towel",
+   "手ぬぐい",
+   "a rolled small towel and a soap dish"
+  ],
+  [
+   "ryokan",
+   "旅館",
+   "a traditional two-storey inn with a tiled roof and lanterns"
+  ],
+  [
+   "milk",
+   "瓶の牛乳",
+   "a glass milk bottle with a paper cap"
+  ],
+  [
+   "pingpong",
+   "卓球",
+   "two paddles and a ball on a table corner"
+  ],
+  [
+   "lantern",
+   "ちょうちん",
+   "a red paper lantern"
+  ],
+  [
+   "monkeys",
+   "湯につかる猿",
+   "a snow monkey soaking in a hot spring pool"
+  ]
+ ]
+}

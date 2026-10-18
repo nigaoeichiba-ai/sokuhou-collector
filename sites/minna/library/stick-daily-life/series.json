@@ -1,0 +1,225 @@
+{
+ "added": "2026-10-19",
+ "slug": "stick-daily-life",
+ "title": "棒人間の毎日",
+ "genre": "life",
+ "touch": "stick",
+ "lead": "朝の支度から就寝まで、日常のひとこまを棒人間で12点描きました。資料や説明図にそのまま差し込めるシンプルな素材です。",
+ "tags": [
+  "棒人間",
+  "日常",
+  "暮らし",
+  "生活",
+  "シンプル",
+  "ピクトグラム風"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "stick-daily-life-wakeup",
+   "file": "stick-daily-life-wakeup.webp",
+   "title": "起きる",
+   "desc": "起きるの棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "起きる",
+    "暮らし・物"
+   ],
+   "w": 385,
+   "h": 378
+  },
+  {
+   "id": "stick-daily-life-brush",
+   "file": "stick-daily-life-brush.webp",
+   "title": "歯みがき",
+   "desc": "歯みがきの棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "歯みがき",
+    "暮らし・物"
+   ],
+   "w": 272,
+   "h": 375
+  },
+  {
+   "id": "stick-daily-life-breakfast",
+   "file": "stick-daily-life-breakfast.webp",
+   "title": "朝ごはん",
+   "desc": "朝ごはんの棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "朝ごはん",
+    "暮らし・物"
+   ],
+   "w": 365,
+   "h": 374
+  },
+  {
+   "id": "stick-daily-life-commute",
+   "file": "stick-daily-life-commute.webp",
+   "title": "通勤",
+   "desc": "通勤の棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "通勤",
+    "暮らし・物"
+   ],
+   "w": 241,
+   "h": 390
+  },
+  {
+   "id": "stick-daily-life-train",
+   "file": "stick-daily-life-train.webp",
+   "title": "電車に乗る",
+   "desc": "電車に乗るの棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "電車に乗る",
+    "暮らし・物"
+   ],
+   "w": 375,
+   "h": 391
+  },
+  {
+   "id": "stick-daily-life-shopping",
+   "file": "stick-daily-life-shopping.webp",
+   "title": "買い物",
+   "desc": "買い物の棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "買い物",
+    "暮らし・物"
+   ],
+   "w": 245,
+   "h": 390
+  },
+  {
+   "id": "stick-daily-life-cooking",
+   "file": "stick-daily-life-cooking.webp",
+   "title": "料理",
+   "desc": "料理の棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "料理",
+    "暮らし・物"
+   ],
+   "w": 346,
+   "h": 443
+  },
+  {
+   "id": "stick-daily-life-laundry",
+   "file": "stick-daily-life-laundry.webp",
+   "title": "洗濯物を干す",
+   "desc": "洗濯物を干すの棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "洗濯物を干す",
+    "暮らし・物"
+   ],
+   "w": 506,
+   "h": 415
+  },
+  {
+   "id": "stick-daily-life-phone",
+   "file": "stick-daily-life-phone.webp",
+   "title": "電話",
+   "desc": "電話の棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "電話",
+    "暮らし・物"
+   ],
+   "w": 232,
+   "h": 429
+  },
+  {
+   "id": "stick-daily-life-reading",
+   "file": "stick-daily-life-reading.webp",
+   "title": "読書",
+   "desc": "読書の棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "読書",
+    "暮らし・物"
+   ],
+   "w": 279,
+   "h": 423
+  },
+  {
+   "id": "stick-daily-life-bath",
+   "file": "stick-daily-life-bath.webp",
+   "title": "お風呂",
+   "desc": "お風呂の棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "お風呂",
+    "暮らし・物"
+   ],
+   "w": 449,
+   "h": 391
+  },
+  {
+   "id": "stick-daily-life-sleep",
+   "file": "stick-daily-life-sleep.webp",
+   "title": "ねむる",
+   "desc": "ねむるの棒人間イラストです。",
+   "tags": [
+    "棒人間",
+    "日常",
+    "暮らし",
+    "生活",
+    "棒人間の毎日",
+    "ねむる",
+    "暮らし・物"
+   ],
+   "w": 426,
+   "h": 398
+  }
+ ]
+}
