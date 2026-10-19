@@ -112,12 +112,39 @@ def _norm(s: str) -> str:
     return unicodedata.normalize("NFKC", s)
 
 
+KATAKANA = re.compile(r"[ァ-ヶー]")
+KATAKANA_WORD = re.compile(r"[ァ-ヶー]+")
+TAILS = ("セット", "ギフト", "ペア")                                   # what may follow a kind word that is written in katakana without making it another word
+INSIDE = {"リップ": ("クリップ",), "コップ": ("スコップ",), "グラス": ("サングラス",)}      # a word that stands inside a longer, different one ("マネークリップ" is not "リップ")
+
+
+def occurrences(t: str, w: str) -> list[int]:
+    """Where the kind word `w` stands in the (normalised) title `t` AS A WORD: a katakana word that goes on into more katakana is another word ("マグネット" is not "マグ",
+    "スタイル" is not "スタイ"), except for the few endings that only say a set or a pair, and the list INSIDE of known look-alikes ("クリップ" is not "リップ")."""
+    wn = _norm(w)
+    if not wn:
+        return []
+    out, i = [], t.find(wn)
+    while i >= 0:
+        end, ok = i + len(wn), True
+        if KATAKANA_WORD.fullmatch(wn):
+            if end < len(t) and KATAKANA.match(t[end]) and not any(t.startswith(a, end) for a in TAILS):
+                ok = False
+            for bad in INSIDE.get(wn, ()):
+                if t.startswith(bad, i - bad.find(wn)):
+                    ok = False
+        if ok:
+            out.append(i)
+        i = t.find(wn, i + 1)
+    return out
+
+
 def _best(t: str, words: list[str]) -> str:
     hits = []
     for w in words:
-        n = t.count(_norm(w))
-        if n:
-            hits.append((w, t.find(_norm(w)), n))
+        at = occurrences(t, w)
+        if at:
+            hits.append((w, at[0], len(at)))
     if not hits:
         return ""
     long = [h for h in hits if not any(h[0] != o[0] and h[0] in o[0] for o in hits)]                      # a word inside a longer hit goes
