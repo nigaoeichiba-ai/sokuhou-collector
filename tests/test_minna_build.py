@@ -78,10 +78,9 @@ class MinnaBuildTest(unittest.TestCase):
         for needle in ('download="season-christmas.png"', "ずっと無料・商用OK・クレジット不要", '"@type": "ImageObject"',
                        '"license": "https://minna-no-illust.com/license/"', "/files/season-christmas.png", 'class="bgsw"'):
             self.assertIn(needle, html)
-        # owner decision 2026-10-12: the AI explanation is on the licence page (and the about/privacy sources), not on every picture and not in the footer
+        # owner decisions 2026-10-12 and 2026-10-20: the site does not say how the pictures are made, on no page (see test_minna_value: no page names it)
         for gone in ("ai-note", "AIで生成し", "生成AI"):
             self.assertNotIn(gone, html)
-        self.assertIn("生成AIで制作", self.read("license/index.html"))
 
     def test_the_indexnow_key_file_is_published_at_the_site_root(self):
         self.assertIn("0123456789abcdef0123456789abcdef.txt", self.files)
@@ -91,6 +90,9 @@ class MinnaBuildTest(unittest.TestCase):
         html = self.read("license/index.html")
         self.assertIn("利用の許諾", html)
         self.assertIn("商用利用", html)
+        for condition in ("クレジット", "素材集として配布・販売することはできません", "商標として登録", "LINEスタンプ", "人を傷つける内容"):
+            self.assertIn(condition, html)                                       # the conditions of use stay
+        self.assertIn("帰属するかについては、断定しません", html)
         self.assertNotIn("著作権は当サイトに帰属します", html)
         self.assertNotIn("侵害しないことを保証します", html)
 

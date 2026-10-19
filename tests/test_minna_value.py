@@ -100,14 +100,44 @@ class InThePages(unittest.TestCase):
         for h2 in ("編集方針", "誤りを見つけたら", "更新の履歴", "免責事項"):
             self.assertIn(f"<h2>{h2}</h2>", about)
         self.assertLess(about.index("<h2>編集方針</h2>"), about.index("<h2>免責事項</h2>"))
-        # the owner does not want the site to say that its text or pages were made with AI or automatically (2026-10-19); the one sentence on where the pictures come from stays
+        # the owner does not want the site to say that its text, pages or pictures were made with AI or automatically (2026-10-19, 2026-10-20)
         for word in ("Claude", "Anthropic", "自動", "プログラムで", "AI(", "支援を受け"):
             self.assertNotIn(word, about, word)
-        self.assertIn("イラストは生成AIが制作しています。", about)
+        self.assertIn("キャラクターは当サイトのオリジナルです。", about)
         self.assertRegex(about, r"<li>20\d\d-\d\d-\d\d: ")
         for rel in ("privacy/index.html", "contact/index.html"):
             self.assertNotIn("<h2>編集方針</h2>", self.read(rel))                 # only the about page is extended
         self.assertEqual(about.count(SHARED_CFG["operator_name"]), 1)             # the company name stays on this page only, once
+
+
+class NoOriginClaims(unittest.TestCase):
+    """オーナー決定 2026-10-20: the site does not say how the pictures are made (nor that its text or pages were made by a program or an AI).
+    The card maker's own words about the AI built into Chrome describe a feature, and a set about people who use AI at work is a subject; neither is a claim about the site."""
+    CLAIM = re.compile(r"生成AI|AI生成|AIが制作|AIで制作|AI制作|AIで生成|AIで作成|AIによる(?:生成|制作)|AIの支援|AIを使って(?:作|制作)|人工知能|機械が作|自動で作|自動的に作|Claude|Anthropic|ChatGPT")
+
+    def test_no_page_file_feed_or_data_says_how_the_pictures_are_made(self):
+        out, files = shared_site()
+        bad = []
+        for rel in files:
+            if not rel.endswith((".html", ".xml", ".json", ".txt", ".webmanifest", ".php")):
+                continue
+            text = (out / rel).read_text(encoding="utf-8", errors="ignore")
+            m = self.CLAIM.search(text)
+            if m:
+                bad.append((rel, text[max(0, m.start() - 20):m.end() + 20]))
+        self.assertEqual(bad, [])
+
+    def test_the_check_finds_the_old_wording(self):
+        for old in ("イラストは生成AIが制作しています。", "素材は透明PNGで、AI生成後に選定・整備した", "AIの支援を受けて作成", "AI(Anthropic の Claude)"):
+            self.assertTrue(self.CLAIM.search(old), old)
+        for fine in ("Chromeに内蔵のAIで、この端末の中で作ります(無料)。", "AI・DXを使う仕事の人物素材", "AIに質問する(AI・DXを使う仕事の人)"):
+            self.assertFalse(self.CLAIM.search(fine), fine)
+
+    def test_the_licence_page_keeps_the_conditions_and_states_no_owner_of_the_rights(self):
+        out, _files = shared_site()
+        html = (out / "license/index.html").read_text(encoding="utf-8")
+        self.assertIn("<h2><span class=\"scribble\">権利について</span></h2>", html)
+        self.assertIn("イラストの権利が誰に帰属するかについては、断定しません", html)
 
 
 class NoAdsOnLinkPages(unittest.TestCase):
