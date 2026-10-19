@@ -115,7 +115,7 @@ def guide_page(cfg, preview, g: dict, series: list[dict]) -> str:
               + "".join(f'<p><a href="{s_["url"]}">「{esc(s_["title"])}」をすべて見る</a></p>' for s_ in rel) + "</section>") if its else ""
     ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": g["title"], "description": g["description"], "inLanguage": "ja",
                      "datePublished": g.get("date", "2026-10-07"), "dateModified": g.get("date", "2026-10-07"),
-                     "author": {"@type": "Organization", "name": cfg["operator_name"]}, "publisher": {"@type": "Organization", "name": cfg["operator_name"]},
+                     "author": {"@type": "Organization", "name": cfg["site_name"]}, "publisher": {"@type": "Organization", "name": cfg["site_name"]},
                      "mainEntityOfPage": f"{base}/guide/{g['slug']}/"}, ensure_ascii=False)
     faq_ld = ""
     if g.get("faq"):
@@ -895,7 +895,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
     tags = "".join(f'<li><a href="{tag_url(x)}">{esc(x)}</a></li>' if x in SITE.get("tags", ()) else f'<li>{esc(x)}</li>' for x in it["tags"])
     ld = json.dumps({"@context": "https://schema.org", "@type": "ImageObject", "contentUrl": f"{base}/files/{it['id']}.png", "name": it["title"],
                      "description": it["desc"], "license": f"{base}/license/", "acquireLicensePage": f"{base}/license/",
-                     "creditText": cfg["site_name"], "creator": {"@type": "Organization", "name": cfg["operator_name"]}, "width": it["w"], "height": it["h"],
+                     "creditText": cfg["site_name"], "creator": {"@type": "Organization", "name": cfg["site_name"]}, "width": it["w"], "height": it["h"],
                      "encodingFormat": "image/png", "keywords": ", ".join(it["tags"])}, ensure_ascii=False)
     prev_next = ""
     if len(s["items"]) > 1:
