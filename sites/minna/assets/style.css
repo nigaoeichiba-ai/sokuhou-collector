@@ -797,6 +797,10 @@ header.site nav a[aria-current] { background: var(--brand); color: var(--ink); }
 .tool-card span { font-size: .9rem; color: var(--muted); line-height: 1.7; }
 @media (max-width: 760px) { .mk-cols { grid-template-columns: minmax(0, 1fr); } }
 .use-links { display: grid; gap: 6px; }
+.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 18px; margin: 0; padding: 14px 18px; background: #fff; border: var(--line2); border-radius: 12px; }
+.facts dt { font-weight: 700; color: var(--muted); }
+.facts dd { margin: 0; line-height: 1.7; }
+@media (max-width: 560px) { .facts { grid-template-columns: minmax(0, 1fr); gap: 2px; } .facts dd { margin-bottom: 8px; } }
 /* the links of an advertising box carry only the attributes the programmes give (href, target, rel): their look is set here, on the box */
 .pr-box li span a { display: inline-flex; align-items: center; justify-content: center; padding: .35em 1em; background: #fff; color: var(--ink); border: 1px solid var(--edge); border-radius: 10px; font-family: var(--display); font-weight: 700; font-size: .85rem; text-decoration: none; text-align: center; }
 .pr-box li span a:hover { background: var(--mint-s); }

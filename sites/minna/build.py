@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.minna import model, printables, wishes  # noqa: E402
+from sites.minna import facts, model, printables, wishes  # noqa: E402
 from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
 from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
 from sites.minna.taxonomy import GENRE_BY_SLUG, GENRES, TOUCH_BY_SLUG, TOUCHES  # noqa: E402
@@ -180,6 +180,101 @@ def thumb_bytes(webp: Path, width: int = 360) -> bytes:
         im.save(buf, format="WEBP", quality=86, method=4)
         return buf.getvalue()
     return _cached(webp, f"t{width}.webp", make)
+
+
+_facts_mem: dict = {}
+
+
+def item_facts(it: dict) -> dict:
+    """What the picture itself tells (sites/minna/facts.py), kept in the disk cache beside the other things made from the file."""
+    p = it["path"]
+    if p not in _facts_mem:
+        _facts_mem[p] = json.loads(_cached(p, "facts1.json", lambda: json.dumps(facts.compute(p), ensure_ascii=False).encode("utf-8")))
+    return _facts_mem[p]
+
+
+def facts_dl(rows: list[tuple[str, str]]) -> str:
+    return '<dl class="facts">' + "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in rows if v) + "</dl>"
+
+
+def colors_text(cols: list) -> str:
+    return "・".join(f"{n}{p}%" for n, p in cols)
+
+
+def facts_box(it: dict) -> str:
+    """The data block of a picture page: size, print size, files, colours, how much of the canvas is drawn, and the backgrounds it suits."""
+    f = item_facts(it)
+    w, h = it["w"], it["h"]
+    png_kb, webp_kb = round(len(png_bytes(it["path"])) / 1024), round(it["path"].stat().st_size / 1024)
+    rows = [("大きさ", f"幅{w}px、高さ{h}px({facts.shape(w, h)})"),
+            ("印刷の目安", f"300dpiで約{facts.mm(w, 300):.0f}×{facts.mm(h, 300):.0f}mm、150dpiで約{facts.mm(w, 150):.0f}×{facts.mm(h, 150):.0f}mm"),
+            ("ファイル", f"PNG(透明な背景)は約{png_kb}KB、WebPは約{webp_kb}KB"),
+            ("主な色", colors_text(f["colors"])),
+            ("絵の大きさ", f"画像の面積の約{f['fill']}%を絵が占め、残りは透明な余白です"),
+            ("背景との相性", facts.bg_sentence(f["bg_low"]))]
+    return f'<section><h2><span class="scribble">このイラストのデータ</span></h2>{facts_dl(rows)}</section>'
+
+
+def span_text(vals: list[int], unit: str = "px") -> str:
+    lo, hi = min(vals), max(vals)
+    return f"{lo}{unit}" if lo == hi else f"{lo}〜{hi}{unit}"
+
+
+def shape_counts(its: list[dict]) -> str:
+    c: dict[str, int] = {}
+    for i in its:
+        k = facts.shape(i["w"], i["h"])
+        c[k] = c.get(k, 0) + 1
+    return "、".join(f"{k}{v}点" for k, v in sorted(c.items(), key=lambda kv: (-kv[1], kv[0])))
+
+
+def common_colors(its: list[dict], n: int = 4) -> str:
+    """The colour words that most pictures of the group list among their main colours, with the number of pictures."""
+    c: dict[str, int] = {}
+    for i in its:
+        for name, _p in item_facts(i)["colors"]:
+            c[name] = c.get(name, 0) + 1
+    top = sorted(c.items(), key=lambda kv: (-kv[1], kv[0]))[:n]
+    return "、".join(f"{k}({v}点)" for k, v in top)
+
+
+def series_facts_box(s: dict, series: list[dict]) -> str:
+    its = s["items"]
+    same_touch = [x for x in series if x["touch"] == s["touch"] and x["slug"] != s["slug"]]
+    zip_mb = sum(len(png_bytes(i["path"])) for i in its) / 1048576
+    rows = [("点数と形", f"{len(its)}点({shape_counts(its)})"),
+            ("大きさ", f"幅{span_text([i['w'] for i in its])}、高さ{span_text([i['h'] for i in its])}"),
+            ("よく出る色", common_colors(its)),
+            ("まとめて保存", f"ZIPで約{zip_mb:.1f}MB(PNG・透明な背景)"),
+            ("タッチ", f"{touch_name(s['touch'])}。同じタッチのセットはほかに{len(same_touch)}あります" if same_touch else touch_name(s["touch"])),
+            ("追加した日", s["added"])]
+    return f'<section style="margin-top:44px"><h2><span class="scribble">このセットのデータ</span></h2>{facts_dl(rows)}</section>'
+
+
+def hub_facts_box(kind: str, its: list[dict], series: list[dict]) -> str:
+    """A summary of a group of pictures (a genre, a touch or a keyword), summed up from the same numbers: counts, mix, shapes, colours, the newest day."""
+    sets = {i["series"] for i in its}
+    by_s = {s["slug"]: s for s in series}
+    key = "genre" if kind == "touch" else "touch"           # a genre is told by its touches, a touch and a keyword by their genres / touches
+    names = (lambda k: genre_name(k)) if key == "genre" else (lambda k: touch_name(k))
+    if kind == "tag":
+        key, names = "touch", (lambda k: touch_name(k))
+    mix: dict[str, int] = {}
+    for i in its:
+        mix[i[key]] = mix.get(i[key], 0) + 1
+    ranked = sorted(mix.items(), key=lambda kv: (-kv[1], kv[0]))[:4]
+    mix_text = "、".join(f"{names(k)}{v}点({round(100 * v / len(its))}%)" for k, v in ranked)
+    days: dict[str, int] = {}
+    for sl in sets:
+        d = by_s[sl]["added"]
+        days[d] = days.get(d, 0) + 1
+    newest = max(days)
+    rows = [("点数", f"{len(sets)}セット、{len(its)}点"),
+            ("内訳", mix_text),
+            ("形", shape_counts(its)),
+            ("よく出る色", common_colors(its)),
+            ("最新の追加", f"{newest}({days[newest]}セット)")]
+    return f'<section style="margin-top:28px"><h2><span class="scribble">この一覧のデータ</span></h2>{facts_dl(rows)}</section>'
 
 
 PDF_SIZES = {"a4": (1654, 2339, 200.0), "hagaki": (1181, 1748, 300.0)}     # pixels and dpi: A4 and a postcard (100 x 148 mm)
@@ -736,7 +831,8 @@ def illust_hub(cfg, preview, items, series) -> dict:
     chips = "".join(f'<a href="/genre/{g[0]}/">{esc(g[1])}</a>' for g in GENRES if any(i["genre"] == g[0] for i in items))
     tchips = "".join(f'<a href="/touch/{t[0]}/">{esc(t[1])}</a>' for t in TOUCHES if any(i["touch"] == t[0] for i in items))
     head = (f'<h1>イラスト一覧</h1><p class="lead">すべて無料、商用OK、クレジット不要です。全{len(items)}点。ジャンルやタッチで絞り込めます。</p>'
-            f'<p class="chip-label">ジャンル</p><nav class="chips">{chips}</nav><p class="chip-label">タッチ</p><nav class="chips">{tchips}</nav>')
+            f'<p class="chip-label">ジャンル</p><nav class="chips">{chips}</nav><p class="chip-label">タッチ</p><nav class="chips">{tchips}</nav>'
+            f'{hub_facts_box("touch", items, series)}')
     ordered = sorted(items, key=lambda i: (i["added"], i["id"]), reverse=True)
     return paged(cfg, preview, "/illust/", ordered, head, f"イラスト一覧 | {cfg['site_name']}",
                  "動物、年賀状、季節の行事、食べ物、フレームなど、すべてのイラストの一覧です。無料・商用OK・登録不要。", [("トップ", "/"), ("イラスト", None)])
@@ -753,7 +849,7 @@ def genre_pages(cfg, preview, items, series) -> dict:
         touches = [(t, ts) for t, ts in touches if ts]
         chips = "".join((f'<a href="/genre/{slug}/{t[0]}/">{esc(t[1])}({len(ts)})</a>' if len(ts) >= MIN_CROSS else f'<span>{esc(t[1])}({len(ts)})</span>') for t, ts in touches)
         head = (f'<h1>{esc(name)}のイラスト</h1><p class="lead">{esc(desc)}無料・商用OK・クレジット不要。全{len(its)}点。</p>{licence_box()}'
-                f'<p class="chip-label">タッチ</p><nav class="chips">{chips}</nav>')
+                f'<p class="chip-label">タッチ</p><nav class="chips">{chips}</nav>{hub_facts_box("genre", its, series)}')
         top = f'<section><h2><span class="scribble">セットで探す</span></h2>{set_grid(sers)}</section><h2 style="margin-top:36px"><span class="scribble">すべてのイラスト</span></h2>'
         out.update(paged(cfg, preview, f"/genre/{slug}/", sorted(its, key=lambda i: (i["added"], i["id"]), reverse=True), head, f"{name}のイラスト 無料・商用OK | {cfg['site_name']}",
                          f"{desc}無料・商用OK・登録不要の透明PNG。", [("トップ", "/"), (name, None)], extra_top=top))
@@ -791,13 +887,13 @@ def tag_url(tag: str) -> str:
     return f"/tag/{hashlib.sha1(tag.encode('utf-8')).hexdigest()[:10]}/"
 
 
-def tag_pages(cfg, preview, items, tags: list[str]) -> dict:
+def tag_pages(cfg, preview, items, tags: list[str], series: list[dict] | None = None) -> dict:
     out = {}
     for tag in tags:
         its = sorted(tagged(items, tag), key=lambda i: (i["added"], i["id"]), reverse=True)
         nseries = len({i["series"] for i in its})
         head = (f'<h1>「{esc(tag)}」のイラスト</h1><p class="lead">「{esc(tag)}」のキーワードが付いたイラストを、{nseries}つのセットから{len(its)}点集めました。'
-                f'無料・商用OK・クレジット不要。</p>{licence_box()}')
+                f'無料・商用OK・クレジット不要。</p>{licence_box()}{hub_facts_box("tag", its, series) if series else ""}')
         pages = paged(cfg, preview, tag_url(tag), its, head, f"{tag}のイラスト 無料・商用OK | {cfg['site_name']}",
                       f"{tag}のイラスト{len(its)}点。無料・商用OK・登録不要の透明PNG。", [("トップ", "/"), (tag, None)])
         out.update(pages)
@@ -811,7 +907,7 @@ def touch_pages(cfg, preview, items, series) -> dict:
         if not its:
             continue
         sers = [s for s in series if s["touch"] == slug]
-        head = f'<h1>{esc(name)}のイラスト</h1><p class="lead">{esc(desc)}全{len(its)}点。無料・商用OK・クレジット不要。</p>{licence_box()}'
+        head = f'<h1>{esc(name)}のイラスト</h1><p class="lead">{esc(desc)}全{len(its)}点。無料・商用OK・クレジット不要。</p>{licence_box()}{hub_facts_box("touch", its, series)}'
         top = f'<section><h2><span class="scribble">セットで探す</span></h2>{set_grid(sers)}</section><h2 style="margin-top:36px"><span class="scribble">すべてのイラスト</span></h2>'
         out.update(paged(cfg, preview, f"/touch/{slug}/", sorted(its, key=lambda i: (i["added"], i["id"]), reverse=True), head, f"{name}のイラスト 無料・商用OK | {cfg['site_name']}",
                          f"{desc}無料・商用OK・登録不要の透明PNG。", [("トップ", "/"), (name, None)], extra_top=top))
@@ -845,6 +941,7 @@ def series_page(cfg, preview, s: dict, items, series, og: bool, guides=()) -> st
 <p class="dl"><button type="button" class="btn big" data-zip data-name="{s['slug']}" data-files='{esc(files)}'>セットをまとめて保存(ZIP)</button> <span class="memo-note">ブラウザの中でまとめます。ログインは不要です。</span></p>
 {licence_box()}{grid(s['items'])}
 <section style="margin-top:44px"><h2><span class="scribble">用途例</span></h2><ul class="check">{uses_html(s, USES[s['genre']])}</ul></section>
+{series_facts_box(s, series)}
 {pose_note(s)}{share(cfg, s['url'], s['title'] + '(無料・商用OKのイラスト)')}
 {('<section style="margin-top:44px"><h2><span class="scribble">他の' + esc(g) + 'のセット</span></h2>' + set_grid(same_genre) + '</section>') if same_genre else ''}
 {guide_box(guides_for(s['genre'], s['touch'], list(guides)))}
@@ -922,6 +1019,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 </div></div>
 {prev_next}
 <section><h2><span class="scribble">用途例</span></h2><ul class="check">{uses}</ul></section>
+{facts_box(it)}
 <section><h2><span class="scribble">キーワード</span></h2><ul class="tagcloud">{tags}</ul></section>
 {share(cfg, f"/illust/{it['id']}/", f"{it['title']}(無料・商用OKのイラスト)")}
 <section style="margin-top:44px"><h2><span class="scribble">同じセットのイラスト</span></h2>{grid(mates)}</section>
@@ -1376,6 +1474,73 @@ def search_index(items: list[dict], series: list[dict]) -> str:
     return json.dumps(rows, ensure_ascii=False, separators=(",", ":"))
 
 
+# Pages that are lists of links or forms, with nothing of their own to read: AdSense keeps Google-served ads off "screens without publisher content" and off
+# screens used for navigation, so these load no AdSense tag.  (A picture page, a set page, a guide and a special have their own content and keep it.)
+NO_ADS_EXACT = {"/", "/illust/", "/search/", "/favorites/", "/new/", "/request/", "/special/", "/guide/", "/tool/", "/use/", "/printables/", "/pose/", "/month/",
+                "/contact/", "/contact/thanks.html", "/404.html"}
+NO_ADS_PREFIX = ("/genre/", "/touch/", "/tag/", "/illust/page/")
+ADS_TAG = re.compile(r'<script async src="https://pagead2\.googlesyndication\.com/pagead/js/adsbygoogle\.js[^"]*" crossorigin="anonymous"></script>\n?')
+
+
+def page_path(rel: str) -> str:
+    """'genre/food/index.html' -> '/genre/food/'; 'contact/thanks.html' -> '/contact/thanks.html'."""
+    if rel == "index.html":
+        return "/"
+    return "/" + rel[:-len("index.html")] if rel.endswith("/index.html") else "/" + rel
+
+
+def has_no_ads(path: str) -> bool:
+    return path in NO_ADS_EXACT or path.startswith(NO_ADS_PREFIX)
+
+
+def drop_ads(pages: dict) -> None:
+    """Take the AdSense tag out of the pages (by relative file name) that are lists of links or forms."""
+    for rel, text in pages.items():
+        if isinstance(text, str) and rel.endswith(".html") and has_no_ads(page_path(rel)):
+            pages[rel] = ADS_TAG.sub("", text)
+
+
+def about_more(html: str, series: list[dict]) -> str:
+    """The about page ("運営者情報") gets how the site is edited and made, how to report a mistake and what changed when; the other legal pages are left as they are."""
+    if "<h1>運営者情報</h1>" not in html:
+        return html
+    added: dict[str, list[int]] = {}
+    for s in series:
+        a = added.setdefault(s["added"], [0, 0])
+        a[0] += 1
+        a[1] += len(s["items"])
+    recent = [f"<li>{d}: イラスト{n[1]}点({n[0]}セット)を追加。</li>" for d, n in sorted(added.items(), reverse=True)[:6]]
+    features = [f"<li>{d}: {t}</li>" for d, t in SITE_UPDATES]
+    more = f"""<h2>編集方針</h2>
+<ul>
+<li>イラストは、生成AIで制作したものを選んで、崩れや不自然な部分があるものを除いて公開しています。</li>
+<li>各ページの大きさ・印刷の目安・色・背景との相性は、画像のファイルから自動で計算した数字です。手で書き写した数字はありません。</li>
+<li>読みものの日付や制度の説明は、確認した出典を付けて書きます。年によって変わることは、そう書きます。</li>
+<li>利用の条件は<a href="/license/">利用について</a>にまとめています。条件を変えるときは、このページの履歴に書きます。</li>
+</ul>
+<h2>このサイトの作り方</h2>
+<p>ページはプログラムで自動的に作っています。文章とプログラムは、AI(Anthropic の Claude)の支援を受けて作成しました。公開のたびに、リンク切れや表示の崩れを自動で検査しています。</p>
+<h2>誤りを見つけたら</h2>
+<p><a href="/contact/">お問い合わせフォーム</a>からお知らせください。誤りと確認できたときは直し、下の更新の履歴に書きます。</p>
+<h2>更新の履歴</h2>
+<ul>
+{"".join(features)}
+{"".join(recent)}
+</ul>
+"""
+    return html.replace("<h2>免責事項</h2>", more + "<h2>免責事項</h2>", 1)
+
+
+SITE_UPDATES = [
+    ("2026-10-19", "絵のページ・セットのページ・一覧に、大きさや色などのデータの欄を追加。"),
+    ("2026-10-17", "サイト全体の文章を見直し。"),
+    ("2026-10-15", "年賀状をつくる・ポーズ集・月ごとのイラストを追加。絵のページに埋め込みコードを追加。"),
+    ("2026-10-13", "トップとサイト全体の見た目を、落ち着いたものに変更。用途別のページと、カレンダー・名札・賞状をつくる機能を追加。"),
+    ("2026-10-12", "イラストのリクエスト、オンラインぬりえ、キーワードのページ、特集7本を追加。"),
+    ("2026-10-07", "読みもの12本、年賀状・ぬりえの印刷用PDF、2027年のカレンダーを追加。"),
+]
+
+
 def render_site(cfg: dict, out: Path, release: bool = False, today: date | None = None) -> list[str]:
     missing = missing_config(cfg)
     if release and missing:
@@ -1407,7 +1572,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     pages.update(touch_pages(cfg, preview, items, series))
     tags = tag_list(items)
     SITE["tags"] = set(tags)
-    pages.update(tag_pages(cfg, preview, items, tags))
+    pages.update(tag_pages(cfg, preview, items, tags, series))
     pages["license/index.html"] = license_page(cfg, preview)
     pages["request/index.html"] = request_page(cfg, preview)
     pages["api/q.php"] = request_php(cfg)
@@ -1468,7 +1633,8 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
                     "1日の送信回数を数えるためだけに、日ごとに変わる元に戻せない値をその日のあいだ使い、翌日に消します。"
                     "検索で見つからなかったときの「この絵をリクエストする」ボタンも同じで、ボタンを押したときだけ検索した言葉を送ります。"
                     "送った言葉は、この端末のブラウザにも「あなたのリクエスト」の表示のために記録されます(ブラウザのデータを消すとなくなります)。"
-                    "個人を特定できる内容や、お受けできない内容は保存せずにお断りします。</p>")))
+                    "個人を特定できる内容や、お受けできない内容は保存せずにお断りします。</p>"), finish=lambda s: about_more(s, series)))
+    drop_ads(pages)                                                              # hubs, forms and the 404 carry no AdSense tag
     pages.update(standard_files(pages, cfg, preview, today.isoformat()))
     pages["sitemap-images.xml"] = sitemap_images(cfg, items)
     if cfg.get("indexnow_key"):
