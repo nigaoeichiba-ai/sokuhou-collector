@@ -81,5 +81,11 @@
    "a cross-country skier striding with poles"
   ]
  ],
- "exclude": []
+ "exclude": [
+  "curling",
+  "hockey",
+  "skate",
+  "sled",
+  "snowboard"
+ ]
 }

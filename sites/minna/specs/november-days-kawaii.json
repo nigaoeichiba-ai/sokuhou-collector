@@ -84,5 +84,7 @@
    "a clay pot on a portable burner with ingredients ready around it"
   ]
  ],
- "exclude": []
+ "exclude": [
+  "kotatsu"
+ ]
 }

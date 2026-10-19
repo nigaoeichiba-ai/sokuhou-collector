@@ -1,0 +1,240 @@
+{
+ "added": "2026-10-20",
+ "slug": "ensoku-bus-trip-crayon",
+ "title": "遠足とバスの場面",
+ "genre": "school",
+ "touch": "crayon",
+ "lead": "バスの座席・お弁当・リュック・集合写真など、遠足の場面12点です。おたよりや行事予定表に使えます。",
+ "tags": [
+  "遠足",
+  "バス",
+  "お弁当",
+  "リュック",
+  "おたより",
+  "学校行事",
+  "園行事",
+  "集合"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "ensoku-bus-trip-crayon-bus-board",
+   "file": "ensoku-bus-trip-crayon-bus-board.webp",
+   "title": "バスに乗る",
+   "desc": "バスに乗るのクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "遠足とバスの場面",
+    "バスに乗る",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 510,
+   "h": 494
+  },
+  {
+   "id": "ensoku-bus-trip-crayon-bus-seat",
+   "file": "ensoku-bus-trip-crayon-bus-seat.webp",
+   "title": "バスの座席",
+   "desc": "バスの座席のクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "遠足とバスの場面",
+    "バスの座席",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 497,
+   "h": 483
+  },
+  {
+   "id": "ensoku-bus-trip-crayon-bus-song",
+   "file": "ensoku-bus-trip-crayon-bus-song.webp",
+   "title": "バスの中で歌う",
+   "desc": "バスの中で歌うのクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "遠足とバスの場面",
+    "バスの中で歌う",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 525,
+   "h": 493
+  },
+  {
+   "id": "ensoku-bus-trip-crayon-gather",
+   "file": "ensoku-bus-trip-crayon-gather.webp",
+   "title": "集合",
+   "desc": "集合のクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "集合",
+    "遠足とバスの場面",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 524,
+   "h": 472
+  },
+  {
+   "id": "ensoku-bus-trip-crayon-lunch",
+   "file": "ensoku-bus-trip-crayon-lunch.webp",
+   "title": "お弁当の時間",
+   "desc": "お弁当の時間のクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "遠足とバスの場面",
+    "お弁当の時間",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 553,
+   "h": 372
+  },
+  {
+   "id": "ensoku-bus-trip-crayon-snack",
+   "file": "ensoku-bus-trip-crayon-snack.webp",
+   "title": "おやつ",
+   "desc": "おやつのクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "遠足とバスの場面",
+    "おやつ",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 515,
+   "h": 341
+  },
+  {
+   "id": "ensoku-bus-trip-crayon-walk",
+   "file": "ensoku-bus-trip-crayon-walk.webp",
+   "title": "歩いて移動",
+   "desc": "歩いて移動のクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "遠足とバスの場面",
+    "歩いて移動",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 517,
+   "h": 466
+  },
+  {
+   "id": "ensoku-bus-trip-crayon-nature",
+   "file": "ensoku-bus-trip-crayon-nature.webp",
+   "title": "自然観察",
+   "desc": "自然観察のクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "遠足とバスの場面",
+    "自然観察",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 527,
+   "h": 370
+  },
+  {
+   "id": "ensoku-bus-trip-crayon-photo",
+   "file": "ensoku-bus-trip-crayon-photo.webp",
+   "title": "集合写真",
+   "desc": "集合写真のクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "集合",
+    "遠足とバスの場面",
+    "集合写真",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 494,
+   "h": 485
+  },
+  {
+   "id": "ensoku-bus-trip-crayon-rest",
+   "file": "ensoku-bus-trip-crayon-rest.webp",
+   "title": "休けい",
+   "desc": "休けいのクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "遠足とバスの場面",
+    "休けい",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 519,
+   "h": 494
+  },
+  {
+   "id": "ensoku-bus-trip-crayon-rucksack",
+   "file": "ensoku-bus-trip-crayon-rucksack.webp",
+   "title": "リュックの準備",
+   "desc": "リュックの準備のクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "遠足とバスの場面",
+    "リュックの準備",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 456,
+   "h": 433
+  },
+  {
+   "id": "ensoku-bus-trip-crayon-home",
+   "file": "ensoku-bus-trip-crayon-home.webp",
+   "title": "帰りのバス",
+   "desc": "帰りのバスのクレヨン・手描きイラストです。",
+   "tags": [
+    "遠足",
+    "バス",
+    "お弁当",
+    "リュック",
+    "遠足とバスの場面",
+    "帰りのバス",
+    "クレヨン・手描き",
+    "学校・保育"
+   ],
+   "w": 502,
+   "h": 448
+  }
+ ]
+}

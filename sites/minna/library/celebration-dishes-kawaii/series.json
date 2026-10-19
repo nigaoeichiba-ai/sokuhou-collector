@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-20",
+ "slug": "celebration-dishes-kawaii",
+ "title": "お祝いの料理",
+ "genre": "food",
+ "touch": "kawaii",
+ "lead": "ちらし寿司・赤飯・鯛・ローストチキンなど、お祝いの席に並ぶ料理12点です。行事のお知らせやメニュー表に使えます。",
+ "tags": [
+  "お祝い",
+  "料理",
+  "ちらし寿司",
+  "赤飯",
+  "鯛",
+  "お祝い膳",
+  "ひな祭り",
+  "誕生日"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "celebration-dishes-kawaii-chirashi",
+   "file": "celebration-dishes-kawaii-chirashi.webp",
+   "title": "ちらし寿司",
+   "desc": "ちらし寿司のゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "お祝いの料理",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 454,
+   "h": 379
+  },
+  {
+   "id": "celebration-dishes-kawaii-sekihan",
+   "file": "celebration-dishes-kawaii-sekihan.webp",
+   "title": "赤飯",
+   "desc": "赤飯のゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "お祝いの料理",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 401,
+   "h": 387
+  },
+  {
+   "id": "celebration-dishes-kawaii-tai",
+   "file": "celebration-dishes-kawaii-tai.webp",
+   "title": "鯛の尾頭付き",
+   "desc": "鯛の尾頭付きのゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "鯛",
+    "お祝いの料理",
+    "鯛の尾頭付き",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 522,
+   "h": 368
+  },
+  {
+   "id": "celebration-dishes-kawaii-temari",
+   "file": "celebration-dishes-kawaii-temari.webp",
+   "title": "手毬寿司",
+   "desc": "手毬寿司のゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "お祝いの料理",
+    "手毬寿司",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 488,
+   "h": 397
+  },
+  {
+   "id": "celebration-dishes-kawaii-tempura",
+   "file": "celebration-dishes-kawaii-tempura.webp",
+   "title": "天ぷらの盛り合わせ",
+   "desc": "天ぷらの盛り合わせのゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "お祝いの料理",
+    "天ぷらの盛り合わせ",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 466,
+   "h": 430
+  },
+  {
+   "id": "celebration-dishes-kawaii-roast-chicken",
+   "file": "celebration-dishes-kawaii-roast-chicken.webp",
+   "title": "ローストチキン",
+   "desc": "ローストチキンのゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "お祝いの料理",
+    "ローストチキン",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 487,
+   "h": 427
+  },
+  {
+   "id": "celebration-dishes-kawaii-chawanmushi",
+   "file": "celebration-dishes-kawaii-chawanmushi.webp",
+   "title": "茶碗蒸し",
+   "desc": "茶碗蒸しのゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "お祝いの料理",
+    "茶碗蒸し",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 455,
+   "h": 492
+  },
+  {
+   "id": "celebration-dishes-kawaii-nimono",
+   "file": "celebration-dishes-kawaii-nimono.webp",
+   "title": "煮物",
+   "desc": "煮物のゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "お祝いの料理",
+    "煮物",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 497,
+   "h": 440
+  },
+  {
+   "id": "celebration-dishes-kawaii-hamaguri",
+   "file": "celebration-dishes-kawaii-hamaguri.webp",
+   "title": "はまぐりのお吸い物",
+   "desc": "はまぐりのお吸い物のゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "お祝いの料理",
+    "はまぐりのお吸い物",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 473,
+   "h": 494
+  },
+  {
+   "id": "celebration-dishes-kawaii-kagami",
+   "file": "celebration-dishes-kawaii-kagami.webp",
+   "title": "紅白なます",
+   "desc": "紅白なますのゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "お祝いの料理",
+    "紅白なます",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 442,
+   "h": 411
+  },
+  {
+   "id": "celebration-dishes-kawaii-sushi-oke",
+   "file": "celebration-dishes-kawaii-sushi-oke.webp",
+   "title": "寿司桶",
+   "desc": "寿司桶のゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "お祝いの料理",
+    "寿司桶",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 586,
+   "h": 464
+  },
+  {
+   "id": "celebration-dishes-kawaii-shortcake",
+   "file": "celebration-dishes-kawaii-shortcake.webp",
+   "title": "お祝いのケーキ",
+   "desc": "お祝いのケーキのゆるかわイラストです。",
+   "tags": [
+    "お祝い",
+    "料理",
+    "ちらし寿司",
+    "赤飯",
+    "お祝いの料理",
+    "お祝いのケーキ",
+    "ゆるかわ",
+    "食べ物"
+   ],
+   "w": 498,
+   "h": 513
+  }
+ ]
+}

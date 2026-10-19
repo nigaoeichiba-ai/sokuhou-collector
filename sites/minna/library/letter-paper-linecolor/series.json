@@ -1,0 +1,241 @@
+{
+ "added": "2026-10-20",
+ "slug": "letter-paper-linecolor",
+ "title": "便箋・メッセージカードの枠",
+ "genre": "deco",
+ "touch": "linecolor",
+ "lead": "お礼・お祝い・お見舞い・季節のあいさつなど、手紙やメッセージカード向けの枠12点です。中央をあけてあるので、文字を重ねて使えます。",
+ "tags": [
+  "便箋",
+  "手紙",
+  "メッセージカード",
+  "枠",
+  "フレーム",
+  "お礼",
+  "お祝い",
+  "季節のあいさつ"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "letter-paper-linecolor-thanks",
+   "file": "letter-paper-linecolor-thanks.webp",
+   "title": "お礼の便箋",
+   "desc": "お礼の便箋の線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "お礼",
+    "便箋・メッセージカードの枠",
+    "お礼の便箋",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 507,
+   "h": 469
+  },
+  {
+   "id": "letter-paper-linecolor-congrats",
+   "file": "letter-paper-linecolor-congrats.webp",
+   "title": "お祝いのカード",
+   "desc": "お祝いのカードの線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "お祝い",
+    "便箋・メッセージカードの枠",
+    "お祝いのカード",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 501,
+   "h": 458
+  },
+  {
+   "id": "letter-paper-linecolor-getwell",
+   "file": "letter-paper-linecolor-getwell.webp",
+   "title": "お見舞いの便箋",
+   "desc": "お見舞いの便箋の線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "便箋・メッセージカードの枠",
+    "お見舞いの便箋",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 506,
+   "h": 462
+  },
+  {
+   "id": "letter-paper-linecolor-spring",
+   "file": "letter-paper-linecolor-spring.webp",
+   "title": "春のあいさつ状",
+   "desc": "春のあいさつ状の線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "便箋・メッセージカードの枠",
+    "春のあいさつ状",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 510,
+   "h": 469
+  },
+  {
+   "id": "letter-paper-linecolor-summer",
+   "file": "letter-paper-linecolor-summer.webp",
+   "title": "夏のあいさつ状",
+   "desc": "夏のあいさつ状の線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "便箋・メッセージカードの枠",
+    "夏のあいさつ状",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 525,
+   "h": 472
+  },
+  {
+   "id": "letter-paper-linecolor-autumn",
+   "file": "letter-paper-linecolor-autumn.webp",
+   "title": "秋のあいさつ状",
+   "desc": "秋のあいさつ状の線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "便箋・メッセージカードの枠",
+    "秋のあいさつ状",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 508,
+   "h": 461
+  },
+  {
+   "id": "letter-paper-linecolor-winter",
+   "file": "letter-paper-linecolor-winter.webp",
+   "title": "冬のあいさつ状",
+   "desc": "冬のあいさつ状の線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "便箋・メッセージカードの枠",
+    "冬のあいさつ状",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 496,
+   "h": 550
+  },
+  {
+   "id": "letter-paper-linecolor-flower",
+   "file": "letter-paper-linecolor-flower.webp",
+   "title": "花の便箋",
+   "desc": "花の便箋の線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "便箋・メッセージカードの枠",
+    "花の便箋",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 497,
+   "h": 537
+  },
+  {
+   "id": "letter-paper-linecolor-envelope",
+   "file": "letter-paper-linecolor-envelope.webp",
+   "title": "封筒の枠",
+   "desc": "封筒の枠の線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "便箋・メッセージカードの枠",
+    "封筒の枠",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 529,
+   "h": 546
+  },
+  {
+   "id": "letter-paper-linecolor-ippitsu",
+   "file": "letter-paper-linecolor-ippitsu.webp",
+   "title": "一筆箋",
+   "desc": "一筆箋の線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "便箋・メッセージカードの枠",
+    "一筆箋",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 508,
+   "h": 215
+  },
+  {
+   "id": "letter-paper-linecolor-birthday",
+   "file": "letter-paper-linecolor-birthday.webp",
+   "title": "誕生日のカード",
+   "desc": "誕生日のカードの線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "便箋・メッセージカードの枠",
+    "誕生日のカード",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 503,
+   "h": 402
+  },
+  {
+   "id": "letter-paper-linecolor-travel",
+   "file": "letter-paper-linecolor-travel.webp",
+   "title": "旅先からの便り",
+   "desc": "旅先からの便りの線画カラーイラストです。",
+   "tags": [
+    "便箋",
+    "手紙",
+    "メッセージカード",
+    "枠",
+    "便箋・メッセージカードの枠",
+    "旅先からの便り",
+    "線画カラー",
+    "フレーム・飾り"
+   ],
+   "w": 521,
+   "h": 409
+  }
+ ]
+}

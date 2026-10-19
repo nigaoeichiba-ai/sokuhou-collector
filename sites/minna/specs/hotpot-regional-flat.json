@@ -81,5 +81,8 @@
    "a red spicy pot with pork, kimchi, tofu and leek"
   ]
  ],
- "exclude": []
+ "exclude": [
+  "chanko",
+  "mizutaki"
+ ]
 }

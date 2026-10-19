@@ -1,0 +1,241 @@
+{
+ "added": "2026-10-20",
+ "slug": "students-uniform-loose",
+ "title": "中高生の学校生活",
+ "genre": "people",
+ "touch": "loose",
+ "lead": "登校・授業・部活・文化祭・修学旅行など、制服姿の中高生の場面12点です。学校案内や教材、Webコンテンツに使えます。",
+ "tags": [
+  "中学生",
+  "高校生",
+  "生徒",
+  "制服",
+  "学校",
+  "授業",
+  "文化祭",
+  "修学旅行",
+  "部活"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "students-uniform-loose-toko",
+   "file": "students-uniform-loose-toko.webp",
+   "title": "登校",
+   "desc": "登校のゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "中高生の学校生活",
+    "登校",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 497,
+   "h": 444
+  },
+  {
+   "id": "students-uniform-loose-class",
+   "file": "students-uniform-loose-class.webp",
+   "title": "授業",
+   "desc": "授業のゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "授業",
+    "中高生の学校生活",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 492,
+   "h": 436
+  },
+  {
+   "id": "students-uniform-loose-recess",
+   "file": "students-uniform-loose-recess.webp",
+   "title": "休み時間",
+   "desc": "休み時間のゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "中高生の学校生活",
+    "休み時間",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 501,
+   "h": 397
+  },
+  {
+   "id": "students-uniform-loose-lunch",
+   "file": "students-uniform-loose-lunch.webp",
+   "title": "給食",
+   "desc": "給食のゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "中高生の学校生活",
+    "給食",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 420,
+   "h": 470
+  },
+  {
+   "id": "students-uniform-loose-cleaning",
+   "file": "students-uniform-loose-cleaning.webp",
+   "title": "掃除当番",
+   "desc": "掃除当番のゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "中高生の学校生活",
+    "掃除当番",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 448,
+   "h": 468
+  },
+  {
+   "id": "students-uniform-loose-test",
+   "file": "students-uniform-loose-test.webp",
+   "title": "テスト",
+   "desc": "テストのゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "中高生の学校生活",
+    "テスト",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 339,
+   "h": 428
+  },
+  {
+   "id": "students-uniform-loose-club",
+   "file": "students-uniform-loose-club.webp",
+   "title": "部活の朝練",
+   "desc": "部活の朝練のゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "部活",
+    "中高生の学校生活",
+    "部活の朝練",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 431,
+   "h": 435
+  },
+  {
+   "id": "students-uniform-loose-library",
+   "file": "students-uniform-loose-library.webp",
+   "title": "図書室",
+   "desc": "図書室のゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "中高生の学校生活",
+    "図書室",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 469,
+   "h": 419
+  },
+  {
+   "id": "students-uniform-loose-bunkasai",
+   "file": "students-uniform-loose-bunkasai.webp",
+   "title": "文化祭",
+   "desc": "文化祭のゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "文化祭",
+    "中高生の学校生活",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 476,
+   "h": 410
+  },
+  {
+   "id": "students-uniform-loose-shugaku",
+   "file": "students-uniform-loose-shugaku.webp",
+   "title": "修学旅行",
+   "desc": "修学旅行のゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "修学旅行",
+    "中高生の学校生活",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 483,
+   "h": 442
+  },
+  {
+   "id": "students-uniform-loose-homeroom",
+   "file": "students-uniform-loose-homeroom.webp",
+   "title": "朝のホームルーム",
+   "desc": "朝のホームルームのゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "中高生の学校生活",
+    "朝のホームルーム",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 482,
+   "h": 438
+  },
+  {
+   "id": "students-uniform-loose-hoyuka",
+   "file": "students-uniform-loose-hoyuka.webp",
+   "title": "放課後",
+   "desc": "放課後のゆるい手書きイラストです。",
+   "tags": [
+    "中学生",
+    "高校生",
+    "生徒",
+    "制服",
+    "中高生の学校生活",
+    "放課後",
+    "ゆるい手書き",
+    "人物"
+   ],
+   "w": 411,
+   "h": 424
+  }
+ ]
+}

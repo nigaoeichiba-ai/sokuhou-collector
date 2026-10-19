@@ -1,0 +1,253 @@
+{
+ "added": "2026-10-20",
+ "slug": "spring-frames-watercolor",
+ "title": "春の行事の枠セット",
+ "genre": "deco",
+ "touch": "watercolor",
+ "lead": "桜・入学・卒業・遠足など、春の行事に合わせた枠12点です。中央があいているので、おたよりや案内状に使えます。",
+ "tags": [
+  "春",
+  "桜",
+  "入学",
+  "卒業",
+  "遠足",
+  "フレーム",
+  "枠",
+  "おたより",
+  "新生活"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "spring-frames-watercolor-sakura",
+   "file": "spring-frames-watercolor-sakura.webp",
+   "title": "桜の枠",
+   "desc": "桜の枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "枠",
+    "春の行事の枠セット",
+    "桜の枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 500,
+   "h": 468
+  },
+  {
+   "id": "spring-frames-watercolor-nyugaku",
+   "file": "spring-frames-watercolor-nyugaku.webp",
+   "title": "入学の枠",
+   "desc": "入学の枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "枠",
+    "春の行事の枠セット",
+    "入学の枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 477,
+   "h": 455
+  },
+  {
+   "id": "spring-frames-watercolor-sotsugyo",
+   "file": "spring-frames-watercolor-sotsugyo.webp",
+   "title": "卒業の枠",
+   "desc": "卒業の枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "枠",
+    "春の行事の枠セット",
+    "卒業の枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 489,
+   "h": 454
+  },
+  {
+   "id": "spring-frames-watercolor-ensoku",
+   "file": "spring-frames-watercolor-ensoku.webp",
+   "title": "遠足の枠",
+   "desc": "遠足の枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "遠足",
+    "枠",
+    "春の行事の枠セット",
+    "遠足の枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 501,
+   "h": 482
+  },
+  {
+   "id": "spring-frames-watercolor-nanohana",
+   "file": "spring-frames-watercolor-nanohana.webp",
+   "title": "菜の花の枠",
+   "desc": "菜の花の枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "枠",
+    "春の行事の枠セット",
+    "菜の花の枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 487,
+   "h": 481
+  },
+  {
+   "id": "spring-frames-watercolor-tulip",
+   "file": "spring-frames-watercolor-tulip.webp",
+   "title": "チューリップの枠",
+   "desc": "チューリップの枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "枠",
+    "春の行事の枠セット",
+    "チューリップの枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 494,
+   "h": 478
+  },
+  {
+   "id": "spring-frames-watercolor-shinryoku",
+   "file": "spring-frames-watercolor-shinryoku.webp",
+   "title": "新緑の枠",
+   "desc": "新緑の枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "枠",
+    "春の行事の枠セット",
+    "新緑の枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 502,
+   "h": 493
+  },
+  {
+   "id": "spring-frames-watercolor-hahanohi",
+   "file": "spring-frames-watercolor-hahanohi.webp",
+   "title": "母の日の枠",
+   "desc": "母の日の枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "枠",
+    "春の行事の枠セット",
+    "母の日の枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 516,
+   "h": 492
+  },
+  {
+   "id": "spring-frames-watercolor-koinobori",
+   "file": "spring-frames-watercolor-koinobori.webp",
+   "title": "こいのぼりの枠",
+   "desc": "こいのぼりの枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "枠",
+    "春の行事の枠セット",
+    "こいのぼりの枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 505,
+   "h": 497
+  },
+  {
+   "id": "spring-frames-watercolor-chou",
+   "file": "spring-frames-watercolor-chou.webp",
+   "title": "春の蝶の枠",
+   "desc": "春の蝶の枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "枠",
+    "春の行事の枠セット",
+    "春の蝶の枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 507,
+   "h": 495
+  },
+  {
+   "id": "spring-frames-watercolor-tanpopo",
+   "file": "spring-frames-watercolor-tanpopo.webp",
+   "title": "たんぽぽの枠",
+   "desc": "たんぽぽの枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "枠",
+    "春の行事の枠セット",
+    "たんぽぽの枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 514,
+   "h": 494
+  },
+  {
+   "id": "spring-frames-watercolor-ume",
+   "file": "spring-frames-watercolor-ume.webp",
+   "title": "梅の枠",
+   "desc": "梅の枠のやわらか水彩イラストです。",
+   "tags": [
+    "春",
+    "桜",
+    "入学",
+    "卒業",
+    "枠",
+    "春の行事の枠セット",
+    "梅の枠",
+    "やわらか水彩",
+    "フレーム・飾り"
+   ],
+   "w": 508,
+   "h": 487
+  }
+ ]
+}
