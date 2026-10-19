@@ -309,7 +309,7 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
     more = "".join(f'<li><a href="{path(o)}">{esc(o["title"])}</a></li>' for o in others[:4])
     url_abs = cfg["site_url"].rstrip("/") + path(f)
     ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": f["title"], "datePublished": f["date"], "dateModified": f["verified"], "inLanguage": "ja",
-                     "author": {"@type": "Organization", "name": cfg["operator_name"]}, "mainEntityOfPage": url_abs}, ensure_ascii=False)
+                     "author": {"@type": "Organization", "name": cfg["site_name"]}, "mainEntityOfPage": url_abs}, ensure_ascii=False)
     body = f"""{B.head_band("yellow", "", esc(f["title"]), f["catch"], single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("毎日のおすすめ", "/picks/"), (dp_label(f["date"]), f"/picks/{f['date']}/"), ("注目の商品", None)])}</div>
 {B.pr_quiet(cfg)}

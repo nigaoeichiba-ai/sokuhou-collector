@@ -1229,7 +1229,7 @@ def article_page(d: dict, cfg: dict, preview: bool, a: dict) -> str:
     live = {t["slug"] for t in d["live_themes"]}
     rel = "".join(f'<li><a href="/theme/{s}/">{esc(c["theme"][s]["title"])}</a></li>' for s in a["themes"] if s in live)
     ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": a["title"], "datePublished": a["date"],
-                     "inLanguage": "ja", "author": {"@type": "Organization", "name": cfg["operator_name"]}}, ensure_ascii=False)
+                     "inLanguage": "ja", "author": {"@type": "Organization", "name": cfg["site_name"]}}, ensure_ascii=False)
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage",
                          "mainEntity": [{"@type": "Question", "name": f["q"], "acceptedAnswer": {"@type": "Answer", "text": f["a"]}} for f in a["faq"]]}, ensure_ascii=False)
     head = head_band("lilac", '', esc(a["title"]), a["lead"], single=True, mascot="r-wink")
@@ -1844,10 +1844,9 @@ def budget_hub_page(d: dict, cfg: dict, preview: bool, tiers: list) -> str:
 # ---------------------------------------------------------------- 編集方針 (how products are chosen, how the text is made, how numbers are used: written down, and true)
 
 def policy_page(d: dict, cfg: dict, preview: bool) -> str:
-    op = esc(cfg.get("operator_name") or "運営者")
     lead = "よろこぶプレゼントが、どのように商品を選び、文章を書き、数字を扱っているかをまとめています。"
     secs = [
-        ("運営", f'<p>運営は{op}です(<a href="/about/">運営者情報</a>)。ご意見や内容の誤りのご指摘は、<a href="/contact/">お問い合わせ</a>から受け付けています。</p>'),
+        ("運営", f'<p>運営者は<a href="/about/">運営者情報</a>に書いています。ご意見や内容の誤りのご指摘は、<a href="/contact/">お問い合わせ</a>から受け付けています。</p>'),
         ("載せる商品の選び方", "<ul><li>贈り物として渡しやすい品であること(日用品や相手の年齢に合わない品は除きます)。</li>"
          "<li>商品ページで仕様と注意事項が確かめられること。</li><li>購入者の評価が、一定の水準を満たしていること。</li>"
          "<li>同じ店の商品にかたよらないこと。</li></ul><p>広告の報酬の有無や大小で載せる商品や順番を決めることはしません。</p>"),

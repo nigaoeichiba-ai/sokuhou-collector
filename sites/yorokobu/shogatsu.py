@@ -233,8 +233,8 @@ def _ld(cfg: dict, a: dict, path: str, data: dict) -> str:
     base = cfg["site_url"].rstrip("/")
     return json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": a["title"], "datePublished": a.get("date", data["checked"]),
                        "dateModified": data["checked"], "inLanguage": "ja", "image": f'{base}/assets/shogatsu/{a["image"]["file"]}-og.webp',
-                       "mainEntityOfPage": base + path, "author": {"@type": "Organization", "name": cfg["operator_name"]},
-                       "publisher": {"@type": "Organization", "name": cfg["operator_name"]}}, ensure_ascii=False)
+                       "mainEntityOfPage": base + path, "author": {"@type": "Organization", "name": cfg["site_name"]},
+                       "publisher": {"@type": "Organization", "name": cfg["site_name"]}}, ensure_ascii=False)
 
 
 def _meta(data: dict, a: dict | None = None) -> str:
