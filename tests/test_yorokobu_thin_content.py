@@ -151,16 +151,15 @@ class AnalysisTest(unittest.TestCase):
                 "n_entered": new, "n_stay": stay, "thin": False}
 
     def d_rank(self, days=6):
-        segs = {f"f{i}": self.seg(f"f{i}", "people", new=i, days=days) for i in range(6)}
-        segs.update({f"g-{i}": self.seg(f"g-{i}", "genre", stay=i, days=days) for i in range(6)})
+        segs = {f"g-{i}": self.seg(f"g-{i}", "genre", new=i, stay=11 - i, days=days) for i in range(12)}
         return {"ranking": {"date": "2026-10-19", "segments": segs, "order": list(segs), "risers": []}}
 
     def test_turnover_names_the_extremes_with_counts_only(self):
         path, h1, lead, body, crumb, finding = ownanalysis.ranking_turnover(self.d_rank())
         self.assertEqual(path, "/data/ranking-turnover/")
-        self.assertIn("f5", finding)                                      # the list with the most new products
+        self.assertIn("g-11", finding)                                    # the list with the most new products
         self.assertIn("記録は6日分", body)
-        self.assertNotIn("f50", body)                                      # no product code
+        self.assertNotIn("g-110", body)                                    # no product code
 
     def test_turnover_needs_three_days_of_records(self):
         self.assertIsNone(ownanalysis.ranking_turnover(self.d_rank(days=2)))

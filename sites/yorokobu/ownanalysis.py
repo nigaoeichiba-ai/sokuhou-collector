@@ -8,6 +8,7 @@ from __future__ import annotations
 from sokuhou.sitekit import esc
 from sites.yorokobu import dataroom as dr
 
+MIN_ITEMS = 12           # a share of a list shorter than this jumps by 8% per product
 MIN_RANK_DAYS = 3        # the share of products that stayed three days needs three days of records
 
 
@@ -32,32 +33,33 @@ def ranking_turnover(d: dict) -> tuple | None:
     rv = d.get("ranking")
     if not rv:
         return None
-    segs = [sg for sg in rv["segments"].values() if not sg.get("thin") and sg.get("days", 0) >= MIN_RANK_DAYS and len(sg["items"]) >= dr.MIN_PER_ROW and "n_entered" in sg]
-    people = sorted((sg for sg in segs if sg["kind"] == "people"), key=lambda sg: -_share(sg["n_entered"], len(sg["items"])))
-    genres = sorted((sg for sg in segs if sg["kind"] == "genre"), key=lambda sg: -_share(sg["n_stay"], len(sg["items"])))
-    if len(people) < dr.MIN_ROWS or len(genres) < dr.MIN_ROWS:
+    segs = [sg for sg in rv["segments"].values() if not sg.get("thin") and sg.get("days", 0) >= MIN_RANK_DAYS and len(sg["items"]) >= MIN_ITEMS and "n_entered" in sg]
+    genres = [sg for sg in segs if sg["kind"] == "genre"]       # the age-and-sex lists that survive the gift filter are too few to compare: the genres are the rows
+    by_new = sorted(genres, key=lambda sg: -_share(sg["n_entered"], len(sg["items"])))
+    by_stay = sorted(genres, key=lambda sg: -_share(sg["n_stay"], len(sg["items"])))
+    if len(genres) < dr.MIN_ROWS + 5:
         return None
     day = dr._b().rk.date_label(rv["date"])
-    days = min(sg["days"] for sg in segs)
+    days = min(sg["days"] for sg in genres)
 
     def row(sg: dict, key: str) -> tuple[str, float, str]:
         v = _share(sg[key], len(sg["items"]))
         return sg["label"], v, f"{v:.0f}%"
-    c1 = dr.figure(d, "世代・性別ごとの、はじめてランクインした商品の割合", dr.hbars([row(sg, "n_entered") for sg in people], top=100, series_class="s2"),
+    c1 = dr.figure(d, "ジャンルごとの、はじめてランクインした商品の割合(多い10ジャンル)", dr.hbars([row(sg, "n_entered") for sg in by_new[:10]], top=100, series_class="s2"),
                    f"前日の上位になかった商品の割合(贈り物向きの商品だけ)。出典: 楽天市場のランキング({day})の記録から当サイトが集計。",
-                   dr.table(["世代・性別", "商品の数", "新しく入った商品", "割合"], [[sg["label"], str(len(sg["items"])), str(sg["n_entered"]), row(sg, "n_entered")[2]] for sg in people]))
-    c2 = dr.figure(d, "ジャンルごとの、3日以上ランクインし続けている商品の割合(上位10ジャンル)", dr.hbars([row(sg, "n_stay") for sg in genres[:10]], top=100),
+                   dr.table(["ジャンル", "商品の数", "新しく入った商品", "割合"], [[sg["label"], str(len(sg["items"])), str(sg["n_entered"]), row(sg, "n_entered")[2]] for sg in by_new]))
+    c2 = dr.figure(d, "ジャンルごとの、3日以上ランクインし続けている商品の割合(多い10ジャンル)", dr.hbars([row(sg, "n_stay") for sg in by_stay[:10]], top=100),
                    f"ジャンルごとに、毎日の上位に3日以上続けて入っている商品の割合。出典: 楽天市場のランキング({day})の記録から当サイトが集計。",
-                   dr.table(["ジャンル", "商品の数", "3日以上続けて入っている商品", "割合"], [[sg["label"], str(len(sg["items"])), str(sg["n_stay"]), row(sg, "n_stay")[2]] for sg in genres]))
-    most, least, steady, moving = people[0], people[-1], genres[0], genres[-1]
+                   dr.table(["ジャンル", "商品の数", "3日以上続けて入っている商品", "割合"], [[sg["label"], str(len(sg["items"])), str(sg["n_stay"]), row(sg, "n_stay")[2]] for sg in by_stay]))
+    most, least, steady, moving = by_new[0], by_new[-1], by_stay[0], by_stay[-1]
     notes = [f"前日の上位になかった商品の割合は、「{most['label']}」が{row(most, 'n_entered')[2]}でいちばん高く、「{least['label']}」が{row(least, 'n_entered')[2]}でいちばん低くなっています。",
-             f"3日以上続けて入っている商品の割合は、ジャンルでは「{steady['label']}」が{row(steady, 'n_stay')[2]}でいちばん高く、「{moving['label']}」が{row(moving, 'n_stay')[2]}でいちばん低くなっています。"]
+             f"3日以上続けて入っている商品の割合は、「{steady['label']}」が{row(steady, 'n_stay')[2]}でいちばん高く、「{moving['label']}」が{row(moving, 'n_stay')[2]}でいちばん低くなっています。"]
     body = (_notes(notes) + c1 + c2
             + _how("楽天市場のランキングの上位から、贈り物向きと分かる商品だけを残し、毎日の記録を残しています。前日の記録になかった商品を「新しく入った商品」、"
-                   f"前日から続けて入っている日数が3日以上の商品を「続けて入っている商品」と数えました。記録は{days}日分です。")
+                   f"前日から続けて入っている日数が3日以上の商品を「続けて入っている商品」と数えました。記録は{days}日分です。商品が{MIN_ITEMS}点に満たないジャンルは除いています。")
             + _care("記録の日数が少ないうちは、1日の動きが大きく出ます。贈り物向きの商品に絞っているため、ランキングの順位そのものとは違います。"
                     '商品の名前は載せていません。商品は<a href="/ranking/">いま売れている商品</a>で見られます。'))
-    lead = f"楽天市場の売れ筋は、毎日どのくらい入れ替わっているのか。世代・性別とジャンルごとに、新しく入った商品と続けて入っている商品の割合を数えました({day}まで)。"
+    lead = f"楽天市場の売れ筋は、毎日どのくらい入れ替わっているのか。ジャンルごとに、新しく入った商品と続けて入っている商品の割合を数えました({day}まで)。"
     return ("/data/ranking-turnover/", "売れ筋の入れ替わり", lead, body, "売れ筋の入れ替わり",
             f"新しく入った商品の割合がいちばん高いのは「{most['label']}」({row(most, 'n_entered')[2]})")
 
