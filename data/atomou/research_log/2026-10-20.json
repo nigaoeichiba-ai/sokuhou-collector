@@ -1,0 +1,19 @@
+{
+ "date": "2026-10-20",
+ "weekday": "火",
+ "words": 0,
+ "rss": 1639,
+ "searches": 8,
+ "candidates": 6,
+ "cards": 5,
+ "rejected": 1,
+ "rejected_reasons": {
+  "2か所目が同じ会社/日付なし(直して通過)": 1
+ },
+ "queries": 0,
+ "failed_words": [],
+ "injections": 0,
+ "results_written": 0,
+ "ideas": "docs/ideas/2026-10-20.md(3案、Codexなし)",
+ "note": "利用者ワード0件。結果書きは未実施(時間のため、翌日に回す)。Yahoo!ニュースは同一ドメインなので2か所目は別ドメインが必要。"
+}
