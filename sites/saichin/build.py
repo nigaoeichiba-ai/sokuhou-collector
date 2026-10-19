@@ -626,7 +626,7 @@ def area_page(d: dict, slug: str, rname: str, shorts: list[str], cfg: dict, prev
 {analysis_pages.region_block(d, rname, members, sys.modules[__name__])}<h2>ほかの地方</h2>
 <ul class="pref-nav">{others}</ul>
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。単純平均は、このサイトで計算した参考値です。</p>"""
-    return finish(layout(cfg, preview, path=f"/area/{slug}/", title=f"{rname}({kinds})の最低賃金一覧と順位({d['label']})",
+    return finish(layout(cfg, preview, path=f"/area/{slug}/", title=f"{rname}の最低賃金一覧({kinds})と順位({d['label']})",
                          description=f"{rname}{kinds}の最低賃金を高い順に並べました。最高は{hi['name']}の{yen(hi['amount'])}、最低は{lo['name']}の{yen(lo['amount'])}。全国順位・引上げ額・発効日も掲載しています。", body=body), d)
 
 

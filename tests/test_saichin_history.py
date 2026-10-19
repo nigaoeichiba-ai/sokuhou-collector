@@ -71,7 +71,7 @@ class AreaAndHistoryPagesTest(SiteFixture):
 
     def test_the_area_page_says_how_many_prefectures_and_ranks_each_of_them(self):
         page = self.read("area/kanto/index.html")
-        self.assertIn("<title>関東(1都6県)の最低賃金一覧と順位(", page)
+        self.assertIn("<title>関東の最低賃金一覧(1都6県)と順位(", page)
         self.assertIn("<h1>関東1都6県の最低賃金 一覧と順位(", page)
         self.assertIn("関東1都6県の最低賃金を高い順に並べました", re.search(r'<meta name="description" content="([^"]*)"', page).group(1))
         table = re.search(r"<th>都道府県</th><th>最低賃金</th><th>全国順位</th>.*?</table>", page, re.S).group(0)
