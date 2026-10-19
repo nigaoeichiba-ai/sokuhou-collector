@@ -1,8 +1,8 @@
 {
- "as_of": "2026-10-15",
+ "as_of": "2026-10-19",
  "bad_coords": 1,
  "credit": "出典:山口県警察本部地域企画課「山口県内のクマ出没情報(YPくまっぷ)」(山口県オープンデータ、CC BY)を加工して作成",
- "fetched_at": "2026-10-17T06:17:19.870638+09:00",
+ "fetched_at": "2026-10-20T06:17:19.811125+09:00",
  "fy_current": "R08",
  "monthly": {
   "R07": {
@@ -11,7 +11,7 @@
    "3": 1
   },
   "R08": {
-   "10": 30,
+   "10": 36,
    "4": 21,
    "5": 55,
    "6": 51,
@@ -21,6 +21,36 @@
   }
  },
  "sightings": [
+  {
+   "city": "周南市",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 34.0777,
+   "lon": 131.7347,
+   "observed_at": "2026-10-19T09:50:00+09:00",
+   "place": "大字福川 市道上",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": null,
+   "kind": "痕跡",
+   "lat": 34.2177,
+   "lon": 132.0748,
+   "observed_at": "2026-10-18T08:00:00+09:00",
+   "place": "美和町西畑 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": null,
+   "kind": "痕跡",
+   "lat": 34.1503,
+   "lon": 132.1182,
+   "observed_at": "2026-10-16T07:30:00+09:00",
+   "place": "寺山 果樹園",
+   "species": "クマ"
+  },
   {
    "city": "周南市",
    "count": null,
@@ -45,6 +75,16 @@
    "city": "岩国市",
    "count": null,
    "kind": "痕跡",
+   "lat": 34.2868,
+   "lon": 131.9661,
+   "observed_at": "2026-10-15T10:00:00+09:00",
+   "place": "錦町中ノ瀬 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": null,
+   "kind": "痕跡",
    "lat": 34.0783,
    "lon": 132.1884,
    "observed_at": "2026-10-14T10:00:00+09:00",
@@ -59,6 +99,16 @@
    "lon": 132.0515,
    "observed_at": "2026-10-14T09:00:00+09:00",
    "place": "錦町宇佐 山中",
+   "species": "クマ"
+  },
+  {
+   "city": "岩国市",
+   "count": null,
+   "kind": "痕跡",
+   "lat": 34.1407,
+   "lon": 132.1244,
+   "observed_at": "2026-10-14T09:00:00+09:00",
+   "place": "近延 果樹園",
    "species": "クマ"
   },
   {
@@ -109,6 +159,16 @@
    "lon": 132.0789,
    "observed_at": "2026-10-12T10:00:00+09:00",
    "place": "伊房 果樹園",
+   "species": "クマ"
+  },
+  {
+   "city": "周南市",
+   "count": null,
+   "kind": "痕跡",
+   "lat": 34.0893,
+   "lon": 131.7859,
+   "observed_at": "2026-10-12T10:00:00+09:00",
+   "place": "大字下上 山中",
    "species": "クマ"
   },
   {
@@ -2580,9 +2640,9 @@
    "species": "クマ"
   }
  ],
- "sightings_in_window": 256,
+ "sightings_in_window": 262,
  "source": "yamaguchi",
- "source_file": "https://yamaguchi-opendata.jp/ckan/dataset/928b40db-0a74-4ad7-b70e-019045860fd4/resource/b257b81d-4acd-4067-ba53-fe8c5235081b/download/r8-01011016.csv",
+ "source_file": "https://yamaguchi-opendata.jp/ckan/dataset/928b40db-0a74-4ad7-b70e-019045860fd4/resource/b257b81d-4acd-4067-ba53-fe8c5235081b/download/r8-01011019.csv",
  "source_page": "https://yamaguchi-opendata.jp/ckan/dataset/yp-2026",
  "unparsed": 0,
  "update_note": "山口県警察が認知した目撃・痕跡の情報です。随時更新されます"
