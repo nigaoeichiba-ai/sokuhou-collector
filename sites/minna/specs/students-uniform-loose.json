@@ -1,0 +1,86 @@
+{
+ "slug": "students-uniform-loose",
+ "title": "中高生の学校生活",
+ "subject": "",
+ "genre": "people",
+ "touch": "loose",
+ "title_fmt": "{ja}",
+ "subject_en": "Japanese junior-high and high-school students in uniforms (blazers, sailor-collar or ties, dark trousers or skirts), mixed boys and girls, each ONE scene with two or three students, loose hand-drawn style, dot eyes, no school logos. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "登校・授業・部活・文化祭・修学旅行など、制服姿の中高生の場面12点です。学校案内や教材、Webコンテンツに使えます。",
+ "tags": [
+  "中学生",
+  "高校生",
+  "生徒",
+  "制服",
+  "学校",
+  "授業",
+  "文化祭",
+  "修学旅行",
+  "部活"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "toko",
+   "登校",
+   "two students walking to school with school bags on a tree-lined street"
+  ],
+  [
+   "class",
+   "授業",
+   "students sitting at desks in a classroom while the teacher writes on a board"
+  ],
+  [
+   "recess",
+   "休み時間",
+   "three students chatting around a desk during a break"
+  ],
+  [
+   "lunch",
+   "給食",
+   "students in white aprons serving school lunch from a cart"
+  ],
+  [
+   "cleaning",
+   "掃除当番",
+   "students sweeping and wiping desks in the classroom after school"
+  ],
+  [
+   "test",
+   "テスト",
+   "a student frowning over an exam paper at a desk"
+  ],
+  [
+   "club",
+   "部活の朝練",
+   "a student running on a track in a gym uniform at dawn"
+  ],
+  [
+   "library",
+   "図書室",
+   "two students reading and choosing books in a library"
+  ],
+  [
+   "bunkasai",
+   "文化祭",
+   "students painting a large signboard and carrying decorations"
+  ],
+  [
+   "shugaku",
+   "修学旅行",
+   "students walking along an old temple street with a guide flag"
+  ],
+  [
+   "homeroom",
+   "朝のホームルーム",
+   "students standing to greet the teacher at the start of the day"
+  ],
+  [
+   "hoyuka",
+   "放課後",
+   "two students walking home together under an evening sky"
+  ]
+ ],
+ "exclude": []
+}

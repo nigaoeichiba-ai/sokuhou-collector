@@ -1,0 +1,86 @@
+{
+ "slug": "flyer-frames-flat",
+ "title": "チラシ・販促の枠セット",
+ "subject": "",
+ "genre": "deco",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Decorative flyer and poster frames for shops with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, thick enough to hold text or a photo. Flat colourful style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "セール・開店・求人・予約受付など、チラシやポスターの用途別の枠12点です。中央があいているので、文字や写真を重ねて使えます。",
+ "tags": [
+  "チラシ",
+  "枠",
+  "フレーム",
+  "セール",
+  "開店",
+  "求人",
+  "ポスター",
+  "販促",
+  "POP"
+ ],
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "sale",
+   "セールの枠",
+   "a bold frame with starbursts, price-tag shapes and confetti, centre empty"
+  ],
+  [
+   "open",
+   "開店のお知らせの枠",
+   "a frame with a small shop awning, balloons and ribbons along the top, centre empty"
+  ],
+  [
+   "newitem",
+   "新商品の枠",
+   "a frame with sparkles and a gift ribbon in the corners, centre empty"
+  ],
+  [
+   "event",
+   "イベントの枠",
+   "a frame with bunting flags and stars, lively and festive, centre empty"
+  ],
+  [
+   "seminar",
+   "セミナー募集の枠",
+   "a clean frame with a pencil, notebook and light bulb in the corners, centre empty"
+  ],
+  [
+   "recruit",
+   "求人の枠",
+   "a friendly frame with a megaphone, handshake and star shapes in the corners, centre empty"
+  ],
+  [
+   "notice",
+   "お知らせの枠",
+   "a simple frame with a pushpin, an envelope and a bell in the corners, centre empty"
+  ],
+  [
+   "menu",
+   "メニューの枠",
+   "a frame with a fork, a spoon and a coffee cup in the corners, centre empty"
+  ],
+  [
+   "reserve",
+   "予約受付の枠",
+   "a frame with a calendar page, a clock and a check mark in the corners, centre empty"
+  ],
+  [
+   "discount",
+   "割引の枠",
+   "a frame made of diagonal red and cream stripes with round coupon shapes, centre empty"
+  ],
+  [
+   "stampcard",
+   "スタンプカードの枠",
+   "a card-shaped frame with a row of empty round stamp circles along the border, centre empty"
+  ],
+  [
+   "thanks",
+   "感謝セールの枠",
+   "a warm frame with hearts, flowers and a ribbon bow, centre empty"
+  ]
+ ],
+ "exclude": []
+}

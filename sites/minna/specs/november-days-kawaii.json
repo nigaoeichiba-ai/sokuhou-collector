@@ -1,0 +1,88 @@
+{
+ "slug": "november-days-kawaii",
+ "title": "11月の行事と暮らし",
+ "subject": "",
+ "genre": "season",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Items and small scenes for November in Japan, cute and friendly, each ONE object centred in its cell Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "立冬・文化の日・焼き芋・新米・紅葉狩りなど、11月の行事と暮らしの素材12点です。月初のおたよりや店頭の掲示に使えます。",
+ "tags": [
+  "11月",
+  "立冬",
+  "文化の日",
+  "焼き芋",
+  "新米",
+  "紅葉狩り",
+  "酉の市",
+  "おたより"
+ ],
+ "season": {
+  "from": "10-25",
+  "to": "11-30"
+ },
+ "holes": false,
+ "items": [
+  [
+   "ritto",
+   "立冬",
+   "a scarf and mittens on a small branch with the first fallen leaves"
+  ],
+  [
+   "bunka",
+   "文化の日",
+   "a medal-like badge with a book, a paintbrush and a flower"
+  ],
+  [
+   "yakiimo",
+   "焼き芋",
+   "a roasted sweet potato split open with steam, wrapped in newspaper"
+  ],
+  [
+   "shinmai",
+   "新米",
+   "a bowl of fresh white rice with a bundle of rice ears beside it"
+  ],
+  [
+   "momijigari",
+   "紅葉狩り",
+   "a picnic mat with a flask and sweets under falling red maple leaves"
+  ],
+  [
+   "torinoichi",
+   "酉の市",
+   "a large decorated lucky rake (kumade) with a gold coin and a lucky cat"
+  ],
+  [
+   "hoshigaki",
+   "干し柿",
+   "a string of persimmons hung to dry under the eaves"
+  ],
+  [
+   "kotatsu",
+   "こたつ出し",
+   "a kotatsu table with a quilt and a basket of mandarin oranges"
+  ],
+  [
+   "kinrou",
+   "勤労感謝の日",
+   "a bouquet of small flowers tied with a ribbon and a thank-you card"
+  ],
+  [
+   "kuri",
+   "栗",
+   "a bowl of chestnuts with spiky burrs beside it"
+  ],
+  [
+   "heater",
+   "ストーブ",
+   "a small kerosene heater with a kettle steaming on top"
+  ],
+  [
+   "nabe-ready",
+   "鍋の季節",
+   "a clay pot on a portable burner with ingredients ready around it"
+  ]
+ ],
+ "exclude": []
+}
