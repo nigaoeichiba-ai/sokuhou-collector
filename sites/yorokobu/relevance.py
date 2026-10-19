@@ -121,3 +121,57 @@ def fits_head(name: str, must: list[str] | tuple[str, ...] | None, limit: int = 
     head = re.sub(r"[【\[（(][^】\]）)]*[】\]）)]", " ", name)
     head = " ".join(head.split())[:limit]
     return fits_idea(head, must)
+
+
+# Kind words that do not make a product "another kind" when they stand in front of the idea's own word: a whole family of goods ("お菓子 クッキー"), a material or a brand
+# ("今治 タオル"), and words of the same family as the idea's word (a "マグ" in front of "タンブラー": both are drinkware).
+PARENT_KINDS = frozenset("""お菓子 菓子 スイーツ 洋菓子 和菓子 焼き菓子 コーヒー 紅茶 日本茶 緑茶 ティー ワイン 日本酒 ビール ウイスキー 焼酎 ジュース チョコ チョコレート
+今治 フラワー プリザーブド アロマ フレグランス 文具 文房具 カタログ ベビー服 おもちゃ""".split())
+FAMILIES = tuple(frozenset(f.split()) for f in (
+    "マグ マグカップ グラス ペアグラス コップ タンブラー ボトル 水筒 湯呑み 茶碗 皿 箸",
+    "タオル タオルハンカチ ハンカチ ハンドタオル バスタオル フェイスタオル ミニタオル ガーゼ マフラー ストール ブランケット ひざ掛け",
+    "バッグ エコバッグ トートバッグ ポーチ リュック 財布 キーケース ペンケース 筆箱",
+    "クッキー ケーキ ゼリー プリン どら焼き せんべい 羊羹 バウムクーヘン フィナンシェ マドレーヌ",
+    "ディフューザー リードディフューザー ルームフレグランス キャンドル アロマキャンドル バスソルト 入浴剤 石けん",
+    "ハンドクリーム ボディクリーム リップ 化粧水 美容液 香水",
+    "ノート 手帳 ボールペン 万年筆 色鉛筆 クレヨン",
+    "イヤホン ワイヤレスイヤホン ヘッドホン",
+    "アイマスク ホットアイマスク マスク",
+    "ソックス 靴下 スリッパ ルームシューズ",
+    "時計 腕時計",
+))
+
+
+def _same_family(v: str, words: list[str]) -> bool:
+    from sites.yorokobu import blurb
+    return any(v in f and any(blurb.occurrences(w, m) for m in f for w in words) for f in FAMILIES)
+
+
+def foreign_kind(name: str, must: list[str] | tuple[str, ...] | None, limit: int = 50) -> str | None:
+    """The word of the site's vocabulary of kinds (blurb.vocab) that stands in the head of the title BEFORE the idea's own word and names another sort of thing: a wristwatch
+    titled "... 腕時計 ... カレンダー機能" is a watch, not a calendar for the fridge; a lip balm that comes with a hair "クリップ" is a lip balm.  None when the first kind word of the title is
+    the idea's own (a word that contains one of the idea's words, one of the same family such as マグ for タンブラー, or a whole family such as お菓子), and when the title does not say
+    where the idea's word stands."""
+    import re
+    import unicodedata
+    from sites.yorokobu import blurb
+    if not must:
+        return None
+    head = re.sub(r"[【\[（(][^】\]）)]*[】\]）)]", " ", name)
+    h = unicodedata.normalize("NFKC", " ".join(head.split())[:limit]).lower()
+    words = [unicodedata.normalize("NFKC", w).lower().replace(" ", "") for w in must if w]
+    at = [h.find(w) for w in words if w and w in h]
+    if not at:
+        return None
+    first = min(at)
+    for v in blurb.vocab():
+        if v in PARENT_KINDS or any(w in v for w in words) or _same_family(v, words):
+            continue
+        if any(p + len(v) <= first for p in blurb.occurrences(h, v)):
+            return v
+    return None
+
+
+def fits_lead(name: str, must: list[str] | tuple[str, ...] | None, limit: int = 50) -> bool:
+    """fits_head, and the product is of the idea's kind rather than of another one that the title names first (see foreign_kind): who leads a page."""
+    return fits_head(name, must, limit) and not foreign_kind(name, must, limit)

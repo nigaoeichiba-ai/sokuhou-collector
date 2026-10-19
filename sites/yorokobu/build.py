@@ -597,7 +597,7 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
     cards_html = ""
     for i, idea in enumerate(ideas):
         # the products whose idea word stands near the front of the title come first; one that only lists the word far behind (keyword stuffing) comes after them
-        fresh = [it for it in idea["items"] if it["code"] not in used]
+        fresh = [it for it in idea["items"] if it["code"] not in used and not relevance.foreign_kind(it["name"], idea.get("must"))]          # not a watch under 「カレンダー」
         mine = sorted(fresh, key=lambda it: not relevance.fits_head(it["name"], idea.get("must")))[:4]
         if len(mine) < MIN_IDEA_ITEMS:
             continue
@@ -679,19 +679,32 @@ def kinds_of(d: dict, keys: list[str]) -> list[list[dict]]:
 
 def top_shown(d: dict, key: str, n: int = 4) -> list[dict]:
     """The products of 「まず見たい」 on a page (none when there are fewer than three: a row of two is not a head)."""
-    # a product leads the page only when the word of its idea stands near the front of its title ("パスケース リール付き ..."): the word far behind is
-    # often one of the keywords a shop stuffed in (an eco bag that lists "ランドリー", a plum wine made by a maker named 布袋), and it is not what the idea is about
-    groups = [sorted((it for it in idea["items"] if relevance.fits_head(it["name"], idea.get("must"))), key=lambda i: -score(i)) for idea in pair_items(d, key)[0]]
+    return [it for it, _ in top_shown_musts(d, key, n)]
+
+
+def top_shown_musts(d: dict, key: str, n: int = 4) -> list[tuple[dict, list[str] | None]]:
+    """(product, the words of the idea it stands for) of the 「まず見たい」 products.  A product leads the page only when the word of its idea stands near the front of its title
+    ("パスケース リール付き ..."): the word far behind is often one of the keywords a shop stuffed in (an eco bag that lists "ランドリー", a plum wine made by a maker named 布袋),
+    and it is not what the idea is about; and only when no other kind of thing is named in front of it (a wristwatch with 「カレンダー」 in its title, a lip balm sold with a 「クリップ」:
+    relevance.foreign_kind, weekly review 2026-10-19)."""
+    musts: dict[str, list[str] | None] = {}
+    groups = []
+    for idea in pair_items(d, key)[0]:
+        ok = [it for it in idea["items"] if relevance.fits_lead(it["name"], idea.get("must"))]
+        for it in ok:
+            musts.setdefault(it["code"], idea.get("must"))
+        groups.append(sorted(ok, key=lambda i: -score(i)))
     shown = spread(groups, n)
-    return shown if len(shown) >= 3 else []
+    return [(it, musts.get(it["code"])) for it in shown] if len(shown) >= 3 else []
 
 
 def top_picks(cfg: dict, d: dict, key: str, n: int = 4) -> str:
-    """The first thing under a gift page's head: the products people look at first, before any explanation (a visitor came for the gifts)."""
-    shown = top_shown(d, key, n)
+    """The first thing under a gift page's head: the products people look at first, before any explanation (a visitor came for the gifts).  Each card says the kind of its idea
+    (a card of a product that the site's vocabulary does not know was left without any words, and its favourite button read 「気になる品」)."""
+    shown = top_shown_musts(d, key, n)
     if not shown:
         return ""
-    cards = "".join(item_card(cfg, it, rank=i + 1, eager=i < 2) for i, it in enumerate(shown))       # the first two are what the visitor sees first: not lazy
+    cards = "".join(item_card(cfg, it, rank=i + 1, eager=i < 2, must=must) for i, (it, must) in enumerate(shown))       # the first two are what the visitor sees first: not lazy
     return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>種類の違う人気の{len(shown)}点</h2></div>'
             f'<ul class="items">{cards}</ul>{freshness(d)}</section>')
 
