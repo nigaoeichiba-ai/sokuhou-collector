@@ -224,7 +224,7 @@ class NumbersBlockTest(SiteFixture):
 class AboutPageTest(SiteFixture):
     def test_the_operator_page_has_the_policy_and_the_update_history(self):
         page = self.read("about/index.html")
-        for heading in ("編集方針", "このサイトの作り方", "誤りを見つけたら", "更新の履歴"):
+        for heading in ("編集方針", "誤りを見つけたら", "更新の履歴"):
             self.assertIn(f"<h2>{heading}</h2>", page)
         from sites.saichin import content
         days = [d for d, _ in content.UPDATES]
@@ -253,3 +253,12 @@ class FaqGuideTest(SiteFixture):
             self.assertIn(url, page)
         self.assertIn('href="/guide/faq/"', self.read("guide/index.html"))
         self.assertIn('href="/guide/faq/"', self.read("tokyo/index.html"))
+
+    def test_no_page_says_it_was_made_by_ai_or_automatically(self):
+        """The owner's decision (2026-10-19): the site does not state how its text was produced."""
+        for rel in self.files:
+            if not rel.endswith((".html", ".xml", ".json", ".csv")):
+                continue
+            text = re.sub(r"<script[^>]*src=[^>]*></script>", "", self.read(rel))
+            for word in ("Claude", "Anthropic", "AIの支援", "AI(", "人工知能", "自動で作", "自動作成", "自動生成", "機械が", "プログラムで計算"):
+                self.assertNotIn(word, text, (rel, word))
