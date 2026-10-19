@@ -107,6 +107,16 @@ class MinnaBuildTest(unittest.TestCase):
         self.assertTrue(len(data["chars"]) >= 30)
         self.assertTrue(all((self.out / c["src"].lstrip("/")).exists() for c in data["chars"]))
 
+    def test_the_operator_name_is_only_where_the_law_needs_it(self):
+        """オーナー指示 2026-10-19: the company name appears on the about page (the operator's information) and nowhere else, not even in the structured data."""
+        op = CFG["operator_name"]
+        where = [rel for rel in self.files if rel.endswith((".html", ".xml", ".json", ".txt", ".js")) and op in self.read(rel)]
+        self.assertEqual(where, ["about/index.html"])
+        ld = self.read("illust/season-christmas/index.html") + self.read("guide/nurie-insatsu/index.html")
+        names = re.findall(r'"@type": "Organization", "name": "([^"]*)"', ld)
+        self.assertGreaterEqual(len(names), 3)                       # creator on the picture page, author and publisher on the guide
+        self.assertEqual(set(names), {CFG["site_name"]})
+
     def test_every_internal_link_resolves(self):
         built = set(self.files)                                   # the list of what was built answers "is there such a file" without asking the disk 40,000 times
         bad = []
