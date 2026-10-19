@@ -231,11 +231,13 @@ def view(store: dict | None, filters: dict, min_items: int = 8) -> dict | None:
             continue
         mv = movers(s)
         ok = {it["code"]: it for it in items}
+        n_new = sum(1 for c in mv["entered"] if c in ok) if mv["days"] >= 2 else 0
+        n_stay = sum(1 for c, n in mv["stay"].items() if c in ok and n >= 3)
         segs[slug] = {
             "thin": len(items) < min_items,                                            # kept only so the address does not turn into a 404: not for the search engines (noindex, not in the sitemap)
             "slug": slug, "label": SEGMENTS[slug]["label"], "kind": SEGMENTS[slug]["kind"], "date": s.get("date") or store.get("updated"), "items": items, "facts": price_facts(items),
             "depth": int(s.get("depth") or PLACES),
-            "days": mv["days"],
+            "days": mv["days"], "n_entered": n_new, "n_stay": n_stay,           # all of them (the lists below show a few): the data room counts them
             "risers": [(ok[c], g) for c, g in mv["risers"] if c in ok][:6],
             "entered": [ok[c] for c in mv["entered"] if c in ok][:6] if mv["days"] >= 2 else [],
             "stay": sorted(((ok[c], n) for c, n in mv["stay"].items() if c in ok and n >= 3), key=lambda t: (-t[1], t[0]["rank"]))[:6],

@@ -24,6 +24,7 @@ if __name__ == "__main__":
 
 from sites.yorokobu import blurb as _blurb, shortname, content as ct  # noqa: E402
 from sites.yorokobu import dataroom  # noqa: E402
+from sites.yorokobu import aboutextra  # noqa: E402
 from sites.yorokobu import picksite  # noqa: E402
 from sites.yorokobu import askpages  # noqa: E402
 from sites.yorokobu import giftcal  # noqa: E402
@@ -215,6 +216,28 @@ def breadcrumb_ld(cfg: dict, body: str) -> str:
     if len(rows) < 2:
         return ""
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": rows}, ensure_ascii=False) + "</script>"
+
+
+# Pages that carry no AdSense tag (weekly review 2026-10-19, after saichin's "low-value content" answer): the hubs (a list of links to other pages), the forms, the pages of a visitor's
+# own list, and the error page.  A tag on a page with little text of its own is what that answer is about.
+NO_ADS_PATHS = frozenset({
+    "/theme/", "/for/", "/occasion/", "/budget/", "/numbers/", "/ranking/", "/data/", "/compare/", "/message/", "/month/", "/diagnosis/", "/oiwai/", "/oseibo/", "/picks/",
+    "/read/", "/tool/",                                               # hubs
+    "/contact/", "/contact/thanks.html", "/ask/", "/dock/", "/memo/", "/favorites/", "/list/",         # forms and the visitor's own lists
+    "/404.html",
+})
+ADS_TAG = re.compile(r'<script async src="https://pagead2\.googlesyndication\.com/pagead/js/adsbygoogle\.js[^"]*"[^>]*></script>' + chr(10) + '?')
+
+
+def strip_ads(pages: dict[str, str]) -> int:
+    """Takes the AdSense tag out of the pages in NO_ADS_PATHS (whichever builder made them); the number of pages changed."""
+    n = 0
+    for path in NO_ADS_PATHS:
+        key = path.strip("/") + ("/index.html" if path.endswith("/") else "")
+        if key in pages and ADS_TAG.search(pages[key]):
+            pages[key] = ADS_TAG.sub("", pages[key])
+            n += 1
+    return n
 
 
 def page(cfg, preview, **kw):
@@ -1500,6 +1523,26 @@ def ranking_grid(cfg: dict, rows: list[tuple[dict, str, str]]) -> str:
     return '<ul class="items">' + "".join(ranked_card(cfg, it, note, label) for it, note, label in rows) + "</ul>"
 
 
+PAGE_NOTES: dict = {}
+
+
+def page_notes() -> dict:
+    """content/page_notes.json: the editors' own words for the pages that are mostly a list of products."""
+    if not PAGE_NOTES:
+        f = HERE / "content" / "page_notes.json"
+        PAGE_NOTES.update(json.loads(f.read_text(encoding="utf-8")) if f.exists() else {"_": 1})
+    return PAGE_NOTES
+
+
+def note_block(kind: str, slug: str) -> str:
+    """「編集部の見かた」: why the list is worth a look, a scene to hand it over in, and what to check before buying (our words, written for this page; '' when there is none)."""
+    n = (page_notes().get(kind) or {}).get(slug)
+    if not n:
+        return ""
+    return ('<section class="editor-note" style="margin-top:30px"><h2><span class="scribble">編集部の見かた</span></h2>'
+            f'<p><b>見る価値</b>{esc(n["why"])}</p><p><b>渡す場面</b>{esc(n["scene"])}</p><p><b>注意したい点</b>{esc(n["care"])}</p></section>')
+
+
 def ranking_hub_page(d: dict, cfg: dict, preview: bool) -> str:
     rv = d["ranking"]
     day = rk.date_label(rv["date"])
@@ -1567,6 +1610,7 @@ def ranking_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("いま売れている", "/ranking/"), (sg["label"], None)])}</div>
 {pr_quiet(cfg)}
 {facts}
+{note_block('ranking', slug)}
 {blocks}
 <section style="margin-top:40px"><h2><span class="scribble">ランキング(上位)</span></h2>
 <p class="sec-lead">順位は楽天市場のランキングの順位です(上位{sg["depth"]}位のなかから、贈り物向きと分かるものだけを載せています。ふだんの買い物の商品などは除いているため、順位に欠けがあります)。</p>
@@ -1662,6 +1706,7 @@ def numbers_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("数字で選ぶ", "/numbers/"), (L["title"], None)])}</div>
 {pr_quiet(cfg)}
 <p class="sec-lead">条件に合う商品のいまの数字です{more}。レビューは購入した人の感想で品質を保証するものではありません。</p>
+{note_block('numbers', slug)}
 <section style="margin-top:30px">{item_grid(cfg, L["items"])}</section>
 {amazon_more(cfg, "プレゼント ギフト 人気", "プレゼントをAmazonで探す")}
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの条件</span></h2><ul class="plain cols2 chips">{others}</ul></section>' if others else ""}
@@ -1825,6 +1870,7 @@ def budget_page(d: dict, cfg: dict, preview: bool, tier: dict, pool: list, tiers
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("予算から探す", "/budget/"), (name, None)])}</div>
 {pr_quiet(cfg)}
 <p class="sec-lead" style="margin-top:18px">{esc(note)}</p>
+{note_block('budget', tier['slug'])}
 <section style="margin-top:26px"><ul class="items">{cards}</ul>{freshness(d)}</section>
 {amazon}
 <section class="block"><div class="sec-head"><h2>ほかの予算から探す</h2></div><ul class="plain cols2 chips">{others}</ul></section>
@@ -1858,7 +1904,7 @@ def policy_page(d: dict, cfg: dict, preview: bool) -> str:
          "Amazonの商品は、規約により、価格・評価・商品の写真を載せていません。写真の代わりに贈る場面を表したイメージ画像を使い、その旨を明記しています。</p>"),
         ("数字と統計", '<p><a href="/data/">データ室</a>の数字は出典を明記しています。「当サイトの商品」と書いてあるものは、当サイトで取り上げた商品の集計で、市場全体ではありません。</p>'),
         ("広告について", "<p>当サイトは、楽天アフィリエイトとAmazonアソシエイトに参加しています。リンク先で購入されると、運営者に報酬が支払われることがあります。広告のあるページには、「PR」と表示しています。</p>"),
-        ("訂正", "<p>誤りが分かったときは速やかに直します。お気づきの点はお問い合わせからお知らせください。</p>"),
+        ("訂正", '<p>誤りが分かったときは速やかに直し、<a href="/about/#history">運営者情報の更新の履歴</a>に「訂正」として日付と内容を残します。お気づきの点は<a href="/contact/">お問い合わせ</a>からお知らせください。</p>'),
         ("アイコン", '<p>アイコンには、<a href="https://phosphoricons.com/" rel="noopener" target="_blank">Phosphor Icons</a>(MITライセンス)を使っています。</p>'),
     ]
     if not PICKS_ON:
@@ -2080,9 +2126,10 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
                          "<p>当サイトの運営者は楽天市場で似顔絵のショップも運営しています。そのショップの商品を紹介するときはそのことをページ上に明示します。</p>"
                          "<p>当サイトは楽天グループ株式会社が運営するものではありません。</p>"),
         contact_notice="商品の購入・配送・返品などのお問い合わせは、各販売店へお願いします。当サイトでは商品の販売を行っていません。",
-        input_note=(askpages.ASK_PRIVACY if c.get("ask") else "") + minepage.COUNT_PRIVACY + ccbot.PRIVACY, finish=lambda s: s))
+        input_note=(askpages.ASK_PRIVACY if c.get("ask") else "") + minepage.COUNT_PRIVACY + ccbot.PRIVACY, finish=aboutextra.inject))
     pages["manifest.webmanifest"] = json.dumps(MANIFEST, ensure_ascii=False, indent=1)
     pages.update(cards)
+    strip_ads(pages)
     listed = dict(pages)                                   # the sitemap lists the pages that can be found by searching, not the shared-list page (noindex, built from a link)
     for slug, sg in ((d.get("ranking") or {}).get("segments") or {}).items():                  # a thin ranking page stays (no 404) but is not offered to the search engines
         if sg.get("thin"):

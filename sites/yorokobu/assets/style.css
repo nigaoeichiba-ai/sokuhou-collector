@@ -870,6 +870,8 @@ footer.site .src { color: var(--muted); }
 .mg-cell { margin: 0; }
 .mg-cell img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); background: #fff; }
 .mg-cell figcaption { margin-top: 6px; font-size: .8rem; line-height: 1.6; color: var(--ink2); }
+.editor-note p { margin: .5em 0; font-size: .92rem; line-height: 1.85; color: var(--ink2); }
+.editor-note b { display: block; margin-bottom: .1em; font: 700 .72rem var(--num); letter-spacing: .1em; color: var(--muted); }
 .feat-react { padding: 12px 16px; background: var(--t-peach); border-radius: 12px; }
 .feat-react b { display: block; margin-bottom: .2em; font-size: .78rem; color: var(--c-peach); }
 .faq { margin: 0 0 8px; padding: 12px 16px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
@@ -1019,3 +1021,7 @@ img[src*="valuecommerce.com/servlet/gifbanner"] { position: absolute; width: 1px
 .shg-wide { grid-template-columns: 240px minmax(0, 1fr); grid-template-rows: auto; align-items: center; }
 .shg-wide img { height: 100%; }
 @media (max-width: 560px) { .shg-cards { grid-template-columns: 1fr; } .shg-wide { grid-template-columns: 1fr; } }
+.changelog { list-style: none; padding: 0; }
+.changelog li { margin: .5em 0; padding-left: .75em; border-left: 2px solid var(--marker); line-height: 1.8; }
+.changelog time { display: block; font: 700 .72rem var(--num); letter-spacing: .08em; color: var(--muted); }
+.changelog .fix { display: inline-block; margin-right: .6em; padding: 0 .5em; border: 1px solid var(--marker); border-radius: 4px; font-size: .72rem; color: var(--ink2); }
