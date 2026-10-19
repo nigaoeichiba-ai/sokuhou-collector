@@ -97,10 +97,13 @@ class InThePages(unittest.TestCase):
 
     def test_the_about_page_says_how_the_site_is_edited_made_corrected_and_changed(self):
         about = self.read("about/index.html")
-        for h2 in ("編集方針", "このサイトの作り方", "誤りを見つけたら", "更新の履歴", "免責事項"):
+        for h2 in ("編集方針", "誤りを見つけたら", "更新の履歴", "免責事項"):
             self.assertIn(f"<h2>{h2}</h2>", about)
         self.assertLess(about.index("<h2>編集方針</h2>"), about.index("<h2>免責事項</h2>"))
-        self.assertIn("AI(Anthropic の Claude)の支援", about)
+        # the owner does not want the site to say that its text or pages were made with AI or automatically (2026-10-19); the one sentence on where the pictures come from stays
+        for word in ("Claude", "Anthropic", "自動", "プログラムで", "AI(", "支援を受け"):
+            self.assertNotIn(word, about, word)
+        self.assertIn("イラストは生成AIが制作しています。", about)
         self.assertRegex(about, r"<li>20\d\d-\d\d-\d\d: ")
         for rel in ("privacy/index.html", "contact/index.html"):
             self.assertNotIn("<h2>編集方針</h2>", self.read(rel))                 # only the about page is extended
