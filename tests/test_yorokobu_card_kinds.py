@@ -44,6 +44,15 @@ class KindWordIsAWordTest(unittest.TestCase):
         self.assertNotIn("マグ", blurb.blurb("マグネットボード 45cm 冷蔵庫 白"))
 
 
+class IdeaWordWithSpacesTest(unittest.TestCase):
+    def test_the_idea_word_is_found_in_a_title_that_spaces_it_the_way_the_gate_does(self):
+        # relevance.fits_idea ignores spaces and case; a card that passed it by 「ホワイト ボード」 said 「二つ折り」 (a word of another idea) or, with no word known, 「気になる品」
+        t = "二つ折り ホワイト ボード 冷蔵庫 マグネット 45cm"
+        self.assertTrue(relevance.fits_idea(t, ["ホワイトボード"]))
+        self.assertEqual(blurb.find_kind(t, must=["ホワイトボード"]), "ホワイトボード")
+        self.assertEqual(blurb.find_kind(t, kind="白板", must=["ホワイトボード"]), "白板")
+
+
 class ForeignKindTest(unittest.TestCase):
     CAL = ["カレンダー", "予定表", "マグネットカレンダー"]
     CLIP = ["マグネットクリップ", "メモクリップ", "クリップ"]
