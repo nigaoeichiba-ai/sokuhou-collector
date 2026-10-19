@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import charts, content, dataset, ogimage, wage as wagelib  # noqa: E402
+from sites.saichin import analysis_pages, charts, content, dataset, ogimage, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
@@ -258,7 +258,7 @@ def prepare(raw: dict) -> dict:
 
 # (label, link, section prefix used to mark the current section)
 NAV = [("全国一覧", "/", "/"), ("差額チェック", "/check/", "/check/"), ("地方別", "/area/", "/area/"), ("ランキング", "/ranking/high/", "/ranking/"),
-       ("発効日", "/calendar/", "/calendar/"), ("推移", "/history/", "/history/"), ("解説", "/guide/", "/guide/"), ("通知", "/notify/", "/notify/")]
+       ("発効日", "/calendar/", "/calendar/"), ("推移", "/history/", "/history/"), ("分析", "/analysis/", "/analysis/"), ("解説", "/guide/", "/guide/"), ("通知", "/notify/", "/notify/")]
 
 
 def icon(name: str) -> str:
@@ -269,7 +269,7 @@ GUIDE_ICONS = {"what-is": "guide", "how-decided": "chart", "excluded": "compare"
 
 
 def guide_card(g: dict) -> str:
-    return (f'<a class="guide-card" href="/guide/{g["slug"]}/"><img class="gc-img" src="/assets/img/guide-{g["slug"]}.webp" alt="" '
+    return (f'<a class="guide-card" href="/guide/{g["slug"]}/"><img class="gc-img" src="/assets/img/guide-{g.get("image", g["slug"])}.webp" alt="" '
             f'width="800" height="450" loading="lazy"><div class="gc-body"><b>{esc(g["title"])}</b><span>{esc(g["lead"])}</span></div></a>')
 
 
@@ -409,6 +409,9 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
         for r in sorted(rows, key=lambda r: (r["effective_date"], r["name"]))
     )
     guides = "".join(guide_card(g) for g in content.GUIDES)
+    built = analysis_pages.pages(d, sys.modules[__name__])
+    analysis_cards = "".join(
+        f'<a class="guide-card" href="/analysis/{slug}/"><b>{esc(dict(analysis_pages.INDEX)[slug])}</b><span>{esc(built[slug]["lead"])}</span></a>' for slug in analysis_pages.ORDER)
     body = f"""<section class="hero hero--saichin">
 <div class="hero-copy">
 <p class="eyebrow">{esc(d['label'])} 地域別最低賃金</p>
@@ -453,6 +456,12 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <div class="rank-box"><h3>低い順 TOP5</h3>{mini_list(bottom, lambda r: yen(r["amount"]))}<a href="/ranking/low/">全47都道府県を見る</a></div>
 <div class="rank-box"><h3>引上げ額 TOP5</h3>{mini_list(ups, lambda r: "+" + str(r["raise"]) + "円")}<a href="/ranking/raise/">全47都道府県を見る</a></div>
 </div>
+</section>
+
+<section>
+<h2>最低賃金の分析</h2>
+<p class="section-lead">{esc(d['years'][0]['label'])}から{esc(d['years'][-1]['label'])}までの数字を、このサイトで計算して比べました。</p>
+<div class="guide-grid">{analysis_cards}</div>
 </section>
 
 <section>
@@ -535,7 +544,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 {chart}
 <div class="tablewrap"><table><thead><tr><th>年度</th><th>最低賃金</th><th>前年度からの引上げ</th><th>全国順位</th><th>発効日</th></tr></thead><tbody>{hist}</tbody></table></div>
 {fixed_note}
-<h2>最低賃金で働いた場合の月収・年収の目安</h2>
+{analysis_pages.pref_block(d, r, sys.modules[__name__])}<h2>最低賃金で働いた場合の月収・年収の目安</h2>
 <p>最低賃金ちょうどで働いた場合の目安です。1年を52週、月収は年収を12で割った額として計算しています。税・社会保険料・手当・賞与・祝日などは含みません。実際の給料と比べるときは、<a href="/guide/calculate/">時間額への換算</a>をご覧ください。</p>
 {earnings_table(r)}
 {wage_section(d, r) if d.get("wage") else ""}
@@ -547,7 +556,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <h2>発効日を通知で受け取る</h2>
 <p><a href="/calendar/{r['slug']}.ics">{esc(r['name'])}の発効日を、カレンダーに入れる</a>(前日の朝9時に通知。登録不要)。ほかの方法は、<a href="/notify/">通知を受け取る</a>をご覧ください。</p>
 <h2>あわせて読む</h2>
-<ul class="link-list"><li><a href="/guide/excluded/">最低賃金に含まれない賃金は?</a></li><li><a href="/guide/below/">最低賃金を下回っていたら?</a></li><li><a href="/calendar/">発効日カレンダー</a></li></ul>
+<ul class="link-list"><li><a href="/guide/excluded/">最低賃金に含まれない賃金は?</a></li><li><a href="/guide/below/">最低賃金を下回っていたら?</a></li><li><a href="/guide/faq/">最低賃金のよくある質問</a></li><li><a href="/calendar/">発効日カレンダー</a></li></ul>
 <h2>ほかの都道府県</h2>
 <ul class="pref-nav">{nav}</ul>
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。47都道府県の全年度のデータは、<a href="/data/">CSV・JSONでダウンロード</a>できます。引用するときは、<a href="/cite/">引用のしかた</a>をご覧ください。</p>"""
@@ -609,7 +618,7 @@ def area_page(d: dict, slug: str, rname: str, shorts: list[str], cfg: dict, prev
 <div class="card-grid">{cards}</div>
 <h2>一覧表</h2>
 <div class="tablewrap"><table><thead><tr><th>都道府県</th><th>最低賃金</th><th>全国順位</th><th>引上げ額</th><th>発効日</th></tr></thead><tbody>{rows}</tbody></table></div>
-<h2>ほかの地方</h2>
+{analysis_pages.region_block(d, rname, members, sys.modules[__name__])}<h2>ほかの地方</h2>
 <ul class="pref-nav">{others}</ul>
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。単純平均は、このサイトで計算した参考値です。</p>"""
     return finish(layout(cfg, preview, path=f"/area/{slug}/", title=f"{rname}({kinds})の最低賃金一覧と順位({d['label']})",
@@ -865,7 +874,9 @@ def history_page(d: dict, cfg: dict, preview: bool) -> str:
 {chart}
 <h2>年度別の一覧</h2>
 <div class="tablewrap"><table><thead><tr><th>年度</th><th>全国加重平均</th><th>前年度から</th><th>最高額</th><th>最低額</th></tr></thead><tbody>{rows}</tbody></table></div>
-{pref_section}<p class="notice">この表のデータは、<a href="/data/">CSV・JSONでダウンロード</a>できます。引用するときは、<a href="/cite/">引用のしかた</a>をご覧ください。</p>
+{pref_section}<h2>もっと詳しく</h2>
+<p>地域差、節目を超えた年度、順位の動き、引上げ額、発効日を、<a href="/analysis/">最低賃金の分析</a>にまとめています。</p>
+<p class="notice">この表のデータは、<a href="/data/">CSV・JSONでダウンロード</a>できます。引用するときは、<a href="/cite/">引用のしかた</a>をご覧ください。</p>
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。出典の表にある各年度の額を、このサイトで並べ替えました。グラフの縦軸は0から始まっていません。</p>"""
     return finish(layout(cfg, preview, path="/history/", title=f"最低賃金の推移 全国加重平均の年度別一覧({first['label']}〜{last['label']})",
                          description=f"{first['label']}から{last['label']}までの全国加重平均の最低賃金の推移を、グラフと年度別の表でまとめます。最高額・最低額も掲載。", body=body), d)
@@ -990,16 +1001,28 @@ def guide_page(d: dict, g: dict, cfg: dict, preview: bool) -> str:
     body = f"""{crumbs([("全国", "/"), ("最低賃金のきほん", "/guide/"), (g["title"], None)])}
 <h1>{esc(g['title'])}</h1>
 <p class="lead">{esc(g['lead'])}</p>
-<img class="page-banner guide" src="/assets/img/guide-{g['slug']}.webp" alt="" width="800" height="450">
+<img class="page-banner guide" src="/assets/img/guide-{g.get('image', g['slug'])}.webp" alt="" width="800" height="450">
 <article class="prose">{g['body']}</article>
 <h2>出典</h2>
 <ul class="link-list">{sources}</ul>
-<p class="notice">内容の確認日: {jp_date(content.VERIFIED_AT)}。制度は改正されることがあります。最新の内容は、出典でご確認ください。</p>
+<p class="notice">内容の確認日: {jp_date(g.get('verified', content.VERIFIED_AT))}。制度は改正されることがあります。最新の内容は、出典でご確認ください。</p>
 <h2>ほかの解説</h2>
 <ul class="link-list">{others}</ul>
 {extra}"""
     return finish(layout(cfg, preview, path=f"/guide/{g['slug']}/", title=f"{g['title']} | {cfg['site_name']}",
                          description=g["description"], body=body), d)
+
+
+def analysis_hub_page(d: dict, built: dict, cfg: dict, preview: bool) -> str:
+    first, last = d["years"][0]["label"], d["years"][-1]["label"]
+    return finish(layout(cfg, preview, path="/analysis/", title=f"最低賃金の分析 地域差・節目・順位・引上げ額・発効日({first}〜{last})",
+                         description=f"{first}から{last}までの47都道府県の最低賃金を、地域差、1,000円など節目を超えた年度、順位の動き、引上げ額、発効日の5つで比べました。数字はすべて計算で出しています。",
+                         body=analysis_pages.hub_body(d, sys.modules[__name__], built), scripts=False), d)
+
+
+def analysis_page(d: dict, slug: str, page: dict, cfg: dict, preview: bool) -> str:
+    return finish(layout(cfg, preview, path=f"/analysis/{slug}/", title=f"{page['title']} | {cfg['site_name']}", description=page["description"],
+                         body=page["body"], scripts=False), d)
 
 
 def contact_summary(cfg: dict) -> str:
@@ -1014,6 +1037,7 @@ def contact_summary(cfg: dict) -> str:
 
 def about_page(d: dict, cfg: dict, preview: bool) -> str:
     op = esc(cfg["operator_name"] or "(未設定)")
+    update_items = "".join(f"<li>{esc(jp_date(day))}: {esc(text)}。</li>\n" for day, text in content.UPDATES)
     body = f"""<h1>運営者情報</h1>
 <dl class="info">
 <dt>サイト名</dt><dd>{esc(cfg['site_name'])}</dd>
@@ -1023,11 +1047,26 @@ def about_page(d: dict, cfg: dict, preview: bool) -> str:
 <dt>情報の出典</dt><dd>{esc(SOURCE_LABEL)}(<a href="{{source}}" rel="noopener" target="_blank">公表ページ</a>)、厚生労働省の最低賃金制度の特設サイト、最低賃金法</dd>
 <dt>更新</dt><dd>厚生労働省の公表データをもとに作成し、内容を更新したときは、各ページに表示するデータの取得日も更新します。</dd>
 </dl>
+<h2>編集方針</h2>
+<ul>
+<li>数字は、厚生労働省の公表資料にあるものだけを使います。他のサイトや報道の数字は載せません。</li>
+<li>順位、引上げ額、全国との差、<a href="/analysis/">分析</a>の数字は、プログラムで計算します。ページを作るたびに計算し直し、手で書き写した数字はありません。</li>
+<li>データに抜けがあるときや、前の年度より額が下がっているときは、ページを更新せず、公開を止めます。確認の記録は<a href="/data/">データのページ</a>に載せています。</li>
+<li>額が動いた理由は、断定しません。出典にあることだけを書きます。</li>
+<li>法律や制度の説明には、確認した日と出典を付けます。個別の事案が違法かどうかの判断は、書きません。</li>
+</ul>
+<h2>このサイトの作り方</h2>
+<p>ページは、毎日、厚生労働省の公表を取得して自動で作り直しています。文章と画面は、AI(Anthropic の Claude)の支援を受けて作成しました。</p>
+<h2>誤りを見つけたら</h2>
+<p><a href="/contact/">お問い合わせフォーム</a>の「データの誤りのご指摘」からお知らせください。誤りと確認できたときは直し、下の更新の履歴に残します。</p>
+<h2>更新の履歴</h2>
+<ul>
+{update_items}</ul>
 <h2>免責事項</h2>
 <p>掲載内容は、正確を期して作成していますが、その正確性・完全性・最新性を保証するものではありません。実際に適用される最低賃金は、都道府県労働局・厚生労働省の発表をご確認ください。当サイトの情報を利用して生じた損害について、運営者は責任を負いません。</p>
 <p>このサイトは、厚生労働省が公表している情報を加工して作成したもので、厚生労働省が作成したものではありません。</p>"""
     return finish(layout(cfg, preview, path="/about/", title=f"運営者情報 | {cfg['site_name']}",
-                         description="最低賃金速報の運営者情報、情報の出典、免責事項です。", body=body, scripts=False), d)
+                         description="最低賃金速報の運営者情報、編集方針、更新の履歴、情報の出典、免責事項です。", body=body, scripts=False), d)
 
 
 def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
@@ -1263,6 +1302,10 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, wage: di
     pages["guide/index.html"] = guide_hub_page(d, cfg, preview)
     for g in content.GUIDES:
         pages[f"guide/{g['slug']}/index.html"] = guide_page(d, g, cfg, preview)
+    built = analysis_pages.pages(d, sys.modules[__name__])
+    pages["analysis/index.html"] = analysis_hub_page(d, built, cfg, preview)
+    for slug, page in built.items():
+        pages[f"analysis/{slug}/index.html"] = analysis_page(d, slug, page, cfg, preview)
     pages["about/index.html"] = about_page(d, cfg, preview)
     pages["privacy/index.html"] = privacy_page(d, cfg, preview)
     pages["contact/index.html"] = contact_page(d, cfg, preview)
