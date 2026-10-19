@@ -1,16 +1,16 @@
 {
- "as_of": "2026-10-16",
+ "as_of": "2026-10-19",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 1,
  "dates_after_as_of_by_month": {
   "10": 1
  },
- "fetched_at": "2026-10-17T06:17:15.177923+09:00",
+ "fetched_at": "2026-10-20T06:17:14.056398+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "1": 0,
-   "10": 74,
+   "10": 82,
    "11": 0,
    "12": 0,
    "2": 0,
@@ -34,6 +34,38 @@
    "species": "クマ"
   },
   {
+   "city": "南三陸町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-16T19:40:00+09:00",
+   "place": "歌津字皿貝",
+   "species": "クマ"
+  },
+  {
+   "city": "大崎市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-16T11:50:00+09:00",
+   "place": "鹿島台大迫字前沢地内",
+   "species": "クマ"
+  },
+  {
+   "city": "栗原市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-16T05:30:00+09:00",
+   "place": "志波姫堀口川原　地内",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市太白区",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-15T19:30:00+09:00",
+   "place": "秋保町長袋字門前地内",
+   "species": "クマ"
+  },
+  {
    "city": "仙台市泉区",
    "count": 1,
    "kind": "目撃",
@@ -42,11 +74,35 @@
    "species": "クマ"
   },
   {
+   "city": "仙台市青葉区",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-15T09:20:00+09:00",
+   "place": "郷六葛岡",
+   "species": "クマ"
+  },
+  {
+   "city": "柴田町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-14T16:40:00+09:00",
+   "place": "四日市場字日当山",
+   "species": "クマ"
+  },
+  {
    "city": "大崎市",
    "count": 1,
    "kind": "目撃",
    "observed_at": "2026-10-14T14:50:00+09:00",
    "place": "鳴子温泉字町西",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市青葉区",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-13T18:27:00+09:00",
+   "place": "中山台4丁目14-11（4丁目公園）",
    "species": "クマ"
   },
   {
@@ -63,6 +119,14 @@
    "kind": "目撃",
    "observed_at": "2026-10-13T16:55:00+09:00",
    "place": "迫町新田字上大田切地内",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市青葉区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-13T16:53:00+09:00",
+   "place": "上愛子字十三枚田6-3付近",
    "species": "クマ"
   },
   {
@@ -10963,7 +11027,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261016.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261019.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }

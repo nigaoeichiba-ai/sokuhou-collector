@@ -1,8 +1,8 @@
 {
- "as_of": "2026-10-15",
+ "as_of": "2026-10-19",
  "bad_coords": 0,
  "credit": "出典: 富山県「富山県ツキノワグマ出没情報地図【クマっぷ】」(https://www.pref.toyama.jp/1709/kurashi/kankyoushizen/shizen/yaseiseibutsu/kumap.html)の公開データを、富山県自然保護課の許可を得て、加工して作成(富山県が作成したものではありません)",
- "fetched_at": "2026-10-17T06:17:34.196812+09:00",
+ "fetched_at": "2026-10-20T06:17:34.312229+09:00",
  "fy_current": "R08",
  "monthly": {
   "R01": {
@@ -98,7 +98,7 @@
    "9": 75
   },
   "R08": {
-   "10": 12,
+   "10": 17,
    "4": 19,
    "5": 40,
    "6": 97,
@@ -108,6 +108,46 @@
   }
  },
  "sightings": [
+  {
+   "city": "南砺市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-19",
+   "place": "蔵原",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "氷見市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-19",
+   "place": "熊無",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "高岡市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-19",
+   "place": "二上",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-17",
+   "place": "富山市庵谷",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富山市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-17",
+   "place": "富山市八木山",
+   "species": "ツキノワグマ"
+  },
   {
    "city": "富山市",
    "count": null,
@@ -2533,7 +2573,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 4279,
+ "sightings_in_window": 4284,
  "source": "toyama",
  "source_file": "https://services7.arcgis.com/pUdPpUsq83Kw8pWi/arcgis/rest/services/survey123_3f07f1f9864d43368d48b5f373d6cd68_results/FeatureServer/0",
  "source_page": "https://www.pref.toyama.jp/1709/kurashi/kankyoushizen/shizen/yaseiseibutsu/kumap.html",
