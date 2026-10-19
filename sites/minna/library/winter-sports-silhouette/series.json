@@ -1,0 +1,150 @@
+{
+ "added": "2026-10-20",
+ "slug": "winter-sports-silhouette",
+ "title": "冬のスポーツ（シルエット）",
+ "genre": "life",
+ "touch": "silhouette",
+ "lead": "スキー・スケート・カーリングなど、冬のスポーツの動きをシルエットで描いた12点です。案内図やポスター、ウェブのアクセントに使えます。",
+ "tags": [
+  "冬",
+  "スポーツ",
+  "スキー",
+  "スケート",
+  "カーリング",
+  "シルエット",
+  "雪",
+  "ポスター"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "winter-sports-silhouette-ski",
+   "file": "winter-sports-silhouette-ski.webp",
+   "title": "スキー",
+   "desc": "スキーのシルエットイラストです。",
+   "tags": [
+    "冬",
+    "スポーツ",
+    "スキー",
+    "スケート",
+    "冬のスポーツ（シルエット）",
+    "シルエット",
+    "暮らし・物"
+   ],
+   "w": 503,
+   "h": 435
+  },
+  {
+   "id": "winter-sports-silhouette-speedskate",
+   "file": "winter-sports-silhouette-speedskate.webp",
+   "title": "スピードスケート",
+   "desc": "スピードスケートのシルエットイラストです。",
+   "tags": [
+    "冬",
+    "スポーツ",
+    "スキー",
+    "スケート",
+    "冬のスポーツ（シルエット）",
+    "スピードスケート",
+    "シルエット",
+    "暮らし・物"
+   ],
+   "w": 467,
+   "h": 413
+  },
+  {
+   "id": "winter-sports-silhouette-jump",
+   "file": "winter-sports-silhouette-jump.webp",
+   "title": "スキージャンプ",
+   "desc": "スキージャンプのシルエットイラストです。",
+   "tags": [
+    "冬",
+    "スポーツ",
+    "スキー",
+    "スケート",
+    "冬のスポーツ（シルエット）",
+    "スキージャンプ",
+    "シルエット",
+    "暮らし・物"
+   ],
+   "w": 473,
+   "h": 447
+  },
+  {
+   "id": "winter-sports-silhouette-snowball",
+   "file": "winter-sports-silhouette-snowball.webp",
+   "title": "雪合戦",
+   "desc": "雪合戦のシルエットイラストです。",
+   "tags": [
+    "冬",
+    "スポーツ",
+    "スキー",
+    "スケート",
+    "雪",
+    "冬のスポーツ（シルエット）",
+    "雪合戦",
+    "シルエット",
+    "暮らし・物"
+   ],
+   "w": 384,
+   "h": 395
+  },
+  {
+   "id": "winter-sports-silhouette-snowshoe",
+   "file": "winter-sports-silhouette-snowshoe.webp",
+   "title": "スノーシュー",
+   "desc": "スノーシューのシルエットイラストです。",
+   "tags": [
+    "冬",
+    "スポーツ",
+    "スキー",
+    "スケート",
+    "冬のスポーツ（シルエット）",
+    "スノーシュー",
+    "シルエット",
+    "暮らし・物"
+   ],
+   "w": 446,
+   "h": 453
+  },
+  {
+   "id": "winter-sports-silhouette-snowman",
+   "file": "winter-sports-silhouette-snowman.webp",
+   "title": "雪だるまづくり",
+   "desc": "雪だるまづくりのシルエットイラストです。",
+   "tags": [
+    "冬",
+    "スポーツ",
+    "スキー",
+    "スケート",
+    "雪",
+    "冬のスポーツ（シルエット）",
+    "雪だるまづくり",
+    "シルエット",
+    "暮らし・物"
+   ],
+   "w": 497,
+   "h": 375
+  },
+  {
+   "id": "winter-sports-silhouette-crosscountry",
+   "file": "winter-sports-silhouette-crosscountry.webp",
+   "title": "クロスカントリー",
+   "desc": "クロスカントリーのシルエットイラストです。",
+   "tags": [
+    "冬",
+    "スポーツ",
+    "スキー",
+    "スケート",
+    "冬のスポーツ（シルエット）",
+    "クロスカントリー",
+    "シルエット",
+    "暮らし・物"
+   ],
+   "w": 517,
+   "h": 434
+  }
+ ]
+}

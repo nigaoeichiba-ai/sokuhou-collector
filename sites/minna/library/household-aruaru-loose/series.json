@@ -1,0 +1,238 @@
+{
+ "added": "2026-10-20",
+ "slug": "household-aruaru-loose",
+ "title": "暮らしの場面（トイレ・風呂・掃除）",
+ "genre": "life",
+ "touch": "loose",
+ "lead": "トイレ・風呂・洗面所の掃除や、洗濯・ごみ出しなど、家事の場面12点です。家事の分担表や暮らしの記事に使えます。",
+ "tags": [
+  "掃除",
+  "トイレ掃除",
+  "風呂掃除",
+  "家事",
+  "暮らし",
+  "洗濯",
+  "ゴミ出し",
+  "分担表"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "household-aruaru-loose-toilet",
+   "file": "household-aruaru-loose-toilet.webp",
+   "title": "トイレ掃除",
+   "desc": "トイレ掃除のゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 432,
+   "h": 477
+  },
+  {
+   "id": "household-aruaru-loose-bath",
+   "file": "household-aruaru-loose-bath.webp",
+   "title": "風呂掃除",
+   "desc": "風呂掃除のゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 513,
+   "h": 473
+  },
+  {
+   "id": "household-aruaru-loose-washstand",
+   "file": "household-aruaru-loose-washstand.webp",
+   "title": "洗面台の掃除",
+   "desc": "洗面台の掃除のゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "洗面台の掃除",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 432,
+   "h": 481
+  },
+  {
+   "id": "household-aruaru-loose-window",
+   "file": "household-aruaru-loose-window.webp",
+   "title": "窓ふき",
+   "desc": "窓ふきのゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "窓ふき",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 416,
+   "h": 513
+  },
+  {
+   "id": "household-aruaru-loose-fan",
+   "file": "household-aruaru-loose-fan.webp",
+   "title": "換気扇の掃除",
+   "desc": "換気扇の掃除のゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "換気扇の掃除",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 412,
+   "h": 515
+  },
+  {
+   "id": "household-aruaru-loose-drain",
+   "file": "household-aruaru-loose-drain.webp",
+   "title": "排水口の掃除",
+   "desc": "排水口の掃除のゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "排水口の掃除",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 464,
+   "h": 488
+  },
+  {
+   "id": "household-aruaru-loose-floor",
+   "file": "household-aruaru-loose-floor.webp",
+   "title": "床ふき",
+   "desc": "床ふきのゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "床ふき",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 346,
+   "h": 469
+  },
+  {
+   "id": "household-aruaru-loose-vacuum",
+   "file": "household-aruaru-loose-vacuum.webp",
+   "title": "掃除機",
+   "desc": "掃除機のゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "掃除機",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 464,
+   "h": 488
+  },
+  {
+   "id": "household-aruaru-loose-laundry",
+   "file": "household-aruaru-loose-laundry.webp",
+   "title": "洗濯物を干す",
+   "desc": "洗濯物を干すのゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "洗濯",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "洗濯物を干す",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 460,
+   "h": 451
+  },
+  {
+   "id": "household-aruaru-loose-trash",
+   "file": "household-aruaru-loose-trash.webp",
+   "title": "ゴミ出し",
+   "desc": "ゴミ出しのゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "ゴミ出し",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 336,
+   "h": 495
+  },
+  {
+   "id": "household-aruaru-loose-tidy",
+   "file": "household-aruaru-loose-tidy.webp",
+   "title": "片づけ",
+   "desc": "片づけのゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "片づけ",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 437,
+   "h": 437
+  },
+  {
+   "id": "household-aruaru-loose-rest",
+   "file": "household-aruaru-loose-rest.webp",
+   "title": "掃除のあとの一息",
+   "desc": "掃除のあとの一息のゆるい手書きイラストです。",
+   "tags": [
+    "掃除",
+    "トイレ掃除",
+    "風呂掃除",
+    "家事",
+    "暮らしの場面（トイレ・風呂・掃除）",
+    "掃除のあとの一息",
+    "ゆるい手書き",
+    "暮らし・物"
+   ],
+   "w": 475,
+   "h": 456
+  }
+ ]
+}

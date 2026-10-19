@@ -1,0 +1,201 @@
+{
+ "added": "2026-10-20",
+ "slug": "hotpot-regional-flat",
+ "title": "ご当地鍋の料理",
+ "genre": "food",
+ "touch": "flat",
+ "lead": "もつ鍋・すき焼き・水炊き・石狩鍋など、日本各地の鍋料理12点です。冬のメニューや献立の資料に使えます。",
+ "tags": [
+  "鍋",
+  "鍋料理",
+  "もつ鍋",
+  "すき焼き",
+  "しゃぶしゃぶ",
+  "ご当地",
+  "冬",
+  "メニュー"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "hotpot-regional-flat-motsu",
+   "file": "hotpot-regional-flat-motsu.webp",
+   "title": "もつ鍋",
+   "desc": "もつ鍋のシンプルフラットイラストです。",
+   "tags": [
+    "鍋",
+    "鍋料理",
+    "もつ鍋",
+    "すき焼き",
+    "ご当地鍋の料理",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 502,
+   "h": 439
+  },
+  {
+   "id": "hotpot-regional-flat-sukiyaki",
+   "file": "hotpot-regional-flat-sukiyaki.webp",
+   "title": "すき焼き",
+   "desc": "すき焼きのシンプルフラットイラストです。",
+   "tags": [
+    "鍋",
+    "鍋料理",
+    "もつ鍋",
+    "すき焼き",
+    "ご当地鍋の料理",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 519,
+   "h": 449
+  },
+  {
+   "id": "hotpot-regional-flat-shabu",
+   "file": "hotpot-regional-flat-shabu.webp",
+   "title": "しゃぶしゃぶ",
+   "desc": "しゃぶしゃぶのシンプルフラットイラストです。",
+   "tags": [
+    "鍋",
+    "鍋料理",
+    "もつ鍋",
+    "すき焼き",
+    "しゃぶしゃぶ",
+    "ご当地鍋の料理",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 499,
+   "h": 435
+  },
+  {
+   "id": "hotpot-regional-flat-ishikari",
+   "file": "hotpot-regional-flat-ishikari.webp",
+   "title": "石狩鍋",
+   "desc": "石狩鍋のシンプルフラットイラストです。",
+   "tags": [
+    "鍋",
+    "鍋料理",
+    "もつ鍋",
+    "すき焼き",
+    "ご当地鍋の料理",
+    "石狩鍋",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 513,
+   "h": 460
+  },
+  {
+   "id": "hotpot-regional-flat-kiritanpo",
+   "file": "hotpot-regional-flat-kiritanpo.webp",
+   "title": "きりたんぽ鍋",
+   "desc": "きりたんぽ鍋のシンプルフラットイラストです。",
+   "tags": [
+    "鍋",
+    "鍋料理",
+    "もつ鍋",
+    "すき焼き",
+    "ご当地鍋の料理",
+    "きりたんぽ鍋",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 497,
+   "h": 456
+  },
+  {
+   "id": "hotpot-regional-flat-hoto",
+   "file": "hotpot-regional-flat-hoto.webp",
+   "title": "ほうとう",
+   "desc": "ほうとうのシンプルフラットイラストです。",
+   "tags": [
+    "鍋",
+    "鍋料理",
+    "もつ鍋",
+    "すき焼き",
+    "ご当地鍋の料理",
+    "ほうとう",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 493,
+   "h": 450
+  },
+  {
+   "id": "hotpot-regional-flat-kaki",
+   "file": "hotpot-regional-flat-kaki.webp",
+   "title": "牡蠣鍋",
+   "desc": "牡蠣鍋のシンプルフラットイラストです。",
+   "tags": [
+    "鍋",
+    "鍋料理",
+    "もつ鍋",
+    "すき焼き",
+    "ご当地鍋の料理",
+    "牡蠣鍋",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 500,
+   "h": 460
+  },
+  {
+   "id": "hotpot-regional-flat-yosenabe",
+   "file": "hotpot-regional-flat-yosenabe.webp",
+   "title": "寄せ鍋",
+   "desc": "寄せ鍋のシンプルフラットイラストです。",
+   "tags": [
+    "鍋",
+    "鍋料理",
+    "もつ鍋",
+    "すき焼き",
+    "ご当地鍋の料理",
+    "寄せ鍋",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 496,
+   "h": 457
+  },
+  {
+   "id": "hotpot-regional-flat-yudofu",
+   "file": "hotpot-regional-flat-yudofu.webp",
+   "title": "湯豆腐",
+   "desc": "湯豆腐のシンプルフラットイラストです。",
+   "tags": [
+    "鍋",
+    "鍋料理",
+    "もつ鍋",
+    "すき焼き",
+    "ご当地鍋の料理",
+    "湯豆腐",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 504,
+   "h": 431
+  },
+  {
+   "id": "hotpot-regional-flat-kimchi",
+   "file": "hotpot-regional-flat-kimchi.webp",
+   "title": "キムチ鍋",
+   "desc": "キムチ鍋のシンプルフラットイラストです。",
+   "tags": [
+    "鍋",
+    "鍋料理",
+    "もつ鍋",
+    "すき焼き",
+    "ご当地鍋の料理",
+    "キムチ鍋",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 507,
+   "h": 459
+  }
+ ]
+}

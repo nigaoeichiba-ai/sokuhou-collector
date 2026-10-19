@@ -1,0 +1,221 @@
+{
+ "added": "2026-10-20",
+ "slug": "november-days-kawaii",
+ "title": "11月の行事と暮らし",
+ "genre": "season",
+ "touch": "kawaii",
+ "lead": "立冬・文化の日・焼き芋・新米・紅葉狩りなど、11月の行事と暮らしの素材12点です。月初のおたよりや店頭の掲示に使えます。",
+ "tags": [
+  "11月",
+  "立冬",
+  "文化の日",
+  "焼き芋",
+  "新米",
+  "紅葉狩り",
+  "酉の市",
+  "おたより"
+ ],
+ "subject": "",
+ "season": {
+  "from": "10-25",
+  "to": "11-30"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "november-days-kawaii-ritto",
+   "file": "november-days-kawaii-ritto.webp",
+   "title": "立冬",
+   "desc": "立冬のゆるかわイラストです。",
+   "tags": [
+    "11月",
+    "立冬",
+    "文化の日",
+    "焼き芋",
+    "11月の行事と暮らし",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 526,
+   "h": 485
+  },
+  {
+   "id": "november-days-kawaii-bunka",
+   "file": "november-days-kawaii-bunka.webp",
+   "title": "文化の日",
+   "desc": "文化の日のゆるかわイラストです。",
+   "tags": [
+    "11月",
+    "立冬",
+    "文化の日",
+    "焼き芋",
+    "11月の行事と暮らし",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 477,
+   "h": 468
+  },
+  {
+   "id": "november-days-kawaii-yakiimo",
+   "file": "november-days-kawaii-yakiimo.webp",
+   "title": "焼き芋",
+   "desc": "焼き芋のゆるかわイラストです。",
+   "tags": [
+    "11月",
+    "立冬",
+    "文化の日",
+    "焼き芋",
+    "11月の行事と暮らし",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 526,
+   "h": 499
+  },
+  {
+   "id": "november-days-kawaii-shinmai",
+   "file": "november-days-kawaii-shinmai.webp",
+   "title": "新米",
+   "desc": "新米のゆるかわイラストです。",
+   "tags": [
+    "11月",
+    "立冬",
+    "文化の日",
+    "焼き芋",
+    "新米",
+    "11月の行事と暮らし",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 490,
+   "h": 438
+  },
+  {
+   "id": "november-days-kawaii-momijigari",
+   "file": "november-days-kawaii-momijigari.webp",
+   "title": "紅葉狩り",
+   "desc": "紅葉狩りのゆるかわイラストです。",
+   "tags": [
+    "11月",
+    "立冬",
+    "文化の日",
+    "焼き芋",
+    "紅葉狩り",
+    "11月の行事と暮らし",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 524,
+   "h": 493
+  },
+  {
+   "id": "november-days-kawaii-torinoichi",
+   "file": "november-days-kawaii-torinoichi.webp",
+   "title": "酉の市",
+   "desc": "酉の市のゆるかわイラストです。",
+   "tags": [
+    "11月",
+    "立冬",
+    "文化の日",
+    "焼き芋",
+    "酉の市",
+    "11月の行事と暮らし",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 502,
+   "h": 520
+  },
+  {
+   "id": "november-days-kawaii-hoshigaki",
+   "file": "november-days-kawaii-hoshigaki.webp",
+   "title": "干し柿",
+   "desc": "干し柿のゆるかわイラストです。",
+   "tags": [
+    "11月",
+    "立冬",
+    "文化の日",
+    "焼き芋",
+    "11月の行事と暮らし",
+    "干し柿",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 514,
+   "h": 371
+  },
+  {
+   "id": "november-days-kawaii-kinrou",
+   "file": "november-days-kawaii-kinrou.webp",
+   "title": "勤労感謝の日",
+   "desc": "勤労感謝の日のゆるかわイラストです。",
+   "tags": [
+    "11月",
+    "立冬",
+    "文化の日",
+    "焼き芋",
+    "11月の行事と暮らし",
+    "勤労感謝の日",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 455,
+   "h": 489
+  },
+  {
+   "id": "november-days-kawaii-kuri",
+   "file": "november-days-kawaii-kuri.webp",
+   "title": "栗",
+   "desc": "栗のゆるかわイラストです。",
+   "tags": [
+    "11月",
+    "立冬",
+    "文化の日",
+    "焼き芋",
+    "11月の行事と暮らし",
+    "栗",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 547,
+   "h": 432
+  },
+  {
+   "id": "november-days-kawaii-heater",
+   "file": "november-days-kawaii-heater.webp",
+   "title": "ストーブ",
+   "desc": "ストーブのゆるかわイラストです。",
+   "tags": [
+    "11月",
+    "立冬",
+    "文化の日",
+    "焼き芋",
+    "11月の行事と暮らし",
+    "ストーブ",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 363,
+   "h": 507
+  },
+  {
+   "id": "november-days-kawaii-nabe-ready",
+   "file": "november-days-kawaii-nabe-ready.webp",
+   "title": "鍋の季節",
+   "desc": "鍋の季節のゆるかわイラストです。",
+   "tags": [
+    "11月",
+    "立冬",
+    "文化の日",
+    "焼き芋",
+    "11月の行事と暮らし",
+    "鍋の季節",
+    "ゆるかわ",
+    "季節・行事"
+   ],
+   "w": 561,
+   "h": 485
+  }
+ ]
+}
