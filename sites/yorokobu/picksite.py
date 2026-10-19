@@ -134,7 +134,7 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
                      "itemListElement": [{"@type": "ListItem", "position": i, "name": e["headline"], "url": f'{cfg["site_url"].rstrip("/")}{day_path(iso)}#{eid}'}
                                          for i, (eid, e) in enumerate(shown, 1)]}, ensure_ascii=False)
     ld2 = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": h1, "datePublished": iso, "dateModified": iso, "inLanguage": "ja",
-                      "author": {"@type": "Organization", "name": cfg["operator_name"]}}, ensure_ascii=False)
+                      "author": {"@type": "Organization", "name": cfg["site_name"]}}, ensure_ascii=False)
     body = f"""{B.head_band("yellow", "", esc(h1), day["lede"], single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("毎日のおすすめ", "/picks/"), (date_label(iso), None)])}</div>
 {B.pr_quiet(cfg)}
