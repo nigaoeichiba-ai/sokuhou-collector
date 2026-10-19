@@ -202,6 +202,13 @@ class ReleaseBuildTest(BuildTestBase):
         plain, _ = self.render(FULL_CFG, release=True)
         self.assertNotIn("adsbygoogle", self.read(plain, "index.html"))
 
+    def test_the_adsense_tag_stays_off_pages_that_only_list_links_or_hold_a_form(self):
+        out, _ = self.render({**FULL_CFG, "adsense_pub_id": "ca-pub-1234567890123456"}, release=True)
+        for rel in ("area/index.html", "guide/index.html", "analysis/index.html", "contact/index.html", "404.html"):
+            self.assertNotIn("adsbygoogle", self.read(out, rel), rel)
+        for rel in ("index.html", "tokyo/index.html", "area/kanto/index.html", "analysis/gap/index.html", "guide/faq/index.html", "history/index.html", "about/index.html"):
+            self.assertIn("adsbygoogle", self.read(out, rel), rel)
+
     def test_operator_text_is_escaped(self):
         out, _ = self.render({**FULL_CFG, "operator_name": 'A&B <script>"x"</script>'}, release=True)
         text = self.read(out, "about/index.html")
