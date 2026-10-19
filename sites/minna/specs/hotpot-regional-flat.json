@@ -1,0 +1,85 @@
+{
+ "slug": "hotpot-regional-flat",
+ "title": "ご当地鍋の料理",
+ "subject": "",
+ "genre": "food",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Japanese hot pot dishes, each ONE simmering pot (clay donabe or iron pot) with ingredients visible and light steam Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "もつ鍋・すき焼き・水炊き・石狩鍋など、日本各地の鍋料理12点です。冬のメニューや献立の資料に使えます。",
+ "tags": [
+  "鍋",
+  "鍋料理",
+  "もつ鍋",
+  "すき焼き",
+  "しゃぶしゃぶ",
+  "ご当地",
+  "冬",
+  "メニュー"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "motsu",
+   "もつ鍋",
+   "a pot of motsunabe with beef tripe, cabbage, chives and garlic slices in a clear broth"
+  ],
+  [
+   "sukiyaki",
+   "すき焼き",
+   "an iron pan of sukiyaki with thin beef, tofu, leek and shirataki with a raw egg dish beside it"
+  ],
+  [
+   "shabu",
+   "しゃぶしゃぶ",
+   "a shallow pot with sliced pork and vegetables, chopsticks lifting a thin slice"
+  ],
+  [
+   "mizutaki",
+   "水炊き",
+   "a clay pot of chicken mizutaki with cabbage and mushrooms and a ponzu dip"
+  ],
+  [
+   "chanko",
+   "ちゃんこ鍋",
+   "a large pot with chicken meatballs, daikon, leek and fried tofu"
+  ],
+  [
+   "ishikari",
+   "石狩鍋",
+   "a miso pot with salmon, potato, tofu and a pat of butter"
+  ],
+  [
+   "kiritanpo",
+   "きりたんぽ鍋",
+   "a pot with grilled kiritanpo rice sticks, burdock, chicken and greens"
+  ],
+  [
+   "hoto",
+   "ほうとう",
+   "a pot of flat hoto noodles with pumpkin and vegetables in miso soup"
+  ],
+  [
+   "kaki",
+   "牡蠣鍋",
+   "a pot with plump oysters, tofu and leek in a pale miso broth"
+  ],
+  [
+   "yosenabe",
+   "寄せ鍋",
+   "a colourful pot with shrimp, fish, chicken, cabbage and mushrooms"
+  ],
+  [
+   "yudofu",
+   "湯豆腐",
+   "a small clay pot with tofu cubes in kombu broth with a ladle and dip dish"
+  ],
+  [
+   "kimchi",
+   "キムチ鍋",
+   "a red spicy pot with pork, kimchi, tofu and leek"
+  ]
+ ],
+ "exclude": []
+}

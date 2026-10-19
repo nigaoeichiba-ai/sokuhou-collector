@@ -1,0 +1,85 @@
+{
+ "slug": "letter-paper-linecolor",
+ "title": "便箋・メッセージカードの枠",
+ "subject": "",
+ "genre": "deco",
+ "touch": "linecolor",
+ "title_fmt": "{ja}",
+ "subject_en": "Letter paper and message card borders in clean line-and-colour style with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, thick enough to hold text or a photo. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "お礼・お祝い・お見舞い・季節のあいさつなど、手紙やメッセージカード向けの枠12点です。中央をあけてあるので、文字を重ねて使えます。",
+ "tags": [
+  "便箋",
+  "手紙",
+  "メッセージカード",
+  "枠",
+  "フレーム",
+  "お礼",
+  "お祝い",
+  "季節のあいさつ"
+ ],
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "thanks",
+   "お礼の便箋",
+   "a letter border with small hearts and a bouquet in one corner, centre empty"
+  ],
+  [
+   "congrats",
+   "お祝いのカード",
+   "a card border with confetti, a ribbon and small stars, centre empty"
+  ],
+  [
+   "getwell",
+   "お見舞いの便箋",
+   "a calm border with soft leaves and a small teacup in one corner, centre empty"
+  ],
+  [
+   "spring",
+   "春のあいさつ状",
+   "a letter border with cherry blossom sprigs in one corner, centre empty"
+  ],
+  [
+   "summer",
+   "夏のあいさつ状",
+   "a letter border with a wind chime, morning glory and a fan, centre empty"
+  ],
+  [
+   "autumn",
+   "秋のあいさつ状",
+   "a letter border with maple leaves, ginkgo leaves and a chestnut, centre empty"
+  ],
+  [
+   "winter",
+   "冬のあいさつ状",
+   "a letter border with holly, snowflakes and a camellia, centre empty"
+  ],
+  [
+   "flower",
+   "花の便箋",
+   "a letter border with a loose garland of small flowers along the edge, centre empty"
+  ],
+  [
+   "envelope",
+   "封筒の枠",
+   "a frame shaped like an open envelope with a heart seal, centre empty"
+  ],
+  [
+   "ippitsu",
+   "一筆箋",
+   "a narrow wide landscape memo-slip border with a small leaf, centre empty"
+  ],
+  [
+   "birthday",
+   "誕生日のカード",
+   "a card border with balloons, a cake and streamers, centre empty"
+  ],
+  [
+   "travel",
+   "旅先からの便り",
+   "a border like a postcard with stamp shapes, a suitcase and a train, centre empty"
+  ]
+ ],
+ "exclude": []
+}

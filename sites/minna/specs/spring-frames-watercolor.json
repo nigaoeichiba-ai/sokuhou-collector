@@ -1,0 +1,86 @@
+{
+ "slug": "spring-frames-watercolor",
+ "title": "春の行事の枠セット",
+ "subject": "",
+ "genre": "deco",
+ "touch": "watercolor",
+ "title_fmt": "{ja}",
+ "subject_en": "Spring event frames in soft watercolour with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, thick enough to hold text or a photo. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "桜・入学・卒業・遠足など、春の行事に合わせた枠12点です。中央があいているので、おたよりや案内状に使えます。",
+ "tags": [
+  "春",
+  "桜",
+  "入学",
+  "卒業",
+  "遠足",
+  "フレーム",
+  "枠",
+  "おたより",
+  "新生活"
+ ],
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "sakura",
+   "桜の枠",
+   "a frame of cherry blossom branches with falling petals, centre empty"
+  ],
+  [
+   "nyugaku",
+   "入学の枠",
+   "a frame with cherry blossoms, a randoseru school bag and a pencil, centre empty"
+  ],
+  [
+   "sotsugyo",
+   "卒業の枠",
+   "a frame with a rolled diploma, a ribbon and spring flowers, centre empty"
+  ],
+  [
+   "ensoku",
+   "遠足の枠",
+   "a frame with a small rucksack, a lunch box and grass, centre empty"
+  ],
+  [
+   "nanohana",
+   "菜の花の枠",
+   "a frame of yellow rapeseed flowers and green leaves, centre empty"
+  ],
+  [
+   "tulip",
+   "チューリップの枠",
+   "a frame of tulips in red, yellow and pink with green leaves, centre empty"
+  ],
+  [
+   "shinryoku",
+   "新緑の枠",
+   "a frame of fresh young green leaves with tiny buds, centre empty"
+  ],
+  [
+   "hahanohi",
+   "母の日の枠",
+   "a frame of pink carnations tied with a ribbon, centre empty"
+  ],
+  [
+   "koinobori",
+   "こいのぼりの枠",
+   "a frame with carp streamers, a pole and clouds along the top, centre empty"
+  ],
+  [
+   "chou",
+   "春の蝶の枠",
+   "a frame with butterflies and small flowers, centre empty"
+  ],
+  [
+   "tanpopo",
+   "たんぽぽの枠",
+   "a frame of dandelions and fluffy seed heads, centre empty"
+  ],
+  [
+   "ume",
+   "梅の枠",
+   "a frame of plum blossom branches with pink and white flowers, centre empty"
+  ]
+ ],
+ "exclude": []
+}

@@ -1,0 +1,85 @@
+{
+ "slug": "celebration-dishes-kawaii",
+ "title": "お祝いの料理",
+ "subject": "",
+ "genre": "food",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Celebration dishes served on plates and in lacquer bowls, cute and friendly, each ONE dish centred in its cell Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "ちらし寿司・赤飯・鯛・ローストチキンなど、お祝いの席に並ぶ料理12点です。行事のお知らせやメニュー表に使えます。",
+ "tags": [
+  "お祝い",
+  "料理",
+  "ちらし寿司",
+  "赤飯",
+  "鯛",
+  "お祝い膳",
+  "ひな祭り",
+  "誕生日"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "chirashi",
+   "ちらし寿司",
+   "a round wooden tub of scattered sushi topped with egg strands, shrimp, salmon roe and snow peas"
+  ],
+  [
+   "sekihan",
+   "赤飯",
+   "a bowl of red sekihan rice with black sesame and a sprig of nanten leaf"
+  ],
+  [
+   "tai",
+   "鯛の尾頭付き",
+   "a whole red sea bream grilled and served on an oval plate with greens"
+  ],
+  [
+   "temari",
+   "手毬寿司",
+   "five round temari sushi balls in pastel colours on a small plate"
+  ],
+  [
+   "tempura",
+   "天ぷらの盛り合わせ",
+   "shrimp and vegetable tempura piled on a plate with a dipping cup"
+  ],
+  [
+   "roast-chicken",
+   "ローストチキン",
+   "a whole roast chicken on a platter with herbs and potatoes"
+  ],
+  [
+   "chawanmushi",
+   "茶碗蒸し",
+   "a lidded cup of chawanmushi with the lid slightly open and steam rising"
+  ],
+  [
+   "nimono",
+   "煮物",
+   "a bowl of simmered carrot, lotus root and shiitake cut in flower shapes"
+  ],
+  [
+   "hamaguri",
+   "はまぐりのお吸い物",
+   "a lacquer bowl of clam soup with a clam shell and a wisp of steam"
+  ],
+  [
+   "kagami",
+   "紅白なます",
+   "a small bowl of red and white shredded daikon and carrot salad"
+  ],
+  [
+   "sushi-oke",
+   "寿司桶",
+   "a large round wooden sushi platter with assorted nigiri"
+  ],
+  [
+   "shortcake",
+   "お祝いのケーキ",
+   "a round strawberry cake with whipped cream and a small flag on top"
+  ]
+ ],
+ "exclude": []
+}

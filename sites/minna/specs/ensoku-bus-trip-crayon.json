@@ -1,0 +1,85 @@
+{
+ "slug": "ensoku-bus-trip-crayon",
+ "title": "遠足とバスの場面",
+ "subject": "",
+ "genre": "school",
+ "touch": "crayon",
+ "title_fmt": "{ja}",
+ "subject_en": "Hand-drawn crayon scenes of a school excursion, each ONE small scene of two to four Japanese children with yellow caps or rucksacks, simple round faces with dot eyes and a smile, no school logos. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "バスの座席・お弁当・リュック・集合写真など、遠足の場面12点です。おたよりや行事予定表に使えます。",
+ "tags": [
+  "遠足",
+  "バス",
+  "お弁当",
+  "リュック",
+  "おたより",
+  "学校行事",
+  "園行事",
+  "集合"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "bus-board",
+   "バスに乗る",
+   "children lining up to climb the steps of a tour bus with a teacher at the door"
+  ],
+  [
+   "bus-seat",
+   "バスの座席",
+   "children sitting side by side on bus seats looking out of the window"
+  ],
+  [
+   "bus-song",
+   "バスの中で歌う",
+   "children singing together on a bus, one teacher holding a microphone"
+  ],
+  [
+   "gather",
+   "集合",
+   "children sitting in a neat group on grass while a teacher counts them"
+  ],
+  [
+   "lunch",
+   "お弁当の時間",
+   "children sitting on a picnic sheet opening bento boxes"
+  ],
+  [
+   "snack",
+   "おやつ",
+   "children holding small snack bags and smiling"
+  ],
+  [
+   "walk",
+   "歩いて移動",
+   "children walking in a line holding hands along a path with a teacher at the end"
+  ],
+  [
+   "nature",
+   "自然観察",
+   "children crouching to look at a snail and flowers with magnifying glasses"
+  ],
+  [
+   "photo",
+   "集合写真",
+   "children and a teacher standing in two rows posing for a group photo"
+  ],
+  [
+   "rest",
+   "休けい",
+   "children drinking from water bottles under a tree"
+  ],
+  [
+   "rucksack",
+   "リュックの準備",
+   "a child packing a rucksack with a lunch box, a water bottle and a hat"
+  ],
+  [
+   "home",
+   "帰りのバス",
+   "children sleeping on bus seats leaning on each other"
+  ]
+ ],
+ "exclude": []
+}

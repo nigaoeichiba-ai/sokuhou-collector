@@ -1,0 +1,85 @@
+{
+ "slug": "winter-sports-silhouette",
+ "title": "冬のスポーツ（シルエット）",
+ "subject": "",
+ "genre": "life",
+ "touch": "silhouette",
+ "title_fmt": "{ja}",
+ "subject_en": "Solid single-colour silhouettes (deep navy) of people doing winter sports, each ONE figure with its equipment, readable pose, no inner detail, no face; cream-tinted outline-free shapes on the plain background Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "スキー・スケート・カーリングなど、冬のスポーツの動きをシルエットで描いた12点です。案内図やポスター、ウェブのアクセントに使えます。",
+ "tags": [
+  "冬",
+  "スポーツ",
+  "スキー",
+  "スケート",
+  "カーリング",
+  "シルエット",
+  "雪",
+  "ポスター"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "ski",
+   "スキー",
+   "a skier gliding downhill with poles"
+  ],
+  [
+   "snowboard",
+   "スノーボード",
+   "a snowboarder in mid-air doing a jump"
+  ],
+  [
+   "skate",
+   "スケート",
+   "a figure skater spinning with one leg lifted"
+  ],
+  [
+   "speedskate",
+   "スピードスケート",
+   "a speed skater leaning into a curve"
+  ],
+  [
+   "curling",
+   "カーリング",
+   "a curler sliding forward holding a stone and a brush"
+  ],
+  [
+   "jump",
+   "スキージャンプ",
+   "a ski jumper flying in a V-style posture"
+  ],
+  [
+   "sled",
+   "そり遊び",
+   "a child riding a sled down a slope"
+  ],
+  [
+   "snowball",
+   "雪合戦",
+   "a child throwing a snowball with one arm raised"
+  ],
+  [
+   "hockey",
+   "アイスホッケー",
+   "a hockey player skating with a stick"
+  ],
+  [
+   "snowshoe",
+   "スノーシュー",
+   "a hiker walking on snowshoes with trekking poles"
+  ],
+  [
+   "snowman",
+   "雪だるまづくり",
+   "a person pushing a large snowball to build a snowman"
+  ],
+  [
+   "crosscountry",
+   "クロスカントリー",
+   "a cross-country skier striding with poles"
+  ]
+ ],
+ "exclude": []
+}
