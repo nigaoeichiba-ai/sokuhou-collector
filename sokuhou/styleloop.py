@@ -820,12 +820,64 @@ def rejudge_units(site: str, scope: str) -> dict[str, Unit]:
 
 
 # --------------------------------------------------------------------------------------------------------------------------------- the source (sites/<name>/)
-SRC_EXT = {".py", ".json", ".md", ".txt", ".tpl", ".html", ".js"}
+# The source of the page text is DATA and CONTENT (json / md / txt in the site's content folders), never code: a string inside a .py / .js / template is a label that tests,
+# other pages and the build rely on (2026-10-19: a run over .py and .json changed 21 places and broke 16 tests).
+SRC_EXT = {".json", ".md", ".txt"}
+SRC_DENY_NAMES = {"config.json", "package.json", "lastmod_static.json", "links.json"}
+SRC_DENY_DIRS = {"__pycache__", "dist", "release", "assets", "assets_retired", "node_modules", "tests", "fixtures", "templates"}
 
 
 def source_files(site: str) -> list[Path]:
     base = ROOT / "sites" / site
-    return [p for p in base.rglob("*") if p.is_file() and p.suffix.lower() in SRC_EXT and not any(x in p.parts for x in ("__pycache__", "dist", "release", "assets_retired", "node_modules"))]
+    return [p for p in base.rglob("*") if p.is_file() and p.suffix.lower() in SRC_EXT and p.name not in SRC_DENY_NAMES and not (SRC_DENY_DIRS & set(p.relative_to(base).parts))]
+
+
+# JSON keys whose values are not page text: search words, addresses, ids, tags ... (a rewording of a search query would change what the page does)
+SRC_DENY_KEYS = {"query", "queries", "q", "slug", "url", "href", "src", "img", "image", "id", "code", "ref", "key", "keys", "tag", "tags", "type", "kind", "class", "k", "match", "pattern",
+                 "regex", "needle", "alias", "aliases", "path", "file", "icon", "color", "lang", "date", "added", "verified"}
+
+
+def _under_denied_key(raw: str, old: str) -> bool:
+    """True when the text stands as the value of a key that is not page text (in this file): the entry is then left to the dictionary alone."""
+    try:
+        data = json.loads(raw)
+    except ValueError:
+        return True
+
+    def walk(o, key):
+        if isinstance(o, str):
+            return key in SRC_DENY_KEYS and old in o
+        if isinstance(o, dict):
+            return any(walk(v, k) for k, v in o.items())
+        if isinstance(o, list):
+            return any(walk(v, key) for v in o)
+        return False
+    return walk(data, "")
+
+
+def _short_pattern(old: str, is_json: bool) -> re.Pattern:
+    o = re.escape(old)
+    if is_json:                                              # a whole string VALUE: not followed by a colon (that would be a key)
+        return re.compile(rf'(?<=["\[,:])\s*"{o}"(?!\s*:)')
+    return re.compile(rf'(?<![^\s>"\'「])({o})(?![^\s<"\'」])')
+
+
+def _count(raw: str, old: str, is_json: bool) -> int:
+    if is_json and _under_denied_key(raw, old):
+        return 0
+    if len(old) >= 12:
+        return raw.count(old)
+    return len(_short_pattern(old, is_json).findall(raw)) if is_json else sum(raw.count(f"{q}{old}{r}") for q, r in (('"', '"'), ("'", "'"), (">", "<")))
+
+
+def _replace(raw: str, old: str, new: str, is_json: bool) -> str:
+    if len(old) >= 12:
+        return raw.replace(old, new)
+    if is_json:
+        return _short_pattern(old, is_json).sub(lambda m: m.group(0).replace(f'"{old}"', f'"{new}"'), raw)
+    for q, r in (('"', '"'), ("'", "'"), (">", "<")):
+        raw = raw.replace(f"{q}{old}{r}", f"{q}{new}{r}")
+    return raw
 
 
 def source_plan(site: str) -> list[tuple[Path, str, str, int]]:
@@ -837,13 +889,9 @@ def source_plan(site: str) -> list[tuple[Path, str, str, int]]:
         except (OSError, UnicodeDecodeError):
             continue
         for e in entries:
-            old, new = e["from"], e["to"]
-            if len(old) >= 12:
-                n = raw.count(old)
-            else:                                           # a short text: only as a whole string / element, never inside a longer sentence
-                n = sum(raw.count(f"{q}{old}{r}") for q, r in (('"', '"'), ("'", "'"), (">", "<")))
+            n = _count(raw, e["from"], p.suffix.lower() == ".json")
             if n:
-                plan.append((p, old, new, n))
+                plan.append((p, e["from"], e["to"], n))
     return plan
 
 
@@ -856,13 +904,16 @@ def apply_source(site: str, dry: bool = False) -> list[tuple[str, str, int]]:
         by_file[p].append((old, new, n))
     for p, items in by_file.items():
         raw = p.read_text(encoding="utf-8")
+        is_json = p.suffix.lower() == ".json"
         new_raw = raw
         for old, new, n in items:
-            if len(old) >= 12:
-                new_raw = new_raw.replace(old, new)
-            else:
-                for q, r in (('"', '"'), ("'", "'"), (">", "<")):
-                    new_raw = new_raw.replace(f"{q}{old}{r}", f"{q}{new}{r}")
+            new_raw = _replace(new_raw, old, new, is_json)
+        if is_json:
+            try:
+                json.loads(new_raw)                               # a rewording with a quote or a backslash must not break the data file
+            except ValueError:
+                continue
+        for old, new, n in items:
             done.append((str(p.relative_to(ROOT)).replace("\\", "/"), old, n))
         if not dry and new_raw != raw:
             rel = p.relative_to(ROOT)

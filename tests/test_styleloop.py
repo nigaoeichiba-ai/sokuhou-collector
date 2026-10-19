@@ -504,23 +504,70 @@ class SourceAndLearning(unittest.TestCase):
     def test_source_replacement_with_backup_and_revert(self):
         with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "ROOT", Path(d)), mock.patch.object(sl, "DATA", Path(d) / "data" / "style"):
             src = Path(d) / "sites" / "yorokobu"
-            src.mkdir(parents=True)
-            (src / "build.py").write_text('H = "詳しく読む"\nS = "詳しく読むための説明です"\nD = "1つの商品を仕様・価格の位置・渡し方まで掘り下げた記事です。"\n', encoding="utf-8")
+            (src / "content").mkdir(parents=True)
+            (src / "content" / "guides.json").write_text(json.dumps({"head": "詳しく読む", "lead": "詳しく読むための説明です", "d": "1つの商品を仕様・価格の位置・渡し方まで掘り下げた記事です。"}, ensure_ascii=False, indent=1), encoding="utf-8")
             sl.add_entry("yorokobu", "詳しく読む", "注目の商品", force=True, today="2026-10-17")
             sl.add_entry("yorokobu", "1つの商品を仕様・価格の位置・渡し方まで掘り下げた記事です。", "気になる商品をくわしく調べました。", force=True, today="2026-10-17")
             done = sl.apply_source("yorokobu", dry=True)
             self.assertEqual(len(done), 2)
-            self.assertIn("詳しく読む", (src / "build.py").read_text(encoding="utf-8"))               # dry run changes nothing
+            self.assertIn("詳しく読む", (src / "content" / "guides.json").read_text(encoding="utf-8"))   # dry run changes nothing
             sl.apply_source("yorokobu")
-            text = (src / "build.py").read_text(encoding="utf-8")
-            self.assertIn('H = "注目の商品"', text)
-            self.assertIn('S = "詳しく読むための説明です"', text)                                        # a short original only as a whole string
-            self.assertIn("気になる商品をくわしく調べました。", text)
+            data = json.loads((src / "content" / "guides.json").read_text(encoding="utf-8"))
+            self.assertEqual(data["head"], "注目の商品")
+            self.assertEqual(data["lead"], "詳しく読むための説明です")                                      # a short original only as a whole string value
+            self.assertEqual(data["d"], "気になる商品をくわしく調べました。")
             self.assertTrue(all(e.get("in_source") for e in sl.load_rewrites("yorokobu")))
             self.assertEqual(sl.apply_source("yorokobu", dry=True), [])                                 # done once
             self.assertEqual(sl.revert_source("yorokobu"), 1)
-            self.assertIn('H = "詳しく読む"', (src / "build.py").read_text(encoding="utf-8"))
+            self.assertEqual(json.loads((src / "content" / "guides.json").read_text(encoding="utf-8"))["head"], "詳しく読む")
             self.assertFalse(any(e.get("in_source") for e in sl.load_rewrites("yorokobu")))
+
+    def test_a_string_inside_code_or_a_template_or_a_config_is_never_rewritten(self):
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "ROOT", Path(d)), mock.patch.object(sl, "DATA", Path(d) / "data" / "style"):
+            src = Path(d) / "sites" / "yorokobu"
+            for sub in ("content", "assets", "templates", "fixtures"):
+                (src / sub).mkdir(parents=True)
+            code = 'H = "詳しく読む"\nD = "1つの商品を仕様・価格の位置・渡し方まで掘り下げた記事です。"\n'
+            for name in ("build.py", "features.py", "assets/app.js", "templates/page.html", "content/helper.py", "content/page.tpl"):
+                (src / name).write_text(code, encoding="utf-8")
+            (src / "config.json").write_text(json.dumps({"label": "詳しく読む"}, ensure_ascii=False), encoding="utf-8")
+            (src / "assets" / "data.json").write_text(json.dumps({"label": "詳しく読む"}, ensure_ascii=False), encoding="utf-8")
+            (src / "content" / "page.json").write_text(json.dumps({"詳しく読む": 1, "head": "詳しく読む"}, ensure_ascii=False), encoding="utf-8")        # a KEY of the same text stays
+            sl.add_entry("yorokobu", "詳しく読む", "注目の商品", force=True, today="2026-10-19")
+            sl.add_entry("yorokobu", "1つの商品を仕様・価格の位置・渡し方まで掘り下げた記事です。", "気になる商品をくわしく調べました。", force=True, today="2026-10-19")
+            before = {str(p): p.read_bytes() for p in src.rglob("*") if p.is_file()}
+            done = sl.apply_source("yorokobu")
+            changed = [str(p) for p in src.rglob("*") if p.is_file() and p.read_bytes() != before[str(p)]]
+            self.assertEqual([Path(c).name for c in changed], ["page.json"])                               # only the content data, nothing else
+            self.assertEqual(json.loads((src / "content" / "page.json").read_text(encoding="utf-8")), {"詳しく読む": 1, "head": "注目の商品"})
+            self.assertEqual({f for f, _, _ in done}, {"sites/yorokobu/content/page.json"})
+            for name in ("build.py", "features.py", "assets/app.js", "templates/page.html", "content/helper.py", "content/page.tpl"):
+                self.assertEqual((src / name).read_text(encoding="utf-8"), code, name)
+
+    def test_a_search_word_or_an_address_in_the_data_is_not_page_text(self):
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "ROOT", Path(d)), mock.patch.object(sl, "DATA", Path(d) / "data" / "style"):
+            src = Path(d) / "sites" / "yorokobu" / "content"
+            src.mkdir(parents=True)
+            idea = {"label": "お茶 ギフト", "query": "お茶 ギフト", "slug": "o-cha"}
+            other = {"label": "名入れ グラス"}
+            (src / "ideas.json").write_text(json.dumps(idea, ensure_ascii=False), encoding="utf-8")
+            (src / "labels.json").write_text(json.dumps(other, ensure_ascii=False), encoding="utf-8")
+            sl.add_entry("yorokobu", "お茶 ギフト", "お茶のギフト", force=True, today="2026-10-19")
+            sl.add_entry("yorokobu", "名入れ グラス", "名入れのグラス", force=True, today="2026-10-19")
+            done = sl.apply_source("yorokobu")
+            self.assertEqual(json.loads((src / "ideas.json").read_text(encoding="utf-8")), idea)           # the same text is also a search query: the file is left alone
+            self.assertEqual(json.loads((src / "labels.json").read_text(encoding="utf-8")), {"label": "名入れのグラス"})
+            self.assertEqual([o for _, o, _ in done], ["名入れ グラス"])
+
+    def test_a_rewording_that_would_break_a_json_file_leaves_it_alone(self):
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "ROOT", Path(d)), mock.patch.object(sl, "DATA", Path(d) / "data" / "style"):
+            src = Path(d) / "sites" / "yorokobu" / "content"
+            src.mkdir(parents=True)
+            raw = json.dumps({"head": "詳しく読む"}, ensure_ascii=False)
+            (src / "a.json").write_text(raw, encoding="utf-8")
+            sl.add_entry("yorokobu", "詳しく読む", '注目の"商品"', force=True, today="2026-10-19")
+            self.assertEqual(sl.apply_source("yorokobu"), [])
+            self.assertEqual((src / "a.json").read_text(encoding="utf-8"), raw)
 
     def test_a_kind_of_rewording_that_comes_up_three_times_is_a_rule_candidate(self):
         with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "DATA", Path(d) / "style"):
