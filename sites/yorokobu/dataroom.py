@@ -542,7 +542,17 @@ def occasion_teaser(d: dict, occasion: str, compact: bool = False) -> str:
             f'<p class="more"><a class="btn btn-sub" href="{path}">調査の数字をくわしく見る(データ室)</a></p></section>')
 
 
-BUILDERS = (price_bands, occasion_prices, mothers_day_budget, births_marriages, ranking_prices, survey_boards)
+def ranking_turnover(d: dict) -> tuple | None:
+    from sites.yorokobu import ownanalysis
+    return ownanalysis.ranking_turnover(d)
+
+
+def kind_prices(d: dict) -> tuple | None:
+    from sites.yorokobu import ownanalysis
+    return ownanalysis.kind_prices(d)
+
+
+BUILDERS = (price_bands, occasion_prices, mothers_day_budget, births_marriages, ranking_prices, ranking_turnover, kind_prices, survey_boards)
 
 
 def results(d: dict) -> list[tuple]:
@@ -566,7 +576,7 @@ def build_pages(d: dict, cfg: dict, preview: bool) -> dict[str, str]:
     groups = (("みんなの予算と贈りもの(調査から)", "survey", "調査会社などの発表した数字を図にしました。贈る相手やイベントを選ぶときの目安になります。"),
               ("いま売られている商品から", "own", "当サイトが取り上げている楽天市場の商品を毎日、集計しています。価格・評価・送料を見比べられます。"),
               ("国の統計から", "stat", "出生数・婚姻件数など、贈る機会の大きさを見ます。"))
-    kind = {"mothers-day-budget": "survey", "price-bands": "own", "occasion-prices": "own", "ranking-prices": "own", "births-marriages": "stat"}
+    kind = {"mothers-day-budget": "survey", "price-bands": "own", "occasion-prices": "own", "ranking-prices": "own", "ranking-turnover": "own", "kind-prices": "own", "births-marriages": "stat"}
     for b in (d["c"].get("surveys") or {}).get("boards", []):
         kind[b["slug"]] = "survey"
     body = ""
@@ -577,6 +587,11 @@ def build_pages(d: dict, cfg: dict, preview: bool) -> dict[str, str]:
         tiles = "".join(f'<li><a class="tile wide" href="{p}"><span><b>{esc(h)}</b><small>{esc(t)}</small></span></a></li>' for p, h, _, _, _, t in mine)
         body += (f'<section class="block" style="margin-top:{34 if i == 0 else 26}px"><div class="sec-head">{"<span class=eyebrow>Data</span>" if i == 0 else ""}<h2>{esc(title)}</h2><p>{esc(note)}</p></div>'
                  f'<ul class="tiles wide">{tiles}</ul></section>')
+    body += ('<section class="data-notes" style="margin-top:34px"><h2>このデータ室の数字について</h2>'
+             '<p>「調査から」の数字は、調査会社などが発表したものを、出典つきで図にしています。「いま売られている商品から」は、当サイトが取り上げた楽天市場の商品の価格や順位の記録を、'
+             '集計したものです。市場全体の数字ではありません。どちらも、集計の方法と見かたの注意を、それぞれのページに書いています。商品の名前や画像は、集計のページには載せていません。</p>'
+             '<p>数字は毎日取り直しています。誤りに気づいたときは、<a href="/about/#history">運営者情報の更新の履歴</a>に「訂正」として残します。'
+             'お気づきの点は<a href="/contact/">お問い合わせ</a>からお知らせください。</p></section>')
     lead = "プレゼントの価格、予算、贈る機会を数字で見る場所です。調査の数字と、当サイトが取り上げている商品のデータ(毎日更新)を図にしています。図は画像にして保存したり、LINEで送ったりできます。"
     out["data/index.html"] = _page(d, cfg, preview, "/data/", "データ室", "データ室", lead, body, "データ室")
     return out
