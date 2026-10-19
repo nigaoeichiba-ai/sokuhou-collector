@@ -63,6 +63,11 @@ HTACCESS = (
 )
 
 
+# Pages with no content of their own (lists of links, forms, the 404): AdSense's policy keeps Google-served ads off "screens without publisher
+# content" and off screens used for navigation, so these pages do not load the AdSense tag at all.
+NO_ADS_PATHS = {"/area/", "/guide/", "/analysis/", "/contact/", "/contact/thanks.html", "/404.html"}
+
+
 def asset_version() -> str:
     """Short content hash of the assets; part of their URLs so browsers and server caches never serve stale ones."""
     h = hashlib.sha1()
@@ -290,7 +295,7 @@ def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str,
         if preview else ""
     )
     adsense = ""
-    if cfg.get("adsense_pub_id"):
+    if cfg.get("adsense_pub_id") and path not in NO_ADS_PATHS:
         pub = cfg["adsense_pub_id"].replace("ca-", "")
         adsense = (
             '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
