@@ -206,7 +206,7 @@ def result_ok(r: dict, today: date | None = None) -> bool:
     if _reg(r["source_url"]) == _reg(r["source_url2"]) or not str(r["source_url"]).startswith("https://") or not str(r["source_url2"]).startswith("https://"):
         return False
     w = _d(r["written_on"])
-    return w is not None and (today is None or w <= today)
+    return w is not None and (today is None or w <= today + timedelta(days=1))   # one day of slack for Japan time against the build's UTC
 
 
 def load_results(seed_dir: Path = SEED_DIR, today: date | None = None) -> dict:
@@ -243,7 +243,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
             rejects["出典が https でない"] += 1
             continue
         d, checked = _d(it["date"]), _d(it["checked_on"])
-        if d is None or checked is None or checked > today:
+        if d is None or checked is None or checked > today + timedelta(days=1):   # a day of slack: the routines write the day in Japan time, the build runs in UTC (until 09:00 JST it is still yesterday there)
             rejects["日付が不正"] += 1
             continue
         if any(k in it["title"] for k in block.get("keywords", [])):
