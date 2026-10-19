@@ -231,6 +231,13 @@ class ThreeLevels(unittest.TestCase):
         self.assertEqual(catalog.mid_for("スポーツ", "競馬", "その他"), "競馬・モータースポーツ")
         self.assertEqual(catalog.mid_for("スポーツ", "知らない題材", "その他"), catalog.MID_OTHER)
 
+    def test_a_day_written_in_japan_time_is_kept_by_a_build_in_utc(self):
+        # the routines write checked_on in Japan time; until 09:00 JST the CI build's date (UTC) is still the day before (2026-10-20: five cards were missing from the live site)
+        entries, _ = build([item(checked_on="2026-10-09")])
+        self.assertEqual(len(entries), 1)
+        entries, _ = build([item(checked_on="2026-10-10")])
+        self.assertEqual(entries, [])
+
 
 if __name__ == "__main__":
     unittest.main()
