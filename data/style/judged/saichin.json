@@ -1,0 +1,658 @@
+{
+"00299814034e": {
+"at": "2026-10-19",
+"natural": true,
+"text": "順位の動き"
+},
+"04d7a662ed66": {
+"at": "2026-10-19",
+"natural": true,
+"text": "差額チェック"
+},
+"0523e6f3d005": {
+"at": "2026-10-19",
+"natural": true,
+"text": "茨城県"
+},
+"06af0557b3c4": {
+"at": "2026-10-19",
+"natural": true,
+"text": "発効日カレンダー"
+},
+"06f905652506": {
+"at": "2026-10-19",
+"natural": true,
+"text": "解説"
+},
+"071cb9222288": {
+"at": "2026-10-19",
+"natural": true,
+"text": "同じ地方(近畿)の最低賃金"
+},
+"08faa135b982": {
+"at": "2026-10-19",
+"natural": true,
+"text": "令和8年度"
+},
+"0b9668ccefe6": {
+"at": "2026-10-19",
+"natural": true,
+"text": "最低賃金"
+},
+"0bbb483bec44": {
+"at": "2026-10-19",
+"natural": true,
+"text": "奈良県"
+},
+"0e47308865b6": {
+"at": "2026-10-19",
+"natural": true,
+"text": "岩手県"
+},
+"0f2ffe4a9619": {
+"at": "2026-10-19",
+"natural": true,
+"text": "最低賃金に含まれない賃金は?"
+},
+"101806f57c32": {
+"at": "2026-10-19",
+"natural": true,
+"text": "中国"
+},
+"10d02a0da138": {
+"at": "2026-10-19",
+"natural": true,
+"text": "京都府"
+},
+"1457b7dd8ca7": {
+"at": "2026-10-19",
+"natural": true,
+"text": "群馬県"
+},
+"14c5e2c27bd4": {
+"at": "2026-10-19",
+"natural": true,
+"text": "同じ地方(九州・沖縄)の最低賃金"
+},
+"15de6e804f88": {
+"at": "2026-10-19",
+"natural": true,
+"text": "愛媛県"
+},
+"1960a8f78727": {
+"at": "2026-10-19",
+"natural": true,
+"text": "時間額への換算"
+},
+"1c7d4e7df8f5": {
+"at": "2026-10-19",
+"natural": true,
+"text": "山梨県"
+},
+"1d1fb7a1ffff": {
+"at": "2026-10-19",
+"natural": true,
+"text": "島根県"
+},
+"210df08ff029": {
+"at": "2026-10-19",
+"natural": true,
+"text": "月収の目安(改定後)"
+},
+"22b9d5cf73d7": {
+"at": "2026-10-19",
+"natural": true,
+"text": "全国と比べると"
+},
+"25a3193efeb0": {
+"at": "2026-10-19",
+"natural": true,
+"text": "愛知県"
+},
+"279120fbf464": {
+"at": "2026-10-19",
+"natural": true,
+"text": "北海道・東北のまとめを見る"
+},
+"283b96c4fad0": {
+"at": "2026-10-19",
+"natural": true,
+"text": "宮城県"
+},
+"28b60c906594": {
+"at": "2026-10-19",
+"natural": true,
+"text": "前年度からの引上げ"
+},
+"2a62dfa400bd": {
+"at": "2026-10-19",
+"natural": true,
+"text": "通知を受け取る"
+},
+"2ad9c5adee32": {
+"at": "2026-10-19",
+"natural": true,
+"text": "平均賃金のランキング"
+},
+"2ca75416866c": {
+"at": "2026-10-19",
+"natural": true,
+"text": "三重県"
+},
+"2dabbbaace26": {
+"at": "2026-10-19",
+"natural": true,
+"text": "働き方"
+},
+"2f3d5c2eac52": {
+"at": "2026-10-19",
+"natural": true,
+"text": "鳥取県"
+},
+"3180a0fccb53": {
+"at": "2026-10-19",
+"natural": true,
+"text": "最低賃金で働いた場合の月収・年収の目安"
+},
+"361ddb956f5c": {
+"at": "2026-10-19",
+"natural": true,
+"text": "運営者情報"
+},
+"37149d624d1a": {
+"at": "2026-10-19",
+"natural": true,
+"text": "全国一覧"
+},
+"3946b2148be0": {
+"at": "2026-10-19",
+"natural": true,
+"text": "節目"
+},
+"3cd63f9ad05b": {
+"at": "2026-10-19",
+"natural": true,
+"text": "中部"
+},
+"3f9a6ea46a6a": {
+"at": "2026-10-19",
+"natural": true,
+"text": "九州・沖縄"
+},
+"43daaaa85012": {
+"at": "2026-10-19",
+"natural": true,
+"text": "長野県"
+},
+"44ff6d3faaff": {
+"at": "2026-10-19",
+"natural": true,
+"text": "お問い合わせ"
+},
+"46ba128ca9ca": {
+"at": "2026-10-19",
+"natural": true,
+"text": "北海道・東北"
+},
+"489775725aec": {
+"at": "2026-10-19",
+"natural": true,
+"text": "秋田県"
+},
+"4ed3d97cfc91": {
+"at": "2026-10-19",
+"natural": true,
+"text": "岐阜県"
+},
+"4f48a9371247": {
+"at": "2026-10-19",
+"better": "最低賃金の基本",
+"candidates": [
+{
+"key": "最低賃金 基本",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "最低賃金の基本"
+},
+{
+"key": "最低賃金 基礎",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "最低賃金の基礎"
+},
+{
+"key": "最低賃金 基礎知識",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "最低賃金の基礎知識"
+}
+],
+"confidence": "high",
+"kind": "nav",
+"natural": false,
+"status": "proposed",
+"text": "最低賃金のきほん",
+"why": "漢字にできる「基本」は漢字で書くほうが自然で、元の意味と長さも保てます。 / 候補(実物の辞書での根拠): 最低賃金の基本(辞書に根拠なし) / 最低賃金の基礎(辞書に根拠なし) / 最低賃金の基礎知識(辞書に根拠なし)"
+},
+"55643374ef72": {
+"at": "2026-10-19",
+"natural": true,
+"text": "東京都"
+},
+"5625e7e3b339": {
+"at": "2026-10-19",
+"natural": true,
+"text": "全国"
+},
+"57716ec07552": {
+"at": "2026-10-19",
+"natural": true,
+"text": "山口県"
+},
+"59c7554f9abb": {
+"at": "2026-10-19",
+"better": "引用の仕方",
+"candidates": [
+{
+"key": "引用 仕方",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "引用の仕方"
+},
+{
+"key": "引用 方法",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "引用する方法"
+},
+{
+"key": "引用方法",
+"lex": 0,
+"problems": [],
+"score": null,
+"text": "引用方法"
+}
+],
+"confidence": "high",
+"kind": "link",
+"natural": false,
+"status": "proposed",
+"text": "引用のしかた",
+"why": "漢字にできる「仕方」は漢字で書くほうが自然です。 / 候補(実物の辞書での根拠): 引用の仕方(辞書に根拠なし) / 引用する方法(辞書に根拠なし) / 引用方法(辞書に根拠なし)"
+},
+"5acdbbcf05d4": {
+"at": "2026-10-19",
+"natural": true,
+"text": "鹿児島県"
+},
+"5eb1ec5291c5": {
+"at": "2026-10-19",
+"natural": true,
+"text": "あわせて読む"
+},
+"610911ab6527": {
+"at": "2026-10-19",
+"natural": true,
+"text": "埼玉県"
+},
+"613a771083cb": {
+"at": "2026-10-19",
+"natural": true,
+"text": "平成14年度"
+},
+"615090d5aac1": {
+"at": "2026-10-19",
+"natural": true,
+"text": "大阪府"
+},
+"61b79b415e59": {
+"at": "2026-10-19",
+"natural": true,
+"text": "香川県"
+},
+"63c499d94989": {
+"at": "2026-10-19",
+"natural": true,
+"text": "福岡県"
+},
+"663731341a11": {
+"at": "2026-10-19",
+"natural": true,
+"text": "兵庫県"
+},
+"676fd36f18f0": {
+"at": "2026-10-19",
+"natural": true,
+"text": "項目"
+},
+"683b788e15a5": {
+"at": "2026-10-19",
+"natural": true,
+"text": "岡山県"
+},
+"6983a0b0e410": {
+"at": "2026-10-19",
+"natural": true,
+"text": "年収の目安(改定後)"
+},
+"6a60eb1c20de": {
+"at": "2026-10-19",
+"natural": true,
+"text": "同じ地方(北海道・東北)の最低賃金"
+},
+"6b1a622421cb": {
+"at": "2026-10-19",
+"natural": true,
+"text": "一覧表"
+},
+"6cd119e5f8b1": {
+"at": "2026-10-19",
+"natural": true,
+"text": "最低賃金の分析"
+},
+"6e508c62e4f3": {
+"at": "2026-10-19",
+"natural": true,
+"text": "年収の目安(改定前)"
+},
+"74ba6d25c64e": {
+"at": "2026-10-19",
+"natural": true,
+"text": "年度"
+},
+"759e7b8753a6": {
+"at": "2026-10-19",
+"natural": true,
+"text": "千葉県"
+},
+"76c2e3ecabf9": {
+"at": "2026-10-19",
+"natural": true,
+"text": "富山県"
+},
+"7753b8303974": {
+"at": "2026-10-19",
+"natural": true,
+"text": "北海道"
+},
+"7a66c0d03631": {
+"at": "2026-10-19",
+"natural": true,
+"text": "通知"
+},
+"7a9eb02d850b": {
+"at": "2026-10-19",
+"natural": true,
+"text": "青森県"
+},
+"7c065e37ef85": {
+"at": "2026-10-19",
+"natural": true,
+"text": "長崎県"
+},
+"7ce9ad0a7a62": {
+"at": "2026-10-19",
+"natural": true,
+"text": "福井県"
+},
+"812b20ad0500": {
+"at": "2026-10-19",
+"natural": true,
+"text": "発効日"
+},
+"8344c5c9e948": {
+"at": "2026-10-19",
+"natural": true,
+"text": "熊本県"
+},
+"8aa03514a3c4": {
+"at": "2026-10-19",
+"natural": true,
+"text": "同じ地方(関東)の最低賃金"
+},
+"8b78047f5c1b": {
+"at": "2026-10-19",
+"natural": true,
+"text": "石川県"
+},
+"8cf1ca2a5eaa": {
+"at": "2026-10-19",
+"natural": true,
+"text": "近畿のまとめを見る"
+},
+"92ae89f64a96": {
+"at": "2026-10-19",
+"natural": true,
+"text": "関東"
+},
+"9692ed171ed9": {
+"at": "2026-10-19",
+"natural": true,
+"text": "静岡県"
+},
+"98b2084c2869": {
+"at": "2026-10-19",
+"natural": true,
+"text": "福島県"
+},
+"9c00c951b8ce": {
+"at": "2026-10-19",
+"natural": true,
+"text": "分析"
+},
+"a0d9e6235153": {
+"at": "2026-10-19",
+"natural": true,
+"text": "パンくず"
+},
+"a224cdc053a4": {
+"at": "2026-10-19",
+"natural": true,
+"text": "九州・沖縄のまとめを見る"
+},
+"a36121574ee8": {
+"at": "2026-10-19",
+"natural": true,
+"text": "最低賃金のよくある質問"
+},
+"a5571ed9b01c": {
+"at": "2026-10-19",
+"natural": true,
+"text": "CSV・JSONでダウンロード"
+},
+"a5bba04de55b": {
+"at": "2026-10-19",
+"natural": true,
+"text": "節目に届いた年度"
+},
+"a6ba08a10ab3": {
+"at": "2026-10-19",
+"natural": true,
+"text": "節目を超えた年度"
+},
+"aa53a42c8c68": {
+"at": "2026-10-19",
+"natural": true,
+"text": "関東のまとめを見る"
+},
+"ad2c605775cf": {
+"at": "2026-10-19",
+"natural": true,
+"text": "推移"
+},
+"ad2d27dbecc2": {
+"at": "2026-10-19",
+"natural": true,
+"text": "高知県"
+},
+"ad6cc8d71636": {
+"at": "2026-10-19",
+"natural": true,
+"text": "都道府県"
+},
+"af1278cddbbe": {
+"at": "2026-10-19",
+"natural": true,
+"text": "同じ地方(中部)の最低賃金"
+},
+"af35b59f362c": {
+"at": "2026-10-19",
+"natural": true,
+"text": "届いた年度"
+},
+"b16d37d44238": {
+"at": "2026-10-19",
+"natural": true,
+"text": "賃金の実態との比較(令和7年賃金統計)"
+},
+"b53284fc7c0a": {
+"at": "2026-10-19",
+"natural": true,
+"text": "最低賃金を下回っていたら?"
+},
+"b57525483e43": {
+"at": "2026-10-19",
+"natural": true,
+"text": "届いた順(同じ年度は同順)"
+},
+"ba20a2f2ec21": {
+"at": "2026-10-19",
+"natural": true,
+"text": "あなたの給料は大丈夫?"
+},
+"bc1b47d7ed46": {
+"at": "2026-10-19",
+"natural": true,
+"text": "四国"
+},
+"bdab956b2e3c": {
+"at": "2026-10-19",
+"natural": true,
+"text": "ほかの地方"
+},
+"c163e5ebf6a3": {
+"at": "2026-10-19",
+"natural": true,
+"text": "徳島県"
+},
+"c1e0e5f2f32e": {
+"at": "2026-10-19",
+"natural": true,
+"text": "新潟県"
+},
+"c74cb8208ac5": {
+"at": "2026-10-19",
+"natural": true,
+"text": "地方別"
+},
+"c91b88794141": {
+"at": "2026-10-19",
+"natural": true,
+"text": "ほかの都道府県"
+},
+"d046c73fe491": {
+"at": "2026-10-19",
+"natural": true,
+"text": "沖縄県"
+},
+"d0b0a558d20c": {
+"at": "2026-10-19",
+"natural": true,
+"text": "大分県"
+},
+"d1ce27e34750": {
+"at": "2026-10-19",
+"natural": true,
+"text": "佐賀県"
+},
+"d3601bb2c2aa": {
+"at": "2026-10-19",
+"natural": true,
+"text": "滋賀県"
+},
+"d53ac0ee020d": {
+"at": "2026-10-19",
+"natural": true,
+"text": "中部のまとめを見る"
+},
+"d664a71a32a2": {
+"at": "2026-10-19",
+"natural": true,
+"text": "近畿"
+},
+"d70e60566e36": {
+"at": "2026-10-19",
+"natural": true,
+"text": "山形県"
+},
+"da262da93bf5": {
+"at": "2026-10-19",
+"natural": true,
+"text": "年収の差"
+},
+"df71be327b9a": {
+"at": "2026-10-19",
+"natural": true,
+"text": "引上げ額"
+},
+"e0f6260c6544": {
+"at": "2026-10-19",
+"natural": true,
+"text": "全国順位"
+},
+"e48969c88c68": {
+"at": "2026-10-19",
+"natural": true,
+"text": "発効日を通知で受け取る"
+},
+"e82f2d2d9628": {
+"at": "2026-10-19",
+"natural": true,
+"text": "出典"
+},
+"ef4c941a9e83": {
+"at": "2026-10-19",
+"natural": true,
+"text": "宮崎県"
+},
+"f2a18522a256": {
+"at": "2026-10-19",
+"natural": true,
+"text": "上がった額"
+},
+"f2cb6c5477f9": {
+"at": "2026-10-19",
+"natural": true,
+"text": "栃木県"
+},
+"f81a2cfac37e": {
+"at": "2026-10-19",
+"natural": true,
+"text": "最低賃金の推移(平成14年度から令和8年度まで)"
+},
+"f996934aa7ca": {
+"at": "2026-10-19",
+"natural": true,
+"text": "厚生労働省「地域別最低賃金の全国一覧」"
+},
+"fb3793fe434b": {
+"at": "2026-10-19",
+"natural": true,
+"text": "和歌山県"
+},
+"fc50a97d7415": {
+"at": "2026-10-19",
+"natural": true,
+"text": "広島県"
+},
+"fc916a7ae02b": {
+"at": "2026-10-19",
+"natural": true,
+"text": "神奈川県"
+}
+}
