@@ -200,22 +200,6 @@ class PrefectureTrendTest(SiteFixture):
                     self.assertEqual(row[7], "-", (short, fy))
                 prev = a
 
-    def test_the_summary_sentences_use_the_workbook_numbers(self):
-        for short in ("兵庫", "東京", "沖縄", "京都"):
-            r = next(x for x in self.d["rows"] if x["short"] == short)
-            page = self.read(f"{r['slug']}/index.html")
-            s = self.series[short]
-            first, last = s[1977], s[2026]
-            self.assertIn(f"{r['name']}の最低賃金は、昭和52年度の{money(first)}から、令和8年度の{money(last)}(決まった額)まで、49年間で{money(last - first)}(約{last / first:.1f}倍)上がりました", page)
-            self.assertIn(f"1年あたりの平均は約{(last - first) / 49:.0f}円です", page)
-            rises = {fy: round(s[fy] - s[fy - 1], 2) for fy in YEARS[1:] if s[fy] is not None and s[fy - 1] is not None}
-            top = max(rises, key=lambda fy: (rises[fy], fy))
-            self.assertIn(f"1年の引上げ額が最も大きかったのは{label(top)}の+{money(rises[top])}、", page)
-            pct = {fy: rises[fy] / s[fy - 1] * 100 for fy in rises}
-            best = max(pct, key=lambda fy: (pct[fy], fy))
-            self.assertIn(f"引上げ率が最も大きかったのは{label(best)}の{pct[best]:.1f}%です。", page)
-            self.assertIn(f"{label(2016)}から令和8年度までの10年間は+{money(s[2026] - s[2016])}、その前の10年間は+{money(s[2016] - s[2006])}でした。", page)
-
     def test_the_title_the_heading_and_the_description_follow_the_search_pattern(self):
         for r in self.d["rows"]:
             page = self.read(f"{r['slug']}/index.html")

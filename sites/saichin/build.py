@@ -505,8 +505,6 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 
 
 def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
-    diff_avg = r["amount"] - round(d["avg"])
-    diff_text = "全国加重平均と同じ額です" if diff_avg == 0 else f"全国加重平均より{abs(diff_avg)}円{'高い' if diff_avg > 0 else '低い'}額です"
     fixed = [h for h in r["history"] if h.get("date_fixed_from")]
     fixed_note = "".join(
         f'<p class="notice">※ 厚生労働省の一覧表では、{esc(h["label"])}の発効日が{jp_date(h["date_fixed_from"])}となっています。'
@@ -519,7 +517,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
     year = d["rows"][0]["history"][-1]["fy"]
     body = f"""{crumbs([("全国", "/"), (r["region"], f"/area/{r['region_slug']}/"), (r["name"], None)])}
 <h1>{esc(r['name'])}の最低賃金の推移(年度別の一覧・グラフ)</h1>
-<p class="lead">{esc(d['label'])}({year}年度)の最低賃金は、{yen(r['prev_amount'])}から{yen(r['amount'])}(+{r['raise']}円)に改定され、発効日は{jp_date(r['effective_date'])}です。{esc(r['name'])}の額は、{diff_text}(全国加重平均 {yen(round(d['avg']))})。</p>
+<p class="lead">{esc(d['label'])}({year}年度)の最低賃金は、{yen(r['prev_amount'])}から{yen(r['amount'])}(+{r['raise']}円)に改定され、発効日は{jp_date(r['effective_date'])}です。{pref_story.lead_diff(d, r, sys.modules[__name__])}</p>
 <p class="status" data-status data-date="{r['effective_date']}" data-amount="{r['amount']}" data-prev="{r['prev_amount']}"></p>
 <div class="stats">
 <div class="stat strong"><span>新しい最低賃金</span><b>{yen(r['amount'])}</b><span>{jp_date(r['effective_date'])} 発効</span></div>
@@ -527,8 +525,8 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <div class="stat"><span>全国での順位</span><b>47都道府県中 {r['rank']}位</b><span>同額は同じ順位とします</span></div>
 </div>
 {trend_pages.pref_trend(r, sys.modules[__name__], fixed_note)}
-{pref_story.story_block(d, r, sys.modules[__name__])}{analysis_pages.pref_block(d, r, sys.modules[__name__])}<h2>{esc(r['name'])}の最低賃金は、月給・年収でいくらか</h2>
-<p>{pref_story.monthly_line(d, r, sys.modules[__name__])}</p>
+{pref_story.figures_table(d, r, sys.modules[__name__])}{pref_story.compare_table(d, r, sys.modules[__name__])}{pref_story.story_block(d, r, sys.modules[__name__])}{analysis_pages.pref_block(d, r, sys.modules[__name__])}<h2>{esc(r['name'])}の最低賃金は、月給・年収でいくらか</h2>
+{pref_story.monthly_table(d, r, sys.modules[__name__])}
 {earnings_table(r)}
 {wage_section(d, r) if d.get("wage") else ""}
 <h2>関連ページ</h2>
@@ -538,10 +536,11 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <p><a href="/area/{r['region_slug']}/">{esc(r['region'])}のまとめを見る</a></p>
 <h3>給料の確認・通知・解説</h3>
 <ul class="link-list"><li><a href="/check/?pref={quote(r['name'])}">{esc(r['name'])}の最低賃金を下回っていないか、差額をチェックする</a></li><li><a href="/calendar/{r['slug']}.ics">{esc(r['name'])}の発効日をカレンダーに入れる</a>(前日の朝9時に通知)</li><li><a href="/guide/excluded/">最低賃金に含まれない賃金は?</a></li><li><a href="/guide/below/">最低賃金を下回っていたら?</a></li><li><a href="/guide/faq/">最低賃金のよくある質問</a></li><li><a href="/guide/raise/">時給を上げたいときの考え方</a></li><li><a href="/guide/wall/">週何時間で社会保険・扶養の壁に届くか</a></li><li><a href="/calendar/">発効日カレンダー</a></li></ul>
+<h3>データと出典</h3>
+<ul class="link-list"><li><a href="/cite/">出典と引用のしかた</a></li><li><a href="/data/">全年度のデータ(CSV・JSON)</a></li></ul>
 <h3>ほかの都道府県</h3>
 <ul class="pref-nav">{nav}</ul>
-</nav>
-<p class="table-note">データの取得日: {jp_date(d['fetched_date'])}。出典と引用のしかたは<a href="/cite/">こちら</a>、全年度のデータは<a href="/data/">CSV・JSON</a>にあります。</p>"""
+</nav>"""
     return finish(layout(
         cfg, preview, path=f"/{r['slug']}/",
         title=f"{r['name']}の最低賃金の推移(年度別の一覧・グラフ) {yen(r['amount'])}({d['label']})",
@@ -679,9 +678,7 @@ def wage_section(d: dict, r: dict) -> str:
     """Block for a prefecture page: how its pay compares with the nation, and where the minimum wage sits."""
     w = d["wage"]
     v, n = w["rows"][r["name"]], w["national"]
-    ratio_gap = "高い" if v["ratio"] > n["ratio"] else "低い"
     return f"""<h2>賃金の実態との比較({esc(w['year_label'])}賃金統計)</h2>
-<p>{esc(r['name'])}の一般労働者の平均賃金(時給換算)は{yen(v['hourly'])}で、47都道府県中{v['hourly_rank']}位です(全国は{yen(n['hourly'])})。{esc(w['min_then_label'])}の最低賃金({yen(v['min_then'])})は、その{pct(v['ratio'])}にあたり、全国の{pct(n['ratio'])}より{ratio_gap}比率です。</p>
 <div class="tablewrap"><table><thead><tr><th>項目</th><th>{esc(r['name'])}</th><th>全国</th></tr></thead><tbody>
 <tr><td>所定内給与(月・男女計)</td><td>{v['pay_k'] / 10:.1f}万円</td><td>{n['pay_k'] / 10:.1f}万円</td></tr>
 <tr><td>うち男性</td><td>{v['male_k'] / 10:.1f}万円</td><td>{n['male_k'] / 10:.1f}万円</td></tr>
