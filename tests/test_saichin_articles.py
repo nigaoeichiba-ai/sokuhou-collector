@@ -223,3 +223,62 @@ class ExpandedGuidesTest(SiteFixture):
             for _, url in content.GUIDE_BY_SLUG[slug]["sources"]:
                 self.assertIn(url, page)
         self.assertIn("https://www.check-roudou.mhlw.go.jp/qa/roudousya/chingin/q9.html", self.read("guide/below/index.html"))
+
+
+class TermsCityRankingTest(SiteFixture):
+    """/guide/terms/ (the words of the news, with Reiwa 8 figures), the all-prefecture table of /guide/city/, and the reading notes under the rankings."""
+
+    def text(self, path):
+        return re.sub(r"\s+", "", re.sub(r"<[^>]+>", "", self.read(path)))
+
+    def test_terms_page(self):
+        page = self.read("guide/terms/index.html")
+        text = self.text("guide/terms/index.html")
+        self.assertGreater(len(text), 2000)
+        raw = _raw()
+        avg = {int(y): v for y, v in raw["national_weighted_average"].items()}
+        up = round(avg[2026]) - round(avg[2025])
+        now = {p["name"]: p["history"]["2026"]["amount"] for p in raw["prefectures"]}
+        self.assertIn(f"全国加重平均は{round(avg[2026]):,}円(+{up}円)になりました", text)
+        self.assertIn(f"ニュースの「+{up}円」は、全国加重平均の上がり幅です", text)
+        self.assertIn(f"{max(now.values()) - min(now.values())}円の幅があります", text)
+        self.assertIn("東京都の1,280円", text)
+        rises = {p["name"]: p["history"]["2026"]["amount"] - p["history"]["2025"]["amount"] for p in raw["prefectures"]}
+        self.assertIn(f"+{min(rises.values())}円から+{max(rises.values())}円まで、県によって違います", text)
+        for slug in ("how-decided", "excluded", "calculate", "monthly", "what-is"):
+            self.assertIn(f'href="/guide/{slug}/"', page)
+        for _, url in content.GUIDE_BY_SLUG["terms"]["sources"]:
+            self.assertIn(url, page)
+        self.assertIn("/guide/terms/", self.read("sitemap.xml"))
+
+    def test_city_page_lists_three_cities_of_every_prefecture_with_its_amount(self):
+        from sites.saichin.places import PLACES
+        raw = _raw()
+        am = {p["name"]: p["history"]["2026"]["amount"] for p in raw["prefectures"]}
+        rows = cells(self.read("guide/city/index.html"), "<h2>47都道府県の主な市</h2>")[1:]
+        self.assertEqual(len(rows), 47)
+        for pref, cities, amount in rows:
+            short = next(s for s in am if pref.startswith(s))
+            self.assertEqual(cities, "、".join(PLACES[short]), pref)
+            self.assertEqual(amount, f"{am[short]:,}円", pref)
+        self.assertGreater(len(self.text("guide/city/index.html")), 2000)
+
+    def test_ranking_notes_name_the_two_ends_and_the_gap(self):
+        raw = _raw()
+        now = {p["name"]: p["history"]["2026"]["amount"] for p in raw["prefectures"]}
+        full = {r["short"]: r["name"] for r in self.d["rows"]}
+        text = self.text("ranking/high/index.html")
+        by_name = {full[s]: now[s] for s in now}
+        listed = re.search(r"最も高い5都道府県は、(.*?)です", text).group(1)
+        pairs = re.findall(r"([^、()]+?)\(([\d,]+)円\)", listed)
+        self.assertEqual(len(pairs), 5)
+        for name, a in pairs:
+            self.assertEqual(by_name[name], int(a.replace(",", "")), name)
+        self.assertEqual([int(a.replace(",", "")) for _, a in pairs], sorted(now.values(), reverse=True)[:5])
+        gap = max(now.values()) - min(now.values())
+        self.assertIn(f"最高額と最低額の差は{gap}円で、1日8時間・年250日働くと、この時給の差は年に{gap * 2000:,}円になります", text)
+        self.assertEqual(len(set(now.values())), int(re.search(r"同じ額の都道府県があるのは、(\d+)通りの額", text).group(1)))
+        rises = {s: p for s, p in ((p["name"], p["history"]["2026"]["amount"] - p["history"]["2025"]["amount"]) for p in raw["prefectures"])}
+        rt = self.text("ranking/raise/index.html")
+        self.assertIn(f"引上げ額は+{min(rises.values())}円から+{max(rises.values())}円まで{len(set(rises.values()))}通りあり", rt)
+        self.assertIn(f"最大と最小の差は{max(rises.values()) - min(rises.values())}円です", rt)

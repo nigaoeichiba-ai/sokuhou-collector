@@ -9,6 +9,7 @@ from sites.saichin.analysis import (
     THRESHOLDS, date_series, gap_series, milestone_rank, milestones, names, national_milestones, number_one_years,
     pref_facts, rank_table, raise_series, region_facts, short_label, top_bottom_means,
 )
+from sites.saichin import analysis_context
 from sites.saichin.long_history import yen_text
 
 INDEX = [
@@ -38,7 +39,7 @@ def _link(r: dict) -> str:
 def _src(d: dict, k) -> str:
     return (f'<p class="notice">データの取得日: {k.jp_date(d["fetched_date"])}。{k.esc(k.SOURCE_LABEL)}の年度別の額と発効日から計算した数字です。'
             f'数字は<a href="/data/">CSV・JSON</a>でも取れます。引用するときは<a href="/cite/">引用のしかた</a>をご覧ください。'
-            f'額が動いた理由は調べていません。物価や賃金全体の動きとの関係は、この分析では扱っていません。</p>')
+            f'額が動いた背景は、法律と厚生労働省の公表に書いてあることだけを、各ページの「動いた背景」に載せています。物価や賃金全体の動きとの関係は、この分析では扱っていません。</p>')
 
 
 def _more(slug: str) -> str:
@@ -84,6 +85,7 @@ def gap_page(d: dict, k) -> dict:
 <li>額は、その年度に決まった地域別最低賃金(時間額)です。発効日の違いは考慮していません。</li>
 <li>同額の都道府県が複数あるときは「ほか○都道府県」と書いています。</li>
 </ul>
+{analysis_context.SECTIONS["gap"](d, k)}
 {_more("gap")}
 {_src(d, k)}"""
     return {"title": f"最低賃金の地域差 最高額と最低額の差の推移({first['label']}〜{last['label']})",
@@ -145,6 +147,7 @@ def milestones_page(d: dict, k) -> dict:
 <li>R は令和、H は平成です(R8 は令和8年度)。</li>
 <li>一度届いたあとに額が下がった都道府県はありません(下がったデータがあれば、ページを作る時点で公開を止めています)。</li>
 </ul>
+{analysis_context.SECTIONS["milestones"](d, k)}
 {_more("milestones")}
 {_src(d, k)}"""
     return {"title": f"最低賃金が1,000円を超えたのはいつ 都道府県別の到達年度({d['years'][0]['label']}〜{last_label})",
@@ -218,6 +221,7 @@ def ranks_page(d: dict, k) -> dict:
 <li>順位は、その年度の額が高い順です。同額は同じ順位で、次の順位は飛びます(2都道府県が1位なら次は3位)。</li>
 <li>順位の変化は、{k.esc(first_lab)}と{k.esc(last_lab)}の2点の比べです。途中で上下した分は、表の「最高の順位」「最低の順位」に出ます。</li>
 </ul>
+{analysis_context.SECTIONS["ranks"](d, k)}
 {_more("ranks")}
 {_src(d, k)}"""
     return {"title": f"最低賃金の都道府県別ランキングの変化 順位が上がった県・下がった県({first_lab}〜{last_lab})",
@@ -265,8 +269,9 @@ def raises_page(d: dict, k) -> dict:
 <ul>
 <li>引上げ額は、その年度の額から前の年度の額を引いた値です。</li>
 <li>全国加重平均の引上げ額は、円未満を四捨五入した平均の差です。</li>
-<li>引上げ額の大小の理由は調べていません。目安額や審議の内容は、厚生労働省の公表資料をご覧ください。</li>
+<li>引上げ額の大小の理由は、「動いた背景」に書いた範囲を超えては言えません。目安額や審議の内容は、厚生労働省の公表資料をご覧ください。</li>
 </ul>
+{analysis_context.SECTIONS["raises"](d, k)}
 {_more("raises")}
 {_src(d, k)}"""
     return {"title": f"最低賃金の引上げ額の推移 年度別・都道府県別({rs[0]['label']}〜{last['label']})",
@@ -305,6 +310,7 @@ def dates_page(d: dict, k) -> dict:
 <li>表の4つの欄(発効日が10月1日まで・10月2〜31日・11〜12月・翌年)は、重ならず、合計が「引き上げた都道府県数」になります。</li>
 <li>発効日が年度内(4月から翌年3月)に入らない日付は、一覧表の誤記とみて翌年に直しています。直したときは、その都道府県のページに注を付けています。</li>
 </ul>
+{analysis_context.SECTIONS["dates"](d, k)}
 {_more("dates")}
 {_src(d, k)}"""
     return {"title": f"最低賃金の発効日の推移 どの県がいつ発効したか({ds[0]['label']}〜{last['label']})",

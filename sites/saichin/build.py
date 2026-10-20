@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import analysis_pages, area_story, articles, charts, content, dataset, history_old, long_history, ogimage, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
+from sites.saichin import ranking_notes, analysis_pages, area_story, articles, charts, content, dataset, history_old, long_history, ogimage, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
@@ -713,6 +713,7 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
 <p class="lead">全47都道府県を、{long_}に並べています。同額・同じ引上げ額は、同じ順位です。</p>
 <div class="tabs" role="tablist">{tabs}</div>
 <div class="tablewrap"><table><thead><tr><th>順位</th><th>都道府県</th><th>最低賃金</th><th>全国加重平均との差</th><th>引上げ額</th><th>発効日</th></tr></thead><tbody>{body_rows}</tbody></table></div>
+{ranking_notes.notes(d, kind, sys.modules[__name__])}
 <p class="notice">全国加重平均は{d['avg']:g}円({esc(d['label'])}、{above}都道府県が平均より高く、{below}都道府県が低い)。差は、各都道府県の最低賃金から全国加重平均を引いた額です。データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。</p>"""
     return finish(layout(cfg, preview, path=f"/ranking/{kind}/", title=f"最低賃金ランキング{short}({d['label']}) 47都道府県",
                          description=f"{d['label']}の最低賃金を、{long_}に47都道府県すべてランキングにしました。", body=body), d)

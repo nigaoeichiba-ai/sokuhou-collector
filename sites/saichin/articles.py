@@ -8,6 +8,7 @@ Statements about the process are what the Ministry's two press releases say (rea
 from __future__ import annotations
 
 from sites.saichin.analysis import raise_series
+from sites.saichin.places import PLACES
 
 # The guideline ranks and amounts of Reiwa 8, from the Ministry's press release of 2026-07-28 (newpage_74920).
 RANKS = {
@@ -114,6 +115,55 @@ def monthly_body(d: dict, k) -> str:
 """
 
 
+def terms_body(d: dict, k) -> str:
+    avg = {y["fy"]: y["avg"] for y in d["years"]}
+    fy = d["rows"][0]["history"][-1]["fy"]
+    up = round(avg[fy]) - round(avg[fy - 1])
+    hi = max(d["rows"], key=lambda r: (r["amount"], r["name"]))
+    lo = min(d["rows"], key=lambda r: (r["amount"], r["name"]))
+    lo_names = k.esc("、".join(r["name"] for r in d["rows"] if r["amount"] == lo["amount"]))
+    process = ""
+    if fy == 2026:
+        process = (f"<p>令和8年度の例です。7月28日に、第75回中央最低賃金審議会が、Aランク54円、Bランク56円、Cランク56円の目安を答申しました。目安どおりに上がった場合の全国加重平均は1,176円(+55円)です。"
+                   f"9月3日には、全ての都道府県の答申がそろい、全国加重平均は{round(d['avg']):,}円(+{up}円)になりました。ニュースの「+{up}円」は、全国加重平均の上がり幅です。"
+                   f"各県の引上げ額は、+54円から+65円まで、県によって違います。</p>")
+    return f"""<p>「最賃」は、最低賃金を短くして書いた言い方です。「最低時給」という言い方もあります。最低賃金は、時間あたりの額(時間額)で定められているので、時給の形で言うと「最低時給」になります。ここでは、ニュースや求人の説明に出てくる言葉を、法律と厚生労働省の説明に合わせて整理します。</p>
+<h2>最低賃金・最賃・最低時給</h2>
+{_t(["言い方", "意味"], [
+        ["最低賃金", "最低賃金法にもとづいて国が定める、賃金の最低額です。使用者は、この額以上の賃金を払わなければなりません(最低賃金法第4条)。"],
+        ["最賃", "最低賃金を略した言い方です。"],
+        ["最低時給", "時間額で定められた最低賃金を、時給の形で言った言い方です。"],
+        ["時間額", "厚生労働省が使う言葉です。すべての地域別最低賃金は、時間額で定められています。"],
+        ["地域別最低賃金", "都道府県ごとに1つずつ定められる最低賃金です。このサイトで扱っているのは、この額です。"],
+        ["特定(産業別)最低賃金", "特定の産業について定められる、地域別より高い額の最低賃金です。両方が当てはまるときは、高い方が適用されます(第6条第1項)。"],
+    ])}
+<h2>ニュースに出る言葉</h2>
+{_t(["言葉", "意味"], [
+        ["目安", "中央最低賃金審議会が、毎年、引上げ額の参考として示す額です。都道府県をA・B・Cの3ランクに分けて、ランクごとに示します。現在は、Aランクが6都府県、Bランクが28道府県、Cランクが13県です。"],
+        ["答申", "各都道府県の地方最低賃金審議会が、目安を参考に、地域の賃金実態調査などを踏まえて審議し、改定額について出す意見です。"],
+        ["決定・公示", "答申を受けて、都道府県労働局長が地域別最低賃金を決め、公示します。意見の要旨の公示から15日以内に、異議を申し出られます(第11条)。"],
+        ["発効日", "新しい額が効力を持つ日です。決定の公示から30日を過ぎた日か、決定で定めた日です(第14条第2項)。都道府県ごとに違います。"],
+        ["全国加重平均", "47都道府県の最低賃金を、適用される労働者の数で重みづけして平均した額です。全国どこでも同じ額という意味ではありません。"],
+    ])}
+{process}
+<h2>見間違えやすい点</h2>
+<ul>
+<li><strong>全国加重平均は、全国一律の額ではありません。</strong>{k.esc(d['label'])}の最低賃金は、{k.esc(hi['name'])}の{k.yen(hi['amount'])}から、{lo_names}の{k.yen(lo['amount'])}まで、{hi['amount'] - lo['amount']}円の幅があります。</li>
+<li><strong>目安は、都道府県が守る下限ではありません。</strong>地方の審議会が参考にする額で、実際の改定額は、目安と同じになることも、上回ることもあります。</li>
+<li><strong>「+{up}円」は、全国加重平均の上がり幅です。</strong>自分の県の上がり幅は、<a href="/ranking/raise/">引上げ額のランキング</a>で確かめます。</li>
+<li><strong>発効日の前は、改定前の額です。</strong>新しい額が決まっていても、その県の発効日より前は、1つ前の額が適用されます(<a href="/calendar/">発効日カレンダー</a>)。</li>
+</ul>
+<h2>自分の県の最低賃金を調べる手順</h2>
+<ol>
+<li>働く場所(事業場)がある都道府県を確かめます。住んでいる県ではありません。派遣は、派遣先の事業場がある県です。</li>
+<li><a href="/">全国の一覧</a>か、県のページで、額と発効日を見ます。</li>
+<li>自分の時給を、<a href="/guide/excluded/">対象にならない賃金</a>を除いて、<a href="/guide/calculate/">時間額に換算</a>して比べます。月給の求人は、<a href="/guide/monthly/">月給換算の早見表</a>が使えます。</li>
+<li>産業別の最低賃金が当てはまりそうなときは、<a href="/guide/what-is/">最低賃金とは?</a>と、厚生労働省の「特定最低賃金について」で確かめます。</li>
+</ol>
+<p>算出の方法や、決まる流れの詳しい説明は、<a href="/guide/how-decided/">最低賃金はどう決まる?</a>にあります。</p>
+"""
+
+
 # city -> prefecture (short name), chosen from the cities people ask about in Search Console and the ordinance-designated cities
 CITIES = [
     ("札幌市", "北海道"), ("仙台市", "宮城"), ("さいたま市", "埼玉"), ("千葉市", "千葉"), ("横浜市", "神奈川"), ("川崎市", "神奈川"), ("新潟市", "新潟"),
@@ -126,11 +176,15 @@ def city_body(d: dict, k) -> str:
     by = {r["short"]: r for r in d["rows"]}
     trs = [[k.esc(c), f'<a href="/{by[p]["slug"]}/">{k.esc(by[p]["name"])}</a>', k.yen(by[p]["amount"]), k.jp_date(by[p]["effective_date"])] for c, p in CITIES]
     osaka, sapporo = by["大阪"], by["北海道"]
+    places_rows = [[f'<a href="/{r["slug"]}/">{k.esc(r["name"])}</a>', k.esc("、".join(PLACES[r["short"]])), k.yen(r["amount"])] for r in sorted(d["rows"], key=lambda r: r["slug"])]
     gap = max(r["amount"] for r in d["rows"]) - min(r["amount"] for r in d["rows"])
     return f"""<p>最低賃金は、市区町村ごとには決まっていません。地域別最低賃金は、都道府県ごとに1つずつ定められていて、同じ都道府県の中なら、大阪市でも堺市でも同じ額です。{k.esc(d['label'])}の{k.esc(osaka['name'])}は{k.yen(osaka['amount'])}、{k.esc(sapporo['name'])}は{k.yen(sapporo['amount'])}で、札幌市は北海道の額、大阪市は大阪府の額になります。</p>
 <h2>主な市と、適用される最低賃金</h2>
 <p>市の名前で探している人が多い市を中心に、その市がある都道府県の額を並べました。</p>
 {_t(["市", "都道府県", "最低賃金", "発効日"], trs)}
+<h2>47都道府県の主な市</h2>
+<p>都道府県ごとに、県庁所在地を含む3つの市(区)を挙げました。ここに載っていない市区町村も、同じ都道府県の中なら、同じ額です。</p>
+{_t(["都道府県", "主な市(区)", "最低賃金"], places_rows)}
 <h2>どの都道府県の額を使うか</h2>
 <ul>
 <li><strong>働く場所(事業場)がある都道府県です。</strong>住んでいる都道府県ではありません。隣の県に通勤するときは、勤務先がある県の額です。</li>
@@ -144,4 +198,4 @@ def city_body(d: dict, k) -> str:
 """
 
 
-BODIES = {"r8": r8_body, "monthly": monthly_body, "city": city_body}
+BODIES = {"r8": r8_body, "monthly": monthly_body, "city": city_body, "terms": terms_body}

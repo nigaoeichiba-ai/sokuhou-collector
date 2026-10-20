@@ -174,7 +174,7 @@ class AnalysisPagesTest(SiteFixture):
             text = re.sub(r"<[^>]+>", "", self.read(f"analysis/{s}/index.html"))
             for word in ("原因", "影響", "背景には", "ためです", "のため上が", "が理由"):
                 self.assertNotIn(word, text, (s, word))
-            self.assertIn("額が動いた理由は調べていません", text)
+            self.assertIn("額が動いた背景は、法律と厚生労働省の公表に書いてあることだけ", text)
 
     def test_each_analysis_page_tells_where_the_numbers_come_from(self):
         for s in analysis_pages.ORDER:
@@ -305,3 +305,85 @@ class NoindexRankingTest(SiteFixture):
     def test_the_decision_rests_on_the_measured_demand(self):
         from sites.saichin import build
         self.assertEqual(build.NOINDEX_PATHS, {"/ranking/low/", "/ranking/raise/"})
+
+
+class ContextSectionsTest(SiteFixture):
+    """The "動いた背景" and "あなたにどう関わるか" sections at the end of each analysis page: size, sources, and the numbers of the examples recomputed."""
+
+    def page_text(self, slug):
+        return re.sub(r"\s+", "", re.sub(r"<[^>]+>", "", self.read(f"analysis/{slug}/index.html")))
+
+    def section(self, slug, title):
+        page = self.read(f"analysis/{slug}/index.html")
+        body = page.split(f"<h2>{title}", 1)[1]
+        body = re.split(r"<h2>", body, maxsplit=1)[0]
+        return re.sub(r"\s+", "", re.sub(r"<[^>]+>", "", body.split("</h2>", 1)[1]))
+
+    def test_every_page_has_both_sections_of_enough_length_and_the_page_is_long_enough(self):
+        for s in analysis_pages.ORDER:
+            self.assertGreaterEqual(len(self.section(s, "動いた背景")), 300, s)
+            self.assertGreaterEqual(len(self.section(s, "あなたにどう関わるか")), 300, s)
+            self.assertGreaterEqual(len(self.page_text(s)), 2400, s)
+
+    def test_the_background_cites_the_primary_sources_with_the_date_they_were_read(self):
+        for s in analysis_pages.ORDER:
+            page = self.read(f"analysis/{s}/index.html")
+            self.assertIn("https://laws.e-gov.go.jp/law/334AC0000000137", page, s)
+            self.assertIn("https://www.mhlw.go.jp/stf/newpage_74920.html", page, s)
+            self.assertIn("https://www.mhlw.go.jp/stf/newpage_75950.html", page, s)
+            self.assertIn("2026年10月20日に開いて確かめました", page, s)
+
+    def test_the_examples_are_recomputed(self):
+        raw = _raw()
+        avg = {int(y): v for y, v in raw["national_weighted_average"].items()}
+        up = round(avg[2026]) - round(avg[2025])
+        self.assertIn(f"{up}円×20時間×52週={up * 20 * 52:,}円の差になります", self.page_text("raises"))
+        now, prev = amounts(raw, 2026), amounts(raw, 2025)
+        gap, gap0 = max(now) - min(now), max(prev) - min(prev)
+        text = self.page_text("gap")
+        self.assertIn(f"差は{gap}円です", text)
+        self.assertIn(f"{gap}円×2,000時間={gap * 2000:,}円になります", text)
+        self.assertIn(f"{LABEL_OF(raw, 2025)}の{gap0}円から、{LABEL_OF(raw, 2026)}の{gap}円に{'縮まりました' if gap < gap0 else '広がりました' if gap > gap0 else '変わりませんでした'}", text)
+        text = self.page_text("milestones")
+        first = next(fy for fy in YEARS if avg[fy] >= 1000)
+        self.assertIn(f"全国加重平均が初めて1,000円以上になったのは、{LABEL_OF(raw, first)}です", text)
+        n = {t: sum(1 for a in now if a > t) for t in (1000, 1100, 1200)}
+        self.assertIn(f"1,000円を超える都道府県が{n[1000]}、1,100円を超える都道府県が{n[1100]}、1,200円を超える都道府県が{n[1200]}です", text)
+        self.assertIn(f"時給1,100円の求人は、最低賃金が1,100円を超える{n[1100]}都道府県では", text)
+
+    def test_the_rank_example_names_the_biggest_riser_and_faller(self):
+        raw = _raw()
+        names = [p["name"] for p in raw["prefectures"]]
+
+        def rank(fy, short):
+            mine = amount(raw, short, fy)
+            return 1 + sum(1 for o in names if amount(raw, o, fy) > mine)
+        change = {n: rank(2025, n) - rank(2026, n) for n in names}
+        up, down = max(change.values()), min(change.values())
+        text = self.page_text("ranks")
+        full = {r["short"]: r["name"] for r in self.d["rows"]}
+        for n in names:
+            if change[n] == up and sum(1 for c in change.values() if c == up) <= 3:
+                self.assertIn(f"{full[n]}({rank(2025, n)}位から{rank(2026, n)}位)", text)
+            if change[n] == down and sum(1 for c in change.values() if c == down) <= 3:
+                self.assertIn(f"{full[n]}({rank(2025, n)}位から{rank(2026, n)}位)", text)
+        top = max(self.d["rows"], key=lambda r: (r["raise"], r["name"]))
+        rise = amount(raw, top["short"], 2026) - amount(raw, top["short"], 2025)
+        self.assertIn(f"{rise}円×20時間×52週={rise * 20 * 52:,}円増えます", text)
+
+    def test_the_dates_example_names_the_latest_prefecture(self):
+        raw = _raw()
+        eff = {p["name"]: p["history"]["2026"]["effective_date"] for p in raw["prefectures"]}
+        last, first = max(eff.values()), min(eff.values())
+        span = (date.fromisoformat(last) - date.fromisoformat(first)).days
+        text = self.page_text("dates")
+        y, m, d_ = last.split("-")
+        self.assertIn(f"{int(y)}年{int(m)}月{int(d_)}日で、それより前の勤務分は、改定前の額で比べます", text)
+        self.assertIn(f"{span}日の開きがあります", text)
+
+    def test_it_states_no_cause_beyond_the_sources(self):
+        for s in analysis_pages.ORDER:
+            text = self.page_text(s)
+            self.assertIn("この分析では言えません" if s == "raises" else "", text)
+            for word in ("原因は", "影響で", "背景には", "のためです"):
+                self.assertNotIn(word, text, (s, word))
