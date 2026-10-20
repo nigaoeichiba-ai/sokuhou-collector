@@ -9,6 +9,7 @@ from sites.saichin.analysis import (
     THRESHOLDS, date_series, gap_series, milestone_rank, milestones, names, national_milestones, number_one_years,
     pref_facts, rank_table, raise_series, region_facts, short_label, top_bottom_means,
 )
+from sites.saichin.long_history import yen_text
 
 INDEX = [
     ("gap", "地域差は広がったのか(最高額と最低額の差)"),
@@ -343,18 +344,18 @@ def _labels(xs: list[str]) -> str:
 
 def pref_block(d: dict, r: dict, k) -> str:
     f = pref_facts(d, r)
-    h0, h1 = r["history"][0], r["history"][-1]
+    h0, h1 = f["first"], f["last"]
     name = k.esc(r["name"])
 
-    def above(n: int, top: bool) -> str:
+    def above(n: float, top: bool) -> str:
         if n == 0:
             return "最高額" if top else "最低額"
-        return f"{n}円低い" if top else f"{n}円高い"
+        return f"{yen_text(n)}{'低い' if top else '高い'}"
 
-    def avg_gap(n: int) -> str:
-        return "同額" if n == 0 else (f"{n}円高い" if n > 0 else f"{-n}円低い")
+    def avg_gap(n: float | None) -> str:
+        return "-" if n is None else ("同額" if n == 0 else (f"{yen_text(n)}高い" if n > 0 else f"{yen_text(-n)}低い"))
     rows = [
-        ["最低賃金", k.yen(h0["amount"]), k.yen(h1["amount"])],
+        ["最低賃金", yen_text(h0["amount"]), yen_text(h1["amount"])],
         ["全国順位", f"{h0['rank']}位", f"{h1['rank']}位"],
         ["最高額の都道府県との差", above(f["to_top_first"], True), above(f["to_top_last"], True)],
         ["最低額の都道府県との差", above(f["to_bottom_first"], False), above(f["to_bottom_last"], False)],
@@ -367,12 +368,14 @@ def pref_block(d: dict, r: dict, k) -> str:
                      f"最も低かったのは{f['worst']}位で、{k.esc(_labels(f['worst_labels']))}です。")
     if f["reached"]:
         top = f["reached"][-1]
-        ms_text = (f"{name}の最低賃金が{top['t']:,}円以上になったのは{k.esc(top['label'])}です。"
+        when = f"{k.esc(top['labels'][0])}(南部)と{k.esc(top['labels'][1])}(北部)" if top["labels"] else k.esc(top["label"])
+        ms_text = (f"{name}の最低賃金が{top['t']:,}円以上になったのは{when}です。"
                    f"{top['t']:,}円以上に届いたのは{top['of']}都道府県で、{name}は早い方から{top['order']}番目です。")
     else:
-        ms_text = f"{name}は、{k.esc(h1['label'])}までに800円に届いていません。"
+        ms_text = f"{name}は、{k.esc(h1['label'])}までに500円に届いていません。"
     zero = f"引上げ額が0円の年度は{f['raises_zero']}回ありました。" if f["raises_zero"] else "毎年、前の年度より額が上がっています。"
-    ms_rows = [[f"{x['t']:,}円", k.esc(x["label"]), f"{x['order']}番目(届いた{x['of']}都道府県のうち)"] for x in f["reached"]]
+    ms_rows = [[f"{x['t']:,}円", (f"{k.esc(x['labels'][0])}(南部)・{k.esc(x['labels'][1])}(北部)" if x["labels"] else k.esc(x["label"])),
+                f"{x['order']}番目(届いた{x['of']}都道府県のうち)"] for x in f["reached"]]
     return f"""<h2>{name}の{k.esc(h0['label'])}から{k.esc(h1['label'])}までを数字で見る</h2>
 <p>{ms_text}{rank_text}{zero}</p>
 {_table(["項目", k.esc(h0["label"]), k.esc(h1["label"])], rows)}
@@ -384,23 +387,23 @@ def pref_block(d: dict, r: dict, k) -> str:
 
 def region_block(d: dict, rname: str, members: list[dict], k) -> str:
     f = region_facts(d, members)
-    avg = {y["fy"]: y["avg"] for y in d["years"]}
-    h0, h1 = members[0]["history"][0], members[0]["history"][-1]
+    avg = {n["fy"]: n["avg"] for n in d["long_years"]}
     (lo0, hi0, m0), (lo1, hi1, m1) = f["first"], f["last"]
     ups = f["ups"]
+    a0 = avg.get(f["fy0"])
     rows = [
-        ["最も低い額", k.yen(lo0), k.yen(lo1)],
-        ["最も高い額", k.yen(hi0), k.yen(hi1)],
-        ["最高額と最低額の差", f"{hi0 - lo0}円", f"{hi1 - lo1}円"],
-        ["単純平均", k.yen(round(m0)), k.yen(round(m1))],
-        ["全国加重平均", k.yen(round(avg[h0["fy"]])), k.yen(round(avg[h1["fy"]]))],
+        ["最も低い額", yen_text(lo0), yen_text(lo1)],
+        ["最も高い額", yen_text(hi0), yen_text(hi1)],
+        ["最高額と最低額の差", yen_text(hi0 - lo0), yen_text(hi1 - lo1)],
+        ["単純平均", yen_text(round(m0)), yen_text(round(m1))],
+        ["全国加重平均", "-" if a0 is None else yen_text(round(a0)), yen_text(round(avg[f["fy1"]]))],
     ]
-    up_rows = [[_link(m), k.yen(m["history"][0]["amount"]), k.yen(m["history"][-1]["amount"]), f"+{u:,}円"] for u, m in ups]
-    return f"""<h2>{k.esc(rname)}の{k.esc(h0['label'])}から{k.esc(h1['label'])}までを数字で見る</h2>
-<p>{k.esc(h0['label'])}から{k.esc(h1['label'])}までに、{k.esc(rname)}で最も上がったのは{k.esc(ups[0][1]['name'])}の+{ups[0][0]:,}円、最も上がり方が小さかったのは{k.esc(ups[-1][1]['name'])}の+{ups[-1][0]:,}円です。
-地方内の最高額と最低額の差は、{hi0 - lo0}円から{hi1 - lo1}円になりました。</p>
-{_table(["項目", k.esc(h0["label"]), k.esc(h1["label"])], rows)}
+    up_rows = [[_link(m), yen_text(m["long"][0]["amount"]), yen_text(m["long"][-1]["amount"]), f"+{yen_text(u)}"] for u, m in ups]
+    return f"""<h2>{k.esc(rname)}の{k.esc(f['label0'])}から{k.esc(f['label1'])}までを数字で見る</h2>
+<p>{k.esc(f['label0'])}から{k.esc(f['label1'])}までに、{k.esc(rname)}で最も上がったのは{k.esc(ups[0][1]['name'])}の+{yen_text(ups[0][0])}、最も上がり方が小さかったのは{k.esc(ups[-1][1]['name'])}の+{yen_text(ups[-1][0])}です。
+地方内の最高額と最低額の差は、{yen_text(hi0 - lo0)}から{yen_text(hi1 - lo1)}になりました。</p>
+{_table(["項目", k.esc(f["label0"]), k.esc(f["label1"])], rows)}
 <h3>都道府県別に上がった額</h3>
-{_table(["都道府県", k.esc(h0["label"]), k.esc(h1["label"]), "上がった額"], up_rows)}
+{_table(["都道府県", k.esc(f["label0"]), k.esc(f["label1"]), "上がった額"], up_rows)}
 <p>全国の比べ方は、<a href="/analysis/gap/">地域差の分析</a>と<a href="/analysis/ranks/">順位の動き</a>にあります。</p>
 """

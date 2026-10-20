@@ -2,7 +2,7 @@
 import re
 from datetime import date
 
-from sites.saichin import analysis, analysis_pages, build
+from sites.saichin import analysis, analysis_pages, build, history_old
 from tests.test_saichin_pages import CFG, SiteFixture, _raw  # noqa: F401
 
 LABEL_OF = lambda raw, fy: raw["fiscal_year_labels"][str(fy)]  # noqa: E731
@@ -184,41 +184,67 @@ class AnalysisPagesTest(SiteFixture):
             self.assertIn('href="/cite/"', page)
 
 
+def money(v):
+    """296円, 320.88円, 1,172円 (own formatting, independent of the site's)."""
+    return f"{int(v):,}円" if v == int(v) else f"{v:,.2f}".rstrip("0").rstrip(".") + "円"
+
+
+def series_1977(raw, old, short):
+    """{fiscal year: amount} from Showa 52 on, from the saved old page and the workbook; Kyoto's split years are absent."""
+    s = {int(y): v for y, v in old["prefectures"][short].items() if int(y) < 2002}
+    s.update({int(y): v["amount"] for y, v in next(p for p in raw["prefectures"] if p["name"] == short)["history"].items()})
+    return s
+
+
 class NumbersBlockTest(SiteFixture):
-    def test_each_prefecture_page_has_the_numbers_block_with_values_from_the_workbook(self):
+    def test_each_prefecture_page_has_the_numbers_block_with_values_from_the_workbook_and_the_old_document(self):
         raw = _raw()
-        for p in raw["prefectures"]:
-            short = p["name"]
+        old = history_old.load()
+        every = {p["name"]: series_1977(raw, old, p["name"]) for p in raw["prefectures"]}
+        hi0, lo0 = max(s[1977] for s in every.values()), min(s[1977] for s in every.values())
+        hi1, lo1 = max(s[2026] for s in every.values()), min(s[2026] for s in every.values())
+        for short, amts in every.items():
             r = next(x for x in self.d["rows"] if x["short"] == short)
             page = self.read(f"{r['slug']}/index.html")
-            self.assertIn(f"{r['name']}の平成14年度から令和8年度までを数字で見る</h2>", page, short)
+            self.assertIn(f"{r['name']}の昭和52年度から令和8年度までを数字で見る</h2>", page, short)
             rows = {x[0]: x for x in rows_of(page, "を数字で見る</h2>")[1:]}
-            amts = {fy: p["history"][str(fy)]["amount"] for fy in YEARS}
-            self.assertEqual(rows["最低賃金"][1:], [f"{amts[2002]:,}円", f"{amts[2026]:,}円"], short)
-            hi, lo = max(amounts(raw, 2026)), min(amounts(raw, 2026))
-            top = "最高額" if amts[2026] == hi else f"{hi - amts[2026]}円低い"
-            bottom = "最低額" if amts[2026] == lo else f"{amts[2026] - lo}円高い"
-            self.assertEqual(rows["最高額の都道府県との差"][2], top, short)
-            self.assertEqual(rows["最低額の都道府県との差"][2], bottom, short)
-            for t in analysis.THRESHOLDS:
-                reached = [fy for fy in YEARS if amts[fy] >= t]
+            self.assertEqual(rows["最低賃金"][1:], [money(amts[1977]), money(amts[2026])], short)
+            self.assertEqual(rows["最高額の都道府県との差"][1:], ["最高額" if amts[1977] == hi0 else f"{money(hi0 - amts[1977])}低い",
+                                                       "最高額" if amts[2026] == hi1 else f"{money(hi1 - amts[2026])}低い"], short)
+            self.assertEqual(rows["最低額の都道府県との差"][1:], ["最低額" if amts[1977] == lo0 else f"{money(amts[1977] - lo0)}高い",
+                                                       "最低額" if amts[2026] == lo1 else f"{money(amts[2026] - lo1)}高い"], short)
+            if short == "京都":
+                continue                                                    # Kyoto's two rates: checked in test_kyoto_has_two_rates_from_showa_54_to_heisei_1
+            for t in analysis.PREF_THRESHOLDS:
+                reached = [fy for fy in sorted(amts) if amts[fy] >= t]
                 if reached:
-                    label = LABEL_OF(raw, reached[0])
-                    self.assertRegex(page, rf"<tr><td>{t:,}円</td><td>{label}</td>", (short, t))
+                    self.assertRegex(page, rf"<tr><td>{t:,}円</td><td>{LABEL_OF_ANY(reached[0])}</td>", (short, t))
                 else:
-                    self.assertNotRegex(page, rf"<tr><td>{t:,}円</td><td>(平成|令和)", (short, t))
+                    self.assertNotRegex(page, rf"<tr><td>{t:,}円</td><td>(昭和|平成|令和)", (short, t))
 
     def test_each_area_page_has_the_numbers_block(self):
         raw = _raw()
+        old = history_old.load()
         for slug, rname, shorts in build.REGIONS:
             page = self.read(f"area/{slug}/index.html")
-            self.assertIn(f"{rname}の平成14年度から令和8年度までを数字で見る</h2>", page, slug)
+            self.assertIn(f"{rname}の昭和52年度から令和8年度までを数字で見る</h2>", page, slug)
             rows = {x[0]: x for x in rows_of(page, "を数字で見る</h2>")[1:]}
-            first, last = [amount(raw, s, 2002) for s in shorts], [amount(raw, s, 2026) for s in shorts]
-            self.assertEqual(rows["最も低い額"][1:], [f"{min(first):,}円", f"{min(last):,}円"], slug)
-            self.assertEqual(rows["最も高い額"][1:], [f"{max(first):,}円", f"{max(last):,}円"], slug)
-            self.assertEqual(rows["最高額と最低額の差"][1:], [f"{max(first) - min(first)}円", f"{max(last) - min(last)}円"], slug)
-            self.assertEqual(rows["単純平均"][1:], [f"{round(sum(first) / len(first)):,}円", f"{round(sum(last) / len(last)):,}円"], slug)
+            first, last = [series_1977(raw, old, s)[1977] for s in shorts], [series_1977(raw, old, s)[2026] for s in shorts]
+            self.assertEqual(rows["最も低い額"][1:], [money(min(first)), money(min(last))], slug)
+            self.assertEqual(rows["最も高い額"][1:], [money(max(first)), money(max(last))], slug)
+            self.assertEqual(rows["最高額と最低額の差"][1:], [money(max(first) - min(first)), money(max(last) - min(last))], slug)
+            self.assertEqual(rows["単純平均"][1:], [money(round(sum(first) / len(first))), money(round(sum(last) / len(last)))], slug)
+
+
+def LABEL_OF_ANY(fy):
+    """The Japanese era label of a fiscal year, written out here (not taken from the site)."""
+    if fy <= 1988:
+        return f"昭和{fy - 1925}年度"
+    if fy == 1989:
+        return "平成元年度"
+    if fy <= 2018:
+        return f"平成{fy - 1988}年度"
+    return "令和元年度" if fy == 2019 else f"令和{fy - 2018}年度"
 
 
 class AboutPageTest(SiteFixture):

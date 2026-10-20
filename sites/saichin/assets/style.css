@@ -327,3 +327,10 @@ h2::before { background:linear-gradient(var(--accent),#10b981); width:8px; borde
 .hint-link { margin:10px 0 0; font-size:.88rem; color:var(--muted); }
 
 .quote { margin:8px 0 14px; padding:10px 14px; border-left:4px solid var(--brand); border-radius:8px; background:var(--card); overflow-wrap:anywhere; font-size:.92rem; }
+.chart .grid { stroke:var(--line); stroke-width:1; stroke-dasharray:3 4; }
+.chart .yl { fill:var(--muted); font-size:11px; }
+.chart .stroke.s2 { stroke:var(--muted); stroke-width:2.4; stroke-dasharray:7 5; }
+.chart .dot.last.s2 { fill:var(--muted); stroke:var(--muted); }
+.chart .val.s2 { fill:var(--muted); }
+.chart .bar { fill:var(--brand); opacity:.75; }
+.chart .bar.hot { opacity:1; }

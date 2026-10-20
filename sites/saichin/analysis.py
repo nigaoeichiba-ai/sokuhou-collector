@@ -160,42 +160,69 @@ def date_series(d: dict) -> list[dict]:
     return out
 
 
-# ---------------------------------------------------------------- one prefecture and one region, 25 years in numbers
+# ---------------------------------------------------------------- one prefecture and one region over the whole series (Showa 52 to now)
+PREF_THRESHOLDS = (500, 600, 700, 800, 900, 1000, 1100, 1200)
+
+
+def _reach(entries: list[dict], t: float, part: str | None = None) -> dict | None:
+    """The first entry whose amount is at least t.  part "south"/"north": Kyoto's two rates stand in for the missing amount of its split years."""
+    for e in entries:
+        a = e["amount"] if e["amount"] is not None or part is None else e["split"][part]
+        if a is not None and a >= t:
+            return e
+    return None
+
+
+def reach_years(d: dict) -> dict[float, dict[str, dict]]:
+    """threshold -> {short name: {"fy", "label", "labels" (two labels when Kyoto's two rates reached it in different years)}}; Kyoto counts from the later of its two."""
+    out: dict[float, dict[str, dict]] = {}
+    for t in PREF_THRESHOLDS:
+        got = {}
+        for r in d["rows"]:
+            s = r["long"]
+            if r["short"] == "京都" and any(e["amount"] is None for e in s):
+                a, b = _reach(s, t, "south"), _reach(s, t, "north")
+                if a is None or b is None:
+                    continue
+                late = max(a, b, key=lambda e: e["fy"])
+                got[r["short"]] = {"fy": late["fy"], "label": late["label"],
+                                   "labels": None if a["fy"] == b["fy"] else (a["label"], b["label"])}
+            else:
+                e = _reach(s, t)
+                if e:
+                    got[r["short"]] = {"fy": e["fy"], "label": e["label"], "labels": None}
+        out[t] = got
+    return out
+
+
 def pref_facts(d: dict, r: dict) -> dict:
-    ms = milestones(d)
-    h0, h1 = r["history"][0], r["history"][-1]
-    hi_row = max(d["rows"], key=lambda x: (x["history"][-1]["amount"], x["name"]))
-    first_hi = max(a for a, _ in year_amounts(d)[h0["fy"]])
-    first_lo = min(a for a, _ in year_amounts(d)[h0["fy"]])
-    last_hi = max(a for a, _ in year_amounts(d)[h1["fy"]])
-    last_lo = min(a for a, _ in year_amounts(d)[h1["fy"]])
-    ranks = [x["rank"] for x in r["history"]]
+    s = r["long"]
+    first = next(e for e in s if e["amount"] is not None)
+    last = s[-1]
+    ny = {n["fy"]: n for n in d["long_years"]}
     reached = []
-    for t in THRESHOLDS:
-        mr = milestone_rank(ms, r, t)
-        if mr:
-            hit = next(x for x in r["history"] if x["fy"] == mr[1])
-            reached.append({"t": t, "label": hit["label"], "order": mr[0], "of": len(ms[t])})
-    avg = {y["fy"]: y["avg"] for y in d["years"]}
+    ry = reach_years(d)
+    for t in PREF_THRESHOLDS:
+        mine = ry[t].get(r["short"])
+        if mine:
+            reached.append({"t": t, "label": mine["label"], "labels": mine["labels"], "order": 1 + sum(1 for v in ry[t].values() if v["fy"] < mine["fy"]), "of": len(ry[t])})
+    ranks = [(e["rank"], e) for e in s if e["rank"] is not None]
+    best, worst = min(x for x, _ in ranks), max(x for x, _ in ranks)
     return {
-        "reached": reached, "best": min(ranks), "worst": max(ranks),
-        "best_labels": [x["label"] for x in r["history"] if x["rank"] == min(ranks)],
-        "worst_labels": [x["label"] for x in r["history"] if x["rank"] == max(ranks)],
-        "to_top_first": first_hi - h0["amount"], "to_top_last": last_hi - h1["amount"],
-        "to_bottom_first": h0["amount"] - first_lo, "to_bottom_last": h1["amount"] - last_lo,
-        "to_avg_first": h0["amount"] - round(avg[h0["fy"]]), "to_avg_last": h1["amount"] - round(avg[h1["fy"]]),
-        "top_row": hi_row,
-        "raises_zero": sum(1 for x in r["history"][1:] if x["raise"] == 0),
-        "raises_ge_50": [x["label"] for x in r["history"][1:] if x["raise"] >= 50],
+        "first": first, "last": last, "reached": reached, "best": best, "worst": worst,
+        "best_labels": [e["label"] for x, e in ranks if x == best], "worst_labels": [e["label"] for x, e in ranks if x == worst],
+        "to_top_first": ny[first["fy"]]["max"] - first["amount"], "to_top_last": ny[last["fy"]]["max"] - last["amount"],
+        "to_bottom_first": first["amount"] - ny[first["fy"]]["min"], "to_bottom_last": last["amount"] - ny[last["fy"]]["min"],
+        "to_avg_first": first["avg_gap"], "to_avg_last": last["avg_gap"],
+        "raises_zero": sum(1 for e in s[1:] if e["raise"] == 0),
     }
 
 
 def region_facts(d: dict, members: list[dict]) -> dict:
-    h0 = members[0]["history"][0]["fy"]
-    h1 = members[0]["history"][-1]["fy"]
+    h0, h1 = members[0]["long"][0], members[0]["long"][-1]
 
     def at(fy):
-        v = [next(x for x in m["history"] if x["fy"] == fy)["amount"] for m in members]
+        v = [next(x for x in m["long"] if x["fy"] == fy)["amount"] for m in members]
         return min(v), max(v), sum(v) / len(v)
-    ups = sorted(((m["history"][-1]["amount"] - m["history"][0]["amount"], m) for m in members), key=lambda t: (-t[0], t[1]["name"]))
-    return {"first": at(h0), "last": at(h1), "ups": ups, "label0": members[0]["history"][0]["label"], "label1": members[0]["history"][-1]["label"]}
+    ups = sorted(((m["long"][-1]["amount"] - m["long"][0]["amount"], m) for m in members), key=lambda t: (-t[0], t[1]["name"]))
+    return {"first": at(h0["fy"]), "last": at(h1["fy"]), "ups": ups, "label0": h0["label"], "label1": h1["label"], "fy0": h0["fy"], "fy1": h1["fy"]}
