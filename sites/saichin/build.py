@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import analysis_pages, area_story, charts, content, dataset, history_old, long_history, ogimage, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
+from sites.saichin import analysis_pages, area_story, articles, charts, content, dataset, history_old, long_history, ogimage, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
@@ -956,6 +956,9 @@ def guide_hub_page(d: dict, cfg: dict, preview: bool) -> str:
                          description="最低賃金の仕組み、決まり方、時給への換算方法、下回っていたときの扱いを、公的な情報にもとづいて説明します。", body=body), d)
 
 
+BODIES = {**work_pages.BODIES, **articles.BODIES}
+
+
 def guide_page(d: dict, g: dict, cfg: dict, preview: bool) -> str:
     sources = "".join(f'<li><a href="{esc(u)}" rel="noopener" target="_blank">{esc(n)}</a></li>' for n, u in g["sources"])
     others = "".join(f'<li><a href="/guide/{x["slug"]}/">{esc(x["title"])}</a></li>' for x in content.GUIDES if x is not g)
@@ -970,7 +973,7 @@ def guide_page(d: dict, g: dict, cfg: dict, preview: bool) -> str:
 <h1>{esc(g['title'])}</h1>
 {work_pages.PR_TOP if g.get('pr') else ''}<p class="lead">{esc(g['lead'])}</p>
 <img class="page-banner guide" src="/assets/img/guide-{g.get('image', g['slug'])}.webp" alt="" width="800" height="450">
-<article class="prose">{work_pages.BODIES[g['slug']](d, sys.modules[__name__]) if g.get('dynamic') else g['body']}</article>
+<article class="prose">{BODIES[g['slug']](d, sys.modules[__name__]) if g.get('dynamic') else g['body']}</article>
 <h2>出典</h2>
 <ul class="link-list">{sources}</ul>
 <p class="notice">内容の確認日: {jp_date(g.get('verified', content.VERIFIED_AT))}。制度は改正されることがあります。最新の内容は、出典でご確認ください。</p>
