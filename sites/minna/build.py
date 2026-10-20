@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.minna import facts, model, printables, wishes  # noqa: E402
+from sites.minna import facts, model, printables, tips, wishes  # noqa: E402
 from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
 from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
 from sites.minna.taxonomy import GENRE_BY_SLUG, GENRES, TOUCH_BY_SLUG, TOUCHES  # noqa: E402
@@ -213,6 +213,24 @@ def facts_box(it: dict) -> str:
             ("絵の大きさ", f"画像の面積の約{f['fill']}%を絵が占め、残りは透明な余白です"),
             ("背景との相性", facts.bg_sentence(f["bg_low"]))]
     return f'<section><h2><span class="scribble">このイラストのデータ</span></h2>{facts_dl(rows)}</section>'
+
+
+def tips_box(it: dict) -> str:
+    """How to use this picture, in sentences chosen by its measured values (tips.py)."""
+    lis = "".join(f"<li>{esc(x)}</li>" for x in tips.tip_lines(it, item_facts(it)))
+    return f'<section><h2><span class="scribble">使うときのコツ</span></h2><ul class="check">{lis}</ul></section>'
+
+
+def similar_box(it: dict) -> str:
+    """Pictures of other sets close in main colours and shape, nearest first (tips.similar_map, made once per build)."""
+    by = SITE.get("by_id", {})
+    near = [by[c] for c, _d in SITE.get("similar", {}).get(it["id"], []) if c in by]
+    if len(near) < 3:
+        return ""
+    f = item_facts(it)
+    colours = "・".join(n for n, _p in f["colors"])
+    return (f'<section style="margin-top:44px"><h2><span class="scribble">色と形が近いイラスト</span></h2>'
+            f'<p class="meta">主な色({esc(colours)})と{esc(facts.shape(it["w"], it["h"]))}の形が近いイラストをほかのセットから選びました。</p>{grid(near)}</section>')
 
 
 def span_text(vals: list[int], unit: str = "px") -> str:
@@ -1043,10 +1061,12 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 {prev_next}
 <section><h2><span class="scribble">用途例</span></h2><ul class="check">{uses}</ul></section>
 {facts_box(it)}
+{tips_box(it)}
 <section><h2><span class="scribble">キーワード</span></h2><ul class="tagcloud">{tags}</ul></section>
 {share(cfg, f"/illust/{it['id']}/", f"{it['title']}(無料・商用OKのイラスト)")}
 <section style="margin-top:44px"><h2><span class="scribble">同じセットのイラスト</span></h2>{grid(mates)}</section>
 {('<section style="margin-top:44px"><h2><span class="scribble">同じ題材の別のタッチ</span></h2>' + grid(same_subject) + '</section>') if same_subject else ''}
+{similar_box(it)}
 {('<section style="margin-top:44px"><h2><span class="scribble">他の' + esc(g) + 'のイラスト</span></h2>' + grid(others) + '</section>') if others else ''}
 {guide_box(guides_for(it['genre'], it['touch'], list(guides)))}
 <script type="application/ld+json">{ld}</script>"""
@@ -1417,7 +1437,7 @@ TOOLS = [
     ("/tool/calendar/", "カレンダーをつくる", "好きなイラストで、祝日入りのA4カレンダー。年と月を選んで保存・印刷できます。"),
     ("/tool/nametag/", "名札・席札・賞状をつくる", "名前を入れて、A4に印刷できる名札(8枚)、二つ折りの席札、賞状を作れます。"),
     ("/tool/card/", "名前入りカードをつくる", "名前とひとことを入れて、お祝いのカードを画像で保存できます。"),
-    ("/tool/nurie/", "オンラインぬりえ", "線画を選んで、ブラウザ上で色を塗れます。保存も印刷もできます。"),
+    ("/tool/nurie/", "オンラインぬりえ", "線画を選んでブラウザ上で色を塗れます。保存も印刷もできます。"),
     ("/printables/", "印刷できるもの(PDF)", "カレンダー、ぬりえ、賞状、名札、時間割をA4のPDFで印刷できます。"),
     ("/request/", "イラストをリクエストする", "サイトにないイラストを希望できます。選んで制作し、公開します。"),
 ]
@@ -1675,6 +1695,8 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         pages["guide/index.html"] = guides_hub(cfg, preview, guides)
         for g in guides:
             pages[f"guide/{g['slug']}/index.html"] = guide_page(cfg, preview, g, series)
+    SITE["by_id"] = {i["id"]: i for i in items}
+    SITE["similar"] = tips.similar_map(items, item_facts)
     for it in items:
         pages[f"illust/{it['id']}/index.html"] = illust_page(cfg, preview, it, items, series, guides)
         pages[f"files/{it['id']}.png"] = png_bytes(it["path"])
