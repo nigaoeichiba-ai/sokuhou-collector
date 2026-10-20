@@ -265,8 +265,9 @@ class DeployWiring(unittest.TestCase):
         names = [l.strip() for l in self.lines() if l.strip().startswith("- name:")]
         i = next(k for k, n in enumerate(names) if n.startswith("- name: Natural-wording dictionary"))
         self.assertTrue(names[i - 1].startswith("- name: Build (release)"), names[i - 1])
-        self.assertTrue(names[i + 1].startswith("- name: Site check"), names[i + 1])
-        self.assertTrue(names[i + 2].startswith("- name: Phone-width layout check"), names[i + 2])
+        self.assertTrue(names[i + 1].startswith("- name: Natural-wording gate"), names[i + 1])      # the publish gate (sokuhou.stylegate) reads the result of the dictionary
+        self.assertTrue(names[i + 2].startswith("- name: Site check"), names[i + 2])
+        self.assertTrue(names[i + 3].startswith("- name: Phone-width layout check"), names[i + 3])
 
     def test_the_step_is_fail_open_and_runs_only_when_the_site_is_deployed(self):
         lines = self.lines()

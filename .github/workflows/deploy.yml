@@ -278,6 +278,11 @@ jobs:
       - name: Natural-wording dictionary (styleloop - the rewordings of data/style/rewrites/SITE.json, checked again now and applied to the built text; FAIL-OPEN, so a problem is only a warning and the page keeps its own text; the checks below run on the result)
         if: steps.gate.outputs.go == 'true'
         run: python -m sokuhou.styleloop apply release --site ${{ matrix.site }} --fail-open
+      - name: Natural-wording gate (naturaljp - a NEW mid finding or any high finding in the real release, after the dictionary, stops the deploy when the site's mode in data/sites.json is ratchet; in shadow it is a warning and the run summary counts it; the baseline is data/style/baseline.json; the mode can be overridden by the repository variable NATURALJP_GATE)
+        if: steps.gate.outputs.go == 'true'
+        env:
+          NATURALJP_GATE: ${{ vars.NATURALJP_GATE }}
+        run: python -m sokuhou.stylegate check release --site ${{ matrix.site }}
       - name: Site check (every link, the sitemap, headings, tables, empty sections of the REAL build; a problem stops the deploy)
         if: steps.gate.outputs.go == 'true'
         run: python -m sokuhou.sitecheck release --base ${{ matrix.url }}

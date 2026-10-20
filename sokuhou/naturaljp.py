@@ -850,14 +850,15 @@ def published_text(raw: str, site: str | None) -> str:
         return raw
 
 
-def check_file(path: Path, site: str | None, rel: str | None = None, **kw) -> list[Hit]:
+def check_file(path: Path, site: str | None, rel: str | None = None, dictionary: bool = True, **kw) -> list[Hit]:
+    """dictionary=False: the folder was already through `styleloop apply` (the deploy gate reads the real release, so a dictionary that failed to apply is seen as a failure)."""
     ext = path.suffix.lower()
     try:
         raw = path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError):
         return []
     if ext in (".html", ".htm"):
-        blocks = blocks_from_html(for_reading(published_text(raw, site), site))
+        blocks = blocks_from_html(for_reading(published_text(raw, site) if dictionary else raw, site))
     elif ext == ".json":
         blocks = blocks_from_json(raw)
     elif ext in (".md", ".txt"):
