@@ -21,6 +21,23 @@ if str(ROOT) not in sys.path:   # `python tests/run_tests.py` puts tests/ first 
     sys.path.insert(0, str(ROOT))
 
 
+def need_the_test_python() -> None:
+    """On a work machine some tests need Pillow and numpy.  A python without them used to show up as three tests failing inside numpy's import; say it in one line instead.
+    (Not in CI: there the requirements are installed, and a missing package is reported by the tests themselves.)"""
+    import os
+    if os.environ.get("CI"):
+        return
+    missing = []
+    for mod in ("PIL", "numpy"):
+        try:
+            __import__(mod)
+        except ImportError:
+            missing.append(mod)
+    if missing:
+        sys.exit(f"stop: this python ({sys.executable}) has no {' / '.join(missing)}. Use the python that has Pillow and numpy (on the owner's machine: the one under "
+                 "%LOCALAPPDATA%/Microsoft/WindowsApps/PythonSoftwareFoundation.Python.3.13_*), then run the tests again.")
+
+
 def owned_patterns() -> tuple[dict[str, list[str]], set[str]]:
     """{site: [test module patterns]} from the register's `own` patterns for tests/ (tests/test_kuma* -> test_kuma*, tests/test_otsu_bear.py -> test_otsu_bear),
     and the sites whose tests also run in the `core` run (saichin: the daily data run has always run them)."""
@@ -75,6 +92,7 @@ def main() -> int:
     ap.add_argument("--site", help="a project name from OWNED, another site (shared tests + this one's), or 'core'")
     ap.add_argument("--strict", action="store_true", help="CI: a test may be skipped only for a reason listed in ALLOWED_SKIPS; any other skip (a missing library, font or tool) fails the run")
     a = ap.parse_args()
+    need_the_test_python()
     if a.site in (None, "atomou"):   # atomou's tests build the same 7,800-page site again and again: one build per distinct arguments (it was 45 to 80 minutes in CI)
         from tests import test_atomou_buildcache
         test_atomou_buildcache.install()
