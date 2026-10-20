@@ -327,6 +327,7 @@ h2::before { background:linear-gradient(var(--accent),#10b981); width:8px; borde
 .hint-link { margin:10px 0 0; font-size:.88rem; color:var(--muted); }
 
 .quote { margin:8px 0 14px; padding:10px 14px; border-left:4px solid var(--brand); border-radius:8px; background:var(--card); overflow-wrap:anywhere; font-size:.92rem; }
+.tablewrap tr.on td { background:var(--brand-l); font-weight:700; }
 .related h3 { font-size:1rem; margin:14px 0 6px; }
 .table-note { font-size:.85rem; color:var(--muted); margin:6px 0 14px; }
 .chartfig { margin:6px 0 14px; }
