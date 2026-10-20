@@ -1,5 +1,6 @@
 """The AdSense tag stays off the pages with nothing of their own to read (forms, the 404, the search, link lists) - kuma had it on every page, saichin already had the rule
 (sites/saichin NO_ADS_PATHS).  `no_ads_paths` is a site setting read by sokuhou.sitekit.layout."""
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -32,6 +33,19 @@ class LayoutSettingTest(unittest.TestCase):
         self.assertIn(TAG, self.html("/contact/", site))
 
 
+class NoindexTest(unittest.TestCase):
+    TAG = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1" crossorigin="anonymous"></script>' + chr(10)
+
+    def test_a_noindex_page_loses_the_tag_and_an_indexed_page_keeps_it(self):
+        nl = chr(10)
+        pages = {"a/index.html": "<head>" + nl + '<meta name="robots" content="noindex,follow">' + nl + self.TAG + "</head><body>x</body>",
+                 "b/index.html": "<head>" + nl + self.TAG + "</head><body>y</body>", "c.png": b"PNG"}
+        self.assertEqual(sitekit.drop_ads_from_noindex(pages), 1)
+        self.assertNotIn(TAG, pages["a/index.html"])
+        self.assertIn(TAG, pages["b/index.html"])
+        self.assertEqual(pages["c.png"], b"PNG")
+
+
 @unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
 class KumaBuildTest(unittest.TestCase):
     @classmethod
@@ -49,6 +63,12 @@ class KumaBuildTest(unittest.TestCase):
             self.assertNotIn(TAG, (self.out / rel).read_text(encoding="utf-8"), rel)
         for rel in ("index.html", "ranking/sightings/index.html", "about/index.html"):
             self.assertIn(TAG, (self.out / rel).read_text(encoding="utf-8"), rel)
+
+    def test_no_noindex_page_of_the_build_carries_the_tag(self):
+        for f in self.out.rglob("*.html"):
+            text = f.read_text(encoding="utf-8")
+            if re.search(r'<meta name="robots" content="[^"]*noindex', text):
+                self.assertNotIn(TAG, text, f.relative_to(self.out).as_posix())
 
 
 if __name__ == "__main__":
