@@ -28,7 +28,7 @@ from sokuhou.sitekit import crumbs, esc
 MIN_CITY_ROWS = 3        # a municipality with fewer records is listed on its prefecture page but has no page of its own
 INDEX_CITY_ROWS = 5      # a municipality page with fewer records stays for readers but asks search engines not to index it (noindex, left out of the sitemap): too thin, and Search Console listed such pages as "crawled - not indexed"
 RECENT_ROWS = 100        # rows listed on a prefecture page
-CITY_ROWS = 60           # rows listed on a municipality page
+CITY_ROWS = 20           # rows listed on a municipality page (the rest is counted by month and kind; the prefecture page lists the newest 100)
 FEED_ROWS = 60
 HUB_ROWS = 50
 MAP_DAYS = 90
@@ -220,7 +220,7 @@ def source_notes(infos: dict, keys: list[str]) -> str:
     return out
 
 
-CAUTION = ("自治体が公表した記録をそのまま並べています。通報から掲載まで日がかかること、同じ出没が重ねて通報されること、クマ以外の動物の見間違いが"
+CAUTION = ("通報から掲載まで日がかかること、同じ出没が重ねて通報されること、クマ以外の動物の見間違いが"
            "含まれることがあります。自治体ごとに、数える対象(目撃のみか、痕跡などを含むか)と更新の時期が違うため、<strong>自治体どうしの件数の大小は、"
            "そのまま比べられません</strong>。")
 
@@ -252,7 +252,7 @@ def hub_page(page, d: dict, lv: dict) -> str:
 <ul class="mini-list">{pref_links}</ul>
 <h2>取得元と、更新の状況</h2>
 {table(["取得元", f"{fy_label(cur)}の記録", "最新", "更新について"], src_rows)}
-{counts_section(lv)}<p class="notice">再利用の許可が明示されている取得元は、詳しい記録を載せています。明示されていない取得元は、件数と最新の日付だけです{'(複数の公開情報で一致を確認できた目撃は、場所も載せています)' if any(c.get('records') for c in lv.get('counts') or []) else '(場所などの詳しい記録は、公式のページへ)'}。載っていない地域は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。取得は、1日1回、自動で行っています。取得元・数え方・引用のしかたは、<a href="/cite/">データの出典・引用のしかた</a>を、各都道府県の公式のページへのリンクは、<a href="/official/">リンク集</a>を、市町村の名前で探すときは、<a href="/search/">市町村名から探す</a>をご覧ください。</p>"""
+{counts_section(lv)}<p class="notice">再利用の許可が明示されている取得元は、詳しい記録を載せています。明示されていない取得元は、件数と最新の日付だけです{'(複数の公開情報で一致を確認できた目撃は、場所も載せています)' if any(c.get('records') for c in lv.get('counts') or []) else '(場所などの詳しい記録は、公式のページへ)'}。載っていない地域は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。取得は、1日1回です。取得元・数え方・引用のしかたは、<a href="/cite/">データの出典・引用のしかた</a>を、各都道府県の公式のページへのリンクは、<a href="/official/">リンク集</a>を、市町村の名前で探すときは、<a href="/search/">市町村名から探す</a>をご覧ください。</p>"""
     return page(path="/live/", title=f"クマの最新の目撃情報(自治体の公式・{len(infos)}か所・{fy_label(cur)})",
                 description=f"{'・'.join(i['name'] for i in infos.values())}が公表しているクマの目撃情報を新しい順に一覧にしています。{fy_label(cur)}の記録は{n(len(recs))}件です。",
                 body=body, alternates=(("最新の目撃", "/live/feed.xml"),))
@@ -382,9 +382,83 @@ def trend_html(slug: str, city: str, rows: list[dict], lv: dict, today: date) ->
         f"<li>直近30日は{n(recent)}件で、{cmp}。</li>",
         f"<li>種別の内訳は、{esc(kind_text)}です。</li>",
         f"<li>記録のあった日は{n(days)}日です(最新は{md(rows[0]['at'][:10])})。</li>",
-        f"<li>{esc(pname)}で記録を載せている{n(len(ranked))}市町村のうち、記録の数は{n(rank)}位です。</li>",
     ]
+    peak = peak_week(rows)
+    if peak:
+        items.append(f"<li>記録がいちばん集まったのは、{md(peak[0].isoformat())}から{md(peak[1].isoformat())}の7日間で、{n(peak[2])}件です(年度の記録の{n(round(peak[2] / len(rows) * 100))}%)。</li>")
+    total = sum(len(v) for v in lv["by_pref"][slug].values())
+    items.append(f"<li>{esc(pname)}で記録を載せている{n(len(ranked))}市町村のうち、記録の数は{n(rank)}位です。県内の記録{n(total)}件のうち、この市町村は{n(round(len(rows) / total * 100))}%です。</li>")
     return "<ul>\n" + "\n".join(items) + "\n</ul>"
+
+
+def peak_week(rows: list[dict]) -> tuple[date, date, int] | None:
+    """The 7-day window (starting on a record's day) with the most records, only when it is the single such window and holds at least 3 records."""
+    days = sorted(date.fromisoformat(r["at"][:10]) for r in rows)
+    best, starts = 0, []
+    for i, a in enumerate(days):
+        k = sum(1 for b in days[i:] if (b - a).days <= 6)
+        if k > best:
+            best, starts = k, [a]
+        elif k == best and a not in starts:
+            starts.append(a)
+    if best < 3 or len(starts) != 1:
+        return None
+    return starts[0], starts[0] + timedelta(days=6), best
+
+
+def season_sentence(d: dict, slug: str, peak_m: int) -> str:
+    """This municipality's peak month so far, next to the month in which the Ministry's table has the prefecture's sightings highest in the last full year.
+    Only for prefectures that have a Ministry row; the two are counted differently, which the sentence says."""
+    r = d["by_slug"].get(slug)
+    if not r or not r["has"]:
+        return ""
+    done = d["done"]
+    vals = r["monthly"][done]
+    pm = d["months"][max(range(12), key=lambda i: vals[i] or 0)]
+    return (f"<p>環境省の表では、{esc(pref_name(slug))}全体の出没が{fy_label(done)}にいちばん多かったのは{pm}月です。この市町村の{fy_label(d['cur'])}の記録は、これまでのところ{peak_m}月が最も多くなっています"
+            f"({'同じ月です' if peak_m == pm else '月が違います'})。環境省の表は、都道府県が数える対象で集計した数字で、自治体の記録とは数え方が違います。</p>")
+
+
+def reading_notes(infos: dict, keys: list[str], rows: list[dict]) -> str:
+    """How this municipality's records are counted (its source's own wording), what kinds its rows hold, and how far its source is updated."""
+    kinds = Counter(r["kind"] for r in rows)
+    parts = []
+    for k in keys:
+        i = infos[k]
+        if i["monthly_label"]:
+            parts.append(f"{esc(i['name'])}の件数の数え方は、「{esc(i['monthly_label'])}」です。")
+        parts.append(f"{esc(i['as_of_text'].format(d=jp_date(i['as_of'])))}。")
+    trace = [k for k in kinds if "目撃" not in k]
+    if trace and any("目撃" in k for k in kinds):
+        sight = sum(v for k, v in kinds.items() if "目撃" in k)
+        parts.append(f"このページの記録のうち、目撃は{n(sight)}件で、残り{n(len(rows) - sight)}件は{esc('・'.join(trace))}です。" + ("痕跡は、クマがいた形跡で、姿を見た件数とは別に考えます。" if any("痕跡" in k for k in trace) else ""))
+    return "<p>" + "".join(parts) + "</p>"
+
+
+def short_place(city: str, place: str) -> str:
+    """The place text without the prefecture, county and municipality in front of it and without a trailing 地内/付近."""
+    i = place.find(city)
+    x = place[i + len(city):] if i >= 0 else place
+    return re.sub(r"[\s　]*(地内|付近|周辺)$", "", x.strip()).strip()
+
+
+def places_html(city: str, rows: list[dict]) -> str:
+    """Where this municipality's records fall, from the place text of its own rows: places that repeat, and the newest places (two short lists)."""
+    c = Counter(short_place(city, r["place"]) for r in rows)
+    again = [(k, v) for k, v in c.most_common(5) if v >= 2 and k]
+    out = ""
+    if again:
+        out += "<p>同じ場所で、記録が重なっています。</p>\n<ul>" + "".join(f"<li>{esc(k)}: {n(v)}件</li>" for k, v in again) + "</ul>\n"
+    newest = []
+    for r in rows:
+        k = short_place(city, r["place"])
+        if k and k not in newest:
+            newest.append(k)
+        if len(newest) == 3:
+            break
+    if newest:
+        out += "<p>新しい記録の場所は、次のとおりです。</p>\n<ul>" + "".join(f"<li>{esc(k)}</li>" for k in newest) + "</ul>\n"
+    return out
 
 
 def city_page(page, d: dict, lv: dict, slug: str, city: str, links: dict) -> str:
@@ -402,20 +476,26 @@ def city_page(page, d: dict, lv: dict, slug: str, city: str, links: dict) -> str
     chart = charts.bars([f"{m}月" for m in mc], list(mc.values()), title=f"{city}の月別の記録", desc=f"{city}の{fy_label(cur)}の記録の月別の件数", uid="cm") if len(mc) >= 2 else ""
     note = kind_note(infos, slug)
     with_count = [r for r in rows if r["count"]]
-    head_extra = ""
+    season = season_sentence(d, slug, peak_m)
+    prev30 = sum(1 for r in rows if (today - timedelta(days=59)).isoformat() <= r["at"][:10] <= (today - timedelta(days=30)).isoformat())
+    lead_cmp = "増えています" if recent > prev30 else ("減っています" if recent < prev30 else "同じです")
+    ranked = sorted(lv["by_pref"][slug].items(), key=lambda kv: (-len(kv[1]), kv[0]))
+    rank = next(i for i, (c, _) in enumerate(ranked, 1) if c == city)
     body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", "/live/"), (pname, f"/live/{slug}/"), (city, None)])}
 <h1>{esc(city)}の熊(クマ)出没・目撃情報({esc(pname)}・{fy_label(cur)})</h1>
-<p class="lead">{esc(pname)}{esc(city)}で、{esc('・'.join(infos[k]['name'] for k in keys))}が公表した{fy_label(cur)}の記録は{n(len(rows))}件で、直近30日は{n(recent)}件です。最新は{md(last['at'][:10])}({ago_text(last['at'], today)})の「{esc(last['place'])}」です。</p>
+<p class="lead">{esc(pname)}{esc(city)}で、{esc('・'.join(infos[k]['name'] for k in keys))}が公表した{fy_label(cur)}の記録は{n(len(rows))}件です。直近30日は{n(recent)}件で、その前の30日({n(prev30)}件)より{lead_cmp}。月別では{peak_m}月が最も多く、{esc(pname)}の{n(len(ranked))}市町村のうち記録の数は{n(rank)}位です。最新は{md(last['at'][:10])}({ago_text(last['at'], today)})の「{esc(last['place'])}」です。</p>
 {stats_html(len(rows), recent, last, today, cur)}
 <p class="alert">最新の記録: {md(last['at'][:10])}({ago_text(last['at'], today)}) {esc(place_text(city, last['place']))}({esc(last['kind'])})</p>
 <h2>{esc(city)}の傾向({fy_label(cur)})</h2>
 {trend_html(slug, city, rows, lv, today)}
 <h2>{esc(city)}の月別の記録</h2>
 <p>{fy_label(cur)}は、{peak_m}月が最も多く({n(mc[peak_m])}件)でした{('(' + esc(note) + ')') if note else ''}。</p>
-{chart}{month_table(rows)}
+{season}{chart}{month_table(rows)}
+<h2>数え方と、読むときの注意</h2>
+{reading_notes(infos, keys, rows)}
 <h2>新しい順の記録</h2>
-{record_rows(rows[:CITY_ROWS])}
-<p class="notice">{'直近' + str(CITY_ROWS) + '件です。' if len(rows) > CITY_ROWS else ''}{CAUTION}</p>
+{places_html(city, rows)}{record_rows(rows[:CITY_ROWS])}
+<p class="notice">{'直近' + str(CITY_ROWS) + '件です。それより前の記録は、上の月別の件数でご覧ください。県内の一覧は<a href="/live/' + slug + '/">' + esc(pname) + 'の目撃情報</a>にあります。' if len(rows) > CITY_ROWS else ''}{CAUTION}</p>
 <p><a href="/map/?pref={slug}&amp;city={esc(city)}" rel="nofollow">{esc(city)}の目撃を地図で見る</a> ・ <a href="/live/{slug}/">{esc(pname)}の目撃情報</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
 {('<h2>' + esc(pname) + 'のほかの市町村</h2>' + other_html) if other_html else ''}
 {source_notes(infos, keys)}"""

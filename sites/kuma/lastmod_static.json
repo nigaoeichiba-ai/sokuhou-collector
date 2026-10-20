@@ -1,15 +1,15 @@
 {
  "about/index.html": {
-  "hash": "17db6f2db1dfe3d1",
-  "date": "2026-10-15"
+  "hash": "499aaca03a4e2be2",
+  "date": "2026-10-20"
  },
  "contact/index.html": {
   "hash": "91eb9c4d127231cf",
   "date": "2026-10-15"
  },
  "goods/index.html": {
-  "hash": "81e1cbefb3a26931",
-  "date": "2026-10-12"
+  "hash": "fe7f4ddff7053f47",
+  "date": "2026-10-20"
  },
  "guide/data/index.html": {
   "hash": "1c089aa2442d9b16",
@@ -36,8 +36,8 @@
   "date": "2026-10-12"
  },
  "notify/index.html": {
-  "hash": "cf3cfd50b9ed90a4",
-  "date": "2026-10-15"
+  "hash": "6bd2f7ea9bbaf081",
+  "date": "2026-10-20"
  },
  "privacy/index.html": {
   "hash": "3b32586785f96c48",
