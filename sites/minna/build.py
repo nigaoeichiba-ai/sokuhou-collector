@@ -1499,6 +1499,50 @@ def drop_ads(pages: dict) -> None:
             pages[rel] = ADS_TAG.sub("", text)
 
 
+# Thin pages (owner decision 2026-10-20): lists that are only a grid of pictures get <meta name="robots" content="noindex,follow"> and stay out of sitemap.xml; their links
+# still work and robots.txt does not block them.  What counts as thin is measured in the build, from the characters a visitor can read, never from a hand-written list:
+#   page 2 and later of a list: always (they only continue a list);
+#   a genre x touch list, a legacy category page, a keyword page: when the readable text is under the bar of its kind, so a page that gains text leaves the rule by itself.
+THIN_CHARS = {"cross": 1000, "category": 800, "tag": 500}
+_PAGED = re.compile(r"(?:^|/)page/\d+/index\.html$")
+_CROSS = re.compile(r"^genre/[^/]+/[^/]+/index\.html$")
+
+
+def page_kind(rel: str) -> str:
+    """'paged', 'cross', 'category', 'tag' or '' for a page's file name."""
+    if _PAGED.search(rel):
+        return "paged"
+    if rel.startswith("category/") and rel.endswith("/index.html"):
+        return "category"
+    if _CROSS.match(rel):
+        return "cross"
+    if rel.startswith("tag/") and rel.endswith("/index.html"):
+        return "tag"
+    return ""
+
+
+def visible_chars(html: str) -> int:
+    """How many characters of the page's main content a visitor can read (tags, scripts and spaces left out)."""
+    m = re.search(r"<main[^>]*>(.*?)</main>", html, re.S)
+    t = re.sub(r"<script.*?</script>|<style.*?</style>", "", m.group(1) if m else html, flags=re.S)
+    return len(re.sub(r"\s+", "", re.sub(r"<[^>]+>", " ", t)))
+
+
+def thin_pages(pages: dict) -> set[str]:
+    out = set()
+    for rel, text in pages.items():
+        kind = page_kind(rel) if isinstance(text, str) else ""
+        if kind == "paged" or (kind in THIN_CHARS and visible_chars(text) < THIN_CHARS[kind]):
+            out.add(rel)
+    return out
+
+
+def noindex(html: str) -> str:
+    if 'name="robots"' in html:
+        return html
+    return html.replace("<head>", '<head>\n<meta name="robots" content="noindex,follow">', 1)
+
+
 def about_more(html: str, series: list[dict]) -> str:
     """The about page ("運営者情報") gets how the site is edited and made, how to report a mistake and what changed when; the other legal pages are left as they are."""
     if "<h1>運営者情報</h1>" not in html:
@@ -1632,7 +1676,10 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
                     "送った言葉は、この端末のブラウザにも「あなたのリクエスト」の表示のために記録されます(ブラウザのデータを消すとなくなります)。"
                     "個人を特定できる内容や、お受けできない内容は保存せずにお断りします。</p>"), finish=lambda s: about_more(s, series)))
     drop_ads(pages)                                                              # hubs, forms and the 404 carry no AdSense tag
-    pages.update(standard_files(pages, cfg, preview, today.isoformat()))
+    thin = thin_pages(pages)
+    for rel in thin:
+        pages[rel] = noindex(pages[rel])
+    pages.update(standard_files({k: v for k, v in pages.items() if k not in thin}, cfg, preview, today.isoformat()))      # thin pages stay out of sitemap.xml
     pages["sitemap-images.xml"] = sitemap_images(cfg, items)
     if cfg.get("indexnow_key"):
         pages[f"{cfg['indexnow_key']}.txt"] = cfg["indexnow_key"]     # IndexNow (Bing and others): proves we own the site, see indexnow.py
