@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import analysis_pages, charts, content, dataset, history_old, long_history, ogimage, trend_pages, work_pages, wage as wagelib  # noqa: E402
+from sites.saichin import analysis_pages, charts, content, dataset, history_old, long_history, ogimage, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
@@ -132,7 +132,8 @@ def earnings_table(r: dict) -> str:
         )
     return (
         '<div class="tablewrap"><table><thead><tr><th>働き方</th><th>月収の目安(改定後)</th><th>年収の目安(改定後)</th>'
-        f"<th>年収の目安(改定前)</th><th>年収の差</th></tr></thead><tbody>{rows}</tbody></table></div>"
+        f'<th>年収の目安(改定前)</th><th>年収の差</th></tr></thead><tbody>{rows}</tbody>'
+        '<tfoot><tr><td colspan="5">最低賃金ちょうどで働く場合です(1年52週。税・保険料・手当・賞与・祝日を除く)。</td></tr></tfoot></table></div>'
     )
 
 
@@ -512,34 +513,32 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
     mates = sorted((x for x in d["rows"] if x["region_slug"] == r["region_slug"] and x is not r), key=lambda x: -x["amount"])
     mate_html = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a><b>{yen(x["amount"])}</b></li>' for x in mates)
     nav = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in d["rows"] if x is not r)
+    year = d["rows"][0]["history"][-1]["fy"]
     body = f"""{crumbs([("全国", "/"), (r["region"], f"/area/{r['region_slug']}/"), (r["name"], None)])}
 <h1>{esc(r['name'])}の最低賃金の推移(年度別の一覧・グラフ)</h1>
-<p class="lead">{esc(d['label'])}の最低賃金は、{yen(r['prev_amount'])}から{yen(r['amount'])}(+{r['raise']}円)に改定され、発効日は{jp_date(r['effective_date'])}です。</p>
+<p class="lead">{esc(d['label'])}({year}年度)の最低賃金は、{yen(r['prev_amount'])}から{yen(r['amount'])}(+{r['raise']}円)に改定され、発効日は{jp_date(r['effective_date'])}です。{esc(r['name'])}の額は、{diff_text}(全国加重平均 {yen(round(d['avg']))})。</p>
 <p class="status" data-status data-date="{r['effective_date']}" data-amount="{r['amount']}" data-prev="{r['prev_amount']}"></p>
 <div class="stats">
 <div class="stat strong"><span>新しい最低賃金</span><b>{yen(r['amount'])}</b><span>{jp_date(r['effective_date'])} 発効</span></div>
 <div class="stat"><span>昨年度</span><b>{yen(r['prev_amount'])}</b><span>引上げ額 +{r['raise']}円</span></div>
 <div class="stat"><span>全国での順位</span><b>47都道府県中 {r['rank']}位</b><span>同額は同じ順位とします</span></div>
 </div>
-<h2>全国と比べると</h2>
-<p>{esc(r['name'])}の{esc(d['label'])}の最低賃金は{yen(r['amount'])}で、{diff_text}(全国加重平均 {yen(round(d['avg']))})。引上げ額の+{r['raise']}円は、47都道府県中{r['raise_rank']}位です。</p>
 {trend_pages.pref_trend(r, sys.modules[__name__], fixed_note)}
-{analysis_pages.pref_block(d, r, sys.modules[__name__])}<h2>最低賃金で働いた場合の月収・年収の目安</h2>
-<p>最低賃金ちょうどで働いた場合の目安です。1年を52週、月収は年収を12で割った額として計算しています。税・社会保険料・手当・賞与・祝日などは含みません。実際の給料と比べるときは、<a href="/guide/calculate/">時間額への換算</a>をご覧ください。</p>
+{pref_story.story_block(d, r, sys.modules[__name__])}{analysis_pages.pref_block(d, r, sys.modules[__name__])}<h2>{esc(r['name'])}の最低賃金は、月給・年収でいくらか</h2>
+<p>{pref_story.monthly_line(d, r, sys.modules[__name__])}</p>
 {earnings_table(r)}
 {wage_section(d, r) if d.get("wage") else ""}
-<h2>同じ地方({esc(r['region'])})の最低賃金</h2>
+<h2>関連ページ</h2>
+<nav class="related" aria-label="関連ページ">
+<h3>同じ地方({esc(r['region'])})の最低賃金</h3>
 <ul class="mini-list">{mate_html}</ul>
 <p><a href="/area/{r['region_slug']}/">{esc(r['region'])}のまとめを見る</a></p>
-<h2>あなたの給料は大丈夫?</h2>
-<p>月給・日給・時給から、{esc(r['name'])}の最低賃金を下回っていないかと、足りない額を計算できます。<a href="/check/?pref={quote(r['name'])}">{esc(r['name'])}で差額をチェックする</a></p>
-<h2>発効日を通知で受け取る</h2>
-<p><a href="/calendar/{r['slug']}.ics">{esc(r['name'])}の発効日を、カレンダーに入れる</a>(前日の朝9時に通知。登録不要)。ほかの方法は、<a href="/notify/">通知を受け取る</a>をご覧ください。</p>
-<h2>あわせて読む</h2>
-<ul class="link-list"><li><a href="/guide/excluded/">最低賃金に含まれない賃金は?</a></li><li><a href="/guide/below/">最低賃金を下回っていたら?</a></li><li><a href="/guide/faq/">最低賃金のよくある質問</a></li><li><a href="/guide/raise/">時給を上げたいときの考え方</a></li><li><a href="/guide/wall/">週何時間で社会保険・扶養の壁に届くか</a></li><li><a href="/calendar/">発効日カレンダー</a></li></ul>
-<h2>ほかの都道府県</h2>
+<h3>給料の確認・通知・解説</h3>
+<ul class="link-list"><li><a href="/check/?pref={quote(r['name'])}">{esc(r['name'])}の最低賃金を下回っていないか、差額をチェックする</a></li><li><a href="/calendar/{r['slug']}.ics">{esc(r['name'])}の発効日をカレンダーに入れる</a>(前日の朝9時に通知)</li><li><a href="/guide/excluded/">最低賃金に含まれない賃金は?</a></li><li><a href="/guide/below/">最低賃金を下回っていたら?</a></li><li><a href="/guide/faq/">最低賃金のよくある質問</a></li><li><a href="/guide/raise/">時給を上げたいときの考え方</a></li><li><a href="/guide/wall/">週何時間で社会保険・扶養の壁に届くか</a></li><li><a href="/calendar/">発効日カレンダー</a></li></ul>
+<h3>ほかの都道府県</h3>
 <ul class="pref-nav">{nav}</ul>
-<p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。47都道府県の全年度のデータは、<a href="/data/">CSV・JSONでダウンロード</a>できます。引用するときは、<a href="/cite/">引用のしかた</a>をご覧ください。</p>"""
+</nav>
+<p class="table-note">データの取得日: {jp_date(d['fetched_date'])}。出典と引用のしかたは<a href="/cite/">こちら</a>、全年度のデータは<a href="/data/">CSV・JSON</a>にあります。</p>"""
     return finish(layout(
         cfg, preview, path=f"/{r['slug']}/",
         title=f"{r['name']}の最低賃金の推移(年度別の一覧・グラフ) {yen(r['amount'])}({d['label']})",
@@ -689,8 +688,7 @@ def wage_section(d: dict, r: dict) -> str:
 <tr><td>年収相当</td><td>{man(v['annual'])}</td><td>{man(n['annual'])}</td></tr>
 <tr><td>最低賃金({esc(w['min_then_label'])})</td><td>{yen(v['min_then'])}</td><td>{yen(n['min_then'])}(全国加重平均)</td></tr>
 <tr><td>最低賃金÷平均賃金</td><td>{pct(v['ratio'])}(全国{v['ratio_rank']}位)</td><td>{pct(n['ratio'])}</td></tr>
-</tbody></table></div>
-<p class="notice">一般労働者の6月分の賃金です。時給換算と年収相当は、このサイトでの計算です。定義と読み方は<a href="/ranking/wage/">平均賃金のランキング</a>のページをご覧ください。</p>"""
+</tbody><tfoot><tr><td colspan="3">一般労働者の6月分の賃金です。読み方は<a href="/ranking/wage/">平均賃金のランキング</a>に書いています。</td></tr></tfoot></table></div>"""
 
 
 def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:

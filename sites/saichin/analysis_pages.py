@@ -377,11 +377,8 @@ def pref_block(d: dict, r: dict, k) -> str:
     ms_rows = [[f"{x['t']:,}円", (f"{k.esc(x['labels'][0])}(南部)・{k.esc(x['labels'][1])}(北部)" if x["labels"] else k.esc(x["label"])),
                 f"{x['order']}番目(届いた{x['of']}都道府県のうち)"] for x in f["reached"]]
     return f"""<h2>{name}の{k.esc(h0['label'])}から{k.esc(h1['label'])}までを数字で見る</h2>
-<p>{ms_text}{rank_text}{zero}</p>
 {_table(["項目", k.esc(h0["label"]), k.esc(h1["label"])], rows)}
-<h3>節目に届いた年度</h3>
 {_table(["節目", "届いた年度", "届いた順(同じ年度は同順)"], ms_rows)}
-<p>ほかの都道府県との比べ方は、<a href="/analysis/">最低賃金の分析</a>(<a href="/analysis/milestones/">節目を超えた年度</a>・<a href="/analysis/ranks/">順位の動き</a>)にあります。</p>
 """
 
 
