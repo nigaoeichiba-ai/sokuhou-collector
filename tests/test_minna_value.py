@@ -10,7 +10,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-from sites.minna import build, facts
+from sites.minna import build, facts, tips
 from tests.test_minna_sitecache import SHARED_CFG, shared_site
 
 
@@ -108,6 +108,119 @@ class InThePages(unittest.TestCase):
         for rel in ("privacy/index.html", "contact/index.html"):
             self.assertNotIn("<h2>編集方針</h2>", self.read(rel))                 # only the about page is extended
         self.assertEqual(about.count(SHARED_CFG["operator_name"]), 1)             # the company name stays on this page only, once
+
+
+def f(colors, fill=60, bg_low=None):
+    return {"w": 400, "h": 300, "fill": fill, "colors": colors, "bg_low": bg_low or {"白": 0, "黄": 0, "桃": 0, "空": 0, "黒": 0}, "dark": 0}
+
+
+def item(i, series, w=400, h=300):
+    return {"id": i, "series": series, "w": w, "h": h}
+
+
+class Tips(unittest.TestCase):
+    def test_the_background_sentence_follows_the_measured_share(self):
+        none = tips.tip_lines(item("a", "s"), f([["赤", 100]]))[0]
+        black = tips.tip_lines(item("a", "s"), f([["赤", 100]], bg_low={"白": 0, "黄": 0, "桃": 0, "空": 0, "黒": 80}))[0]
+        light = tips.tip_lines(item("a", "s"), f([["白", 100]], bg_low={"白": 90, "黄": 40, "桃": 5, "空": 5, "黒": 0}))[0]
+        every = tips.tip_lines(item("a", "s"), f([["灰色", 100]], bg_low={"白": 50, "黄": 50, "桃": 50, "空": 50, "黒": 50}))[0]
+        self.assertIn("どの背景でも見分けられる", none)
+        self.assertIn("黒の背景に置くと輪郭が沈みます", black)
+        self.assertIn("輪郭が白・黄の背景に近い色で、沈みます", light)
+        self.assertIn("桃・空・黒の上に置く", light)                           # the backgrounds measured as safe are the ones it recommends
+        self.assertIn("輪郭が背景に近い色になりやすい", every)
+        self.assertEqual(len({none, black, light, every}), 4)
+
+    def test_print_size_numbers_and_the_postcard_clause_match_the_pixels(self):
+        small = tips.tip_lines(item("a", "s", w=400, h=480), f([["赤", 100]]))[1]          # 400 px = 68 mm at 150 dpi: less than a postcard width
+        big = tips.tip_lines(item("a", "s", w=640, h=442), f([["赤", 100]]))[1]            # 640 px = 108 mm at 150 dpi
+        self.assertIn("300dpiで約34×41mm、150dpiで約68×81mm", small)
+        self.assertIn("の拡大になり", small)
+        self.assertIn("300dpiで約54×37mm、150dpiで約108×75mm", big)
+        self.assertIn("はがきの幅(100mm)を超える", big)
+        self.assertNotIn("の拡大になり", big)
+
+    def test_margin_and_shape_sentences(self):
+        wide = tips.tip_lines(item("a", "s", w=400, h=300), f([["赤", 100]], fill=30))
+        tall = tips.tip_lines(item("a", "s", w=300, h=400), f([["赤", 100]], fill=90))
+        square = tips.tip_lines(item("a", "s", w=400, h=400), f([["赤", 100]], fill=60))
+        self.assertTrue(any("余白が広め" in x and "30%" in x for x in wide))
+        self.assertTrue(any("余白がほとんどありません" in x and "90%" in x for x in tall))
+        self.assertFalse(any("余白" in x for x in square))                          # a middling margin says nothing
+        self.assertIn("横長なので", wide[-1])
+        self.assertIn("縦長なので", tall[-1])
+        self.assertIn("ほぼ正方形なので", square[-1])
+
+    def test_no_sentence_says_how_the_picture_was_made(self):
+        text = "".join(tips.tip_lines(item("a", "s"), f([["赤", 100]])))
+        self.assertFalse(NoOriginClaims.CLAIM.search(text))
+
+
+class Similar(unittest.TestCase):
+    def test_nearest_first_one_per_other_set_never_itself_or_its_own_set(self):
+        items = [item("me", "A"), item("a2", "A"), item("b1", "B"), item("b2", "B"), item("c1", "C"), item("d1", "D"), item("e1", "E"), item("g1", "G"), item("h1", "H"), item("far", "F")]
+        facts_by = {"me": f([["赤", 70], ["白", 30]]), "a2": f([["赤", 70], ["白", 30]]), "b1": f([["赤", 60], ["白", 40]]), "b2": f([["赤", 70], ["白", 30]]),
+                    "c1": f([["赤", 50], ["白", 50]]), "d1": f([["赤", 100]]), "e1": f([["赤", 30], ["青", 70]]), "g1": f([["赤", 90]]), "h1": f([["白", 90]]),
+                    "far": f([["青", 100]])}
+        got = tips.similar_map(items, lambda i: facts_by[i["id"]])["me"]
+        ids = [c for c, _d in got]
+        self.assertNotIn("me", ids)
+        self.assertNotIn("a2", ids)                                                  # the same set
+        self.assertEqual(len({i["series"] for i in items if i["id"] in ids}), len(ids))        # one picture per set
+        self.assertNotIn("b1", ids)                                                  # b2 has exactly my colours and is nearer: one picture per set
+        self.assertEqual(ids[0], "b2")
+        dist = [d for _c, d in got]
+        self.assertEqual(dist, sorted(dist))
+        self.assertNotIn("far", ids)                                                 # no colour in common: not near
+
+    def test_a_different_shape_is_farther(self):
+        a = f([["赤", 100]])
+        self.assertLess(tips.distance(a, a, "横長", "横長"), tips.distance(a, a, "横長", "縦長"))
+
+
+class InThePicturePages(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.out, cls.files = shared_site()
+        cls.pages = [f for f in cls.files if re.fullmatch(r"illust/[^/]+/index\.html", f)]
+
+    def read(self, rel):
+        return (self.out / rel).read_text(encoding="utf-8")
+
+    def test_every_picture_page_has_tips_and_most_have_similar_pictures_of_other_sets(self):
+        with_similar = 0
+        for rel in self.pages[::7]:
+            h = self.read(rel)
+            self.assertIn("使うときのコツ", h, rel)
+            m = re.search(r'色と形が近いイラスト</span></h2>(.*?)</section>', h, re.S)
+            if m:
+                with_similar += 1
+                own = rel.split("/")[1]
+                links = re.findall(r'href="/illust/([^/"]+)/"', m.group(1))
+                self.assertGreaterEqual(len(links), 3, rel)
+                self.assertNotIn(own, links, rel)                                    # never itself
+        self.assertGreater(with_similar / len(self.pages[::7]), 0.9)
+
+    def test_the_tips_and_the_similar_lists_differ_from_picture_to_picture(self):
+        tip_texts, sims = [], []
+        for rel in self.pages[::5]:
+            h = self.read(rel)
+            tip_texts.append(re.search(r'使うときのコツ</span></h2>(.*?)</ul>', h, re.S).group(1))
+            m = re.search(r'色と形が近いイラスト</span></h2>(.*?)</section>', h, re.S)
+            sims.append(tuple(re.findall(r'href="/illust/([^/"]+)/"', m.group(1))) if m else ())
+        self.assertGreaterEqual(len(set(tip_texts)) / len(tip_texts), 0.9)
+        self.assertGreaterEqual(len(set(sims)) / len(sims), 0.9)
+
+    def test_the_similar_pictures_are_shown_nearest_first(self):
+        by = {i["id"]: i for i in build.load_data()[0]}
+        rel = next(p for p in self.pages if "eto-sheep-kawaii-bow" in p)
+        m = re.search(r'色と形が近いイラスト</span></h2>(.*?)</section>', self.read(rel), re.S)
+        shown = re.findall(r'href="/illust/([^/"]+)/"', m.group(1))
+        expect = [c for c, _d in build.SITE["similar"]["eto-sheep-kawaii-bow"]]
+        self.assertEqual(shown, expect)
+        dist = [d for _c, d in build.SITE["similar"]["eto-sheep-kawaii-bow"]]
+        self.assertEqual(dist, sorted(dist))
+        self.assertTrue(all(by[c]["series"] != by["eto-sheep-kawaii-bow"]["series"] for c in shown))
 
 
 class PictureDescriptions(unittest.TestCase):
