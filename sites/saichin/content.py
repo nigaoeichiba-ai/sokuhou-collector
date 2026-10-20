@@ -389,6 +389,17 @@ GUIDES = [
         "sources": [S_JPS_WAGE, S_MHLW_SI],
     },
     {
+        "slug": "terms",
+        "image": "what-is",
+        "verified": "2026-10-20",
+        "dynamic": True,
+        "title": "最賃・最低時給とは?最低賃金との違いと、ニュースに出る言葉",
+        "description": "最賃、最低時給、地域別最低賃金、目安、答申、発効日、全国加重平均の意味を、最低賃金法と厚生労働省の説明にもとづいて整理します。令和8年度の数字つきです。",
+        "lead": "最賃は最低賃金の略で、最低時給は時間額の言い方です。ニュースに出る言葉の意味を、令和8年度の数字で確かめます。",
+        "body": "",
+        "sources": [S_WHAT, S_HOW, S_MEYASU, S_TOSHIN, S_CHECK, LAW],
+    },
+    {
         "slug": "r8",
         "image": "how-decided",
         "verified": "2026-10-20",
