@@ -21,6 +21,7 @@ sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/
 
 from sites.saichin import ranking_notes, analysis_pages, area_story, articles, charts, content, dataset, history_old, long_history, ogimage, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
+from sokuhou.sitekit import structured_data  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
 SLUGS = dict(zip(
@@ -299,6 +300,7 @@ def nav_html(path: str) -> str:
 
 def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str, body: str, scripts: bool = True, head_extra: str = "") -> str:
     base = cfg["site_url"].rstrip("/")
+    head_extra = structured_data(cfg, path, body, head_extra) + head_extra   # BreadcrumbList from the page's own breadcrumbs, WebSite on the home page
     name = esc(cfg["site_name"])
     robots = '<meta name="robots" content="noindex,nofollow">\n' if preview else ('<meta name="robots" content="noindex,follow">\n' if path in NOINDEX_PATHS else "")
     banner = (

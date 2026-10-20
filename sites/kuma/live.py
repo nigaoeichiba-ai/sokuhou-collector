@@ -216,7 +216,7 @@ def source_notes(infos: dict, keys: list[str]) -> str:
         i = infos[k]
         where = "位置の座標は、地図にだけ使っています。" if LIVE_SOURCES.get(k, {}).get("coords", True) else "位置の座標は、載せていません。"
         out += (f'<p class="notice">{esc(i["credit"])}。{where}{esc(i["note"])}。取得日: {jp_date(i["fetched"])}。'
-                f'公式ページは<a href="{esc(i["page"])}" rel="noopener" target="_blank">こちら</a>です。</p>\n')
+                f'<a href="{esc(i["page"])}" rel="noopener" target="_blank">取得元の公式ページ</a>で、原文を確かめられます。</p>\n')
     return out
 
 

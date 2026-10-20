@@ -15,6 +15,14 @@ Rules (each is a list entry in RULES below):
   empty      no heading directly followed by another heading of the same or a higher level (an empty section)
   lists      no empty <ul>/<ol> (a list a script fills in carries aria-live)
   images     every <img> has a src and an alt attribute
+  seo        what Search Console cannot tell before the page is live (added 2026-10-20 after the owner's SEO instruction):
+             - a noindex page is not in the sitemap (a page that asks not to be indexed must not be offered either)
+             - every JSON-LD block is valid JSON; a BreadcrumbList has 2+ items numbered 1..n with names, and every item URL is on the site's own host and resolves to a page;
+               no company name ("株式会社") anywhere in the markup (owner's rule: the company is named only where the law requires it)
+             - an internal link is never worded "こちら" / "ここ" / "詳細" alone (the text of a link is what the linked page is about)
+             - a canonical URL is the page's own address, except on a page whose canonical is declared on purpose (pagination of a list points to itself too)
+  seo_report (not a gate; `python -m sokuhou.sitecheck <folder> --base ... --report`) lists what is only worth a look: duplicate titles / descriptions / h1 among
+             indexable pages, titles over 60 characters or descriptions over 120 or under 40, pages with no JSON-LD, indexable pages with fewer than 2 internal links pointing to them
 """
 from __future__ import annotations
 
@@ -28,6 +36,7 @@ from urllib.parse import unquote, urldefrag, urlparse
 
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
 LEAKS = ("None", "undefined", "NaN", "{{", "[object Object]")
+WEAK_ANCHORS = ("こちら", "ここ", "詳細", "詳しくはこちら", "詳しくはこちら。", "こちらをクリック", "クリック", "click here", "here")   # a link worded like this says nothing about the page it leads to
 SKIP_SCHEMES = ("mailto:", "tel:", "javascript:", "data:", "sms:", "line:", "intent:")
 
 
@@ -58,13 +67,27 @@ class Page(HTMLParser):
         self.empty_lists = 0
         self.empty_list_names: list[str] = []
         self._list_stack: list[list[int]] = []        # item counts of open ul/ol
+        self.ld: list[str] = []                       # the text of every <script type="application/ld+json">
+        self._in_ld = False
+        self._ld_buf = ""
+        self.anchor_text: list[tuple[str, str]] = []  # (href, visible text) of every <a>
+        self._a: list | None = None
+        self._svg = 0
+        self._title_done = False
+        self.h1_text = ""
+        self._in_h1 = False
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
-        if tag == "title":
+        if tag == "svg":
+            self._svg += 1
+        if tag == "title" and not self._svg and not self._title_done:      # an inline picture's own <title> is not the page's
             self._in_title = True
         if tag in ("script", "style"):
             self._in_script += 1
+        if tag == "script" and (a.get("type") or "").lower() == "application/ld+json":
+            self._in_ld = True
+            self._ld_buf = ""
         if tag == "meta":
             n = (a.get("name") or "").lower()
             if n == "description":
@@ -81,6 +104,7 @@ class Page(HTMLParser):
                 self.empty_anchors += 1
             else:
                 self.links.append(("a", href))
+                self._a = [href, ""]
         if tag in ("img", "script", "source", "iframe", "video", "audio") and a.get("src"):
             self.links.append((tag, a["src"]))
         if tag == "img":
@@ -93,6 +117,8 @@ class Page(HTMLParser):
             lvl = int(tag[1])
             if lvl == 1:
                 self.h1 += 1
+                if self.h1 == 1:
+                    self._in_h1 = True
             prev = self._last_heading
             if prev and self._since_heading == 0 and lvl <= prev[0] and prev[0] > 1:
                 self.empty_sections.append(prev[1])
@@ -112,8 +138,19 @@ class Page(HTMLParser):
                 self._since_heading += 1
 
     def handle_endtag(self, tag):
-        if tag == "title":
+        if tag == "svg":
+            self._svg = max(0, self._svg - 1)
+        if tag == "title" and self._in_title:
             self._in_title = False
+            self._title_done = True
+        if tag == "script" and self._in_ld:
+            self._in_ld = False
+            self.ld.append(self._ld_buf)
+        if tag == "a" and self._a is not None:
+            self.anchor_text.append((self._a[0], re.sub(r"\s+", " ", self._a[1]).strip()))
+            self._a = None
+        if tag == "h1":
+            self._in_h1 = False
         if tag in ("script", "style") and self._in_script:
             self._in_script -= 1
         if re.fullmatch(r"h[1-6]", tag) and self._cur_h:
@@ -131,10 +168,16 @@ class Page(HTMLParser):
             self.stack.pop()
 
     def handle_data(self, data):
+        if self._in_ld:
+            self._ld_buf += data
         if self._in_title:
             self.title += data
         if self._in_script:
             return
+        if self._a is not None:
+            self._a[1] += data
+        if self._in_h1:
+            self.h1_text += data
         if self._cur_h is not None:
             self._cur_h[1] += data
         elif data.strip():
@@ -187,6 +230,59 @@ def _local(root: Path, base: str, page_rel: str, ref: str) -> Path | None:
     return cand
 
 
+def _own_path(rel: str) -> str:
+    """The address a built file answers at: a/b/index.html -> /a/b/, x.html -> /x.html."""
+    return "/" + (rel[: -len("index.html")] if rel.endswith("index.html") else rel)
+
+
+def jsonld_problems(rel: str, blocks: list[str], root: Path, base: str, page_rel: str) -> list[str]:
+    """The `seo` rule for the structured data of one page (see the module docstring)."""
+    out: list[str] = []
+    host = urlparse(base).netloc.lower()
+    import json
+
+    def walk(x):
+        if isinstance(x, dict):
+            for v in x.values():
+                yield from walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                yield from walk(v)
+        elif isinstance(x, str):
+            yield x
+
+    for raw in blocks:
+        try:
+            data = json.loads(raw)
+        except ValueError as e:
+            out.append(f"{rel}: a JSON-LD block is not valid JSON ({e})")
+            continue
+        for text in walk(data):
+            if "株式会社" in text:
+                out.append(f"{rel}: the structured data names a company ({text[:30]!r}); the company is named only on /about/")
+                break
+        for node in (data if isinstance(data, list) else [data]):
+            if not isinstance(node, dict) or node.get("@type") != "BreadcrumbList":
+                continue
+            items = node.get("itemListElement") or []
+            if len(items) < 2:
+                out.append(f"{rel}: BreadcrumbList with {len(items)} item(s) (at least 2)")
+                continue
+            for n, it in enumerate(items, 1):
+                if not isinstance(it, dict) or it.get("position") != n or not str(it.get("name") or "").strip():
+                    out.append(f"{rel}: BreadcrumbList item {n} has no name or a wrong position")
+                    break
+                url = it.get("item")
+                if url:
+                    if urlparse(url).netloc.lower() != host:
+                        out.append(f"{rel}: BreadcrumbList item {n} is on another host: {url}")
+                    else:
+                        t = _local(root, base, page_rel, url)
+                        if t is None or not t.exists():
+                            out.append(f"{rel}: BreadcrumbList item {n} does not resolve to a page: {url}")
+    return out
+
+
 def sitemap_urls(root: Path) -> list[str]:
     out: list[str] = []
     for sm in sorted(root.glob("sitemap*.xml")):
@@ -208,12 +304,15 @@ def check_dir(root: Path, base: str, require_sitemap: bool = True, skip: tuple[s
         return ["[links] no html files in " + str(root)]
     host = urlparse(base).netloc
     indexable: set[Path] = set()
+    noindexed: set[Path] = set()
     for f in pages:
         rel = f.relative_to(root).as_posix()
         if re.fullmatch(r"google[0-9a-f]+\.html", rel):     # Search Console's ownership file is not a page
             continue
         pg = parse(f)
         is_404 = rel == "404.html"
+        if pg.noindex:
+            noindexed.add(f.resolve())
         if not pg.noindex and not is_404:
             indexable.add(f.resolve())
             if not pg.title.strip():
@@ -226,6 +325,13 @@ def check_dir(root: Path, base: str, require_sitemap: bool = True, skip: tuple[s
                 add("head", f"{rel}: no canonical URL")
             elif host and urlparse(pg.canonical).netloc.lower() != host.lower():
                 add("head", f"{rel}: canonical points to another host: {pg.canonical}")
+            elif urlparse(pg.canonical).path != _own_path(rel):
+                add("seo", f"{rel}: canonical is not the page's own address: {pg.canonical}")
+        for msg in jsonld_problems(rel, pg.ld, root, base, rel):
+            add("seo", msg)
+        weak = sorted({t for h, t in pg.anchor_text if t.lower() in WEAK_ANCHORS and _local(root, base, rel, h) is not None})
+        if weak:
+            add("seo", f"{rel}: internal link(s) worded {', '.join(repr(w) for w in weak)}: say what the linked page is")
         if links_out is not None:
             links_out[rel] = pg.links
         seen: set[str] = set()
@@ -263,9 +369,61 @@ def check_dir(root: Path, base: str, require_sitemap: bool = True, skip: tuple[s
         else:
             mapped.add(t.resolve())
     if urls:
+        for f in sorted(noindexed & mapped if indexable else ()):       # a whole site that is noindex on purpose (a preview, atomou's sample) lists what it lists
+            add("seo", f"{f.relative_to(root.resolve()).as_posix()}: a noindex page is in the sitemap")
         for f in sorted(indexable - mapped):
             add("sitemap", f"{f.relative_to(root.resolve()).as_posix()}: indexable page missing from the sitemap")
     return [f"[{r}] {m}" for r, m in found if r not in skip]
+
+
+def seo_report(root: Path, base: str) -> list[str]:
+    """Things worth a look for search, not a gate (the numbers are in the module docstring).  Each line names the page.  Only indexable pages are looked at."""
+    root = Path(root)
+    host = urlparse(base).netloc
+    rows = []
+    inbound: dict[Path, int] = {}
+    for f in sorted(root.rglob("*.html")):
+        rel = f.relative_to(root).as_posix()
+        if rel == "404.html" or re.fullmatch(r"google[0-9a-f]+\.html", rel):
+            continue
+        pg = parse(f)
+        rows.append((f, rel, pg))
+    for f, rel, pg in rows:
+        seen = set()
+        for tag, ref in pg.links:
+            if tag != "a":
+                continue
+            t = _local(root, base, rel, ref)
+            if t is not None and t.exists() and t.resolve() != f.resolve() and t.resolve() not in seen:
+                seen.add(t.resolve())
+                inbound[t.resolve()] = inbound.get(t.resolve(), 0) + 1
+    out: list[str] = []
+    by_title: dict[str, list[str]] = {}
+    by_desc: dict[str, list[str]] = {}
+    by_h1: dict[str, list[str]] = {}
+    for f, rel, pg in rows:
+        if pg.noindex:
+            continue
+        title, desc, h1 = pg.title.strip(), pg.description.strip(), re.sub(r"\s+", " ", pg.h1_text).strip()
+        by_title.setdefault(title, []).append(rel)
+        by_desc.setdefault(desc, []).append(rel)
+        if h1:
+            by_h1.setdefault(h1, []).append(rel)
+        if len(title) > 60:
+            out.append(f"[title-long] {rel}: {len(title)} characters")
+        if desc and len(desc) > 120:
+            out.append(f"[desc-long] {rel}: {len(desc)} characters")
+        if desc and len(desc) < 40:
+            out.append(f"[desc-short] {rel}: {len(desc)} characters")
+        if not pg.ld and rel != "contact/index.html":
+            out.append(f"[no-jsonld] {rel}")
+        if rel != "index.html" and inbound.get(f.resolve(), 0) < 2:
+            out.append(f"[few-links-in] {rel}: {inbound.get(f.resolve(), 0)} page(s) link to it")
+    for label, groups in (("dup-title", by_title), ("dup-desc", by_desc), ("dup-h1", by_h1)):
+        for text, rels in groups.items():
+            if text and len(rels) > 1:
+                out.append(f"[{label}] {len(rels)} pages share {text[:50]!r}: {', '.join(rels[:3])}")
+    return out
 
 
 _tls = threading.local()   # one set of kept-alive connections per worker thread (urllib opened a new TCP+TLS connection for every request: about 0.9 s each from a US runner to a Japanese server)
@@ -500,7 +658,7 @@ def _check_live(base: str, workers: int, probes: tuple[str, ...] = (), sample: i
             f.write_bytes(body)
         # page rules on the mirrored pages; links are resolved against the live site below, not the mirror
         page_links: dict[str, list] = {}
-        problems += check_dir(root, base, skip=("links", "sitemap"), links_out=page_links)
+        problems += check_dir(root, base, skip=("links", "sitemap", "seo"), links_out=page_links)
         targets: dict[str, str] = {}
         for rel in sorted(page_links):
             for tag, ref in page_links[rel]:
@@ -543,6 +701,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--base", required=True, help="the site URL, e.g. https://yorokobu-present.com")
     ap.add_argument("--live", action="store_true", help="check the deployed site at --base instead of a folder")
     ap.add_argument("--probe", action="append", default=[], help="an extra path that must answer 200 (with --live)")
+    ap.add_argument("--report", action="store_true", help="also print the SEO report (duplicates, long titles, pages few links point to); it never fails the check")
     ap.add_argument("--max", type=int, default=60, help="print at most this many problems")
     ap.add_argument("--workers", type=int, default=24, help="with --live: parallel requests (each worker keeps one connection open)")
     ap.add_argument("--rate", type=float, default=80, help="with --live: at most this many requests per second in all (0 = no limit)")
@@ -568,6 +727,15 @@ def main(argv: list[str] | None = None) -> int:
         ap.error("a folder is needed without --live")
     problems = check_dir(Path(a.root), a.base)
     n = len(list(Path(a.root).rglob("*.html")))
+    from sokuhou import sametype
+    same_warning = sametype.warning(sametype.measure(Path(a.root)))      # shadow: printed, never a failure
+    if same_warning:
+        print(same_warning)
+    if a.report:
+        lines = seo_report(Path(a.root), a.base)
+        print(f"seo report: {len(lines)} thing(s) worth a look in {n} pages")
+        for ln in lines[: a.max]:
+            print("  ~ " + ln)
     if problems:
         print(f"SITECHECK FAILED: {len(problems)} problem(s) in {n} pages")
         for p in problems[: a.max]:

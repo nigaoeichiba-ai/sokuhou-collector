@@ -485,7 +485,7 @@ class LiveSectionTest(unittest.TestCase):
         self.assertIn("6件", page)
         self.assertIn(">CSVをダウンロード(6件)<", page)
         self.assertIn('href="/data/kuma-sightings.csv"', page)
-        ld = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', page, re.S).group(1))
+        ld = next(x for x in (json.loads(m) for m in re.findall(r'<script type="application/ld\+json">(.*?)</script>', page, re.S)) if x["@type"] == "Dataset")   # beside the breadcrumb data
         self.assertEqual(ld["@type"], "Dataset")
         self.assertEqual(ld["distribution"][0]["contentUrl"], "https://kuma-sokuho.com/data/kuma-sightings.csv")
         self.assertGreaterEqual(len(ld["description"]), 50)  # Dataset Search wants a description of at least 50 characters
