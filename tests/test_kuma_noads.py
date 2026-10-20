@@ -13,7 +13,7 @@ ADS_CFG = {**CFG, "adsense_pub_id": "ca-pub-1234567890"}
 
 
 class LayoutSettingTest(unittest.TestCase):
-    SITE = {"assets": Path(__file__).parent, "nav": [], "glyph": "x", "source_html": "", "no_ads_paths": frozenset({"/contact/"})}
+    SITE = {"assets": Path(__file__).parent, "nav": [], "glyph": "x", "source_html": "", "no_ads_paths": frozenset({"/contact/", "/live/"})}
 
     def html(self, path, site=None):
         return sitekit.layout(site or self.SITE, ADS_CFG, False, path=path, title="t", description="d", body="<h1>t</h1>")
@@ -21,6 +21,11 @@ class LayoutSettingTest(unittest.TestCase):
     def test_a_listed_path_loads_no_tag_and_every_other_path_does(self):
         self.assertNotIn(TAG, self.html("/contact/"))
         self.assertIn(TAG, self.html("/about/"))
+
+    def test_the_path_must_match_exactly_so_the_pages_below_a_hub_keep_the_tag(self):
+        self.assertNotIn(TAG, self.html("/live/"))                       # the hub of links
+        self.assertIn(TAG, self.html("/live/miyagi/"))                   # a prefecture's page and a municipality's page are content
+        self.assertIn(TAG, self.html("/live/miyagi/m-a6154e/"))
 
     def test_a_site_without_the_setting_keeps_the_tag_everywhere(self):
         site = {k: v for k, v in self.SITE.items() if k != "no_ads_paths"}

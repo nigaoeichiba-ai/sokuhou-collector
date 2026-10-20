@@ -56,6 +56,15 @@ class StructuredDataTest(unittest.TestCase):
         self.assertEqual(len(blocks(head)), 1)
         self.assertNotIn("</script></script>", head)
 
+    def test_a_site_can_opt_out_and_what_a_page_puts_first_stays_first(self):
+        site = {"assets": sitekit.Path(__file__).parent, "nav": [], "glyph": "x", "source_html": "", "structured_data": False}
+        html = sitekit.layout(site, CFG, False, path="/p/", title="t", description="d", body=CRUMBS + "<h1>t</h1>")
+        self.assertEqual(blocks(html), [])
+        own = '<script type="application/ld+json">{"@type": "Article"}</script>'
+        site = {**site, "structured_data": True}
+        head = sitekit.layout(site, CFG, False, path="/p/", title="t", description="d", body=CRUMBS + "<h1>t</h1>", head_extra=own).split("</head>")[0]
+        self.assertEqual([b["@type"] for b in blocks(head)], ["Article", "BreadcrumbList"])
+
 
 if __name__ == "__main__":
     unittest.main()

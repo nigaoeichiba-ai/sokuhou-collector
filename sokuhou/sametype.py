@@ -6,7 +6,7 @@ Method (docs/growth/ADSENSE_PATH_2026-10-20.md, appendix; the numbers are those 
   - only indexable pages (no noindex), the prose of <main>: p, li, h2, h3 - tables, navigation, scripts and pictures left out;
   - digits and the 47 prefecture names are masked ("愛知県の最低賃金は1,195円" and "兵庫県の最低賃金は1,172円" become the same text);
   - the text is cut into 8-character pieces; the overlap of two pages is the shared pieces / the smaller page's pieces;
-  - pages are grouped by the shape of the address (/live/<県>/<市>/ is one group, /live/<県>/ another) and, for pages one level below the root,
+  - pages are grouped by their folder (/live/miyagi/<市>/ pages are one group, /live/<県>/ pages another) and, for pages one level below the root,
     by the pattern of the title (@の最低賃金の推移...);
   - a page is "same-type" when its median overlap with up to 8 other pages of its group is 0.8 or more.
 A site is warned about when more than 60 % of its indexable pages are same-type.  The warning never stops a deploy (shadow, decided with the report desk).
@@ -87,7 +87,7 @@ def pieces(text: str) -> set[str]:
 def group_key(rel: str, title: str) -> str:
     parts = rel.split("/")[:-1]
     if len(parts) > 1:
-        return f"{parts[0]}/{len(parts)}"
+        return "/".join(parts[:-1]) + "/*"       # the pages of one folder (/live/miyagi/*): across folders the pages differ by the folder's own facts, within one they are one text
     return "title:" + re.sub(r"[県都府]", "", mask(title))[:8]
 
 

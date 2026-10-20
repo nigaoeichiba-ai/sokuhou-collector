@@ -137,7 +137,8 @@ def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, descr
            scripts: bool = False, og_image: str | None = None, alternates: tuple[tuple[str, str], ...] = (),
            head_extra: str = "") -> str:
     base = cfg["site_url"].rstrip("/")
-    head_extra = structured_data(cfg, path, body, head_extra) + head_extra
+    if site.get("structured_data", True):
+        head_extra = head_extra + structured_data(cfg, path, body, head_extra)      # after the page's own head markup, so what a page puts first stays first
     name = esc(cfg["site_name"])
     robots = '<meta name="robots" content="noindex,nofollow">\n' if preview else ""
     if og_image and not preview:   # Discover / large previews. Named googlebot so the name="robots" checks that add noindex still work
