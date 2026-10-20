@@ -236,10 +236,10 @@ def changed_files(base_ref: str) -> list[str]:
 SHARED = ("sokuhou/naturaljp.py", "sokuhou/stylegate.py", "sokuhou/styleloop.py", "data/style/baseline.json", "data/sites.json")
 
 
-def sites_touched(files: list[str], sites: dict | None = None) -> list[str]:
+def sites_touched(files: list[str], sites: dict | None = None, shared_all: bool = False) -> list[str]:
     sites = sites or load_sites()
     names = [s["name"] for s in sites.get("sites", [])]
-    if any(f in SHARED for f in files):
+    if shared_all and any(f in SHARED for f in files):          # a change of the tool itself: every site would be built here (minutes); the deploy checks them, `precheck --all` does it by hand
         return [n for n in names if n in nj.SITES]
     out = []
     for s in sites.get("sites", []):
@@ -253,9 +253,9 @@ def sites_touched(files: list[str], sites: dict | None = None) -> list[str]:
 PRECHECK_FAIL = 8          # the exit code publish.ps1 stops on; any other non-zero code (an import error, a crash) is the gate's own problem and only a warning there
 
 
-def precheck(base_ref: str = "origin/main", only: list[str] | None = None) -> int:
+def precheck(base_ref: str = "origin/main", only: list[str] | None = None, shared_all: bool = False) -> int:
     files = changed_files(base_ref)
-    targets = only or sites_touched(files)
+    targets = only or sites_touched(files, shared_all=shared_all)
     worst = 0
     for site in targets:
         mode = mode_for(site)
@@ -315,6 +315,7 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("precheck")
     p.add_argument("--base", default="origin/main")
     p.add_argument("--site", action="append")
+    p.add_argument("--all", action="store_true", help="also build every site when the gate itself changed")
     b = sub.add_parser("baseline")
     b.add_argument("--site", required=True, choices=list(nj.SITES))
     b.add_argument("--dir")
@@ -331,7 +332,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "baseline":
         return cmd_baseline(args.site, Path(args.dir) if args.dir else None, args.shrink)
     if args.cmd == "precheck":
-        return precheck(args.base, args.site)
+        return precheck(args.base, args.site, args.all)
     code, text, v = run_check(Path(args.dir), args.site, args.mode, dictionary=args.apply_dictionary)
     print(text)
     if v is not None:

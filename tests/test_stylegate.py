@@ -170,7 +170,8 @@ class ModeTest(unittest.TestCase):
             self.assertEqual(sg.sites_touched(["sites/kuma/build.py"]), ["kuma"])
             self.assertEqual(sg.sites_touched(["data/style/rewrites/yorokobu.json"]), ["yorokobu"])
             self.assertEqual(sg.sites_touched(["tests/test_x.py"]), [])
-            self.assertEqual(set(sg.sites_touched(["sokuhou/naturaljp.py"])), set(nj.SITES))
+            self.assertEqual(sg.sites_touched(["sokuhou/naturaljp.py"]), [])                 # the tool itself: the deploy checks the sites
+            self.assertEqual(set(sg.sites_touched(["sokuhou/naturaljp.py"], shared_all=True)), set(nj.SITES))
 
 
 class WorkflowTest(unittest.TestCase):
