@@ -10,10 +10,17 @@
   },
   {
    "city": "福島市",
-   "count": 1,
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-17",
+   "place": "土湯温泉町字猪倉 地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
    "kind": "目撃",
    "observed_at": "2026-10-15",
-   "place": "松川町浅川字脇ノ久保"
+   "place": "松川町浅川字脇ノ久保地内"
   },
   {
    "city": "郡山市",
@@ -952,7 +959,7 @@
   "郡山市": "2026-10-20"
  },
  "credit": "出典: 福島県「福島県クマ目撃マップ」(https://www.pref.fukushima.lg.jp/sec/16035b/tukinowaguma-mokugeki.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、福島県のページでご確認ください)",
- "fetched_at": "2026-10-20T06:17:37.223578+09:00",
+ "fetched_at": "2026-10-20T09:21:40.037153+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
