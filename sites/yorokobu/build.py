@@ -957,13 +957,29 @@ def theme_tile(t: dict) -> str:
             f'<span><b>{esc(t["name"])}</b><small>{esc(t["title"])}</small></span></a></li>')
 
 
+def theme_neighbours(live: list[dict], t: dict, n: int = 10) -> list[dict]:
+    """The `n` themes of the same group that follow `t` around the group: every theme is linked from `n` others (the first `n` of a group were linked from all, the rest from none)."""
+    ring = [x for x in live if x["group"] == t["group"]]
+    at = next((i for i, x in enumerate(ring) if x["slug"] == t["slug"]), 0)
+    return (ring[at + 1:] + ring[:at])[:n]
+
+
+def theme_reads(c: dict, t: dict) -> str:
+    """「この気持ちの読みもの」: the reading articles that name this theme (an article links to its themes; this is the link back)."""
+    arts = [a for a in c["articles"] if t["slug"] in (a.get("themes") or [])][:6]
+    if not arts:
+        return ""
+    items = "".join(f'<li><a href="/read/{a["slug"]}/">{esc(a["title"])}</a></li>' for a in arts)
+    return f'<section class="related" style="margin-top:40px"><h2><span class="scribble">この気持ちの読みもの</span></h2><ul class="plain">{items}</ul></section>'
+
+
 def theme_page(d: dict, cfg: dict, preview: bool, t: dict) -> str:
     set_keep()
     c = d["c"]
     color, mascot, _ = group_style(t["group"])
     group = next(g for g in c["theme_groups"] if g["slug"] == t["group"])
     proposals, browse, _ = listing(d, cfg, t, f'{t["name"]}、こんな贈り方はどうでしょう')
-    same = [x for x in d["live_themes"] if x["group"] == t["group"] and x["slug"] != t["slug"]][:10]
+    same = theme_neighbours(d["live_themes"], t)
     other = "".join(f'<li><a href="/theme/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in same)
     avoid = f'<section class="avoid" style="margin-top:48px"><h2><span class="scribble">気をつけたいこと</span></h2>{ul(t["avoid"], "warn")}</section>' if t["avoid"] else ""
     amazon = ""
@@ -984,7 +1000,8 @@ def theme_page(d: dict, cfg: dict, preview: bool, t: dict) -> str:
 {concierge(cfg, d, t)}
 {avoid}
 <p style="margin-top:40px">{amazon}</p>
-{f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの{esc(group["name"])}テーマ</span></h2><ul class="plain cols2 chips">{other}</ul></section>' if other else ""}"""
+{f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの{esc(group["name"])}テーマ</span></h2><ul class="plain cols2 chips">{other}</ul></section>' if other else ""}
+{theme_reads(c, t)}"""
     return page(cfg, preview, path=f"/theme/{t['slug']}/", title=f"{t['title']} | {cfg['site_name']}", description=t["lead"][:110], body=body,
                 og_image=og_for(f"theme/{t['slug']}"))
 

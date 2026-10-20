@@ -306,7 +306,7 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
     reading = "".join(f"<h3>{esc(r['h'])}</h3><p>{esc(r['p'])}</p>" for r in f["reading"])
     faq = "".join(f"<details class='faq'><summary>{esc(q['q'])}</summary><p>{esc(q['a'])}</p></details>" for q in f["faq"])
     ev = "".join((f'<li><a href="{esc(e["url"])}" rel="noopener nofollow" target="_blank">{esc(e["label"])}</a></li>' if e.get("url") else f'<li>{esc(e["label"])}</li>') for e in f["evidence"])
-    more = "".join(f'<li><a href="{path(o)}">{esc(o["title"])}</a></li>' for o in others[:4])
+    more = "".join(f'<li><a href="{path(o)}">{esc(o["title"])}</a></li>' for o in others[:6])
     url_abs = cfg["site_url"].rstrip("/") + path(f)
     ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": f["title"], "datePublished": f["date"], "dateModified": f["verified"], "inLanguage": "ja",
                      "author": {"@type": "Organization", "name": cfg["site_name"]}, "mainEntityOfPage": url_abs}, ensure_ascii=False)

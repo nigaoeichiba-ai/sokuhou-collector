@@ -163,7 +163,7 @@ def hub_page(d: dict, cfg: dict, preview: bool, days: list[dict]) -> str:
 {B.pr_quiet(cfg)}
 <section class="block"><div class="sec-head"><span class="eyebrow">Latest</span><h2>{esc(date_label(latest["date"]))}のおすすめ: {esc(latest["theme"])}</h2></div>
 {highlight_tiles(latest, d, cfg)}<p class="more"><a class="btn" href="{day_path(latest["date"])}">すべて見る</a></p></section>
-{_b().feats.teaser(cfg, d, d["c"].get("features") or [], None, 4)}
+{_b().feats.teaser(cfg, d, d["c"].get("features") or [], None, 60)}
 {_b().minepage.section(d, cfg)}
 <section class="block"><div class="sec-head"><h2>これまでのおすすめ</h2></div><ul class="tiles wide">{rows}</ul></section>
 <section class="block"><div class="sec-head"><h2>選び方</h2></div><p class="notice">{esc(POLICY)}</p></section>"""
