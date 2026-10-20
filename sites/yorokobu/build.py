@@ -240,6 +240,21 @@ def strip_ads(pages: dict[str, str]) -> int:
     return n
 
 
+# The individual pages of the sales-ranking and number lists are mostly a list of products that changes every day, with little text of their own (weekly review 2026-10-19:
+# 16-17% of their text is not found on a sibling page).  First wave of the owner's approval of 2026-10-20: noindex,follow (never a robots.txt ban: the search engine has to read the
+# tag) and out of the sitemap; the hubs /ranking/ and /numbers/ and every link stay as they are.  To undo: empty NOINDEX_LISTS (one line) and publish.
+NOINDEX_LISTS = re.compile(r"^(?:ranking|numbers)/[^/]+/index\.html$")
+
+
+def noindex_thin(pages: dict[str, str]) -> list[str]:
+    """Puts <meta name="robots" content="noindex,follow"> into the pages of NOINDEX_LISTS (once) and returns their keys, which are kept out of the sitemap."""
+    keys = [k for k in pages if NOINDEX_LISTS.match(k)]
+    for k in keys:
+        if 'name="robots"' not in pages[k]:
+            pages[k] = pages[k].replace("<head>", "<head>" + chr(10) + '<meta name="robots" content="noindex,follow">', 1)
+    return keys
+
+
 def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
     amazon_links = kw.pop("amazon_links", False)                     # a page whose Amazon buttons are made by its script
@@ -2130,10 +2145,13 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     pages["manifest.webmanifest"] = json.dumps(MANIFEST, ensure_ascii=False, indent=1)
     pages.update(cards)
     strip_ads(pages)
+    noindexed = noindex_thin(pages)
     listed = dict(pages)                                   # the sitemap lists the pages that can be found by searching, not the shared-list page (noindex, built from a link)
     for slug, sg in ((d.get("ranking") or {}).get("segments") or {}).items():                  # a thin ranking page stays (no 404) but is not offered to the search engines
         if sg.get("thin"):
             listed.pop(f"ranking/{slug}/index.html", None)
+    for k in noindexed:
+        listed.pop(k, None)
     if SEEN:
         pages["list/index.html"] = list_page(d, cfg, preview)
         PRIVATE[itemsserver.PRIVATE_FILES["items"]] = json.dumps(SEEN, ensure_ascii=False, separators=(",", ":"))

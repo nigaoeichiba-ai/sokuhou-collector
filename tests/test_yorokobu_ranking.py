@@ -308,7 +308,8 @@ class BuildTest(unittest.TestCase):
         self.assertFalse((self.out / "ranking/f30/index.html").exists())           # no data for that segment: no page
         for page in ("index.html", "theme/index.html"):
             self.assertIn('href="/ranking/"', self.read(page))
-        self.assertIn("/ranking/f20/", self.read("sitemap.xml"))
+        self.assertNotIn("/ranking/f20/", self.read("sitemap.xml"))          # the individual lists are noindex and out of the sitemap since 2026-10-20 (the hub stays)
+        self.assertIn("/ranking/", self.read("sitemap.xml"))
 
     def test_products_link_through_the_affiliate_id_with_the_pr_label_and_the_dated_disclaimer(self):
         html = self.read("ranking/f20/index.html")
@@ -405,14 +406,11 @@ class ThinPageTest(unittest.TestCase):
         cls.tmp.cleanup()
         build.RANKING_ON = False
 
-    def test_the_thin_page_exists_with_noindex_and_is_not_in_the_sitemap_while_the_full_one_is_ordinary(self):
+    def test_the_thin_page_exists_with_noindex_and_is_not_in_the_sitemap(self):
         thin = (self.out / "ranking/m40/index.html").read_text(encoding="utf-8")
-        full = (self.out / "ranking/f20/index.html").read_text(encoding="utf-8")
+        self.assertEqual(thin.count('name="robots"'), 1)                          # once, though two rules (thin, and every individual list since 2026-10-20) ask for it
         self.assertIn('<meta name="robots" content="noindex,follow">', thin)
-        self.assertNotIn("noindex", full)
-        sitemap = (self.out / "sitemap.xml").read_text(encoding="utf-8")
-        self.assertNotIn("/ranking/m40/", sitemap)
-        self.assertIn("/ranking/f20/", sitemap)
+        self.assertNotIn("/ranking/m40/", (self.out / "sitemap.xml").read_text(encoding="utf-8"))
 
     def test_the_site_checker_accepts_it(self):
         problems = sitecheck.check_dir(self.out, CFG["site_url"], skip=("lists",))
