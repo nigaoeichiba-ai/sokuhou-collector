@@ -300,7 +300,7 @@ def nav_html(path: str) -> str:
 
 def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str, body: str, scripts: bool = True, head_extra: str = "") -> str:
     base = cfg["site_url"].rstrip("/")
-    head_extra = structured_data(cfg, path, body, head_extra) + head_extra   # BreadcrumbList from the page's own breadcrumbs, WebSite on the home page
+    head_extra = head_extra + structured_data(cfg, path, body, head_extra)   # BreadcrumbList from the page's own breadcrumbs, WebSite on the home page
     name = esc(cfg["site_name"])
     robots = '<meta name="robots" content="noindex,nofollow">\n' if preview else ('<meta name="robots" content="noindex,follow">\n' if path in NOINDEX_PATHS else "")
     banner = (

@@ -60,6 +60,7 @@ SITE = {
     "glyph": "",
     "assets": HERE / "assets",
     "source_html": 'カードの日付は間違っていることがあります。<a href="/manual/">説明書</a> | <a href="/manual/#guide">使い方</a> | <a href="/use/">こんな時に</a> | <a href="/skins/">きせかえ</a>',
+    "structured_data": False,    # the pages carry their own markup (a @graph); sitekit's breadcrumb / WebSite data is not added
 }
 WD = "月火水木金土日"
 _TODAY = date.today()   # set by build_pages: the date the static counts on the cards are worked out for (the browser recounts at once)
@@ -1544,7 +1545,7 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     pages.update(asset_pages(SITE["assets"]))
     # the sitemap lists indexable pages only (not /my/, not event pages that are held back)
     listed = {k: 1 for k in pages if k.endswith("index.html") and k != "my/index.html" and k != "quiz/index.html" and k != "rule/index.html"
-              and k != "plan/index.html" and k != "interests/index.html" and k != "card/index.html" and k not in kyou_noindex and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
+              and k != "plan/index.html" and k != "interests/index.html" and k != "card/index.html" and k != "thanks/index.html" and k not in kyou_noindex and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
     pages.update(standard_files(listed, cfg, preview, today.isoformat()))
     pages[".htaccess"] = pages[".htaccess"] + HT_CACHE
     if preview:

@@ -19,7 +19,7 @@ Rules (each is a list entry in RULES below):
              - a noindex page is not in the sitemap (a page that asks not to be indexed must not be offered either)
              - every JSON-LD block is valid JSON; a BreadcrumbList has 2+ items numbered 1..n with names, and every item URL is on the site's own host and resolves to a page;
                no company name ("株式会社") anywhere in the markup (owner's rule: the company is named only where the law requires it)
-             - an internal link is never worded "こちら" / "ここ" / "詳細" alone (the text of a link is what the linked page is about)
+             - an internal link is never worded "こちら" / "ここ" alone (the text of a link is what the linked page is about)
              - a canonical URL is the page's own address, except on a page whose canonical is declared on purpose (pagination of a list points to itself too)
   seo_report (not a gate; `python -m sokuhou.sitecheck <folder> --base ... --report`) lists what is only worth a look: duplicate titles / descriptions / h1 among
              indexable pages, titles over 60 characters or descriptions over 120 or under 40, pages with no JSON-LD, indexable pages with fewer than 2 internal links pointing to them
@@ -36,7 +36,7 @@ from urllib.parse import unquote, urldefrag, urlparse
 
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
 LEAKS = ("None", "undefined", "NaN", "{{", "[object Object]")
-WEAK_ANCHORS = ("こちら", "ここ", "詳細", "詳しくはこちら", "詳しくはこちら。", "こちらをクリック", "クリック", "click here", "here")   # a link worded like this says nothing about the page it leads to
+WEAK_ANCHORS = ("こちら", "ここ", "詳しくはこちら", "詳しくはこちら。", "こちらをクリック", "クリック", "click here", "here")   # a link worded like this says nothing about the page it leads to
 SKIP_SCHEMES = ("mailto:", "tel:", "javascript:", "data:", "sms:", "line:", "intent:")
 
 

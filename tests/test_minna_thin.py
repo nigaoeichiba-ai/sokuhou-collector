@@ -60,6 +60,7 @@ class InTheBuild(unittest.TestCase):
     def test_thin_pages_have_noindex_follow_and_are_not_in_the_sitemap_and_the_others_are_the_other_way_round(self):
         html_pages = [f for f in self.files if f.endswith("/index.html") or f == "index.html"]
         thin = {f for f in html_pages if build.page_kind(f) == "paged"}
+        thin |= set(build.UTILITY_PAGES)        # a visitor's own list and the search form (2026-10-20 SEO audit)
         for f in html_pages:
             kind = build.page_kind(f)
             if kind in build.THIN_CHARS and build.visible_chars(self.read(f).replace('<meta name="robots" content="noindex,follow">', "")) < build.THIN_CHARS[kind]:
@@ -77,7 +78,7 @@ class InTheBuild(unittest.TestCase):
     def test_the_kinds_the_owner_named_are_covered_and_the_content_pages_are_not(self):
         thin = [f for f in self.files if f.endswith("/index.html") and 'content="noindex,follow"' in self.read(f)]
         kinds = {build.page_kind(f) for f in thin}
-        self.assertEqual(kinds, {"paged", "cross", "category", "tag"})
+        self.assertEqual(kinds - {""}, {"paged", "cross", "category", "tag"})      # "" = the utility pages (build.UTILITY_PAGES)
         for f in thin:
             self.assertFalse(f.startswith(("illust/", "series/", "guide/", "special/")) and not build.page_kind(f), f)
         for f in ("illust/season-christmas/index.html", "series/dog-pose/index.html", "guide/nurie-insatsu/index.html", "special/nenga-2027/index.html", "genre/animals/index.html",

@@ -67,6 +67,16 @@ class MeasureTest(unittest.TestCase):
         self.assertLess(r["share"], 0.6, r)
         self.assertEqual(sametype.warning(r), "")
 
+    def test_pages_alike_within_a_folder_but_not_across_folders_are_detected_like_kuma_live(self):
+        files = {}
+        stories = {"a": "この町の記録は、山あいの集落で見つかった足跡と、畑の被害の届け出が中心です。役場は見回りを増やし、住民には夕方の外出を控えるよう求めています。",
+                   "b": "この町の記録は、川沿いの住宅地で見つかった糞と、ごみ置き場の被害の届け出が中心です。町は箱わなを置き、住民には生ごみを屋外に出さないよう求めています。"}
+        for folder, text in stories.items():
+            for i in range(6):
+                files[f"live/{folder}/c{i}/index.html"] = page(f"{folder}{i}市のクマ", [text.replace("この町", f"この{i}番目の町") + f"件数は{i}件です。"])
+        r = self.measure(files)
+        self.assertEqual(r["same"], 12, r["groups"])
+
     def test_the_tables_the_navigation_and_noindex_pages_do_not_count(self):
         files = same_text_site()
         for p in SHORT[:12]:                                       # all twelve are noindex now: nothing is offered to a search engine
