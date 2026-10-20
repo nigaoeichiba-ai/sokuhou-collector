@@ -2,11 +2,11 @@
  "as_of": "2026-10-18",
  "bad_coords": 1,
  "credit": "出典:「ツキノワグマ出没・目撃情報(令和8年度)」(山梨県)(https://catalog.dataplatform-yamanashi.jp/dataset/kuma1)を加工して作成(山梨県オープンデータ利用規約に基づく)",
- "fetched_at": "2026-10-20T06:17:23.166732+09:00",
+ "fetched_at": "2026-10-21T06:17:25.711283+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
-   "10": 37,
+   "10": 40,
    "4": 16,
    "5": 33,
    "6": 53,
@@ -27,6 +27,26 @@
    "species": "ツキノワグマ"
   },
   {
+   "city": "上野原市",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.6447,
+   "lon": 139.1047,
+   "observed_at": "2026-10-17T17:40:00+09:00",
+   "place": "上野原地区山風呂地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "富士河口湖町",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.4923,
+   "lon": 138.6818,
+   "observed_at": "2026-10-17T15:00:00+09:00",
+   "place": "富士河口湖町西湖",
+   "species": "ツキノワグマ"
+  },
+  {
    "city": "大月市",
    "count": 3,
    "kind": "目撃",
@@ -44,6 +64,14 @@
    "lon": 138.4379,
    "observed_at": "2026-10-16T20:10:00+09:00",
    "place": "伊沼地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "笛吹市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-16T18:00:00+09:00",
+   "place": "八代町奈良原",
    "species": "ツキノワグマ"
   },
   {
@@ -2595,7 +2623,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 259,
+ "sightings_in_window": 262,
  "source": "yamanashi",
  "source_file": [
   "https://catalog.dataplatform-yamanashi.jp/dataset/bed5301d-75b2-4976-8687-2b2721ae143a/resource/89d2478e-e29e-46e3-9ad3-19bf44822d4d/download/2026kumadata.csv",
