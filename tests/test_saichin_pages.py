@@ -217,7 +217,7 @@ class SiteTest(SiteFixture):
 class PrefecturePageExtrasTest(SiteFixture):
     def test_earnings_table_values(self):
         text = self.read("shiga/index.html")
-        self.assertIn("最低賃金で働いた場合の月収・年収の目安", text)
+        self.assertIn("滋賀県の最低賃金は、月給・年収でいくらか", text)
         row = re.search(r"<tr><td>フルタイム\(週40時間\)</td>(.*?)</tr>", text).group(1)
         cells = re.findall(r"<td>(.*?)</td>", row)
         self.assertEqual(cells, ["196,900円", "236.3万円", "224.6万円", "+11.6万円"])  # 1136*40*52 / 1080*40*52

@@ -49,6 +49,7 @@ def all_series(raw, old):
 def rows_of(page, after):
     section = page.split(after, 1)[1]
     table = re.search(r"<table>.*?</table>", section, re.S).group(0)
+    table = re.sub(r"<tfoot>.*?</tfoot>", "", table, flags=re.S)                    # the notes of the table are not rows of data
     return [[re.sub(r"<[^>]+>", "", c) for c in re.findall(r"<t[dh]>(.*?)</t[dh]>", tr, re.S)] for tr in re.findall(r"<tr>(.*?)</tr>", table, re.S)]
 
 
@@ -235,9 +236,10 @@ class PrefectureTrendTest(SiteFixture):
         for fy in range(1979, 1990):
             south, north = self.split[fy]
             self.assertIn(f"<td>{label(fy)}</td><td>南部 {money(south)}・北部 {money(north)}</td>", page, fy)
-        self.assertIn("※2 京都府は、昭和54年度から平成元年度まで、南部と北部で別の額でした。この期間の京都府の額は「南部・北部」で示し、全国順位は付けていません。", page)
-        other = self.read("hyogo/index.html")
-        self.assertIn("この期間の全国順位は、京都府を除く46都道府県の中で数えています。", other)
+        self.assertIn("昭和54年度から平成元年度までは、南部と北部で額が分かれていました。この期間の表は、2つの額を並べています。", page)
+        for slug in ("kyoto", "hyogo"):
+            self.assertIn("※2 昭和54〜平成元年度の順位は、南部と北部で額が分かれていた京都府を除く、46都道府県の中の順位です。", self.read(f"{slug}/index.html"))
+        self.assertNotIn("南部と北部で額が分かれていました", self.read("hyogo/index.html"))
         # a year with Kyoto missing is ranked among 46: Tokyo is 1st in 1985, a prefecture below it is ranked against 46
         self.assertEqual(self.rank("東京", 1985), 1)
         self.assertEqual(sum(1 for s in self.series.values() if s[1985] is not None), 46)
@@ -245,10 +247,10 @@ class PrefectureTrendTest(SiteFixture):
     def test_the_old_figures_are_credited_to_the_2003_document_and_decimals_are_explained(self):
         page = self.read("aichi/index.html")
         self.assertIn("https://www.mhlw.go.jp/shingi/2003/12/s1202-3h.html", page)
-        self.assertIn("平成14年度と平成15年度は、2つの資料の額が、47都道府県すべてで一致しています。", page)
+        self.assertIn("平成14年度と平成15年度の額は、上の「全国一覧」と47都道府県すべてで一致することを", self.read("cite/index.html"))
         self.assertIn("<td>昭和53年度</td><td>320.88円</td>", page)
-        self.assertIn("小数のある額は、出典の表のとおりです。", page)
-        self.assertNotIn("小数のある額は", self.read("hokkaido/index.html"))
+        self.assertIn("昭和53年度などの額に小数があるのは、出典の表のとおりです。", page)
+        self.assertNotIn("に小数があるのは", self.read("hokkaido/index.html"))
 
 
 class NationalTrendTest(SiteFixture):

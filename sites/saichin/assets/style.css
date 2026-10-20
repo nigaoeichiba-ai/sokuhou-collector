@@ -327,6 +327,11 @@ h2::before { background:linear-gradient(var(--accent),#10b981); width:8px; borde
 .hint-link { margin:10px 0 0; font-size:.88rem; color:var(--muted); }
 
 .quote { margin:8px 0 14px; padding:10px 14px; border-left:4px solid var(--brand); border-radius:8px; background:var(--card); overflow-wrap:anywhere; font-size:.92rem; }
+.related h3 { font-size:1rem; margin:14px 0 6px; }
+.table-note { font-size:.85rem; color:var(--muted); margin:6px 0 14px; }
+.chartfig { margin:6px 0 14px; }
+.chartfig .chart { margin-bottom:6px; }
+.chartfig figcaption { font-size:.85rem; color:var(--muted); }
 .pr-note { font-size:.88rem; color:var(--muted); background:var(--card); border:1px solid var(--line); border-radius:10px; padding:7px 12px; margin:0 0 14px; }
 .pr-note strong { color:var(--ink); margin-right:6px; }
 .aff { margin:8px 0 14px; padding:10px 14px; border:1px dashed var(--line); border-radius:10px; background:var(--card); line-height:1.8; }

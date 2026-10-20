@@ -47,11 +47,6 @@ def pref_summary(r: dict, k) -> str:
         f"1年の引上げ額が最も大きかったのは{k.esc(top[0]['label'])}の+{yen_text(top[0]['raise'])}、引上げ率が最も大きかったのは{k.esc(best_pct['label'])}の{best_pct['raise_pct']:.1f}%です。",
         f"{k.esc(a10['label'])}から{k.esc(last['label'])}までの10年間は+{yen_text(last['amount'] - a10['amount'])}、その前の10年間は+{yen_text(a10['amount'] - b10['amount'])}でした。",
     ]
-    if zero:
-        out.append(f"前の年度と同じ額だった(引上げ額0円の)年度は{len(zero)}回あります。")
-    out.append(
-        f"全国加重平均は、{k.esc(avg_first['label'])}の{round(avg_first['avg']):,}円から{k.esc(last['label'])}の{round(last['avg']):,}円になりました。"
-        f"年度ごとに全国加重平均と比べると、{name}の額が上回ったのは{higher}回、下回ったのは{lower}回{f'、同額は{same}回' if same else ''}です。")
     return "".join(out)
 
 
@@ -67,7 +62,8 @@ def pref_charts(r: dict, k) -> str:
         [(xs[i], None if e["raise"] is None else e["raise"]) for i, e in enumerate(s)][1:],
         title=f"{r['name']}の最低賃金の、前の年度からの引上げ額",
         desc=f"{s[1]['label']}から{s[-1]['label']}までの、{r['name']}の最低賃金の前の年度からの引上げ額(円)", label_every=6)
-    return line + "\n<p class=\"chart-note\">実線が" + k.esc(r["name"]) + "、点線が全国加重平均です。縦軸は0から始まっていません。</p>\n" + bars + "\n<p class=\"chart-note\">棒の高さは、前の年度からの引上げ額です(縦軸は0から)。</p>"
+    return (f'<figure class="chartfig">{line}<figcaption>実線が{k.esc(r["name"])}、点線が全国加重平均です。縦軸は0から始まっていません。</figcaption></figure>\n'
+            f'<figure class="chartfig">{bars}<figcaption>棒の高さは、前の年度からの引上げ額です(縦軸は0から)。</figcaption></figure>')
 
 
 def pref_table(r: dict, k) -> str:
@@ -88,22 +84,15 @@ def pref_table(r: dict, k) -> str:
         rows.append(
             f"<tr><td>{k.esc(e['label'])}</td><td>{amount}</td><td>{_signed(e['raise'])}</td><td>{_pct(e['raise_pct'])}</td>"
             f"<td>{avg}</td><td>{_signed(e['avg_gap'])}</td><td>{rank}</td><td>{date}</td></tr>")
+    foot = ('<tfoot><tr><td colspan="8">昭和52〜平成13年度は<a href="https://www.mhlw.go.jp/shingi/2003/12/s1202-3h.html" rel="noopener" target="_blank">厚生労働省の審議会資料(2003年)</a>、'
+            '平成14年度以降は「地域別最低賃金の全国一覧」の値です。発効日は平成14年度以降だけです。'
+            '※2 昭和54〜平成元年度の順位は、南部と北部で額が分かれていた京都府を除く、46都道府県の中の順位です。</td></tr></tfoot>')
     return ('<div class="tablewrap"><table><thead><tr><th>年度</th><th>最低賃金</th><th>前年度から</th><th>上がり率</th><th>全国加重平均</th><th>全国との差</th>'
-            f'<th>全国順位</th><th>発効日</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>')
+            f'<th>全国順位</th><th>発効日</th></tr></thead><tbody>{"".join(rows)}</tbody>{foot}</table></div>')
 
 
 def pref_notes(r: dict, k, fixed_note: str) -> str:
-    out = [fixed_note]
-    out.append('<p class="notice">昭和52年度から平成13年度までの額は、厚生労働省の審議会資料(2003年)「<a href="https://www.mhlw.go.jp/shingi/2003/12/s1202-3h.html" rel="noopener" target="_blank">地域別最低賃金に関するデータ(時間額)</a>」の表の値です。'
-               '平成14年度以降は、厚生労働省「地域別最低賃金の全国一覧」の値です。平成14年度と平成15年度は、2つの資料の額が、47都道府県すべてで一致しています。'
-               '発効日は、平成14年度以降だけ載せています。</p>')
-    has_frac = any(e["amount"] is not None and e["amount"] != int(e["amount"]) for e in r["long"])
-    if has_frac:
-        out.append('<p class="notice">小数のある額は、出典の表のとおりです。</p>')
-    kyoto = ("この期間の京都府の額は「南部・北部」で示し、全国順位は付けていません。" if r["short"] == "京都"
-             else "この期間の全国順位は、京都府を除く46都道府県の中で数えています。")
-    out.append(f'<p class="notice">※2 京都府は、昭和54年度から平成元年度まで、南部と北部で別の額でした。{kyoto}</p>')
-    return "".join(out)
+    return fixed_note
 
 
 def pref_trend(r: dict, k, fixed_note: str) -> str:
