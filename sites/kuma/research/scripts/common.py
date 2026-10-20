@@ -17,6 +17,8 @@ JST = timezone(timedelta(hours=9))
 FY_START = date(2026, 4, 1)          # the fiscal year the notes count (令和8年度)
 
 sys.stdout.reconfigure(encoding="utf-8")
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 
 def today() -> date:
@@ -46,3 +48,34 @@ def write_note(doc: dict) -> Path:
 
 def pct(part: int, whole: int, digits: int = 0) -> float:
     return round(part / whole * 100, digits) if whole else 0.0
+
+
+# ---- the Ministry of the Environment's tables (data/env_kuma.json, data/env_capture_kuma.json): notes built from them name the page that was opened
+
+MOE_PAGE = "https://www.env.go.jp/nature/choju/effort/effort12/effort12.html"
+MOE_CREDIT = "出典:環境省「クマに関する各種情報・取組」の公表資料(速報値)を加工して作成。環境省が作成したものではありません"
+MOE_CHECKED = "2026-10-20"     # the day the Ministry's page was opened and the PDFs named in each note were seen to be listed there
+MONTHS = [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3]
+
+
+def load_env() -> dict:
+    return json.loads((DATA / "env_kuma.json").read_text(encoding="utf-8"))
+
+
+def load_capture() -> dict:
+    return json.loads((DATA / "env_capture_kuma.json").read_text(encoding="utf-8"))
+
+
+def fy(y: str) -> str:
+    """'R07' -> '令和7年度', 'H20' -> '平成20年度'."""
+    return f"{'平成' if y[0] == 'H' else '令和'}{int(y[1:])}年度"
+
+
+def full_name(short: str) -> str:
+    from sokuhou import prefectures as pf
+    return pf.full(short)
+
+
+def jp(d: str) -> str:
+    x = date.fromisoformat(d)
+    return f"{x.year}年{x.month}月{x.day}日"
