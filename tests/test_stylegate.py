@@ -3,6 +3,8 @@
 An unnatural sentence stops the publish (ratchet mode), a warning that is in the baseline does not, a sentence the dictionary fixed does not, a high finding always does,
 and in shadow mode nothing stops but the report is the same.
 """
+import contextlib
+import io
 import json
 import tempfile
 import unittest
@@ -130,7 +132,9 @@ class GateTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d, mock.patch.object(sg, "BASELINE", Path(d) / "baseline.json"):
             sg.save_baseline(baseline_of("kuma", f.root))
             (f.root / "a.html").write_text(page(PLAIN, HIGH), encoding="utf-8")                    # the mid one is fixed, a new (high) one appears
-            self.assertEqual(sg.cmd_baseline("kuma", f.root, shrink=True), 0)
+            with contextlib.redirect_stdout(io.StringIO()):
+                code = sg.cmd_baseline("kuma", f.root, shrink=True)
+            self.assertEqual(code, 0)
             entry = sg.load_baseline()["sites"]["kuma"]
             self.assertEqual(entry["keys"], {})
             self.assertEqual(entry["counts"], {"high": 0, "mid": 0})
@@ -190,7 +194,9 @@ class PrecheckCodeTest(unittest.TestCase):
     def test_a_failing_precheck_returns_the_code_publish_ps1_stops_on(self):
         f = Folder(self, {"index.html": page(PLAIN, MID)})
         with mock.patch.object(sg, "changed_files", return_value=["sites/kuma/x.json"]), mock.patch.object(nj, "built_dir", return_value=f.root),                 mock.patch.object(sg, "load_baseline", return_value={"version": 1, "sites": {"kuma": sg.baseline_entry([], "2026-10-20")}}),                 mock.patch.dict("os.environ", {"NATURALJP_GATE": "ratchet"}):
-            self.assertEqual(sg.precheck("origin/main", ["kuma"]), 8)
+            with contextlib.redirect_stdout(io.StringIO()):
+                code = sg.precheck("origin/main", ["kuma"])
+            self.assertEqual(code, 8)
 
 
 class ModeTest(unittest.TestCase):
