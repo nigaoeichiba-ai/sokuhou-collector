@@ -250,6 +250,9 @@ def sites_touched(files: list[str], sites: dict | None = None) -> list[str]:
     return out
 
 
+PRECHECK_FAIL = 8          # the exit code publish.ps1 stops on; any other non-zero code (an import error, a crash) is the gate's own problem and only a warning there
+
+
 def precheck(base_ref: str = "origin/main", only: list[str] | None = None) -> int:
     files = changed_files(base_ref)
     targets = only or sites_touched(files)
@@ -265,7 +268,8 @@ def precheck(base_ref: str = "origin/main", only: list[str] | None = None) -> in
             continue
         code, text, v = run_check(out, site, mode, dictionary=True)
         print(text)
-        worst = max(worst, code)
+        if code:
+            worst = PRECHECK_FAIL
     if not targets:
         print("naturaljp gate: no site's text is in these commits")
     return worst

@@ -141,6 +141,13 @@ class GateTest(unittest.TestCase):
         self.assertNotIn("幸いです", raw)
 
 
+class PrecheckCodeTest(unittest.TestCase):
+    def test_a_failing_precheck_returns_the_code_publish_ps1_stops_on(self):
+        f = Folder(self, {"index.html": page(PLAIN, MID)})
+        with mock.patch.object(sg, "changed_files", return_value=["sites/kuma/x.json"]), mock.patch.object(nj, "built_dir", return_value=f.root),                 mock.patch.object(sg, "load_baseline", return_value={"version": 1, "sites": {"kuma": sg.baseline_entry([], "2026-10-20")}}),                 mock.patch.dict("os.environ", {"NATURALJP_GATE": "ratchet"}):
+            self.assertEqual(sg.precheck("origin/main", ["kuma"]), 8)
+
+
 class ModeTest(unittest.TestCase):
     def test_modes_come_from_the_register_and_the_environment(self):
         sites = {"defaults": {"naturaljp_gate": "shadow"}, "sites": [{"name": "kuma", "naturaljp_gate": "ratchet"}, {"name": "minna"}]}
