@@ -99,7 +99,7 @@ def pref_trend(r: dict, k, fixed_note: str) -> str:
     first = next(e for e in r["long"] if e["amount"] is not None)
     last = r["long"][-1]
     return (f"<h2>{k.esc(r['name'])}の最低賃金の推移({k.esc(first['label'])}から{k.esc(last['label'])}まで)</h2>\n"
-            f"<p>{pref_summary(r, k)}</p>\n{pref_charts(r, k)}\n"
+            f"{pref_charts(r, k)}\n"
             f"<h2>{k.esc(r['name'])}の最低賃金 年度別の一覧</h2>\n{pref_table(r, k)}\n{pref_notes(r, k, fixed_note)}")
 
 

@@ -162,7 +162,7 @@ class WagePagesTest(unittest.TestCase):
         self.assertIn("2,631円", html)
         self.assertIn("44.2%", html)
         self.assertIn("678.0万円", html)
-        self.assertIn("令和6年度の最低賃金(1,163円)", html)
+        self.assertIn("<tr><td>最低賃金(令和6年度)</td><td>1,163円</td>", html)
 
     def test_definitions_page_states_what_the_numbers_are(self):
         html = self.read("ranking/ratio/index.html")
