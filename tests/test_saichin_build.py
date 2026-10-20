@@ -112,7 +112,7 @@ class PreviewBuildTest(BuildTestBase):
 
     def test_sitemap_lists_every_page(self):
         locs = re.findall(r"<loc>(.*?)</loc>", self.read(self.out, "sitemap.xml"))
-        self.assertEqual(len(locs), 83)  # every html page except 404
+        self.assertEqual(len(locs), 81)  # every html page except 404 and the two noindex rankings
         self.assertIn("https://saichin-sokuho.com/shiga/", locs)
 
     def test_privacy_page_has_the_ad_disclosures(self):

@@ -139,3 +139,61 @@ class SimilarityTest(SiteFixture):
         for s in build.SLUGS.values():
             text = ov.prose(self.read(f"{s}/index.html"))
             self.assertGreater(len(text), 900, s)
+
+
+class AreaStoryTest(SiteFixture):
+    def prose(self, slug):
+        return ov.prose(self.read(f"area/{slug}/index.html"))
+
+    def facts(self):
+        raw = _raw()
+        am = {p["name"]: p["history"]["2026"]["amount"] for p in raw["prefectures"]}
+        up = {p["name"]: p["history"]["2026"]["amount"] - p["history"]["2025"]["amount"] for p in raw["prefectures"]}
+        eff = {p["name"]: p["history"]["2026"]["effective_date"] for p in raw["prefectures"]}
+        full = {r["short"]: r["name"] for r in self.d["rows"]}
+        return am, up, eff, full
+
+    def test_the_rank_of_the_region_among_the_seven_is_by_simple_mean(self):
+        am, up, eff, full = self.facts()
+        means = {slug: sum(am[s] for s in shorts) / len(shorts) for slug, _, shorts in build.REGIONS}
+        for slug, rname, shorts in build.REGIONS:
+            text = self.prose(slug)
+            rank = 1 + sum(1 for m in means.values() if m > means[slug])
+            if rank == 1:
+                self.assertIn("単純平均が最も高い地方です", text, slug)
+            elif rank == 7:
+                self.assertIn("単純平均が最も低い地方です", text, slug)
+            else:
+                self.assertIn(f"単純平均の高い順に並べると、{rank}番目です", text, slug)
+            self.assertIn(f"単純平均{round(means[slug]):,}円", text, slug)
+
+    def test_the_biggest_step_between_neighbours_is_recomputed_from_the_adjacency_table(self):
+        am, up, eff, full = self.facts()
+        for slug, rname, shorts in build.REGIONS:
+            edges = [abs(am[a] - am[b]) for a in shorts for b in adjacency.NEIGHBOURS[a] if b in shorts and a < b]
+            text = self.prose(slug)
+            if not edges:
+                continue
+            self.assertIn(f"{max(edges)}円です。", text.split("県境をはさんで最も差が大きいのは、", 1)[1][:60], slug)
+            if min(edges) != max(edges):
+                tail = text.split("最も小さいのは、", 1)[1][:40]
+                self.assertIn("同額" if min(edges) == 0 else f"{min(edges)}円の差", tail, slug)
+
+    def test_raise_and_date_sentences(self):
+        am, up, eff, full = self.facts()
+        for slug, rname, shorts in build.REGIONS:
+            text = self.prose(slug)
+            hi, lo = max(up[s] for s in shorts), min(up[s] for s in shorts)
+            self.assertIn(f"の+{hi}円、最も小さいのは", text, slug)
+            self.assertIn(f"の+{lo}円で、{hi - lo}円の開きがあります", text, slug)
+            d1, d2 = min(eff[s] for s in shorts), max(eff[s] for s in shorts)
+            from datetime import date
+            days = (date.fromisoformat(d2) - date.fromisoformat(d1)).days
+            self.assertIn(f"{days}日の幅があります", text, slug)
+
+    def test_the_table_of_the_seven_regions_is_on_every_region_page_with_the_current_one_marked(self):
+        am, up, eff, full = self.facts()
+        for slug, rname, shorts in build.REGIONS:
+            page = self.read(f"area/{slug}/index.html")
+            self.assertEqual(page.count("<tr class='on'>"), 1, slug)
+            self.assertIn(f"<tr class='on'><td>{rname}</td><td>{round(sum(am[s] for s in shorts) / len(shorts)):,}円</td>", page, slug)

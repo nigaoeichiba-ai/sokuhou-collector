@@ -288,3 +288,20 @@ class FaqGuideTest(SiteFixture):
             text = re.sub(r"<script[^>]*src=[^>]*></script>", "", self.read(rel))
             for word in ("Claude", "Anthropic", "AIの支援", "AI(", "人工知能", "自動で作", "自動作成", "自動生成", "機械が", "プログラムで計算"):
                 self.assertNotIn(word, text, (rel, word))
+
+
+class NoindexRankingTest(SiteFixture):
+    def test_the_two_rankings_without_demand_are_noindex_follow_and_not_in_the_sitemap_but_still_linked(self):
+        sitemap = self.read("sitemap.xml")
+        for kind in ("low", "raise"):
+            page = self.read(f"ranking/{kind}/index.html")
+            self.assertIn('<meta name="robots" content="noindex,follow">', page, kind)
+            self.assertNotIn(f"/ranking/{kind}/", sitemap, kind)
+            self.assertIn(f'href="/ranking/{kind}/"', self.read("ranking/high/index.html"), kind)         # the tabs still lead to them
+        for kind in ("high",):
+            self.assertNotIn("noindex", self.read(f"ranking/{kind}/index.html"), kind)
+            self.assertIn(f"https://saichin-sokuho.com/ranking/{kind}/", sitemap, kind)
+
+    def test_the_decision_rests_on_the_measured_demand(self):
+        from sites.saichin import build
+        self.assertEqual(build.NOINDEX_PATHS, {"/ranking/low/", "/ranking/raise/"})

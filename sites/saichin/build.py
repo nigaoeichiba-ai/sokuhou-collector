@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import analysis_pages, charts, content, dataset, history_old, long_history, ogimage, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
+from sites.saichin import analysis_pages, area_story, charts, content, dataset, history_old, long_history, ogimage, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
@@ -66,6 +66,9 @@ HTACCESS = (
 # Pages with no content of their own (lists of links, forms, the 404): AdSense's policy keeps Google-served ads off "screens without publisher
 # content" and off screens used for navigation, so these pages do not load the AdSense tag at all.
 NO_ADS_PATHS = {"/area/", "/guide/", "/analysis/", "/contact/", "/contact/thanks.html", "/404.html"}
+# The same table as /ranking/high/ in another order, with no search demand in Search Console (2026-10-20: /ranking/high/ 403 impressions, /ranking/raise/ 12,
+# /ranking/low/ none): kept for readers who follow the tabs, but not offered to search engines (noindex,follow) and left out of the sitemap.
+NOINDEX_PATHS = {"/ranking/low/", "/ranking/raise/"}
 
 
 def asset_version() -> str:
@@ -297,7 +300,7 @@ def nav_html(path: str) -> str:
 def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str, body: str, scripts: bool = True, head_extra: str = "") -> str:
     base = cfg["site_url"].rstrip("/")
     name = esc(cfg["site_name"])
-    robots = '<meta name="robots" content="noindex,nofollow">\n' if preview else ""
+    robots = '<meta name="robots" content="noindex,nofollow">\n' if preview else ('<meta name="robots" content="noindex,follow">\n' if path in NOINDEX_PATHS else "")
     banner = (
         '<div class="preview">プレビュー版です。運営者情報などが未設定のため、検索エンジンには公開されません。</div>\n'
         if preview else ""
@@ -597,8 +600,8 @@ def area_page(d: dict, slug: str, rname: str, shorts: list[str], cfg: dict, prev
 <div class="card-grid">{cards}</div>
 <h2>一覧表</h2>
 <div class="tablewrap"><table><thead><tr><th>都道府県</th><th>最低賃金</th><th>全国順位</th><th>引上げ額</th><th>発効日</th></tr></thead><tbody>{rows}</tbody></table></div>
-{analysis_pages.region_block(d, rname, members, sys.modules[__name__])}<h2>ほかの地方</h2>
-<ul class="pref-nav">{others}</ul>
+{area_story.story_block(d, slug, rname, members, sys.modules[__name__])}{analysis_pages.region_block(d, rname, members, sys.modules[__name__])}<h2>ほかの地方</h2>
+<nav aria-label="ほかの地方"><ul class="pref-nav">{others}</ul></nav>
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。単純平均は、このサイトで計算した参考値です。</p>"""
     return finish(layout(cfg, preview, path=f"/area/{slug}/", title=f"{rname}の最低賃金一覧({kinds})と順位({d['label']})",
                          description=f"{rname}{kinds}の最低賃金を高い順に並べました。最高は{hi['name']}の{yen(hi['amount'])}、最低は{lo['name']}の{yen(lo['amount'])}。全国順位・引上げ額・発効日も掲載しています。", body=body), d)
@@ -1279,7 +1282,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, wage: di
     pages["404.html"] = not_found_page(d, cfg, preview)
 
     urls = ["/" + p[: -len("index.html")] for p in pages if p.endswith("index.html")]
-    urls = sorted(set(urls), key=lambda u: (u != "/", u))
+    urls = sorted(set(urls) - NOINDEX_PATHS, key=lambda u: (u != "/", u))
     pages["sitemap.xml"] = (
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"<url><loc>{esc(base + u)}</loc><lastmod>{d['fetched_date']}</lastmod></url>\n" for u in urls)
