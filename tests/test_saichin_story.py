@@ -497,3 +497,33 @@ class AreaStoryTest(SiteFixture):
             page = self.read(f"area/{slug}/index.html")
             self.assertEqual(page.count("<tr class='on'>"), 1, slug)
             self.assertIn(f"<tr class='on'><td>{rname}</td><td>{round(sum(am[s] for s in shorts) / len(shorts)):,}円</td>", page, slug)
+
+
+class AreaMembersTest(SiteFixture):
+    """The table 'prefectures of the region' and the list of cities on each region page, recomputed from the workbook fixture and the places table."""
+
+    def test_the_members_table(self):
+        from sites.saichin.places import PLACES
+        raw, old = _raw(), history_old.load()
+        series, _ = all_series(raw, old)
+
+        def rank(fy, short):
+            return 1 + sum(1 for o in series.values() if o[fy] is not None and o[fy] > series[short][fy])
+        full = {r["short"]: r["name"] for r in self.d["rows"]}
+        for slug, rname, shorts in build.REGIONS:
+            page = self.read(f"area/{slug}/index.html")
+            section = page.split("<h3>都道府県ごとの動き</h3>", 1)[1]
+            rows = [[re.sub(r"<[^>]+>", "", c) for c in re.findall(r"<td>(.*?)</td>", tr, re.S)] for tr in re.findall(r"<tr>(.*?)</tr>", re.search(r"<tbody>(.*?)</tbody>", section, re.S).group(1), re.S)]
+            self.assertEqual(sorted(r[0] for r in rows), sorted(full[s] for s in shorts), slug)
+            for name, now, ten, y1000 in rows:
+                short = next(s for s in shorts if full[s] == name)
+                d0 = rank(2016, short) - rank(2026, short)
+                self.assertEqual(now, f"{rank(2026, short)}位", name)
+                move = f"{d0}位上がった" if d0 >= 1 else f"{-d0}位下がった" if d0 <= -1 else "変わらず"
+                self.assertEqual(ten, f"{rank(2016, short)}位({move})", name)
+                fy = next(y for y in YEARS_ if series[short][y] is not None and series[short][y] >= 1000)
+                self.assertEqual(y1000, label(fy), name)
+            text = re.sub(r"<[^>]+>", "", page)
+            self.assertIn(f"{rname}の主な市と区は、", text)
+            for s in shorts:
+                self.assertIn("、".join(PLACES[s]) + f"({full[s]})", text, (slug, s))
