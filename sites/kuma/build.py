@@ -49,6 +49,8 @@ SITE = {
     "glyph": "&#128059;",
     "assets": HERE / "assets",
     "source_html": SOURCE_HTML,
+    # forms, the search, the notification page, the 404 and lists of links have nothing of their own to read: AdSense keeps Google-served ads off "screens without publisher content"
+    "no_ads_paths": frozenset({"/contact/", "/contact/thanks.html", "/404.html", "/search/", "/notify/", "/live/", "/official/", "/notices/", "/map/"}),
 }
 WEEKDAY_SKIP = None
 CAUTION = ("環境省が都道府県から聞き取った<strong>速報値</strong>で、後から修正されることがあります。"
@@ -319,7 +321,11 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
                   f'{n(r["ytd"][cur])}'] for r in rows]
         head = ["順位", "道府県", f"{fy_label(done)}", f"{fy_label(prev)}", "前年度との比", f"{fy_label(cur)}({month_range(d)})"]
         extra = bar_list([(pref_link(r), f'{n(r["total"][done])}件', r["total"][done]) for r in rows], 10)
-        h1, lead = "熊(クマ)の出没件数ランキング", f"{fy_label(done)}の出没件数が多い順に、並べています。{'と'.join(r['name'] for r in d['rows'] if not r['has'])}は、環境省の表に数値がありません(「-」)ので、載せていません。"
+        top3 = "、".join(f"{r['name']}({n(r['total'][done])}件)" for r in rows[:3])
+        h1 = "熊(クマ)が多い県のランキング 出没件数の多い順"        # the searched words are 「熊が多い県 ランキング」 (Search Console, 2026-10)
+        first = f"{fy_label(done)}に熊(クマ)の出没が最も多かったのは、{top3}の順です。"
+        lead = (f"{first}{fy_label(done)}の出没件数が多い順に、並べています。"
+                f"{'と'.join(r['name'] for r in d['rows'] if not r['has'])}は、環境省の表に数値がありません(「-」)ので、載せていません。")
     elif kind == "change":
         extra = ""
         rows = sorted((r for r in d["rows"] if r["rank"]["change"]), key=lambda r: (r["rank"]["change"], r["name"]))
@@ -346,8 +352,10 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
 {extra if kind == "sightings" else ""}{table(head, lines)}
 {extra if kind == "injuries" else ""}{note}
 <p class="notice">{freshness(d)}</p>"""
-    return page(cfg, preview, path=f"/ranking/{kind}/", title=f"{h1}({fy_label(done)}・環境省の速報値)",
-                description=f"{lead[:110]}", body=body)
+    title = f"{h1}({fy_label(done)}・環境省の速報値)" if kind != "sightings" else f"熊が多い県ランキング 出没件数の都道府県別一覧({fy_label(done)}・環境省の速報値)"
+    desc = lead[:110] if kind != "sightings" else f"{first}{len(rows)}道府県の出没件数を、環境省の速報値から多い順に並べた表です。"
+    return page(cfg, preview, path=f"/ranking/{kind}/", title=title,
+                description=desc, body=body)
 
 
 def injuries_table(d: dict, r: dict | None) -> str:
@@ -569,7 +577,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
 {caution_box()}
 {rel}<h2>ほかの道府県</h2>
 <ul class="pref-nav">{nav}</ul>
-<div class="next-box"><h2>次に見る</h2><ul><li><a href="/ranking/sightings/">{icon("chart")}出没件数ランキング</a></li><li><a href="/trend/">{icon("calendar")}月別の推移</a></li><li><a href="/emergency/">{icon("emergency")}緊急銃猟</a></li><li><a href="/guide/">{icon("guide")}クマへの対処法</a></li></ul></div>
+<div class="next-box"><h2>次に見る</h2><ul><li><a href="/ranking/sightings/">{icon("chart")}出没件数ランキング</a></li><li><a href="/trend/">{icon("calendar")}月別の推移</a></li><li><a href="/season/">{icon("calendar")}何月に多いか(都道府県別)</a></li><li><a href="/emergency/">{icon("emergency")}緊急銃猟</a></li><li><a href="/guide/">{icon("guide")}クマへの対処法</a></li></ul></div>
 <p class="notice">{freshness(d)}</p>"""
     return page(cfg, preview, scripts=True, path=f"/{r['slug']}/", title=f"{r['name']}の熊(クマ)出没・人身被害・死亡事故({fy_label(done)}・環境省の速報値)",
                 description=f"{r['name']}の熊(クマ)の出没件数(月別)、人身被害、死亡事故(環境省の一覧に載っているか、日付つきで)、緊急銃猟、公式の出没情報への案内。環境省の速報値をもとにしています。", body=body)
@@ -816,7 +824,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         nav = nav[:-1] + [("グッズ(PR)", "/goods/", "/goods/")] + nav[-1:]
     SITE = {**SITE, "nav": nav}
     # the footer of every page links to where the numbers come from (the page exists only with live data); SITE is module-wide, so set it every time
-    SITE["source_html"] = SOURCE_HTML + (' 数字の出典・数え方・引用のしかたは、<a href="/cite/">こちら</a>。' if any_live else "")
+    SITE["source_html"] = SOURCE_HTML + (' <a href="/cite/">数字の出典・数え方・引用のしかた</a>は、別のページにまとめています。' if any_live else "")
     d["lv"] = live_mod.prepare_live(d, today or datetime.now(JST).date()) if any_live else None
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
     thin_pages: set[str] = set()      # pages kept out of the index: thin municipality pages, old week pages, a prefecture without bears (sites/kuma/indexing.py)

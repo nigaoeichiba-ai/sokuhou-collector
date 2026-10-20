@@ -106,10 +106,38 @@ def nav_html(site: dict, path: str) -> str:
     return "".join(out)
 
 
+_CRUMB_ITEM = re.compile(r'<a href="([^"]+)">([^<]+)</a>|<span>([^<]+)</span>')
+
+
+def structured_data(cfg: dict, path: str, body: str, existing: str = "") -> str:
+    """JSON-LD every page can have from what the page already shows: a BreadcrumbList from its own breadcrumb navigation (links and labels as the reader sees them),
+    and a WebSite on the home page (site name and address only: no author, no publisher).  A page that already carries a BreadcrumbList / WebSite of its own is left alone."""
+    import html as _html
+    import json
+    base = cfg["site_url"].rstrip("/")
+    out = []
+    if path == "/" and '"WebSite"' not in body and '"WebSite"' not in existing:
+        out.append({"@context": "https://schema.org", "@type": "WebSite", "name": cfg["site_name"], "url": base + "/", "inLanguage": "ja"})
+    m = re.search(r'<nav class="crumbs"[^>]*>(.*?)</nav>', body, re.S)
+    if m and "BreadcrumbList" not in body and "BreadcrumbList" not in existing:
+        rows = []
+        for href, label, last in _CRUMB_ITEM.findall(m.group(1)):
+            name = _html.unescape(label or last).strip()
+            if href and not href.startswith(("/", "http")):
+                rows = []
+                break
+            rows.append({"@type": "ListItem", "position": len(rows) + 1, "name": name,
+                         **({"item": (base + href) if href.startswith("/") else href} if href else {})})
+        if len(rows) >= 2:
+            out.append({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": rows})
+    return "".join('<script type="application/ld+json">' + json.dumps(d, ensure_ascii=False).replace("</", "<\\/") + "</script>\n" for d in out)
+
+
 def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, description: str, body: str,
            scripts: bool = False, og_image: str | None = None, alternates: tuple[tuple[str, str], ...] = (),
            head_extra: str = "") -> str:
     base = cfg["site_url"].rstrip("/")
+    head_extra = structured_data(cfg, path, body, head_extra) + head_extra
     name = esc(cfg["site_name"])
     robots = '<meta name="robots" content="noindex,nofollow">\n' if preview else ""
     if og_image and not preview:   # Discover / large previews. Named googlebot so the name="robots" checks that add noindex still work
@@ -117,7 +145,7 @@ def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, descr
     banner = ('<div class="preview">プレビュー版です。運営者情報などが未設定のため、検索エンジンには公開されません。</div>\n'
               if preview else "")
     adsense = ""
-    if cfg.get("adsense_pub_id"):
+    if cfg.get("adsense_pub_id") and path not in site.get("no_ads_paths", ()):      # pages with nothing of their own to read (forms, link lists, the 404) carry no tag
         pub = cfg["adsense_pub_id"].replace("ca-", "")
         adsense = ('<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
                    f'?client=ca-{esc(pub)}" crossorigin="anonymous"></script>\n')

@@ -71,9 +71,10 @@ class DataFilesTest(SiteFixture):
 
 class DatasetMarkupTest(SiteFixture):
     def ld(self):
-        m = re.search(r'<script type="application/ld\+json">(.*?)</script>', self.read("data/index.html"), re.S)
-        self.assertIsNotNone(m)
-        return json.loads(m.group(1))
+        found = [json.loads(x) for x in re.findall(r'<script type="application/ld\+json">(.*?)</script>', self.read("data/index.html"), re.S)]
+        datasets = [x for x in found if x.get("@type") == "Dataset"]      # the breadcrumb data (sitekit.structured_data) sits beside it
+        self.assertEqual(len(datasets), 1)
+        return datasets[0]
 
     def test_the_dataset_markup_meets_the_conditions_of_dataset_search(self):
         ld = self.ld()
@@ -89,7 +90,8 @@ class DatasetMarkupTest(SiteFixture):
     def test_only_the_data_page_carries_the_markup(self):
         for rel in self.files:
             if rel.endswith(".html") and rel != "data/index.html":
-                self.assertNotIn("application/ld+json", self.read(rel), rel)
+                for x in re.findall(r'<script type="application/ld\+json">(.*?)</script>', self.read(rel), re.S):
+                    self.assertIn(json.loads(x).get("@type"), ("BreadcrumbList", "WebSite"), rel)     # the Dataset markup stays on /data/ only
 
 
 class CiteAndLinksTest(SiteFixture):

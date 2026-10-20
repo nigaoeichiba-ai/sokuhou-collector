@@ -90,7 +90,7 @@ def page(d: dict, cfg: dict, preview: bool) -> str | None:
     lead = f"Amazonで買える贈り物{len(rows)}点を、商品ページの事実から{len(axes)}項目で採点した順に並べます。価格とレビューはAmazonの規約で載せられないため、点数に入っていません。"
     lis = "".join(_row(cfg, axes, e, i) for i, e in enumerate(rows, 1))
     rakuten = "楽天市場の商品は、価格・ポイント・送料・レビューを並べた<a href=\"/compare/\">商品比較</a>で比べられます。" if d.get("compare") else ""
-    body = f"""{B.head_band("sky", "", "Amazonで選ぶ贈り物", lead, single=True)}
+    body = f"""{B.head_band("sky", "", "Amazonで選ぶ贈り物の採点順", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/")] + ([("商品比較", "/compare/")] if d.get("compare") else []) + [("Amazonで選ぶ", None)])}</div>
 {B.pr_quiet(cfg)}
 <section class="block cmp" id="cmp">

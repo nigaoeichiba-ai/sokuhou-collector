@@ -977,6 +977,17 @@ def embed_box(base: str, it: dict) -> str:
 """
 
 
+def illust_page_title(it: dict, items, s: dict) -> str:
+    """The <title> text of an illustration page.  Several sets draw the same subject ('ロケット' in 4 sets), and a title shared by 540 pages tells a search engine nothing about which
+    page is which (2026-10-20 audit: 231 titles on 540 pages): where the subject name is not unique, the set's name goes in brackets, and the place in the set where even that is not."""
+    same = [x for x in items if x["title"] == it["title"]]
+    if len(same) < 2:
+        return it["title"]
+    if sum(1 for x in same if x["series"] == it["series"]) < 2:
+        return f"{it['title']}({s['title']})"
+    return f"{it['title']}({s['title']}・{s['ids'].index(it['id']) + 1}点目)"
+
+
 def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
     base = cfg["site_url"].rstrip("/")
     s = series_of(it, series)
@@ -1026,7 +1037,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 {('<section style="margin-top:44px"><h2><span class="scribble">他の' + esc(g) + 'のイラスト</span></h2>' + grid(others) + '</section>') if others else ''}
 {guide_box(guides_for(it['genre'], it['touch'], list(guides)))}
 <script type="application/ld+json">{ld}</script>"""
-    return page(cfg, preview, path=f"/illust/{it['id']}/", title=f"{it['title']} 無料・商用OKのイラスト | {cfg['site_name']}",
+    return page(cfg, preview, path=f"/illust/{it['id']}/", title=f"{illust_page_title(it, items, s)} 無料・商用OKのイラスト | {cfg['site_name']}",
                 description=(f"{it['title']}のイラスト。{s['title']}の1点です。{use_line}無料・商用OK・クレジット不要の透明PNG。" if use_line
                              else f"{it['desc']}{t}のタッチ。無料・商用OK・クレジット不要の透明PNG。")[:150], body=body, og_image=f"/thumbs/{it['id']}.webp")
 
@@ -1528,8 +1539,11 @@ def visible_chars(html: str) -> int:
     return len(re.sub(r"\s+", "", re.sub(r"<[^>]+>", " ", t)))
 
 
+UTILITY_PAGES = ("favorites/index.html", "search/index.html")      # a visitor's own list (empty for a search engine) and the search form: nothing of their own to find in a search (2026-10-20 audit)
+
+
 def thin_pages(pages: dict) -> set[str]:
-    out = set()
+    out = {rel for rel in UTILITY_PAGES if rel in pages}
     for rel, text in pages.items():
         kind = page_kind(rel) if isinstance(text, str) else ""
         if kind == "paged" or (kind in THIN_CHARS and visible_chars(text) < THIN_CHARS[kind]):
