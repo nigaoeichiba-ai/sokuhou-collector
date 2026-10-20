@@ -9,6 +9,7 @@ from datetime import date
 
 from sites.saichin.adjacency import NEIGHBOURS
 from sites.saichin.long_history import yen_text
+from sites.saichin.places import PLACES
 
 
 def _mean(rows: list[dict]) -> float:
@@ -130,20 +131,56 @@ def history_story(d: dict, rname: str, members: list[dict], k) -> list[str]:
     return [f"地方内の最高額と最低額の差が最も大きかったのは{k.esc(label)}の{yen_text(big[0])}で、いまの{now}円は、それより{yen_text(big[0] - now)}小さくなっています。"]
 
 
-def members_list(d: dict, members: list[dict], k) -> str:
-    """One line per prefecture: how its national rank moved in ten years and when it passed 1,000 yen (only what is true of it)."""
-    items = []
+def places_story(d: dict, rname: str, members: list[dict], k) -> list[str]:
+    """The cities of the region that people search by (three per prefecture, the capital first), as a list; the amount of each is its prefecture's."""
+    parts = []
     for r in members:
-        s = [e for e in r["long"] if e["rank"] is not None]
-        last = s[-1]
-        ten = next(e for e in s if e["fy"] == last["fy"] - 10)
+        parts.append("、".join(PLACES[r["short"]]) + f"({k.esc(r['name'])})")
+    return [f"{k.esc(rname)}の主な市と区は、{'、'.join(parts)}です。どの市区も、その都道府県の最低賃金が適用されます。"]
+
+
+def members_list(d: dict, members: list[dict], k) -> str:
+    """One row per prefecture (a table): its national rank, how the rank moved in ten years and when it passed 1,000 yen."""
+    rows = []
+    for r in members:
+        sr = [e for e in r["long"] if e["rank"] is not None]
+        last = sr[-1]
+        ten = next(e for e in sr if e["fy"] == last["fy"] - 10)
         diff = ten["rank"] - last["rank"]
-        move = (f"10年前の{ten['rank']}位から{diff}位上がりました" if diff >= 1 else
-                f"10年前の{ten['rank']}位から{-diff}位下がりました" if diff <= -1 else f"10年前と同じ{ten['rank']}位です")
+        move = (f"{diff}位上がった" if diff >= 1 else f"{-diff}位下がった" if diff <= -1 else "変わらず")
         y1000 = next((e["label"] for e in r["long"] if e["amount"] is not None and e["amount"] >= 1000), None)
-        thousand = f"1,000円に届いたのは{k.esc(y1000)}です" if y1000 else "1,000円には、まだ届いていません"
-        items.append(f'<li><a href="/{r["slug"]}/">{k.esc(r["name"])}</a>は、全国{last["rank"]}位。{move}。{thousand}。</li>')
-    return '<h3>都道府県ごとの動き</h3>\n<ul>' + "".join(items) + "</ul>\n"
+        rows.append(f'<tr><td><a href="/{r["slug"]}/">{k.esc(r["name"])}</a></td><td>{last["rank"]}位</td><td>{ten["rank"]}位({move})</td><td>{k.esc(y1000) if y1000 else "まだ届いていません"}</td></tr>')
+    return ('<h3>都道府県ごとの動き</h3>\n<div class="tablewrap"><table><thead><tr><th>都道府県</th><th>全国順位</th><th>10年前の順位</th><th>1,000円以上になった年度</th></tr></thead>'
+            f'<tbody>{"".join(rows)}</tbody></table></div>\n')
+
+
+def industry_block(d: dict, rname: str, members: list[dict], k) -> str:
+    """The industries whose own (higher) minimum wage applies in the prefectures of the region, from the Ministry's table (industry_view)."""
+    if not d.get("industry"):
+        return ""
+    by = d["industry"]["by_pref"]
+    count: dict[str, list[str]] = {}
+    for r in members:
+        for x in by[r["short"]]:
+            if not x["regional_applies"]:
+                count.setdefault(x["industry"], []).append(r["name"])
+    most = sorted(count.items(), key=lambda t: (-len(t[1]), t[0]))
+    n_with = sum(1 for r in members if any(not x["regional_applies"] for x in by[r["short"]]))
+    rows = []
+    for r in members:
+        applying = [x for x in by[r["short"]] if not x["regional_applies"]]
+        top = applying[0] if applying else None
+        rows.append(f'<tr><td><a href="/{r["slug"]}/">{k.esc(r["name"])}</a></td><td>{len(by[r["short"]])}</td><td>{len(applying)}</td>'
+                    f'<td>{k.esc(top["industry"]) + "(" + k.yen(top["hourly"]) + ")" if top else "-"}</td></tr>')
+    if most:
+        listed = "、".join(f"{k.esc(name)}({len(prefs)}都道府県)" for name, prefs in most[:4])
+        lead = (f"<p>{k.esc(rname)}の{len(members)}都道府県のうち、特定(産業別)最低賃金の額が適用される産業が1つ以上あるのは{n_with}都道府県です。"
+                f"複数の都道府県にまたがる産業は、{listed}です。</p>" if len(most[0][1]) > 1 else
+                f"<p>{k.esc(rname)}の{len(members)}都道府県のうち、特定(産業別)最低賃金の額が適用される産業が1つ以上あるのは{n_with}都道府県です。同じ産業が2つ以上の都道府県で適用されることは、ありません。</p>")
+    else:
+        lead = f"<p>{k.esc(rname)}の{len(members)}都道府県には、特定(産業別)最低賃金の額が適用される産業が、ありません。</p>"
+    return (f"<h2>{k.esc(rname)}の特定(産業別)最低賃金</h2>\n{lead}\n<div class=\"tablewrap\"><table><thead><tr><th>都道府県</th><th>特定最低賃金のある産業</th><th>うち特定の額が適用される産業</th><th>適用される最も高い額</th></tr></thead>"
+            f'<tbody>{"".join(rows)}</tbody><tfoot><tr><td colspan="4">厚生労働省「特定(産業別)最低賃金全国一覧」({k.esc(d["industry"].get("table_label") or "")})。「特定の額が適用される」は、同じ表で「※」が付いていない額です。</td></tr></tfoot></table></div>\n')
 
 
 def story_block(d: dict, slug: str, rname: str, members: list[dict], k) -> str:
@@ -153,10 +190,12 @@ def story_block(d: dict, slug: str, rname: str, members: list[dict], k) -> str:
         ("県境をはさんだ差", border_story(d, members, k)),
         ("引上げ額と発効日", raise_story(d, rname, members, k) + date_story(d, rname, members, k)),
         ("地方内の差の推移", history_story(d, rname, members, k)),
+        ("地方内の主な市", places_story(d, rname, members, k)),
     ):
         s = [x for x in sentences if x]
         if s:
             parts.append(f"<h3>{head}</h3>\n<p>{''.join(s)}</p>")
     parts.append(members_list(d, members, k))
+    parts.append(industry_block(d, rname, members, k))
     parts.append(region_table(d, k, slug))
     return "\n".join(parts) + "\n"

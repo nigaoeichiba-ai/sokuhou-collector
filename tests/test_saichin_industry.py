@@ -137,6 +137,38 @@ class SectionTest(SiteFixture):
             else:
                 self.assertIn("いずれも、厚生労働省の表で「※」が付いていて、地域別最低賃金が適用される額です。", text, r["name"])
 
+    def test_each_region_page_counts_the_industries_that_apply_in_its_prefectures(self):
+        for slug, rname, shorts in build.REGIONS:
+            page = self.read(f"area/{slug}/index.html")
+            section = page.split(f"<h2>{rname}の特定(産業別)最低賃金</h2>", 1)[1]
+            body = re.search(r"<tbody>(.*?)</tbody>", section, re.S).group(1)
+            rows = [[re.sub(r"<[^>]+>", "", c) for c in re.findall(r"<td>(.*?)</td>", tr, re.S)] for tr in re.findall(r"<tr>(.*?)</tr>", body, re.S)]
+            self.assertEqual(len(rows), len(shorts), slug)
+            counted = {}
+            for name, n_all, n_apply, top in rows:
+                short_ = next(s for s in shorts if name.startswith(s))
+                want = self.want[short_]
+                applying = [w for w in want if not w[1]]
+                self.assertEqual((int(n_all), int(n_apply)), (len(want), len(applying)), name)
+                if applying:
+                    best = max(applying, key=lambda w: w[2])
+                    self.assertEqual(top, f"{best[0]}({best[2]:,}円)", name)
+                else:
+                    self.assertEqual(top, "-", name)
+                for w in applying:
+                    counted.setdefault(w[0], []).append(name)
+            text = re.sub(r"<[^>]+>", "", section.split("<table>", 1)[0])
+            n_with = sum(1 for r in rows if int(r[2]) > 0)
+            if n_with == 0:
+                self.assertIn(f"{rname}の{len(shorts)}都道府県には、特定(産業別)最低賃金の額が適用される産業が、ありません。", text, slug)
+                continue
+            self.assertIn(f"{rname}の{len(shorts)}都道府県のうち、特定(産業別)最低賃金の額が適用される産業が1つ以上あるのは{n_with}都道府県です。", text, slug)
+            multi = sorted(((n, v) for n, v in counted.items() if len(v) > 1), key=lambda t: (-len(t[1]), t[0]))
+            if multi:
+                self.assertIn("、".join(f"{n}({len(v)}都道府県)" for n, v in multi[:4]), text, slug)
+            else:
+                self.assertIn("同じ産業が2つ以上の都道府県で適用されることは、ありません。", text, slug)
+
     def test_the_source_the_date_and_the_rule_are_stated(self):
         page = self.read("chiba/index.html")
         self.assertIn("厚生労働省「特定(産業別)最低賃金全国一覧」(令和7年度)。データの取得日: 2026年10月20日。", page)
