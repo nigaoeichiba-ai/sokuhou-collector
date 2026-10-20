@@ -136,6 +136,7 @@ class CliTest(unittest.TestCase):
         names = {s.name for group in run.GROUPS.values() for s in group}
         self.assertEqual(names, {
             "minwage",
+            "minwage_industry",
             "estat_wage",
             "env_kuma",
             "env_capture_kuma",

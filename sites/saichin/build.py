@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import ranking_notes, analysis_pages, area_story, articles, charts, content, dataset, history_old, long_history, ogimage, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
+from sites.saichin import industry_view, ranking_notes, analysis_pages, area_story, articles, charts, content, dataset, history_old, long_history, ogimage, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
 from sokuhou.sitekit import structured_data  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
@@ -527,7 +527,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <div class="stat"><span>全国での順位</span><b>47都道府県中 {r['rank']}位</b><span>同額は同じ順位とします</span></div>
 </div>
 {trend_pages.pref_trend(r, sys.modules[__name__], fixed_note)}
-{pref_story.figures_table(d, r, sys.modules[__name__])}{pref_story.compare_table(d, r, sys.modules[__name__])}{pref_story.story_block(d, r, sys.modules[__name__])}{analysis_pages.pref_block(d, r, sys.modules[__name__])}<h2>{esc(r['name'])}の最低賃金は、月給・年収でいくらか</h2>
+{pref_story.figures_table(d, r, sys.modules[__name__])}{pref_story.compare_table(d, r, sys.modules[__name__])}{pref_story.story_block(d, r, sys.modules[__name__])}{analysis_pages.pref_block(d, r, sys.modules[__name__])}{industry_view.section(d, r, sys.modules[__name__]) if d.get("industry") else ""}<h2>{esc(r['name'])}の最低賃金は、月給・年収でいくらか</h2>
 {pref_story.monthly_table(d, r, sys.modules[__name__])}
 {earnings_table(r)}
 {wage_section(d, r) if d.get("wage") else ""}
@@ -1235,7 +1235,7 @@ def og_cards(d: dict) -> dict[str, bytes]:
 
 # ---------------------------------------------------------------- site
 
-def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, wage: dict | None = None) -> list[str]:
+def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, wage: dict | None = None, industry: dict | None = None) -> list[str]:
     missing = missing_config(cfg)
     if release and missing:
         raise BuildError(f"release build refused: set {', '.join(missing)} in config.json")
@@ -1246,6 +1246,11 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, wage: di
             d["wage"] = wagelib.view(wage, d)
         except wagelib.WageError as e:
             raise BuildError(f"wage survey does not fit the minimum-wage data: {e}")
+    if industry:
+        try:
+            d["industry"] = industry_view.view(industry, d)
+        except industry_view.IndustryError as e:
+            raise BuildError(f"industry-specific minimum wages do not fit the prefectures: {e}")
     base = cfg["site_url"].rstrip("/")
     use_og = ogimage.available() and not os.environ.get("SOKUHOU_NO_OG")
     cfg = {**cfg, "_og": {"enabled": use_og, "slugs": {r["slug"] for r in d["rows"]}}}
@@ -1335,7 +1340,9 @@ def main() -> None:
     try:
         wage_file = HERE.parents[1] / "data" / "estat_wage.json"
         wage = json.loads(wage_file.read_text(encoding="utf-8")) if wage_file.exists() else None
-        files = render_site(mhlw_minwage.collect(), cfg, Path(args.out), release=args.release, wage=wage)
+        industry_file = HERE.parents[1] / "data" / "minwage_industry.json"
+        industry = json.loads(industry_file.read_text(encoding="utf-8")) if industry_file.exists() else None
+        files = render_site(mhlw_minwage.collect(), cfg, Path(args.out), release=args.release, wage=wage, industry=industry)
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {args.out}")
