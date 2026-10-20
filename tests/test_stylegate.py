@@ -16,6 +16,7 @@ from sokuhou import stylegate as sg
 
 MID = "この記事がお役に立てれば幸いです。"            # closing_kouei (mid)
 HIGH = "いかがでしたでしょうか。ぜひ参考にしてみてください。"  # closing_ikaga (high)
+NL = chr(10)
 GOOD = "気になる品があれば、候補の一覧から価格を見比べてください。"
 PLAIN = "ゴーヤの苗は、四月の終わりに植えるのが目安です。"
 
@@ -188,6 +189,37 @@ class FeatureArticleTest(unittest.TestCase):
     def test_the_real_articles_are_found(self):
         hits, n = sg.source_hits("yorokobu")
         self.assertGreaterEqual(n, 1)
+
+
+class ShopNameAndAcceptTest(unittest.TestCase):
+    def test_a_shops_own_name_in_a_comparison_row_is_not_read(self):
+        row = '<li class="cmp-row"><span>1</span><div class="cmp-main"><p class="cmp-shop">{}</p><p class="cmp-blurb">耐熱ガラスの二重構造です。</p></div></li>'
+        f = Folder(self, {"index.html": page(PLAIN) + row.format("想いを届ける 名入れ ギフト")})
+        with tempfile.TemporaryDirectory() as empty, mock.patch.object(sg, "ROOT", Path(empty)):                # no feature articles here: only the page
+            hits, _ = sg.collect(f.root, "yorokobu", False)
+            self.assertEqual([h for h in hits if h.level != "low"], [])
+        shop_page = nj.for_reading(page(PLAIN) + row.format("想いを届ける 名入れ ギフト"), "yorokobu")
+        self.assertNotIn("想いを届ける", shop_page)
+        self.assertIn("耐熱ガラスの二重構造です。", shop_page)                                       # our own one-line remark stays
+        # the same words as OUR sentence are still reported
+        g = Folder(self, {"index.html": page("想いを届けるギフトです。")})
+        with tempfile.TemporaryDirectory() as empty, mock.patch.object(sg, "ROOT", Path(empty)):
+            self.assertTrue([h for h in sg.collect(g.root, "yorokobu", False)[0] if h.rule == "flowery"])
+
+    def test_accept_writes_the_keys_of_a_deploy_log_into_the_baseline(self):
+        f = Folder(self, {"a.html": page(PLAIN, MID)})
+        base = {"version": 1, "sites": {"kuma": sg.baseline_entry([], "2026-10-20")}}
+        code, text, v = sg.run_check(f.root, "kuma", "shadow", baseline=base)
+        line = sg.keys_line(v)
+        self.assertTrue(line.startswith("GATEKEYS kuma closing_kouei:"))
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sg, "BASELINE", Path(d) / "baseline.json"):
+            sg.save_baseline(base)
+            log = Path(d) / "deploy.log"
+            log.write_text(NL.join(["noise", line, "GATEKEYS minna closing_kouei:000000000000"]), encoding="utf-8")
+            self.assertEqual(sg.cmd_accept("kuma", log, None), 0)
+            self.assertEqual(sg.run_check(f.root, "kuma", "ratchet", baseline=sg.load_baseline())[0], 0)
+            self.assertNotIn("minna", sg.load_baseline()["sites"])                                  # another site's line is not taken
+            self.assertEqual(sg.cmd_accept("kuma", log, {"flowery"}), 2)                              # --rule limits it
 
 
 class PrecheckCodeTest(unittest.TestCase):

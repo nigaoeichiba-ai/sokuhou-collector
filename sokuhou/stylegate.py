@@ -198,6 +198,12 @@ def annotate(v: Verdict, limit: int = 15) -> str:
     return "\n".join(lines)
 
 
+def keys_line(v: Verdict) -> str:
+    """The new mid findings as keys (rule:hash), so that the findings that turn out to be false positives in the real release can be written into the baseline from the log (`accept`)."""
+    keys = sorted({key_of(h) for h in v.new})
+    return f"GATEKEYS {v.site} {','.join(keys)}" if keys else ""
+
+
 def shadow_line(v: Verdict) -> str:
     by_rule = Counter(h.rule for h in v.failing)
     rules = ", ".join(f"{r} {n}" for r, n in by_rule.most_common())
@@ -299,6 +305,33 @@ def precheck(base_ref: str = "origin/main", only: list[str] | None = None, share
 
 
 # ------------------------------------------------------------------------------------------------------------------------------ baseline commands
+KEYS_LINE = re.compile(r"GATEKEYS ([a-z0-9]+) ([a-z_]+:[0-9a-f]{12}(?:,[a-z_]+:[0-9a-f]{12})*)")
+
+
+def cmd_accept(site: str, log: Path, only: set[str] | None) -> int:
+    """Write the findings of a deploy log (the GATEKEYS line of this site) into the baseline: the false positives that only the real release showed.  A person's decision;
+    --rule limits it to those rules.  Mid findings only (a high one is never excused)."""
+    text = log.read_text(encoding="utf-8", errors="replace")
+    keys: set[str] = set()
+    for m in KEYS_LINE.finditer(text):
+        if m.group(1) == site:
+            keys |= set(m.group(2).split(","))
+    keys = {k for k in keys if k.split(":")[0] in nj.RULES and nj.RULES[k.split(":")[0]].level == "mid" and (not only or k.split(":")[0] in only)}
+    if not keys:
+        print(f"{site}: no key to accept in {log}")
+        return 2
+    base = load_baseline()
+    entry = base.setdefault("sites", {}).setdefault(site, {"date": dt.date.today().isoformat(), "counts": {"high": 0, "mid": 0}, "keys": {}})
+    for k in sorted(keys):
+        rule, _, digest = k.partition(":")
+        lst = set(entry["keys"].get(rule, []))
+        lst.add(digest)
+        entry["keys"][rule] = sorted(lst)
+    entry["counts"] = {"high": entry.get("counts", {}).get("high", 0), "mid": sum(len(v) for v in entry["keys"].values())}
+    save_baseline(base)
+    print(f"{site}: {len(keys)} key(s) written into the baseline: {', '.join(sorted({k.split(':')[0] for k in keys}))}")
+    return 0
+
 def cmd_baseline(site: str, directory: Path | None, shrink: bool) -> int:
     root = directory or nj.built_dir(site, rebuild=True, base=ROOT / "out" / "stylegate")
     hits, pages = collect(root, site, dictionary=directory is None)
@@ -343,6 +376,10 @@ def main(argv: list[str] | None = None) -> int:
     b.add_argument("--site", required=True, choices=list(nj.SITES))
     b.add_argument("--dir")
     b.add_argument("--shrink", action="store_true")
+    ac = sub.add_parser("accept", help="write the findings of a deploy log (GATEKEYS line) into the baseline")
+    ac.add_argument("--site", required=True, choices=list(nj.SITES))
+    ac.add_argument("--log", required=True)
+    ac.add_argument("--rule", action="append")
     sub.add_parser("modes")
     args = ap.parse_args(argv)
     if hasattr(sys.stdout, "reconfigure"):
@@ -352,6 +389,8 @@ def main(argv: list[str] | None = None) -> int:
         for s in nj.SITES:
             print(f"{s}: {mode_for(s)}")
         return 0
+    if args.cmd == "accept":
+        return cmd_accept(args.site, Path(args.log), set(args.rule) if args.rule else None)
     if args.cmd == "baseline":
         return cmd_baseline(args.site, Path(args.dir) if args.dir else None, args.shrink)
     if args.cmd == "precheck":
@@ -364,6 +403,8 @@ def main(argv: list[str] | None = None) -> int:
             print(ann)
         if v.mode == "shadow":
             print(shadow_line(v))
+        if keys_line(v):
+            print(keys_line(v))
         summary = os.environ.get("GITHUB_STEP_SUMMARY")
         if summary:
             try:

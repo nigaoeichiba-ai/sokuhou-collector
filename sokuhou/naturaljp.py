@@ -786,9 +786,14 @@ _CARD_OPEN = re.compile(r"<(li|article|div|table)\b([^>]*)>", re.I)
 _CARD_CLASSES = {"item", "sale-item"}
 
 
+_SHOP_NAME = re.compile(r'<p[^>]*class="[^"]*cmp-shop[^"]*"[^>]*>.*?</p>', re.S | re.I)
+
+
 def strip_cards(raw: str) -> str:
     """Take the shops' product cards (li.item, .sale-item) and tables out of a page: a product title, a shop title, a price or a shop's description is somebody else's data (the Rakuten and Yahoo!
-    terms: not kept in our public repository).  They are not read for style, not sent to the judge or the editor, and never stored."""
+    terms: not kept in our public repository).  They are not read for style, not sent to the judge or the editor, and never stored.
+    The shop's name in the comparison rows (p.cmp-shop: 'irodori ヤフー店', a shop that calls itself 想いを届ける ...) is the shop's own writing: left out too."""
+    raw = _SHOP_NAME.sub("", raw)
     out, i = [], 0
     while True:
         m = _CARD_OPEN.search(raw, i)
