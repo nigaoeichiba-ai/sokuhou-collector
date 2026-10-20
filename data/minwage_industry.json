@@ -1,0 +1,1791 @@
+{
+ "fetched_at": "2026-10-20T19:15:47+09:00",
+ "rows": [
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1113,
+   "industry": "処理牛乳・乳飲料、乳製品、砂糖・でんぷん糖類製造業",
+   "pref": "北海道",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1165,
+   "industry": "鉄鋼業",
+   "pref": "北海道",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1116,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "北海道",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1105,
+   "industry": "船舶製造・修理業、船体ブロック製造業",
+   "pref": "北海道",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-21",
+   "hourly": 1109,
+   "industry": "鉄鋼業",
+   "pref": "青森",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-21",
+   "hourly": 1045,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "青森",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-21",
+   "hourly": 956,
+   "industry": "百貨店、総合スーパーマーケット、その他の各種商品小売業",
+   "pref": "青森",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-21",
+   "hourly": 963,
+   "industry": "自動車小売業",
+   "pref": "青森",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-15",
+   "hourly": 1072,
+   "industry": "鉄鋼業、金属線製品、その他の金属製品製造業",
+   "pref": "岩手",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-15",
+   "hourly": 1039,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "岩手",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-02-01",
+   "hourly": 1052,
+   "industry": "光学器械器具・レンズ、時計・同部分品製造業",
+   "pref": "岩手",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2016-12-11",
+   "hourly": 767,
+   "industry": "各種商品小売業",
+   "pref": "岩手",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-15",
+   "hourly": 1068,
+   "industry": "自動車小売業",
+   "pref": "岩手",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2018-12-28",
+   "hourly": 800,
+   "industry": "百貨店,総合スーパー",
+   "pref": "岩手",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-15",
+   "hourly": 1125,
+   "industry": "鉄鋼業",
+   "pref": "宮城",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-15",
+   "hourly": 1077,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "宮城",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-15",
+   "hourly": 1101,
+   "industry": "自動車小売業",
+   "pref": "宮城",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1091,
+   "industry": "非鉄金属精錬・精製業",
+   "pref": "秋田",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-03-31",
+   "hourly": 1032,
+   "industry": "電子部品・デバイス・電子回路、電池、電子応用装置、その他の電気機械器具、映像・音響機械器具、電子計算機・同附属装置製造業",
+   "pref": "秋田",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-03-31",
+   "hourly": 1060,
+   "industry": "自動車・同附属品製造業",
+   "pref": "秋田",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-03-31",
+   "hourly": 1032,
+   "industry": "自動車(新車)、自動車部分品・附属品小売業",
+   "pref": "秋田",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-23",
+   "hourly": 1070,
+   "industry": "ポンプ・圧縮機器、一般産業用機械・装置、他に分類されないはん用機械・装置、化学機械・同装置、真空装置・真空機器製造業",
+   "pref": "山形",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-23",
+   "hourly": 1055,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "山形",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-23",
+   "hourly": 1070,
+   "industry": "自動車・同附属品製造業",
+   "pref": "山形",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-25",
+   "hourly": 1017,
+   "industry": "自動車整備業",
+   "pref": "山形",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-01-04",
+   "hourly": 996,
+   "industry": "非鉄金属製造業",
+   "pref": "福島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2022-12-30",
+   "hourly": 880,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "福島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-21",
+   "hourly": 1005,
+   "industry": "輸送用機械器具製造業",
+   "pref": "福島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-01-12",
+   "hourly": 928,
+   "industry": "計量器・測定器・分析機器・試験機・測量機械器具・理化学機械器具、時計・同部品、眼鏡製造業",
+   "pref": "福島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-08",
+   "hourly": 1098,
+   "industry": "自動車小売業",
+   "pref": "福島",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2014-03-23",
+   "hourly": 871,
+   "industry": "鉄鋼業",
+   "pref": "東京",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2010-12-31",
+   "hourly": 832,
+   "industry": "はん用機械器具、生産用機械器具製造業",
+   "pref": "東京",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2010-12-31",
+   "hourly": 829,
+   "industry": "業務用機械器具、電気機械器具、情報通信機械器具、時計・同部分品、眼鏡製造業",
+   "pref": "東京",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2012-02-18",
+   "hourly": 838,
+   "industry": "自動車・同附属品製造業、船舶製造・修理業，舶用機関製造業、航空機・同附属品製造業",
+   "pref": "東京",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-03-01",
+   "hourly": 1166,
+   "industry": "鉄鋼業",
+   "pref": "茨城",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-03-01",
+   "hourly": 1105,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具製造業",
+   "pref": "茨城",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-03-19",
+   "hourly": 1115,
+   "industry": "計量器・測定器・分析機器・試験機・理化学機械器具、医療用機械器具・医療用品、光学機械器具・レンズ、電子部品･デバイス・電子回路、電気機械器具、情報通信機械器具、時計・同部分品製造業",
+   "pref": "茨城",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-31",
+   "hourly": 881,
+   "industry": "各種商品小売業",
+   "pref": "茨城",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1159,
+   "industry": "塗料製造業",
+   "pref": "栃木",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1070,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具製造業",
+   "pref": "栃木",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1105,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "栃木",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1114,
+   "industry": "自動車・同附属品製造業",
+   "pref": "栃木",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1104,
+   "industry": "計量器・測定器・分析機器・試験機・測量機械器具製造業、医療用機械器具・医療用品製造業、光学機械器具・レンズ製造業、医療用計測器製造業、時計・同部分品製造業",
+   "pref": "栃木",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2020-12-31",
+   "hourly": 874,
+   "industry": "各種商品小売業",
+   "pref": "栃木",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-01",
+   "hourly": 1131,
+   "industry": "製鋼・製鋼圧延業、鉄素形材製造業",
+   "pref": "群馬",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-01",
+   "hourly": 1120,
+   "industry": "ポンプ・圧縮機器、一般産業用機械・装置、その他のはん用機械・同部分品、金属加工機械、その他の生産用機械・同部分品、事務用機械器具、サービス用・娯楽用機械器具製造業",
+   "pref": "群馬",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-01",
+   "hourly": 1120,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "群馬",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-01",
+   "hourly": 1120,
+   "industry": "輸送用機械器具製造業",
+   "pref": "群馬",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1161,
+   "industry": "非鉄金属製造業",
+   "pref": "埼玉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1168,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "埼玉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1165,
+   "industry": "輸送用機械器具製造業",
+   "pref": "埼玉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1177,
+   "industry": "光学機械器具・レンズ、時計・同部分品製造業",
+   "pref": "埼玉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2016-12-01",
+   "hourly": 849,
+   "industry": "各種商品小売業",
+   "pref": "埼玉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1152,
+   "industry": "自動車小売業",
+   "pref": "埼玉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2017-12-25",
+   "hourly": 889,
+   "industry": "調味料製造業",
+   "pref": "千葉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1210,
+   "industry": "鉄鋼業",
+   "pref": "千葉",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2018-12-25",
+   "hourly": 922,
+   "industry": "はん用機械器具、生産用機械器具製造業",
+   "pref": "千葉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1169,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "千葉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2017-12-25",
+   "hourly": 887,
+   "industry": "計量器・測定器・分析機器・試験機・測量機械器具・理化学機械器具製造業、医療用機械器具・医療用品製造業、光学機械器具・レンズ製造業、時計・同部分品製造業、眼鏡製造業",
+   "pref": "千葉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2016-12-25",
+   "hourly": 848,
+   "industry": "各種商品小売業",
+   "pref": "千葉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2018-12-25",
+   "hourly": 922,
+   "industry": "自動車(新車）小売業",
+   "pref": "千葉",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2015-03-01",
+   "hourly": 894,
+   "industry": "塗料製造業",
+   "pref": "神奈川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2014-03-15",
+   "hourly": 874,
+   "industry": "鉄鋼業",
+   "pref": "神奈川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2010-12-20",
+   "hourly": 821,
+   "industry": "非鉄金属・同合金圧延業、電線・ケーブル製造業",
+   "pref": "神奈川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2013-03-01",
+   "hourly": 857,
+   "industry": "ボイラ・原動機、ポンプ・圧縮機器、一般産業用機械・装置、建設機械・鉱山機械、金属加工機械製造業",
+   "pref": "神奈川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2015-03-01",
+   "hourly": 890,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "神奈川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2013-03-01",
+   "hourly": 855,
+   "industry": "輸送用機械器具製造業",
+   "pref": "神奈川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2011-12-21",
+   "hourly": 842,
+   "industry": "自動車小売業",
+   "pref": "神奈川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2023-12-27",
+   "hourly": 1005,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "新潟",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2023-12-30",
+   "hourly": 932,
+   "industry": "各種商品小売業",
+   "pref": "新潟",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-14",
+   "hourly": 1053,
+   "industry": "自動車(新車)、自動車部分品・附属品小売業",
+   "pref": "新潟",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2015-12-26",
+   "hourly": 781,
+   "industry": "アルミニウム第２次製錬・精製業、アルミニウム・同合金圧延業、アルミニウム・同合金鋳物、アルミニウム・同合金ダイカスト、金属製サッシ・ドア、建築用金属製品、アルミニウム・同合金プレス製品製造業",
+   "pref": "富山",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-27",
+   "hourly": 1035,
+   "industry": "玉軸受・ころ軸受、他に分類されないはん用機械・装置、トラクタ、金属工作機械、機械工具、ロボット、自動車・同附属品製造業",
+   "pref": "富山",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-26",
+   "hourly": 1002,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "富山",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-26",
+   "hourly": 1003,
+   "industry": "百貨店、総合スーパーマーケット",
+   "pref": "富山",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2011-01-20",
+   "hourly": 769,
+   "industry": "自動車(新車)小売業",
+   "pref": "富山",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2017-12-31",
+   "hourly": 782,
+   "industry": "綿紡績、化学繊維紡績、毛紡績、その他の紡績、染色整理、綱、漁網、網地製造業",
+   "pref": "石川",
+   "regional_applies": true
+  },
+  {
+   "daily": 6102,
+   "effective_date": "1999-12-26",
+   "hourly": 763,
+   "industry": "洋食器・刃物・手道具・金物類、金属素形材製品、ボルト・ナット・リベット・小ねじ・木ねじ等、その他の金属製品製造業",
+   "pref": "石川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1090,
+   "industry": "金属素形材製品、ボルト・ナット・リベット・小ねじ・木ねじ等、その他の金属製品、はん用機械器具、生産用機械器具、発電用・送電用・配電用電気機械器具、産業用電気機械器具製造業",
+   "pref": "石川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1064,
+   "industry": "電子部品・デバイス・電子回路、民生用電気機械器具、電子応用装置、情報通信機械器具製造業",
+   "pref": "石川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1090,
+   "industry": "自動車・同附属品、自転車・同部分品製造業",
+   "pref": "石川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1060,
+   "industry": "百貨店、総合スーパーマーケット",
+   "pref": "石川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2019-12-24",
+   "hourly": 830,
+   "industry": "紡績業，化学繊維、織物、染色整理業",
+   "pref": "福井",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2022-12-24",
+   "hourly": 933,
+   "industry": "繊維機械、金属加工機械製造業",
+   "pref": "福井",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2019-12-24",
+   "hourly": 857,
+   "industry": "電子デバイス、電子部品、記録メディア、電子回路、ユニット部品、その他の電子部品・デバイス・電子回路、発電用・送電用・配電用電気機械器具、産業用電気機械器具、電子応用装置、通信機械器具・同関連機械器具、映像・音響機械器具製造業",
+   "pref": "福井",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2020-12-24",
+   "hourly": 840,
+   "industry": "百貨店，総合スーパー",
+   "pref": "福井",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-02-15",
+   "hourly": 1100,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "山梨",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-03-01",
+   "hourly": 1089,
+   "industry": "自動車・同附属品製造業",
+   "pref": "山梨",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2019-12-31",
+   "hourly": 850,
+   "industry": "印刷、製版業",
+   "pref": "長野",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-28",
+   "hourly": 1105,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具、自動車・同附属品、船舶製造・修理業、舶用機関製造業",
+   "pref": "長野",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-01",
+   "hourly": 1095,
+   "industry": "計量器・測定器・分析機器・試験機、医療用機械器具・医療用品、光学機械器具・レンズ、電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具、時計・同部分品、眼鏡製造業",
+   "pref": "長野",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2023-12-31",
+   "hourly": 950,
+   "industry": "各種商品小売業",
+   "pref": "長野",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2023-12-21",
+   "hourly": 965,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "岐阜",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-21",
+   "hourly": 1117,
+   "industry": "自動車・同附属品製造業",
+   "pref": "岐阜",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-21",
+   "hourly": 1049,
+   "industry": "航空機・同附属品製造業",
+   "pref": "岐阜",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2015-12-31",
+   "hourly": 786,
+   "industry": "パルプ・紙・加工紙製造業",
+   "pref": "静岡",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-20",
+   "hourly": 915,
+   "industry": "タイヤ・チューブ、ゴムベルト・ゴムホース・工業用ゴム製品製造業",
+   "pref": "静岡",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-21",
+   "hourly": 1117,
+   "industry": "鉄鋼、非鉄金属製造業",
+   "pref": "静岡",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-21",
+   "hourly": 1133,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具、輸送用機械器具製造業",
+   "pref": "静岡",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-21",
+   "hourly": 1042,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "静岡",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2019-12-21",
+   "hourly": 886,
+   "industry": "各種商品小売業",
+   "pref": "静岡",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2008-12-16",
+   "hourly": 732,
+   "industry": "染色整理業",
+   "pref": "愛知",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-16",
+   "hourly": 1175,
+   "industry": "製鉄業、製鋼・製鋼圧延業、鋼材製造業",
+   "pref": "愛知",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-16",
+   "hourly": 968,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具製造業",
+   "pref": "愛知",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2018-12-16",
+   "hourly": 901,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "愛知",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-16",
+   "hourly": 1146,
+   "industry": "輸送用機械器具製造業",
+   "pref": "愛知",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2017-12-16",
+   "hourly": 875,
+   "industry": "計量器・測定器・分析機器・試験機、光学機械器具・レンズ、時計・同部分品製造業",
+   "pref": "愛知",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2016-12-16",
+   "hourly": 847,
+   "industry": "各種商品小売業",
+   "pref": "愛知",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2007-12-16",
+   "hourly": 800,
+   "industry": "自動車(新車)、自動車部分品・附属品小売業",
+   "pref": "愛知",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2020-12-16",
+   "hourly": 943,
+   "industry": "自動車(新車)小売業",
+   "pref": "愛知",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2019-12-22",
+   "hourly": 933,
+   "industry": "金属素形材製品、ボルト・ナット・リベット・小ねじ・木ねじ等製造業",
+   "pref": "京都",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2008-12-21",
+   "hourly": 822,
+   "industry": "ポンプ・圧縮機器製造業、一般産業用機械・装置製造業、その他のはん用機械・同部分品製造業、繊維機械製造業、生活関連産業用機械製造業、基礎素材産業用機械製造業、金属加工機械製造業、半導体・フラットパネルディスプレイ製造装置製造業、その他の生産用機械・同部分品製造業、事務用機械器具製造業、サービス用・娯楽用機械器具製造業、建設機械・鉱山機械製造業",
+   "pref": "京都",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-24",
+   "hourly": 1136,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "京都",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-01-19",
+   "hourly": 1076,
+   "industry": "輸送用機械器具、建設機械・鉱山機械製造業",
+   "pref": "京都",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2022-01-26",
+   "hourly": 938,
+   "industry": "各種商品小売業",
+   "pref": "京都",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2022-01-26",
+   "hourly": 939,
+   "industry": "自動車(新車)小売業",
+   "pref": "京都",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-04",
+   "hourly": 1191,
+   "industry": "塗料製造業",
+   "pref": "大阪",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1185,
+   "industry": "鉄鋼業",
+   "pref": "大阪",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1180,
+   "industry": "非鉄金属・同合金圧延業、電線・ケーブル製造業",
+   "pref": "大阪",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1197,
+   "industry": "はん用機械器具製造業、生産用機械器具製造業、業務用機械器具製造業、暖房・調理等装置、配管工事用附属品、金属線製品製造業、船舶製造・修理業、舶用機関製造業",
+   "pref": "大阪",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-04",
+   "hourly": 1197,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "大阪",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1194,
+   "industry": "自動車・同附属品製造業",
+   "pref": "大阪",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-01",
+   "hourly": 993,
+   "industry": "自動車小売業",
+   "pref": "大阪",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-21",
+   "hourly": 923,
+   "industry": "ガラス・同製品製造業",
+   "pref": "三重",
+   "regional_applies": true
+  },
+  {
+   "daily": 5907,
+   "effective_date": "1998-12-15",
+   "hourly": 739,
+   "industry": "銑鉄鋳物、可鍛鋳鉄、鋳鉄管製造業",
+   "pref": "三重",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-21",
+   "hourly": 1097,
+   "industry": "電線・ケーブル製造業",
+   "pref": "三重",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2015-12-20",
+   "hourly": 843,
+   "industry": "洋食器・刃物・手道具・金物類製造業",
+   "pref": "三重",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2003-12-15",
+   "hourly": 762,
+   "industry": "一般機械器具製造業",
+   "pref": "三重",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-21",
+   "hourly": 1031,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "三重",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-21",
+   "hourly": 1111,
+   "industry": "建設機械・鉱山機械製造業、自動車・同附属品製造業、船舶製造・修理業、舶用機関製造業、産業用運搬車両・同部分品・附属品製造業、その他の輸送用機械器具製造業",
+   "pref": "三重",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2016-12-30",
+   "hourly": 789,
+   "industry": "紡績業，化学繊維製造業、その他の織物業、染色整理業、繊維粗製品製造業、その他の繊維製品製造業",
+   "pref": "滋賀",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-28",
+   "hourly": 1099,
+   "industry": "ガラス・同製品、セメント・同製品、衛生陶器、炭素・黒鉛製品、炭素繊維製造業",
+   "pref": "滋賀",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-28",
+   "hourly": 1114,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具製造業",
+   "pref": "滋賀",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-28",
+   "hourly": 1105,
+   "industry": "計量器・測定器・分析機器・試験機、光学機械器具・レンズ、電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "滋賀",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-28",
+   "hourly": 1115,
+   "industry": "自動車・同附属品製造業",
+   "pref": "滋賀",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2018-12-29",
+   "hourly": 840,
+   "industry": "各種商品小売業",
+   "pref": "滋賀",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2016-03-01",
+   "hourly": 800,
+   "industry": "繊維工業",
+   "pref": "兵庫",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1158,
+   "industry": "塗料製造業",
+   "pref": "兵庫",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1180,
+   "industry": "鉄鋼業",
+   "pref": "兵庫",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1150,
+   "industry": "はん用機械器具製造業、生産用機械器具製造業、業務用機械器具製造業",
+   "pref": "兵庫",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1117,
+   "industry": "電子部品・デバイス・電子回路製造業、電気機械器具製造業、情報通信機械器具製造業",
+   "pref": "兵庫",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1188,
+   "industry": "輸送用機械器具製造業",
+   "pref": "兵庫",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-01",
+   "hourly": 1117,
+   "industry": "計量器・測定器・分析機器・試験機・測量機械器具製造業",
+   "pref": "兵庫",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2016-02-01",
+   "hourly": 797,
+   "industry": "各種商品小売業",
+   "pref": "兵庫",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2022-12-01",
+   "hourly": 963,
+   "industry": "自動車小売業",
+   "pref": "兵庫",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-29",
+   "hourly": 905,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具製造業",
+   "pref": "奈良",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-29",
+   "hourly": 891,
+   "industry": "電子部品・デバイス・電子回路、発電用・送電用・配電用電気機械器具、産業用電気機械器具、民生用電気機械器具製造業",
+   "pref": "奈良",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-29",
+   "hourly": 892,
+   "industry": "自動車小売業",
+   "pref": "奈良",
+   "regional_applies": true
+  },
+  {
+   "daily": 6527,
+   "effective_date": "1989-01-25",
+   "hourly": 816,
+   "industry": "木材・木製品・家具・装備品製造業",
+   "pref": "奈良",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-30",
+   "hourly": 1170,
+   "industry": "鉄鋼業",
+   "pref": "和歌山",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-30",
+   "hourly": 869,
+   "industry": "百貨店,総合スーパー",
+   "pref": "和歌山",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-19",
+   "hourly": 963,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "鳥取",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2023-12-15",
+   "hourly": 902,
+   "industry": "各種商品小売業",
+   "pref": "鳥取",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-13",
+   "hourly": 1163,
+   "industry": "製鋼・製鋼圧延業、鉄素形材製造業",
+   "pref": "島根",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-19",
+   "hourly": 1134,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具製造業",
+   "pref": "島根",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-14",
+   "hourly": 1058,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "島根",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-28",
+   "hourly": 1094,
+   "industry": "自動車・同附属品製造業",
+   "pref": "島根",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2023-12-28",
+   "hourly": 905,
+   "industry": "百貨店,総合スーパー",
+   "pref": "島根",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-11-26",
+   "hourly": 1069,
+   "industry": "自動車(新車)小売業",
+   "pref": "島根",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-02-04",
+   "hourly": 1074,
+   "industry": "耐火物製造業",
+   "pref": "岡山",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-27",
+   "hourly": 1166,
+   "industry": "鉄鋼業",
+   "pref": "岡山",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-17",
+   "hourly": 1103,
+   "industry": "空気圧縮機・ガス圧縮機・送風機、家庭用エレベータ、冷凍機・温湿調整装置、玉軸受・ころ軸受、農業用機械、縫製機械、生活関連産業用機械、基礎素材産業用機械、半導体・フラットパネルディスプレイ製造装置、真空装置・真空機器、他に分類されない生産用機械・同部分品、事務用機械器具、サービス用・娯楽用機械器具製造業",
+   "pref": "岡山",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-04",
+   "hourly": 1090,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "岡山",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-21",
+   "hourly": 1083,
+   "industry": "自動車・同附属品製造業",
+   "pref": "岡山",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-01",
+   "hourly": 1159,
+   "industry": "船舶製造・修理業、舶用機関製造業",
+   "pref": "岡山",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-01-10",
+   "hourly": 933,
+   "industry": "各種商品小売業",
+   "pref": "岡山",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1179,
+   "industry": "製鉄業、鋼材、銑鉄鋳物、可鍛鋳鉄製造業、その他鉄鋼業",
+   "pref": "広島",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-02-21",
+   "hourly": 1052,
+   "industry": "建設用・建築用金属製品、その他の金属製品製造業",
+   "pref": "広島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-31",
+   "hourly": 1070,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具製造業",
+   "pref": "広島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1110,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "広島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-31",
+   "hourly": 1105,
+   "industry": "自動車・同附属品製造業",
+   "pref": "広島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-02-21",
+   "hourly": 1080,
+   "industry": "船舶製造・修理業、舶用機関製造業",
+   "pref": "広島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-31",
+   "hourly": 903,
+   "industry": "各種商品小売業",
+   "pref": "広島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-02-21",
+   "hourly": 1038,
+   "industry": "自動車小売業",
+   "pref": "広島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-15",
+   "hourly": 1180,
+   "industry": "鉄鋼業、非鉄金属製錬・精製業、非鉄金属・同合金圧延業、非鉄金属素形材製造業",
+   "pref": "山口",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-15",
+   "hourly": 1032,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "山口",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-15",
+   "hourly": 1141,
+   "industry": "輸送用機械器具製造業",
+   "pref": "山口",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-15",
+   "hourly": 1000,
+   "industry": "百貨店、総合スーパーマーケット",
+   "pref": "山口",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-21",
+   "hourly": 876,
+   "industry": "造作材・合板・建築用組立材料製造業",
+   "pref": "徳島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-01",
+   "hourly": 1134,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具製造業",
+   "pref": "徳島",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-01",
+   "hourly": 1105,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "徳島",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-15",
+   "hourly": 849,
+   "industry": "冷凍調理食品製造業",
+   "pref": "香川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-15",
+   "hourly": 1158,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具製造業",
+   "pref": "香川",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-28",
+   "hourly": 1090,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "香川",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-28",
+   "hourly": 1159,
+   "industry": "船舶製造・修理業、舶用機関製造業",
+   "pref": "香川",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1113,
+   "industry": "パルプ、紙製造業",
+   "pref": "愛媛",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1114,
+   "industry": "はん用機械器具、生産用機械器具、業務用機械器具製造業",
+   "pref": "愛媛",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1107,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "愛媛",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1136,
+   "industry": "船舶製造・修理業、舶用機関製造業",
+   "pref": "愛媛",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2022-12-25",
+   "hourly": 854,
+   "industry": "各種商品小売業",
+   "pref": "愛媛",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2019-12-29",
+   "hourly": 793,
+   "industry": "電子部品・デバイス・電子回路、電子応用装置、映像・音響機械器具製造業",
+   "pref": "高知",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2007-06-02",
+   "hourly": 910,
+   "industry": "一般貨物自動車運送業",
+   "pref": "高知",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-10",
+   "hourly": 1176,
+   "industry": "製鉄業、製鋼・製鋼圧延業、鋼材製造業",
+   "pref": "福岡",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-10",
+   "hourly": 1137,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "福岡",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-10",
+   "hourly": 1147,
+   "industry": "輸送用機械器具製造業",
+   "pref": "福岡",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-02-01",
+   "hourly": 1065,
+   "industry": "百貨店、総合スーパーマーケット",
+   "pref": "福岡",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-10",
+   "hourly": 1131,
+   "industry": "自動車(新車)小売業",
+   "pref": "福岡",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-21",
+   "hourly": 957,
+   "industry": "陶磁器・同関連製品製造業",
+   "pref": "佐賀",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-20",
+   "hourly": 1010,
+   "industry": "ポンプ・圧縮機器、一般産業用機械・装置、その他のはん用機械・同部分品、農業用機械、建設機械・鉱山機械、生活関連産業用機械、基礎素材産業用機械、金属加工機械、半導体・フラットパネルディスプレイ製造装置、その他の生産用機械・同部分品製造業",
+   "pref": "佐賀",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2024-12-19",
+   "hourly": 996,
+   "industry": "発電用・送電用・配電用電気機械器具、産業用電気機械器具、電球・電気照明器具、電池、その他の電気機械器具、通信機械器具・同関連機械器具、電子計算機・同付属装置、電子デバイス、電子部品、記録メディア、電子回路、ユニット部品、その他の電子部品・デバイス・電子回路製造業",
+   "pref": "佐賀",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2019-12-07",
+   "hourly": 875,
+   "industry": "はん用機械器具、生産用機械器具製造業",
+   "pref": "長崎",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-29",
+   "hourly": 864,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "長崎",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2019-11-29",
+   "hourly": 875,
+   "industry": "船舶製造・修理業,舶用機関製造業",
+   "pref": "長崎",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1176,
+   "industry": "鉄鋼業",
+   "pref": "大分",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1116,
+   "industry": "非鉄金属製造業",
+   "pref": "大分",
+   "regional_applies": false
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1066,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "大分",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1055,
+   "industry": "自動車・同附属品製造業、船舶製造・修理業、舶用機関製造業",
+   "pref": "大分",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2016-12-25",
+   "hourly": 716,
+   "industry": "各種商品小売業",
+   "pref": "大分",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-25",
+   "hourly": 1061,
+   "industry": "自動車(新車)小売業",
+   "pref": "大分",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-01",
+   "hourly": 1063,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "熊本",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2026-01-01",
+   "hourly": 1074,
+   "industry": "自動車・同附属品製造業、船舶製造・修理業,舶用機関製造業",
+   "pref": "熊本",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2022-12-15",
+   "hourly": 855,
+   "industry": "百貨店,総合スーパー",
+   "pref": "熊本",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2014-12-26",
+   "hourly": 678,
+   "industry": "部分肉・冷凍肉、肉加工品、処理牛乳・乳飲料、乳製品製造業",
+   "pref": "宮崎",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-24",
+   "hourly": 831,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "宮崎",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2015-12-24",
+   "hourly": 705,
+   "industry": "各種商品小売業",
+   "pref": "宮崎",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2023-12-20",
+   "hourly": 927,
+   "industry": "自動車(新車)小売業",
+   "pref": "宮崎",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2021-12-17",
+   "hourly": 842,
+   "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
+   "pref": "鹿児島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2014-12-26",
+   "hourly": 693,
+   "industry": "百貨店,総合スーパー",
+   "pref": "鹿児島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2025-12-28",
+   "hourly": 1048,
+   "industry": "自動車(新車)小売業",
+   "pref": "鹿児島",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2018-11-25",
+   "hourly": 769,
+   "industry": "糖類製造業",
+   "pref": "沖縄",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2022-11-17",
+   "hourly": 879,
+   "industry": "新聞業",
+   "pref": "沖縄",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2018-11-23",
+   "hourly": 770,
+   "industry": "各種商品小売業",
+   "pref": "沖縄",
+   "regional_applies": true
+  },
+  {
+   "daily": null,
+   "effective_date": "2018-11-18",
+   "hourly": 770,
+   "industry": "自動車(新車)小売業",
+   "pref": "沖縄",
+   "regional_applies": true
+  }
+ ],
+ "source": "https://saiteichingin.mhlw.go.jp/table/page_indlist_nationallist.html",
+ "table_label": "令和7年度"
+}

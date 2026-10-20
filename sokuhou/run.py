@@ -28,6 +28,7 @@ from sokuhou.sources import (
     estat_wage,
     ishikari_kuma,
     jgrants,
+    mhlw_industry,
     mhlw_minwage,
     miyagi_kuma,
     nagano_kuma,
@@ -63,6 +64,12 @@ class Source:
 def check_minwage(old, new):
     if old and new["latest_fiscal_year"] < old["latest_fiscal_year"]:
         raise SanityError("latest fiscal year went backwards")
+
+
+def check_minwage_industry(old, new):
+    """The Ministry's table of industry-specific minimum wages may lose obsolete rows, but not most of them at once."""
+    if old and len(new["rows"]) < len(old["rows"]) * 0.7:
+        raise SanityError(f"industry table shrank {len(old['rows'])} -> {len(new['rows'])} rows")
 
 
 def check_estat_wage(old, new):
@@ -155,6 +162,7 @@ def check_fire(old, new):
 GROUPS: dict[str, list[Source]] = {
     "daily": [
         Source("minwage", mhlw_minwage.collect, check_minwage),
+        Source("minwage_industry", mhlw_industry.collect, check_minwage_industry),
         Source("estat_wage", estat_wage.collect, check_estat_wage),
         Source("env_kuma", env_kuma.collect, check_env_kuma),
         Source("env_capture_kuma", env_capture_kuma.collect, check_env_capture),
