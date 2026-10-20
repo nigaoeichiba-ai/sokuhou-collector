@@ -376,6 +376,32 @@ def check_dir(root: Path, base: str, require_sitemap: bool = True, skip: tuple[s
     return [f"[{r}] {m}" for r, m in found if r not in skip]
 
 
+def duplicate_warnings(root: Path) -> list[str]:
+    """Shadow warnings printed with every check (never a failure): indexable pages that share a <title> or a meta description.  Each line names the text and up to 3 pages."""
+    root = Path(root)
+    by_title: dict[str, list[str]] = {}
+    by_desc: dict[str, list[str]] = {}
+    for f in sorted(root.rglob("*.html")):
+        rel = f.relative_to(root).as_posix()
+        if rel == "404.html" or re.fullmatch(r"google[0-9a-f]+\.html", rel):
+            continue
+        pg = parse(f)
+        if pg.noindex:
+            continue
+        if pg.title.strip():
+            by_title.setdefault(pg.title.strip(), []).append(rel)
+        if pg.description.strip():
+            by_desc.setdefault(pg.description.strip(), []).append(rel)
+    out = []
+    for label, groups in (("title", by_title), ("description", by_desc)):
+        dup = {t: r for t, r in groups.items() if len(r) > 1}
+        if dup:
+            pages = sum(len(r) for r in dup.values())
+            first_text, first_pages = next(iter(dup.items()))
+            out.append(f"WARNING [duplicate-{label}]: {len(dup)} {label}(s) are shared by {pages} indexable pages, e.g. {first_text[:40]!r}: {', '.join(first_pages[:3])}. Not a failure.")
+    return out
+
+
 def seo_report(root: Path, base: str) -> list[str]:
     """Things worth a look for search, not a gate (the numbers are in the module docstring).  Each line names the page.  Only indexable pages are looked at."""
     root = Path(root)
@@ -727,6 +753,8 @@ def main(argv: list[str] | None = None) -> int:
         ap.error("a folder is needed without --live")
     problems = check_dir(Path(a.root), a.base)
     n = len(list(Path(a.root).rglob("*.html")))
+    for line in duplicate_warnings(Path(a.root)):         # shadow, like the same-type warning below
+        print(line)
     from sokuhou import sametype
     same_warning = sametype.warning(sametype.measure(Path(a.root)))      # shadow: printed, never a failure
     if same_warning:
