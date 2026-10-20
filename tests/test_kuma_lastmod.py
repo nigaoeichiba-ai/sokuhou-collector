@@ -39,7 +39,8 @@ class SitemapDatesTest(unittest.TestCase):
         cls.tmp.cleanup()
 
     def test_every_page_of_the_site_is_in_the_sitemap_with_a_valid_date_and_the_checker_passes(self):
-        urls = {"/" + f[: -len("index.html")] for f in self.files if f.endswith("index.html")}
+        urls = {"/" + f[: -len("index.html")] for f in self.files if f.endswith("index.html")
+                and 'content="noindex' not in (self.out / f).read_text(encoding="utf-8")}      # noindex pages (old week pages, a prefecture without bears) are not in the sitemap
         self.assertEqual(set(self.dates), urls)
         for d in self.dates.values():
             self.assertRegex(d, r"^\d{4}-\d{2}-\d{2}$")

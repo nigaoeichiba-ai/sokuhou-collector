@@ -166,7 +166,8 @@ class KumaSiteTest(unittest.TestCase):
 
     def test_sitemap_matches_the_pages(self):
         locs = re.findall(r"<loc>([^<]+)</loc>", self.read("sitemap.xml"))
-        self.assertEqual(len(locs), len([f for f in self.files if f.endswith("index.html")]))
+        noindex = [f for f in self.files if f.endswith("index.html") and 'content="noindex' in self.read(f)]       # a page that asks not to be indexed is left out of the sitemap
+        self.assertEqual(len(locs), len([f for f in self.files if f.endswith("index.html")]) - len(noindex))
         self.assertIn("https://kuma-sokuho.com/akita/", locs)
 
     def test_feed_is_valid_and_dated_by_the_ministry(self):

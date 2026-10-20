@@ -22,9 +22,11 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
 from sites.kuma import charts, content, digest  # noqa: E402
+from sites.kuma import about as about_mod  # noqa: E402
 from sites.kuma import captures as captures_mod  # noqa: E402
 from sites.kuma import cite as cite_mod  # noqa: E402
 from sites.kuma import finder as finder_mod  # noqa: E402
+from sites.kuma import indexing as indexing_mod  # noqa: E402
 from sites.kuma import lastmod as lastmod_mod  # noqa: E402
 from sites.kuma import notices as notices_mod  # noqa: E402
 from sites.kuma import official as official_mod  # noqa: E402
@@ -484,7 +486,38 @@ def fatal_answer(d: dict, r: dict) -> str:
             f"環境省の資料は、公表までに時間がかかります。直近の事故は、{esc(name)}・警察・市町村の発表で確認してください。</p>\n")
 
 
+# Prefectures where the Ministry says there are no wild bears: the page is a short explanation (no table of zeros), noindex, and names the neighbouring prefectures.
+NO_BEAR_NEIGHBOURS = {"千葉": ("茨城", "埼玉", "東京")}
+
+
+def has_no_bears(d: dict, r: dict) -> bool:
+    """True only while every number for the prefecture is empty or zero: no ministry count and no injury in any year (otherwise the full page is shown)."""
+    return (r["short"] in NO_BEAR_NEIGHBOURS and not r["has"] and all(v == 0 for y in d["inj"]["years"] for v in r["inj"][y])
+            and not any(c["prefecture"] == r["name"] for y in d["emergency"] for c in d["emergency"][y]["cases"]))
+
+
+def no_bear_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
+    done = d["done"]
+    near = [x for x in d["rows"] if x["short"] in NO_BEAR_NEIGHBOURS[r["short"]]]
+    grid = "".join(f'<a href="/{x["slug"]}/">{esc(x["name"])}<span>{n(x["total"][done]) + "件" if x["has"] else "-"}</span></a>' for x in near)
+    years = d["inj"]["years"]
+    body = f"""{crumbs([("全国", "/"), ("ランキング", "/ranking/sightings/"), (r["name"], None)])}
+<h1>{esc(r['name'])}にクマはいる?(環境省の資料)</h1>
+<p class="lead">環境省の出没件数の表に、{esc(r['name'])}の数値がありません(「-」)。県内に、野生のクマが生息していないとされているためです。</p>
+{NO_COUNT_WHY.get(r['short'], '')}
+<p>人身被害の統計(環境省・{fy_or_h(years[0])}から{fy_or_h(years[-1])})にも、{esc(r['name'])}の記録はありません。{esc(r['name'])}で見かけた動物がクマかどうか気になるときは、{esc(r['name'])}の自然保護の担当課や、市町村の窓口に問い合わせてください。</p>
+<h2>近くの都県の出没({fy_label(done)}・環境省の速報値)</h2>
+<div class="rel-grid">{grid}</div>
+<p>{esc(r['name'])}の外で山に入るときは、<a href="/guide/prepare/">山に入る前の備え</a>と、<a href="/guide/encounter/">出会ったときの行動</a>を、お読みください。ほかの都道府県は、<a href="/ranking/sightings/">出没件数のランキング</a>にあります。</p>
+{caution_box()}
+<p class="notice">{freshness(d)}</p>"""
+    return page(cfg, preview, path=f"/{r['slug']}/", title=f"{r['name']}にクマはいる?生息していないとされる根拠(環境省)と、近くの都県の出没",
+                description=f"{r['name']}は、環境省の資料で、ツキノワグマの生息地から除かれている県です。出没件数の表に数値がない理由と、近くの都県の出没件数をまとめています。", body=body)
+
+
 def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
+    if has_no_bears(d, r):
+        return no_bear_page(d, r, cfg, preview)
     done, cur, prev = d["done"], d["cur"], d["years"][-3]
     emg = [c for c in d["emergency"][cur]["cases"] if c["prefecture"] == r["name"]]
     i_done = r["inj"][done]
@@ -580,7 +613,7 @@ def notify_page(d: dict, cfg: dict, preview: bool) -> str:
 <ul class="link-list"><li><a href="/feed.xml">更新のお知らせ(フィード)</a>: 出没件数・人身被害・緊急銃猟のデータが更新されるたびに、1件ずつ載ります。</li></ul>
 <p>フィードリーダーに、このアドレスを登録してください。</p>
 {"<h2>SNS</h2><ul class='link-list'>" + social + "</ul>" if social else ""}
-<p class="notice">お知らせは、環境省の公表にあわせて、自動で作っています。{freshness(d)}</p>"""
+<p class="notice">お知らせは、環境省の公表にあわせて更新します。{freshness(d)}</p>"""
     return page(cfg, preview, path="/notify/", title=f"更新を通知で受け取る方法 | {cfg['site_name']}",
                 description="環境省のクマのデータが更新されたときのお知らせを、フィード(RSS)や SNS で受け取る方法です。", body=body)
 
@@ -786,7 +819,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     SITE["source_html"] = SOURCE_HTML + (' 数字の出典・数え方・引用のしかたは、<a href="/cite/">こちら</a>。' if any_live else "")
     d["lv"] = live_mod.prepare_live(d, today or datetime.now(JST).date()) if any_live else None
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
-    thin_pages: set[str] = set()      # municipality pages too thin to index (live.INDEX_CITY_ROWS)
+    thin_pages: set[str] = set()      # pages kept out of the index: thin municipality pages, old week pages, a prefecture without bears (sites/kuma/indexing.py)
     for kind in ("sightings", "change", "injuries"):
         pages[f"ranking/{kind}/index.html"] = ranking_page(d, kind, cfg, preview)
     if d["captures"]:
@@ -810,7 +843,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
                 if live_mod.city_has_page(rows):
                     rel = f"live/{slug}/{live_mod.city_slug(slug, city)}/index.html"
                     pages[rel] = live_mod.city_page(page_fn, d, lv, slug, city, links)
-                    if len(rows) < live_mod.INDEX_CITY_ROWS:
+                    if indexing_mod.city_is_thin(slug, city, rows):
                         thin_pages.add(rel)
         for c in lv["counts"]:
             if c["slug"] in lv["by_pref"]:         # the prefecture has a record page: the counts are a section of it (live.pref_live_page)
@@ -828,6 +861,8 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
             pages["data/" + live_mod.CSV_NAME] = live_mod.csv_text(lv)
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview, links)
+        if has_no_bears(d, r):
+            thin_pages.add(f"{r['slug']}/index.html")
     pages["season/index.html"] = season_mod.season_page(lambda **kw: page(cfg, preview, **kw), d, today or datetime.now(JST).date(), bool(d.get("lv")))
     pages["official/index.html"] = official_mod.official_page(lambda **kw: page(cfg, preview, **kw), d, d.get("lv"), links)
     pages["guide/index.html"] = guide_hub(cfg, preview)
@@ -841,6 +876,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         pages["digest/index.html"] = digest_hub(dig, cfg, preview)
         for k in dig["weeks"]:
             pages[f"digest/{k}/index.html"] = digest_page(dig, k, cfg, preview)
+        thin_pages.update(f"digest/{k}/index.html" for k in indexing_mod.thin_weeks(dig["weeks"]))
     pages["feed.xml"] = feed_xml(d, cfg)
     lv_ = d.get("lv")
     detail_names = [i["name"] for i in lv_["infos"].values()] if lv_ else []
@@ -855,7 +891,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         SITE, cfg, preview,
         purpose="クマの出没や人身被害に関する、環境省の公表データを、都道府県別・月別に整理して、暮らしの安全の判断に役立てていただくこと。",
         sources_html=f'環境省「クマに関する各種情報・取組」(<a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">公表ページ</a>)の、出没情報・人身被害件数・緊急銃猟の実施状況・死亡事故の資料(いずれも速報値)' + live_sources_text,
-        update_text="環境省の公表にあわせて、自動で更新します。各ページに、公表された日付と、どの月までのデータかを表示します。",
+        update_text="環境省の公表にあわせて更新します。自治体の公開データは、1日1回取得します。各ページに、公表された日付と、どの月までのデータかを表示します。",
         disclaimer_html=("<p>掲載内容は、環境省が都道府県から聞き取った速報値を加工したもので、後から修正されることがあります。出没数は、都道府県ごとに異なる方法で取りまとめられています。"
                          "正確性・完全性・最新性を保証するものではありません。身近な出没情報は、お住まいの都道府県・市町村の公式の情報をご確認ください。</p>"
                          "<p>このサイトは、環境省や自治体が公表している情報を加工して作成したもので、環境省・自治体が作成したものではありません。クマ撃退スプレーなどの商品の効果を保証するものでもありません。</p>"
@@ -863,6 +899,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         contact_notice="クマの目撃や被害の通報は、お住まいの市町村、または警察(110番)へお願いします。このサイトでは、通報や個別の相談を受け付けていません。掲載内容(データの誤り、掲載の中止のご依頼など)は、種類を選んで、ご連絡ください。",
         input_note="",
         finish=lambda s: s))
+    pages["about/index.html"] = pages["about/index.html"].replace("<h2>免責事項</h2>", about_mod.editorial_html(any_live) + "<h2>免責事項</h2>", 1)
     pages.update(standard_files(pages, cfg, preview, max([d["fetched_date"]] + [src["fetched_date"] for src in d.get("live_prefs", [])])))   # the newest of the ministry and the municipal sources
     apply_index_policy(pages, thin_pages, preview)
     render_day = today or datetime.now(JST).date()

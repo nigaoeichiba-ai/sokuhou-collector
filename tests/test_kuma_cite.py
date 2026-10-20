@@ -158,7 +158,7 @@ class CitePageTest(unittest.TestCase):
         text = text_of(self.read("cite/index.html"))
         self.assertIn("1日1回", text)
         self.assertNotIn("3時間ごと", text)
-        self.assertIn("取得は、1日1回、自動で行っています", text_of(self.read("live/index.html")))
+        self.assertIn("取得は、1日1回です", text_of(self.read("live/index.html")))
 
     def test_no_claim_of_what_the_site_does_not_do(self):
         text = text_of(self.read("cite/index.html"))
