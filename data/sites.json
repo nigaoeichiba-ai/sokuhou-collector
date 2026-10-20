@@ -10,12 +10,13 @@
     "watch": true,
     "group": "deploy-{name}",
     "timeout_minutes": 90,
+    "naturaljp_gate": "shadow",
     "build": "python sites/{name}/build.py --release --out release",
     "own": ["sites/{name}/*", "tests/test_{name}*", "tests/fixtures/{name}/*", "data/{name}*", "data/style/rewrites/{name}.json"]
   },
   "ignore": [
     "data/style/judged/*", "data/style/examples.json", "data/style/learned_rules.json", "data/style/lexicon/*", "data/style/suggest_cache.json",
-    "data/style/edited/*", "data/style/editor_prompt_ja.md"
+    "data/style/edited/*", "data/style/editor_prompt_ja.md", "data/style/baseline.json"
   ],
   "sites": [
     {"name": "saichin", "domain": "saichin-sokuho.com", "marker": "最低賃金速報", "min_pages": 70, "min_cards": 48, "probe": "/calendar/all.ics",
