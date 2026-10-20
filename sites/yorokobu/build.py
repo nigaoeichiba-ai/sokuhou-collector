@@ -1050,8 +1050,8 @@ def occasion_page(d: dict, cfg: dict, preview: bool, o: dict) -> str:
 {guide_link(c, o["slug"])}
 {amazon_picks_section(cfg, c, o["slug"])}
 {amazon_more(cfg, o["name"] + " プレゼント", o["name"] + "のプレゼントをAmazonで探す")}"""
-    return page(cfg, preview, path=f"/occasion/{o['slug']}/", title=f"{o['name']}のプレゼント 選び方と相手別のおすすめ | {cfg['site_name']}",
-                description=o["blurb"][:110], body=body, og_image=og_for(f"occasion/{o['slug']}"))
+    return page(cfg, preview, path=f"/occasion/{o['slug']}/", title=o.get("seo_title") or f"{o['name']}のプレゼント 選び方と相手別のおすすめ | {cfg['site_name']}",
+                description=o.get("seo_description") or o["blurb"][:110], body=body, og_image=og_for(f"occasion/{o['slug']}"))
 
 
 def like_items(d: dict, r: dict, i: int, n: int = 4, skip: frozenset | set = frozenset()) -> list[dict]:
