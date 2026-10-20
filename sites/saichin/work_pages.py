@@ -7,6 +7,7 @@ Statements about the rules are limited to what the cited pages say (read in a br
 """
 from __future__ import annotations
 
+from sites.saichin import content
 from sites.saichin.analysis import raise_series
 
 WEEKS = 52
@@ -29,6 +30,16 @@ def man(yen: int) -> str:
 
 def hours_for(target: int, w: int) -> float:
     return target / (WEEKS * w)
+
+
+PR_TOP = '<p class="pr-note"><strong>PR</strong>このページには、広告(アフィリエイト広告)を含みます。</p>\n'
+PR_BLOCK = '<p class="pr-note"><strong>PR</strong>次のリンクは広告です。</p>\n'
+
+
+def aff(program: str) -> str:
+    """The program's link code exactly as A8 gave it, in our own wrapper; empty if the program has no code in content.AFFILIATE."""
+    item = content.AFFILIATE.get(program)
+    return f'<div class="aff">{item["html"]}</div>\n' if item else ""
 
 
 def wall_rows(d: dict) -> list[dict]:
@@ -68,7 +79,16 @@ def wall_body(d: dict, k) -> str:
 <h2>130万円の壁</h2>
 <p>厚生労働省の説明では、年収が130万円以上になると、配偶者の扶養(第3号被保険者)から外れます。週20時間未満で働く場合でも同じで、国民年金と国民健康保険の保険料がかかります。収入が一時的に上がった場合は、事業主の証明により、引き続き扶養が認められる特例があります。</p>
 <p>上の表の「130万円に届く週の時間」は、最低賃金ちょうどで働くとき、週に何時間で年収が130万円になるかです。たとえば{k.esc(hi['row']['name'])}では約{hi['hours130']:.1f}時間、{k.esc(lo['row']['name'])}では約{lo['hours130']:.1f}時間です。時給が最低賃金より高い人は、これより少ない時間で届きます。</p>
-<h2>数え方と注意</h2>
+<h2>この条件で、仕事や副業を探すとき</h2>
+<p>仕事を探す前に次の3つを決めておくと、求人を選びやすくなります。</p>
+<ol>
+<li>週の所定労働時間を20時間未満にするか、20時間以上にするか。20時間以上で、勤め先の従業員数が51人以上なら、社会保険の対象です(学生を除く)。</li>
+<li>年収を130万円未満にするか。上の表の「130万円に届く週の時間」が、最低賃金ちょうどで働くときの目安です。</li>
+<li>求人の時給が勤務地の都道府県の最低賃金を下回っていないか。月給の求人は、時間額に直して比べます(<a href="/guide/calculate/">換算のしかた</a>)。</li>
+</ol>
+{PR_BLOCK}<p><strong>パート・アルバイトの求人を探す</strong>: 主婦向けの求人サイトの例です。サイトごとに、掲載している求人の地域や仕事は違います。</p>
+{aff("mamaworks")}<p><strong>副業を探す</strong>: スキルや知識を、サービスとして出品して販売するサイトの例です。副業で得た収入も、扶養や社会保険の判定に関係することがあります。扶養内で働くときは、先に、勤め先、健康保険組合、年金事務所で、収入の数え方を確かめてください。</p>
+{aff("coconala")}<h2>数え方と注意</h2>
 <ul>
 <li>年収は「最低賃金 × 週の時間 × 52週」です。賞与、残業代、通勤手当は入れていません。税金と社会保険料を引く前の額です。</li>
 <li>月収は、年収を12で割って100円未満を四捨五入した額です。</li>
@@ -118,7 +138,11 @@ def raise_body(d: dict, k) -> str:
 <h2>4. 通勤できる範囲で、地方内の違いを知る</h2>
 <p>同じ地方の中でも、最低賃金には差があります。全国では最高と最低で{gap_all}円、地方の中で最も差が大きいのは{k.esc(top[2])}の{top[0]}円です。県境をまたいで通える範囲に仕事があるときは、勤務地が変わると下限が変わります。ただし、最低賃金は下限です。実際の時給は求人ごとに違い、最低賃金の差がそのまま時給の差になるとは限りません。</p>
 <div class="tablewrap"><table><thead><tr><th>地方</th><th>最も高い</th><th>最も低い</th><th>差</th></tr></thead><tbody>{rtr}</tbody></table></div>
-<h2>5. 相談したいとき</h2>
+<h2>5. 仕事を探すとき・副業を探すとき</h2>
+<p>求人を見るときは、上の3の確認(固定残業代、試用期間の時給、月給の換算、勤務地)を、1件ずつ当てはめます。最低賃金法は、使用者に、最低賃金額以上の賃金を払うことを求めています(第4条)。気になる求人は、記載の時給を、勤務先の都道府県の最低賃金と比べてください。</p>
+{PR_BLOCK}<p><strong>求人を探す</strong>: 主婦向けの求人サイトの例です。</p>
+{aff("mamaworks")}<p><strong>副業を探す</strong>: スキルや知識を、サービスとして出品して販売するサイトの例です。時給で働くのとは、収入の入り方が違います。扶養や社会保険との関係は、<a href="/guide/wall/">週何時間で壁に届くか</a>で、先に確かめてください。</p>
+{aff("coconala")}<h2>6. 相談したいとき</h2>
 <p>時給が最低賃金を下回っているときは、まず使用者に伝えます。解決しないときは、最寄りの労働基準監督署に相談します(厚生労働省)。働く時間と社会保険や扶養の関係は、<a href="/guide/wall/">最低賃金で働くと、週何時間で壁に届くか</a>をご覧ください。</p>
 """
 

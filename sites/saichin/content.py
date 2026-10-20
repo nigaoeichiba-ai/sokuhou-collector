@@ -207,6 +207,7 @@ GUIDES = [
         "image": "calculate",
         "verified": "2026-10-20",
         "dynamic": True,
+        "pr": True,
         "title": "最低賃金で働くと、週何時間で社会保険・扶養の壁に届く?都道府県別の早見表",
         "description": "社会保険の賃金要件(月額8.8万円)は2026年10月に撤廃されました。最低賃金で週20時間働いたときの年収と、扶養の130万円に届く週の時間を、47都道府県別に計算しました。",
         "lead": "社会保険の「106万円の壁」の賃金要件は、2026年10月に撤廃されました。いまの分かれ目は、週20時間と扶養の130万円です。",
@@ -218,6 +219,7 @@ GUIDES = [
         "image": "below",
         "verified": "2026-10-20",
         "dynamic": True,
+        "pr": True,
         "title": "時給を上げたいときの考え方 最低賃金との比べ方・求人の見方・相談先",
         "description": "最低賃金が上がっても、高い時給は自動で上がりません。いまの時給を最低賃金と比べる手順、求人の時給の見方(固定残業代・試用期間)、地方内の違い、相談先をまとめました。",
         "lead": "最低賃金が上がっても、それより高い時給は自動では上がりません。時給を上げたいときは、いまの時給を最低賃金と比べるところから始めます。",
@@ -259,10 +261,27 @@ CHECK_NOTES = """<h2>結果を見るときの注意</h2>
 
 # 主な更新の記録(新しい順)。サイトに載せる更新の履歴。変更したら先頭に1行足す(過去の行は直さない)。
 UPDATES = [
-    ("2026-10-20", "都道府県別のページの推移を、昭和52年度までさかのぼって載せた(それまでは平成14年度から)。上がり率、全国加重平均との差、グラフを追加。推移のページに、全国加重平均の歴代の一覧と引上げ額のランキングを追加"),
+    ("2026-10-20", "都道府県別のページの推移を、昭和52年度までさかのぼって載せた(それまでは平成14年度から)。上がり率、全国加重平均との差、グラフを追加。推移のページに、全国加重平均の歴代の一覧と引上げ額のランキングを追加。働く人向けの解説「週何時間で社会保険・扶養の壁に届くか」と「時給を上げたいときの考え方」を追加。広告(PR)を含むページには、その表示を付けた"),
     ("2026-10-19", "最低賃金の分析(/analysis/)を追加。地域差、節目を超えた年度、順位の動き、引上げ額、発効日の5ページ。都道府県別と地方別のページに「数字で見る」の表を追加"),
     ("2026-10-15", "全都道府県の推移を、平成14年度から令和8年度までの25年度分に広げた(それまでは11年度分)。データのダウンロード(/data/)と引用のしかた(/cite/)を追加。ページを作るたびに、データの抜けや異常を検査するようにした"),
     ("2026-10-12", "ランキングの表に全国加重平均との差を追加"),
     ("2026-10-07", "差額チェッカー(/check/)を追加。お問い合わせフォームをこのサイトのものに切り替えた"),
     ("2026-10-05", "サイトを公開。令和8年度の47都道府県の最低賃金と発効日、地方別・ランキング・推移・解説、発効日の通知(カレンダー・フィード)"),
 ]
+
+
+# ---------------------------------------------------------------- affiliate links (A8.net, media 004 最低賃金速報)
+# The "html" of each program is the code A8's link-creation screen gave, copied as it is (2026-10-20): the Ministry's and A8's rule is to add nothing to it,
+# remove nothing from it and rewrite nothing in it.  The wrapper, the PR labels and the sentences around it are ours.  A program is shown only if its code is here.
+AFFILIATE = {
+    "mamaworks": {
+        "program": "ママワークス", "a8_program": "s00000015629001", "asset": "素材002",
+        "html": '主婦のための求人応援サイト<br>\n<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" rel="nofollow">「ママワークス」<b>mamaworks.jp</b></a>\n'
+                '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" alt="">',
+    },
+    "coconala": {
+        "program": "ココナラ", "a8_program": "s00000012624001", "asset": "素材001",
+        "html": '<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AJ97FU+2PEO+5YJRM" rel="nofollow">ココナラ</a>\n'
+                '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AJ97FU+2PEO+5YJRM" alt="">',
+    },
+}

@@ -967,7 +967,7 @@ def guide_page(d: dict, g: dict, cfg: dict, preview: bool) -> str:
         extra = f'<script type="application/json" id="data">{data}</script>'
     body = f"""{crumbs([("全国", "/"), ("最低賃金のきほん", "/guide/"), (g["title"], None)])}
 <h1>{esc(g['title'])}</h1>
-<p class="lead">{esc(g['lead'])}</p>
+{work_pages.PR_TOP if g.get('pr') else ''}<p class="lead">{esc(g['lead'])}</p>
 <img class="page-banner guide" src="/assets/img/guide-{g.get('image', g['slug'])}.webp" alt="" width="800" height="450">
 <article class="prose">{work_pages.BODIES[g['slug']](d, sys.modules[__name__]) if g.get('dynamic') else g['body']}</article>
 <h2>出典</h2>
@@ -1046,6 +1046,7 @@ def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
 <p>当サイトは、第三者配信の広告サービス「Google AdSense」を利用する場合があります。広告配信事業者は、利用者の興味に応じた広告を表示するために、Cookie(クッキー)を使用することがあります。</p>
 <p>Cookie を無効にする、または、パーソナライズ広告を無効にするには、<a href="https://adssettings.google.com/" rel="noopener" target="_blank">Google の広告設定</a>をご利用ください。第三者配信事業者による Cookie の使用については、<a href="https://www.aboutads.info/" rel="noopener" target="_blank">aboutads.info</a> でも無効にできます。詳しくは、<a href="https://policies.google.com/technologies/partner-sites" rel="noopener" target="_blank">Google のポリシーと規約</a>をご覧ください。</p>
 <p>広告の配信にあたり、お使いのブラウザから広告配信事業者へ、閲覧に関する情報が送信されることがあります。</p>
+<p>当サイトの一部のページには、アフィリエイト広告(広告であることを「PR」などで示しています)を含みます。アフィリエイトサービス「A8.net」を利用しており、広告のリンクを通じて、ブラウザに Cookie が保存され、広告主のサイトでの申し込みなどが、A8.net を通じて当サイトの成果として記録されることがあります。成果の記録に、お名前などの個人を特定する情報は使われません。</p>
 <h2>免責事項・著作権</h2>
 <p>免責事項と情報の出典は、<a href="/about/">運営者情報</a>に記載しています。</p>
 <h2>お問い合わせ</h2>

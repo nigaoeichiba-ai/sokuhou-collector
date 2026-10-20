@@ -105,14 +105,68 @@ class RaiseGuideTest(SiteFixture):
             self.assertIn(url, page)
 
 
-class BothGuidesTest(SiteFixture):
-    def test_no_affiliate_or_shop_link_and_no_ai_wording_until_a_program_is_approved(self):
+# The codes exactly as A8's link-creation screen gave them for media 004 (2026-10-20), written out here separately from content.py.
+MAMAWORKS = ('主婦のための求人応援サイト<br>\n<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" rel="nofollow">「ママワークス」<b>mamaworks.jp</b></a>\n'
+             '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" alt="">')
+COCONALA = ('<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AJ97FU+2PEO+5YJRM" rel="nofollow">ココナラ</a>\n'
+            '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AJ97FU+2PEO+5YJRM" alt="">')
+
+
+class AffiliateBlockTest(SiteFixture):
+    def test_the_provided_codes_are_on_both_pages_exactly_as_given(self):
+        self.assertEqual(content.AFFILIATE["mamaworks"]["html"], MAMAWORKS)
+        self.assertEqual(content.AFFILIATE["coconala"]["html"], COCONALA)
         for slug in ("wall", "raise"):
             page = self.read(f"guide/{slug}/index.html")
-            for word in ("a8.net", "rakuten", "amazon", "valuecommerce", "rel=\"sponsored\"", "Claude", "AIの支援", "自動作成"):
+            self.assertEqual(page.count(f'<div class="aff">{MAMAWORKS}</div>'), 1, slug)
+            self.assertEqual(page.count(f'<div class="aff">{COCONALA}</div>'), 1, slug)
+            self.assertEqual(len(re.findall(r"a8mat=", page)), 4, slug)             # two links, two 1x1 images; nothing else carries a tracking id
+            self.assertEqual(len(re.findall(r'href="https://px\.a8\.net/', page)), 2, slug)
+
+    def test_the_ad_is_labelled_in_the_first_view_and_again_before_the_links(self):
+        for slug in ("wall", "raise"):
+            page = self.read(f"guide/{slug}/index.html")
+            top = page.index('<p class="pr-note"><strong>PR</strong>このページには、広告(アフィリエイト広告)を含みます。</p>')
+            self.assertLess(page.index("<h1>"), top)
+            self.assertLess(top, page.index('<p class="lead">'))                    # above the lead, before the banner image and the text
+            block = page.index('<p class="pr-note"><strong>PR</strong>次のリンクは広告です。</p>')
+            self.assertLess(block, page.index("a8mat="))
+            self.assertLess(block, page.index('<div class="aff">'))
+
+    def test_a_program_without_a_code_shows_nothing(self):
+        from sites.saichin import work_pages
+        saved = dict(content.AFFILIATE)
+        try:
+            content.AFFILIATE.clear()
+            self.assertEqual(work_pages.aff("mamaworks"), "")
+        finally:
+            content.AFFILIATE.update(saved)
+
+    def test_no_wording_the_program_rules_forbid(self):
+        for slug in ("wall", "raise"):
+            text = re.sub(r"<[^>]+>", "", self.read(f"guide/{slug}/index.html"))
+            for word in ("稼げる", "クリックして", "絶対", "必ず", "おすすめ", "オススメ", "100%", "ご協力", "他社にはない", "No.1"):
+                self.assertNotIn(word, text, (slug, word))
+
+    def test_the_cautions_come_before_the_side_job_link(self):
+        page = self.read("guide/wall/index.html")
+        self.assertLess(page.index("扶養内で働くときは、先に、勤め先、健康保険組合、年金事務所で、収入の数え方を確かめてください"), page.index("a8mat=4BEL1J+AJ97FU"))
+
+    def test_the_privacy_policy_names_the_affiliate_service(self):
+        page = self.read("privacy/index.html")
+        self.assertIn("アフィリエイトサービス「A8.net」を利用しており", page)
+        self.assertIn("個人を特定する情報は使われません", page)
+
+
+class BothGuidesTest(SiteFixture):
+    def test_only_the_two_approved_a8_programs_and_the_official_sources_are_linked_and_no_ai_wording(self):
+        for slug in ("wall", "raise"):
+            page = self.read(f"guide/{slug}/index.html")
+            for word in ("rakuten", "amazon", "valuecommerce", "Claude", "AIの支援", "自動作成"):
                 self.assertNotIn(word, page, (slug, word))
             hosts = set(re.findall(r'href="https?://([^/"]+)', page))
-            self.assertLessEqual(hosts, {"saichin-sokuho.com", "www.nenkin.go.jp", "www.mhlw.go.jp", "saiteichingin.mhlw.go.jp", "jsite.mhlw.go.jp", "laws.e-gov.go.jp", "www.digital.go.jp"}, slug)
+            self.assertLessEqual(hosts, {"saichin-sokuho.com", "px.a8.net", "www.nenkin.go.jp", "www.mhlw.go.jp", "saiteichingin.mhlw.go.jp", "jsite.mhlw.go.jp", "laws.e-gov.go.jp", "www.digital.go.jp"}, slug)
+            self.assertIn("px.a8.net", hosts, slug)
 
     def test_the_guides_are_linked_from_the_hub_the_home_page_and_the_prefecture_pages(self):
         for slug in ("wall", "raise"):
