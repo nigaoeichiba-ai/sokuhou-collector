@@ -72,7 +72,7 @@ class PreviewBuildTest(BuildTestBase):
 
     def test_prefecture_page_content(self):
         text = self.read(self.out, "shiga/index.html")
-        for needle in ("滋賀県の最低賃金(令和8年度) 1,136円", "2026年10月3日", "+56円", "1,080円",
+        for needle in ("滋賀県の最低賃金の推移(年度別の一覧・グラフ)", "2026年10月3日", "+56円", "1,080円",
                        "全国加重平均 1,177円", 'rel="canonical" href="https://saichin-sokuho.com/shiga/"'):
             self.assertIn(needle, text)
         higher = sum(1 for p in _raw()["prefectures"] if p["history"]["2026"]["amount"] > 1136)  # independent count

@@ -155,12 +155,12 @@ class SiteTest(SiteFixture):
     # ---- history
     def test_history_page(self):
         text = self.read("history/index.html")
-        self.assertEqual(len(re.findall(r"<tr><td>(?:平成|令和)", text)), 25)
+        self.assertEqual(len(re.findall(r"<tr><td>(?:昭和|平成|令和)", text)), 50)       # one row per fiscal year, Showa 52 to Reiwa 8
         self.assertIn("平成14年度", text)
         self.assertIn("令和元年度", text)
         self.assertIn("1,177円", text)
         self.assertIn("<svg", text)
-        self.assertIn("グラフの縦軸は0から始まっていません", text)
+        self.assertIn("グラフの縦軸は、折れ線では0から始まっていません", text)
 
     # ---- guides
     def test_every_guide_has_sources_and_a_verification_date(self):
