@@ -69,6 +69,8 @@ class PublishedNotesTest(unittest.TestCase):
 
     def test_the_credits_are_the_ones_the_data_files_carry(self):
         credits = {json.loads(p.read_text(encoding="utf-8")).get("credit") for p in (ROOT / "data").glob("*_kuma.json")}
+        credits.add("出典:環境省「クマに関する各種情報・取組」の公表資料(速報値)を加工して作成。環境省が作成したものではありません")      # the Ministry's tables (data/env_kuma.json has no credit field: this is the site's own footer text, see build.SOURCE_HTML)
+        self.assertIn("環境省「クマに関する各種情報・取組」", re.sub(r"<[^>]+>", "", build.SOURCE_HTML))
         for d in DOCS:
             for c in d["credits"]:
                 self.assertIn(c, credits, f"{d['slug']}: credit differs from every data file: {c[:40]}")
@@ -129,6 +131,53 @@ class RenderTest(unittest.TestCase):
     def test_without_notes_there_is_no_page_and_no_link(self):
         self.assertNotIn("research/index.html", self.empty)
         self.assertNotIn('href="/research/"', (Path(self.tmp.name) / "e" / "index.html").read_text(encoding="utf-8"))
+
+
+MIN_NOTES, MIN_NOTE_CHARS = 15, 2000
+
+
+def note_chars(html: str) -> int:
+    """The characters of one note page without spaces, leaving out the navigation and the list of the other notes."""
+    main = html.split("<main", 1)[1].split("</main>", 1)[0]
+    main = re.sub(r"<h2>ほかの研究ノート</h2>.*?</ul>", "", main, flags=re.S)
+    main = re.sub(r"<(nav|script|style|svg).*?</>", "", main, flags=re.S)
+    return len(re.sub(r"\s+", "", re.sub(r"<[^>]+>", "", main)))
+
+
+@unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
+class NoteDepthTest(unittest.TestCase):
+    """The notes that are in the repository: how many there are and how long each page is (AdSense review, 2026-10-20: depth is what the site needs more of)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        raw = raw_data()
+        raw["notices"] = []
+        cls.out = Path(cls.tmp.name) / "site"
+        build.render_site(raw, CFG, cls.out, release=True, research=DOCS)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def test_there_are_at_least_fifteen_notes(self):
+        self.assertGreaterEqual(len(DOCS), MIN_NOTES)
+
+    def test_every_note_page_has_at_least_2000_characters(self):
+        for d in DOCS:
+            html = (self.out / "research" / d["slug"] / "index.html").read_text(encoding="utf-8")
+            self.assertGreaterEqual(note_chars(html), MIN_NOTE_CHARS, d["slug"])
+
+    def test_the_length_check_fails_for_a_short_note(self):
+        short = {**sample(), "slug": "short-note"}
+        with tempfile.TemporaryDirectory() as tmp:
+            build.render_site(raw_data(), CFG, Path(tmp) / "s", release=True, research=[short])
+            self.assertLess(note_chars((Path(tmp) / "s" / "research" / "short-note" / "index.html").read_text(encoding="utf-8")), MIN_NOTE_CHARS)
+
+    def test_every_note_says_how_it_was_counted_and_what_it_cannot_say_and_names_its_script(self):
+        for d in DOCS:
+            self.assertTrue(d["method"] and d["caveats"] and d["script"].startswith("sites/kuma/research/scripts/"), d["slug"])
+            self.assertTrue((ROOT / d["script"]).is_file(), d["slug"])
 
 
 if __name__ == "__main__":

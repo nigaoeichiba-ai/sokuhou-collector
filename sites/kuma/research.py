@@ -160,11 +160,11 @@ def hub_page(page, docs: list[dict], has_live: bool = True, has_digest: bool = T
             + ('週ごとの動きは<a href="/digest/">週ごとのまとめ</a>へ。' if has_digest else "ほかのデータは各ページへ。"))
     body = f"""{crumbs([("全国", "/"), ("研究ノート", None)])}
 <h1>熊(クマ)出没の研究ノート</h1>
-<p class="lead">このサイトが集めた自治体の目撃記録を数えて、分かったことを1日1本ずつ書いています。時間帯、曜日、季節の進み、地区ごとのくり返しなど、公式の一覧表だけでは見えない見方です。いま{len(docs)}本あります。</p>
+<p class="lead">このサイトが集めた自治体の目撃記録と、環境省の公表データを数えて、分かったことを書いています。時間帯、季節の進み、被害や捕獲との重なりなど、公式の一覧表だけでは見えない見方です。いま{len(docs)}本あります。</p>
 <ul class="link-list">{items}</ul>
 <p class="notice">どのノートにも、数え方と言えないことを書いています。件数の大小は、自治体ごとに数える対象が違うため、そのまま比べられません。{tail}</p>"""
     return page(path="/research/", title=f"熊(クマ)出没の研究ノート({len(docs)}本・自治体の記録を数えて分かったこと)",
-                description="自治体が公表している熊(クマ)の目撃記録を数えて分かったことを、1日1本ずつ書いています。時間帯・曜日・季節の進みなど。数え方と限界つき。", body=body)
+                description="自治体が公表している熊(クマ)の目撃記録と、環境省の公表データを数えて分かったこと。時間帯・季節の進み・被害や捕獲との重なりなど。数え方と限界つき。", body=body)
 
 
 def home_block(docs: list[dict], limit: int = 3) -> str:
