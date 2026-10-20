@@ -126,5 +126,40 @@ class SeoReportTest(unittest.TestCase):
         self.assertTrue(any(x.startswith("[few-links-in] month/index.html") for x in r), r)       # only the home page links to it
 
 
+class DuplicateWarningTest(unittest.TestCase):
+    """The warning printed with every check: indexable pages that share a title or a description (minna had 540 picture pages on 231 titles)."""
+
+    def warnings(self, files):
+        s = Site(files)
+        self.addCleanup(s.tmp.cleanup)
+        return sitecheck.duplicate_warnings(s.root)
+
+    def test_pages_with_the_same_title_and_description_are_warned_about_by_kind(self):
+        w = self.warnings(good())            # both pages carry title 't' and description 'd'
+        self.assertEqual(len(w), 2, w)
+        self.assertTrue(w[0].startswith("WARNING [duplicate-title]") and "2 indexable pages" in w[0], w)
+        self.assertTrue(w[1].startswith("WARNING [duplicate-description]"), w)
+
+    def test_different_texts_and_noindex_pages_are_not_warned_about(self):
+        files = good()
+        files["month/index.html"] = page('<h1>Months</h1><a href="/">top</a>', "month/",
+                                         head='<title>Months</title><meta name="description" content="Months of the year"><link rel="canonical" href="https://example.test/{p}">')
+        self.assertEqual(self.warnings(files), [])
+        files["month/index.html"] = page('<h1>Top</h1>', "month/",
+                                         head='<title>t</title><meta name="description" content="d"><meta name="robots" content="noindex"><link rel="canonical" href="https://example.test/{p}">')
+        self.assertEqual(self.warnings(files), [])
+
+    def test_main_prints_the_warning_and_does_not_count_it_as_a_problem(self):
+        import contextlib
+        import io
+        s = Site(good())
+        self.addCleanup(s.tmp.cleanup)
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            sitecheck.main([str(s.root), "--base", BASE])
+        self.assertIn("WARNING [duplicate-title]", buf.getvalue())
+        self.assertFalse([p for p in sitecheck.check_dir(s.root, BASE) if "duplicate" in p])
+
+
 if __name__ == "__main__":
     unittest.main()
