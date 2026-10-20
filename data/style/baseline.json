@@ -39,7 +39,7 @@
   "yorokobu": {
    "counts": {
     "high": 0,
-    "mid": 24
+    "mid": 26
    },
    "date": "2026-10-20",
    "keys": {
@@ -70,6 +70,12 @@
      "c3cc9e66dd30",
      "f49af8a0f8c9",
      "f942e9ba8f1c"
+    ],
+    "long_sentence": [
+     "bf485139578f"
+    ],
+    "monotone_ending": [
+     "490103cb5b64"
     ],
     "spaced_writing": [
      "7a3855de2d5f",

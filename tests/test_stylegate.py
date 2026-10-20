@@ -141,6 +141,51 @@ class GateTest(unittest.TestCase):
         self.assertNotIn("幸いです", raw)
 
 
+class FeatureArticleTest(unittest.TestCase):
+    """The 詳しく読む articles (/pick/<slug>/) are drawn only when the shop data answers; a local build has none of them.  Their JSON is read too: a new article cannot slip through."""
+
+    def repo(self, article: dict | None):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        d = Path(tmp.name) / "sites" / "yorokobu" / "content" / "features"
+        d.mkdir(parents=True)
+        if article is not None:
+            (d / "new-article.json").write_text(json.dumps(article, ensure_ascii=False), encoding="utf-8")
+        return Path(tmp.name)
+
+    def test_a_new_article_with_an_unnatural_sentence_stops_it_though_the_release_has_no_page_for_it(self):
+        repo = self.repo({"slug": "new-article", "title": "二重構造のグラス", "reading": [{"h": "容量", "p": PLAIN + MID}]})
+        site_pages = Folder(self, {"index.html": page(PLAIN)})                                       # a release without /pick/new-article/
+        base = {"version": 1, "sites": {"yorokobu": sg.baseline_entry([], "2026-10-20")}}
+        with mock.patch.object(sg, "ROOT", repo):
+            code, text, v = sg.run_check(site_pages.root, "yorokobu", "ratchet", baseline=base)
+        self.assertEqual(code, 1)
+        self.assertEqual([h.rule for h in v.new], ["closing_kouei"])
+        self.assertIn("content/features/new-article.json", text)
+
+    def test_the_same_article_is_fine_once_its_sentence_is_good_or_in_the_baseline(self):
+        site_pages = Folder(self, {"index.html": page(PLAIN)})
+        bad = self.repo({"slug": "x", "reading": [{"h": "容量", "p": PLAIN + MID}]})
+        with mock.patch.object(sg, "ROOT", bad):
+            base = {"version": 1, "sites": {"yorokobu": sg.baseline_entry(sg.collect(site_pages.root, "yorokobu", False)[0], "2026-10-20")}}
+            self.assertEqual(sg.run_check(site_pages.root, "yorokobu", "ratchet", baseline=base)[0], 0)
+        good = self.repo({"slug": "x", "reading": [{"h": "容量", "p": PLAIN + GOOD}]})
+        empty = {"version": 1, "sites": {"yorokobu": sg.baseline_entry([], "2026-10-20")}}
+        with mock.patch.object(sg, "ROOT", good):
+            self.assertEqual(sg.run_check(site_pages.root, "yorokobu", "ratchet", baseline=empty)[0], 0)
+
+    def test_the_dictionary_is_applied_to_the_article_text_in_memory(self):
+        repo = self.repo({"slug": "x", "reading": [{"h": "容量", "p": PLAIN + MID}]})
+        site_pages = Folder(self, {"index.html": page(PLAIN)})
+        empty = {"version": 1, "sites": {"yorokobu": sg.baseline_entry([], "2026-10-20")}}
+        with mock.patch.object(sg, "ROOT", repo), mock.patch.object(nj, "published_text", lambda raw, site: raw.replace(MID, GOOD)):
+            self.assertEqual(sg.run_check(site_pages.root, "yorokobu", "ratchet", baseline=empty)[0], 0)
+
+    def test_the_real_articles_are_found(self):
+        hits, n = sg.source_hits("yorokobu")
+        self.assertGreaterEqual(n, 1)
+
+
 class PrecheckCodeTest(unittest.TestCase):
     def test_a_failing_precheck_returns_the_code_publish_ps1_stops_on(self):
         f = Folder(self, {"index.html": page(PLAIN, MID)})

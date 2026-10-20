@@ -206,8 +206,31 @@ def shadow_line(v: Verdict) -> str:
 
 
 # ------------------------------------------------------------------------------------------------------------------------------ the check
+# Text that is published as a page only when the shop data answers (yorokobu's 詳しく読む articles /pick/<slug>/ are built from these files, and a local build does not draw them):
+# the files are read too, so a new article cannot slip through.  The dictionary is applied to them in memory in every case (it is applied to the pages, not to these files).
+SOURCE_TEXT = {"yorokobu": ("sites/yorokobu/content/features/*.json",)}
+
+
+def source_hits(site: str, repo: Path | None = None) -> tuple[list[nj.Hit], int]:
+    hits: list[nj.Hit] = []
+    n = 0
+    base = repo or ROOT
+    for pat in SOURCE_TEXT.get(site, ()):
+        for f in sorted(base.glob(pat)):
+            try:
+                raw = f.read_text(encoding="utf-8")
+            except (OSError, UnicodeDecodeError):
+                continue
+            n += 1
+            blocks = nj.blocks_from_json(nj.published_text(raw, site))
+            hits += nj.check_blocks(blocks, f.relative_to(base).as_posix(), site, min_level="low")
+    return hits, n
+
+
 def collect(root: Path, site: str, dictionary: bool) -> tuple[list[nj.Hit], int]:
-    return nj.check_path(root, site, (".html", ".htm"), min_level="low", dictionary=dictionary)
+    hits, n = nj.check_path(root, site, (".html", ".htm"), min_level="low", dictionary=dictionary)
+    more, m = source_hits(site)
+    return hits + more, n + m
 
 
 def run_check(root: Path, site: str, mode: str | None = None, dictionary: bool = False, baseline: dict | None = None) -> tuple[int, str, Verdict | None]:
