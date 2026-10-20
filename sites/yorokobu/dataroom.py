@@ -428,6 +428,7 @@ def _shop_section(d: dict, b: dict) -> str:
     pool = products_of_occasion(d, b["occasion"])
     B.set_keep(d["c"]["occ"][b["occasion"]]["name"])
     out = ""
+    amazon = ""
     for r in b["shop"]:
         xs = sorted((i for i in pool if in_band(i["price"], r["lo"], r["hi"])), key=lambda i: (-picking.score(i), i["code"]))
         picked, shops = [], {}
@@ -442,15 +443,16 @@ def _shop_section(d: dict, b: dict) -> str:
             continue
         rt = _range_text(r["lo"], r["hi"])
         btns = f'<span class="btn"><a href="{esc(B.search_link(cfg, r["query"]))}" target="_blank" rel="nofollow sponsored noopener">楽天市場で探す</a></span>'
-        if cfg.get("amazon_tracking_id"):
-            btns += (f'<span class="btn"><a href="{esc(B.amazon_url(cfg, r["query"]))}" target="_blank" rel="nofollow sponsored noopener">Amazonで探す({esc(rt)})</a></span>')
         out += (f'<div class="shop-range"><h3>{esc(r["label"])}</h3><ul class="items">{"".join(B.item_card(cfg, it) for it in picked)}</ul>'
                 f'<p class="more">{btns}</p></div>')
+        if cfg.get("amazon_tracking_id"):                             # Amazon's buttons are a part of their own: a part made with the Rakuten Web Service carries Rakuten's links only (Article 8)
+            amazon += (f'<span class="btn"><a href="{esc(B.amazon_url(cfg, r["query"]))}" target="_blank" rel="nofollow sponsored noopener">{esc(r["label"])}をAmazonで探す({esc(rt)})</a></span>')
     B.set_keep()                                                      # (the words kept in titles belong to the page being built; not to the next one)
     if not out:
         return ""
-    return ('<section class="block" id="shop"><div class="sec-head"><h2>この予算で探す</h2><p>調査で多かった価格帯の商品です。ボタンから楽天市場・Amazonでほかの商品も探せます。</p></div>'
-            f'{out}{B.freshness(d)}</section>')
+    other = (f'<section class="block" id="shop-amazon"><div class="sec-head"><h2>Amazonで探す</h2></div><p class="more">{amazon}</p></section>') if amazon else ""
+    return ('<section class="block" id="shop"><div class="sec-head"><h2>この予算で探す</h2><p>調査で多かった価格帯の商品です。ボタンから楽天市場でほかの商品も探せます。</p></div>'
+            f'{out}{B.freshness(d)}</section>{other}')
 
 
 def _days_tile(d: dict, occasion: str) -> str:
