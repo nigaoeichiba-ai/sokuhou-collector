@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-21",
+  "weekday": "水",
+  "words": 0,
+  "rss": 2190,
+  "searches": 17,
+  "fetches": 40,
+  "candidates": 12,
+  "cards": 10,
+  "rejected": 2,
+  "rejected_reasons": {"2か所目が取得できない(alba.co.jp が429、3tours.jp は日付がJS表示)": 1, "subject が長すぎた(直して再投入で通過)": 1},
+  "queries": [
+    {"q": "公式特設ページ(球場・球団・企業のお知らせ)を直接開く", "hit": 5, "cards": 5},
+    {"q": "PR TIMES + 音楽・ニュースサイトの2か所", "hit": 3, "cards": 3},
+    {"q": "固有名詞+公式ドメイン絞り(allowed_domains)", "hit": 1, "cards": 1},
+    {"q": "WebSearch standard で最新の発表は出にくい。extended か、先にRSSの見出しから公式ページを直接開く方が効く", "hit": 0, "cards": 0}
+  ],
+  "failed_words": ["日立3ツアーズ選手権 2026(12月13日。2か所目が見つからず)"],
+  "injections": 0,
+  "results_written": 1,
+  "ideas": "docs/ideas/2026-10-21.md(3案、Codexなし)",
+  "naturaljp": "high 0 / mid 0 / low 0",
+  "note": "利用者ワード0件。結果は国スポ閉会式の1件。Yahoo!ニュースは同一ドメインなので2か所目は別ドメインを使った。alba.co.jp は取得に429を返す。"
+}
