@@ -35,7 +35,7 @@ from sites.kuma import season as season_mod  # noqa: E402
 from sites.kuma import live as live_mod  # noqa: E402
 from sites.kuma.fmt import day_text, fy_label, fy_start, jp_date, md, n, ratio_text, table  # noqa: E402
 from sokuhou import prefectures as pf  # noqa: E402
-from sokuhou.sitekit import BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
+from sokuhou.sitekit import BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages, drop_ads_from_noindex  # noqa: E402
 
 JST = timezone(timedelta(hours=9))
 MINISTRY_PAGE = "https://www.env.go.jp/nature/choju/effort/effort12/effort12.html"
@@ -910,6 +910,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages["about/index.html"] = pages["about/index.html"].replace("<h2>免責事項</h2>", about_mod.editorial_html(any_live) + "<h2>免責事項</h2>", 1)
     pages.update(standard_files(pages, cfg, preview, max([d["fetched_date"]] + [src["fetched_date"] for src in d.get("live_prefs", [])])))   # the newest of the ministry and the municipal sources
     apply_index_policy(pages, thin_pages, preview)
+    drop_ads_from_noindex(pages)            # no ad tag on a page that is not indexed (kuma-adsense-about, 2026-10-20)
     render_day = today or datetime.now(JST).date()
     if update_lastmod:
         for rel in lastmod_mod.update_static(pages, render_day):

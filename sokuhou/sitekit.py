@@ -133,6 +133,20 @@ def structured_data(cfg: dict, path: str, body: str, existing: str = "") -> str:
     return "".join('<script type="application/ld+json">' + json.dumps(d, ensure_ascii=False).replace("</", "<\\/") + "</script>\n" for d in out)
 
 
+_ADS_TAG = re.compile(r'<script async src="https://pagead2\.googlesyndication\.com/pagead/js/adsbygoogle\.js[^"]*"[^>]*></script>\n?')
+
+
+def drop_ads_from_noindex(pages: dict) -> int:
+    """Take the AdSense tag out of every page that asks not to be indexed (a page no search sends anyone to is no place for an ad); returns how many pages changed.
+    A site calls this after it has decided which pages are noindex (the robots meta is added after the layout is made)."""
+    n = 0
+    for rel, text in pages.items():
+        if isinstance(text, str) and rel.endswith(".html") and re.search(r'<meta name="robots" content="[^"]*noindex', text) and _ADS_TAG.search(text):
+            pages[rel] = _ADS_TAG.sub("", text)
+            n += 1
+    return n
+
+
 def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, description: str, body: str,
            scripts: bool = False, og_image: str | None = None, alternates: tuple[tuple[str, str], ...] = (),
            head_extra: str = "") -> str:
