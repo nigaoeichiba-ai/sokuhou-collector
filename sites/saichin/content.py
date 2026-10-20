@@ -17,6 +17,9 @@ S_FAQ_USER = ("厚生労働省 最低賃金制度「よくあるご質問(使用
 S_FAQ_OTHER = ("厚生労働省 最低賃金制度「よくあるご質問(その他の最低賃金についての質問)」", "https://saiteichingin.mhlw.go.jp/faq/page_faq_03.html")
 S_TARGET_PERSON = ("厚生労働省 最低賃金制度「適用される対象者は?」", "https://saiteichingin.mhlw.go.jp/point/page_point_target.html")
 S_HAKEN = ("厚生労働省 最低賃金制度「派遣労働者の最低賃金は?」", "https://saiteichingin.mhlw.go.jp/point/page_point_haken.html")
+S_JPS_WAGE = ("日本年金機構「2026(令和8)年10月に社会保険の短時間労働者に係る賃金要件が撤廃されました」", "https://www.nenkin.go.jp/oshirase/taisetu/jigyosho/2026/202610/100104.html")
+S_MHLW_SI = ("厚生労働省「社会保険の加入対象の拡大について」", "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000147284_00021.html")
+S_FIXED_OT = ("静岡労働局「固定残業代を賃金に含める場合は、適切な表示をお願いします。」", "https://jsite.mhlw.go.jp/shizuoka-roudoukyoku/news_topics/topics/2016topics/_120316.html")
 S_WELLKNOWN = ("厚生労働省 最低賃金制度「最低賃金の周知義務は?」", "https://saiteichingin.mhlw.go.jp/point/page_point_wellknown.html")
 
 GUIDES = [
@@ -198,6 +201,28 @@ GUIDES = [
 <p>自分の賃金が下回っていないかは、<a href="/guide/below/">確認の手順</a>と<a href="/check/">差額チェッカー</a>で調べられます。</p>
 """,
         "sources": [S_FAQ_WORKER, S_FAQ_USER, S_FAQ_OTHER, S_TARGET_PERSON, S_HAKEN, S_WELLKNOWN, LAW],
+    },
+    {
+        "slug": "wall",
+        "image": "calculate",
+        "verified": "2026-10-20",
+        "dynamic": True,
+        "title": "最低賃金で働くと、週何時間で社会保険・扶養の壁に届く?都道府県別の早見表",
+        "description": "社会保険の賃金要件(月額8.8万円)は2026年10月に撤廃されました。最低賃金で週20時間働いたときの年収と、扶養の130万円に届く週の時間を、47都道府県別に計算しました。",
+        "lead": "社会保険の「106万円の壁」の賃金要件は、2026年10月に撤廃されました。いまの分かれ目は、週20時間と扶養の130万円です。",
+        "body": "",
+        "sources": [S_JPS_WAGE, S_MHLW_SI],
+    },
+    {
+        "slug": "raise",
+        "image": "below",
+        "verified": "2026-10-20",
+        "dynamic": True,
+        "title": "時給を上げたいときの考え方 最低賃金との比べ方・求人の見方・相談先",
+        "description": "最低賃金が上がっても、高い時給は自動で上がりません。いまの時給を最低賃金と比べる手順、求人の時給の見方(固定残業代・試用期間)、地方内の違い、相談先をまとめました。",
+        "lead": "最低賃金が上がっても、それより高い時給は自動では上がりません。時給を上げたいときは、いまの時給を最低賃金と比べるところから始めます。",
+        "body": "",
+        "sources": [S_FAQ_WORKER, S_FAQ_USER, S_TARGET, S_TARGET_PERSON, S_HAKEN, S_FIXED_OT, LAW],
     },
 ]
 

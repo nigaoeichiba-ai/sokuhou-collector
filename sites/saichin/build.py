@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import analysis_pages, charts, content, dataset, history_old, long_history, ogimage, trend_pages, wage as wagelib  # noqa: E402
+from sites.saichin import analysis_pages, charts, content, dataset, history_old, long_history, ogimage, trend_pages, work_pages, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
@@ -536,7 +536,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <h2>発効日を通知で受け取る</h2>
 <p><a href="/calendar/{r['slug']}.ics">{esc(r['name'])}の発効日を、カレンダーに入れる</a>(前日の朝9時に通知。登録不要)。ほかの方法は、<a href="/notify/">通知を受け取る</a>をご覧ください。</p>
 <h2>あわせて読む</h2>
-<ul class="link-list"><li><a href="/guide/excluded/">最低賃金に含まれない賃金は?</a></li><li><a href="/guide/below/">最低賃金を下回っていたら?</a></li><li><a href="/guide/faq/">最低賃金のよくある質問</a></li><li><a href="/calendar/">発効日カレンダー</a></li></ul>
+<ul class="link-list"><li><a href="/guide/excluded/">最低賃金に含まれない賃金は?</a></li><li><a href="/guide/below/">最低賃金を下回っていたら?</a></li><li><a href="/guide/faq/">最低賃金のよくある質問</a></li><li><a href="/guide/raise/">時給を上げたいときの考え方</a></li><li><a href="/guide/wall/">週何時間で社会保険・扶養の壁に届くか</a></li><li><a href="/calendar/">発効日カレンダー</a></li></ul>
 <h2>ほかの都道府県</h2>
 <ul class="pref-nav">{nav}</ul>
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。47都道府県の全年度のデータは、<a href="/data/">CSV・JSONでダウンロード</a>できます。引用するときは、<a href="/cite/">引用のしかた</a>をご覧ください。</p>"""
@@ -969,7 +969,7 @@ def guide_page(d: dict, g: dict, cfg: dict, preview: bool) -> str:
 <h1>{esc(g['title'])}</h1>
 <p class="lead">{esc(g['lead'])}</p>
 <img class="page-banner guide" src="/assets/img/guide-{g.get('image', g['slug'])}.webp" alt="" width="800" height="450">
-<article class="prose">{g['body']}</article>
+<article class="prose">{work_pages.BODIES[g['slug']](d, sys.modules[__name__]) if g.get('dynamic') else g['body']}</article>
 <h2>出典</h2>
 <ul class="link-list">{sources}</ul>
 <p class="notice">内容の確認日: {jp_date(g.get('verified', content.VERIFIED_AT))}。制度は改正されることがあります。最新の内容は、出典でご確認ください。</p>
