@@ -89,7 +89,7 @@ class BuildTest(unittest.TestCase):
         self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc=", page)
         self.assertIn('aria-label="広告を含みます">PR</span>', page)
         self.assertIn("保証するものではありません", page)
-        self.assertIn("/numbers/reviews-10000/", (out / "sitemap.xml").read_text(encoding="utf-8"))
+        self.assertNotIn("/numbers/reviews-10000/", (out / "sitemap.xml").read_text(encoding="utf-8"))          # noindex and out of the sitemap since 2026-10-20; the hub stays
         problems = [p for p in sitecheck.check_dir(out, CFG["site_url"]) if "numbers" in p]
         self.assertEqual(problems, [])
 
