@@ -110,6 +110,37 @@ class InThePages(unittest.TestCase):
         self.assertEqual(about.count(SHARED_CFG["operator_name"]), 1)             # the company name stays on this page only, once
 
 
+class PictureDescriptions(unittest.TestCase):
+    def test_no_two_picture_pages_share_a_meta_description(self):
+        """seo-sweep 2026-10-20: two pictures of one set with the same title (a wave in two outfits) shared a description; the place in the set now tells them apart."""
+        out, files = shared_site()
+        seen: dict[str, str] = {}
+        dup = []
+        for rel in files:
+            if not re.fullmatch(r"illust/[^/]+/index\.html", rel):
+                continue
+            m = re.search(r'<meta name="description" content="([^"]*)"', (out / rel).read_text(encoding="utf-8"))
+            self.assertTrue(m, rel)
+            self.assertLessEqual(len(m.group(1)), 160, rel)
+            if m.group(1) in seen:
+                dup.append((seen[m.group(1)], rel))
+            seen[m.group(1)] = rel
+        self.assertEqual(dup, [])
+        self.assertGreater(len(seen), 2000)
+
+    def test_the_description_names_the_place_in_the_set(self):
+        items, series = build.load_data()
+        s = next(x for x in series if not x["legacy"] and build.series_use(x) and len(x["items"]) >= 3)
+        a, b = s["items"][0], s["items"][2]
+        da = build.illust_description(a, s, "かわいい", 0)
+        db = build.illust_description(b, s, "かわいい", 2)
+        self.assertIn(f"{len(s['items'])}点のうち1点目です", da)
+        self.assertIn(f"{len(s['items'])}点のうち3点目です", db)
+        self.assertNotEqual(da, db)
+        legacy = next(x for x in series if x["legacy"])
+        self.assertIn("点のうち2点目です", build.illust_description(legacy["items"][1], legacy, "かわいい", 1))
+
+
 class NoOriginClaims(unittest.TestCase):
     """オーナー決定 2026-10-20: the site does not say how the pictures are made (nor that its text or pages were made by a program or an AI).
     The card maker's own words about the AI built into Chrome describe a feature, and a set about people who use AI at work is a subject; neither is a claim about the site."""

@@ -988,6 +988,18 @@ def illust_page_title(it: dict, items, s: dict) -> str:
     return f"{it['title']}({s['title']}・{s['ids'].index(it['id']) + 1}点目)"
 
 
+def illust_description(it: dict, s: dict, touch: str, idx: int) -> str:
+    """The meta description of a picture page.  It names the picture's place in its set ("12点のうち3点目"), so two pictures of one set with the same title (a wave
+    in two outfits) do not share a description."""
+    place = f"{s['title']}{len(s['items'])}点のうち{idx + 1}点目です。"
+    use_line = series_use(s)
+    if use_line:
+        d = f"{it['title']}のイラスト。{place}{use_line}無料・商用OK・クレジット不要の透明PNG。"
+    else:
+        d = f"{it['desc']}{place}{touch}のタッチ。無料・商用OK・クレジット不要の透明PNG。"
+    return d[:150]
+
+
 def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
     base = cfg["site_url"].rstrip("/")
     s = series_of(it, series)
@@ -1038,8 +1050,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 {guide_box(guides_for(it['genre'], it['touch'], list(guides)))}
 <script type="application/ld+json">{ld}</script>"""
     return page(cfg, preview, path=f"/illust/{it['id']}/", title=f"{illust_page_title(it, items, s)} 無料・商用OKのイラスト | {cfg['site_name']}",
-                description=(f"{it['title']}のイラスト。{s['title']}の1点です。{use_line}無料・商用OK・クレジット不要の透明PNG。" if use_line
-                             else f"{it['desc']}{t}のタッチ。無料・商用OK・クレジット不要の透明PNG。")[:150], body=body, og_image=f"/thumbs/{it['id']}.webp")
+                description=illust_description(it, s, t, idx), body=body, og_image=f"/thumbs/{it['id']}.webp")
 
 
 def special_page(cfg, preview, sp: dict, sers: list[dict], its: list[dict], today: date, guides=()) -> str:
