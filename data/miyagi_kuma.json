@@ -1,16 +1,16 @@
 {
- "as_of": "2026-10-19",
+ "as_of": "2026-10-20",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 1,
  "dates_after_as_of_by_month": {
   "10": 1
  },
- "fetched_at": "2026-10-20T06:17:14.056398+09:00",
+ "fetched_at": "2026-10-21T06:17:16.015197+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "1": 0,
-   "10": 82,
+   "10": 86,
    "11": 0,
    "12": 0,
    "2": 0,
@@ -31,6 +31,38 @@
    "kind": "目撃",
    "observed_at": "2026-10-29T15:20:00+09:00",
    "place": "駒場字上五仏",
+   "species": "クマ"
+  },
+  {
+   "city": "富谷市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-20T02:16:00+09:00",
+   "place": "明石台九丁目地内",
+   "species": "クマ"
+  },
+  {
+   "city": "富谷市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-19T19:00:00+09:00",
+   "place": "大清水二丁目",
+   "species": "クマ"
+  },
+  {
+   "city": "栗原市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-19T00:35:00+09:00",
+   "place": "築館字照越後沢　地内",
+   "species": "クマ"
+  },
+  {
+   "city": "大郷町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-18T08:30:00+09:00",
+   "place": "中村字屋敷前",
    "species": "クマ"
   },
   {
@@ -11027,7 +11059,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261019.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261020.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }
