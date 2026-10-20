@@ -66,12 +66,12 @@ class CityPageHelpersTest(unittest.TestCase):
         self.assertEqual(live_mod.short_place("富谷市", "富谷市一ノ関臑合山　地内"), "一ノ関臑合山")
         self.assertEqual(live_mod.short_place("三種町", "秋田県三種町"), "")                # the municipality alone says nothing about where
 
-    def test_places_html_lists_only_places_that_repeat_and_the_three_newest(self):
+    def test_places_html_lists_only_places_that_repeat_and_the_newest(self):
         rows = [{"place": p} for p in ("岩国市A", "岩国市B", "岩国市A", "岩国市C", "岩国市A", "岩国市B", "岩国市D")]
         html = live_mod.places_html("岩国市", rows)
         self.assertIn("<li>A: 3件</li><li>B: 2件</li>", html)
         self.assertNotIn("C: ", html)
-        self.assertIn("<li>A</li><li>B</li><li>C</li></ul>", html)                       # the newest three distinct places, newest first
+        self.assertIn("<li>A</li><li>B</li><li>C</li><li>D</li></ul>", html)             # the newest (up to five) distinct places, newest first
         self.assertEqual(live_mod.places_html("岩国市", [{"place": "岩国市A"}, {"place": "岩国市B"}]).count("同じ場所"), 0)
 
     def test_peak_week_is_reported_only_when_it_is_the_single_busiest_week_with_three_or_more(self):
@@ -80,6 +80,58 @@ class CityPageHelpersTest(unittest.TestCase):
         self.assertEqual((got[0], got[1], got[2]), (date(2026, 9, 1), date(2026, 9, 7), 3))
         self.assertIsNone(live_mod.peak_week([day(d) for d in (1, 2, 20, 21)]))          # fewer than 3
         self.assertIsNone(live_mod.peak_week([day(d) for d in (1, 2, 3, 20, 21, 22)]))    # two weeks tie: no sentence rather than a guess
+
+
+class CityFactsTest(unittest.TestCase):
+    """The municipality pages carry only the sentences that are true of that municipality, so two pages differ in structure and in the names they mention."""
+    TODAY = date(2026, 10, 20)
+
+    @staticmethod
+    def rows(days, kind="目撃"):
+        return [{"at": f"{d}T09:00:00+09:00", "kind": kind, "place": f"{d}の場所", "city": "X"} for d in sorted(days, reverse=True)]
+
+    def lv(self, **cities):
+        return {"by_pref": {"akita": {c: r for c, r in cities.items()}}, "today": self.TODAY}
+
+    def facts(self, city, **cities):
+        return live_mod.city_facts("akita", city, cities[city], self.lv(**cities), self.TODAY)
+
+    def test_the_biggest_municipality_names_the_second_and_a_small_one_names_the_first(self):
+        big = self.rows([f"2026-09-{d:02d}" for d in range(1, 21)])
+        mid = self.rows([f"2026-08-{d:02d}" for d in range(1, 11)])
+        small = self.rows(["2026-07-01", "2026-07-02", "2026-07-03"])
+        tiny = self.rows(["2026-06-01", "2026-06-02"])
+        cities = {"大館市": big, "能代市": mid, "男鹿市": small, "三種町": tiny}
+        first = "".join(self.facts("大館市", **cities)["lead"])
+        self.assertIn("いちばん記録の多い市町村です(2位は能代市の10件)", first)
+        last = "".join(self.facts("三種町", **cities)["lead"])
+        self.assertIn("記録の数は4位と、少ない側です。1位の大館市は20件です", last)
+        self.assertNotIn("いちばん記録の多い", last)
+
+    def test_a_municipality_without_recent_records_says_so_instead_of_comparing_two_zeros(self):
+        rows = self.rows(["2026-05-01", "2026-05-02", "2026-05-03"])
+        lead = "".join(self.facts("大館市", **{"大館市": rows})["lead"])
+        self.assertIn("直近60日(その前の30日を含む)には、記録がありません", lead)
+        self.assertNotIn("より増えています", lead)
+
+    def test_the_busiest_week_is_in_the_lead_only_when_it_holds_a_large_share(self):
+        spread = self.rows([f"2026-0{m}-0{d}" for m in (5, 6, 7, 8) for d in (1, 2, 3)])
+        lead = "".join(self.facts("大館市", **{"大館市": spread})["lead"])
+        self.assertNotIn("に集まっています", lead)                                   # 3 of 12 in the best week: a quarter, not a concentration
+        packed = self.rows(["2026-07-01", "2026-07-02", "2026-07-03", "2026-07-04", "2026-09-01", "2026-09-20"])
+        lead = "".join(self.facts("大館市", **{"大館市": packed})["lead"])
+        self.assertIn("記録の67%(4件)は、7月1日から7月7日の7日間に集まっています", lead)
+
+    def test_kinds_a_late_first_record_and_a_long_gap_are_stated_only_when_they_apply(self):
+        rows = self.rows(["2026-05-10", "2026-06-01", "2026-08-30"])
+        items = "".join(self.facts("大館市", **{"大館市": rows})["items"])
+        self.assertIn("記録は、すべて「目撃」です", items)
+        self.assertIn("年度の最初の記録は5月10日で、4月ではありません", items)
+        self.assertIn("記録のない日が最も長く続いたのは、6月2日から8月29日の89日間です", items)
+        early = self.rows(["2026-04-02", "2026-04-05", "2026-04-09"], kind="痕跡")
+        items = "".join(self.facts("大館市", **{"大館市": early})["items"])
+        self.assertNotIn("4月ではありません", items)
+        self.assertNotIn("最も長く続いた", items)
 
 
 @unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
@@ -149,12 +201,12 @@ class AdsenseFixSiteTest(unittest.TestCase):
         rel = self.city_rel("岩国市")
         html = self.read(rel)
         lead = re.search(r'<p class="lead">(.*?)</p>', html).group(1)
-        for part in ("令和8年度の記録は30件です", "直近30日は", "その前の30日(", "月別では", "市町村のうち記録の数は"):
+        for part in ("令和8年度の記録は30件です", "直近30日は", "その前の30日(", "いちばん記録の多い市町村です(2位は周南市の9件)"):
             self.assertIn(part, lead)
         text = re.sub(r"<[^>]+>", " ", html)
-        for part in ("記録がいちばん集まったのは", "県内の記録", "数え方と、読むときの注意", "件数の数え方は、「"):
+        for part in ("記録のあった日は", "数え方と、読むときの注意", "件数の数え方は、「"):
             self.assertIn(part, text)
-        records = html.split("新しい順の記録</h2>", 1)[1].split("</table>", 1)[0]
+        records = html.split("新しい順の記録(直近20件)</h2>", 1)[1].split("</table>", 1)[0]
         self.assertEqual(records.count("<tr>") - 1, live_mod.CITY_ROWS)               # the record table stops at CITY_ROWS rows (30 records here)
 
     def test_a_municipality_page_has_at_least_400_characters_of_text_outside_tables_and_headings(self):
