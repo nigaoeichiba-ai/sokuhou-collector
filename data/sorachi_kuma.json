@@ -1,21 +1,21 @@
 {
- "as_of": "2026-10-20",
+ "as_of": "2026-10-21",
  "bad_coords": 0,
  "credit": "出典:空知総合振興局「そらち・ヒグマ情報」(北海道、CC-BY)を加工して作成",
- "fetched_at": "2026-10-21T06:17:27.172860+09:00",
+ "fetched_at": "2026-10-22T06:17:22.153440+09:00",
  "fy_current": "R08",
  "monthly": {
   "R07": {
    "3": 2
   },
   "R08": {
-   "10": 11,
+   "10": 12,
    "4": 8,
    "5": 23,
    "6": 25,
    "7": 26,
    "8": 36,
-   "9": 22
+   "9": 23
   }
  },
  "sightings": [
@@ -33,6 +33,14 @@
    "kind": "目撃",
    "observed_at": "2026-10-16",
    "place": "吉野 市道南１丁目線",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-15",
+   "place": "南部住の江町",
    "species": "ヒグマ"
   },
   {
@@ -105,6 +113,14 @@
    "kind": "痕跡",
    "observed_at": "2026-10-02",
    "place": "御園",
+   "species": "ヒグマ"
+  },
+  {
+   "city": "夕張市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-29",
+   "place": "滝の上公園駐車場付近",
    "species": "ヒグマ"
   },
   {
@@ -1244,7 +1260,7 @@
    "species": "ヒグマ"
   }
  ],
- "sightings_in_window": 153,
+ "sightings_in_window": 155,
  "source": "sorachi",
  "source_file": "https://www.sorachi.pref.hokkaido.lg.jp/hk/kks/245135.html",
  "source_page": "https://www.sorachi.pref.hokkaido.lg.jp/hk/kks/245135.html",

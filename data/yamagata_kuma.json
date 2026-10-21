@@ -2404,14 +2404,14 @@
   }
  ],
  "corroborated_on": {
-  "南陽市": "2026-10-21",
-  "山形市": "2026-10-21",
-  "白鷹町": "2026-10-21",
-  "酒田市": "2026-10-21",
-  "鶴岡市": "2026-10-21"
+  "南陽市": "2026-10-22",
+  "山形市": "2026-10-22",
+  "白鷹町": "2026-10-22",
+  "酒田市": "2026-10-22",
+  "鶴岡市": "2026-10-22"
  },
  "credit": "出典: 山形県「クマ目撃マップ」の元データ(https://www.pref.yamagata.jp/050011/kurashi/shizen/seibutsu/about_kuma/kuma_yamagata_top.html)から、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、山形県のページでご確認ください)",
- "fetched_at": "2026-10-21T06:18:39.248513+09:00",
+ "fetched_at": "2026-10-22T06:18:18.009275+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
@@ -2896,7 +2896,7 @@
   }
  },
  "source": "yamagata",
- "source_file": "https://www.pref.yamagata.jp/documents/2414/20261011_kemonote-cleaned.csv",
+ "source_file": "https://www.pref.yamagata.jp/documents/2414/20261018_kemonote-cleaned.csv",
  "source_page": "https://www.pref.yamagata.jp/050011/kurashi/shizen/seibutsu/about_kuma/kuma_yamagata_top.html",
  "total_fy": 875,
  "unparsed": 0,
