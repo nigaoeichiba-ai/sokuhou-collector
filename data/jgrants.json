@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-18T21:15:37.779026+00:00",
+ "fetched_at": "2026-10-21T21:16:26.984609+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -205,18 +205,6 @@
    "target_area_search": "東京都",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "令和８年度フィンテック企業等に対するイノベーション支援事業（金融サービス事業化支援補助金）"
-  },
-  {
-   "acceptance_end_datetime": "2027-01-29T14:59:00.000Z",
-   "acceptance_start_datetime": "2026-04-09T15:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDMSsMAP",
-   "id": "a0WJ200000CDMSsMAP",
-   "institution_name": null,
-   "name": "S-00006444",
-   "subsidy_max_limit": 7500000,
-   "target_area_search": "東京都",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "デジタル証券（セキュリティトークン）市場拡大促進事業補助金"
   },
   {
    "acceptance_end_datetime": "2027-01-15T14:59:00.000Z",
@@ -1983,5 +1971,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 165
+ "total": 164
 }

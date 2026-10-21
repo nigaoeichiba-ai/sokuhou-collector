@@ -853,7 +853,7 @@
    ]
   }
  },
- "fetched_at": "2026-10-15T08:54:12.140227+09:00",
+ "fetched_at": "2026-10-22T06:16:24.487221+09:00",
  "injuries": {
   "as_of": "R08年9月末",
   "national": {
@@ -4881,6 +4881,11 @@
  "injuries_pdf": "https://www.env.go.jp/nature/choju/effort/effort12/injury-qe.pdf",
  "notices": [
   {
+   "date": "2026-09-28",
+   "title": "令和8年度秋季におけるクマの出没に係る適切な対応及びクマに関する情報提供について(依頼)",
+   "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r080929.pdf"
+  },
+  {
    "date": "2026-08-28",
    "title": "クマ被害対策等関係情報のお知らせ(令和8年8月28日追加)",
    "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r080828.pdf"
@@ -4934,11 +4939,6 @@
    "date": "2025-11-14",
    "title": "クマ被害対策等関係情報のお知らせ(11月14日追加)",
    "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r071114.html"
-  },
-  {
-   "date": "2025-10-31",
-   "title": "クマ被害対策等関係情報のお知らせ",
-   "url": "https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r071031.html"
   }
  ],
  "sightings": {
