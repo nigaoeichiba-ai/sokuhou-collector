@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-22",
+  "weekday": "木",
+  "words": 0,
+  "rss": 2759,
+  "searches": 8,
+  "fetches": 30,
+  "candidates": 8,
+  "cards": 4,
+  "rejected": 4,
+  "rejected_reasons": {"すでにカードがある(重複)": 2, "引用に日付が入っていない(DeNA。2か所目の記事に11月16日の表記なし)": 1, "2か所目なし(CDTV)": 1},
+  "queries": [
+    {"q": "RSSの見出し → 日付を本文で確認 → WebSearch extended で別ドメインの2か所目", "hit": 8, "cards": 4},
+    {"q": "Yahoo!ニュースの記事同士は同一ドメインになるので、2か所目は元の会社のサイトを使う", "hit": 4, "cards": 4}
+  ],
+  "failed_words": ["DeNA B-SIDE HOLIDAYS(11/16。引用に日付が入る記事を探す)", "日立3ツアーズ選手権(2か所目)"],
+  "injections": 0,
+  "results_written": 0,
+  "ideas": "未作成(今回は時間の都合)",
+  "note": "利用者ワード0件。結果を書く作業・改善案は今回やっていない。"
+}
