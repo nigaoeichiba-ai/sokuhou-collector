@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-22",
+ "slug": "shichigosan-items-flat",
+ "title": "七五三の小物と場面",
+ "genre": "season",
+ "touch": "flat",
+ "lead": "千歳飴・草履・神社の鳥居など、七五三に関わる小物と場面を描いた12点です。写真台紙やお祝いのカード、案内状に使えます。",
+ "tags": [
+  "七五三",
+  "千歳飴",
+  "神社",
+  "着物",
+  "11月",
+  "お祝い"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "shichigosan-items-flat-chitose",
+   "file": "shichigosan-items-flat-chitose.webp",
+   "title": "千歳飴の袋",
+   "desc": "千歳飴の袋のシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "千歳飴の袋",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 224,
+   "h": 499
+  },
+  {
+   "id": "shichigosan-items-flat-zori",
+   "file": "shichigosan-items-flat-zori.webp",
+   "title": "草履",
+   "desc": "草履のシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "草履",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 381,
+   "h": 407
+  },
+  {
+   "id": "shichigosan-items-flat-geta",
+   "file": "shichigosan-items-flat-geta.webp",
+   "title": "下駄",
+   "desc": "下駄のシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "下駄",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 432,
+   "h": 354
+  },
+  {
+   "id": "shichigosan-items-flat-hakama",
+   "file": "shichigosan-items-flat-hakama.webp",
+   "title": "袴",
+   "desc": "袴のシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "袴",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 496,
+   "h": 501
+  },
+  {
+   "id": "shichigosan-items-flat-kimono",
+   "file": "shichigosan-items-flat-kimono.webp",
+   "title": "七歳の着物",
+   "desc": "七歳の着物のシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "七歳の着物",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 400,
+   "h": 534
+  },
+  {
+   "id": "shichigosan-items-flat-kanzashi",
+   "file": "shichigosan-items-flat-kanzashi.webp",
+   "title": "髪飾り",
+   "desc": "髪飾りのシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "髪飾り",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 387,
+   "h": 493
+  },
+  {
+   "id": "shichigosan-items-flat-torii",
+   "file": "shichigosan-items-flat-torii.webp",
+   "title": "神社の鳥居",
+   "desc": "神社の鳥居のシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "神社の鳥居",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 472,
+   "h": 442
+  },
+  {
+   "id": "shichigosan-items-flat-bell",
+   "file": "shichigosan-items-flat-bell.webp",
+   "title": "鈴と本坪",
+   "desc": "鈴と本坪のシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "鈴と本坪",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 243,
+   "h": 498
+  },
+  {
+   "id": "shichigosan-items-flat-omamori",
+   "file": "shichigosan-items-flat-omamori.webp",
+   "title": "お守り",
+   "desc": "お守りのシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "お守り",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 407,
+   "h": 419
+  },
+  {
+   "id": "shichigosan-items-flat-family",
+   "file": "shichigosan-items-flat-family.webp",
+   "title": "家族の参拝",
+   "desc": "家族の参拝のシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "家族の参拝",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 472,
+   "h": 479
+  },
+  {
+   "id": "shichigosan-items-flat-camera",
+   "file": "shichigosan-items-flat-camera.webp",
+   "title": "記念撮影",
+   "desc": "記念撮影のシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "記念撮影",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 492,
+   "h": 472
+  },
+  {
+   "id": "shichigosan-items-flat-sakaki",
+   "file": "shichigosan-items-flat-sakaki.webp",
+   "title": "お祓い",
+   "desc": "お祓いのシンプルフラットイラストです。",
+   "tags": [
+    "七五三",
+    "千歳飴",
+    "神社",
+    "着物",
+    "七五三の小物と場面",
+    "お祓い",
+    "シンプルフラット",
+    "季節・行事"
+   ],
+   "w": 464,
+   "h": 507
+  }
+ ]
+}

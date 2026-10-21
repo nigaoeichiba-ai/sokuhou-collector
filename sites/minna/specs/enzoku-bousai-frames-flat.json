@@ -1,0 +1,83 @@
+{
+ "slug": "enzoku-bousai-frames-flat",
+ "title": "遠足と防災のフレーム",
+ "subject": "",
+ "genre": "deco",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Decorative frames/borders with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, landscape or square, thick enough to hold text or a photo, decorated with the motifs of the theme. Flat colourful style. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "遠足の持ち物や防災用品で縁取った、12点の飾り枠です。学校や園のおたより、防災マップ、掲示物に使えます。",
+ "tags": [
+  "遠足",
+  "防災",
+  "フレーム",
+  "おたより",
+  "掲示物",
+  "枠"
+ ],
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "enzoku-bag",
+   "リュックと水筒の遠足枠",
+   "frame made of backpacks, water bottles and lunch boxes"
+  ],
+  [
+   "enzoku-trail",
+   "山道の遠足枠",
+   "frame with a hiking trail, trees and small flags"
+  ],
+  [
+   "enzoku-bus",
+   "バス遠足の枠",
+   "frame with a tour bus, clouds and road signs"
+  ],
+  [
+   "enzoku-park",
+   "公園遠足の枠",
+   "frame with picnic sheet, ball and flowers"
+  ],
+  [
+   "enzoku-zoo",
+   "動物園遠足の枠",
+   "frame with simple zoo animals peeking in from the edges"
+  ],
+  [
+   "enzoku-round",
+   "遠足の丸枠",
+   "circular wreath of hiking items and leaves"
+  ],
+  [
+   "bousai-kit",
+   "防災用品の枠",
+   "frame made of emergency kit, helmet, flashlight and water bottles"
+  ],
+  [
+   "bousai-helmet",
+   "防災頭巾の枠",
+   "frame with safety hood, whistle and radio"
+  ],
+  [
+   "bousai-evac",
+   "避難の枠",
+   "frame with evacuation arrows and a shelter symbol, no text"
+  ],
+  [
+   "bousai-round",
+   "防災の丸枠",
+   "circular wreath of emergency items"
+  ],
+  [
+   "bousai-wide",
+   "防災の横長枠",
+   "wide frame with a first-aid kit, blanket and a flashlight"
+  ],
+  [
+   "bousai-tall",
+   "防災の縦長枠",
+   "tall portrait frame with emergency items stacked on both sides"
+  ]
+ ],
+ "exclude": []
+}

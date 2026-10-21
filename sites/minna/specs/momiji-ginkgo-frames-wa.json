@@ -1,0 +1,83 @@
+{
+ "slug": "momiji-ginkgo-frames-wa",
+ "title": "紅葉と銀杏のフレーム",
+ "subject": "",
+ "genre": "deco",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "subject_en": "Decorative frames/borders with an EMPTY centre filled with plain white so it becomes transparent; each frame is ONE separate piece centred in its cell, landscape or square, thick enough to hold text or a photo, decorated with the motifs of the theme. Japanese traditional (wa) style, maple leaves and ginkgo leaves in red, orange and gold. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "紅葉と銀杏の葉で縁取った、12点の飾り枠です。秋の案内状、おたより、写真の額に使えます。",
+ "tags": [
+  "紅葉",
+  "銀杏",
+  "フレーム",
+  "秋",
+  "枠",
+  "飾り罫"
+ ],
+ "season": null,
+ "holes": true,
+ "items": [
+  [
+   "maple-square",
+   "紅葉の四角枠",
+   "square frame made of red maple leaves"
+  ],
+  [
+   "ginkgo-square",
+   "銀杏の四角枠",
+   "square frame made of yellow ginkgo leaves"
+  ],
+  [
+   "mixed-wide",
+   "紅葉と銀杏の横長枠",
+   "wide landscape frame with maple and ginkgo leaves mixed"
+  ],
+  [
+   "corner-maple",
+   "紅葉の角飾り枠",
+   "frame with maple leaf clusters only at the four corners and a thin line between"
+  ],
+  [
+   "stream",
+   "紅葉と流水の枠",
+   "frame with maple leaves floating on blue wave patterns"
+  ],
+  [
+   "round-ginkgo",
+   "銀杏の丸枠",
+   "circular wreath of ginkgo leaves"
+  ],
+  [
+   "round-maple",
+   "紅葉の丸枠",
+   "circular wreath of maple leaves"
+  ],
+  [
+   "tall",
+   "紅葉の縦長枠",
+   "tall portrait frame with maple branches on both sides"
+  ],
+  [
+   "acorn",
+   "秋の実りの枠",
+   "frame with chestnuts, acorns and small maple leaves"
+  ],
+  [
+   "seigaiha",
+   "青海波と紅葉の枠",
+   "frame with seigaiha wave pattern edge and a few maple leaves"
+  ],
+  [
+   "falling",
+   "舞い散る落ち葉の枠",
+   "frame with leaves of ginkgo and maple falling from the upper side"
+  ],
+  [
+   "gold",
+   "金色の銀杏並木の枠",
+   "wide frame showing a golden ginkgo avenue along the top and bottom edges"
+  ]
+ ],
+ "exclude": []
+}

@@ -1,0 +1,225 @@
+{
+ "added": "2026-10-22",
+ "slug": "reading-autumn-animals-loose",
+ "title": "読書の秋の動物たち",
+ "genre": "animals",
+ "touch": "loose",
+ "lead": "本を読む動物を、ゆるい手描きのタッチで描いた12点です。図書だよりや読書週間の案内、書店のポップに使えます。",
+ "tags": [
+  "読書の秋",
+  "動物",
+  "本",
+  "図書館",
+  "読書週間",
+  "図書だより"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "reading-autumn-animals-loose-cat",
+   "file": "reading-autumn-animals-loose-cat.webp",
+   "title": "本を読む猫",
+   "desc": "本を読む猫のゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を読む猫",
+    "ゆるい手書き"
+   ],
+   "w": 493,
+   "h": 384
+  },
+  {
+   "id": "reading-autumn-animals-loose-dog",
+   "file": "reading-autumn-animals-loose-dog.webp",
+   "title": "本を読む犬",
+   "desc": "本を読む犬のゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を読む犬",
+    "ゆるい手書き"
+   ],
+   "w": 367,
+   "h": 428
+  },
+  {
+   "id": "reading-autumn-animals-loose-rabbit",
+   "file": "reading-autumn-animals-loose-rabbit.webp",
+   "title": "本を読む兎",
+   "desc": "本を読む兎のゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を読む兎",
+    "ゆるい手書き"
+   ],
+   "w": 463,
+   "h": 468
+  },
+  {
+   "id": "reading-autumn-animals-loose-bear",
+   "file": "reading-autumn-animals-loose-bear.webp",
+   "title": "本を読む熊",
+   "desc": "本を読む熊のゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を読む熊",
+    "ゆるい手書き"
+   ],
+   "w": 483,
+   "h": 492
+  },
+  {
+   "id": "reading-autumn-animals-loose-owl",
+   "file": "reading-autumn-animals-loose-owl.webp",
+   "title": "本を読む梟",
+   "desc": "本を読む梟のゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を読む梟",
+    "ゆるい手書き"
+   ],
+   "w": 453,
+   "h": 464
+  },
+  {
+   "id": "reading-autumn-animals-loose-fox",
+   "file": "reading-autumn-animals-loose-fox.webp",
+   "title": "本を読む狐",
+   "desc": "本を読む狐のゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を読む狐",
+    "ゆるい手書き"
+   ],
+   "w": 444,
+   "h": 503
+  },
+  {
+   "id": "reading-autumn-animals-loose-squirrel",
+   "file": "reading-autumn-animals-loose-squirrel.webp",
+   "title": "本を抱える栗鼠",
+   "desc": "本を抱える栗鼠のゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を抱える栗鼠",
+    "ゆるい手書き"
+   ],
+   "w": 448,
+   "h": 444
+  },
+  {
+   "id": "reading-autumn-animals-loose-panda",
+   "file": "reading-autumn-animals-loose-panda.webp",
+   "title": "本を読む熊猫",
+   "desc": "本を読む熊猫のゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を読む熊猫",
+    "ゆるい手書き"
+   ],
+   "w": 391,
+   "h": 448
+  },
+  {
+   "id": "reading-autumn-animals-loose-penguin",
+   "file": "reading-autumn-animals-loose-penguin.webp",
+   "title": "本を運ぶペンギン",
+   "desc": "本を運ぶペンギンのゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を運ぶペンギン",
+    "ゆるい手書き"
+   ],
+   "w": 423,
+   "h": 443
+  },
+  {
+   "id": "reading-autumn-animals-loose-elephant",
+   "file": "reading-autumn-animals-loose-elephant.webp",
+   "title": "本を読む象",
+   "desc": "本を読む象のゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を読む象",
+    "ゆるい手書き"
+   ],
+   "w": 502,
+   "h": 451
+  },
+  {
+   "id": "reading-autumn-animals-loose-hedgehog",
+   "file": "reading-autumn-animals-loose-hedgehog.webp",
+   "title": "本を読む針鼠",
+   "desc": "本を読む針鼠のゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を読む針鼠",
+    "ゆるい手書き"
+   ],
+   "w": 412,
+   "h": 403
+  },
+  {
+   "id": "reading-autumn-animals-loose-tanuki",
+   "file": "reading-autumn-animals-loose-tanuki.webp",
+   "title": "本を読む狸",
+   "desc": "本を読む狸のゆるい手書きイラストです。",
+   "tags": [
+    "読書の秋",
+    "動物",
+    "本",
+    "図書館",
+    "読書の秋の動物たち",
+    "本を読む狸",
+    "ゆるい手書き"
+   ],
+   "w": 527,
+   "h": 434
+  }
+ ]
+}
