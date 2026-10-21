@@ -1,0 +1,135 @@
+{
+ "added": "2026-10-22",
+ "slug": "enzoku-bousai-frames-flat",
+ "title": "遠足と防災のフレーム",
+ "genre": "deco",
+ "touch": "flat",
+ "lead": "遠足の持ち物や防災用品で縁取った、12点の飾り枠です。学校や園のおたより、防災マップ、掲示物に使えます。",
+ "tags": [
+  "遠足",
+  "防災",
+  "フレーム",
+  "おたより",
+  "掲示物",
+  "枠"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "enzoku-bousai-frames-flat-enzoku-bag",
+   "file": "enzoku-bousai-frames-flat-enzoku-bag.webp",
+   "title": "リュックと水筒の遠足枠",
+   "desc": "リュックと水筒の遠足枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "リュックと水筒の遠足枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 496,
+   "h": 472
+  },
+  {
+   "id": "enzoku-bousai-frames-flat-enzoku-trail",
+   "file": "enzoku-bousai-frames-flat-enzoku-trail.webp",
+   "title": "山道の遠足枠",
+   "desc": "山道の遠足枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "山道の遠足枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 522,
+   "h": 481
+  },
+  {
+   "id": "enzoku-bousai-frames-flat-enzoku-bus",
+   "file": "enzoku-bousai-frames-flat-enzoku-bus.webp",
+   "title": "バス遠足の枠",
+   "desc": "バス遠足の枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "バス遠足の枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 503,
+   "h": 479
+  },
+  {
+   "id": "enzoku-bousai-frames-flat-enzoku-park",
+   "file": "enzoku-bousai-frames-flat-enzoku-park.webp",
+   "title": "公園遠足の枠",
+   "desc": "公園遠足の枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "公園遠足の枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 505,
+   "h": 507
+  },
+  {
+   "id": "enzoku-bousai-frames-flat-enzoku-zoo",
+   "file": "enzoku-bousai-frames-flat-enzoku-zoo.webp",
+   "title": "動物園遠足の枠",
+   "desc": "動物園遠足の枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "動物園遠足の枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 527,
+   "h": 507
+  },
+  {
+   "id": "enzoku-bousai-frames-flat-enzoku-round",
+   "file": "enzoku-bousai-frames-flat-enzoku-round.webp",
+   "title": "遠足の丸枠",
+   "desc": "遠足の丸枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "遠足の丸枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 499,
+   "h": 502
+  }
+ ]
+}

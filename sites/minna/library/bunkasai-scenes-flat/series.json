@@ -1,0 +1,128 @@
+{
+ "added": "2026-10-22",
+ "slug": "bunkasai-scenes-flat",
+ "title": "文化祭の場面",
+ "genre": "school",
+ "touch": "flat",
+ "lead": "模擬店・演劇・看板づくりなど、文化祭の準備と当日の場面を描いた12点です。ポスターや学校だより、案内に使えます。",
+ "tags": [
+  "文化祭",
+  "学園祭",
+  "模擬店",
+  "学校行事",
+  "ポスター",
+  "高校"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "bunkasai-scenes-flat-signboard",
+   "file": "bunkasai-scenes-flat-signboard.webp",
+   "title": "看板づくり",
+   "desc": "看板づくりのシンプルフラットイラストです。",
+   "tags": [
+    "文化祭",
+    "学園祭",
+    "模擬店",
+    "学校行事",
+    "文化祭の場面",
+    "看板づくり",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 526,
+   "h": 419
+  },
+  {
+   "id": "bunkasai-scenes-flat-stall",
+   "file": "bunkasai-scenes-flat-stall.webp",
+   "title": "模擬店",
+   "desc": "模擬店のシンプルフラットイラストです。",
+   "tags": [
+    "文化祭",
+    "学園祭",
+    "模擬店",
+    "学校行事",
+    "文化祭の場面",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 496,
+   "h": 455
+  },
+  {
+   "id": "bunkasai-scenes-flat-play",
+   "file": "bunkasai-scenes-flat-play.webp",
+   "title": "演劇の発表",
+   "desc": "演劇の発表のシンプルフラットイラストです。",
+   "tags": [
+    "文化祭",
+    "学園祭",
+    "模擬店",
+    "学校行事",
+    "文化祭の場面",
+    "演劇の発表",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 522,
+   "h": 454
+  },
+  {
+   "id": "bunkasai-scenes-flat-band",
+   "file": "bunkasai-scenes-flat-band.webp",
+   "title": "バンド演奏",
+   "desc": "バンド演奏のシンプルフラットイラストです。",
+   "tags": [
+    "文化祭",
+    "学園祭",
+    "模擬店",
+    "学校行事",
+    "文化祭の場面",
+    "バンド演奏",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 543,
+   "h": 385
+  },
+  {
+   "id": "bunkasai-scenes-flat-haunted",
+   "file": "bunkasai-scenes-flat-haunted.webp",
+   "title": "お化け屋敷",
+   "desc": "お化け屋敷のシンプルフラットイラストです。",
+   "tags": [
+    "文化祭",
+    "学園祭",
+    "模擬店",
+    "学校行事",
+    "文化祭の場面",
+    "お化け屋敷",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 509,
+   "h": 458
+  },
+  {
+   "id": "bunkasai-scenes-flat-cafe",
+   "file": "bunkasai-scenes-flat-cafe.webp",
+   "title": "教室の喫茶",
+   "desc": "教室の喫茶のシンプルフラットイラストです。",
+   "tags": [
+    "文化祭",
+    "学園祭",
+    "模擬店",
+    "学校行事",
+    "文化祭の場面",
+    "教室の喫茶",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 549,
+   "h": 407
+  }
+ ]
+}

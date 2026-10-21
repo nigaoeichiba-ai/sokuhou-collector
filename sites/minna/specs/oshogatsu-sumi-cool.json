@@ -1,0 +1,82 @@
+{
+ "slug": "oshogatsu-sumi-cool",
+ "title": "お正月（墨と朱のかっこいいタッチ）",
+ "subject": "",
+ "genre": "season",
+ "touch": "cool",
+ "title_fmt": "{ja}",
+ "subject_en": "Bold modern Japanese ink-brush style (black sumi ink strokes with vermilion red accents), each ONE New Year motif centred, strong contrast and dynamic shapes. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "鶴・富士・達磨・凧などお正月の定番を、墨と朱を使ったかっこいいタッチで描いた12点です。年賀状やポスター、SNS の画像に使えます。",
+ "tags": [
+  "お正月",
+  "墨",
+  "朱",
+  "かっこいい",
+  "年賀状",
+  "モダン"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "crane",
+   "鶴",
+   "a crane spreading its wings in brush strokes"
+  ],
+  [
+   "fuji",
+   "富士山",
+   "Mount Fuji with a red rising sun behind it"
+  ],
+  [
+   "daruma",
+   "達磨",
+   "a bold red daruma doll with strong brush outlines"
+  ],
+  [
+   "kite",
+   "凧",
+   "a rectangular kite with a dragon-like pattern flying with a long tail"
+  ],
+  [
+   "pine",
+   "松",
+   "a pine branch in strong ink strokes"
+  ],
+  [
+   "bamboo",
+   "竹",
+   "bamboo stalks with leaves in ink strokes"
+  ],
+  [
+   "plum",
+   "梅",
+   "a plum blossom branch with red blossoms"
+  ],
+  [
+   "koma",
+   "独楽",
+   "a spinning top with a bold stripe pattern and motion lines"
+  ],
+  [
+   "hagoita",
+   "羽子板",
+   "a hagoita paddle with a shuttlecock, bold pattern"
+  ],
+  [
+   "shishimai",
+   "獅子舞",
+   "a lion dance head with open mouth in dynamic ink style"
+  ],
+  [
+   "sunrise-wave",
+   "波と初日の出",
+   "big stylised waves with a red sun rising"
+  ],
+  [
+   "kadomatsu",
+   "門松",
+   "a kadomatsu in strong geometric ink style"
+  ]
+ ]
+}

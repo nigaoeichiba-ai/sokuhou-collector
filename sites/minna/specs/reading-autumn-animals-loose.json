@@ -1,0 +1,83 @@
+{
+ "slug": "reading-autumn-animals-loose",
+ "title": "読書の秋の動物たち",
+ "subject": "",
+ "genre": "animals",
+ "touch": "loose",
+ "title_fmt": "{ja}",
+ "subject_en": "Loose hand-drawn style animals reading books in cosy poses, each ONE animal with a book, centred, warm autumn colours. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "本を読む動物を、ゆるい手描きのタッチで描いた12点です。図書だよりや読書週間の案内、書店のポップに使えます。",
+ "tags": [
+  "読書の秋",
+  "動物",
+  "本",
+  "図書館",
+  "読書週間",
+  "図書だより"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "cat",
+   "本を読む猫",
+   "a cat lying on its belly reading an open book"
+  ],
+  [
+   "dog",
+   "本を読む犬",
+   "a dog sitting and holding a picture book with both paws"
+  ],
+  [
+   "rabbit",
+   "本を読む兎",
+   "a rabbit sitting with a stack of books beside it, reading one"
+  ],
+  [
+   "bear",
+   "本を読む熊",
+   "a bear in an armchair reading a thick book with round glasses"
+  ],
+  [
+   "owl",
+   "本を読む梟",
+   "an owl on a branch with a small book and tiny glasses"
+  ],
+  [
+   "fox",
+   "本を読む狐",
+   "a fox sitting under a tree reading with a scarf on"
+  ],
+  [
+   "squirrel",
+   "本を抱える栗鼠",
+   "a squirrel hugging a large book with a fallen acorn beside"
+  ],
+  [
+   "panda",
+   "本を読む熊猫",
+   "a panda reading a book while eating a bamboo shoot"
+  ],
+  [
+   "penguin",
+   "本を運ぶペンギン",
+   "a penguin carrying a tall stack of books"
+  ],
+  [
+   "elephant",
+   "本を読む象",
+   "an elephant holding a tiny book with its trunk"
+  ],
+  [
+   "hedgehog",
+   "本を読む針鼠",
+   "a hedgehog reading a book with autumn leaves on its back"
+  ],
+  [
+   "tanuki",
+   "本を読む狸",
+   "a tanuki sitting and reading a scroll-like book with a lantern"
+  ]
+ ],
+ "exclude": []
+}

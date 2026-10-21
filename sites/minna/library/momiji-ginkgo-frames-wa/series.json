@@ -1,0 +1,249 @@
+{
+ "added": "2026-10-22",
+ "slug": "momiji-ginkgo-frames-wa",
+ "title": "紅葉と銀杏のフレーム",
+ "genre": "deco",
+ "touch": "wa",
+ "lead": "紅葉と銀杏の葉で縁取った、12点の飾り枠です。秋の案内状、おたより、写真の額に使えます。",
+ "tags": [
+  "紅葉",
+  "銀杏",
+  "フレーム",
+  "秋",
+  "枠",
+  "飾り罫"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "momiji-ginkgo-frames-wa-maple-square",
+   "file": "momiji-ginkgo-frames-wa-maple-square.webp",
+   "title": "紅葉の四角枠",
+   "desc": "紅葉の四角枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "紅葉の四角枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 483,
+   "h": 462
+  },
+  {
+   "id": "momiji-ginkgo-frames-wa-ginkgo-square",
+   "file": "momiji-ginkgo-frames-wa-ginkgo-square.webp",
+   "title": "銀杏の四角枠",
+   "desc": "銀杏の四角枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "銀杏の四角枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 449,
+   "h": 449
+  },
+  {
+   "id": "momiji-ginkgo-frames-wa-mixed-wide",
+   "file": "momiji-ginkgo-frames-wa-mixed-wide.webp",
+   "title": "紅葉と銀杏の横長枠",
+   "desc": "紅葉と銀杏の横長枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "紅葉と銀杏の横長枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 584,
+   "h": 389
+  },
+  {
+   "id": "momiji-ginkgo-frames-wa-corner-maple",
+   "file": "momiji-ginkgo-frames-wa-corner-maple.webp",
+   "title": "紅葉の角飾り枠",
+   "desc": "紅葉の角飾り枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "紅葉の角飾り枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 480,
+   "h": 469
+  },
+  {
+   "id": "momiji-ginkgo-frames-wa-stream",
+   "file": "momiji-ginkgo-frames-wa-stream.webp",
+   "title": "紅葉と流水の枠",
+   "desc": "紅葉と流水の枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "紅葉と流水の枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 581,
+   "h": 388
+  },
+  {
+   "id": "momiji-ginkgo-frames-wa-round-ginkgo",
+   "file": "momiji-ginkgo-frames-wa-round-ginkgo.webp",
+   "title": "銀杏の丸枠",
+   "desc": "銀杏の丸枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "銀杏の丸枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 479,
+   "h": 479
+  },
+  {
+   "id": "momiji-ginkgo-frames-wa-round-maple",
+   "file": "momiji-ginkgo-frames-wa-round-maple.webp",
+   "title": "紅葉の丸枠",
+   "desc": "紅葉の丸枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "紅葉の丸枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 502,
+   "h": 505
+  },
+  {
+   "id": "momiji-ginkgo-frames-wa-tall",
+   "file": "momiji-ginkgo-frames-wa-tall.webp",
+   "title": "紅葉の縦長枠",
+   "desc": "紅葉の縦長枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "紅葉の縦長枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 419,
+   "h": 492
+  },
+  {
+   "id": "momiji-ginkgo-frames-wa-acorn",
+   "file": "momiji-ginkgo-frames-wa-acorn.webp",
+   "title": "秋の実りの枠",
+   "desc": "秋の実りの枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "秋の実りの枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 495,
+   "h": 448
+  },
+  {
+   "id": "momiji-ginkgo-frames-wa-seigaiha",
+   "file": "momiji-ginkgo-frames-wa-seigaiha.webp",
+   "title": "青海波と紅葉の枠",
+   "desc": "青海波と紅葉の枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "青海波と紅葉の枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 521,
+   "h": 389
+  },
+  {
+   "id": "momiji-ginkgo-frames-wa-falling",
+   "file": "momiji-ginkgo-frames-wa-falling.webp",
+   "title": "舞い散る落ち葉の枠",
+   "desc": "舞い散る落ち葉の枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "舞い散る落ち葉の枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 471,
+   "h": 444
+  },
+  {
+   "id": "momiji-ginkgo-frames-wa-gold",
+   "file": "momiji-ginkgo-frames-wa-gold.webp",
+   "title": "金色の銀杏並木の枠",
+   "desc": "金色の銀杏並木の枠の和風・和柄イラストです。",
+   "tags": [
+    "紅葉",
+    "銀杏",
+    "フレーム",
+    "秋",
+    "枠",
+    "紅葉と銀杏のフレーム",
+    "金色の銀杏並木の枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 549,
+   "h": 382
+  }
+ ]
+}

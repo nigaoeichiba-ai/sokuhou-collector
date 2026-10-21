@@ -1,0 +1,83 @@
+{
+ "slug": "omisoka-toshikoshi-flat",
+ "title": "大みそかと年越し",
+ "subject": "",
+ "genre": "season",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Flat colourful illustrations of New Year's Eve in Japan, each ONE object or scene centred, deep blue and red accents. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "年越しそば・除夜の鐘・初日の出など、大みそかから元日の朝までの小物と場面を描いた12点です。年末のカードや案内に使えます。",
+ "tags": [
+  "大みそか",
+  "年越し",
+  "年越しそば",
+  "除夜の鐘",
+  "年末",
+  "カード"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "soba",
+   "年越しそば",
+   "a bowl of toshikoshi soba with a shrimp tempura and green onion"
+  ],
+  [
+   "bell",
+   "除夜の鐘",
+   "a temple bell with a wooden striker and a few snowflakes"
+  ],
+  [
+   "clock",
+   "年越しの時計",
+   "a wall clock with both hands at twelve, no numbers"
+  ],
+  [
+   "tv",
+   "大みそかのテレビ",
+   "a family sitting in front of a TV with mandarin oranges, seen from behind"
+  ],
+  [
+   "temple",
+   "夜の初詣",
+   "a night shrine approach with lanterns and a small crowd of silhouettes"
+  ],
+  [
+   "sunrise",
+   "初日の出",
+   "the first sunrise over the sea with a pine tree in the foreground"
+  ],
+  [
+   "cleaning",
+   "大掃除の最後",
+   "a person wiping a window with a bucket and cloth"
+  ],
+  [
+   "card",
+   "年越しのカード",
+   "a blank greeting card with a gold border and a plum blossom"
+  ],
+  [
+   "toast",
+   "年越しの乾杯",
+   "two cups raised together in a toast with sparkles"
+  ],
+  [
+   "kadomatsu",
+   "門松",
+   "a pair of kadomatsu pine and bamboo decorations"
+  ],
+  [
+   "cat-soba",
+   "そばを待つ猫",
+   "a cat sitting in front of a soba bowl wearing a small scarf"
+  ],
+  [
+   "fireworks",
+   "年明けの花火",
+   "fireworks over a night town roof with a crescent moon"
+  ]
+ ],
+ "exclude": []
+}

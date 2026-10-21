@@ -1,0 +1,83 @@
+{
+ "slug": "shichigosan-items-flat",
+ "title": "七五三の小物と場面",
+ "subject": "",
+ "genre": "season",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Flat colourful illustrations of Shichi-Go-San (Japanese children's festival) items and scenes, each ONE object or scene centred, red and gold accents. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "千歳飴・草履・神社の鳥居など、七五三に関わる小物と場面を描いた12点です。写真台紙やお祝いのカード、案内状に使えます。",
+ "tags": [
+  "七五三",
+  "千歳飴",
+  "神社",
+  "着物",
+  "11月",
+  "お祝い"
+ ],
+ "season": null,
+ "holes": false,
+ "items": [
+  [
+   "chitose",
+   "千歳飴の袋",
+   "a long paper bag of chitose-ame candy with crane and turtle pictures but no text"
+  ],
+  [
+   "zori",
+   "草履",
+   "a pair of red zori sandals with a brocade strap"
+  ],
+  [
+   "geta",
+   "下駄",
+   "a pair of children's wooden geta"
+  ],
+  [
+   "hakama",
+   "袴",
+   "a boy's black haori and hakama set laid out neatly"
+  ],
+  [
+   "kimono",
+   "七歳の着物",
+   "a girl's red kimono with flower patterns on a hanger"
+  ],
+  [
+   "kanzashi",
+   "髪飾り",
+   "a girl's hair ornament with silk flowers and tassels"
+  ],
+  [
+   "torii",
+   "神社の鳥居",
+   "a vermilion torii gate with gravel path and a lantern"
+  ],
+  [
+   "bell",
+   "鈴と本坪",
+   "a shrine bell with a thick red and white rope"
+  ],
+  [
+   "omamori",
+   "お守り",
+   "a small brocade amulet with a cord"
+  ],
+  [
+   "family",
+   "家族の参拝",
+   "a parent and a child in festive clothes walking toward a shrine, seen from behind"
+  ],
+  [
+   "camera",
+   "記念撮影",
+   "a family posing in front of a camera on a tripod, faces simple"
+  ],
+  [
+   "sakaki",
+   "お祓い",
+   "a shrine priest waving a ritual wand over a bowing child"
+  ]
+ ],
+ "exclude": []
+}
