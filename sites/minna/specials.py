@@ -155,7 +155,7 @@ SPECIALS = [
     },
     {
         "slug": "shichigosan", "name": "七五三", "title": "七五三のイラスト・フレーム 無料・商用OK",
-        "description": "七五三の案内、写真カード、しおりに使える和風のイラストとフレーム。千歳飴、着物、鳥居。無料・商用OK・登録不要の透明PNG。",
+        "description": "七五三の写真フレームを無料でダウンロード。案内、写真カード、しおりに使える和風のイラストと、千歳飴・着物・鳥居の絵もあります。商用OK・登録不要の透明PNG。",
         "season": {"from": "09-20", "to": "11-20"},
         "guides": ["shichigosan-guide", "tomei-png"],
         "match_series": ["shichigosan-wa", "shichigosan-frames-wa"],
