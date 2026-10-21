@@ -41,6 +41,21 @@ class OtsuFireTest(unittest.TestCase):
         d = otsu_fire.parse(_load(), now=datetime(2027, 1, 2, 9, 0, tzinfo=JST))
         self.assertTrue(all(e["started_at"].startswith("2026-") for e in d["incidents"]))
 
+    def test_fire_out_message_is_a_resolution(self):
+        # 2026-10-19: the page began to say "消えました" for a hazardous-materials fire; frequent-collect then failed for days
+        html = (
+            "<ul><li>10月19日 21時56分 大津市晴嵐一丁目付近の危険物火災は、 "
+            "10月19日 22時11分に消えました。</li></ul>"
+        )
+        d = otsu_fire.parse(html, now=datetime(2026, 10, 20, 9, 0, tzinfo=JST))
+        self.assertEqual(d["unparsed"], [])
+        self.assertEqual(len(d["incidents"]), 1)
+        e = d["incidents"][0]
+        self.assertEqual(e["status"], "resolved")
+        self.assertEqual(e["kind"], "危険物火災")
+        self.assertEqual(e["resolved_at"], "2026-10-19T22:11:00+09:00")
+        self.assertEqual(e["result"], "消火")
+
     def test_open_incident_is_reported_without_resolution(self):
         html = (
             "<ul><li>10月05日 15時30分 大津市瀬田一丁目付近で建物火災が発生し、"

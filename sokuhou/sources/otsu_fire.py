@@ -29,7 +29,7 @@ _START = re.compile(
     rf"^{_ts('s')}\s*(?P<place>.+?付近|.+?)で(?P<kind>.+?)が発生し、\s*消防車等が出動しています"
 )
 _RESOLVED = re.compile(
-    rf"^{_ts('s')}\s*(?P<place>.+?付近|.+?)の(?P<kind>.+?)は、\s*{_ts('r')}に(?P<result>.+?)しました"
+    rf"^{_ts('s')}\s*(?P<place>.+?付近|.+?)の(?P<kind>.+?)は、\s*{_ts('r')}に(?:(?P<result>.+?)しました|(?P<out>消え)ました)"
 )
 _NO_INCIDENT = "火事などの災害は発生していません"
 
@@ -70,7 +70,7 @@ def parse(html: str, now: datetime | None = None) -> dict:
             key = (started.isoformat(), m["place"], m["kind"])
             rec = incidents.setdefault(key, {"started_at": started.isoformat(), "place": m["place"], "kind": m["kind"]})
             rec["resolved_at"] = resolved.isoformat()
-            rec["result"] = m["result"]
+            rec["result"] = m["result"] or "消火"  # "…に消えました" (seen 2026-10-19) = fire out
     events = sorted(incidents.values(), key=lambda e: e["started_at"], reverse=True)
     for e in events:
         e["status"] = "resolved" if "resolved_at" in e else "reported"
