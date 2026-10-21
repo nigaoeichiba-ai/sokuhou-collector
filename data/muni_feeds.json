@@ -542,7 +542,7 @@
    "id": "13ff42458c",
    "items": [
     {
-     "date": "2026-10-20",
+     "date": "2026-10-21",
      "link": "https://www.city.sakata.lg.jp/shisei/nyusatsu/nyusatsukeiyaku.html",
      "summary": "",
      "title": "入札・契約"
@@ -1089,6 +1089,12 @@
      "title": "愛媛県公営企業管理局 入札・発注情報"
     },
     {
+     "date": "2026-10-21",
+     "link": "https://www.pref.ehime.jp/page/161004.html",
+     "summary": "",
+     "title": "令和8年度「差別をなくする強調月間」及び「差別をなくする県民のつどい」の参加募集について"
+    },
+    {
      "date": "2026-10-20",
      "link": "https://www.pref.ehime.jp/page/161630.html",
      "summary": "",
@@ -1165,12 +1171,6 @@
      "link": "https://www.pref.ehime.jp/page/161608.html",
      "summary": "",
      "title": "民間主体の大規模な藻場造成事業に係る審査要領検討会(第1回検討会)を開催します"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.ehime.jp/page/161598.html",
-     "summary": "",
-     "title": "【11月14日開催】愛媛UIJターンインターンシップフェア in 大阪~参加学生の募集~"
     }
    ],
    "name": "愛媛県庁",
@@ -1283,6 +1283,12 @@
    "id": "38db2808d3",
    "items": [
     {
+     "date": "2026-10-21",
+     "link": "https://www.pref.ehime.jp/page/161004.html",
+     "summary": "",
+     "title": "令和8年度「差別をなくする強調月間」及び「差別をなくする県民のつどい」の参加募集について"
+    },
+    {
      "date": "2026-10-20",
      "link": "https://www.pref.ehime.jp/page/161392.html",
      "summary": "秋田港・能代港洋上風力発電所の視察を実施",
@@ -1365,12 +1371,6 @@
      "link": "https://www.pref.ehime.jp/page/160101.html",
      "summary": "「ものづくりコーディネーター小規模交流会」開催のお知らせ",
      "title": "ものづくりコーディネーター小規模交流会の開催について"
-    },
-    {
-     "date": "2026-10-05",
-     "link": "https://www.pref.ehime.jp/page/159099.html",
-     "summary": "",
-     "title": "「広い愛で拾い合い愛顔の河川清掃 in 新居浜」の開催について"
     }
    ],
    "name": "愛媛県庁",
@@ -1400,6 +1400,12 @@
    "items": [
     {
      "date": "2026-10-21",
+     "link": "https://www.pref.fukushima.lg.jp/sec/36021d/2021syokuhinn01.html",
+     "summary": "",
+     "title": "食品表示に係る研修会の開催について"
+    },
+    {
+     "date": "2026-10-21",
      "link": "https://www.pref.fukushima.lg.jp/sec/11055a/bunkahyoushou.html",
      "summary": "福島県では、県の文化の向上に貢献した方を表彰しています。",
      "title": "文化功労賞/文化・スポーツ知事感謝状"
@@ -1415,12 +1421,6 @@
      "link": "https://www.pref.fukushima.lg.jp/sec/36035b/daishinsai-kokurui-monitoring-shinchoku-r8.html",
      "summary": "令和8年産の穀類(米・大豆・麦・そば)のモニタリング検査結果",
      "title": "令和8年産米・穀類の市町村別モニタリング検査の進捗状況"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.fukushima.lg.jp/sec/11015e/ceatec-inov-f-rei1013.html",
-     "summary": "福島イノベーション・コースト構想 福島国際研究教育機構 F-REI CEATEC2026",
-     "title": "国内最大級の産業展示会CEATEC2026@幕張メッセに出展しました!"
     },
     {
      "date": "2026-10-20",
@@ -1899,7 +1899,7 @@
     }
    ],
    "name": "北海道庁",
-   "ok": true,
+   "ok": false,
    "site": "https://www.pref.hokkaido.lg.jp/",
    "title": "お知らせ - 北海道のホームページ"
   },
@@ -2039,7 +2039,7 @@
     }
    ],
    "name": "北海道庁",
-   "ok": true,
+   "ok": false,
    "site": "https://www.pref.hokkaido.lg.jp/",
    "title": "入札情報 - 北海道のホームページ"
   },
@@ -2420,6 +2420,12 @@
    "items": [
     {
      "date": "2026-10-21",
+     "link": "https://www.pref.miyagi.jp/soshiki/dobokusom/nijiirotsushin.html",
+     "summary": "",
+     "title": "宮城県土木部虹色通信~R8上半期号~を発行しました!"
+    },
+    {
+     "date": "2026-10-21",
      "link": "https://www.pref.miyagi.jp/soshiki/ky-teacher/r09kyosai.html",
      "summary": "",
      "title": "宮城県公立学校教員採用候補者選考"
@@ -2449,6 +2455,12 @@
      "title": "ナイトタイムイベント「TAGAJO YOGOTO」を開催します!"
     },
     {
+     "date": "2026-10-20",
+     "link": "https://www.pref.miyagi.jp/soshiki/zeimu/hurusatochoice20261019.html",
+     "summary": "",
+     "title": "ふるさと納税ポータルサイト「ふるさとチョイス」における不正アクセスについて"
+    },
+    {
      "date": "2026-10-19",
      "link": "https://www.pref.miyagi.jp/soshiki/kankou/pokemon/laprascafe.html",
      "summary": "「Pokémon GO ワイルドエリア:仙台・東北」にあわせて、ラプラスカフェを開催します。 みやぎ応援ポケモン「ラプラス」をはじめ、いわて応援ポケモン「イシツブテ」や、ふくしま応援ポケモン「ラッキー」とコラボしたオリジナルメニューのほか、施設内の大画面で放映する迫力たっぷりの観光映像などをお楽しみください。",
@@ -2465,18 +2477,6 @@
      "link": "https://www.pref.miyagi.jp/soshiki/bousai/bousaikokutai.html",
      "summary": "令和9年度「防災推進国民大会」(ぼうさいこくたい)が宮城県で開催されます。",
      "title": "令和9年度「防災推進国民大会」の宮城県開催の決定について"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.miyagi.jp/site/lapras-plus-dam/2026.html",
-     "summary": "宮城県では、ダムにみやぎ応援ポケモン「ラプラス」のパネルを設置や、ホログラム加工を施した「プレミアダムカード」を配布し、ダム周辺の協力店舗と連携したイベントを開催します。",
-     "title": "ダムへ行こう!ラプラスでダムカードゲットだぜ!【2026】"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.miyagi.jp/site/zairi/kyosonyusatsu.html",
-     "summary": "宮城県では、県有地の一般競争入札を実施しています。",
-     "title": "一般競争入札により県有財産を売払います"
     }
    ],
    "name": "宮城県庁",
@@ -2820,6 +2820,12 @@
    "id": "96f2ab737b",
    "items": [
     {
+     "date": "2026-10-21",
+     "link": "https://www.pref.niigata.lg.jp/sec/gakko_joetsuyogo/20261113jouetutokusi-juuyu.html",
+     "summary": "",
+     "title": "LSA重油の購入単価契約(一般競争入札、入札日11月13日)上越特別支援学校"
+    },
+    {
      "date": "2026-10-20",
      "link": "https://www.pref.niigata.lg.jp/site/jouetsu-seibi/1217354468498.html",
      "summary": "上越地域整備部管内における冬期間の道路閉鎖状況です。",
@@ -2902,12 +2908,6 @@
      "link": "https://www.pref.niigata.lg.jp/site/syokuhin/r8-edamamepr-6.html",
      "summary": "「世界えだまめ早食い選手権」を主催する「ながおか農challeプロジェクト実行委員会」の実行委員長等が農林水産部長を表敬訪問し、これまでの開催実績について報告します。",
      "title": "「ながおか農challeプロジェクト実行委員会」が農林水産部長を表敬訪問します(「世界えだまめ早食い選手権」の開催報告)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.niigata.lg.jp/sec/minamiuonuma_seibi/r8cuttingriverwoods.html",
-     "summary": "",
-     "title": "【南魚沼】河川の維持管理のため、クマ被害対策にもつながる伐木を実施しています"
     }
    ],
    "name": "新潟県庁",
@@ -3120,6 +3120,12 @@
    "id": "be33458b6b",
    "items": [
     {
+     "date": "2026-10-21",
+     "link": "https://www.pref.okayama.jp/site/16/1061935.html",
+     "summary": "岡山県教育庁のスクールソーシャルワーカーの募集",
+     "title": "令和9年度スクールソーシャルワーカーの募集"
+    },
+    {
      "date": "2026-10-20",
      "link": "https://www.pref.okayama.jp/page/988575.html",
      "summary": "",
@@ -3202,12 +3208,6 @@
      "link": "https://www.pref.okayama.jp/page/1003824.html",
      "summary": "",
      "title": "令和9年度岡山県立高等学校入学者選抜様式ダウンロード(令和8年10月)"
-    },
-    {
-     "date": "2026-10-16",
-     "link": "https://www.pref.okayama.jp/page/1034258.html",
-     "summary": "",
-     "title": "岡山県職員採用選考【公務員経験者採用】を実施します"
     }
    ],
    "name": "岡山県庁",
@@ -3538,6 +3538,12 @@
    "id": "0330a26da3",
    "items": [
     {
+     "date": "2026-10-21",
+     "link": "https://www.pref.tochigi.lg.jp/j53/03houshanou/mizu.html",
+     "summary": "",
+     "title": "北那須水道用水に係る放射性物質の測定を行いました"
+    },
+    {
      "date": "2026-10-20",
      "link": "https://www.pref.tochigi.lg.jp/h57/system/desaki/desaki/tusukoukisei/zyuutai7.html",
      "summary": "",
@@ -3620,12 +3626,6 @@
      "link": "https://www.pref.tochigi.lg.jp/f06/reskilling/reskillingkosyu.html",
      "summary": "",
      "title": "リスキリング講習"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.tochigi.lg.jp/g63/r5noudaisai.html",
-     "summary": "",
-     "title": "【農業大学校】令和8(2026)年度 第48回農大祭の開催のお知らせ"
     }
    ],
    "name": "栃木県庁",
@@ -3897,6 +3897,12 @@
    "items": [
     {
      "date": "2026-10-20",
+     "link": "https://www.pref.yamagata.jp/700026/bunkyo/kyoiku/kyoin/setumeikai.html",
+     "summary": "",
+     "title": "説明会・相談会について"
+    },
+    {
+     "date": "2026-10-20",
      "link": "https://www.pref.yamagata.jp/301001/kensei/joho/koho/murayamanews.html",
      "summary": "村山総合支庁ニュース",
      "title": "【村山総合支庁ニュース発行】ぜひご覧ください。"
@@ -3978,12 +3984,6 @@
      "link": "https://www.pref.yamagata.jp/700026/bunkyo/kyoiku/kyoin/r9gakkouginouinn.html",
      "summary": "",
      "title": "令和9年度採用学校技能員選考試験"
-    },
-    {
-     "date": "2026-10-16",
-     "link": "https://www.pref.yamagata.jp/020077/shiteikanri/r8kyodokan-bosyuu.html",
-     "summary": "",
-     "title": "山形県郷土館(愛称:文翔館)及び県政史緑地の指定管理者の指定について"
     }
    ],
    "name": "山形県庁",
@@ -4377,5 +4377,5 @@
    "title": ""
   }
  ],
- "fetched_at": "2026-10-21T06:22:15.901573+09:00"
+ "fetched_at": "2026-10-21T08:58:36.263659+09:00"
 }
