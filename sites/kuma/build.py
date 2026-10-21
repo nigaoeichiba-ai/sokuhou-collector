@@ -289,7 +289,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 {tile_map(d)}
 <h2>{fy_label(done)}に出没が多かった道府県</h2>
 {top_rows}
-<p><a href="/ranking/sightings/">全国のランキング</a> / <a href="/ranking/change/">前年度の同じ期間との比較</a> / <a href="/ranking/injuries/">人身被害のランキング</a> / <a href="/season/">何月に多いか(都道府県別)</a>{' / <a href="/ranking/captures/">許可捕獲数のランキング</a>' if d.get('captures') else ''}</p>
+<p><a href="/ranking/sightings/">全国のランキング</a> / <a href="/ranking/change/">前年度の同じ期間との比較</a> / <a href="/ranking/injuries/">人身被害のランキング</a> / <a href="/ranking/deaths/">死亡者数のランキング</a> / <a href="/season/">何月に多いか(都道府県別)</a>{' / <a href="/ranking/captures/">許可捕獲数のランキング</a>' if d.get('captures') else ''}</p>
 <h2>{fy_label(done)}は、出没が秋に集中しました</h2>
 <p>全国の月別では、{d['peak_month']}月が最も多く({n(nat['monthly'][done][d['months'].index(d['peak_month'])])}件)でした。{fy_label(cur)}の月別も、公表が進み次第、追加します。</p>
 {charts.lines([{"label": fy_label(y), "values": nat["monthly"][y], "cls": c, "strong": y == cur} for y, c in zip(d["years"], ("c0", "c1", "c2", "c3", "c4"))], [f"{m}月" for m in d["months"]], title="全国の月別の出没件数", desc="令和4年度から令和8年度までの、全国の月別の出没件数(件)", uid="home")}
@@ -307,7 +307,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 
 
 def ranking_tabs(kind: str, captures: bool = False) -> str:
-    tabs = [("sightings", "出没件数"), ("change", "前年度との比較"), ("injuries", "人身被害")] + ([("captures", "許可捕獲数")] if captures else [])
+    tabs = [("sightings", "出没件数"), ("change", "前年度との比較"), ("injuries", "人身被害"), ("deaths", "死亡者数")] + ([("captures", "許可捕獲数")] if captures else [])
     return '<div class="tabs" role="tablist">' + "".join(
         f'<a href="/ranking/{k}/"{" class=\"on\"" if k == kind else ""}>{label}</a>' for k, label in tabs) + "</div>"
 
@@ -337,6 +337,27 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
         lead = (f"{fy_label(cur)}の{month_range(d)}の出没件数が、{fy_label(done)}の同じ期間の何%にあたるかを、高い順に並べています。"
                 f"{fy_label(done)}の同じ期間が{d['base_floor']}件未満の道府県は、割合が不安定になるため、載せていません。")
         extra = ""
+    elif kind == "deaths":
+        years = [y for y in d["inj"]["years"] if y != cur]          # the year in progress is shown on its own: its count will still change
+        tot = {r["short"]: sum(r["inj"][y][2] for y in years) for r in d["rows"]}
+        last5 = {r["short"]: sum(r["inj"][y][2] for y in years[-5:]) for r in d["rows"]}
+        rows = sorted((r for r in d["rows"] if tot[r["short"]] > 0), key=lambda r: (-tot[r["short"]], -r["inj"][done][2], r["name"]))
+        rk = rank_of({r["short"]: tot[r["short"]] for r in rows})
+        lines = [[str(rk[r["short"]]), pref_link(r), n(r["inj"][done][2]), n(last5[r["short"]]), n(tot[r["short"]]), n(r["inj"][cur][2])] for r in rows]
+        head = ["順位", "道府県", f"{fy_label(done)}", f"直近5年度({fy_or_h(years[-5])}〜{fy_label(done)})", f"{fy_or_h(years[0])}〜{fy_label(done)}の合計", f"{fy_label(cur)}(途中)"]
+        zero = [r["name"] for r in d["rows"] if tot[r["short"]] == 0]
+        nat = d["inj"]["national"]
+        nat_tot = sum(nat[y][2] for y in years)
+        top = "、".join(f"{r['name']}({n(tot[r['short']])}人)" for r in rows[:3])
+        h1 = "熊(クマ)による死亡者数 都道府県別ランキング"
+        lead = (f"{fy_label(done)}に熊(クマ)に襲われて亡くなった人は、全国で{n(nat[done][2])}人でした。{fy_or_h(years[0])}から{fy_label(done)}までの{len(years)}年度の合計は{n(nat_tot)}人で、"
+                f"道府県別では{top}の順に多くなっています。")
+        yr = table(["年度", "全国の死亡者数(人)"], [[fy_or_h(y) + ("(途中)" if y == cur else ""), n(nat[y][2])] for y in reversed([*years, cur])])
+        extra = (f'<h2>全国の死亡者数の年度別の推移</h2>{yr}'
+                 f'<p>死亡者数は、環境省の人身被害の統計(死亡者数の欄)の数字です。{len(zero)}道府県({"・".join(zero)})は、この{len(years)}年度に死亡者の記録がないため、表に載せていません。'
+                 f'事故の日付と場所は、各道府県のページの「熊(クマ)による死亡事故」で、環境省の一覧にある分を確認できます。</p>'
+                 f'<p>人数の多い少ないは、山に入る人の数や、クマの生息する範囲にも左右されます。件数・人数の全体は<a href="/ranking/injuries/">人身被害ランキング</a>にあります。</p>'
+                 + ('<p>時期ごとの違いは<a href="/research/">研究ノート</a>にあります。</p>' if d.get("research") else ""))
     else:
         rows = sorted(d["rows"], key=lambda r: (-r["inj"][done][1], r["name"]))
         lines = [[str(r["rank"]["injured"]), pref_link(r), f'{n(r["inj"][done][0])}', f'{n(r["inj"][done][1])}', f'{n(r["inj"][done][2])}',
@@ -350,8 +371,11 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
 <p class="lead">{lead}</p>
 {ranking_tabs(kind, bool(d.get('captures')))}
 {extra if kind == "sightings" else ""}{table(head, lines)}
-{extra if kind == "injuries" else ""}{note}
+{extra if kind in ("injuries", "deaths") else ""}{note}
 <p class="notice">{freshness(d)}</p>"""
+    if kind == "deaths":
+        return page(cfg, preview, path="/ranking/deaths/", title=f"熊(クマ)による死亡者数 都道府県別ランキング({fy_or_h(years[0])}〜{fy_label(done)}の合計・環境省)",
+                    description=f"熊に襲われて亡くなった人の数を、道府県別に並べた表です。{fy_label(done)}は全国で{n(nat[done][2])}人。{fy_or_h(years[0])}から{len(years)}年度の合計、直近5年度、{fy_label(cur)}の途中経過を、環境省の統計から載せています。", body=body)
     title = f"{h1}({fy_label(done)}・環境省の速報値)" if kind != "sightings" else f"熊が多い県ランキング 出没件数の都道府県別一覧({fy_label(done)}・環境省の速報値)"
     desc = lead[:110] if kind != "sightings" else f"{first}{len(rows)}道府県の出没件数を、環境省の速報値から多い順に並べた表です。"
     return page(cfg, preview, path=f"/ranking/{kind}/", title=title,
@@ -828,7 +852,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     d["lv"] = live_mod.prepare_live(d, today or datetime.now(JST).date()) if any_live else None
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
     thin_pages: set[str] = set()      # pages kept out of the index: thin municipality pages, old week pages, a prefecture without bears (sites/kuma/indexing.py)
-    for kind in ("sightings", "change", "injuries"):
+    for kind in ("sightings", "change", "injuries", "deaths"):
         pages[f"ranking/{kind}/index.html"] = ranking_page(d, kind, cfg, preview)
     if d["captures"]:
         pages["ranking/captures/index.html"] = captures_mod.ranking_page(lambda **kw: page(cfg, preview, **kw), d["captures"], lambda kind: ranking_tabs(kind, True))

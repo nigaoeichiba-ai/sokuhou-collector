@@ -68,6 +68,20 @@ class KumaSiteTest(unittest.TestCase):
         for text in ("50,801件", "20,513", "約2.5倍", "216件・238人(うち死亡13人)", "17,362件"):
             self.assertIn(text, html)
 
+    def test_deaths_ranking_adds_up_from_the_injury_table(self):
+        """The deaths page is a second reading of the same table: its totals are recomputed here, year by year, straight from the raw ministry data."""
+        html = self.read("ranking/deaths/index.html")
+        years = [y for y in self.raw["injuries"]["years"] if y != self.d["cur"]]
+        tot = {p["name"]: sum(p["by_year"][y][2] for y in years) for p in self.raw["injuries"]["prefectures"]}
+        top = max(tot.values())
+        self.assertGreater(top, 0)
+        nat = sum(v[2] for y, v in self.raw["injuries"]["national"].items() if y in years)
+        self.assertEqual(sum(tot.values()), nat)               # the 39 rows add up to the national row
+        self.assertIn(f"{nat}人", html)
+        self.assertIn(f"<td>{top}</td>", html.replace("<td class=\"num\">", "<td>"))
+        self.assertIn("速報値", html)
+        self.assertIn("/ranking/deaths/", self.read("ranking/injuries/index.html"))
+
     def test_the_two_pictograms_on_the_home_page_have_a_visible_caption_and_link_to_their_guide(self):
         html = self.read("index.html")
         figs = re.findall(r'<figure><a href="(/guide/[a-z]+/)"><img [^>]*pictogram[^>]*></a><figcaption>(.*?)</figcaption></figure>', html, re.S)
