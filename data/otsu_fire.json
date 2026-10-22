@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-22T12:37:37.301156+09:00",
+ "fetched_at": "2026-10-22T14:37:38.073600+09:00",
  "incidents": [
   {
    "kind": "山岳救助",
@@ -256,7 +256,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": false,
+ "no_active_incident": true,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
