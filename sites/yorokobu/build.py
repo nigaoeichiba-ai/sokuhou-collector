@@ -275,6 +275,7 @@ def page(cfg, preview, **kw):
                               + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
     pre = '<link rel="preconnect" href="https://thumbnail.image.rakuten.co.jp">' if "thumbnail.image.rakuten.co.jp" in kw.get("body", "") else ""
     head_extra = FONTS + pre + kw.pop("head_extra", "") + sale_script + '<script src="/assets/mine.js" defer></script><script src="/assets/concierge.js" defer></script>'
+    kw["alternates"] = (("新着のお知らせ", "/feed.xml"),) + tuple(kw.get("alternates", ()))
     return layout(site, cfg, preview, scripts=True, head_extra=head_extra, **kw)
 
 
