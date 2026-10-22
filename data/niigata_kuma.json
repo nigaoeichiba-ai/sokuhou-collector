@@ -2,7 +2,7 @@
  "as_of": "2026-10-20",
  "bad_coords": 0,
  "credit": "出典: 新潟県鳥獣被害対策支援センター「にいがたクマ出没マップ」(https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html)の公開データを、新潟県環境対策課の許可を得て、加工して作成(新潟県が作成したものではありません)",
- "fetched_at": "2026-10-21T06:18:36.712195+09:00",
+ "fetched_at": "2026-10-22T09:02:03.703271+09:00",
  "fy_current": "R08",
  "monthly": {
   "R07": {
@@ -24,7 +24,7 @@
    "4": 67,
    "5": 161,
    "6": 218,
-   "7": 148,
+   "7": 147,
    "8": 47,
    "9": 28
   }
@@ -2368,16 +2368,6 @@
    "lon": 137.8639,
    "observed_at": "2026-07-03",
    "place": "一の宮４丁目地内",
-   "species": "ツキノワグマ"
-  },
-  {
-   "city": "十日町市",
-   "count": null,
-   "kind": "痕跡",
-   "lat": 37.0975,
-   "lon": 138.6279,
-   "observed_at": "2026-07-02",
-   "place": "松之山松口",
    "species": "ツキノワグマ"
   },
   {
@@ -7621,7 +7611,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 4221,
+ "sightings_in_window": 4220,
  "source": "niigata",
  "source_file": "https://services6.arcgis.com/SKz58fvdFlaEB35q/arcgis/rest/services/survey123_08d14b98657b47309b868f49602375c8_results/FeatureServer/0",
  "source_page": "https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html",
