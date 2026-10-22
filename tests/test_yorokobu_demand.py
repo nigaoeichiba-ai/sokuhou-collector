@@ -21,24 +21,24 @@ class DemandTest(unittest.TestCase):
         self.assertEqual(self.lex.classify("母の日 プレゼント 祖父")[0], "answered" if "mothers-day-grandfather" in self.lex.pairs else "pair")
 
     def test_words_the_site_does_not_know_are_the_unknown_ones_and_filler_is_not(self):
-        kind, r = self.lex.classify("盆栽 プレゼント おすすめ")
+        kind, r = self.lex.classify("ハリネズミ プレゼント おすすめ")
         self.assertEqual(kind, "unknown")
-        self.assertEqual(r["unknown"], ["盆栽"])
+        self.assertEqual(r["unknown"], ["ハリネズミ"])
         self.assertEqual(self.lex.classify("プレゼント おすすめ 人気")[0], "other")
         self.assertEqual(self.lex.read("丈夫な傘")["rec"], "")                 # 丈夫 is not 夫
 
     def test_the_queue_counts_missing_pairs_and_unknown_words_with_an_example_and_reads_search_console(self):
-        sug = {"母の日 プレゼント 祖父 70代": 3, "盆栽 プレゼント": 2, "盆栽 誕生日": 1, "誕生日 プレゼント 彼女": 5, "金継ぎ 器": 1}
-        gsc = [{"query": "誕生日 プレゼント 彼女", "impressions": 40, "clicks": 1, "position": 14.2}, {"query": "盆栽 プレゼント", "impressions": 9, "clicks": 0, "position": 30}]
+        sug = {"母の日 プレゼント 祖父 70代": 3, "ハリネズミ プレゼント": 2, "ハリネズミ 誕生日": 1, "誕生日 プレゼント 彼女": 5, "金継ぎ 器": 1}
+        gsc = [{"query": "誕生日 プレゼント 彼女", "impressions": 40, "clicks": 1, "position": 14.2}, {"query": "ハリネズミ プレゼント", "impressions": 9, "clicks": 0, "position": 30}]
         q = demand.build(sug, gsc, self.lex)
         words = {w["word"]: w for w in q["words"]}
-        self.assertEqual(words["盆栽"]["n"], 3)
-        self.assertEqual(words["盆栽"]["example"], "盆栽 プレゼント")
+        self.assertEqual(words["ハリネズミ"]["n"], 3)
+        self.assertEqual(words["ハリネズミ"]["example"], "ハリネズミ プレゼント")
         self.assertEqual(q["gsc"][0]["query"], "誕生日 プレゼント 彼女")           # most shown first
         self.assertEqual(q["gsc"][0]["kind"], "answered")
         self.assertEqual(q["gsc"][1]["kind"], "unknown")
         md = demand.queue_md(q, [("金継", 2)])
-        self.assertIn("盆栽: 3回", md)
+        self.assertIn("ハリネズミ: 3回", md)
         self.assertIn("金継: 2", md)
         self.assertIn("| 誕生日 プレゼント 彼女 | 40 | 1 | 14.2 |", md)
 
@@ -71,12 +71,12 @@ class DemandTest(unittest.TestCase):
         from sites.yorokobu import factory
         with tempfile.TemporaryDirectory() as t:
             q = Path(t) / "QUEUE.md"
-            q.write_text("# x\n\n## 2. words\n- 盆栽: 3回(例: 盆栽 プレゼント)\n- 施設: 2回(例: 敬老の日 プレゼント 施設)\nprose line\n", encoding="utf-8")
+            q.write_text("# x\n\n## 2. words\n- ハリネズミ: 3回(例: ハリネズミ プレゼント)\n- 施設: 2回(例: 敬老の日 プレゼント 施設)\nprose line\n", encoding="utf-8")
             factory.brief("themes", 2, Path(t) / "with.md", Path(t) / "a.json", demand=q)
             factory.brief("themes", 2, Path(t) / "without.md", Path(t) / "a.json")
             with_ = (Path(t) / "with.md").read_text(encoding="utf-8")
             self.assertIn("REAL SEARCH DEMAND", with_)
-            self.assertIn("- 盆栽: 3回", with_)
+            self.assertIn("- ハリネズミ: 3回", with_)
             self.assertNotIn("prose line", with_)
             self.assertNotIn("REAL SEARCH DEMAND", (Path(t) / "without.md").read_text(encoding="utf-8"))
 
