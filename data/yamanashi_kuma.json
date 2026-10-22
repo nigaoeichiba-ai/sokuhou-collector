@@ -1,12 +1,12 @@
 {
- "as_of": "2026-10-19",
+ "as_of": "2026-10-22",
  "bad_coords": 1,
  "credit": "出典:「ツキノワグマ出没・目撃情報(令和8年度)」(山梨県)(https://catalog.dataplatform-yamanashi.jp/dataset/kuma1)を加工して作成(山梨県オープンデータ利用規約に基づく)",
- "fetched_at": "2026-10-22T06:17:21.171257+09:00",
+ "fetched_at": "2026-10-23T06:17:42.965010+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
-   "10": 42,
+   "10": 46,
    "4": 16,
    "5": 33,
    "6": 53,
@@ -16,6 +16,46 @@
   }
  },
  "sightings": [
+  {
+   "city": "山中湖村",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.4351,
+   "lon": 138.8596,
+   "observed_at": "2026-10-22T11:30:00+09:00",
+   "place": "山中地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "上野原市",
+   "count": 2,
+   "kind": "目撃",
+   "lat": 35.573,
+   "lon": 139.1211,
+   "observed_at": "2026-10-21T20:10:00+09:00",
+   "place": "秋山地区安寺沢地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "上野原市",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.6431,
+   "lon": 139.1008,
+   "observed_at": "2026-10-21T09:50:00+09:00",
+   "place": "上野原地区八米地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "早川町",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.4249,
+   "lon": 138.3914,
+   "observed_at": "2026-10-21T07:10:00+09:00",
+   "place": "榑坪地区",
+   "species": "ツキノワグマ"
+  },
   {
    "city": "身延町",
    "count": 1,
@@ -2643,7 +2683,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 264,
+ "sightings_in_window": 268,
  "source": "yamanashi",
  "source_file": [
   "https://catalog.dataplatform-yamanashi.jp/dataset/bed5301d-75b2-4976-8687-2b2721ae143a/resource/89d2478e-e29e-46e3-9ad3-19bf44822d4d/download/2026kumadata.csv",

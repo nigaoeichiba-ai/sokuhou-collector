@@ -5,16 +5,28 @@
    "id": "43d35c50cd",
    "items": [
     {
+     "date": "2026-10-22",
+     "link": "https://www.city.chichibu.lg.jp/item/26377.html#itemid26377",
+     "summary": "",
+     "title": "クマ目撃等情報(荒川地区)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.chichibu.lg.jp/item/26926.html#itemid26926",
+     "summary": "",
+     "title": "屋根置き太陽光発電設備・蓄電池及び高効率照明機器補助金"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.chichibu.lg.jp/item/29277.html#itemid29277",
+     "summary": "",
+     "title": "ふるさとチョイス 会員情報の流出について"
+    },
+    {
      "date": "2026-10-21",
      "link": "https://www.city.chichibu.lg.jp/item/29274.html#itemid29274",
      "summary": "",
      "title": "学校で働く会計年度任用職員を募集します"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.city.chichibu.lg.jp/item/26926.html#itemid26926",
-     "summary": "",
-     "title": "屋根置き太陽光発電設備・蓄電池及び高効率照明機器補助金"
     },
     {
      "date": "2026-10-21",
@@ -27,12 +39,6 @@
      "link": "https://www.city.chichibu.lg.jp/item/7882.html#itemid7882",
      "summary": "",
      "title": "クマ目撃等情報"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.city.chichibu.lg.jp/item/26377.html#itemid26377",
-     "summary": "",
-     "title": "クマ目撃等情報(荒川地区)"
     },
     {
      "date": "2026-10-20",
@@ -57,12 +63,6 @@
      "link": "https://www.city.chichibu.lg.jp/item/28982.html#itemid28982",
      "summary": "",
      "title": "令和8年度「秩父市立病院建設計画策定委員会」"
-    },
-    {
-     "date": "2026-10-15",
-     "link": "https://www.city.chichibu.lg.jp/item/27331.html#itemid27331",
-     "summary": "",
-     "title": "防災行政無線音声応答システムのサービス復旧について"
     },
     {
      "date": "2026-10-15",
@@ -105,16 +105,16 @@
    "id": "0edf26b8c1",
    "items": [
     {
-     "date": "2026-10-21",
+     "date": "2026-10-22",
      "link": "https://www.city.chichibu.lg.jp/item/26377.html#itemid26377",
      "summary": "",
      "title": "クマ目撃等情報(荒川地区)"
     },
     {
-     "date": "2026-10-15",
-     "link": "https://www.city.chichibu.lg.jp/item/27331.html#itemid27331",
+     "date": "2026-10-22",
+     "link": "https://www.city.chichibu.lg.jp/item/29277.html#itemid29277",
      "summary": "",
-     "title": "防災行政無線音声応答システムのサービス復旧について"
+     "title": "ふるさとチョイス 会員情報の流出について"
     },
     {
      "date": "2026-10-13",
@@ -138,6 +138,42 @@
    "feed": "https://www.city.fukushima.fukushima.jp/cgi-bin/feed.php?siteNew=1&displayRange=90",
    "id": "040ca84a2c",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.fukushima.fukushima.jp/soshiki/2/1005/1/20705.html",
+     "summary": "",
+     "title": "福島市インターネットサービスの一時停止および再開について【2026年10月22日17時00分時点】"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.fukushima.fukushima.jp/soshiki/2/1001/20704.html",
+     "summary": "",
+     "title": "【やさしい日本語のサービスを一時停止しています】PHPの脆弱性への対応に伴うホームページ一部機能の停止について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.fukushima.fukushima.jp/toshokan/oshirase/20710.html",
+     "summary": "",
+     "title": "デジタル利用券の利用停止のお知らせ"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.fukushima.fukushima.jp/soshiki/19/1093/eventkouza/15338.html",
+     "summary": "",
+     "title": "令和8年度 飯野地区文化祭"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.fukushima.fukushima.jp/soshiki/7/1032/1/20690.html",
+     "summary": "",
+     "title": "ふくしままちなか音楽祭2026 出店者情報"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.fukushima.fukushima.jp/soshiki/19/1080/20539.html",
+     "summary": "",
+     "title": "渡利地区地域づくり講演会「笑いは元気のもと~ふくしまSHOWの舞台裏~」"
+    },
     {
      "date": "2026-10-19",
      "link": "https://www.city.fukushima.fukushima.jp/soshiki/19/1080/18590.html",
@@ -191,46 +227,10 @@
      "link": "https://www.city.fukushima.fukushima.jp/soshiki/6/1026/2/20469.html",
      "summary": "",
      "title": "【募集】四季の里「オータムフェスタ」での旬の農産物販売"
-    },
-    {
-     "date": "2026-10-13",
-     "link": "https://www.city.fukushima.fukushima.jp/soshiki/7/1031/1/deaievent/20431.html",
-     "summary": "",
-     "title": "【福島圏域出会いのイベント】未来を紡ぐ 大人の恋時間"
-    },
-    {
-     "date": "2026-10-13",
-     "link": "https://www.city.fukushima.fukushima.jp/soshiki/7/1030/1/20275.html",
-     "summary": "",
-     "title": "乳幼児・小学生・中学生・高校生等に係る一部負担金の支給申請について"
-    },
-    {
-     "date": "2026-10-09",
-     "link": "https://www.city.fukushima.fukushima.jp/soshiki/12/1062/1/toshiryokka/18660.html",
-     "summary": "",
-     "title": "都市緑化フェスタ2026"
-    },
-    {
-     "date": "2026-10-09",
-     "link": "https://www.city.fukushima.fukushima.jp/soshiki/7/1031/1/deaievent/20624.html",
-     "summary": "",
-     "title": "【福島圏域出会いのイベント】ふくしま恋キッチン~料理から始まるステキな出会い~"
-    },
-    {
-     "date": "2026-10-08",
-     "link": "https://www.city.fukushima.fukushima.jp/soshiki/19/1073/3/chiikitenkai/20466.html",
-     "summary": "",
-     "title": "オンラインダンスクラブ開催のお知らせ"
-    },
-    {
-     "date": "2026-10-07",
-     "link": "https://www.city.fukushima.fukushima.jp/soshiki/2/1001/happyo/R8kaiken/20599.html",
-     "summary": "",
-     "title": "令和8年10月7日市長定例記者会見(5歳児健康診査を始めます ほか5件)"
     }
    ],
    "name": "福島市",
-   "ok": false,
+   "ok": true,
    "site": "https://www.city.fukushima.fukushima.jp/",
    "title": ""
   },
@@ -295,6 +295,48 @@
    "id": "7a6f5696ac",
    "items": [
     {
+     "date": "2026-10-23",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/nanbu-machi/jitiku-15area-wada.html",
+     "summary": "和田区地域協議会の活動状況はこちらをご覧ください。",
+     "title": "地域協議会の活動状況(和田区)"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/nanbu-machi/jitiku-15area-takada.html",
+     "summary": "高田区地域協議会の活動状況はこちらをご覧ください。",
+     "title": "地域協議会の活動状況(高田区)"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/syouhiseikatsu-c/r809.html",
+     "summary": "消費生活相談受付状況 相談事例",
+     "title": "消費生活相談受付状況と相談事例(令和8年9月)"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/kikikanri/akinokasaiyobouunndou.html",
+     "summary": "これからの季節は、暖房器具などの火気を使用する機会が増えます。使用前は、器具が正常に作動するか、周囲に燃えやすい物がないか確認し、火災の発生を防ぐとともに、万が一発生した場合に備え、すぐ消火できる準備をしましょう。",
+     "title": "秋の火災予防運動"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.city.joetsu.niigata.jp/site/souzou-gyosei/tikumati02.html",
+     "summary": "人口減少・高齢化が進む中、持続可能なまちづくりを進めるため、今年度板倉区で実施した住民ワークショップの成果を発表します。また、先行モデル地区である牧区・大島区(令和5年度ワークショップ実施)でこの春から活動を開始した定住支援コーディネーターの活動報告もあわせて行い、地域コミュニティ維持や定住促進に向けた具体的な取り組み",
+     "title": "地区まち交流会を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/koho/koho-sns-line-suspend.html",
+     "summary": "上越市公式LINEアカウントの配信等を再開しました",
+     "title": "上越市公式LINEアカウントの配信等を再開しました"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/koho/koho-hp-suspend.html",
+     "summary": "市ホームページの一部機能を停止します。",
+     "title": "市ホームページの一部機能を停止します"
+    },
+    {
      "date": "2026-10-22",
      "link": "https://www.city.joetsu.niigata.jp/soshiki/shimin-anzen/kunren.html",
      "summary": "UPZ(柏崎刈羽原子力発電所からおおむね5~30km圏内)にお住いの皆さんを対象に避難訓練などを実施",
@@ -341,48 +383,6 @@
      "link": "https://www.city.joetsu.niigata.jp/soshiki/keiyakukensa/doboku-kouwankouziniokeru.html",
      "summary": "令和8年10月に、準用する新潟県の制度が改定されたことから当市においても改定された制度を適用するもの。",
      "title": "土木・港湾工事における「週休2日適用工事」の改定(令和8年11月1日以降適用)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/kyouikusoumu/manabiaifesta2026.html",
-     "summary": "教育大綱「わくわくを未来へ」のもと、「わくわくする学び」を広げるきっかけづくりの場として、学び愛フェスタを開催します。",
-     "title": "上越市教育コラボ2026 学び愛フェスタを開催します"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/sanwa-ku/jitiku-13area-sanwa.html",
-     "summary": "三和区地域協議会の活動状況はこちらをご覧ください。",
-     "title": "地域協議会の活動状況(三和区)"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/sanritu/hukinitu.html",
-     "summary": "上越市内において事業用資産を導入した場合、その資産に対する固定資産税を軽減する優遇制度が受けられることがあります",
-     "title": "原子力発電施設等立地地域指定による固定資産税の軽減(不均一課税)"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/chiikiiryou/hospital-setumei.html",
-     "summary": "令和2年度に策定した上越地域医療センター病院基本計画の改定案について説明します。",
-     "title": "上越地域医療センター病院の改築に関する市民説明会を開催しました"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/yasuzuka-ku/shinryojo-yasuzuka.html",
-     "summary": "安塚診療所の診療日",
-     "title": "安塚診療所 診療カレンダー"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/nakago-ku/nakago-community-plaza-riyoukyuushioshirase.html",
-     "summary": "施設電気設備の更新工事及び年次点検実施のため、以下のとおり利用を休止します。",
-     "title": "中郷コミュニティプラザ一般利用休止のお知らせ"
-    },
-    {
-     "date": "2026-10-16",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/kenkou/tyuikanki.html",
-     "summary": "インフルエンザ等の感染対策を徹底するようお願いします。",
-     "title": "インフルエンザ等の感染症にご注意を"
     }
    ],
    "name": "上越市",
@@ -394,6 +394,24 @@
    "feed": "https://www.city.joetsu.niigata.jp/rss/10/list14.xml",
    "id": "d2f7a64002",
    "items": [
+    {
+     "date": "2026-10-23",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/kouminkan/kouminkan-kidsfesta.html",
+     "summary": "「うごく・あそぶ・まなぶ」をテーマに中高生が中心となり企画・運営する公民館のイベント「こうみんかんキッズフェスタ」を開催します。",
+     "title": "「こうみんかんキッズフェスタ」を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/jinken/20261103.html",
+     "summary": "北朝鮮当局による拉致問題を風化させることなく、市民の皆さんからこの問題に対する理解と関心を深めていただくため開催します。",
+     "title": "拉致問題を考える写真パネル展を開催"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/kubiki-ku/kubiki-ibennto-r8.html",
+     "summary": "頸城区で行われるイベントを紹介していきます",
+     "title": "頸城区の主なイベント(令和8年度)"
+    },
     {
      "date": "2026-10-22",
      "link": "https://www.city.joetsu.niigata.jp/soshiki/nadachi-ku/nadachisobamaturi.html",
@@ -414,6 +432,12 @@
     },
     {
      "date": "2026-10-22",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/sports/sportsclass-annai.html",
+     "summary": "市主催の各種スポーツ教室の詳細を掲載しています。",
+     "title": "各種スポーツ教室を開催します"
+    },
+    {
+     "date": "2026-10-22",
      "link": "https://www.city.joetsu.niigata.jp/soshiki/nougyoushinkou/soba.html",
      "summary": "上越市では、各地域で特色ある「そば」を味わうイベントが開催されます。市内の「そばまつり」や「そば」に関するイベントを紹介します。",
      "title": "「そば」の魅力を味わうイベント"
@@ -429,12 +453,6 @@
      "link": "https://www.city.joetsu.niigata.jp/soshiki/shakaikyouiku/shimingeinousai4.html",
      "summary": "第55回記念上越市民芸能祭「古典芸能のつどい」を開催します。",
      "title": "第55回記念上越市民芸能祭「古典芸能のつどい」"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/kubiki-ku/kubiki-ibennto-r8.html",
-     "summary": "頸城区で行われるイベントを紹介していきます",
-     "title": "頸城区の主なイベント(令和8年度)"
     },
     {
      "date": "2026-10-21",
@@ -465,24 +483,6 @@
      "link": "https://www.city.joetsu.niigata.jp/soshiki/bunka/marubun-event-information.html",
      "summary": "上越市の文化・芸術に関する情報を紹介します。",
      "title": "上越まるごと文化祭 文化・芸術情報発信サイト"
-    },
-    {
-     "date": "2026-10-15",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/bunkagyousei/chikinotakaranotsudoi.html",
-     "summary": "上越市「地域の宝」を紹介するパネル展示と「地域の宝」の次世代への継承をテーマとした学習会を行います。",
-     "title": "上越市「地域の宝」のつどい"
-    },
-    {
-     "date": "2026-10-14",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/kubiki-ku/kubikibunkasai.html",
-     "summary": "頸城区で活動する各団体や個人の日頃の活動成果を発表します。書画、絵画、写真、パッチワーク、木工、菊花など多種多様な作品のほか、区内の園児及び小学生の作品を展示します。また、くびき文化協会のほか、中学生やダンスサークルなどの発表会も行います。",
-     "title": "令和8年度 くびき文化祭"
-    },
-    {
-     "date": "2026-10-14",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/sangyou/jyoseikigyoukouenkai.html",
-     "summary": "女性の起業・創業をテーマに、女性起業家の経験談を聞き、グループトークを通して自分らしい働き方を考えるきっかけづくりのイベントです",
-     "title": "女性の起業・創業を支援する「Women’s ライフキャリアデザインイベント Vol.2」を開催します"
     }
    ],
    "name": "上越市",
@@ -495,6 +495,12 @@
    "id": "7d53437fff",
    "items": [
     {
+     "date": "2026-10-23",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/sangyou/jigyoushoukei-seminar.html",
+     "summary": "企業の重要な課題である事業承継についてセミナーを実施し、事業者へ事業承継の必要性を認識してもらう。",
+     "title": "事業承継セミナーの参加者募集"
+    },
+    {
      "date": "2026-10-22",
      "link": "https://www.city.joetsu.niigata.jp/soshiki/nougyoushinkou/daisankai.html",
      "summary": "販路拡大を目指したSNS発信を学び、生成AIによる投稿戦略を実践的に習得します。",
@@ -505,6 +511,12 @@
      "link": "https://www.city.joetsu.niigata.jp/soshiki/youchikanzai/toilet-sounding.html",
      "summary": "市が保有するトイレについて、ネーミングライツ等の導入を検討しています。民間事業者の皆さんの意向をお聞きし、ネーミングライツ等の在り方や導入方法等を検討するため、サウンディング型市場調査を行うこととしました。ネーミングライツだけでなく、消耗品や役務の提供等の提案も広く募集します。",
      "title": "市有トイレへのネーミングライツ等の導入に関するサウンディング型市場調査を実施します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/sports/suisiniin-koubo.html",
+     "summary": "令和9・10年度のスポーツ推進委員を募集します。",
+     "title": "スポーツ推進委員募集"
     },
     {
      "date": "2026-10-21",
@@ -578,6 +590,36 @@
    "id": "13ff42458c",
    "items": [
     {
+     "date": "2026-10-22",
+     "link": "https://www.city.sakata.lg.jp/shisei/nyusatsu/nyusatsukeiyaku.html",
+     "summary": "",
+     "title": "入札・契約"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.sakata.lg.jp/bousai/syobokyukyu/syobooshirase/shobo0220261022.html",
+     "summary": "",
+     "title": "消防出動情報の閲覧に関する不具合について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.sakata.lg.jp/bunka/kokusaikouryu/saron/chinasalon.html",
+     "summary": "",
+     "title": "「中国サロン(後期)」参加者募集!"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.sakata.lg.jp/bunka/kokusaikouryukyokai/sirareport2026.html",
+     "summary": "",
+     "title": "2026年酒田市国際交流協会(SIRA)活動報告"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.sakata.lg.jp/bunka/geijyutsu/tenjievent/nihonno-geino.html",
+     "summary": "",
+     "title": "日本の芸能を楽しむ会"
+    },
+    {
      "date": "2026-10-21",
      "link": "https://www.city.sakata.lg.jp/sangyo/mtsuri/R8hanabigakuennsai.html",
      "summary": "",
@@ -600,12 +642,6 @@
      "link": "https://www.city.sakata.lg.jp/bunka/kokusaikouryu/saron/speechcontest15.html",
      "summary": "",
      "title": "「第15回日本語スピーチコンテストin庄内」観覧者募集"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.city.sakata.lg.jp/shisei/nyusatsu/nyusatsukeiyaku.html",
-     "summary": "",
-     "title": "入札・契約"
     },
     {
      "date": "2026-10-20",
@@ -642,30 +678,6 @@
      "link": "https://www.city.sakata.lg.jp/sangyo/kotsu/teikisen/teikisenoshirase/teiki20260326-027.html",
      "summary": "",
      "title": "定期船「とびしま」一般事業者の自動車輸送の受付再開について"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.sakata.lg.jp/sangyo/kotsu/teikisen/tobishimasyokai/WildBird.html",
-     "summary": "",
-     "title": "飛島の野鳥観察情報"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.sakata.lg.jp/sangyo/kotsu/railway/shonaienshin.html",
-     "summary": "",
-     "title": "山形新幹線庄内延伸講演会 「山形新幹線を庄内へ! -観光インバウンドと鉄道高速化が創る地域の未来-」"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.sakata.lg.jp/kenko/kenko/eiyo_syokuseikatsu/kakusyuresipi.html",
-     "summary": "",
-     "title": "食改さんのおすすめレシピ"
-    },
-    {
-     "date": "2026-10-18",
-     "link": "https://www.city.sakata.lg.jp/shisei/shicyou/koumunittei07.html",
-     "summary": "",
-     "title": "市長公務日程"
     }
    ],
    "name": "酒田市",
@@ -678,98 +690,98 @@
    "id": "8ca186d80a",
    "items": [
     {
+     "date": "2026-10-22",
+     "link": "https://www.city.sapporo.jp/eiken/infect/index.html",
+     "summary": "",
+     "title": "衛生研究所のページ「札幌市の主な感染症の発生動向」のデータを更新しました。"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.sapporo.jp/kikaku/citypromote/partners/members/index.html",
+     "summary": "",
+     "title": "サッポロスマイルパートナーズ会員「笑顔になれる街」宣言"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.sapporo.jp/shimin/danjo/sapporodiversityforum/2026forum.html",
+     "summary": "",
+     "title": "「#SAPPORO DIVERSITY FORUM」セミナー開催のお知らせ"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.sapporo.jp/kikaku/it-keiyaku/1_ippan_kyousou.html",
+     "summary": "",
+     "title": "デジタル戦略推進局情報システム部 一般競争入札等情報"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.sapporo.jp/eiken/nyuusatsu/ippanindex.html",
+     "summary": "",
+     "title": "衛生研究所一般競争入札等情報"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.sapporo.jp/shobo/nishi/2026/akinoboukaibennto.html",
+     "summary": "",
+     "title": "秋の防火イベントを実施しました"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.sapporo.jp/koho/hp/20261022.html",
+     "summary": "",
+     "title": "市公式ホームページ内のお問い合わせフォーム・アンケート機能の停止"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.sapporo.jp/city/mayor/interview/index.html",
+     "summary": "",
+     "title": "次の市長記者会見は、10月29日(木曜日)14時00分~行います"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.sapporo.jp/keizai/tokku/hff_news.html",
+     "summary": "",
+     "title": "「北海道フービーフェスティバル」広報さっぽろ10月号連動企画(チケット発売について 10月21日更新)"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.sapporo.jp/hokenjo/shoku/sekininsha/fugushori.html",
+     "summary": "",
+     "title": "ふぐ処理者"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.sapporo.jp/keizai/gx/1013topsales.html",
+     "summary": "",
+     "title": "札幌市金融企業誘致セミナー「ビジネスのまち・札幌の新展開」を開催しました。"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.sapporo.jp/eiken/oshirase.html",
+     "summary": "",
+     "title": "【お知らせ】新生児マススクリーニング検査データ等を用いた研究実施について"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.sapporo.jp/kodomo/kenri/kodomohosupisu.html",
+     "summary": "",
+     "title": "【出展者募集】病気や障がいのある子どもと家族を支える活動PR展"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.sapporo.jp/kotsuanzen/mamoroune.html",
+     "summary": "",
+     "title": "交通安全だより235号を掲載しました。"
+    },
+    {
      "date": "2026-10-20",
-     "link": "https://www.city.sapporo.jp/kaigo/ninchisyoshien/sapporo-ninchisyoshien-yasasiiomisezigyosyo.html",
+     "link": "https://www.city.sapporo.jp/kensetsu/kasen/sugata/index.html",
      "summary": "",
-     "title": "札幌市「認知症の方にもやさしいお店・事業所」登録事業"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.city.sapporo.jp/zaisei/kohyo/yosan-kessan/r7/reiwa7nendo_yosan.html",
-     "summary": "",
-     "title": "令和7年度予算の執行状況について公表しました。"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.city.sapporo.jp/kenko/wellness/wellnekoroom.html",
-     "summary": "",
-     "title": "JCOM「MIRAI Style SAPPORO」でウェルネス特集が放送されました!"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.city.sapporo.jp/kokusai/tabunka/iryo_support.html",
-     "summary": "",
-     "title": "札幌メディカルコミュニケーションホットライン"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.city.sapporo.jp/sports/syogai/event/r8.html",
-     "summary": "障がい者スポーツイベント情報を掲載します。",
-     "title": "障がい者スポーツイベント情報"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.city.sapporo.jp/kikaku/ictplan/sumaho/sb2.html",
-     "summary": "",
-     "title": "ソフトバンクと連携したスマホ教室のご案内(無料)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.city.sapporo.jp/shohi/01-shohi/03-event_koza/details/koza-seminar.html",
-     "summary": "",
-     "title": "消費生活講座(令和8年度)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.city.sapporo.jp/ombudsman/syokuinbosyu02.html",
-     "summary": "",
-     "title": "会計年度任用職員募集情報"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.sapporo.jp/gesui/surveillance.html",
-     "summary": "",
-     "title": "下水サーベイランスの結果を更新しました"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.sapporo.jp/kyoiku/kyoshokuin/setsumeikaizyouhou/oshirase.html",
-     "summary": "",
-     "title": "セミナー、説明会に係るお知らせ"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.sapporo.jp/hokenjo/f4imuyaku/f77tuuti/tuutilistimu/2026.html",
-     "summary": "",
-     "title": "令和8年度各種通知(医務)"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.sapporo.jp/shobo/higashi/zissikekka.html",
-     "summary": "ここでは東消防署の行事実施結果を掲載しています",
-     "title": "東消防署イベントレポート(秋の火災予防運動で啓発イべントを開催しました。)"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.sapporo.jp/shobo/higashi/oshirase.html",
-     "summary": "",
-     "title": "【東消防署】災害情報等を更新しました。"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.sapporo.jp/ryokuka/shiryo/gaiyou.html",
-     "summary": "",
-     "title": "みどりの推進部の事業概要を更新しました。"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.city.sapporo.jp/hokenfukushi/hoshi-bosyu/step_r8nenmatsu.html",
-     "summary": "",
-     "title": "「さっぽろ年末生活サポート相談会」を開催します!"
+     "title": "今週の「コラム「川のすがた」」を更新しました。"
     }
    ],
    "name": "札幌市",
-   "ok": false,
+   "ok": true,
    "site": "https://www.city.sapporo.jp/",
    "title": ""
   },
@@ -777,6 +789,36 @@
    "feed": "https://www.city.sapporo.jp/boshu/boshuu.xml",
    "id": "60f6b45e4d",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.city.sapporo.jp/shimin/shinko/kusei-suishin/soshiki/shieninbosyu.html",
+     "summary": "",
+     "title": "まちづくりセンター支援員の募集情報を更新しました。"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.sapporo.jp/kankyo/kankyo_kyoiku/contest/2026/index.html",
+     "summary": "",
+     "title": "さっぽろこども環境コンテスト2026を開催します!"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.sapporo.jp/kodomo/kenri/kodomohosupisu.html",
+     "summary": "",
+     "title": "【出展者募集】病気や障がいのある子どもと家族を支える活動PR展"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.city.sapporo.jp/higashi/bousai/shinseiform.html",
+     "summary": "",
+     "title": "東区冬季体験型防災訓練の参加者を募集しています。"
+    },
+    {
+     "date": "2026-10-20",
+     "link": "https://www.city.sapporo.jp/citytax/bosyu_chuosiminzei.html",
+     "summary": "札幌市中央市税事務所市民税課では、会計年度任用職員(事務員)を募集します。",
+     "title": "会計年度任用職員(中央市税事務所市民税課)を募集しています"
+    },
     {
      "date": "2026-10-20",
      "link": "https://www.city.sapporo.jp/kaigo/ninchisyoshien/sapporo-ninchisyoshien-yasasiiomisezigyosyo.html",
@@ -815,12 +857,6 @@
     },
     {
      "date": "2026-10-14",
-     "link": "https://www.city.sapporo.jp/shimin/shinko/kusei-suishin/soshiki/shieninbosyu.html",
-     "summary": "",
-     "title": "まちづくりセンター支援員の募集情報を更新しました。"
-    },
-    {
-     "date": "2026-10-14",
      "link": "https://www.city.sapporo.jp/kodomo/kosodate/kouritsuhoikusho/rinjishokuin.html",
      "summary": "",
      "title": "募集しています(公立保育所等の会計年度任用職員)"
@@ -842,34 +878,10 @@
      "link": "https://www.city.sapporo.jp/somu/koho/udtalk/2026.html",
      "summary": "",
      "title": "【12月22日締切】令和8年度(2026年度)UDトーク講習会の参加者を募集しています"
-    },
-    {
-     "date": "2026-10-06",
-     "link": "https://www.city.sapporo.jp/kankobunka/maibun/bosyu/maibun-kaikeinendosyokuin-bosyu.html",
-     "summary": "",
-     "title": "札幌市埋蔵文化財センターで勤務する会計年度任用職員(埋蔵文化財調査技能員)を募集します"
-    },
-    {
-     "date": "2026-10-06",
-     "link": "https://www.city.sapporo.jp/shimin/shinko/chounaikai/hint/digtal_r8yorozusoudan.html",
-     "summary": "",
-     "title": "町内会デジタル化よろず相談会を開催します!"
-    },
-    {
-     "date": "2026-10-02",
-     "link": "https://www.city.sapporo.jp/somu/sonotashokuin/kaikeinendoninyoshokuin.html",
-     "summary": "",
-     "title": "会計年度任用職員(事務員)を募集しています。"
-    },
-    {
-     "date": "2026-10-02",
-     "link": "https://www.city.sapporo.jp/somu/sonotashokuin/kaikeinendoninyoshokuin2.html",
-     "summary": "",
-     "title": "会計年度任用職員(自動車運転手)を募集しています。"
     }
    ],
    "name": "札幌市",
-   "ok": false,
+   "ok": true,
    "site": "https://www.city.sapporo.jp/",
    "title": ""
   },
@@ -885,7 +897,7 @@
     }
    ],
    "name": "札幌市",
-   "ok": false,
+   "ok": true,
    "site": "https://www.city.sapporo.jp/",
    "title": ""
   },
@@ -893,6 +905,66 @@
    "feed": "https://www.city.tsuruoka.lg.jp/rss_news.xml",
    "id": "d6f2ca92ac",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "http://www.city.tsuruoka.lg.jp/seibi/kankyo/nature-forestculture/R081116_hotoriarinji.html",
+     "summary": "",
+     "title": "【お知らせ】鶴岡市自然学習交流館ほとりあ臨時休館(11月9日)について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "http://www.city.tsuruoka.lg.jp/bunka/lib/news/tosyokan20261031ha.html",
+     "summary": "",
+     "title": "【図書館羽黒分館】臨時休館のお知らせ"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "http://www.city.tsuruoka.lg.jp/sangyo/nyusatsu/nyusatu-kekka/r8nyusatsukekka.html",
+     "summary": "",
+     "title": "令和8年度の入札(見積)結果について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "http://www.city.tsuruoka.lg.jp/seibi/doboku0120201225.html",
+     "summary": "",
+     "title": "鶴岡市の道路通行規制情報"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "http://www.city.tsuruoka.lg.jp/bunka/manabi/kouminkan/minnanomanabiyaharu.html",
+     "summary": "",
+     "title": "【10月29日まで募集延長します!】 女性センター講座 「みんなの学び舎~秋~」"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "http://www.city.tsuruoka.lg.jp/bunka/manabi/oshirase/josei-osirase.html",
+     "summary": "",
+     "title": "女性センターからのお知らせ"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "http://www.city.tsuruoka.lg.jp/shisei/shiyakusyo/infomation/atsumi/joho/nourinsuisanfes.html",
+     "summary": "",
+     "title": "温海農林水産まつり開催!"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "http://www.city.tsuruoka.lg.jp/kanko/kankou-event/atsangyo-ninamaturi.html",
+     "summary": "",
+     "title": "焼畑あつみかぶマルシェを開催します!"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "http://www.city.tsuruoka.lg.jp/kanko/kankou-event/atsangyo-osakanaiti.html",
+     "summary": "",
+     "title": "2026年鼠ヶ関港カニ・えび甲殻祭り開催!"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "http://www.city.tsuruoka.lg.jp/shisei/kohojigyou/official_sns/1man.html",
+     "summary": "",
+     "title": "【フォロワー1万人突破!】鶴岡市公式Instagram"
+    },
     {
      "date": "2026-10-21",
      "link": "http://www.city.tsuruoka.lg.jp/shisei/shiyakusyo/soshiki/kusibikityousya/aaa.html",
@@ -922,66 +994,6 @@
      "link": "http://www.city.tsuruoka.lg.jp/sangyo/nourinsuisan/nousei2025101819.html",
      "summary": "",
      "title": "【ご報告】つるおか大産業まつり2026へのご来場について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "http://www.city.tsuruoka.lg.jp/shisei/shiyakusyo/infomation/asahi/kanko/itoudakehinangoya.html",
-     "summary": "",
-     "title": "朝日連峰「以東岳避難小屋」情報"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "http://www.city.tsuruoka.lg.jp/shisei/shiyakusyo/infomation/haguro/joho/hsangyo20261025.html",
-     "summary": "",
-     "title": "秋の収穫祭 ~柿市・食市・松ヶ岡~ 開催のお知らせ"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "http://www.city.tsuruoka.lg.jp/shisei/shiyakusyo/infomation/asahi/kanko/otorigoyazyouho.html",
-     "summary": "",
-     "title": "大鳥池避難小屋(タキタロウ山荘)情報"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "http://www.city.tsuruoka.lg.jp/kenko/seikatsuhogo/oshirase/fukushi0120261019.html",
-     "summary": "",
-     "title": "日本赤十字社「令和8年台風第18号災害義援金」の受付について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "http://www.city.tsuruoka.lg.jp/seibi/kankyo/nature-forestculture/sinrinbunkatosi/R08katudouhoukoku.html",
-     "summary": "",
-     "title": "【第3回公開中】つるおか森の時間:令和8年度(2026年)活動報告"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "http://www.city.tsuruoka.lg.jp/shisei/shiyakusyo/soshiki/kyouikuiinkai/01202603031636.html",
-     "summary": "",
-     "title": "令和8年 教育委員会の会議"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "http://www.city.tsuruoka.lg.jp/shisei/shiyakusyo/infomation/asahi/kanko/asahirenpotozanjoho.html",
-     "summary": "",
-     "title": "(令和8年10月19日更新)朝日連峰 道路・登山道情報【泡滝~大鳥池~以東岳間】"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "http://www.city.tsuruoka.lg.jp/kurashi/2026ouen/seikatuouen.html",
-     "summary": "",
-     "title": "生活応援商品券について(利用実績)"
-    },
-    {
-     "date": "2026-10-16",
-     "link": "http://www.city.tsuruoka.lg.jp/shisei/shicho/sityou-ugoki.html",
-     "summary": "",
-     "title": "これからの市長日程"
-    },
-    {
-     "date": "2026-10-16",
-     "link": "http://www.city.tsuruoka.lg.jp/shisei/shiyakusyo/infomation/asahi/joho/assangyo-chainsaw-r8.html",
-     "summary": "",
-     "title": "【募集終了】企業の森づくり推進事業「水源の森づくり チェーンソー講習会」参加者募集!【10月31日(土曜)開催】"
     }
    ],
    "name": "鶴岡市",
@@ -993,6 +1005,24 @@
    "feed": "https://www.kankyo.metro.tokyo.lg.jp/index.html/-/asset_publisher/cjyx/rss",
    "id": "00a04cea3e",
    "items": [
+    {
+     "date": "2026-10-21",
+     "link": "https://www.kankyo.metro.tokyo.lg.jp/information/press/2026/10/2026102103",
+     "summary": "「令和8年度「東京都環境影響評価審議会」第7回総会を開催します」のページです。",
+     "title": "令和8年度「東京都環境影響評価審議会」第7回総会を開催します"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.kankyo.metro.tokyo.lg.jp/information/press/2026/10/2026102101",
+     "summary": "「令和8年度第2回 東京都再エネ実装専門家ボードの開催について」のページです。",
+     "title": "令和8年度第2回 東京都再エネ実装専門家ボードの開催について"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.kankyo.metro.tokyo.lg.jp/information/press/2026/10/2026102102",
+     "summary": "「第3回東京都廃棄物審議会散乱ごみ対策検討部会を開催」のページです。",
+     "title": "第3回東京都廃棄物審議会散乱ごみ対策検討部会を開催"
+    },
     {
      "date": "2026-10-19",
      "link": "https://www.kankyo.metro.tokyo.lg.jp/information/press/2026/10/2026101902",
@@ -1064,24 +1094,6 @@
      "link": "https://www.kankyo.metro.tokyo.lg.jp/information/press/2026/10/2026100501",
      "summary": "「「自由が丘×東京油田プロジェクト」キックオフイベントを開催しました!」のページです。",
      "title": "「自由が丘×東京油田プロジェクト」キックオフイベントを開催しました!"
-    },
-    {
-     "date": "2026-10-01",
-     "link": "https://www.kankyo.metro.tokyo.lg.jp/information/press/2026/10/2026100103",
-     "summary": "「「住まいの断熱体感バスツアー」を開催します!」のページです。",
-     "title": "「住まいの断熱体感バスツアー」を開催します!"
-    },
-    {
-     "date": "2026-10-01",
-     "link": "https://www.kankyo.metro.tokyo.lg.jp/information/press/2026/10/2026100102",
-     "summary": "「令和8年度「ゼロエミッション地区創出プロジェクト」選定結果について」のページです。",
-     "title": "令和8年度「ゼロエミッション地区創出プロジェクト」選定結果について"
-    },
-    {
-     "date": "2026-10-01",
-     "link": "https://www.kankyo.metro.tokyo.lg.jp/information/press/2026/10/2026100101",
-     "summary": "「「しない、させない、ゆるさない 不法投棄は犯罪です」のページです。",
-     "title": "「しない、させない、ゆるさない 不法投棄は犯罪です"
     }
    ],
    "name": "東京都環境局",
@@ -1103,7 +1115,7 @@
    "id": "0f4f738af7",
    "items": [
     {
-     "date": "2026-10-21",
+     "date": "2026-10-22",
      "link": "https://www.pref.ehime.jp/page/154856.html",
      "summary": "",
      "title": "令和8年熊本地震被災地への支援について"
@@ -1119,10 +1131,76 @@
    "id": "0909f1c174",
    "items": [
     {
+     "date": "2026-10-23",
+     "link": "https://www.pref.ehime.jp/site/nyusatsu/161877.html",
+     "summary": "",
+     "title": "畑寺発電所及び肱川発電所FIT特定卸供給に係る一般競争入札の実施について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ehime.jp/page/162175.html",
+     "summary": "",
+     "title": "ホームページの一部機能を停止しています(令和8年10月22日)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ehime.jp/page/154856.html",
+     "summary": "",
+     "title": "令和8年熊本地震被災地への支援について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ehime.jp/site/nyusatsu/162002.html",
+     "summary": "",
+     "title": "愛媛県動物愛護センター休憩棟等照明器具LED更新等修繕に係る入札について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ehime.jp/page/161862.html",
+     "summary": "",
+     "title": "「スーパーマーケット・トレードショー2027」における愛媛県ブース出展事業者の2次募集について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ehime.jp/page/162300.html",
+     "summary": "",
+     "title": "Webサイトの公開一時停止について【自転車新文化推進課】"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ehime.jp/page/162217.html",
+     "summary": "",
+     "title": "Webサイトの公開一時停止について【営業本部/愛媛百貨選】"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ehime.jp/site/nyusatsu/162167.html",
+     "summary": "",
+     "title": "【お知らせ】愛媛県美術館ウェブサイトのメンテナンスについて"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ehime.jp/page/9246.html",
+     "summary": "特定家畜伝染病の防疫対策マニュアルを令和8年10月7日に一部改正しました。",
+     "title": "特定家畜伝染病の防疫対策マニュアルについて"
+    },
+    {
      "date": "2026-10-22",
      "link": "https://www.pref.ehime.jp/page/162020.html",
      "summary": "",
      "title": "愛媛県農林水産研究所果樹研究センター 高圧ケーブル取替修繕業務に係る一般競争入札の実施について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ehime.jp/page/160953.html",
+     "summary": "林業関係者や市町等に対して、J-クレジット制度への認知度向上を図り、県内のクレジットの創出等の活動を活性化させるため、標記セミナーを開催し、近年の動向や県内での取組事例等を周知し、森林吸収系クレジットの普及啓発を図る。",
+     "title": "令和8年度森林J-クレジット活用セミナーの開催について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ehime.jp/page/17973.html",
+     "summary": "アライグマ、ニホンカワウソ情報を募集しています。",
+     "title": "アライグマ・ニホンカワウソ情報の募集について"
     },
     {
      "date": "2026-10-21",
@@ -1141,72 +1219,6 @@
      "link": "https://www.pref.ehime.jp/page/162001.html",
      "summary": "",
      "title": "愛媛県八幡浜支局水産課車両(国産ハイブリッド小型乗用車)の賃貸借契約に係る入札結果について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.ehime.jp/page/10016.html",
-     "summary": "",
-     "title": "麻薬・覚醒剤・大麻乱用防止運動に~地区大会参加しよう!~"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.ehime.jp/page/154856.html",
-     "summary": "",
-     "title": "令和8年熊本地震被災地への支援について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.ehime.jp/page/161041.html",
-     "summary": "愛媛県では、(公財)愛媛の森林基金との共催により、令和8年度「えひめ山の日の集い」をえひめ森林公園にて開催します。",
-     "title": "令和8年度「えひめ山の日の集い」を開催します!"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.ehime.jp/site/nyusatsu/160429.html",
-     "summary": "令和9・10年度における建設工事及び建設工事関連業務に係る入札参加有資格審査申請に係る説明会について以下に掲載しています。",
-     "title": "令和9・10年度入札参加資格審査説明会について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.ehime.jp/page/5836.html",
-     "summary": "",
-     "title": "魅力あふれる建設産業支援"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.ehime.jp/page/52159.html",
-     "summary": "",
-     "title": "令和8年度愛媛県地域の守り手力強化事業の募集について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.ehime.jp/site/nyusatsu/2291.html",
-     "summary": "",
-     "title": "愛媛県公営企業管理局 入札・発注情報"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.ehime.jp/page/161004.html",
-     "summary": "",
-     "title": "令和8年度「差別をなくする強調月間」及び「差別をなくする県民のつどい」の参加募集について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.ehime.jp/page/161630.html",
-     "summary": "",
-     "title": "子どもの愛顔応援ファンドへの寄附金贈呈式について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.ehime.jp/page/161084.html",
-     "summary": "",
-     "title": "メタル技術科・溶接技術科で学びませんか?"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.ehime.jp/page/161103.html",
-     "summary": "",
-     "title": "令和8年度えひめ高校生インド青少年交流事業の実施について"
     }
    ],
    "name": "愛媛県庁",
@@ -1319,6 +1331,12 @@
    "id": "38db2808d3",
    "items": [
     {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ehime.jp/page/162308.html",
+     "summary": "",
+     "title": "「全国植樹祭アフターフェスタ」を開催します!"
+    },
+    {
      "date": "2026-10-21",
      "link": "https://www.pref.ehime.jp/page/10016.html",
      "summary": "",
@@ -1401,12 +1419,6 @@
      "link": "https://www.pref.ehime.jp/page/160569.html",
      "summary": "",
      "title": "令和8年度林業研究センター農林水産参観デー(久万林業まつり)の開催について"
-    },
-    {
-     "date": "2026-10-07",
-     "link": "https://www.pref.ehime.jp/page/161102.html",
-     "summary": "令和7年10月19日に、重信川サイクリングロードで、家族一緒にサイクリングを楽しむイベントを開催します。当日は、交通安全教室や自転車の乗り方レクチャーを受けたあと、親子で「謎解きサイクリング」にチャレンジ!ランチは「ルリイロサンド」をご用意しています。安全に楽しく走りながら、秋の風を感じて家族の思い出を作りませんか?",
-     "title": "【自転車で秋を満喫しよう!】「しげチャリ サイクリングDAY」@重信川サイクリングロード"
     }
    ],
    "name": "愛媛県庁",
@@ -1418,6 +1430,12 @@
    "feed": "https://www.pref.fukushima.lg.jp/rss/10/list6.xml",
    "id": "bac993d813",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/01010d/poster-photo-contest.html",
+     "summary": "福島県公式イメージポスター「来て。」を作るフォトコンテスト",
+     "title": "「来て。」ポスターフォトコンテスト-2026-"
+    },
     {
      "date": "2026-10-21",
      "link": "https://www.pref.fukushima.lg.jp/sec/01135d/shouboubousaikunren.html",
@@ -1442,93 +1460,93 @@
    "items": [
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.fukushima.lg.jp/sec/36021d/kannkyou-hozenngatanougyou-taikai-marche.html",
+     "link": "https://www.pref.fukushima.lg.jp/site/portal-old/monitoring.html",
      "summary": "",
-     "title": "【10月31日開催】みんなでチャレンジ!環境保全型農業大会2026及びみんなでチャレンジ!ふくしまエコマルシェ2026を開催します!"
+     "title": "魚介類の放射線モニタリング検査に関する結果をお知らせします。"
     },
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.fukushima.lg.jp/site/portal/wbc-kensa.html",
+     "link": "https://www.pref.fukushima.lg.jp/sec/32011a/nyuusatu-kouji.html",
      "summary": "",
-     "title": "ホールボディ・カウンタによる内部被ばく検査について"
+     "title": "一般競争入札等の公告、工事の発注見通し、入札の結果(商工労働部)"
     },
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.fukushima.lg.jp/sec/21045b/ps-wbc-kensa-kekka.html",
-     "summary": "",
-     "title": "ホールボディ・カウンタによる内部被ばく検査の結果について"
+     "link": "https://www.pref.fukushima.lg.jp/sec/41035c/reiwa8nenndonyuusatsujoho.html",
+     "summary": "入札 契約 福島県土木部",
+     "title": "令和8年度入札・契約情報(土木部道路管理課)"
     },
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.fukushima.lg.jp/sec/36005a/reiwa7nyuusatukekka.html",
+     "link": "https://www.pref.fukushima.lg.jp/sec/21160a/kansensyo-index.html",
+     "summary": "感染症",
+     "title": "感染症≪相双地域感染症発生動向調査週報を更新しました。≫"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/site/edu/nyusatu-syakyou2.html",
      "summary": "",
-     "title": "農林水産部の入札結果(令和8年度)"
+     "title": "社会教育課入札情報"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/11025a/261107esports.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/01230a/kennan-kouji-nyuusatsu.html",
      "summary": "",
-     "title": "【eスポーツに挑戦してみませんか?】令和8年度市町村対抗eスポーツ交流大会の参加者を募集します!"
+     "title": "公共工事条件付一般競争入札公告(県南地方振興局出納室)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/21620a/joto-dog-miharu.html",
-     "summary": "現在福島県動物愛護センターで保護されている譲渡犬の検索",
-     "title": "福島県動物愛護センター (本所) の譲渡犬情報"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/41310a/bandaiazumaskyline.html",
-     "summary": "",
-     "title": "磐梯吾妻スカイライン交通情報"
-    },
-    {
-     "date": "2026-10-21",
+     "date": "2026-10-22",
      "link": "https://www.pref.fukushima.lg.jp/site/portal/ps-kukan-monitoring.html",
      "summary": "",
      "title": "空間線量モニタリング結果情報"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/21045i/kansenkangokansen41.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/site/edu/bunkazai14.html",
      "summary": "",
-     "title": "インフルエンザ情報"
+     "title": "文化財課入札情報"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/21045i/covid19-data.html",
-     "summary": "新型コロナウイルス感染症の発生動向、入院状況、変異株等について",
-     "title": "新型コロナウイルス感染症の発生動向等について"
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/55015c/kouzi.html",
+     "summary": "農林水産部・土木部の本庁発注分、県北農林事務所、県北建設事務所発注分(所管区域:福島市、二本松市、伊達市、本宮市、伊達郡、安達郡)、県北流域下水道建設事務所発注分",
+     "title": "公共工事条件付一般競争入札公告(出納局)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/41005a/dobokubupuropo.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/16035b/aityou07.html",
      "summary": "",
-     "title": "土木部のプロポーザル方式等発注見通し"
+     "title": "令和8年度福島県愛鳥週間ポスターコンクール入賞作品について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/36045a/nousonkeikaku-hayawakari.html",
-     "summary": "農業農村整備事業はやわかり集",
-     "title": "農業農村整備はやわかり集"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/37207a/syutuganzyoukyou.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/32031a/flower2026kekka.html",
      "summary": "",
-     "title": "令和9年度推薦入校試験出願状況について"
+     "title": "【審査結果】「ふくしまアフターDCにおける観光周遊促進事業(フラワー・ポケふたスタンプラリー)」公募型プロポーザルについて"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/21910a/newshotyoroom.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/site/edu/zaimu13.html",
      "summary": "",
-     "title": "シン・所長の部屋"
+     "title": "施設財産室入札情報"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/21910a/kansenshojoho.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/36035d/inoshishi-kensa.html",
      "summary": "",
-     "title": "福島県感染症発生動向調査報告"
+     "title": "野生いのししにおける豚熱及びアフリカ豚熱検査状況"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/01010d/poster-photo-contest.html",
+     "summary": "福島県公式イメージポスター「来て。」を作るフォトコンテスト",
+     "title": "「来て。」ポスターフォトコンテスト-2026-"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/01410a/event-tokyo-r8.html",
+     "summary": "福島県東京事務所が主催または参加するイベント(食・農産物、関係人口、復興支援など)を紹介しています。",
+     "title": "イベント・魅力発信情報(令和8年度)"
     }
    ],
    "name": "福島県庁",
@@ -1542,93 +1560,93 @@
    "items": [
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.fukushima.lg.jp/sec/36005a/reiwa7nyuusatukekka.html",
+     "link": "https://www.pref.fukushima.lg.jp/sec/32011a/nyuusatu-kouji.html",
      "summary": "",
-     "title": "農林水産部の入札結果(令和8年度)"
+     "title": "一般競争入札等の公告、工事の発注見通し、入札の結果(商工労働部)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/41005a/dobokubupuropo.html",
-     "summary": "",
-     "title": "土木部のプロポーザル方式等発注見通し"
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/41035c/reiwa8nenndonyuusatsujoho.html",
+     "summary": "入札 契約 福島県土木部",
+     "title": "令和8年度入札・契約情報(土木部道路管理課)"
     },
     {
-     "date": "2026-10-21",
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/site/edu/nyusatu-syakyou2.html",
+     "summary": "",
+     "title": "社会教育課入札情報"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/01230a/kennan-kouji-nyuusatsu.html",
+     "summary": "",
+     "title": "公共工事条件付一般競争入札公告(県南地方振興局出納室)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/41035d/r8seibikanyuusatsujoho.html",
+     "summary": "入札 契約 福島県土木部",
+     "title": "令和8年度入札・契約情報(土木部道路整備課)"
+    },
+    {
+     "date": "2026-10-22",
      "link": "https://www.pref.fukushima.lg.jp/site/edu/bunkazai14.html",
      "summary": "",
      "title": "文化財課入札情報"
     },
     {
-     "date": "2026-10-21",
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/55015c/kouzi.html",
+     "summary": "農林水産部・土木部の本庁発注分、県北農林事務所、県北建設事務所発注分(所管区域:福島市、二本松市、伊達市、本宮市、伊達郡、安達郡)、県北流域下水道建設事務所発注分",
+     "title": "公共工事条件付一般競争入札公告(出納局)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/32031a/flower2026kekka.html",
+     "summary": "",
+     "title": "【審査結果】「ふくしまアフターDCにおける観光周遊促進事業(フラワー・ポケふたスタンプラリー)」公募型プロポーザルについて"
+    },
+    {
+     "date": "2026-10-22",
      "link": "https://www.pref.fukushima.lg.jp/site/edu/zaimu13.html",
      "summary": "",
      "title": "施設財産室入札情報"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/41371a/nyuusatukekkar8.html",
-     "summary": "入札の結果です。",
-     "title": "【令和8年度】入札結果"
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/01250a/suitou-kouji-nyuusatsu.html",
+     "summary": "",
+     "title": "公共工事条件付一般競争入札公告(南会津地方振興局出納室)"
     },
     {
-     "date": "2026-10-21",
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/41045b/nyusatsujoho.html",
+     "summary": "",
+     "title": "入札情報(河川整備課)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/21160a/nyuusatsujyouhou1.html",
+     "summary": "",
+     "title": "入札情報を更新しました。(条件付一般競争入札等の公告)"
+    },
+    {
+     "date": "2026-10-22",
      "link": "https://www.pref.fukushima.lg.jp/sec/70013a/zaimu01.html",
      "summary": "",
      "title": "建設工事、その他一般競争入札等の公告・結果について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/01010a/kiki-nyuusatsu.html",
-     "summary": "",
-     "title": "危機管理部入札情報"
-    },
-    {
-     "date": "2026-10-21",
+     "date": "2026-10-22",
      "link": "https://www.pref.fukushima.lg.jp/sec/70013a/zaimu04.html",
      "summary": "",
      "title": "物品購入等に関する一般競争入札の公告について"
     },
     {
-     "date": "2026-10-21",
+     "date": "2026-10-22",
      "link": "https://www.pref.fukushima.lg.jp/sec/01220a/suitoukouji.html",
      "summary": "",
      "title": "公共工事に係る条件付一般競争入札"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.fukushima.lg.jp/sec/01270a/koujinyusatsu.html",
-     "summary": "工事等入札",
-     "title": "いわき管内における公共工事に関する入札公告情報(いわき地方振興局出納室)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.fukushima.lg.jp/sec/41320a/reiwa8nenndonyuusatukekka.html",
-     "summary": "",
-     "title": "令和8年度入札結果(県中建設事務所)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.fukushima.lg.jp/sec/36035d/fukushima-syutoken-pr08.html",
-     "summary": "",
-     "title": "令和8年度おいしい福島畜産販路拡大推進事業(福島牛首都圏PR)公募型プロポーザルについて"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.fukushima.lg.jp/sec/41350a/hattyuumitoosi.html",
-     "summary": "",
-     "title": "発注見通しを掲載しました"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.fukushima.lg.jp/sec/41330a/hattyuumikomi-kennanken.html",
-     "summary": "福島県 県南建設事務所 発注見通し",
-     "title": "発注見通し(県南建設)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.fukushima.lg.jp/sec/16005a/nyu-satsu.html",
-     "summary": "",
-     "title": "建設工事・庁舎等維持管理業務委託等に関する一般競争入札等の公告について"
     }
    ],
    "name": "福島県庁",
@@ -1650,6 +1668,78 @@
    "id": "447406bf4b",
    "items": [
     {
+     "date": "2026-10-23",
+     "link": "https://www.pref.gunma.jp/page/740821.html",
+     "summary": "県の未来構想について考える「県未来構想フォーラム」を開催します。山本県政の現状や取り組みを、知事が説明し、県民と知事が県内各地域で意見交換を行います。",
+     "title": "群馬県未来構想フォーラム2026を開催します"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.gunma.jp/page/762478.html",
+     "summary": "",
+     "title": "群馬県立図書館の電子書籍サービス※新着資料【2026年9月】"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.gunma.jp/page/780263.html",
+     "summary": "ICT職",
+     "title": "令和8年度群馬県職員採用試験(ICT)合格者"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.gunma.jp/site/furusatozei/779930.html",
+     "summary": "",
+     "title": "ふるさと納税ポータルサイト「ふるさとチョイス」における不正アクセス検知に伴うサービス停止及び注意喚起について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.gunma.jp/page/780279.html",
+     "summary": "",
+     "title": "県ホームページの一部機能制限について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.gunma.jp/site/houdou/780096.html",
+     "summary": "",
+     "title": "令和8年度リデュース・リユース・リサイクル推進功労者等表彰における文部科学大臣賞の受賞について(廃棄物・リサイクル課)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.gunma.jp/page/681305.html",
+     "summary": "人口動態等の変化、生産年齢人口の減少と介護現場における人材不足の状況、新興感染症等による介護事業者への経営影響を踏まえた支援、制度の持続可能性などに的確に対応し、物価上昇や災害、新興感染症等に当たり経営影響を踏まえた的確な支援策の検討を行うため、介護サービス事業者経営情報の収集及びデータベースの整備をし、収集した情報を",
+     "title": "介護サービス事業者経営情報の報告について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.gunma.jp/site/nyuusatsu/779972.html",
+     "summary": "",
+     "title": "公募型プロポーザル結果の公表(「子どもかるたコミュニティ」モデル事業委託業務)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.gunma.jp/page/139758.html",
+     "summary": "",
+     "title": "【北毛青少年自然の家】利用状況カレンダー"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.gunma.jp/site/doctorguide/1977.html",
+     "summary": "",
+     "title": "臨床研修医採用の二次募集を実施しています(令和9年度採用)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.gunma.jp/page/22363.html",
+     "summary": "",
+     "title": "利根教育事務所 利根・沼田の教育"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.gunma.jp/page/777013.html",
+     "summary": "",
+     "title": "「キミの“好き”を配信しよう!eスポーツクリエイティブアカデミー」の開催について"
+    },
+    {
      "date": "2026-10-21",
      "link": "https://www.pref.gunma.jp/site/houdou/779767.html",
      "summary": "",
@@ -1666,78 +1756,6 @@
      "link": "https://www.pref.gunma.jp/site/nyuusatsu/181183.html",
      "summary": "",
      "title": "【オープンカウンタ】10月21日(水曜日)付け公開等案件"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.gunma.jp/page/719073.html",
-     "summary": "",
-     "title": "【北毛青少年自然の家】北毛オープンデー"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.gunma.jp/site/nyuusatsu/778020.html",
-     "summary": "",
-     "title": "公募型プロポーザル結果の公表(「ぐんま・ONSEN Culture世界発信事業」業務委託)"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.gunma.jp/site/nyuusatsu/778739.html",
-     "summary": "",
-     "title": "【入札公告】前橋合同庁舎1,2階 デスク椅子類購入に関する一般競争入札"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.gunma.jp/page/10790.html",
-     "summary": "",
-     "title": "外国人材雇用・定着支援セミナーのご案内"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.gunma.jp/page/202973.html",
-     "summary": "",
-     "title": "指定障害福祉サービス事業者等の公示"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.gunma.jp/site/kyouiku/779322.html",
-     "summary": "",
-     "title": "令和10年度採用 群馬県公立学校教員選考試験の実施日について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.gunma.jp/site/kyouiku/779321.html",
-     "summary": "",
-     "title": "令和9年度採用 群馬県公立学校教員選考試験合格者状況"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.gunma.jp/site/furusatozei/779930.html",
-     "summary": "",
-     "title": "ふるさと納税ポータルサイト「ふるさとチョイス」における不正アクセス検知に伴うサービス停止及び注意喚起について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.gunma.jp/site/paraonestopcenter/779832.html",
-     "summary": "",
-     "title": "唐澤剣也選手(SUBARU)が愛知・名古屋アジアパラ大会で「金メダル」を獲得!"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.gunma.jp/page/770246.html",
-     "summary": "",
-     "title": "群馬県低所得者世帯(児童扶養手当受給世帯)への物価高騰支援事業"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.gunma.jp/site/houdou/779425.html",
-     "summary": "",
-     "title": "《グローバル始動人テイクオフ事業》米国インディアナ州に群馬県の高校生を派遣します(地域外交課)"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.gunma.jp/site/houdou/779310.html",
-     "summary": "",
-     "title": "人気料理インフルエンサー等が考案したレシピを発信中!(ぐんまブランド推進課)"
     }
    ],
    "name": "群馬県庁",
@@ -1749,6 +1767,54 @@
    "feed": "https://www.pref.hokkaido.lg.jp/news/rss.xml",
    "id": "1046e7741a",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/kz/ssg/haia/272298.html",
+     "summary": "",
+     "title": "北海道自動車産業集積促進協議会 令和8年度講演会(北海道経済連合会共催)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/sm/sks/210812.html",
+     "summary": "",
+     "title": "道庁地下食堂の週間メニューについて"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/sm/jsk/270564.html",
+     "summary": "",
+     "title": "一般競争入札の実施 (パーソナルコンピュータの賃貸借)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/sm/jsk/270541.html",
+     "summary": "",
+     "title": "一般競争入札の実施 (パーソナルコンピュータの購入)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/hf/kse/167386.html",
+     "summary": "",
+     "title": "「食の安全見てみ隊、学び隊 in 名寄」の開催について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/ks/ksk/assesshp/project_hou50_soyamisaki-kosinkeikaku.html",
+     "summary": "",
+     "title": "法50_(仮称)宗谷岬風力発電事業 更新計画"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/ns/nsk/199259.html",
+     "summary": "",
+     "title": "お米の需給状況に係る情報"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/sm/sks/doutyousinnryouzyo-sinnryoutaisei.html",
+     "summary": "",
+     "title": "北海道庁診療所の診療体制について"
+    },
     {
      "date": "2026-10-21",
      "link": "https://www.pref.hokkaido.lg.jp/ss/tsk/263288.html",
@@ -1790,54 +1856,6 @@
      "link": "https://www.pref.hokkaido.lg.jp/kz/csk/272049.html",
      "summary": "",
      "title": "公金の支出事務の委託に係る告示について(令和8年10月21日)"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.hokkaido.lg.jp/ks/ass/272903.html",
-     "summary": "",
-     "title": "【申込み受付中】宿泊付きナイトプログラム(登別温泉 地獄谷散策・阿寒湖温泉 松明行進)"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.hokkaido.lg.jp/sm/ktk/bsb/kasai.html",
-     "summary": "",
-     "title": "火災発生状況"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/kg/htd/adviser.html",
-     "summary": "",
-     "title": "地域新エネルギー導入アドバイザー制度について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/ss/ckk/isantop.html",
-     "summary": "",
-     "title": "北海道遺産"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/ss/ckk/hokkaido-japanheritage.html",
-     "summary": "",
-     "title": "「北海道の日本遺産」ポータルサイトを公開しました"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/ss/ckk/235047.html",
-     "summary": "",
-     "title": "日本遺産×北海道遺産PRイベントinイオンモール札幌発寒"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/kz/zcs/160527.html",
-     "summary": "",
-     "title": "北海道地球温暖化防止対策基金(通称:ゼロカーボン北海道推進基金)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/sr/sky/200755.html",
-     "summary": "",
-     "title": "森林由来クレジットとは"
     }
    ],
    "name": "北海道庁",
@@ -1849,6 +1867,42 @@
    "feed": "https://www.pref.hokkaido.lg.jp/news/oshirase/rss.xml",
    "id": "913b65eba1",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/kz/ssg/haia/272298.html",
+     "summary": "",
+     "title": "北海道自動車産業集積促進協議会 令和8年度講演会(北海道経済連合会共催)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/sm/sks/210812.html",
+     "summary": "",
+     "title": "道庁地下食堂の週間メニューについて"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/hf/kse/167386.html",
+     "summary": "",
+     "title": "「食の安全見てみ隊、学び隊 in 名寄」の開催について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/ks/ksk/assesshp/project_hou50_soyamisaki-kosinkeikaku.html",
+     "summary": "",
+     "title": "法50_(仮称)宗谷岬風力発電事業 更新計画"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/ns/nsk/199259.html",
+     "summary": "",
+     "title": "お米の需給状況に係る情報"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/sm/sks/doutyousinnryouzyo-sinnryoutaisei.html",
+     "summary": "",
+     "title": "北海道庁診療所の診療体制について"
+    },
     {
      "date": "2026-10-21",
      "link": "https://www.pref.hokkaido.lg.jp/ss/tsk/263288.html",
@@ -1902,42 +1956,6 @@
      "link": "https://www.pref.hokkaido.lg.jp/kg/htd/adviser.html",
      "summary": "",
      "title": "地域新エネルギー導入アドバイザー制度について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/ss/ckk/isantop.html",
-     "summary": "",
-     "title": "北海道遺産"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/ss/ckk/hokkaido-japanheritage.html",
-     "summary": "",
-     "title": "「北海道の日本遺産」ポータルサイトを公開しました"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/ss/ckk/235047.html",
-     "summary": "",
-     "title": "日本遺産×北海道遺産PRイベントinイオンモール札幌発寒"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/kz/zcs/160527.html",
-     "summary": "",
-     "title": "北海道地球温暖化防止対策基金(通称:ゼロカーボン北海道推進基金)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/sr/sky/200755.html",
-     "summary": "",
-     "title": "森林由来クレジットとは"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.hokkaido.lg.jp/ss/tsk/193932.html",
-     "summary": "",
-     "title": "外国人材受入・定着促進事業"
     }
    ],
    "name": "北海道庁",
@@ -1978,12 +1996,6 @@
      "link": "https://www.pref.hokkaido.lg.jp/kz/jzi/248571.html",
      "summary": "",
      "title": "人材確保奨励金・支援金について(令和8年4月~11月)"
-    },
-    {
-     "date": "2026-10-01",
-     "link": "https://www.pref.hokkaido.lg.jp/hf/iyk/kanngo/271234.html",
-     "summary": "",
-     "title": "令和8年度(2026年度)子育て看護職員等就業支援事業費補助金の交付申請について"
     }
    ],
    "name": "北海道庁",
@@ -1995,6 +2007,18 @@
    "feed": "https://www.pref.hokkaido.lg.jp/news/nyusatsu/rss.xml",
    "id": "16850411d1",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/sm/jsk/270564.html",
+     "summary": "",
+     "title": "一般競争入札の実施 (パーソナルコンピュータの賃貸借)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.hokkaido.lg.jp/sm/jsk/270541.html",
+     "summary": "",
+     "title": "一般競争入札の実施 (パーソナルコンピュータの購入)"
+    },
     {
      "date": "2026-10-20",
      "link": "https://www.pref.hokkaido.lg.jp/sr/dyr/203219.html",
@@ -2072,18 +2096,6 @@
      "link": "https://www.pref.hokkaido.lg.jp/sr/kms/272208.html",
      "summary": "",
      "title": "令和8年度北海道立北の森づくり専門学院校舎敷地除排雪委託業務の入札"
-    },
-    {
-     "date": "2026-10-09",
-     "link": "https://www.pref.hokkaido.lg.jp/sm/ktk/bsb/bousai1.html",
-     "summary": "",
-     "title": "過去の入札結果"
-    },
-    {
-     "date": "2026-10-09",
-     "link": "https://www.pref.hokkaido.lg.jp/sm/jsk/270564.html",
-     "summary": "",
-     "title": "一般競争入札の実施 (パーソナルコンピュータの賃貸借)"
     }
    ],
    "name": "北海道庁",
@@ -2095,6 +2107,18 @@
    "feed": "https://www.pref.ishikawa.lg.jp/shinchaku/shinchaku.xml",
    "id": "9b4527622b",
    "items": [
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.ishikawa.lg.jp/kensei/koho/publiccomment/index.html",
+     "summary": "",
+     "title": "意見募集(パブリックコメント)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.ishikawa.lg.jp/kouhou/idouchijishitsu_town_meeting/kaisaiannai_20261112.html",
+     "summary": "",
+     "title": "石川・金沢の観光を考えるトークセッション(令和8年11月12日)"
+    },
     {
      "date": "2026-10-21",
      "link": "https://www.pref.ishikawa.lg.jp/tikusan/juuishi_kakuho/juuishi_kakuho.html",
@@ -2142,18 +2166,6 @@
      "link": "https://www.pref.ishikawa.lg.jp/kenmin/danjo/purpleribbon/symposium.html",
      "summary": "パープルリボンキャンペーンシンポジウム",
      "title": "「パープルリボンキャンペーンシンポジウム」の参加者募集について"
-    },
-    {
-     "date": "2026-10-13",
-     "link": "https://www.pref.ishikawa.lg.jp/chiji/kisya/r8_9_30_houkoku/r8_9_30_houkoku.html",
-     "summary": "",
-     "title": "知事からの報告(令和8年9月30日)"
-    },
-    {
-     "date": "2026-10-13",
-     "link": "https://www.pref.ishikawa.lg.jp/chiji/kisya/r8_9_11_houkoku/r8_9_11_houkoku.html",
-     "summary": "",
-     "title": "知事からの報告(令和8年9月11日)"
     }
    ],
    "name": "石川県庁",
@@ -2175,105 +2187,71 @@
    "id": "69c49f27b9",
    "items": [
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/SINGI/m0144800186.htm",
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0038900081.htm",
      "summary": "",
-     "title": "令和8年度第1回北勢地域高等学校活性化推進協議会を開催します"
+     "title": "令和8年度みえ花と絆のプロジェクト花植えを実施します(大谷町第一自治会)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0035100117.htm",
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0360200054.htm",
      "summary": "",
-     "title": "令和8年度紀勢自動車道建設促進三重県期成同盟会の要望活動を実施します"
+     "title": "令和8年度健やか親子21内閣府特命担当大臣表彰の受賞者が決定しました"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0025300105.htm",
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0028300150.htm",
      "summary": "",
-     "title": "令和8年度 三重県ツキノワグマ被害対策人材育成講座 第3回 クマの捕獲技術(箱わな)を学ぶを開催します"
+     "title": "令和8年度病害虫発生予報第6号"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/SINGI/m0111800103.htm",
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0025500029.htm",
      "summary": "",
-     "title": "第3回「三重県犯罪被害者等支援及び性暴力の根絶をめざす施策推進計画(仮称)」検討懇話会を開催します"
+     "title": "「鳥羽・志摩の海女漁業・真珠養殖業 日本農業遺産認定10周年記念&世界農業遺産申請キックオフイベント」を開催します"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0046100231.htm",
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0039300112.htm",
      "summary": "",
-     "title": "令和10年度全国高等学校総合体育大会三重県実行委員会第1回高校生活動専門委員会を開催します"
+     "title": "国道260号(船越)のバイパスが開通します"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/SINGI/m0107400312.htm",
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0023300192.htm",
      "summary": "",
-     "title": "令和8年度第6回三重県行政不服審査会(第2部会)を開催します"
+     "title": "三重県庁食堂においてノウフクメニューが提供されます"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/SINGI/m0115600398.htm",
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0011500591.htm",
      "summary": "",
-     "title": "令和8年度第1回三重県循環器病対策推進協議会社会連携・リハビリ部会を開催します"
+     "title": "ファミリーマートとの連携によるフレンテみえ相談室の周知を行います"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0014901154.htm",
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0030700667.htm",
      "summary": "",
-     "title": "集団かぜ・インフルエンザ発生予防のための情報提供(第23報)"
+     "title": "【募集終了】「働き方改革アドバイザー」派遣企業及び「企業で働く人のための出前講座」講師派遣企業を募集します"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0043900219.htm",
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0014901156.htm",
      "summary": "",
-     "title": "公立学校職員の人事異動について"
+     "title": "集団かぜ・インフルエンザ発生予防のための情報提供(第24報)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0043900216.htm",
+     "date": "2026-10-22",
+     "link": "https://www.pref.mie.lg.jp/KANSAI/HP/m0001000146.htm",
      "summary": "",
-     "title": "社会人経験者を対象とした教員採用選考試験(教員免許不要)を実施します"
+     "title": "令和8年度定期監査結果を公表します"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0043900215.htm",
+     "date": "2026-10-22",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0039300115.htm",
      "summary": "",
-     "title": "三重県立学校実習助手採用選考試験(申込資格拡大)を実施します"
+     "title": "主要地方道伊勢大宮線(度会郡大紀町滝原地内)の法面崩落に伴う通行止め解除について"
     },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0046100233.htm",
-     "summary": "",
-     "title": "令和8年度学校保健功労者表彰の受賞者が決定しました"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0044500393.htm",
-     "summary": "",
-     "title": "令和8年度教育功労者表彰の被表彰者が決定しました"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0045700164.htm",
-     "summary": "",
-     "title": "令和8年度いじめ防止強化月間(11月)における県教育委員会の取組"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.mie.lg.jp/SINGI/m0115200153.htm",
-     "summary": "",
-     "title": "令和8年度第2回三重県精神保健福祉審議会アルコール健康障害対策推進部会を開催します"
-    }
-   ],
-   "name": "三重県庁",
-   "ok": true,
-   "site": "https://www.pref.mie.lg.jp/",
-   "title": ""
-  },
-  {
-   "feed": "https://www.pref.mie.lg.jp/app/rss/hodo_rss",
-   "id": "b46d6a0d93",
-   "items": [
     {
      "date": "2026-10-22",
      "link": "https://www.pref.mie.lg.jp/TOPICS/m0031900132.htm",
@@ -2297,72 +2275,106 @@
      "link": "https://www.pref.mie.lg.jp/TOPICS/m0030700684.htm",
      "summary": "",
      "title": "転職希望者等を対象としたオンラインセミナーを開催します"
+    }
+   ],
+   "name": "三重県庁",
+   "ok": true,
+   "site": "https://www.pref.mie.lg.jp/",
+   "title": ""
+  },
+  {
+   "feed": "https://www.pref.mie.lg.jp/app/rss/hodo_rss",
+   "id": "b46d6a0d93",
+   "items": [
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0014901156.htm",
+     "summary": "",
+     "title": "集団かぜ・インフルエンザ発生予防のための情報提供(第24報)"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0038900081.htm",
+     "summary": "",
+     "title": "令和8年度みえ花と絆のプロジェクト花植えを実施します(大谷町第一自治会)"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0360200054.htm",
+     "summary": "",
+     "title": "令和8年度健やか親子21内閣府特命担当大臣表彰の受賞者が決定しました"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0028300150.htm",
+     "summary": "",
+     "title": "令和8年度病害虫発生予報第6号"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0025500029.htm",
+     "summary": "",
+     "title": "「鳥羽・志摩の海女漁業・真珠養殖業 日本農業遺産認定10周年記念&世界農業遺産申請キックオフイベント」を開催します"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0039300112.htm",
+     "summary": "",
+     "title": "国道260号(船越)のバイパスが開通します"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0023300192.htm",
+     "summary": "",
+     "title": "三重県庁食堂においてノウフクメニューが提供されます"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0011500591.htm",
+     "summary": "",
+     "title": "ファミリーマートとの連携によるフレンテみえ相談室の周知を行います"
     },
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0011500593.htm",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0346800027.htm",
      "summary": "",
-     "title": "令和8年熊本地震等災害ボランティア活動支援金が贈呈されます"
+     "title": "三重県移住セミナー運営事業者のサーバーへの不正アクセスについて"
     },
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0023500208.htm",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0359400025.htm",
      "summary": "",
-     "title": "多面的機能の維持・発揮活動「第17回みえのつどい」と「令和8年度獣害につよい三重づくりフォーラム」を同時開催します"
+     "title": "県Webサイトの公開停止について 第1報(10月22日15時現在)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0015100352.htm",
+     "date": "2026-10-22",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0039300115.htm",
      "summary": "",
-     "title": "三重県健康づくり応援サイトへの不正アクセスについて"
+     "title": "主要地方道伊勢大宮線(度会郡大紀町滝原地内)の法面崩落に伴う通行止め解除について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0014901154.htm",
+     "date": "2026-10-22",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0031900132.htm",
      "summary": "",
-     "title": "集団かぜ・インフルエンザ発生予防のための情報提供(第23報)"
+     "title": "「みえ半導体産業振興方針(仮称)」策定に係る第3回有識者会議を開催します"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0043900219.htm",
+     "date": "2026-10-22",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0359800128.htm",
      "summary": "",
-     "title": "公立学校職員の人事異動について"
+     "title": "首都圏で開催する三重の総合プロモーションイベントにおける出展者を募集します"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/SINGI/m0144800186.htm",
+     "date": "2026-10-22",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0030700685.htm",
      "summary": "",
-     "title": "令和8年度第1回北勢地域高等学校活性化推進協議会を開催します"
+     "title": "転職希望者等を対象とした企業との交流会「みえモノヅクリMeet UP」を開催します"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0035100117.htm",
+     "date": "2026-10-22",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/m0030700684.htm",
      "summary": "",
-     "title": "令和8年度紀勢自動車道建設促進三重県期成同盟会の要望活動を実施します"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0002700619.htm",
-     "summary": "",
-     "title": "三重県鉱工業指数(令和8年8月分)"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0025300105.htm",
-     "summary": "",
-     "title": "令和8年度 三重県ツキノワグマ被害対策人材育成講座 第3回 クマの捕獲技術(箱わな)を学ぶを開催します"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0043900216.htm",
-     "summary": "",
-     "title": "社会人経験者を対象とした教員採用選考試験(教員免許不要)を実施します"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0043900215.htm",
-     "summary": "",
-     "title": "三重県立学校実習助手採用選考試験(申込資格拡大)を実施します"
+     "title": "転職希望者等を対象としたオンラインセミナーを開催します"
     }
    ],
    "name": "三重県庁",
@@ -2375,13 +2387,13 @@
    "id": "03d9cc0c47",
    "items": [
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/sizenhogo/26-10-21.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/kohou/26-10-21.html",
      "summary": "",
      "title": "セキュリティの脆弱性対応に係るHP機能の一部制限"
     },
     {
-     "date": "2026-10-21",
+     "date": "2026-10-22",
      "link": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
      "summary": "",
      "title": "令和8年度クマ目撃等情報"
@@ -2402,6 +2414,36 @@
    "feed": "https://www.pref.miyagi.jp/chumoku/chumoku.xml",
    "id": "7edd3dfd32",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/syokuin/cvsbosyu.html",
+     "summary": "",
+     "title": "宮城県行政庁舎2階売店(コンビニエンスストア)設置・運営業務の企画提案募集について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/kentaku/20261029.html",
+     "summary": "東日本大震災から15年が経過し、応急危険度判定を経験した者が減少していることを踏まえ、実際の建築物を用いて模擬判定を行う「被災建築物応急危険度判定実地訓練」を実施します。",
+     "title": "被災建築物応急危険度判定実地訓練を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/syokushin/2026saizi_schedule.html",
+     "summary": "首都圏をはじめとする主要都市において、より多くの消費者に個性と魅力あふれる宮城県産品の魅力を伝え、消費者と県産品との接点を創出するため、農産加工品や水産加工品等の県産品を販売する「宮城いぎなりマルシェ!」を開催します。",
+     "title": "「宮城いぎなりマルシェ」を開催します!"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/jigyokanri/2026hureai.html",
+     "summary": "建設業界の魅力発信・将来を担う人材の確保・育成を図るイベントを開催",
+     "title": "「令和8年度みやぎ建設ふれあいまつり」を開催します!"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/et-tmsgsin-e/tomekomematuri2026-i.html",
+     "summary": "",
+     "title": "登米地域の魅力体験イベント「Tome米祭」開催!"
+    },
     {
      "date": "2026-10-21",
      "link": "https://www.pref.miyagi.jp/soshiki/suishin/gyogyoshikai/top.html",
@@ -2431,36 +2473,6 @@
      "link": "https://www.pref.miyagi.jp/soshiki/kankou/2026tagajo_yogoto.html",
      "summary": "",
      "title": "ナイトタイムイベント「TAGAJO YOGOTO」を開催します!"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.miyagi.jp/soshiki/kankou/pokemon/laprascafe.html",
-     "summary": "「Pokémon GO ワイルドエリア:仙台・東北」にあわせて、ラプラスカフェを開催します。 みやぎ応援ポケモン「ラプラス」をはじめ、いわて応援ポケモン「イシツブテ」や、ふくしま応援ポケモン「ラッキー」とコラボしたオリジナルメニューのほか、施設内の大画面で放映する迫力たっぷりの観光映像などをお楽しみください。",
-     "title": "「ラプラスカフェ」を期間限定オープンします!"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.miyagi.jp/soshiki/kankou/r8_syukuhakusokusin.html",
-     "summary": "",
-     "title": "「みやげ話は、みやぎ話。」宿泊促進キャンペーンを実施します!"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.miyagi.jp/soshiki/bousai/bousaikokutai.html",
-     "summary": "令和9年度「防災推進国民大会」(ぼうさいこくたい)が宮城県で開催されます。",
-     "title": "令和9年度「防災推進国民大会」の宮城県開催の決定について"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.miyagi.jp/soshiki/kikisom/kumamoto-tokusethu.html",
-     "summary": "",
-     "title": "令和8年熊本地震に係る特設ページ"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.miyagi.jp/soshiki/syokushin/2026saizi_schedule.html",
-     "summary": "首都圏をはじめとする主要都市において、より多くの消費者に個性と魅力あふれる宮城県産品の魅力を伝え、消費者と県産品との接点を創出するため、農産加工品や水産加工品等の県産品を販売する「宮城いぎなりマルシェ!」を開催します。",
-     "title": "「宮城いぎなりマルシェ」を開催します!"
     }
    ],
    "name": "宮城県庁",
@@ -2473,64 +2485,64 @@
    "id": "4af0c557fb",
    "items": [
     {
+     "date": "2026-10-23",
+     "link": "https://www.pref.miyagi.jp/soshiki/sinkou/tikatsu-sanson/sansonhousin.html",
+     "summary": "",
+     "title": "「宮城県山村振興基本方針(案)」に対する御意見の募集について"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.miyagi.jp/soshiki/kokusaisei/earthquake/20261020.html",
+     "summary": "",
+     "title": "2026年コロンビア地震救援金について"
+    },
+    {
      "date": "2026-10-22",
-     "link": "https://www.pref.miyagi.jp/soshiki/byouins/seisakuiryou_iken.html",
+     "link": "https://www.pref.miyagi.jp/soshiki/kohou/26-10-21.html",
      "summary": "",
-     "title": "【仙台医療圏の病院再編】県民の皆様からの御意見等について"
+     "title": "セキュリティの脆弱性対応に係るHP機能の一部制限"
     },
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.miyagi.jp/site/adopt/smilesapokousekisyar8.html",
+     "link": "https://www.pref.miyagi.jp/soshiki/syokuin/cvsbosyu.html",
      "summary": "",
-     "title": "令和8年度スマイルサポーター功績者表彰について"
+     "title": "宮城県行政庁舎2階売店(コンビニエンスストア)設置・運営業務の企画提案募集について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/site/chiji-kaiken/kk-261019.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/jyoho/20261021php.html",
      "summary": "",
-     "title": "宮城県知事記者会見(令和8年10月19日)"
+     "title": "宮城県が管理・利用するウェブサイト・システムの一部停止について(令和8年10月21日に発覚したPHPの脆弱性対応)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/dobokusom/nijiirotsushin.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/kentaku/20261029.html",
+     "summary": "東日本大震災から15年が経過し、応急危険度判定を経験した者が減少していることを踏まえ、実際の建築物を用いて模擬判定を行う「被災建築物応急危険度判定実地訓練」を実施します。",
+     "title": "被災建築物応急危険度判定実地訓練を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/syokokin/nextleader.html",
      "summary": "",
-     "title": "宮城県土木部虹色通信~R8上半期号~を発行しました!"
+     "title": "【令和8年度地域版ネットワークミーティングの募集を開始しました(9月4日)】商店街NEXTリーダ ー創出事業"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/iryou/newfund.html",
-     "summary": "地域における医療及び介護の総合的な確保の推進",
-     "title": "医療及び介護の総合確保"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/sinrin/hutakuchi/hutakuchitopsyuusei.html",
-     "summary": "林道二口線の概要,通行状況,冬季閉鎖",
-     "title": "林道「二口線」(宮城県側)の通行規制について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/suishin/gyogyoshikai/top.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/hohusom/20261130_gousetu.html",
      "summary": "",
-     "title": "宮城県漁業士会について"
+     "title": "心理・福祉・法務系公務員合同説明会の開催について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/ky-teacher/r09kyosai.html",
-     "summary": "",
-     "title": "宮城県公立学校教員採用候補者選考"
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/syokushin/2026saizi_schedule.html",
+     "summary": "首都圏をはじめとする主要都市において、より多くの消費者に個性と魅力あふれる宮城県産品の魅力を伝え、消費者と県産品との接点を創出するため、農産加工品や水産加工品等の県産品を販売する「宮城いぎなりマルシェ!」を開催します。",
+     "title": "「宮城いぎなりマルシェ」を開催します!"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/kosodate/hoikuai.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/jyoho/shinsei-r8.html",
      "summary": "",
-     "title": "保育施設における生成AI活用"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/souzou/4-ki-1keikaku-ikennkoukann2.html",
-     "summary": "",
-     "title": "【第2回】みやぎ県立高校将来ビジョン実施計画“意見交換会”"
+     "title": "マイナンバーカード出張申請会・申請サポートを行います"
     }
    ],
    "name": "宮城県庁",
@@ -2543,64 +2555,64 @@
    "id": "8cf6d47573",
    "items": [
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/seihocnt/20261021_tien.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/jyoho/20261021php-press.html",
      "summary": "",
-     "title": "事務処理遅延及び個人情報を含む書類の所在不明について(続報)"
+     "title": "宮城県が管理・利用するウェブサイト・システムの一部停止について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/kigyo/release1021ukraine-hyoukei.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/kentaku/20261029.html",
+     "summary": "東日本大震災から15年が経過し、応急危険度判定を経験した者が減少していることを踏まえ、実際の建築物を用いて模擬判定を行う「被災建築物応急危険度判定実地訓練」を実施します。",
+     "title": "被災建築物応急危険度判定実地訓練を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/syoufuku/press-release/chura-sounds-concert2026.html",
      "summary": "",
-     "title": "ウクライナ国政府等関係者による副知事への表敬訪問及び「みやぎ型管理運営方式」の視察について"
+     "title": "東北初開催!「美らサウンズコンサート 2026 in 宮城」"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/kouwan/261030cruise.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/iryou/syouni02.html",
      "summary": "",
-     "title": "外国クルーズ船「ノルウェージャン・ジェイド」の仙台塩釜港(仙台港区)初寄港について"
+     "title": "宮城県小児医療協議会について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/site/chiji-kaiken/kk-261019.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/syokokin/nextleader.html",
      "summary": "",
-     "title": "宮城県知事記者会見(令和8年10月19日)"
+     "title": "【令和8年度地域版ネットワークミーティングの募集を開始しました(9月4日)】商店街NEXTリーダ ー創出事業"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/iryou/newfund.html",
-     "summary": "地域における医療及び介護の総合的な確保の推進",
-     "title": "医療及び介護の総合確保"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/haitai/saigaihaikibutu/20241025-2.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/suishin/r6miyagikennmituryoubousitaisakukyougikai.html",
      "summary": "",
-     "title": "【県北地域で初開催!!】「災害廃棄物仮置場実地演習」を開催します!"
+     "title": "令和8年度宮城県密漁防止対策協議会の開催について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/haitai/saigaihaikibutu/20261029.html",
-     "summary": "宮城県内の市町村や関係団体を対象とした仮置場の設置・運営・搬出までの一連の流れを実地で体験する演習を実施します。",
-     "title": "【県北地域で初開催!!】「災害廃棄物仮置場実地演習」を開催します!"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/kensui/r8dentalmonthly.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/jigyokanri/kisyahappyou2024.html",
      "summary": "",
-     "title": "歯と口腔の健康づくり月間"
+     "title": "記者発表資料"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/kankou/20261021.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/jyoho/shinsei-r8.html",
      "summary": "",
-     "title": "インバウンド向け地方送客バスツアーの催行と取材申込について"
+     "title": "マイナンバーカード出張申請会・申請サポートを行います"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.miyagi.jp/soshiki/byouins/kaiinminaoshi.html",
-     "summary": "",
-     "title": "仙台赤十字病院・宮城県立がんセンター統合新病院開院時期の見直しについて"
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/jigyokanri/2026hureai.html",
+     "summary": "建設業界の魅力発信・将来を担う人材の確保・育成を図るイベントを開催",
+     "title": "「令和8年度みやぎ建設ふれあいまつり」を開催します!"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.miyagi.jp/soshiki/kankou/r8_miyagiolle/marumoricourse_openinngevent.html",
+     "summary": "宮城オルレ「丸森コース」オープニングイベントの開催及び一般参加者の募集について",
+     "title": "宮城オルレ「丸森コース」オープニングイベントの開催及び一般参加者の募集について"
     }
    ],
    "name": "宮城県庁",
@@ -2629,12 +2641,6 @@
      "link": "https://www.pref.miyagi.jp/site/newsclip/26-10-6.html",
      "summary": "",
      "title": "「雇用のトラブル まず相談」 県労働委員会街頭PR実施!(令和8年10月6日)"
-    },
-    {
-     "date": "2026-10-01",
-     "link": "https://www.pref.miyagi.jp/site/newsclip/26-9-27.html",
-     "summary": "",
-     "title": "令和8年度Peacemaker宮城オレンジバイカーズ活動出発式(令和8年9月27日)"
     }
    ],
    "name": "宮城県庁",
@@ -2678,64 +2684,64 @@
    "id": "c71ab54be9",
    "items": [
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.nagano.lg.jp/sansei/happyou/20261021_ninteisikipress.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.nagano.lg.jp/koho/happyou/20261022press.html",
      "summary": "",
-     "title": "長野県が誇る優れた技術・製品の認定制度 「NAGANOものづくり エクセレンス 2026」 認定式 を10月23日(金)に開催します"
+     "title": "県ホームページの自動翻訳サービスを一時停止しました(企画振興部広報・共創推進課)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.nagano.lg.jp/kotsu/happyou/20261020press.html",
-     "summary": "公共交通機関で来県する観光客の利便性向上を図るため、宿泊税を活用して、駅やバス停等の交通拠点における待合環境の整備を支援する「観光アクセス拠点待合環境整備事業」について、応募のあった1件を採択しました。さらに、多くの取組を支援するため、令和8年10月20日(火)から本事業の二次募集を開始します。",
-     "title": "宿泊税を活用し松本駅前広場へのデジタルサイネージ設置を支援します 更なる取組を支援するため二次募集を開始します!(企画振興部交通政策局交通政策課)"
+     "date": "2026-10-22",
+     "link": "https://www.pref.nagano.lg.jp/sansei/happyou/261022press_suiso.html",
+     "summary": "",
+     "title": "乗鞍・上高地地区で水素利用実証を行います(産業労働部産業政策課)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.nagano.lg.jp/shippei-kansen/happyou/2026-42w.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.nagano.lg.jp/rodokoyo/happyou/261022press.html",
      "summary": "",
-     "title": "感染症情報(2026年第42週)(健康福祉部疾病・感染症対策課)"
+     "title": "カスハラについて気軽に学べる動画を公開しました(産業労働部労働雇用課)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.nagano.lg.jp/kurashi-shohi/happyou/261021press.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.nagano.lg.jp/kokusai-kouryu/happyou/20261022press.html",
      "summary": "",
-     "title": "交通安全功労者表彰(内閣府)の受賞者が県民文化部長を表敬訪問します(県民文化部くらし安全・消費生活課)"
+     "title": "関副知事と依田県議会議長が海外長野県人会の周年記念式典に出席するため米国及びメキシコを訪問します(企画振興部)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.nagano.lg.jp/kenko-choju/happyou/20261013press.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.nagano.lg.jp/kenchiku/happyou/261022press.html",
      "summary": "",
-     "title": "大学等における歯周病簡易スクリーニング事業(生涯を通じた歯科健診パイロット事業)委託業務の受託者を募集します(健康福祉部健康増進課)"
+     "title": "建築物の適切な解体を徹底し、廃材のリサイクルを推進するため建設工事現場(解体等)の県内一斉パトロールを実施します(建設部建築住宅課)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.nagano.lg.jp/ken-manabi/261028shingikai.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.nagano.lg.jp/toshikei/happyou/261022keikakukaitei.html",
      "summary": "",
-     "title": "長野県私立学校審議会を開催します"
+     "title": "「長野県景観計画」の改定及び「木曽谷・御嶽景観育成重点地域景観計画」の策定について縦覧します"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.nagano.lg.jp/gikai/gikai/happyou/261021b.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.nagano.lg.jp/rodokoyo/happyou/r081022_studio_huseiaccess.html",
      "summary": "",
-     "title": "10月28日(水曜日)から30日(金曜日)まで県民文化健康福祉委員会の県外視察(北海道)が実施されます(議会事務局)"
+     "title": "Studio株式会社で発生した不正アクセスに伴う個人情報漏えいの可能性について(企画振興部DX推進課デジタルインフラ整備室)/(産業労働部産業立地・IT振興課)/(産業労働部労働雇用課)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.nagano.lg.jp/ken-manabi/261021press.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.nagano.lg.jp/kankoshin/happyou/261022press.html",
      "summary": "",
-     "title": "「信州学び円卓会議 ともつくフォーラム」の 出展者・出展団体を募集します(県民文化部県民の学び支援課)"
+     "title": "北米からの誘客拡大に向けて~北米3都市開催『長野県観光セミナー・商談会』を実施します~(観光スポーツ部観光誘客課)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.nagano.lg.jp/shizenhogo/happyou/20261021press.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.nagano.lg.jp/shippei-kansen/happyou/1022press.html",
      "summary": "",
-     "title": "自治体職員及び農業関係者等向けにクビアカツヤカミキリ防除講習会を開催します(環境部自然保護課)"
+     "title": "令和8年度長野県がん検診検討委員会を開催します(健康福祉部疾病・感染症対策課)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.nagano.lg.jp/gikai/giji/happyou/261021a.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.nagano.lg.jp/kankoki/happyou/261022press.html",
      "summary": "",
-     "title": "10月28日(水曜日)から30日(金曜日)まで総務企画警察委員会の県外視察が実施されます(議会事務局)"
+     "title": "令和8年度第2回長野県宿泊税活用部会を開催します(観光スポーツ部山岳高原観光課)"
     }
    ],
    "name": "長野県庁",
@@ -2764,10 +2770,16 @@
    "id": "4a498b3ea7",
    "items": [
     {
-     "date": "2026-10-20",
+     "date": "2026-10-22",
      "link": "https://www.pref.nara.lg.jp/n118/p043003.html",
      "summary": "",
      "title": "ツキノワグマ出没情報"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.nara.lg.jp/n002/p151320.html",
+     "summary": "",
+     "title": "【復旧済み】県公式ホームページの一部機能を一時的に制限しています(PHP脆弱性対応)"
     }
    ],
    "name": "奈良県庁",
@@ -2780,6 +2792,24 @@
    "id": "4573043bcc",
    "items": [
     {
+     "date": "2026-10-22",
+     "link": "https://www.pref.nara.lg.jp/n102/p065107.html",
+     "summary": "愛知県で開催される第64回技能五輪全国大会(令和8年12月4日から7日まで開催)及び第46回全国障害者技能競技大会〔アビリンピック〕(令和8年12月4日から6日まで開催)に参加される奈良県選手団の皆様が、出場に際して、川島副知事及び川上産業部長へ出場の報告に来られます。",
+     "title": "技能競技大会全国大会出場者の表敬訪問"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.nara.lg.jp/n051/p168022.html",
+     "summary": "奈良県では、離婚を考えている方、またはひとり親家庭等の方を対象に、離婚前後におけるお子さんへの接し方、離婚手続き、離婚時の取り決め、こどもの年齢に応じた具体的な生活設計等のセミナーを開催します。",
+     "title": "令和8年度ひとり親家庭等支援セミナーを開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.nara.lg.jp/n100/press/p066029.html",
+     "summary": "11月3日(火曜日)10時~16時に令和8年度「奈良漢方ひろばin県庁」を開催します。会場は奈良県庁主棟前回廊です。薬用作物を使った食品・雑貨などの販売会です。",
+     "title": "令和8年度 奈良漢方ひろばin県庁"
+    },
+    {
      "date": "2026-10-21",
      "link": "https://www.pref.nara.lg.jp/n173/p029091.html",
      "summary": "奈良県選挙管理委員会では、未来の有権者への啓発として、出前授業を実施します。",
@@ -2790,6 +2820,18 @@
      "link": "https://www.pref.nara.lg.jp/n040/p099125.html",
      "summary": "「ワールドマスターズゲームズ2021関西」組織委員会の松本正義会長が大会開催に向けての意見交換を行うため知事を訪問されます。また、組織委員会会長から知事へ大会旗を分与し、大会成功への思いを共有するほか、大会で交付する金、銀、銅の各メダルのセットの授与も行います。",
      "title": "「ワールドマスターズゲームズ2021関西」組織委員会会長による知事訪問について"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.pref.nara.lg.jp/n115/p042001.html",
+     "summary": "食と農の施策全般に関して有識者の方々に幅広く意見をお聴きし今後の政策に活かすため、令和8年度奈良県食と農の振興会議を開催します。",
+     "title": "令和8年度奈良県食と農の振興会議を開催"
+    },
+    {
+     "date": "2026-10-21",
+     "link": "https://www.pref.nara.lg.jp/n034/p101104.html",
+     "summary": "なら歴史芸術文化村の管理・運営について、第2期(令和9年4月~令和14年3月)指定管理者について公募を行い、外部有識者で構成する「なら歴史芸術文化村指定管理者選定審査会」からの答申を受け、以下のとおり指定管理予定者を選定しました。今後、令和8年12月定例県議会において指定管理予定者を指定管理者とする議案の議決を経ること",
+     "title": "なら歴史芸術文化村第2期指定管理予定者を選定しました"
     },
     {
      "date": "2026-10-21",
@@ -2838,36 +2880,6 @@
      "link": "https://www.pref.nara.lg.jp/n040/p099126.html",
      "summary": "奈良マラソンでは11月28日(土曜日)、ランニングクリニックを開催します。会場は、鞄工房山本 アスレチックフィールド橿原(県立橿原公苑)です。詳細・申込は奈良マラソン公式ホームページから。",
      "title": "奈良マラソン「ランニングクリニックin橿原」開催!"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.nara.lg.jp/n111/p060030.html",
-     "summary": "奈良公園公式Instagramにおいて、フォトコンテスト「わたしの奈良公園」を開催いたします。奈良公園公式Instagramをフォローして、奈良公園で撮影した写真に「#わたしの奈良公園」を付けて投稿することで、参加することができます。",
-     "title": "奈良公園公式Instagramにおけるフォトコンテスト「わたしの奈良公園」の開催について"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.nara.lg.jp/n118/p043036.html",
-     "summary": "下北山村上池原地内における山林の工事現場において、男性土木作業員がツキノワグマと遭遇し、顔面、腕、太ももを負傷する怪我を負った。負傷した作業員は、現在は病院で治療中。県警察の発表によると命には別状がないとのこと。",
-     "title": "下北山村において発生したツキノワグマによる人身被害の状況について"
-    },
-    {
-     "date": "2026-10-16",
-     "link": "https://www.pref.nara.lg.jp/n003/p149077.html",
-     "summary": "令和8年8月の生産指数は、季節調整済指数では96.2となり、前月比で2ヶ月連続で低下(▲2.4%)となりました。",
-     "title": "奈良県鉱工業指数(令和8年8月分)"
-    },
-    {
-     "date": "2026-10-16",
-     "link": "https://www.pref.nara.lg.jp/n094/p080038.html",
-     "summary": "奈良県は公益財団法人ニッセイ緑の財団と、矢田山遊びの森の一部を「ニッセイ矢田山の森」として森林整備を行う協定を締結!",
-     "title": "奈良県とニッセイ緑の財団が「ニッセイ矢田山の森」に関する協定を締結します!"
-    },
-    {
-     "date": "2026-10-16",
-     "link": "https://www.pref.nara.lg.jp/n034/p101096.html",
-     "summary": "",
-     "title": "「ムジーク・アーティストベース」をぜひご活用ください!"
     }
    ],
    "name": "奈良県庁",
@@ -2880,94 +2892,94 @@
    "id": "96f2ab737b",
    "items": [
     {
-     "date": "2026-10-22",
-     "link": "https://www.pref.niigata.lg.jp/sec/shougaifukushi/sinnseigakuenn-siteikanri2026.html",
-     "summary": "",
-     "title": "新潟県新星学園の指定管理者候補の選定について"
+     "date": "2026-10-23",
+     "link": "https://www.pref.niigata.lg.jp/sec/uonuma_nogyo/rinnjitekininnyousyokuinnsaiyoubosyuu2026zuiji.html",
+     "summary": "臨時的任用募集のお知らせ",
+     "title": "臨時的任用職員(農業)の募集(魚沼、1人、随時採用予定)"
     },
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.niigata.lg.jp/sec/gakko_nagaokakoryo/r8toyu-ngkr.html",
-     "summary": "",
-     "title": "暖房用白灯油購入単価契約(一般競争入札、入札日11月6日)長岡向陵高等学校"
+     "link": "https://www.pref.niigata.lg.jp/site/senkyo/r9kengi-poster.html",
+     "summary": "令和9年執行予定 新潟県議会議員一般選挙に係る政治活動用ポスターの取扱いについて",
+     "title": "令和9年執行予定 新潟県議会議員一般選挙に係る政治活動用ポスターの取扱いについて"
     },
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.niigata.lg.jp/sec/gakko_makisogo/2026touyunyuusatu.html",
-     "summary": "",
-     "title": "暖房用白灯油購入単価契約(一般競争入札、入札日11月10日)巻総合高等学校"
+     "link": "https://www.pref.niigata.lg.jp/sec/ict/php-hp-kohyou.html",
+     "summary": "PHPの脆弱性公表にともない、県HPの一部機用停止します。",
+     "title": "脆弱性対応に伴う県ホームページの一部機能の停止について"
     },
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.niigata.lg.jp/site/jouetsu-kikaku/cyclingguide20261028-2.html",
+     "link": "https://www.pref.niigata.lg.jp/site/green2rhythm/storytelling.html",
+     "summary": "新潟県内のグリーン・ツーリズム推進団体等を対象に、インバウンド受入に向けた実地研修を開催します。",
+     "title": "農山漁村へのインバウンド誘客に向けた実地研修を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/kouhou/chijikaiken20261021.html",
+     "summary": "令和8年9月25日に行われた新潟県知事定例記者会見の模様をご覧になれます。",
+     "title": "令和8年10月21日 新潟県知事 定例記者会見"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/hokanken/1207674051500.html",
+     "summary": "感染症情報(新潟県)のうち、患者発生情報及び患者報告数の時間的・地域的状況",
+     "title": "【保環研】感染症情報(患者発生情報:新潟県)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/hokanken/byougentai.html",
      "summary": "",
-     "title": "【上越】サイクリングガイド養成講習会モニターツアーを開催します"
+     "title": "【保環研】感染症情報:病原体検出状況"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/jouetsu-seibi/dobokusyuttyou-pr-itakuratyuu261009.html",
-     "summary": "上越地域振興局地域整備部では、建設産業の魅力を伝え将来の職業選択肢を広げてもらうため、新潟県建設業協会、建設コンサルタント協会北陸支部、新潟県測量設計業協会の建設3団体及び地元建設業と連携して、上越市立吉川中学校の1年生を対象に「土木出張PR」を行いました。今回の取組により、参加された生徒さん達がより建設産業を身近に感",
-     "title": "【上越】板倉中学校で土木出張PRを行いました"
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/hokanken/influenza.html",
+     "summary": "感染症発生動向調査に基づく患者サーベイランス情報、病原体サーベイランスによるインフルエンザウイルスの検出状況を掲載します。",
+     "title": "【保環研】インフルエンザ患者発生状況・ウイルス検出状況"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/tokei/r8zenkokugurakon.html",
-     "summary": "第74回統計グラフ全国コンクールの審査結果が発表されました",
-     "title": "第74回統計グラフ全国コンクール審査結果"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/sec/tokamachi_kikaku/20261105.html",
-     "summary": "令和8年11月5日に十日町市で開催する「やさしい日本語セミナー」の参加者募集を延長します。",
-     "title": "【南魚沼・魚沼・十日町】11月5日開催「やさしい日本語セミナー」参加者募集を延長します"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/sec/gakko_niigatanishi/nisi08.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/site/uonuma-seibi/352toukiheisa.html",
      "summary": "",
-     "title": "暖房用白灯油購入単価契約(一般競争入札、入札日11月12日)新潟西高等学校"
+     "title": "【魚沼】令和8年11月4日(水曜日)午前9時~ 尾瀬への道 国道352号の冬期通行止め"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/sanjou-seibi/2026081021.html",
-     "summary": "低濃度PCB廃棄物収集運搬・処分業務委託(三条地域整備部)",
-     "title": "低濃度PCB廃棄物収集運搬・処分業務委託(一般競争入札 入札日令和8年11月18日)三条地域整備部"
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/kanyaku/1232482573101.html",
+     "summary": "県内の感染症情報です。",
+     "title": "新潟県感染症情報(週報)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/koutsuseisaku/logimachiinkantohoudou.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/hokanken/20260918triplekekka.html",
      "summary": "",
-     "title": "令和8年度物流マッチングイベント「ロジマチ!NIIGATA in 関東」を開催します。"
+     "title": "入札結果「トリプル四重極型液体クロマトグラフ質量分析措置の賃貸借」(入札日9月18日)保健環境科学研究所"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/sado-seibi/0698785.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/site/itoigawa-seibi/20231107hakutouyu.html",
      "summary": "",
-     "title": "【佐渡】佐渡総合高校で「測量体験・現場見学会」を行います"
+     "title": "白灯油(ローリー渡し)の購入(制限付き一般競争入札、入札日令和8年11月11日)糸魚川地域整備部"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/nosoken/news.html",
-     "summary": "農総研だより 新潟県農業総合研究所",
-     "title": "農総研だより"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/sec/risui_joetsu/r08tenpikannsouikeitaku02.html",
-     "summary": "入札結果 天日乾燥池整備及び発生土運搬業務(入札日10月20日)上越利水",
-     "title": "入札結果「天日乾燥池整備及び発生土運搬業務委託」(入札日10月20日)上越利水事務所"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/niigata/gozzolife-hp.html",
-     "summary": "新潟地域振興局では、二つの大河を通じて歴史的・文化的なつながりのある新潟・会津エリア(当振興局管内の新潟市、五泉市、阿賀町に加え、広域的に佐渡市、阿賀野市、県央地域、会津地域を対象)の地域振興や交流人口拡大、ひいては地域の誇りと自信の蓄積を目的に、ウェブサイト「にいがた・あいづGOZZOライン“ごっつぉLIFE”」を開",
-     "title": "【新潟】水曜読んで週末行ける新潟・会津情報「にいがた・あいづ “ごっつぉLIFE”」発信中です!"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/sec/kokusaikanko/natgeo2027.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/site/murakami-seibi/20261028maekawaootasawagawakyougikai.html",
      "summary": "",
-     "title": "米有力メディアにおける「Best of the World 2027 (2027年に行くべき世界の旅行先25選)」に選出されました"
+     "title": "【村上】第2回 前川・太田沢川流域水害対策協議会を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/site/jouetsu/jouetsuhigashi-shomu-saiyou-ippann-josetu.html",
+     "summary": "会計年度任用職員(一般)の募集(上越東維持管理事務所、1人、12月1日採用予定)",
+     "title": "会計年度任用職員(一般・除雪事務補助)の募集(上越東維持管理事務所、1人、12月1日採用予定)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/site/tanadanet/tanadafestival2026.html",
+     "summary": "上越市の棚田とゆかりのある方々を迎えて活動紹介、棚田県にいがたフォトコンテスト表彰式の他、応募作品を館内に展示、ぬり絵や物販、郷土料理教室等楽しめるイベントを開催",
+     "title": "「上越つなぐ棚田フェス~棚田のこれからを話そう~」を開催します!"
     }
    ],
    "name": "新潟県庁",
@@ -2979,6 +2991,72 @@
    "feed": "https://www.pref.niigata.lg.jp/rss/10/list2.xml",
    "id": "3e98598ed8",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/ict/php-hp-kohyou.html",
+     "summary": "PHPの脆弱性公表にともない、県HPの一部機用停止します。",
+     "title": "脆弱性対応に伴う県ホームページの一部機能の停止について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/kinbi/2026kyogikai2.html",
+     "summary": "",
+     "title": "【県立近代美術館】令和 8 年度 第 2 回新潟県立近代美術館協議会を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/site/green2rhythm/storytelling.html",
+     "summary": "新潟県内のグリーン・ツーリズム推進団体等を対象に、インバウンド受入に向けた実地研修を開催します。",
+     "title": "農山漁村へのインバウンド誘客に向けた実地研修を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/kouhou/chijikaiken.html",
+     "summary": "新潟県知事の記者会見の模様を動画とテキストでご覧になれます。",
+     "title": "知事 記者会見 (日程・一覧)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/kouhou/chijikaiken20261021.html",
+     "summary": "令和8年9月25日に行われた新潟県知事定例記者会見の模様をご覧になれます。",
+     "title": "令和8年10月21日 新潟県知事 定例記者会見"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0842.html",
+     "summary": "感染症情報",
+     "title": "新潟県感染症情報(週報速報版)をお知らせします 令和8年第42週"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/site/murakami-seibi/20261028maekawaootasawagawakyougikai.html",
+     "summary": "",
+     "title": "【村上】第2回 前川・太田沢川流域水害対策協議会を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/site/suisan/kouryuutaikai69.html",
+     "summary": "第69回新潟県青壮年・女性漁業者交流大会を開催します",
+     "title": "第69回新潟県青壮年・女性漁業者交流大会を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/site/sanjou-kikaku/20261022-hikozen.html",
+     "summary": "八十里越開通を見据え、三条市下田地域の伝統食「ひこぜん」をPRします",
+     "title": "【三条】八十里越開通を見据え、三条市下田地域の伝統食「ひこぜん」をPRします"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/kenminseikatsu/anzenansin-suisinkaigi.html",
+     "summary": "新潟県犯罪のない安全で安心なまちづくり推進会議",
+     "title": "新潟県犯罪のない安全で安心なまちづくり推進会議を開催します"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/niigata_tsugawashinko/r081110mirushiru.html",
+     "summary": "",
+     "title": "【津川】阿賀町立津川小学校で「みる・しる・たのしむ 建設業たいけん!」を開催します"
+    },
     {
      "date": "2026-10-22",
      "link": "https://www.pref.niigata.lg.jp/site/jouetsu-kikaku/cyclingguide20261028-2.html",
@@ -3002,72 +3080,6 @@
      "link": "https://www.pref.niigata.lg.jp/sec/tokamachi_kikaku/20261105.html",
      "summary": "令和8年11月5日に十日町市で開催する「やさしい日本語セミナー」の参加者募集を延長します。",
      "title": "【南魚沼・魚沼・十日町】11月5日開催「やさしい日本語セミナー」参加者募集を延長します"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/sec/chiikiseisaku/furusatochoice-houdou.html",
-     "summary": "",
-     "title": "ふるさと納税ポータルサイト「ふるさとチョイス」における個人情報の外部流出について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/gikai/tokubetuiinnkainonittei-0812.html",
-     "summary": "",
-     "title": "「特別委員会」の日程等について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/gikai/r08-kessannsinnnittei.html",
-     "summary": "",
-     "title": "企業会計決算審査特別委員会、普通会計決算審査特別委員会の日程等について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/sec/sangyoseisaku/theniigata-1million-visitor-mark.html",
-     "summary": "",
-     "title": "THE NIIGATAの来館者数が100万人を達成しました!"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/koutsuseisaku/logimachiinkantohoudou.html",
-     "summary": "",
-     "title": "令和8年度物流マッチングイベント「ロジマチ!NIIGATA in 関東」を開催します。"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/sado-seibi/0698785.html",
-     "summary": "",
-     "title": "【佐渡】佐渡総合高校で「測量体験・現場見学会」を行います"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/sec/kokusaikanko/natgeo2027.html",
-     "summary": "",
-     "title": "米有力メディアにおける「Best of the World 2027 (2027年に行くべき世界の旅行先25選)」に選出されました"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/rachi/koshi-ss-r8.html",
-     "summary": "新潟市立高志中等教育学校で拉致問題啓発セミナーを開催することを告知するものです。",
-     "title": "新潟市立高志中等教育学校で拉致問題啓発セミナーを開催します"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/sec/byoinkeiei/20261021tsugawaarikata3.html",
-     "summary": "第3回県立津川病院あり方検討会を開催します",
-     "title": "第3回県立津川病院あり方検討会を開催します"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/site/bosai/2010221030.html",
-     "summary": "第40回新潟県保安大会を開催し、県知事表彰を行います",
-     "title": "第40回新潟県保安大会を開催し、県知事表彰を行います"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/sec/kenko/illumination-bigswanstadium-worldstrokeday2026.html",
-     "summary": "",
-     "title": "世界脳卒中デー2026 ライトアップ in 新潟"
     }
    ],
    "name": "新潟県庁",
@@ -3080,6 +3092,24 @@
    "id": "54b48fa859",
    "items": [
     {
+     "date": "2026-10-23",
+     "link": "https://www.pref.niigata.lg.jp/sec/uonuma_nogyo/rinnjitekininnyousyokuinnsaiyoubosyuu2026zuiji.html",
+     "summary": "臨時的任用募集のお知らせ",
+     "title": "臨時的任用職員(農業)の募集(魚沼、1人、随時採用予定)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/site/jouetsu/jouetsuhigashi-shomu-saiyou-ippann-josetu.html",
+     "summary": "会計年度任用職員(一般)の募集(上越東維持管理事務所、1人、12月1日採用予定)",
+     "title": "会計年度任用職員(一般・除雪事務補助)の募集(上越東維持管理事務所、1人、12月1日採用予定)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.niigata.lg.jp/sec/jinji/1198083654030.html",
+     "summary": "現在募集している臨時的任用職員、会計年度任用職員及び特別職非常勤職員に関するお知らせがご覧になれます。",
+     "title": "臨時・会計年度任用職員等募集のお知らせ(全県の最新一覧)"
+    },
+    {
      "date": "2026-10-21",
      "link": "https://www.pref.niigata.lg.jp/site/niigata-seibi-niitsu/r8josetuzimu.html",
      "summary": "会計年度任用職員(一般)(除雪関連事務)募集のお知らせ",
@@ -3090,12 +3120,6 @@
      "link": "https://www.pref.niigata.lg.jp/site/niigata-kouwan/higasikou-rinji.html",
      "summary": "",
      "title": "臨時的任用職員(行政事務)の募集(新潟港湾事務所東港分所、1人、12月1日採用予定)"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.niigata.lg.jp/sec/jinji/1198083654030.html",
-     "summary": "現在募集している臨時的任用職員、会計年度任用職員及び特別職非常勤職員に関するお知らせがご覧になれます。",
-     "title": "臨時・会計年度任用職員等募集のお知らせ(全県の最新一覧)"
     },
     {
      "date": "2026-10-20",
@@ -3156,18 +3180,6 @@
      "link": "https://www.pref.niigata.lg.jp/site/niigata/r8kaikeinendosenmon081125.html",
      "summary": "",
      "title": "会計年度任用職員(専門・税務)の募集(新潟市東区、1人、11月25日採用予定)"
-    },
-    {
-     "date": "2026-10-16",
-     "link": "https://www.pref.niigata.lg.jp/site/saiyou3/r8-guidance-1003.html",
-     "summary": "「新潟県自治体合同ガイダンス」を開催します。",
-     "title": "【アーカイブ配信】にいがた暮らしと公務員しごと研究「新潟県自治体合同ガイダンス2026」を開催します!"
-    },
-    {
-     "date": "2026-10-15",
-     "link": "https://www.pref.niigata.lg.jp/site/byoin/iryougijutsusaiyo-keikensha.html",
-     "summary": "病院局では、県立病院で勤務する診療放射線技師の採用選考考査を実施します。",
-     "title": "新潟県職員採用選考考査(医療技術職 経験者採用)を実施します"
     }
    ],
    "name": "新潟県庁",
@@ -3181,15 +3193,45 @@
    "items": [
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.okayama.jp/site/16/913706.html",
+     "link": "https://www.pref.okayama.jp/page/detail-18786.html",
      "summary": "",
-     "title": "県立高等学校の入学者選抜"
+     "title": "岡山県港湾施設総合管理システム"
     },
     {
-     "date": "2026-10-21",
+     "date": "2026-10-22",
+     "link": "https://www.pref.okayama.jp/page/817555.html",
+     "summary": "",
+     "title": "AIチャットボットを導入しています!"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.okayama.jp/page/1055521.html",
+     "summary": "",
+     "title": "(R8年度シーズン)岡山県内の学校等におけるインフルエンザとみられる臨時休業(報道発表資料)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.okayama.jp/page/1062464.html",
+     "summary": "",
+     "title": "岡山県道路規制情報システムの一時停止について"
+    },
+    {
+     "date": "2026-10-22",
      "link": "https://www.pref.okayama.jp/page/900285.html",
      "summary": "",
      "title": "岡山県継続検査用確認システムについて(自動車整備事業者向けのご案内)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.okayama.jp/page/1062414.html",
+     "summary": "",
+     "title": "令和9年度地域農業構造転換支援事業に係る要望調査について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.okayama.jp/site/16/913706.html",
+     "summary": "",
+     "title": "県立高等学校の入学者選抜"
     },
     {
      "date": "2026-10-21",
@@ -3202,12 +3244,6 @@
      "link": "https://www.pref.okayama.jp/site/presssystem/1062148.html",
      "summary": "",
      "title": "中小企業向け 新規事業開発研修 ~「次の事業」、どうつくる?アイデアをカタチに多角的な視点からつくり出す未来のビジネス~を開催します"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.okayama.jp/site/255/1061393.html",
-     "summary": "",
-     "title": "岡山県人権教育推進委員会第59回を開催します"
     },
     {
      "date": "2026-10-21",
@@ -3241,33 +3277,9 @@
     },
     {
      "date": "2026-10-20",
-     "link": "https://www.pref.okayama.jp/page/1055521.html",
+     "link": "https://www.pref.okayama.jp/page/941238.html",
      "summary": "",
-     "title": "(R8年度シーズン)岡山県内の学校等におけるインフルエンザとみられる臨時休業(報道発表資料)"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.okayama.jp/page/1061841.html",
-     "summary": "",
-     "title": "中小企業向け不正アクセス・情報漏えいに関する相談窓口について"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.okayama.jp/page/1062000.html",
-     "summary": "",
-     "title": "岡山県一般旅客自動車運送事業者地域公共交通安定化支援金の申請を開始しました"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.okayama.jp/site/presssystem/1061671.html",
-     "summary": "",
-     "title": "菊薫る秋「第69回岡山県後楽園菊花大会」を開催します"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.okayama.jp/site/presssystem/1002763.html",
-     "summary": "",
-     "title": "「こっこちゃんフェア~2026おかやまエッグ&チキン~」 に行ってみよう!"
+     "title": "子育て世帯を皆で応援!こどもまんなかマナーアップ県民運動について"
     }
    ],
    "name": "岡山県庁",
@@ -3288,6 +3300,12 @@
    "feed": "https://www.pref.osaka.lg.jp/shinchaku/shinchaku.xml",
    "id": "18aa8131aa",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.osaka.lg.jp/hodo/fumin/o070070/prs_51233.html",
+     "summary": "",
+     "title": "ミャクミャクモニュメント「いらっしゃい」及び「ワクワク」の第三期設置場所が決定しました"
+    },
     {
      "date": "2026-10-21",
      "link": "https://www.pref.osaka.lg.jp/hodo/fumin/o120050/prs_50571.html",
@@ -3371,12 +3389,6 @@
      "link": "https://www.pref.osaka.lg.jp/hodo/fumin/o130080/prs_50877.html",
      "summary": "",
      "title": "交通死亡事故多発警報の発令について"
-    },
-    {
-     "date": "2026-10-15",
-     "link": "https://www.pref.osaka.lg.jp/hodo/fumin/o070040/prs_50939.html",
-     "summary": "",
-     "title": "「ドーンdeキラリ フェスティバル 2026」アフターイベントの詳細が決定しました!"
     }
    ],
    "name": "大阪府庁",
@@ -3388,6 +3400,60 @@
    "feed": "https://www.pref.saitama.lg.jp/news/news.xml",
    "id": "96f29671f5",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.saitama.lg.jp/a0302/news/page/news2026102201.html",
+     "summary": "",
+     "title": "公益財団法人いきいき埼玉の実施講座登録者の個人情報の 漏えいの可能性について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.saitama.lg.jp/a0508/nagatorosyagekijo.html",
+     "summary": "",
+     "title": "長瀞射撃場における銃の暴発について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.saitama.lg.jp/b0616/news/page/news2026102202.html",
+     "summary": "",
+     "title": "保育士応援ポータルサイト「埼玉保育ナビ」登録者の個人情報の漏洩の可能性について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.saitama.lg.jp/a1001/news/page/news2026102102.html",
+     "summary": "",
+     "title": "第35回首都圏中央連絡自動車道建設促進会議総会の開催について-日本経済を牽引する、圏央道の早期完成を!-"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.saitama.lg.jp/a0305/news/page/news2026102201.html",
+     "summary": "",
+     "title": "埼玉会館の愛称を「三和埼玉会館」に決定!-ネーミングライツ契約締結式を開催しました-"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.saitama.lg.jp/a0605/news/page/news2026102201.html",
+     "summary": "",
+     "title": "令和8年度埼玉県障害者就労施設プレミアムパートナー企業認定証交付式を行います-障害者就労施設との取引を積極的に行う26企業・団体を認定-"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.saitama.lg.jp/a0503/news/page/news2026102201.html",
+     "summary": "",
+     "title": "川島町で埼玉版スーパー・シティプロジェクトをきっかけとした、官民連携による雨水対策実証実験を行いました!"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.saitama.lg.jp/a0507/news/page/2026102201.html",
+     "summary": "",
+     "title": "浦和レッズ・埼玉スタジアム2○○2と連携してサーキュラーエコノミーワークショップを開催します! ―ペットボトルキャップを再利用したレッズキーホルダー作り―"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.saitama.lg.jp/a0306/news/news2026102201.html",
+     "summary": "",
+     "title": "ブランデンブルグ州経済・エネルギー・気候保護・欧州担当大臣の表敬訪問について-姉妹州との交流をより一層深めるために-"
+    },
     {
      "date": "2026-10-21",
      "link": "https://www.pref.saitama.lg.jp/a1001/news/page/news2026102101.html",
@@ -3423,60 +3489,6 @@
      "link": "https://www.pref.saitama.lg.jp/a0103/news/page/news20261020.html",
      "summary": "",
      "title": "令和9年度予算編成方針について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.saitama.lg.jp/a0508/news/page/news2026101602.html",
-     "summary": "",
-     "title": "令和8年度堅果類豊凶調査の結果について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.saitama.lg.jp/a0608/news/page/news20261020.html",
-     "summary": "埼玉県では、毎年11月を児童虐待防止推進月間としています。 期間中は、児童虐待に対する社会的関心を高めるため、オレンジライトアップ等の各種取組を行います。",
-     "title": "11月は児童虐待防止推進月間です~オレンジライトアップ及び普及啓発動画の配信等~"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.saitama.lg.jp/a0309/news/page/news2026102001.html",
-     "summary": "",
-     "title": "11月12日から25日は「女性に対する暴力をなくす運動」期間~「パープルライトアップ」などを実施します~"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.saitama.lg.jp/a1006/news/page/news20261023.html",
-     "summary": "",
-     "title": "一般国道140号の倒木撤去作業に伴い寄居町末野から長瀞町中野上の通行止めを行います"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.saitama.lg.jp/a0707/news/page/news2026102001.html",
-     "summary": "",
-     "title": "第55回埼玉県薬事功労者等表彰式を開催します"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.saitama.lg.jp/a0502/news/page/news2026102001.html",
-     "summary": "広げよう!温暖化対策の環(わ)みんなのショートムービーコンテストのWEB投票を開始します。ぜひ応募作品をご視聴いただき、あなたの「推し」動画への投票をお願いします。",
-     "title": "広げよう!温暖化対策の環(わ)みんなのショートムービーコンテスト WEB投票開始!~「推し」動画を応援しよう~"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.saitama.lg.jp/a0312/news/page/news2026102002.html",
-     "summary": "",
-     "title": "eスポーツ×リアルスポーツ(サッカー)体験会 両スポーツの魅力を実感! スペシャルイベントの参加者を募集します"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.saitama.lg.jp/a0101/news/page/news2026101901.html",
-     "summary": "",
-     "title": "令和8年度定例第二回(秋)関東地方知事会議の開催について"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.saitama.lg.jp/a0310/news/page/news2026101901.html",
-     "summary": "",
-     "title": "屋根修繕工事等を行う事業者等に対する行政処分について"
     }
    ],
    "name": "埼玉県庁",
@@ -3497,6 +3509,72 @@
    "feed": "https://www.pref.shizuoka.jp/news.rss",
    "id": "bc8c604790",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.shizuoka.jp/kurashikankyo/zei/kenzeigaiyou/1002344/1073032.html",
+     "summary": "",
+     "title": "静岡県自動車税納税確認システム(FUJNKS)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.shizuoka.jp/machizukuri/dobokujimusho/numazudoboku/1002190/index.html",
+     "summary": "",
+     "title": "沼川新放水路(仮称)計画"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.shizuoka.jp/kensei/keikaku/degital/1079291/index.html",
+     "summary": "",
+     "title": "静岡県サイバーセキュリティ戦略本部"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.shizuoka.jp/sangyoshigoto/kigyoshien/kigyoricchi/1000107/1085214.html",
+     "summary": "",
+     "title": "令和8年度 静岡県企業立地セミナー(令和8年10月30日開催)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.shizuoka.jp/bosaikinkyu/sonae/earthquake/bosaicenter/1043918/1047449/1086261.html",
+     "summary": "",
+     "title": "第188回静岡県防災学講座のお知らせ"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.shizuoka.jp/bosaikinkyu/sonae/earthquake/bosaicenter/1043918/1054137.html",
+     "summary": "",
+     "title": "DIGセミナーを開催します!(令和8年度後期)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.shizuoka.jp/bosaikinkyu/sonae/earthquake/bosaicenter/1043918/1054136.html",
+     "summary": "",
+     "title": "イメージTEN演習を開催します!(令和8年度後期)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.shizuoka.jp/bosaikinkyu/sonae/earthquake/bosaicenter/1043918/1054135.html",
+     "summary": "",
+     "title": "HUG体験会を開催します!(令和8年度後期)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.shizuoka.jp/machizukuri/doboclub/1047513/1057207/index.html",
+     "summary": "「土木の日」「公共建築の日」イベント一覧を更新しました",
+     "title": "「土木の日」「公共建築の日」でのイベント開催"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.shizuoka.jp/sangyoshigoto/kigyoshien/shuseki/1054121.html",
+     "summary": "",
+     "title": "静岡県セルロース循環経済国際展示会in富士"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.shizuoka.jp/kodomokyoiku/shogaigakushu/kateikyoiku/1040796/index.html",
+     "summary": "",
+     "title": "つながるネット"
+    },
     {
      "date": "2026-10-21",
      "link": "https://www.pref.shizuoka.jp/kodomokyoiku/school/kyoiku/1003764/1003891/1082226.html",
@@ -3520,72 +3598,6 @@
      "link": "https://www.pref.shizuoka.jp/bosaikinkyu/sonae/earthquake/bosaicenter/1043918/1086223.html",
      "summary": "",
      "title": "「令和8年度静岡県災害ボランティアシンポジウム」を開催します!"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.shizuoka.jp/machizukuri/kokyokoji/kensetsu/1086204.html",
-     "summary": "R8静岡どぼくらぶ 秋の若手交流会を開催します",
-     "title": "R8 第2回静岡どぼくらぶ若手交流会(秋の2DAYS開催)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.shizuoka.jp/kenkofukushi/koreifukushi/kaigohoken/1086213.html",
-     "summary": "",
-     "title": "令和8年度介護技術コンテストの観覧者を募集します!"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.shizuoka.jp/kenkofukushi/shippeikansensho/ganshippei/1066879/1066882.html",
-     "summary": "",
-     "title": "慢性腎臓病(CKD)対策(県民向け)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.shizuoka.jp/kenkofukushi/shippeikansensho/ganshippei/1065958/1066310.html",
-     "summary": "",
-     "title": "脳卒中対策(世界脳卒中デー、脳卒中月間)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.shizuoka.jp/kensei/kengikai/hirakaretagikai/1003754/1030745.html",
-     "summary": "",
-     "title": "議長写真レポート"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.shizuoka.jp/kurashikankyo/shizenkankyo/1055317/1086222.html",
-     "summary": "",
-     "title": "「ふじのくに生物多様性地域戦略推進パートナーシップ協定」に基づく生物多様性に関する環境保全活動(7)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.shizuoka.jp/machizukuri/kokyokoji/kensetsu/1003487/1082522.html",
-     "summary": "",
-     "title": "建設業のひろば 令和8年度新着情報"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.shizuoka.jp/kodomokyoiku/school/kyoiku/1003764/1003767/1003793/1003806/1003853/1086219.html",
-     "summary": "",
-     "title": "令和9年度 静岡県公立学校任期付職員採用選考試験結果"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.shizuoka.jp/kodomokyoiku/school/kyoiku/1003764/1003767/index.html",
-     "summary": "",
-     "title": "教職員の採用"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.shizuoka.jp/kensei/information/kenminnohi/1005208.html",
-     "summary": "",
-     "title": "静岡県誕生150周年ポータルサイト"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.shizuoka.jp/bosaikinkyu/index.html",
-     "summary": "",
-     "title": "防災・緊急情報"
     }
    ],
    "name": "静岡県庁",
@@ -3597,6 +3609,72 @@
    "feed": "https://www.pref.tochigi.lg.jp/c05/kensei/kouhou/hp/shinchaku.xml",
    "id": "0330a26da3",
    "items": [
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.tochigi.lg.jp/f03/kouhou/startupcaravan2026-5.html",
+     "summary": "",
+     "title": "とちぎスタートアップキャラバン in 大田原"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/h02/hojokin/2026.html",
+     "summary": "",
+     "title": "インフラDXはじめの一歩補助金"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/e07/welfare/iryou/yakuji/hanbaigyou/package.html",
+     "summary": "医療機関等が賃金・物価上昇の影響を受けている状況を踏まえ、医療機関等の従事者の処遇の改善につなげるため、医療機関等に対して賃上げに必要な経費や、診療等に必要な経費に係る給付金を支給するための補助を実施する事業です。",
+     "title": "医療機関等における賃上げ・物価上昇に対する支援事業について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/f01/josei_monozukuri_empowerment_all.html",
+     "summary": "",
+     "title": "「女性×ものづくり企業」エンパワーメントモデル事業について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/e60/tidctop.html",
+     "summary": "",
+     "title": "【10月12日~10月18日】感染症の発生状況等"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/f05/2026tochigitabinettoakusesuseigenn.html",
+     "summary": "",
+     "title": "「とちぎ旅ネット」及び「Visit Tochigi」アクセス制限について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/h15/taishin/jigyousyatouroku.html",
+     "summary": "",
+     "title": "栃木県木造住宅耐震改修事業者登録制度"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/e12/welfare/adultguardianship.html",
+     "summary": "",
+     "title": "令和8年度栃木県権利擁護支援者養成研修の受講者を募集しています"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/k02/pref/saiyou/kenshokuin/shiken/r81022kousotsu.html",
+     "summary": "",
+     "title": "令和8(2026)年度栃木県職員(高校卒業程度)採用試験等 最終合格者発表(10月22日発表分)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/b07/cartax_nouzeikakunin.html",
+     "summary": "",
+     "title": "とちまるJNKS(栃木県自動車税納税確認システム)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/e06/welfare/kodomo/gaykutaiboushi/r4gyakutaiboushigekkan.html",
+     "summary": "児童虐待防止に関する一層の意識の高揚と防止対策を図るため、集中的に広報・啓発活動等を行います",
+     "title": "11月は「オレンジリボン・児童虐待防止推進キャンペーン」期間です"
+    },
     {
      "date": "2026-10-22",
      "link": "https://www.pref.tochigi.lg.jp/g01/internship.html",
@@ -3611,81 +3689,15 @@
     },
     {
      "date": "2026-10-22",
-     "link": "https://www.pref.tochigi.lg.jp/d04/08wataraseyuusuichi3.html",
+     "link": "https://www.pref.tochigi.lg.jp/b03/20261022.html",
      "summary": "",
-     "title": "渡良瀬遊水地外来植物除去活動(ボランティア募集)"
+     "title": "PHPの脆弱性対応に伴うシステム停止のお知らせ"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/d05/eco/haikibutsu/jyunkan/seisoukatudoutourokuseido.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/h15/kenchikugyousei/kinnkyuutenken.html",
      "summary": "",
-     "title": "栃木の森里川湖(もりさとかわうみ)清掃活動等ポータルサイト"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/d02/carbonneutral/r8zerocarbon_boshu.html",
-     "summary": "",
-     "title": "令和8(2026)年度「とちぎゼロカーボン企業表彰」の募集を開始します"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/d02/carbonneutral/zerocarbon__commendation.html",
-     "summary": "",
-     "title": "とちぎゼロカーボン企業表彰について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/j53/03houshanou/mizu.html",
-     "summary": "",
-     "title": "北那須水道用水に係る放射性物質の測定を行いました"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/g55/komemadoguti.html",
-     "summary": "",
-     "title": "「米生産に関する相談窓口」の設置について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/g55/keieihukyubu/r8/nouchiku/r8kandentyokuha_wcs01.html",
-     "summary": "",
-     "title": "【塩谷南那須地域】【参加者募集】令和8年度第1回矢板市若手農業者の集いについて"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/d02/carbonneutral/r8zerocarbon_kettei.html",
-     "summary": "",
-     "title": "令和8(2026)年度「とちぎゼロカーボン企業表彰」受賞者の決定について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/c03/life/shouhi/seikatsu/kouhou/1016shinsen554.html",
-     "summary": "",
-     "title": "事故を防ぐ!リコール情報を確認しましょう"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/c10/kouhou/kouhou/202610artmu-togo.html",
-     "summary": "",
-     "title": "【初公開】県立美術館で東郷青児氏の絵画をお披露目します"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/c04/toukei/documents/r8gurakon_kekka.html",
-     "summary": "",
-     "title": "第73回統計グラフ全国コンクールの結果について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.tochigi.lg.jp/h57/system/desaki/desaki/tusukoukisei/zyuutai7.html",
-     "summary": "",
-     "title": "道路工事に伴う県道の通行止について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.tochigi.lg.jp/h54/r8kinnirisekkeisyo.html",
-     "summary": "",
-     "title": "金額入り設計書の公開 令和8年度"
+     "title": "建築行政手続きの一部についてオンライン受付を開始しました"
     }
    ],
    "name": "栃木県庁",
@@ -3698,6 +3710,84 @@
    "id": "c550743874",
    "items": [
     {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/e02/houdou/houdou/r8syuusannki.html",
+     "summary": "",
+     "title": "令和8(2026)年度栃木県周産期医療協議会の開催について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/c10/20261022bijyutsutenkekka.html",
+     "summary": "",
+     "title": "第80回記念栃木県芸術祭美術展(日本画・書道・写真)の審査結果について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/c07/jinken/houdou/shingikai2026-1.html",
+     "summary": "",
+     "title": "栃木県人権施策推進審議会の開催について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/b05/houdou/r8_koushiritukyougikai.html",
+     "summary": "",
+     "title": "令和8(2026)年度(第46回)栃木県公私立高等学校協議会の開催について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/a01/houdou/miraihyouka_20261029-2.html",
+     "summary": "",
+     "title": "令和8(2026)年度第2回新とちぎ未来創造プラン評価会議の開催について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/e12/houdou/houdou/20261030tochimarusg.html",
+     "summary": "",
+     "title": "令和8(2026)年度第2回とちまる地域共生社会推進研修会の開催について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/g05/2026tochiriyou.html",
+     "summary": "露地野菜産地の生産拡大と経営の安定化を図るため、専門的な知見が得られる「土地利用型園芸推進セミナー」を開催します。",
+     "title": "【参加者募集】土地利用型園芸推進セミナー2026~土地利用型園芸の産地づくりを目指して~"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/h01/houdou/houdou/mitooshi1023.html",
+     "summary": "",
+     "title": "公共工事の入札及び契約の適正化の促進に関する法律に基づく発注見通しの公表について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/f05/houdou/shinko/houdou/r8syodan.html",
+     "summary": "",
+     "title": "令和8(2026)年度栃木県観光情報商談会の開催について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/c05/houdou/houdou/snscampaign202610.html",
+     "summary": "",
+     "title": "「栃木県公式SNS登録キャンペーン」の実施について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/a03/houdou/1031ceremony.html",
+     "summary": "成婚400組を記念したセレモニーを実施します。",
+     "title": "とちぎ結婚支援センター会員成婚400組記念セレモニーの実施について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/d04/houdou/08wataraseyuusuichi.html",
+     "summary": "",
+     "title": "【参加者募集】渡良瀬遊水地外来植物除去活動"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.tochigi.lg.jp/f05/houdou/shinko/houdou/2026kyoiku.html",
+     "summary": "",
+     "title": "台湾訪日教育旅行関係者招請の実施について"
+    },
+    {
      "date": "2026-10-21",
      "link": "https://www.pref.tochigi.lg.jp/p01/houdou/gu20261023.html",
      "summary": "",
@@ -3708,84 +3798,6 @@
      "link": "https://www.pref.tochigi.lg.jp/d04/houdou/20261021shizenbukai.html",
      "summary": "",
      "title": "【開催結果】令和8年度栃木県環境審議会自然環境部会"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/d02/houdou/2025tekiou/r8_zerocarbonkigyouhyousyou_zyusyousya.html",
-     "summary": "",
-     "title": "【受賞者決定】令和8(2026)年度「とちぎゼロカーボン企業表彰」"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/e12/houdou/20261013syakaifukusisinngikai.html",
-     "summary": "",
-     "title": "令和8(2026)年度栃木県社会福祉審議会の会議結果について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/e05/houdou/081sesakusuisinziritusien.html",
-     "summary": "",
-     "title": "令和8(2026)年度第1回栃木県障害者施策推進審議会及び第2回栃木県自立支援協議会の開催について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.tochigi.lg.jp/e04/kansen/documents/jyunkanki.html",
-     "summary": "",
-     "title": "第33回栃木県脳卒中・心血管疾患対策協議会の結果について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.tochigi.lg.jp/m04/r8sangyo3.html",
-     "summary": "",
-     "title": "第42期第1回栃木県産業教育審議会の開催について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.tochigi.lg.jp/c10/houdou/20261020suginamiki.html",
-     "summary": "",
-     "title": "日光杉並木街道クラウドファンディングに係るサイトの停止について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.tochigi.lg.jp/m04/r8globalgatewaytankyu.html",
-     "summary": "",
-     "title": "令和8(2026)年度とちぎグローバルゲートウェイ事業「英語を使用した生徒向け探究特別講座」の開催について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.tochigi.lg.jp/e02/houdou/r81024_workshop.html",
-     "summary": "",
-     "title": "令和8(2026)年度地域医療ワークショップの実施について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.tochigi.lg.jp/m09/2026nendai5kaikekka2.html",
-     "summary": "",
-     "title": "令和8(2026)年度第5回登山計画審査会の結果について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.tochigi.lg.jp/m12/syougai/houdou/20261022tijihyoushou.html",
-     "summary": "",
-     "title": "中・高校生全国大会優勝者・指導者知事表彰について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.tochigi.lg.jp/g07/houdou/kansyajou08.html",
-     "summary": "",
-     "title": "【10月27日開催】令和8(2026)年度県営土地改良事業の換地業務に係る知事感謝状贈呈式"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.tochigi.lg.jp/d05/houdou/08boranthiaseisou1027.html",
-     "summary": "",
-     "title": "県職員ボランティア清掃を実施します"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.tochigi.lg.jp/h09/20261016sateikekka.html",
-     "summary": "",
-     "title": "7月17日から18日の豪雨により被災した公共土木施設(都市公園)の災害査定結果について"
     }
    ],
    "name": "栃木県庁",
@@ -3806,6 +3818,36 @@
    "feed": "https://www.pref.toyama.jp/shinchaku/shinchaku.xml",
    "id": "a021ab61f9",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/140531/phptyuikanki.html",
+     "summary": "",
+     "title": "セキュリティ対策に伴う一部ウェブコンテンツの公開停止について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/announcement.html",
+     "summary": "",
+     "title": "富山県公式ホームページの緊急メンテナンスについて"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/810111/1022kankou.html",
+     "summary": "",
+     "title": "富山県観光公式サイト「とやま観光ナビ」及び各関連サイトの一時停止について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/140406/sangyou/nourinsuisan/nousangyoson/r8johokokannew.html",
+     "summary": "富山県中山間地域情報交換会を開催します。",
+     "title": "富山県中山間地域情報交換会の開催について(初開催)"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/140511/kensei/kenseiunei/jouhouka/tfw_mente.html",
+     "summary": "",
+     "title": "TOYAMA Free Wi-Fiの緊急メンテナンスについて"
+    },
     {
      "date": "2026-10-21",
      "link": "https://www.pref.toyama.jp/1279/kurashi/kenkou/kenkou/1279/department/department1/covid-19.html",
@@ -3835,36 +3877,6 @@
      "link": "https://www.pref.toyama.jp/1600/sangyou/nourinsuisan/r808gouushien.html",
      "summary": "令和8年8月豪雨により被害を受けた富山の農林水産業者に対する支援のまとめ",
      "title": "令和8年8月27日からの大雨に伴う農林水産業者への支援について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.toyama.jp/1738/exh2026/exh2604_cyottodake.html",
-     "summary": "当館のコレクションの中でもこれだけは見ていただきたい!という優品から、知る人ぞ知る一品までご紹介します。美術館がはじめての方でも楽しめる、ガイドブックのような展覧会です。",
-     "title": "ちょっとだけわかる日本美術~水墨美術館編~|富山県水墨美術館"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.toyama.jp/1500/sangyou/nyuusatsu/koukyoukouji/kj00018221/20261019kasyoduke.html",
-     "summary": "",
-     "title": "令和8年度土木関係公共事業等箇所付け(9月補正予算分)の発表"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.toyama.jp/140631/gaikokujinzai/syusyoku_support.html",
-     "summary": "",
-     "title": "(3/24(火)開催)令和7年度第2回外国人材活用・定着セミナーのお知らせ"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.toyama.jp/1200/chiikikyosei/20230929.html",
-     "summary": "福祉介護人材の確保を推進する一環として、介護の仕事についての周知を図り、理解を深めていただくため、関係団体や行政機関との連携の下に、キャンペーン・イベントを開催します。",
-     "title": "介護の日フェスティバル2026を開催します"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.toyama.jp/140631/gaikokujinzai/teicyakuhojyokin.html",
-     "summary": "",
-     "title": "外国人材定着総合支援補助金制度のご案内"
     }
    ],
    "name": "富山県庁",
@@ -3877,64 +3889,64 @@
    "id": "fc650911fc",
    "items": [
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.toyama.jp/1300/kensei/kouhou/houdou/2026/10gatu/20261021_kakakutenka_jireikyoyukai.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/1204/kurashi/kenkou/iryou/houdou/081022ishimatching.html",
      "summary": "",
-     "title": "「伴走支援で県内企業の成長を後押し!価格転嫁に関する事例共有会」の開催について"
+     "title": "令和8年度医師臨床研修マッチングの結果について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.toyama.jp/1612/20261021.html",
-     "summary": "",
-     "title": "野生いのししの豚熱感染確認検査(PCR検査)の結果について"
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/1705/kensei/kouhou/houdou/2026/1022_kankyoufair.html",
+     "summary": "とやま環境フェア2026を開催します",
+     "title": "「とやま環境フェア2026」を開催します!"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.toyama.jp/1503/kensei/kouhou/houdou/2026/20261023hokurikutihoutisuitaikai.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/1200/kokuho/unkyou20261026.html",
      "summary": "",
-     "title": "令和8年度北陸地方治水大会の開催について"
+     "title": "令和8年度第1回富山県国民健康保険運営協議会の開催について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.toyama.jp/0100/houdo/2026gikaikaikakusuisinkaigi02.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/120501/tounyoubyou/r8tounyoubyoukouenkai.html",
      "summary": "",
-     "title": "第2回議会改革推進会議の開催について"
+     "title": "糖尿病講演会「気づかないうちに進む糖尿病~肥満症を防ぐポイントとは~」の開催について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.toyama.jp/1405/kyougi/asiahyoukeiinaba.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/1600/press/kanri_hyosho081022.html",
      "summary": "",
-     "title": "第20回アジア競技大会水球競技女子日本代表選手の来庁について"
+     "title": "令和8年度県産業経済部門(農林漁業分野)功労表彰等について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.toyama.jp/1405/kyogi/51th_syakaijinnyakyuunihonnsennsyukenn.html",
-     "summary": "",
-     "title": "社会人野球日本選手権出場伏木海陸運送(株)硬式野球部関係者の来庁について"
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/1602/nouchiseibi/20261014.html",
+     "summary": "令和8年度とやま水土里フォーラムの開催について~「出口戦略」×「基盤整備」 で描く農業のミライ~",
+     "title": "令和8年度とやま水土里フォーラムの開催について~「出口戦略」×「基盤整備」で描く農業のミライ~"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.toyama.jp/100222/kensei/kouhou/houdou/vol1_toyamastartuplink2026.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/1510/press/20261024press.html",
      "summary": "",
-     "title": "令和8年度「TOYAMA STARTUP LINK-東京で学び、富山で未来を創るー」(第1回)の開催について"
+     "title": "「インフラ自分ごと化体験教室」を開催します!"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.toyama.jp/1002/houdou/20261016yamakeikeisai.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/2000/houdou/20261024_kunren.html",
      "summary": "",
-     "title": "「山と溪谷11月号」に立山信仰の特集記事が掲載されました!"
+     "title": "富山県立中央病院の災害対策訓練について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.toyama.jp/140611/houdouhappyou/2026_moldova_hyoukei.html",
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/1119/20261019.html",
      "summary": "",
-     "title": "駐日モルドバ共和国特命全権大使の副知事表敬について"
+     "title": "令和8年度第3回富山県公立大学法人評価委員会の開催について"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.toyama.jp/110421/houdou/r8_kaigi_jinzaiikuseikakuho.html",
-     "summary": "令和8年度の富山県職員人材育成・確保推進会議を開催しますので、ご案内します。",
-     "title": "令和8年度富山県職員人材育成・確保推進会議の開催について"
+     "date": "2026-10-22",
+     "link": "https://www.pref.toyama.jp/1901/20261023_gasdaijin.html",
+     "summary": "令和8年度高圧ガス保安経済産業大臣表彰受賞者が決定され、県内からは以下のとおり表彰されることになりました。",
+     "title": "令和8年度高圧ガス保安経済産業大臣表彰について"
     }
    ],
    "name": "富山県庁",
@@ -3956,6 +3968,36 @@
    "id": "dfc68e1133",
    "items": [
     {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamagata.jp/020026/20261022securityresponse.html",
+     "summary": "セキュリティ脆弱性への対応",
+     "title": "セキュリティの脆弱性に係る県ホームページの対応について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamagata.jp/700026/bunkyo/kyoiku/kyoin/kyoinsaiyo.html",
+     "summary": "",
+     "title": "教員採用試験"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamagata.jp/700026/bunkyo/kyoiku/kyoin/setumeikai.html",
+     "summary": "",
+     "title": "説明会・相談会について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamagata.jp/090013/kenfuku/iryo/ishikangoshi/ishikakuho.html",
+     "summary": "",
+     "title": "山形県内の医師臨床研修・専門研修について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamagata.jp/021006/kurashi/shohi/chuuikanki/chuuitop.html",
+     "summary": "山形県消費生活センターからの注意喚起情報",
+     "title": "注意喚起情報"
+    },
+    {
      "date": "2026-10-21",
      "link": "https://www.pref.yamagata.jp/180025/bosai/kochibou/bousaijouhou/jishintsunami/earthquake/taisinnkaishuukoushuukai.html",
      "summary": "令和6年度木造住宅耐震改修工事等技術講習会の申込みのページ",
@@ -3966,12 +4008,6 @@
      "link": "https://www.pref.yamagata.jp/020007/kensei/zaisei/zei/hutoukoukokuboshur8.html",
      "summary": "",
      "title": "【税政課】自動車税納税通知書用封筒への掲載広告の募集(期限:令和8年11月16日)"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.yamagata.jp/700026/bunkyo/kyoiku/kyoin/setumeikai.html",
-     "summary": "",
-     "title": "説明会・相談会について"
     },
     {
      "date": "2026-10-20",
@@ -4020,30 +4056,6 @@
      "link": "https://www.pref.yamagata.jp/020052/riyousuisin/kenmintecho.html",
      "summary": "やまがた県民手帳には最新の統計資料や、県内のレジャー施設、くらしの相談ダイヤルなどの情報が満載!毎年11月1日から発売しています。",
      "title": "やまがた県民手帳"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.yamagata.jp/301043/08gohann.html",
-     "summary": "",
-     "title": "令和8年度「村山地域おいしいごはんポスターコンクール」"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.yamagata.jp/020023/bunkyo/kyoiku/shingakushien/shingakuguide.html",
-     "summary": "",
-     "title": "やまがたで学ぼう 進学ガイドポータルサイト"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.yamagata.jp/090015/kenfuku/kenko/shoku/kjshome.html",
-     "summary": "",
-     "title": "地域食生活・健康情報ステーション (減塩・ベジアップレシピなど)"
-    },
-    {
-     "date": "2026-10-19",
-     "link": "https://www.pref.yamagata.jp/301073/kurashi/kendo/toshikeikaku/gktop1/workshop.html",
-     "summary": "",
-     "title": "文翔館周辺エリアウォーカブル基本構想"
     }
    ],
    "name": "山形県庁",
@@ -4055,6 +4067,36 @@
    "feed": "https://www.pref.yamagata.jp/houdou/press.xml",
    "id": "d30ebc39d1",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamagata.jp/020026/press/mailmagazine_press.html",
+     "summary": "",
+     "title": "〔注意喚起情報〕山形県メールマガジン配信サービス運営企業への不正アクセスを受けた対応について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamagata.jp/110002/sangyo/shokogyo/kogyogijutsu/yojo/yojo-r8-benkyoukai.html",
+     "summary": "",
+     "title": "山形県洋上風力発電関連産業勉強会の開催について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamagata.jp/110009/press/r8kouennkai/r8kouennkai.html",
+     "summary": "",
+     "title": "「山形県立産業技術短期大学校講演会」の御案内"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamagata.jp/301022/202610press.html",
+     "summary": "",
+     "title": "村山地区不法投棄防止対策協議会による原状回復作業について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamagata.jp/090004/kenfuku/shogai/press/20261022.html",
+     "summary": "",
+     "title": "企業の昼休みを活用した就労継続支援B型事業所による製品販売会の開催"
+    },
     {
      "date": "2026-10-22",
      "link": "https://www.pref.yamagata.jp/180025/kenju/20211021.html",
@@ -4114,36 +4156,6 @@
      "link": "https://www.pref.yamagata.jp/110011/202610accecible.html",
      "summary": "",
      "title": "アクセシブルツーリズム理解促進研修会の開催について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.yamagata.jp/301026/kenfuku/kenko/shoku/r81025takidashikunren.html",
-     "summary": "",
-     "title": "「東根市生涯学習フェスティバル(健康まつり)」での炊き出し訓練と試食の実施について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.yamagata.jp/325001/houdouhappyo/081020.html",
-     "summary": "",
-     "title": "置賜総合支庁ニュース10月号の発行について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.yamagata.jp/010003/press/r8enpass_bosyuu.html",
-     "summary": "",
-     "title": "やまがたご縁パスポート(えんパス)の創設及び協賛店舗の募集について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.yamagata.jp/301071/r81021yamagatakougyou.html",
-     "summary": "",
-     "title": "高校生への特別課外授業について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.yamagata.jp/301026/kenfuku/kenko/shoku/r081028syokushienn.html",
-     "summary": "",
-     "title": "「要配慮者のための食支援スキルアップ研修会」を開催します"
     }
    ],
    "name": "山形県庁",
@@ -4154,7 +4166,26 @@
   {
    "feed": "https://www.pref.yamaguchi.lg.jp/rss/10/list5.xml",
    "id": "b8b67aaaa4",
-   "items": [],
+   "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamaguchi.lg.jp/press/367666.html",
+     "summary": "",
+     "title": "プログラミング言語「PHP」の脆弱性に伴う県ウェブサイト等 の一時停止について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamaguchi.lg.jp/soshiki/0/367594.html",
+     "summary": "",
+     "title": "県公式ホームページの一部機能を停止しています"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamaguchi.lg.jp/soshiki/21/276208.html",
+     "summary": "",
+     "title": "FAQシステム(よくある質問)の利用停止について(R8.10.26)"
+    }
+   ],
    "name": "山口県庁",
    "ok": true,
    "site": "https://www.pref.yamaguchi.lg.jp/",
@@ -4274,6 +4305,18 @@
    "id": "494ae75c09",
    "items": [
     {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamanashi.jp/release/sports-kk/1022.html",
+     "summary": "",
+     "title": "「❖いざ出陣!KOFU 国スポ 2027」カウントダウンボード除幕式について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamanashi.jp/release/bousai/0810/kitchencar.html",
+     "summary": "",
+     "title": "山梨県と一般社団法人日本キッチンカー経営審議会との協定締結式について"
+    },
+    {
      "date": "2026-10-21",
      "link": "https://www.pref.yamanashi.jp/event/shigaku-kgk/miniopencumpas.html",
      "summary": "山梨県立大学では、2028年度の開設を予定している国際共創学部(仮称)の学びが体験できる、ミニオープンキャンパスを開催します。",
@@ -4298,16 +4341,10 @@
      "title": "令和9年度山梨県離職者等再就職訓練事業業務委託(長期高度人材育成コース)に係る一般競争入札について(就業支援センター)"
     },
     {
-     "date": "2026-10-21",
-     "link": "https://www.pref.yamanashi.jp/shinchaku/sports-kk/bansoushien.html",
+     "date": "2026-10-20",
+     "link": "https://www.pref.yamanashi.jp/shinchaku/ch-rinmuk/0810/kiyosatonomori.html",
      "summary": "",
-     "title": "スポーツ競技団体基盤強化事業業務委託に係る公募型プロポーザルの実施について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.yamanashi.jp/event/kouko-hak/0811/kenmin.html",
-     "summary": "県立考古博物館の県民の日イベントのご案内です。",
-     "title": "県民の日イベント「ぐるぐるJOMONまつり」(県立考古博物館)"
+     "title": "清里の森除雪用ホイールローダー賃貸借"
     },
     {
      "date": "2026-10-20",
@@ -4326,12 +4363,6 @@
      "link": "https://www.pref.yamanashi.jp/shinchaku/kgisen-kn/r9-chouki.html",
      "summary": "",
      "title": "峡南高等技術専門校 令和9年度離職者等再就職訓練事業(長期高度人材育成コース)に係る一般競争入札の実施について"
-    },
-    {
-     "date": "2026-10-20",
-     "link": "https://www.pref.yamanashi.jp/release/douroseibi/0810/fujiichiforamu.html",
-     "summary": "",
-     "title": "フジイチ フォーラムを開催します!"
     }
    ],
    "name": "山梨県庁",
@@ -4343,6 +4374,18 @@
    "feed": "https://www.pref.yamanashi.jp/release/release.xml",
    "id": "269e7f230c",
    "items": [
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamanashi.jp/release/bousai/0810/kitchencar.html",
+     "summary": "",
+     "title": "山梨県と一般社団法人日本キッチンカー経営審議会との協定締結式について"
+    },
+    {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamanashi.jp/release/sports-kk/1022.html",
+     "summary": "",
+     "title": "「❖いざ出陣!KOFU 国スポ 2027」カウントダウンボード除幕式について"
+    },
     {
      "date": "2026-10-21",
      "link": "https://www.pref.yamanashi.jp/release/san-jin/0810/cuu0810.html",
@@ -4386,22 +4429,10 @@
      "title": "~みんなの応援を一つに~「国スポ応援横断幕をつくろう!」国スポ応援ワークショップ開催!"
     },
     {
-     "date": "2026-10-19",
-     "link": "https://www.pref.yamanashi.jp/release/sports-kk/0810/muryosyotai.html",
-     "summary": "",
-     "title": "山梨県民限定!「❖いざ出陣!KOFU国スポ2027」フィギュアスケート競技会に500名様を無料ご招待!"
-    },
-    {
      "date": "2026-10-16",
      "link": "https://www.pref.yamanashi.jp/release/kosodate/202610/purekonkoukouseijyugyou.html",
      "summary": "",
      "title": "高校生が将来の健康とライフデザインを考える 『プレコンセプションケア出前授業』開催!"
-    },
-    {
-     "date": "2026-10-14",
-     "link": "https://www.pref.yamanashi.jp/release/shogai-fks/0810/geibunsai.html",
-     "summary": "",
-     "title": "「第13回山梨県障害者芸術・文化祭」を開催します!"
     }
    ],
    "name": "山梨県庁",
@@ -4437,5 +4468,5 @@
    "title": ""
   }
  ],
- "fetched_at": "2026-10-22T09:05:07.958157+09:00"
+ "fetched_at": "2026-10-23T06:21:53.688038+09:00"
 }

@@ -1,11 +1,9 @@
 {
- "as_of": "2026-10-21",
+ "as_of": "2026-10-22",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
- "dates_after_as_of": 1,
- "dates_after_as_of_by_month": {
-  "10": 1
- },
- "fetched_at": "2026-10-22T06:17:14.035036+09:00",
+ "dates_after_as_of": 0,
+ "dates_after_as_of_by_month": {},
+ "fetched_at": "2026-10-23T06:17:17.275883+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
@@ -20,17 +18,17 @@
    "6": 347,
    "7": 222,
    "8": 132,
-   "9": 133
+   "9": 140
   }
  },
  "monthly_note": "月別計は公表表の全行で検算し、as_of後の日付も含みます",
  "sightings": [
   {
-   "city": "大衡村",
+   "city": "村田町",
    "count": 1,
    "kind": "目撃",
-   "observed_at": "2026-10-29T15:20:00+09:00",
-   "place": "駒場字上五仏",
+   "observed_at": "2026-10-21",
+   "place": "足立字馬立",
    "species": "クマ"
   },
   {
@@ -1018,6 +1016,14 @@
    "species": "クマ"
   },
   {
+   "city": "塩竈市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-24T15:00:00+09:00",
+   "place": "杉ノ入表（内裡島）",
+   "species": "クマ"
+  },
+  {
    "city": "登米市",
    "count": 1,
    "kind": "目撃",
@@ -1039,6 +1045,14 @@
    "kind": "目撃",
    "observed_at": "2026-09-23T18:28:00+09:00",
    "place": "大清水一丁目地内",
+   "species": "クマ"
+  },
+  {
+   "city": "塩竈市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-23T10:30:00+09:00",
+   "place": "杉ノ入表（内裡島）",
    "species": "クマ"
   },
   {
@@ -1154,6 +1168,30 @@
    "species": "クマ"
   },
   {
+   "city": "塩竈市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-20T02:20:00+09:00",
+   "place": "新浜町三丁目",
+   "species": "クマ"
+  },
+  {
+   "city": "塩竈市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-19T20:40:00+09:00",
+   "place": "新浜町一丁目（漁船）",
+   "species": "クマ"
+  },
+  {
+   "city": "塩竈市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-19T20:00:00+09:00",
+   "place": "新浜町二丁目",
+   "species": "クマ"
+  },
+  {
    "city": "富谷市",
    "count": 1,
    "kind": "目撃",
@@ -1210,11 +1248,27 @@
    "species": "クマ"
   },
   {
+   "city": "塩竈市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-19T08:00:00+09:00",
+   "place": "新浜町三丁目",
+   "species": "クマ"
+  },
+  {
    "city": "登米市",
    "count": 1,
    "kind": "目撃",
    "observed_at": "2026-09-18T22:30:00+09:00",
    "place": "東和町米谷字相川地内",
+   "species": "クマ"
+  },
+  {
+   "city": "塩竈市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-09-18T20:00:00+09:00",
+   "place": "新浜町二丁目",
    "species": "クマ"
   },
   {
@@ -11115,7 +11169,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261021.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261022.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }
