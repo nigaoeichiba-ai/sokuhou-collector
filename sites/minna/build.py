@@ -472,6 +472,7 @@ def assist_data(built, guides, year: int, kinds: dict, use_hubs: list | None = N
 
 def page(cfg, preview, **kw):
     kw.setdefault("og_image", "/assets/img/og.webp")
+    kw["alternates"] = (("新着のイラスト", "/feed.xml"),) + tuple(kw.get("alternates", ()))
     html = layout(SITE, cfg, preview, scripts=True, head_extra=FONTS, **kw)
     html = html.replace('<nav aria-label="メイン">', SEARCH_FORM + '<nav aria-label="メイン">', 1)
     return tune_images(html.replace("</body>", ASSIST_BUTTON + "</body>", 1))
