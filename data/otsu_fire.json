@@ -1,6 +1,12 @@
 {
- "fetched_at": "2026-10-22T05:45:22.263599+09:00",
+ "fetched_at": "2026-10-22T12:37:37.301156+09:00",
  "incidents": [
+  {
+   "kind": "山岳救助",
+   "place": "大津市八屋戸付近",
+   "started_at": "2026-10-22T12:27:00+09:00",
+   "status": "reported"
+  },
   {
    "kind": "油漏れ警戒",
    "place": "大津市北比良付近",
@@ -250,7 +256,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": true,
+ "no_active_incident": false,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
