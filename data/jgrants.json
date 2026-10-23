@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-22T21:16:09.241532+00:00",
+ "fetched_at": "2026-10-23T21:16:33.918539+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -517,18 +517,6 @@
    "target_area_search": "山形県",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "【山形県】令和8年度地域主導型再生可能エネルギー導入支援事業費補助金"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-23T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-24T00:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDYtoMAH",
-   "id": "a0WJ200000CDYtoMAH",
-   "institution_name": "【香川県】令和８年度中小企業等海外展開支援事業費補助金（海外出願支援事業）",
-   "name": "S-00009116",
-   "subsidy_max_limit": 3000000,
-   "target_area_search": "香川県",
-   "target_number_of_employees": "300名以下",
-   "title": "【香川県】令和８年度中小企業等海外展開支援事業費補助金（海外出願支援事業）第３次募集"
   },
   {
    "acceptance_end_datetime": "2026-11-30T14:59:00.000Z",
@@ -1095,18 +1083,6 @@
    "title": "【倉敷市】実証実験サポート事業"
   },
   {
-   "acceptance_end_datetime": "2026-11-13T04:00:00.000Z",
-   "acceptance_start_datetime": "2026-10-22T02:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDbPBMA1",
-   "id": "a0WJ200000CDbPBMA1",
-   "institution_name": "令和８年度二酸化炭素排出抑制対策事業費等補助金 （地域共生型廃棄物発電等導入促進事業 （うち地域の廃棄物を活用した地域エネルギー創出事業））",
-   "name": "S-00009384",
-   "subsidy_max_limit": 0,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "【令和８年度】二酸化炭素排出抑制対策事業費等補助金 （地域共生型廃棄物発電等導入促進事業 （うち地域の廃棄物を活用した地域エネルギー創出事業））（第２次公募）"
-  },
-  {
    "acceptance_end_datetime": "2026-12-28T15:00:00.000Z",
    "acceptance_start_datetime": "2026-03-31T23:30:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDYZ7MAP",
@@ -1251,18 +1227,6 @@
    "title": "松山港利用促進インセンティブ補助金（荷主向け）"
   },
   {
-   "acceptance_end_datetime": "2026-10-23T03:00:00.000Z",
-   "acceptance_start_datetime": "2026-10-02T03:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003GpG9UAK",
-   "id": "a0WfQ000003GpG9UAK",
-   "institution_name": "グローバルサウス未来志向型共創等事業費補助金",
-   "name": "S-00009854",
-   "subsidy_max_limit": 0,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和７年度補正グローバルサウス未来志向型共創等事業費補助金（小規模実証・ＦＳ事業：二次公募）（ＦＳ・小規模実証事業実施事業者の募集（補助））"
-  },
-  {
    "acceptance_end_datetime": "2026-11-13T08:00:00.000Z",
    "acceptance_start_datetime": "2026-07-30T07:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDNDnMAP",
@@ -1321,18 +1285,6 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "産業車両等の脱炭素化促進事業のうち、空港における脱炭素化促進事業②空港におけるEV・FCV型車両導入事業（二酸化炭素排出抑制対策事業費等補助金）"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-23T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-08-24T01:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003I7R7UAK",
-   "id": "a0WfQ000003I7R7UAK",
-   "institution_name": "中小企業等海外展開支援事業費補助金（海外出願支援事業）",
-   "name": "S-00009858",
-   "subsidy_max_limit": 3000000,
-   "target_area_search": "秋田県",
-   "target_number_of_employees": "300名以下",
-   "title": "【秋田県】令和8年度中小企業等海外展開支援事業費補助金（海外出願支援事業）２次公募"
   },
   {
    "acceptance_end_datetime": "2026-11-13T07:00:00.000Z",
@@ -1959,18 +1911,6 @@
    "title": "令和８年度臨床研修費等補助金（歯科医師）"
   },
   {
-   "acceptance_end_datetime": "2026-11-13T04:00:00.000Z",
-   "acceptance_start_datetime": "2026-10-22T02:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003qYNFUA2",
-   "id": "a0WfQ000003qYNFUA2",
-   "institution_name": "令和８年度二酸化炭素排出抑制対策事業費等補助金 （地域共生型廃棄物発電等導入促進事業 （うち地域の廃棄物を活用した地域エネルギー創出事業））",
-   "name": "S-00009989",
-   "subsidy_max_limit": 0,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "【令和８年度】二酸化炭素排出抑制対策事業費等補助金 （地域共生型廃棄物発電等導入促進事業 （うち地域の廃棄物を活用した地域エネルギー創出事業））（３次公募）"
-  },
-  {
    "acceptance_end_datetime": "2026-11-20T15:00:00.000Z",
    "acceptance_start_datetime": "2026-05-20T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDYbNMAX",
@@ -1981,6 +1921,18 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "エイジフレンドリー補助金"
+  },
+  {
+   "acceptance_end_datetime": "2026-11-13T04:00:00.000Z",
+   "acceptance_start_datetime": "2026-10-22T02:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003qYNFUA2",
+   "id": "a0WfQ000003qYNFUA2",
+   "institution_name": "令和８年度二酸化炭素排出抑制対策事業費等補助金 （地域共生型廃棄物発電等導入促進事業 （うち地域の廃棄物を活用した地域エネルギー創出事業））",
+   "name": "S-00009989",
+   "subsidy_max_limit": 0,
+   "target_area_search": "全国",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "【令和８年度】二酸化炭素排出抑制対策事業費等補助金 （地域共生型廃棄物発電等導入促進事業 （うち地域の廃棄物を活用した地域エネルギー創出事業））（３次公募）"
   },
   {
    "acceptance_end_datetime": "2027-01-29T07:30:00.000Z",
@@ -1995,5 +1947,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 166
+ "total": 162
 }
