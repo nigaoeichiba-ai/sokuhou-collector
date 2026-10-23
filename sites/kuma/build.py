@@ -494,6 +494,15 @@ def news_page(d: dict, cfg: dict, preview: bool) -> str:
                 description="環境省が公表している、クマに関する大臣の談話・会見、自治体への事務連絡などの新着を、日付順に一覧にしています。", body=body)
 
 
+def fatal_summary(d: dict, r: dict) -> str:
+    """One sentence for the meta description: what the ministry's two death lists say about the prefecture (same facts as fatal_answer)."""
+    cur, done, name = d["cur"], d["done"], r["name"]
+    count = sum(1 for y in (cur, done) for i in d["fatal"][y]["incidents"] if i["prefecture"] == name)
+    if count:
+        return f"{name}の熊(クマ)による死亡事故は、環境省の一覧に{n(count)}件載っています(日付つき)。"
+    return f"{name}の熊(クマ)による死亡事故は、環境省の一覧({fy_label(done)}・{fy_label(cur)})には載っていません。"
+
+
 def fatal_answer(d: dict, r: dict) -> str:
     """"Did anyone die of bears in this prefecture?" answered only from the ministry's two lists and its injury statistics, always with their dates.
     It never says that nothing happened: it says what the ministry's lists contain (or do not contain) as of their dates."""
@@ -604,7 +613,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
 <div class="next-box"><h2>次に見る</h2><ul><li><a href="/ranking/sightings/">{icon("chart")}出没件数ランキング</a></li><li><a href="/trend/">{icon("calendar")}月別の推移</a></li><li><a href="/season/">{icon("calendar")}何月に多いか(都道府県別)</a></li><li><a href="/emergency/">{icon("emergency")}緊急銃猟</a></li><li><a href="/guide/">{icon("guide")}クマへの対処法</a></li></ul></div>
 <p class="notice">{freshness(d)}</p>"""
     return page(cfg, preview, scripts=True, path=f"/{r['slug']}/", title=f"{r['name']}の熊(クマ)出没・人身被害・死亡事故({fy_label(done)}・環境省の速報値)",
-                description=f"{r['name']}の熊(クマ)の出没件数(月別)、人身被害、死亡事故(環境省の一覧に載っているか、日付つきで)、緊急銃猟、公式の出没情報への案内。環境省の速報値をもとにしています。", body=body)
+                description=f"{fatal_summary(d, r)}出没件数(月別)、人身被害、緊急銃猟、公式の出没情報への案内もあります。環境省の速報値をもとにしています。", body=body)
 
 
 def guide_hub(cfg: dict, preview: bool) -> str:

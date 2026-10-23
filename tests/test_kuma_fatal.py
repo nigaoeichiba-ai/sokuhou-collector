@@ -54,5 +54,16 @@ class FatalAnswerTest(unittest.TestCase):
         self.assertEqual(len(re.findall(r"\(1人\)", t.split("死亡者が出た年度は、")[1].split("です")[0])), 5)
 
 
+
+class FatalSummaryTest(unittest.TestCase):
+    """The meta description of a prefecture page opens with the same dated fact (search term: 鳥取 熊 死亡)."""
+    def test_listed_prefecture_states_the_count(self):
+        self.assertIn("秋田県の熊(クマ)による死亡事故は、環境省の一覧に2件載っています", build.fatal_summary(D, pref("秋田県", {})))
+
+    def test_unlisted_prefecture_says_not_listed_never_none_happened(self):
+        t = build.fatal_summary(D, pref("鳥取県", {}))
+        self.assertIn("鳥取県の熊(クマ)による死亡事故は、環境省の一覧(令和7年度・令和8年度)には載っていません", t)
+        self.assertNotIn("ありません", t)
+
 if __name__ == "__main__":
     unittest.main()
