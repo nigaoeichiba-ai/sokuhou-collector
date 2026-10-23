@@ -11,7 +11,10 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 import sys
+import time
+import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -25,6 +28,9 @@ from sokuhou import rakuten  # noqa: E402
 
 JST = timezone(timedelta(hours=9))
 MAX_MISSING_PAGE_SHARE = 0.25          # more new pages than this and the full refresh is the better way
+ITEMS_WORKFLOW = "yorokobu-items.yml"
+WAIT_MAX_MINUTES = 50                  # how long the deploy waits for a running yorokobu-items before it fetches everything itself
+WAIT_POLL_SECONDS = 90                 # one call per poll: about 35 calls in the 50 minutes, under the 60 an hour that GitHub allows without a token
 
 
 def age_hours(data: dict, now: datetime) -> float:
@@ -84,6 +90,41 @@ def prepare(data: dict | None, c: dict, picks: dict, now: datetime, max_hours: f
         return None, f"the top-up failed: {e}"
 
 
+def running_items_run(repo: str, token: str | None = None) -> bool:
+    """Is a run of the scheduled yorokobu-items workflow going (or queued) now?  The runs of a public repository can be listed without a token; None of the answers means no."""
+    req = urllib.request.Request(f"https://api.github.com/repos/{repo}/actions/workflows/{ITEMS_WORKFLOW}/runs?per_page=3",
+                                 headers={"Accept": "application/vnd.github+json", "User-Agent": "yorokobu-items-fresh", **({"Authorization": f"Bearer {token}"} if token else {})})
+    with urllib.request.urlopen(req, timeout=20) as r:
+        return any(x.get("status") in ("in_progress", "queued") for x in json.load(r).get("workflow_runs") or [])
+
+
+def wait_for_items_run(repo: str | None, token: str | None = None, *, running=running_items_run, sleep=time.sleep, clock=time.monotonic,
+                       max_minutes: float = WAIT_MAX_MINUTES, poll: float = WAIT_POLL_SECONDS) -> str:
+    """When the data is old because the scheduled fetch has not finished (or failed and its retry is running), the deploy asking the API for everything at the same time ends in
+    429s for both (2026-10-24).  So: wait, up to `max_minutes`, while that workflow runs.  Returns what happened, in a few words ('' when there was nothing to wait for)."""
+    if not repo:
+        return ""
+    try:
+        if not running(repo, token):
+            return ""
+    except Exception as e:                                                  # no answer from GitHub: do not wait for something that cannot be seen
+        return f"could not ask GitHub whether {ITEMS_WORKFLOW} is running ({type(e).__name__})"
+    start = clock()
+    while clock() - start < max_minutes * 60:
+        sleep(poll)
+        try:
+            if not running(repo, token):
+                return f"waited {(clock() - start) / 60:.0f} minutes for {ITEMS_WORKFLOW} to finish"
+        except Exception:
+            return "lost sight of the workflow while waiting"
+    return f"{ITEMS_WORKFLOW} was still running after {max_minutes:.0f} minutes"
+
+
+def pull_items() -> None:
+    """Takes the (possibly new) data file from the server's private folder again."""
+    subprocess.run([sys.executable, "-m", "sites.yorokobu.privatedata", "pull", "yorokobu_items.json"], cwd=str(ROOT), check=False)
+
+
 def _client() -> rakuten.Client | None:
     app_id, key = os.environ.get("RAKUTEN_APP_ID"), os.environ.get("RAKUTEN_ACCESS_KEY")
     if not (app_id and key):
@@ -104,6 +145,14 @@ def main(argv: list[str] | None = None) -> int:
     picks_file = ct.CONTENT_DIR / "picks.json"
     picks = json.loads(picks_file.read_text(encoding="utf-8")) if picks_file.exists() else {}
     out, why = prepare(data, c, picks, datetime.now(JST), a.max_hours, _client)
+    if out is None:
+        waited = wait_for_items_run(os.environ.get("GITHUB_REPOSITORY"), os.environ.get("GITHUB_TOKEN"))
+        if waited:
+            print(f"items_fresh: {why}; {waited}")
+            if src == ROOT / "data" / "yorokobu_items.json":
+                pull_items()
+            data = json.loads(src.read_text(encoding="utf-8")) if src.exists() else None
+            out, why = prepare(data, c, picks, datetime.now(JST), a.max_hours, _client)
     print(f"items_fresh: {why}")
     if out is None:
         return 1

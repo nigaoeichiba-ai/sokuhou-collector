@@ -27,6 +27,7 @@ from sites.yorokobu.picking import pick, usable  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
 
 MAX_LOOKUP_ERROR_SHARE = 0.05
+COOL_DOWN = 20.0       # seconds to wait after a lookup that failed
 
 
 def lookup(client: rakuten.Client, code: str, state: dict, total: int) -> dict | None:
@@ -38,6 +39,9 @@ def lookup(client: rakuten.Client, code: str, state: dict, total: int) -> dict |
         print(f"warning: lookup {code}: {e}", file=sys.stderr)
         if state["errors"] > max(5, MAX_LOOKUP_ERROR_SHARE * total):
             raise
+        pause = getattr(client, "sleep", None)
+        if pause:
+            pause(COOL_DOWN)                                      # the limit is shared with whatever else runs on the application ID: give it a moment before the next call
         return None
     for x in raw:
         item = rakuten.normalize(x)
