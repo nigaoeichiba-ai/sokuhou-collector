@@ -1,9 +1,9 @@
 {
- "as_of": "2026-10-22",
+ "as_of": "2026-10-23",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 0,
  "dates_after_as_of_by_month": {},
- "fetched_at": "2026-10-23T06:17:17.275883+09:00",
+ "fetched_at": "2026-10-24T06:17:16.992776+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
@@ -11169,7 +11169,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261022.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261023.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }
