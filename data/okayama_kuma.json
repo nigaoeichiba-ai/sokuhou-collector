@@ -1,8 +1,8 @@
 {
- "as_of": "2026-10-05",
+ "as_of": "2026-10-20",
  "bad_coords": 0,
  "credit": "出典:岡山県「岡山県ツキノワグマ出没情報」を加工して作成(公共データ利用規約(第1.0版)に基づく)",
- "fetched_at": "2026-10-09T10:14:54.526695+09:00",
+ "fetched_at": "2026-10-24T06:17:22.727543+09:00",
  "fy_current": "R08",
  "monthly": {
   "R07": {
@@ -19,7 +19,7 @@
    "9": 4
   },
   "R08": {
-   "10": 2,
+   "10": 11,
    "4": 18,
    "5": 12,
    "6": 12,
@@ -34,10 +34,100 @@
    "city": "美作市",
    "count": null,
    "kind": "目撃",
+   "lat": 35.0872,
+   "lon": 134.2952,
+   "observed_at": "2026-10-20",
+   "place": "川上",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "美作市",
+   "count": null,
+   "kind": "目撃",
+   "lat": 35.0627,
+   "lon": 134.2729,
+   "observed_at": "2026-10-18",
+   "place": "五名",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "美作市",
+   "count": null,
+   "kind": "目撃",
+   "lat": 35.1338,
+   "lon": 134.3429,
+   "observed_at": "2026-10-18",
+   "place": "東吉田",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "奈義町",
+   "count": null,
+   "kind": "目撃",
+   "lat": 35.132,
+   "lon": 134.1701,
+   "observed_at": "2026-10-16",
+   "place": "宮内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "奈義町",
+   "count": null,
+   "kind": "目撃",
+   "lat": 35.1309,
+   "lon": 134.1953,
+   "observed_at": "2026-10-15",
+   "place": "行方",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "美作市",
+   "count": null,
+   "kind": "目撃",
+   "lat": 35.0955,
+   "lon": 134.2899,
+   "observed_at": "2026-10-12",
+   "place": "川上",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "美作市",
+   "count": null,
+   "kind": "目撃",
+   "lat": 35.1127,
+   "lon": 134.2955,
+   "observed_at": "2026-10-11",
+   "place": "川上",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "美作市",
+   "count": null,
+   "kind": "目撃",
+   "lat": 35.1854,
+   "lon": 134.2361,
+   "observed_at": "2026-10-08",
+   "place": "右手",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "美作市",
+   "count": null,
+   "kind": "目撃",
    "lat": 35.1498,
    "lon": 134.3525,
    "observed_at": "2026-10-05",
    "place": "野原",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "美作市",
+   "count": null,
+   "kind": "目撃",
+   "lat": 35.0104,
+   "lon": 134.1386,
+   "observed_at": "2026-10-04",
+   "place": "入田",
    "species": "ツキノワグマ"
   },
   {
@@ -911,7 +1001,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 121,
+ "sightings_in_window": 130,
  "source": "okayama",
  "source_file": "https://www.google.com/maps/d/kml?mid=1y64vgpv0Yc6srgFeVC5ZkJf37kNuuKI&forcekml=1",
  "source_page": "https://www.pref.okayama.jp/page/1006862.html",
