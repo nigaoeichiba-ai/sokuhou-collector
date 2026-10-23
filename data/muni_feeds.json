@@ -2910,6 +2910,12 @@
    "id": "96f2ab737b",
    "items": [
     {
+     "date": "2026-10-24",
+     "link": "https://www.pref.niigata.lg.jp/sec/genshiryoku/1024kunren.html",
+     "summary": "",
+     "title": "令和8年度新潟県原子力防災訓練(住民避難等)の実施の有無"
+    },
+    {
      "date": "2026-10-23",
      "link": "https://www.pref.niigata.lg.jp/site/tokamachi-seibi/snowpole2.html",
      "summary": "",
@@ -2992,12 +2998,6 @@
      "link": "https://www.pref.niigata.lg.jp/sec/hokentaiiku/saihatuboushi.html",
      "summary": "",
      "title": "第5号案件調査報告書の提言を受けた再発防止の取組について"
-    },
-    {
-     "date": "2026-10-23",
-     "link": "https://www.pref.niigata.lg.jp/sec/kodomokatei/kiunzyoseiibento.html",
-     "summary": "",
-     "title": "“いい夫婦の日”にちなんだご縁のイベントを実施します"
     }
    ],
    "name": "新潟県庁",
@@ -4486,5 +4486,5 @@
    "title": ""
   }
  ],
- "fetched_at": "2026-10-24T06:21:28.460174+09:00"
+ "fetched_at": "2026-10-24T08:57:30.939148+09:00"
 }
