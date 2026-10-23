@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-24",
+  "weekday": "土",
+  "words": 0,
+  "rss": 1218,
+  "searches": 1,
+  "fetches": 3,
+  "candidates": 1,
+  "cards": 1,
+  "rejected": 0,
+  "rejected_reasons": {},
+  "queries": [
+    {"q": "RSSの見出し → WebSearch extended → 本文で日付確認(ITmedia+4Gamer)", "hit": 1, "cards": 1}
+  ],
+  "failed_words": [],
+  "injections": 0,
+  "results_written": 0,
+  "note": "利用者ワード0件。RSSの手がかりの大半(日本シリーズ・ゴジラ・ドゥームズデイ・みらいしのほこう等)は既にカード済みで、新規は GPD WIN Max 3(12/25発売)の1件。結果待ち15日は未着手(今回は時間と利用枠の都合。次回に実施)。"
+}

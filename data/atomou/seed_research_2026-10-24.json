@@ -1,0 +1,27 @@
+[
+  {
+    "title": "GPD WIN Max 3 国内正規版",
+    "date": "2026-12-25",
+    "precision": "day",
+    "kind": "発売",
+    "group": "スマホ・ネット・アプリ",
+    "category": "パソコン",
+    "subject": "携帯ゲーミングPC",
+    "what": "国内正規版の発売",
+    "place": "全国",
+    "source_url": "https://www.itmedia.co.jp/pcuser/articles/2610/23/news073.html",
+    "source_quote": "天空が12月25日に発売する「GPD WIN Max 3」",
+    "source_url2": "https://www.4gamer.net/games/409/G040961/20260924039/",
+    "source_quote2": "12月25日",
+    "basis": "press",
+    "keep": false,
+    "ad_ok": true,
+    "sensitivity": "none",
+    "checked_on": "2026-10-24",
+    "verified": true,
+    "son_toku": false,
+    "region": "全国",
+    "date_end": null,
+    "note": "2つの報道ページの本文で、日付を機械的に確かめた。"
+  }
+]
