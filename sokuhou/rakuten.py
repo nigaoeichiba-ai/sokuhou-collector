@@ -74,7 +74,13 @@ class Client:
             self.calls += 1
             try:
                 body = self.transport(url, headers)
-                break
+                try:
+                    data = json.loads(body.decode("utf-8"))
+                except ValueError:                                    # an empty or half-written answer (seen on 2026-10-23 after 1,610 calls: the run died on JSONDecodeError): wait and ask again
+                    last_error = RakutenError(f"the answer was empty or not JSON ({len(body)} bytes)")
+                    self.sleep(5.0 * (attempt + 1))
+                    continue
+                return data.get("Items") or data.get("items") or []
             except urllib.error.HTTPError as e:
                 detail = e.read().decode("utf-8", "replace")[:200] if hasattr(e, "read") else ""
                 if e.code == 404 or (e.code == 400 and "not_found" in detail):
@@ -87,10 +93,7 @@ class Client:
             except (urllib.error.URLError, TimeoutError) as e:
                 last_error = e
                 self.sleep(2.0 * (attempt + 1))
-        else:
-            raise RakutenError(f"gave up after {self.retries} tries: {last_error}")
-        data = json.loads(body.decode("utf-8"))
-        return data.get("Items") or data.get("items") or []
+        raise RakutenError(f"gave up after {self.retries} tries: {last_error}")
 
 
 def _first_image(item: dict) -> str:
