@@ -1,6 +1,12 @@
 {
- "fetched_at": "2026-10-24T11:07:37.337446+09:00",
+ "fetched_at": "2026-10-25T08:23:17.042626+09:00",
  "incidents": [
+  {
+   "kind": "救助事故",
+   "place": "大津市大平二丁目付近",
+   "started_at": "2026-10-25T08:14:00+09:00",
+   "status": "reported"
+  },
   {
    "kind": "車両火災",
    "place": "大津市大谷町付近",
@@ -272,7 +278,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": true,
+ "no_active_incident": false,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
