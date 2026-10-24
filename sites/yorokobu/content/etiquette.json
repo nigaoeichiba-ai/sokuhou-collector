@@ -48,7 +48,9 @@
     {
       "slug": "oseibo",
       "budget": [
-        {"to": "一般的なお付き合い", "range": "3,000〜5,000円", "note": "相手に気を遣わせない金額が目安です。"}
+        {"to": "一般的なお付き合い", "range": "3,000〜5,000円", "note": "相手に気を遣わせない金額が目安です。"},
+        {"to": "上司・両親・特にお礼を伝えたい人", "range": "5,000〜10,000円", "note": "三越伊勢丹はこの幅で考えると案内しています。"},
+        {"to": "特にお世話になった人", "range": "10,000円以上", "note": "高島屋は1万円以上を贈ることもあると案内しています。"}
       ],
       "timing": "関東は12月の初めから、関西などは12月13日ごろから12月31日までに贈ります。20日ごろまでに届くようにすると安心です。",
       "noshi": {"applicable": true, "omote": "御歳暮", "mizuhiki": "紅白の蝶結び", "note": "遅れたときは年明けから松の内(関東は1月7日、関西は1月15日)までは「御年賀」、立春の前までは「寒中御伺」、立春以降は「余寒御伺」にします。"},
@@ -60,7 +62,8 @@
       "confidence": "high",
       "sources": [
         {"name": "大丸松坂屋 お歳暮の時期", "url": "https://www.daimaru-matsuzakaya.jp/oseibo/contents1/", "year": 2026},
-        {"name": "三越伊勢丹 お歳暮の贈り物マナー", "url": "https://www.mistore.jp/gifts/seibo/seibo_manner"}
+        {"name": "三越伊勢丹 お歳暮の贈り物マナー", "url": "https://www.mistore.jp/gifts/seibo/seibo_manner"},
+        {"name": "高島屋 お歳暮の相場", "url": "https://www.takashimaya.co.jp/shopping/gift/story/wintergift/624553/", "year": 2026}
       ]
     },
     {
