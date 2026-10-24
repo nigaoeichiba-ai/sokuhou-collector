@@ -1,5 +1,9 @@
+import contextlib
+import io
 import json
+import tempfile
 import unittest
+import urllib.error
 from collections import Counter
 from datetime import date, datetime
 from pathlib import Path
@@ -160,6 +164,90 @@ class AomoriKumaTest(unittest.TestCase):
     def test_the_credit_says_it_is_processed_and_not_the_prefecture_s(self):
         self.assertIn("くまログあおもり", self.out["credit"])
         self.assertIn("青森県が作成したものではありません", self.out["credit"])
+
+
+def _http_error(code):
+    return urllib.error.HTTPError("https://kumalog-aomori.info/api", code, "x", {}, None)
+
+
+def _raise(exc):
+    def boom():
+        raise exc
+    return boom
+
+
+class BlockedBySiteTest(unittest.TestCase):
+    """GitHub's runners get 403 from kumalog-aomori.info (2026-10-22 on): the stored file stays, the daily run is not red, the other sources still update."""
+    TODAY = date(2026, 10, 24)
+
+    def setUp(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.dir = Path(tmp.name)
+        self.old = {"as_of": "2026-10-20", "fetched_at": "2026-10-22T06:18:00+09:00", "total_fy": 100}
+        (self.dir / "aomori_kuma.json").write_text(json.dumps(self.old), encoding="utf-8")
+        self.before = (self.dir / "aomori_kuma.json").read_bytes()
+
+    def _run(self, aomori, other=lambda: {"v": 1}, **kw):
+        kept = {}
+        sources = [run.Source("aomori_kuma", aomori, keep_if_blocked=True), run.Source("akita_kuma", other)]
+        changed, errors = run.run_group(sources, self.dir, kept, today=self.TODAY, **kw)
+        return changed, errors, kept
+
+    def test_403_keeps_the_previous_file_and_the_others_update(self):
+        changed, errors, kept = self._run(_raise(_http_error(403)))
+        self.assertEqual(errors, {})
+        self.assertEqual(changed, ["akita_kuma"])
+        self.assertEqual(list(kept), ["aomori_kuma"])
+        self.assertIn("403", kept["aomori_kuma"])
+        self.assertEqual((self.dir / "aomori_kuma.json").read_bytes(), self.before)     # as_of / fetched_at stay old, nothing is blanked
+        self.assertTrue((self.dir / "akita_kuma.json").exists())
+
+    def test_a_block_that_lasts_more_than_three_weeks_fails_again(self):
+        src = [run.Source("aomori_kuma", _raise(_http_error(403)), keep_if_blocked=True)]
+        kept = {}
+        _, errors = run.run_group(src, self.dir, kept, today=date(2026, 11, 12))      # fetched 10-22: 21 days, still only a warning
+        self.assertEqual((errors, list(kept)), ({}, ["aomori_kuma"]))
+        kept = {}
+        _, errors = run.run_group(src, self.dir, kept, today=date(2026, 11, 13))      # 22 days
+        self.assertEqual(kept, {})
+        self.assertIn("HTTP Error 403", errors["aomori_kuma"])
+        self.assertIn("22 days", errors["aomori_kuma"])
+
+    def test_other_failures_are_still_failures(self):
+        for exc in (_http_error(500), _http_error(404), _http_error(429), TimeoutError("slow"), kuma.AomoriKumaSourceError("format changed")):
+            with self.subTest(exc=repr(exc)):
+                changed, errors, kept = self._run(_raise(exc))
+                self.assertIn("aomori_kuma", errors)
+                self.assertEqual(kept, {})
+                self.assertEqual((self.dir / "aomori_kuma.json").read_bytes(), self.before)
+
+    def test_without_a_previous_file_a_403_is_a_failure(self):
+        (self.dir / "aomori_kuma.json").unlink()
+        _, errors, kept = self._run(_raise(_http_error(403)))
+        self.assertIn("aomori_kuma", errors)
+        self.assertEqual(kept, {})
+
+    def test_only_sources_marked_keep_if_blocked_are_forgiven(self):
+        flagged = {s.name for srcs in run.GROUPS.values() for s in srcs if s.keep_if_blocked}
+        self.assertEqual(flagged, {"aomori_kuma"})
+        _, errors = run.run_group([run.Source("akita_kuma", _raise(_http_error(403)))], self.dir, {}, today=self.TODAY)
+        self.assertIn("akita_kuma", errors)
+
+    def test_main_exits_zero_with_a_warning_when_only_the_blocked_source_failed(self):
+        group = [run.Source("aomori_kuma", _raise(_http_error(403)), keep_if_blocked=True), run.Source("akita_kuma", lambda: {"v": 1})]
+        err = io.StringIO()
+        with mock.patch.dict(run.GROUPS, {"kuma": group}), mock.patch.object(run, "DATA_DIR", self.dir),                 mock.patch.object(run, "datetime", wraps=datetime) as dt, contextlib.redirect_stderr(err), contextlib.redirect_stdout(io.StringIO()):
+            dt.now.return_value = datetime(2026, 10, 24, 6, 20, tzinfo=kumalib.JST)
+            code = run.main(["run", "kuma"])
+        self.assertEqual(code, 0)
+        self.assertIn("::warning title=source blocked (aomori_kuma)", err.getvalue())
+        self.assertNotIn("::error", err.getvalue())
+        self.assertEqual((self.dir / "aomori_kuma.json").read_bytes(), self.before)
+        # and a real failure of another source is still red
+        group[1] = run.Source("akita_kuma", _raise(RuntimeError("down")))
+        with mock.patch.dict(run.GROUPS, {"kuma": group}), mock.patch.object(run, "DATA_DIR", self.dir),                 contextlib.redirect_stderr(io.StringIO()), contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(run.main(["run", "kuma"]), 1)
 
 
 if __name__ == "__main__":
