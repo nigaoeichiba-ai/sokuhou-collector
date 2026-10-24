@@ -3,7 +3,7 @@
   "2026-10": {
    "ask.mode.o": 1,
    "ask.n.all": 1,
-   "ask.new.o": 1,
+   "ask.new.o": 2,
    "ask.q1.home": 1,
    "ask.q2.coffee": 1,
    "ask.q3.sweet": 1,
@@ -48,7 +48,7 @@
  "total": {
   "ask.mode.o": 1,
   "ask.n.all": 1,
-  "ask.new.o": 1,
+  "ask.new.o": 2,
   "ask.q1.home": 1,
   "ask.q2.coffee": 1,
   "ask.q3.sweet": 1,
