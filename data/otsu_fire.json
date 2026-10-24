@@ -1,11 +1,13 @@
 {
- "fetched_at": "2026-10-24T10:52:36.761254+09:00",
+ "fetched_at": "2026-10-24T11:07:37.337446+09:00",
  "incidents": [
   {
    "kind": "車両火災",
    "place": "大津市大谷町付近",
+   "resolved_at": "2026-10-24T11:03:00+09:00",
+   "result": "非火災と判明",
    "started_at": "2026-10-24T10:43:00+09:00",
-   "status": "reported"
+   "status": "resolved"
   },
   {
    "kind": "山岳救助",
@@ -270,7 +272,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": false,
+ "no_active_incident": true,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
