@@ -1,0 +1,23 @@
+{
+ "date": "2026-10-25",
+ "weekday": "日",
+ "words": 0,
+ "rss": 1763,
+ "searches": 1,
+ "fetches": 2,
+ "candidates": 1,
+ "cards": 1,
+ "rejected": 0,
+ "rejected_reasons": {},
+ "queries": [
+  {
+   "q": "RSSの見出し(ENCOUNT)→WebSearch extended→cinemacafe+mdpr本文で日付確認",
+   "hit": 1,
+   "cards": 1
+  }
+ ],
+ "failed_words": [],
+ "injections": 0,
+ "results_written": 0,
+ "note": "利用者ワード0件。新規は MOGURA 続編(12/23配信)の1件。結果待ち15日は未着手(MLB WS第2戦は米国時間で未開催、日本シリーズ第1戦などは次回)。curl はこの環境で拒否されたため python の seedcheck.fetch を使用。"
+}
