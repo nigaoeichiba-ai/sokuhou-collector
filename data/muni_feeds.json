@@ -906,6 +906,12 @@
    "id": "d6f2ca92ac",
    "items": [
     {
+     "date": "2026-10-24",
+     "link": "http://www.city.tsuruoka.lg.jp/anzen/information/docomokinkyuusokuhou.html",
+     "summary": "",
+     "title": "ドコモの緊急速報「エリアメール」サービスの一時停止について"
+    },
+    {
      "date": "2026-10-23",
      "link": "http://www.city.tsuruoka.lg.jp/shisei/shicho/sityou-ugoki.html",
      "summary": "",
@@ -988,12 +994,6 @@
      "link": "http://www.city.tsuruoka.lg.jp/bunka/manabi/oshirase/josei-osirase.html",
      "summary": "",
      "title": "女性センターからのお知らせ"
-    },
-    {
-     "date": "2026-10-22",
-     "link": "http://www.city.tsuruoka.lg.jp/shisei/shiyakusyo/infomation/atsumi/joho/nourinsuisanfes.html",
-     "summary": "",
-     "title": "温海農林水産まつり開催!"
     }
    ],
    "name": "鶴岡市",
@@ -4435,6 +4435,12 @@
      "title": "第2回山梨県新たな地域医療構想策定検討会の開催について"
     },
     {
+     "date": "2026-10-22",
+     "link": "https://www.pref.yamanashi.jp/release/kenhaku/0810/kenhaku-closed.html",
+     "summary": "山梨県立博物館はLED工事のため11月に常設展休室、12月から1月1日まで全館休館します。",
+     "title": "山梨県立博物館LED化工事にともなう常設展示室休室および臨時休館のお知らせ"
+    },
+    {
      "date": "2026-10-21",
      "link": "https://www.pref.yamanashi.jp/release/sangyo-sin/1023.html",
      "summary": "",
@@ -4445,12 +4451,6 @@
      "link": "https://www.pref.yamanashi.jp/release/san-jin/0810/cuu0810.html",
      "summary": "",
      "title": "やまなしキャリアアップ・ユニバーシティ(CUU)に係る情報漏洩の可能性について"
-    },
-    {
-     "date": "2026-10-21",
-     "link": "https://www.pref.yamanashi.jp/release/san-jin/0810/otonanomanabinaoshi0810.html",
-     "summary": "",
-     "title": "社会人基礎力養成講座に係る情報漏洩の可能性について"
     }
    ],
    "name": "山梨県庁",
@@ -4486,5 +4486,5 @@
    "title": ""
   }
  ],
- "fetched_at": "2026-10-24T08:57:30.939148+09:00"
+ "fetched_at": "2026-10-24T10:22:01.352776+09:00"
 }
