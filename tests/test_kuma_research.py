@@ -70,6 +70,7 @@ class PublishedNotesTest(unittest.TestCase):
     def test_the_credits_are_the_ones_the_data_files_carry(self):
         credits = {json.loads(p.read_text(encoding="utf-8")).get("credit") for p in (ROOT / "data").glob("*_kuma.json")}
         credits.add("出典:環境省「クマに関する各種情報・取組」の公表資料(速報値)を加工して作成。環境省が作成したものではありません")      # the Ministry's tables (data/env_kuma.json has no credit field: this is the site's own footer text, see build.SOURCE_HTML)
+        credits |= {"出典:" + c for c in list(credits) if c}      # a data file whose credit has no leading 出典 (higumap_kuma.json) is credited with the prefix the note check asks for
         self.assertIn("環境省「クマに関する各種情報・取組」", re.sub(r"<[^>]+>", "", build.SOURCE_HTML))
         for d in DOCS:
             for c in d["credits"]:
