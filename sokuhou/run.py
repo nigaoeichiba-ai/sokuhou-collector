@@ -2,12 +2,18 @@
 
 Each source is isolated: one failing source never blocks the others, and a result that fails its sanity
 check is NOT stored (the previous good file stays). Exit code is 1 if any source failed, so CI shows it.
+
+One exception: a source marked `keep_if_blocked` whose site answers 403 Forbidden to our request keeps its previous file and is
+reported as a warning, not a failure, for up to BLOCKED_KEEP_DAYS days (a block is the publisher's decision, not a bug of ours; we do not retry,
+change our User-Agent or go around it).  After that the source fails again, so a long block cannot go unnoticed.
 """
 from __future__ import annotations
 
 import re
 import sys
+import urllib.error
 from dataclasses import dataclass
+from datetime import date, datetime
 from pathlib import Path
 from typing import Callable
 
@@ -59,6 +65,17 @@ class Source:
     collect: Callable[[], dict]
     check: Callable[[dict | None, dict], None] = lambda old, new: None
     merge: Callable[[dict | None, dict], dict] | None = None
+    keep_if_blocked: bool = False
+
+
+BLOCKED_KEEP_DAYS = 21
+
+
+def _days_since_fetch(old: dict | None, today: date) -> int | None:
+    try:
+        return (today - date.fromisoformat(str(old["fetched_at"])[:10])).days
+    except (TypeError, KeyError, ValueError):
+        return None
 
 
 def check_minwage(old, new):
@@ -182,7 +199,8 @@ GROUPS: dict[str, list[Source]] = {
         Source("fukushima_kuma", fukushima_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("niigata_kuma", niigata_kuma.collect, check_pref_bear),
         Source("yamagata_kuma", yamagata_kuma.collect, check_counts_bear, corroborated.carry_over),
-        Source("aomori_kuma", aomori_kuma.collect, check_counts_bear, corroborated.carry_over),
+        # kumalog-aomori.info answers GitHub's runners with 403 (2026-10-22 on): keep the last file, show a warning, fail after BLOCKED_KEEP_DAYS
+        Source("aomori_kuma", aomori_kuma.collect, check_counts_bear, corroborated.carry_over, keep_if_blocked=True),
         Source("nara_kuma", nara_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("saitama_kuma", saitama_kuma.collect, check_counts_bear, corroborated.carry_over),
         Source("otsu_kuma", otsu_kuma.collect, check_counts_bear),
@@ -202,8 +220,11 @@ GROUPS: dict[str, list[Source]] = {
 }
 
 
-def run_group(sources: list[Source], data_dir: Path) -> tuple[list[str], dict[str, str]]:
+def run_group(sources: list[Source], data_dir: Path, kept: dict[str, str] | None = None,
+              today: date | None = None) -> tuple[list[str], dict[str, str]]:
+    """(changed sources, {failed source: message}).  `kept`, if given, receives {source: message} for the blocked sources whose previous file was kept."""
     changed, errors = [], {}
+    today = today or datetime.now(kumalib.JST).date()
     for src in sources:
         if kumalib.is_stopped(src.name):      # the publisher asked us to stop: not collected (and the site ignores its stored file)
             continue
@@ -216,6 +237,14 @@ def run_group(sources: list[Source], data_dir: Path) -> tuple[list[str], dict[st
                 new = src.merge(old, new)
             if store.write_if_changed(path, new):
                 changed.append(src.name)
+        except urllib.error.HTTPError as e:
+            msg = f"{type(e).__name__}: {e}"
+            age = _days_since_fetch(store.read(path), today) if src.keep_if_blocked and e.code == 403 else None
+            if age is not None and age <= BLOCKED_KEEP_DAYS:
+                if kept is not None:
+                    kept[src.name] = f"{msg} (blocked; the file fetched {age} days ago is kept)"
+            else:
+                errors[src.name] = msg + (f" (blocked for {age} days: over {BLOCKED_KEEP_DAYS})" if age is not None else "")
         except Exception as e:  # noqa: BLE001 - isolate every source; report all failures at the end
             errors[src.name] = f"{type(e).__name__}: {e}"
     return changed, errors
@@ -225,8 +254,12 @@ def main(argv: list[str]) -> int:
     if len(argv) != 2 or argv[1] not in GROUPS:
         print(f"usage: python -m sokuhou.run {'|'.join(GROUPS)}", file=sys.stderr)
         return 2
-    changed, errors = run_group(GROUPS[argv[1]], DATA_DIR)
+    kept: dict[str, str] = {}
+    changed, errors = run_group(GROUPS[argv[1]], DATA_DIR, kept)
     print("changed:", ", ".join(changed) or "(none)")
+    for name, msg in kept.items():
+        print(f"BLOCKED {name}: {msg}", file=sys.stderr)
+        print(f"::warning title=source blocked ({name}), previous data kept::{msg[:300]}".replace(chr(10), " "), file=sys.stderr)
     for name, msg in errors.items():
         print(f"FAILED {name}: {msg}", file=sys.stderr)
         # a GitHub Actions annotation: it stays readable on the run page and through the public API (the step log needs a sign-in)
