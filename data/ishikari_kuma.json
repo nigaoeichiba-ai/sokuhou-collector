@@ -1,8 +1,8 @@
 {
- "as_of": "2026-10-17",
+ "as_of": "2026-10-24",
  "bad_coords": 0,
  "credit": "出典:石狩市「石狩市ヒグマ出没情報」(石狩市オープンデータ、クリエイティブ・コモンズ・ライセンス表示4.0国際 https://creativecommons.org/licenses/by/4.0/deed.ja)の日時・場所・種類・座標を、当サイトが整理して利用しています(改変しています。石狩市が作成したものではありません)",
- "fetched_at": "2026-10-20T06:17:26.450563+09:00",
+ "fetched_at": "2026-10-25T06:17:34.304248+09:00",
  "fy_current": "R08",
  "monthly": {
   "R02": {
@@ -59,7 +59,7 @@
    "9": 27
   },
   "R08": {
-   "10": 3,
+   "10": 4,
    "4": 2,
    "5": 6,
    "6": 3,
@@ -69,6 +69,16 @@
   }
  },
  "sightings": [
+  {
+   "city": "石狩市",
+   "count": null,
+   "kind": "目撃",
+   "lat": 43.3156,
+   "lon": 141.4288,
+   "observed_at": "2026-10-24T15:00:00+09:00",
+   "place": "厚田望来489番地付近",
+   "species": "ヒグマ"
+  },
   {
    "city": "石狩市",
    "count": null,
@@ -310,7 +320,7 @@
    "species": "ヒグマ"
   }
  ],
- "sightings_in_window": 220,
+ "sightings_in_window": 221,
  "source": "ishikari",
  "source_file": "https://services7.arcgis.com/9WKv3OOuUkGgAibZ/arcgis/rest/services/%E7%9F%B3%E7%8B%A9%E5%B8%82%E3%83%92%E3%82%B0%E3%83%9E%E5%87%BA%E6%B2%A1%E6%83%85%E5%A0%B1/FeatureServer/0",
  "source_page": "https://www.city.ishikari.hokkaido.jp/kurashi/kankyo/1001830/1002415.html",
