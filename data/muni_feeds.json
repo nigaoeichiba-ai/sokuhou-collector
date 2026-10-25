@@ -1471,10 +1471,28 @@
    "id": "d02ea5db63",
    "items": [
     {
+     "date": "2026-10-26",
+     "link": "https://www.pref.fukushima.lg.jp/sec/55015c/kouzi.html",
+     "summary": "農林水産部・土木部の本庁発注分、県北農林事務所、県北建設事務所発注分(所管区域:福島市、二本松市、伊達市、本宮市、伊達郡、安達郡)、県北流域下水道建設事務所発注分",
+     "title": "公共工事条件付一般競争入札公告(出納局)"
+    },
+    {
+     "date": "2026-10-26",
+     "link": "https://www.pref.fukushima.lg.jp/sec/01260a/soso-nyusatsukokoku.html",
+     "summary": "",
+     "title": "公共工事条件付一般競争入札公告(相双地方振興局出納室)"
+    },
+    {
      "date": "2026-10-25",
      "link": "https://www.pref.fukushima.lg.jp/sec/41360a/insta.html",
      "summary": "",
      "title": "インスタグラム掲載記事の詳細はこちら"
+    },
+    {
+     "date": "2026-10-25",
+     "link": "https://www.pref.fukushima.lg.jp/site/kokoronomori/day-care.html",
+     "summary": "",
+     "title": "デイケアとは、1日の流れ、プログラム"
     },
     {
      "date": "2026-10-25",
@@ -1541,24 +1559,6 @@
      "link": "https://www.pref.fukushima.lg.jp/site/portal/ps-kukan-monitoring.html",
      "summary": "",
      "title": "空間線量モニタリング結果情報"
-    },
-    {
-     "date": "2026-10-23",
-     "link": "https://www.pref.fukushima.lg.jp/site/edu/zaimu13.html",
-     "summary": "",
-     "title": "施設財産室入札情報"
-    },
-    {
-     "date": "2026-10-23",
-     "link": "https://www.pref.fukushima.lg.jp/sec/41310a/skyline-kouyou-info.html",
-     "summary": "スカイライン 紅葉 紅葉情報",
-     "title": "スカイライン 紅葉情報"
-    },
-    {
-     "date": "2026-10-23",
-     "link": "https://www.pref.fukushima.lg.jp/sec/01250a/deiseminar2026.html",
-     "summary": "",
-     "title": "DEIセミナー(南会津町・檜枝岐村)"
     }
    ],
    "name": "福島県庁",
@@ -1570,6 +1570,18 @@
    "feed": "https://www.pref.fukushima.lg.jp/rss/10/list10.xml",
    "id": "5af5c7924f",
    "items": [
+    {
+     "date": "2026-10-26",
+     "link": "https://www.pref.fukushima.lg.jp/sec/55015c/kouzi.html",
+     "summary": "農林水産部・土木部の本庁発注分、県北農林事務所、県北建設事務所発注分(所管区域:福島市、二本松市、伊達市、本宮市、伊達郡、安達郡)、県北流域下水道建設事務所発注分",
+     "title": "公共工事条件付一般競争入札公告(出納局)"
+    },
+    {
+     "date": "2026-10-26",
+     "link": "https://www.pref.fukushima.lg.jp/sec/01260a/soso-nyusatsukokoku.html",
+     "summary": "",
+     "title": "公共工事条件付一般競争入札公告(相双地方振興局出納室)"
+    },
     {
      "date": "2026-10-23",
      "link": "https://www.pref.fukushima.lg.jp/site/edu/zaimu13.html",
@@ -1647,18 +1659,6 @@
      "link": "https://www.pref.fukushima.lg.jp/sec/32011a/nyuusatu-kouji.html",
      "summary": "",
      "title": "一般競争入札等の公告、工事の発注見通し、入札の結果(商工労働部)"
-    },
-    {
-     "date": "2026-10-22",
-     "link": "https://www.pref.fukushima.lg.jp/sec/41035c/reiwa8nenndonyuusatsujoho.html",
-     "summary": "入札 契約 福島県土木部",
-     "title": "令和8年度入札・契約情報(土木部道路管理課)"
-    },
-    {
-     "date": "2026-10-22",
-     "link": "https://www.pref.fukushima.lg.jp/site/edu/nyusatu-syakyou2.html",
-     "summary": "",
-     "title": "社会教育課入札情報"
     }
    ],
    "name": "福島県庁",
@@ -2892,6 +2892,12 @@
    "id": "96f2ab737b",
    "items": [
     {
+     "date": "2026-10-26",
+     "link": "https://www.pref.niigata.lg.jp/sec/gakko_arakawa/arakawa20261110.html",
+     "summary": "",
+     "title": "暖房用白灯油購入単価契約(一般競争入札、入札日11月10日)荒川高等学校"
+    },
+    {
      "date": "2026-10-25",
      "link": "https://www.pref.niigata.lg.jp/site/aicho/20260402aicho.html",
      "summary": "愛鳥センターからの新着情報です。",
@@ -2908,6 +2914,12 @@
      "link": "https://www.pref.niigata.lg.jp/site/aicho/20261016aicho.html",
      "summary": "鳴き声講座の内容です",
      "title": "令和8年度 講座「めざせ調査員!鳥の鳴き声勉強会(秋)」を開催しました"
+    },
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.niigata.lg.jp/site/keiryo/kigyouhunsitu.html",
+     "summary": "",
+     "title": "企業情報が記載された書類の紛失について"
     },
     {
      "date": "2026-10-23",
@@ -2968,18 +2980,6 @@
      "link": "https://www.pref.niigata.lg.jp/site/saiyou3/blog.html",
      "summary": "新潟県採用担当ブログ",
      "title": "【採用担当ブログ更新!】令和8年10月23日:民間から県庁へ。転職して見つけた「まちの未来をつくる仕事」"
-    },
-    {
-     "date": "2026-10-23",
-     "link": "https://www.pref.niigata.lg.jp/site/kyoiku/5gou-saihatubousi.html",
-     "summary": "",
-     "title": "新潟県いじめ防止対策等に関する委員会から提出された、「第5号案件調査報告書」の提言を受けて策定した再発防止に向けた取組に関する教育長コメント"
-    },
-    {
-     "date": "2026-10-23",
-     "link": "https://www.pref.niigata.lg.jp/sec/nosanengei/kiribanakyousinnkai.html",
-     "summary": "",
-     "title": "令和8年度新潟県花きコンテスト(切花共進会の部)を開催しました"
     }
    ],
    "name": "新潟県庁",
@@ -2991,6 +2991,12 @@
    "feed": "https://www.pref.niigata.lg.jp/rss/10/list2.xml",
    "id": "3e98598ed8",
    "items": [
+    {
+     "date": "2026-10-23",
+     "link": "https://www.pref.niigata.lg.jp/site/keiryo/kigyouhunsitu.html",
+     "summary": "",
+     "title": "企業情報が記載された書類の紛失について"
+    },
     {
      "date": "2026-10-23",
      "link": "https://www.pref.niigata.lg.jp/sec/kotogakko/nyugakushasenbatsu.html",
@@ -3074,12 +3080,6 @@
      "link": "https://www.pref.niigata.lg.jp/site/toshiseisaku/r8nagaoka-toshisaikaihatsu.html",
      "summary": "",
      "title": "長岡都市計画都市再開発の方針の決定に関する素案説明会と公聴会を開催します"
-    },
-    {
-     "date": "2026-10-22",
-     "link": "https://www.pref.niigata.lg.jp/sec/ict/php-hp-kohyou.html",
-     "summary": "PHPの脆弱性公表にともない、県HPの一部機用停止します。",
-     "title": "脆弱性対応に伴う県ホームページの一部機能の停止について"
     }
    ],
    "name": "新潟県庁",
@@ -3610,6 +3610,18 @@
    "id": "0330a26da3",
    "items": [
     {
+     "date": "2026-10-26",
+     "link": "https://www.pref.tochigi.lg.jp/e71/shisetsu/fukushi/syukutyokuinnbosyuu2026.html",
+     "summary": "",
+     "title": "矢板市・任期5月・宿直員の募集(那須学園)"
+    },
+    {
+     "date": "2026-10-26",
+     "link": "https://www.pref.tochigi.lg.jp/e04/kyoutei-portal/kyoutei-portal.html",
+     "summary": "",
+     "title": "医療措置協定締結医療機関向けポータルページを更新しました!"
+    },
+    {
      "date": "2026-10-25",
      "link": "https://www.pref.tochigi.lg.jp/a01/pref/chiji/page/260427.html",
      "summary": "",
@@ -3686,18 +3698,6 @@
      "link": "https://www.pref.tochigi.lg.jp/e09/pref/toukei/sonota/r6hokentoukeinenpou_mainpage.html",
      "summary": "",
      "title": "令和6(2024)年版 栃木県保健統計年報"
-    },
-    {
-     "date": "2026-10-22",
-     "link": "https://www.pref.tochigi.lg.jp/h02/hojokin/2026.html",
-     "summary": "",
-     "title": "インフラDXはじめの一歩補助金"
-    },
-    {
-     "date": "2026-10-22",
-     "link": "https://www.pref.tochigi.lg.jp/e07/welfare/iryou/yakuji/hanbaigyou/package.html",
-     "summary": "医療機関等が賃金・物価上昇の影響を受けている状況を踏まえ、医療機関等の従事者の処遇の改善につなげるため、医療機関等に対して賃上げに必要な経費や、診療等に必要な経費に係る給付金を支給するための補助を実施する事業です。",
-     "title": "医療機関等における賃上げ・物価上昇に対する支援事業について"
     }
    ],
    "name": "栃木県庁",
@@ -4468,5 +4468,5 @@
    "title": ""
   }
  ],
- "fetched_at": "2026-10-26T06:21:58.549380+09:00"
+ "fetched_at": "2026-10-26T08:21:58.197355+09:00"
 }
