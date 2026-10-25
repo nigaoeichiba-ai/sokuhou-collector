@@ -1,0 +1,17 @@
+{
+ "date": "2026-10-26",
+ "weekday": "月",
+ "words": 0,
+ "rss": 2274,
+ "searches": 7,
+ "fetches": 12,
+ "candidates": 6,
+ "cards": 6,
+ "rejected": 0,
+ "rejected_reasons": {},
+ "queries": [{"q": "日本シリーズ2026 日程(NPB公式)", "official_hit": true, "cards": 6}],
+ "failed_words": [],
+ "injections": [],
+ "results_written": 3,
+ "note": "利用者ワード0件。日本シリーズ第2〜7戦のカードを NPB 公式から追加。結果3件(日本シリーズ第2戦・WS第2戦・全日本大学女子駅伝)。F1アメリカGPとエル・クラシコは日本時間26日朝の開催で、記事がまだ無く、次回に回す。独自の新規ワード収集は行えていない(目標30に届かず)。"
+}
