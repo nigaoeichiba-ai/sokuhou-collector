@@ -217,6 +217,37 @@ def entry_of(day: dict | None, ref: str) -> dict | None:
     return rows.get(ref)
 
 
+def product_key(entry: dict | None) -> str | None:
+    """What names the product of a daily entry: the Rakuten item code or the Amazon ASIN."""
+    return (entry or {}).get("code") or (entry or {}).get("asin")
+
+
+def featured_codes(feats: list[dict], days: list[dict]) -> dict[str, str]:
+    """{product code or ASIN: slug of its article} for the articles that exist.  The same product can be picked again on another day; its article exists already (2026-10-25:
+    bodum-pavina-glass was drafted, drawn and reviewed a second time before anyone noticed)."""
+    by_day = {d["date"]: d for d in days}
+    out: dict[str, str] = {}
+    for f in feats:
+        key = product_key(entry_of(by_day.get(f["date"]), f["ref"]))
+        if key:
+            out.setdefault(key, f["slug"])
+    return out
+
+
+def duplicate_features(feats: list[dict], days: list[dict]) -> list[str]:
+    """Articles that are about the same product: an article exists once per product."""
+    seen: dict[str, str] = {}
+    bad = []
+    by_day = {d["date"]: d for d in days}
+    for f in feats:
+        key = product_key(entry_of(by_day.get(f["date"]), f["ref"]))
+        if key and key in seen:
+            bad.append(f"{f['slug']} and {seen[key]} are about the same product ({key})")
+        elif key:
+            seen[key] = f["slug"]
+    return bad
+
+
 def _list(items: list[str], cls: str = "") -> str:
     return f'<ul class="{cls}">' + "".join(f"<li>{esc(x)}</li>" for x in items) + "</ul>"
 
@@ -352,6 +383,9 @@ def build_pages(d: dict, cfg: dict, preview: bool) -> dict[str, str]:
     feats = d["c"].get("features") or []
     days = {x["date"]: x for x in (d["c"].get("daily") or [])}
     out: dict[str, str] = {}
+    dupes = duplicate_features(feats, list(days.values()))
+    if dupes:
+        raise BuildError("; ".join(dupes[:3]))
     for f in feats:
         day = days.get(f["date"])
         entry = entry_of(day, f["ref"])

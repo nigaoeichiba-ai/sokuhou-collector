@@ -1,6 +1,7 @@
 """Helpers for the person (or routine) who writes the day's picks: find candidates, read a Rakuten product page as text.
 
     python -m sites.yorokobu.pickresearch candidates [--n 40]      Rakuten candidates from the stored ranking data (not used in the last 30 days)
+    python -m sites.yorokobu.pickresearch featurable [YYYY-MM-DD]    the day's entries (r1.. a1..) for the deep-read article, each marked 記事済み when the product has an article already
     python -m sites.yorokobu.pickresearch page <item code> [...]   save the product page's visible text to work/picks/<code>.txt and print its key lines
 
 The Amazon side is read in a real browser (see FACTORY_PLAYBOOK.md, 「毎日のおすすめ」): search pages and /dp/<ASIN> pages are fetched with `fetch()` from a tab that is
@@ -21,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from sites.yorokobu import dailypicks as dp  # noqa: E402
+from sites.yorokobu import features as feats  # noqa: E402
 
 WORK = ROOT.parent / "sokuhou-sites" / "work" / "picks"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
@@ -50,12 +52,34 @@ def item_url(code: str, ranking: dict) -> str | None:
     return None
 
 
+def featured() -> dict[str, str]:
+    """{product code or ASIN: slug} of the deep-read articles that exist."""
+    return feats.featured_codes(_features(), dp.load_days())
+
+
+def _features() -> list[dict]:
+    d = ROOT / "sites" / "yorokobu" / "content" / "features"
+    return [json.loads(p.read_text(encoding="utf-8")) for p in sorted(d.glob("*.json"))] if d.exists() else []
+
+
+def featurable(day_iso: str | None = None) -> list[tuple[str, str, str]]:
+    """[(ref, product code or ASIN, 記事済み: slug | '')] for the entries of a day (the newest by default)."""
+    days = dp.load_days()
+    day = next((x for x in days if x["date"] == day_iso), days[0] if not day_iso else None)
+    if not day:
+        return []
+    done = feats.featured_codes(_features(), days)
+    rows = [(f"r{i}", e["code"]) for i, e in enumerate(day["rakuten"], 1)] + [(f"a{i}", e["asin"]) for i, e in enumerate(day["amazon"], 1)]
+    return [(ref, key, f"記事済み: {done[key]}" if key in done else "") for ref, key in rows]
+
+
 def candidates(n: int, days: int = 30) -> list[dict]:
     ranking = json.loads((ROOT / "data" / "yorokobu_ranking.json").read_text(encoding="utf-8"))
     used = set()
     for d in dp.load_days():
         if date.fromisoformat(d["date"]) >= date.today() - timedelta(days=days):
             used |= {e["code"] for e in d["rakuten"]}
+    used |= set(featured())                      # a product that has an article is not picked again either
     out, seen = [], set()
     for rank in range(10):                       # round by round over the genres, so that one genre does not fill the list
         for slug, seg in ranking["segments"].items():
@@ -74,12 +98,18 @@ def main() -> None:
     sub = ap.add_subparsers(dest="cmd", required=True)
     c = sub.add_parser("candidates")
     c.add_argument("--n", type=int, default=40)
+    f = sub.add_parser("featurable")
+    f.add_argument("day", nargs="?")
     g = sub.add_parser("page")
     g.add_argument("codes", nargs="+")
     a = ap.parse_args()
     if a.cmd == "candidates":
         for it in candidates(a.n):
             print(f'{it["code"]} | {it["genre"]} | {it["name"][:56]} | {it["price"]}円 ★{it["rating"]} ({it["reviews"]}件) | {it["shop"][:12]}')
+        return
+    if a.cmd == "featurable":
+        for ref, key, mark in featurable(a.day):
+            print(f"{ref:4} {key:28} {mark}")
         return
     ranking = json.loads((ROOT / "data" / "yorokobu_ranking.json").read_text(encoding="utf-8"))
     WORK.mkdir(parents=True, exist_ok=True)
