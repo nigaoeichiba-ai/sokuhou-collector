@@ -253,6 +253,11 @@ def raises_page(d: dict, k) -> dict:
         bullets.append(f"引上げ額が0円の都道府県が出た年度は、{len(zero_years)}回あります。" + "、".join(f"{k.esc(x['label'])}は{x['n_zero']}" for x in zero_years) + "都道府県でした。")
     bullets.append(f"{k.esc(last['label'])}の都道府県別の引上げ額は、+{last['min']}円({k.esc(names(last['lo_rows']))})から+{last['max']}円({k.esc(names(last['hi_rows']))})です。")
     li = "".join(f"<li>{b}</li>\n" for b in bullets)
+    vs = sorted(d["rows"], key=lambda r: (-(r["raise"] - last["avg_up"]), r["name"]))
+    n_above = sum(1 for r in vs if r["raise"] > last["avg_up"])
+    n_same = sum(1 for r in vs if r["raise"] == last["avg_up"])
+    n_below = n - n_above - n_same
+    vs_rows = [[_link(r), f"+{r['raise']}円", "0円" if r["raise"] == last["avg_up"] else f"{r['raise'] - last['avg_up']:+d}円".replace("-", "−")] for r in vs]
     body = f"""{k.crumbs([("全国", "/"), ("分析", "/analysis/"), ("引上げ額", None)])}
 <h1>最低賃金の引上げ額は年ごとにどう変わったか</h1>
 <p class="lead">全国加重平均の引上げ額は、{k.esc(rs[0]['label'])}の+{rs[0]['avg_up']}円から、最も大きい{k.esc(peak['label'])}の+{peak['avg_up']}円まで動きました。{k.esc(last['label'])}は+{last['avg_up']}円で、{k.esc(change)}です。</p>
@@ -265,6 +270,9 @@ def raises_page(d: dict, k) -> dict:
 <h2>年度別の一覧</h2>
 <p>引上げ率は、前年度の全国加重平均(円未満を四捨五入)に対する、引上げ額の割合です。</p>
 {_table(["年度", "全国加重平均の引上げ", "引上げ率", "最大の引上げ(都道府県)", "最小の引上げ(都道府県)", "30円以上の都道府県数", "50円以上の都道府県数"], rows)}
+<h2>{k.esc(last['label'])}の引上げ額と全国平均の差</h2>
+<p>{k.esc(last['label'])}の全国加重平均の引上げ額は+{last['avg_up']}円です。これより引上げ額が大きかったのは{n_above}都道府県、同じは{n_same}都道府県、小さかったのは{n_below}都道府県でした。差の大きい順に並べています。</p>
+{_table(["都道府県", "引上げ額", "全国平均の引上げ額との差"], vs_rows)}
 <h2>数え方</h2>
 <ul>
 <li>引上げ額は、その年度の額から前の年度の額を引いた値です。</li>

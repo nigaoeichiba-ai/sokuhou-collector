@@ -94,6 +94,20 @@ class AnalysisPagesTest(SiteFixture):
         page = self.read("analysis/raises/index.html").replace(f"<td>+{up}円</td>", f"<td>+{up + 1}円</td>", 1)
         self.assertEqual(wrong_raise_rows(page, raw), [2026])
 
+    def test_the_raise_vs_national_average_table_matches_the_workbook(self):
+        raw = _raw()
+        avg = raw["national_weighted_average"]
+        nat = round(avg["2026"]) - round(avg["2025"])
+        page = self.read("analysis/raises/index.html")
+        head = re.search(r"<h2>[^<]*の引上げ額と全国平均の差</h2>", page)
+        self.assertIsNotNone(head)
+        rows = rows_of(page, head.group(0))[1:]
+        self.assertEqual(len(rows), 47)
+        diffs = [a - b for a, b in zip(amounts(raw, 2026), amounts(raw, 2025))]
+        shown = [int(re.sub(r"[^0-9+−-]", "", r[2]).replace("−", "-") or 0) for r in rows]
+        self.assertEqual(shown, sorted((x - nat for x in diffs), reverse=True))
+        self.assertIn(f"これより引上げ額が大きかったのは{sum(1 for x in diffs if x > nat)}都道府県", page)
+
     def test_every_milestone_year_is_the_first_year_at_or_above_the_amount(self):
         raw = _raw()
         rows = {r[0]: r for r in rows_of(self.read("analysis/milestones/index.html"), "<h2>都道府県別の到達年度</h2>")[1:]}
