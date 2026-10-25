@@ -49,6 +49,24 @@ class MinnaBuildTest(unittest.TestCase):
             self.assertNotIn(rare, tags)
         self.assertIn("/tag/", self.read("sitemap.xml"))
 
+    def test_the_keyword_hub_lists_every_keyword_page_once_with_its_count(self):
+        tags = build.tag_list(self.items)
+        html = self.read("tag/index.html")
+        self.assertIn("https://minna-no-illust.com/tag/</loc>", self.read("sitemap.xml"))
+        self.assertIn('href="/tag/"', self.read("illust/index.html"))
+        links = re.findall(r'<a href="(/tag/[0-9a-f]{10}/)">([^<]*)</a>', html)
+        self.assertEqual(sorted(u for u, _ in links), sorted(build.tag_url(t) for t in tags))
+        for tag in tags:
+            self.assertIn((build.tag_url(tag), f"{tag}({len(build.tagged(self.items, tag))})"), links)
+        self.assertIn(f"{len(tags)}語", html)
+
+    def test_kana_row_reads_katakana_as_hiragana_and_puts_other_words_last(self):
+        self.assertEqual(build.kana_row("ネコ"), "な行")
+        self.assertEqual(build.kana_row("さくら"), "さ行")
+        self.assertEqual(build.kana_row("ぱんだ"), "は行")
+        self.assertEqual(build.kana_row("犬"), "漢字・英数字ほか")
+        self.assertEqual(build.kana_row("A4"), "漢字・英数字ほか")
+
     def test_a_guide_set_carrying_every_animals_name_does_not_fill_one_animals_page(self):
         """The 犬 page led with a sparrow: the animal guide set tags all twelve items 犬, ハムスター, カエル ... (weekly review 2026-10-12)."""
         guide = [i for i in self.items if i["series"] == "realistic-animals-pets"]
