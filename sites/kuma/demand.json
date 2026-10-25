@@ -1,7 +1,7 @@
 {
  "_note": "Pages that Google Search showed at least once (Search Console, 'Pages' report, 28 days to 2026-10-17; the site's first impressions were on 2026-10-06). Municipality pages (the m-xxxxxx part of /live/<pref>/m-xxxxxx/) and week pages (/digest/<week>/). The build keeps these indexable; see sites/kuma/indexing.py. Refresh it from Search Console (acquisition routine).",
- "measured": "2026-10-24",
- "window_end": "2026-10-21",
+ "measured": "2026-10-26",
+ "window_end": "2026-10-23",
  "live_cities": [
   "01611d",
   "043880",
