@@ -846,12 +846,13 @@ def specials_in_season(items, series, today):
     return out
 
 
-def illust_hub(cfg, preview, items, series) -> dict:
+def illust_hub(cfg, preview, items, series, has_tags: bool = False) -> dict:
     chips = "".join(f'<a href="/genre/{g[0]}/">{esc(g[1])}</a>' for g in GENRES if any(i["genre"] == g[0] for i in items))
     tchips = "".join(f'<a href="/touch/{t[0]}/">{esc(t[1])}</a>' for t in TOUCHES if any(i["touch"] == t[0] for i in items))
     head = (f'<h1>イラスト一覧</h1><p class="lead">すべて無料、商用OK、クレジット不要です。全{len(items)}点。ジャンルやタッチで絞り込めます。</p>'
             f'<p class="chip-label">ジャンル</p><nav class="chips">{chips}</nav><p class="chip-label">タッチ</p><nav class="chips">{tchips}</nav>'
-            f'{hub_facts_box("touch", items, series)}')
+            f'{hub_facts_box("touch", items, series)}'
+            + ('<p class="meta">ほかに、<a href="/tag/">キーワードの五十音一覧</a>からも探せます。</p>' if has_tags else ""))
     ordered = sorted(items, key=lambda i: (i["added"], i["id"]), reverse=True)
     return paged(cfg, preview, "/illust/", ordered, head, f"イラスト一覧 | {cfg['site_name']}",
                  "動物、年賀状、季節の行事、食べ物、フレームなど、すべてのイラストの一覧です。無料・商用OK・登録不要。", [("トップ", "/"), ("イラスト", None)])
@@ -917,6 +918,42 @@ def tag_pages(cfg, preview, items, tags: list[str], series: list[dict] | None = 
                       f"{tag}のイラスト{len(its)}点。無料・商用OK・登録不要の透明PNG。", [("トップ", "/"), (tag, None)])
         out.update(pages)
     return out
+
+
+KANA_ROWS = [("あ行", "あいうえおぁぃぅぇぉ"), ("か行", "かきくけこがぎぐげご"), ("さ行", "さしすせそざじずぜぞ"), ("た行", "たちつてとだぢづでどっ"),
+             ("な行", "なにぬねの"), ("は行", "はひふへほばびぶべぼぱぴぷぺぽ"), ("ま行", "まみむめも"), ("や行", "やゆよゃゅょ"), ("ら行", "らりるれろ"), ("わ行", "わをんゐゑ")]
+
+
+def kana_row(tag: str) -> str:
+    """The 五十音 row a keyword starts with (katakana read as hiragana); words that start with a kanji, a letter or a digit have no reading in the data, so they share one group."""
+    c = tag[0]
+    if "ァ" <= c <= "ヶ":
+        c = chr(ord(c) - 0x60)
+    for name, chars in KANA_ROWS:
+        if c in chars:
+            return name
+    return "漢字・英数字ほか"
+
+
+def tag_hub(cfg, preview, items, tags: list[str]) -> str:
+    """/tag/: every keyword page in one list, grouped by the row its first letter belongs to; each link shows how many pictures the page holds."""
+    groups: dict[str, list[tuple[str, int]]] = {}
+    for t in tags:
+        groups.setdefault(kana_row(t), []).append((t, len(tagged(items, t))))
+    order = [n for n, _ in KANA_ROWS if n in groups] + (["漢字・英数字ほか"] if "漢字・英数字ほか" in groups else [])
+    jump = "".join(f'<a href="#tag-{order.index(n)}">{esc(n)}</a>' for n in order)
+    secs = "".join(
+        f'<section style="margin-top:36px" id="tag-{k}"><h2><span class="scribble">{esc(n)}</span></h2><nav class="chips">'
+        + "".join(f'<a href="{tag_url(t)}">{esc(t)}({c})</a>' for t, c in sorted(groups[n], key=lambda x: (-x[1], x[0]))) + "</nav></section>"
+        for k, n in enumerate(order))
+    body = f"""{crumbs([("トップ", "/"), ("キーワード", None)])}
+<h1>キーワードからイラストを探す</h1>
+<p class="lead">イラストに付いているキーワードのうち、{MIN_TAG}点以上あるものを{len(tags)}語、五十音の行ごとに並べました。カッコの中は、その語のイラストの点数です。無料・商用OK・クレジット不要です。</p>
+<p>漢字や英数字で始まる語は読みが分からないので、まとめて最後に置いています。語が見つからないときは、<a href="/search/">イラストを検索</a>してください。</p>
+<nav class="chips" aria-label="五十音の行">{jump}</nav>
+{secs}"""
+    return page(cfg, preview, path="/tag/", title=f"キーワードからイラストを探す 五十音の一覧 | {cfg['site_name']}",
+                description=f"イラストのキーワード{len(tags)}語を五十音の行ごとに並べた一覧です。点数つきで、無料・商用OK・登録不要の透明PNGが見つかります。", body=body)
 
 
 def touch_pages(cfg, preview, items, series) -> dict:
@@ -1655,12 +1692,14 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         pages["pose/index.html"] = pose_html
     if month_filled >= 6:
         pages["month/index.html"] = month_html
-    pages.update(illust_hub(cfg, preview, items, series))
+    tags = tag_list(items)
+    pages.update(illust_hub(cfg, preview, items, series, bool(tags)))
     pages.update(genre_pages(cfg, preview, items, series))
     pages.update(touch_pages(cfg, preview, items, series))
-    tags = tag_list(items)
     SITE["tags"] = set(tags)
     pages.update(tag_pages(cfg, preview, items, tags, series))
+    if tags:
+        pages["tag/index.html"] = tag_hub(cfg, preview, items, tags)
     pages["license/index.html"] = license_page(cfg, preview)
     pages["request/index.html"] = request_page(cfg, preview)
     pages["api/q.php"] = request_php(cfg)
