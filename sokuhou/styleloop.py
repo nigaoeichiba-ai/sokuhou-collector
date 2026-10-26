@@ -16,6 +16,7 @@ Design: sokuhou-sites/docs/STYLE_AUTOFIX_DESIGN.md.  Nothing is changed unless i
 from __future__ import annotations
 
 import argparse
+import ast
 import datetime as dt
 import difflib
 import hashlib
@@ -347,6 +348,46 @@ def save_rewrites(site: str, entries: list[dict]) -> None:
     f.write_text(json.dumps({"_note": "exact original -> rewording, applied after the build by sokuhou.styleloop (delete a line to undo it)", "entries": entries}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
 
+_TEMPLATE_TEXT: dict = {}
+
+
+def template_texts(site: str) -> dict[str, list[str]]:
+    """{file name: the text constants of the site's code (docstrings left out) or, for js / tpl files, the whole text} - what the page templates print on every page they make.
+    The same reading as tests/test_yorokobu_rewrite_scope.py, which fails a dictionary line that rewrites such a text without scope=template."""
+    key = (str(ROOT), site)
+    if key in _TEMPLATE_TEXT:
+        return _TEMPLATE_TEXT[key]
+    out: dict[str, list[str]] = {}
+    base = ROOT / "sites" / site
+    for f in sorted(base.rglob("*.py")) if base.is_dir() else []:
+        try:
+            tree = ast.parse(f.read_text(encoding="utf-8"))
+        except (OSError, SyntaxError, UnicodeDecodeError):
+            continue
+        doc = set()
+        for n in ast.walk(tree):
+            if isinstance(n, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and n.body and isinstance(n.body[0], ast.Expr)                     and isinstance(getattr(n.body[0], "value", None), ast.Constant) and isinstance(n.body[0].value.value, str):
+                doc.add(id(n.body[0].value))
+        out.setdefault(f.name, []).extend(n.value for n in ast.walk(tree) if isinstance(n, ast.Constant) and isinstance(n.value, str) and id(n) not in doc)
+    for pat in ("*.js", "*.tpl"):
+        for f in sorted(base.rglob(pat)) if base.is_dir() else []:
+            try:
+                out.setdefault(f.name, []).append(f.read_text(encoding="utf-8"))
+            except (OSError, UnicodeDecodeError):
+                continue
+    _TEMPLATE_TEXT[key] = out
+    return out
+
+
+def template_origin(site: str, old: str) -> str | None:
+    """The file of the site's code that prints this text on every page it makes (None: the text is in the content, not in a template)."""
+    key = norm(old)
+    for name, texts in template_texts(site).items():
+        if any(key in t for t in texts):
+            return name
+    return None
+
+
 SHOP_URL = re.compile(r"rakuten\.co\.jp|shopping\.yahoo|image\.rakuten|thumbnail\.image|placehold|amazon\.co\.jp|amzn\.")
 
 
@@ -361,6 +402,15 @@ def add_entry(site: str, old: str, new: str, by: str = "codex", why: str = "", k
     entries = load_rewrites(site)
     if any(e["from"] == old for e in entries):
         return False, ["already in the dictionary"]
+    origin = template_origin(site, old)
+    if origin and not any(norm(e["to"]) == old for e in entries):
+        # The dictionary replaces a text on EVERY page that has it (the 2026-10-18 incident: a wording written for one article went onto all 8).  A page edit is made for one page: it is not put in.
+        # A judged line or a person's line (the text comes up on many pages) is put in with scope=template, which says the wording fits every page the template makes.
+        if by == "editor":
+            return False, [f"this text is printed by a page template ({origin}): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"]
+        scope = "template"
+    else:
+        scope = None
     for e in entries:                                          # the text being edited is already the result of a dictionary line: compose (original -> newest wording)
         if norm(e["to"]) == old:
             e["prev"] = e["to"]
@@ -369,7 +419,7 @@ def add_entry(site: str, old: str, new: str, by: str = "codex", why: str = "", k
             e["rechecked"] = today or dt.date.today().isoformat()
             save_rewrites(site, entries)
             return True, []
-    entries.append({"from": old, "to": new, "kind": kind, "by": by, "why": why, "added": today or dt.date.today().isoformat(), **({"forced": True} if force else {}), **({} if small_edit else {"edit": True})})
+    entries.append({"from": old, "to": new, "kind": kind, "by": by, "why": why, "added": today or dt.date.today().isoformat(), **({"scope": scope} if scope else {}), **({"forced": True} if force else {}), **({} if small_edit else {"edit": True})})
     save_rewrites(site, entries)
     return True, []
 
