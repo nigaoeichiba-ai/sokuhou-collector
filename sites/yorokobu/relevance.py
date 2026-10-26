@@ -92,6 +92,37 @@ def _norm(text: str) -> str:
     return unicodedata.normalize("NFKC", text).lower().replace(" ", "")
 
 
+SHORT_KATAKANA = None     # compiled below
+BOUNDARY_TAILS = ("セット", "ギフト", "ペア", "アソート", "サンド", "タイプ")        # what may follow a short katakana kind word without making it another word
+
+
+def word_positions(name: str, word: str) -> list[int]:
+    """Where `word` stands in `name` (compared like _norm: width, case and spaces ignored; the numbers count in the text without spaces) AS A WORD.  A short katakana word
+    (up to 4 letters) that goes on into more katakana is the beginning of another word: 「トレー」 in 「トレーニング」 and 「ストレート」, 「アンテナ」 in 「アンテナショップ」, 「マグ」 in 「マグネット」
+    (weekly review 2026-10-26: a ginger syrup of an antenna shop was shown as 「アンテナ」, a solar lantern as 「トレー」)."""
+    import re
+    import unicodedata
+    n = unicodedata.normalize("NFKC", name).lower()
+    keep = [i for i, ch in enumerate(n) if not ch.isspace()]
+    s = "".join(n[i] for i in keep)
+    w = _norm(word)
+    if not w:
+        return []
+    short = bool(re.fullmatch(r"[ァ-ヶー]{1,4}", w))
+    out, at = [], s.find(w)
+    while at >= 0:
+        end = at + len(w)
+        ok = True
+        if short and end < len(keep) and keep[end] == keep[end - 1] + 1:          # the next letter touches the word (a space between them is a border)
+            rest = n[keep[end]:]
+            if re.match(r"[ァ-ヶー]", rest) and not any(rest.startswith(t) for t in BOUNDARY_TAILS):
+                ok = False
+        if ok:
+            out.append(at)
+        at = s.find(w, at + 1)
+    return out
+
+
 def fits_idea(name: str, must: list[str] | tuple[str, ...] | None, never: list[str] | tuple[str, ...] | None = None) -> bool:
     """Is this product the kind of thing the idea is about?  `must` is the idea's list of words (any one is enough; spelling variants are in the list):
     "保温タンブラー" lists タンブラー, ボトル, 水筒, so a card case that the search returned for it is not shown.  An idea without a list accepts everything.
@@ -101,15 +132,15 @@ def fits_idea(name: str, must: list[str] | tuple[str, ...] | None, never: list[s
         return False
     if not must:
         return True
-    return any(_norm(w) in n for w in must)
+    return any(word_positions(name, w) for w in must)
 
 
 def head_position(name: str, must: list[str] | tuple[str, ...] | None, limit: int = 50) -> int | None:
     """Where in the head of the title (see fits_head) the first of the words stands: 0 is the very front; None when none of them is there."""
     import re
     head = re.sub(r"[【\[（(][^】\]）)]*[】\]）)]", " ", name)
-    head = _norm(" ".join(head.split())[:limit])
-    hits = [head.find(_norm(w)) for w in (must or []) if _norm(w) and _norm(w) in head]
+    head = " ".join(head.split())[:limit]
+    hits = [p for w in (must or []) for p in word_positions(head, w)[:1]]
     return min(hits) if hits else None
 
 

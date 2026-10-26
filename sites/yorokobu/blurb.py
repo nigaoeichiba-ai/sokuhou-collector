@@ -156,13 +156,13 @@ def find_kind(title: str, kind: str | None = None, must: list[str] | None = None
     """The site's word for the sort of product.  `kind`: the page's own word (a comparison's label): the product is on the page because it is of that kind, so the word is used as it is.
     `must`: an idea's words; a title that holds one of them is of that kind.  Otherwise: a word of the site's vocabulary that the title contains."""
     t = _norm(title)
-    solid = re.sub(r"\s+", "", t).lower()                        # relevance.fits_idea compares without spaces and case, so the idea's word counts here the same way ("ホワイト ボード")
-    if kind and (not must or any(w and _norm(w).lower().replace(" ", "") in solid for w in must)):
+    from sites.yorokobu import relevance                      # the same reading of the idea's word as the gate that let the product in: spaces and case ignored, a short katakana word only as a word
+    if kind and (not must or any(w and relevance.word_positions(title, w) for w in must)):
         return kind
     if must and not kind:
-        hit = [w for w in must if w and _norm(w).lower().replace(" ", "") in solid]
+        hit = [w for w in must if w and relevance.word_positions(title, w)]
         if hit:
-            return max(hit, key=lambda w: (solid.count(_norm(w).lower().replace(" ", "")), len(w)))
+            return max(hit, key=lambda w: (len(relevance.word_positions(title, w)), len(w)))
     return _best(t, vocab()) or _best(t, vocab2())
 
 
