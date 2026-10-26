@@ -1,11 +1,13 @@
 {
- "fetched_at": "2026-10-26T16:37:37.189174+09:00",
+ "fetched_at": "2026-10-26T17:22:37.919302+09:00",
  "incidents": [
   {
    "kind": "油漏れ警戒",
    "place": "大津市藤尾奥町付近",
+   "resolved_at": "2026-10-26T17:15:00+09:00",
+   "result": "活動を完了",
    "started_at": "2026-10-26T16:32:00+09:00",
-   "status": "reported"
+   "status": "resolved"
   },
   {
    "kind": "自火報作動",
@@ -294,7 +296,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": false,
+ "no_active_incident": true,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
