@@ -1,0 +1,26 @@
+[
+  {
+    "title": "TIFFCOM 2026",
+    "date": "2026-10-28",
+    "date_end": "2026-10-30",
+    "precision": "day",
+    "kind": "開催",
+    "group": "エンタメ・音楽・賞",
+    "category": "映画祭・見本市",
+    "subject": "TIFFCOM",
+    "what": "映像コンテンツの見本市",
+    "place": "東京都立産業貿易センター浜松町館",
+    "basis": "official",
+    "source_url": "https://www.tiffcom.jp/",
+    "source_quote": "会期： 2026年10月28日(水)～30日(金)",
+    "official_url": "https://www.tiffcom.jp/",
+    "keep": false,
+    "ad_ok": true,
+    "checked_on": "2026-10-27",
+    "verified": true,
+    "sensitivity": "none",
+    "son_toku": false,
+    "region": "東京都立産業貿易センター浜松町館",
+    "note": "出典ページの本文で、日付を機械的に確かめた。"
+  }
+]
