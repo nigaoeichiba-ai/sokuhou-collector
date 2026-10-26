@@ -105,6 +105,7 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
     B = _b()
     iso = day["date"]
     r_cards, a_cards, shown = [], [], []
+    left_out: list[str] = []
     fx = {f["ref"]: f for f in (d["c"].get("features") or []) if f["date"] == iso}
 
     def more(ref):
@@ -115,6 +116,9 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
         if c:
             r_cards.append(c)
             shown.append((f"r{i}", e))
+        else:                                                              # why a pick is not on the page (read from the page source: no log needed)
+            live = d.get("daily_items", {}).get(e["code"])
+            left_out.append(f"r{i}={'not-found' if live is None else 'unavailable'}")
     for i, e in enumerate(day["amazon"], 1):
         if cfg.get("amazon_tracking_id"):
             a_cards.append(amazon_card(cfg, d, e, f"a{i}", i, more(f"a{i}")))
@@ -148,6 +152,7 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
 {B.next_steps(d)}
 <section class="block" id="policy"><div class="sec-head"><h2>このページの選び方</h2></div><p class="notice">{esc(POLICY)}</p></section>
 {B.share_bar(cfg, day_path(iso), f"{h1}: {day['theme']}", "このページをだれかに・自分に送る", hint=True)}
+{f"<!-- left out of this page: {' '.join(left_out)} (not-found: the API did not return the item today; unavailable: it reports it as not for sale) -->" if left_out else ""}
 {nav}
 <script type="application/ld+json">{ld}</script><script type="application/ld+json">{ld2}</script>"""
     return B.page(cfg, preview, path=day_path(iso), title=f"{h1}|{day['theme']} | {cfg['site_name']}", description=day["lede"][:110], body=body, og_image=B.og_for(f"picks/{iso}"))
