@@ -1,0 +1,26 @@
+[
+  {
+    "title": "DeNA 秋季トレーニング 2026",
+    "date": "2026-10-31",
+    "date_end": "2026-11-17",
+    "precision": "day",
+    "kind": "開催",
+    "group": "スポーツ",
+    "category": "プロ野球",
+    "subject": "DeNA秋季練習",
+    "what": "横須賀での秋季トレーニング",
+    "place": "神奈川県横須賀市",
+    "basis": "official",
+    "source_url": "https://www.baystars.co.jp/news/2026/10/1026_01.php",
+    "source_quote": "期 間 2026年10月31日(土)～11月17日(火)",
+    "official_url": "https://www.baystars.co.jp/news/2026/10/1026_01.php",
+    "keep": false,
+    "ad_ok": true,
+    "checked_on": "2026-10-27",
+    "verified": true,
+    "sensitivity": "none",
+    "son_toku": false,
+    "region": "神奈川県横須賀市",
+    "note": "出典ページの本文で、日付を機械的に確かめた。"
+  }
+]
