@@ -1,0 +1,20 @@
+{
+ "date": "2026-10-27",
+ "weekday": "火",
+ "words": 0,
+ "rss": 2847,
+ "searches": 3,
+ "fetches": 14,
+ "candidates": 1,
+ "cards": 1,
+ "rejected": 0,
+ "rejected_reasons": {},
+ "queries": [
+  {"q": "TIFFCOM 2026 会期(公式 tiffcom.jp)", "official_hit": true, "cards": 1},
+  {"q": "F1アメリカGP 決勝 結果(2か所目探し)", "official_hit": true, "cards": 0}
+ ],
+ "failed_words": [],
+ "injections": [],
+ "results_written": 2,
+ "note": "利用者ワード0件。結果2件(F1アメリカGP・エル・クラシコ)。結果の facts は本文にそのままある語でないと検査を通らない(最初は 0〜3/6 で落ち、本文の語に直して通過)。フィギュアGPフランスは18歳の選手が中心のため見送り。独自の新規ワード収集は十分に行えず、目標30に届かず(カード1件)。次回: RSS leads から公式ページのある新作・発売・開催を増やす。"
+}
