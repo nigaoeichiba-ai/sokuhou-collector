@@ -203,7 +203,7 @@ class PrefectureTrendTest(SiteFixture):
     def test_the_title_the_heading_and_the_description_follow_the_search_pattern(self):
         for r in self.d["rows"]:
             page = self.read(f"{r['slug']}/index.html")
-            self.assertIn(f"<title>{r['name']}の最低賃金の推移(年度別の一覧・グラフ) {r['amount']:,}円(令和8年度)</title>", page, r["slug"])
+            self.assertIn(f"<title>{r['name']}の最低賃金は{r['amount']:,}円(令和8年度) 推移・年度別の一覧とグラフ</title>", page, r["slug"])
             self.assertIn(f"<h1>{r['name']}の最低賃金の推移(年度別の一覧・グラフ)</h1>", page, r["slug"])
             self.assertIn("昭和52年度から令和8年度まで50年度分、一覧表とグラフで掲載", re.search(r'<meta name="description" content="([^"]*)"', page).group(1), r["slug"])
 
