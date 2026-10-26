@@ -1,14 +1,14 @@
 {
- "as_of": "2026-10-23",
+ "as_of": "2026-10-26",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 0,
  "dates_after_as_of_by_month": {},
- "fetched_at": "2026-10-24T06:17:16.992776+09:00",
+ "fetched_at": "2026-10-27T06:17:16.167524+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "1": 0,
-   "10": 93,
+   "10": 96,
    "11": 0,
    "12": 0,
    "2": 0,
@@ -24,11 +24,35 @@
  "monthly_note": "月別計は公表表の全行で検算し、as_of後の日付も含みます",
  "sightings": [
   {
+   "city": "大和町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-10-24T13:54:00+09:00",
+   "place": "もみじヶ丘三丁目地内",
+   "species": "クマ"
+  },
+  {
+   "city": "大和町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-22T18:30:00+09:00",
+   "place": "小野字馬場地内",
+   "species": "クマ"
+  },
+  {
    "city": "村田町",
    "count": 1,
    "kind": "目撃",
    "observed_at": "2026-10-21",
    "place": "足立字馬立",
+   "species": "クマ"
+  },
+  {
+   "city": "登米市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-21T21:30:00+09:00",
+   "place": "登米町日根牛上羽沢地内",
    "species": "クマ"
   },
   {
@@ -11169,7 +11193,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261023.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261026.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }
