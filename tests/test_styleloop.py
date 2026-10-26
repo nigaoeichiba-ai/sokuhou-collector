@@ -255,6 +255,63 @@ class FailOpen(unittest.TestCase):
         nj._published_rw.clear()
 
 
+class TemplateText(unittest.TestCase):
+    """The text a page template prints on every page is never put in the dictionary by a page edit, and a judged / person's line for it carries scope=template
+    (tests/test_rewrite_scope_all_sites.py fails the whole suite for an unscoped one: 2026-10-26 the style-keeper hit it with askpages.py's description)."""
+
+    TEMPLATE_TEXT = "好みやほしいものをそれとなく聞くためのアンケートを作ります。リンクを送るだけです。"
+
+    def site(self, d):
+        base = Path(d) / "sites" / "yorokobu"
+        base.mkdir(parents=True)
+        nl = chr(10)
+        code = nl.join(['"""docstring only"""', "", "def page():", f"    return \"<meta name=description content='{self.TEMPLATE_TEXT}'>\"", ""])
+        (base / "askpages.py").write_text(code, encoding="utf-8")
+        return base
+
+    def patched(self, d):
+        sl._TEMPLATE_TEXT.clear()
+        return mock.patch.object(sl, "ROOT", Path(d)), mock.patch.object(sl, "DATA", Path(d) / "data" / "style")
+
+    def test_a_page_edit_of_a_template_text_is_not_put_in(self):
+        with tempfile.TemporaryDirectory() as d:
+            self.site(d)
+            r, dd = self.patched(d)
+            with r, dd:
+                ok, why = sl.add_entry("yorokobu", self.TEMPLATE_TEXT, "気軽に好みを聞くアンケートを作れます。リンクを送るだけです。", by="editor", force=True, today="2026-10-26")
+                self.assertFalse(ok)
+                self.assertIn("askpages.py", why[0])
+                self.assertEqual(sl.load_rewrites("yorokobu"), [])
+
+    def test_a_judged_or_a_persons_line_for_a_template_text_gets_scope_template(self):
+        with tempfile.TemporaryDirectory() as d:
+            self.site(d)
+            r, dd = self.patched(d)
+            with r, dd:
+                for by in ("codex", "owner"):
+                    ok, why = sl.add_entry("yorokobu", self.TEMPLATE_TEXT, "気軽に好みを聞くアンケートを作れます。リンクを送るだけです。", by=by, force=True, today="2026-10-26")
+                    self.assertTrue(ok, why)
+                    e = sl.load_rewrites("yorokobu")
+                    self.assertEqual([x.get("scope") for x in e], ["template"])
+                    (Path(d) / "data" / "style" / "rewrites" / "yorokobu.json").unlink()
+
+    def test_a_text_of_the_content_stays_unscoped_and_a_docstring_is_not_template_text(self):
+        with tempfile.TemporaryDirectory() as d:
+            self.site(d)
+            r, dd = self.patched(d)
+            with r, dd:
+                ok, _ = sl.add_entry("yorokobu", "どのひな形にも載っていない、内容のなかの文です。", "内容の文です。", by="editor", force=True, today="2026-10-26")
+                self.assertTrue(ok)
+                ok, _ = sl.add_entry("yorokobu", "docstring only", "docstring", by="editor", force=True, today="2026-10-26")
+                self.assertTrue(ok)
+                self.assertEqual([x.get("scope") for x in sl.load_rewrites("yorokobu")], [None, None])
+
+    def test_the_real_scope_tests_agree_with_it(self):
+        sl._TEMPLATE_TEXT.clear()
+        self.assertEqual(sl.template_origin("yorokobu", "渡す場面を思い浮かべる"), "features.py")
+        self.assertIsNone(sl.template_origin("yorokobu", "この文は、どのひな形にも載っていない"))
+
+
 class DeployWiring(unittest.TestCase):
     """The step in .github/workflows/deploy.yml: after the build, before the checks that can stop a deploy, and fail-open."""
 
