@@ -545,7 +545,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 </nav>"""
     return finish(layout(
         cfg, preview, path=f"/{r['slug']}/",
-        title=f"{r['name']}の最低賃金の推移(年度別の一覧・グラフ) {yen(r['amount'])}({d['label']})",
+        title=f"{r['name']}の最低賃金は{yen(r['amount'])}({d['label']}) 推移・年度別の一覧とグラフ",
         description=f"{r['name']}の最低賃金の推移を、{r['long'][0]['label']}から{r['long'][-1]['label']}まで{len(r['long'])}年度分、一覧表とグラフで掲載。{d['label']}は{yen(r['amount'])}(+{r['raise']}円)、発効日は{jp_date(r['effective_date'])}。上がり率・全国加重平均との差・順位も載せています。",
         body=body,
     ), d)
