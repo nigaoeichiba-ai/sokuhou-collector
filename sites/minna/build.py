@@ -30,7 +30,7 @@ from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
 from sites.minna.taxonomy import GENRE_BY_SLUG, GENRES, TOUCH_BY_SLUG, TOUCHES  # noqa: E402
 from sites.yorokobu import content as gift_content  # noqa: E402
 from sokuhou import contactform, rakuten  # noqa: E402
-from sokuhou.sitekit import BuildError, asset_pages, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
+from sokuhou.sitekit import BuildError, asset_pages, crumbs, drop_ads_from_noindex, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 PER_PAGE = 60
 MIN_TAG = 12            # a keyword page exists only with at least this many items from at least two sets
@@ -1573,10 +1573,23 @@ def has_no_ads(path: str) -> bool:
     return path in NO_ADS_EXACT or path.startswith(NO_ADS_PREFIX)
 
 
+# AdSense turned the site down on 2026-10-27 ("有用性の低いコンテンツ"); its help says to keep the code off pages with little or no content of their own.  What a picture page or a
+# set page says in sentences is a line or two (the rest is the picture, the download form, the embed code and the measured data), so the tag stays only where the sentences
+# are enough.  Measured in the build (the <p> text of <main>, tables, lists of data, code and forms left out), never from a list: a page that gains text gets the tag back by itself.
+ADS_MIN_PROSE = 600
+
+
+def prose_chars(html: str) -> int:
+    """How many characters of running sentences (<p>) the page's main content has; data tables, definition lists, code boxes and forms do not count."""
+    m = re.search(r"<main[^>]*>(.*?)</main>", html, re.S)
+    t = re.sub(r"<script.*?</script>|<style.*?</style>|<pre.*?</pre>|<textarea.*?</textarea>|<table.*?</table>|<dl.*?</dl>|<form.*?</form>|<nav.*?</nav>", "", m.group(1) if m else html, flags=re.S)
+    return sum(len(re.sub(r"\s+", "", re.sub(r"<[^>]+>", "", p))) for p in re.findall(r"<p[^>]*>(.*?)</p>", t, re.S))
+
+
 def drop_ads(pages: dict) -> None:
-    """Take the AdSense tag out of the pages (by relative file name) that are lists of links or forms."""
+    """Take the AdSense tag out of the pages (by relative file name) that are lists of links or forms, or that have less than ADS_MIN_PROSE characters of sentences."""
     for rel, text in pages.items():
-        if isinstance(text, str) and rel.endswith(".html") and has_no_ads(page_path(rel)):
+        if isinstance(text, str) and rel.endswith(".html") and (has_no_ads(page_path(rel)) or prose_chars(text) < ADS_MIN_PROSE):
             pages[rel] = ADS_TAG.sub("", text)
 
 
@@ -1767,6 +1780,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     thin = thin_pages(pages)
     for rel in thin:
         pages[rel] = noindex(pages[rel])
+    drop_ads_from_noindex(pages)                                                 # a page that asks not to be indexed carries no ad tag either
     pages.update(standard_files({k: v for k, v in pages.items() if k not in thin}, cfg, preview, today.isoformat()))      # thin pages stay out of sitemap.xml
     pages["sitemap-images.xml"] = sitemap_images(cfg, items)
     if cfg.get("indexnow_key"):
