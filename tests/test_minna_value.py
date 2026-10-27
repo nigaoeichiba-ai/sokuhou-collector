@@ -294,7 +294,9 @@ class NoAdsOnLinkPages(unittest.TestCase):
                 "contact/index.html", "contact/thanks.html", "404.html", "month/index.html", "pose/index.html"]
         kept = ["illust/some-picture/index.html", "series/dog-pose/index.html", "guide/nurie-insatsu/index.html", "special/nenga-2027/index.html", "about/index.html",
                 "privacy/index.html", "tool/nenga/index.html", "use/flyer/index.html"]
-        pages = {rel: html for rel in gone + kept}
+        full = f"<head>\n{self.TAG}</head><body><main><p>{'あ' * build.ADS_MIN_PROSE}</p></main></body>"
+        pages = {rel: html for rel in gone}
+        pages.update({rel: full for rel in kept})
         pages["files/x.png"] = b"\x89PNG"
         build.drop_ads(pages)
         for rel in gone:
@@ -302,6 +304,18 @@ class NoAdsOnLinkPages(unittest.TestCase):
         for rel in kept:
             self.assertIn("adsbygoogle", pages[rel], rel)
         self.assertEqual(pages["files/x.png"], b"\x89PNG")
+
+    def test_a_page_with_few_sentences_loses_the_tag_and_data_boxes_do_not_count_as_sentences(self):
+        def page(inner: str) -> str:
+            return f"<head>\n{self.TAG}</head><body><main>{inner}</main></body>"
+        short = page(f"<p>{'あ' * (build.ADS_MIN_PROSE - 1)}</p>")
+        data = page(f"<p>あ</p><table><tr><td><p>{'い' * 5000}</p></td></tr></table><dl><dt>x</dt><dd><p>{'う' * 5000}</p></dd></dl><pre><p>{'え' * 5000}</p></pre>")
+        enough = page(f"<p>{'あ' * 300}</p><p>{'い' * 300}</p>")
+        pages = {"illust/a/index.html": short, "series/b/index.html": data, "guide/c/index.html": enough}
+        build.drop_ads(pages)
+        self.assertNotIn("adsbygoogle", pages["illust/a/index.html"])
+        self.assertNotIn("adsbygoogle", pages["series/b/index.html"])
+        self.assertIn("adsbygoogle", pages["guide/c/index.html"])
 
     def test_the_page_path_of_a_file_name(self):
         self.assertEqual(build.page_path("index.html"), "/")
