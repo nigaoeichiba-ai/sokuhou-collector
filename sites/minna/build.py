@@ -1556,7 +1556,7 @@ def search_index(items: list[dict], series: list[dict]) -> str:
 
 # Pages that are lists of links or forms, with nothing of their own to read: AdSense keeps Google-served ads off "screens without publisher content" and off
 # screens used for navigation, so these load no AdSense tag.  (A picture page, a set page, a guide and a special have their own content and keep it.)
-NO_ADS_EXACT = {"/", "/illust/", "/search/", "/favorites/", "/new/", "/request/", "/special/", "/guide/", "/tool/", "/use/", "/printables/", "/pose/", "/month/",
+NO_ADS_EXACT = {"/illust/", "/search/", "/favorites/", "/new/", "/request/", "/special/", "/guide/", "/tool/", "/use/", "/printables/", "/pose/", "/month/",
                 "/contact/", "/contact/thanks.html", "/404.html"}
 NO_ADS_PREFIX = ("/genre/", "/touch/", "/tag/", "/illust/page/")
 ADS_TAG = re.compile(r'<script async src="https://pagead2\.googlesyndication\.com/pagead/js/adsbygoogle\.js[^"]*" crossorigin="anonymous"></script>\n?')
@@ -1577,6 +1577,8 @@ def has_no_ads(path: str) -> bool:
 # set page says in sentences is a line or two (the rest is the picture, the download form, the embed code and the measured data), so the tag stays only where the sentences
 # are enough.  Measured in the build (the <p> text of <main>, tables, lists of data, code and forms left out), never from a list: a page that gains text gets the tag back by itself.
 ADS_MIN_PROSE = 600
+# The top page carries the loader tag only (no ad unit anywhere on the site): AdSense looks for its code on the home page when it reviews a site (owner decision 2026-10-27).
+ADS_KEEP_EXACT = {"/"}
 
 
 def prose_chars(html: str) -> int:
@@ -1589,7 +1591,7 @@ def prose_chars(html: str) -> int:
 def drop_ads(pages: dict) -> None:
     """Take the AdSense tag out of the pages (by relative file name) that are lists of links or forms, or that have less than ADS_MIN_PROSE characters of sentences."""
     for rel, text in pages.items():
-        if isinstance(text, str) and rel.endswith(".html") and (has_no_ads(page_path(rel)) or prose_chars(text) < ADS_MIN_PROSE):
+        if isinstance(text, str) and rel.endswith(".html") and page_path(rel) not in ADS_KEEP_EXACT and (has_no_ads(page_path(rel)) or prose_chars(text) < ADS_MIN_PROSE):
             pages[rel] = ADS_TAG.sub("", text)
 
 

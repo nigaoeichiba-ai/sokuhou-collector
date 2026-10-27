@@ -289,7 +289,7 @@ class NoAdsOnLinkPages(unittest.TestCase):
 
     def test_hubs_forms_and_the_404_lose_the_tag_and_pages_with_content_keep_it(self):
         html = f"<head>\n{self.TAG}</head><body>x</body>"
-        gone = ["index.html", "illust/index.html", "illust/page/2/index.html", "genre/food/index.html", "genre/food/pixel/index.html", "touch/kawaii/index.html",
+        gone = ["illust/index.html", "illust/page/2/index.html", "genre/food/index.html", "genre/food/pixel/index.html", "touch/kawaii/index.html",
                 "tag/abc/index.html", "search/index.html", "request/index.html", "special/index.html", "guide/index.html", "tool/index.html", "use/index.html",
                 "contact/index.html", "contact/thanks.html", "404.html", "month/index.html", "pose/index.html"]
         kept = ["illust/some-picture/index.html", "series/dog-pose/index.html", "guide/nurie-insatsu/index.html", "special/nenga-2027/index.html", "about/index.html",
@@ -316,6 +316,13 @@ class NoAdsOnLinkPages(unittest.TestCase):
         self.assertNotIn("adsbygoogle", pages["illust/a/index.html"])
         self.assertNotIn("adsbygoogle", pages["series/b/index.html"])
         self.assertIn("adsbygoogle", pages["guide/c/index.html"])
+
+    def test_the_top_page_keeps_the_loader_tag_however_short_it_is_and_has_no_ad_unit(self):
+        pages = {"index.html": f"<head>\n{self.TAG}</head><body><main><p>あ</p></main></body>", "illust/a/index.html": f"<head>\n{self.TAG}</head><body><main><p>あ</p></main></body>"}
+        build.drop_ads(pages)
+        self.assertIn("adsbygoogle", pages["index.html"])
+        self.assertNotIn("<ins", pages["index.html"])
+        self.assertNotIn("adsbygoogle", pages["illust/a/index.html"])
 
     def test_the_page_path_of_a_file_name(self):
         self.assertEqual(build.page_path("index.html"), "/")
