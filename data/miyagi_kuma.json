@@ -1,14 +1,14 @@
 {
- "as_of": "2026-10-26",
+ "as_of": "2026-10-27",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 0,
  "dates_after_as_of_by_month": {},
- "fetched_at": "2026-10-27T06:17:16.167524+09:00",
+ "fetched_at": "2026-10-28T06:17:19.108477+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "1": 0,
-   "10": 96,
+   "10": 100,
    "11": 0,
    "12": 0,
    "2": 0,
@@ -24,11 +24,43 @@
  "monthly_note": "月別計は公表表の全行で検算し、as_of後の日付も含みます",
  "sightings": [
   {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-26T02:10:00+09:00",
+   "place": "松崎浦田",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市青葉区",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-10-25T21:30:00+09:00",
+   "place": "作並字湯ノ原３２－７付近（国道４８号線上）",
+   "species": "クマ"
+  },
+  {
    "city": "大和町",
    "count": null,
    "kind": "痕跡",
    "observed_at": "2026-10-24T13:54:00+09:00",
    "place": "もみじヶ丘三丁目地内",
+   "species": "クマ"
+  },
+  {
+   "city": "大和町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-10-24T13:54:00+09:00",
+   "place": "もみじヶ丘一丁目地内",
+   "species": "クマ"
+  },
+  {
+   "city": "栗原市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-23T17:50:00+09:00",
+   "place": "築館字下待井　地内",
    "species": "クマ"
   },
   {
@@ -11193,7 +11225,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261026.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261027.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }

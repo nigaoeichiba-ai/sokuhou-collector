@@ -4,7 +4,7 @@
   {
    "city": "秩父市",
    "count": null,
-   "kind": "目撃",
+   "kind": "痕跡",
    "observed_at": "2026-10-26",
    "place": "荒川久那地内(諸下橋より南西に約150m付近)"
   },
@@ -360,12 +360,12 @@
   }
  ],
  "corroborated_on": {
-  "皆野町": "2026-10-27",
-  "秩父市": "2026-10-27",
-  "飯能市": "2026-10-27"
+  "皆野町": "2026-10-28",
+  "秩父市": "2026-10-28",
+  "飯能市": "2026-10-28"
  },
  "credit": "出典: 埼玉県「埼玉県ツキノワグマ出没マップ」(https://www.pref.saitama.lg.jp/a0508/tyouzyu/kumatyui.html)の公開データから、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、埼玉県のページでご確認ください)",
- "fetched_at": "2026-10-27T09:28:28.077460+09:00",
+ "fetched_at": "2026-10-28T06:19:00.080427+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
@@ -375,7 +375,7 @@
    "3": 2
   },
   "R08": {
-   "10": 51,
+   "10": 54,
    "4": 4,
    "5": 17,
    "6": 27,
@@ -402,13 +402,13 @@
    }
   },
   "小鹿野町": {
-   "latest": "2026-10-25",
+   "latest": "2026-10-26",
    "monthly": {
     "R07": {
      "2": 1
     },
     "R08": {
-     "10": 19,
+     "10": 22,
      "4": 1,
      "5": 1,
      "6": 3,
@@ -503,7 +503,7 @@
  "source": "saitama",
  "source_file": "https://services9.arcgis.com/n65w8AXGaYPTqFYI/arcgis/rest/services/survey123_3123e5ed452d4e89845e4ba6129c1e2d_results/FeatureServer/0",
  "source_page": "https://www.pref.saitama.lg.jp/a0508/tyouzyu/kumatyui.html",
- "total_fy": 146,
+ "total_fy": 149,
  "unparsed": 0,
  "update_note": "埼玉県が、市町村からの報告を受けて、ほぼ随時更新します。最新の記録は、更新時点から遅れます。件数は、市町村が県に報告した、クマの出没の件数です"
 }
