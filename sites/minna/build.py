@@ -26,6 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 from sites.minna import facts, model, printables, tips, wishes  # noqa: E402
 from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
+from sites.minna.setguides import set_guide_html  # noqa: E402
 from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
 from sites.minna.taxonomy import GENRE_BY_SLUG, GENRES, TOUCH_BY_SLUG, TOUCHES  # noqa: E402
 from sites.yorokobu import content as gift_content  # noqa: E402
@@ -996,7 +997,7 @@ def series_page(cfg, preview, s: dict, items, series, og: bool, guides=()) -> st
 <p class="meta">{len(s['items'])}点 ・ タッチ: <a href="/touch/{s['touch']}/">{esc(t)}</a> ・ ジャンル: <a href="/genre/{s['genre']}/">{esc(g)}</a></p>
 <p class="dl"><button type="button" class="btn big" data-zip data-name="{s['slug']}" data-files='{esc(files)}'>セットをまとめて保存(ZIP)</button> <span class="memo-note">ブラウザの中でまとめます。ログインは不要です。</span></p>
 {licence_box()}{grid(s['items'])}
-<section style="margin-top:44px"><h2><span class="scribble">用途例</span></h2><ul class="check">{uses_html(s, USES[s['genre']])}</ul></section>
+{set_guide_html(s)}<section style="margin-top:44px"><h2><span class="scribble">用途例</span></h2><ul class="check">{uses_html(s, USES[s['genre']])}</ul></section>
 {series_facts_box(s, series)}
 {pose_note(s)}{share(cfg, s['url'], s['title'] + '(無料・商用OKのイラスト)')}
 {('<section style="margin-top:44px"><h2><span class="scribble">他の' + esc(g) + 'のセット</span></h2>' + set_grid(same_genre) + '</section>') if same_genre else ''}
