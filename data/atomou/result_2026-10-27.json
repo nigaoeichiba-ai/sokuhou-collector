@@ -76,5 +76,42 @@
     "source_url2": "https://www.soccer-king.jp/news/world/esp/20261026/2221557.html",
     "source_quote2": "1–2で敗戦。開幕からのリーグ戦連勝記録は「9」でストップした",
     "verified": true
+  },
+  {
+    "title": "SMBC日本シリーズ2026 第3戦",
+    "date": "2026-10-27",
+    "text": "福岡で行われた日本シリーズ第3戦は、ソフトバンクがDeNAに2対1で勝った。延長10回の末のサヨナラ勝ちで、正木智也選手のサヨナラ本塁打が決勝点になった。\nこれでソフトバンクは対戦成績を3勝0敗とし、2年連続の日本一に王手をかけた。DeNAは3連敗となった。\n次の第4戦は10月28日に行われる。",
+    "facts": [
+      [
+        "勝者",
+        "ソフトバンク"
+      ],
+      [
+        "スコア",
+        "2対1"
+      ],
+      [
+        "試合の形",
+        "延長10回"
+      ],
+      [
+        "決勝打",
+        "正木智也"
+      ],
+      [
+        "対戦成績",
+        "3勝0敗"
+      ],
+      [
+        "敗者",
+        "DeNA"
+      ]
+    ],
+    "written_on": "2026-10-28",
+    "source_url": "https://news.web.nhk/newsweb/na/nd-20261027de66671",
+    "source_quote": "延長10回、2対1でサヨナラ勝ち",
+    "source_url2": "https://www.nikkei.com/article/DGXZQODH27B9C0X21C26A0000000/",
+    "source_quote2": "正木智也のサヨナラ弾",
+    "verified": true
   }
 ]

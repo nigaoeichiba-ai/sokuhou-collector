@@ -1,1 +1,26 @@
-{"date":"2026-10-28","weekday":"水","words":0,"rss":3427,"searches":7,"fetches":3,"candidates":2,"cards":2,"rejected":2,"rejected_reasons":{"schema(group/subject/what の字数)":2,"直して再投入し通過":0},"queries":["TDL新アトラクション 開業日(extended: 公式プレスリリース命中)","LAVIE 新モデル 10月29日(press 2か所: ITmedia + PC Watch)","巨人 秋季キャンプ(公式取得不可・Yahoo系のみで2か所にならず見送り)"],"failed_words":["巨人秋季キャンプ 2026-10-30〜(公式 giants.jp が取得できない。2か所目の別ドメインを翌日再挑戦)"],"injections":0,"results_written":0,"note":"利用者ワード0件。WebFetch が公式サイトでタイムアウト/拒否、WebSearch standard は日付が出ず extended で命中。目標30に届かず(カード2)。次回: RSS leads から公式プレスリリースが PR TIMES に載るものを優先、extended を最初から使う。"}
+{
+ "date": "2026-10-28",
+ "weekday": "水",
+ "words": 0,
+ "rss": 3427,
+ "searches": 13,
+ "fetches": 3,
+ "candidates": 5,
+ "cards": 4,
+ "rejected": 2,
+ "rejected_reasons": {
+  "schema(group/subject/what の字数)": 2,
+  "直して再投入し通過": 0
+ },
+ "queries": [
+  "TDL新アトラクション 開業日(extended: 公式プレスリリース命中)",
+  "LAVIE 新モデル 10月29日(press 2か所: ITmedia + PC Watch)",
+  "巨人 秋季キャンプ(公式取得不可・Yahoo系のみで2か所にならず見送り)"
+ ],
+ "failed_words": [
+  "U23アジア杯2028(2028年1月・2か所目を別ドメインで探す)"
+ ],
+ "injections": 0,
+ "results_written": 1,
+ "note": "利用者ワード0件。WebFetch が公式サイトでタイムアウト/拒否、WebSearch standard は日付が出ず extended で命中。目標30に届かず(カード2)。次回: RSS leads から公式プレスリリースが PR TIMES に載るものを優先、extended を最初から使う。 追加回(窓口の指示): 巨人秋季キャンプ(中日新聞+SANSPO)・ディーン・フジオカ写真集(めざまし+ぴあ)をカード化、日本シリーズ第3戦の結果記事、改善案 docs/ideas/2026-10-28.md。U23アジア杯2028は2か所目が404で見送り。"
+}
