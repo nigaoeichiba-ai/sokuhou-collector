@@ -3,6 +3,7 @@
 Why (2026-10-19): another site of ours was refused by AdSense as "low value content"; 3,154 of this site's pages are a picture and a short text.
 The numbers on a picture page come from the file; the tests make sure they are measured (not stock text) and that no two pictures read the same.
 """
+import atexit
 import re
 import tempfile
 import unittest
@@ -10,8 +11,9 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
+from sokuhou import sitekit
 from sites.minna import build, facts, tips
-from tests.test_minna_sitecache import SHARED_CFG, shared_site
+from tests.test_minna_sitecache import SHARED_CFG, SHARED_DAY, shared_site
 
 
 def make_png(draw_fn, size=(200, 160)) -> Path:
@@ -287,35 +289,65 @@ class NoOriginClaims(unittest.TestCase):
 class NoAdsOnLinkPages(unittest.TestCase):
     TAG = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1" crossorigin="anonymous"></script>\n'
 
-    def test_hubs_forms_and_the_404_lose_the_tag_and_pages_with_content_keep_it(self):
+    def test_only_the_allow_list_and_the_top_page_keep_the_tag(self):
         html = f"<head>\n{self.TAG}</head><body>x</body>"
         gone = ["illust/index.html", "illust/page/2/index.html", "genre/food/index.html", "genre/food/pixel/index.html", "touch/kawaii/index.html",
                 "tag/abc/index.html", "search/index.html", "request/index.html", "special/index.html", "guide/index.html", "tool/index.html", "use/index.html",
                 "contact/index.html", "contact/thanks.html", "404.html", "month/index.html", "pose/index.html"]
-        kept = ["illust/some-picture/index.html", "series/dog-pose/index.html", "guide/nurie-insatsu/index.html", "special/nenga-2027/index.html", "about/index.html",
-                "privacy/index.html", "tool/nenga/index.html", "use/flyer/index.html"]
         full = f"<head>\n{self.TAG}</head><body><main><p>{'あ' * build.ADS_MIN_PROSE}</p></main></body>"
+        # long pages that are not on the list: a picture, a set, a general guide, another special, privacy, about, a tool, a use hub and a page that did not exist yet
+        not_listed = ["illust/some-picture/index.html", "series/dog-pose/index.html", "guide/christmas-card/index.html", "guide/bounenkai-annai/index.html",
+                      "special/otayori/index.html", "about/index.html", "privacy/index.html", "tool/nenga/index.html", "use/flyer/index.html", "guide/brand-new-page/index.html"]
+        listed = [build.page_path_to_rel(p) for p in sorted(build.ADS_ALLOW)] if hasattr(build, "page_path_to_rel") else [p.strip("/") + "/index.html" for p in sorted(build.ADS_ALLOW)]
         pages = {rel: html for rel in gone}
-        pages.update({rel: full for rel in kept})
+        pages.update({rel: full for rel in not_listed + listed})
         pages["files/x.png"] = b"\x89PNG"
         build.drop_ads(pages)
-        for rel in gone:
+        for rel in gone + not_listed:
             self.assertNotIn("adsbygoogle", pages[rel], rel)
-        for rel in kept:
+        self.assertEqual(len(listed), 9)
+        for rel in listed:
             self.assertIn("adsbygoogle", pages[rel], rel)
         self.assertEqual(pages["files/x.png"], b"\x89PNG")
 
-    def test_a_page_with_few_sentences_loses_the_tag_and_data_boxes_do_not_count_as_sentences(self):
+    def test_a_listed_page_loses_the_tag_when_it_has_few_sentences_or_is_noindex(self):
         def page(inner: str) -> str:
             return f"<head>\n{self.TAG}</head><body><main>{inner}</main></body>"
-        short = page(f"<p>{'あ' * (build.ADS_MIN_PROSE - 1)}</p>")
-        data = page(f"<p>あ</p><table><tr><td><p>{'い' * 5000}</p></td></tr></table><dl><dt>x</dt><dd><p>{'う' * 5000}</p></dd></dl><pre><p>{'え' * 5000}</p></pre>")
-        enough = page(f"<p>{'あ' * 300}</p><p>{'い' * 300}</p>")
-        pages = {"illust/a/index.html": short, "series/b/index.html": data, "guide/c/index.html": enough}
-        build.drop_ads(pages)
-        self.assertNotIn("adsbygoogle", pages["illust/a/index.html"])
-        self.assertNotIn("adsbygoogle", pages["series/b/index.html"])
-        self.assertIn("adsbygoogle", pages["guide/c/index.html"])
+        rel = "guide/tomei-png/index.html"
+        short = {rel: page(f"<p>{'あ' * (build.ADS_MIN_PROSE - 1)}</p>")}
+        build.drop_ads(short)
+        self.assertNotIn("adsbygoogle", short[rel])
+        data = {rel: page(f"<p>あ</p><table><tr><td><p>{'い' * 5000}</p></td></tr></table><dl><dt>x</dt><dd><p>{'う' * 5000}</p></dd></dl><pre><p>{'え' * 5000}</p></pre>")}
+        build.drop_ads(data)
+        self.assertNotIn("adsbygoogle", data[rel])
+        enough = {rel: page(f"<p>{'あ' * 300}</p><p>{'い' * 300}</p>")}
+        build.drop_ads(enough)
+        self.assertIn("adsbygoogle", enough[rel])
+        noindex = {rel: enough[rel].replace("<head>", '<head><meta name="robots" content="noindex,follow">', 1)}
+        self.assertEqual(sitekit.drop_ads_from_noindex(noindex), 1)
+        self.assertNotIn("adsbygoogle", noindex[rel])
+
+    _ad_site: dict = {}
+
+    @classmethod
+    def ad_site(cls):
+        """One release build with an AdSense id in its config (the shared test site has none, so it never has the tag): (folder, file names)."""
+        if "out" not in cls._ad_site:
+            tmp = tempfile.TemporaryDirectory()
+            atexit.register(tmp.cleanup)
+            out = Path(tmp.name) / "site"
+            cls._ad_site["files"] = build.render_site(dict(SHARED_CFG, adsense_pub_id="pub-1"), out, release=True, today=SHARED_DAY)
+            cls._ad_site["out"] = out
+        return cls._ad_site["out"], cls._ad_site["files"]
+
+    def test_the_allow_list_is_the_nine_pages_and_no_page_of_the_build_has_the_tag_except_those_and_the_top_page(self):
+        self.assertEqual(len(build.ADS_ALLOW), 9)
+        out, files = self.ad_site()
+        have = {build.page_path(f) for f in files if f.endswith(".html") and "adsbygoogle" in (out / f).read_text(encoding="utf-8")}
+        self.assertEqual(have, set(build.ADS_ALLOW) | {"/"})
+        for f in files:
+            if f.endswith(".html"):
+                self.assertNotIn("<ins", (out / f).read_text(encoding="utf-8"), f)
 
     def test_the_top_page_keeps_the_loader_tag_however_short_it_is_and_has_no_ad_unit(self):
         pages = {"index.html": f"<head>\n{self.TAG}</head><body><main><p>あ</p></main></body>", "illust/a/index.html": f"<head>\n{self.TAG}</head><body><main><p>あ</p></main></body>"}

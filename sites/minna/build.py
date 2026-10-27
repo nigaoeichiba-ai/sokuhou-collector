@@ -1580,6 +1580,13 @@ def has_no_ads(path: str) -> bool:
 ADS_MIN_PROSE = 600
 # The top page carries the loader tag only (no ad unit anywhere on the site): AdSense looks for its code on the home page when it reviews a site (owner decision 2026-10-27).
 ADS_KEEP_EXACT = {"/"}
+# The AdSense tag is on the pages listed here and on no others (owner decision 2026-10-28): a new page never gets it by itself.  To add a page: read it through first (does it give something
+# a visitor cannot get from the official page it rests on?), then add its path here in the same commit, with the date.  A listed page still loses the tag when it has less than
+# ADS_MIN_PROSE characters of sentences, is noindex, or is a link list or a form.
+ADS_ALLOW = {
+    "/guide/nenga-2027-schedule/", "/guide/tomei-png/", "/guide/nurie-insatsu/", "/guide/frame-kazarigyo-tsukaikata/", "/guide/eto-ichiran/", "/guide/icon-irasuto-erabikata/",
+    "/guide/hoiku-otayori/", "/guide/nenmatsu-junbi-calendar/", "/special/nenga-2027/",
+}
 
 
 def prose_chars(html: str) -> int:
@@ -1590,9 +1597,14 @@ def prose_chars(html: str) -> int:
 
 
 def drop_ads(pages: dict) -> None:
-    """Take the AdSense tag out of the pages (by relative file name) that are lists of links or forms, or that have less than ADS_MIN_PROSE characters of sentences."""
+    """Take the AdSense tag out of every page (by relative file name) except the top page and the pages of ADS_ALLOW that are not link lists or forms and have ADS_MIN_PROSE characters of sentences."""
     for rel, text in pages.items():
-        if isinstance(text, str) and rel.endswith(".html") and page_path(rel) not in ADS_KEEP_EXACT and (has_no_ads(page_path(rel)) or prose_chars(text) < ADS_MIN_PROSE):
+        if not (isinstance(text, str) and rel.endswith(".html")):
+            continue
+        path = page_path(rel)
+        if path in ADS_KEEP_EXACT:
+            continue
+        if path not in ADS_ALLOW or has_no_ads(path) or prose_chars(text) < ADS_MIN_PROSE:
             pages[rel] = ADS_TAG.sub("", text)
 
 
