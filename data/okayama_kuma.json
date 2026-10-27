@@ -1,8 +1,8 @@
 {
- "as_of": "2026-10-20",
+ "as_of": "2026-10-26",
  "bad_coords": 0,
  "credit": "出典:岡山県「岡山県ツキノワグマ出没情報」を加工して作成(公共データ利用規約(第1.0版)に基づく)",
- "fetched_at": "2026-10-24T06:17:22.727543+09:00",
+ "fetched_at": "2026-10-27T09:26:56.265865+09:00",
  "fy_current": "R08",
  "monthly": {
   "R07": {
@@ -19,7 +19,7 @@
    "9": 4
   },
   "R08": {
-   "10": 11,
+   "10": 12,
    "4": 18,
    "5": 12,
    "6": 12,
@@ -30,6 +30,16 @@
  },
  "monthly_note": "KMLは種別を示していないため、全件を目撃として集計しています。",
  "sightings": [
+  {
+   "city": "美作市",
+   "count": null,
+   "kind": "目撃",
+   "lat": 35.0468,
+   "lon": 134.2387,
+   "observed_at": "2026-10-26",
+   "place": "瀬戸",
+   "species": "ツキノワグマ"
+  },
   {
    "city": "美作市",
    "count": null,
@@ -1001,7 +1011,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 130,
+ "sightings_in_window": 131,
  "source": "okayama",
  "source_file": "https://www.google.com/maps/d/kml?mid=1y64vgpv0Yc6srgFeVC5ZkJf37kNuuKI&forcekml=1",
  "source_page": "https://www.pref.okayama.jp/page/1006862.html",
