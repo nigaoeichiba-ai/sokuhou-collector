@@ -1,6 +1,20 @@
 {
- "as_of": "2026-10-24",
+ "as_of": "2026-10-27",
  "corroborated": [
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-27",
+   "place": "福知山市字上小田(六十内)"
+  },
+  {
+   "city": "福知山市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-26",
+   "place": "福知山市字立原"
+  },
   {
    "city": "福知山市",
    "count": null,
@@ -780,15 +794,15 @@
   }
  ],
  "corroborated_on": {
-  "福知山市": "2026-10-27"
+  "福知山市": "2026-10-28"
  },
  "credit": "出典: 福知山市「熊出没情報」(https://www.city.fukuchiyama.lg.jp/soshiki/27/2615.html)の公開データから、月別の件数を、当サイトが集計して作成(福知山市が作成したものではありません)",
- "fetched_at": "2026-10-27T06:19:35.581011+09:00",
+ "fetched_at": "2026-10-28T06:19:37.840184+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
   "R08": {
-   "10": 13,
+   "10": 15,
    "4": 5,
    "5": 22,
    "6": 28,
@@ -799,10 +813,10 @@
  },
  "municipalities": {
   "福知山市": {
-   "latest": "2026-10-24",
+   "latest": "2026-10-27",
    "monthly": {
     "R08": {
-     "10": 13,
+     "10": 15,
      "4": 5,
      "5": 22,
      "6": 28,
@@ -816,7 +830,7 @@
  "source": "fukuchiyama",
  "source_file": "https://www.city.fukuchiyama.lg.jp/soshiki/27/2615.html",
  "source_page": "https://www.city.fukuchiyama.lg.jp/soshiki/27/2615.html",
- "total_fy": 111,
+ "total_fy": 113,
  "unparsed": 0,
  "update_note": "福知山市が、目撃のたびに(ほぼ随時)更新します。最新の記録は、更新時点から遅れます。件数は、クマの目撃の場所のお知らせです"
 }
