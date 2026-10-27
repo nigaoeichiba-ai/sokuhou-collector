@@ -115,6 +115,427 @@
   "unchanged": 40,
   "units": 55
  },
+ "gift/homecoming-grandmother/index.html": {
+  "accepted": [
+   {
+    "from": "種類の違う人気の4点",
+    "kind": "heading",
+    "to": "種類別に見る人気の4点",
+    "why": "比較の軸を明確に"
+   },
+   {
+    "from": "和菓子は硬さ、甘さ、個包装を確認し、祖母が開けやすい袋や箱のものを選ぶ。",
+    "kind": "item",
+    "to": "和菓子は硬さ、甘さ、個包装かどうかを確認します。袋や箱は祖母が開けやすいものを選びます。",
+    "why": "確認事項を二文に分割"
+   },
+   {
+    "from": "祖母への帰省・手土産、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "祖母への帰省の手土産 花・和菓子・ストール・ハンドクリーム",
+    "why": "候補が分かる見出しに変更"
+   },
+   {
+    "from": "玄関や居間に飾りやすく、帰省した日の部屋をやさしく明るくしてくれます。",
+    "kind": "para",
+    "to": "玄関や居間に飾りやすく、帰省した日の部屋を明るく見せます。",
+    "why": "雰囲気語を削って具体化"
+   },
+   {
+    "from": "一緒にお茶を飲む口実になり、近況をゆっくり話す落ち着いた時間を作れます。",
+    "kind": "para",
+    "to": "一緒にお茶を飲みながら、近況をゆっくり話す時間を作れます。",
+    "why": "口実という表現を改める"
+   },
+   {
+    "from": "冷房や朝晩の冷えに羽織りやすく、軽いので持ち運びの負担も少ない品です。",
+    "kind": "para",
+    "to": "冷房や朝晩の冷えに羽織れます。軽く、持ち運びやすい品です。",
+    "why": "抽象語を避けて二文に分割"
+   },
+   {
+    "from": "フルーツ入りのバウムクーヘンが、8個の個包装で届きます。お茶の時間に1つずつ配れます。",
+    "kind": "para",
+    "to": "フルーツ入りのバウムクーヘン8個が個包装になっています。お茶の時間に1つずつ配れます。",
+    "why": "届くという回りくどさを削除"
+   },
+   {
+    "from": "年始のあいさつに持参する品の時期・金額・のしを百貨店の案内から1枚にまとめています。",
+    "kind": "para",
+    "to": "年始のあいさつに持参するお年賀の時期・金額・のしを、百貨店の案内をもとに1枚にまとめています。",
+    "why": "何の早見表かを具体化"
+   },
+   {
+    "from": "帰省・手土産に贈るほかの相手",
+    "kind": "heading",
+    "to": "帰省の手土産を贈るほかの相手",
+    "why": "助詞のつながりを修正"
+   },
+   {
+    "from": "祖母へのほかのイベント",
+    "kind": "heading",
+    "to": "祖母へのプレゼントをイベント別に",
+    "why": "一覧の内容を明示"
+   }
+  ],
+  "date": "2026-10-27",
+  "deleted": [
+   "喜ばれやすい理由",
+   "小ぶりな花束やアレンジメントは、玄関や居間に飾りやすく、帰省した日の部屋を明るく見せます。",
+   "最中やカステラなどの和菓子は、お茶の時間に一緒に食べられ、近況を話す場を作れる帰省土産です。",
+   "薄手のストールは外出や室内の冷え対策に使いやすく、軽いので持ち運びも負担になりにくい小物です。"
+  ],
+  "diagnosis": [
+   "構成: 花・和菓子・ストールの利点が導入、理由、商品候補で重複し、定型の「理由3つ」がページを長くしています。",
+   "見出し: 「喜ばれやすい理由」「この提案はどんなタイプ？」など、扱う品や比較方法が見出しだけでは分かりません。",
+   "リズム: 選び方や商品候補の文末が同じ形で続き、一文に複数の確認事項を詰めた箇所があります。",
+   "構成: 注意点が商品候補や比較の後にあり、読み手が確認したい順序とずれています。",
+   "見出し: 「こんな贈り方」「この提案」など、中身を開くまで分からない見出しがあります。",
+   "語: 「帰省・手土産に贈る」「祖母へのイベント」は語のつながりが不自然です。"
+  ],
+  "failed": "",
+  "hash": "3f264ac78f4f",
+  "needs_check": [],
+  "page": "gift/homecoming-grandmother/index.html",
+  "rejected": [
+   {
+    "after": "祖母への帰省の手土産は花、和菓子、薄手のストールが候補です。花は部屋に飾れ、和菓子なら一緒にお茶を飲めます。ストールは冷房や朝晩の冷えに使えます。軽くてしまいや",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補']"
+    ],
+    "text": "祖母に会いに行く帰省土産は、手に取った時の軽さやしまいやすさまで考えると親切です。花は部屋を明るくし、和菓子はお茶の時間"
+   },
+   {
+    "after": "花は花瓶が必要か、水替えの手間が少ないかを確認します。香りが強すぎない種類を選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['確認']"
+    ],
+    "text": "花は花瓶が必要か、水替えの手間が少ないかを考え、香りが強すぎない種類にする。"
+   },
+   {
+    "after": "家族写真で祖母の服を見て普段の服に合う色を選びます。洗濯表示と肌ざわりも確認します。",
+    "problems": [
+     "names / quoted words lost: ['ストール']",
+     "words added that the original does not have (information must not grow): ['祖母']"
+    ],
+    "text": "ストールは普段の服に合う色を家族写真から見て、洗濯表示と肌ざわりを確かめる。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから、祖母への帰省の手土産に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖母', '帰省', '手土産']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "祖母の好きなもの趣味、年齢などを入力すると近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖母', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "大きく重い品や飾り物は片付ける場所を祖母に確認してから選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['場所', '祖母']"
+    ],
+    "text": "大きく重い品や片付けに困る飾り物を確認なしで贈らないようにします"
+   },
+   {
+    "after": "祖母への帰省の手土産は軽くてしまいやすいものから選びます。花は部屋を明るくし、和菓子は一緒にお茶を飲むきっかけになります。ストールは冷房や朝晩の冷えに羽織れる品",
+    "problems": [
+     "added claim/hedge removed/condition dropped: 「手に取った時」が落ち、配慮事項を必須の選択条件として断定している"
+    ],
+    "text": "祖母に会いに行く帰省土産は、手に取った時の軽さやしまいやすさまで考えると親切です。花は部屋を明るくし、和菓子はお茶の時間"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年10月27日 7:12時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "after": "においの強い食品やこぼれやすい品は、移動中も訪問先でも扱いにくいため避けます。",
+    "problems": [
+     "added claim: 扱いにくいという説明から「避ける」という勧めを追加している"
+    ],
+    "text": "匂いが強い食品やこぼれやすい品は移動中も訪問先でも扱いにくいです"
+   },
+   {
+    "after": "年末年始の帰省の手土産を日持ち・持ち運び・人数から選べる記事です。",
+    "problems": [
+     "added claim: 整理した記事を「選べる記事」とする機能を追加している"
+    ],
+    "text": "年末年始の帰省の手土産を、日持ち・持ち運び・人数の面から整理した記事があります。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで見つけた贈り物"
+   }
+  ],
+  "structure_suggestions": [
+   "「気をつけたいこと…」〜「大きく重い品や片付けに困る飾…」を「選び方のポイント…」〜「ストールは普段の服に合う色を…」の直後へ移し、選び方と避ける品を続けて読めるようにします。",
+   "「お年賀の早見表…」〜「お正月の訪問と贈り物ガイド…」は年末年始に帰省する読者向けの情報として、商品一覧より前にまとめると時期を先に確認できます。",
+   "「喜ばれやすい理由…」〜「薄手のストールは外出や室内の…」は「祖母に会いに行く帰省土産は、…」と「祖母への帰省・手土産、こんな…」〜「楽天市場で「レディース スト…」に内容が重なるため削り、導入から選び方へ進む構成にします。",
+   "「気をつけたいこと…」「気をつけたいこと」を「種類の違う人気の4点…」より前に移し、注意点を確認してから商品を比べる順にする。",
+   "「喜ばれやすい理由…」と「選び方のポイント…」を統合し、喜ばれやすい理由に対応する選び方を続けて示す。"
+  ],
+  "unchanged": 83,
+  "units": 96
+ },
+ "gift/year-end-gathering-baby/index.html": {
+  "accepted": [
+   {
+    "from": "おむつケーキは見た目が華やかで、写真を撮る親戚がいる集まりでも場が明るくなり、後日実用品として使えます。",
+    "kind": "item",
+    "to": "おむつケーキは見た目が華やかで、親戚が写真を撮る集まりでは場が明るくなります。あとでおむつとして使える実用品です。",
+    "why": "一文一論点に整理"
+   },
+   {
+    "from": "ベビー服は肌着やロンパースなら着替えに回しやすく、帰省先でミルクや食べこぼしがあった時にも助かります。",
+    "kind": "item",
+    "to": "ベビー服は肌着やロンパースなら着替えに使えます。帰省先でミルクや食べこぼしが付いたときにも替えられます。",
+    "why": "使う場面を明確に"
+   },
+   {
+    "from": "布おもちゃや布絵本は、床に座った保護者のそばで触って遊べて、硬い玩具より持ち運びも楽です。",
+    "kind": "item",
+    "to": "布おもちゃや布絵本は床に座った保護者のそばに置いて遊べます。硬い玩具より持ち運びも楽です。",
+    "why": "不自然な語順を修正"
+   },
+   {
+    "from": "ベビー服は少し先の月齢で着られるサイズにし、首まわりの開きや洗濯表示を確認する。",
+    "kind": "item",
+    "to": "ベビー服は少し先の月齢で着られるサイズを選びます。首まわりの開きと洗濯表示も確認します。",
+    "why": "論点を二文に分割"
+   },
+   {
+    "from": "赤ちゃんへの年末年始の集まり、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "赤ちゃんへの年末年始の手土産候補",
+    "why": "見出しを簡潔に"
+   },
+   {
+    "from": "年始のあいさつ・帰省・喪中・お年玉のときの考え方を、百貨店の案内の読み比べと当サイトの調べで記事にまとめています。",
+    "kind": "para",
+    "to": "年始のあいさつ・帰省・喪中・お年玉の考え方を百貨店の案内を読み比べ、当サイトで調べた内容とともに記事にまとめています。",
+    "why": "不自然な名詞を修正"
+   },
+   {
+    "from": "種類の違う人気の4点",
+    "kind": "heading",
+    "to": "種類で選ぶ人気の4点",
+    "why": "語順を自然にする"
+   },
+   {
+    "from": "年末年始の集まりに贈るほかの相手",
+    "kind": "heading",
+    "to": "年末年始の手土産を相手別に探す",
+    "why": "一覧の用途を示す"
+   },
+   {
+    "from": "赤ちゃんへのほかのイベント",
+    "kind": "heading",
+    "to": "赤ちゃんへの贈り物をイベント別に探す",
+    "why": "一覧の用途を示す"
+   },
+   {
+    "from": "赤ちゃんへの出産祝いのプレゼント",
+    "kind": "item",
+    "to": "赤ちゃんに贈る出産祝い",
+    "why": "重複する語を削る"
+   }
+  ],
+  "date": "2026-10-27",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 選び方が先行し、時期・金額・のしと注意点が商品の後ろに分かれています。",
+   "具体: 導入と候補説明に「扱いやすさ」「渡しやすい」「安心」などの抽象語が残り、品名や使う場面が後ろに回っています。",
+   "構成: 導入・理由・選び方・候補説明で同じ内容を繰り返し、定型の枠が目立ちます。",
+   "構成: 時期・金額・渡し方より商品候補が先に並び、読み手の問いの順になっていません。",
+   "見出し: 「この提案」「次の一歩」「気をつけたいこと」など、見出しだけでは内容が分からない箇所があります。",
+   "語: 「種類の違う」「ほかのイベント」など、案内文として引っかかる表現があります。"
+  ],
+  "failed": "",
+  "hash": "d6f80d406f26",
+  "needs_check": [
+   {
+    "question": "4点を「人気」とする根拠があるか確認してください。",
+    "text": "種類の違う人気の4点"
+   },
+   {
+    "question": "「タイプ」が指すのは商品・贈り方・相手のどれか。本文に合わせた具体名を確認したい。",
+    "text": "この提案はどんなタイプ？"
+   }
+  ],
+  "page": "gift/year-end-gathering-baby/index.html",
+  "rejected": [
+   {
+    "after": "赤ちゃんへの年末年始の手土産は保護者が扱いやすい品を選びます。おむつケーキはサイズ、ベビー服は季節と月齢、布おもちゃは洗濯のしやすさを確認。大人数の集まりでは紙",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['手土産', '集']"
+    ],
+    "text": "赤ちゃんがいる年末年始の訪問では、本人よりも保護者の扱いやすさまで含めて選ぶと渡しやすくなります。おむつケーキはサイズ確"
+   },
+   {
+    "after": "赤ちゃんへの年末年始の手土産は保護者が扱いやすい品を選びます。おむつケーキはサイズ、ベビー服は季節と月齢、布おもちゃは洗濯のしやすさを確認。大人数の集まりでは紙",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['手土産', '集']"
+    ],
+    "text": "赤ちゃんがいる年末年始の訪問では、本人よりも保護者の扱いやすさまで含めて選ぶと渡しやすくなります。おむつケーキはサイズ確"
+   },
+   {
+    "after": "おむつケーキ・ベビー服・布おもちゃが向く理由",
+    "problems": [
+     "too much longer (8 -> 22)"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "おむつはメーカーの好みやサイズがあるため、S、Mなど今使っているものを事前に聞きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['好']"
+    ],
+    "text": "おむつはメーカーへのこだわりやサイズがあるため、S、Mなど現在使っているものを事前に聞く。"
+   },
+   {
+    "after": "布おもちゃは洗濯できるか、縫い目は丈夫か、鈴やタグが固定されているかを確認します。包装は開けやすいものにします。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['確認']"
+    ],
+    "text": "布おもちゃは洗濯可、縫い目の丈夫さ、鈴やタグの固定を見て、包装は開けやすくしておく。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "おむつケーキは集まりの写真に残しやすく、あとで消耗品として使えます。保護者にも渡しやすい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ケーキ']"
+    ],
+    "text": "集まりで写真に残しやすく、使える消耗品として保護者にも渡しやすい品です。"
+   },
+   {
+    "after": "ベビー服は帰省先での着替えにも使えます。月齢と季節を確かめて選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ベビー']"
+    ],
+    "text": "帰省先での着替えにも回しやすく、月齢と季節に合わせて無理なく選びやすいです。"
+   },
+   {
+    "after": "布絵本は床に置いて遊べます。汚れても手入れしやすく、保護者も扱いやすい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['布絵本']"
+    ],
+    "text": "床でそばに置いて遊ばせやすく、汚れても手入れしやすい点が保護者にも安心です。"
+   },
+   {
+    "after": "名前入りのスタイは食事やよだれ対策に使えます。年始の記念写真にも名前が残ります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['スタイ']"
+    ],
+    "text": "食事やよだれ対策に使え、名前入りなら年始の記念写真にも自然に残ります。"
+   },
+   {
+    "after": "贈る相手について好きなもの、趣味、年齢などを入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "小さな部品が外れやすいおもちゃは部品の固定を確認してから贈ります",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['固定']"
+    ],
+    "text": "小さな部品が外れやすいおもちゃを確認なしで贈らないようにします"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "迷ったときの次の一歩"
+   }
+  ],
+  "structure_suggestions": [
+   "「お年賀の早見表…」〜「お年賀の早見表(時期・金額・…」は時期・金額・のしを扱うため、導入の直後へ移すと判断の順に読めます。",
+   "「喜ばれやすい理由…」〜「布おもちゃは洗濯可、縫い目の…」と「赤ちゃんへの年末年始の集まり…」〜「食事やよだれ対策に使え、名前…」は内容が重なるため、品ごとに「向く理由・確認点・商品を見る」をまとめる案があります。",
+   "「Amazonで見つけた贈り物…」〜「抹茶を使った京都のお菓子が、…」の焼き菓子は赤ちゃん向けの品と役割が異なります。家族で分ける手土産として位置づけるか、別ページへ分けるかを検討してください。",
+   "「気をつけたいこと…」〜「小さな部品が外れやすいおもち…」は商品を選ぶ前に必要な注意点なので、「条件で絞って比べる…」より前へ移すと流れが整います。",
+   "「お年賀の早見表…」・「お正月の訪問と贈り物ガイド…」のうち時期・金額・渡し方を扱う部分を「選び方のポイント…」より前へ移し、先に贈り方の基準を確認できる順にする。",
+   "「気をつけたいこと…」を商品紹介の「Amazonで見つけた贈り物…」〜「祇園辻利 つじりの里 ぎおん…」より前へ移し、注意点を確認してから候補を選べる順にする。",
+   "「喜ばれやすい理由…」と「この提案はどんなタイプ？…」が同じ利点を扱っている場合は一つの節に統合する。"
+  ],
+  "unchanged": 83,
+  "units": 94
+ },
  "message/birth-gift/index.html": {
   "accepted": [
    {
@@ -3262,6 +3683,110 @@
   ],
   "unchanged": 24,
   "units": 39
+ },
+ "oiwai/shussan/index.html": {
+  "accepted": [
+   {
+    "from": "妊娠を知った時点でお祝いをする必要はなく、無事に出産したあとに贈るのが一般的です(松坂屋名古屋店)。",
+    "kind": "item",
+    "to": "出産祝いは無事に出産したあとに贈るのが一般的です。妊娠を知った時点で贈る必要はありません(松坂屋名古屋店)。",
+    "why": "勧める文を先に"
+   },
+   {
+    "from": "お七夜(生後7日目)が過ぎて、退院後に落ち着いたころに持参します(松坂屋名古屋店)。三越伊勢丹はお七夜のあとからお宮参りまでの、生後7日目から1か月ほどの間に贈るとしています。",
+    "kind": "item",
+    "to": "持参するなら、お七夜(生後7日目)が過ぎ、退院後に落ち着いたころが目安です(松坂屋名古屋店)。三越伊勢丹はお七夜のあとからお宮参りまで、生後7日目から1か月ほどの間に贈るとしています。",
+    "why": "条件と目安を整理"
+   },
+   {
+    "from": "水引は紅白の蝶結びです。何度あってもよいお祝いなので蝶結びを使います(松坂屋名古屋店)。",
+    "kind": "item",
+    "to": "水引は紅白の蝶結びです。蝶結びは何度あってもよいお祝いに使います(松坂屋名古屋店)。",
+    "why": "重複を抑えて簡潔に"
+   }
+  ],
+  "date": "2026-10-27",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 「贈る品の例」のあとに渡し方が続くため、読み手が決める順序とずれています。",
+   "語: 「産んだ人」「希望と重なり」のように、意味を取りにくい言い方があります。",
+   "リズム: 出典の説明を一文に詰めた箇所があり、要点と条件が埋もれています。"
+  ],
+  "failed": "",
+  "hash": "e0e06403a797",
+  "needs_check": [
+   {
+    "question": "妊娠中にベビー服などを贈るのを控える理由が本文にありません。出典で理由を確認できますか。",
+    "text": "妊娠中はベビー服など育児の品は出産まで贈るのを控えます(三越伊勢丹)。"
+   }
+  ],
+  "page": "oiwai/shussan/index.html",
+  "rejected": [
+   {
+    "after": "出産祝いは無事に出産したあとからお宮参りまでを目安に贈ります。時期を逃した場合は表書きを替えます。",
+    "problems": [
+     "numbers differ: ['三'] -> []",
+     "words added that the original does not have (information must not grow): ['無事', '宮参', '目安', '場合', '表書']"
+    ],
+    "text": "出産祝いの時期、金額、のし、贈る品の例を、三越伊勢丹と松坂屋名古屋店の案内からまとめました。"
+   },
+   {
+    "after": "出産直後は母親も赤ちゃんも体調が不安定です。身内でなければ、お見舞いや訪問は控えます。すぐに祝いたいときは、メールや祝電、手紙で先に気持ちを伝えます(松坂屋名古",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['母親']"
+    ],
+    "text": "出産直後は産んだ人も赤ちゃんも体調が不安定です。身内でなければ、お見舞いや訪問を控えます。すぐに祝いたいときは、メールや"
+   },
+   {
+    "after": "時期を逃したときは表書きを「御成長祝」にします。三越伊勢丹では生後3か月ごろまでは「御出産祝」、そのあと1歳の誕生日までは「御成長祝」と案内しています。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['案内']"
+    ],
+    "text": "時期を逃したときは表書きを「御成長祝」にします。生後3か月ごろまでは「御出産祝」、そのあと1歳の誕生日までは「御成長祝」"
+   },
+   {
+    "after": "肌着やおもちゃは重なりやすいので、親しい相手には必要な物を聞いてから贈ります(三越伊勢丹)。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手']",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "肌着やおもちゃは重なりやすい品です。親しい間柄なら、必要な物を事前に聞いて贈ります(三越伊勢丹)。"
+   },
+   {
+    "after": "慣れない生活が始まった自宅への訪問より、百貨店などから送るほうがよい場合もあります。お祝いの品には母親の体調を気遣う手紙を添えます(三越伊勢丹)。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['自宅', '母親', '品']"
+    ],
+    "text": "慣れない生活の場に訪ねるより、百貨店などから送るほうがよいこともあります。お祝いと産んだ人の体調を気遣う手紙を添えます("
+   },
+   {
+    "after": "この記事は出典先を要約・比較し、当サイトの考え方を足したものです。しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときはそれに合わせてください",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['記事', 'サイト', '考']"
+    ],
+    "text": "この早見表は、出典先を要約・比較したものです。しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときは、"
+   },
+   {
+    "after": "大きな育児用品は希望を聞いてから選び、重複を避けます。同僚や友人には使い切れる小さな品が選びやすいです(松坂屋名古屋店)。",
+    "problems": [
+     "condition dropped: 「同僚や友人から」という贈り手の条件が「同僚や友人には」に変わっています。"
+    ],
+    "text": "大きな育児用品は希望と重なりを確かめます。同僚や友人からは使い切れる小さな品が選びやすいです(松坂屋名古屋店)。"
+   },
+   {
+    "after": "祖父母は赤ちゃんの両親に希望を聞いてから品を決めます。上の子がいる家庭では、その子にもささやかな贈り物を添えると喜ばれます(三越伊勢丹)。",
+    "problems": [
+     "added claim: 「お祝い」を「品」に限定しています。"
+    ],
+    "text": "祖父母からのお祝いは赤ちゃんの両親に希望を聞いてから決めます。上の子がいる家庭では、その子にもささやかな贈り物を添えると"
+   }
+  ],
+  "structure_suggestions": [
+   "「贈り方で気をつけること…」〜「自宅を訪ねるときは長居せずに…」を「のしと表書き…」〜「配送するときは、のし紙を品物…」の後、「贈る品の例…」の前へ移し、「いつ・いくら・どう渡す・選ぶ」の順にします。",
+   "「妊娠中はベビー服など育児の品…」は時期の説明ではなく注意点なので、「贈り方で気をつけること…」配下の先頭へ移します。"
+  ],
+  "unchanged": 25,
+  "units": 37
  },
  "pick/bruno-lid-mug/index.html": {
   "accepted": [
