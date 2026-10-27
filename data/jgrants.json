@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-23T21:16:33.918539+00:00",
+ "fetched_at": "2026-10-27T21:16:24.382282+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -1911,6 +1911,18 @@
    "title": "令和８年度臨床研修費等補助金（歯科医師）"
   },
   {
+   "acceptance_end_datetime": "2026-12-23T03:00:00.000Z",
+   "acceptance_start_datetime": "2026-10-27T01:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003rYGLUA2",
+   "id": "a0WfQ000003rYGLUA2",
+   "institution_name": "二酸化炭素排出抑制対策事業費等補助金",
+   "name": "S-00009992",
+   "subsidy_max_limit": 0,
+   "target_area_search": "全国",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "令和８年度_グリーンスローモビリティ等導入促進事業（三次公募）"
+  },
+  {
    "acceptance_end_datetime": "2026-11-20T15:00:00.000Z",
    "acceptance_start_datetime": "2026-05-20T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDYbNMAX",
@@ -1947,5 +1959,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 162
+ "total": 163
 }
