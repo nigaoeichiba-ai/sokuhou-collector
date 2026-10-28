@@ -66,6 +66,27 @@ class SpecificGuides(unittest.TestCase):
     def test_the_modified_date_is_in_the_article_data(self):
         self.assertIn('"dateModified": "2026-10-28"', self.guide("kantyu-mimai"))
 
+class HagakiGuide(unittest.TestCase):
+    """/guide/hagaki-size-ichiran/ (2026-10-28): checked against Japan Post, linked from the pages that talk about the same card, no ad tag."""
+
+    def read(self, rel: str) -> str:
+        out, _ = shared_site()
+        return (out / rel).read_text(encoding="utf-8")
+
+    def test_the_guide_says_when_it_was_checked_and_does_not_call_the_return_postcard_exempt(self):
+        html = self.read("guide/hagaki-size-ichiran/index.html")
+        self.assertIn("2026年10月28日に、日本郵便", html)
+        self.assertIn("往復はがきを除く", html)
+        self.assertNotIn("大きさの条件は上記の対象外", html)
+        self.assertIn("日本郵便の表で確認", html)
+
+    def test_five_pages_link_to_it(self):
+        for rel in ("guide/nenga-tsukurikata/index.html", "guide/nenga-2027-schedule/index.html", "tool/nenga/index.html", "special/nenga-2027/index.html", "printables/index.html"):
+            self.assertIn('href="/guide/hagaki-size-ichiran/"', self.read(rel), rel)
+
+    def test_it_is_not_on_the_ad_allow_list(self):
+        self.assertNotIn("/guide/hagaki-size-ichiran/", build.ADS_ALLOW)
+
 
 if __name__ == "__main__":
     unittest.main()
