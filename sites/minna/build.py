@@ -719,7 +719,7 @@ def printables_hub(cfg, preview, year: int, themes: list[dict], items: list[dict
     body = f"""{crumbs([("トップ", "/"), ("印刷", None)])}
 <h1>印刷できるもの</h1><p class="lead">カレンダー、ぬりえ、はがきサイズの年賀状イラストなど、印刷して使えるものを集めました。すべて無料・商用OK・登録不要です。</p>
 <ul class="special-grid">{cards}</ul>
-<p>イラストのページには、「A4で印刷(PDF)」「はがきサイズで印刷(PDF)」のボタンがあるものもあります。</p>"""
+<p>イラストのページには、「A4で印刷(PDF)」「はがきサイズで印刷(PDF)」のボタンがあるものもあります。はがきの大きさの規格と、画像で作るときのpx換算は、<a href="/guide/hagaki-size-ichiran/">はがきのサイズ一覧</a>にあります。</p>"""
     return page(cfg, preview, path="/printables/", title=f"印刷できる素材(カレンダー・ぬりえ・はがき) | {cfg['site_name']}",
                 description="2027年イラストカレンダー、ぬりえ、はがきサイズの年賀状イラストなど、印刷して使える素材。無料・商用OK・登録不要。", body=body)
 
@@ -1472,7 +1472,7 @@ def maker_page(cfg: dict, preview: bool, kind: str) -> str:
 <div id="mk-printbox" class="nu-printbox" hidden aria-hidden="true"></div>
 <noscript><p class="notice">この機能にはJavaScriptが必要です。印刷だけなら、<a href="/printables/">印刷できるもの</a>から選べます。</p></noscript>
 <section style="margin-top:44px"><h2><span class="scribble">よくある質問</span></h2><div class="faq">{faq_html}</div></section>
-<p><a href="/tool/">ほかのつくる機能</a> ・ <a href="/printables/">印刷できるもの(PDF)</a></p>
+<p><a href="/tool/">ほかのつくる機能</a> ・ <a href="/printables/">印刷できるもの(PDF)</a> ・ <a href="/guide/hagaki-size-ichiran/">はがきの大きさと規格(px換算つき)</a></p>
 <script type="application/ld+json">{ld}</script>
 <script src="/assets/maker.js" defer></script>"""
     return page(cfg, preview, path=path, title=f"{title} 無料・印刷OK・登録不要 | {cfg['site_name']}", description=desc, body=body)

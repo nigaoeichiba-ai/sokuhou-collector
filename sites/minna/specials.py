@@ -13,6 +13,7 @@ SPECIALS = [
         "description": "2027年・令和9年は未年(ひつじ年)です。ひつじのイラスト、お正月の飾り、写真フレーム、ぬりえまで、年賀状に使える透明PNGをそろえています。登録不要・無料・商用OK。",
         "season": {"from": "09-15", "to": "01-31"},
         "match_series": ["eto-*", "nenga-*", "newyear-*", "coloring-newyear-lineart", "sheep-pose"],
+        "guides": ["nenga-tsukurikata", "nenga-2027-schedule", "hagaki-size-ichiran", "kantyu-mimai"],
         "intro": [
             "2027年(令和9年)の干支は未(ひつじ)です。ひつじを主役にした年賀状向けイラスト、門松・鏡餅・初日の出などのお正月素材、写真や一言を入れられるフレームを集めました。背景が透明のPNGなので、年賀状ソフト、Canva、Word、スマートフォンの編集アプリに貼り付けて使えます。",
             "個人の年賀状のほか、会社や店舗の挨拶状、保育園・学校のおたよりにも使えます。無料・商用OK・クレジット表示不要で、使用点数の制限もありません。",
