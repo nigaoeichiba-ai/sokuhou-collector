@@ -1,0 +1,26 @@
+[
+  {
+    "title": "K-1 WORLD MAX 2026",
+    "date": "2026-12-29",
+    "precision": "day",
+    "kind": "開催",
+    "group": "スポーツ",
+    "category": "格闘技",
+    "subject": "K-1年末大会",
+    "what": "K-1の年末大会",
+    "place": "神奈川・横浜BUNTAI",
+    "basis": "official",
+    "ad_ok": true,
+    "keep": true,
+    "source_url": "https://prtimes.jp/main/html/rd/p/000000406.000030100.html",
+    "source_quote": "12月29日（火）に神奈川・横浜BUNTAIで開催する『K-1 WORLD MAX 2026』",
+    "official_url": "https://prtimes.jp/main/html/rd/p/000000406.000030100.html",
+    "checked_on": "2026-10-29",
+    "verified": true,
+    "sensitivity": "none",
+    "son_toku": false,
+    "region": "神奈川・横浜BUNTAI",
+    "date_end": null,
+    "note": "出典ページの本文で、日付を機械的に確かめた。"
+  }
+]
