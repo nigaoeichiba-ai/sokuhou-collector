@@ -1,0 +1,87 @@
+{
+ "slug": "animals-undokai-kawaii",
+ "title": "運動会の動物たち",
+ "subject": "",
+ "genre": "animals",
+ "touch": "kawaii",
+ "title_fmt": "{ja}",
+ "subject_en": "Cute animals taking part in a sports day, each ONE animal doing one event, full body, centred in its cell, with a simple prop, rounded kawaii shapes with dot eyes. Animals wear plain red or white headbands or caps only. Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no numbers, no logos.",
+ "lead": "かけっこ・玉入れ・綱引きなど運動会の競技をする動物を、かわいいタッチで描いた12点です。運動会のお知らせやプログラムに使えます。",
+ "tags": [
+  "運動会",
+  "動物",
+  "かけっこ",
+  "玉入れ",
+  "綱引き",
+  "体育祭",
+  "お知らせ"
+ ],
+ "season": null,
+ "holes": false,
+ "exclude": [
+  "dog-relay",
+  "panda-three-leg"
+ ],
+ "items": [
+  [
+   "rabbit-run",
+   "かけっこをするうさぎ",
+   "a rabbit running a footrace with a red headband, ears flying back"
+  ],
+  [
+   "turtle-run",
+   "ゴールするカメ",
+   "a turtle slowly crossing a finish tape, smiling"
+  ],
+  [
+   "bear-tsunahiki",
+   "綱引きをするクマ",
+   "a bear pulling a thick rope, leaning back with effort"
+  ],
+  [
+   "monkey-tamaire",
+   "玉入れをするサル",
+   "a monkey throwing a red ball up toward a basket on a pole"
+  ],
+  [
+   "dog-relay",
+   "リレーのバトンを渡すイヌ",
+   "a dog passing a relay baton to the next runner's paw"
+  ],
+  [
+   "cat-hurdle",
+   "ハードルを跳ぶネコ",
+   "a cat jumping over a low hurdle"
+  ],
+  [
+   "elephant-ball",
+   "大玉を転がすゾウ",
+   "an elephant rolling a giant ball with its trunk"
+  ],
+  [
+   "penguin-slide",
+   "すべるペンギン",
+   "a penguin sliding forward on its belly in a race"
+  ],
+  [
+   "panda-three-leg",
+   "二人三脚のパンダ",
+   "two pandas running a three-legged race with their legs tied"
+  ],
+  [
+   "fox-cheer",
+   "応援団長のキツネ",
+   "a fox waving a big flag on a pole as cheering captain"
+  ],
+  [
+   "pig-bread",
+   "パン食い競走のブタ",
+   "a pig jumping up to bite a bread roll hanging on a string"
+  ],
+  [
+   "lion-medal",
+   "メダルをもらうライオン",
+   "a lion standing proudly on a podium with a medal around its neck"
+  ]
+ ]
+}

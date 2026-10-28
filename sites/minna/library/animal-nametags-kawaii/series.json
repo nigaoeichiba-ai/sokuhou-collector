@@ -1,0 +1,237 @@
+{
+ "added": "2026-10-29",
+ "slug": "animal-nametags-kawaii",
+ "title": "動物の名札",
+ "genre": "school",
+ "touch": "kawaii",
+ "lead": "動物が空白の名札を持った12点です。名前や学年を書き足して、ロッカー・下駄箱・席札に使えます。",
+ "tags": [
+  "名札",
+  "名前",
+  "動物",
+  "ロッカー",
+  "席札",
+  "かわいい"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "animal-nametags-kawaii-cat",
+   "file": "animal-nametags-kawaii-cat.webp",
+   "title": "名札を持つ猫",
+   "desc": "名札を持つ猫のゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札を持つ猫",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 405,
+   "h": 489
+  },
+  {
+   "id": "animal-nametags-kawaii-dog",
+   "file": "animal-nametags-kawaii-dog.webp",
+   "title": "名札を下げた犬",
+   "desc": "名札を下げた犬のゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札を下げた犬",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 438,
+   "h": 473
+  },
+  {
+   "id": "animal-nametags-kawaii-rabbit",
+   "file": "animal-nametags-kawaii-rabbit.webp",
+   "title": "名札を持つ兎",
+   "desc": "名札を持つ兎のゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札を持つ兎",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 370,
+   "h": 521
+  },
+  {
+   "id": "animal-nametags-kawaii-bear",
+   "file": "animal-nametags-kawaii-bear.webp",
+   "title": "名札を持つ熊",
+   "desc": "名札を持つ熊のゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札を持つ熊",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 430,
+   "h": 507
+  },
+  {
+   "id": "animal-nametags-kawaii-penguin",
+   "file": "animal-nametags-kawaii-penguin.webp",
+   "title": "名札を持つペンギン",
+   "desc": "名札を持つペンギンのゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札を持つペンギン",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 392,
+   "h": 479
+  },
+  {
+   "id": "animal-nametags-kawaii-fox",
+   "file": "animal-nametags-kawaii-fox.webp",
+   "title": "名札を持つ狐",
+   "desc": "名札を持つ狐のゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札を持つ狐",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 440,
+   "h": 505
+  },
+  {
+   "id": "animal-nametags-kawaii-panda",
+   "file": "animal-nametags-kawaii-panda.webp",
+   "title": "名札を持つ熊猫",
+   "desc": "名札を持つ熊猫のゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札を持つ熊猫",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 455,
+   "h": 449
+  },
+  {
+   "id": "animal-nametags-kawaii-chick",
+   "file": "animal-nametags-kawaii-chick.webp",
+   "title": "名札と雛",
+   "desc": "名札と雛のゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札と雛",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 355,
+   "h": 426
+  },
+  {
+   "id": "animal-nametags-kawaii-elephant",
+   "file": "animal-nametags-kawaii-elephant.webp",
+   "title": "名札を持つ象",
+   "desc": "名札を持つ象のゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札を持つ象",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 509,
+   "h": 441
+  },
+  {
+   "id": "animal-nametags-kawaii-sheep",
+   "file": "animal-nametags-kawaii-sheep.webp",
+   "title": "名札を持つ羊",
+   "desc": "名札を持つ羊のゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札を持つ羊",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 432,
+   "h": 472
+  },
+  {
+   "id": "animal-nametags-kawaii-frog",
+   "file": "animal-nametags-kawaii-frog.webp",
+   "title": "名札と蛙",
+   "desc": "名札と蛙のゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札と蛙",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 468,
+   "h": 423
+  },
+  {
+   "id": "animal-nametags-kawaii-lion",
+   "file": "animal-nametags-kawaii-lion.webp",
+   "title": "名札を持つ獅子",
+   "desc": "名札を持つ獅子のゆるかわイラストです。",
+   "tags": [
+    "名札",
+    "名前",
+    "動物",
+    "ロッカー",
+    "動物の名札",
+    "名札を持つ獅子",
+    "ゆるかわ",
+    "学校・保育"
+   ],
+   "w": 449,
+   "h": 478
+  }
+ ]
+}

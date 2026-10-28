@@ -1,0 +1,84 @@
+{
+ "slug": "office-worker-middleaged-flat",
+ "title": "会社員(中高年の男性)の仕事の場面",
+ "subject": "",
+ "genre": "work",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Scenes of a middle-aged Japanese male office worker in his forties to fifties (short hair, a little grey, suit and tie or shirt sleeves, glasses on some), the same man in every scene, each ONE small complete scene centred in its cell, flat style, simple round face with dot eyes and a mild expression. Include no company names. Outlines are closed and darker than the fill; light parts (paper, shirts, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "会議・出張・残業・通勤など、中高年の会社員男性の日常を、フラットなタッチで描いた12点です。社内文書やビジネス記事に使えます。",
+ "tags": [
+  "会社員",
+  "サラリーマン",
+  "中高年",
+  "男性",
+  "ビジネス",
+  "通勤",
+  "オフィス"
+ ],
+ "season": null,
+ "holes": false,
+ "exclude": [],
+ "items": [
+  [
+   "commute",
+   "満員電車で通勤する",
+   "the man holding a briefcase and a strap in a crowded train car"
+  ],
+  [
+   "meeting",
+   "会議で資料を見る",
+   "the man seated at a meeting table reading printed documents"
+  ],
+  [
+   "presentation",
+   "プレゼンをする",
+   "the man standing beside a blank screen, pointing at it with a pen"
+  ],
+  [
+   "bow",
+   "取引先にお辞儀をする",
+   "the man bowing politely in a suit with his briefcase at his side"
+  ],
+  [
+   "phone",
+   "電話で話す",
+   "the man at a desk talking on a phone, taking notes"
+  ],
+  [
+   "pc-work",
+   "パソコンで作業する",
+   "the man typing at a laptop with a coffee cup beside it"
+  ],
+  [
+   "overtime",
+   "残業する",
+   "the man tired at a desk at night with a desk lamp and a stack of papers"
+  ],
+  [
+   "business-trip",
+   "出張に向かう",
+   "the man pulling a small suitcase on a station platform"
+  ],
+  [
+   "lunch",
+   "昼食をとる",
+   "the man eating a bento at his desk with a smile"
+  ],
+  [
+   "break",
+   "休憩で一息つく",
+   "the man holding a canned coffee, leaning on a railing, relieved"
+  ],
+  [
+   "thinking",
+   "考えこむ",
+   "the man with a hand on his chin looking at a notebook, thoughtful"
+  ],
+  [
+   "back-home",
+   "帰宅する",
+   "the man walking home with his coat over his arm under a streetlight"
+  ]
+ ]
+}
