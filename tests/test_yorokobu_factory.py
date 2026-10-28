@@ -17,10 +17,10 @@ def good_theme(slug="rainy-day", **over):
          "reasons": ["家で使える物は、天気に関係なく使い道がはっきりしています。", "香りや温かさのある物は、気分を切り替えるきっかけになります。", "小さめの品なら、重ねて贈っても場所を取りません。"],
          "how_to_choose": ["置く場所を想像して、大きさを決める。", "香りは弱めを選び、好みが分かれにくくする。", "届く日が雨でも使えるよう、防水の包装を確かめる。"],
          "avoid": ["濡れると傷む素材の物", "強い香りの物"], "recipient": None,
-         "ideas": [{"label": "ルームシューズ", "type": "ファッション小物", "query": "ルームシューズ ギフト 洗える", "why": "家の中で足元から温めてくれて、雨の日の気分を上げてくれます。"},
-                   {"label": "ハーブティー", "type": "食べもの・飲みもの", "query": "ハーブティー ティーバッグ 詰め合わせ", "why": "湯気と香りでほっとできて、雨音を聞きながら味わえます。"},
-                   {"label": "ブランケット", "type": "癒し・リラックス", "query": "ブランケット ひざ掛け 洗える", "why": "ソファや椅子で羽織れて、湿った日の肌寒さをやわらげます。"},
-                   {"label": "室内干しグッズ", "type": "実用品", "query": "室内干し ハンガー おしゃれ", "why": "洗濯物が乾きにくい日の手間を減らす、気の利いた実用品です。"}],
+         "ideas": [{"label": "ルームシューズ", "must": ["ルームシューズ","スリッパ"], "type": "ファッション小物", "query": "ルームシューズ ギフト 洗える", "why": "家の中で足元から温めてくれて、雨の日の気分を上げてくれます。"},
+                   {"label": "ハーブティー", "must": ["ハーブティー","ティーバッグ"], "type": "食べもの・飲みもの", "query": "ハーブティー ティーバッグ 詰め合わせ", "why": "湯気と香りでほっとできて、雨音を聞きながら味わえます。"},
+                   {"label": "ブランケット", "must": ["ブランケット","ひざ掛け"], "type": "癒し・リラックス", "query": "ブランケット ひざ掛け 洗える", "why": "ソファや椅子で羽織れて、湿った日の肌寒さをやわらげます。"},
+                   {"label": "室内干しグッズ", "must": ["ハンガー","物干し"], "type": "実用品", "query": "室内干し ハンガー おしゃれ", "why": "洗濯物が乾きにくい日の手間を減らす、気の利いた実用品です。"}],
          "keywords": ["ルームシューズ", "ハーブティー", "ブランケット", "室内干し", "入浴剤", "アロマ", "傘", "レインブーツ"], "tiers": ["under3000", "3000-5000"]}
     t.update(over)
     return t
@@ -61,6 +61,18 @@ class FactoryTest(unittest.TestCase):
             n, probs = factory.merge_themes({"themes": [bad]}, date(2026, 10, 8))
             self.assertEqual(n, 0)
             self.assertTrue(any(needle in p for p in probs), (needle, probs))
+
+    def test_an_idea_without_must_is_refused(self):
+        t = good_theme()
+        del t["ideas"][2]["must"]
+        n, probs = factory.merge_themes({"themes": [t]}, date(2026, 10, 8))
+        self.assertEqual(n, 0)
+        self.assertTrue(any("no valid must" in p for p in probs), probs)
+
+    def test_the_themes_brief_asks_for_must(self):
+        out = self.dir / "bm.md"
+        factory.brief("themes", 4, out, Path("x/answer.json"))
+        self.assertIn('"must"', out.read_text(encoding="utf-8"))
 
     def test_a_query_already_used_is_refused(self):
         t = good_theme()
