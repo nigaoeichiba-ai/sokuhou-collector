@@ -1,0 +1,22 @@
+{
+ "date": "2026-10-29",
+ "weekday": "木",
+ "words": 0,
+ "rss": 4004,
+ "searches": 4,
+ "fetches": 12,
+ "candidates": 5,
+ "cards": 4,
+ "rejected": 1,
+ "rejected_reasons": {"2か所目の引用がページに無い(instax SQUARE 2)": 1},
+ "queries": [
+  "九州場所 初日(extended: 朝日+福岡の情報サイトで press 通過)",
+  "ベストヒット歌謡祭 11月11日(Yahoo系+リアルサウンドで press 通過)",
+  "ミュージックソン 12月24日(radiko news+thefirsttimes で press 通過)",
+  "instax mini Evo 2(富士フイルム公式で official 通過)"
+ ],
+ "failed_words": ["有村藍里 写真集 12月4日(2か所目未確認)", "K-1 WORLD MAX 12月29日(未確認)", "instax SQUARE 2 11月13日(2か所目の引用が合わず)"],
+ "injections": 0,
+ "results_written": 0,
+ "note": "利用者ワード0件。目標30に届かず(カード4)。RSS leads から選び、extended 検索で別ドメインの2か所目を探す型が有効。結果待ち12日分は未着手(時間配分の都合)。次回: 結果待ちの日本シリーズ第4戦などを優先。"
+}
