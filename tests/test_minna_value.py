@@ -363,5 +363,30 @@ class NoAdsOnLinkPages(unittest.TestCase):
         self.assertEqual(build.page_path("404.html"), "/404.html")
 
 
+class LeadCount(unittest.TestCase):
+    """A set's lead says how many pictures it has; the number is the real one (2026-10-29: 33 sets said 12 with fewer pictures)."""
+
+    def test_the_first_number_of_points_is_replaced_and_nothing_else(self):
+        from sites.minna import model
+        self.assertEqual(model.lead_with_count("かけっこなど運動会の動物を描いた12点です。6点は動物です。", 10), "かけっこなど運動会の動物を描いた10点です。6点は動物です。")
+        self.assertEqual(model.lead_with_count("数のない文です。", 10), "数のない文です。")
+        self.assertEqual(model.lead_with_count("素材12点です。", 12), "素材12点です。")
+
+    def test_on_every_series_page_the_lead_and_the_count_line_agree_with_the_pictures_shown(self):
+        out, files = shared_site()
+        bad = []
+        for f in files:
+            if not (f.startswith("series/") and f.endswith("/index.html")):
+                continue
+            html = (out / f).read_text(encoding="utf-8")
+            shown = len(set(re.findall(r'href="/illust/([^/"]+)/"', re.search(r"<main.*?</main>", html, re.S).group(0)))) 
+            lead = re.search(r'class="lead">([^<]*)', html).group(1)
+            m = re.search(r"(\d+)点", lead)
+            count_line = re.search(r'<p class="meta">(\d+)点', html)
+            if (m and int(m.group(1)) != int(count_line.group(1))) or int(count_line.group(1)) > shown:
+                bad.append((f, m and m.group(1), count_line.group(1), shown))
+        self.assertEqual(bad, [])
+
+
 if __name__ == "__main__":
     unittest.main()

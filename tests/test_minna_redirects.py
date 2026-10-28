@@ -43,5 +43,45 @@ class Redirects(unittest.TestCase):
         self.assertFalse(pat.match("tag/09e7384c81x/"))
 
 
+class AutoTagRedirects(unittest.TestCase):
+    """A keyword page that has existed and falls out of the 150 biggest keywords gets a 301 by itself (2026-10-29: 介護 and 介護士 had gone the day before)."""
+
+    ITEMS = [{"series": "care", "genre": "life"}] * 5 + [{"series": "other", "genre": "life"}]
+
+    def run_(self, published, built, tagged_items, manual=None):
+        return redirects.auto_tag_redirects(published, built, lambda t: f"/tag/{t}/", lambda t: tagged_items.get(t, []),
+                                            {"care": "/series/care/", "other": "/series/other/"}, {"life", "food"}, manual or {})
+
+    def test_a_dropped_keyword_goes_to_the_set_that_holds_most_of_its_pictures(self):
+        out = self.run_(["介護"], set(), {"介護": self.ITEMS})
+        self.assertEqual(out, {"tag/介護": "/series/care/"})
+
+    def test_a_keyword_spread_over_sets_goes_to_its_genre_and_one_without_pictures_to_the_list(self):
+        spread = [{"series": f"s{i}", "genre": "food"} for i in range(6)]
+        self.assertEqual(self.run_(["a"], set(), {"a": spread}), {"tag/a": "/genre/food/"})
+        self.assertEqual(self.run_(["b"], set(), {}), {"tag/b": "/tag/"})
+
+    def test_a_keyword_that_still_has_its_page_or_has_a_hand_written_redirect_gets_nothing(self):
+        self.assertEqual(self.run_(["介護"], {"/tag/介護/"}, {"介護": self.ITEMS}), {})
+        self.assertEqual(self.run_(["介護"], set(), {"介護": self.ITEMS}, manual={"tag/介護": "/x/"}), {})
+
+    def test_the_two_keywords_that_went_missing_have_rules_in_the_build_and_every_rule_is_sound(self):
+        out, files = shared_site()
+        ht = (out / ".htaccess").read_text(encoding="utf-8")
+        for h in ("54b977088b", "8e2d07faa2"):
+            self.assertRegex(ht, rf"RewriteRule \^tag/{h}\(/\.\*\)\?\$ /[a-z0-9/-]+/ \[R=301,L\]")
+        pages = {f[: -len("index.html")].rstrip("/") for f in files if f.endswith("index.html")}
+        for old, new in re.findall(r"RewriteRule \^([a-z0-9/-]+)\(/\.\*\)\?\$ (/[a-z0-9/-]*/) \[R=301,L\]", ht):
+            self.assertNotIn(old, pages, old)
+            self.assertIn(new.strip("/"), pages, f"{old} -> {new}")
+
+    def test_the_published_list_has_no_duplicates_and_includes_the_two_keywords_that_went_missing(self):
+        # Not a check that every page of the build is in the list: a new keyword page must not stop a deploy.  build.py --record-tags adds them.
+        words = redirects.published_tags()
+        self.assertEqual(len(words), len(set(words)))
+        self.assertIn("介護", words)
+        self.assertIn("介護士", words)
+
+
 if __name__ == "__main__":
     unittest.main()
