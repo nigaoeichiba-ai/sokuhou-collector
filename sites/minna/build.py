@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.minna import facts, model, printables, tips, wishes  # noqa: E402
+from sites.minna import facts, model, printables, redirects, tips, wishes  # noqa: E402
 from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
 from sites.minna.setguides import set_guide_html  # noqa: E402
 from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
@@ -105,6 +105,13 @@ def guide_page(cfg, preview, g: dict, series: list[dict]) -> str:
             t = sec["table"]
             secs += ('<div class="tablewrap"><table><thead><tr>' + "".join(f"<th>{esc(h)}</th>" for h in t["head"]) + "</tr></thead><tbody>"
                      + "".join("<tr>" + "".join(f"<td>{esc(c)}</td>" for c in r) + "</tr>" for r in t["rows"]) + "</tbody></table></div>")
+        if sec.get("figure"):       # a finished example made of the site's own pictures: {src, w, h, alt, caption}
+            f = sec["figure"]
+            secs += (f'<figure style="margin:0 0 24px"><img src="{esc(f["src"])}" alt="{esc(f["alt"])}" width="{f["w"]}" height="{f["h"]}" loading="lazy" style="max-width:100%;height:auto;border-radius:8px">'
+                     f'<figcaption class="memo-note" style="margin-top:8px">{esc(f["caption"])}</figcaption></figure>')
+        secs += "".join(f"<p>{esc(p)}</p>" for p in sec.get("paras2", []))
+        if sec.get("links"):        # [[label, path], ...]: pages of this site the section talks about
+            secs += '<ul class="check">' + "".join(f'<li><a href="{esc(href)}">{esc(label)}</a></li>' for label, href in sec["links"]) + "</ul>"
         secs += "</section>"
     faq = "".join(f"<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>" for q, a in g.get("faq", []))
     src = ""
@@ -115,7 +122,7 @@ def guide_page(cfg, preview, g: dict, series: list[dict]) -> str:
     illust = (f'<section style="margin-top:36px"><h2><span class="scribble">この記事で使えるイラスト</span></h2>{grid(its)}'
               + "".join(f'<p><a href="{s_["url"]}">「{esc(s_["title"])}」をすべて見る</a></p>' for s_ in rel) + "</section>") if its else ""
     ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": g["title"], "description": g["description"], "inLanguage": "ja",
-                     "datePublished": g.get("date", "2026-10-07"), "dateModified": g.get("date", "2026-10-07"),
+                     "datePublished": g.get("date", "2026-10-07"), "dateModified": g.get("modified", g.get("date", "2026-10-07")),
                      "author": {"@type": "Organization", "name": cfg["site_name"]}, "publisher": {"@type": "Organization", "name": cfg["site_name"]},
                      "mainEntityOfPage": f"{base}/guide/{g['slug']}/"}, ensure_ascii=False)
     faq_ld = ""
@@ -1797,6 +1804,8 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         pages[rel] = noindex(pages[rel])
     drop_ads_from_noindex(pages)                                                 # a page that asks not to be indexed carries no ad tag either
     pages.update(standard_files({k: v for k, v in pages.items() if k not in thin}, cfg, preview, today.isoformat()))      # thin pages stay out of sitemap.xml
+    if not preview:
+        pages[".htaccess"] = pages[".htaccess"] + redirects.htaccess_lines()                                  # old URLs that are gone go to the page that holds their content (redirects.py)
     pages["sitemap-images.xml"] = sitemap_images(cfg, items)
     if cfg.get("indexnow_key"):
         pages[f"{cfg['indexnow_key']}.txt"] = cfg["indexnow_key"]     # IndexNow (Bing and others): proves we own the site, see indexnow.py

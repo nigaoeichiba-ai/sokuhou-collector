@@ -171,8 +171,21 @@ def eto() -> None:
     save(im, f"{s}-2")
 
 
+def christmas_card() -> None:
+    """The example of the guide /guide/christmas-card/ (not of a set page): one picture of a set at its own size on a postcard."""
+    s = "christmas-animals-kawaii"
+    im, d = paper(592, 876)
+    centered(d, "Merry Christmas", 296, 50, font(56, 800), ACCENT)
+    p = pic(s, "christmas-animals-kawaii-cat")
+    put(im, p, 296, 170)
+    centered(d, "今年も一年、ありがとう。\nあたたかい冬をお過ごしください。", 296, 700, font(28, 500), INK, 10)
+    centered(d, "○○より", 296, 810, font(26, 600), SOFT)
+    save(im, "christmas-card-1")
+
+
 if __name__ == "__main__":
     event_frames()
     bowing()
     winter()
     eto()
+    christmas_card()
