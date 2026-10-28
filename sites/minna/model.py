@@ -8,6 +8,7 @@ Every item ends up with: id, title, desc, tags, genre, touch, series (slug), pat
 from __future__ import annotations
 
 import json
+import re
 from datetime import date
 from pathlib import Path
 
@@ -37,6 +38,11 @@ def load_legacy(gift_content, build_catalog, categories) -> tuple[list[dict], li
     return items, series
 
 
+def lead_with_count(lead: str, n: int) -> str:
+    """A set's lead says how many pictures it has ("…を描いた12点です"); pictures that review takes out leave that number wrong, so the first "N点" is the real count (2026-10-29: 33 sets said 12)."""
+    return re.sub(r"\d+点", f"{n}点", lead, count=1)
+
+
 def load_library() -> tuple[list[dict], list[dict]]:
     items, series = [], []
     for f in sorted(LIBRARY.glob("*/series.json")):
@@ -50,7 +56,7 @@ def load_library() -> tuple[list[dict], list[dict]]:
                           "path": p, "w": it["w"], "h": it["h"], "added": d.get("added", LEGACY_ADDED)})
             ids.append(it["id"])
         if ids:
-            series.append({"slug": d["slug"], "title": d["title"], "lead": d["lead"], "genre": d["genre"], "touch": d["touch"], "tags": d.get("tags", []),
+            series.append({"slug": d["slug"], "title": d["title"], "lead": lead_with_count(d["lead"], len(ids)), "genre": d["genre"], "touch": d["touch"], "tags": d.get("tags", []),
                            "season": d.get("season"), "added": d.get("added", LEGACY_ADDED), "legacy": False, "url": f"/series/{d['slug']}/", "ids": ids})
     return items, series
 

@@ -1805,7 +1805,9 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     drop_ads_from_noindex(pages)                                                 # a page that asks not to be indexed carries no ad tag either
     pages.update(standard_files({k: v for k, v in pages.items() if k not in thin}, cfg, preview, today.isoformat()))      # thin pages stay out of sitemap.xml
     if not preview:
-        pages[".htaccess"] = pages[".htaccess"] + redirects.htaccess_lines()                                  # old URLs that are gone go to the page that holds their content (redirects.py)
+        auto = redirects.auto_tag_redirects(redirects.published_tags(), {tag_url(t) for t in tags}, tag_url, lambda t: tagged(items, t),
+                                            {x["slug"]: x["url"] for x in series if not x.get("legacy")}, set(GENRE_BY_SLUG), redirects.REDIRECTS)
+        pages[".htaccess"] = pages[".htaccess"] + redirects.htaccess_lines(auto)                                  # old URLs that are gone go to the page that holds their content (redirects.py)
     pages["sitemap-images.xml"] = sitemap_images(cfg, items)
     if cfg.get("indexnow_key"):
         pages[f"{cfg['indexnow_key']}.txt"] = cfg["indexnow_key"]     # IndexNow (Bing and others): proves we own the site, see indexnow.py
@@ -1819,11 +1821,14 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--release", action="store_true")
+    ap.add_argument("--record-tags", action="store_true", help="add the keyword pages of this build to content/published_tags.json (a keyword that later falls out of the list then gets a 301)")
     ap.add_argument("--out", default=str(HERE / "dist"))
     a = ap.parse_args()
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
     try:
         files = render_site(cfg, Path(a.out), release=a.release)
+        if a.record_tags:
+            print(f"recorded {redirects.record_tags(SITE['tags'])} new keyword page(s) in {redirects.PUBLISHED_TAGS.name}")
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {a.out}")
