@@ -1,11 +1,13 @@
 {
- "fetched_at": "2026-10-29T05:37:47.250987+09:00",
+ "fetched_at": "2026-10-29T05:52:41.413693+09:00",
  "incidents": [
   {
    "kind": "建物火災",
    "place": "大津市相模町付近",
+   "resolved_at": "2026-10-29T05:45:00+09:00",
+   "result": "非火災と判明",
    "started_at": "2026-10-29T05:28:00+09:00",
-   "status": "reported"
+   "status": "resolved"
   },
   {
    "kind": "油漏れ警戒",
@@ -318,7 +320,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": false,
+ "no_active_incident": true,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
