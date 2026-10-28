@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-20T19:15:47+09:00",
+ "fetched_at": "2026-10-29T06:16:23+09:00",
  "rows": [
   {
    "daily": null,
@@ -71,7 +71,7 @@
    "hourly": 1072,
    "industry": "鉄鋼業、金属線製品、その他の金属製品製造業",
    "pref": "岩手",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -79,7 +79,7 @@
    "hourly": 1039,
    "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
    "pref": "岩手",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -87,7 +87,7 @@
    "hourly": 1052,
    "industry": "光学器械器具・レンズ、時計・同部分品製造業",
    "pref": "岩手",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -103,7 +103,7 @@
    "hourly": 1068,
    "industry": "自動車小売業",
    "pref": "岩手",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -175,7 +175,7 @@
    "hourly": 1070,
    "industry": "ポンプ・圧縮機器、一般産業用機械・装置、他に分類されないはん用機械・装置、化学機械・同装置、真空装置・真空機器製造業",
    "pref": "山形",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -183,7 +183,7 @@
    "hourly": 1055,
    "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
    "pref": "山形",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -191,7 +191,7 @@
    "hourly": 1070,
    "industry": "自動車・同附属品製造業",
    "pref": "山形",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -695,7 +695,7 @@
    "hourly": 1100,
    "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
    "pref": "山梨",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -703,7 +703,7 @@
    "hourly": 1089,
    "industry": "自動車・同附属品製造業",
    "pref": "山梨",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -903,7 +903,7 @@
    "hourly": 1136,
    "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
    "pref": "京都",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -1182,14 +1182,6 @@
    "effective_date": "2021-12-29",
    "hourly": 892,
    "industry": "自動車小売業",
-   "pref": "奈良",
-   "regional_applies": true
-  },
-  {
-   "daily": 6527,
-   "effective_date": "1989-01-25",
-   "hourly": 816,
-   "industry": "木材・木製品・家具・装備品製造業",
    "pref": "奈良",
    "regional_applies": true
   },
@@ -1647,7 +1639,7 @@
    "hourly": 1066,
    "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
    "pref": "大分",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -1655,7 +1647,7 @@
    "hourly": 1055,
    "industry": "自動車・同附属品製造業、船舶製造・修理業、舶用機関製造業",
    "pref": "大分",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -1671,7 +1663,7 @@
    "hourly": 1061,
    "industry": "自動車(新車)小売業",
    "pref": "大分",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -1679,7 +1671,7 @@
    "hourly": 1063,
    "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
    "pref": "熊本",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -1687,7 +1679,7 @@
    "hourly": 1074,
    "industry": "自動車・同附属品製造業、船舶製造・修理業,舶用機関製造業",
    "pref": "熊本",
-   "regional_applies": true
+   "regional_applies": false
   },
   {
    "daily": null,
@@ -1787,5 +1779,5 @@
   }
  ],
  "source": "https://saiteichingin.mhlw.go.jp/table/page_indlist_nationallist.html",
- "table_label": "令和7年度"
+ "table_label": "令和8年度"
 }
