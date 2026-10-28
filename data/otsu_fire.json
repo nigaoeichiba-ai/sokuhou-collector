@@ -1,11 +1,13 @@
 {
- "fetched_at": "2026-10-28T15:52:37.810364+09:00",
+ "fetched_at": "2026-10-28T16:22:38.109283+09:00",
  "incidents": [
   {
    "kind": "油漏れ警戒",
    "place": "大津市田上石居町付近",
+   "resolved_at": "2026-10-26T16:13:00+09:00",
+   "result": "活動を完了",
    "started_at": "2026-10-28T15:37:00+09:00",
-   "status": "reported"
+   "status": "resolved"
   },
   {
    "kind": "油漏れ警戒",
@@ -310,7 +312,7 @@
    "status": "resolved"
   }
  ],
- "no_active_incident": false,
+ "no_active_incident": true,
  "source": "http://www.otsu119.jp/fire/saigai/saigaiPc.html",
  "unparsed": []
 }
