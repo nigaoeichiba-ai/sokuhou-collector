@@ -536,6 +536,432 @@
   "unchanged": 83,
   "units": 94
  },
+ "gift/year-end-gathering-grandmother/index.html": {
+  "accepted": [
+   {
+    "from": "種類別に見る人気の4点",
+    "kind": "heading",
+    "to": "種類別に見る4点",
+    "why": "根拠のない人気を削った"
+   },
+   {
+    "from": "花は水替えの手間を考え、花瓶不要のアレンジメントか小ぶりな鉢を選んで持参する。",
+    "kind": "item",
+    "to": "花は水替えの手間を考え、花瓶がいらないアレンジメントか小ぶりな鉢を選びます。",
+    "why": "文末と読点を整えた"
+   },
+   {
+    "from": "和菓子は甘さの強さと賞味期限を見て集まりの日に開けやすい箱にしておく。",
+    "kind": "item",
+    "to": "和菓子は甘さと賞味期限を確かめます。集まりの日に開けやすい箱を選びます。",
+    "why": "一文一論点に分けた"
+   },
+   {
+    "from": "ストールは祖母の普段の服の色を思い出し、派手すぎない差し色を選んで包む。",
+    "kind": "item",
+    "to": "ストールは祖母が普段着る服の色に合わせ、派手すぎない差し色を選びます。",
+    "why": "不要な動作を削った"
+   },
+   {
+    "from": "祖母への年末年始の集まり、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "祖母への手土産 花・和菓子・ストール・ひざ掛け",
+    "why": "候補が分かる見出しにした"
+   },
+   {
+    "from": "親戚が帰る前のお茶に出せて余っても祖母が少しずつ楽しめる気軽な品です。",
+    "kind": "para",
+    "to": "親戚が帰る前のお茶に出せます。余った分は祖母が少しずつ楽しめます。",
+    "why": "気軽の中身を示した"
+   },
+   {
+    "from": "年始のあいさつ・帰省・喪中・お年玉の考え方を百貨店の案内を読み比べ、当サイトで調べた内容とともに記事にまとめています。",
+    "kind": "para",
+    "to": "年始のあいさつ・帰省・喪中・お年玉の考え方を百貨店の案内を読み比べ、当サイトで調べた内容を加えて記事にまとめています。",
+    "why": "係り受けを整えた"
+   },
+   {
+    "from": "義父母への年末年始手土産",
+    "kind": "item",
+    "to": "義父母への年末年始の手土産",
+    "why": "助詞を補い自然に"
+   }
+  ],
+  "date": "2026-10-28",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 選び方・注意点・お年賀の案内が商品の前後に分散し、読者が決める順番になっていません。",
+   "具体: 「明るく整える」「やさしく支える」「気軽な品」など、品物の働きが見えにくい抽象表現が残っています。",
+   "見出し: 「喜ばれやすい理由」「この提案はどんなタイプ？」は、節の中身を読むまで内容が分かりません。",
+   "構成: 商品選びが先に続き、お年賀の早見表や訪問時の案内、注意点が後ろにあるため、慣習を確かめてから選ぶ流れになっていません。",
+   "見出し: 「ポイント」「こんな贈り方」「気をつけたいこと」など、対象や中身が見出しだけでは分かりにくい箇所があります。",
+   "語: 「祖母への年末年始の集まり」のように係り受けが不自然な表現と、操作が伝わりにくい表現が混じっています。"
+  ],
+  "failed": "",
+  "hash": "a9bb568ba45e",
+  "needs_check": [],
+  "page": "gift/year-end-gathering-grandmother/index.html",
+  "rejected": [
+   {
+    "after": "祖母への年末年始の手土産は、玄関に飾れる花、お茶に出せる和菓子、初詣で使えるストールが候補です。大きすぎる品や台所で調理が必要な品は避けます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補', '調理', '必要']"
+    ],
+    "text": "祖母宅に集まる年末年始は玄関や食卓が明るくなる手土産がよく似合います。花は来客を迎える飾りに、和菓子はお茶の時間に、スト"
+   },
+   {
+    "after": "年末年始に祖母へ持参するなら、玄関に飾れる花、お茶の時間に出せる和菓子、初詣や買い物で使えるストールが候補です。台所が混み合う日を考え、大きな品や調理が必要な品",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['持参', '候補', '調理', '必要']"
+    ],
+    "text": "祖母宅に集まる年末年始は玄関や食卓が明るくなる手土産がよく似合います。花は来客を迎える飾りに、和菓子はお茶の時間に、スト"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "横軸は「食べて消える」から「ずっと残る」まで、縦軸は「定番・無難」から「個性的・意外」までです。番号を押すと該当する提案に移動します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['該当']"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから、年末年始の手土産に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['年末年始', '手土産']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "祖母の好きなものや趣味、年齢を入力すると近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖母', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "調理に台所を使う品は忙しい家では準備の手間が増えます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['調理', '準備', '手間']",
+     "careful wording removed (1 -> 0)",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "台所を使う必要がある品は忙しい家に負担をかけることがあります"
+   },
+   {
+    "after": "大きく重い品や飾り物は、持ち運びや置き場所に困るため、贈る前に祖母へ確認します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['場所', '祖母']"
+    ],
+    "text": "大きく重い品や片付けに困る飾り物を確認なしで贈らないようにします"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年10月28日 7:00時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "小さな花のアレンジメントは、玄関や座卓に置きやすく、来客を迎える飾りになります。",
+    "problems": [
+     "condition dropped: 「祖母の気持ち」という対象が落ちた"
+    ],
+    "text": "小さな花のアレンジメントは、玄関や座卓に置きやすく、来客を迎える祖母の気持ちを明るくします。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "after": "玄関や座卓に置きやすく、来客を迎える飾りになる手土産です。",
+    "problems": [
+     "condition dropped: 飾る場所が「祖母の家」である条件が落ちた"
+    ],
+    "text": "玄関や座卓に置きやすく、来客を迎える祖母の家を明るく整えられる手土産です。"
+   },
+   {
+    "after": "台所や居間で座るときに使えるひざ掛けです。寒い年末年始に体を温めます。",
+    "problems": [
+     "added claim: ひざ掛けが体を温めるとの効果を加えた"
+    ],
+    "text": "台所や居間で座る時間に使いやすく、寒い年末年始の体をやさしく支えます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "ほかの商品"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「お年賀の早見表…」〜「お年賀の早見表…」を「祖母宅に集まる年末年始は玄関…」の後ろへ移し、お年賀の時期・金額・のしを商品選びの前に確認できるようにする。",
+   "「条件で絞って比べる…」〜「この条件に合う商品は見つかり…」を「喜ばれやすい理由…」の前へ移し、予算と種類で候補を絞ってから理由や選び方を読む順にする。",
+   "「気をつけたいこと…」〜「大きく重い品や片付けに困る飾…」を「選び方のポイント…」の前へ移し、避けたい品と理由を選び方の直前に置く。",
+   "「お年賀の早見表…」「お年賀の早見表」、「お正月の訪問と贈り物ガイド…」「お正月の訪問と贈り物ガイド」、「気をつけたいこと…」「祖母への手土産の注意点」を「選び方のポイント…」より前へ移し、慣習の確認、注意点、選び方、商品の順にします。",
+   "「喜ばれやすい理由…」の理由を「選び方のポイント…」の各選択基準に添えられる場合は、二つの節を統合すると固定型の印象を抑えられます。",
+   "「迷ったときの次の一歩…」「迷ったときの次の一歩」は「一言入れて探す…」の後、「あわせて読みたい…」「あわせて読みたい」の直前へ移し、最後の行動を示す結びにします。",
+   "「ほかの商品…」「ほかの商品」と「Amazonで見つけた贈り物…」「Amazonで見つけた贈り物」が同じ商品一覧を案内する節なら、一つの見出しに統合します。"
+  ],
+  "unchanged": 94,
+  "units": 102
+ },
+ "gift/year-end-gathering-toddler/index.html": {
+  "accepted": [
+   {
+    "from": "あとで見返すなら、LINEで自分のトークに送るか、自分あてにメールを送るとスマホで開けます。",
+    "kind": "para",
+    "to": "あとで見返すときは、LINEで自分のトークに送るか、自分あてにメールで送るとスマホから開けます。",
+    "why": "案内を自然な表現に"
+   },
+   {
+    "from": "絵本は一冊が短く、角が丸い丈夫な仕様を選び、兄弟がいる家庭なら取り合いにくい冊数にする。",
+    "kind": "item",
+    "to": "絵本は一冊が短く、角が丸い丈夫な仕様を選びます。兄弟がいる家庭には取り合いにくい冊数にします。",
+    "why": "条件を二文に分割"
+   },
+   {
+    "from": "幼児(1〜5歳)への年末年始の集まり、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "年末年始に贈る、幼児(1〜5歳)向けの手土産",
+    "why": "長い見出しを簡潔に"
+   },
+   {
+    "from": "年始のあいさつ・帰省・喪中・お年玉の考え方を百貨店の案内を読み比べ、当サイトで調べた内容とともに記事にまとめています。",
+    "kind": "para",
+    "to": "百貨店の案内を読み比べ、年始のあいさつ・帰省・喪中・お年玉の考え方をまとめています。当サイトで調べた内容も加えました。",
+    "why": "長文を二文に分割"
+   },
+   {
+    "from": "義父母への年末年始手土産",
+    "kind": "item",
+    "to": "義父母への年末年始の手土産",
+    "why": "助詞の抜けを修正"
+   },
+   {
+    "from": "種類別に見る人気の4点",
+    "kind": "heading",
+    "to": "人気の4点を種類別に紹介",
+    "why": "語順と内容を明確に"
+   }
+  ],
+  "date": "2026-10-28",
+  "deleted": [
+   "幼児(1〜5歳)へのほかのイベント"
+  ],
+  "diagnosis": [
+   "構成: 幼児向けの選び方に、焼き菓子中心のAmazon商品や同じ内容の理由が混在し、短時間で候補を決めにくくなっています。",
+   "具体: 導入の「助かります」「その場になじみます」を、知育玩具・絵本セット・リュックの選び方に置き換える必要があります。",
+   "見出し: 「この提案はどんなタイプ？」など、節の中身を予測しにくい見出しがあります。",
+   "リズム: 選び方と注意点が長い一文に詰め込まれ、同じ調子の文末が続いています。",
+   "見出し: 「喜ばれやすい理由」「この提案はどんなタイプ？」など、本文の対象や内容が見出しだけでは分かりません。",
+   "構成: 選び方と注意点の間に商品案内が続き、選ぶ前に確認したい情報が離れています。",
+   "語: 「こんな贈り方はどうでしょう」「一言入れて探す」のような曖昧な言い方が残っています。"
+  ],
+  "failed": "",
+  "hash": "b7f49381aa38",
+  "needs_check": [
+   {
+    "question": "「人気の4点」とする根拠となる売上やランキングのデータがあるか確認してください。",
+    "text": "種類別に見る人気の4点"
+   },
+   {
+    "question": "Amazonの4商品は焼き菓子で、幼児向けの候補と一致しません。このページ用に選ばれた商品か確認してください。",
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。"
+   }
+  ],
+  "page": "gift/year-end-gathering-toddler/index.html",
+  "rejected": [
+   {
+    "after": "幼児への年末年始の手土産は、知育玩具や短い絵本セット、小さなリュックが候補です。部品の大きさや読み聞かせの長さを確かめ、親が片付けやすい量を選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補', '片付']"
+    ],
+    "text": "幼児を連れて集まる年末年始は、食卓の準備中や大人の会話のあいだに遊べる手土産が助かります。知育玩具は部品の大きさ、絵本セ"
+   },
+   {
+    "after": "幼児への年末年始の手土産は、知育玩具や短い絵本セット、小さなリュックが候補です。知育玩具は部品の大きさ、絵本セットは読み聞かせの長さを確かめます。リュックは背負",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補']",
+     "careful wording removed (1 -> 0)"
+    ],
+    "text": "幼児を連れて集まる年末年始は、食卓の準備中や大人の会話のあいだに遊べる手土産が助かります。知育玩具は部品の大きさ、絵本セ"
+   },
+   {
+    "after": "リュックは肩ひもの長さと胸ベルト、洗える素材を確認します。サイズは冬服の上から背負えるものを選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['確認']"
+    ],
+    "text": "リュックは肩ひもの長さ、胸ベルト、洗える素材を見て、冬服の上から背負えるサイズにする。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを下に表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "贈り物の残り方と定番度を比べる",
+    "problems": [
+     "new claim: 定番"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "after": "抹茶を使った京都のお菓子です。24本入りで1本ずつ包装されています。お茶と一緒に分けられます。",
+    "problems": [
+     "numbers differ: ['24'] -> ['24', '1']"
+    ],
+    "text": "抹茶を使った京都のお菓子が、24本の個包装で入っています。お茶と一緒に分けられます。"
+   },
+   {
+    "after": "好きなものや趣味、年齢などを入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "台所で準備が必要な品は忙しい家では手間になることがあります",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['準備', '手間']"
+    ],
+    "text": "台所を使う必要がある品は忙しい家に負担をかけることがあります"
+   },
+   {
+    "after": "幼児(1〜5歳)へのクリスマス・入学祝い",
+    "problems": [
+     "names / quoted words lost: ['イベント']"
+    ],
+    "text": "幼児(1〜5歳)へのほかのイベント"
+   },
+   {
+    "after": "価格・在庫は2026年10月28日 7:00時点の情報です。このサイトはよろこぶプレゼントの作成者が運営しています。価格と販売可能情報は変更される場合があります",
+    "problems": [
+     "added claim: 掲載情報の運営からサイト自体の運営へ断定対象が変わった"
+    ],
+    "text": "価格・在庫は2026年10月28日 7:00時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "after": "対象年齢と電池の有無は商品表示で確認します。口に入る大きさの部品や音の大きすぎる玩具は避けます。",
+    "problems": [
+     "hedge removed/condition dropped: 「口に入りそう」が言い切りになり、部品を商品表示で確認する条件も落ちた"
+    ],
+    "text": "対象年齢、口に入りそうな部品、電池の有無を商品表示で確認し、音が大きすぎる玩具は避ける。"
+   },
+   {
+    "after": "おむつやタオルを入れて出かけられ、年始の外出写真にも残せます。",
+    "problems": [
+     "hedge removed/condition dropped: 「残しやすい」が「残せます」となり、「かわいく」も落ちた"
+    ],
+    "text": "おむつやタオルを入れて出かけられ、年始の外出写真にもかわいく残しやすいです。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "after": "音の大きさは贈る前に確認します。大きすぎる玩具は家庭の負担になります",
+    "problems": [
+     "added claim: 音が大きすぎる玩具は家庭の負担になると一般化した"
+    ],
+    "text": "音が大きすぎて家庭の負担になる玩具を確認なしで贈らないようにします"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "条件で絞って比べる"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "迷ったときの次の一歩"
+   }
+  ],
+  "structure_suggestions": [
+   "「幼児を連れて集まる年末年始は…」が表示される要素なら、内容が重なる「幼児を連れて集まる年末年始は…」と統合してください。メタ説明なら、本文には表示しない構成が適しています。",
+   "「喜ばれやすい理由…」〜「リュックは肩ひもの長さ、胸ベ…」と「気をつけたいこと…」〜「音が大きすぎて家庭の負担にな…」は内容が重なります。「選ぶ基準」と「贈る前の確認」にまとめ、部品や音の注意を一度だけ示してください。",
+   "「Amazonで見つけた贈り物…」〜「Amazonで選ぶ贈り物をす…」は幼児向けの商品候補と内容が合うか確認し、共通の年末年始手土産ページへ移すか、このページ用の商品に差し替えてください。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」をページの最後へ移し、候補をお気に入りに入れる行動でページを結んでください。",
+   "「幼児(1〜5歳)へのほかのイ…」は本文がないため削除案としました。リンクを掲載する予定がある場合だけ、内容を追加して残してください。",
+   "「喜ばれやすい理由…」と「選び方のポイント…」は、知育玩具・絵本・リュックの品目ごとに「向く理由」と「選ぶ条件」をまとめると、同じ品について節を行き来せずに読めます。",
+   "「気をつけたいこと…」は「選び方のポイント…」の直後へ移し、注意点を確認してから「条件で絞って比べる…」以降の商品比較へ進む順にします。",
+   "「迷ったときの次の一歩…」は関連記事の後へ移し、ページの最後を次にする行動で結びます。"
+  ],
+  "unchanged": 80,
+  "units": 96
+ },
  "message/birth-gift/index.html": {
   "accepted": [
    {
@@ -4313,6 +4739,151 @@
   ],
   "unchanged": 102,
   "units": 135
+ },
+ "shogatsu/index.html": {
+  "accepted": [
+   {
+    "from": "2027年の年始の暦",
+    "kind": "heading",
+    "to": "お年賀と寒中見舞い 2027年の日程",
+    "why": "中身を具体化"
+   },
+   {
+    "from": "いつ何をするか(検索の動きから)",
+    "kind": "heading",
+    "to": "検索から見る準備の時期",
+    "why": "見出しを平易に"
+   },
+   {
+    "from": "お正月の贈り物に関する検索は時期によって中身が変わります。10月下旬から11月は喪中とお歳暮、12月はお年賀の品選び、1月は「いつまで」と寒中見舞いです。準備の順番の目安として並べました。",
+    "kind": "para",
+    "to": "10月下旬から11月は喪中とお歳暮、12月はお年賀の品選び、1月は「いつまで」と寒中見舞いが検索されます。お正月の贈り物は時期によって検索の中身が変わります。準備の順番を決める目安として並べました。",
+    "why": "時期を先に並べる"
+   },
+   {
+    "from": "検索の動きはGoogle トレンド(日本・ウェブ検索)で、2022〜2025年の各年の傾向を当サイトが調べたものです。年によって数日ずれます。",
+    "kind": "para",
+    "to": "検索の動きは、Google トレンド(日本・ウェブ検索)で当サイトが調べました。2022〜2025年の各年に見られた傾向で年によって数日ずれます。",
+    "why": "調査条件を簡潔に"
+   },
+   {
+    "from": "品を選ぶ前に決めておくこと",
+    "kind": "heading",
+    "to": "品選びの前に決めること",
+    "why": "見出しを短くする"
+   },
+   {
+    "from": "相手か自分が喪中ではないか。喪中なら、お年賀ではなく寒中見舞いの考え方になります",
+    "kind": "item",
+    "to": "相手か自分が喪中かどうか。喪中なら、お年賀ではなく寒中見舞いを考えます",
+    "why": "硬い言い方を直す"
+   },
+   {
+    "from": "移動の仕方。電車で運ぶのか車なのかで箱の大きさと重さの許容が違います",
+    "kind": "item",
+    "to": "移動が電車か車か。持ち運べる箱の大きさと重さが変わります",
+    "why": "具体的な動作で示す"
+   },
+   {
+    "from": "この特集のつくり方",
+    "kind": "heading",
+    "to": "この特集で扱う内容",
+    "why": "読者向けの見出しに"
+   }
+  ],
+  "date": "2026-10-28",
+  "deleted": [
+   "お正月の訪問と贈り物について、場面ごとに13の記事にまとめています。"
+  ],
+  "diagnosis": [
+   "構成: 記事一覧のあとに暦や品選びの条件が続くため、短時間で決めたい読者が「いつ」「何を基準に」の答えへ進みにくくなっています。",
+   "具体: 導入は扱うテーマと調査方法が中心で、読者が最初に知りたい「時期と相手で考え方が変わる」という結論が埋もれています。",
+   "語: 品選びの説明に「扱いやすい」「許容」「考え方」のような抽象的で硬い語があり、実際の判断に結びつく言葉へ直す余地があります。",
+   "リズム: 導入と干支の説明は一文の情報量が多く、文を分けた方が要点を追いやすくなります。"
+  ],
+  "failed": "",
+  "hash": "f1177aa1302d",
+  "needs_check": [
+   {
+    "question": "u26は2022〜2025年の各年、u48は過去5年となっています。調査期間が一致するか確認してください。",
+    "text": "Google トレンド(日本・ウェブ検索・過去5年)を当サイトが2026年10月17日に調べた結果"
+   }
+  ],
+  "page": "shogatsu/index.html",
+  "rejected": [
+   {
+    "after": "年始のあいさつに持っていく品、帰省の手土産、お菓子以外の選び方、喪中と寒中見舞い、お返し、取引先への年始、お年玉。お正月の贈り物は時期と相手によって考え方が変わ",
+    "problems": [
+     "numbers differ: ['2027', '百'] -> ['2027', '百', '十三']",
+     "words added that the original does not have (information must not grow): ['十三', '記事']"
+    ],
+    "text": "年始のあいさつに持っていく品、帰省の手土産、お菓子以外の選び方、喪中と寒中見舞い、お返し、取引先への年始、お年玉。お正月"
+   },
+   {
+    "after": "お正月の贈り物は時期と相手によって考え方が変わります。年始の手土産、お年賀、帰省、喪中と寒中見舞い、お返し、取引先への年始、お年玉を十三の記事に分けました。お菓",
+    "problems": [
+     "numbers differ: ['2027', '百', '十三'] -> ['2027', '十三', '百']"
+    ],
+    "text": "年始のあいさつに持っていく品、帰省の手土産、お菓子以外の選び方、喪中と寒中見舞い、お返し、取引先への年始、お年玉。お正月"
+   },
+   {
+    "after": "2027年の元日は金曜日です。三が日は金・土・日、成人の日は1月11日の月曜日に当たります。お年賀を渡せる期間とそのあとの寒中見舞いの期間を暦に並べました。曜日",
+    "problems": [
+     "numbers differ: ['2027', '2027', '1', '11', '三'] -> ['2027', '1', '11', '2027', '三']"
+    ],
+    "text": "お年賀を渡せる期間とそのあとの寒中見舞いの期間を2027年の暦に並べました。曜日は年の暦から計算しています。2027年は"
+   },
+   {
+    "after": "人数、渡す場所、喪中かどうか、移動の仕方を先に決めると品物を絞りやすくなります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['人数', '場所', '喪中', '移動']"
+    ],
+    "text": "お正月は品物より先に決めることがいくつかあります。ここを決めておくと記事を読んだあとの選び方が楽になります。"
+   },
+   {
+    "after": "渡す場所が玄関先か、居間か、相手の職場か。置き場所やすぐに食べるかどうかに合わせて品物を選びます",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['品物']"
+    ],
+    "text": "渡す場所が玄関先か、居間か、それとも相手の職場か。置き場所とすぐ食べるかどうかが変わります"
+   },
+   {
+    "after": "大丸松坂屋の案内は、干支にちなんだ菓子やラベルのお酒を新年らしい贈り物の例に挙げています。2026年版では、午(うま)の年にちなんだ馬をモチーフにした品が紹介さ",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['紹介']",
+     "attribution removed (1 -> 0)"
+    ],
+    "text": "大丸松坂屋の案内は、干支にちなんだ菓子やラベルのお酒を新年らしい贈り物の例に挙げています。2026年版の案内では、午(う"
+   },
+   {
+    "after": "記事のテーマは検索される時期と規模、検索語から分かる悩み、上位ページに足りない情報を調べて決めました。おせちは贈り物の主題から外れるため扱っていません。お年玉は",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['テーマ', '情報']"
+    ],
+    "text": "どの記事を作るかは、検索の時期や規模、検索語の悩み、上位のページの足りない点を調べて決めました。おせちは贈り物の主題とず"
+   },
+   {
+    "after": "訪問先に集まる人数。分からないときは個包装で数に余裕のある品を選びます",
+    "problems": [
+     "added claim: 「扱いやすい」が「選びます」という断定的な選択基準に変わった"
+    ],
+    "text": "訪問先で何人が集まるか。人数が分からないなら、個包装で数に余裕のある品が扱いやすくなります"
+   },
+   {
+    "after": "品物とのしの形は年内に決めておくと年始に慌てずに済みます。贈るのは松の内に入ってからです。注文時期は年末年始の配送状況も見て決めてください。",
+    "problems": [
+     "condition dropped: 注文を「早めに」決めるという時期の条件が落ちた"
+    ],
+    "text": "品物の選び方や、のしの形を決めるのは、年内に済ませておくと年始に慌てません。贈る日は松の内に入ってからです。品物の注文は"
+   }
+  ],
+  "structure_suggestions": [
+   "「2027年の年始の暦…」〜「松の内の終わりは地域や家で違…」と「品を選ぶ前に決めておくこと…」〜「移動の仕方。電車で運ぶのか車…」を「場面から読む…」「場面から読む」の前へ移し、「いつ」「何を決める」「記事を選ぶ」の順にする。",
+   "「いつ何をするか(検索の動きか…」〜「検索の動きはGoogle ト…」と「この特集のつくり方…」〜「どの記事を作るかは、検索の時…」は調査方法に近いため、よくある質問のあと、出典の前へまとめる。",
+   "「贈り物の価格や在庫は、各ペー…」は「楽天市場でお年賀 菓子を探す…」のあとへ移し、販売店で価格と在庫を確かめるという次の行動で本文を結ぶ。"
+  ],
+  "unchanged": 45,
+  "units": 64
  },
  "tool/taboo/index.html": {
   "accepted": [
