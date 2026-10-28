@@ -183,9 +183,205 @@ def christmas_card() -> None:
     save(im, "christmas-card-1")
 
 
+def silhouette(im: Image.Image, colour=(40, 40, 40)) -> Image.Image:
+    """The shape of a picture in one colour (its own alpha, nothing drawn)."""
+    out = Image.new("RGBA", im.size, colour + (0,))
+    out.putalpha(im.split()[3])
+    return out
+
+
+def fit_text(d: ImageDraw.ImageDraw, text: str, width: int, size: int, weight: int) -> ImageFont.FreeTypeFont:
+    """The biggest font (from `size` down) in which the text is not wider than `width`."""
+    while size > 10:
+        f = font(size, weight)
+        if d.textlength(text, font=f) <= width:
+            return f
+        size -= 2
+    return font(10, weight)
+
+
+def tropical() -> None:
+    s = "tropical-fruits-flat"
+    im, d = paper(592, 876)
+    centered(d, "南国フルーツ", 296, 40, font(54, 800), ACCENT)
+    centered(d, "お品書き", 296, 108, font(34, 700), INK)
+    items = [("dragonfruit", "ドラゴンフルーツ"), ("mango", "マンゴー"), ("pineapple", "パイナップル"), ("coconut", "ココナッツ")]
+    for k, (key, name) in enumerate(items):
+        p = pic(s, f"{s}-{key}", 0.5)
+        cx, top = 160 + (k % 2) * 272, 190 + (k // 2) * 330
+        put(im, p, cx, top)
+        centered(d, name, cx, top + 262, font(28, 700), INK, 4)
+        centered(d, "○○円", cx, top + 298, font(26, 500), SOFT, 4)
+    save(im, f"{s}-1")
+    im, d = paper(876, 592)
+    centered(d, "中は どうなっているかな?", 438, 24, font(40, 800), INK)
+    for k, key in enumerate(["dragonfruit", "passionfruit", "durian"]):
+        p = pic(s, f"{s}-{key}", 0.5)
+        cx = 150 + k * 288
+        put(im, p, cx, 130)
+        d.rounded_rectangle([cx - 120, 440, cx + 120, 520], radius=14, outline=(214, 214, 214, 255), width=3)
+        centered(d, "?", cx, 450, font(52, 800), ACCENT)
+    centered(d, "ゆびさして こたえよう", 438, 540, font(26, 500), SOFT)
+    save(im, f"{s}-2")
+
+
+def undokai() -> None:
+    s = "animals-undokai-kawaii"
+    im, d = paper(592, 876)
+    centered(d, "運動会プログラム", 296, 36, font(46, 800), ACCENT)
+    centered(d, "○月○日(○)", 296, 100, font(28, 600), INK)
+    rows = [("rabbit-run", "かけっこ"), ("bear-tsunahiki", "綱引き"), ("monkey-tamaire", "玉入れ"), ("cat-hurdle", "ハードル走"), ("elephant-ball", "大玉ころがし"), ("pig-bread", "パン食い競走")]
+    for k, (key, name) in enumerate(rows):
+        y = 160 + k * 112
+        p = pic(s, f"{s}-{key}", 0.3)
+        put(im, p, 100, y + 56 - p.height // 2)
+        d.text((190, y + 22), name, font=font(34, 700), fill=INK)
+        d.text((190, y + 66), "○時○分", font=font(24, 500), fill=SOFT)
+        d.line([(60, y + 108), (532, y + 108)], fill=(228, 228, 228, 255), width=2)
+    save(im, f"{s}-1")
+    from sites.minna.setguides import blank_box
+    im, d = paper(876, 592)
+    lion = pic(s, f"{s}-lion-medal")
+    b = blank_box(lion, "cream")
+    pos = put(im, lion, 240, 40)
+    cx = pos[0] + (b[0] + b[2]) // 2
+    cy = pos[1] + (b[1] + b[3]) // 2
+    f = font(64, 800)
+    d.text((cx - d.textlength("1", font=f) / 2, cy - 44), "1", font=f, fill=ACCENT)
+    centered(d, "よくがんばりました", 640, 170, font(40, 800), INK)
+    centered(d, "○○さん", 640, 260, font(46, 800), ACCENT)
+    centered(d, "○月○日 運動会", 640, 360, font(28, 500), SOFT)
+    save(im, f"{s}-2")
+
+
+def newyear_eve() -> None:
+    s = "newyear-eve-cool-sumi"
+    im, d = paper(592, 876)
+    centered(d, "大みそかの よる", 296, 40, font(52, 800), ACCENT)
+    d.line([(60, 120), (532, 120)], fill=(214, 214, 214, 255), width=2)
+    rows = [("joya-bell", "除夜の鐘"), ("toshikoshi-soba", "年越しそば"), ("clock-midnight", "0時を まつ")]
+    for k, (key, name) in enumerate(rows):
+        y = 150 + k * 230
+        p = pic(s, f"{s}-{key}", 0.42)
+        put(im, p, 120, y + 100 - p.height // 2)
+        d.text((260, y + 60), name, font=font(40, 800), fill=INK)
+        d.text((260, y + 120), "○時から", font=font(30, 500), fill=SOFT)
+    centered(d, "どなたでも どうぞ", 296, 820, font(26, 500), SOFT, 8)
+    save(im, f"{s}-1")
+    im, d = paper(592, 876)
+    centered(d, "謹賀新年", 296, 44, font(76, 800), ACCENT)
+    p = pic(s, f"{s}-hatsuhinode")
+    put(im, p, 296, 190)
+    centered(d, "2027年 元旦", 296, 730, font(34, 700), INK)
+    centered(d, "旧年中はお世話になりました。\n本年もよろしくお願いいたします。", 296, 782, font(24, 500), INK, 10)
+    save(im, f"{s}-2")
+
+
+def office() -> None:
+    s = "office-worker-middleaged-flat"
+    im, d = paper(876, 592)
+    p = pic(s, f"{s}-meeting")
+    put(im, p, 200, 60)
+    centered(d, "定例会議の お知らせ", 650, 60, font(40, 800), INK)
+    centered(d, "○月○日(○) ○時から\n会議室○", 650, 160, font(34, 700), ACCENT, 12)
+    centered(d, "資料は 前日までに\n共有フォルダへ お願いします。", 650, 320, font(26, 500), INK, 10)
+    save(im, f"{s}-1")
+    im, d = paper(1168, 592)
+    centered(d, "ある会社員の 一日", 584, 20, font(40, 800), INK)
+    for k, (key, name) in enumerate([("commute", "通勤"), ("pc-work", "作業"), ("lunch", "昼食"), ("back-home", "帰宅")]):
+        p = pic(s, f"{s}-{key}", 0.5)
+        cx = 146 + k * 292
+        put(im, p, cx, 110 + (300 - p.height) // 2)
+        centered(d, name, cx, 440, font(34, 700), INK, 4)
+        centered(d, "○時", cx, 490, font(28, 500), SOFT, 4)
+    save(im, f"{s}-2")
+
+
+def nametags() -> None:
+    from sites.minna.setguides import blank_box
+    s = "animal-nametags-kawaii"
+
+    def name_on(base, d, key, cx, top, name, scale):
+        p = pic(s, f"{s}-{key}")
+        b = blank_box(p, "cream")
+        if scale != 1.0:
+            q = pic(s, f"{s}-{key}", scale)
+        else:
+            q = p
+        pos = put(base, q, cx, top)
+        bx0, by0, bx1, by1 = [round(v * scale) for v in b]
+        f = fit_text(d, name, int((bx1 - bx0) * 0.8), 40, 800)
+        tx = pos[0] + (bx0 + bx1) // 2
+        ty = pos[1] + (by0 + by1) // 2
+        d.text((tx - d.textlength(name, font=f) / 2, ty - f.size * 0.6), name, font=f, fill=INK)
+
+    im, d = paper(592, 876)
+    centered(d, "ロッカー", 296, 30, font(44, 800), ACCENT)
+    names = [("cat", "あおい"), ("dog", "そうた"), ("bear", "ひなた"), ("fox", "れん"), ("panda", "ゆいな"), ("lion", "はると")]
+    for k, (key, nm) in enumerate(names):
+        name_on(im, d, key, 160 + (k % 2) * 272, 110 + (k // 2) * 245, nm, 0.5)
+    save(im, f"{s}-1")
+    im, d = paper(876, 592)
+    centered(d, "おせき", 438, 20, font(36, 800), INK)
+    name_on(im, d, "penguin", 230, 90, "やまださま", 1.0)
+    name_on(im, d, "sheep", 640, 90, "さとうさま", 1.0)
+    save(im, f"{s}-2")
+
+
+def oshogatsu_sumi() -> None:
+    s = "oshogatsu-sumi-cool"
+    im, d = paper(592, 876)
+    centered(d, "賀正", 296, 40, font(84, 800), ACCENT)
+    p = pic(s, f"{s}-shishimai")
+    put(im, p, 296, 200)
+    centered(d, "2027年 元旦", 296, 730, font(34, 700), INK)
+    centered(d, "本年も どうぞ よろしく お願いいたします。", 296, 790, font(24, 500), INK, 10)
+    save(im, f"{s}-1")
+    im, d = paper(876, 592)
+    centered(d, "新春 あそびの会", 438, 24, font(46, 800), ACCENT)
+    for k, (key, name) in enumerate([("hagoita", "羽根つき"), ("koma", "こま回し"), ("daruma", "だるま落とし")]):
+        p = pic(s, f"{s}-{key}", 0.5)
+        cx = 146 + k * 292
+        put(im, p, cx, 120 + (270 - p.height) // 2)
+        centered(d, name, cx, 420, font(32, 700), INK, 4)
+    centered(d, "○月○日(○) ○時から", 438, 500, font(30, 600), SOFT)
+    save(im, f"{s}-2")
+
+
+def zoo() -> None:
+    s = "realistic-zoo-field-guide"
+    im, d = paper(592, 876)
+    centered(d, "どうぶつカード", 296, 30, font(44, 800), INK)
+    p = pic(s, f"{s}-panda")
+    put(im, p, 296, 110)
+    d.text((70, 640), "なまえ", font=font(26, 700), fill=SOFT)
+    d.text((200, 636), "パンダ", font=font(40, 800), fill=INK)
+    for k, label in enumerate(["すんでいる ところ", "たべもの", "しらべて わかったこと"]):
+        y = 710 + k * 52
+        d.text((70, y), label, font=font(24, 600), fill=SOFT)
+        d.line([(70, y + 40), (522, y + 40)], fill=(190, 190, 190, 255), width=2)
+    save(im, f"{s}-1")
+    im, d = paper(1168, 592)
+    centered(d, "これは だれかな?", 584, 20, font(42, 800), INK)
+    names = [("giraffe", "キリン"), ("zebra", "シマウマ"), ("elephant", "アフリカゾウ")]
+    for k, (key, nm) in enumerate(names):
+        p = pic(s, f"{s}-{key}", 0.55)
+        cx = 195 + k * 389
+        put(im, silhouette(p), cx, 100 + (330 - p.height) // 2)
+        centered(d, "こたえ: " + nm, cx, 480, font(28, 700), SOFT, 4)
+    save(im, f"{s}-2")
+
+
 if __name__ == "__main__":
     event_frames()
     bowing()
     winter()
     eto()
     christmas_card()
+    tropical()
+    undokai()
+    newyear_eve()
+    office()
+    nametags()
+    oshogatsu_sumi()
+    zoo()
