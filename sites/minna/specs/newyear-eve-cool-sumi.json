@@ -1,0 +1,87 @@
+{
+ "slug": "newyear-eve-cool-sumi",
+ "title": "大みそかとお正月(墨と朱)",
+ "subject": "",
+ "genre": "season",
+ "touch": "cool",
+ "title_fmt": "{ja}",
+ "subject_en": "Japanese New Year's Eve and New Year motifs in a bold modern ink-brush style, black sumi strokes with vermilion red and gold accents, strong graphic shapes, each ONE motif centred in its cell, no people. Outlines are closed and darker than the fill; light parts (snow, paper, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no calligraphy characters, no logos.",
+ "lead": "除夜の鐘・年越しそば・初日の出など大みそかからお正月の題材を、墨と朱のモダンなタッチで描いた12点です。年末年始のポスターやカードに使えます。",
+ "tags": [
+  "大みそか",
+  "年越し",
+  "お正月",
+  "かっこいい",
+  "墨",
+  "年末年始",
+  "ポスター"
+ ],
+ "season": {
+  "from": "12-15",
+  "to": "01-07"
+ },
+ "holes": false,
+ "exclude": ["clock-midnight"],
+ "items": [
+  [
+   "joya-bell",
+   "除夜の鐘",
+   "a large temple bell with a striking log, bold black ink strokes with a red sun behind"
+  ],
+  [
+   "toshikoshi-soba",
+   "年越しそば",
+   "a bowl of soba noodles with chopsticks, steam drawn as ink swirls"
+  ],
+  [
+   "hatsuhinode",
+   "初日の出",
+   "a vermilion sun rising over mountains and a calm sea, bold ink waves"
+  ],
+  [
+   "kadomatsu",
+   "門松",
+   "a pair of pine and bamboo kadomatsu, thick ink strokes with gold ties"
+  ],
+  [
+   "kagamimochi",
+   "鏡餅",
+   "a stacked kagami mochi with a bitter orange on top on a red-trimmed stand"
+  ],
+  [
+   "daruma",
+   "だるま",
+   "a red daruma doll with bold black eyebrows and plain blank eyes"
+  ],
+  [
+   "crane",
+   "鶴",
+   "a crane in flight with long wings in sweeping black ink and a red crown"
+  ],
+  [
+   "hamaya",
+   "破魔矢",
+   "a hamaya arrow with feathers and a red-and-white bell ornament"
+  ],
+  [
+   "torii",
+   "初詣の鳥居",
+   "a vermilion torii gate standing against dark pine silhouettes"
+  ],
+  [
+   "fuji",
+   "富士山",
+   "Mount Fuji in black ink with a red sun, snow cap in cream"
+  ],
+  [
+   "osechi",
+   "おせち",
+   "a three-tier lacquered osechi box seen from above with colourful dishes"
+  ],
+  [
+   "clock-midnight",
+   "年越しの時計",
+   "a round wall clock with both hands at twelve, no numerals, surrounded by red ink splashes"
+  ]
+ ]
+}

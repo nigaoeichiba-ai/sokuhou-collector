@@ -1,0 +1,236 @@
+{
+ "added": "2026-10-29",
+ "slug": "realistic-zoo-field-guide",
+ "title": "動物園の動物（図鑑風）",
+ "genre": "animals",
+ "touch": "realistic",
+ "lead": "パンダ・コアラ・カピバラなど動物園の人気者を、図鑑風のリアルなタッチで描いた12点です。教材や資料、展示パネルに使えます。",
+ "tags": [
+  "動物園",
+  "図鑑",
+  "リアル",
+  "パンダ",
+  "動物",
+  "教材"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "realistic-zoo-field-guide-panda",
+   "file": "realistic-zoo-field-guide-panda.webp",
+   "title": "パンダ",
+   "desc": "パンダのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 467,
+   "h": 486
+  },
+  {
+   "id": "realistic-zoo-field-guide-koala",
+   "file": "realistic-zoo-field-guide-koala.webp",
+   "title": "コアラ",
+   "desc": "コアラのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "コアラ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 409,
+   "h": 506
+  },
+  {
+   "id": "realistic-zoo-field-guide-capybara",
+   "file": "realistic-zoo-field-guide-capybara.webp",
+   "title": "カピバラ",
+   "desc": "カピバラのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "カピバラ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 496,
+   "h": 432
+  },
+  {
+   "id": "realistic-zoo-field-guide-redpanda",
+   "file": "realistic-zoo-field-guide-redpanda.webp",
+   "title": "レッサーパンダ",
+   "desc": "レッサーパンダのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "レッサーパンダ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 481,
+   "h": 508
+  },
+  {
+   "id": "realistic-zoo-field-guide-lion",
+   "file": "realistic-zoo-field-guide-lion.webp",
+   "title": "ライオン",
+   "desc": "ライオンのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "ライオン",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 521,
+   "h": 512
+  },
+  {
+   "id": "realistic-zoo-field-guide-giraffe",
+   "file": "realistic-zoo-field-guide-giraffe.webp",
+   "title": "キリン",
+   "desc": "キリンのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "キリン",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 364,
+   "h": 547
+  },
+  {
+   "id": "realistic-zoo-field-guide-elephant",
+   "file": "realistic-zoo-field-guide-elephant.webp",
+   "title": "アフリカゾウ",
+   "desc": "アフリカゾウのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "アフリカゾウ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 622,
+   "h": 451
+  },
+  {
+   "id": "realistic-zoo-field-guide-zebra",
+   "file": "realistic-zoo-field-guide-zebra.webp",
+   "title": "シマウマ",
+   "desc": "シマウマのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "シマウマ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 516,
+   "h": 454
+  },
+  {
+   "id": "realistic-zoo-field-guide-flamingo",
+   "file": "realistic-zoo-field-guide-flamingo.webp",
+   "title": "フラミンゴ",
+   "desc": "フラミンゴのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "フラミンゴ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 343,
+   "h": 472
+  },
+  {
+   "id": "realistic-zoo-field-guide-polarbear",
+   "file": "realistic-zoo-field-guide-polarbear.webp",
+   "title": "ホッキョクグマ",
+   "desc": "ホッキョクグマのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "ホッキョクグマ",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 654,
+   "h": 405
+  },
+  {
+   "id": "realistic-zoo-field-guide-penguin",
+   "file": "realistic-zoo-field-guide-penguin.webp",
+   "title": "ペンギン",
+   "desc": "ペンギンのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "ペンギン",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 294,
+   "h": 487
+  },
+  {
+   "id": "realistic-zoo-field-guide-meerkat",
+   "file": "realistic-zoo-field-guide-meerkat.webp",
+   "title": "ミーアキャット",
+   "desc": "ミーアキャットのリアル・図鑑風イラストです。",
+   "tags": [
+    "動物園",
+    "図鑑",
+    "リアル",
+    "パンダ",
+    "動物園の動物（図鑑風）",
+    "ミーアキャット",
+    "リアル・図鑑風",
+    "動物"
+   ],
+   "w": 363,
+   "h": 474
+  }
+ ]
+}

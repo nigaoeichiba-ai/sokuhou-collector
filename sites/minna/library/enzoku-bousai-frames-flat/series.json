@@ -130,6 +130,120 @@
    ],
    "w": 499,
    "h": 502
+  },
+  {
+   "id": "enzoku-bousai-frames-flat-bousai-kit",
+   "file": "enzoku-bousai-frames-flat-bousai-kit.webp",
+   "title": "防災用品の枠",
+   "desc": "防災用品の枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "防災用品の枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 587,
+   "h": 422
+  },
+  {
+   "id": "enzoku-bousai-frames-flat-bousai-helmet",
+   "file": "enzoku-bousai-frames-flat-bousai-helmet.webp",
+   "title": "防災頭巾の枠",
+   "desc": "防災頭巾の枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "防災頭巾の枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 540,
+   "h": 442
+  },
+  {
+   "id": "enzoku-bousai-frames-flat-bousai-evac",
+   "file": "enzoku-bousai-frames-flat-bousai-evac.webp",
+   "title": "避難の枠",
+   "desc": "避難の枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "避難の枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 432,
+   "h": 418
+  },
+  {
+   "id": "enzoku-bousai-frames-flat-bousai-round",
+   "file": "enzoku-bousai-frames-flat-bousai-round.webp",
+   "title": "防災の丸枠",
+   "desc": "防災の丸枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "防災の丸枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 514,
+   "h": 526
+  },
+  {
+   "id": "enzoku-bousai-frames-flat-bousai-wide",
+   "file": "enzoku-bousai-frames-flat-bousai-wide.webp",
+   "title": "防災の横長枠",
+   "desc": "防災の横長枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "防災の横長枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 648,
+   "h": 435
+  },
+  {
+   "id": "enzoku-bousai-frames-flat-bousai-tall",
+   "file": "enzoku-bousai-frames-flat-bousai-tall.webp",
+   "title": "防災の縦長枠",
+   "desc": "防災の縦長枠のシンプルフラットイラストです。",
+   "tags": [
+    "遠足",
+    "防災",
+    "フレーム",
+    "おたより",
+    "枠",
+    "遠足と防災のフレーム",
+    "防災の縦長枠",
+    "シンプルフラット",
+    "フレーム・飾り"
+   ],
+   "w": 386,
+   "h": 519
   }
  ]
 }

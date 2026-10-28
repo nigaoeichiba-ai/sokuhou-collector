@@ -1,0 +1,193 @@
+{
+ "added": "2026-10-29",
+ "slug": "animals-undokai-kawaii",
+ "title": "運動会の動物たち",
+ "genre": "animals",
+ "touch": "kawaii",
+ "lead": "かけっこ・玉入れ・綱引きなど運動会の競技をする動物を、かわいいタッチで描いた12点です。運動会のお知らせやプログラムに使えます。",
+ "tags": [
+  "運動会",
+  "動物",
+  "かけっこ",
+  "玉入れ",
+  "綱引き",
+  "体育祭",
+  "お知らせ"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "animals-undokai-kawaii-rabbit-run",
+   "file": "animals-undokai-kawaii-rabbit-run.webp",
+   "title": "かけっこをするうさぎ",
+   "desc": "かけっこをするうさぎのゆるかわイラストです。",
+   "tags": [
+    "運動会",
+    "動物",
+    "かけっこ",
+    "玉入れ",
+    "運動会の動物たち",
+    "かけっこをするうさぎ",
+    "ゆるかわ"
+   ],
+   "w": 428,
+   "h": 469
+  },
+  {
+   "id": "animals-undokai-kawaii-turtle-run",
+   "file": "animals-undokai-kawaii-turtle-run.webp",
+   "title": "ゴールするカメ",
+   "desc": "ゴールするカメのゆるかわイラストです。",
+   "tags": [
+    "運動会",
+    "動物",
+    "かけっこ",
+    "玉入れ",
+    "運動会の動物たち",
+    "ゴールするカメ",
+    "ゆるかわ"
+   ],
+   "w": 504,
+   "h": 453
+  },
+  {
+   "id": "animals-undokai-kawaii-bear-tsunahiki",
+   "file": "animals-undokai-kawaii-bear-tsunahiki.webp",
+   "title": "綱引きをするクマ",
+   "desc": "綱引きをするクマのゆるかわイラストです。",
+   "tags": [
+    "運動会",
+    "動物",
+    "かけっこ",
+    "玉入れ",
+    "綱引き",
+    "運動会の動物たち",
+    "綱引きをするクマ",
+    "ゆるかわ"
+   ],
+   "w": 504,
+   "h": 457
+  },
+  {
+   "id": "animals-undokai-kawaii-monkey-tamaire",
+   "file": "animals-undokai-kawaii-monkey-tamaire.webp",
+   "title": "玉入れをするサル",
+   "desc": "玉入れをするサルのゆるかわイラストです。",
+   "tags": [
+    "運動会",
+    "動物",
+    "かけっこ",
+    "玉入れ",
+    "運動会の動物たち",
+    "玉入れをするサル",
+    "ゆるかわ"
+   ],
+   "w": 488,
+   "h": 456
+  },
+  {
+   "id": "animals-undokai-kawaii-cat-hurdle",
+   "file": "animals-undokai-kawaii-cat-hurdle.webp",
+   "title": "ハードルを跳ぶネコ",
+   "desc": "ハードルを跳ぶネコのゆるかわイラストです。",
+   "tags": [
+    "運動会",
+    "動物",
+    "かけっこ",
+    "玉入れ",
+    "運動会の動物たち",
+    "ハードルを跳ぶネコ",
+    "ゆるかわ"
+   ],
+   "w": 428,
+   "h": 483
+  },
+  {
+   "id": "animals-undokai-kawaii-elephant-ball",
+   "file": "animals-undokai-kawaii-elephant-ball.webp",
+   "title": "大玉を転がすゾウ",
+   "desc": "大玉を転がすゾウのゆるかわイラストです。",
+   "tags": [
+    "運動会",
+    "動物",
+    "かけっこ",
+    "玉入れ",
+    "運動会の動物たち",
+    "大玉を転がすゾウ",
+    "ゆるかわ"
+   ],
+   "w": 525,
+   "h": 448
+  },
+  {
+   "id": "animals-undokai-kawaii-penguin-slide",
+   "file": "animals-undokai-kawaii-penguin-slide.webp",
+   "title": "すべるペンギン",
+   "desc": "すべるペンギンのゆるかわイラストです。",
+   "tags": [
+    "運動会",
+    "動物",
+    "かけっこ",
+    "玉入れ",
+    "運動会の動物たち",
+    "すべるペンギン",
+    "ゆるかわ"
+   ],
+   "w": 482,
+   "h": 303
+  },
+  {
+   "id": "animals-undokai-kawaii-fox-cheer",
+   "file": "animals-undokai-kawaii-fox-cheer.webp",
+   "title": "応援団長のキツネ",
+   "desc": "応援団長のキツネのゆるかわイラストです。",
+   "tags": [
+    "運動会",
+    "動物",
+    "かけっこ",
+    "玉入れ",
+    "運動会の動物たち",
+    "応援団長のキツネ",
+    "ゆるかわ"
+   ],
+   "w": 486,
+   "h": 500
+  },
+  {
+   "id": "animals-undokai-kawaii-pig-bread",
+   "file": "animals-undokai-kawaii-pig-bread.webp",
+   "title": "パン食い競走のブタ",
+   "desc": "パン食い競走のブタのゆるかわイラストです。",
+   "tags": [
+    "運動会",
+    "動物",
+    "かけっこ",
+    "玉入れ",
+    "運動会の動物たち",
+    "パン食い競走のブタ",
+    "ゆるかわ"
+   ],
+   "w": 389,
+   "h": 469
+  },
+  {
+   "id": "animals-undokai-kawaii-lion-medal",
+   "file": "animals-undokai-kawaii-lion-medal.webp",
+   "title": "メダルをもらうライオン",
+   "desc": "メダルをもらうライオンのゆるかわイラストです。",
+   "tags": [
+    "運動会",
+    "動物",
+    "かけっこ",
+    "玉入れ",
+    "運動会の動物たち",
+    "メダルをもらうライオン",
+    "ゆるかわ"
+   ],
+   "w": 421,
+   "h": 501
+  }
+ ]
+}

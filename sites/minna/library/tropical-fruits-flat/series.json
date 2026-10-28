@@ -1,0 +1,239 @@
+{
+ "added": "2026-10-29",
+ "slug": "tropical-fruits-flat",
+ "title": "南国の果物",
+ "genre": "food",
+ "touch": "flat",
+ "lead": "ドラゴンフルーツ・マンゴー・ライチなど南国の果物を、フラットなタッチで描いた12点です。メニューや商品紹介、食育の資料に使えます。",
+ "tags": [
+  "果物",
+  "南国",
+  "ドラゴンフルーツ",
+  "マンゴー",
+  "トロピカル",
+  "フルーツ",
+  "食べ物"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "tropical-fruits-flat-dragonfruit",
+   "file": "tropical-fruits-flat-dragonfruit.webp",
+   "title": "ドラゴンフルーツ",
+   "desc": "ドラゴンフルーツのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "フルーツ",
+    "南国の果物",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 519,
+   "h": 492
+  },
+  {
+   "id": "tropical-fruits-flat-mango",
+   "file": "tropical-fruits-flat-mango.webp",
+   "title": "マンゴー",
+   "desc": "マンゴーのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "南国の果物",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 498,
+   "h": 434
+  },
+  {
+   "id": "tropical-fruits-flat-papaya",
+   "file": "tropical-fruits-flat-papaya.webp",
+   "title": "パパイヤ",
+   "desc": "パパイヤのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "南国の果物",
+    "パパイヤ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 440,
+   "h": 451
+  },
+  {
+   "id": "tropical-fruits-flat-lychee",
+   "file": "tropical-fruits-flat-lychee.webp",
+   "title": "ライチ",
+   "desc": "ライチのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "南国の果物",
+    "ライチ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 473,
+   "h": 415
+  },
+  {
+   "id": "tropical-fruits-flat-passionfruit",
+   "file": "tropical-fruits-flat-passionfruit.webp",
+   "title": "パッションフルーツ",
+   "desc": "パッションフルーツのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "フルーツ",
+    "南国の果物",
+    "パッションフルーツ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 501,
+   "h": 433
+  },
+  {
+   "id": "tropical-fruits-flat-coconut",
+   "file": "tropical-fruits-flat-coconut.webp",
+   "title": "ココナッツ",
+   "desc": "ココナッツのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "南国の果物",
+    "ココナッツ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 505,
+   "h": 497
+  },
+  {
+   "id": "tropical-fruits-flat-mangosteen",
+   "file": "tropical-fruits-flat-mangosteen.webp",
+   "title": "マンゴスチン",
+   "desc": "マンゴスチンのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "南国の果物",
+    "マンゴスチン",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 524,
+   "h": 450
+  },
+  {
+   "id": "tropical-fruits-flat-guava",
+   "file": "tropical-fruits-flat-guava.webp",
+   "title": "グアバ",
+   "desc": "グアバのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "南国の果物",
+    "グアバ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 491,
+   "h": 435
+  },
+  {
+   "id": "tropical-fruits-flat-rambutan",
+   "file": "tropical-fruits-flat-rambutan.webp",
+   "title": "ランブータン",
+   "desc": "ランブータンのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "南国の果物",
+    "ランブータン",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 522,
+   "h": 461
+  },
+  {
+   "id": "tropical-fruits-flat-starfruit",
+   "file": "tropical-fruits-flat-starfruit.webp",
+   "title": "スターフルーツ",
+   "desc": "スターフルーツのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "フルーツ",
+    "南国の果物",
+    "スターフルーツ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 540,
+   "h": 492
+  },
+  {
+   "id": "tropical-fruits-flat-pineapple",
+   "file": "tropical-fruits-flat-pineapple.webp",
+   "title": "パイナップル",
+   "desc": "パイナップルのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "南国の果物",
+    "パイナップル",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 484,
+   "h": 557
+  },
+  {
+   "id": "tropical-fruits-flat-durian",
+   "file": "tropical-fruits-flat-durian.webp",
+   "title": "ドリアン",
+   "desc": "ドリアンのシンプルフラットイラストです。",
+   "tags": [
+    "果物",
+    "南国",
+    "ドラゴンフルーツ",
+    "マンゴー",
+    "南国の果物",
+    "ドリアン",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 536,
+   "h": 514
+  }
+ ]
+}

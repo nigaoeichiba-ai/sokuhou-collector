@@ -1,0 +1,84 @@
+{
+ "slug": "tropical-fruits-flat",
+ "title": "南国の果物",
+ "subject": "",
+ "genre": "food",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Tropical fruits, each ONE fruit (whole or one cut half beside it) centred in its cell, flat vector style with clean shapes and simple highlights, bright natural colours. Outlines are closed and darker than the fill; light parts (flesh, seeds, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "ドラゴンフルーツ・マンゴー・ライチなど南国の果物を、フラットなタッチで描いた12点です。メニューや商品紹介、食育の資料に使えます。",
+ "tags": [
+  "果物",
+  "南国",
+  "ドラゴンフルーツ",
+  "マンゴー",
+  "トロピカル",
+  "フルーツ",
+  "食べ物"
+ ],
+ "season": null,
+ "holes": false,
+ "exclude": [],
+ "items": [
+  [
+   "dragonfruit",
+   "ドラゴンフルーツ",
+   "a pink dragon fruit with green scales, with a cut half showing white flesh and black seeds"
+  ],
+  [
+   "mango",
+   "マンゴー",
+   "a ripe mango, orange-red and yellow, with a cut half showing the flesh in a grid"
+  ],
+  [
+   "papaya",
+   "パパイヤ",
+   "a papaya cut in half lengthwise showing orange flesh and black seeds"
+  ],
+  [
+   "lychee",
+   "ライチ",
+   "three lychees with rough red skin, one peeled to show the pale flesh"
+  ],
+  [
+   "passionfruit",
+   "パッションフルーツ",
+   "a purple passion fruit with a cut half showing yellow pulp and seeds"
+  ],
+  [
+   "coconut",
+   "ココナッツ",
+   "a brown coconut with a cut half showing white flesh, with a straw in it"
+  ],
+  [
+   "mangosteen",
+   "マンゴスチン",
+   "a dark purple mangosteen with a cut half showing white segments, green calyx on top"
+  ],
+  [
+   "guava",
+   "グアバ",
+   "a green guava with a cut half showing pink flesh and seeds"
+  ],
+  [
+   "rambutan",
+   "ランブータン",
+   "a cluster of red rambutans with soft green-tipped hairs, one peeled"
+  ],
+  [
+   "starfruit",
+   "スターフルーツ",
+   "a yellow-green star fruit with a cross-section slice showing a star shape"
+  ],
+  [
+   "pineapple",
+   "パイナップル",
+   "a whole pineapple with a green crown, next to a ring slice"
+  ],
+  [
+   "durian",
+   "ドリアン",
+   "a spiky green-brown durian with a cut section showing pale yellow pods"
+  ]
+ ]
+}

@@ -1,0 +1,165 @@
+{
+ "added": "2026-10-29",
+ "slug": "oshogatsu-sumi-cool",
+ "title": "お正月（墨と朱のかっこいいタッチ）",
+ "genre": "season",
+ "touch": "cool",
+ "lead": "鶴・富士・達磨・凧などお正月の定番を、墨と朱を使ったかっこいいタッチで描いた12点です。年賀状やポスター、SNS の画像に使えます。",
+ "tags": [
+  "お正月",
+  "墨",
+  "朱",
+  "かっこいい",
+  "年賀状",
+  "モダン"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "oshogatsu-sumi-cool-daruma",
+   "file": "oshogatsu-sumi-cool-daruma.webp",
+   "title": "達磨",
+   "desc": "達磨のポップイラストです。",
+   "tags": [
+    "お正月",
+    "墨",
+    "朱",
+    "かっこいい",
+    "お正月（墨と朱のかっこいいタッチ）",
+    "達磨",
+    "ポップ",
+    "季節・行事"
+   ],
+   "w": 448,
+   "h": 470
+  },
+  {
+   "id": "oshogatsu-sumi-cool-bamboo",
+   "file": "oshogatsu-sumi-cool-bamboo.webp",
+   "title": "竹",
+   "desc": "竹のポップイラストです。",
+   "tags": [
+    "お正月",
+    "墨",
+    "朱",
+    "かっこいい",
+    "お正月（墨と朱のかっこいいタッチ）",
+    "竹",
+    "ポップ",
+    "季節・行事"
+   ],
+   "w": 488,
+   "h": 506
+  },
+  {
+   "id": "oshogatsu-sumi-cool-plum",
+   "file": "oshogatsu-sumi-cool-plum.webp",
+   "title": "梅",
+   "desc": "梅のポップイラストです。",
+   "tags": [
+    "お正月",
+    "墨",
+    "朱",
+    "かっこいい",
+    "お正月（墨と朱のかっこいいタッチ）",
+    "梅",
+    "ポップ",
+    "季節・行事"
+   ],
+   "w": 488,
+   "h": 489
+  },
+  {
+   "id": "oshogatsu-sumi-cool-koma",
+   "file": "oshogatsu-sumi-cool-koma.webp",
+   "title": "独楽",
+   "desc": "独楽のポップイラストです。",
+   "tags": [
+    "お正月",
+    "墨",
+    "朱",
+    "かっこいい",
+    "お正月（墨と朱のかっこいいタッチ）",
+    "独楽",
+    "ポップ",
+    "季節・行事"
+   ],
+   "w": 481,
+   "h": 422
+  },
+  {
+   "id": "oshogatsu-sumi-cool-hagoita",
+   "file": "oshogatsu-sumi-cool-hagoita.webp",
+   "title": "羽子板",
+   "desc": "羽子板のポップイラストです。",
+   "tags": [
+    "お正月",
+    "墨",
+    "朱",
+    "かっこいい",
+    "お正月（墨と朱のかっこいいタッチ）",
+    "羽子板",
+    "ポップ",
+    "季節・行事"
+   ],
+   "w": 498,
+   "h": 528
+  },
+  {
+   "id": "oshogatsu-sumi-cool-shishimai",
+   "file": "oshogatsu-sumi-cool-shishimai.webp",
+   "title": "獅子舞",
+   "desc": "獅子舞のポップイラストです。",
+   "tags": [
+    "お正月",
+    "墨",
+    "朱",
+    "かっこいい",
+    "お正月（墨と朱のかっこいいタッチ）",
+    "獅子舞",
+    "ポップ",
+    "季節・行事"
+   ],
+   "w": 504,
+   "h": 506
+  },
+  {
+   "id": "oshogatsu-sumi-cool-sunrise-wave",
+   "file": "oshogatsu-sumi-cool-sunrise-wave.webp",
+   "title": "波と初日の出",
+   "desc": "波と初日の出のポップイラストです。",
+   "tags": [
+    "お正月",
+    "墨",
+    "朱",
+    "かっこいい",
+    "お正月（墨と朱のかっこいいタッチ）",
+    "波と初日の出",
+    "ポップ",
+    "季節・行事"
+   ],
+   "w": 517,
+   "h": 500
+  },
+  {
+   "id": "oshogatsu-sumi-cool-kadomatsu",
+   "file": "oshogatsu-sumi-cool-kadomatsu.webp",
+   "title": "門松",
+   "desc": "門松のポップイラストです。",
+   "tags": [
+    "お正月",
+    "墨",
+    "朱",
+    "かっこいい",
+    "お正月（墨と朱のかっこいいタッチ）",
+    "門松",
+    "ポップ",
+    "季節・行事"
+   ],
+   "w": 489,
+   "h": 552
+  }
+ ]
+}
