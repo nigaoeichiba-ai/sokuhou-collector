@@ -115,6 +115,583 @@
   "unchanged": 40,
   "units": 55
  },
+ "gift/farewell-boss/index.html": {
+  "accepted": [
+   {
+    "from": "種類別に見る4点",
+    "kind": "heading",
+    "to": "4つの種類から選ぶ",
+    "why": "見出しを自然に"
+   },
+   {
+    "from": "名入れペンは新しい部署で手帳や書類に向かうときに毎日使える、胸ポケットに入る小さな記念品です。",
+    "kind": "item",
+    "to": "名入れペンは胸ポケットに入り、新しい部署で手帳や書類を書くときに毎日使えます。手元に残る小さな記念品です。",
+    "why": "用途を読みやすく整理"
+   },
+   {
+    "from": "小ぶりな酒器やグラスは、送別会でお酒の話が出る上司に、帰宅後の一杯を楽しんでもらう品になります。",
+    "kind": "item",
+    "to": "送別会でお酒の話が出る上司には小ぶりな酒器やグラスが選べます。帰宅後の一杯に使ってもらえる送別品です。",
+    "why": "勧める文を先に"
+   },
+   {
+    "from": "部署一同の品にする場合は、個人名ではなくチーム名でカードを添える形にする。",
+    "kind": "item",
+    "to": "部署一同で贈るなら、カードの差出人は個人名ではなくチーム名にします。",
+    "why": "堅い言い回しを整理"
+   },
+   {
+    "from": "上司への送別・異動の贈り物、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "上司への送別・異動に選ぶ贈り物",
+    "why": "問いかけ調を整理"
+   },
+   {
+    "from": "産地の違うスティックコーヒーの詰め合わせで小さな贈り物に向いています。",
+    "kind": "para",
+    "to": "異なる産地のスティックコーヒーを詰め合わせています。小さな贈り物に向きます。",
+    "why": "自然な語順に"
+   },
+   {
+    "from": "表書き・金額・避けたい品を百貨店の案内から1枚にまとめています。",
+    "kind": "para",
+    "to": "表書き・金額・避けたい品を百貨店の案内をもとに1枚にまとめました。",
+    "why": "出典との関係を明確に"
+   },
+   {
+    "from": "同僚への送別ギフトプレゼント",
+    "kind": "item",
+    "to": "同僚への送別ギフト・プレゼント",
+    "why": "語の重なりを整理"
+   },
+   {
+    "from": "女友達への送別ギフトプレゼント",
+    "kind": "item",
+    "to": "女友達への送別ギフト・プレゼント",
+    "why": "語の重なりを整理"
+   }
+  ],
+  "date": "2026-10-29",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 渡す時期や金額、避けたい品より先に、商品の特徴と候補が並んでいます。",
+   "具体: 「配慮」「負担」「好みを広く受け止める」といった抽象語が、品名や使う場面を弱めています。",
+   "リズム: 菓子折り・名入れペン・酒器の説明が複数の節で重なり、同じ内容を繰り返しています。"
+  ],
+  "failed": "",
+  "hash": "d6f2ea30810c",
+  "needs_check": [],
+  "page": "gift/farewell-boss/index.html",
+  "rejected": [
+   {
+    "after": "異動する上司への送別品は送別会や昼礼で渡せるよう準備します。部署で分けるなら菓子折り、手元に残すなら名入れペンや酒器が選べます。辞令後は予定が立て込みやすいため",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['昼礼', '準備', '用意']"
+    ],
+    "text": "異動する上司への送別品は、感謝をきちんと伝えながら、荷物になりすぎない配慮が要ります。菓子折りなら部署で分けられ、名入れ"
+   },
+   {
+    "after": "異動する上司への送別品は送別会や昼礼で渡せるよう準備します。辞令後は予定が立て込み、最終出社日では渡しそびれやすいためです。部署で分けるなら菓子折り、手元に残す",
+    "problems": [
+     "a reason was added (…からです)"
+    ],
+    "text": "異動する上司への送別品は、感謝をきちんと伝えながら、荷物になりすぎない配慮が要ります。菓子折りなら部署で分けられ、名入れ"
+   },
+   {
+    "after": "名入れ品には新部署名を入れません。名前か短い感謝の言葉だけなら、異動後も使いやすくなります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['異動後']"
+    ],
+    "text": "名入れ品は新部署名を入れず、名前や短い感謝の言葉だけにして使いやすくする。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを下に表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "菓子折りは送別会や最終出社日のあとに職場で分けやすく、上司が持ち帰る量も抑えられます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['菓子折']"
+    ],
+    "text": "送別会や最終出社日のあとに職場で分けやすく、上司の持ち帰りの負担も抑えられます。"
+   },
+   {
+    "after": "名入れペンは新しい部署で手帳や書類を書くときに使えます。異動の記念として手元にも残ります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['名入', 'ペン']"
+    ],
+    "text": "新しい部署で手帳や書類に向かうときに使え、異動の小さな記念にも毎日の仕事にも使えます。"
+   },
+   {
+    "after": "酒器やグラスはお酒の話が出る上司への送別品。帰宅後の一杯に使ってもらえます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['グラス']"
+    ],
+    "text": "お酒の話が出る上司へ、帰宅後の一杯を楽しんでもらう落ち着いた送別品になります。"
+   },
+   {
+    "after": "ドリップコーヒーは新しい職場でも自宅でも使えます。上司の好みが分からないときにも選びやすい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ドリップコーヒー', '上司']"
+    ],
+    "text": "新しい職場でも自宅でも使いやすく、相手の好みを広く受け止めやすい贈り物です。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから上司への送別に合う商品を選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司', '送別', '商品']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "上司について好きなものや趣味、年齢などを一言で入力してください。条件に近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司', '入力', '条件']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "内輪の冗談を強く出した品は、あとで見返したときに上司が扱いに困ることがあります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司']"
+    ],
+    "text": "内輪の冗談が強すぎる品は後で見返した時に負担になることがあります"
+   },
+   {
+    "after": "個人的すぎる衣類や香りの強い品は好みが分かれるため、上司に確認してから贈ります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司']"
+    ],
+    "text": "個人的すぎる衣類や香りの強い品を確認なしで贈らないようにします"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年10月29日 7:24時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "菓子折りは職場で分けられます。箱も軽く、送別会や最終出社日のあとに上司が持ち帰る量を少なくできます。",
+    "problems": [
+     "condition dropped: 職場で分けられる時期の条件が落ちている"
+    ],
+    "text": "菓子折りは送別会や最終出社日のあとに職場で分けられ、箱も軽く、上司が持ち帰る量を少なくできます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   }
+  ],
+  "structure_suggestions": [
+   "「昇進・転勤・退職祝いの早見表…」〜「昇進・転勤・退職祝いの早見表…」の早見表を「異動する上司への送別品は、感…」のあとへ移し、金額や表書きを早い段階で確認できる構成にする。",
+   "「選び方のポイント…」〜「名入れ品は新部署名を入れず、…」の渡し方、「気をつけたいこと…」〜「個人的すぎる衣類や香りの強い…」の避けたい品を商品候補より前へ移し、「どう渡す・何を避ける・何を選ぶ」の順にする。",
+   "「喜ばれやすい理由…」〜「小ぶりな酒器やグラスは、送別…」と「上司への送別・異動の贈り物、…」〜「楽天市場で「ドリップコーヒー…」は内容が重なるため、前者を選び方の要点、後者を商品候補として一つの流れに統合する。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」は「気をつけたいこと…」〜「昇進・転勤・退職祝いの早見表…」のあとへ移し、候補を見た読者が次にすることを示す結びにする。"
+  ],
+  "unchanged": 67,
+  "units": 93
+ },
+ "gift/farewell-friend-male/index.html": {
+  "accepted": [
+   {
+    "from": "あとで見返すときは、LINEで自分のトークに送るか、自分あてにメールで送るとスマホから開けます。",
+    "kind": "para",
+    "to": "あとでスマホから見返すなら、LINEで自分のトークに送るか、自分あてにメールで送ってください。",
+    "why": "手順を短く整理"
+   },
+   {
+    "from": "種類別に見る4点",
+    "kind": "heading",
+    "to": "贈り物の種類から選ぶ4点",
+    "why": "見出しの中身を明示"
+   },
+   {
+    "from": "男友達への送別・異動の贈り物、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "男友達への送別・異動におすすめの贈り物",
+    "why": "曖昧な問いを具体化"
+   },
+   {
+    "from": "産地の違うスティックコーヒーの詰め合わせで小さな贈り物に向いています。",
+    "kind": "para",
+    "to": "産地の違うスティックコーヒーの詰め合わせです。小さな贈り物に向いています。",
+    "why": "文を分けて読みやすく"
+   },
+   {
+    "from": "表書き・金額・避けたい品を百貨店の案内から1枚にまとめています。",
+    "kind": "para",
+    "to": "表書き・金額・避けたい品を百貨店の案内をもとに1枚にまとめました。",
+    "why": "出典との関係を明示"
+   },
+   {
+    "from": "同僚への送別ギフトプレゼント",
+    "kind": "item",
+    "to": "同僚への送別ギフト",
+    "why": "同義語の重複を削除"
+   },
+   {
+    "from": "女友達への送別ギフトプレゼント",
+    "kind": "item",
+    "to": "女友達への送別ギフト",
+    "why": "同義語の重複を削除"
+   }
+  ],
+  "date": "2026-10-29",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 理由と選び方が別々の定数リストになっており、品ごとの判断材料が分かれています。",
+   "構成: 「迷ったときの次の一歩」が商品紹介の途中にあり、選び終えたあとの行動として機能していません。",
+   "語: 「場が締まる」「主役感」「相棒」などの雰囲気語が、渡す場面や使い道を見えにくくしています。",
+   "見出し: 「こんな贈り方」「どんなタイプ」のように、節の中身が読み取れない見出しがあります。"
+  ],
+  "failed": "",
+  "hash": "436c86942dad",
+  "needs_check": [],
+  "page": "gift/farewell-friend-male/index.html",
+  "rejected": [
+   {
+    "after": "男友達が遠くへ行く送別には短い言葉を添えた実用品が渡しやすいです。花束なら送別会らしさが出て、ハンカチや名入れペンなら新しい職場や学校で使えます。仲間内ではしん",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "男友達が遠くへ行く送別では、しんみりしすぎない実用品に、短い言葉を添えるくらいが渡しやすいです。花束は送別会を特別にし、"
+   },
+   {
+    "after": "男友達が遠くへ行く送別には短い言葉を添えた実用品が向いています。花束は送別会の席や集合写真を明るくし、ハンカチや名入れペンは新しい職場や学校で使えます。仲間内で",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['集合写真', '席']"
+    ],
+    "text": "男友達が遠くへ行く送別では、しんみりしすぎない実用品に、短い言葉を添えるくらいが渡しやすいです。花束は送別会を特別にし、"
+   },
+   {
+    "after": "価格・在庫は2026年10月29日 7:24時点の情報です。このサイトの掲載情報はよろこぶプレゼントの作成者が管理しています。価格や在庫は変わる場合があります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年10月29日 7:24時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "花束を仲間内の送別会で渡すと会の区切りになります。集合写真にも門出らしい明るさが出ます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['区切']",
+     "careful wording removed (1 -> 0)",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "花束は仲間内の送別会で渡すと場が締まり、集合写真にも門出らしい明るさとほどよい主役感が出ます。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけが表示されます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "この条件に合う商品は見つかりませんでした。予算や種類の条件を広げるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '種類']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "ハンカチはスーツにも普段着にも合わせやすく、引っ越し荷物に入れても場所を取りにくい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ハンカチ']"
+    ],
+    "text": "スーツにも普段着にも合わせやすく、引っ越し荷物に入れても場所を取りにくい品です。"
+   },
+   {
+    "after": "名入れペンは転勤先の書類や手帳に使えます。新しい仕事に向かう友達への応援になる品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['名入', 'ペン']"
+    ],
+    "text": "転勤先での書類や手帳に使えるため、新しい仕事を頑張る友達への応援になります。"
+   },
+   {
+    "after": "タンブラーは通勤や学校で飲み物を持ち歩くときに使えます。しんみりしすぎない実用的な送別品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['タンブラー']"
+    ],
+    "text": "通勤や学校で飲み物を持ち歩けるので、しんみりしすぎない実用的な送別品です。"
+   },
+   {
+    "after": "贈る相手の好きなもの、趣味、年齢などを入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "名入れ ボールペン",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ボールペン']"
+    ],
+    "text": "名入れ ペン"
+   },
+   {
+    "after": "内輪の冗談が強すぎる品はあとで見返したときに友達が困ることがあります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['友達']"
+    ],
+    "text": "内輪の冗談が強すぎる品は後で見返した時に負担になることがあります"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "after": "個人的すぎる品は恋愛感情と誤解されやすいため、本人に確認せず贈るのは避けます。",
+    "problems": [
+     "added claim: 確認相手を「本人」と限定している"
+    ],
+    "text": "恋愛感情と誤解されやすい個人的すぎる品を確認なしで贈らないようにします"
+   }
+  ],
+  "structure_suggestions": [
+   "「喜ばれやすい理由…」〜「名入れペンは名前を目立たせす…」は、花束・ハンカチ・名入れペンごとに「おすすめする理由」と「選び方」をまとめ、理由と選び方を往復せず読める構成にする。",
+   "「気をつけたいこと…」〜「恋愛感情と誤解されやすい個人…」は「条件で絞って比べる…」より前へ移し、注意点を確認してから商品を絞り込める順にする。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」は商品紹介と関連記事のあとへ移し、ページの結びを次にする行動にする。",
+   "「男友達への送別・異動の贈り物…」〜「楽天市場で「メンズ タンブラ…」の楽天市場の商品提案に「Amazonで見つけた贈り物…」〜「Amazonで選ぶ贈り物をす…」のAmazonの商品紹介を続け、商品を選ぶ節を途中で分断しない。"
+  ],
+  "unchanged": 61,
+  "units": 90
+ },
+ "gift/farewell-teacher/index.html": {
+  "accepted": [
+   {
+    "from": "種類別に見る4点",
+    "kind": "heading",
+    "to": "種類別の贈り物4点",
+    "why": "見出しの中身を明確に"
+   },
+   {
+    "from": "代表者を決め、学校に持ち込める品や渡せる時間を事前に職員室へ確認する。",
+    "kind": "item",
+    "to": "代表者を決め、学校に持ち込める品と渡せる時間を事前に職員室へ確認します。",
+    "why": "文末を本文の調子に統一"
+   },
+   {
+    "from": "花束は水が漏れにくい保水袋で包み、電車で帰る先生なら小ぶりにまとめる。",
+    "kind": "item",
+    "to": "花束は水が漏れにくい保水袋で包みます。電車で帰る先生には小ぶりな花束が向いています。",
+    "why": "一文一論点に分ける"
+   },
+   {
+    "from": "寄せ書きはクラス名と年度を書き、誰からの送別か後で分かるようにする。",
+    "kind": "item",
+    "to": "寄せ書きにはクラス名と年度を書き、誰から贈られたか後で分かるようにします。",
+    "why": "不自然な名詞表現を修正"
+   },
+   {
+    "from": "先生への送別・異動の贈り物、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "先生の送別・異動に贈る品",
+    "why": "長い誘いかけを簡潔に"
+   },
+   {
+    "from": "産地の違うスティックコーヒーの詰め合わせで小さな贈り物に向いています。",
+    "kind": "para",
+    "to": "産地の違うスティックコーヒーの詰め合わせです。ちょっとした贈り物に向いています。",
+    "why": "一文を分けて読みやすく"
+   },
+   {
+    "from": "表書き・金額・避けたい品を百貨店の案内から1枚にまとめています。",
+    "kind": "para",
+    "to": "表書き・金額・避けたい品を百貨店の案内をもとに1枚にまとめています。",
+    "why": "語のつながりを自然に"
+   },
+   {
+    "from": "同僚への送別ギフトプレゼント",
+    "kind": "item",
+    "to": "同僚へ贈る送別ギフト・プレゼント",
+    "why": "語の重なりを読みやすく"
+   },
+   {
+    "from": "女友達への送別ギフトプレゼント",
+    "kind": "item",
+    "to": "女友達へ贈る送別ギフト・プレゼント",
+    "why": "語の重なりを読みやすく"
+   }
+  ],
+  "date": "2026-10-29",
+  "deleted": [
+   "喜ばれやすい理由",
+   "花束は離任式や最後の授業のあとに渡しやすく、その場の写真に先生の表情まで残る贈り物です。",
+   "菓子折りは個包装なら職員室で先生方に配れるため、学校で受け取っても扱いやすい送別品です。",
+   "名入れペンは次の学校や研究の場でも長く使え、書く仕事を続ける先生への静かな励ましになります。"
+  ],
+  "diagnosis": [
+   "構成: 渡す時間や学校の決まりを確認する前に商品選びが始まり、読み手の判断順とずれています。",
+   "構成: u13〜u16とu34〜u42で、花束・菓子折り・名入れペンの説明が重複しています。",
+   "語: 「感謝がまとまる」「控えめな送別品」など、品物や使い方が見えにくい表現があります。",
+   "リズム: 箇条書きに長い一文と同じ調子の文末が続き、要点を拾いにくくなっています。"
+  ],
+  "failed": "",
+  "hash": "480d31416260",
+  "needs_check": [],
+  "page": "gift/farewell-teacher/index.html",
+  "rejected": [
+   {
+    "after": "先生への送別ギフトは花束や菓子折り、名入れペンが候補です。寄せ書きを添えると生徒や保護者からの感謝と応援も一緒に届けられます。離任式や最後の授業の前後に渡すなら",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ギフト', '候補', '一緒', '人数', '場所']"
+    ],
+    "text": "お世話になった先生を送り出す日は、派手さよりも生徒や保護者の言葉が残る形を考えたいものです。花束、菓子折り、名入れペンに"
+   },
+   {
+    "after": "先生への送別ギフトは花束や菓子折り、名入れペンが候補です。寄せ書きを添えると生徒や保護者からの感謝と応援も伝えられます。離任式や最後の授業の前後は慌ただしいため",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ギフト', '候補']"
+    ],
+    "text": "お世話になった先生を送り出す日は、派手さよりも生徒や保護者の言葉が残る形を考えたいものです。花束、菓子折り、名入れペンに"
+   },
+   {
+    "after": "価格・在庫は2026年10月29日 7:24時点の情報です。掲載情報はよろこぶプレゼントの作成者が管理しています。価格と販売状況は変更される場合があります。購入",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年10月29日 7:24時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "離任式や最後の授業のあとに渡しやすい花束です。先生の表情も写真に残せます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['花束']"
+    ],
+    "text": "離任式や最後の授業のあとに渡しやすく、その場の写真に先生の表情まで残せます。"
+   },
+   {
+    "after": "個包装の菓子折りなら、職員室で分けやすく、学校で受け取ったあとも扱いやすい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['個包装', '菓子折']"
+    ],
+    "text": "職員室で分けてもらいやすく、学校で受け取っても扱いやすい控えめな送別品です。"
+   },
+   {
+    "after": "生徒や保護者の写真と言葉をフォトアルバムに一緒に残せます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['フォトアルバム']"
+    ],
+    "text": "生徒や保護者の写真と言葉を一緒に残せるので、教室を離れる先生への感謝がまとまります。"
+   },
+   {
+    "after": "横軸は「食べて消える」から「ずっと残る」まで、縦軸は「定番・無難」から「個性的・意外」までを表します。番号を押すと該当する提案に移動します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['該当']"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "after": "先生について一言入力してください(好きなもの、趣味、年齢など)。入力内容に近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['先生', '入力内容']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "内輪だけで通じる冗談を使った品は、あとで見返したときに先生を困らせることがあります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['先生']"
+    ],
+    "text": "内輪の冗談が強すぎる品は後で見返した時に負担になることがあります"
+   },
+   {
+    "after": "金品や高額品を贈る前に学校の受け取りの決まりを確認します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['学校', '決']"
+    ],
+    "text": "受け取り規定に反する金品や高額品を確認なしで贈らないようにします"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   }
+  ],
+  "structure_suggestions": [
+   "「選び方のポイント…」〜「寄せ書きはクラス名と年度を書…」を「お世話になった先生を送り出す…」の直後に置き、渡す時間・場所の確認を商品選びより先にする。",
+   "「気をつけたいこと…」〜「受け取り規定に反する金品や高…」を「選び方のポイント…」〜「寄せ書きはクラス名と年度を書…」の次に移し、学校の決まりを確認してから商品を選ぶ流れにする。",
+   "「喜ばれやすい理由…」〜「名入れペンは次の学校や研究の…」は削り、同じ内容を商品候補と検索先がそろう「先生への送別・異動の贈り物、…」〜「楽天市場で「フォトアルバム …」に一本化する。",
+   "「条件で絞って比べる…」〜「この条件に合う商品は見つかり…」は予算と種類を選ぶ操作として、「先生への送別・異動の贈り物、…」〜「楽天市場で「フォトアルバム …」の商品提案の直前に置く。"
+  ],
+  "unchanged": 64,
+  "units": 90
+ },
  "gift/homecoming-grandmother/index.html": {
   "accepted": [
    {
