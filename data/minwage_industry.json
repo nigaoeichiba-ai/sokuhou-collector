@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-29T06:16:23+09:00",
+ "fetched_at": "2026-10-30T06:16:09+09:00",
  "rows": [
   {
    "daily": null,
@@ -175,7 +175,7 @@
    "hourly": 1070,
    "industry": "ポンプ・圧縮機器、一般産業用機械・装置、他に分類されないはん用機械・装置、化学機械・同装置、真空装置・真空機器製造業",
    "pref": "山形",
-   "regional_applies": false
+   "regional_applies": true
   },
   {
    "daily": null,
@@ -183,7 +183,7 @@
    "hourly": 1055,
    "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
    "pref": "山形",
-   "regional_applies": false
+   "regional_applies": true
   },
   {
    "daily": null,
@@ -191,7 +191,7 @@
    "hourly": 1070,
    "industry": "自動車・同附属品製造業",
    "pref": "山形",
-   "regional_applies": false
+   "regional_applies": true
   },
   {
    "daily": null,
