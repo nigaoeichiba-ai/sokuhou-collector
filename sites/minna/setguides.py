@@ -395,6 +395,24 @@ GUIDES: dict[str, dict] = {
 }
 
 
+def guide_stats(its: list[dict], g: dict) -> dict:
+    """The numbers a guide's paragraphs may use ({n}, {wmin}, {iw_min}, ...), measured from the set's pictures."""
+    ws, hs = [i["w"] for i in its], [i["h"] for i in its]
+    stats = {"n": len(its), "wmin": min(ws), "wmax": max(ws), "hmin": min(hs), "hmax": max(hs), "wide": sum(1 for i in its if i["w"] > i["h"] * 1.15), "tall": sum(1 for i in its if i["h"] > i["w"] * 1.15),
+             "dpi30": round(min(ws) / (30 / 25.4)), "dpi_a4": round(max(ws) / (210 / 25.4)), "wmax_mm": mm(max(ws), 300)}
+    stats.update({"hmin_mm": mm(min(hs), 300), "hmax_mm": mm(max(hs), 300), "dpi60": round(min(hs) / (60 / 25.4))})
+    if g["frame"]:
+        boxes = [inner_box(Image.open(i["path"])) for i in its]
+        iws, ihs = [b[2] - b[0] for b in boxes], [b[3] - b[1] for b in boxes]
+        stats.update({"iw_min": min(iws), "iw_max": max(iws), "ih_min": min(ihs), "ih_max": max(ihs), "chars24": min(iws) // 24, "lines24": int(min(ihs) // (24 * 1.5)),
+                      "ratio_max": f"{max(w / h for w, h in zip(iws, ihs)):.1f}:1"})
+    lion = next((i for i in its if i["id"].endswith("-lion-medal")), None)
+    if lion is not None:
+        bb = blank_box(Image.open(lion["path"]), "cream")
+        stats["blank_lion"] = f"{bb[2] - bb[0] + 1}×{bb[3] - bb[1] + 1}" if bb else "なし"
+    return stats
+
+
 def set_guide_html(s: dict) -> str:
     """The 使い分けのガイド section of a featured set, or '' for the other sets."""
     g = GUIDES.get(s["slug"])
@@ -435,18 +453,7 @@ def set_guide_html(s: dict) -> str:
     blank_note = ""
     if g.get("blank"):
         blank_note = "<p>「書き込める白い面」は、名前や文字を書き足せる、四角い白(クリーム色)の部分のいちばん大きいものの大きさです。</p>"
-    stats = {"n": len(its), "wmin": min(ws), "wmax": max(ws), "hmin": min(hs), "hmax": max(hs), "wide": sum(1 for i in its if i["w"] > i["h"] * 1.15), "tall": sum(1 for i in its if i["h"] > i["w"] * 1.15),
-             "dpi30": round(min(ws) / (30 / 25.4)), "dpi_a4": round(max(ws) / (210 / 25.4)), "wmax_mm": mm(max(ws), 300)}
-    stats.update({"hmin_mm": mm(min(hs), 300), "hmax_mm": mm(max(hs), 300), "dpi60": round(min(hs) / (60 / 25.4))})
-    if g["frame"]:
-        boxes = [inner_box(Image.open(i["path"])) for i in its]
-        iws, ihs = [b[2] - b[0] for b in boxes], [b[3] - b[1] for b in boxes]
-        stats.update({"iw_min": min(iws), "iw_max": max(iws), "ih_min": min(ihs), "ih_max": max(ihs), "chars24": min(iws) // 24, "lines24": int(min(ihs) // (24 * 1.5)),
-                      "ratio_max": f"{max(w / h for w, h in zip(iws, ihs)):.1f}:1"})
-    lion = next((i for i in its if i["id"].endswith("-lion-medal")), None)
-    if lion is not None:
-        bb = blank_box(Image.open(lion["path"]), "cream")
-        stats["blank_lion"] = f"{bb[2] - bb[0] + 1}×{bb[3] - bb[1] + 1}" if bb else "なし"
+    stats = guide_stats(its, g)
     points = "".join(f"<p>{esc(p.format(**stats))}</p>" for p in g.get("points", []))
     points_html = f'<section style="margin-top:44px"><h2><span class="scribble">使い方のコツ</span></h2>{points}' + (
         '<ul class="check">' + "".join(f'<li><a href="{esc(h)}">{esc(l)}</a></li>' for l, h in g["links"]) + "</ul>" if g.get("links") else "") + "</section>" if points else ""

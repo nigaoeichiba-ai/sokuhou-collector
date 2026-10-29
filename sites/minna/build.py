@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.minna import facts, model, printables, redirects, tips, wishes  # noqa: E402
+from sites.minna import facts, gate, model, printables, redirects, tips, wishes  # noqa: E402
 from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
 from sites.minna.setguides import set_guide_html  # noqa: E402
 from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
@@ -352,6 +352,7 @@ def og_bytes(items: list[dict], bg: tuple[int, int, int]) -> bytes:
 # ------------------------------------------------------------------ data
 def load_data(today: date | None = None):
     items, series = model.load_all(gift_content, build_catalog, CATEGORIES)
+    items, series, _held = gate.apply(items, series)           # a new set without a thick page stays off the site (gate.py)
     by_id = {i["id"]: i for i in items}
     for s in series:
         s["items"] = [by_id[i] for i in s["ids"]]
