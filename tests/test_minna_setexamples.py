@@ -32,7 +32,20 @@ class GuideFiles(unittest.TestCase):
         self.assertNotIn('"tropical-fruits-flat": {', src)
 
 
+def _fallback_font(size: int, weight: int = 500):
+    from PIL import ImageFont
+    return ImageFont.load_default(size)
+
+
 class DeclarativeExamples(unittest.TestCase):
+    """The drawing needs a Japanese font (Noto Sans JP); a machine without one (the CI runner) draws the same layout with PIL's built-in font, which is enough to check sizes and fit."""
+
+    def setUp(self):
+        if not any(Path(p).exists() for p in setexamples.FONT_PATHS):
+            patcher = mock.patch.object(setexamples, "font", _fallback_font)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+
     def spec(self, kind: str) -> dict:
         items = [{"item": k, "label": k, "sub": "○円"} for k in ("sleep", "wave", "jump", "run")]
         return {"card": {"type": "card", "size": "hagaki", "title": {"text": "見出し", "size": 48, "colour": "accent"}, "item": "sleep", "scale": 1.0, "top": 170,
