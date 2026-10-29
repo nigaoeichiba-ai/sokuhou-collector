@@ -372,7 +372,87 @@ def zoo() -> None:
     save(im, f"{s}-2")
 
 
+PRESETS = {"hagaki": (592, 876), "landscape": (876, 592), "square": (592, 592), "wide": (1168, 592)}      # postcard 100x148mm at 150dpi, its landscape, a square, a wide strip
+COLOURS = {"ink": INK, "soft": SOFT, "accent": ACCENT}
+
+
+def _text(d: ImageDraw.ImageDraw, im: Image.Image, spec: dict, default_y: int) -> int:
+    """A title/line block {"text", "size", "weight", "colour", "y", "x"}: centred on x (default: the middle); returns the y under it."""
+    f = font(spec.get("size", 32), spec.get("weight", 700))
+    x = spec.get("x", im.width // 2)
+    y = spec.get("y", default_y)
+    return centered(d, spec["text"], x, y, f, COLOURS.get(spec.get("colour", "ink"), INK), spec.get("gap", 8))
+
+
+def render_spec(slug: str, spec: dict) -> Image.Image:
+    """Draw an example from its description (library/<slug>/guide.json, "spec"), with the set's own pictures at their own size or smaller; never enlarged.
+
+    {"type": "card",   "size": "hagaki|landscape|square|wide" or [w, h], "title": {...}, "item": "<picture key>", "scale": 1.0, "x": 296, "top": 170, "lines": [{...}, ...]}
+    {"type": "grid",   ..., "items": [{"item", "label", "sub"}], "cols": 2, "scale": 0.5, "top": 190}
+    {"type": "strip",  ..., "items": [{"item", "label", "sub"}], "scale": 0.5, "top": 110}          (one row, equal columns)
+    {"type": "poster", ..., "rows": [{"item", "label", "sub"}], "scale": 0.3, "top": 160}           (picture left, words right, one row each)
+    A text block is {"text", "size", "weight", "colour": ink|soft|accent, "y", "x"}.  Every picture must fit its cell, or the call fails."""
+    size = spec.get("size", "hagaki")
+    w, h = PRESETS[size] if isinstance(size, str) else tuple(size)
+    im, d = paper(w, h)
+    if spec.get("title"):
+        _text(d, im, spec["title"], 36)
+    kind = spec["type"]
+    key = lambda k: f"{slug}-{k}"
+    if kind == "card":
+        p = pic(slug, key(spec["item"]), spec.get("scale", 1.0))
+        assert p.width <= w and spec.get("top", 170) + p.height <= h, "the picture does not fit the card"
+        put(im, p, spec.get("x", w // 2), spec.get("top", 170))
+        for ln in spec.get("lines", []):
+            _text(d, im, ln, h - 150)
+    elif kind in ("grid", "strip"):
+        items = spec["items"]
+        cols = spec.get("cols", len(items)) if kind == "grid" else len(items)
+        rows = -(-len(items) // cols)
+        top = spec.get("top", 110)
+        cw, ch = w // cols, (h - top) // rows
+        for n, it in enumerate(items):
+            p = pic(slug, key(it["item"]), spec.get("scale", 0.5))
+            assert p.width <= cw and p.height <= ch - (60 if it.get("label") else 0), f"{it['item']} does not fit its cell ({p.width}x{p.height} in {cw}x{ch})"
+            cx, cy = (n % cols) * cw + cw // 2, top + (n // cols) * ch
+            put(im, p, cx, cy + max(0, (ch - 60 - p.height) // 2))
+            y = cy + ch - 58
+            if it.get("label"):
+                y = centered(d, it["label"], cx, y, font(spec.get("label_size", 28), 700), INK, 4)
+            if it.get("sub"):
+                centered(d, it["sub"], cx, y, font(spec.get("sub_size", 24), 500), SOFT, 4)
+    elif kind == "poster":
+        top, rh = spec.get("top", 160), spec.get("row", 112)
+        for n, it in enumerate(spec["rows"]):
+            p = pic(slug, key(it["item"]), spec.get("scale", 0.3))
+            assert p.height <= rh and p.width <= 150, f"{it['item']} does not fit its row"
+            y = top + n * rh
+            put(im, p, 100, y + rh // 2 - p.height // 2)
+            d.text((190, y + 22), it.get("label", ""), font=font(34, 700), fill=INK)
+            d.text((190, y + 66), it.get("sub", ""), font=font(24, 500), fill=SOFT)
+            d.line([(60, y + rh - 4), (w - 60, y + rh - 4)], fill=(228, 228, 228, 255), width=2)
+    else:
+        raise ValueError(f"unknown example type: {kind}")
+    return im
+
+
+def render_slug(slug: str) -> list[str]:
+    """Draw every example of library/<slug>/guide.json that has a "spec"; the others are made by the hand-written functions above."""
+    import json
+    g = json.loads((LIB / slug / "guide.json").read_text(encoding="utf-8"))
+    done = []
+    for ex in g.get("examples", []):
+        if ex.get("spec"):
+            save(render_spec(slug, ex["spec"]), ex["name"])
+            done.append(ex["name"])
+    return done
+
+
 if __name__ == "__main__":
+    if len(sys.argv) > 2 and sys.argv[1] == "--slug":
+        names = render_slug(sys.argv[2])
+        print(f"{len(names)} example(s) drawn from their spec: {', '.join(names) or '(none: this set has hand-made examples)'}")
+        raise SystemExit(0)
     event_frames()
     bowing()
     winter()
