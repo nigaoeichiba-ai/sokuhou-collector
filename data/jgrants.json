@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-30T00:54:57.885938+00:00",
+ "fetched_at": "2026-10-30T21:16:09.289326+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -939,18 +939,6 @@
    "title": "【長野県茅野市】消費喚起イベント事業補助金"
   },
   {
-   "acceptance_end_datetime": "2026-10-30T15:00:00.000Z",
-   "acceptance_start_datetime": "2026-03-24T04:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDY4mMAH",
-   "id": "a0WJ200000CDY4mMAH",
-   "institution_name": "令和７年度補正 「再生可能エネルギー導入拡大・分散型エネルギーリソース導入支援等事業費補助金」業務産業用蓄電システム導入支援事業",
-   "name": "S-00008429",
-   "subsidy_max_limit": 15000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和７年度補正 業務産業用蓄電システム導入支援事業"
-  },
-  {
    "acceptance_end_datetime": "2026-11-27T15:00:00.000Z",
    "acceptance_start_datetime": "2026-03-24T04:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDY5GMAX",
@@ -987,7 +975,7 @@
    "title": "令和8年度　農林水産物認証取得支援事業（森林認証取得支援事業）補助金"
   },
   {
-   "acceptance_end_datetime": "2026-10-30T09:00:00.000Z",
+   "acceptance_end_datetime": "2026-11-30T09:00:00.000Z",
    "acceptance_start_datetime": "2026-05-21T07:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDYzVMAX",
    "id": "a0WJ200000CDYzVMAX",
@@ -1131,7 +1119,7 @@
    "title": "[３次公募]中小企業成長加速化補助金"
   },
   {
-   "acceptance_end_datetime": "2026-10-30T09:00:00.000Z",
+   "acceptance_end_datetime": "2026-11-30T09:00:00.000Z",
    "acceptance_start_datetime": "2026-05-21T07:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZ04MAH",
    "id": "a0WJ200000CDZ04MAH",
@@ -1251,7 +1239,7 @@
    "title": "令和8年度_低炭素型ディーゼルトラック普及加速化事業"
   },
   {
-   "acceptance_end_datetime": "2026-11-13T09:00:00.000Z",
+   "acceptance_end_datetime": "2026-11-30T09:00:00.000Z",
    "acceptance_start_datetime": "2026-07-02T07:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZDHMA5",
    "id": "a0WJ200000CDZDHMA5",
@@ -1297,18 +1285,6 @@
    "target_area_search": "東京都",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "令和８年度多様な体験型観光推進事業補助金"
-  },
-  {
-   "acceptance_end_datetime": "2026-11-30T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-06-01T00:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZIAMA5",
-   "id": "a0WJ200000CDZIAMA5",
-   "institution_name": "埼玉県中小企業等奨学金返還支援事業補助金（令和８年度）",
-   "name": "S-00009204",
-   "subsidy_max_limit": 0,
-   "target_area_search": "埼玉県",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "埼玉県中小企業等奨学金返還支援事業補助金（令和８年度）"
   },
   {
    "acceptance_end_datetime": "2026-12-03T03:00:00.000Z",
@@ -1501,18 +1477,6 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "交通システムの省CO2 化に向けた設備整備事業（鉄道事業等におけるネットワーク型低炭素化促進事業）（三次公募）"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-30T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-23T15:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003a9flUAA",
-   "id": "a0WfQ000003a9flUAA",
-   "institution_name": "中小企業等海外展開支援事業費補助金（海外出願支援事業）",
-   "name": "S-00009899",
-   "subsidy_max_limit": 3000000,
-   "target_area_search": "鳥取県",
-   "target_number_of_employees": "300名以下",
-   "title": "【鳥取県】令和８年度_中小企業等海外展開支援事業費補助金（海外出願支援事業）（三次公募）"
   },
   {
    "acceptance_end_datetime": "2027-03-31T08:00:00.000Z",
@@ -1827,18 +1791,6 @@
    "title": "【畜産事業者向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   },
   {
-   "acceptance_end_datetime": "2026-10-30T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-30T15:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003oIxhUAE",
-   "id": "a0WfQ000003oIxhUAE",
-   "institution_name": "中小企業等海外展開支援事業費補助金（海外出願支援事業）",
-   "name": "S-00009969",
-   "subsidy_max_limit": 3000000,
-   "target_area_search": "島根県",
-   "target_number_of_employees": "300名以下",
-   "title": "【島根県】令和8年度_中小企業等海外展開支援事業費補助金（海外出願支援事業）（第６回公募）"
-  },
-  {
    "acceptance_end_datetime": "2027-07-31T14:59:00.000Z",
    "acceptance_start_datetime": "2026-10-08T15:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003n4bqUAA",
@@ -1887,7 +1839,7 @@
    "title": "【令和８年度】二酸化炭素排出抑制対策事業費等補助金 （地域共生型廃棄物発電等導入促進事業 （うち地域の廃棄物を活用した地域エネルギー創出事業））（３次公募）"
   },
   {
-   "acceptance_end_datetime": "2026-10-30T09:00:00.000Z",
+   "acceptance_end_datetime": "2026-11-30T09:00:00.000Z",
    "acceptance_start_datetime": "2026-05-21T07:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZ1GMAX",
    "id": "a0WJ200000CDZ1GMAX",
@@ -1911,5 +1863,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 159
+ "total": 155
 }
