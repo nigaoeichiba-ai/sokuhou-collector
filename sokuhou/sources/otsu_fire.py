@@ -1,5 +1,9 @@
 """Otsu City fire department dispatch page (public info).
 
+ENDED 2026-10-29: the city closed this page ("災害発生情報ページを終了しました",
+https://www.city.otsu.lg.jp/fire119/t_news/77415.html); the host no longer answers. No longer collected (sokuhou/run.py GROUPS["frequent"] is empty);
+this module and data/otsu_fire.json (last fetched 2026-10-29) stay as history.
+
 Source: http://www.otsu119.jp/fire/saigai/saigaiPc.html (Shift_JIS, http only).
 Each <li> holds one message. A header timestamp is followed by either
   - a start message:      "<place>で<kind>が発生し、消防車等が出動しています。"

@@ -41,7 +41,6 @@ from sokuhou.sources import (
     nara_kuma,
     niigata_kuma,
     okayama_kuma,
-    otsu_fire,
     otsu_kuma,
     saitama_kuma,
     shizuoka_kuma,
@@ -214,9 +213,8 @@ GROUPS: dict[str, list[Source]] = {
         # the RSS / Atom feeds of municipalities and prefectures (registry: data/muni_feeds_registry.json): the bear items feed this site, the rest is shared with the other projects
         Source("muni_feeds", feedscan.collect, feedscan.check_feeds, feedscan.merge_feeds),
     ],
-    "frequent": [
-        Source("otsu_fire", otsu_fire.collect, check_fire, store.merge_incidents),
-    ],
+    # empty since 2026-10-29: Otsu City ended its fire dispatch page (sokuhou/sources/otsu_fire.py, data/otsu_fire.json kept as history)
+    "frequent": [],
 }
 
 
@@ -254,6 +252,8 @@ def main(argv: list[str]) -> int:
     if len(argv) != 2 or argv[1] not in GROUPS:
         print(f"usage: python -m sokuhou.run {'|'.join(GROUPS)}", file=sys.stderr)
         return 2
+    if not GROUPS[argv[1]]:
+        print(f"no sources in the '{argv[1]}' group: nothing to collect")
     kept: dict[str, str] = {}
     changed, errors = run_group(GROUPS[argv[1]], DATA_DIR, kept)
     print("changed:", ", ".join(changed) or "(none)")
