@@ -1,8 +1,9 @@
 name: frequent-collect
 
+# The group is empty since 2026-10-29: Otsu City ended its fire dispatch page (the only source here), so there is nothing to collect.
+# The file stays so that the Apps Script trigger that still dispatches it every 15 minutes (docs/office/gas/github_triggers.gs) gets a success,
+# not a failure, until that trigger is removed. No schedule: of its own.
 on:
-  schedule:
-    - cron: "*/15 * * * *"   # fire dispatch page keeps only ~10 recent incidents; we keep the history
   workflow_dispatch:
 
 permissions:

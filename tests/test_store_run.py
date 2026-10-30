@@ -1,7 +1,10 @@
+import contextlib
+import io
 import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from sokuhou import run, store
 
@@ -164,8 +167,16 @@ class CliTest(unittest.TestCase):
             "nagano_kuma",
             "higumap_kuma",
             "muni_feeds",
-            "otsu_fire",
         })
+
+    def test_the_frequent_group_is_empty_and_exits_zero_since_the_fire_page_closed(self):
+        # Otsu City closed its fire dispatch page on 2026-10-29: the group has nothing to collect, and an empty run must be a success (not a failure)
+        self.assertEqual(run.GROUPS["frequent"], [])
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(run, "DATA_DIR", Path(tmp)),                 contextlib.redirect_stdout(io.StringIO()) as out, contextlib.redirect_stderr(io.StringIO()):
+            self.assertEqual(run.main(["run", "frequent"]), 0)
+            self.assertEqual(list(Path(tmp).iterdir()), [])
+        self.assertIn("no sources in the 'frequent' group", out.getvalue())
+        self.assertTrue((Path(run.__file__).resolve().parent.parent / "data" / "otsu_fire.json").exists())   # kept as history
 
     def test_municipal_bear_sources_run_in_the_kuma_group_so_the_daily_run_does_not_collect_them_twice(self):
         kuma = {s.name for s in run.GROUPS["kuma"]}
