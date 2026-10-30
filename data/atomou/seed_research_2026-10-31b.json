@@ -1,0 +1,28 @@
+[
+  {
+    "title": "NEOBANK CASH 提供開始",
+    "date": "2027-03-29",
+    "precision": "day",
+    "date_end": null,
+    "kind": "開始",
+    "group": "お金・税金・制度",
+    "category": "金融",
+    "subject": "NEOBANK",
+    "what": "V NEOBANK後継の提供開始",
+    "place": "日本",
+    "source_url": "https://www.netbk.co.jp/contents/company/press/2026/1030_006505.html",
+    "source_quote": "2027年3月29日",
+    "source_url2": "https://watch.impress.co.jp/docs/news/2152567.html",
+    "source_quote2": "3月29日",
+    "basis": "press",
+    "ad_ok": true,
+    "keep": false,
+    "official_url": "https://www.netbk.co.jp/contents/company/press/2026/1030_006505.html",
+    "checked_on": "2026-10-31",
+    "verified": true,
+    "sensitivity": "none",
+    "son_toku": false,
+    "region": "日本",
+    "note": "2つの報道ページの本文で、日付を機械的に確かめた。"
+  }
+]
