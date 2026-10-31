@@ -644,5 +644,16 @@ class SourceAndLearning(unittest.TestCase):
             self.assertEqual(sl.report("yorokobu", "2026-10-18"), "")
 
 
+class SearchTexts(unittest.TestCase):
+    def test_a_theme_search_phrase_title_or_name_is_never_reworded(self):
+        for old, new in [("お茶 ギフト", "お茶のギフト"), ("ソファ飯", "ソファで食事"),
+                         ("宅配で割れにくい 布・革・金属の贈り物", "宅配で割れにくい布・革・金属の贈り物")]:
+            self.assertTrue(any("search phrase" in b for b in sl.check_rewrite(old, new, "yorokobu", "heading")), old)
+
+    def test_other_text_and_other_sites_are_not_blocked(self):
+        self.assertFalse(any("search phrase" in b for b in sl.check_rewrite("詳しく読む", "注目の商品", "yorokobu", "heading")))
+        self.assertFalse(any("search phrase" in b for b in sl.check_rewrite("ソファ飯", "ソファで食事", "minna", "heading")))
+
+
 if __name__ == "__main__":
     unittest.main()
