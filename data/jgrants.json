@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-30T21:16:09.289326+00:00",
+ "fetched_at": "2026-10-31T21:16:10.555000+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -649,18 +649,6 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "休廃止鉱山鉱害防止等工事費補助金（令和８年度当初）【関東監督部】"
-  },
-  {
-   "acceptance_end_datetime": "2026-10-31T14:59:00.000Z",
-   "acceptance_start_datetime": "2026-04-16T15:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDXjwMAH",
-   "id": "a0WJ200000CDXjwMAH",
-   "institution_name": "【福井県】企業の太陽光・蓄電池設備導入促進事業補助金",
-   "name": "S-00008168",
-   "subsidy_max_limit": 11300000,
-   "target_area_search": "福井県",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "【福井県】令和８年度企業の太陽光・蓄電池設備導入促進事業補助金"
   },
   {
    "acceptance_end_datetime": "2026-12-25T14:59:00.000Z",
@@ -1863,5 +1851,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 155
+ "total": 154
 }

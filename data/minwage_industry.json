@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-30T06:16:09+09:00",
+ "fetched_at": "2026-11-01T06:16:00+09:00",
  "rows": [
   {
    "daily": null,
@@ -695,7 +695,7 @@
    "hourly": 1100,
    "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
    "pref": "山梨",
-   "regional_applies": false
+   "regional_applies": true
   },
   {
    "daily": null,
@@ -703,7 +703,7 @@
    "hourly": 1089,
    "industry": "自動車・同附属品製造業",
    "pref": "山梨",
-   "regional_applies": false
+   "regional_applies": true
   },
   {
    "daily": null,
@@ -1639,7 +1639,7 @@
    "hourly": 1066,
    "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
    "pref": "大分",
-   "regional_applies": false
+   "regional_applies": true
   },
   {
    "daily": null,
@@ -1647,7 +1647,7 @@
    "hourly": 1055,
    "industry": "自動車・同附属品製造業、船舶製造・修理業、舶用機関製造業",
    "pref": "大分",
-   "regional_applies": false
+   "regional_applies": true
   },
   {
    "daily": null,
@@ -1663,7 +1663,7 @@
    "hourly": 1061,
    "industry": "自動車(新車)小売業",
    "pref": "大分",
-   "regional_applies": false
+   "regional_applies": true
   },
   {
    "daily": null,
