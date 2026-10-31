@@ -258,12 +258,43 @@ def added_words(old: str, new: str) -> list[str]:
     return out
 
 
+_SEARCH_KEYS = ("query", "title", "name")
+_search_texts_cache: list[str] | None = None
+
+
+def search_texts() -> list[str]:
+    """The yorokobu theme texts a search depends on (the search phrase, the title, the name): a rewording must not touch them (reported by the desk, 2026-10-31)."""
+    global _search_texts_cache
+    if _search_texts_cache is None:
+        out: list[str] = []
+        try:
+            data = json.loads((ROOT / "sites" / "yorokobu" / "content" / "themes.json").read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            data = None
+
+        def walk(x, key=""):
+            if isinstance(x, dict):
+                for k, v in x.items():
+                    walk(v, k)
+            elif isinstance(x, list):
+                for v in x:
+                    walk(v, key)
+            elif isinstance(x, str) and key in _SEARCH_KEYS:
+                out.append(x)
+
+        walk(data)
+        _search_texts_cache = out
+    return _search_texts_cache
+
+
 def check_rewrite(old: str, new: str, site: str | None = None, kind: str = "heading", small_edit: bool = True, new_words: bool = True) -> list[str]:
     """Reasons a rewording is NOT accepted (empty list = accepted)."""
     bad: list[str] = []
     new = new.strip()
     if not new or new == old:
         return ["empty or unchanged"]
+    if site == "yorokobu" and len(old) >= 4 and any(old in t for t in search_texts()):
+        return ["a search phrase, title or name of a theme: not reworded (SEO, owner policy: no change without evidence)"]
     if re.search(r"[<>\n]|https?:|\*\*", new):
         bad.append("markup, newline or a URL in the new text")
     if digits(old) != digits(new):
