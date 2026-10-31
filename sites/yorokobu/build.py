@@ -1274,6 +1274,25 @@ def guide_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 
 # ---------------------------------------------------------------- reading articles (free-form, added by the content factory)
 
+def article_picks(cfg: dict, d: dict, a: dict, n: int = 3) -> str:
+    """「この話題の人気の3点」 for a reading article: the first products of the first theme it names that has enough of them (the cards of the theme pages, as they are: the picture
+    carries the link, the words are the site's own; nothing of the shop is stored in the repository).  '' when no theme of the article has {n} products today.
+    (2026-11-01: the 101 reading articles had no product link at all.)"""
+    c = d["c"]
+    live = {t["slug"] for t in d["live_themes"]}
+    for slug in a.get("themes") or []:
+        if slug not in live:
+            continue
+        shown = top_shown_musts(d, c["theme"][slug]["key"], n)
+        if len(shown) >= n:
+            set_keep()
+            cards = "".join(item_card(cfg, it, rank=None, eager=False, must=must) for it, must in shown[:n])
+            return (f'<section class="top-picks read-picks" style="margin-top:44px"><div class="sec-title"><span class="tag">読んだあとに</span><h2>この話題の人気の{n}点</h2></div>'
+                    f'<ul class="items">{cards}</ul>{freshness(d)}'
+                    f'<p class="more"><a class="btn btn-sub" href="/theme/{slug}/">{esc(c["theme"][slug]["name"])}のプレゼントをもっと見る</a></p></section>')
+    return ""
+
+
 def article_page(d: dict, cfg: dict, preview: bool, a: dict) -> str:
     c = d["c"]
     secs = "".join(f'<section class="g-sec"><h2><span class="scribble">{esc(s["h"])}</span></h2><p>{esc(s["body"])}</p></section>' for s in a["sections"])
@@ -1289,10 +1308,13 @@ def article_page(d: dict, cfg: dict, preview: bool, a: dict) -> str:
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage",
                          "mainEntity": [{"@type": "Question", "name": f["q"], "acceptedAnswer": {"@type": "Answer", "text": f["a"]}} for f in a["faq"]]}, ensure_ascii=False)
     head = head_band("lilac", '', esc(a["title"]), a["lead"], single=True, mascot="r-wink")
+    picks = article_picks(cfg, d, a)
     body = f"""{head}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("読みもの", "/read/"), (a["title"], None)])}</div>
+{pr_quiet(cfg) if picks else ""}
 <p class="meta-date">{esc(a["date"])} 公開</p>
 <article class="guide">{secs}{checks}<section class="g-sec"><h2><span class="scribble">よくある質問</span></h2>{faq}</section></article>
+{picks}
 {share_bar(cfg, f"/read/{a['slug']}/", a["title"], "この記事をだれかに送る")}
 {f'<section class="related" style="margin-top:44px"><h2><span class="scribble">贈り物を探してみる</span></h2><ul class="plain cols2 chips">{rel}</ul></section>' if rel else ""}
 <script type="application/ld+json">{ld}</script><script type="application/ld+json">{faq_ld}</script>"""
