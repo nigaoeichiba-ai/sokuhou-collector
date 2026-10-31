@@ -2942,6 +2942,12 @@
    "id": "96f2ab737b",
    "items": [
     {
+     "date": "2026-10-31",
+     "link": "https://www.pref.niigata.lg.jp/site/saiyou3/meetup-2026.html",
+     "summary": "「新潟県自治体合同ガイダンス」を開催します。",
+     "title": "【東京&新潟リアル開催】職員のホンネを引き出す座談会・1DAY県庁MEETUP!"
+    },
+    {
      "date": "2026-10-30",
      "link": "https://www.pref.niigata.lg.jp/sec/shigenjunkan/nokosazutabeyoucpn2026.html",
      "summary": "イベント 3R エコニャン",
@@ -3024,12 +3030,6 @@
      "link": "https://www.pref.niigata.lg.jp/sec/kenminsports/oisixalbbcyoukei2026.html",
      "summary": "オイシックス新潟アルビレックス新潟BC アルビ 新潟県 表敬訪問 野球",
      "title": "オイシックス新潟アルビレックスBCの髙島会長、池田社長、桑田CBO、武田監督及び高主将が花角知事を表敬訪問します"
-    },
-    {
-     "date": "2026-10-30",
-     "link": "https://www.pref.niigata.lg.jp/sec/kenminseikatsu/1356751388925.html",
-     "summary": "製品事故・消費者事故等の情報を掲載しています。",
-     "title": "新潟くらしの安全かわら版「きーつけなせや」を発行しました"
     }
    ],
    "name": "新潟県庁",
@@ -3142,6 +3142,12 @@
    "id": "54b48fa859",
    "items": [
     {
+     "date": "2026-10-31",
+     "link": "https://www.pref.niigata.lg.jp/site/saiyou3/meetup-2026.html",
+     "summary": "「新潟県自治体合同ガイダンス」を開催します。",
+     "title": "【東京&新潟リアル開催】職員のホンネを引き出す座談会・1DAY県庁MEETUP!"
+    },
+    {
      "date": "2026-10-30",
      "link": "https://www.pref.niigata.lg.jp/sec/kuko/kekka-kukosougokouryu.html",
      "summary": "新潟空港・仙台空港連携による相互交流拡大・新規路線誘致事業業務に係る公募型プロポーザルの審査結果です。",
@@ -3224,12 +3230,6 @@
      "link": "https://www.pref.niigata.lg.jp/site/nagaoka-seibi-ojiya/o-jyosetubosyu-r8.html",
      "summary": "",
      "title": "会計年度任用職員(一般)の募集(小千谷、1人、12月1日採用予定)"
-    },
-    {
-     "date": "2026-10-28",
-     "link": "https://www.pref.niigata.lg.jp/sec/dourokanri/kaikeinendninyousyokuin2026.html",
-     "summary": "",
-     "title": "会計年度任用職員(一般)の募集(本庁、1人、12月1日採用予定)"
     }
    ],
    "name": "新潟県庁",
@@ -4519,5 +4519,5 @@
    "title": ""
   }
  ],
- "fetched_at": "2026-10-31T06:22:09.169738+09:00"
+ "fetched_at": "2026-10-31T09:53:17.724453+09:00"
 }
