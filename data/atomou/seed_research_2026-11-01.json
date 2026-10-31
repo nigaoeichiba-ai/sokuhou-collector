@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Xiaomi Smart Band 11 の国内発売",
+    "date": "2026-11-04",
+    "precision": "day",
+    "kind": "発売",
+    "group": "趣味・ゲーム・アニメ",
+    "category": "ガジェット",
+    "subject": "スマートバンド",
+    "what": "国内発売日",
+    "place": "日本",
+    "source_url": "https://www.gdm.or.jp/pressrelease/2026/1030/658656",
+    "source_quote": "発売日は11月4日（水）",
+    "source_url2": "https://www.itmedia.co.jp/mobile/articles/2610/30/news083.html",
+    "source_quote2": "11月4日発売",
+    "basis": "press",
+    "ad_ok": true,
+    "checked_on": "2026-11-01",
+    "verified": true,
+    "sensitivity": "none",
+    "son_toku": false,
+    "region": "日本",
+    "date_end": null,
+    "note": "2つの報道ページの本文で、日付を機械的に確かめた。"
+  }
+]
