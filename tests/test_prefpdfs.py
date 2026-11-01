@@ -66,7 +66,8 @@ NAGANO = """令和8年10月7日
 天井の穴から逃げた痕跡を確認し た
 107 9月23日 14時50分 戸隠 砂田バス停西付 近 目撃 路上に落ちたクルミを食べてい た"""
 
-NAGANO_PAGE = """<html><a href="/documents/3071/kuma_20260930.pdf">令和8年9月30日現在のツキノワグマの目撃出没情報(PDF:119KB)</a>
+NAGANO_PAGE = """<html><a href="/documents/3071/kuma_pamphlet_1.pdf">クマは身近な野生動物(令和8年・長野市農林部)(PDF:1,869KB)</a>
+<a href="/documents/3071/kuma_20260930.pdf">令和8年9月30日現在のツキノワグマの目撃出没情報(PDF:119KB)</a>
 <a href="/documents/3071/ino_20260930.pdf">令和8年9月30日現在のイノシシなどの目撃出没情報(PDF:110KB)</a>
 <a href="/documents/3071/kuma20260331.pdf">令和7年度クマ出没情報(PDF:385KB)</a></html>"""
 
