@@ -1072,6 +1072,13 @@ def illust_description(it: dict, s: dict, touch: str, idx: int) -> str:
     return d[:150]
 
 
+def shichigosan_line(it: dict) -> str:
+    """A picture of 七五三 or 千歳飴 sits in a general event set, so the set does not lead to the 七五三 special; this line does (2026-11-02: 37 such pages had no link to it)."""
+    if not re.search(r"七五三|千歳飴", it["title"] + " ".join(it["tags"])):
+        return ""
+    return '<p class="meta">七五三のイラストは<a href="/special/shichigosan/">七五三の特集</a>に、準備の手順は<a href="/guide/shichigosan-guide/">七五三の準備ガイド</a>にまとめています。</p>\n'
+
+
 def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
     base = cfg["site_url"].rstrip("/")
     s = series_of(it, series)
@@ -1097,7 +1104,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 <div class="bgsw" aria-label="背景色を確認する"><button type="button" data-bg="" class="on">透明</button><button type="button" data-bg="#ffffff">白</button><button type="button" data-bg="#ffc93c">黄</button><button type="button" data-bg="#ffd6e0">桃</button><button type="button" data-bg="#d9f1ff">空</button><button type="button" data-bg="#2b1b14">黒</button></div></div>
 <div class="info"><h1>{esc(it['title'])}</h1><p class="lead">{esc(it['desc'])}</p>
 <p class="meta">「<a href="{s['url']}">{esc(s['title'])}</a>」{len(s['items'])}点のうちの1点です。{esc(use_line)}</p>
-<p class="dl"><a class="btn big" href="/files/{it['id']}.png" download="{it['id']}.png">PNG(透明)をダウンロード</a>
+{shichigosan_line(it)}<p class="dl"><a class="btn big" href="/files/{it['id']}.png" download="{it['id']}.png">PNG(透明)をダウンロード</a>
 <a class="btn btn-sub" href="/files/{it['id']}.webp" download="{it['id']}.webp">WebP</a>
 {''.join(f'<a class="btn btn-sub" href="/files/{it["id"]}-{k}.pdf" download="{it["id"]}-{k}.pdf">{"A4で印刷(PDF)" if k == "a4" else "はがきサイズで印刷(PDF)"}</a>' for k in pdf_kinds(it))}
 {f'<a class="btn btn-sub" href="/tool/nurie/?id={it["id"]}">オンラインで塗る</a>' if it["touch"] == "lineart" else ""}
