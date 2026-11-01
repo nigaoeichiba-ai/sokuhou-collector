@@ -31,7 +31,7 @@ def fetch(url: str) -> bytes:
 def collect(now: datetime | None = None) -> dict:
     today = kumacounts.today_jst(now)
     era = kumalib.fiscal_start(today) - 2018
-    rows, url = prefpdfs.read_pdf_rows(PAGE, fetch, {"label": f"令和{era}年", "href": "kuma_"}, prefpdfs.parse_nagano_city, kumacounts.pause)
+    rows, url = prefpdfs.read_pdf_rows(PAGE, fetch, {"label": f"令和{era}年", "href": "kuma_20"}, prefpdfs.parse_nagano_city, kumacounts.pause)
     return prefpdfs.collect_list(source="nagano", page=PAGE, credit=CREDIT, update_note=UPDATE_NOTE, rows=rows, file_url=url, today=today,
                                  min_rows=MIN_ROWS, error=NaganoKumaSourceError)
 
