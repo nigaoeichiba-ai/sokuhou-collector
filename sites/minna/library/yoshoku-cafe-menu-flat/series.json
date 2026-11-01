@@ -1,0 +1,238 @@
+{
+ "added": "2026-11-02",
+ "slug": "yoshoku-cafe-menu-flat",
+ "title": "洋食・カフェのメニュー料理",
+ "genre": "food",
+ "touch": "flat",
+ "lead": "オムライス・ハンバーグ・パスタ・パンケーキなど、洋食店やカフェのメニューに並ぶ料理を、フラットなタッチで描いた12点です。メニュー表や店の案内、チラシに使えます。",
+ "tags": [
+  "洋食",
+  "カフェ",
+  "メニュー",
+  "オムライス",
+  "ハンバーグ",
+  "パスタ",
+  "レストラン",
+  "料理"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "yoshoku-cafe-menu-flat-omurice",
+   "file": "yoshoku-cafe-menu-flat-omurice.webp",
+   "title": "オムライス",
+   "desc": "オムライスのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "洋食・カフェのメニュー料理",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 527,
+   "h": 365
+  },
+  {
+   "id": "yoshoku-cafe-menu-flat-hamburg",
+   "file": "yoshoku-cafe-menu-flat-hamburg.webp",
+   "title": "ハンバーグ",
+   "desc": "ハンバーグのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "ハンバーグ",
+    "洋食・カフェのメニュー料理",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 510,
+   "h": 370
+  },
+  {
+   "id": "yoshoku-cafe-menu-flat-napolitan",
+   "file": "yoshoku-cafe-menu-flat-napolitan.webp",
+   "title": "ナポリタン",
+   "desc": "ナポリタンのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "洋食・カフェのメニュー料理",
+    "ナポリタン",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 521,
+   "h": 384
+  },
+  {
+   "id": "yoshoku-cafe-menu-flat-curry",
+   "file": "yoshoku-cafe-menu-flat-curry.webp",
+   "title": "カレーライス",
+   "desc": "カレーライスのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "洋食・カフェのメニュー料理",
+    "カレーライス",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 535,
+   "h": 385
+  },
+  {
+   "id": "yoshoku-cafe-menu-flat-pizza",
+   "file": "yoshoku-cafe-menu-flat-pizza.webp",
+   "title": "ピザ",
+   "desc": "ピザのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "洋食・カフェのメニュー料理",
+    "ピザ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 519,
+   "h": 419
+  },
+  {
+   "id": "yoshoku-cafe-menu-flat-gratin",
+   "file": "yoshoku-cafe-menu-flat-gratin.webp",
+   "title": "グラタン",
+   "desc": "グラタンのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "洋食・カフェのメニュー料理",
+    "グラタン",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 529,
+   "h": 415
+  },
+  {
+   "id": "yoshoku-cafe-menu-flat-stew",
+   "file": "yoshoku-cafe-menu-flat-stew.webp",
+   "title": "シチュー",
+   "desc": "シチューのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "洋食・カフェのメニュー料理",
+    "シチュー",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 500,
+   "h": 394
+  },
+  {
+   "id": "yoshoku-cafe-menu-flat-sandwich",
+   "file": "yoshoku-cafe-menu-flat-sandwich.webp",
+   "title": "クラブサンドイッチ",
+   "desc": "クラブサンドイッチのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "洋食・カフェのメニュー料理",
+    "クラブサンドイッチ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 529,
+   "h": 397
+  },
+  {
+   "id": "yoshoku-cafe-menu-flat-steak",
+   "file": "yoshoku-cafe-menu-flat-steak.webp",
+   "title": "ステーキ",
+   "desc": "ステーキのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "洋食・カフェのメニュー料理",
+    "ステーキ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 531,
+   "h": 346
+  },
+  {
+   "id": "yoshoku-cafe-menu-flat-ebifry",
+   "file": "yoshoku-cafe-menu-flat-ebifry.webp",
+   "title": "エビフライ",
+   "desc": "エビフライのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "洋食・カフェのメニュー料理",
+    "エビフライ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 521,
+   "h": 409
+  },
+  {
+   "id": "yoshoku-cafe-menu-flat-pancake",
+   "file": "yoshoku-cafe-menu-flat-pancake.webp",
+   "title": "パンケーキ",
+   "desc": "パンケーキのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "洋食・カフェのメニュー料理",
+    "パンケーキ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 535,
+   "h": 397
+  },
+  {
+   "id": "yoshoku-cafe-menu-flat-parfait",
+   "file": "yoshoku-cafe-menu-flat-parfait.webp",
+   "title": "パフェ",
+   "desc": "パフェのシンプルフラットイラストです。",
+   "tags": [
+    "洋食",
+    "カフェ",
+    "メニュー",
+    "オムライス",
+    "洋食・カフェのメニュー料理",
+    "パフェ",
+    "シンプルフラット",
+    "食べ物"
+   ],
+   "w": 348,
+   "h": 536
+  }
+ ]
+}

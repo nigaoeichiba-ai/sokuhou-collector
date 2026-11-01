@@ -87,7 +87,7 @@ class Gate(unittest.TestCase):
         items, _ = build.load_data()
         old_four = {"event-frames-flat", "bowing-greetings-flat", "winter-prep-year-end-flat", "eto-lineup-kawaii"}      # published before the gate, shorter, and safe by the published list
         seven = {k: v for k, v in setguides.GUIDES.items() if k not in old_four}
-        self.assertEqual(len(seven), 7)
+        self.assertGreaterEqual(len(seven), 7)      # later sets (2026-11-02 on) are checked too
         for slug, spec in seven.items():
             its = [i for i in items if i["series"] == slug]
             self.assertEqual(gate.problems(slug, its, spec), [], slug)

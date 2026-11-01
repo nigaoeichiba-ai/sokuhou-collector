@@ -1,0 +1,88 @@
+{
+ "slug": "fuyuyasumi-lines-lineart",
+ "title": "冬休みのライン画",
+ "subject": "",
+ "genre": "season",
+ "touch": "lineart",
+ "title_fmt": "{ja}",
+ "subject_en": "Winter holiday scenes and objects drawn as clean black line art for colouring, each ONE motif centred in its cell, plain white inside every shape, all contours closed. No letters, no text, no logos.",
+ "lead": "こたつ・雪だるま・雪遊び・大掃除・餅つきなど、冬休みの場面と道具を線画で描いた12点です。冬休みの課題やおたより、ぬりえに使えます。",
+ "tags": [
+  "冬休み",
+  "ぬりえ",
+  "線画",
+  "ライン",
+  "冬",
+  "白黒",
+  "雪だるま",
+  "こたつ"
+ ],
+ "season": {
+  "from": "11-25",
+  "to": "01-12"
+ },
+ "holes": false,
+ "exclude": [],
+ "items": [
+  [
+   "kotatsu",
+   "こたつとみかん",
+   "a kotatsu table with a blanket, a bowl of mandarin oranges and a cat curled beside it"
+  ],
+  [
+   "snowman",
+   "雪だるま",
+   "a snowman with a bucket hat, a scarf, stick arms and a carrot nose"
+  ],
+  [
+   "sled",
+   "そりすべり",
+   "a child on a sled going down a snowy hill (simple faced child, mittens and a hat)"
+  ],
+  [
+   "skate",
+   "スケート",
+   "a pair of ice skates with laces and a few snowflakes"
+  ],
+  [
+   "snowball",
+   "雪合戦",
+   "two children throwing snowballs at each other in warm coats"
+  ],
+  [
+   "osouji",
+   "大掃除",
+   "a bucket, a mop and a duster arranged together"
+  ],
+  [
+   "mochi",
+   "餅つき",
+   "a wooden mortar with a mallet and round rice cakes"
+  ],
+  [
+   "nengajo",
+   "年賀状を書く",
+   "a child writing a postcard at a desk with a brush pen"
+  ],
+  [
+   "cocoa",
+   "ココア",
+   "a mug of hot cocoa with steam and a marshmallow, with a knitted scarf beside"
+  ],
+  [
+   "mittens",
+   "手ぶくろとマフラー",
+   "a pair of mittens, a scarf and a knit hat"
+  ],
+  [
+   "snowflakes",
+   "雪の結晶",
+   "three large detailed snowflakes of different shapes"
+  ],
+  [
+   "homework",
+   "冬休みの宿題",
+   "a stack of notebooks with a pencil and an eraser and a calendar page"
+  ]
+ ]
+}

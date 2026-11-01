@@ -1,0 +1,85 @@
+{
+ "slug": "yoshoku-cafe-menu-flat",
+ "title": "洋食・カフェのメニュー料理",
+ "subject": "",
+ "genre": "food",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "Western-style Japanese cafe and diner dishes, each ONE dish on its plate or in its bowl centred in its cell, seen from a slightly raised front angle. Flat vector style with clean shapes, bright natural colours and simple highlights. Outlines are closed and darker than the fill; light parts (plates, paper, white fur, steam) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "オムライス・ハンバーグ・パスタ・パンケーキなど、洋食店やカフェのメニューに並ぶ料理を、フラットなタッチで描いた12点です。メニュー表や店の案内、チラシに使えます。",
+ "tags": [
+  "洋食",
+  "カフェ",
+  "メニュー",
+  "オムライス",
+  "ハンバーグ",
+  "パスタ",
+  "レストラン",
+  "料理"
+ ],
+ "season": null,
+ "holes": false,
+ "exclude": [],
+ "items": [
+  [
+   "omurice",
+   "オムライス",
+   "an omelette rice with a yellow omelette and red sauce on an oval plate, with a spoon"
+  ],
+  [
+   "hamburg",
+   "ハンバーグ",
+   "a hamburg steak with brown sauce, carrots and green beans on a round plate"
+  ],
+  [
+   "napolitan",
+   "ナポリタン",
+   "spaghetti napolitan, orange-red noodles with sliced sausage and green pepper on a plate with a fork"
+  ],
+  [
+   "curry",
+   "カレーライス",
+   "curry and rice on an oval plate with brown curry, white rice and a small pickle, a spoon beside"
+  ],
+  [
+   "pizza",
+   "ピザ",
+   "a round pizza with one slice pulled away, melted cheese, tomato and basil leaves"
+  ],
+  [
+   "gratin",
+   "グラタン",
+   "a baked gratin in a white oval dish with a golden brown cheese top and steam"
+  ],
+  [
+   "stew",
+   "シチュー",
+   "a bowl of white cream stew with carrots, potatoes and broccoli, a slice of bread beside"
+  ],
+  [
+   "sandwich",
+   "クラブサンドイッチ",
+   "a toasted club sandwich cut in halves with lettuce, tomato and ham, held with picks, a few fries"
+  ],
+  [
+   "steak",
+   "ステーキ",
+   "a grilled steak with a sauce, corn and potato on a hot plate"
+  ],
+  [
+   "ebifry",
+   "エビフライ",
+   "three fried shrimp with golden crust, a lemon wedge and shredded cabbage"
+  ],
+  [
+   "pancake",
+   "パンケーキ",
+   "a stack of three fluffy pancakes with a square of butter and syrup dripping"
+  ],
+  [
+   "parfait",
+   "パフェ",
+   "a tall parfait glass with ice cream, fruit, whipped cream and a wafer"
+  ]
+ ]
+}
