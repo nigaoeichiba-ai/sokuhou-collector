@@ -287,7 +287,7 @@ def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None
             "source_quote": (it.get("source_quote") or "")[:60] or None,
             "checked_on": it["checked_on"], "added": _added(it), "status": ("ended" if last < today else ("old_checked" if (today - checked).days > STALE_DAYS else "active")),
             "publish_on": max(date(2000, 1, 1), d - timedelta(days=lead)).isoformat(),
-            "corrected_on": _day_or_empty(it.get("corrected_on")), "changes": _changes(it.get("changes")), "archived": archived,
+            "not_held": bool(it.get("not_held")), "corrected_on": _day_or_empty(it.get("corrected_on")), "changes": _changes(it.get("changes")), "archived": archived,
             "result": results.get((str(it["title"]).strip(), it["date"])),
         })
     # an estimate ("例年12月31日ごろ") stands only until the official day of that cycle is known: a confirmed entry of the same series (the key names the cycle: "kouhaku-2026") takes its place
