@@ -1,0 +1,135 @@
+{
+  "why": "国語・算数・理科・社会・音楽・図工・体育・家庭科・英語・道徳・書写・総合学習の12教科を、それぞれの道具2〜3点で表したセットです。人は描かれておらず、時間割表や教室の掲示に教科の目印として置けます。",
+  "frame": false,
+  "picks": {
+    "kokugo": "開いた本に、筆とえんぴつを重ねた絵。本のページは空白です。",
+    "sansu": "4色の玉が並んだそろばんに、定規とコンパス。",
+    "rika": "緑の液体が入ったフラスコと試験管、虫めがね。",
+    "shakai": "卓上の地球儀と、折りたたんだ地図。",
+    "ongaku": "リコーダーと青い鍵盤ハーモニカ、2つの音符。",
+    "zuko": "絵の具のパレットと筆、はさみ、紫色の紙のロール。",
+    "taiiku": "赤いボール、縄とび、黄色い笛。",
+    "kateika": "ポケット付きのピンクのエプロン、糸を通した針、フライパン。",
+    "eigo": "青いヘッドホンと、空白の吹き出し2つ。吹き出しに文字を足せます。",
+    "doutoku": "両手が赤いハートを包んでいる絵。教科の道具ではなく、思いやりを表す図柄です。",
+    "shosha": "筆、黒いすずり、白い半紙。",
+    "sogo": "スパイラルノートと虫めがね、鉢植えの小さな植物。"
+  },
+  "points": [
+    "時間割表では、教科名の文字の横か上に素材を置くと、文字が読めない低学年にも教科が伝わります。{n}点とも幅{wmin}〜{wmax}px、高さ{hmin}〜{hmax}pxで、ほぼ同じ大きさです。6つ並べる一覧表でも、マスの大きさをそろえやすい素材です。",
+    "絵の中に文字や数字は入っていません。そのため、教科名は自由な書体で足せます。吹き出しの空白がある英語の素材には、あいさつの言葉を入れられます。ノートやすずり用紙の白い部分に、書き込みを重ねることもできます。ただし、白い部分は素材の一部なので、大きな文字を重ねると絵の形と競ります。",
+    "同じ道具が複数の教科に出てくる点も押さえておきます。虫めがねは理科と総合学習に、筆は国語と図工と書写に出てきます。1枚の時間割表に全教科を並べるときは、道具がかぶる教科を隣り合わせにしないほうが、見分けやすくなります。例えば、理科の次に社会を置いて、虫めがねが続かないようにします。",
+    "色は教科ごとに違います。赤が体育、緑が理科、青が音楽と英語、ピンクが家庭科です。教科名の札にも同じ色を使うと、素材との組み合わせがまとまります。印刷するときは、幅{wmin}pxの素材を30mmで使うと約{dpi30}dpiになります。名刺より小さい札に使うのに十分な細かさです。A4に大きく1枚で使う用途には向きません。"
+  ],
+  "examples": [
+    {
+      "name": "school-subjects-icons-flat-1",
+      "caption": "時間割表の見本。6教科の素材を元の大きさの約4割に縮め、時限と教科名を添えました。",
+      "uses": [
+        "school-subjects-icons-flat-kokugo",
+        "school-subjects-icons-flat-sansu",
+        "school-subjects-icons-flat-rika",
+        "school-subjects-icons-flat-shakai",
+        "school-subjects-icons-flat-ongaku",
+        "school-subjects-icons-flat-taiiku"
+      ],
+      "size": "横長の大きさ",
+      "spec": {
+        "type": "grid",
+        "size": [
+          876,
+          660
+        ],
+        "title": {
+          "text": "○年○組 時間割(月曜日)",
+          "size": 38,
+          "weight": 800,
+          "colour": "ink"
+        },
+        "cols": 3,
+        "scale": 0.4,
+        "top": 90,
+        "label_size": 28,
+        "sub_size": 24,
+        "items": [
+          {
+            "item": "kokugo",
+            "label": "1時間目",
+            "sub": "国語"
+          },
+          {
+            "item": "sansu",
+            "label": "2時間目",
+            "sub": "算数"
+          },
+          {
+            "item": "rika",
+            "label": "3時間目",
+            "sub": "理科"
+          },
+          {
+            "item": "shakai",
+            "label": "4時間目",
+            "sub": "社会"
+          },
+          {
+            "item": "ongaku",
+            "label": "5時間目",
+            "sub": "音楽"
+          },
+          {
+            "item": "taiiku",
+            "label": "6時間目",
+            "sub": "体育"
+          }
+        ]
+      }
+    },
+    {
+      "name": "school-subjects-icons-flat-2",
+      "caption": "学級だよりの見本。今週の特別な授業を、素材4点と日付の空欄で案内しています。",
+      "uses": [
+        "school-subjects-icons-flat-zuko",
+        "school-subjects-icons-flat-taiiku",
+        "school-subjects-icons-flat-ongaku",
+        "school-subjects-icons-flat-eigo"
+      ],
+      "size": "はがき(100×148mm)を150dpiで作った大きさ",
+      "spec": {
+        "type": "poster",
+        "size": "hagaki",
+        "title": {
+          "text": "今週の授業",
+          "size": 50,
+          "weight": 800,
+          "colour": "accent"
+        },
+        "scale": 0.28,
+        "top": 150,
+        "row": 130,
+        "rows": [
+          {
+            "item": "zuko",
+            "label": "図工",
+            "sub": "○月○日(○)"
+          },
+          {
+            "item": "taiiku",
+            "label": "体育",
+            "sub": "○月○日(○)"
+          },
+          {
+            "item": "ongaku",
+            "label": "音楽",
+            "sub": "○月○日(○)"
+          },
+          {
+            "item": "eigo",
+            "label": "英語",
+            "sub": "○月○日(○)"
+          }
+        ]
+      }
+    }
+  ]
+}

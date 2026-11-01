@@ -416,7 +416,7 @@ def render_spec(slug: str, spec: dict) -> Image.Image:
             assert p.width <= cw and p.height <= ch - (60 if it.get("label") else 0), f"{it['item']} does not fit its cell ({p.width}x{p.height} in {cw}x{ch})"
             cx, cy = (n % cols) * cw + cw // 2, top + (n // cols) * ch
             put(im, p, cx, cy + max(0, (ch - 60 - p.height) // 2))
-            y = cy + ch - 58
+            y = cy + ch - (80 if it.get("sub") else 58)
             if it.get("label"):
                 y = centered(d, it["label"], cx, y, font(spec.get("label_size", 28), 700), INK, 4)
             if it.get("sub"):

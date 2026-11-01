@@ -1,0 +1,239 @@
+{
+ "added": "2026-11-02",
+ "slug": "school-subjects-icons-flat",
+ "title": "教科の道具(時間割用)",
+ "genre": "school",
+ "touch": "flat",
+ "lead": "国語・算数・理科・社会・音楽・体育など、小学校の教科を道具で表した12点です。時間割表や学級だより、教室の掲示に使えます。",
+ "tags": [
+  "時間割",
+  "教科",
+  "小学校",
+  "学校",
+  "国語",
+  "算数",
+  "理科",
+  "掲示"
+ ],
+ "subject": "",
+ "season": null,
+ "planned": 12,
+ "items": [
+  {
+   "id": "school-subjects-icons-flat-kokugo",
+   "file": "school-subjects-icons-flat-kokugo.webp",
+   "title": "国語",
+   "desc": "国語のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "国語",
+    "教科の道具(時間割用)",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 479,
+   "h": 388
+  },
+  {
+   "id": "school-subjects-icons-flat-sansu",
+   "file": "school-subjects-icons-flat-sansu.webp",
+   "title": "算数",
+   "desc": "算数のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "算数",
+    "教科の道具(時間割用)",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 481,
+   "h": 446
+  },
+  {
+   "id": "school-subjects-icons-flat-rika",
+   "file": "school-subjects-icons-flat-rika.webp",
+   "title": "理科",
+   "desc": "理科のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "理科",
+    "教科の道具(時間割用)",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 499,
+   "h": 388
+  },
+  {
+   "id": "school-subjects-icons-flat-shakai",
+   "file": "school-subjects-icons-flat-shakai.webp",
+   "title": "社会",
+   "desc": "社会のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "教科の道具(時間割用)",
+    "社会",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 478,
+   "h": 446
+  },
+  {
+   "id": "school-subjects-icons-flat-ongaku",
+   "file": "school-subjects-icons-flat-ongaku.webp",
+   "title": "音楽",
+   "desc": "音楽のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "教科の道具(時間割用)",
+    "音楽",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 487,
+   "h": 434
+  },
+  {
+   "id": "school-subjects-icons-flat-zuko",
+   "file": "school-subjects-icons-flat-zuko.webp",
+   "title": "図工",
+   "desc": "図工のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "教科の道具(時間割用)",
+    "図工",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 503,
+   "h": 458
+  },
+  {
+   "id": "school-subjects-icons-flat-taiiku",
+   "file": "school-subjects-icons-flat-taiiku.webp",
+   "title": "体育",
+   "desc": "体育のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "教科の道具(時間割用)",
+    "体育",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 442,
+   "h": 410
+  },
+  {
+   "id": "school-subjects-icons-flat-kateika",
+   "file": "school-subjects-icons-flat-kateika.webp",
+   "title": "家庭科",
+   "desc": "家庭科のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "教科の道具(時間割用)",
+    "家庭科",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 466,
+   "h": 432
+  },
+  {
+   "id": "school-subjects-icons-flat-eigo",
+   "file": "school-subjects-icons-flat-eigo.webp",
+   "title": "英語",
+   "desc": "英語のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "教科の道具(時間割用)",
+    "英語",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 465,
+   "h": 405
+  },
+  {
+   "id": "school-subjects-icons-flat-doutoku",
+   "file": "school-subjects-icons-flat-doutoku.webp",
+   "title": "道徳",
+   "desc": "道徳のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "教科の道具(時間割用)",
+    "道徳",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 441,
+   "h": 347
+  },
+  {
+   "id": "school-subjects-icons-flat-shosha",
+   "file": "school-subjects-icons-flat-shosha.webp",
+   "title": "書写",
+   "desc": "書写のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "教科の道具(時間割用)",
+    "書写",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 444,
+   "h": 439
+  },
+  {
+   "id": "school-subjects-icons-flat-sogo",
+   "file": "school-subjects-icons-flat-sogo.webp",
+   "title": "総合学習",
+   "desc": "総合学習のシンプルフラットイラストです。",
+   "tags": [
+    "時間割",
+    "教科",
+    "小学校",
+    "学校",
+    "教科の道具(時間割用)",
+    "総合学習",
+    "シンプルフラット",
+    "学校・保育"
+   ],
+   "w": 479,
+   "h": 439
+  }
+ ]
+}

@@ -1,0 +1,244 @@
+{
+ "added": "2026-11-02",
+ "slug": "fuyuyasumi-lines-lineart",
+ "title": "冬休みのライン画",
+ "genre": "season",
+ "touch": "lineart",
+ "lead": "こたつ・雪だるま・雪遊び・大掃除・餅つきなど、冬休みの場面と道具を線画で描いた12点です。冬休みの課題やおたより、ぬりえに使えます。",
+ "tags": [
+  "冬休み",
+  "ぬりえ",
+  "線画",
+  "ライン",
+  "冬",
+  "白黒",
+  "雪だるま",
+  "こたつ"
+ ],
+ "subject": "",
+ "season": {
+  "from": "11-25",
+  "to": "01-12"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "fuyuyasumi-lines-lineart-kotatsu",
+   "file": "fuyuyasumi-lines-lineart-kotatsu.webp",
+   "title": "こたつとみかん",
+   "desc": "こたつとみかんのぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "こたつ",
+    "冬休みのライン画",
+    "こたつとみかん",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 428,
+   "h": 309
+  },
+  {
+   "id": "fuyuyasumi-lines-lineart-snowman",
+   "file": "fuyuyasumi-lines-lineart-snowman.webp",
+   "title": "雪だるま",
+   "desc": "雪だるまのぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "雪だるま",
+    "冬休みのライン画",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 337,
+   "h": 384
+  },
+  {
+   "id": "fuyuyasumi-lines-lineart-sled",
+   "file": "fuyuyasumi-lines-lineart-sled.webp",
+   "title": "そりすべり",
+   "desc": "そりすべりのぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "冬休みのライン画",
+    "そりすべり",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 426,
+   "h": 381
+  },
+  {
+   "id": "fuyuyasumi-lines-lineart-skate",
+   "file": "fuyuyasumi-lines-lineart-skate.webp",
+   "title": "スケート",
+   "desc": "スケートのぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "冬休みのライン画",
+    "スケート",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 379,
+   "h": 357
+  },
+  {
+   "id": "fuyuyasumi-lines-lineart-snowball",
+   "file": "fuyuyasumi-lines-lineart-snowball.webp",
+   "title": "雪合戦",
+   "desc": "雪合戦のぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "冬休みのライン画",
+    "雪合戦",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 496,
+   "h": 329
+  },
+  {
+   "id": "fuyuyasumi-lines-lineart-osouji",
+   "file": "fuyuyasumi-lines-lineart-osouji.webp",
+   "title": "大掃除",
+   "desc": "大掃除のぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "冬休みのライン画",
+    "大掃除",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 395,
+   "h": 377
+  },
+  {
+   "id": "fuyuyasumi-lines-lineart-mochi",
+   "file": "fuyuyasumi-lines-lineart-mochi.webp",
+   "title": "餅つき",
+   "desc": "餅つきのぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "冬休みのライン画",
+    "餅つき",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 477,
+   "h": 470
+  },
+  {
+   "id": "fuyuyasumi-lines-lineart-nengajo",
+   "file": "fuyuyasumi-lines-lineart-nengajo.webp",
+   "title": "年賀状を書く",
+   "desc": "年賀状を書くのぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "冬休みのライン画",
+    "年賀状を書く",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 515,
+   "h": 512
+  },
+  {
+   "id": "fuyuyasumi-lines-lineart-cocoa",
+   "file": "fuyuyasumi-lines-lineart-cocoa.webp",
+   "title": "ココア",
+   "desc": "ココアのぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "冬休みのライン画",
+    "ココア",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 493,
+   "h": 497
+  },
+  {
+   "id": "fuyuyasumi-lines-lineart-mittens",
+   "file": "fuyuyasumi-lines-lineart-mittens.webp",
+   "title": "手ぶくろとマフラー",
+   "desc": "手ぶくろとマフラーのぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "冬休みのライン画",
+    "手ぶくろとマフラー",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 516,
+   "h": 494
+  },
+  {
+   "id": "fuyuyasumi-lines-lineart-snowflakes",
+   "file": "fuyuyasumi-lines-lineart-snowflakes.webp",
+   "title": "雪の結晶",
+   "desc": "雪の結晶のぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "冬休みのライン画",
+    "雪の結晶",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 510,
+   "h": 485
+  },
+  {
+   "id": "fuyuyasumi-lines-lineart-homework",
+   "file": "fuyuyasumi-lines-lineart-homework.webp",
+   "title": "冬休みの宿題",
+   "desc": "冬休みの宿題のぬりえ・線画イラストです。",
+   "tags": [
+    "冬休み",
+    "ぬりえ",
+    "線画",
+    "ライン",
+    "冬",
+    "冬休みのライン画",
+    "冬休みの宿題",
+    "ぬりえ・線画",
+    "季節・行事"
+   ],
+   "w": 535,
+   "h": 449
+  }
+ ]
+}

@@ -1,0 +1,85 @@
+{
+ "slug": "school-subjects-icons-flat",
+ "title": "教科の道具(時間割用)",
+ "subject": "",
+ "genre": "school",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "One school subject per cell, shown only by its typical tools and objects (no people, no letters or numbers anywhere), each cluster of two or three objects centred in its cell. Flat vector style with clean shapes, bright natural colours and simple highlights. Outlines are closed and darker than the fill; light parts (plates, paper, white fur, steam) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "国語・算数・理科・社会・音楽・体育など、小学校の教科を道具で表した12点です。時間割表や学級だより、教室の掲示に使えます。",
+ "tags": [
+  "時間割",
+  "教科",
+  "小学校",
+  "学校",
+  "国語",
+  "算数",
+  "理科",
+  "掲示"
+ ],
+ "season": null,
+ "holes": false,
+ "exclude": [],
+ "items": [
+  [
+   "kokugo",
+   "国語",
+   "an open book with a brush pen and a pencil"
+  ],
+  [
+   "sansu",
+   "算数",
+   "a wooden abacus, a ruler and a compass"
+  ],
+  [
+   "rika",
+   "理科",
+   "a flask with green liquid, a test tube and a magnifying glass"
+  ],
+  [
+   "shakai",
+   "社会",
+   "a desk globe and a folded paper map"
+  ],
+  [
+   "ongaku",
+   "音楽",
+   "a recorder, a melodica and two music notes"
+  ],
+  [
+   "zuko",
+   "図工",
+   "a paint palette with brushes, scissors and a roll of coloured paper"
+  ],
+  [
+   "taiiku",
+   "体育",
+   "a red ball, a skipping rope and a whistle"
+  ],
+  [
+   "kateika",
+   "家庭科",
+   "a pink apron, a needle with thread and a small pan"
+  ],
+  [
+   "eigo",
+   "英語",
+   "a pair of headphones and two blank speech bubbles"
+  ],
+  [
+   "doutoku",
+   "道徳",
+   "two hands holding a red heart"
+  ],
+  [
+   "shosha",
+   "書写",
+   "a calligraphy brush, an ink stone and a sheet of paper"
+  ],
+  [
+   "sogo",
+   "総合学習",
+   "a notebook, a magnifying glass and a small plant in a pot"
+  ]
+ ]
+}

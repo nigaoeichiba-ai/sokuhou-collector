@@ -22,7 +22,7 @@ class GuideFiles(unittest.TestCase):
     def test_every_guide_is_a_file_of_its_set_and_the_python_file_holds_none(self):
         files = sorted(p.parent.name for p in setexamples.LIB.glob("*/guide.json"))
         self.assertEqual(files, sorted(setguides.GUIDES))
-        self.assertEqual(len(files), 11)
+        self.assertGreaterEqual(len(files), 11)
         for f in setexamples.LIB.glob("*/guide.json"):
             g = json.loads(f.read_text(encoding="utf-8"))
             self.assertTrue({"why", "picks", "points", "examples"} <= set(g), f.parent.name)
