@@ -1,0 +1,26 @@
+[
+  {
+    "title": "G-FREAK FACTORY 初の日本武道館公演",
+    "date": "2027-04-28",
+    "precision": "day",
+    "kind": "開催",
+    "group": "エンタメ・音楽・賞",
+    "category": "音楽",
+    "subject": "Gフリーク",
+    "what": "初の武道館ワンマン",
+    "place": "東京・日本武道館",
+    "source_url": "https://barks.jp/news/1101297/",
+    "source_quote": "2027年4月28日(水)",
+    "source_url2": "https://realsound.jp/2026/10/post-2568705.html",
+    "source_quote2": "日程：2027年4月28日（水）",
+    "basis": "press",
+    "ad_ok": true,
+    "checked_on": "2026-11-02",
+    "verified": true,
+    "sensitivity": "none",
+    "son_toku": false,
+    "region": "東京・日本武道館",
+    "date_end": null,
+    "note": "2つの報道ページの本文で、日付を機械的に確かめた。"
+  }
+]
