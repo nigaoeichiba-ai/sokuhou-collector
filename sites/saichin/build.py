@@ -626,6 +626,11 @@ def gap_text(gap: float) -> str:
     return f"{gap:+.1f}円".replace("-", "−")
 
 
+def raise_gap_text(gap: int) -> str:
+    """This prefecture's raise minus the national weighted-average raise, in whole yen."""
+    return "同じ" if gap == 0 else f"{gap:+d}円".replace("-", "−")
+
+
 def pct(x: float) -> str:
     return f"{x * 100:.1f}%"
 
@@ -703,9 +708,10 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
         "low": lambda r: ascending.index(r["amount"]) + 1,
         "raise": lambda r: r["raise_rank"],
     }[kind]
+    nat_up = round(d["avg"]) - round(d["avg_prev"])
     body_rows = "".join(
         f'<tr><td class="rk">{rank_of(r)}</td><td><a href="/{r["slug"]}/">{esc(r["name"])}</a></td><td>{yen(r["amount"])}</td>'
-        f'<td>{gap_text(r["avg_gap"])}</td><td>+{r["raise"]}円</td><td>{md(r["effective_date"])}</td></tr>'
+        f'<td>{gap_text(r["avg_gap"])}</td><td>+{r["raise"]}円</td><td>{raise_gap_text(r["raise"] - nat_up)}</td><td>{md(r["effective_date"])}</td></tr>'
         for r in rows
     )
     above = sum(1 for r in d["rows"] if r["avg_gap"] > 0)
@@ -714,9 +720,9 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
 <h1>最低賃金ランキング({esc(d['label'])}) {short}</h1>
 <p class="lead">全47都道府県を、{long_}に並べています。同額・同じ引上げ額は、同じ順位です。</p>
 <div class="tabs" role="tablist">{tabs}</div>
-<div class="tablewrap"><table><thead><tr><th>順位</th><th>都道府県</th><th>最低賃金</th><th>全国加重平均との差</th><th>引上げ額</th><th>発効日</th></tr></thead><tbody>{body_rows}</tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>順位</th><th>都道府県</th><th>最低賃金</th><th>全国加重平均との差</th><th>引上げ額</th><th>全国平均の引上げ額との差</th><th>発効日</th></tr></thead><tbody>{body_rows}</tbody></table></div>
 {ranking_notes.notes(d, kind, sys.modules[__name__])}
-<p class="notice">全国加重平均は{d['avg']:g}円({esc(d['label'])}、{above}都道府県が平均より高く、{below}都道府県が低い)。差は、各都道府県の最低賃金から全国加重平均を引いた額です。データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。</p>"""
+<p class="notice">全国加重平均は{d['avg']:g}円({esc(d['label'])}、{above}都道府県が平均より高く、{below}都道府県が低い)。差は、各都道府県の最低賃金から全国加重平均を引いた額です。引上げ額の差は、各都道府県の引上げ額から全国加重平均の引上げ額(+{nat_up}円)を引いた額です。データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。</p>"""
     return finish(layout(cfg, preview, path=f"/ranking/{kind}/", title=f"最低賃金ランキング{short}({d['label']}) 47都道府県",
                          description=f"{d['label']}の最低賃金を、{long_}に47都道府県すべてランキングにしました。", body=body), d)
 

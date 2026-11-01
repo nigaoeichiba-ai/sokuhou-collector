@@ -549,12 +549,18 @@ def paged(cfg, preview, base: str, items: list[dict], head_html: str, title: str
     for n in range(1, pages + 1):
         chunk = items[(n - 1) * PER_PAGE:n * PER_PAGE]
         path = base if n == 1 else f"{base}page/{n}/"
-        t = title if n == 1 else f"{title}(ページ{n})"
+        if n == 1:
+            t, desc = title, description
+        else:
+            head_t, sep, tail_t = title.rpartition(" | ")
+            t = f"{head_t}(ページ{n}){sep}{tail_t}" if sep else f"{title}(ページ{n})"
+            first, last = (n - 1) * PER_PAGE + 1, min(n * PER_PAGE, len(items))
+            desc = f"{first}〜{last}点目(全{len(items)}点)。{description}"
         top = extra_top if n == 1 else ""
         body = (f'{crumbs(crumb_items if n == 1 else crumb_items[:-1] + [(crumb_items[-1][0], base)] + [(f"ページ{n}", None)])}\n{head_html if n == 1 else f"<h1>{esc(crumb_items[-1][0])}(ページ{n})</h1>"}'
                 f'{top}{grid(chunk)}{pager_html(base, n, pages)}{extra_bottom if n == pages else ""}')
         kw = {"og_image": og_image} if og_image else {}
-        out[f"{path.strip('/')}/index.html" if path != "/" else "index.html"] = page(cfg, preview, path=path, title=t, description=description, body=body, **kw)
+        out[f"{path.strip('/')}/index.html" if path != "/" else "index.html"] = page(cfg, preview, path=path, title=t, description=desc, body=body, **kw)
     return out
 
 
