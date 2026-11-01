@@ -21,7 +21,7 @@
   "to": "01-07"
  },
  "holes": false,
- "exclude": ["clock-midnight"],
+ "exclude": [],
  "items": [
   [
    "joya-bell",
