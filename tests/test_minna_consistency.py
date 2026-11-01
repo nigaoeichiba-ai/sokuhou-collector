@@ -29,3 +29,19 @@ class SpecAndSeriesAgree(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class LeadsNameShownPictures(unittest.TestCase):
+    def test_no_lead_names_a_subject_that_no_picture_shows_unless_a_person_checked_it(self):
+        import os
+        from sites.minna import leadcheck
+        bad = []
+        for f in sorted((R / "library").glob("*/series.json")):
+            d = json.loads(f.read_text(encoding="utf-8"))
+            items = [it for it in d["items"] if os.path.exists(f.parent / it["file"])]
+            hay = "".join(it["title"] + it["desc"] + " ".join(it["tags"]) for it in items) + d["title"] + " ".join(d.get("tags", []))
+            ok = leadcheck.reviewed().get(d["slug"], {})
+            miss = [w for w in leadcheck.lead_misses(d["lead"], hay) if w not in ok]
+            if miss:
+                bad.append(f"{d['slug']}: {miss}")
+        self.assertEqual(bad, [], "a lead names a subject none of the pictures shows: fix the lead, or record why in content/leadcheck_reviewed.json")

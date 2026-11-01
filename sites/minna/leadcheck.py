@@ -13,6 +13,7 @@ import re
 from pathlib import Path
 
 LIBRARY = Path(__file__).resolve().parent / "library"
+REVIEWED = Path(__file__).resolve().parent / "content" / "leadcheck_reviewed.json"      # {slug: {word: why it is not a miss}}: a person looked at the pictures (2026-11-02)
 
 
 def lead_misses(lead: str, hay: str) -> list[str]:
@@ -24,13 +25,18 @@ def lead_misses(lead: str, hay: str) -> list[str]:
     return [t for t in toks if t not in hay]
 
 
+def reviewed() -> dict:
+    return json.loads(REVIEWED.read_text(encoding="utf-8")) if REVIEWED.exists() else {}
+
+
 def main() -> None:
     rows = []
     for f in sorted(LIBRARY.glob("*/series.json")):
         d = json.loads(f.read_text(encoding="utf-8"))
         items = [it for it in d["items"] if os.path.exists(f.parent / it["file"])]
         hay = "".join(it["title"] + it["desc"] + " ".join(it["tags"]) for it in items) + d["title"] + " ".join(d.get("tags", []))
-        miss = lead_misses(d["lead"], hay)
+        ok = reviewed().get(d["slug"], {})
+        miss = [w for w in lead_misses(d["lead"], hay) if w not in ok]
         if miss:
             rows.append((d["slug"], len(items), miss, " / ".join(it["title"] for it in items)[:160]))
     print(f"{len(rows)} set(s) whose lead names a subject found in none of its pictures")
