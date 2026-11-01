@@ -816,7 +816,7 @@
   "group": "スポーツ",
   "category": "プロ野球",
   "subject": "日本シリーズ第7戦",
-  "what": "決着がつかない場合",
+  "what": "4連勝で決着、開催なし",
   "place": "セ・リーグ本拠地球場",
   "basis": "official",
   "source_url": "https://npb.jp/nippons/2026/information.html",
@@ -829,7 +829,14 @@
   "son_toku": false,
   "region": "セ・リーグ本拠地球場",
   "date_end": null,
-  "note": "出典ページの本文で、日付を機械的に確かめた。"
+  "note": "出典ページの本文で、日付を機械的に確かめた。",
+  "not_held": true,
+  "changes": [
+   {
+    "on": "2026-11-02",
+    "text": "ソフトバンクの4連勝で日本一が決まり、行われなかった"
+   }
+  ]
  },
  {
   "title": "Yahoo!プレイス サービス終了",

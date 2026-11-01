@@ -25,7 +25,7 @@ def queue(entries: list[dict], today: date, days: int = 8, limit: int = 40) -> l
     rows = []
     for e in entries:
         last = e.get("date_end") or e["date"]
-        if not (lo <= last <= hi) or e["precision"] != "day" or e["quiet"] or e.get("result") or e["kind"] not in RESULT_KINDS or e.get("estimated"):
+        if not (lo <= last <= hi) or e["precision"] != "day" or e["quiet"] or e.get("result") or e["kind"] not in RESULT_KINDS or e.get("estimated") or e.get("not_held"):
             continue
         score = (3 if e.get("keep") else 0) + GROUP_WEIGHT.get(e["group"], 0)
         rows.append({"title": e["title"], "date": e["date"], "date_end": e.get("date_end"), "kind": e["kind"], "group": e["group"], "place": e["place"], "keep": bool(e.get("keep")), "score": score})
