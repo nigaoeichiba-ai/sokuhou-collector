@@ -676,10 +676,8 @@ def listing(d: dict, cfg: dict, p: dict, heading: str) -> tuple[str, str, dict |
         if li:
             rest = (f'<section class="rest"><div class="sec-title"><span class="tag">ほかにも</span><h2>ほかの商品</h2></div>{sort_ctl}'
                     f'<ul class="items grid-all">{li}</ul>{freshness(d)}</section>')
-        elif not proposals:
-            rest = freshness(d)
         else:
-            rest = ""
+            rest = freshness(d)      # the proposals alone show prices too, so Rakuten's price-time notice is due (weekly review 2026-11-02: 3 theme pages had none)
     else:
         rest = '<section class="browse"><p class="notice">いま表示できる商品がありません。下の入力欄から楽天市場で探してください。</p></section>'
     gm = gift_map(key, ideas, d["c"]["map_tags"], shown_ideas)
