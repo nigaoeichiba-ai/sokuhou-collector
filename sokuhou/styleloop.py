@@ -926,11 +926,42 @@ SRC_DENY_KEYS = {"query", "queries", "q", "slug", "url", "href", "src", "img", "
                  "regex", "needle", "alias", "aliases", "path", "file", "icon", "color", "lang", "date", "added", "verified", "keywords", "words", "must", "not"}
 
 # The unit tests that must stay green after a change of a site's content (checked after every change of `source`: some fields have a length band, e.g. a reason of 38 to 140 characters).
-SOURCE_CHECKS = {"yorokobu": ["tests.test_yorokobu_content"]}
+SOURCE_CHECKS = {"yorokobu": ["tests.test_yorokobu_content", "tests.test_yorokobu_picks"]}
+# The slow ones (they build the site: about 2 minutes each) run once, after all the changes; when one fails the whole run is taken back (the cheap checks above and the band checks
+# below are what keep that from happening: 2026-11-02 a run passed the content test and then broke the features gate, wording and images tests).
+SOURCE_FINAL_CHECKS = {"yorokobu": ["tests.test_yorokobu_features", "tests.test_yorokobu_wording", "tests.test_yorokobu_images", "tests.test_yorokobu_sitecheck"]}
 
 
-def _checks_pass(site: str) -> tuple[bool, str]:
-    mods = [m for m in SOURCE_CHECKS.get(site, []) if (ROOT / (m.replace(".", "/") + ".py")).exists()]
+def band_problems(site: str, path: Path, before: str, after: str) -> list[str]:
+    """What a change of a content file newly breaks of the site's own limits (the lengths and the gate of a feature article, the sizes of a daily page): the problems of the file after
+    the change that the file did not have before.  Cheap, so it is asked for every change.  An import problem or an unreadable file means 'cannot check' (no problems)."""
+    if site != "yorokobu" or path.suffix.lower() != ".json":
+        return []
+    parts = path.relative_to(ROOT / "sites" / "yorokobu" / "content").parts if (ROOT / "sites" / "yorokobu" / "content") in path.parents else ()
+    if not parts:
+        return []
+    try:
+        old, new = json.loads(before), json.loads(after)
+        if parts[0] == "features":
+            from sites.yorokobu import features
+            day = None
+            dp = ROOT / "sites" / "yorokobu" / "content" / "daily" / f"{new.get('date', '')}.json"
+            if dp.exists():
+                day = json.loads(dp.read_text(encoding="utf-8"))
+            entry = features.entry_of(day, new.get("ref", "")) or {}
+            was = set(features.problems(old, entry))
+            return [x for x in features.problems(new, entry) if x not in was]
+        if parts[0] == "daily":
+            from sites.yorokobu import dailypicks
+            was = set(dailypicks.problems(old))
+            return [x for x in dailypicks.problems(new) if x not in was]
+    except Exception:
+        return []
+    return []
+
+
+def _checks_pass(site: str, checks: dict | None = None) -> tuple[bool, str]:
+    mods = [m for m in (checks or SOURCE_CHECKS).get(site, []) if (ROOT / (m.replace(".", "/") + ".py")).exists()]
     if not mods:
         return True, ""
     r = subprocess.run([sys.executable, "-m", "unittest", *mods], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace")
@@ -1034,7 +1065,8 @@ def apply_source(site: str, dry: bool = False) -> list[tuple[str, str, int]]:
         if all_new != raw:
             put(all_new, True)
             ok, why = _checks_pass(site)
-            if not ok:                                            # one of them breaks a test: back to the start of this file, and try them one by one
+            bands = band_problems(site, p, raw, all_new) if ok else []
+            if not ok or bands:                                            # one of them breaks a test: back to the start of this file, and try them one by one
                 p.write_text(raw, encoding="utf-8", newline="")
                 current = raw
                 for old, new, n in items:
@@ -1043,6 +1075,9 @@ def apply_source(site: str, dry: bool = False) -> list[tuple[str, str, int]]:
                         continue
                     p.write_text(cand, encoding="utf-8", newline="")
                     ok1, why1 = _checks_pass(site)
+                    b1 = band_problems(site, p, current, cand) if ok1 else []
+                    if b1:
+                        ok1, why1 = False, "AssertionError: " + b1[0]
                     if ok1:
                         current = cand
                         done.append((rel, old, n))
@@ -1052,6 +1087,15 @@ def apply_source(site: str, dry: bool = False) -> list[tuple[str, str, int]]:
                         blocked[old] = (lines[0] if lines else "a test fails")[:160]
                 continue
         done += [(rel, old, n) for old, new, n in items]
+    if not dry and done:
+        ok, why = _checks_pass(site, SOURCE_FINAL_CHECKS)
+        if not ok:                                                # the whole run is taken back: the slow tests cannot say which change broke them
+            for f in backup.rglob("*"):
+                if f.is_file():
+                    shutil.copy2(f, ROOT / f.relative_to(backup))
+            lines = [x for x in why.splitlines() if x.startswith(("AssertionError", "FAIL:", "ERROR:"))]
+            print(f"TAKEN BACK: a site test fails after the run ({(lines[0] if lines else why.strip()[-160:])[:200]}); nothing was put into the source", file=sys.stderr)
+            return []
     if not dry and (done or blocked):
         entries = load_rewrites(site)
         replaced = {o for _, o, _ in done}
