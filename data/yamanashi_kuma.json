@@ -1,12 +1,13 @@
 {
- "as_of": "2026-10-29",
+ "as_of": "2026-11-02",
  "bad_coords": 1,
  "credit": "出典:「ツキノワグマ出没・目撃情報(令和8年度)」(山梨県)(https://catalog.dataplatform-yamanashi.jp/dataset/kuma1)を加工して作成(山梨県オープンデータ利用規約に基づく)",
- "fetched_at": "2026-10-31T06:17:25.400019+09:00",
+ "fetched_at": "2026-11-03T06:18:01.309824+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
-   "10": 75,
+   "10": 83,
+   "11": 2,
    "4": 16,
    "5": 33,
    "6": 53,
@@ -16,6 +17,66 @@
   }
  },
  "sightings": [
+  {
+   "city": "身延町",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.3165,
+   "lon": 138.4388,
+   "observed_at": "2026-11-02T06:30:00+09:00",
+   "place": "横根中地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "身延町",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.3224,
+   "lon": 138.4534,
+   "observed_at": "2026-11-01T14:50:00+09:00",
+   "place": "大島地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "身延町",
+   "count": 2,
+   "kind": "目撃",
+   "lat": 35.3924,
+   "lon": 138.4538,
+   "observed_at": "2026-10-30T18:40:00+09:00",
+   "place": "帯金地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "都留市",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.5188,
+   "lon": 138.9326,
+   "observed_at": "2026-10-30T16:30:00+09:00",
+   "place": "大野地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "鳴沢村",
+   "count": 3,
+   "kind": "目撃",
+   "lat": 35.487,
+   "lon": 138.6856,
+   "observed_at": "2026-10-30",
+   "place": "字物見処",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "大月市",
+   "count": 2,
+   "kind": "目撃",
+   "lat": 35.6066,
+   "lon": 138.9354,
+   "observed_at": "2026-10-29T18:30:00+09:00",
+   "place": "大月町花咲",
+   "species": "ツキノワグマ"
+  },
   {
    "city": "南部町",
    "count": 4,
@@ -27,13 +88,43 @@
    "species": "ツキノワグマ"
   },
   {
+   "city": "大月市",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.6387,
+   "lon": 138.9543,
+   "observed_at": "2026-10-29T17:00:00+09:00",
+   "place": "七保町林",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "大月市",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.6039,
+   "lon": 138.9027,
+   "observed_at": "2026-10-29T15:45:00+09:00",
+   "place": "大月町真木",
+   "species": "ツキノワグマ"
+  },
+  {
    "city": "上野原市",
    "count": 1,
    "kind": "目撃",
    "lat": 35.6044,
    "lon": 139.1243,
    "observed_at": "2026-10-28T19:00:00+09:00",
-   "place": "島田地区鶴島地内",
+   "place": "島田地区\n鶴島地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "大月市",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.6068,
+   "lon": 139.0598,
+   "observed_at": "2026-10-28T16:30:00+09:00",
+   "place": "梁川町塩瀬",
    "species": "ツキノワグマ"
   },
   {
@@ -54,6 +145,16 @@
    "lon": 138.4975,
    "observed_at": "2026-10-28T05:30:00+09:00",
    "place": "東南湖地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "大月市",
+   "count": 2,
+   "kind": "目撃",
+   "lat": 35.6054,
+   "lon": 138.933,
+   "observed_at": "2026-10-27T22:20:00+09:00",
+   "place": "大月町花咲",
    "species": "ツキノワグマ"
   },
   {
@@ -2973,7 +3074,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 297,
+ "sightings_in_window": 307,
  "source": "yamanashi",
  "source_file": [
   "https://catalog.dataplatform-yamanashi.jp/dataset/bed5301d-75b2-4976-8687-2b2721ae143a/resource/89d2478e-e29e-46e3-9ad3-19bf44822d4d/download/2026kumadata.csv",
