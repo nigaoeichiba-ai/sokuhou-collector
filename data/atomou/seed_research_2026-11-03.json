@@ -1,0 +1,26 @@
+[
+  {
+    "title": "KEIRINグランプリ2026 前夜祭",
+    "date": "2026-12-16",
+    "precision": "day",
+    "kind": "開催",
+    "group": "スポーツ",
+    "category": "競輪",
+    "subject": "競輪",
+    "what": "GP前夜祭",
+    "place": "東京都・東京プリンスホテル",
+    "source_url": "https://gp2026.tairakeirin.com/",
+    "source_quote": "12月16日（水）、東京プリンスホテルにて前夜祭を開催します。",
+    "source_url2": "https://rin-pedia.com/other/keiringp2026_zenyasai",
+    "source_quote2": "12月16日に前夜祭を開催",
+    "basis": "press",
+    "ad_ok": false,
+    "checked_on": "2026-11-03",
+    "verified": true,
+    "sensitivity": "none",
+    "son_toku": false,
+    "region": "東京都・東京プリンスホテル",
+    "date_end": null,
+    "note": "2つの報道ページの本文で、日付を機械的に確かめた。"
+  }
+]
