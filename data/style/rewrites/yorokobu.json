@@ -3638,7 +3638,8 @@
    "by": "editor",
    "why": "口実という表現を改める",
    "added": "2026-10-27",
-   "edit": true
+   "edit": true,
+   "source_blocked": "2026-11-02: AssertionError: Lists differ: [('homecoming-grandmother', '�����̘a�َq')] != []"
   },
   {
    "from": "冷房や朝晩の冷えに羽織りやすく、軽いので持ち運びの負担も少ない品です。",
@@ -3647,7 +3648,8 @@
    "by": "editor",
    "why": "抽象語を避けて二文に分割",
    "added": "2026-10-27",
-   "edit": true
+   "edit": true,
+   "source_blocked": "2026-11-02: AssertionError: Lists differ: [('homecoming-grandmother', '�y�₩�X�g�[��')] != []"
   },
   {
    "from": "和菓子は硬さ、甘さ、個包装を確認し、祖母が開けやすい袋や箱のものを選ぶ。",
@@ -3732,7 +3734,8 @@
    "by": "editor",
    "why": "雰囲気語を削って具体化",
    "added": "2026-10-27",
-   "edit": true
+   "edit": true,
+   "source_blocked": "2026-11-02: AssertionError: Lists differ: [('homecoming-grandmother', '���Ԃ�ȉ�')] != []"
   },
   {
    "from": "祖母へのほかのイベント",
@@ -4150,7 +4153,8 @@
    "by": "editor",
    "why": "不自然な言い回しを修正",
    "added": "2026-10-30",
-   "edit": true
+   "edit": true,
+   "source_blocked": "2026-11-02: AssertionError: Lists differ: [('homecoming-father', 'reason', 29)] != []"
   },
   {
    "from": "地元菓子は日持ちと崩れにくさを見て、電車や飛行機の移動でも箱が傷みにくいものにする。",
