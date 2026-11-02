@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-01T21:16:26.168432+00:00",
+ "fetched_at": "2026-11-02T21:17:15.925368+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -229,6 +229,18 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "【経済産業省】ものづくり・商業・サービス生産性向上促進補助金（20次締切）"
+  },
+  {
+   "acceptance_end_datetime": "2026-12-15T08:00:00.000Z",
+   "acceptance_start_datetime": "2026-11-02T08:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003tCA5UAM",
+   "id": "a0WfQ000003tCA5UAM",
+   "institution_name": "小規模事業者持続化補助金＜一般型 災害支援枠＞",
+   "name": "S-00009997",
+   "subsidy_max_limit": 2000000,
+   "target_area_search": "熊本県",
+   "target_number_of_employees": "20名以下",
+   "title": "⼩規模事業者持続化補助⾦＜⼀般型 災害支援枠（令和8年熊本地震）＞2次公募【商⼯会地区】"
   },
   {
    "acceptance_end_datetime": "2027-03-31T07:00:00.000Z",
@@ -1467,6 +1479,18 @@
    "title": "交通システムの省CO2 化に向けた設備整備事業（鉄道事業等におけるネットワーク型低炭素化促進事業）（三次公募）"
   },
   {
+   "acceptance_end_datetime": "2026-11-09T14:59:00.000Z",
+   "acceptance_start_datetime": "2026-08-16T15:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZi6MAH",
+   "id": "a0WJ200000CDZi6MAH",
+   "institution_name": "高度人材インターンシップ受入支援費補助金",
+   "name": "S-00009232",
+   "subsidy_max_limit": 5000,
+   "target_area_search": "東京都",
+   "target_number_of_employees": "300名以下",
+   "title": "令和8年度 高度人材インターンシップ受入支援費補助金"
+  },
+  {
    "acceptance_end_datetime": "2027-03-31T08:00:00.000Z",
    "acceptance_start_datetime": "2026-04-01T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZz6MAH",
@@ -1767,6 +1791,18 @@
    "title": "令和8年度東京都臨床調査個人票電子化等推進事業補助金"
   },
   {
+   "acceptance_end_datetime": "2026-12-15T08:00:00.000Z",
+   "acceptance_start_datetime": "2026-11-02T08:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003iibVUAQ",
+   "id": "a0WfQ000003iibVUAQ",
+   "institution_name": "小規模事業者持続化補助金＜一般型 災害支援枠＞",
+   "name": "S-00009935",
+   "subsidy_max_limit": 2000000,
+   "target_area_search": "熊本県",
+   "target_number_of_employees": "20名以下",
+   "title": "小規模事業者持続化補助金＜一般型 災害支援枠（令和８年熊本地震）＞２次公募【商工会議所地区】"
+  },
+  {
    "acceptance_end_datetime": "2027-01-29T07:30:00.000Z",
    "acceptance_start_datetime": "2026-10-16T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDVn4MAH",
@@ -1863,5 +1899,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 155
+ "total": 158
 }
