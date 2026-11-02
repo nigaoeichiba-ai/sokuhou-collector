@@ -58,6 +58,15 @@ class OnePlacePerProductTest(unittest.TestCase):
         self.assertNotIn('class="items grid-all"', html)
         self.assertNotIn('class="rest"', html)
         self.assertNotIn("data-sort", html)             # nothing to sort
+        self.assertIn('class="fresh"', html)            # 2026-11-02: the proposals show prices, so the price-time notice must stand (3 live theme pages had none)
+
+    def test_every_gift_and_theme_page_with_product_cards_carries_the_price_time_notice(self):
+        pages = [p for sub in ("gift", "theme") for p in (self.root / sub).glob("*/index.html")]
+        self.assertGreaterEqual(len(pages), 1)
+        for f in pages:
+            html = f.read_text(encoding="utf-8")
+            if 'class="proposals"' in html:           # the notice must come after the proposals (the top picks' own notice stands above them and does not cover them)
+                self.assertIn('class="fresh"', html[html.index('class="proposals"'):], f.parent.name)
 
     def test_a_recipient_page_does_not_repeat_the_products_of_its_liked_rows(self):
         for f in (self.root / "for").glob("*/index.html"):
