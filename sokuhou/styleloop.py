@@ -258,33 +258,41 @@ def added_words(old: str, new: str) -> list[str]:
     return out
 
 
-_SEARCH_KEYS = ("query", "title", "name")
-_search_texts_cache: list[str] | None = None
+_SEARCH_KEYS = ("query", "queries", "keywords")            # the search phrases of the content (ideas, pairs, recipients, compare, themes ...): the words a search and the links to a search use
+_THEME_KEYS = ("title", "name")                              # themes.json: the title and name of a theme are its search page
+_search_texts_cache: dict = {}
 
 
 def search_texts() -> list[str]:
-    """The yorokobu theme texts a search depends on (the search phrase, the title, the name): a rewording must not touch them (reported by the desk, 2026-10-31)."""
-    global _search_texts_cache
-    if _search_texts_cache is None:
-        out: list[str] = []
-        try:
-            data = json.loads((ROOT / "sites" / "yorokobu" / "content" / "themes.json").read_text(encoding="utf-8"))
-        except (OSError, ValueError):
-            data = None
+    """The yorokobu texts a search depends on: every search phrase of sites/yorokobu/content (query / queries / keywords, which come up as link texts and as search words) and the
+    title and name of the themes.  A rewording must not touch them (reported by the desk 2026-10-31 for the themes; 2026-11-02 the judge took the keywords of ideas.json: 9 links)."""
+    key = str(ROOT)
+    if key not in _search_texts_cache:
+        out: set[str] = set()
+        base = ROOT / "sites" / "yorokobu" / "content"
 
-        def walk(x, key=""):
+        def walk(x, k, keys):
             if isinstance(x, dict):
-                for k, v in x.items():
-                    walk(v, k)
+                for kk, v in x.items():
+                    walk(v, kk, keys)
             elif isinstance(x, list):
                 for v in x:
-                    walk(v, key)
-            elif isinstance(x, str) and key in _SEARCH_KEYS:
-                out.append(x)
+                    walk(v, k, keys)
+            elif isinstance(x, str) and k in keys and x.strip():
+                out.add(norm(x))
 
-        walk(data)
-        _search_texts_cache = out
-    return _search_texts_cache
+        for f in sorted(base.glob("*.json")) if base.is_dir() else []:
+            try:
+                data = json.loads(f.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+            walk(data, "", _SEARCH_KEYS + (_THEME_KEYS if f.name == "themes.json" else ()))
+        _search_texts_cache[key] = sorted(out)
+    return _search_texts_cache[key]
+
+
+def is_search_text(site: str, old: str) -> bool:
+    return site == "yorokobu" and len(old) >= 4 and any(old in t for t in search_texts())
 
 
 def check_rewrite(old: str, new: str, site: str | None = None, kind: str = "heading", small_edit: bool = True, new_words: bool = True) -> list[str]:
@@ -293,7 +301,7 @@ def check_rewrite(old: str, new: str, site: str | None = None, kind: str = "head
     new = new.strip()
     if not new or new == old:
         return ["empty or unchanged"]
-    if site == "yorokobu" and len(old) >= 4 and any(old in t for t in search_texts()):
+    if is_search_text(site or "", old):
         return ["a search phrase, title or name of a theme: not reworded (SEO, owner policy: no change without evidence)"]
     if re.search(r"[<>\n]|https?:|\*\*", new):
         bad.append("markup, newline or a URL in the new text")
@@ -915,7 +923,18 @@ def source_files(site: str) -> list[Path]:
 
 # JSON keys whose values are not page text: search words, addresses, ids, tags ... (a rewording of a search query would change what the page does)
 SRC_DENY_KEYS = {"query", "queries", "q", "slug", "url", "href", "src", "img", "image", "id", "code", "ref", "key", "keys", "tag", "tags", "type", "kind", "class", "k", "match", "pattern",
-                 "regex", "needle", "alias", "aliases", "path", "file", "icon", "color", "lang", "date", "added", "verified"}
+                 "regex", "needle", "alias", "aliases", "path", "file", "icon", "color", "lang", "date", "added", "verified", "keywords", "words", "must", "not"}
+
+# The unit tests that must stay green after a change of a site's content (checked after every change of `source`: some fields have a length band, e.g. a reason of 38 to 140 characters).
+SOURCE_CHECKS = {"yorokobu": ["tests.test_yorokobu_content"]}
+
+
+def _checks_pass(site: str) -> tuple[bool, str]:
+    mods = [m for m in SOURCE_CHECKS.get(site, []) if (ROOT / (m.replace(".", "/") + ".py")).exists()]
+    if not mods:
+        return True, ""
+    r = subprocess.run([sys.executable, "-m", "unittest", *mods], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    return r.returncode == 0, (r.stderr or r.stdout)[-400:]
 
 
 def _under_denied_key(raw: str, old: str) -> bool:
@@ -963,7 +982,7 @@ def _replace(raw: str, old: str, new: str, is_json: bool) -> str:
 
 def source_plan(site: str) -> list[tuple[Path, str, str, int]]:
     plan = []
-    entries = [e for e in load_rewrites(site) if not e.get("in_source")]
+    entries = [e for e in load_rewrites(site) if not e.get("in_source") and not e.get("source_blocked") and not is_search_text(site, e["from"])]
     for p in source_files(site):
         try:
             raw = p.read_text(encoding="utf-8")
@@ -980,35 +999,73 @@ def apply_source(site: str, dry: bool = False) -> list[tuple[str, str, int]]:
     plan = source_plan(site)
     backup = ROOT / "out" / "styleloop_backup" / f"{site}-{dt.datetime.now():%Y%m%d-%H%M%S}"
     done = []
+    blocked: dict[str, str] = {}
     by_file: dict[Path, list] = defaultdict(list)
     for p, old, new, n in plan:
         by_file[p].append((old, new, n))
     for p, items in by_file.items():
         raw = p.read_text(encoding="utf-8")
         is_json = p.suffix.lower() == ".json"
-        new_raw = raw
-        for old, new, n in items:
-            new_raw = _replace(new_raw, old, new, is_json)
-        if is_json:
+        rel = str(p.relative_to(ROOT)).replace("\\", "/")
+
+        def valid(text: str) -> bool:
+            if not is_json:
+                return True
             try:
-                json.loads(new_raw)                               # a rewording with a quote or a backslash must not break the data file
+                json.loads(text)                                  # a rewording with a quote or a backslash must not break the data file
+                return True
             except ValueError:
-                continue
+                return False
+
+        def put(text: str, first: bool) -> None:
+            if first:
+                (backup / p.relative_to(ROOT)).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(p, backup / p.relative_to(ROOT))
+            p.write_text(text, encoding="utf-8", newline="")
+
+        all_new = raw
         for old, new, n in items:
-            done.append((str(p.relative_to(ROOT)).replace("\\", "/"), old, n))
-        if not dry and new_raw != raw:
-            rel = p.relative_to(ROOT)
-            (backup / rel).parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(p, backup / rel)
-            p.write_text(new_raw, encoding="utf-8", newline="")
-    if not dry and done:
+            all_new = _replace(all_new, old, new, is_json)
+        if not valid(all_new):
+            continue
+        if dry:
+            done += [(rel, old, n) for old, new, n in items]
+            continue
+        if all_new != raw:
+            put(all_new, True)
+            ok, why = _checks_pass(site)
+            if not ok:                                            # one of them breaks a test: back to the start of this file, and try them one by one
+                p.write_text(raw, encoding="utf-8", newline="")
+                current = raw
+                for old, new, n in items:
+                    cand = _replace(current, old, new, is_json)
+                    if cand == current or not valid(cand):
+                        continue
+                    p.write_text(cand, encoding="utf-8", newline="")
+                    ok1, why1 = _checks_pass(site)
+                    if ok1:
+                        current = cand
+                        done.append((rel, old, n))
+                    else:
+                        p.write_text(current, encoding="utf-8", newline="")
+                        lines = [x for x in why1.splitlines() if x.startswith(("AssertionError", "FAIL:", "ERROR:"))]
+                        blocked[old] = (lines[0] if lines else "a test fails")[:160]
+                continue
+        done += [(rel, old, n) for old, new, n in items]
+    if not dry and (done or blocked):
         entries = load_rewrites(site)
         replaced = {o for _, o, _ in done}
+        today = dt.date.today().isoformat()
         for e in entries:
             if e["from"] in replaced:
                 e["in_source"] = True
+            elif e["from"] in blocked:
+                e["source_blocked"] = f"{today}: {blocked[e['from']]}"
         save_rewrites(site, entries)
-        (ROOT / "out" / "styleloop_last_backup.txt").write_text(str(backup), encoding="utf-8")
+        if done:
+            (ROOT / "out" / "styleloop_last_backup.txt").write_text(str(backup), encoding="utf-8")
+    for old, why in blocked.items():
+        print(f"not put into the source (a test of the site fails): 「{old[:40]}」 {why}", file=sys.stderr)
     return done
 
 
