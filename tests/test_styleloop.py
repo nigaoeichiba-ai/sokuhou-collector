@@ -701,6 +701,64 @@ class SearchTexts(unittest.TestCase):
             self.assertTrue(e[ok_reason].get("in_source"))
             self.assertEqual(sl.apply_source("yorokobu", dry=True), [])                                        # the blocked line is not tried again
 
+    FEATURE = Path(__file__).resolve().parents[1] / "sites" / "yorokobu" / "content" / "features" / "montblanc-morin.json"
+
+    def feature_root(self, d):
+        c = Path(d) / "sites" / "yorokobu" / "content" / "features"
+        c.mkdir(parents=True)
+        raw = self.FEATURE.read_text(encoding="utf-8")
+        (c / "montblanc-morin.json").write_text(raw, encoding="utf-8")
+        return c / "montblanc-morin.json", raw
+
+    def test_a_rewording_that_takes_a_feature_text_out_of_its_length_band_is_a_problem(self):
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "ROOT", Path(d)):
+            path, raw = self.feature_root(d)
+            data = json.loads(raw)
+            first = data["reading"][0]["p"]
+            data["reading"][0]["p"] = first[:60] + "。"                                               # 61 characters: the band is 140-520
+            short = json.dumps(data, ensure_ascii=False, indent=1)
+            self.assertEqual(sl.band_problems("yorokobu", path, raw, raw), [])                      # no change: nothing new
+            bad = sl.band_problems("yorokobu", path, raw, short)
+            self.assertTrue(any("reading needs 3-5 blocks" in x for x in bad), bad)
+            self.assertEqual(sl.band_problems("minna", path, raw, short), [])                       # another site: not this check
+
+    def test_source_does_not_write_a_feature_rewording_that_leaves_the_band_but_the_old_way_did(self):
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "ROOT", Path(d)), mock.patch.object(sl, "DATA", Path(d) / "data" / "style"):
+            path, raw = self.feature_root(d)
+            first = json.loads(raw)["reading"][0]["p"]
+            sl.add_entry("yorokobu", first, first[:60] + "。", force=True, today="2026-11-02")
+            with mock.patch.object(sl, "band_problems", return_value=[]):                              # the old way: only the (here absent) tests were asked
+                sl.apply_source("yorokobu")
+            self.assertNotEqual(path.read_text(encoding="utf-8"), raw)                               # ... and the short text was written
+            path.write_text(raw, encoding="utf-8")
+            entries = sl.load_rewrites("yorokobu")
+            for e in entries:
+                e.pop("in_source", None)
+            sl.save_rewrites("yorokobu", entries)
+            with contextlib.redirect_stderr(io.StringIO()):
+                done = sl.apply_source("yorokobu")
+            self.assertEqual(done, [])
+            self.assertEqual(path.read_text(encoding="utf-8"), raw)                                   # now: refused and the file is as it was
+            self.assertIn("source_blocked", sl.load_rewrites("yorokobu")[0])
+
+    def test_the_slow_site_tests_run_once_at_the_end_and_a_failure_takes_the_whole_run_back(self):
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "ROOT", Path(d)), mock.patch.object(sl, "DATA", Path(d) / "data" / "style"):
+            c = Path(d) / "sites" / "yorokobu" / "content"
+            c.mkdir(parents=True)
+            (Path(d) / "tests").mkdir()
+            (Path(d) / "tests" / "__init__.py").write_text("", encoding="utf-8")
+            (Path(d) / "tests" / "test_final.py").write_text(chr(10).join(["import unittest", "class T(unittest.TestCase):", "    def test_x(self):", "        self.assertTrue(False, 'the site test fails')", ""]), encoding="utf-8")
+            text = "冬の居間やこたつで膝を冷やさずに過ごせて、荷物にならず新年の集まりで手渡しやすい実用品です。"
+            (c / "a.json").write_text(json.dumps({"why": text}, ensure_ascii=False), encoding="utf-8")
+            sl.add_entry("yorokobu", text, "冬の居間やこたつで膝を冷やさずに使えて、荷物にならず新年の集まりで渡しやすい実用品です。", force=True, today="2026-11-02")
+            before = (c / "a.json").read_text(encoding="utf-8")
+            with mock.patch.dict(sl.SOURCE_FINAL_CHECKS, {"yorokobu": ["tests.test_final"]}), contextlib.redirect_stderr(io.StringIO()) as err:
+                done = sl.apply_source("yorokobu")
+            self.assertEqual(done, [])
+            self.assertEqual((c / "a.json").read_text(encoding="utf-8"), before)
+            self.assertIn("TAKEN BACK", err.getvalue())
+            self.assertFalse(any(e.get("in_source") for e in sl.load_rewrites("yorokobu")))
+
     def test_other_text_and_other_sites_are_not_blocked(self):
         self.assertFalse(any("search phrase" in b for b in sl.check_rewrite("詳しく読む", "注目の商品", "yorokobu", "heading")))
         self.assertFalse(any("search phrase" in b for b in sl.check_rewrite("ソファ飯", "ソファで食事", "minna", "heading")))
