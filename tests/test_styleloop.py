@@ -3,6 +3,8 @@
 Negative tests first: a rewording that changes a number / a name / the meaning must be refused; a judge that fails must not mark anything as fine; the dictionary must not
 touch links, scripts or text inside a longer sentence (for a short original).
 """
+import contextlib
+import io
 import json
 import tempfile
 import unittest
@@ -649,6 +651,55 @@ class SearchTexts(unittest.TestCase):
         for old, new in [("お茶 ギフト", "お茶のギフト"), ("ソファ飯", "ソファで食事"),
                          ("宅配で割れにくい 布・革・金属の贈り物", "宅配で割れにくい布・革・金属の贈り物")]:
             self.assertTrue(any("search phrase" in b for b in sl.check_rewrite(old, new, "yorokobu", "heading")), old)
+
+    def test_the_search_words_of_ideas_and_recipients_are_never_reworded_either(self):
+        # 2026-11-02: the judge took 9 keywords of ideas.json (kind=link, e.g. 「名入れ カップ」) because only themes.json was read; the old condition is kept here to show it misses them
+        with tempfile.TemporaryDirectory() as d:
+            c = Path(d) / "sites" / "yorokobu" / "content"
+            c.mkdir(parents=True)
+            (c / "themes.json").write_text(json.dumps([{"query": "お茶 ギフト", "title": "お茶の贈り物", "name": "お茶"}], ensure_ascii=False), encoding="utf-8")
+            (c / "ideas.json").write_text(json.dumps({"p": {"keywords": ["名入れ カップ", "キッズ 時計"], "ideas": [{"query": "入浴剤 香り", "why": "香りが選べます。"}]}}, ensure_ascii=False), encoding="utf-8")
+            (c / "recipients.json").write_text(json.dumps({"r": {"queries": ["入浴剤 香り控えめ"]}}, ensure_ascii=False), encoding="utf-8")
+            with mock.patch.object(sl, "ROOT", Path(d)):
+                themes_only = [x["query"] for x in json.loads((c / "themes.json").read_text(encoding="utf-8"))]
+                for old in ("名入れ カップ", "キッズ 時計", "入浴剤 香り", "入浴剤 香り控えめ"):
+                    self.assertFalse(any(old in t for t in themes_only), old)                                    # the old condition: not found, so the rewording was taken
+                    self.assertTrue(any("search phrase" in b for b in sl.check_rewrite(old, old.replace(" ", ""), "yorokobu", "link")), old)
+                self.assertTrue(any("search phrase" in b for b in sl.check_rewrite("お茶の贈り物", "お茶のおくりもの", "yorokobu", "heading")))
+                self.assertFalse(any("search phrase" in b for b in sl.check_rewrite("香りが選べます。", "香りを選べます。", "yorokobu", "para")))
+
+    def test_source_leaves_search_words_alone_and_undoes_a_change_that_breaks_a_test(self):
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(sl, "ROOT", Path(d)), mock.patch.object(sl, "DATA", Path(d) / "data" / "style"):
+            c = Path(d) / "sites" / "yorokobu" / "content"
+            c.mkdir(parents=True)
+            (Path(d) / "tests").mkdir()
+            nl = chr(10)
+            (Path(d) / "tests" / "__init__.py").write_text("", encoding="utf-8")
+            (Path(d) / "tests" / "test_yorokobu_content.py").write_text(nl.join([
+                "import json, unittest, pathlib", "class T(unittest.TestCase):", "    def test_reason_length(self):",
+                "        d = json.loads(pathlib.Path('sites/yorokobu/content/pairs.json').read_text(encoding='utf-8'))",
+                "        self.assertTrue(all(len(r) >= 38 for r in d['reasons']))", ""]), encoding="utf-8")
+            long_reason = "冬の居間やこたつで膝を冷やさずに過ごせて、荷物にならず新年の集まりで手渡しやすい実用品です。"
+            ok_reason = "個包装の菓子折りは、来客が増える正月の茶菓子に回しやすく、食後に少しずつ出せて人数が多い日にも便利です。"
+            (c / "pairs.json").write_text(json.dumps({"reasons": [long_reason, ok_reason], "keywords": ["名入れ カップ"]}, ensure_ascii=False, indent=1), encoding="utf-8")
+            (c / "ideas.json").write_text(json.dumps({"keywords": ["名入れ カップ"]}, ensure_ascii=False), encoding="utf-8")
+            sl.add_entry("yorokobu", long_reason, "冬の居間で使えます。", force=True, today="2026-11-02")                 # makes a reason shorter than the band
+            sl.add_entry("yorokobu", ok_reason, "個包装の菓子折りは、来客が増える正月の茶菓子に回しやすく、食後に少しずつ出せるので、人数が多い日にも便利です。", force=True, today="2026-11-02")
+            sl.add_entry("yorokobu", "名入れ カップ", "名入れカップ", force=True, today="2026-11-02", kind="link")
+            before = (c / "ideas.json").read_text(encoding="utf-8")
+            with contextlib.redirect_stderr(io.StringIO()):
+                done = sl.apply_source("yorokobu")
+            data = json.loads((c / "pairs.json").read_text(encoding="utf-8"))
+            self.assertEqual(data["reasons"][0], long_reason)                                                   # undone: it broke the unit test
+            self.assertIn("膝を冷やさず", data["reasons"][0])
+            self.assertIn("ので、人数が多い日", data["reasons"][1])                                                # the harmless one stayed
+            self.assertEqual(data["keywords"], ["名入れ カップ"])                                                # a search word is left alone
+            self.assertEqual((c / "ideas.json").read_text(encoding="utf-8"), before)
+            self.assertEqual([o for _, o, _ in done], [ok_reason])
+            e = {x["from"]: x for x in sl.load_rewrites("yorokobu")}
+            self.assertIn("source_blocked", e[long_reason])
+            self.assertTrue(e[ok_reason].get("in_source"))
+            self.assertEqual(sl.apply_source("yorokobu", dry=True), [])                                        # the blocked line is not tried again
 
     def test_other_text_and_other_sites_are_not_blocked(self):
         self.assertFalse(any("search phrase" in b for b in sl.check_rewrite("詳しく読む", "注目の商品", "yorokobu", "heading")))
