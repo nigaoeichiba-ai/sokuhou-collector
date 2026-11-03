@@ -7,7 +7,8 @@ from collections import Counter
 from datetime import date
 from pathlib import Path
 
-from .common import TODAY, d, jp, md, left, in_days, CHECKED
+from . import common
+from .common import today_j, d, jp, md, left, in_days, CHECKED
 from .facts import EVENTS, TOEIC
 from .pages_exam import RATES, official, drow, dates_table, n
 
@@ -191,7 +192,7 @@ def results() -> dict:
         f"次の合格発表は、{md('2026-11-25')}の宅建士試験です。続いて、{md('2027-01-13')}に診断士の2次試験、{md('2027-01-27')}に行政書士試験です。",
         [
             {"h2": "これから、と最近の合格発表", "paras": [
-                f"今日({jp('2026-11-03')})のいちばん近い発表は、{jp('2026-11-25')}の宅建士試験で、あと{left('2026-11-25')}日です。宅建士試験の合格発表は、受験した年の11月下旬で、前の年は{jp(RATES['takken'][0]['announce_date'])}でした。",
+                f"今日({jp(common.TODAY)})のいちばん近い発表は、{jp('2026-11-25')}の宅建士試験で、あと{left('2026-11-25')}日です。宅建士試験の合格発表は、受験した年の11月下旬で、前の年は{jp(RATES['takken'][0]['announce_date'])}でした。",
                 f"行政書士試験は{jp('2027-01-27')}で、前の年度は{jp(RATES['gyosei'][0].get('announce_date') or '2026-01-28')}でした。介護福祉士国家試験は{jp('2027-03-23')}、看護師国家試験は{jp('2027-03-24')}で、2つとも3月の下旬です。"],
              "table": {"caption": "合格発表の日(今回と前回)", "cols": ["試験", "今回の発表", "今日から", "前回の発表", "前回との日数の差"], "num_cols": [4], "rows": rows,
                        "note": "前回の発表日は、公表資料で確かめられたものだけを載せています。—は確認できなかったものです。"}},
