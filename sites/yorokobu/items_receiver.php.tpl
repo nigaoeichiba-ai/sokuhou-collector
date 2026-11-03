@@ -4,6 +4,7 @@
 // only what a page needs for its own purpose, a few products at a time:
 //   ?c=<code>,<code>,...        up to 24 products by their code           -> {"<code>": {"n","p","i","u"}, ...}   (only the codes found)
 //   ?r=<recipient>&t=<tier>[&x=<link of the last one>]    one product at random for the gacha   -> {"row": [name, price, image, link, reviews, rating x10]} or {"row": null}
+//   ?pk=<pair key>&t=<tier>[&n=3&k=<kind no.>&exc=<kind nos.>&x=<links shown last>]   up to 3 products of different ideas for a pair (occasion x recipient) -> {"rows": [[idea no., kind no., line, price, picture, link, reviews, rating x10], ...]}
 //   ?g=<group>[&min=&max=&gender=&n=]   up to 12 products of an interest group that fit the budget  -> {"items": [...]}
 // Same-site requests only, and a daily limit per sender.
 date_default_timezone_set('Asia/Tokyo');
@@ -57,6 +58,34 @@ if (isset($_GET['c'])) {
     $res = array();
     foreach ($codes as $c) { if (isset($db[$c])) { $res[$c] = $db[$c]; } }
     out(200, (object)$res);
+}
+if (isset($_GET['pk'], $_GET['t'])) {
+    $pk = $_GET['pk']; $t = $_GET['t'];
+    if (!slug($pk) || !slug($t)) { out(400); }
+    $n = max(1, min(3, (int)($_GET['n'] ?? 3)));
+    $take = yen_or_null($_GET['k'] ?? null);
+    $exc = array();
+    foreach (explode(',', (string)($_GET['exc'] ?? '')) as $e) { if (preg_match('/^\d{1,2}$/', $e) === 1) { $exc[] = (int)$e; } }
+    $shown = array();
+    foreach (explode(',', (string)($_GET['x'] ?? '')) as $x) { if ($x !== '' && strlen($x) <= 400) { $shown[] = $x; } }
+    $db = load_db($priv . '/yorokobu_gacha_db.json');
+    $rows = isset($db['pair'][$pk]['tiers'][$t]) && is_array($db['pair'][$pk]['tiers'][$t]) ? $db['pair'][$pk]['tiers'][$t] : array();
+    $by = array();
+    foreach ($rows as $r) {
+        if (in_array($r[1], $exc, true) || ($take !== null && $r[1] !== $take)) { continue; }
+        $by[$r[0]][] = $r;
+    }
+    $ideas = array_keys($by);
+    shuffle($ideas);
+    $res = array();
+    foreach ($ideas as $i) {
+        $fresh = array();
+        foreach ($by[$i] as $r) { if (!in_array($r[5], $shown, true)) { $fresh[] = $r; } }
+        if (!count($fresh)) { $fresh = $by[$i]; }
+        $res[] = $fresh[random_int(0, count($fresh) - 1)];
+        if (count($res) >= $n) { break; }
+    }
+    out(200, array('rows' => $res));
 }
 if (isset($_GET['r'], $_GET['t'])) {
     $r = $_GET['r']; $t = $_GET['t'];

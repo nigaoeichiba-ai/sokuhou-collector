@@ -446,6 +446,15 @@ main.wrap > h1:first-child { margin-top: 36px; }
 .gacha-form label { flex: 1 1 180px; min-width: 0; }
 .gacha-form select { width: 100%; }
 .gacha-msg { margin: 14px 2px; font-weight: 500; min-height: 1.6em; }
+.gacha-out { display: grid; gap: 16px; }
+.gacha-kind { margin: 0 0 4px; font: 700 .72rem var(--num); letter-spacing: .08em; color: var(--muted); }
+.gacha-why { margin: 8px 0 12px; font-size: .9rem; line-height: 1.85; color: var(--ink2); }
+.gacha-avoid { flex: 1 1 100%; }
+.gacha-avoid summary { cursor: pointer; font-weight: 700; font-size: .85rem; }
+.gacha-avoid div { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; }
+.gacha-chk { display: inline-flex !important; grid-auto-flow: column; align-items: center; gap: 6px !important; font-weight: 500 !important; }
+.gacha-amazon { margin-top: 28px; }
+.gacha-amz-h { font-size: 1.05rem; margin: 0 0 6px; }
 .gacha-card { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 22px; padding: 20px; background: #fff; border-radius: 22px; box-shadow: var(--shadow); }
 .gacha-card img { width: 100%; max-width: 128px; height: auto; border-radius: 14px; display: block; }   /* never past the 128px Rakuten gives */
 .gacha-body h2, .gacha-name { margin: 0 0 6px; font-size: 1.1rem; font-weight: 500; overflow-wrap: anywhere; }

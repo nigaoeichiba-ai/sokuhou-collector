@@ -489,37 +489,72 @@
   }
 
   function yen(n) { return Math.round(n).toLocaleString("ja-JP") + "円"; }
-  // ---------------------------------------------------------------- おまかせガチャ: one product at random (data is fetched when the page opens)
+  // ---------------------------------------------------------------- おまかせ提案: three products of different kinds for a recipient, an occasion and a budget (the products are fetched when the button is pressed)
   function initGacha() {
-    var root = $("#gacha"); if (!root) return;
-    var form = $(".gacha-form", root), msg = $(".gacha-msg", root), out = $(".gacha-out", root), last = "", busy = false;
+    var root = $("#gacha"), pubEl = $("#gacha-pub"); if (!root || !pubEl) return;
+    var pub = JSON.parse(pubEl.textContent), form = $(".gacha-form", root), msg = $(".gacha-msg", root), out = $(".gacha-out", root), amz = $(".gacha-amazon", root), last = [], busy = false;
     function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; }
-    function show(it) {
-      out.textContent = "";
-      var card = el("div", "gacha-card"), pic = el("div", "gacha-img"), a = document.createElement("a"), img = document.createElement("img");
-      a.href = it[3]; a.target = "_blank"; a.rel = "nofollow sponsored noopener";                  // the link the API gave, as it is
-      img.src = it[2]; img.alt = it[0] || "楽天市場の商品ページ"; a.appendChild(img); pic.appendChild(a);
+    function pairOf(o, r) { for (var k in pub.pairs) { if (pub.pairs[k].o === o && pub.pairs[k].r === r) return k; } return ""; }
+    function fillOccasions(keep) {
+      var r = form.elements.r.value, sel = form.elements.o, seen = {}, first = "";
+      sel.textContent = "";
+      for (var k in pub.pairs) { var p = pub.pairs[k]; if (p.r === r && !seen[p.o]) { seen[p.o] = 1; var op = document.createElement("option"); op.value = p.o; op.textContent = pub.occ[p.o]; sel.appendChild(op); if (!first) first = p.o; } }
+      sel.value = seen[keep] ? keep : first;
+    }
+    function tierLabel(t) { for (var i = 0; i < pub.tiers.length; i++) { if (pub.tiers[i].slug === t) return pub.tiers[i].label; } return ""; }
+    function card(row, p, o, r, t) {
+      var idea = p.i[row[0]] || ["", -1, "", ""], c = el("div", "gacha-card"), pic = el("div", "gacha-img"), a = document.createElement("a"), img = document.createElement("img");
+      a.href = row[5]; a.target = "_blank"; a.rel = "nofollow sponsored noopener";                  // the link the API gave, as it is
+      img.src = row[4]; img.alt = row[2] || "楽天市場の商品ページ"; a.appendChild(img); pic.appendChild(a);
       var body = el("div", "gacha-body");
-      if (it[0]) body.appendChild(el("p", "gacha-name", it[0]));
-      body.appendChild(el("p", "price", yen(it[1])));
-      if (it[4]) body.appendChild(el("p", "meta", "★" + (it[5] / 10).toFixed(1) + "(" + it[4].toLocaleString("ja-JP") + "件)"));
+      body.appendChild(el("p", "gacha-kind", (pub.types[row[1]] || "") + (idea[0] ? "・" + idea[0] : "")));
+      if (row[2]) body.appendChild(el("p", "gacha-name", row[2]));
+      body.appendChild(el("p", "price", yen(row[3])));
+      if (row[6]) body.appendChild(el("p", "meta", "★" + (row[7] / 10).toFixed(1) + "(" + row[6].toLocaleString("ja-JP") + "件)"));
+      body.appendChild(el("p", "gacha-why", pub.occ[o] + "に" + pub.rec[r] + "へ贈るなら、" + idea[2] + "予算は" + tierLabel(t) + "の中から選びました。"));
       var buy = el("span", "btn"), buya = el("a", "", "楽天市場で見る"); buya.href = a.href; buya.target = "_blank"; buya.rel = a.rel; buy.appendChild(buya);
-      var again = el("button", "btn btn-sub", "もういちど回す"); again.type = "button"; again.addEventListener("click", spin);
-      var row = el("p", "gacha-actions"); row.appendChild(buy); row.appendChild(document.createTextNode(" ")); row.appendChild(again);
-      body.appendChild(row); card.appendChild(pic); card.appendChild(body); out.appendChild(card);
+      body.appendChild(buy); c.appendChild(pic); c.appendChild(body); return c;
+    }
+    function amazon(rows, p) {                                   // a part of its own: no price, no picture, only the search of the idea's words (the Rakuten part carries Rakuten's links only)
+      amz.textContent = "";
+      var tag = root.getAttribute("data-amazon"); if (!tag || !rows.length) return;
+      amz.appendChild(el("h2", "gacha-amz-h", "Amazonで探す"));
+      amz.appendChild(el("p", "meta", "同じ種類の言葉でAmazonを検索します。価格や商品の写真は、Amazonのページでご確認ください。"));
+      var box = el("p", "more");
+      rows.forEach(function (row) {
+        var idea = p.i[row[0]]; if (!idea) return;
+        var s = el("span", "btn"), l = el("a", "", "「" + idea[0] + "」をAmazonで探す");
+        l.href = "https://www.amazon.co.jp/s?k=" + encodeURIComponent(idea[3]) + "&tag=" + encodeURIComponent(tag); l.target = "_blank"; l.rel = "nofollow sponsored noopener";
+        s.appendChild(l); box.appendChild(s); box.appendChild(document.createTextNode(" "));
+      });
+      amz.appendChild(box);
     }
     function spin() {
       if (busy) return;
+      var r = form.elements.r.value, o = form.elements.o.value, t = form.elements.t.value, pk = pairOf(o, r);
+      if (!pk) { msg.textContent = "その相手と場面の組み合わせは、まだありません。ほかの場面を選んでみてください。"; out.textContent = ""; amz.textContent = ""; return; }
       busy = true;
-      var q = "?r=" + encodeURIComponent(form.elements.r.value) + "&t=" + encodeURIComponent(form.elements.t.value) + (last ? "&x=" + encodeURIComponent(last) : "");
-      fetch(root.getAttribute("data-src") + q).then(function (r) { if (!r.ok) throw new Error("gacha"); return r.json(); }).then(function (j) {
+      var exc = [].map.call(form.querySelectorAll('input[name="exc"]:checked'), function (c) { return c.value; }).join(","), k = form.elements.k.value;
+      var q = "?pk=" + encodeURIComponent(pk) + "&t=" + encodeURIComponent(t) + "&n=3" + (k ? "&k=" + encodeURIComponent(k) : "") + (exc ? "&exc=" + exc : "") + (last.length ? "&x=" + encodeURIComponent(last.join(",")) : "");
+      fetch(root.getAttribute("data-src") + q).then(function (res) { if (!res.ok) throw new Error("gacha"); return res.json(); }).then(function (j) {
         busy = false;
-        var pick = j && j.row;
-        if (!pick) { msg.textContent = "その組み合わせの商品はまだありません。ほかの予算を選んでみてください。"; out.textContent = ""; return; }
-        last = pick[3]; msg.textContent = "条件に合う商品を1点、選びました。"; show(pick);
+        var rows = (j && j.rows) || [];
+        out.textContent = ""; amz.textContent = "";
+        if (!rows.length) { msg.textContent = "その条件の商品はまだありません。予算や種類を変えてみてください。"; return; }
+        last = rows.map(function (x) { return x[5]; });
+        msg.textContent = "条件に合う商品を" + rows.length + "点、選びました。";
+        rows.forEach(function (row) { out.appendChild(card(row, pub.pairs[pk], o, r, t)); });
+        var again = el("p", "gacha-actions"), b = el("button", "btn btn-sub", "もういちど提案する"); b.type = "button"; b.addEventListener("click", spin); again.appendChild(b); out.appendChild(again);
+        amazon(rows, pub.pairs[pk]);
       }, function () { busy = false; msg.textContent = "うまく読み込めませんでした。時間をおいてもう一度お試しください。"; });
     }
-    form.addEventListener("submit", function (e) { e.preventDefault(); spin(); });
+    form.elements.r.addEventListener("change", function () { fillOccasions(form.elements.o.value); });
+    form.addEventListener("submit", function (e) { e.preventDefault(); last = []; spin(); });
+    var qs = new URLSearchParams(location.search), want = { r: qs.get("r"), o: qs.get("o"), t: qs.get("t") };       // a link from a gift page: the conditions come with it
+    if (want.r && pub.rec[want.r]) form.elements.r.value = want.r;
+    fillOccasions(want.o || "");
+    if (want.t && tierLabel(want.t)) form.elements.t.value = want.t;
+    if (want.r && want.o && pairOf(want.o, form.elements.r.value)) spin();
   }
 
   function initCalc() {

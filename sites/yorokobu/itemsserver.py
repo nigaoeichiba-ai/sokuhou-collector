@@ -34,6 +34,8 @@ def answer(query: dict, db: dict, rnd: random.Random | None = None) -> tuple[int
         codes = [c for c in str(query["c"]).split(",") if CODE.match(c)][:24]
         items = db["items"]
         return 200, {c: items[c] for c in codes if c in items}
+    if "pk" in query and "t" in query:
+        return _pair_answer(query, db, rnd)
     if "r" in query and "t" in query:
         r, t = query["r"], query["t"]
         if not (SLUG.match(r) and SLUG.match(t)):
@@ -65,6 +67,35 @@ def answer(query: dict, db: dict, rnd: random.Random | None = None) -> tuple[int
                 break
         return 200, {"items": out}
     return 400, None
+
+
+def _pair_answer(query: dict, db: dict, rnd) -> tuple[int, object]:
+    """?pk=<pair key>&t=<tier>[&n=3][&k=<kind no. to take>][&exc=<kind nos. to leave out, comma-separated>][&x=<links shown last, comma-separated>]: up to n rows of DIFFERENT ideas
+    (one at random from the best of each idea), never a link of `x` while another is left.  -> {"rows": [[idea no., kind no., line, price, picture, link, reviews, rating x10], ...]}"""
+    pk, t = query["pk"], query["t"]
+    if not (SLUG.match(pk) and SLUG.match(t)):
+        return 400, None
+    try:
+        n = max(1, min(3, int(query.get("n") or 3)))
+    except ValueError:
+        n = 3
+    take = _int(query.get("k"))
+    exc = {int(x) for x in str(query.get("exc") or "").split(",") if re.fullmatch(r"\d{1,2}", x)}
+    shown = {x for x in str(query.get("x") or "").split(",") if x and len(x) <= 400}
+    rows = (((db["gacha"].get("pair") or {}).get(pk) or {}).get("tiers") or {}).get(t) or []
+    rows = [r for r in rows if r[1] not in exc and (take is None or r[1] == take)]
+    by_idea: dict[int, list] = {}
+    for r in rows:
+        by_idea.setdefault(r[0], []).append(r)
+    ideas = list(by_idea)
+    rnd.shuffle(ideas)
+    out = []
+    for i in ideas:
+        fresh = [r for r in by_idea[i] if r[5] not in shown] or by_idea[i]
+        out.append(rnd.choice(fresh))
+        if len(out) >= n:
+            break
+    return 200, {"rows": out}
 
 
 def load_private(folder: Path) -> dict:

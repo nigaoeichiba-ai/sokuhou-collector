@@ -139,32 +139,91 @@ def gacha_pool(d: dict, cfg: dict) -> dict:
     return out
 
 
+GACHA_PER_IDEA = 3        # products kept per idea and budget band, best first: the API picks one of them at random
+
+
+def gacha_pairs(d: dict, cfg: dict) -> dict:
+    """The private part of the three-product gacha: {pair key: {"tiers": {tier slug: [[idea no., kind no., one line, price, picture, link, reviews, rating x10], ...]}}} for the
+    products already on the pairs' pages (occasion x recipient), per idea (kind of gift) and budget band.  The API (`?pk=&t=`) picks one row of three different ideas.
+    Shop data: it goes to the private store only (yorokobu_gacha_db.json), never to a public file."""
+    B = _b()
+    c = d["c"]
+    out: dict = {}
+    for p in c["pairs"]:
+        key = B.ct.pair_key(p)
+        ideas = B.pair_items(d, key)[0]
+        tiers: dict = {}
+        for t in c["filters"]["tiers"]:
+            rows = []
+            for n, idea in enumerate(ideas):
+                kind = B.TYPE_ORDER.index(idea["type"]) if idea["type"] in B.TYPE_ORDER else -1
+                if kind < 0:
+                    continue
+                cand = [it for it in idea["items"] if it.get("available", True) and B.in_tier(it["price"], t) and not B.relevance.foreign_kind(it["name"], idea.get("must"))]
+                cand.sort(key=lambda i: -B.score(i))
+                for it in cand[:GACHA_PER_IDEA]:
+                    rows.append([n, kind, B.blurb_line(it, must=idea.get("must")), it["price"], it["image"], B.item_href(cfg, it), it["reviews"], int(round(it["rating"] * 10))])
+            if len({r[0] for r in rows}) >= 2:                              # three different kinds need at least two ideas with something to show
+                tiers[t["slug"]] = rows
+        if tiers:
+            out[key] = {"tiers": tiers}
+    return out
+
+
+def gacha_public(d: dict, pairs: dict) -> dict:
+    """The public part: only the editors' own words (labels, reasons, search words) and names, for the pairs that have products: no product, price or link."""
+    B = _b()
+    c = d["c"]
+    pub: dict = {"pairs": {}, "occ": {}, "rec": {}}
+    for p in c["pairs"]:
+        key = B.ct.pair_key(p)
+        if key not in pairs:
+            continue
+        ideas = B.pair_items(d, key)[0]
+        pub["pairs"][key] = {"o": p["occasion"], "r": p["recipient"], "i": [[i["label"], B.TYPE_ORDER.index(i["type"]) if i["type"] in B.TYPE_ORDER else -1, i["why"], i["query"]] for i in ideas]}
+        pub["occ"][p["occasion"]] = c["occ"][p["occasion"]]["name"]
+        pub["rec"][p["recipient"]] = c["rec"][p["recipient"]]["name"]
+    used = {t for v in pairs.values() for t in v["tiers"]}
+    pub["tiers"] = [{"slug": t["slug"], "label": t["label"]} for t in c["filters"]["tiers"] if t["slug"] in used]
+    pub["types"] = list(B.TYPE_ORDER)
+    return pub
+
+
 def gacha_data(d: dict, cfg: dict) -> str | None:
     pool = gacha_pool(d, cfg)
     if len(pool) < 2:
         return None
     c = d["c"]
     tiers = [{"slug": t["slug"], "label": t["label"]} for t in c["filters"]["tiers"] if any(t["slug"] in v["tiers"] for v in pool.values())]
-    return json.dumps({"rec": pool, "tiers": tiers}, ensure_ascii=False, separators=(",", ":"))
+    return json.dumps({"rec": pool, "tiers": tiers, "pair": gacha_pairs(d, cfg)}, ensure_ascii=False, separators=(",", ":"))
 
 
-def gacha_page(d: dict, cfg: dict, preview: bool, pool: dict, tiers: list[dict]) -> str:
+def gacha_page(d: dict, cfg: dict, preview: bool, gp: dict) -> str:
     B = _b()
-    lead = "贈る相手と予算を選んでボタンを押すと条件に合う商品を1点、提案します。迷ったときのきっかけにしてください。"
-    rec = "".join(f'<option value="{esc(s)}">{esc(v["name"])}</option>' for s, v in pool.items())
-    bud = "".join(f'<option value="{esc(t["slug"])}">{esc(t["label"])}</option>' for t in tiers)
-    body = f"""{B.head_band("sky", '', "おまかせで<wbr>1点提案します", lead, single=True, mascot="b-joy")}
+    pub = gacha_public(d, gp.get("pair") or {})
+    lead = "贈る相手・場面・予算を選んでボタンを押すと、種類の違う商品を3点、理由つきで提案します。迷ったときのきっかけにしてください。"
+    rec = "".join(f'<option value="{esc(s)}">{esc(n)}</option>' for s, n in pub["rec"].items())
+    bud = "".join(f'<option value="{esc(t["slug"])}">{esc(t["label"])}</option>' for t in pub["tiers"])
+    kinds = "".join(f'<option value="{n}">{esc(k)}</option>' for n, k in enumerate(pub["types"]))
+    avoid = "".join(f'<label class="gacha-chk"><input type="checkbox" name="exc" value="{n}"> {esc(k)}</label>' for n, k in enumerate(pub["types"]))
+    data = json.dumps(pub, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    body = f"""{B.head_band("sky", '', "条件を選んで<wbr>3点提案します", lead, single=True, mascot="b-joy")}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("診断・ツール", "/tool/"), ("おまかせ提案", None)])}</div>
 {B.pr_quiet(cfg)}
-<section id="gacha" class="gacha" data-src="/api/items.php" data-aff="{esc(cfg["rakuten_affiliate_id"])}">
+<section id="gacha" class="gacha" data-src="/api/items.php" data-aff="{esc(cfg["rakuten_affiliate_id"])}" data-amazon="{esc(cfg.get("amazon_tracking_id") or "")}">
 <form class="gacha-form" onsubmit="return false"><label>贈る相手<select name="r">{rec}</select></label>
+<label>場面<select name="o"></select></label>
 <label>予算<select name="t">{bud}</select></label>
-<button type="submit" class="btn big">1点、提案してもらう</button></form>
+<label>入れたい種類<select name="k"><option value="">指定しない</option>{kinds}</select></label>
+<details class="gacha-avoid"><summary>避けたい種類</summary><div>{avoid}</div></details>
+<button type="submit" class="btn big">3点、提案してもらう</button></form>
 <p class="gacha-msg" role="status" aria-live="polite"></p>
 <div class="gacha-out" aria-live="polite"></div>
+<div class="gacha-amazon" aria-live="polite"></div>
+<script type="application/json" id="gacha-pub">{data}</script>
 <noscript><p class="notice">このページはJavaScript が使える環境でお使いください。使えない場合は、<a href="/for/">相手から探す</a>ページでも、おすすめを探せます。</p></noscript>
 </section>
-<p class="notice">表示される商品はこのサイトで紹介している商品からランダムに選んでいます。価格・在庫・レビューは取得した時点の情報です。</p>
+<p class="notice">選ぶ基準: 当サイトが取り上げた楽天市場の商品のうち、選んだ相手と場面のページにあり、予算の帯に入る商品から、種類(案)が重ならないように3点をランダムに選びます。理由の文は、その種類の案について当サイトが書いたものです。商品を使った感想ではありません。価格・在庫・レビューは取得した時点の情報です。</p>
 {B.freshness(d)}"""
     return B.page(cfg, preview, path="/tool/gacha/", title=f"おまかせ提案 | {cfg['site_name']}", description=lead, body=body)
 
@@ -225,7 +284,7 @@ def tools_hub_page(d: dict, cfg: dict, preview: bool) -> str:
              ("/tool/taboo/", "shield-check", "縁起・マナーチェック", "贈る前に気をつけたい言い伝えやマナーが、あるかどうか確かめます。", c["taboo"]),
              ("/dock/", "list-checks", "贈り物ドック", "相手のことを入力すると健康診断の結果票のように項目ごとの点数と評価、おすすめの種類を返します。", c.get("ask")),
              ("/ask/", "chat-circle-text", "ほしいものを聞く", "好みやほしいものをそれとなく聞くアンケートを作ってリンクで送ります。結果とおすすめも見られます。", c.get("ask")),
-             ("/tool/gacha/", "dice-five", "おまかせ提案", "贈る相手と予算を選ぶと条件に合う商品を1点、提案します。", d.get("gacha")),
+             ("/tool/gacha/", "dice-five", "おまかせ提案", "贈る相手・場面・予算を選ぶと、種類の違う商品を3点、理由つきで提案します。", d.get("gacha")),
              ("/compare/", "chart-bar", "商品比較", "同じ種類の商品を楽天市場のショップで並べて価格・ポイント・送料・レビューを比べます。", d.get("compare")),
              ("/tool/calc/", "currency-jpy", "お返し・割り勘の計算", "お返しの金額の目安と連名で贈るときの一人あたりの金額を計算します。", True),
              ("/memo/", "calendar-heart", "たいせつな日メモ", "誕生日や記念日を登録して贈りどきを逃さないようにします。", True),
