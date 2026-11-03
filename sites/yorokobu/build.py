@@ -884,6 +884,20 @@ def list_page(d: dict, cfg: dict, preview: bool) -> str:
     return html.replace("<head>", '<head>\n<meta name="robots" content="noindex,nofollow">', 1)
 
 
+def gacha_button(d: dict, p: dict) -> str:
+    """「この条件で3点」: a link to おまかせ提案 with this occasion and recipient (and the middle budget band) already chosen; only for a pair the proposal has products for, so it never leads to an empty answer."""
+    g = d.get("gacha")
+    if not g:
+        return ""
+    pairs = d.setdefault("_gacha_pairs", set(json.loads(g).get("pair") or {}))
+    if ct.pair_key(p) not in pairs:
+        return ""
+    tiers = d["c"]["filters"]["tiers"]
+    t = "&amp;t=" + tiers[len(tiers) // 2]["slug"] if tiers else ""
+    return (f'<p class="more gacha-go"><span class="btn btn-sub"><a href="/tool/gacha/?o={p["occasion"]}&amp;r={p["recipient"]}{t}">この条件で3点、提案してもらう</a></span>'
+            f'<small>予算や好みを変えて、種類の違う商品を理由つきで3点選びます。</small></p>')
+
+
 def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
     set_keep(d["c"]["occ"][p["occasion"]]["name"])
     c = d["c"]
@@ -912,6 +926,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 {pr_quiet(cfg)}
 {share_bar(cfg, f"/gift/{key}/", f"{p['title'].split(' ')[0]}の候補です。どれが合うか、意見をください。", hint=True)}
 {top_picks(cfg, d, key, label=p["title"].split(" ")[0])}
+{gacha_button(d, p)}
 <p class="memo-link"><a href="/memo/?o={p['occasion']}&amp;r={p['recipient']}">この日を忘れない(たいせつな日メモに登録)</a></p>
 {quick_pair_note(c, p)}
 {dataroom.occasion_teaser(d, p["occasion"], compact=True)}
