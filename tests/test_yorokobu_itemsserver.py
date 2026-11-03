@@ -69,7 +69,11 @@ class TemplateTest(unittest.TestCase):
 
 PAIR_DB = {**DB, "gacha": {**DB["gacha"], "pair": {"birthday-mother": {"tiers": {"3000": [
     [0, 0, "財布1", 2000, "i0", "L0a", 10, 45], [0, 0, "財布2", 2100, "i0b", "L0b", 10, 44],
-    [1, 1, "菓子", 2500, "i1", "L1", 20, 46], [2, 2, "ハンカチ", 1800, "i2", "L2", 5, 43], [3, 4, "名入れ", 2900, "i3", "L3", 7, 42]]}}}}}
+    [1, 1, "菓子", 2500, "i1", "L1", 20, 46], [2, 2, "ハンカチ", 1800, "i2", "L2", 5, 43], [3, 4, "名入れ", 2900, "i3", "L3", 7, 42]],
+    "5000": [[0, 0, "財布3", 4500, "i0c", "L0c", 10, 45], [4, 3, "石けん", 4800, "i4", "L4", 9, 44], [5, 5, "傘", 4200, "i5", "L5", 8, 41]],
+    "10000": [[6, 6, "時計", 9800, "i6", "L6", 3, 43]], "30000": [[0, 0, "財布4", 29000, "i0d", "L0d", 2, 45]]}},
+    "birthday-lonely": {"tiers": {"3000": [[0, 0, "財布1", 2000, "i0", "M0", 10, 45], [1, 1, "菓子", 2500, "i1", "M1", 20, 46]]}}},
+    "order": ["3000", "5000", "10000", "20000", "30000"]}}
 
 
 class PairAnswerTest(unittest.TestCase):
@@ -90,7 +94,7 @@ class PairAnswerTest(unittest.TestCase):
         self.assertEqual({r[1] for r in self.ask(k="1")[1]["rows"]}, {1})
         rows = self.ask(exc="0,4")[1]["rows"]
         self.assertTrue(rows and all(r[1] not in (0, 4) for r in rows))
-        self.assertEqual(self.ask(k="7")[1], {"rows": []})                       # no such kind in this pair: nothing, not an error
+        self.assertEqual(self.ask(k="7")[1]["rows"], [])                       # no such kind in this pair: nothing, not an error
 
     def test_the_links_shown_last_are_left_out_while_another_is_left(self):
         for seed in range(20):
@@ -109,15 +113,37 @@ class PairAnswerTest(unittest.TestCase):
         self.assertEqual(len(self.ask(exc="a,99999,,1")[1]["rows"]), len(self.ask(exc="1")[1]["rows"]))          # junk in exc is ignored, the real kind still counts
 
     def test_an_unknown_pair_or_budget_gives_no_rows(self):
-        self.assertEqual(S.answer({"pk": "nope", "t": "3000"}, PAIR_DB), (200, {"rows": []}))
-        self.assertEqual(self.ask(t="9999")[1], {"rows": []})
+        self.assertEqual(S.answer({"pk": "nope", "t": "3000"}, PAIR_DB), (200, {"rows": [], "bands": []}))
+        self.assertEqual(self.ask(t="9999")[1], {"rows": [], "bands": []})
 
     def test_the_old_one_row_gacha_still_answers(self):
         self.assertEqual(S.answer({"r": "mother", "t": "3000"}, PAIR_DB, random.Random(1))[0], 200)
 
+    def test_a_thin_budget_band_is_filled_from_the_nearest_bands_and_the_answer_names_each_band(self):
+        for seed in range(20):
+            out = self.ask(random.Random(seed), t="5000")[1]
+            self.assertEqual(len(out["rows"]), 3)                                    # the band's own three ideas: nothing borrowed
+            self.assertEqual(out["bands"], ["5000"] * 3)
+            out = self.ask(random.Random(seed), t="10000")[1]                       # one idea of its own, two from the nearest bands (5000 is one step away, 3000 two)
+            self.assertEqual(len(out["rows"]), 3)
+            self.assertEqual(len({r[0] for r in out["rows"]}), 3)
+            self.assertEqual(out["bands"][0], "10000")
+            self.assertTrue(set(out["bands"][1:]) <= {"5000", "3000"})
+            self.assertIn("5000", out["bands"])                                      # the nearer band is used before the farther one
+            out = self.ask(random.Random(seed), t="20000")[1]                       # a band with nothing: all of it from the near ones
+            self.assertEqual(len(out["rows"]), 3)
+            self.assertEqual(set(out["bands"]), {"10000", "30000", "5000"} & set(out["bands"]))
+            self.assertNotIn("3000", out["bands"])                                   # two steps is the farthest
+
+    def test_nothing_is_taken_from_a_band_too_far_away_or_twice_from_one_idea(self):
+        out = self.ask(t="30000")[1]                                                 # 20000 and 10000 are within two steps, 10000 has one idea, 30000 own idea 0
+        self.assertEqual(len({r[0] for r in out["rows"]}), len(out["rows"]))
+        self.assertNotIn("3000", out["bands"])
+        self.assertEqual(S.answer({"pk": "birthday-lonely", "t": "30000"}, PAIR_DB)[1], {"rows": [], "bands": []})      # too far from the only band
+
     def test_the_php_has_the_same_branch(self):
         php = (ROOT / "sites" / "yorokobu" / "items_receiver.php.tpl").read_text(encoding="utf-8")
-        for needle in ("isset($_GET['pk'], $_GET['t'])", "['pair'][$pk]['tiers'][$t]", "exc", "shuffle($ideas)", "random_int", "min(3,"):
+        for needle in ("isset($_GET['pk'], $_GET['t'])", "['pair'][$pk]['tiers']", "'bands' => $bands", "abs($k - $pos) <= 2", "exc", "shuffle($ideas)", "random_int", "min(3,"):
             self.assertIn(needle, php, needle)
 
 

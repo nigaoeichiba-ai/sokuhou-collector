@@ -69,23 +69,38 @@ if (isset($_GET['pk'], $_GET['t'])) {
     $shown = array();
     foreach (explode(',', (string)($_GET['x'] ?? '')) as $x) { if ($x !== '' && strlen($x) <= 400) { $shown[] = $x; } }
     $db = load_db($priv . '/yorokobu_gacha_db.json');
-    $rows = isset($db['pair'][$pk]['tiers'][$t]) && is_array($db['pair'][$pk]['tiers'][$t]) ? $db['pair'][$pk]['tiers'][$t] : array();
-    $by = array();
-    foreach ($rows as $r) {
-        if (in_array($r[1], $exc, true) || ($take !== null && $r[1] !== $take)) { continue; }
-        $by[$r[0]][] = $r;
+    $tiers = isset($db['pair'][$pk]['tiers']) && is_array($db['pair'][$pk]['tiers']) ? $db['pair'][$pk]['tiers'] : array();
+    $order = array();
+    foreach ((isset($db['order']) && is_array($db['order']) ? $db['order'] : array()) as $o) { if (is_string($o)) { $order[] = $o; } }
+    $pos = array_search($t, $order, true);
+    $try = array($t);
+    if ($pos !== false) {
+        $dist = array();
+        foreach ($order as $k => $o) { if ($o !== $t && isset($tiers[$o]) && abs($k - $pos) <= 2) { $dist[$o] = abs($k - $pos) * 100 + $k; } }
+        asort($dist);
+        $try = array_merge($try, array_keys($dist));
     }
-    $ideas = array_keys($by);
-    shuffle($ideas);
-    $res = array();
-    foreach ($ideas as $i) {
-        $fresh = array();
-        foreach ($by[$i] as $r) { if (!in_array($r[5], $shown, true)) { $fresh[] = $r; } }
-        if (!count($fresh)) { $fresh = $by[$i]; }
-        $res[] = $fresh[random_int(0, count($fresh) - 1)];
+    $res = array(); $bands = array(); $used = array();
+    foreach ($try as $tt) {
         if (count($res) >= $n) { break; }
+        $by = array();
+        foreach ((isset($tiers[$tt]) && is_array($tiers[$tt]) ? $tiers[$tt] : array()) as $r) {
+            if (in_array($r[1], $exc, true) || ($take !== null && $r[1] !== $take) || isset($used[$r[0]])) { continue; }
+            $by[$r[0]][] = $r;
+        }
+        $ideas = array_keys($by);
+        shuffle($ideas);
+        foreach ($ideas as $i) {
+            $fresh = array();
+            foreach ($by[$i] as $r) { if (!in_array($r[5], $shown, true)) { $fresh[] = $r; } }
+            if (!count($fresh)) { $fresh = $by[$i]; }
+            $res[] = $fresh[random_int(0, count($fresh) - 1)];
+            $bands[] = $tt;
+            $used[$i] = true;
+            if (count($res) >= $n) { break; }
+        }
     }
-    out(200, array('rows' => $res));
+    out(200, array('rows' => $res, 'bands' => $bands));
 }
 if (isset($_GET['r'], $_GET['t'])) {
     $r = $_GET['r']; $t = $_GET['t'];
