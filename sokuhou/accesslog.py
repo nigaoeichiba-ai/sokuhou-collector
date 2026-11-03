@@ -77,6 +77,39 @@ def referrer_host(ref: str) -> str:
         return ""
 
 
+# Visits that came from an answer or a search of an AI assistant (indicator L9).  The referrer host is all that is counted: nothing that identifies a visitor.
+# Only the visits that carry a referrer (or the utm_source that ChatGPT adds to the links it shows) can be seen; a visit from an app that sends none is NOT counted,
+# so the count is a floor and the ledger says so.  duckduckgo.com is ambiguous (its AI answers send the same host as its search): counted apart, never added to the total.
+AI_HOSTS = {"chatgpt.com": "ChatGPT", "chat.openai.com": "ChatGPT", "perplexity.ai": "Perplexity", "claude.ai": "Claude", "gemini.google.com": "Gemini",
+            "bard.google.com": "Gemini", "copilot.microsoft.com": "Copilot", "copilot.com": "Copilot", "you.com": "You.com", "phind.com": "Phind", "poe.com": "Poe",
+            "meta.ai": "Meta AI", "grok.com": "Grok", "chat.deepseek.com": "DeepSeek", "kimi.com": "Kimi"}
+AI_UTM = {"chatgpt.com": "ChatGPT", "perplexity": "Perplexity", "claude.ai": "Claude", "gemini": "Gemini", "copilot": "Copilot"}
+AMBIGUOUS_HOSTS = ("duckduckgo.com",)
+
+
+def ai_source(host: str, target: str) -> str:
+    """The AI assistant a visit came from ('' if none): by the referrer host (and its sub-domains), else by the utm_source in the landing address."""
+    h = host.lower()
+    for k, name in AI_HOSTS.items():
+        if h == k or h.endswith("." + k):
+            return name
+    m = re.search(r"[?&]utm_source=([^&#]+)", target)
+    if m:
+        v = m.group(1).lower()
+        for k, name in AI_UTM.items():
+            if v == k or v.startswith(k):
+                return name
+    return ""
+
+
+def week_of(day: str) -> str:
+    try:
+        y, w, _ = datetime.strptime(day, "%Y-%m-%d").isocalendar()
+        return f"{y}-W{w:02d}"
+    except ValueError:
+        return ""
+
+
 def parse_day(stamp: str) -> str:
     try:
         return datetime.strptime(stamp.split()[0], "%d/%b/%Y:%H:%M:%S").strftime("%Y-%m-%d")
@@ -88,7 +121,7 @@ def aggregate(lines, own_domain: str = "") -> dict:
     own = own_domain.lower().removeprefix("www.")
     r = {"lines": 0, "parsed": 0, "first": "", "last": "", "days": Counter(), "days_human": Counter(),
          "pages": Counter(), "refs": Counter(), "search": Counter(), "agents": Counter(), "n404": Counter(),
-         "visitors": set(), "human_views": 0, "measure": measure.new()}
+         "visitors": set(), "human_views": 0, "measure": measure.new(), "ai": Counter(), "ai_maybe": Counter(), "weeks_human": Counter()}
     for raw in lines:
         r["lines"] += 1
         m = LINE.match(raw)
@@ -122,6 +155,13 @@ def aggregate(lines, own_domain: str = "") -> dict:
         r["pages"][path[:120]] += 1
         r["visitors"].add(hashlib.sha1(f"{day}|{ip}|{ua}".encode()).digest()[:8])
         host = referrer_host(ref)
+        wk = week_of(day)
+        r["weeks_human"][wk] += 1
+        ai = ai_source(host, target)
+        if ai:
+            r["ai"][(wk, ai)] += 1
+        elif host in AMBIGUOUS_HOSTS or host.endswith(".duckduckgo.com"):
+            r["ai_maybe"][wk] += 1
         if not host:
             r["refs"]["(直接・不明)"] += 1
         elif own and host.endswith(own):
@@ -153,8 +193,24 @@ def render(r: dict, site: str) -> str:
                               ("Bot・自動取得の種別(ページ取得の件数)", "agents", 15), ("404 になったパス(3回以上)", "n404", 15)):
         rows = _rows(r[key], limit)
         out.append(f"- {title}: " + (" / ".join(f"{k} {v}" for k, v in rows) if rows else "なし"))
+    out.append(render_ai(r))
     out.append(measure.render(r["measure"]))
     return "\n".join(out)
+
+
+def render_ai(r: dict) -> str:
+    """L9 per week: visits from AI assistants (a floor: visits with no referrer cannot be seen) and the weeks' human page views for scale."""
+    weeks = sorted({w for w, _ in r["ai"]} | set(r["ai_maybe"]) | {w for w in r["weeks_human"] if w})
+    if not weeks:
+        return "- L9 AI経由の流入: 測れなかった(読めた週がありません)"
+    rows = []
+    for w in weeks:
+        by = {a: n for (ww, a), n in r["ai"].items() if ww == w}
+        tot = sum(by.values())
+        rows.append(f"{w}: {tot}" + (f"({'・'.join(f'{a} {n}' for a, n in sorted(by.items(), key=lambda x: -x[1]))})" if by else "") +
+                    (f"、DuckDuckGo(AI回答かどうか区別できない)経由 {r['ai_maybe'][w]}" if r["ai_maybe"][w] else "") + f" / 人のページ表示 {r['weeks_human'][w]}")
+    return ("- L9 AI経由の流入(リファラのホスト別の回数だけ。人のページ表示のうち): " + " | ".join(rows) +
+            "\n  - 測れなかった分があります: リファラを送らない AI アプリ・ブラウザ拡張からの訪問は数えられません。実数はこれ以上です。")
 
 
 def main(argv=None) -> int:
