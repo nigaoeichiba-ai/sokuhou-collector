@@ -123,13 +123,23 @@ class RegisterTest(unittest.TestCase):
         self.assertIn("tests/test_newsite*", site["own"])
         self.assertEqual((site["needs_var"], site["var_name"], site["inbox"]), (True, "DEPLOY_NEWSITE", True))    # off until DEPLOY_NEWSITE is "true"; its contact-form messages are collected from day one
 
-    def test_the_inbox_sites_are_the_four_with_a_contact_inbox_and_not_atomou(self):
+    def test_the_inbox_sites_are_the_ones_of_the_register_that_have_a_contact_inbox(self):
         from sokuhou import deployplan as dp
         import io, contextlib
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
             dp.main(["inbox-sites"])
-        self.assertEqual(buf.getvalue().split(), ["saichin:saichin-sokuho.com", "kuma:kuma-sokuho.com", "yorokobu:yorokobu-present.com", "minna:minna-no-illust.com"])
+        expected = [f"{n}:{s['dir']}" for n, s in self.reg["sites"].items() if s.get("inbox", True)]
+        self.assertEqual(buf.getvalue().split(), expected)
+        self.assertNotIn("atomou", [x.split(":")[0] for x in expected])      # atomou has its own word box
+        self.assertIn("saichin:saichin-sokuho.com", expected)
+
+    def test_every_site_but_saichin_is_off_until_its_variable_is_true(self):
+        # the rule that a NEW site cannot be published by accident, computed from the register (2026-11-03: it was published as soon as the folder and the secrets were there)
+        for n, s in self.reg["sites"].items():
+            if n != "saichin":
+                self.assertTrue(s["needs_var"], f"{n}: a site without needs_var is published without anyone's decision")
+                self.assertEqual(s["var_name"], "DEPLOY_" + n.upper())
 
 
 if __name__ == "__main__":

@@ -16,7 +16,10 @@ from pathlib import Path
 from sokuhou import deployplan
 
 ROOT = Path(__file__).resolve().parents[1]
-SITES = ("saichin", "kuma", "yorokobu", "minna", "atomou")
+# The plan's logic is tested on a FIXED register of five sites (tests/fixtures/deploy_sites.json, a snapshot), not on data/sites.json: that file grows by a new site every few days and
+# must not make these tests count sites.  The real register is checked for its own rules in tests/test_site_registry.py.
+FIXTURE = ROOT / "tests" / "fixtures" / "deploy_sites.json"
+SITES = tuple(e["name"] for e in json.loads(FIXTURE.read_text(encoding="utf-8"))["sites"])
 
 
 class PlanBase(unittest.TestCase):
@@ -25,7 +28,7 @@ class PlanBase(unittest.TestCase):
         self.repo = self.tmp / "repo"
         self.repo.mkdir()
         self.live = {}
-        self.reg = deployplan.load_registry(env={"ATOMOU_BUILD_FLAG": "--release", "ATOMOU_PROBE": "/assets/catalog.json"})
+        self.reg = deployplan.load_registry(FIXTURE, env={"ATOMOU_BUILD_FLAG": "--release", "ATOMOU_PROBE": "/assets/catalog.json"})
         for n, site in self.reg["sites"].items():
             d = self.tmp / "live" / n
             d.mkdir(parents=True)
@@ -248,7 +251,7 @@ class SwitchedOffSites(PlanBase):
         self.assertEqual([i["site"] for i in res["include"]], ["saichin"])
 
     def test_a_new_site_is_off_until_its_variable_says_true(self):
-        self.reg["sites"]["newsite"] = deployplan.load_registry(ROOT / "data" / "sites.json", env={"ATOMOU_BUILD_FLAG": "", "ATOMOU_PROBE": "/x"})["sites"]["saichin"] | {"name": "newsite", "needs_var": True, "var_name": "DEPLOY_NEWSITE", "own": ["sites/newsite/*"]}
+        self.reg["sites"]["newsite"] = deployplan.load_registry(FIXTURE, env={"ATOMOU_BUILD_FLAG": "", "ATOMOU_PROBE": "/x"})["sites"]["saichin"] | {"name": "newsite", "needs_var": True, "var_name": "DEPLOY_NEWSITE", "own": ["sites/newsite/*"]}
         self.live["newsite"] = self.live["saichin"]
         off = self.plan_with({"DEPLOY_NEWSITE": ""})
         self.assertNotIn("newsite", [i["site"] for i in off["include"]])
@@ -299,7 +302,7 @@ class ConnectionSlots(PlanBase):
 
 class RegisterChanges(PlanBase):
     def register(self, mutate):
-        data = json.loads((ROOT / "data" / "sites.json").read_text(encoding="utf-8"))
+        data = json.loads(FIXTURE.read_text(encoding="utf-8"))
         mutate(data)
         p = self.repo / "data" / "sites.json"
         p.parent.mkdir(parents=True, exist_ok=True)
