@@ -165,6 +165,16 @@ class ScaffoldTest(unittest.TestCase):
     def _first_item_slug(self):
         return sorted(newsite._example_rows(), key=lambda r: -r[2])[0][1]
 
+    def test_robots_lets_every_bot_in_and_names_no_one(self):
+        """Owner decision pending on training bots: the default stays 'everyone allowed' (search and citation bots must never be blocked by the scaffold)."""
+        robots = self.pages["robots.txt"]
+        self.assertEqual(robots, "User-agent: *\nAllow: /\nSitemap: https://dummy.example/sitemap.xml\n")
+        self.assertNotIn("Disallow", robots)
+        d = newsite.init_site("presite", "p.example", "下見", "下", self.tmp / "pre", "2026-11-03")
+        (d / "config.json").write_text((d / "config.json").read_text(encoding="utf-8").replace("株式会社MACS", ""), encoding="utf-8")
+        pre, _ = newsite.build_pages(d)
+        self.assertIn("Disallow: /", pre["robots.txt"])       # only a preview (operator not set) keeps everybody out
+
     def test_about_has_method_and_correction_policy(self):
         about = self.pages["about/index.html"]
         for needle in ("運営者情報", "数字の出し方", "誤りを見つけたら", "訂正の履歴"):

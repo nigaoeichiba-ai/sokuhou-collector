@@ -69,3 +69,43 @@ class XserverSampleTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AiReferralTest(unittest.TestCase):
+    """L9: visits that came from an AI assistant, by referrer host (and utm_source), per ISO week; nothing that identifies anyone."""
+
+    def run_lines(self, lines):
+        return accesslog.aggregate(lines, "x.example")
+
+    def test_known_assistants_are_counted_by_week_and_name(self):
+        ls = ([line(ref="https://chatgpt.com/", day="05/Nov/2026")] * 3 + [line(ref="https://www.perplexity.ai/search", day="05/Nov/2026")] * 2
+              + [line(ref="https://claude.ai/", day="12/Nov/2026")] * 4 + [line(ref="https://gemini.google.com/app", day="12/Nov/2026")])
+        r = self.run_lines(ls)
+        self.assertEqual(r["ai"][("2026-W45", "ChatGPT")], 3)
+        self.assertEqual(r["ai"][("2026-W45", "Perplexity")], 2)
+        self.assertEqual(r["ai"][("2026-W46", "Claude")], 4)
+        self.assertEqual(r["ai"][("2026-W46", "Gemini")], 1)
+        out = accesslog.render(r, "x.example")
+        self.assertIn("2026-W45: 5", out)
+        self.assertIn("測れなかった分があります", out)
+
+    def test_utm_source_of_chatgpt_counts_without_a_referrer(self):
+        r = self.run_lines([line(path="/a/?utm_source=chatgpt.com", ref="-")] * 3)
+        self.assertEqual(sum(r["ai"].values()), 3)
+
+    def test_duckduckgo_is_kept_apart_and_a_plain_search_is_not_ai(self):
+        r = self.run_lines([line(ref="https://duckduckgo.com/")] * 3 + [line(ref="https://www.google.com/")] * 3 + [line(ref="https://notchatgpt.com.evil.example/")] * 3)
+        self.assertEqual(sum(r["ai"].values()), 0)
+        self.assertEqual(sum(r["ai_maybe"].values()), 3)
+        out = accesslog.render(r, "x.example")
+        self.assertIn("区別できない", out)
+
+    def test_bots_are_not_ai_visits_and_nothing_identifying_is_printed(self):
+        r = self.run_lines([line(ref="https://chatgpt.com/", ua="Mozilla/5.0 (compatible; GPTBot/1.0)")] * 3 + [line(ip="198.51.100.88", ref="https://chatgpt.com/c/secret-id")] * 3)
+        self.assertEqual(sum(r["ai"].values()), 3)
+        out = accesslog.render(r, "x.example")
+        for secret in ("198.51.100.88", "secret-id"):
+            self.assertNotIn(secret, out)
+
+    def test_no_data_is_not_zero(self):
+        self.assertIn("測れなかった", accesslog.render_ai(self.run_lines(["garbage"])))
