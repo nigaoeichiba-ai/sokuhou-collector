@@ -1,4 +1,4 @@
-"""kaidoki-calendar.com (買い時カレンダー): dates agree with the calendar, nothing invents a date, no outside link or price, the calculator agrees with its Python twin."""
+"""sale-calendar.com (買い時カレンダー): dates agree with the calendar, nothing invents a date, no outside link or price, the calculator agrees with its Python twin."""
 from __future__ import annotations
 
 import json
