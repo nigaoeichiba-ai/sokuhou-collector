@@ -62,3 +62,14 @@ def in_days(x: date | str) -> str:
 
 def a(path: str, text: str) -> str:
     return f'<a href="{path}">{text}</a>'
+
+
+def rel(x: date | str) -> str:
+    """'あと22日' / '今日' / '3日前': a sentence that must stay true after the day has passed"""
+    n = left(x)
+    return "今日" if n == 0 else f"あと{n}日" if n > 0 else f"{-n}日前"
+
+
+def ver(x: date | str, now: str = "です", then: str = "でした") -> str:
+    """the ending of a sentence about the day x: 'です' until it has come, 'でした' after"""
+    return now if left(x) >= 0 else then
