@@ -185,6 +185,24 @@ class RunnerImage(unittest.TestCase):
         self.assertNotIn("runs-on: ubuntu-latest", TEXT)      # 'latest' moved to Ubuntu 26 on 2026-10-19: the gates (layoutcheck's fonts, Pillow, rsync) must not change by themselves
         self.assertEqual(TEXT.count("runs-on: ${{ vars.DEPLOY_RUNNER || 'ubuntu-24.04' }}"), 2)
 
+class EverySiteHasItsSwitch(unittest.TestCase):
+    def test_the_gate_reads_the_variable_of_the_site_not_four_fixed_names(self):
+        gate = block("Gate")
+        self.assertIn("VAR_VALUE: ${{ vars[matrix.var_name] }}", gate)
+        self.assertIn('[ "$NEEDS_VAR" = "true" ] && [ "$VAR_VALUE" != "true" ]', gate)
+        for old in ("DEPLOY_KUMA", "DEPLOY_MINNA", "DEPLOY_ATOMOU", "DEPLOY_YOROKOBU"):
+            self.assertNotIn(old + " is not true", gate)      # no site is named here: a new one is covered by the same lines
+
+    def test_the_plan_gets_the_variables_and_leaves_a_switched_off_site_out(self):
+        plan = TEXT[TEXT.index(chr(10) + "  plan:"):TEXT.index(chr(10) + "  deploy:")]
+        self.assertIn("GH_VARS: ${{ toJSON(vars) }}", plan)
+
+    def test_the_inbox_collects_every_site_of_the_register(self):
+        inbox = (ROOT / ".github" / "workflows" / "inbox.yml").read_text(encoding="utf-8")
+        self.assertIn("python3 -m sokuhou.deployplan inbox-sites", inbox)
+        self.assertNotIn("kuma:kuma-sokuho.com", inbox)
+
+
 class OtherSessionsSteps(unittest.TestCase):
     def test_the_yorokobu_private_product_data_step_is_still_there_after_the_tests_and_before_the_upload(self):
         # lost once on 2026-10-18 when a copy of this file was put back over a newer one: a step another session adds must survive a rewrite of the workflow

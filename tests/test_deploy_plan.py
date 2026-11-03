@@ -227,6 +227,45 @@ class WhoseIsIt(PlanBase):
         self.assertEqual(y["build"], "python sites/yorokobu/build.py --release --out release --items out/yorokobu_items.json")
 
 
+class SwitchedOffSites(PlanBase):
+    """Every site but saichin is switched on by its own repository variable DEPLOY_<NAME>; a new site is off until the owner has added the domain (2026-11-03: a site added to the
+    register was published as soon as the server folder and the secrets were there, because only four sites were checked by name)."""
+
+    def plan_with(self, variables, **kw):
+        before = self.head()
+        after = self.commit("sokuhou/sitekit.py", "shared")
+        for s in SITES:
+            self.serve(s, before)
+        return deployplan.plan(self.reg, event="push", only=kw.get("only", ""), before=before, after=after, cwd=self.repo, variables=variables)
+
+    def test_a_site_whose_variable_is_not_true_gets_no_job(self):
+        res = self.plan_with({"DEPLOY_KUMA": "true", "DEPLOY_MINNA": "true", "DEPLOY_YOROKOBU": "true", "DEPLOY_ATOMOU": "false"})
+        self.assertEqual([i["site"] for i in res["include"]], ["saichin", "kuma", "yorokobu", "minna"])
+        self.assertIn("DEPLOY_ATOMOU", res["decisions"]["atomou"]["why"])
+
+    def test_saichin_needs_no_variable(self):
+        res = self.plan_with({})
+        self.assertEqual([i["site"] for i in res["include"]], ["saichin"])
+
+    def test_a_new_site_is_off_until_its_variable_says_true(self):
+        self.reg["sites"]["newsite"] = deployplan.load_registry(ROOT / "data" / "sites.json", env={"ATOMOU_BUILD_FLAG": "", "ATOMOU_PROBE": "/x"})["sites"]["saichin"] | {"name": "newsite", "needs_var": True, "var_name": "DEPLOY_NEWSITE", "own": ["sites/newsite/*"]}
+        self.live["newsite"] = self.live["saichin"]
+        off = self.plan_with({"DEPLOY_NEWSITE": ""})
+        self.assertNotIn("newsite", [i["site"] for i in off["include"]])
+        on = self.plan_with({"DEPLOY_NEWSITE": "true"})
+        self.assertIn("newsite", [i["site"] for i in on["include"]])
+
+    def test_the_matrix_tells_the_job_which_variable_to_read(self):
+        res = self.plan_with({v: "true" for v in ("DEPLOY_KUMA", "DEPLOY_MINNA", "DEPLOY_YOROKOBU", "DEPLOY_ATOMOU")})
+        inc = {i["site"]: i for i in res["include"]}
+        self.assertEqual((inc["kuma"]["needs_var"], inc["kuma"]["var_name"], inc["saichin"]["needs_var"]), (True, "DEPLOY_KUMA", False))
+
+    def test_a_manual_run_of_a_switched_off_site_does_not_publish_it_either(self):
+        before = self.head()
+        res = deployplan.plan(self.reg, event="workflow_dispatch", only="kuma", before=before, after=before, cwd=self.repo, variables={})
+        self.assertEqual(res["include"], [])
+
+
 class WaitMeasured(PlanBase):
     def test_the_matrix_carries_the_commit_time_of_the_oldest_waiting_change(self):
         live = self.commit("sites/minna/old.json", "live minna")

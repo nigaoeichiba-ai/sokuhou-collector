@@ -40,7 +40,7 @@ class RegistryError(ValueError):
     pass
 
 
-BUILTIN = {"min_pages": 20, "min_cards": 0, "probe": "/sitemap.xml", "needs_var": False, "live_sha": True, "watch": True, "group": "deploy-{name}", "timeout_minutes": 90,
+BUILTIN = {"min_pages": 20, "min_cards": 0, "probe": "/sitemap.xml", "needs_var": True, "inbox": True, "live_sha": True, "watch": True, "group": "deploy-{name}", "timeout_minutes": 90,
            "build": "python sites/{name}/build.py --release --out release",
            "own": ["sites/{name}/*", "tests/test_{name}*", "tests/fixtures/{name}/*", "data/{name}*", "data/style/rewrites/{name}.json"]}   # what data/sites.json says too; a register without "defaults" still works
 
@@ -71,6 +71,7 @@ def load_registry(path: Path | str = REGISTRY, env: dict | None = None) -> dict:
         site["fast_lane"] = list(entry.get("fast_lane", []))
         for key in ("build", "probe", "group", "marker"):
             site[key] = _fill(site[key], name, env)
+        site["var_name"] = entry.get("var_name", "DEPLOY_" + name.upper())    # the repository variable that switches the site on: a new site is OFF until it is "true" (the owner has added the domain and the secrets are there)
         site["dir"] = entry.get("dir", entry["domain"])
         site["url"] = entry.get("url", "https://" + entry["domain"])
         sites[name] = site
@@ -158,10 +159,12 @@ def served_sha(site: dict, cwd: Path = ROOT, timeout: int = 20) -> str:
     return ""
 
 
-def decide(name: str, site: dict, *, event: str, only: str, before: str, after: str, served: str, cwd: Path = ROOT) -> dict:
-    """{'go': bool, 'fast': bool, 'why': str} for one site."""
+def decide(name: str, site: dict, *, event: str, only: str, before: str, after: str, served: str, cwd: Path = ROOT, variables: dict | None = None) -> dict:
+    """{'go': bool, 'fast': bool, 'why': str} for one site.  `variables`: the repository variables (None = not checked, as in the tests)."""
     if only and only != name:
         return {"go": False, "fast": False, "why": f"this run is for {only} only"}
+    if variables is not None and site.get("needs_var") and variables.get(site["var_name"]) != "true":
+        return {"go": False, "fast": False, "why": f"{site['var_name']} is not \"true\": the site is switched off (nothing is built or published)"}
     base = served or before
     if event != "push":
         return {"go": True, "fast": False, "why": f"{event}: every site"}
@@ -191,7 +194,7 @@ def oldest_waiting(name: str, reg: dict, base: str, after: str, changed: set[str
     return oldest
 
 
-def plan(reg: dict, *, event: str, only: str, before: str, after: str, cwd: Path = ROOT, fetch_served=True) -> dict:
+def plan(reg: dict, *, event: str, only: str, before: str, after: str, cwd: Path = ROOT, fetch_served=True, variables: dict | None = None) -> dict:
     """{'include': [matrix entries], 'decisions': {site: {...}}}"""
     if only and only not in reg["sites"]:
         raise RegistryError(f"--only {only!r}: no such site (register: {', '.join(reg['sites'])})")
@@ -201,14 +204,14 @@ def plan(reg: dict, *, event: str, only: str, before: str, after: str, cwd: Path
             raise RegistryError(f"site {n}: the probe path {reg['sites'][n]['probe']!r} is not a path (an {{env:...}} placeholder with no value?)")
     served: dict[str, str] = {n: "" for n in names}
     if event == "push" and fetch_served:
-        cand = [n for n in names if not only or only == n]
+        cand = [n for n in names if (not only or only == n) and (variables is None or not reg["sites"][n].get("needs_var") or variables.get(reg["sites"][n]["var_name"]) == "true")]
         with ThreadPoolExecutor(16) as ex:
             for n, sha in zip(cand, ex.map(lambda n: served_sha(reg["sites"][n], cwd), cand)):
                 served[n] = sha
     include, decisions = [], {}
     for n in names:
         site = reg["sites"][n]
-        d = decide(n, site, event=event, only=only, before=before, after=after, served=served[n], cwd=cwd)
+        d = decide(n, site, event=event, only=only, before=before, after=after, served=served[n], cwd=cwd, variables=variables)
         if "files" in d:
             changed = registry_changes(d["base"], after, cwd) if REGISTRY_FILE in d["files"] else None
             rel = relevant_files(n, d["files"], reg, changed)
@@ -224,7 +227,8 @@ def plan(reg: dict, *, event: str, only: str, before: str, after: str, cwd: Path
             include.append({"site": n, "dir": site["dir"], "url": site["url"], "build": site["build"], "min_pages": site["min_pages"], "min_cards": site["min_cards"],
                             "marker": site["marker"], "probe": site["probe"], "group": site["group"], "fast": d["fast"], "timeout": site["timeout_minutes"], "since": d.get("since", 0),
                             "slot": len(include) % SLOTS, "upload": site.get("upload", "auto"),
-                            "cache_path": site.get("cache_path", ""), "cache_files": site.get("cache_files", "")})
+                            "cache_path": site.get("cache_path", ""), "cache_files": site.get("cache_files", ""),
+                            "needs_var": bool(site.get("needs_var")), "var_name": site["var_name"]})
     return {"include": include, "decisions": decisions}
 
 
@@ -239,9 +243,19 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--only", default=os.environ.get("ONLY", ""))
     p.add_argument("--before", default=os.environ.get("BEFORE", ""))
     p.add_argument("--after", default=os.environ.get("AFTER", "HEAD"))
+    sub.add_parser("inbox-sites", help="name:folder of every site whose contact-form messages are collected (inbox.yml)")
     a = ap.parse_args(argv)
+    if a.cmd == "inbox-sites":
+        for n, site in load_registry(env={}).get("sites", {}).items():
+            if site.get("inbox", True):
+                print(f"{n}:{site['dir']}")
+        return 0
     reg = load_registry(a.registry)
-    result = plan(reg, event=a.event, only=a.only, before=a.before, after=a.after)
+    try:
+        variables = json.loads(os.environ["GH_VARS"]) if os.environ.get("GH_VARS") else None
+    except ValueError:
+        variables = None
+    result = plan(reg, event=a.event, only=a.only, before=a.before, after=a.after, variables=variables)
     lines = [f"| {n} | {'**publish**' if d['go'] else 'skip'}{' (fast lane)' if d['fast'] else ''} | {d['why']} |" for n, d in result["decisions"].items()]
     summary = "### deploy plan\n\n| site | decision | why |\n|---|---|---|\n" + "\n".join(lines) + "\n"
     print(summary)
