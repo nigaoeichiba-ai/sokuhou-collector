@@ -67,5 +67,59 @@ class TemplateTest(unittest.TestCase):
             self.assertIn(name, ignore.split())
 
 
+PAIR_DB = {**DB, "gacha": {**DB["gacha"], "pair": {"birthday-mother": {"tiers": {"3000": [
+    [0, 0, "財布1", 2000, "i0", "L0a", 10, 45], [0, 0, "財布2", 2100, "i0b", "L0b", 10, 44],
+    [1, 1, "菓子", 2500, "i1", "L1", 20, 46], [2, 2, "ハンカチ", 1800, "i2", "L2", 5, 43], [3, 4, "名入れ", 2900, "i3", "L3", 7, 42]]}}}}}
+
+
+class PairAnswerTest(unittest.TestCase):
+    """?pk=<pair key>&t=<tier>: up to three rows of DIFFERENT ideas for an occasion x recipient pair (the three-product gacha, 2026-11-03)."""
+
+    def ask(self, rnd=None, **q):
+        return S.answer({"pk": "birthday-mother", "t": "3000", **q}, PAIR_DB, rnd or random.Random(3))
+
+    def test_three_rows_of_three_different_ideas(self):
+        for seed in range(20):
+            code, out = self.ask(random.Random(seed))
+            self.assertEqual(code, 200)
+            rows = out["rows"]
+            self.assertEqual(len(rows), 3)
+            self.assertEqual(len({r[0] for r in rows}), 3)
+
+    def test_the_kind_to_take_and_the_kinds_to_leave_out(self):
+        self.assertEqual({r[1] for r in self.ask(k="1")[1]["rows"]}, {1})
+        rows = self.ask(exc="0,4")[1]["rows"]
+        self.assertTrue(rows and all(r[1] not in (0, 4) for r in rows))
+        self.assertEqual(self.ask(k="7")[1], {"rows": []})                       # no such kind in this pair: nothing, not an error
+
+    def test_the_links_shown_last_are_left_out_while_another_is_left(self):
+        for seed in range(20):
+            rows = self.ask(random.Random(seed), x="L0a,L1")[1]["rows"]
+            by = {r[0]: r[5] for r in rows}
+            if 0 in by:
+                self.assertEqual(by[0], "L0b")                                   # idea 0 has another product: that one
+            if 1 in by:
+                self.assertEqual(by[1], "L1")                                    # idea 1 has no other: the same is better than none
+
+    def test_n_is_capped_at_three_and_bad_input_is_refused_or_ignored(self):
+        self.assertEqual(len(self.ask(n="1")[1]["rows"]), 1)
+        self.assertEqual(len(self.ask(n="99")[1]["rows"]), 3)
+        self.assertEqual(S.answer({"pk": "../x", "t": "3000"}, PAIR_DB)[0], 400)
+        self.assertEqual(S.answer({"pk": "birthday-mother", "t": "<b>"}, PAIR_DB)[0], 400)
+        self.assertEqual(len(self.ask(exc="a,99999,,1")[1]["rows"]), len(self.ask(exc="1")[1]["rows"]))          # junk in exc is ignored, the real kind still counts
+
+    def test_an_unknown_pair_or_budget_gives_no_rows(self):
+        self.assertEqual(S.answer({"pk": "nope", "t": "3000"}, PAIR_DB), (200, {"rows": []}))
+        self.assertEqual(self.ask(t="9999")[1], {"rows": []})
+
+    def test_the_old_one_row_gacha_still_answers(self):
+        self.assertEqual(S.answer({"r": "mother", "t": "3000"}, PAIR_DB, random.Random(1))[0], 200)
+
+    def test_the_php_has_the_same_branch(self):
+        php = (ROOT / "sites" / "yorokobu" / "items_receiver.php.tpl").read_text(encoding="utf-8")
+        for needle in ("isset($_GET['pk'], $_GET['t'])", "['pair'][$pk]['tiers'][$t]", "exc", "shuffle($ideas)", "random_int", "min(3,"):
+            self.assertIn(needle, php, needle)
+
+
 if __name__ == "__main__":
     unittest.main()

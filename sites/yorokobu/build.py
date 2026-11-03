@@ -1487,7 +1487,7 @@ def home_tools(d: dict) -> str:
     c = d["c"]
     rows = []
     if d["gacha"]:
-        rows.append(tool_tile("/tool/gacha/", "dice-five", "おまかせ提案", "条件を選ぶと1点だけ提案します"))
+        rows.append(tool_tile("/tool/gacha/", "dice-five", "おまかせ提案", "相手・場面・予算を選ぶと3点、理由つきで提案します"))
     if c.get("ask"):
         rows.append(tool_tile("/dock/", "list-checks", "贈り物ドック", "相手のことを入れると診断の結果票を返します"))
         rows.append(tool_tile("/ask/", "chat-circle-text", "ほしいものを聞く", "好みをそれとなく聞くアンケートを作る"))
@@ -2123,7 +2123,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     pages["tool/calc/index.html"] = calc_page(d, cfg, preview)
     if d["gacha"]:
         gp = json.loads(d["gacha"])
-        pages["tool/gacha/index.html"] = gacha_page(d, cfg, preview, gp["rec"], gp["tiers"])
+        pages["tool/gacha/index.html"] = gacha_page(d, cfg, preview, gp)
         PRIVATE[itemsserver.PRIVATE_FILES["gacha"]] = d["gacha"]                              # not a public file: api/items.php gives one product at a time
     if c["taboo"]:
         pages["tool/taboo/index.html"] = taboo_page(d, cfg, preview)
