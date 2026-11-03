@@ -1,0 +1,224 @@
+{
+  "glyph": "試",
+  "updated": "2026-11-03",
+  "home_label": "トップ",
+  "nav": [
+    [
+      "日程の一覧",
+      "/schedule/",
+      "/schedule/"
+    ],
+    [
+      "締切が近い順",
+      "/deadlines/",
+      "/deadlines/"
+    ],
+    [
+      "入試",
+      "/nyushi/",
+      "/nyushi/"
+    ],
+    [
+      "方法と出典",
+      "/method/",
+      "/method/"
+    ]
+  ],
+  "footer_html": "出典: 各試験団体・省庁・教育委員会の公式ページ。各ページの末尾に、機関名・ページ名・URL・基準日・確認日を書いています。",
+  "purpose": "資格試験と入学試験の、申込・出願の期間、試験日、合格発表日を、公式ページで確かめた日付だけで並べること。受験する人が、締切を見落とさないための道具です。",
+  "update_text": "試験団体が日程を発表したら、公式ページで日付を確かめて入れ替え、各ページの最終更新日を書き換えます。年度が替わるたびに、全ページの日付を公式ページから取り直します。直した内容は「訂正と更新の記録」に残します。",
+  "disclaimer": [
+    "日程は、試験団体や教育委員会が変更することがあります。申し込む前に、必ず公式ページで最新の内容を確かめてください。",
+    "このサイトは、日付と制度の事実を伝えるものです。個々の受験について、出願先や受験資格の判断はしません。"
+  ],
+  "method": [
+    "試験団体・省庁・教育委員会の公式ページを開き、日付を読み取って表に入れています。曜日と「あと何日」は日付から計算しています。",
+    "公式ページに載っていない日程は、推測で補いません。その試験は、公式ページへのリンクだけを載せています。",
+    "各団体の表や文章は写していません。日付や金額という事実だけを、当サイトの表に組み直しています。"
+  ],
+  "corrections": [],
+  "sources": {
+    "retio": {
+      "org": "不動産適正取引推進機構",
+      "table": "宅地建物取引士資格試験 試験日程",
+      "url": "https://www.retio.or.jp/exam/schedule/",
+      "basis": "令和8年度",
+      "fetched": "2026-11-03"
+    },
+    "gyosei": {
+      "org": "行政書士試験研究センター",
+      "table": "行政書士試験 受験案内",
+      "url": "https://www.gyosei-shiken.or.jp/doc/guide/guide.html",
+      "basis": "令和8年度",
+      "fetched": "2026-11-03"
+    },
+    "sharosi": {
+      "org": "全国社会保険労務士会連合会 試験センター",
+      "table": "社会保険労務士試験 申込みの案内",
+      "url": "https://www.sharosi-siken.or.jp/application/",
+      "basis": "令和8年度(第58回)",
+      "fetched": "2026-11-03"
+    },
+    "sssc": {
+      "org": "社会福祉振興・試験センター",
+      "table": "介護福祉士国家試験 受験の手続き",
+      "url": "https://www.sssc.or.jp/kaigo/tetsuzuki.html",
+      "basis": "第39回(令和8年度)",
+      "fetched": "2026-11-03"
+    },
+    "mhlw_kango": {
+      "org": "厚生労働省",
+      "table": "看護師国家試験",
+      "url": "https://www.mhlw.go.jp/kouseiroudoushou/shikaku_shiken/kangoshi/",
+      "basis": "第116回",
+      "fetched": "2026-11-03"
+    },
+    "jfcmca": {
+      "org": "中小企業診断協会",
+      "table": "令和8年度 中小企業診断士試験 日程",
+      "url": "https://www.jf-cmca.jp/contents/010_c_/010_c_r08_shiken/R08_nittei.html",
+      "basis": "令和8年度",
+      "fetched": "2026-11-03"
+    },
+    "jinji": {
+      "org": "人事院",
+      "table": "令和9年度 国家公務員試験の日程",
+      "url": "https://www.jinji.go.jp/kouho_houdo/kisya/2603/2027nittei.html",
+      "basis": "2027年度",
+      "fetched": "2026-11-03"
+    },
+    "kentei": {
+      "org": "日本商工会議所 検定試験",
+      "table": "簿記検定 試験日カレンダー",
+      "url": "https://www.kentei.ne.jp/calendar_2026",
+      "basis": "第173〜175回",
+      "fetched": "2026-11-03"
+    },
+    "jafp": {
+      "org": "日本FP協会",
+      "table": "FP技能検定 試験日程",
+      "url": "https://www.jafp.or.jp/exam/schedule/",
+      "basis": "2026〜2027年",
+      "fetched": "2026-11-03"
+    },
+    "kinzai": {
+      "org": "金融財政事情研究会(きんざい)",
+      "table": "FP技能検定 1級学科",
+      "url": "https://www.kinzai.or.jp/fp",
+      "basis": "2027年1月",
+      "fetched": "2026-11-03"
+    },
+    "ipa": {
+      "org": "情報処理推進機構(IPA)",
+      "table": "情報処理技術者試験 スケジュール・手数料",
+      "url": "https://www.ipa.go.jp/shiken/mousikomi/schedule.html",
+      "basis": "2026年度",
+      "fetched": "2026-11-03"
+    },
+    "eiken": {
+      "org": "日本英語検定協会",
+      "table": "英検 2026年度 第3回 申込み",
+      "url": "https://www.eiken.or.jp/eiken/schedule/examinee/03/",
+      "basis": "2026年度第3回",
+      "fetched": "2026-11-03"
+    },
+    "iibc": {
+      "org": "IIBC(国際ビジネスコミュニケーション協会)",
+      "table": "TOEIC Listening & Reading 公開テスト 日程",
+      "url": "https://www.iibc-global.org/toeic/test/lr/guide01/schedule.html",
+      "basis": "2026年12月〜2027年3月",
+      "fetched": "2026-11-03"
+    },
+    "kanken": {
+      "org": "日本漢字能力検定協会",
+      "table": "漢検 個人受検 検定日程",
+      "url": "https://www.kanken.or.jp/kanken/individual/pbt/schedule/",
+      "basis": "2026年度第3回",
+      "fetched": "2026-11-03"
+    },
+    "tokyo_hoken": {
+      "org": "東京都保健医療局",
+      "table": "登録販売者試験 令和8年度",
+      "url": "https://www.hokeniryo.metro.tokyo.lg.jp/anzen/iyaku/tourokushiken/r8shiken",
+      "basis": "令和8年度",
+      "fetched": "2026-11-03"
+    },
+    "dnc": {
+      "org": "大学入試センター",
+      "table": "令和9年度 大学入学共通テスト 試験情報",
+      "url": "https://www.dnc.ac.jp/kyotsu/shiken_jouhou/r9/index.html",
+      "basis": "令和9年度",
+      "fetched": "2026-11-03"
+    },
+    "utokyo": {
+      "org": "東京大学",
+      "table": "令和9年度 学部入学者選抜 一般選抜",
+      "url": "https://www.u-tokyo.ac.jp/ja/admissions/undergraduate/e01_02_01.html",
+      "basis": "令和9年度",
+      "fetched": "2026-11-03"
+    },
+    "mext": {
+      "org": "文部科学省",
+      "table": "令和9年度大学入学者選抜について",
+      "url": "https://www.mext.go.jp/a_menu/koutou/senbatsu/1412102_00013.htm",
+      "basis": "令和9年度",
+      "fetched": "2026-11-03"
+    },
+    "koko": {
+      "org": "各都道府県の教育委員会",
+      "table": "令和9年度 公立高等学校入学者選抜の日程(表の行ごとにリンク)",
+      "url": "https://www.mext.go.jp/",
+      "basis": "令和9年度",
+      "fetched": "2026-11-03"
+    },
+    "retio_stat": {
+      "org": "不動産適正取引推進機構",
+      "table": "宅建士試験 実施状況(過去の年度)",
+      "url": "https://www.retio.or.jp/exam/exam_detail/",
+      "basis": "平成26〜令和7年度",
+      "fetched": "2026-11-03"
+    },
+    "gyosei_stat": {
+      "org": "行政書士試験研究センター",
+      "table": "行政書士試験 結果の概要",
+      "url": "https://www.gyosei-shiken.or.jp/pdf/summary.pdf",
+      "basis": "平成28〜令和7年度",
+      "fetched": "2026-11-03"
+    },
+    "sharosi_stat": {
+      "org": "厚生労働省",
+      "table": "社会保険労務士試験の合格者発表",
+      "url": "https://www.mhlw.go.jp/stf/newpage_76425.html",
+      "basis": "第49〜58回",
+      "fetched": "2026-11-03"
+    },
+    "kentei_stat": {
+      "org": "日本商工会議所 検定試験",
+      "table": "簿記検定 受験者データ",
+      "url": "https://www.kentei.ne.jp/bookkeeping/candidate-data",
+      "basis": "第163〜173回",
+      "fetched": "2026-11-03"
+    },
+    "kaigo_stat": {
+      "org": "厚生労働省",
+      "table": "介護福祉士国家試験の合格発表",
+      "url": "https://www.mhlw.go.jp/stf/newpage_71070.html",
+      "basis": "第32〜38回",
+      "fetched": "2026-11-03"
+    },
+    "kango_stat": {
+      "org": "厚生労働省",
+      "table": "第115回看護師国家試験の合格発表",
+      "url": "https://www.mhlw.go.jp/general/sikaku/successlist/2026/siken03_04_05/about.html",
+      "basis": "第115回",
+      "fetched": "2026-11-03"
+    },
+    "ipa_stat": {
+      "org": "情報処理推進機構(IPA)",
+      "table": "情報処理技術者試験 統計資料",
+      "url": "https://www.ipa.go.jp/shiken/reports/toukei_all.html",
+      "basis": "平成28〜令和7年度",
+      "fetched": "2026-11-03"
+    }
+  }
+}
