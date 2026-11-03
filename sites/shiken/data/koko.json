@@ -570,6 +570,93 @@
   }
  },
  {
+  "pref": "和歌山県",
+  "src": "https://www.pref.wakayama.lg.jp/prefg/500200/d00221979.html",
+  "general": {
+   "name": "一般選抜・スポーツ推薦",
+   "apply": [
+    "2027-02-19",
+    "2027-03-03"
+   ],
+   "exam": [
+    "2027-03-10",
+    "2027-03-11"
+   ],
+   "result": "2027-03-18",
+   "apply_raw": null
+  },
+  "early": {
+   "name": "特色化選抜",
+   "apply": [
+    "2027-01-21",
+    "2027-01-21"
+   ],
+   "exam": [
+    "2027-01-28"
+   ],
+   "result": "2027-02-05",
+   "apply_raw": null
+  }
+ },
+ {
+  "pref": "鳥取県",
+  "src": "https://www.pref.tottori.lg.jp/76404.htm",
+  "general": {
+   "name": "一般入学者選抜",
+   "apply": [
+    "2027-02-15",
+    "2027-02-17"
+   ],
+   "exam": [
+    "2027-03-04",
+    "2027-03-05"
+   ],
+   "result": "2027-03-15",
+   "apply_raw": null
+  },
+  "early": {
+   "name": "特色入学者選抜",
+   "apply": [
+    "2027-01-25",
+    "2027-01-26"
+   ],
+   "exam": [
+    "2027-02-02"
+   ],
+   "result": "2027-02-09",
+   "apply_raw": null
+  }
+ },
+ {
+  "pref": "島根県",
+  "src": "https://www.pref.shimane.lg.jp/education/kyoiku/senbatsu/senbatsu_info/index.html",
+  "general": {
+   "name": "一般入学者選抜(全日制・定時制)",
+   "apply": [
+    "2027-01-25",
+    "2027-02-04"
+   ],
+   "exam": [
+    "2027-03-03",
+    "2027-03-04"
+   ],
+   "result": "2027-03-12",
+   "apply_raw": null
+  },
+  "early": {
+   "name": "特色入学者選抜(総合選抜・中高一貫特別選抜・スポーツ特別選抜の総称。全日制)",
+   "apply": [
+    "2026-12-21",
+    "2027-01-08"
+   ],
+   "exam": [
+    "2027-01-20"
+   ],
+   "result": "2027-03-12",
+   "apply_raw": null
+  }
+ },
+ {
   "pref": "岡山県",
   "src": "https://www.pref.okayama.jp/uploaded/life/1061952_10292562_misc.pdf",
   "general": {
@@ -627,6 +714,35 @@
   }
  },
  {
+  "pref": "山口県",
+  "src": "https://www.pref.yamaguchi.lg.jp/site/kyouiku/353652.html",
+  "general": {
+   "name": "第一次募集(全日制・定時制)",
+   "apply": [
+    "2027-02-17",
+    "2027-02-25"
+   ],
+   "exam": [
+    "2027-03-09"
+   ],
+   "result": "2027-03-16",
+   "apply_raw": null
+  },
+  "early": {
+   "name": "特色選抜(全日制・定時制)",
+   "apply": [
+    "2027-01-26",
+    "2027-02-02"
+   ],
+   "exam": [
+    "2027-02-09",
+    "2027-02-10"
+   ],
+   "result": "2027-03-16",
+   "apply_raw": null
+  }
+ },
+ {
   "pref": "香川県",
   "src": "https://www.pref.kagawa.lg.jp/documents/15088/nyusinittei9.pdf",
   "general": {
@@ -656,6 +772,35 @@
   }
  },
  {
+  "pref": "愛媛県",
+  "src": "https://ehime-kyoiku.esnet.ed.jp/koukou/nyuusi/r09nyuusi",
+  "general": {
+   "name": "一般入学者選抜(全日制)",
+   "apply": [
+    "2027-02-08",
+    "2027-02-15"
+   ],
+   "exam": [
+    "2027-03-04",
+    "2027-03-05"
+   ],
+   "result": "2027-03-18",
+   "apply_raw": null
+  },
+  "early": {
+   "name": "特色入学者選抜",
+   "apply": [
+    "2027-01-12",
+    "2027-01-19"
+   ],
+   "exam": [
+    "2027-01-29"
+   ],
+   "result": "2027-03-18",
+   "apply_raw": null
+  }
+ },
+ {
   "pref": "福岡県",
   "src": "https://www.pref.fukuoka.lg.jp/uploaded/attachment/284848.pdf",
   "general": {
@@ -680,6 +825,35 @@
     "2027-02-02"
    ],
    "result": "2027-03-18",
+   "apply_raw": null
+  }
+ },
+ {
+  "pref": "佐賀県",
+  "src": "https://www.pref.saga.lg.jp/kyouiku/kiji003119218/index.html",
+  "general": {
+   "name": "一般選抜(全日制・定時制)",
+   "apply": [
+    "2027-02-15",
+    "2027-02-16"
+   ],
+   "exam": [
+    "2027-03-02",
+    "2027-03-03"
+   ],
+   "result": "2027-03-10",
+   "apply_raw": null
+  },
+  "early": {
+   "name": "特別選抜(全日制。スポーツ推進競技実績枠・学校希望枠、文化芸術推進、特色ある教育課程推進)",
+   "apply": [
+    "2027-01-26",
+    "2027-01-27"
+   ],
+   "exam": [
+    "2027-02-02"
+   ],
+   "result": "2027-02-08",
    "apply_raw": null
   }
  },
