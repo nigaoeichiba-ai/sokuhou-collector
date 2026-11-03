@@ -1,0 +1,58 @@
+{
+  "shichigosan-items-flat-chitose": {
+    "title": "千歳飴の袋イラスト 無料ダウンロード・実寸と印刷の方法",
+    "description": "千歳飴の袋の和柄イラスト(鶴・亀・松・梅)を無料ダウンロード。元の大きさ224×499px、300dpiで約19×42mm。印刷サイズの早見表とカードの見本つき。商用OK。",
+    "heading": "千歳飴の袋の大きさと印刷のしかた",
+    "paragraphs": [
+      "千歳飴の袋の絵は、赤い持ち手のついた縦長の袋を正面から描いたイラストです。地は薄いクリーム色で、鶴、亀、松、梅、波の和柄が入っています。背景が透明なPNGなので、台紙の色に合わせて使えます。",
+      "配っているのは絵です。切り抜いて組み立てる袋の型紙(展開図)ではありません。使い道は、既製の袋や紙袋に貼るラベル、お祝いカードやアルバムの飾り、七五三の写真に重ねる素材です。",
+      "元の大きさは幅{w}px、高さ{h}pxです。印刷サイズは、ピクセル数をdpiで割った値です。300dpiで{mm300}、200dpiで{mm200}、150dpiで{mm150}、100dpiで{mm100}になります。元より大きく引き伸ばすと、ふちと和柄の細い線がぼやけます。100dpiより大きく刷るときは、試し刷りで線の粗さを確かめてください。",
+      "家庭のプリンターで刷るには、PNGをWordやPagesなどの文書に貼り、高さをmmで指定します。印刷画面で「拡大縮小なし(実際のサイズ)」を選ぶと、決めたとおりの大きさで出ます。赤とクリーム色がはっきり出るのは、普通紙より写真用紙です。ラベルにするなら、A4のシール用紙に300dpiで並べて、余白なしで縦{a4_rows}×横{a4_cols}の最大{a4_n}枚です。",
+      "縦長の絵なので、はがき(縦)に置くと上下をほぼ使い切ります。元の大きさのまま置いても、はがきを150dpiで作る画面(592×876px)の横幅の{hagaki_pct}%です。残った余白に、神社の名前、日付、お祝いの言葉を入れられます。"
+    ],
+    "links": [
+      ["七五三の準備ガイド", "/guide/shichigosan-guide/"],
+      ["七五三の特集(フレーム・写真カード)", "/special/shichigosan/"],
+      ["七五三の小物と場面(同じセットの12点)", "/series/shichigosan-items-flat/"],
+      ["利用について(商用OK・クレジット不要)", "/license/"]
+    ],
+    "examples_heading": "千歳飴の袋を使った見本",
+    "examples": [
+      {
+        "name": "chitose-bag-1",
+        "caption": "七五三のお祝いカードの見本。千歳飴の袋を元の大きさのまま置き、神社名と日付は空欄(○)にしました。",
+        "uses": ["shichigosan-items-flat-chitose"],
+        "size": "はがき(100×148mm)を150dpiで作った大きさ",
+        "spec": {
+          "type": "card",
+          "size": "hagaki",
+          "title": {"text": "七五三のお祝い", "size": 44, "y": 56},
+          "item": "chitose",
+          "top": 150,
+          "lines": [
+            {"text": "○○神社にて\n○月○日", "size": 32, "weight": 500, "y": 704}
+          ]
+        }
+      },
+      {
+        "name": "chitose-bag-2",
+        "caption": "七五三の小物の台紙の見本。袋・草履・お守り・鳥居を元の大きさの半分に縮めて並べました。",
+        "uses": ["shichigosan-items-flat-chitose", "shichigosan-items-flat-zori", "shichigosan-items-flat-omamori", "shichigosan-items-flat-torii"],
+        "size": "横長(1168×592px)の大きさ",
+        "spec": {
+          "type": "strip",
+          "size": "wide",
+          "title": {"text": "七五三の小物", "size": 40, "y": 30},
+          "items": [
+            {"item": "chitose", "label": "千歳飴の袋"},
+            {"item": "zori", "label": "草履"},
+            {"item": "omamori", "label": "お守り"},
+            {"item": "torii", "label": "神社の鳥居"}
+          ],
+          "scale": 0.5,
+          "top": 100
+        }
+      }
+    ]
+  }
+}

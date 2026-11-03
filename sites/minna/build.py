@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.minna import facts, gate, model, printables, redirects, tips, wishes  # noqa: E402
+from sites.minna import facts, gate, itemguides, model, printables, redirects, tips, wishes  # noqa: E402
 from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
 from sites.minna.setguides import set_guide_html  # noqa: E402
 from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
@@ -1122,6 +1122,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 <section><h2><span class="scribble">用途例</span></h2><ul class="check">{uses}</ul></section>
 {facts_box(it)}
 {tips_box(it)}
+{itemguides.item_guide_html(it)}
 <section><h2><span class="scribble">キーワード</span></h2><ul class="tagcloud">{tags}</ul></section>
 {share(cfg, f"/illust/{it['id']}/", f"{it['title']}(無料・商用OKのイラスト)")}
 <section style="margin-top:44px"><h2><span class="scribble">同じセットのイラスト</span></h2>{grid(mates)}</section>
@@ -1130,8 +1131,9 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 {('<section style="margin-top:44px"><h2><span class="scribble">他の' + esc(g) + 'のイラスト</span></h2>' + grid(others) + '</section>') if others else ''}
 {guide_box(guides_for(it['genre'], it['touch'], list(guides)))}
 <script type="application/ld+json">{ld}</script>"""
-    return page(cfg, preview, path=f"/illust/{it['id']}/", title=f"{illust_page_title(it, items, s)} 無料・商用OKのイラスト | {cfg['site_name']}",
-                description=illust_description(it, s, t, idx), body=body, og_image=f"/thumbs/{it['id']}.webp")
+    ig = itemguides.meta(it["id"]) or {}
+    return page(cfg, preview, path=f"/illust/{it['id']}/", title=f"{ig.get('title') or illust_page_title(it, items, s) + ' 無料・商用OKのイラスト'} | {cfg['site_name']}",
+                description=ig.get("description") or illust_description(it, s, t, idx), body=body, og_image=f"/thumbs/{it['id']}.webp")
 
 
 def special_page(cfg, preview, sp: dict, sers: list[dict], its: list[dict], today: date, guides=()) -> str:
