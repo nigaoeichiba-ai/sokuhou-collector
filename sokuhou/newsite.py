@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import io
 import json
 import re
@@ -31,7 +32,7 @@ import shutil
 import sys
 from pathlib import Path
 
-from sokuhou import prefectures, seokit, sitekit, tilegrid
+from sokuhou import measure, prefectures, seokit, sitekit, tilegrid
 from sokuhou.sitekit import BuildError, esc
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -300,12 +301,14 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
             "source_html": spec["footer_html"], "assets": site_dir / "assets"}
 
     errors, warnings = [], []
+    measure_tag = (f'<script src="/assets/measure.js?v={hashlib.sha1(measure.MEASURE_JS.encode()).hexdigest()[:8]}" defer></script>\n'
+                   if cfg.get("measure") and not preview else "")
     metas, kinds, pages, rel_of = [], {}, {}, {}
     for p in content:
         body = page_body(p, spec, by_path, cfg)
         rel = "index.html" if p["path"] == "/" else p["path"].strip("/") + "/index.html"
         pages[rel] = sitekit.layout(site, cfg, preview, path=p["path"], title=f"{p['title']} | {cfg['site_name']}", description=p["description"], body=body,
-                                    head_extra=page_ld(p, spec, cfg))
+                                    head_extra=page_ld(p, spec, cfg) + measure_tag)
         kinds[rel] = p["kind"]
         rel_of[p["path"]] = rel
         metas.append({"path": p["path"], "kind": p["kind"], "primary_kw": p.get("primary_kw"), "secondary_kw": p.get("secondary_kw"), "intent": p.get("intent"),
@@ -317,6 +320,9 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
                                 disclaimer_html=_disclaimer_html(spec), contact_notice="お返事には数日かかることがあります。内容によっては、お返事できないこともあります。")
     pages.update(legal)
     pages.update(sitekit.asset_pages(site["assets"]))
+    if measure_tag:      # visits are counted without knowing who came (sokuhou/measure.py); the privacy page says so (sitekit.MEASURE_TEXT)
+        pages["assets/measure.js"] = measure.MEASURE_JS
+        pages["m/t.gif"] = measure.GIF
 
     kw_errors, kw_warnings = seokit.keyword_problems([m for m in metas if m["kind"] not in seokit.ALWAYS_NOINDEX or m.get("primary_kw")])
     errors += kw_errors
@@ -339,6 +345,8 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
 
     lastmod = {rel_of[p["path"]]: page_updated(p, spec) for p in content}
     pages.update(sitekit.standard_files(pages, cfg, preview, spec["updated"]))
+    if measure_tag:
+        pages[".htaccess"] += 'SetEnvIf Request_URI "^/m/" Ngx_Cache_NoCacheMode=on\n'      # the server cache must not answer the counting requests: they would never reach the access log
     pages["sitemap.xml"] = _sitemap(cfg, sorted(indexable), lastmod, spec["updated"])
     return pages, {"thin": thin, "warnings": warnings, "pages": len(content), "indexable": len(indexable)}
 
@@ -440,7 +448,7 @@ def init_site(name: str, domain: str, site_name: str, glyph: str, sites_dir: Pat
     (d / "content").mkdir()
     shutil.copy(ASSETS_SRC / "style.css", d / "assets" / "style.css")
     _icons(d / "assets", glyph)
-    cfg = {"site_url": f"https://{domain}", "site_name": site_name, "operator_name": "株式会社MACS", "contact_email": None, "contact_own": True, "contact_kinds": DEFAULT_KINDS}
+    cfg = {"site_url": f"https://{domain}", "site_name": site_name, "operator_name": "株式会社MACS", "contact_email": None, "contact_own": True, "contact_kinds": DEFAULT_KINDS, "measure": True}
     (d / "config.json").write_text(json.dumps(cfg, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     spec = {
         "glyph": glyph, "updated": today, "home_label": "トップ",
@@ -533,6 +541,9 @@ def main(argv: list[str] | None = None) -> int:
     i.add_argument("--sites-dir", default=str(ROOT / "sites"))
     i.add_argument("--register", action="store_true", help="also append the site to data/sites.json")
     i.add_argument("--min-pages", type=int, default=10)
+    g = sub.add_parser("register", help="add an existing sites/<name> to data/sites.json (after the deploy gate knows the name)")
+    g.add_argument("site_dir")
+    g.add_argument("--min-pages", type=int, default=10)
     b = sub.add_parser("build")
     b.add_argument("site_dir")
     b.add_argument("rest", nargs=argparse.REMAINDER)
@@ -556,6 +567,11 @@ def main(argv: list[str] | None = None) -> int:
                 print("not registered. The line for data/sites.json:  " + json.dumps({"name": a.name, "domain": a.domain, "marker": a.site_name, "min_pages": a.min_pages, "needs_var": True}, ensure_ascii=False))
             return 0
         site_dir = Path(a.site_dir)
+        if a.cmd == "register":
+            cfg = json.loads((site_dir / "config.json").read_text(encoding="utf-8"))
+            register(site_dir.name, cfg["site_url"].split("//")[-1], cfg["site_name"], ROOT / "data" / "sites.json", a.min_pages)
+            print(f"added {site_dir.name} to data/sites.json (check that deploy.yml's Gate and inbox.yml know the name first)")
+            return 0
         if a.cmd == "build":
             main_build(site_dir, a.rest)
             return 0

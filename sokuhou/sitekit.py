@@ -268,6 +268,17 @@ def contact_files(cfg: dict, page) -> dict:
     return {"contact/send.php": contactform.send_php(cfg), "contact/thanks.html": thanks}
 
 
+MEASURE_TEXT = """<p>当サイトは、Google アナリティクスなどの外部のアクセス解析ツールを使用していません。代わりに、ページの利用の様子を数えるための小さなスクリプトを、当サイトの中だけで動かしています。</p>
+<p>数えるのは、訪問の始まり、紹介リンクや外部サイトへのリンクを押した回数(種類だけで、リンク先もページも記録しません)、ページを開いていた時間とその訪問で見たページ数(おおまかな区間)、7日以内にこのブラウザで来たことがあるかどうかです。クッキーは使いません。お名前・IPアドレス・端末を見分けるための番号は、取得も保存もしません。</p>
+<p>「7日以内に来たことがあるか」を知るため、お使いのブラウザの中にだけ、前に開いた時刻と、この訪問で見たページ数を残します。この値は当サイトのサーバーへは送られません。ブラウザの設定でサイトデータを消せば、なくなります。ブラウザの「トラッキング拒否(Do Not Track)」を有効にしている場合は、数えません。</p>"""
+NO_ANALYTICS_TEXT = "<p>現時点では、Google アナリティクスなどのアクセス解析ツールを使用していません。使用を始める場合は、このページでお知らせします。</p>"
+
+
+def analytics_text(cfg: dict) -> str:
+    """The privacy-policy paragraphs about measuring visits: a site that loads sokuhou/measure.py (cfg["measure"]) says what is counted; the others keep the old sentence."""
+    return MEASURE_TEXT if cfg.get("measure") else NO_ANALYTICS_TEXT
+
+
 def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_html: str, update_text: str,
                 disclaimer_html: str, contact_notice: str, input_note: str = "", finish=lambda s: s) -> dict[str, str]:
     """about / privacy / contact / 404, with the site-specific sentences passed in."""
@@ -292,7 +303,7 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
 <h2>取得する情報</h2>
 <p>当サイトは、会員登録などの機能を持ちません。お問い合わせの際にいただいたお名前・メールアドレスなどは、返信のためだけに使い、法令に基づく場合を除いて、第三者へ提供しません。</p>
 {input_note}{form_privacy(cfg)}<h2>アクセス解析</h2>
-<p>現時点では、Google アナリティクスなどのアクセス解析ツールを使用していません。使用を始める場合は、このページでお知らせします。</p>
+{analytics_text(cfg)}
 <h2>広告について</h2>
 <p>当サイトは、第三者配信の広告サービス「Google AdSense」を利用する場合があります。広告配信事業者は、利用者の興味に応じた広告を表示するために、Cookie(クッキー)を使用することがあります。</p>
 <p>Cookie を無効にする、または、パーソナライズ広告を無効にするには、<a href="https://adssettings.google.com/" rel="noopener" target="_blank">Google の広告設定</a>をご利用ください。第三者配信事業者による Cookie の使用を無効にするには、<a href="https://www.aboutads.info/choices/" rel="noopener" target="_blank">aboutads.info</a> もご利用いただけます。</p>

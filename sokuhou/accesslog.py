@@ -16,6 +16,8 @@ from collections import Counter
 from datetime import datetime
 from urllib.parse import urlsplit
 
+from sokuhou import measure
+
 MIN_ROWS = 3
 LINE = re.compile(r'^(\S+) \S+ \S+ \[([^\]]+)\] "(\S+) (\S+)[^"]*" (\d{3}) \S+ "([^"]*)" "([^"]*)"')
 ASSET = re.compile(r"\.(css|js|mjs|map|png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|otf|xml|txt|json|csv|pdf|ics|mp4|webm|zip)$", re.I)
@@ -86,7 +88,7 @@ def aggregate(lines, own_domain: str = "") -> dict:
     own = own_domain.lower().removeprefix("www.")
     r = {"lines": 0, "parsed": 0, "first": "", "last": "", "days": Counter(), "days_human": Counter(),
          "pages": Counter(), "refs": Counter(), "search": Counter(), "agents": Counter(), "n404": Counter(),
-         "visitors": set(), "human_views": 0}
+         "visitors": set(), "human_views": 0, "measure": measure.new()}
     for raw in lines:
         r["lines"] += 1
         m = LINE.match(raw)
@@ -101,6 +103,13 @@ def aggregate(lines, own_domain: str = "") -> dict:
             r["last"] = day if day > r["last"] else r["last"]
         if status == "404" and method == "GET" and "@" not in path:
             r["n404"][path[:120]] += 1
+        if path == measure.BEACON_PATH:      # our own measurement file: counted by kind, never as a page view (sokuhou/measure.py)
+            beacon = measure.parse_beacon(target) if method == "GET" and status in ("200", "304") else None
+            if beacon and classify_agent(ua) == "ブラウザ(人)":
+                measure.add(r["measure"], beacon)
+            else:
+                r["measure"]["ignored"] += 1
+            continue
         if method != "GET" or status not in ("200", "304") or not is_page(path):
             continue
         agent = classify_agent(ua)
@@ -144,6 +153,7 @@ def render(r: dict, site: str) -> str:
                               ("Bot・自動取得の種別(ページ取得の件数)", "agents", 15), ("404 になったパス(3回以上)", "n404", 15)):
         rows = _rows(r[key], limit)
         out.append(f"- {title}: " + (" / ".join(f"{k} {v}" for k, v in rows) if rows else "なし"))
+    out.append(measure.render(r["measure"]))
     return "\n".join(out)
 
 

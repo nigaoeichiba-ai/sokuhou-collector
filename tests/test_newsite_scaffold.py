@@ -207,6 +207,15 @@ class ScaffoldTest(unittest.TestCase):
         with self.assertRaises(sitekit.BuildError):
             newsite.register("dummysite", "dummy.example", "ダミー統計", copy, 10)
 
+    def test_register_command_reads_the_site_folder(self):
+        from sokuhou import deployplan
+        copy = self.tmp / "sites_cmd.json"
+        shutil.copy(ROOT / "data" / "sites.json", copy)
+        cfg = json.loads((self.site / "config.json").read_text(encoding="utf-8"))
+        newsite.register(self.site.name, cfg["site_url"].split("//")[-1], cfg["site_name"], copy, 10)
+        entry = deployplan.load_registry(copy, env={})["sites"]["dummysite"]
+        self.assertEqual(entry["domain"], "dummy.example")
+
     # ---- negative tests: each check finds the failure it was made for ----
     def test_thin_page_becomes_noindex_and_leaves_the_sitemap(self):
         """minna 2026-10-20: a list that is only a grid of pictures is no page for a search to send anyone to."""
