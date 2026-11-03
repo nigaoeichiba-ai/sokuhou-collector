@@ -35,7 +35,7 @@ DROP = re.compile(r"(日程と金額の|日付の)?確認日は2026年11月3日�
 def finalize(p: dict) -> dict:
     """The owner's rule (2026-11-03): no source URL, no 'checked on' day per row, no list of official links on a page.  What stays: the page's update day,
     one closing sentence on every page, and the method page.  (The dates are still read from the primary sources when they are made.)"""
-    p["sources"] = ["official"]
+    p.pop("sources", None)
     secs = []
     for s in p["sections"]:
         s = dict(s)
@@ -61,7 +61,9 @@ def write(root: Path = SITE) -> int:
         slug = p["path"].strip("/").replace("/", "-") or "home"
         (content / f"{slug}.json").write_text(json.dumps(p, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     site = json.loads((root / "site.json").read_text(encoding="utf-8"))
-    site["sources"] = SOURCES
+    site["sources"] = {}
+    site["sources_style"] = "credit"
+    site["credits"] = ["各試験団体・省庁・教育委員会の公式発表をもとに作成"]
     site["updated"] = CHECKED
     site.update({
         "nav": [["日程の一覧", "/schedule/", "/schedule/"], ["締切が近い順", "/deadlines/", "/deadlines/"], ["入試", "/nyushi/", "/nyushi/"],
