@@ -508,8 +508,8 @@
   },
   {
     "title": "AFCアジアカップ2027 サウジアラビア大会",
-    "date": "2027-01-07",
-    "date_end": "2027-02-05",
+    "date": "2027-12-23",
+    "date_end": "2028-01-21",
     "precision": "day",
     "kind": "開始",
     "category": "サッカー",
@@ -519,13 +519,14 @@
     "place": "サウジアラビア",
     "son_toku": false,
     "son_toku_reason": "",
-    "source_url": "https://www.the-afc.com/en/competitions/afc_asian_cup.html",
-    "source_quote": "from January 7 to February 5, 2027",
-    "checked_on": "2026-10-08",
+    "source_url": "https://www.jfa.jp/news/00036971/",
+    "source_quote": "変更後の同大会の開催期間は 2027年12月23日から2028年1月21日 となります。",
+    "checked_on": "2026-11-04",
     "verified": true,
     "sensitivity": "none",
     "ad_ok": true,
-    "note": "決勝は2027-02-05。日本の初戦の日付は未確認。"
+    "note": "2026-11-03にAFCが延期を発表(FIFAの承認待ち)。決勝は2028-01-21。",
+    "basis": "official"
   },
   {
     "title": "大相撲 十一月場所(九州場所)",
