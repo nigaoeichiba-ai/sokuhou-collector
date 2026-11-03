@@ -125,6 +125,23 @@
   }
  },
  {
+  "pref": "茨城県",
+  "src": "https://kyoiku.pref.ibaraki.jp/gakko/nyushi/highschool/schedule2026/",
+  "general": {
+   "name": "一般入学(第1希望校)の共通選抜・特色選抜",
+   "apply": [
+    "2027-02-05",
+    "2027-02-09"
+   ],
+   "exam": [
+    "2027-02-25"
+   ],
+   "result": "2027-03-11",
+   "apply_raw": null
+  },
+  "early": null
+ },
+ {
   "pref": "栃木県",
   "src": "https://www.pref.tochigi.lg.jp/m04/r09/documents/20261015163318.pdf",
   "general": {
@@ -257,6 +274,35 @@
    "apply_raw": null
   },
   "early": null
+ },
+ {
+  "pref": "富山県",
+  "src": "https://www.pref.toyama.jp/300201/kyouiku/kenritsukoukou/09senbatsu.html",
+  "general": {
+   "name": "全日制 一般",
+   "apply": [
+    "2027-02-24",
+    "2027-02-26"
+   ],
+   "exam": [
+    "2027-03-09",
+    "2027-03-10"
+   ],
+   "result": "2027-03-18",
+   "apply_raw": null
+  },
+  "early": {
+   "name": "全日制 推薦",
+   "apply": [
+    "2027-02-01",
+    "2027-02-03"
+   ],
+   "exam": [
+    "2027-02-09"
+   ],
+   "result": "2027-03-18",
+   "apply_raw": null
+  }
  },
  {
   "pref": "石川県",
@@ -437,6 +483,35 @@
   }
  },
  {
+  "pref": "京都府",
+  "src": "https://www.kyoto-be.ne.jp/koukyou/cms/wp-content/uploads/2026/04/002%EF%BC%88%E5%BA%83%E5%A0%B1%E8%B3%87%E6%96%99%EF%BC%89%E5%85%AC%E7%AB%8B%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1%E5%85%A5%E5%AD%A6%E8%80%85%E9%81%B8%E6%8A%9C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6.pdf",
+  "general": {
+   "name": "後期選抜",
+   "apply": [
+    "2027-03-10",
+    "2027-03-11"
+   ],
+   "exam": [
+    "2027-03-16"
+   ],
+   "result": "2027-03-18",
+   "apply_raw": null
+  },
+  "early": {
+   "name": "前期選抜・特別入学者選抜(全日制・定時制。独自枠/共通枠)",
+   "apply": [
+    "2027-02-03",
+    "2027-02-05"
+   ],
+   "exam": [
+    "2027-02-18",
+    "2027-02-19"
+   ],
+   "result": "2027-03-05",
+   "apply_raw": null
+  }
+ },
+ {
   "pref": "大阪府",
   "src": "https://www.pref.osaka.lg.jp/documents/129117/03_r9_hs_nittei.pdf",
   "general": {
@@ -495,31 +570,31 @@
   }
  },
  {
-  "pref": "京都府",
-  "src": "https://www.kyoto-be.ne.jp/koukyou/cms/wp-content/uploads/2026/04/002%EF%BC%88%E5%BA%83%E5%A0%B1%E8%B3%87%E6%96%99%EF%BC%89%E5%85%AC%E7%AB%8B%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1%E5%85%A5%E5%AD%A6%E8%80%85%E9%81%B8%E6%8A%9C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6.pdf",
+  "pref": "岡山県",
+  "src": "https://www.pref.okayama.jp/uploaded/life/1061952_10292562_misc.pdf",
   "general": {
-   "name": "後期選抜",
+   "name": "一般入学者選抜(全日制課程・定時制課程)",
    "apply": [
-    "2027-03-10",
-    "2027-03-11"
+    "2027-02-24",
+    "2027-02-26"
    ],
    "exam": [
-    "2027-03-16"
+    "2027-03-09",
+    "2027-03-10"
    ],
-   "result": "2027-03-18",
+   "result": "2027-03-17",
    "apply_raw": null
   },
   "early": {
-   "name": "前期選抜・特別入学者選抜(全日制・定時制。独自枠/共通枠)",
+   "name": "特別入学者選抜(海外帰国生徒・連携型中高一貫・フレックス制・定時制の特別な入学者選抜を含む)",
    "apply": [
-    "2027-02-03",
-    "2027-02-05"
+    "2027-01-26",
+    "2027-01-28"
    ],
    "exam": [
-    "2027-02-18",
-    "2027-02-19"
+    "2027-02-09"
    ],
-   "result": "2027-03-05",
+   "result": "2027-02-18",
    "apply_raw": null
   }
  },
@@ -552,6 +627,35 @@
   }
  },
  {
+  "pref": "香川県",
+  "src": "https://www.pref.kagawa.lg.jp/documents/15088/nyusinittei9.pdf",
+  "general": {
+   "name": "一般選抜",
+   "apply": [
+    null,
+    null
+   ],
+   "exam": [
+    "2027-03-09",
+    "2027-03-10"
+   ],
+   "result": "2027-03-18",
+   "apply_raw": null
+  },
+  "early": {
+   "name": "自己推薦選抜",
+   "apply": [
+    null,
+    null
+   ],
+   "exam": [
+    "2027-02-02"
+   ],
+   "result": "2027-02-09",
+   "apply_raw": null
+  }
+ },
+ {
   "pref": "福岡県",
   "src": "https://www.pref.fukuoka.lg.jp/uploaded/attachment/284848.pdf",
   "general": {
@@ -576,35 +680,6 @@
     "2027-02-02"
    ],
    "result": "2027-03-18",
-   "apply_raw": null
-  }
- },
- {
-  "pref": "岡山県",
-  "src": "https://www.pref.okayama.jp/uploaded/life/1061952_10292562_misc.pdf",
-  "general": {
-   "name": "一般入学者選抜(全日制課程・定時制課程)",
-   "apply": [
-    "2027-02-24",
-    "2027-02-26"
-   ],
-   "exam": [
-    "2027-03-09",
-    "2027-03-10"
-   ],
-   "result": "2027-03-17",
-   "apply_raw": null
-  },
-  "early": {
-   "name": "特別入学者選抜(海外帰国生徒・連携型中高一貫・フレックス制・定時制の特別な入学者選抜を含む)",
-   "apply": [
-    "2027-01-26",
-    "2027-01-28"
-   ],
-   "exam": [
-    "2027-02-09"
-   ],
-   "result": "2027-02-18",
    "apply_raw": null
   }
  },
@@ -638,31 +713,90 @@
   }
  },
  {
-  "pref": "香川県",
-  "src": "https://www.pref.kagawa.lg.jp/documents/15088/nyusinittei9.pdf",
+  "pref": "大分県",
+  "src": "https://www.pref.oita.jp/site/kyoiku/r09koukounyuushi.html",
   "general": {
-   "name": "一般選抜",
+   "name": "一般入学者選抜 第一志願",
    "apply": [
-    null,
-    null
+    "2027-02-04",
+    "2027-02-10"
    ],
    "exam": [
-    "2027-03-09",
-    "2027-03-10"
+    "2027-03-03",
+    "2027-03-04"
    ],
-   "result": "2027-03-18",
+   "result": "2027-03-12",
    "apply_raw": null
   },
   "early": {
-   "name": "自己推薦選抜",
+   "name": "推薦入学者選抜(学校推薦型・自己推薦型。連携型中高一貫教育に係る入学者選抜及び帰国・外国人生徒特別入学者選抜も同日程)",
    "apply": [
-    null,
-    null
+    "2027-01-18",
+    "2027-01-21"
+   ],
+   "exam": [
+    "2027-01-28",
+    "2027-01-29"
+   ],
+   "result": "2027-02-01",
+   "apply_raw": null
+  }
+ },
+ {
+  "pref": "宮崎県",
+  "src": "https://www.pref.miyazaki.lg.jp/kokokyoiku/kyoikukosodate/kyoiku/20260519170532.html",
+  "general": {
+   "name": "一般入学者選抜",
+   "apply": [
+    "2027-02-04",
+    "2027-02-16"
+   ],
+   "exam": [
+    "2027-03-03",
+    "2027-03-04"
+   ],
+   "result": "2027-03-17",
+   "apply_raw": null
+  },
+  "early": {
+   "name": "推薦入学者選抜(自己推薦方式・スポーツ推薦方式)・連携型入学者選抜・帰国・外国人生徒等入学者選抜",
+   "apply": [
+    "2027-01-06",
+    "2027-01-21"
+   ],
+   "exam": [
+    "2027-02-03"
+   ],
+   "result": "2027-03-17",
+   "apply_raw": null
+  }
+ },
+ {
+  "pref": "鹿児島県",
+  "src": "https://www.pref.kagoshima.jp/ba05/kyoiku-bunka/school/koukou/nyushi/r4/r9nittei.html",
+  "general": {
+   "name": "第一次入学者選抜 一般入学者選抜(学力検査)",
+   "apply": [
+    "2027-02-04",
+    "2027-02-10"
+   ],
+   "exam": [
+    "2027-03-03",
+    "2027-03-04"
+   ],
+   "result": "2027-03-12",
+   "apply_raw": null
+  },
+  "early": {
+   "name": "推薦入学者選抜・帰国生徒等特別入学者選抜・連携型中高一貫教育校(喜界高校・与論高校)入学者選抜",
+   "apply": [
+    "2027-01-19",
+    "2027-01-25"
    ],
    "exam": [
     "2027-02-02"
    ],
-   "result": "2027-02-09",
+   "result": "2027-02-08",
    "apply_raw": null
   }
  }
