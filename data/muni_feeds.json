@@ -640,6 +640,12 @@
    "items": [
     {
      "date": "2026-11-03",
+     "link": "https://www.city.sakata.lg.jp/shisei/kouho/jyohohasshin/pressrelease.html",
+     "summary": "",
+     "title": "酒田市プレスリリース"
+    },
+    {
+     "date": "2026-11-03",
      "link": "https://www.city.sakata.lg.jp/event/fes_event/ychiki01.html",
      "summary": "",
      "title": "日向里かふぇで「秋の酒南塩ラーメン」はいかがですか!"
@@ -721,12 +727,6 @@
      "link": "https://www.city.sakata.lg.jp/sangyo/mtsuri/nenkanevent/november/11gatsu.html",
      "summary": "",
      "title": "2026城下町松山秋まつり"
-    },
-    {
-     "date": "2026-10-30",
-     "link": "https://www.city.sakata.lg.jp/kenko/iryo/iryokikan/shinryojyo/shinryoujyo-oshirase.html",
-     "summary": "",
-     "title": "休日診療所からのお知らせ"
     }
    ],
    "name": "酒田市",
@@ -1515,6 +1515,12 @@
    "id": "d02ea5db63",
    "items": [
     {
+     "date": "2026-11-03",
+     "link": "https://www.pref.fukushima.lg.jp/site/edu/kyu-hyo.html",
+     "summary": "",
+     "title": "学校給食関係表彰受賞者・団体"
+    },
+    {
      "date": "2026-11-02",
      "link": "https://www.pref.fukushima.lg.jp/site/portal/ps-kukan-monitoring.html",
      "summary": "",
@@ -1597,12 +1603,6 @@
      "link": "https://www.pref.fukushima.lg.jp/sec/41055a/morido-tetuduki.html",
      "summary": "",
      "title": "盛土規制法に係る手続きについて"
-    },
-    {
-     "date": "2026-11-02",
-     "link": "https://www.pref.fukushima.lg.jp/sec/41035c/reiwa8nenndonyuusatsujoho.html",
-     "summary": "入札 契約 福島県土木部",
-     "title": "令和8年度入札・契約情報(土木部道路管理課)"
     }
    ],
    "name": "福島県庁",
@@ -2876,6 +2876,12 @@
    "id": "96f2ab737b",
    "items": [
     {
+     "date": "2026-11-03",
+     "link": "https://www.pref.niigata.lg.jp/sec/kanyaku/dokugeki2026.html",
+     "summary": "令和8年度の毒物劇物取扱者試験について",
+     "title": "令和8年度毒物劇物取扱者試験の実施について"
+    },
+    {
      "date": "2026-11-02",
      "link": "https://www.pref.niigata.lg.jp/site/saiyou3/blog.html",
      "summary": "新潟県採用担当ブログ",
@@ -2928,12 +2934,6 @@
      "link": "https://www.pref.niigata.lg.jp/sec/gakko_nagaokarou/2026jyuyukekka.html",
      "summary": "",
      "title": "入札結果「暖房用A重油購入単価契約」(入札日 令和8年10月29日)長岡聾学校"
-    },
-    {
-     "date": "2026-11-02",
-     "link": "https://www.pref.niigata.lg.jp/sec/kanyaku/dokugeki2026.html",
-     "summary": "令和8年度の毒物劇物取扱者試験について",
-     "title": "令和8年度毒物劇物取扱者試験の実施について"
     },
     {
      "date": "2026-11-02",
@@ -3076,16 +3076,16 @@
    "id": "54b48fa859",
    "items": [
     {
+     "date": "2026-11-03",
+     "link": "https://www.pref.niigata.lg.jp/sec/kanyaku/dokugeki2026.html",
+     "summary": "令和8年度の毒物劇物取扱者試験について",
+     "title": "令和8年度毒物劇物取扱者試験の実施について"
+    },
+    {
      "date": "2026-11-02",
      "link": "https://www.pref.niigata.lg.jp/site/saiyou3/blog.html",
      "summary": "新潟県採用担当ブログ",
      "title": "【採用担当ブログ更新!】令和8年11月2日:畜産動物を清潔・安全に保つ 家畜保健衛生所のお仕事/包丁と切っても切り離せない関係?公務員獣医師のお仕事"
-    },
-    {
-     "date": "2026-11-02",
-     "link": "https://www.pref.niigata.lg.jp/sec/kanyaku/dokugeki2026.html",
-     "summary": "令和8年度の毒物劇物取扱者試験について",
-     "title": "令和8年度毒物劇物取扱者試験の実施について"
     },
     {
      "date": "2026-11-02",
@@ -4459,5 +4459,5 @@
    "title": ""
   }
  ],
- "fetched_at": "2026-11-03T06:22:38.240299+09:00"
+ "fetched_at": "2026-11-03T12:00:39.436075+09:00"
 }
