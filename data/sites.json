@@ -5,7 +5,8 @@
     "min_pages": 20,
     "min_cards": 0,
     "probe": "/sitemap.xml",
-    "needs_var": false,
+    "needs_var": true,
+    "inbox": true,
     "live_sha": true,
     "watch": true,
     "group": "deploy-{name}",
@@ -19,7 +20,7 @@
     "data/style/edited/*", "data/style/editor_prompt_ja.md", "data/style/baseline.json"
   ],
   "sites": [
-    {"name": "saichin", "domain": "saichin-sokuho.com", "marker": "最低賃金速報", "min_pages": 70, "min_cards": 48, "probe": "/calendar/all.ics",
+    {"name": "saichin", "domain": "saichin-sokuho.com", "marker": "最低賃金速報", "min_pages": 70, "min_cards": 48, "probe": "/calendar/all.ics", "needs_var": false,
      "owns": ["data/minwage.json", "data/estat_wage.json"],
      "core_tests": true},
     {"name": "kuma", "domain": "kuma-sokuho.com", "marker": "クマ出没速報", "min_pages": 100, "probe": "/feed.xml", "needs_var": true,
@@ -30,7 +31,7 @@
     {"name": "minna", "domain": "minna-no-illust.com", "marker": "みんなのイラスト", "min_pages": 90, "probe": "/sitemap-images.xml", "needs_var": true,
      "cache_path": "out/minna_cache", "cache_files": "sites/minna/library/**",
      "fast_lane": ["sites/minna/library/*", "sites/minna/specs/*", "sites/minna/content/*"]},
-    {"name": "atomou", "domain": "atomou.com", "marker": "あと何日、もう何日", "min_pages": 60, "needs_var": true,
+    {"name": "atomou", "domain": "atomou.com", "marker": "あと何日、もう何日", "min_pages": 60, "needs_var": true, "inbox": false,
      "build": "python sites/atomou/build.py {env:ATOMOU_BUILD_FLAG} --out release", "probe": "{env:ATOMOU_PROBE}"}
   ]
 }

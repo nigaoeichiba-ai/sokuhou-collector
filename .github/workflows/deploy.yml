@@ -7,8 +7,8 @@ name: deploy-sites
 #   XSERVER_SSH_KEY   the private key file from Xserver's SSH settings (whole file, passphrase-free)
 #   XSERVER_HOST      e.g. sv8477.xserver.jp
 #   XSERVER_USER      the Xserver server ID (the SSH user name)
-# The kuma site is built and uploaded only when the repository variable DEPLOY_KUMA is "true" (set after the
-# owner has added kuma-sokuho.com to the Xserver server); the same switch for minna-no-illust.com is DEPLOY_MINNA and for atomou.com DEPLOY_ATOMOU.
+# A site is built and uploaded only when its repository variable DEPLOY_<NAME> is "true" (a "needs_var" site of data/sites.json; every site but saichin, and every new one): the owner adds the domain to the Xserver server, the
+# variable is set to "true", and only then is the site built and uploaded (DEPLOY_KUMA, DEPLOY_MINNA, DEPLOY_ATOMOU, DEPLOY_YOROKOBU, and DEPLOY_<NAME> of a new site).
 # atomou is a DEMO until the repository variable ATOMOU_PUBLIC is "true" (release build, indexable). While ATOMOU_REVIEW is "true" and ATOMOU_PUBLIC is not, the small REVIEW copy
 # (public to crawlers but not indexable, no password; sites/atomou/review.py) is the site and the full demo rides along in public_html/demo, the folder of demo.atomou.com. A demo is deployed only
 # behind a password (HTTP Basic): the secret ATOMOU_DEMO_PASSWORD (owner-made) must exist (the user name is ATOMOU_DEMO_USER, "demo" when that secret is not set), the job writes the password
@@ -78,6 +78,7 @@ jobs:
           # atomou is a DEMO until ATOMOU_PUBLIC is "true"; while ATOMOU_REVIEW is "true" and ATOMOU_PUBLIC is not, the small review copy is the site
           ATOMOU_BUILD_FLAG: ${{ vars.ATOMOU_PUBLIC == 'true' && '--release' || (vars.ATOMOU_REVIEW == 'true' && '--review' || '') }}
           ATOMOU_PROBE: ${{ vars.ATOMOU_PUBLIC != 'true' && vars.ATOMOU_REVIEW == 'true' && '/c/exams/' || '/assets/catalog.json' }}
+          GH_VARS: ${{ toJSON(vars) }}   # the repository variables (not secret): a site whose DEPLOY_<NAME> is not "true" gets no job
         run: python3 -m sokuhou.deployplan plan
 
   deploy:
@@ -111,10 +112,9 @@ jobs:
           KEY: ${{ secrets.XSERVER_SSH_KEY }}
           HOST: ${{ secrets.XSERVER_HOST }}
           USER_ID: ${{ secrets.XSERVER_USER }}
-          KUMA: ${{ vars.DEPLOY_KUMA }}
-          YOROKOBU: ${{ vars.DEPLOY_YOROKOBU }}
-          MINNA: ${{ vars.DEPLOY_MINNA }}
-          ATOMOU: ${{ vars.DEPLOY_ATOMOU }}
+          NEEDS_VAR: ${{ matrix.needs_var }}
+          VAR_NAME: ${{ matrix.var_name }}
+          VAR_VALUE: ${{ vars[matrix.var_name] }}
           ATOMOU_PUBLIC: ${{ vars.ATOMOU_PUBLIC }}
           ATOMOU_REVIEW: ${{ vars.ATOMOU_REVIEW }}
           DEMO_USER: ${{ secrets.ATOMOU_DEMO_USER || 'demo' }}
@@ -135,20 +135,14 @@ jobs:
             echo "XSERVER_SSH_KEY / XSERVER_HOST / XSERVER_USER are not all set; nothing to do"
             go=false
           fi
-          if [ "$SITE" = "kuma" ] && [ "$KUMA" != "true" ]; then
-            echo "DEPLOY_KUMA is not true; the kuma site is skipped"
+          # every site is switched on by its own repository variable DEPLOY_<NAME> (a site's "needs_var" in data/sites.json, true unless it says otherwise): a new site is OFF until the owner has
+          # added the domain to the server and the variable is "true".  The plan job already leaves a switched-off site out; this is the second lock (a manual run, a changed register).
+          if [ "$NEEDS_VAR" = "true" ] && [ "$VAR_VALUE" != "true" ]; then
+            echo "$VAR_NAME is not true; the $SITE site is skipped"
             go=false
           fi
-          if [ "$SITE" = "yorokobu" ] && { [ "$YOROKOBU" != "true" ] || [ -z "$RK_APP" ] || [ -z "$RK_KEY" ]; }; then
-            echo "DEPLOY_YOROKOBU is not true, or the Rakuten secrets are missing; the yorokobu site is skipped"
-            go=false
-          fi
-          if [ "$SITE" = "minna" ] && [ "$MINNA" != "true" ]; then
-            echo "DEPLOY_MINNA is not true; the minna site is skipped"
-            go=false
-          fi
-          if [ "$SITE" = "atomou" ] && [ "$ATOMOU" != "true" ]; then
-            echo "DEPLOY_ATOMOU is not true; the atomou site is skipped"
+          if [ "$SITE" = "yorokobu" ] && { [ -z "$RK_APP" ] || [ -z "$RK_KEY" ]; }; then
+            echo "the Rakuten secrets are missing; the yorokobu site is skipped"
             go=false
           fi
           if [ "$SITE" = "atomou" ] && [ "$ATOMOU_PUBLIC" != "true" ] && { [ -z "$DEMO_USER" ] || [ -z "$DEMO_PASS" ]; }; then

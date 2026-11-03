@@ -9,7 +9,7 @@ from sokuhou import deployplan
 
 ROOT = Path(__file__).resolve().parents[1]
 ENTRY_KEYS = {"name", "domain", "marker", "min_pages", "min_cards", "probe", "needs_var", "live_sha", "watch", "group", "timeout_minutes", "build", "own", "owns",
-              "fast_lane", "dir", "url", "core_tests", "lag_minutes", "upload", "cache_path", "cache_files"}
+              "fast_lane", "dir", "url", "core_tests", "lag_minutes", "upload", "cache_path", "cache_files", "inbox", "var_name"}
 SECRETISH = ("password", "secret", "token", "api_key", "apikey", "private key")
 
 
@@ -121,6 +121,15 @@ class RegisterTest(unittest.TestCase):
         self.assertEqual(site["build"], "python sites/newsite/build.py --release --out release")
         self.assertEqual((site["dir"], site["url"], site["group"], site["probe"]), ("newsite.example", "https://newsite.example", "deploy-newsite", "/sitemap.xml"))
         self.assertIn("tests/test_newsite*", site["own"])
+        self.assertEqual((site["needs_var"], site["var_name"], site["inbox"]), (True, "DEPLOY_NEWSITE", True))    # off until DEPLOY_NEWSITE is "true"; its contact-form messages are collected from day one
+
+    def test_the_inbox_sites_are_the_four_with_a_contact_inbox_and_not_atomou(self):
+        from sokuhou import deployplan as dp
+        import io, contextlib
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            dp.main(["inbox-sites"])
+        self.assertEqual(buf.getvalue().split(), ["saichin:saichin-sokuho.com", "kuma:kuma-sokuho.com", "yorokobu:yorokobu-present.com", "minna:minna-no-illust.com"])
 
 
 if __name__ == "__main__":

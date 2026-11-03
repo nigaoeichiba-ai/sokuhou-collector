@@ -1,6 +1,6 @@
 name: inbox
 
-# Copies new contact-form messages from the four servers into data/inbox/ ENCRYPTED (the repository is public, so a message, which may carry
+# Copies new contact-form messages from the sites' folders (every site of data/sites.json that has an inbox) into data/inbox/ ENCRYPTED (the repository is public, so a message, which may carry
 # an e-mail address, is never stored in clear text).  Only the owner's PC holds the private key (~/.sokuhou/inbox_private.pem); the routines read
 # the messages there with `python -m sokuhou.inbox read`.  Messages stay on the server too (<site folder>/inbox/*.jsonl).
 # Needs the repository secrets XSERVER_SSH_KEY, XSERVER_HOST and XSERVER_USER (the same ones the deploy job uses).
@@ -49,7 +49,7 @@ jobs:
           done
           stamp=$(date -u +%Y%m%d-%H%M)
           mkdir -p data/inbox
-          for pair in saichin:saichin-sokuho.com kuma:kuma-sokuho.com yorokobu:yorokobu-present.com minna:minna-no-illust.com; do
+          for pair in $(python3 -m sokuhou.deployplan inbox-sites); do   # name:folder of every site in data/sites.json (a new site is collected from its first day; atomou has its own word box)
             site="${pair%%:*}"; dir="${pair##*:}"
             if ! ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
                  "cd \"\$HOME/$dir/inbox\" 2>/dev/null && for f in *.jsonl; do if [ -f \"\$f\" ]; then echo \"== \$f\"; cat \"\$f\"; fi; done; true" > "raw_$site.txt"; then
