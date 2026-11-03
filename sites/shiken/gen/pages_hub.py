@@ -10,7 +10,9 @@ from .facts import EVENTS, TOEIC
 from .pages_exam import official
 
 KOKO = json.loads((Path(__file__).resolve().parents[1] / "data" / "koko.json").read_text(encoding="utf-8"))
-SRC = {"retio": "不動産適正取引推進機構"}
+JIS = "北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県 茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県 新潟県 富山県 石川県 福井県 山梨県 長野県 岐阜県 静岡県 愛知県 三重県 滋賀県 京都府 大阪府 兵庫県 奈良県 和歌山県 鳥取県 島根県 岡山県 広島県 山口県 徳島県 香川県 愛媛県 高知県 福岡県 佐賀県 長崎県 熊本県 大分県 宮崎県 鹿児島県 沖縄県".split()
+_have = {r["pref"] for r in KOKO}
+MISSING = [p[:-1] if p[-1] in "県府都" else p for p in JIS if p not in _have]
 
 
 def upcoming(kinds: tuple[str, ...]) -> list[tuple[str, str, str, str]]:
@@ -230,7 +232,7 @@ def method() -> dict:
                 "試験団体や教育委員会から、削除や修正の依頼があったときは、すぐに従います。問い合わせのフォームから知らせてください。"]},
             {"h2": "確認できなかったこと", "paras": [
                 "日商簿記の受験料、きんざいの受験料、危険物取扱者試験の全国の日程は、公式ページで直接読めなかったため、載せていません。大阪大学と九州大学の令和9年度入試は、募集要項が公表される前のため載せていません。",
-                "公立高校入試は、滋賀・奈良・和歌山・鳥取・島根・山口・徳島・愛媛・佐賀・長崎・大分・宮崎・鹿児島・富山・福井・福島・茨城・高知・沖縄の日程を、公式資料で確かめられていません。確かめられたら足します。"]},
+                "公立高校入試は、" + "・".join(MISSING) + "の日程を、公式資料で確かめられていません。確かめられたら足します。"]},
         ],
         "related": [{"path": "/corrections/", "text": "訂正と更新の記録"}, {"path": "/nendo/", "text": "来年度の日程は、いつ発表されるか"}, {"path": "/schedule/", "text": "資格試験日程一覧(日付順)"},
                     {"path": "/koko/", "text": "公立高校入試の日程(都道府県別)"}]}
