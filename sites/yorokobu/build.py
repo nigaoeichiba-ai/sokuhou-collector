@@ -735,14 +735,15 @@ def top_shown_musts(d: dict, key: str, n: int = 4) -> list[tuple[dict, list[str]
     return [(it, musts.get(it["code"])) for it in shown] if len(shown) >= 3 else []
 
 
-def top_picks(cfg: dict, d: dict, key: str, n: int = 4) -> str:
+def top_picks(cfg: dict, d: dict, key: str, n: int = 4, label: str = "") -> str:
     """The first thing under a gift page's head: the products people look at first, before any explanation (a visitor came for the gifts).  Each card says the kind of its idea
-    (a card of a product that the site's vocabulary does not know was left without any words, and its favourite button read 「気になる品」)."""
+    (a card of a product that the site's vocabulary does not know was left without any words, and its favourite button read 「気になる品」).
+    `label` is the page's own short title (「先生への送別ギフト」): the heading then names the page's occasion and person; without it (the theme pages) the heading is the common one."""
     shown = top_shown_musts(d, key, n)
     if not shown:
         return ""
     cards = "".join(item_card(cfg, it, rank=i + 1, eager=i < 2, must=must) for i, (it, must) in enumerate(shown))       # the first two are what the visitor sees first: not lazy
-    return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>種類の違う人気の{len(shown)}点</h2></div>'
+    return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>{(esc(label) + "、") if label else ""}種類の違う人気の{len(shown)}点</h2></div>'
             f'<ul class="items">{cards}</ul>{freshness(d)}</section>')
 
 
@@ -910,7 +911,7 @@ def pair_page(d: dict, cfg: dict, preview: bool, p: dict) -> str:
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), (occ["name"], f"/occasion/{occ['slug']}/"), (p["title"].split(" ")[0], None)])}</div>
 {pr_quiet(cfg)}
 {share_bar(cfg, f"/gift/{key}/", f"{p['title'].split(' ')[0]}の候補です。どれが合うか、意見をください。", hint=True)}
-{top_picks(cfg, d, key)}
+{top_picks(cfg, d, key, label=p["title"].split(" ")[0])}
 <p class="memo-link"><a href="/memo/?o={p['occasion']}&amp;r={p['recipient']}">この日を忘れない(たいせつな日メモに登録)</a></p>
 {quick_pair_note(c, p)}
 {dataroom.occasion_teaser(d, p["occasion"], compact=True)}
