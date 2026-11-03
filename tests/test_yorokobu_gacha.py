@@ -87,14 +87,16 @@ class GachaDataTest(unittest.TestCase):
         data = json.loads(self.private["yorokobu_gacha_db.json"])
         self.assertTrue(data["pair"])
         for key, v in data["pair"].items():
+            self.assertGreaterEqual(len({r[0] for rows in v["tiers"].values() for r in rows}), 2, key)   # three kinds need two ideas at least (a thin band is filled from the near ones by the API)
             for tier, rows in v["tiers"].items():
-                self.assertGreaterEqual(len({r[0] for r in rows}), 2, (key, tier))              # three kinds need two ideas at least
+                self.assertTrue(rows, (key, tier))
                 for idea_no, kind, line, price, image, url, reviews, rating10 in rows:
                     self.assertTrue(url.startswith("https://hb.afl.rakuten.co.jp/hgc/"))
                     self.assertTrue(0 <= kind < len(build.TYPE_ORDER))
         html = (self.out / "tool/gacha/index.html").read_text(encoding="utf-8")
         pub = json.loads(re.search(r'<script type="application/json" id="gacha-pub">(.*?)</script>', html, re.S).group(1))
         self.assertEqual(set(pub["pairs"]), set(data["pair"]))
+        self.assertTrue({t for v in data["pair"].values() for t in v["tiers"]} <= set(data["order"]))          # the budget bands in their order: the API takes a thin band's help from the nearest ones
         blob = json.dumps(pub, ensure_ascii=False)
         for row in (r for v in data["pair"].values() for rows in v["tiers"].values() for r in rows):
             self.assertNotIn(row[5], blob)                                                      # no product link, price line or picture in the public part

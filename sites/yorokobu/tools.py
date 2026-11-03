@@ -163,9 +163,9 @@ def gacha_pairs(d: dict, cfg: dict) -> dict:
                 cand.sort(key=lambda i: -B.score(i))
                 for it in cand[:GACHA_PER_IDEA]:
                     rows.append([n, kind, B.blurb_line(it, must=idea.get("must")), it["price"], it["image"], B.item_href(cfg, it), it["reviews"], int(round(it["rating"] * 10))])
-            if len({r[0] for r in rows}) >= 2:                              # three different kinds need at least two ideas with something to show
+            if rows:
                 tiers[t["slug"]] = rows
-        if tiers:
+        if len({r[0] for rows in tiers.values() for r in rows}) >= 2:         # three different kinds need at least two ideas with something to show (the API fills a thin band from the nearest ones)
             out[key] = {"tiers": tiers}
     return out
 
@@ -195,7 +195,7 @@ def gacha_data(d: dict, cfg: dict) -> str | None:
         return None
     c = d["c"]
     tiers = [{"slug": t["slug"], "label": t["label"]} for t in c["filters"]["tiers"] if any(t["slug"] in v["tiers"] for v in pool.values())]
-    return json.dumps({"rec": pool, "tiers": tiers, "pair": gacha_pairs(d, cfg)}, ensure_ascii=False, separators=(",", ":"))
+    return json.dumps({"rec": pool, "tiers": tiers, "order": [t["slug"] for t in c["filters"]["tiers"]], "pair": gacha_pairs(d, cfg)}, ensure_ascii=False, separators=(",", ":"))
 
 
 def gacha_page(d: dict, cfg: dict, preview: bool, gp: dict) -> str:

@@ -69,6 +69,9 @@ def answer(query: dict, db: dict, rnd: random.Random | None = None) -> tuple[int
     return 400, None
 
 
+NEAR_BANDS = 2                                      # how many budget bands away a product may be taken from when the asked band has fewer than three kinds
+
+
 def _pair_answer(query: dict, db: dict, rnd) -> tuple[int, object]:
     """?pk=<pair key>&t=<tier>[&n=3][&k=<kind no. to take>][&exc=<kind nos. to leave out, comma-separated>][&x=<links shown last, comma-separated>]: up to n rows of DIFFERENT ideas
     (one at random from the best of each idea), never a link of `x` while another is left.  -> {"rows": [[idea no., kind no., line, price, picture, link, reviews, rating x10], ...]}"""
@@ -82,20 +85,27 @@ def _pair_answer(query: dict, db: dict, rnd) -> tuple[int, object]:
     take = _int(query.get("k"))
     exc = {int(x) for x in str(query.get("exc") or "").split(",") if re.fullmatch(r"\d{1,2}", x)}
     shown = {x for x in str(query.get("x") or "").split(",") if x and len(x) <= 400}
-    rows = (((db["gacha"].get("pair") or {}).get(pk) or {}).get("tiers") or {}).get(t) or []
-    rows = [r for r in rows if r[1] not in exc and (take is None or r[1] == take)]
-    by_idea: dict[int, list] = {}
-    for r in rows:
-        by_idea.setdefault(r[0], []).append(r)
-    ideas = list(by_idea)
-    rnd.shuffle(ideas)
-    out = []
-    for i in ideas:
-        fresh = [r for r in by_idea[i] if r[5] not in shown] or by_idea[i]
-        out.append(rnd.choice(fresh))
+    tiers = ((db["gacha"].get("pair") or {}).get(pk) or {}).get("tiers") or {}
+    order = [x for x in (db["gacha"].get("order") or []) if isinstance(x, str)]
+    near = sorted((x for x in order if x != t and x in tiers), key=lambda x: (abs(order.index(x) - order.index(t)), order.index(x))) if t in order else []
+    out, bands, used = [], [], set()
+    for tt in [t] + [x for x in near if abs(order.index(x) - order.index(t)) <= NEAR_BANDS]:      # the asked budget first; only when it gives fewer than n, the nearest bands (cheaper first on a tie)
         if len(out) >= n:
             break
-    return 200, {"rows": out}
+        by_idea: dict[int, list] = {}
+        for r in tiers.get(tt) or []:
+            if r[1] not in exc and (take is None or r[1] == take) and r[0] not in used:
+                by_idea.setdefault(r[0], []).append(r)
+        ideas = list(by_idea)
+        rnd.shuffle(ideas)
+        for i in ideas:
+            fresh = [r for r in by_idea[i] if r[5] not in shown] or by_idea[i]
+            out.append(rnd.choice(fresh))
+            bands.append(tt)
+            used.add(i)
+            if len(out) >= n:
+                break
+    return 200, {"rows": out, "bands": bands}
 
 
 def load_private(folder: Path) -> dict:
