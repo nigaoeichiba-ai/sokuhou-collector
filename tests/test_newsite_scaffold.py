@@ -209,20 +209,20 @@ class ScaffoldTest(unittest.TestCase):
         copy = self.tmp / "sites.json"
         shutil.copy(ROOT / "data" / "sites.json", copy)
         before = deployplan.load_registry(copy, env={})["sites"]
-        newsite.register("dummysite", "dummy.example", "ダミー統計", copy, 10)
+        newsite.register("dummysite", "dummy.example", "ダミー統計", copy, 10, keys_file=self.keys_copy("keys0"))
         after = deployplan.load_registry(copy, env={})["sites"]
         self.assertEqual(list(after)[-1], "dummysite")
         self.assertEqual(len(after), len(before) + 1)
         self.assertEqual(after["dummysite"]["min_pages"], 10)
         with self.assertRaises(sitekit.BuildError):
-            newsite.register("dummysite", "dummy.example", "ダミー統計", copy, 10)
+            newsite.register("dummysite", "dummy.example", "ダミー統計", copy, 10, keys_file=self.keys_copy("keys0b"))
 
     def test_register_command_reads_the_site_folder(self):
         from sokuhou import deployplan
         copy = self.tmp / "sites_cmd.json"
         shutil.copy(ROOT / "data" / "sites.json", copy)
         cfg = json.loads((self.site / "config.json").read_text(encoding="utf-8"))
-        newsite.register(self.site.name, cfg["site_url"].split("//")[-1], cfg["site_name"], copy, 10)
+        newsite.register(self.site.name, cfg["site_url"].split("//")[-1], cfg["site_name"], copy, 10, keys_file=self.keys_copy("keys0c"))
         entry = deployplan.load_registry(copy, env={})["sites"]["dummysite"]
         self.assertEqual(entry["domain"], "dummy.example")
 
@@ -298,6 +298,59 @@ class ScaffoldTest(unittest.TestCase):
         spec = json.loads((d / "site.json").read_text(encoding="utf-8"))
         self.assertEqual(spec["sources_style"], "credit")
         self.assertTrue(spec["sources"]["example"]["credit"])
+
+    # ---- the first deploy: what the repository must hold (kurashi stopped on a missing IndexNow key, 2026-11-04) ----
+    def keys_copy(self, name: str) -> Path:
+        k = self.tmp / f"{name}.json"
+        shutil.copy(ROOT / "data" / "indexnow_keys.json", k)
+        return k
+
+    def test_register_makes_the_indexnow_key_and_leaves_old_lines_alone(self):
+        from sokuhou import indexnow
+        keys, reg = self.keys_copy("keys1"), self.tmp / "reg1.json"
+        shutil.copy(ROOT / "data" / "sites.json", reg)
+        before = indexnow.load_keys(keys)
+        newsite.register("dummysite", "dummy.example", "ダミー統計", reg, 10, site_dir=self.site, keys_file=keys)
+        after = indexnow.load_keys(keys)
+        self.assertEqual({h: k for h, k in after.items() if h in before}, before)
+        self.assertRegex(after["dummy.example"], r"^[0-9a-f]{32}$")
+        self.assertEqual(indexnow.prepare(self.tmp / "rel1", "https://dummy.example", after) if (self.tmp / "rel1").mkdir() is None else None, self.tmp / "rel1" / f"{after['dummy.example']}.txt")
+
+    def test_register_refuses_when_the_repository_side_is_not_ready(self):
+        keys, reg = self.keys_copy("keys2"), self.tmp / "reg2.json"
+        shutil.copy(ROOT / "data" / "sites.json", reg)
+        wrong = self.edit("wrongurl", None)
+        cfg = json.loads((wrong / "config.json").read_text(encoding="utf-8"))
+        cfg["site_url"] = "https://another.example"
+        (wrong / "config.json").write_text(json.dumps(cfg, ensure_ascii=False), encoding="utf-8")
+        with self.assertRaises(sitekit.BuildError) as cm:
+            newsite.register("dummysite", "dummy.example", "ダミー統計", reg, 10, site_dir=wrong, keys_file=keys)
+        self.assertIn("site_url", str(cm.exception))
+        self.assertNotIn("dummysite", reg.read_text(encoding="utf-8"))       # nothing was written
+        nobuild = self.edit("nobuild", None)
+        (nobuild / "build.py").unlink()
+        with self.assertRaises(sitekit.BuildError) as cm:
+            newsite.register("dummysite", "dummy.example", "ダミー統計", reg, 10, site_dir=nobuild, keys_file=keys)
+        self.assertIn("build.py", str(cm.exception))
+
+    def test_preflight_names_a_missing_key(self):
+        problems = newsite.preflight(self.site, "no-key.example", self.keys_copy("keys3"))
+        self.assertTrue(any("no IndexNow key for no-key.example" in p and "add-key" in p for p in problems), problems)
+
+    def test_a_broken_key_register_is_said_plainly(self):
+        bad = self.tmp / "badkeys.json"
+        bad.write_text("{ not json", encoding="utf-8")
+        self.assertTrue(any("cannot be read" in p for p in newsite.preflight(None, "x.example", bad)))
+        with self.assertRaises(sitekit.BuildError):
+            newsite.register("x", "x.example", "x", self.tmp / "none.json", 10, keys_file=bad)
+
+    def test_every_registered_site_has_its_indexnow_key(self):
+        """The failure of the first kurashi deploy: the register named a site whose host had no key.  atomou is the one site the deploy step leaves out."""
+        from sokuhou import deployplan, indexnow
+        keys = indexnow.load_keys()
+        for name, site in deployplan.load_registry(env={})["sites"].items():
+            if name != "atomou":
+                self.assertIn(site["domain"], keys, f"{name}: no IndexNow key for {site['domain']}: python -m sokuhou.indexnow add-key {site['domain']}")
 
     # ---- negative tests: each check finds the failure it was made for ----
     def test_thin_page_becomes_noindex_and_leaves_the_sitemap(self):

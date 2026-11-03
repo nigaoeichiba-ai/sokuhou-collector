@@ -541,8 +541,41 @@ def _example_pages(today: str) -> dict[str, dict]:
     return pages
 
 
-def register(name: str, domain: str, site_name: str, sites_json: Path, min_pages: int) -> None:
-    """Append the site's entry to data/sites.json, keeping the file's layout (one entry per line)."""
+def preflight(site_dir: Path | None, domain: str, keys_file: Path | None = None, *, atomou_style: bool = False) -> list[str]:
+    """What the first deploy of a site needs from the repository (deploy.yml, step by step): the IndexNow key of its host ('IndexNow key file'), a build.py ('Build'),
+    and a config.json whose site_url is the registered domain ('Verify' looks for the site under that address).  Returns the problems; empty means the repository side is ready.
+    What no file can say (the repository variable DEPLOY_<NAME>, the domain on the server, its public_html folder) is listed in SCAFFOLD_USAGE.md."""
+    from sokuhou import indexnow
+    problems = []
+    try:
+        keys = indexnow.load_keys(keys_file) if keys_file else indexnow.load_keys()
+        if not atomou_style and domain not in keys:
+            problems.append(f"no IndexNow key for {domain} in data/indexnow_keys.json (the deploy step 'IndexNow key file' would stop): python -m sokuhou.indexnow add-key {domain}")
+    except (indexnow.IndexNowError, OSError, ValueError, KeyError) as e:
+        problems.append(f"data/indexnow_keys.json cannot be read: {e}")
+    if site_dir is not None:
+        if not (site_dir / "build.py").exists():
+            problems.append(f"{site_dir}/build.py is missing (the deploy step 'Build' runs it)")
+        try:
+            cfg = json.loads((site_dir / "config.json").read_text(encoding="utf-8"))
+            if cfg["site_url"].split("//")[-1].rstrip("/") != domain:
+                problems.append(f"config.json site_url ({cfg['site_url']}) is not https://{domain}")
+        except (OSError, ValueError, KeyError) as e:
+            problems.append(f"{site_dir}/config.json cannot be read: {e}")
+    return problems
+
+
+def register(name: str, domain: str, site_name: str, sites_json: Path, min_pages: int, site_dir: Path | None = None, keys_file: Path | None = None) -> None:
+    """Append the site's entry to data/sites.json, keeping the file's layout (one entry per line).  Makes the IndexNow key of the domain first (the first deploy of kurashi stopped
+    on its absence, 2026-11-04) and refuses, naming each missing piece, when the repository side of the first deploy is not ready."""
+    from sokuhou import indexnow
+    try:
+        indexnow.ensure_key(domain, keys_file) if keys_file else indexnow.ensure_key(domain)
+    except (indexnow.IndexNowError, OSError, ValueError, KeyError) as e:
+        raise BuildError(f"cannot make the IndexNow key of {domain}: {e}") from e
+    problems = preflight(site_dir, domain, keys_file)
+    if problems:
+        raise BuildError("not ready to register:\n  " + "\n  ".join(problems))
     text = sites_json.read_text(encoding="utf-8")
     data = json.loads(text)
     if any(s["name"] == name for s in data["sites"]):
@@ -593,9 +626,12 @@ def main(argv: list[str] | None = None) -> int:
             from datetime import datetime, timedelta, timezone
             today = datetime.now(timezone(timedelta(hours=9))).date().isoformat()
             d = init_site(a.name, a.domain, a.site_name, a.glyph or a.site_name[0], Path(a.sites_dir), today)
+            from sokuhou import indexnow
+            key, created = indexnow.ensure_key(a.domain)
+            print(f"IndexNow key for {a.domain}: {'made and added to data/indexnow_keys.json (commit it with the site)' if created else 'already in data/indexnow_keys.json'}")
             print(f"made {d}: edit config.json / site.json, replace the example pages in content/, then: python -m sokuhou.newsite build {d} --out out/{a.name}")
             if a.register:
-                register(a.name, a.domain, a.site_name, ROOT / "data" / "sites.json", a.min_pages)
+                register(a.name, a.domain, a.site_name, ROOT / "data" / "sites.json", a.min_pages, site_dir=d)
                 print(f"added {a.name} to data/sites.json.  BEFORE pushing: .github/workflows/deploy.yml's Gate step skips a site only by name (kuma, yorokobu, minna, atomou); "
                       f"a new name is published as soon as the server folder and the secrets exist.  Add its DEPLOY_{a.name.upper()} switch there first (the report desk's job).")
             else:
@@ -604,7 +640,7 @@ def main(argv: list[str] | None = None) -> int:
         site_dir = Path(a.site_dir)
         if a.cmd == "register":
             cfg = json.loads((site_dir / "config.json").read_text(encoding="utf-8"))
-            register(site_dir.name, cfg["site_url"].split("//")[-1], cfg["site_name"], ROOT / "data" / "sites.json", a.min_pages)
+            register(site_dir.name, cfg["site_url"].split("//")[-1], cfg["site_name"], ROOT / "data" / "sites.json", a.min_pages, site_dir=site_dir)
             print(f"added {site_dir.name} to data/sites.json (check that deploy.yml's Gate and inbox.yml know the name first)")
             return 0
         if a.cmd == "build":

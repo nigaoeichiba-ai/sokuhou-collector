@@ -55,8 +55,10 @@ class FakeNet:
 class KeysTest(unittest.TestCase):
     def test_every_public_site_has_a_valid_unique_key(self):
         keys = ix.load_keys()
-        self.assertEqual(set(keys), {"saichin-sokuho.com", "kuma-sokuho.com", "yorokobu-present.com", "minna-no-illust.com"})
-        self.assertEqual(len(set(keys.values())), 4)
+        from sokuhou import deployplan      # a new site brings its key with it (newsite.register makes it): the hosts are the register's, atomou's deploy has no IndexNow step
+        registered = {site["domain"] for name, site in deployplan.load_registry(env={})["sites"].items() if name != "atomou"}
+        self.assertEqual(set(keys), registered)
+        self.assertEqual(len(set(keys.values())), len(keys))
         for key in keys.values():
             self.assertRegex(key, r"^[0-9a-f]{16,128}$")
 

@@ -46,6 +46,24 @@ def load_keys(path: Path = KEYS_FILE) -> dict[str, str]:
     return keys
 
 
+def ensure_key(host: str, path: Path = KEYS_FILE) -> tuple[str, bool]:
+    """The IndexNow key of `host`, made and written to the register when there is none: (key, created).  Existing lines are never changed (the text is extended, not
+    re-written).  A key is 32 random hex characters; it is public by design, the deploy publishes /<key>.txt."""
+    import secrets
+    keys = load_keys(path)
+    if host in keys:
+        return keys[host], False
+    key = secrets.token_hex(16)
+    text = path.read_text(encoding="utf-8")
+    i = text.rindex("}", 0, text.rindex("}"))          # the closing brace of "hosts" (the last but one)
+    head = text[:i].rstrip()
+    path.write_text(f'{head},\n  "{host}": "{key}"\n {text[i:]}', encoding="utf-8")
+    if load_keys(path).get(host) != key:               # the file must still be valid, and say what was meant
+        path.write_text(text, encoding="utf-8")
+        raise IndexNowError(f"could not add a key for {host} to {path}")
+    return key, True
+
+
 def host_of(base: str) -> str:
     u = urlparse(base)
     if u.scheme != "https" or not u.netloc or u.path not in ("", "/"):
@@ -136,6 +154,8 @@ def prepare(root: Path, base: str, keys: dict[str, str] | None = None) -> Path:
 def main(argv: list[str] | None = None, opener=urllib.request.urlopen) -> int:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
+    p0 = sub.add_parser("add-key", help="make the key of a domain and add it to data/indexnow_keys.json (nothing happens when it has one)")
+    p0.add_argument("host")
     p1 = sub.add_parser("prepare")
     p1.add_argument("--root", required=True)
     p1.add_argument("--base", required=True)
@@ -151,6 +171,10 @@ def main(argv: list[str] | None = None, opener=urllib.request.urlopen) -> int:
     p3.add_argument("--cap", type=int, default=DEFAULT_CAP)
     a = ap.parse_args(argv)
     try:
+        if a.cmd == "add-key":
+            key, created = ensure_key(a.host)
+            print(f"{a.host}: {'key made and added' if created else 'already has a key'} ({key})")
+            return 0
         if a.cmd == "prepare":
             print(f"wrote {prepare(Path(a.root), a.base)}")
             return 0
