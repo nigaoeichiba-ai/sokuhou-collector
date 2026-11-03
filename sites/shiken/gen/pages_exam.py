@@ -6,7 +6,8 @@ import json
 from datetime import date
 from pathlib import Path
 
-from .common import jp, md, left, in_days
+from . import common
+from .common import jp, md, left, in_days, today_j
 
 RATES = json.loads((Path(__file__).resolve().parents[1] / "data" / "rates.json").read_text(encoding="utf-8"))
 
@@ -20,7 +21,7 @@ def drow(label: str, iso: str) -> list:
 
 
 def dates_table(caption: str, rows: list[list], note: str = "") -> dict:
-    t = {"caption": caption, "cols": ["区分", "日付", "2026年11月3日から"], "rows": rows}
+    t = {"caption": caption, "cols": ["区分", "日付", f"{today_j()}から"], "rows": rows}
     if note:
         t["note"] = note
     return t
@@ -59,7 +60,7 @@ def takken() -> dict:
         f"令和8年度の宅建試験は2026年10月18日に終わり、合格発表は{md('2026-11-25')}です。令和9年度の日程は未発表です。",
         [
             {"h2": "令和8年度の日程", "paras": [
-                f"試験は{jp('2026-10-18')}の13時から15時までで、すでに終わっています。結果を待つ人の次の日付は、{jp('2026-11-25')}の合格発表です。今日({jp('2026-11-03')})から数えて{left('2026-11-25')}日後になります。",
+                f"試験は{jp('2026-10-18')}の13時から15時までで、すでに終わっています。結果を待つ人の次の日付は、{jp('2026-11-25')}の合格発表です。今日({jp(common.TODAY)})から数えて{left('2026-11-25')}日後になります。",
                 "合格発表のあとは、受験した人の動きが分かれます。合格者は登録の手続きへ、不合格だった人は次の年度の申込を待つことになります。"],
              "table": dates_table("宅建士試験 令和8年度の日程", [
                  drow("郵送申込の開始", "2026-07-01"), drow("郵送申込の締切", "2026-07-15"),

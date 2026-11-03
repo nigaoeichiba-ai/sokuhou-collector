@@ -7,8 +7,20 @@ from __future__ import annotations
 
 from datetime import date
 
-TODAY = date(2026, 11, 3)          # the day the dates were checked against the primary sources
-CHECKED = "2026-11-03"
+import os
+from datetime import datetime, timedelta, timezone
+
+CHECKED = "2026-11-03"           # the day the dates were checked against the primary sources (the pages' update day)
+TODAY = date.fromisoformat(os.environ.get("SHIKEN_TODAY") or datetime.now(timezone(timedelta(hours=9))).date().isoformat())   # "N days left" counts from today (JST), the day of the build
+
+
+def set_today(x: str) -> None:
+    global TODAY
+    TODAY = date.fromisoformat(x)
+
+
+def today_j() -> str:
+    return f"{TODAY.year}年{TODAY.month}月{TODAY.day}日"
 WD = "月火水木金土日"
 
 

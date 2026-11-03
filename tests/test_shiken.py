@@ -75,7 +75,42 @@ class ShikenTest(unittest.TestCase):
     def test_days_left_agree_with_the_dates(self):
         html = self.html["takken/index.html"]
         self.assertIn("2026年11月25日(水)", html)
-        self.assertIn("あと22日", html)                                    # 2026-11-03 -> 2026-11-25
+        m = re.search(r"今日\((\d{4})年(\d{1,2})月(\d{1,2})日", html)
+        today = date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        self.assertIn(f"あと{(date(2026, 11, 25) - today).days}日", html)
+
+    def test_the_build_counts_from_the_day_it_is_made_and_drops_what_has_passed(self):
+        """build.py makes the content again on every build (the daily deploy): another day gives other day counts, and a deadline that has passed leaves the list."""
+        import shutil
+        import tempfile
+        from sites.shiken import gen
+        from sites.shiken.gen import common
+        before = common.TODAY
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "shiken"
+            shutil.copytree(SITE, root, ignore=shutil.ignore_patterns("__pycache__"))
+            try:
+                common.set_today("2026-11-28")
+                gen.write(root)
+            finally:
+                common.set_today(before.isoformat())
+            deadlines = json.loads((root / "content" / "deadlines.json").read_text(encoding="utf-8"))
+            text = json.dumps(deadlines, ensure_ascii=False)
+            self.assertNotIn("2026年11月27日(金)", text)                    # the nursing deadline has passed: not listed any more
+            self.assertIn("2026年12月1日(火)", text)                        # the next one is
+            self.assertIn("あと3日", text)
+
+    def test_the_facts_that_passed_are_reported(self):
+        from sites.shiken import gen
+        from sites.shiken.gen import common
+        before = common.TODAY
+        try:
+            common.set_today("2026-11-27")
+            self.assertTrue(any("宅建士" in x for x in gen.stale()))
+            common.set_today("2026-11-03")
+            self.assertEqual(gen.stale(), [])
+        finally:
+            common.set_today(before.isoformat())
 
     def test_unpublished_dates_are_not_made_up(self):
         html = self.html["schedule/index.html"]

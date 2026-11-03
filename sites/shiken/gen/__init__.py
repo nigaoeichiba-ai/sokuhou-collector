@@ -51,16 +51,16 @@ def finalize(p: dict) -> dict:
     return p
 
 
-def write() -> int:
+def write(root: Path = SITE) -> int:
     pages = all_pages()
-    content = SITE / "content"
+    content = root / "content"
     for f in content.glob("*.json"):
         f.unlink()
     for p in pages:
         p.setdefault("updated", CHECKED)
         slug = p["path"].strip("/").replace("/", "-") or "home"
         (content / f"{slug}.json").write_text(json.dumps(p, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    site = json.loads((SITE / "site.json").read_text(encoding="utf-8"))
+    site = json.loads((root / "site.json").read_text(encoding="utf-8"))
     site["sources"] = SOURCES
     site["updated"] = CHECKED
     site.update({
@@ -79,8 +79,17 @@ def write() -> int:
             "各団体の表や文章は写していません。日付や金額という事実だけを、当サイトの表に組み直しています。",
         ],
     })
-    (SITE / "site.json").write_text(json.dumps(site, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (root / "site.json").write_text(json.dumps(site, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return len(pages)
+
+
+def stale() -> list[str]:
+    """The dates the prose was written around that have passed since CHECKED (the pages say 'next' / 'coming'): the facts need the yearly (or weekly) re-reading."""
+    from .common import CHECKED, TODAY, d
+    from .facts import EVENTS, TOEIC
+    out = [f"{who} {kind} {iso}" for who, g, kind, iso, src, note in EVENTS if d(CHECKED) <= d(iso) < TODAY]
+    out += [f"TOEIC {x} {iso}" for row in TOEIC for x, iso in zip(("試験日", "申込開始", "申込締切", "認定証"), row) if d(CHECKED) <= d(iso) < TODAY]
+    return out
 
 
 if __name__ == "__main__":
