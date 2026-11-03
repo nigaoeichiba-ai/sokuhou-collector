@@ -32,6 +32,7 @@
      "cache_path": "out/minna_cache", "cache_files": "sites/minna/library/**",
      "fast_lane": ["sites/minna/library/*", "sites/minna/specs/*", "sites/minna/content/*"]},
     {"name": "atomou", "domain": "atomou.com", "marker": "あと何日、もう何日", "min_pages": 60, "needs_var": true, "inbox": false,
-     "build": "python sites/atomou/build.py {env:ATOMOU_BUILD_FLAG} --out release", "probe": "{env:ATOMOU_PROBE}"}
+     "build": "python sites/atomou/build.py {env:ATOMOU_BUILD_FLAG} --out release", "probe": "{env:ATOMOU_PROBE}"},
+    {"name": "shiken", "domain": "shiken-nittei.com", "marker": "試験日程カレンダー", "min_pages": 10, "needs_var": true}
   ]
 }
