@@ -49,17 +49,23 @@ class ShikenTest(unittest.TestCase):
         self.assertEqual(wrong_weekdays("合格発表は2026年11月25日(木)です"), ["2026年11月25日(木)"])
         self.assertEqual(wrong_weekdays("合格発表は2026年11月25日(水)です"), [])
 
-    def test_sources_exist_and_every_source_has_a_checked_day(self):
-        site = json.loads((SITE / "site.json").read_text(encoding="utf-8"))
-        for sid, s in site["sources"].items():
-            self.assertTrue(s["url"].startswith("https://"), sid)
-            self.assertEqual(s["fetched"], "2026-11-03", sid)
+    def test_every_content_page_closes_with_the_official_announcement_sentence(self):
+        for p in (SITE / "content").glob("*.json"):
+            slug = json.loads(p.read_text(encoding="utf-8"))["path"].strip("/") or "."
+            rel = "index.html" if slug == "." else f"{slug}/index.html"
+            self.assertIn("最終的な日程は、主催団体の公式発表でご確認ください", self.html[rel], rel)
 
-    def test_every_exam_page_points_to_the_official_page(self):
-        for slug in ("takken", "gyosei", "sharoshi", "boki", "fp", "eiken", "kaigo-fukushi", "kangoshi", "kyotsu", "komuin"):
-            html = self.html[f"{slug}/index.html"]
-            self.assertIn("最終確認は公式で", html, slug)
-            self.assertIn('rel="noopener"', html, slug)
+    def test_no_source_links_and_no_checked_day_per_row_on_a_page(self):
+        """Owner's rule 2026-11-03: no source URL, no 'checked on' day, no list of official links in the page body."""
+        for p in (SITE / "content").glob("*.json"):
+            slug = json.loads(p.read_text(encoding="utf-8"))["path"].strip("/") or "."
+            rel = "index.html" if slug == "." else f"{slug}/index.html"
+            body = re.search(r"<main.*?</main>", self.html[rel], re.S).group(0)
+            self.assertNotRegex(body, r'href="https?://', rel)
+            self.assertNotIn("確認日", body, rel)
+
+    def test_a_page_with_an_outside_link_would_be_caught(self):
+        self.assertRegex('<main><a href="https://www.retio.or.jp/">x</a></main>', r'href="https?://')
 
     def test_no_page_claims_to_be_complete(self):
         for rel, html in self.html.items():
@@ -81,7 +87,7 @@ class ShikenTest(unittest.TestCase):
     def test_koko_rows_have_the_board_page_as_link(self):
         html = self.html["koko/index.html"]
         self.assertIn("東京都", html)
-        self.assertGreaterEqual(html.count('href="https://'), 27)
+        self.assertGreaterEqual(html.count("<tr>"), 28)                       # one row per prefecture in each table
         self.assertIn("公式で確認", html)                                     # a missing application period is not filled in
 
     def test_the_example_pages_are_gone(self):

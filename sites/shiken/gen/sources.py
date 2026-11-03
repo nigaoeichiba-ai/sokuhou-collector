@@ -34,3 +34,6 @@ SOURCES = {
     "kango_stat": S("厚生労働省", "第115回看護師国家試験の合格発表", "https://www.mhlw.go.jp/general/sikaku/successlist/2026/siken03_04_05/about.html", "第115回"),
     "ipa_stat": S("情報処理推進機構(IPA)", "情報処理技術者試験 統計資料", "https://www.ipa.go.jp/shiken/reports/toukei_all.html", "平成28〜令和7年度"),
 }
+
+# One line at the foot of every page (the build wants a source for every page; the owner wants no links and no per-row citations)
+SOURCES = {"official": {"org": "各試験団体・省庁・教育委員会", "table": "公式発表の日程", "url": "", "basis": "公表されている最新の回", "fetched": CHECKED}}

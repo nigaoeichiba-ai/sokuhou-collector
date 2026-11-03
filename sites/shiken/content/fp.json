@@ -74,9 +74,9 @@
   {
    "h2": "最終確認は公式で",
    "paras": [
-    "確認日は2026年11月3日です。日程が変わることがあります。"
-   ],
-   "html": "<ul class=\"links\"><li><a href=\"https://www.jafp.or.jp/exam/schedule/\" rel=\"noopener\" target=\"_blank\">FP技能検定の試験日程(日本FP協会)</a></li><li><a href=\"https://www.kinzai.or.jp/fp\" rel=\"noopener\" target=\"_blank\">FP技能検定(きんざい)</a></li></ul>"
+    "日程が変わることがあります。",
+    "最終的な日程は、主催団体の公式発表でご確認ください。日程は変更されることがあります。申し込む前に、必ず確かめてください。"
+   ]
   }
  ],
  "related": [
@@ -98,8 +98,7 @@
   }
  ],
  "sources": [
-  "jafp",
-  "kinzai"
+  "official"
  ],
  "updated": "2026-11-03"
 }

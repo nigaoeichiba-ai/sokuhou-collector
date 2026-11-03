@@ -158,9 +158,9 @@
   {
    "h2": "最終確認は公式で",
    "paras": [
-    "次の回の案内は、センターのページに出た日から読めます。確認日は2026年11月3日です。"
-   ],
-   "html": "<ul class=\"links\"><li><a href=\"https://www.sharosi-siken.or.jp/application/\" rel=\"noopener\" target=\"_blank\">社会保険労務士試験の申込みの案内(試験センター)</a></li></ul>"
+    "次の回の案内は、センターのページに出た日から読めます。",
+    "最終的な日程は、主催団体の公式発表でご確認ください。日程は変更されることがあります。申し込む前に、必ず確かめてください。"
+   ]
   }
  ],
  "related": [
@@ -182,8 +182,7 @@
   }
  ],
  "sources": [
-  "sharosi",
-  "sharosi_stat"
+  "official"
  ],
  "updated": "2026-11-03"
 }
