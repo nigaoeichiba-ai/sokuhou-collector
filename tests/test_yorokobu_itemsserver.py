@@ -141,9 +141,19 @@ class PairAnswerTest(unittest.TestCase):
         self.assertNotIn("3000", out["bands"])
         self.assertEqual(S.answer({"pk": "birthday-lonely", "t": "30000"}, PAIR_DB)[1], {"rows": [], "bands": []})      # too far from the only band
 
+    def test_the_ideas_the_visitors_words_point_to_come_first_in_every_band(self):
+        for seed in range(20):
+            out = self.ask(random.Random(seed), i="3")[1]
+            self.assertEqual(out["rows"][0][0], 3)                                   # idea 3 (the liked one) is in the answer, and first
+            self.assertEqual(len(out["rows"]), 3)                                    # the others fill up the three
+            out = self.ask(random.Random(seed), t="10000", i="0")[1]                 # liked idea 0 has no product in this band: the near band's is taken before another idea of this band
+            self.assertEqual(out["rows"][0][0], 0)
+            self.assertNotEqual(out["bands"][0], "10000")
+        self.assertEqual(self.ask(i="x,99999,,")[1]["rows"].__len__(), 3)             # junk in i is ignored
+
     def test_the_php_has_the_same_branch(self):
         php = (ROOT / "sites" / "yorokobu" / "items_receiver.php.tpl").read_text(encoding="utf-8")
-        for needle in ("isset($_GET['pk'], $_GET['t'])", "['pair'][$pk]['tiers']", "'bands' => $bands", "abs($k - $pos) <= 2", "exc", "shuffle($ideas)", "random_int", "min(3,"):
+        for needle in ("isset($_GET['pk'], $_GET['t'])", "['pair'][$pk]['tiers']", "'bands' => $bands", "abs($k - $pos) <= 2", "$liked", "exc", "shuffle($ideas)", "random_int", "min(3,"):
             self.assertIn(needle, php, needle)
 
 

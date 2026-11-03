@@ -180,7 +180,7 @@ def gacha_public(d: dict, pairs: dict) -> dict:
         if key not in pairs:
             continue
         ideas = B.pair_items(d, key)[0]
-        pub["pairs"][key] = {"o": p["occasion"], "r": p["recipient"], "i": [[i["label"], B.TYPE_ORDER.index(i["type"]) if i["type"] in B.TYPE_ORDER else -1, i["why"], i["query"]] for i in ideas]}
+        pub["pairs"][key] = {"o": p["occasion"], "r": p["recipient"], "i": [[i["label"], B.TYPE_ORDER.index(i["type"]) if i["type"] in B.TYPE_ORDER else -1, i["why"], i["query"], [w for w in (i.get("must") or []) if len(w) >= 2][:12]] for i in ideas]}
         pub["occ"][p["occasion"]] = c["occ"][p["occasion"]]["name"]
         pub["rec"][p["recipient"]] = c["rec"][p["recipient"]]["name"]
     used = {t for v in pairs.values() for t in v["tiers"]}
@@ -214,6 +214,7 @@ def gacha_page(d: dict, cfg: dict, preview: bool, gp: dict) -> str:
 <form class="gacha-form" onsubmit="return false"><label>贈る相手<select name="r">{rec}</select></label>
 <label>場面<select name="o"></select></label>
 <label>予算<select name="t">{bud}</select></label>
+<label>好み・用途(任意)<input type="text" name="l" maxlength="40" autocomplete="off" placeholder="例: コーヒーが好き、出張が多い"></label>
 <label>入れたい種類<select name="k"><option value="">指定しない</option>{kinds}</select></label>
 <details class="gacha-avoid"><summary>避けたい種類</summary><div>{avoid}</div></details>
 <button type="submit" class="btn big">3点、提案してもらう</button></form>
@@ -223,6 +224,7 @@ def gacha_page(d: dict, cfg: dict, preview: bool, gp: dict) -> str:
 <script type="application/json" id="gacha-pub">{data}</script>
 <noscript><p class="notice">このページはJavaScript が使える環境でお使いください。使えない場合は、<a href="/for/">相手から探す</a>ページでも、おすすめを探せます。</p></noscript>
 </section>
+<p class="notice">好み・用途に書いた言葉は、この端末の中で種類の名前や商品の呼び名と照らすだけで、サイトには送りません。合う種類があれば、その種類を先に選びます。</p>
 <p class="notice">選ぶ基準: 当サイトが取り上げた楽天市場の商品のうち、選んだ相手と場面のページにあり、予算の帯に入る商品から、種類(案)が重ならないように3点をランダムに選びます。理由の文は、その種類の案について当サイトが書いたものです。商品を使った感想ではありません。価格・在庫・レビューは取得した時点の情報です。</p>
 {B.freshness(d)}"""
     return B.page(cfg, preview, path="/tool/gacha/", title=f"おまかせ提案 | {cfg['site_name']}", description=lead, body=body)

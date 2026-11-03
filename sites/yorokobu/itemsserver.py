@@ -73,7 +73,7 @@ NEAR_BANDS = 2                                      # how many budget bands away
 
 
 def _pair_answer(query: dict, db: dict, rnd) -> tuple[int, object]:
-    """?pk=<pair key>&t=<tier>[&n=3][&k=<kind no. to take>][&exc=<kind nos. to leave out, comma-separated>][&x=<links shown last, comma-separated>]: up to n rows of DIFFERENT ideas
+    """?pk=<pair key>&t=<tier>[&n=3][&i=<idea nos. to take first, comma-separated>][&k=<kind no. to take>][&exc=<kind nos. to leave out, comma-separated>][&x=<links shown last, comma-separated>]: up to n rows of DIFFERENT ideas
     (one at random from the best of each idea), never a link of `x` while another is left.  -> {"rows": [[idea no., kind no., line, price, picture, link, reviews, rating x10], ...]}"""
     pk, t = query["pk"], query["t"]
     if not (SLUG.match(pk) and SLUG.match(t)):
@@ -88,23 +88,25 @@ def _pair_answer(query: dict, db: dict, rnd) -> tuple[int, object]:
     tiers = ((db["gacha"].get("pair") or {}).get(pk) or {}).get("tiers") or {}
     order = [x for x in (db["gacha"].get("order") or []) if isinstance(x, str)]
     near = sorted((x for x in order if x != t and x in tiers), key=lambda x: (abs(order.index(x) - order.index(t)), order.index(x))) if t in order else []
+    liked = {int(x) for x in str(query.get("i") or "").split(",") if re.fullmatch(r"\d{1,3}", x)}      # the ideas the visitor's own words point to: taken first, in every band, before the others
     out, bands, used = [], [], set()
-    for tt in [t] + [x for x in near if abs(order.index(x) - order.index(t)) <= NEAR_BANDS]:      # the asked budget first; only when it gives fewer than n, the nearest bands (cheaper first on a tie)
-        if len(out) >= n:
-            break
-        by_idea: dict[int, list] = {}
-        for r in tiers.get(tt) or []:
-            if r[1] not in exc and (take is None or r[1] == take) and r[0] not in used:
-                by_idea.setdefault(r[0], []).append(r)
-        ideas = list(by_idea)
-        rnd.shuffle(ideas)
-        for i in ideas:
-            fresh = [r for r in by_idea[i] if r[5] not in shown] or by_idea[i]
-            out.append(rnd.choice(fresh))
-            bands.append(tt)
-            used.add(i)
+    for only in ([True, False] if liked else [False]):
+        for tt in [t] + [x for x in near if abs(order.index(x) - order.index(t)) <= NEAR_BANDS]:      # the asked budget first; only when it gives fewer than n, the nearest bands (cheaper first on a tie)
             if len(out) >= n:
                 break
+            by_idea: dict[int, list] = {}
+            for r in tiers.get(tt) or []:
+                if r[1] not in exc and (take is None or r[1] == take) and r[0] not in used and (not only or r[0] in liked):
+                    by_idea.setdefault(r[0], []).append(r)
+            ideas = list(by_idea)
+            rnd.shuffle(ideas)
+            for i in ideas:
+                fresh = [r for r in by_idea[i] if r[5] not in shown] or by_idea[i]
+                out.append(rnd.choice(fresh))
+                bands.append(tt)
+                used.add(i)
+                if len(out) >= n:
+                    break
     return 200, {"rows": out, "bands": bands}
 
 

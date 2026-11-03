@@ -109,6 +109,26 @@ class GachaDataTest(unittest.TestCase):
         self.assertLess(counted, noted)                                                         # 2026-11-03: the note was written before `far` was known and never showed
         self.assertIn("bands[n]", js)
 
+    def test_the_gift_page_leads_to_the_proposal_only_where_the_pair_has_products(self):
+        data = json.loads(self.private["yorokobu_gacha_db.json"])
+        pairs = set(data["pair"])
+        cfgd = build.ct.load()
+        seen_with = seen_without = 0
+        for p in cfgd["pairs"]:
+            key = build.ct.pair_key(p)
+            f = self.out / "gift" / key / "index.html"
+            if not f.exists():
+                continue
+            html = f.read_text(encoding="utf-8")
+            has = "/tool/gacha/?o=" in html
+            self.assertEqual(has, key in pairs, key)
+            if has:
+                seen_with += 1
+                self.assertIn(f'/tool/gacha/?o={p["occasion"]}&amp;r={p["recipient"]}&amp;t=', html)
+            else:
+                seen_without += 1
+        self.assertGreaterEqual(seen_with, 1)
+
     def test_the_static_page_holds_no_other_mall_link_and_no_product(self):
         html = (self.out / "tool/gacha/index.html").read_text(encoding="utf-8")
         card_part = html.split('id="gacha"', 1)[1].split("</section>", 1)[0]
@@ -148,6 +168,14 @@ const wait = (ms) => new Promise(r => setTimeout(r, ms));
     const again = d.querySelector('.gacha-actions button'); out.again = !!again;
     if (again) { again.click(); await wait(500); out.after = d.querySelectorAll('.gacha-card').length; }
     out.scroll = d.documentElement.scrollWidth;
+    // the visitor's own words: a word of a kind of the pair is taken first, a word of no kind gives no proposal and no request
+    const pk = 'birthday-boyfriend', pubd = JSON.parse(d.getElementById('gacha-pub').textContent), word = (pubd.pairs[pk].i[0][4][0] || pubd.pairs[pk].i[0][0]);
+    form.elements.o.value = 'birthday'; form.elements.r.value = 'boyfriend'; form.elements.r.dispatchEvent(new Event('change')); form.elements.o.value = 'birthday';
+    form.elements.l.value = '好きなのは' + word + 'です'; form.querySelector('button[type="submit"]').click(); await wait(600);
+    out.liked = [...d.querySelectorAll('.gacha-kind')].map(e => e.textContent).filter(t => t.indexOf('好みに合う種類') >= 0).length;
+    form.elements.l.value = 'ぽぷらぽぷら'; form.querySelector('button[type="submit"]').click(); await wait(400);
+    out.noLike = [d.querySelectorAll('.gacha-card').length, d.querySelector('.gacha-msg').textContent];
+    form.elements.l.value = '';
     // a link from a gift page: the conditions come with the address
     const h = document.createElement('iframe'); h.style.width = '1000px'; h.style.height = '900px'; document.body.appendChild(h);
     const tier = form.elements.t.value;
@@ -212,6 +240,9 @@ class GachaBrowserTest(unittest.TestCase):
         self.assertFalse(o["amazonPrice"])
         self.assertTrue(o["again"])
         self.assertGreaterEqual(o["after"], 2)
+        self.assertGreaterEqual(o["liked"], 1)                                                   # a word of a kind: that kind is marked
+        self.assertEqual(o["noLike"][0], 0)                                                      # a word of no kind: nothing is forced, the message asks for other words
+        self.assertIn("見つかりませんでした", o["noLike"][1])
         self.assertGreaterEqual(o["byUrl"], 2)                                                   # the conditions in the address run the proposal at once
         self.assertGreaterEqual(o["card300"], 2)
         self.assertLessEqual(o["scroll300"], 301)

@@ -501,13 +501,25 @@
       for (var k in pub.pairs) { var p = pub.pairs[k]; if (p.r === r && !seen[p.o]) { seen[p.o] = 1; var op = document.createElement("option"); op.value = p.o; op.textContent = pub.occ[p.o]; sel.appendChild(op); if (!first) first = p.o; } }
       sel.value = seen[keep] ? keep : first;
     }
+    function fold(s) {                                             // width, case and hiragana/katakana ignored: 「こーひー」 finds 「コーヒー」
+      return s.normalize("NFKC").toLowerCase().replace(/\s+/g, "").replace(/[ぁ-ゖ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) + 96); });
+    }
+    function likedIdeas(text, p) {                                 // the kinds of the pair whose label or words stand in the visitor's text (a word of one letter does not count)
+      var t = fold(text), hit = [];
+      if (!t) return hit;
+      p.i.forEach(function (idea, n) {
+        var words = (idea[4] || []).concat(idea[0].split(/[・\/]/));
+        if (words.some(function (w) { w = fold(w); return w.length >= 2 && t.indexOf(w) >= 0; })) hit.push(n);
+      });
+      return hit;
+    }
     function tierLabel(t) { for (var i = 0; i < pub.tiers.length; i++) { if (pub.tiers[i].slug === t) return pub.tiers[i].label; } return ""; }
-    function card(row, p, o, r, t) {
+    function card(row, p, o, r, t, liked) {
       var idea = p.i[row[0]] || ["", -1, "", ""], c = el("div", "gacha-card"), pic = el("div", "gacha-img"), a = document.createElement("a"), img = document.createElement("img");
       a.href = row[5]; a.target = "_blank"; a.rel = "nofollow sponsored noopener";                  // the link the API gave, as it is
       img.src = row[4]; img.alt = row[2] || "楽天市場の商品ページ"; a.appendChild(img); pic.appendChild(a);
       var body = el("div", "gacha-body");
-      body.appendChild(el("p", "gacha-kind", (pub.types[row[1]] || "") + (idea[0] ? "・" + idea[0] : "")));
+      body.appendChild(el("p", "gacha-kind", (pub.types[row[1]] || "") + (idea[0] ? "・" + idea[0] : "") + (liked ? "(好みに合う種類)" : "")));
       if (row[2]) body.appendChild(el("p", "gacha-name", row[2]));
       body.appendChild(el("p", "price", yen(row[3])));
       if (row[6]) body.appendChild(el("p", "meta", "★" + (row[7] / 10).toFixed(1) + "(" + row[6].toLocaleString("ja-JP") + "件)"));
@@ -533,9 +545,11 @@
       if (busy) return;
       var r = form.elements.r.value, o = form.elements.o.value, t = form.elements.t.value, pk = pairOf(o, r);
       if (!pk) { msg.textContent = "その相手と場面の組み合わせは、まだありません。ほかの場面を選んでみてください。"; out.textContent = ""; amz.textContent = ""; return; }
+      var like = likedIdeas(form.elements.l.value, pub.pairs[pk]);
+      if (form.elements.l.value.trim() && !like.length) { msg.textContent = "書いていただいた好みに合う種類が、この組み合わせでは見つかりませんでした。言葉を変えるか、入れたい種類から選んでください。"; out.textContent = ""; amz.textContent = ""; return; }
       busy = true;
       var exc = [].map.call(form.querySelectorAll('input[name="exc"]:checked'), function (c) { return c.value; }).join(","), k = form.elements.k.value;
-      var q = "?pk=" + encodeURIComponent(pk) + "&t=" + encodeURIComponent(t) + "&n=3" + (k ? "&k=" + encodeURIComponent(k) : "") + (exc ? "&exc=" + exc : "") + (last.length ? "&x=" + encodeURIComponent(last.join(",")) : "");
+      var q = "?pk=" + encodeURIComponent(pk) + "&t=" + encodeURIComponent(t) + "&n=3" + (k ? "&k=" + encodeURIComponent(k) : "") + (like.length ? "&i=" + like.join(",") : "") + (exc ? "&exc=" + exc : "") + (last.length ? "&x=" + encodeURIComponent(last.join(",")) : "");
       fetch(root.getAttribute("data-src") + q).then(function (res) { if (!res.ok) throw new Error("gacha"); return res.json(); }).then(function (j) {
         busy = false;
         var rows = (j && j.rows) || [];
@@ -544,7 +558,7 @@
         last = rows.map(function (x) { return x[5]; });
         msg.textContent = "条件に合う商品を" + rows.length + "点、選びました。";
         var bands = (j && j.bands) || [], far = 0;
-        rows.forEach(function (row, n) { var b = bands[n] || t; if (b !== t) far++; out.appendChild(card(row, pub.pairs[pk], o, r, b)); });
+        rows.forEach(function (row, n) { var b = bands[n] || t; if (b !== t) far++; out.appendChild(card(row, pub.pairs[pk], o, r, b, like.indexOf(row[0]) >= 0)); });
         if (far) msg.textContent = tierLabel(t) + "の商品は少なかったので、" + (rows.length - far ? "近い予算帯の商品を" + far + "点入れて、" + rows.length + "点選びました。" : "近い予算帯から" + rows.length + "点選びました。");
         var again = el("p", "gacha-actions"), b = el("button", "btn btn-sub", "もういちど提案する"); b.type = "button"; b.addEventListener("click", spin); again.appendChild(b); out.appendChild(again);
         amazon(rows, pub.pairs[pk]);

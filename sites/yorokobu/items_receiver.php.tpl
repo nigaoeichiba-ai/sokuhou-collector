@@ -80,24 +80,28 @@ if (isset($_GET['pk'], $_GET['t'])) {
         asort($dist);
         $try = array_merge($try, array_keys($dist));
     }
+    $liked = array();
+    foreach (explode(',', (string)($_GET['i'] ?? '')) as $l) { if (preg_match('/^\d{1,3}$/', $l) === 1) { $liked[] = (int)$l; } }
     $res = array(); $bands = array(); $used = array();
-    foreach ($try as $tt) {
-        if (count($res) >= $n) { break; }
-        $by = array();
-        foreach ((isset($tiers[$tt]) && is_array($tiers[$tt]) ? $tiers[$tt] : array()) as $r) {
-            if (in_array($r[1], $exc, true) || ($take !== null && $r[1] !== $take) || isset($used[$r[0]])) { continue; }
-            $by[$r[0]][] = $r;
-        }
-        $ideas = array_keys($by);
-        shuffle($ideas);
-        foreach ($ideas as $i) {
-            $fresh = array();
-            foreach ($by[$i] as $r) { if (!in_array($r[5], $shown, true)) { $fresh[] = $r; } }
-            if (!count($fresh)) { $fresh = $by[$i]; }
-            $res[] = $fresh[random_int(0, count($fresh) - 1)];
-            $bands[] = $tt;
-            $used[$i] = true;
+    foreach (count($liked) ? array(true, false) : array(false) as $only) {
+        foreach ($try as $tt) {
             if (count($res) >= $n) { break; }
+            $by = array();
+            foreach ((isset($tiers[$tt]) && is_array($tiers[$tt]) ? $tiers[$tt] : array()) as $r) {
+                if (in_array($r[1], $exc, true) || ($take !== null && $r[1] !== $take) || isset($used[$r[0]]) || ($only && !in_array($r[0], $liked, true))) { continue; }
+                $by[$r[0]][] = $r;
+            }
+            $ideas = array_keys($by);
+            shuffle($ideas);
+            foreach ($ideas as $i) {
+                $fresh = array();
+                foreach ($by[$i] as $r) { if (!in_array($r[5], $shown, true)) { $fresh[] = $r; } }
+                if (!count($fresh)) { $fresh = $by[$i]; }
+                $res[] = $fresh[random_int(0, count($fresh) - 1)];
+                $bands[] = $tt;
+                $used[$i] = true;
+                if (count($res) >= $n) { break; }
+            }
         }
     }
     out(200, array('rows' => $res, 'bands' => $bands));
