@@ -543,9 +543,9 @@
         if (!rows.length) { msg.textContent = "その条件の商品はまだありません。予算や種類を変えてみてください。"; return; }
         last = rows.map(function (x) { return x[5]; });
         msg.textContent = "条件に合う商品を" + rows.length + "点、選びました。";
-        if (far) msg.textContent = tierLabel(t) + "の商品は少なかったので、" + (rows.length - far ? "" : "すべて") + "近い予算帯の商品を" + far + "点入れて、" + rows.length + "点選びました。";
         var bands = (j && j.bands) || [], far = 0;
         rows.forEach(function (row, n) { var b = bands[n] || t; if (b !== t) far++; out.appendChild(card(row, pub.pairs[pk], o, r, b)); });
+        if (far) msg.textContent = tierLabel(t) + "の商品は少なかったので、" + (rows.length - far ? "近い予算帯の商品を" + far + "点入れて、" + rows.length + "点選びました。" : "近い予算帯から" + rows.length + "点選びました。");
         var again = el("p", "gacha-actions"), b = el("button", "btn btn-sub", "もういちど提案する"); b.type = "button"; b.addEventListener("click", spin); again.appendChild(b); out.appendChild(again);
         amazon(rows, pub.pairs[pk]);
       }, function () { busy = false; msg.textContent = "うまく読み込めませんでした。時間をおいてもう一度お試しください。"; });
