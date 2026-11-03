@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from . import common
-from .common import today_j, d, jp, md, left, in_days, CHECKED
+from .common import today_j, d, jp, md, left, in_days, CHECKED, rel, ver
 from .facts import EVENTS, TOEIC
 from .pages_exam import official
 
@@ -103,11 +103,11 @@ def deadlines() -> dict:
         "path": "/deadlines/", "kind": "list", "parent": "/", "primary_kw": "申込期限が近い試験", "secondary_kw": ["宅建 申し込み期限", "出願 期限"], "intent": 1,
         "title": "申込期限が近い試験の一覧(締切の近い順)", "h1": "申込期限が近い試験の一覧",
         "description": "今日から先の申込の締切を、近い順に並べた一覧です。看護師国家試験・FP1級・TOEIC・英検・漢検など。締切までの日数は日付から計算しています。時刻や郵送の扱いも添えています。",
-        "answer": f"いちばん近い申込の締切は、{jp(items[0][0])}の{items[0][1]}です。あと{left(items[0][0])}日です。",
+        "answer": f"いちばん近い申込の締切は、{jp(items[0][0])}の{items[0][1]}です。{rel(items[0][0])}です。",
         "data_basis": "2026年11月3日現在", "sources": ["mhlw_kango", "kinzai", "eiken", "iibc", "kanken"],
         "sections": [
             {"h2": "締切の近い順", "paras": [
-                f"{today_j()}から先の、申込の締切です。今日からの日数が少ない順に並べています。いちばん上の{items[0][1]}は、あと{left(items[0][0])}日です。",
+                f"{today_j()}から先の、申込の締切です。今日からの日数が少ない順に並べています。いちばん上の{items[0][1]}は、{rel(items[0][0])}です。",
                 "締切の時刻は、日付だけでは分かりません。インターネットは17時や23時59分、郵送は消印か必着かなど、試験ごとに違います。備考の欄と、試験ごとのページで確かめてください。"],
              "table": {"caption": f"申込の締切が近い順({today_j()}時点)", "cols": ["締切の日", "試験", "あと何日", "備考"], "rows": [[jp(iso), who, in_days(iso), note or "—"] for iso, who, what, note in items]}},
             {"h2": "これから申込が始まる試験", "paras": ["申込がまだ始まっていない試験です。開始日を過ぎれば、同じ試験が上の表に並びます。"],
