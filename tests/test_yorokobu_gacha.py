@@ -103,6 +103,12 @@ class GachaDataTest(unittest.TestCase):
             self.assertNotIn(row[4], blob)
         self.assertNotIn("rakuten.co.jp", blob)
 
+    def test_the_note_on_borrowed_bands_is_made_after_the_bands_are_counted(self):
+        js = (Path(__file__).parents[1] / "sites" / "yorokobu" / "assets" / "app.js").read_text(encoding="utf-8")
+        counted, noted = js.index("if (b !== t) far++"), js.index("近い予算帯の商品を")
+        self.assertLess(counted, noted)                                                         # 2026-11-03: the note was written before `far` was known and never showed
+        self.assertIn("bands[n]", js)
+
     def test_the_static_page_holds_no_other_mall_link_and_no_product(self):
         html = (self.out / "tool/gacha/index.html").read_text(encoding="utf-8")
         card_part = html.split('id="gacha"', 1)[1].split("</section>", 1)[0]
