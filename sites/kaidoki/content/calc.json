@@ -1,0 +1,155 @@
+{
+ "path": "/calc/",
+ "kind": "hub",
+ "parent": "/",
+ "primary_kw": "楽天ポイント倍率計算",
+ "secondary_kw": [
+  "楽天 ポイント 倍率 計算",
+  "実質価格 計算"
+ ],
+ "intent": 5,
+ "title": "楽天ポイント倍率計算と実質価格の出し方(税抜・クーポン後)",
+ "h1": "楽天ポイント倍率計算と実質価格のツール",
+ "description": "価格、送料、クーポン、ポイント倍率を自分で入れると、実質価格が出ます。ポイントが税抜・クーポン後に付く点や、使い切れないポイントも計算に入れられ、2つの案を並べて見られます。",
+ "answer": "実質価格は、支払う金額から、使い切れるポイントを引いた額です。下の欄に数字を入れると、案Aと案Bを並べて計算します。",
+ "updated": "2026-11-03",
+ "sections": [
+  {
+   "h2": "数字を入れて計算する",
+   "paras": [
+    "入れた数字はこのページの中だけで計算します。送信も保存もしません。2つの案を並べて見られますが、どちらが良いかの判定は出しません。判断は、出てきた数字を見て自分で決めてください。"
+   ],
+   "html": "<div class=\"calc\"><div class=\"calc-col\"><h3>案A</h3>\n<label>商品の価格(税込・円)<input type=\"text\" inputmode=\"numeric\" name=\"price\" value=\"11000\" autocomplete=\"off\"></label>\n<label>送料(円。無料なら0)<input type=\"text\" inputmode=\"numeric\" name=\"ship\" value=\"500\" autocomplete=\"off\"></label>\n<label>クーポンの値引き(円)<input type=\"text\" inputmode=\"numeric\" name=\"coupon\" value=\"1000\" autocomplete=\"off\"></label>\n<label>付くポイントの合計(%。例: 通常1%と上乗せ9%なら10)<input type=\"text\" inputmode=\"decimal\" name=\"rate\" value=\"10\" autocomplete=\"off\"></label>\n<label>ポイントの上限(ポイント。上限が無ければ空欄)<input type=\"text\" inputmode=\"numeric\" name=\"cap\" value=\"\" autocomplete=\"off\"></label>\n<label>付いたポイントのうち、使い切る割合(%)<input type=\"text\" inputmode=\"numeric\" name=\"use\" value=\"100\" autocomplete=\"off\"></label>\n<label class=\"chk\"><input type=\"checkbox\" name=\"excl_tax\" checked> ポイントは、税抜の金額に対して付く</label>\n<div class=\"calc-out\" aria-live=\"polite\"></div></div><div class=\"calc-col\"><h3>案B(使わなければ空のまま)</h3>\n<label>商品の価格(税込・円)<input type=\"text\" inputmode=\"numeric\" name=\"price\" value=\"\" autocomplete=\"off\"></label>\n<label>送料(円。無料なら0)<input type=\"text\" inputmode=\"numeric\" name=\"ship\" value=\"0\" autocomplete=\"off\"></label>\n<label>クーポンの値引き(円)<input type=\"text\" inputmode=\"numeric\" name=\"coupon\" value=\"0\" autocomplete=\"off\"></label>\n<label>付くポイントの合計(%。例: 通常1%と上乗せ9%なら10)<input type=\"text\" inputmode=\"decimal\" name=\"rate\" value=\"1\" autocomplete=\"off\"></label>\n<label>ポイントの上限(ポイント。上限が無ければ空欄)<input type=\"text\" inputmode=\"numeric\" name=\"cap\" value=\"\" autocomplete=\"off\"></label>\n<label>付いたポイントのうち、使い切る割合(%)<input type=\"text\" inputmode=\"numeric\" name=\"use\" value=\"100\" autocomplete=\"off\"></label>\n<label class=\"chk\"><input type=\"checkbox\" name=\"excl_tax\" checked> ポイントは、税抜の金額に対して付く</label>\n<div class=\"calc-out\" aria-live=\"polite\"></div></div></div>\n<script src=\"/assets/calc.js\" defer></script>"
+  },
+  {
+   "h2": "計算の式",
+   "paras": [
+    "実質価格は、(商品の価格 − クーポン + 送料)から、使い切るポイントを引いた額です。付くポイントは、(商品の価格 − クーポン)に倍率をかけて、小数点以下を切り捨てます。税抜に付く場合は、先に1.1で割ります。",
+    "最初から入っている案Aの数字で計算すると、支払う金額は10,500円、付くポイントは909ポイントで、実質価格は9,591円です。同じ条件でポイントが通常の1%だけなら、付くポイントは90ポイント、実質価格は10,410円になります。差は819円です。"
+   ]
+  },
+  {
+   "h2": "入れる前に確かめる3点",
+   "paras": [
+    "ポイントは、クーポンを引いたあとの金額に付くのが一般的です。楽天市場のお買い物マラソンも、税抜・送料別・クーポン適用後の金額に付くと案内されています。送料にはポイントが付かないので、送料の高い店は、倍率が高くても実質価格が下がらないことがあります。",
+    "期間限定ポイントは、期限までに使い切れないと価値が下がります。使い切る割合の欄を、自分が使う見込みに合わせて下げてください。ポイントの上限がある企画では、上限の欄に数字を入れると、上限で止まる分まで計算します。"
+   ]
+  },
+  {
+   "h2": "買いまわりの上限に届く金額の目安",
+   "paras": [
+    "お買い物マラソンの買いまわりは、ショップ数が増えるほど倍率が上がり、特典ポイントの上限は7,000ポイントです。通常の1倍分は上乗せに含まれないので、2ショップなら上乗せは1%、10ショップなら9%です。上乗せ分が上限に届く、税抜の合計金額を下の表にしました。"
+   ],
+   "table": {
+    "caption": "買いまわりの上限7,000ポイントに届く、税抜の合計金額",
+    "cols": [
+     "購入ショップ数",
+     "倍率",
+     "上乗せ分",
+     "上限に届く税抜の合計",
+     "1ショップあたり"
+    ],
+    "rows": [
+     [
+      "2ショップ",
+      "2倍",
+      "1%",
+      "700,000円",
+      "350,000円"
+     ],
+     [
+      "3ショップ",
+      "3倍",
+      "2%",
+      "350,000円",
+      "116,667円"
+     ],
+     [
+      "4ショップ",
+      "4倍",
+      "3%",
+      "233,334円",
+      "58,334円"
+     ],
+     [
+      "5ショップ",
+      "5倍",
+      "4%",
+      "175,000円",
+      "35,000円"
+     ],
+     [
+      "6ショップ",
+      "6倍",
+      "5%",
+      "140,000円",
+      "23,334円"
+     ],
+     [
+      "7ショップ",
+      "7倍",
+      "6%",
+      "116,667円",
+      "16,667円"
+     ],
+     [
+      "8ショップ",
+      "8倍",
+      "7%",
+      "100,000円",
+      "12,500円"
+     ],
+     [
+      "9ショップ",
+      "9倍",
+      "8%",
+      "87,500円",
+      "9,723円"
+     ],
+     [
+      "10ショップ",
+      "10倍",
+      "9%",
+      "77,778円",
+      "7,778円"
+     ]
+    ],
+    "num_cols": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "note": "ショップ数で決まる倍率が期間中の買い物すべてに付くと考えた目安です。実際の付与は主催者の案内に従います。"
+   }
+  },
+  {
+   "h2": "最終確認は公式で",
+   "paras": [
+    "最終的な日程は、主催者の公式発表でご確認ください。日程は変更されることがあります。"
+   ]
+  }
+ ],
+ "related": [
+  {
+   "path": "/calc/points/",
+   "text": "ポイント倍率の計算の考え方"
+  },
+  {
+   "path": "/rakuten/marathon-cap/",
+   "text": "お買い物マラソンの上限と攻略"
+  },
+  {
+   "path": "/what-to-buy/",
+   "text": "セールで買うもの・見送るもの"
+  },
+  {
+   "path": "/calendar/",
+   "text": "セール日程の一覧"
+  }
+ ],
+ "sources": [
+  "official"
+ ],
+ "data_basis": "楽天の買いまわりの案内(2026年11月)"
+}

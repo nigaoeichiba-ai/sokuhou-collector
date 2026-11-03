@@ -1,0 +1,30 @@
+{
+ "path": "/corrections/",
+ "kind": "archive",
+ "parent": "/method/",
+ "primary_kw": "訂正と更新の記録",
+ "secondary_kw": [],
+ "intent": 1,
+ "title": "訂正と更新の記録",
+ "h1": "訂正と更新の記録",
+ "description": "このサイトの日程や数字を訂正した履歴と、大きな更新をした日の記録です。",
+ "answer": "",
+ "updated": "2026-11-03",
+ "sections": [
+  {
+   "h2": "記録",
+   "paras": [
+    "2026年11月3日(火): サイトを公開する前の準備を行いました。訂正した内容は、ここに日付つきで書きます。"
+   ]
+  }
+ ],
+ "related": [
+  {
+   "path": "/method/",
+   "text": "セール日程の調べ方"
+  }
+ ],
+ "sources": [
+  "official"
+ ]
+}
