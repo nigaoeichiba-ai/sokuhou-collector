@@ -66,7 +66,7 @@ for f in ("hs_A.json", "hs_B.json", "hs_C.json", "hs_D.json"):
     for x in json.load(open(NOTES / f, encoding="utf-8")):
         if x["pref"] in PICK:
             g, e = PICK[x["pref"]]
-            if not str(x.get("status", "")).startswith("公表済み") or "令和8年度" in str(x["stages"][0].get("name", "")) or max(g, e or 0) >= len(x["stages"]):
+            if not str(x.get("status", "")).startswith("公表済み") or "(令和8年度)" in str(x["stages"][0].get("name", "")) or max(g, e or 0) >= len(x["stages"]):
                 continue
             rows[x["pref"]] = {"pref": x["pref"], "src": x["source_urls"][0], "general": stage(x["stages"][g]),
                                "early": stage(x["stages"][e]) if e is not None else None}

@@ -570,6 +570,24 @@
   }
  },
  {
+  "pref": "奈良県",
+  "src": "https://www.pref.nara.lg.jp/n167/p122021.html",
+  "general": {
+   "name": "一次選抜(全日制。令和8年度から特色選抜と一般選抜を一本化)",
+   "apply": [
+    "2027-02-08",
+    "2027-02-19"
+   ],
+   "exam": [
+    "2027-02-24",
+    "2027-02-25"
+   ],
+   "result": "2027-03-08",
+   "apply_raw": null
+  },
+  "early": null
+ },
+ {
   "pref": "和歌山県",
   "src": "https://www.pref.wakayama.lg.jp/prefg/500200/d00221979.html",
   "general": {
