@@ -171,9 +171,8 @@
   {
    "h2": "最終確認は公式で",
    "paras": [
-    "申込の前に、次の公式ページで最新の日程と手続きを確かめてください。確認日は2026年11月3日です。"
-   ],
-   "html": "<ul class=\"links\"><li><a href=\"https://www.gyosei-shiken.or.jp/doc/guide/guide.html\" rel=\"noopener\" target=\"_blank\">行政書士試験の受験案内(行政書士試験研究センター)</a></li></ul>"
+    "最終的な日程は、主催団体の公式発表でご確認ください。日程は変更されることがあります。申し込む前に、必ず確かめてください。"
+   ]
   }
  ],
  "related": [
@@ -195,8 +194,7 @@
   }
  ],
  "sources": [
-  "gyosei",
-  "gyosei_stat"
+  "official"
  ],
  "updated": "2026-11-03"
 }

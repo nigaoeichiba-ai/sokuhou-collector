@@ -105,9 +105,9 @@
   {
    "h2": "最終確認は公式で",
    "paras": [
-    "確認日は2026年11月3日です。厚生労働省のページが、日程の正本です。"
-   ],
-   "html": "<ul class=\"links\"><li><a href=\"https://www.mhlw.go.jp/kouseiroudoushou/shikaku_shiken/kangoshi/\" rel=\"noopener\" target=\"_blank\">看護師国家試験(厚生労働省)</a></li></ul>"
+    "厚生労働省のページが、日程の正本です。",
+    "最終的な日程は、主催団体の公式発表でご確認ください。日程は変更されることがあります。申し込む前に、必ず確かめてください。"
+   ]
   }
  ],
  "related": [
@@ -129,8 +129,7 @@
   }
  ],
  "sources": [
-  "mhlw_kango",
-  "kango_stat"
+  "official"
  ],
  "updated": "2026-11-03"
 }
