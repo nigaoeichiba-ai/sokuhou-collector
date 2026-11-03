@@ -62,7 +62,7 @@ def rich_site(root: Path) -> Path:
     for f in (d / "content").glob("*.json"):
         f.unlink()
     spec = json.loads((d / "site.json").read_text(encoding="utf-8"))
-    spec["sources"] = {"main": {"org": "総務省", "table": "ダミーの調査表", "url": "https://www.soumu.go.jp/", "basis": "2026年4月1日", "fetched": "2026-11-03"}}
+    spec["sources"] = {"main": {"org": "総務省", "table": "ダミーの調査表", "credit": "総務省『ダミーの調査表』を加工して作成", "url": "https://www.soumu.go.jp/", "basis": "2026年4月1日", "fetched": "2026-11-03"}}
     spec["footer_html"] = "出典: 総務省の公表表。各ページの末尾に基準日と取得日を書いています。"
     spec["purpose"] = "公的な統計を、ページごとに一つの問いへ答える形に整えて載せること。"
     spec["update_text"] = "出典の表が更新されたら、数字を入れ替えて、各ページの最終更新日を書き換えます。"
@@ -226,6 +226,79 @@ class ScaffoldTest(unittest.TestCase):
         entry = deployplan.load_registry(copy, env={})["sites"]["dummysite"]
         self.assertEqual(entry["domain"], "dummy.example")
 
+    # ---- how the sources are shown (owner 2026-11-03: no addresses and no per-source dates on the site) ----
+    def with_style(self, name: str, style: str | None, strip_credit: bool = False, site_credits=None):
+        d = self.edit(name, None)
+        spec = json.loads((d / "site.json").read_text(encoding="utf-8"))
+        if style is None:
+            spec.pop("sources_style", None)
+        else:
+            spec["sources_style"] = style
+        if strip_credit:
+            spec["sources"]["main"].pop("credit")
+        if site_credits is not None:
+            spec["credits"] = site_credits
+        (d / "site.json").write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+        return d
+
+    def test_credit_style_shows_one_line_and_the_update_day_only(self):
+        page = self.pages["list/index.html"]
+        self.assertIn('<p class="credit">出典: 総務省『ダミーの調査表』を加工して作成</p>', page)
+        self.assertIn("最終更新日: 2026-11-03", page)
+        main = page.split("<main", 1)[1].split("</main>")[0]
+        for gone in ("soumu.go.jp", "取得日", "基準日", "出典と更新日", "出典の公開ページ"):
+            self.assertNotIn(gone, main)
+
+    def test_block_style_is_unchanged(self):
+        """The sites that do not set sources_style keep the old block, byte for byte."""
+        pages, _ = self.rebuild(self.with_style("blk", None))
+        main = pages["list/index.html"].split("<main", 1)[1].split("</main>")[0]
+        self.assertIn('<h2>出典と更新日</h2>\n<ul class="sources"><li>総務省「ダミーの調査表」(<a href="https://www.soumu.go.jp/" rel="noopener" target="_blank">出典の公開ページ</a>、基準日 2026年4月1日、取得日 2026-11-03)</li></ul>\n'
+                      '<p class="stamp">最終更新日: 2026-11-03</p>', main)
+        self.assertIn("出典の公開ページ", pages["about/index.html"])
+
+    def test_none_style_shows_nothing_but_still_needs_a_declaration(self):
+        pages, _ = self.rebuild(self.with_style("none", "none"))
+        main = pages["list/index.html"].split("<main", 1)[1].split("</main>")[0]
+        for gone in ("出典", "最終更新日", "class=\"credit\""):
+            self.assertNotIn(gone, main)
+        with self.assertRaises(sitekit.BuildError):
+            self.rebuild(self.with_style("none2", "none", strip_credit=True))
+
+    def test_numbers_without_any_declared_source_fail(self):
+        """Negative: a table with no page credit, no source credit and no site credits is the failure the check is for."""
+        with self.assertRaises(sitekit.BuildError) as cm:
+            self.rebuild(self.with_style("nocredit", "credit", strip_credit=True))
+        self.assertIn("no source declared", str(cm.exception))
+
+    def test_site_credits_or_a_page_credit_satisfy_the_check(self):
+        pages, _ = self.rebuild(self.with_style("sitecred", "credit", strip_credit=True, site_credits=["総務省統計局『ダミー』を加工して作成"]))
+        self.assertIn("出典: 総務省統計局『ダミー』を加工して作成", pages["list/index.html"])
+        d = self.with_style("pagecred", "credit", strip_credit=True)
+        self.mutate(d, "list", lambda p: p.update(credit="独自の一行"))
+        for key in ("home", "guide", "pref-0", "pref-1", "pref-2", "pref-3", "pref-4", "pref-5"):
+            self.mutate(d, key, lambda p: p.update(credit="別の一行"))
+        pages, _ = self.rebuild(d)
+        self.assertIn("出典: 独自の一行", pages["list/index.html"])
+
+    def test_block_style_still_requires_sources_on_every_page(self):
+        d = self.with_style("blk2", None)
+        self.mutate(d, "guide", lambda p: p.update(sources=[]))
+        with self.assertRaises(sitekit.BuildError) as cm:
+            self.rebuild(d)
+        self.assertIn("no sources", str(cm.exception))
+
+    def test_unknown_style_fails(self):
+        with self.assertRaises(sitekit.BuildError) as cm:
+            self.rebuild(self.with_style("badstyle", "links"))
+        self.assertIn("sources_style", str(cm.exception))
+
+    def test_init_defaults_to_credit_style(self):
+        d = newsite.init_site("cs", "cs.example", "表記", "表", self.tmp / "cs", "2026-11-03")
+        spec = json.loads((d / "site.json").read_text(encoding="utf-8"))
+        self.assertEqual(spec["sources_style"], "credit")
+        self.assertTrue(spec["sources"]["example"]["credit"])
+
     # ---- negative tests: each check finds the failure it was made for ----
     def test_thin_page_becomes_noindex_and_leaves_the_sitemap(self):
         """minna 2026-10-20: a list that is only a grid of pictures is no page for a search to send anyone to."""
@@ -326,7 +399,7 @@ class ScaffoldTest(unittest.TestCase):
         self.mutate(d, "guide", lambda p: p.update(sources=[], parent="/nowhere/"))
         with self.assertRaises(sitekit.BuildError) as cm:
             self.rebuild(d)
-        self.assertIn("no sources", str(cm.exception))
+        self.assertIn("no source declared", str(cm.exception))
         self.assertIn("not a page", str(cm.exception))
 
 

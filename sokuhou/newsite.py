@@ -38,6 +38,7 @@ from sokuhou.sitekit import BuildError, esc
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS_SRC = Path(__file__).with_name("newsite_assets")
 KINDS = seokit.HUB_TYPES + seokit.ITEM_TYPES + seokit.ALWAYS_NOINDEX
+SOURCE_STYLES = ("block", "credit", "none")
 NAME = re.compile(r"[a-z][a-z0-9]*")
 MAX_TABLES = 3
 DEFAULT_KINDS = ["数字の誤りのご指摘", "ご意見・ご要望", "その他"]
@@ -79,6 +80,9 @@ def check_spec(spec: dict, pages: list[dict]) -> None:
     if "/" not in paths:
         errors.append("no page with path '/' (the home page)")
     sources = spec.get("sources", {})
+    style = spec.get("sources_style", "block")
+    if style not in SOURCE_STYLES:
+        errors.append(f"site.json sources_style must be one of {SOURCE_STYLES}, got {style!r}")
     for p in pages:
         f = p["_file"]
         if p.get("parent") and p["parent"] not in paths:
@@ -91,8 +95,11 @@ def check_spec(spec: dict, pages: list[dict]) -> None:
         for sid in p.get("sources", []):
             if sid not in sources:
                 errors.append(f"{f}: source {sid!r} is not in site.json sources")
-        if p.get("kind") != "archive" and p["path"] != "/" and not p.get("sources"):
-            errors.append(f"{f}: no sources (every page ends with where its numbers come from)")
+        if style == "block":
+            if p.get("kind") != "archive" and p["path"] != "/" and not p.get("sources"):
+                errors.append(f"{f}: no sources (every page ends with where its numbers come from)")
+        elif has_numbers(p) and not credit_lines(p, spec):
+            errors.append(f"{f}: numbers in a table / chart / map but no source declared (a page 'credit', a source with a 'credit', or the site's 'credits'; sources_style is {style!r})")
         ds = p.get("dataset")
         if ds:
             n = ds.get("table_section", 0)
@@ -195,7 +202,29 @@ def tile_map(t: dict, existing: set[str]) -> str:
             f'<div class="tile-legend"><b>{esc(t["title"])}</b> 少ない {legend} 多い</div></div>')
 
 
+def has_numbers(page: dict) -> bool:
+    return any(sec.get("table") or sec.get("chart") or sec.get("tilemap") for sec in page.get("sections", []))
+
+
+def credit_lines(page: dict, spec: dict) -> list[str]:
+    """The credit sentences of a page ('総務省統計局『家計調査』を加工して作成'): its own `credit`, else the `credit` of the sources it names, else the site's `credits`."""
+    own = page.get("credit")
+    if own:
+        return [own] if isinstance(own, str) else list(own)
+    named = [spec["sources"][sid]["credit"] for sid in page.get("sources", []) if sid in spec.get("sources", {}) and spec["sources"][sid].get("credit")]
+    return named or list(spec.get("credits") or [])
+
+
 def sources_block(page: dict, spec: dict) -> str:
+    """The end of a page.  sources_style "block" (the default, as before): every source with its link, base day and day fetched.  "credit": the one credit line the licence
+    needs and the page's day of update, no address, no per-source dates.  "none": nothing."""
+    style = spec.get("sources_style", "block")
+    if style == "none":
+        return ""
+    if style == "credit":
+        lines = credit_lines(page, spec)
+        credit = f'<p class="credit">出典: {esc("、".join(dict.fromkeys(lines)))}</p>\n' if lines else ""
+        return f'{credit}<p class="stamp">最終更新日: {esc(page_updated(page, spec))}</p>'
     items = []
     for sid in page.get("sources", []):
         s = spec["sources"][sid]
@@ -370,6 +399,10 @@ def _sitemap(cfg: dict, rels: list[str], lastmod: dict, default: str) -> str:
 
 
 def _sources_html(spec: dict) -> str:
+    style = spec.get("sources_style", "block")
+    if style != "block":      # no addresses, no per-source dates on the site (owner 2026-11-03): the about page names who the figures come from, if the site says so
+        lines = list(dict.fromkeys([*(spec.get("credits") or []), *(s["credit"] for s in spec.get("sources", {}).values() if s.get("credit"))])) if style == "credit" else []
+        return f'<ul>{"".join("<li>" + esc(x) + "</li>" for x in lines)}</ul>' if lines else "公的機関などが公表している統計を、加工して掲載しています。"
     rows = []
     for s in spec.get("sources", {}).values():
         link = f'(<a href="{esc(s["url"])}" rel="noopener" target="_blank">公開ページ</a>)' if s.get("url") else ""
@@ -459,7 +492,9 @@ def init_site(name: str, domain: str, site_name: str, glyph: str, sites_dir: Pat
         "disclaimer": ["(例)数字は出典の公表時点のものです。判断や手続きの前に、出典の公開ページで最新の内容を確かめてください。"],
         "method": ["(例)出典の表から数字をそのまま読み取り、順位と増減だけを当サイトで計算しています。計算の式は、各ページの本文に書きます。"],
         "corrections": [],
-        "sources": {"example": {"org": "(例)出典の機関名", "table": "(例)表の名前", "url": "", "basis": "2026年4月1日", "fetched": today}},
+        "sources_style": "credit",
+        "credits": [],
+        "sources": {"example": {"org": "(例)出典の機関名", "table": "(例)表の名前", "credit": "(例)出典の機関名『表の名前』を加工して作成", "url": "", "basis": "2026年4月1日", "fetched": today}},
     }
     (d / "site.json").write_text(json.dumps(spec, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     for fname, page in _example_pages(today).items():
