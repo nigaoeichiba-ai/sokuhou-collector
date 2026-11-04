@@ -300,13 +300,15 @@ LIGHT_WRITER = os.environ.get("KOBO_LIGHT_WRITER", "opus")
 MARK_LABELS = {"K01": "同じ言い方の重なり", "K02": "同じ内容のくり返し", "K03": "素材にない数字", "K04": "素材にない固有名詞", "K05": "素材にない語(参考)",
                "K06": "ラベルのような見出し", "K07": "広告の表記", "K08": "確認のない豆知識", "K09": "出典・「分からない」の話", "K10": "形(冒頭・3行まとめ・長い文)",
                "K11": "決まった部品", "K12": "ほかの記事の話の混入", "K13": "note の決まり", "K14": "断定に読める言い方"}
+from .style_rules import LABELS as _SL
+MARK_LABELS.update(_SL)
 
 
 def human_marks(fs: list[C.Finding]) -> list[dict]:
     """What a person should look at, from the machine checks only (nothing here passes or stops the text)."""
     out, seen = [], set()
     for f in fs:
-        if f.code == "K05" or not (f.code.startswith("K") or f.code == "NJ"):
+        if f.code == "K05" or not (f.code[0] in "KS" or f.code == "NJ"):
             continue                       # K05 word lists and the wadai codes (English, repeating K10, flagging what the material has): noise
         key = (f.code, f.msg)
         if key in seen:
@@ -325,6 +327,10 @@ PERSONAS = [
     ("急いでいる人", "電車で斜め読みする、急いでいる人。題・3行まとめ・見出ししか読まない。それだけで、自分が何をすればよいか分かるかを見る。"),
     ("疑い深い人", "疑い深い人。「本当?」「誰が言っている?」「あおって売りたいのでは?」と思いながら読む。言い切り・大げさな言い方・根拠のない話を見る。"),
 ]
+PROOF_WHO = ("日本語の校正者。主語・述語・目的語の欠落、助詞のずれ、述語と主語の呼応、数の食い違い、名詞の列挙が文になっていない所、"
+             "「数」「目安」で何の数か分からない所、動詞で終わる見出しに「何を」がない所を見る。直し案は、文の形(主語・目的語・述語の補い、語順、助詞)だけにする。"
+             "素材にない事実(誰が・どこが言ったか、新しい数字や説明)を足す直しは書かない。")
+PROOFERS = [("校正(haiku)", PROOF_WHO, "haiku"), ("校正(Codex)", PROOF_WHO, "codex")]      # the desk, 2026-11-04: the union of the two
 CITATION_ASK = re.compile(r"出典|URL|リンク|ソース|引用元|情報源|報道")
 
 
@@ -343,12 +349,12 @@ def _key(s: str) -> str:
 def persona_points(text: str, m: dict, model: str = PERSONA_MODEL) -> dict:
     """Every persona reads at once. Returns {"readers": [{name, gist, points}], "points": [{text, asks, fixes, by}] (most readers first)}."""
     from concurrent.futures import ThreadPoolExecutor
-    ps = personas_for(m)
+    ps = personas_for(m) + PROOFERS
     # the readers see the page as a reader does (the fixed parts shown in place, not as bare work marks like '[商品カード]')
     view = D.plain(D.parse(text), m.get("parts"))
 
     def one(p):
-        res = parse_json(runner.call(model, fill(prompt_file("persona_read"), persona=p[1], text=view)))
+        res = parse_json(runner.call(p[2] if len(p) > 2 else model, fill(prompt_file("persona_read"), persona=p[1], text=view)))
         pts = [x for x in (res.get("points") if isinstance(res.get("points"), list) else []) if isinstance(x, dict)]
         pts = [x for x in pts if not CITATION_ASK.search(str(x.get("ask", "")) + str(x.get("fix", "")))]    # the owner: no sources in the text
         return {"name": p[0], "gist": str(res.get("gist", "")), "points": pts}
@@ -377,6 +383,24 @@ def persona_fix(text: str, m: dict, pp: dict, model: str = PERSONA_MODEL) -> str
     if not out.strip() or not D.parse(out)["sections"]:
         return text                                    # the fix lost the shape: keep the writer's version
     return out
+
+
+def fix_endings(tool: str, text: str, fs: list, m: dict, card: dict, writer: str, system: str):
+    """Monotony (the same ending / opening / phrase three times or more) is fixed by the writer in one more call that replaces only
+    the named sentences (the desk, 2026-11-04). Returns (text, findings, number of sentences replaced)."""
+    mono = [f for f in fs if (f.code == "K01" and f.block) or f.code[0] == "S" or f.code == "K14"]
+    if tool not in ("article", "note") or not mono:
+        return text, fs, 0
+    notes = "\n".join(f"- {f.msg}(該当: {f.detail})" if f.detail else f"- {f.msg}" for f in mono)
+    notes += "\n(挙がった文だけを言い換える。同じ言い方の重なりは、1つか2つだけ。事実・条件・数字の意味は変えない。素材にない事実は足さない。)"
+    rp = fill(prompt_file("revise_patch"), head=head_text(m, card), draft=text, marks="(なし)", notes=notes)
+    try:
+        new, n = apply_edits(text, parse_json(runner.call(writer, rp, system)).get("edits"))
+    except Exception:
+        return text, fs, 0
+    if not n:
+        return text, fs, 0
+    return new, [f for u in units(tool, new) for f in tool_findings(tool, u, m, card)], n
 
 
 def added_explanations(draft: str, final: str, m: dict) -> list[dict]:
@@ -417,13 +441,15 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
         final = _keep_shape(_apply_tsukkomi(tool, draft, tk, log), draft, tool)
     t2 = time.time()
     fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
+    final, fs1, ends_fixed = fix_endings(tool, final, fs1, m, card, writer, system)
+    t3 = time.time()
     marks = human_marks(fs1) + added_explanations(draft, final, m)
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     result = {"mode": "light", "tool": tool, "material": m.get("id"), "site": card.get("site"), "writer": writer, "tsukkomi": tk,
               "draft": draft, "output": final, "marks": marks, "draft_marks": human_marks(fs0),
               "tsukkomi_points": (pp["points"] if pp else (log[0]["points"] if log else [])), "tsukkomi_ok": bool(pp) or bool(log and log[0]["ok"]),
               "readers": ([{"name": r["name"], "gist": r["gist"], "points": len(r["points"])} for r in pp["readers"]] if pp else []),
-              "seconds": {"writer": round(t1 - t0), "tsukkomi": round(t2 - t1), "total": round(time.time() - t0)}}
+              "endings_fixed": ends_fixed, "seconds": {"writer": round(t1 - t0), "tsukkomi": round(t2 - t1), "endings": round(t3 - t2), "total": round(time.time() - t0)}}
     if record:
         rec = home() / "runs" / datetime.now().strftime("%Y-%m-%d") / f"{m.get('id', 'x')}-{tool}-{writer}-light-{stamp}"
         rec.mkdir(parents=True, exist_ok=True)
