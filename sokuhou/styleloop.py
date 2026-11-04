@@ -303,6 +303,11 @@ def check_rewrite(old: str, new: str, site: str | None = None, kind: str = "head
         return ["empty or unchanged"]
     if is_search_text(site or "", old):
         return ["a search phrase, title or name of a theme: not reworded (SEO, owner policy: no change without evidence)"]
+    # a description the build cut to length ends mid-sentence; finishing it guesses words the source does not have
+    # (2026-11-04: 70 such rows, e.g. source 「決めてもらえます。」 completed as 「決められます。」)
+    if kind == "description" and len(old) > 20 and not re.search(r"[。．！？!?」』)）]$", old.rstrip()) \
+            and re.search(r"[。．！？!?」』)）]$", new) and len(new) > len(old) - 2:
+        return ["completes a description that the build cut to length (the ending would be a guess)"]
     if re.search(r"[<>\n]|https?:|\*\*", new):
         bad.append("markup, newline or a URL in the new text")
     if digits(old) != digits(new):

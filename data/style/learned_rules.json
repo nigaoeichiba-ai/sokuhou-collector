@@ -1,0 +1,11 @@
+{
+ "_note": "Patterns promoted from the rewrite dictionary (a kind of rewording accepted 3+ times). Short-text rules: styleloop.short_flags reads them. Added by daily-style-keeper.",
+ "rules": [
+  {
+   "id": "vague_question_heading",
+   "pattern": "(?:こんな|どんな)[^、。]{0,8}(?:は|が)どうでしょう[かう]?[？?]?$",
+   "why": "見出しが問いかけで終わり、節の中身(品物・選び方)が分からない。2026-11-04、「〜、こんな贈り方はどうでしょう」を3ページ以上で中身の見出しに言い直した",
+   "added": "2026-11-04"
+  }
+ ]
+}
