@@ -237,6 +237,17 @@ class TestArticle(unittest.TestCase):
         b["sections"] = with_sections(prep={"paras": ["電気毛布は、消し忘れを防ぐ機能と、コードの長さを先に見る。"]})["sections"]
         self.assertNotIn("A09", codes(w.check_article(b)))
 
+
+    def test_official_name_with_a_banned_word_needs_the_allow_list(self):
+        a = with_sections(prep={"paras": ["防災庁の緊急要請を読んで、携帯トイレを数える。"]})
+        a["ledger"] = a["ledger"] + ["防災庁"]
+        self.assertIn("A07", codes(w.check_article(a)))                                   # the banned word is caught by default
+        self.assertNotIn("A07", codes(w.check_article(a, {"allowed_phrases": ["緊急要請"]})))
+        still = with_sections(prep={"paras": ["今すぐ緊急要請を読む。"]})
+        self.assertIn("A07", codes(w.check_article(still, {"allowed_phrases": ["緊急要請"]})))   # other banned words stay caught
+        self.assertIn("P02", codes(w.check_post(post(body=post()["body"] + "緊急要請"))))
+        self.assertNotIn("P02", codes(w.check_post(post(body=post()["body"] + "緊急要請"), {"allowed_phrases": ["緊急要請"]})))
+
     def test_a10_freshness(self):
         self.assertTrue(any("stale" in f.msg for f in w.check_article(ART, {"today": "2026-12-20"})))
         self.assertTrue(any("warn" in f.msg for f in w.check_article(ART, {"today": "2026-11-20"})))
