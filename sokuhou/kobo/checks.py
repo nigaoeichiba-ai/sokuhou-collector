@@ -57,6 +57,17 @@ SENT_BLOCK, SENT_WARN, PARA_WARN = 100, 80, 130
 SITUATIONS = ["停電", "台風", "地震", "断水", "大雨", "浸水", "避難", "津波", "猛暑", "大雪", "感染", "流出", "漏えい", "不正アクセス", "詐欺"]
 
 
+NEAR = 6        # sentences: three alike inside this span read as monotonous
+
+
+def _close(v: list) -> bool:
+    """Blocking for a repeated ending/opening: four or more anywhere, or three inside NEAR consecutive sentences."""
+    if len(v) >= 4:
+        return True
+    idx = [i for i, _ in v]
+    return any(idx[j + 2] - idx[j] < NEAR for j in range(len(idx) - 2))
+
+
 def _core(sent: str) -> str:
     s = sent.rstrip()
     while s and s[-1] in "。！？!?　 …~〜」』)）":
@@ -108,22 +119,24 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
     blob = "\n".join(t for _, t in texts)
     sents = _body_sentences(doc)
     # K01 rhythm
+    # monotony is local: three alike within a few sentences (or four anywhere) stop the text; three spread over a long article are a note
+    # (2026-11-04: three '…ておきます' across 40 sentences of a preparation article stopped page after page; the reader never marked them)
     ends: dict = {}
-    for _, s in sents:
+    for i, (_, s) in enumerate(sents):
         c = _core(s)
         if len(c) >= 8 and not re.search(r"\d", c[-5:]):
-            ends.setdefault(c[-5:], []).append(s)
+            ends.setdefault(c[-5:], []).append((i, s))
     for k, v in ends.items():
         if len(v) >= 3:
-            add("K01", True, f"同じ終わり方(…{k})の文が{len(v)}回あります。言い方を変えるか、文をまとめてください。", " / ".join(x[:20] for x in v))
+            add("K01", _close(v), f"同じ終わり方(…{k})の文が{len(v)}回あります。言い方を変えるか、文をまとめてください。", " / ".join(x[:20] for _, x in v))
     starts: dict = {}
-    for _, s in sents:
+    for i, (_, s) in enumerate(sents):
         k = re.sub(r"[、。]", "", s)[:6]
         if len(k) == 6:
-            starts.setdefault(k, []).append(s)
+            starts.setdefault(k, []).append((i, s))
     for k, v in starts.items():
         if len(v) >= 3:
-            add("K01", True, f"同じ書き出し({k}…)の文が{len(v)}回あります。", " / ".join(x[:20] for x in v))
+            add("K01", _close(v), f"同じ書き出し({k}…)の文が{len(v)}回あります。", " / ".join(x[:20] for _, x in v))
     body = "".join(t for r, t in texts if r not in ("title", "tldr"))
     seen, reps = set(), {}
     for i in range(len(body) - 8):
