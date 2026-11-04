@@ -34,7 +34,7 @@ def over_five_note(unit_row: str = "1人の行") -> str:
     return f"6人以上の家は、{unit_row}の数に人数をかけると出せます。"
 
 
-def calculator_html(items: list[dict], days: list[int] = (3, 7), label: str = "家の人数") -> str:
+def calculator_html(items: list[dict], days: list[int] = (3, 7), label: str = "いっしょに暮らす人数") -> str:
     """items: [{"name": "水", "rate": 3, "unit": "リットル"}, ...]. Returns a self-contained block (no external script)."""
     rows = "".join(
         f'<tr><th scope="row">{html.escape(i["name"])}</th>' + "".join(f'<td data-rate="{i["rate"]}" data-days="{d}" data-unit="{html.escape(i["unit"])}"></td>' for d in days) + "</tr>"

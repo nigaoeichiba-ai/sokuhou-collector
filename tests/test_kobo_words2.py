@@ -27,6 +27,20 @@ class Residual(unittest.TestCase):
         self.assertFalse(lexicon.scan(["「事前防災の徹底を求める緊急要請」と呼ばれます。"]))
 
 
+class Wording(unittest.TestCase):
+    def test_the_calculator_label_and_the_sonae_noun(self):
+        from sokuhou.kobo import parts
+        h = parts.calculator_html([{"name": "水", "rate": 3, "unit": "リットル"}])
+        self.assertIn("いっしょに暮らす人数", h)
+        self.assertNotIn("家の人数", h)
+        self.assertIn("水と食料、必要な量", lexicon.autofix("水と食料の数え方")[0])
+        self.assertIn("携帯トイレ、必要な数", lexicon.autofix("携帯トイレの数え方")[0])
+        self.assertEqual(lexicon.autofix("足りない備えを増やす")[0], "足りない防災グッズを増やす")
+        self.assertEqual(lexicon.autofix("水や食料などの備えは足りていますか")[0], "水や食料などの備蓄は足りていますか")
+        self.assertFalse(lexicon.scan(["災害への備えが大事です。"]))             # the general use stays
+        self.assertTrue(lexicon.scan(["家にある備えに□をつけます。"]))
+
+
 class SeparateStories(unittest.TestCase):
     def test_typhoon_and_the_agency_call_in_one_lead_or_paragraph_are_marked(self):
         md = ("# 題\n\n台風31号は直撃しない予報です。防災庁は11月2日、備えを呼びかけました。\n\n## 見出し\n本文です。\n\n## 別の節\n台風と同じころ、防災庁は呼びかけました。\n")
