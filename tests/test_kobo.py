@@ -158,7 +158,7 @@ class FakeModels:
         if "ふつうの会社員" in prompt:
             self.reader_marks -= 1
             if self.reader_marks >= 0:
-                return json.dumps({"marks": [{"text": "大丈夫です", "level": 2, "why": "硬い", "fix": "x"}], "impression": ""})
+                return json.dumps({"marks": [{"text": "大丈夫です", "level": 3, "why": "意味が取れない", "fix": "x"}], "impression": ""})
             return json.dumps({"marks": [{"text": "x", "level": 1, "why": "好み", "fix": ""}], "impression": "自然"})
         return self.drafts.pop(0) if len(self.drafts) > 1 else self.drafts[0]
 
@@ -193,6 +193,29 @@ class Loop(unittest.TestCase):
         runner.set_backend(FakeModels([bad], reader_marks=0))
         r = engine.run("article", MAT, CARD, writer="opus", record=False, rewrites=1)
         self.assertFalse(r["passed"])
+
+    def test_the_best_round_is_kept_not_the_last(self):
+        worse = GOOD.replace("点検は2時間です。", "点検は3時間です。")          # a rewrite that adds a number not in the material
+        runner.set_backend(FakeModels([GOOD, worse], reader_marks=99))   # the reader never passes: nothing passes, the best is still recorded
+        r = engine.run("article", MAT, CARD, writer="opus", record=False, rewrites=1)
+        self.assertFalse(r["passed"])
+        self.assertEqual(r["best_round"], 0)
+        self.assertEqual(r["best"], GOOD)
+
+    def test_mark_allowance(self):
+        l2 = [{"level": 2}]
+        self.assertTrue(engine.marks_ok([{"level": 1}], "x"))
+        self.assertFalse(engine.marks_ok([{"level": 3}], "x" * 5000))
+        old = engine.PASS_L2_CHARS
+        try:
+            engine.PASS_L2_CHARS = 0
+            self.assertFalse(engine.marks_ok(l2, "x" * 5000))
+            engine.PASS_L2_CHARS = 500
+            self.assertTrue(engine.marks_ok(l2, "x" * 600))
+            self.assertFalse(engine.marks_ok(l2 * 2, "x" * 600))
+            self.assertFalse(engine.marks_ok(l2, "x" * 600, "title"))      # short pieces: no level-2 mark at all
+        finally:
+            engine.PASS_L2_CHARS = old
 
     def test_reader_of_the_same_family_is_refused(self):
         runner.set_backend(FakeModels([GOOD]))

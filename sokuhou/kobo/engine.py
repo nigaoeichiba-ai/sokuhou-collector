@@ -23,6 +23,7 @@ TOOLS = ("article", "title", "lead", "outline", "tldr", "tips", "threads", "rewr
 MULTI = {"title", "lead"}           # tools that return several candidates: the ones the reader passes are the output
 MAX_REWRITES = 3
 PASS_LEVEL = 2                      # a reader mark of this level or higher stops the text
+PASS_L2_CHARS = 200                 # an article may keep one level-2 mark per 200 characters. Calibration 2026-11-04 (whole articles, 3 reads each): old articles one mark per <=132 chars, the corrected v2 one per >=283; the line sits between
 # the writer by the weight of the piece (owner 2026-11-04): short and breaking news -> light, the body of a reading piece -> middle, disaster / money / contracts -> top
 WRITER_BY_WEIGHT = {"light": "haiku", "mid": "sonnet", "heavy": "opus"}
 TOOL_WEIGHT = {"title": "light", "lead": "light", "tldr": "light", "threads": "light", "tips": "mid", "outline": "mid"}
@@ -183,8 +184,26 @@ def confirm_marks(text: str, g: dict, model: str) -> None:
             mk["level_first"], mk["level"] = mk["level"], 1
 
 
-def gate_pass(g: dict) -> bool:
-    return not g["unparsed"] and not any(mk["level"] >= PASS_LEVEL for mk in g["marks"])
+def gate_pass(g: dict, text: str = "", tool: str = "article") -> bool:
+    return not g["unparsed"] and marks_ok(g["marks"], text, tool)
+
+
+def marks_ok(marks: list[dict], text: str, tool: str = "article") -> bool:
+    """No level-3 mark; level-2 marks: none for short pieces, at most one per PASS_L2_CHARS characters for an article (calibrated, see KOBO_WRITER.md)."""
+    if any(mk["level"] >= 3 for mk in marks):
+        return False
+    n2 = sum(1 for mk in marks if mk["level"] == PASS_LEVEL)
+    if tool in MULTI or not PASS_L2_CHARS:
+        return n2 == 0
+    return n2 <= len(text) // PASS_L2_CHARS
+
+
+def score(rd: dict) -> int:
+    """Lower is better: machine findings weigh most, then unsupported statements, then the reader's marks."""
+    mb = sum(1 for fs in rd["findings"] for f in fs if f["block"])
+    l3 = sum(1 for mk in rd["reader"]["marks"] if mk["level"] >= 3)
+    l2 = sum(1 for mk in rd["reader"]["marks"] if mk["level"] == PASS_LEVEL)
+    return 100 * mb + 10 * len(rd["support"]["unsupported"]) + 5 * l3 + 2 * l2
 
 
 def support_check(m: dict, text: str, judge: str, tool: str, source: str = "") -> dict:
@@ -263,24 +282,35 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
         plain = plain_of(tool, us, m)
         sup = support_check(m, plain, judge, tool, source)
         g = read_gate(plain, reader)
-        # which units pass: no blocking finding, nothing unsupported in it, no reader mark of level >= 2 on it
+        # which units pass: no blocking finding, nothing unsupported in it, no level-3 mark, and level-2 marks within the allowance
         passed = []
         for u, fs in zip(us, fs_all):
             raw = u["raw"]
-            bad_mark = any(mk["level"] >= PASS_LEVEL and (tool not in MULTI or _in(mk["text"], raw)) for mk in g["marks"])
+            mine = [mk for mk in g["marks"] if tool not in MULTI or _in(mk["text"], raw)]
             bad_sup = any(tool not in MULTI or _in(x["text"], raw) for x in sup["unsupported"])
-            if not C.blocking(fs) and not bad_mark and not bad_sup and not g["unparsed"] and not sup["unparsed"]:
+            if not C.blocking(fs) and not bad_sup and not g["unparsed"] and not sup["unparsed"] and marks_ok(mine, raw, tool):
                 passed.append(u)
-        rounds.append({"round": r, "writer": writer, "text": text, "findings": [[f.as_dict() for f in fs] for fs in fs_all], "support": sup,
-                       "reader": g, "passed": len(passed), "units": len(us)})
+        rd = {"round": r, "writer": writer, "text": text, "findings": [[f.as_dict() for f in fs] for fs in fs_all], "support": sup,
+              "reader": g, "passed": len(passed), "units": len(us), "passed_units": [u["raw"] for u in passed]}
+        rd["score"] = score(rd)
+        rounds.append(rd)
         done = (len(passed) == len(us)) if tool not in MULTI else len(passed) >= min(2, len(us))
         if done or r == rewrites:
+            # a rewrite can also make a text worse: the best round is kept, not the last one
+            ok = [x for x in rounds if (x["passed"] == x["units"] if tool not in MULTI else x["passed"] >= min(2, x["units"]))]
+            best = min(ok or rounds, key=lambda x: (x["score"], -x["round"]))
             result = {"tool": tool, "material": m.get("id"), "site": card.get("site"), "writer": writer, "reader": reader, "judge": judge,
-                      "passed": done, "rewrites": r, "output": [u["raw"] for u in passed] if tool in MULTI else (text if done else ""),
-                      "last": text, "rounds": rounds, "seconds": round(time.time() - t0)}
+                      "passed": bool(ok), "rewrites": r, "best_round": best["round"],
+                      "output": best["passed_units"] if tool in MULTI else (best["text"] if ok else ""),
+                      "last": text, "best": best["text"], "rounds": rounds, "seconds": round(time.time() - t0), "allowance": PASS_L2_CHARS}
             break
         fs_flat = [f for fs in fs_all for f in fs]
-        rp = fill(prompt_file("revise"), head=head_text(m, card) if tool != "rewrite" else "【もとの文章】\n" + source, draft=text, marks=_marks(g), notes=_notes(fs_flat, sup))
+        # rewrite from the best version so far (a worse rewrite is not built on)
+        base = min(rounds, key=lambda x: (x["score"], -x["round"]))
+        if base is not rd:
+            fs_flat = [C.Finding(**f) for fs in base["findings"] for f in fs]
+            sup, g = base["support"], base["reader"]
+        rp = fill(prompt_file("revise"), head=head_text(m, card) if tool != "rewrite" else "【もとの文章】\n" + source, draft=base["text"], marks=_marks(g), notes=_notes(fs_flat, sup))
         text = runner.call(writer, rp, system)
     if record:
         save(rec_dir, m, prompt, result)
