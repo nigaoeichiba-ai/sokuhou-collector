@@ -66,16 +66,20 @@ class TestPostNegatives(unittest.TestCase):
         self.assertCaught("P01", **{**g, "evidence_date": None})
 
     def test_p02_alarm(self):
-        for word in ("緊急", "今すぐ", "命を守る", "絶対", "必ず", "買い占め"):
+        for word in ("緊急", "命を守る", "手遅れ", "買い占め"):
             self.assertCaught("P02", body=post()["body"] + word)
+        for word in ("今すぐ", "絶対", "必ず", "確実", "急いで"):        # words of everyday speech: not stopped (rule audit 2026-11-04)
+            self.assertNotIn("P02", codes(w.check_post(post(body=post()["body"] + word))), word)
 
     def test_p03_experience(self):
         for word in ("我が家では", "使ってみた", "愛用しています", "買いました"):
             self.assertCaught("P03", body=post()["body"] + word)
 
     def test_p04_price_authority(self):
-        for word in ("最安", "1,980円", "人気No.1", "専門家によると", "ランキング上位", "話題の"):
+        for word in ("最安", "1,980円", "人気No.1", "専門家によると", "ランキング上位", "口コミ"):
             self.assertCaught("P04", body=post()["body"] + word)
+        for word in ("話題の", "調査によると", "医師", "お得", "安い"):
+            self.assertNotIn("P04", codes(w.check_post(post(body=post()["body"] + word))), word)
 
     def test_p05_product_data(self):
         self.assertCaught("P05", body=post()["body"] + "\nhttps://item.rakuten.co.jp/shop/x/")
@@ -93,7 +97,10 @@ class TestPostNegatives(unittest.TestCase):
         self.assertCaught("P06", body="  ")
 
     def test_p07_links(self):
-        self.assertCaught("P07", reply=REPLY + "\nhttps://example.com/b/")
+        self.assertEqual([f for f in w.check_post(post(reply=REPLY + "\nhttps://example.com/b/\nhttps://example.com/c/")) if f.code == "P07"], [])      # up to three
+        self.assertCaught("P07", reply=REPLY + "\nhttps://example.com/b/\nhttps://example.com/c/\nhttps://example.com/d/")
+        found = w.check_post(post(reply=REPLY + "\nhttps://example.com/b/"), {"limits": {"reply_url_max": 1}})        # the limit is a setting
+        self.assertIn("P07", codes(found))
 
     def test_p08_pr_line(self):
         self.assertCaught("P08", reply="こちら\nhttps://example.com/")
@@ -107,14 +114,16 @@ class TestPostNegatives(unittest.TestCase):
         self.assertNotIn("P08", codes(w.check_post(post(reply=plain, ads=False))))
 
     def test_p09_off_limits(self):
-        for word in ("ボジョレー", "投資", "サプリ", "選挙", "パチンコ", "免疫", "違法です"):
+        for word in ("投資", "サプリ", "選挙", "パチンコ", "効く", "予防できる", "ダイエット", "処方"):
             self.assertCaught("P09", body=post()["body"] + word)
+        for word in ("ボジョレー", "免疫", "違法です", "病気", "症状が", "治療", "健康に", "政権", "投票"):         # not stopped (rule audit 2026-11-04)
+            self.assertNotIn("P09", codes(w.check_post(post(body=post()["body"] + word))), word)
 
     def test_p10_layers(self):
         # the fact line holds a hedge
         self.assertCaught("P10", body="11月7日は立冬かもしれない。\n冷えるかも。\n毛布を見てね。")
-        # no view line
-        self.assertCaught("P10", body="11月7日は立冬。\n冬の始まりだよ。\n毛布を見てね。")
+        # the middle line may be said flatly (no rule about its ending any more)
+        self.assertNotIn("P10", codes(w.check_post(post(body="11月7日は立冬。\n冬の始まりだよ。\n毛布を見てね。"))))
         # the fact line has neither a date nor an issuer
         self.assertCaught("P10", body="冬の始まりだよ。\n冷えるかも。\n毛布を見てね。")
         # too few lines
@@ -137,10 +146,13 @@ class TestBatchNegatives(unittest.TestCase):
         d = post(id="D-01", account="D", scheduled_at="2026-11-07T16:00", body="冬の始まりの日だね。\n暖房の電気代は、消費電力を見ると分かりそう。\n計算の仕方をまとめたよ。", product_kind="meter", facts=[])
         self.assertTrue(any("same topic" in f.msg for f in w.check_batch([a, d])))
 
-    def test_p12_same_product_kind(self):
-        a = post()
-        b = post(id="A-08", scheduled_at="2026-11-10T12:30", topic_id="t2", body="まったく別の文章。\n中身も違うかも。\n別の話だよ。", facts=[])
-        self.assertTrue(any("product kind" in f.msg for f in w.check_batch([a, b])))
+    def test_p12_same_product_within_30_days_but_the_same_kind_is_free(self):
+        a = post(product_id="P-1")
+        b = post(id="A-08", scheduled_at="2026-11-10T12:30", topic_id="t2", body="まったく別の文章。\n中身も違うかも。\n別の話だよ。", facts=[], product_id="P-1")
+        self.assertTrue(any("same product" in f.msg for f in w.check_batch([a, b])))
+        c = post(id="A-09", scheduled_at="2026-11-10T12:30", topic_id="t3", body="まったく別の文章。\n中身も違うかも。\n別の話だよ。", facts=[], product_id="P-2")   # another product of the same kind: allowed
+        self.assertFalse(any("product" in f.msg for f in w.check_batch([a, c])))
+        self.assertFalse(any("kind" in f.msg for f in w.check_batch([a, c])))
 
     def test_p13_gap_between_accounts(self):
         a = post()
@@ -150,8 +162,9 @@ class TestBatchNegatives(unittest.TestCase):
     def test_p13_daily_limits(self):
         ps = [post(id=f"A-1{i}", scheduled_at=f"2026-11-07T{9 + 3 * i:02d}:00", topic_id=f"t{i}", product_kind=f"k{i}", type=["T1S", "T2", "T3", "T1S"][i % 4],
                    body=f"{'あいうえお' * (i + 3)}{i}の話。\n{'かきくけこ' * (i + 2)}かも。\n{'さしすせそ' * (i + 2)}。", facts=[f"{i}"]) for i in range(4)]
-        found = w.check_batch(ps, ACCOUNTS)
+        found = w.check_batch(ps, ACCOUNTS, None, {"limits": {"global_daily_max": 3}})        # the limit is a setting (10 by default)
         self.assertTrue(any("breaking posts" in f.msg for f in found))
+        self.assertFalse(any("breaking posts" in f.msg for f in w.check_batch(ps, ACCOUNTS)))
         self.assertTrue(any("daily_max" in f.msg for f in found))
 
     def test_p13_same_type_three_times(self):
@@ -207,7 +220,7 @@ class TestArticle(unittest.TestCase):
 
     def test_a02_layer_mix(self):
         self.assertIn("A02", codes(w.check_article(with_sections(fact={"bullets": ["国立天文台は11月7日に立冬と発表した可能性がある。"]}))))
-        self.assertIn("A02", codes(w.check_article(with_sections(opinion={"paras": ["この冬は寒くなります。"]}))))
+        self.assertNotIn("A02", codes(w.check_article(with_sections(opinion={"paras": ["この冬は寒くなります。"]}))))      # no hedge is asked for in the opinion layer
 
     def test_a03_fact_has_issuer_and_date(self):
         self.assertIn("A03", codes(w.check_article(with_sections(fact={"bullets": ["立冬は11月7日だ。"]}))))
@@ -230,9 +243,11 @@ class TestArticle(unittest.TestCase):
         self.assertIn("A06", codes(w.check_article(a)))
 
     def test_a07_a08_words(self):
-        self.assertIn("A07", codes(w.check_article(with_sections(prep={"paras": ["今すぐ買うべきだ。"]}))))
+        self.assertIn("A07", codes(w.check_article(with_sections(prep={"paras": ["命を守るために買うべきだ。"]}))))
+        self.assertNotIn("A07", codes(w.check_article(with_sections(prep={"paras": ["今すぐ買うべきだ。"]}))))
         self.assertIn("A07", codes(w.check_article(with_sections(prep={"paras": ["私の家で使ってみた。"]}))))
-        self.assertIn("A07", codes(w.check_article(with_sections(prep={"paras": ["免疫が上がる。"]}))))
+        self.assertIn("A07", codes(w.check_article(with_sections(prep={"paras": ["ダイエットに効く。"]}))))
+        self.assertNotIn("A07", codes(w.check_article(with_sections(prep={"paras": ["けがや病気の症状に備える。"]}))))
         self.assertIn("A08", codes(w.check_article(with_sections(prep={"paras": ["最安のものを選ぶ。"]}))))
         self.assertIn("A08", codes(w.check_article(with_sections(prep={"paras": ["1,980円で買える。"]}))))
 
@@ -250,7 +265,7 @@ class TestArticle(unittest.TestCase):
         a["ledger"] = a["ledger"] + ["防災庁"]
         self.assertIn("A07", codes(w.check_article(a)))                                   # the banned word is caught by default
         self.assertNotIn("A07", codes(w.check_article(a, {"allowed_phrases": ["緊急要請"]})))
-        still = with_sections(prep={"paras": ["今すぐ緊急要請を読む。"]})
+        still = with_sections(prep={"paras": ["手遅れになる前に緊急要請を読む。"]})
         self.assertIn("A07", codes(w.check_article(still, {"allowed_phrases": ["緊急要請"]})))   # other banned words stay caught
         self.assertIn("P02", codes(w.check_post(post(body=post()["body"] + "緊急要請"))))
         self.assertNotIn("P02", codes(w.check_post(post(body=post()["body"] + "緊急要請"), {"allowed_phrases": ["緊急要請"]})))
@@ -264,7 +279,7 @@ class TestArticle(unittest.TestCase):
         self.assertIn("A13", codes(w.check_article(with_sections(opinion={"paras": ["被害女性の話から考えると、注意が要りそうだ。"]}))))
 
     def test_treatment_advice_and_party_in_posts(self):
-        self.assertIn("P09", codes(w.check_post(post(body=post()["body"] + "治療に役立つよ"))))
+        self.assertIn("P09", codes(w.check_post(post(body=post()["body"] + "病気が治るよ"))))
         self.assertIn("P16", codes(w.check_post(post(parties=["テスト商事"], body=post()["body"] + "テスト商事"))))
         self.assertNotIn("P16", codes(w.check_post(post(parties=["テスト商事"]))))
 
@@ -348,7 +363,7 @@ class TestAccountsAndDryRun(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t:
             d = Path(t)
             good = dict(post(), state="approved")
-            bad = dict(post(id="A-05", scheduled_at="2026-11-07T08:00", topic_id="zz", product_kind="x1", body="木枯らしが吹く夜は早めの支度だね。\nひざ掛けもあると楽そう。\n今すぐ選んでね！", facts=[]), state="approved")
+            bad = dict(post(id="A-05", scheduled_at="2026-11-07T08:00", topic_id="zz", product_kind="x1", body="木枯らしが吹く夜は早めの支度だね。\nひざ掛けもあると楽そう。\n命を守るために選んでね！", facts=[]), state="approved")
             later = dict(post(id="A-06", scheduled_at="2026-11-30T12:30", topic_id="yy", product_kind="x2", body="全然別の文章です。\nこれも別かも。\nさらに別の話。", facts=[]), state="approved")
             draft = dict(post(id="A-07", scheduled_at="2026-11-09T09:00", topic_id="ww", product_kind="x3", body="湯たんぽの話をしよう。\n朝まで温かいと楽かも。\n注ぎ口の向きを見てね。", facts=[]), state="draft")
             self.make(d, [good, bad, later, draft])
@@ -381,15 +396,38 @@ class TestAccountsAndDryRun(unittest.TestCase):
     def test_cli_does_not_print_draft_text(self):
         with tempfile.TemporaryDirectory() as t:
             f = Path(t) / "p.json"
-            f.write_text(json.dumps([post(body=post()["body"] + "今すぐ")], ensure_ascii=False), encoding="utf-8")
+            f.write_text(json.dumps([post(body=post()["body"] + "命を守る")], ensure_ascii=False), encoding="utf-8")
             import io
             from contextlib import redirect_stdout
             buf = io.StringIO()
             with redirect_stdout(buf):
                 rc = w.main(["check-posts", str(f)])
             self.assertEqual(rc, 1)
-            self.assertNotIn("今すぐ", buf.getvalue())
+            self.assertNotIn("命を守る", buf.getvalue())
             self.assertNotIn("立冬", buf.getvalue())
+
+
+class TestPostRuleAudit(unittest.TestCase):
+    def test_one_link_to_our_own_site_may_stand_in_the_body(self):
+        own = post(body=post()["body"] + "\nhttps://kaimono-wadai.com/bousai/x/")
+        self.assertNotIn("P05", codes(w.check_post(own)))
+        other = post(body=post()["body"] + "\nhttps://example.com/x/")
+        self.assertIn("P05", codes(w.check_post(other)))                              # any other link stays in the reply
+        two = post(body=post()["body"] + "\nhttps://kaimono-wadai.com/a/ https://kaimono-wadai.com/b/")
+        self.assertIn("P05", codes(w.check_post(two)))
+
+    def test_the_daily_limits_are_settings_with_new_defaults(self):
+        self.assertEqual(w.GLOBAL_DAILY_MAX, 10)
+        self.assertEqual(w.ACCOUNT_DAILY_MAX, 3)
+        self.assertEqual(w.REPLY_URL_MAX, 3)
+        ps = [post(id=f"A-3{i}", scheduled_at="2026-11-07T12:30", topic_id=f"s{i}", body=f"{'あいうえお' * (i + 3)}{i}の話。\n{'かきくけこ' * (i + 2)}かも。\n{'さしすせそ' * (i + 2)}。", facts=[f"{i}"]) for i in range(4)]
+        acc = {"accounts": [{"id": "A", "token_secret": "THREADS_TOKEN_A", "categories": ["fuyu"], "enabled": True}]}        # no daily_max: the default of 3
+        found = w.check_batch(ps, acc, None, {})
+        self.assertTrue(any("daily_max (3)" in f.msg for f in found))
+
+    def test_warnings_do_not_hold_a_post(self):
+        a = post(id="A-60", scheduled_at="2026-11-07T12:30")
+        self.assertTrue(all(isinstance(f.blocking, bool) for f in w.check_batch([a])))
 
 
 class TestRepositoryHygiene(unittest.TestCase):

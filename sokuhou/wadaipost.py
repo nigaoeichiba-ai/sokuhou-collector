@@ -32,30 +32,33 @@ TEXT_MARGIN = 30                    # the real limit is 500; stay under 470 beca
 EVIDENCE_MAX_HOURS = 72             # a fact from an announcement is stale after 72 hours
 SIM_CROSS, SIM_SAME, SIM_HOOK = 0.30, 0.45, 0.50     # as tools/cross_account_check.py
 GAP_MIN = 90                        # minutes between posts of different accounts
-GLOBAL_DAILY_MAX = 3                # breaking-news posts per day, all accounts together
-SAME_KIND_DAYS = 7                  # the same product kind on the same account: once in 7 days
+GLOBAL_DAILY_MAX = 10               # breaking-news posts per day, all accounts together (a setting: ctx["limits"]["global_daily_max"]; the desk changes it when the accounts are fixed)
+ACCOUNT_DAILY_MAX = 3               # per account per day, unless the account says otherwise (daily_max in accounts.json)
+REPLY_URL_MAX = 3                   # links in one reply (Threads allows 5)
+OWN_HOSTS = ["kaimono-wadai.com"]   # our own site: one article link may stand in the body
+SAME_PRODUCT_DAYS = 30              # the same PRODUCT (not the same kind of product): once in 30 days on any account
 SAME_TOPIC_DAYS = 7                 # the same topic on two accounts: never within 7 days
 SAME_TYPE_WINDOW = 3                # the same post type twice within the last 3 posts of an account is refused
 POST_TYPES = {"T1S", "T2", "T3", "T4", "T5", "T6", "T7"}
 FACT_KINDS = {"E": "calendar", "G": "government", "W": "weather", "M": "media"}      # topic kinds (design 2-1)
 
 # ---- word lists (design 12-4) --------------------------------------------------------------------------------------------------------------
-ALARM = ["緊急", "今すぐ", "命を守る", "危険です", "危険な", "手遅れ", "絶対", "必ず", "確実", "しないと大変", "買い占め", "売り切れ前", "急いで", "大変なことに"]
-EXPERIENCE = ["使ってみた", "買ってみた", "愛用", "リピ", "うちの", "我が家", "実際に試", "私の家", "取材", "使っています", "買いました", "使いました", "試しました", "使ってます"]
-AUTHORITY = ["専門家によると", "専門家は", "医師", "関係者によると", "調査によると", "満足度", "人気No", "売れ筋", "話題の", "バズ", "口コミ", "レビュー"]
-PRICE_RE = re.compile(r"\d[\d,]*\s*円|最安|格安|お得|安い|ランキング|No\.?\s?1|第\s?1位|[1１]位|ポイント\d|送料無料")
+ALARM = ["緊急", "命を守る", "危険です", "危険な", "手遅れ", "しないと大変", "買い占め", "売り切れ前", "大変なことに"]       # words that frighten; 今すぐ・絶対・必ず・確実・急いで are left to the reader of the text (audit 2026-11-04)
+EXPERIENCE = ["使ってみた", "買ってみた", "愛用", "リピ", "うちの", "我が家", "実際に試", "私の家", "取材", "買いました", "使いました", "試しました"]
+AUTHORITY = ["専門家によると", "専門家は", "関係者によると", "満足度", "人気No", "売れ筋", "バズ", "口コミ", "レビュー"]
+PRICE_RE = re.compile(r"\d[\d,]*\s*円|最安|格安|ランキング|No\.?\s?1|第\s?1位|[1１]位|ポイント\d|送料無料")
 CRITICISM = ["隠蔽", "怠慢", "責任", "が悪い", "のせい", "失態", "ずさん", "無責任", "許せない", "ひどい", "だらしない"]
 ORG_RE = re.compile(r"[一-龥ァ-ヴーA-Za-z]{2,}(?:社|庁|省|氏|会社|銀行|電力|協会|機構|センター|委員会|知事|首相|大臣|事業者)")
 VICTIM_INDIVIDUAL = ["被害女性", "被害男性", "被害者の女性", "被害者の男性", "遺族", "被害少女", "被害児童"]       # stories about an individual victim are not used (owner 2026-11-04)
-LEGAL_ADVICE = ["違法です", "訴えられる", "必ず儲かる", "儲かる"]
+LEGAL_ADVICE = ["必ず儲かる", "儲かる"]
 # subjects that are off limits for this project (design 2-4); substring match
 OFF_LIMITS = {
-    "medical": ["効く", "治る", "治す", "改善する", "予防できる", "健康に", "免疫", "ダイエット", "サプリ", "医薬", "病気", "治療", "処方", "症状が"],
+    # only words that promise an effect or sell something are stopped (rule audit 2026-11-04): 病気・症状・治療・健康に・免疫・医薬 and the alcohol words are free (a first-aid page needs them)
+    "medical": ["効く", "治る", "治す", "改善する", "予防できる", "ダイエット", "サプリ", "処方"],
     "finance": ["投資", "FX", "暗号資産", "仮想通貨", "儲か", "利回り", "証券", "株価", "株式"],
-    "alcohol": ["ボジョレー", "ワイン", "日本酒", "ビール", "飲酒"],
     "adult": ["アダルト", "成人向け", "18禁"],
     "gambling": ["カジノ", "パチンコ", "競馬", "ギャンブル"],
-    "politics": ["選挙", "与党", "野党", "政権", "投票"],
+    "politics": ["選挙", "与党", "野党"],
 }
 ISSUERS = ["特定商取引法", "国民生活センター", "消費者庁", "気象庁", "防災庁", "内閣府", "消防庁", "国立天文台", "総務省", "経済産業省", "資源エネルギー庁", "厚生労働省", "国土交通省", "文部科学省", "IPA", "JPCERT", "首相官邸", "政府"]
 HEDGE_END = re.compile(r"(そう|かも|かな|かもしれない|と考えられる|可能性がある|可能性も|ではないか|のではないか|だろう|と思う|かもね|ようだ|見方もある|見方ができる|そうです|かもしれません|かもです|可能性があります|可能性もあります|でしょう|ようです|ではないでしょうか|と思います|そうですね|手です|手があります|選択肢です|選択肢もあります|方法もあります|のもありです)$")
@@ -82,9 +85,14 @@ class Finding:
     item: str                       # the id of the post or the article
     msg: str                        # a short reason (may name the rule, never the draft's text unless verbose)
     detail: str = ""                # the offending snippet, shown only with --verbose
+    level: str = "error"            # "error" blocks; "warn" is shown and never blocks (rule audit 2026-11-04)
+
+    @property
+    def blocking(self) -> bool:
+        return self.level != "warn"
 
     def line(self, verbose=False) -> str:
-        return f"{self.code} {self.item}: {self.msg}" + (f"  [{self.detail}]" if verbose and self.detail else "")
+        return f"{self.code} {self.item}: {self.msg}" + (f"  [{self.detail}]" if verbose and self.detail else "") + ("  (warn)" if self.level == "warn" else "")
 
 
 # ---- helpers ------------------------------------------------------------------------------------------------------------------------------
@@ -120,8 +128,16 @@ def _strip_tail(s: str) -> str:
     return s
 
 
+COUNTER_RE = re.compile(r"\d+\s*(?:つ|人|回|個|本|点|種類|行|段|枚|冊|軒|台)")
+
+
 def _nums(text: str) -> set:
     return {n.replace(",", "") for n in NUM_RE.findall(text)}
+
+
+def _nums_nc(text: str) -> set:
+    """Numbers without the counting words (3つ, 4人 ...): they count things the writer lists, not facts."""
+    return _nums(COUNTER_RE.sub("", text))
 
 
 def _when(p: dict) -> datetime:
@@ -148,8 +164,8 @@ def check_post(p: dict, ctx: dict | None = None) -> list[Finding]:
     body, reply = p.get("body", ""), p.get("reply", "")
     both = _without(body + "\n" + reply, ctx.get("allowed_phrases", []))
 
-    def add(code, msg, detail=""):
-        out.append(Finding(code, pid, msg, detail))
+    def add(code, msg, detail="", level="error"):
+        out.append(Finding(code, pid, msg, detail, level))
 
     # P01 evidence (a fact needs its source id and date; announcements go stale)
     kind = p.get("topic_kind")
@@ -164,8 +180,9 @@ def check_post(p: dict, ctx: dict | None = None) -> list[Finding]:
         else:
             try:
                 age = _when(p) - datetime.fromisoformat(ev_date)
-                if age > timedelta(hours=EVIDENCE_MAX_HOURS):
-                    add("P01", f"the evidence is older than {EVIDENCE_MAX_HOURS} hours")
+                max_h = ctx.get("limits", {}).get("evidence_max_hours", EVIDENCE_MAX_HOURS)
+                if age > timedelta(hours=max_h):
+                    add("P01", f"the evidence is older than {max_h} hours")
                 if age < timedelta(0):
                     add("P01", "the evidence is dated after the post")
             except ValueError:
@@ -194,8 +211,10 @@ def check_post(p: dict, ctx: dict | None = None) -> list[Finding]:
             add("P09", f"off-limits subject ({cat})", w)
 
     # P05 product data must not enter a Threads text (Rakuten rule 10-1 (9)): no URL, no price, no product / brand terms in the body
-    if URL_RE.search(body):
-        add("P05", "a URL in the body (links go in the reply)", URL_RE.search(body).group(0))
+    body_urls = URL_RE.findall(body)
+    own = ctx.get("own_hosts", OWN_HOSTS)
+    if len(body_urls) > 1 or any(not any(h in u for h in own) for u in body_urls):
+        add("P05", "a URL in the body other than one link to our own site (product links go in the reply)", body_urls[0])
     for t in ctx.get("product_terms", []):
         if t and t in both:
             add("P05", "a product / brand term in the text", t)
@@ -209,8 +228,9 @@ def check_post(p: dict, ctx: dict | None = None) -> list[Finding]:
         add("P06", "empty body")
 
     # P07 links: none in the body, at most one in the reply
-    if len(URL_RE.findall(reply)) > 1:
-        add("P07", "more than one URL in the reply")
+    reply_max = ctx.get("limits", {}).get("reply_url_max", REPLY_URL_MAX)
+    if len(URL_RE.findall(reply)) > reply_max:
+        add("P07", f"more than {reply_max} URLs in the reply")
 
     # P08 PR line (a reply with a link starts with 【PR】, the second line says what the page offers; the body has no 【PR】)
     if reply and p.get("ads", True):          # a reply that carries no advertising (ads: false) needs no 【PR】
@@ -236,8 +256,6 @@ def check_post(p: dict, ctx: dict | None = None) -> list[Finding]:
                 add("P10", "the fact line holds a hedge (views belong to the middle lines)")
             if not (DATE_RE.search(fact) or any(i in fact for i in ISSUERS + [str(p.get("issuer", "-"))])):
                 add("P10", "the fact line names neither a date nor an issuer")
-            if not any(HEDGE_END.search(_strip_tail(l)) for l in middle):
-                add("P10", "no middle line reads as a view (ends with そう / かも / 可能性…)")
 
     # P17 the first two lines must not open with "not known / not confirmed"
     opening = "\n".join([l for l in body.strip().split("\n") if l.strip()][:2])
@@ -284,27 +302,27 @@ def check_batch(posts: list[dict], accounts: dict | None = None, history: list[d
                 out.append(Finding("P12", pid, f"first line too similar to {q.get('id')}"))
             if not same and p.get("topic_id") and p.get("topic_id") == q.get("topic_id") and abs((_when(q) - _when(p)).days) < SAME_TOPIC_DAYS:
                 out.append(Finding("P12", pid, f"the same topic is on another account ({q.get('id')}) within {SAME_TOPIC_DAYS} days"))
-            if same and p.get("product_kind") and p.get("product_kind") == q.get("product_kind") and 0 < abs((_when(q) - _when(p)).days) < SAME_KIND_DAYS:
-                out.append(Finding("P12", pid, f"the same product kind on this account within {SAME_KIND_DAYS} days ({q.get('id')})"))
-            if not same and p.get("product_kind") and p.get("product_kind") == q.get("product_kind") and abs((_when(q) - _when(p)).days) < 30:
-                out.append(Finding("P12", pid, f"the same product kind on another account within 30 days ({q.get('id')})"))
+            if p.get("product_id") and p.get("product_id") == q.get("product_id") and abs((_when(q) - _when(p)).days) < SAME_PRODUCT_DAYS:
+                out.append(Finding("P12", pid, f"the same product within {SAME_PRODUCT_DAYS} days ({q.get('id')})"))
             if not same and abs((_when(q) - _when(p)).total_seconds()) < GAP_MIN * 60:
                 out.append(Finding("P13", pid, f"less than {GAP_MIN} minutes from another account's post ({q.get('id')})"))
         # same type twice within the last 3 posts of the account
         mine = sorted([q for q in allp if q.get("account") == p.get("account") and _when(q) <= _when(p)], key=_when)
         recent = [q for q in mine if q.get("id") != p.get("id")][-(SAME_TYPE_WINDOW - 1):]
         if p.get("type") and sum(1 for q in recent if q.get("type") == p.get("type")) >= 2:
-            out.append(Finding("P13", pid, f"the same type {p.get('type')} three times in a row on this account"))
+            out.append(Finding("P13", pid, f"the same type {p.get('type')} three times in a row on this account", "", "warn"))
         # daily limits
         day = p["scheduled_at"][:10]
         same_day = [q for q in allp if q["scheduled_at"][:10] == day and q.get("breaking", True)]
-        if len(same_day) > GLOBAL_DAILY_MAX:
-            out.append(Finding("P13", pid, f"more than {GLOBAL_DAILY_MAX} breaking posts on {day}"))
+        g_max = ctx.get("limits", {}).get("global_daily_max", GLOBAL_DAILY_MAX)
+        if len(same_day) > g_max:
+            out.append(Finding("P13", pid, f"more than {g_max} breaking posts on {day}"))
         cfg = acc_cfg.get(p.get("account"))
         if cfg:
             n = sum(1 for q in same_day if q.get("account") == p.get("account"))
-            if n > cfg.get("daily_max", 1):
-                out.append(Finding("P13", pid, f"over the account's daily_max ({cfg.get('daily_max', 1)})"))
+            a_max = cfg.get("daily_max", ctx.get("limits", {}).get("account_daily_max", ACCOUNT_DAILY_MAX))
+            if n > a_max:
+                out.append(Finding("P13", pid, f"over the account's daily_max ({a_max})"))
             if not cfg.get("enabled"):
                 out.append(Finding("P14", pid, "the account is not enabled"))
             elif p.get("topic_category") and cfg.get("categories") and p["topic_category"] not in cfg["categories"]:
@@ -353,8 +371,8 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
         return (list(s.get("paras", [])) + list(s.get("paras_after", [])) + list(s.get("bullets", [])) + [b.get("title", "") + " " + b.get("text", "") for b in s.get("boxes", [])]
                 + ([s["summary"]] if s.get("summary") else []) + [f["caption"] for f in s.get("figures", []) if f.get("caption")])
 
-    def add(code, msg, detail=""):
-        out.append(Finding(code, aid, msg, detail))
+    def add(code, msg, detail="", level="error"):
+        out.append(Finding(code, aid, msg, detail, level))
 
     # A17 the reader memo (four lines written BEFORE the text) and A15 the lead (an answer or a fact the reader can take as their own)
     memo = a.get("reader_memo") or {}
@@ -373,9 +391,14 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
             add("A15", "the opening two sentences say something is not known / not confirmed", UNKNOWN_RE.search(head2).group(0))
     layers = [s.get("layer") for s in secs if s.get("layer") in LAYER_ORDER]
     # A01 the four layers, once each, in order; the heading names them
-    if layers != LAYER_ORDER:
-        add("A01", "the layers must be fact, opinion, prep, history, in this order, once each")
     reading = a.get("format") == "reading"
+    if reading:
+        if "history" in layers and [s.get("layer") for s in secs][-1] != "history":
+            add("A01", "the update history comes last")
+        if "fact" not in layers:
+            add("A01", "the page has no fact section (the facts carry the verification record)")
+    elif layers != LAYER_ORDER:
+        add("A01", "the layers must be fact, opinion, prep, history, in this order, once each")
     for s in secs:
         lay = s.get("layer")
         if reading:
@@ -395,11 +418,6 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
                 hedged = bool(HEDGE_END.search(_strip_tail(sent)) or HEDGE_ANY.search(sent))
                 if s.get("layer") == "fact" and hedged:
                     add("A02", "a hedged sentence in the fact section", sent[:20])
-                # 'do not assert' applies to facts and effects only; a plain, widely held safety tip may be said flatly (the reading edition does not ask the opinion layer to hedge)
-                if not reading and s.get("layer") == "opinion" and re.search(r"(である|となる|だった|になる|です|ます)[。！]?$", _strip_tail(sent) + "。") and not hedged and not any(m in sent for m in FORMULA_MARK):
-                    # a flat statement in the opinion section: allowed only when it labels the view ("あくまで筆者の見方で…")
-                    if "見方" not in sent and "編集部" not in sent and "場合" not in sent:
-                        add("A02", "a flat statement in the opinion section (use a hedge, or label it)", sent[:20])
     # A16 "not known / not confirmed" is not said in the body at all (only the update history may carry a short note)
     for s in secs:
         if s.get("layer") == "history":
@@ -443,9 +461,9 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
             if "発表されていない" in t or "分かっていない" in t:
                 continue
             if not any(i in t for i in ISSUERS + list(ctx.get("issuers", []))):
-                add("A03", "a fact bullet without an issuer", t[:15])
+                add("A03", "a fact bullet without an issuer", t[:15], "warn")
             if not DATE_RE.search(t):
-                add("A03", "a fact bullet without a date", t[:15])
+                add("A03", "a fact bullet without a date", t[:15], "warn")
     # A04 numbers
     allowed = set()
     for t in fact_texts:
@@ -460,18 +478,18 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
             for line in re.split(r"\n", t):
                 if any(m in line for m in FORMULA_MARK):
                     allowed |= _nums(line)
-    for n in sorted(_nums(DATE_RE.sub("", lead)) - allowed):
+    for n in sorted(_nums_nc(DATE_RE.sub("", lead)) - allowed):
         add("A04", "a number in the lead that is in no fact", n)
     for s in secs:
         if s.get("layer") in ("fact", "history"):
             continue
         for t in text_of(s):
             t_clean = DATE_RE.sub("", t)
-            for n in sorted(_nums(t_clean) - allowed):
+            for n in sorted(_nums_nc(t_clean) - allowed):
                 add("A04", "a number that is in no fact, no public value and no formula", n)
     # A05 proper nouns must be in the ledger (names the editors checked) or in the allowed terms
     ledger = [x for x in a.get("ledger", [])] + list(ctx.get("allowed_terms", [])) + ISSUERS
-    found = set(ORG_RE.findall(alltext)) | set(QUOTED_RE.findall(alltext)) | set(NUMBERED_RE.findall(alltext)) | set(KATAKANA_RE.findall(alltext))
+    found = set(ORG_RE.findall(alltext)) | set(QUOTED_RE.findall(alltext)) | set(NUMBERED_RE.findall(alltext))
     for n in sorted(found):
         if not any(n in l or l in n for l in ledger):
             add("A05", "a proper noun not in the ledger", n)
@@ -587,8 +605,8 @@ def check_reading(a: dict) -> list[Finding]:
     aid = str(a.get("id", "?"))
     out: list[Finding] = []
 
-    def add(code, msg, detail=""):
-        out.append(Finding(code, aid, msg, detail))
+    def add(code, msg, detail="", level="error"):
+        out.append(Finding(code, aid, msg, detail, level))
 
     T = reading_texts(a)
     allt = [t for v in T.values() for t in v]
@@ -601,7 +619,7 @@ def check_reading(a: dict) -> list[Finding]:
     if sents:
         polite = sum(1 for x in sents if POLITE_END.search(x))
         if polite / len(sents) < 0.5:
-            add("A20", f"only {polite} of {len(sents)} sentences end in です/ます (a です・ます tone is the base)")
+            add("A20", f"only {polite} of {len(sents)} sentences end in です/ます (a です・ます tone is the base)", "", "warn")
     # A25 rhythm: a formula repeated, the same opening on three sentences in a row of a section, the same phrase again and again, a pet construction used too often
     blob = "\n".join(allt)
     n_formula = sum(blob.count(f) for f in FORMULAS)
@@ -624,7 +642,7 @@ def check_reading(a: dict) -> list[Finding]:
     for pat, limit, label in PET_PATTERNS:
         n = len(re.findall(pat, blob))
         if n > limit:
-            add("A25", f"{label} used {n} times (more than {limit})", label)
+            add("A25", f"{label} used {n} times (more than {limit})", label, "warn")
     # A25 (continued) the same ending or turn of phrase three times or more in one article
     ends: dict = {}
     for sent in [x for t in T["lead"] + T["paras"] + T["boxes"] for x in _sentences(t)]:
@@ -671,9 +689,9 @@ def check_reading(a: dict) -> list[Finding]:
     # A21 figures: at least one chart or table with data, and an illustration
     figs = [f for s in a.get("sections", []) for f in s.get("figures", [])] + ([a["hero"]] if a.get("hero") else [])
     if not any(f["kind"] in ("chart", "table") for f in figs):
-        add("A21", "no chart or table (one or two figures made from public numbers)")
+        add("A21", "no chart or table (a figure is welcome when it can be drawn tidily; none is better than an untidy one)", "", "warn")
     if not any(f["kind"] == "image" for f in figs):
-        add("A21", "no illustration")
+        add("A21", "no illustration", "", "warn")
     for f in figs:
         if f["kind"] == "image" and not f.get("alt"):
             add("A21", "an illustration without alt text")
@@ -682,16 +700,16 @@ def check_reading(a: dict) -> list[Finding]:
     # A22 lumps of text
     for t in T["paras"]:
         if len(t) > LUMP_CHARS:
-            add("A22", f"a paragraph of {len(t)} characters (cut it)", t[:12])
+            add("A22", f"a paragraph of {len(t)} characters (cut it)", t[:12], "warn")
     for t in T["lead"] + T["paras"] + T["bullets"] + T["boxes"]:
         for sent in _sentences(t):
             if len(sent) > SENT_MAX:
-                add("A22", f"a sentence of {len(sent)} characters (say it in two)", sent[:12])
+                add("A22", f"a sentence of {len(sent)} characters (say it in two)", sent[:12], "warn")
             parts = sent.split("、")
             if len(parts) - 1 >= 5 and sum(len(x) for x in parts) / len(parts) > 10:
-                add("A22", f"{len(parts) - 1} commas in one sentence with long parts (a list of clauses: use short sentences or a list)", sent[:12])
+                add("A22", f"{len(parts) - 1} commas in one sentence with long parts (a list of clauses: use short sentences or a list)", sent[:12], "warn")
             if sent.count("こと") >= 3:
-                add("A22", "three or more 'こと' in one sentence (a chain of nominalised clauses: use verbs)", sent[:12])
+                add("A22", "three or more 'こと' in one sentence (a chain of nominalised clauses: use verbs)", sent[:12], "warn")
     for bad, better in DISCOURAGED.items():
         if bad in blob:
             add("A28", f"'{bad}' reads oddly or is a term the reader does not know" + (f" (say: {better})" if better else ""), bad)
@@ -699,13 +717,13 @@ def check_reading(a: dict) -> list[Finding]:
         if s.get("layer") == "history":
             continue
         if len(s.get("paras", [])) >= LUMP_RUN and not s.get("boxes") and not s.get("figures"):
-            add("A22", f"section '{s.get('heading', '')[:10]}' has {len(s['paras'])} plain paragraphs and no figure or box")
+            add("A22", f"section '{s.get('heading', '')[:10]}' has {len(s['paras'])} plain paragraphs and no figure or box", "", "warn")
     # A23 summaries: 3 lines at the top, one short line under each heading
-    if len(a.get("tldr", [])) != 3:
-        add("A23", "the 3-line summary needs exactly three lines")
+    if not 2 <= len(a.get("tldr", [])) <= 4:
+        add("A23", "the summary at the top needs two to four lines (three is usual)")
     for t in a.get("tldr", []):
-        if len(t) > 60:
-            add("A23", "a summary line over 60 characters", t[:10])
+        if len(t) > 70:
+            add("A23", "a summary line over 70 characters", t[:10])
     for s in a.get("sections", []):
         if s.get("layer") == "history":
             continue
@@ -715,21 +733,22 @@ def check_reading(a: dict) -> list[Finding]:
             add("A23", "a section summary over 60 characters", s["summary"][:10])
     # A24 parts: tip and hack boxes, series, poll, next
     kinds = [b.get("kind") for s in a.get("sections", []) for b in s.get("boxes", [])]
-    if "tip" not in kinds:
-        add("A24", "no 豆知識 box")
     if "hack" not in kinds:
         add("A24", "no ライフハック box")
     se = a.get("series") or {}
-    if not (se.get("name") and se.get("parent") and len(se.get("children", [])) >= 2):
-        add("A24", "series needs a name, a parent and at least two child pages")
+    if not (se.get("name") and se.get("parent") and len(se.get("children", [])) >= 1):
+        add("A24", "series needs a name, a parent and the child pages that are already published (one or more; no 'coming soon')")
     if len(a.get("next", [])) < 1:
         add("A24", "no 'next to read'")
-    po = a.get("poll") or {}
-    if not (po.get("question") and 3 <= len(po.get("options", [])) <= 5):
-        add("A24", "the poll needs one question and three to five choices")
-    for t in [po.get("question", "")] + po.get("options", []):
-        if re.search(r"名前|メール|住所|電話|年齢|性別", t):
-            add("A24", "the poll asks for personal information")
+    polls = a.get("polls") or ([a["poll"]] if a.get("poll") else [])
+    if not polls:
+        add("A24", "the page has no poll")
+    for po in polls:
+        if not (po.get("question") and 2 <= len(po.get("options", [])) <= 8):
+            add("A24", "a poll needs a question and two to eight choices")
+        for t in [po.get("question", "")] + po.get("options", []):
+            if re.search(r"名前|メール|住所|電話|年齢|性別", t):
+                add("A24", "the poll asks for personal information")
     return out
 
 
@@ -798,7 +817,7 @@ def dry_run(private: Path, now: datetime, publisher: Publisher | None = None) ->
     cand = [q for q in queue if q.get("state") in ("approved", "draft")]
     ctx = {"product_terms": terms, "approvals": approvals}
     findings = check_posts_all(cand, accounts, done, ctx) if not errs else []
-    bad = {f.item for f in findings}
+    bad = {f.item for f in findings if f.blocking}
     posted, held = [], []
     for q in cand:
         if q.get("state") != "approved" or _when(q) > now:
@@ -833,8 +852,9 @@ def main(argv=None) -> int:
         findings = r["findings"]
     for f in findings:
         print(f.line(a.verbose))
-    print(f"findings: {len(findings)}")
-    return 1 if findings else 0
+    n_err = sum(1 for f in findings if f.blocking)
+    print(f"findings: {len(findings)} ({n_err} blocking, {len(findings) - n_err} warnings)")
+    return 1 if n_err else 0
 
 
 if __name__ == "__main__":

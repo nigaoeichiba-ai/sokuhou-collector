@@ -73,13 +73,19 @@ class TestReadingChecks(unittest.TestCase):
 
     def test_a23_summaries(self):
         a = fixture()
-        a["tldr"] = ["一つ", "二つ"]
+        a["tldr"] = ["一つ"]
         self.assertIn("A23", codes(w.check_reading(a)))
+        a["tldr"] = ["一つ", "二つ", "三つ", "四つ", "五つ"]
+        self.assertIn("A23", codes(w.check_reading(a)))
+        a["tldr"] = ["あ" * 71]
+        self.assertIn("A23", codes(w.check_reading(a)))
+        a["tldr"] = ["一つ", "二つ", "三つ", "四つ"]               # two to four lines are fine
+        self.assertNotIn("A23", codes(w.check_reading(a)))
         a = fixture()
         a["sections"][1]["summary"] = ""                           # a one-line summary under a heading is optional
         self.assertNotIn("A23", codes(w.check_reading(a)))
         a = fixture()
-        a["tldr"][0] = "あ" * 61
+        a["tldr"][0] = "あ" * 71
         self.assertIn("A23", codes(w.check_reading(a)))
 
     def test_a25_rhythm(self):
@@ -182,9 +188,10 @@ class TestReadingChecks(unittest.TestCase):
         self.assertNotIn("A30", codes(w.check_reading(a)))
 
     def test_a24_parts(self):
-        for mutate, why in ((lambda a: a["sections"][0].__setitem__("boxes", []), "no tip"), (lambda a: a["sections"][2].__setitem__("boxes", []), "no hack"),
+        for mutate, why in ((lambda a: a["sections"][2].__setitem__("boxes", []), "no hack"),
                             (lambda a: a["series"].__setitem__("children", []), "no children"), (lambda a: a.__setitem__("next", []), "no next"),
-                            (lambda a: a.__setitem__("poll", None), "no poll"), (lambda a: a["poll"].__setitem__("options", ["a", "b"]), "two choices"),
+                            (lambda a: a.__setitem__("poll", None), "no poll"), (lambda a: a["poll"].__setitem__("options", ["a"]), "one choice"),
+                            (lambda a: a["poll"].__setitem__("options", list("abcdefghi")), "nine choices"),
                             (lambda a: a["poll"].__setitem__("question", "お名前を教えてください"), "personal information")):
             a = fixture()
             mutate(a)
@@ -272,6 +279,78 @@ class TestPage(unittest.TestCase):
         self.assertIn("灯りを出した", html)
         self.assertIn("<details>", html)
         self.assertIn("親ページ", html)
+
+
+class TestRuleAudit(unittest.TestCase):
+    """The rules loosened or removed after the audit of 2026-11-04 (WADAI_RULE_AUDIT): each stays quiet where it used to stop a natural text, and the ones kept still catch."""
+
+    def test_a01_the_layers_come_in_any_order_and_number_but_the_history_is_last(self):
+        a = fixture()
+        a["sections"].insert(2, copy.deepcopy(a["sections"][2]))                       # a second prep section
+        self.assertNotIn("A01", codes(w.check_article(a)))
+        a = fixture()
+        a["sections"].insert(0, a["sections"].pop())                                   # the history moved to the top
+        self.assertIn("A01", codes(w.check_article(a)))
+        a = fixture()
+        a["sections"] = [s for s in a["sections"] if s["layer"] != "fact"]             # no fact section at all
+        self.assertIn("A01", codes(w.check_article(a)))
+
+    def test_a04_counting_words_are_not_numbers(self):
+        a = fixture()
+        a["sections"][1]["paras"] = ["見る点は4つだけです。ライトをひとつ持つ。3人で分けます。2回に分けて確かめます。"]
+        self.assertNotIn("A04", codes(w.check_article(a)))
+        a["sections"][1]["paras"] = ["見る点は4つだけです。値段は480ほどです。"]
+        self.assertIn("A04", codes(w.check_article(a)))                                  # a real number with no source is still caught
+
+    def test_a05_plain_katakana_words_are_not_proper_nouns(self):
+        a = fixture()
+        a["sections"][1]["paras"] = ["地図の海岸線はパブリックドメインのデータです。"]
+        self.assertNotIn("A05", codes(w.check_article(a)))
+        a["sections"][1]["paras"] = ["テスト社の発表を受けて、備えが広がっています。"]
+        self.assertIn("A05", codes(w.check_article(a)))                                  # a company name is still checked
+
+    def test_a21_a22_a25_pet_patterns_are_warnings_that_do_not_block(self):
+        a = fixture()
+        a["sections"][1]["paras"] = ["あ" * 140 + "です。"]
+        f = [x for x in w.check_reading(a) if x.code == "A22"]
+        self.assertTrue(f)
+        self.assertTrue(all(x.level == "warn" and not x.blocking for x in f))
+        a = fixture()
+        a["hero"] = None
+        a["sections"][1]["figures"] = []
+        f = [x for x in w.check_reading(a) if x.code == "A21"]
+        self.assertTrue(f and all(not x.blocking for x in f))
+
+    def test_a24_polls_and_series(self):
+        a = fixture()
+        a["polls"] = [a["poll"], {"id": "x-2", "question": "いちばん足りないのは?", "options": list("abcdefgh")}]      # two questions, eight choices
+        self.assertNotIn("A24", codes(w.check_reading(a)))
+        a["polls"][1]["options"] = list("abcdefghi")
+        self.assertIn("A24", codes(w.check_reading(a)))
+        a = fixture()
+        a["series"]["children"] = a["series"]["children"][:1]                              # one published child is enough
+        self.assertNotIn("A24", codes(w.check_reading(a)))
+        for s in a["sections"]:
+            s["boxes"] = [b for b in s.get("boxes", []) if b.get("kind") != "tip"]         # a page without a 豆知識 is fine
+        self.assertNotIn("A24", codes(w.check_reading(a)))
+
+    def test_findings_that_warn_do_not_make_the_command_fail(self):
+        import io
+        import json
+        import tempfile
+        from contextlib import redirect_stdout
+        from pathlib import Path
+        a = fixture()
+        a["sections"][1]["paras"] = ["あ" * 140 + "です。"]                                   # only a warning (a long paragraph)
+        errs = [x for x in w.check_article(a) if x.blocking]
+        with tempfile.TemporaryDirectory() as t:
+            f = Path(t) / "a.json"
+            f.write_text(json.dumps(a, ensure_ascii=False), encoding="utf-8")
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                rc = w.main(["check-article", str(f)])
+        self.assertEqual(rc, 1 if errs else 0)
+        self.assertIn("warnings", buf.getvalue())
 
 
 if __name__ == "__main__":
