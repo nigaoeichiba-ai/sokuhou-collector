@@ -316,6 +316,67 @@ def human_marks(fs: list[C.Finding]) -> list[dict]:
     return out
 
 
+# ---- the 突っ込み役 as several readers in parallel (the owner, 2026-11-04: one reader missed what someone who does not know the topic
+# would have stopped on; all of them haiku) ------------------------------------------------------------------------------------------------
+
+PERSONA_MODEL = os.environ.get("KOBO_PERSONA_MODEL", "haiku")
+PERSONAS = [
+    ("知らない人", "何の話題かも知らない人。ニュースを見ていない。題・冒頭・3行まとめ・見出しだけで、何の話か通じるかを特に見る。"),
+    ("急いでいる人", "電車で斜め読みする、急いでいる人。題・3行まとめ・見出ししか読まない。それだけで、自分が何をすればよいか分かるかを見る。"),
+    ("疑い深い人", "疑い深い人。「本当?」「誰が言っている?」「あおって売りたいのでは?」と思いながら読む。言い切り・大げさな言い方・根拠のない話を見る。"),
+]
+CITATION_ASK = re.compile(r"出典|URL|リンク|ソース|引用元|情報源|報道")
+
+
+def personas_for(m: dict) -> list[tuple[str, str]]:
+    """The three standing readers, the article's own 当事者 (from the material, else the reader memo) and any extra readers the material names."""
+    memo = m.get("reader_memo") or {}
+    insider = m.get("insider") or f"当事者: {memo.get('reader', '')}。{memo.get('trouble', '')}。「うちの場合は?」「結局、何から?」「お金は?」と思いながら読む。"
+    extra = [(p.get("name", f"追加{i + 1}"), p["who"]) if isinstance(p, dict) else (f"追加{i + 1}", str(p)) for i, p in enumerate(m.get("personas", []))]
+    return PERSONAS + [("当事者", insider)] + extra
+
+
+def _key(s: str) -> str:
+    return re.sub(r"[\s、。「」()（）!?！？・]", "", str(s))[:14]
+
+
+def persona_points(text: str, m: dict, model: str = PERSONA_MODEL) -> dict:
+    """Every persona reads at once. Returns {"readers": [{name, gist, points}], "points": [{text, asks, fixes, by}] (most readers first)}."""
+    from concurrent.futures import ThreadPoolExecutor
+    ps = personas_for(m)
+
+    def one(p):
+        res = parse_json(runner.call(model, fill(prompt_file("persona_read"), persona=p[1], text=text)))
+        pts = [x for x in (res.get("points") if isinstance(res.get("points"), list) else []) if isinstance(x, dict)]
+        pts = [x for x in pts if not CITATION_ASK.search(str(x.get("ask", "")) + str(x.get("fix", "")))]    # the owner: no sources in the text
+        return {"name": p[0], "gist": str(res.get("gist", "")), "points": pts}
+
+    with ThreadPoolExecutor(max_workers=len(ps)) as ex:
+        readers = list(ex.map(one, ps))
+    groups: dict = {}
+    for r in readers:
+        for x in r["points"]:
+            g = groups.setdefault(_key(x.get("text", "")), {"text": str(x.get("text", "")), "asks": [], "fixes": [], "by": []})
+            if r["name"] not in g["by"]:
+                g["by"].append(r["name"])
+            g["asks"].append(str(x.get("ask", "")))
+            g["fixes"].append(str(x.get("fix", "")))
+    pts = sorted(groups.values(), key=lambda g: -len(g["by"]))
+    return {"model": model, "readers": readers, "points": pts}
+
+
+def persona_fix(text: str, m: dict, pp: dict, model: str = PERSONA_MODEL) -> str:
+    many = [g for g in pp["points"] if len(g["by"]) >= 2]
+    one = [g for g in pp["points"] if len(g["by"]) < 2]
+    def fmt(g):
+        return f"- 「{g['text'][:80]}」({'・'.join(g['by'])}) {' / '.join(a for a in g['asks'][:3] if a)} → 案: {g['fixes'][0][:80] if g['fixes'] else ''}"
+    pts = "### 2人以上が引っかかった所\n" + ("\n".join(fmt(g) for g in many) or "(なし)") + "\n\n### 1人だけが引っかかった所\n" + ("\n".join(fmt(g) for g in one[:25]) or "(なし)")
+    out = _strip_fence(runner.call(model, fill(prompt_file("persona_fix"), material=for_prompt(m), points=pts, text=text)))
+    if not out.strip() or not D.parse(out)["sections"]:
+        return text                                    # the fix lost the shape: keep the writer's version
+    return out
+
+
 def added_explanations(draft: str, final: str, m: dict) -> list[dict]:
     """Explanations in brackets that the 突っ込み役 added and the material does not have (2026-11-04: '188(最寄りの消費生活センターに
     つながる番号)', a legal definition of クーリング・オフ): marked for a person, not removed."""
@@ -341,17 +402,25 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
     draft = runner.call(writer, prompt, system)
     t1 = time.time()
     fs0 = [f for u in units(tool, draft) for f in tool_findings(tool, u, m, card)]
-    tk = TSUKKOMI_DEFAULT if tsukkomi_model == "default" else tsukkomi_model
-    tk = None if tk in ("", "none") else tk
     log: list = []
-    final = _keep_shape(_apply_tsukkomi(tool, draft, tk, log), draft, tool)
+    pp = None
+    if tsukkomi_model in ("default", "personas") and tool in ("article", "note"):
+        # the standard: several haiku readers at once, one fix (the owner, 2026-11-04)
+        tk = f"personas:{PERSONA_MODEL}"
+        pp = persona_points(draft, m)
+        final = _keep_shape(persona_fix(draft, m, pp), draft, tool)
+    else:
+        tk = TSUKKOMI_DEFAULT if tsukkomi_model == "default" else tsukkomi_model
+        tk = None if tk in ("", "none") else tk
+        final = _keep_shape(_apply_tsukkomi(tool, draft, tk, log), draft, tool)
     t2 = time.time()
     fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
     marks = human_marks(fs1) + added_explanations(draft, final, m)
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     result = {"mode": "light", "tool": tool, "material": m.get("id"), "site": card.get("site"), "writer": writer, "tsukkomi": tk,
               "draft": draft, "output": final, "marks": marks, "draft_marks": human_marks(fs0),
-              "tsukkomi_points": (log[0]["points"] if log else []), "tsukkomi_ok": bool(log and log[0]["ok"]),
+              "tsukkomi_points": (pp["points"] if pp else (log[0]["points"] if log else [])), "tsukkomi_ok": bool(pp) or bool(log and log[0]["ok"]),
+              "readers": ([{"name": r["name"], "gist": r["gist"], "points": len(r["points"])} for r in pp["readers"]] if pp else []),
               "seconds": {"writer": round(t1 - t0), "tsukkomi": round(t2 - t1), "total": round(time.time() - t0)}}
     if record:
         rec = home() / "runs" / datetime.now().strftime("%Y-%m-%d") / f"{m.get('id', 'x')}-{tool}-{writer}-light-{stamp}"
@@ -381,7 +450,13 @@ def marks_md(r: dict) -> str:
         lines.append("(機械の検査で拾えたものはありません)")
     for x in r["marks"]:
         lines.append(f"- {'**' if x['strong'] else ''}{x['label']}{'**' if x['strong'] else ''}: {x['msg']}" + (f"(該当: {x['detail']})" if x["detail"] and x["detail"] not in x["msg"] else ""))
-    if r.get("tsukkomi_points"):
+    if r.get("readers"):
+        lines += ["", "## 読者役(題と冒頭だけで、何の話だと思ったか)"]
+        lines += [f"- {x['name']}(指摘 {x['points']}件): {x['gist']}" for x in r["readers"]]
+        pts = r.get("tsukkomi_points", [])
+        lines += ["", f"## 2人以上が引っかかった所({sum(1 for p in pts if len(p['by']) >= 2)}件。直しに必ず反映)"]
+        lines += [f"- 「{p['text'][:40]}」({'・'.join(p['by'])}) {p['asks'][0][:60] if p['asks'] else ''}" for p in pts if len(p["by"]) >= 2]
+    elif r.get("tsukkomi_points"):
         lines += ["", f"## 突っ込み役の指摘({len(r['tsukkomi_points'])}件、全部反映済み)"]
         lines += [f"- 「{str(p.get('text', ''))[:40]}」 {p.get('ask', '')} → {str(p.get('fix', ''))[:60]}" for p in r["tsukkomi_points"]]
     return "\n".join(lines) + "\n"
