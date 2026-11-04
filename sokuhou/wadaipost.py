@@ -744,8 +744,8 @@ def check_reading(a: dict) -> list[Finding]:
     if not polls:
         add("A24", "the page has no poll")
     for po in polls:
-        if not (po.get("question") and 2 <= len(po.get("options", [])) <= 8):
-            add("A24", "a poll needs a question and two to eight choices")
+        if not (po.get("question") and 2 <= len(po.get("options", [])) <= 10):
+            add("A24", "a poll needs a question and two to ten choices")
         for t in [po.get("question", "")] + po.get("options", []):
             if re.search(r"名前|メール|住所|電話|年齢|性別", t):
                 add("A24", "the poll asks for personal information")

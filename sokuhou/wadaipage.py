@@ -252,16 +252,36 @@ JS = """
   if(share){var u=share.dataset.url,t=share.dataset.title;
     document.getElementById("sx").href="https://twitter.com/intent/tweet?text="+encodeURIComponent(t)+"&url="+encodeURIComponent(u);
     document.getElementById("sl").href="https://line.me/R/msg/text/?"+encodeURIComponent(t+" "+u)}
-  var poll=document.getElementById("poll");
-  if(poll){var key="wadai:poll:"+poll.dataset.id;var form=poll.querySelector("form"),done=poll.querySelector(".done"),err=poll.querySelector(".err");
+  Array.prototype.forEach.call(document.querySelectorAll(".poll"),function(poll){var key="wadai:poll:"+poll.dataset.id;var form=poll.querySelector("form"),done=poll.querySelector(".done"),err=poll.querySelector(".err");
     var show=function(){form.hidden=true;done.hidden=false;done.textContent="ありがとうございます。集まった結果は、次の記事でお見せします。";done.focus()};
     if(get(key,null)!==null){form.hidden=true;done.hidden=false;done.textContent="答えてくれてありがとうございます。"}
     form.addEventListener("submit",function(ev){ev.preventDefault();var c=poll.querySelector("input:checked");
       if(!c){err.hidden=false;err.textContent="どれかを選んでください。";return}
       err.hidden=true;put(key,c.value);show();
-      try{var x=new XMLHttpRequest();x.open("POST","/api/poll.php");x.setRequestHeader("Content-Type","application/json");x.send(JSON.stringify({id:poll.dataset.id,choice:c.value}))}catch(e){}})}
+      try{var x=new XMLHttpRequest();x.open("POST","/api/poll.php");x.setRequestHeader("Content-Type","application/json");x.send(JSON.stringify({id:poll.dataset.id,choice:c.value}))}catch(e){}})});
 })();
 """
+
+
+def poll_html_one(poll: dict, idx: int = 0) -> str:
+    """One poll: choose one, nothing else is asked.  The first poll keeps the id 'poll'; the others are 'poll-2', 'poll-3' ..."""
+    pid = "poll" if idx == 0 else f"poll-{idx + 1}"
+    opts = "".join(f'<label><input type="radio" name="c" value="{_e(o)}"> {_e(o)}</label>' for o in poll["options"])
+    note = poll.get("note") or "選んだ項目だけを送ります。名前や連絡先の入力はありません。"
+    return (f'<div class="poll" id="{pid}" data-id="{_e(poll["id"])}"><form><fieldset style="border:0;padding:0;margin:0"><legend>{_e(poll["question"])}</legend>{opts}'
+            f'</fieldset><p class="err" role="alert" hidden></p><p style="margin:8px 0 0"><button class="btn" type="submit">これで答える</button> <small>{_e(note)}</small></p></form>'
+            f'<p class="done" role="status" aria-live="polite" tabindex="-1" hidden></p></div>')
+
+
+def share_html(title: str, path: str, base: str) -> str:
+    url = base + path
+    q = urllib.parse.quote
+    return (f'<div id="share" data-url="{_e(url)}" data-title="{_e(title)}"><p class="act-note">友だちにも教えたいときは、こちらから。お気に入りは、この端末のブラウザーにだけ保存します。</p>'
+            f'<div class="actions"><button class="btn" id="copy" type="button" data-url="{_e(url)}">リンクをコピー</button>'
+            f'<a class="btn" id="sx" rel="noopener" target="_blank" href="https://twitter.com/intent/tweet?text={q(title)}&amp;url={q(url, safe="")}">Xで共有</a>'
+            f'<a class="btn" id="sl" rel="noopener" target="_blank" href="https://line.me/R/msg/text/?{q(title + " " + url, safe="")}">LINEで送る</a>'
+            f'<button class="btn" id="fav" type="button" aria-pressed="false" data-path="{_e(path)}" data-title="{_e(title)}">お気に入りに入れる</button></div>'
+            f'<p id="favmsg" class="act-note" role="status" aria-live="polite"></p><p id="urlbox" class="urlbox" hidden></p></div>')
 
 
 def _jsonld(a: dict) -> str:
@@ -303,21 +323,9 @@ def render_article(a: dict, *, path: str = "/", base: str = "https://example.inv
         parts.append("</section>")
         secs.append("".join(parts))
     hist = next((x for x in a["sections"] if x["layer"] == "history"), None)
-    poll = a.get("poll")
-    poll_html = ""
-    if poll:
-        opts = "".join(f'<label><input type="radio" name="c" value="{_e(o)}"> {_e(o)}</label>' for o in poll["options"])
-        poll_html = (f'<div class="poll" id="poll" data-id="{_e(poll["id"])}"><form><fieldset style="border:0;padding:0;margin:0"><legend>{_e(poll["question"])}</legend>{opts}'
-                     f'</fieldset><p class="err" role="alert" hidden></p><p style="margin:8px 0 0"><button class="btn" type="submit">これで答える</button> <small>選んだ項目だけを送ります。名前や連絡先の入力はありません。</small></p></form>'
-                     f'<p class="done" role="status" aria-live="polite" tabindex="-1" hidden></p></div>')
-    url = base + path
-    q = urllib.parse.quote
-    share = (f'<div id="share" data-url="{_e(url)}" data-title="{_e(a["title"])}"><p class="act-note">友だちにも教えたいときは、こちらから。お気に入りは、この端末のブラウザーにだけ保存します。</p>'
-             f'<div class="actions"><button class="btn" id="copy" type="button" data-url="{_e(url)}">リンクをコピー</button>'
-             f'<a class="btn" id="sx" rel="noopener" target="_blank" href="https://twitter.com/intent/tweet?text={q(a["title"])}&amp;url={q(url, safe="")}">Xで共有</a>'
-             f'<a class="btn" id="sl" rel="noopener" target="_blank" href="https://line.me/R/msg/text/?{q(a["title"] + " " + url, safe="")}">LINEで送る</a>'
-             f'<button class="btn" id="fav" type="button" aria-pressed="false" data-path="{_e(path)}" data-title="{_e(a["title"])}">お気に入りに入れる</button></div>'
-             f'<p id="favmsg" class="act-note" role="status" aria-live="polite"></p><p id="urlbox" class="urlbox" hidden></p></div>')
+    polls = a.get("polls") or ([a["poll"]] if a.get("poll") else [])
+    poll_html = "".join(poll_html_one(po, i) for i, po in enumerate(polls))
+    share = share_html(a["title"], path, base)
     kids = "".join(f'<li><a href="{_e(c["path"])}">{_e(c["title"])}</a>({_e(c["kind"])})</li>' for c in s.get("children", []))
     nxt = "".join(f'<li><a href="{_e(n["path"])}">{_e(n["title"])}</a></li>' for n in a.get("next", []))
     tl = "".join(f"<li>{_e(x)}</li>" for x in a["tldr"])
