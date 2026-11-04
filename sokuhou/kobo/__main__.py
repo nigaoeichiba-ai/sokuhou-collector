@@ -70,7 +70,7 @@ def main(argv=None) -> int:
     sub.add_parser("tools")
     for t in engine.TOOLS:
         p = sub.add_parser(t)
-        if t == "rewrite":
+        if t in ("rewrite", "note"):
             p.add_argument("--in", dest="inp", required=True)
             p.add_argument("--material", default="")
         else:
@@ -93,6 +93,11 @@ def main(argv=None) -> int:
     p = sub.add_parser("tsukkomi")
     p.add_argument("draft")
     p.add_argument("--models", default="haiku,sonnet")
+    p = sub.add_parser("ledger")
+    p.add_argument("action", choices=["list", "set"])
+    p.add_argument("key", nargs="?", default="")
+    p.add_argument("field", nargs="?", default="")
+    p.add_argument("value", nargs="?", default="")
     p = sub.add_parser("compare")
     p.add_argument("material")
     p.add_argument("--writers", default="haiku,sonnet,opus,fable")
@@ -146,6 +151,16 @@ def main(argv=None) -> int:
         print(f"[questions] {m['id']} questions={len(res['questions']['questions'])} type1={sum(q['answer_type'] == 1 for q in res['questions']['questions'])} "
               f"checked={len(r['accepted'])} dropped={len(r['dropped'])}")
         print(f"record: {out} (summary.md)  material with the checked answers: {mq}")
+        return 0
+    if a.cmd == "ledger":
+        if a.action == "set":
+            v = int(a.value) if a.value.isdigit() else a.value
+            print(json.dumps(engine.ledger_set(a.key, a.field, v), ensure_ascii=False, indent=1))
+            return 0
+        lp = engine.ledger_path()
+        for r in (json.loads(lp.read_text(encoding="utf-8")) if lp.exists() else []):
+            rd = r["reading"]
+            print(f"{r['key']:28s} {r.get('title', '')[:30]:30s} note={rd['note_views']} 表示={rd['site_impressions']} クリック={rd['site_clicks']} 回答={rd['poll_answers']}")
         return 0
     if a.cmd == "tsukkomi":
         src = Path(a.draft).read_text(encoding="utf-8")
@@ -226,6 +241,13 @@ def main(argv=None) -> int:
             print("=" * 60)
         return 0
     # the writing tools
+    if a.cmd == "note":
+        src = Path(a.inp).read_text(encoding="utf-8")
+        m = _material(a.material)
+        card = engine.load_card(a.site or m.get("site", "wadai"))
+        r = engine.run("note", m, card, writer=a.writer, reader=a.reader, source=src, rewrites=a.rewrites, tsukkomi_model=a.tsukkomi)
+        _print_result(r)
+        return 0 if r["passed"] else 1
     if a.cmd == "rewrite":
         src = Path(a.inp).read_text(encoding="utf-8")
         m = _material(a.material) if a.material else {"id": Path(a.inp).stem, "site": a.site or "wadai", "weight": "mid", "names": []}

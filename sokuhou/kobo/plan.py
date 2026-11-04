@@ -62,6 +62,8 @@ def plan_checks(plan: str, brief: dict) -> list[dict]:
     extra = sorted(numbers(plan) - numbers(src) - {str(i) for i in range(0, 11)})
     if extra:
         out.append({"code": "P04", "block": False, "msg": "事実にない数字(計算で出したものなら、式を素材に残す): " + "、".join(extra[:12])})
+    if not _section(secs, "商品の置き場所"):
+        out.append({"code": "P06", "block": True, "msg": "商品の置き場所(ページごとに、どの疑問のあと・種類・置くときの一言)がありません。"})
     if not secs:
         out.append({"code": "P05", "block": True, "msg": "企画の見出しがありません(書く形のとおりに)。"})
     return out

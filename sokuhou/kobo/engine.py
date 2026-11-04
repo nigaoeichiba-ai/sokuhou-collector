@@ -19,7 +19,7 @@ from .material import for_prompt, source_text
 HERE = Path(__file__).resolve().parent
 PROMPTS = HERE / "prompts"
 CARDS = HERE / "cards"
-TOOLS = ("article", "title", "lead", "outline", "tldr", "tips", "threads", "rewrite")
+TOOLS = ("article", "title", "lead", "outline", "tldr", "tips", "threads", "rewrite", "note")
 MULTI = {"title", "lead"}           # tools that return several candidates: the ones the reader passes are the output
 MAX_REWRITES = 3
 PASS_LEVEL = 2                      # a reader mark of this level or higher stops the text
@@ -64,6 +64,8 @@ def writer_prompt(tool: str, m: dict, card: dict, source: str = "") -> str:
     cp = card_parts(card)
     if tool == "rewrite":
         return fill(prompt_file("rewrite"), source=source, **cp)
+    if tool == "note":
+        return fill(prompt_file("note"), head=head_text(m, card), source=source, **cp)
     return fill(prompt_file(tool), head=head_text(m, card), **cp)
 
 
@@ -115,7 +117,7 @@ def _doc(title="", lead="", tldr=None, sections=None) -> dict:
 
 
 def kind_of(tool: str) -> str:
-    return "article" if tool == "article" else tool
+    return "article" if tool in ("article", "note") else tool
 
 
 def plain_of(tool: str, us: list[dict], m: dict | None = None) -> str:
@@ -224,7 +226,7 @@ def support_judge_for(writer: str) -> str:
 
 def tool_findings(tool: str, u: dict, m: dict, card: dict) -> list[C.Finding]:
     d = u["doc"]
-    fs = C.check(d, m if tool != "rewrite" else u.get("_m", m), card, kind_of(tool))
+    fs = C.check(d, m if tool != "rewrite" else u.get("_m", m), dict(card, _tool=tool), kind_of(tool))
     if tool == "threads":
         body = d.get("post", "")
         if len(body) > 250:
@@ -244,7 +246,7 @@ def tool_findings(tool: str, u: dict, m: dict, card: dict) -> list[C.Finding]:
 
 # ---- 突っ込み役 (the desk, 2026-11-04): a picky editor asks 'what? who? of what?' sentence by sentence; its revised text is the next version --
 
-TSUKKOMI_TOOLS = ("article", "rewrite", "outline", "tips", "tldr", "threads")
+TSUKKOMI_TOOLS = ("article", "rewrite", "outline", "tips", "tldr", "threads", "note")
 TSUKKOMI_DEFAULT = os.environ.get("KOBO_TSUKKOMI", "haiku")     # 2026-11-04 comparison: haiku caught every point the owner made, with the least over-correction
 
 
@@ -259,6 +261,14 @@ def tsukkomi(text: str, model: str) -> dict:
         revised = _strip_fence(mm.group(2))
     ok = bool(mm) and bool(revised.strip())
     return {"model": model, "points": pts, "revised": revised if ok else text, "ok": ok}
+
+
+def remaining(m: dict, text: str, model: str = "sonnet") -> dict:
+    """After the 突っ込み役: what a reader with the problem still asks.  Questions the material can answer go to the first rewrite;
+    the others are kept in the record (another page, the research role or a place to ask)."""
+    res = parse_json(runner.call(model, fill(prompt_file("remaining"), material=for_prompt(m), text=text)))
+    left = res.get("left", []) if isinstance(res.get("left"), list) else []
+    return {"model": model, "answerable": [x for x in left if x.get("in_material")], "elsewhere": [x for x in left if not x.get("in_material")]}
 
 
 def _apply_tsukkomi(tool: str, text: str, model: str | None, log: list) -> str:
@@ -285,7 +295,7 @@ def _marks(g: dict) -> str:
 
 
 def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str | None = None, source: str = "", rewrites: int = MAX_REWRITES,
-        record: bool = True, label: str = "", tsukkomi_model: str | None = "default") -> dict:
+        record: bool = True, label: str = "", tsukkomi_model: str | None = "default", ask_left: bool = True) -> dict:
     assert tool in TOOLS, tool
     writer = pick_writer(tool, m, writer)
     reader = reader or runner.other_family(writer)
@@ -294,6 +304,8 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
     judge = support_judge_for(writer)
     if tool == "rewrite":
         m = dict(m, facts=[{"text": source, "status": "primary"}], advice=[], tips=[], names=m.get("names", []))
+    if tool == "note":
+        m = dict(m, parts=[], slot="")
     system = prompt_file("system_writer")
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     rec_dir = home() / "runs" / datetime.now().strftime("%Y-%m-%d") / f"{m.get('id', 'x')}-{tool}-{writer}{('-' + label) if label else ''}-{stamp}"
@@ -303,6 +315,7 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
     tk = None if tk in ("", "none") else tk
     tk_log: list = []
     text = _apply_tsukkomi(tool, runner.call(writer, prompt, system), tk, tk_log)
+    left = remaining(m, text) if (ask_left and tool in ("article", "note")) else {"answerable": [], "elsewhere": []}
     t0 = time.time()
     result = None
     for r in range(rewrites + 1):
@@ -322,7 +335,7 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
             bad_sup = any(tool not in MULTI or _in(x["text"], raw) for x in sup["unsupported"])
             if not C.blocking(fs) and not bad_sup and not g["unparsed"] and not sup["unparsed"] and marks_ok(mine, raw, tool):
                 passed.append(u)
-        rd = {"round": r, "writer": writer, "text": text, "tsukkomi": tk_log[-1] if tk_log and len(tk_log) == r + 1 else None, "findings": [[f.as_dict() for f in fs] for fs in fs_all], "support": sup,
+        rd = {"round": r, "writer": writer, "text": text, "tsukkomi": tk_log[0] if tk_log and r == 0 else None, "findings": [[f.as_dict() for f in fs] for fs in fs_all], "support": sup,
               "reader": g, "passed": len(passed), "units": len(us), "passed_units": [u["raw"] for u in passed]}
         rd["score"] = score(rd)
         rounds.append(rd)
@@ -334,7 +347,7 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
             result = {"tool": tool, "material": m.get("id"), "site": card.get("site"), "writer": writer, "reader": reader, "judge": judge,
                       "passed": bool(ok), "rewrites": r, "best_round": best["round"],
                       "output": best["passed_units"] if tool in MULTI else (best["text"] if ok else ""),
-                      "last": text, "best": best["text"], "rounds": rounds, "seconds": round(time.time() - t0), "allowance": PASS_L2_CHARS, "tsukkomi": tk}
+                      "last": text, "best": best["text"], "rounds": rounds, "seconds": round(time.time() - t0), "allowance": PASS_L2_CHARS, "tsukkomi": tk, "left": left}
             break
         fs_flat = [f for fs in fs_all for f in fs]
         # rewrite from the best version so far (a worse rewrite is not built on)
@@ -342,8 +355,13 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
         if base is not rd:
             fs_flat = [C.Finding(**f) for fs in base["findings"] for f in fs]
             sup, g = base["support"], base["reader"]
-        rp = fill(prompt_file("revise"), head=head_text(m, card) if tool != "rewrite" else "【もとの文章】\n" + source, draft=base["text"], marks=_marks(g), notes=_notes(fs_flat, sup))
-        text = _apply_tsukkomi(tool, runner.call(writer, rp, system), tk, tk_log)
+        notes = _notes(fs_flat, sup)
+        if r == 0 and left["answerable"]:
+            notes += "\n" + "\n".join(f"- 読者にまだ残っている疑問: 「{x.get('q', '')}」(素材の「{str(x.get('from', ''))[:60]}」で答えられる。{x.get('where', '')})" for x in left["answerable"][:5])
+        rp = fill(prompt_file("revise"), head=head_text(m, card) if tool != "rewrite" else "【もとの文章】\n" + source, draft=base["text"], marks=_marks(g), notes=notes)
+        # the 突っ込み役 works on the first draft only (the desk's order: writer -> checks -> 突っ込み役 -> fixes -> reader gate);
+        # run on every round, it reworked the writer's targeted fixes and the text swung back and forth (2026-11-04)
+        text = runner.call(writer, rp, system)
     if record:
         save(rec_dir, m, prompt, result)
     result["record"] = str(rec_dir) if record else ""
@@ -367,7 +385,44 @@ def save(rec_dir: Path, m: dict, prompt: str, result: dict) -> None:
         out.mkdir(parents=True, exist_ok=True)
         name = f"{result['tool']}-{result['writer']}"
         body = result["output"] if isinstance(result["output"], str) else "\n".join(result["output"])
+        if result["tool"] in ("article", "note"):
+            body = D.with_toc(body)
         (out / f"{name}.md").write_text(body, encoding="utf-8")
+        ledger_add(m, result, out / f"{name}.md")
         if result["tool"] == "article":
             a = D.to_wadai(D.parse(body), m)
             (out / f"{name}.json").write_text(json.dumps(a, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
+# ---- the ledger: one row per passed piece, with fields for how it is read (filled later by the routines) ----------------------------------
+
+READ_FIELDS = {"note_url": None, "note_views": None, "site_impressions": None, "site_clicks": None, "poll_answers": None, "updated": None}
+
+
+def ledger_path() -> Path:
+    return home() / "ledger.json"
+
+
+def ledger_add(m: dict, result: dict, path: Path) -> None:
+    lp = ledger_path()
+    rows = json.loads(lp.read_text(encoding="utf-8")) if lp.exists() else []
+    key = f"{m.get('id')}/{result['tool']}"
+    row = next((x for x in rows if x["key"] == key), None)
+    if row is None:
+        row = {"key": key, "id": m.get("id"), "tool": result["tool"], "site": result.get("site"), "reading": dict(READ_FIELDS)}
+        rows.append(row)
+    body = path.read_text(encoding="utf-8")
+    row.update(title=D.parse(body)["title"], writer=result["writer"], reader=result["reader"], file=str(path), passed_at=datetime.now().isoformat(timespec="seconds"))
+    lp.write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
+def ledger_set(key: str, field: str, value) -> dict:
+    lp = ledger_path()
+    rows = json.loads(lp.read_text(encoding="utf-8")) if lp.exists() else []
+    row = next(x for x in rows if x["key"] == key)
+    if field not in READ_FIELDS:
+        raise KeyError(f"{field}: one of {sorted(READ_FIELDS)}")
+    row["reading"][field] = value
+    row["reading"]["updated"] = datetime.now().isoformat(timespec="seconds")
+    lp.write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
+    return row

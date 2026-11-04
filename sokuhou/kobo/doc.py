@@ -10,6 +10,8 @@ BOX_RE = re.compile(r"^>\s*\**\s*(ライフハック|豆知識)\s*[:：]\s*(.*?)
 SLOT = "[商品カード]"
 MARK_RE = re.compile(r"^\s*(\[[^\[\]]{1,40}\])\s*$")     # a fixed part placed by the writer: [表: …] [チェックリスト] [図: …] [アンケート]
 TLDR_HEADS = ("3行まとめ", "三行まとめ")
+TOC_HEAD = "目次"
+TOC_MIN = 4             # an article with this many headings or more gets a table of contents (the owner, 2026-11-04)
 
 
 def _clean(s: str) -> str:
@@ -36,9 +38,14 @@ def parse(md: str) -> dict:
             if any(h in head for h in TLDR_HEADS):
                 in_tldr, cur = True, None
                 continue
+            if head == TOC_HEAD:                 # the table of contents is made by the tool, not parsed as a section
+                in_tldr, cur = "toc", None
+                continue
             in_tldr = False
             cur = {"heading": head, "paras": [], "bullets": [], "boxes": [], "slot": False, "marks": []}
             doc["sections"].append(cur)
+            continue
+        if in_tldr == "toc":
             continue
         if in_tldr:
             if re.match(r"^\s*[-・*]\s*", line):
@@ -161,3 +168,16 @@ def to_wadai(doc: dict, m: dict) -> dict:
     return {"format": "reading", "id": m.get("id", "?"), "updated": m.get("date", ""), "title": doc["title"], "lead": doc["lead"],
             "tldr": list(doc["tldr"]), "reader_memo": m.get("reader_memo", {}), "ledger": list(m.get("names", [])), "sections": secs,
             "ads": any(s.get("slot") for s in doc["sections"])}
+
+
+def with_toc(md: str) -> str:
+    """Insert a table of contents (the headings; the HTML builder links them) after the 3-line summary when the article is long."""
+    d = parse(md)
+    heads = [s["heading"] for s in d["sections"]]
+    if len(heads) < TOC_MIN or re.search(r"^## 目次\s*$", md, re.M):
+        return md
+    toc = "## 目次\n" + "\n".join(f"- {h}" for h in heads) + "\n\n"
+    m = re.search(r"^## (?!3行まとめ|三行まとめ)", md, re.M)
+    if not m:
+        return md
+    return md[:m.start()] + toc + md[m.start():]
