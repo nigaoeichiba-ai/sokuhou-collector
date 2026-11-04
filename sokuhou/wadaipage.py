@@ -64,7 +64,7 @@ def chart_svg(fig: dict) -> str:
         for i, (lab, v) in enumerate(zip(labels, vals)):
             x = PADL + i * bw + bw * 0.15
             y = _scale(v, 0, hi, H - PADB, PADT)
-            cls = "bar hl" if fig.get("highlight") == i else "bar"
+            cls = "bar partial" if i in fig.get("partial", []) else ("bar hl" if fig.get("highlight") == i else "bar")      # a partial period is hollow with a dashed edge: never read it as a full year
             out.append(f'<rect class="{cls}" x="{x:.1f}" y="{y:.1f}" width="{bw * 0.7:.1f}" height="{H - PADB - y:.1f}" rx="3"/>')
             out.append(f'<text class="val" x="{x + bw * 0.35:.1f}" y="{y - 6:.1f}" text-anchor="middle">{_e(fig.get("fmt", "{:,}").format(v))}</text>')
             out.append(f'<text class="lab" x="{x + bw * 0.35:.1f}" y="{H - PADB + 18}" text-anchor="middle">{_e(lab)}</text>')
@@ -177,7 +177,7 @@ p{margin:0 0 14px}
 .fig{margin:22px 0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}.fig svg{width:100%;height:auto;display:block}.fig img{width:100%;height:auto;border-radius:10px;display:block}
 .fig figcaption{font-size:13px;color:var(--muted);margin-top:6px}
 details.data{margin-top:6px;font-size:14px}details.data summary{cursor:pointer;color:var(--acc)}
-.chart .axis{stroke:var(--muted);stroke-width:1}.chart .grid{stroke:var(--line);stroke-width:1}.chart .plot{fill:none;stroke:var(--line)}.chart .bar{fill:var(--bar)}.chart .bar.hl{fill:var(--hl)}
+.chart .axis{stroke:var(--muted);stroke-width:1}.chart .grid{stroke:var(--line);stroke-width:1}.chart .plot{fill:none;stroke:var(--line)}.chart .bar{fill:var(--bar)}.chart .bar.hl{fill:var(--hl)}.chart .bar.partial{fill:var(--card);stroke:var(--bar);stroke-width:2;stroke-dasharray:5 3}
 .chart .ln{stroke:var(--hl);stroke-width:3}.chart .pt{fill:var(--hl);stroke:var(--card);stroke-width:2}.chart .pt.fc{fill:var(--card);stroke:var(--hl);stroke-width:3}.chart .mk{fill:var(--acc)}
 .chart text{fill:var(--fg);font-size:14px}.chart .lab{fill:var(--muted)}.chart .val{font-weight:700}
 .box{border-radius:14px;padding:12px 16px;margin:20px 0}.box.tip{background:var(--tip)}.box.hack{background:var(--hack)}.box p{margin:0 0 6px}.box-h{font-weight:700}.tag{display:inline-block;font-size:12px;border:1px solid currentColor;border-radius:999px;padding:0 8px;margin-right:6px}

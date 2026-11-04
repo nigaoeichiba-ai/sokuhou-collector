@@ -144,6 +144,12 @@ class TestPage(unittest.TestCase):
             hi = pg._nice_hi(v)
             self.assertGreaterEqual(hi, v * 1.05)
 
+    def test_a_partial_period_bar_is_drawn_hollow(self):
+        svg = pg.chart_svg({"type": "bar", "title": "x", "desc": "d", "labels": ["a", "b", "c"], "values": [3, 5, 2], "partial": [2]})
+        self.assertEqual(svg.count('class="bar partial"'), 1)
+        self.assertEqual(svg.count('class="bar"'), 2)
+        self.assertIn("stroke-dasharray", pg.CSS)
+
     def test_charts_have_title_and_description(self):
         self.assertIn('role="img"', self.html)
         self.assertRegex(self.html, r"<desc[^>]*>三つの値の例。</desc>")
