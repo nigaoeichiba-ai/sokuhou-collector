@@ -1,6 +1,8 @@
 """文章工房 (kobo): write public Japanese text that reads naturally, check it, and let a reader of another model family pass it.
 
     python -m sokuhou.kobo plan <brief.json> [--writer opus] [--reader codex]   # 企画: 3案 -> 読者役が指摘して選ぶ -> 直す (窓口が決める)
+    python -m sokuhou.kobo tsukkomi <draft.md> --models haiku,sonnet          # 突っ込み役 only: points and the revised text per model
+    python -m sokuhou.kobo questions <material> [--draft text.md]   # 当事者の疑問出し -> 公的資料の確認(引用を取得して照合) -> 構成案
     python -m sokuhou.kobo tools                                   # the tools (like Catchy's forms)
     python -m sokuhou.kobo article <material> [--writer opus] [--reader codex]
     python -m sokuhou.kobo title|lead|outline|tldr|tips|threads <material> [--writer ...]
@@ -24,6 +26,7 @@ from pathlib import Path
 
 from . import calibrate, checks, doc, engine, material
 from . import plan as planmod
+from . import questions as qmod
 
 TOOL_HELP = {
     "article": "記事一本(タイトル・冒頭2文・3行まとめ・見出しごとの本文・ライフハック・豆知識)",
@@ -76,10 +79,20 @@ def main(argv=None) -> int:
         p.add_argument("--writer", default=None)
         p.add_argument("--reader", default=None)
         p.add_argument("--rewrites", type=int, default=engine.MAX_REWRITES)
+        p.add_argument("--tsukkomi", default="default", help="the 突っ込み役 model (haiku/sonnet/opus/fable/codex), or none")
     p = sub.add_parser("plan")
     p.add_argument("brief")
     p.add_argument("--writer", default="opus")
     p.add_argument("--reader", default=None)
+    p = sub.add_parser("questions")
+    p.add_argument("material")
+    p.add_argument("--draft", default="", help="a written text: ask what is still left after writing")
+    p.add_argument("--ask-model", default="sonnet")
+    p.add_argument("--research-model", default="sonnet")
+    p.add_argument("--structure-model", default="opus")
+    p = sub.add_parser("tsukkomi")
+    p.add_argument("draft")
+    p.add_argument("--models", default="haiku,sonnet")
     p = sub.add_parser("compare")
     p.add_argument("material")
     p.add_argument("--writers", default="haiku,sonnet,opus,fable")
@@ -117,6 +130,41 @@ def main(argv=None) -> int:
         print(f"[plan] {brief.get('id')} writer={r['writer']} reader={r['reader']} plans={len(r['plans'])} choice={r['choice']} passed={r['passed']} rounds={len(r['history'])}")
         print(f"record: {r.get('record', '')}  (plans.md is the page for the desk)")
         return 0 if r["passed"] else 1
+    if a.cmd == "questions":
+        m = _material(a.material)
+        card = engine.load_card(m.get("site", "wadai"))
+        draft = Path(a.draft).read_text(encoding="utf-8") if a.draft else ""
+        res = qmod.run(m, card, draft=draft, ask_model=a.ask_model, research_model=a.research_model, structure_model=a.structure_model)
+        from datetime import datetime
+        out = engine.home() / "questions" / str(m["id"]) / datetime.now().strftime("%Y%m%d-%H%M%S")
+        out.mkdir(parents=True, exist_ok=True)
+        (out / "result.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+        (out / "summary.md").write_text(qmod.summary_md(res), encoding="utf-8")
+        mq = engine.home() / "materials" / f"{m['id']}-q.json"
+        mq.write_text(json.dumps(dict(res["material"], id=f"{m['id']}-q", structure=res["structure"]), ensure_ascii=False, indent=1), encoding="utf-8")
+        r = res["research"]
+        print(f"[questions] {m['id']} questions={len(res['questions']['questions'])} type1={sum(q['answer_type'] == 1 for q in res['questions']['questions'])} "
+              f"checked={len(r['accepted'])} dropped={len(r['dropped'])}")
+        print(f"record: {out} (summary.md)  material with the checked answers: {mq}")
+        return 0
+    if a.cmd == "tsukkomi":
+        src = Path(a.draft).read_text(encoding="utf-8")
+        ms = a.models.split(",")
+        with ThreadPoolExecutor(max_workers=len(ms)) as ex:
+            res = list(ex.map(lambda mo: engine.tsukkomi(src, mo), ms))
+        out = engine.home() / "tsukkomi"
+        out.mkdir(parents=True, exist_ok=True)
+        from collections import Counter
+        for r in res:
+            kinds = Counter(str(x.get("kind", "")) for x in r["points"])
+            print(f"[{r['model']}] points={len(r['points'])} parsed={r['ok']} " + " ".join(f"{k}={v}" for k, v in kinds.most_common()))
+            for x in r["points"]:
+                print(f"   [{x.get('kind', '')}]「{str(x.get('text', ''))[:40]}」 {str(x.get('ask', ''))[:60]} → {str(x.get('fix', ''))[:50]}")
+            stem = f"{Path(a.draft).stem}-{r['model']}"
+            (out / f"{stem}.json").write_text(json.dumps(r, ensure_ascii=False, indent=1), encoding="utf-8")
+            (out / f"{stem}.md").write_text(r["revised"], encoding="utf-8")
+        print(f"saved: {out}")
+        return 0
     if a.cmd == "import-wadai":
         art = json.loads(Path(a.json).read_text(encoding="utf-8"))
         m = material.from_wadai(art, a.weight, Path(a.json).stem)
@@ -182,11 +230,11 @@ def main(argv=None) -> int:
         src = Path(a.inp).read_text(encoding="utf-8")
         m = _material(a.material) if a.material else {"id": Path(a.inp).stem, "site": a.site or "wadai", "weight": "mid", "names": []}
         card = engine.load_card(a.site or m.get("site", "wadai"))
-        r = engine.run("rewrite", m, card, writer=a.writer, reader=a.reader, source=src, rewrites=a.rewrites)
+        r = engine.run("rewrite", m, card, writer=a.writer, reader=a.reader, source=src, rewrites=a.rewrites, tsukkomi_model=a.tsukkomi)
     else:
         m = _material(a.material)
         card = engine.load_card(a.site or m.get("site", "wadai"))
-        r = engine.run(a.cmd, m, card, writer=a.writer, reader=a.reader, rewrites=a.rewrites)
+        r = engine.run(a.cmd, m, card, writer=a.writer, reader=a.reader, rewrites=a.rewrites, tsukkomi_model=a.tsukkomi)
     _print_result(r)
     return 0 if r["passed"] else 1
 

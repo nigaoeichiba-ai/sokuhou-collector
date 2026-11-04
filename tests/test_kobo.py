@@ -70,7 +70,13 @@ class Checks(unittest.TestCase):
         self.assertEqual(codes(GOOD), [])
 
     def test_hedge_formula(self):
-        self.assertIn("K01", codes(GOOD.replace("出しておけば大丈夫です", "出しておくのが一つの手です")))
+        once = GOOD.replace("出しておけば大丈夫です", "出しておくのが一つの手です")
+        self.assertNotIn("K01", codes(once))           # once: a note
+        self.assertIn("K01", codes(once.replace("一度点けてみてください", "一度点けてみるのも手です")))
+
+    def test_summary_then_detail_is_not_a_repeat(self):
+        md = GOOD.replace("ライトをひとつ出して、一度点けてみてください。", "見る点は、両手があくか、電池が合うか、置き場所を家族が知っているかです。ふたつめは、電池が合うか。")
+        self.assertNotIn("K02", codes(md))
 
     def test_same_opening_three_times(self):
         md = GOOD.replace("市は11月4日、夜に停電の点検があると発表しました。点検は2時間です。",
@@ -112,6 +118,11 @@ class Checks(unittest.TestCase):
     def test_table_repeating_a_paragraph(self):
         md = GOOD.replace("## 何を出せばいい?", "| 市は11月4日 | 夜に停電の点検があると発表しました |\n\n## 何を出せばいい?")
         self.assertIn("K02", codes(md))
+
+    def test_situation_from_another_story(self):
+        md = GOOD.replace("> 出したついでにスイッチを入れて、点くか見ておきます。", "> 台風で停電したときのために、点くか見ておきます。")
+        self.assertIn("K12", codes(md))
+        self.assertNotIn("K12", codes(GOOD))      # 停電 is in this material's facts
 
     def test_lead_of_three_sentences(self):
         self.assertIn("K10", codes(GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。電池も見ます。")))
@@ -155,6 +166,9 @@ class FakeModels:
         self.calls.append((model, prompt[:30]))
         if "事実確認係" in prompt:
             return json.dumps({"unsupported": []})
+        if "意地悪で細かい" in prompt:              # the 突っ込み役 passes the text through unchanged (no point)
+            body = prompt.split("----- 原稿 -----\n", 1)[1].rsplit("\n----- ここまで -----", 1)[0]
+            return "===突っ込み===\n" + json.dumps({"points": []}) + "\n===直した全文===\n" + body
         if "ふつうの会社員" in prompt:
             self.reader_marks -= 1
             if self.reader_marks >= 0:
@@ -168,14 +182,14 @@ class Loop(unittest.TestCase):
         runner.set_backend(None)
 
     def test_rewrite_until_the_reader_passes(self):
-        bad = GOOD.replace("出しておけば大丈夫です", "出しておくのが一つの手です")
+        bad = GOOD.replace("出しておけば大丈夫です", "出しておくのが一つの手です").replace("一度点けてみてください", "一度点けてみるのも手です")
         fake = FakeModels([bad, GOOD], reader_marks=1)
         runner.set_backend(fake)
         r = engine.run("article", MAT, CARD, writer="sonnet", record=False)
         self.assertTrue(r["passed"])
         self.assertEqual(r["rewrites"], 1)
         self.assertEqual(r["reader"], "codex")          # the reader is of the other family
-        self.assertEqual(r["output"], GOOD)
+        self.assertEqual(r["output"].strip(), GOOD.strip())
         # the reader never sees the rule findings
         reader_prompts = [p for m, p in fake.calls if m == "codex"]
         self.assertTrue(reader_prompts)
@@ -200,7 +214,7 @@ class Loop(unittest.TestCase):
         r = engine.run("article", MAT, CARD, writer="opus", record=False, rewrites=1)
         self.assertFalse(r["passed"])
         self.assertEqual(r["best_round"], 0)
-        self.assertEqual(r["best"], GOOD)
+        self.assertEqual(r["best"].strip(), GOOD.strip())
 
     def test_mark_allowance(self):
         l2 = [{"level": 2}]
@@ -307,6 +321,63 @@ class Plan(unittest.TestCase):
         self.assertTrue(r["passed"])
         self.assertIn("数える表", r["chosen"])
         self.assertEqual(r["reader"], "codex")
+
+
+class Tsukkomi(unittest.TestCase):
+    def tearDown(self):
+        runner.set_backend(None)
+
+    def test_points_and_the_revised_text_become_the_next_version(self):
+        fixed = GOOD.replace("## 点検は、いつ?", "## 停電の点検は、いつ?")
+        answer = "===突っ込み===\n" + json.dumps({"points": [{"text": "点検は、いつ?", "kind": "見出し", "ask": "何の点検?", "fix": "停電の点検は、いつ?"}]}) + "\n===直した全文===\n" + fixed
+        runner.set_backend(lambda model, prompt, system=None: answer)
+        t = engine.tsukkomi(GOOD, "haiku")
+        self.assertTrue(t["ok"])
+        self.assertEqual(len(t["points"]), 1)
+        self.assertEqual(t["revised"].strip(), fixed.strip())
+
+    def test_an_unreadable_answer_keeps_the_text(self):
+        runner.set_backend(lambda model, prompt, system=None: "形の違う答え")
+        t = engine.tsukkomi(GOOD, "haiku")
+        self.assertFalse(t["ok"])
+        self.assertEqual(t["revised"], GOOD)
+
+
+class Questions(unittest.TestCase):
+    PAGE = "<html><body><p>消費者ホットラインは、身近な消費生活センターや消費生活相談窓口をご案内します。</p></body></html>"
+
+    def tearDown(self):
+        runner.set_backend(None)
+
+    def test_quote_check(self):
+        from sokuhou.kobo import questions as Q
+        fetch = lambda url: self.PAGE
+        self.assertTrue(Q.quote_found("https://www.caa.go.jp/x", "身近な消費生活センターや消費生活相談窓口をご案内します", fetch)[0])
+        self.assertFalse(Q.quote_found("https://www.caa.go.jp/x", "消費者庁が直接相談に乗ります。電話は無料です", fetch)[0])      # not on the page
+        self.assertFalse(Q.quote_found("https://example.com/x", "身近な消費生活センターや消費生活相談窓口をご案内します", fetch)[0])  # not a public page
+
+    def test_ask_research_and_material(self):
+        from sokuhou.kobo import questions as Q
+
+        def fake(model, prompt, system=None):
+            if "演じます" in prompt:
+                return json.dumps({"personas": [{"who": "迷っている人", "questions": [
+                    {"q": "188に電話するとどこにつながる?", "action": "電話する", "answer_type": 1, "place": "質問と答え", "search": "消費者庁"},
+                    {"q": "私の地域の相談先は?", "action": "調べる", "answer_type": 3, "place": "別ページ"}]}]})
+            return json.dumps({"answers": [
+                {"q": "188に電話するとどこにつながる?", "found": True, "answer": "188は、身近な消費生活センターや相談窓口を案内する。",
+                 "url": "https://www.caa.go.jp/x", "quote": "身近な消費生活センターや消費生活相談窓口をご案内します"},
+                {"q": "作り話", "found": True, "answer": "x", "url": "https://www.caa.go.jp/x", "quote": "このページにない文をそれらしく書いたもの"}]})
+        runner.set_backend(fake)
+        q = Q.ask(MAT)
+        self.assertEqual([x["answer_type"] for x in q["questions"]], [1, 3])
+        r = Q.research(q["questions"], fetch=lambda url: self.PAGE)
+        self.assertEqual(len(r["accepted"]), 1)
+        self.assertEqual(r["dropped"][0]["check"], "the quote is not in the page")
+        m2 = Q.add_to_material(MAT, r["accepted"])
+        self.assertEqual(m2["facts"][-1]["status"], "primary")
+        self.assertIn("quote checked", m2["facts"][-1]["note"])
+        self.assertNotIn("caa.go.jp", material.for_prompt(m2))          # the record stays private
 
 
 class Calibration(unittest.TestCase):
