@@ -389,6 +389,7 @@ def fix_endings(tool: str, text: str, fs: list, m: dict, card: dict, writer: str
     """Monotony (the same ending / opening / phrase three times or more) is fixed by the writer in one more call that replaces only
     the named sentences (the desk, 2026-11-04). Returns (text, findings, number of sentences replaced)."""
     mono = [f for f in fs if (f.code == "K01" and f.block) or f.code[0] == "S" or f.code == "K14"]
+    mono = sorted(mono, key=lambda f: f.code == "S13")[:12]        # the named sentences only: at most 12, the many 「数える」 last
     if tool not in ("article", "note") or not mono:
         return text, fs, 0
     notes = "\n".join(f"- {f.msg}(該当: {f.detail})" if f.detail else f"- {f.msg}" for f in mono)

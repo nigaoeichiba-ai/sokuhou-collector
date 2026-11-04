@@ -7,7 +7,7 @@ S04 forcing: てみてください / しなさい / べき / しないと, and �
 S05 a title/heading that ends on an abstract verb alone (数えてみよう …) or uses 〜てみよう/みましょう
 S06 a heading ending on a verb with no object (を)   S07 a heading ending on 「へ」   S08 a list of nouns standing as a sentence
 S09 「数」「目安」「量」 with nothing before it saying what     S10 a range that does not match the count (0〜7 / 8 types)
-S11 a table/checklist intro with 「〜の行」 or a bare 「見てください」   S12 「家族の人」「人数の行」(unclear)
+S11 a table/checklist intro with 「〜の行」 or a bare 「見てください」   S12 「家族の人」「人数の行」(unclear)   S13 数える/確かめる without 「を」   S14 stops on a particle
 Not yet by rule (needs parsing): subject-predicate agreement ('携帯トイレは…備える'), dropped subject/object inside a long sentence.
 """
 from __future__ import annotations
@@ -18,7 +18,7 @@ from . import doc as D
 
 LABELS = {"S01": "「並べる」の言い方", "S02": "「置く」(商品・案内)", "S03": "「扱う」の言い方", "S04": "強い言い方・「ください」の多さ",
           "S05": "題・見出しの抽象的な動詞", "S06": "動詞止めの見出しに目的語がない", "S07": "「へ」止めの見出し", "S08": "名詞の列挙が文になっていない",
-          "S09": "何の数・目安・量か分からない", "S10": "数の範囲と種類数が合わない", "S11": "表の案内文(「〜の行」・命令形)", "S12": "「家族の人」「人数の行」"}
+          "S09": "何の数・目安・量か分からない", "S10": "数の範囲と種類数が合わない", "S11": "表の案内文(「〜の行」・命令形)", "S12": "「家族の人」「人数の行」", "S13": "「数える」に「何を」がない", "S14": "助詞で終わる文・見出し"}
 
 ABSTRACT_HEAD = re.compile(r"(?:数え|確かめ|確認し|調べ|見直し|考え|見)(?:て(?:み)?)?(?:よう|ましょう)|数えて|確かめて|てみよう|てみましょう|てみる[!?！？]?$")
 PARA_MAX_ASK = 3        # ください per page (safety/procedure advice may keep it, but no more than this)
@@ -70,8 +70,15 @@ def check(doc: dict) -> list[dict]:
             add("S09", "「数」「目安」「量」が、何の数かを言っていません。対象を入れてください。", s)
         if re.search(r"の行", s) and re.search(r"見て|探して|確かめて", s):
             add("S11", "「〜の行」は何の人数・何の行か分かりにくく、「見てください」は何が分かるかを言っていません。「自分の家の人数の行を見ると、〜が分かります」の形に。", s)
-        if re.search(r"家族の人(?!数)|人数の行", s):
+        if re.search(r"家族の人(?!数)|(?<!家の)(?<!自分の家の)人数の行", s):
             add("S12", "「家族の人」「人数の行」は不自然・不明です。「家族がいる人」「家の人数の行」などにしてください。", s)
+
+    # S13 数える/確かめる without an object in the same sentence; S14 a sentence or heading that stops on a particle
+    for s in sents + [h for _, h in heads if h]:
+        if re.search(r"数え(?:る|て|ます|られます|ておきます|ておく)", s) and not re.search(r"を[^。、]{0,40}数え", s) and not re.search(r"(?:数|量|回数|在庫)が", s):
+            add("S13", "「数える」に、何を、がありません。「〜を数える」の形にしてください(題・見出しの「数える」だけは、S05)。", s)
+        if re.search(r"[でにをはがもとのへ][。!！]?$", s.strip()) and not re.search(r"(?:ので|ため|とも|のに)[。]?$", s.strip()):
+            add("S14", "文や見出しが助詞で終わっていて、述語がありません。", s)
 
     ask = sum(len(re.findall(r"ください", s)) for s in sents)
     if ask > PARA_MAX_ASK:
