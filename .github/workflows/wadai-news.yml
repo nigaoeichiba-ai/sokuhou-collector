@@ -35,8 +35,6 @@ jobs:
           python -m sokuhou.wadainews collect --private "$PRIV" --day "$DAY"
           python -m sokuhou.wadainews report --private "$PRIV" --day "$DAY"
           python -m sokuhou.wadainews bundle --private "$PRIV" --day "$DAY" || echo "bundle: failed (see above)"
-      - name: Stage timings
+      - name: Stage timings (stage, seconds only)
         if: always()
-        run: |
-          f="$RUNNER_TEMP/wadai-private/news/timing.jsonl"
-          if [ -f "$f" ]; then cat "$f"; else echo "no timing file"; fi
+        run: python -m sokuhou.wadainews timing --private "$RUNNER_TEMP/wadai-private" || echo "no timing"
