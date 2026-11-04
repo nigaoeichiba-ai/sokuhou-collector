@@ -78,7 +78,7 @@ if __name__ == "__main__":
 class DeAndOku(unittest.TestCase):
     def test_deru_and_oku_words(self):
         hit = ["回数が出たら、次へ進みます。", "表で出した回数に届くものを選びます。", "買い足す数を出す", "手の届く場所に置きます。", "手元に置いて読みます。"]
-        ok = ["ライトを出して、一度点けます。", "外に出る前に確認します。", "熱が出たら休みます。", "水道水の汲み置きは3日ほどです。", "古い電池の買い置きを確かめます。", "置き場所を決めます。", "位置を確かめます。"]
+        ok = ["ライトを出して、一度点けます。", "外に出る前に確認します。", "熱が出たら休みます。", "水道水の汲み置きは3日ほどです。", "古い電池の買い置きを数えます。", "置き場所を決めます。", "位置を測ります。"]
         for t in hit:
             self.assertTrue(lexicon.scan([t]), t)
         for t in ok:
@@ -254,3 +254,11 @@ class TimeClash(unittest.TestCase):
         self.assertFalse(self._s85("今は、来週の予定を確かめます。"))
         self.assertFalse(self._s85("次の買い物では、足りないものを1つだけ、かごに入れましょう。"))
         self.assertFalse(self._s85("今日は、次のページで量を確かめます。"))
+
+
+class NineMoreWords(unittest.TestCase):
+    def test_nine_owner_words(self):
+        for t in ["回数を考えます。", "まず、そこを確かめます。", "ライトを選びます。", "ここを見ます。", "備蓄を増やせます。", "買い物の中身を入れます。", "窓口で聞けます。", "気持ちを伝えます。", "ここに書き込みます。"]:
+            self.assertTrue([h for h in lexicon.scan([t]) if h.get("code") in {f"S{n}" for n in range(86, 95)}], t)
+        for t in ["持ち帰って考えます。", "充電が残っているか確かめます。", "ベランダの物を家の中に入れます。", "表に書き込みます。"]:
+            self.assertFalse([h for h in lexicon.scan([t]) if h.get("code") in {f"S{n}" for n in range(86, 95)}], t)
