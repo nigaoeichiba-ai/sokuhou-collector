@@ -350,7 +350,7 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
 
     def text_of(s):
         # paragraphs and bullets, plus (reading edition) the boxes, the one-line summary and the figure captions: every public sentence is checked
-        return (list(s.get("paras", [])) + list(s.get("bullets", [])) + [b.get("title", "") + " " + b.get("text", "") for b in s.get("boxes", [])]
+        return (list(s.get("paras", [])) + list(s.get("paras_after", [])) + list(s.get("bullets", [])) + [b.get("title", "") + " " + b.get("text", "") for b in s.get("boxes", [])]
                 + ([s["summary"]] if s.get("summary") else []) + [f["caption"] for f in s.get("figures", []) if f.get("caption")])
 
     def add(code, msg, detail=""):
@@ -534,6 +534,11 @@ LUMP_CHARS = 130            # one paragraph longer than this is a lump of text
 LUMP_RUN = 4                # this many plain paragraphs in a row, with no figure or box between them, is a wall of text
 
 
+def _grams3(s: str) -> set:
+    s = re.sub(r"[\s、。・「」()（）:：]", "", s)
+    return {s[i:i + 3] for i in range(max(0, len(s) - 2))}
+
+
 FORMULAS = ["一つの手", "のも手です", "も手です", "選択肢です", "選択肢もあります"]
 NUMUNIT_RE = re.compile(r"\d[\d,.]*(?:キロ|メートル|ヘクトパスカル|リットル|件|日分|日間|年度|時間|万件)")
 # (pattern, limit, label): constructions that make a text read like a document; each is fine once or twice
@@ -572,7 +577,7 @@ def _repeated_phrases(texts, ledger) -> dict:
 def reading_texts(a: dict) -> dict:
     """The public texts of a reading article by role."""
     secs = [s for s in a.get("sections", []) if s.get("layer") != "history"]
-    paras = [t for s in secs for t in s.get("paras", [])]
+    paras = [t for s in secs for t in s.get("paras", []) + s.get("paras_after", [])]
     return {"lead": [a.get("lead", "")], "tldr": list(a.get("tldr", [])), "paras": paras, "bullets": [t for s in secs for t in s.get("bullets", [])],
             "summaries": [s.get("summary", "") for s in secs], "boxes": [b.get("text", "") for s in secs for b in s.get("boxes", [])],
             "captions": [f.get("caption", "") for s in secs for f in s.get("figures", [])]}
@@ -620,6 +625,40 @@ def check_reading(a: dict) -> list[Finding]:
         n = len(re.findall(pat, blob))
         if n > limit:
             add("A25", f"{label} used {n} times (more than {limit})", label)
+    # A25 (continued) the same ending or turn of phrase three times or more in one article
+    ends: dict = {}
+    for sent in [x for t in T["lead"] + T["paras"] + T["boxes"] for x in _sentences(t)]:
+        core = _strip_tail(sent)
+        k = core[-6:]
+        if len(core) >= 8 and not re.search(r"[0-9]", k):
+            ends[k] = ends.get(k, 0) + 1
+    for k, n in ends.items():
+        if n >= 3:
+            add("A25", f"{n} sentences end the same way ('…{k}'); vary the ending or merge the sentences", k)
+    # A26 (continued) a table that says what the paragraph above or below already says
+    for s in a.get("sections", []):
+        if s.get("layer") == "history":
+            continue
+        para_text = "".join(s.get("paras", []))
+        for f in s.get("figures", []):
+            if f.get("kind") == "table" and para_text:
+                cells = "".join(c for r in f["rows"] for c in r)
+                ga, gb = _grams3(cells), _grams3(para_text)
+                if ga and len(ga & gb) / len(ga) > 0.4:
+                    add("A26", "a table repeats what the paragraphs of the same section say (keep a table for many numbers only)", f.get("title", "")[:12])
+    # A29 an advertising note with no product card on the page
+    has_cards = any(s.get("cards") for s in a.get("sections", []))
+    if a.get("ads") and not has_cards:
+        add("A29", "the page says it carries advertising but there is no product card (show the note only next to cards)")
+    # A30 a 豆知識 box that is the news itself (its words are already in the fact paragraphs): a tip is a light 'oh, I see' story, not the news
+    facts_text = "".join(t for s in a.get("sections", []) if s.get("layer") == "fact" for t in s.get("paras", []) + s.get("bullets", []))
+    for s in a.get("sections", []):
+        for b in s.get("boxes", []):
+            if b.get("kind") != "tip":
+                continue
+            gb = _grams3(b.get("title", "") + b.get("text", ""))
+            if gb and facts_text and len(gb & _grams3(facts_text)) / len(gb) > 0.35:
+                add("A30", "the 豆知識 box repeats the news facts of the page; use a light story that is not the news", b.get("title", "")[:12])
     # A26 the same fact said again: one number with its unit in more than two blocks (lead, summary line, a section, a box)
     blocks = [T["lead"][0]] + T["tldr"] + [x for x in T["summaries"] if x] + T["paras"] + T["bullets"] + T["boxes"]
     seen: dict = {}

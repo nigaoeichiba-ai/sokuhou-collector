@@ -52,8 +52,47 @@ def _axes(lo, hi, unit) -> str:
     return "".join(o)
 
 
+def _map_svg(fig: dict) -> str:
+    """A map of the north-west Pacific with real coastlines (Natural Earth, public domain; sokuhou/wadaimap.py) and a track drawn on it.
+    fig: points[{x: east longitude, y: north latitude, label, name, obs, dx, dy}], marks[{x, y, label, dx, dy}], extent (optional)."""
+    import math
+    from sokuhou import wadaimap
+    x0, x1, y0, y1 = fig.get("extent", wadaimap.EXTENT)
+    k = math.cos(math.radians((y0 + y1) / 2))
+    MW = 520
+    MH = round(MW * (y1 - y0) / ((x1 - x0) * k))
+
+    def px(lon, lat):
+        return (lon - x0) / (x1 - x0) * MW, (y1 - lat) / (y1 - y0) * MH
+    sid = id(fig)
+    o = [f'<svg viewBox="0 0 {MW} {MH}" role="img" aria-labelledby="t{sid} d{sid}" class="chart map"><title id="t{sid}">{_e(fig["title"])}</title><desc id="d{sid}">{_e(fig.get("desc", fig["title"]))}</desc>',
+         f'<defs><clipPath id="c{sid}"><rect width="{MW}" height="{MH}"/></clipPath></defs><rect class="sea" width="{MW}" height="{MH}"/><g clip-path="url(#c{sid})">']
+    for gx in range(int(x0 // 10 * 10 + 10), int(x1) + 1, 10):
+        a, _ = px(gx, y0)
+        o.append(f'<line class="grid" x1="{a:.1f}" y1="0" x2="{a:.1f}" y2="{MH}"/><text class="lab" x="{a + 3:.1f}" y="{MH - 5}">東経{gx}度</text>')
+    for gy in range(int(y0 // 10 * 10 + 10), int(y1), 10):
+        _, b = px(x0, gy)
+        o.append(f'<line class="grid" x1="0" y1="{b:.1f}" x2="{MW}" y2="{b:.1f}"/><text class="lab" x="4" y="{b - 4:.1f}">北緯{gy}度</text>')
+    for ring in wadaimap.rings():
+        o.append('<path class="land" d="M' + " L".join(f"{px(lo, la)[0]:.1f},{px(lo, la)[1]:.1f}" for lo, la in ring) + ' Z"/>')
+    pts = fig["points"]
+    P = [px(p["x"], p["y"]) for p in pts]
+    o.append('<polyline class="ln" fill="none" stroke-dasharray="7 5" points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in P) + '"/>')
+    for m in fig.get("marks", []):
+        x, y = px(m["x"], m["y"])
+        o.append(f'<rect class="mk" x="{x - 4:.1f}" y="{y - 4:.1f}" width="8" height="8"/><text class="lab mkl" x="{x + m.get("dx", 8):.1f}" y="{y + m.get("dy", 4):.1f}">{_e(m["label"])}</text>')
+    for (x, y), p in zip(P, pts):
+        o.append(f'<circle class="{"pt" if p.get("obs") else "pt fc"}" cx="{x:.1f}" cy="{y:.1f}" r="5.5"/>')
+        if p.get("label"):
+            o.append(f'<text class="val" x="{x + p.get("dx", 9):.1f}" y="{y + p.get("dy", -8):.1f}">{_e(p["label"])}</text>')
+    o.append("</g></svg>")
+    return "".join(o)
+
+
 def chart_svg(fig: dict) -> str:
     kind = fig["type"]
+    if kind == "map":
+        return _map_svg(fig)
     title, desc = fig["title"], fig.get("desc", fig["title"])
     out = [f'<svg viewBox="0 0 {W} {H}" role="img" aria-labelledby="t{id(fig)} d{id(fig)}" class="chart"><title id="t{id(fig)}">{_e(title)}</title><desc id="d{id(fig)}">{_e(desc)}</desc>']
     if kind == "bar":
@@ -163,9 +202,9 @@ def check_list_html(items) -> str:
 
 # ---- page --------------------------------------------------------------------------------------------------------------------------------------
 CSS = """
-:root{--bg:#fbfaf7;--fg:#222;--muted:#666;--card:#fff;--line:#e4e0d8;--acc:#2f6f8f;--accbg:#e8f2f7;--tip:#fff6dc;--hack:#e9f6ec;--bar:#7aa7bf;--hl:#d9822b;--warn:#8a5a00}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181b;--fg:#e9e7e2;--muted:#a8a69f;--card:#1d2226;--line:#2d343a;--acc:#7fc0e0;--accbg:#1c2d37;--tip:#3a331c;--hack:#1c3324;--bar:#4d7a92;--hl:#e8a050;--warn:#e8c070}}
-:root[data-theme="dark"]{--bg:#15181b;--fg:#e9e7e2;--muted:#a8a69f;--card:#1d2226;--line:#2d343a;--acc:#7fc0e0;--accbg:#1c2d37;--tip:#3a331c;--hack:#1c3324;--bar:#4d7a92;--hl:#e8a050;--warn:#e8c070}
+:root{--bg:#fbfaf7;--fg:#222;--muted:#666;--card:#fff;--line:#e4e0d8;--acc:#2f6f8f;--accbg:#e8f2f7;--tip:#fff6dc;--hack:#e9f6ec;--bar:#7aa7bf;--hl:#d9822b;--warn:#8a5a00;--sea:#e3eef5;--land:#efe9da;--coast:#a99f86;--mapgrid:#b9cad6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181b;--fg:#e9e7e2;--muted:#a8a69f;--card:#1d2226;--line:#2d343a;--acc:#7fc0e0;--accbg:#1c2d37;--tip:#3a331c;--hack:#1c3324;--bar:#4d7a92;--hl:#e8a050;--warn:#e8c070;--sea:#16262f;--land:#2b2f26;--coast:#6f6a58;--mapgrid:#2f4553}}
+:root[data-theme="dark"]{--bg:#15181b;--fg:#e9e7e2;--muted:#a8a69f;--card:#1d2226;--line:#2d343a;--acc:#7fc0e0;--accbg:#1c2d37;--tip:#3a331c;--hack:#1c3324;--bar:#4d7a92;--hl:#e8a050;--warn:#e8c070;--sea:#16262f;--land:#2b2f26;--coast:#6f6a58;--mapgrid:#2f4553}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.85 "Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif}
 .wrap{max-width:720px;margin:0 auto;padding:16px 16px 72px}
 .series{font-size:14px;color:var(--muted);margin:8px 0 0}.series a{color:var(--acc)}
@@ -178,7 +217,7 @@ p{margin:0 0 14px}
 .fig figcaption{font-size:13px;color:var(--muted);margin-top:6px}
 details.data{margin-top:6px;font-size:14px}details.data summary{cursor:pointer;color:var(--acc)}
 .chart .axis{stroke:var(--muted);stroke-width:1}.chart .grid{stroke:var(--line);stroke-width:1}.chart .plot{fill:none;stroke:var(--line)}.chart .bar{fill:var(--bar)}.chart .bar.hl{fill:var(--hl)}.chart .bar.partial{fill:var(--card);stroke:var(--bar);stroke-width:2;stroke-dasharray:5 3}
-.chart .ln{stroke:var(--hl);stroke-width:3}.chart .pt{fill:var(--hl);stroke:var(--card);stroke-width:2}.chart .pt.fc{fill:var(--card);stroke:var(--hl);stroke-width:3}.chart .mk{fill:var(--acc)}
+.chart .ln{stroke:var(--hl);stroke-width:3}.chart .pt{fill:var(--hl);stroke:var(--card);stroke-width:2}.chart .pt.fc{fill:var(--card);stroke:var(--hl);stroke-width:3}.chart .mk{fill:var(--acc)}.chart .sea{fill:var(--sea)}.chart .land{fill:var(--land);stroke:var(--coast);stroke-width:.8}.chart.map .grid{stroke:var(--mapgrid);stroke-dasharray:2 4}.chart .mkl{font-size:13px}
 .chart text{fill:var(--fg);font-size:14px}.chart .lab{fill:var(--muted)}.chart .val{font-weight:700}
 .box{border-radius:14px;padding:12px 16px;margin:20px 0}.box.tip{background:var(--tip)}.box.hack{background:var(--hack)}.box p{margin:0 0 6px}.box-h{font-weight:700}.tag{display:inline-block;font-size:12px;border:1px solid currentColor;border-radius:999px;padding:0 8px;margin-right:6px}
 .tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:15px}caption{text-align:left;font-weight:700;padding-bottom:6px}th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}th{background:var(--accbg)}
@@ -245,16 +284,22 @@ def render_article(a: dict, *, path: str = "/", base: str = "https://example.inv
         for p in sec.get("paras", []):
             parts.append(f"<p>{_e(p)}</p>")
         if sec.get("bullets"):
-            if sec["layer"] == "prep":
+            if sec.get("ordered"):
+                parts.append("<ol>" + "".join(f"<li>{_e(b)}</li>" for b in sec["bullets"]) + "</ol>")
+            elif sec["layer"] == "prep":
                 parts.append(check_list_html(sec["bullets"]))
             else:
                 parts.append("<ul>" + "".join(f"<li>{_e(b)}</li>" for b in sec["bullets"]) + "</ul>")
+        for p in sec.get("paras_after", []):          # paragraphs that come after the list
+            parts.append(f"<p>{_e(p)}</p>")
         for fig in [f for f in sec.get("figures", []) if f.get("pos") == "after"]:
             parts.append(figure_html(fig))
         for b in sec.get("boxes", []):
             parts.append(box_html(b))
         if sec.get("slot"):
             parts.append('<div class="slot" aria-label="商品カードの位置">' + _e(sec["slot"]) + "</div>")
+        if sec.get("cards"):      # product cards (filled at run time): the note goes with them
+            parts.append('<p class="adnote">下の案内には広告が含まれます。</p>')
         parts.append("</section>")
         secs.append("".join(parts))
     hist = next((x for x in a["sections"] if x["layer"] == "history"), None)
@@ -276,7 +321,7 @@ def render_article(a: dict, *, path: str = "/", base: str = "https://example.inv
     kids = "".join(f'<li><a href="{_e(c["path"])}">{_e(c["title"])}</a>({_e(c["kind"])})</li>' for c in s.get("children", []))
     nxt = "".join(f'<li><a href="{_e(n["path"])}">{_e(n["title"])}</a></li>' for n in a.get("next", []))
     tl = "".join(f"<li>{_e(x)}</li>" for x in a["tldr"])
-    ad_top = '<p class="adnote">このページの案内には広告が含まれます。</p>' if a.get("ads") else ""
+    ad_top = ""      # the advertising note sits next to the product cards only (see the slot); never on a page without cards
     hist_html = ""
     if hist:
         hist_html = "<footer><p><b>更新履歴</b></p><ul>" + "".join(f"<li>{_e(b)}</li>" for b in hist.get("bullets", [])) + f"</ul><p>最終更新 {_e(a['updated'])} ／ 編集部</p></footer>"
@@ -286,7 +331,7 @@ def render_article(a: dict, *, path: str = "/", base: str = "https://example.inv
             f"<style>{CSS}</style>{_jsonld(a)}</head><body><div class=\"wrap\">"
             f"<p class=\"series\">シリーズ「<a href=\"{_e(s['parent'])}\">{_e(s['name'])}</a>」</p><h1>{_e(a['title'])}</h1><p class=\"lead\">{_e(a['lead'])}</p>{ad_top}"
             f"<div class=\"tldr\"><h2>3行でまとめ</h2><ol>{tl}</ol></div>{hero}{''.join(secs)}{poll_html}{share}"
-            f"<div class=\"series-nav\"><h2 class=\"h-sm\">このシリーズの続き</h2><ul>{kids}</ul></div>"
+            f"{'<div class=\"series-nav\"><h2 class=\"h-sm\">このシリーズの続き</h2><ul>' + kids + '</ul></div>' if kids else ''}"
             f"<div class=\"next\"><h2 class=\"h-sm\">次に読む</h2><ul>{nxt}</ul></div>{hist_html}</div><script>{JS}</script></body></html>")
 
 

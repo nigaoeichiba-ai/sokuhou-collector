@@ -23,7 +23,7 @@ def fixture():
              "figures": [{"kind": "chart", "type": "bar", "title": "例の棒グラフ", "desc": "三つの値の例。", "labels": ["a", "b", "c"], "values": [3, 5, 4], "caption": "気象庁(2026年)"}],
              "boxes": [{"kind": "tip", "title": "豆知識", "text": "灯りは、頭に付けると両手が空きます。"}]},
             {"layer": "opinion", "heading": "あなたの場合は?", "summary": "場面で選びます。", "paras": ["家で過ごすなら、手の届く所に置くのがよさそうです。"], "boxes": []},
-            {"layer": "prep", "heading": "ライトの選び方", "summary": "四つだけ見ます。", "paras": ["電池が合うかを見ましょう。"], "bullets": ["置き場所を決める"],
+            {"layer": "prep", "heading": "ライトの選び方", "summary": "四つだけ見ます。", "paras": ["電池が合うかを見ましょう。"], "bullets": ["置き場所を決める"], "cards": [{"kind": "light"}],
              "boxes": [{"kind": "hack", "title": "予備の電池", "text": "予備は、灯りと同じ袋に入れましょう。"}]},
             {"layer": "history", "heading": "更新履歴", "bullets": ["11月4日 追記: 作りました。"]}],
     }
@@ -153,6 +153,34 @@ class TestReadingChecks(unittest.TestCase):
         a["sections"][0]["paras"][0] = "台風は南の海上にいます。"
         self.assertIn("A03", codes(w.check_article(a)))                  # the first paragraph names no issuer
 
+    def test_a25_same_ending_three_times(self):
+        a = fixture()
+        a["sections"][1]["paras"] = ["通勤の日は、雨具と靴を先に出しておくのがよい準備です。", "家で過ごす夜は、ライトを手元に置いておくのがよい準備です。", "出かける前は、電池を確かめておくのがよい準備です。"]
+        self.assertIn("A25", codes(w.check_reading(a)))
+
+    def test_a26_a_table_that_repeats_the_paragraphs(self):
+        a = fixture()
+        a["sections"][1]["paras"] = ["家で過ごす夜は手の届く所にライトを置きます。通勤の日は雨具と靴を先に出します。"]
+        a["sections"][1]["figures"] = [{"kind": "table", "title": "場面別", "headers": ["場面", "先に"], "rows": [["家で過ごす夜", "手の届く所にライトを置きます"], ["通勤の日", "雨具と靴を先に出します"]]}]
+        self.assertIn("A26", codes(w.check_reading(a)))
+        a["sections"][1]["figures"][0]["rows"] = [["a", "1"], ["b", "2"]]
+        self.assertNotIn("A26", codes(w.check_reading(a)))
+
+    def test_a29_an_advertising_note_without_a_product_card(self):
+        a = fixture()
+        a["sections"][2]["cards"] = []
+        self.assertIn("A29", codes(w.check_reading(a)))
+        a["ads"] = False
+        self.assertNotIn("A29", codes(w.check_reading(a)))
+
+    def test_a30_a_tip_that_is_the_news(self):
+        a = fixture()
+        a["sections"][0]["paras"] = ["台風は11月5日9時に父島の西北西およそ280キロの海上を北北東へ進みます。"]
+        a["sections"][0]["boxes"] = [{"kind": "tip", "title": "台風は北北東へ進む", "text": "台風は11月5日9時に父島の西北西およそ280キロの海上を北北東へ進みます。"}]
+        self.assertIn("A30", codes(w.check_reading(a)))
+        a["sections"][0]["boxes"] = [{"kind": "tip", "title": "台風の名前", "text": "名前は、アジアの国々が出した中から順番に使われます。"}]
+        self.assertNotIn("A30", codes(w.check_reading(a)))
+
     def test_a24_parts(self):
         for mutate, why in ((lambda a: a["sections"][0].__setitem__("boxes", []), "no tip"), (lambda a: a["sections"][2].__setitem__("boxes", []), "no hack"),
                             (lambda a: a["series"].__setitem__("children", []), "no children"), (lambda a: a.__setitem__("next", []), "no next"),
@@ -175,7 +203,7 @@ class TestPage(unittest.TestCase):
         self.html = pg.render_article(fixture(), path="/a/", base="https://example.invalid")
 
     def test_parts_are_on_the_page(self):
-        for needle in ("3行でまとめ", "ひとことで", "豆知識", "ライフハック", 'id="poll"', 'id="copy"', 'id="fav"', "このシリーズの続き", "次に読む", "<svg", "このページの案内には広告が含まれます", "最終更新"):
+        for needle in ("3行でまとめ", "ひとことで", "豆知識", "ライフハック", 'id="poll"', 'id="copy"', 'id="fav"', "このシリーズの続き", "次に読む", "<svg", "下の案内には広告が含まれます", "最終更新"):
             self.assertIn(needle, self.html, needle)
         self.assertIn('alt="雨の夜の部屋の絵"', self.html)
         self.assertRegex(self.html, r"<title[^>]*>例の棒グラフ</title>")
@@ -197,10 +225,12 @@ class TestPage(unittest.TestCase):
         self.assertIn("&lt;script&gt;alert(1)&lt;/script&gt;", html)
         self.assertIn("a &lt; b &amp; c &gt; d", html)
 
-    def test_ad_note_is_on_the_first_screen_and_only_when_there_are_ads(self):
-        self.assertLess(self.html.index("広告が含まれます"), self.html.index("3行でまとめ"))
+    def test_ad_note_sits_next_to_the_product_cards_and_nowhere_else(self):
+        self.assertIn("広告が含まれます", self.html)
+        self.assertGreater(self.html.index("広告が含まれます"), self.html.index("ライトの選び方"))       # inside the section that holds the cards, not at the top
         a = fixture()
         a["ads"] = False
+        a["sections"][2]["cards"] = []
         self.assertNotIn("広告が含まれます", pg.render_article(a, path="/a/"))
 
     def test_dark_mode_and_mobile_basics(self):
