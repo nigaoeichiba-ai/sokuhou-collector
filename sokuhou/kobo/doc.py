@@ -113,7 +113,15 @@ def body_text(doc: dict) -> str:
     return "\n".join(t for _, t in all_texts(doc))
 
 
-def plain(doc: dict, parts: list | None = None) -> str:
+def _empty_part(mark: str, what: str) -> list[str]:
+    """A part the page builder fills in, as the reader will meet it: a list of pages as a box of links, anything else as its caption."""
+    name = mark.strip("[]")
+    if " / " in what:
+        return [f"【{name}】"] + [f"・{w.strip()}" for w in what.split(" / ") if w.strip()]
+    return [f"【{name}】{what}"]
+
+
+def plain(doc: dict, parts: list | None = None, describe_empty: bool = True) -> str:
     """The text as a reader sees it (for the reader gate): no slot marker, boxes with their names, fixed parts shown with their content."""
     pc = {p["mark"]: p.get("content", "") for p in (parts or [])}
     pw = {p["mark"]: p.get("what", "") for p in (parts or [])}
@@ -136,10 +144,11 @@ def plain(doc: dict, parts: list | None = None) -> str:
                 lines.append(f"・{t}")
             elif t == SLOT:
                 lines.append("(ここに商品の一覧が入ります)")
-            elif not pc.get(t) and pw.get(t):
-                # a part the page builder fills in (a map, the links to the child pages): the reader sees what will stand there,
-                # not a bare work mark (2026-11-04: '[子ページの案内]' alone was rightly stopped as an unreadable placeholder)
-                lines.append(f"(ここに入るもの: {pw[t]})")
+            elif not pc.get(t) and pw.get(t) and describe_empty:
+                # a part the page builder fills in (a map, the links to the child pages): the reader sees it as it will stand there,
+                # not a bare work mark (2026-11-04: '[子ページの案内]' alone was rightly stopped as an unreadable placeholder, and
+                # '(ここに入るもの: …)' as an editor's note). The fact judge gets the bare mark (describe_empty=False).
+                lines += _empty_part(t, pw[t])
             else:
                 lines.append(t)
                 if pc.get(t):

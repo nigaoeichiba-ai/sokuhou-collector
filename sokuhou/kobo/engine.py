@@ -120,7 +120,7 @@ def kind_of(tool: str) -> str:
     return "article" if tool in ("article", "note") else tool
 
 
-def plain_of(tool: str, us: list[dict], m: dict | None = None) -> str:
+def plain_of(tool: str, us: list[dict], m: dict | None = None, describe_empty: bool = True) -> str:
     if tool in MULTI:
         return "\n".join(f"案{i + 1}: {u['raw']}" for i, u in enumerate(us))
     if tool == "threads":
@@ -130,7 +130,7 @@ def plain_of(tool: str, us: list[dict], m: dict | None = None) -> str:
         return us[0]["raw"]
     if tool == "rewrite":
         return us[0]["raw"]
-    return D.plain(us[0]["doc"], (m or {}).get("parts"))
+    return D.plain(us[0]["doc"], (m or {}).get("parts"), describe_empty)
 
 
 # ---- judges ------------------------------------------------------------------------------------------------------------------------------
@@ -325,7 +325,7 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
                 u["_m"] = m
         fs_all = [tool_findings(tool, u, m, card) for u in us]
         plain = plain_of(tool, us, m)
-        sup = support_check(m, plain, judge, tool, source)
+        sup = support_check(m, plain_of(tool, us, m, describe_empty=False), judge, tool, source)
         g = read_gate(plain, reader)
         # which units pass: no blocking finding, nothing unsupported in it, no level-3 mark, and level-2 marks within the allowance
         passed = []
