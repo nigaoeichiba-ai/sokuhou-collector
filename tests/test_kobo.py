@@ -82,7 +82,7 @@ class Parse(unittest.TestCase):
         md = GOOD.replace("ライトをひとつ出して、一度点けてみてください。", "続きは次のページで。\n\n[子ページの案内]\n\n")
         txt = doc.plain(doc.parse(md), [{"mark": "[子ページの案内]", "what": "体験の前 / 質問と答え", "content": ""}])
         self.assertNotIn("[子ページの案内]", txt)
-        self.assertIn("【子ページの案内】\n・体験の前\n・質問と答え", txt)
+        self.assertIn("【くわしく読む】\n・体験の前\n・質問と答え", txt)
         self.assertNotIn("ここに入る", txt)
         judge = doc.plain(doc.parse(md), [{"mark": "[子ページの案内]", "what": "体験の前 / 質問と答え", "content": ""}], describe_empty=False)
         self.assertIn("[子ページの案内]", judge)
@@ -441,6 +441,8 @@ class Output(unittest.TestCase):
         self.assertLess(out.index("## 3行まとめ"), out.index("## 目次"))
         self.assertEqual([s["heading"] for s in doc.parse(out)["sections"]], [s["heading"] for s in doc.parse(long)["sections"]])
         self.assertEqual(doc.with_toc(GOOD), GOOD)          # short: no table of contents
+        named = doc.with_toc(long.replace("## 3行まとめ", "## 備えの3行まとめ"))
+        self.assertLess(named.index("## 備えの3行まとめ"), named.index("## 目次"))
 
     def test_ledger(self):
         import tempfile
