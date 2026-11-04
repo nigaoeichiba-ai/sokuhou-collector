@@ -19,7 +19,7 @@ from . import lexicon
 
 LABELS = {"S01": "「並べる」の言い方", "S02": "「置く」(商品・案内)", "S03": "「扱う」の言い方", "S04": "強い言い方・「ください」の多さ",
           "S05": "題・見出しの抽象的な動詞", "S06": "動詞止めの見出しに目的語がない", "S07": "「へ」止めの見出し", "S08": "名詞の列挙が文になっていない",
-          "S09": "何の数・目安・量か分からない", "S10": "数の範囲と種類数が合わない", "S11": "表の案内文(「〜の行」・命令形)", "S12": "「家族の人」「人数の行」", "S13": "「数える」に「何を」がない", "S14": "助詞で終わる文・見出し", "S15": "「所」「ところ」(場所でないもの)", "S16": "「見つけてみませんか」", "S17": "「どこ」(場所でないもの)", "S18": "個数でないものを「数える」", "S19": "「埋める」の言い方", "S20": "回りくどい言い方・長い題", "S21": "AIに多い言い回し(調査より)", "S37": "同じ動詞の見出しが続く", "S43": "導入に□", "S45": "別々の話を並べている", "S49": "見出しが「〜から選ぶ」", "S53": "導入と同じ文が3行まとめにある", "S44": "3行まとめの文末がそろっていない", "S54": "「額が出ます」型の「出る・出す」", "S56": "主語と述語が合わない(量・結果が「〜します」)", "S57": "前の文とつながっていない文"}
+          "S09": "何の数・目安・量か分からない", "S10": "数の範囲と種類数が合わない", "S11": "表の案内文(「〜の行」・命令形)", "S12": "「家族の人」「人数の行」", "S13": "「数える」に「何を」がない", "S14": "助詞で終わる文・見出し", "S15": "「所」「ところ」(場所でないもの)", "S16": "「見つけてみませんか」", "S17": "「どこ」(場所でないもの)", "S18": "個数でないものを「数える」", "S19": "「埋める」の言い方", "S20": "回りくどい言い方・長い題", "S21": "AIに多い言い回し(調査より)", "S37": "同じ動詞の見出しが続く", "S43": "導入に□", "S45": "別々の話を並べている", "S49": "見出しが「〜から選ぶ」", "S53": "導入と同じ文が3行まとめにある", "S44": "3行まとめの文末がそろっていない", "S54": "「額が出ます」型の「出る・出す」", "S56": "主語と述語が合わない(量・結果が「〜します」)", "S57": "前の文とつながっていない文", "S58": "狙う語が題・導入・descriptionにない(SEO)"}
 
 ABSTRACT_HEAD = re.compile(r"(?:数え|確かめ|確認し|調べ|見直し|考え|見)(?:て(?:み)?)?(?:よう|ましょう)|数えて|確かめて|てみよう|てみましょう|てみる[!?！？]?$")
 SUBJ_TOPIC = r"(?:量|数|額|幅|目安|結果|値|金額|総額|費用|料金|回数|日数|人数|必要数|グッズ|もの|項目|商品|期間|割合|費)"
@@ -153,4 +153,33 @@ def check(doc: dict) -> list[dict]:
     cnt = re.search(r"(\d{1,2})(?:つの種類|種類)", blob + "\n".join(h for _, h in heads))
     if rng and cnt and int(rng.group(1)) != int(cnt.group(1)):
         add("S10", f"数の範囲(0〜{rng.group(1)})と種類の数({cnt.group(1)}種類)が合いません。", rng.group(0))
+    return out
+
+
+def seo_check(doc: dict, m: dict) -> list[dict]:
+    """S58 (the owner, 2026-11-05: SEO): one search phrase per page (material 'keyword', words separated by spaces) must be in the title, in the first two
+    sentences of the lead (the answer), and the material needs its own 'description' (one or two sentences that are not the lead copied) with the phrase.
+    Only for materials that name a keyword; a mark for a person, like every check here."""
+    kw = (m.get("keyword") or "").split()
+    if not kw:
+        return []
+    out = []
+
+    def add(msg, detail):
+        out.append({"code": "S58", "msg": msg, "detail": detail[:90]})
+    title, lead = doc.get("title", ""), doc.get("lead", "")
+    if not all(w in title for w in kw):
+        add(f"狙う語「{' '.join(kw)}」が題にありません。題の前半に自然に入れてください(直球で、問いかけだけの題にしない)。", title)
+    head = "".join(_sents(lead)[:2])
+    if not all(w in head for w in kw):
+        add(f"狙う語「{' '.join(kw)}」が、導入の最初の2文にありません。検索した人の問いに、最初の2文で答えてください。", head)
+    desc = (m.get("description") or "").strip()
+    if not desc:
+        add("description(ページ固有の1〜2文)がありません。素材の description に、狙う語を入れて書いてください。", title)
+    else:
+        if not all(w in desc for w in kw):
+            add("description に狙う語がありません。", desc)
+        g = lambda x: {x[i:i + 3] for i in range(len(x) - 2)}
+        if g(desc) and len(g(desc) & g(lead)) >= 0.6 * len(g(desc)):
+            add("description が導入の文とほぼ同じです。導入の流用でなく、ページ固有の1〜2文にしてください。", desc)
     return out
