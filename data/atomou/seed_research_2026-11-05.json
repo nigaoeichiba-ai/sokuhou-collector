@@ -1,0 +1,26 @@
+[
+  {
+    "title": "プロ野球2027 セ・リーグ開幕",
+    "date": "2027-03-26",
+    "precision": "day",
+    "kind": "開始",
+    "group": "スポーツ",
+    "category": "野球",
+    "subject": "プロ野球",
+    "what": "セ・リーグ開幕",
+    "place": "全国",
+    "source_url": "https://news.yahoo.co.jp/articles/f9e89185a21e0fade3e65d662e5edccd31eb438e",
+    "source_quote": "3月26日に巨人－中日、阪神－広島、DeNA－ヤクルトで開幕",
+    "source_url2": "https://baseballking.jp/ns/711756/",
+    "source_quote2": "3月26日開幕",
+    "basis": "press",
+    "checked_on": "2026-11-05",
+    "verified": true,
+    "sensitivity": "none",
+    "ad_ok": true,
+    "son_toku": false,
+    "region": "全国",
+    "date_end": null,
+    "note": "2つの報道ページの本文で、日付を機械的に確かめた。"
+  }
+]
