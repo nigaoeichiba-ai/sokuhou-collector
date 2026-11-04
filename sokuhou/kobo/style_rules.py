@@ -63,7 +63,7 @@ def check(doc: dict) -> list[dict]:
     # S43 a □ in the lead (the checklist has not appeared yet); S44 the 3-line summary mixes endings (です/ます and plain or noun endings)
     if "□" in doc["lead"]:
         add("S43", "導入に「□」が出ています。チェックリストの前なので、意味が通りません。", doc["lead"][:90])
-    ends = [bool(re.search(r"(?:です|ます|でした|ません)[。]?$", x)) for x in doc["tldr"]]
+    ends = [bool(re.search(r"(?:です|ます|でした|ました|ません)[。]?$", x)) for x in doc["tldr"]]
     if len(ends) >= 3 and 0 < sum(ends) < len(ends):
         add("S44", "3行まとめの文末がそろっていません(「です・ます」と、そうでない終わり方が混ざっています)。", "/".join(x[-8:] for x in doc["tldr"]))
 
