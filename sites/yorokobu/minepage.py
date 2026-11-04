@@ -82,6 +82,7 @@ def favorites_page(d: dict, cfg: dict, preview: bool) -> str:
 <section class="block"><div class="sec-head"><h2>気になるリスト(<span id="my-favs-n">0</span>点)</h2></div>
 <div id="my-favs-empty"><p>まだ、入っていません。商品カードの「♡」を押すとここに入ります。</p><p class="more">{starts}</p></div>
 <div id="my-favs-wrap" hidden><ul class="items" id="my-favs" aria-live="polite"></ul>
+<div id="my-favs-az-wrap" hidden><h3 class="fav-az-h">Amazonで見る候補</h3><p class="fav-note">楽天市場の商品とは別の欄です。価格と在庫は、Amazonのページでご確認ください。</p><ul class="items" id="my-favs-az" aria-live="polite"></ul></div>
 <p class="more"><button type="button" class="btn" id="my-send">このリストを送る</button><a class="btn btn-sub" href="/memo/">贈る日を登録する</a></p>
 <p class="fav-note">別のスマホやパソコンで見るときは、「このリストを送る」で作ったリンクを自分に送ってください。価格と在庫は販売ページでご確認ください。</p></div></section>
 <section class="block"><div class="sec-head"><h2>最近チェックした商品</h2></div>

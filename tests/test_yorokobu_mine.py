@@ -156,6 +156,12 @@ async function load(url) {
     out.empty_shown = !d.querySelector('#my-favs-empty').hidden;
     d.querySelector('#my-recent-clear').click();
     out.recent_after_clear = JSON.parse(w.localStorage.getItem('yorokobu.recent')).length;
+    // an Amazon product kept with the heart: a part of its own (no Amazon link in the Rakuten list), its name is text, the button is the link
+    w.localStorage.setItem('yorokobu.favs', JSON.stringify([{ code: code, name: 'x', price: '1' }, { code: 'a:B012345678', name: 'あの焼き菓子', url: 'https://www.amazon.co.jp/dp/B012345678/ref=nosim?tag=test-22' }]));
+    f = await load('/favorites/'); d = f.contentDocument;
+    out.az = { inRakutenList: d.querySelectorAll('#my-favs a[href*="amazon"]').length, azCards: d.querySelectorAll('#my-favs-az li.item').length, azHidden: d.querySelector('#my-favs-az-wrap').hidden,
+               nameLink: d.querySelectorAll('#my-favs-az h3 a').length, buttons: [...d.querySelectorAll('#my-favs-az .btn > a')].map(a => a.rel + '|' + a.textContent), rakutenInAz: d.querySelectorAll('#my-favs-az a[href*="rakuten"]').length,
+               imgs: d.querySelectorAll('#my-favs-az img').length, rm: d.querySelectorAll('#my-favs-az .fav-rm').length };
   } catch (e) { out.error = String(e); }
   document.getElementById('out').textContent = JSON.stringify(out);
 })();
@@ -215,6 +221,11 @@ async function load(url) {
         self.assertEqual(o["after_remove"], 0)
         self.assertTrue(o["empty_shown"])
         self.assertEqual(o["recent_after_clear"], 0)
+        az = o["az"]                                                                       # 2026-11-04: the Amazon card was in the Rakuten list and its name was a link
+        self.assertEqual(az["inRakutenList"], 0)
+        self.assertEqual(az["rakutenInAz"], 0)
+        self.assertEqual((az["azCards"], az["azHidden"], az["nameLink"], az["imgs"], az["rm"]), (1, False, 0, 0, 1))
+        self.assertEqual(az["buttons"], ["nofollow sponsored noopener|Amazonで見る"])
 
 
 if __name__ == "__main__":
