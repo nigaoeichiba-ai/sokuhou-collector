@@ -155,6 +155,27 @@ class OwnerNov5Evening(unittest.TestCase):
         self.assertIn("S60", c)
         self.assertIn("S61", c)                                       # it ends on a box
         ok = md.replace("足りない防災グッズから、1つずつ買い足していきます。", "チェックのない項目を1つ選びます。").replace("- 足りない防災グッズから、1つずつ買い足します。", "- 水は、1人1日3リットルです。")
-        ok += "\n今日は、足りない防災グッズを1つ決めるところから始めます。\n"
+        ok += "\n## まとめ: 今日は、足りない防災グッズを1つ決める\nこのページのまとめです。今日は、足りない防災グッズを1つ決めるところから始めるとよいです。\n"
         self.assertNotIn("S60", self._codes(ok))
         self.assertNotIn("S61", self._codes(ok))
+
+
+class ClosingAndNounEndings(unittest.TestCase):
+    def _codes(self, md):
+        return [x["code"] for x in style_rules.check(doc.parse(md))]
+
+    def test_closing_section_needs_matome_heading_and_opening(self):
+        base = "# 題\n\n冒頭です。二文目です。\n\n## 見出し\n本文です。\n\n"
+        bad = base + "## 今日は、足りない防災グッズを1つ決める\n今日は、1つ選んで始めるとよいです。\n"
+        ok = base + "## まとめ: 今日は、足りない防災グッズを1つ決める\nこのページのまとめです。答えは、チェックのない項目を見ることです。今日は、1つ選んで始めるとよいです。\n"
+        noopen = base + "## まとめ: 今日は1つ決める\n答えは、チェックのない項目を見ることです。今日は、1つ選びます。\n"
+        self.assertIn("S61", self._codes(bad))
+        self.assertNotIn("S61", self._codes(ok))
+        self.assertIn("S61", self._codes(noopen))
+
+    def test_the_same_noun_ending_in_a_row(self):
+        bad = ("# 題\n\n冒頭です。二文目です。\n\n## 見出し\n電池と充電は、スマホの電池を残すための用意です。\n\n救急用品は、けがの手当てに使うものの用意です。\n")
+        ok = ("# 題\n\n冒頭です。二文目です。\n\n## 見出し\n電池と充電の役目は、スマホの電池を残すことです。\n\n救急用品は、けがの手当てが中心です。\n")
+        self.assertIn("S63", self._codes(bad))
+        self.assertNotIn("S63", self._codes(ok))
+        self.assertTrue(lexicon.scan(["足りないものと、読むページが分かります。"]))
