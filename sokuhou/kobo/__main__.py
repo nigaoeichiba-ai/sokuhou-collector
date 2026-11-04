@@ -99,6 +99,17 @@ def main(argv=None) -> int:
     p = sub.add_parser("tsukkomi")
     p.add_argument("draft")
     p.add_argument("--models", default="haiku,sonnet")
+    p = sub.add_parser("lex", help="the word dictionary: list | add | check <text file>")
+    p.add_argument("action", choices=["list", "add", "check", "fix"])
+    p.add_argument("target", nargs="?", default="", help="check/fix: a Markdown file")
+    p.add_argument("--pattern", default="")
+    p.add_argument("--msg", default="")
+    p.add_argument("--replace", default="", help="candidates, comma separated")
+    p.add_argument("--auto", action="append", default=[], help="safe mechanical replacement 'regex=>replacement' (repeatable)")
+    p.add_argument("--unless", default="")
+    p.add_argument("--code", default="S99")
+    p.add_argument("--label", default="")
+    p.add_argument("--source", default="")
     p = sub.add_parser("ledger")
     p.add_argument("action", choices=["list", "set"])
     p.add_argument("key", nargs="?", default="")
@@ -208,6 +219,29 @@ def main(argv=None) -> int:
         g = engine.read_gate(Path(a.draft).read_text(encoding="utf-8"), a.reader)
         print(json.dumps(g, ensure_ascii=False, indent=1))
         return 0 if engine.gate_pass(g) else 1
+    if a.cmd == "lex":
+        from . import lexicon
+        if a.action == "list":
+            for e in lexicon.entries():
+                print(f"{e['id']} {e['code']} {e['label']}  /{e['pattern']}/  -> {' | '.join(e['replace'][:3])}  auto={len(e.get('auto', []))}  ({e.get('source', '')})")
+            return 0
+        if a.action == "add":
+            e = lexicon.add_entry(a.pattern, a.msg, [x for x in a.replace.split(",") if x], code=a.code, label=a.label,
+                                  auto=[x.split("=>", 1) for x in a.auto], unless=a.unless, source=a.source)
+            print("added", e["id"], e["label"])
+            return 0
+        txt = Path(a.target).read_text(encoding="utf-8")
+        if a.action == "fix":
+            new, n = lexicon.autofix(txt)
+            Path(a.target).write_text(new, encoding="utf-8")
+            print(f"{n} replacements")
+            return 0
+        d = doc.parse(txt)
+        hits = lexicon.scan([x for t in [d["lead"]] + d["tldr"] + [q for s in d["sections"] for q in s["paras"] + s["bullets"]] for x in doc.sentences(t)] + [s["heading"] for s in d["sections"]] + [d["title"]])
+        for h in hits:
+            print(f"{h['id']} {h['code']} {h['detail']}")
+        print(f"{len(hits)} hits")
+        return 0
     if a.cmd == "calib":
         cdir = engine.home() / "calib"
         cdir.mkdir(parents=True, exist_ok=True)

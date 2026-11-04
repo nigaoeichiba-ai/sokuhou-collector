@@ -264,9 +264,9 @@ class Light(unittest.TestCase):
         self.assertEqual(calls.count("codex"), 1)                      # the Codex proofreader
         self.assertIn("停電の点検は2時間です", r["output"])
         top = r["tsukkomi_points"][0]
-        self.assertEqual(len(top["by"]), 6)                             # the point every reader made comes first
+        self.assertEqual(len(top["by"]), 7)                             # the point every reader made comes first
         self.assertFalse(any("出典" in a for p in r["tsukkomi_points"] for a in p["asks"]))
-        self.assertEqual(len(r["readers"]), 6)
+        self.assertEqual(len(r["readers"]), 7)      # 4 readers + 3 proofreaders (haiku, sonnet, Codex)
 
     def test_an_explanation_added_by_the_tsukkomi_is_marked(self):
         final = GOOD.replace("点検は2時間です。", "点検(電気を止めて設備を調べる作業)は2時間です。")
@@ -311,6 +311,32 @@ class Light(unittest.TestCase):
             self.assertIn(code, c, code)
         ok = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。ライトはどこにありますか。水を3リットル数えます。")
         self.assertFalse([x for x in style_rules.check(doc.parse(ok)) if x["code"] in ("S15", "S16", "S17", "S18")])
+
+    def test_the_word_dictionary_marks_replaces_and_learns(self):
+        import tempfile
+        from pathlib import Path as P
+        from sokuhou.kobo import lexicon
+        self.assertEqual(lexicon.scan(["足りない所を見つけてみませんか。"])[0]["code"], "S15")
+        txt = ("## 足りなかったら、どこから?\n\n足りない所を見つけてみませんか。この記事は水を扱います。\n\n| 扱 | 足りない所 |\n\n"
+               "> ライフハック: 足りない所\n\nどこにありますか。取り扱いは別です。")
+        new, n = lexicon.autofix(txt)
+        self.assertIn("## 足りなかったら、何から?", new)
+        self.assertIn("足りないものを確認しませんか。この記事は水を取り上げます。", new)
+        self.assertIn("| 扱 | 足りない所 |", new)                  # a table row is left alone
+        self.assertIn("どこにありますか。", new)                   # a place: not replaced
+        self.assertIn("取り扱いは別です", new)                     # 取り扱い is not 扱う
+        self.assertEqual(n, 4)
+        # a new point becomes an entry at once
+        old = lexicon.PATH
+        with tempfile.TemporaryDirectory() as td:
+            lexicon.PATH = P(td) / "w.json"
+            lexicon.PATH.write_text(old.read_text(encoding="utf-8"), encoding="utf-8")
+            try:
+                e = lexicon.add_entry("試しの語", "試しの語は使わない。", ["別の語"], code="S99", auto=[["試しの語", "別の語"]])
+                self.assertEqual(lexicon.autofix("これは試しの語です。")[0], "これは別の語です。")
+                self.assertEqual(lexicon.scan(["試しの語"])[0]["id"], e["id"])
+            finally:
+                lexicon.PATH = old
 
     def test_style_marks_never_block(self):
         md = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。表に数字を並べると分かります。")

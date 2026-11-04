@@ -13,6 +13,7 @@ from pathlib import Path
 
 from . import checks as C
 from . import doc as D
+from . import lexicon
 from . import runner
 from .material import for_prompt, source_text
 
@@ -327,10 +328,15 @@ PERSONAS = [
     ("急いでいる人", "電車で斜め読みする、急いでいる人。題・3行まとめ・見出ししか読まない。それだけで、自分が何をすればよいか分かるかを見る。"),
     ("疑い深い人", "疑い深い人。「本当?」「誰が言っている?」「あおって売りたいのでは?」と思いながら読む。言い切り・大げさな言い方・根拠のない話を見る。"),
 ]
-PROOF_WHO = ("日本語の校正者。主語・述語・目的語の欠落、助詞のずれ、述語と主語の呼応、数の食い違い、名詞の列挙が文になっていない所、"
-             "「数」「目安」で何の数か分からない所、動詞で終わる見出しに「何を」がない所を見る。直し案は、文の形(主語・目的語・述語の補い、語順、助詞)だけにする。"
-             "素材にない事実(誰が・どこが言ったか、新しい数字や説明)を足す直しは書かない。")
-PROOFERS = [("校正(haiku)", PROOF_WHO, "haiku"), ("校正(Codex)", PROOF_WHO, "codex")]      # the desk, 2026-11-04: the union of the two
+def proof_who() -> str:
+    """The proofreaders' brief: the seven standards of the desk (2026-11-04) and, as examples, the words in the dictionary."""
+    return ("日本語の校正者。次の7つの基準で読む: ①欠落(主語・述語・目的語・助詞) ②ねじれ(述語と主語の呼応、数の食い違い) ③見出し(動詞で終わるのに「何を」がない、名詞の列挙が文になっていない) "
+            "④省略(何の数・何の体験・何の相談か分からない) ⑤語の使い方・選び方が適切か ⑥読み手に強いる言い方 ⑦初めて読む人に通じるか。"
+            "直し案は、文の形(主語・目的語・述語の補い、語順、助詞)と語の置き換えだけにする。素材にない事実(誰が・どこが言ったか、新しい数字や説明)を足す直しは書かない。"
+            "また、直し案の中に、次の語を残したり新しく入れたりしない。\n次のような語の使い方に気づく(例):\n" + lexicon.examples_text())
+
+
+PROOFERS = [("校正(haiku)", None, "haiku"), ("校正(sonnet)", None, "sonnet"), ("校正(Codex)", None, "codex")]      # the union of the three (the desk, 2026-11-04)
 CITATION_ASK = re.compile(r"出典|URL|リンク|ソース|引用元|情報源|報道")
 
 
@@ -352,7 +358,8 @@ def _key(s: str) -> str:
 def persona_points(text: str, m: dict, model: str = PERSONA_MODEL) -> dict:
     """Every persona reads at once. Returns {"readers": [{name, gist, points}], "points": [{text, asks, fixes, by}] (most readers first)}."""
     from concurrent.futures import ThreadPoolExecutor
-    ps = personas_for(m) + PROOFERS
+    who = proof_who()
+    ps = personas_for(m) + [(n, who, mo) for n, _, mo in PROOFERS]
     # the readers see the page as a reader does (the fixed parts shown in place, not as bare work marks like '[商品カード]')
     view = D.plain(D.parse(text), m.get("parts"))
 
@@ -382,7 +389,7 @@ def persona_fix(text: str, m: dict, pp: dict, model: str = PERSONA_MODEL) -> str
     def fmt(g):
         return f"- 「{g['text'][:80]}」({'・'.join(g['by'])}) {' / '.join(a for a in g['asks'][:3] if a)} → 案: {g['fixes'][0][:80] if g['fixes'] else ''}"
     pts = "### 2人以上が引っかかった所\n" + ("\n".join(fmt(g) for g in many) or "(なし)") + "\n\n### 1人だけが引っかかった所\n" + ("\n".join(fmt(g) for g in one[:25]) or "(なし)")
-    out = _strip_fence(runner.call(model, fill(prompt_file("persona_fix"), material=for_prompt(m), points=pts, text=text)))
+    out = _strip_fence(runner.call(model, fill(prompt_file("persona_fix"), material=for_prompt(m), points=pts, text=text, words=lexicon.examples_text())))
     if not out.strip() or not D.parse(out)["sections"]:
         return text                                    # the fix lost the shape: keep the writer's version
     return out
@@ -445,7 +452,17 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
         final = _keep_shape(_apply_tsukkomi(tool, draft, tk, log), draft, tool)
     t2 = time.time()
     fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
+    auto_n = 0
+    if tool in ("article", "note"):
+        # the words of the dictionary are replaced by machine (the readers' own fixes sometimes bring the word back), then named to the writer
+        final, auto_n = lexicon.autofix(final)
+        fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
     final, fs1, ends_fixed = fix_endings(tool, final, fs1, m, card, writer, system)
+    if tool in ("article", "note"):
+        final, k = lexicon.autofix(final)
+        if k:
+            auto_n += k
+            fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
     t3 = time.time()
     marks = human_marks(fs1) + added_explanations(draft, final, m)
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -453,7 +470,7 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
               "draft": draft, "output": final, "marks": marks, "draft_marks": human_marks(fs0),
               "tsukkomi_points": (pp["points"] if pp else (log[0]["points"] if log else [])), "tsukkomi_ok": bool(pp) or bool(log and log[0]["ok"]),
               "readers": ([{"name": r["name"], "gist": r["gist"], "points": len(r["points"])} for r in pp["readers"]] if pp else []),
-              "endings_fixed": ends_fixed, "seconds": {"writer": round(t1 - t0), "tsukkomi": round(t2 - t1), "endings": round(t3 - t2), "total": round(time.time() - t0)}}
+              "endings_fixed": ends_fixed, "words_replaced": auto_n, "seconds": {"writer": round(t1 - t0), "tsukkomi": round(t2 - t1), "endings": round(t3 - t2), "total": round(time.time() - t0)}}
     if record:
         rec = home() / "runs" / datetime.now().strftime("%Y-%m-%d") / f"{m.get('id', 'x')}-{tool}-{writer}-light-{stamp}"
         rec.mkdir(parents=True, exist_ok=True)
