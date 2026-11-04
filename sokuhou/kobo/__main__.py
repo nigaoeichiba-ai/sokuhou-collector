@@ -86,6 +86,7 @@ def main(argv=None) -> int:
     p.add_argument("--tool", default="article")
     p.add_argument("--writer", default=None)
     p.add_argument("--tsukkomi", default="default")
+    p.add_argument("--workers", type=int, default=4, help="pages run at once (the desk: 3-4)")
     p = sub.add_parser("plan")
     p.add_argument("brief")
     p.add_argument("--writer", default="opus")
@@ -286,12 +287,12 @@ def main(argv=None) -> int:
         def one(name):
             m = _material(name)
             return engine.light(a.tool, m, engine.load_card(m.get("site", "wadai")), writer=a.writer, tsukkomi_model=a.tsukkomi)
-        with ThreadPoolExecutor(max_workers=len(a.materials)) as ex:
+        with ThreadPoolExecutor(max_workers=max(1, min(a.workers, len(a.materials)))) as ex:
             rs = list(ex.map(one, a.materials))
         for r in rs:
             _print_light(r)
             _learn(r)
-        print(f"batch: {len(rs)} pages in {round(_t.time() - t0)}s (in parallel)")
+        print(f"batch: {len(rs)} pages in {round(_t.time() - t0)}s ({a.workers} at a time)")
         return 0
     # the writing tools
     if a.cmd == "note":
