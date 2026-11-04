@@ -29,14 +29,30 @@ class Words(unittest.TestCase):
         self.assertEqual(len(nc["learned"]), 2)
 
     def test_title_is_picked_by_votes_and_bad_titles_are_dropped(self):
-        def fake(model, prompt, system=None):
-            return json.dumps({"best": 2, "why": "x"})
+        def fake(model, prompt, system=None):                 # the options are shuffled: choose the one with 不足 by its number
+            n = next(int(line.split(".")[0]) for line in prompt.splitlines() if "不足" in line and line[:1].isdigit())
+            return json.dumps({"best": n, "why": "x"})
         runner.set_backend(fake)
         opts = ["防災グッズ、全部そろってますか", "防災グッズ、不足はありませんか", "防災グッズを数えてみよう", "防災グッズ:人数分を確認", "防災グッズ、必要なもの教えます"]
         t, info = engine.pick_title(GOOD, opts)
         self.assertEqual(t, "防災グッズ、不足はありませんか")
         self.assertEqual(len(info["options"]), 3)                  # the 数えてみよう and the subtitle are out before the vote
         self.assertEqual(engine.set_title("# 古い題\n\n本文\n", "新しい題"), "# 新しい題\n\n本文\n")
+
+    def test_standard_flow_has_three_haiku_readers_and_one_codex_proofreader(self):
+        from tests.test_kobo import MAT
+        seen = []
+
+        def fake(model, prompt, system=None):
+            seen.append(model)
+            return json.dumps({"gist": "x", "points": []})
+        runner.set_backend(fake)
+        pp = engine.persona_points(GOOD, MAT)
+        self.assertEqual(sorted(seen), ["codex", "haiku", "haiku", "haiku"])      # no sonnet / haiku proofreaders unless the article is named
+        self.assertEqual(len(pp["readers"]), 4)
+        seen.clear()
+        engine.persona_points(GOOD, dict(MAT, deep_readers=True))
+        self.assertEqual(seen.count("sonnet"), 1)                                  # the named article gets all three proofreaders
 
     def test_stats_and_the_audit_of_what_the_rewrite_added(self):
         st = textstats.stats(doc.parse(GOOD))

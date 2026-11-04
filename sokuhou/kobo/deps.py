@@ -52,3 +52,19 @@ def check(sentences: list[str], headings: list[str] | None = None) -> list[dict]
                 out.append({"code": "D03", "msg": f"「{t.text}」が何を指すか、前の文を読まないと分かりません。具体的な名詞にできないか、確認してください。", "detail": s[:90]})
                 break
     return out
+
+
+if __name__ == "__main__":
+    # a separate check tool (the desk, 2026-11-04): run with a Python that has spaCy + ja-ginza, from the collector folder:
+    #   C:/work/sokuhou/ginza_venv/Scripts/python.exe -m sokuhou.kobo.deps <article.md>
+    import sys
+    from pathlib import Path
+
+    from . import doc as D
+    sys.stdout.reconfigure(encoding="utf-8")
+    d = D.parse(Path(sys.argv[1]).read_text(encoding="utf-8"))
+    sents = [x for t in [d["lead"]] + d["tldr"] + [q for s in d["sections"] for q in s["paras"] + s["bullets"]] for x in D.sentences(t)]
+    hits = check(sents, [s["heading"] for s in d["sections"]])
+    for h in hits:
+        print(f"{h['code']} {h['detail']}  — {h['msg']}")
+    print(f"{len(hits)} candidates in {len(sents)} sentences")

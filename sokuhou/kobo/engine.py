@@ -360,7 +360,8 @@ def persona_points(text: str, m: dict, model: str = PERSONA_MODEL) -> dict:
     """Every persona reads at once. Returns {"readers": [{name, gist, points}], "points": [{text, asks, fixes, by}] (most readers first)}."""
     from concurrent.futures import ThreadPoolExecutor
     who = proof_who()
-    ps = personas_for(m) + [(n, who, mo) for n, _, mo in PROOFERS]
+    proofers = PROOFERS if (m.get("deep_readers") or m.get("proof_all")) else [p for p in PROOFERS if p[2] == "codex"]
+    ps = personas_for(m) + [(n, who, mo) for n, _, mo in proofers]
     # the readers see the page as a reader does (the fixed parts shown in place, not as bare work marks like '[商品カード]')
     view = D.plain(D.parse(text), m.get("parts"))
 
@@ -455,9 +456,11 @@ BAD_TITLE = re.compile(r"[:：]|について|てみよう|てみましょう|数
 
 
 def pick_title(text: str, opts: list[str]) -> tuple[str, dict]:
+    import random
     """Two haiku readers (the one who does not know the topic, the one in a hurry) each choose the title that hits home; the most votes win."""
     from concurrent.futures import ThreadPoolExecutor
-    ok = [t for t in opts if not BAD_TITLE.search(t) and 8 <= len(t) <= 30]
+    ok = list(dict.fromkeys(t for t in opts if not BAD_TITLE.search(t) and 8 <= len(t) <= 30))
+    random.Random(len(text)).shuffle(ok)                    # the readers do not see who made an option or in what order
     if len(ok) < 2:
         return "", {"options": opts, "votes": []}
     lead = D.parse(text)["lead"]
@@ -527,6 +530,9 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
     system = prompt_file("system_writer")
     prompt = writer_prompt(tool, m, card)
     draft = runner.call(writer, prompt, system)
+    pre_n = 0
+    if tool in ("article", "note"):
+        draft, pre_n = lexicon.autofix(draft)              # the dictionary first (the desk's flow): the readers see the text without the known words
     t1 = time.time()
     fs0 = [f for u in units(tool, draft) for f in tool_findings(tool, u, m, card)]
     log: list = []
@@ -549,7 +555,7 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
             opts = []
     t2 = time.time()
     fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
-    auto_n = 0
+    auto_n = pre_n
     if tool in ("article", "note"):
         # the words of the dictionary are replaced by machine (the readers' own fixes sometimes bring the word back), then named to the writer
         final, auto_n = lexicon.autofix(final)
@@ -564,9 +570,11 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
         if k:
             auto_n += k
         if opts:
-            new_title, title_info = pick_title(final, opts)
+            new_title, title_info = pick_title(final, opts + list(m.get("title_candidates", [])))
             if new_title:
                 final = set_title(final, new_title)
+        if m.get("title_fixed"):
+            final = set_title(final, m["title_fixed"])         # the desk's decision for the article (bousai parent)
         fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
     t3 = time.time()
     dd = D.parse(final)
