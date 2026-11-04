@@ -58,8 +58,8 @@ OFF_LIMITS = {
     "politics": ["選挙", "与党", "野党", "政権", "投票"],
 }
 ISSUERS = ["国民生活センター", "消費者庁", "気象庁", "防災庁", "内閣府", "消防庁", "国立天文台", "総務省", "経済産業省", "資源エネルギー庁", "厚生労働省", "国土交通省", "文部科学省", "IPA", "JPCERT", "首相官邸", "政府"]
-HEDGE_END = re.compile(r"(そう|かも|かな|かもしれない|と考えられる|可能性がある|可能性も|ではないか|のではないか|だろう|と思う|かもね|ようだ|見方もある|見方ができる)$")
-HEDGE_ANY = re.compile(r"(かもしれない|と考えられる|可能性がある|可能性も|のではないか|だろう|と思う|そう[。!！\s]|かも[。!！\s]|かな[。!！\s])")
+HEDGE_END = re.compile(r"(そう|かも|かな|かもしれない|と考えられる|可能性がある|可能性も|ではないか|のではないか|だろう|と思う|かもね|ようだ|見方もある|見方ができる|そうです|かもしれません|かもです|可能性があります|可能性もあります|でしょう|ようです|ではないでしょうか|と思います|そうですね|手です|手があります|選択肢です|選択肢もあります|方法もあります|のもありです)$")
+HEDGE_ANY = re.compile(r"(かもしれ|と考えられ|可能性が|可能性も|のではないか|だろう|と思う|そうで|そう[。!！\s]|かも[。!！\s]|かな[。!！\s]|でしょう|ようです|と思います)")
 DATE_RE = re.compile(r"\d{1,2}月\d{1,2}日|\d{4}年\d{1,2}月")
 NUM_RE = re.compile(r"\d+(?:[.,]\d+)?")
 URL_RE = re.compile(r"https?://\S+|\b[a-z0-9-]+\.(?:com|jp|net|org|to)/\S*", re.I)
@@ -348,7 +348,9 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
     secs = a.get("sections", [])
 
     def text_of(s):
-        return list(s.get("paras", [])) + list(s.get("bullets", []))
+        # paragraphs and bullets, plus (reading edition) the boxes, the one-line summary and the figure captions: every public sentence is checked
+        return (list(s.get("paras", [])) + list(s.get("bullets", [])) + [b.get("title", "") + " " + b.get("text", "") for b in s.get("boxes", [])]
+                + ([s["summary"]] if s.get("summary") else []) + [f["caption"] for f in s.get("figures", []) if f.get("caption")])
 
     def add(code, msg, detail=""):
         out.append(Finding(code, aid, msg, detail))
@@ -376,7 +378,8 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
         lay = s.get("layer")
         if lay in LAYER_ORDER and LAYER_TITLES[lay] not in s.get("heading", ""):
             add("A01", f"the heading of the {lay} section must contain '{LAYER_TITLES[lay]}'")
-    alltext = _without("\n".join(t for s in secs for t in text_of(s)), ctx.get("allowed_phrases", []))
+    extra = list(a.get("tldr", [])) + ([a["poll"]["question"]] + list(a["poll"].get("options", [])) if a.get("poll") else [])
+    alltext = _without("\n".join([t for s in secs for t in text_of(s)] + extra), ctx.get("allowed_phrases", []))
     fact_texts = [t for s in secs if s.get("layer") == "fact" for t in text_of(s)]
     # A02 layer mix
     for s in secs:
@@ -490,6 +493,8 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
             add("A09", "the update date changed but the text did not")
         if len(hist) > len(prev_hist) and prev_text == now_text:
             add("A09", "a history line was added but nothing else changed")
+    if a.get("format") == "reading":
+        out += check_reading(a)
     # A10 freshness (a warning-level finding: code A10 with 'warn'/'stale')
     try:
         age = (datetime.fromisoformat(ctx.get("today", datetime.now().date().isoformat())) - datetime.fromisoformat(str(a.get("updated")))).days
@@ -499,6 +504,94 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
             add("A10", "warn: not updated for 7 days or more")
     except (ValueError, TypeError):
         add("A10", "the updated date is missing or not ISO")
+    return out
+
+
+# ---- the reading edition (format: "reading"): casual, with figures, boxes, a series and ways to take part (owner 2026-11-04) ---------------------------------
+HARD_RE = re.compile(r"と考えられ|が望ましい|と言える|と言えま|であろう|と思われ|べきである|を要する|に留意|に資する|において|における|することが可能|を行う|を行いま|と推察|ものとする|の観点から|に際し|いただきたい|であると|である。")
+POLITE_END = re.compile(r"(です|ます|ません|ください|ましょう|でした|ました|でしょう|ですね|ますね|ですよ|ますよ)[。！？!?]?$")
+LUMP_CHARS = 130            # one paragraph longer than this is a lump of text
+LUMP_RUN = 4                # this many plain paragraphs in a row, with no figure or box between them, is a wall of text
+
+
+def reading_texts(a: dict) -> dict:
+    """The public texts of a reading article by role."""
+    secs = [s for s in a.get("sections", []) if s.get("layer") != "history"]
+    paras = [t for s in secs for t in s.get("paras", [])]
+    return {"lead": [a.get("lead", "")], "tldr": list(a.get("tldr", [])), "paras": paras, "bullets": [t for s in secs for t in s.get("bullets", [])],
+            "summaries": [s.get("summary", "") for s in secs], "boxes": [b.get("text", "") for s in secs for b in s.get("boxes", [])],
+            "captions": [f.get("caption", "") for s in secs for f in s.get("figures", [])]}
+
+
+def check_reading(a: dict) -> list[Finding]:
+    aid = str(a.get("id", "?"))
+    out: list[Finding] = []
+
+    def add(code, msg, detail=""):
+        out.append(Finding(code, aid, msg, detail))
+
+    T = reading_texts(a)
+    allt = [t for v in T.values() for t in v]
+    # A20 a hard, report-like style
+    for t in allt:
+        m = HARD_RE.search(t)
+        if m:
+            add("A20", "a stiff phrase (write it the way you would say it)", m.group(0))
+    sents = [x for t in T["lead"] + T["paras"] for x in _sentences(t)]
+    if sents:
+        polite = sum(1 for x in sents if POLITE_END.search(x))
+        if polite / len(sents) < 0.5:
+            add("A20", f"only {polite} of {len(sents)} sentences end in です/ます (a です・ます tone is the base)")
+    # A21 figures: at least one chart or table with data, and an illustration
+    figs = [f for s in a.get("sections", []) for f in s.get("figures", [])] + ([a["hero"]] if a.get("hero") else [])
+    if not any(f["kind"] in ("chart", "table") for f in figs):
+        add("A21", "no chart or table (one or two figures made from public numbers)")
+    if not any(f["kind"] == "image" for f in figs):
+        add("A21", "no illustration")
+    for f in figs:
+        if f["kind"] == "image" and not f.get("alt"):
+            add("A21", "an illustration without alt text")
+        if f["kind"] == "chart" and not (f.get("title") and f.get("desc")):
+            add("A21", "a chart without title and description")
+    # A22 lumps of text
+    for t in T["paras"]:
+        if len(t) > LUMP_CHARS:
+            add("A22", f"a paragraph of {len(t)} characters (cut it)", t[:12])
+    for s in a.get("sections", []):
+        if s.get("layer") == "history":
+            continue
+        if len(s.get("paras", [])) >= LUMP_RUN and not s.get("boxes") and not s.get("figures"):
+            add("A22", f"section '{s.get('heading', '')[:10]}' has {len(s['paras'])} plain paragraphs and no figure or box")
+    # A23 summaries: 3 lines at the top, one short line under each heading
+    if len(a.get("tldr", [])) != 3:
+        add("A23", "the 3-line summary needs exactly three lines")
+    for t in a.get("tldr", []):
+        if len(t) > 60:
+            add("A23", "a summary line over 60 characters", t[:10])
+    for s in a.get("sections", []):
+        if s.get("layer") == "history":
+            continue
+        if not s.get("summary"):
+            add("A23", f"section '{s.get('heading', '')[:10]}' has no one-line summary")
+        elif len(s["summary"]) > 60:
+            add("A23", "a section summary over 60 characters", s["summary"][:10])
+    # A24 parts: tip and hack boxes, series, poll, next
+    kinds = [b.get("kind") for s in a.get("sections", []) for b in s.get("boxes", [])]
+    if "tip" not in kinds:
+        add("A24", "no 豆知識 box")
+    if "hack" not in kinds:
+        add("A24", "no ライフハック box")
+    se = a.get("series") or {}
+    if not (se.get("name") and se.get("parent") and len(se.get("children", [])) >= 2):
+        add("A24", "series needs a name, a parent and at least two child pages")
+    if len(a.get("next", [])) < 1:
+        add("A24", "no 'next to read'")
+    po = a.get("poll") or {}
+    if not (po.get("question") and 3 <= len(po.get("options", [])) <= 5):
+        add("A24", "the poll needs one question and three to five choices")
+    for t in [po.get("question", "")] + po.get("options", []):
+        if re.search(r"名前|メール|住所|電話|年齢|性別", t):
+            add("A24", "the poll asks for personal information")
     return out
 
 
