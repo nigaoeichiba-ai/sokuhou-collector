@@ -154,7 +154,7 @@ def parse_check(content: str) -> list[str]:
 
 
 # ---- parts ---------------------------------------------------------------------------------------------------------------------------------------
-def table_part(title: str, md: str, kind: str = "", calc_items: list | None = None) -> str:
+def table_part(title: str, md: str, kind: str = "", calc_items: list | None = None, calc_label: str = "人数") -> str:
     head, rows = parse_table(md)
     if not head:
         return ""
@@ -163,7 +163,7 @@ def table_part(title: str, md: str, kind: str = "", calc_items: list | None = No
     out = pg.table_html({"title": title, "headers": head, "rows": rows})
     if calc_items:      # the workshop's own calculator (sokuhou/kobo/parts.py) goes under the table
         from sokuhou.kobo import parts as kparts
-        return out + kparts.calculator_html(calc_items)
+        return out + kparts.calculator_html(calc_items, label=calc_label)
     # a table of rows "1人 ... 5人": an input that works out the numbers for any number of people
     if rows and re.fullmatch(r"\d+人", rows[0][0]):
         pp = []
@@ -249,7 +249,7 @@ def build_page(pid: str, kobo: Path, cfg: dict, base_dir: Path) -> tuple[str, di
             kind = pc.get("table_kinds", {}).get(mark, "")
             if p.get("content"):
                 used["table"] += 1
-                return table_part(title, p["content"], kind, pc.get("calculator", {}).get(mark))
+                return table_part(title, p["content"], kind, pc.get("calculator", {}).get(mark), pc.get("calculator_label", "人数"))
         elif inner.startswith("図"):
             fig = pc.get("figures", {}).get(mark)
             if fig:
@@ -266,7 +266,12 @@ def build_page(pid: str, kobo: Path, cfg: dict, base_dir: Path) -> tuple[str, di
                 used["poll"] += len(polls)
                 return "".join(pg.poll_html_one({**po, "note": po.get("note", "答えは任意です。答えなくても、このまま読み進められます。名前や連絡先は聞きません。")}, i) for i, po in enumerate(polls))
         elif inner.startswith("子ページの案内"):
-            kids = pc.get("children")
+            kids = [dict(k) for k in pc.get("children", [])]
+            for k in kids:
+                if k.get("id") and not k.get("title"):
+                    f = kobo / "out" / k["id"] / "article-opus.md"
+                    if f.exists():
+                        k["title"] = parse_md(f.read_text(encoding="utf-8"))["title"]
             if kids:
                 used["kids"] += 1
                 return children_part(kids, base_dir)
@@ -301,7 +306,7 @@ def build_page(pid: str, kobo: Path, cfg: dict, base_dir: Path) -> tuple[str, di
         if img.exists():
             data = base64.b64encode(img.read_bytes()).decode()
             hero = f'<figure class="fig fig-image"><img src="data:image/webp;base64,{data}" alt="{E(pc.get("hero_alt", ""))}"></figure>'
-    series_name = pc.get("series", "ニュースから備える手帖")
+    series_name = pc.get("series", "ニュースの手帖")
     parent = pc.get("parent_href", "")
     series = f'<p class="series">シリーズ「{f"<a href={chr(34)}{E(parent)}{chr(34)}>{E(series_name)}</a>" if parent else E(series_name)}」</p>'
     nxt = ""
