@@ -191,7 +191,7 @@ class TestReadingChecks(unittest.TestCase):
         for mutate, why in ((lambda a: a["sections"][2].__setitem__("boxes", []), "no hack"),
                             (lambda a: a["series"].__setitem__("children", []), "no children"), (lambda a: a.__setitem__("next", []), "no next"),
                             (lambda a: a.__setitem__("poll", None), "no poll"), (lambda a: a["poll"].__setitem__("options", ["a"]), "one choice"),
-                            (lambda a: a["poll"].__setitem__("options", list("abcdefghi")), "nine choices"),
+                            (lambda a: a["poll"].__setitem__("options", list("abcdefghijk")), "eleven choices"),
                             (lambda a: a["poll"].__setitem__("question", "お名前を教えてください"), "personal information")):
             a = fixture()
             mutate(a)
@@ -323,9 +323,9 @@ class TestRuleAudit(unittest.TestCase):
 
     def test_a24_polls_and_series(self):
         a = fixture()
-        a["polls"] = [a["poll"], {"id": "x-2", "question": "いちばん足りないのは?", "options": list("abcdefgh")}]      # two questions, eight choices
+        a["polls"] = [a["poll"], {"id": "x-2", "question": "いちばん足りないのは?", "options": list("abcdefghij")}]      # two questions, ten choices
         self.assertNotIn("A24", codes(w.check_reading(a)))
-        a["polls"][1]["options"] = list("abcdefghi")
+        a["polls"][1]["options"] = list("abcdefghijk")
         self.assertIn("A24", codes(w.check_reading(a)))
         a = fixture()
         a["series"]["children"] = a["series"]["children"][:1]                              # one published child is enough
