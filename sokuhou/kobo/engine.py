@@ -461,7 +461,7 @@ def title_options(text: str, writer: str) -> list[str]:
     return [str(t).strip() for t in (res.get("titles") if isinstance(res.get("titles"), list) else []) if str(t).strip()][:5]
 
 
-BAD_TITLE = re.compile(r"[:：]|について|てみよう|てみましょう|数え")
+BAD_TITLE = re.compile(r"[:：]|について|てみよう|てみましょう|数え|ください|ましょう")
 
 
 def pick_title(text: str, opts: list[str]) -> tuple[str, dict]:
