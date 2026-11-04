@@ -31,6 +31,7 @@ from pathlib import Path
 UA = "sokuhou-collector/0.1 (read-only news headline reader; headline and date only)"
 HOST_GAP = 3.0           # seconds between two requests to the same host
 ANY_GAP = 1.0            # seconds between any two requests
+HOST_GAPS = {"b.hatena.ne.jp": 5.0}      # hosts whose robots.txt asks for a longer Crawl-delay
 MAX_BYTES = 5_000_000
 REFUSE_STATUS = {401, 403, 429}
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -48,6 +49,9 @@ SOURCES = {
     "jiji": ("https://www.jiji.com/rss/ranking.rdf", "general"),
     "kyodo-yahoo": ("https://news.yahoo.co.jp/rss/media/kyodonews/all.xml", "general"),
     "trends": ("https://trends.google.com/trending/rss?geo=JP", "general"),
+    # aggregators: used only to DISCOVER headlines (owner 2026-11-04).  A fact is written only after it is checked at the primary (the party's own announcement, an office, the report itself).
+    "livedoor": ("https://news.livedoor.com/topics/rss/top.xml", "aggregator"),
+    "hatena": ("https://b.hatena.ne.jp/hotentry/all.rss", "aggregator"),
     "nhk-main": ("https://www3.nhk.or.jp/rss/news/cat0.xml", "general"),
     "asahi": ("https://www.asahi.com/rss/asahi/newsheadlines.rdf", "general"),
     "jpcert": ("https://www.jpcert.or.jp/rss/jpcert.rdf", "security"),
@@ -119,7 +123,7 @@ class Fetcher:
 
     def _wait(self, host: str):
         now = self.clock()
-        wait = max(self.last_host.get(host, -1e9) + HOST_GAP - now, self.last_any + ANY_GAP - now, 0)
+        wait = max(self.last_host.get(host, -1e9) + HOST_GAPS.get(host, HOST_GAP) - now, self.last_any + ANY_GAP - now, 0)
         if wait > 0:
             self.sleep(wait)
         t = self.clock()
@@ -182,7 +186,9 @@ CATEGORIES = [
     ("gadget_sale", False, "価格・割引率が主題(価格を書かない決まりと合わない)", [r"セールで\d+％オフ", r"％オフ", r"クーポン", r"還元"]),
     ("disaster_weather", True, "", [r"台風", r"大雨", r"警報", r"備蓄", r"防災", r"地震", r"津波", r"停電", r"豪雨", r"大雪", r"寒波", r"噴火", r"避難", r"気温"]),
     ("leak_security", True, "", [r"流出", r"漏えい", r"漏洩", r"不正アクセス", r"脆弱性", r"ハッキング", r"サイバー", r"フィッシング", r"ダークウェブ", r"盗難", r"セキュリティ", r"乗っ取り", r"ランサム"]),
-    ("health", False, "健康・効能の断定になりやすい", [r"病", r"医療", r"感染", r"症", r"がん", r"体臭", r"ダイエット", r"トレーナー", r"エボラ", r"健康"]),
+    # consumer trouble (contracts, cancellation, labels, fees, procedures) is in scope since 2026-11-04; the party's own products are never placed
+    ("consumer_trouble", True, "", [r"契約", r"解約", r"勧誘", r"トラブル", r"高額請求", r"返金", r"注意喚起", r"国民生活センター", r"消費者", r"表示", r"料金", r"手続き", r"制度", r"クーリング"]),
+    ("health", False, "効能の断定・診断や治療の助言になりやすい", [r"病", r"医療", r"感染", r"症", r"がん", r"体臭", r"ダイエット", r"エボラ", r"健康"]),
     ("incident", False, "被害を扱う話に商品を結びつけない", [r"死亡", r"重体", r"重傷", r"遺体", r"逮捕", r"摘発", r"事件", r"事故", r"容疑", r"爆弾", r"空爆", r"攻撃"]),
     ("politics_world_finance", False, "政治・国際・金融は扱わない", [r"選挙", r"大統領", r"首相", r"政権", r"与党", r"野党", r"民主", r"共和", r"トランプ", r"イスラエル", r"イラン", r"ウクライナ", r"ロシア", r"北朝鮮", r"中国",
                                                          r"東証", r"NY円", r"NY株", r"NYダウ", r"日経平均", r"為替", r"利上げ", r"株価", r"原油", r"首脳", r"外相", r"国会", r"献金", r"農相", r"自治体システム"]),
@@ -190,7 +196,7 @@ CATEGORIES = [
     ("life_food", True, "", [r"値上げ", r"もやし", r"カメムシ", r"家族じまい", r"セルフレジ", r"節約", r"食品", r"洗剤", r"収納", r"掃除", r"暖房", r"寒さ", r"電気代", r"光熱費"]),
     ("it_company", False, "商品の種類が決まらない(企業・AI・決算の話)", [r"AI", r"決算", r"増収", r"買収", r"IPO", r"Windows", r"Apple", r"Google", r"Microsoft", r"アプリ", r"SaaS", r"業績", r"社長", r"人事"]),
 ]
-CAT_LABEL = {"disaster_weather": "防災・気象", "leak_security": "情報漏えい・セキュリティ", "life_food": "暮らし・食", "gadget_sale": "ガジェットのセール(価格が主題)",
+CAT_LABEL = {"consumer_trouble": "消費者トラブル・制度・手続き", "disaster_weather": "防災・気象", "leak_security": "情報漏えい・セキュリティ", "life_food": "暮らし・食", "gadget_sale": "ガジェットのセール(価格が主題)",
              "health": "健康・医療", "incident": "事件・事故", "politics_world_finance": "政治・国際・金融・市況", "sports_entertainment": "スポーツ・芸能・文化",
              "it_company": "IT・企業・AI", "other": "その他(商品に結びつかない)"}
 

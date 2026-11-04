@@ -11,6 +11,7 @@ Checks (a finding has a code; the CLI prints codes and ids only, never the text 
          P11 numbers must come from the facts   P12 repeats and similarity   P13 daily limit, gap, same type   P14 approval
  articles A01 layers in order   A02 layer mix   A03 each fact has a body and a date   A04 numbers   A05 proper nouns not in the ledger
          A06 criticism of a named party   A07 forbidden words   A08 price / product names   A09 update history really changed   A10 freshness
+         A13 the party of a consumer trouble gets no product or path, and no individual victim (P16 is the same rule for posts)
 Not implemented (needs a live feed or a page build): warning areas (P15), thin-page measure (A11), advertising label in the built page (A12), the natural-Japanese gate (A14).
 """
 from __future__ import annotations
@@ -43,17 +44,18 @@ AUTHORITY = ["専門家によると", "専門家は", "医師", "関係者によ
 PRICE_RE = re.compile(r"\d[\d,]*\s*円|最安|格安|お得|安い|ランキング|No\.?\s?1|第\s?1位|[1１]位|ポイント\d|送料無料")
 CRITICISM = ["隠蔽", "怠慢", "責任", "が悪い", "のせい", "失態", "ずさん", "無責任", "許せない", "ひどい", "だらしない"]
 ORG_RE = re.compile(r"[一-龥ァ-ヴーA-Za-z]{2,}(?:社|庁|省|氏|会社|銀行|電力|協会|機構|センター|委員会|知事|首相|大臣|事業者)")
+VICTIM_INDIVIDUAL = ["被害女性", "被害男性", "被害者の女性", "被害者の男性", "遺族", "被害少女", "被害児童"]       # stories about an individual victim are not used (owner 2026-11-04)
 LEGAL_ADVICE = ["違法です", "訴えられる", "必ず儲かる", "儲かる"]
 # subjects that are off limits for this project (design 2-4); substring match
 OFF_LIMITS = {
-    "medical": ["効く", "治る", "治す", "改善する", "予防できる", "健康に", "免疫", "ダイエット", "サプリ", "医薬", "病気"],
+    "medical": ["効く", "治る", "治す", "改善する", "予防できる", "健康に", "免疫", "ダイエット", "サプリ", "医薬", "病気", "治療", "処方", "症状が"],
     "finance": ["投資", "FX", "暗号資産", "仮想通貨", "儲か", "利回り", "証券", "株価", "株式"],
     "alcohol": ["ボジョレー", "ワイン", "日本酒", "ビール", "飲酒"],
     "adult": ["アダルト", "成人向け", "18禁"],
     "gambling": ["カジノ", "パチンコ", "競馬", "ギャンブル"],
     "politics": ["選挙", "与党", "野党", "政権", "投票"],
 }
-ISSUERS = ["気象庁", "防災庁", "内閣府", "消防庁", "国立天文台", "総務省", "経済産業省", "資源エネルギー庁", "厚生労働省", "国土交通省", "文部科学省", "IPA", "JPCERT", "首相官邸", "政府"]
+ISSUERS = ["国民生活センター", "消費者庁", "気象庁", "防災庁", "内閣府", "消防庁", "国立天文台", "総務省", "経済産業省", "資源エネルギー庁", "厚生労働省", "国土交通省", "文部科学省", "IPA", "JPCERT", "首相官邸", "政府"]
 HEDGE_END = re.compile(r"(そう|かも|かな|かもしれない|と考えられる|可能性がある|可能性も|ではないか|のではないか|だろう|と思う|かもね|ようだ|見方もある|見方ができる)$")
 HEDGE_ANY = re.compile(r"(かもしれない|と考えられる|可能性がある|可能性も|のではないか|だろう|と思う|そう[。!！\s]|かも[。!！\s]|かな[。!！\s])")
 DATE_RE = re.compile(r"\d{1,2}月\d{1,2}日|\d{4}年\d{1,2}月")
@@ -173,6 +175,11 @@ def check_post(p: dict, ctx: dict | None = None) -> list[Finding]:
         add("P04", "authority / price / rank word", w)
     for w in _hits(both, LEGAL_ADVICE):
         add("P09", "legal / money advice", w)
+    for w in _hits(both, VICTIM_INDIVIDUAL):
+        add("P09", "an individual victim", w)
+    for name in p.get("parties", []):                     # the company that caused the trouble is never named in a post and never gets a path
+        if name and name in both:
+            add("P16", "the party of the trouble is named in the text", name)
     for cat, words in OFF_LIMITS.items():
         for w in _hits(both, words):
             add("P09", f"off-limits subject ({cat})", w)
@@ -197,7 +204,7 @@ def check_post(p: dict, ctx: dict | None = None) -> list[Finding]:
         add("P07", "more than one URL in the reply")
 
     # P08 PR line (a reply with a link starts with 【PR】, the second line says what the page offers; the body has no 【PR】)
-    if reply:
+    if reply and p.get("ads", True):          # a reply that carries no advertising (ads: false) needs no 【PR】
         lines = [l for l in reply.strip().split("\n") if l.strip()]
         if not lines or not lines[0].startswith("【PR】"):
             add("P08", "the reply must start with 【PR】")
@@ -393,6 +400,13 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
         window = alltext[max(0, m.start() - 30): m.end() + 30]
         if ORG_RE.search(window) or any(n in window for n in a.get("ledger", [])):
             add("A06", "criticism next to a named party", m.group(0))
+    # A13 the party of the trouble: not in the preparation layer (no product or service of it is placed), and no individual victim anywhere
+    for name in a.get("parties", []):
+        for s in secs:
+            if s.get("layer") == "prep" and any(name in tx for tx in text_of(s)):
+                add("A13", "the party of the trouble is named in the preparation layer", name)
+    for w in _hits(alltext, VICTIM_INDIVIDUAL):
+        add("A13", "an individual victim", w)
     # A07 forbidden words, A08 price and product names
     for w in _hits(alltext, ALARM):
         add("A07", "alarm word", w)

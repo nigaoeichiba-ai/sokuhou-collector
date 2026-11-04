@@ -89,6 +89,11 @@ class TestFetcher(unittest.TestCase):
         self.assertGreaterEqual(len(c.slept), 2)
         self.assertTrue(all(s >= n.HOST_GAP - 1e-6 for s in c.slept[:2]))
 
+    def test_hatena_asks_for_five_seconds(self):
+        f, c = fetcher({"https://b.hatena.ne.jp/hotentry/all.rss": (200, RDF)})
+        f.get("https://b.hatena.ne.jp/hotentry/all.rss")
+        self.assertTrue(any(s >= 5.0 - 1e-6 for s in c.slept))
+
     def test_gap_between_different_hosts(self):
         f, c = fetcher({self.URL: (200, RSS), "https://other.example/x.xml": (200, RSS)})
         f.get(self.URL)
@@ -148,6 +153,16 @@ class TestCollect(unittest.TestCase):
             n.private_dir(n.REPO_ROOT / "wadai-private-test")
         self.assertFalse((n.REPO_ROOT / "wadai-private-test").exists())
 
+    def test_aggregators_are_discovery_only_and_listed_as_such(self):
+        agg = {k for k, (_u, kind) in n.SOURCES.items() if kind == "aggregator"}
+        self.assertEqual(agg, {"livedoor", "hatena"})
+        # a refused aggregator drops out like any other source
+        f, _ = fetcher({"https://news.livedoor.com/robots.txt": (403, b"")})
+        with tempfile.TemporaryDirectory() as t:
+            private = n.private_dir(t)
+            r = n.collect(private, f, "20261104", {"livedoor": n.SOURCES["livedoor"]})
+            self.assertIn("refused", r["status"]["livedoor"])
+
     def test_default_sources_have_no_sports_or_entertainment_only_feed(self):
         self.assertFalse(any("sports" in u or "entertainment" in u for u, _k in n.SOURCES.values()))
 
@@ -166,6 +181,9 @@ class TestClassify(unittest.TestCase):
         ("路上に血を流した女性 搬送も重体", "incident"),
         ("安いもやし限界 5年で13社消える", "life_food"),
         ("米巨大IT5社とも増収 7～9月期", "it_company"),
+        ("パーソナルトレ トラブル急増", "consumer_trouble"),
+        ("個別指導トレーニングトラブル増 強引な勧誘や高額契約「慎重に」", "consumer_trouble"),
+        ("12月から変わるahamoの新料金を検証", "consumer_trouble"),
     ]
 
     def test_known_headlines(self):
@@ -173,7 +191,7 @@ class TestClassify(unittest.TestCase):
             self.assertEqual(n.classify(title), cat, title)
 
     def test_candidates_are_only_the_product_linked_categories(self):
-        self.assertTrue(n.is_candidate("disaster_weather") and n.is_candidate("leak_security") and n.is_candidate("life_food"))
+        self.assertTrue(n.is_candidate("disaster_weather") and n.is_candidate("leak_security") and n.is_candidate("life_food") and n.is_candidate("consumer_trouble"))
         for c in ("gadget_sale", "politics_world_finance", "sports_entertainment", "health", "incident", "it_company", "other"):
             self.assertFalse(n.is_candidate(c), c)
 
