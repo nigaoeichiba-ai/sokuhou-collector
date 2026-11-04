@@ -203,3 +203,16 @@ class OwnersAiWords2(unittest.TestCase):
         keys = [r["key"] for r in aiwords.candidates(texts, human, min_out=3)]
         self.assertIn("進めます", keys)
         self.assertNotIn("確認します", keys)
+
+
+class ThingAndQuantity(unittest.TestCase):
+    def _s77(self, t):
+        md = "# 題\n\n冒頭です。二文目です。\n\n## 見出し\n" + t + "\n"
+        return [x["code"] for x in style_rules.check(doc.parse(md)) if x["code"] == "S77"]
+
+    def test_topic_and_predicate_do_not_fit(self):
+        for t in ["食料は、水と同じ日数分です。", "携帯トイレは、1日5から6回×人数×7日分です。", "水は、人数×日数×3リットルです。"]:
+            self.assertTrue(self._s77(t), t)
+        for t in ["食料も、水と同じ日数分が必要です。", "携帯トイレは、7日分が必要です。", "水は、1人1日3リットルが目安です。", "ライトは、1人1本です。", "電池は、4本で足ります。"]:
+            self.assertFalse(self._s77(t), t)
+        self.assertTrue(lexicon.scan(["最低3日分をめざします。"]))
