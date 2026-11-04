@@ -1,6 +1,7 @@
 """文章工房 (sokuhou/kobo): the writer's Markdown, the machine checks (a negative case for each), the material rules, and the write -> check ->
 reader-gate loop with a fake model backend (no model is called in a test).  The texts here are made up (no news, no mall data)."""
 import json
+import re
 import unittest
 
 from sokuhou.kobo import calibrate, checks, doc, engine, material, runner
@@ -60,6 +61,14 @@ class Parse(unittest.TestCase):
         self.assertLess(txt.index("下の表で"), txt.index("[表: 人数別]"))
         self.assertLess(txt.index("| 1人 | 3L |"), txt.index("そのあとライトを出します"))
         self.assertIn("(ここに商品の一覧が入ります)", txt)
+
+    def test_a_rewrite_that_drops_the_summary_gets_it_back(self):
+        from sokuhou.kobo import engine
+        lost = re.sub(r"## 3行まとめ\n(?:- .*\n)+\n?", "", GOOD)
+        self.assertFalse(doc.parse(lost)["tldr"])
+        back = engine._keep_shape(lost, GOOD, "article")
+        self.assertEqual(doc.parse(back)["tldr"], doc.parse(GOOD)["tldr"])
+        self.assertEqual(engine._keep_shape(GOOD, GOOD, "article"), GOOD)
 
     def test_a_part_without_content_is_shown_by_what_it_is(self):
         md = GOOD.replace("ライトをひとつ出して、一度点けてみてください。", "続きは次のページで。\n\n[子ページの案内]\n\n")
