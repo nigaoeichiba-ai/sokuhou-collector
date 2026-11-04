@@ -306,13 +306,25 @@ def human_marks(fs: list[C.Finding]) -> list[dict]:
     """What a person should look at, from the machine checks only (nothing here passes or stops the text)."""
     out, seen = [], set()
     for f in fs:
-        if f.code == "K05":
-            continue                       # long word lists: noise for a person reading
+        if f.code == "K05" or not (f.code.startswith("K") or f.code == "NJ"):
+            continue                       # K05 word lists and the wadai codes (English, repeating K10, flagging what the material has): noise
         key = (f.code, f.msg)
         if key in seen:
             continue
         seen.add(key)
         out.append({"code": f.code, "label": MARK_LABELS.get(f.code, f.code), "msg": f.msg, "detail": f.detail, "strong": f.block})
+    return out
+
+
+def added_explanations(draft: str, final: str, m: dict) -> list[dict]:
+    """Explanations in brackets that the 突っ込み役 added and the material does not have (2026-11-04: '188(最寄りの消費生活センターに
+    つながる番号)', a legal definition of クーリング・オフ): marked for a person, not removed."""
+    src = source_text(m)
+    out = []
+    for mt in re.finditer(r"[（(]([^（）()]{4,40})[）)]", final):
+        if mt.group(0) not in draft and mt.group(1) not in src:
+            out.append({"code": "TK", "label": "突っ込み役が足した説明", "msg": f"「{mt.group(1)}」は素材にない説明です。正しいか、要るかを見てください。",
+                        "detail": final[max(0, mt.start() - 15):mt.end()].replace("\n", " "), "strong": False})
     return out
 
 
@@ -335,7 +347,7 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
     final = _keep_shape(_apply_tsukkomi(tool, draft, tk, log), draft, tool)
     t2 = time.time()
     fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
-    marks = human_marks(fs1)
+    marks = human_marks(fs1) + added_explanations(draft, final, m)
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     result = {"mode": "light", "tool": tool, "material": m.get("id"), "site": card.get("site"), "writer": writer, "tsukkomi": tk,
               "draft": draft, "output": final, "marks": marks, "draft_marks": human_marks(fs0),

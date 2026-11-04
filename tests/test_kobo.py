@@ -241,6 +241,12 @@ class Light(unittest.TestCase):
         self.assertIn("K03", [x["code"] for x in r["marks"]])                      # the number not in the material is marked for a person
         self.assertIn("total", r["seconds"])
 
+    def test_an_explanation_added_by_the_tsukkomi_is_marked(self):
+        final = GOOD.replace("点検は2時間です。", "点検(電気を止めて設備を調べる作業)は2時間です。")
+        ms = engine.added_explanations(GOOD, final, MAT)
+        self.assertEqual([x["code"] for x in ms], ["TK"])
+        self.assertEqual(engine.added_explanations(GOOD, GOOD, MAT), [])
+
     def test_definite_claims_are_marked_not_blocked(self):
         md = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。これで必ず安心です。")
         fs = checks.check(doc.parse(md), MAT, CARD)
