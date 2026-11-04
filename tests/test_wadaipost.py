@@ -101,6 +101,11 @@ class TestPostNegatives(unittest.TestCase):
         self.assertCaught("P08", reply="【PR】https://example.com/\nhttps://example.com/x")
         self.assertCaught("P08", body="【PR】" + post()["body"])
 
+    def test_p08_a_reply_without_advertising_needs_no_pr(self):
+        plain = "詳しくはこちらにまとめました。\nhttps://example.com/consumer/x/"
+        self.assertCaught("P08", reply=plain)                                  # ads default to true: a PR line is required
+        self.assertNotIn("P08", codes(w.check_post(post(reply=plain, ads=False))))
+
     def test_p09_off_limits(self):
         for word in ("ボジョレー", "投資", "サプリ", "選挙", "パチンコ", "免疫", "違法です"):
             self.assertCaught("P09", body=post()["body"] + word)
@@ -247,6 +252,19 @@ class TestArticle(unittest.TestCase):
         self.assertIn("A07", codes(w.check_article(still, {"allowed_phrases": ["緊急要請"]})))   # other banned words stay caught
         self.assertIn("P02", codes(w.check_post(post(body=post()["body"] + "緊急要請"))))
         self.assertNotIn("P02", codes(w.check_post(post(body=post()["body"] + "緊急要請"), {"allowed_phrases": ["緊急要請"]})))
+
+    def test_a13_the_party_of_a_trouble_gets_no_path_and_no_individual_victim(self):
+        a = art(parties=["テスト商事"])
+        a["sections"] = with_sections(prep={"paras": ["契約前の確認を済ませる。テスト商事のコースは選ばない。"]})["sections"]
+        self.assertIn("A13", codes(w.check_article(a)))
+        ok = art(parties=["テスト商事"])
+        self.assertNotIn("A13", codes(w.check_article(ok)))
+        self.assertIn("A13", codes(w.check_article(with_sections(opinion={"paras": ["被害女性の話から考えると、注意が要りそうだ。"]}))))
+
+    def test_treatment_advice_and_party_in_posts(self):
+        self.assertIn("P09", codes(w.check_post(post(body=post()["body"] + "治療に役立つよ"))))
+        self.assertIn("P16", codes(w.check_post(post(parties=["テスト商事"], body=post()["body"] + "テスト商事"))))
+        self.assertNotIn("P16", codes(w.check_post(post(parties=["テスト商事"]))))
 
     def test_a10_freshness(self):
         self.assertTrue(any("stale" in f.msg for f in w.check_article(ART, {"today": "2026-12-20"})))
