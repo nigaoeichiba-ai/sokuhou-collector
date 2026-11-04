@@ -91,8 +91,7 @@ class Build(unittest.TestCase):
 
     def test_search_console_verification_file_is_written(self):
         f = self.out / "googleabcac004d8b7d556.html"
-        self.assertEqual(f.read_text(encoding="utf-8"), "google-site-verification: googleabcac004d8b7d556.html
-")
+        self.assertEqual(f.read_text(encoding="utf-8"), "google-site-verification: googleabcac004d8b7d556.html\n")
 
     def test_a_thin_page_would_be_caught(self):
         """The bar is real: a page with a table but a few lines is reported by the same function the build uses."""
