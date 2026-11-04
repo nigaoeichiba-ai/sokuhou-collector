@@ -117,6 +117,13 @@ def _when(p: dict) -> datetime:
     return datetime.fromisoformat(p["scheduled_at"])
 
 
+def _without(text: str, phrases) -> str:
+    """Official names that contain a banned word (e.g. 緊急要請, the name of the request) may be named once the editor lists them in ctx["allowed_phrases"]."""
+    for ph in phrases:
+        text = text.replace(ph, "")
+    return text
+
+
 def _hits(text: str, words) -> list:
     return [w for w in words if w in text]
 
@@ -128,7 +135,7 @@ def check_post(p: dict, ctx: dict | None = None) -> list[Finding]:
     out: list[Finding] = []
     pid = str(p.get("id", "?"))
     body, reply = p.get("body", ""), p.get("reply", "")
-    both = body + "\n" + reply
+    both = _without(body + "\n" + reply, ctx.get("allowed_phrases", []))
 
     def add(code, msg, detail=""):
         out.append(Finding(code, pid, msg, detail))
@@ -330,7 +337,7 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
         lay = s.get("layer")
         if lay in LAYER_ORDER and LAYER_TITLES[lay] not in s.get("heading", ""):
             add("A01", f"the heading of the {lay} section must contain '{LAYER_TITLES[lay]}'")
-    alltext = "\n".join(t for s in secs for t in text_of(s))
+    alltext = _without("\n".join(t for s in secs for t in text_of(s)), ctx.get("allowed_phrases", []))
     fact_texts = [t for s in secs if s.get("layer") == "fact" for t in text_of(s)]
     # A02 layer mix
     for s in secs:
