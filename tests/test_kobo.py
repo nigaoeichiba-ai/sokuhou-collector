@@ -322,12 +322,12 @@ class Light(unittest.TestCase):
         txt = ("## 足りなかったら、どこから?\n\n足りない所を見つけてみませんか。この記事は水を扱います。\n\n| 扱 | 足りない所 |\n\n"
                "> ライフハック: 足りない所\n\nどこにありますか。取り扱いは別です。")
         new, n = lexicon.autofix(txt)
-        self.assertIn("## 足りなかったら、何から?", new)
+        self.assertIn("## 足りなかったら、何から？", new)           # どこ→何 and the half-width ? to ？
         self.assertIn("足りない備えを確認しませんか。この記事は水を取り上げます。", new)
         self.assertIn("| 扱 | 足りない所 |", new)                  # a table row is left alone
         self.assertIn("どこにありますか。", new)                   # a place: not replaced
         self.assertIn("取り扱いは別です", new)                     # 取り扱い is not 扱う
-        self.assertEqual(n, 4)
+        self.assertEqual(n, 5)                                     # 5 now: the half-width ? of the heading is replaced too
         # a new point becomes an entry at once
         old = lexicon.PATH
         with tempfile.TemporaryDirectory() as td:
