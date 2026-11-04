@@ -83,3 +83,32 @@ class DeAndOku(unittest.TestCase):
             self.assertTrue(lexicon.scan([t]), t)
         for t in ok:
             self.assertFalse(lexicon.scan([t]), t)
+
+
+class SubjectPredicate(unittest.TestCase):
+    """The owner's points of 2026-11-05 are the negative examples: each must be marked, and the natural rewrite must not be."""
+
+    def _codes(self, body):
+        md = "# 題\n\n冒頭です。二文目です。\n\n## 見出し\n" + body + "\n"
+        return [x["code"] for x in style_rules.check(doc.parse(md))]
+
+    def test_s54_catches_any_word_before_demasu(self):
+        for t in ("額が出ます。", "幅が出ます。", "水の量が出ます。", "結果が出ます。"):
+            self.assertTrue([h for h in lexicon.scan([t]) if h.get("code") == "S54"], t)
+        for t in ("ライトを出して点けます。", "熱が出たら休みます。", "ごみを出す日です。", "新しい話が出ると、迷います。"):
+            self.assertFalse([h for h in lexicon.scan([t]) if h.get("code") == "S54"], t)
+
+    def test_s56_quantity_subject_with_a_doing_verb(self):
+        self.assertIn("S56", self._codes("水の必要量は、人数と日数をかけて計算します。"))
+        self.assertIn("S56", self._codes("足りない防災グッズは、いつもの買い物で買い足します。"))
+        self.assertIn("S56", self._codes("まず3日分をそろえて、あとから1週間分まで増やします。"))
+        self.assertNotIn("S56", self._codes("水の必要量は、人数と日数をかけて計算できます。"))
+        self.assertNotIn("S56", self._codes("足りない防災グッズは、買い足していきます。"))
+        self.assertNotIn("S56", self._codes("あとから1週間分まで増やしていきます。"))
+
+    def test_s57_a_sentence_that_starts_in_the_middle(self):
+        bad = "防災庁は、水と食料を最低3日分備蓄することをすすめています。食事に使う分も含めて、1人1日3リットルです。"
+        self.assertIn("S57", self._codes(bad))
+        self.assertIn("S57", self._codes("その量は、人数で決まります。"))
+        self.assertNotIn("S57", self._codes("防災庁は、水と食料を最低3日分備蓄することをすすめています。水は、食事に使う分も含めて、1人1日3リットルです。"))
+        self.assertNotIn("S57", self._codes("これからの流れを書きます。"))
