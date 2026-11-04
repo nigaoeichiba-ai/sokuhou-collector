@@ -44,6 +44,19 @@ def _run_claude(model: str, prompt: str, system: str | None, timeout: int) -> st
     return r.stdout.strip()
 
 
+def call_with_web(model: str, prompt: str, timeout: int = 1500) -> str:
+    """A Claude call that may search and read the web (the research role). Only WebSearch / WebFetch; no file or shell tool."""
+    if _backend is not _real:
+        return _backend(model, prompt, None)
+    with tempfile.TemporaryDirectory(prefix="kobo_") as tmp:
+        cmd = [_claude_exe(), "-p", "--model", model, "--safe-mode", "--tools", "WebSearch,WebFetch", "--allowedTools", "WebSearch", "WebFetch",
+               "--no-session-persistence", "--output-format", "text"]
+        r = subprocess.run(cmd, input=prompt, capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=tmp, timeout=timeout)
+    if r.returncode != 0 or not r.stdout.strip():
+        raise RuntimeError(f"claude {model} (web) failed ({r.returncode}): {(r.stderr or r.stdout)[-400:]}")
+    return r.stdout.strip()
+
+
 def _run_codex(prompt: str, system: str | None, timeout: int) -> str:
     with tempfile.TemporaryDirectory(prefix="kobo_") as tmp:
         out = Path(tmp) / "last.txt"

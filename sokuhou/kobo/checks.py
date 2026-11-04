@@ -51,6 +51,8 @@ COMMON_KATA = set("""ライト ヘッドライト ランタン スマホ スマ�
 # wadaipost.UNKNOWN_RE misses the polite negative ('分かっていません'): added here
 UNKNOWN_MORE = re.compile(r"(?:分か|わか)っていません|明らかになっていません|明らかではありません|はっきりしていません")
 SENT_BLOCK, SENT_WARN, PARA_WARN = 100, 80, 130
+# situations that belong to one story; seen in a text whose story does not have them, they came from another material (K12)
+SITUATIONS = ["停電", "台風", "地震", "断水", "大雨", "浸水", "避難", "津波", "猛暑", "大雪", "感染", "流出", "漏えい", "不正アクセス", "詐欺"]
 
 
 def _core(sent: str) -> str:
@@ -76,6 +78,11 @@ def _grams(s: str) -> set:
 def _jac(a: str, b: str) -> float:
     ga, gb = _grams(a), _grams(b)
     return len(ga & gb) / max(1, min(len(ga), len(gb))) if ga and gb else 0.0
+
+
+def _jac_max(a: str, b: str) -> float:
+    ga, gb = _grams(a), _grams(b)
+    return len(ga & gb) / max(1, max(len(ga), len(gb))) if ga and gb else 0.0
 
 
 def _body_sentences(doc: dict) -> list[tuple[int, str]]:
@@ -129,7 +136,8 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
         add("K01", True, f"「{g}」という言い回しが{reps[g]}回出ます。2回目からは言い換えるか、削ってください。", g)
     n_f = sum(blob.count(f) for f in FORMULAS)
     if n_f:
-        add("K01", True, f"「一つの手です」「選択肢です」のような逃げの言い方が{n_f}回あります。ふつうに勧める言い方にしてください。")
+        # the owner's complaint was the formula used again and again: once is a note, twice stops the text
+        add("K01", n_f >= 2, f"「一つの手です」「選択肢です」のような逃げの言い方が{n_f}回あります。ふつうに勧める言い方にしてください。")
     for pat, limit, label in PETS:
         n = len(re.findall(pat, blob))
         if n > limit:
@@ -144,7 +152,8 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
     for a in range(len(sents)):
         for b in range(a + 1, len(sents)):
             (ia, sa), (ib, sb) = sents[a], sents[b]
-            if ia != ib and len(sa) >= 15 and len(sb) >= 15 and _jac(sa, sb) >= 0.6 and pairs < 3:
+            # both ways: a summary sentence followed by its detail ('見るのは、A、B、C' / 'ふたつめは、B') is not a repeat
+            if ia != ib and len(sa) >= 15 and len(sb) >= 15 and _jac(sa, sb) >= 0.6 and _jac_max(sa, sb) >= 0.45 and pairs < 3:
                 pairs += 1
                 add("K02", True, "ほぼ同じことを、別の所でもう一度言っています。どちらか一方にしてください。", f"{sa[:25]} / {sb[:25]}")
     # K03 numbers not in the material
@@ -225,6 +234,12 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
                 add("K11", True, f"部品 {p['mark']} の中身を、文でも書いています。文では「下の表で〜」のように指すだけにしてください。", p["mark"])
         for mk in set(placed) - {p["mark"] for p in m.get("parts", [])}:
             add("K11", True, f"素材にない部品 {mk} を置いています。消してください。", mk)
+    # K12 a situation from another story (the desk, 2026-11-04: a 停電 box in the data-leak article came from the typhoon article's material):
+    # a situation word in the text that is in neither the facts, the reader memo, the topic nor the decided plan
+    story = "\n".join([f["text"] for f in m.get("facts", [])] + [str(v) for v in (m.get("reader_memo") or {}).values()] + [m.get("topic", ""), m.get("plan", "")])
+    for w in SITUATIONS:
+        if w in blob and w not in story:
+            add("K12", True, f"「{w}」の話は、この記事の事実にも読者メモにもありません。別の記事の話が混ざっていないか見て、混ざっていれば消してください。", w)
     # naturaljp
     try:
         from sokuhou import naturaljp as NJ

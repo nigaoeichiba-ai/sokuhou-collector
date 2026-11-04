@@ -242,6 +242,35 @@ def tool_findings(tool: str, u: dict, m: dict, card: dict) -> list[C.Finding]:
     return fs
 
 
+# ---- 突っ込み役 (the desk, 2026-11-04): a picky editor asks 'what? who? of what?' sentence by sentence; its revised text is the next version --
+
+TSUKKOMI_TOOLS = ("article", "rewrite", "outline", "tips", "tldr", "threads")
+TSUKKOMI_DEFAULT = os.environ.get("KOBO_TSUKKOMI", "haiku")     # 2026-11-04 comparison: haiku caught every point the owner made, with the least over-correction
+
+
+def tsukkomi(text: str, model: str) -> dict:
+    """{"points": [{text, kind, ask, fix}], "revised": full text, "ok": parsed}.  Not a pass / fail: every point is applied."""
+    raw = runner.call(model, fill(prompt_file("tsukkomi"), text=text))
+    pts, revised = [], ""
+    mm = re.search(r"===突っ込み===\s*(.*?)\s*===直した全文===\s*(.*)$", raw, re.S)
+    if mm:
+        js = parse_json(mm.group(1))
+        pts = js.get("points", []) if isinstance(js.get("points"), list) else []
+        revised = _strip_fence(mm.group(2))
+    ok = bool(mm) and bool(revised.strip())
+    return {"model": model, "points": pts, "revised": revised if ok else text, "ok": ok}
+
+
+def _apply_tsukkomi(tool: str, text: str, model: str | None, log: list) -> str:
+    if not model or tool not in TSUKKOMI_TOOLS:
+        return text
+    t = tsukkomi(text, model)
+    if tool == "article" and t["ok"] and not D.parse(t["revised"])["sections"]:
+        t["ok"], t["revised"] = False, text            # the revised text lost the shape: keep the writer's version
+    log.append({"model": model, "points": t["points"], "ok": t["ok"], "before": text})
+    return t["revised"]
+
+
 # ---- the loop ----------------------------------------------------------------------------------------------------------------------------
 
 def _notes(fs: list[C.Finding], sup: dict) -> str:
@@ -256,7 +285,7 @@ def _marks(g: dict) -> str:
 
 
 def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str | None = None, source: str = "", rewrites: int = MAX_REWRITES,
-        record: bool = True, label: str = "") -> dict:
+        record: bool = True, label: str = "", tsukkomi_model: str | None = "default") -> dict:
     assert tool in TOOLS, tool
     writer = pick_writer(tool, m, writer)
     reader = reader or runner.other_family(writer)
@@ -270,7 +299,10 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
     rec_dir = home() / "runs" / datetime.now().strftime("%Y-%m-%d") / f"{m.get('id', 'x')}-{tool}-{writer}{('-' + label) if label else ''}-{stamp}"
     rounds = []
     prompt = writer_prompt(tool, m, card, source)
-    text = runner.call(writer, prompt, system)
+    tk = TSUKKOMI_DEFAULT if tsukkomi_model == "default" else tsukkomi_model
+    tk = None if tk in ("", "none") else tk
+    tk_log: list = []
+    text = _apply_tsukkomi(tool, runner.call(writer, prompt, system), tk, tk_log)
     t0 = time.time()
     result = None
     for r in range(rewrites + 1):
@@ -290,7 +322,7 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
             bad_sup = any(tool not in MULTI or _in(x["text"], raw) for x in sup["unsupported"])
             if not C.blocking(fs) and not bad_sup and not g["unparsed"] and not sup["unparsed"] and marks_ok(mine, raw, tool):
                 passed.append(u)
-        rd = {"round": r, "writer": writer, "text": text, "findings": [[f.as_dict() for f in fs] for fs in fs_all], "support": sup,
+        rd = {"round": r, "writer": writer, "text": text, "tsukkomi": tk_log[-1] if tk_log and len(tk_log) == r + 1 else None, "findings": [[f.as_dict() for f in fs] for fs in fs_all], "support": sup,
               "reader": g, "passed": len(passed), "units": len(us), "passed_units": [u["raw"] for u in passed]}
         rd["score"] = score(rd)
         rounds.append(rd)
@@ -302,7 +334,7 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
             result = {"tool": tool, "material": m.get("id"), "site": card.get("site"), "writer": writer, "reader": reader, "judge": judge,
                       "passed": bool(ok), "rewrites": r, "best_round": best["round"],
                       "output": best["passed_units"] if tool in MULTI else (best["text"] if ok else ""),
-                      "last": text, "best": best["text"], "rounds": rounds, "seconds": round(time.time() - t0), "allowance": PASS_L2_CHARS}
+                      "last": text, "best": best["text"], "rounds": rounds, "seconds": round(time.time() - t0), "allowance": PASS_L2_CHARS, "tsukkomi": tk}
             break
         fs_flat = [f for fs in fs_all for f in fs]
         # rewrite from the best version so far (a worse rewrite is not built on)
@@ -311,7 +343,7 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
             fs_flat = [C.Finding(**f) for fs in base["findings"] for f in fs]
             sup, g = base["support"], base["reader"]
         rp = fill(prompt_file("revise"), head=head_text(m, card) if tool != "rewrite" else "【もとの文章】\n" + source, draft=base["text"], marks=_marks(g), notes=_notes(fs_flat, sup))
-        text = runner.call(writer, rp, system)
+        text = _apply_tsukkomi(tool, runner.call(writer, rp, system), tk, tk_log)
     if record:
         save(rec_dir, m, prompt, result)
     result["record"] = str(rec_dir) if record else ""
