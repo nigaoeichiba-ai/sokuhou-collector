@@ -92,6 +92,7 @@ class Stopwatch:
 
             def __exit__(self_inner, *exc):
                 t1 = sw.clock()
+                self_inner.seconds = round((t1 - self_inner.t0).total_seconds(), 1)
                 with sw.path.open("a", encoding="utf-8") as f:
                     f.write(json.dumps({"stage": name, "start": self_inner.t0.isoformat(timespec="seconds"), "end": t1.isoformat(timespec="seconds"),
                                         "seconds": round((t1 - self_inner.t0).total_seconds(), 1), "ok": exc[0] is None}, ensure_ascii=False) + "\n")
@@ -183,25 +184,32 @@ def parse_feed(data: bytes) -> list[dict]:
 # ---- classification (rules; today's counts) -----------------------------------------------------------------------------------------------------
 # order matters: the first category whose word matches wins.  'candidate' categories can lead to a product kind.
 CATEGORIES = [
-    ("gadget_sale", False, "価格・割引率が主題(価格を書かない決まりと合わない)", [r"セールで\d+％オフ", r"％オフ", r"クーポン", r"還元"]),
-    ("disaster_weather", True, "", [r"台風", r"大雨", r"警報", r"備蓄", r"防災", r"地震", r"津波", r"停電", r"豪雨", r"大雪", r"寒波", r"噴火", r"避難", r"気温"]),
-    ("leak_security", True, "", [r"流出", r"漏えい", r"漏洩", r"不正アクセス", r"脆弱性", r"ハッキング", r"サイバー", r"フィッシング", r"ダークウェブ", r"盗難", r"セキュリティ", r"乗っ取り", r"ランサム"]),
+    ("gadget_sale", False, "価格・割引率が主題(価格を書かない決まりと合わない)", [r"セールで\d+％オフ", r"％オフ", r"クーポン", r"還元", r"ポイント"]),
+    ("disaster_weather", True, "", [r"台風", r"大雨", r"警報", r"備蓄", r"防災", r"地震", r"津波", r"停電", r"豪雨", r"大雪", r"寒波", r"噴火", r"避難", r"気温", r"傘", r"天気", r"雷雨", r"土砂", r"通信障害", r"システム障害", r"ライフライン"]),
+    ("leak_security", True, "", [r"流出", r"漏えい", r"漏洩", r"漏れて", r"不正アクセス", r"脆弱性", r"ハッキング", r"サイバー", r"フィッシング", r"ダークウェブ", r"盗難", r"セキュリティ", r"乗っ取り", r"ランサム", r"設計上の不備", r"窃取", r"GMO.*会見", r"会見.*GMO", r"不正なユーザー"]),
     # consumer trouble (contracts, cancellation, labels, fees, procedures) is in scope since 2026-11-04; the party's own products are never placed
     ("consumer_trouble", True, "", [r"契約", r"解約", r"勧誘", r"トラブル", r"高額請求", r"返金", r"注意喚起", r"国民生活センター", r"消費者", r"表示", r"料金", r"手続き", r"制度", r"クーリング"]),
-    ("health", False, "効能の断定・診断や治療の助言になりやすい", [r"病", r"医療", r"感染", r"症", r"がん", r"体臭", r"ダイエット", r"エボラ", r"健康"]),
-    ("incident", False, "被害を扱う話に商品を結びつけない", [r"死亡", r"重体", r"重傷", r"遺体", r"逮捕", r"摘発", r"事件", r"事故", r"容疑", r"爆弾", r"空爆", r"攻撃"]),
+    ("health", False, "効能の断定・診断や治療の助言になりやすい", [r"病", r"医療", r"感染", r"症", r"がん", r"体臭", r"ダイエット", r"エボラ", r"健康", r"精子"]),
+    ("incident", False, "被害を扱う話に商品を結びつけない", [r"死亡", r"重体", r"重傷", r"遺体", r"逮捕", r"摘発", r"事件", r"事故", r"容疑", r"爆弾", r"空爆", r"攻撃", r"監禁", r"運転見合わせ"]),
     ("politics_world_finance", False, "政治・国際・金融は扱わない", [r"選挙", r"大統領", r"首相", r"政権", r"与党", r"野党", r"民主", r"共和", r"トランプ", r"イスラエル", r"イラン", r"ウクライナ", r"ロシア", r"北朝鮮", r"中国",
-                                                         r"東証", r"NY円", r"NY株", r"NYダウ", r"日経平均", r"為替", r"利上げ", r"株価", r"原油", r"首脳", r"外相", r"国会", r"献金", r"農相", r"自治体システム"]),
-    ("sports_entertainment", False, "人名・作品名で売る商品は扱わない", [r"監督", r"選手", r"優勝", r"ドラマ", r"主演", r"映画", r"アニメ", r"MV", r"歌", r"結婚", r"将棋", r"野球", r"サッカー", r"ゴルフ", r"駅伝", r"欧州CL", r"ACL"]),
-    ("life_food", True, "", [r"値上げ", r"もやし", r"カメムシ", r"家族じまい", r"セルフレジ", r"節約", r"食品", r"洗剤", r"収納", r"掃除", r"暖房", r"寒さ", r"電気代", r"光熱費"]),
-    ("it_company", False, "商品の種類が決まらない(企業・AI・決算の話)", [r"AI", r"決算", r"増収", r"買収", r"IPO", r"Windows", r"Apple", r"Google", r"Microsoft", r"アプリ", r"SaaS", r"業績", r"社長", r"人事"]),
+                                                         r"東証", r"NY円", r"NY株", r"NYダウ", r"日経平均", r"為替", r"利上げ", r"株価", r"原油", r"首脳", r"外相", r"国会", r"献金", r"農相", r"自治体システム",
+                                                         r"安保", r"ICC", r"表現の自由", r"協定", r"党大会", r"証券", r"ファイナンス", r"物品税", r"外交", r"デモ"]),
+    ("sports_entertainment", False, "人名・作品名で売る商品は扱わない", [r"監督", r"選手", r"優勝", r"ドラマ", r"主演", r"映画", r"アニメ", r"MV", r"歌", r"結婚", r"将棋", r"竜王", r"野球", r"サッカー", r"ゴルフ", r"駅伝", r"欧州CL", r"ACL", r"阪神", r"巨人",
+                                                                  r"Ｇリーグ", r"Gリーグ", r"F1", r"連覇", r"開幕戦", r"ブラッサム", r"アナ[、。]", r"アナウンサー", r"パワハラ発言", r"MLB", r"NBA", r"リベンジ"]),
+    ("career_learning", True, "", [r"教員免許", r"資格", r"転職", r"中途採用", r"公務員志望", r"学び直し", r"リスキリング", r"採用", r"試験"]),
+    ("product_news", True, "", [r"生産中止", r"再販", r"発売", r"特典", r"ワークマン", r"バッグ", r"バックパック", r"新モデル"]),
+    ("life_food", True, "", [r"値上げ", r"もやし", r"カメムシ", r"家族じまい", r"セルフレジ", r"節約", r"食品", r"洗剤", r"収納", r"掃除", r"暖房", r"寒さ", r"電気代", r"光熱費", r"物価", r"建築費", r"家計", r"アレンジ", r"レシピ", r"ウナギ"]),
+    ("it_company", False, "商品の種類が決まらない(企業・AI・決算の話)", [r"AI", r"決算", r"増収", r"買収", r"IPO", r"Windows", r"Apple", r"Google", r"Microsoft", r"アプリ", r"SaaS", r"業績", r"社長", r"人事", r"Engine", r"PHP", r"Xiaomi", r"ChatGPT",
+                                                            r"ドコモ", r"オープンソース", r"人件費", r"iPhone", r"Anthropic"]),
 ]
-CAT_LABEL = {"consumer_trouble": "消費者トラブル・制度・手続き", "disaster_weather": "防災・気象", "leak_security": "情報漏えい・セキュリティ", "life_food": "暮らし・食", "gadget_sale": "ガジェットのセール(価格が主題)",
+CAT_LABEL = {"career_learning": "学び直し・仕事・資格", "product_news": "商品そのものの話題(生産中止・再販など)", "security_advisory": "技術的な注意喚起(JPCERT・IPA)", "consumer_trouble": "消費者トラブル・制度・手続き", "disaster_weather": "防災・気象", "leak_security": "情報漏えい・セキュリティ", "life_food": "暮らし・食", "gadget_sale": "ガジェットのセール(価格が主題)",
              "health": "健康・医療", "incident": "事件・事故", "politics_world_finance": "政治・国際・金融・市況", "sports_entertainment": "スポーツ・芸能・文化",
              "it_company": "IT・企業・AI", "other": "その他(商品に結びつかない)"}
 
 
-def classify(title: str) -> str:
+def classify(title: str, source: str | None = None) -> str:
+    if source in ("jpcert", "ipa"):
+        return "security_advisory"      # the agencies' technical advisories: a weak link at best (update habits, second factor); counted apart from the leaks in the news
     for cat, _cand, _why, pats in CATEGORIES:
         if any(re.search(p, title) for p in pats):
             return cat
@@ -209,7 +217,7 @@ def classify(title: str) -> str:
 
 
 def is_candidate(cat: str) -> bool:
-    return any(c == cat and cand for c, cand, _w, _p in CATEGORIES)
+    return cat == "security_advisory" or any(c == cat and cand for c, cand, _w, _p in CATEGORIES)
 
 
 def _grams(s: str, n: int = 3) -> set:
@@ -273,7 +281,7 @@ def make_report(private: Path, day: str) -> dict:
     rows = [json.loads(l) for l in (private / "news" / f"{day}.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
     by: dict[str, list[str]] = {}
     for r in rows:
-        by.setdefault(classify(r["title"]), []).append(r["title"])
+        by.setdefault(classify(r["title"], r.get("source")), []).append(r["title"])
     counts = {c: len(v) for c, v in by.items()}
     cand_titles = [t for c, v in by.items() if is_candidate(c) for t in v]
     clusters = cluster(cand_titles)
@@ -344,35 +352,47 @@ def has_gap(article: dict) -> bool:
     return any("〔書く" in t for s in article["sections"] for t in list(s.get("paras", [])) + list(s.get("bullets", [])))
 
 
+def timing_summary(private: Path) -> str:
+    """Stage names, start / end times and seconds only (safe for a public CI log): the 'one hour' target is measured from these."""
+    p = private / "news" / "timing.jsonl"
+    rows = [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()] if p.exists() else []
+    lines = [f"{r['stage']}: {r['start']} -> {r['end']} = {r['seconds']}s" + ("" if r.get("ok", True) else " (failed)") for r in rows[-20:]]
+    total = round(sum(r["seconds"] for r in rows[-20:]), 1)
+    return "\n".join(lines + [f"total (last {len(rows[-20:])} stages): {total}s"])
+
+
 # ---- command line ------------------------------------------------------------------------------------------------------------------------------
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="wadai news collector (read only)")
-    ap.add_argument("cmd", choices=["collect", "report", "bundle"])
+    ap.add_argument("cmd", choices=["collect", "report", "bundle", "timing"])
     ap.add_argument("--private", required=True, help="the private folder, e.g. ~/wadai-private (must be outside the repository)")
     ap.add_argument("--day", default=datetime.now().strftime("%Y%m%d"))
     a = ap.parse_args(argv)
     private = private_dir(a.private)
     sw = Stopwatch(private)
+    if a.cmd == "timing":
+        print(timing_summary(private))
+        return 0
     if a.cmd == "collect":
-        with sw.stage("collect"):
+        with sw.stage("collect") as st:
             r = collect(private, Fetcher(), a.day)
-        print(f"headlines={r['headlines']} raw={r['raw']}")
+        print(f"headlines={r['headlines']} raw={r['raw']} seconds={st.seconds}")
         for sid, st in r["status"].items():
             print(f"  {sid}: {st}")
     elif a.cmd == "report":
-        with sw.stage("report"):
+        with sw.stage("report") as st:
             r = make_report(private, a.day)
-        print(f"headlines={r['headlines']} candidates={r['candidates']} events={r['events']}")
+        print(f"headlines={r['headlines']} candidates={r['candidates']} events={r['events']} seconds={st.seconds}")
         for c, n in sorted(r["counts"].items(), key=lambda x: -x[1]):
             print(f"  {CAT_LABEL.get(c, c)}: {n}")
     else:
         f = Fetcher()
-        with sw.stage("bundle"):
+        with sw.stage("bundle") as st:
             targets = json.loads(f.get(JMA_TARGETS))
             specs = {t["tropicalCyclone"]: json.loads(f.get(JMA_SPEC.format(tc=t["tropicalCyclone"]))) for t in targets}
             bundle = {"typhoons": typhoon_facts(targets, specs), "bousai": bousai_notices(f.get(BOUSAI_TOP).decode("utf-8", "replace"))}
             (private / "news" / f"{a.day}_bundle.json").write_text(json.dumps(bundle, ensure_ascii=False, indent=1), encoding="utf-8")
-        print(f"typhoons={len(bundle['typhoons'])} bousai_notices={len(bundle['bousai'])}")
+        print(f"typhoons={len(bundle['typhoons'])} bousai_notices={len(bundle['bousai'])} seconds={st.seconds}")
     return 0
 
 

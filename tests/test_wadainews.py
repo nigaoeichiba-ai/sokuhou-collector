@@ -182,6 +182,16 @@ class TestClassify(unittest.TestCase):
         ("安いもやし限界 5年で13社消える", "life_food"),
         ("米巨大IT5社とも増収 7～9月期", "it_company"),
         ("パーソナルトレ トラブル急増", "consumer_trouble"),
+        ("ひと目でわかる今日の傘マップ 11月4日(水)", "disaster_weather"),
+        ("5日の天気（東日本）", "disaster_weather"),
+        ("通信障害", "disaster_weather"),
+        ("GMOのサーバー「設計上の不備」", "leak_security"),
+        ("もう何もかも漏れている……それでも「暗黒の10月」に焦らなかった筆者", "leak_security"),
+        ("三菱電機「純正SDカード」生産中止へ　産業用メモリの“調達難”", "product_news"),
+        ("離婚後極貧 50歳で教員免許を取得", "career_learning"),
+        ("盤上に虫 藤井竜王思わず席を立つ", "sports_entertainment"),
+        ("松井証券", "politics_world_finance"),
+        ("Unreal Engine 6ではアクターやブループリントなどを撤廃", "it_company"),
         ("個別指導トレーニングトラブル増 強引な勧誘や高額契約「慎重に」", "consumer_trouble"),
         ("12月から変わるahamoの新料金を検証", "consumer_trouble"),
     ]
@@ -189,6 +199,11 @@ class TestClassify(unittest.TestCase):
     def test_known_headlines(self):
         for title, cat in self.CASES:
             self.assertEqual(n.classify(title), cat, title)
+
+    def test_agency_advisories_are_counted_apart(self):
+        self.assertEqual(n.classify("Weekly Report: GitLabに複数の脆弱性", "jpcert"), "security_advisory")
+        self.assertEqual(n.classify("Weekly Report: GitLabに複数の脆弱性", "itmedia"), "leak_security")
+        self.assertTrue(n.is_candidate("security_advisory"))
 
     def test_candidates_are_only_the_product_linked_categories(self):
         self.assertTrue(n.is_candidate("disaster_weather") and n.is_candidate("leak_security") and n.is_candidate("life_food") and n.is_candidate("consumer_trouble"))
@@ -273,6 +288,18 @@ class TestStopwatch(unittest.TestCase):
                 pass
             row = json.loads((private / "news" / "timing.jsonl").read_text(encoding="utf-8").splitlines()[0])
             self.assertEqual((row["stage"], row["start"], row["end"], row["seconds"], row["ok"]), ("collect", "2026-11-04T09:00:00", "2026-11-04T09:07:30", 450.0, True))
+
+    def test_stage_object_carries_the_seconds_and_the_summary_has_no_text(self):
+        with tempfile.TemporaryDirectory() as t:
+            private = n.private_dir(t)
+            times = iter([datetime(2026, 11, 4, 9, 0, 0), datetime(2026, 11, 4, 9, 2, 5)])
+            sw = n.Stopwatch(private, clock=lambda: next(times))
+            with sw.stage("collect") as st:
+                pass
+            self.assertEqual(st.seconds, 125.0)
+            out = n.timing_summary(private)
+            self.assertIn("collect: 2026-11-04T09:00:00 -> 2026-11-04T09:02:05 = 125.0s", out)
+            self.assertIn("total (last 1 stages): 125.0s", out)
 
     def test_a_failed_stage_is_recorded_as_not_ok(self):
         with tempfile.TemporaryDirectory() as t:
