@@ -55,6 +55,8 @@ def parse(md: str) -> dict:
         if m:
             box = {"kind": "hack" if m.group(1) == "ライフハック" else "tip", "title": _clean(m.group(2)), "text": ""}
             (cur["boxes"] if cur is not None else doc.setdefault("pre_boxes", [])).append(box)
+            if cur is not None:
+                cur.setdefault("flow", []).append(("x", box["title"]))
             continue
         if line.startswith(">"):
             body = _clean(line.lstrip(">").strip())
