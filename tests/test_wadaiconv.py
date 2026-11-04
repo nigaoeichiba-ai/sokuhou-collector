@@ -117,6 +117,23 @@ class TestConv(unittest.TestCase):
         self.assertEqual(html.count('data-k="per"'), 2)
         self.assertIn("costcalc", html)
 
+    def test_child_titles_come_from_the_child_pages_own_heading_and_the_calculator_says_people(self):
+        with tempfile.TemporaryDirectory() as t:
+            tmp = Path(t)
+            make(tmp)
+            (tmp / "out" / "p2").mkdir()
+            (tmp / "out" / "p2" / "article-opus.md").write_text("# 水は人数分ありますか
+
+導入。
+", encoding="utf-8")
+            cfg = json.loads(json.dumps(CFG))
+            cfg["pages"]["p1"]["children"] = [{"id": "p2", "href": "kobo_p2.html"}]
+            cfg["pages"]["p1"]["calculator"] = {"[表: 人数別の早見表]": [{"name": "水", "rate": 3, "unit": "L"}]}
+            page, _ = cv.build_page("p1", tmp, cfg, tmp)
+        self.assertIn("水は人数分ありますか", page)
+        self.assertIn("人数: <input", page)
+        self.assertNotIn("家の人数", page)
+
     def test_html_in_the_text_is_escaped(self):
         page, _ = self.build(md=MD.replace("数え方は簡単です。", "数え方は<script>alert(1)</script>簡単です。"))
         self.assertNotIn("<script>alert(1)</script>", page)
