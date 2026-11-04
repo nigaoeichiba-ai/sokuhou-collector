@@ -1,0 +1,25 @@
+{
+  "site": "minna",
+  "name": "みんなのイラスト",
+  "reader": "Web・イラスト・出版のプロと、DTPをする個人",
+  "tone": [
+    "ふつうの日本語。漢字にできる語は漢字に。",
+    "読点は0〜2個。",
+    "AI の説明を繰り返さない。空の約束を書かない。"
+  ],
+  "samples_note": "見本の文はまだない。オーナーが「自然」と選んだ文を、ここに足す(調子だけを真似る見本)。",
+  "samples": [],
+  "headings": "見出しは、読者の問いか、中身が分かる短い言い切り。ラベル(まとめ・概要・ポイント)にしない。",
+  "parts": {
+    "tldr": false,
+    "hack": false,
+    "tip": false
+  },
+  "rules": {
+    "no_sources": false,
+    "no_unknown": true,
+    "wadaipost": false,
+    "naturaljp_site": "minna"
+  },
+  "length": ""
+}
