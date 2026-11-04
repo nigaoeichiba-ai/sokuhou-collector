@@ -8,7 +8,8 @@ D03 a pointing word (これ・それ・もの・ところ) as the object or subj
 from __future__ import annotations
 
 _NLP = None
-TRANS = {"数える", "確認", "確かめる", "見直す", "用意", "準備", "比べる", "調べる", "選ぶ", "買う", "入れる", "出す", "備える", "決める", "書く", "持つ", "そろえる", "点検", "チェック", "計算", "探す", "使う"}
+TRANS_WIDE = {"数える", "確認", "確かめる", "見直す", "用意", "準備", "比べる", "調べる", "選ぶ", "買う", "入れる", "出す", "備える", "決める", "書く", "持つ", "そろえる", "点検", "チェック", "計算", "探す", "使う"}
+TRANS = {"数える", "確認", "見直す", "用意"}            # narrowed (the desk, 2026-11-04): the wide list flagged 22% of the sentences
 POINTING = {"これ", "それ", "あれ", "もの", "ところ", "こと", "所"}
 
 
@@ -29,16 +30,17 @@ def _nlp():
     return _NLP
 
 
-def check(sentences: list[str], headings: list[str] | None = None) -> list[dict]:
+def check(sentences: list[str], headings: list[str] | None = None, wide: bool = False) -> list[dict]:
     try:
         nlp = _nlp()
     except Exception:
         return []
     out = []
+    trans = TRANS_WIDE if wide else TRANS
     heads = set(headings or [])
     for s in list(sentences) + list(heads):
         doc = nlp(s)
-        verbs = [t for t in doc if t.pos_ in ("VERB", "NOUN") and (t.lemma_ in TRANS or t.text in TRANS) and (t.pos_ == "VERB" or any(c.dep_ == "aux" or c.lemma_ in ("する", "し") for c in t.children))]
+        verbs = [t for t in doc if t.pos_ in ("VERB", "NOUN") and (t.lemma_ in trans or t.text in trans) and (t.pos_ == "VERB" or any(c.dep_ == "aux" or c.lemma_ in ("する", "し") for c in t.children))]
         for v in verbs:
             if not any(c.dep_ in ("obj", "iobj") for c in v.children) and not any(c.text == "を" for c in v.subtree):
                 out.append({"code": "D01", "msg": "他動詞に目的語(何を)がありません。読み手が補う必要がないか、確認してください。", "detail": s[:90]})
