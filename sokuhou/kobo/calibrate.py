@@ -102,7 +102,7 @@ def run(items: list[dict], reader: str, workers: int = 4) -> dict:
             g = E.read_gate(it["text"], reader)
         except Exception as e:        # noqa: BLE001
             g = {"marks": [], "impression": "", "unparsed": True, "error": str(e)}
-        return dict(it, gate=g, marked=not E.gate_pass(g))
+        return dict(it, gate=g, marked=not E.gate_pass(g, it["text"]))
 
     with ThreadPoolExecutor(max_workers=workers) as ex:
         res = list(ex.map(one, items))

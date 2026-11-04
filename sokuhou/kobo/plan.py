@@ -83,9 +83,10 @@ def review(plans: list[str], brief: dict, reader: str) -> dict:
     return res
 
 
-def _stopping(rv: dict, no: int) -> list[dict]:
+def _stopping(rv: dict, no: int, level: int = 3) -> list[dict]:
+    """Points that stop a plan: level 3 ('this plan cannot go out'). Level-2 points go to the desk with the plan (the desk decides)."""
     p = next((x for x in rv.get("plans", []) if int(x.get("no", 0) or 0) == no), {})
-    return [i for i in p.get("issues", []) if int(i.get("level", 2) or 2) >= 2]
+    return [i for i in p.get("issues", []) if int(i.get("level", 2) or 2) >= level]
 
 
 def run(brief: dict, card: dict, writer: str = "opus", reader: str | None = None, record: bool = True) -> dict:
@@ -107,11 +108,15 @@ def run(brief: dict, card: dict, writer: str = "opus", reader: str | None = None
         choice = None
     chosen = plans[choice - 1] if choice and 0 < choice <= len(plans) else None
     passed = False
+    cur = choice
     if chosen is not None:
         issues = _stopping(rv, choice)
         mc = [c for c in plan_checks(chosen, brief) if c["block"]]
         for k in range(MAX_REVISE + 1):
-            if not issues and not mc:
+            if not issues and not mc and k > 0:
+                passed = True
+                break
+            if not issues and not mc and not _stopping(rv, cur, 2):
                 passed = True
                 break
             if k == MAX_REVISE:
@@ -124,8 +129,8 @@ def run(brief: dict, card: dict, writer: str = "opus", reader: str | None = None
                 break
             chosen = new[0]
             rv = review([chosen.replace("# 案", "# 案1", 1) if not chosen.startswith("# 案1") else chosen], brief, reader)
-            choice_one = 1
-            issues = _stopping(rv, choice_one)
+            cur = 1
+            issues = _stopping(rv, cur)
             mc = [c for c in plan_checks(chosen, brief) if c["block"]]
             history.append({"plans": [chosen], "checks": [plan_checks(chosen, brief)], "review": rv})
     result = {"brief": brief.get("id"), "writer": writer, "reader": reader, "plans": plans, "choice": choice, "chosen": chosen or "",
