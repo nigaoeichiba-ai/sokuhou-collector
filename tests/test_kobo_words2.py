@@ -216,3 +216,20 @@ class ThingAndQuantity(unittest.TestCase):
         for t in ["食料も、水と同じ日数分が必要です。", "携帯トイレは、7日分が必要です。", "水は、1人1日3リットルが目安です。", "ライトは、1人1本です。", "電池は、4本で足ります。"]:
             self.assertFalse(self._s77(t), t)
         self.assertTrue(lexicon.scan(["最低3日分をめざします。"]))
+
+
+class OwnerNightRules(unittest.TestCase):
+    def _codes(self, body, box=""):
+        md = "# 題\n\n冒頭です。二文目です。\n\n## 見出し\n" + body + "\n" + box
+        return [x["code"] for x in style_rules.check(doc.parse(md))]
+
+    def test_each_rule_marks_the_example_and_not_the_fix(self):
+        self.assertIn("S79", self._codes("1つずつで足り、慌てて買い込む必要はありません。"))
+        self.assertNotIn("S79", self._codes("まずは、1つずつで足ります。慌てて買い込む必要はありません。"))
+        self.assertIn("S80", self._codes("本文です。", "\n> ライフハック: 保管\n> 玄関の隅に分けて保管します。\n"))
+        self.assertNotIn("S80", self._codes("本文です。", "\n> ライフハック: 保管\n> 玄関の隅に分けて保管しましょう。\n"))
+        self.assertIn("S81", self._codes("そのページを開くところから始めるとよいです。"))
+        self.assertIn("S82", self._codes("水と食料は、1人1日3リットルを目安に、最低3日分をそろえます。"))
+        self.assertNotIn("S82", self._codes("水は、1人1日3リットルを目安にします。水と食料とも、最低3日分をそろえます。"))
+        self.assertIn("S83", self._codes("これをくり返すのが、ローリングストックです。"))
+        self.assertNotIn("S83", self._codes("ローリングストックとは、少し多めに買って使う方法です。"))
