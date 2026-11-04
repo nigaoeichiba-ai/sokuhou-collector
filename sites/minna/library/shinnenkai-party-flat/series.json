@@ -1,0 +1,241 @@
+{
+ "added": "2026-11-05",
+ "slug": "shinnenkai-party-flat",
+ "title": "新年会の場面",
+ "genre": "life",
+ "touch": "flat",
+ "lead": "乾杯・幹事の挨拶・ビンゴ・料理の大皿など、新年会の場面12点の素材です。社内の案内や幹事の連絡資料に使えます。",
+ "tags": [
+  "新年会",
+  "乾杯",
+  "幹事",
+  "宴会",
+  "居酒屋",
+  "ビンゴ",
+  "会社"
+ ],
+ "subject": "",
+ "season": {
+  "from": "12-01",
+  "to": "01-31"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "shinnenkai-party-flat-toast",
+   "file": "shinnenkai-party-flat-toast.webp",
+   "title": "乾杯",
+   "desc": "乾杯のシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "新年会の場面",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 532,
+   "h": 455
+  },
+  {
+   "id": "shinnenkai-party-flat-kanji",
+   "file": "shinnenkai-party-flat-kanji.webp",
+   "title": "幹事の挨拶",
+   "desc": "幹事の挨拶のシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "新年会の場面",
+    "幹事の挨拶",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 360,
+   "h": 472
+  },
+  {
+   "id": "shinnenkai-party-flat-bingo",
+   "file": "shinnenkai-party-flat-bingo.webp",
+   "title": "ビンゴ大会",
+   "desc": "ビンゴ大会のシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "ビンゴ",
+    "新年会の場面",
+    "ビンゴ大会",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 563,
+   "h": 440
+  },
+  {
+   "id": "shinnenkai-party-flat-platter",
+   "file": "shinnenkai-party-flat-platter.webp",
+   "title": "料理の大皿",
+   "desc": "料理の大皿のシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "新年会の場面",
+    "料理の大皿",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 513,
+   "h": 415
+  },
+  {
+   "id": "shinnenkai-party-flat-nenga",
+   "file": "shinnenkai-party-flat-nenga.webp",
+   "title": "年賀状を見せ合う",
+   "desc": "年賀状を見せ合うのシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "新年会の場面",
+    "年賀状を見せ合う",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 479,
+   "h": 424
+  },
+  {
+   "id": "shinnenkai-party-flat-decor",
+   "file": "shinnenkai-party-flat-decor.webp",
+   "title": "会場の飾り付け",
+   "desc": "会場の飾り付けのシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "新年会の場面",
+    "会場の飾り付け",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 558,
+   "h": 468
+  },
+  {
+   "id": "shinnenkai-party-flat-hall",
+   "file": "shinnenkai-party-flat-hall.webp",
+   "title": "座敷の宴席",
+   "desc": "座敷の宴席のシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "新年会の場面",
+    "座敷の宴席",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 505,
+   "h": 439
+  },
+  {
+   "id": "shinnenkai-party-flat-prize",
+   "file": "shinnenkai-party-flat-prize.webp",
+   "title": "景品",
+   "desc": "景品のシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "新年会の場面",
+    "景品",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 474,
+   "h": 436
+  },
+  {
+   "id": "shinnenkai-party-flat-waiter",
+   "file": "shinnenkai-party-flat-waiter.webp",
+   "title": "料理を運ぶ店員",
+   "desc": "料理を運ぶ店員のシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "新年会の場面",
+    "料理を運ぶ店員",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 412,
+   "h": 454
+  },
+  {
+   "id": "shinnenkai-party-flat-round",
+   "file": "shinnenkai-party-flat-round.webp",
+   "title": "二次会へ向かう",
+   "desc": "二次会へ向かうのシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "新年会の場面",
+    "二次会へ向かう",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 537,
+   "h": 437
+  },
+  {
+   "id": "shinnenkai-party-flat-tea",
+   "file": "shinnenkai-party-flat-tea.webp",
+   "title": "締めのお茶漬け",
+   "desc": "締めのお茶漬けのシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "新年会の場面",
+    "締めのお茶漬け",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 441,
+   "h": 490
+  },
+  {
+   "id": "shinnenkai-party-flat-receipt",
+   "file": "shinnenkai-party-flat-receipt.webp",
+   "title": "幹事の精算",
+   "desc": "幹事の精算のシンプルフラットイラストです。",
+   "tags": [
+    "新年会",
+    "乾杯",
+    "幹事",
+    "宴会",
+    "新年会の場面",
+    "幹事の精算",
+    "シンプルフラット",
+    "暮らし・物"
+   ],
+   "w": 527,
+   "h": 482
+  }
+ ]
+}

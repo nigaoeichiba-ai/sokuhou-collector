@@ -1,0 +1,88 @@
+{
+ "slug": "nanakusa-wa",
+ "title": "春の七草と七草がゆ",
+ "subject": "",
+ "genre": "season",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "subject_en": "Japanese seven spring herbs (seri, nazuna, gogyo, hakobera, hotokenoza, suzuna turnip, suzushiro daikon) and the seven-herb rice porridge, Japanese ink-and-colour style, each plant shown whole with leaves and roots on its own, centred Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "セリ・ナズナ・ゴギョウなど春の七草と、七草がゆ・土鍋・まな板の場面12点の素材です。1月7日の行事食の案内に使えます。",
+ "tags": [
+  "七草",
+  "春の七草",
+  "七草がゆ",
+  "人日",
+  "1月7日",
+  "行事食",
+  "正月"
+ ],
+ "season": {
+  "from": "12-26",
+  "to": "01-10"
+ },
+ "holes": false,
+ "items": [
+  [
+   "seri",
+   "セリ",
+   "a bunch of Japanese parsley (seri) with green leaves and white roots"
+  ],
+  [
+   "nazuna",
+   "ナズナ",
+   "a shepherd's purse (nazuna) plant with heart-shaped seed pods and roots"
+  ],
+  [
+   "gogyo",
+   "ゴギョウ",
+   "a cudweed (gogyo) plant with soft white-grey leaves and small yellow flowers"
+  ],
+  [
+   "hakobera",
+   "ハコベラ",
+   "a chickweed (hakobera) plant with small round leaves and tiny white flowers"
+  ],
+  [
+   "hotokenoza",
+   "ホトケノザ",
+   "a nipplewort (hotokenoza) rosette flat on the ground with small leaves"
+  ],
+  [
+   "suzuna",
+   "スズナ",
+   "a small white turnip with its green leaves attached"
+  ],
+  [
+   "suzushiro",
+   "スズシロ",
+   "a white daikon radish with its green leaves attached"
+  ],
+  [
+   "bunch",
+   "七草のそろい",
+   "all seven spring herbs tied together in a loose bundle"
+  ],
+  [
+   "porridge",
+   "七草がゆ",
+   "a bowl of seven-herb rice porridge with green flecks and a wooden spoon"
+  ],
+  [
+   "donabe",
+   "土鍋",
+   "an earthenware pot with lid half-open and steam, with a ladle"
+  ],
+  [
+   "board",
+   "まな板と包丁",
+   "a wooden cutting board with chopped green herbs and a kitchen knife"
+  ],
+  [
+   "basket",
+   "七草を入れたかご",
+   "a bamboo basket filled with spring herbs on a cloth"
+  ]
+ ],
+ "priority": 1,
+ "exclude": []
+}

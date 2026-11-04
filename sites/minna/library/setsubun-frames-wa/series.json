@@ -1,0 +1,244 @@
+{
+ "added": "2026-11-05",
+ "slug": "setsubun-frames-wa",
+ "title": "節分の飾り枠",
+ "genre": "deco",
+ "touch": "wa",
+ "lead": "鬼の面・豆まきの升・柊鰯・恵方巻などで縁取った、節分の飾り枠12点の素材です。案内状やおたよりの囲みに使えます。",
+ "tags": [
+  "節分",
+  "フレーム",
+  "枠",
+  "豆まき",
+  "恵方巻",
+  "鬼",
+  "柊鰯"
+ ],
+ "subject": "",
+ "season": {
+  "from": "01-10",
+  "to": "02-04"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "setsubun-frames-wa-oni",
+   "file": "setsubun-frames-wa-oni.webp",
+   "title": "鬼の面の枠",
+   "desc": "鬼の面の枠の和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "鬼",
+    "節分の飾り枠",
+    "鬼の面の枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 498,
+   "h": 493
+  },
+  {
+   "id": "setsubun-frames-wa-mame",
+   "file": "setsubun-frames-wa-mame.webp",
+   "title": "豆まきの枠",
+   "desc": "豆まきの枠の和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "節分の飾り枠",
+    "豆まきの枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 515,
+   "h": 471
+  },
+  {
+   "id": "setsubun-frames-wa-hiiragi",
+   "file": "setsubun-frames-wa-hiiragi.webp",
+   "title": "柊鰯の枠",
+   "desc": "柊鰯の枠の和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "柊鰯",
+    "節分の飾り枠",
+    "柊鰯の枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 508,
+   "h": 474
+  },
+  {
+   "id": "setsubun-frames-wa-ehomaki",
+   "file": "setsubun-frames-wa-ehomaki.webp",
+   "title": "恵方巻の枠",
+   "desc": "恵方巻の枠の和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "恵方巻",
+    "節分の飾り枠",
+    "恵方巻の枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 487,
+   "h": 497
+  },
+  {
+   "id": "setsubun-frames-wa-otafuku",
+   "file": "setsubun-frames-wa-otafuku.webp",
+   "title": "おたふくの枠",
+   "desc": "おたふくの枠の和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "節分の飾り枠",
+    "おたふくの枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 490,
+   "h": 486
+  },
+  {
+   "id": "setsubun-frames-wa-ume",
+   "file": "setsubun-frames-wa-ume.webp",
+   "title": "梅と豆の枠",
+   "desc": "梅と豆の枠の和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "節分の飾り枠",
+    "梅と豆の枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 517,
+   "h": 486
+  },
+  {
+   "id": "setsubun-frames-wa-kanabo",
+   "file": "setsubun-frames-wa-kanabo.webp",
+   "title": "金棒の枠",
+   "desc": "金棒の枠の和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "節分の飾り枠",
+    "金棒の枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 498,
+   "h": 376
+  },
+  {
+   "id": "setsubun-frames-wa-spring",
+   "file": "setsubun-frames-wa-spring.webp",
+   "title": "立春の枠",
+   "desc": "立春の枠の和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "節分の飾り枠",
+    "立春の枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 519,
+   "h": 388
+  },
+  {
+   "id": "setsubun-frames-wa-lantern",
+   "file": "setsubun-frames-wa-lantern.webp",
+   "title": "提灯の枠",
+   "desc": "提灯の枠の和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "節分の飾り枠",
+    "提灯の枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 492,
+   "h": 358
+  },
+  {
+   "id": "setsubun-frames-wa-round",
+   "file": "setsubun-frames-wa-round.webp",
+   "title": "丸い枠",
+   "desc": "丸い枠の和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "節分の飾り枠",
+    "丸い枠",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 465,
+   "h": 422
+  },
+  {
+   "id": "setsubun-frames-wa-corner",
+   "file": "setsubun-frames-wa-corner.webp",
+   "title": "四隅の飾り",
+   "desc": "四隅の飾りの和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "節分の飾り枠",
+    "四隅の飾り",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 453,
+   "h": 381
+  },
+  {
+   "id": "setsubun-frames-wa-line",
+   "file": "setsubun-frames-wa-line.webp",
+   "title": "罫線の帯",
+   "desc": "罫線の帯の和風・和柄イラストです。",
+   "tags": [
+    "節分",
+    "フレーム",
+    "枠",
+    "豆まき",
+    "節分の飾り枠",
+    "罫線の帯",
+    "和風・和柄",
+    "フレーム・飾り"
+   ],
+   "w": 494,
+   "h": 366
+  }
+ ]
+}

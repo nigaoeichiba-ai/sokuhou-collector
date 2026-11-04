@@ -1,0 +1,88 @@
+{
+ "slug": "exam-support-loose",
+ "title": "受験応援",
+ "subject": "",
+ "genre": "school",
+ "touch": "loose",
+ "title_fmt": "{ja}",
+ "subject_en": "Exam-support scenes and objects in a relaxed hand-drawn style: each a small complete object or scene, warm and encouraging, simple-faced people Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "合格祈願のお守り・絵馬・鉛筆・夜食・目覚まし時計など、受験生を応援する場面12点の素材です。応援メッセージのカードや塾の案内に使えます。",
+ "tags": [
+  "受験",
+  "受験応援",
+  "合格祈願",
+  "お守り",
+  "絵馬",
+  "合格",
+  "塾"
+ ],
+ "season": {
+  "from": "12-01",
+  "to": "03-15"
+ },
+ "holes": false,
+ "items": [
+  [
+   "omamori",
+   "合格祈願のお守り",
+   "a shrine amulet pouch with a gold cord"
+  ],
+  [
+   "ema",
+   "絵馬",
+   "a wooden votive plaque with a cherry blossom drawn on it, hanging from a cord"
+  ],
+  [
+   "pencil",
+   "鉛筆",
+   "three sharpened pencils with erasers tied with a ribbon"
+  ],
+  [
+   "night",
+   "夜食",
+   "a student's desk at night with a bowl of noodles and a lamp"
+  ],
+  [
+   "clock",
+   "目覚まし時計",
+   "an alarm clock ringing beside a pile of textbooks"
+  ],
+  [
+   "study",
+   "机に向かう受験生",
+   "a student with a headband studying hard at a desk"
+  ],
+  [
+   "sakura",
+   "桜のつぼみ",
+   "a branch with cherry blossom buds about to open"
+  ],
+  [
+   "cheer",
+   "家族の応援",
+   "a parent handing a lunch box to a student at a front door"
+  ],
+  [
+   "train",
+   "試験会場へ向かう",
+   "a student with a bag walking to a school gate in winter coat and scarf"
+  ],
+  [
+   "board",
+   "合格発表",
+   "a student and parent happily looking at a pinned list on a board, numbers blank"
+  ],
+  [
+   "notebook",
+   "参考書とノート",
+   "a stack of reference books and a notebook with a bookmark"
+  ],
+  [
+   "daruma",
+   "必勝のだるま",
+   "a red daruma doll with one eye filled in"
+  ]
+ ],
+ "priority": 1,
+ "exclude": []
+}
