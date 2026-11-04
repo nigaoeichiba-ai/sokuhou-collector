@@ -89,7 +89,7 @@
     var u = safeUrl(x.url), asin = String(x.code).slice(2);
     if (!u || !/^[A-Z0-9]{10}$/.test(asin)) return plain({ name: x.name, price: "" });
     var rel = ' target="_blank" rel="nofollow sponsored noopener"';
-    return '<li class="item item-az" data-asin="' + esc(asin) + '"><div class="item-body"><h3><a href="' + esc(u) + '"' + rel + ">" + esc(x.name) + '</a></h3><p class="fav-gone">価格・在庫はAmazonのページでご確認ください。</p>' +
+    return '<li class="item item-az" data-asin="' + esc(asin) + '"><div class="item-body"><h3>' + esc(x.name) + '</h3><p class="fav-gone">価格・在庫はAmazonのページでご確認ください。</p>' +
       (extra || "") + '<div class="item-btns"><span class="btn"><a href="' + esc(u) + '"' + rel + '>Amazonで見る</a></span></div></div></li>';
   }
   function plain(x) {                                   // a product that is no longer on the site: its name and the price it had, and a search
@@ -99,22 +99,24 @@
   function favorites(root) {
     var db = {};
     var favs = read(FAV, []), recent = read(RECENT, []);
-    var favBox = $("#my-favs"), recBox = $("#my-recent");
+    var favBox = $("#my-favs"), azBox = $("#my-favs-az"), recBox = $("#my-recent");
     function paint() {
       favs = read(FAV, []); recent = read(RECENT, []);
-      favBox.innerHTML = favs.length ? favs.map(function (x) {
+      function rmBtn(x) { return '<button type="button" class="btn btn-sub fav-rm" data-code="' + esc(x.code) + '">リストから外す</button>'; }
+      var isAz = function (x) { return String(x.code).indexOf("a:") === 0; };
+      favBox.innerHTML = favs.filter(function (x) { return !isAz(x); }).map(function (x) {         // the Rakuten part holds Rakuten's links only (Art. 8): the Amazon ones are a part of their own below
         var it = db[x.code];
-        var rm = '<button type="button" class="btn btn-sub fav-rm" data-code="' + esc(x.code) + '">リストから外す</button>';
-        if (String(x.code).indexOf("a:") === 0) return amazonCard(x, rm);
-        return it ? card({ code: x.code, n: it.n, p: it.p, i: it.i, u: it.u, a: it.a }, rm) : plain({ name: x.name, price: x.price });
-      }).join("") : "";
+        return it ? card({ code: x.code, n: it.n, p: it.p, i: it.i, u: it.u, a: it.a }, rmBtn(x)) : plain({ name: x.name, price: x.price });
+      }).join("");
+      var az = favs.filter(isAz);
+      if (azBox) { azBox.innerHTML = az.map(function (x) { return amazonCard(x, rmBtn(x)); }).join(""); $("#my-favs-az-wrap").hidden = az.length === 0; }
       $("#my-favs-empty").hidden = favs.length > 0;
       $("#my-favs-wrap").hidden = favs.length === 0;
       var shownRecent = recent.filter(function (x) { return x.code && db[x.code]; }).slice(0, 12);
       recBox.innerHTML = shownRecent.map(function (x) { var it = db[x.code]; return card({ code: x.code, n: it.n, p: it.p, i: it.i, u: it.u, a: it.a }); }).join("");
       $("#my-recent-wrap").hidden = shownRecent.length === 0;
       $("#my-recent-empty").hidden = shownRecent.length > 0;
-      $$(".fav-rm", favBox).forEach(function (b) {
+      $$(".fav-rm", favBox.parentNode).forEach(function (b) {
         b.addEventListener("click", function () { write(FAV, read(FAV, []).filter(function (x) { return x.code !== b.getAttribute("data-code"); })); paint(); });
       });
       var n = $("#my-favs-n"); if (n) n.textContent = favs.length;
