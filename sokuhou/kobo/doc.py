@@ -144,7 +144,11 @@ def plain(doc: dict, parts: list | None = None, describe_empty: bool = True) -> 
                 lines.append(f"・{t}")
             elif t == SLOT:
                 lines.append("(ここに商品の一覧が入ります)")
-            elif not pc.get(t) and pw.get(t) and describe_empty:
+            elif not describe_empty:
+                # the fact judge: the bare mark only (the part is the editor's, not the writer's; shown its table, the judge
+                # took the numbers for copied text, 2026-11-04)
+                lines.append(t)
+            elif not pc.get(t) and pw.get(t):
                 # a part the page builder fills in (a map, the links to the child pages): the reader sees it as it will stand there,
                 # not a bare work mark (2026-11-04: '[子ページの案内]' alone was rightly stopped as an unreadable placeholder, and
                 # '(ここに入るもの: …)' as an editor's note). The fact judge gets the bare mark (describe_empty=False).

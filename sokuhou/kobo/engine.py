@@ -358,14 +358,44 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
         notes = _notes(fs_flat, sup)
         if r == 0 and left["answerable"]:
             notes += "\n" + "\n".join(f"- 読者にまだ残っている疑問: 「{x.get('q', '')}」(素材の「{str(x.get('from', ''))[:60]}」で答えられる。{x.get('where', '')})" for x in left["answerable"][:5])
-        rp = fill(prompt_file("revise"), head=head_text(m, card) if tool != "rewrite" else "【もとの文章】\n" + source, draft=base["text"], marks=_marks(g), notes=notes)
+        head = head_text(m, card) if tool != "rewrite" else "【もとの文章】\n" + source
         # the 突っ込み役 works on the first draft only (the desk's order: writer -> checks -> 突っ込み役 -> fixes -> reader gate);
         # run on every round, it reworked the writer's targeted fixes and the text swung back and forth (2026-11-04)
-        text = _keep_shape(runner.call(writer, rp, system), base["text"], tool)
+        text = None
+        if tool in ("article", "note") and not any(f.code in STRUCTURAL for f in C.blocking(fs_flat)):
+            # only the marked sentences change: the writer sends replacements and the tool applies them (2026-11-04: asked to keep
+            # the other sentences, the writer still reworded them, and each rewrite fixed some marks and made new ones)
+            rp = fill(prompt_file("revise_patch"), head=head, draft=base["text"], marks=_marks(g), notes=notes)
+            text, n = apply_edits(base["text"], parse_json(runner.call(writer, rp, system)).get("edits"))
+            if not n:
+                text = None
+        if text is None:
+            rp = fill(prompt_file("revise"), head=head, draft=base["text"], marks=_marks(g), notes=notes)
+            text = runner.call(writer, rp, system)
+        text = _keep_shape(text, base["text"], tool)
     if record:
         save(rec_dir, m, prompt, result)
     result["record"] = str(rec_dir) if record else ""
     return result
+
+
+STRUCTURAL = {"K06", "K10", "K11", "K13"}      # findings about the shape (headings, summary, parts, note line): the whole text is rewritten
+
+
+def apply_edits(text: str, edits) -> tuple[str, int]:
+    """Apply the writer's sentence replacements to the text; an 'old' that is not in the text is skipped. Returns (text, applied)."""
+    n = 0
+    for e in edits if isinstance(edits, list) else []:
+        if not isinstance(e, dict):
+            continue
+        old, new = str(e.get("old", "")).strip(), str(e.get("new", "")).strip()
+        if len(old) < 4 or old == new or old not in text:
+            continue
+        text = text.replace(old, new, 1)
+        n += 1
+    text = re.sub(r"[ \t]+\n", "\n", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text, n
 
 
 def _keep_shape(new: str, old: str, tool: str) -> str:

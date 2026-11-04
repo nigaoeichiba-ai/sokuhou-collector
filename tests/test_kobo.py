@@ -62,6 +62,14 @@ class Parse(unittest.TestCase):
         self.assertLess(txt.index("| 1人 | 3L |"), txt.index("そのあとライトを出します"))
         self.assertIn("(ここに商品の一覧が入ります)", txt)
 
+    def test_edits_change_only_the_named_sentences(self):
+        from sokuhou.kobo import engine
+        out, n = engine.apply_edits(GOOD, [{"old": "点検は2時間です。", "new": "点検には2時間かかります。"},
+                                           {"old": "本文にない文。", "new": "x"}, "junk"])
+        self.assertEqual(n, 1)
+        self.assertEqual(out, GOOD.replace("点検は2時間です。", "点検には2時間かかります。"))
+        self.assertEqual(engine.apply_edits(GOOD, None), (GOOD, 0))
+
     def test_a_rewrite_that_drops_the_summary_gets_it_back(self):
         from sokuhou.kobo import engine
         lost = re.sub(r"## 3行まとめ\n(?:- .*\n)+\n?", "", GOOD)
@@ -111,6 +119,11 @@ class Checks(unittest.TestCase):
     def test_same_ending_three_times(self):
         md = GOOD.replace("ライトをひとつ出して、一度点けてみてください。", "ライトを出しておきましょう。点けておきましょう。電池も入れておきましょう。")
         self.assertIn("K01", codes(md))
+
+    def test_three_alike_spread_over_a_long_text_are_a_note(self):
+        self.assertFalse(checks._close([(0, "a"), (12, "b"), (30, "c")]))
+        self.assertTrue(checks._close([(0, "a"), (2, "b"), (4, "c")]))
+        self.assertTrue(checks._close([(0, "a"), (12, "b"), (30, "c"), (45, "d")]))
 
     def test_number_not_in_material(self):
         self.assertIn("K03", codes(GOOD.replace("点検は2時間です。", "点検は3時間です。")))
