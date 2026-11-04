@@ -1,0 +1,231 @@
+{
+ "added": "2026-11-05",
+ "slug": "exam-support-loose",
+ "title": "受験応援",
+ "genre": "school",
+ "touch": "loose",
+ "lead": "合格祈願のお守り・絵馬・鉛筆・夜食・目覚まし時計など、受験生を応援する場面12点の素材です。応援メッセージのカードや塾の案内に使えます。",
+ "tags": [
+  "受験",
+  "受験応援",
+  "合格祈願",
+  "お守り",
+  "絵馬",
+  "合格",
+  "塾"
+ ],
+ "subject": "",
+ "season": {
+  "from": "12-01",
+  "to": "03-15"
+ },
+ "planned": 12,
+ "items": [
+  {
+   "id": "exam-support-loose-omamori",
+   "file": "exam-support-loose-omamori.webp",
+   "title": "合格祈願のお守り",
+   "desc": "合格祈願のお守りのゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "合格",
+    "合格祈願のお守り",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 362,
+   "h": 449
+  },
+  {
+   "id": "exam-support-loose-ema",
+   "file": "exam-support-loose-ema.webp",
+   "title": "絵馬",
+   "desc": "絵馬のゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "絵馬",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 436,
+   "h": 465
+  },
+  {
+   "id": "exam-support-loose-pencil",
+   "file": "exam-support-loose-pencil.webp",
+   "title": "鉛筆",
+   "desc": "鉛筆のゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "鉛筆",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 338,
+   "h": 442
+  },
+  {
+   "id": "exam-support-loose-night",
+   "file": "exam-support-loose-night.webp",
+   "title": "夜食",
+   "desc": "夜食のゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "夜食",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 481,
+   "h": 459
+  },
+  {
+   "id": "exam-support-loose-clock",
+   "file": "exam-support-loose-clock.webp",
+   "title": "目覚まし時計",
+   "desc": "目覚まし時計のゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "目覚まし時計",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 471,
+   "h": 345
+  },
+  {
+   "id": "exam-support-loose-study",
+   "file": "exam-support-loose-study.webp",
+   "title": "机に向かう受験生",
+   "desc": "机に向かう受験生のゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "机に向かう受験生",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 501,
+   "h": 457
+  },
+  {
+   "id": "exam-support-loose-sakura",
+   "file": "exam-support-loose-sakura.webp",
+   "title": "桜のつぼみ",
+   "desc": "桜のつぼみのゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "桜のつぼみ",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 465,
+   "h": 370
+  },
+  {
+   "id": "exam-support-loose-cheer",
+   "file": "exam-support-loose-cheer.webp",
+   "title": "家族の応援",
+   "desc": "家族の応援のゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "家族の応援",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 482,
+   "h": 442
+  },
+  {
+   "id": "exam-support-loose-train",
+   "file": "exam-support-loose-train.webp",
+   "title": "試験会場へ向かう",
+   "desc": "試験会場へ向かうのゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "試験会場へ向かう",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 517,
+   "h": 421
+  },
+  {
+   "id": "exam-support-loose-board",
+   "file": "exam-support-loose-board.webp",
+   "title": "合格発表",
+   "desc": "合格発表のゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "合格",
+    "合格発表",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 521,
+   "h": 446
+  },
+  {
+   "id": "exam-support-loose-notebook",
+   "file": "exam-support-loose-notebook.webp",
+   "title": "参考書とノート",
+   "desc": "参考書とノートのゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "参考書とノート",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 475,
+   "h": 422
+  },
+  {
+   "id": "exam-support-loose-daruma",
+   "file": "exam-support-loose-daruma.webp",
+   "title": "必勝のだるま",
+   "desc": "必勝のだるまのゆるい手書きイラストです。",
+   "tags": [
+    "受験",
+    "受験応援",
+    "合格祈願",
+    "お守り",
+    "必勝のだるま",
+    "ゆるい手書き",
+    "学校・保育"
+   ],
+   "w": 445,
+   "h": 443
+  }
+ ]
+}

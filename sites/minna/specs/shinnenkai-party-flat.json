@@ -1,0 +1,88 @@
+{
+ "slug": "shinnenkai-party-flat",
+ "title": "新年会の場面",
+ "subject": "",
+ "genre": "life",
+ "touch": "flat",
+ "title_fmt": "{ja}",
+ "subject_en": "New-year party scenes for office workers in a flat style: each a small complete scene or object with simple-faced adults, warm colours Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "乾杯・幹事の挨拶・ビンゴ・料理の大皿など、新年会の場面12点の素材です。社内の案内や幹事の連絡資料に使えます。",
+ "tags": [
+  "新年会",
+  "乾杯",
+  "幹事",
+  "宴会",
+  "居酒屋",
+  "ビンゴ",
+  "会社"
+ ],
+ "season": {
+  "from": "12-01",
+  "to": "01-31"
+ },
+ "holes": false,
+ "items": [
+  [
+   "toast",
+   "乾杯",
+   "three colleagues raising beer glasses together at a table"
+  ],
+  [
+   "kanji",
+   "幹事の挨拶",
+   "a man standing to give a short speech holding a glass"
+  ],
+  [
+   "bingo",
+   "ビンゴ大会",
+   "a person drawing a numbered ball from a bingo cage, others holding cards"
+  ],
+  [
+   "platter",
+   "料理の大皿",
+   "a large platter of sashimi and fried food on a table"
+  ],
+  [
+   "nenga",
+   "年賀状を見せ合う",
+   "two colleagues looking at new-year postcards together"
+  ],
+  [
+   "decor",
+   "会場の飾り付け",
+   "a banquet room with a pine and bamboo decoration and round tables"
+  ],
+  [
+   "hall",
+   "座敷の宴席",
+   "a tatami banquet room with low tables and cushions, seated people from behind"
+  ],
+  [
+   "prize",
+   "景品",
+   "a set of wrapped prizes and a gift box on a table"
+  ],
+  [
+   "waiter",
+   "料理を運ぶ店員",
+   "a restaurant staff member carrying a tray of dishes"
+  ],
+  [
+   "round",
+   "二次会へ向かう",
+   "a group of colleagues walking together at night with a lantern sign"
+  ],
+  [
+   "tea",
+   "締めのお茶漬け",
+   "a bowl of ochazuke rice with tea poured over"
+  ],
+  [
+   "receipt",
+   "幹事の精算",
+   "a person with a calculator and cash envelope counting money at a table"
+  ]
+ ],
+ "priority": 1,
+ "exclude": []
+}
