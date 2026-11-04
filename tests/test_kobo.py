@@ -327,7 +327,8 @@ class Light(unittest.TestCase):
         self.assertIn("| 扱 | 足りない所 |", new)                  # a table row is left alone
         self.assertIn("どこにありますか。", new)                   # a place: not replaced
         self.assertIn("取り扱いは別です", new)                     # 取り扱い is not 扱う
-        self.assertEqual(n, 5)                                     # 5 now: the half-width ? of the heading is replaced too
+        self.assertEqual(n, 6)                                     # 6 now: the half-width ? of the heading and the box title's wording are replaced too
+        self.assertIn("> ライフハック: 足りない備え", new)           # the box name stays, its title is fixed
         # a new point becomes an entry at once
         old = lexicon.PATH
         with tempfile.TemporaryDirectory() as td:

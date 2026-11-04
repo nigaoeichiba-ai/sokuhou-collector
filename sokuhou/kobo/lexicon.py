@@ -40,9 +40,13 @@ def autofix(text: str) -> tuple[str, int]:
     n = 0
     lines = []
     for line in text.split("\n"):
-        if line.lstrip().startswith(("|", "[", "#")) and not line.startswith(("# ", "## ")) or re.match(r"^>\s*(?:ライフハック|豆知識)\s*[:：]", line):
+        if line.lstrip().startswith(("|", "[", "#")) and not line.startswith(("# ", "## ")):
             lines.append(line)
             continue
+        head = ""
+        mb = re.match(r"^(>\s*(?:ライフハック|豆知識)\s*[:：])(.*)$", line)
+        if mb:                                           # the box name is left alone; its title is fixed like any text
+            head, line = mb.group(1), mb.group(2)
         for e in entries():
             if e.get("unless") and re.search(e["unless"], line):
                 continue
@@ -51,7 +55,7 @@ def autofix(text: str) -> tuple[str, int]:
             for pat, rep in e.get("auto", []):
                 line, k = re.subn(pat, rep, line)
                 n += k
-        lines.append(line)
+        lines.append(head + line)
     return "\n".join(lines), n
 
 
