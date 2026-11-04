@@ -339,7 +339,10 @@ def personas_for(m: dict) -> list[tuple[str, str]]:
     memo = m.get("reader_memo") or {}
     insider = m.get("insider") or f"当事者: {memo.get('reader', '')}。{memo.get('trouble', '')}。「うちの場合は?」「結局、何から?」「お金は?」と思いながら読む。"
     extra = [(p.get("name", f"追加{i + 1}"), p["who"]) if isinstance(p, dict) else (f"追加{i + 1}", str(p)) for i, p in enumerate(m.get("personas", []))]
-    return PERSONAS + [("当事者", insider)] + extra
+    base = [PERSONAS[0], PERSONAS[1], ("当事者", insider)]            # the standard three (the desk, 2026-11-04: time)
+    if m.get("deep_readers"):                                      # the sceptic and the extra readers only for the articles the desk names
+        base += [PERSONAS[2]] + extra
+    return base
 
 
 def _key(s: str) -> str:
