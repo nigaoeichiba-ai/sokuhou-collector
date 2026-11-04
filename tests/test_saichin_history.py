@@ -36,7 +36,7 @@ class AreaAndHistoryPagesTest(SiteFixture):
 
     def test_the_area_page_says_how_many_prefectures_and_ranks_each_of_them(self):
         page = self.read("area/kanto/index.html")
-        self.assertIn("<title>関東の最低賃金一覧(1都6県)と順位(", page)
+        self.assertIn("<title>関東の最低賃金一覧 2026年度(令和8年度) 1都6県は", page)
         self.assertIn("<h1>関東1都6県の最低賃金 一覧と順位(", page)
         self.assertIn("関東1都6県の最低賃金を高い順に並べました", re.search(r'<meta name="description" content="([^"]*)"', page).group(1))
         table = re.search(r"<th>都道府県</th><th>最低賃金</th><th>全国順位</th>.*?</table>", page, re.S).group(0)
@@ -45,6 +45,24 @@ class AreaAndHistoryPagesTest(SiteFixture):
         self.assertEqual(len(rows), 7)
         for slug, rank in rows:
             self.assertEqual(int(rank), by_slug[slug], slug)
+
+    def test_the_area_title_range_and_monthly_column_are_recomputed_from_the_raw_amounts(self):
+        """Title says 'lowest〜highest' of the region and each row's monthly pay is hourly x 40 h x 52 / 12 (to 100 yen), computed here from the raw file."""
+        raw = _raw()
+        amount = {p["name"]: p["history"]["2026"]["amount"] for p in raw["prefectures"]}
+        for slug, rname, shorts in build.REGIONS:
+            page = self.read(f"area/{slug}/index.html")
+            vals = [amount[s] for s in shorts]
+            title = re.search(r"<title>([^<]*)</title>", page).group(1)
+            self.assertIn(f"は{min(vals):,}円〜{max(vals):,}円", title, slug)
+            table = re.search(r"<th>発効日</th><th>月給の目安</th>.*?</tbody>", page, re.S).group(0)
+            rows = re.findall(r'<tr><td><a href="/[a-z]+/">([^<]*)</a></td><td>([\d,]+)円</td>.*?<td>([\d,]+)円</td></tr>', table)
+            self.assertEqual(len(rows), len(shorts), slug)
+            for name, hourly, month in rows:
+                h = int(hourly.replace(",", ""))
+                expect = int((h * 2080 / 12 + 50) // 100 * 100)
+                self.assertEqual(int(month.replace(",", "")), expect, (slug, name))
+        self.assertIn("勤務先の事業場がある県の額です", self.read("area/kanto/index.html"))
 
     def test_the_history_page_lists_all_47_with_the_rise_since_showa_52_recomputed_independently(self):
         raw = _raw()

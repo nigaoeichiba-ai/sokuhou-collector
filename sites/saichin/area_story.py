@@ -136,7 +136,7 @@ def places_story(d: dict, rname: str, members: list[dict], k) -> list[str]:
     parts = []
     for r in members:
         parts.append("、".join(PLACES[r["short"]]) + f"({k.esc(r['name'])})")
-    return [f"{k.esc(rname)}の主な市と区は、{'、'.join(parts)}です。どの市区も、その都道府県の最低賃金が適用されます。"]
+    return [f"{k.esc(rname)}の主な市と区は、{'、'.join(parts)}です。どの市区も、その都道府県の最低賃金が適用されます。県境を越えて通勤する人は、住んでいる県ではなく、勤務先の事業場がある県の額です(<a href=\"/guide/city/\">市と都道府県の額</a>)。"]
 
 
 def members_list(d: dict, members: list[dict], k) -> str:

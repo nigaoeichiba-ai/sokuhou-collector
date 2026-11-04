@@ -584,14 +584,15 @@ def area_page(d: dict, slug: str, rname: str, shorts: list[str], cfg: dict, prev
     mean = sum(r["amount"] for r in members) / len(members)
     cards = "".join(pref_card(r) for r in members)
     rows = "".join(
-        f'<tr><td><a href="/{r["slug"]}/">{esc(r["name"])}</a></td><td>{yen(r["amount"])}</td><td>{r["rank"]}位</td><td>+{r["raise"]}円</td><td>{jp_date(r["effective_date"])}</td></tr>'
+        f'<tr><td><a href="/{r["slug"]}/">{esc(r["name"])}</a></td><td>{yen(r["amount"])}</td><td>{r["rank"]}位</td><td>+{r["raise"]}円</td><td>{jp_date(r["effective_date"])}</td><td>{yen(monthly_estimate(r["amount"]))}</td></tr>'
         for r in members
     )
     kinds = member_kinds(members)
+    year = f"{d['fy']}年度({d['label']})"
     others = "".join(f'<li><a href="/area/{s}/">{esc(n)}</a></li>' for s, n, _ in REGIONS if s != slug)
     body = f"""{crumbs([("全国", "/"), ("地方別", "/area/"), (rname, None)])}
-<h1>{esc(rname)}{kinds}の最低賃金 一覧と順位({esc(d['label'])})</h1>
-<p class="lead">{esc(rname)}の{len(members)}都道府県の最低賃金です。最も高いのは{esc(hi['name'])}の{yen(hi['amount'])}、最も低いのは{esc(lo['name'])}の{yen(lo['amount'])}で、差は{hi['amount'] - lo['amount']}円です。</p>
+<h1>{esc(rname)}{kinds}の最低賃金 一覧と順位({esc(year)})</h1>
+<p class="lead">{esc(rname)}の{len(members)}都道府県の最低賃金は、{esc(year)}で{yen(lo['amount'])}から{yen(hi['amount'])}です。最も高いのは{esc(hi['name'])}の{yen(hi['amount'])}、最も低いのは{esc(lo['name'])}の{yen(lo['amount'])}で、差は{hi['amount'] - lo['amount']}円です。</p>
 <div class="stats">
 <div class="stat strong"><span>最も高い</span><b>{yen(hi['amount'])}</b><span>{esc(hi['name'])}</span></div>
 <div class="stat"><span>最も低い</span><b>{yen(lo['amount'])}</b><span>{esc(lo['name'])}</span></div>
@@ -600,12 +601,13 @@ def area_page(d: dict, slug: str, rname: str, shorts: list[str], cfg: dict, prev
 <h2>都道府県別</h2>
 <div class="card-grid">{cards}</div>
 <h2>一覧表</h2>
-<div class="tablewrap"><table><thead><tr><th>都道府県</th><th>最低賃金</th><th>全国順位</th><th>引上げ額</th><th>発効日</th></tr></thead><tbody>{rows}</tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>都道府県</th><th>最低賃金</th><th>全国順位</th><th>引上げ額</th><th>発効日</th><th>月給の目安</th></tr></thead><tbody>{rows}</tbody>
+<tfoot><tr><td colspan="6">月給の目安は、最低賃金ちょうどで週40時間働いたときの額です(1年52週÷12か月。100円未満は四捨五入。手当・残業代を除く)。</td></tr></tfoot></table></div>
 {area_story.story_block(d, slug, rname, members, sys.modules[__name__])}{analysis_pages.region_block(d, rname, members, sys.modules[__name__])}<h2>ほかの地方</h2>
 <nav aria-label="ほかの地方"><ul class="pref-nav">{others}</ul></nav>
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。単純平均は、このサイトで計算した参考値です。</p>"""
-    return finish(layout(cfg, preview, path=f"/area/{slug}/", title=f"{rname}の最低賃金一覧({kinds})と順位({d['label']})",
-                         description=f"{rname}{kinds}の最低賃金を高い順に並べました。最高は{hi['name']}の{yen(hi['amount'])}、最低は{lo['name']}の{yen(lo['amount'])}。全国順位・引上げ額・発効日も掲載しています。", body=body), d)
+    return finish(layout(cfg, preview, path=f"/area/{slug}/", title=f"{rname}の最低賃金一覧 {year} {kinds}は{yen(lo['amount'])}〜{yen(hi['amount'])}",
+                         description=f"{rname}{kinds}の最低賃金を高い順に並べました。{year}の最高は{hi['name']}の{yen(hi['amount'])}、最低は{lo['name']}の{yen(lo['amount'])}。全国順位・引上げ額・発効日・月給の目安も掲載しています。", body=body), d)
 
 
 WAGE_RANKINGS = {
