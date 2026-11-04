@@ -113,9 +113,13 @@ def body_text(doc: dict) -> str:
     return "\n".join(t for _, t in all_texts(doc))
 
 
+READER_NAMES = {"子ページの案内": "くわしく読む"}       # the box heading the reader meets on the page (not the editor's word)
+
+
 def _empty_part(mark: str, what: str) -> list[str]:
     """A part the page builder fills in, as the reader will meet it: a list of pages as a box of links, anything else as its caption."""
     name = mark.strip("[]")
+    name = READER_NAMES.get(name, name)
     if " / " in what:
         return [f"【{name}】"] + [f"・{w.strip()}" for w in what.split(" / ") if w.strip()]
     return [f"【{name}】{what}"]
@@ -214,7 +218,8 @@ def with_toc(md: str) -> str:
     if len(heads) < TOC_MIN or re.search(r"^## 目次\s*$", md, re.M):
         return md
     toc = "## 目次\n" + "\n".join(f"- {h}" for h in heads) + "\n\n"
-    m = re.search(r"^## (?!3行まとめ|三行まとめ)", md, re.M)
+    # the summary heading may carry a word before it ('備えの3行まとめ'): the contents go after it, not above it (2026-11-04)
+    m = re.search(r"^## (?!.*(?:3行まとめ|三行まとめ))", md, re.M)
     if not m:
         return md
     return md[:m.start()] + toc + md[m.start():]
