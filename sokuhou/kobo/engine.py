@@ -561,18 +561,25 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
         final, auto_n = lexicon.autofix(final)
         fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
     nc = {"asked": 0, "flagged": [], "learned": []}
+    new_title, title_info = "", {}
     if tool in ("article", "note"):
-        nc = named_check(final)                                   # the words of the dictionary still in the text, asked of three models by name
+        # the named-word check and the title vote run at the same time (the desk, 2026-11-04: time)
+        with ThreadPoolExecutor(max_workers=2) as ex2:
+            f_nc = ex2.submit(named_check, final)               # the words of the dictionary still in the text, asked of three models by name
+            f_tt = ex2.submit(pick_title, final, opts + list(m.get("title_candidates", []))) if opts else None
+            nc = f_nc.result()
+            if f_tt is not None:
+                try:
+                    new_title, title_info = f_tt.result()
+                except Exception:
+                    new_title, title_info = "", {}
     final, fs1, ends_fixed = fix_endings(tool, final, fs1, m, card, writer, system, extra=named_notes(nc))
-    title_info = {}
     if tool in ("article", "note"):
         final, k = lexicon.autofix(final)
         if k:
             auto_n += k
-        if opts:
-            new_title, title_info = pick_title(final, opts + list(m.get("title_candidates", [])))
-            if new_title:
-                final = set_title(final, new_title)
+        if new_title:
+            final = set_title(final, new_title)
         if m.get("title_fixed"):
             final = set_title(final, m["title_fixed"])         # the desk's decision for the article (bousai parent)
         fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
