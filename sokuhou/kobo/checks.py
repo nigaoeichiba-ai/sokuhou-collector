@@ -53,6 +53,8 @@ COMMON_KATA = set("""ライト ヘッドライト ランタン スマホ スマ�
 # wadaipost.UNKNOWN_RE misses the polite negative ('分かっていません'): added here
 UNKNOWN_MORE = re.compile(r"(?:分か|わか)っていません|明らかになっていません|明らかではありません|はっきりしていません")
 SENT_BLOCK, SENT_WARN, PARA_WARN = 100, 80, 130
+# definite claims a person should look at (K14): effects, legal force, money, guarantees
+ASSERT_RE = re.compile(r"必ず|絶対に?|確実に|間違いなく|100%|安心です|大丈夫です|防げます|治ります|効きます|効果があります|守られます|権利があります|義務があります|返金されます|取り消せます|解約できます|無料で|かかりません|請求されません|違法です")
 # situations that belong to one story; seen in a text whose story does not have them, they came from another material (K12)
 SITUATIONS = ["停電", "台風", "地震", "断水", "大雨", "浸水", "避難", "津波", "猛暑", "大雪", "感染", "流出", "漏えい", "不正アクセス", "詐欺"]
 
@@ -274,6 +276,10 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
     for w in SITUATIONS:
         if w in blob and w not in story:
             add("K12", True, f"「{w}」の話は、この記事の事実にも読者メモにもありません。別の記事の話が混ざっていないか見て、混ざっていれば消してください。", w)
+    # K14 a definite claim (effect, legal force, money) for a person to look at: never blocking (the desk, 2026-11-04: light mode)
+    for mt in ASSERT_RE.finditer(blob):
+        a, b = max(0, mt.start() - 18), mt.end() + 8
+        add("K14", False, f"断定に読める言い方「{mt.group(0)}」があります。素材の事実どおりか、見てください。", blob[a:b].replace("\n", " "))
     # naturaljp
     try:
         from sokuhou import naturaljp as NJ
@@ -288,8 +294,9 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
     return out
 
 
-WADAI_BLOCK = {"A06", "A07", "A08", "A13", "A15", "A20", "A26", "A28"}
-WADAI_ADVISE = {"A02", "A03", "A04", "A05", "A22", "A23"}
+# A26 (the same number in 3 places) is a note in the kobo: the article's core number is said in the lead, the summary and the body (the desk, 2026-11-04)
+WADAI_BLOCK = {"A06", "A07", "A08", "A13", "A15", "A20", "A28"}
+WADAI_ADVISE = {"A02", "A03", "A04", "A05", "A22", "A23", "A26"}
 WADAI_JA = {"A06": "名前の出た相手を責める言い方があります。", "A07": "あおる言葉・体験を装う言葉・権威を借りる言葉があります。", "A08": "価格・順位・商品名の言葉があります。",
             "A13": "被害を受けた個人の話、または備えの部分にトラブルの相手の名前があります。", "A15": "冒頭が長いか、分からないことから始まっています。",
             "A20": "硬い言い回しがあります。話すときの言い方にしてください。", "A26": "同じ数字を3か所以上で言っています。1〜2か所にしてください。",

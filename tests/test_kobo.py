@@ -228,6 +228,27 @@ class FakeModels:
         return self.drafts.pop(0) if len(self.drafts) > 1 else self.drafts[0]
 
 
+class Light(unittest.TestCase):
+    def tearDown(self):
+        runner.set_backend(None)
+
+    def test_one_writer_call_one_tsukkomi_call_no_judges(self):
+        fake = FakeModels([GOOD.replace("点検は2時間です。", "点検は3時間です。")])
+        runner.set_backend(fake)
+        r = engine.light("article", MAT, CARD, writer="opus", tsukkomi_model="haiku", record=False)
+        self.assertEqual([m for m, _ in fake.calls], ["opus", "haiku"])           # no reader, no judge, no rounds
+        self.assertIn("3時間", r["output"])                                         # nothing passes or stops: the text is output
+        self.assertIn("K03", [x["code"] for x in r["marks"]])                      # the number not in the material is marked for a person
+        self.assertIn("total", r["seconds"])
+
+    def test_definite_claims_are_marked_not_blocked(self):
+        md = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。これで必ず安心です。")
+        fs = checks.check(doc.parse(md), MAT, CARD)
+        k14 = [f for f in fs if f.code == "K14"]
+        self.assertTrue(k14)
+        self.assertFalse(any(f.block for f in k14))
+
+
 class Loop(unittest.TestCase):
     def tearDown(self):
         runner.set_backend(None)
