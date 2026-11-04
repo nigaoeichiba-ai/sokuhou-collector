@@ -347,6 +347,8 @@ def personas_for(m: dict) -> list[tuple[str, str]]:
     insider = m.get("insider") or f"当事者: {memo.get('reader', '')}。{memo.get('trouble', '')}。「うちの場合は?」「結局、何から?」「お金は?」と思いながら読む。"
     extra = [(p.get("name", f"追加{i + 1}"), p["who"]) if isinstance(p, dict) else (f"追加{i + 1}", str(p)) for i, p in enumerate(m.get("personas", []))]
     base = [PERSONAS[0], PERSONAS[1], ("当事者", insider)]            # the standard three (the desk, 2026-11-04: time)
+    ear = prompt_file("owner_ear")
+    base += [("オーナーの耳(haiku)", ear, "haiku"), ("オーナーの耳(sonnet)", ear, "sonnet")]      # the causes of 違和感, not a word list (the owner, 2026-11-05)
     if m.get("deep_readers"):                                      # the sceptic and the extra readers only for the articles the desk names
         base += [PERSONAS[2]] + extra
     return base

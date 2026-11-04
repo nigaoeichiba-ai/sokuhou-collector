@@ -262,13 +262,13 @@ class Light(unittest.TestCase):
             return GOOD
         runner.set_backend(fake)
         r = engine.light("article", dict(MAT, deep_readers=True), CARD, writer="opus", record=False)
-        self.assertEqual(calls.count("haiku"), 7)                      # 4 readers + the haiku proofreader + the fix + the named-word check
+        self.assertEqual(calls.count("haiku"), 8)                      # 4 readers + the haiku proofreader + the fix + the named-word check
         self.assertEqual(calls.count("codex"), 2)                      # the Codex proofreader + the named-word check
         self.assertIn("停電の点検は2時間です", r["output"])
         top = r["tsukkomi_points"][0]
-        self.assertEqual(len(top["by"]), 7)                             # the point every reader made comes first
+        self.assertEqual(len(top["by"]), 9)                             # the point every reader made comes first
         self.assertFalse(any("出典" in a for p in r["tsukkomi_points"] for a in p["asks"]))
-        self.assertEqual(len(r["readers"]), 7)      # 4 readers + 3 proofreaders (haiku, sonnet, Codex)
+        self.assertEqual(len(r["readers"]), 9)      # 4 readers + the owner's ear (haiku, sonnet) + 3 proofreaders (haiku, sonnet, Codex)
 
     def test_an_explanation_added_by_the_tsukkomi_is_marked(self):
         final = GOOD.replace("点検は2時間です。", "点検(電気を止めて設備を調べる作業)は2時間です。")
