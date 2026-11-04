@@ -19,10 +19,15 @@ from . import lexicon
 
 LABELS = {"S01": "「並べる」の言い方", "S02": "「置く」(商品・案内)", "S03": "「扱う」の言い方", "S04": "強い言い方・「ください」の多さ",
           "S05": "題・見出しの抽象的な動詞", "S06": "動詞止めの見出しに目的語がない", "S07": "「へ」止めの見出し", "S08": "名詞の列挙が文になっていない",
-          "S09": "何の数・目安・量か分からない", "S10": "数の範囲と種類数が合わない", "S11": "表の案内文(「〜の行」・命令形)", "S12": "「家族の人」「人数の行」", "S13": "「数える」に「何を」がない", "S14": "助詞で終わる文・見出し", "S15": "「所」「ところ」(場所でないもの)", "S16": "「見つけてみませんか」", "S17": "「どこ」(場所でないもの)", "S18": "個数でないものを「数える」", "S19": "「埋める」の言い方", "S20": "回りくどい言い方・長い題", "S21": "AIに多い言い回し(調査より)", "S37": "同じ動詞の見出しが続く", "S43": "導入に□", "S45": "別々の話を並べている", "S49": "見出しが「〜から選ぶ」", "S53": "導入と同じ文が3行まとめにある", "S44": "3行まとめの文末がそろっていない"}
+          "S09": "何の数・目安・量か分からない", "S10": "数の範囲と種類数が合わない", "S11": "表の案内文(「〜の行」・命令形)", "S12": "「家族の人」「人数の行」", "S13": "「数える」に「何を」がない", "S14": "助詞で終わる文・見出し", "S15": "「所」「ところ」(場所でないもの)", "S16": "「見つけてみませんか」", "S17": "「どこ」(場所でないもの)", "S18": "個数でないものを「数える」", "S19": "「埋める」の言い方", "S20": "回りくどい言い方・長い題", "S21": "AIに多い言い回し(調査より)", "S37": "同じ動詞の見出しが続く", "S43": "導入に□", "S45": "別々の話を並べている", "S49": "見出しが「〜から選ぶ」", "S53": "導入と同じ文が3行まとめにある", "S44": "3行まとめの文末がそろっていない", "S54": "「額が出ます」型の「出る・出す」", "S56": "主語と述語が合わない(量・結果が「〜します」)", "S57": "前の文とつながっていない文"}
 
 ABSTRACT_HEAD = re.compile(r"(?:数え|確かめ|確認し|調べ|見直し|考え|見)(?:て(?:み)?)?(?:よう|ましょう)|数えて|確かめて|てみよう|てみましょう|てみる[!?！？]?$")
-PARA_MAX_ASK = 3        # ください per page (safety/procedure advice may keep it, but no more than this)
+SUBJ_TOPIC = r"(?:量|数|額|幅|目安|結果|値|金額|総額|費用|料金|回数|日数|人数|必要数|グッズ|もの|項目|商品|期間|割合|費)"
+SUBJ_DOING = re.compile(r"^(?:[^。、は]{0,14}、)?[^。、は]{0,16}" + SUBJ_TOPIC + r"は、[^。]*?((?:計算|確認|用意|見直)し|決め|買い足し|買い|増やし|そろえ|比べ|調べ|選び|出し|足し|引き|集め|加え|考え)ます。?$")
+SUBJ_FIX = {"計算": "計算できます", "買い足し": "買い足せばOKです / 買い足していきます", "買い": "買えば足ります / 買っていきます", "増や": "増やしていきます",
+            "確認": "確認できます / 分かります", "決め": "決まります / 決められます", "出し": "分かります"}
+LATER_DOING = re.compile(r"(?:あとから|そのあと|その後|のちに|のちほど|少しずつ|だんだん|徐々に|いずれ)[^。]{0,30}(?:増やし|買い足し|そろえ|用意し|足し|加え)ます。?$")
+PARA_MAX_ASK = 3       # ください per page (safety/procedure advice may keep it, but no more than this)
 VERB_END = re.compile(r"(?:[るうくすつぬぶむぐ]|ます|ましょう|ください)[。!！]?$")
 NOUN_LIST = re.compile(r"^[^。、]{2,16}(?:、[^。、]{2,16}){2,}。?$")
 
@@ -104,6 +109,33 @@ def check(doc: dict) -> list[dict]:
             add("S13", "「数える」に、何を、がありません。「〜を数える」の形にしてください(題・見出しの「数える」だけは、S05)。", s)
         if re.search(r"[でにをはがもとのへ][。!！]?$", s.strip()) and not re.search(r"(?:ので|ため|とも|のに)[。]?$", s.strip()):
             add("S14", "文や見出しが助詞で終わっていて、述語がありません。", s)
+
+    # S56 subject and predicate do not fit: a quantity / result / thing as the topic, ended by a doing verb ("水の必要量は…計算します");
+    # advice to the reader that reads as the writer's own act ("あとから1週間分まで増やします"). S57 a sentence that starts in the middle (no subject, 「その」「これ」
+    #「〜も含めて」) when the sentence before does not give the thing it points at.
+    for s in sents:
+        m = SUBJ_DOING.match(s)
+        if m and not re.search(r"(?:でき|いき|行き|分かり|わかり|見え|変わり|決まり|なり)ます。?$", s):
+            verb = m.group(1)
+            fix = SUBJ_FIX.get(verb) or SUBJ_FIX.get(verb.rstrip("し")) or "〜できます / 〜が分かります"
+            add("S56", f"主語が量・結果・物なのに、人がする言い方「{verb}ます」で終わっています。主語に合う述語にしてください(例: {fix})。", s)
+        elif LATER_DOING.search(s):
+            add("S56", "読者への助言なのに、書き手が行う形で終わっています。「〜していきます」「〜すればOKです」の形にしてください。", s)
+    paras = [doc["lead"]] + [q for sec in doc["sections"] for q in sec["paras"]]
+    for q in paras:
+        ss = _sents(q)
+        for i, s in enumerate(ss):
+            if s.startswith("#") or s.startswith("[") or s.startswith("|"):
+                continue
+            starts_ref = re.match(r"^(?:その|この|あの|これ|それ|あれ|そう)(?!から|まで|ため|あと|ページ|記事)", s) and i == 0
+            no_subject = re.match(r"^[^。、はが]{0,20}も含めて、", s) and not re.search(r"[はが]", s)
+            if (starts_ref or no_subject) and i == 0:
+                add("S57", "前の文とつながっていません(段落の最初の文が、「その・これ」や「〜も含めて」で始まっています)。何の話かを主語に入れてください。", s)
+            elif no_subject and i > 0:
+                key = re.sub(r"[^ぁ-んァ-ン一-龥ー]", "", s.split("も含めて")[0])
+                prev = ss[i - 1]
+                if not any(w and w in prev for w in re.findall(r"[ァ-ンー]{2,}|[一-龥]{2,}", key)):
+                    add("S57", "前の文に、この文が指す話(主語)がありません。いきなり別の話になります。主語を入れるか、前の文とつなげてください。", s)
 
     # the word dictionary (data/word_rules.json): S01-S04 words, S12, S15-S19 ...  Every point the owner or the desk made is one entry there.
     out += lexicon.scan(sents + [h for _, h in heads if h])
