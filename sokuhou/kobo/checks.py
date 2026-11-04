@@ -9,7 +9,7 @@ K06 a label heading (事実 / 考察 / まとめ …)
 K07 an advertising note in the writer's text (the tool adds it next to the product card, never the writer)
 K08 a 豆知識 that is not a confirmed story of the material, or that is the news itself
 K09 source talk / 'not known' in the body (sites whose card says so)
-K10 shape: lead in two sentences, 3-line summary, long sentences and paragraphs
+K10 shape: lead in two to four sentences, 3-line summary, long sentences and paragraphs
 plus sokuhou.naturaljp (high = blocking) and, for wadai, sokuhou.wadaipost's reading checks (text-level codes only).
 """
 from __future__ import annotations
@@ -233,8 +233,8 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
     # K10 shape
     if kind == "article":
         nlead = len(D.sentences(doc["lead"]))
-        if nlead == 0 or nlead > 2:
-            add("K10", True, f"冒頭が{nlead}文です。2文にしてください。")
+        if nlead == 0 or nlead > 4:       # 2-4 sentences: what the news is, why it matters to me, what this page lets me do (the owner, 2026-11-04)
+            add("K10", True, f"冒頭が{nlead}文です。2〜4文にしてください。")
         if card.get("parts", {}).get("tldr") and len(doc["tldr"]) != 3:
             add("K10", True, f"3行まとめが{len(doc['tldr'])}行です。ちょうど3行にしてください。")
         if not doc["sections"]:

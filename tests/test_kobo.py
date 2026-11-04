@@ -174,7 +174,8 @@ class Checks(unittest.TestCase):
         self.assertIn("K07", codes(GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。【PR】")))
 
     def test_lead_of_three_sentences(self):
-        self.assertIn("K10", codes(GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。電池も見ます。")))
+        self.assertNotIn("K10", codes(GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。電池も見ます。")))   # 3 sentences: fine
+        self.assertIn("K10", codes(GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。電池も見ます。点けます。消します。")))
 
     def test_long_sentence(self):
         self.assertIn("K10", codes(GOOD.replace("ライトをひとつ出して、一度点けてみてください。", "ライトをひとつ出して" + "、手の届く所に置いて" * 12 + "、一度点けてみてください。")))
@@ -240,6 +241,30 @@ class Light(unittest.TestCase):
         self.assertIn("3時間", r["output"])                                         # nothing passes or stops: the text is output
         self.assertIn("K03", [x["code"] for x in r["marks"]])                      # the number not in the material is marked for a person
         self.assertIn("total", r["seconds"])
+
+    def test_personas_read_in_parallel_and_shared_points_come_first(self):
+        calls = []
+
+        def fake(model, prompt, system=None):
+            calls.append(model)
+            if "何人かの読者が読んで" in prompt:          # the one fix
+                return GOOD.replace("点検は2時間です。", "停電の点検は2時間です。")
+            if "次の人になって" in prompt:
+                pts = [{"text": "点検は2時間です。", "ask": "何の点検?", "fix": "停電の点検"}]
+                if "疑い深い" in prompt:
+                    pts.append({"text": "市は11月4日", "ask": "出典を書いて", "fix": "URLを書く"})     # dropped: the owner's rule
+                if "斜め読み" in prompt:
+                    pts.append({"text": "ライトをひとつ", "ask": "どの?", "fix": "x"})
+                return json.dumps({"gist": "停電の点検の話", "points": pts})
+            return GOOD
+        runner.set_backend(fake)
+        r = engine.light("article", MAT, CARD, writer="opus", record=False)
+        self.assertEqual(calls.count("haiku"), 5)                      # 4 readers + 1 fix, all haiku
+        self.assertIn("停電の点検は2時間です", r["output"])
+        top = r["tsukkomi_points"][0]
+        self.assertEqual(len(top["by"]), 4)                             # the point every reader made comes first
+        self.assertFalse(any("出典" in a for p in r["tsukkomi_points"] for a in p["asks"]))
+        self.assertEqual(len(r["readers"]), 4)
 
     def test_an_explanation_added_by_the_tsukkomi_is_marked(self):
         final = GOOD.replace("点検は2時間です。", "点検(電気を止めて設備を調べる作業)は2時間です。")
