@@ -59,18 +59,18 @@ class Words(unittest.TestCase):
         cases = [("家の人数の行を見ると、目安が分かります。", "いっしょに暮らす人数の行を見ると"),
                  ("□のつかなかったものが、足りないものです。", None),
                  ("うちには、8つの種類のうち、いくつそろっていましたか？", "8項目のうち、そろっているのはいくつですか"),
-                 ("いちばん足りないと思うのは、どれですか？", "いちばん足りない備えはどれですか"),
-                 ("足りない備えは、下の一覧からそのページを読めます。", None),
+                 ("いちばん足りないと思うのは、どれですか？", "いちばん足りない防災グッズはどれですか"),
+                 ("足りない防災グッズは、下の一覧からそのページを読めます。", None),
                  ("置き場所が狭い家の、備えの分け方", "収納が少ない家の備え方"),
-                 ("ふだんの買い物で備えをそろえる", "いつもの買い物で備えを増やす"),
+                 ("ふだんの買い物で備えをそろえる", "いつもの買い物で防災グッズを買い足す"),
                  ("一定量を持つ方法", "いつも一定量ストックしておく方法"),
-                 ("足りないものから読むと、分かりやすいです。", "足りない備えのページから読むと")]
+                 ("足りないものから読むと、分かりやすいです。", "足りない防災グッズのページから読むと")]
         for text, expect in cases:
             self.assertTrue(lexicon.scan([text]), text)                         # every one is marked
             if expect:
                 self.assertIn(expect, lexicon.autofix(text)[0], text)           # and the mechanical ones are replaced
         # "もの" is replaced only in the 備え context; a contract page is left alone
-        self.assertIn("足りない備え", lexicon.autofix("家の備えで足りないものを確認します。")[0])
+        self.assertIn("足りない防災グッズ", lexicon.autofix("家の備えで足りないものを確認します。")[0])
         self.assertEqual(lexicon.autofix("契約で足りないものを書きます。")[0], "契約で足りないものを書きます。")
 
     def test_stats_and_the_audit_of_what_the_rewrite_added(self):
