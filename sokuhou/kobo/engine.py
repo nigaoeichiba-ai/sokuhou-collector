@@ -371,8 +371,10 @@ def persona_points(text: str, m: dict, model: str = PERSONA_MODEL) -> dict:
         pts = [x for x in pts if not CITATION_ASK.search(str(x.get("ask", "")) + str(x.get("fix", "")))]    # the owner: no sources in the text
         return {"name": p[0], "gist": str(res.get("gist", "")), "points": pts}
 
+    t_r = time.time()
     with ThreadPoolExecutor(max_workers=len(ps)) as ex:
         readers = list(ex.map(one, ps))
+    read_s = round(time.time() - t_r)
     groups: dict = {}
     for r in readers:
         for x in r["points"]:
@@ -382,15 +384,22 @@ def persona_points(text: str, m: dict, model: str = PERSONA_MODEL) -> dict:
             g["asks"].append(str(x.get("ask", "")))
             g["fixes"].append(str(x.get("fix", "")))
     pts = sorted(groups.values(), key=lambda g: -len(g["by"]))
-    return {"model": model, "readers": readers, "points": pts}
+    return {"model": model, "readers": readers, "points": pts, "read_seconds": read_s}
 
 
-def persona_fix(text: str, m: dict, pp: dict, model: str = PERSONA_MODEL) -> str:
+def persona_fix(text: str, m: dict, pp: dict, model: str = PERSONA_MODEL, machine: str = "") -> str:
     many = [g for g in pp["points"] if len(g["by"]) >= 2]
     one = [g for g in pp["points"] if len(g["by"]) < 2]
     def fmt(g):
         return f"- 「{g['text'][:80]}」({'・'.join(g['by'])}) {' / '.join(a for a in g['asks'][:3] if a)} → 案: {g['fixes'][0][:80] if g['fixes'] else ''}"
-    pts = "### 2人以上が引っかかった所\n" + ("\n".join(fmt(g) for g in many) or "(なし)") + "\n\n### 1人だけが引っかかった所\n" + ("\n".join(fmt(g) for g in one[:25]) or "(なし)")
+    pts = ("### 機械の検査で挙がった所(同じ言い方の重なり・語の使い方。挙がった文だけを直す)\n" + machine + "\n\n" if machine else "") + "### 2人以上が引っかかった所\n" + ("\n".join(fmt(g) for g in many) or "(なし)") + "\n\n### 1人だけが引っかかった所\n" + ("\n".join(fmt(g) for g in one[:25]) or "(なし)")
+    # replacements of the named sentences (a short answer: much faster than the whole article written back); the whole text only as a fallback
+    try:
+        patched, n = apply_edits(text, parse_json(runner.call(model, fill(prompt_file("persona_fix_patch"), material=for_prompt(m), points=pts, text=text, words=lexicon.examples_text()))).get("edits"))
+    except Exception:
+        patched, n = text, 0
+    if n and D.parse(patched)["sections"]:
+        return patched
     out = _strip_fence(runner.call(model, fill(prompt_file("persona_fix"), material=for_prompt(m), points=pts, text=text, words=lexicon.examples_text())))
     if not out.strip() or not D.parse(out)["sections"]:
         return text                                    # the fix lost the shape: keep the writer's version
@@ -487,6 +496,16 @@ def set_title(text: str, title: str) -> str:
     return re.sub(r"^# .*$", "# " + title, text, count=1, flags=re.M)
 
 
+def mono_marks(fs: list) -> list:
+    """The machine's marks that the writer should fix by naming the sentences: repeated endings/openings (blocking K01), the wording marks (S), definite claims (K14)."""
+    mono = [f for f in fs if (f.code == "K01" and f.block) or f.code[0] == "S" or f.code == "K14"]
+    return sorted(mono, key=lambda f: f.code == "S13")[:12]
+
+
+def mono_notes(mono: list) -> str:
+    return "\n".join(f"- {f.msg}(該当: {f.detail})" if f.detail else f"- {f.msg}" for f in mono)
+
+
 def fix_endings(tool: str, text: str, fs: list, m: dict, card: dict, writer: str, system: str, extra: str = ""):
     """Monotony (the same ending / opening / phrase three times or more) is fixed by the writer in one more call that replaces only
     the named sentences (the desk, 2026-11-04). Returns (text, findings, number of sentences replaced)."""
@@ -544,7 +563,9 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
             # the standard: several haiku readers at once, one fix (the owner, 2026-11-04)
             tk = f"personas:{PERSONA_MODEL}"
             pp = persona_points(draft, m)
-            final = _keep_shape(persona_fix(draft, m, pp), draft, tool)
+            t_f = time.time()
+            final = _keep_shape(persona_fix(draft, m, pp, machine=mono_notes(mono_marks(fs0))), draft, tool)
+            fix_s = round(time.time() - t_f)
         else:
             tk = TSUKKOMI_DEFAULT if tsukkomi_model == "default" else tsukkomi_model
             tk = None if tk in ("", "none") else tk
@@ -596,7 +617,7 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
               "tsukkomi_points": (pp["points"] if pp else (log[0]["points"] if log else [])), "tsukkomi_ok": bool(pp) or bool(log and log[0]["ok"]),
               "readers": ([{"name": r["name"], "gist": r["gist"], "points": len(r["points"])} for r in pp["readers"]] if pp else []),
               "endings_fixed": ends_fixed, "words_replaced": auto_n, "named_check": {"asked": nc["asked"], "flagged": len(nc["flagged"])}, "learned": nc["learned"],
-              "title": title_info, "stats": st, "seconds": {"writer": round(t1 - t0), "tsukkomi": round(t2 - t1), "endings": round(t3 - t2), "total": round(time.time() - t0)}}
+              "title": title_info, "stats": st, "seconds": {"read": (pp or {}).get("read_seconds"), "fix": locals().get("fix_s"), "writer": round(t1 - t0), "tsukkomi": round(t2 - t1), "endings": round(t3 - t2), "total": round(time.time() - t0)}}
     if record:
         rec = home() / "runs" / datetime.now().strftime("%Y-%m-%d") / f"{m.get('id', 'x')}-{tool}-{writer}-light-{stamp}"
         rec.mkdir(parents=True, exist_ok=True)
