@@ -27,5 +27,15 @@ class Residual(unittest.TestCase):
         self.assertFalse(lexicon.scan(["「事前防災の徹底を求める緊急要請」と呼ばれます。"]))
 
 
+class Residual2(unittest.TestCase):
+    def test_square_in_the_lead_and_mixed_summary_endings(self):
+        md = ("# 題\n\n冒頭に□をつけます。二文目です。\n\n## 3行まとめ\n- 一つ目です。\n- 二つ目は、そろえる。\n- 三つ目です。\n\n## 見出し\n本文です。\n")
+        codes = [x["code"] for x in style_rules.check(doc.parse(md))]
+        self.assertIn("S43", codes)
+        self.assertIn("S44", codes)
+        ok = md.replace("□をつけ", "確かめ").replace("そろえる。", "そろえます。")
+        self.assertNotIn("S44", [x["code"] for x in style_rules.check(doc.parse(ok))])
+
+
 if __name__ == "__main__":
     unittest.main()
