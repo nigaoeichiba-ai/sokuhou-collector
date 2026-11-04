@@ -2,7 +2,7 @@
  "as_of": "2026-10-30",
  "bad_coords": 0,
  "credit": "出典: 新潟県鳥獣被害対策支援センター「にいがたクマ出没マップ」(https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html)の公開データを、新潟県環境対策課の許可を得て、加工して作成(新潟県が作成したものではありません)",
- "fetched_at": "2026-10-31T09:49:56.502605+09:00",
+ "fetched_at": "2026-11-04T10:24:38.911951+09:00",
  "fy_current": "R08",
  "monthly": {
   "R07": {
@@ -20,7 +20,7 @@
    "9": 435
   },
   "R08": {
-   "10": 32,
+   "10": 33,
    "4": 67,
    "5": 161,
    "6": 218,
@@ -30,6 +30,16 @@
   }
  },
  "sightings": [
+  {
+   "city": "小千谷市",
+   "count": null,
+   "kind": "痕跡",
+   "lat": 37.3264,
+   "lon": 138.8256,
+   "observed_at": "2026-10-30",
+   "place": "東小千谷地区横渡",
+   "species": "ツキノワグマ"
+  },
   {
    "city": "村上市",
    "count": 1,
@@ -7691,7 +7701,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 4228,
+ "sightings_in_window": 4229,
  "source": "niigata",
  "source_file": "https://services6.arcgis.com/SKz58fvdFlaEB35q/arcgis/rest/services/survey123_08d14b98657b47309b868f49602375c8_results/FeatureServer/0",
  "source_page": "https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html",
