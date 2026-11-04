@@ -112,3 +112,16 @@ class SubjectPredicate(unittest.TestCase):
         self.assertIn("S57", self._codes("その量は、人数で決まります。"))
         self.assertNotIn("S57", self._codes("防災庁は、水と食料を最低3日分備蓄することをすすめています。水は、食事に使う分も含めて、1人1日3リットルです。"))
         self.assertNotIn("S57", self._codes("これからの流れを書きます。"))
+
+
+class SeoKeyword(unittest.TestCase):
+    def test_keyword_in_title_lead_and_description(self):
+        m = {"keyword": "防災グッズ チェックリスト", "description": "水・食料・携帯トイレなど8項目の一覧で、家に足りない防災グッズを確かめるチェックリストです。"}
+        bad = doc.parse("# 防災グッズ、本当に足りていますか？\n\nきっかけは防災庁の呼びかけです。8項目あります。\n\n## 見出し\n本文です。\n")
+        ok = doc.parse("# 防災グッズのチェックリスト、8項目で見直す\n\n防災グッズのチェックリストで、家に足りないものが分かります。8項目に□をつけます。\n\n## 見出し\n本文です。\n")
+        self.assertEqual(sorted({x["code"] for x in style_rules.seo_check(bad, m)}), ["S58"])
+        self.assertGreaterEqual(len(style_rules.seo_check(bad, m)), 2)                 # title and lead
+        self.assertEqual(style_rules.seo_check(ok, m), [])
+        self.assertTrue(style_rules.seo_check(ok, dict(m, description="")))            # no description
+        self.assertTrue(style_rules.seo_check(ok, dict(m, description="防災グッズのチェックリストで、家に足りないものが分かります。")))   # the lead copied
+        self.assertEqual(style_rules.seo_check(bad, {}), [])                           # no keyword: not checked

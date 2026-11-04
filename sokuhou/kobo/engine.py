@@ -302,7 +302,7 @@ LIGHT_WRITER = os.environ.get("KOBO_LIGHT_WRITER", "opus")
 MARK_LABELS = {"K01": "同じ言い方の重なり", "K02": "同じ内容のくり返し", "K03": "素材にない数字", "K04": "素材にない固有名詞", "K05": "素材にない語(参考)",
                "K06": "ラベルのような見出し", "K07": "広告の表記", "K08": "確認のない豆知識", "K09": "出典・「分からない」の話", "K10": "形(冒頭・3行まとめ・長い文)",
                "K11": "決まった部品", "K12": "ほかの記事の話の混入", "K13": "note の決まり", "K14": "断定に読める言い方"}
-from .style_rules import LABELS as _SL
+from .style_rules import LABELS as _SL, seo_check
 MARK_LABELS.update(_SL)
 
 
@@ -608,7 +608,7 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
     dd = D.parse(final)
     st = textstats.stats(dd)
     heads = [dd["title"]] + [s["heading"] for s in dd["sections"]]
-    marks = (human_marks(fs1) + added_explanations(draft, final, m) + textstats.audit(draft, final, source_text(m)) + textstats.stat_marks(st)
+    marks = (human_marks(fs1) + [dict(x, label=_SL.get(x['code'], x['code']), strong=False) for x in seo_check(dd, m)] + added_explanations(draft, final, m) + textstats.audit(draft, final, source_text(m)) + textstats.stat_marks(st)
              + textstats.styleloop_marks([h for h in heads if h] + [x for t in [dd["lead"]] + dd["tldr"] + [p for s in dd["sections"] for p in s["paras"]] for x in D.sentences(t)])
              + [{"code": f["code"], "label": "語の使い方(モデルの確認)", "msg": f"{'・'.join(f['by'])}が不自然と答えました: {f['reasons'][0] if f['reasons'] else ''}", "detail": f["text"][:90], "strong": False} for f in nc["flagged"]])
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")

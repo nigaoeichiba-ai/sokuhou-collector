@@ -208,7 +208,7 @@ def to_wadai(doc: dict, m: dict) -> dict:
         secs.append({"layer": "history", "heading": "更新履歴", "bullets": [m["history"]]})
     return {"format": "reading", "id": m.get("id", "?"), "updated": m.get("date", ""), "title": doc["title"], "lead": doc["lead"],
             "tldr": list(doc["tldr"]), "reader_memo": m.get("reader_memo", {}), "ledger": list(m.get("names", [])), "sections": secs,
-            "ads": any(s.get("slot") for s in doc["sections"])}
+            "ads": any(s.get("slot") for s in doc["sections"]), **({"description": m["description"]} if m.get("description") else {})}
 
 
 def with_toc(md: str) -> str:
