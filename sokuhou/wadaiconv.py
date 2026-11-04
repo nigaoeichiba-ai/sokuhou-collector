@@ -277,7 +277,7 @@ def build_page(pid: str, kobo: Path, cfg: dict, base_dir: Path) -> tuple[str, di
                 return children_part(kids, base_dir)
         elif inner.startswith("商品カード"):
             used["cards"] += 1
-            return '<div class="slot" aria-label="商品カードの位置"><b>商品カードの枠</b>商品が入ると、ここにカードが並びます。広告を含む案内は、カードのすぐ近くにだけ表示します。</div>'
+            return '<div class="slot" aria-label="商品カードの位置"><b>商品カードの枠</b>ここにカードが入ります。広告を含む案内は、カードのすぐ近くにだけ表示します。</div>'
         unresolved.append(mark)
         return f'<p class="slot">(部品がまだありません: {E(mark)})</p>'
 
