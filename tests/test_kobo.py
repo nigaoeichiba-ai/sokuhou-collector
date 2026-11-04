@@ -250,8 +250,8 @@ class Light(unittest.TestCase):
 
         def fake(model, prompt, system=None):
             calls.append(model)
-            if "何人かの読者が読んで" in prompt:          # the one fix
-                return GOOD.replace("点検は2時間です。", "停電の点検は2時間です。")
+            if "何人かの読者が読んで" in prompt:          # the one fix: sentence replacements
+                return json.dumps({"edits": [{"old": "点検は2時間です。", "new": "停電の点検は2時間です。"}]})
             if "次の人になって" in prompt:
                 pts = [{"text": "点検は2時間です。", "ask": "何の点検?", "fix": "停電の点検"}]
                 if "疑い深い" in prompt:
