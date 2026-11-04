@@ -233,3 +233,11 @@ class OwnerNightRules(unittest.TestCase):
         self.assertNotIn("S82", self._codes("水は、1人1日3リットルを目安にします。水と食料とも、最低3日分をそろえます。"))
         self.assertIn("S83", self._codes("これをくり返すのが、ローリングストックです。"))
         self.assertNotIn("S83", self._codes("ローリングストックとは、少し多めに買って使う方法です。"))
+
+
+class DecideWord(unittest.TestCase):
+    def test_decide_is_marked_unless_concrete(self):
+        for t in ["今日は、足りない防災グッズを1つ決めて、始めます。", "避難情報を見る先を決めます。"]:
+            self.assertTrue(lexicon.scan([t]), t)
+        for t in ["その場では決めずに、持ち帰ります。", "返事の日を決めます。", "何から買うか決めやすくなります。"]:
+            self.assertFalse(lexicon.scan([t]), t)
