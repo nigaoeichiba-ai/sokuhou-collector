@@ -170,7 +170,9 @@ class TestBatchNegatives(unittest.TestCase):
         self.assertTrue(any("outside the approved" in f.msg for f in w.check_batch([post(product_kind="radio")], ACCOUNTS, ctx={"approvals": appr})))
 
 
-ART = {"id": "m-1", "updated": "2026-11-07", "ledger": ["国立天文台"], "sections": [
+MEMO = {"reader": "寝具を見直したい人", "trouble": "何から見ればよいか迷っている", "feel": "見る点は三つで足りると感じる", "action": "今夜、消し忘れ防止の機能を見る"}
+ART = {"id": "m-1", "updated": "2026-11-07", "ledger": ["国立天文台"], "reader_memo": MEMO,
+       "lead": "11月7日は立冬。電気毛布は、消し忘れを防ぐ機能があるかを先に見ると選びやすい。", "sections": [
     {"layer": "fact", "heading": "確認できた事実(11月7日時点)", "bullets": ["国立天文台は、2026年の立冬を11月7日と暦要項に載せている。"]},
     {"layer": "opinion", "heading": "考察(編集部の見方)", "paras": ["朝晩の冷え込みが強まる頃で、寝具の見直しを始める人が増えるのではないか。あくまで編集部の見方で、地域によって違う。"]},
     {"layer": "prep", "heading": "備え・選び方", "paras": ["電気毛布は、消し忘れを防ぐ機能があるかを先に見る。"]},
@@ -265,6 +267,30 @@ class TestArticle(unittest.TestCase):
         self.assertIn("P09", codes(w.check_post(post(body=post()["body"] + "治療に役立つよ"))))
         self.assertIn("P16", codes(w.check_post(post(parties=["テスト商事"], body=post()["body"] + "テスト商事"))))
         self.assertNotIn("P16", codes(w.check_post(post(parties=["テスト商事"]))))
+
+    def test_a15_the_lead_is_an_answer_not_an_admission(self):
+        for bad in ("資料からは分からない。何を選ぶかは読者次第だ。", "原因は確認できていない。まず灯りを出す。", "11月7日は立冬。ただ、詳しいことは不明だ。"):
+            self.assertIn("A15", codes(w.check_article(art(lead=bad))), bad)
+        self.assertIn("A15", codes(w.check_article(art(lead=""))))
+        self.assertIn("A15", codes(w.check_article(art(lead="一つ目。二つ目。三つ目。"))))               # at most two sentences
+        self.assertIn("A04", codes(w.check_article(art(lead="気温は5度を下回る。まず毛布を見る。"))))     # a number of the lead must come from the facts
+
+    def test_a16_not_known_is_not_said_in_the_body(self):
+        for layer, key in (("fact", "bullets"), ("opinion", "paras"), ("prep", "paras")):
+            text = "国立天文台は11月7日の立冬を載せているが、細かい点は分からない。" if layer == "fact" else "理由は資料にない。選ぶ基準は三つだ。"
+            body = {key: [text]}
+            self.assertIn("A16", codes(w.check_article(with_sections(**{layer: body}))), layer)
+        # a short note in the update history is allowed
+        ok = with_sections(history={"bullets": ["11月7日 追記: 暦要項の全文は未確認のため、公式ページの内容で書いた。"]})
+        self.assertNotIn("A16", codes(w.check_article(ok)))
+
+    def test_a17_reader_memo(self):
+        self.assertIn("A17", codes(w.check_article(art(reader_memo={}))))
+        self.assertIn("A17", codes(w.check_article(art(reader_memo=dict(MEMO, action="")))))
+
+    def test_p17_posts_do_not_open_with_not_known(self):
+        self.assertIn("P17", codes(w.check_post(post(body="理由は分からない。\n電気毛布は見るかも。\n消し忘れ防止を見てね。"))))
+        self.assertNotIn("P17", codes(w.check_post(post())))
 
     def test_a10_freshness(self):
         self.assertTrue(any("stale" in f.msg for f in w.check_article(ART, {"today": "2026-12-20"})))

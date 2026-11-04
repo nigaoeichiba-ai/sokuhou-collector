@@ -12,6 +12,7 @@ Checks (a finding has a code; the CLI prints codes and ids only, never the text 
  articles A01 layers in order   A02 layer mix   A03 each fact has a body and a date   A04 numbers   A05 proper nouns not in the ledger
          A06 criticism of a named party   A07 forbidden words   A08 price / product names   A09 update history really changed   A10 freshness
          A13 the party of a consumer trouble gets no product or path, and no individual victim (P16 is the same rule for posts)
+         A15 a lead, not opening with "not known" (P17 for posts)   A16 no "not known / not confirmed" in the body   A17 the four-line reader memo
 Not implemented (needs a live feed or a page build): warning areas (P15), thin-page measure (A11), advertising label in the built page (A12), the natural-Japanese gate (A14).
 """
 from __future__ import annotations
@@ -61,6 +62,9 @@ HEDGE_ANY = re.compile(r"(かもしれない|と考えられる|可能性があ�
 DATE_RE = re.compile(r"\d{1,2}月\d{1,2}日|\d{4}年\d{1,2}月")
 NUM_RE = re.compile(r"\d+(?:[.,]\d+)?")
 URL_RE = re.compile(r"https?://\S+|\b[a-z0-9-]+\.(?:com|jp|net|org|to)/\S*", re.I)
+# "we do not know" is never the main voice of a page or a post (owner 2026-11-04): what is not confirmed is left out, or goes to the update history (the end) as a short note
+UNKNOWN_RE = re.compile(r"分からな|わからな|分かって(?:い)?な|確認できて(?:い)?な|確認できな|資料にな|読めて(?:い)?な|未確認|不明|裏付けは")
+MEMO_KEYS = ("reader", "trouble", "feel", "action")        # who reads / what troubles them before reading / what the first sentence should make them feel / what they should do after reading
 FORMULA_MARK = ("＝", "=", "×", "例だよ", "例です", "たとえば")
 KATAKANA_RE = re.compile(r"[ァ-ヴー]{4,}")
 QUOTED_RE = re.compile(r"[「『]([^」』]{2,20})[」』]")
@@ -230,6 +234,11 @@ def check_post(p: dict, ctx: dict | None = None) -> list[Finding]:
             if not any(HEDGE_END.search(_strip_tail(l)) for l in middle):
                 add("P10", "no middle line reads as a view (ends with そう / かも / 可能性…)")
 
+    # P17 the first two lines must not open with "not known / not confirmed"
+    opening = "\n".join([l for l in body.strip().split("\n") if l.strip()][:2])
+    if UNKNOWN_RE.search(opening):
+        add("P17", "the opening lines say something is not known / not confirmed", UNKNOWN_RE.search(opening).group(0))
+
     # P11 numbers: each number in the body is in the facts, in the evidence date, or in a formula line marked as an example
     allowed = set()
     for f in p.get("facts", []):
@@ -336,6 +345,21 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
     def add(code, msg, detail=""):
         out.append(Finding(code, aid, msg, detail))
 
+    # A17 the reader memo (four lines written BEFORE the text) and A15 the lead (an answer or a fact the reader can take as their own)
+    memo = a.get("reader_memo") or {}
+    if any(not str(memo.get(k, "")).strip() for k in MEMO_KEYS):
+        add("A17", "reader_memo needs reader / trouble / feel / action")
+    lead = a.get("lead", "")
+    if not lead.strip():
+        add("A15", "the article has no lead")
+    else:
+        opening = _sentences(lead)
+        if len(opening) > 2:
+            add("A15", "the lead is longer than two sentences")
+        first_text = next((t for s0 in secs for t in text_of(s0)), "")
+        head2 = "".join((opening + _sentences(first_text))[:2])
+        if UNKNOWN_RE.search(head2):
+            add("A15", "the opening two sentences say something is not known / not confirmed", UNKNOWN_RE.search(head2).group(0))
     layers = [s.get("layer") for s in secs if s.get("layer") in LAYER_ORDER]
     # A01 the four layers, once each, in order; the heading names them
     if layers != LAYER_ORDER:
@@ -357,6 +381,14 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
                     # a flat statement in the opinion section: allowed only when it labels the view ("あくまで筆者の見方で…")
                     if "見方" not in sent and "編集部" not in sent and "場合" not in sent:
                         add("A02", "a flat statement in the opinion section (use a hedge, or label it)", sent[:20])
+    # A16 "not known / not confirmed" is not said in the body at all (only the update history may carry a short note)
+    for s in secs:
+        if s.get("layer") == "history":
+            continue
+        for t in text_of(s):
+            m = UNKNOWN_RE.search(t)
+            if m:
+                add("A16", "the body says something is not known / not confirmed (leave it out, or move a short note to the update history)", m.group(0))
     # A03 every fact bullet names an issuer and a date
     for s in secs:
         if s.get("layer") != "fact":
@@ -382,6 +414,8 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
             for line in re.split(r"\n", t):
                 if any(m in line for m in FORMULA_MARK):
                     allowed |= _nums(line)
+    for n in sorted(_nums(DATE_RE.sub("", lead)) - allowed):
+        add("A04", "a number in the lead that is in no fact", n)
     for s in secs:
         if s.get("layer") in ("fact", "history"):
             continue
