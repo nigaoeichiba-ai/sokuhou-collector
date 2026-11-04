@@ -344,9 +344,11 @@ def persona_points(text: str, m: dict, model: str = PERSONA_MODEL) -> dict:
     """Every persona reads at once. Returns {"readers": [{name, gist, points}], "points": [{text, asks, fixes, by}] (most readers first)}."""
     from concurrent.futures import ThreadPoolExecutor
     ps = personas_for(m)
+    # the readers see the page as a reader does (the fixed parts shown in place, not as bare work marks like '[商品カード]')
+    view = D.plain(D.parse(text), m.get("parts"))
 
     def one(p):
-        res = parse_json(runner.call(model, fill(prompt_file("persona_read"), persona=p[1], text=text)))
+        res = parse_json(runner.call(model, fill(prompt_file("persona_read"), persona=p[1], text=view)))
         pts = [x for x in (res.get("points") if isinstance(res.get("points"), list) else []) if isinstance(x, dict)]
         pts = [x for x in pts if not CITATION_ASK.search(str(x.get("ask", "")) + str(x.get("fix", "")))]    # the owner: no sources in the text
         return {"name": p[0], "gist": str(res.get("gist", "")), "points": pts}
