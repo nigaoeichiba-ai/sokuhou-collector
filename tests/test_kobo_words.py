@@ -48,11 +48,11 @@ class Words(unittest.TestCase):
             return json.dumps({"gist": "x", "points": []})
         runner.set_backend(fake)
         pp = engine.persona_points(GOOD, MAT)
-        self.assertEqual(sorted(seen), ["codex", "haiku", "haiku", "haiku"])      # no sonnet / haiku proofreaders unless the article is named
-        self.assertEqual(len(pp["readers"]), 4)
+        self.assertEqual(sorted(seen), ["codex", "haiku", "haiku", "haiku", "haiku", "sonnet"])      # no sonnet / haiku proofreaders unless the article is named
+        self.assertEqual(len(pp["readers"]), 6)
         seen.clear()
         engine.persona_points(GOOD, dict(MAT, deep_readers=True))
-        self.assertEqual(seen.count("sonnet"), 1)                                  # the named article gets all three proofreaders
+        self.assertEqual(seen.count("sonnet"), 2)                                  # the named article gets all three proofreaders
 
     def test_the_owners_nine_points_on_the_bousai_parent(self):
         from sokuhou.kobo import lexicon
