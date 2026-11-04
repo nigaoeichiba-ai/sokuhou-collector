@@ -11,9 +11,9 @@ from __future__ import annotations
 import html
 
 
-def table_intro(lo: int, hi: int, what: list[str], who: str = "家の人数") -> str:
-    """'早見表は、1人から5人までの人数別です。自分の家の人数の行を見ると、水、食料、携帯トイレの目安が分かります。'  (the desk's sample, 2026-11-04)"""
-    return f"早見表は、{lo}人から{hi}人までの人数別です。自分の{who}の行を見ると、{'、'.join(what)}の目安が分かります。"
+def table_intro(lo: int, hi: int, what: list[str], who: str = "いっしょに暮らす人数") -> str:
+    """'早見表は、1人から5人までの人数別です。いっしょに暮らす人数の行を見ると、水、食料、携帯トイレの目安が分かります。'  (the owner changed 家の人数, 2026-11-04)"""
+    return f"早見表は、{lo}人から{hi}人までの人数別です。{who}の行を見ると、{'、'.join(what)}の目安が分かります。"
 
 
 def amount(people: int, per_person_day: float, days: int):

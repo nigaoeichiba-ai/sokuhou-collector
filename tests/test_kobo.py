@@ -296,7 +296,7 @@ class Light(unittest.TestCase):
         self.assertIn("| 1人 | 9リットル | 21リットル |", t)
         self.assertIn("| 4人 | 36リットル | 84リットル |", t)            # the numbers the desk's table has
         self.assertEqual(parts.table_intro(1, 5, ["水", "食料", "携帯トイレ"]),
-                         "早見表は、1人から5人までの人数別です。自分の家の人数の行を見ると、水、食料、携帯トイレの目安が分かります。")
+                         "早見表は、1人から5人までの人数別です。いっしょに暮らす人数の行を見ると、水、食料、携帯トイレの目安が分かります。")
         from sokuhou.kobo import style_rules
         intro = parts.table_intro(1, 5, ["水"])
         d = doc.parse("# t\n\n" + intro + "\n\n## a\n" + intro)
@@ -323,7 +323,7 @@ class Light(unittest.TestCase):
                "> ライフハック: 足りない所\n\nどこにありますか。取り扱いは別です。")
         new, n = lexicon.autofix(txt)
         self.assertIn("## 足りなかったら、何から?", new)
-        self.assertIn("足りないものを確認しませんか。この記事は水を取り上げます。", new)
+        self.assertIn("足りない備えを確認しませんか。この記事は水を取り上げます。", new)
         self.assertIn("| 扱 | 足りない所 |", new)                  # a table row is left alone
         self.assertIn("どこにありますか。", new)                   # a place: not replaced
         self.assertIn("取り扱いは別です", new)                     # 取り扱い is not 扱う
