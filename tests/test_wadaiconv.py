@@ -122,10 +122,7 @@ class TestConv(unittest.TestCase):
             tmp = Path(t)
             make(tmp)
             (tmp / "out" / "p2").mkdir()
-            (tmp / "out" / "p2" / "article-opus.md").write_text("# 水は人数分ありますか
-
-導入。
-", encoding="utf-8")
+            (tmp / "out" / "p2" / "article-opus.md").write_text("# 水は人数分ありますか\n\n導入。\n", encoding="utf-8")
             cfg = json.loads(json.dumps(CFG))
             cfg["pages"]["p1"]["children"] = [{"id": "p2", "href": "kobo_p2.html"}]
             cfg["pages"]["p1"]["calculator"] = {"[表: 人数別の早見表]": [{"name": "水", "rate": 3, "unit": "L"}]}
