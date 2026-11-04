@@ -1,0 +1,42 @@
+name: wadai-news
+
+# 話題の速報(wadai)の見出し収集器を、本番のフィードに対して動かす。
+# 公開リポジトリのログに出すのは「件数・源ごとの状態・段階の所要時間」だけ。見出しの文は出さず、保存もしない
+# (保存先は実行機の一時フォルダ。終了で消える)。サーバーの非公開フォルダへ送る段は、鍵の用意ができてから足す。
+# 毎朝 06:30 JST に動かして、各源が生きているかと所要時間を見張る。
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 21 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wadai-news
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Collect, report, bundle (counts only)
+        run: |
+          set -e
+          PRIV="$RUNNER_TEMP/wadai-private"
+          mkdir -p "$PRIV/news"
+          DAY=$(TZ=Asia/Tokyo date +%Y%m%d)
+          python -m sokuhou.wadainews collect --private "$PRIV" --day "$DAY"
+          python -m sokuhou.wadainews report --private "$PRIV" --day "$DAY"
+          python -m sokuhou.wadainews bundle --private "$PRIV" --day "$DAY" || echo "bundle: failed (see above)"
+      - name: Stage timings
+        if: always()
+        run: |
+          f="$RUNNER_TEMP/wadai-private/news/timing.jsonl"
+          if [ -f "$f" ]; then cat "$f"; else echo "no timing file"; fi
