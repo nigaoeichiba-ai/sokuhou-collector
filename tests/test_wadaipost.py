@@ -312,6 +312,13 @@ class TestArticle(unittest.TestCase):
         self.assertNotIn("A19", codes(w.check_article(art(verification=[{"fact": 0, "sources": ["甲", "乙"]}]))))      # two independent sources
         self.assertNotIn("A19", codes(w.check_article(art(verification=[{"fact": 0, "primary": True, "sources": ["官公庁"]}]))))
 
+    def test_a19_a_note_that_waits_for_a_person_blocks_until_confirmed(self):
+        pending = [{"fact": 0, "sources": ["甲", "乙"], "note": "要請文PDFは未読。人がPDFで確認してから公開"}]
+        self.assertIn("A19", codes(w.check_article(art(verification=pending))))
+        done = [dict(pending[0], confirmed=True)]
+        self.assertNotIn("A19", codes(w.check_article(art(verification=done))))
+        self.assertNotIn("A19", codes(w.check_article(art(verification=[{"fact": 0, "sources": ["甲", "乙"], "note": "生年月日は源で食い違うため本文に出さない"}]))))
+
     def test_p18_posts_show_no_source(self):
         for bad in ("共同通信が伝えたよ", "報道によると", "ITmedia NEWSの記事より"):
             self.assertIn("P18", codes(w.check_post(post(body=post()["body"] + bad))), bad)

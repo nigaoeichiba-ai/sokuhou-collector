@@ -415,6 +415,8 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
             add("A19", f"fact {i} rests on a single source")
         elif rec.get("conflict"):
             add("A19", f"fact {i} has conflicting sources")
+        elif re.search(r"公開前に人が|確認してから公開|確認する$", str(rec.get("note", ""))) and not rec.get("confirmed"):
+            add("A19", f"fact {i} still waits for a person to confirm it before publication (set confirmed when done)")
     # A03 every fact bullet names an issuer and a date
     for s in secs:
         if s.get("layer") != "fact":
