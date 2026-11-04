@@ -205,7 +205,10 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
         from sokuhou import wadaipost as W
         pub = "\n".join(t for r, t in texts)
         if rules.get("no_sources"):
-            for x in [n for n in W.MEDIA_NAMES if n in pub] + [mm.group(0) for mm in W.SOURCE_TALK.finditer(pub)]:
+            # '…と伝えてください / 伝えておく' tells the reader what to say, it is not '…と伝えている' (a report): left out
+            talk = [mm.group(0) for mm in W.SOURCE_TALK.finditer(pub)
+                    if not (mm.group(0) == "伝えて" and re.match(r"(?:ください|おく|おき|みる|みて|も|、|から)", pub[mm.end():mm.end() + 4]))]
+            for x in [n for n in W.MEDIA_NAMES if n in pub] + talk:
                 add("K09", True, f"出典の書き方「{x}」があります。媒体の名前や「報道によると」は書かないでください(発表した役所と日付は書いてよい)。", x)
         if rules.get("no_unknown"):
             for mm in list(W.UNKNOWN_RE.finditer(pub)) + list(UNKNOWN_MORE.finditer(pub)):

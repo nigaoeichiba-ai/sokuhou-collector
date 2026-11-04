@@ -54,6 +54,13 @@ class Parse(unittest.TestCase):
         self.assertIn("プラス", boxes[1]["text"])
         self.assertNotIn("3行まとめ", doc.plain(d).split("【3行まとめ】")[0])
 
+    def test_the_reader_sees_the_fixed_parts_in_place(self):
+        md = GOOD.replace("ライトをひとつ出して、一度点けてみてください。", "下の表で、家の人数の行を見てください。\n\n[表: 人数別]\n\nそのあとライトを出します。\n\n[商品カード]")
+        txt = doc.plain(doc.parse(md), [{"mark": "[表: 人数別]", "content": "| 1人 | 3L |"}])
+        self.assertLess(txt.index("下の表で"), txt.index("[表: 人数別]"))
+        self.assertLess(txt.index("| 1人 | 3L |"), txt.index("そのあとライトを出します"))
+        self.assertIn("(ここに商品の一覧が入ります)", txt)
+
     def test_round_trip(self):
         d = doc.parse(GOOD)
         self.assertEqual(doc.parse(doc.to_markdown(d))["sections"], d["sections"])
@@ -110,6 +117,10 @@ class Checks(unittest.TestCase):
     def test_source_talk_and_not_known(self):
         self.assertIn("K09", codes(GOOD.replace("点検は2時間です。", "点検は2時間と報じられています。")))
         self.assertIn("K09", codes(GOOD.replace("点検は2時間です。", "点検の場所は分かっていません。")))
+
+    def test_telling_someone_is_not_source_talk(self):
+        self.assertNotIn("K09", codes(GOOD.replace("一度点けてみてください。", "家族にも、置き場所を伝えてください。")))
+        self.assertIn("K09", codes(GOOD.replace("点検は2時間です。", "点検は2時間だと伝えています。")))
 
     def test_same_thing_twice(self):
         md = GOOD.replace("> 出したついでにスイッチを入れて、点くか見ておきます。", "> 市は11月4日、夜に停電の点検があると発表しました。")

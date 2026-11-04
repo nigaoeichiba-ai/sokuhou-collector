@@ -67,18 +67,25 @@ def parse(md: str) -> dict:
         if SLOT in line:
             if cur is not None:
                 cur["slot"] = True
+                cur.setdefault("flow", []).append(("m", SLOT))
             continue
         mk = MARK_RE.match(line)
         if mk:
-            (cur.setdefault("marks", []) if cur is not None else doc.setdefault("lead_marks", [])).append(mk.group(1))
+            if cur is not None:
+                cur.setdefault("marks", []).append(mk.group(1))
+                cur.setdefault("flow", []).append(("m", mk.group(1)))
+            else:
+                doc.setdefault("lead_marks", []).append(mk.group(1))
             continue
         if cur is None:
             lead_lines.append(_clean(line))
             continue
         if re.match(r"^\s*(?:[-・*]|\d+[.)．])\s+", line):
             cur["bullets"].append(_clean(re.sub(r"^\s*(?:[-・*]|\d+[.)．])\s+", "", line)))
+            cur.setdefault("flow", []).append(("b", cur["bullets"][-1]))
         else:
             cur["paras"].append(_clean(line))
+            cur.setdefault("flow", []).append(("p", cur["paras"][-1]))
     doc["lead"] = "".join(lead_lines)
     return doc
 
@@ -118,8 +125,20 @@ def plain(doc: dict, parts: list | None = None) -> str:
         lines += ["【3行まとめ】"] + [f"・{t}" for t in doc["tldr"]] + [""]
     for s in doc["sections"]:
         lines.append(f"■ {s['heading']}")
-        lines += s["paras"]
-        lines += [f"・{b}" for b in s["bullets"]]
+        # the reader sees the page in order, with the fixed parts where they stand (2026-11-04: without them the reader rightly
+        # stopped on '下の表で…' pointing at nothing)
+        flow = s.get("flow") or [("p", t) for t in s["paras"]] + [("b", t) for t in s["bullets"]]
+        for kind, t in flow:
+            if kind == "p":
+                lines.append(t)
+            elif kind == "b":
+                lines.append(f"・{t}")
+            elif t == SLOT:
+                lines.append("(ここに商品の一覧が入ります)")
+            else:
+                lines.append(t)
+                if pc.get(t):
+                    lines.append(pc[t])
         for b in s["boxes"]:
             lines.append(f"【{'ライフハック' if b['kind'] == 'hack' else '豆知識'}】{b['title']}  {b['text']}")
         lines.append("")
