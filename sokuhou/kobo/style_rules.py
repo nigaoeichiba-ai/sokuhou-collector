@@ -51,7 +51,7 @@ def check(doc: dict) -> list[dict]:
         if ABSTRACT_HEAD.search(h):
             add("S05", f"{kind}が「数える・確かめる・見る」やの「〜てみよう」だけで、何のために何をするかが分かりません。「何を・どうする」を言ってください。", h)
         last = re.split(r"[?？、「」:：]", h)[-1].strip() if not h.rstrip().endswith(("?", "？")) else ""
-        if kind == "見出し" and last and VERB_END.search(last) and "を" not in last and not last.endswith(("ください", "ましょう")):
+        if kind == "見出し" and last and VERB_END.search(last) and "を" not in h and not re.search(r"に参加|に行|へ行|に入|に出", last) and not last.endswith(("ください", "ましょう")):
             add("S06", "見出しが動詞で終わっていて、何を・どうするかの「何を」がありません。名詞止めか「〜を〜する」の形にしてください。", h)
         if kind == "題" and re.search(r"ください|ましょう", h):
             add("S20", "題の「〜してください」「〜しましょう」は強いる言い方です。直球の言い方(問いかけ・約束)にしてください。", h)
