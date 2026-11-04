@@ -27,6 +27,17 @@ class Residual(unittest.TestCase):
         self.assertFalse(lexicon.scan(["「事前防災の徹底を求める緊急要請」と呼ばれます。"]))
 
 
+class SeparateStories(unittest.TestCase):
+    def test_typhoon_and_the_agency_call_in_one_lead_or_paragraph_are_marked(self):
+        md = ("# 題\n\n台風31号は直撃しない予報です。防災庁は11月2日、備えを呼びかけました。\n\n## 見出し\n本文です。\n\n## 別の節\n台風と同じころ、防災庁は呼びかけました。\n")
+        marks = [x for x in style_rules.check(doc.parse(md)) if x["code"] == "S45"]
+        self.assertEqual(len(marks), 2)                                       # the lead and the paragraph
+        ok = ("# 題\n\n台風31号は直撃しない予報です。備えは足りていますか。\n\n## 見出し\n本文です。\n\n## 別の節\n国の防災庁は11月2日、備えを呼びかけました。\n")
+        self.assertFalse([x for x in style_rules.check(doc.parse(ok)) if x["code"] == "S45"])
+        self.assertTrue(lexicon.scan(["台風と同じころ、防災庁は呼びかけました。"]))
+        self.assertFalse(lexicon.scan(["国の防災庁は11月2日、水と食料を備えるよう呼びかけました。"]))
+
+
 class Residual2(unittest.TestCase):
     def test_square_in_the_lead_and_mixed_summary_endings(self):
         md = ("# 題\n\n冒頭に□をつけます。二文目です。\n\n## 3行まとめ\n- 一つ目です。\n- 二つ目は、そろえる。\n- 三つ目です。\n\n## 見出し\n本文です。\n")
