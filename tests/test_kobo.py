@@ -288,6 +288,21 @@ class Light(unittest.TestCase):
         for c in ("S10", "S11", "S08"):
             self.assertIn(c, c2, c)
 
+    def test_parts_are_computed_from_confirmed_rates(self):
+        from sokuhou.kobo import parts
+        t = parts.quick_table([{"head": "水 3日分", "rate": 3, "days": 3, "unit": "リットル"}, {"head": "水 7日分", "rate": 3, "days": 7, "unit": "リットル"}])
+        self.assertIn("| 1人 | 9リットル | 21リットル |", t)
+        self.assertIn("| 4人 | 36リットル | 84リットル |", t)            # the numbers the desk's table has
+        self.assertEqual(parts.table_intro(1, 5, ["水", "食料", "携帯トイレ"]),
+                         "早見表は、1人から5人までの人数別です。自分の家の人数の行を見ると、水、食料、携帯トイレの目安が分かります。")
+        from sokuhou.kobo import style_rules
+        intro = parts.table_intro(1, 5, ["水"])
+        d = doc.parse("# t\n\n" + intro + "\n\n## a\n" + intro)
+        self.assertEqual([x for x in style_rules.check(d) if x['code'] in ('S11', 'S12')], [])    # the template trips none of the table-intro rules
+        h = parts.calculator_html([{"name": "水", "rate": 3, "unit": "リットル"}])
+        self.assertIn('data-rate="3"', h)
+        self.assertNotIn("src=", h)                                      # no external script
+
     def test_style_marks_never_block(self):
         md = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。表に数字を並べると分かります。")
         fs = [f for f in checks.check(doc.parse(md), MAT, CARD) if f.code.startswith("S")]
