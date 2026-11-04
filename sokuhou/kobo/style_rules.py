@@ -19,7 +19,7 @@ from . import lexicon
 
 LABELS = {"S01": "「並べる」の言い方", "S02": "「置く」(商品・案内)", "S03": "「扱う」の言い方", "S04": "強い言い方・「ください」の多さ",
           "S05": "題・見出しの抽象的な動詞", "S06": "動詞止めの見出しに目的語がない", "S07": "「へ」止めの見出し", "S08": "名詞の列挙が文になっていない",
-          "S09": "何の数・目安・量か分からない", "S10": "数の範囲と種類数が合わない", "S11": "表の案内文(「〜の行」・命令形)", "S12": "「家族の人」「人数の行」", "S13": "「数える」に「何を」がない", "S14": "助詞で終わる文・見出し", "S15": "「所」「ところ」(場所でないもの)", "S16": "「見つけてみませんか」", "S17": "「どこ」(場所でないもの)", "S18": "個数でないものを「数える」", "S19": "「埋める」の言い方", "S20": "回りくどい言い方・長い題", "S21": "AIに多い言い回し(調査より)", "S37": "同じ動詞の見出しが続く", "S43": "導入に□", "S45": "別々の話を並べている", "S49": "見出しが「〜から選ぶ」", "S53": "導入と同じ文が3行まとめにある", "S44": "3行まとめの文末がそろっていない", "S54": "「額が出ます」型の「出る・出す」", "S56": "主語と述語が合わない(量・結果が「〜します」)", "S57": "前の文とつながっていない文", "S58": "狙う語が題・導入・descriptionにない(SEO)", "S59": "「〜ます」で終わる文が続く", "S60": "同じ趣旨の文がページのあちこちにある", "S61": "結び(まとめと次の1手)がない"}
+          "S09": "何の数・目安・量か分からない", "S10": "数の範囲と種類数が合わない", "S11": "表の案内文(「〜の行」・命令形)", "S12": "「家族の人」「人数の行」", "S13": "「数える」に「何を」がない", "S14": "助詞で終わる文・見出し", "S15": "「所」「ところ」(場所でないもの)", "S16": "「見つけてみませんか」", "S17": "「どこ」(場所でないもの)", "S18": "個数でないものを「数える」", "S19": "「埋める」の言い方", "S20": "回りくどい言い方・長い題", "S21": "AIに多い言い回し(調査より)", "S37": "同じ動詞の見出しが続く", "S43": "導入に□", "S45": "別々の話を並べている", "S49": "見出しが「〜から選ぶ」", "S53": "導入と同じ文が3行まとめにある", "S44": "3行まとめの文末がそろっていない", "S54": "「額が出ます」型の「出る・出す」", "S56": "主語と述語が合わない(量・結果が「〜します」)", "S57": "前の文とつながっていない文", "S58": "狙う語が題・導入・descriptionにない(SEO)", "S59": "「〜ます」で終わる文が続く", "S60": "同じ趣旨の文がページのあちこちにある", "S61": "結び(まとめと次の1手)がない", "S63": "同じ名詞止めの説明がくり返される"}
 
 ABSTRACT_HEAD = re.compile(r"(?:数え|確かめ|確認し|調べ|見直し|考え|見)(?:て(?:み)?)?(?:よう|ましょう)|数えて|確かめて|てみよう|てみましょう|てみる[!?！？]?$")
 SUBJ_TOPIC = r"(?:量|数|額|幅|目安|結果|値|金額|総額|費用|料金|回数|日数|人数|必要数|グッズ|もの|項目|商品|期間|割合|費)"
@@ -254,12 +254,27 @@ def page_rules(doc: dict) -> list[dict]:
             if len(ga & gb) >= 0.6 * min(len(ga), len(gb)):
                 seen.add((xa, xb))
                 add("S60", f"ほぼ同じ趣旨の文が、{ka}と{kb}にあります。どちらか一方にしてください。(もう一方: {xb[:30]})", xa)
-    # S61 the closing: the last section ends with the conclusion again and the next step, not on a box or a list of links
+    # S61 the closing (the desk, 2026-11-05): the last section is headed with 「まとめ」, starts 「このページのまとめです」, goes answer -> points -> the next one step,
+    # and does not end on a box, a link or a bullet list
     if doc["sections"]:
         last = doc["sections"][-1]
         flow = last.get("flow", [])
         end = flow[-1] if flow else None
         step = re.compile(r"まず|次に|今日|今夜|今から|はじめ|始め|最初|ここから|1つ|ひとつ|あとは|すぐ")
-        if end is None or end[0] in ("x", "m", "b") or (re.search(r"のページ", end[1]) and not step.search(end[1])):
+        if "まとめ" not in last["heading"]:
+            add("S61", "最後の節の見出しに「まとめ」がありません。「まとめ: 〜」のように、まとめの節だと分かる見出しにしてください。", last["heading"])
+        elif not (last["paras"] and last["paras"][0].startswith("このページのまとめです")):
+            add("S61", "まとめの節の最初が「このページのまとめです」で始まっていません。結論(答え)→要点→次の1手の順に書いてください。", last["paras"][0] if last["paras"] else last["heading"])
+        if end is None or end[0] in ("x", "m", "b") or not step.search(end[1]):
             add("S61", "結びがありません。最後は、結論をもう一度言い、次にやる1つを書くまとめで終えてください(ライフハックの囲み・案内のリンク・箇条書きで終わらせない)。", (end[1] if end else last["heading"]))
+    # S63 the same noun-ending explanation again and again ("〜の用意です" for each item): two in a row with the same ending
+    for sec in doc["sections"]:
+        firsts = [(_sents(q) or [""])[0] for q in sec["paras"] if not q.startswith(("[", "|", "#"))]
+        ends = [re.search(r"([^、。は]{1,6}(?:の用意|のための用意|の役目|の手段|のひとつ|のこと))です。?$", x) for x in firsts]
+        for i in range(1, len(firsts)):
+            if ends[i] and ends[i - 1] and ends[i].group(1)[-3:] == ends[i - 1].group(1)[-3:]:
+                add("S63", f"「{ends[i].group(1)[-3:]}です」と終わる説明が、続けて出ています。項目ごとに同じ型にせず、主語の中身に合う述語(「〜の役目は…です」「〜が中心です」「〜が目安です」)にしてください。", firsts[i])
+    ncnt = sum(1 for sec in doc["sections"] for q in sec["paras"] for x in _sents(q) if re.search(r"の用意です。?$", x))
+    if ncnt >= 3:
+        add("S63", f"「〜の用意です」が{ncnt}回あります。同じ言い方をくり返さず、主語の中身に合う述語にしてください。", "の用意です")
     return out
