@@ -125,3 +125,36 @@ class SeoKeyword(unittest.TestCase):
         self.assertTrue(style_rules.seo_check(ok, dict(m, description="")))            # no description
         self.assertTrue(style_rules.seo_check(ok, dict(m, description="防災グッズのチェックリストで、家に足りないものが分かります。")))   # the lead copied
         self.assertEqual(style_rules.seo_check(bad, {}), [])                           # no keyword: not checked
+
+
+class OwnerNov5Evening(unittest.TestCase):
+    def _codes(self, md):
+        return [x["code"] for x in style_rules.check(doc.parse(md))]
+
+    def test_box_symbol_is_replaced(self):
+        self.assertEqual(lexicon.autofix("家にあるものに□をつけると分かります。")[0], "家にあるものにチェックを入れると分かります。")
+        self.assertEqual(lexicon.autofix("□のつかなかった項目から買います。")[0], "チェックのない項目から買います。")
+        self.assertTrue(lexicon.scan(["□を見ます。"]))
+
+    def test_masu_run_is_marked_and_a_mix_is_not(self):
+        bad = "# 題\n\n冒頭です。二文目です。\n\n## 見出し\n水を見ます。食料を書いておきます。ライトを選びます。\n"
+        ok = "# 題\n\n冒頭です。二文目です。\n\n## 見出し\n水を見ます。食料は、賞味期限を書いておくと分かります。ライトは、両手があくものが使いやすいです。\n"
+        self.assertIn("S59", self._codes(bad))
+        self.assertNotIn("S59", self._codes(ok))
+
+    def test_thing_topic_with_a_persons_act(self):
+        md = "# 題\n\n冒頭です。二文目です。\n\n## 見出し\nライトは、停電の暗さに備えます。\n\nラジオは、情報を聞く手段のひとつです。スマホとは別の手段として、そろえておきます。\n"
+        self.assertEqual(sum(1 for c in self._codes(md) if c == "S56"), 2)
+        ok = "# 題\n\n冒頭です。二文目です。\n\n## 見出し\nライトは、停電の暗さに備える防災グッズです。\n\nラジオは、スマホとは別の情報の手段になります。\n"
+        self.assertNotIn("S56", self._codes(ok))
+
+    def test_the_same_gist_in_many_places_and_the_closing(self):
+        md = ("# 題\n\n冒頭です。二文目です。\n\n## 3行まとめ\n- 足りない防災グッズから、1つずつ買い足します。\n- 二です。\n- 三です。\n\n"
+              "## 見出し\n足りない防災グッズから、1つずつ買い足していきます。\n\n> ライフハック: 小さな話\n> 箱の中の話です。\n")
+        c = self._codes(md)
+        self.assertIn("S60", c)
+        self.assertIn("S61", c)                                       # it ends on a box
+        ok = md.replace("足りない防災グッズから、1つずつ買い足していきます。", "チェックのない項目を1つ選びます。").replace("- 足りない防災グッズから、1つずつ買い足します。", "- 水は、1人1日3リットルです。")
+        ok += "\n今日は、足りない防災グッズを1つ決めるところから始めます。\n"
+        self.assertNotIn("S60", self._codes(ok))
+        self.assertNotIn("S61", self._codes(ok))

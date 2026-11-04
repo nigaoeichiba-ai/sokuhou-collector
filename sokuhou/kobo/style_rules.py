@@ -19,7 +19,7 @@ from . import lexicon
 
 LABELS = {"S01": "「並べる」の言い方", "S02": "「置く」(商品・案内)", "S03": "「扱う」の言い方", "S04": "強い言い方・「ください」の多さ",
           "S05": "題・見出しの抽象的な動詞", "S06": "動詞止めの見出しに目的語がない", "S07": "「へ」止めの見出し", "S08": "名詞の列挙が文になっていない",
-          "S09": "何の数・目安・量か分からない", "S10": "数の範囲と種類数が合わない", "S11": "表の案内文(「〜の行」・命令形)", "S12": "「家族の人」「人数の行」", "S13": "「数える」に「何を」がない", "S14": "助詞で終わる文・見出し", "S15": "「所」「ところ」(場所でないもの)", "S16": "「見つけてみませんか」", "S17": "「どこ」(場所でないもの)", "S18": "個数でないものを「数える」", "S19": "「埋める」の言い方", "S20": "回りくどい言い方・長い題", "S21": "AIに多い言い回し(調査より)", "S37": "同じ動詞の見出しが続く", "S43": "導入に□", "S45": "別々の話を並べている", "S49": "見出しが「〜から選ぶ」", "S53": "導入と同じ文が3行まとめにある", "S44": "3行まとめの文末がそろっていない", "S54": "「額が出ます」型の「出る・出す」", "S56": "主語と述語が合わない(量・結果が「〜します」)", "S57": "前の文とつながっていない文", "S58": "狙う語が題・導入・descriptionにない(SEO)"}
+          "S09": "何の数・目安・量か分からない", "S10": "数の範囲と種類数が合わない", "S11": "表の案内文(「〜の行」・命令形)", "S12": "「家族の人」「人数の行」", "S13": "「数える」に「何を」がない", "S14": "助詞で終わる文・見出し", "S15": "「所」「ところ」(場所でないもの)", "S16": "「見つけてみませんか」", "S17": "「どこ」(場所でないもの)", "S18": "個数でないものを「数える」", "S19": "「埋める」の言い方", "S20": "回りくどい言い方・長い題", "S21": "AIに多い言い回し(調査より)", "S37": "同じ動詞の見出しが続く", "S43": "導入に□", "S45": "別々の話を並べている", "S49": "見出しが「〜から選ぶ」", "S53": "導入と同じ文が3行まとめにある", "S44": "3行まとめの文末がそろっていない", "S54": "「額が出ます」型の「出る・出す」", "S56": "主語と述語が合わない(量・結果が「〜します」)", "S57": "前の文とつながっていない文", "S58": "狙う語が題・導入・descriptionにない(SEO)", "S59": "「〜ます」で終わる文が続く", "S60": "同じ趣旨の文がページのあちこちにある", "S61": "結び(まとめと次の1手)がない"}
 
 ABSTRACT_HEAD = re.compile(r"(?:数え|確かめ|確認し|調べ|見直し|考え|見)(?:て(?:み)?)?(?:よう|ましょう)|数えて|確かめて|てみよう|てみましょう|てみる[!?！？]?$")
 SUBJ_TOPIC = r"(?:量|数|額|幅|目安|結果|値|金額|総額|費用|料金|回数|日数|人数|必要数|グッズ|もの|項目|商品|期間|割合|費)"
@@ -153,6 +153,7 @@ def check(doc: dict) -> list[dict]:
     cnt = re.search(r"(\d{1,2})(?:つの種類|種類)", blob + "\n".join(h for _, h in heads))
     if rng and cnt and int(rng.group(1)) != int(cnt.group(1)):
         add("S10", f"数の範囲(0〜{rng.group(1)})と種類の数({cnt.group(1)}種類)が合いません。", rng.group(0))
+    out += page_rules(doc)
     return out
 
 
@@ -182,4 +183,83 @@ def seo_check(doc: dict, m: dict) -> list[dict]:
         g = lambda x: {x[i:i + 3] for i in range(len(x) - 2)}
         if g(desc) and len(g(desc) & g(lead)) >= 0.6 * len(g(desc)):
             add("description が導入の文とほぼ同じです。導入の流用でなく、ページ固有の1〜2文にしてください。", desc)
+    return out
+
+
+# ---- 2026-11-05 (the owner): runs of 「ます」, a thing as the topic with a person's act as the predicate, the same gist said again and again, no closing ----------
+
+MASU_RUN = 3            # sentences in a row ending in ます (not です)
+MASU_SHARE = 0.75       # or this share of a section with five sentences or more
+THING_TOPIC = (r"(?:水|食料|食事|携帯トイレ|トイレ|ライト|電池|充電|ラジオ|雨具|防水|救急用品|バッテリー|表|早見表|ページ|商品|防災グッズ|グッズ|"
+               r"量|数|額|幅|目安|結果|値|金額|総額|費用|料金|回数|日数|人数|必要数|項目|期間|割合|費)")
+DOING_END = re.compile(r"(?:(?:計算|確認|用意|見直|保管|備蓄)し|決め|買い足し|買い|増やし|そろえ|比べ|調べ|選び|出し|足し|引き|集め|加え|考え|備え|見|書い|入れ|持ち|しまい|つけ|かけ|にし|届くものにし|"
+                       r"(?:そろえ|用意し|入れ|書い|選び|買い|しまい|確かめ|見)て?おき)ます。?$")
+THING_FIRST = re.compile(r"^(?:[^。、は]{0,14}、)?[^。、は]{0,12}" + THING_TOPIC + r"は、")
+
+
+def _ends_masu(s: str) -> bool:
+    return bool(re.search(r"ます。?$", s)) and not re.search(r"(?:でし|です)。?$", s)
+
+
+def _plain(x: str) -> str:
+    return re.sub(r"[\s、。「」()（）!?！？・]", "", x)
+
+
+def page_rules(doc: dict) -> list[dict]:
+    out: list[dict] = []
+
+    def add(code, msg, sent):
+        out.append({"code": code, "msg": msg, "detail": sent[:90]})
+    # S59 ます in a row
+    for sec in doc["sections"]:
+        seq = [x for p in sec["paras"] if not p.startswith(("[", "|", "#")) for x in _sents(p)]
+        run = best = 0
+        for x in seq:
+            run = run + 1 if _ends_masu(x) else 0
+            best = max(best, run)
+        masu = sum(_ends_masu(x) for x in seq)
+        if best >= MASU_RUN or (len(seq) >= 5 and masu / len(seq) > MASU_SHARE):
+            add("S59", f"「〜ます」で終わる文が続いています(節「{sec['heading'][:14]}」: 続き最長{best}文、{masu}/{len(seq)}文)。「です」「〜が目安です」「〜するとよい」「〜が合う」「体言止め」などを混ぜてください。", sec["heading"])
+    # S56 (wider): a thing as the topic, the predicate is a person's act; and the sentences after it without a subject
+    for sec in doc["sections"]:
+        for p in sec["paras"]:
+            if p.startswith(("[", "|", "#")):
+                continue
+            ss = _sents(p)
+            first_thing = bool(ss) and bool(THING_FIRST.match(ss[0]))
+            for i, x in enumerate(ss):
+                if THING_FIRST.match(x) and DOING_END.search(x):
+                    add("S56", "主題が物・量なのに、人がする言い方で終わっています(「ライトは、…備えます」)。述語を主題に合わせてください(例: 〜を選びます→〜が合います / 〜するとよいです / 〜が目安です)。", x)
+                elif i > 0 and first_thing and not re.match(r"^[^、。]{1,14}[はが]、", x) and not re.search(r"ときは|場合は", x) and re.search(r"(?:そろえ|用意し|入れ|書い|選び|買い|しまい|確かめ|見)て?おきます。?$", x):
+                    add("S56", "段落の主題が物・量なのに、主語のない文が人がする言い方で終わっています。主語を入れるか、主題に合う述語にしてください。", x)
+    # S60 the same gist in several places (tldr, paragraphs, boxes, closing)
+    units = [("3行まとめ", t) for t in doc["tldr"]]
+    for sec in doc["sections"]:
+        units += [("本文", p) for p in sec["paras"] if not p.startswith(("[", "|", "#"))]
+        units += [("囲み", b["title"] + "。" + b["text"]) for b in sec["boxes"]]
+    sl = []
+    for ui, (kind, t) in enumerate(units):
+        for x in _sents(t):
+            n = _plain(x)
+            if len(n) >= 12:
+                sl.append((ui, kind, x, n, {n[i:i + 3] for i in range(len(n) - 2)}))
+    lead_n = [_plain(x) for x in _sents(doc["lead"]) if len(_plain(x)) >= 8]
+    seen = set()
+    for a in range(len(sl)):
+        for b in range(a + 1, len(sl)):
+            ua, ka, xa, na, ga = sl[a]
+            ub, kb, xb, nb, gb = sl[b]
+            if ua == ub or (xa, xb) in seen:
+                continue
+            if len(ga & gb) >= 0.6 * min(len(ga), len(gb)):
+                seen.add((xa, xb))
+                add("S60", f"ほぼ同じ趣旨の文が、{ka}と{kb}にあります。どちらか一方にしてください。(もう一方: {xb[:30]})", xa)
+    # S61 the closing: the last section ends with the conclusion again and the next step, not on a box or a list of links
+    if doc["sections"]:
+        last = doc["sections"][-1]
+        flow = last.get("flow", [])
+        end = flow[-1] if flow else None
+        step = re.compile(r"まず|次に|今日|今夜|今から|はじめ|始め|最初|ここから|1つ|ひとつ|あとは|すぐ")
+        if end is None or end[0] in ("x", "m", "b") or (re.search(r"のページ", end[1]) and not step.search(end[1])):
+            add("S61", "結びがありません。最後は、結論をもう一度言い、次にやる1つを書くまとめで終えてください(ライフハックの囲み・案内のリンク・箇条書きで終わらせない)。", (end[1] if end else last["heading"]))
     return out
