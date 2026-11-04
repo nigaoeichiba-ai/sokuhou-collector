@@ -27,6 +27,15 @@ class Residual(unittest.TestCase):
         self.assertFalse(lexicon.scan(["「事前防災の徹底を求める緊急要請」と呼ばれます。"]))
 
 
+class Summary(unittest.TestCase):
+    def test_a_lead_sentence_repeated_in_the_summary_is_marked(self):
+        md = ("# 題\n\n防災庁は2026年11月2日、家庭でやることを5つ呼びかけました。全部を一度に始めなくて大丈夫です。\n\n"
+              "## 3行まとめ\n- 防災庁は2026年11月2日、家庭でやることを5つ呼びかけました。\n- 水は一人一日3リットルです。\n- どれから始めるかを選びます。\n\n## 見出し\n本文です。\n")
+        self.assertIn("S53", [x["code"] for x in style_rules.check(doc.parse(md))])
+        ok = md.replace("- 防災庁は2026年11月2日、家庭でやることを5つ呼びかけました。", "- 5つは、耐震診断と家具の固定、備蓄、ハザードマップの確認、持ち出し品の準備、防災訓練への参加です。")
+        self.assertNotIn("S53", [x["code"] for x in style_rules.check(doc.parse(ok))])
+
+
 class Wording(unittest.TestCase):
     def test_the_calculator_label_and_the_sonae_noun(self):
         from sokuhou.kobo import parts
