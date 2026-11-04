@@ -179,3 +179,11 @@ class ClosingAndNounEndings(unittest.TestCase):
         self.assertIn("S63", self._codes(bad))
         self.assertNotIn("S63", self._codes(ok))
         self.assertTrue(lexicon.scan(["足りないものと、読むページが分かります。"]))
+
+
+class OwnersAiWords(unittest.TestCase):
+    def test_ai_words_are_marked_and_concrete_uses_are_left(self):
+        for t in ["必要な回数に届くものを選びます。", "ライトを用意します。", "目安が分かります。", "備蓄を残すことです。", "資料に載っています。", "量が決まります。", "読むとよいページが下に表示されます。"]:
+            self.assertTrue(lexicon.scan([t]), t)
+        for t in ["手の届く場所に出します。", "宅配で荷物が届きます。", "契約書を用意して行きます。"]:
+            self.assertFalse(lexicon.scan([t]), t)
