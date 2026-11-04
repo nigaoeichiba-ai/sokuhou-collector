@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-02T21:17:15.925368+00:00",
+ "fetched_at": "2026-11-04T21:28:40.098250+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -337,6 +337,18 @@
    "target_area_search": "埼玉県",
    "target_number_of_employees": "300名以下",
    "title": "深谷市起業家支援事業補助金"
+  },
+  {
+   "acceptance_end_datetime": "2026-11-30T08:00:00.000Z",
+   "acceptance_start_datetime": "2026-11-01T15:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ0000046qPpUAI",
+   "id": "a0WfQ0000046qPpUAI",
+   "institution_name": "中小企業等海外展開支援事業費補助金（海外出願支援事業）",
+   "name": "S-00010035",
+   "subsidy_max_limit": 3000000,
+   "target_area_search": "島根県",
+   "target_number_of_employees": "300名以下",
+   "title": "【島根県】令和8年度_中小企業等海外展開支援事業費補助金（海外出願支援事業）（第７回公募）"
   },
   {
    "acceptance_end_datetime": "2026-11-30T08:00:00.000Z",
@@ -841,18 +853,6 @@
    "target_area_search": "全国 / 北海道 / 青森県 / 岩手県 / 宮城県 / 秋田県 / 山形県 / 福島県 / 茨城県 / 栃木県 / 群馬県 / 埼玉県 / 千葉県 / 東京都 / 神奈川県 / 新潟県 / 山梨県 / 長野県 / 富山県 / 石川県 / 福井県 / 岐阜県 / 静岡県 / 愛知県 / 三重県 / 滋賀県 / 京都府 / 大阪府 / 兵庫県 / 奈良県 / 和歌山県 / 鳥取県 / 島根県 / 岡山県 / 広島県 / 山口県 / 徳島県 / 香川県 / 愛媛県 / 高知県 / 福岡県 / 佐賀県 / 長崎県 / 熊本県 / 大分県 / 宮崎県 / 鹿児島県 / 沖縄県",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "令和７年度（補正）　商用車等の電動化促進事業（建設機械）"
-  },
-  {
-   "acceptance_end_datetime": "2026-11-04T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-04T08:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDe4JMAT",
-   "id": "a0WJ200000CDe4JMAT",
-   "institution_name": "令和７年度補正　再生可能エネルギー導入拡大・系統用蓄電池等電力貯蔵システム導入支援事業費補助金",
-   "name": "S-00009688",
-   "subsidy_max_limit": 4000000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和７年度補正　再生可能エネルギー導入拡大・系統用蓄電池等電力貯蔵システム導入支援事業費補助金　系統用蓄電システム等導入支援事業"
   },
   {
    "acceptance_end_datetime": "2026-12-25T14:59:00.000Z",

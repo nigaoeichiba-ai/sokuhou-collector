@@ -693,10 +693,31 @@
      "place": "宇陀市",
      "prefecture": "奈良県",
      "species": "ツキノワグマ"
+    },
+    {
+     "date": "2026-11-02",
+     "no": 39,
+     "place": "宇陀市",
+     "prefecture": "奈良県",
+     "species": "ツキノワグマ"
+    },
+    {
+     "date": "2026-11-02",
+     "no": 40,
+     "place": "養父市",
+     "prefecture": "兵庫県",
+     "species": "ツキノワグマ"
+    },
+    {
+     "date": "2026-11-03",
+     "no": 41,
+     "place": "福知山市",
+     "prefecture": "京都府",
+     "species": "ツキノワグマ"
     }
    ],
    "fy_start": 2026,
-   "updated": "2026-10-29"
+   "updated": "2026-11-04"
   }
  },
  "fatal": {
@@ -867,7 +888,7 @@
    ]
   }
  },
- "fetched_at": "2026-10-30T06:16:15.743472+09:00",
+ "fetched_at": "2026-11-05T06:28:37.068746+09:00",
  "injuries": {
   "as_of": "R08年9月末",
   "national": {
