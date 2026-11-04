@@ -1,0 +1,25 @@
+{
+  "site": "atomou",
+  "name": "あと何日、もう何日",
+  "reader": "中学生以上。大切な日までの日数を数えたい人",
+  "tone": [
+    "ひらがなを増やさない。分かち書きしない。",
+    "実在しない機能を書かない。",
+    "静かな調子。悲しみに関わる日は、明るくしすぎない。"
+  ],
+  "samples_note": "見本の文はまだない。オーナーが「自然」と選んだ文を、ここに足す(調子だけを真似る見本)。",
+  "samples": [],
+  "headings": "見出しは、読者の問いか、中身が分かる短い言い切り。ラベル(まとめ・概要・ポイント)にしない。",
+  "parts": {
+    "tldr": false,
+    "hack": false,
+    "tip": false
+  },
+  "rules": {
+    "no_sources": false,
+    "no_unknown": true,
+    "wadaipost": false,
+    "naturaljp_site": "atomou"
+  },
+  "length": ""
+}
