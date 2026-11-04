@@ -361,11 +361,25 @@ def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str |
         rp = fill(prompt_file("revise"), head=head_text(m, card) if tool != "rewrite" else "【もとの文章】\n" + source, draft=base["text"], marks=_marks(g), notes=notes)
         # the 突っ込み役 works on the first draft only (the desk's order: writer -> checks -> 突っ込み役 -> fixes -> reader gate);
         # run on every round, it reworked the writer's targeted fixes and the text swung back and forth (2026-11-04)
-        text = runner.call(writer, rp, system)
+        text = _keep_shape(runner.call(writer, rp, system), base["text"], tool)
     if record:
         save(rec_dir, m, prompt, result)
     result["record"] = str(rec_dir) if record else ""
     return result
+
+
+def _keep_shape(new: str, old: str, tool: str) -> str:
+    """A rewrite that drops the 3-line summary gets the old one back (2026-11-04: the battery page lost its summary in the last
+    rewrite and stopped on K10 alone; the writer was asked to fix sentences, not to remove parts)."""
+    if tool not in ("article", "note"):
+        return new
+    if D.parse(new)["tldr"] or not D.parse(old)["tldr"]:
+        return new
+    blk = re.search(r"^## (?:3行まとめ|三行まとめ)\s*\n(?:.*\S.*\n?)+", old, re.M)
+    at = re.search(r"^## ", new, re.M)
+    if not blk or not at:
+        return new
+    return new[:at.start()] + blk.group(0).rstrip() + "\n\n" + new[at.start():]
 
 
 def _in(needle: str, hay: str) -> bool:
