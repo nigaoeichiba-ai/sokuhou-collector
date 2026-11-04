@@ -132,8 +132,14 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
         n = body.count(g)
         if n >= 3 and g not in src:
             reps[g] = n
-    for g in sorted(reps, key=len, reverse=True)[:3]:
-        add("K01", True, f"「{g}」という言い回しが{reps[g]}回出ます。2回目からは言い換えるか、削ってください。", g)
+    kept: list = []
+    for g in sorted(reps, key=lambda x: -reps[x]):
+        if any(g[1:] in k or g[:-1] in k or k[1:] in g for k in kept):      # overlapping windows of one phrase count once
+            continue
+        kept.append(g)
+    for g in kept[:3]:
+        # three times is a note (filling an omission often names the thing again), four stops the text
+        add("K01", reps[g] >= 4, f"「{g}」という言い回しが{reps[g]}回出ます。2回目からは言い換えるか、削ってください。", g)
     n_f = sum(blob.count(f) for f in FORMULAS)
     if n_f:
         # the owner's complaint was the formula used again and again: once is a note, twice stops the text
@@ -234,6 +240,12 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
                 add("K11", True, f"部品 {p['mark']} の中身を、文でも書いています。文では「下の表で〜」のように指すだけにしてください。", p["mark"])
         for mk in set(placed) - {p["mark"] for p in m.get("parts", [])}:
             add("K11", True, f"素材にない部品 {mk} を置いています。消してください。", mk)
+    # K13 a note post carries the AI line near the top (NOTE_DAILY_ROUTINE.md 6) and no product card
+    if card.get("_tool") == "note":
+        if "AIの支援を受けて作成しています" not in (doc["lead"] + "".join(doc["sections"][0]["paras"] if doc["sections"] else [])):
+            add("K13", True, "冒頭の近くに「(この記事は、公開データをもとに、AIの支援を受けて作成しています。)」の1行を入れてください。")
+        if any(s.get("slot") for s in doc["sections"]):
+            add("K13", True, "note の記事に商品カードは置きません。")
     # K12 a situation from another story (the desk, 2026-11-04: a 停電 box in the data-leak article came from the typhoon article's material):
     # a situation word in the text that is in neither the facts, the reader memo, the topic nor the decided plan
     story = "\n".join([f["text"] for f in m.get("facts", [])] + [str(v) for v in (m.get("reader_memo") or {}).values()] + [m.get("topic", ""), m.get("plan", "")])

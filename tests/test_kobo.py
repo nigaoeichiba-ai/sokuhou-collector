@@ -166,6 +166,8 @@ class FakeModels:
         self.calls.append((model, prompt[:30]))
         if "事実確認係" in prompt:
             return json.dumps({"unsupported": []})
+        if "読み終えたところ" in prompt:            # the remaining-questions pass: nothing left
+            return json.dumps({"left": []})
         if "意地悪で細かい" in prompt:              # the 突っ込み役 passes the text through unchanged (no point)
             body = prompt.split("----- 原稿 -----\n", 1)[1].rsplit("\n----- ここまで -----", 1)[0]
             return "===突っ込み===\n" + json.dumps({"points": []}) + "\n===直した全文===\n" + body
@@ -283,6 +285,8 @@ PLAN_WIDE = """# 案2: 停電の夜の総点検
 - アンケート
 ## 危機感の作り方(事実から)
 台風は直撃はしない。点検の2時間を、家で数える時間にする。
+## 商品の置き場所
+- 親: なし / 子1: ライトの選び方のあと、ライトの種類
 ## 誠実さの線(書かないこと)
 直撃と書かない。
 """
@@ -297,7 +301,7 @@ class Plan(unittest.TestCase):
     def test_checks_catch_a_narrow_alarming_plan(self):
         from sokuhou.kobo import plan
         c = {x["code"] for x in plan.plan_checks(PLAN_ONE, BRIEF) if x["block"]}
-        self.assertEqual(c, {"P01", "P02", "P03"})
+        self.assertEqual(c, {"P01", "P02", "P03", "P06"})
         self.assertEqual([x for x in plan.plan_checks(PLAN_WIDE, BRIEF) if x["block"]], [])     # '直撃はしない' is the fact, not an alarm
 
     def test_three_plans_reviewed_and_the_pick_reworked(self):
@@ -378,6 +382,40 @@ class Questions(unittest.TestCase):
         self.assertEqual(m2["facts"][-1]["status"], "primary")
         self.assertIn("quote checked", m2["facts"][-1]["note"])
         self.assertNotIn("caa.go.jp", material.for_prompt(m2))          # the record stays private
+
+
+class Output(unittest.TestCase):
+    def test_toc_for_a_long_article(self):
+        long = GOOD.replace("## 何を出せばいい?", "## 何を出せばいい?\nライトを出します。\n\n## どこに置く?\n手の届く所です。\n\n## 電池は?\nそばに入れます。\n\n## 何を見る?")
+        out = doc.with_toc(long)
+        self.assertIn("## 目次\n- 点検は、いつ?", out)
+        self.assertLess(out.index("## 3行まとめ"), out.index("## 目次"))
+        self.assertEqual([s["heading"] for s in doc.parse(out)["sections"]], [s["heading"] for s in doc.parse(long)["sections"]])
+        self.assertEqual(doc.with_toc(GOOD), GOOD)          # short: no table of contents
+
+    def test_ledger(self):
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmp:
+            old = engine.home
+            engine.home = lambda: Path(tmp)
+            try:
+                f = Path(tmp) / "a.md"
+                f.write_text(GOOD, encoding="utf-8")
+                engine.ledger_add(MAT, {"tool": "article", "site": "wadai", "writer": "opus", "reader": "codex"}, f)
+                row = engine.ledger_set("t-light/article", "note_views", 12)
+                self.assertEqual(row["reading"]["note_views"], 12)
+                self.assertIsNone(row["reading"]["site_clicks"])
+                with self.assertRaises(KeyError):
+                    engine.ledger_set("t-light/article", "price", 1)
+            finally:
+                engine.home = old
+
+    def test_note_needs_the_ai_line(self):
+        fs = [f.code for f in checks.blocking(checks.check(doc.parse(GOOD), MAT, dict(CARD, _tool="note"), "article"))]
+        self.assertIn("K13", fs)
+        ok = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。\n\n(この記事は、公開データをもとに、AIの支援を受けて作成しています。)", 1)
+        self.assertNotIn("K13", [f.code for f in checks.blocking(checks.check(doc.parse(ok), MAT, dict(CARD, _tool="note"), "article"))])
 
 
 class Calibration(unittest.TestCase):

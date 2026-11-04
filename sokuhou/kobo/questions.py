@@ -26,6 +26,8 @@ PERSONAS = {
            "家族(親や子)の契約が心配な人"],
 }
 DEFAULT_PERSONAS = ["これから行動しようとしている人", "もう当事者になってしまった人", "迷っている人", "地方に住んでいる人", "別の方法を考えている人", "家族のことが心配な人"]
+# what a page does NOT say is not a fact for the article ('分からない' is never written): such sentences are cut from an answer
+META = re.compile(r"書かれていない|書かれていません|記載はない|記載はありません|記載がない|述べた記載|分からない|わからない|確認できない|ではなく、[^。]*(?:ページ|資料)の内容")
 PUBLIC = re.compile(r"(^|\.)(go\.jp|lg\.jp)$")
 QUOTE_MIN = 12
 
@@ -100,7 +102,8 @@ def research(questions: list[dict], model: str = "sonnet", fetch=page_text) -> d
             drop.append({"q": a.get("q", ""), "why": "the research role did not find it on a public page"})
             continue
         ok, why = quote_found(str(a.get("url", "")), str(a.get("quote", "")), fetch)
-        rec = {"q": a.get("q", ""), "answer": str(a.get("answer", "")), "url": a.get("url", ""), "quote": a.get("quote", ""), "check": why}
+        answer = "".join(x for x in re.split(r"(?<=。)", str(a.get("answer", ""))) if x.strip() and not META.search(x))
+        rec = {"q": a.get("q", ""), "answer": answer, "url": a.get("url", ""), "quote": a.get("quote", ""), "check": why}
         (acc if ok else drop).append(rec)
     return {"accepted": acc, "dropped": drop}
 
@@ -131,7 +134,8 @@ def run(m: dict, card: dict, draft: str = "", ask_model: str = "sonnet", researc
 def summary_md(res: dict) -> str:
     q, r = res["questions"], res["research"]
     lines = [f"# 当事者の疑問出し(疑問 {len(q['questions'])} 件 / 当事者 {len(q['personas'])} 人 / 疑問出し {q['model']})", ""]
-    for who in q["personas"]:
+    whos = list(dict.fromkeys(x["who"] for x in q["questions"]))      # the persona names as the model wrote them
+    for who in whos:
         lines += [f"## {who}"]
         lines += [f"- {x['no']}. {x['q']} — 行動: {x['action']} / 答えの種類 {x['answer_type']} / 置き場所: {x['place']}" for x in q["questions"] if x["who"] == who]
         lines.append("")
