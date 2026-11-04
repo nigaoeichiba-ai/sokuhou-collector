@@ -171,7 +171,7 @@ class TestBatchNegatives(unittest.TestCase):
 
 
 MEMO = {"reader": "寝具を見直したい人", "trouble": "何から見ればよいか迷っている", "feel": "見る点は三つで足りると感じる", "action": "今夜、消し忘れ防止の機能を見る"}
-ART = {"id": "m-1", "updated": "2026-11-07", "ledger": ["国立天文台"], "reader_memo": MEMO,
+ART = {"id": "m-1", "updated": "2026-11-07", "ledger": ["国立天文台"], "reader_memo": MEMO, "verification": [{"fact": 0, "primary": True, "sources": ["国立天文台 暦要項"]}],
        "lead": "11月7日は立冬。電気毛布は、消し忘れを防ぐ機能があるかを先に見ると選びやすい。", "sections": [
     {"layer": "fact", "heading": "確認できた事実(11月7日時点)", "bullets": ["国立天文台は、2026年の立冬を11月7日と暦要項に載せている。"]},
     {"layer": "opinion", "heading": "考察(編集部の見方)", "paras": ["朝晩の冷え込みが強まる頃で、寝具の見直しを始める人が増えるのではないか。あくまで編集部の見方で、地域によって違う。"]},
@@ -291,6 +291,31 @@ class TestArticle(unittest.TestCase):
     def test_p17_posts_do_not_open_with_not_known(self):
         self.assertIn("P17", codes(w.check_post(post(body="理由は分からない。\n電気毛布は見るかも。\n消し忘れ防止を見てね。"))))
         self.assertNotIn("P17", codes(w.check_post(post())))
+
+    def test_a18_the_public_text_shows_no_source(self):
+        for bad in ("国立天文台は2026年の立冬を11月7日と暦要項に載せている(11月4日のITmedia NEWSの報道)。",
+                    "国立天文台は11月7日の立冬を載せていると報じられている。",
+                    "11月7日の報道によると、立冬は11月7日だ。",
+                    "国立天文台は11月7日の立冬を載せている(国立天文台の公式ページ)。",
+                    "時事通信と共同通信が、11月7日の立冬を伝えている。"):
+            self.assertIn("A18", codes(w.check_article(with_sections(fact={"bullets": [bad]}))), bad)
+        self.assertIn("A18", codes(w.check_article(art(lead="日経が伝えた11月7日の立冬です。"))))
+        # the announcer and the date are part of the fact and stay
+        self.assertNotIn("A18", codes(w.check_article(with_sections(fact={"bullets": ["国立天文台は、2026年の立冬を11月7日と暦要項に載せている。"]}))))
+        self.assertNotIn("A18", codes(w.check_article(art(lead="気象庁によると、台風は5日朝、父島の西北西にいます。"))))
+
+    def test_a19_each_fact_is_verified_in_the_private_ledger(self):
+        self.assertIn("A19", codes(w.check_article(art(verification=[]))))                                              # no record
+        self.assertIn("A19", codes(w.check_article(art(verification=[{"fact": 0, "sources": ["一社"]}]))))             # a single source
+        self.assertIn("A19", codes(w.check_article(art(verification=[{"fact": 0, "sources": ["一社", "一社"]}]))))     # the same source twice
+        self.assertIn("A19", codes(w.check_article(art(verification=[{"fact": 0, "sources": ["甲", "乙"], "conflict": True}]))))
+        self.assertNotIn("A19", codes(w.check_article(art(verification=[{"fact": 0, "sources": ["甲", "乙"]}]))))      # two independent sources
+        self.assertNotIn("A19", codes(w.check_article(art(verification=[{"fact": 0, "primary": True, "sources": ["官公庁"]}]))))
+
+    def test_p18_posts_show_no_source(self):
+        for bad in ("共同通信が伝えたよ", "報道によると", "ITmedia NEWSの記事より"):
+            self.assertIn("P18", codes(w.check_post(post(body=post()["body"] + bad))), bad)
+        self.assertNotIn("P18", codes(w.check_post(post())))
 
     def test_a10_freshness(self):
         self.assertTrue(any("stale" in f.msg for f in w.check_article(ART, {"today": "2026-12-20"})))

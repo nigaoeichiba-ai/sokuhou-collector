@@ -12,6 +12,7 @@ Checks (a finding has a code; the CLI prints codes and ids only, never the text 
  articles A01 layers in order   A02 layer mix   A03 each fact has a body and a date   A04 numbers   A05 proper nouns not in the ledger
          A06 criticism of a named party   A07 forbidden words   A08 price / product names   A09 update history really changed   A10 freshness
          A13 the party of a consumer trouble gets no product or path, and no individual victim (P16 is the same rule for posts)
+         A18 no source talk in the public text   A19 each fact verified (primary, or two sources) in the private ledger
          A15 a lead, not opening with "not known" (P17 for posts)   A16 no "not known / not confirmed" in the body   A17 the four-line reader memo
 Not implemented (needs a live feed or a page build): warning areas (P15), thin-page measure (A11), advertising label in the built page (A12), the natural-Japanese gate (A14).
 """
@@ -64,6 +65,9 @@ NUM_RE = re.compile(r"\d+(?:[.,]\d+)?")
 URL_RE = re.compile(r"https?://\S+|\b[a-z0-9-]+\.(?:com|jp|net|org|to)/\S*", re.I)
 # "we do not know" is never the main voice of a page or a post (owner 2026-11-04): what is not confirmed is left out, or goes to the update history (the end) as a short note
 UNKNOWN_RE = re.compile(r"分からな|わからな|分かって(?:い)?な|確認できて(?:い)?な|確認できな|資料にな|読めて(?:い)?な|未確認|不明|裏付けは")
+# the public text shows no sources (owner 2026-11-04): no media names, no "according to the press", no bracketed source notes.  The agency / office that announced a fact and the date stay: that is part of the fact.
+MEDIA_NAMES = ["ITmedia", "Yahoo!ニュース", "時事通信", "共同通信", "日本経済新聞", "日経", "テレビ朝日", "テレ朝", "朝日新聞", "読売新聞", "毎日新聞", "産経", "東京新聞", "NHK", "livedoor", "ライブドア", "ビジネス+IT", "FNN", "tenki.jp", "埼玉新聞"]
+SOURCE_TALK = re.compile(r"報道|報じ|伝えて|[（(][^）)]*(?:公式ページ|ニュース|新聞|通信|NEWS)[^）)]*[）)]|公式ページ(?:に|は)")
 MEMO_KEYS = ("reader", "trouble", "feel", "action")        # who reads / what troubles them before reading / what the first sentence should make them feel / what they should do after reading
 FORMULA_MARK = ("＝", "=", "×", "例だよ", "例です", "たとえば")
 KATAKANA_RE = re.compile(r"[ァ-ヴー]{4,}")
@@ -239,6 +243,10 @@ def check_post(p: dict, ctx: dict | None = None) -> list[Finding]:
     if UNKNOWN_RE.search(opening):
         add("P17", "the opening lines say something is not known / not confirmed", UNKNOWN_RE.search(opening).group(0))
 
+    # P18 no source talk in the public text (media names, "according to reports", bracketed source notes)
+    for m in [m for m in MEDIA_NAMES if m in both] + [x.group(0) for x in SOURCE_TALK.finditer(both)]:
+        add("P18", "the text shows a source (media name / report wording); keep the announcer and the date, drop the source", m)
+
     # P11 numbers: each number in the body is in the facts, in the evidence date, or in a formula line marked as an example
     allowed = set()
     for f in p.get("facts", []):
@@ -389,6 +397,21 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
             m = UNKNOWN_RE.search(t)
             if m:
                 add("A16", "the body says something is not known / not confirmed (leave it out, or move a short note to the update history)", m.group(0))
+    # A18 no source talk in any public text of the page (the record of what was checked lives in the private ledger: "verification")
+    public = _without("\n".join([lead] + [t for s in secs for t in text_of(s)]), ctx.get("allowed_phrases", []))
+    for m in [m for m in MEDIA_NAMES if m in public] + [x.group(0) for x in SOURCE_TALK.finditer(public)]:
+        add("A18", "the page shows a source (media name / report wording / bracketed source note)", m)
+    # A19 every fact bullet has a private verification record: a primary source, or at least two independent sources (a single source or a conflicting story is not published)
+    ver = a.get("verification", [])
+    fact_bullets = [t for s in secs if s.get("layer") == "fact" for t in s.get("bullets", [])]
+    for i, _t in enumerate(fact_bullets):
+        rec = next((v for v in ver if v.get("fact") == i), None)
+        if not rec:
+            add("A19", f"fact {i} has no verification record in the private ledger")
+        elif not (rec.get("primary") or len(set(rec.get("sources", []))) >= 2):
+            add("A19", f"fact {i} rests on a single source")
+        elif rec.get("conflict"):
+            add("A19", f"fact {i} has conflicting sources")
     # A03 every fact bullet names an issuer and a date
     for s in secs:
         if s.get("layer") != "fact":
