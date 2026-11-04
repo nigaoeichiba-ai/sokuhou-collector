@@ -61,6 +61,12 @@ class Parse(unittest.TestCase):
         self.assertLess(txt.index("| 1人 | 3L |"), txt.index("そのあとライトを出します"))
         self.assertIn("(ここに商品の一覧が入ります)", txt)
 
+    def test_a_part_without_content_is_shown_by_what_it_is(self):
+        md = GOOD.replace("ライトをひとつ出して、一度点けてみてください。", "続きは次のページで。\n\n[子ページの案内]\n\n")
+        txt = doc.plain(doc.parse(md), [{"mark": "[子ページの案内]", "what": "体験の前 / 質問と答え", "content": ""}])
+        self.assertNotIn("[子ページの案内]", txt)
+        self.assertIn("(ここに入るもの: 体験の前 / 質問と答え)", txt)
+
     def test_round_trip(self):
         d = doc.parse(GOOD)
         self.assertEqual(doc.parse(doc.to_markdown(d))["sections"], d["sections"])
@@ -134,6 +140,13 @@ class Checks(unittest.TestCase):
         md = GOOD.replace("> 出したついでにスイッチを入れて、点くか見ておきます。", "> 台風で停電したときのために、点くか見ておきます。")
         self.assertIn("K12", codes(md))
         self.assertNotIn("K12", codes(GOOD))      # 停電 is in this material's facts
+        # a situation in the material's own confirmed 豆知識 is not a mix-in
+        tip = dict(MAT["tips"][0], text=MAT["tips"][0]["text"] + "台風のときも同じです。")
+        self.assertNotIn("K12", codes(md, dict(MAT, tips=[tip])))
+
+    def test_the_word_advert_in_a_sentence_is_not_an_ad_note(self):
+        self.assertNotIn("K07", codes(GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。広告やチラシも取っておきます。")))
+        self.assertIn("K07", codes(GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。【PR】")))
 
     def test_lead_of_three_sentences(self):
         self.assertIn("K10", codes(GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。電池も見ます。")))
