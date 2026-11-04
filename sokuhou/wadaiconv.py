@@ -33,6 +33,7 @@ td.in input{font:inherit;width:100%;min-width:5em;padding:4px 6px;border:1px sol
 .costcalc th[scope=row]{min-width:7.5em;font-size:14px}td.out{font-weight:700}.countbar{background:var(--accbg);border-radius:12px;padding:8px 14px;margin:6px 0 14px;font-weight:700}
 .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 18px;margin:18px 0}.toc h2{font-size:17px;margin:0 0 4px}.toc ol{margin:0;padding-left:1.4em}.toc a{color:var(--acc)}
 .kids{list-style:none;padding:0}.kids li{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:8px 0;padding:10px 14px}.kids a{color:var(--acc);font-weight:700}.kids .sub{display:block;font-size:14px;color:var(--muted)}
+.kobo-calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:14px 0}.kobo-calc input{font:inherit;width:5.5em;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
 .slot b{display:block;color:var(--fg);margin-bottom:4px}
 """
 
@@ -153,13 +154,16 @@ def parse_check(content: str) -> list[str]:
 
 
 # ---- parts ---------------------------------------------------------------------------------------------------------------------------------------
-def table_part(title: str, md: str, kind: str = "") -> str:
+def table_part(title: str, md: str, kind: str = "", calc_items: list | None = None) -> str:
     head, rows = parse_table(md)
     if not head:
         return ""
     if kind == "cost":
         return cost_table(title, head, rows)
     out = pg.table_html({"title": title, "headers": head, "rows": rows})
+    if calc_items:      # the workshop's own calculator (sokuhou/kobo/parts.py) goes under the table
+        from sokuhou.kobo import parts as kparts
+        return out + kparts.calculator_html(calc_items)
     # a table of rows "1人 ... 5人": an input that works out the numbers for any number of people
     if rows and re.fullmatch(r"\d+人", rows[0][0]):
         pp = []
@@ -245,7 +249,7 @@ def build_page(pid: str, kobo: Path, cfg: dict, base_dir: Path) -> tuple[str, di
             kind = pc.get("table_kinds", {}).get(mark, "")
             if p.get("content"):
                 used["table"] += 1
-                return table_part(title, p["content"], kind)
+                return table_part(title, p["content"], kind, pc.get("calculator", {}).get(mark))
         elif inner.startswith("図"):
             fig = pc.get("figures", {}).get(mark)
             if fig:
