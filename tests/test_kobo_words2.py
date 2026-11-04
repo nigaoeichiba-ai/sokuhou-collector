@@ -187,3 +187,19 @@ class OwnersAiWords(unittest.TestCase):
             self.assertTrue(lexicon.scan([t]), t)
         for t in ["手の届く場所に出します。", "宅配で荷物が届きます。", "契約書を用意して行きます。"]:
             self.assertFalse(lexicon.scan([t]), t)
+
+
+class OwnersAiWords2(unittest.TestCase):
+    def test_more_ai_words(self):
+        for t in ["本数が要ります。", "手順を一つずつ進めます。", "流れがつかめます。", "ラジオは情報を得る手段です。", "リンクがつきます。"]:
+            self.assertTrue(lexicon.scan([t]), t)
+        for t in ["重要な点です。", "移動の手段です。", "ご覧いただくよう勧めます。"]:
+            self.assertFalse(lexicon.scan([t]), t)
+
+    def test_candidates_come_from_phrases_the_human_documents_do_not_use(self):
+        from sokuhou.kobo import aiwords
+        texts = {"a": "手順を進めます。話を進めます。", "b": "予約を進めます。確認します。確認します。確認します。"}
+        human = {"確認します": [9, 5]}
+        keys = [r["key"] for r in aiwords.candidates(texts, human, min_out=3)]
+        self.assertIn("進めます", keys)
+        self.assertNotIn("確認します", keys)
