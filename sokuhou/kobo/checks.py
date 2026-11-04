@@ -36,7 +36,9 @@ FORMULAS = ["一つの手", "ひとつの手", "のも手です", "も手です"
 PETS = [(r"という", 3, "「という」"), (r"ことができ", 0, "「することができます」"), (r"になります", 3, "「になります」"), (r"ておきま", 3, "「ておきます」"),
         (r"ください", 4, "「ください」"), (r"大切です|重要です|大事です", 1, "「大切です/重要です」")]
 LABEL_HEAD = re.compile(r"^(?:まとめ|概要|結論|ポイント|注意点|背景|はじめに|おわりに|事実|考察|解説|基本情報|ニュースの概要|今回のポイント)$|確認できた事実|考察|編集部の見方|備え・選び方|豆知識|ライフハック|^【")
-AD_RE = re.compile(r"広告|ＰＲ|(?<![A-Za-z])PR(?![A-Za-z])|プロモーション|アフィリエイト|提携リンク")
+# an advertising NOTE, not the word 広告 in a sentence ('契約のきっかけになった広告やパンフレット' is about the shop's adverts; 2026-11-04)
+AD_RE = re.compile(r"(?:^|[【\[［(（])\s*(?:広告|ＰＲ|PR)\s*(?:[】\]］)）]|$)|広告を含|広告が含|広告リンク|広告です|(?<![A-Za-z])PR(?![A-Za-z])を含"
+                   r"|プロモーションを含|アフィリエイト|提携リンク", re.M)
 ORG_RE = re.compile(r"[一-龥ァ-ヴー]{2,}(?:庁|省|県|府|都|市|区|町|村|社|会社|銀行|センター|協会|機構|委員会|大学|研究所)")
 LATIN_RE = re.compile(r"[A-Za-z][A-Za-z0-9+.&-]{1,}")
 KATA_RE = re.compile(r"[ァ-ヴー]{3,}")
@@ -251,7 +253,11 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
             add("K13", True, "note の記事に商品カードは置きません。")
     # K12 a situation from another story (the desk, 2026-11-04: a 停電 box in the data-leak article came from the typhoon article's material):
     # a situation word in the text that is in neither the facts, the reader memo, the topic nor the decided plan
-    story = "\n".join([f["text"] for f in m.get("facts", [])] + [str(v) for v in (m.get("reader_memo") or {}).values()] + [m.get("topic", ""), m.get("plan", "")])
+    # the material's confirmed tips and allowed advice belong to the story too (2026-11-04: '避難所のトイレ' from the toilet page's
+    # confirmed 豆知識 was stopped as a mix-in)
+    story = "\n".join([f["text"] for f in m.get("facts", [])] + [str(v) for v in (m.get("reader_memo") or {}).values()]
+                      + [t.get("title", "") + t.get("text", "") for t in usable_tips(m)] + [str(a) for a in m.get("advice", [])]
+                      + [m.get("topic", ""), m.get("plan", "")])
     for w in SITUATIONS:
         if w in blob and w not in story:
             add("K12", True, f"「{w}」の話は、この記事の事実にも読者メモにもありません。別の記事の話が混ざっていないか見て、混ざっていれば消してください。", w)

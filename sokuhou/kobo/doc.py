@@ -116,6 +116,7 @@ def body_text(doc: dict) -> str:
 def plain(doc: dict, parts: list | None = None) -> str:
     """The text as a reader sees it (for the reader gate): no slot marker, boxes with their names, fixed parts shown with their content."""
     pc = {p["mark"]: p.get("content", "") for p in (parts or [])}
+    pw = {p["mark"]: p.get("what", "") for p in (parts or [])}
     lines = []
     if doc["title"]:
         lines += [doc["title"], ""]
@@ -135,6 +136,10 @@ def plain(doc: dict, parts: list | None = None) -> str:
                 lines.append(f"・{t}")
             elif t == SLOT:
                 lines.append("(ここに商品の一覧が入ります)")
+            elif not pc.get(t) and pw.get(t):
+                # a part the page builder fills in (a map, the links to the child pages): the reader sees what will stand there,
+                # not a bare work mark (2026-11-04: '[子ページの案内]' alone was rightly stopped as an unreadable placeholder)
+                lines.append(f"(ここに入るもの: {pw[t]})")
             else:
                 lines.append(t)
                 if pc.get(t):
