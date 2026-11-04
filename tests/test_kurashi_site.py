@@ -89,6 +89,11 @@ class Build(unittest.TestCase):
                 continue
             self.assertNotIn("noindex", html[:3000], rel)
 
+    def test_search_console_verification_file_is_written(self):
+        f = self.out / "googleabcac004d8b7d556.html"
+        self.assertEqual(f.read_text(encoding="utf-8"), "google-site-verification: googleabcac004d8b7d556.html
+")
+
     def test_a_thin_page_would_be_caught(self):
         """The bar is real: a page with a table but a few lines is reported by the same function the build uses."""
         thin = "<main><h1>x</h1><p>短い。</p><table><tr><td>1</td></tr></table></main>"
