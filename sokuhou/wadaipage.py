@@ -69,10 +69,10 @@ def _map_svg(fig: dict) -> str:
          f'<defs><clipPath id="c{sid}"><rect width="{MW}" height="{MH}"/></clipPath></defs><rect class="sea" width="{MW}" height="{MH}"/><g clip-path="url(#c{sid})">']
     for gx in range(int(x0 // 10 * 10 + 10), int(x1) + 1, 10):
         a, _ = px(gx, y0)
-        o.append(f'<line class="grid" x1="{a:.1f}" y1="0" x2="{a:.1f}" y2="{MH}"/><text class="lab" x="{a + 3:.1f}" y="{MH - 5}">東経{gx}度</text>')
+        o.append(f'<line class="grid" x1="{a:.1f}" y1="0" x2="{a:.1f}" y2="{MH}"/><text class="lab" x="{a + 3 if a < MW - 70 else a - 3:.1f}" y="{MH - 5}"{'' if a < MW - 70 else ' text-anchor="end"'}>{f"東経{gx}度" if a < MW - 70 else ""}</text>')
     for gy in range(int(y0 // 10 * 10 + 10), int(y1), 10):
         _, b = px(x0, gy)
-        o.append(f'<line class="grid" x1="0" y1="{b:.1f}" x2="{MW}" y2="{b:.1f}"/><text class="lab" x="4" y="{b - 4:.1f}">北緯{gy}度</text>')
+        o.append(f'<line class="grid" x1="0" y1="{b:.1f}" x2="{MW}" y2="{b:.1f}"/><text class="lab" x="{MW - 4}" y="{b - 4:.1f}" text-anchor="end">{f"北緯{gy}度" if b < MH - 30 else ""}</text>')
     for ring in wadaimap.rings():
         o.append('<path class="land" d="M' + " L".join(f"{px(lo, la)[0]:.1f},{px(lo, la)[1]:.1f}" for lo, la in ring) + ' Z"/>')
     pts = fig["points"]
