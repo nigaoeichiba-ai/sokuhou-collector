@@ -80,6 +80,12 @@ def main(argv=None) -> int:
         p.add_argument("--reader", default=None)
         p.add_argument("--rewrites", type=int, default=engine.MAX_REWRITES)
         p.add_argument("--tsukkomi", default="default", help="the 突っ込み役 model (haiku/sonnet/opus/fable/codex), or none")
+        p.add_argument("--heavy", action="store_true", help="reader gate + fact judge + rewrite rounds (only for topics the desk names)")
+    p = sub.add_parser("batch", help="light mode: several materials at once, in parallel")
+    p.add_argument("materials", nargs="+")
+    p.add_argument("--tool", default="article")
+    p.add_argument("--writer", default=None)
+    p.add_argument("--tsukkomi", default="default")
     p = sub.add_parser("plan")
     p.add_argument("brief")
     p.add_argument("--writer", default="opus")
@@ -240,6 +246,18 @@ def main(argv=None) -> int:
             _print_result(r)
             print("=" * 60)
         return 0
+    if a.cmd == "batch":
+        import time as _t
+        t0 = _t.time()
+        def one(name):
+            m = _material(name)
+            return engine.light(a.tool, m, engine.load_card(m.get("site", "wadai")), writer=a.writer, tsukkomi_model=a.tsukkomi)
+        with ThreadPoolExecutor(max_workers=len(a.materials)) as ex:
+            rs = list(ex.map(one, a.materials))
+        for r in rs:
+            _print_light(r)
+        print(f"batch: {len(rs)} pages in {round(_t.time() - t0)}s (in parallel)")
+        return 0
     # the writing tools
     if a.cmd == "note":
         src = Path(a.inp).read_text(encoding="utf-8")
@@ -256,9 +274,23 @@ def main(argv=None) -> int:
     else:
         m = _material(a.material)
         card = engine.load_card(a.site or m.get("site", "wadai"))
+        if not a.heavy:
+            r = engine.light(a.cmd, m, card, writer=a.writer, tsukkomi_model=a.tsukkomi)
+            _print_light(r)
+            return 0
         r = engine.run(a.cmd, m, card, writer=a.writer, reader=a.reader, rewrites=a.rewrites, tsukkomi_model=a.tsukkomi)
     _print_result(r)
     return 0 if r["passed"] else 1
+
+
+def _print_light(r: dict) -> None:
+    sec = r["seconds"]
+    print(f"[{r['tool']} light] material={r['material']} writer={r['writer']} tsukkomi={r['tsukkomi']} "
+          f"marks={len(r['marks'])} (strong {sum(x['strong'] for x in r['marks'])}) time={sec['total']}s (writer {sec['writer']}s, tsukkomi {sec['tsukkomi']}s)")
+    for x in r["marks"]:
+        print(f"  - {x['label']}: {x['msg'][:90]}")
+    if r.get("out"):
+        print(f"  out: {r['out']}")
 
 
 if __name__ == "__main__":

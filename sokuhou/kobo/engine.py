@@ -294,6 +294,87 @@ def _marks(g: dict) -> str:
     return "\n".join(f"- 「{mk['text']}」 / {mk['why']} / 直し案: {mk['fix']}" for mk in ms) or "(なし)"
 
 
+# ---- light mode (the standard since 2026-11-04, the owner: about a minute a page; heavy judging only cost time) -------------------------
+
+LIGHT_WRITER = os.environ.get("KOBO_LIGHT_WRITER", "opus")
+MARK_LABELS = {"K01": "同じ言い方の重なり", "K02": "同じ内容のくり返し", "K03": "素材にない数字", "K04": "素材にない固有名詞", "K05": "素材にない語(参考)",
+               "K06": "ラベルのような見出し", "K07": "広告の表記", "K08": "確認のない豆知識", "K09": "出典・「分からない」の話", "K10": "形(冒頭・3行まとめ・長い文)",
+               "K11": "決まった部品", "K12": "ほかの記事の話の混入", "K13": "note の決まり", "K14": "断定に読める言い方"}
+
+
+def human_marks(fs: list[C.Finding]) -> list[dict]:
+    """What a person should look at, from the machine checks only (nothing here passes or stops the text)."""
+    out, seen = [], set()
+    for f in fs:
+        if f.code == "K05":
+            continue                       # long word lists: noise for a person reading
+        key = (f.code, f.msg)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append({"code": f.code, "label": MARK_LABELS.get(f.code, f.code), "msg": f.msg, "detail": f.detail, "strong": f.block})
+    return out
+
+
+def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_model: str | None = "default", record: bool = True) -> dict:
+    """素材 -> 書き手 (1 call) -> 機械の検査 -> 突っ込み役 (1 call, the full revised text) -> 機械の検査 -> output with the marks for a person.
+    No reader gate, no fact judge, no rewrite rounds (those stay in run(), for topics the desk names: contracts, law, health, money)."""
+    assert tool in TOOLS, tool
+    writer = writer or LIGHT_WRITER
+    if tool == "note":
+        m = dict(m, parts=[], slot="")
+    t0 = time.time()
+    system = prompt_file("system_writer")
+    prompt = writer_prompt(tool, m, card)
+    draft = runner.call(writer, prompt, system)
+    t1 = time.time()
+    fs0 = [f for u in units(tool, draft) for f in tool_findings(tool, u, m, card)]
+    tk = TSUKKOMI_DEFAULT if tsukkomi_model == "default" else tsukkomi_model
+    tk = None if tk in ("", "none") else tk
+    log: list = []
+    final = _keep_shape(_apply_tsukkomi(tool, draft, tk, log), draft, tool)
+    t2 = time.time()
+    fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
+    marks = human_marks(fs1)
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    result = {"mode": "light", "tool": tool, "material": m.get("id"), "site": card.get("site"), "writer": writer, "tsukkomi": tk,
+              "draft": draft, "output": final, "marks": marks, "draft_marks": human_marks(fs0),
+              "tsukkomi_points": (log[0]["points"] if log else []), "tsukkomi_ok": bool(log and log[0]["ok"]),
+              "seconds": {"writer": round(t1 - t0), "tsukkomi": round(t2 - t1), "total": round(time.time() - t0)}}
+    if record:
+        rec = home() / "runs" / datetime.now().strftime("%Y-%m-%d") / f"{m.get('id', 'x')}-{tool}-{writer}-light-{stamp}"
+        rec.mkdir(parents=True, exist_ok=True)
+        (rec / "material.json").write_text(json.dumps(m, ensure_ascii=False, indent=1), encoding="utf-8")
+        (rec / "prompt.md").write_text(prompt, encoding="utf-8")
+        (rec / "draft.md").write_text(draft, encoding="utf-8")
+        (rec / "final.md").write_text(final, encoding="utf-8")
+        (rec / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
+        result["record"] = str(rec)
+        out = home() / "out" / str(m.get("id"))
+        out.mkdir(parents=True, exist_ok=True)
+        body = D.with_toc(final) if tool in ("article", "note") else final
+        path = out / f"{tool}-{writer}.md"
+        path.write_text(body, encoding="utf-8")
+        (out / f"{tool}-{writer}.marks.md").write_text(marks_md(result), encoding="utf-8")
+        if tool == "article":
+            (out / f"{tool}-{writer}.json").write_text(json.dumps(D.to_wadai(D.parse(body), m), ensure_ascii=False, indent=1), encoding="utf-8")
+        ledger_add(m, dict(result, reader="-"), path)
+        result["out"] = str(path)
+    return result
+
+
+def marks_md(r: dict) -> str:
+    lines = [f"# 人が見る印: {r['material']} / {r['tool']}(書き手 {r['writer']}、突っ込み役 {r['tsukkomi']}、{r['seconds']['total']}秒)", ""]
+    if not r["marks"]:
+        lines.append("(機械の検査で拾えたものはありません)")
+    for x in r["marks"]:
+        lines.append(f"- {'**' if x['strong'] else ''}{x['label']}{'**' if x['strong'] else ''}: {x['msg']}" + (f"(該当: {x['detail']})" if x["detail"] and x["detail"] not in x["msg"] else ""))
+    if r.get("tsukkomi_points"):
+        lines += ["", f"## 突っ込み役の指摘({len(r['tsukkomi_points'])}件、全部反映済み)"]
+        lines += [f"- 「{str(p.get('text', ''))[:40]}」 {p.get('ask', '')} → {str(p.get('fix', ''))[:60]}" for p in r["tsukkomi_points"]]
+    return "\n".join(lines) + "\n"
+
+
 def run(tool: str, m: dict, card: dict, writer: str | None = None, reader: str | None = None, source: str = "", rewrites: int = MAX_REWRITES,
         record: bool = True, label: str = "", tsukkomi_model: str | None = "default", ask_left: bool = True) -> dict:
     assert tool in TOOLS, tool
