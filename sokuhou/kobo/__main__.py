@@ -290,6 +290,7 @@ def main(argv=None) -> int:
             rs = list(ex.map(one, a.materials))
         for r in rs:
             _print_light(r)
+            _learn(r)
         print(f"batch: {len(rs)} pages in {round(_t.time() - t0)}s (in parallel)")
         return 0
     # the writing tools
@@ -311,10 +312,19 @@ def main(argv=None) -> int:
         if not a.heavy:
             r = engine.light(a.cmd, m, card, writer=a.writer, tsukkomi_model=a.tsukkomi)
             _print_light(r)
+            _learn(r)
             return 0
         r = engine.run(a.cmd, m, card, writer=a.writer, reader=a.reader, rewrites=a.rewrites, tsukkomi_model=a.tsukkomi)
     _print_result(r)
     return 0 if r["passed"] else 1
+
+
+def _learn(r: dict) -> None:
+    """The models' reasons for an unnatural word go into the dictionary (one write, here, after the runs; not from the parallel threads)."""
+    from . import lexicon
+    n = lexicon.merge_learned(r.get("learned", []))
+    if n:
+        print(f"  dictionary: {n} reasons added")
 
 
 def _print_light(r: dict) -> None:

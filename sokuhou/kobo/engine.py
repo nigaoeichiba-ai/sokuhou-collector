@@ -14,6 +14,7 @@ from pathlib import Path
 from . import checks as C
 from . import doc as D
 from . import lexicon
+from . import textstats
 from . import runner
 from .material import for_prompt, source_text
 
@@ -309,7 +310,7 @@ def human_marks(fs: list[C.Finding]) -> list[dict]:
     """What a person should look at, from the machine checks only (nothing here passes or stops the text)."""
     out, seen = [], set()
     for f in fs:
-        if f.code == "K05" or not (f.code[0] in "KS" or f.code == "NJ"):
+        if f.code == "K05" or not (f.code[0] in "KS" or f.code in ("NJ", "SL")):
             continue                       # K05 word lists and the wadai codes (English, repeating K10, flagging what the material has): noise
         key = (f.code, f.msg)
         if key in seen:
@@ -395,14 +396,104 @@ def persona_fix(text: str, m: dict, pp: dict, model: str = PERSONA_MODEL) -> str
     return out
 
 
-def fix_endings(tool: str, text: str, fs: list, m: dict, card: dict, writer: str, system: str):
+# ---- the named-word check, the titles (the desk and the owner, 2026-11-04) ---------------------------------------------------------------
+
+NAMED_MODELS = ("haiku", "sonnet", "codex")
+
+
+def named_check(text: str, models=NAMED_MODELS) -> dict:
+    """Every sentence with a word of the dictionary is shown to three models, short and all at once: 'is this word natural here? if not, why, and three
+    alternatives'. (Asked about the whole text, the three models did not name the owner's words; asked about the word, all three did.)"""
+    from concurrent.futures import ThreadPoolExecutor
+    d = D.parse(text)
+    texts = [d["title"]] + [s["heading"] for s in d["sections"]] + [x for t in [d["lead"]] + d["tldr"] + [p for s in d["sections"] for p in s["paras"] + s["bullets"] + [b["text"] for b in s["boxes"]]] for x in D.sentences(t)]
+    items, seen = [], set()
+    for h in lexicon.scan([t for t in texts if t]):
+        if (h["id"], h["text"]) not in seen:
+            seen.add((h["id"], h["text"]))
+            items.append(h)
+    items = items[:14]
+    if not items:
+        return {"asked": 0, "flagged": [], "learned": []}
+    label = {e["id"]: e["label"] for e in lexicon.entries()}
+    lines = "\n".join(f"{i + 1}. 【{label.get(h['id'], h['id'])}】 {h['text']}" for i, h in enumerate(items))
+
+    def one(model):
+        try:
+            res = parse_json(runner.call(model, fill(prompt_file("named_check"), lines=lines)))
+        except Exception:
+            return model, []
+        return model, [x for x in (res.get("items") if isinstance(res.get("items"), list) else []) if isinstance(x, dict)]
+
+    with ThreadPoolExecutor(max_workers=len(models)) as ex:
+        answers = list(ex.map(one, models))
+    flagged, learned = [], []
+    for i, h in enumerate(items):
+        by, reasons, alts = [], [], []
+        for model, its in answers:
+            a = next((x for x in its if x.get("n") == i + 1), None)
+            if a and a.get("natural") is False:
+                by.append(model)
+                reasons.append(str(a.get("reason", "")))
+                alts += [str(t) for t in (a.get("alternatives") or [])][:3]
+                learned.append({"id": h["id"], "model": model, "reason": str(a.get("reason", ""))[:140], "alternatives": [str(t) for t in (a.get("alternatives") or [])][:3]})
+        if by:
+            flagged.append({"id": h["id"], "code": h["code"], "text": h["text"], "by": by, "reasons": reasons, "alternatives": alts})
+    return {"asked": len(items), "flagged": flagged, "learned": learned}
+
+
+def named_notes(nc: dict) -> str:
+    return "\n".join(f"- 語の使い方({'・'.join(f['by'])}が不自然と答えた): 「{f['text']}」 — {f['reasons'][0] if f['reasons'] else ''}。言い換え案: {' / '.join(dict.fromkeys(f['alternatives']))[:120]}"
+                     for f in nc["flagged"])
+
+
+def title_options(text: str, writer: str) -> list[str]:
+    res = parse_json(runner.call(writer, fill(prompt_file("title_options"), text=text)))
+    return [str(t).strip() for t in (res.get("titles") if isinstance(res.get("titles"), list) else []) if str(t).strip()][:5]
+
+
+BAD_TITLE = re.compile(r"[:：]|について|てみよう|てみましょう|数えて|数えよう")
+
+
+def pick_title(text: str, opts: list[str]) -> tuple[str, dict]:
+    """Two haiku readers (the one who does not know the topic, the one in a hurry) each choose the title that hits home; the most votes win."""
+    from concurrent.futures import ThreadPoolExecutor
+    ok = [t for t in opts if not BAD_TITLE.search(t) and 8 <= len(t) <= 30]
+    if len(ok) < 2:
+        return "", {"options": opts, "votes": []}
+    lead = D.parse(text)["lead"]
+    options = "\n".join(f"{i + 1}. {t}" for i, t in enumerate(ok))
+
+    def one(p):
+        try:
+            res = parse_json(runner.call(PERSONA_MODEL, fill(prompt_file("title_pick"), persona=p[1], lead=lead, options=options)))
+            n = int(res.get("best", 0))
+            return n if 1 <= n <= len(ok) else 0
+        except Exception:
+            return 0
+
+    with ThreadPoolExecutor(max_workers=2) as ex:
+        votes = list(ex.map(one, PERSONAS[:2]))
+    cnt = {v: votes.count(v) for v in votes if v}
+    if not cnt:
+        return "", {"options": ok, "votes": votes}
+    best = max(cnt, key=lambda k: (cnt[k], -votes.index(k)))
+    return ok[best - 1], {"options": ok, "votes": votes}
+
+
+def set_title(text: str, title: str) -> str:
+    return re.sub(r"^# .*$", "# " + title, text, count=1, flags=re.M)
+
+
+def fix_endings(tool: str, text: str, fs: list, m: dict, card: dict, writer: str, system: str, extra: str = ""):
     """Monotony (the same ending / opening / phrase three times or more) is fixed by the writer in one more call that replaces only
     the named sentences (the desk, 2026-11-04). Returns (text, findings, number of sentences replaced)."""
     mono = [f for f in fs if (f.code == "K01" and f.block) or f.code[0] == "S" or f.code == "K14"]
     mono = sorted(mono, key=lambda f: f.code == "S13")[:12]        # the named sentences only: at most 12, the many 「数える」 last
-    if tool not in ("article", "note") or not mono:
+    if tool not in ("article", "note") or not (mono or extra):
         return text, fs, 0
     notes = "\n".join(f"- {f.msg}(該当: {f.detail})" if f.detail else f"- {f.msg}" for f in mono)
+    notes += ("\n" + extra) if extra else ""
     notes += "\n(挙がった文だけを言い換える。同じ言い方の重なりは、1つか2つだけ。事実・条件・数字の意味は変えない。素材にない事実は足さない。)"
     rp = fill(prompt_file("revise_patch"), head=head_text(m, card), draft=text, marks="(なし)", notes=notes)
     try:
@@ -441,15 +532,22 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
     fs0 = [f for u in units(tool, draft) for f in tool_findings(tool, u, m, card)]
     log: list = []
     pp = None
-    if tsukkomi_model in ("default", "personas") and tool in ("article", "note"):
-        # the standard: several haiku readers at once, one fix (the owner, 2026-11-04)
-        tk = f"personas:{PERSONA_MODEL}"
-        pp = persona_points(draft, m)
-        final = _keep_shape(persona_fix(draft, m, pp), draft, tool)
-    else:
-        tk = TSUKKOMI_DEFAULT if tsukkomi_model == "default" else tsukkomi_model
-        tk = None if tk in ("", "none") else tk
-        final = _keep_shape(_apply_tsukkomi(tool, draft, tk, log), draft, tool)
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=1) as tex:
+        f_titles = tex.submit(title_options, draft, writer) if tool == "article" else None      # five titles, while the readers read
+        if tsukkomi_model in ("default", "personas") and tool in ("article", "note"):
+            # the standard: several haiku readers at once, one fix (the owner, 2026-11-04)
+            tk = f"personas:{PERSONA_MODEL}"
+            pp = persona_points(draft, m)
+            final = _keep_shape(persona_fix(draft, m, pp), draft, tool)
+        else:
+            tk = TSUKKOMI_DEFAULT if tsukkomi_model == "default" else tsukkomi_model
+            tk = None if tk in ("", "none") else tk
+            final = _keep_shape(_apply_tsukkomi(tool, draft, tk, log), draft, tool)
+        try:
+            opts = f_titles.result() if f_titles else []
+        except Exception:
+            opts = []
     t2 = time.time()
     fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
     auto_n = 0
@@ -457,20 +555,34 @@ def light(tool: str, m: dict, card: dict, writer: str | None = None, tsukkomi_mo
         # the words of the dictionary are replaced by machine (the readers' own fixes sometimes bring the word back), then named to the writer
         final, auto_n = lexicon.autofix(final)
         fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
-    final, fs1, ends_fixed = fix_endings(tool, final, fs1, m, card, writer, system)
+    nc = {"asked": 0, "flagged": [], "learned": []}
+    if tool in ("article", "note"):
+        nc = named_check(final)                                   # the words of the dictionary still in the text, asked of three models by name
+    final, fs1, ends_fixed = fix_endings(tool, final, fs1, m, card, writer, system, extra=named_notes(nc))
+    title_info = {}
     if tool in ("article", "note"):
         final, k = lexicon.autofix(final)
         if k:
             auto_n += k
-            fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
+        if opts:
+            new_title, title_info = pick_title(final, opts)
+            if new_title:
+                final = set_title(final, new_title)
+        fs1 = [f for u in units(tool, final) for f in tool_findings(tool, u, m, card)]
     t3 = time.time()
-    marks = human_marks(fs1) + added_explanations(draft, final, m)
+    dd = D.parse(final)
+    st = textstats.stats(dd)
+    heads = [dd["title"]] + [s["heading"] for s in dd["sections"]]
+    marks = (human_marks(fs1) + added_explanations(draft, final, m) + textstats.audit(draft, final, source_text(m)) + textstats.stat_marks(st)
+             + textstats.styleloop_marks([h for h in heads if h] + [x for t in [dd["lead"]] + dd["tldr"] + [p for s in dd["sections"] for p in s["paras"]] for x in D.sentences(t)])
+             + [{"code": f["code"], "label": "語の使い方(モデルの確認)", "msg": f"{'・'.join(f['by'])}が不自然と答えました: {f['reasons'][0] if f['reasons'] else ''}", "detail": f["text"][:90], "strong": False} for f in nc["flagged"]])
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     result = {"mode": "light", "tool": tool, "material": m.get("id"), "site": card.get("site"), "writer": writer, "tsukkomi": tk,
               "draft": draft, "output": final, "marks": marks, "draft_marks": human_marks(fs0),
               "tsukkomi_points": (pp["points"] if pp else (log[0]["points"] if log else [])), "tsukkomi_ok": bool(pp) or bool(log and log[0]["ok"]),
               "readers": ([{"name": r["name"], "gist": r["gist"], "points": len(r["points"])} for r in pp["readers"]] if pp else []),
-              "endings_fixed": ends_fixed, "words_replaced": auto_n, "seconds": {"writer": round(t1 - t0), "tsukkomi": round(t2 - t1), "endings": round(t3 - t2), "total": round(time.time() - t0)}}
+              "endings_fixed": ends_fixed, "words_replaced": auto_n, "named_check": {"asked": nc["asked"], "flagged": len(nc["flagged"])}, "learned": nc["learned"],
+              "title": title_info, "stats": st, "seconds": {"writer": round(t1 - t0), "tsukkomi": round(t2 - t1), "endings": round(t3 - t2), "total": round(time.time() - t0)}}
     if record:
         rec = home() / "runs" / datetime.now().strftime("%Y-%m-%d") / f"{m.get('id', 'x')}-{tool}-{writer}-light-{stamp}"
         rec.mkdir(parents=True, exist_ok=True)

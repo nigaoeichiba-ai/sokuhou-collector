@@ -237,8 +237,10 @@ class Light(unittest.TestCase):
         fake = FakeModels([GOOD.replace("点検は2時間です。", "点検は3時間です。")])
         runner.set_backend(fake)
         r = engine.light("article", MAT, CARD, writer="opus", tsukkomi_model="haiku", record=False)
-        self.assertEqual([m for m, _ in fake.calls][:2], ["opus", "haiku"])      # no reader, no judge, no rounds (a third call may fix the marked sentences)
-        self.assertNotIn("codex", [m for m, _ in fake.calls])
+        names = [m for m, _ in fake.calls]
+        self.assertEqual(names[0], "opus")
+        self.assertIn("haiku", names)                                     # the 突っ込み役 ran; no reader gate, no judge, no rounds
+        self.assertNotIn("fable", [m for m, _ in fake.calls])
         self.assertIn("3時間", r["output"])                                         # nothing passes or stops: the text is output
         self.assertIn("K03", [x["code"] for x in r["marks"]])                      # the number not in the material is marked for a person
         self.assertIn("total", r["seconds"])
@@ -260,8 +262,8 @@ class Light(unittest.TestCase):
             return GOOD
         runner.set_backend(fake)
         r = engine.light("article", dict(MAT, deep_readers=True), CARD, writer="opus", record=False)
-        self.assertEqual(calls.count("haiku"), 6)                      # 4 readers + the haiku proofreader + the fix
-        self.assertEqual(calls.count("codex"), 1)                      # the Codex proofreader
+        self.assertEqual(calls.count("haiku"), 7)                      # 4 readers + the haiku proofreader + the fix + the named-word check
+        self.assertEqual(calls.count("codex"), 2)                      # the Codex proofreader + the named-word check
         self.assertIn("停電の点検は2時間です", r["output"])
         top = r["tsukkomi_points"][0]
         self.assertEqual(len(top["by"]), 7)                             # the point every reader made comes first

@@ -30,7 +30,7 @@ def scan(texts: list[str]) -> list[dict]:
         pat, unless = re.compile(e["pattern"]), (re.compile(e["unless"]) if e.get("unless") else None)
         for t in texts:
             if pat.search(t) and not (unless and unless.search(t)):
-                out.append({"code": e["code"], "msg": e["msg"], "detail": t[:90], "id": e["id"]})
+                out.append({"code": e["code"], "msg": e["msg"], "detail": t[:90], "id": e["id"], "text": t})
     return out
 
 
@@ -71,3 +71,25 @@ def add_entry(pattern: str, msg: str, replace: list[str], code: str = "S99", lab
     d["entries"].append(e)
     PATH.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
     return e
+
+
+def merge_learned(items: list[dict]) -> int:
+    """The models' answers become part of the dictionary: why a word is unnatural, and alternatives, with the date (one write, after the runs)."""
+    if not items:
+        return 0
+    d = load()
+    by_id = {e["id"]: e for e in d["entries"]}
+    n = 0
+    for it in items:
+        e = by_id.get(it["id"])
+        if not e or not it.get("reason"):
+            continue
+        L = e.setdefault("learned", [])
+        if any(x["reason"] == it["reason"] for x in L):
+            continue
+        L.append({"date": str(date.today()), "model": it["model"], "reason": it["reason"], "alternatives": it.get("alternatives", [])})
+        del L[:-6]                                   # the latest six
+        n += 1
+    if n:
+        PATH.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+    return n
