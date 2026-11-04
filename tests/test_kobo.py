@@ -237,7 +237,8 @@ class Light(unittest.TestCase):
         fake = FakeModels([GOOD.replace("点検は2時間です。", "点検は3時間です。")])
         runner.set_backend(fake)
         r = engine.light("article", MAT, CARD, writer="opus", tsukkomi_model="haiku", record=False)
-        self.assertEqual([m for m, _ in fake.calls], ["opus", "haiku"])           # no reader, no judge, no rounds
+        self.assertEqual([m for m, _ in fake.calls][:2], ["opus", "haiku"])      # no reader, no judge, no rounds (a third call may fix the marked sentences)
+        self.assertNotIn("codex", [m for m, _ in fake.calls])
         self.assertIn("3時間", r["output"])                                         # nothing passes or stops: the text is output
         self.assertIn("K03", [x["code"] for x in r["marks"]])                      # the number not in the material is marked for a person
         self.assertIn("total", r["seconds"])
@@ -259,18 +260,39 @@ class Light(unittest.TestCase):
             return GOOD
         runner.set_backend(fake)
         r = engine.light("article", MAT, CARD, writer="opus", record=False)
-        self.assertEqual(calls.count("haiku"), 5)                      # 4 readers + 1 fix, all haiku
+        self.assertEqual(calls.count("haiku"), 6)                      # 4 readers + the haiku proofreader + the fix
+        self.assertEqual(calls.count("codex"), 1)                      # the Codex proofreader
         self.assertIn("停電の点検は2時間です", r["output"])
         top = r["tsukkomi_points"][0]
-        self.assertEqual(len(top["by"]), 4)                             # the point every reader made comes first
+        self.assertEqual(len(top["by"]), 6)                             # the point every reader made comes first
         self.assertFalse(any("出典" in a for p in r["tsukkomi_points"] for a in p["asks"]))
-        self.assertEqual(len(r["readers"]), 4)
+        self.assertEqual(len(r["readers"]), 6)
 
     def test_an_explanation_added_by_the_tsukkomi_is_marked(self):
         final = GOOD.replace("点検は2時間です。", "点検(電気を止めて設備を調べる作業)は2時間です。")
         ms = engine.added_explanations(GOOD, final, MAT)
         self.assertEqual([x["code"] for x in ms], ["TK"])
         self.assertEqual(engine.added_explanations(GOOD, GOOD, MAT), [])
+
+    def test_wording_and_heading_rules(self):
+        from sokuhou.kobo import style_rules as SR
+        md = GOOD.replace("# ", "# 防災グッズを数えてみよう ", 1).replace("## 点検は、いつ?", "## 備えは足りている? 人数に合わせて数える").replace(
+            "暗い中で探さずにすみます。", "暗い中で探さずにすみます。表に数字を並べると分かります。この記事は水を扱います。答えてみてください。")
+        codes_ = [x["code"] for x in SR.check(doc.parse(md))]
+        for c in ("S05", "S06", "S01", "S03", "S04"):
+            self.assertIn(c, codes_, c)
+        self.assertEqual([x for x in SR.check(doc.parse(GOOD)) if x["code"] in ("S01", "S03", "S05", "S06", "S07")], [])
+        # a range that does not match the count, an unclear table intro, a list of nouns standing as a sentence
+        md2 = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。いま、そろっている数(0〜7)を答えてください。8つの種類があります。一人暮らしの人は1人の行を見てください。エステ、語学教室、学習塾、家庭教師。")
+        c2 = [x["code"] for x in SR.check(doc.parse(md2))]
+        for c in ("S10", "S11", "S08"):
+            self.assertIn(c, c2, c)
+
+    def test_style_marks_never_block(self):
+        md = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。表に数字を並べると分かります。")
+        fs = [f for f in checks.check(doc.parse(md), MAT, CARD) if f.code.startswith("S")]
+        self.assertTrue(fs)
+        self.assertFalse(any(f.block for f in fs))
 
     def test_definite_claims_are_marked_not_blocked(self):
         md = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。これで必ず安心です。")

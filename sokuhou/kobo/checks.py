@@ -280,6 +280,11 @@ def check(doc: dict, m: dict, card: dict, kind: str = "article") -> list[Finding
     for mt in ASSERT_RE.finditer(blob):
         a, b = max(0, mt.start() - 18), mt.end() + 8
         add("K14", False, f"断定に読める言い方「{mt.group(0)}」があります。素材の事実どおりか、見てください。", blob[a:b].replace("\n", " "))
+    # S01-S12 wording and heading rules (marks for a person; the writer's fix call names the sentences)
+    if kind == "article":
+        from . import style_rules as SR
+        for x in SR.check(doc):
+            add(x["code"], False, x["msg"], x["detail"])
     # naturaljp
     try:
         from sokuhou import naturaljp as NJ
