@@ -65,7 +65,10 @@ class Parse(unittest.TestCase):
         md = GOOD.replace("ライトをひとつ出して、一度点けてみてください。", "続きは次のページで。\n\n[子ページの案内]\n\n")
         txt = doc.plain(doc.parse(md), [{"mark": "[子ページの案内]", "what": "体験の前 / 質問と答え", "content": ""}])
         self.assertNotIn("[子ページの案内]", txt)
-        self.assertIn("(ここに入るもの: 体験の前 / 質問と答え)", txt)
+        self.assertIn("【子ページの案内】\n・体験の前\n・質問と答え", txt)
+        self.assertNotIn("ここに入る", txt)
+        judge = doc.plain(doc.parse(md), [{"mark": "[子ページの案内]", "what": "体験の前 / 質問と答え", "content": ""}], describe_empty=False)
+        self.assertIn("[子ページの案内]", judge)
 
     def test_round_trip(self):
         d = doc.parse(GOOD)
