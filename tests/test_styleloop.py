@@ -764,5 +764,27 @@ class SearchTexts(unittest.TestCase):
         self.assertFalse(any("search phrase" in b for b in sl.check_rewrite("ソファ飯", "ソファで食事", "minna", "heading")))
 
 
+class CutDescriptionTest(unittest.TestCase):
+    """2026-11-04: the judge 'completed' 70 descriptions that the build had cut to length, guessing the ending."""
+
+    def test_finishing_a_cut_description_is_refused(self):
+        old = "お酒を配送で贈るときは、相手がお酒を飲める年齢かを本人に確かめます。瓶の本数、保存方法、送り主名を先に伝えると到着後の置き場所まで決めて"
+        bad = sl.check_rewrite(old, old + "られます。", "yorokobu", "description")
+        self.assertTrue(any("cut to length" in b for b in bad), bad)
+
+    def test_a_whole_description_and_a_duplicated_ending_are_still_allowed(self):
+        old = "サイズや日持ち、アレルゲンなど渡す前に確かめたい点も商品ごとに添えています。す。"
+        self.assertFalse(any("cut to length" in b for b in sl.check_rewrite(old, old[:-2], "yorokobu", "description")))
+        whole = "花束は、相手が帰宅するまでの時間と花瓶の有無を確かめてから大きさを決めます。"
+        self.assertFalse(any("cut to length" in b for b in sl.check_rewrite(whole, whole + "持ち帰り袋も用意します。", "yorokobu", "description")))
+
+
+class LearnedRuleTest(unittest.TestCase):
+    def test_the_vague_question_heading_rule_is_learned(self):
+        ids = lambda t: {r for r, _ in sl.short_flags(sl.Unit("heading", t), "yorokobu")}
+        self.assertIn("vague_question_heading", ids("先生への退職祝い、こんな贈り方はどうでしょう"))
+        self.assertNotIn("vague_question_heading", ids("女友達への引っ越し・新築祝い 品物別の贈り方"))
+
+
 if __name__ == "__main__":
     unittest.main()
