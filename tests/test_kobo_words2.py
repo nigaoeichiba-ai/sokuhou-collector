@@ -241,3 +241,16 @@ class DecideWord(unittest.TestCase):
             self.assertTrue(lexicon.scan([t]), t)
         for t in ["その場では決めずに、持ち帰ります。", "返事の日を決めます。", "何から買うか決めやすくなります。"]:
             self.assertFalse(lexicon.scan([t]), t)
+
+
+class TimeClash(unittest.TestCase):
+    def _s85(self, t):
+        md = "# 題\n\n冒頭です。二文目です。\n\n## 見出し\n" + t + "\n"
+        return [x["code"] for x in style_rules.check(doc.parse(md)) if x["code"] == "S85"]
+
+    def test_topic_time_and_predicate_time(self):
+        self.assertTrue(self._s85("今日は、足りないものを1つだけ、次の買い物のかごに入れましょう。"))
+        self.assertTrue(self._s85("今日は、あとで読む本を選びます。"))
+        self.assertFalse(self._s85("今は、来週の予定を確かめます。"))
+        self.assertFalse(self._s85("次の買い物では、足りないものを1つだけ、かごに入れましょう。"))
+        self.assertFalse(self._s85("今日は、次のページで量を確かめます。"))
