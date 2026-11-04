@@ -73,3 +73,13 @@ class Residual2(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DeAndOku(unittest.TestCase):
+    def test_deru_and_oku_words(self):
+        hit = ["回数が出たら、次へ進みます。", "表で出した回数に届くものを選びます。", "買い足す数を出す", "手の届く場所に置きます。", "手元に置いて読みます。"]
+        ok = ["ライトを出して、一度点けます。", "外に出る前に確認します。", "熱が出たら休みます。", "水道水の汲み置きは3日ほどです。", "古い電池の買い置きを確かめます。", "置き場所を決めます。", "位置を確かめます。"]
+        for t in hit:
+            self.assertTrue(lexicon.scan([t]), t)
+        for t in ok:
+            self.assertFalse(lexicon.scan([t]), t)
