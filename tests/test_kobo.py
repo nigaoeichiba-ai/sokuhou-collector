@@ -259,7 +259,7 @@ class Light(unittest.TestCase):
                 return json.dumps({"gist": "停電の点検の話", "points": pts})
             return GOOD
         runner.set_backend(fake)
-        r = engine.light("article", MAT, CARD, writer="opus", record=False)
+        r = engine.light("article", dict(MAT, deep_readers=True), CARD, writer="opus", record=False)
         self.assertEqual(calls.count("haiku"), 6)                      # 4 readers + the haiku proofreader + the fix
         self.assertEqual(calls.count("codex"), 1)                      # the Codex proofreader
         self.assertIn("停電の点検は2時間です", r["output"])
@@ -302,6 +302,15 @@ class Light(unittest.TestCase):
         h = parts.calculator_html([{"name": "水", "rate": 3, "unit": "リットル"}])
         self.assertIn('data-rate="3"', h)
         self.assertNotIn("src=", h)                                      # no external script
+
+    def test_place_words_and_counting_things(self):
+        from sokuhou.kobo import style_rules
+        md = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。足りない所を見つけてみませんか。足りなかったら、どこから買いますか。8つの種類を数えます。")
+        c = [x["code"] for x in style_rules.check(doc.parse(md))]
+        for code in ("S15", "S16", "S17", "S18"):
+            self.assertIn(code, c, code)
+        ok = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。ライトはどこにありますか。水を3リットル数えます。")
+        self.assertFalse([x for x in style_rules.check(doc.parse(ok)) if x["code"] in ("S15", "S16", "S17", "S18")])
 
     def test_style_marks_never_block(self):
         md = GOOD.replace("暗い中で探さずにすみます。", "暗い中で探さずにすみます。表に数字を並べると分かります。")
