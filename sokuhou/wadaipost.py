@@ -64,6 +64,7 @@ DATE_RE = re.compile(r"\d{1,2}月\d{1,2}日|\d{4}年\d{1,2}月")
 NUM_RE = re.compile(r"\d+(?:[.,]\d+)?")
 URL_RE = re.compile(r"https?://\S+|\b[a-z0-9-]+\.(?:com|jp|net|org|to)/\S*", re.I)
 # "we do not know" is never the main voice of a page or a post (owner 2026-11-04): what is not confirmed is left out, or goes to the update history (the end) as a short note
+STIFF_HEAD = re.compile(r"確認できた事実|考察|編集部の見方|備え・選び方")
 UNKNOWN_RE = re.compile(r"分からな|わからな|分かって(?:い)?な|確認できて(?:い)?な|確認できな|資料にな|読めて(?:い)?な|未確認|不明|裏付けは")
 # the public text shows no sources (owner 2026-11-04): no media names, no "according to the press", no bracketed source notes.  The agency / office that announced a fact and the date stay: that is part of the fact.
 MEDIA_NAMES = ["ITmedia", "Yahoo!ニュース", "時事通信", "共同通信", "日本経済新聞", "日経", "テレビ朝日", "テレ朝", "朝日新聞", "読売新聞", "毎日新聞", "産経", "東京新聞", "NHK", "livedoor", "ライブドア", "ビジネス+IT", "FNN", "tenki.jp", "埼玉新聞"]
@@ -374,9 +375,15 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
     # A01 the four layers, once each, in order; the heading names them
     if layers != LAYER_ORDER:
         add("A01", "the layers must be fact, opinion, prep, history, in this order, once each")
+    reading = a.get("format") == "reading"
     for s in secs:
         lay = s.get("layer")
-        if lay in LAYER_ORDER and LAYER_TITLES[lay] not in s.get("heading", ""):
+        if reading:
+            # the reading edition keeps the layers in internal tags and in the boxes; the headings are written for the reader, never as labels (owner 2026-11-04)
+            m = STIFF_HEAD.search(s.get("heading", ""))
+            if m:
+                add("A27", "a heading that is a label, not a reader's heading (use 'いま、どこ?' or 'あなたの場合は?')", m.group(0))
+        elif lay in LAYER_ORDER and LAYER_TITLES[lay] not in s.get("heading", ""):
             add("A01", f"the heading of the {lay} section must contain '{LAYER_TITLES[lay]}'")
     extra = list(a.get("tldr", [])) + ([a["poll"]["question"]] + list(a["poll"].get("options", [])) if a.get("poll") else [])
     alltext = _without("\n".join([t for s in secs for t in text_of(s)] + extra), ctx.get("allowed_phrases", []))
@@ -388,7 +395,8 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
                 hedged = bool(HEDGE_END.search(_strip_tail(sent)) or HEDGE_ANY.search(sent))
                 if s.get("layer") == "fact" and hedged:
                     add("A02", "a hedged sentence in the fact section", sent[:20])
-                if s.get("layer") == "opinion" and re.search(r"(である|となる|だった|になる|です|ます)[。！]?$", _strip_tail(sent) + "。") and not hedged and not any(m in sent for m in FORMULA_MARK):
+                # 'do not assert' applies to facts and effects only; a plain, widely held safety tip may be said flatly (the reading edition does not ask the opinion layer to hedge)
+                if not reading and s.get("layer") == "opinion" and re.search(r"(である|となる|だった|になる|です|ます)[。！]?$", _strip_tail(sent) + "。") and not hedged and not any(m in sent for m in FORMULA_MARK):
                     # a flat statement in the opinion section: allowed only when it labels the view ("あくまで筆者の見方で…")
                     if "見方" not in sent and "編集部" not in sent and "場合" not in sent:
                         add("A02", "a flat statement in the opinion section (use a hedge, or label it)", sent[:20])
@@ -407,6 +415,9 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
     # A19 every fact bullet has a private verification record: a primary source, or at least two independent sources (a single source or a conflicting story is not published)
     ver = a.get("verification", [])
     fact_bullets = [t for s in secs if s.get("layer") == "fact" for t in s.get("bullets", [])]
+    if reading:      # the reading edition writes facts as short paragraphs (and a 豆知識 box): each one is a fact to verify
+        fact_bullets = [t for s in secs if s.get("layer") == "fact" for t in s.get("paras", [])] + fact_bullets + \
+                       [b.get("text", "") for s in secs if s.get("layer") == "fact" for b in s.get("boxes", []) if b.get("kind") == "tip"]
     for i, _t in enumerate(fact_bullets):
         rec = next((v for v in ver if v.get("fact") == i), None)
         if not rec:
@@ -417,9 +428,16 @@ def check_article(a: dict, ctx: dict | None = None) -> list[Finding]:
             add("A19", f"fact {i} has conflicting sources")
         elif re.search(r"公開前に人が|確認してから公開|確認する$", str(rec.get("note", ""))) and not rec.get("confirmed"):
             add("A19", f"fact {i} still waits for a person to confirm it before publication (set confirmed when done)")
-    # A03 every fact bullet names an issuer and a date
+    # A03 every fact bullet names an issuer and a date (the reading edition: the first fact paragraph does; the next ones continue the same subject)
     for s in secs:
         if s.get("layer") != "fact":
+            continue
+        if reading:
+            first = (s.get("paras") or s.get("bullets") or [""])[0]
+            if not any(i in first for i in ISSUERS + list(ctx.get("issuers", []))):
+                add("A03", "the first fact paragraph names no issuer", first[:15])
+            if not (DATE_RE.search(first) or re.search(r"\d{1,2}日", first)):
+                add("A03", "the first fact paragraph names no date", first[:15])
             continue
         for t in s.get("bullets", []):
             if "発表されていない" in t or "分かっていない" in t:
@@ -516,6 +534,41 @@ LUMP_CHARS = 130            # one paragraph longer than this is a lump of text
 LUMP_RUN = 4                # this many plain paragraphs in a row, with no figure or box between them, is a wall of text
 
 
+FORMULAS = ["一つの手", "のも手です", "も手です", "選択肢です", "選択肢もあります"]
+NUMUNIT_RE = re.compile(r"\d[\d,.]*(?:キロ|メートル|ヘクトパスカル|リットル|件|日分|日間|年度|時間|万件)")
+# (pattern, limit, label): constructions that make a text read like a document; each is fine once or twice
+PET_PATTERNS = [(r"という", 3, "という"), (r"ことができ", 0, "することができます"), (r"になります", 3, "になります"), (r"ておきま", 3, "ておきます/ておきましょう"),
+                (r"ください", 4, "ください"), (r"確かめ", 4, "確かめる")]
+SENT_MAX = 80
+# phrases the 'ordinary office worker' reader stumbled on in the read-aloud review (2026-11-04): invented terms and vague abstractions; the better word follows
+DISCOURAGED = {"二つ目の確認": "二段階認証", "入数": "何個入りか", "回す形": "補充しながら続ける", "先に考える物": "先に用意するもの", "場合の代わり": "ときの別の方法", "物理のセキュリティキー": "セキュリティキー",
+               "届いたリンク": "メールのリンク", "数える形": "数える", "ゆるく読む": "", "備蓄が回": "備蓄を続けられ", "選択肢になります": "", "のも手": ""}
+REPEAT_N = 9
+REPEAT_MIN = 3
+
+
+def _repeated_phrases(texts, ledger) -> dict:
+    """Substrings of REPEAT_N characters that occur REPEAT_MIN times or more in the public text (names of the article's own things are skipped)."""
+    joined = "".join(texts)
+    out: dict = {}
+    seen = set()
+    for i in range(len(joined) - REPEAT_N):
+        g = joined[i:i + REPEAT_N]
+        if g in seen or re.search(r"[0-9、。()（）:：\s]", g):
+            continue
+        seen.add(g)
+        n = joined.count(g)
+        if n >= REPEAT_MIN and not any(g in l or l in g for l in ledger):
+            out[g] = n
+    # keep only the longest of overlapping repeats
+    keys = sorted(out, key=len, reverse=True)
+    kept: dict = {}
+    for g in keys:
+        if not any(g in k for k in kept):
+            kept[g] = out[g]
+    return kept
+
+
 def reading_texts(a: dict) -> dict:
     """The public texts of a reading article by role."""
     secs = [s for s in a.get("sections", []) if s.get("layer") != "history"]
@@ -544,6 +597,38 @@ def check_reading(a: dict) -> list[Finding]:
         polite = sum(1 for x in sents if POLITE_END.search(x))
         if polite / len(sents) < 0.5:
             add("A20", f"only {polite} of {len(sents)} sentences end in です/ます (a です・ます tone is the base)")
+    # A25 rhythm: a formula repeated, the same opening on three sentences in a row of a section, the same phrase again and again, a pet construction used too often
+    blob = "\n".join(allt)
+    n_formula = sum(blob.count(f) for f in FORMULAS)
+    if n_formula > 1:
+        add("A25", f"a hedge formula (一つの手 / 選択肢です …) used {n_formula} times; say it flatly, or once")
+    for s in a.get("sections", []):
+        if s.get("layer") == "history":
+            continue
+        starts: dict = {}
+        for t in list(s.get("paras", [])) + list(s.get("bullets", [])):
+            for sent in _sentences(t):
+                k = sent[:5]
+                if len(k) == 5:
+                    starts[k] = starts.get(k, 0) + 1
+        for k, n in starts.items():
+            if n >= 3:
+                add("A25", f"{n} sentences of one section start with the same words ({k}…); join them or vary", k)
+    for m, n in _repeated_phrases(allt, a.get("ledger", [])).items():
+        add("A25", f"the phrase '{m}' appears {n} times", m)
+    for pat, limit, label in PET_PATTERNS:
+        n = len(re.findall(pat, blob))
+        if n > limit:
+            add("A25", f"{label} used {n} times (more than {limit})", label)
+    # A26 the same fact said again: one number with its unit in more than two blocks (lead, summary line, a section, a box)
+    blocks = [T["lead"][0]] + T["tldr"] + [x for x in T["summaries"] if x] + T["paras"] + T["bullets"] + T["boxes"]
+    seen: dict = {}
+    for b in blocks:
+        for m in set(NUMUNIT_RE.findall(b)):
+            seen[m] = seen.get(m, 0) + 1
+    for m, n in seen.items():
+        if n > 2:
+            add("A26", f"'{m}' is said in {n} places (lead / summaries / body); say it once or twice", m)
     # A21 figures: at least one chart or table with data, and an illustration
     figs = [f for s in a.get("sections", []) for f in s.get("figures", [])] + ([a["hero"]] if a.get("hero") else [])
     if not any(f["kind"] in ("chart", "table") for f in figs):
@@ -559,6 +644,18 @@ def check_reading(a: dict) -> list[Finding]:
     for t in T["paras"]:
         if len(t) > LUMP_CHARS:
             add("A22", f"a paragraph of {len(t)} characters (cut it)", t[:12])
+    for t in T["lead"] + T["paras"] + T["bullets"] + T["boxes"]:
+        for sent in _sentences(t):
+            if len(sent) > SENT_MAX:
+                add("A22", f"a sentence of {len(sent)} characters (say it in two)", sent[:12])
+            parts = sent.split("、")
+            if len(parts) - 1 >= 5 and sum(len(x) for x in parts) / len(parts) > 10:
+                add("A22", f"{len(parts) - 1} commas in one sentence with long parts (a list of clauses: use short sentences or a list)", sent[:12])
+            if sent.count("こと") >= 3:
+                add("A22", "three or more 'こと' in one sentence (a chain of nominalised clauses: use verbs)", sent[:12])
+    for bad, better in DISCOURAGED.items():
+        if bad in blob:
+            add("A28", f"'{bad}' reads oddly or is a term the reader does not know" + (f" (say: {better})" if better else ""), bad)
     for s in a.get("sections", []):
         if s.get("layer") == "history":
             continue
@@ -574,7 +671,7 @@ def check_reading(a: dict) -> list[Finding]:
         if s.get("layer") == "history":
             continue
         if not s.get("summary"):
-            add("A23", f"section '{s.get('heading', '')[:10]}' has no one-line summary")
+            pass        # a one-line summary under a heading is optional: it often says the same fact a third time (A26); the 3-line summary at the top is the required one
         elif len(s["summary"]) > 60:
             add("A23", "a section summary over 60 characters", s["summary"][:10])
     # A24 parts: tip and hack boxes, series, poll, next

@@ -13,16 +13,17 @@ def fixture():
         "format": "reading", "id": "t-1", "updated": "2026-11-04", "title": "停電の夜に、ひとつだけ出しておく物", "lead": "停電に備えて、灯りをひとつ出しておきましょう。置き場所を決めておくと、夜に探さずに済みます。",
         "tldr": ["灯りをひとつ出す。", "置き場所を決める。", "電池を確かめる。"],
         "reader_memo": {"reader": "a", "trouble": "b", "feel": "c", "action": "d"}, "ledger": [], "parties": [], "ads": True,
+        "verification": [{"fact": 0, "primary": True, "sources": ["x"]}, {"fact": 1, "primary": True, "sources": ["x"]}],
         "series": {"name": "手帖", "parent": "/a/", "children": [{"path": "/a/1/", "title": "場面別", "kind": "場面別"}, {"path": "/a/2/", "title": "チェック", "kind": "チェックリスト"}]},
         "hero": {"kind": "image", "src": "x.webp", "alt": "雨の夜の部屋の絵", "caption": "手の届く所に灯りを。"},
         "poll": {"id": "p1", "question": "いちばん困るのは?", "options": ["暗さ", "電池", "情報"]},
         "next": [{"path": "/b/", "title": "次の記事"}],
         "sections": [
-            {"layer": "fact", "heading": "確認できた事実", "summary": "灯りは手の届く所に。", "bullets": ["気象庁は11月4日、台風が南の海上にあると発表しています。"],
+            {"layer": "fact", "heading": "台風はいま、どこ?", "summary": "灯りは手の届く所に。", "bullets": ["気象庁は11月4日、台風が南の海上にあると発表しています。"],
              "figures": [{"kind": "chart", "type": "bar", "title": "例の棒グラフ", "desc": "三つの値の例。", "labels": ["a", "b", "c"], "values": [3, 5, 4], "caption": "気象庁(2026年)"}],
              "boxes": [{"kind": "tip", "title": "豆知識", "text": "灯りは、頭に付けると両手が空きます。"}]},
-            {"layer": "opinion", "heading": "考察", "summary": "場面で選びます。", "paras": ["家で過ごすなら、手の届く所に置くのがよさそうです。"], "boxes": []},
-            {"layer": "prep", "heading": "備え・選び方", "summary": "四つだけ見ます。", "paras": ["電池が合うかを見ましょう。"], "bullets": ["置き場所を決める"],
+            {"layer": "opinion", "heading": "あなたの場合は?", "summary": "場面で選びます。", "paras": ["家で過ごすなら、手の届く所に置くのがよさそうです。"], "boxes": []},
+            {"layer": "prep", "heading": "ライトの選び方", "summary": "四つだけ見ます。", "paras": ["電池が合うかを見ましょう。"], "bullets": ["置き場所を決める"],
              "boxes": [{"kind": "hack", "title": "予備の電池", "text": "予備は、灯りと同じ袋に入れましょう。"}]},
             {"layer": "history", "heading": "更新履歴", "bullets": ["11月4日 追記: 作りました。"]}],
     }
@@ -75,11 +76,82 @@ class TestReadingChecks(unittest.TestCase):
         a["tldr"] = ["一つ", "二つ"]
         self.assertIn("A23", codes(w.check_reading(a)))
         a = fixture()
-        a["sections"][1]["summary"] = ""
-        self.assertIn("A23", codes(w.check_reading(a)))
+        a["sections"][1]["summary"] = ""                           # a one-line summary under a heading is optional
+        self.assertNotIn("A23", codes(w.check_reading(a)))
         a = fixture()
         a["tldr"][0] = "あ" * 61
         self.assertIn("A23", codes(w.check_reading(a)))
+
+    def test_a25_rhythm(self):
+        a = fixture()
+        a["sections"][1]["paras"] = ["家で過ごすなら、手の届く所に置くのが一つの手です。", "外に出る日は、雨具を先に考えるのも一つの手です。"]
+        self.assertIn("A25", codes(w.check_reading(a)))                                   # the formula twice
+        a = fixture()
+        a["sections"][1]["paras"] = ["通勤の日は雨具を先に出します。", "通勤の日は靴も先に出します。", "通勤の日は傘もかばんに入れます。"]
+        self.assertIn("A25", codes(w.check_reading(a)))                                   # three sentences with the same opening
+        a = fixture()
+        a["sections"][1]["paras"] = ["暗い部屋でもすぐ見つかるように、玄関に置きます。", "暗い部屋でもすぐ見つかるように、枕元にも置きます。", "暗い部屋でもすぐ見つかるように、かばんにも入れます。"]
+        self.assertIn("A25", codes(w.check_reading(a)))                                   # the same long phrase three times
+        a = fixture()
+        a["sections"][1]["paras"] = ["台風という言葉と、停電という言葉と、備蓄という言葉と、灯りという言葉があります。"]
+        self.assertIn("A25", codes(w.check_reading(a)))                                   # 'という' too often
+        a = fixture()
+        a["sections"][1]["paras"] = ["確認することができます。"]
+        self.assertIn("A25", codes(w.check_reading(a)))                                   # 'することができます' even once
+
+    def test_a26_the_same_fact_said_again(self):
+        a = fixture()
+        a["lead"] = "台風は5日朝に280キロの海上を進みます。置き場所を決めておきましょう。"
+        a["tldr"] = ["台風は280キロの海上。", "置き場所を決める。", "電池を確かめる。"]
+        a["sections"][0]["bullets"] = ["気象庁は11月4日、台風が280キロ先の海上にあると発表しています。"]
+        self.assertIn("A26", codes(w.check_reading(a)))
+        a["tldr"][0] = "台風は南の海上。"
+        self.assertNotIn("A26", codes(w.check_reading(a)))
+
+    def test_a22_commas_and_nominalised_chains(self):
+        a = fixture()
+        a["sections"][1]["paras"] = ["契約内容をよく確かめて、関連の商品やサービスが必要かを確かめて、予約の取りやすさを確かめて、トレーナーを変えられるかを確かめて、不安なら相談して、早めに動きます。"]
+        self.assertIn("A22", codes(w.check_reading(a)))                                   # a list of clauses in one sentence
+        a["sections"][1]["paras"] = ["エステ、美容医療、語学、家庭教師、学習塾、パソコン、結婚相手紹介が対象です。"]
+        self.assertNotIn("A22", codes(w.check_reading(a)))                                # a short list of nouns is fine
+        a["sections"][1]["paras"] = ["その場で決めないこと、確かめること、相談することが大切です。"]
+        self.assertIn("A22", codes(w.check_reading(a)))                                   # three 'こと' in one sentence
+
+    def test_a28_terms_the_reader_stumbled_on(self):
+        for bad in ("二つ目の確認を付けます。", "携帯トイレの入数を見ます。", "届いたリンクは開きません。", "物理のセキュリティキーがあります。"):
+            a = fixture()
+            a["sections"][1]["paras"] = [bad]
+            self.assertIn("A28", codes(w.check_reading(a)), bad)
+        a = fixture()
+        a["sections"][1]["paras"] = ["二段階認証を調べます。"]
+        self.assertNotIn("A28", codes(w.check_reading(a)))
+
+    def test_a22_a_long_sentence(self):
+        a = fixture()
+        a["sections"][1]["paras"] = ["停電になったときに暗い部屋の中でも慌てずに動けるように" * 3 + "準備します。"]
+        self.assertIn("A22", codes(w.check_reading(a)))
+
+    def test_a27_headings_are_for_the_reader(self):
+        for h in ("確認できた事実:台風はいま、どこ?", "考察(編集部の見方):あなたの場合は?", "備え・選び方"):
+            a = fixture()
+            a["sections"][0]["heading"] = h
+            self.assertIn("A27", codes(w.check_article(a)), h)
+        a = fixture()
+        a["sections"][0]["heading"] = "台風31号、いまどこ?"
+        self.assertNotIn("A27", codes(w.check_article(a)))
+
+    def test_reading_edition_facts_as_paragraphs_are_verified_and_name_the_issuer_once(self):
+        a = fixture()
+        a["sections"][0]["bullets"] = []
+        a["sections"][0]["paras"] = ["気象庁の4日9時の解析では、台風は南の海上にいます。", "このあとは北へ進みます。"]
+        a["verification"] = [{"fact": 0, "primary": True, "sources": ["x"]}, {"fact": 1, "primary": True, "sources": ["x"]}, {"fact": 2, "primary": True, "sources": ["x"]}]
+        found = codes(w.check_article(a))
+        self.assertNotIn("A03", found)                                   # the second paragraph continues the subject
+        self.assertNotIn("A19", found)
+        a["verification"] = [{"fact": 0, "primary": True, "sources": ["x"]}]
+        self.assertIn("A19", codes(w.check_article(a)))                  # the second paragraph and the 豆知識 box have no record
+        a["sections"][0]["paras"][0] = "台風は南の海上にいます。"
+        self.assertIn("A03", codes(w.check_article(a)))                  # the first paragraph names no issuer
 
     def test_a24_parts(self):
         for mutate, why in ((lambda a: a["sections"][0].__setitem__("boxes", []), "no tip"), (lambda a: a["sections"][2].__setitem__("boxes", []), "no hack"),
