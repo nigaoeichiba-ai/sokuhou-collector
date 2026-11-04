@@ -46,6 +46,8 @@ def autofix(text: str) -> tuple[str, int]:
         for e in entries():
             if e.get("unless") and re.search(e["unless"], line):
                 continue
+            if e.get("only") and not re.search(e["only"], line):
+                continue
             for pat, rep in e.get("auto", []):
                 line, k = re.subn(pat, rep, line)
                 n += k
