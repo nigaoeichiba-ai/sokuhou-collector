@@ -52,17 +52,14 @@ class Words(unittest.TestCase):
         import tempfile
         from pathlib import Path
         from sokuhou.kobo import lexicon
-        old = lexicon.PATH
         with tempfile.TemporaryDirectory() as td:
-            lexicon.PATH = Path(td) / "w.json"
-            lexicon.PATH.write_text(old.read_text(encoding="utf-8"), encoding="utf-8")
+            lexicon.LEARNED_PATH = Path(td) / "learned.json"
             try:
                 item = {"id": "w04", "model": "sonnet", "reason": "場所ではない", "alternatives": ["足りないもの"]}
                 self.assertEqual(lexicon.merge_learned([item, item]), 1)           # the same reason twice is one
-                e = next(x for x in lexicon.entries() if x["id"] == "w04")
-                self.assertEqual(e["learned"][0]["reason"], "場所ではない")
+                self.assertEqual(json.loads(lexicon.LEARNED_PATH.read_text(encoding="utf-8"))["w04"][0]["reason"], "場所ではない")
             finally:
-                lexicon.PATH = old
+                lexicon.LEARNED_PATH = None
 
 
 if __name__ == "__main__":

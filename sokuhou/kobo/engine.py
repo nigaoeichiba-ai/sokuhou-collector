@@ -415,8 +415,7 @@ def named_check(text: str, models=NAMED_MODELS) -> dict:
     items = items[:14]
     if not items:
         return {"asked": 0, "flagged": [], "learned": []}
-    label = {e["id"]: e["label"] for e in lexicon.entries()}
-    lines = "\n".join(f"{i + 1}. 【{label.get(h['id'], h['id'])}】 {h['text']}" for i, h in enumerate(items))
+    lines = "\n".join(f"{i + 1}. 【{h['match']}】 {h['text']}" for i, h in enumerate(items))
 
     def one(model):
         try:
