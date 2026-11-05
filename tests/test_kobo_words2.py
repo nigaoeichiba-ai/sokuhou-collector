@@ -262,3 +262,19 @@ class NineMoreWords(unittest.TestCase):
             self.assertTrue([h for h in lexicon.scan([t]) if h.get("code") in {f"S{n}" for n in range(86, 95)}], t)
         for t in ["持ち帰って考えます。", "充電が残っているか確かめます。", "ベランダの物を家の中に入れます。", "表に書き込みます。"]:
             self.assertFalse([h for h in lexicon.scan([t]) if h.get("code") in {f"S{n}" for n in range(86, 95)}], t)
+
+
+class AskPlacement(unittest.TestCase):
+    def _s04(self, body, box=""):
+        md = "# 題\n\n冒頭です。二文目です。\n\n## 見出し\n" + body + "\n" + (f"\n> ライフハック: 保管\n> {box}\n" if box else "")
+        return [x for x in style_rules.check(doc.parse(md)) if x["code"] == "S04"]
+
+    def test_invitations_are_judged_by_place_not_by_count(self):
+        self.assertFalse(self._s04("契約書を手元に用意して、電話してください。"))
+        self.assertFalse(self._s04("本文です。", "分けて保管しましょう。"))
+        self.assertTrue(self._s04("水は多めに買いましょう。ライトも買ってください。"))                 # neighbouring
+        self.assertTrue(self._s04("まとめ買いは必要ありません。安心です。まず1本買ってください。"))      # right after an assurance
+        self.assertTrue(self._s04("水を買いましょう。\n\nライトを選びましょう。\n\n電池を確かめてください。"))   # three in a section
+        many = "\n\n".join(f"{n}を確かめてください。" for n in ("水", "食料", "電池", "ライト", "ラジオ"))
+        self.assertTrue(self._s04(many))                                                                  # still marked, by the section, not by the page
+        self.assertFalse(self._s04("本文です。\n\n水を買ってください。"))                                  # a single one is fine

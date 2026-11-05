@@ -3,7 +3,7 @@ person (never blocking in light mode); the writer's one fix call names the sente
 text needs no AI to be right: each rule says which kind of slip it catches.
 
 S01 並べる/並んでいる (things or numbers)      S02 商品・案内を「置く」          S03 「扱う」(the content of the article)
-S04 forcing: てみてください / しなさい / べき / しないと, and ください more than 3 times, ましょう more than 2 times
+S04 forcing: てみてください / しなさい / べき / しないと (the dictionary) and ください / ましょう in the wrong place (ask_placement: lead, tldr, stacked, after an assurance)
 S05 a title/heading that ends on an abstract verb alone (数えてみよう …) or uses 〜てみよう/みましょう
 S06 a heading ending on a verb with no object (を)   S07 a heading ending on 「へ」   S08 a list of nouns standing as a sentence
 S09 「数」「目安」「量」 with nothing before it saying what     S10 a range that does not match the count (0〜7 / 8 types)
@@ -27,7 +27,6 @@ SUBJ_DOING = re.compile(r"^(?:[^。、は]{0,14}、)?[^。、は]{0,16}" + SUBJ_
 SUBJ_FIX = {"計算": "計算できます", "買い足し": "買い足せばOKです / 買い足していきます", "買い": "買えば足ります / 買っていきます", "増や": "増やしていきます",
             "確認": "確認できます / 分かります", "決め": "決まります / 決められます", "出し": "分かります"}
 LATER_DOING = re.compile(r"(?:あとから|そのあと|その後|のちに|のちほど|少しずつ|だんだん|徐々に|いずれ)[^。]{0,30}(?:増やし|買い足し|そろえ|用意し|足し|加え)ます。?$")
-PARA_MAX_ASK = 3       # ください per page (safety/procedure advice may keep it, but no more than this)
 VERB_END = re.compile(r"(?:[るうくすつぬぶむぐ]|ます|ましょう|ください)[。!！]?$")
 NOUN_LIST = re.compile(r"^[^。、]{2,16}(?:、[^。、]{2,16}){2,}。?$")
 
@@ -140,12 +139,7 @@ def check(doc: dict) -> list[dict]:
     # the word dictionary (data/word_rules.json): S01-S04 words, S12, S15-S19 ...  Every point the owner or the desk made is one entry there.
     out += lexicon.scan(sents + [h for _, h in heads if h])
 
-    ask = sum(len(re.findall(r"ください", s)) for s in sents)
-    if ask > PARA_MAX_ASK:
-        add("S04", f"「ください」が{ask}回あります(安全・手続きの案内だけにして、3回まで)。", "ください")
-    mash = sum(len(re.findall(r"ましょう", s)) for s in sents)
-    if mash > 2:
-        add("S04", f"「ましょう」が{mash}回あります(呼びかけが続くと強いられる感じがします。2回まで)。", "ましょう")
+    out += ask_placement(doc)
 
     # S10: a range of N+1 values (0..N) against a stated count of types
     blob = "\n".join(body)
@@ -354,4 +348,33 @@ def time_clash(doc: dict) -> list[dict]:
         m = re.match(r"^(" + TOPIC_TIME + r")は?、(.*)$", x)
         if m and LATER_TIME.search(m.group(2)):
             out.append({"code": "S85", "msg": f"文頭の「{m.group(1)}」と、後ろの「{LATER_TIME.search(m.group(2)).group(0)}」の時間が合いません。「次の買い物では、〜をかごに入れましょう」のように、時間語を述語側にそろえてください。", "detail": x[:90]})
+    return out
+
+
+# ---- 「ください」「しましょう」: judged by where they stand, not by a count (the owner, 2026-11-05: used in the right place they are fine) ----------------------------------
+ASK = re.compile(r"ください|ましょう")
+ASSURE = re.compile(r"安心|必ず|絶対|大丈夫です|心配ありません")
+
+
+def ask_placement(doc: dict) -> list[dict]:
+    """S04: an invitation is marked when it stands (b) twice in neighbouring sentences, (c) three or more in one section, (d) right after an assurance without a ground ('安心です。…してください').  Kept where it is natural: one concrete step of a procedure, the end of a box, the closing next step."""
+    out = []
+
+    def add(msg, sent):
+        out.append({"code": "S04", "msg": msg, "detail": sent[:90]})
+    for sec in doc["sections"]:
+        sec_n = 0
+        for q in sec["paras"]:
+            if q.startswith(("[", "|", "#")):
+                continue
+            ss = _sents(q)
+            idx = [i for i, x in enumerate(ss) if ASK.search(x)]
+            sec_n += len(idx)
+            if len(idx) >= 2 and idx[-1] - idx[0] <= 1:
+                add("「〜してください/〜しましょう」が、隣り合う文で重なっています。促すのは1つにしてください。", ss[idx[1]])
+            for i in idx:
+                if i > 0 and ASSURE.search(ss[i - 1]):
+                    add("根拠のない安心の言い切りのすぐあとに、促す言い方が続いています。理由を言ってから促してください。", ss[i])
+        if sec_n >= 3:
+            add(f"節「{sec['heading'][:14]}」に、促す言い方(〜してください/〜しましょう)が{sec_n}つあります。重ねず、1節に2つまでにしてください。", sec["heading"])
     return out
