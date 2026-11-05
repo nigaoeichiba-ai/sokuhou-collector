@@ -230,7 +230,10 @@ def main(argv=None) -> int:
             e = lexicon.add_entry(a.pattern, a.msg, [x for x in a.replace.split(",") if x], code=a.code, label=a.label,
                                   auto=[x.split("=>", 1) for x in a.auto], unless=a.unless, source=a.source)
             print("added", e["id"], e["label"])
-            return 0
+            bad = [(t, i) for t, i in lexicon.clean_conflicts() if i == e["id"]]
+            for t, i in bad:
+                print("WARNING: the new entry marks a natural sentence:", t, "(add an exclusion with --unless, or the entry is too wide)")
+            return 1 if bad else 0
         txt = Path(a.target).read_text(encoding="utf-8")
         if a.action == "fix":
             new, n = lexicon.autofix(txt)
