@@ -2832,6 +2832,301 @@
   "unchanged": 62,
   "units": 89
  },
+ "gift/new-job-boyfriend/index.html": {
+  "accepted": [
+   {
+    "from": "彼氏への就職祝いのプレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "彼氏への就職祝い、種類の違う4点",
+    "why": "根拠のない人気を削除"
+   },
+   {
+    "from": "彼の靴やベルトの色を見て名刺入れの革色を黒、茶、ネイビーから合わせる。",
+    "kind": "item",
+    "to": "彼の靴やベルトに合わせ、名刺入れは黒、茶、ネイビーから選びます。",
+    "why": "語順と文末を整理"
+   },
+   {
+    "from": "ペンケースは通勤バッグの内ポケットに入る幅か、太いペンが入るマチがあるかを確認する。",
+    "kind": "item",
+    "to": "ペンケースは通勤バッグの内ポケットに収まる幅か、太いペンが入るマチがあるかを確認します。",
+    "why": "確認点を読みやすく"
+   },
+   {
+    "from": "初出社直前に焦らないよう、名入れやラッピング込みの納期を一週間以上前に確認して注文する。",
+    "kind": "item",
+    "to": "初出社直前に慌てないよう、名入れやラッピングを含む納期を一週間以上前に確認して注文します。",
+    "why": "不自然な動詞を修正"
+   },
+   {
+    "from": "彼氏への就職・入社祝い、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "彼氏への就職・入社祝いに。名刺入れ・ボールペン・腕時計・ネクタイ",
+    "why": "紹介する品を明記"
+   },
+   {
+    "from": "声で音楽をかけたりタイマーをセットしたりできるスマートスピーカーです。新しい部屋に置く1台に向きます。",
+    "kind": "para",
+    "to": "声で音楽をかけたり、タイマーをセットしたりできるスマートスピーカーです。新しい部屋で使う1台に向いています。",
+    "why": "不自然な助詞を修正"
+   },
+   {
+    "from": "お祝いの時期、金額、表書きを百貨店の案内から1枚にまとめています。",
+    "kind": "para",
+    "to": "百貨店の案内をもとにお祝いの時期、金額、表書きを1枚にまとめました。",
+    "why": "不自然な助詞を修正"
+   }
+  ],
+  "date": "2026-11-05",
+  "deleted": [
+   "彼氏の就職祝いは、初出社の朝に自信を持って手に取れる道具を選ぶと気持ちが伝わります。名刺入れ、ペンケース、腕時計は職場で見られる機会があるため、彼が普段選ぶ革の色や金具の雰囲気に合わせたいところです。"
+  ],
+  "diagnosis": [
+   "構成: 渡す時期や選び方が冒頭と後半に分かれ、商品を見る前に必要な判断材料を拾いにくくなっています。",
+   "見出し: 「人気」「こんな贈り方」「タイプ」など、中身や根拠が見出しだけでは分からない箇所があります。",
+   "具体: 「緊張を支える」「バッグの中を整える」といった抽象表現が、実際に使う場面を隠しています。"
+  ],
+  "failed": "",
+  "hash": "b738c06ada83",
+  "needs_check": [],
+  "page": "gift/new-job-boyfriend/index.html",
+  "rejected": [
+   {
+    "after": "彼氏の就職祝いには、名刺入れ、ペンケース、腕時計など、初出社から使える仕事道具が候補になります。革の色や金具は彼が普段使う小物に合わせます。渡すなら、入社書類が",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補', '小物']"
+    ],
+    "text": "彼氏の就職祝いは、初出社の朝に自信を持って手に取れる道具を選ぶと気持ちが伝わります。名刺入れ、ペンケース、腕時計は職場で"
+   },
+   {
+    "after": "ペンケースは研修ノートと一緒に使うペンや印鑑、USBメモリをまとめて通勤バッグに入れられます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['一緒']"
+    ],
+    "text": "ペンケースは研修ノート、印鑑、USBメモリをまとめられ、通勤バッグの中を整えやすくしてくれます。"
+   },
+   {
+    "after": "予算や種類を選ぶと下の商品から条件に合うものだけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "名刺入れは配属後のあいさつで使え、毎日の仕事に持っていけます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['名刺入', '配属後']"
+    ],
+    "text": "初対面のあいさつの場面で使いやすい品で、新社会人が毎日の仕事に持ち込めます。"
+   },
+   {
+    "after": "ボールペンは研修ノートや書類記入に使え、初出社の朝から持っていける仕事道具です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ボールペン']"
+    ],
+    "text": "研修ノートや書類記入に使えて初出社の朝に手に取りやすい仕事道具です。"
+   },
+   {
+    "after": "ネクタイは研修や配属後のきちんとした場で使えます。彼が普段選ぶ色みに合わせます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ネクタイ']"
+    ],
+    "text": "研修や配属後のきちんとした場に使え、彼の普段の色みに合わせて選べます。"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月5日 8:29時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者に"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "名刺入れは配属後のあいさつや研修先で使います。新社会人が緊張しやすい名刺交換で手に取る小物です。",
+    "problems": [
+     "added claim/hedge removed: 「使う場面があり」を「使います」と断定し、名刺交換で緊張しやすいという説明を追加"
+    ],
+    "text": "名刺入れは配属後のあいさつや研修先で使う場面があり、新社会人らしい緊張を支える小物です。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "服や香水は好みが分かれるため、彼の好みが分からないまま選ぶのは避けます。",
+    "problems": [
+     "added claim/condition dropped: 「急に」という条件を落とし、「彼の好みが分からないまま」という別の条件を追加"
+    ],
+    "text": "服や香水など好みが強い品を急に選ぶことは避けます"
+   }
+  ],
+  "structure_suggestions": [
+   "「彼氏の就職祝いは、初出社の朝…」の後に「条件で絞って比べる…」〜「この条件に合う商品は見つかり…」、「気をつけたいこと…」〜「服や香水など好みが強い品を急…」、「選び方のポイント…」〜「初出社直前に焦らないよう、名…」を置き、渡す時期と渡し方→予算→避ける条件→選び方→商品候補の順にする。",
+   "「喜ばれやすい理由…」〜「腕時計は会議前や移動中に時間…」は「彼氏への就職祝いのプレゼント…」の商品一覧で該当する品の説明に統合し、理由だけを先にまとめる節をなくす。"
+  ],
+  "unchanged": 63,
+  "units": 87
+ },
+ "gift/new-job-friend-female/index.html": {
+  "accepted": [
+   {
+    "from": "女友達への就職祝いプレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "女友達への就職祝いプレゼント、種類別に4点",
+    "why": "根拠のない人気を削除"
+   },
+   {
+    "from": "入社式当日ではなく、前の週か初任給後の食事など、荷物が少ない日に手渡す。",
+    "kind": "item",
+    "to": "入社式当日は避け、前の週か初任給後の食事など、荷物が少ない日に手渡します。",
+    "why": "文末と順序を整理"
+   },
+   {
+    "from": "女友達への就職・入社祝い、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "女友達への就職・入社祝い 名刺入れ・ペンケース・ハンカチ・タンブラー",
+    "why": "見出しに品名を明示"
+   }
+  ],
+  "date": "2026-11-05",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 理由3点、選び方3点の型が先に立ち、同じ説明が後の商品候補と重複しています。",
+   "具体: 「自然に入る」「友人らしい軽さ」「気兼ねなく」など、品物や使う場面が見えにくい表現があります。",
+   "見出し: 根拠の示されていない「人気」と、中身が分からない「こんな贈り方はどうでしょう」を直す必要があります。"
+  ],
+  "failed": "",
+  "hash": "3f2d88312623",
+  "needs_check": [],
+  "page": "gift/new-job-friend-female/index.html",
+  "rejected": [
+   {
+    "after": "名刺入れ、ペンケース、腕時計は、初出社のバッグに入れやすく、仕事でも使える就職祝いです。女友達には、恋人からの贈り物のように重く見えない価格とデザインを選びます",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['バッグ', '仕事']",
+     "careful wording removed (2 -> 0)",
+     "condition removed (2 -> 0)"
+    ],
+    "text": "女友達の就職祝いは、友人らしい気軽さを保ちながら、初出社の荷物に自然に入るものがちょうどいいです。名刺入れ、ペンケース、"
+   },
+   {
+    "after": "名刺入れは配属先で急に必要になることがあります。シンプルなものなら、友達から贈られても仕事で使いやすい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['仕事']"
+    ],
+    "text": "名刺入れは配属先で急に必要になることがあり、シンプルなものなら友達からでも気兼ねなく使えます。"
+   },
+   {
+    "after": "友人への就職祝いの予算に収まり、高価に見えすぎない革小物を選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['就職祝']"
+    ],
+    "text": "高価に見えすぎる革小物は避け、友人同士の予算に収まる範囲を先に決める。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "この条件に合う商品は見つかりませんでした。予算の幅を広げるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '幅']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "シンプルな名刺入れは配属先で急に必要になったときに使えます。友達から贈りやすい実用品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['シンプル', '名刺入', '実用品']"
+    ],
+    "text": "配属先で急に必要になっても使いやすく、友達からでも気兼ねなく渡せます。"
+   },
+   {
+    "after": "ハンカチは初出社のバッグに入れやすく、友達からの就職祝いに向く小物です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ハンカチ', '就職祝']"
+    ],
+    "text": "初出社のバッグに入れやすく、友人らしい軽さで新生活を応援できる小物です。"
+   },
+   {
+    "after": "タンブラーはデスクで飲むときにも通勤後にも使えます。忙しい日にも飲み物を手元に置ける、気軽な贈り物です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['タンブラー', '手元']"
+    ],
+    "text": "デスクや通勤後の飲み物に使え、忙しい日でもほっとする時間を作れる気軽な品です。"
+   },
+   {
+    "after": "贈る相手の好きなもの、趣味、年齢などを一言で入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月5日 8:29時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者に"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   }
+  ],
+  "structure_suggestions": [
+   "導入の次に「選び方のポイント…」〜「入社式当日ではなく、前の週か…」を置き、「入社式当日ではなく、前の週か…」の時期と渡し方、「高価に見えすぎる革小物は避け…」の予算、「色で迷う場合は相手のスマホケ…」の色の順に並べると、読者が決めやすくなります。",
+   "「喜ばれやすい理由…」〜「腕時計は電車の乗り換えや会議…」は「女友達への就職・入社祝い、こ…」以下の商品候補と内容が重なるため、それぞれ対応する品の説明へ統合します。「気をつけたいこと…」〜「美容や年齢を評価しているよう…」は商品候補の前に置きます。"
+  ],
+  "unchanged": 75,
+  "units": 90
+ },
  "gift/new-job-friend-male/index.html": {
   "accepted": [
    {
