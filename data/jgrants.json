@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-05T01:28:35.642964+00:00",
+ "fetched_at": "2026-11-05T21:16:31.913801+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -445,6 +445,18 @@
    "target_area_search": "福岡県",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "【久留米市】久留米市キッチンカー導入事業費補助金（令和８年度）"
+  },
+  {
+   "acceptance_end_datetime": "2027-03-31T08:15:00.000Z",
+   "acceptance_start_datetime": "2026-03-31T23:30:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ0000047HWTUA2",
+   "id": "a0WfQ0000047HWTUA2",
+   "institution_name": "四日市市燃料電池自動車導入促進補助金",
+   "name": "S-00010039",
+   "subsidy_max_limit": 200000,
+   "target_area_search": "三重県",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "四日市市燃料電池自動車導入促進補助金"
   },
   {
    "acceptance_end_datetime": "2027-03-31T14:59:00.000Z",
@@ -1815,6 +1827,18 @@
    "title": "小規模事業者持続化補助金＜一般型 災害支援枠（令和８年熊本地震）＞２次公募【商工会議所地区】"
   },
   {
+   "acceptance_end_datetime": "2026-12-15T08:00:00.000Z",
+   "acceptance_start_datetime": "2026-11-05T06:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003kEuHUAU",
+   "id": "a0WfQ000003kEuHUAU",
+   "institution_name": "小規模事業者持続化補助金＜創業型＞",
+   "name": "S-00009944",
+   "subsidy_max_limit": 2000000,
+   "target_area_search": "全国",
+   "target_number_of_employees": "20名以下",
+   "title": "小規模事業者持続化補助金＜創業型＞ 第４回受付締切"
+  },
+  {
    "acceptance_end_datetime": "2027-01-29T07:30:00.000Z",
    "acceptance_start_datetime": "2026-10-16T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDVn4MAH",
@@ -1911,5 +1935,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 159
+ "total": 161
 }
