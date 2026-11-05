@@ -1,13 +1,13 @@
 {
- "as_of": "2026-11-03",
+ "as_of": "2026-11-04",
  "bad_coords": 1,
  "credit": "出典:「ツキノワグマ出没・目撃情報(令和8年度)」(山梨県)(https://catalog.dataplatform-yamanashi.jp/dataset/kuma1)を加工して作成(山梨県オープンデータ利用規約に基づく)",
- "fetched_at": "2026-11-05T10:29:19.094445+09:00",
+ "fetched_at": "2026-11-06T06:17:25.910829+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
-   "10": 84,
-   "11": 8,
+   "10": 85,
+   "11": 9,
    "4": 16,
    "5": 33,
    "6": 53,
@@ -17,6 +17,16 @@
   }
  },
  "sightings": [
+  {
+   "city": "北杜市",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.8167,
+   "lon": 138.3864,
+   "observed_at": "2026-11-04",
+   "place": "長坂町渋沢地内",
+   "species": "ツキノワグマ"
+  },
   {
    "city": "都留市",
    "count": 1,
@@ -353,6 +363,16 @@
    "lon": 138.9715,
    "observed_at": "2026-10-23T16:30:00+09:00",
    "place": "猿橋町朝日小沢",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "忍野村",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.4463,
+   "lon": 138.8574,
+   "observed_at": "2026-10-23T15:30:00+09:00",
+   "place": "山中湖村沖新畑（ハリモミ純林）",
    "species": "ツキノワグマ"
   },
   {
@@ -3142,7 +3162,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 314,
+ "sightings_in_window": 316,
  "source": "yamanashi",
  "source_file": [
   "https://catalog.dataplatform-yamanashi.jp/dataset/bed5301d-75b2-4976-8687-2b2721ae143a/resource/89d2478e-e29e-46e3-9ad3-19bf44822d4d/download/2026kumadata.csv",
