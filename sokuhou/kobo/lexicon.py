@@ -109,3 +109,16 @@ def merge_learned(items: list[dict]) -> int:
     if n:
         p.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
     return n
+
+
+def clean_conflicts() -> list[tuple[str, str]]:
+    """[(sentence, entry id)] for every natural sentence of data/clean_sentences.json that the dictionary marks.  A new entry that marks one has to get an exclusion
+    (unless) or the example has to go; tests/test_kobo_clean.py runs this on every kobo commit, and `lex add` prints it at once."""
+    f = Path(__file__).parent / "data" / "clean_sentences.json"
+    if not f.exists():
+        return []
+    out = []
+    for sent in json.loads(f.read_text(encoding="utf-8")).get("sentences", []):
+        for h in scan([sent]):
+            out.append((sent, h.get("id", "?")))
+    return out
