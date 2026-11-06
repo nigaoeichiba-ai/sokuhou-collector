@@ -424,7 +424,9 @@ def named_check(text: str, models=NAMED_MODELS) -> dict:
         if (h["id"], h["text"]) not in seen:
             seen.add((h["id"], h["text"]))
             items.append(h)
-    items = items[:14]
+    src = {e["id"]: str(e.get("source", "")) for e in lexicon.entries()}
+    items.sort(key=lambda h: not src.get(h["id"], "").startswith("owner"))          # the owner's words first
+    items = items[:24]
     if not items:
         return {"asked": 0, "flagged": [], "learned": []}
     lines = "\n".join(f"{i + 1}. 【{h['match']}】 {h['text']}" for i, h in enumerate(items))
@@ -448,6 +450,9 @@ def named_check(text: str, models=NAMED_MODELS) -> dict:
                 reasons.append(str(a.get("reason", "")))
                 alts += [str(t) for t in (a.get("alternatives") or [])][:3]
                 learned.append({"id": h["id"], "model": model, "reason": str(a.get("reason", ""))[:140], "alternatives": [str(t) for t in (a.get("alternatives") or [])][:3]})
+        if not by and src.get(h["id"], "").startswith("owner"):                      # the owner's words are decided: no model's 'natural' can keep them (2026-11-05)
+            by, reasons = ["オーナーの指定"], ["オーナーが使わないと決めた語・言い方。判定に関係なく、使わない言い方にする(自然で具体的な使い方は、除外済み)"]
+            alts = [str(t) for t in (next((e.get("replace") for e in lexicon.entries() if e["id"] == h["id"]), []) or [])][:3]
         if by:
             flagged.append({"id": h["id"], "code": h["code"], "text": h["text"], "by": by, "reasons": reasons, "alternatives": alts})
     return {"asked": len(items), "flagged": flagged, "learned": learned}
