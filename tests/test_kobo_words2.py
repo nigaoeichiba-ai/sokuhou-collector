@@ -278,3 +278,29 @@ class AskPlacement(unittest.TestCase):
         many = "\n\n".join(f"{n}を確かめてください。" for n in ("水", "食料", "電池", "ライト", "ラジオ"))
         self.assertTrue(self._s04(many))                                                                  # still marked, by the section, not by the page
         self.assertFalse(self._s04("本文です。\n\n水を買ってください。"))                                  # a single one is fine
+
+
+class OwnersWordsAreNotVetoed(unittest.TestCase):
+    def tearDown(self):
+        from sokuhou.kobo import runner
+        runner.set_backend(None)
+
+    def test_a_word_the_owner_decided_is_flagged_even_when_every_model_says_natural(self):
+        import json
+        from sokuhou.kobo import engine, runner
+
+        def fake(model, prompt, system=None):
+            return json.dumps({"items": [{"n": 1, "natural": True, "reason": "", "alternatives": []}]})
+        runner.set_backend(fake)
+        text = "# 題\n\n冒頭の文です。2文目です。\n\n## 3行まとめ\n- 一です。\n- 二です。\n- 三です。\n\n## 見出し\n\nライトを用意します。\n"
+        nc = engine.named_check(text)
+        self.assertTrue([f for f in nc["flagged"] if "オーナーの指定" in f["by"]])
+
+
+class EndOnlyWords(unittest.TestCase):
+    def test_choose_and_see_are_marked_at_the_end_of_a_sentence_only(self):
+        codes = lambda t: [h["code"] for h in lexicon.scan([t])]
+        self.assertTrue(codes("ライトを選びます。"))
+        self.assertTrue(codes("ここを見ます。"))
+        self.assertFalse([c for c in codes("ライトを選ぶときは、電池が合うか確かめてから買います。") if c in ("S88", "S89", "S87")])        # 選ぶ in the middle is fine
+        self.assertTrue(codes("今日は、足りない防災グッズを1つ決めて、始めます。"))                                               # 決める stays as the owner set it
