@@ -3332,6 +3332,179 @@
   "unchanged": 58,
   "units": 86
  },
+ "gift/new-job-girlfriend/index.html": {
+  "accepted": [
+   {
+    "from": "彼女への就職祝いのプレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "彼女への就職祝い、種類別の人気4点",
+    "why": "見出しを簡潔に"
+   },
+   {
+    "from": "彼女への就職・入社祝い、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "彼女への就職・入社祝い、品物ごとの選び方",
+    "why": "曖昧な問いを具体化"
+   },
+   {
+    "from": "サイズ確認が必要な服や靴を予想だけで選ぶこと",
+    "kind": "item",
+    "to": "服や靴はサイズを確認してから選びます。予想だけでは合わないことがあります。",
+    "why": "注意と理由を組にする"
+   }
+  ],
+  "date": "2026-11-06",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 選び方や注意点より先に商品が並び、時期と金額を確認できる早見表もページの後半にあります。",
+   "具体: 導入と商品説明に「安心感」「整える」などの抽象語が残り、品物を使う場面が埋もれています。",
+   "見出し: 「こんな贈り方はどうでしょう」「どんなタイプ？」では、節の内容が見出しだけで分かりません。"
+  ],
+  "failed": "",
+  "hash": "edf933702737",
+  "needs_check": [],
+  "page": "gift/new-job-girlfriend/index.html",
+  "rejected": [
+   {
+    "after": "彼女への就職祝いには、新しい職場で「自分らしく始められる」と思える名刺入れやペンケース、腕時計が候補になります。毎朝使うものなので、かわいさだけでなく、彼女が職",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補']"
+    ],
+    "text": "彼女への就職祝いは、新しい職場で「自分らしく始められる」と思える小物が似合います。名刺入れやペンケース、腕時計は毎朝の支"
+   },
+   {
+    "after": "就職祝いの日を登録する(たいせつな日メモ)",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['就職祝']"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "after": "仕事で役立つ3つの品",
+    "problems": [
+     "numbers differ: [] -> ['3']"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "名刺入れは研修や初めての取引先へのあいさつで使えます。就職後の仕事で使う実用品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['就職後', '仕事', '実用品']"
+    ],
+    "text": "名刺入れは研修や初めての取引先あいさつで使え、緊張する場面に小さな安心感を添えられます。"
+   },
+   {
+    "after": "選ぶ前に確かめる3つ",
+    "problems": [
+     "numbers differ: [] -> ['3']"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "名刺入れは研修や初めてのあいさつで使えます。新しい職場へ持っていく実用品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['名刺入', '実用品']"
+    ],
+    "text": "研修や初めてのあいさつで使え、新しい職場に向かう気持ちを整えられます。"
+   },
+   {
+    "after": "慣れない職場で疲れた日の夜に使える入浴剤です。彼女が自分を労う時間に使えます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['入浴剤', '彼女', '時間']"
+    ],
+    "text": "慣れない職場で疲れた日の夜に使え、就職祝いとして自分を労われる品です。"
+   },
+   {
+    "after": "4つの提案を2つの軸で比較",
+    "problems": [
+     "numbers differ: [] -> ['4', '2']"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "after": "迷ったときにできる3つのこと",
+    "problems": [
+     "numbers differ: [] -> ['3']"
+    ],
+    "text": "迷ったときの次の一歩"
+   },
+   {
+    "after": "6インチの薄くて軽い電子書籍リーダーです。通勤中や寝る前に本を読む彼女に合います。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女']"
+    ],
+    "text": "6インチの薄くて軽い電子書籍リーダーです。通勤や寝る前の読書をする人に合います。"
+   },
+   {
+    "after": "メール、携帯番号、URLのいずれかで送れて金額を選べます。彼女の好みが分からないときにも贈れます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女']"
+    ],
+    "text": "メール、携帯番号、URLのいずれかで送れて金額を選べます。好みが分からない相手にも贈れます。"
+   },
+   {
+    "after": "彼女について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月6日 8:39時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者に"
+   },
+   {
+    "after": "腕時計はスマホを見にくい会議室や通勤中に役立ちます。私服にも仕事着にも合わせられます。",
+    "problems": [
+     "hedge removed: 「合わせられる余地があります」が「合わせられます」という言い切りになっています。"
+    ],
+    "text": "腕時計はスマホを見にくい会議室や通勤中に役立ち、私服にも仕事着にも合わせられる余地があります。"
+   },
+   {
+    "after": "彼女が普段使うバッグ、財布、アクセサリーの金具の色を見て、時計や名刺入れの金具の色を合わせます。",
+    "problems": [
+     "added claim: 「普段選ぶ」を「普段使う」に変え、合わせる対象も「雰囲気」から「金具の色」に限定しています。"
+    ],
+    "text": "彼女が普段選ぶバッグ、財布、アクセサリーの金具色を見て、時計や名刺入れの雰囲気を合わせる。"
+   },
+   {
+    "after": "渡すときはレシートを同封しません。腕時計は交換が必要になったときのために保証書の保管場所を伝えます。",
+    "problems": [
+     "condition dropped: 保証書の保管場所を伝える対象を「交換が必要な腕時計だけ」に限る条件が落ちています。"
+    ],
+    "text": "渡すときはレシートを同封せず、交換が必要な腕時計だけ保証書の保管場所を伝える。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「入学・卒業・就職祝いの早見表…」〜「入学・卒業・就職祝いの早見表…」の早見表を導入の直後へ移し、時期と金額を先に確認できる構成にする。",
+   "「選び方のポイント…」〜「渡すときはレシートを同封せず…」と「気をつけたいこと…」〜「サイズ確認が必要な服や靴を予…」を商品一覧より前へ移し、選ぶ基準と注意点を確認してから候補を見る順にする。",
+   "「喜ばれやすい理由…」〜「腕時計はスマホを見にくい会議…」は「研修や初めてのあいさつで使え…」〜「慣れない職場で疲れた日の夜に…」と内容が重なるため、事実を残したまま品物ごとの説明へ統合する。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」はAmazonの商品紹介と検索機能の後へ移し、ページの最後に行うこととしてまとめる。"
+  ],
+  "unchanged": 64,
+  "units": 86
+ },
  "gift/retirement-boss/index.html": {
   "accepted": [
    {
@@ -3548,6 +3721,394 @@
   ],
   "unchanged": 64,
   "units": 94
+ },
+ "gift/retirement-colleague/index.html": {
+  "accepted": [
+   {
+    "from": "同僚への退職祝いプレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "同僚への退職祝い 4つの候補",
+    "why": "根拠のない人気を削除"
+   },
+   {
+    "from": "同僚への退職祝い、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "同僚に贈るハンカチ・焼き菓子・タンブラー・ミニブーケ",
+    "why": "中身が分かる見出しに"
+   },
+   {
+    "from": "年齢や退職理由を深掘りする表現は相手を困らせることがあります",
+    "kind": "item",
+    "to": "年齢や退職理由を詳しく尋ねると相手を困らせることがあります。",
+    "why": "深掘りを普通の言葉に"
+   }
+  ],
+  "date": "2026-11-06",
+  "deleted": [
+   "喜ばれやすい理由",
+   "ハンカチは通勤バッグに入れて持ち帰りやすく、次の職場や外出先でもすぐ使える小さな実用品です。",
+   "個包装の焼き菓子は、退職日の休憩時間に周りと分けられ、甘いものが好きな同僚へ気軽に渡せます。",
+   "タンブラーはデスクで飲み物をよく飲んでいた人に、次の仕事場でも使える応援の品になります。"
+  ],
+  "diagnosis": [
+   "構成: 商品候補が先に続き、贈る時期と予算の目安がなく、渡し方も導入や商品説明に散らばっています。",
+   "構成: u14〜u17とu35〜u42が同じ理由を繰り返し、型を埋めたように見えます。",
+   "具体: 「自然」「応援の気持ち」「明るく整える」といった抽象表現が、品物を選ぶ基準をぼかしています。"
+  ],
+  "failed": "",
+  "hash": "c5682c79a5bf",
+  "needs_check": [
+   {
+    "question": "Amazonのどの売れ筋ランキングを、いつ確認して選んだのかを確かめてください。",
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。"
+   },
+   {
+    "question": "「フルーツ入り」が果肉入りを指すのか、フルーツ風味を指すのかを商品ページで確かめてください。",
+    "text": "フルーツ入りのバウムクーヘン8個が個包装になっています。お茶の時間に1つずつ配れます。"
+   },
+   {
+    "question": "早見表の根拠にした百貨店の案内名と掲載内容を確かめてください。",
+    "text": "表書き・金額・避けたい品を百貨店の案内をもとに1枚にまとめました。"
+   }
+  ],
+  "page": "gift/retirement-colleague/index.html",
+  "rejected": [
+   {
+    "after": "同僚への退職祝いは、職場で渡して持ち帰りやすいハンカチ、焼き菓子、タンブラーが候補です。短いメッセージを添えます。同期や隣席の同僚なら、昼休みに飲んでいたものや",
+    "problems": [
+     "names / quoted words lost: ['ロッカー']",
+     "words added that the original does not have (information must not grow): ['候補']"
+    ],
+    "text": "同僚の退職には、大げさな記念品よりもロッカーや帰り道で困らない軽い品が似合います。ハンカチ、焼き菓子、タンブラーのように"
+   },
+   {
+    "after": "同僚への退職祝いは、職場で渡して持ち帰りやすいハンカチ、焼き菓子、タンブラーが候補です。短いメッセージを添えます。同期や隣席の同僚なら、昼休みに飲んでいたものや",
+    "problems": [
+     "names / quoted words lost: ['ロッカー']",
+     "words added that the original does not have (information must not grow): ['候補']"
+    ],
+    "text": "同僚の退職には、大げさな記念品よりもロッカーや帰り道で困らない軽い品が似合います。ハンカチ、焼き菓子、タンブラーのように"
+   },
+   {
+    "after": "予算や種類を選ぶと下の商品から条件に合うものだけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "この条件に合う商品はありません。予算や種類の条件を広げるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '種類']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "ハンカチは通勤バッグに入れて持ち帰りやすく、次の職場や外出先でも使えます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ハンカチ']"
+    ],
+    "text": "通勤バッグに入れて持ち帰りやすく、次の職場や外出先でもすぐ使える小さな贈り物です。"
+   },
+   {
+    "after": "甘いものが好きな同僚には休憩時間に周りと分けやすい焼き菓子を。退職日のあいさつと一緒に渡せます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['同僚', '菓子', '一緒']"
+    ],
+    "text": "休憩時間に周りと分けやすく、退職日のあいさつを重くしすぎずに和らげてくれます。"
+   },
+   {
+    "after": "デスクで飲み物をよく飲む同僚なら、タンブラーは次の職場でも使えます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['タンブラー', '職場']"
+    ],
+    "text": "デスクで飲み物をよく飲む同僚に、次の環境でも使える応援の気持ちを添えられます。"
+   },
+   {
+    "after": "ロッカーに収まり、帰り道に持ち歩けるサイズのミニブーケは、退職日のあいさつに添えられます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ミニブーケ']",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "ロッカーや帰り道で困りにくいサイズなら、退職日の雰囲気を明るく整えてくれます。"
+   },
+   {
+    "after": "4つの候補を残り方と定番度で比べる",
+    "problems": [
+     "numbers differ: [] -> ['4']",
+     "new claim: 定番"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "after": "横軸は「食べて消える」から「ずっと残る」まで、縦軸は「定番・無難」から「個性的・意外」までを示します。番号を押すと該当する提案に移動します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['該当']"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "after": "同僚の好きなもの、趣味、年齢などを入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['同僚', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "私的な贈り物は職場で目立ち、相手を困らせます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手']"
+    ],
+    "text": "職場で目立ちすぎる私的な贈り物を渡すこと"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月6日 8:39時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者に"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "after": "ハンカチは相手の服やバッグの色を手がかりに柄を選びます。",
+    "problems": [
+     "condition dropped: 「仕事帰りにも持ちやすい」という選択条件が落ちています。"
+    ],
+    "text": "ハンカチは相手の服やバッグの色を思い出し、仕事帰りにも持ちやすい柄を選ぶ。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「同僚の退職には、大げさな記念…」の後に、贈る時期・予算・渡し方を置く。現行本文には根拠となる情報がないため、出典を確認してから追加する。",
+   "「気をつけたいこと…」〜「職場で目立ちすぎる私的な贈り…」を「選び方のポイント…」の前へ移し、「避けたいこと」から「選び方」へ進む順にする。",
+   "「Amazonで見つけた贈り物…」〜「Amazonで選ぶ贈り物をす…」を「ほかの商品…」の直後へ移し、楽天市場とAmazonの商品候補を一か所にまとめる。"
+  ],
+  "unchanged": 68,
+  "units": 96
+ },
+ "gift/retirement-father/index.html": {
+  "accepted": [
+   {
+    "from": "父への退職祝いプレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "父への退職祝いプレゼント、種類別の人気4点",
+    "why": "語順を自然にする"
+   },
+   {
+    "from": "時計に入れる文字は、退職日、名前、短い感謝の言葉までにして読みやすくする。",
+    "kind": "item",
+    "to": "時計に入れる文字は、退職日、名前、短い感謝の言葉までに絞ると読みやすくなります。",
+    "why": "判断の理由を先にする"
+   },
+   {
+    "from": "母や家族との旅行計画に使え、働いた後の時間を楽しむきっかけになります。",
+    "kind": "para",
+    "to": "旅行券は母や家族との温泉旅行やひとり旅に使えます。退職後の時間を楽しむきっかけになる品です。",
+    "why": "一文一論点に分ける"
+   },
+   {
+    "from": "8種類の焼き菓子が21個入った詰め合わせです。人数が多い場でも分けやすい品です。",
+    "kind": "para",
+    "to": "8種類、21個の焼き菓子を詰め合わせています。人数が多い場でも分けやすい品です。",
+    "why": "数字の関係を明確にする"
+   }
+  ],
+  "date": "2026-11-06",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 渡す時期や場面は冒頭にありますが、予算、渡し方、避けたいこと、選び方がページ内に分散しています。",
+   "構成: 理由3点、選び方3点という型が先に立ち、同じ3品の説明が後半でも繰り返されています。",
+   "語: 「人気の4点」「この提案」「言い方の商品」など、意味を取りにくい表現が残っています。",
+   "リズム: 「〜になります」「〜ます」が続く箇条書きが多く、説明の調子が均一です。"
+  ],
+  "failed": "",
+  "hash": "35302e161918",
+  "needs_check": [
+   {
+    "question": "Amazonの売れ筋ランキングから選んだ事実と、選定時点を確認してください。",
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。"
+   }
+  ],
+  "page": "gift/retirement-father/index.html",
+  "rejected": [
+   {
+    "after": "父の退職祝いは長く働いてきた日々への家族の思いを伝える機会です。花束はその日の食卓を明るくし、名入れ時計は記念に残ります。旅行券はこれからの時間を楽しむきっかけ",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['思', '話']",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "父の退職祝いは、長く働いてきた日々を家族がどう見ていたかを伝える機会です。花束はその日の場を明るくし、名入れ時計は記念と"
+   },
+   {
+    "after": "父の退職祝いは長く働いてきた日々への家族の思いを伝える機会です。退職日の夜か週末の食卓で渡し、昔の仕事の話を聞く時間をつくります。花束はその場を明るくし、名入れ",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補', '思']"
+    ],
+    "text": "父の退職祝いは、長く働いてきた日々を家族がどう見ていたかを伝える機会です。花束はその日の場を明るくし、名入れ時計は記念と"
+   },
+   {
+    "after": "名入れ時計は書斎やリビングに置けます。退職後も使える記念品です。",
+    "problems": [
+     "numbers differ: ['一'] -> []"
+    ],
+    "text": "名入れ時計は書斎やリビングに置けて、退職後の新しい一日の始まりを見守る記念品になります。"
+   },
+   {
+    "after": "3つの品の選び方",
+    "problems": [
+     "numbers differ: [] -> ['3']"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "after": "花束は持ち帰る時間を考えて重すぎない大きさを選びます。花瓶がない家にはアレンジメントも候補です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補']"
+    ],
+    "text": "花束は持ち帰り時間を考え、重すぎない大きさにし、花瓶がない家ならアレンジメントも選ぶ。"
+   },
+   {
+    "after": "旅行券は有効期限、利用できる地域、予約方法を確認します。金額は父が使いやすい範囲で選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['範囲']"
+    ],
+    "text": "旅行券は有効期限、利用できる地域、予約方法を確認し、父が使いやすい金額にする。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "条件に合う商品がありません。予算の幅を広げるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '幅']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "父への退職祝い、3つの贈り方",
+    "problems": [
+     "numbers differ: [] -> ['3']"
+    ],
+    "text": "父への退職祝い、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "花束は退職日の帰宅時や家族の食事会で渡せます。その場が華やぎ、記念写真にも残しやすい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['花束']"
+    ],
+    "text": "退職日の帰宅時や家族の食事会で場が華やぎ、記念写真にも残しやすいです。"
+   },
+   {
+    "after": "4点の特徴を図で比較",
+    "problems": [
+     "numbers differ: [] -> ['4']"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "after": "父の好きなものや趣味、年齢などを一言で入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "年齢や退職理由に踏み込む言葉は父を困らせることがあります",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['言葉']"
+    ],
+    "text": "年齢や退職理由を深掘りする表現は相手を困らせることがあります"
+   },
+   {
+    "after": "健康への不安をあおる商品は父を心配させるため選びません",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['不安']"
+    ],
+    "text": "健康を心配させる言い方の商品を選ぶことは避けます"
+   },
+   {
+    "after": "価格と在庫は2026年11月6日 8:39時点の情報です。このサイトはよろこぶプレゼントの作成者が運営しています。価格や販売状況は変わることがあります。購入には",
+    "problems": [
+     "condition dropped: 価格適用の対象である「その商品」が落ちています。"
+    ],
+    "text": "価格・在庫は2026年11月6日 8:39時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者に"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "日本酒は家でゆっくり過ごす夜の晩酌に向きます。家族で飲みながら、長く働いた日々をねぎらえます。",
+    "problems": [
+     "added claim: 家族も一緒に飲むという行動が足されています。"
+    ],
+    "text": "家でゆっくり過ごす夜に合い、長く働いた日々を家族でねぎらえる晩酌の品です。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「父の退職祝いは、長く働いてき…」の後を、「条件で絞って比べる…」〜「この条件に合う商品は見つかり…」の予算と種類、「父への退職祝い、こんな贈り方…」〜「楽天市場で「日本酒 飲み比べ…」の渡し方、「気をつけたいこと…」〜「健康を心配させる言い方の商品…」の避けたい言葉、「選び方のポイント…」〜「旅行券は有効期限、利用できる…」の選び方の順にすると、読者の問いに沿って読めます。",
+   "「喜ばれやすい理由…」〜「旅行券は母や家族との温泉旅行…」と「父への退職祝い、こんな贈り方…」〜「楽天市場で「日本酒 飲み比べ…」は同じ3品の説明が重なるため、前者を品ごとの特徴、後者を渡す場面に絞って統合を検討してください。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」は次の行動を示す節なので、関連ページより後のページ末に置くと結びとして機能します。"
+  ],
+  "unchanged": 70,
+  "units": 97
  },
  "gift/retirement-teacher/index.html": {
   "accepted": [
