@@ -1,7 +1,7 @@
 {
- "_note": "Pages that Google Search showed at least once (Search Console, 'Pages' report, 28 days to 2026-10-30; the site's first impressions were on 2026-10-06). Municipality pages (the m-xxxxxx part of /live/<pref>/m-xxxxxx/) and week pages (/digest/<week>/). The build keeps these indexable; see sites/kuma/indexing.py. Refresh it from Search Console (acquisition routine).",
- "measured": "2026-11-02",
- "window_end": "2026-10-30",
+ "_note": "Pages that Google Search showed at least once (Search Console, 'Pages' report, 28 days to 2026-11-04; the site's first impressions were on 2026-10-06). Municipality pages (the m-xxxxxx part of /live/<pref>/m-xxxxxx/) and week pages (/digest/<week>/). The build keeps these indexable; see sites/kuma/indexing.py. Refresh it from Search Console (acquisition routine).",
+ "measured": "2026-11-07",
+ "window_end": "2026-11-04",
  "live_cities": [
   "01611d",
   "043880",
@@ -44,6 +44,7 @@
   "73e70c",
   "7bfcf2",
   "7d4105",
+  "7daa98",
   "7e4bf2",
   "7f7e33",
   "8020f4",
