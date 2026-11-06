@@ -43,12 +43,15 @@
    "pop.r.bellevie-harima:10013197": 1,
    "pop.r.naturavie:10004784": 1,
    "pop.r.wide02:10014094": 1
+  },
+  "2026-11": {
+   "ask.new.o": 1
   }
  },
  "total": {
   "ask.mode.o": 1,
   "ask.n.all": 1,
-  "ask.new.o": 2,
+  "ask.new.o": 3,
   "ask.q1.home": 1,
   "ask.q2.coffee": 1,
   "ask.q3.sweet": 1,
