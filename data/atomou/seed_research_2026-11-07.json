@@ -1,0 +1,26 @@
+[
+  {
+    "title": "中村倫也 カレンダーブック『400』",
+    "date": "2026-12-24",
+    "precision": "day",
+    "kind": "発売",
+    "group": "エンタメ・音楽・賞",
+    "category": "本",
+    "subject": "中村倫也",
+    "what": "カレンダーブック発売",
+    "place": "ワニブックス",
+    "source_url": "https://natalie.mu/eiga/news/696647",
+    "source_quote": "12月24日",
+    "source_url2": "https://realsound.jp/book/2026/11/post-2577324.html",
+    "source_quote2": "12月24日",
+    "basis": "press",
+    "checked_on": "2026-11-07",
+    "verified": true,
+    "sensitivity": "none",
+    "ad_ok": true,
+    "son_toku": false,
+    "region": "ワニブックス",
+    "date_end": null,
+    "note": "2つの報道ページの本文で、日付を機械的に確かめた。"
+  }
+]
