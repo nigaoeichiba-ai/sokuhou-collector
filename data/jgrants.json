@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-05T21:16:31.913801+00:00",
+ "fetched_at": "2026-11-06T21:21:54.209256+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -1467,18 +1467,6 @@
    "title": "［第十三回］事業再構築補助金_促進上乗せ措置（交付申請等）"
   },
   {
-   "acceptance_end_datetime": "2026-11-06T06:00:00.000Z",
-   "acceptance_start_datetime": "2026-10-01T06:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003N8hVUAS",
-   "id": "a0WfQ000003N8hVUAS",
-   "institution_name": "脱炭素成長型経済構造移行推進対策費補助金（自律型資源循環システム強靱化促進事業）",
-   "name": "S-00009897",
-   "subsidy_max_limit": 0,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和８年度 脱炭素成長型経済構造移行推進対策費補助金（自律型資源 循環システム強靱化促進事業）（事前着手届出）【二次公募】"
-  },
-  {
    "acceptance_end_datetime": "2026-11-20T14:59:00.000Z",
    "acceptance_start_datetime": "2026-09-25T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003ENsfUAG",
@@ -1551,30 +1539,6 @@
    "title": "令和８年度 脱炭素成長型経済構造移行推進対策費補助金 （業務用建築物の脱炭素改修加速化事業）"
   },
   {
-   "acceptance_end_datetime": "2026-11-06T08:30:00.000Z",
-   "acceptance_start_datetime": "2026-10-02T06:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003N1RZUA0",
-   "id": "a0WfQ000003N1RZUA0",
-   "institution_name": "中小企業生産性革命推進事業_事業承継・M&A事業補助金(16次公募)",
-   "name": "S-00009892",
-   "subsidy_max_limit": 4500000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "中小企業生産性革命推進事業_事業承継・M&A補助金(16次公募)_専門家活用枠(小規模売り手支援類型)"
-  },
-  {
-   "acceptance_end_datetime": "2026-11-06T08:30:00.000Z",
-   "acceptance_start_datetime": "2026-10-02T06:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003N1RaUAK",
-   "id": "a0WfQ000003N1RaUAK",
-   "institution_name": "中小企業生産性革命推進事業_事業承継・M&A事業補助金(16次公募)",
-   "name": "S-00009893",
-   "subsidy_max_limit": 10000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "中小企業生産性革命推進事業_事業承継・M&A補助金(16次公募)_事業承継促進枠"
-  },
-  {
    "acceptance_end_datetime": "2028-03-31T08:00:00.000Z",
    "acceptance_start_datetime": "2026-04-03T08:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDdtMMAT",
@@ -1597,42 +1561,6 @@
    "target_area_search": "福岡県",
    "target_number_of_employees": "300名以下",
    "title": "【久留米市】中小企業先端設備等導入支援補助金（令和8年度）"
-  },
-  {
-   "acceptance_end_datetime": "2026-11-06T08:30:00.000Z",
-   "acceptance_start_datetime": "2026-10-02T06:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003N1RWUA0",
-   "id": "a0WfQ000003N1RWUA0",
-   "institution_name": "中小企業生産性革命推進事業_事業承継・M&A事業補助金(16次公募)",
-   "name": "S-00009889",
-   "subsidy_max_limit": 20000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "中小企業生産性革命推進事業_事業承継・M&A補助金(16次公募)_専門家活用枠(買い手支援類型-100億企業特例)"
-  },
-  {
-   "acceptance_end_datetime": "2026-11-06T08:30:00.000Z",
-   "acceptance_start_datetime": "2026-10-02T06:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003N1RXUA0",
-   "id": "a0WfQ000003N1RXUA0",
-   "institution_name": "中小企業生産性革命推進事業_事業承継・M&A事業補助金(16次公募)",
-   "name": "S-00009890",
-   "subsidy_max_limit": 1500000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "中小企業生産性革命推進事業_事業承継・M&A補助金(16次公募)_PMI推進枠(PMI専門家活用類型)"
-  },
-  {
-   "acceptance_end_datetime": "2026-11-06T08:30:00.000Z",
-   "acceptance_start_datetime": "2026-10-02T06:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003N1RYUA0",
-   "id": "a0WfQ000003N1RYUA0",
-   "institution_name": "中小企業生産性革命推進事業_事業承継・M&A事業補助金(16次公募)",
-   "name": "S-00009891",
-   "subsidy_max_limit": 10000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "中小企業生産性革命推進事業_事業承継・M&A補助金(16次公募)_PMI推進枠(事業統合投資類型)"
   },
   {
    "acceptance_end_datetime": "2026-11-30T14:59:00.000Z",
@@ -1671,18 +1599,6 @@
    "title": "令和８年度地域脱炭素実現に向けた具体的施策実装支援事業"
   },
   {
-   "acceptance_end_datetime": "2026-11-06T08:30:00.000Z",
-   "acceptance_start_datetime": "2026-10-02T06:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003N1RVUA0",
-   "id": "a0WfQ000003N1RVUA0",
-   "institution_name": "中小企業生産性革命推進事業_事業承継・M&A事業補助金(16次公募)",
-   "name": "S-00009888",
-   "subsidy_max_limit": 8000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "中小企業生産性革命推進事業_事業承継・M&A補助金(16次公募)_専門家活用枠(買い手支援類型／売り手支援類型)"
-  },
-  {
    "acceptance_end_datetime": "2027-02-26T08:00:00.000Z",
    "acceptance_start_datetime": "2026-06-04T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDYCmMAP",
@@ -1693,30 +1609,6 @@
    "target_area_search": "大阪府",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "【堺市】余剰電力等活用型太陽光発電設備整備事業（堺エネルギー地産地消プロジェクト推進事業補助金）"
-  },
-  {
-   "acceptance_end_datetime": "2026-11-06T08:30:00.000Z",
-   "acceptance_start_datetime": "2026-10-02T06:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003N1RbUAK",
-   "id": "a0WfQ000003N1RbUAK",
-   "institution_name": "中小企業生産性革命推進事業_事業承継・M&A事業補助金(16次公募)",
-   "name": "S-00009894",
-   "subsidy_max_limit": 3000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "中小企業生産性革命推進事業_事業承継・M&A補助金(16次公募)_廃業・再チャレンジ枠"
-  },
-  {
-   "acceptance_end_datetime": "2026-11-06T06:00:00.000Z",
-   "acceptance_start_datetime": "2026-10-01T06:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003JPtqUAG",
-   "id": "a0WfQ000003JPtqUAG",
-   "institution_name": "脱炭素成長型経済構造移行推進対策費補助金（自律型資源循環システム強靱化促進事業）",
-   "name": "S-00009879",
-   "subsidy_max_limit": 20000000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和８年度 脱炭素成長型経済構造移行推進対策費補助金（自律型資源循環システム強靱化促進事業）【二次公募】"
   },
   {
    "acceptance_end_datetime": "2027-03-19T11:00:00.000Z",
@@ -1935,5 +1827,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 161
+ "total": 152
 }
