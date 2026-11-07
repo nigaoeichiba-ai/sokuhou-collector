@@ -1,0 +1,25 @@
+[
+  {
+    "title": "BRAND NEW STAR EVENT 2027",
+    "date": "2026-12-05",
+    "precision": "day",
+    "kind": "開催",
+    "group": "スポーツ",
+    "category": "プロ野球",
+    "subject": "DeNA新人",
+    "what": "お披露目イベント",
+    "place": "横浜市",
+    "source_url": "https://www.baystars.co.jp/news/",
+    "source_quote": "『BRAND NEW STAR EVENT 2027』12/5(土)開催",
+    "basis": "official",
+    "official_url": "https://www.baystars.co.jp/news/",
+    "checked_on": "2026-11-08",
+    "verified": true,
+    "sensitivity": "none",
+    "ad_ok": true,
+    "son_toku": false,
+    "region": "横浜市",
+    "date_end": null,
+    "note": "出典ページの本文で、日付を機械的に確かめた。"
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "title": "松本人志 ピクチャログ 配信開始",
+    "date": "2026-11-25",
+    "precision": "day",
+    "kind": "開始",
+    "group": "エンタメ・音楽・賞",
+    "category": "配信",
+    "subject": "ピクチャログ",
+    "what": "松本人志の大喜利企画",
+    "place": "DOWNTOWN+・Netflix",
+    "source_url": "https://prtimes.jp/main/html/rd/p/000005469.000029501.html",
+    "source_quote": "11月25日(水)17:00よりDOWNTOWN+とNetflixにて独占同時配信",
+    "basis": "official",
+    "checked_on": "2026-11-08",
+    "verified": true,
+    "sensitivity": "none",
+    "ad_ok": true,
+    "son_toku": false,
+    "region": "DOWNTOWN+・Netflix",
+    "date_end": null,
+    "note": "出典ページの本文で、日付を機械的に確かめた。"
+  }
+]
