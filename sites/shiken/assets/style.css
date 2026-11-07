@@ -65,7 +65,7 @@ ul.links li { margin:.35em 0; }
 .urgent { margin:18px 0 0; background:var(--danger-l); border:2px solid var(--danger); border-radius:14px; padding:12px 16px; display:flex; gap:10px 14px; align-items:center; flex-wrap:wrap; }
 .urgent .u-badge { background:var(--danger); color:#fff; font-weight:800; border-radius:8px; padding:4px 10px; font-size:.82rem; white-space:nowrap; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .urgent .u-badge { color:#1a0b0a; } }
-.urgent .u-text { color:var(--ink); font-weight:700; text-decoration:none; min-height:44px; display:inline-flex; align-items:center; }
+.urgent .u-text { color:var(--ink); font-weight:700; text-decoration:none; display:block; padding:8px 0; flex:1 1 14em; }
 .urgent .more { margin-left:auto; font-size:.9rem; }
 
 .sec-sub { color:var(--muted); margin:0 0 14px; font-size:.95rem; }
@@ -279,6 +279,8 @@ footer.site a { color:var(--muted); display:inline-block; padding:8px 0; }
 /* tables made by the new design turn into stacked cards on a phone: no sideways scroll */
 @media (max-width:640px) {
   table.stack, table.stack tbody, table.stack tr, table.stack td { display:block; width:100%; }
+  table.stack caption { display:block; width:100%; }
+  table.stack td:empty { display:none; }
   table.stack thead { position:absolute; left:-9999px; }
   table.stack tr { border-bottom:1px solid var(--line); padding:8px 0; }
   table.stack tr:last-child { border-bottom:0; }

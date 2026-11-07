@@ -61,7 +61,7 @@ def takken() -> dict:
     # 2. dates by way of applying
     def row(label, e, tail=""):
         over = left(e["iso"]) < 0
-        cal = "—" if over else cal_buttons(e)
+        cal = "" if over else cal_buttons(e)
         return [label, when_text(e) + tail, "受付は終了しました" if over and "deadline" in e["id"] else ("終了しました" if over else in_days_text(e["iso"])), f'<span class="actions">{cal}</span>' if not over else cal]
     ok_rows = [
         row("郵送申込 開始", ev["takken-start-mail"]),
