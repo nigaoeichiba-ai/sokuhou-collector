@@ -1,15 +1,9 @@
 :root {
-  --bg:#f5f7f6; --card:#fff; --ink:#1d2623; --muted:#5b6762; --line:#d9e0dc;
-  --brand:#17606b; --brand-d:#0f4650; --brand-l:#e2f0f2; --warn:#b3261e;
-  --shadow:0 1px 2px rgba(20,40,35,.07), 0 6px 18px rgba(20,40,35,.06);
-  --c0:#e3e8e5; --c1:#bcdde1; --c2:#7fbac2; --c3:#3d8d99; --c4:#17606b;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg:#101614; --card:#18211e; --ink:#e8efec; --muted:#a3b0aa; --line:#2b3733;
-    --brand:#6cc3cf; --brand-d:#8fd5de; --brand-l:#1b3237; --warn:#ff9a8f; --shadow:none;
-    --c0:#2b3733; --c1:#25535a; --c2:#2f7782; --c3:#4aa3b0; --c4:#8fd5de;
-  }
+  color-scheme: light;
+  --bg:#fff; --card:#fff; --ink:#1f1a17; --muted:#6a5f58; --line:#ecd9c6;
+  --brand:#E60012; --brand-d:#b3000e; --brand-l:#FFEFE0; --warm:#FFF3D6; --warn:#b3261e;
+  --shadow:0 1px 2px rgba(60,30,10,.07), 0 6px 18px rgba(60,30,10,.06);
+  --c0:#f4e6d8; --c1:#f6c9b8; --c2:#f0968a; --c3:#e85a58; --c4:#E60012;
 }
 * { box-sizing:border-box; }
 html { -webkit-text-size-adjust:100%; }
@@ -20,10 +14,11 @@ img, svg { max-width:100%; }
 main.wrap { padding-top:20px; padding-bottom:56px; }
 .preview { background:#fff3cd; color:#5c4400; text-align:center; padding:6px 12px; font-size:.85rem; }
 
-header.site { background:var(--card); border-bottom:1px solid var(--line); }
+header.site { background:#fff; border-bottom:3px solid var(--brand); }
 header.site .wrap { display:flex; flex-wrap:wrap; align-items:center; gap:4px 20px; padding-top:10px; padding-bottom:10px; }
-.brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.05rem; color:var(--ink); text-decoration:none; }
-.logo { display:inline-grid; place-items:center; width:30px; height:30px; border-radius:9px; background:var(--brand); color:#fff; font-weight:800; }
+.brand { display:flex; align-items:center; font-size:0; color:var(--ink); text-decoration:none; }
+.logo { display:inline-block; line-height:0; }
+.logo img { height:44px; width:auto; display:block; }
 header.site nav { display:flex; flex-wrap:wrap; gap:2px 4px; margin-left:auto; }
 header.site nav a { padding:6px 10px; border-radius:8px; text-decoration:none; color:var(--muted); font-size:.92rem; white-space:nowrap; }
 header.site nav a[aria-current="page"] { background:var(--brand-l); color:var(--brand-d); font-weight:700; }
@@ -79,3 +74,26 @@ footer.site a { color:var(--muted); }
   dl.info { grid-template-columns:1fr; }
   dl.info dt { margin-top:6px; }
 }
+
+/* trend-sokuho.com */
+.eyecatch { margin:0 0 1.2em; } .eyecatch img { width:100%; height:auto; display:block; border-radius:12px; }
+figure.pic { margin:1em 0; } figure.pic img { width:100%; height:auto; display:block; border-radius:12px; border:1px solid var(--line); }
+.answer { background:var(--warm); border-color:#f0dcae; border-left-color:var(--brand); }
+h2 { border-bottom-color:var(--brand); }
+.more { margin:.2em 0 1.2em; } .more a { font-weight:700; }
+aside.hack { background:var(--warm); border:1px solid #f0dcae; border-radius:12px; padding:12px 16px; margin:1em 0; }
+aside.hack strong { display:block; color:var(--brand-d); margin-bottom:2px; }
+.checklist { background:var(--brand-l); border:1px solid var(--line); border-radius:14px; padding:12px 16px; margin:.8em 0 1.2em; }
+.checklist ul { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:4px 16px; }
+.checklist label { display:flex; align-items:center; gap:8px; padding:6px 0; cursor:pointer; }
+.checklist input { width:20px; height:20px; accent-color:var(--brand); }
+.checklist .tally { margin:8px 0 0; font-weight:700; }
+.lead-card { background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); margin:.6em 0 1.2em; }
+.lead-card a { display:block; text-decoration:none; color:var(--ink); }
+.lead-card img { width:100%; height:auto; display:block; }
+.lead-card .lead-title { display:block; font-size:1.3rem; font-weight:800; line-height:1.4; padding:12px 16px 0; }
+.lead-card p { margin:.4em 16px 14px; color:var(--muted); }
+th { background:var(--brand-l); color:var(--brand-d); }
+footer.site .fcats { margin-right:16px; }
+footer.site .legal span { font-size:0; }
+footer.site .legal span::after { content:"© 2026 今日の話題"; font-size:.85rem; }
