@@ -40,7 +40,7 @@ def convert(a: dict, slug: str) -> dict:
         "updated": a["updated"], "data_basis": "2026年11月7日15時現在", "sources": ["jma"],
         "path": f"/articles/{slug}/", "kind": "article", "parent": "/",
         "title": a["title"], "h1": a["title"], "primary_kw": a["seo_keyword"], "intent": 1,
-        "description": a["description"], "answer": a["lead"].split("。")[1] + "。" + a["lead"].split("。")[2] + "。",
+        "description": a["description"], "answer": a["answer"],
         "sections": secs,
         "related": [],
     }
