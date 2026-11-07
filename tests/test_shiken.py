@@ -34,9 +34,9 @@ class ShikenTest(unittest.TestCase):
         cls.pages, cls.report = newsite.build_pages(SITE, release=True, strict_seo=True)
         cls.html = {k: v for k, v in cls.pages.items() if isinstance(v, str) and k.endswith(".html")}
 
-    def test_thirty_pages_with_the_designed_mix(self):
+    def test_the_pages_with_the_designed_mix(self):
         content = sorted((SITE / "content").glob("*.json"))
-        self.assertEqual(len(content), 30)
+        self.assertEqual(len(content), 32)                                  # 30 pages, and the two new features (readings, entrance exams) of the 2026-11-08 design
         kinds = [json.loads(p.read_text(encoding="utf-8"))["kind"] for p in content]
         self.assertGreaterEqual(kinds.count("article"), 10)                 # deep articles: ten or more
         self.assertLessEqual(kinds.count("item") / len(kinds), 0.5)        # same-type pages: half at most
@@ -61,7 +61,7 @@ class ShikenTest(unittest.TestCase):
             slug = json.loads(p.read_text(encoding="utf-8"))["path"].strip("/") or "."
             rel = "index.html" if slug == "." else f"{slug}/index.html"
             body = re.search(r"<main.*?</main>", self.html[rel], re.S).group(0)
-            self.assertNotRegex(body, r'href="https?://', rel)
+            self.assertNotRegex(body, r'href="https?://(?!calendar\.google\.com/)', rel)       # the one outside host is the "add to Google Calendar" link
             self.assertNotIn("確認日", body, rel)
 
     def test_a_page_with_an_outside_link_would_be_caught(self):
@@ -75,9 +75,11 @@ class ShikenTest(unittest.TestCase):
     def test_days_left_agree_with_the_dates(self):
         html = self.html["takken/index.html"]
         self.assertIn("2026年11月25日(水)", html)
-        m = re.search(r"今日\((\d{4})年(\d{1,2})月(\d{1,2})日", html)
+        m = re.search(r"(\d{4})年(\d{1,2})月(\d{1,2})日時点で、あと(\d+)日です", html)
         today = date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
-        self.assertIn(f"あと{(date(2026, 11, 25) - today).days}日", html)
+        self.assertEqual(int(m.group(4)), (date(2026, 11, 25) - today).days)
+        big = re.search(r'data-countdown="2026-11-25"[^>]*>あと<b class="num">(\d+)</b>', html)
+        self.assertEqual(int(big.group(1)), (date(2026, 11, 25) - today).days)
 
     def test_the_build_counts_from_the_day_it_is_made_and_drops_what_has_passed(self):
         """build.py makes the content again on every build (the daily deploy): another day gives other day counts, and a deadline that has passed leaves the list."""

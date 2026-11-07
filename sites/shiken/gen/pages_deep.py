@@ -151,7 +151,7 @@ def cbt() -> dict:
 def fees() -> dict:
     rows = [
         ("英検3級(個人・本会場)", 6800, "eiken"), ("IPA(ITパスポート・基本情報)", 7500, "ipa"), ("宅建士", 8200, "retio"), ("英検2級(個人・本会場)", 9000, "eiken"),
-        ("行政書士", 10400, "gyosei"), ("共通テスト(2教科以下)", 12000, "dnc"), ("社労士", 15000, "sharosi"), ("診断士 2次試験", 15100, "jfcmca"),
+        ("行政書士", 10400, "gyosei"), ("管理業務主任者", 8900, "kanrikyo"), ("共通テスト(2教科以下)", 12000, "dnc"), ("社労士", 15000, "sharosi"), ("診断士 2次試験", 15100, "jfcmca"),
         ("共通テスト(3教科以上)", 18000, "dnc"), ("診断士 1次試験", 17200, "jfcmca"), ("介護福祉士", 20510, "sssc"),
     ]
     rows.sort(key=lambda r: r[1])
@@ -165,11 +165,13 @@ def fees() -> dict:
                 f"公式ページに金額が書かれていた試験を、安い順に並べました。いちばん安いのは{cheap[0]}の{n(cheap[1])}円、いちばん高いのは{dear[0]}の{n(dear[1])}円で、{dear[1] / cheap[1]:.1f}倍の差があります。",
                 "受験料は、申込の方法で別の手数料が加わる場合があります。コンビニ払いやカード決済の手数料は、表の金額に含まれていません。"],
              "table": {"caption": "受験料(安い順・円)", "cols": ["試験", "受験料", "詳しいページ"], "num_cols": [1],
-                       "rows": [[nm, f"{n(v)}円", {"text": "開く", "href": f'/{ {"eiken": "eiken", "ipa": "cbt", "retio": "takken", "gyosei": "gyosei", "dnc": "kyotsu", "sharosi": "sharoshi", "jfcmca": "schedule", "sssc": "kaigo-fukushi"}[src] }/'}] for nm, v, src in rows]},
+                       "rows": [[nm, f"{n(v)}円", {"text": "開く", "href": f'/{ {"eiken": "eiken", "ipa": "cbt", "retio": "takken", "gyosei": "gyosei", "dnc": "kyotsu", "sharosi": "sharoshi", "jfcmca": "schedule", "sssc": "kaigo-fukushi", "kanrikyo": "schedule"}[src] }/'}] for nm, v, src in rows]
+                       + [[nm, "確認中", {"text": "開く", "href": href}] for nm, href in (("日商簿記", "/boki/"), ("FP技能検定", "/fp/"), ("漢検", "/minkan/"), ("TOEIC L&R", "/minkan/"))],
+                       "note": "「確認中」は、公式ページで金額を確かめられていない試験です。確認が取れ次第、金額を載せます。"},
              "chart": {"kind": "bar", "title": "資格試験の受験料", "desc": "確認できた受験料を安い順に示した棒グラフ。最も安いのは英検3級の6,800円、最も高いのは介護福祉士の20,510円。", "labels": [r[0] for r in rows], "values": [r[1] for r in rows], "unit": "円"}},
             {"h2": "含まれないもの", "paras": [
                 "表の金額は、各団体のページに書かれた受験料の本体です。診断士の1次試験は、このほかにオンライン決済の手数料590円がかかります。共通テストは、支払手数料188円がかかります。",
-                "日商簿記、FP技能検定、漢検、TOEICの受験料は、公式ページで直接確かめられた金額が少ないため、表に入れていません。受験する団体のページで確かめてください。"]},
+                "日商簿記、FP技能検定、漢検、TOEICの受験料は、公式ページで金額を確かめられていないため、表では「確認中」としています。確認が取れ次第、金額を載せます。受験する団体のページで、先に確かめることもできます。"]},
             {"h2": "最終確認は公式で", "paras": ["金額は年度で変わることがあります。確認日は2026年11月3日です。申込の前に、必ず公式ページを確かめてください。"]},
         ],
         [{"path": "/schedule/", "text": "資格試験日程一覧(日付順)"}, {"path": "/takken/", "text": "宅建の試験日と申込期間"}, {"path": "/kyotsu/", "text": "共通テストの日程と検定料"},

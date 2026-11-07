@@ -1,6 +1,6 @@
 {
  "path": "/goukaku-ritsu/",
- "kind": "article",
+ "kind": "analysis",
  "parent": "/",
  "primary_kw": "合格率の見方",
  "secondary_kw": [
@@ -8,158 +8,35 @@
   "資格 合格率 一覧"
  ],
  "intent": 4,
- "title": "合格率の見方(受験者基準と申込者基準の違い・主な資格の最新の数字)",
+ "title": "合格率の見方｜受験者基準と申込者基準の違い・宅建の実数で解説",
  "h1": "合格率の見方 受験者基準と申込者基準の違い",
- "description": "合格率は、受験者を分母にするか、申込者を分母にするかで数字が変わります。宅建18.7%、行政書士14.5%、社労士9.3%など、主な資格の最新の合格率を公式の統計で並べました。",
- "answer": "主な資格の最新の合格率は、社労士の9.3%から看護師の88.3%まで。分母は受験者です。",
- "data_basis": "最新の回(令和7年度〜令和8年度)",
+ "description": "合格率は、受験者で割るか申込者で割るかで数字が変わります。宅建の令和7年度は、受験者基準で18.7％、申込者基準で約15.0％です。実数で違いを解説し、主な資格の最新の合格率も並べました。",
+ "answer": "同じ宅建の令和7年度でも、受験者で割ると18.7％、申込者で割ると約15.0％です。合格率は、分母を確かめてから比べます。",
+ "data_basis": "2026年11月3日現在",
  "sections": [
   {
-   "h2": "分母が違えば、数字が変わる",
-   "paras": [
-    "合格率は、合格者を何で割るかで決まります。公式の統計の多くは、実際に受けた人(受験者)で割っています。申し込んだ人(申込者)で割ると、数字はもっと低くなります。",
-    "宅建士の令和7年度は、申込者306,099人、受験者245,462人、合格者45,821人です。受験者で割ると18.7%、申込者で割ると15.0%になります。"
-   ],
-   "table": {
-    "caption": "主な資格の最新の合格率",
-    "cols": [
-     "試験",
-     "回・年度",
-     "受験者",
-     "合格者",
-     "合格率(受験者基準)",
-     "受験率(受験者÷申込者)"
-    ],
-    "num_cols": [
-     2,
-     3,
-     4,
-     5
-    ],
-    "rows": [
-     [
-      "宅建士",
-      "令和7年度",
-      "245,462",
-      "45,821",
-      "18.7%",
-      "80.2%"
-     ],
-     [
-      "行政書士",
-      "令和7年度",
-      "50,163",
-      "7,292",
-      "14.5%",
-      "78.6%"
-     ],
-     [
-      "社労士",
-      "令和8年度",
-      "42,510",
-      "3,961",
-      "9.3%",
-      "80.4%"
-     ],
-     [
-      "介護福祉士",
-      "第38回",
-      "78,469",
-      "54,987",
-      "70.1%",
-      "—"
-     ],
-     [
-      "看護師",
-      "第115回",
-      "59,614",
-      "52,666",
-      "88.3%",
-      "98.8%"
-     ],
-     [
-      "簿記2級(第173回)",
-      "第173回",
-      "4,821",
-      "728",
-      "15.1%",
-      "84.2%"
-     ],
-     [
-      "簿記3級(第173回)",
-      "第173回",
-      "14,359",
-      "4,854",
-      "33.8%",
-      "86.9%"
-     ],
-     [
-      "ITパスポート",
-      "令和7年度",
-      "271,352",
-      "132,012",
-      "48.6%",
-      "88.3%"
-     ],
-     [
-      "基本情報技術者",
-      "令和7年度",
-      "147,186",
-      "56,370",
-      "38.3%",
-      "85.5%"
-     ]
-    ],
-    "note": "合格率は各団体の公表値(合格者÷受験者)。社労士の過去の回は当サイトで計算した値を含みます。看護師は申込者の数ではなく応募者の数です。"
-   },
-   "chart": {
-    "kind": "bar",
-    "title": "主な資格の最新の合格率",
-    "desc": "各試験の最新の合格率(受験者基準)。",
-    "labels": [
-     "看護師",
-     "介護福祉士",
-     "ITパスポート",
-     "基本情報技術者",
-     "簿記3級(第173回)",
-     "宅建士",
-     "簿記2級(第173回)",
-     "行政書士",
-     "社労士"
-    ],
-    "values": [
-     88.3,
-     70.1,
-     48.6,
-     38.3,
-     33.8,
-     18.7,
-     15.1,
-     14.5,
-     9.3
-    ],
-    "unit": "%"
-   }
+   "html": "<p class=\"sec-sub\">合格率は、試験の難しさを比べるときによく使われます。ただし、割り算の分母が違うと、同じ試験でも数字が変わります。この特集では、宅建の実数で、その違いを見せます。</p><h2>宅建の合格率の推移（直近5回）</h2><p class=\"sec-sub\">合格率は17〜19％の範囲で動いています。下のグラフと表は、<a href=\"/takken/\">宅建の詳細ページ</a>と同じデータです。</p><figure class=\"chart\" role=\"img\" aria-label=\"宅建の合格率の推移（受験者基準・単位は％）。下の表に同じ数字があります。\"><div class=\"bars\" style=\"--n:5\"><div class=\"bar\"><span class=\"val\">18.7%</span><span class=\"col\" style=\"height:87.0%\"></span></div><div class=\"bar\"><span class=\"val\">18.6%</span><span class=\"col\" style=\"height:86.5%\"></span></div><div class=\"bar\"><span class=\"val\">17.2%</span><span class=\"col\" style=\"height:80.0%\"></span></div><div class=\"bar\"><span class=\"val\">17.0%</span><span class=\"col\" style=\"height:79.1%\"></span></div><div class=\"bar\"><span class=\"val\">17.9%</span><span class=\"col\" style=\"height:83.2%\"></span></div></div><div class=\"bar-lbls\" style=\"--n:5\"><div>令和7年度</div><div>令和6年度</div><div>令和5年度</div><div>令和4年度</div><div>令和3年度（10月）</div></div></figure><p class=\"hint\">棒グラフの数字は、合格率（合格者 ÷ 受験者）で、単位は％です。</p><div class=\"tablewrap\"><table class=\"stack\"><caption>宅建士試験 直近5回の結果</caption><thead><tr><th>年度</th><th class=num>申込者</th><th class=num>受験者</th><th class=num>合格者</th><th class=num>合格率（受験者基準）</th></tr></thead><tbody><tr><td data-label=\"年度\">令和7年度</td><td class=num data-label=\"申込者\">306,099</td><td class=num data-label=\"受験者\">245,462</td><td class=num data-label=\"合格者\">45,821</td><td class=num data-label=\"合格率（受験者基準）\">18.7%</td></tr><tr><td data-label=\"年度\">令和6年度</td><td class=num data-label=\"申込者\">301,336</td><td class=num data-label=\"受験者\">241,436</td><td class=num data-label=\"合格者\">44,992</td><td class=num data-label=\"合格率（受験者基準）\">18.6%</td></tr><tr><td data-label=\"年度\">令和5年度</td><td class=num data-label=\"申込者\">289,096</td><td class=num data-label=\"受験者\">233,276</td><td class=num data-label=\"合格者\">40,025</td><td class=num data-label=\"合格率（受験者基準）\">17.2%</td></tr><tr><td data-label=\"年度\">令和4年度</td><td class=num data-label=\"申込者\">283,856</td><td class=num data-label=\"受験者\">226,048</td><td class=num data-label=\"合格者\">38,525</td><td class=num data-label=\"合格率（受験者基準）\">17.0%</td></tr><tr><td data-label=\"年度\">令和3年度（10月）</td><td class=num data-label=\"申込者\">256,704</td><td class=num data-label=\"受験者\">209,749</td><td class=num data-label=\"合格者\">37,579</td><td class=num data-label=\"合格率（受験者基準）\">17.9%</td></tr></tbody></table></div>",
+   "paras": []
   },
   {
-   "h2": "合格率だけで難しさは決まらない",
-   "paras": [
-    "合格率が高くても、受ける人が事前に絞られている試験があります。看護師国家試験の合格率は高く、受験資格を満たした人だけが受けるためです。合格率が低い試験は、誰でも申し込める試験が多くあります。",
-    "同じ試験でも、回で動きます。社労士は第57回の5.5%から第58回の9.3%に上がりました。簿記2級は第171回の23.6%から第172回の15.1%に下がっています。1回の数字ではなく、数年の幅で見てください。"
-   ]
+   "html": "<h2>合格率は「合格者 ÷ 受験者」で計算します</h2><p>一般に、試験の合格率は、合格者の数を、実際に試験を受けた受験者の数で割って計算します。宅建・令和7年度では、合格者が45,821人、受験者が245,462人です。45,821 ÷ 245,462 = 0.1867…となり、合格率は18.7％になります。これが、実施団体が発表する合格率です。</p><h3>申込者で割ると、数字は約15.0％になります</h3><p>同じ合格者45,821人を、申込者の数306,099人で割ると、45,821 ÷ 306,099 = 約0.1497、つまり約15.0％になります。申込をしても試験を受けなかった人が分母に入るため、数字は小さくなります。令和7年度は、申込者のうち実際に受験した人の割合（受験率）が80.2％でした。残りの約2割の人は、申し込んだものの受験しなかったことになります。</p><div class=\"compare\"><div class=\"cmp official\"><b>受験者基準（宅建の公式の合格率）</b><p>45,821 ÷ 245,462</p><div class=\"big\">18.7％</div></div><div class=\"cmp\"><b>申込者基準（参考の計算）</b><p>45,821 ÷ 306,099</p><div class=\"big\">約15.0％</div></div></div><figure class=\"chart\" role=\"img\" aria-label=\"同じ合格者数を、受験者と申込者で割った合格率の比較（単位は％）。下の表に同じ数字があります。\"><div class=\"bars\" style=\"--n:2\"><div class=\"bar\"><span class=\"val\">18.7%</span><span class=\"col\" style=\"height:87.0%\"></span></div><div class=\"bar\"><span class=\"val\">15.0%</span><span class=\"col\" style=\"height:69.8%\"></span></div></div><div class=\"bar-lbls\" style=\"--n:2\"><div>受験者基準（公式）</div><div>申込者基準（参考）</div></div></figure><h3>基準が違う数字は、そのまま比べられません</h3><p>あるサイトが受験者基準で18.7％と書き、別のサイトが申込者基準で約15.0％と書くと、同じ試験なのに数字が食い違って見えます。どちらかが間違っているのではなく、分母が違うだけです。合格率を比べるときは、まず「合格者 ÷ 受験者」なのか「合格者 ÷ 申込者」なのかを確かめてください。基準がそろっていない数字同士を並べても、難しさの比較にはなりません。</p><div class=\"rule-box\"><b>このサイトの決め方</b><br>合格率は、実施団体が発表する「合格者 ÷ 受験者」の数字を載せます。申込者基準の数字を使うときは、そのことを明記します。</div>",
+   "paras": []
   },
   {
-   "h2": "合格基準の違い",
-   "paras": [
-    "合格の基準は、点数で決まる試験と、受験者の上位から決まる試験があります。簿記は70%以上、行政書士は300点満点中180点以上、介護福祉士は125点満点中64点以上です。",
-    "社労士は、問題の難しさで基準点を補正します。宅建士は、毎年の合格点が違い、受験者の得点の分布で決まります。基準が違う試験の合格率は、そのまま比べられません。"
-   ]
+   "html": "<h2>データで見る、ほかの数字</h2><div class=\"bignums\"><div class=\"bignum\"><div class=\"num\">80.2<small> ％</small></div><h3>宅建の受験率（令和7年度）</h3><p>受験者245,462人 ÷ 申込者306,099人です。申込者の約2割は受験していません。</p></div><div class=\"bignum\"><div class=\"num\">6,800<small> 円</small>〜20,510<small> 円</small></div><h3>受験料の範囲</h3><p>確かめた範囲では、英検3級が6,800円、介護福祉士が20,510円です。宅建は8,200円です。</p><a class=\"cardlink\" href=\"/fees/\">受験料の一覧を見る</a></div><div class=\"bignum\"><div class=\"num\">306,099<small> 人</small></div><h3>宅建の申込者数（令和7年度）</h3><p>申込者数は、この5回で毎回増えています。前回（令和6年度）は301,336人でした。</p></div></div>",
+   "paras": []
   },
   {
-   "h2": "規約と出典",
-   "paras": [
-    "統計の数字は、各団体と厚生労働省の公表資料から読み取った事実です。宅建士試験の機構は表の無断転載を禁じているため、当サイトは数字を自分の表に組み直し、機構の表は載せていません。"
-   ]
+   "html": "<h2>ほかの資格の合格率</h2><p>主な資格の最新の合格率です。どれも合格者 ÷ 受験者の数字で、分母の定義はそろえてあります。</p><div class=\"tablewrap\"><table class=\"stack\"><caption>主な資格の最新の合格率</caption><thead><tr><th>試験</th><th>回・年度</th><th class=num>受験者</th><th class=num>合格者</th><th class=num>合格率(受験者基準)</th><th class=num>受験率(受験者÷申込者)</th></tr></thead><tbody><tr><td data-label=\"試験\">宅建士</td><td data-label=\"回・年度\">令和7年度</td><td class=num data-label=\"受験者\">245,462</td><td class=num data-label=\"合格者\">45,821</td><td class=num data-label=\"合格率(受験者基準)\">18.7%</td><td class=num data-label=\"受験率(受験者÷申込者)\">80.2%</td></tr><tr><td data-label=\"試験\">行政書士</td><td data-label=\"回・年度\">令和7年度</td><td class=num data-label=\"受験者\">50,163</td><td class=num data-label=\"合格者\">7,292</td><td class=num data-label=\"合格率(受験者基準)\">14.5%</td><td class=num data-label=\"受験率(受験者÷申込者)\">78.6%</td></tr><tr><td data-label=\"試験\">社労士</td><td data-label=\"回・年度\">令和8年度</td><td class=num data-label=\"受験者\">42,510</td><td class=num data-label=\"合格者\">3,961</td><td class=num data-label=\"合格率(受験者基準)\">9.3%</td><td class=num data-label=\"受験率(受験者÷申込者)\">80.4%</td></tr><tr><td data-label=\"試験\">介護福祉士</td><td data-label=\"回・年度\">第38回</td><td class=num data-label=\"受験者\">78,469</td><td class=num data-label=\"合格者\">54,987</td><td class=num data-label=\"合格率(受験者基準)\">70.1%</td><td class=num data-label=\"受験率(受験者÷申込者)\">—</td></tr><tr><td data-label=\"試験\">看護師</td><td data-label=\"回・年度\">第115回</td><td class=num data-label=\"受験者\">59,614</td><td class=num data-label=\"合格者\">52,666</td><td class=num data-label=\"合格率(受験者基準)\">88.3%</td><td class=num data-label=\"受験率(受験者÷申込者)\">98.8%</td></tr><tr><td data-label=\"試験\">簿記2級(第173回)</td><td data-label=\"回・年度\">第173回</td><td class=num data-label=\"受験者\">4,821</td><td class=num data-label=\"合格者\">728</td><td class=num data-label=\"合格率(受験者基準)\">15.1%</td><td class=num data-label=\"受験率(受験者÷申込者)\">84.2%</td></tr><tr><td data-label=\"試験\">簿記3級(第173回)</td><td data-label=\"回・年度\">第173回</td><td class=num data-label=\"受験者\">14,359</td><td class=num data-label=\"合格者\">4,854</td><td class=num data-label=\"合格率(受験者基準)\">33.8%</td><td class=num data-label=\"受験率(受験者÷申込者)\">86.9%</td></tr><tr><td data-label=\"試験\">ITパスポート</td><td data-label=\"回・年度\">令和7年度</td><td class=num data-label=\"受験者\">271,352</td><td class=num data-label=\"合格者\">132,012</td><td class=num data-label=\"合格率(受験者基準)\">48.6%</td><td class=num data-label=\"受験率(受験者÷申込者)\">88.3%</td></tr><tr><td data-label=\"試験\">基本情報技術者</td><td data-label=\"回・年度\">令和7年度</td><td class=num data-label=\"受験者\">147,186</td><td class=num data-label=\"合格者\">56,370</td><td class=num data-label=\"合格率(受験者基準)\">38.3%</td><td class=num data-label=\"受験率(受験者÷申込者)\">85.5%</td></tr></tbody></table></div><p class=\"hint\">合格率は各団体の公表値(合格者÷受験者)。社労士の過去の回は当サイトで計算した値を含みます。看護師は申込者の数ではなく応募者の数です。</p><h3>合格率だけで難しさは決まらない</h3><p>合格率が高くても、受ける人が事前に絞られている試験があります。看護師国家試験の合格率は高く、受験資格を満たした人だけが受けるためです。合格率が低い試験は、誰でも申し込める試験が多くあります。</p><p>同じ試験でも、回で動きます。社労士は第57回の5.5%から第58回の9.3%に上がりました。簿記2級は第171回の23.6%から第172回の15.1%に下がっています。1回の数字ではなく、数年の幅で見てください。</p><h3>合格基準の違い</h3><p>合格の基準は、点数で決まる試験と、受験者の上位から決まる試験があります。簿記は70%以上、行政書士は300点満点中180点以上、介護福祉士は125点満点中64点以上です。</p><p>社労士は、問題の難しさで基準点を補正します。宅建士は、毎年の合格点が違い、受験者の得点の分布で決まります。基準が違う試験の合格率は、そのまま比べられません。</p>",
+   "paras": []
+  },
+  {
+   "html": "<h2>関連する詳細ページ</h2><div class=\"feature-grid\"><div class=\"fcard\"><h3>宅建の詳細</h3><p>合格発表まであと17日。日程、合格率、総コスト計算機と逆算プランナーがある詳細ページです。</p><a class=\"cardlink\" href=\"/takken/\">宅建の詳細を見る</a></div><div class=\"fcard\"><h3>看護師国家試験（第116回）</h3><p>申込締切は11月27日(金)（あと19日）、試験日は2027年2月14日(日)、合格発表は3月24日(水)です。</p><a class=\"cardlink\" href=\"/kangoshi/\">看護師国家試験のページを見る</a></div><div class=\"fcard\"><h3>介護福祉士</h3><p>試験日は2027年1月31日(日)、受験料は20,510円です。このサイトで確かめた受験料の中では、いちばん高い金額です。</p><a class=\"cardlink\" href=\"/kaigo-fukushi/\">介護福祉士のページを見る</a></div></div><p><a class=\"cardlink\" href=\"/\">トップで締切を探す</a></p>",
+   "paras": []
+  },
+  {
+   "html": "<script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Dataset\", \"name\": \"宅建士試験の合格率（受験者基準・申込者基準）\", \"description\": \"宅地建物取引士資格試験の直近5回の申込者・受験者・合格者・合格率と、基準による数字の違い。\", \"inLanguage\": \"ja\", \"creator\": {\"@type\": \"Organization\", \"name\": \"一般財団法人 不動産適正取引推進機構\"}, \"dateModified\": \"2026-11-08\"}</script>",
+   "paras": []
   },
   {
    "h2": "最終確認は公式で",
@@ -186,5 +63,5 @@
    "text": "資格試験の合格発表日の一覧"
   }
  ],
- "updated": "2026-11-03"
+ "updated": "2026-11-08"
 }

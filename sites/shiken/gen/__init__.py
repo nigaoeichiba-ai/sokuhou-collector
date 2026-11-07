@@ -21,10 +21,16 @@ def all_pages() -> list[dict]:
         out += m.pages()
     from .extra import EXTRA, EXTRA_METHOD_TABLE
     for p in out:
-        if p["path"] in EXTRA:
+        if p["path"] in EXTRA and p["path"] != "/cbt/":
             p["sections"] = p["sections"][:-1] + EXTRA[p["path"]] + p["sections"][-1:] if p["sections"][-1]["h2"].startswith("最終確認") else p["sections"] + EXTRA[p["path"]]
         if p["path"] == "/method/":
             p["sections"][2]["table"] = EXTRA_METHOD_TABLE
+    from . import pages_v2, pages_takken, pages_features, pages_lists
+    new = {p["path"]: p for p in (pages_v2.home(), pages_takken.takken(), pages_features.goukaku_ritsu(), pages_features.cbt(), pages_features.yomimono(), pages_features.tokushu_nyushi())}
+    out = [new.pop(p["path"], p) for p in out] + list(new.values())
+    out = [pages_lists.restyle(p) for p in out]
+    for p in out:
+        p["sections"] = [s for s in p["sections"] if s]
     return [finalize(p) for p in out]
 
 
@@ -39,7 +45,8 @@ def finalize(p: dict) -> dict:
     secs = []
     for s in p["sections"]:
         s = dict(s)
-        s.pop("html", None) if "http" in s.get("html", "") else None
+        if re.search(r'href="https?://(?!calendar\.google\.com/)', s.get("html", "")):
+            s.pop("html")
         s["paras"] = [t for t in (DROP.sub("", t).strip() for t in s.get("paras", [])) if t]
         secs.append(s)
     last = secs[-1]
@@ -67,7 +74,7 @@ def write(root: Path = SITE) -> int:
     site["updated"] = CHECKED
     site.update({
         "nav": [["日程の一覧", "/schedule/", "/schedule/"], ["締切が近い順", "/deadlines/", "/deadlines/"], ["入試", "/nyushi/", "/nyushi/"],
-                ["方法と出典", "/method/", "/method/"]],
+                ["読み物", "/yomimono/", "/yomimono/"], ["方法と出典", "/method/", "/method/"]],
         "footer_html": "日程は、各試験団体・省庁・教育委員会の公式発表をもとにしています。最終的な日程は、主催団体の公式発表でご確認ください。",
         "purpose": "資格試験と入学試験の、申込・出願の期間、試験日、合格発表日を、公式ページで確かめた日付だけで並べること。受験する人が、締切を見落とさないための道具です。",
         "update_text": "試験団体が日程を発表したら、公式ページで日付を確かめて入れ替え、各ページの最終更新日を書き換えます。年度が替わるたびに、全ページの日付を公式ページから取り直します。直した内容は「訂正と更新の記録」に残します。",

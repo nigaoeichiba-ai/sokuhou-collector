@@ -15,9 +15,14 @@
  "data_basis": "2026年11月3日現在",
  "sections": [
   {
+   "h2": "カードで見る",
+   "html": "<p class=\"sec-sub\">これから来る試験日です。分野で絞り込めます。</p><div class=\"viewswitch\" role=\"group\" aria-label=\"分野で絞り込む\"><button type=\"button\" data-chip=\"all\" aria-pressed=\"true\">すべて</button><button type=\"button\" data-chip=\"資格\" aria-pressed=\"false\">資格</button><button type=\"button\" data-chip=\"語学・教養\" aria-pressed=\"false\">語学・教養</button><button type=\"button\" data-chip=\"入試\" aria-pressed=\"false\">入試</button></div><div class=\"cards\"><div data-cat=\"資格\" style=\"display:contents\"><article class=\"dcard examday\" data-name=\"行政書士試験\" data-exam=\"gyosei\" data-event=\"gyosei-exam\"><div class=\"top\"><span class=\"cat\">法律 ・ 試験日</span></div><h3><a href=\"/gyosei/\">行政書士試験</a></h3><p class=\"when\"><b>2026年11月8日(日) 13:00〜16:00</b></p><div class=\"days today big\" data-countdown=\"2026-11-08\" data-kind=\"deadline\"><b class=\"num\">本日</b><span class=\"urgent-label\">本日</span></div><div class=\"actions\"><a class=\"btn solid\" href=\"/gyosei/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"gyosei\" data-name=\"行政書士試験\" data-url=\"/gyosei/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E8%A1%8C%E6%94%BF%E6%9B%B8%E5%A3%AB%E8%A9%A6%E9%A8%93&amp;dates=20261108T130000/20261108T160000&amp;ctz=Asia%2FTokyo&amp;details=%E8%A1%8C%E6%94%BF%E6%9B%B8%E5%A3%AB%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fgyosei%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-gyosei-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"資格\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"日商簿記 第174回\" data-exam=\"boki-174\" data-event=\"boki-174-exam\"><div class=\"top\"><span class=\"cat\">会計 ・ 試験日</span></div><h3><a href=\"/boki/\">日商簿記 第174回</a></h3><p class=\"when\"><b>2026年11月15日(日)</b></p><div class=\"days red big\" data-countdown=\"2026-11-15\" data-kind=\"deadline\">あと<b class=\"num\">7</b>日<span class=\"urgent-label\">まもなく締切</span></div><div class=\"actions\"><a class=\"btn solid\" href=\"/boki/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"boki-174\" data-name=\"日商簿記 第174回\" data-url=\"/boki/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E6%97%A5%E5%95%86%E7%B0%BF%E8%A8%98%20%E7%AC%AC174%E5%9B%9E&amp;dates=20261115/20261116&amp;ctz=Asia%2FTokyo&amp;details=%E6%97%A5%E5%95%86%E7%B0%BF%E8%A8%98%20%E7%AC%AC174%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fboki%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-boki-174-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"資格\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"管理業務主任者試験\" data-exam=\"kanri\" data-event=\"kanri-exam\"><div class=\"top\"><span class=\"cat\">不動産 ・ 試験日</span></div><h3><a href=\"/schedule/\">管理業務主任者試験</a></h3><p class=\"when\"><b>2026年12月6日(日) 13:00〜15:00</b></p><div class=\"days yellow big\" data-countdown=\"2026-12-06\" data-kind=\"deadline\">あと<b class=\"num\">28</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/schedule/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"kanri\" data-name=\"管理業務主任者試験\" data-url=\"/schedule/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E7%AE%A1%E7%90%86%E6%A5%AD%E5%8B%99%E4%B8%BB%E4%BB%BB%E8%80%85%E8%A9%A6%E9%A8%93&amp;dates=20261206T130000/20261206T150000&amp;ctz=Asia%2FTokyo&amp;details=%E7%AE%A1%E7%90%86%E6%A5%AD%E5%8B%99%E4%B8%BB%E4%BB%BB%E8%80%85%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fschedule%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-kanri-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"語学・教養\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"TOEIC L&amp;R 12月19日回\" data-exam=\"toeic-20261219\" data-event=\"toeic-20261219-exam\"><div class=\"top\"><span class=\"cat\">語学 ・ 試験日</span></div><h3><a href=\"/minkan/\">TOEIC L&amp;R 12月19日回</a></h3><p class=\"when\"><b>2026年12月19日(土)</b></p><div class=\"days blue big\" data-countdown=\"2026-12-19\" data-kind=\"deadline\">あと<b class=\"num\">41</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/minkan/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"toeic-20261219\" data-name=\"TOEIC L&amp;R 12月19日回\" data-url=\"/minkan/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%2012%E6%9C%8819%E6%97%A5%E5%9B%9E&amp;dates=20261219/20261220&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%2012%E6%9C%8819%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-toeic-20261219-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"語学・教養\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"TOEIC L&amp;R 1月10日回\" data-exam=\"toeic-20270110\" data-event=\"toeic-20270110-exam\"><div class=\"top\"><span class=\"cat\">語学 ・ 試験日</span></div><h3><a href=\"/minkan/\">TOEIC L&amp;R 1月10日回</a></h3><p class=\"when\"><b>2027年1月10日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-01-10\" data-kind=\"deadline\">あと<b class=\"num\">63</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/minkan/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"toeic-20270110\" data-name=\"TOEIC L&amp;R 1月10日回\" data-url=\"/minkan/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%201%E6%9C%8810%E6%97%A5%E5%9B%9E&amp;dates=20270110/20270111&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%201%E6%9C%8810%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-toeic-20270110-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"入試\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"大学入学共通テスト\" data-exam=\"kyotsu\" data-event=\"kyotsu-exam\"><div class=\"top\"><span class=\"cat\">大学入試 ・ 試験日</span></div><h3><a href=\"/kyotsu/\">大学入学共通テスト</a></h3><p class=\"when\"><b>2027年1月16日(土)</b></p><div class=\"days blue big\" data-countdown=\"2027-01-16\" data-kind=\"deadline\">あと<b class=\"num\">69</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/kyotsu/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"kyotsu\" data-name=\"大学入学共通テスト\" data-url=\"/kyotsu/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%A4%A7%E5%AD%A6%E5%85%A5%E5%AD%A6%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88&amp;dates=20270116/20270117&amp;ctz=Asia%2FTokyo&amp;details=%E5%A4%A7%E5%AD%A6%E5%85%A5%E5%AD%A6%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkyotsu%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-kyotsu-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"入試\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"大学入学共通テスト\" data-exam=\"kyotsu\" data-event=\"kyotsu-exam-20270117\"><div class=\"top\"><span class=\"cat\">大学入試 ・ 試験日</span></div><h3><a href=\"/kyotsu/\">大学入学共通テスト</a></h3><p class=\"when\"><b>2027年1月17日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-01-17\" data-kind=\"deadline\">あと<b class=\"num\">70</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/kyotsu/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"kyotsu\" data-name=\"大学入学共通テスト\" data-url=\"/kyotsu/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%A4%A7%E5%AD%A6%E5%85%A5%E5%AD%A6%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88&amp;dates=20270117/20270118&amp;ctz=Asia%2FTokyo&amp;details=%E5%A4%A7%E5%AD%A6%E5%85%A5%E5%AD%A6%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkyotsu%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-kyotsu-exam-20270117.ics\" download>ICS保存</a></div></article></div><div data-cat=\"入試\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"共通テストの追・再試験\" data-exam=\"kyotsu-tsuishi\" data-event=\"kyotsu-tsuishi-exam\"><div class=\"top\"><span class=\"cat\">大学入試 ・ 試験日</span></div><h3><a href=\"/kyotsu-tsuishi/\">共通テストの追・再試験</a></h3><p class=\"when\"><b>2027年1月23日(土)</b></p><div class=\"days blue big\" data-countdown=\"2027-01-23\" data-kind=\"deadline\">あと<b class=\"num\">76</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/kyotsu-tsuishi/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"kyotsu-tsuishi\" data-name=\"共通テストの追・再試験\" data-url=\"/kyotsu-tsuishi/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%BF%BD%E3%83%BB%E5%86%8D%E8%A9%A6%E9%A8%93&amp;dates=20270123/20270124&amp;ctz=Asia%2FTokyo&amp;details=%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%BF%BD%E3%83%BB%E5%86%8D%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkyotsu-tsuishi%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-kyotsu-tsuishi-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"語学・教養\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"英検 2026年度 第3回\" data-exam=\"eiken-3\" data-event=\"eiken-3-exam\"><div class=\"top\"><span class=\"cat\">語学 ・ 試験日</span></div><h3><a href=\"/eiken/\">英検 2026年度 第3回</a></h3><p class=\"when\"><b>2027年1月24日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-01-24\" data-kind=\"deadline\">あと<b class=\"num\">77</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/eiken/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"eiken-3\" data-name=\"英検 2026年度 第3回\" data-url=\"/eiken/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20270124/20270125&amp;ctz=Asia%2FTokyo&amp;details=%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Feiken%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-eiken-3-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"資格\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"FP技能検定1級 学科(きんざい)\" data-exam=\"fp1\" data-event=\"fp1-exam\"><div class=\"top\"><span class=\"cat\">金融 ・ 試験日</span></div><h3><a href=\"/fp/\">FP技能検定1級 学科(きんざい)</a></h3><p class=\"when\"><b>2027年1月24日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-01-24\" data-kind=\"deadline\">あと<b class=\"num\">77</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/fp/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"fp1\" data-name=\"FP技能検定1級 学科(きんざい)\" data-url=\"/fp/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDFP%E6%8A%80%E8%83%BD%E6%A4%9C%E5%AE%9A1%E7%B4%9A%20%E5%AD%A6%E7%A7%91%28%E3%81%8D%E3%82%93%E3%81%96%E3%81%84%29&amp;dates=20270124/20270125&amp;ctz=Asia%2FTokyo&amp;details=FP%E6%8A%80%E8%83%BD%E6%A4%9C%E5%AE%9A1%E7%B4%9A%20%E5%AD%A6%E7%A7%91%28%E3%81%8D%E3%82%93%E3%81%96%E3%81%84%29%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Ffp%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-fp1-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"入試\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"共通テストの追・再試験\" data-exam=\"kyotsu-tsuishi\" data-event=\"kyotsu-tsuishi-exam-20270124\"><div class=\"top\"><span class=\"cat\">大学入試 ・ 試験日</span></div><h3><a href=\"/kyotsu-tsuishi/\">共通テストの追・再試験</a></h3><p class=\"when\"><b>2027年1月24日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-01-24\" data-kind=\"deadline\">あと<b class=\"num\">77</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/kyotsu-tsuishi/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"kyotsu-tsuishi\" data-name=\"共通テストの追・再試験\" data-url=\"/kyotsu-tsuishi/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%BF%BD%E3%83%BB%E5%86%8D%E8%A9%A6%E9%A8%93&amp;dates=20270124/20270125&amp;ctz=Asia%2FTokyo&amp;details=%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%BF%BD%E3%83%BB%E5%86%8D%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkyotsu-tsuishi%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-kyotsu-tsuishi-exam-20270124.ics\" download>ICS保存</a></div></article></div><div data-cat=\"語学・教養\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"TOEIC L&amp;R 1月24日回\" data-exam=\"toeic-20270124\" data-event=\"toeic-20270124-exam\"><div class=\"top\"><span class=\"cat\">語学 ・ 試験日</span></div><h3><a href=\"/minkan/\">TOEIC L&amp;R 1月24日回</a></h3><p class=\"when\"><b>2027年1月24日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-01-24\" data-kind=\"deadline\">あと<b class=\"num\">77</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/minkan/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"toeic-20270124\" data-name=\"TOEIC L&amp;R 1月24日回\" data-url=\"/minkan/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%201%E6%9C%8824%E6%97%A5%E5%9B%9E&amp;dates=20270124/20270125&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%201%E6%9C%8824%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-toeic-20270124-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"資格\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"介護福祉士国家試験(第39回)\" data-exam=\"kaigo\" data-event=\"kaigo-exam\"><div class=\"top\"><span class=\"cat\">福祉 ・ 試験日</span></div><h3><a href=\"/kaigo-fukushi/\">介護福祉士国家試験(第39回)</a></h3><p class=\"when\"><b>2027年1月31日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-01-31\" data-kind=\"deadline\">あと<b class=\"num\">84</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/kaigo-fukushi/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"kaigo\" data-name=\"介護福祉士国家試験(第39回)\" data-url=\"/kaigo-fukushi/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E4%BB%8B%E8%AD%B7%E7%A6%8F%E7%A5%89%E5%A3%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC39%E5%9B%9E%29&amp;dates=20270131/20270201&amp;ctz=Asia%2FTokyo&amp;details=%E4%BB%8B%E8%AD%B7%E7%A6%8F%E7%A5%89%E5%A3%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC39%E5%9B%9E%29%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkaigo-fukushi%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-kaigo-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"資格\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"看護師国家試験(第116回)\" data-exam=\"kangoshi\" data-event=\"kangoshi-exam\"><div class=\"top\"><span class=\"cat\">医療 ・ 試験日</span></div><h3><a href=\"/kangoshi/\">看護師国家試験(第116回)</a></h3><p class=\"when\"><b>2027年2月14日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-02-14\" data-kind=\"deadline\">あと<b class=\"num\">98</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/kangoshi/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"kangoshi\" data-name=\"看護師国家試験(第116回)\" data-url=\"/kangoshi/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E7%9C%8B%E8%AD%B7%E5%B8%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC116%E5%9B%9E%29&amp;dates=20270214/20270215&amp;ctz=Asia%2FTokyo&amp;details=%E7%9C%8B%E8%AD%B7%E5%B8%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC116%E5%9B%9E%29%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkangoshi%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-kangoshi-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"語学・教養\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"漢検 2026年度 第3回\" data-exam=\"kanken-3\" data-event=\"kanken-3-exam\"><div class=\"top\"><span class=\"cat\">語学・教養 ・ 試験日</span></div><h3><a href=\"/minkan/\">漢検 2026年度 第3回</a></h3><p class=\"when\"><b>2027年2月14日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-02-14\" data-kind=\"deadline\">あと<b class=\"num\">98</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/minkan/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"kanken-3\" data-name=\"漢検 2026年度 第3回\" data-url=\"/minkan/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E6%BC%A2%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20270214/20270215&amp;ctz=Asia%2FTokyo&amp;details=%E6%BC%A2%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-kanken-3-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"語学・教養\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"TOEIC L&amp;R 2月14日回\" data-exam=\"toeic-20270214\" data-event=\"toeic-20270214-exam\"><div class=\"top\"><span class=\"cat\">語学 ・ 試験日</span></div><h3><a href=\"/minkan/\">TOEIC L&amp;R 2月14日回</a></h3><p class=\"when\"><b>2027年2月14日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-02-14\" data-kind=\"deadline\">あと<b class=\"num\">98</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/minkan/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"toeic-20270214\" data-name=\"TOEIC L&amp;R 2月14日回\" data-url=\"/minkan/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%202%E6%9C%8814%E6%97%A5%E5%9B%9E&amp;dates=20270214/20270215&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%202%E6%9C%8814%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-toeic-20270214-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"入試\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"東京大学 一般選抜\" data-exam=\"todai\" data-event=\"todai-exam\"><div class=\"top\"><span class=\"cat\">大学入試 ・ 試験日</span></div><h3><a href=\"/kokkoritsu/\">東京大学 一般選抜</a></h3><p class=\"when\"><b>2027年2月25日(木)</b></p><div class=\"days blue big\" data-countdown=\"2027-02-25\" data-kind=\"deadline\">あと<b class=\"num\">109</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/kokkoritsu/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"todai\" data-name=\"東京大学 一般選抜\" data-url=\"/kokkoritsu/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E6%9D%B1%E4%BA%AC%E5%A4%A7%E5%AD%A6%20%E4%B8%80%E8%88%AC%E9%81%B8%E6%8A%9C&amp;dates=20270225/20270226&amp;ctz=Asia%2FTokyo&amp;details=%E6%9D%B1%E4%BA%AC%E5%A4%A7%E5%AD%A6%20%E4%B8%80%E8%88%AC%E9%81%B8%E6%8A%9C%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkokkoritsu%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-todai-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"資格\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"日商簿記 第175回\" data-exam=\"boki-175\" data-event=\"boki-175-exam\"><div class=\"top\"><span class=\"cat\">会計 ・ 試験日</span></div><h3><a href=\"/boki/\">日商簿記 第175回</a></h3><p class=\"when\"><b>2027年2月28日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-02-28\" data-kind=\"deadline\">あと<b class=\"num\">112</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/boki/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"boki-175\" data-name=\"日商簿記 第175回\" data-url=\"/boki/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E6%97%A5%E5%95%86%E7%B0%BF%E8%A8%98%20%E7%AC%AC175%E5%9B%9E&amp;dates=20270228/20270301&amp;ctz=Asia%2FTokyo&amp;details=%E6%97%A5%E5%95%86%E7%B0%BF%E8%A8%98%20%E7%AC%AC175%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fboki%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-boki-175-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"語学・教養\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"英検 2026年度 第3回\" data-exam=\"eiken-3\" data-event=\"eiken-3-exam-20270228\"><div class=\"top\"><span class=\"cat\">語学 ・ 試験日</span></div><h3><a href=\"/eiken/\">英検 2026年度 第3回</a></h3><p class=\"when\"><b>2027年2月28日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-02-28\" data-kind=\"deadline\">あと<b class=\"num\">112</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/eiken/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"eiken-3\" data-name=\"英検 2026年度 第3回\" data-url=\"/eiken/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20270228/20270301&amp;ctz=Asia%2FTokyo&amp;details=%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Feiken%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-eiken-3-exam-20270228.ics\" download>ICS保存</a></div></article></div><div data-cat=\"資格\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"国家総合職(春)第1次試験\" data-exam=\"komuin-sogo\" data-event=\"komuin-sogo-exam\"><div class=\"top\"><span class=\"cat\">公務員 ・ 試験日</span></div><h3><a href=\"/komuin/\">国家総合職(春)第1次試験</a></h3><p class=\"when\"><b>2027年2月28日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-02-28\" data-kind=\"deadline\">あと<b class=\"num\">112</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/komuin/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"komuin-sogo\" data-name=\"国家総合職(春)第1次試験\" data-url=\"/komuin/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%9B%BD%E5%AE%B6%E7%B7%8F%E5%90%88%E8%81%B7%28%E6%98%A5%29%E7%AC%AC1%E6%AC%A1%E8%A9%A6%E9%A8%93&amp;dates=20270228/20270301&amp;ctz=Asia%2FTokyo&amp;details=%E5%9B%BD%E5%AE%B6%E7%B7%8F%E5%90%88%E8%81%B7%28%E6%98%A5%29%E7%AC%AC1%E6%AC%A1%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkomuin%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-komuin-sogo-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"語学・教養\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"TOEIC L&amp;R 3月6日回\" data-exam=\"toeic-20270306\" data-event=\"toeic-20270306-exam\"><div class=\"top\"><span class=\"cat\">語学 ・ 試験日</span></div><h3><a href=\"/minkan/\">TOEIC L&amp;R 3月6日回</a></h3><p class=\"when\"><b>2027年3月6日(土)</b></p><div class=\"days blue big\" data-countdown=\"2027-03-06\" data-kind=\"deadline\">あと<b class=\"num\">118</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/minkan/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"toeic-20270306\" data-name=\"TOEIC L&amp;R 3月6日回\" data-url=\"/minkan/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%203%E6%9C%886%E6%97%A5%E5%9B%9E&amp;dates=20270306/20270307&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%203%E6%9C%886%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-toeic-20270306-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"語学・教養\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"英検 2026年度 第3回\" data-exam=\"eiken-3\" data-event=\"eiken-3-exam-20270307\"><div class=\"top\"><span class=\"cat\">語学 ・ 試験日</span></div><h3><a href=\"/eiken/\">英検 2026年度 第3回</a></h3><p class=\"when\"><b>2027年3月7日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-03-07\" data-kind=\"deadline\">あと<b class=\"num\">119</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/eiken/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"eiken-3\" data-name=\"英検 2026年度 第3回\" data-url=\"/eiken/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20270307/20270308&amp;ctz=Asia%2FTokyo&amp;details=%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Feiken%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-eiken-3-exam-20270307.ics\" download>ICS保存</a></div></article></div><div data-cat=\"語学・教養\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"TOEIC L&amp;R 3月14日回\" data-exam=\"toeic-20270314\" data-event=\"toeic-20270314-exam\"><div class=\"top\"><span class=\"cat\">語学 ・ 試験日</span></div><h3><a href=\"/minkan/\">TOEIC L&amp;R 3月14日回</a></h3><p class=\"when\"><b>2027年3月14日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-03-14\" data-kind=\"deadline\">あと<b class=\"num\">126</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/minkan/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"toeic-20270314\" data-name=\"TOEIC L&amp;R 3月14日回\" data-url=\"/minkan/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%203%E6%9C%8814%E6%97%A5%E5%9B%9E&amp;dates=20270314/20270315&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%203%E6%9C%8814%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-toeic-20270314-exam.ics\" download>ICS保存</a></div></article></div><div data-cat=\"資格\" style=\"display:contents\"><article class=\"dcard blue\" data-name=\"国家一般職(大卒)第1次試験\" data-exam=\"komuin-ippan\" data-event=\"komuin-ippan-exam\"><div class=\"top\"><span class=\"cat\">公務員 ・ 試験日</span></div><h3><a href=\"/komuin/\">国家一般職(大卒)第1次試験</a></h3><p class=\"when\"><b>2027年5月2日(日)</b></p><div class=\"days blue big\" data-countdown=\"2027-05-02\" data-kind=\"deadline\">あと<b class=\"num\">175</b>日</div><div class=\"actions\"><a class=\"btn solid\" href=\"/komuin/\">詳細を見る</a><button type=\"button\" class=\"btn js-my\" data-exam=\"komuin-ippan\" data-name=\"国家一般職(大卒)第1次試験\" data-url=\"/komuin/\" aria-pressed=\"false\">マイ試験に追加</button><a class=\"btn\" href=\"https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%9B%BD%E5%AE%B6%E4%B8%80%E8%88%AC%E8%81%B7%28%E5%A4%A7%E5%8D%92%29%E7%AC%AC1%E6%AC%A1%E8%A9%A6%E9%A8%93&amp;dates=20270502/20270503&amp;ctz=Asia%2FTokyo&amp;details=%E5%9B%BD%E5%AE%B6%E4%B8%80%E8%88%AC%E8%81%B7%28%E5%A4%A7%E5%8D%92%29%E7%AC%AC1%E6%AC%A1%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkomuin%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=\" target=\"_blank\" rel=\"noopener\">Googleカレンダー</a><a class=\"btn\" href=\"/ics/shiken-komuin-ippan-exam.ics\" download>ICS保存</a></div></article></div></div>",
+   "paras": []
+  },
+  {
    "h2": "これからの試験日と合格発表",
    "paras": [
-    "2026年11月3日から後の、試験日と合格発表日です。日付の早い順に並べています。個別の試験の申込期間や受験料は、試験名のページで確かめてください。"
+    "2026年11月8日から後の、試験日と合格発表日です。日付の早い順に並べています。個別の試験の申込期間や受験料は、試験名のページで確かめてください。"
    ],
    "table": {
     "caption": "これからの試験日と合格発表(日付順)",
@@ -25,224 +30,236 @@
      "日付",
      "試験",
      "区分",
-     "2026年11月3日から"
+     "2026年11月8日から"
     ],
     "rows": [
      [
       "2026年11月8日(日)",
       "行政書士(令和8年度)",
       "試験日",
-      "あと5日"
+      "本日"
      ],
      [
       "2026年11月15日(日)",
       "日商簿記 第174回",
       "試験日",
-      "あと12日"
+      "あと7日"
      ],
      [
       "2026年11月25日(水)",
       "宅建士(令和8年度)",
       "合格発表",
-      "あと22日"
+      "あと17日"
+     ],
+     [
+      "2026年12月6日(日)",
+      "管理業務主任者(令和8年度)",
+      "試験日",
+      "あと28日"
      ],
      [
       "2026年12月19日(土)",
       "TOEIC L&R 12月19日(土)の回",
       "試験日",
-      "あと46日"
+      "あと41日"
      ],
      [
       "2027年1月8日(金)",
       "TOEIC L&R 12月19日(土)の回",
       "デジタル公式認定証",
-      "あと66日"
+      "あと61日"
      ],
      [
       "2027年1月10日(日)",
       "TOEIC L&R 1月10日(日)の回",
       "試験日",
-      "あと68日"
+      "あと63日"
      ],
      [
       "2027年1月13日(水)",
       "中小企業診断士 2次(令和8年度)",
       "合格発表",
-      "あと71日"
+      "あと66日"
+     ],
+     [
+      "2027年1月15日(金)",
+      "管理業務主任者(令和8年度)",
+      "合格発表",
+      "あと68日"
      ],
      [
       "2027年1月16日(土)",
       "共通テスト(令和9年度)",
       "試験日",
-      "あと74日"
+      "あと69日"
      ],
      [
       "2027年1月17日(日)",
       "共通テスト(令和9年度)",
       "試験日",
-      "あと75日"
+      "あと70日"
      ],
      [
       "2027年1月23日(土)",
       "共通テスト 追・再試験",
       "試験日",
-      "あと81日"
+      "あと76日"
      ],
      [
       "2027年1月24日(日)",
       "FP1級学科(きんざい)",
       "試験日",
-      "あと82日"
+      "あと77日"
      ],
      [
       "2027年1月24日(日)",
       "TOEIC L&R 1月24日(日)の回",
       "試験日",
-      "あと82日"
+      "あと77日"
      ],
      [
       "2027年1月24日(日)",
       "共通テスト 追・再試験",
       "試験日",
-      "あと82日"
+      "あと77日"
      ],
      [
       "2027年1月24日(日)",
       "英検 2026年度第3回",
       "試験日",
-      "あと82日"
+      "あと77日"
      ],
      [
       "2027年1月27日(水)",
       "行政書士(令和8年度)",
       "合格発表",
-      "あと85日"
+      "あと80日"
      ],
      [
       "2027年1月28日(木)",
       "TOEIC L&R 1月10日(日)の回",
       "デジタル公式認定証",
-      "あと86日"
+      "あと81日"
      ],
      [
       "2027年1月31日(日)",
       "介護福祉士(第39回)",
       "試験日",
-      "あと89日"
+      "あと84日"
      ],
      [
       "2027年2月11日(木)",
       "TOEIC L&R 1月24日(日)の回",
       "デジタル公式認定証",
-      "あと100日"
+      "あと95日"
      ],
      [
       "2027年2月14日(日)",
       "TOEIC L&R 2月14日(日)の回",
       "試験日",
-      "あと103日"
+      "あと98日"
      ],
      [
       "2027年2月14日(日)",
       "漢検 2026年度第3回",
       "試験日",
-      "あと103日"
+      "あと98日"
      ],
      [
       "2027年2月14日(日)",
       "看護師(第116回)",
       "試験日",
-      "あと103日"
+      "あと98日"
      ],
      [
       "2027年2月15日(月)",
       "英検 2026年度第3回",
       "合格発表",
-      "あと104日"
+      "あと99日"
      ],
      [
       "2027年2月25日(木)",
       "東京大 一般選抜",
       "試験日",
-      "あと114日"
+      "あと109日"
      ],
      [
       "2027年2月28日(日)",
       "国家総合職(春)2027年度",
       "試験日",
-      "あと117日"
+      "あと112日"
      ],
      [
       "2027年2月28日(日)",
       "日商簿記 第175回",
       "試験日",
-      "あと117日"
+      "あと112日"
      ],
      [
       "2027年2月28日(日)",
       "英検 2026年度第3回",
       "試験日",
-      "あと117日"
+      "あと112日"
      ],
      [
       "2027年3月4日(木)",
       "TOEIC L&R 2月14日(日)の回",
       "デジタル公式認定証",
-      "あと121日"
+      "あと116日"
      ],
      [
       "2027年3月6日(土)",
       "TOEIC L&R 3月6日(土)の回",
       "試験日",
-      "あと123日"
+      "あと118日"
      ],
      [
       "2027年3月7日(日)",
       "英検 2026年度第3回",
       "試験日",
-      "あと124日"
+      "あと119日"
      ],
      [
       "2027年3月10日(水)",
       "東京大 一般選抜",
       "合格発表",
-      "あと127日"
+      "あと122日"
      ],
      [
       "2027年3月14日(日)",
       "TOEIC L&R 3月14日(日)の回",
       "試験日",
-      "あと131日"
+      "あと126日"
      ],
      [
       "2027年3月23日(火)",
       "介護福祉士(第39回)",
       "合格発表",
-      "あと140日"
+      "あと135日"
      ],
      [
       "2027年3月24日(水)",
       "看護師(第116回)",
       "合格発表",
-      "あと141日"
+      "あと136日"
      ],
      [
       "2027年3月26日(金)",
       "TOEIC L&R 3月6日(土)の回",
       "デジタル公式認定証",
-      "あと143日"
+      "あと138日"
      ],
      [
       "2027年4月1日(木)",
       "TOEIC L&R 3月14日(日)の回",
       "デジタル公式認定証",
-      "あと149日"
+      "あと144日"
      ],
      [
       "2027年5月2日(日)",
       "国家一般職(大卒)2027年度",
       "試験日",
-      "あと180日"
+      "あと175日"
      ]
     ],
     "note": "TOEICは、デジタル公式認定証の日を合格発表の代わりに載せています。"
@@ -254,7 +271,7 @@
     "次の回の日程が、公式ページにまだ載っていない試験です。当サイトは日付を推測で入れません。公式発表を確かめて、載ったら足します。"
    ],
    "table": {
-    "caption": "次の回が未発表の試験(2026年11月3日時点)",
+    "caption": "次の回が未発表の試験(2026年11月8日時点)",
     "cols": [
      "試験",
      "状況"
@@ -297,6 +314,10 @@
     "試験名をたどって、各ページの日程表を見てください。申込を済ませたかどうかは、「申込期限が近い試験の一覧」で並べ替えて確かめられます。",
     "この一覧に載っていない試験は、まだ公式ページで確認できていません。載っていないことは、試験がないことを意味しません。"
    ]
+  },
+  {
+   "html": "<script type=\"application/json\" id=\"shiken-data\">{\"events\":[{\"id\":\"takken-start-net\",\"exam\":\"takken\",\"name\":\"宅地建物取引士(宅建)\",\"cat\":\"不動産\",\"type\":\"application_start\",\"iso\":\"2026-07-01\",\"time\":\"09:30\",\"end\":\"\",\"note\":\"インターネット申込\",\"url\":\"/takken/\",\"variant\":\"net\"},{\"id\":\"takken-start-mail\",\"exam\":\"takken\",\"name\":\"宅地建物取引士(宅建)\",\"cat\":\"不動産\",\"type\":\"application_start\",\"iso\":\"2026-07-01\",\"time\":\"\",\"end\":\"\",\"note\":\"郵送申込\",\"url\":\"/takken/\",\"variant\":\"mail\"},{\"id\":\"takken-deadline-mail\",\"exam\":\"takken\",\"name\":\"宅地建物取引士(宅建)\",\"cat\":\"不動産\",\"type\":\"application_deadline\",\"iso\":\"2026-07-15\",\"time\":\"\",\"end\":\"\",\"note\":\"郵送申込\",\"url\":\"/takken/\",\"variant\":\"mail\"},{\"id\":\"takken-deadline-net\",\"exam\":\"takken\",\"name\":\"宅地建物取引士(宅建)\",\"cat\":\"不動産\",\"type\":\"application_deadline\",\"iso\":\"2026-07-31\",\"time\":\"23:59\",\"end\":\"\",\"note\":\"インターネット申込\",\"url\":\"/takken/\",\"variant\":\"net\"},{\"id\":\"kanri-start\",\"exam\":\"kanri\",\"name\":\"管理業務主任者試験\",\"cat\":\"不動産\",\"type\":\"application_start\",\"iso\":\"2026-08-03\",\"time\":\"10:00\",\"end\":\"\",\"note\":\"Web申込・郵送申込とも\",\"url\":\"/schedule/\",\"variant\":\"\"},{\"id\":\"sharoshi-exam\",\"exam\":\"sharoshi\",\"name\":\"社会保険労務士試験\",\"cat\":\"労務\",\"type\":\"exam\",\"iso\":\"2026-08-23\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/sharoshi/\",\"variant\":\"\"},{\"id\":\"gyosei-deadline\",\"exam\":\"gyosei\",\"name\":\"行政書士試験\",\"cat\":\"法律\",\"type\":\"application_deadline\",\"iso\":\"2026-08-24\",\"time\":\"17:00\",\"end\":\"\",\"note\":\"インターネットは17時まで(郵送は8月17日の消印まで)\",\"url\":\"/gyosei/\",\"variant\":\"\"},{\"id\":\"kaigo-deadline\",\"exam\":\"kaigo\",\"name\":\"介護福祉士国家試験(第39回)\",\"cat\":\"福祉\",\"type\":\"application_deadline\",\"iso\":\"2026-09-02\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/kaigo-fukushi/\",\"variant\":\"\"},{\"id\":\"kanri-deadline\",\"exam\":\"kanri\",\"name\":\"管理業務主任者試験\",\"cat\":\"不動産\",\"type\":\"application_deadline\",\"iso\":\"2026-09-30\",\"time\":\"16:59\",\"end\":\"\",\"note\":\"Web申込は16時59分まで(郵送は8月24日の消印まで)\",\"url\":\"/schedule/\",\"variant\":\"\"},{\"id\":\"sharoshi-result\",\"exam\":\"sharoshi\",\"name\":\"社会保険労務士試験\",\"cat\":\"労務\",\"type\":\"announcement\",\"iso\":\"2026-10-01\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/sharoshi/\",\"variant\":\"\"},{\"id\":\"kyotsu-deadline\",\"exam\":\"kyotsu\",\"name\":\"大学入学共通テスト\",\"cat\":\"大学入試\",\"type\":\"application_deadline\",\"iso\":\"2026-10-02\",\"time\":\"17:00\",\"end\":\"\",\"note\":\"登録は17時まで、支払は23時59分まで\",\"url\":\"/kyotsu/\",\"variant\":\"\"},{\"id\":\"toeic-20261219-start\",\"exam\":\"toeic-20261219\",\"name\":\"TOEIC L&R 12月19日回\",\"cat\":\"語学\",\"type\":\"application_start\",\"iso\":\"2026-10-06\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"takken-exam\",\"exam\":\"takken\",\"name\":\"宅地建物取引士(宅建)\",\"cat\":\"不動産\",\"type\":\"exam\",\"iso\":\"2026-10-18\",\"time\":\"13:00\",\"end\":\"15:00\",\"note\":\"13時から15時\",\"url\":\"/takken/\",\"variant\":\"\"},{\"id\":\"shindanshi-exam\",\"exam\":\"shindanshi\",\"name\":\"中小企業診断士 2次試験\",\"cat\":\"経営\",\"type\":\"exam\",\"iso\":\"2026-10-25\",\"time\":\"\",\"end\":\"\",\"note\":\"筆記\",\"url\":\"/schedule/\",\"variant\":\"\"},{\"id\":\"toeic-20270110-start\",\"exam\":\"toeic-20270110\",\"name\":\"TOEIC L&R 1月10日回\",\"cat\":\"語学\",\"type\":\"application_start\",\"iso\":\"2026-10-27\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"fp1-start\",\"exam\":\"fp1\",\"name\":\"FP技能検定1級 学科(きんざい)\",\"cat\":\"金融\",\"type\":\"application_start\",\"iso\":\"2026-10-28\",\"time\":\"10:00\",\"end\":\"\",\"note\":\"10時から\",\"url\":\"/fp/\",\"variant\":\"\"},{\"id\":\"eiken-3-start\",\"exam\":\"eiken-3\",\"name\":\"英検 2026年度 第3回\",\"cat\":\"語学\",\"type\":\"application_start\",\"iso\":\"2026-10-30\",\"time\":\"\",\"end\":\"\",\"note\":\"個人申込\",\"url\":\"/eiken/\",\"variant\":\"\"},{\"id\":\"kangoshi-start\",\"exam\":\"kangoshi\",\"name\":\"看護師国家試験(第116回)\",\"cat\":\"医療\",\"type\":\"application_start\",\"iso\":\"2026-11-06\",\"time\":\"\",\"end\":\"\",\"note\":\"受験書類の提出期間の始まり\",\"url\":\"/kangoshi/\",\"variant\":\"\"},{\"id\":\"gyosei-exam\",\"exam\":\"gyosei\",\"name\":\"行政書士試験\",\"cat\":\"法律\",\"type\":\"exam\",\"iso\":\"2026-11-08\",\"time\":\"13:00\",\"end\":\"16:00\",\"note\":\"13時から16時\",\"url\":\"/gyosei/\",\"variant\":\"\"},{\"id\":\"toeic-20261219-deadline\",\"exam\":\"toeic-20261219\",\"name\":\"TOEIC L&R 12月19日回\",\"cat\":\"語学\",\"type\":\"application_deadline\",\"iso\":\"2026-11-11\",\"time\":\"15:00\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"toeic-20270124-start\",\"exam\":\"toeic-20270124\",\"name\":\"TOEIC L&R 1月24日回\",\"cat\":\"語学\",\"type\":\"application_start\",\"iso\":\"2026-11-11\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"boki-174-exam\",\"exam\":\"boki-174\",\"name\":\"日商簿記 第174回\",\"cat\":\"会計\",\"type\":\"exam\",\"iso\":\"2026-11-15\",\"time\":\"\",\"end\":\"\",\"note\":\"統一試験。申込は終了\",\"url\":\"/boki/\",\"variant\":\"\"},{\"id\":\"takken-result\",\"exam\":\"takken\",\"name\":\"宅地建物取引士(宅建)\",\"cat\":\"不動産\",\"type\":\"announcement\",\"iso\":\"2026-11-25\",\"time\":\"09:30\",\"end\":\"\",\"note\":\"試験日の翌月、不動産適正取引推進機構が掲示\",\"url\":\"/takken/\",\"variant\":\"\"},{\"id\":\"toeic-20270110-deadline\",\"exam\":\"toeic-20270110\",\"name\":\"TOEIC L&R 1月10日回\",\"cat\":\"語学\",\"type\":\"application_deadline\",\"iso\":\"2026-11-26\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"kangoshi-deadline\",\"exam\":\"kangoshi\",\"name\":\"看護師国家試験(第116回)\",\"cat\":\"医療\",\"type\":\"application_deadline\",\"iso\":\"2026-11-27\",\"time\":\"\",\"end\":\"\",\"note\":\"受験書類の提出期間の終わり\",\"url\":\"/kangoshi/\",\"variant\":\"\"},{\"id\":\"toeic-20270214-start\",\"exam\":\"toeic-20270214\",\"name\":\"TOEIC L&R 2月14日回\",\"cat\":\"語学\",\"type\":\"application_start\",\"iso\":\"2026-11-27\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"fp1-deadline\",\"exam\":\"fp1\",\"name\":\"FP技能検定1級 学科(きんざい)\",\"cat\":\"金融\",\"type\":\"application_deadline\",\"iso\":\"2026-12-01\",\"time\":\"17:30\",\"end\":\"\",\"note\":\"17時30分まで\",\"url\":\"/fp/\",\"variant\":\"\"},{\"id\":\"kanken-3-start\",\"exam\":\"kanken-3\",\"name\":\"漢検 2026年度 第3回\",\"cat\":\"語学・教養\",\"type\":\"application_start\",\"iso\":\"2026-12-04\",\"time\":\"09:00\",\"end\":\"\",\"note\":\"9時から\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"kanri-exam\",\"exam\":\"kanri\",\"name\":\"管理業務主任者試験\",\"cat\":\"不動産\",\"type\":\"exam\",\"iso\":\"2026-12-06\",\"time\":\"13:00\",\"end\":\"15:00\",\"note\":\"13時から15時\",\"url\":\"/schedule/\",\"variant\":\"\"},{\"id\":\"toeic-20270124-deadline\",\"exam\":\"toeic-20270124\",\"name\":\"TOEIC L&R 1月24日回\",\"cat\":\"語学\",\"type\":\"application_deadline\",\"iso\":\"2026-12-09\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"toeic-20270306-start\",\"exam\":\"toeic-20270306\",\"name\":\"TOEIC L&R 3月6日回\",\"cat\":\"語学\",\"type\":\"application_start\",\"iso\":\"2026-12-10\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"eiken-3-deadline\",\"exam\":\"eiken-3\",\"name\":\"英検 2026年度 第3回\",\"cat\":\"語学\",\"type\":\"application_deadline\",\"iso\":\"2026-12-14\",\"time\":\"\",\"end\":\"\",\"note\":\"個人申込(コンビニ・Pay-easy払いは12月11日)\",\"url\":\"/eiken/\",\"variant\":\"\"},{\"id\":\"toeic-20261219-exam\",\"exam\":\"toeic-20261219\",\"name\":\"TOEIC L&R 12月19日回\",\"cat\":\"語学\",\"type\":\"exam\",\"iso\":\"2026-12-19\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"toeic-20270314-start\",\"exam\":\"toeic-20270314\",\"name\":\"TOEIC L&R 3月14日回\",\"cat\":\"語学\",\"type\":\"application_start\",\"iso\":\"2027-01-06\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"toeic-20270214-deadline\",\"exam\":\"toeic-20270214\",\"name\":\"TOEIC L&R 2月14日回\",\"cat\":\"語学\",\"type\":\"application_deadline\",\"iso\":\"2027-01-07\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"toeic-20261219-result\",\"exam\":\"toeic-20261219\",\"name\":\"TOEIC L&R 12月19日回\",\"cat\":\"語学\",\"type\":\"announcement\",\"iso\":\"2027-01-08\",\"time\":\"\",\"end\":\"\",\"note\":\"デジタル公式認定証\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"kanken-3-deadline\",\"exam\":\"kanken-3\",\"name\":\"漢検 2026年度 第3回\",\"cat\":\"語学・教養\",\"type\":\"application_deadline\",\"iso\":\"2027-01-10\",\"time\":\"23:59\",\"end\":\"\",\"note\":\"23時59分まで・先着順\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"toeic-20270110-exam\",\"exam\":\"toeic-20270110\",\"name\":\"TOEIC L&R 1月10日回\",\"cat\":\"語学\",\"type\":\"exam\",\"iso\":\"2027-01-10\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"shindanshi-result\",\"exam\":\"shindanshi\",\"name\":\"中小企業診断士 2次試験\",\"cat\":\"経営\",\"type\":\"announcement\",\"iso\":\"2027-01-13\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/schedule/\",\"variant\":\"\"},{\"id\":\"kanri-result\",\"exam\":\"kanri\",\"name\":\"管理業務主任者試験\",\"cat\":\"不動産\",\"type\":\"announcement\",\"iso\":\"2027-01-15\",\"time\":\"\",\"end\":\"\",\"note\":\"協会のホームページに掲載\",\"url\":\"/schedule/\",\"variant\":\"\"},{\"id\":\"kyotsu-exam\",\"exam\":\"kyotsu\",\"name\":\"大学入学共通テスト\",\"cat\":\"大学入試\",\"type\":\"exam\",\"iso\":\"2027-01-16\",\"time\":\"\",\"end\":\"\",\"note\":\"本試験の1日目\",\"url\":\"/kyotsu/\",\"variant\":\"\"},{\"id\":\"kyotsu-exam-20270117\",\"exam\":\"kyotsu\",\"name\":\"大学入学共通テスト\",\"cat\":\"大学入試\",\"type\":\"exam\",\"iso\":\"2027-01-17\",\"time\":\"\",\"end\":\"\",\"note\":\"本試験の2日目\",\"url\":\"/kyotsu/\",\"variant\":\"\"},{\"id\":\"kyotsu-tsuishi-exam\",\"exam\":\"kyotsu-tsuishi\",\"name\":\"共通テストの追・再試験\",\"cat\":\"大学入試\",\"type\":\"exam\",\"iso\":\"2027-01-23\",\"time\":\"\",\"end\":\"\",\"note\":\"追・再試験の1日目\",\"url\":\"/kyotsu-tsuishi/\",\"variant\":\"\"},{\"id\":\"eiken-3-exam\",\"exam\":\"eiken-3\",\"name\":\"英検 2026年度 第3回\",\"cat\":\"語学\",\"type\":\"exam\",\"iso\":\"2027-01-24\",\"time\":\"\",\"end\":\"\",\"note\":\"一次試験(本会場)\",\"url\":\"/eiken/\",\"variant\":\"\"},{\"id\":\"fp1-exam\",\"exam\":\"fp1\",\"name\":\"FP技能検定1級 学科(きんざい)\",\"cat\":\"金融\",\"type\":\"exam\",\"iso\":\"2027-01-24\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/fp/\",\"variant\":\"\"},{\"id\":\"kyotsu-tsuishi-exam-20270124\",\"exam\":\"kyotsu-tsuishi\",\"name\":\"共通テストの追・再試験\",\"cat\":\"大学入試\",\"type\":\"exam\",\"iso\":\"2027-01-24\",\"time\":\"\",\"end\":\"\",\"note\":\"追・再試験の2日目\",\"url\":\"/kyotsu-tsuishi/\",\"variant\":\"\"},{\"id\":\"toeic-20270124-exam\",\"exam\":\"toeic-20270124\",\"name\":\"TOEIC L&R 1月24日回\",\"cat\":\"語学\",\"type\":\"exam\",\"iso\":\"2027-01-24\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"todai-start\",\"exam\":\"todai\",\"name\":\"東京大学 一般選抜\",\"cat\":\"大学入試\",\"type\":\"application_start\",\"iso\":\"2027-01-25\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/kokkoritsu/\",\"variant\":\"\"},{\"id\":\"gyosei-result\",\"exam\":\"gyosei\",\"name\":\"行政書士試験\",\"cat\":\"法律\",\"type\":\"announcement\",\"iso\":\"2027-01-27\",\"time\":\"09:00\",\"end\":\"\",\"note\":\"9時から\",\"url\":\"/gyosei/\",\"variant\":\"\"},{\"id\":\"toeic-20270306-deadline\",\"exam\":\"toeic-20270306\",\"name\":\"TOEIC L&R 3月6日回\",\"cat\":\"語学\",\"type\":\"application_deadline\",\"iso\":\"2027-01-27\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"toeic-20270110-result\",\"exam\":\"toeic-20270110\",\"name\":\"TOEIC L&R 1月10日回\",\"cat\":\"語学\",\"type\":\"announcement\",\"iso\":\"2027-01-28\",\"time\":\"\",\"end\":\"\",\"note\":\"デジタル公式認定証\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"kaigo-exam\",\"exam\":\"kaigo\",\"name\":\"介護福祉士国家試験(第39回)\",\"cat\":\"福祉\",\"type\":\"exam\",\"iso\":\"2027-01-31\",\"time\":\"\",\"end\":\"\",\"note\":\"筆記試験\",\"url\":\"/kaigo-fukushi/\",\"variant\":\"\"},{\"id\":\"todai-deadline\",\"exam\":\"todai\",\"name\":\"東京大学 一般選抜\",\"cat\":\"大学入試\",\"type\":\"application_deadline\",\"iso\":\"2027-02-03\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/kokkoritsu/\",\"variant\":\"\"},{\"id\":\"toeic-20270314-deadline\",\"exam\":\"toeic-20270314\",\"name\":\"TOEIC L&R 3月14日回\",\"cat\":\"語学\",\"type\":\"application_deadline\",\"iso\":\"2027-02-03\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"toeic-20270124-result\",\"exam\":\"toeic-20270124\",\"name\":\"TOEIC L&R 1月24日回\",\"cat\":\"語学\",\"type\":\"announcement\",\"iso\":\"2027-02-11\",\"time\":\"\",\"end\":\"\",\"note\":\"デジタル公式認定証\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"kangoshi-exam\",\"exam\":\"kangoshi\",\"name\":\"看護師国家試験(第116回)\",\"cat\":\"医療\",\"type\":\"exam\",\"iso\":\"2027-02-14\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/kangoshi/\",\"variant\":\"\"},{\"id\":\"kanken-3-exam\",\"exam\":\"kanken-3\",\"name\":\"漢検 2026年度 第3回\",\"cat\":\"語学・教養\",\"type\":\"exam\",\"iso\":\"2027-02-14\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"toeic-20270214-exam\",\"exam\":\"toeic-20270214\",\"name\":\"TOEIC L&R 2月14日回\",\"cat\":\"語学\",\"type\":\"exam\",\"iso\":\"2027-02-14\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"eiken-3-result\",\"exam\":\"eiken-3\",\"name\":\"英検 2026年度 第3回\",\"cat\":\"語学\",\"type\":\"announcement\",\"iso\":\"2027-02-15\",\"time\":\"\",\"end\":\"\",\"note\":\"一次のウェブ合否\",\"url\":\"/eiken/\",\"variant\":\"\"},{\"id\":\"todai-exam\",\"exam\":\"todai\",\"name\":\"東京大学 一般選抜\",\"cat\":\"大学入試\",\"type\":\"exam\",\"iso\":\"2027-02-25\",\"time\":\"\",\"end\":\"\",\"note\":\"第2次学力試験(26日、理科三類は27日も)\",\"url\":\"/kokkoritsu/\",\"variant\":\"\"},{\"id\":\"boki-175-exam\",\"exam\":\"boki-175\",\"name\":\"日商簿記 第175回\",\"cat\":\"会計\",\"type\":\"exam\",\"iso\":\"2027-02-28\",\"time\":\"\",\"end\":\"\",\"note\":\"統一試験(2級・3級のみ)\",\"url\":\"/boki/\",\"variant\":\"\"},{\"id\":\"eiken-3-exam-20270228\",\"exam\":\"eiken-3\",\"name\":\"英検 2026年度 第3回\",\"cat\":\"語学\",\"type\":\"exam\",\"iso\":\"2027-02-28\",\"time\":\"\",\"end\":\"\",\"note\":\"二次試験A日程(21歳以上)\",\"url\":\"/eiken/\",\"variant\":\"\"},{\"id\":\"komuin-sogo-exam\",\"exam\":\"komuin-sogo\",\"name\":\"国家総合職(春)第1次試験\",\"cat\":\"公務員\",\"type\":\"exam\",\"iso\":\"2027-02-28\",\"time\":\"\",\"end\":\"\",\"note\":\"第1次試験\",\"url\":\"/komuin/\",\"variant\":\"\"},{\"id\":\"toeic-20270214-result\",\"exam\":\"toeic-20270214\",\"name\":\"TOEIC L&R 2月14日回\",\"cat\":\"語学\",\"type\":\"announcement\",\"iso\":\"2027-03-04\",\"time\":\"\",\"end\":\"\",\"note\":\"デジタル公式認定証\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"toeic-20270306-exam\",\"exam\":\"toeic-20270306\",\"name\":\"TOEIC L&R 3月6日回\",\"cat\":\"語学\",\"type\":\"exam\",\"iso\":\"2027-03-06\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"eiken-3-exam-20270307\",\"exam\":\"eiken-3\",\"name\":\"英検 2026年度 第3回\",\"cat\":\"語学\",\"type\":\"exam\",\"iso\":\"2027-03-07\",\"time\":\"\",\"end\":\"\",\"note\":\"二次試験B日程(20歳以下)\",\"url\":\"/eiken/\",\"variant\":\"\"},{\"id\":\"todai-result\",\"exam\":\"todai\",\"name\":\"東京大学 一般選抜\",\"cat\":\"大学入試\",\"type\":\"announcement\",\"iso\":\"2027-03-10\",\"time\":\"12:00\",\"end\":\"\",\"note\":\"12時ごろ\",\"url\":\"/kokkoritsu/\",\"variant\":\"\"},{\"id\":\"toeic-20270314-exam\",\"exam\":\"toeic-20270314\",\"name\":\"TOEIC L&R 3月14日回\",\"cat\":\"語学\",\"type\":\"exam\",\"iso\":\"2027-03-14\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"kaigo-result\",\"exam\":\"kaigo\",\"name\":\"介護福祉士国家試験(第39回)\",\"cat\":\"福祉\",\"type\":\"announcement\",\"iso\":\"2027-03-23\",\"time\":\"\",\"end\":\"\",\"note\":\"ホームページに掲載\",\"url\":\"/kaigo-fukushi/\",\"variant\":\"\"},{\"id\":\"kangoshi-result\",\"exam\":\"kangoshi\",\"name\":\"看護師国家試験(第116回)\",\"cat\":\"医療\",\"type\":\"announcement\",\"iso\":\"2027-03-24\",\"time\":\"\",\"end\":\"\",\"note\":\"\",\"url\":\"/kangoshi/\",\"variant\":\"\"},{\"id\":\"toeic-20270306-result\",\"exam\":\"toeic-20270306\",\"name\":\"TOEIC L&R 3月6日回\",\"cat\":\"語学\",\"type\":\"announcement\",\"iso\":\"2027-03-26\",\"time\":\"\",\"end\":\"\",\"note\":\"デジタル公式認定証\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"toeic-20270314-result\",\"exam\":\"toeic-20270314\",\"name\":\"TOEIC L&R 3月14日回\",\"cat\":\"語学\",\"type\":\"announcement\",\"iso\":\"2027-04-01\",\"time\":\"\",\"end\":\"\",\"note\":\"デジタル公式認定証\",\"url\":\"/minkan/\",\"variant\":\"\"},{\"id\":\"komuin-ippan-exam\",\"exam\":\"komuin-ippan\",\"name\":\"国家一般職(大卒)第1次試験\",\"cat\":\"公務員\",\"type\":\"exam\",\"iso\":\"2027-05-02\",\"time\":\"\",\"end\":\"\",\"note\":\"第1次試験\",\"url\":\"/komuin/\",\"variant\":\"\"}],\"cards\":[]}</script>\n<script src=\"/assets/shiken.js\" defer></script>",
+   "paras": []
   },
   {
    "h2": "最終確認は公式で",

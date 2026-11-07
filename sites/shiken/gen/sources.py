@@ -18,6 +18,7 @@ SOURCES = {
     "jafp": S("日本FP協会", "FP技能検定 試験日程", "https://www.jafp.or.jp/exam/schedule/", "2026〜2027年"),
     "kinzai": S("金融財政事情研究会(きんざい)", "FP技能検定 1級学科", "https://www.kinzai.or.jp/fp", "2027年1月"),
     "ipa": S("情報処理推進機構(IPA)", "情報処理技術者試験 スケジュール・手数料", "https://www.ipa.go.jp/shiken/mousikomi/schedule.html", "2026年度"),
+    "kanrikyo": S("マンション管理業協会", "管理業務主任者試験 令和8年度の実施詳細", "https://www.kanrikyo.or.jp/kanri/shiken_r08/shiken_detail_20260605.html", "令和8年度"),
     "eiken": S("日本英語検定協会", "英検 2026年度 第3回 申込み", "https://www.eiken.or.jp/eiken/schedule/examinee/03/", "2026年度第3回"),
     "iibc": S("IIBC(国際ビジネスコミュニケーション協会)", "TOEIC Listening & Reading 公開テスト 日程", "https://www.iibc-global.org/toeic/test/lr/guide01/schedule.html", "2026年12月〜2027年3月"),
     "kanken": S("日本漢字能力検定協会", "漢検 個人受検 検定日程", "https://www.kanken.or.jp/kanken/individual/pbt/schedule/", "2026年度第3回"),

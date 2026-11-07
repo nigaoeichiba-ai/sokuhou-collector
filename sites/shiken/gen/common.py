@@ -73,3 +73,9 @@ def rel(x: date | str) -> str:
 def ver(x: date | str, now: str = "です", then: str = "でした") -> str:
     """the ending of a sentence about the day x: 'です' until it has come, 'でした' after"""
     return now if left(x) >= 0 else then
+
+
+# The day the new design (and its pages) went out: the pages that were rebuilt carry it as their update day.
+DESIGN_DATE = "2026-11-08"
+# The owner's rule of 2026-11-03: no link to an official page on the site.  The spec of the new design has one ('公式で申し込む'); it stays off until the owner says yes.
+OFFICIAL_LINKS = False
