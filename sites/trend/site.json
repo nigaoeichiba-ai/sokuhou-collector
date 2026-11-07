@@ -1,15 +1,20 @@
 {
-  "glyph": "話",
+  "glyph": "<img src=\"/assets/img/logo.png\" alt=\"今日の話題 速報×深掘り\" width=\"145\" height=\"60\">",
   "updated": "2026-11-07",
   "home_label": "トップ",
   "nav": [
     [
+      "防災・気象",
+      "/bousai/",
+      "/bousai"
+    ],
+    [
       "台風32号",
-      "/articles/typhoon-32/",
-      "/articles/"
+      "/trend-typhoon32/",
+      "/trend-typhoon32"
     ]
   ],
-  "footer_html": "記事の数字は、気象庁など公的な発表によります。",
+  "footer_html": "<span class=\"fcats\">カテゴリ: <a href=\"/bousai/\">防災・気象</a></span> <span class=\"credit\"><a href=\"https://developers.rakuten.com/\" target=\"_blank\">Supported by Rakuten Developers</a></span>",
   "purpose": "今の話題を、公的な発表の数字で確かめて、速く深く伝えること。",
   "update_text": "発表の数字が変わったら、数字を入れ替えて、各ページの最終更新日を書き換えます。",
   "disclaimer": [
@@ -21,7 +26,8 @@
   "corrections": [],
   "sources_style": "credit",
   "credits": [
-    "気象庁『台風情報』『台風の発生数』『台風の平年値』を加工して作成"
+    "気象庁『台風情報』『台風の発生数』『台風の平年値』を加工して作成",
+    "防災庁『事前防災徹底のための緊急要請』(2026年11月2日)をもとに作成"
   ],
   "sources": {
     "jma": {
@@ -30,6 +36,14 @@
       "credit": "気象庁『台風情報』『台風の発生数』『台風の平年値』を加工して作成",
       "url": "https://www.data.jma.go.jp/yoho/typhoon/statistics/generation/generation.html",
       "basis": "2026年11月7日",
+      "fetched": "2026-11-07"
+    },
+    "bousaicho": {
+      "org": "防災庁",
+      "table": "事前防災徹底のための緊急要請",
+      "credit": "防災庁『事前防災徹底のための緊急要請』(2026年11月2日)をもとに作成",
+      "url": "",
+      "basis": "2026年11月2日",
       "fetched": "2026-11-07"
     }
   }
