@@ -120,7 +120,9 @@ def build_db(shelves: list[dict], client, today: str, log=print) -> dict:
         try:
             got = fetch_shelf(client, s)
         except Exception as e:                                   # one shelf failing must not stop the others; the message carries no shop data
-            log(f"mallstore: shelf {s['id']}: {type(e).__name__}")
+            from sokuhou import rakuten
+            why = f" {str(e)[:200]}" if isinstance(e, rakuten.RakutenError) else ""      # an API error text (HTTP code and its reason) carries no product; any other error shows its type only
+            log(f"mallstore: shelf {s['id']}: {type(e).__name__}{why}")
             continue
         if got:
             db["shelves"][s["id"]] = [row(x) for x in got]

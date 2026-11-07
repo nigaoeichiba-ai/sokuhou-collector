@@ -72,6 +72,21 @@ class Select(unittest.TestCase):
         self.assertTrue(logs and all("秘密の商品名" not in l and "RuntimeError" in l or "shelf light" in l for l in logs))
 
 
+class ApiError(unittest.TestCase):
+    def test_an_api_error_shows_its_reason_and_nothing_else_shows_more_than_its_type(self):
+        from sokuhou import rakuten
+
+        class Bad(FakeClient):
+            def search(self, **params):
+                if params["keyword"] == "api":
+                    raise rakuten.RakutenError("HTTP 403: {\"error\":\"REQUEST_CONTEXT_BODY_HTTP_REFERRER_MISSING\"}")
+                raise RuntimeError("{'itemName': '秘密の商品名'}")
+        logs: list[str] = []
+        mallstore.build_db([dict(SHELF, id="a", keyword="api"), dict(SHELF, id="b", keyword="other")], Bad([]), "2026-11-08", log=logs.append)
+        self.assertIn("HTTP 403", logs[0])
+        self.assertNotIn("秘密の商品名", " ".join(logs))
+
+
 class Definition(unittest.TestCase):
     def test_a_definition_that_holds_a_product_is_refused(self):
         with tempfile.TemporaryDirectory() as td:
