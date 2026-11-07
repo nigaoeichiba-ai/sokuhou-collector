@@ -70,6 +70,32 @@ class TrendSite(unittest.TestCase):
             for href in re.findall(r'href="(/[^"#]*)"', "".join(s.get("html", "") for s in page["sections"])):
                 self.assertIn(href, paths, f"{page['path']} links to {href}")
 
+    def test_no_mark_of_the_writing_stage_is_left_in_a_page(self):
+        for name, page in _pages().items():
+            text = json.dumps(page, ensure_ascii=False)
+            for mark in ("[イラスト", "[アフィリ候補", "[表:", "[チェックリスト]", "[子ページの案内]"):
+                self.assertNotIn(mark, text, f"{name}: {mark}")                      # seen on 2026-11-07: a mark at the end of a paragraph stayed in four pages
+
+    def test_each_child_has_its_own_source_line_and_never_the_typhoons(self):
+        for name in ("bousai-mizu-shokuryo", "bousai-keitai-toilet", "bousai-light", "bousai-denchi-juden"):
+            page = _pages()[name + ".json"]
+            self.assertTrue(page.get("credit"), name)
+            self.assertNotIn("気象庁", page["credit"], name)                          # seen on 2026-11-07: the typhoon's source line was shown on the four child pages
+
+    def test_the_home_page_does_not_rule_out_politics(self):
+        text = json.dumps(_pages()["home.json"], ensure_ascii=False)
+        self.assertNotIn("政治などの重い話題", text)                                   # owner's decision 2026-11-07: politics and economy count when written for their effect on daily life
+        self.assertIn("暮らしへの影響", text)
+
+    def test_the_parent_intro_does_not_repeat_the_answer(self):
+        page = _pages()["bousai.json"]
+        intro = " ".join(x for sec in page["sections"] for x in sec.get("paras", []))
+        self.assertEqual(intro.count(page["answer"]), 0)
+
+    def test_the_search_console_file_is_shipped(self):
+        cfg = json.loads((SITE / "config.json").read_text(encoding="utf-8"))
+        self.assertRegex(cfg["google_site_verification"], r"^google[0-9a-f]{16}\.html$")
+
     def test_the_footer_has_the_rakuten_credit_as_the_official_text_link(self):
         site = json.loads((SITE / "site.json").read_text(encoding="utf-8"))
         self.assertIn('<a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>', site["footer_html"])

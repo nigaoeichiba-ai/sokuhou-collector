@@ -377,6 +377,8 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
     if measure_tag:
         pages[".htaccess"] += 'SetEnvIf Request_URI "^/m/" Ngx_Cache_NoCacheMode=on\n'      # the server cache must not answer the counting requests: they would never reach the access log
     pages["sitemap.xml"] = _sitemap(cfg, sorted(indexable), lastmod, spec["updated"])
+    from sokuhou import mallstore                                 # a site with shelves.json ships the product shelves' files (api/shelf.php, assets/shelf.js); the products themselves are never in the build
+    pages.update(mallstore.build_files(site_dir, cfg))
     return pages, {"thin": thin, "warnings": warnings, "pages": len(content), "indexable": len(indexable)}
 
 

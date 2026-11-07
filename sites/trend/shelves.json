@@ -1,0 +1,118 @@
+{
+ "shelves": [
+  {
+   "id": "light",
+   "label": "防災用の懐中電灯",
+   "keyword": "防災 懐中電灯 LED 乾電池",
+   "count": 3,
+   "min_price": 800,
+   "max_price": 8000,
+   "min_reviews": 30,
+   "min_rating": 4.0,
+   "exclude": [
+    "福袋",
+    "中古",
+    "ランタン"
+   ]
+  },
+  {
+   "id": "lantern",
+   "label": "防災用のランタン",
+   "keyword": "防災 LEDランタン 乾電池",
+   "count": 3,
+   "min_price": 1000,
+   "max_price": 8000,
+   "min_reviews": 30,
+   "min_rating": 4.0,
+   "exclude": [
+    "福袋",
+    "中古"
+   ]
+  },
+  {
+   "id": "radio",
+   "label": "防災ラジオ",
+   "keyword": "防災ラジオ 手回し充電 ワイドFM",
+   "count": 3,
+   "min_price": 2500,
+   "max_price": 15000,
+   "min_reviews": 20,
+   "min_rating": 4.0,
+   "exclude": [
+    "福袋",
+    "中古"
+   ]
+  },
+  {
+   "id": "powerbank",
+   "label": "防災用のモバイルバッテリー",
+   "keyword": "モバイルバッテリー 大容量 20000mAh",
+   "count": 3,
+   "min_price": 2500,
+   "max_price": 8000,
+   "min_reviews": 50,
+   "min_rating": 4.0,
+   "exclude": [
+    "福袋",
+    "中古"
+   ]
+  },
+  {
+   "id": "battery",
+   "label": "アルカリ乾電池",
+   "keyword": "アルカリ乾電池 単3 まとめ買い",
+   "count": 3,
+   "min_price": 800,
+   "max_price": 4000,
+   "min_reviews": 50,
+   "min_rating": 4.0,
+   "exclude": [
+    "福袋",
+    "中古",
+    "充電式"
+   ]
+  },
+  {
+   "id": "water",
+   "label": "保存水",
+   "keyword": "保存水 防災 2L 6本",
+   "count": 3,
+   "min_price": 1200,
+   "max_price": 5000,
+   "min_reviews": 30,
+   "min_rating": 4.0,
+   "exclude": [
+    "福袋",
+    "中古"
+   ]
+  },
+  {
+   "id": "food",
+   "label": "非常食のセット",
+   "keyword": "非常食 セット 防災",
+   "count": 3,
+   "min_price": 3000,
+   "max_price": 20000,
+   "min_reviews": 20,
+   "min_rating": 4.0,
+   "exclude": [
+    "福袋",
+    "中古"
+   ]
+  },
+  {
+   "id": "toilet",
+   "label": "携帯トイレ",
+   "keyword": "携帯トイレ 防災 凝固剤 50回",
+   "count": 3,
+   "min_price": 1500,
+   "max_price": 9000,
+   "min_reviews": 30,
+   "min_rating": 4.0,
+   "exclude": [
+    "福袋",
+    "中古"
+   ]
+  }
+ ]
+}

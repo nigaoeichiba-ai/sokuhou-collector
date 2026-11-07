@@ -1,4 +1,5 @@
-"""Builds this site (the scaffold of sokuhou/newsite.py).  python sites/trend/build.py --release --out release"""
+"""Builds this site (the scaffold of sokuhou/newsite.py).  python sites/trend/build.py --release --out release
+The product shelves (sites/trend/shelves.json) ship api/shelf.php and assets/shelf.js through sokuhou/mallstore.py."""
 from pathlib import Path
 import sys
 

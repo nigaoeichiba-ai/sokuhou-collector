@@ -154,6 +154,12 @@
    "html": "<p>備えの具体的な数字や選び方は、<a href=\"/bousai/\">「防災グッズのチェックリスト、8項目で家の備えを確認しよう」</a>のページで紹介しています。</p>"
   },
   {
+   "html": "<div class=\"shelf\" data-shelf=\"light\" data-label=\"防災用の懐中電灯\" hidden></div><script src=\"/assets/shelf.js\" defer></script>"
+  },
+  {
+   "html": "<div class=\"shelf\" data-shelf=\"radio\" data-label=\"防災ラジオ\" hidden></div><script src=\"/assets/shelf.js\" defer></script>"
+  },
+  {
    "h2": "気象庁の台風情報で、最新の進路を見る",
    "paras": [
     "32号の発生は1994年以来、32年ぶりです。本土に来ない今回は、停電に備えるライトや電池、水や食料がそろっているか確かめておくと安心です。最新の進路は、気象庁の台風情報で見ましょう。"

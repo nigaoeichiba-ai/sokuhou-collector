@@ -2,6 +2,7 @@
  "updated": "2026-11-07",
  "data_basis": "2026年11月7日現在",
  "sources": [],
+ "credit": "政府広報オンライン『災害に事前に備える』、パナソニック『防災用の懐中電灯の場合、乾電池はどのように保管すればよいか』をもとに作成",
  "path": "/bousai-light/",
  "kind": "article",
  "parent": "/bousai/",
@@ -58,6 +59,9 @@
    }
   },
   {
+   "html": "<div class=\"shelf\" data-shelf=\"light\" data-label=\"防災用の懐中電灯\" hidden></div><script src=\"/assets/shelf.js\" defer></script>"
+  },
+  {
    "h2": "ライトを置く場所と、使う場面",
    "paras": [
     "ライトは1か所にまとめず、使う場所の近くに置きましょう。夜中に停電して目が覚めたとき、ライトを探して動き回るのは危ないからです。"
@@ -73,6 +77,9 @@
   },
   {
    "html": "<ul><li>寝室の枕元: 目が覚めてすぐ手に取れる場所に置いておきます。地震で物が落ちたときも、足元を照らして歩けます。</li><li>トイレと玄関: 夜に使う場所なので、取り出しやすい棚に入れておくと安心です。</li><li>非常用バッグ: 避難するときは、バッグごと持ち出せます。</li></ul>"
+  },
+  {
+   "html": "<div class=\"shelf\" data-shelf=\"lantern\" data-label=\"防災用のランタン\" hidden></div><script src=\"/assets/shelf.js\" defer></script>"
   },
   {
    "h2": "電池の種類と、ライトの保管",

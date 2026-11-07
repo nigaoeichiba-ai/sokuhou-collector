@@ -1,0 +1,37 @@
+name: mall-refresh
+
+# Every day: the product shelves of the sites that have sites/<name>/shelves.json (sokuhou/mallstore.py): one Rakuten search per shelf, every site in turn (one application ID allows one request
+# a second), the products pushed to the SERVER's private folder ~/<name>-private/.  The result is NOT committed, NOT put in the Actions cache and NOT uploaded as an artifact (the repository is
+# public; the Rakuten terms bar keeping API data where many can read it), and the log carries counts only, never a product.  Needs RAKUTEN_APP_ID, RAKUTEN_ACCESS_KEY and the SSH secrets.
+
+on:
+  schedule:
+    - cron: "30 19 * * *"   # 04:30 JST: after yorokobu-items (02:00 JST, about 40 minutes) and before the 07:00 deploy
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mall-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Plan (no network)
+        run: python -m sokuhou.mallstore plan
+      - name: Fetch the shelves and store them privately (the server's private folders, never the repository)
+        env:
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sokuhou.mallstore refresh

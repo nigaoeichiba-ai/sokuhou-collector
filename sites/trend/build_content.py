@@ -15,6 +15,9 @@ from pathlib import Path
 
 from PIL import Image
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from sokuhou import mallstore  # noqa: E402
+
 HERE = Path(__file__).resolve().parent
 DRIVE = Path("H:/マイドライブ")
 KOBO = Path("C:/Dropbox/AI/Claude/副業/sokuhou-sites/work/kobo/out")
@@ -31,6 +34,12 @@ CHILDREN = {
     "bousai-keitai-toilet": ("/bousai-keitai-toilet/", "携帯トイレの使い方", "携帯トイレの使い方と使用後の処理"),
     "bousai-light": ("/bousai-light/", "防災用ライトの選び方", "防災用ライトの選び方と置き場所"),
     "bousai-denchi-juden": ("/bousai-denchi-juden/", "防災用モバイルバッテリーの容量", "モバイルバッテリーの容量と電池の備蓄"),
+}
+CREDITS = {
+    "bousai-mizu-shokuryo": "農林水産省『災害時に備えた食品ストックガイド』、政府広報オンライン『災害に事前に備える』『ローリングストックの始め方』をもとに作成",
+    "bousai-keitai-toilet": "広報東京都2025年9月号『もしもの時に困らないトイレの備蓄』、政府広報オンライン『災害に事前に備える』をもとに作成",
+    "bousai-light": "政府広報オンライン『災害に事前に備える』、パナソニック『防災用の懐中電灯の場合、乾電池はどのように保管すればよいか』をもとに作成",
+    "bousai-denchi-juden": "パナソニック『使用推奨期限の意味』『防災用の懐中電灯の場合、乾電池はどのように保管すればよいか』、エレコムの公表値、政府広報オンライン『災害に事前に備える』をもとに作成",
 }
 PARENT_TITLE = "防災グッズのチェックリスト、8項目で家の備えを確認しよう"
 TYPHOON_PATH = "/trend-typhoon32/"
@@ -52,6 +61,37 @@ PICS = {
     "bousai-mizu-shokuryo": [("家の中に水の箱を分けて置いた", "water-map.jpg", "家の中に水の箱を分けて置いた断面図。キッチン、押し入れ、寝室のクローゼットに1箱ずつ"),
                               ("「1日目」「2日目」と書いた箱", "food-week.jpg", "1日目から7日目と書いた箱が7つ並び、1つの箱の中にその日の食料が入っている絵")],
 }
+
+
+# where the product shelves stand: after the section whose h2 starts with the words (the definitions are in shelves.json; no product is named here)
+SHELF_AFTER = {
+    "bousai-light": [("防災用の懐中電灯は", "light"), ("ライトを置く場所", "lantern")],
+    "bousai-denchi-juden": [("モバイルバッテリーの容量は", "powerbank"), ("乾電池の備蓄", "battery")],
+    "bousai-mizu-shokuryo": [("水は、分散して保管する", "water"), ("食料は、使う頻度で", "food")],
+    "bousai-keitai-toilet": [("携帯トイレの使い方", "toilet")],
+    "trend-typhoon32": [("本土に来ない台風でも", "light"), ("本土に来ない台風でも", "radio")],
+}
+
+
+def add_shelves(secs: list[dict], key: str) -> list[dict]:
+    labels = {s["id"]: s["label"] for s in mallstore.load_shelves(HERE)}
+    wants = SHELF_AFTER.get(key, [])
+    if not wants:
+        return secs
+    out, cur = [], None
+
+    def flush():
+        for w, sid in wants:
+            if cur and cur.startswith(w):
+                out.append({"html": mallstore.shelf_html(sid, labels[sid])})
+
+    for x in secs:
+        if x.get("h2"):
+            flush()
+            cur = x["h2"]
+        out.append(x)
+    flush()
+    return out
 
 
 def esc(s: str) -> str:
@@ -119,7 +159,7 @@ def child_page(key: str) -> dict:
         secs.insert(0, {"html": f'<p class="eyecatch"><img src="/assets/img/{ef[0]}" width="1280" alt="{esc(ef[1])}" fetchpriority="high"></p>'})
     for s in a["sections"]:
         cur: dict = {"h2": s["heading"], "paras": []}
-        for p in s["paras"]:
+        for p in [x.strip() for para in s["paras"] for x in re.split(r"(\[(?:イラスト|アフィリ候補)[^\]]*\])", para) if x.strip()]:   # a mark may follow the text on the same line
             if p.startswith("[アフィリ候補"):
                 continue
             if p.startswith("[イラスト"):
@@ -150,7 +190,8 @@ def child_page(key: str) -> dict:
                 break
         else:
             raise SystemExit(f"{key}: the section {extra['after_h2']!r} was not found")
-    return {"updated": UPDATED, "data_basis": "2026年11月7日現在", "sources": [], "path": path, "kind": "article", "parent": PARENT,
+    secs = add_shelves(secs, key)
+    return {"updated": UPDATED, "data_basis": "2026年11月7日現在", "sources": [], "credit": CREDITS[key], "path": path, "kind": "article", "parent": PARENT,
             "title": a["title"], "h1": a["title"], "crumb": crumb, "primary_kw": kw, "intent": 4, "description": extra.get("description", a["description"]), "answer": extra.get("answer", sentence_answer(a)),
             "sections": secs, "related": [{"path": PARENT, "text": PARENT_TITLE}]}
 
@@ -250,7 +291,8 @@ def parent_page() -> dict:
             secs.append(cur)
     head = {"html": '<p class="eyecatch"><img src="/assets/img/bousai-header.jpg" width="1600" alt="今日の話題 防災特集。携帯トイレ、凝固剤、防臭袋の絵と、携帯トイレの使い方などの見出し" fetchpriority="high"></p>'}
     secs = [x for x in secs if x.get("html") or x.get("paras") or x.get("table") or x.get("h2")]
-    intro = {"paras": [lead]}
+    first = lead.split("。")[0] + "。"
+    intro = {"paras": [lead[len(first):] if lead.startswith(first) else lead]}
     secs = [head, intro, {"h2": "3行まとめ", "paras": tldr}] + secs
     return {"updated": UPDATED, "data_basis": "2026年11月7日現在", "sources": ["bousaicho"], "path": PARENT, "kind": "article", "parent": "/",
             "title": PARENT_TITLE, "h1": PARENT_TITLE, "crumb": "防災グッズのチェックリスト", "primary_kw": "防災グッズのチェックリスト", "intent": 4,
@@ -293,6 +335,7 @@ def typhoon_page() -> dict:
         secs.append(out)
         for r in rest:
             secs.append({"html": r})
+    secs = add_shelves(secs, "trend-typhoon32")
     return {"updated": a["updated"], "data_basis": "2026年11月7日18時45分現在", "sources": ["jma"], "path": TYPHOON_PATH, "kind": "article", "parent": "/",
             "title": a["title"], "h1": a["title"], "crumb": "台風32号の進路予報", "primary_kw": a["seo_keyword"], "intent": 1, "description": a["description"], "answer": a["answer"],
             "sections": secs, "related": [{"path": PARENT, "text": PARENT_TITLE}]}
@@ -319,7 +362,7 @@ def home_page() -> dict:
                                                                   "まず親ページ「" + PARENT_TITLE + "」で、足りないものを確かめます。そのあと、足りない項目のページで、量や選び方を読みます。親ページのチェックリストは、印をつけると、そろっている項目の数が分かります。印は、お使いの画面の中だけで数えていて、サイトには送りません。"],
                           "table": {"caption": "防災グッズ8項目と、読めるページ", "cols": ["項目", "目安", "詳しいページ"], "num_cols": [], "rows": rows}},
                          {"html": '<p class="more"><a href="' + PARENT + '">' + esc(PARENT_TITLE) + '</a></p><ul class="links"><li><a href="/bousai-mizu-shokuryo/">水と食料の備蓄を続ける、保管と期限管理のコツ</a></li><li><a href="/bousai-keitai-toilet/">携帯トイレの使い方と、使用後の保管・処理のしかた</a></li><li><a href="/bousai-light/">防災用ライトの選び方、明るさ・電池・置き場所</a></li><li><a href="/bousai-denchi-juden/">防災用モバイルバッテリーの容量の目安と、電池の備蓄</a></li></ul>'},
-                         {"h2": "このサイトについて", "paras": ["今日の話題を、ニュースの見出しだけで終わらせず、公的な発表の数字で確かめて紹介するサイトです。結論を先に書き、数字は出典のあるものだけを載せます。事件・事故・訃報・医療・政治などの重い話題は扱いません。","記事は、速報と深掘りを1セットにします。速報では、いま何が起きているかを、発表の数字で伝えます。深掘りでは、ほかの年や地域と比べたり、家でできる備えに落としたりして、読んだあとに何をすればよいかが分かるようにします。数字や予報は、時間とともに変わります。各ページに、数字を確かめた日時を書いています。"]}]}
+                         {"h2": "このサイトについて", "paras": ["今日の話題を、ニュースの見出しだけで終わらせず、公的な発表の数字で確かめて紹介するサイトです。結論を先に書き、数字は出典のあるものだけを載せます。事件・事故・訃報・医療の話題は扱いません。政治や経済、国際ニュースは、政局そのものではなく、暮らしへの影響を扱います。","記事は、速報と深掘りを1セットにします。速報では、いま何が起きているかを、発表の数字で伝えます。深掘りでは、ほかの年や地域と比べたり、家でできる備えに落としたりして、読んだあとに何をすればよいかが分かるようにします。数字や予報は、時間とともに変わります。各ページに、数字を確かめた日時を書いています。"]}]}
 
 
 def main() -> None:
