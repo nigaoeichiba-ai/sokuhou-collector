@@ -16,7 +16,7 @@ def convert(a: dict, slug: str) -> dict:
     secs = [{"h2": "3行まとめ", "paras": list(a["tldr"])}]
     eye = a.get("eyecatch")
     if eye:
-        secs.insert(0, {"html": f'<p class="eyecatch"><img src="/assets/img/{slug}.jpg" width="1280" height="720" alt="{eye["alt"]}" style="max-width:100%;height:auto"></p>'})
+        secs.insert(0, {"html": f'<p class="eyecatch"><img src="/assets/img/{slug}.jpg" width="1280" height="853" alt="{eye["alt"]}" style="max-width:100%;height:auto"></p>'})
     for s in a["sections"]:
         paras = [p for p in s["paras"] if not p.startswith("[アフィリ候補") and not p.startswith("[イラスト")]
         out = {"h2": s["heading"], "paras": paras}
