@@ -444,9 +444,54 @@ def emergency_page(d: dict, cfg: dict, preview: bool) -> str:
 <p class="notice">環境省の資料(令和8年度のクマによる死亡事故数等、{jp_date(fatal['as_of'])}現在)です。「被害者発見日」は、事故の日ではなく、被害者が見つかった日です。この資料の更新が、人身被害の表より遅れることがあります。</p>
 <h2>{fy_label(done)}の死亡事故(参考)</h2>
 {table(["日付", "場所"], prev_fatal_rows)}
-<p class="notice">{jp_date(prev_fatal['as_of'])}現在の環境省の資料です。</p>"""
+<p class="notice">{jp_date(prev_fatal['as_of'])}現在の環境省の資料です。</p>
+<p>2年度分を合わせた一覧と、月別・道府県別の件数は<a href="/deaths/">熊による死亡事故の一覧</a>にあります。</p>"""
     return page(cfg, preview, path="/emergency/", title=f"クマの緊急銃猟と死亡事故の一覧({fy_label(cur)}・環境省)",
                 description=f"{fy_label(cur)}のクマの緊急銃猟{n(len(emg['cases']))}件と、死亡事故の日付・場所を、環境省の資料から一覧にしています。", body=body)
+
+
+def deaths_list_page(d: dict, cfg: dict, preview: bool) -> str:
+    """The ministry's two death lists (this and last fiscal year) read together: one table, newest first, counted by month and by prefecture.
+    Searched as 「熊 死亡事故 一覧」(Search Console, 2026-11)."""
+    cur, done = d["cur"], d["done"]
+    inc = [(y, i) for y in (cur, done) for i in d["fatal"][y]["incidents"]]
+    inc.sort(key=lambda t: (t[1]["date"], t[1]["no"]), reverse=True)
+    slug_of = {r["name"]: r["slug"] for r in d["rows"]}
+    people = {y: sum(i["victims"] for i in d["fatal"][y]["incidents"]) for y in (cur, done)}
+    cases = {y: len(d["fatal"][y]["incidents"]) for y in (cur, done)}
+    rows = []
+    for y, i in inc:
+        pref = f'<a href="/{slug_of[i["prefecture"]]}/">{esc(i["prefecture"])}</a>' if i["prefecture"] in slug_of else esc(i["prefecture"])
+        rows.append([jp_date(i["date"]) + ("(被害者発見日)" if i["found_date"] else ""), pref + esc(i["place"]), f'{i["victims"]}人', fy_label(y)])
+    months = [m for m in FY_MONTHS]
+    by_m = {y: {m: 0 for m in months} for y in (cur, done)}
+    for y, i in inc:
+        by_m[y][int(i["date"][5:7])] += 1
+    month_rows = [[f"{m}月", n(by_m[done][m]), n(by_m[cur][m])] for m in months if by_m[done][m] or by_m[cur][m]]
+    by_p: dict[str, list[int]] = {}
+    for y, i in inc:
+        by_p.setdefault(i["prefecture"], [0, 0])[0 if y == done else 1] += 1
+    pref_rows = [[(f'<a href="/{slug_of[p]}/">{esc(p)}</a>' if p in slug_of else esc(p)), n(v[0]), n(v[1]), n(v[0] + v[1])]
+                 for p, v in sorted(by_p.items(), key=lambda kv: (-(kv[1][0] + kv[1][1]), kv[0]))]
+    top = sorted(by_p.items(), key=lambda kv: (-(kv[1][0] + kv[1][1]), kv[0]))
+    top_text = "、".join(f"{p}({n(v[0] + v[1])}件)" for p, v in top[:3])
+    total_cases = cases[cur] + cases[done]
+    total_people = people[cur] + people[done]
+    body = f"""{crumbs([("全国", "/"), ("死亡事故の一覧", None)])}
+<h1>熊(クマ)による死亡事故の一覧 {fy_label(done)}・{fy_label(cur)}(環境省)</h1>
+<p class="lead">環境省が公表している死亡事故の一覧は、{fy_label(done)}が{n(cases[done])}件({n(people[done])}人)、{fy_label(cur)}が{n(cases[cur])}件({n(people[cur])}人)で、合わせて{n(total_cases)}件({n(total_people)}人)です。日付の新しい順に、場所とあわせて並べました。件数が多い道府県は、{top_text}の順です。</p>
+<div class="stats">{stat(fy_label(cur), f"{n(cases[cur])}件", f"{n(people[cur])}人・{jp_date(d['fatal'][cur]['as_of'])}現在", True)}{stat(fy_label(done), f"{n(cases[done])}件", f"{n(people[done])}人・{jp_date(d['fatal'][done]['as_of'])}現在")}</div>
+<h2>死亡事故の一覧(日付の新しい順)</h2>
+{table(["日付", "場所", "人数", "年度"], rows)}
+<p class="notice">「被害者発見日」と書いた行は、事故の日ではなく、被害者が見つかった日です。環境省が把握した事例に限り、公表までに時間がかかります。事故の経過や被害者の情報は、環境省の資料にないため載せていません。</p>
+<h2>何月に起きたか(件数)</h2>
+{table(["月", fy_label(done), fy_label(cur)], month_rows)}
+<h2>どの道府県で起きたか(件数)</h2>
+{table(["道府県", fy_label(done), fy_label(cur), "合計"], pref_rows)}
+<p>年度ごとの死亡者数の合計は<a href="/ranking/deaths/">死亡者数の都道府県別ランキング</a>(平成20年度から)に、緊急銃猟の実施状況は<a href="/emergency/">緊急銃猟のページ</a>にあります。道府県ごとの出没と人身被害は、表の道府県名から各ページへ進めます。山に入る前は<a href="/guide/prepare/">山に入る前の備え</a>を、出会ったときは<a href="/guide/encounter/">出会ったときの行動</a>をお読みください。</p>
+<p class="notice">{freshness(d)}</p>"""
+    return page(cfg, preview, path="/deaths/", title=f"熊(クマ)による死亡事故の一覧 {fy_label(done)}・{fy_label(cur)}の日付と場所(環境省)",
+                description=f"熊に襲われた死亡事故の一覧です。{fy_label(done)}{n(cases[done])}件、{fy_label(cur)}{n(cases[cur])}件の日付・場所・人数を、環境省の資料から新しい順に並べ、月別・道府県別に数えました。", body=body)
 
 
 PREF_LIVE = live_mod.LIVE_SOURCES
@@ -867,6 +912,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         pages["ranking/captures/index.html"] = captures_mod.ranking_page(lambda **kw: page(cfg, preview, **kw), d["captures"], lambda kind: ranking_tabs(kind, True))
     pages["trend/index.html"] = trend_page(d, cfg, preview)
     pages["emergency/index.html"] = emergency_page(d, cfg, preview)
+    pages["deaths/index.html"] = deaths_list_page(d, cfg, preview)
     pages["news/index.html"] = news_page(d, cfg, preview)
     if d["research"]:
         pages["research/index.html"] = research_mod.hub_page(lambda **kw: page(cfg, preview, **kw), d["research"], has_live=any_live, has_digest=bool(dig["weeks"]))

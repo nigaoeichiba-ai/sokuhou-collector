@@ -150,6 +150,23 @@ class KumaSiteTest(unittest.TestCase):
         self.assertIn("2026年7月10日現在", html)
         self.assertIn("緊急銃猟(実施)", html)
 
+    def test_deaths_list_counts_match_the_raw_ministry_lists(self):
+        """/deaths/ merges the two fiscal years' lists: the rows, the month table and the prefecture table are recounted here from the raw data."""
+        html = self.read("deaths/index.html")
+        inc = [i for y in self.raw["fatal"].values() for i in y["incidents"]]
+        self.assertGreater(len(inc), 5)
+        body = html.split("<h2>死亡事故の一覧", 1)[1].split("<h2>何月に", 1)[0]
+        self.assertEqual(len(re.findall(r"<tr><td>", body)), len(inc))
+        self.assertIn(f"合わせて{len(inc)}件({sum(i['victims'] for i in inc)}人)", html)
+        months = html.split("<h2>何月に起きたか", 1)[1].split("<h2>どの道府県", 1)[0]
+        cells = [int(x) for x in re.findall(r"<td[^>]*>(\d+)</td>", months)]
+        self.assertEqual(sum(cells), len(inc))
+        prefs = html.split("<h2>どの道府県で起きたか", 1)[1].split("</table>", 1)[0]
+        totals = [int(x) for x in re.findall(r"<td[^>]*>(\d+)</td></tr>", prefs)]
+        self.assertEqual(sum(totals), len(inc))
+        self.assertIn("被害者発見日", html)
+        self.assertIn("/deaths/", self.read("emergency/index.html"))
+
     # ---- structure
     def test_pages(self):
         for rel in ("index.html", "trend/index.html", "emergency/index.html", "notify/index.html", "guide/index.html",
