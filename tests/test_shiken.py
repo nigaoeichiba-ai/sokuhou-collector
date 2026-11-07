@@ -31,6 +31,8 @@ def wrong_weekdays(html: str) -> list[str]:
 class ShikenTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        from sites.shiken import gen
+        gen.write()                                                        # the content of today, whatever an earlier test left on disk
         cls.pages, cls.report = newsite.build_pages(SITE, release=True, strict_seo=True)
         cls.html = {k: v for k, v in cls.pages.items() if isinstance(v, str) and k.endswith(".html")}
 

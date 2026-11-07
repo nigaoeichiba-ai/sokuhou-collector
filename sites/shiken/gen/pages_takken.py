@@ -151,7 +151,7 @@ def takken() -> dict:
     s_next = (f'<h2>{sub_fix}</h2><p class="sec-sub">日程は、それぞれのページで確かめられます。</p><div class="feature-grid">'
               f'<div class="fcard"><h3>管理業務主任者</h3><p>マンション管理の国家資格です。試験日は{esc(jp(nxt["iso"]))}、{esc(rel(nxt["iso"]))}です。'
               f'令和8年度の申込は、{esc(md(kanri_start["iso"]))}から{esc(md(kanri_end["iso"]))}のWeb申込でした。</p>{a("/schedule/", "日程の一覧で見る", "cardlink")}</div>'
-              f'<div class="fcard"><h3>FP技能検定</h3><p>お金に関する幅広い知識を問う検定です。不動産の分野が、宅建とつながります。</p>{a("/fp/", "FP技能検定のページを見る", "cardlink")}</div></div>')
+              f'<div class="fcard"><h3>FP技能検定</h3><p>お金に関する幅広い知識を問う検定です。FP技能検定には、不動産を扱う分野があります。</p>{a("/fp/", "FP技能検定のページを見る", "cardlink")}</div></div>')
     CHECK.append(("宅建", "素材にあった賃貸不動産経営管理士のカードは、日程と行き先のページが用意できていないため載せていない"))
     months = round((d(res["iso"]) - d(start["iso"])).days / 30.4)
     s_read = ('<h2>あわせて読む</h2><div class="feature-grid">'

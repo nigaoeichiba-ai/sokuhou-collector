@@ -28,7 +28,7 @@
    "paras": []
   },
   {
-   "html": "<h2>総コスト計算機</h2><p class=\"sec-sub\">受験料は固定です。テキスト代などを自分で入力すると、合計が出ます。</p><div class=\"tool\" id=\"cost\" data-fee=\"8200\">\n<div class=\"row\"><label>受験料（公式の金額・固定）<output class=\"fixed\">8,200円（非課税）</output></label></div>\n<div class=\"row\"><label>テキスト代（円）<input type=\"number\" inputmode=\"numeric\" min=\"0\" step=\"1\" value=\"0\" data-cost></label>\n<label>問題集代（円）<input type=\"number\" inputmode=\"numeric\" min=\"0\" step=\"1\" value=\"0\" data-cost></label></div>\n<div class=\"row\"><label>模試代（円）<input type=\"number\" inputmode=\"numeric\" min=\"0\" step=\"1\" value=\"0\" data-cost></label>\n<label>その他（円）<input type=\"number\" inputmode=\"numeric\" min=\"0\" step=\"1\" value=\"0\" data-cost></label></div>\n<p class=\"total-line\">合計（受験料込み）<span class=\"total\"><b data-total>8,200</b> 円</span></p>\n<p class=\"warn-text\" data-cost-warn role=\"alert\" hidden>マイナスの金額や数字でない入力は、0円として計算しています。</p>\n<p class=\"hint\">受験料の非課税は公式の金額です。そのほかは、入力した金額の合計です。</p></div><p class=\"hint\">合格したあとの登録などの費用は、この計算に含めていません。</p>",
+   "html": "<h2>総コスト計算機</h2><p class=\"sec-sub\">受験料は固定です。テキスト代などを自分で入力すると、合計が出ます。</p><div class=\"tool\" id=\"cost\" data-fee=\"8200\">\n<div class=\"row\"><label>受験料（公式の金額・固定）<output class=\"fixed\">8,200円（非課税）</output></label></div>\n<div class=\"row\"><label>テキスト代（円）<input type=\"number\" inputmode=\"numeric\" min=\"0\" step=\"1\" value=\"0\" data-cost></label>\n<label>問題集代（円）<input type=\"number\" inputmode=\"numeric\" min=\"0\" step=\"1\" value=\"0\" data-cost></label></div>\n<div class=\"row\"><label>模試代（円）<input type=\"number\" inputmode=\"numeric\" min=\"0\" step=\"1\" value=\"0\" data-cost></label>\n<label>その他（円）<input type=\"number\" inputmode=\"numeric\" min=\"0\" step=\"1\" value=\"0\" data-cost></label></div>\n<p class=\"total-line\">合計（受験料込み）<span class=\"total\"><b data-total>8,200</b> 円</span></p>\n<p class=\"warn-text\" data-cost-warn role=\"alert\" hidden>マイナスの金額や数字でない入力は、0円として計算しています。</p>\n<p class=\"hint\">受験料は公式の金額で、非課税です。そのほかは、入力した金額の合計です。</p></div><p class=\"hint\">合格したあとの登録などの費用は、この計算に含めていません。</p>",
    "paras": []
   },
   {
@@ -52,7 +52,7 @@
    "paras": []
   },
   {
-   "html": "<h2>宅建と分野が近い資格</h2><p class=\"sec-sub\">日程は、それぞれのページで確かめられます。</p><div class=\"feature-grid\"><div class=\"fcard\"><h3>管理業務主任者</h3><p>マンション管理の国家資格です。試験日は2026年12月6日(日)、あと28日です。令和8年度の申込は、8月3日(月)から9月30日(水)のWeb申込でした。</p><a class=\"cardlink\" href=\"/schedule/\">日程の一覧で見る</a></div><div class=\"fcard\"><h3>FP技能検定</h3><p>お金に関する幅広い知識を問う検定です。不動産の分野が、宅建とつながります。</p><a class=\"cardlink\" href=\"/fp/\">FP技能検定のページを見る</a></div></div>",
+   "html": "<h2>宅建と分野が近い資格</h2><p class=\"sec-sub\">日程は、それぞれのページで確かめられます。</p><div class=\"feature-grid\"><div class=\"fcard\"><h3>管理業務主任者</h3><p>マンション管理の国家資格です。試験日は2026年12月6日(日)、あと28日です。令和8年度の申込は、8月3日(月)から9月30日(水)のWeb申込でした。</p><a class=\"cardlink\" href=\"/schedule/\">日程の一覧で見る</a></div><div class=\"fcard\"><h3>FP技能検定</h3><p>お金に関する幅広い知識を問う検定です。FP技能検定には、不動産を扱う分野があります。</p><a class=\"cardlink\" href=\"/fp/\">FP技能検定のページを見る</a></div></div>",
    "paras": []
   },
   {

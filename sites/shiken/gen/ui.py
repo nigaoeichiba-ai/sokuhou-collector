@@ -114,7 +114,7 @@ def cost_tool(fee: int, fee_note: str) -> str:
 <label>その他（円）<input type="number" inputmode="numeric" min="0" step="1" value="0" data-cost></label></div>
 <p class="total-line">合計（受験料込み）<span class="total"><b data-total>{fee:,}</b> 円</span></p>
 <p class="warn-text" data-cost-warn role="alert" hidden>マイナスの金額や数字でない入力は、0円として計算しています。</p>
-<p class="hint">受験料の{esc(fee_note)}は公式の金額です。そのほかは、入力した金額の合計です。</p></div>'''
+<p class="hint">受験料は公式の金額で、{esc(fee_note)}です。そのほかは、入力した金額の合計です。</p></div>'''
 
 
 def planner_tool(fixed_date: str | None, hint: str) -> str:
