@@ -25,8 +25,8 @@ def all_pages() -> list[dict]:
             p["sections"] = p["sections"][:-1] + EXTRA[p["path"]] + p["sections"][-1:] if p["sections"][-1]["h2"].startswith("最終確認") else p["sections"] + EXTRA[p["path"]]
         if p["path"] == "/method/":
             p["sections"][2]["table"] = EXTRA_METHOD_TABLE
-    from . import pages_v2, pages_takken, pages_features, pages_lists
-    new = {p["path"]: p for p in (pages_v2.home(), pages_takken.takken(), pages_features.goukaku_ritsu(), pages_features.cbt(), pages_features.yomimono(), pages_features.tokushu_nyushi())}
+    from . import pages_v2, pages_takken, pages_features, pages_lists, pages_articles
+    new = {p["path"]: p for p in (pages_v2.home(), pages_takken.takken(), pages_features.goukaku_ritsu(), pages_features.cbt(), pages_features.yomimono(), pages_features.tokushu_nyushi(), *pages_articles.pages())}
     out = [new.pop(p["path"], p) for p in out] + list(new.values())
     out = [pages_lists.restyle(p) for p in out]
     for p in out:

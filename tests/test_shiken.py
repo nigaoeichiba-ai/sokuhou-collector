@@ -38,7 +38,7 @@ class ShikenTest(unittest.TestCase):
 
     def test_the_pages_with_the_designed_mix(self):
         content = sorted((SITE / "content").glob("*.json"))
-        self.assertEqual(len(content), 32)                                  # 30 pages, and the two new features (readings, entrance exams) of the 2026-11-08 design
+        self.assertEqual(len(content), 33)                                  # 30 pages, the two new features (readings, entrance exams) of the 2026-11-08 design, and the desk's article takken-junbi
         kinds = [json.loads(p.read_text(encoding="utf-8"))["kind"] for p in content]
         self.assertGreaterEqual(kinds.count("article"), 10)                 # deep articles: ten or more
         self.assertLessEqual(kinds.count("item") / len(kinds), 0.5)        # same-type pages: half at most

@@ -174,7 +174,7 @@ def takken() -> dict:
         answer,
         [sec(None, hero), sec(None, s_dates), sec(None, s_rate), sec(None, s_cost), sec(None, s_plan), sec(None, s_elig), sec(None, s_fail), sec(None, s_faq),
          sec(None, s_wait) if s_wait else {}, sec(None, s_next), sec(None, s_read), sec(None, ld + data_blob([]))],
-        [{"path": "/results/", "text": "資格試験の合格発表日の一覧"}, {"path": "/goukaku-ritsu/", "text": "合格率の見方と、資格ごとの数字"}, {"path": "/flow/", "text": "申込から合格発表までの流れ"},
+        [{"path": "/takken-junbi/", "text": "宅建は来年度に向けて、11月の今から始める準備"}, {"path": "/results/", "text": "資格試験の合格発表日の一覧"}, {"path": "/goukaku-ritsu/", "text": "合格率の見方と、資格ごとの数字"}, {"path": "/flow/", "text": "申込から合格発表までの流れ"},
          {"path": "/deadlines/", "text": "申込の締切が近い順の一覧"}], secondary=("宅建 試験日", "宅建 合格発表", "宅建 申し込み"))
 
 

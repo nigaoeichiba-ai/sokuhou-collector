@@ -85,7 +85,7 @@ def goukaku_ritsu() -> dict:
              f"合格率は、受験者で割るか申込者で割るかで数字が変わります。宅建の{y}は、受験者基準で{r_ex:.1f}％、申込者基準で約{r_ap:.1f}％です。実数で違いを解説し、主な資格の最新の合格率も並べました。",
              f"同じ宅建の{y}でも、受験者で割ると{r_ex:.1f}％、申込者で割ると約{r_ap:.1f}％です。合格率は、分母にどちらの数字を使うかで変わります。",
              [sec(None, s1), sec(None, s2), sec(None, s3), sec(None, s4), sec(None, s5), sec(None, ld)],
-             [{"path": "/takken/", "text": "宅建の試験日と合格率"}, {"path": "/gyosei/", "text": "行政書士試験の日程と合格率"}, {"path": "/sharoshi/", "text": "社労士試験の日程と合格率"},
+             [{"path": "/takken/", "text": "宅建の試験日と合格率"}, {"path": "/takken-junbi/", "text": "宅建は来年度に向けて、11月の今から始める準備"}, {"path": "/gyosei/", "text": "行政書士試験の日程と合格率"}, {"path": "/sharoshi/", "text": "社労士試験の日程と合格率"},
               {"path": "/results/", "text": "資格試験の合格発表日の一覧"}], secondary=("合格率 とは", "資格 合格率 一覧"), intent=4)
     return p
 
@@ -95,7 +95,7 @@ ARTICLES = [
     ("試験の仕組み", [("/cbt/", "CBT試験とは", "ITパスポート・FP2級3級・簿記ネット試験"), ("/boki-net/", "簿記のネット試験と統一試験の違い", "日商簿記"),
                   ("/zenki-koki/", "国公立大学の前期日程と後期日程の違い", "国公立大学")]),
     ("申込", [("/postmark/", "消印有効と必着の違い", "宅建・行政書士・国家公務員"), ("/flow/", "申込から合格発表までの流れ", "宅建・行政書士・看護師ほか"), ("/fees/", "資格試験の受験料一覧", "受験料を確かめた資格")]),
-    ("合格率", [("/goukaku-ritsu/", "合格率の見方", "宅建ほか")]),
+    ("合格率", [("/goukaku-ritsu/", "合格率の見方", "宅建ほか"), ("/takken-junbi/", "宅建は来年度に向けて、11月の今から始める準備", "宅建")]),
     ("日程の調べ方", [("/nendo/", "来年度の日程はいつ発表されるか", "主な資格"), ("/method/", "日程の調べ方と出典", "すべて"), ("/yama/", "11月から3月の試験日", "資格・入試")]),
 ]
 
@@ -106,6 +106,9 @@ def _answers() -> dict:
     for m in (pages_deep, pages_hub, pages_nyushi):
         for p in m.pages():
             out[p["path"]] = p["answer"]
+    from . import pages_articles   # the desk's confirmed articles: the first sentence of the lead is the hub's summary
+    for p in pages_articles.pages():
+        out[p["path"]] = p["answer"].split("。")[0] + "。"
     return out
 
 
@@ -118,7 +121,7 @@ def yomimono() -> dict:
         n += len(items)
         parts.append(f'<h2>{theme}</h2><div class="shelf">{cards}</div>')
     intro = ('<p class="sec-sub">日程の一覧だけでは分からない、試験の仕組みや申込の注意がテーマです。' '')
-    intro += '全部で10本あり、各特集の最後に、対象の試験の日程ページへのリンクがあります。気になる題からご覧ください。</p>'
+    intro += f'全部で{n}本あり、各特集の最後に、対象の試験の日程ページへのリンクがあります。気になる題からご覧ください。</p>'
     parts.append('<h2>一覧表で見る</h2><details class="tableview"><summary>一覧表で見る 特集の一覧を表で開く</summary>' + ui.table(["テーマ", "記事", "要約", "対象"], [[theme, a(h, esc(t)), ans[h], tag] for theme, items in ARTICLES for h, t, tag in items], "特集の一覧") + "</details>")
     return page("/yomimono/", "hub", "/", "試験の仕組みと申込の注意", "特集｜試験の仕組みと申込の注意をテーマ別に", "特集 試験の仕組みと申込の注意",
                 "CBT試験、消印有効と必着、合格率の見方など、試験の仕組みと申込の注意を解説した記事を、テーマ別に並べた棚です。各記事から、対象の試験の日程ページへ進めるようにしています。",

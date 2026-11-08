@@ -290,3 +290,7 @@ footer.site a { color:var(--muted); display:inline-block; padding:8px 0; }
   table.stack td:first-child::before { content:""; }
   table.stack td.num { text-align:left; }
 }
+
+/* the desk's articles (pages_articles.py): a picture of the article, centred, never wider than the column, never taller than a screen */
+.article-fig { margin: 18px 0; text-align: center; }
+.article-fig img { display: inline-block; width: 100%; max-width: 640px; height: auto; border: 1px solid var(--line); border-radius: 10px; background: #fff; }

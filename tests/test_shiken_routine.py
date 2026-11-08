@@ -54,5 +54,53 @@ class MorningListTest(unittest.TestCase):
         self.assertIn("docs/daily-routine.md", (ROOT / "sites" / "shiken" / "CLAUDE.md").read_text(encoding="utf-8"))
 
 
+class ConfirmedArticleTest(unittest.TestCase):
+    """The desk's confirmed article is poured in as it is: every sentence of the file is on the page, the pictures and the two links back are there."""
+
+    @classmethod
+    def setUpClass(cls):
+        import re
+        from sokuhou import newsite
+        from sites.shiken import gen
+        gen.write()
+        cls.pages, _ = newsite.build_pages(ROOT / "sites" / "shiken", release=True, strict_seo=True)
+        cls.html = cls.pages["takken-junbi/index.html"]
+        cls.md = (ROOT / "sites" / "shiken" / "articles" / "takken-junbi.md").read_text(encoding="utf-8")
+        cls.re = re
+
+    def test_every_sentence_of_the_confirmed_text_is_on_the_page_unchanged(self):
+        import html as _html
+        re = self.re
+        md = re.sub(r"\A\s*<!--.*?-->\s*", "", self.md, flags=re.S)
+        t = re.sub(r"!\[([^\]]*)\]\([^)]*\)", "", md)
+        t = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", t)
+        t = re.sub(r"^(#{1,3} |- )", "", t, flags=re.M)
+        t = re.sub(r"^\|[-| ]+\|$", "", t, flags=re.M).replace("|", " ").replace("---", "")
+        main = self.html[self.html.index("<main"):self.html.index("</main>")]
+        main = re.sub(r"<script.*?</script>|<style.*?</style>|<img[^>]*>", "", main, flags=re.S)
+        page_text = re.sub(r"\s+", "", _html.unescape(re.sub(r"<[^>]+>", " ", main)))
+        sents = [s for s in re.split(r"(?<=[。！？])", re.sub(r"\s+", " ", t)) if len(re.sub(r"\s+", "", s)) > 6]
+        self.assertGreater(len(sents), 50)
+        missing = [s for s in sents if re.sub(r"\s+", "", s) not in page_text]
+        self.assertEqual(missing, [])
+
+    def test_the_two_pictures_the_alt_texts_and_the_two_links_back(self):
+        re = self.re
+        for alt in re.findall(r"!\[([^\]]*)\]", self.md):
+            self.assertIn(f'alt="{alt}"', self.html)
+        self.assertIn("/assets/articles/takken-junbi-trend.webp", self.html)
+        self.assertIn("/assets/articles/takken-junbi-radar.webp", self.html)
+        self.assertTrue((ROOT / "sites" / "shiken" / "assets" / "articles" / "takken-junbi-trend.webp").exists())
+        for src in ("takken/index.html", "goukaku-ritsu/index.html"):
+            self.assertIn('href="/takken-junbi/"', self.pages[src], src)          # the links to the article, from the detail page and from the feature
+        self.assertIn('href="/takken-junbi/"', self.pages["yomimono/index.html"])
+        self.assertIn("全部で11本", re.sub(r"<[^>]+>", "", self.pages["yomimono/index.html"]))
+        self.assertNotIn("<!--", self.html[self.html.index("<main"):self.html.index("</main>")])    # the note for Claude Code is not on the page
+
+    def test_no_link_to_a_course_or_an_outside_page_is_in_the_article(self):
+        main = self.html[self.html.index("<main"):self.html.index("</main>")]
+        self.assertNotRegex(main, r'href="https?://')
+
+
 if __name__ == "__main__":
     unittest.main()
