@@ -1,0 +1,21 @@
+[
+ {
+  "date": "2026-11-09",
+  "exam": "漢検(個人受検・公開会場)2026年度第3回",
+  "claim": "申込は先着順。受検地によっては満席になる(会場によっては早く埋まる)",
+  "result": "確認できた",
+  "official_pages": [
+   "https://www.kanken.or.jp/kanken/individual/pbt/",
+   "https://www.kanken.or.jp/kanken/individual/pbt/apply/"
+  ],
+  "original_text": [
+   "受付期間：2026年12月4日（金）9:00 から 2027年1月10日（日）23:59まで ※先着順",
+   "「満席」と表示されている受検地は、申込人数が定員に達しているため、お申し込みいただけません。"
+  ],
+  "note": "検定日程のページ(/kanken/individual/pbt/schedule/)には「先着順」の記載がなく、受検情報・申込ガイドのページにある。「早く締め切る場合がある」という文言は、読めた6ページにはない(満席の表示で、受検地ごとに申込が止まる)。",
+  "used_in": [
+   "/minkan/",
+   "gen/facts.py の備考"
+  ]
+ }
+]

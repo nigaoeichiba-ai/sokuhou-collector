@@ -35,13 +35,13 @@ def all_pages() -> list[dict]:
 
 
 CLOSING = "最終的な日程は、主催団体の公式発表でご確認ください。日程は変更されることがあります。申し込む前に、必ず確かめてください。"   # kept only by the pages of KEEP_NOTES
-KEEP_NOTES = {"/minkan/", "/yama/"}
+KEEP_NOTES: set = set()   # empty since 2026-11-09: every page has its added sentence (the mechanism stays for a page that falls under the limit)
 
 # the desk's added sentences (sites/shiken/additions/<slug>.md, written by Muse, put in word for word): the slug -> the heading of the section after which the sentence stands
 ADD_AFTER = {"boki-net": "決まり方の違い", "flow": "いつ、何をするか", "kokkoritsu": "出願期間は大学ごとに決まる", "komuin": "公表されている日程",
              "kyotsu-tsuishi": "本試験を受けられなかったときの順番", "kyotsu": "これから受験生が確認すること", "minkan": "TOEIC L&Rの公開テスト", "nendo": "見落とさない方法",
              "nyushi": "2027年1月から3月の主な日程", "postmark": "意味の違い", "results": "発表の時刻と方法", "yama": "月別の件数"}
-HELD = {"minkan", "yama"}   # their sentences wait for the desk: minkan says "漢検は先着順" (the official page does not), yama names "1月の12件" (the count follows the data)
+HELD: set = set()   # a sentence of the desk that waits for a check
 
 
 def added_sentence(slug: str) -> str:
