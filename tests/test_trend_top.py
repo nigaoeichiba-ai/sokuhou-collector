@@ -135,10 +135,22 @@ class TrendTop(unittest.TestCase):
                 self.assertLessEqual(main.count(f'href="{p["path"]}"'), 1, p["path"])         # the card is the only link
         self.assertNotIn("速報×深掘りの各ページ", main)
 
-    def test_the_description_of_an_article_is_the_first_sentence_of_the_three_line_summary(self):
+    def test_the_description_of_an_article_is_the_first_two_sentences_of_the_three_line_summary(self):
         for p in self.articles:
-            first = next(s["paras"][0] for s in p["sections"] if s.get("h2") == "3行まとめ")
-            self.assertIn(f'<meta name="description" content="{first}">', self.html(p["path"]), p["path"])
+            text = "".join(next(s["paras"] for s in p["sections"] if s.get("h2") == "3行まとめ"))
+            two = "".join(re.findall(r"[^。]+。", text)[:2])
+            self.assertIn(f'<meta name="description" content="{two}">', self.html(p["path"]), p["path"])
+            self.assertIn(f'<meta property="og:description" content="{two}">', self.html(p["path"]), p["path"])
+
+    def test_the_category_pages_open_with_the_desks_three_sentences(self):
+        intro = json.loads((SITE / "site.json").read_text(encoding="utf-8"))["category_intro"]
+        self.assertEqual(set(intro), set(CAT_DESC))
+        for slug, sentences in intro.items():
+            self.assertEqual(len(sentences), 3)
+            body = self.html(f"/cat/{slug}/")
+            for sent in sentences:
+                self.assertIn(sent, body)
+            self.assertLess(body.index(sentences[0]), body.index('class="cards"'))
 
     def test_an_article_shows_the_dates_near_the_title_and_keeps_the_last_updated_line(self):
         for p in self.articles:

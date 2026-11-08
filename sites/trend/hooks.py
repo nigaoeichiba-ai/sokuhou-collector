@@ -56,6 +56,15 @@ def first_summary(p: dict) -> str | None:
     return None
 
 
+def first_sentences(p: dict, n: int = 2) -> str | None:
+    """The first n sentences of 「3行まとめ」 (its lines read one after another), exactly as written."""
+    text = three_lines(p)
+    if not text:
+        return None
+    out = re.findall(r"[^。]+。", text)
+    return "".join(out[:n]) or None
+
+
 def three_lines(p: dict) -> str:
     for s in p.get("sections", []):
         if s.get("h2") == "3行まとめ":
@@ -91,8 +100,8 @@ def prepare(cfg: dict, spec: dict, pages: list[dict], site_dir: Path) -> list[di
         p["published"] = p.get("published") or p["updated"]
         p["_img"] = eyecatch_src(p)
         p["_sum"] = first_summary(p) or p["answer"]
-        if first_summary(p):
-            p["description"] = p["_sum"]            # the first sentence of 「3行まとめ」, no new sentence
+        if first_sentences(p):
+            p["description"] = first_sentences(p)   # the first two sentences of 「3行まとめ」, no new sentence
         if p.get("parent") == "/":
             p["parent"] = CAT_PATH[p["category"]]
         dates = f'公開日 {ja_date(p["published"])}' + (f' / 更新日 {ja_date(p["updated"])}' if p.get("updated") else "")
