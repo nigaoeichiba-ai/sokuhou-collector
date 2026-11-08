@@ -4813,6 +4813,321 @@
   "unchanged": 63,
   "units": 84
  },
+ "gift/white-day-girlfriend/index.html": {
+  "accepted": [
+   {
+    "from": "彼女へのホワイトデーギフト、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "彼女へのホワイトデーギフト、種類で比べる4点",
+    "why": "根拠のない人気を削除"
+   },
+   {
+    "from": "焼き菓子はデートの帰りに渡しやすく、家で紅茶やコーヒーと食べられるため、量を調整しやすい品です。",
+    "kind": "item",
+    "to": "焼き菓子はデートの帰りに渡しやすく、家で紅茶やコーヒーと楽しめます。食べる量を決めやすい品です。",
+    "why": "一文一論点に分割"
+   }
+  ],
+  "date": "2026-11-08",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 「理由3つ」「ポイント3つ」の型が先に立ち、選ぶ基準と注意点が商品一覧の前後に分かれています。",
+   "具体: 導入や案内文に「気持ち」「ぴったり」「この場面」などの曖昧な語が残り、品名や使う場面が後から出てきます。",
+   "見出し: 「人気」「どんなタイプ？」「次の一歩」など、根拠や節の中身が見出しだけでは分からない箇所があります。"
+  ],
+  "failed": "",
+  "hash": "43bd64b9a7ef",
+  "needs_check": [
+   {
+    "question": "掲載品がAmazonの売れ筋ランキングから選ばれたことを確認できますか。",
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。"
+   }
+  ],
+  "page": "gift/white-day-girlfriend/index.html",
+  "rejected": [
+   {
+    "after": "彼女へのホワイトデーは、バレンタインにもらった気持ちを覚えていると伝えるお返しです。一緒に食べる焼き菓子、通勤バッグに入るハンドクリーム、休日に飲む紅茶など、会",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['約束']"
+    ],
+    "text": "彼女へのホワイトデーは、バレンタインにもらった気持ちを覚えていることが伝わる返し方にしたい日です。焼き菓子で一緒にお茶を"
+   },
+   {
+    "after": "バレンタインにもらった品を思い出し、焼き菓子や紅茶は見合う価格帯から選ぶ。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['見合']"
+    ],
+    "text": "もらったバレンタインの雰囲気を思い出し、重すぎない価格帯で焼き菓子や紅茶を選ぶ。"
+   },
+   {
+    "after": "予算や種類を選ぶと下の商品を条件に合うものだけに絞れます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "条件に合う商品がありません。予算の幅を広げるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '幅']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "焼き菓子とアクセサリーの贈り方",
+    "problems": [
+     "names / quoted words lost: ['ホワイトデー']"
+    ],
+    "text": "彼女へのホワイトデー、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "焼き菓子はデートの帰りに渡しやすく、家でお茶をしながらゆっくり楽しんでもらえます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['菓子']"
+    ],
+    "text": "デート帰りに渡しやすく、家でお茶をしながらゆっくり楽しんでもらえます。"
+   },
+   {
+    "after": "アクセサリーは手元に残り、普段の服に合わせて使えます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['アクセサリー', '手元']"
+    ],
+    "text": "気持ちを残せる品として選びやすく、普段の服に合わせる楽しみもあります。"
+   },
+   {
+    "after": "彼女について一言教えてください(好きなもの、趣味、年齢など)。入力した言葉に近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "Amazonで商品を探す",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['商品']"
+    ],
+    "text": "Amazonで探す"
+   },
+   {
+    "after": "彼女へのホワイトデーは、バレンタインにもらった気持ちを覚えていると伝えるお返しです。焼き菓子なら一緒にお茶をする時間に、ハンドクリームなら通勤バッグ用に、紅茶な",
+    "problems": [
+     "added claim: 「返し方にしたい日」が「伝えるお返しです」という断定に変わっています。"
+    ],
+    "text": "彼女へのホワイトデーは、バレンタインにもらった気持ちを覚えていることが伝わる返し方にしたい日です。焼き菓子で一緒にお茶を"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月8日 6:54時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者に"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "迷ったときの次の一歩"
+   },
+   {
+    "after": "11種類のチョコレートを詰め合わせています。相手に好きな味を選んでもらえます。",
+    "problems": [
+     "condition dropped: 「好みが分かれる相手にも」という条件が落ちています。"
+    ],
+    "text": "チョコレートを11種類の味で詰め合わせた定番です。好みが分かれる相手にも選んでもらえます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "after": "大げさな品は相手に返礼以上の意味があると思わせることがあります。",
+    "problems": [
+     "condition dropped: 「大げさすぎる」が「大げさな」に広がり、程度の条件が落ちています。"
+    ],
+    "text": "大げさすぎる品は相手に返礼以上の意味を感じさせることがあります"
+   }
+  ],
+  "structure_suggestions": [
+   "「選び方のポイント…」〜「渡す日は紙袋の大きさまで考え…」と「気をつけたいこと…」〜「服や靴はサイズを確認してから…」を「条件で絞って比べる…」の前にまとめ、価格・香り・持ち運び・サイズを確認してから商品を絞る順にする。",
+   "「喜ばれやすい理由…」〜「渡す日は紙袋の大きさまで考え…」は「理由3つ」「ポイント3つ」に分けず、一つの節に統合して品ごとの特徴と確認事項を並べる。",
+   "「彼女へのホワイトデーは、バレ…」が画面にも表示される本文なら「彼女へのホワイトデーは、バレ…」と重なるため、どちらか一方にまとめる。検索結果用の要約なら現状の配置でよい。"
+  ],
+  "unchanged": 63,
+  "units": 86
+ },
+ "gift/white-day-wife/index.html": {
+  "accepted": [
+   {
+    "from": "普段買っているお菓子の味を見て、チョコ系、ナッツ系、果物系のどれが好きかを決める。",
+    "kind": "item",
+    "to": "普段買っているお菓子からチョコ系、ナッツ系、果物系の好みを確かめます。",
+    "why": "不自然な手順を簡潔に"
+   },
+   {
+    "from": "一人でゆっくり湯船に入る時間を作りやすく、日々の疲れをやさしくいたわれます。",
+    "kind": "para",
+    "to": "入浴剤は一人でゆっくり湯船に入るきっかけになります。日々の疲れをいたわる品です。",
+    "why": "一文一論点に分ける"
+   }
+  ],
+  "date": "2026-11-08",
+  "deleted": [
+   "家族用とは分けて選ぶことで妻本人へ用意した気持ちがまっすぐ伝わります。",
+   "洗い物や外出で手を使う妻に寝室やバッグで使える小さな労わりになります。",
+   "片付け後や休日の朝に一杯淹れられ、忙しい日にも休むきっかけになります。"
+  ],
+  "diagnosis": [
+   "構成: 焼き菓子、ハンドクリーム、紅茶の説明が複数の節で重なり、理由3つ・選び方3つの型が目立ちます。",
+   "見出し: 「こんな贈り方はどうでしょう」など、節の中身が分からない見出しがあります。",
+   "語: 「小さな労わり」「ぴったり」のような抽象語と、入力や比較の操作が伝わりにくい表現が残っています。"
+  ],
+  "failed": "",
+  "hash": "5f03ff61854b",
+  "needs_check": [],
+  "page": "gift/white-day-wife/index.html",
+  "rejected": [
+   {
+    "after": "妻へのホワイトデーは、家族用とは分けて、妻本人のために選んだと分かるようにします。焼き菓子、ハンドクリーム、紅茶なら、家事や仕事の合間に使えます。子どもの前では",
+    "problems": [
+     "numbers differ: ['一', '二'] -> ['二']",
+     "words added that the original does not have (information must not grow): ['言葉']"
+    ],
+    "text": "妻へのホワイトデーは、家族全員のおやつではなく、妻本人のために選んだと分かる形がうれしいものです。焼き菓子、ハンドクリー"
+   },
+   {
+    "after": "紅茶は休日の朝や夜の片付け後に楽しめます。ティーバッグなら、忙しい日も一杯分を手軽に用意できます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['手軽', '用意']"
+    ],
+    "text": "紅茶は休日の朝や夜の片付け後に淹れられ、ティーバッグなら忙しい日でも一杯の準備が簡単です。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "焼き菓子・ハンドクリーム・紅茶・入浴剤",
+    "problems": [
+     "names / quoted words lost: ['ホワイトデー']"
+    ],
+    "text": "妻へのホワイトデー、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "好きなもの、趣味、年齢など、その人について一言入力してください。入力内容に近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['入力内容']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "大げさすぎる品は、ホワイトデーのお返し以上の意味があると受け取られることがあります",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ホワイトデー']"
+    ],
+    "text": "大げさすぎる品は相手に返礼以上の意味を感じさせることがあります"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月8日 6:54時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者に"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "ハンドクリームは洗い物のあとや外出先で使えます。寝室にもバッグにも置ける、手をいたわる品です。",
+    "problems": [
+     "condition dropped: 対象の「洗い物や外出で手を使う妻」という条件が落ちています。"
+    ],
+    "text": "ハンドクリームは洗い物や外出で手を使う妻に渡しやすく、寝室やバッグに置ける小さな労わりになります。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "after": "チョコレートを11種類の味で詰め合わせた定番です。相手に好きな味を選んでもらえます。",
+    "problems": [
+     "condition dropped: 「好みが分かれる相手にも」という対象条件が落ちています。"
+    ],
+    "text": "チョコレートを11種類の味で詰め合わせた定番です。好みが分かれる相手にも選んでもらえます。"
+   },
+   {
+    "after": "メール、携帯番号、URLのいずれかで送れます。金額も選べるため、好みが分からない相手への贈り物に向きます。",
+    "problems": [
+     "added claim: 金額を選べることを、好みが分からない相手に向く理由として新たに結び付けています。"
+    ],
+    "text": "メール、携帯番号、URLのいずれかで送れて金額を選べます。好みが分からない相手にも贈れます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "after": "生活用品は妻が欲しいと確認できたものを選びます。確認せずに贈ると家事を期待しているように見えることがあります",
+    "problems": [
+     "added claim: 「妻が欲しいと確認できたものを選ぶ」という元にない具体的な条件を加えています。"
+    ],
+    "text": "家事を期待しているように見える生活用品を確認なしで贈らないようにします"
+   }
+  ],
+  "structure_suggestions": [
+   "「喜ばれやすい理由…」〜「紅茶はカフェインを気にする時…」は、理由と選び方を別々の3項目にせず、焼き菓子、ハンドクリーム、紅茶の品物別に統合する。",
+   "「気をつけたいこと…」〜「家事を期待しているように見え…」の「気をつけたいこと」は、商品を絞り込む前に移し、生活用品を選ぶ条件を先に示す。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」の「迷ったときの次の一歩」は、Amazonと楽天市場の検索案内のあとへ移し、ページの結びにする。",
+   "「一人でゆっくり湯船に入る時間…」の入浴剤は「妻へのホワイトデー、こんな贈…」の品物別案内に統合し、焼き菓子、ハンドクリーム、紅茶と同じ位置で比べられるようにする。"
+  ],
+  "unchanged": 67,
+  "units": 88
+ },
  "gift/year-end-gathering-baby/index.html": {
   "accepted": [
    {
@@ -10157,6 +10472,140 @@
   ],
   "unchanged": 45,
   "units": 64
+ },
+ "shogatsu/itsumade/index.html": {
+  "accepted": [
+   {
+    "from": "2027年の暦に当てはめる",
+    "kind": "heading",
+    "to": "2027年のお年賀を渡す日",
+    "why": "中身が分かる見出しに"
+   },
+   {
+    "from": "2027年は2日と3日が週末にあたります。遠方の親戚と会う予定は組みやすい一方、どの家も人が集まりやすい日なので、時間は早めに決めておきます",
+    "kind": "item",
+    "to": "2027年は2日と3日が週末です。遠方の親戚とも会う予定を立てやすい一方、どの家にも人が集まりやすいため、時間は早めに決めておきます",
+    "why": "一文一論点に分ける"
+   }
+  ],
+  "date": "2026-11-08",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 2027年の暦の説明が見出しと別の節に分かれ、よくある質問には本文と重なる回答があります。",
+   "リズム: 長い文と「案内されています」が続く箇所があり、要点をつかみにくくしています。",
+   "語: 「今回の出典には書かれていません」という断りより、確認できた地域と次にすることを直接示す方が明快です。"
+  ],
+  "failed": "",
+  "hash": "e0c2ccb660d3",
+  "needs_check": [
+   {
+    "question": "「1月15日に間に合うように」という案内の対象地域と、元日配送の質問にこの期日を載せる必要があるか確認してください。",
+    "text": "今回の出典は元日配送の可否を明記していません。お年賀の一般的な期間は1月2日からなので、配送も1月2日以降に受け取ってもらう形にすると分かりやすくなります。1月"
+   }
+  ],
+  "page": "shogatsu/itsumade/index.html",
+  "rejected": [
+   {
+    "after": "お年賀を渡す時期は1月2日から松の内までが目安です。松の内は関東では1月7日、関西では1月15日に終わると案内されています。2027年は関東の松の内が明けた後、",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['時期', '目安']"
+    ],
+    "text": "お年賀を渡せるのは1月2日から松の内が終わるまでです。松の内の終わりは関東が1月7日、関西が1月15日と案内されています"
+   },
+   {
+    "after": "お年賀を渡す時期は1月2日から松の内までが目安です。松の内は関東では1月7日、関西では1月15日に終わると案内されています。2027年は関東の松の内が明けた後、",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['時期', '目安']"
+    ],
+    "text": "お年賀を渡せるのは1月2日から松の内が終わるまでです。松の内の終わりは関東が1月7日、関西が1月15日と案内されています"
+   },
+   {
+    "after": "お年賀は年始のあいさつに持参する品で松の内までに渡すのが一般的です。松の内は関東では1月7日、関西では1月15日に終わると案内されています。高島屋の案内では山陰",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['一般的']",
+     "attribution removed (2 -> 1)"
+    ],
+    "text": "お年賀は年始のあいさつに持参する品で、渡せる期間は松の内までとされています。松の内の終わりは関東では1月7日、関西では1"
+   },
+   {
+    "after": "お年賀は本来、三が日に手渡すものとされますが、元日の訪問は避けます。近ごろは1月2日以降、松の内までであれば失礼にあたらないという案内もあります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['年賀']",
+     "attribution removed (2 -> 1)",
+     "careful wording removed (2 -> 1)"
+    ],
+    "text": "元日の訪問は避けるとされ、本来は三が日に手渡すものとされてきました。ただ近ごろは、1月2日以降の松の内であれば失礼にあた"
+   },
+   {
+    "after": "取引先へのお年賀は仕事始めから15日ごろまでが目安と案内されています。仕事始めの日は会社ごとに違うため、先方に確かめます",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['年賀']"
+    ],
+    "text": "取引先は仕事始めから15日ごろまでが目安と案内されています。仕事始めの日は会社ごとに違うので先方に確かめます"
+   },
+   {
+    "after": "松の内を過ぎたら、表書きは「寒中御見舞」に替え、立春ごろまでに贈ります。同じ時期には「寒中御伺」も使えると三越伊勢丹は案内しています。立春を過ぎたら「余寒御見舞",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "松の内を過ぎたら、表書きを「寒中御見舞」に改めて、立春ごろまでに贈ります。三越伊勢丹は同じ時期の表書きとして「寒中御伺」"
+   },
+   {
+    "after": "相手が住む地域の目安に合わせます。分からなければ、年始のあいさつに行く前の連絡で、訪ねてよい日と松の内の目安を聞きます。日にちの食い違いを避けられます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['内']"
+    ],
+    "text": "相手が住む地域の目安に合わせるのが無難です。相手に直接聞いてもかまいません。年始のあいさつに行く前の連絡のついでに訪ねて"
+   },
+   {
+    "after": "関東は1月7日、関西・山陰・名古屋は1月15日までと案内されています。九州に住む相手へ渡す場合は松の内の目安を相手に聞くのが確実です。",
+    "problems": [
+     "numbers differ: ['1', '7', '1', '15', '百', '九', '九'] -> ['1', '7', '1', '15', '九']",
+     "words added that the original does not have (information must not grow): ['場合']"
+    ],
+    "text": "今回読んだ百貨店の案内には九州の松の内の終わりは書かれていません。関東は1月7日、関西・山陰・名古屋は1月15日と案内さ"
+   },
+   {
+    "after": "まず相手の都合を聞きます。午前は家の人が支度で忙しいため、午後に訪ねるのがよいとされています",
+    "problems": [
+     "condition dropped: 午後のうち「落ち着いた時間」という条件が落ちた"
+    ],
+    "text": "先に相手の都合を聞きます。午前は家の人が支度で忙しいため、午後の落ち着いた時間がよいと案内されています"
+   },
+   {
+    "after": "関東で松の内が明ける8日以降に訪ねる場合は、表書きを寒中御見舞に改めます。9日からの三連休に回す場合も同じです",
+    "problems": [
+     "hedge removed: 「訪ねることになりそう」という控えめな表現が言い切りになった"
+    ],
+    "text": "関東で、松の内を過ぎる8日以降に訪ねることになりそうなときは、品の表書きを寒中御見舞に改めます。9日からの三連休に回す場"
+   },
+   {
+    "after": "地域をまたいで訪ねるときは、当サイトでは受け取る側の松の内に合わせるのがよいと考えます。相手の地域の暦に沿えるためです。分からないときは訪問日を決める前に松の内",
+    "problems": [
+     "added claim: 関東・関西間の話を地域間一般へ広げ、聞く時期も追加した"
+    ],
+    "text": "関東の人が関西の親戚を訪ねる場合や、その逆の場合は、当サイトでは、受け取る側の地域の松の内に合わせるのがよいと考えます。"
+   },
+   {
+    "after": "三越伊勢丹は実家や義実家へ元旦に出向く家もあるため、松の内かどうかにかかわらず、正月のあいさつに添える品をお年賀と呼んでかまわないと案内しています。一方、大丸松",
+    "problems": [
+     "hedge removed/condition dropped: 「よさそうです」が言い切りになり、対象も家族全般から実家・義実家に狭まった"
+    ],
+    "text": "三越伊勢丹は実家や義実家へ元旦に出向く家もあるので、松の内かどうかを気にせず、正月のあいさつに添える品をお年賀と呼んでか"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (shogatsu.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "お正月の特集のトップへ"
+   }
+  ],
+  "structure_suggestions": [
+   "「2027年の暦に当てはめる…」と「いつ訪ねるかを決める順番…」を一つの節にまとめ、「曜日は年の暦から計算していま…」は「2027年は2日と3日が週末…」・「関東で、松の内を過ぎる8日以…」の後に出典の注記として置くと、2027年の暦と訪問日の判断が続けて読めます。",
+   "「松の内を過ぎてからあいさつに…」〜「相手が住む地域の目安に合わせ…」は「松の内を過ぎたとき、間に合わ…」〜「関東の人が関西の親戚を訪ねる…」と内容が重なるため、FAQでは本文の該当箇所へ導く形にまとめると重複を減らせます。"
+  ],
+  "unchanged": 42,
+  "units": 58
  },
  "shogatsu/mochu-kanchu/index.html": {
   "accepted": [
