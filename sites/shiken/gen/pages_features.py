@@ -205,7 +205,7 @@ def tokushu_nyushi() -> dict:
     eight = ["千葉県", "神奈川県", "東京都", "愛知県", "埼玉県", "北海道", "福岡県", "大阪府"]
     items = sorted(((gen[p]["general"]["exam"][0], p) for p in eight if gen[p]["general"]["exam"]))
     cards = "".join(f'<div class="ncard"><div class="nd">{ui.counter(iso, "exam", big=False)}</div><div><h3>{esc(p)}</h3><p>学力検査：{esc(_dates(gen[p]["general"]["exam"]))}</p></div></div>' for iso, p in items)
-    s_koko = (f'<h2>公立高校入試 学力検査日（都道府県別）</h2><p class="sec-sub">主な8都道府県の学力検査日です。残り日数は{esc(weekday(TODAY))}時点の計算です。{len(KOKO)}都道府県分は、一覧ページにあります。</p>'
+    s_koko = (f'<h2>公立高校入試 学力検査日（都道府県別）</h2><p class="sec-sub">主な8都道府県の学力検査日です。{len(KOKO)}都道府県分は、一覧ページにあります。</p>'
               f'<div class="near">{cards}</div><p>お住まいの都道府県の日程は、一覧ページで県を選んでご確認ください。</p>'
               f'<p>{a("/koko/", f"{len(KOKO)}都道府県から探す", "btn solid")} {a("/nyushi/", "入試カレンダーを見る", "btn")}</p>')
     todo = [("出願が済んでいるかを確かめる", f'共通テストの出願は{md(entry_end["iso"])}に終了しました。受験生本人と一緒に、済んでいるかをご確認ください。'),

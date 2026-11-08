@@ -22,11 +22,6 @@
       "特集",
       "/yomimono/",
       "/yomimono/"
-    ],
-    [
-      "方法と出典",
-      "/method/",
-      "/method/"
     ]
   ],
   "footer_html": "日程は、各試験団体・省庁・教育委員会の公式発表をもとにしています。最終的な日程は、主催団体の公式発表でご確認ください。",
@@ -43,8 +38,14 @@
   ],
   "corrections": [],
   "sources": {},
-  "sources_style": "credit",
+  "sources_style": "stamp",
   "credits": [
     "各試験団体・省庁・教育委員会の公式発表をもとに作成"
+  ],
+  "legal_extra": [
+    [
+      "方法と出典",
+      "/method/"
+    ]
   ]
 }

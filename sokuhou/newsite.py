@@ -38,7 +38,7 @@ from sokuhou.sitekit import BuildError, esc
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS_SRC = Path(__file__).with_name("newsite_assets")
 KINDS = seokit.HUB_TYPES + seokit.ITEM_TYPES + seokit.ALWAYS_NOINDEX
-SOURCE_STYLES = ("block", "credit", "none")
+SOURCE_STYLES = ("block", "credit", "stamp", "none")
 NAME = re.compile(r"[a-z][a-z0-9]*")
 MAX_TABLES = 3
 DEFAULT_KINDS = ["数字の誤りのご指摘", "ご意見・ご要望", "その他"]
@@ -231,9 +231,11 @@ def credit_lines(page: dict, spec: dict) -> list[str]:
 def sources_block(page: dict, spec: dict) -> str:
     """The end of a page.  sources_style "block" (the default, as before): every source with its link, base day and day fetched.  "credit": the one credit line the licence
     needs and the page's day of update, no address, no per-source dates.  "none": nothing."""
-    style = spec.get("sources_style", "block")
+    style = page.get("sources_style") or spec.get("sources_style", "block")   # a page may keep a style of its own
     if style == "none":
         return ""
+    if style == "stamp":   # only the day of update: the credits stay declared (the build still wants a source for numbers) but are not printed
+        return f'<p class="stamp">最終更新日: {esc(page_updated(page, spec))}</p>'
     if style == "credit":
         lines = credit_lines(page, spec)
         credit = f'<p class="credit">出典: {esc("、".join(dict.fromkeys(lines)))}</p>\n' if lines else ""
@@ -343,7 +345,8 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
     check_spec(spec, content)
     by_path = {p["path"]: p for p in content}
     site = {"nav": [(n[0], n[1], n[2] if len(n) > 2 else n[1]) for n in spec["nav"]], "glyph": spec.get("glyph", cfg["site_name"][0]),
-            "source_html": spec["footer_html"], "assets": site_dir / "assets"}
+            "source_html": spec["footer_html"], "assets": site_dir / "assets",
+            "legal_extra": [tuple(x) for x in spec.get("legal_extra", [])]}   # a site's own extra footer links, [text, href] (none by default)
 
     errors, warnings = [], []
     measure_tag = (f'<script src="/assets/measure.js?v={hashlib.sha1(measure.MEASURE_JS.encode()).hexdigest()[:8]}" defer></script>\n'

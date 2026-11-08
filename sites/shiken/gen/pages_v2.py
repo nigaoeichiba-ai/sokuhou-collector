@@ -107,13 +107,9 @@ def home() -> dict:
 
     lead = fix("トップ", "受けたい試験を決めたら、カレンダーに入れて申込を忘れないようにできます。",
                "受ける試験が決まったら、予定に入れて、申込を忘れないようにできます。", "「受けたい試験を決めたら」は、次の「できます」と主語がずれる。先の動作と後の動作がつながる形に")
-    meta = fix("トップ", "残り日数は 2026年11月8日（日）時点の計算です。日付は各実施団体の公式発表で確認したものだけを載せ、未発表のものは載せていません。",
-               f"残り日数は{weekday_text()}時点の計算です。日付は、各実施団体の公式発表で確かめたものだけです。未発表の日程は含みません。",
-               "二つの内容を一文に入れていたので分けた。日付は構築日から計算する")
-    hero = (f'<p class="trust">日付は公式で確かめたものだけです</p>'
-            f'<form class="searchbox" role="search" onsubmit="return false"><label for="q">試験名で探す</label>'
+    hero = (f'<form class="searchbox" role="search" onsubmit="return false"><label for="q">試験名で探す</label>'
             f'<input id="q" type="search" placeholder="試験名で探す（例：TOEIC）" autocomplete="off"><button type="submit">検索</button></form>'
-            f'<p class="hero-meta">{esc(meta)}</p><!--hero-end-->')
+            '<!--hero-end-->')
 
     legend = fix("トップ", "残り日数が大きい数字で出ます。あと7日以内は赤、30日以内は黄、それ以外は青で色分けしています。",
                  "残り日数は大きな数字で表示されます。締切まで7日以内は赤、8日から30日は黄、31日以上は青です。",
