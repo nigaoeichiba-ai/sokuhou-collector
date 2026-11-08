@@ -72,18 +72,18 @@ class KaidokiTest(unittest.TestCase):
         gen.write()      # back to the fixed day for the other tests
 
     def test_calculator_js_equals_python(self):
-        deno = shutil.which("deno")
-        if not deno:
-            self.skipTest("deno is not installed")
+        """node (on the CI runners) or deno runs assets/calc.js.  Neither installed: the test fails, it never skips (a skipped test checks nothing)."""
+        node, deno = shutil.which("node"), shutil.which("deno")
+        self.assertTrue(node or deno, "neither node nor deno is installed: the calculator cannot be checked")
         cases = [dict(price=11000, ship=500, coupon=1000, rate=10, cap=0, excl_tax=True, use=100),
                  dict(price=100000, ship=0, coupon=0, rate=10, cap=7000, excl_tax=True, use=50),
                  dict(price=5000, ship=300, coupon=9999, rate=3.5, cap=0, excl_tax=False, use=80)]
-        js = ("import {createRequire} from 'node:module';const r=createRequire(import.meta.url);const {compute}=r(Deno.args[0]);"
-              "const cs=JSON.parse(Deno.args[1]);console.log(JSON.stringify(cs.map(c=>compute(c))));")
-        tmp = ROOT / "out" / "_calc_probe.mjs"
+        js = ("const {compute}=require(process.argv[2]);const cs=JSON.parse(process.argv[3]);console.log(JSON.stringify(cs.map(c=>compute(c))));")
+        tmp = ROOT / "out" / "_calc_probe.cjs"
         tmp.parent.mkdir(exist_ok=True)
         tmp.write_text(js, encoding="utf-8")
-        r = subprocess.run([deno, "run", "-A", str(tmp), str(SITE / "assets" / "calc.js"), json.dumps(cases)], capture_output=True, text=True, encoding="utf-8")
+        cmd = [node, str(tmp)] if node else [deno, "run", "-A", "--ext=cjs", str(tmp)]
+        r = subprocess.run(cmd + [str(SITE / "assets" / "calc.js"), json.dumps(cases)], capture_output=True, text=True, encoding="utf-8")
         self.assertEqual(r.returncode, 0, r.stderr)
         got = json.loads(r.stdout)
         for c, g in zip(cases, got):
