@@ -35,7 +35,20 @@ def all_pages() -> list[dict]:
 
 
 CLOSING = "最終的な日程は、主催団体の公式発表でご確認ください。日程は変更されることがあります。申し込む前に、必ず確かめてください。"   # kept only by the pages of KEEP_NOTES
-KEEP_NOTES = {"/boki-net/", "/flow/", "/kokkoritsu/", "/komuin/", "/kyotsu-tsuishi/", "/kyotsu/", "/minkan/", "/nendo/", "/nyushi/", "/postmark/", "/results/", "/yama/"}
+KEEP_NOTES = {"/minkan/", "/yama/"}
+
+# the desk's added sentences (sites/shiken/additions/<slug>.md, written by Muse, put in word for word): the slug -> the heading of the section after which the sentence stands
+ADD_AFTER = {"boki-net": "決まり方の違い", "flow": "いつ、何をするか", "kokkoritsu": "出願期間は大学ごとに決まる", "komuin": "公表されている日程",
+             "kyotsu-tsuishi": "本試験を受けられなかったときの順番", "kyotsu": "これから受験生が確認すること", "minkan": "TOEIC L&Rの公開テスト", "nendo": "見落とさない方法",
+             "nyushi": "2027年1月から3月の主な日程", "postmark": "意味の違い", "results": "発表の時刻と方法", "yama": "月別の件数"}
+HELD = {"minkan", "yama"}   # their sentences wait for the desk: minkan says "漢検は先着順" (the official page does not), yama names "1月の12件" (the count follows the data)
+
+
+def added_sentence(slug: str) -> str:
+    text = (SITE / "additions" / f"{slug}.md").read_text(encoding="utf-8")
+    body = text.split("## 追加文（このまま入れてください）", 1)[1]
+    return " ".join(l.strip() for l in body.strip().splitlines() if l.strip())
+
 GENERAL_NOTES = {"日程は変わることがあります。", "日程が変わることがあります。"}   # said by every page: the footer has the one sentence
 DROP = re.compile(r"(日程と金額の|日付の)?確認日は2026年11月3日です。|申込の前に、次の公式ページで[^。]*確かめてください。|申込の前に、必ず公式ページで確かめてください。")
 
@@ -51,6 +64,15 @@ def finalize(p: dict) -> dict:
             s.pop("html")
         s["paras"] = [t for t in (DROP.sub("", t).strip() for t in s.get("paras", [])) if t]
         secs.append(s)
+    slug = p["path"].strip("/")
+    if slug in ADD_AFTER and slug not in HELD:
+        out = []
+        for sec_ in secs:
+            out.append(sec_)
+            if sec_.get("h2", "").startswith(ADD_AFTER[slug]):
+                out.append({"paras": [added_sentence(slug)]})
+        assert len(out) == len(secs) + 1, f"{slug}: the section {ADD_AFTER[slug]!r} is not on the page"
+        secs = out
     # the owner's rule (2026-11-09): the site-wide notes (where the dates come from, when they were counted, "check the official page") are said once, in the footer.
     # What stays: a note that belongs to one exam ("受験料は、受験する商工会議所の案内で確かめてください").
     if p["path"] in KEEP_NOTES:

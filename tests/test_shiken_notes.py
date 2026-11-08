@@ -63,9 +63,24 @@ class NotesTest(unittest.TestCase):
 
     def test_the_pages_that_keep_the_old_notes_for_now_are_listed_and_few(self):
         # TEMPORARY: they leave this set when the desk's added sentences arrive (each page then passes the 1,200 characters without the notes)
-        self.assertLessEqual(len(self.keep), 12)
+        self.assertLessEqual(len(self.keep), 2)
         for path in self.keep:
             self.assertIn("最終的な日程は、主催団体の公式発表でご確認ください。日程は変更されることがあります。", text(self.html[path.strip("/") + "/index.html"]), path)
+
+    def test_the_desks_added_sentences_are_on_the_pages_word_for_word_and_the_pages_stay_indexed(self):
+        from sites.shiken import gen
+        from sokuhou import seokit
+        for slug in gen.ADD_AFTER:
+            page = self.html[slug + "/index.html"]
+            sentence = gen.added_sentence(slug)
+            self.assertGreaterEqual(len(sentence), 100, slug)
+            if slug in gen.HELD:
+                self.assertNotIn(sentence, text(page), slug)          # waits for the desk
+            else:
+                self.assertIn("".join(sentence.split()), "".join(text(page).split()), slug)
+                self.assertNotIn("最終的な日程は、主催団体の公式発表でご確認ください。日程は変更されることがあります。", text(page), slug)   # and the old notes are gone
+            self.assertNotIn("noindex", page[:3000], slug)
+            self.assertGreaterEqual(seokit.visible_chars(page), 1200, slug)
 
     def test_the_note_of_the_article_stays(self):
         self.assertIn("この記事について", text(self.html["takken-junbi/index.html"]))
