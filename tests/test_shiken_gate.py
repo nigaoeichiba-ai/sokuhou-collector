@@ -1,0 +1,105 @@
+"""shiken-nittei.com の公開ゲート: 文章のNG語が1語でも残っていたら、テストが落ちて、公開（デプロイ）が止まる。
+
+走査は sites/shiken/tools/check_text.py（窓口の指定の一覧）。ここで、ビルド後の全ページを、日付を変えて走査する。
+公開前チェックの記録（sites/shiken/tools/checks/公開前チェック_*.md）が無い・未記入の公開も、止める。
+"""
+from __future__ import annotations
+
+import importlib.util
+import re
+import tempfile
+import unittest
+from pathlib import Path
+
+from sokuhou import newsite
+
+ROOT = Path(__file__).resolve().parents[1]
+SITE = ROOT / "sites" / "shiken"
+TOOLS = SITE / "tools"
+
+
+def load_checker():
+    spec = importlib.util.spec_from_file_location("shiken_check_text", TOOLS / "check_text.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def write_pages(pages: dict, out: Path) -> None:
+    for rel, body in pages.items():
+        if isinstance(body, str) and rel.endswith(".html"):
+            p = out / rel
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(body, encoding="utf-8")
+
+
+class GateTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from sites.shiken import gen
+        gen.write()
+        cls.mod = load_checker()
+
+    def scan_built(self):
+        pages, _ = newsite.build_pages(SITE, release=True, strict_seo=True)
+        with tempfile.TemporaryDirectory() as tmp:
+            write_pages(pages, Path(tmp))
+            files, hard, soft, _loc = self.mod.scan(tmp)
+        return files, hard
+
+    def test_no_hard_ng_word_is_left_in_any_page(self):
+        files, hard = self.scan_built()
+        self.assertGreaterEqual(len(files), 30)
+        self.assertEqual(hard, [], "NG語が残っています: " + "; ".join(f"{r}[{l}]" for r, l, _ in hard[:10]))
+
+    def test_the_text_stays_clean_on_other_days_too(self):
+        # 毎日のデプロイで日付が替わると、文章が変わる(残り日数・「始まっています」など)。その日も0件であること。
+        from sites.shiken.gen import common
+        before = common.TODAY
+        try:
+            for day in ("2026-11-20", "2026-12-20"):   # 2027-01-11 以降は、申込締切の残る試験がなくなる(別件: 日程データの更新が要る)
+                common.set_today(day)
+                from sites.shiken import gen
+                gen.write()
+                _files, hard = self.scan_built()
+                self.assertEqual(hard, [], f"{day}: " + "; ".join(f"{r}[{l}]" for r, l, _ in hard[:10]))
+        finally:
+            common.set_today(before.isoformat())
+            from sites.shiken import gen
+            gen.write()
+
+    def test_a_page_with_an_ng_word_is_stopped(self):
+        # 負例: わざとNG語を入れたページで、走査が「公開不可」(終了コード1)を返すこと。
+        for word in ("並びます", "いちばん近い", "読み物", "入口", "棚", "見てください"):
+            with tempfile.TemporaryDirectory() as tmp:
+                (Path(tmp) / "index.html").write_text(f"<html><body><p>試験が{word}。</p></body></html>", encoding="utf-8")
+                _files, hard, _soft, _loc = self.mod.scan(tmp)
+                self.assertTrue(hard, word)
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "index.html").write_text("<html><body><p>クレジットカード決済が使えます。</p></body></html>", encoding="utf-8")
+            self.assertEqual(self.mod.scan(tmp)[1], [])          # 支払い手段の名称は対象外
+
+    def test_the_command_exits_with_1_on_a_hit_and_0_on_a_clean_folder(self):
+        import subprocess
+        import sys
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "index.html").write_text("<html><body><p>日程が並びます。</p></body></html>", encoding="utf-8")
+            r = subprocess.run([sys.executable, str(TOOLS / "check_text.py"), tmp], capture_output=True)
+            self.assertEqual(r.returncode, 1)
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "index.html").write_text("<html><body><p>日程が表示されます。</p></body></html>", encoding="utf-8")
+            r = subprocess.run([sys.executable, str(TOOLS / "check_text.py"), tmp], capture_output=True)
+            self.assertEqual(r.returncode, 0)
+
+    def test_there_is_a_filled_pre_publication_record(self):
+        records = sorted((TOOLS / "checks").glob("公開前チェック_*.md"))
+        self.assertTrue(records, "tools/checks/ に「公開前チェック_日付.md」がありません。公開前チェックリストをコピーして埋めてください")
+        text = records[-1].read_text(encoding="utf-8")
+        self.assertNotIn("はい／いいえ", text, f"{records[-1].name}: 未記入の項目があります")
+        self.assertRegex(text, r"判定[^\n]*公開する")
+        self.assertNotRegex(text, r"判定[^\n]*公開しない[^\n]*\n*$")
+        self.assertNotRegex(text, r"\|\s*[^|\n]+\s*\|\s*\|\s*$", f"{records[-1].name}: NG語の件数が空の行があります")
+
+
+if __name__ == "__main__":
+    unittest.main()

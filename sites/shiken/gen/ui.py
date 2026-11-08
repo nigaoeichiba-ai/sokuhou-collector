@@ -113,7 +113,7 @@ def cost_tool(fee: int, fee_note: str) -> str:
 <div class="row"><label>模試代（円）<input type="number" inputmode="numeric" min="0" step="1" value="0" data-cost></label>
 <label>その他（円）<input type="number" inputmode="numeric" min="0" step="1" value="0" data-cost></label></div>
 <p class="total-line">合計（受験料込み）<span class="total"><b data-total>{fee:,}</b> 円</span></p>
-<p class="warn-text" data-cost-warn role="alert" hidden>マイナスの金額や数字でない入力は、0円として計算しています。</p>
+<p class="warn-text" data-cost-warn role="alert" hidden>マイナスの金額や数字でない入力は、0円として計算されます。</p>
 <p class="hint">受験料は公式の金額で、{esc(fee_note)}です。そのほかは、入力した金額の合計です。</p></div>'''
 
 
@@ -125,7 +125,7 @@ def planner_tool(fixed_date: str | None, hint: str) -> str:
 <label>目標の総学習時間（時間）<input type="number" inputmode="decimal" min="1" step="1" data-plan-total></label></div>
 <div class="row"><label>平日1日の学習時間（時間）<input type="number" inputmode="decimal" min="0" step="0.5" data-plan-weekday></label>
 <label>休日1日の学習時間（時間・省略可）<input type="number" inputmode="decimal" min="0" step="0.5" data-plan-weekend></label></div>
-<div class="plan-out" data-plan-out aria-live="polite"><p>目標日、総学習時間、平日の学習時間を入れると、勉強を始める日の目安が出ます。{esc(hint)}</p></div></div>'''
+<div class="plan-out" data-plan-out aria-live="polite"><p>目標日、総学習時間、平日の学習時間を入れると、勉強を始める日の目安が表示されます。{esc(hint)}</p></div></div>'''
 
 
 def json_script(id_: str, obj) -> str:
