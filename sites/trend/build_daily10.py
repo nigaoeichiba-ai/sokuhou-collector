@@ -26,13 +26,13 @@ CRUMB = {"trend-rice-price": "コメの価格", "trend-fire-alarm": "火災警�
          "trend-influenza-44": "インフルエンザの定点報告", "trend-blackfriday-price": "ブラックフライデー前の価格記録", "trend-crab-phone-call": "海産物の電話勧誘",
          "trend-nengajo-print": "年賀はがきの印刷", "trend-humidifier-care": "加湿器の手入れ", "trend-gastroenteritis-winter": "感染性胃腸炎の対策"}
 # the main term of a page must stand in its title and h1 (the desk's text is not reworded), so it is a phrase of the title; the desk's search words are kept as the second term
-KW = {"trend-rice-price": "スーパーのコメ", "trend-fire-alarm": "住宅用火災警報器", "trend-vegetable-price": "野菜相場", "trend-wage-2026-09": "9月の給与", "trend-influenza-44": "インフルエンザ",
-      "trend-blackfriday-price": "ブラックフライデー", "trend-crab-phone-call": "海産物の電話勧誘", "trend-nengajo-print": "年賀はがき", "trend-humidifier-care": "加湿器",
+KW = {"trend-rice-price": "5kg平均2,816円", "trend-fire-alarm": "火災警報器", "trend-vegetable-price": "たまねぎは平年の55％", "trend-wage-2026-09": "実質2.2％増", "trend-influenza-44": "インフルエンザは定点10.26人",
+      "trend-blackfriday-price": "ブラックフライデー", "trend-crab-phone-call": "カニの電話勧誘", "trend-nengajo-print": "年賀はがき", "trend-humidifier-care": "加湿器の手入れ",
       "trend-gastroenteritis-winter": "感染性胃腸炎"}
 # the section after which the illustration stands (prefix of the h2)
-FIG_AFTER = {"trend-rice-price": "買うときは、単価で比べる", "trend-fire-alarm": "点検の3つ目", "trend-vegetable-price": "献立は、安い品目から",
-             "trend-wage-2026-09": "名目と実質は", "trend-influenza-44": "基本の予防", "trend-blackfriday-price": "記録に残すのは4つ", "trend-crab-phone-call": "代引きで届いたら",
-             "trend-nengajo-print": "比べる項目は5つ", "trend-humidifier-care": "手入れの確認点", "trend-gastroenteritis-winter": "場面別の対策"}
+FIG_AFTER = {"trend-rice-price": "買うときは、単価と", "trend-fire-alarm": "点検は、この順番で", "trend-vegetable-price": "店頭での使い方",
+             "trend-wage-2026-09": "理由の1つ目", "trend-influenza-44": "基本の予防", "trend-blackfriday-price": "記録に残すのは4つ", "trend-crab-phone-call": "場面別の対応",
+             "trend-nengajo-print": "自宅の印刷とネット注文", "trend-humidifier-care": "毎日の手入れは", "trend-gastroenteritis-winter": "場面別の対策"}
 # related pages (the text of the link is the title of the other page)
 RELATED = {"trend-rice-price": ["trend-vegetable-price", "trend-wage-2026-09"], "trend-fire-alarm": ["/bousai/"], "trend-vegetable-price": ["trend-rice-price", "trend-wage-2026-09"],
            "trend-wage-2026-09": ["trend-rice-price", "trend-vegetable-price"], "trend-influenza-44": ["trend-gastroenteritis-winter", "trend-humidifier-care"],
@@ -40,7 +40,7 @@ RELATED = {"trend-rice-price": ["trend-vegetable-price", "trend-wage-2026-09"], 
            "trend-nengajo-print": ["trend-blackfriday-price", "trend-crab-phone-call"], "trend-humidifier-care": ["trend-influenza-44", "trend-gastroenteritis-winter"],
            "trend-gastroenteritis-winter": ["trend-influenza-44", "trend-humidifier-care"]}
 # product shelves (definitions are in shelves.json; the cards stay hidden until the private store has products): slug -> [(h2 prefix, shelf id)]
-SHELF_AFTER = {"trend-humidifier-care": [("手入れの確認点", "humidifier"), ("まず湿度を測る", "hygrometer")], "trend-nengajo-print": [("自宅の印刷が向く場合", "nengajo-paper")]}
+SHELF_AFTER = {"trend-humidifier-care": [("毎日の手入れは", "humidifier"), ("湿度の物差し", "hygrometer")], "trend-nengajo-print": [("自宅の印刷とネット注文", "nengajo-paper")]}
 CATEGORY_ORDER = ["家計・値上げ", "防災・気象", "天気・季節", "暮らし"]
 ALT = json.loads((Path(__file__).resolve().parent / "daily10_alt.json").read_text(encoding="utf-8")) if (Path(__file__).resolve().parent / "daily10_alt.json").exists() else {}
 
@@ -101,7 +101,7 @@ def answer_of(lead: str, tldr: str) -> str:
 
 def images() -> None:
     d = HERE / "assets" / "img"
-    for p in sorted(IMG_SRC.glob("eye-*.png")) + sorted(IMG_SRC.glob("ill-*.png")):
+    for p in sorted(x for x in list(IMG_SRC.glob("eye-*.png")) + list(IMG_SRC.glob("ill-*.png")) if not re.search(r"-v\d[a-z]$", x.stem)):   # the chosen file only (the variants stay in the work folder)
         w = 1280 if p.name.startswith("eye-") else 1200
         im = Image.open(p).convert("RGB")
         im = im.resize((w, round(im.size[1] * w / im.size[0])))
