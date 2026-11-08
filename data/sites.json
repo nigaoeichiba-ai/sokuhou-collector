@@ -36,6 +36,7 @@
      "build": "python sites/atomou/build.py {env:ATOMOU_BUILD_FLAG} --out release", "probe": "{env:ATOMOU_PROBE}"},
     {"name": "shiken", "textgate": "stop", "domain": "shiken-nittei.com", "marker": "試験日程カレンダー", "min_pages": 10, "needs_var": true},
     {"name": "kurashi", "domain": "kurashi-calendar.com", "marker": "暮らしの年間カレンダー", "min_pages": 10, "needs_var": true},
-    {"name": "trend", "domain": "trend-sokuho.com", "marker": "今日の話題", "min_pages": 3, "needs_var": true}
+    {"name": "trend", "domain": "trend-sokuho.com", "marker": "今日の話題", "min_pages": 3, "needs_var": true},
+    {"name": "kaidoki", "domain": "sale-calendar.com", "marker": "買い時カレンダー", "min_pages": 10, "needs_var": true, "textgate": "shadow"}
   ]
 }

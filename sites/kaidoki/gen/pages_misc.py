@@ -17,7 +17,7 @@ def coming_rows():
 def pages() -> list[dict]:
     up = upcoming()
     first = up[0] if up else None
-    lead = (f"いちばん近いのは、{first['mall']}の{first['name']}で、{ev_span(first)}です。" if first else "いま日程が発表されている大型セールはありません。")
+    lead = (f"最も近いのは、{first['mall']}の{first['name']}で、{ev_span(first)}です。" if first else "いま日程が発表されている大型セールはありません。")
     done = [e for e in sorted(EVENTS, key=lambda e: e["start"], reverse=True) if phase(e) == "done"][:10]
     cal = page(
         "/calendar/", "list", "/", "セール カレンダー", "セールカレンダー|楽天・Amazon・Yahoo!ショッピングの日程を日付順に",
@@ -105,7 +105,7 @@ def pages() -> list[dict]:
             S("いま分かっている日程", f"{jp(TODAY)}時点で、主催者が発表している日程です。", table=T("これからのセール", ["モール", "名前", "期間", "今日から"], coming_rows())),
             S("このサイトでできること", "セールの日程は、モールごとのページと、日付順の一覧で見られます。買い時は、家電とランドセルで、メーカーの発表日や、業界団体の出荷台数を調べました。",
               "ポイント倍率やクーポンの数字を入れると、実質価格が出る計算ツールもあります。入れた数字は、送信も保存もしません。"),
-            S("決まり", "日程は、主催者の公式発表で確かめたものだけを載せます。未発表のものは、予想でも日付を書きません。商品の価格や順位は載せません。詳しくは、調べ方のページに書きました。"),
+            S("決まり", "日程は、主催者の公式発表で確かめたものだけを出します。未発表のものは、予想でも日付を書きません。商品の価格や順位は出しません。詳しい決まりは、調べ方のページにあります。"),
         ],
         [R("/calendar/", "セール日程の一覧"), R("/rakuten/", "楽天のセール"), R("/amazon/sale-calendar/", "Amazonのセール"), R("/yahoo/", "Yahoo!ショッピングのセール"), R("/buytime/", "買い時のハブ"), R("/calc/", "実質価格の計算ツール"), R("/method/", "調べ方と決まり")],
         intent=1, basis=f"{jp(TODAY)}時点の主催者の発表",

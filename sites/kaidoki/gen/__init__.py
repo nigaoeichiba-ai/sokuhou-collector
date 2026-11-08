@@ -43,6 +43,7 @@ def write() -> int:
         f.unlink()
     for p in pages:
         slug = p["path"].strip("/").replace("/", "-") or "home"
+        slug = {"calendar": "sale-list"}.get(slug, slug)    # tests/test_wadaipost.py keeps a file named calendar.json out of git
         (content / f"{slug}.json").write_text(json.dumps(p, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     site = json.loads((SITE / "site.json").read_text(encoding="utf-8"))
     site["updated"] = TODAY.isoformat()
