@@ -167,6 +167,15 @@ class BuildTest(unittest.TestCase):
         self.assertIn("/memo/?o=birthday&amp;r=boyfriend", self.read("gift/birthday-boyfriend/index.html"))
         self.assertIn('id="memo-strip"', self.read("index.html"))
 
+    def test_gift_history_page_is_private_and_linked_from_the_memo(self):
+        self.assertIn("history/index.html", self.files)
+        h = self.read("history/index.html")
+        for needle in ('id="gift-app"', 'name="item"', 'name="year"', 'noindex,follow', "この端末のブラウザだけに保存され、送信されません"):
+            self.assertIn(needle, h)
+        self.assertNotIn("/history/", self.read("sitemap.xml"))                    # one browser's own page: not listed
+        self.assertNotIn("adsbygoogle", h)                                         # a form page carries no AdSense tag
+        self.assertIn('href="/history/"', self.read("memo/index.html"))
+
     def test_a_card_has_a_note_only_where_an_editor_wrote_one(self):
         html = self.read("gift/birthday-boyfriend/index.html")
         self.assertNotIn("レビューがいちばん多い一品です", html)       # a sentence made from the numbers and repeated on every card reads as machine-made

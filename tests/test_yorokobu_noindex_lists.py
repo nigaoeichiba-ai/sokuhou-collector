@@ -58,7 +58,7 @@ class NoindexListsTest(unittest.TestCase):
             self.assertIn(url, self.listed(), url)
         others = [p for p in self.out.rglob("index.html") if p.relative_to(self.out).parts[0] not in ("ranking", "numbers", "favorites", "list", "ask", "p") and not p.relative_to(self.out).as_posix().startswith(("ask/", "ask_"))]
         self.assertGreater(len(others), 20)
-        bad = [p.relative_to(self.out).as_posix() for p in others if NOINDEX in p.read_text(encoding="utf-8") and p.relative_to(self.out).as_posix() not in ("favorites/index.html", "list/index.html")]
+        bad = [p.relative_to(self.out).as_posix() for p in others if NOINDEX in p.read_text(encoding="utf-8") and p.relative_to(self.out).as_posix() not in ("favorites/index.html", "history/index.html", "list/index.html")]
         self.assertEqual(bad, [], "pages that should be indexable carry noindex")
 
     def test_links_stay_and_robots_txt_does_not_ban_them(self):

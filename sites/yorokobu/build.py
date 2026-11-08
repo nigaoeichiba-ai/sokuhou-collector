@@ -223,7 +223,7 @@ def breadcrumb_ld(cfg: dict, body: str) -> str:
 NO_ADS_PATHS = frozenset({
     "/theme/", "/for/", "/occasion/", "/budget/", "/numbers/", "/ranking/", "/data/", "/compare/", "/message/", "/month/", "/diagnosis/", "/oiwai/", "/oseibo/", "/picks/",
     "/read/", "/tool/",                                               # hubs
-    "/contact/", "/contact/thanks.html", "/ask/", "/dock/", "/memo/", "/favorites/", "/list/",         # forms and the visitor's own lists
+    "/contact/", "/contact/thanks.html", "/ask/", "/dock/", "/memo/", "/history/", "/favorites/", "/list/",         # forms and the visitor's own lists
     "/404.html",
 })
 ADS_TAG = re.compile(r'<script async src="https://pagead2\.googlesyndication\.com/pagead/js/adsbygoogle\.js[^"]*"[^>]*></script>' + chr(10) + '?')
@@ -1209,6 +1209,7 @@ def memo_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <ul class="memo-list" aria-live="polite"></ul>
 <p class="memo-empty">まだ登録がありません。左のフォームから大切な日を登録してみましょう。</p>
 <p class="memo-all" hidden><button type="button" class="btn btn-sub" data-all-ics>すべてカレンダーに追加(.ics)</button></p>
+<p class="memo-note">去年贈ったものを忘れないよう、<a href="/history/">贈りものの記録</a>も残せます。記録した人の日には、前回に贈ったものがここに出ます。</p>
 </div>
 </section>
 <section class="calendar-teaser" style="margin-top:50px"><h2><span class="scribble">みんなの贈りどき</span></h2>
@@ -2213,6 +2214,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     pages.update(ask_quiet)                                 # the other person's page and the results: not listed (noindex), built after the sitemap's list
     pages["concierge-data.json"] = ccbot.data(d, cfg, finder_map(d))     # what the corner counter reads (assets/concierge.js)
     pages["favorites/index.html"] = minepage.favorites_page(d, cfg, preview)    # one browser's own page: noindex, not in the sitemap
+    pages["history/index.html"] = minepage.history_page(d, cfg, preview, today)  # the same kind: gifts the visitor wrote down (this browser only)
     pages.update(standard_files(listed, cfg, preview, d["fetched_date"]))
     pages[".htaccess"] += guide_redirects(cfg, c.get("guide_moves") or {}, pages)
     pages.update(asset_pages(HERE / "assets"))

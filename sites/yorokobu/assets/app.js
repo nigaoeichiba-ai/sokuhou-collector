@@ -391,7 +391,7 @@
     a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
   }
-  window.YorokobuMemo = { nextDate: nextDate, daysUntil: daysUntil, buildIcs: buildIcs, googleHref: googleHref, label: label };
+  window.YorokobuMemo = { lastGift: lastGift, nextDate: nextDate, daysUntil: daysUntil, buildIcs: buildIcs, googleHref: googleHref, label: label };
 
   function initMemo() {
     var app = $("#memo-app");
@@ -420,6 +420,8 @@
         $("b", li).textContent = label(r.e, data.names);
         $(".cd", li).textContent = r.n === 0 ? "きょう!" : "あと" + r.n + "日";
         $("small", li).textContent = nd ? (nd.getMonth() + 1) + "月" + nd.getDate() + "日" + (r.n <= 21 ? "(そろそろ選びはじめましょう)" : "") : "";
+        var lg = lastGift(giftLoad(), r.e.rec, r.e.occ, r.e.name);
+        if (lg) { var lgp = document.createElement("small"); lgp.className = "last-gift"; lgp.textContent = "前回(" + lg.year + "年)に贈ったもの: " + lg.item; li.insertBefore(lgp, $(".acts", li)); }
         var acts = $(".acts", li);
         var go = document.createElement("a"); go.className = "go"; go.href = giftHref(r.e, data.pairs); go.textContent = "おすすめを見る"; acts.appendChild(go);
         var g = document.createElement("a"); g.href = googleHref(r.e, data, now); g.target = "_blank"; g.rel = "noopener"; g.textContent = "Googleカレンダー"; acts.appendChild(g);
@@ -444,6 +446,62 @@
     });
     $("[data-all-ics]", app).addEventListener("click", function () { download("tasetsunahi.ics", buildIcs(memoLoad(), data, today0())); });
     render();
+  }
+
+  // ---------------------------------------------------------------- 贈りものの記録: what was given to whom and when, kept only in this browser; the memo shows "last time" from it
+  var GIFT_KEY = "yorokobu.gifts";
+  function giftLoad() { try { var a = JSON.parse(localStorage.getItem(GIFT_KEY) || "[]"); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function giftSave(list) { try { localStorage.setItem(GIFT_KEY, JSON.stringify(list)); return true; } catch (e) { return false; } }
+  // the most recent record of the same person (relation and name) and occasion, or null
+  function lastGift(list, rec, occ, name) {
+    var hit = (list || []).filter(function (g) { return g.rec === rec && g.occ === occ && (g.name || "") === (name || ""); });
+    hit.sort(function (a, b) { return b.year - a.year || (a.id < b.id ? 1 : -1); });
+    return hit[0] || null;
+  }
+  function initHistory() {
+    var app = $("#gift-app");
+    if (!app) return;
+    var names = JSON.parse(app.getAttribute("data-json")), form = $(".gift-add", app), list = $(".gift-list", app), empty = $(".gift-empty", app), hint = $(".gift-hint", app);
+    function showHint() {
+      var f = form.elements, g = f.rec.value && f.occ.value ? lastGift(giftLoad(), f.rec.value, f.occ.value, f.name.value.trim()) : null;
+      if (!g) { hint.hidden = true; return; }
+      hint.textContent = "前回(" + g.year + "年)は「" + g.item + "」を贈りました。同じものにならないよう、気をつけて選べます。";
+      hint.hidden = false;
+    }
+    ["rec", "occ", "name"].forEach(function (k) { form.elements[k].addEventListener(k === "name" ? "input" : "change", showHint); });
+    var q = new URLSearchParams(location.search);
+    if (q.get("o") && form.elements.occ.querySelector('option[value="' + q.get("o") + '"]')) form.elements.occ.value = q.get("o");
+    if (q.get("r") && form.elements.rec.querySelector('option[value="' + q.get("r") + '"]')) form.elements.rec.value = q.get("r");
+    function render() {
+      var entries = giftLoad().slice().sort(function (a, b) { return b.year - a.year || (a.id < b.id ? 1 : -1); });
+      list.innerHTML = "";
+      entries.forEach(function (g) {
+        var li = document.createElement("li"); li.className = "memo-card";
+        li.innerHTML = '<div class="row1"><b></b><span class="cd"></span></div><small></small><div class="acts"></div>';
+        $("b", li).textContent = g.item;
+        $(".cd", li).textContent = g.year + "年";
+        $("small", li).textContent = (g.name || (names.rec[g.rec] || "")) + "へ・" + (names.occ[g.occ] || "");
+        var del = document.createElement("button"); del.type = "button"; del.textContent = "削除";
+        del.addEventListener("click", function () { giftSave(giftLoad().filter(function (x) { return x.id !== g.id; })); render(); showHint(); });
+        $(".acts", li).appendChild(del);
+        list.appendChild(li);
+      });
+      empty.hidden = entries.length > 0;
+      $("[data-gift-copy]", app).hidden = entries.length === 0;
+    }
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var f = form.elements, item = f.item.value.trim();
+      if (!f.rec.value || !f.occ.value || !item) return;
+      var entries = giftLoad(); if (entries.length >= 200) entries.shift();
+      entries.push({ id: "g" + Date.now().toString(36) + Math.floor(Math.random() * 1000), rec: f.rec.value, occ: f.occ.value, name: f.name.value.trim(), year: Number(f.year.value), item: item });
+      giftSave(entries); f.item.value = ""; render(); showHint();
+    });
+    $("[data-gift-copy]", app).addEventListener("click", function () {
+      var text = giftLoad().slice().sort(function (a, b) { return b.year - a.year; }).map(function (g) { return g.year + "年 " + (g.name || names.rec[g.rec] || "") + "・" + (names.occ[g.occ] || "") + ": " + g.item; }).join("\n");
+      download("okurimono-kiroku.txt", text + "\n");
+    });
+    render(); showHint();
   }
 
   // the top page strip: with something saved, the nearest days as countdown cards
@@ -619,7 +677,7 @@
     initShare();
     var f = $("form.finder");
     if (f) window.YorokobuFinder(f);
-    initBrowse(); initConcierge(); initFavorites(); initMemo(); initMemoStrip();
+    initBrowse(); initConcierge(); initFavorites(); initMemo(); initMemoStrip(); initHistory();
     initTaboo(); initCalc(); initGacha(); initQuiz(); initList();
   });
   // ---------------------------------------------------------------- copy buttons (message examples): shown only when copying works

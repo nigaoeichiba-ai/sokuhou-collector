@@ -108,6 +108,51 @@ const grid = (d) => rows(d, '.grid-all li.item');
 """
 
 
+GIFT_SCENARIO = r"""
+const out = {};
+const wait = (ms) => new Promise(r => setTimeout(r, ms));
+async function load(url) {
+  const f = document.createElement('iframe'); f.style.width = '1200px'; f.style.height = '900px'; document.body.appendChild(f);
+  await new Promise(r => { f.onload = r; f.src = url; }); await wait(300); return f;
+}
+(async () => {
+  try {
+    let f = await load('/history/?o=birthday&r=mother'); let d = f.contentDocument, w = f.contentWindow;
+    w.localStorage.clear();
+    const form = d.querySelector('.gift-add');
+    out.prefill = [form.elements.occ.value, form.elements.rec.value];
+    out.empty_shown = !d.querySelector('.gift-empty').hidden;
+    out.hint_hidden_at_first = d.querySelector('.gift-hint').hidden;
+    const thisYear = new Date().getFullYear();
+    form.elements.name.value = 'ハナコ'; form.elements.year.value = String(thisYear - 1); form.elements.item.value = 'ハンドクリームのセット';
+    form.dispatchEvent(new w.Event('submit', {cancelable: true})); await wait(100);
+    out.stored = JSON.parse(w.localStorage.getItem('yorokobu.gifts')).length;
+    out.card_title = d.querySelector('.gift-list .memo-card b').textContent;
+    out.card_year = d.querySelector('.gift-list .memo-card .cd').textContent;
+    out.expected_year = (thisYear - 1) + '年';
+    out.item_cleared = form.elements.item.value;
+    // the same person and occasion again: the page says what was given last time
+    form.elements.name.dispatchEvent(new w.Event('input')); await wait(50);
+    out.hint = d.querySelector('.gift-hint').hidden ? '' : d.querySelector('.gift-hint').textContent;
+    // another name: no hint
+    form.elements.name.value = 'タロウ'; form.elements.name.dispatchEvent(new w.Event('input')); await wait(50);
+    out.hint_other_name_hidden = d.querySelector('.gift-hint').hidden;
+    // the memo card of the same person and occasion shows it too
+    f = await load('/memo/'); d = f.contentDocument; w = f.contentWindow;
+    w.localStorage.setItem('yorokobu.memo', JSON.stringify([{id: 'm1', name: 'ハナコ', rec: 'mother', occ: 'birthday', m: 1, d: 15}, {id: 'm2', name: '', rec: 'mother', occ: 'birthday', m: 1, d: 15}]));
+    f = await load('/memo/'); d = f.contentDocument;
+    out.memo_last = [...d.querySelectorAll('.memo-card')].map(c => (c.querySelector('.last-gift') || {}).textContent || '');
+    // deleting
+    f = await load('/history/'); d = f.contentDocument;
+    [...d.querySelectorAll('.gift-list .acts button')].filter(b => b.textContent === '削除')[0].click(); await wait(100);
+    out.after_delete = d.querySelectorAll('.gift-list .memo-card').length;
+    out.empty_after_delete = !d.querySelector('.gift-empty').hidden;
+  } catch (e) { out.error = String(e); }
+  document.getElementById('out').textContent = JSON.stringify(out);
+})();
+"""
+
+
 MEMO_SCENARIO = r"""
 const out = {};
 const wait = (ms) => new Promise(r => setTimeout(r, ms));
@@ -273,6 +318,23 @@ class BrowserTest(unittest.TestCase):
         self.assertTrue(o["fav_line"].startswith("https://line.me/R/msg/text/?"))
         self.assertIn('"code"', o["fav_stored"])
         self.assertEqual(o["fav_after_remove"], "0")
+
+    def test_gift_history_records_warns_about_repeats_and_feeds_the_memo(self):
+        o = self.run_scenario(GIFT_SCENARIO)
+        self.assertNotIn("error", o)
+        self.assertEqual(o["prefill"], ["birthday", "mother"])
+        self.assertTrue(o["empty_shown"] and o["hint_hidden_at_first"])
+        self.assertEqual(o["stored"], 1)
+        self.assertEqual(o["card_title"], "ハンドクリームのセット")
+        self.assertEqual(o["card_year"], o["expected_year"])
+        self.assertEqual(o["item_cleared"], "")
+        self.assertIn("前回(" + o["expected_year"].replace("年", "") + "年)は「ハンドクリームのセット」を贈りました", o["hint"])
+        self.assertTrue(o["hint_other_name_hidden"])
+        self.assertEqual(len(o["memo_last"]), 2)
+        self.assertIn("ハンドクリームのセット", o["memo_last"][0] + o["memo_last"][1])
+        self.assertEqual(sorted(x == "" for x in o["memo_last"]), [False, True])      # only the card of the same name shows it
+        self.assertEqual(o["after_delete"], 0)
+        self.assertTrue(o["empty_after_delete"])
 
     def test_memo_registration_countdown_calendar_files_and_the_home_strip(self):
         o = self.run_scenario(MEMO_SCENARIO)

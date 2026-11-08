@@ -97,6 +97,43 @@ def favorites_page(d: dict, cfg: dict, preview: bool) -> str:
     return html.replace("<head>", '<head>\n<meta name="robots" content="noindex,follow">', 1)         # a page of one browser's own: not for the search results
 
 
+def history_page(d: dict, cfg: dict, preview: bool, today) -> str:
+    """/history/ (贈りものの記録): a form and a list drawn by assets/app.js from this browser's own storage (key yorokobu.gifts); nothing is sent."""
+    B = _b()
+    c = d["c"]
+    occ_opts = "".join(f'<option value="{o["slug"]}">{esc(o["name"])}</option>' for o in c["occasions"])
+    rec_opts = "".join(f'<option value="{r["slug"]}">{esc(r["name"])}</option>' for r in c["recipients"])
+    year_opts = "".join(f'<option value="{y}"{" selected" if y == today.year else ""}>{y}年</option>' for y in range(today.year, today.year - 7, -1))
+    data = {"occ": {o["slug"]: o["name"] for o in c["occasions"]}, "rec": {r["slug"]: r["name"] for r in c["recipients"]}}
+    lead = "だれに、いつ、何を贈ったかを書きとめておくと、来年も同じものを贈ってしまうのを防げます。このブラウザの中だけに保存し、サーバーには送りません。"
+    body = f"""{B.head_band("mint", "", "贈りものの記録", lead, single=True)}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("たいせつな日メモ", "/memo/"), ("贈りものの記録", None)])}</div>
+<section id="gift-app" class="memo" data-json="{esc(json.dumps(data, ensure_ascii=False, separators=(",", ":")))}">
+<div class="memo-form"><h2><span class="scribble">贈ったものを書きとめる</span></h2>
+<form class="gift-add">
+<label>だれに<select name="rec" required><option value="">贈る相手</option>{rec_opts}</select></label>
+<label>名前(自由・なくてもOK)<input type="text" name="name" maxlength="12" placeholder="例: ハナコ"></label>
+<label>どの日<select name="occ" required><option value="">イベント</option>{occ_opts}</select></label>
+<label>贈った年<select name="year">{year_opts}</select></label>
+<label>贈ったもの<input type="text" name="item" maxlength="40" required placeholder="例: ハンドクリームのセット"></label>
+<p class="memo-fixed gift-hint" hidden></p>
+<button type="submit" class="btn">記録する</button>
+</form>
+<p class="memo-note">入力した内容は、<b>この端末のブラウザだけに保存され、送信されません</b>。端末やブラウザを変えると見られなくなります。名前の欄に本名を入れる必要はありません。</p>
+</div>
+<div class="memo-list-wrap"><h2><span class="scribble">これまでに贈ったもの</span></h2>
+<ul class="memo-list gift-list" aria-live="polite"></ul>
+<p class="memo-empty gift-empty">まだ記録がありません。左のフォームから書きとめてみましょう。</p>
+<p class="memo-all"><button type="button" class="btn btn-sub" data-gift-copy hidden>記録をテキストで保存</button></p>
+</div>
+</section>
+<section class="calendar-teaser" style="margin-top:50px"><h2><span class="scribble">次の贈りものを選ぶ</span></h2>
+<p>記録した相手と日は、<a href="/memo/">たいせつな日メモ</a>の「前回に贈ったもの」にも出ます。贈り物選びは、<a href="/occasion/">イベントから探す</a>か<a href="/for/">相手から探す</a>から。</p></section>
+<noscript><p class="notice">このページはJavaScript が使える環境でお使いください。</p></noscript>"""
+    html = B.page(cfg, preview, path="/history/", title=f"贈りものの記録 去年の贈り物のかぶり防止 | {cfg['site_name']}", description=lead, body=body)
+    return html.replace("<head>", '<head>\n<meta name="robots" content="noindex,follow">', 1)         # a page of one browser's own: not for the search results
+
+
 COUNT_PRIVACY = ("<h2>商品のボタンが押された回数</h2>"
                  "<p>商品のショップへのボタンが押されるとその商品が押された回数を1つ数えます。数えるのは商品ごとの回数だけです。押した人、ブラウザ、IPアドレス、時刻は記録しません。"
                  "同じブラウザでは1つの商品につき1日1回までです。ブラウザの「トラッキングしない」設定がオンのときは、数えません。"
