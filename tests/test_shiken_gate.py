@@ -1,7 +1,7 @@
 """shiken-nittei.com の公開ゲート: 文章のNG語が1語でも残っていたら、テストが落ちて、公開（デプロイ）が止まる。
 
 走査は sites/shiken/tools/check_text.py（窓口の指定の一覧）。ここで、ビルド後の全ページを、日付を変えて走査する。
-公開前チェックの記録（sites/shiken/tools/checks/公開前チェック_*.md）が無い・未記入の公開も、止める。
+公開前チェックの記録（sites/shiken/tools/checks/prepublish_*.md）が無い・未記入の公開も、止める。
 """
 from __future__ import annotations
 
@@ -92,8 +92,8 @@ class GateTest(unittest.TestCase):
             self.assertEqual(r.returncode, 0)
 
     def test_there_is_a_filled_pre_publication_record(self):
-        records = sorted((TOOLS / "checks").glob("公開前チェック_*.md"))
-        self.assertTrue(records, "tools/checks/ に「公開前チェック_日付.md」がありません。公開前チェックリストをコピーして埋めてください")
+        records = sorted((TOOLS / "checks").glob("prepublish_*.md"))
+        self.assertTrue(records, "tools/checks/ に prepublish_日付.md がありません。tools/checklist_template.md をコピーして埋めてください")
         text = records[-1].read_text(encoding="utf-8")
         self.assertNotIn("はい／いいえ", text, f"{records[-1].name}: 未記入の項目があります")
         self.assertRegex(text, r"判定[^\n]*公開する")
