@@ -1,0 +1,88 @@
+{
+ "slug": "kantyu-mimai-wa",
+ "title": "寒中見舞いの和風素材",
+ "subject": "",
+ "genre": "season",
+ "touch": "wa",
+ "title_fmt": "{ja}",
+ "subject_en": "Japanese kanchu-mimai (midwinter greeting) motifs in Japanese ink-and-colour style, calm and quiet, snow on each subject, each a small complete object or scene Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "雪をかぶった南天・椿・雪うさぎ・手紙・湯のみなど、寒中見舞いに使える和の絵柄12点の素材です。喪中の返礼や、寒中見舞いはがきの飾りに向きます。",
+ "tags": [
+  "寒中見舞い",
+  "和風",
+  "南天",
+  "椿",
+  "雪うさぎ",
+  "雪景色",
+  "はがき"
+ ],
+ "season": {
+  "from": "12-20",
+  "to": "02-10"
+ },
+ "holes": false,
+ "items": [
+  [
+   "nanten",
+   "雪をかぶった南天",
+   "a nandina branch with red berries and snow on its leaves"
+  ],
+  [
+   "tsubaki",
+   "雪の椿",
+   "a red camellia flower with glossy leaves and a cap of snow"
+  ],
+  [
+   "usagi",
+   "雪うさぎ",
+   "a snow rabbit with red nandina berry eyes and two leaf ears on a small tray"
+  ],
+  [
+   "suisen",
+   "水仙",
+   "a cluster of white narcissus flowers with long green leaves and snow at the base"
+  ],
+  [
+   "tegami",
+   "寒中見舞いの手紙",
+   "a letter and an envelope with a pine twig beside them, tied with a thin cord"
+  ],
+  [
+   "yunomi",
+   "湯のみとお茶",
+   "a Japanese tea cup with steam and a small tea sweet on a plate"
+  ],
+  [
+   "toro",
+   "雪の灯籠",
+   "a stone lantern with a cap of snow beside a small pine"
+  ],
+  [
+   "matsu",
+   "雪の松",
+   "a pine branch bending under snow"
+  ],
+  [
+   "fukujuso",
+   "福寿草",
+   "a golden Amur adonis flower coming up through snow"
+  ],
+  [
+   "yukidaruma",
+   "雪だるま",
+   "a small round snow figure with a bucket-like cap and a scarf, Japanese style"
+  ],
+  [
+   "kotatsu",
+   "こたつ",
+   "a kotatsu table with a quilt, a tea cup and a mandarin orange"
+  ],
+  [
+   "village",
+   "雪の里",
+   "a quiet snow-covered farmhouse with a thatched roof and smoke from its chimney"
+  ]
+ ],
+ "priority": 1,
+ "exclude": []
+}

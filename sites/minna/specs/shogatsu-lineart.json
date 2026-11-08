@@ -1,0 +1,88 @@
+{
+ "slug": "shogatsu-lineart",
+ "title": "お正月飾りの白黒線画",
+ "subject": "",
+ "genre": "eto",
+ "touch": "lineart",
+ "title_fmt": "{ja}",
+ "subject_en": "New Year decorations and games in clean black outline only on a white background, no fill colour and no shading, thick even line, closed shapes, each a separate subject, monochrome-print friendly Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "門松・鏡餅・しめ縄・破魔矢・羽子板・凧・独楽・おせち・初日の出などお正月の飾りと遊びを、黒い線だけで描いた12点の素材です。白黒の年賀状や、モノクロ印刷のおたよりに使えます。",
+ "tags": [
+  "お正月",
+  "白黒",
+  "線画",
+  "モノクロ",
+  "門松",
+  "鏡餅",
+  "年賀状"
+ ],
+ "season": {
+  "from": "11-20",
+  "to": "01-15"
+ },
+ "holes": false,
+ "items": [
+  [
+   "kadomatsu",
+   "門松",
+   "a pair-style kadomatsu of cut bamboo and pine branches tied with straw rope"
+  ],
+  [
+   "kagami",
+   "鏡餅",
+   "a kagami mochi of two stacked round rice cakes on a stand with a bitter orange on top and a leaf"
+  ],
+  [
+   "shimenawa",
+   "しめ縄飾り",
+   "a New Year shimenawa wreath with paper streamers, a bitter orange and fern leaves"
+  ],
+  [
+   "hamaya",
+   "破魔矢",
+   "a hamaya arrow with feather fletching and a decorated shaft"
+  ],
+  [
+   "hagoita",
+   "羽子板と羽根",
+   "a hagoita paddle with a decorated panel and a shuttlecock"
+  ],
+  [
+   "tako",
+   "凧",
+   "a kite with a long tail flying, with a simple pattern"
+  ],
+  [
+   "koma",
+   "独楽",
+   "a spinning top with a wide pattern and a string"
+  ],
+  [
+   "osechi",
+   "おせち重箱",
+   "a tiered osechi lunch box seen from above with several small dishes in it"
+  ],
+  [
+   "hatsuhinode",
+   "初日の出",
+   "the first sunrise over mountains with a pine tree in front"
+  ],
+  [
+   "daruma",
+   "だるま",
+   "a daruma doll with a round body and a simple face"
+  ],
+  [
+   "ema",
+   "絵馬と鈴",
+   "a votive plaque and a shrine bell with a rope"
+  ],
+  [
+   "toshikoshi",
+   "年越しそば",
+   "a bowl of soba noodles with a tempura shrimp and chopsticks, steam rising"
+  ]
+ ],
+ "priority": 1,
+ "exclude": []
+}

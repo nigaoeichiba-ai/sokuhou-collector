@@ -1,0 +1,89 @@
+{
+ "slug": "setsubun-nurie-lineart",
+ "title": "節分のぬりえ",
+ "subject": "",
+ "genre": "season",
+ "touch": "lineart",
+ "title_fmt": "{ja}",
+ "subject_en": "Setsubun coloring pages in clean black outline only on a white background, no fill colour and no shading, thick even line, big closed shapes that are easy to colour in, each page one separate subject Outlines are closed and darker than the fill; light parts (snow, paper, white fur, plates) are warm cream (#FFF6E0) or tinted, never pure white. No letters, no text, no logos.",
+ "lead": "鬼・豆まき・恵方巻・柊鰯・升など、節分の行事を黒い線だけで描いた12点のぬりえ素材です。保育園・学童の製作や、季節のおたよりの飾りに使えます。",
+ "tags": [
+  "節分",
+  "ぬりえ",
+  "塗り絵",
+  "豆まき",
+  "鬼",
+  "恵方巻",
+  "柊鰯",
+  "線画"
+ ],
+ "season": {
+  "from": "01-10",
+  "to": "02-05"
+ },
+ "holes": false,
+ "items": [
+  [
+   "oni",
+   "赤鬼のお面をかぶる子",
+   "a child wearing a big horned oni mask while throwing beans"
+  ],
+  [
+   "mame",
+   "豆まき",
+   "a child throwing roasted soybeans from a wooden masu box, beans flying"
+  ],
+  [
+   "masu",
+   "升に入った豆",
+   "a square wooden masu box filled with roasted soybeans"
+  ],
+  [
+   "ehomaki",
+   "恵方巻",
+   "a thick sushi roll cut in two pieces showing colourful fillings, a whole roll beside it"
+  ],
+  [
+   "hiiragi",
+   "柊鰯",
+   "a holly branch with a grilled sardine head stuck on it"
+  ],
+  [
+   "onigawara",
+   "笑う鬼",
+   "a friendly round ogre with two small horns and a tiger-skin loincloth laughing"
+  ],
+  [
+   "otafuku",
+   "おたふくのお面",
+   "a smiling okame mask with round cheeks"
+  ],
+  [
+   "family",
+   "家族の豆まき",
+   "a family of four at an open door throwing beans together"
+  ],
+  [
+   "kanabo",
+   "鬼の金棒",
+   "an ogre's spiked iron club and a small ogre mask side by side"
+  ],
+  [
+   "fukuwauchi",
+   "福を呼ぶ招き猫",
+   "a lucky beckoning cat holding a small bean bag"
+  ],
+  [
+   "ume",
+   "梅の枝",
+   "a plum blossom branch with open flowers and buds"
+  ],
+  [
+   "spring",
+   "立春の朝",
+   "a sunrise over a hill with a small bird on a branch and a warm winter sun"
+  ]
+ ],
+ "priority": 1,
+ "exclude": []
+}
