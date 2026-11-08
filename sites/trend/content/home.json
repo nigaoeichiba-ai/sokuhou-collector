@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-07",
- "data_basis": "2026年11月7日現在",
+ "updated": "2026-11-08",
+ "data_basis": "2026年11月8日現在",
  "sources": [
   "bousaicho"
  ],
@@ -16,6 +16,10 @@
   {
    "h2": "最新の記事",
    "html": "<article class=\"lead-card\"><a href=\"/trend-typhoon32/\"><img src=\"/assets/img/typhoon-32.jpg\" width=\"1280\" alt=\"「台風32号 発生 32年ぶり 進路は日本の南へ、小笠原近海に接近」の文字と、右側に台風の雲の渦を描いた絵\"><span class=\"lead-title\">台風32号(チャンパカ)の進路予報と、32年ぶりの発生</span></a><p>台風32号は気象庁の予報で日本の南を通り、11日に小笠原近海へ。小笠原が暴風域に入る確率は91%です。</p></article>"
+  },
+  {
+   "h2": "本日の新着記事(カテゴリ別)",
+   "html": "<h3>家計・値上げ</h3><ul class=\"links\"><li><a href=\"/trend-rice-price/\">スーパーのコメは5kgで平均2,816円、前年同期より33.5％安い</a></li><li><a href=\"/trend-vegetable-price/\">たまねぎは平年の55％、レタスは122％、11月上旬の野菜相場</a></li><li><a href=\"/trend-wage-2026-09/\">9月の給与は名目4.6％増、実質2.2％増。物価を引くと増え方は半分ほど</a></li><li><a href=\"/trend-blackfriday-price/\">ブラックフライデーの前に、買う予定の品の通常価格を記録しておく</a></li></ul><h3>防災・気象</h3><ul class=\"links\"><li><a href=\"/trend-fire-alarm/\">11月9日から秋の火災予防運動、住宅用火災警報器は製造年を確認</a></li></ul><h3>天気・季節</h3><ul class=\"links\"><li><a href=\"/trend-influenza-44/\">インフルエンザ、定点あたり10.26人で前の週より増えた</a></li><li><a href=\"/trend-humidifier-care/\">加湿器は、買う前に手入れのしやすさを確認</a></li><li><a href=\"/trend-gastroenteritis-winter/\">感染性胃腸炎は冬に増える。東京都は「警報レベルに達していない」</a></li></ul><h3>暮らし</h3><ul class=\"links\"><li><a href=\"/trend-crab-phone-call/\">カニや海産物の電話勧誘、断った商品が届いたときの対応</a></li><li><a href=\"/trend-nengajo-print/\">年賀はがきは自宅の印刷とネット注文、枚数が多いほど差が出る</a></li></ul>"
   },
   {
    "h2": "防災特集: 家の備えを8項目で確かめる",

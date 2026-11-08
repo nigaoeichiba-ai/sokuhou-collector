@@ -113,6 +113,51 @@
     "福袋",
     "中古"
    ]
+  },
+  {
+   "id": "humidifier",
+   "label": "加湿器",
+   "keyword": "加湿器 上部給水 お手入れ簡単",
+   "count": 3,
+   "min_price": 3000,
+   "max_price": 15000,
+   "min_reviews": 30,
+   "min_rating": 4.0,
+   "exclude": [
+    "福袋",
+    "中古",
+    "フィルター",
+    "部品"
+   ]
+  },
+  {
+   "id": "hygrometer",
+   "label": "湿度計",
+   "keyword": "温湿度計 デジタル",
+   "count": 3,
+   "min_price": 500,
+   "max_price": 3000,
+   "min_reviews": 50,
+   "min_rating": 4.0,
+   "exclude": [
+    "福袋",
+    "中古"
+   ]
+  },
+  {
+   "id": "nengajo-paper",
+   "label": "年賀状用の印刷用紙",
+   "keyword": "年賀状 印刷用紙 インクジェット",
+   "count": 3,
+   "min_price": 500,
+   "max_price": 4000,
+   "min_reviews": 30,
+   "min_rating": 4.0,
+   "exclude": [
+    "福袋",
+    "中古",
+    "年賀はがき 郵便"
+   ]
   }
  ]
 }
