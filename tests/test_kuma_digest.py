@@ -121,3 +121,75 @@ class TopCityTest(unittest.TestCase):
         rows = [dict(row("2026-09-22"), city="B市"), dict(row("2026-10-06"), city="Z市"), dict(row("2026-10-07"), city="Z市")]
         src = digest.pref_source("miyagi", "宮城県", pref(rows, {"9": 1, "10": 2}, "2026-10-04"))
         self.assertEqual(digest.top_cities(src, "2026-W41"), ([], 0, 0))
+
+
+class SnapshotTest(unittest.TestCase):
+    """Weeks counted once stay after the municipality's list no longer allows counting them."""
+
+    def live(self):
+        rows = [dict(row("2026-09-22"), city="B市"), dict(row("2026-09-23"), city="B市"), dict(row("2026-09-24"), city="C町")]
+        src = digest.pref_source("miyagi", "宮城県", pref(rows, {"9": 3}, "2026-10-04"))
+        return digest.build([src], first_day=date(2026, 9, 21))
+
+    def test_entry_matches_a_hand_count(self):
+        dig = self.live()
+        self.assertEqual(digest.entry(dig, "miyagi", "2026-W39"),
+                         {"count": 3, "first": "2026-09-22", "last": "2026-09-24", "cities": {"B市": 2, "C町": 1}})
+
+    def test_snapshot_keeps_a_week_the_list_no_longer_covers(self):
+        snap = digest.updated_snapshot(None, self.live())
+        self.assertEqual(snap["weeks"]["2026-W39"]["miyagi"]["count"], 3)
+        # later the prefecture's list only holds one row, the month no longer adds up: the live digest has no such week
+        later = digest.build([digest.pref_source("miyagi", "宮城県", pref([row("2026-10-01")], {"9": 3, "10": 1}, "2026-10-11"))],
+                             first_day=date(2026, 9, 21))
+        self.assertNotIn("2026-W39", later["weeks"])
+        merged = digest.merge_snapshot(later, snap)
+        self.assertEqual(merged["by_week"]["2026-W39"], {"miyagi": 3})
+        self.assertIn("2026-W39", merged["weeks"])
+        self.assertEqual(digest.entry(merged, "miyagi", "2026-W39")["cities"], {"B市": 2, "C町": 1})
+
+    def test_a_week_counted_from_today_wins_and_replaces_the_saved_figure(self):
+        snap = {"version": 1, "weeks": {"2026-W39": {"miyagi": {"count": 99, "first": None, "last": None, "cities": {}}}}}
+        dig = digest.merge_snapshot(self.live(), snap)
+        self.assertEqual(dig["by_week"]["2026-W39"]["miyagi"], 3)
+        self.assertNotIn(("2026-W39", "miyagi"), dig["frozen"])
+        self.assertEqual(digest.updated_snapshot(snap, dig)["weeks"]["2026-W39"]["miyagi"]["count"], 3)
+
+    def test_frozen_weeks_are_not_rewritten_and_a_source_that_is_gone_stays_out(self):
+        snap = {"version": 1, "weeks": {"2026-W30": {"miyagi": {"count": 4, "first": "2026-07-20", "last": "2026-07-22", "cities": {"X市": 4}},
+                                                       "stopped": {"count": 7, "first": None, "last": None, "cities": {}}}}}
+        dig = digest.merge_snapshot(self.live(), snap)
+        self.assertEqual(dig["by_week"]["2026-W30"], {"miyagi": 4})        # "stopped" is not a source of today's build
+        again = digest.updated_snapshot(snap, dig)
+        self.assertEqual(again["weeks"]["2026-W30"]["miyagi"]["count"], 4)
+        self.assertEqual(again["weeks"]["2026-W30"]["stopped"]["count"], 7)  # kept in the file, shown nowhere
+
+    def test_saved_week_page_renders_with_its_note_and_older_weeks_in_the_hub(self):
+        from tests.test_kuma_build import CFG, HAVE_PYPDF, raw_data
+        if not HAVE_PYPDF:
+            self.skipTest("pypdf is not installed")
+        raw = raw_data()
+        raw["notices"] = []
+        snap = {"version": 1, "weeks": {"2026-W30": {"miyagi": {"count": 4, "first": "2026-07-20", "last": "2026-07-22", "cities": {"X市": 4}}}}}
+        full = {**GOOD, "source": "miyagi", "source_page": "https://example.jp/m", "credit": "出典:テスト", "update_note": "更新します"}
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            build.render_site(raw, CFG, out, release=True, prefs={"miyagi": full}, snapshot=snap)
+            t = (out / "digest/2026-W30/index.html").read_text(encoding="utf-8")
+            self.assertIn("合計4件", t)
+            self.assertIn("X市の4件", t)
+            self.assertIn("保存した値", t)
+            self.assertIn("/digest/2026-W30/", (out / "digest/index.html").read_text(encoding="utf-8"))
+            live_page = (out / "digest/2026-W39/index.html").read_text(encoding="utf-8")
+            self.assertNotIn("保存した値", live_page)
+
+    def test_update_cli_writes_only_when_something_changed(self):
+        from sites.kuma import digest_snapshot
+        with tempfile.TemporaryDirectory() as tmp:
+            data = Path(tmp)
+            full = {**GOOD, "source": "miyagi", "source_page": "https://example.jp/m", "credit": "出典:テスト", "update_note": "更新します"}
+            (data / "miyagi_kuma.json").write_text(__import__("json").dumps(full, ensure_ascii=False), encoding="utf-8")
+            self.assertTrue(digest_snapshot.update(data))
+            self.assertFalse(digest_snapshot.update(data))
+            saved = __import__("json").loads((data / "kuma_digest_snapshot.json").read_text(encoding="utf-8"))
+            self.assertEqual(saved["weeks"]["2026-W39"]["miyagi"]["count"], 3)

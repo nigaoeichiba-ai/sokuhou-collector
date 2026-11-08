@@ -33,6 +33,10 @@ jobs:
         id: collect
         continue-on-error: true   # keep what succeeded, then fail the job below
         run: python -m sokuhou.run kuma
+      # week counts of the weekly digest are saved, so a week page stays after a municipality drops old rows (sites/kuma/digest_snapshot.py)
+      - name: Save digest weeks
+        continue-on-error: true
+        run: python -m sites.kuma.digest_snapshot
       - name: Commit data
         id: commit
         run: |

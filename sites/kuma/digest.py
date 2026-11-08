@@ -100,3 +100,46 @@ def top_cities(src: dict, key: str) -> tuple[list[str], int, int]:
         return [], 0, 0
     top = max(cnt.values())
     return sorted(c for c, v in cnt.items() if v == top), top, sum(cnt.values())
+
+
+# ---------------------------------------------------------------- saved weeks (data/kuma_digest_snapshot.json)
+# A municipality's list often drops its old rows, or a month stops adding up after a later correction. The week counts that
+# were computed while the data was consistent are kept in a small file (counts and city names only, no place text), so a
+# week page that was once published does not disappear. A week that can be counted from today's list always wins.
+
+def entry_from_source(src: dict, key: str) -> dict:
+    """One source's figures for one week, in the form that is saved: count, first and last day, rows per named municipality."""
+    ws = week_start(key)
+    we = ws + timedelta(days=6)
+    days = [d for d in src["days"] if ws <= d <= we]
+    cities = Counter(c for d, c in src.get("cities", []) if ws <= d <= we)
+    return {"count": len(days), "first": min(days).isoformat() if days else None, "last": max(days).isoformat() if days else None,
+            "cities": dict(sorted(cities.items()))}
+
+
+def entry(dig: dict, sk: str, key: str) -> dict:
+    """The saved figures when the week is only known from the snapshot, else the figures counted from today's list."""
+    frozen = dig.get("frozen", {}).get((key, sk))
+    return frozen if frozen is not None else entry_from_source(dig["sources"][sk], key)
+
+
+def merge_snapshot(dig: dict, snap: dict | None) -> dict:
+    """Add the saved weeks (and sources) that today's lists can no longer count. Sources that are not in `dig` (stopped ones) stay out."""
+    dig.setdefault("frozen", {})
+    for key, row in ((snap or {}).get("weeks") or {}).items():
+        for sk, e in row.items():
+            if sk in dig["sources"] and sk not in dig["by_week"].get(key, {}) and isinstance(e.get("count"), int):
+                dig["by_week"].setdefault(key, {})[sk] = e["count"]
+                dig["frozen"][(key, sk)] = e
+    dig["weeks"] = sorted(dig["by_week"], reverse=True)
+    return dig
+
+
+def updated_snapshot(snap: dict | None, dig: dict) -> dict:
+    """The snapshot with every week counted from today's lists written over its older figures (frozen ones are left as they were)."""
+    weeks = {k: dict(v) for k, v in ((snap or {}).get("weeks") or {}).items()}
+    for key, row in dig["by_week"].items():
+        for sk in row:
+            if (key, sk) not in dig.get("frozen", {}):
+                weeks.setdefault(key, {})[sk] = entry_from_source(dig["sources"][sk], key)
+    return {"version": 1, "weeks": {k: weeks[k] for k in sorted(weeks)}}

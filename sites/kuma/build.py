@@ -841,16 +841,24 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
             notes += f'<p class="notice">{esc(src["name"])}: {esc(src["note"])}</p>\n'
     if both:
         rows.append(["<strong>合計(両週で数えた自治体)</strong>", n(tot), n(ptot), ratio_text(tot, ptot)])
-    ws = digest.week_start(key)
-    places = ""
+    places, frozen_names = "", []
     for sk in cur:
         src = dig["sources"][sk]
-        days = [x for x in src["days"] if ws <= x <= ws + timedelta(days=6)]
-        tops, tc, named = digest.top_cities(src, key)
+        e = digest.entry(dig, sk, key)
+        if (key, sk) in dig.get("frozen", {}):
+            frozen_names.append(src["name"])
+        named = sum(e["cities"].values())
+        tops = []
+        if e["cities"]:
+            top = max(e["cities"].values())
+            tops = sorted(c for c, v in e["cities"].items() if v == top)
         # only when every row of the week names a city, so "most" is not decided on a partial count
-        most = (f"。市町村別で最も多かったのは、{'・'.join(esc(c) for c in tops)}の{n(tc)}件" + ("ずつ" if len(tops) > 1 else "")) if tops and named == len(days) else ""
-        places += (f"<li>{esc(src['name'])}: {md(min(days).isoformat())}から{md(max(days).isoformat())}まで({n(len(days))}件){most}</li>" if days
+        most = (f"。市町村別で最も多かったのは、{'・'.join(esc(c) for c in tops)}の{n(max(e['cities'].values()))}件" + ("ずつ" if len(tops) > 1 else "")) if tops and named == e["count"] else ""
+        places += (f"<li>{esc(src['name'])}: {md(e['first'])}から{md(e['last'])}まで({n(e['count'])}件){most}</li>" if e["count"]
                    else f"<li>{esc(src['name'])}: 記録なし</li>")
+    if frozen_names:
+        notes += (f'<p class="notice">{esc("・".join(frozen_names))}の件数は、その週の記録が自治体の一覧から外れたあとも残せるよう、'
+                  "一覧が週の数と合っていた時点で保存した値です。</p>\n")
     ks = dig["weeks"]
     i = ks.index(key)
     links = ([f'<a href="/digest/{ks[i + 1]}/">前の週</a>'] if i + 1 < len(ks) else []) + ([f'<a href="/digest/{ks[i - 1]}/">次の週</a>'] if i > 0 else [])
@@ -875,7 +883,8 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
 
 def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: dict | None = None,
                 prefs: dict | None = None, today: date | None = None,
-                captures: dict | None = None, update_lastmod: bool = False, feeds: dict | None = None, research: list | None = None) -> list[str]:
+                captures: dict | None = None, update_lastmod: bool = False, feeds: dict | None = None, research: list | None = None,
+                snapshot: dict | None = None) -> list[str]:
     global SITE
     missing = missing_config(cfg)
     if release and missing:
@@ -893,7 +902,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     d["live_prefs"] = prepare_prefs(prefs)
     d["live_counts"] = live_mod.prepare_counts(prefs)
     any_live = bool(d["live_prefs"] or d["live_counts"])
-    dig = digest.build(digest_sources(prefs))      # built before the navigation: /digest/ is linked only when a week page exists
+    dig = digest.merge_snapshot(digest.build(digest_sources(prefs)), snapshot)      # built before the navigation: /digest/ is linked only when a week page exists
     d["has_digest"] = bool(dig["weeks"])
     nav = [x for x in BASE_NAV if x[1] != "/live/" or any_live]
     if any_live:
@@ -1019,11 +1028,13 @@ def main() -> None:
     feeds = json.loads(feeds_file.read_text(encoding="utf-8")) if feeds_file.exists() else None
     cap_file = data / "env_capture_kuma.json"
     captures = json.loads(cap_file.read_text(encoding="utf-8")) if cap_file.exists() else None
+    snap_file = data / "kuma_digest_snapshot.json"
+    snapshot = json.loads(snap_file.read_text(encoding="utf-8")) if snap_file.exists() else None
     links_file = HERE / "links.json"
     links = json.loads(links_file.read_text(encoding="utf-8")) if links_file.exists() else {}
     try:
         files = render_site(raw, cfg, Path(args.out), release=args.release, links=links, prefs=prefs, captures=captures, update_lastmod=args.update_lastmod, feeds=feeds,
-                            research=research_mod.load())
+                            research=research_mod.load(), snapshot=snapshot)
     except BuildError as e:
         sys.exit(str(e))
     print(f"built {len(files)} files into {args.out}")
