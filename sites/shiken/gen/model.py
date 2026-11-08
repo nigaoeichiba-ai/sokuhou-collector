@@ -73,6 +73,10 @@ def _take_ids(rows):
     return rows
 
 
+# the rounds whose deadline hour the official page gives (15:00); read 2026-11-08: the page lists it for each of these four rounds
+TOEIC_DEADLINE_15 = {"2026-12-19", "2027-01-10", "2027-01-24", "2027-02-14"}
+
+
 def build_events() -> list[dict]:
     rows = []
     for who, group, kind, iso, src, note in EVENTS:
@@ -86,7 +90,7 @@ def build_events() -> list[dict]:
         name = f"TOEIC L&R {x.month}月{x.day}日回"
         url = "/minkan/"
         rows += [_event("", eid, name, "語学", "application_start", s, "", "", "", url, "iibc"),
-                 _event("", eid, name, "語学", "application_deadline", e, "15:00" if exam == "2026-12-19" else "", "", "", url, "iibc"),
+                 _event("", eid, name, "語学", "application_deadline", e, "15:00" if exam in TOEIC_DEADLINE_15 else "", "", "", url, "iibc"),
                  _event("", eid, name, "語学", "exam", exam, "", "", "", url, "iibc"),
                  _event("", eid, name, "語学", "announcement", res, "", "", "デジタル公式認定証", url, "iibc")]
     # 宅建: the application is by post or by internet, with different deadlines (the spec's own example)
