@@ -24,11 +24,11 @@ BASIS = "2026年11月8日現在"
 
 CRUMB = {"trend-rice-price": "コメの価格", "trend-fire-alarm": "火災警報器の点検", "trend-vegetable-price": "野菜の相場", "trend-wage-2026-09": "9月の給与",
          "trend-influenza-44": "インフルエンザの定点報告", "trend-blackfriday-price": "ブラックフライデー前の価格記録", "trend-crab-phone-call": "海産物の電話勧誘",
-         "trend-nengajo-print": "年賀はがきの印刷", "trend-humidifier-care": "加湿器の手入れ", "trend-gastroenteritis-winter": "感染性胃腸炎の対策"}
+         "trend-nengajo-print": "年賀はがきの印刷", "trend-humidifier-care": "加湿器は手入れのしやすい機種", "trend-gastroenteritis-winter": "感染性胃腸炎の対策"}
 # the main term of a page must stand in its title and h1 (the desk's text is not reworded), so it is a phrase of the title; the desk's search words are kept as the second term
 KW = {"trend-rice-price": "5kg平均2,816円", "trend-fire-alarm": "火災警報器", "trend-vegetable-price": "たまねぎは平年の55％", "trend-wage-2026-09": "実質2.2％増", "trend-influenza-44": "インフルエンザは定点10.26人",
-      "trend-blackfriday-price": "ブラックフライデー", "trend-crab-phone-call": "カニの電話勧誘", "trend-nengajo-print": "年賀はがき", "trend-humidifier-care": "加湿器の手入れ",
-      "trend-gastroenteritis-winter": "感染性胃腸炎"}
+      "trend-blackfriday-price": "ブラックフライデー", "trend-crab-phone-call": "カニの電話勧誘", "trend-nengajo-print": "年賀はがき", "trend-humidifier-care": "加湿器は手入れのしやすい機種",
+      "trend-gastroenteritis-winter": "感染性胃腸炎の冬の対策"}
 # the section after which the illustration stands (prefix of the h2)
 FIG_AFTER = {"trend-rice-price": "買うときは、単価と", "trend-fire-alarm": "点検は、この順番で", "trend-vegetable-price": "店頭での使い方",
              "trend-wage-2026-09": "理由の1つ目", "trend-influenza-44": "基本の予防", "trend-blackfriday-price": "記録に残すのは4つ", "trend-crab-phone-call": "場面別の対応",
