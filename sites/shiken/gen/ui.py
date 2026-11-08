@@ -41,7 +41,7 @@ def counter(iso: str, kind: str = "deadline", big: bool = True) -> str:
         inner = '<b class="num">本日</b>'
     else:
         inner = f'<span class="past-text">{-n}日前に終了</span>'
-    lab = f'<span class="urgent-label">{esc(label)}</span>' if label and n >= 0 else ""
+    lab = f'<span class="urgent-label">{esc(label)}</span>' if label and n > 0 else ""
     return f'<div class="days {cls}{" big" if big else ""}" data-countdown="{esc(iso)}" data-kind="{kind}">{inner}{lab}</div>'
 
 

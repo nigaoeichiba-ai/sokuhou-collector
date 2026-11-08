@@ -32,7 +32,7 @@
    "paras": []
   },
   {
-   "html": "<h2 id=\"planner-h\">逆算プランナー</h2><p class=\"sec-sub\">令和9年度の日程は未発表のため、目標の日はご自身で選んでください。このサイトが日付を入れることはありません。</p><div class=\"tool\" id=\"planner\" data-today=\"2026-11-08\">\n<div class=\"row\"><label>目標日（試験日など）<input type=\"date\" data-plan-date></label>\n<label>目標の総学習時間（時間）<input type=\"number\" inputmode=\"decimal\" min=\"1\" step=\"1\" data-plan-total></label></div>\n<div class=\"row\"><label>平日1日の学習時間（時間）<input type=\"number\" inputmode=\"decimal\" min=\"0\" step=\"0.5\" data-plan-weekday></label>\n<label>休日1日の学習時間（時間・省略可）<input type=\"number\" inputmode=\"decimal\" min=\"0\" step=\"0.5\" data-plan-weekend></label></div>\n<div class=\"plan-out\" data-plan-out aria-live=\"polite\"><p>目標日、総学習時間、平日の学習時間を入れると、勉強を始める日の目安が出ます。休日の時間を空にすると、休日は勉強しない前提で計算します。</p></div></div><p class=\"hint\">日程が発表されたら、試験日に合わせた計画をここで立てられるようにします。</p>",
+   "html": "<h2 id=\"planner-h\">逆算プランナー</h2><p class=\"sec-sub\">令和9年度の日程は未発表のため、目標の日はご自身で選んでください。このサイトが目標の日を代わりに入れることはありません。</p><div class=\"tool\" id=\"planner\" data-today=\"2026-11-08\">\n<div class=\"row\"><label>目標日（試験日など）<input type=\"date\" data-plan-date></label>\n<label>目標の総学習時間（時間）<input type=\"number\" inputmode=\"decimal\" min=\"1\" step=\"1\" data-plan-total></label></div>\n<div class=\"row\"><label>平日1日の学習時間（時間）<input type=\"number\" inputmode=\"decimal\" min=\"0\" step=\"0.5\" data-plan-weekday></label>\n<label>休日1日の学習時間（時間・省略可）<input type=\"number\" inputmode=\"decimal\" min=\"0\" step=\"0.5\" data-plan-weekend></label></div>\n<div class=\"plan-out\" data-plan-out aria-live=\"polite\"><p>目標日、総学習時間、平日の学習時間を入れると、勉強を始める日の目安が出ます。休日の時間を空にすると、休日は勉強しない前提で計算します。</p></div></div><p class=\"hint\">日程が発表されたら、試験日に合わせた計画をここで立てられるようにします。</p>",
    "paras": []
   },
   {

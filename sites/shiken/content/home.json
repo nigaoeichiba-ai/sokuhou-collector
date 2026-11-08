@@ -47,7 +47,7 @@
    "paras": []
   },
   {
-   "html": "<h2>試験日が近い順</h2><p class=\"sec-sub\">締切ではなく、試験そのものの日が近い順です。</p><div class=\"near\"><div class=\"ncard today\"><div class=\"nd\"><div class=\"days examday\" data-countdown=\"2026-11-08\" data-kind=\"exam\"><b class=\"num\">本日</b><span class=\"urgent-label\">本日</span></div></div><div><h3><a href=\"/gyosei/\">行政書士試験</a></h3><p>2026年11月8日(日) 13:00 試験日</p></div></div><div class=\"ncard\"><div class=\"nd\"><div class=\"days blue\" data-countdown=\"2026-11-15\" data-kind=\"exam\">あと<b class=\"num\">7</b>日</div></div><div><h3><a href=\"/boki/\">日商簿記 第174回</a></h3><p>2026年11月15日(日) 試験日</p></div></div><div class=\"ncard\"><div class=\"nd\"><div class=\"days blue\" data-countdown=\"2026-12-06\" data-kind=\"exam\">あと<b class=\"num\">28</b>日</div></div><div><h3><a href=\"/schedule/\">管理業務主任者試験</a></h3><p>2026年12月6日(日) 13:00 試験日</p></div></div></div>",
+   "html": "<h2>試験日が近い順</h2><p class=\"sec-sub\">締切ではなく、試験そのものの日が近い順です。</p><div class=\"near\"><div class=\"ncard today\"><div class=\"nd\"><div class=\"days examday\" data-countdown=\"2026-11-08\" data-kind=\"exam\"><b class=\"num\">本日</b></div></div><div><h3><a href=\"/gyosei/\">行政書士試験</a></h3><p>2026年11月8日(日) 13:00 試験日</p></div></div><div class=\"ncard\"><div class=\"nd\"><div class=\"days blue\" data-countdown=\"2026-11-15\" data-kind=\"exam\">あと<b class=\"num\">7</b>日</div></div><div><h3><a href=\"/boki/\">日商簿記 第174回</a></h3><p>2026年11月15日(日) 試験日</p></div></div><div class=\"ncard\"><div class=\"nd\"><div class=\"days blue\" data-countdown=\"2026-12-06\" data-kind=\"exam\">あと<b class=\"num\">28</b>日</div></div><div><h3><a href=\"/schedule/\">管理業務主任者試験</a></h3><p>2026年12月6日(日) 13:00 試験日</p></div></div></div>",
    "paras": []
   },
   {
