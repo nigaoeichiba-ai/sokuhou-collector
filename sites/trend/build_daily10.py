@@ -82,7 +82,7 @@ def parse(lines: list[str]) -> dict:
                 rows.append(lines[i].strip())
                 i += 1
             cells = [[c.strip() for c in r.strip("|").split("|")] for r in rows if not re.match(r"^\|[-\s|]+\|$", r)]
-            cur["table"] = {"caption": cur["h2"], "cols": cells[0], "num_cols": [], "rows": cells[1:]}
+            cur["table"] = {"caption": "", "cols": cells[0], "num_cols": [], "rows": cells[1:]}
         elif cur is None:
             lead.append(s)
         else:
