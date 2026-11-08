@@ -922,6 +922,32 @@ def tag_url(tag: str) -> str:
     return f"/tag/{hashlib.sha1(tag.encode('utf-8')).hexdigest()[:10]}/"
 
 
+MIN_RELATED_SHARED = 3     # a related keyword must be on at least this many of the same pictures
+MAX_RELATED = 8
+
+
+def related_tags(items: list[dict], tag: str, tags: list[str]) -> list[tuple[str, int]]:
+    """Keywords that have their own page and are on the same pictures as `tag`: [(keyword, pictures that carry both)], most shared first.
+    Counted from the pictures' own keywords, so the numbers are what the page itself lists."""
+    own = tagged(items, tag)
+    page_tags = set(tags) - {tag}
+    cnt: dict[str, int] = {}
+    for it in own:
+        for k in set(it["tags"]) & page_tags:
+            cnt[k] = cnt.get(k, 0) + 1
+    ranked = sorted(((k, v) for k, v in cnt.items() if v >= MIN_RELATED_SHARED), key=lambda kv: (-kv[1], kv[0]))
+    return ranked[:MAX_RELATED]
+
+
+def related_block(items: list[dict], tag: str, tags: list[str]) -> str:
+    rel = related_tags(items, tag, tags)
+    chips = ("".join(f'<a href="{tag_url(k)}">{esc(k)}({v})</a>' for k, v in rel)) if rel else ""
+    head = (f'<section style="margin-top:28px"><h2><span class="scribble">いっしょによく付くキーワード</span></h2><nav class="chips" aria-label="関連するキーワード">{chips}</nav>'
+            f'<p class="meta">カッコの中は、「{esc(tag)}」と同じイラストに付いている点数です。</p></section>') if rel else ""
+    return head + ('<p class="meta" style="margin-top:20px"><a href="/tag/">キーワードの一覧</a>から別の語も探せます。'
+                   '商用で使うときの決まりや、年賀状・ぬりえなどの作り方は<a href="/guide/">読みもの</a>にまとめています。</p>')
+
+
 def tag_pages(cfg, preview, items, tags: list[str], series: list[dict] | None = None) -> dict:
     out = {}
     for tag in tags:
@@ -930,7 +956,8 @@ def tag_pages(cfg, preview, items, tags: list[str], series: list[dict] | None = 
         head = (f'<h1>「{esc(tag)}」のイラスト</h1><p class="lead">「{esc(tag)}」のキーワードが付いたイラストを、{nseries}つのセットから{len(its)}点集めました。'
                 f'無料・商用OK・クレジット不要。</p>{licence_box()}{hub_facts_box("tag", its, series) if series else ""}')
         pages = paged(cfg, preview, tag_url(tag), its, head, f"{tag}のイラスト 無料・商用OK | {cfg['site_name']}",
-                      f"{tag}のイラスト{len(its)}点。無料・商用OK・登録不要の透明PNG。", [("トップ", "/"), (tag, None)])
+                      f"{tag}のイラスト{len(its)}点。無料・商用OK・登録不要の透明PNG。", [("トップ", "/"), (tag, None)],
+                      extra_top=related_block(items, tag, tags))
         out.update(pages)
     return out
 

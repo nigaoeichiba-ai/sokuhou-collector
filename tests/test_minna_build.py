@@ -60,6 +60,25 @@ class MinnaBuildTest(unittest.TestCase):
             self.assertIn((build.tag_url(tag), f"{tag}({len(build.tagged(self.items, tag))})"), links)
         self.assertIn(f"{len(tags)}語", html)
 
+    def test_related_keywords_are_counted_from_the_pictures_and_link_to_pages_that_exist(self):
+        tags = build.tag_list(self.items)
+        with_related = 0
+        for tag in tags:
+            own = build.tagged(self.items, tag)
+            # an independent count: pictures of this keyword that also carry the other keyword
+            expect = {k: sum(1 for i in own if k in i["tags"]) for k in tags if k != tag}
+            expect = sorted(((k, v) for k, v in expect.items() if v >= build.MIN_RELATED_SHARED), key=lambda kv: (-kv[1], kv[0]))[:build.MAX_RELATED]
+            self.assertEqual(build.related_tags(self.items, tag, tags), expect)
+            html = self.read(build.tag_url(tag).strip("/") + "/index.html")
+            self.assertEqual("いっしょによく付くキーワード" in html, bool(expect))
+            for k, v in expect:
+                self.assertIn(f'<a href="{build.tag_url(k)}">{k}({v})</a>', html)
+                self.assertIn(build.tag_url(k).strip("/") + "/index.html", self.files)
+            self.assertNotIn(f'<a href="{build.tag_url(tag)}">{tag}(', html)       # never links to itself
+            self.assertIn('href="/guide/"', html)
+            with_related += bool(expect)
+        self.assertGreater(with_related, 0)
+
     def test_kana_row_reads_katakana_as_hiragana_and_puts_other_words_last(self):
         self.assertEqual(build.kana_row("ネコ"), "な行")
         self.assertEqual(build.kana_row("さくら"), "さ行")
