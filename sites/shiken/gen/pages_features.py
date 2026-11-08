@@ -164,7 +164,7 @@ def cbt() -> dict:
            f'<div class="fcard"><h3>{a("/postmark/", "消印有効と必着の違い")}</h3><p>郵送で申し込むとき、「消印有効」はその日に郵便局の消印が押されていれば間に合い、「必着」はその日までに届いていなければ間に合いません。</p></div>'
            f'<div class="fcard"><h3>{a("/goukaku-ritsu/", "合格率の見方")}</h3><p>受験者基準と申込者基準では、同じ試験でも合格率の数字が変わります。宅建の実数で解説します。</p></div>'
            f'<div class="fcard"><h3>関連する試験の詳細</h3><p>{a("/takken/", "宅建の日程と合格率を見る", "cardlink")}</p></div></div>'
-           '<h2>特集の一覧</h2><p class="sec-sub">このサイトにある特集の一覧です。題だけを並べています。</p><ul class="links">'
+           '<h2>特集の一覧</h2><p class="sec-sub">このサイトにある特集の題の一覧です。</p><ul class="links">'
            + "".join(f'<li>{a(h, esc(t))}</li>' for _, items in ARTICLES for h, t, _tag in items) + f'</ul><p>{a("/yomimono/", "特集をテーマ別に見る", "cardlink")}</p>')
     p = page("/cbt/", "article", "/yomimono/", "CBT試験とは", "CBT試験とは｜通年で受ける試験と年1回の試験の違い", "CBT試験とは 通年で受ける試験と年1回の試験の違い",
              prev["description"], prev["answer"],

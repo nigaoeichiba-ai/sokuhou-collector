@@ -104,6 +104,31 @@ class GateTest(unittest.TestCase):
             r = subprocess.run([sys.executable, str(TOOLS / "check_text.py"), tmp, "--rules", str(TOOLS / "ng_rules.json")], capture_output=True)
             self.assertEqual(r.returncode, 0)
 
+    def test_fetching_the_rules_stops_on_any_failure_and_never_falls_back(self):
+        import json
+        import subprocess
+        import sys
+        fetch = str(TOOLS / "fetch_rules.py")
+        good = TOOLS / "ng_rules.json"
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "got.json"
+            r = subprocess.run([sys.executable, fetch, good.as_uri(), str(out)], capture_output=True, text=True, encoding="utf-8")
+            self.assertEqual(r.returncode, 0, r.stdout)
+            self.assertIn("version=", r.stdout)
+            self.assertEqual(json.loads(out.read_text(encoding="utf-8"))["version"], self.version)
+            out.unlink()
+            bad = {"": "", "empty url": None}
+            for name, body in (("not json", "{oops"), ("no version", json.dumps({"hard": [{"label": "a", "pattern": "a"}]})),
+                               ("empty hard", json.dumps({"hard": [], "version": "x"})), ("no pattern", json.dumps({"hard": [{"label": "a"}], "version": "x"}))):
+                p = Path(tmp) / "bad.json"
+                p.write_text(body, encoding="utf-8")
+                r = subprocess.run([sys.executable, fetch, p.as_uri(), str(out)], capture_output=True, text=True, encoding="utf-8")
+                self.assertEqual(r.returncode, 1, name)
+                self.assertFalse(out.exists(), name)               # 失敗しても、控えや古い内容を書き出さない
+            for url in ("", (Path(tmp) / "missing.json").as_uri()):
+                r = subprocess.run([sys.executable, fetch, url, str(out)], capture_output=True, text=True, encoding="utf-8")
+                self.assertEqual(r.returncode, 1, url)
+
     def test_the_copy_of_the_rules_has_the_version_of_the_master_when_the_drive_is_here(self):
         master = Path("H:/マイドライブ/文章ツール/ng_rules.json")
         if not master.exists():
