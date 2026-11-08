@@ -39,6 +39,9 @@ class GateTest(unittest.TestCase):
         from sites.shiken import gen
         gen.write()
         cls.mod = load_checker()
+        # ルールの正は ng_rules.json(Drive)。CIにはリポジトリ内の控え(同じversion)を使う。
+        hard, soft, white, cls.version = cls.mod.load_rules(str(TOOLS / "ng_rules.json"))
+        cls.mod.HARD_PATTERNS, cls.mod.SOFT_PATTERNS, cls.mod.WHITELIST = hard, soft, white
 
     def scan_built(self):
         pages, _ = newsite.build_pages(SITE, release=True, strict_seo=True)
@@ -90,6 +93,23 @@ class GateTest(unittest.TestCase):
             (Path(tmp) / "index.html").write_text("<html><body><p>日程が表示されます。</p></body></html>", encoding="utf-8")
             r = subprocess.run([sys.executable, str(TOOLS / "check_text.py"), tmp], capture_output=True)
             self.assertEqual(r.returncode, 0)
+
+    def test_a_rules_file_that_cannot_be_read_stops_the_gate(self):
+        import subprocess
+        import sys
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "index.html").write_text("<html><body><p>日程が表示されます。</p></body></html>", encoding="utf-8")
+            r = subprocess.run([sys.executable, str(TOOLS / "check_text.py"), tmp, "--rules", str(Path(tmp) / "none.json")], capture_output=True)
+            self.assertEqual(r.returncode, 2)
+            r = subprocess.run([sys.executable, str(TOOLS / "check_text.py"), tmp, "--rules", str(TOOLS / "ng_rules.json")], capture_output=True)
+            self.assertEqual(r.returncode, 0)
+
+    def test_the_copy_of_the_rules_has_the_version_of_the_master_when_the_drive_is_here(self):
+        master = Path("H:/マイドライブ/文章ツール/ng_rules.json")
+        if not master.exists():
+            self.skipTest("Drive の正が、この環境にない")
+        import json
+        self.assertEqual(json.loads(master.read_text(encoding="utf-8"))["version"], self.version)
 
     def test_there_is_a_filled_pre_publication_record(self):
         records = sorted((TOOLS / "checks").glob("prepublish_*.md"))

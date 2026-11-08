@@ -4,21 +4,24 @@
 公開ゲート：文章チェック（shiken-nittei.com）
 
 使い方:
-    python3 check_text.py <走査するフォルダ> [--report <出力先md>]
+    python3 check_text.py <走査するフォルダ> [--report <出力先md>] [--rules <ng_rules.json>]
 
 動作:
     - フォルダ内の .html / .md / .txt をすべて走査する。
-    - ハードNG（下の HARD_PATTERNS）が1件でもあれば、終了コード 1 で終わる。
+    - ハードNGが1件でもあれば、終了コード 1 で終わる。
       デプロイ側は、この終了コードを見て公開を止めること。
-    - ソフト対象（SOFT_PATTERNS）は件数と箇所を表示する。0件でなくても
-      終了コードは変えないが、公開前チェックリストに「確認した」記録がないと
-      公開できない運用にする（チェックリスト側で担保）。
+    - ソフト対象は件数と箇所を表示する。0件でなくても終了コードは変えないが、
+      公開前チェックリストに「確認した」記録がないと公開できない運用にする。
     - 結果は標準出力と、--report 指定時はそのファイルにも書く。
+    - --rules で ng_rules.json（ルールのマスター）を指定すると、その内容で走査する。
+      指定したのに読めない場合は、終了コード 2（エラー）で終わる＝ゲートは止める側に倒す。
+      --rules を付けない場合は、このファイル内の予備リストで走査する（手元確認用）。
 
 ホワイトリスト（支払い手段の名称は「カード」でも対象外）:
     クレジットカード / カード決済
 """
 
+import json
 import os
 import re
 import sys
@@ -96,16 +99,42 @@ def scan(root: str):
     return files, hard_hits, soft_counts, soft_locations
 
 
+def load_rules(path):
+    """ng_rules.json を読み、(hard, soft, whitelist, version) を返す。失敗したら例外。"""
+    with open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
+    hard = [(item["label"], item["pattern"]) for item in data["hard"]]
+    soft = [(item["label"], item["pattern"]) for item in data.get("soft", [])]
+    whitelist = data.get("whitelist", [])
+    version = data.get("version", "unknown")
+    return hard, soft, whitelist, version
+
+
 def main() -> int:
+    global HARD_PATTERNS, SOFT_PATTERNS, WHITELIST
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     report_path = None
+    rules_path = None
+    rules_version = "embedded (予備リスト)"
     if "--report" in sys.argv:
         idx = sys.argv.index("--report")
         if idx + 1 < len(sys.argv):
             report_path = sys.argv[idx + 1]
+    if "--rules" in sys.argv:
+        idx = sys.argv.index("--rules")
+        if idx + 1 < len(sys.argv):
+            rules_path = sys.argv[idx + 1]
     if not args:
-        print("使い方: python3 check_text.py <フォルダ> [--report <出力先md>]")
+        print("使い方: python3 check_text.py <フォルダ> [--report <出力先md>] [--rules <ng_rules.json>]")
         return 2
+    if rules_path:
+        try:
+            HARD_PATTERNS, SOFT_PATTERNS, WHITELIST, rules_version = load_rules(rules_path)
+            rules_version = f"{rules_version}（{rules_path}）"
+        except Exception as exc:  # 読めないルールで通さない（止める側に倒す）
+            print(f"ルールファイルを読めませんでした: {rules_path}: {exc}")
+            print("ゲートは安全側に倒し、公開不可として終了します。")
+            return 2
     root = args[0]
     files, hard_hits, soft_counts, soft_locations = scan(root)
 
@@ -113,6 +142,7 @@ def main() -> int:
     lines.append("# 文章チェック結果（公開ゲート）")
     lines.append("")
     lines.append(f"- 走査したファイル数: {len(files)}")
+    lines.append(f"- 使ったルール: {rules_version}")
     lines.append(f"- ハードNGのヒット: {len(hard_hits)} 件")
     lines.append("")
     if hard_hits:

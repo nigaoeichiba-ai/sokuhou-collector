@@ -19,6 +19,8 @@
 ## 2. 機械チェック（公開ゲート）
 
 - check_text.py の実行結果ファイル名：sites/shiken/tools/check_text.py を、ビルド後の sites/shiken/dist（39ファイル）に実行。結果は報告に添付（Drive の 実装結果_試験日程カレンダー.md）。テストは tests/test_shiken_gate.py
+- 使ったルール：Drive の ng_rules.json、version 2026-11-08.1（--rules で指定。リポジトリ内の控えも同じ version）
+- 書き直しの回数：2回目で通過（1回目：差し替え直後に68件→書き直して再実行→2回目：0件）
 - ハードNGのヒット件数（0でなければ公開不可）：0
 
 | 語 | 件数 |
