@@ -64,7 +64,7 @@ class SpecificGuides(unittest.TestCase):
             self.assertIn(day, html)
 
     def test_the_modified_date_is_in_the_article_data(self):
-        self.assertIn('"dateModified": "2026-10-28"', self.guide("kantyu-mimai"))
+        self.assertIn('"dateModified": "2026-11-09"', self.guide("kantyu-mimai"))      # 2026-11-09: the printing-service section
 
 class HagakiGuide(unittest.TestCase):
     """/guide/hagaki-size-ichiran/ (2026-10-28): checked against Japan Post, linked from the pages that talk about the same card, no ad tag."""

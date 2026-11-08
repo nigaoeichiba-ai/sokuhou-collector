@@ -733,22 +733,22 @@ def printables_hub(cfg, preview, year: int, themes: list[dict], items: list[dict
 
 # ------------------------------------------------------------------ affiliate boxes (only when the owner's ids are in config.json; always marked as advertising)
 GUIDE_PR = {
-    "nenga-tsukurikata": ("年賀状作りにあると便利なもの", [("年賀状の印刷サービス", "年賀状 印刷 2027"), ("年賀状向けのプリンター用紙", "年賀状 プリンター用紙"), ("プリンターのインク", "プリンター インク 純正")]),
-    "nenga-2027-schedule": ("年賀状の準備に", [("年賀状の印刷サービス", "年賀状 印刷 2027"), ("宛名ラベル", "年賀状 宛名 ラベル"), ("スタンプ・はんこ", "年賀状 スタンプ 干支")]),
+    "nenga-tsukurikata": ("年賀状作りにあると便利なもの", [("年賀状向けのプリンター用紙", "年賀状 プリンター用紙"), ("プリンターのインク", "プリンター インク 純正")]),
+    "nenga-2027-schedule": ("年賀状の準備に", [("宛名ラベル", "年賀状 宛名 ラベル"), ("スタンプ・はんこ", "年賀状 スタンプ 干支")]),
     "nenga-bunrei": ("年賀状にひとこと添えるなら", [("年賀状用のペン", "年賀状 ペン 筆ペン"), ("スタンプ・はんこ", "年賀状 スタンプ 干支")]),
-    "kantyu-mimai": ("寒中見舞いの準備に", [("寒中見舞いはがき", "寒中見舞い はがき 印刷"), ("筆ペン", "筆ペン 薄墨")]),
-    "nenga-jimai": ("あいさつ状の準備に", [("あいさつ状の印刷", "年賀状じまい 印刷"), ("ペン・万年筆", "万年筆 はがき")]),
+    "kantyu-mimai": ("寒中見舞いの準備に", [("筆ペン", "筆ペン 薄墨")]),
+    "nenga-jimai": ("あいさつ状の準備に", [("ペン・万年筆", "万年筆 はがき")]),
     "nurie-insatsu": ("ぬりえを楽しむ道具", [("色えんぴつ", "色えんぴつ 24色"), ("クレヨン", "クレヨン 幼児 安全"), ("ぬりえの本", "ぬりえ 本")]),
     "hoiku-otayori": ("おたよりづくりに", [("ラミネートフィルム", "ラミネートフィルム A4"), ("カラーペン", "カラーペン 水性 12色"), ("A4の厚手用紙", "A4 用紙 厚手 カラー")]),
     "frame-kazarigyo-tsukaikata": ("おたより・チラシづくりに", [("A4の厚手用紙", "A4 用紙 厚手 カラー"), ("ラミネートフィルム", "ラミネートフィルム A4"), ("カラーペン", "カラーペン 水性 12色")]),
     "tomei-png": ("イラストを印刷して使うなら", [("A4の厚手用紙", "A4 用紙 厚手"), ("ラミネートフィルム", "ラミネートフィルム A4"), ("写真用紙", "写真用紙 A4 光沢")]),
     "christmas-card": ("クリスマスカードづくりに", [("カード用の厚紙", "メッセージカード 用紙 A4"), ("封筒", "封筒 カード用"), ("シール・スタンプ", "クリスマス シール")]),
-    "oseibo-orei-jo": ("お礼状の準備に", [("便せん・封筒", "便せん 封筒 縦書き"), ("筆ペン", "筆ペン 黒"), ("はがき用の切手", "切手 シート")]),
+    "oseibo-orei-jo": ("お礼状の準備に", [("便せん・封筒", "便せん 封筒 縦書き"), ("筆ペン", "筆ペン 黒")]),
     "shichigosan-guide": ("七五三の準備に", [("千歳飴の袋", "千歳飴 袋"), ("写真用紙", "写真用紙 A4 光沢"), ("フォトフレーム", "フォトフレーム A4")]),
     "eto-ichiran": ("干支のグッズ", [("干支の置物", "干支 置物 2027 未"), ("来年の手帳", "手帳 2027")]),
 }
 SPECIAL_PR = {
-    "nenga-2027": ("年賀状作りにあると便利なもの", [("年賀状の印刷サービス", "年賀状 印刷 2027"), ("プリンターのインク", "プリンター インク 純正"), ("年賀状向けのプリンター用紙", "年賀状 プリンター用紙")]),
+    "nenga-2027": ("年賀状作りにあると便利なもの", [("プリンターのインク", "プリンター インク 純正"), ("年賀状向けのプリンター用紙", "年賀状 プリンター用紙")]),
     "nurie": ("ぬりえを楽しむ道具", [("色えんぴつ", "色えんぴつ 24色"), ("クレヨン", "クレヨン 幼児 安全"), ("ぬりえの本", "ぬりえ 本")]),
     "christmas": ("クリスマスの準備に", [("クリスマスカード用紙", "メッセージカード 用紙 A4"), ("ラッピング用品", "ラッピング 袋 クリスマス")]),
 }
@@ -764,25 +764,36 @@ def affiliates_on(cfg: dict) -> bool:
     return bool(cfg.get("rakuten_affiliate_id") or cfg.get("amazon_tracking_id"))
 
 
-def pr_box(cfg: dict, heading: str, rows: list[tuple[str, str]]) -> str:
-    """A small 'things that help' box with search links to Rakuten Ichiba and Amazon; empty when no affiliate id is configured."""
-    if not affiliates_on(cfg) or not rows:
+# One box per store (2026-11-09): a box never holds links of two stores (AFFILIATE_RULES.md: a Rakuten part gets Rakuten links only).  The box rows are things (paper, ink, pens),
+# never services: a printing service goes in a partner (A8) box after the owner's approval, and none exists yet, so none is rendered (no empty frame).
+def _store_box(cfg: dict, heading: str, rows: list[tuple[str, str]], label: str, link_text: str, url_of, note: str) -> str:
+    items = "".join(f'<li><b>{esc(name)}</b><span><a href="{esc(url_of(kw))}" target="_blank" rel="nofollow sponsored noopener">{link_text}</a></span></li>' for name, kw in rows)
+    return f'<aside class="pr-box"><h2><span class="pr-note">PR</span>{esc(heading)}</h2><ul>{items}</ul><p class="pr-small">{esc(note)}</p></aside>'
+
+
+def rakuten_box(cfg: dict, heading: str, rows: list[tuple[str, str]]) -> str:
+    if not cfg.get("rakuten_affiliate_id") or not rows:
         return ""
-    items = ""
-    for label, kw in rows:
-        links = ""
-        if cfg.get("rakuten_affiliate_id"):
-            # Rakuten's own form, nothing added: .../hgc/[affiliate id]/?pc=[URL]&m=[URL] (no tracking id after the id; AFFILIATE_RULES.md 3b)
-            url = rakuten.affiliate_link(cfg["rakuten_affiliate_id"], None, rakuten.search_url(kw))
-            links += f'<a href="{esc(url)}" target="_blank" rel="nofollow sponsored noopener">楽天市場で見る</a>'
-        if cfg.get("amazon_tracking_id"):
-            url = f"https://www.amazon.co.jp/s?k={quote(kw, safe='')}&tag={quote(cfg['amazon_tracking_id'], safe='')}"
-            links += f'<a href="{esc(url)}" target="_blank" rel="nofollow sponsored noopener">Amazonで見る</a>'
-        items += f'<li><b>{esc(label)}</b><span>{links}</span></li>'
-    note = ("このボックスには、広告(" + "・".join(x for x in ("楽天アフィリエイト" if cfg.get("rakuten_affiliate_id") else "", "Amazonアソシエイト" if cfg.get("amazon_tracking_id") else "") if x)
-            + ")のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。")
-    amazon = f"<br>Amazonのアソシエイトとして、{esc(cfg['site_name'])}は適格販売により収入を得ています。" if cfg.get("amazon_tracking_id") else ""
-    return (f'<aside class="pr-box"><h2><span class="pr-note">PR</span>{esc(heading)}</h2><ul>{items}</ul><p class="pr-small">{esc(note)}{amazon}</p></aside>')
+    # Rakuten's own form, nothing added: .../hgc/[affiliate id]/?pc=[URL]&m=[URL] (no tracking id after the id; AFFILIATE_RULES.md 3b)
+    return _store_box(cfg, heading, rows, "rakuten", "楽天市場で見る", lambda kw: rakuten.affiliate_link(cfg["rakuten_affiliate_id"], None, rakuten.search_url(kw)),
+                      "このボックスには、広告(楽天アフィリエイト)のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。")
+
+
+def amazon_box(cfg: dict, heading: str, rows: list[tuple[str, str]]) -> str:
+    if not cfg.get("amazon_tracking_id") or not rows:
+        return ""
+    return _store_box(cfg, heading, rows, "amazon", "Amazonで見る", lambda kw: f"https://www.amazon.co.jp/s?k={quote(kw, safe='')}&tag={quote(cfg['amazon_tracking_id'], safe='')}",
+                      f"このボックスには、広告(Amazonアソシエイト)のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。Amazonのアソシエイトとして、{cfg['site_name']}は適格販売により収入を得ています。")
+
+
+# The stores that get a box.  Amazon is off for now (owner decision 2026-11-09: the condition of qualifying sales within 180 days is not confirmed, and the two stores no longer
+# share a box); to turn it on add "amazon": amazon_box here, and it will be a separate box under the Rakuten one.
+PR_STORES = {"rakuten": rakuten_box}
+
+
+def pr_box(cfg: dict, heading: str, rows: list[tuple[str, str]]) -> str:
+    """The 'things that help' boxes of a page: one box per store in PR_STORES, each with search links to that store only; empty when no id is configured."""
+    return "".join(box(cfg, heading, rows) for box in PR_STORES.values())
 
 
 # ------------------------------------------------------------------ pages
