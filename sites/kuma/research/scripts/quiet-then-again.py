@@ -92,8 +92,8 @@ def main() -> None:
     rows5 += [["31日以降", f"{long_after}", f"{long_after / base['n'] * 100:.0f}%"], ["年度内に次の記録なし", f"{base['n'] - len(g)}", f"{(base['n'] - len(g)) / base['n'] * 100:.0f}%"]]
     cum = [sum(1 for x in g if x <= w) for w in (3, 7, 14)]
     rows4 = [["4〜6月", f"{early['n']}", f"{early['hit']}", pc(early), med(early)], ["7〜10月", f"{late['n']}", f"{late['hit']}", pc(late), med(late)]]
-    desc = (f"秋田・宮城・新潟・富山・山口・山梨の令和8年度で、14日間記録のなかった市町村に熊の記録が出た{base['n']}件を数えると、"
-            f"その後14日以内に同じ市町村でまた記録が出たのは{ratio(base):.0f}%でした。県別では{ratio(start_pref[lo]):.0f}%から{ratio(start_pref[hi]):.0f}%、4〜6月は{ratio(early):.0f}%、7〜10月は{ratio(late):.0f}%です。")
+    desc = (f"6県の令和8年度で、14日間記録のなかった市町村に熊の記録が出た{base['n']}件のうち、その後14日以内にまた記録が出たのは{ratio(base):.0f}%でした。"
+            f"4〜6月は{ratio(early):.0f}%、7〜10月は{ratio(late):.0f}%です。")
     doc = {
         "slug": "quiet-then-again", "date": today, "data_as_of": as_of,
         "title": "熊の記録が久しぶりに出た市町村では、2週間以内にまた出たか",
