@@ -41,7 +41,9 @@ RELATED = {"trend-rice-price": ["trend-vegetable-price", "trend-wage-2026-09"], 
            "trend-gastroenteritis-winter": ["trend-influenza-44", "trend-humidifier-care"]}
 # product shelves (definitions are in shelves.json; the cards stay hidden until the private store has products): slug -> [(h2 prefix, shelf id)]
 SHELF_AFTER = {"trend-humidifier-care": [("毎日の手入れは", "humidifier"), ("湿度の物差し", "hygrometer")], "trend-nengajo-print": [("自宅の印刷とネット注文", "nengajo-paper")]}
-CATEGORY_ORDER = ["家計・値上げ", "防災・気象", "天気・季節", "暮らし"]
+# which of the day's articles counts as the newest (they share one date): a higher number is newer; the desk can change it
+SEQ = {"trend-fire-alarm": 20, "trend-influenza-44": 19, "trend-rice-price": 18, "trend-vegetable-price": 17, "trend-wage-2026-09": 16, "trend-blackfriday-price": 15,
+       "trend-crab-phone-call": 14, "trend-nengajo-print": 13, "trend-humidifier-care": 12, "trend-gastroenteritis-winter": 11}
 ALT = json.loads((Path(__file__).resolve().parent / "daily10_alt.json").read_text(encoding="utf-8")) if (Path(__file__).resolve().parent / "daily10_alt.json").exists() else {}
 
 
@@ -135,7 +137,7 @@ def article(a: dict, titles: dict[str, str], labels: dict[str, str]) -> dict:
         else:
             related.append({"path": f"/{r}/", "text": titles[r]})
     return {"updated": UPDATED, "data_basis": BASIS, "sources": [], "credit": p["credit"], "path": f"/{slug}/", "kind": "article", "parent": "/", "title": p["title"], "h1": p["title"],
-            "crumb": CRUMB[slug], "primary_kw": KW[slug], "secondary_kw": [a["kw"]], "intent": 4 if slug in ("trend-blackfriday-price", "trend-nengajo-print", "trend-humidifier-care") else 1,
+            "category": a["category"], "published": UPDATED, "seq": SEQ[slug], "crumb": CRUMB[slug], "primary_kw": KW[slug], "secondary_kw": [a["kw"]], "intent": 4 if slug in ("trend-blackfriday-price", "trend-nengajo-print", "trend-humidifier-care") else 1,
             "description": p["lead"], "answer": ans, "sections": secs, "related": related}
 
 
@@ -151,20 +153,7 @@ def main() -> int:
     cdir = HERE / "content"
     for a in arts:
         (cdir / f"{a['slug']}.json").write_text(json.dumps(article(a, titles, labels), ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    # the home page: the 10 articles by category
-    home = json.loads((cdir / "home.json").read_text(encoding="utf-8"))
-    home["sections"] = [s for s in home["sections"] if s.get("h2") != "本日の新着記事(カテゴリ別)"]
-    blocks = []
-    for cat in CATEGORY_ORDER:
-        mine = [a for a in arts if a["category"] == cat]
-        if mine:
-            blocks.append(f"<h3>{esc(cat)}</h3><ul class=\"links\">" + "".join(f'<li><a href="/{a["slug"]}/">{esc(titles[a["slug"]])}</a></li>' for a in mine) + "</ul>")
-    new = {"h2": "本日の新着記事(カテゴリ別)", "html": "".join(blocks)}
-    idx = next(i for i, s in enumerate(home["sections"]) if s.get("h2") == "最新の記事") + 1
-    home["sections"].insert(idx, new)
-    home["updated"], home["data_basis"] = UPDATED, BASIS
-    (cdir / "home.json").write_text(json.dumps(home, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    print("wrote", len(arts), "articles and the home list")
+    print("wrote", len(arts), "articles")
     return 0
 
 

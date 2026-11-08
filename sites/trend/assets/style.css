@@ -111,3 +111,23 @@ footer.site .legal span::after { content:"© 2026 今日の話題"; font-size:.8
 .shelf-btn { margin-top:4px; }
 .shelf-btn > a { display:block; color:#fff; text-decoration:none; padding:.4em 1em; }
 .shelf-note { margin:8px 0 0; font-size:.8rem; color:var(--muted); }
+
+/* cards: the home page and the category pages (sites/trend/hooks.py) */
+.cards { display:grid; grid-template-columns:minmax(0,1fr); gap:16px; margin:.6em 0 1.2em; }
+@media (min-width:640px) { .cards { grid-template-columns:repeat(2,minmax(0,1fr)); } .cards .card-hero { grid-column:1 / -1; } }
+.card { position:relative; background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:var(--shadow); min-width:0; }
+.card img { display:block; width:100%; height:auto; aspect-ratio:3 / 2; object-fit:cover; background:var(--warm); }
+.card-body { padding:10px 14px 14px; }
+.card-meta { display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; margin:0; font-size:.82rem; color:var(--muted); }
+.card-cat { position:relative; z-index:1; display:inline-block; background:var(--brand-l); color:var(--brand-d); font-weight:700; padding:1px 10px; border-radius:999px; text-decoration:none; }
+.card h3 { margin:.3em 0 .2em; font-size:1.02rem; line-height:1.5; }
+.card h3 a { color:var(--ink); text-decoration:none; overflow-wrap:anywhere; }
+.card h3 a::after { content:""; position:absolute; inset:0; }
+.card h3 a:hover { text-decoration:underline; }
+.card-sum { margin:0; font-size:.88rem; line-height:1.65; color:var(--muted); overflow-wrap:anywhere; }
+.card-hero h3 { font-size:1.2rem; }
+.card-hero .card-sum { font-size:.95rem; }
+h3.cat-h { margin:1.4em 0 .2em; font-size:1.05rem; border-left:5px solid var(--brand); padding-left:10px; }
+h3.cat-h a { color:var(--ink); text-decoration:none; }
+.dates { margin:.2em 0 .8em; font-size:.85rem; color:var(--muted); }
+@media (min-width:760px) { .card-hero { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); } .card-hero img { height:100%; } .card-hero .card-body { align-self:center; padding:18px 20px; } }

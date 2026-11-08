@@ -45,6 +45,19 @@ DEFAULT_KINDS = ["数字の誤りのご指摘", "ご意見・ご要望", "その
 
 
 # ---------------------------------------------------------------- reading a site folder
+def site_hooks(site_dir: Path):
+    """A site may ship hooks.py: prepare(cfg, spec, pages, site_dir) -> pages (before the pages are rendered: it may add pages and sections) and
+    post(pages, content, cfg, spec, site_dir) -> pages (after: it may change the rendered files).  A site without hooks.py is built as before."""
+    f = site_dir / "hooks.py"
+    if not f.exists():
+        return None
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(f"_site_hooks_{site_dir.name}", f)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def load_site(site_dir: Path) -> tuple[dict, dict, list[dict]]:
     """(config.json, site.json, the pages of content/*.json in file-name order)."""
     cfg = json.loads((site_dir / "config.json").read_text(encoding="utf-8"))
@@ -267,7 +280,7 @@ def page_body(page: dict, spec: dict, by_path: dict, cfg: dict) -> str:
     if page.get("dataset"):
         out.append(f'<p><a class="btn" href="/{esc(page["dataset"]["csv"])}" download>このページの表をCSVでダウンロード</a></p>')
     kids = [c for c in by_path.values() if c.get("parent") == page["path"]]
-    if kids:
+    if kids and not page.get("hide_children"):          # a page whose children are already shown another way (cards) can say so
         out.append(f"<h2>{esc(page.get('children_h2') or page['h1'] + 'の各ページ')}</h2>\n<ul class=\"links\">"
                    + "".join(f'<li><a href="{esc(c["path"])}">{esc(c["h1"])}</a></li>' for c in kids) + "</ul>")
     if page.get("related"):
@@ -317,6 +330,9 @@ def csv_text(t: dict) -> str:
 def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = False, strict_seo: bool = False) -> tuple[dict, dict]:
     """Every file of the site as {path: str | bytes}, and the report {thin: {page: [why]}, warnings: [...]}.  Raises BuildError for what must not be published."""
     cfg, spec, content = load_site(site_dir)
+    hooks = site_hooks(site_dir)
+    if hooks and hasattr(hooks, "prepare"):
+        content = hooks.prepare(cfg, spec, content, site_dir)
     missing = sitekit.missing_config(cfg)
     if release and missing:
         raise BuildError(f"release build refused: set {', '.join(missing)} in config.json")
@@ -352,6 +368,8 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
     if measure_tag:      # visits are counted without knowing who came (sokuhou/measure.py); the privacy page says so (sitekit.MEASURE_TEXT)
         pages["assets/measure.js"] = measure.MEASURE_JS
         pages["m/t.gif"] = measure.GIF
+    if hooks and hasattr(hooks, "post"):
+        pages = hooks.post(pages, content, cfg, spec, site_dir)
 
     kw_errors, kw_warnings = seokit.keyword_problems([m for m in metas if m["kind"] not in seokit.ALWAYS_NOINDEX or m.get("primary_kw")])
     errors += kw_errors

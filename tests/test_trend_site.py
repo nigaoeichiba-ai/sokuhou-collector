@@ -62,7 +62,7 @@ class TrendSite(unittest.TestCase):
 
     def test_the_parent_links_the_four_children_and_nothing_that_does_not_exist(self):
         pages = _pages()
-        paths = {p["path"] for p in pages.values()}
+        paths = {p["path"] for p in pages.values()} | {"/about/", "/privacy/", "/contact/"} | {f"/cat/{slug}/" for slug, _, _ in newsite.site_hooks(SITE).CATS}   # legal pages and category pages are made by the build
         html = "".join(s.get("html", "") for s in pages["bousai.json"]["sections"])
         for child in ("/bousai-mizu-shokuryo/", "/bousai-keitai-toilet/", "/bousai-light/", "/bousai-denchi-juden/"):
             self.assertIn(f'href="{child}"', html)
@@ -83,9 +83,11 @@ class TrendSite(unittest.TestCase):
             self.assertNotIn("気象庁", page["credit"], name)                          # seen on 2026-11-07: the typhoon's source line was shown on the four child pages
 
     def test_the_home_page_does_not_rule_out_politics(self):
-        text = json.dumps(_pages()["home.json"], ensure_ascii=False)
-        self.assertNotIn("政治などの重い話題", text)                                   # owner's decision 2026-11-07: politics and economy count when written for their effect on daily life
-        self.assertIn("暮らしへの影響", text)
+        home = json.dumps(_pages()["home.json"], ensure_ascii=False)
+        about = json.loads((SITE / "site.json").read_text(encoding="utf-8"))["purpose"]            # the long text of the old home page lives on /about/ since 2026-11-08
+        for text in (home, about):
+            self.assertNotIn("政治などの重い話題", text)                               # owner's decision 2026-11-07: politics and economy count when written for their effect on daily life
+        self.assertIn("暮らしへの影響", about)
 
     def test_the_parent_intro_does_not_repeat_the_answer(self):
         page = _pages()["bousai.json"]
