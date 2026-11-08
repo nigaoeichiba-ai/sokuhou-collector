@@ -292,7 +292,7 @@ jobs:
         run: |
           rc=0
           python3 sites/shiken/tools/fetch_rules.py "$RULES_URL" ng_rules.json | tee rules-version.txt || rc=$?
-          if [ "$rc" = "0" ]; then python3 sites/shiken/tools/check_text.py release --rules ng_rules.json --report text-gate-report.md || rc=$?; fi
+          if [ "$rc" = "0" ]; then python3 sites/shiken/tools/check_text.py release --rules ng_rules.json --site ${{ matrix.site }} --report text-gate-report.md || rc=$?; fi
           # a change of the gate itself is shown in the run summary (never hidden in a long log)
           changed=""
           if [ -n "$BEFORE" ] && git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
@@ -302,6 +302,7 @@ jobs:
             echo "### text gate: ${{ matrix.site }} ($MODE)"
             echo "- rules: $(cat rules-version.txt 2>/dev/null || echo 'not fetched')"
             if [ -f text-gate-report.md ]; then grep -E "ハードNGのヒット|判定" text-gate-report.md || true; fi
+            if [ -f text-gate-report.md ]; then echo "- hits per word: $(awk -F'[][]' '/^- \[/{c[$2]++} END{for(k in c) printf "%s %d; ", k, c[k]}' text-gate-report.md)"; fi
             echo "- exit code: $rc"
             if [ -n "$changed" ]; then echo "- **ゲート変更あり** (the owner confirms): $(echo $changed)"; echo "::warning title=ゲート変更あり::$(echo $changed)"; else echo "- ゲート変更なし"; fi
           } >> "$GITHUB_STEP_SUMMARY"

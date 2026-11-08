@@ -68,10 +68,11 @@ def strip_markup(text: str) -> str:
     return text
 
 
-def scan(root: str):
+def scan(root: str, site: str = None):
     hard_hits = []  # (file, pattern_name, excerpt)
     soft_counts = Counter()
     soft_locations = defaultdict(list)
+    applied_exceptions = []  # (file, pattern, reason)
     files = []
     for dirpath, _dirs, names in os.walk(root):
         for name in sorted(names):
@@ -84,6 +85,23 @@ def scan(root: str):
         for w in WHITELIST:
             text = text.replace(w, "〇〇")
         rel = os.path.relpath(path, root)
+        # サイト別例外：--site が一致する例外だけ、その箇所を走査対象から外す
+        if site:
+            for exc in EXCEPTIONS:
+                if exc.get("site") not in (site, "*"):
+                    continue
+                pages = exc.get("pages")
+                if pages and not any(p in rel for p in pages):
+                    continue
+                pat = exc.get("pattern", "")
+                if not pat:
+                    continue
+
+                def _blank(m, exc=exc, rel=rel):
+                    applied_exceptions.append((rel, exc.get("pattern"), exc.get("reason", "")))
+                    return "〇" * max(1, len(m.group(0)))
+
+                text = re.sub(pat, _blank, text)
         for label, pat in HARD_PATTERNS:
             for m in re.finditer(pat, text):
                 start = max(0, m.start() - 25)
@@ -96,25 +114,30 @@ def scan(root: str):
                     start = max(0, m.start() - 25)
                     excerpt = text[start : m.end() + 25].replace("\n", " ")
                     soft_locations[label].append((rel, excerpt))
-    return files, hard_hits, soft_counts, soft_locations
+    return files, hard_hits, soft_counts, soft_locations, applied_exceptions
+
+
+EXCEPTIONS = []
 
 
 def load_rules(path):
-    """ng_rules.json を読み、(hard, soft, whitelist, version) を返す。失敗したら例外。"""
+    """ng_rules.json を読み、(hard, soft, whitelist, version, exceptions) を返す。失敗したら例外。"""
     with open(path, encoding="utf-8") as fh:
         data = json.load(fh)
     hard = [(item["label"], item["pattern"]) for item in data["hard"]]
     soft = [(item["label"], item["pattern"]) for item in data.get("soft", [])]
     whitelist = data.get("whitelist", [])
     version = data.get("version", "unknown")
-    return hard, soft, whitelist, version
+    exceptions = data.get("exceptions", [])
+    return hard, soft, whitelist, version, exceptions
 
 
 def main() -> int:
-    global HARD_PATTERNS, SOFT_PATTERNS, WHITELIST
+    global HARD_PATTERNS, SOFT_PATTERNS, WHITELIST, EXCEPTIONS
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     report_path = None
     rules_path = None
+    site = None
     rules_version = "embedded (予備リスト)"
     if "--report" in sys.argv:
         idx = sys.argv.index("--report")
@@ -124,26 +147,35 @@ def main() -> int:
         idx = sys.argv.index("--rules")
         if idx + 1 < len(sys.argv):
             rules_path = sys.argv[idx + 1]
+    if "--site" in sys.argv:
+        idx = sys.argv.index("--site")
+        if idx + 1 < len(sys.argv):
+            site = sys.argv[idx + 1]
     if not args:
-        print("使い方: python3 check_text.py <フォルダ> [--report <出力先md>] [--rules <ng_rules.json>]")
+        print("使い方: python3 check_text.py <フォルダ> [--report <出力先md>] [--rules <ng_rules.json>] [--site <サイトID>]")
         return 2
     if rules_path:
         try:
-            HARD_PATTERNS, SOFT_PATTERNS, WHITELIST, rules_version = load_rules(rules_path)
+            HARD_PATTERNS, SOFT_PATTERNS, WHITELIST, rules_version, EXCEPTIONS = load_rules(rules_path)
             rules_version = f"{rules_version}（{rules_path}）"
         except Exception as exc:  # 読めないルールで通さない（止める側に倒す）
             print(f"ルールファイルを読めませんでした: {rules_path}: {exc}")
             print("ゲートは安全側に倒し、公開不可として終了します。")
             return 2
     root = args[0]
-    files, hard_hits, soft_counts, soft_locations = scan(root)
+    files, hard_hits, soft_counts, soft_locations, applied_exceptions = scan(root, site=site)
 
     lines = []
     lines.append("# 文章チェック結果（公開ゲート）")
     lines.append("")
     lines.append(f"- 走査したファイル数: {len(files)}")
     lines.append(f"- 使ったルール: {rules_version}")
+    lines.append(f"- 対象サイト: {site if site else '（指定なし＝例外は適用しない）'}")
     lines.append(f"- ハードNGのヒット: {len(hard_hits)} 件")
+    if applied_exceptions:
+        lines.append(f"- 例外を適用した箇所: {len(applied_exceptions)} 件")
+        for rel, pat, reason in applied_exceptions:
+            lines.append(f"  - {rel}： パターン「{pat}」（理由: {reason}）")
     lines.append("")
     if hard_hits:
         lines.append("## ハードNG（1件でもあれば公開不可）")

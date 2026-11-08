@@ -1,0 +1,44 @@
+name: text-gate-live
+
+# Read-only watch of the writing-tool NG words (2026-11-08).  Once a day it reads the REAL pages of every live site (the sitemaps), scans them with the master
+# ng_rules.json (fetched from Drive now, address in the secret SHIKEN_RULES_URL) and writes, per site and per word, the number of hits and the rules version
+# to the run summary and to an artifact.  It changes nothing: no deploy, no server, no other workflow is touched.  A site or a page that could not be read is
+# reported as "not read" (never as 0), and the run turns red, so that nobody trusts a zero that was not measured.
+on:
+  schedule:
+    - cron: "40 19 * * *"   # 04:40 JST, away from the 07:00 deploy
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: text-gate-live
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Fetch the master rules
+        env:
+          RULES_URL: ${{ secrets.SHIKEN_RULES_URL }}
+        run: python3 sites/shiken/tools/fetch_rules.py "$RULES_URL" ng_rules.json
+      - name: Scan the live pages (read only)
+        run: |
+          rc=0
+          python3 sites/shiken/tools/scan_live.py ng_rules.json text-gate-live-report.md || rc=$?
+          cat text-gate-live-report.md >> "$GITHUB_STEP_SUMMARY" || true
+          exit "$rc"
+      - name: Upload the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: text-gate-live-report
+          path: text-gate-live-report.md
+          if-no-files-found: ignore

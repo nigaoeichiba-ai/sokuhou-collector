@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import importlib.util
+import os
 import re
 import tempfile
 import unittest
@@ -40,14 +41,14 @@ class GateTest(unittest.TestCase):
         gen.write()
         cls.mod = load_checker()
         # ルールの正は ng_rules.json(Drive)。CIにはリポジトリ内の控え(同じversion)を使う。
-        hard, soft, white, cls.version = cls.mod.load_rules(str(TOOLS / "ng_rules.json"))
-        cls.mod.HARD_PATTERNS, cls.mod.SOFT_PATTERNS, cls.mod.WHITELIST = hard, soft, white
+        hard, soft, white, cls.version, exc = cls.mod.load_rules(str(TOOLS / "ng_rules.json"))
+        cls.mod.HARD_PATTERNS, cls.mod.SOFT_PATTERNS, cls.mod.WHITELIST, cls.mod.EXCEPTIONS = hard, soft, white, exc
 
     def scan_built(self):
         pages, _ = newsite.build_pages(SITE, release=True, strict_seo=True)
         with tempfile.TemporaryDirectory() as tmp:
             write_pages(pages, Path(tmp))
-            files, hard, soft, _loc = self.mod.scan(tmp)
+            files, hard, soft, _loc, _app = self.mod.scan(tmp)
         return files, hard
 
     def test_no_hard_ng_word_is_left_in_any_page(self):
@@ -76,7 +77,7 @@ class GateTest(unittest.TestCase):
         for word in ("並びます", "いちばん近い", "読み物", "入口", "棚", "見てください"):
             with tempfile.TemporaryDirectory() as tmp:
                 (Path(tmp) / "index.html").write_text(f"<html><body><p>試験が{word}。</p></body></html>", encoding="utf-8")
-                _files, hard, _soft, _loc = self.mod.scan(tmp)
+                _files, hard, _soft, _loc, _app = self.mod.scan(tmp)
                 self.assertTrue(hard, word)
         with tempfile.TemporaryDirectory() as tmp:
             (Path(tmp) / "index.html").write_text("<html><body><p>クレジットカード決済が使えます。</p></body></html>", encoding="utf-8")
@@ -112,7 +113,7 @@ class GateTest(unittest.TestCase):
         good = TOOLS / "ng_rules.json"
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "got.json"
-            r = subprocess.run([sys.executable, fetch, good.as_uri(), str(out)], capture_output=True, text=True, encoding="utf-8")
+            r = subprocess.run([sys.executable, fetch, good.as_uri(), str(out)], capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "utf-8"})
             self.assertEqual(r.returncode, 0, r.stdout)
             self.assertIn("version=", r.stdout)
             self.assertEqual(json.loads(out.read_text(encoding="utf-8"))["version"], self.version)
@@ -122,11 +123,11 @@ class GateTest(unittest.TestCase):
                                ("empty hard", json.dumps({"hard": [], "version": "x"})), ("no pattern", json.dumps({"hard": [{"label": "a"}], "version": "x"}))):
                 p = Path(tmp) / "bad.json"
                 p.write_text(body, encoding="utf-8")
-                r = subprocess.run([sys.executable, fetch, p.as_uri(), str(out)], capture_output=True, text=True, encoding="utf-8")
+                r = subprocess.run([sys.executable, fetch, p.as_uri(), str(out)], capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "utf-8"})
                 self.assertEqual(r.returncode, 1, name)
                 self.assertFalse(out.exists(), name)               # 失敗しても、控えや古い内容を書き出さない
             for url in ("", (Path(tmp) / "missing.json").as_uri()):
-                r = subprocess.run([sys.executable, fetch, url, str(out)], capture_output=True, text=True, encoding="utf-8")
+                r = subprocess.run([sys.executable, fetch, url, str(out)], capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "utf-8"})
                 self.assertEqual(r.returncode, 1, url)
 
     def test_the_deploy_workflow_runs_the_gate_and_does_not_swallow_a_failure(self):
@@ -142,6 +143,47 @@ class GateTest(unittest.TestCase):
         shiken = [s for s in reg["sites"] if s["name"] == "shiken"][0]
         self.assertEqual(shiken.get("textgate"), "stop")                 # a failed gate stops shiken (the others: the default, shadow)
         self.assertIn(reg["defaults"].get("textgate"), ("shadow", "stop"))
+
+    def test_the_live_monitor_never_reports_an_unread_site_as_zero(self):
+        spec = importlib.util.spec_from_file_location("shiken_scan_live", TOOLS / "scan_live.py")
+        live = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(live)
+        import sys
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "report.md"
+            live.page_urls = lambda base: None                              # a site that cannot be read
+            old = sys.argv
+            sys.argv = ["scan_live.py", str(TOOLS / "ng_rules.json"), str(out), "shiken"]
+            try:
+                rc = live.main()
+            finally:
+                sys.argv = old
+            text = out.read_text(encoding="utf-8")
+        self.assertEqual(rc, 3)
+        self.assertIn("取得できず", text)
+        self.assertIn(f"version: {self.version}", text)
+        self.assertNotRegex(text, r"shiken \| 0ページ")
+
+    def test_the_live_monitor_counts_hits_per_word_and_applies_the_exceptions_of_the_site(self):
+        spec = importlib.util.spec_from_file_location("shiken_scan_live2", TOOLS / "scan_live.py")
+        live = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(live)
+        import sys
+        pages = {"https://shiken-nittei.com/a/": "<p>日程が並びます。いちばん近い日。</p>", "https://shiken-nittei.com/b/": "<p>日程が表示されます。</p>"}
+        live.page_urls = lambda base: list(pages)
+        live.get = lambda url: pages.get(url)
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "report.md"
+            old = sys.argv
+            sys.argv = ["scan_live.py", str(TOOLS / "ng_rules.json"), str(out), "shiken"]
+            try:
+                rc = live.main()
+            finally:
+                sys.argv = old
+            text = out.read_text(encoding="utf-8")
+        self.assertEqual(rc, 0)
+        self.assertIn("ハードNG 2 件", text)
+        self.assertIn("並びます 1", text)
 
     def test_the_copy_of_the_rules_has_the_version_of_the_master_when_the_drive_is_here(self):
         master = Path("H:/マイドライブ/文章ツール/ng_rules.json")
