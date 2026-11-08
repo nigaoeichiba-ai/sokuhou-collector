@@ -129,6 +129,20 @@ class GateTest(unittest.TestCase):
                 r = subprocess.run([sys.executable, fetch, url, str(out)], capture_output=True, text=True, encoding="utf-8")
                 self.assertEqual(r.returncode, 1, url)
 
+    def test_the_deploy_workflow_runs_the_gate_and_does_not_swallow_a_failure(self):
+        import json
+        text = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
+        i = text.index("- name: Text gate (")
+        step = text[i:text.index("- name: Upload text gate report")]
+        for needle in ("fetch_rules.py", "check_text.py", "secrets.SHIKEN_RULES_URL", "matrix.textgate", 'if [ "$MODE" = "stop" ]', "exit \"$rc\""):
+            self.assertIn(needle, step, needle)
+        self.assertNotIn("continue-on-error", step)
+        self.assertNotIn("drive.google.com", text)                       # the address of the master file is in the Secrets, not in this file
+        reg = json.loads((ROOT / "data" / "sites.json").read_text(encoding="utf-8"))
+        shiken = [s for s in reg["sites"] if s["name"] == "shiken"][0]
+        self.assertEqual(shiken.get("textgate"), "stop")                 # a failed gate stops shiken (the others: the default, shadow)
+        self.assertIn(reg["defaults"].get("textgate"), ("shadow", "stop"))
+
     def test_the_copy_of_the_rules_has_the_version_of_the_master_when_the_drive_is_here(self):
         master = Path("H:/マイドライブ/文章ツール/ng_rules.json")
         if not master.exists():

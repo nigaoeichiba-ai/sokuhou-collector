@@ -283,6 +283,39 @@ jobs:
       - name: Phone-width layout check (Chrome measures sample pages of every kind at 300 / 375 / 768 px; sideways overflow or squeezed text stops the deploy)
         if: steps.gate.outputs.go == 'true'
         run: python -m sokuhou.layoutcheck release
+      - name: Text gate (the writing-tool NG words of the master ng_rules.json, fetched from Drive now; sites/shiken/tools/. Per site in data/sites.json (textgate), stop = a failed fetch, a bad rules file or any NG word stops this site's deploy, with no fallback copy; shadow = only a warning counted in the run summary; off = not run)
+        if: steps.gate.outputs.go == 'true' && matrix.textgate != 'off'
+        env:
+          RULES_URL: ${{ secrets.SHIKEN_RULES_URL }}   # the address of the master file (never written in this file)
+          MODE: ${{ matrix.textgate }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          rc=0
+          python3 sites/shiken/tools/fetch_rules.py "$RULES_URL" ng_rules.json | tee rules-version.txt || rc=$?
+          if [ "$rc" = "0" ]; then python3 sites/shiken/tools/check_text.py release --rules ng_rules.json --report text-gate-report.md || rc=$?; fi
+          # a change of the gate itself is shown in the run summary (never hidden in a long log)
+          changed=""
+          if [ -n "$BEFORE" ] && git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            changed=$(git diff --name-only "$BEFORE" "$GITHUB_SHA" -- .github/workflows/deploy.yml tests/test_shiken_gate.py sites/shiken/tools/ sokuhou/deployplan.py data/sites.json || true)
+          fi
+          {
+            echo "### text gate: ${{ matrix.site }} ($MODE)"
+            echo "- rules: $(cat rules-version.txt 2>/dev/null || echo 'not fetched')"
+            if [ -f text-gate-report.md ]; then grep -E "ハードNGのヒット|判定" text-gate-report.md || true; fi
+            echo "- exit code: $rc"
+            if [ -n "$changed" ]; then echo "- **ゲート変更あり** (the owner confirms): $(echo $changed)"; echo "::warning title=ゲート変更あり::$(echo $changed)"; else echo "- ゲート変更なし"; fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$rc" != "0" ]; then
+            if [ "$MODE" = "stop" ]; then echo "::error::text gate failed (exit $rc)"; exit "$rc"; fi
+            echo "::warning title=text gate (shadow)::exit $rc, the deploy goes on"
+          fi
+      - name: Upload text gate report
+        if: always() && matrix.textgate != 'off' && steps.gate.outputs.go == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: text-gate-report
+          path: text-gate-report.md
+          if-no-files-found: ignore
       - name: IndexNow key file (the search engines fetch it to check that we own the site; public by design)
         if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou'
         run: python -m sokuhou.indexnow prepare --root release --base ${{ matrix.url }}
