@@ -30,6 +30,7 @@ from sites.kuma import indexing as indexing_mod  # noqa: E402
 from sites.kuma import lastmod as lastmod_mod  # noqa: E402
 from sites.kuma import notices as notices_mod  # noqa: E402
 from sites.kuma import official as official_mod  # noqa: E402
+from sites.kuma import preffacts as preffacts_mod  # noqa: E402
 from sites.kuma import research as research_mod  # noqa: E402
 from sites.kuma import season as season_mod  # noqa: E402
 from sites.kuma import live as live_mod  # noqa: E402
@@ -606,7 +607,6 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
         return no_bear_page(d, r, cfg, preview)
     done, cur, prev = d["done"], d["cur"], d["years"][-3]
     emg = [c for c in d["emergency"][cur]["cases"] if c["prefecture"] == r["name"]]
-    i_done = r["inj"][done]
     official = links.get(r["short"]) or []
     off_html = ("<ul class='link-list'>" + "".join(
         f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["label"])}</a></li>' for x in official) + "</ul>") if official else (
@@ -642,9 +642,10 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
     body = f"""{crumbs([("全国", "/"), ("ランキング", "/ranking/sightings/"), (r["name"], None)])}
 <h1>{esc(r['name'])}のクマ出没({fy_label(done)}・環境省の速報値)</h1>
 <button class="btn-ghost" type="button" data-mypref-toggle data-slug="{r['slug']}" data-name="{esc(r['name'])}" aria-pressed="false" hidden>この県を「マイ都道府県」にする</button>
+<p class="lead">{"".join(preffacts_mod.lead(d, r))}</p>
 {fatal_answer(d, r)}{sight}
-{live_block}<h2>人身被害</h2>
-<p>{fy_label(done)}は、{n(i_done[0])}件・{n(i_done[1])}人(うち死亡{n(i_done[2])}人)で、39道府県中{r['rank']['injured']}位(人数)でした。令和元年度から{fy_label(done)}までの7年間の合計は、{n(r['injured7'])}人です。</p>
+{preffacts_mod.section_html(d, r)}{live_block}<h2>人身被害</h2>
+{preffacts_mod.injury_html(d, r)}
 {charts.bars([y for y in d['inj']['years']], [r['inj'][y][1] for y in d['inj']['years']], title="人身被害の人数", desc=f"{r['name']}の人身被害の人数と死亡者数(平成20年度から)", uid="pi", marks=[r['inj'][y][2] for y in d['inj']['years']], marks_label="うち死亡者数")}
 {injuries_table(d, r)}
 <h2>{fy_label(cur)}の緊急銃猟</h2>
