@@ -211,6 +211,38 @@ def page(cfg, preview, **kw):
 
 # ---------------------------------------------------------------- pages
 
+def add_research_links(pages: dict, d: dict) -> None:
+    """Links from the pages to the research notes of the same subject (research_links.json), and from each prefecture page to the notes that have a row for it.
+    The block goes at the end of the page's main text; a note the page already links is not repeated."""
+    docs = d.get("research") or []
+    if not docs:
+        return
+
+    def put(rel: str, block: str) -> None:
+        if block and rel in pages and "</main>" in pages[rel]:
+            pages[rel] = pages[rel].replace("</main>", block + "</main>", 1)
+    for path, slugs in research_mod.LINKS.items():
+        rel = path.strip("/") + "/index.html"
+        if rel in pages:
+            put(rel, research_mod.related_html(docs, slugs, pages[rel]))
+    for r in d["rows"]:
+        rel = f"{r['slug']}/index.html"
+        slugs = research_mod.notes_with_row(docs, {r["name"]}, research_mod.PREF_NOTES)
+        if rel in pages and slugs and not build_is_short(d, r):
+            put(rel, research_mod.related_html(docs, slugs, pages[rel], heading=f"{r['name']}が載っている研究ノート"))
+    lv = d.get("lv")
+    for slug in (lv["by_pref"] if lv else {}):
+        rel = f"live/{slug}/index.html"
+        name = pf.full(next(k for k, v in pf.SLUG.items() if v == slug))
+        slugs = research_mod.notes_with_row(docs, {name}, research_mod.LIVE_NOTES)
+        if rel in pages and slugs:
+            put(rel, research_mod.related_html(docs, slugs, pages[rel], heading=f"{name}の記録を数えた研究ノート"))
+
+
+def build_is_short(d: dict, r: dict) -> bool:
+    return has_no_bears(d, r)
+
+
 def apply_index_policy(pages: dict, thin: set[str], preview: bool) -> None:
     """What Search Console showed on 2026-10-15 (54 'alternate page' URLs were /map/?pref=...&city=..., and the 'crawled - not indexed' ones were mostly small
     municipality pages): the map's parameter URLs are kept out of crawling; municipality pages with too few records are noindex and left out of the sitemap."""
@@ -361,7 +393,7 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
         yr = table(["年度", "全国の死亡者数(人)"], [[fy_or_h(y) + ("(途中)" if y == cur else ""), n(nat[y][2])] for y in reversed([*years, cur])])
         extra = (f'<h2>全国の死亡者数の年度別の推移</h2>{yr}'
                  f'<p>死亡者数は、環境省の人身被害の統計(死亡者数の欄)の数字です。{len(zero)}道府県({"・".join(zero)})は、この{len(years)}年度に死亡者の記録がないため、表に載せていません。'
-                 f'事故の日付と場所は、各道府県のページの「熊(クマ)による死亡事故」で、環境省の一覧にある分を確認できます。</p>'
+                 f'事故の日付と場所は、各道府県のページの「熊(クマ)による死亡事故」で、環境省の一覧にある分を確認できます。全国の一覧と、月別・道府県別の集計は、<a href="/deaths/">熊(クマ)による死亡事故の一覧</a>で確認できます。</p>'
                  f'<p>人数の多い少ないは、山に入る人の数や、クマの生息する範囲にも左右されます。件数・人数の全体は<a href="/ranking/injuries/">人身被害ランキング</a>にあります。</p>'
                  + ('<p>時期ごとの違いは<a href="/research/">研究ノート</a>にあります。</p>' if d.get("research") else ""))
     else:
@@ -1002,8 +1034,12 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         input_note="",
         finish=lambda s: s))
     pages["about/index.html"] = pages["about/index.html"].replace("<h2>免責事項</h2>", about_mod.editorial_html(any_live) + "<h2>免責事項</h2>", 1)
+    add_research_links(pages, d)
     pages.update(standard_files(pages, cfg, preview, max([d["fetched_date"]] + [src["fetched_date"] for src in d.get("live_prefs", [])])))   # the newest of the ministry and the municipal sources
     pages[".htaccess"] += retired_mod.htaccess_lines(pages)
+    if "404.html" in pages:      # an unknown URL answers 404 with the site's own page (not the server's), which asks not to be indexed when it is opened directly
+        pages[".htaccess"] += "ErrorDocument 404 /404.html\n"
+        pages["404.html"] = pages["404.html"].replace("<head>", '<head>\n<meta name="robots" content="noindex,follow">', 1)
     apply_index_policy(pages, thin_pages, preview)
     drop_ads_from_noindex(pages)            # no ad tag on a page that is not indexed (kuma-adsense-about, 2026-10-20)
     render_day = today or datetime.now(JST).date()

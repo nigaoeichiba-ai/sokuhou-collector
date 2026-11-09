@@ -1,0 +1,80 @@
+{
+ "note": "Pages that link to research notes of the same subject (2026-11-09). A page lists a note only when the note counts what the page shows; the notes' own table rows decide for the prefecture pages (research.py).",
+ "pages": {
+  "/ranking/sightings/": [
+   "big-year",
+   "concentration",
+   "weekly-peak",
+   "peak-month-type"
+  ],
+  "/ranking/change/": [
+   "big-year",
+   "weekly-peak"
+  ],
+  "/ranking/injuries/": [
+   "injury-rate",
+   "deaths-by-year"
+  ],
+  "/ranking/deaths/": [
+   "deaths-by-year",
+   "injury-rate"
+  ],
+  "/ranking/captures/": [
+   "capture-vs-sightings"
+  ],
+  "/deaths/": [
+   "deaths-by-year"
+  ],
+  "/emergency/": [
+   "emergency-by-month"
+  ],
+  "/season/": [
+   "peak-month-type",
+   "month-ratio-autumn",
+   "october-vs-september",
+   "october-halves",
+   "october-towns",
+   "half-by-date"
+  ],
+  "/trend/": [
+   "weekly-peak",
+   "week-direction",
+   "weekly-comovement",
+   "spread-vs-volume"
+  ],
+  "/live/": [
+   "hour-of-day",
+   "after-sunset",
+   "round-minutes",
+   "holiday-weeks",
+   "moon-phase",
+   "first-sighting",
+   "record-days",
+   "busy-days",
+   "new-towns",
+   "same-place-same-day",
+   "quiet-then-again"
+  ],
+  "/map/": [
+   "latitude-by-month",
+   "same-day-distance",
+   "same-place-same-day"
+  ],
+  "/guide/data/": [
+   "trace-ratio",
+   "count-per-report",
+   "record-days"
+  ],
+  "/guide/encounter/": [
+   "hour-of-day",
+   "after-sunset"
+  ],
+  "/guide/prepare/": [
+   "peak-month-type",
+   "month-ratio-autumn"
+  ],
+  "/live/hokkaido/": [
+   "hokkaido-monthly"
+  ]
+ }
+}

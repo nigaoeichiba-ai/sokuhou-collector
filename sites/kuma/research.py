@@ -24,6 +24,9 @@ from sites.kuma.fmt import jp_date, md, table
 from sokuhou.sitekit import BuildError, crumbs, esc
 
 DIR = Path(__file__).resolve().parent / "research"
+LINKS = json.loads(Path(__file__).with_name("research_links.json").read_text(encoding="utf-8"))["pages"]     # page path -> the notes of the same subject
+PREF_NOTES = ["injury-rate", "peak-month-type", "capture-vs-sightings", "big-year", "deaths-by-year", "concentration"]      # prefecture pages: the first four of these that have a row for the prefecture
+LIVE_NOTES = ["concentration", "place-repeat", "first-sighting", "town-rank-stability", "same-town-streak", "hour-of-day", "record-days"]      # /live/<prefecture>/ pages
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 LINK = re.compile(r"\[\[([^\]|]+)\|(/[^\]\s]*)\]\]")
 BANNED = re.compile(r"必ず|絶対|100%|安全です|危険です|日本一|No\.1|ナンバーワン|最も危険|最も安全")
@@ -172,6 +175,40 @@ def home_block(docs: list[dict], limit: int = 3) -> str:
         return ""
     items = "".join(f'<li><a href="/research/{x["slug"]}/">{esc(x["h1"])}</a><b>{md(x["date"])}</b></li>' for x in docs[:limit])
     return f'<h2>研究ノート(記録を数えて分かったこと)</h2>\n<ul class="link-list">{items}</ul>\n<p><a href="/research/">研究ノートの一覧</a></p>\n'
+
+
+def _links_to(html: str, slug: str) -> bool:
+    return f'href="/research/{slug}/"' in html
+
+
+def related_html(docs: list[dict], slugs: list[str], html: str = "", heading: str = "関連する研究ノート") -> str:
+    """A list of links to notes (the note's title is the link text); notes the page already links are left out; a slug that is not among the notes is skipped."""
+    by = {x["slug"]: x for x in docs}
+    items = []
+    for s in slugs:
+        if s not in by:
+            continue                    # a build with fewer notes (a test fixture); tests/test_kuma_research_links.py checks that the links file names only real notes
+        if not _links_to(html, s):
+            items.append(f'<li><a href="/research/{s}/">{esc(by[s]["h1"])}</a></li>')
+    if not items:
+        return ""
+    return f'<h2>{esc(heading)}</h2>\n<ul class="link-list">{"".join(items)}</ul>\n'
+
+
+def notes_with_row(docs: list[dict], names: set[str], order: list[str], limit: int = 4) -> list[str]:
+    """The slugs, in the given order, of the notes whose own tables have a row for one of the names (the first column): the page of that prefecture is in the note."""
+    by = {x["slug"]: x for x in docs}
+    out = []
+    for s in order:
+        doc = by.get(s)
+        if not doc:
+            continue
+        cells = {str(r[0]).strip() for sec in doc.get("sections", []) if sec.get("table") for r in sec["table"]["rows"] if r}
+        if cells & names:
+            out.append(s)
+        if len(out) == limit:
+            break
+    return out
 
 
 def newest_date(docs: list[dict]) -> str | None:
