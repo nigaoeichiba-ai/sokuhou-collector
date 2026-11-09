@@ -1,0 +1,41 @@
+name: trend-depth-live
+
+# Read-only watch of the depth bar of trend-sokuho.com (desk's rule 2026-11-09).  Once a day it reads the REAL pages of the live sitemap and writes, per article,
+# the readable characters and whether it has a table or chart, to the run summary.  It changes nothing: no deploy, no server, no other workflow is touched.
+# The run turns red when an indexed article is below the bar (or a page could not be read), so that nobody trusts a zero that was not measured.
+on:
+  schedule:
+    - cron: "10 20 * * *"   # 05:10 JST, after the 04:40 text watch
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: trend-depth-live
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Install the packages (Pillow is read by the site's hooks)
+        run: python3 -m pip install -r requirements.txt
+      - name: Scan the live pages (read only)
+        run: |
+          rc=0
+          python3 sites/trend/tools/scan_depth_live.py trend-depth-live-report.md || rc=$?
+          cat trend-depth-live-report.md >> "$GITHUB_STEP_SUMMARY" || true
+          exit "$rc"
+      - name: Upload the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trend-depth-live-report
+          path: trend-depth-live-report.md
+          if-no-files-found: ignore
