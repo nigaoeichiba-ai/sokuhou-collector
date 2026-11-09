@@ -84,7 +84,7 @@ def scan(root: str, site: str = None):
         text = strip_markup(raw)
         for w in WHITELIST:
             text = text.replace(w, "〇〇")
-        rel = os.path.relpath(path, root)
+        rel = os.path.relpath(path, root).replace(os.sep, "/")      # 区切りは「/」にそろえる(Windows の手元と Linux の CI で、例外の pages の一致を同じにする)
         # サイト別例外：--site が一致する例外だけ、その箇所を走査対象から外す
         if site:
             for exc in EXCEPTIONS:
