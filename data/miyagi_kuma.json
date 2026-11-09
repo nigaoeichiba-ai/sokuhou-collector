@@ -1,15 +1,15 @@
 {
- "as_of": "2026-11-06",
+ "as_of": "2026-11-09",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 0,
  "dates_after_as_of_by_month": {},
- "fetched_at": "2026-11-07T06:22:21.480766+09:00",
+ "fetched_at": "2026-11-10T06:17:34.862418+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "1": 0,
    "10": 107,
-   "11": 10,
+   "11": 12,
    "12": 0,
    "2": 0,
    "3": 0,
@@ -32,11 +32,27 @@
    "species": "クマ"
   },
   {
+   "city": "大郷町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-04T22:40:00+09:00",
+   "place": "東成田字長松沢山",
+   "species": "クマ"
+  },
+  {
    "city": "富谷市",
    "count": 1,
    "kind": "目撃",
    "observed_at": "2026-11-04T20:35:00+09:00",
    "place": "大清水一丁目　付近",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-04T16:40:00+09:00",
+   "place": "松崎鶴巻",
    "species": "クマ"
   },
   {
@@ -11361,7 +11377,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261106.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261109.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }
