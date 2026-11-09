@@ -3163,6 +3163,14 @@
     "first": "2026-10-26",
     "last": "2026-11-01"
    }
+  },
+  "2026-W45": {
+   "sorachi": {
+    "cities": {},
+    "count": 0,
+    "first": null,
+    "last": null
+   }
   }
  }
 }
