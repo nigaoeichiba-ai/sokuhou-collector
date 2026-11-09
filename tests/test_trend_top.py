@@ -183,6 +183,30 @@ class TrendTop(unittest.TestCase):
         with self.assertRaises(SystemExit):
             hooks.prepare(cfg, spec, bad, SITE)
 
+    def test_depth_bar_a_new_thin_article_stops_the_build_a_bridge_page_and_an_old_one_do_not(self):
+        """Desk's rule 2026-11-09: a NEW article needs 2,000 readable characters and its own table or chart.  A page declared a bridge (`noindex`) and the articles
+        published before the bar (DEEP_GRANDFATHERED: no character count required of them) pass.  The failure it reproduces: a thin article going out as a normal one."""
+        content = _prepared()                                                              # the pages as the build hands them to post(): category and dates set
+        base = next(p for p in content if p["path"] == "/trend-typhoon32/")
+        thin_html = "<main><h1>薄い</h1><p>" + "短い文です。" * 20 + "</p></main>"
+
+        def new_page(**extra):
+            p = json.loads(json.dumps(base))
+            p.update({"path": "/trend-test-thin/", **extra})
+            return p, {"trend-test-thin/index.html": thin_html}
+
+        p, pages = new_page()
+        problems = hooks.deep_problems(pages, [p])
+        self.assertTrue(any("readable characters" in x for x in problems), problems)
+        self.assertTrue(any("no table and no chart" in x for x in problems), problems)
+        p, pages = new_page(noindex=True)
+        self.assertEqual(hooks.deep_problems(pages, [p]), [])                              # declared as a bridge: allowed
+        self.assertEqual(hooks.deep_problems({"trend-typhoon32/index.html": thin_html}, [base]), [])      # an old article: no character count required
+        self.assertIn(base["path"], hooks.DEEP_GRANDFATHERED)
+        self.assertEqual(hooks.DEEP_MIN_CHARS, 2000)
+        # every article now on the site is either deep or on the list, so the build passes
+        self.assertEqual(hooks.deep_problems(self.pages, [x for x in content if x["path"] not in hooks.DEEP_GRANDFATHERED]), [])
+
     def test_the_old_all_pages_list_and_the_stale_medical_line_are_gone(self):
         self.assertNotIn("医療の話題は扱いません", self.html("/"))
         self.assertNotIn("速報×深掘りの各ページ", self.html("/"))

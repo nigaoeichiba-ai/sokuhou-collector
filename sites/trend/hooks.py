@@ -170,7 +170,34 @@ def _add_json_image(text: str, image_url: str) -> str:
     return re.sub(r'<script type="application/ld\+json">(.*?)</script>', fix, text, flags=re.S)
 
 
+DEEP_MIN_CHARS = 2000
+# Articles published before the depth bar (2026-11-09): the character count is not required of them (owner: no padding just to reach a number), but they are
+# reviewed against the other bars (own view, own text, own content, research) and thickened only with real content.  A NEW article is not on this list.
+DEEP_GRANDFATHERED = {"/trend-nengajo-print/", "/trend-fire-alarm/", "/trend-influenza-44/", "/trend-vegetable-price/", "/trend-crab-phone-call/", "/bousai-light/",
+                      "/bousai-mizu-shokuryo/", "/trend-wage-2026-09/", "/trend-rice-price/", "/bousai-keitai-toilet/", "/bousai-denchi-juden/", "/trend-humidifier-care/",
+                      "/trend-gastroenteritis-winter/", "/trend-typhoon32/", "/trend-blackfriday-price/", "/bousai/"}
+
+
+def deep_problems(pages: dict, content: list[dict]) -> list[str]:
+    """The depth bar for articles (desk's rule 2026-11-09): a new article needs 2,000 readable characters and an own table or chart, or it must be declared a bridge
+    page (`"noindex": true` in its JSON, which keeps it out of search).  The own view, own text and research bars cannot be measured: the writer declares them."""
+    from sokuhou import seokit
+    out = []
+    for p in content:
+        if not p.get("category") or p.get("noindex") or p["path"] in DEEP_GRANDFATHERED:
+            continue
+        info = seokit.read_main(pages[p["path"].strip("/") + "/index.html"])
+        if info["chars"] < DEEP_MIN_CHARS:
+            out.append(f"{p['path']}: {info['chars']} readable characters (a deep article needs {DEEP_MIN_CHARS}); thicken it with content of its own, or declare it a bridge page with \"noindex\": true")
+        if not (info["tables"] or info["charts"]):
+            out.append(f"{p['path']}: no table and no chart of its own (a deep article needs one)")
+    return out
+
+
 def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path) -> dict:
+    problems = deep_problems(pages, content)
+    if problems:
+        raise SystemExit("depth bar not met:\n  " + "\n  ".join(problems))
     base = cfg["site_url"].rstrip("/")
     name = cfg["site_name"]
     by_rel = {("index.html" if p["path"] == "/" else p["path"].strip("/") + "/index.html"): p for p in content}
