@@ -107,7 +107,7 @@ class TrendTop(unittest.TestCase):
         hero = re.search(r'class="card card-hero".*?</article>', self.html("/"), re.S).group(0)
         self.assertIn(f'<h3><a href="{top["path"]}">', hero)
         newer = json.loads(json.dumps(next(p for p in content if p["path"] == top["path"])))
-        newer.update({"path": "/trend-test-newer/", "category": "暮らし", "published": "2026-11-09", "seq": 1, "_file": "x.json", "primary_kw": "新しいテスト", "h1": "新しいテスト記事"})
+        newer.update({"path": "/trend-test-newer/", "category": "暮らし", "published": "2026-11-12", "seq": 1, "_file": "x.json", "primary_kw": "新しいテスト", "h1": "新しいテスト記事"})
         home = [p for p in hooks.prepare(cfg, spec, content + [newer], SITE) if p["path"] == "/"][0]
         self.assertIn("/trend-test-newer/", next(s["html"] for s in home["sections"] if s.get("h2") == "最新の深掘り記事"))
 
