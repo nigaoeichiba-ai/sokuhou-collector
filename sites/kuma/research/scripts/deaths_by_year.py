@@ -45,8 +45,8 @@ def main() -> None:
         "slug": "deaths-by-year", "date": common.today().isoformat(), "data_as_of": data_as_of,
         "title": f"熊(クマ)による死亡は、年にどれだけか。環境省の統計({common.fy(years[0])}〜{common.fy(years[-1])})と、死亡事故の一覧を数える",
         "h1": f"クマによる死亡者数は、年度でどう動いてきたか。{common.fy(years[0])}から{common.fy(years[-1])}と、最近の死亡事故の月別・県別",
-        "description": f"環境省の人身被害の統計で、クマによる死亡者数を{common.fy(years[0])}から{common.fy(years[-1])}まで年度別に数えました。最も多かったのは{common.fy(top[0])}の{deaths[top[0]]}人です。死亡事故の月別・県別も、件数だけで載せます。",
-        "lead": (f"環境省は、クマによる人身被害を、件数・人数・死亡者数で、平成20年度から公表しています。死亡者数が年度でどう動いてきたのかを、{common.fy(years[0])}から{common.fy(years[-1])}の{len(years)}年度分で数えました。"
+        "description": f"環境省の人身被害の統計で、クマによる死亡者数を{common.fy(years[0])}から{common.fy(years[-1])}まで年度別に集計しました。最も多かったのは{common.fy(top[0])}の{deaths[top[0]]}人です。死亡事故の月別・県別も、件数だけで掲載します。",
+        "lead": (f"環境省は、クマによる人身被害を、件数・人数・死亡者数で、平成20年度から公表しています。死亡者数が年度でどう動いてきたのかを、{common.fy(years[0])}から{common.fy(years[-1])}の{len(years)}年度分で集計しました。"
                  f"あわせて、環境省が別に公表している死亡事故の一覧(令和7年度{len(lists['R07']['incidents'])}件・令和8年度{len(lists['R08']['incidents'])}件)を、月別・都道府県別に数えます。事故の経過や被害者の状況は、扱いません。"),
         "findings": [
             f"{common.fy(years[0])}から{common.fy(years[-1])}の{len(years)}年度で、死亡者は合計{cum}人です。最も多かったのは{common.fy(top[0])}の{deaths[top[0]]}人、次いで{common.fy(top[1])}の{deaths[top[1]]}人でした。死亡者が0人の年度は{len(zero)}年度あります。",
@@ -63,10 +63,10 @@ def main() -> None:
              "chart": {"kind": "bars", "labels": [y.replace("R0", "R").replace("H", "H") for y in years], "values": [deaths[y] for y in years], "title": "クマによる死亡者数(人)",
                        "desc": f"{common.fy(years[0])}から{common.fy(years[-1])}までの、全国のクマによる死亡者数を年度別に比べた棒グラフ。"}},
             {"h2": "死亡事故の一覧(令和7・8年度)を、月別に数える",
-             "paragraphs": [f"環境省が公表している死亡事故の一覧の、日付の月で数えました。令和7年度は{common.jp(lists['R07']['as_of'])}現在、令和8年度は{common.jp(lists['R08']['as_of'])}現在の一覧です。{found}件は、事故の日ではなく被害者が見つかった日が、日付に書かれています。"],
+             "paragraphs": [f"環境省が公表している死亡事故の一覧の、日付の月で集計しました。令和7年度は{common.jp(lists['R07']['as_of'])}現在、令和8年度は{common.jp(lists['R08']['as_of'])}現在の一覧です。{found}件は、事故の日ではなく被害者が見つかった日が、日付に書かれています。"],
              "table": {"head": ["月", "令和7年度(件)", "令和8年度(件)"], "rows": rows}},
             {"h2": "都道府県別の件数",
-             "paragraphs": ["一覧に書かれている都道府県で数えました。人数は、1件につき1人です。" if not two else f"一覧に書かれている都道府県で数えました。1件で複数の被害者の事故が{two}件あります。"],
+             "paragraphs": ["一覧に書かれている都道府県で集計しました。人数は、1件につき1人です。" if not two else f"一覧に書かれている都道府県で集計しました。1件で複数の被害者の事故が{two}件あります。"],
              "table": {"head": ["都道府県", "令和7年度(件)", "令和8年度(件)", "合計(件)"], "rows": prow}},
         ],
         "method": [

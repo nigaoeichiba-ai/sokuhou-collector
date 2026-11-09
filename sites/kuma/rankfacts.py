@@ -49,7 +49,7 @@ def injuries_after(d: dict, rows: list[dict]) -> str:
     # the prefecture whose place moves most when the population is taken into account (a prefecture with 3 or more victims, so that one person does not decide it)
     big = [r for r in rows if r["injured7"] >= 3]
     mover = max(big, key=lambda r: (by_count[r["name"]] - by_pop[r["name"]], r["name"]))
-    out = [f"令和元年度から{fy_label(done)}までの7年間の被害者数を人口100万人あたりにすると、{top}の順に多くなります。"]
+    out = [f"令和元年度から{fy_label(done)}までの7年間の被害者数を、人口100万人あたりにします。多い順に、{top}です。"]
     if by_count[mover["name"]] - by_pop[mover["name"]] >= 5:
         out.append(f"{mover['name']}は、人数では{by_count[mover['name']]}位ですが、人口あたりでは{by_pop[mover['name']]}位に上がります。")
     nat = sum(r["injured7"] for r in rows)

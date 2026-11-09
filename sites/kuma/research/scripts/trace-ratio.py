@@ -66,7 +66,7 @@ def main() -> None:
     comp_names = "・".join(SOURCES[k] for k in comp)
     excl = [SOURCES[k] for k in SOURCES if k not in comp]
     big = max(comp, key=lambda k: stats[k]["l_share"] - stats[k]["e_share"])
-    diff_big = f"増え方がいちばん大きい{SOURCES[big]}は、{stats[big]['e_share']:.1f}%から{stats[big]['l_share']:.1f}%でした。"
+    diff_big = f"増え方が最も大きい{SOURCES[big]}は、{stats[big]['e_share']:.1f}%から{stats[big]['l_share']:.1f}%でした。"
 
     doc = {
         "slug": "trace-ratio", "date": "2026-10-18", "data_as_of": as_of,
@@ -76,17 +76,17 @@ def main() -> None:
         "lead": (f"熊の記録には、姿を見た「目撃」のほかに、足跡・糞・食害などの「痕跡」の報告が混じっています。秋田県・宮城県・新潟県・富山県・山口県の令和8年度の記録{total:,}件のうち、痕跡は{all_trace:,}件でした。"
                  "県ごとの割合と、4〜8月・9〜10月での違いを数えます。"),
         "findings": [
-            f"痕跡の割合がいちばん大きいのは{SOURCES[hi]}で{stats[hi]['share']:.1f}%、いちばん小さいのは{SOURCES[lo]}で{stats[lo]['share']:.1f}%です。",
+            f"痕跡の割合が最も大きいのは{SOURCES[hi]}で{stats[hi]['share']:.1f}%、最も小さいのは{SOURCES[lo]}で{stats[lo]['share']:.1f}%です。",
             f"4〜8月と9〜10月を比べられる{comp_names}では、9〜10月の割合が高い県が{len(comp)}県中{len(up)}県でした。{diff_big}",
             "痕跡の割合は、県の記録の取り方に左右されます。県どうしの差は、熊の行動の差とは言えません。",
         ],
         "sections": [
             {"h2": "県ごとの痕跡の件数と割合",
-             "paragraphs": ["記録の「種別」の欄が、痕跡(足跡・糞・食害などの「その他」を含む)になっているものを数えました。右の2つの欄は、4〜8月と9〜10月に分けた割合です。かっこの中は、痕跡の件数 / その期間の記録の件数です。"],
+             "paragraphs": ["記録の「種別」の欄が、痕跡(足跡・糞・食害などの「その他」を含む)になっているものを集計しました。右の2つの欄は、4〜8月と9〜10月に分けた割合です。かっこの中は、痕跡の件数 / その期間の記録の件数です。"],
              "table": {"head": ["県", "記録", "痕跡", "痕跡の割合", "4〜8月の痕跡の割合", "9〜10月の痕跡の割合"], "rows": rows,
                        "note": "9〜10月の記録が少ない県は、割合を比べていません。秋田県の記録は9月30日まで、ほかの県は10月15・16日までです。"}},
             {"h2": "月ごとの痕跡の割合",
-             "paragraphs": [f"期間を月に分けて、痕跡の割合を数えました。記録が{MIN_MONTH}件に満たない月は「-」です。月の割合のうち、いちばん高いのは{SOURCES[top_month[0]]}の{top_month[1]}月({month_hi[top_month] * 100:.0f}%)、いちばん低いのは{SOURCES[low_month[0]]}の{low_month[1]}月({month_hi[low_month] * 100:.0f}%)でした。",
+             "paragraphs": [f"期間を月に分けて、痕跡の割合を集計しました。記録が{MIN_MONTH}件に満たない月は「-」です。月の割合のうち、最も高いのは{SOURCES[top_month[0]]}の{top_month[1]}月({month_hi[top_month] * 100:.0f}%)、最も低いのは{SOURCES[low_month[0]]}の{low_month[1]}月({month_hi[low_month] * 100:.0f}%)でした。",
                             "同じ県の中でも、月によって割合は大きく動きます。月ごとの記録の件数が少ない県と月では、数件の違いで割合が変わるため、1か月の数字だけで傾向を決めることはできません。"],
              "table": {"head": ["月"] + [SOURCES[k] for k in SOURCES], "rows": month_rows,
                        "note": "かっこの中は、痕跡の件数 / その月の記録の件数です。数えた期間は、各県の記録が最も新しい日までです。"}},
