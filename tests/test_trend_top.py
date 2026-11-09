@@ -17,11 +17,11 @@ SITE = ROOT / "sites" / "trend"
 hooks = site_hooks(SITE)
 BASE = "https://trend-sokuho.com"
 
-TITLE = "今日の話題｜速報×深掘り、公的な発表の数字で確かめる"
-H1 = "公的な発表の数字で確かめる、今日の話題"
-LEAD = "今日の話題を、ニュースの見出しだけで終わらせず、公的な発表の数字で確かめて紹介します。速報と深掘りを1セットにし、読んだあとに何をすればよいかが分かる記事を出します。"
-DESC = "今日の話題は、速報と深掘りを1セットにしたサイトです。コメや野菜の価格、給与、防災、天気など暮らしの話題を、省庁や公的機関の発表の数字で確かめ、家でできる対策まで紹介します。"
-ABOUT = "今日の話題は、ニュースの見出しだけで終わらせず、公的な発表の数字で確かめて紹介するサイトです。事件・事故・訃報などの重い話題は扱いません。"
+TITLE = "今日の話題｜速報×深掘り"
+H1 = "速報ニュースを、どこよりも深掘りする。"
+LEAD = "「今日の話題」は、ニュースの見出しや表面的な情報だけで終わりません。速報性と深い洞察を1セットにし、出来事の背景と移り変わり、数字の裏にある意味、暮らしや実務への影響、そして「次に何をすればよいか」までを、一次情報の読み直しとともに1本にまとめてお届けします。"
+DESC = LEAD      # the description follows the new lead (the desk, 2026-11-10)
+ABOUT = "「今日の話題 速報×深掘り」は、気になる速報ニュースをどこよりも深く、多角的に読み解くメディアです。事件・事故・訃報などの重い話題は扱いません。"
 CAT_DESC = {"kakei": "コメや野菜の価格、給与、セールの動きなど、家計に関わる数字の記事です。省庁や公的機関の発表をもとに、店頭で使える比べ方まで紹介します。",
             "bousai": "台風や火災予防、防災グッズの備えなど、身を守るための記事です。気象庁や消防庁、防災庁の発表をもとに、家でやることまで紹介します。",
             "tenki": "インフルエンザや胃腸炎の流行、加湿器の手入れなど、季節と健康に関わる記事です。公的機関の報告の数字と、家庭での予防を紹介します。",
@@ -109,7 +109,7 @@ class TrendTop(unittest.TestCase):
         newer = json.loads(json.dumps(next(p for p in content if p["path"] == top["path"])))
         newer.update({"path": "/trend-test-newer/", "category": "暮らし", "published": "2026-11-09", "seq": 1, "_file": "x.json", "primary_kw": "新しいテスト", "h1": "新しいテスト記事"})
         home = [p for p in hooks.prepare(cfg, spec, content + [newer], SITE) if p["path"] == "/"][0]
-        self.assertIn("/trend-test-newer/", next(s["html"] for s in home["sections"] if s.get("h2") == "いまの話題"))
+        self.assertIn("/trend-test-newer/", next(s["html"] for s in home["sections"] if s.get("h2") == "最新の深掘り記事"))
 
     def test_a_card_has_one_link_a_picture_with_size_and_the_title_as_alt(self):
         for path in ("/", "/cat/kakei/"):
@@ -137,7 +137,10 @@ class TrendTop(unittest.TestCase):
 
     def test_the_description_of_an_article_is_the_first_two_sentences_of_the_three_line_summary(self):
         for p in self.articles:
-            text = "".join(next(s["paras"] for s in p["sections"] if s.get("h2") == "3行まとめ"))
+            sec = next((s for s in p["sections"] if s.get("h2") == "3行まとめ"), None)
+            if sec is None:
+                continue      # the desk's full-text rewrite (2026-11-10, the fire-alarm article) has no 3-line summary: its description is the first sentence of the body
+            text = "".join(sec["paras"])
             two = "".join(re.findall(r"[^。]+。", text)[:2])
             self.assertIn(f'<meta name="description" content="{two}">', self.html(p["path"]), p["path"])
             self.assertIn(f'<meta property="og:description" content="{two}">', self.html(p["path"]), p["path"])

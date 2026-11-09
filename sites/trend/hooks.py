@@ -220,6 +220,12 @@ def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path
             exact = p["title"]
             t = t.replace(f"<title>{esc(exact)} | {esc(name)}</title>", f"<title>{esc(exact)}</title>", 1)
             t = t.replace(f'<meta property="og:title" content="{esc(exact)} | {esc(name)}">', f'<meta property="og:title" content="{esc(exact)}">', 1)
+        # ヘッダー・フッター(オーナー指示 2026-11-10。ロゴ画像に名前の文字が入っているため、テキストの名前は並べない=二重表示にしない)
+        t = t.replace('<a class="brand" href="/"><span class="logo" aria-hidden="true">', '<a class="brand" href="/" aria-label="今日の話題 速報×深掘り"><span class="logo">', 1)
+        t = t.replace("</span>今日の話題</a>\n<nav", "</span></a>\n<nav", 1)
+        t = t.replace('<header class="site">', '<div class="wrap"><p class="tagline" style="margin:.4rem 0 0;font-size:.82rem;color:#555">ニュースの見出しで終わらせない「速報×深掘り」メディア</p></div>\n<header class="site">', 1)
+        t = t.replace('<p class="legal">', '<p class="src"><span>速報と深掘りを、1セットに。</span> <span>今日の話題を、速く、そして深く伝えること。</span></p>\n<p class="legal">', 1)
+        t = t.replace("<span>&copy; 今日の話題</span>", "<span>&copy; 今日の話題 速報×深掘り All Rights Reserved.</span>", 1)
         if p and p.get("category"):
             t = _add_json_image(t, base + src)
         if rel == "index.html":
