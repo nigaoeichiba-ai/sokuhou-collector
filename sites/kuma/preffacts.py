@@ -10,8 +10,16 @@ compared by a ratio built from them (the same prefecture's years are).  Injuries
 """
 from __future__ import annotations
 
-from sites.kuma.fmt import fy_label, n, ratio_text
+import json
+import re
+from collections import Counter
+from pathlib import Path
+
+from sites.kuma import live as live_mod
+from sites.kuma.fmt import fy_label, jp_date, n, ratio_text
 from sokuhou.sitekit import esc
+
+_MAST = json.loads(Path(__file__).with_name("mast.json").read_text(encoding="utf-8"))
 
 SUMMER = (2, 3, 4)       # June-August (months start in April)
 AUTUMN = (5, 6, 7)       # September-November
@@ -19,6 +27,9 @@ MIN_SEASON = 60          # a year with fewer sightings than this does not say wh
 MIN_RATE = 150           # a year with fewer sightings than this moves too much with one person for a per-1,000 figure
 MIN_CAPTURE = 100        # sightings needed in both years for the capture-to-sightings comparison
 MIN_YTD = 30             # the same period of the last year must have this many sightings for a comparison
+MIN_CITIES = 6           # municipalities (with a record or a count) needed to say how a prefecture's records are spread
+MIN_RECORDS = 100        # records (or counts) needed in all, so that the shares do not move with one report
+MIN_DISTRICT = 5         # records in one district before it is named as one where records repeat
 
 
 def fy_or_h(y: str) -> str:
@@ -186,10 +197,15 @@ def _capture(d: dict, r: dict) -> list[str]:
 def _emergency(d: dict, r: dict) -> list[str]:
     name = r["name"]
     done, cur = d["done"], d["cur"]
-    k = {y: sum(1 for x in d["emergency"][y]["cases"] if x["prefecture"] == name) for y in (done, cur)}
-    if not any(k.values()):
+    cases = {y: [x for x in d["emergency"][y]["cases"] if x["prefecture"] == name] for y in (done, cur)}
+    if not any(cases.values()):
         return []
-    return [f"環境省が把握する緊急銃猟は、{fy_label(done)}が{n(k[done])}件、{fy_label(cur)}が{n(k[cur])}件です。"]
+
+    def where(cs):
+        names = [x["place"] if re.search(r"[クグ]マ$", x.get("species", "クマ")) else f"{x['place']}({x['species']}が対象)" for x in cs]
+        return "、".join(names[:4]) + (f"ほか{n(len(names) - 4)}件" if len(names) > 4 else "")
+    parts = [f"{fy_label(y)}が{n(len(cases[y]))}件" + (f"({where(cases[y])})" if cases[y] else "") for y in (done, cur)]
+    return [f"環境省が把握する緊急銃猟は、{'、'.join(parts)}です。"]
 
 
 def _death_months(d: dict, r: dict) -> list[str]:
@@ -201,9 +217,108 @@ def _death_months(d: dict, r: dict) -> list[str]:
     return [f"環境省の一覧にある死亡事故{n(len(inc))}件が起きた月は、{'・'.join(f'{m}月' for m in months)}です。"]
 
 
+# ---------------------------------------------------------------- the nut-crop survey (acorns, beech nuts): what the ministry's table says of this prefecture
+
+def _mast(d: dict, r: dict) -> list[str]:
+    m = _MAST["prefectures"].get(r["name"])
+    if not m:
+        return []                      # the ministry's table has no row for this prefecture: nothing is said (no claim that nothing was surveyed)
+    miss = _MAST["missing_marker"]
+    species = [("ブナ", m["buna"]), ("ミズナラ", m["mizunara"]), ("コナラ", m["konara"])]
+    have = [f"{sp}が「{v}」" for sp, v in species if v != miss]
+    none = [sp for sp, v in species if v == miss]
+    text = f"環境省が{jp_date(_MAST['as_of'])}にまとめた{fy_label(d['cur'])}の堅果類の結実調査(速報)で、{esc(r['name'])}は{'、'.join(have)}でした。"
+    if none:
+        text += f"{'・'.join(none)}は調査がありません。"
+    if r["name"] in _MAST["shared_survey"]["members"]:
+        text += "島根県・広島県・山口県は、西中国山地として島根県がまとめた調査です。"
+    if m["others"] and len(m["others"]) <= 2:
+        text += "ほかの樹種は、" + "、".join(f"{esc(a)}が「{esc(b)}」" for a, b in m["others"]) + "です。"
+    if r["name"] in _MAST["alert"]:
+        text += f"同じ資料は、{esc(r['name'])}を、クマの出没について注意喚起を行っている道府県に挙げています。"
+    if m["link"]:
+        label = "島根県" if r["name"] == "山口県" else r["name"]
+        text += f'県の掲載ページ: <a href="{esc(m["link"])}" rel="noopener" target="_blank">{esc(label)}の結果</a>(環境省の資料が示す掲載先)。'
+    return [text]
+
+
+# ---------------------------------------------------------------- municipal data (only for prefectures whose data covers the whole prefecture)
+
+def _scoped_out(lv: dict, slug: str) -> bool:
+    keys = {x.get("src") for x in lv["records"] if x["slug"] == slug} | {c.get("key") for c in lv["counts"] if c["slug"] == slug}
+    return any(live_mod.LIVE_SOURCES.get(k, {}).get("scope") for k in keys)
+
+
+def _city_counts(d: dict, slug: str) -> tuple[dict[str, int], str] | None:
+    """{municipality: records or count} and the unit word, or None when the data does not cover the prefecture or comes from two kinds of source."""
+    lv = d.get("lv")
+    if not lv or _scoped_out(lv, slug):
+        return None
+    recs = lv["by_pref"].get(slug)
+    counts = [c for c in lv["counts"] if c["slug"] == slug]
+    if recs and not counts:
+        return {c: len(v) for c, v in recs.items()}, "記録"
+    if counts and not recs and len(counts) == 1:
+        return {city: k for city, k, _ in counts[0]["munis"]}, "件数"
+    return None
+
+
+def _is_municipality(name: str) -> bool:
+    return bool(re.search(r"[市町村区]$", name)) and "分から" not in name
+
+
+def _concentration(d: dict, r: dict) -> list[str]:
+    got = _city_counts(d, r["slug"])
+    if not got:
+        return []
+    counts, unit = got
+    valid = {c: k for c, k in counts.items() if _is_municipality(c)}
+    total = sum(valid.values())
+    if len(valid) < MIN_CITIES or total < MIN_RECORDS:
+        return []
+    ranked = sorted(valid.items(), key=lambda kv: (-kv[1], kv[0]))
+    (a, ka), (b, kb), (c, kc) = ranked[:3]
+    p1, p3 = round(ka / total * 100), round((ka + kb + kc) / total * 100)
+    if p1 >= 40:
+        return [f"{unit}がある{n(len(valid))}市町村のうち、{esc(a)}が{n(ka)}件で全体の{p1}%を占めます。2位は{esc(b)}({n(kb)}件)、3位は{esc(c)}({n(kc)}件)です。"]
+    text = f"{unit}がある{n(len(valid))}市町村のうち、多いのは{esc(a)}({n(ka)}件)、{esc(b)}({n(kb)}件)、{esc(c)}({n(kc)}件)で、この3つで{p3}%です。"
+    if p3 < 40:
+        text += f"{unit}は、多くの市町村に分かれています。"
+    return [text]
+
+
+def district(city: str, place: str) -> str:
+    """The district (大字・町名) of a record: the text after the municipality's name, up to the first digit, space, bracket or 丁目 (no street numbers are ever used)."""
+    i = place.find(city)
+    x = place[i + len(city):] if i >= 0 else place
+    x = re.split(r"[\s　(（]|[0-9０-９]|[一二三四五六七八九十]+丁目|丁目", x)[0]
+    x = re.sub(r"^(大字|字)", "", x)
+    x = re.sub(r"(周辺|地内|付近|地区)$", "", x)
+    return x.strip()
+
+
+def _districts(d: dict, r: dict) -> list[str]:
+    lv = d.get("lv")
+    got = _city_counts(d, r["slug"])
+    if not lv or not got or got[1] != "記録":
+        return []
+    rows = [x for x in lv["records"] if x["slug"] == r["slug"] and _is_municipality(x["city"])]
+    if len(rows) < MIN_RECORDS:
+        return []
+    c = Counter()
+    for x in rows:
+        area = district(x["city"], x["place"])
+        if len(area) >= 2:
+            c[(x["city"], area)] += 1
+    top = [(k, v) for k, v in sorted(c.items(), key=lambda kv: (-kv[1], kv[0])) if v >= MIN_DISTRICT][:3]
+    if not top:
+        return []
+    return ["同じ地区で記録がくり返されているのは、" + "、".join(f"{esc(city)}{esc(area)}({n(v)}件)" for (city, area), v in top) + "です。番地は使わず、市町村の下の地区名だけを使っています。"]
+
+
 def items(d: dict, r: dict) -> list[str]:
     out: list[str] = []
-    for f in (_sightings, _season, _rate, _capture, _emergency, _death_months):
+    for f in (_sightings, _season, _rate, _capture, _emergency, _death_months, _mast, _concentration, _districts):
         out += f(d, r)
     return out
 

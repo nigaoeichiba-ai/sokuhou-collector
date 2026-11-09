@@ -23,7 +23,7 @@ def make(inj=None, total=None, monthly=None, ytd=None, emergency=None, fatal=Non
     total = total or {"R04": 200, "R05": 300, "R06": 400, "R07": 900, "R08": 500}
     flat = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
     monthly = monthly or {y: flat[:] for y in ys}
-    r = {"name": "テスト県", "short": "テスト", "has": has, "inj": i, "rank": {"injured": 7}, "total": total, "monthly": monthly,
+    r = {"name": "テスト県", "short": "テスト", "slug": "tesuto", "has": has, "inj": i, "rank": {"injured": 7}, "total": total, "monthly": monthly,
          "ytd": ytd or {"R04": 50, "R05": 80, "R06": 100, "R07": 200, "R08": 500}}
     d = {"inj": {"years": INJ_YEARS}, "cur": "R08", "done": "R07", "years": ys, "months": [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3], "latest_month": 8,
          "inj_as_of": "R08年9月末", "captures": captures,
@@ -181,8 +181,15 @@ class EmergencyAndDeathMonthsTest(unittest.TestCase):
     def test_emergency_is_stated_only_when_there_is_a_case(self):
         d, r = make()
         self.assertEqual(preffacts._emergency(d, r), [])
-        d, r = make(emergency=[{"prefecture": "テスト県"}, {"prefecture": "他県"}])
-        self.assertEqual(preffacts._emergency(d, r), ["環境省が把握する緊急銃猟は、令和7年度が1件、令和8年度が0件です。"])
+        d, r = make(emergency=[{"prefecture": "テスト県", "place": "甲市", "species": "ツキノワグマ"}, {"prefecture": "他県", "place": "乙市", "species": "ヒグマ"}])
+        self.assertEqual(preffacts._emergency(d, r), ["環境省が把握する緊急銃猟は、令和7年度が1件(甲市)、令和8年度が0件です。"])
+
+    def test_a_case_against_another_animal_says_so_and_a_long_list_is_cut(self):
+        cases = [{"prefecture": "テスト県", "place": f"{c}市", "species": "ツキノワグマ"} for c in "甲乙丙丁戊"] + [{"prefecture": "テスト県", "place": "己市", "species": "イノシシ"}]
+        d, r = make(emergency=cases)
+        self.assertIn("甲市、乙市、丙市、丁市ほか2件", preffacts._emergency(d, r)[0])
+        d, r = make(emergency=[{"prefecture": "テスト県", "place": "己市", "species": "イノシシ"}])
+        self.assertIn("己市(イノシシが対象)", preffacts._emergency(d, r)[0])
 
     def test_death_months_need_two_incidents(self):
         inc = [{"prefecture": "テスト県", "date": "2025-06-22"}, {"prefecture": "テスト県", "date": "2025-10-03"}, {"prefecture": "他県", "date": "2025-07-01"}]
