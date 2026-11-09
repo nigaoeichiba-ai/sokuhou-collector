@@ -15,5 +15,7 @@
   "indexnow_key": "eff1ddfeb966d8ebbc3d4ff2ba008287",
   "rakuten_affiliate_id": "583f273a.77c989b6.583f273b.0a6a5fff",
   "rakuten_tracking_id": "minna",
-  "amazon_tracking_id": "amazonmacs-22"
+  "amazon_tracking_id": "amazonmacs-22",
+  "privacy_adsense_in_use": true,
+  "privacy_affiliate_note_html": "<p>当サイトは、楽天アフィリエイトとA8.netのアフィリエイトサービスを利用しています。A8.netの広告を含むページには、ページの冒頭と広告のそばに「PR」と表示します。</p>\n"
 }

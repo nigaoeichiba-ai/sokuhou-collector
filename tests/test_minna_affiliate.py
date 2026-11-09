@@ -94,14 +94,15 @@ class AffiliateTest(unittest.TestCase):
                     self.assertNotIn("印刷", kw, kw)
                     self.assertNotIn("切手", kw, kw)
 
-    def test_a_built_page_has_no_amazon_link_and_no_partner_frame(self):
+    def test_a_built_page_has_no_amazon_link_and_the_partner_box_only_where_it_belongs(self):
         items, series = build.load_data()
         for slug in ("nenga-tsukurikata", "kantyu-mimai", "nenga-2027-schedule", "oseibo-orei-jo"):
             g = next(x for x in build.load_guides() if x["slug"] == slug)
             html = build.guide_page({**BASE, **IDS}, False, g, series)
             self.assertEqual(html.count('<aside class="pr-box">'), 1, slug)
             self.assertNotIn("amazon.co.jp", html, slug)
-            self.assertNotIn("印刷サービスの例", html, slug)
+            # the partner (A8) box is on nenga-tsukurikata only (tests/test_minna_partners.py); every other page shows none
+            self.assertEqual(html.count('<aside class="pr-box pr-partner">'), 1 if slug == "nenga-tsukurikata" else 0, slug)
 
     def test_every_planned_box_is_for_a_page_that_exists(self):
         guides = {g["slug"] for g in json.loads((Path(build.__file__).parent / "content" / "guides.json").read_text(encoding="utf-8"))["guides"]}

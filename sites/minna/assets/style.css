@@ -804,3 +804,6 @@ header.site nav a[aria-current] { background: var(--brand); color: var(--ink); }
 /* the links of an advertising box carry only the attributes the programmes give (href, target, rel): their look is set here, on the box */
 .pr-box li span a { display: inline-flex; align-items: center; justify-content: center; padding: .35em 1em; background: #fff; color: var(--ink); border: 1px solid var(--edge); border-radius: 10px; font-family: var(--display); font-weight: 700; font-size: .85rem; text-decoration: none; text-align: center; }
 .pr-box li span a:hover { background: var(--mint-s); }
+.pr-partner-body { margin: 0; overflow-wrap: anywhere; }
+.pr-partner-body img { max-width: 100%; height: auto; }
+.pr-top { margin: 0 0 16px; font-size: .86rem; color: var(--muted); }

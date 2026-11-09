@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.minna import facts, gate, itemguides, model, printables, redirects, tips, wishes  # noqa: E402
+from sites.minna import facts, gate, itemguides, model, partners, printables, redirects, tips, wishes  # noqa: E402
 from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
 from sites.minna.setguides import set_guide_html  # noqa: E402
 from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
@@ -113,6 +113,8 @@ def guide_page(cfg, preview, g: dict, series: list[dict]) -> str:
         if sec.get("links"):        # [[label, path], ...]: pages of this site the section talks about
             secs += '<ul class="check">' + "".join(f'<li><a href="{esc(href)}">{esc(label)}</a></li>' for label, href in sec["links"]) + "</ul>"
         secs += "</section>"
+        if sec.get("partner"):      # the partner (A8) box of this section: the programme's own code, nothing when the page has none (partners.py)
+            secs += partners.box(g["slug"])
     faq = "".join(f"<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>" for q, a in g.get("faq", []))
     src = ""
     if g.get("sources"):
@@ -131,7 +133,7 @@ def guide_page(cfg, preview, g: dict, series: list[dict]) -> str:
         faq_ld = f'<script type="application/ld+json">{faq_json}</script>'
     faq_html = ('<section class="art"><h2>よくある質問</h2><div class="faq">' + faq + '</div></section>') if faq else ""
     body = f"""{crumbs([("トップ", "/"), ("読みもの", "/guide/"), (g["title"], None)])}
-<h1>{esc(g['title'])}</h1><p class="lead">{esc(g['lead'])}</p>{licence_box()}
+<h1>{esc(g['title'])}</h1><p class="lead">{esc(g['lead'])}</p>{partners.top_notice(g['slug'])}{licence_box()}
 {secs}{illust}
 {faq_html}
 {src}{pr_box(cfg, *GUIDE_PR[g['slug']]) if g['slug'] in GUIDE_PR else ""}{share(cfg, f"/guide/{g['slug']}/", g['title'])}
@@ -404,6 +406,13 @@ def tune_images(html: str, eager: int = 5) -> str:
     """Only the first few pictures of a page are fetched at once (the logo and the first cards); every other picture waits until it is near the screen, and none blocks the page while it decodes.
     A special page used to start 8 pictures per heading: 63 pictures, 1.5 MB, before anyone scrolled."""
     n = 0
+    held: list[str] = []    # a partner box holds the programme's code exactly as given (partners.py): not even an attribute is added to its tags
+
+    def hold(m: re.Match) -> str:
+        held.append(m.group(0))
+        return f"@@PARTNER{len(held) - 1}@@"
+
+    html = re.sub(r'<div class="pr-partner-body">.*?</div>', hold, html, flags=re.S)
 
     def one(m: re.Match) -> str:
         nonlocal n
@@ -416,7 +425,10 @@ def tune_images(html: str, eager: int = 5) -> str:
             if "loading=" not in tag:
                 tag = tag[:-1] + ' loading="lazy">'
         return tag
-    return re.sub(r"<img\b[^>]*>", one, html)
+    out = re.sub(r"<img\b[^>]*>", one, html)
+    for i, h in enumerate(held):
+        out = out.replace(f"@@PARTNER{i}@@", h)
+    return out
 
 
 ASSIST_BUTTON = ('<div id="assist-nudge" class="assist-nudge" hidden><button type="button" class="n-go" data-assist-open>探しているイラストを、案内がお手伝いします</button>'
@@ -1837,8 +1849,10 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     pages["data/synonyms.json"] = json.dumps({"v": 1, "groups": synonym_groups()}, ensure_ascii=False, separators=(",", ":"))
     pages["data/assist.json"] = json.dumps(assist_data(built, guides, calendar_year(today), pr_kinds, use_live, len(pose_sets) >= 3), ensure_ascii=False, separators=(",", ":"))
     pages["feed.xml"] = feed_xml(cfg, series, today)
+    # the Amazon sentence of the privacy page is only for a site that carries Amazon links (PR_STORES; off since 2026-11-09)
+    legal_cfg = {k: v for k, v in cfg.items() if not (k == "amazon_tracking_id" and "amazon" not in PR_STORES)}
     pages.update(legal_pages(
-        SITE, cfg, preview,
+        SITE, legal_cfg, preview,
         purpose="個人でも商用でも無料で使えるイラストを公開し、名前入りのカードを簡単に作れるようにすること。",
         sources_html="キャラクターは当サイトのオリジナルです。",
         update_text="イラストは順次追加します。",

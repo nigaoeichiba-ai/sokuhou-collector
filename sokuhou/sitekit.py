@@ -305,12 +305,12 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
 {input_note}{form_privacy(cfg)}<h2>アクセス解析</h2>
 {analytics_text(cfg)}
 <h2>広告について</h2>
-<p>当サイトは、第三者配信の広告サービス「Google AdSense」を利用する場合があります。広告配信事業者は、利用者の興味に応じた広告を表示するために、Cookie(クッキー)を使用することがあります。</p>
+<p>当サイトは、第三者配信の広告サービス「Google AdSense」を{"利用しています" if cfg.get("privacy_adsense_in_use") else "利用する場合があります"}。広告配信事業者は、利用者の興味に応じた広告を表示するために、Cookie(クッキー)を使用することがあります。</p>
 <p>Cookie を無効にする、または、パーソナライズ広告を無効にするには、<a href="https://adssettings.google.com/" rel="noopener" target="_blank">Google の広告設定</a>をご利用ください。第三者配信事業者による Cookie の使用を無効にするには、<a href="https://www.aboutads.info/choices/" rel="noopener" target="_blank">aboutads.info</a> もご利用いただけます。</p>
 <p>広告の配信にあたり、お使いのブラウザから広告配信事業者へ、閲覧に関する情報が送信されることがあります。</p>
 <h2>アフィリエイトについて</h2>
 <p>当サイトには、商品やサービスの紹介リンク(アフィリエイトリンク)が含まれる場合があります。該当するページには、広告であることを明示します。リンク先で商品が購入されると、当サイトの運営者に報酬が支払われることがあります。</p>{amazon_disclosure(cfg)}
-<h2>免責事項・著作権</h2>
+{cfg.get("privacy_affiliate_note_html", "")}<h2>免責事項・著作権</h2>
 <p>免責事項と情報の出典は、<a href="/about/">運営者情報</a>に記載しています。</p>
 <h2>お問い合わせ</h2>
 <p>このポリシーに関するお問い合わせは、{contact_summary(cfg)}からお願いします。</p>
