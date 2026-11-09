@@ -16,6 +16,9 @@
     - --rules で ng_rules.json（ルールのマスター）を指定すると、その内容で走査する。
       指定したのに読めない場合は、終了コード 2（エラー）で終わる＝ゲートは止める側に倒す。
       --rules を付けない場合は、このファイル内の予備リストで走査する（手元確認用）。
+    - 走査対象のフォルダがない、または対象ファイル（.html / .md / .txt）が0件の場合は、
+      PASSを出さず終了コード 2（エラー）で終わる＝ゲートは止める側に倒す。
+      （2026-11-10 追加：0件でPASSが返る事故の防止。オーナー承認済み）
 
 ホワイトリスト（支払い手段の名称は「カード」でも対象外）:
     クレジットカード / カード決済
@@ -134,23 +137,34 @@ def load_rules(path):
 
 def main() -> int:
     global HARD_PATTERNS, SOFT_PATTERNS, WHITELIST, EXCEPTIONS
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    # オプションとその値を分けて読む。値（パスやサイト名）を位置引数と
+    # 取り違えると、走査対象がずれて0件走査のままPASSになるため。
+    argv = sys.argv[1:]
+    args = []
     report_path = None
     rules_path = None
     site = None
     rules_version = "embedded (予備リスト)"
-    if "--report" in sys.argv:
-        idx = sys.argv.index("--report")
-        if idx + 1 < len(sys.argv):
-            report_path = sys.argv[idx + 1]
-    if "--rules" in sys.argv:
-        idx = sys.argv.index("--rules")
-        if idx + 1 < len(sys.argv):
-            rules_path = sys.argv[idx + 1]
-    if "--site" in sys.argv:
-        idx = sys.argv.index("--site")
-        if idx + 1 < len(sys.argv):
-            site = sys.argv[idx + 1]
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a in ("--report", "--rules", "--site"):
+            if i + 1 >= len(argv):
+                print(f"{a} の値がありません。")
+                return 2
+            if a == "--report":
+                report_path = argv[i + 1]
+            elif a == "--rules":
+                rules_path = argv[i + 1]
+            else:
+                site = argv[i + 1]
+            i += 2
+        elif a.startswith("--"):
+            print(f"不明なオプションです: {a}")
+            return 2
+        else:
+            args.append(a)
+            i += 1
     if not args:
         print("使い方: python3 check_text.py <フォルダ> [--report <出力先md>] [--rules <ng_rules.json>] [--site <サイトID>]")
         return 2
@@ -163,7 +177,22 @@ def main() -> int:
             print("ゲートは安全側に倒し、公開不可として終了します。")
             return 2
     root = args[0]
+    if not os.path.isdir(root):
+        print(f"走査対象のフォルダがありません: {root}")
+        print("ゲートは安全側に倒し、公開不可として終了します。")
+        return 2
     files, hard_hits, soft_counts, soft_locations, applied_exceptions = scan(root, site=site)
+    if not files:
+        msg = (
+            f"走査したファイル数: 0（対象フォルダ: {root}）\n"
+            "対象ファイル（.html / .md / .txt）が見つからないため、判定は出しません。\n"
+            "ゲートは安全側に倒し、公開不可として終了します。\n"
+        )
+        print(msg)
+        if report_path:
+            with open(report_path, "w", encoding="utf-8") as fh:
+                fh.write("# 文章チェック結果（公開ゲート）\n\n" + msg)
+        return 2
 
     lines = []
     lines.append("# 文章チェック結果（公開ゲート）")
