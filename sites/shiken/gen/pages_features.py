@@ -77,7 +77,7 @@ def goukaku_ritsu() -> dict:
     s5 = ('<h2>関連する詳細ページ</h2><div class="feature-grid">'
           f'<div class="fcard"><h3>宅建の詳細</h3><p>{("合格発表まで" + rel(tk["iso"]) + "。") if left(tk["iso"]) >= 0 else ""}日程、合格率、総コスト計算機と逆算プランナーがある詳細ページです。</p>{a("/takken/", "宅建の詳細を見る", "cardlink")}</div>'
           f'<div class="fcard"><h3>看護師国家試験（第116回）</h3><p>申込締切は{md(kg["iso"])}（{rel(kg["iso"])}）、試験日は{jp(BY_ID["kangoshi-exam"]["iso"])}、合格発表は{md(BY_ID["kangoshi-result"]["iso"])}です。</p>{a("/kangoshi/", "看護師国家試験のページを見る", "cardlink")}</div>'
-          f'<div class="fcard"><h3>介護福祉士</h3><p>試験日は{jp(kn["iso"])}、受験料は20,510円です。' + ("このサイトで確かめた受験料の中では、最も高い金額です。" if top_fee else "") + f'</p>{a("/kaigo-fukushi/", "介護福祉士のページを見る", "cardlink")}</div></div>'
+          f'<div class="fcard"><h3>介護福祉士</h3><p>試験日は{jp(kn["iso"])}、受験料は20,510円です。' + ("受験料の中では、最も高い金額です。" if top_fee else "") + f'</p>{a("/kaigo-fukushi/", "介護福祉士のページを見る", "cardlink")}</div></div>'
           f'<p>{a("/", "トップで締切を探す", "cardlink")}</p>')
     ld = _ld({"@context": "https://schema.org", "@type": "Dataset", "name": "宅建士試験の合格率（受験者基準・申込者基準）", "description": "宅地建物取引士資格試験の直近5回の申込者・受験者・合格者・合格率と、基準による数字の違い。",
               "inLanguage": "ja", "creator": {"@type": "Organization", "name": "一般財団法人 不動産適正取引推進機構"}, "dateModified": DESIGN_DATE})

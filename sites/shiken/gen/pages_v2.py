@@ -174,7 +174,7 @@ def home() -> dict:
           f'<div class="bignum"><div class="num">{cur["rate"]:.1f}<small> ％</small></div><h3>宅建の合格率（{fy_label(cur["year"])}）</h3>'
           f'<p>合格者{cur["passers"]:,}人 ÷ 受験者{cur["examinees"]:,}人で計算した数字です。</p>{a("/goukaku-ritsu/", "合格率データを見る", "cardlink")}</div>'
           f'<div class="bignum"><div class="num">{lo[1]:,}<small> 円</small>〜{hi[1]:,}<small> 円</small></div><h3>受験料の範囲</h3>'
-          f'<p>このサイトで確かめた範囲では、{lo_n}が{lo[1]:,}円、{hi_n}が{hi[1]:,}円です。</p>{a("/fees/", "受験料の一覧を見る", "cardlink")}</div>'
+          f'<p>受験料は、{lo_n}が{lo[1]:,}円、{hi_n}が{hi[1]:,}円です。</p>{a("/fees/", "受験料の一覧を見る", "cardlink")}</div>'
           f'<div class="bignum"><div class="num">{n_pref}<small> 都道府県</small></div><h3>公立高校入試を収録</h3>'
           f'<p>公立高校入試の日程は、{n_pref}都道府県分を一覧で確認できます。</p>{a("/koko/", "都道府県別の一覧を見る", "cardlink")}</div></div>')
 

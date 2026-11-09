@@ -166,21 +166,19 @@ for page, old, new in rows:
         continue
     if not own:
         problems.append(("対象ページの専用ファイルなし(全体で置換)", page, old))
-    # 前の20字の文脈つきで、ほかのファイル(gen など)の同じ箇所にも反映する
+    # 正本は gen/*.py(content/*.json は、gen が毎回作り直す出力。テストやビルドで上書きされる)。
+    # 現在の文(content の実物)を、gen/*.py・site.json の中で探して置き換える。ほかのページと同じ文が当たったら止めて報告する。
     ex = found[0][3]
-    done = False
-    for f0, st, en, _ in found[:1]:
-        pre = texts[f0][max(0, st - 20):st]
-        for f in list(texts):
-            if f.endswith(".md"):
-                continue
-            key = (pre + ex) if own else ex
-            if key in texts[f]:
-                texts[f] = texts[f].replace(key, (pre if own else "") + new_t)
-                done = True
-    if not done:
-        problems.append(("置換できず", page, old))
+    src_files = [f for f in texts if (rel(f).startswith("sites/shiken/gen/") or rel(f) == "site.json" or rel(f).startswith("gen/")) and not f.endswith(".md")]
+    total = sum(texts[f].count(ex) for f in src_files)
+    if total == 0:
+        problems.append(("gen に見当たらない(文を組み立てている?)", page, old + "  => " + ex))
         continue
+    if total > 1 and len(ex) < 30:
+        problems.append((f"gen に{total}か所(短い文なので止めた)", page, old + "  => " + ex))
+        continue
+    for f in src_files:
+        texts[f] = texts[f].replace(ex, new_t)
     applied += 1
 
 # 削除で空になった段落を取り除く
