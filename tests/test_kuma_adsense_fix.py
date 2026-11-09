@@ -43,13 +43,12 @@ class IndexingRulesTest(unittest.TestCase):
             self.assertTrue(indexing.city_is_thin("akita", "鹿角市", few))             # still too thin even if shown (the older rule)
             self.assertTrue(indexing.city_is_thin("akita", "大館市", some))            # another municipality: not shown
 
-    def test_old_week_pages_are_noindex_except_the_newest_and_those_google_showed(self):
-        weeks = [f"2026-W{w:02d}" for w in range(41, 13, -1)]                        # 28 weeks, newest first
+    def test_every_week_page_is_noindex(self):
+        weeks = [f"2026-W{w:02d}" for w in range(41, 13, -1)]                        # 28 weeks
         with mock.patch.object(indexing, "_DEMAND", {"live_cities": [], "digest_weeks": ["2026-W20", "2026-W34"]}):
             thin = indexing.thin_weeks(weeks)
-        keep = [k for k in weeks if k not in thin]
-        self.assertEqual(set(keep), {"2026-W41", "2026-W40", "2026-W20", "2026-W34"})
-        self.assertEqual(len(thin), 24)
+        self.assertEqual(thin, set(weeks))                                            # the newest weeks and the ones Google showed are no exception any more
+        self.assertEqual(indexing.thin_weeks([]), set())
 
     def test_the_demand_file_has_the_keys_the_build_reads(self):
         self.assertTrue(indexing._DEMAND["live_cities"])
@@ -232,6 +231,17 @@ class AdsenseFixSiteTest(unittest.TestCase):
             self.assertIn(live_mod.city_url("yamaguchi", "周南市"), (Path(tmp) / "s" / "sitemap.xml").read_text(encoding="utf-8"))
 
     # ---- the prefecture without bears
+    def test_every_week_page_is_noindex_in_the_built_site_and_the_hub_still_links_them(self):
+        weeks = [f for f in self.files if re.match(r"digest/2026-W\d+/index.html$", f)]
+        self.assertTrue(weeks)
+        sitemap = self.read("sitemap.xml")
+        for f in weeks:
+            self.assertIn('content="noindex', self.read(f), f)
+            self.assertNotIn("/" + f.rsplit("/", 1)[0] + "/</loc>", sitemap, f)
+        hub = self.read("digest/index.html")
+        for f in weeks:
+            self.assertIn("/" + f.rsplit("/", 1)[0] + "/", hub, f)
+
     def test_chiba_is_a_short_noindex_page_without_a_table_of_zeros(self):
         html = self.read("chiba/index.html")
         self.assertIn('<meta name="robots" content="noindex,follow">', html)

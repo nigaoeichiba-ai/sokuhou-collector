@@ -94,7 +94,10 @@ class DigestPagesTest(unittest.TestCase):
         hub = self.read("digest/index.html")
         self.assertIn("/digest/2026-W39/", hub)
         self.assertIn("そのまま比べられません", hub)
-        self.assertIn("/digest/2026-W39/", self.read("sitemap.xml"))
+        sitemap = self.read("sitemap.xml")
+        self.assertIn("/digest/</loc>", sitemap)                                    # the hub is indexed
+        self.assertNotIn("/digest/2026-W39/", sitemap)                              # every week page is noindex and left out (2026-11-09)
+        self.assertIn('content="noindex', self.read("digest/2026-W39/index.html"))
         self.assertIn("/digest/", self.read("index.html"))  # the header link
 
     def test_no_digest_without_any_list(self):
