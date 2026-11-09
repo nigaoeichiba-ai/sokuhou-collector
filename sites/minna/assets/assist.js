@@ -38,6 +38,9 @@
     });
   }
   function offerRequest(text) {
+    A.loadRules().then(function (rules) { if (rules && rules.enabled === false) return; offerRequestChips(text); }); // requests closed: no offer
+  }
+  function offerRequestChips(text) {
     var w = strip(text) || text;
     chips([["「" + w.slice(0, 20) + "」をリクエストする", function () { say("me", "リクエストする"); sendRequest(w, "miss"); }], ["別の言葉で検索する", function () { say("bot", "別の言葉を入力してください。"); input.focus(); }]]);
   }
@@ -78,7 +81,9 @@
     say("me", esc(text));
     if (asking) { asking = false; return sendRequest(text, "form"); }
     if (REQ.test(text) && text.replace(REQ, "").replace(NOTHING_LEFT, "").length < 2) {
-      asking = true; say("bot", "必要なイラストを一言で入力してください(例: こたつでみかんを食べるひつじ)。入力した言葉をリクエストとして送信します。既存のキャラクターや実在の人物はお受けできません。"); return;
+      return A.loadRules().then(function (rules) {
+        if (rules && rules.enabled === false) { say("bot", "リクエストの受付は終了しました。探したいイラストの言葉を入力してください。検索できます。"); return; }
+        asking = true; say("bot", "必要なイラストを一言で入力してください(例: こたつでみかんを食べるひつじ)。入力した言葉をリクエストとして送信します。既存のキャラクターや実在の人物はお受けできません。"); });
     }
     return A.loadRules().then(function (rules) {
       var why = rules ? A.refuseW(rules, text) : "";
@@ -141,7 +146,7 @@
     panel = el("section", "assist"); panel.id = "assist-panel"; panel.setAttribute("role", "dialog"); panel.setAttribute("aria-modal", "true"); panel.setAttribute("aria-label", "案内"); panel.hidden = true;
     panel.innerHTML = '<header><b>案内</b><button type="button" class="as-x" aria-label="閉じる">×</button></header><div class="as-log" role="log" aria-live="polite"></div>' +
       '<form class="as-form"><input type="text" name="m" maxlength="80" placeholder="検索したいものを入力してください" autocomplete="off" aria-label="メッセージ"><button class="btn" type="submit">送る</button></form>' +
-      '<p class="as-note">ここに入力した言葉は、この端末内でのみ使われます。リクエストを送るボタンを押した場合だけ、その言葉を送信します。</p>';
+      '<p class="as-note">ここに入力した言葉は、この端末内でのみ使われ、送信されません。</p>';
     document.body.appendChild(panel);
     log = $(".as-log", panel); input = $("input", panel);
     $(".as-x", panel).addEventListener("click", close);

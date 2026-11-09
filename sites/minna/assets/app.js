@@ -502,6 +502,9 @@
   function showMiss(list, text) { // after a search that found nothing: offer to send the words as a request (only when the visitor presses the button)
     var old = $("#search-miss"); if (old) old.remove();
     var w = String(text || "").trim(); if (!w) return;
+    loadRules().then(function (rules) { if (rules && rules.enabled === false) return; showMissBox(list, w); }); // requests closed (data/request-rules.json says enabled: false): no button
+  }
+  function showMissBox(list, w) {
     var box = document.createElement("div"); box.id = "search-miss"; box.className = "miss";
     box.innerHTML = "<p><b>「" + esc(w) + "」</b>のイラストはまだありません。</p><p>必要な場合はリクエストを送信できます(送信するのはこの言葉だけです)。</p>" +
       '<p><button type="button" class="btn" data-miss>このイラストをリクエストする</button> <a href="/request/?w=' + encodeURIComponent(w.slice(0, 60)) + '">詳しく書く</a></p><p class="req-msg" role="status" aria-live="polite"></p>';

@@ -37,7 +37,13 @@ PER_PAGE = 60
 MIN_TAG = 12            # a keyword page exists only with at least this many items from at least two sets
 MAX_TAG_PAGES = 150
 MIN_CROSS = 12          # a genre x touch page exists only with at least this many items
+# THE ONE SWITCH of the illustration-request feature (owner order 2026-11-09: switch it all off, reversibly; the code stays).  False: no request box, no nav/footer/hub link, no "request this"
+# button in the search page or the helper, /request/ is a short closed notice (noindex, out of the sitemap), api/q.php answers 410 and writes nothing, the contact form has no request kind.
+# What was received stays on the server (<site folder>/inbox/, outside public_html; the deploy never touches it).  To switch it back on: REQUESTS_ENABLED = True.
+REQUESTS_ENABLED = False
 BASE_NAV = [("イラスト", "/illust/", "/illust/"), ("特集", "/special/", "/special/"), ("用途", "/use/", "/use/"), ("読みもの", "/guide/", "/guide/"), ("印刷", "/printables/", "/printables/"), ("つくる", "/tool/", "/tool/"), ("リクエスト", "/request/", "/request/")]
+if not REQUESTS_ENABLED:
+    BASE_NAV = [n for n in BASE_NAV if n[1] != "/request/"]
 SITE = {
     "nav": list(BASE_NAV),
     "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">',
@@ -436,7 +442,7 @@ ASSIST_BUTTON = ('<div id="assist-nudge" class="assist-nudge" hidden><button typ
                  '<button id="assist-open" class="assist-open" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="assist-panel" data-src="/assets/assist.js">'
                  '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>'
                  '<path d="M7 9h10M7 12.5h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span class="t">探しものの案内</span></button>')
-ASSIST_CHIPS = ["年賀状に使いたい", "印刷したい", "商用で使えますか", "ぬりえを使いたい", "リクエストしたい"]
+ASSIST_CHIPS = ["年賀状に使いたい", "印刷したい", "商用で使えますか", "ぬりえを使いたい"] + (["リクエストしたい"] if REQUESTS_ENABLED else [])
 ASSIST_FAQ = [
     {"k": ["商用", "会社", "広告", "お金をもらう", "仕事で"], "a": "はい。個人でも会社でも、無料で商用利用できます。使う前の連絡も点数制限もありません。", "u": "/license/", "l": "利用について"},
     {"k": ["クレジット", "表記", "著作権表示", "出典"], "a": "クレジット表示は不要です。付ける場合は任意です。", "u": "/license/", "l": "利用について"},
@@ -486,7 +492,8 @@ def assist_data(built, guides, year: int, kinds: dict, use_hubs: list | None = N
     pages.append({"u": "/tool/calendar/", "n": "カレンダーをつくる(イラスト入り・祝日つき)", "k": ["カレンダー", "月間", "祝日", "印刷", "壁掛け", "メーカー"], "t": "ツール"})
     pages.append({"u": "/tool/nametag/", "n": "名前入りの名札・席札・賞状をつくる", "k": ["名札", "ネームプレート", "席札", "賞状", "名前入り", "印刷", "ネームタグ"], "t": "ツール"})
     pages.append({"u": "/tool/card/", "n": "名前入りカードをつくる", "k": ["カード", "名前入り", "誕生日", "ありがとう", "おめでとう", "あけおめ"], "t": "ツール"})
-    pages.append({"u": "/request/", "n": "イラストのリクエスト", "k": ["リクエスト", "欲しい", "描いて", "ない"], "t": "リクエスト"})
+    if REQUESTS_ENABLED:
+        pages.append({"u": "/request/", "n": "イラストのリクエスト", "k": ["リクエスト", "欲しい", "描いて", "ない"], "t": "リクエスト"})
     pages.append({"u": "/new/", "n": "新着のセット", "k": ["新着", "新しい", "最近"], "t": "新着"})
     return {"v": 1, "pages": pages, "faq": ASSIST_FAQ, "chips": ASSIST_CHIPS, "touches": {t[0]: t[1] for t in TOUCHES}}
 
@@ -1274,8 +1281,20 @@ def php_single(text: str) -> str:
     return text.replace("\\", "\\\\").replace("'", "\\'")
 
 
+REQUESTS_CLOSED_PHP = """<?php
+// Illustration requests are closed (owner order 2026-11-09, build.py REQUESTS_ENABLED = False).  This answers and does nothing else: it reads nothing, writes nothing and removes nothing;
+// what was received stays in <site folder>/inbox/ (outside public_html).  To open it again set REQUESTS_ENABLED = True in sites/minna/build.py and build.
+http_response_code(410);
+header('Content-Type: application/json; charset=utf-8');
+header('Cache-Control: no-store');
+echo '{"error":"closed","msg":"リクエストの受付は終了しました。"}';
+"""
+
+
 def request_php(cfg: dict) -> str:
-    """api/q.php: the receiver of illustration requests (see request_receiver.php.tpl); the rules are the page's own (content/request_rules.json)."""
+    """api/q.php: the receiver of illustration requests (see request_receiver.php.tpl); the rules are the page's own (content/request_rules.json).  Closed: a stub that writes nothing."""
+    if not REQUESTS_ENABLED:
+        return REQUESTS_CLOSED_PHP
     url = str(cfg["site_url"]).rstrip("/")
     rules = json.dumps(wishes.client_rules(), ensure_ascii=False, separators=(",", ":"))
     j = lambda x: json.dumps(x, ensure_ascii=False)   # noqa: E731
@@ -1290,13 +1309,27 @@ def request_board() -> dict:
 
 def request_data_files() -> dict:
     """data/request-rules.json (the request box and the search page use it) and data/request-board.json (what is being made / published, for the 'your request' note)."""
+    if not REQUESTS_ENABLED:      # the scripts read "enabled": false and show no request button (app.js, assist.js)
+        return {"data/request-rules.json": json.dumps({"enabled": False}, separators=(",", ":")), "data/request-board.json": json.dumps({"v": 1, "updated": "", "rows": []}, separators=(",", ":"))}
     rules = wishes.client_rules()
     rules["uses"] = wishes.USES
     return {"data/request-rules.json": json.dumps(rules, ensure_ascii=False, separators=(",", ":")),
             "data/request-board.json": json.dumps(request_board(), ensure_ascii=False, separators=(",", ":"))}
 
 
+def request_closed_page(cfg: dict, preview: bool) -> str:
+    """/request/ while requests are closed: a short notice (the address stays a page, not a 404; no search presence to move, so no 301)."""
+    body = f"""{crumbs([("トップ", "/"), ("リクエスト", None)])}
+<h1>イラストのリクエストの受付は終了しました</h1>
+<p class="lead">サイトにないイラストを探している場合は、キーワードで検索できます。ジャンル・用途・タッチからも探せます。</p>
+<ul class="check"><li><a href="/search/">イラストを検索する</a></li><li><a href="/illust/">イラストの一覧</a></li><li><a href="/use/">用途から探す</a></li><li><a href="/special/">特集</a></li></ul>
+<p class="memo-note">これまでに送っていただいたリクエストは、イラストを企画する参考にしています。ご意見・ご指摘は<a href="/contact/">お問い合わせ</a>からお送りください。</p>"""
+    return page(cfg, preview, path="/request/", title=f"イラストのリクエスト(受付終了) | {cfg['site_name']}", description="イラストのリクエストの受付は終了しました。サイトのイラストは検索や一覧から探せます。", body=body)
+
+
 def request_page(cfg: dict, preview: bool) -> str:
+    if not REQUESTS_ENABLED:
+        return request_closed_page(cfg, preview)
     form = contactform.form_html(cfg, default_kind="イラストのリクエスト", message_hint="例: ひつじが、お正月に、こたつでみかんを食べているイラスト。年賀状に使いたいです。", page_hint=False)
     board = request_board()["rows"]
     uopts = '<option value="">使い道: 選ばない</option>' + "".join(f'<option value="{esc(u)}">{esc(u)}</option>' for u in wishes.USES)
@@ -1553,6 +1586,8 @@ TOOLS = [
     ("/printables/", "印刷できるもの(PDF)", "カレンダー、ぬりえ、賞状、名札、時間割をA4のPDFで印刷できます。"),
     ("/request/", "イラストをリクエストする", "サイトにないイラストを希望できます。選んで制作し、公開します。"),
 ]
+if not REQUESTS_ENABLED:
+    TOOLS = [t for t in TOOLS if t[0] != "/request/"]
 
 
 def tools_page(cfg: dict, preview: bool) -> str:
@@ -1710,7 +1745,7 @@ def visible_chars(html: str) -> int:
     return len(re.sub(r"\s+", "", re.sub(r"<[^>]+>", " ", t)))
 
 
-UTILITY_PAGES = ("favorites/index.html", "search/index.html")      # a visitor's own list (empty for a search engine) and the search form: nothing of their own to find in a search (2026-10-20 audit)
+UTILITY_PAGES = ("favorites/index.html", "search/index.html") + (() if REQUESTS_ENABLED else ("request/index.html",))      # a visitor's own list (empty for a search engine) and the search form: nothing of their own to find in a search (2026-10-20 audit)
 
 
 def thin_pages(pages: dict) -> set[str]:
@@ -1758,6 +1793,7 @@ def about_more(html: str, series: list[dict]) -> str:
 
 
 SITE_UPDATES = [
+    ("2026-11-09", "イラストのリクエストの受付を終了。年賀状の作り方・寒中見舞い・はがきサイズ一覧に、印刷サービスと用紙を選ぶ節を追加。"),
     ("2026-10-19", "絵のページ・セットのページ・一覧に、大きさや色などのデータの欄を追加。"),
     ("2026-10-17", "サイト全体の文章を見直し。"),
     ("2026-10-15", "年賀状をつくる・ポーズ集・月ごとのイラストを追加。絵のページに埋め込みコードを追加。"),
@@ -1851,6 +1887,8 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     pages["feed.xml"] = feed_xml(cfg, series, today)
     # the Amazon sentence of the privacy page is only for a site that carries Amazon links (PR_STORES; off since 2026-11-09)
     legal_cfg = {k: v for k, v in cfg.items() if not (k == "amazon_tracking_id" and "amazon" not in PR_STORES)}
+    if not REQUESTS_ENABLED:
+        legal_cfg["contact_kinds"] = [k for k in legal_cfg.get("contact_kinds", []) if "リクエスト" not in k] or None
     pages.update(legal_pages(
         SITE, legal_cfg, preview,
         purpose="個人でも商用でも無料で使えるイラストを公開し、名前入りのカードを簡単に作れるようにすること。",
@@ -1858,14 +1896,17 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         update_text="イラストは順次追加します。",
         disclaimer_html=("<p>イラストの利用によって生じた問題について、当サイトは責任を負いません。ご利用条件は、<a href=\"/license/\">利用について</a>をご覧ください。</p>"
                          "<p>既存のキャラクター・実在の人物・特定の作家の画風に似せたイラストは、公開しない方針です。似ているというご指摘があればお問い合わせください。</p>"),
-        contact_notice="リクエストは、個別のお返事や納期をお約束するものではありません。",
+        contact_notice=("リクエストは、個別のお返事や納期をお約束するものではありません。" if REQUESTS_ENABLED else "ご用件によっては、お返事できないことがあります。"),
         input_note=("<p>カードをつくる機能や、お気に入りに入力・保存した内容は、この端末のブラウザの中だけで使われ、当サイトには送信されません。</p>"
+                    + (
                     "<p>「リクエスト」欄に書いて送った言葉(と、選んだ使い道・タッチ)は、イラストを企画するために当サイトのサーバーに保存し、集計して使います。"
                     "住所・メールアドレス・名前は聞きません。送った人の端末や回線を特定できる情報(IPアドレスなど)は保存しません。"
                     "1日の送信回数を数えるためだけに、日ごとに変わる元に戻せない値をその日のあいだ使い、翌日に消します。"
                     "検索で見つからなかったときの「この絵をリクエストする」ボタンも同じで、ボタンを押したときだけ検索した言葉を送ります。"
                     "送った言葉は、この端末のブラウザにも「あなたのリクエスト」の表示のために記録されます(ブラウザのデータを消すとなくなります)。"
-                    "個人を特定できる内容や、お受けできない内容は保存せずにお断りします。</p>"), finish=lambda s: about_more(s, series)))
+                    "個人を特定できる内容や、お受けできない内容は保存せずにお断りします。</p>"
+                       if REQUESTS_ENABLED else
+                       "<p>リクエストの受付は終了しました。受付のあいだに「リクエスト」欄や検索のボタンから送られた言葉(と、選んだ使い道・タッチ)は、イラストを企画するための集計のためだけに、当サイトのサーバーに保存したままです。住所・メールアドレス・名前は聞いていません。送った人の端末や回線を特定できる情報(IPアドレスなど)は保存していません。個人を特定できる内容は保存せずにお断りしました。</p>")), finish=lambda s: about_more(s, series)))
     drop_ads(pages)                                                              # hubs, forms and the 404 carry no AdSense tag
     thin = thin_pages(pages)
     for rel in thin:

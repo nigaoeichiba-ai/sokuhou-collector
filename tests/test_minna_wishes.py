@@ -16,6 +16,10 @@ ORDINARY = [
 ]
 
 
+# the request feature is switched off (build.REQUESTS_ENABLED = False, 2026-11-09); its tests run with the switch on, so the code that stays is still tested
+requests_on = mock.patch.object(build, "REQUESTS_ENABLED", True)
+
+
 class Refusals(unittest.TestCase):
     def test_ordinary_wishes_are_not_refused(self):
         for w in ORDINARY:
@@ -85,6 +89,7 @@ class ClientRules(unittest.TestCase):
             re.compile(p)
 
 
+@requests_on
 class Receiver(unittest.TestCase):
     cfg = {"site_url": "https://minna-no-illust.com"}
 
@@ -228,6 +233,7 @@ class Spec(unittest.TestCase):
                 self.assertEqual(board["rows"][0]["status"], "公開しました")
 
 
+@requests_on
 class Page(unittest.TestCase):
     def test_request_page_has_the_box_the_board_and_the_refusals(self):
         html = build.request_page({"site_url": "https://minna-no-illust.com", "site_name": "みんなのイラスト", "contact_own": True, "contact_kinds": ["イラストのリクエスト", "その他"]}, True)
@@ -376,6 +382,7 @@ class Specials(unittest.TestCase):
         self.assertIn("代わりにはなりません", text)
 
 
+@requests_on
 class Votes(unittest.TestCase):
     def test_plus_votes_count_for_the_title_and_planned_rows_stand_on_the_board(self):
         ledger = []
