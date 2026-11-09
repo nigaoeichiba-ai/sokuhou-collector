@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-06T21:21:54.209256+00:00",
+ "fetched_at": "2026-11-09T21:17:05.879641+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -1491,18 +1491,6 @@
    "title": "交通システムの省CO2 化に向けた設備整備事業（鉄道事業等におけるネットワーク型低炭素化促進事業）（三次公募）"
   },
   {
-   "acceptance_end_datetime": "2026-11-09T14:59:00.000Z",
-   "acceptance_start_datetime": "2026-08-16T15:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZi6MAH",
-   "id": "a0WJ200000CDZi6MAH",
-   "institution_name": "高度人材インターンシップ受入支援費補助金",
-   "name": "S-00009232",
-   "subsidy_max_limit": 5000,
-   "target_area_search": "東京都",
-   "target_number_of_employees": "300名以下",
-   "title": "令和8年度 高度人材インターンシップ受入支援費補助金"
-  },
-  {
    "acceptance_end_datetime": "2027-03-31T08:00:00.000Z",
    "acceptance_start_datetime": "2026-04-01T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZz6MAH",
@@ -1827,5 +1815,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 152
+ "total": 151
 }
