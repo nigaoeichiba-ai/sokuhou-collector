@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from datetime import date
 
-from .common import d, jp, last_day_exclusive, last_day_inclusive, md, plus, wd
+from .common import TODAY_MD, d, days, jp, last_day_exclusive, last_day_inclusive, md, plus, rel, wd
 from .pages_hub import CLOSED_FROM, CLOSED_TO, KAKUTEI_END, KAKUTEI_START, YEAR_END
 
 
@@ -56,7 +56,7 @@ def extras() -> dict[str, list[dict]]:
 
     # tax and furusato
     out["/furusato/deadline/"] = [{"h2": "寄附先を選ぶ前に決めておくこと", "paras": [
-        f"年末まで{(YEAR_END - d(2026, 11, 3)).days}日あります。寄附の前に、確定申告をする年かどうかを決めます。医療費控除を受ける年や、副収入が20万円を超える年は、ふるさと納税も確定申告に入れるので、ワンストップの申請書は意味を持ちません。",
+        f"年末まで{days(YEAR_END)}日あります。寄附の前に、確定申告をする年かどうかを決めます。医療費控除を受ける年や、副収入が20万円を超える年は、ふるさと納税も確定申告に入れるので、ワンストップの申請書は意味を持ちません。",
         "ワンストップを使う人は、寄附先の数を5団体以内に数えながら選びます。6つ目に寄附した時点で、すべての寄附が特例の対象外になります。"]}]
     out["/furusato/one-stop/"] = [{"h2": "ワンストップを使うかの分かれ目", "paras": [
         "次のどれかに当てはまる年は、ワンストップではなく確定申告でふるさと納税の控除を受けます。年の途中で退職して年末調整を受けていない、医療費控除を受ける、住宅ローン控除を受けるために申告する、副収入の所得が20万円を超える、の4つです。",
@@ -73,12 +73,12 @@ def extras() -> dict[str, list[dict]]:
         f"期限の{md(KAKUTEI_END)}は、期間の初日から数えて{(KAKUTEI_END - KAKUTEI_START).days + 1}日目です。"]}]
     out["/kakutei-shinkoku/junbi/"] = [{"h2": "準備の日程(逆算)", "paras": [
         "準備を日付に置き直しました。年内に終わる作業と、年明けに始まる作業を分けています。"],
-        "table": {"caption": "確定申告の準備の日程(令和8年分)", "cols": ["日付", "11月3日から", "やること"], "num_cols": [1], "rows": [
-            [jp(YEAR_END), f"{(YEAR_END - d(2026, 11, 3)).days}日後", "医療費の支払いとふるさと納税の寄附の締め。領収書と受領証明書を集める"],
-            [jp(d(2027, 1, 1)), f"{(d(2027, 1, 1) - d(2026, 11, 3)).days}日後", "還付申告を出せる最初の日。源泉徴収票の受け取りを待つ"],
-            [jp(plus(KAKUTEI_START, -7)), f"{(plus(KAKUTEI_START, -7) - d(2026, 11, 3)).days}日後", "期間の1週間前。入力に必要な書類が全部そろっているかを確かめる"],
-            [jp(KAKUTEI_START), f"{(KAKUTEI_START - d(2026, 11, 3)).days}日後", "確定申告の期間の初日"],
-            [jp(KAKUTEI_END), f"{(KAKUTEI_END - d(2026, 11, 3)).days}日後", "申告と納税の期限(原則)"]]}}]
+        "table": {"caption": "確定申告の準備の日程(令和8年分)", "cols": ["日付", f"{TODAY_MD}から", "やること"], "num_cols": [1], "rows": [
+            [jp(YEAR_END), rel(YEAR_END), "医療費の支払いとふるさと納税の寄附の締め。領収書と受領証明書を集める"],
+            [jp(d(2027, 1, 1)), rel(d(2027, 1, 1)), "還付申告を出せる最初の日。源泉徴収票の受け取りを待つ"],
+            [jp(plus(KAKUTEI_START, -7)), rel(plus(KAKUTEI_START, -7)), "期間の1週間前。入力に必要な書類が全部そろっているかを確かめる"],
+            [jp(KAKUTEI_START), rel(KAKUTEI_START), "確定申告の期間の初日"],
+            [jp(KAKUTEI_END), rel(KAKUTEI_END), "申告と納税の期限(原則)"]]}}]
 
     # life events and moving
     out["/life/"] = [{"h2": "日数の短い順に並べる", "paras": [

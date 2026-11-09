@@ -1,7 +1,7 @@
 """Life events and the season: moving (3), a new life, hay fever, birth, leaving a job, marriage, death, care insurance, and how the deadlines are counted."""
 from __future__ import annotations
 
-from .common import CHECKED, a, after, d, jp, last_day_exclusive, last_day_inclusive, md, page, para_html, plus, row_link, wd
+from .common import CHECKED, a, d, jp, last_day_exclusive, last_day_inclusive, md, page, para_html, plus, row_link, wd
 
 
 def add_months(x, n):
@@ -414,7 +414,7 @@ def method() -> dict:
                 "住民基本台帳法や道路運送車両法のように、初日の扱いを個別に書いていない法律は、民法の原則で読みます。ただし、窓口の取り扱いは、市区町村や運輸支局ごとに違うことがあります。",
                 "このサイトの表は、初日を数える日を『どちらの数え方でも間に合う日』として出しています。早いほうの日付に合わせておけば、数え方が違っても遅れません。"]},
             {"h2": "日付はどう計算しているか", "paras": [
-                "日付、曜日、起点からの日数は、手で書かずにプログラムで計算しています。確認した日は2026年11月3日で、各ページの『あと何日』は、その日からの日数です。",
+                "日付、曜日、起点からの日数は、手で書かずにプログラムで計算しています。確認した日は2026年11月3日で、各ページの『あと何日』は、今日の日付からの日数です。",
                 "毎年11月に、国税庁・日本郵便・法令を見直します。日付が変わった項目は、各ページの最終更新日が変わります。"]},
             {"h2": "何で確かめているか", "paras": [
                 "確認先は、法令の原文、国税庁、日本郵便、日本年金機構、こども家庭庁、厚生労働省、環境省、大学入試センターです。民間の記事は根拠にしません。",

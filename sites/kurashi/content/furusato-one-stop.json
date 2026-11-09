@@ -98,5 +98,8 @@
    "path": "/month/1/",
    "text": "1月のやること"
   }
+ ],
+ "deadline_ids": [
+  "onestop-henko"
  ]
 }

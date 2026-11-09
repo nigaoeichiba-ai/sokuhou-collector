@@ -33,9 +33,25 @@ def plus(x: date, n: int) -> date:
     return x + timedelta(days=n)
 
 
-def after(x: date) -> int:
-    """days from TODAY"""
-    return (x - TODAY).days
+# The day counts are never typed or computed here: the page says WHICH deadline (a date), and the build (hooks.py) turns the marker into the number of days from the
+# build day (07:00 JST every day), and assets/tools.js corrects it in the reader's browser.  The facts were checked on TODAY / CHECKED; the counts start from the day of the page.
+TODAY_MD = "{today}"          # M月D日 of the day the page is built / opened
+TODAY_YMD = "{todayy}"        # YYYY年M月D日
+
+
+def days(x: date) -> str:
+    """the number of days from today to x (marker, resolved at build time)"""
+    return "{days:%s}" % x.isoformat()
+
+
+def rel(x: date, past: str = "") -> str:
+    """'N日後' (or 'today' / the text for a day that has passed)"""
+    return "{rel:%s}" % x.isoformat() if not past else "{rel:%s|%s}" % (x.isoformat(), past)
+
+
+def weeks(x: date) -> str:
+    """whole weeks from today to x"""
+    return "{weeks:%s}" % x.isoformat()
 
 
 def last_day_inclusive(start: date, n: int) -> date:

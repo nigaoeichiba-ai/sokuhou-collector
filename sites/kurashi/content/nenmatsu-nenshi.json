@@ -137,5 +137,9 @@
    "path": "/life/birth/",
    "text": "出生届と児童手当"
   }
+ ],
+ "deadline_ids": [
+  "gyosei-saigo-heijitsu",
+  "gyosei-yasumi"
  ]
 }

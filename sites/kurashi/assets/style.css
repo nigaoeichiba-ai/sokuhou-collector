@@ -79,3 +79,33 @@ footer.site a { color:var(--muted); }
   dl.info { grid-template-columns:1fr; }
   dl.info dt { margin-top:6px; }
 }
+
+/* calendar block (calendar/*.ics) */
+.cal-list { list-style:none; padding:0; margin:.4em 0 1em; }
+.cal-list li { display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; padding:8px 0; border-bottom:1px solid var(--line); }
+.cal-d { font-weight:700; font-variant-numeric:tabular-nums; }
+.cal-n { flex:1 1 12em; min-width:0; }
+.btn.cal-b { font-size:.88rem; padding:.35em 1em; }
+button.btn { border:0; font:inherit; font-weight:700; cursor:pointer; }
+.printonly { display:none; }
+
+/* print: the list of procedures and deadlines on A4, with a box to tick before each row */
+@media print {
+  @page { size:A4; margin:12mm; }
+  html, body { background:#fff; color:#000; font-size:10.5pt; line-height:1.5; }
+  header.site, footer.site, .crumbs, .noprint, .btn, ul.links, .preview { display:none !important; }
+  main.wrap { max-width:none; padding:0; }
+  h1 { font-size:15pt; margin:0 0 6pt; }
+  h2 { font-size:11.5pt; margin:10pt 0 4pt; page-break-after:avoid; }
+  .answer { box-shadow:none; border:1px solid #999; border-left:4px solid #000; padding:4pt 8pt; margin:0 0 6pt; font-size:10.5pt; }
+  p { margin:0 0 4pt; }
+  .tablewrap { overflow:visible; border:0; box-shadow:none; border-radius:0; margin:4pt 0 8pt; }
+  table { font-size:9.5pt; }
+  th, td { white-space:normal; padding:3pt 6pt; border:1px solid #999; color:#000; background:none; }
+  tr { page-break-inside:avoid; }
+  caption { color:#000; padding:0 0 3pt; }
+  a { color:#000; text-decoration:none; }
+  table.chk tbody td:first-child::before { content:"\25A1\00a0"; font-size:13pt; line-height:1; }
+  .credit, .stamp { font-size:8.5pt; color:#000; margin:2pt 0; }
+  .printonly { display:block; font-size:8.5pt; margin-top:6pt; }
+}

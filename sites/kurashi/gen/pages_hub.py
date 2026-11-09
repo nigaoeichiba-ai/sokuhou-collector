@@ -1,7 +1,7 @@
 """The hubs: the home page, the month list, five month pages, the list of life events (11 to 3 only: the months where the deadlines gather)."""
 from __future__ import annotations
 
-from .common import CHECKED, TODAY, a, after, d, jp, md, page, para_html, plus, row_link, wd
+from .common import CHECKED, TODAY_MD, TODAY_YMD, a, d, days, jp, md, page, para_html, plus, rel, row_link, wd
 
 # ---- the dates that more than one page uses (computed once) ------------------------------------------------------------------------------------------
 NENGA_SALE = d(2026, 11, 2)
@@ -20,7 +20,7 @@ REFUND_START = d(2027, 1, 1)
 
 
 def n_days(x) -> str:
-    return f"{after(x)}日後"
+    return rel(x)
 
 
 def home() -> dict:
@@ -40,11 +40,11 @@ def home() -> dict:
         "暮らしの手続きと準備の期限を、月ごと・出来事ごとに並べたカレンダー",
         "暮らしの手続き 期限", 1,
         "年末調整、ふるさと納税、確定申告、引越し、出生届など、暮らしの手続きの期限を月と出来事から探せます。日付と曜日は年ごとに計算して出し、法令と国の資料で確認しています。",
-        f"{CHECKED}時点でいちばん近い期限は、{md(NENGA_START)}の年賀状の引受開始と、{md(YEAR_END)}のふるさと納税・医療費の締めです。",
+        f"{TODAY_YMD}時点でいちばん近い期限は、{md(NENGA_START)}の年賀状の引受開始と、{md(YEAR_END)}のふるさと納税・医療費の締めです。",
         [
-            {"h2": f"いま近い期限({CHECKED}から数えた日数つき)", "paras": [
+            {"h2": f"いま近い期限({TODAY_YMD}から数えた日数つき)", "paras": [
                 "年末までの期限は、日本郵便の発表や国税庁の資料で確認した日付です。日付と曜日は、年ごとに計算して出しています。"],
-             "table": {"caption": f"{CHECKED}時点で近い期限", "cols": ["日付", "11月3日から", "内容", "詳しい記事"], "num_cols": [1], "rows": rows,
+             "table": {"caption": f"{TODAY_YMD}時点で近い期限", "cols": ["日付", f"{TODAY_MD}から", "内容", "詳しい記事"], "num_cols": [1], "rows": rows,
                        "note": "確定申告の期間は、令和8年分について国税庁の特集ページがまだ出ていません。ここに書いた日付は、国税庁が示す原則の期間です。"}},
             {"h2": "月から探す", "html": para_html(
                 "期限が集まる11月から3月までを、月ごとにまとめています。", a("/month/11/", "11月"), "、", a("/month/12/", "12月"), "、", a("/month/1/", "1月"), "、",
@@ -84,13 +84,13 @@ def month_index() -> dict:
                 "月別ページは、日付の順に表にして、各項目から詳しい記事へ飛べるようにしました。"],
              "table": {"caption": "月別ページの一覧", "cols": ["月", "主な項目", "ページ"], "rows": rows}},
             {"h2": "確認日から数えた日数", "paras": [
-                f"確認した{CHECKED}から、11月が終わるまで{after(d(2026, 11, 30))}日、年末まで{after(YEAR_END)}日、確定申告の期限まで{after(KAKUTEI_END)}日です。",
-                f"5か月は合わせて{(KAKUTEI_END - d(2026, 11, 1)).days + 1}日(2026年11月1日〜2027年3月15日)あります。そのうち、年賀状の引受開始が{after(NENGA_START)}日後、共通テストの本試験が{after(KYOTSU[0])}日後です。"]},
+                f"{TODAY_YMD}から、11月が終わるまで{days(d(2026, 11, 30))}日、年末まで{days(YEAR_END)}日、確定申告の期限まで{days(KAKUTEI_END)}日です。",
+                f"5か月は合わせて{(KAKUTEI_END - d(2026, 11, 1)).days + 1}日(2026年11月1日〜2027年3月15日)あります。そのうち、年賀状の引受開始が{days(NENGA_START)}日後、共通テストの本試験が{days(KYOTSU[0])}日後です。"]},
             {"h2": "11月から3月に出てくる法律の日数", "paras": [
                 "このサイトで使う日数は、出来事ごとに違います。戸籍の届出は7日と14日、住民票は14日、自動車の登録は15日、健康保険の任意継続は20日、介護保険の認定は30日です。",
                 "月で数える期限は、相続の放棄の3か月、準確定申告の4か月、相続税の10か月です。年で数える期限は、還付申告の5年と相続登記の3年です。"]},
             {"h2": "月別ページの読み方", "paras": [
-                "表の「あと何日」は、確認した日(2026年11月3日)から数えた日数です。今日の日付からは数えていないので、読んだ日に合わせて引き算してください。",
+                "表の「あと何日」は、今日の日付から数えた日数です。",
                 "日数は、法律の原文で確かめて書いています。",
                 "出来事(引越し・出生・退職など)の手続きは、月でなく起点の日から数えます。そちらは人生の節目のページに分けました。"]},
         ],
@@ -105,7 +105,7 @@ def _month(path, title, h1, kw, desc, answer, intro, table, extra_sections, rela
 
 
 def m11() -> dict:
-    cols = ["日付", "11月3日から", "内容", "詳しい記事"]
+    cols = ["日付", f"{TODAY_MD}から", "内容", "詳しい記事"]
     rows = [
         [jp(NENGA_SALE), "発売中", f"2027年用の年賀はがきの発売開始({md(NENGA_SALE_END)}まで販売)", row_link("年賀状", "/nengajo/")],
         ["会社が決める日", "-", "年末調整の書類の提出(会社が12月の給与で精算する)", row_link("年末調整", "/nenmatsu-chosei/")],
@@ -116,8 +116,8 @@ def m11() -> dict:
         "/month/11/", "11月 やること 手続きと準備(期限つき・2026年版)", "11月のやること。年末調整・ふるさと納税・医療費・年賀状の準備",
         "11月 やること",
         "11月にやる手続きと準備を、日付と曜日つきで並べました。年末調整、ふるさと納税、医療費の整理、年賀はがきの発売中の期間まで。確認先は国税庁と日本郵便と環境省です。",
-        f"11月は、年末調整の書類を出し、ふるさと納税と医療費の年内分を決める月です。年内の締めは{md(YEAR_END)}で、11月3日から{after(YEAR_END)}日後です。",
-        [f"11月3日の時点で、年末まであと{after(YEAR_END)}日です。この月に済ませると12月が楽になる項目を、日付順に並べました。",
+        f"11月は、年末調整の書類を出し、ふるさと納税と医療費の年内分を決める月です。年内の締めは{md(YEAR_END)}で、{TODAY_MD}から{days(YEAR_END)}日後です。",
+        [f"{TODAY_MD}の時点で、年末まであと{days(YEAR_END)}日です。この月に済ませると12月が楽になる項目を、日付順に並べました。",
          "11月に期限が来る手続きは多くありません。この月の仕事は、12月と1月の期限に備えて材料をそろえることです。"],
         {"caption": "11月の項目(確認日 2026年11月3日)", "cols": cols, "num_cols": [1], "rows": rows},
         [
@@ -135,7 +135,7 @@ def m11() -> dict:
 
 
 def m12() -> dict:
-    cols = ["日付", "11月3日から", "内容", "詳しい記事"]
+    cols = ["日付", f"{TODAY_MD}から", "内容", "詳しい記事"]
     rows = [
         [jp(NENGA_START), n_days(NENGA_START), "年賀状の引受開始。これより前に出した分は、通常郵便として年内に届く", row_link("年賀状", "/nengajo/")],
         [jp(NENGA_NEW_YEAR), n_days(NENGA_NEW_YEAR), "元日に届けるための差し出し日の目安", row_link("年賀状", "/nengajo/")],
@@ -166,7 +166,7 @@ def m12() -> dict:
 
 
 def m1() -> dict:
-    cols = ["日付", "11月3日から", "内容", "詳しい記事"]
+    cols = ["日付", f"{TODAY_MD}から", "内容", "詳しい記事"]
     rows = [
         [jp(REFUND_START), n_days(REFUND_START), "令和8年分の還付申告を出せる最初の日(期限は5年間)", row_link("還付申告", "/kakutei-shinkoku/kanpu/")],
         [jp(d(2027, 1, 3)), n_days(d(2027, 1, 3)), "年賀郵便の配達日(元日と1月3日)", row_link("年賀状", "/nengajo/")],
@@ -201,7 +201,7 @@ def m1() -> dict:
 
 
 def m2() -> dict:
-    cols = ["日付", "11月3日から", "内容", "詳しい記事"]
+    cols = ["日付", f"{TODAY_MD}から", "内容", "詳しい記事"]
     rows = [
         [jp(KAKUTEI_START), n_days(KAKUTEI_START), "確定申告の期間の初日(原則の期間。令和8年分の公式な日付は未発表)", row_link("確定申告", "/kakutei-shinkoku/")],
         ["飛散の1週間前まで", "-", "毎年症状が出る人は、本格的な飛散開始の1週間前までに薬を準備して使い始める(環境省)", row_link("花粉症", "/kafun/")],
@@ -239,7 +239,7 @@ def m2() -> dict:
 def m3() -> dict:
     move = d(2027, 3, 27)
     quit_next = d(2027, 4, 1)
-    cols = ["日付", "11月3日から", "内容", "詳しい記事"]
+    cols = ["日付", f"{TODAY_MD}から", "内容", "詳しい記事"]
     rows = [
         [jp(KAKUTEI_END), n_days(KAKUTEI_END), "確定申告と納税の期限(原則)。令和8年分は月曜日", row_link("確定申告", "/kakutei-shinkoku/")],
         [jp(d(2027, 3, 31)), n_days(d(2027, 3, 31)), "年度末。3月末で退職する人の退職日になりやすい日", row_link("退職の手続き", "/life/taishoku/")],

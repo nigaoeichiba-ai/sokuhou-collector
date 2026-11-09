@@ -70,6 +70,15 @@ class Content(unittest.TestCase):
             self.assertNotIn(bad, blob.lower(), bad)
 
 
+def _plain(text: str) -> str:
+    """the answer as the build writes it (the day counts are markers in the generated content, numbers in the page)"""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("_kurashi_hooks_site_test", SITE / "hooks.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.plain(text, date(2026, 11, 10))
+
+
 class Build(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -100,7 +109,7 @@ class Build(unittest.TestCase):
 
     def test_main_search_term_is_in_title_and_h1(self):
         metas = [{"path": p["path"], "kind": p["kind"], "primary_kw": p["primary_kw"], "secondary_kw": p.get("secondary_kw", []), "intent": p["intent"], "title": p["title"],
-                  "h1": p["h1"], "description": p["description"], "answer": p["answer"]} for p in gen.all_pages()]
+                  "h1": p["h1"], "description": p["description"], "answer": _plain(p["answer"])} for p in gen.all_pages()]
         errors, warnings = seokit.keyword_problems(metas)
         self.assertEqual(errors, [])
         self.assertEqual(warnings, [])

@@ -10,7 +10,7 @@ import json
 import re
 from pathlib import Path
 
-from . import extras, pages_hub, pages_life, pages_money
+from . import deadlines, extras, pages_hub, pages_life, pages_money
 from .common import CHECKED, sources_json
 from .titles import TITLES
 
@@ -23,6 +23,8 @@ def all_pages() -> list[dict]:
     for p in pages:
         p["sections"] = p["sections"] + more.pop(p["path"], [])
         p["title"], p["h1"] = TITLES[p["path"]]
+        if p["path"] in deadlines.BY_PAGE:
+            p["deadline_ids"] = deadlines.BY_PAGE[p["path"]]
         if p["path"] == "/method/":
             p["primary_kw"] = "初日不算入"
     assert not more, f"extras for pages that do not exist: {list(more)}"
@@ -55,6 +57,7 @@ def site_json() -> dict:
         "sources_style": "credit",
         "credits": ["法令と、国税庁・日本郵便・日本年金機構・厚生労働省・環境省などの公表資料をもとに作成"],
         "sources": sources_json(),
+        "deadlines": deadlines.catalog_json(),
     }
 
 

@@ -284,5 +284,84 @@
    "basis": "掲載時点",
    "fetched": "2026-11-03"
   }
- }
+ },
+ "deadlines": [
+  {
+   "id": "nengajo-hikiuke",
+   "date": "2026-12-20",
+   "name": "年賀状の引受開始",
+   "lead": "年賀状の引受開始",
+   "url": "/nengajo/"
+  },
+  {
+   "id": "nengajo-motojitsu",
+   "date": "2026-12-27",
+   "name": "年賀状を元日に届ける差し出し日の目安",
+   "lead": "",
+   "url": "/nengajo/"
+  },
+  {
+   "id": "gyosei-saigo-heijitsu",
+   "date": "2026-12-28",
+   "name": "国の行政機関の最後の平日",
+   "lead": "",
+   "url": "/nenmatsu-nenshi/"
+  },
+  {
+   "id": "gyosei-yasumi",
+   "date": "2026-12-29",
+   "name": "国の行政機関の年末年始の休みの開始",
+   "lead": "",
+   "url": "/nenmatsu-nenshi/"
+  },
+  {
+   "id": "nenmatsu-shime",
+   "date": "2026-12-31",
+   "name": "ふるさと納税・医療費の年内の締め",
+   "lead": "ふるさと納税・医療費の締め",
+   "url": "/furusato/deadline/"
+  },
+  {
+   "id": "kanpu-start",
+   "date": "2027-01-01",
+   "name": "令和8年分の還付申告を出せる最初の日",
+   "lead": "",
+   "url": "/kakutei-shinkoku/kanpu/"
+  },
+  {
+   "id": "onestop-henko",
+   "date": "2027-01-10",
+   "name": "ワンストップ特例の変更届の期限",
+   "lead": "ワンストップ特例の変更届の期限",
+   "url": "/furusato/one-stop/"
+  },
+  {
+   "id": "nengajo-hanbai-end",
+   "date": "2027-01-15",
+   "name": "年賀はがきの販売の最終日",
+   "lead": "",
+   "url": "/nengajo/"
+  },
+  {
+   "id": "kyotsu-honshiken",
+   "date": "2027-01-16",
+   "name": "大学入学共通テストの本試験",
+   "lead": "",
+   "url": "/month/1/"
+  },
+  {
+   "id": "shinkoku-start",
+   "date": "2027-02-16",
+   "name": "確定申告の期間の初日",
+   "lead": "確定申告の期間の初日",
+   "url": "/kakutei-shinkoku/"
+  },
+  {
+   "id": "shinkoku-end",
+   "date": "2027-03-15",
+   "name": "確定申告と納税の期限(原則)",
+   "lead": "",
+   "url": "/kakutei-shinkoku/"
+  }
+ ]
 }
