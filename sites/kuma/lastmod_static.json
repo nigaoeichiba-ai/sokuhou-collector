@@ -1,6 +1,6 @@
 {
  "about/index.html": {
-  "hash": "86bd779dfa36dfa6",
+  "hash": "dec085cf216ca2c2",
   "date": "2026-11-09"
  },
  "contact/index.html": {
@@ -12,7 +12,7 @@
   "date": "2026-10-20"
  },
  "guide/data/index.html": {
-  "hash": "3d91c43ecb0b9c20",
+  "hash": "b89557f9a220a44e",
   "date": "2026-11-09"
  },
  "guide/encounter/index.html": {
@@ -24,11 +24,11 @@
   "date": "2026-10-12"
  },
  "guide/index.html": {
-  "hash": "3f19a4559a30f30e",
-  "date": "2026-10-12"
+  "hash": "ee93ac8905336c1a",
+  "date": "2026-11-09"
  },
  "guide/prepare/index.html": {
-  "hash": "deecf07ebb2f8cf2",
+  "hash": "b21bc14eb8ad1722",
   "date": "2026-11-09"
  },
  "guide/spray/index.html": {
@@ -36,7 +36,7 @@
   "date": "2026-10-12"
  },
  "notify/index.html": {
-  "hash": "4b59bbda134dc309",
+  "hash": "9e7213af83bc14bf",
   "date": "2026-11-09"
  },
  "privacy/index.html": {

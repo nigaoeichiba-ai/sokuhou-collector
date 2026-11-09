@@ -65,7 +65,7 @@ NO_COUNT_WHY = {
     "千葉": '<p>千葉県には、野生のツキノワグマが生息していないとされています。環境省の資料は、ツキノワグマの生息地を「千葉県を除く本州と四国の一部地域」と書いています'
           '(<a href="https://www.env.go.jp/nature/choju/docs/docs5-4a/pdfs/chpt4.pdf" rel="noopener" target="_blank">環境省「クマ類の生態と現状」</a>)。'
           'そのため、出没件数の表に数値がありません。</p>',
-    "北海道": '<p>北海道は、道全体の出没件数をまとめた表を、道のサイトに載せていません。道のサイトには、市町村ごとの出没情報のリンク集があります'
+    "北海道": '<p>北海道は、道全体の出没件数をまとめた表を、道のサイトに載せていません。道のサイトには、市町村ごとの出没情報のリンク集を公開しています'
             '(<a href="https://www.pref.hokkaido.lg.jp/ks/skn/higuma/joho.html" rel="noopener" target="_blank">北海道「市町村ヒグマ関連情報リンク集」</a>)。'
             '注意書きは「市町村で提供しているヒグマの出没に関する情報は、すべての出没を網羅するものではありません」です。'
             'そのため、環境省の表でも「-」になっています。このサイトでは、市町村が公開している情報が読めた分だけを、下に載せています。</p>',
@@ -292,7 +292,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
                      f'最新は{md(lv["records"][0]["at"][:10])}({live_mod.ago_text(lv["records"][0]["at"], lv["today"])})です。</p>\n'
                      f'<ul class="mini-list wide">{items}</ul>\n'
                      f'{hot_home(lv)}'
-                     f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図で見る(現在地の近く)</a>{' / <a href="/digest/">週ごとのまとめ</a>' if d.get("has_digest") else ''}{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''} / <a href="/search/">市町村名から探す</a> / <a href="/official/">都道府県の公式の出没情報(リンク集)</a> / <a href="/cite/">データの出典・引用のしかた</a></p>\n')
+                     f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図を開く(現在地の近く)</a>{' / <a href="/digest/">週ごとのまとめ</a>' if d.get("has_digest") else ''}{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''} / <a href="/search/">市町村名から探す</a> / <a href="/official/">都道府県の公式の出没情報(リンク集)</a> / <a href="/cite/">データの出典・引用のしかた</a></p>\n')
     news_block = ""
     if d["notices"]:
         items = "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
@@ -394,8 +394,8 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
         extra = (f'<h2>全国の死亡者数の年度別の推移</h2>{yr}'
                  f'<p>死亡者数は、環境省の人身被害の統計(死亡者数の欄)の数字です。{len(zero)}道府県({"・".join(zero)})は、この{len(years)}年度に死亡者の記録がないため、表に載せていません。'
                  f'事故の日付と場所は、各道府県のページの「熊(クマ)による死亡事故」で、環境省の一覧にある分を確認できます。全国の一覧と、月別・道府県別の集計は、<a href="/deaths/">熊(クマ)による死亡事故の一覧</a>で確認できます。</p>'
-                 f'<p>人数の多い少ないは、山に入る人の数や、クマの生息する範囲にも左右されます。件数・人数の全体は<a href="/ranking/injuries/">人身被害ランキング</a>にあります。</p>'
-                 + ('<p>時期ごとの違いは<a href="/research/">研究ノート</a>にあります。</p>' if d.get("research") else ""))
+                 f'<p>人数の多い少ないは、山に入る人の数や、クマの生息する範囲にも左右されます。件数・人数の全体は<a href="/ranking/injuries/">人身被害ランキング</a>で確認できます。</p>'
+                 + ('<p>時期ごとの違いは<a href="/research/">研究ノート</a>で読めます。</p>' if d.get("research") else ""))
     else:
         rows = sorted(d["rows"], key=lambda r: (-r["inj"][done][1], r["name"]))
         lines = [[str(r["rank"]["injured"]), pref_link(r), f'{n(r["inj"][done][0])}', f'{n(r["inj"][done][1])}', f'{n(r["inj"][done][2])}',
@@ -485,7 +485,7 @@ def emergency_page(d: dict, cfg: dict, preview: bool) -> str:
 <h2>{fy_label(done)}の死亡事故(参考)</h2>
 {table(["日付", "場所"], prev_fatal_rows)}
 <p class="notice">{jp_date(prev_fatal['as_of'])}現在の環境省の資料です。</p>
-<p>2年度分を合わせた一覧と、月別・道府県別の件数は<a href="/deaths/">熊による死亡事故の一覧</a>にあります。</p>"""
+<p>2年度分を合わせた一覧と、月別・道府県別の件数は<a href="/deaths/">熊による死亡事故の一覧</a>で確認できます。</p>"""
     return page(cfg, preview, path="/emergency/", title=f"クマの緊急銃猟と死亡事故の一覧({fy_label(cur)}・環境省)",
                 description=f"{fy_label(cur)}のクマの緊急銃猟{n(len(emg['cases']))}件と、死亡事故の日付・場所を、環境省の資料から一覧にしています。", body=body)
 
@@ -528,10 +528,10 @@ def deaths_list_page(d: dict, cfg: dict, preview: bool) -> str:
 {table(["月", fy_label(done), fy_label(cur)], month_rows)}
 <h2>どの道府県で起きたか(件数)</h2>
 {table(["道府県", fy_label(done), fy_label(cur), "合計"], pref_rows)}
-<p>年度ごとの死亡者数の合計は<a href="/ranking/deaths/">死亡者数の都道府県別ランキング</a>(平成20年度から)に、緊急銃猟の実施状況は<a href="/emergency/">緊急銃猟のページ</a>にあります。道府県ごとの出没と人身被害は、表の道府県名から各ページへ進めます。山に入る前は<a href="/guide/prepare/">山に入る前の備え</a>を、出会ったときは<a href="/guide/encounter/">出会ったときの行動</a>をお読みください。</p>
+<p>年度ごとの死亡者数の合計は<a href="/ranking/deaths/">死亡者数の都道府県別ランキング</a>(平成20年度から)に、緊急銃猟の実施状況は<a href="/emergency/">緊急銃猟のページ</a>で確認できます。道府県ごとの出没と人身被害は、表の道府県名から各ページへ進めます。山に入る前は<a href="/guide/prepare/">山に入る前の備え</a>を、出会ったときは<a href="/guide/encounter/">出会ったときの行動</a>をお読みください。</p>
 <p class="notice">{freshness(d)}</p>"""
     return page(cfg, preview, path="/deaths/", title=f"熊(クマ)による死亡事故の一覧 {fy_label(done)}・{fy_label(cur)}の日付と場所(環境省)",
-                description=f"熊に襲われた死亡事故の一覧です。{fy_label(done)}{n(cases[done])}件、{fy_label(cur)}{n(cases[cur])}件の日付・場所・人数を、環境省の資料から新しい順に並べ、月別・道府県別に数えました。", body=body)
+                description=f"熊に襲われた死亡事故の一覧です。{fy_label(done)}{n(cases[done])}件、{fy_label(cur)}{n(cases[cur])}件の日付・場所・人数を、環境省の資料から新しい順に並べ、月別・道府県別に集計しました。", body=body)
 
 
 PREF_LIVE = live_mod.LIVE_SOURCES
@@ -573,7 +573,7 @@ def news_page(d: dict, cfg: dict, preview: bool) -> str:
 <h1>環境省の、クマに関するお知らせ</h1>
 <p class="lead">環境省の「クマに関する各種情報・取組」のページに載っている、日付つきのお知らせを、新しい順に並べました。大臣の談話・会見、自治体への事務連絡、講習会の案内などです。リンク先は、環境省のページです。</p>
 <ul class="link-list news-list">{rows}</ul>
-<p class="notice">題名は、環境省のページの表記のままです(日付の後ろにある発信元の記載は省いています)。このサイトでは、報道各社の記事は載せていません。お住まいの地域の最新の情報は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。{' 都道府県・市町村が自分のサイトで発表したお知らせは、<a href="/notices/">自治体のクマ関連のお知らせ</a>にあります。' if d.get("muni_notices") else ''}</p>
+<p class="notice">題名は、環境省のページの表記のままです(日付の後ろにある発信元の記載は省いています)。このサイトでは、報道各社の記事は載せていません。お住まいの地域の最新の情報は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。{' 都道府県・市町村が自分のサイトで発表したお知らせは、<a href="/notices/">自治体のクマ関連のお知らせ</a>で確認できます。' if d.get("muni_notices") else ''}</p>
 <p class="notice">出典: <a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">環境省「クマに関する各種情報・取組」</a>を加工して作成。環境省が作成したものではありません。取得日: {jp_date(d['fetched_date'])}。</p>"""
     return page(cfg, preview, path="/news/", title="環境省のクマに関するお知らせ(新着)",
                 description="環境省が公表している、クマに関する大臣の談話・会見、自治体への事務連絡などの新着を、日付順に一覧にしています。", body=body)
@@ -634,7 +634,7 @@ def no_bear_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <p>人身被害の統計(環境省・{fy_or_h(years[0])}から{fy_or_h(years[-1])})にも、{esc(r['name'])}の記録はありません。{esc(r['name'])}で見かけた動物がクマかどうか気になるときは、{esc(r['name'])}の自然保護の担当課や、市町村の窓口に問い合わせてください。</p>
 <h2>近くの都県の出没({fy_label(done)}・環境省の速報値)</h2>
 <div class="rel-grid">{grid}</div>
-<p>{esc(r['name'])}の外で山に入るときは、<a href="/guide/prepare/">山に入る前の備え</a>と、<a href="/guide/encounter/">出会ったときの行動</a>を、お読みください。ほかの都道府県は、<a href="/ranking/sightings/">出没件数のランキング</a>にあります。</p>
+<p>{esc(r['name'])}の外で山に入るときは、<a href="/guide/prepare/">山に入る前の備え</a>と、<a href="/guide/encounter/">出会ったときの行動</a>を、お読みください。ほかの都道府県は、<a href="/ranking/sightings/">出没件数のランキング</a>で確認できます。</p>
 {caution_box()}
 <p class="notice">{freshness(d)}</p>"""
     return page(cfg, preview, path=f"/{r['slug']}/", title=f"{r['name']}にクマはいる?生息していないとされる根拠(環境省)と、近くの都県の出没",
@@ -731,7 +731,7 @@ def notify_page(d: dict, cfg: dict, preview: bool) -> str:
     if cfg.get("bluesky_handle"):
         social += f'<li><a href="https://bsky.app/profile/{esc(cfg["bluesky_handle"])}" rel="noopener" target="_blank">Bluesky(@{esc(cfg["bluesky_handle"])})</a>をフォローすると、環境省のデータが更新されたときのお知らせが届きます。</li>'
     if cfg.get("x_handle"):
-        social += f'<li><a href="https://x.com/{esc(cfg["x_handle"])}" rel="noopener" target="_blank">X(@{esc(cfg["x_handle"])})</a>でも、主なお知らせを載せます。</li>'
+        social += f'<li><a href="https://x.com/{esc(cfg["x_handle"])}" rel="noopener" target="_blank">X(@{esc(cfg["x_handle"])})</a>でも、主なお知らせを掲載します。</li>'
     body = f"""{crumbs([("全国", "/"), ("通知を受け取る", None)])}
 <h1>更新を、通知で受け取る</h1>
 <p class="lead">環境省のクマの出没・人身被害・緊急銃猟のデータが更新されたときに、お知らせを受け取れます。登録は不要で、メールアドレスなどの個人情報も預かりません。</p>

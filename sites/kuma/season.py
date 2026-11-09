@@ -84,7 +84,7 @@ def season_page(page, d: dict, today, live: bool = True) -> str:
     live_link = 'と、<a href="/live/">自治体の最新の目撃情報</a>' if live else ""       # /live/ exists only with live data
     body = f"""{crumbs([("全国", "/"), ("出没の季節性", None)])}
 <h1>クマの出没は、何月に多い?(都道府県別・{first}〜{last}の{len(years)}年度)</h1>
-<p class="lead">環境省が公表している月別の出没件数のうち、<strong>月がそろっている{len(years)}年度({first}〜{last})</strong>を使って、「年間の出没の、何%が、何月に出ているか」を、都道府県ごとに出しました。全国では、<strong>{peak_nat}月</strong>が、いちばん多い月です(年間の{pct(max(nat))})。いまは{now}月で、全国の平均では、年間の{pct(nat[months.index(now)])}が、この月に出ています。</p>
+<p class="lead">環境省が公表している月別の出没件数のうち、<strong>月がそろっている{len(years)}年度({first}〜{last})</strong>を使って、「年間の出没の、何%が、何月に出ているか」を、都道府県ごとに出しました。全国では、<strong>{peak_nat}月</strong>が、最も多い月です(年間の{pct(max(nat))})。いまは{now}月で、全国の平均では、年間の{pct(nat[months.index(now)])}が、この月に出ています。</p>
 <h2>全国の月別の割合</h2>
 {chart}{table(["月"] + [f"{m}月" for m in months], [["年間に占める割合"] + [pct(v) for v in nat]])}
 <h2>都道府県別(年間の出没が、毎年{MIN_YEARLY}件以上あるところ)</h2>

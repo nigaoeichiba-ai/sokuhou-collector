@@ -165,7 +165,7 @@ class CitePageTest(unittest.TestCase):
         for bad in ("日本一", "最多", "安全です", "確実", "全国のすべて"):
             self.assertNotIn(bad, text)
         self.assertIn("報道・SNS・住民の投稿・他のサイトが集めたデータは、使っていません", text)
-        self.assertIn("重ねて数えています", text)                           # no deduplication is claimed
+        self.assertIn("重ねて集計しています", text)                           # no deduplication is claimed
         self.assertIn("お問い合わせ", text)
 
     def test_the_csv_link_is_there_only_when_licensed_sources_exist(self):

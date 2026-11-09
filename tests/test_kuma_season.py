@@ -103,7 +103,7 @@ class SeasonPageTest(unittest.TestCase):
             self.assertAlmostEqual(a, b)
         self.assertAlmostEqual(sum(got), 1.0)
         peak = [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3][max(range(12), key=lambda k: want[k])]
-        self.assertIn(f"全国では、 {peak}月 が、いちばん多い月です", self.text)
+        self.assertIn(f"全国では、 {peak}月 が、最も多い月です", self.text)
 
     def test_this_month_is_the_month_of_the_build_date(self):
         self.assertIn("いまは10月で", self.text)

@@ -42,7 +42,7 @@ LIVE_SOURCES = {
                "as_of_text": "データは{d}時点です"},
     "yamaguchi": {"pref": "山口", "license": "CC BY", "name": "山口県", "label": "山口県・県警の公式", "monthly_label": "山口県警察が認知した目撃のほか、痕跡などを含む",
                   "as_of_text": "データは{d}の分までです"},
-    "okayama": {"pref": "岡山", "license": "公共データ利用規約(第1.0版)", "name": "岡山県", "label": "岡山県・県の公式。更新は不定期", "monthly_label": "種別の区別がなく、すべてを目撃として数えています",
+    "okayama": {"pref": "岡山", "license": "公共データ利用規約(第1.0版)", "name": "岡山県", "label": "岡山県・県の公式。更新は不定期", "monthly_label": "種別の区別がなく、すべてを目撃として集計しています",
                 "as_of_text": "最新の記録は{d}の分までです(県の更新は不定期で、遅れて載ります)"},
     "yamanashi": {"pref": "山梨", "license": "山梨県オープンデータ利用規約(商用利用可・出典明記)", "name": "山梨県", "label": "山梨県・県の公式。ほぼ毎週更新", "monthly_label": "目撃の記録のみ",
                   "as_of_text": "最新の記録は{d}の分までです"},
@@ -225,7 +225,7 @@ def source_notes(infos: dict, keys: list[str]) -> str:
 
 
 CAUTION = ("通報から掲載まで日がかかること、同じ出没が重ねて通報されること、クマ以外の動物の見間違いが"
-           "含まれることがあります。自治体ごとに、数える対象(目撃のみか、痕跡などを含むか)と更新の時期が違うため、<strong>自治体どうしの件数の大小は、"
+           "含まれます。自治体ごとに、数える対象(目撃のみか、痕跡などを含むか)と更新の時期が違うため、<strong>自治体どうしの件数の大小は、"
            "そのまま比べられません</strong>。")
 
 
@@ -251,10 +251,10 @@ def hub_page(page, d: dict, lv: dict) -> str:
 <h1>最新のクマの目撃情報(自治体の公式)</h1>
 <p class="lead">環境省の数字は、公表まで1〜2か月かかります。ここでは、自治体が公式に公表している目撃情報を、取得できるところから順に載せています。いまは、{len(infos)}か所({'・'.join(i['name'] for i in infos.values())})です。</p>
 {stats_html(len(recs), last30(recs, today), latest, today, cur)}
-<p><a class="btn" href="/map/">地図で見る(現在地の近くを探す)</a>{' <a href="/data/">データ(CSV)をダウンロード</a>' if licensed_sources(lv) else ''}</p>
+<p><a class="btn" href="/map/">地図を開く(現在地の近くを探す)</a>{' <a href="/data/">データ(CSV)をダウンロード</a>' if licensed_sources(lv) else ''}</p>
 <h2>新しい順の記録(全国)</h2>
 {record_rows(recs[:HUB_ROWS], with_pref=True, with_city_link=True, by_slug_cities=by_pref)}
-<p class="notice">直近{HUB_ROWS}件です。道府県ごとの全件と、月別・市町村別は、下の道府県のページにあります。{CAUTION}</p>
+<p class="notice">直近{HUB_ROWS}件です。道府県ごとの全件と、月別・市町村別は、下の道府県のページに載せています。{CAUTION}</p>
 <h2>道府県別(取得できたところ)</h2>
 <ul class="mini-list">{pref_links}</ul>
 <h2>取得元と、更新の状況</h2>
@@ -331,7 +331,7 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
 {record_rows(rows[:RECENT_ROWS], with_city_link=True, by_slug_cities=lv["by_pref"])}
 <p class="notice">直近{min(RECENT_ROWS, len(rows))}件です。{CAUTION}</p>
 <h2>月別の記録</h2>
-{month_blocks}{extra_counts_html(extras, today)}<p><a href="/map/?pref={slug}" rel="nofollow">{esc(pname)}の目撃を地図で見る</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
+{month_blocks}{extra_counts_html(extras, today)}<p><a href="/map/?pref={slug}" rel="nofollow">{esc(pname)}の目撃を地図で確認</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
 {('<h2>' + esc(pname) + 'の公式の出没情報</h2>' + off_html) if off_html else ''}
 <p><a href="/live/{slug}/feed.xml">{esc(pname)}の最新の目撃(フィード)</a>を、フィードリーダーに登録すると、新しい記録が公表されるたびに届きます。</p>
 {source_notes(infos, keys)}"""
@@ -407,7 +407,7 @@ def city_facts(slug: str, city: str, rows: list[dict], lv: dict, today: date) ->
         trend = f"直近30日は{n(recent)}件で、その前の30日({n(prev)}件)より{word}" if recent != prev else f"直近30日は{n(recent)}件で、その前の30日({n(prev)}件)と同じです"
     # 2. where it stands in the prefecture
     if rank == 1:
-        where = f"{esc(pname)}で記録を載せている{n(len(ranked))}市町村のうち、いちばん記録の多い市町村です" + (f"(2位は{esc(ranked[1][0])}の{n(len(ranked[1][1]))}件)" if len(ranked) > 1 else "")
+        where = f"{esc(pname)}で記録を載せている{n(len(ranked))}市町村のうち、最も記録の多い市町村です" + (f"(2位は{esc(ranked[1][0])}の{n(len(ranked[1][1]))}件)" if len(ranked) > 1 else "")
     elif rank <= 3:
         where = f"{esc(pname)}で記録を載せている{n(len(ranked))}市町村のうち、記録の数は{n(rank)}位で、1位は{esc(first_city)}({n(first_n)}件)です"
     elif rank > len(ranked) / 2:
@@ -419,7 +419,7 @@ def city_facts(slug: str, city: str, rows: list[dict], lv: dict, today: date) ->
     if peak and peak[2] / N >= 0.3:
         conc = f"記録の{n(round(peak[2] / N * 100))}%({n(peak[2])}件)は、{md(peak[0].isoformat())}から{md(peak[1].isoformat())}の7日間に集まっています"
     elif peak:
-        conc = f"記録がいちばん集まったのは、{md(peak[0].isoformat())}から{md(peak[1].isoformat())}の7日間で、{n(peak[2])}件です"
+        conc = f"記録が最も集まったのは、{md(peak[0].isoformat())}から{md(peak[1].isoformat())}の7日間で、{n(peak[2])}件です"
     else:
         conc = ""
     # 4. kinds
@@ -470,7 +470,7 @@ def season_sentence(d: dict, slug: str, peak_m: int) -> str:
     pm = d["months"][max(range(12), key=lambda i: vals[i] or 0)]
     if peak_m == pm:
         return ""
-    return (f"<p>環境省の表では、{esc(pref_name(slug))}全体の出没が{fy_label(done)}にいちばん多かったのは{pm}月です。この市町村の{fy_label(d['cur'])}の記録は、これまでのところ{peak_m}月が最多です。"
+    return (f"<p>環境省の表では、{esc(pref_name(slug))}全体の出没が{fy_label(done)}に最も多かったのは{pm}月です。この市町村の{fy_label(d['cur'])}の記録は、これまでのところ{peak_m}月が最多です。"
             "環境省の表は、都道府県が数える対象で集計した数字で、自治体の記録とは数え方が違います。</p>")
 
 
@@ -548,7 +548,7 @@ def city_page(page, d: dict, lv: dict, slug: str, city: str, links: dict) -> str
 <h2>新しい順の記録{('(直近' + str(CITY_ROWS) + '件)') if len(rows) > CITY_ROWS else ''}</h2>
 {places_html(city, rows)}{record_rows(rows[:CITY_ROWS])}
 <p class="notice">{CITY_CAUTION}</p>
-<p><a href="/map/?pref={slug}&amp;city={esc(city)}" rel="nofollow">{esc(city)}の目撃を地図で見る</a> ・ <a href="/live/{slug}/">{esc(pname)}の目撃情報</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
+<p><a href="/map/?pref={slug}&amp;city={esc(city)}" rel="nofollow">{esc(city)}の目撃を地図で確認</a> ・ <a href="/live/{slug}/">{esc(pname)}の目撃情報</a> ・ <a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>
 {('<h2>' + esc(pname) + 'のほかの市町村</h2>' + other_html) if other_html else ''}
 {source_notes(infos, keys)}"""
     return page(path=city_url(slug, city), title=f"{city}の熊(クマ)出没・目撃情報【最新{md(last['at'][:10])}】{pname}・{fy_label(cur)}・{n(len(rows))}件",
@@ -647,7 +647,7 @@ def data_page(page, d: dict, lv: dict, base: str) -> str:
     total = sum(rows_by[k] for k in keys)
     body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", "/live/"), ("データのダウンロード", None)])}
 <h1>クマの目撃情報のデータ(CSV・{fy_label(cur)})</h1>
-<p class="lead">自治体が公表しているクマの目撃情報のうち、<strong>再利用の条件が明示されている{len(keys)}か所</strong>の{fy_label(cur)}の記録{n(total)}件を、1つのCSVにまとめました。取得元・ライセンス・市町村名を、そろえてあります。</p>
+<p class="lead">自治体が公表しているクマの目撃情報のうち、<strong>再利用の条件が明示されている{len(keys)}か所</strong>の{fy_label(cur)}の記録{n(total)}件を、1つのCSVにまとめました。取得元・ライセンス・市町村名を、そろえています。</p>
 <p><a class="btn" href="/data/{CSV_NAME}" download>CSVをダウンロード({n(total)}件)</a></p>
 <h2>収録している取得元</h2>
 {table(["取得元", "ライセンス・利用条件", f"{fy_label(cur)}の記録", "出典の表記"], src_rows)}

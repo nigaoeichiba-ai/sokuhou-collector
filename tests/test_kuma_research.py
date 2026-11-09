@@ -21,7 +21,7 @@ def sample():
         "slug": "sample-note", "date": "2026-10-15", "data_as_of": "2026-10-13", "title": "見本の研究ノート(件数を数えた)", "h1": "見本の研究ノート",
         "description": "見本の説明です。", "lead": "これは見本の研究ノートです。数えたのは見本の記録の件数で、四十字を超える長さにしてあります。",
         "findings": ["一つ目のわかったこと。", "二つ目のわかったこと。"],
-        "sections": [{"h2": "一つ目", "paragraphs": ["本文です。[[ランキング|/ranking/sightings/]]を見てください。"], "chart": {"kind": "bars", "labels": ["a", "b"], "values": [1, 2], "title": "t", "desc": "d"}},
+        "sections": [{"h2": "一つ目", "paragraphs": ["本文です。[[ランキング|/ranking/sightings/]]をご覧ください。"], "chart": {"kind": "bars", "labels": ["a", "b"], "values": [1, 2], "title": "t", "desc": "d"}},
                      {"h2": "二つ目", "table": {"head": ["x", "y"], "rows": [["1", "2"]]}}],
         "method": ["数え方。"], "caveats": ["言えないこと。"], "credits": ["出典:見本のデータ(CC BY 4.0)を加工して作成"],
         "script": "sites/kuma/research/scripts/common.py",

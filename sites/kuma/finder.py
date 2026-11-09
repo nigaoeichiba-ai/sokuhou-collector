@@ -44,14 +44,14 @@ def finder_page(page, d: dict, lv: dict) -> str:
     pref_names = "・".join(pref_name(s) for s in prefs)
     body = f"""{crumbs([("全国", "/"), ("市町村から探す", None)])}
 <h1>市町村名から、クマの出没(公式)を調べる</h1>
-<p class="lead">お住まいの市町村、行き先の市町村の名前を入れると、{fy_label(cur)}の記録の件数と、いちばん新しい日付が、わかります。自治体が公式に公表している情報だけを、{n(len(ms))}の市町村について、並べています({esc(pref_names)})。</p>
+<p class="lead">お住まいの市町村、行き先の市町村の名前を入れると、{fy_label(cur)}の記録の件数と、最新の日付が、わかります。自治体が公式に公表している情報だけを、{n(len(ms))}の市町村について、並べています({esc(pref_names)})。</p>
 <form id="finder-tools" role="search" hidden>
 <label>市町村・都道府県の名前 <input id="finder-q" type="search" name="q" autocomplete="off" placeholder="例: 盛岡、岩国、富山"></label>
 <p id="finder-msg" class="muted" role="status"></p>
 </form>
 <div class="tablewrap"><table id="finder-table"><thead><tr><th>市町村</th><th>都道府県</th><th>{fy_label(cur)}の件数</th><th>直近30日</th><th>最新の日付</th><th>載せ方</th></tr></thead>
 <tbody>{"".join(rows)}</tbody></table></div>
-<p class="notice">新しい日付の順に並べています。「直近30日」は、記録を載せている取得元だけです(件数だけの取得元は、「-」)。載っていない市町村は、「出没がない」「安全」という意味ではなく、<strong>このサイトが、その地域の取得元を、まだ持っていない</strong>ということです。公式のページへのリンクは、<a href="/official/">都道府県の公式の出没情報</a>に、取得元と数え方は、<a href="/cite/">データの出典・数え方・引用のしかた</a>にあります。取得元ごとに数え方が違うため、市町村どうしの件数は、そのまま比べられません。市町村ではない地名(山の名前など)で報告された分は、この表に入れていません。</p>
+<p class="notice">新しい日付の順に並べています。「直近30日」は、記録を載せている取得元だけです(件数だけの取得元は、「-」)。載っていない市町村は、「出没がない」「安全」という意味ではなく、<strong>このサイトが、その地域の取得元を、まだ持っていない</strong>ということです。公式のページへのリンクは、<a href="/official/">都道府県の公式の出没情報</a>に、取得元と数え方は、<a href="/cite/">データの出典・数え方・引用のしかた</a>で確認できます。取得元ごとに数え方が違うため、市町村どうしの件数は、そのまま比べられません。市町村ではない地名(山の名前など)で報告された分は、この表に入れていません。</p>
 <script src="/assets/finder.js" defer></script>"""
     return page(path="/search/", title=f"市町村名から、クマの出没(公式)を調べる({n(len(ms))}市町村・{fy_label(cur)})",
                 description=f"{n(len(ms))}の市町村について、自治体が公式に公表しているクマの出没の件数({fy_label(cur)})と最新の日付を、名前で探せます。", body=body)

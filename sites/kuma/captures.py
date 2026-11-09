@@ -11,7 +11,7 @@ from sokuhou import prefectures as pf
 from sokuhou.sitekit import crumbs, esc
 
 NOTE = ("許可捕獲(被害防止目的での捕獲と、特定計画による数の調整)の捕獲数を、都道府県などから聞き取った環境省の<strong>速報値</strong>で、後から変更されることがあります。"
-        "「捕殺」は、捕獲して殺処理した頭数、「非捕殺」は、放獣などをした頭数です。出没件数とは別の統計で、頭数で数えています。")
+        "「捕殺」は、捕獲して殺処理した頭数、「非捕殺」は、放獣などをした頭数です。出没件数とは別の統計で、頭数で集計しています。")
 NOT_LISTED = "環境省の表は、近年クマの目撃・捕獲の実績がない県(香川・愛媛・高知と、福岡から沖縄までの8県)を載せていません。"
 
 
@@ -81,7 +81,7 @@ def pref_block(c: dict | None, short: str, name: str) -> str:
         return ""
     if short not in c["by"]:
         return (f"<h2>クマ類の許可捕獲数</h2>\n<p>環境省の許可捕獲数の表には、{esc(name)}は載っていません(近年、クマの目撃・捕獲の実績がない県は、表示されていません)。"
-                f'全国の数字は、<a href="/ranking/captures/">許可捕獲数ランキング</a>にあります。</p>\n')
+                f'全国の数字は、<a href="/ranking/captures/">許可捕獲数ランキング</a>で確認できます。</p>\n')
     by, cur, done = c["by"][short], c["cur"], c["done"]
     ys = [y for y in c["years"] if y != cur][-8:]
     chart = charts.bars([short_label(y) for y in ys], [by[y][0] for y in ys], title="許可捕獲数(頭)",

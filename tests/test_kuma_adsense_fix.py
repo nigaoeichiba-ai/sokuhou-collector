@@ -108,10 +108,10 @@ class CityFactsTest(unittest.TestCase):
         tiny = self.rows(["2026-06-01", "2026-06-02"])
         cities = {"大館市": big, "能代市": mid, "男鹿市": small, "三種町": tiny}
         first = "".join(self.facts("大館市", **cities)["lead"])
-        self.assertIn("いちばん記録の多い市町村です(2位は能代市の10件)", first)
+        self.assertIn("最も記録の多い市町村です(2位は能代市の10件)", first)
         last = "".join(self.facts("三種町", **cities)["lead"])
         self.assertIn("記録の数は4位と、少ない側です。1位の大館市は20件です", last)
-        self.assertNotIn("いちばん記録の多い", last)
+        self.assertNotIn("最も記録の多い", last)
 
     def test_a_municipality_without_recent_records_says_so_instead_of_comparing_two_zeros(self):
         rows = self.rows(["2026-05-01", "2026-05-02", "2026-05-03"])
@@ -209,7 +209,7 @@ class AdsenseFixSiteTest(unittest.TestCase):
         rel = self.city_rel("岩国市")
         html = self.read(rel)
         lead = re.search(r'<p class="lead">(.*?)</p>', html).group(1)
-        for part in ("令和8年度の記録は120件です", "直近30日は", "その前の30日(", "いちばん記録の多い市町村です(2位は周南市の30件)"):
+        for part in ("令和8年度の記録は120件です", "直近30日は", "その前の30日(", "最も記録の多い市町村です(2位は周南市の30件)"):
             self.assertIn(part, lead)
         text = re.sub(r"<[^>]+>", " ", html)
         for part in ("記録のあった日は", "数え方と、読むときの注意", "件数の数え方は、「"):

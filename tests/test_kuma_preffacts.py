@@ -271,7 +271,7 @@ class PrefecturePagesTest(unittest.TestCase):
         for r, html in self.pages():
             body = html.split("<main", 1)[1].split("</main>", 1)[0]
             new = re.search(r'<p class="lead">(.*?)</p>', body, re.S).group(1) + (body.split("から言えること</h2>", 1)[1].split("</ul>", 1)[0] if "から言えること</h2>" in body else "")
-            for bad in ("いちばん", "数えています", "見てください", "並びます", "載せます", "入口"):
+            for bad in ("いちばん", "数えています", "数えました", "見てください", "並びます", "載せます", "入口", "あります", "確かめてください", "読んでください"):
                 self.assertNotIn(bad, new, r["name"])
 
     def test_a_negative_case_a_season_sentence_for_a_prefecture_with_small_years_would_be_caught(self):
