@@ -138,7 +138,7 @@ def set_guide_html(s: dict) -> str:
     ws, hs = [i["w"] for i in its], [i["h"] for i in its]
     size_note = (f"どの素材も幅{min(ws)}〜{max(ws)}px、高さ{min(hs)}〜{max(hs)}pxです。300dpiの印刷なら約{mm(min(ws), 300)}〜{mm(max(ws), 300)}mm×{mm(min(hs), 300)}〜{mm(max(hs), 300)}mmで、"
                  f"はがき(幅100mm)に載せるなら、150dpi(幅約591px)で作る画面にそのまま置けます。A4の幅(210mm)いっぱいまで広げると、{round(max(ws) / 210 * 25.4)}dpi前後になり、"
-                 "線が粗く見えます。小さめに置くか、大きく使うときは試し刷りで確かめてください。")
+                 "線が粗く見えます。小さめに置くか、大きく使うときは、先に1枚だけ試し刷りをして、線の粗さを見てから決めます。")
     ex_html = []
     for name, caption, uses, size_label in g["examples"]:
         f = EXAMPLES_DIR / f"{name}.webp"
@@ -149,10 +149,10 @@ def set_guide_html(s: dict) -> str:
                        f'({size_label}、{w}×{h}px)使った素材: {used}</figcaption></figure>')
     frame_note = ""
     if g["frame"]:
-        frame_note = "<p>「中の空き」は、枠の真ん中で透明になっている、いちばん大きい四角の大きさです。文字や写真は、この中に収めると枠にかかりません。</p>"
+        frame_note = "<p>「中の空き」は、枠の真ん中で透明になっている、最も大きい四角の大きさです。文字や写真は、この中に収めると枠にかかりません。</p>"
     blank_note = ""
     if g.get("blank"):
-        blank_note = "<p>「書き込める白い面」は、名前や文字を書き足せる、四角い白(クリーム色)の部分のいちばん大きいものの大きさです。</p>"
+        blank_note = "<p>「書き込める白い面」は、名前や文字を書き足せる、四角い白(クリーム色)の部分のうち、最も大きいものの大きさです。</p>"
     stats = guide_stats(its, g)
     points = "".join(f"<p>{esc(p.format(**stats))}</p>" for p in g.get("points", []))
     points_html = f'<section style="margin-top:44px"><h2><span class="scribble">使い方のコツ</span></h2>{points}' + (

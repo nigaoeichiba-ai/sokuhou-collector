@@ -391,6 +391,7 @@ def render_spec(slug: str, spec: dict) -> Image.Image:
     {"type": "grid",   ..., "items": [{"item", "label", "sub"}], "cols": 2, "scale": 0.5, "top": 190}
     {"type": "strip",  ..., "items": [{"item", "label", "sub"}], "scale": 0.5, "top": 110}          (one row, equal columns)
     {"type": "poster", ..., "rows": [{"item", "label", "sub"}], "scale": 0.3, "top": 160}           (picture left, words right, one row each)
+    {"type": "round",  ..., "items": [{"item", "label"}], "cols": 4, "d": 260, "scale": 0.5, "top": 110}   (each picture cut to a circle of d px on a pastel disc, as a profile icon is)
     A text block is {"text", "size", "weight", "colour": ink|soft|accent, "y", "x"}.  Every picture must fit its cell, or the call fails."""
     size = spec.get("size", "hagaki")
     w, h = PRESETS[size] if isinstance(size, str) else tuple(size)
@@ -431,6 +432,30 @@ def render_spec(slug: str, spec: dict) -> Image.Image:
             d.text((190, y + 22), it.get("label", ""), font=font(34, 700), fill=INK)
             d.text((190, y + 66), it.get("sub", ""), font=font(24, 500), fill=SOFT)
             d.line([(60, y + rh - 4), (w - 60, y + rh - 4)], fill=(228, 228, 228, 255), width=2)
+    elif kind == "round":       # pictures cut to a circle (profile icons): the circle is cut out of the picture on a pastel disc, so what sticks out of the circle is really cut off
+        items = spec["items"]
+        cols = spec.get("cols", len(items))
+        rows = -(-len(items) // cols)
+        dia, top = spec.get("d", 260), spec.get("top", 110)
+        cw, ch = w // cols, (h - top) // rows
+        big = max([dia] + [i.get("d", dia) for i in items])
+        assert big <= cw and big + (52 if any(i.get("label") for i in items) else 0) <= ch, f"circles of {big}px do not fit their cells ({cw}x{ch})"
+        bgs = spec.get("bgs", ["#fde8c8", "#dff0e0", "#e0ecfa", "#f8e0e8"])
+        for n, it in enumerate(items):
+            dia = it.get("d", spec.get("d", 260))       # a circle of its own size per picture when "d" is given in the item
+            p = pic(slug, key(it["item"]), it.get("scale", spec.get("scale", 1.0)))
+            side = max(dia, p.width, p.height)
+            canvas = Image.new("RGBA", (side, side), tuple(int(bgs[n % len(bgs)][i:i + 2], 16) for i in (1, 3, 5)) + (255,))
+            canvas.alpha_composite(p, ((side - p.width) // 2, (side - p.height) // 2))
+            off = (side - dia) // 2
+            disc = canvas.crop((off, off, off + dia, off + dia))
+            mask = Image.new("L", (dia * 4, dia * 4), 0)
+            ImageDraw.Draw(mask).ellipse([0, 0, dia * 4 - 1, dia * 4 - 1], fill=255)
+            disc.putalpha(mask.resize((dia, dia), Image.LANCZOS))
+            cx, cy = (n % cols) * cw + cw // 2, top + (n // cols) * ch
+            im.alpha_composite(disc, (cx - dia // 2, cy))
+            if it.get("label"):
+                centered(d, it["label"], cx, cy + dia + 10, font(spec.get("label_size", 26), 700), INK, 4)
     else:
         raise ValueError(f"unknown example type: {kind}")
     return im

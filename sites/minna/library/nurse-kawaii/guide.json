@@ -1,0 +1,71 @@
+{
+  "why": "同じナースを、12のポーズと場面でそろえたセットです。お辞儀・クリップボード・説明・手を差し伸べる・体温計・聴診器・注射器・マスク・走る・一息・ガッツポーズ・手洗いで、病院や医院の案内、研修資料、チラシ、スライドに、同じ人物で場面を使い分けられます。",
+  "frame": false,
+  "picks": {
+    "01-bowing-cheerfully-front": "目を閉じて笑い、両手を前で重ねて軽く頭を下げる姿。受付や案内の最初のあいさつに。",
+    "02-holding-clipboard-against": "クリップボードを胸に抱えて立つ姿。受付、問診、記録の場面に。",
+    "03-index-finger-raised": "右手の人差し指を立て、顔の横にひらめきの線が出ています。説明やポイントの強調に。",
+    "04-extending-open-toward": "左手を開いて、前へ差し伸べる姿。案内や、どうぞと促す場面に。",
+    "05-holding-thermometer-up": "体温計を持ち上げて見る姿。検温、体調確認の場面に。",
+    "06-standing-stethoscope-around": "聴診器を首にかけ、両手を腰に当てて立つ姿。診察、医療の案内の見出しに。",
+    "07-holding-simple-small": "小さな注射器を片手に持つ姿。予防接種などの案内に。実際の処置の説明図ではありません。",
+    "08-wearing-surgical-mask": "マスクをして、片手を上げる姿。目は笑っています。感染対策のお願いに。",
+    "09-hurrying-running-worried": "汗のしずくを飛ばして、急いで走る姿。緊急、急ぎの連絡の場面に。",
+    "10-sitting-sighing-cheek": "座って頬づえをつき、ため息の雲が出ています。12点のなかで高さが最も低い(446px)絵で、休憩やストレスの話題に。",
+    "11-fist-pump-encouraging": "こぶしを握って、ガッツポーズ。顔の横に、ひらめきの線が出ています。励ましや達成の場面に。",
+    "12-rubbing-together-as": "両手をこすり合わせ、泡が出ている姿。手洗いの案内に。"
+  },
+  "points": [
+    "12点を場面で分けると、あいさつと案内(お辞儀・手を差し伸べる・説明する・マスク姿)が4点、診察と処置(クリップボード・体温計・聴診器・注射器・手洗い)が5点、気持ちや状態(急いで走る・疲れて一息・ガッツポーズ)が3点です。案内文書は上の2つ、研修資料や社内の連絡は3つ目も使えます。",
+    "12点とも同じ人物で、茶色の髪を後ろでまとめ、ピンクの上下の制服に、名札と白い靴を身につけています。並べても同じナースに見えます。座った1点(疲れて一息)だけは、高さが446pxと低く、ほかの11点は幅が{wmin}〜{wmax}pxの縦長です。",
+    "12点とも縦長で、幅{wmin}〜{wmax}px、高さ{hmin}〜{hmax}pxです。300dpiで刷ると、最も背の高い{hmax}pxの絵で高さ約{hmax_mm}mm、最も低い{hmin}pxの絵で約{hmin_mm}mmです。全点が縦長なので、横に並べる使い方(スライドや案内の帯)は、元の大きさの6割ほどに縮めると4点が収まります。",
+    "完成例の1枚目は、はがきの縦に、5点を約2割の大きさに縮めて並べた外来案内です。時間は空欄にしています。2枚目は、マスク・手洗い・検温・手を差し伸べるの4点を横に並べた、感染対策のお願いの見本です。文面は例です。",
+    "絵は、案内や研修の雰囲気をつくるための素材です。注射器や体温計を持つ絵は、実際の処置の手順や、症状・治療の正しさを示す図ではないので、手順の説明には別の資料を使ってください。"
+  ],
+  "links": [
+    ["フレーム・飾り罫イラストの使い方(おたより・チラシ・POP)", "/guide/frame-kazarigyo-tsukaikata/"],
+    ["透明PNGとは 貼り方と保存形式", "/guide/tomei-png/"],
+    ["利用について(商用OK・クレジット不要)", "/license/"]
+  ],
+  "examples": [
+    {
+      "name": "nurse-kawaii-1",
+      "caption": "外来案内の見本。5点を元の大きさの約2割に縮めて並べ、時間は空欄(○)にしました。",
+      "uses": ["nurse-kawaii-01-bowing-cheerfully-front", "nurse-kawaii-02-holding-clipboard-against", "nurse-kawaii-05-holding-thermometer-up", "nurse-kawaii-06-standing-stethoscope-around", "nurse-kawaii-12-rubbing-together-as"],
+      "size": "はがき(100×148mm)を150dpiで作った大きさ",
+      "spec": {
+        "type": "poster",
+        "size": "hagaki",
+        "title": {"text": "外来のご案内", "size": 42, "y": 40},
+        "rows": [
+          {"item": "01-bowing-cheerfully-front", "label": "ごあいさつ", "sub": "受付: ○時〜○時"},
+          {"item": "02-holding-clipboard-against", "label": "受付・問診", "sub": "記入: ○分ほど"},
+          {"item": "05-holding-thermometer-up", "label": "検温", "sub": "○階 ○番"},
+          {"item": "06-standing-stethoscope-around", "label": "診察", "sub": "○時〜○時"},
+          {"item": "12-rubbing-together-as", "label": "手洗い", "sub": "入口にあります"}
+        ],
+        "scale": 0.22,
+        "top": 130
+      }
+    },
+    {
+      "name": "nurse-kawaii-2",
+      "caption": "感染対策のお願いの見本。マスク・手洗い・検温・手を差し伸べるの4点を、元の大きさの約6割に縮めて並べました。",
+      "uses": ["nurse-kawaii-08-wearing-surgical-mask", "nurse-kawaii-12-rubbing-together-as", "nurse-kawaii-05-holding-thermometer-up", "nurse-kawaii-04-extending-open-toward"],
+      "size": "横長(1168×592px)の大きさ",
+      "spec": {
+        "type": "strip",
+        "size": "wide",
+        "title": {"text": "感染対策のお願い", "size": 40, "y": 30},
+        "items": [
+          {"item": "08-wearing-surgical-mask", "label": "マスク"},
+          {"item": "12-rubbing-together-as", "label": "手洗い"},
+          {"item": "05-holding-thermometer-up", "label": "検温"},
+          {"item": "04-extending-open-toward", "label": "ご案内"}
+        ],
+        "scale": 0.6,
+        "top": 100
+      }
+    }
+  ]
+}
