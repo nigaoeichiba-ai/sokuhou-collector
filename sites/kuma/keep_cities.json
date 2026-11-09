@@ -1,0 +1,31 @@
+{
+ "measured": "2026-11-09",
+ "window": "2026-10-04..2026-11-06",
+ "rule": "municipality pages with at least 1 click or 50 impressions in Search Console in the window (page hashes only; no counts)",
+ "cities": [
+  "01611d",
+  "16a7a4",
+  "197c22",
+  "227d46",
+  "2c15dc",
+  "3033dd",
+  "37a745",
+  "4795c3",
+  "4cbfe5",
+  "52fc9e",
+  "6b9eb4",
+  "6c866e",
+  "73e70c",
+  "99ff65",
+  "a6154e",
+  "b9663e",
+  "ba767b",
+  "cd3c93",
+  "da8c3a",
+  "e4e5b5",
+  "e65bed",
+  "ea17e6",
+  "fca305",
+  "ffea1a"
+ ]
+}

@@ -33,6 +33,7 @@ from sites.kuma import official as official_mod  # noqa: E402
 from sites.kuma import preffacts as preffacts_mod  # noqa: E402
 from sites.kuma import rankfacts as rankfacts_mod  # noqa: E402
 from sites.kuma import research as research_mod  # noqa: E402
+from sites.kuma import retired as retired_mod  # noqa: E402
 from sites.kuma import season as season_mod  # noqa: E402
 from sites.kuma import live as live_mod  # noqa: E402
 from sites.kuma.fmt import day_text, fy_label, fy_start, jp_date, md, n, ratio_text, table  # noqa: E402
@@ -1004,6 +1005,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         finish=lambda s: s))
     pages["about/index.html"] = pages["about/index.html"].replace("<h2>免責事項</h2>", about_mod.editorial_html(any_live) + "<h2>免責事項</h2>", 1)
     pages.update(standard_files(pages, cfg, preview, max([d["fetched_date"]] + [src["fetched_date"] for src in d.get("live_prefs", [])])))   # the newest of the ministry and the municipal sources
+    pages[".htaccess"] += retired_mod.htaccess_lines(pages)
     apply_index_policy(pages, thin_pages, preview)
     drop_ads_from_noindex(pages)            # no ad tag on a page that is not indexed (kuma-adsense-about, 2026-10-20)
     render_day = today or datetime.now(JST).date()

@@ -17,7 +17,7 @@ try:
 except ImportError:
     HAVE_PYPDF = False
 
-from sites.kuma import build, charts, content
+from sites.kuma import build, charts, content, indexing
 from sites.kuma import live as live_mod
 from sokuhou import sitecheck
 from sokuhou.sitekit import BuildError
@@ -397,11 +397,14 @@ class LiveSectionTest(unittest.TestCase):
         cls.raw["notices"] = env_kuma.parse_notices((FIX / "env_kuma_effort12.html").read_text(encoding="utf-8"))
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name) / "site"
+        cls.keep = mock.patch.object(indexing, "_KEEP", {"cities": []})        # the real keep list names this real city: start from none kept
+        cls.keep.start()
         cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, prefs={"yamaguchi": _yamaguchi()}, today=date(2026, 10, 7))
         cls.iwakuni = f"live/yamaguchi/{live_mod.city_slug('yamaguchi', '岩国市')}/index.html"
 
     @classmethod
     def tearDownClass(cls):
+        cls.keep.stop()
         cls.tmp.cleanup()
 
     def read(self, rel):

@@ -31,17 +31,23 @@ def _yamaguchi(city_rows: dict):
 
 
 class IndexingRulesTest(unittest.TestCase):
-    def test_a_municipality_page_is_thin_below_the_index_floor_and_below_the_no_demand_floor_unless_google_showed_it(self):
-        few, some, many = [0] * 4, [0] * 8, [0] * indexing.NO_DEMAND_CITY_ROWS
-        shown = {"live_cities": [indexing.city_hash("akita", "鹿角市")], "digest_weeks": []}
-        with mock.patch.object(indexing, "_DEMAND", {"live_cities": [], "digest_weeks": []}):
+    def test_a_municipality_page_stays_indexed_only_if_search_console_gave_it_a_click_or_it_has_100_records(self):
+        few, some, many = [0] * 4, [0] * 99, [0] * indexing.KEEP_BY_RECORDS
+        kept = {"cities": [indexing.city_hash("akita", "鹿角市")]}
+        with mock.patch.object(indexing, "_KEEP", {"cities": []}):
             self.assertTrue(indexing.city_is_thin("akita", "鹿角市", few))
-            self.assertTrue(indexing.city_is_thin("akita", "鹿角市", some))
-            self.assertFalse(indexing.city_is_thin("akita", "鹿角市", many))
-        with mock.patch.object(indexing, "_DEMAND", shown):
-            self.assertFalse(indexing.city_is_thin("akita", "鹿角市", some))           # shown in a search: stays indexed
-            self.assertTrue(indexing.city_is_thin("akita", "鹿角市", few))             # still too thin even if shown (the older rule)
-            self.assertTrue(indexing.city_is_thin("akita", "大館市", some))            # another municipality: not shown
+            self.assertTrue(indexing.city_is_thin("akita", "鹿角市", some))            # 99 records: still thin
+            self.assertFalse(indexing.city_is_thin("akita", "鹿角市", many))           # 100 records: stays
+        with mock.patch.object(indexing, "_KEEP", kept):
+            self.assertFalse(indexing.city_is_thin("akita", "鹿角市", few))            # shown with a click: stays whatever the records
+            self.assertTrue(indexing.city_is_thin("akita", "大館市", some))            # another municipality: not on the list
+
+    def test_the_keep_file_has_the_hashes_the_build_reads(self):
+        cities = indexing._KEEP["cities"]
+        self.assertGreaterEqual(len(cities), 20)
+        self.assertEqual(len(cities), len(set(cities)))
+        for h in cities:
+            self.assertRegex(h, r"^[0-9a-f]{6}$")
 
     def test_every_week_page_is_noindex(self):
         weeks = [f"2026-W{w:02d}" for w in range(41, 13, -1)]                        # 28 weeks
@@ -141,9 +147,9 @@ class AdsenseFixSiteTest(unittest.TestCase):
         cls.raw["notices"] = env_kuma.parse_notices((FIX / "env_kuma_effort12.html").read_text(encoding="utf-8"))
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name) / "site"
-        cls.no_demand = mock.patch.object(indexing, "_DEMAND", {"live_cities": [], "digest_weeks": []})     # the real list names these real municipalities: start from none shown
+        cls.no_demand = mock.patch.object(indexing, "_KEEP", {"cities": []})     # the real list names these real municipalities: start from none shown
         cls.no_demand.start()
-        cls.cities = {"岩国市": 30, "周南市": 9, "萩市": 6, "下松市": 4}               # indexed by rows / thin and not shown / thin and not shown / below the old floor
+        cls.cities = {"岩国市": 120, "周南市": 30, "萩市": 6, "下松市": 4}               # indexed by records (100 or more) / thin and not shown / thin / thin
         cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, prefs={"yamaguchi": _yamaguchi(cls.cities)}, today=TODAY)
 
     @classmethod
@@ -200,13 +206,13 @@ class AdsenseFixSiteTest(unittest.TestCase):
         rel = self.city_rel("岩国市")
         html = self.read(rel)
         lead = re.search(r'<p class="lead">(.*?)</p>', html).group(1)
-        for part in ("令和8年度の記録は30件です", "直近30日は", "その前の30日(", "いちばん記録の多い市町村です(2位は周南市の9件)"):
+        for part in ("令和8年度の記録は120件です", "直近30日は", "その前の30日(", "いちばん記録の多い市町村です(2位は周南市の30件)"):
             self.assertIn(part, lead)
         text = re.sub(r"<[^>]+>", " ", html)
         for part in ("記録のあった日は", "数え方と、読むときの注意", "件数の数え方は、「"):
             self.assertIn(part, text)
         records = html.split("新しい順の記録(直近20件)</h2>", 1)[1].split("</table>", 1)[0]
-        self.assertEqual(records.count("<tr>") - 1, live_mod.CITY_ROWS)               # the record table stops at CITY_ROWS rows (30 records here)
+        self.assertEqual(records.count("<tr>") - 1, live_mod.CITY_ROWS)               # the record table stops at CITY_ROWS rows (120 records here)
 
     def test_a_municipality_page_has_at_least_400_characters_of_text_outside_tables_and_headings(self):
         for city in ("岩国市", "周南市", "萩市"):
@@ -224,8 +230,8 @@ class AdsenseFixSiteTest(unittest.TestCase):
             self.assertEqual(url in sitemap, not thin, city)
 
     def test_a_municipality_page_that_google_showed_stays_indexed_while_thin(self):
-        shown = {"live_cities": [indexing.city_hash("yamaguchi", "周南市")], "digest_weeks": []}
-        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(indexing, "_DEMAND", shown):
+        shown = {"cities": [indexing.city_hash("yamaguchi", "周南市")]}
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(indexing, "_KEEP", shown):
             build.render_site(self.raw, CFG, Path(tmp) / "s", release=True, prefs={"yamaguchi": _yamaguchi(self.cities)}, today=TODAY)
             self.assertNotIn("noindex", (Path(tmp) / "s" / self.city_rel("周南市")).read_text(encoding="utf-8"))
             self.assertIn(live_mod.city_url("yamaguchi", "周南市"), (Path(tmp) / "s" / "sitemap.xml").read_text(encoding="utf-8"))

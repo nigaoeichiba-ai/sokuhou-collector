@@ -2,10 +2,11 @@
 
 Search Console (2026-10-20): most of the 127 municipality pages and 28 week pages were never shown in a search.  A page of the same shape for every municipality or week,
 with few records behind it, adds little for a searcher and makes the site look like one table repeated.  What stays indexed:
-  - a municipality page with enough records (live.INDEX_CITY_ROWS, and NO_DEMAND_CITY_ROWS unless Search Console showed the page), or one Google has shown;
+  - a municipality page that Search Console gave a click or 50 impressions (keep_cities.json), or one with KEEP_BY_RECORDS records or more (rule B, decided 2026-11-09:
+    34 of 152 pages; the other 118 had no click in 34 days and read as one table repeated; /live/<prefecture>/ lists every municipality, so the information stays);
   - no week page (2026-11-09): the 9 week pages that were left had 20 impressions and 1 click in 34 days, a text overlap of 0.83 between any two, and the same table every week.
-    The pages stay on the site and linked from /digest/; they only ask search engines not to index them, and the loader of the ad script stays (the page is still part of the site).
-demand.json lists the municipality pages that Search Console showed; the acquisition routine refreshes it.  Its digest_weeks list is no longer read.
+    The pages stay on the site and linked from /digest/; they only ask search engines not to index them (the shared rule then drops the ad script from them).
+keep_cities.json lists the pages Search Console showed with a click or 50 impressions; the acquisition routine refreshes it.  demand.json is no longer read by the build.
 """
 from __future__ import annotations
 
@@ -14,9 +15,10 @@ from pathlib import Path
 
 from sites.kuma import live as live_mod
 
-NO_DEMAND_CITY_ROWS = 15     # a municipality page that Search Console has not shown stays out of the index while it has fewer records than this
+KEEP_BY_RECORDS = 100        # a municipality page with this many records or more stays indexed whether or not it has been shown
 
-_DEMAND = json.loads((Path(__file__).with_name("demand.json")).read_text(encoding="utf-8"))
+_KEEP = json.loads((Path(__file__).with_name("keep_cities.json")).read_text(encoding="utf-8"))
+_DEMAND = json.loads((Path(__file__).with_name("demand.json")).read_text(encoding="utf-8"))      # kept for the acquisition routine's refresh; not read by the build
 
 
 def city_hash(slug: str, city: str) -> str:
@@ -24,9 +26,7 @@ def city_hash(slug: str, city: str) -> str:
 
 
 def city_is_thin(slug: str, city: str, rows: list) -> bool:
-    if len(rows) < live_mod.INDEX_CITY_ROWS:
-        return True
-    return city_hash(slug, city) not in _DEMAND["live_cities"] and len(rows) < NO_DEMAND_CITY_ROWS
+    return city_hash(slug, city) not in _KEEP["cities"] and len(rows) < KEEP_BY_RECORDS
 
 
 def thin_weeks(weeks: list[str]) -> set[str]:
