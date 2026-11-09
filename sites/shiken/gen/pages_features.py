@@ -54,7 +54,7 @@ def goukaku_ritsu() -> dict:
     n_fee = f'{FEE_RANGE[0][1]:,}'
     grows = all(rows5[i]["applicants"] > rows5[i + 1]["applicants"] for i in range(4))
     prev_row = rows5[1]
-    s3 = ('<h2>データで見る、ほかの数字</h2><div class="bignums">'
+    s3 = ('<h2>データで調べる、ほかの数字</h2><div class="bignums">'
           f'<div class="bignum"><div class="num">{sit_rate(cur):.1f}<small> ％</small></div><h3>宅建の受験率（{y}）</h3><p>受験者{ex:,}人 ÷ 申込者{ap:,}人です。申込者の約2割は受験していません。</p></div>'
           f'<div class="bignum"><div class="num">{FEE_RANGE[0][1]:,}<small> 円</small>〜{FEE_RANGE[1][1]:,}<small> 円</small></div><h3>受験料の範囲</h3>'
           f'<p>確かめた範囲では、{FEE_RANGE[0][0].split("（")[0]}が{FEE_RANGE[0][1]:,}円、{FEE_RANGE[1][0].split("（")[0]}が{FEE_RANGE[1][1]:,}円です。宅建は8,200円です。</p>{a("/fees/", "受験料の一覧を見る", "cardlink")}</div>'
@@ -122,7 +122,7 @@ def yomimono() -> dict:
         parts.append(f'<h2>{theme}</h2><div class="shelf">{cards}</div>')
     intro = ('<p class="sec-sub">日程の一覧だけでは分からない、試験の仕組みや申込の注意がテーマです。' '')
     intro += f'全部で{n}本あり、各特集の最後に、対象の試験の日程ページへのリンクがあります。気になる題からご覧ください。</p>'
-    parts.append('<h2>一覧表で見る</h2><details class="tableview"><summary>一覧表で見る 特集の一覧を表で開く</summary>' + ui.table(["テーマ", "記事", "要約", "対象"], [[theme, a(h, esc(t)), ans[h], tag] for theme, items in ARTICLES for h, t, tag in items], "特集の一覧") + "</details>")
+    parts.append('<h2>一覧表で調べる</h2><details class="tableview"><summary>一覧表で調べる 特集の一覧を表で開く</summary>' + ui.table(["テーマ", "記事", "要約", "対象"], [[theme, a(h, esc(t)), ans[h], tag] for theme, items in ARTICLES for h, t, tag in items], "特集の一覧") + "</details>")
     return page("/yomimono/", "hub", "/", "試験の仕組みと申込の注意", "特集｜試験の仕組みと申込の注意をテーマ別に", "特集 試験の仕組みと申込の注意",
                 "CBT試験、消印有効と必着、合格率の見方など、試験の仕組みと申込の注意を解説した記事を、テーマ別に並べた棚です。各記事から、対象の試験の日程ページへ進めるようにしています。",
                 "試験の仕組みと、申込の注意を解説した特集の一覧です。試験の仕組み、申込、合格率、日程の調べ方の4つのテーマで探せます。",

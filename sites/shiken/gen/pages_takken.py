@@ -150,14 +150,14 @@ def takken() -> dict:
     kanri_start, kanri_end = BY_ID["kanri-start"], BY_ID["kanri-deadline"]
     s_next = (f'<h2>{sub_fix}</h2><p class="sec-sub">日程は、それぞれのページで確認できます。</p><div class="feature-grid">'
               f'<div class="fcard"><h3>管理業務主任者</h3><p>マンション管理の国家資格です。試験日は{esc(jp(nxt["iso"]))}、{esc(rel(nxt["iso"]))}です。'
-              f'令和8年度の申込は、{esc(md(kanri_start["iso"]))}から{esc(md(kanri_end["iso"]))}のWeb申込でした。</p>{a("/schedule/", "日程の一覧で見る", "cardlink")}</div>'
+              f'令和8年度の申込は、{esc(md(kanri_start["iso"]))}から{esc(md(kanri_end["iso"]))}のWeb申込でした。</p>{a("/schedule/", "日程の一覧で調べる", "cardlink")}</div>'
               f'<div class="fcard"><h3>FP技能検定</h3><p>お金に関する幅広い知識を問う検定です。FP技能検定には、不動産を扱う分野があります。</p>{a("/fp/", "FP技能検定のページを見る", "cardlink")}</div></div>')
     CHECK.append(("宅建", "素材にあった賃貸不動産経営管理士のカードは、日程と行き先のページが用意できていないため載せていない"))
     months = round((d(res["iso"]) - d(start["iso"])).days / 30.4)
     s_read = ('<h2>あわせて読む</h2><div class="feature-grid">'
               f'<div class="fcard"><h3>合格率の見方</h3><p>{cur["rate"]:.1f}％という数字が、どの人数で割って出たものかを解説します。</p>{a("/goukaku-ritsu/", "特集を読む", "cardlink")}</div>'
               f'<div class="fcard"><h3>申込の流れと、申込から合格発表までの日数</h3><p>令和8年度は、申込開始の{md(start["iso"])}から合格発表の{md(res["iso"])}まで、約{months}か月ありました。流れを追うと、次の年度の見通しが立てやすくなります。</p>{a("/flow/", "記事を読む", "cardlink")}</div>'
-              f'<div class="fcard"><h3>次の試験 管理業務主任者</h3><p>試験日は{esc(md(nxt["iso"]))}、{esc(rel(nxt["iso"]))}です。</p>{a("/deadlines/", "締切の一覧で見る", "cardlink")}</div></div>')
+              f'<div class="fcard"><h3>次の試験 管理業務主任者</h3><p>試験日は{esc(md(nxt["iso"]))}、{esc(rel(nxt["iso"]))}です。</p>{a("/deadlines/", "締切の一覧で調べる", "cardlink")}</div></div>')
 
     ld_event = {"@context": "https://schema.org", "@type": "Event", "name": "宅地建物取引士資格試験 令和8年度", "startDate": f"{exam['iso']}T{exam['time']}:00+09:00",
                 "endDate": f"{exam['iso']}T{exam['end']}:00+09:00", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",

@@ -127,7 +127,7 @@ def home() -> dict:
           + '<div data-panel="cal" hidden><div class="cal" id="cal"></div>'
             '<p class="hint">赤は申込の締切、紺は試験日と合格発表です。月を切り替えると、ほかの月の締切も確認できます。</p></div>'
           + f'<div data-panel="tl" hidden>{timeline_html(cards)}</div>'
-          + '<details class="tableview"><summary>表で見る（読み上げ用・8件）</summary>'
+          + '<details class="tableview"><summary>表で調べる（読み上げ用・8件）</summary>'
           + ui.table(["締切", "試験", "日時", "残り日数"], [[ui.TYPE_LABEL[e["type"]], e["name"], when_text(e), in_days(e["iso"])] for e in cards], "申込締切が近い順（8件）") + "</details>")
 
     entrances = (
@@ -170,7 +170,7 @@ def home() -> dict:
     fix("トップ", "郵送で申し込むとき、この2つの言葉の違いが締切そのものになります。", "郵送で申し込むときは、この2つの言葉の違いが、そのまま締切の違いになります。", "「違いが締切そのものになる」は意味が取りにくい")
     fix("トップ", "同じ試験でも、合格率の割り方によって数字は変わります。…どちらの数字を見ているかを確認しないと、試験同士を比べられません。", "（要約を1文に。トップは「タイトルと1行要約のみ」）", "仕様書4.1: 今日の特集は本文を載せず、1行要約にする")
 
-    s6 = ('<h2>データで見る</h2><p class="sec-sub">このサイトで確かめた数字です。詳しい内訳は特集ページにあります。</p><div class="bignums">'
+    s6 = ('<h2>データで調べる</h2><p class="sec-sub">このサイトで確かめた数字です。詳しい内訳は特集ページにあります。</p><div class="bignums">'
           f'<div class="bignum"><div class="num">{cur["rate"]:.1f}<small> ％</small></div><h3>宅建の合格率（{fy_label(cur["year"])}）</h3>'
           f'<p>合格者{cur["passers"]:,}人 ÷ 受験者{cur["examinees"]:,}人で計算した数字です。</p>{a("/goukaku-ritsu/", "合格率データを見る", "cardlink")}</div>'
           f'<div class="bignum"><div class="num">{lo[1]:,}<small> 円</small>〜{hi[1]:,}<small> 円</small></div><h3>受験料の範囲</h3>'

@@ -149,7 +149,7 @@ class PageTest(unittest.TestCase):
 
     def test_the_home_page_has_the_blocks_in_the_fixed_order(self):
         h = self.html["index.html"]
-        order = ['id="q"'] + [f"<h2>{t}</h2>" for t in ("申込締切が近い順", "目的から探す", "マイ試験", "あなたはどの段階ですか", "今日の特集", "データで見る", "特集")]
+        order = ['id="q"'] + [f"<h2>{t}</h2>" for t in ("申込締切が近い順", "目的から探す", "マイ試験", "あなたはどの段階ですか", "今日の特集", "データで調べる", "特集")]
         pos = [h.index(x) for x in order]
         self.assertEqual(pos, sorted(pos))
         self.assertEqual(h.count('<div class="pcard">'), 6)
