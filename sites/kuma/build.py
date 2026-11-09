@@ -944,11 +944,9 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         for slug in lv["by_pref"]:
             pages[f"live/{slug}/index.html"] = live_mod.pref_live_page(page_fn, d, lv, slug, links)
             for city, rows in lv["by_pref"][slug].items():
-                if live_mod.city_has_page(rows):
+                if live_mod.city_has_page(rows, slug, city):          # only the municipalities that are kept (indexing.city_is_thin): the others are on the prefecture page, and their old URL redirects
                     rel = f"live/{slug}/{live_mod.city_slug(slug, city)}/index.html"
                     pages[rel] = live_mod.city_page(page_fn, d, lv, slug, city, links)
-                    if indexing_mod.city_is_thin(slug, city, rows):
-                        thin_pages.add(rel)
         for c in lv["counts"]:
             if c["slug"] in lv["by_pref"]:         # the prefecture has a record page: the counts are a section of it (live.pref_live_page)
                 continue
@@ -965,7 +963,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
             pages["data/" + live_mod.CSV_NAME] = live_mod.csv_text(lv)
     for r in d["rows"]:
         pages[f"{r['slug']}/index.html"] = pref_page(d, r, cfg, preview, links)
-        if has_no_bears(d, r):
+        if has_no_bears(d, r) or indexing_mod.pref_is_thin(d, r):
             thin_pages.add(f"{r['slug']}/index.html")
     pages["season/index.html"] = season_mod.season_page(lambda **kw: page(cfg, preview, **kw), d, today or datetime.now(JST).date(), bool(d.get("lv")))
     pages["official/index.html"] = official_mod.official_page(lambda **kw: page(cfg, preview, **kw), d, d.get("lv"), links)

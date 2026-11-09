@@ -1,9 +1,11 @@
-"""kuma-sokuho.com (2026-11-09): the retired Shiga page redirects instead of answering 404, and the municipality pages outside the keep rule are noindex while
-/live/<prefecture>/ still lists every municipality (the information stays).  Negative cases: the checks fail when the redirect is wrong or a municipality is missing."""
+"""kuma-sokuho.com (2026-11-09): a municipality has a page only when it is kept (keep rule B: a click or 50 impressions in Search Console, or 100 records);
+the others are listed on /live/<prefecture>/ and their old URLs redirect (301) to it.  The retired Shiga page redirects too.
+
+Negative cases: the checks fail when a redirect points at a missing page, a redirect source is still a page or is still linked, a municipality is missing from its
+prefecture's table, or the rule cannot be rolled back."""
 import re
 import tempfile
 import unittest
-from datetime import date
 from pathlib import Path
 from unittest import mock
 
@@ -19,7 +21,8 @@ class RetiredTest(unittest.TestCase):
     PAGES = {"live/shiga/index.html": "x", "index.html": "y"}
 
     def test_the_retired_shiga_page_redirects_to_the_prefectures_page(self):
-        self.assertEqual(retired.htaccess_lines(self.PAGES), "Redirect 301 /live/shiga/m-4973b5/ /live/shiga/\n")
+        self.assertEqual(retired.redirects(self.PAGES)["/live/shiga/m-4973b5/"], "/live/shiga/")
+        self.assertIn("Redirect 301 /live/shiga/m-4973b5/ /live/shiga/\n", retired.htaccess_lines(self.PAGES))
 
     def test_a_build_without_the_target_writes_no_redirect(self):
         self.assertEqual(retired.htaccess_lines({"index.html": "y"}), "")
@@ -38,9 +41,26 @@ class RetiredTest(unittest.TestCase):
             self.assertEqual(src.split("/")[1:3], dst.split("/")[1:3])       # the same /live/<prefecture>/
             self.assertTrue(dst.endswith("/"))
 
+    def test_a_known_municipality_url_without_a_page_redirects_to_its_prefecture_and_one_with_a_page_does_not(self):
+        known = ["/live/miyagi/m-aaaaaa/", "/live/miyagi/m-bbbbbb/", "/live/akita/m-cccccc/"]
+        pages = {"live/miyagi/index.html": "x", "live/miyagi/m-aaaaaa/index.html": "y"}        # akita has no prefecture page in this build
+        with mock.patch.object(retired, "KNOWN", known):
+            got = retired.redirects(pages)
+        self.assertEqual(got.get("/live/miyagi/m-bbbbbb/"), "/live/miyagi/")
+        self.assertNotIn("/live/miyagi/m-aaaaaa/", got)
+        self.assertNotIn("/live/akita/m-cccccc/", got)                                          # a redirect to a page that does not exist is never written
+
+    def test_the_known_urls_are_the_municipality_pages_that_existed(self):
+        self.assertGreaterEqual(len(retired.KNOWN), 150)
+        self.assertEqual(len(retired.KNOWN), len(set(retired.KNOWN)))
+        for u in retired.KNOWN:
+            self.assertRegex(u, r"^/live/[a-z]+/m-[0-9a-f]{6}/$")
+
 
 @unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
 class MunicipalityKeepTest(unittest.TestCase):
+    CITIES = {"岩国市": 120, "周南市": 30, "萩市": 6, "下松市": 4}          # 100+ records / on the keep list / not kept / not kept
+
     @classmethod
     def setUpClass(cls):
         cls.raw = raw_data()
@@ -49,8 +69,7 @@ class MunicipalityKeepTest(unittest.TestCase):
         cls.keep.start()
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name) / "site"
-        cls.cities = {"岩国市": 120, "周南市": 30, "萩市": 6, "下松市": 4}          # 100+ records / on the keep list / thin / thin
-        build.render_site(cls.raw, CFG, cls.out, release=True, prefs={"yamaguchi": _yamaguchi(cls.cities)}, today=TODAY)
+        cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, prefs={"yamaguchi": _yamaguchi(cls.CITIES)}, today=TODAY)
 
     @classmethod
     def tearDownClass(cls):
@@ -60,31 +79,70 @@ class MunicipalityKeepTest(unittest.TestCase):
     def read(self, rel):
         return (self.out / rel).read_text(encoding="utf-8")
 
-    def test_only_the_kept_and_the_large_municipality_pages_are_indexed(self):
-        sitemap = self.read("sitemap.xml")
-        for city, indexed in (("岩国市", True), ("周南市", True), ("萩市", False), ("下松市", False)):
-            html = self.read(f"live/yamaguchi/{live_mod.city_slug('yamaguchi', city)}/index.html")
-            self.assertEqual("noindex" not in html, indexed, city)
-            self.assertEqual(live_mod.city_url("yamaguchi", city) in sitemap, indexed, city)
+    @staticmethod
+    def rel(city):
+        return f"live/yamaguchi/{live_mod.city_slug('yamaguchi', city)}/index.html"
 
-    def test_the_prefecture_page_lists_every_municipality_with_its_count_so_that_nothing_is_lost(self):
+    def redirects(self):
+        return dict(re.findall(r"^Redirect 301 (\S+) (\S+)$", self.read(".htaccess"), re.M))
+
+    def test_only_the_kept_municipalities_have_a_page_and_it_is_indexed(self):
+        sitemap = self.read("sitemap.xml")
+        for city, kept in (("岩国市", True), ("周南市", True), ("萩市", False), ("下松市", False)):
+            self.assertEqual(self.rel(city) in self.files, kept, city)
+            if kept:
+                self.assertNotIn("noindex", self.read(self.rel(city)), city)
+            self.assertEqual(live_mod.city_url("yamaguchi", city) in sitemap, kept, city)
+
+    def test_the_prefecture_page_lists_every_municipality_with_its_count_and_links_only_the_kept(self):
         hub = self.read("live/yamaguchi/index.html")
         table = hub.split("市町村別の記録", 1)[1].split("</table>", 1)[0]
-        for city, n in self.cities.items():
+        for city, k in self.CITIES.items():
             self.assertIn(city, table, city)
-            self.assertRegex(table, rf"{city}[^|]*?</td><td>{n}</td>", city)
+            self.assertRegex(table, rf"{city}[^|]*?</td><td>{k}</td>", city)
+        for city, kept in (("岩国市", True), ("周南市", True), ("萩市", False), ("下松市", False)):
+            self.assertEqual(f'href="{live_mod.city_url("yamaguchi", city)}"' in table, kept, city)
+
+    def test_a_municipality_without_a_page_that_google_may_know_redirects_to_its_prefecture(self):
+        red = self.redirects()
+        for city in ("萩市", "下松市"):
+            url = live_mod.city_url("yamaguchi", city)
+            self.assertEqual(url in retired.KNOWN, url in red, city)                 # known to Google <-> redirected
+            if url in red:
+                self.assertEqual(red[url], "/live/yamaguchi/")
+        for city in ("岩国市", "周南市"):
+            self.assertNotIn(live_mod.city_url("yamaguchi", city), red, city)
+
+    def test_every_redirect_target_is_a_page_in_the_sitemap_and_no_source_is_a_page_or_linked_or_a_target(self):
+        red = self.redirects()
+        sitemap = self.read("sitemap.xml")
+        sources, targets = set(red), set(red.values())
+        self.assertFalse(sources & targets)                                            # no chain
+        for src, dst in red.items():
+            self.assertIn(dst.strip("/") + "/index.html", self.files, (src, dst))
+            self.assertIn(f"<loc>https://kuma-sokuho.com{dst}</loc>", sitemap, (src, dst))
+            self.assertNotIn(src.strip("/") + "/index.html", self.files, src)
+            self.assertNotIn(src, sitemap, src)
+        for f in self.files:
+            if f.endswith(".html"):
+                body = self.read(f)
+                for src in sources:
+                    self.assertNotIn(f'href="{src}"', body, (f, src))
+
+    def test_the_site_check_passes_with_the_municipalities_merged(self):
+        self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
 
     def test_a_negative_case_a_municipality_missing_from_the_prefecture_page_would_be_caught(self):
         hub = self.read("live/yamaguchi/index.html").replace("萩市", "")
         table = hub.split("市町村別の記録", 1)[1].split("</table>", 1)[0]
         self.assertNotIn("萩市", table)
 
-    def test_noindex_municipality_pages_stay_linked_and_the_site_check_passes(self):
-        hub = self.read("live/yamaguchi/index.html")
-        for city in ("萩市", "下松市"):
-            self.assertIn(live_mod.city_url("yamaguchi", city).replace("https://kuma-sokuho.com", ""), hub, city)
-        problems = sitecheck.check(self.out, "https://kuma-sokuho.com") if hasattr(sitecheck, "check") else []
-        self.assertFalse(problems)
+    def test_the_rule_can_be_rolled_back_all_pages_return_and_no_redirect_is_left(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(indexing, "KEEP_BY_RECORDS", live_mod.MIN_CITY_ROWS):
+            files = build.render_site(self.raw, CFG, Path(tmp) / "s", release=True, prefs={"yamaguchi": _yamaguchi(self.CITIES)}, today=TODAY)
+            self.assertTrue(all(self.rel(c) in files for c in self.CITIES))
+            red = dict(re.findall(r"^Redirect 301 (\S+) (\S+)$", (Path(tmp) / "s" / ".htaccess").read_text(encoding="utf-8"), re.M))
+            self.assertFalse([u for u in red if u in {live_mod.city_url("yamaguchi", c) for c in self.CITIES}])      # the four municipalities of the fixture have pages again, so nothing redirects for them
 
 
 if __name__ == "__main__":

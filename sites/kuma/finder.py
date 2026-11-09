@@ -21,7 +21,7 @@ def municipalities(d: dict, lv: dict) -> list[dict]:
         pname = pref_name(slug)
         for city, rows in cities.items():
             out.append({"name": city, "pref": pname, "slug": slug, "mode": "records", "total": len(rows), "last30": last30(rows, today), "latest": rows[0]["at"][:10],
-                        "url": city_url(slug, city) if city_has_page(rows) else f"/live/{slug}/"})
+                        "url": city_url(slug, city) if city_has_page(rows, slug, city) else f"/live/{slug}/"})
     for c in lv["counts"]:
         pname = pref_name(c["slug"])
         for city, k, latest in c["munis"]:

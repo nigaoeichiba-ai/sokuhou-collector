@@ -149,11 +149,14 @@ class AdsenseFixSiteTest(unittest.TestCase):
         cls.out = Path(cls.tmp.name) / "site"
         cls.no_demand = mock.patch.object(indexing, "_KEEP", {"cities": []})     # the real list names these real municipalities: start from none shown
         cls.no_demand.start()
+        cls.keep_rows = mock.patch.object(indexing, "KEEP_BY_RECORDS", live_mod.MIN_CITY_ROWS)      # every municipality with 3 records has a page here (the keep rule itself: tests/test_kuma_retired_and_keep.py)
+        cls.keep_rows.start()
         cls.cities = {"岩国市": 120, "周南市": 30, "萩市": 6, "下松市": 4}               # indexed by records (100 or more) / thin and not shown / thin / thin
         cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, prefs={"yamaguchi": _yamaguchi(cls.cities)}, today=TODAY)
 
     @classmethod
     def tearDownClass(cls):
+        cls.keep_rows.stop()
         cls.no_demand.stop()
         cls.tmp.cleanup()
 
@@ -220,23 +223,6 @@ class AdsenseFixSiteTest(unittest.TestCase):
             html = re.sub(r"<(table|nav|h1|h2|h3|svg)\b.*?</\1>", "", html, flags=re.S)
             self.assertGreaterEqual(len(re.sub(r"\s+", "", re.sub(r"<[^>]+>", "", html))), 400, city)
 
-    def test_thin_municipality_pages_are_noindex_and_out_of_the_sitemap_and_the_others_are_in_it(self):
-        sitemap = self.read("sitemap.xml")
-        for city, thin in (("岩国市", False), ("周南市", True), ("萩市", True), ("下松市", True)):
-            html = self.read(self.city_rel(city))
-            url = live_mod.city_url("yamaguchi", city)
-            noindex = '<meta name="robots" content="noindex,follow">' in html
-            self.assertEqual(noindex, thin, city)
-            self.assertEqual(url in sitemap, not thin, city)
-
-    def test_a_municipality_page_that_google_showed_stays_indexed_while_thin(self):
-        shown = {"cities": [indexing.city_hash("yamaguchi", "周南市")]}
-        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(indexing, "_KEEP", shown):
-            build.render_site(self.raw, CFG, Path(tmp) / "s", release=True, prefs={"yamaguchi": _yamaguchi(self.cities)}, today=TODAY)
-            self.assertNotIn("noindex", (Path(tmp) / "s" / self.city_rel("周南市")).read_text(encoding="utf-8"))
-            self.assertIn(live_mod.city_url("yamaguchi", "周南市"), (Path(tmp) / "s" / "sitemap.xml").read_text(encoding="utf-8"))
-
-    # ---- the prefecture without bears
     def test_every_week_page_is_noindex_in_the_built_site_and_the_hub_still_links_them(self):
         weeks = [f for f in self.files if re.match(r"digest/2026-W\d+/index.html$", f)]
         self.assertTrue(weeks)

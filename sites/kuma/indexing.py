@@ -15,7 +15,7 @@ from pathlib import Path
 
 from sites.kuma import live as live_mod
 
-KEEP_BY_RECORDS = 100        # a municipality page with this many records or more stays indexed whether or not it has been shown
+KEEP_BY_RECORDS = live_mod.KEEP_BY_RECORDS        # a municipality page exists only with this many records, or when keep_cities.json lists it
 
 _KEEP = json.loads((Path(__file__).with_name("keep_cities.json")).read_text(encoding="utf-8"))
 _DEMAND = json.loads((Path(__file__).with_name("demand.json")).read_text(encoding="utf-8"))      # kept for the acquisition routine's refresh; not read by the build
@@ -27,6 +27,18 @@ def city_hash(slug: str, city: str) -> str:
 
 def city_is_thin(slug: str, city: str, rows: list) -> bool:
     return city_hash(slug, city) not in _KEEP["cities"] and len(rows) < KEEP_BY_RECORDS
+
+
+live_mod.PAGE_RULE = lambda slug, city, rows: not city_is_thin(slug, city, rows)     # a thin municipality has no page: it is listed on its prefecture page and its old URL redirects (301)
+
+
+PREF_MIN_SIGHTINGS = 10      # a prefecture page whose last full year AND whose year so far are both under this many sightings asks not to be indexed (the page stays, like Chiba's)
+
+
+def pref_is_thin(d: dict, r: dict) -> bool:
+    """A prefecture with almost no sightings (2026-11-09: Ibaraki, Ehime, Kagawa, Kochi, Tokushima): nothing of its own can be said, and its readers (no click in 34 days) are served by the
+    page staying on the site.  It returns to the index by itself when the counts reach PREF_MIN_SIGHTINGS."""
+    return bool(r["has"]) and r["total"][d["done"]] < PREF_MIN_SIGHTINGS and (r["ytd"][d["cur"]] or 0) < PREF_MIN_SIGHTINGS
 
 
 def thin_weeks(weeks: list[str]) -> set[str]:

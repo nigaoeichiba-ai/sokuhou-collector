@@ -26,6 +26,8 @@ from sokuhou import prefectures as pf
 from sokuhou.sitekit import crumbs, esc
 
 MIN_CITY_ROWS = 3        # a municipality with fewer records is listed on its prefecture page but has no page of its own
+KEEP_BY_RECORDS = 100    # a municipality page exists only for a municipality with this many records, or one that readers reached from a search (keep_cities.json); the others are listed on the prefecture page
+PAGE_RULE = None         # set by sites.kuma.indexing: (slug, city, rows) -> True when the municipality has a page of its own
 INDEX_CITY_ROWS = 5      # a municipality page with fewer records stays for readers but asks search engines not to index it (noindex, left out of the sitemap): too thin, and Search Console listed such pages as "crawled - not indexed"
 RECENT_ROWS = 100        # rows listed on a prefecture page
 CITY_ROWS = 20           # rows listed on a municipality page (the rest is counted by month and kind; the prefecture page lists the newest 100)
@@ -161,14 +163,16 @@ def hot_cities(lv: dict, limit: int = 10) -> list[dict]:
     for slug, cities in lv["by_pref"].items():
         for city, rows in cities.items():
             k = last30(rows, lv["today"])
-            if k and city_has_page(rows):
+            if k and city_has_page(rows, slug, city):
                 out.append({"slug": slug, "city": city, "pref": pref_name(slug), "last30": k, "latest": rows[0]["at"][:10]})
     out.sort(key=lambda x: (-x["last30"], x["latest"], x["city"]))
     return out[:limit]
 
 
-def city_has_page(rows: list[dict]) -> bool:
-    return len(rows) >= MIN_CITY_ROWS
+def city_has_page(rows: list[dict], slug: str | None = None, city: str | None = None) -> bool:
+    if len(rows) < MIN_CITY_ROWS:
+        return False
+    return PAGE_RULE(slug, city, rows) if (PAGE_RULE and slug and city) else True
 
 
 def city_url(slug: str, city: str) -> str:
@@ -191,7 +195,7 @@ def record_rows(rows: list[dict], with_pref: bool = False, with_city_link: bool 
     lines = []
     for r in rows:
         place = esc(place_text(r["city"], r["place"]))
-        if with_city_link and by_slug_cities is not None and city_has_page(by_slug_cities.get(r["slug"], {}).get(r["city"], [])):
+        if with_city_link and by_slug_cities is not None and city_has_page(by_slug_cities.get(r["slug"], {}).get(r["city"], []), r["slug"], r["city"]):
             place = f'<a href="{city_url(r["slug"], r["city"])}">{esc(r["city"])}</a>' + esc(r["place"][len(r["city"]):] if r["place"].startswith(r["city"]) else r["place"])
         cells = [day_text(r["at"], year=True), (esc(pf.full(r["pref"])) + " " if with_pref else "") + place, esc(r["kind"])]
         lines.append(cells)
@@ -302,7 +306,7 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
     pname_s = f"{pname}({scope})" if scope else pname
     city_rows = []
     for city, cr in sorted(cities.items(), key=lambda kv: (-len(kv[1]), kv[0])):
-        label = f'<a href="{city_url(slug, city)}">{esc(city)}</a>' if city_has_page(cr) else esc(city)
+        label = f'<a href="{city_url(slug, city)}">{esc(city)}</a>' if city_has_page(cr, slug, city) else esc(city)
         city_rows.append([label, n(len(cr)), n(last30(cr, today)), md(cr[0]["at"][:10])])
     after = "".join(f'<p class="notice">{esc(infos[k]["name"])}の表には、日付が公表時点より後になっている記録が{infos[k]["after"]}件あります(入力の誤りの可能性があります)。一覧と件数からは除いています。</p>\n'
                     for k in keys if infos[k]["after"])
@@ -322,7 +326,7 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
 {stats_html(len(rows), last30(rows, today), rows[0], today, cur)}
 {published}{after}<h2>市町村別の記録({fy_label(cur)})</h2>
 {table(["市町村", "記録", "直近30日", "最新"], city_rows)}
-<p class="notice">記録が{MIN_CITY_ROWS}件以上の市町村には、その市町村のページがあります。</p>
+<p class="notice">市町村名にリンクがあるのは、その市町村のページがある市町村です(記録が{KEEP_BY_RECORDS}件以上、または検索でよく見られているページ)。ほかの市町村も、件数と最新の日付は、この表に載っています。</p>
 <h2>新しい順の記録</h2>
 {record_rows(rows[:RECENT_ROWS], with_city_link=True, by_slug_cities=lv["by_pref"])}
 <p class="notice">直近{min(RECENT_ROWS, len(rows))}件です。{CAUTION}</p>
@@ -522,7 +526,7 @@ def city_page(page, d: dict, lv: dict, slug: str, city: str, links: dict) -> str
     recent = last30(rows, today)
     mc = month_counts(rows)
     peak_m = max(mc, key=lambda m: mc[m])
-    others = [(c, cr) for c, cr in sorted(lv["by_pref"][slug].items(), key=lambda kv: (-len(kv[1]), kv[0])) if c != city and city_has_page(cr)][:12]
+    others = [(c, cr) for c, cr in sorted(lv["by_pref"][slug].items(), key=lambda kv: (-len(kv[1]), kv[0])) if c != city and city_has_page(cr, slug, c)][:12]
     other_html = ("<ul class='pref-nav'>" + "".join(f'<li><a href="{city_url(slug, c)}">{esc(c)}<span>{n(len(cr))}件</span></a></li>' for c, cr in others) + "</ul>") if others else ""
     chart = charts.bars([f"{m}月" for m in mc], list(mc.values()), title=f"{city}の月別の記録", desc=f"{city}の{fy_label(cur)}の記録の月別の件数", uid="cm") if len(mc) >= 2 else ""
     note = kind_note(infos, slug)
@@ -564,7 +568,7 @@ def feed_xml(lv: dict, cfg: dict, slug: str | None = None) -> str:
     entries = ""
     for r in recs:
         eid = hashlib.sha1(f"{r['src']}|{r['at']}|{r['city']}|{r['place']}".encode("utf-8")).hexdigest()[:12]
-        link = base + (city_url(r["slug"], r["city"]) if city_has_page(lv["by_pref"][r["slug"]][r["city"]]) else f"/live/{r['slug']}/")
+        link = base + (city_url(r["slug"], r["city"]) if city_has_page(lv["by_pref"][r["slug"]][r["city"]], r["slug"], r["city"]) else f"/live/{r['slug']}/")
         where = place_text(r["city"], r["place"])
         entries += (f"<entry><id>tag:{host},{r['at'][:10]}:{eid}</id><title>{esc(pf.full(r['pref']))}: {esc(where)}({esc(r['kind'])})</title>"
                     f'<link href="{esc(link)}"/><updated>{r["at"][:10]}T00:00:00+09:00</updated>'

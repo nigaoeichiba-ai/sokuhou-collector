@@ -6,6 +6,10 @@ page of the same prefecture that holds what is still published.
 """
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
+KNOWN = json.loads(Path(__file__).with_name("known_cities.json").read_text(encoding="utf-8"))["urls"]
 RETIRED = {"/live/shiga/m-4973b5/": "/live/shiga/"}
 
 
@@ -22,6 +26,13 @@ def redirects(pages: dict) -> dict[str, str]:
             raise ValueError(f"retired URL {src} is a page again: remove it from sites/kuma/retired.py")
         if dst in RETIRED:
             raise ValueError(f"retired URL {src} redirects to {dst}, which is itself redirected")
+        if _rel(dst) in pages:
+            out[src] = dst
+    # a municipality page that is no longer built (the municipality is not kept) sends its readers to the prefecture's page, which lists it
+    for src in KNOWN:
+        if _rel(src) in pages or src in out:
+            continue
+        dst = "/live/" + src.split("/")[2] + "/"
         if _rel(dst) in pages:
             out[src] = dst
     return out

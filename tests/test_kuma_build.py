@@ -399,11 +399,14 @@ class LiveSectionTest(unittest.TestCase):
         cls.out = Path(cls.tmp.name) / "site"
         cls.keep = mock.patch.object(indexing, "_KEEP", {"cities": []})        # the real keep list names this real city: start from none kept
         cls.keep.start()
+        cls.keep_rows = mock.patch.object(indexing, "KEEP_BY_RECORDS", live_mod.MIN_CITY_ROWS)       # every municipality with 3 records has a page here (the keep rule itself: tests/test_kuma_retired_and_keep.py)
+        cls.keep_rows.start()
         cls.files = build.render_site(cls.raw, CFG, cls.out, release=True, prefs={"yamaguchi": _yamaguchi()}, today=date(2026, 10, 7))
         cls.iwakuni = f"live/yamaguchi/{live_mod.city_slug('yamaguchi', '岩国市')}/index.html"
 
     @classmethod
     def tearDownClass(cls):
+        cls.keep_rows.stop()
         cls.keep.stop()
         cls.tmp.cleanup()
 
@@ -467,15 +470,6 @@ class LiveSectionTest(unittest.TestCase):
         counts = [int(k) for _, k in links]
         self.assertEqual(counts, sorted(counts, reverse=True))
         self.assertIn("そのまま比べられません", home[home.index("直近30日で記録が多い市町村"):])
-
-    def test_a_thin_municipality_page_is_noindex_and_left_out_of_the_sitemap_but_still_linked_for_readers(self):
-        html = self.read(self.iwakuni)                              # 4 records: fewer than live.INDEX_CITY_ROWS
-        self.assertLess(4, live_mod.INDEX_CITY_ROWS)
-        self.assertIn('<meta name="robots" content="noindex,follow">', html)
-        sitemap = self.read("sitemap.xml")
-        self.assertNotIn(live_mod.city_url("yamaguchi", "岩国市"), sitemap)
-        self.assertIn(f'href="{live_mod.city_url("yamaguchi", "岩国市")}"', self.read("live/yamaguchi/index.html"))      # readers still get there
-        self.assertIn("<loc>https://kuma-sokuho.com/live/yamaguchi/</loc>", sitemap)                                      # the prefecture page is indexed
 
     def test_the_maps_parameter_urls_are_kept_out_of_crawling_and_linked_with_nofollow(self):
         self.assertIn("Allow: /\nDisallow: /map/?\n", self.read("robots.txt"))

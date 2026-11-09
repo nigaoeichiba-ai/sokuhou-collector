@@ -68,7 +68,7 @@ def live_dates(lv: dict | None) -> tuple[dict[str, str], dict[str, str]]:
         pref[c["slug"]] = max(pref.get(c["slug"], ""), c["latest"])
     for slug, cities in lv["by_pref"].items():
         for name, rows in cities.items():
-            if city_has_page(rows):
+            if city_has_page(rows, slug, name):
                 city[city_url(slug, name)] = rows[0]["at"][:10]
     return pref, city
 
