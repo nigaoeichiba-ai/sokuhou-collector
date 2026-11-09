@@ -1,6 +1,7 @@
 """みんなのイラスト: thin pages are noindex,follow and out of the sitemap (owner decision 2026-10-20), decided by measuring the build, never by a list."""
 import re
 import unittest
+from unittest import mock
 
 from sites.minna import build
 from tests.test_minna_sitecache import shared_site
@@ -22,6 +23,7 @@ class Rule(unittest.TestCase):
         for other in ("illust/season-christmas/index.html", "series/dog-pose/index.html", "guide/x/index.html", "special/x/index.html", "index.html", "touch/flat/index.html"):
             self.assertEqual(build.page_kind(other), "", other)
 
+    @mock.patch.object(build, "AUTO_THIN_ENABLED", False)      # these two test the older rule alone; stage 2 has its own tests (test_minna_autothin.py)
     def test_a_page_with_more_text_than_the_bar_leaves_the_rule_by_itself(self):
         bar = build.THIN_CHARS
         pages = {"genre/a/b/index.html": pad(bar["cross"] - 1), "genre/a/c/index.html": pad(bar["cross"]),
@@ -30,6 +32,7 @@ class Rule(unittest.TestCase):
                  "illust/page/2/index.html": pad(5000)}                              # a later page of a list is thin however long it is
         self.assertEqual(build.thin_pages(pages), {"genre/a/b/index.html", "tag/t1/index.html", "category/x/index.html", "illust/page/2/index.html"})
 
+    @mock.patch.object(build, "AUTO_THIN_ENABLED", False)      # these two test the older rule alone; stage 2 has its own tests (test_minna_autothin.py)
     def test_pages_of_other_kinds_are_never_thin_and_bytes_are_ignored(self):
         pages = {"illust/x/index.html": pad(10), "series/y/index.html": pad(10), "genre/z/index.html": pad(10), "files/a.png": b"\x89PNG", "index.html": pad(1)}
         self.assertEqual(build.thin_pages(pages), set())
@@ -61,6 +64,7 @@ class InTheBuild(unittest.TestCase):
         html_pages = [f for f in self.files if f.endswith("/index.html") or f == "index.html"]
         thin = {f for f in html_pages if build.page_kind(f) == "paged"}
         thin |= set(build.UTILITY_PAGES)        # a visitor's own list and the search form (2026-10-20 SEO audit)
+        thin |= build.auto_thin_pages({f: self.read(f) for f in html_pages})      # stage 2 (2026-11-09): thin automatic list pages nobody has seen in a search
         for f in html_pages:
             kind = build.page_kind(f)
             if kind in build.THIN_CHARS and build.visible_chars(self.read(f).replace('<meta name="robots" content="noindex,follow">', "")) < build.THIN_CHARS[kind]:
@@ -81,7 +85,7 @@ class InTheBuild(unittest.TestCase):
         self.assertEqual(kinds - {""}, {"paged", "cross", "category", "tag"})      # "" = the utility pages (build.UTILITY_PAGES)
         for f in thin:
             self.assertFalse(f.startswith(("illust/", "series/", "guide/", "special/")) and not build.page_kind(f), f)
-        for f in ("illust/season-christmas/index.html", "series/dog-pose/index.html", "guide/nurie-insatsu/index.html", "special/nenga-2027/index.html", "genre/animals/index.html",
+        for f in ("illust/season-christmas/index.html", "series/dog-pose/index.html", "guide/nurie-insatsu/index.html", "special/nenga-2027/index.html", "genre/food/index.html",
                   "touch/kawaii/index.html", "illust/index.html", "tool/nenga/index.html", "index.html"):
             self.assertNotIn("noindex", self.read(f), f)
             self.assertTrue(self.in_sitemap(f), f)

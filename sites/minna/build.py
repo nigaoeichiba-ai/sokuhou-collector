@@ -1754,6 +1754,38 @@ def thin_pages(pages: dict) -> set[str]:
         kind = page_kind(rel) if isinstance(text, str) else ""
         if kind == "paged" or (kind in THIN_CHARS and visible_chars(text) < THIN_CHARS[kind]):
             out.add(rel)
+    return out | auto_thin_pages(pages)
+
+
+# Stage 2 of the AdSense work (owner decisions 2026-11-09): the automatic list pages (keyword, genre, touch, use, new) that say under AUTO_MAX_PROSE characters in sentences and that nobody has seen
+# in a search (content/keep_indexed.json: every page with an impression or click in the whole recorded period) are noindex,follow and out of the sitemap.  The two entrances of the keyword
+# and use pages stay (AUTO_ALWAYS_INDEXED).  To undo: AUTO_THIN_ENABLED = False.
+AUTO_THIN_ENABLED = True
+AUTO_KINDS = ("tag", "touch", "genre", "use", "new")
+AUTO_MAX_PROSE = 300
+AUTO_ALWAYS_INDEXED = ("tag/index.html", "use/index.html")
+
+
+def keep_indexed() -> set[str]:
+    f = HERE / "content" / "keep_indexed.json"
+    return set(json.loads(f.read_text(encoding="utf-8"))["pages"]) if f.exists() else set()
+
+
+def auto_thin_pages(pages: dict, keep: set[str] | None = None) -> set[str]:
+    """The pages of the automatic list kinds with under AUTO_MAX_PROSE characters of sentences and no search history (the list file)."""
+    if not AUTO_THIN_ENABLED:
+        return set()
+    keep = keep_indexed() if keep is None else keep
+    out = set()
+    for rel, text in pages.items():
+        if not isinstance(text, str) or not rel.endswith("index.html") or rel in AUTO_ALWAYS_INDEXED or page_kind(rel) == "paged":
+            continue
+        head = rel.split("/")[0]
+        if head not in AUTO_KINDS or (rel != "new/index.html" and "/" not in rel):
+            continue
+        url = "/" + rel[:-len("index.html")]
+        if url not in keep and prose_chars(text) < AUTO_MAX_PROSE:
+            out.add(rel)
     return out
 
 
