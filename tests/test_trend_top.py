@@ -146,7 +146,7 @@ class TrendTop(unittest.TestCase):
         intro = json.loads((SITE / "site.json").read_text(encoding="utf-8"))["category_intro"]
         self.assertEqual(set(intro), set(CAT_DESC))
         for slug, sentences in intro.items():
-            self.assertEqual(len(sentences), 3)
+            self.assertEqual(len(sentences), 4 if slug in ("kakei", "tenki", "kurashi") else 3)      # the desk's three sentences, and for the three short categories the extra paragraph (2026-11-09)
             body = self.html(f"/cat/{slug}/")
             for sent in sentences:
                 self.assertIn(sent, body)
