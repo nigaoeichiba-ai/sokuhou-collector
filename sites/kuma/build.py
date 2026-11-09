@@ -31,6 +31,7 @@ from sites.kuma import lastmod as lastmod_mod  # noqa: E402
 from sites.kuma import notices as notices_mod  # noqa: E402
 from sites.kuma import official as official_mod  # noqa: E402
 from sites.kuma import preffacts as preffacts_mod  # noqa: E402
+from sites.kuma import rankfacts as rankfacts_mod  # noqa: E402
 from sites.kuma import research as research_mod  # noqa: E402
 from sites.kuma import season as season_mod  # noqa: E402
 from sites.kuma import live as live_mod  # noqa: E402
@@ -319,8 +320,9 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
     if kind == "sightings":
         rows = sorted((r for r in d["rows"] if r["has"]), key=lambda r: (-r["total"][done], r["name"]))
         lines = [[str(r["rank"]["done"]), pref_link(r), n(r["total"][done]), n(r["total"][prev]), ratio_text(r["total"][done], r["total"][prev]),
-                  f'{n(r["ytd"][cur])}'] for r in rows]
-        head = ["順位", "道府県", f"{fy_label(done)}", f"{fy_label(prev)}", "前年度との比", f"{fy_label(cur)}({month_range(d)})"]
+                  f'{n(r["ytd"][cur])}', " / ".join(rankfacts_mod.directions(d, r))] for r in rows]
+        head = ["順位", "道府県", f"{fy_label(done)}", f"{fy_label(prev)}", "前年度との比", f"{fy_label(cur)}({month_range(d)})", rankfacts_mod.sightings_head(d)]
+        after = rankfacts_mod.sightings_after(d, rows)
         extra = bar_list([(pref_link(r), f'{n(r["total"][done])}件', r["total"][done]) for r in rows], 10)
         top3 = "、".join(f"{r['name']}({n(r['total'][done])}件)" for r in rows[:3])
         h1 = "熊(クマ)が多い県のランキング 出没件数の多い順"        # the searched words are 「熊が多い県 ランキング」 (Search Console, 2026-10)
@@ -329,6 +331,7 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
                 f"{'と'.join(r['name'] for r in d['rows'] if not r['has'])}は、環境省の表に数値がありません(「-」)ので、載せていません。")
     elif kind == "change":
         extra = ""
+        after = ""
         rows = sorted((r for r in d["rows"] if r["rank"]["change"]), key=lambda r: (r["rank"]["change"], r["name"]))
         lines = [[str(r["rank"]["change"]), pref_link(r), n(r["ytd"][cur]), n(r["ytd"][done]),
                   f'{r["ytd"][cur] / r["ytd"][done] * 100:.0f}%'] for r in rows]
@@ -344,8 +347,9 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
         last5 = {r["short"]: sum(r["inj"][y][2] for y in years[-5:]) for r in d["rows"]}
         rows = sorted((r for r in d["rows"] if tot[r["short"]] > 0), key=lambda r: (-tot[r["short"]], -r["inj"][done][2], r["name"]))
         rk = rank_of({r["short"]: tot[r["short"]] for r in rows})
-        lines = [[str(rk[r["short"]]), pref_link(r), n(r["inj"][done][2]), n(last5[r["short"]]), n(tot[r["short"]]), n(r["inj"][cur][2])] for r in rows]
-        head = ["順位", "道府県", f"{fy_label(done)}", f"直近5年度({fy_or_h(years[-5])}〜{fy_label(done)})", f"{fy_or_h(years[0])}〜{fy_label(done)}の合計", f"{fy_label(cur)}(途中)"]
+        lines = [[str(rk[r["short"]]), pref_link(r), n(r["inj"][done][2]), n(last5[r["short"]]), rankfacts_mod.deaths_trend(d, r), n(tot[r["short"]]), n(r["inj"][cur][2])] for r in rows]
+        head = ["順位", "道府県", f"{fy_label(done)}", f"直近5年度({fy_or_h(years[-5])}〜{fy_label(done)})の合計", rankfacts_mod.deaths_head(d), f"{fy_or_h(years[0])}〜{fy_label(done)}の合計", f"{fy_label(cur)}(途中)"]
+        after = rankfacts_mod.deaths_after(d, d["rows"])
         zero = [r["name"] for r in d["rows"] if tot[r["short"]] == 0]
         nat = d["inj"]["national"]
         nat_tot = sum(nat[y][2] for y in years)
@@ -362,16 +366,18 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
     else:
         rows = sorted(d["rows"], key=lambda r: (-r["inj"][done][1], r["name"]))
         lines = [[str(r["rank"]["injured"]), pref_link(r), f'{n(r["inj"][done][0])}', f'{n(r["inj"][done][1])}', f'{n(r["inj"][done][2])}',
-                  f'{n(r["injured7"])}'] for r in rows]
-        head = ["順位", "道府県", f"{fy_label(done)} 件数", "人数", "死亡", f"令和元年度〜{fy_label(done)}の人数の合計"]
+                  f'{n(r["injured7"])}', *rankfacts_mod.injuries_cols(d, r)] for r in rows]
+        head = ["順位", "道府県", f"{fy_label(done)} 件数", "人数", "死亡", f"令和元年度〜{fy_label(done)}の人数の合計", f"人口100万人あたり({fy_label(done)})", "人口100万人あたり(7年間の合計)"]
+        after = rankfacts_mod.injuries_after(d, rows)
         h1 = "熊(クマ)による人身被害ランキング"
-        lead = f"{fy_label(done)}の人身被害(人数)が多い順に、39道府県を並べています。人身被害は、出没件数と違って、全国で同じ基準(件数・人数・死亡者数)で数えられています。"
+        lead = f"{fy_label(done)}の人身被害(人数)が多い順に、39道府県を並べています。人身被害は、出没件数と違って、全国で同じ基準(件数・人数・死亡者数)で数えられています。人口100万人あたりの被害者数も載せています。"
         extra = f'<p class="notice">人身被害の{fy_label(cur)}は、{d["inj_as_of"].replace("R08年", "令和8年")}の速報値で、全国で{n(d["inj"]["national"][cur][0])}件・{n(d["inj"]["national"][cur][1])}人(うち死亡{n(d["inj"]["national"][cur][2])}人)です。</p>'
     body = f"""{crumbs([("全国", "/"), ("ランキング", None)])}
 <h1>{h1}</h1>
 <p class="lead">{lead}</p>
 {ranking_tabs(kind, bool(d.get('captures')))}
 {extra if kind == "sightings" else ""}{table(head, lines)}
+{after}
 {extra if kind in ("injuries", "deaths") else ""}{note}
 <p class="notice">{freshness(d)}</p>"""
     if kind == "deaths":
