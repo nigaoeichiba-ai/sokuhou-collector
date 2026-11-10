@@ -9,9 +9,13 @@ import html
 import io
 import json
 import re
+import sys
 from pathlib import Path
 
 from PIL import Image
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import statuspanel  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 
@@ -121,6 +125,9 @@ def prepare(cfg: dict, spec: dict, pages: list[dict], site_dir: Path) -> list[di
             p["description"] = first_sentences(p)   # the first two sentences of 「3行まとめ」, no new sentence
         if p.get("parent") == "/":
             p["parent"] = CAT_PATH[p["category"]]
+        if p.get("status_typhoon"):   # the status panel (common part): right after the lead (「3行まとめ」)
+            at = next((i for i, sec in enumerate(p["sections"]) if sec.get("h2") == "3行まとめ"), -1) + 1
+            p["sections"].insert(at, {"html": statuspanel.typhoon_panel(p["status_typhoon"])})
         dates = f'公開日 {ja_date(p["published"])}' + (f' / 更新日 {ja_date(p["updated"])}' if p.get("updated") else "")
         p["sections"].insert(0, {"html": f'<p class="dates">{dates}</p>'})
     ordered = newest_first(arts)

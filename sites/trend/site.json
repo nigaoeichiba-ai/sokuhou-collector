@@ -45,8 +45,8 @@
       "table": "台風情報・台風の発生数・台風の平年値",
       "credit": "気象庁『台風情報』『台風の発生数』『台風の平年値』を加工して作成",
       "url": "https://www.data.jma.go.jp/yoho/typhoon/statistics/generation/generation.html",
-      "basis": "2026年11月7日",
-      "fetched": "2026-11-07"
+      "basis": "2026年11月10日",
+      "fetched": "2026-11-10"
     },
     "bousaicho": {
       "org": "防災庁",
