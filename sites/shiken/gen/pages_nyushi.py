@@ -97,32 +97,65 @@ def kokkoritsu() -> dict:
          {"path": "/nyushi/", "text": "入試カレンダー(大学・高校)"}], ["utokyo", "mext", "dnc"], "令和9年度(2027年)", intent=1, secondary=("国公立 出願期間 2027", "国公立 前期 日程"))
 
 
+def _desk_text(slug: str) -> tuple[str, list[dict]]:
+    """The desk's confirmed text (sites/shiken/articles/<slug>.md, put in word for word) -> (the answer, the sections).
+    Only the form is changed: '---' lines (separators) and '**' (emphasis marks) are not shown; a '###' line is the caption of the table that follows; a '- ' list is a <ul>."""
+    import html as _h
+    import re
+    from pathlib import Path
+    md_ = (Path(__file__).resolve().parents[1] / "articles" / f"{slug}.md").read_text(encoding="utf-8")
+    md_ = re.sub(r"\A\s*<!--.*?-->\s*", "", md_, flags=re.S).replace("**", "")
+    lines = [l.rstrip() for l in md_.splitlines()]
+    secs: list[dict] = []
+    cur: dict = {}
+    order = {"paras": 0, "table": 1, "html": 2}
+    last = -1
+    caption = ""
+    def put(kind, value):
+        nonlocal cur, last
+        if cur and order[kind] <= last and not (kind == "paras" and last == 0):
+            secs.append(cur); cur = {}; last = -1
+        if kind == "paras":
+            cur.setdefault("paras", []).append(value)
+        else:
+            cur[kind] = value
+        last = order[kind]
+    i, answer = 0, None
+    while i < len(lines):
+        ln = lines[i]
+        if not ln.strip() or ln.strip() == "---" or ln.startswith("# "):
+            i += 1; continue
+        if ln.startswith("## "):
+            if cur: secs.append(cur)
+            cur, last = {"h2": ln[3:].strip()}, -1
+            i += 1; continue
+        if ln.startswith("### "):
+            caption = ln[4:].strip(); i += 1; continue
+        if ln.startswith("|"):
+            rows = []
+            while i < len(lines) and lines[i].startswith("|"):
+                rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")]); i += 1
+            put("table", {"caption": caption, "cols": rows[0], "rows": rows[2:]})
+            continue
+        if ln.startswith("- "):
+            items = []
+            while i < len(lines) and lines[i].startswith("- "):
+                items.append(lines[i][2:].strip()); i += 1
+            put("html", "<ul>" + "".join(f"<li>{_h.escape(x, quote=False)}</li>" for x in items) + "</ul>")
+            continue
+        if answer is None and not cur:
+            answer = ln.strip(); i += 1; continue
+        put("paras", ln.strip()); i += 1
+    if cur: secs.append(cur)
+    return answer, secs
+
+
 def zenki_koki() -> dict:
+    answer, secs = _desk_text("zenki-koki")
     return art(
         "/zenki-koki/", "前期日程と後期日程の違い", "国公立の前期日程と後期日程の違い(令和9年度の日付つき)", "国公立大学の前期日程と後期日程の違い",
         "国公立大学の一般選抜には、前期日程と後期日程があります。令和9年度の前期日程は2月25日から。何が違い、いつ決まり、出願はいくつできるのかを、東京大学の公式の日付とあわせて整理しました。",
-        f"国公立大学の前期日程は、令和9年度は{md('2027-02-25')}から始まります。後期日程の日は、大学ごとに公式の募集要項で決まります。",
-        [
-            {"h2": "前期日程と後期日程", "paras": [
-                f"前期日程は、2月下旬に試験があります。令和9年度は、東京大学が{md('2027-02-25')}を第2次学力試験の1日目にしています。合格発表は3月10日です。",
-                "後期日程は、前期のあとに行います。大学によっては、後期日程を設けません。後期日程の日は大学ごとに違い、このページに出ているのは前期の日程です。"],
-             "table": {"caption": "令和9年度 国公立大学の前期日程と後期日程", "cols": ["項目", "前期日程", "後期日程"], "rows": [
-                 ["出願の期間(東京大学・北海道大学)", span("2027-01-25", "2027-02-03"), "大学ごとに決まる"],
-                 ["試験の日", f"{md('2027-02-25')}から", f"{md('2027-03-12')}以降"],
-                 ["国立大学の合格発表", "3月6日から3月10日", "3月20日から3月24日"],
-                 ["公立大学の合格発表", "3月1日から3月10日", "大学ごとに決まる"],
-                 ["北海道大学", f"試験 {md('2027-02-25')}、発表 {md('2027-03-08')}", f"試験 {md('2027-03-12')}、発表 {md('2027-03-20')}"],
-                 ["京都大学", f"試験 {md('2027-02-25')}から27日、発表 {md('2027-03-10')}", "なし(前期日程のみ)"]],
-                 "note": "日付は国立大学協会・公立大学協会の実施要領と、各大学の入学者選抜要項です。公立大学には、3月8日以降に始まる中期日程を設ける大学もあります。"}},
-            {"h2": "出願できる数", "paras": [
-                "国公立大学の一般選抜は、前期日程と後期日程に分かれていて、それぞれの日程で出願できる大学は1つです。公立大学には中期日程を設ける大学もあります。",
-                "同じ日程の大学を2つ受けることはできません。この仕組みを前提に、前期に挑戦する大学と、後期に受ける大学を、共通テストの結果を見て決めることが多くなります。"]},
-            {"h2": "共通テストとの順番", "paras": [
-                f"共通テストは{md('2027-01-16')}と{md('2027-01-17')}です。前期日程の出願は、その後の1月下旬から2月初めに行われます。共通テストの結果を見てから出願先を決められる日程です。",
-                "出願の締切は、大学の募集要項に書かれた日が正本です。郵送の場合の消印と必着の違いにも注意してください。"]},
-            {"h2": "最終確認は公式で", "paras": ["確認日は2026年11月3日です。実施要項と各大学の募集要項に、最新の日程が出ています。"],
-             "html": official(("大学入学者選抜について(文部科学省)", "https://www.mext.go.jp/a_menu/koutou/senbatsu/1412102_00013.htm"))},
-        ],
+        answer, secs,
         [{"path": "/kokkoritsu/", "text": "国公立大学の出願期間"}, {"path": "/kyotsu/", "text": "共通テストの日程と検定料"}, {"path": "/postmark/", "text": "消印有効と必着の違い"},
          {"path": "/nyushi/", "text": "入試カレンダー(大学・高校)"}], ["utokyo", "mext"], "令和9年度(2027年)", intent=4, secondary=("国公立 前期 後期 違い", "国公立 前期 日程"))
 

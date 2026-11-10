@@ -102,5 +102,59 @@ class ConfirmedArticleTest(unittest.TestCase):
         self.assertNotRegex(main, r'href="https?://')
 
 
+class ZenkiKokiDeskTextTest(unittest.TestCase):
+    """/zenki-koki/ carries the desk's text (articles/zenki-koki.md) unchanged: every sentence and every table cell is on the page; the old sentences are gone."""
+
+    @classmethod
+    def setUpClass(cls):
+        import re
+        from sokuhou import newsite
+        from sites.shiken import gen
+        gen.write()
+        cls.pages, _ = newsite.build_pages(ROOT / "sites" / "shiken", release=True, strict_seo=True)
+        cls.html = cls.pages["zenki-koki/index.html"]
+        cls.md = (ROOT / "sites" / "shiken" / "articles" / "zenki-koki.md").read_text(encoding="utf-8")
+        cls.re = re
+
+    def _page_text(self):
+        import html as _html
+        re = self.re
+        main = self.html[self.html.index("<main"):self.html.index("</main>")]
+        main = re.sub(r"<script.*?</script>|<style.*?</style>", "", main, flags=re.S)
+        return re.sub(r"\s+", "", _html.unescape(re.sub(r"<[^>]+>", " ", main)))
+
+    def test_every_sentence_and_cell_of_the_desk_text_is_on_the_page(self):
+        re = self.re
+        md = re.sub(r"\A\s*<!--.*?-->\s*", "", self.md, flags=re.S).replace("**", "")
+        page_text = self._page_text()
+        cells = [c.strip() for l in md.splitlines() if l.startswith("|") and not re.fullmatch(r"[|:\- ]+", l) for c in l.strip().strip("|").split("|")]
+        self.assertGreater(len(cells), 10)
+        sents = []
+        for l in md.splitlines():
+            if l.startswith("# ") or l.startswith("|") or l.strip() in ("", "---"):      # the h1 stays the site's own; the table is checked cell by cell
+                continue
+            l = re.sub(r"^(#{2,3} |- )", "", l).strip()
+            sents += [x for x in re.split(r"(?<=[。！？])", l) if len(re.sub(r"\s+", "", x)) > 3]
+        self.assertGreater(len(sents), 30)
+        missing = [x for x in sents + cells if re.sub(r"\s+", "", x) not in page_text]
+        self.assertEqual(missing, [])
+
+    def test_the_old_text_is_gone_and_no_emphasis_marks_or_separator_remain(self):
+        text = self._page_text()
+        for old in ("第1段階選抜は、出願者が多いときに", "前期日程と後期日程を、どう使い分けるかは、それぞれ違います", "後期日程の日は大学ごとに違い、このページに出ているのは前期の日程です"):
+            self.assertNotIn(old, text)
+        self.assertNotIn("**", text)
+        main = self.html[self.html.index("<main"):self.html.index("</main>")]
+        self.assertNotIn("<!--", main)
+        self.assertNotRegex(main, r'href="https?://')
+        for path in ("/kokkoritsu/", "/kyotsu/", "/postmark/", "/nyushi/"):
+            self.assertIn(f'href="{path}"', self.html)           # the related links stay
+        self.assertIn('"BreadcrumbList"', self.html)
+
+    def test_the_two_labelled_lists_are_lists(self):
+        self.assertIn("<li>前期日程 試験：2月25日(木) ／ 合格発表：3月8日(月)</li>", self.html)
+        self.assertIn("<li>後期日程 なし（※前期日程のみ実施）</li>", self.html)
+
+
 if __name__ == "__main__":
     unittest.main()
