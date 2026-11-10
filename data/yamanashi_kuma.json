@@ -1,13 +1,13 @@
 {
- "as_of": "2026-11-08",
+ "as_of": "2026-11-10",
  "bad_coords": 1,
  "credit": "出典:「ツキノワグマ出没・目撃情報(令和8年度)」(山梨県)(https://catalog.dataplatform-yamanashi.jp/dataset/kuma1)を加工して作成(山梨県オープンデータ利用規約に基づく)",
- "fetched_at": "2026-11-10T06:18:01.313038+09:00",
+ "fetched_at": "2026-11-11T06:17:19.227415+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "10": 86,
-   "11": 22,
+   "11": 28,
    "4": 16,
    "5": 33,
    "6": 53,
@@ -17,6 +17,46 @@
   }
  },
  "sightings": [
+  {
+   "city": "早川町",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.4101,
+   "lon": 138.3701,
+   "observed_at": "2026-11-10T11:30:00+09:00",
+   "place": "高住地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "鳴沢村",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.4593,
+   "lon": 138.7251,
+   "observed_at": "2026-11-08T19:00:00+09:00",
+   "place": "字富士山",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "早川町",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.4128,
+   "lon": 138.3631,
+   "observed_at": "2026-11-08T18:30:00+09:00",
+   "place": "高住地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "甲州市",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 35.8294,
+   "lon": 138.8281,
+   "observed_at": "2026-11-08T14:00:00+09:00",
+   "place": "甲州市塩山一ノ瀬高橋",
+   "species": "ツキノワグマ"
+  },
   {
    "city": "身延町",
    "count": 1,
@@ -44,7 +84,7 @@
    "lat": 35.6365,
    "lon": 139.0944,
    "observed_at": "2026-11-06T16:40:00+09:00",
-   "place": "大鶴地区\n大倉地内",
+   "place": "大鶴地区大倉地内",
    "species": "ツキノワグマ"
   },
   {
@@ -113,6 +153,16 @@
    "kind": "目撃",
    "lat": 35.4362,
    "lon": 138.337,
+   "observed_at": "2026-11-05T10:10:00+09:00",
+   "place": "保地区",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "早川町",
+   "count": 2,
+   "kind": "目撃",
+   "lat": 35.4362,
+   "lon": 138.337,
    "observed_at": "2026-11-04T17:50:00+09:00",
    "place": "保地区",
    "species": "ツキノワグマ"
@@ -155,6 +205,14 @@
    "lon": 138.4432,
    "observed_at": "2026-11-03T09:50:00+09:00",
    "place": "波木井地内",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "笛吹市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-03T08:00:00+09:00",
+   "place": "一宮町金沢",
    "species": "ツキノワグマ"
   },
   {
@@ -3302,7 +3360,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 330,
+ "sightings_in_window": 336,
  "source": "yamanashi",
  "source_file": [
   "https://catalog.dataplatform-yamanashi.jp/dataset/bed5301d-75b2-4976-8687-2b2721ae143a/resource/89d2478e-e29e-46e3-9ad3-19bf44822d4d/download/2026kumadata.csv",
