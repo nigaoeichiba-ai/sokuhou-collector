@@ -40,7 +40,7 @@ RELATED = {"trend-rice-price": ["trend-vegetable-price", "trend-wage-2026-09"], 
            "trend-nengajo-print": ["trend-blackfriday-price", "trend-crab-phone-call"], "trend-humidifier-care": ["trend-influenza-44", "trend-gastroenteritis-winter"],
            "trend-gastroenteritis-winter": ["trend-influenza-44", "trend-humidifier-care"]}
 # product shelves (definitions are in shelves.json; the cards stay hidden until the private store has products): slug -> [(h2 prefix, shelf id)]
-SHELF_AFTER = {"trend-humidifier-care": [("毎日の手入れは", "humidifier"), ("湿度の物差し", "hygrometer")], "trend-nengajo-print": [("自宅の印刷とネット注文", "nengajo-paper")]}
+SHELF_AFTER = {"trend-humidifier-care": [("毎日の手入れは", "humidifier"), ("湿度は測ってから加湿する", "hygrometer")], "trend-nengajo-print": [("自宅の印刷とネット注文", "nengajo-paper")]}
 # which of the day's articles counts as the newest (they share one date): a higher number is newer; the desk can change it
 SEQ = {"trend-fire-alarm": 20, "trend-influenza-44": 19, "trend-rice-price": 18, "trend-vegetable-price": 17, "trend-wage-2026-09": 16, "trend-blackfriday-price": 15,
        "trend-crab-phone-call": 14, "trend-nengajo-print": 13, "trend-humidifier-care": 12, "trend-gastroenteritis-winter": 11}
