@@ -12,7 +12,7 @@ from urllib.parse import quote
 from sites.atomou import bizday, calendar_data as cal, phenology
 
 CAO = "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html"
-OPERATOR = "株式会社MACS"
+OPERATOR = "あと何日、もう何日運営部"
 SPECIAL_KIND = "special"
 
 
