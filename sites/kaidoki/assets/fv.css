@@ -75,7 +75,7 @@
 .fv .next .visual img { width:100%; height:100%; object-fit:cover; min-height:220px; }
 
 /* genres */
-.fv .genres { margin:26px 0 8px; padding-bottom:18px; }
+.fv .genres { margin:26px auto 8px; padding-bottom:18px; }
 .fv .genres .lab { font-size:12px; font-weight:900; letter-spacing:.24em; color:var(--fgray); margin-bottom:10px; }
 .fv .genres .row { display:flex; flex-wrap:wrap; gap:8px; }
 .fv .genres a { display:block; padding:8px 16px; background:#fff; border:1.5px solid var(--fline); border-radius:999px; color:var(--fink); text-decoration:none; font-size:14px; font-weight:700; }
