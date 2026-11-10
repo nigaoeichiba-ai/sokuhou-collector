@@ -1,0 +1,26 @@
+[
+  {
+    "title": "映画『ゼンブ・オブ・ワールド』",
+    "date": "2027-02-26",
+    "precision": "day",
+    "kind": "開始",
+    "group": "エンタメ・音楽・賞",
+    "category": "映画",
+    "subject": "ゼンブオブワールド",
+    "what": "映画の公開",
+    "place": "全国",
+    "source_url": "https://www.cinematoday.jp/news/N0157893",
+    "source_quote": "27年2月26日公開決定",
+    "source_url2": "https://natalie.mu/music/news/697309",
+    "source_quote2": "2027年2月26日",
+    "basis": "press",
+    "checked_on": "2026-11-11",
+    "verified": true,
+    "sensitivity": "none",
+    "ad_ok": true,
+    "son_toku": false,
+    "region": "全国",
+    "date_end": null,
+    "note": "2つの報道ページの本文で、日付を機械的に確かめた。"
+  }
+]
