@@ -75,6 +75,36 @@ class MeasureTest(unittest.TestCase):
         self.assertEqual(self.run_pages(["externalimg"]), [])
 
 
+@unittest.skipUnless(layoutcheck.find_chrome(), "Chrome is not installed")
+class InnerScrollTest(unittest.TestCase):
+    """The 2026-11-10 defect: nowrap cells made a table scroll sideways inside its frame on a PC screen, the last column was cut off, and the
+    page itself did not overflow, so no earlier check saw it."""
+
+    def run_wide(self, cell_style):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            body = ('<h1>表</h1><div style="overflow-x:auto;max-width:960px;margin:0 auto"><table style="width:100%"><tr>'
+                    f'<td style="{cell_style}">' + '楽天お買い物マラソン2026年11月のジャンル祭と同時に開催(2026年11月4日から11月11日まで)' * 2 + '</td><td>開催中</td></tr></table></div>')
+            (t / "index.html").write_text(BASE.format(body), encoding="utf-8")
+            return layoutcheck.problems_of(layoutcheck.measure(t, ["/"], widths=layoutcheck.WIDE_WIDTHS))
+
+    def test_a_table_that_scrolls_inside_its_frame_on_a_pc_screen_is_reported(self):
+        p = self.run_wide("white-space:nowrap")
+        self.assertTrue(any(x.startswith("[innerscroll]") and "@1280px" in x for x in p), p)
+        self.assertTrue(any(x.startswith("[innerscroll]") and "@1919px" in x for x in p), p)
+
+    def test_a_table_that_fits_passes(self):
+        self.assertEqual(self.run_wide(""), [])
+
+    def test_only_a_site_that_asks_gets_the_pc_width_measurement(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            (t / "index.html").write_text(BASE.format("<h1>x</h1>"), encoding="utf-8")
+            self.assertFalse(layoutcheck.wants_wide(t))
+            (t / "index.html").write_text(BASE.format('<meta name="layoutcheck" content="tables-fit"><h1>x</h1>'), encoding="utf-8")
+            self.assertTrue(layoutcheck.wants_wide(t))
+
+
 class MissingChromeTest(unittest.TestCase):
     def test_without_chrome_the_check_fails_instead_of_passing(self):
         real = layoutcheck.find_chrome

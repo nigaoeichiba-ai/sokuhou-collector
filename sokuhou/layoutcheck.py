@@ -6,6 +6,8 @@ Why: pages that look fine in a desktop screenshot broke on phones (the header li
 page sideways) and nothing measured it.  This loads sample pages of every kind of page in iframes of 300 / 375 / 768 px (an iframe's width is what the page's
 media queries see) and measures:
   overflow   the page is wider than the viewport (a sideways scroll on a phone); names the elements that stick out
+  innerscroll  (only for a site that asks for it with <meta name="layoutcheck" content="tables-fit"> on its top page, measured at 1280 and 1919 px on the top page) a table that
+             scrolls sideways INSIDE its frame on a PC screen, so a column is cut off at first sight (the page itself does not overflow, so `overflow` cannot see it)
   squeezed   readable text (a link, a heading, a paragraph, a cell) squeezed into a column narrower than 40px, i.e. vertical text
   nav        a header/nav link narrower than 9px per character (vertical text) or taller than 90px
   images     an image that is not lazy and failed to load
@@ -30,6 +32,8 @@ from urllib.parse import urlparse
 CHROME_PATHS = (r"C:\Program Files\Google\Chrome\Application\chrome.exe", r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
                 "/usr/bin/google-chrome", "/usr/bin/google-chrome-stable", "/usr/bin/chromium", "/usr/bin/chromium-browser")
 WIDTHS = (300, 375, 768)
+WIDE_WIDTHS = (1280, 1919)        # PC widths, measured on the top page of a site that asks for it (see wants_wide)
+WIDE_MARK = re.compile(r'<meta\s+name="layoutcheck"\s+content="tables-fit"', re.I)
 
 SCENARIO = r"""
 const PAGES = __PAGES__, WIDTHS = __WIDTHS__;
@@ -44,7 +48,7 @@ function inScroller(el) {
 }
 function name(el) { return el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.trim().split(/\s+/).slice(0, 2).join('.') : ''); }
 function measure(d, w) {
-  const res = {overflow: 0, offenders: [], squeezed: [], nav: [], images: []};
+  const res = {overflow: 0, offenders: [], squeezed: [], nav: [], images: [], innerscroll: []};
   const de = d.documentElement;
   res.overflow = Math.max(de.scrollWidth, d.body ? d.body.scrollWidth : 0) - w;
   if (res.overflow > 1) {
@@ -60,6 +64,14 @@ function measure(d, w) {
     if (r.width === 0 || r.height <= 2 || cs.display === 'none' || cs.visibility === 'hidden' || el.closest('[aria-hidden="true"]')) continue;     // (a 1px-high box is a visually hidden field such as a honeypot)
     if (cs.display.startsWith('inline') && el.tagName !== 'A') continue;
     if (r.width < 40 && !el.closest('[hidden]')) { res.squeezed.push(name(el) + ' ' + Math.round(r.width) + 'px "' + own.slice(0, 12) + '"'); if (res.squeezed.length >= 3) break; }
+  }
+  if (w >= 1024) {
+    for (const el of d.body.querySelectorAll('*')) {
+      const o = getComputedStyle(el).overflowX;
+      if ((o === 'auto' || o === 'scroll') && el.querySelector('table') && el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1) {
+        res.innerscroll.push(name(el) + ' (' + el.scrollWidth + 'px of ' + el.clientWidth + 'px)'); if (res.innerscroll.length >= 3) break;
+      }
+    }
   }
   for (const a of d.querySelectorAll('header a, nav a')) {
     const r = a.getBoundingClientRect(), cs = getComputedStyle(a);
@@ -82,7 +94,7 @@ function measure(d, w) {
         await new Promise(r => { const t = setTimeout(r, 20000); f.onload = () => { loaded = true; clearTimeout(t); r(); }; f.src = url; });
         await wait(100);
         let m;
-        try { m = measure(f.contentDocument, w); } catch (e) { m = {overflow: 0, offenders: [], squeezed: [], nav: [], images: [], failed: String(e)}; }
+        try { m = measure(f.contentDocument, w); } catch (e) { m = {overflow: 0, offenders: [], squeezed: [], nav: [], images: [], innerscroll: [], failed: String(e)}; }
         if (!loaded) m.failed = 'the page did not finish loading in 20 s';
         m.url = url; m.w = w; out.push(m);
       }
@@ -209,7 +221,17 @@ def problems_of(results: list[dict]) -> list[str]:
             out.append(f"[nav] {where}: header/nav links squeezed or stretched: {'; '.join(r['nav'])}")
         if r["images"]:
             out.append(f"[images] {where}: images that did not load: {', '.join(r['images'])}")
+        if r.get("innerscroll"):
+            out.append(f"[innerscroll] {where}: a table scrolls sideways inside its frame (a column is cut off): {'; '.join(r['innerscroll'])}")
     return out
+
+
+def wants_wide(root: Path) -> bool:
+    """A site opts in to the PC-width table check with <meta name="layoutcheck" content="tables-fit"> on its top page."""
+    try:
+        return bool(WIDE_MARK.search((root / "index.html").read_text(encoding="utf-8", errors="replace")))
+    except OSError:
+        return False
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -230,6 +252,8 @@ def main(argv: list[str] | None = None) -> int:
     widths = tuple(int(x) for x in a.widths.split(","))
     try:
         results = measure(root, pages, widths)
+        if wants_wide(root):
+            results += measure(root, ["/"], WIDE_WIDTHS)
     except RuntimeError as e:
         print("LAYOUT CHECK FAILED: " + str(e))
         return 1

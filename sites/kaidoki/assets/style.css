@@ -45,7 +45,8 @@ ul.links li { margin:.25em 0; }
 .tablewrap { overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--card); box-shadow:var(--shadow); margin:.8em 0 1.2em; }
 table { border-collapse:collapse; width:100%; font-size:.93rem; }
 caption { text-align:left; padding:10px 12px 4px; font-weight:700; color:var(--muted); }
-th, td { padding:8px 12px; border-bottom:1px solid var(--line); text-align:left; white-space:nowrap; }
+th, td { padding:8px 12px; border-bottom:1px solid var(--line); text-align:left; }
+td.nw, th.nw, td.num, th.num { white-space:nowrap; }
 th { background:var(--brand-l); color:var(--brand-d); font-weight:700; }
 td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
 tr:last-child td { border-bottom:0; }

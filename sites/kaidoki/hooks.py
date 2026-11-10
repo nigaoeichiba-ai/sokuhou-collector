@@ -259,6 +259,7 @@ def post(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
     new, n = ICONS_OLD.subn(ICONS_NEW, html, count=1)
     assert n == 1, "kaidoki hooks: the icon links of the layout changed"
     html = new
+    html = html.replace("</head>", '<meta name="layoutcheck" content="tables-fit">\n</head>', 1)      # layoutcheck also measures the top page's tables at PC widths
     html = html.replace('<link rel="stylesheet" href="/assets/style.css', '<link rel="stylesheet" href="/assets/fv.css?v=' + _ver(site_dir) + '">\n<link rel="stylesheet" href="/assets/style.css', 1)
     block = HEADER + first_view(_build_time())
     html, n = re.subn(r'<header class="site">.*?</header>\n', lambda m: block, html, count=1, flags=re.S)
