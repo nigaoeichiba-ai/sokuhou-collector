@@ -132,7 +132,7 @@ V5 = """<section class="hero">
 <div class="sale-dates">11月22日（日）0:00 〜 11月30日（月）1:59</div>
 <div class="sale-facts">期間中の11月25日（水）は「5のつく日」も重なります（PayPayポイント+4%、要エントリー、上限は1人2,000円相当）｜ 最終日は、最もポイントが付く日として主催者が案内しています</div>
 </div>
-<div class="count" id="count" aria-label="カウントダウン">
+<div class="count" id="count" aria-label="終了までのカウントダウン">
 <div class="cell"><div class="num" id="cd-d">-</div><div class="lab">日</div></div>
 <div class="cell"><div class="num" id="cd-h">-</div><div class="lab">時間</div></div>
 <div class="cell"><div class="num" id="cd-m">-</div><div class="lab">分</div></div>
@@ -158,7 +158,7 @@ V5 = """<section class="hero">
 <div class="kicker">NEXT BIG MATCH</div>
 <div class="name">次の大型セールは<br>公式発表待ちです</div>
 <div class="dates">12月は大型企画の予告が出ています</div>
-<p class="desc">Yahoo!ショッピングは12月からの大型企画で最大25%付与と予告していますが、日程と内容は変わる場合があるという注記つきで、確定ではありません。このサイトでは、公式に確定した日程だけを載せます。</p>
+<p class="desc">Yahoo!ショッピングは12月からの大型企画で最大25%付与と予告していますが、日程と内容は変わる場合があるという注記つきで、確定ではありません。このサイトでは、公式に確定した日程だけを扱います。</p>
 </div>
 <div class="visual"><img src="/assets/fv/next-blackfriday.jpg" width="1368" height="456" alt="黒と金のブラックフライデーのキービジュアル。黒い買い物袋と金のギフトボックス"></div>
 </div>
@@ -222,7 +222,7 @@ SCRIPT = """<script>
         label.textContent = "終了までの残り時間は、見ている人の時計で計算しています。";
         setCount(BF_END - now);
       } else {
-        ended(badge, label, "このセールは終了しました。次のセールは公式発表が出たら載せます。");
+        ended(badge, label, "このセールは終了しました。次のセールは公式発表が出たらお知らせします。");
       }
     }
   }
