@@ -104,3 +104,6 @@
   .fv h1 { font-size:25px; }
   .fv .hero-copy .en { letter-spacing:.2em; }
 }
+/* v5 (Yahoo! Black Friday): a black hero */
+.fv[data-fv="v5"] .hero { background:#101013; }
+.fv[data-fv="v5"] .hero-copy { background:linear-gradient(160deg,#232327 0%,#101013 100%); }
