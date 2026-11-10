@@ -115,6 +115,363 @@
   "unchanged": 40,
   "units": 55
  },
+ "gift/birthday-friend-male/index.html": {
+  "accepted": [
+   {
+    "from": "男友達への誕生日プレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "男友達への誕生日プレゼント 人気の4点を種類別に",
+    "why": "語順を自然にした"
+   },
+   {
+    "from": "男友達への誕生日、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "男友達への誕生日プレゼント 品物別の提案",
+    "why": "曖昧な問いを具体化した"
+   },
+   {
+    "from": "声で音楽をかけたり、タイマーをセットしたりできるスマートスピーカーです。新しい部屋で使う1台に向いています。",
+    "kind": "para",
+    "to": "声で音楽をかけたり、タイマーをセットしたりできるスマートスピーカーです。新しい部屋で使い始める1台に向いています。",
+    "why": "不自然な語順を直した"
+   }
+  ],
+  "date": "2026-11-10",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 選び方・理由・品物別の提案で内容が重なり、注意点が商品一覧より後に置かれています。",
+   "見出し: 「こんな贈り方」のように、節の中身が見出しだけでは分からない箇所があります。",
+   "具体: 「負担の少ない」「ぴったり」などの抽象語が、品名や使う場面より前に出ています。",
+   "リズム: 導入と注意書きは一文が長く、複数の論点が詰め込まれています。"
+  ],
+  "failed": "",
+  "hash": "c1663dd15e1f",
+  "needs_check": [
+   {
+    "question": "「本人の生」で切れているのは表示用の自動切断ですか、それとも元データの欠落ですか。",
+    "text": "男友達の誕生日には気軽に受け取れてその場で話題になる品が合います。財布や名入れ小物は親しい相手向け、タンブラーやデスク用品、入浴剤は職場や家で使いやすく、飲み会"
+   }
+  ],
+  "page": "gift/birthday-friend-male/index.html",
+  "rejected": [
+   {
+    "after": "古い財布を使っている友達には、買い替え候補としてコインケースやカードケースを贈れます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補']"
+    ],
+    "text": "コインケースやカードケースは、古い財布を使っている友達に実用的な買い替えとして渡せます。"
+   },
+   {
+    "after": "身につける物は相手の服装や持ち物に近い色を選びます。黒、紺、グレーが候補です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補']"
+    ],
+    "text": "身につける物は相手の服装や持ち物の色を見て、黒、紺、グレーなど近い色に寄せる。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "職場や車内で使えるタンブラーは、仲間内の誕生日会でも話題にしやすく、その後も出番があります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['タンブラー']"
+    ],
+    "text": "職場や車内で使えて、仲間内の誕生日会でも気軽に話題にしやすく、その後も出番があります。"
+   },
+   {
+    "after": "コインケースは、古い財布を使っている友達に買い替え用として渡しやすい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['コインケース']"
+    ],
+    "text": "古い財布を使っている友達に、負担の少ない買い替え小物として渡しやすいです。"
+   },
+   {
+    "after": "アイマスクは出張や夜更かしが多い友達にも使いやすく、あとに残りすぎないので気軽に渡せます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['アイマスク']"
+    ],
+    "text": "出張や夜更かしが多い友達にも使いやすく、あとに残りすぎない気軽さがあります。"
+   },
+   {
+    "after": "ボードゲームは集まりの場ですぐに遊べて、男友達同士の誕生日を盛り上げます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ボードゲーム']"
+    ],
+    "text": "集まりの場でそのまま遊べるので、男友達同士の誕生日を明るく盛り上げられます。"
+   },
+   {
+    "after": "ギフトボックスに入った、定番のシングルモルトスコッチです。お酒を飲む人への贈り物に向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['贈']"
+    ],
+    "text": "シングルモルトスコッチの定番でギフトボックスに入っています。お酒を飲む人へ。"
+   },
+   {
+    "after": "その人の好きなもの、趣味、年齢などを一言で入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "サイズや香りなど、好みが分かれるものは事前に相手の好みを確かめます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手']"
+    ],
+    "text": "サイズや香りなど好みが強く出るものは事前に探りを入れます"
+   },
+   {
+    "after": "恋愛感情と誤解されやすい品は相手に確認してから贈ります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手']"
+    ],
+    "text": "恋愛感情と誤解されやすい個人的すぎる品を確認なしで贈らないようにします"
+   },
+   {
+    "after": "男友達の誕生日には、タンブラーやデスク用品、入浴剤など、職場や家で使える品が選びやすいです。財布や名入れ小物は親しい友達に向きます。集まりで渡すなら、その場で話",
+    "problems": [
+     "added claim: 元にない「選びやすい」という評価が足されています。"
+    ],
+    "text": "男友達の誕生日には気軽に受け取れてその場で話題になる品が合います。財布や名入れ小物は親しい相手向け、タンブラーやデスク用"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月10日 10:52時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "after": "梅の実を感じるあらごし梅酒です。Amazon限定のギフトボックスに入っていて、お酒を飲む人への贈り物に向きます。",
+    "problems": [
+     "added claim: 「ギフトボックス付き」を、商品が箱に入っているとの断定に変えています。"
+    ],
+    "text": "梅の実を感じるあらごし梅酒です。Amazon限定のギフトボックス付きでお酒を飲む人に贈れます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「選び方のポイント…」〜「飲み会で渡すなら、持ち帰りや…」の直後に「気をつけたいこと…」〜「恋愛感情と誤解されやすい個人…」を移し、選び方と注意点を商品一覧より前にまとめる。",
+   "「喜ばれやすい理由…」〜「入浴剤やアイマスクは、出張や…」と「男友達への誕生日、こんな贈り…」〜「集まりの場でそのまま遊べるの…」は品物と理由が重なるため、品物ごとの提案として一つの節に統合する。"
+  ],
+  "unchanged": 71,
+  "units": 93
+ },
+ "gift/birthday-girlfriend/index.html": {
+  "accepted": [
+   {
+    "from": "彼女への誕生日プレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "彼女への誕生日プレゼント 人気の4点",
+    "why": "重なった表現を整理"
+   },
+   {
+    "from": "バスソルトやハンドクリームは、仕事や学校から帰った夜に使いやすく、消えものなので負担が軽めです。",
+    "kind": "item",
+    "to": "バスソルトやハンドクリームは、仕事や学校から帰った夜に使いやすい消えものです。使い切ればあとに残りません。",
+    "why": "負担を仕組みで説明"
+   },
+   {
+    "from": "誕生日当日に会えない場合は、配送日を指定し、箱の中に短いカードを入れてもらえるか確認する。",
+    "kind": "item",
+    "to": "誕生日当日に会えないなら、配送日を指定します。箱に短いカードを入れてもらえるかも確認してください。",
+    "why": "渡し方を読みやすく"
+   },
+   {
+    "from": "彼女への誕生日、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "ミニ財布・ミラー・バスソルト・ネックレス",
+    "why": "候補の中身を見出しに"
+   },
+   {
+    "from": "声で音楽をかけたり、タイマーをセットしたりできるスマートスピーカーです。新しい部屋で使う1台に向いています。",
+    "kind": "para",
+    "to": "声で音楽をかけたり、タイマーをセットしたりできるスマートスピーカーです。新しい部屋に置く1台として向いています。",
+    "why": "不自然な助詞を修正"
+   }
+  ],
+  "date": "2026-11-10",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 「理由3つ」「選び方3つ」の型が前に出て、予算・渡し方・注意点が離れています。",
+   "具体: 主語のない商品説明や「この場面」「ぴったり」があり、何を指すのか分かりにくい箇所があります。",
+   "見出し: 「こんな贈り方」「どんなタイプ」のように、節の中身が分からない見出しがあります。"
+  ],
+  "failed": "",
+  "hash": "d8ddd109a155",
+  "needs_check": [],
+  "page": "gift/birthday-girlfriend/index.html",
+  "rejected": [
+   {
+    "after": "彼女への誕生日プレゼントは、かわいさだけでなく、普段のバッグや部屋で使えるかを見て選びます。小さめの財布、刻印できるミラー、香りが控えめな入浴剤なら、服装や帰宅",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['プレゼント']"
+    ],
+    "text": "彼女の誕生日にはかわいいだけで決めず、普段のバッグや部屋に自然に入るかまで見たいところです。小さめ財布、刻印できるミラー"
+   },
+   {
+    "after": "価格・在庫は2026年11月10日 10:52時点の情報です。このサイトの掲載情報は、よろこぶプレゼントの作成者が運営・管理しています。価格や販売状況は変わる場",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月10日 10:52時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成"
+   },
+   {
+    "after": "彼女の誕生日を登録する(たいせつな日メモ)",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女']"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "after": "財布やポーチは彼女のバッグの大きさとよく着る色を見て選びます。黒、白、くすみ色など、近い系統の色が候補です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補']"
+    ],
+    "text": "財布やポーチは彼女のバッグの大きさとよく着る色を見て、黒、白、くすみ色など近い系統から選ぶ。"
+   },
+   {
+    "after": "コスメや香水は色味と香りの好みが細かく分かれます。彼女が話題にした品を選ぶか、一緒に選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女']"
+    ],
+    "text": "コスメや香水は色味と香りの好みが細かいため、本人が話題にした品か一緒に選べる形にする。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "ミニ財布は休日の小さなバッグにも入れやすく、彼女の普段の服装に合わせて選べます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ミニ', '財布']"
+    ],
+    "text": "休日の小さなバッグにも入れやすく、彼女の普段の服装に合わせて選びやすいです。"
+   },
+   {
+    "after": "コンパクトミラーは朝の支度にも外出先にも使えます。誕生日に贈ったあとも日常で使える小物です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['コンパクトミラー']"
+    ],
+    "text": "朝の支度や外出先で使える小物なので、誕生日に贈っても日常で使ってもらえます。"
+   },
+   {
+    "after": "バスソルトは帰宅後のひと息に使えます。使えばなくなる消えものなので好みを決めつけすぎずに贈れます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['バスソルト']"
+    ],
+    "text": "帰宅後のひと息に使いやすく、好みを強く決めつけずに贈れる消えものです。"
+   },
+   {
+    "after": "小ぶりなネックレスなら普段の装いに足しやすく、食事の席で渡しても誕生日らしさが出ます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ネックレス']",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "普段の装いに足しやすい小ぶりな品なら、食事の席で渡しても誕生日感が出ます。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから、彼女への誕生日プレゼントに合うものを選びました。価格や在庫は変わるため、購入前にAmazonの商品ページで確認してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女', '誕生日', 'プレゼント', '商品']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "6インチの薄くて軽い電子書籍リーダーです。通勤中や寝る前に本を読む彼女に向いています。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女']"
+    ],
+    "text": "6インチの薄くて軽い電子書籍リーダーです。通勤や寝る前の読書をする人に合います。"
+   },
+   {
+    "after": "彼女について一言入力してください(好きなもの、趣味、年齢など)。入力内容に近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女', '入力内容']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "after": "サイズや香りなど好みが分かれるものは事前に確かめます。",
+    "problems": [
+     "added claim: 「探りを入れる」が、確認まで行う「確かめる」に強められている"
+    ],
+    "text": "サイズや香りなど好みが強く出るものは事前に探りを入れます"
+   }
+  ],
+  "structure_suggestions": [
+   "「誕生日当日に会えない場合は、…」を「誕生日当日に会えるか」と「配送・カード」に分け、導入のあとを、会う日、予算、渡し方、注意点、選び方の順に並べる。",
+   "「喜ばれやすい理由…」〜「コスメや香水は色味と香りの好…」は「理由3つ」「選び方3つ」の枠を外し、財布、コスメ・香水、バス用品の順に、使う場面と選ぶ基準を続けて載せる。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」は関連記事の一覧より後ろへ移し、最後を「気になる商品に♡をつける」など、次にすること一つで終える。"
+  ],
+  "unchanged": 64,
+  "units": 89
+ },
  "gift/farewell-boss/index.html": {
   "accepted": [
    {
@@ -11087,6 +11444,114 @@
   ],
   "unchanged": 48,
   "units": 61
+ },
+ "shogatsu/otoshidama-watashikata/index.html": {
+  "accepted": [
+   {
+    "from": "渡す前に決めておく三つ",
+    "kind": "heading",
+    "to": "渡す前に決める三つのこと",
+    "why": "見出しを自然にする"
+   },
+   {
+    "from": "贈与税の見方",
+    "kind": "heading",
+    "to": "お年玉と贈与税",
+    "why": "節の内容を明確にする"
+   },
+   {
+    "from": "国税庁は、個人から受ける金品のうち、年末年始の贈答や祝い事のためで、社会通念から見て相当な範囲のものを、贈与税のかからない場合の一つに挙げています。お年玉という言葉はそこに出てきません。お年玉がこの記載に当たるかは、この資料だけでは断定できません。",
+    "kind": "para",
+    "to": "国税庁は、年末年始の贈答や祝い事のために個人から受ける金品のうち、社会通念から見て相当な範囲のものを、贈与税がかからない場合の一つに挙げています。お年玉という言葉は記載されていません。この資料だけではお年玉が当てはまるか断定できません。",
+    "why": "一文一論点に分ける"
+   },
+   {
+    "from": "検索の動き: ポチ袋はいつ探されるか",
+    "kind": "heading",
+    "to": "ポチ袋の検索が増える時期",
+    "why": "見出しを具体化する"
+   },
+   {
+    "from": "「ポチ袋」の検索は、12月下旬が山で、過去5年の合計で約4割が12月に集まります。山の週は12月25日から1月6日ごろの間で、2025年は12月28日からの週でした。「ポチ袋 書き方」の検索は2025年に過去5年でもっとも多くなりました。",
+    "kind": "para",
+    "to": "「ポチ袋」の検索は12月下旬が山です。過去5年の合計では約4割が12月に集まります。最も検索が多かった週は12月25日から1月6日ごろの間で、2025年は12月28日からの週でした。「ポチ袋 書き方」は、2025年の検索が過去5年でもっとも多くなりました。",
+    "why": "データごとに文を分ける"
+   },
+   {
+    "from": "新札にするかどうかは、家や親戚の習慣に合わせます。",
+    "kind": "para",
+    "to": "新札にするかどうかは家や親戚の習慣に合わせてください。",
+    "why": "回答を直接伝える"
+   }
+  ],
+  "date": "2026-11-10",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 導入が内容の予告にとどまり、同じ文も重複しています。最初に、渡す前の判断とポチ袋選びの結論を置きます。",
+   "構成: 検索データは用意する時期の根拠になるため、ポチ袋を選ぶ節より前にあると読み手の行動順に合います。",
+   "リズム: 贈与税と検索データの段落は、一文に複数の論点が入り込んでいます。事実ごとに文を分けます。",
+   "語: 「贈与税の見方」「検索の動き」のような広い見出しを、節の内容がすぐ分かる言葉に直します。"
+  ],
+  "failed": "",
+  "hash": "9b15a2e9b251",
+  "needs_check": [],
+  "page": "shogatsu/otoshidama-watashikata/index.html",
+  "rejected": [
+   {
+    "after": "お年玉は渡す人・日・中身を先に決めます。ポチ袋は相手の年齢と中身に合わせて選びます。贈与税の確認先は税務署か税理士です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['中身', '相手', '中身', '確認先']"
+    ],
+    "text": "お年玉を渡す前に決めておくこと、ポチ袋の選び方、現金以外を入れるときの袋の大きさ、贈与税の見方をまとめました。"
+   },
+   {
+    "after": "お年玉はだれが、いつ、何を渡すかを先に決めます。ポチ袋は相手の年齢と中身に合わせ、カードや券を入れるなら購入前に大きさを測ります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手', '中身', 'カード']"
+    ],
+    "text": "お年玉を渡す前に決めておくこと、ポチ袋の選び方、現金以外を入れるときの袋の大きさ、贈与税の見方をまとめました。"
+   },
+   {
+    "after": "ポチ袋は渡す相手と中身に合わせて選びます。確かめるのは相手の年齢、中身の大きさ、必要な枚数、封のしかたです。",
+    "problems": [
+     "numbers differ: ['四'] -> []",
+     "words added that the original does not have (information must not grow): ['年齢', '必要', '枚数', '大']"
+    ],
+    "text": "ポチ袋は、渡す相手と中身に合わせて選びます。当サイトの考えでは、次の四つを見れば迷いません。"
+   },
+   {
+    "after": "図書カードやギフトカードを入れるなら、購入前にカードと袋の大きさを測ります。袋の中でカードが折れない大きさを選んでください。品物は別に手渡しし、ポチ袋には一言を",
+    "problems": [
+     "condition removed (2 -> 1)"
+    ],
+    "text": "図書カードやギフトカードを入れるなら、カードが袋の中で折れない大きさか、袋を買う前に測ります。品物を渡すときは、ポチ袋に"
+   },
+   {
+    "after": "当サイトでは12月上旬までにポチ袋を用意することを勧めます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ポチ']"
+    ],
+    "text": "当サイトでは、余裕をもって12月上旬までに用意しておくことを勧めます。"
+   },
+   {
+    "after": "家や地域で書き方が違います。迷ったら、渡す相手の親や家族に習慣を聞いてください。",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "家や地域で書き方が違います。迷うときは、渡す相手の親や家族に習慣を聞きます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (shogatsu.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "お正月の特集のトップへ"
+   }
+  ],
+  "structure_suggestions": [
+   "「検索の動き: ポチ袋はいつ探…」〜「検索の動きはGoogle ト…」は「何を渡すか。現金か、品物か、…」の後へ移し、用意する時期を示してからポチ袋の選び方へ進むと、読者の行動順に合います。"
+  ],
+  "unchanged": 42,
+  "units": 55
  },
  "tool/taboo/index.html": {
   "accepted": [
