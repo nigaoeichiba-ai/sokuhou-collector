@@ -28,6 +28,8 @@ HEADER = """<header class="fvh"><div class="fwrap">
 <a class="flogo" href="/"><img class="mark" src="/assets/fv/d-gold-bag-180.png" width="46" height="46" alt="買い時カレンダーのロゴマーク（深い赤に金の紙袋）"><span class="name">買い時カレンダー<small>SALE-CALENDAR.COM</small></span></a>
 <nav aria-label="メイン">
 <a href="/calendar/">日程カレンダー</a>
+<a href="/rakuten/">楽天</a>
+<a href="/amazon/sale-calendar/">Amazon</a>
 <a href="/buytime/">買い時</a>
 <a href="/kaden/">商品ジャンル</a>
 <a href="/calc/" class="cta">計算ツール</a>
@@ -48,7 +50,6 @@ V4 = """<section class="hero">
 </div>
 <div class="hero-visual">
 <img src="/assets/fv/main-confetti.webp" width="2240" height="1120" alt="クリーム地に赤い買い物カートとギフト、風船と紙吹雪が舞うセールのキービジュアル">
-<span class="cap">キービジュアルはセールの雰囲気を表すイラストです</span>
 </div>
 </div>
 </section>
@@ -66,7 +67,6 @@ V4 = """<section class="hero">
 <div class="cell"><div class="num" id="cd-m">-</div><div class="lab">分</div></div>
 <div class="cell"><div class="num" id="cd-s">-</div><div class="lab">秒</div></div>
 </div>
-<div class="count-note">終了までの残り時間は、見ている人の時計で計算しています。終わったセールは「終了」と表示します。</div>
 </div>
 </div>
 
@@ -120,7 +120,6 @@ V5 = """<section class="hero">
 </div>
 <div class="hero-visual">
 <img src="/assets/fv/next-blackfriday.jpg" width="1368" height="456" alt="黒と金のブラックフライデーのキービジュアル。黒い買い物袋と金のギフトボックス">
-<span class="cap">キービジュアルはセールの雰囲気を表すイラストです</span>
 </div>
 </div>
 </section>
@@ -138,7 +137,7 @@ V5 = """<section class="hero">
 <div class="cell"><div class="num" id="cd-m">-</div><div class="lab">分</div></div>
 <div class="cell"><div class="num" id="cd-s">-</div><div class="lab">秒</div></div>
 </div>
-<div class="count-note" id="count-label">開幕までの残り時間は、見ている人の時計で計算しています。期間中は終了までの残り時間に切り替わります。</div>
+<div class="count-note" id="count-label"></div>
 </div>
 </div>
 
@@ -215,11 +214,11 @@ SCRIPT = """<script>
       var badge = el("phase-badge"), label = el("count-label");
       if (now < BF_START) {
         badge.textContent = "開幕迫る";
-        label.textContent = "開幕までの残り時間は、見ている人の時計で計算しています。期間中は終了までの残り時間に切り替わります。";
+        label.textContent = "";
         setCount(BF_START - now);
       } else if (now < BF_END) {
         badge.textContent = "開催中";
-        label.textContent = "終了までの残り時間は、見ている人の時計で計算しています。";
+        label.textContent = "";
         setCount(BF_END - now);
       } else {
         ended(badge, label, "このセールは終了しました。次のセールは公式発表が出たらお知らせします。");

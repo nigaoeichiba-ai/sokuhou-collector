@@ -107,3 +107,4 @@
 /* v5 (Yahoo! Black Friday): a black hero */
 .fv[data-fv="v5"] .hero { background:#101013; }
 .fv[data-fv="v5"] .hero-copy { background:linear-gradient(160deg,#232327 0%,#101013 100%); }
+.fv .count-note:empty { display:none; }
