@@ -118,3 +118,11 @@ footer.site a { color:var(--gold-l); }
 @media (prefers-color-scheme: dark) { footer.site { background:#12060a; } }
 .fv { background:var(--bg); }
 .fv .genres .lab { color:var(--muted); }
+
+/* affiliate link box (inside a mall's sale page, after the official-check section) */
+.aff-box { display:flex; gap:.7em; align-items:flex-start; margin:14px 0 20px; padding:12px 14px; border:1px solid var(--line); border-radius:10px; background:var(--card); }
+.aff-box p { margin:0 0 .5em; }
+.aff-box .pr-chip { flex:none; display:inline-block; padding:0 .6em; border:1px solid var(--muted); border-radius:6px; color:var(--muted); font-weight:700; font-size:.7rem; letter-spacing:.06em; line-height:1.7; }
+.aff-btn a { display:inline-block; padding:.5em 1em; border-radius:8px; background:var(--brand); color:var(--on-brand); font-weight:700; text-decoration:none; overflow-wrap:anywhere; }
+.aff-btn a img { display:none; }
+.aff-note { color:var(--muted); font-size:.78rem; }

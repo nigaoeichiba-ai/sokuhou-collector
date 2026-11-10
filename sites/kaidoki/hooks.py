@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import os
 import re
+from urllib.parse import quote
 from datetime import date, datetime, timedelta, timezone
 
 JST = timezone(timedelta(hours=9))
@@ -254,6 +255,61 @@ def first_view(now: datetime) -> str:
             f'<template id="fv-alt">\n{_no_h1(other)}{GENRES}</template>\n{SCRIPT}')
 
 
+# --- affiliate links (owner 2026-11-11: all three malls, natural places only) ----------------------------------------------------------
+# One link per page, inside the page that explains that mall's sale, right after its "最終確認は公式で" section (the point where the reader goes to the official page).
+# Never on the top page, never in a table; a Rakuten page carries Rakuten only.  The forms are the ones in docs/AFFILIATE_RULES.md: Rakuten hgc redirect (sokuhou/mallstore.affiliate_href,
+# no m=), Amazon: the official URL with tag only, Yahoo!: the ValueCommerce referral of sites/yorokobu (the programme's own tag with its 1x1 counter).  The ids are the ones that
+# already stand in the public config of sites/yorokobu; nothing from a mall's catalogue is shown.
+_R = "rakuten"
+_A = "amazon"
+AFF_LINKS = {
+    "rakuten/marathon/index.html": (_R, "https://event.rakuten.co.jp/campaign/point-up/marathon/", "楽天市場のお買い物マラソンのページを見る"),
+    "rakuten/marathon-cap/index.html": (_R, "https://event.rakuten.co.jp/campaign/point-up/marathon/", "楽天市場のお買い物マラソンのページで条件を見る"),
+    "rakuten/marathon-vs-super-sale/index.html": (_R, "https://event.rakuten.co.jp/campaign/supersale/", "楽天市場のスーパーSALEのページを見る"),
+    "rakuten/super-sale/index.html": (_R, "https://event.rakuten.co.jp/campaign/supersale/", "楽天市場のスーパーSALEのページを見る"),
+    "rakuten/genre-matsuri/index.html": (_R, "https://event.rakuten.co.jp/genre/festival/", "楽天市場のジャンル祭のページを見る"),
+    "rakuten/hatsuuri/index.html": (_R, "https://event.rakuten.co.jp/newyear/", "楽天市場の福袋・初売りのページを見る"),
+    "rakuten/pointday/index.html": (_R, "https://event.rakuten.co.jp/card/pointday/", "楽天の「5と0のつく日」のページを見る"),
+    "rakuten/black-friday/index.html": (_R, "https://event.rakuten.co.jp/", "楽天市場のイベント一覧のページを見る"),
+    "amazon/black-friday/index.html": (_A, "https://www.amazon.co.jp/blackfriday", "Amazonのブラックフライデーのページを見る"),
+    "amazon/prime-day/index.html": (_A, "https://www.amazon.co.jp/primeday", "Amazonのプライムデーのページを見る"),
+    "amazon/prime-day-early/index.html": (_A, "https://www.amazon.co.jp/primeday", "Amazonのプライムデーのページを見る"),
+    "amazon/prime-appreciation/index.html": (_A, "https://www.amazon.co.jp/gp/goldbox", "Amazonのセール会場のページを見る"),
+    "amazon/sale-calendar/index.html": (_A, "https://www.amazon.co.jp/gp/goldbox", "Amazonのセール会場のページを見る"),
+}
+MALL_NAME = {_R: "楽天市場", _A: "Amazon"}
+PROGRAMME = {_R: "楽天アフィリエイト", _A: "Amazonアソシエイト"}
+AFF_REL = "nofollow sponsored noopener"
+OFFICIAL_END = re.compile(r'(<h2>最終確認は公式で</h2>\n(?:<p>.*?</p>\n)+)')
+
+
+def affiliate_url(mall: str, target: str, cfg: dict) -> str:
+    if mall == _R:
+        return f"https://hb.afl.rakuten.co.jp/hgc/{cfg['rakuten_affiliate_id']}/?pc={quote(target, safe='')}"      # the form of sokuhou/mallstore.affiliate_href
+    if mall == _A:
+        return f"{target}?tag={cfg['amazon_tracking_id']}"          # the official URL and tag, nothing else
+
+
+def affiliate_block(mall: str, target: str, label: str, cfg: dict) -> str:
+    href = affiliate_url(mall, target, cfg)
+    a = f'<a href="{href}" target="_blank" rel="{AFF_REL}">{label}</a>'
+    note = f"広告({PROGRAMME[mall]})のリンクです。リンク先で購入されると、運営者に報酬が支払われることがあります。"
+    if mall == _A:
+        note += f"Amazonのアソシエイトとして、{cfg['amazon_disclosure_name'] if cfg.get('amazon_disclosure_name') else cfg['site_name']}は適格販売により収入を得ています。"
+    return (f'<aside class="aff-box"><span class="pr-chip">PR</span><div><p>条件と最新の日程は、{MALL_NAME[mall]}の公式のページで確かめられます。</p>'
+            f'<p class="aff-btn">{a}</p><p class="aff-note">{note}</p></div></aside>\n')
+
+
+def add_affiliate_links(pages: dict, cfg: dict) -> dict:
+    for rel, (mall, target, label) in AFF_LINKS.items():
+        html = pages.get(rel)
+        assert html, f"kaidoki hooks: no page {rel}"
+        html, n = OFFICIAL_END.subn(lambda m: m.group(1) + affiliate_block(mall, target, label, cfg), html, count=1)
+        assert n == 1, f"kaidoki hooks: {rel} has no 最終確認は公式で section"
+        pages[rel] = html
+    return pages
+
+
 def post(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
     html = pages["index.html"]
     new, n = ICONS_OLD.subn(ICONS_NEW, html, count=1)
@@ -267,7 +323,7 @@ def post(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
     html, n = re.subn(r'<h1>[^<]*</h1>\n(<p class="answer">)', r"\1", html, count=1)      # the hero's h1 is the only h1; the answer line stays (it counts in the page's readable length)
     assert n == 1, "kaidoki hooks: the top page no longer starts with h1 and answer"
     pages["index.html"] = html
-    return pages
+    return add_affiliate_links(pages, cfg)
 
 
 def _ver(site_dir) -> str:

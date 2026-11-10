@@ -19,6 +19,7 @@ from sokuhou import newsite  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "sites" / "kaidoki"
+AFF_BOX = re.compile(r'<aside class="aff-box">.*?</aside>', re.S)
 WD = "月火水木金土日"
 FULL = re.compile(r"(\d{4})年(\d{1,2})月(\d{1,2})日\(([月火水木金土日])\)")
 
@@ -50,7 +51,9 @@ class KaidokiTest(unittest.TestCase):
             if rel.startswith(("contact", "privacy", "terms", "about")):
                 continue
             body = html.split("<main", 1)[-1]
+            body = AFF_BOX.sub("", body)      # the one affiliate box of a mall's page (tested below) is the only outside link
             self.assertNotIn('href="http', body, rel)
+            self.assertNotIn('href="//', body, rel)
             self.assertNotRegex(body, r"出典の公開ページ|取得日", rel)
 
     def test_unannounced_sales_have_no_date_in_the_facts(self):
@@ -89,6 +92,54 @@ class KaidokiTest(unittest.TestCase):
         for c, g in zip(cases, got):
             p = real_price(c["price"], c["ship"], c["coupon"], c["rate"], c["cap"], c["excl_tax"], c["use"])
             self.assertEqual((g["pay"], g["points"], g["usable"], round(g["real"])), (p["pay"], p["points"], p["usable"], p["real"]))
+
+    # ---- affiliate links (owner 2026-11-11) ----
+    def _cfg(self):
+        return json.loads((SITE / "config.json").read_text(encoding="utf-8"))
+
+    def test_affiliate_links_only_on_mall_pages_one_mall_one_box(self):
+        from sites.kaidoki import hooks
+        cfg = self._cfg()
+        boxes = {rel: AFF_BOX.findall(html) for rel, html in self.html.items() if AFF_BOX.search(html)}
+        self.assertEqual(sorted(boxes), sorted(hooks.AFF_LINKS))
+        for rel, bx in boxes.items():
+            self.assertEqual(len(bx), 1, rel)
+            hrefs = re.findall(r'href="([^"]+)"', bx[0])
+            self.assertEqual(len(hrefs), 1, rel)
+            mall = hooks.AFF_LINKS[rel][0]
+            h = hrefs[0]
+            if mall == "rakuten":
+                self.assertTrue(h.startswith("https://hb.afl.rakuten.co.jp/hgc/" + cfg["rakuten_affiliate_id"] + "/?pc=https%3A%2F%2Fevent.rakuten.co.jp%2F"), h)
+                self.assertNotRegex(h, r"amazon|yahoo|valuecommerce", rel)
+            elif mall == "amazon":
+                self.assertRegex(h, r"^https://www\.amazon\.co\.jp/[a-z/]+\?tag=" + re.escape(cfg["amazon_tracking_id"]) + "$")
+                self.assertIn("Amazonのアソシエイトとして", bx[0])
+            self.assertIn('<span class="pr-chip">PR</span>', bx[0], rel)
+            self.assertIn('target="_blank" rel="nofollow sponsored noopener">', bx[0], rel)
+            self.assertNotRegex(bx[0], r"今すぐ|お見逃し|クリック|こちら|最安|お得", rel)
+
+    def test_yahoo_has_no_valuecommerce_link_until_the_site_is_registered(self):
+        self.assertNotIn("yahoo_vc", self._cfg())
+        for rel, html in self.html.items():
+            self.assertNotIn("valuecommerce", html, rel)
+
+    def test_top_page_and_tables_and_calendar_have_no_outside_link(self):
+        for rel in ("index.html", "calendar/index.html", "buytime/index.html", "black-friday/index.html", "calc/index.html"):
+            html = self.html[rel]
+            self.assertNotRegex(html, r'href="(https?:)?//(?!sale-calendar\.com)', rel)
+        for rel, html in self.html.items():
+            for t in re.findall(r"<table.*?</table>", html, re.S):
+                self.assertNotRegex(t, r'href="(https?:)?//', rel)
+
+    def test_affiliate_negative_a_mixed_or_changed_link_is_caught(self):
+        from sites.kaidoki import hooks
+        cfg = self._cfg()
+        r = hooks.affiliate_block("rakuten", "https://event.rakuten.co.jp/campaign/point-up/marathon/", "x", cfg)
+        self.assertNotIn("amazon", r)
+        a = hooks.affiliate_block("amazon", "https://www.amazon.co.jp/primeday", "x", cfg)
+        self.assertEqual(re.findall(r'href="([^"]+)"', a), ["https://www.amazon.co.jp/primeday?tag=" + cfg["amazon_tracking_id"]])
+        bad = r.replace("hgc/" + cfg["rakuten_affiliate_id"], "hgc/other")
+        self.assertNotIn(cfg["rakuten_affiliate_id"], bad)      # a changed id would no longer match the config: the test above compares with it
 
 
 if __name__ == "__main__":
