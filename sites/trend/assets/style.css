@@ -160,7 +160,8 @@ h3.cat-h a { color:var(--ink); text-decoration:none; }
 .bz .gauge { height: 14px; background: #F1E7CE; border-radius: 999px; margin: 12px 0 4px; position: relative; }
 .bz .gauge .fill { height: 100%; border-radius: 999px; transition: width .3s; }
 .bz .ticks { position: relative; height: 16px; font-size: 11px; color: #8A7648; }
-.bz .ticks span { position: absolute; transform: translateX(-50%); }
+.bz .ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.bz .ticks span:last-child { transform: translateX(-100%); }
 .bz .stage { font-size: 14px; font-weight: bold; margin-top: 6px; }
 .bz .low { color: #C4000F; } .bz .mid { color: #C77400; } .bz .high { color: #1F7A3D; }
 .bz .fill.low-bg { background: #E60012; } .bz .fill.mid-bg { background: #F39800; } .bz .fill.high-bg { background: #2E9E4F; }
