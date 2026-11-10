@@ -28,6 +28,23 @@ OG_DEFAULT = "/assets/og-default.png"
 HOME_LATEST, HOME_CATS = "<!--TOP:latest-->", "<!--TOP:cats-->"
 
 
+ICON_ROOT_FILES = ("favicon-16.png", "favicon-32.png", "favicon-48.png", "icon-512.png")
+ICON_LINES = "\n".join([
+    '<link rel="icon" href="/favicon.ico" sizes="any">',
+    '<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">',
+    '<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">',
+    '<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">',
+    '<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">']) + "\n"
+_OLD_ICONS = "\n".join([
+    '<link rel="icon" href="/favicon.ico" sizes="48x48">',
+    '<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">',
+    '<link rel="apple-touch-icon" href="/apple-touch-icon.png">']) + "\n"
+
+
+def _swap_icons(t: str) -> str:
+    return t.replace(_OLD_ICONS, ICON_LINES, 1) if _OLD_ICONS in t else t
+
+
 def esc(s: str) -> str:
     return html.escape(s, quote=True)
 
@@ -202,6 +219,8 @@ def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path
     name = cfg["site_name"]
     by_rel = {("index.html" if p["path"] == "/" else p["path"].strip("/") + "/index.html"): p for p in content}
     pages["assets/og-default.png"] = _og_default(site_dir)
+    for n in ICON_ROOT_FILES:  # favicons are asked for at the site root (owner decision 2026-11-10: favicon A, speech bubble x lightning)
+        pages[n] = (site_dir / "assets" / n).read_bytes()
     for p in content:
         if p.get("category") and p.get("_img"):
             pages[f"assets/img/card/{slug_of(p['path'])}.webp"] = _jpeg_free_card(site_dir / p["_img"].lstrip("/"))
@@ -220,6 +239,7 @@ def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path
             exact = p["title"]
             t = t.replace(f"<title>{esc(exact)} | {esc(name)}</title>", f"<title>{esc(exact)}</title>", 1)
             t = t.replace(f'<meta property="og:title" content="{esc(exact)} | {esc(name)}">', f'<meta property="og:title" content="{esc(exact)}">', 1)
+        t = _swap_icons(t)
         # ヘッダー・フッター(オーナー指示 2026-11-10。ロゴ画像に名前の文字が入っているため、テキストの名前は並べない=二重表示にしない)
         t = t.replace('<a class="brand" href="/"><span class="logo" aria-hidden="true">', '<a class="brand" href="/" aria-label="今日の話題 速報×深掘り"><span class="logo">', 1)
         t = t.replace("</span>今日の話題</a>\n<nav", "</span></a>\n<nav", 1)
