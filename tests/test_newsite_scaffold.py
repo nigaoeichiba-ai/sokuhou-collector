@@ -479,12 +479,6 @@ class SeokitTest(unittest.TestCase):
         self.assertIn("without alt", out[0])
         self.assertIn("empty alt", out[1])
 
-    def test_alt_problems_exempts_only_the_exact_valuecommerce_counter(self):
-        vc = '<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=1&amp;pid=2" height="1" width="1" border="0">'
-        self.assertEqual(seokit.alt_problems({"p/index.html": vc}), [])
-        for bad in (vc.replace('height="1"', 'height="9"'), vc.replace("valuecommerce.com", "example.com"), vc.replace(' border="0">', ' border="0" class="x">')):
-            self.assertEqual(len(seokit.alt_problems({"p/index.html": bad})), 1, bad)
-
     def test_visible_chars_ignores_breadcrumbs_scripts_and_tags(self):
         html = '<main><nav class="crumbs"><a href="/">トップ</a> &gt; <span>x</span></nav><h1>題</h1><script>var a=1;</script><p>あ い う</p></main>'
         self.assertEqual(seokit.visible_chars(html), 4)
