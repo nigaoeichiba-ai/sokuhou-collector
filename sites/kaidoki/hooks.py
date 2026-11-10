@@ -262,6 +262,7 @@ def first_view(now: datetime) -> str:
 # already stand in the public config of sites/yorokobu; nothing from a mall's catalogue is shown.
 _R = "rakuten"
 _A = "amazon"
+_Y = "yahoo"
 AFF_LINKS = {
     "rakuten/marathon/index.html": (_R, "https://event.rakuten.co.jp/campaign/point-up/marathon/", "楽天市場のお買い物マラソンのページを見る"),
     "rakuten/marathon-cap/index.html": (_R, "https://event.rakuten.co.jp/campaign/point-up/marathon/", "楽天市場のお買い物マラソンのページで条件を見る"),
@@ -276,9 +277,10 @@ AFF_LINKS = {
     "amazon/prime-day-early/index.html": (_A, "https://www.amazon.co.jp/primeday", "Amazonのプライムデーのページを見る"),
     "amazon/prime-appreciation/index.html": (_A, "https://www.amazon.co.jp/gp/goldbox", "Amazonのセール会場のページを見る"),
     "amazon/sale-calendar/index.html": (_A, "https://www.amazon.co.jp/gp/goldbox", "Amazonのセール会場のページを見る"),
+    "yahoo/index.html": (_Y, "https://shopping.yahoo.co.jp/promotion/campaign/blackfriday/", "Yahoo!ショッピングのブラックフライデーのページを見る"),
 }
-MALL_NAME = {_R: "楽天市場", _A: "Amazon"}
-PROGRAMME = {_R: "楽天アフィリエイト", _A: "Amazonアソシエイト"}
+MALL_NAME = {_R: "楽天市場", _A: "Amazon", _Y: "Yahoo!ショッピング"}
+PROGRAMME = {_R: "楽天アフィリエイト", _A: "Amazonアソシエイト", _Y: "バリューコマース"}
 AFF_REL = "nofollow sponsored noopener"
 OFFICIAL_END = re.compile(r'(<h2>最終確認は公式で</h2>\n(?:<p>.*?</p>\n)+)')
 
@@ -288,11 +290,19 @@ def affiliate_url(mall: str, target: str, cfg: dict) -> str:
         return f"https://hb.afl.rakuten.co.jp/hgc/{cfg['rakuten_affiliate_id']}/?pc={quote(target, safe='')}"      # the form of sokuhou/mallstore.affiliate_href
     if mall == _A:
         return f"{target}?tag={cfg['amazon_tracking_id']}"          # the official URL and tag, nothing else
+    if mall == _Y:
+        v = cfg["yahoo_vc"]      # the form of sites/yorokobu/build.py yahoo_url (protocol-relative, as the programme's code)
+        return f"//ck.jp.ap.valuecommerce.com/servlet/referral?sid={v['sid']}&pid={v['pid']}&vc_url={quote(target, safe='')}"
 
 
 def affiliate_block(mall: str, target: str, label: str, cfg: dict) -> str:
     href = affiliate_url(mall, target, cfg)
-    a = f'<a href="{href}" target="_blank" rel="{AFF_REL}">{label}</a>'
+    if mall == _Y:
+        v = cfg["yahoo_vc"]      # the programme's 1x1 counter first inside the link, as sites/yorokobu/build.py vc_a writes it
+        px = f'<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid={v["sid"]}&amp;pid={v["pid"]}" height="1" width="1" border="0">'
+        a = f'<a href="{href.replace("&", "&amp;")}" target="_blank" rel="{AFF_REL}">{px}{label}</a>'
+    else:
+        a = f'<a href="{href}" target="_blank" rel="{AFF_REL}">{label}</a>'
     note = f"広告({PROGRAMME[mall]})のリンクです。リンク先で購入されると、運営者に報酬が支払われることがあります。"
     if mall == _A:
         note += f"Amazonのアソシエイトとして、{cfg['amazon_disclosure_name'] if cfg.get('amazon_disclosure_name') else cfg['site_name']}は適格販売により収入を得ています。"

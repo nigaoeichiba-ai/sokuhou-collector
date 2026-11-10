@@ -114,14 +114,28 @@ class KaidokiTest(unittest.TestCase):
             elif mall == "amazon":
                 self.assertRegex(h, r"^https://www\.amazon\.co\.jp/[a-z/]+\?tag=" + re.escape(cfg["amazon_tracking_id"]) + "$")
                 self.assertIn("Amazonのアソシエイトとして", bx[0])
+            elif mall == "yahoo":
+                self.assertEqual(h, "//ck.jp.ap.valuecommerce.com/servlet/referral?sid=" + cfg["yahoo_vc"]["sid"] + "&amp;pid=" + cfg["yahoo_vc"]["pid"]
+                                 + "&amp;vc_url=https%3A%2F%2Fshopping.yahoo.co.jp%2Fpromotion%2Fcampaign%2Fblackfriday%2F")
+                self.assertNotRegex(bx[0], r"rakuten|amazon", rel)
             self.assertIn('<span class="pr-chip">PR</span>', bx[0], rel)
             self.assertIn('target="_blank" rel="nofollow sponsored noopener">', bx[0], rel)
             self.assertNotRegex(bx[0], r"今すぐ|お見逃し|クリック|こちら|最安|お得", rel)
 
-    def test_yahoo_has_no_valuecommerce_link_until_the_site_is_registered(self):
-        self.assertNotIn("yahoo_vc", self._cfg())
+    def test_valuecommerce_only_in_the_yahoo_box(self):
+        cfg = self._cfg()
+        self.assertEqual(cfg["yahoo_vc"], {"sid": "3787704", "pid": "892728268"})
         for rel, html in self.html.items():
-            self.assertNotIn("valuecommerce", html, rel)
+            has = "valuecommerce" in html
+            self.assertEqual(has, rel == "yahoo/index.html", rel)
+        h = self.html["yahoo/index.html"]
+        box = AFF_BOX.findall(h)[0]
+        self.assertEqual(box.count("valuecommerce.com/servlet/referral"), 1)
+        self.assertEqual(re.findall(r"sid=(\d+)&(?:amp;)?pid=(\d+)", box), [("3787704", "892728268")] * 2)      # the link and the 1x1 counter
+        self.assertIn('<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3787704&amp;pid=892728268" height="1" width="1" border="0">', box)
+        self.assertIn('target="_blank" rel="nofollow sponsored noopener">', box)
+        self.assertIn("広告(バリューコマース)のリンクです。", box)
+        self.assertIn("バリューコマース(Yahoo!ショッピング)", self.html["privacy/index.html"])
 
     def test_top_page_and_tables_and_calendar_have_no_outside_link(self):
         for rel in ("index.html", "calendar/index.html", "buytime/index.html", "black-friday/index.html", "calc/index.html"):
