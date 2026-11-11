@@ -288,6 +288,7 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
     def page(path, title, description, body):
         return finish(layout(site, cfg, preview, path=path, title=f"{title} | {name}", description=description, body=body))
 
+    update_row = f"<dt>更新</dt><dd>{update_text}</dd>\n" if update_text else ""
     about = f"""<h1>運営者情報</h1>
 <dl class="info">
 <dt>サイト名</dt><dd>{esc(name)}</dd>
@@ -295,8 +296,7 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
 <dt>連絡先</dt><dd>{contact_summary(cfg)}</dd>
 <dt>目的</dt><dd>{purpose}</dd>
 <dt>情報の出典</dt><dd>{sources_html}</dd>
-<dt>更新</dt><dd>{update_text}</dd>
-</dl>
+{update_row}</dl>
 <h2>免責事項</h2>
 {disclaimer_html}"""
     privacy = f"""<h1>プライバシーポリシー</h1>

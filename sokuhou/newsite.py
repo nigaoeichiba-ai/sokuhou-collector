@@ -364,7 +364,7 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
         if p.get("dataset"):
             pages[p["dataset"]["csv"]] = csv_text(p["sections"][p["dataset"].get("table_section", 0)]["table"])
 
-    legal = sitekit.legal_pages(site, cfg, preview, purpose=esc(spec["purpose"]), sources_html=_sources_html(spec), update_text=esc(spec["update_text"]),
+    legal = sitekit.legal_pages(site, cfg, preview, purpose=esc(spec["purpose"]), sources_html=_sources_html(spec), update_text=esc(spec.get("update_text", "")),
                                 disclaimer_html=_disclaimer_html(spec), contact_notice="お返事には数日かかることがあります。内容によっては、お返事できないこともあります。")
     pages.update(legal)
     pages.update(sitekit.asset_pages(site["assets"]))
