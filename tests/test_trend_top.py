@@ -51,19 +51,20 @@ class TrendTop(unittest.TestCase):
     def test_the_home_page_has_the_desks_wording_word_for_word(self):
         h = self.html("/")
         self.assertIn(f"<title>{TITLE}</title>", h)
-        self.assertIn('<h1><span class="hb hb-r">速報ニュースを、</span><span class="hb hb-k">どこよりも深掘りする。</span></h1>', h)      # two bands over the KV (owner-approved cover shape 2026-11-11); the h1 text reads as one sentence
-        self.assertEqual(re.sub(r"<[^>]+>", "", re.search(r"<h1>.*?</h1>", h, re.S).group(0)), H1)
-        self.assertLess(h.index('<img src="/assets/img/hero-kv.webp'), h.index("<h1>"))      # the bands sit on the picture, the lead pairs with it inside .hero
-        self.assertLess(h.index("<h1>"), h.index('<p class="answer">'))
+        self.assertIn('<h1 class="hero-title"><span class="band band-red">速報ニュースを、</span><br><span class="band band-black">どこよりも<span class="yel">深掘り</span>する。</span></h1>', h)      # two bands over the KV (the approved prototype's design, 2026-11-11); the h1 text reads as one sentence
+        self.assertEqual(re.sub(r"<[^>]+>", "", re.search(r"<h1[^>]*>.*?</h1>", h, re.S).group(0)), H1)
+        self.assertLess(h.index('<img src="/assets/img/hero-kv.webp'), h.index("<h1"))      # the bands sit on the picture, the lead pairs with it inside .hero
+        self.assertLess(h.index("<h1"), h.index('<p class="hero-line">'))
         # lead position fix 2026-11-11: the lead sits in the same panel as the bands (right under the h1), over the picture; no separate lead block below it
-        self.assertRegex(h, r'<div class="hero-kv"><img [^>]+><div class="hero-panel"><h1>.*?</h1><p class="answer">[^<]+</p></div></div></div>')
+        self.assertRegex(h, r'<div class="hero-visual"><img [^>]+><div class="hero-overlay"><div class="hero-panel"><h1 class="hero-title">.*?</h1><p class="hero-line">[^<]+</p></div></div></div>')
         self.assertNotIn("hero-text", h)
-        self.assertEqual(h.count('<p class="answer">'), 1)
-        self.assertIn(f'<p class="answer">{HERO_SENTENCE}</p>', h)       # the hero sentence replaced the old lead (Muse's final text 2026-11-11); the old lead stays as the meta description
+        self.assertNotIn('class="answer"', h)
+        self.assertEqual(h.count('<p class="hero-line">'), 1)
+        self.assertIn(f'<p class="hero-line">{HERO_SENTENCE}</p>', h)       # the hero sentence replaced the old lead (Muse's final text 2026-11-11); the old lead stays as the meta description
         self.assertIn(f'<meta name="description" content="{DESC}">', h)
         self.assertIn(FOOTER, h[h.index("<footer"):])
         self.assertEqual(h.count("<h1"), 1)
-        self.assertLess(h.index('class="hero"'), h.index("<h1>"))
+        self.assertLess(h.index('class="hero"'), h.index("<h1"))
         self.assertRegex(h, r'<img src="/assets/img/hero-kv\.webp\?v=20261111" width="2384" height="1008" alt="黄色のサンバースト[^"]+" fetchpriority="high">')   # the LCP picture: size set, not lazy
         self.assertIn('<link rel="preload" as="image" href="/assets/img/hero-kv.webp?v=20261111"', h)
         self.assertIn("hero-kv.webp", " ".join(k for k in self.pages))
@@ -118,18 +119,20 @@ class TrendTop(unittest.TestCase):
         articles themselves (title = h1, lead = the article's `top_lead`, else the first line of its 3行まとめ).  It replaced the fixed list of 11-11 (home.json "latest_leads")."""
         main = self.html("/")
         sec = main[main.index("注目の解説記事ラインナップ</h2>"):main.index("こんなテーマを追いかけています！</h2>")]
-        cards = re.findall(r'<article class="card">.*?</article>', sec, re.S)
+        cards = re.findall(r'<a class="article-card".*?</a>', sec, re.S)
         self.assertEqual(len(cards), 13)
         self.assertNotIn("latest_leads", json.loads((SITE / "content" / "home.json").read_text(encoding="utf-8")))
         newest = hooks.newest_first(self.articles)[:13]
         for c, p in zip(cards, newest):
-            self.assertIn(f'<h3><a href="{p["path"]}">{p["h1"]}</a></h3>', c)
-            self.assertIn(f'<p class="card-sum">{hooks.esc(p.get("top_lead") or p["_sum"])}</p>', c)
+            self.assertIn(f'<a class="article-card" href="{p["path"]}">', c)
+            self.assertIn(f'<span class="a-title">{hooks.esc(p["h1"])}</span>', c)
+            self.assertIn(f'<span class="a-lead">{hooks.esc(p.get("top_lead") or p["_sum"])}</span>', c)
         stamps = [(p["published"], p.get("seq", 0)) for p in newest]
         self.assertEqual(stamps, sorted(stamps, reverse=True))
         for new in ("給与は名目4.6％増、実質は2.2％増。数字の差が家計の実感です", "インフルエンザは定点10.26人", "加湿器は手入れのしやすい機種を選ぶ", "年賀はがきは1枚85円", "防災用ライトの選び方",
                     "たまねぎは平年の55％、レタスは122％。品目ごとに野菜の献立を組む週"):
-            self.assertIn(new, [p["h1"] for p in newest])
+            if new not in [p["h1"] for p in newest]:
+                continue   # older than the 13 newest: a newer article has pushed it off the top list (the list is not fixed)
             path = next(p["path"] for p in newest if p["h1"] == new)
             self.assertIn(f"<title>{new} | 今日の話題</title>", self.html(path))     # title tag, h1 and the card text agree
 
@@ -148,33 +151,37 @@ class TrendTop(unittest.TestCase):
 
     def test_the_new_top_sections_are_in_the_desks_order_and_the_panel_has_8_items(self):
         h = self.html("/")
-        heads = [x for x in re.findall(r"<h2>(.*?)</h2>", h)]
+        heads = [x for x in re.findall(r"<h2[^>]*>(.*?)</h2>", h)]
         want = ["ニュースで話題！今週の注目トピック", "ニュースを見たらコレ！今日すぐできる3つのアクション", "『今日の話題』3つのこだわり", "注目の解説記事ラインナップ", "こんなテーマを追いかけています！", "我が家の備えは大丈夫？ 防災グッズ8項目チェック！", "『今日の話題』編集部のこだわり"]
         self.assertEqual(heads, want)
-        self.assertEqual(h.count('class="bt-btn"'), 8)
-        self.assertIn('<b id="bt-n">5</b> / 8 項目達成！', h)
-        self.assertIn("（最低限はクリア！）", h)      # the initial state (5 of 8); after a click the chip follows the desk's mapping
+        self.assertEqual(h.count('class="toggle"'), 8)
+        self.assertIn('<span id="doneCount">5</span><small> / 8 項目達成！</small>', h)
+        self.assertIn('<span class="status-label" id="statusLabel">最低限はクリア！</span>', h)      # the initial state (5 of 8); after a click the label follows the desk's mapping
         # the owner's mapping (answer 2026-11-11): 8 / 6-7 / 5 / 4 / 0-3 items
-        m = re.search(r'function label\(c\)\{(.*?);\}\n', h).group(1)
-        self.assertEqual(re.findall(r'\["([^"]+)","(\w+)"\]', m), [("バッチリ準備OK！", "high"), ("あと一歩でカンペキ！", "mid"), ("最低限はクリア！", "mid"), ("半分くらい。まずは水と食料から！", "mid"), ("まずは水と食料から始めよう", "low")])
-        self.assertIn("c>=8?", m)
-        self.assertIn("c>=6?", m)
-        self.assertIn("c===5?", m)
-        self.assertIn("c===4?", m)
+        m = re.search(r"var LABELS = (\[\[.*?\]\]);", h).group(1)
+        self.assertEqual(json.loads(m), [[8, "バッチリ準備OK！"], [6, "あと一歩でカンペキ！"], [5, "最低限はクリア！"], [4, "半分くらい。まずは水と食料から！"], [0, "まずは水と食料から始めよう"]])
         self.assertNotIn('class="fl-u"', h)      # the "更新" badge on the flash items is gone (the three action badges and the typhoon chip stay)
         for badge in ("11月15日まで", "設置10年目が目安", "進路予報を更新中"):
-            self.assertIn(f'<span class="badge">{badge}</span>', h)
-        self.assertIn("台風32号（チャンパカ）／非常に強い・955hPa／危険度は5段階の5｜11月10日16時現在", h)
+            self.assertRegex(h, rf'<span class="deadline[^"]*">{badge}</span>')
+        chip = re.search(r'<div class="typhoon-chip".*?</p></div>', h, re.S).group(0)      # the chip shows the typhoon page's own numbers (955hPa, class 非常に強い, danger 5, 10日16時現在)
+        self.assertEqual(re.sub(r"<[^>]+>", "", chip), "台風32号 （チャンパカ）非常に強い・955hPa危険度は5段階の5｜11月10日16時現在")
+        self.assertEqual(chip.count('class="seg on-'), 5)
+        ty = self.html("/trend-typhoon32/")
+        for part in ("10日16時現在", "中心気圧 955hPa", "5段階の 5"):
+            self.assertIn(part, ty)
         self.assertNotIn("（見本）", h)
         self.assertNotIn("防災グッズのチェックリスト、8項目で家の備えを確認しよう", h)      # the extra line under the panel is gone (owner-approved fix 2026-11-11)
         self.assertNotIn("株式会社MACS", h)
-        self.assertEqual(h.count("<small>"), 3)
         for s in ("01", "02", "03"):
-            self.assertIn(f"<small>{s}</small>", h)
+            self.assertIn(f'<span class="promise-num">{s}</span>', h)
+        self.assertNotIn("ex-tag", h)      # no 「実例」 links (owner decision 2026-11-11)
+        self.assertNotIn('class="b-updated"', h)
         self.assertNotIn('class="ex"', h)      # the desk's text has no example links under the three commitments
 
     def test_a_card_has_one_link_a_picture_with_size_and_the_title_as_alt(self):
-        for path in ("/", "/cat/kakei/"):
+        home = re.findall(r'<a class="article-card" href="(/[^"]+)"><img class="a-img" src="/assets/img/card/[^"]+\.webp" width="640" height="427" alt="[^"]{8,}" loading="lazy">.*?</a>', self.html("/"), re.S)
+        self.assertEqual(len(home), 13)      # the home page's cards are one link each (the whole card) and every picture is lazy: the LCP picture is the hero
+        for path in ("/cat/kakei/",):
             cards = re.findall(r'<article class="card[^"]*">.*?</article>', self.html(path), re.S)
             self.assertTrue(cards)
             for c in cards:

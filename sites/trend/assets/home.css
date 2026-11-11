@@ -1,0 +1,363 @@
+/* trend-sokuho.com top page: the approved prototype's CSS, verbatim (トップ改訂_デザイン仕様_試作HTML_2026-11-11.html, owner-approved).
+   Do not edit above the marker line; additions for the live page go below it. */
+:root {
+  --red: #e60012;
+  --red-deep: #b3000e;
+  --navy: #0f2a5c;
+  --navy-deep: #0a1e42;
+  --yellow: #ffc900;
+  --yellow-soft: #fff3c4;
+  --cream: #fff7e6;
+  --bg: #fffdf8;
+  --surface: #ffffff;
+  --surface-2: #fdf6ea;
+  --ink: #1d1d20;
+  --ink-2: #45454b;
+  --muted: #6d6d74;
+  --line: #ead9c2;
+  --chip-bg: #fdecec;
+  --ok: #0c7a3d;
+  --ok-bg: #e3f5ea;
+  --shadow: 0 10px 30px rgba(60, 30, 0, 0.10);
+  --radius: 18px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16171b;
+    --surface: #222329;
+    --surface-2: #2a2620;
+    --ink: #f4f1ea;
+    --ink-2: #cfccc4;
+    --muted: #a3a099;
+    --line: #3d3a33;
+    --chip-bg: #3d2126;
+    --ok-bg: #173626;
+    --yellow-soft: #453a08;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--red); }
+button { font-family: inherit; cursor: pointer; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+/* ---------- header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--surface);
+  border-bottom: 3px solid var(--red);
+}
+.header-inner {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding-top: 10px; padding-bottom: 10px;
+}
+.brand { display: inline-flex; align-items: center; text-decoration: none; min-height: 44px; }
+.brand-logo { height: 84px; width: auto; }
+@media (max-width: 760px) { .brand-logo { height: 54px; } }
+.main-nav { margin-left: auto; }
+.main-nav ul { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+.main-nav a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 6px 13px;
+  color: var(--ink); text-decoration: none; font-weight: 700; font-size: 15px; border-radius: 999px;
+}
+.main-nav a:hover, .main-nav a:focus-visible { background: var(--chip-bg); color: var(--red-deep); }
+
+/* ---------- hero : flyer-style key visual, headline on the sunburst ---------- */
+.hero { background: var(--cream); border-bottom: 3px solid var(--red); padding-bottom: 34px; }
+.hero-visual { position: relative; }
+.hero-visual > img {
+  /* The KV is 2352x1008 (7:3). The box keeps that exact ratio at every
+     width, so the whole illustration is always visible, never cropped. */
+  width: 100%; height: auto; aspect-ratio: 7 / 3;
+  object-fit: contain; object-position: center; display: block;
+}
+/* Desktop: the headline sits on the open sunburst at the left of the KV. */
+.hero-overlay {
+  position: absolute; inset: 0; max-width: 1120px; margin: 0 auto;
+  padding: 0 20px; display: flex; align-items: center;
+}
+.hero-panel { max-width: 600px; }
+h1.hero-title {
+  font-size: clamp(30px, 4vw, 44px); font-weight: 900; line-height: 1.45;
+  margin: 0 0 16px; letter-spacing: 0.01em; transform: rotate(-1deg);
+}
+h1.hero-title .band {
+  display: inline-block; padding: 4px 16px 6px; margin-bottom: 10px;
+  white-space: nowrap;
+  box-shadow: 5px 5px 0 rgba(29, 29, 32, 0.85);
+}
+h1.hero-title .band-red { background: var(--red); color: #fff; }
+h1.hero-title .band-black { background: #1d1d20; color: #fff; margin-bottom: 0; }
+h1.hero-title .band-black .yel { color: var(--yellow); }
+.hero-line {
+  display: inline-block; background: #fff; color: #1d1d20;
+  font-size: 15px; font-weight: 700; line-height: 1.7;
+  padding: 8px 16px; border: 2px solid #1d1d20; margin: 0;
+  box-shadow: 4px 4px 0 rgba(29, 29, 32, 0.85);
+}
+.breaking-wrap { margin-top: 28px; }
+/* Phones: keep the image full-width and put the headline bands below it,
+   at full type size, instead of shrinking them over the busy right side. */
+@media (max-width: 760px) {
+  .hero-overlay { position: static; display: block; padding-top: 22px; }
+  .hero-panel { max-width: none; }
+  .breaking-wrap { margin-top: 24px; }
+}
+
+/* breaking panel */
+.breaking {
+  background: var(--surface); color: var(--ink); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin: 0; overflow: hidden;
+}
+.breaking-head {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  background: var(--navy); color: #fff; padding: 10px 18px;
+}
+.breaking-head h2 { font-size: 17px; font-weight: 900; margin: 0; letter-spacing: 0.05em; }
+.breaking-head .live {
+  background: var(--red); color: #fff; font-size: 11.5px; font-weight: 900;
+  padding: 2px 10px; border-radius: 999px; letter-spacing: 0.12em;
+}
+.breaking-head time { margin-left: auto; font-size: 13px; opacity: 0.9; }
+.breaking-list { list-style: none; margin: 0; padding: 6px 18px; }
+.breaking-list li { border-bottom: 1px dashed var(--line); }
+.breaking-list li:last-child { border-bottom: none; }
+.breaking-list a {
+  display: flex; gap: 12px; align-items: baseline; padding: 11px 2px;
+  color: var(--ink); text-decoration: none; min-height: 44px;
+}
+.breaking-list a:hover .b-title, .breaking-list a:focus-visible .b-title { color: var(--red); text-decoration: underline; }
+.b-date { flex: none; font-weight: 900; color: var(--red); font-size: 14px; white-space: nowrap; }
+.b-updated { flex: none; font-size: 11px; font-weight: 700; background: var(--yellow); color: #4d3800; border-radius: 4px; padding: 1px 7px; white-space: nowrap; }
+.b-title { font-weight: 700; font-size: 15.5px; line-height: 1.55; }
+.typhoon-chip {
+  margin: 4px 18px 18px; background: var(--surface-2); border: 1.5px solid var(--line);
+  border-radius: 14px; padding: 14px 16px;
+  display: grid; grid-template-columns: auto 1fr auto; gap: 6px 18px; align-items: center;
+}
+.typhoon-chip .t-name { font-weight: 900; font-size: 16px; }
+.typhoon-chip .t-name span { color: var(--red); }
+.typhoon-chip .t-meta { font-size: 13px; color: var(--ink-2); grid-column: 1 / -1; margin: 0; }
+.gauge { display: flex; gap: 4px; align-items: center; }
+.gauge .seg { width: 34px; height: 14px; border-radius: 3px; background: var(--line); }
+.gauge .seg.on-1 { background: #ffd23e; }
+.gauge .seg.on-2 { background: #ff9d00; }
+.gauge .seg.on-3 { background: #ff5f00; }
+.gauge .seg.on-4 { background: var(--red); }
+.gauge-label { font-weight: 900; font-size: 14px; white-space: nowrap; }
+.gauge-label b { color: var(--red); font-size: 17px; }
+
+/* ---------- sections ---------- */
+section.block { padding: 46px 0 8px; }
+.sec-head { margin-bottom: 20px; }
+.sec-head h2 {
+  font-size: clamp(22px, 3.4vw, 29px); font-weight: 900; margin: 0 0 6px; line-height: 1.4;
+}
+.sec-head h2::after {
+  content: ""; display: block; width: 64px; height: 5px; border-radius: 3px;
+  background: var(--red); margin-top: 8px;
+}
+.sec-head p { margin: 0; color: var(--ink-2); font-size: 15px; }
+
+/* today actions */
+.actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; list-style: none; margin: 0; padding: 0; }
+.action-card {
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius);
+  padding: 20px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px;
+}
+.action-icon {
+  width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; flex: none;
+}
+.action-icon.red { background: var(--chip-bg); }
+.action-icon.navy { background: #e4ebfa; }
+.action-icon.yellow { background: var(--yellow-soft); }
+@media (prefers-color-scheme: dark) {
+  .action-icon.navy { background: #232c47; }
+}
+.action-card h3 { font-size: 18px; font-weight: 900; margin: 2px 0 0; line-height: 1.5; }
+.action-card p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.7; }
+.deadline {
+  margin-top: auto; align-self: flex-start; font-weight: 900; font-size: 13px;
+  background: var(--red); color: #fff; border-radius: 999px; padding: 4px 13px;
+}
+.deadline.soft { background: var(--navy); }
+
+/* promises */
+.promises { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; list-style: none; margin: 0; padding: 0; }
+.promise {
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column;
+}
+.promise-visual { padding: 18px 18px 6px; }
+.promise-visual svg { width: 100%; height: auto; }
+.promise-body { padding: 6px 20px 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.promise-num { font-size: 12px; font-weight: 900; color: var(--red); letter-spacing: 0.18em; }
+.promise-body h3 { font-size: 18.5px; font-weight: 900; margin: 0; line-height: 1.5; }
+.promise-body p { margin: 0; font-size: 14px; color: var(--ink-2); }
+.example-link {
+  margin-top: auto; padding-top: 8px; font-size: 14px; font-weight: 700; line-height: 1.6;
+  text-decoration: none; display: inline-block; min-height: 32px;
+}
+.example-link:hover { text-decoration: underline; }
+.example-link .ex-tag {
+  display: inline-block; font-size: 11px; font-weight: 900; color: var(--navy);
+  background: #e4ebfa; border-radius: 4px; padding: 1px 7px; margin-right: 7px; vertical-align: 2px;
+}
+@media (prefers-color-scheme: dark) { .example-link .ex-tag { background: #232c47; color: #b9c8f2; } }
+
+/* articles */
+.articles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; list-style: none; margin: 0; padding: 0; }
+.article-card {
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column;
+  text-decoration: none; color: var(--ink);
+}
+.article-card:hover .a-title, .article-card:focus-visible .a-title { color: var(--red); text-decoration: underline; }
+/* Eyecatches are 640x427 (3:2) with headlines baked across the full
+   frame, so the box keeps the 3:2 ratio and never crops them. */
+.a-img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; display: block; }
+.a-body { padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.a-lead { font-size: 13.5px; line-height: 1.65; color: var(--ink-2); }
+.a-meta { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+.cat-chip {
+  font-size: 12px; font-weight: 900; color: var(--red-deep); background: var(--chip-bg);
+  border-radius: 999px; padding: 2px 11px;
+}
+.a-title { font-size: 16.5px; font-weight: 700; line-height: 1.65; margin: 0; }
+
+/* categories */
+.categories { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; list-style: none; margin: 0; padding: 0; }
+.cat-tile {
+  display: flex; flex-direction: column; background: var(--surface);
+  border: 1.5px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  text-decoration: none; color: var(--ink); box-shadow: var(--shadow); min-height: 44px;
+}
+.cat-tile:hover h3, .cat-tile:focus-visible h3 { color: var(--red); text-decoration: underline; }
+.cat-tile .cat-img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; display: block; }
+.cat-tile .cat-body { padding: 16px 20px 18px; display: flex; flex-direction: column; gap: 4px; }
+.cat-tile h3 { font-size: 20px; font-weight: 900; margin: 0; }
+.cat-tile p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.7; }
+.cat-tile .count { font-size: 12.5px; font-weight: 700; color: var(--muted); }
+
+/* bousai panel */
+.bousai {
+  background: var(--surface); border: 2px solid var(--navy); border-radius: 22px;
+  overflow: hidden; box-shadow: var(--shadow);
+}
+.bousai-head { background: var(--navy); color: #fff; padding: 18px 22px; }
+.bousai-head .tag {
+  display: inline-block; background: var(--yellow); color: #4d3800; font-weight: 900;
+  font-size: 12px; border-radius: 4px; padding: 2px 9px; margin-bottom: 8px; letter-spacing: 0.08em;
+}
+.bousai-head h3 { font-size: clamp(19px, 3vw, 24px); font-weight: 900; margin: 0; line-height: 1.5; }
+.bousai-head p { margin: 6px 0 0; font-size: 14px; opacity: 0.92; }
+.bousai-status {
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  padding: 18px 22px 6px;
+}
+.status-num { font-size: 34px; font-weight: 900; line-height: 1; }
+.status-num small { font-size: 16px; color: var(--muted); font-weight: 700; }
+.status-label { font-weight: 900; font-size: 17px; color: var(--ok); }
+.progress { flex: 1 1 220px; height: 16px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.progress .fill { height: 100%; background: var(--ok); border-radius: 999px; transition: width 0.35s ease; }
+.bousai-list { list-style: none; margin: 8px 0 0; padding: 6px 22px 10px; }
+.bousai-item {
+  display: flex; align-items: center; gap: 14px; padding: 11px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.bousai-item:last-child { border-bottom: none; }
+.b-icon { width: 46px; height: 46px; flex: none; border-radius: 12px; background: var(--surface-2); display: grid; place-items: center; }
+.b-text { flex: 1; min-width: 0; }
+.b-text .name { font-weight: 900; font-size: 16px; }
+.b-text .std { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+.b-text .extra { font-size: 13px; font-weight: 700; color: var(--navy); }
+@media (prefers-color-scheme: dark) { .b-text .extra { color: #b9c8f2; } }
+.toggle {
+  flex: none; min-height: 44px; min-width: 108px; padding: 8px 14px; border-radius: 999px;
+  font-weight: 900; font-size: 13.5px; border: 2px solid var(--line); background: var(--surface); color: var(--muted);
+}
+.toggle[aria-pressed="true"] { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
+.bousai-note { padding: 4px 22px 20px; font-size: 13px; color: var(--muted); margin: 0; }
+.bousai-more { padding: 0 22px 22px; }
+.bousai-more a { font-weight: 700; display: inline-flex; align-items: center; min-height: 44px; }
+
+/* standards */
+.standards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; list-style: none; margin: 0; padding: 0; }
+.standard {
+  display: flex; gap: 13px; align-items: flex-start; background: var(--surface-2);
+  border: 1.5px solid var(--line); border-radius: var(--radius); padding: 18px;
+}
+.standard svg { flex: none; margin-top: 2px; }
+.standard p { margin: 0; font-size: 14.5px; font-weight: 700; line-height: 1.65; }
+
+/* footer */
+footer { margin-top: 56px; background: var(--navy-deep); color: #dfe6f5; }
+.footer-inner { padding: 30px 0 34px; }
+.footer-brand { display: flex; align-items: center; gap: 12px; font-weight: 900; font-size: 19px; color: #fff; }
+.footer-logo { height: 46px; width: auto; background: #fff; border-radius: 8px; padding: 5px 9px; }
+.footer-nav { display: flex; gap: 4px; flex-wrap: wrap; list-style: none; margin: 16px 0; padding: 0; }
+.footer-nav a {
+  color: #dfe6f5; text-decoration: none; font-weight: 700; font-size: 14px;
+  display: inline-flex; align-items: center; min-height: 44px; padding: 6px 12px; border-radius: 999px;
+}
+.footer-nav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.footer-meta { font-size: 13px; color: #aebadd; margin: 0; line-height: 1.8; }
+.prototype-note {
+  margin-top: 14px; display: inline-block; border: 1px dashed rgba(255,255,255,0.45);
+  border-radius: 8px; padding: 6px 12px; font-size: 12.5px; color: #dfe6f5;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .articles { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  .actions, .promises, .standards { grid-template-columns: 1fr; }
+  .categories { grid-template-columns: 1fr; }
+  .typhoon-chip { grid-template-columns: 1fr; }
+  .gauge .seg { width: 30px; }
+  .main-nav { margin-left: 0; }
+  .header-inner { gap: 6px 12px; }
+}
+@media (max-width: 560px) {
+  .articles { grid-template-columns: 1fr; }
+  .breaking-list a { flex-wrap: wrap; row-gap: 2px; }
+  .bousai-item { flex-wrap: wrap; }
+  .toggle { margin-left: 60px; }
+}
+
+/* ==== additions for the live page (not in the prototype) ==== */
+.gauge .seg.on-5 { background: var(--red-deep); }
+.action-card h3 a, .b-text .name a, .typhoon-chip .t-name a { color: inherit; text-decoration: none; }
+.action-card h3 a:hover, .action-card h3 a:focus-visible, .b-text .name a:hover, .b-text .name a:focus-visible, .typhoon-chip .t-name a:hover, .typhoon-chip .t-name a:focus-visible { color: var(--red); text-decoration: underline; }
+.sec-closing { margin: 18px 0 0; color: var(--ink-2); font-size: 15px; font-weight: 700; }
+.footer-meta a { color: inherit; }
+.bousai-head p:first-child { margin-top: 0; font-size: 15px; opacity: 1; }
+/* the 8 items are a real table (item and guide, check) that looks like the prototype's list */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+table.bousai-list { display: block; width: auto; border-collapse: collapse; }
+.bousai-list tbody { display: block; }
+.bousai-list td, .bousai-list th { display: block; padding: 0; text-align: left; font-weight: inherit; }
+/* the black band does not wrap (white-space: nowrap): on phones it would be wider than the screen, so the headline shrinks with the screen (at 430px and up it is the prototype's size) */
+@media (max-width: 430px) { h1.hero-title { font-size: calc((100vw - 76px) / 11.8); } }
+/* on phones the prototype means the check button to drop under the text (flex-wrap + margin-left); with min-width: 0 the text column never makes it wrap and is squeezed to a few characters */
+@media (max-width: 560px) { .b-text { min-width: 160px; } }
+/* section.block (padding: 46px 0 8px) comes after .wrap and wipes its side padding, so below the 1120px column the sections touch the screen edge: keep the 20px gutter there (the desktop column is unchanged) */
+@media (max-width: 1159px) { section.block { padding-left: 20px; padding-right: 20px; } }
+/* the progress fill is a span: inline, so its width and height are ignored and the green never shows */
+.progress .fill { display: block; }
