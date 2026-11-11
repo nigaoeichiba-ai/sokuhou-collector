@@ -39,4 +39,4 @@ SOURCES = {
 OFFICIAL_PAGES = dict(SOURCES)   # the official page of each source id (internal: the morning check reads it, tools/morning_list.py; never shown on the pages)
 
 # One line at the foot of every page (the build wants a source for every page; the owner wants no links and no per-row citations)
-SOURCES = {"official": {"org": "各試験団体・省庁・教育委員会", "table": "公式発表の日程", "url": "", "basis": "公表されている最新の回", "fetched": CHECKED}}
+SOURCES = {"official": {"org": "各試験団体・省庁・教育委員会", "table": "試験団体の発表と報道による日程", "url": "", "basis": "公表されている最新の回", "fetched": CHECKED}}
