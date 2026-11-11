@@ -59,8 +59,12 @@ def run(action: str, names: list[str]) -> int:
     DATA.mkdir(exist_ok=True)
     with tempfile.TemporaryDirectory() as td:
         kf, kh = Path(td) / "key", Path(td) / "known_hosts"
-        kf.write_text(key.strip() + chr(10), encoding="utf-8")
-        kf.chmod(0o600)
+        own = os.environ.get("XSERVER_SSH_KEY_FILE", "")
+        if not os.environ.get("XSERVER_SSH_KEY") and own and Path(own).is_file():
+            kf = Path(own)                      # a local (Windows) run: use the key file where it is (its own permissions); a copy in a temp folder is refused by ssh there
+        else:
+            kf.write_text(key.strip() + chr(10), encoding="utf-8")
+            kf.chmod(0o600)
         ssh = _ssh_base(str(kf), str(kh), host, user)
         if action == "push":
             return _push(ssh, names)
