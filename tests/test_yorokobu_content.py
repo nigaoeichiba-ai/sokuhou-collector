@@ -29,7 +29,7 @@ class ContentQualityTest(unittest.TestCase):
 
     def test_counts(self):
         self.assertEqual(len(self.c["occasions"]), 24)
-        self.assertEqual(len(self.c["recipients"]), 18)
+        self.assertEqual(len(self.c["recipients"]), 19)
         self.assertGreaterEqual(len(self.c["pairs"]), 100)
 
     def test_no_forbidden_words_or_template_phrases(self):
