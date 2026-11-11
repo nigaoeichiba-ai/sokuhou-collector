@@ -6,8 +6,8 @@
  "path": "/trend-humidifier-care/",
  "kind": "article",
  "parent": "/",
- "title": "加湿器は手入れのしやすい機種を選ぶ、水は毎日入れ替える",
- "h1": "加湿器は手入れのしやすい機種を選ぶ、水は毎日入れ替える",
+ "title": "加湿器は手入れのしやすい機種を選ぶ",
+ "h1": "加湿器は手入れのしやすい機種を選ぶ",
  "category": "天気・季節",
  "published": "2026-11-08",
  "seq": 12,
@@ -142,7 +142,7 @@
  "related": [
   {
    "path": "/trend-influenza-44/",
-   "text": "インフルエンザは定点10.26人。増えたのは本当だが、去年よりは少ない"
+   "text": "インフルエンザは定点10.26人"
   },
   {
    "path": "/trend-gastroenteritis-winter/",

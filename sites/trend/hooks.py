@@ -142,20 +142,17 @@ def prepare(cfg: dict, spec: dict, pages: list[dict], site_dir: Path) -> list[di
                       "sections": ([{"paras": list(spec.get("category_intro", {}).get(slug, []))}] if spec.get("category_intro", {}).get(slug) else []) + [{"html": '<div class="cards">' + "".join(card(p, first=(i == 0)) for i, p in enumerate(mine)) + "</div>"},
                                    {"h2": f"{name}の記事の一覧", "table": {"caption": "", "cols": ["題", "公開日", "更新日", "3行まとめ"], "num_cols": [], "rows": rows}}],
                       "related": []})
-    # the home page
+    # the home page (2026-11-11 revision): the latest articles in the order the desk fixed (home.json "latest_leads"), each with the desk's own one-line lead
     home = by["/"]
     for s in home["sections"]:
-        if s.get("html") == HOME_LATEST and ordered:
-            s["html"] = card(ordered[0], first=True)
-        elif s.get("html") == HOME_CATS:
-            groups = []
-            for slug, name, _ in CATS:
-                mine = [p for p in ordered[1:] if p["category"] == name]      # the top card is not listed a second time
-                if not mine:
-                    continue
-                more = f'<p class="more"><a href="/cat/{slug}/">{esc(name)}の記事をすべて見る({len(mine)}本)</a></p>' if len(mine) > 4 else ""
-                groups.append(f'<h3 class="cat-h"><a href="/cat/{slug}/">{esc(name)}</a></h3><div class="cards">' + "".join(card(p) for p in mine[:4]) + f"</div>{more}")
-            s["html"] = "".join(groups)
+        if s.get("html") == HOME_LATEST:
+            leads = home.get("latest_leads", {})
+            cards = []
+            for path, lead in leads.items():
+                a = dict(by[path])
+                a["_sum"] = lead
+                cards.append(card(a))
+            s["html"] = '<div class="cards">' + "".join(cards) + "</div>"
     return pages
 
 
@@ -251,11 +248,17 @@ def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path
         t = t.replace('<a class="brand" href="/"><span class="logo" aria-hidden="true">', '<a class="brand" href="/" aria-label="今日の話題 速報×深掘り"><span class="logo">', 1)
         t = t.replace("</span>今日の話題</a>\n<nav", "</span></a>\n<nav", 1)
         t = t.replace('<header class="site">', '<div class="wrap"><p class="tagline" style="margin:.4rem 0 0;font-size:.82rem;color:#555">ニュースの見出しで終わらせない「速報×深掘り」メディア</p></div>\n<header class="site">', 1)
-        t = t.replace('<p class="legal">', '<p class="src"><span>速報と深掘りを、1セットに。</span> <span>今日の話題を、速く、そして深く伝えること。</span></p>\n<p class="legal">', 1)
+        t = t.replace('<p class="legal">', '<p class="src"><span>「今日の話題」は、気になる速報ニュースをどこよりも深く、多角的に読み解くメディアです。</span></p>\n<p class="legal">', 1)
         t = t.replace("<span>&copy; 今日の話題</span>", "<span>&copy; 今日の話題 速報×深掘り All Rights Reserved.</span>", 1)
         if p and p.get("category"):
             t = _add_json_image(t, base + src)
         if rel == "index.html":
+            hero = (p or {}).get("hero")
+            m = re.search(r'<main class="wrap">\n(<h1>.*?</h1>)\n(<p class="answer">.*?</p>)\n', t, re.S)
+            if hero and m:
+                img = f'<img src="{hero["img"]}" width="{hero["width"]}" height="{hero["height"]}" alt="{esc(hero["alt"])}" fetchpriority="high">'
+                t = t.replace(m.group(0), f'<main class="wrap">\n<div class="hero"><div class="hero-text">{m.group(1)}\n{m.group(2)}</div>{img}</div>\n', 1)
+                t = t.replace('<link rel="stylesheet"', f'<link rel="preload" as="image" href="{hero["img"]}" fetchpriority="high">\n<link rel="stylesheet"', 1)
             org = {"@context": "https://schema.org", "@type": "Organization", "name": name, "url": base + "/", "logo": base + "/assets/img/logo.png"}
             t = t.replace('<link rel="stylesheet"', '<script type="application/ld+json">' + json.dumps(org, ensure_ascii=False) + '</script>\n<link rel="stylesheet"', 1)
         pages[rel] = t

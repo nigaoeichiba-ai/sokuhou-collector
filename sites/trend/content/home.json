@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-08",
- "data_basis": "2026年11月8日現在",
+ "updated": "2026-11-11",
+ "data_basis": "2026年11月11日現在",
  "sources": [
   "bousaicho"
  ],
@@ -12,122 +12,71 @@
  "primary_kw": "速報",
  "intent": 1,
  "description": "「今日の話題」は、ニュースの見出しや表面的な情報だけで終わりません。速報性と深い洞察を1セットにし、出来事の背景と移り変わり、数字の裏にある意味、暮らしや実務への影響、そして「次に何をすればよいか」までを、一次情報の読み直しとともに1本にまとめてお届けします。",
- "answer": "「今日の話題」は、ニュースの見出しや表面的な情報だけで終わりません。速報性と深い洞察を1セットにし、出来事の背景と移り変わり、数字の裏にある意味、暮らしや実務への影響、そして「次に何をすればよいか」までを、一次情報の読み直しとともに1本にまとめてお届けします。",
+ "answer": "見出しの先にある背景と数字を一次情報から読み解き、今日これから何をすればいいかまで示すサイトです。",
  "children_h2": "カテゴリ",
  "sections": [
   {
-   "h2": "『今日の話題 速報×深掘り』3つの約束",
-   "html": "<div class=\"feature-grid\"><div class=\"fcard\"><h3><small>特徴01</small><br>「数字」の裏取りと徹底比較</h3><p>単なる噂や感情論ではなく、出典の明確な数値や一次情報をもとに分析。過去のデータと見比べることで、ニュースの本当の意味を明らかにします。</p></div><div class=\"fcard\"><h3><small>特徴02</small><br>背景と推移がわかる</h3><p>なぜ今この話題が注目されているのか。事象に至るまでの流れや変化のプロセスを整理し、出来事の全体像をスムーズに理解できるようにまとめます。</p></div><div class=\"fcard\"><h3><small>特徴03</small><br>「次に何をすべきか」がわかる実務視点</h3><p>ニュースを知ったあと、自分の生活や仕事にどう影響するのか。独自の比較表や手順を交え、読者が次にとるべき具体的なアクションまで提示します。</p></div></div>"
+   "h2": "いまの速報",
+   "html": "<ul class=\"flash\"><li><span class=\"fl-d\">11/10</span> <a href=\"/trend-fire-prevention-week/\">秋の火災予防運動は11月15日まで｜この1週間で終わらせる、家の火の元の点検6つ</a></li><li><span class=\"fl-d\">11/10</span> <span class=\"fl-u\">更新</span> <a href=\"/trend-typhoon32/\">台風32号（チャンパカ）の進路予報と、32年ぶりの発生</a></li><li><span class=\"fl-d\">11/10</span> <span class=\"fl-u\">更新</span> <a href=\"/trend-fire-alarm/\">住宅用火災警報器の設置率は85.5％へ上昇</a></li></ul><p class=\"tchip\"><a href=\"/trend-typhoon32/\">台風32号（チャンパカ）／非常に強い・955hPa／危険度は5段階で表示（見本）｜11月10日16時現在</a></p>"
   },
   {
-   "h2": "このサイトについて",
+   "h2": "今日やること",
    "paras": [
-    "「今日の話題 速報×深掘り」は、気になる速報ニュースをどこよりも深く、多角的に読み解くメディアです。事件・事故・訃報などの重い話題は扱いません。"
+    "ニュースを読んだら、ここから始められます。ここにあるのは、いま動いている話題に結びついた3つです。"
    ],
-   "html": "<p class=\"more\"><a href=\"/about/\">続きは運営者情報をご覧ください。</a></p>"
+   "html": "<ol class=\"todo\"><li><span class=\"badge\">11月15日まで</span><h3><a href=\"/trend-fire-prevention-week/\">家の火の元を点検する</a></h3><p>秋の火災予防運動の期間中に、コンロやストーブまわりなど6か所を確認します。</p></li><li><span class=\"badge\">設置10年目が目安</span><h3><a href=\"/trend-fire-alarm/\">火災警報器の点検・交換を確認する</a></h3><p>設置率は85.5％まで上がりました。残る課題は、設置から10年目の点検と交換です。</p></li><li><span class=\"badge\">進路予報を更新中</span><h3><a href=\"/trend-typhoon32/\">台風への備えを確認する</a></h3><p>台風32号（チャンパカ）の進路予報が出ています。水と食料、窓まわりの備えを先に確認します。</p></li></ol>"
   },
   {
-   "h2": "注目カテゴリー",
+   "h2": "『今日の話題 速報×深掘り』3つの約束",
+   "paras": [
+    "約束は、言葉ではなく記事の中身で示すものです。"
+   ],
+   "html": "<div class=\"feature-grid\"><div class=\"fcard\"><h3><small>約束01</small><br>「数字」の裏取りと比較</h3><p>出典がはっきりした数字と一次情報をもとに、過去のデータと比べて意味を読み解きます。</p><p class=\"ex\"><a href=\"/trend-fire-alarm/\">実例 住宅用火災警報器の設置率は85.5％へ上昇</a></p></div><div class=\"fcard\"><h3><small>約束02</small><br>背景と推移がわかる</h3><p>出来事に至るまでの流れと変化の過程をたどり、全体像を描きます。</p><p class=\"ex\"><a href=\"/trend-typhoon32/\">実例 台風32号（チャンパカ）の進路予報と、32年ぶりの発生</a></p></div><div class=\"fcard\"><h3><small>約束03</small><br>「次に何をすべきか」がわかる</h3><p>生活や仕事への影響も踏まえて、独自の比較表や手順で次の一手まで示します。</p><p class=\"ex\"><a href=\"/trend-fire-prevention-week/\">実例 この1週間で終わらせる、家の火の元の点検6つ</a></p></div></div>"
+  },
+  {
+   "h2": "最新の深掘り記事",
+   "paras": [
+    "見出しだけでは見えてこない、出来事の「その先」を解説する記事です。"
+   ],
+   "html": "<!--TOP:latest-->"
+  },
+  {
+   "h2": "カテゴリ",
    "paras": [
     "家計、防災、天気、暮らし。いま動いている話題を多角的に掘り下げています。"
    ],
    "html": "<ul class=\"links\"><li><a href=\"/cat/kakei/\">家計・値上げ</a>：食品や光熱費の値動きと、制度の変更と、家計への影響の整理</li><li><a href=\"/cat/bousai/\">防災・気象</a>：台風や大雨の見通しと、家でできる備えの手順</li><li><a href=\"/cat/tenki/\">天気・季節</a>：気温や季節の変わり目と、体調や暮らしへの影響</li><li><a href=\"/cat/kurashi/\">暮らし</a>：日常の選択に直結するニュースの整理と、今すぐ試せる手順</li></ul>"
   },
   {
-   "h2": "最新の深掘り記事",
-   "paras": [
-    "見出しだけでは見えてこない、出来事の「その先」を解説した記事一覧です。"
-   ],
-   "html": "<!--TOP:latest-->"
+   "h2": "防災特集／ご自宅の備蓄・備えを8項目でチェック",
+   "html": "<div class=\"bt\" id=\"bt\"><p class=\"bt-lead\">防災庁は、家庭での水と食料の備蓄について、最低3日分、できれば1週間分を備えるよう案内しています。</p><p class=\"bt-desc\">項目ごとに「そろっている」を押して、いまの備えの状態を確認できます。各項目の見出しは、詳しい解説ページへのリンクになっています。</p><div class=\"bt-stat\"><span class=\"bt-count\"><b id=\"bt-n\">5</b> / 8 項目</span><span class=\"bt-chip mid\" id=\"bt-chip\" aria-live=\"polite\">最低限そろっている</span></div><div class=\"bt-seg\" id=\"bt-seg\"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class=\"tablewrap bt-tw\"><table class=\"bt-tbl\"><thead><tr><th scope=\"col\">項目</th><th scope=\"col\">目安</th><th scope=\"col\">チェック</th></tr></thead><tbody><tr class=\"on\"><th scope=\"row\"><a href=\"/bousai-mizu-shokuryo/\">水</a></th><td>1人1日3リットル。最低3日分、できれば1週間分<span class=\"bt-sub\">（補足：見本の備蓄量：約3.1日分）</span></td><td class=\"bt-act\"><button type=\"button\" class=\"bt-btn\" aria-pressed=\"true\">そろっている</button></td></tr><tr class=\"on\"><th scope=\"row\"><a href=\"/bousai-mizu-shokuryo/\">食料</a></th><td>水と同じ日数分。缶詰、レトルト、ごはん、麺類が基本</td><td class=\"bt-act\"><button type=\"button\" class=\"bt-btn\" aria-pressed=\"true\">そろっている</button></td></tr><tr class=\"on\"><th scope=\"row\"><a href=\"/bousai-keitai-toilet/\">携帯トイレ</a></th><td>1人1日5〜6回分、人数と日数分</td><td class=\"bt-act\"><button type=\"button\" class=\"bt-btn\" aria-pressed=\"true\">そろっている</button></td></tr><tr class=\"on\"><th scope=\"row\"><a href=\"/bousai-light/\">ライト</a></th><td>ランタン型とヘッドライトの使い分け</td><td class=\"bt-act\"><button type=\"button\" class=\"bt-btn\" aria-pressed=\"true\">そろっている</button></td></tr><tr class=\"\"><th scope=\"row\"><a href=\"/bousai-denchi-juden/\">電池と充電器</a></th><td>停電中もスマホを使い続けるためのもの。電池は同じ種類をそろえる</td><td class=\"bt-act\"><button type=\"button\" class=\"bt-btn\" aria-pressed=\"false\">そろっている</button></td></tr><tr class=\"\"><th scope=\"row\"><a href=\"/bousai/\">ラジオ</a></th><td>スマホの電池を使わずに情報を得る</td><td class=\"bt-act\"><button type=\"button\" class=\"bt-btn\" aria-pressed=\"false\">そろっている</button></td></tr><tr class=\"on\"><th scope=\"row\"><a href=\"/bousai/\">雨具と防水仕様の靴</a></th><td>両手があくレインコートと、水を通さない靴</td><td class=\"bt-act\"><button type=\"button\" class=\"bt-btn\" aria-pressed=\"true\">そろっている</button></td></tr><tr class=\"\"><th scope=\"row\"><a href=\"/bousai/\">救急用品</a></th><td>けがの手当て用品と、薬・お薬手帳</td><td class=\"bt-act\"><button type=\"button\" class=\"bt-btn\" aria-pressed=\"false\">そろっている</button></td></tr></tbody></table></div><p class=\"bt-note\">※ チェックの選択状況が外部に送信されたり、保存されたりすることはありません。</p><p class=\"more\"><a href=\"/bousai/\">防災グッズのチェックリスト、8項目で家の備えを確認しよう</a></p><script>\n(function(){\nvar root=document.getElementById(\"bt\");if(!root)return;\nvar btns=root.querySelectorAll(\".bt-btn\"),n=document.getElementById(\"bt-n\"),chip=document.getElementById(\"bt-chip\"),segs=root.querySelectorAll(\"#bt-seg div\");\nfunction label(c){return c>=8?[\"しっかりそろっている\",\"high\"]:c>=6?[\"あと少しで一通りそろう\",\"mid\"]:c===5?[\"最低限そろっている\",\"mid\"]:c>=3?[\"半分ほど。まず水と食料から\",\"low\"]:[\"まず水と食料から始めよう\",\"low\"];}\nfunction update(){var c=0;btns.forEach(function(b){var on=b.getAttribute(\"aria-pressed\")===\"true\";b.parentNode.parentNode.className=on?\"on\":\"\";if(on)c++;});\nn.textContent=c;var l=label(c);chip.textContent=l[0];chip.className=\"bt-chip \"+l[1];\nsegs.forEach(function(s,i){s.className=i<c?\"on-\"+l[1]:\"\";});}\nbtns.forEach(function(b){b.addEventListener(\"click\",function(){b.setAttribute(\"aria-pressed\",b.getAttribute(\"aria-pressed\")===\"true\"?\"false\":\"true\");update();});});\nupdate();\n})();\n</script></div>"
   },
   {
-   "h2": "カテゴリ別の新着",
-   "html": "<!--TOP:cats-->"
-  },
-  {
-   "h2": "【防災特集】ご自宅の備蓄・備えを8項目でチェック",
-   "paras": [
-    "防災庁から、家庭での水と食料の備蓄について「最低3日分、推奨1週間分」との呼びかけがありました。本特集では、ご家庭に必要な備えを8つの重要項目に整理し、具体的な選び方や計算の基準をまとめています。",
-    "まずは下記のチェックリストでご自宅の不足分を確認し、各項目の「詳しい解説ページ」で必要な量や失敗しない選び方をご確認ください。",
-    "※チェックの選択状況が外部に送信されたり、保存されたりすることはありません。安心してお使いいただけます。"
-   ],
-   "table": {
-    "caption": "防災グッズ8項目と、読めるページ",
-    "cols": [
-     "項目",
-     "目安",
-     "詳しいページ"
-    ],
-    "num_cols": [],
-    "rows": [
-     [
-      "水",
-      "1人1日3リットル。最低3日分、できれば1週間分",
-      {
-       "text": "水と食料の備蓄を続ける、保管と期限管理のコツ",
-       "href": "/bousai-mizu-shokuryo/"
-      }
-     ],
-     [
-      "食料",
-      "水と同じ日数分。缶詰、レトルト、ごはん、麺類が基本",
-      {
-       "text": "水と食料の備蓄を続ける、保管と期限管理のコツ",
-       "href": "/bousai-mizu-shokuryo/"
-      }
-     ],
-     [
-      "携帯トイレ",
-      "1日5〜6回×人数×日数分",
-      {
-       "text": "携帯トイレの使い方と、使用後の保管・処理のしかた",
-       "href": "/bousai-keitai-toilet/"
-      }
-     ],
-     [
-      "ライト",
-      "ランタン型とヘッドライトを、使う場面で使い分ける",
-      {
-       "text": "防災用ライトの選び方、明るさ・電池・置き場所",
-       "href": "/bousai-light/"
-      }
-     ],
-     [
-      "電池と充電器",
-      "スマホの充電を守る。電池は同じ種類をそろえる",
-      {
-       "text": "防災用モバイルバッテリーの容量の目安と、電池の備蓄",
-       "href": "/bousai-denchi-juden/"
-      }
-     ],
-     [
-      "ラジオ",
-      "スマホの電池を使わずに情報を得る",
-      "—"
-     ],
-     [
-      "雨具と防水仕様の靴",
-      "両手があくレインコートと、水を通さない靴",
-      "—"
-     ],
-     [
-      "救急用品",
-      "けがの手当て用品と、薬・お薬手帳",
-      "—"
-     ]
-    ]
-   }
-  },
-  {
-   "html": "<p class=\"more\"><a href=\"/bousai/\">防災グッズのチェックリスト、8項目で家の備えを確認しよう</a></p>"
-  },
-  {
-   "h2": "本サイトの取材・執筆基準について",
-   "paras": [
-    "当サイトでは、読者のみなさまに安心して確実な情報をお届けするため、以下の基準で記事を作成しています。"
-   ],
-   "html": "<ul><li>出典の明確な一次情報・公式発表をベースに調査・執筆します。</li><li>事件・事故・訃報などの過度に重い話題や不確実なゴシップは扱いません。</li><li>単なる要約にとどまらず、自作の比較表や計算・具体的な手順など、独自の視点を加えて提供します。</li></ul>"
+   "h2": "取材・執筆基準",
+   "html": "<ul><li>出典がはっきりした一次情報・公式発表をもとに調査・執筆します</li><li>事件・事故・訃報などの重い話題や、不確実なゴシップは扱いません</li><li>単なる要約にとどまらず、自作の比較表や計算・具体的な手順など、独自の視点を加えます</li></ul>"
   }
  ],
- "related": []
+ "related": [],
+ "hide_children": true,
+ "hero": {
+  "img": "/assets/img/hero-kv.webp",
+  "width": 2384,
+  "height": 1008,
+  "alt": "黄色のサンバーストを背景に、通信衛星、動画配信のスマートフォン、ドローン、チャートと天気のピクトグラムが映る薄型モニター、ニュースアプリのタブレット、新幹線、スタジアム、上昇するグラフ、ズワイガニ、ゲーム機、取材マイク、スマートフォン、ワインが描かれたイラスト"
+ },
+ "latest_leads": {
+  "/trend-fire-prevention-week/": "コンロやストーブまわりなど、家の火の元6か所を期間中に点検する手順です",
+  "/trend-fire-alarm/": "設置が進んだ次は、10年目を迎えた警報器の点検と交換が課題です",
+  "/trend-rice-price/": "11週下がり続けたコメの価格が、12週ぶりに上がりました",
+  "/trend-vegetable-price/": "品目ごとに平年との差が大きい週です。価格を見ながら献立を組みます",
+  "/trend-wage-2026-09/": "名目と実質の差は、物価の上がり方です。数字の読み方を、家計の実感と結びつけて説明します",
+  "/trend-blackfriday-price/": "割引の大きさは、通常価格と比べて初めて見えてきます",
+  "/trend-influenza-44/": "定点あたりの報告数から、いまの広がり具合を追います",
+  "/trend-humidifier-care/": "使い続けるには手入れの手間が決め手です。選び方をまとめています",
+  "/trend-gastroenteritis-winter/": "冬に増える感染性胃腸炎の、家庭でできる対策をまとめます",
+  "/trend-nengajo-print/": "年賀はがきの価格と、準備の進め方を紹介します",
+  "/bousai-light/": "ランタン型とヘッドライトの、使う場面に合わせた使い分け方です",
+  "/bousai-keitai-toilet/": "必要な回数の目安は、1人1日5〜6回です。使い方と処理のしかたです",
+  "/bousai-denchi-juden/": "スマホを停電中も使い続けるための容量の目安と、電池のそろえ方です"
+ }
 }
