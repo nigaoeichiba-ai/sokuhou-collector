@@ -918,7 +918,7 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict], pool: tuple[l
         rows_ = "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in res["facts"])
         paras = "".join(f"<p>{esc(p)}</p>" for p in str(res["text"]).split(chr(10)) if p.strip())
         result_html = (f'<section class="result" id="result"><h2>結果</h2><dl class="info">{rows_}</dl>{paras}'
-                       f'<p class="small muted">{esc(fmt_date(res["written_on"]))}にまとめました。公式の発表をもとにしています。間違いに気づいたときは、<a href="/contact/?kind=date">お問い合わせ</a>からお知らせください。</p></section>')
+                       f'<p class="small muted">{esc(fmt_date(res["written_on"]))}にまとめました。主催者の発表と報道をもとにしています。間違いに気づいたときは、<a href="/contact/?kind=date">お問い合わせ</a>からお知らせください。</p></section>')
     vkey, vtext = verify_badge(e)
     vrow = (f'<p class="vrow"><span class="vbadge vb-{vkey}" data-vbadge>{VERIFY_LABELS[vkey]}</span> <span class="small muted" data-vtext>{esc(vtext)}</span> '
             + (f' <a class="small" href="{esc(official_link(e))}" rel="noopener nofollow" target="_blank">公式ページ</a>' if official_link(e) else "") + "</p>")
@@ -1325,7 +1325,7 @@ def legal(c: Ctx) -> dict:
                     '<h2 id="words">調べてほしいワード(任意)</h2>'
                     "<p>「好きな分野を選ぶ」のページで、入れたワードの横の「このワードを調べてもらう」を押したときだけ、そのワードをサーバーに預かります。押さなければ、ワードは、この端末の中にだけあります。"
                     "サーバーに残るのは、ワードの文字、受け付けた時刻、ランダムな番号だけです。名前・メールアドレス・アドレス(IP)・クッキーは、ワードに結びつけません。送りすぎを防ぐため、アドレスから作った1日限りの符号を、1日の回数の数えにだけ使い、翌日に削除します。"
-                    "預かったワードは、公式の情報を調べて、日付をカードにするためにだけ使います。カードに、だれが頼んだかは出ません。ワードは、暗号にして取り出し、公開しません。ワードは、200日で削除します。"
+                    "預かったワードは、公式の情報や報道を調べて、日付をカードにするためにだけ使います。カードに、だれが頼んだかは出ません。ワードは、暗号にして取り出し、公開しません。ワードは、200日で削除します。"
                     "個人の名前・電話番号・住所・メールアドレス・アドレス(URL)は、入力しないでください(受け付けません)。ギャンブル・アダルトなどの禁止ワードは、カードにできません。調べても、日付が見つからないことがあります。調べる時期は、お約束できません。</p>"
                     "<h2>カードの共有(任意)</h2>"
                     "<p>「カードを作って送る」で作ったカードの内容(題名・日付・ひとこと・やること)は、リンクのうち「#」より後ろに入ります。この部分は、ブラウザから当サイトのサーバーへは送られず、保存もされません。リンクを渡した相手の端末で、カードとして表示されます。スマホの共有メニューから渡した文章も、サーバーには送られず、ご利用の端末の中で、カードを作るページに渡されます。リンクを送る相手と手段は、あなたが選びます。</p>"),

@@ -904,7 +904,7 @@
       if (bad) { sendEl.innerHTML = ''; return; }
       if (sentWords().indexOf(w) >= 0) { sendEl.innerHTML = '<p class="muted">「' + H(w) + '」は、今日、送りました。</p>'; return; }
       sendEl.innerHTML = '<p><button type="button" class="btn small" data-word-send="' + H(w) + '">このワードを調べてもらう</button></p>' +
-        '<p class="muted">数日以内に、公式の情報を調べます。見つかった日付を、カードにします。見つからないこともあります。押すと、ワードがサーバーに保存されます(個人とは結びつけません。<a href="/privacy/#words">詳しく</a>)。ギャンブル・アダルト・個人の情報などは、カードにできません。</p>';
+        '<p class="muted">数日以内に、公式の情報や報道を調べます。見つかった日付を、カードにします。見つからないこともあります。押すと、ワードがサーバーに保存されます(個人とは結びつけません。<a href="/privacy/#words">詳しく</a>)。ギャンブル・アダルト・個人の情報などは、カードにできません。</p>';
     }
     document.addEventListener('click', function (ev) {
       var b = ev.target.closest ? ev.target.closest('[data-word-send]') : null;
