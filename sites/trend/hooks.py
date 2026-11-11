@@ -259,7 +259,7 @@ def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path
             if hero and m:
                 img = f'<img src="{hero["img"]}" width="{hero["width"]}" height="{hero["height"]}" alt="{esc(hero["alt"])}" fetchpriority="high">'
                 h1 = m.group(1).replace("<h1>", '<h1><span class="hb hb-r">', 1).replace("、どこよりも", '、</span><span class="hb hb-k">どこよりも', 1).replace("</h1>", "</span></h1>", 1)
-                t = t.replace(m.group(0), f'<main class="wrap">\n<div class="hero"><div class="hero-kv">{img}{h1}</div><div class="hero-text">{m.group(2)}</div></div>\n', 1)
+                t = t.replace(m.group(0), f'<main class="wrap">\n<div class="hero"><div class="hero-kv">{img}<div class="hero-panel">{h1}{m.group(2)}</div></div></div>\n', 1)
                 t = t.replace('<link rel="stylesheet"', f'<link rel="preload" as="image" href="{hero["img"]}" fetchpriority="high">\n<link rel="stylesheet"', 1)
             org = {"@context": "https://schema.org", "@type": "Organization", "name": name, "url": base + "/", "logo": base + "/assets/img/logo.png"}
             t = t.replace('<link rel="stylesheet"', '<script type="application/ld+json">' + json.dumps(org, ensure_ascii=False) + '</script>\n<link rel="stylesheet"', 1)

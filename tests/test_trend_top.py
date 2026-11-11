@@ -55,6 +55,10 @@ class TrendTop(unittest.TestCase):
         self.assertEqual(re.sub(r"<[^>]+>", "", re.search(r"<h1>.*?</h1>", h, re.S).group(0)), H1)
         self.assertLess(h.index('<img src="/assets/img/hero-kv.webp'), h.index("<h1>"))      # the bands sit on the picture, the lead pairs with it inside .hero
         self.assertLess(h.index("<h1>"), h.index('<p class="answer">'))
+        # lead position fix 2026-11-11: the lead sits in the same panel as the bands (right under the h1), over the picture; no separate lead block below it
+        self.assertRegex(h, r'<div class="hero-kv"><img [^>]+><div class="hero-panel"><h1>.*?</h1><p class="answer">[^<]+</p></div></div></div>')
+        self.assertNotIn("hero-text", h)
+        self.assertEqual(h.count('<p class="answer">'), 1)
         self.assertIn(f'<p class="answer">{HERO_SENTENCE}</p>', h)       # the hero sentence replaced the old lead (Muse's final text 2026-11-11); the old lead stays as the meta description
         self.assertIn(f'<meta name="description" content="{DESC}">', h)
         self.assertIn(FOOTER, h[h.index("<footer"):])
