@@ -56,6 +56,7 @@ class TrendSite(unittest.TestCase):
     def test_every_page_has_its_picture_and_every_picture_has_alt_text(self):
         for name, page in _pages().items():
             html = "".join(s.get("html", "") for s in page["sections"])
+            html = re.sub(r'<img [^>]*src="https://www\d*\.a8\.net/0\.gif[^>]*>', "", html)   # the ASP's 1x1 counter pixel (alt="" by design, code used as provided)
             for src in re.findall(r'<img src="/assets/img/([^"]+)"', html):
                 self.assertTrue((SITE / "assets" / "img" / src).exists(), f"{name}: {src}")
             self.assertEqual(len(re.findall(r"<img ", html)), len(re.findall(r'alt="[^"]{8,}"', html)), name)
