@@ -377,7 +377,7 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
                         categories=category_cards(ctx.categories), articles=article_cards(arts),
                         more=f'<section class="section"><div class="wrap"><article class="reading-column doc"><p class="answer">{pg["answer"]}</p>{pg["rest"]}</article></div></section>')
     if path == "/calendar/":
-        stamp = f"表示時点：{fmt(at.isoformat(timespec='seconds'), True)}（日本時間）。未発表・終了を含めて確認できます。日程は、各セールの欄に書いた確認日に、主催者の公式発表で確かめたものです。"
+        stamp = f"表示時点：{fmt(at.isoformat(timespec='seconds'), True)}（日本時間）。未発表・終了を含めて確認できます。日程は、各セールの欄に書いた確認日に、主催者の発表や信頼できる報道で確かめたものです。"
         return template("calendar", notes=notice(stamp), filters=filters(["rakuten", "amazon", "yahoo"]), sales=sales_grid(ctx.sales, at))
     mall = next((m for m, pth in MALL_PATH.items() if pth == path), None)
     if mall:

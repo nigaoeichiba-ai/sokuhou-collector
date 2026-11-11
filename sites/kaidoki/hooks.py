@@ -43,7 +43,7 @@ V4 = """<section class="hero">
 <div class="hero-copy">
 <div class="live-row"><span class="live">開催中</span><span class="en">RAKUTEN SHOPPING MARATHON</span></div>
 <h1>お買い物マラソン、<br><span class="gold">11月11日1時59分に</span><br>ゴールを迎えます！</h1>
-<p class="sub">セールの日程は、主催者の公式発表で確かめたものだけ。未発表は未発表のまま、予想で埋めない。買い時の見極めは、ここから始まります。</p>
+<p class="sub">セールの日程は、主催者の発表や信頼できる報道で確かめたものだけ。未発表は未発表のまま、予想で埋めない。買い時の見極めは、ここから始まります。</p>
 <div class="hero-cta">
 <a class="fbtn fbtn-gold" href="/rakuten/marathon/">開催中のセールを見る</a>
 <a class="fbtn fbtn-ghost" href="/yahoo/">次のセールに備える</a>
@@ -103,7 +103,7 @@ V5 = """<section class="hero">
 <div class="hero-copy">
 <div class="live-row"><span class="live" id="phase-badge">開幕迫る</span><span class="en">YAHOO! SHOPPING BLACK FRIDAY 2026</span></div>
 <h1>ブラックフライデー<br><span class="gold">11月22日0時に</span><br>いよいよ開幕！</h1>
-<p class="sub">Yahoo!ショッピングの大型セールが、11月22日（日）0時に始まります。セールの日程は、主催者の公式発表で確かめたものだけ。欲しい物のリストは、開幕前に作っておくのが勝ち筋です。</p>
+<p class="sub">Yahoo!ショッピングの大型セールが、11月22日（日）0時に始まります。セールの日程は、主催者の発表や信頼できる報道で確かめたものだけ。欲しい物のリストは、開幕前に作っておくのが勝ち筋です。</p>
 <div class="hero-cta">
 <a class="fbtn fbtn-gold" href="/calendar/">セールの日程を見る</a>
 <a class="fbtn fbtn-ghost" href="/buytime/">買い時を調べる</a>

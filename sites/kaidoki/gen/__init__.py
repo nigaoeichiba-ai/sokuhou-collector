@@ -65,7 +65,7 @@ def write() -> int:
         ],
         "sources_style": "credit",
         "credits": [],
-        "sources": {"official": {"org": "各主催者・メーカー・業界団体", "table": "公式発表", "credit": "各主催者・メーカー・業界団体の公式発表をもとに作成",
+        "sources": {"official": {"org": "各主催者・メーカー・業界団体", "table": "主催者の発表と報道", "credit": "各主催者・メーカー・業界団体の発表と報道をもとに作成",
                                  "url": "", "basis": CHECKED, "fetched": CHECKED}},
     })
     (SITE / "site.json").write_text(json.dumps(site, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
