@@ -20,7 +20,7 @@ BASE = "https://trend-sokuho.com"
 TITLE = "今日の話題｜速報×深掘り"
 H1 = "速報ニュースを、どこよりも深掘りする。"
 LEAD = "「今日の話題」は、ニュースの見出しや表面的な情報だけで終わりません。速報性と深い洞察を1セットにし、出来事の背景と移り変わり、数字の裏にある意味、暮らしや実務への影響、そして「次に何をすればよいか」までを、一次情報の読み直しとともに1本にまとめてお届けします。"
-DESC = LEAD      # the description follows the new lead (the desk, 2026-11-10)
+DESC = "速報ニュースをどこよりも深く調査・検証し、今日これから何をすればいいかまで示すメディア。数字は一次情報で裏取りし、独自の比較表や手順で次の一手まで提示します。"      # the owner's decision 2026-11-11 (answer to the confirmation points, item 3); the lead of 11-10 (LEAD) is no longer the description
 HERO_SENTENCE = "当サイトは、話題のテーマの裏にある「ホントの数字」や「本当のトピック」を分かりやすく深掘りをして、今すぐ使えるお役立ち情報をお届けするメディアです。"      # the owner's rewrite 2026-11-11 (desk instruction)
 FOOTER = "「今日の話題」は、気になる速報ニュースをどこよりも深く、多角的に読み解くメディアです。"
 CAT_DESC = {"kakei": "コメや野菜の価格、給与、セールの動きなど、家計に関わる数字の記事です。省庁や公的機関の発表をもとに、店頭で使える比べ方まで紹介します。",
@@ -109,23 +109,38 @@ class TrendTop(unittest.TestCase):
             crumbs = [d for d in _lds(self.html(f"/cat/{slug}/")) if d["@type"] == "BreadcrumbList"][0]
             self.assertEqual([i["name"] for i in crumbs["itemListElement"]], ["トップ", CAT_NAME[slug]])
 
-    def test_the_latest_articles_are_the_13_cards_in_the_desks_order_with_the_desks_leads(self):
-        """2026-11-11 revision: the "注目の解説記事ラインナップ" list is the desk's fixed 13 (order and one-line leads in home.json "latest_leads"), not the newest-first rule of 11-10."""
+    def test_the_latest_articles_are_the_13_newest_cards_taken_from_the_articles(self):
+        """Owner decision 2026-11-11 (answer to the confirmation points, item 5): the "注目の解説記事ラインナップ" list is the 13 newest articles, newest first, made from the
+        articles themselves (title = h1, lead = the article's `top_lead`, else the first line of its 3行まとめ).  It replaced the fixed list of 11-11 (home.json "latest_leads")."""
         main = self.html("/")
         sec = main[main.index("注目の解説記事ラインナップ</h2>"):main.index("こんなテーマを追いかけています！</h2>")]
         cards = re.findall(r'<article class="card">.*?</article>', sec, re.S)
         self.assertEqual(len(cards), 13)
-        leads = json.loads((SITE / "content" / "home.json").read_text(encoding="utf-8"))["latest_leads"]
-        by = {p["path"]: p for p in self.articles}
-        for c, (path, lead) in zip(cards, leads.items()):
-            self.assertIn(f'<h3><a href="{path}">{by[path]["h1"]}</a></h3>', c)
-            self.assertIn(f'<p class="card-sum">{lead}</p>', c)
-        self.assertEqual(len(leads), 13)
-        titles = [by[p]["h1"] for p in leads]
+        self.assertNotIn("latest_leads", json.loads((SITE / "content" / "home.json").read_text(encoding="utf-8")))
+        newest = hooks.newest_first(self.articles)[:13]
+        for c, p in zip(cards, newest):
+            self.assertIn(f'<h3><a href="{p["path"]}">{p["h1"]}</a></h3>', c)
+            self.assertIn(f'<p class="card-sum">{hooks.esc(p.get("top_lead") or p["_sum"])}</p>', c)
+        stamps = [(p["published"], p.get("seq", 0)) for p in newest]
+        self.assertEqual(stamps, sorted(stamps, reverse=True))
         for new in ("給与は名目4.6％増、実質は2.2％増。数字の差が家計の実感です", "インフルエンザは定点10.26人", "加湿器は手入れのしやすい機種を選ぶ", "年賀はがきは1枚85円", "防災用ライトの選び方",
                     "たまねぎは平年の55％、レタスは122％。品目ごとに野菜の献立を組む週"):
-            self.assertIn(new, titles)
-            self.assertIn(f"<title>{new} | 今日の話題</title>", self.html(next(p for p in leads if by[p]["h1"] == new)))     # title tag, h1 and the card text agree
+            self.assertIn(new, [p["h1"] for p in newest])
+            path = next(p["path"] for p in newest if p["h1"] == new)
+            self.assertIn(f"<title>{new} | 今日の話題</title>", self.html(path))     # title tag, h1 and the card text agree
+
+    def test_a_new_article_shows_up_on_the_top_by_itself(self):
+        """The failure this reproduces: a newly published article missing from the top because the list was fixed by hand."""
+        cfg, spec, content = newsite.load_site(SITE)
+        new = json.loads(json.dumps(next(p for p in content if p["path"] == "/trend-rice-price/")))
+        new.update({"path": "/trend-test-newest/", "h1": "新しい記事のテスト", "published": "2026-12-01", "seq": 99})
+        new.pop("top_lead", None)
+        out = hooks.prepare(cfg, spec, content + [new], SITE)
+        home = next(p for p in out if p["path"] == "/")
+        sec = next(s["html"] for s in home["sections"] if s.get("html", "").startswith('<div class="cards">'))
+        cards = re.findall(r'<article class="card">.*?</article>', sec, re.S)
+        self.assertEqual(len(cards), 13)
+        self.assertIn('<a href="/trend-test-newest/">新しい記事のテスト</a>', cards[0])      # newest first, the lead falls back to its 3行まとめ
 
     def test_the_new_top_sections_are_in_the_desks_order_and_the_panel_has_8_items(self):
         h = self.html("/")
@@ -135,8 +150,16 @@ class TrendTop(unittest.TestCase):
         self.assertEqual(h.count('class="bt-btn"'), 8)
         self.assertIn('<b id="bt-n">5</b> / 8 項目達成！', h)
         self.assertIn("（最低限はクリア！）", h)      # the initial state (5 of 8); after a click the chip follows the desk's mapping
-        for lab in ("バッチリ準備OK！", "あと一歩でカンペキ！", "半分くらい。まずは水と食料から！", "まずは水と食料から始めよう。"):
-            self.assertIn(lab, h)
+        # the owner's mapping (answer 2026-11-11): 8 / 6-7 / 5 / 4 / 0-3 items
+        m = re.search(r'function label\(c\)\{(.*?);\}\n', h).group(1)
+        self.assertEqual(re.findall(r'\["([^"]+)","(\w+)"\]', m), [("バッチリ準備OK！", "high"), ("あと一歩でカンペキ！", "mid"), ("最低限はクリア！", "mid"), ("半分くらい。まずは水と食料から！", "mid"), ("まずは水と食料から始めよう", "low")])
+        self.assertIn("c>=8?", m)
+        self.assertIn("c>=6?", m)
+        self.assertIn("c===5?", m)
+        self.assertIn("c===4?", m)
+        self.assertNotIn('class="fl-u"', h)      # the "更新" badge on the flash items is gone (the three action badges and the typhoon chip stay)
+        for badge in ("11月15日まで", "設置10年目が目安", "進路予報を更新中"):
+            self.assertIn(f'<span class="badge">{badge}</span>', h)
         self.assertIn("台風32号（チャンパカ）／非常に強い・955hPa／危険度は5段階の5｜11月10日16時現在", h)
         self.assertNotIn("（見本）", h)
         self.assertNotIn("防災グッズのチェックリスト、8項目で家の備えを確認しよう", h)      # the extra line under the panel is gone (owner-approved fix 2026-11-11)

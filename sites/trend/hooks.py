@@ -30,6 +30,7 @@ LEGACY = {"/trend-typhoon32/": ("防災・気象", "2026-11-07", 1), "/bousai/":
 CARD_W, CARD_H = 640, 427
 OG_DEFAULT = "/assets/og-default.png"
 HOME_LATEST, HOME_CATS = "<!--TOP:latest-->", "<!--TOP:cats-->"
+HOME_LATEST_N = 13
 
 
 ICON_ROOT_FILES = ("favicon-16.png", "favicon-32.png", "favicon-48.png", "icon-512.png")
@@ -142,15 +143,15 @@ def prepare(cfg: dict, spec: dict, pages: list[dict], site_dir: Path) -> list[di
                       "sections": ([{"paras": list(spec.get("category_intro", {}).get(slug, []))}] if spec.get("category_intro", {}).get(slug) else []) + [{"html": '<div class="cards">' + "".join(card(p, first=(i == 0)) for i, p in enumerate(mine)) + "</div>"},
                                    {"h2": f"{name}の記事の一覧", "table": {"caption": "", "cols": ["題", "公開日", "更新日", "3行まとめ"], "num_cols": [], "rows": rows}}],
                       "related": []})
-    # the home page (2026-11-11 revision): the latest articles in the order the desk fixed (home.json "latest_leads"), each with the desk's own one-line lead
+    # the home page: the 13 newest articles, newest first (owner decision 2026-11-11).  Title and lead come from the article itself: `top_lead` (its one-line lead,
+    # moved from home.json) when it has one, else the first line of its 「3行まとめ」.  A new article shows up here by itself.
     home = by["/"]
     for s in home["sections"]:
         if s.get("html") == HOME_LATEST:
-            leads = home.get("latest_leads", {})
             cards = []
-            for path, lead in leads.items():
-                a = dict(by[path])
-                a["_sum"] = lead
+            for a in ordered[:HOME_LATEST_N]:
+                a = dict(a)
+                a["_sum"] = a.get("top_lead") or a["_sum"]
                 cards.append(card(a))
             s["html"] = '<div class="cards">' + "".join(cards) + "</div>"
     return pages
