@@ -32,6 +32,9 @@ PORT = os.environ.get("SSH_PORT", "10022")
 
 def _conn():
     key, host, user = (os.environ.get(k, "") for k in ("XSERVER_SSH_KEY", "XSERVER_HOST", "XSERVER_USER"))
+    kf = os.environ.get("XSERVER_SSH_KEY_FILE", "")             # a local run (2026-11-11): the key as a file on the owner's PC instead of a GitHub secret; never in the repository
+    if not key and kf and Path(kf).is_file():
+        key = Path(kf).read_text(encoding="utf-8")
     if not (key and host and user):
         return None
     return key, host, user
