@@ -771,7 +771,7 @@ def related_section(cols: list[tuple[str, str]]) -> str:
 REL_WORDS = {"boyfriend": ("恋人", "パートナー"), "girlfriend": ("恋人", "パートナー"), "husband": ("夫婦", "配偶者", "パートナー"), "wife": ("夫婦", "配偶者", "パートナー"),
              "father": ("両親", "親"), "mother": ("両親", "親"), "grandfather": ("祖父母", "祖父", "親族"), "grandmother": ("祖父母", "祖母", "親族"),
              "friend-female": ("友人", "友達"), "friend-male": ("友人", "友達"), "colleague": ("同僚", "職場"), "boss": ("上司", "目上"), "teacher": ("先生",),
-             "baby": ("赤ちゃん", "子ども", "本人"), "toddler": ("子ども", "幼児"), "child": ("子ども", "小学生"), "teen": ("子ども", "中高生"), "in-laws": ("義父母", "義")}
+             "baby": ("赤ちゃん", "子ども", "本人"), "toddler": ("子ども", "幼児"), "child": ("子ども", "小学生"), "teen": ("子ども", "中高生"), "university-student": ("大学生", "学生"), "in-laws": ("義父母", "義")}
 
 
 def budget_for(e: dict, recipient: str) -> dict | None:

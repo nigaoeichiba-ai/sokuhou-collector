@@ -40,7 +40,7 @@ class DataTest(unittest.TestCase):
         self.assertIn("就職", occ["new-job"]["w"])                       # '就職・入社祝い' also answers to its first half
         self.assertIn("還暦", occ["longevity"]["w"])
         rec = {r["s"]: r for r in self.data["rec"]}
-        self.assertEqual(len(rec), 18)
+        self.assertEqual(len(rec), 19)
         self.assertEqual(rec["toddler"]["n"], "幼児")                      # the bracket of '幼児(1〜5歳)' is not part of the name
         self.assertIn("お母さん", rec["mother"]["w"])
         self.assertEqual(rec["mother"]["w"][0], "お母さん")                # the longest first
@@ -113,6 +113,8 @@ EXPECT = {
     "明日までに届く誕生日プレゼント": ["birthday", "", "", "", "urgent", ""],
     "引っ越し祝い 2万5千円": ["housewarming", "", "over20000", "", "", ""],
     "小学校の卒業祝い": ["graduation", "child", "", "", "", ""],
+    "大学生の誕生日プレゼント 予算": ["birthday", "university-student", "", "", "", ""],
+    "大学4年の卒業祝い": ["graduation", "university-student", "", "", "", ""],
     "卒園の先生に": ["graduation", "teacher", "", "", "", ""],
 }
 YENS = [("5000円", 5000), ("5千円", 5000), ("1万円", 10000), ("1.5万円", 15000), ("2万5千円", 25000), ("3,000円〜5,000円", 5000), ("70代", 0), ("3人で", 0), ("100円", 0), ("1000万円", 0)]

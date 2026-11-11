@@ -21,7 +21,7 @@ GENERIC = "gift"
 # the character shown for each person (the full name is always written beside it)
 RECIPIENT = {"boyfriend": "彼", "girlfriend": "彼女", "husband": "夫", "wife": "妻", "father": "父", "mother": "母", "grandfather": "祖父", "grandmother": "祖母",
              "friend-female": "友", "friend-male": "友", "colleague": "同僚", "boss": "上司", "teacher": "先生", "baby": "赤", "toddler": "幼", "child": "小",
-             "teen": "中高", "in-laws": "義"}
+             "teen": "中高", "university-student": "大学", "in-laws": "義"}
 USED = re.compile(r'href="#p-([a-z-]+)"')
 
 

@@ -10,7 +10,7 @@ PROFILE = {
     "boyfriend": ("m", "adult"), "girlfriend": ("f", "adult"), "husband": ("m", "adult"), "wife": ("f", "adult"),
     "father": ("m", "adult"), "mother": ("f", "adult"), "grandfather": ("m", "senior"), "grandmother": ("f", "senior"),
     "friend-female": ("f", "adult"), "friend-male": ("m", "adult"), "colleague": (None, "adult"), "boss": (None, "adult"),
-    "teacher": (None, "adult"), "baby": (None, "baby"), "toddler": (None, "kids"), "child": (None, "kids"), "teen": (None, "teen"),
+    "teacher": (None, "adult"), "baby": (None, "baby"), "toddler": (None, "kids"), "child": (None, "kids"), "teen": (None, "teen"), "university-student": (None, "adult"),
     "in-laws": (None, "senior"),
 }
 UNISEX = ("兼用", "ユニセックス", "男女", "メンズ レディース", "メンズ・レディース", "レディース メンズ", "レディース・メンズ")
