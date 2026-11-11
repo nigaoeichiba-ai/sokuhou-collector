@@ -52,6 +52,7 @@ class KaidokiTest(unittest.TestCase):
                 continue
             body = html.split("<main", 1)[-1]
             body = AFF_BOX.sub("", body)      # the one affiliate box of a mall's page (tested below) is the only outside link
+            body = re.sub(r'<p class="src">.*?</p>', "", body, flags=re.S)      # the redesign's product page: the maker's / carrier's official page, a plain source line
             self.assertNotIn('href="http', body, rel)
             self.assertNotIn('href="//', body, rel)
             self.assertNotRegex(body, r"出典の公開ページ|取得日", rel)

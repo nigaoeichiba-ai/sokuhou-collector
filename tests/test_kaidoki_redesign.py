@@ -44,7 +44,7 @@ class RedesignTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.old = build({"KAIDOKI_REDESIGN": "0"})
-        cls.demo = build({"KAIDOKI_REDESIGN": "1", "KAIDOKI_NOW": "2026-11-12T10:00"}, products=[FIXTURE])
+        cls.demo = build({"KAIDOKI_REDESIGN": "1", "KAIDOKI_REDESIGN_DEMO": "1", "KAIDOKI_NOW": "2026-11-12T10:00"}, products=[FIXTURE])
         cls.live = build({"KAIDOKI_REDESIGN": "1", "KAIDOKI_REDESIGN_DEMO": "0", "KAIDOKI_NOW": "2026-11-12T10:00"}, products=[FIXTURE])
 
     @staticmethod
@@ -170,6 +170,9 @@ class RedesignTest(unittest.TestCase):
     def test_the_repository_holds_no_product_data(self):
         out = subprocess.run(["git", "ls-files", "sites/kaidoki"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8").stdout.split()
         self.assertFalse([f for f in out if "/private/" in f])
+        for f in (SITE / "redesign" / "products").glob("*.json"):
+            txt = f.read_text(encoding="utf-8")
+            self.assertNotRegex(txt, r"amazon\.co\.jp|amzn\.|rakuten\.co\.jp/(?!campaign)|yahoo\.co\.jp", str(f))
         ignored = subprocess.run(["git", "check-ignore", "sites/kaidoki/private/products/x.json"], cwd=ROOT, capture_output=True, text=True).stdout
         self.assertIn("private", ignored)
         for f in (SITE / "redesign").rglob("*"):

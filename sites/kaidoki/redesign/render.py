@@ -6,7 +6,7 @@ re-wraps each one in the kit's layout: the kit-native pages (top, calendar, mall
 page (the explanation pages, method, about, privacy, contact) keeps its confirmed text and gets the kit's header, banner and reading column.
 
 Data: the sales are facts.EVENTS (organisers' own announcements; the checked day is gen.common.CHECKED), the unannounced ones facts.UNANNOUNCED.  No product price, no ranking of
-shops.  The product pages come from sites/kaidoki/private/products/*.json (git-ignored: they hold store pages; see tools/extract_product.py): no file, no page.
+shops.  The product pages come from sites/kaidoki/redesign/products/*.json (tracked: official campaign facts of makers and carriers only, no mall product page address; see tools/extract_product.py): no file, no page.
 The hero's headline frame comes from hero.json (the picture is permanent).  Going public: site.json (demo, publication_reviewed), see the result file of 2026-11-12.
 """
 from __future__ import annotations
@@ -47,6 +47,8 @@ def settings() -> dict:
     s = _json(HERE / "site.json")
     if os.environ.get("KAIDOKI_REDESIGN_DEMO") == "0":
         s = dict(s, demo=False, publication_reviewed=True)
+    if os.environ.get("KAIDOKI_REDESIGN_DEMO") == "1":
+        s = dict(s, demo=True)
     return s
 
 
@@ -350,7 +352,7 @@ class Ctx:
 
 
 def load_products(site_dir: Path) -> list[dict]:
-    d = Path(site_dir) / "private" / "products"
+    d = Path(site_dir) / "redesign" / "products"
     return [_json(f) for f in sorted(d.glob("*.json"))] if d.is_dir() else []
 
 
@@ -411,8 +413,9 @@ def product_pages(ctx: Ctx, base_head: str) -> dict:
         stores = ""
         for st in pr["stores"]:
             links = " ／ ".join(f'<a href="{e(u)}" target="_blank" rel="noopener noreferrer">{e(t)} ↗</a>' for t, u in st["links"])
+            src = f'確認日：{e(st["checked"])} ｜ 公式ページ：{links}' if links else f'確認日：{e(st["checked"])}'   # a store without a public source link (Amazon: its page address stays out of the repository) shows the date only
             stores += (f'<article class="store-card"><h3>{e(st["name"])}<span class="tag">{e(st["tag"])}</span></h3>{facts_dl(st["rows"])}'
-                       f'<p class="src">確認日：{e(st["checked"])} ｜ 公式ページ：{links}</p></article>')
+                       f'<p class="src">{src}</p></article>')
         body = template("product", intro=paragraphs([pr["lead"]]), meta=f'<p class="meta-line">{e(pr["meta"])}</p>',
                         stores_h2=f'<span class="store-burst">{e(pr["stores_burst"])}</span> {e(pr["stores_h2"])}', stores=stores, note=notice(pr["note"]),
                         calc_big=e(pr["calc_big"]), calc_text=e(pr["calc_text"]), howto_h2=e(pr["howto_h2"]), howto="".join(f"<p>{e(x)}</p>" for x in pr["howto"]),

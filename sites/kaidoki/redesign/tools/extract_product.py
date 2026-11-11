@@ -1,6 +1,6 @@
 """Turns Muse's approved product-page prototype (an HTML file) into the JSON that the redesign's product template reads.
 
-    python -X utf8 sites/kaidoki/redesign/tools/extract_product.py <prototype.html> [--out sites/kaidoki/private/products/iphone-18-pro.json]
+    python -X utf8 sites/kaidoki/redesign/tools/extract_product.py <prototype.html> [--out sites/kaidoki/redesign/products/iphone-18-pro.json]
 
 The JSON holds store campaign conditions and the stores' own page addresses, among them an Amazon product page.  Under the owner's rule (the public
 repository takes no mall product information) it is NOT committed: the default output folder is git-ignored, and the build reads it from there when it is
@@ -52,9 +52,11 @@ def extract(src: str, slug: str = "iphone-18-pro") -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("prototype")
-    ap.add_argument("--out", default=str(Path(__file__).resolve().parents[2] / "private" / "products" / "iphone-18-pro.json"))
+    ap.add_argument("--out", default=str(Path(__file__).resolve().parents[1] / "products" / "iphone-18-pro.json"))
     a = ap.parse_args()
     data = extract(Path(a.prototype).read_text(encoding="utf-8"))
+    for st in data["stores"]:   # the repository is public: a mall's product page address (Amazon, Yahoo!, Rakuten Ichiba) is never written
+        st["links"] = [l for l in st["links"] if not re.search(r"amazon\.|amzn\.|shopping\.yahoo|item\.rakuten", l[1])]
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

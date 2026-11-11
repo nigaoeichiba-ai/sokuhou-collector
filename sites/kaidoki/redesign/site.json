@@ -1,7 +1,7 @@
 {
   "name": "SALEカレンダー",
   "operator_name": "SALEカレンダー運営部",
-  "demo": true,
+  "demo": false,
   "base_url": "https://sale-calendar.com",
-  "publication_reviewed": false
+  "publication_reviewed": true
 }
