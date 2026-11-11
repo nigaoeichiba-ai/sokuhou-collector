@@ -21,7 +21,7 @@ TITLE = "今日の話題｜速報×深掘り"
 H1 = "速報ニュースを、どこよりも深掘りする。"
 LEAD = "「今日の話題」は、ニュースの見出しや表面的な情報だけで終わりません。速報性と深い洞察を1セットにし、出来事の背景と移り変わり、数字の裏にある意味、暮らしや実務への影響、そして「次に何をすればよいか」までを、一次情報の読み直しとともに1本にまとめてお届けします。"
 DESC = LEAD      # the description follows the new lead (the desk, 2026-11-10)
-HERO_SENTENCE = "見出しの先にある背景と数字を一次情報から読み解き、今日これから何をすればいいかまで示すサイトです。"      # Muse's final text 2026-11-11
+HERO_SENTENCE = "当サイトは、話題のテーマの裏にある「ホントの数字」や「本当のトピック」を分かりやすく深掘りをして、今すぐ使えるお役立ち情報をお届けするメディアです。"      # the owner's rewrite 2026-11-11 (desk instruction)
 FOOTER = "「今日の話題」は、気になる速報ニュースをどこよりも深く、多角的に読み解くメディアです。"
 CAT_DESC = {"kakei": "コメや野菜の価格、給与、セールの動きなど、家計に関わる数字の記事です。省庁や公的機関の発表をもとに、店頭で使える比べ方まで紹介します。",
             "bousai": "台風や火災予防、防災グッズの備えなど、身を守るための記事です。気象庁や消防庁、防災庁の発表をもとに、家でやることまで紹介します。",
@@ -57,8 +57,8 @@ class TrendTop(unittest.TestCase):
         self.assertIn(FOOTER, h[h.index("<footer"):])
         self.assertEqual(h.count("<h1"), 1)
         self.assertLess(h.index('class="hero"'), h.index("<h1>"))
-        self.assertRegex(h, r'<img src="/assets/img/hero-kv\.webp" width="2384" height="1008" alt="黄色のサンバースト[^"]+" fetchpriority="high">')   # the LCP picture: size set, not lazy
-        self.assertIn('<link rel="preload" as="image" href="/assets/img/hero-kv.webp"', h)
+        self.assertRegex(h, r'<img src="/assets/img/hero-kv\.webp\?v=20261111" width="2384" height="1008" alt="黄色のサンバースト[^"]+" fetchpriority="high">')   # the LCP picture: size set, not lazy
+        self.assertIn('<link rel="preload" as="image" href="/assets/img/hero-kv.webp?v=20261111"', h)
         self.assertIn("hero-kv.webp", " ".join(k for k in self.pages))
 
     def test_the_four_category_pages_have_the_desks_title_and_description(self):
@@ -107,9 +107,9 @@ class TrendTop(unittest.TestCase):
             self.assertEqual([i["name"] for i in crumbs["itemListElement"]], ["トップ", CAT_NAME[slug]])
 
     def test_the_latest_articles_are_the_13_cards_in_the_desks_order_with_the_desks_leads(self):
-        """2026-11-11 revision: the "最新の深掘り記事" list is the desk's fixed 13 (order and one-line leads in home.json "latest_leads"), not the newest-first rule of 11-10."""
+        """2026-11-11 revision: the "注目の解説記事ラインナップ" list is the desk's fixed 13 (order and one-line leads in home.json "latest_leads"), not the newest-first rule of 11-10."""
         main = self.html("/")
-        sec = main[main.index("最新の深掘り記事</h2>"):main.index("<h2>カテゴリ</h2>")]
+        sec = main[main.index("注目の解説記事ラインナップ</h2>"):main.index("こんなテーマを追いかけています！</h2>")]
         cards = re.findall(r'<article class="card">.*?</article>', sec, re.S)
         self.assertEqual(len(cards), 13)
         leads = json.loads((SITE / "content" / "home.json").read_text(encoding="utf-8"))["latest_leads"]
@@ -127,15 +127,19 @@ class TrendTop(unittest.TestCase):
     def test_the_new_top_sections_are_in_the_desks_order_and_the_panel_has_8_items(self):
         h = self.html("/")
         heads = [x for x in re.findall(r"<h2>(.*?)</h2>", h)]
-        want = ["いまの速報", "今日やること", "『今日の話題 速報×深掘り』3つの約束", "最新の深掘り記事", "カテゴリ", "防災特集／ご自宅の備蓄・備えを8項目でチェック", "取材・執筆基準"]
+        want = ["ニュースで話題！今週の注目トピック", "ニュースを見たらコレ！今日すぐできる3つのアクション", "『今日の話題』3つのこだわり", "注目の解説記事ラインナップ", "こんなテーマを追いかけています！", "我が家の備えは大丈夫？ 防災グッズ8項目チェック！", "『今日の話題』編集部のこだわり"]
         self.assertEqual(heads, want)
         self.assertEqual(h.count('class="bt-btn"'), 8)
-        self.assertIn('<b id="bt-n">5</b> / 8 項目', h)
-        self.assertIn("最低限そろっている", h)
-        for lab in ("しっかりそろっている", "あと少しで一通りそろう", "半分ほど。まず水と食料から", "まず水と食料から始めよう"):
+        self.assertIn('<b id="bt-n">5</b> / 8 項目達成！', h)
+        self.assertIn("（最低限はクリア！）", h)      # the initial state (5 of 8); after a click the chip follows the desk's mapping
+        for lab in ("バッチリ準備OK！", "あと一歩でカンペキ！", "半分くらい。まずは水と食料から！", "まずは水と食料から始めよう。"):
             self.assertIn(lab, h)
         self.assertIn("台風32号（チャンパカ）／非常に強い・955hPa／危険度は5段階で表示（見本）｜11月10日16時現在", h)
         self.assertNotIn("株式会社MACS", h)
+        self.assertEqual(h.count("<small>"), 3)
+        for s in ("01", "02", "03"):
+            self.assertIn(f"<small>{s}</small>", h)
+        self.assertNotIn('class="ex"', h)      # the desk's text has no example links under the three commitments
 
     def test_a_card_has_one_link_a_picture_with_size_and_the_title_as_alt(self):
         for path in ("/", "/cat/kakei/"):
@@ -200,7 +204,7 @@ class TrendTop(unittest.TestCase):
         h = self.html("/")
         for slug in CAT_DESC:
             self.assertGreaterEqual(h.count(f'href="/cat/{slug}/"'), 3, slug)       # header, the category list, the footer
-        self.assertIn("カテゴリ</h2>", h)
+        self.assertIn("こんなテーマを追いかけています！</h2>", h)
 
     def test_a_category_page_without_enough_text_is_noindex_and_stays_out_of_the_sitemap(self):
         sm = self.pages["sitemap.xml"]
