@@ -38,6 +38,8 @@ class TrendSite(unittest.TestCase):
 
     def test_no_mall_data_in_the_public_content(self):
         text = "".join(p.read_text(encoding="utf-8") for p in (SITE / "content").glob("*.json"))
+        # the one thing allowed: an owner-approved affiliate link to a Rakuten SEARCH page (no product data in it: no item name, price, image or item URL)
+        text = re.sub(r"https://hb\.afl\.rakuten\.co\.jp/hgc/[0-9a-f.]+/\?pc=https%3A%2F%2Fsearch\.rakuten\.co\.jp%2Fsearch%2Fmall%2F[^\"\\ ]*", "", text)
         for bad in ("rakuten.co.jp", "item.rakuten", "hb.afl", "affiliate", "applicationId", "accessKey", "amazon.co.jp", "shopping.yahoo"):
             self.assertNotIn(bad, text)
 
