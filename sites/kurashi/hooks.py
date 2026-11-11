@@ -24,6 +24,8 @@ BUTTON = "カレンダーに登録"
 BUNDLE = "まとめて登録"
 NOTE = "通知は前日の午前9時です。"
 PRINT_BUTTON = "印刷"
+ICON16 = '<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">'
+ICON48 = '<link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png">'
 PRINT_PAGES = ("/life/birth/", "/life/kaigo/", "/life/kekkon/", "/life/shibo/", "/life/taishoku/", "/moving/", "/moving/tenshutsu/", "/moving/menkyo-sha/",
                "/month/11/", "/month/12/", "/month/1/", "/month/2/", "/month/3/")
 
@@ -234,6 +236,10 @@ def post(pages, content, cfg, spec, site_dir):
             h = h.replace("</body>", tag + "</body>", 1)
         pages[rel] = h
     pages["assets/tools.js"] = tools
+    icon32 = '<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">'
+    for rel, h in list(pages.items()):         # the 16px and 48px icons beside the 32px one the shared head already has
+        if isinstance(h, str) and rel.endswith(".html") and icon32 in h and "favicon-16.png" not in h:
+            pages[rel] = h.replace(icon32, ICON16 + "\n" + icon32 + "\n" + ICON48, 1)
     pages.update(files)
     for s in sorted(set(STALE)):
         print(f"  warning kurashi: a day count that has passed ({s}): the page needs this season's review")
