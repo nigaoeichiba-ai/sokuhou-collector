@@ -1,6 +1,6 @@
 """The first view of the top page of sale-calendar.com (prototype v4 and v5, owner decisions 2026-11-10).
 
-sokuhou/newsite.py calls post() after the pages are rendered.  Only index.html changes: the header and the first view (hero, countdown bar, judge card,
+sokuhou/newsite.py calls post() after the pages are rendered.  Only index.html changes: the header and the first view (hero, countdown bar,
 next-sale card, genre links) replace the old header and h1 (the "answer" line stays under the first view); every section below them (いま分かっている日程 ...) and every
 other page stay as they were.
 v4 (Rakuten shopping marathon) is shown until SWITCH_AT (2026-11-11 1:59 JST, the end of the marathon), v5 (Yahoo! Black Friday) from then on.  Both are written into the HTML:
@@ -71,16 +71,6 @@ V4 = """<section class="hero">
 </div>
 </div>
 
-<div class="fwrap judge">
-<div class="fcard">
-<div class="face">辛口</div>
-<div>
-<div class="who">編集部の辛口ジャッジ</div>
-<p>上限7,000ポイントに届くのは、10ショップの買い回りでも約77,778円の買い物から。届かない買い方を「損」とは言わない。買う物が先、上限はあと。それがこのセールとの正しい付き合い方だ。</p>
-</div>
-</div>
-</div>
-
 <div class="fwrap next">
 <div class="fcard">
 <div class="copy">
@@ -139,16 +129,6 @@ V5 = """<section class="hero">
 <div class="cell"><div class="num" id="cd-s">-</div><div class="lab">秒</div></div>
 </div>
 <div class="count-note" id="count-label"></div>
-</div>
-</div>
-
-<div class="fwrap judge">
-<div class="fcard">
-<div class="face">辛口</div>
-<div>
-<div class="who">編集部の辛口ジャッジ</div>
-<p>主催者の案内では、最終日が最もポイントの付く日だ。ただし在庫は最終日まで待ってくれない。リスト作りは今のうちに済ませて、買う日は条件と在庫を見て決める。それと、期間中の25日は「5のつく日」も重なる。エントリーを忘れるな。</p>
-</div>
 </div>
 </div>
 
