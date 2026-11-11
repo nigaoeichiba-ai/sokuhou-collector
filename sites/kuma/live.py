@@ -603,7 +603,7 @@ def map_page(page, d: dict, lv: dict) -> str:
 </div>
 <div id="kuma-map" class="map-box" role="region" aria-label="クマの目撃マップ"><p class="map-fallback">地図には JavaScript が必要です。下の一覧と、<a href="/live/">最新の目撃情報</a>をご覧ください。</p></div>
 <div class="map-legend"><span><i class="m7"></i>7日以内</span><span><i class="m30"></i>8〜30日前</span><span><i class="m90"></i>31日より前</span></div>
-<div id="near-list" hidden><h2>現在地の近くの記録</h2><div class="near-slot"></div><p class="notice">現在地は、この端末の中だけで使い、サイトには送りません。直線距離です。</p></div>
+<div id="near-list" hidden><h2>現在地の近くの記録</h2><div class="near-slot"></div><p class="notice">現在地は、この端末の中だけで使います。サイトのサーバーには届きません。直線距離です。</p></div>
 <p class="notice">地図の背景は、<a href="https://maps.gsi.go.jp/development/ichiran.html" rel="noopener" target="_blank">国土地理院の地理院タイル</a>です。位置は、自治体が公表した座標(小数点以下4桁に丸めたもの)で、実際の場所と、数十メートルほど違うことがあります。{CAUTION}</p>
 {source_notes(infos, [k for k in infos if any(r["lat"] is not None and r["src"] == k for r in lv["records"])])}
 <script src="/assets/leaflet.js"></script>
