@@ -1,0 +1,2 @@
+# redesign: store/mall campaign data for product pages stays out of the public repo (see redesign/tools/extract_product.py)
+private/

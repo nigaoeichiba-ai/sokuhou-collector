@@ -290,7 +290,16 @@ def add_affiliate_links(pages: dict, cfg: dict) -> dict:
     return pages
 
 
+def prepare(cfg: dict, spec: dict, content: list, site_dir) -> list:
+    """Only for the redesign (KAIDOKI_REDESIGN=1, sites/kaidoki/redesign/): the new site name.  Otherwise the content is left as it is."""
+    from sites.kaidoki.redesign import render
+    return render.prepare(cfg, spec, content, site_dir) if render.enabled(cfg) else content
+
+
 def post(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
+    from sites.kaidoki.redesign import render
+    if render.enabled(cfg):          # the new design is built beside the current one (another output folder); the current build below is untouched
+        return render.apply(add_affiliate_links(pages, cfg), content, cfg, spec, site_dir)
     html = pages["index.html"]
     new, n = ICONS_OLD.subn(ICONS_NEW, html, count=1)
     assert n == 1, "kaidoki hooks: the icon links of the layout changed"
