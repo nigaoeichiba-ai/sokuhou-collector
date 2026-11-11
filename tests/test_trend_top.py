@@ -51,7 +51,10 @@ class TrendTop(unittest.TestCase):
     def test_the_home_page_has_the_desks_wording_word_for_word(self):
         h = self.html("/")
         self.assertIn(f"<title>{TITLE}</title>", h)
-        self.assertIn(f"<h1>{H1}</h1>", h)
+        self.assertIn('<h1><span class="hb hb-r">速報ニュースを、</span><span class="hb hb-k">どこよりも深掘りする。</span></h1>', h)      # two bands over the KV (owner-approved cover shape 2026-11-11); the h1 text reads as one sentence
+        self.assertEqual(re.sub(r"<[^>]+>", "", re.search(r"<h1>.*?</h1>", h, re.S).group(0)), H1)
+        self.assertLess(h.index('<img src="/assets/img/hero-kv.webp'), h.index("<h1>"))      # the bands sit on the picture, the lead pairs with it inside .hero
+        self.assertLess(h.index("<h1>"), h.index('<p class="answer">'))
         self.assertIn(f'<p class="answer">{HERO_SENTENCE}</p>', h)       # the hero sentence replaced the old lead (Muse's final text 2026-11-11); the old lead stays as the meta description
         self.assertIn(f'<meta name="description" content="{DESC}">', h)
         self.assertIn(FOOTER, h[h.index("<footer"):])
@@ -134,7 +137,9 @@ class TrendTop(unittest.TestCase):
         self.assertIn("（最低限はクリア！）", h)      # the initial state (5 of 8); after a click the chip follows the desk's mapping
         for lab in ("バッチリ準備OK！", "あと一歩でカンペキ！", "半分くらい。まずは水と食料から！", "まずは水と食料から始めよう。"):
             self.assertIn(lab, h)
-        self.assertIn("台風32号（チャンパカ）／非常に強い・955hPa／危険度は5段階で表示（見本）｜11月10日16時現在", h)
+        self.assertIn("台風32号（チャンパカ）／非常に強い・955hPa／危険度は5段階の5｜11月10日16時現在", h)
+        self.assertNotIn("（見本）", h)
+        self.assertNotIn("防災グッズのチェックリスト、8項目で家の備えを確認しよう", h)      # the extra line under the panel is gone (owner-approved fix 2026-11-11)
         self.assertNotIn("株式会社MACS", h)
         self.assertEqual(h.count("<small>"), 3)
         for s in ("01", "02", "03"):
@@ -162,7 +167,7 @@ class TrendTop(unittest.TestCase):
     def test_one_link_per_article_on_the_home_page_and_one_to_the_bousai_parent(self):
         h = self.html("/")
         main = h[h.index("<main"):h.index("</main>")]
-        self.assertEqual(main.count('href="/bousai/"'), 4)      # the panel: three items without an own page (radio, rain gear, first aid) and the link under it
+        self.assertEqual(main.count('href="/bousai/"'), 3)      # the panel: three items without an own page (radio, rain gear, first aid); the link under the panel was removed 2026-11-11
         for p in self.articles:
             if p["path"].startswith("/trend-"):
                 self.assertLessEqual(main.count(f'href="{p["path"]}"'), 5, p["path"])         # the card, and the desk's flash / to-do / promise links (2026-11-11)
