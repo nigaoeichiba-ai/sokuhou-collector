@@ -123,7 +123,7 @@ def _groups(kinds: dict[str, str]) -> dict[str, list[str]]:
     return out
 
 
-def thin_reasons(pages: dict, kinds: dict[str, str]) -> dict[str, list[str]]:
+def thin_reasons(pages: dict, kinds: dict[str, str], min_chars: dict[str, int] | None = None) -> dict[str, list[str]]:
     """{page: [why it is thin]} for the pages that miss the bars of their type.  `kinds` maps a page to its type (hub / list / analysis / article / item / archive / paged);
     a page of any other type (about, privacy ...) is not judged.  The 'own share' of an item page is the part of its text that no other page of the same type has."""
     info = {rel: read_main(pages[rel]) for rel in kinds if isinstance(pages.get(rel), str)}
@@ -140,8 +140,9 @@ def thin_reasons(pages: dict, kinds: dict[str, str]) -> dict[str, list[str]]:
         if kind in ALWAYS_NOINDEX:
             why.append(f"a {kind} page is always noindex,follow")
         elif kind in HUB_TYPES:
-            if i["chars"] < HUB_MIN_CHARS:
-                why.append(f"{i['chars']} readable characters (a {kind} page needs {HUB_MIN_CHARS})")
+            need = (min_chars or {}).get(rel, HUB_MIN_CHARS)      # a site may lower the bar for named pages (config "thin_min_chars"); none by default
+            if i["chars"] < need:
+                why.append(f"{i['chars']} readable characters (a {kind} page needs {need})")
             if not (i["tables"] or i["charts"]):
                 why.append("no table and no chart")
             own = sum(1 for s in i["sentences"] if _own_share(shingles(s), shared[kind]) >= 0.5)

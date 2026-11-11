@@ -483,6 +483,18 @@ class SeokitTest(unittest.TestCase):
         html = '<main><nav class="crumbs"><a href="/">トップ</a> &gt; <span>x</span></nav><h1>題</h1><script>var a=1;</script><p>あ い う</p></main>'
         self.assertEqual(seokit.visible_chars(html), 4)
 
+    def test_thin_min_chars_lowers_only_the_named_page(self):
+        body = "<main><h1>t</h1><p>" + "これは文章です。" * 90 + "</p><table><tr><td>1</td></tr></table></main>"    # about 720 characters
+        pages = {"a/index.html": body, "b/index.html": body.replace("これは", "あれは")}
+        kinds = {"a/index.html": "article", "b/index.html": "article"}
+        base = seokit.thin_reasons(pages, kinds)
+        self.assertTrue(any("readable characters" in w for w in base["a/index.html"]))
+        self.assertTrue(any("readable characters" in w for w in base["b/index.html"]))
+        low = seokit.thin_reasons(pages, kinds, {"a/index.html": 500})
+        self.assertFalse(any("readable characters" in w for w in low.get("a/index.html", [])))     # the named page passes the lower bar
+        self.assertTrue(any("needs 1200" in w for w in low["b/index.html"]))                        # every other page keeps the default
+        self.assertEqual(seokit.thin_reasons(pages, kinds, None), base)                              # no setting: the same answer as before
+
     def test_thin_bars_by_kind(self):
         long_p = "<p>" + "これは長い文章です。" * 200 + "</p>"
         pages = {"a/index.html": f"<main><h1>t</h1>{long_p}</main>", "b/index.html": "<main><h1>t</h1><p>短い。</p><table><tr><td>1</td></tr></table></main>",

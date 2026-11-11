@@ -381,7 +381,7 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
         errors.append(f"{a} and {b}: the text overlaps by {j} (more than {seokit.SIMILAR_LIMIT}): merge them or make one of them noindex")
     errors += seokit.alt_problems(pages)
 
-    thin = seokit.thin_reasons(pages, kinds)
+    thin = seokit.thin_reasons(pages, kinds, cfg.get("thin_min_chars"))
     declared = {rel_of[p["path"]] for p in content if p.get("noindex")}
     for rel in set(thin) | declared:
         pages[rel] = _noindex(pages[rel])
