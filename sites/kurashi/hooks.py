@@ -13,7 +13,9 @@ from __future__ import annotations
 import hashlib
 import html
 import os
+import importlib.util
 import re
+from pathlib import Path
 from datetime import date, datetime, timedelta, timezone
 
 SITE_URL = "https://kurashi-calendar.com"
@@ -31,6 +33,11 @@ PRINT_PAGES = ("/life/birth/", "/life/kaigo/", "/life/kekkon/", "/life/shibo/", 
 
 MARK = re.compile(r"\{(days|rel|weeks):(\d{4}-\d\d-\d\d)(?:\|([^}]*))?\}|\{(today|todayy)\}")
 STALE: list[str] = []          # a count that would be negative (a deadline that has passed): the page needs this season's review
+
+
+_spec = importlib.util.spec_from_file_location("_kurashi_design", Path(__file__).with_name("design.py"))
+design = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(design)
 
 
 def today_jst() -> date:
@@ -199,8 +206,56 @@ def print_ready(body: str, path: str) -> str:
     return head + kept + body[end:].rstrip("\n") + f'\n<p class="printonly">{SITE_URL}{path}</p>\n'
 
 
+NL = chr(10)
+
+
+def link_texts(content: list[dict]) -> dict:
+    """the address of a page -> the words the site's own tables use for the link to it"""
+    out: dict[str, str] = {}
+    for p in content:
+        for sec in p.get("sections", []):
+            for row in (sec.get("table") or {}).get("rows", []):
+                for c in row:
+                    if isinstance(c, dict) and c.get("href") and c.get("text"):
+                        out.setdefault(c["href"], c["text"])
+    return out
+
+
+def season_year(month: int, cat: dict) -> int:
+    first = min(date.fromisoformat(c["date"]) for c in cat.values())
+    return first.year if month >= 7 else first.year + 1
+
+
+def add_design(body: str, p: dict, per_page: dict, spec: dict, today: date, links: dict) -> str:
+    """the neon-white parts: the switch view (home), the month table (month pages), the month tables (the list of months), the deadline box (the other pages that have a deadline)"""
+    path = p["path"]
+    cat = {c["id"]: c for c in spec.get("deadlines", [])}
+    a = body.find('<p class="answer">')
+    if a < 0:
+        return body
+    i = body.find("</p>", a) + 4
+    block = ""
+    m = re.fullmatch(r"/month/(\d+)/", path)
+    if path == "/":
+        evs = [cat[x] for x in p.get("deadline_ids", []) if date.fromisoformat(cat[x]["date"]) >= today]
+        if evs:
+            block = design.switch_view(evs, cat, links, today)
+    elif path == "/month/":
+        months = [(season_year(n, cat), n) for n in (11, 12, 1, 2, 3)]
+        block = design.month_overview(months, list(cat.values()), cat, today)
+    elif m:
+        n = int(m.group(1))
+        block = design.month_view(season_year(n, cat), n, list(cat.values()), cat, links, today)
+    elif path in per_page:
+        ev = per_page[path][0][0]
+        y, mo, dd = p["updated"].split("-")
+        block = design.deadline_box(ev, f"{y}年{int(mo)}月{int(dd)}日")
+    return body[:i] + NL + block + body[i:].lstrip(NL) if block else body
+
+
 def post(pages, content, cfg, spec, site_dir):
     today = today_jst()
+    links = link_texts(content)
     STALE.clear()
     files, per_page = calendar_files(content, spec, today)
     tools = (site_dir / "assets" / "tools.js").read_text(encoding="utf-8")
@@ -230,9 +285,11 @@ def post(pages, content, cfg, spec, site_dir):
             old = f'<p class="answer">{html.escape(p["answer"], quote=True)}</p>'
             if old in body:
                 body = body.replace(old, f'<p class="answer">{html.escape(p["_answer_marked"], quote=True)}</p>', 1)
+        body = add_design(body, p, per_page, spec, today, links)
         body = resolve(body, today)
         h = h[:m.start(1)] + body + h[m.end(1):]
-        if 'class="nd"' in body or "cal-list" in body or "data-print" in body:
+        h = h.replace("<body>", f'<body data-cat="{design.category(p["path"])}">', 1)
+        if 'class="nd"' in body or "cal-list" in body or "data-print" in body or 'class="kv' in body:
             h = h.replace("</body>", tag + "</body>", 1)
         pages[rel] = h
     pages["assets/tools.js"] = tools
