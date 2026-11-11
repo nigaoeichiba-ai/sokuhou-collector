@@ -26,8 +26,9 @@
 /* hero */
 .fv { background:#fdfaf2; color:var(--fink); padding-bottom:1px; }
 .fv .hero { background:var(--red-deep); }
-.fv .hero-grid { display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); min-height:520px; }
-.fv .hero-copy { background:linear-gradient(160deg,var(--red) 0%,var(--red-dark) 100%); color:#fff; padding:56px 48px 48px; display:flex; flex-direction:column; justify-content:center; }
+.fv .hero-grid { position:relative; max-width:var(--fwrap); margin:0 auto; min-height:520px; }
+.fv .hero-copy, .fv[data-fv] .hero-copy { position:relative; z-index:1; box-sizing:border-box; min-height:520px; background:linear-gradient(90deg,rgba(10,6,4,.88) 0%,rgba(10,6,4,.74) 50%,rgba(10,6,4,0) 80%); color:#fff; padding:56px 48px; display:flex; flex-direction:column; justify-content:center; }
+.fv .hero-copy > * { max-width:600px; }
 .fv .live-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 .fv .live { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:#5c1000; font-weight:900; font-size:13px; letter-spacing:.22em; padding:6px 14px; border-radius:999px; white-space:nowrap; flex:0 0 auto; }
 .fv .live::before { content:""; width:9px; height:9px; border-radius:50%; background:var(--red); animation:fvblink 1.2s infinite; }
@@ -40,7 +41,7 @@
 .fv .fbtn { display:inline-block; text-decoration:none; font-weight:900; font-size:15px; padding:13px 26px; border-radius:999px; }
 .fv .fbtn-gold { background:var(--gold); color:#4a0d00; box-shadow:0 4px 0 #b57f0e; }
 .fv .fbtn-ghost { background:transparent; color:#fff; border:2px solid rgba(255,255,255,.85); }
-.fv .hero-visual { position:relative; overflow:hidden; }
+.fv .hero-visual { position:absolute; inset:0; overflow:hidden; }
 .fv .hero-visual img { width:100%; height:100%; object-fit:cover; object-position:right center; }
 .fv .hero-visual .cap { position:absolute; right:16px; top:14px; background:rgba(0,0,0,.55); color:#fff; font-size:11px; padding:4px 10px; border-radius:6px; letter-spacing:.06em; }
 
@@ -82,9 +83,8 @@
 .fv .genres a.hot { background:var(--red); border-color:var(--red); color:#fff; font-weight:900; }
 
 @media (max-width:820px) {
-  .fv .hero-grid { grid-template-columns:1fr; min-height:0; }
-  .fv .hero-copy { padding:38px 24px 30px; }
-  .fv .hero-visual { height:230px; }
+  .fv .hero-grid { min-height:500px; }
+  .fv .hero-copy, .fv[data-fv] .hero-copy { min-height:500px; padding:34px 20px; background:linear-gradient(180deg,rgba(10,6,4,.88) 0%,rgba(10,6,4,.66) 62%,rgba(10,6,4,.5) 100%); }
   .fv .countbar { margin-top:20px; }
   .fv .countbar .fcard { grid-template-columns:1fr; padding:20px; }
   .fv .count { justify-content:flex-start; }
@@ -95,7 +95,7 @@
 }
 @media (max-width:400px) {
   .fv .fwrap, .fvh .fwrap { padding-left:16px; padding-right:16px; }
-  .fv .hero-copy { padding-left:16px; padding-right:16px; }
+  .fv .hero-copy, .fv[data-fv] .hero-copy { padding-left:16px; padding-right:16px; }
   .fv .count { gap:6px; }
   .fv .count .cell { min-width:0; flex:1 1 0; }
   .fv .hero-cta .fbtn { padding:12px 18px; }
@@ -106,5 +106,4 @@
 }
 /* v5 (Yahoo! Black Friday): a black hero */
 .fv[data-fv="v5"] .hero { background:#101013; }
-.fv[data-fv="v5"] .hero-copy { background:linear-gradient(160deg,#232327 0%,#101013 100%); }
 .fv .count-note:empty { display:none; }
