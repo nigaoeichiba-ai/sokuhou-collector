@@ -244,3 +244,6 @@ ol.todo p { margin:0; font-size:.92rem; line-height:1.7; color:var(--muted); }
   .bt-tbl tr.on { box-shadow:inset 4px 0 0 #2E9E4F; }
   .bt-tbl td.bt-act { text-align:left; padding-top:6px; }
 }
+.bt-btn, .bt-tbl td.bt-act, .bt-tbl thead th:last-child { white-space:nowrap; }
+.bt-tbl td.bt-act { width:9em; }
+@media (max-width:600px) { .bt-tbl td.bt-act { width:auto; } }
