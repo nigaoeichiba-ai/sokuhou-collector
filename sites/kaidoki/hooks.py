@@ -296,7 +296,7 @@ def affiliate_block(mall: str, target: str, label: str, cfg: dict) -> str:
     note = f"広告({PROGRAMME[mall]})のリンクです。リンク先で購入されると、運営者に報酬が支払われることがあります。"
     if mall == _A:
         note += f"Amazonのアソシエイトとして、{cfg['amazon_disclosure_name'] if cfg.get('amazon_disclosure_name') else cfg['site_name']}は適格販売により収入を得ています。"
-    return (f'<aside class="aff-box"><span class="pr-chip">PR</span><div><p>条件と最新の日程は、{MALL_NAME[mall]}の公式のページで確かめられます。</p>'
+    return (f'<aside class="aff-box"><span class="pr-chip">PR</span><div><p>条件と最新の日程は、{MALL_NAME[mall]}の公式のページで確かめておきましょう。</p>'
             f'<p class="aff-btn">{a}</p><p class="aff-note">{note}</p></div></aside>\n')
 
 
