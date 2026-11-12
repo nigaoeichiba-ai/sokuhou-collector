@@ -18,7 +18,7 @@ from sites.atomou import articles, build as B, catalog, skins
 from sokuhou.sitekit import asset_pages, crumbs, esc, layout, legal_pages, standard_files
 
 NAME = B.NAME
-TAGLINE = "公式の日付まで、あと何日"
+TAGLINE = "日付まで、あと何日"
 LEAD = ("試験、締切、制度の変更、大会、天文、お祭りなど、公式の発表や報道などをもとに、日付を集めています。"
         "それぞれの日まであと何日かがひと目で分かります。")
 ALLOWED_ASSETS = {"assets/style.css", "assets/core.js", "assets/review.js", "assets/wordmark.svg", "assets/og.png", "assets/favicon.ico", "assets/favicon-32.png",
