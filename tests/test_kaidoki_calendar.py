@@ -153,6 +153,13 @@ def home_problems(html: str, today: date) -> list[str]:
     want = S.home_choose(S.home_pool(items, today), today)
     if shown != want:
         bad.append(f"two weeks shown {shown} differ from the data {want}")
+    slides = re.findall(r'<li class="hs-slide[^>]*data-id="([^"]*)"', html)
+    want_slides = [i["id"] for i in S.hero_slides(items, today)]
+    if slides != want_slides:
+        bad.append(f"hero slides {slides} differ from the data {want_slides}")
+    big = [i for i in S.hero_slides(items, today) if S.ENT[i["mall"]][2] == "mall"]
+    if len(big) >= 2 and len([x for x in slides if x in {i["id"] for i in big}]) < len(big):
+        bad.append("the hero shows fewer big sales than the data has")
     for name, mall, why in facts.UNANNOUNCED:
         if name == "Amazon ブラックフライデー 2026" and "11月19日" in why and "11月19日" not in html:
             bad.append("the Amazon Black Friday state (11/19) of the data is not on the top page")
@@ -179,6 +186,51 @@ class HomeTest(unittest.TestCase):
         self.assertIn("n", kinds)                                  # the announcement days (Yahoo! 11/16, Amazon 11/19) are in the two weeks
         self.assertIn('data-kind="regular"', h)
         self.assertNotIn("開催中</span>", h.split("home-cal")[1][:4000])      # "開催中" / "あとN日" are written by the visitor's clock
+
+    def test_hero_slides_hold_every_coming_big_sale_of_the_malls_then_other_shops(self):
+        h = self.pages["index.html"]
+        sl = S.hero_slides(S.all_items(), self.TODAY)
+        mall = [i for i in sl if S.ENT[i["mall"]][2] == "mall"]
+        self.assertGreaterEqual(len(mall), 4)
+        self.assertEqual({S.hero_kind(i) for i in mall}, {"confirmed", "announced", "expected"})      # the three kinds, each told apart
+        self.assertEqual([S.ENT[i["mall"]][2] for i in sl], sorted([S.ENT[i["mall"]][2] for i in sl], key=lambda x: x != "mall"))      # the malls first
+        names = " ".join(i["title"] for i in sl)
+        for w in ("Yahoo!ショッピング ブラックフライデー 2026", "Amazon ブラックフライデー 2026", "楽天ブラックフライデー 2026", "楽天スーパーSALE 2026年12月", "Googleストア"):
+            self.assertIn(w, names)
+        self.assertEqual(h.count('<li class="hs-slide'), len(sl))                      # without the script every card is in the HTML (a column)
+        for badge in ("● 確定", "▲ 開催は発表済み・詳細待ち", "◇ 例年の予想"):
+            self.assertIn(badge, h)
+        self.assertLessEqual(len(sl) - len(mall), S.HERO_OTHERS)
+        self.assertIn('aria-roledescription="カルーセル"', h)
+        js = (S.__file__.replace("schedule.py", "static/scripts/calendar.js"))
+        src = open(js, encoding="utf-8").read()
+        for w in ("prefers-reduced-motion", "mouseenter", "focusin", "touchstart", "5500", "hs-prev", "hs-next", "hs-dot"):
+            self.assertIn(w, src)
+
+    def test_the_headline_frame_agrees_with_the_data(self):
+        import json
+        from pathlib import Path
+        hero = json.loads((Path(S.__file__).parent / "hero.json").read_text(encoding="utf-8"))
+        yb = facts.BY_ID["ybf-2026"]
+        for h in hero["scheduled"]:
+            if "Y" in h["eyebrow"] and "BLACK FRIDAY" in h["eyebrow"]:
+                m, dd = int(yb["start"][5:7]), int(yb["start"][8:10])
+                self.assertIn(f"{m}月{dd}日", h["h1"])
+                self.assertEqual(h["until"][:10], yb["start"])
+
+    def test_the_calendar_pages_are_linked_from_the_top_the_lists_and_the_category(self):
+        for path in ("/calendar/rakuten/", "/calendar/amazon/", "/calendar/yahoo/"):
+            linkers = [rel for rel, h in self.pages.items() if isinstance(h, str) and rel.endswith("index.html") and f'href="{path}"' in h and rel != path.strip("/") + "/index.html"]
+            for need in ("index.html", "calendar/index.html", "malls/index.html"):
+                self.assertIn(need, linkers, path)
+            self.assertGreaterEqual(len(linkers), 4, path)
+        self.assertIn('href="/calendar/"', self.pages["kaden/index.html"])
+
+    def test_negative_hero_with_one_card_is_caught(self):
+        h = self.pages["index.html"]
+        cut = re.sub(r'<li class="hs-slide.*?</li>', "", h, count=3, flags=re.S)
+        self.assertTrue(home_problems(cut, self.TODAY))
+        self.assertTrue(home_problems(h.replace("2026/11/12", "2026/11/03", 1), self.TODAY))
 
     def test_negative_a_stale_top_page_is_caught(self):
         h = self.pages["index.html"]

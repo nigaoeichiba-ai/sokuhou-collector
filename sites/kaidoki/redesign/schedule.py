@@ -66,7 +66,7 @@ def _t(t: str) -> str:
 def ev_item(ev: dict) -> dict:
     mall = MALL_OF[ev["mall"]]
     return {"id": ev["id"], "kind": "confirmed", "mall": mall, "title": ev["name"], "s": ev["start"], "e": ev["end"], "when": ev_span(ev), "note": ev.get("note", ""),
-            "basis": [], "src": SRC_OFFICIAL if ev.get("read") != "summary" else SRC_PAGE, "checked": CHECKED, "announce": "", "href": GROUP_PAGE[ev["group"]]}
+            "basis": [], "src": SRC_OFFICIAL if ev.get("read") != "summary" else SRC_PAGE, "checked": REVERIFIED, "announce": "", "href": GROUP_PAGE[ev["group"]]}
 
 
 def C(id, mall, title, s, e, when, href, note="", src=SRC_PAGE, checked=VERIFIED):
@@ -447,3 +447,75 @@ def home_block(items: list[dict], today: date) -> str:
             f'<ul class="cal-list home-cal-list">{lis}</ul><p class="cal-empty" data-fortnight-empty{"" if not chosen else " hidden"}>この2週間に載せられる予定は、いまのところありません。</p>'
             f'<div class="home-cal-links"><a class="btn btn-red" href="/calendar/">月間カレンダーを見る →</a>'
             + "".join(f'<a class="btn btn-light" href="{CAL_PATH[m]}">{e(MALLS[m][0])}のカレンダー</a>' for m in MALLS) + "</div></section>")
+
+
+# ------------------------------------------------------------------ the top page's slides: the coming big sales of the three malls (confirmed / announced / expected, told apart), then other shops' confirmed ones
+HERO_OTHERS = 4                                    # the other shops' sales after the malls
+HERO_OTHER_ORDER = ["playstation", "google", "sonystore", "dyson", "nitori", "yamada", "asus", "lg", "sharp", "panasonic", "stardomain", "xdomain"]
+HERO_EXPECTED_DAYS = 45
+
+
+def hero_kind(it: dict) -> str:
+    """confirmed / announced (the month is announced, the days are not) / expected."""
+    if it["kind"] == "expected" and it.get("announce"):
+        return "announced"
+    return it["kind"]
+
+
+def hero_slides(items: list[dict], today: date) -> list[dict]:
+    """The sales on the slides: every mall sale that is running or coming (confirmed with days, announced, expected within HERO_EXPECTED_DAYS days or this / next month),
+    then the confirmed sales of the other shops (the nearest HERO_OTHERS, in HERO_OTHER_ORDER)."""
+    nm = f"{today.year}-{today.month:02d}"
+    nxt = f"{today.year + (today.month == 12)}-{today.month % 12 + 1:02d}"
+    malls, others = [], []
+    for it in items:
+        if it["kind"] not in ("confirmed", "expected"):
+            continue
+        is_mall = ENT[it["mall"]][2] == "mall"
+        if it["kind"] == "confirmed":
+            if "(終了日)" in it["title"] or d(it["e"]) < today:
+                continue
+            if is_mall:
+                if d(it["s"]) <= today + timedelta(days=60):
+                    malls.append(it)
+            elif d(it["s"]) <= today + timedelta(days=30):
+                others.append(it)
+        elif is_mall:
+            near = (it.get("s") and today <= d(it["s"]) <= today + timedelta(days=HERO_EXPECTED_DAYS)) or it.get("mo") in (nm, nxt)
+            if near:
+                malls.append(it)
+    rank = {"confirmed": 0, "announced": 1, "expected": 2}
+    malls.sort(key=lambda it: (rank[hero_kind(it)], it.get("s") or (it.get("mo") or "9999") + "-99", it["title"]))
+    others.sort(key=lambda it: (HERO_OTHER_ORDER.index(it["mall"]) if it["mall"] in HERO_OTHER_ORDER else 99, it["s"]))
+    return malls + others[:HERO_OTHERS]
+
+
+HERO_BADGE = {"confirmed": ("確定", "●", "confirmed"), "announced": ("開催は発表済み・詳細待ち", "▲", "notice"), "expected": ("例年の予想", "◇", "expected")}
+
+
+def hero_card(it: dict, n: int, total: int) -> str:
+    label, sym, cls = HERO_BADGE[hero_kind(it)]
+    title = f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])
+    notes = ""
+    if it["kind"] == "expected":
+        notes += f'<p class="cal-note">予想の根拠: {e(it["basis"][0])}</p>' if it.get("basis") else ""
+    if it.get("announce"):
+        notes += f'<p class="cal-note">公式が発表を予定している日時は、{e(it["announce"])}です。</p>'
+    if it.get("note") and it["kind"] != "expected":
+        notes += f'<p class="cal-note">{e(it["note"])}</p>'
+    dates = f' data-s="{it["s"]}" data-e="{it["e"] or it["s"]}"' if it.get("s") else ""
+    more = f'<p class="hs-more"><a class="text-link" href="{e(it["href"])}">このセールのページを見る →</a></p>' if it["href"] else ""
+    return (f'<li class="hs-slide cal-item k-{cls}" data-kind="{it["kind"]}" data-id="{e(it["id"])}"{dates} aria-roledescription="スライド" aria-label="{n} / {total}">'
+            f'<div class="cal-head"><span class="cal-badge k-{cls}">{sym} {e(label)}</span><span class="cal-mall">{e(ENT[it["mall"]][0])}</span><span class="cal-seg">{e(SEGMENTS[ENT[it["mall"]][2]])}</span>'
+            f'<span class="cal-live" data-live></span></div><h3>{title}</h3><p class="cal-when">{e(it["when"])}</p>{notes}'
+            f'<p class="cal-src">出典の種類: {e(it["src"])} ／ 確認日 {e(it["checked"].replace("-", "/"))}</p>{more}</li>')
+
+
+def hero_html(items: list[dict], today: date) -> str:
+    sl = hero_slides(items, today)
+    cards = "".join(hero_card(it, i + 1, len(sl)) for i, it in enumerate(sl))
+    return ('<section class="hero-slides" data-slides aria-roledescription="カルーセル" aria-label="直近の大型セール"><div class="hs-head"><h2>直近の大型セール</h2>'
+            '<p>開催中と、これから開くセールを全部並べています。確定・開催は発表済み・例年の予想は、バッジで分けています。</p></div>'
+            f'<div class="hs-viewport"><ol class="hs-track">{cards}</ol></div>'
+            '<div class="hs-controls" hidden><button type="button" class="hs-prev" aria-label="前のセール">←</button><div class="hs-dots"></div>'
+            '<button type="button" class="hs-next" aria-label="次のセール">→</button><button type="button" class="hs-pause" aria-pressed="false">自動で切り替えを止める</button></div></section>')

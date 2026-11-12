@@ -456,7 +456,7 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
     if path == "/":
         arts = [ctx.card("/rakuten/marathon/", "楽天"), ctx.card("/rakuten/marathon-vs-super-sale/", "楽天"), ctx.card("/calc/points/", "計算")]
         lead, more = home_more(ctx, pg["answer"], pg["rest"])
-        return template("home", headline=hero_headline(ctx), featured=sales_grid(live[:2], at), schedule=lead + schedule.home_block(ctx.sched, at.date()) + sales_grid(ctx.sales[:3], at) + f'<p class="cal-homelink">{link("/calendar/", "全ショップの月間カレンダーを見る")}</p>' + f'<script defer src="/assets/kit/scripts/calendar.js?v={ctx.ver}"></script>',
+        return template("home", headline=hero_headline(ctx), featured=schedule.hero_html(ctx.sched, at.date()) + f'<script defer src="/assets/kit/scripts/calendar.js?v={ctx.ver}"></script>', schedule=lead + schedule.home_block(ctx.sched, at.date()) + sales_grid(ctx.sales[:3], at) + f'<p class="cal-homelink">{link("/calendar/", "全ショップの月間カレンダーを見る")}</p>',
                         categories=category_cards(ctx.categories), articles=article_cards(arts), more=more)
     if path == "/calendar/":
         stamp = f"表示時点：{fmt(at.isoformat(timespec='seconds'), True)}（日本時間）。未発表・終了を含めて確認できます。日程は、各セールの欄に書いた確認日に、主催者の発表や信頼できる報道で確かめたものです。"
@@ -471,7 +471,7 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
         c = ctx.categories[0]
         kids = ctx.children("/kaden/") + ctx.product_cards("electronics")
         return template("category", intro=paragraphs(c["intro"]), image=category_card(c, anchor=False), sales=sales_grid([s for s in ctx.sales if state(s, at) != "終了"][:6], at),
-                        checks=checks(c["checks"]), articles=article_cards(kids))
+                        checks=checks(c["checks"]), articles=article_cards(kids)) + f'<div class="wrap page-content"><p class="cal-homelink">{link("/calendar/", "家電のセールの日付は、月間カレンダーにあります")}</p></div>'
     if path == "/buytime/":
         return template("category-index", intro=notice("金額や商品の価格帯で対象を限定しません。情報を用意できたジャンルから掲載します。"), categories=category_cards(ctx.categories))
     return None
