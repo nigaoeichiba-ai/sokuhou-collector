@@ -70,7 +70,7 @@
       var list = items.filter(function (it) { return visible(it) && covers(it, day); }), det = root.querySelector('.cal-detail');
       var html = '<h4>' + jp(day) + 'の予定</h4>';
       html += list.length ? '<ul>' + list.map(function (it) {
-        return '<li><span class="cal-badge k-' + it.k + '">' + KIND[it.k][1] + ' ' + KIND[it.k][0] + '</span> <span class="cal-mall">' + MALL[it.m][0] + '</span> ' + (it.h ? '<a href="' + esc(it.h) + '">' + esc(it.t) + '</a>' : esc(it.t)) + '<br><span class="cal-when">' + esc(it.w) + '</span></li>';
+        return '<li><span class="cal-badge k-' + it.k + '">' + KIND[it.k][1] + ' ' + KIND[it.k][0] + '</span> <span class="cal-mall">' + MALL[it.m][0] + '</span> ' + (it.h ? '<a href="' + esc(it.h) + '">' + esc(it.t) + '</a>' : esc(it.t)) + '<br><span class="cal-when">' + esc(it.w) + '</span>' + (it.a ? '<div class="aff-lines">' + it.a.map(function (x) { return '<p class="aff-line"><span class="pr-chip">PR</span>' + x + '</p>'; }).join('') + '</div>' : '') + '</li>';
       }).join('') + '</ul>' : '<p>この日に載せられる予定は、いまのところありません。</p>';
       det.innerHTML = html; det.hidden = false;
     }

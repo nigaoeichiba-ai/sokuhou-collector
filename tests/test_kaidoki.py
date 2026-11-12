@@ -20,6 +20,7 @@ from sokuhou import newsite  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "sites" / "kaidoki"
 AFF_BOX = re.compile(r'<aside class="aff-box">.*?</aside>', re.S)
+PR_LINK = re.compile(r'<a href="[^"]+" target="_blank" rel="nofollow sponsored noopener">.*?</a>', re.S)
 WD = "月火水木金土日"
 FULL = re.compile(r"(\d{4})年(\d{1,2})月(\d{1,2})日\(([月火水木金土日])\)")
 
@@ -51,7 +52,8 @@ class KaidokiTest(unittest.TestCase):
             if rel.startswith(("contact", "privacy", "terms", "about")):
                 continue
             body = html.split("<main", 1)[-1]
-            body = AFF_BOX.sub("", body)      # the one affiliate box of a mall's page (tested below) is the only outside link
+            body = AFF_BOX.sub("", body)      # the affiliate box of a mall's page (tested below)
+            body = PR_LINK.sub("", body)      # an affiliate link (rel="nofollow sponsored noopener", target=_blank; tested in test_kaidoki_affiliate.py) is the only other outside link
             body = re.sub(r'<p class="src">.*?</p>', "", body, flags=re.S)      # the redesign's product page: the maker's / carrier's official page, a plain source line
             self.assertNotIn('href="http', body, rel)
             self.assertNotIn('href="//', body, rel)
@@ -102,10 +104,18 @@ class KaidokiTest(unittest.TestCase):
         from sites.kaidoki import hooks
         cfg = self._cfg()
         boxes = {rel: AFF_BOX.findall(html) for rel, html in self.html.items() if AFF_BOX.search(html)}
-        self.assertEqual(sorted(boxes), sorted(hooks.AFF_LINKS))
+        self.assertEqual(sorted(boxes), sorted(list(hooks.AFF_LINKS) + list(hooks.AFF_LINKS_MULTI)))
         for rel, bx in boxes.items():
             self.assertEqual(len(bx), 1, rel)
             hrefs = re.findall(r'href="([^"]+)"', bx[0])
+            if rel in hooks.AFF_LINKS_MULTI:      # the pages of several malls: one line per mall, a mall's link never on another's line
+                lines = re.findall(r'<p class="aff-btn">(.*?)</p>', bx[0])
+                self.assertEqual(len(lines), len(hooks.AFF_LINKS_MULTI[rel]), rel)
+                for ln in lines:
+                    self.assertEqual(len(re.findall(r'<a href=', ln)), 1, rel)
+                self.assertIn('<span class="pr-chip">PR</span>', bx[0], rel)
+                self.assertNotRegex(bx[0], r"今すぐ|お見逃し|クリック|こちら|最安|お得", rel)
+                continue
             self.assertEqual(len(hrefs), 1, rel)
             mall = hooks.AFF_LINKS[rel][0]
             h = hrefs[0]
@@ -119,18 +129,21 @@ class KaidokiTest(unittest.TestCase):
             self.assertIn('target="_blank" rel="nofollow sponsored noopener">', bx[0], rel)
             self.assertNotRegex(bx[0], r"今すぐ|お見逃し|クリック|こちら|最安|お得", rel)
 
-    def test_yahoo_has_no_valuecommerce_link_until_the_site_is_registered(self):
+    def test_yahoo_valuecommerce_link_is_the_one_of_this_site(self):
         self.assertNotIn("yahoo_vc", self._cfg())
         for rel, html in self.html.items():
-            self.assertNotIn("valuecommerce", html, rel)
+            for u in re.findall(r'href="(//ck\.jp\.ap\.valuecommerce\.com/[^"]+)"', html):
+                self.assertTrue(u.startswith("//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3787704&amp;pid="), (rel, u))
+            vis = re.sub(r"<script.*?</script>", "", html, flags=re.S)      # (the copy in calendar.js's JSON has no counter: the lists of the page carry it)
+            self.assertEqual(vis.count("servlet/referral?"), vis.count("servlet/gifbanner?"), rel)      # every ValueCommerce link has its counter
 
-    def test_top_page_and_tables_and_calendar_have_no_outside_link(self):
+    def test_every_outside_link_of_the_top_page_and_tables_and_calendar_is_a_pr_link(self):
         for rel in ("index.html", "calendar/index.html", "buytime/index.html", "black-friday/index.html", "calc/index.html"):
-            html = self.html[rel]
+            html = PR_LINK.sub("", AFF_BOX.sub("", self.html[rel]))
             self.assertNotRegex(html, r'href="(https?:)?//(?!sale-calendar\.com)', rel)
         for rel, html in self.html.items():
             for t in re.findall(r"<table.*?</table>", html, re.S):
-                self.assertNotRegex(t, r'href="(https?:)?//', rel)
+                self.assertNotRegex(PR_LINK.sub("", t), r'href="(https?:)?//', rel)      # a table may carry the PR link of a row (never any other)
 
     def test_affiliate_negative_a_mixed_or_changed_link_is_caught(self):
         from sites.kaidoki import hooks

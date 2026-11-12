@@ -20,7 +20,7 @@ from html import escape
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-from sites.kaidoki.redesign import schedule  # noqa: E402
+from sites.kaidoki.redesign import affiliate, schedule  # noqa: E402
 SITE_DIR = HERE.parent
 JST = timezone(timedelta(hours=9))
 WD = "月火水木金土日"
@@ -548,8 +548,9 @@ def product_pages(ctx: Ctx, base_head: str) -> dict:
         for st in pr["stores"]:
             links = " ／ ".join(f'<a href="{e(u)}" target="_blank" rel="noopener noreferrer">{e(t)} ↗</a>' for t, u in st["links"])
             src = f'確認日：{e(st["checked"])} ｜ 公式ページ：{links}' if links else f'確認日：{e(st["checked"])}'   # a store without a public source link (Amazon: its page address stays out of the repository) shows the date only
+            aff = affiliate.lines(affiliate.product_links(pr, st))
             stores += (f'<article class="store-card"><h3>{e(st["name"])}<span class="tag">{e(st["tag"])}</span></h3>{facts_dl(st["rows"])}'
-                       f'<p class="src">{src}</p></article>')
+                       f'<p class="src">{src}</p>{aff}</article>')
         body = template("product", intro=paragraphs([pr["lead"]]), meta=f'<p class="meta-line">{e(pr["meta"])}</p>',
                         stores_h2=f'<span class="store-burst">{e(pr["stores_burst"])}</span> {e(pr["stores_h2"])}', stores=stores, note=notice(pr["note"]),
                         calc_big=e(pr["calc_big"]), calc_text=e(pr["calc_text"]), howto_h2=e(pr["howto_h2"]), howto="".join(f"<p>{e(x)}</p>" for x in pr["howto"]),

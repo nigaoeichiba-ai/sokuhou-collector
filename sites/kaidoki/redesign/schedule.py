@@ -17,6 +17,7 @@ from datetime import date, timedelta
 from html import escape
 
 from sites.kaidoki.gen.common import CHECKED, REVERIFIED, hm, ev_span
+from sites.kaidoki.redesign import affiliate as AFF
 
 WD = "月火水木金土日"
 MIN_YM, MAX_YM = "2026-01", "2027-12"          # the months the calendar can show
@@ -33,6 +34,7 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
        "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"),
        "stardomain": ("スタードメイン", "ス", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand")}
+AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
 MALL_PAGE = {"rakuten": "/rakuten/", "amazon": "/amazon/sale-calendar/", "yahoo": "/yahoo/"}
 CAL_PATH = {"rakuten": "/calendar/rakuten/", "amazon": "/calendar/amazon/", "yahoo": "/calendar/yahoo/"}
@@ -240,6 +242,8 @@ def payload(items: list[dict]) -> str:
     rows = []
     for it in items:
         row = {"id": it["id"], "k": it["kind"], "m": it["mall"], "g": ENT[it["mall"]][2], "t": it["title"], "w": it["when"], "h": it["href"]}
+        if AFF.links_for(it):
+            row["a"] = [AFF.anchor(l, False) for l in AFF.links_for(it)]          # the affiliate links (each already with its PR rel); calendar.js writes them under the day's entry
         if it.get("days") is not None:
             row["d"] = it["days"]
         elif it.get("s"):
@@ -314,7 +318,7 @@ def item_li(it: dict) -> str:
     return (f'<li class="cal-item k-{it["kind"]}" data-mall="{it["mall"]}" data-seg="{ENT[it["mall"]][2]}" data-kind="{it["kind"]}"{dates}><div class="cal-head"><span class="cal-badge k-{it["kind"]}">{sym} {e(label)}</span>'
             f'<span class="cal-mall">{e(mall_title)}</span><span class="cal-seg">{e(SEGMENTS[ENT[it["mall"]][2]])}</span><span class="cal-live" data-live></span></div>'
             f'<h4>{f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])}</h4><p class="cal-when">{e(it["when"])}</p>{extra}{ann}{basis}'
-            f'<p class="cal-src">出典の種類: {e(it["src"])} ／ 確認日 {e(it["checked"].replace("-", "/"))}</p></li>')
+            f'<p class="cal-src">出典の種類: {e(it["src"])} ／ 確認日 {e(it["checked"].replace("-", "/"))}</p>{AFF.lines(AFF.links_for(it))}</li>')
 
 
 def month_section(ym: str, items: list[dict], shown: bool) -> str:
@@ -354,7 +358,7 @@ def calendar_block(items: list[dict], mall: str | None, today: date) -> str:
     bar = (f'<div class="cal-bar"><button type="button" class="small-btn cal-prev" aria-label="前の月">← 前の月</button><h3 class="cal-title" aria-live="polite">{y}年{m}月</h3>'
            f'<button type="button" class="small-btn cal-next" aria-label="次の月">次の月 →</button><button type="button" class="small-btn cal-today">今月へ</button></div>')
     secs = "".join(month_section(x, its, x == ym) for x in months())
-    return (f'<div class="cal" data-cal data-mall="{mall or "all"}" data-ym="{ym}" data-min="{MIN_YM}" data-max="{MAX_YM}"><p class="cal-name">{e(name)}のカレンダー</p>{bar}{controls(mall, its)}'
+    return (f'<div class="cal" data-cal data-mall="{mall or "all"}" data-ym="{ym}" data-min="{MIN_YM}" data-max="{MAX_YM}"><p class="cal-name">{e(name)}のカレンダー</p>{AFF.disclosure()}{bar}{controls(mall, its)}'
             f'<div class="tablewrap cal-scroll">{grid(ym, its, today)}</div>{legend()}'
             f'<div class="cal-detail" aria-live="polite" hidden></div>'
             f'<div class="cal-lists"><p class="cal-listlead">下の一覧は、カレンダーの月に合わせて切り替わります。スクリプトが動かないときは、すべての月の予定が日付順に続きます。</p>'
@@ -368,7 +372,7 @@ def regular_table(items: list[dict], mall: str | None) -> str:
         if it["kind"] != "regular":
             continue
         nxt = " ".join(it["days"] or [])
-        rows += (f'<tr data-next="{e(nxt)}"><th scope="row">{f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])}<br><small>{e(ENT[it["mall"]][0])}</small></th><td>{e(it["when"])}</td>'
+        rows += (f'<tr data-next="{e(nxt)}"><th scope="row">{f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])}<br><small>{e(ENT[it["mall"]][0])}</small>{AFF.lines(AFF.links_for(it))}</th><td>{e(it["when"])}</td>'
                  f'<td>{e(it["note"])}</td><td><span class="cal-next-day" data-next-day></span></td><td>{e(it["src"])}<br><small>確認日 {e(it["checked"].replace("-", "/"))}</small></td></tr>')
     if not rows:
         return ""
@@ -381,7 +385,7 @@ def basis_table(items: list[dict], mall: str | None) -> str:
     for it in for_mall(items, mall):
         if it["kind"] != "expected":
             continue
-        rows += (f'<tr><th scope="row">{f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])}<br><small>{e(ENT[it["mall"]][0])}</small></th><td>{e(it["when"])}</td>'
+        rows += (f'<tr><th scope="row">{f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])}<br><small>{e(ENT[it["mall"]][0])}</small>{AFF.lines(AFF.links_for(it))}</th><td>{e(it["when"])}</td>'
                  f'<td><ul>{"".join(f"<li>{e(b)}</li>" for b in it["basis"])}</ul></td><td>{e(it["src"])}</td></tr>')
     if not rows:
         return ""
@@ -440,14 +444,14 @@ def home_li(it: dict, shown: bool) -> str:
     title = f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])
     return (f'<li class="cal-item k-{it["kind"]}" data-kind="{it["kind"]}" data-s="{it["s"]}" data-e="{it["e"] or it["s"]}" data-rule="{e(it["rule"])}" data-id="{e(it["id"])}"{"" if shown else " hidden"}>'
             f'<div class="cal-head"><span class="cal-badge k-{it["kind"]}">{sym} {e(label)}</span><span class="cal-mall">{e(ENT[it["mall"]][0])}</span><span class="cal-live" data-live></span></div>'
-            f'<h4>{title}</h4><p class="cal-when">{e(it["when"])}</p></li>')
+            f'<h4>{title}</h4><p class="cal-when">{e(it["when"])}</p>{AFF.lines(AFF.links_for(it))}</li>')
 
 
 def home_block(items: list[dict], today: date) -> str:
     pool = home_pool(items, today)
     chosen = set(home_choose(pool, today))
     lis = "".join(home_li(it, it["id"] in chosen) for it in pool)
-    return (f'<section class="home-cal" data-fortnight data-days="{HOME_DAYS}" data-max="{HOME_MAX}"><h3>これから2週間の日程</h3>'
+    return (f'<section class="home-cal" data-fortnight data-days="{HOME_DAYS}" data-max="{HOME_MAX}"><h3>これから2週間の日程</h3>{AFF.disclosure()}'
             f'<p class="cal-note">赤い●は確定、破線の◇は例年の予想、↻は毎月の定例、▲は発表予定日です。予想は、決まった日程ではありません。</p>'
             f'<ul class="cal-list home-cal-list">{lis}</ul><p class="cal-empty" data-fortnight-empty{"" if not chosen else " hidden"}>この2週間に載せられる予定は、いまのところありません。</p>'
             f'<div class="home-cal-links"><a class="btn btn-red" href="/calendar/">月間カレンダーを見る →</a>'
@@ -517,14 +521,14 @@ def hero_card(it: dict, n: int, total: int) -> str:
     return (f'<li class="hs-slide cal-item k-{cls}" data-kind="{it["kind"]}" data-id="{e(it["id"])}"{dates} aria-roledescription="スライド" aria-label="{n} / {total}">'
             f'<div class="cal-head"><span class="cal-badge k-{cls}">{sym} {e(label)}</span><span class="cal-mall">{e(ENT[it["mall"]][0])}</span><span class="cal-seg">{e(SEGMENTS[ENT[it["mall"]][2]])}</span>'
             f'<span class="cal-live" data-live></span></div><h3>{title}</h3><p class="cal-when">{e(it["when"])}</p>{notes}'
-            f'<p class="cal-src">出典の種類: {e(it["src"])} ／ 確認日 {e(it["checked"].replace("-", "/"))}</p>{more}</li>')
+            f'<p class="cal-src">出典の種類: {e(it["src"])} ／ 確認日 {e(it["checked"].replace("-", "/"))}</p>{AFF.lines(AFF.links_for(it))}{more}</li>')
 
 
 def hero_html(items: list[dict], today: date) -> str:
     sl = hero_slides(items, today)
     cards = "".join(hero_card(it, i + 1, len(sl)) for i, it in enumerate(sl))
     return ('<section class="hero-slides" data-slides aria-roledescription="カルーセル" aria-label="直近の大型セール"><div class="hs-head"><h2>直近の大型セール</h2>'
-            '<p>開催中と、これから開くセールを全部並べています。確定・開催は発表済み・例年の予想は、バッジで分けています。</p></div>'
+            '<p>開催中と、これから開くセールを全部並べています。確定・開催は発表済み・例年の予想は、バッジで分けています。</p>' + AFF.disclosure() + '</div>'
             f'<div class="hs-viewport"><ol class="hs-track">{cards}</ol></div>'
             '<div class="hs-controls" hidden><button type="button" class="hs-prev" aria-label="前のセール">←</button><div class="hs-dots"></div>'
             '<button type="button" class="hs-next" aria-label="次のセール">→</button><button type="button" class="hs-pause" aria-pressed="false">自動で切り替えを止める</button></div></section>')

@@ -183,3 +183,11 @@
 .hs-dots{flex:1 1 auto;min-width:0;justify-content:center}
 .hs-pause{flex:1 1 100%;margin-left:0}
 @media(min-width:741px){.hs-pause{flex:0 0 auto;margin-left:auto}}
+.aff-lines{margin:8px 0 0}
+.aff-line{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:4px 0 0;font-size:13px;line-height:1.7}
+.aff-line a{color:#b0121a;font-weight:700;text-decoration:underline;overflow-wrap:anywhere}
+.aff-line img{vertical-align:baseline}
+.cal-table th .aff-lines{font-weight:400}
+.aff-disclose{display:block;margin:10px 0;font-size:12px;line-height:1.9;color:var(--muted,#75685c)}
+.aff-disclose .pr-chip{display:inline-block;margin-right:8px}
+.cal-detail .aff-lines,.hs-slide .aff-lines{margin-top:6px}

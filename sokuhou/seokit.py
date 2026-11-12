@@ -297,6 +297,10 @@ _ALT = re.compile(r'\balt="([^"]*)"')
 _LINKED_IMG = re.compile(r"<a\b[^>]*>\s*(<img\b[^>]*>)\s*</a>", re.S)
 
 
+# The ValueCommerce 1x1 impression counter is used exactly as the programme gave it (src, height, width, border; no alt: docs/AFFILIATE_RULES.md 3b); nothing else is exempt.
+_VC_COUNTER = re.compile(r'^<img src="//ad\.jp\.ap\.valuecommerce\.com/servlet/gifbanner\?sid=\d+&amp;pid=\d+" height="1" width="[01]" border="0">$')
+
+
 def alt_problems(pages: dict) -> list[str]:
     """Every <img> has an alt attribute; a picture that is the only content of a link has words in it (a decorative picture has an empty alt, a linked one cannot)."""
     out = []
@@ -304,7 +308,7 @@ def alt_problems(pages: dict) -> list[str]:
         if not (isinstance(html, str) and rel.endswith(".html")):
             continue
         for tag in _IMG.findall(html):
-            if not _ALT.search(tag):
+            if not _ALT.search(tag) and not _VC_COUNTER.match(tag):
                 out.append(f"{rel}: <img> without alt: {tag[:60]}")
         for tag in _LINKED_IMG.findall(html):
             m = _ALT.search(tag)

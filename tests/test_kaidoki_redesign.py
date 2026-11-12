@@ -22,6 +22,7 @@ from sokuhou import newsite  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "sites" / "kaidoki"
 AFF_BOX = re.compile(r'<aside class="aff-box">.*?</aside>', re.S)
+PR_LINK = re.compile(r'<a href="[^"]+" target="_blank" rel="nofollow sponsored noopener">.*?</a>', re.S)
 PROMISE = re.compile(r"その日のうちに|発表されたら.{0,12}足します|発表の日に.{0,12}足します|毎日つくり直|更新は、主催者が発表した日に行います")
 
 FIXTURE = {"slug": "test-phone", "title": "テスト機のお得情報", "kicker": "スマートフォン", "h1_html": "テスト機<br><span class=\"gold\">4店</span>", "sub": "価格は出さない。",
@@ -89,9 +90,12 @@ class RedesignTest(unittest.TestCase):
         cfg = json.loads((SITE / "config.json").read_text(encoding="utf-8"))
         h = self.html(self.live)
         boxes = {rel: AFF_BOX.findall(t) for rel, t in h.items() if AFF_BOX.search(t)}
-        self.assertEqual(sorted(boxes), sorted(hooks.AFF_LINKS))
+        self.assertEqual(sorted(boxes), sorted(list(hooks.AFF_LINKS) + list(hooks.AFF_LINKS_MULTI)))
         for rel, bx in boxes.items():
             self.assertEqual(len(bx), 1, rel)
+            if rel in hooks.AFF_LINKS_MULTI:
+                self.assertEqual(bx[0], hooks.affiliate_multi_block(hooks.AFF_LINKS_MULTI[rel], dict(cfg, site_name="SALEカレンダー")).strip(), rel)
+                continue
             mall, target, label = hooks.AFF_LINKS[rel]
             self.assertEqual(bx[0], hooks.affiliate_block(mall, target, label, dict(cfg, site_name="SALEカレンダー")).strip(), rel)      # the text is the same sentence as the current site's
             self.assertEqual(len(re.findall(r'href="', bx[0])), 1, rel)
@@ -119,14 +123,13 @@ class RedesignTest(unittest.TestCase):
 
     def test_outside_links_only_in_the_affiliate_box_and_the_product_page(self):
         for rel, h in self.html(self.live).items():
-            body = AFF_BOX.sub("", h.split("<main", 1)[-1])
+            body = PR_LINK.sub("", AFF_BOX.sub("", h.split("<main", 1)[-1]))
             if rel.startswith("kaden/test-phone/"):
                 self.assertEqual(re.findall(r'href="(https?://[^"]+)"', body), ["https://example.com/a"])
                 continue
             if rel.startswith(("contact", "privacy", "about")):
                 continue
             self.assertNotRegex(body, r'href="(https?:)?//', rel)
-            self.assertNotIn("valuecommerce", h, rel)
 
     def test_hero_headline_comes_from_hero_json_by_time(self):
         def top(now):

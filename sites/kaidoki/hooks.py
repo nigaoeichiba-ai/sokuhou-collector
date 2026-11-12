@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import os
 import re
+from html import escape
 from urllib.parse import quote
 from datetime import date, datetime, timedelta, timezone
 
@@ -257,8 +258,16 @@ AFF_LINKS = {
     "amazon/prime-appreciation/index.html": (_A, "https://www.amazon.co.jp/gp/goldbox", "Amazonのセール会場のページを見る"),
     "amazon/sale-calendar/index.html": (_A, "https://www.amazon.co.jp/gp/goldbox", "Amazonのセール会場のページを見る"),
 }
-MALL_NAME = {_R: "楽天市場", _A: "Amazon"}
-PROGRAMME = {_R: "楽天アフィリエイト", _A: "Amazonアソシエイト"}
+_Y = "yahoo"
+# Pages of all three malls (and the Yahoo! page): one box, each mall's link on its own line (a mall's link never shares a line with another mall's); owner 2026-11-12.
+AFF_LINKS_MULTI = {
+    "yahoo/index.html": [(_Y, "https://shopping.yahoo.co.jp/promotion/campaign/guide/", "Yahoo!ショッピングのキャンペーン案内のページを見る")],
+    "black-friday/index.html": [(_R, "https://event.rakuten.co.jp/", "楽天市場のイベント一覧のページを見る"), (_A, "https://www.amazon.co.jp/blackfriday", "Amazonのブラックフライデーのページを見る"),
+                                (_Y, "https://shopping.yahoo.co.jp/promotion/campaign/guide/", "Yahoo!ショッピングのキャンペーン案内のページを見る")],
+    "rakuten/index.html": [(_R, "https://event.rakuten.co.jp/", "楽天市場のイベント一覧のページを見る")],
+}
+MALL_NAME = {_R: "楽天市場", _A: "Amazon", _Y: "Yahoo!ショッピング"}
+PROGRAMME = {_R: "楽天アフィリエイト", _A: "Amazonアソシエイト", _Y: "バリューコマース"}
 AFF_REL = "nofollow sponsored noopener"
 OFFICIAL_END = re.compile(r'(<h2>最終確認は公式で</h2>\n(?:<p>.*?</p>\n)+)')
 
@@ -268,6 +277,9 @@ def affiliate_url(mall: str, target: str, cfg: dict) -> str:
         return f"https://hb.afl.rakuten.co.jp/hgc/{cfg['rakuten_affiliate_id']}/?pc={quote(target, safe='')}"      # the form of sokuhou/mallstore.affiliate_href
     if mall == _A:
         return f"{target}?tag={cfg['amazon_tracking_id']}"          # the official URL and tag, nothing else
+    if mall == _Y:
+        from sites.kaidoki.redesign import affiliate
+        return affiliate.vc_href(affiliate.VC_PID["yahoo"], target)          # the MyLink of this site (ValueCommerce tool), see redesign/affiliate.py
 
 
 def affiliate_block(mall: str, target: str, label: str, cfg: dict) -> str:
@@ -280,7 +292,29 @@ def affiliate_block(mall: str, target: str, label: str, cfg: dict) -> str:
             f'<p class="aff-btn">{a}</p><p class="aff-note">{note}</p></div></aside>\n')
 
 
+def affiliate_multi_block(items: list, cfg: dict) -> str:
+    """One box, one line per mall: [PR] link.  The mall's link on its own line; the notes of the programmes under them."""
+    from sites.kaidoki.redesign import affiliate
+    btns, notes = "", []
+    for mall, target, label in items:
+        href = affiliate_url(mall, target, cfg)
+        counter = affiliate.vc_counter(affiliate.VC_PID["yahoo"]) if mall == _Y else ""
+        btns += f'<p class="aff-btn"><a href="{escape(href, quote=True)}" target="_blank" rel="{AFF_REL}">{label}{counter}</a></p>'
+        notes.append(f"{MALL_NAME[mall]}は{PROGRAMME[mall]}")
+    note = "広告(" + "・".join(notes) + ")のリンクです。リンク先で購入されると、運営者に報酬が支払われることがあります。"
+    if any(m == _A for m, _, _ in items):
+        note += f"Amazonのアソシエイトとして、{cfg['amazon_disclosure_name'] if cfg.get('amazon_disclosure_name') else cfg['site_name']}は適格販売により収入を得ています。"
+    return (f'<aside class="aff-box"><span class="pr-chip">PR</span><div><p>条件と最新の日程は、各モールの公式のページで確かめておきましょう。</p>'
+            f'{btns}<p class="aff-note">{note}</p></div></aside>\n')
+
+
 def add_affiliate_links(pages: dict, cfg: dict) -> dict:
+    for rel, items in AFF_LINKS_MULTI.items():
+        html = pages.get(rel)
+        assert html, f"kaidoki hooks: no page {rel}"
+        html, n = OFFICIAL_END.subn(lambda m: m.group(1) + affiliate_multi_block(items, cfg), html, count=1)
+        assert n == 1, f"kaidoki hooks: {rel} has no 最終確認は公式で section"
+        pages[rel] = html
     for rel, (mall, target, label) in AFF_LINKS.items():
         html = pages.get(rel)
         assert html, f"kaidoki hooks: no page {rel}"
