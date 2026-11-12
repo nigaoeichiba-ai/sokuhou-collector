@@ -87,6 +87,17 @@
     draw();
   });
 
+  /* the top page: the entries of the visitor's own next two weeks (same rule as schedule.home_choose) */
+  document.querySelectorAll('[data-fortnight]').forEach(function (box) {
+    var days = +box.dataset.days, max = +box.dataset.max, today = todayIso(), n = dayNo(today), shown = 0, seen = {};
+    box.querySelectorAll('.cal-item[data-s]').forEach(function (li) {
+      var s = li.dataset.s, e = li.dataset.e, rule = li.dataset.rule, ok = dayNo(s) <= n + days - 1 && dayNo(e) >= n && shown < max;
+      if (ok && rule) { if (seen[rule]) ok = false; else seen[rule] = true; }
+      li.hidden = !ok; if (ok) shown++;
+    });
+    var em = box.querySelector('[data-fortnight-empty]'); if (em) em.hidden = shown > 0;
+  });
+
   /* "開催中 / あとN日": the sales and notices of the lists, from the visitor's clock */
   function live() {
     var today = todayIso(), n = dayNo(today);

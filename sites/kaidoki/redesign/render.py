@@ -106,7 +106,7 @@ def _iso(day: str, t: str, default: str) -> str:
 
 def sales_list() -> list[dict]:
     from sites.kaidoki.gen import facts
-    from sites.kaidoki.gen.common import CHECKED
+    from sites.kaidoki.gen.common import REVERIFIED
     out = []
     for ev in facts.EVENTS:
         if ev["end"] < SHOW_FROM:
@@ -116,12 +116,12 @@ def sales_list() -> list[dict]:
                     "start": _iso(ev["start"], ev.get("start_t", ""), "00:00"), "end": _iso(ev["end"], ev.get("end_t", ""), "23:59"),
                     "start_t": bool(ev.get("start_t")), "end_t": bool(ev.get("end_t")), "href": GROUP_PAGE[ev["group"]],
                     "summary": ev.get("note") or ("主催者の公式ページで確認した日程です。" if ev.get("read") != "summary" else "公式ページの表示で確認した日程です。"),
-                    "tags": [f"確認日 {CHECKED.replace('-', '/')}"], "categories": ["electronics"]})
+                    "tags": [f"確認日 {REVERIFIED.replace('-', '/')}"], "categories": ["electronics"]})
     for name, mall, why in facts.UNANNOUNCED:
         mall_id = MALL_ID[mall]
         href = next(p for k, p in UNANNOUNCED_PAGE if name.startswith(k))
         out.append({"id": "un-" + hashlib.sha1(name.encode()).hexdigest()[:6], "mall_id": mall_id, "mall": MALL_TITLE[mall_id], "title": name, "start": None, "end": None,
-                    "start_t": False, "end_t": False, "href": href, "summary": why, "tags": [f"確認日 {CHECKED.replace('-', '/')}"], "categories": ["electronics"]})
+                    "start_t": False, "end_t": False, "href": href, "summary": why, "tags": [f"確認日 {REVERIFIED.replace('-', '/')}"], "categories": ["electronics"]})
     return out
 
 
@@ -456,7 +456,7 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
     if path == "/":
         arts = [ctx.card("/rakuten/marathon/", "楽天"), ctx.card("/rakuten/marathon-vs-super-sale/", "楽天"), ctx.card("/calc/points/", "計算")]
         lead, more = home_more(ctx, pg["answer"], pg["rest"])
-        return template("home", headline=hero_headline(ctx), featured=sales_grid(live[:2], at), schedule=lead + sales_grid(ctx.sales[:3], at) + f'<p class="cal-homelink">{link("/calendar/", "全モールの月間カレンダー(確定・例年の予想・毎月の定例)を見る")}</p>',
+        return template("home", headline=hero_headline(ctx), featured=sales_grid(live[:2], at), schedule=lead + schedule.home_block(ctx.sched, at.date()) + sales_grid(ctx.sales[:3], at) + f'<p class="cal-homelink">{link("/calendar/", "全ショップの月間カレンダーを見る")}</p>' + f'<script defer src="/assets/kit/scripts/calendar.js?v={ctx.ver}"></script>',
                         categories=category_cards(ctx.categories), articles=article_cards(arts), more=more)
     if path == "/calendar/":
         stamp = f"表示時点：{fmt(at.isoformat(timespec='seconds'), True)}（日本時間）。未発表・終了を含めて確認できます。日程は、各セールの欄に書いた確認日に、主催者の発表や信頼できる報道で確かめたものです。"

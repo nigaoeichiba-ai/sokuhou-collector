@@ -9,6 +9,7 @@ import os
 from datetime import date, datetime, timedelta, timezone
 
 CHECKED = "2026-11-03"
+REVERIFIED = "2026-11-12"          # the day the sales of facts.py and the schedule of redesign/schedule.py were read again (the "確認日" of the top page and the calendars); CHECKED stays the day the pages were first written
 WD = "月火水木金土日"
 JST = timezone(timedelta(hours=9))
 

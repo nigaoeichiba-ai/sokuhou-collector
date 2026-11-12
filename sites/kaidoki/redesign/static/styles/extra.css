@@ -144,3 +144,14 @@
 .cal-homelink .text-link{white-space:normal}
 .cal-grid.cal-wide{min-width:0}
 .cal-table th[scope=row]{min-width:9em}.cal-table td:nth-child(3){min-width:14em}
+.home-cal{margin:6px 0 26px}
+.home-cal h3{font-size:20px;margin:0 0 6px}
+.home-cal-list{margin-top:10px}
+.home-cal-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.home-cal-links .btn{justify-content:center}
+@media(max-width:740px){.home-cal-links .btn{flex:1 1 100%}}
+.cal-item h4{color:#30251f}
+.cal-item.k-confirmed,.cal-item.k-expected,.cal-item.k-regular,.cal-item.k-notice{color:#30251f;background:#fff;border:1px solid var(--line)}
+.cal-item.k-expected{border:1px dashed #b9791d}
+.cal-item.k-confirmed{border-left:5px solid #d71920}
+.cal-item.k-notice{border-left:5px solid #2871bc}

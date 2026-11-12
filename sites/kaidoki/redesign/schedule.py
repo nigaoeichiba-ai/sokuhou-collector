@@ -16,13 +16,13 @@ import json
 from datetime import date, timedelta
 from html import escape
 
-from sites.kaidoki.gen.common import CHECKED, hm, ev_span
+from sites.kaidoki.gen.common import CHECKED, REVERIFIED, hm, ev_span
 
 WD = "月火水木金土日"
 MIN_YM, MAX_YM = "2026-01", "2027-12"          # the months the calendar can show
 REGULAR_FROM = date(2026, 11, 1)                 # a monthly day is listed from this month on (the older months show announced sales only)
 REGULAR_TO = date(2027, 6, 30)                   # ... and up to this day (a campaign's rules can change; the page says so)
-VERIFIED = "2026-11-12"                          # the day the entries below were read again
+VERIFIED = REVERIFIED                             # the day the entries below were read again (gen/common.py: one value for the top page, the tiles and the calendars)
 
 MALLS = {"rakuten": ("楽天市場", "楽"), "amazon": ("Amazon", "A"), "yahoo": ("Yahoo!ショッピング", "Y")}      # the three malls: each has its own calendar page
 SEGMENTS = {"mall": "大型モール", "ec": "そのほか大手EC", "brand": "ブランド公式EC", "web": "WEBサービス"}
@@ -392,3 +392,58 @@ def counts(items: list[dict]) -> dict:
         if it["kind"] == "regular":
             out[it["mall"]]["regular_days"] = out[it["mall"]].get("regular_days", 0) + len(it["days"] or [])
     return out
+
+
+# ------------------------------------------------------------------ the top page: "これから2週間の日程"
+HOME_DAYS, HOME_MAX, HOME_POOL_DAYS = 14, 8, 60
+KIND_ORDER = {"confirmed": 0, "notice": 1, "expected": 2, "regular": 3}
+
+
+def home_pool(items: list[dict], today: date) -> list[dict]:
+    """Every entry that can fall in the window within HOME_POOL_DAYS (the script picks the visitor's own two weeks from them); a monthly day appears as its next three days."""
+    hi = today + timedelta(days=HOME_POOL_DAYS)
+    pool = []
+    for it in items:
+        if it["kind"] == "regular":
+            for x in [x for x in (it["days"] or []) if today <= d(x) <= hi][:3]:
+                pool.append(dict(it, id=f'{it["id"]}@{x}', rule=it["id"], s=x, e=x, when=f'{jpd(x)}、{it["when"]}'))
+        elif it.get("s") and "(終了日)" not in it["title"] and d(it["e"] or it["s"]) >= today and d(it["s"]) <= hi:      # an entry with only an end day is not a "coming" sale
+            pool.append(dict(it, rule=""))
+    seg = {"mall": 0, "ec": 1, "brand": 1, "web": 1}
+    pool.sort(key=lambda it: (0 if d(it["s"]) >= today else 1, it["s"], seg[ENT[it["mall"]][2]], KIND_ORDER[it["kind"]]))
+    return pool
+
+
+def home_choose(pool: list[dict], today: date) -> list[str]:
+    """The ids shown: the entries that run in [today, today + HOME_DAYS - 1], the first day of each monthly rule only, at most HOME_MAX (calendar.js does the same with the visitor's clock)."""
+    end = today + timedelta(days=HOME_DAYS - 1)
+    out, seen = [], set()
+    for it in pool:
+        if d(it["s"]) <= end and d(it["e"] or it["s"]) >= today:
+            if it["rule"]:
+                if it["rule"] in seen:
+                    continue
+                seen.add(it["rule"])
+            out.append(it["id"])
+        if len(out) >= HOME_MAX:
+            break
+    return out
+
+
+def home_li(it: dict, shown: bool) -> str:
+    label, sym, _ = KINDS[it["kind"]]
+    title = f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])
+    return (f'<li class="cal-item k-{it["kind"]}" data-kind="{it["kind"]}" data-s="{it["s"]}" data-e="{it["e"] or it["s"]}" data-rule="{e(it["rule"])}" data-id="{e(it["id"])}"{"" if shown else " hidden"}>'
+            f'<div class="cal-head"><span class="cal-badge k-{it["kind"]}">{sym} {e(label)}</span><span class="cal-mall">{e(ENT[it["mall"]][0])}</span><span class="cal-live" data-live></span></div>'
+            f'<h4>{title}</h4><p class="cal-when">{e(it["when"])}</p></li>')
+
+
+def home_block(items: list[dict], today: date) -> str:
+    pool = home_pool(items, today)
+    chosen = set(home_choose(pool, today))
+    lis = "".join(home_li(it, it["id"] in chosen) for it in pool)
+    return (f'<section class="home-cal" data-fortnight data-days="{HOME_DAYS}" data-max="{HOME_MAX}"><h3>これから2週間の日程</h3>'
+            f'<p class="cal-note">赤い●は確定、破線の◇は例年の予想、↻は毎月の定例、▲は発表予定日です。予想は、決まった日程ではありません。</p>'
+            f'<ul class="cal-list home-cal-list">{lis}</ul><p class="cal-empty" data-fortnight-empty{"" if not chosen else " hidden"}>この2週間に載せられる予定は、いまのところありません。</p>'
+            f'<div class="home-cal-links"><a class="btn btn-red" href="/calendar/">月間カレンダーを見る →</a>'
+            + "".join(f'<a class="btn btn-light" href="{CAL_PATH[m]}">{e(MALLS[m][0])}のカレンダー</a>' for m in MALLS) + "</div></section>")

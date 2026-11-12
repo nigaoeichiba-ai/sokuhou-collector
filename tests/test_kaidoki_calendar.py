@@ -13,6 +13,8 @@ from datetime import date
 
 os.environ.setdefault("KAIDOKI_TODAY", "2026-11-12")
 
+from sites.kaidoki.gen import facts  # noqa: E402
+from sites.kaidoki.gen.common import REVERIFIED  # noqa: E402
 from sites.kaidoki.redesign import schedule as S  # noqa: E402
 from tests.test_kaidoki_redesign import build  # noqa: E402
 
@@ -133,6 +135,57 @@ class PageTest(unittest.TestCase):
         bad = dict(S.all_items()[0], kind="expected", s="2026-12-04", when="12月4日(土)20時ごろ", id="neg")
         self.assertTrue(_weekday_problems([bad]))
         self.assertFalse(_weekday_problems([dict(bad, when="12月4日(金)20時ごろ")]))
+
+
+def home_problems(html: str, today: date) -> list[str]:
+    """What the top page must agree with in the data: the check day of every tile, the entry to the calendars, the two weeks it lists."""
+    bad = []
+    days = set(re.findall(r"確認日 (\d{4}/\d{2}/\d{2})", html))
+    if days != {REVERIFIED.replace("-", "/")}:
+        bad.append(f"check days on the top page {sorted(days)} are not the data's {REVERIFIED}")
+    for path in ("/calendar/", "/calendar/rakuten/", "/calendar/amazon/", "/calendar/yahoo/"):
+        if f'href="{path}"' not in html:
+            bad.append(f"no link to {path}")
+    if "data-fortnight" not in html:
+        return bad + ["no two-week block"]
+    shown = re.findall(r'<li class="cal-item[^>]*data-id="([^"]*)"(?![^>]*hidden)', html)
+    items = S.all_items()
+    want = S.home_choose(S.home_pool(items, today), today)
+    if shown != want:
+        bad.append(f"two weeks shown {shown} differ from the data {want}")
+    for name, mall, why in facts.UNANNOUNCED:
+        if name == "Amazon ブラックフライデー 2026" and "11月19日" in why and "11月19日" not in html:
+            bad.append("the Amazon Black Friday state (11/19) of the data is not on the top page")
+    return bad
+
+
+class HomeTest(unittest.TestCase):
+    TODAY = date(2026, 11, 12)
+
+    @classmethod
+    def setUpClass(cls):
+        cls.pages = build({"KAIDOKI_REDESIGN": "1", "KAIDOKI_REDESIGN_DEMO": "0", "KAIDOKI_NOW": "2026-11-12T10:00"}, products=[])
+
+    def test_the_top_page_agrees_with_the_data(self):
+        self.assertEqual(home_problems(self.pages["index.html"], self.TODAY), [])
+
+    def test_the_two_weeks_come_from_the_data_with_the_kinds_and_the_links(self):
+        h = self.pages["index.html"]
+        self.assertIn("これから2週間の日程", h)
+        self.assertIn("月間カレンダーを見る", h)
+        ids = S.home_choose(S.home_pool(S.all_items(), self.TODAY), self.TODAY)
+        self.assertTrue(3 <= len(ids) <= S.HOME_MAX)
+        kinds = {i.split("@")[0][0] for i in ids}
+        self.assertIn("n", kinds)                                  # the announcement days (Yahoo! 11/16, Amazon 11/19) are in the two weeks
+        self.assertIn('data-kind="regular"', h)
+        self.assertNotIn("開催中</span>", h.split("home-cal")[1][:4000])      # "開催中" / "あとN日" are written by the visitor's clock
+
+    def test_negative_a_stale_top_page_is_caught(self):
+        h = self.pages["index.html"]
+        self.assertTrue(home_problems(h.replace(REVERIFIED.replace("-", "/"), "2026/11/03"), self.TODAY))      # the old check day (the report of the owner)
+        self.assertTrue(home_problems(h.replace('href="/calendar/yahoo/"', 'href="/x/"'), self.TODAY))         # a missing entry to a mall calendar
+        self.assertTrue(home_problems(h.replace("data-fortnight", "data-x"), self.TODAY))
+        self.assertTrue(home_problems(h.replace('data-id="n-abf-2026"', 'data-id="n-abf-2026" hidden'), self.TODAY))      # the two weeks differ from the data
 
 
 if __name__ == "__main__":
