@@ -64,5 +64,24 @@ class TrendAffiliate(unittest.TestCase):
         self.assertEqual(problems('<a href="https://www.amazon.co.jp/s?k=a&amp;tag=t" rel="nofollow sponsored noopener" target="_blank">Amazonで探す</a>（PR）'), [])
 
 
+def one_way(related: dict) -> list[tuple[str, str]]:
+    """related: path -> [paths].  A link to another article that does not link back (a one-way link) is what the owner does not want."""
+    return [(a, b) for a, rs in related.items() for b in rs if b in related and a not in related[b]]
+
+
+class TrendRelated(unittest.TestCase):
+    def test_related_links_go_both_ways(self):
+        rel = {}
+        for f in CONTENT.glob("*.json"):
+            d = json.loads(f.read_text(encoding="utf-8"))
+            if d.get("path") and d["path"] != "/":
+                rel[d["path"]] = [r["path"] for r in d.get("related", [])]
+        self.assertEqual(one_way(rel), [])
+
+    def test_a_one_way_link_is_caught(self):
+        self.assertEqual(one_way({"/a/": ["/b/"], "/b/": []}), [("/a/", "/b/")])
+        self.assertEqual(one_way({"/a/": ["/b/"], "/b/": ["/a/"]}), [])
+
+
 if __name__ == "__main__":
     unittest.main()
