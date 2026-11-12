@@ -11,7 +11,7 @@ import re
 from pathlib import Path
 
 from . import deadlines, extras, pages_hub, pages_life, pages_money, shop_links
-from .common import CHECKED, sources_json
+from .common import CHECKED, SITE_UPDATED, sources_json
 from .titles import TITLES
 
 SITE = Path(__file__).resolve().parent.parent
@@ -41,7 +41,7 @@ def file_name(path: str) -> str:
 def site_json() -> dict:
     return {
         "glyph": "暦",
-        "updated": "2026-11-03",
+        "updated": SITE_UPDATED,
         "home_label": "トップ",
         "nav": [["月別", "/month/", "/month/"], ["人生の節目", "/life/", "/life/"], ["引っ越し", "/moving/", "/moving/"], ["確定申告", "/kakutei-shinkoku/", "/kakutei-shinkoku/"],
                 ["期限の数え方", "/method/", "/method/"]],
