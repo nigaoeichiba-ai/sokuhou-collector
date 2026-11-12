@@ -136,8 +136,9 @@ class ThreeArticlesTest(SiteFixture):
             self.assertIn(f'href="/guide/{slug}/"', self.read("index.html"))
             self.assertIn(f"https://saichin-sokuho.com/guide/{slug}/", self.read("sitemap.xml"))
             page = self.read(f"guide/{slug}/index.html")
-            self.assertNotIn("a8.net", page)
-            self.assertNotIn("pr-note", page)                                  # no advertisement on these pages
+            if slug != "monthly":                                              # 2026-11-13: monthly has the job link (tests/test_saichin_work.py)
+                self.assertNotIn("a8.net", page)
+                self.assertNotIn("pr-note", page)                              # no advertisement on these pages
             self.assertEqual(content.GUIDE_BY_SLUG[slug]["verified"], "2026-10-20")
             self.assertGreater(len(re.sub(r"<[^>]+>", "", page)), 1800, slug)
 

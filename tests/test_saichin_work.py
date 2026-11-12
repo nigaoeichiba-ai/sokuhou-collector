@@ -158,6 +158,16 @@ class AffiliateBlockTest(SiteFixture):
         self.assertIn("個人を特定する情報は使われません", page)
 
 
+class MonthlyGuideAffiliateTest(SiteFixture):
+    def test_the_monthly_guide_has_the_job_link_with_the_pr_notice_before_it(self):
+        """2026-11-13: the guide about reading monthly-pay job ads ends with the programme's link, as given, after the PR notices."""
+        page = self.read("guide/monthly/index.html")
+        self.assertEqual(page.count(f'<div class="aff">{MAMAWORKS}</div>'), 1)
+        self.assertLess(page.index('<p class="pr-note"><strong>PR</strong>このページには、広告(アフィリエイト広告)を含みます。</p>'), page.index('<p class="lead">'))
+        self.assertLess(page.index('<p class="pr-note"><strong>PR</strong>次のリンクは広告です。</p>'), page.index("a8mat="))
+        self.assertEqual(re.findall(r">(https?://[^<]+)</a>", page), [])
+
+
 class BothGuidesTest(SiteFixture):
     def test_only_the_two_approved_a8_programs_and_the_official_sources_are_linked_and_no_ai_wording(self):
         for slug in ("wall", "raise"):

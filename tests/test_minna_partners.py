@@ -94,7 +94,7 @@ class PartnerBox(unittest.TestCase):
     def test_no_other_page_of_the_site_has_an_a8_link(self):
         out, _ = shared_site()
         found = sorted(p.relative_to(out).as_posix() for p in out.rglob("*.html") if "px.a8.net" in p.read_text(encoding="utf-8"))
-        self.assertEqual(found, ["guide/nenga-tsukurikata/index.html"])
+        self.assertEqual(found, ["guide/mochu-hagaki/index.html", "guide/nenga-tsukurikata/index.html", "guide/nenmatsu-junbi-calendar/index.html"])      # 2026-11-13: the same programme on two more pages about printing the cards
 
     def test_no_price_or_discount_claim_around_the_link_and_no_programme_name_in_the_head(self):
         _items, series = build.load_data()

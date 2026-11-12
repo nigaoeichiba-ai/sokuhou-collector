@@ -752,6 +752,10 @@ def printables_hub(cfg, preview, year: int, themes: list[dict], items: list[dict
 
 # ------------------------------------------------------------------ affiliate boxes (only when the owner's ids are in config.json; always marked as advertising)
 GUIDE_PR = {
+    "mochu-hagaki": ("喪中はがきの準備に", [("喪中はがきの用紙", "喪中はがき 用紙 プリンター"), ("筆ペン", "筆ペン 薄墨")]),
+    "nenmatsu-junbi-calendar": ("年末の準備に", [("年賀状向けのプリンター用紙", "年賀状 プリンター用紙"), ("宛名ラベル", "年賀状 宛名 ラベル")]),
+    "hagaki-size-ichiran": ("はがきに印刷するなら", [("はがき用の印刷用紙", "はがき 用紙 インクジェット"), ("はがき入れ・ケース", "はがき 収納 ケース")]),
+    "bounenkai-annai": ("案内状を印刷するなら", [("A4の印刷用紙", "A4 コピー用紙 白"), ("ラミネートフィルム", "ラミネートフィルム A4")]),
     "nenga-tsukurikata": ("年賀状作りにあると便利なもの", [("年賀状向けのプリンター用紙", "年賀状 プリンター用紙"), ("プリンターのインク", "プリンター インク 純正")]),
     "nenga-2027-schedule": ("年賀状の準備に", [("宛名ラベル", "年賀状 宛名 ラベル"), ("スタンプ・はんこ", "年賀状 スタンプ 干支")]),
     "nenga-bunrei": ("年賀状にひとこと添えるなら", [("年賀状用のペン", "年賀状 ペン 筆ペン"), ("スタンプ・はんこ", "年賀状 スタンプ 干支")]),
@@ -776,6 +780,16 @@ PRINTABLE_PR = {
     "shojo": ("賞状をきれいに仕上げるために", [("賞状用紙", "賞状用紙 A4"), ("賞状ホルダー・額", "賞状 額縁 A4"), ("A4の厚手用紙", "A4 用紙 厚手 カラー")]),
     "nafuda": ("名札を丈夫にするために", [("名札ケース", "名札ケース 安全ピン"), ("ラミネートフィルム", "ラミネートフィルム 名刺サイズ"), ("ストラップ", "ネームホルダー ストラップ")]),
     "jikanwari": ("時間割を長く使うために", [("ラミネートフィルム", "ラミネートフィルム A4"), ("下敷き", "下敷き 学習"), ("クリアファイル", "クリアファイル A4")]),
+}
+
+
+# The hubs of /use/<slug>/ that talk about printed things get a Rakuten box (2026-11-13, owner: affiliate links in natural places).  Things only, never services.
+USE_PR = {
+    "flyer": ("チラシ・ポスターを作るときに", [("A4のコピー用紙", "A4 コピー用紙 白"), ("ポスター用の用紙", "ポスター用紙 A3 インクジェット")]),
+    "nenga": ("年賀状・挨拶状に", [("年賀状向けのプリンター用紙", "年賀状 プリンター用紙"), ("宛名ラベル", "年賀状 宛名 ラベル")]),
+    "otayori": ("おたよりを作るときに", [("A4のコピー用紙", "A4 コピー用紙 白"), ("クリアファイル", "クリアファイル A4")]),
+    "learning": ("教材・学習プリントに", [("ラミネートフィルム", "ラミネートフィルム A4"), ("色鉛筆", "色鉛筆 24色")]),
+    "craft": ("手づくりの名札・賞状に", [("名札ケース", "名札ケース 安全ピン"), ("賞状用紙", "賞状用紙 A4")]),
 }
 
 
@@ -1419,7 +1433,7 @@ def use_pages(cfg: dict, preview: bool, series: list[dict], built: list, guides:
 <h1>{esc(h["name"])}に使えるイラスト</h1>{intro}{licence_box()}
 <section><h2><span class="scribble">使うときのポイント</span></h2><ul class="promise">{points}</ul></section>
 <section style="margin-top:44px"><h2><span class="scribble">おすすめのセット</span></h2><p class="meta">{len(sers)}セット・{n_items}点。ほかのイラストは<a href="/search/?q={esc(q)}">「{esc(q)}」で検索</a>できます。</p>{set_grid(sers)}</section>
-{related}"""
+{related}{pr_box(cfg, *USE_PR[h['slug']]) if h['slug'] in USE_PR else ""}"""
         pages[f"use/{h['slug']}/index.html"] = page(cfg, preview, path=f"/use/{h['slug']}/", title=f"{h['name']}に使える無料イラスト 商用OK | {cfg['site_name']}",
                                                        description=f"{h['short']}に使える、無料・商用OK・登録不要のイラスト素材。{len(sers)}セット{n_items}点から選べます。", body=body)
         live.append({**h, "sets": sers, "n": n_items})

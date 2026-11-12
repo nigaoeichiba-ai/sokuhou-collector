@@ -7,6 +7,7 @@ Statements about the process are what the Ministry's two press releases say (rea
 """
 from __future__ import annotations
 
+from sites.saichin import work_pages
 from sites.saichin.analysis import raise_series
 from sites.saichin.places import PLACES
 
@@ -112,7 +113,9 @@ def monthly_body(d: dict, k) -> str:
 <li>発効日の前に、新しい額で比べてしまう。発効日の前は改定前の額、発効日以降は新しい額です(<a href="/calendar/">発効日カレンダー</a>)。</li>
 </ul>
 <p>自分の給与明細で計算したいときは、<a href="/check/">差額チェッカー</a>が、手当の欄と発効日の前後の額に対応しています。計算の根拠は<a href="/guide/calculate/">月給・日給を時給に換算する方法</a>に書いています。</p>
-"""
+<h2>パート・アルバイトの求人を探すとき</h2>
+{work_pages.PR_BLOCK}<p>時給の求人を探すときは、上の手順で、勤務地の最低賃金を下回っていないかを確かめます。主婦向けの求人サイトの例です。</p>
+{work_pages.aff("mamaworks")}"""
 
 
 def terms_body(d: dict, k) -> str:

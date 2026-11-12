@@ -114,7 +114,7 @@ def cite_page(page, d: dict, lv: dict, cfg: dict, base: str) -> str:
     if example_src:
         slug = pf.SLUG[example_src["pref"]]
         example = (f'<li><strong>数字を引用する例</strong>: 「{esc(pf.full(example_src["pref"]))}の{fy_label(cur)}の記録は{n(example_src["count"])}件'
-                   f'({jp_date(example_src["latest"])}の分まで)。出典: {esc(example_src["name"])}の公開データを、クマ出没速報(<a href="/live/{slug}/">{esc(base + "/live/" + slug + "/")}</a>)が加工して作成。'
+                   f'({jp_date(example_src["latest"])}の分まで)。出典: {esc(example_src["name"])}の公開データを、クマ出没速報の<a href="/live/{slug}/">{esc(pf.full(example_src["pref"]))}のページ</a>({esc(base + "/live/" + slug + "/")})が加工して作成。'
                    f'{jp_date(today.isoformat())}閲覧」</li>\n')
     body = f"""{crumbs([("全国", "/"), ("データの出典・引用のしかた", None)])}
 <h1>データの出典・数え方・引用のしかた</h1>

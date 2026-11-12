@@ -102,7 +102,7 @@ class AffiliateTest(unittest.TestCase):
             self.assertEqual(html.count('<aside class="pr-box">'), 1, slug)
             self.assertNotIn("amazon.co.jp", html, slug)
             # the partner (A8) box is on nenga-tsukurikata only (tests/test_minna_partners.py); every other page shows none
-            self.assertEqual(html.count('<aside class="pr-box pr-partner">'), 1 if slug == "nenga-tsukurikata" else 0, slug)
+            self.assertEqual(html.count('<aside class="pr-box pr-partner">'), 1 if slug in ("nenga-tsukurikata", "mochu-hagaki", "nenmatsu-junbi-calendar") else 0, slug)
 
     def test_every_planned_box_is_for_a_page_that_exists(self):
         guides = {g["slug"] for g in json.loads((Path(build.__file__).parent / "content" / "guides.json").read_text(encoding="utf-8"))["guides"]}

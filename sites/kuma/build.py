@@ -730,6 +730,7 @@ def guide_page(g: dict, cfg: dict, preview: bool) -> str:
 <h2>出典</h2>
 <ul class="link-list">{sources}</ul>
 <p class="notice">内容の確認日: {jp_date(content.VERIFIED_AT)}。公的機関の資料は更新されることがあります。最新の内容は、出典でご確認ください。身の危険があるときは、ためらわず 110 番へ連絡してください。</p>
+{guide_goods_box(g['slug'], cfg)}
 <h2>ほかの解説</h2>
 <ul class="link-list">{others}</ul>"""
     return page(cfg, preview, path=f"/guide/{g['slug']}/", title=f"{g['title']} | {cfg['site_name']}", description=g["description"], body=body)
@@ -820,6 +821,31 @@ def rakuten_url(cfg: dict, target: str) -> str:
 def amazon_url(cfg: dict, query: str) -> str:
     """Amazon.co.jp search results for a keyword, with the Associates tracking ID."""
     return f"https://www.amazon.co.jp/s?k={quote(query, safe='')}&tag={quote(cfg['amazon_tracking_id'], safe='')}"
+
+
+# Slugs of the guides that carry a "tools to look for" box (2026-11-13, owner: affiliate links in natural places).  Only guides about equipment and preparation:
+# "encounter" (what to do when a bear is met) and "data" (how to read the numbers) get none.  Rows come from GOODS (search pages only, no product names or prices).
+GUIDE_GOODS_SLUGS = ("prepare", "spray", "home")
+
+
+def guide_goods_box(slug: str, cfg: dict) -> str:
+    items = [g for g in GOODS if g["guide"][0] == slug]
+    if not items or not cfg.get("rakuten_affiliate_id"):
+        return ""
+    rows_r, rows_a = "", ""
+    for g in items:
+        target = "https://search.rakuten.co.jp/search/mall/" + quote(g["query"], safe="") + "/"
+        rows_r += (f'<li><a href="{esc(rakuten_url(cfg, target))}" target="_blank" rel="nofollow sponsored noopener">'
+                   f'<span class="pr-note">PR</span>{esc(g["title"])}を楽天市場で探す</a></li>')
+        if cfg.get("amazon_tracking_id"):
+            rows_a += (f'<li><a href="{esc(amazon_url(cfg, g["query"]))}" target="_blank" rel="nofollow sponsored noopener">'
+                       f'<span class="pr-note">PR</span>{esc(g["title"])}をAmazonで探す</a></li>')
+    amazon = f'<ul class="link-list">{rows_a}</ul>' if rows_a else ""
+    return (f'<aside class="pr-guide-box"><h2><span class="pr-note">PR</span>この備えに使う道具を探す</h2>'
+            f'<p>道具は、出会わないための対策の補助です。選ぶときの確認点は<a href="/goods/">クマ対策のグッズ</a>にまとめています。</p>'
+            f'<ul class="link-list">{rows_r}</ul>{amazon}'
+            f'<p class="notice">このボックスには、広告(楽天アフィリエイト・Amazonアソシエイト)のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。</p>'
+            f'{amazon_disclosure(cfg) if rows_a else ""}</aside>')
 
 
 def goods_page(d: dict, cfg: dict, preview: bool) -> str:
