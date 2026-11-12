@@ -317,7 +317,87 @@ def head_html(head: str, demo: bool, ld_extra: str = "") -> str:
 
 
 def doc(rest: str) -> str:
+    """Fallback (no Ctx): the plain reading column.  Pages go through kit_doc()."""
     return f'<div class="wrap page-content doc"><article class="reading-column">{rest}</article></div>' if rest.strip() else ""
+
+
+H2_SPLIT = re.compile(r"(<h2>.*?</h2>)", re.S)
+LINKS_ONLY = re.compile(r'^<ul class="links">(.*)</ul>$', re.S)
+LINK_ITEM = re.compile(r'<li><a href="([^"]+)">(.*?)</a></li>', re.S)
+TAIL = re.compile(r'<p class="(credit|stamp)">.*?</p>\s*', re.S)
+HISTORY_P = re.compile(r"<p>(\d{4}年\d{1,2}月\d{1,2}日\([^)]+\)): (.*?)</p>", re.S)
+DL_INFO = re.compile(r'<dl class="info">(.*?)</dl>', re.S)
+
+
+def _facts_from_info(m) -> str:
+    pairs = [(a, b.replace("<ul>", '<ul class="plain">')) for a, b in re.findall(r"<dt>(.*?)</dt>\s*<dd>(.*?)</dd>", m.group(1), re.S)]
+    return '<dl class="facts">' + "".join(f"<div><dt>{a}</dt><dd>{b}</dd></div>" for a, b in pairs) + "</dl>"
+
+
+def kit_body(rest: str) -> str:
+    """The kit's list and key-value pieces for the plain HTML of a page's text: a bare list is the kit's checklist, a dl.info is the kit's facts table."""
+    rest = DL_INFO.sub(_facts_from_info, rest)
+    rest = rest.replace("<ul>", '<ul class="checklist">')
+    if HISTORY_P.search(rest):
+        items = "".join(f"<li><time>{a}</time><p>{b}</p></li>" for a, b in HISTORY_P.findall(rest))
+        rest = f'<ol class="history-list">{items}</ol>'
+    return rest
+
+
+def link_cards(ctx, inner: str) -> str:
+    items = []
+    for href, text in LINK_ITEM.findall(inner):
+        if href in ctx.by_path:
+            c = dict(ctx.card(href), title=html_unescape(re.sub(r"<[^>]+>", "", text)))
+        else:
+            c = {"href": href, "title": html_unescape(re.sub(r"<[^>]+>", "", text)), "description": "", "label": label_of(href)}
+        items.append(c)
+    return article_cards(items)
+
+
+def split_sections(rest: str):
+    """rest -> (intro, [(h2 html, body)], tail notice)."""
+    tail = "".join(m.group(0) for m in TAIL.finditer(rest))
+    rest = TAIL.sub("", rest)
+    parts = H2_SPLIT.split(rest)
+    return parts[0].strip(), [(parts[i], parts[i + 1].strip()) for i in range(1, len(parts) - 1, 2)], tail.strip()
+
+
+def kit_doc(ctx, path: str, rest: str) -> str:
+    """A page's text in the kit's article layout (templates/article.html): intro, table of contents (long articles), content blocks, 'also read' cards, the source line as a notice."""
+    if not rest.strip():
+        return ""
+    intro, secs, tail = split_sections(rest)
+    blocks, related, toc_items = "", "", []
+    for h2, body in secs:
+        m = LINKS_ONLY.match(body)
+        if m:
+            related += h2 + link_cards(ctx, m.group(1))
+            continue
+        i = len(toc_items)
+        toc_items.append(re.sub(r"</?h2>", "", h2))
+        blocks += f'<section class="content-block" id="part-{i}">{h2}{kit_body(body)}</section>'
+    kind = ctx.by_path.get(path, {}).get("kind")
+    toc = ""
+    if kind in ("analysis", "article") and len(toc_items) >= 4:
+        toc = '<nav class="toc" aria-label="目次"><strong>この記事の内容</strong><ol>' + "".join(f'<li><a href="#part-{i}">{t}</a></li>' for i, t in enumerate(toc_items)) + "</ol></nav>"
+    meta = f'<div class="notice source-notice">{tail}</div>' if tail else ""
+    return f'<div class="wrap page-content doc"><article class="reading-column">{kit_body(intro)}{toc}{blocks}{meta}</article>{related}</div>'
+
+
+def home_more(ctx, answer: str, rest: str) -> tuple[str, str]:
+    """The text of the top page in the kit's home sections (section-head + body), alternating the plain and the striped band.  Returns (lead notice, sections)."""
+    intro, secs, tail = split_sections(rest)
+    out = ""
+    for n, (h2, body) in enumerate(secs):
+        title = re.sub(r"</?h2>", "", h2)
+        m = LINKS_ONLY.match(body)
+        inner = link_cards(ctx, m.group(1)) if m else f'<div class="kit-body doc">{kit_body(body)}</div>'
+        cls = "section check-section" if n % 2 else "section"
+        out += f'<section class="{cls}"><div class="wrap"><div class="section-head"><div><h2>{title}</h2></div></div>{inner}</div></section>'
+    if tail:
+        out += f'<section class="section"><div class="wrap"><div class="notice source-notice">{tail}</div></div></section>'
+    return f'<div class="notice">{answer}</div>', out
 
 
 class Ctx:
@@ -373,9 +453,9 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
     live = [s for s in ctx.sales if state(s, at) in ("開催中", "開催予定")]
     if path == "/":
         arts = [ctx.card("/rakuten/marathon/", "楽天"), ctx.card("/rakuten/marathon-vs-super-sale/", "楽天"), ctx.card("/calc/points/", "計算")]
-        return template("home", headline=hero_headline(ctx), featured=sales_grid(live[:2], at), schedule=sales_grid(ctx.sales[:3], at),
-                        categories=category_cards(ctx.categories), articles=article_cards(arts),
-                        more=f'<section class="section"><div class="wrap"><article class="reading-column doc"><p class="answer">{pg["answer"]}</p>{pg["rest"]}</article></div></section>')
+        lead, more = home_more(ctx, pg["answer"], pg["rest"])
+        return template("home", headline=hero_headline(ctx), featured=sales_grid(live[:2], at), schedule=lead + sales_grid(ctx.sales[:3], at),
+                        categories=category_cards(ctx.categories), articles=article_cards(arts), more=more)
     if path == "/calendar/":
         stamp = f"表示時点：{fmt(at.isoformat(timespec='seconds'), True)}（日本時間）。未発表・終了を含めて確認できます。日程は、各セールの欄に書いた確認日に、主催者の発表や信頼できる報道で確かめたものです。"
         return template("calendar", notes=notice(stamp), filters=filters(["rakuten", "amazon", "yahoo"]), sales=sales_grid(ctx.sales, at))
@@ -484,11 +564,11 @@ def apply(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
         trail = [("トップ", "/")] + (pg["crumbs"][1:] if pg["crumbs"] and pg["crumbs"][0][1] == "/" else pg["crumbs"]) if pg["crumbs"] else [("トップ", "/"), (re.sub(r"<[^>]+>", "", pg["h1"]), None)]
         page_type = "doc"
         if body is None:
-            full = doc(pg["rest"])
+            full = kit_doc(ctx, path, pg["rest"])
         else:
-            full = body + doc(pg["rest"])
+            full = body + kit_doc(ctx, path, pg["rest"])
             page_type = "kit"
-        upd = ctx.by_path[path]["updated"] if path in ctx.by_path else ""
+        upd = ctx.by_path[path]["updated"] if path in ctx.by_path else (cfg.get("updated") or spec.get("updated", ""))
         out[rel] = wrap(ctx, path, pg["head"], crumbs_html([(a, b) for a, b in trail]), banner(label_of(path), pg["h1"], html_unescape(text)), full, upd, page_type)
     # pages the kit adds
     if base_head is None:

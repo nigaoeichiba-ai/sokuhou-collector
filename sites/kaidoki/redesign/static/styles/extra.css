@@ -2,10 +2,15 @@
    Only the kit's colours and sizes; nothing here changes the kit's own pieces. */
 .doc{padding-bottom:28px}
 .doc .reading-column{max-width:800px}
-.doc h2{font-size:22px;margin:34px 0 12px;padding-bottom:8px;border-bottom:3px solid var(--brand-gold)}
 .doc h3{font-size:17px;margin:22px 0 8px}
 .doc p,.doc li{line-height:2;font-size:15px}
-.doc ul,.doc ol{padding-left:1.4em}
+.doc ul:not(.checklist),.doc ol{padding-left:1.4em}
+.kit-body{max-width:860px}
+.kit-body>p:first-child{margin-top:0}
+.source-notice p{margin:2px 0;font-size:12px;line-height:1.8}
+.doc .content-block>h2{margin-top:0}
+.doc .article-links{margin:6px 0 4px}
+.doc .article-links h3{font-size:15px}
 .doc a{color:#b0121a}
 .doc .tablewrap{overflow-x:auto;margin:16px 0;background:#fff;border:1px solid var(--border);-webkit-overflow-scrolling:touch}
 .doc table{border-collapse:collapse;width:100%;min-width:560px;font-size:13px}
@@ -14,11 +19,10 @@
 .doc thead th{background:#fff0c9;font-size:12px;white-space:nowrap}
 .doc td.num,.doc th.num{text-align:right;white-space:nowrap;background:none;color:inherit;padding:10px 12px;font-family:inherit;font-size:13px;letter-spacing:0;font-weight:400}
 .doc thead th.num{background:#fff0c9;font-size:12px;font-weight:700}
-.doc ul.links{list-style:none;padding:0;margin:12px 0;display:grid;gap:8px}
-.doc ul.links li{background:#fff;border:1px solid var(--border);padding:10px 14px}
-.doc ul.links a{font-weight:800}
 .doc .stamp,.doc .credit{font-size:12px;color:var(--muted,#75685c);line-height:1.7;margin:6px 0}
 .doc .notice{margin:18px 0}
+.doc .checklist li{line-height:1.8;font-size:14px}
+.doc .facts{margin:16px 0}
 .doc dl.info{background:#fff;border:1px solid var(--border);margin:16px 0}
 .doc dl.info dt{background:#fff0c9;font-size:12px;font-weight:800;padding:10px 14px}
 .doc dl.info dd{margin:0;padding:12px 14px;font-size:14px;line-height:1.8;overflow-wrap:anywhere;border-bottom:1px solid var(--border)}
@@ -49,10 +53,14 @@
 .product-page .store-burst{display:inline-block;background:var(--brand-red);color:#fff;padding:2px 10px;margin-right:8px;font-size:.8em}
 .product-page .reading-column{max-width:none}
 @media(max-width:740px){
-.doc h2{font-size:19px}.doc p,.doc li{font-size:14px;line-height:1.95}
+.doc p,.doc li{font-size:14px;line-height:1.95}
 .doc .calc{grid-template-columns:1fr}
 .store-card{padding:14px}.store-card .facts>div{grid-template-columns:1fr}
 .store-card .facts dt{border-bottom:0;padding-bottom:4px}.store-card .facts dd{padding-top:0}
 .store-card h3{font-size:17px}
 .aff-box{flex-direction:column;gap:8px}
 }
+.facts ul.plain{margin:0;padding-left:1.2em}
+.facts ul.plain li{font-size:13px;line-height:1.8}
+.history-list li p{margin:8px 0 0;font-size:14px;line-height:1.9}
+.doc ol.history-list{padding-left:0}
