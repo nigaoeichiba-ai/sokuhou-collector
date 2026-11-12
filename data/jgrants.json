@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-10T21:16:37.873336+00:00",
+ "fetched_at": "2026-11-12T21:16:10.130187+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -879,6 +879,18 @@
    "title": "岸和田市オフィス誘致補助金"
   },
   {
+   "acceptance_end_datetime": "2027-03-31T08:15:00.000Z",
+   "acceptance_start_datetime": "2026-04-01T00:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000004CHdtUAG",
+   "id": "a0WfQ000004CHdtUAG",
+   "institution_name": "四日市市中小企業脱炭素経営支援事業費補助金",
+   "name": "S-00010055",
+   "subsidy_max_limit": 0,
+   "target_area_search": "三重県",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "四日市市中小企業脱炭素経営支援事業費補助金"
+  },
+  {
    "acceptance_end_datetime": "2027-01-29T08:00:00.000Z",
    "acceptance_start_datetime": "2026-03-19T05:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDXRpMAP",
@@ -1141,18 +1153,6 @@
    "target_area_search": "大阪府",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "【大阪府和泉市】再エネ・省エネ機器設置促進事業補助金（事業者用）"
-  },
-  {
-   "acceptance_end_datetime": "2026-11-12T06:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-29T04:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDdjfMAD",
-   "id": "a0WJ200000CDdjfMAD",
-   "institution_name": "中小企業成長加速化補助金",
-   "name": "S-00009572",
-   "subsidy_max_limit": 500000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "[３次公募]中小企業成長加速化補助金"
   },
   {
    "acceptance_end_datetime": "2026-11-30T09:00:00.000Z",
@@ -1491,6 +1491,18 @@
    "title": "交通システムの省CO2 化に向けた設備整備事業（鉄道事業等におけるネットワーク型低炭素化促進事業）（三次公募）"
   },
   {
+   "acceptance_end_datetime": "2026-11-13T14:59:00.000Z",
+   "acceptance_start_datetime": "2026-08-16T15:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZi6MAH",
+   "id": "a0WJ200000CDZi6MAH",
+   "institution_name": "高度人材インターンシップ受入支援費補助金",
+   "name": "S-00009232",
+   "subsidy_max_limit": 5000,
+   "target_area_search": "東京都",
+   "target_number_of_employees": "300名以下",
+   "title": "令和8年度 高度人材インターンシップ受入支援費補助金"
+  },
+  {
    "acceptance_end_datetime": "2027-03-31T08:00:00.000Z",
    "acceptance_start_datetime": "2026-04-01T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZz6MAH",
@@ -1815,5 +1827,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 151
+ "total": 152
 }
