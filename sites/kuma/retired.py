@@ -11,6 +11,9 @@ from pathlib import Path
 
 KNOWN = json.loads(Path(__file__).with_name("known_cities.json").read_text(encoding="utf-8"))["urls"]
 RETIRED = {"/live/shiga/m-4973b5/": "/live/shiga/"}
+# Fukushima prefecture's count page: the prefecture did not allow its data on an ad-supported site (2026-11-12), so the page is not built (sites/kuma/live.py WITHHELD).
+# Unlike RETIRED, this does not stop the build if the page exists again (test builds mock a source of that name); the redirect is written only while the page is absent.
+WITHDRAWN = {"/live/fukushima/": "/fukushima/"}
 
 
 def _rel(url: str) -> str:
@@ -27,6 +30,9 @@ def redirects(pages: dict) -> dict[str, str]:
         if dst in RETIRED:
             raise ValueError(f"retired URL {src} redirects to {dst}, which is itself redirected")
         if _rel(dst) in pages:
+            out[src] = dst
+    for src, dst in WITHDRAWN.items():
+        if _rel(src) not in pages and _rel(dst) in pages:
             out[src] = dst
     # a municipality page that is no longer built (the municipality is not kept) sends its readers to the prefecture's page, which lists it
     for src in KNOWN:

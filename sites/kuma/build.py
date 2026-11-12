@@ -672,6 +672,9 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
         if c["pref"] == r["short"]:
             live_block += (f'<h2>{c["name"]}が公表している件数</h2>\n<p>{fy_label(c["fy"])}は{n(c["total"])}件で、最新は{md(c["latest"])}の分です。件数だけを載せています。</p>\n'
                           f'<p><a href="/live/{r["slug"]}/">市町村別・月別の件数</a></p>\n')
+    held = live_mod.WITHHELD.get(r["short"])
+    if held and not live_block:
+        live_block += f'<h2>{held["name"]}の目撃情報について</h2>\n<p>{esc(held["note"])}</p>\n'
     nav = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in d["rows"] if x is not r)
     mates = [x for x in d["rows"] if x is not r and x["region_slug"] == r["region_slug"]]
     rel = ""

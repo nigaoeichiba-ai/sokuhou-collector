@@ -59,8 +59,6 @@ LIVE_SOURCES = {
 }
 # Sources without an explicit licence: counts only (mode "counts" in the stored file); no "license" key, so they never reach the CSV.
 LIVE_SOURCES.update({
-    "fukushima": {"pref": "福島", "name": "福島県", "label": "福島県・県の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や被害の報告を含む",
-                  "as_of_text": "最新の記録は{d}の分までです"},
     "yamagata": {"pref": "山形", "name": "山形県", "label": "山形県・県の公式データを集計(件数のみ)", "monthly_label": "クマ目撃マップの報告(人身被害を含む)",
                  "as_of_text": "最新の記録は{d}の分までです"},
     "aomori": {"pref": "青森", "name": "青森県", "label": "青森県「くまログあおもり」を集計(件数のみ)", "monthly_label": "県が確認した報告のみ(目撃のほか、痕跡などを含む)",
@@ -86,6 +84,14 @@ LIVE_SOURCES.update({
     "otsu": {"pref": "滋賀", "scope": "大津市のみ", "name": "滋賀県大津市", "label": "大津市・市の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や錯誤捕獲の報告を含む",
              "as_of_text": "最新の記録は{d}の分までです"},
 })
+
+
+# Prefectures whose data is NOT published, by the prefecture's own answer: the prefecture's page says so instead of showing counts.
+# Fukushima: the prefecture answered (2026-11) that its bear sightings may not be used on a site with advertising.
+WITHHELD = {
+    "福島": {"name": "福島県", "note": "福島県は、県の許可が得られていないため、県が公表しているクマの目撃情報(市町村別の件数など)を載せていません。"
+                                          "福島県の出没・人身被害・捕獲などの数字は、環境省の資料によるものです。目撃の最新の情報は、福島県の公式ページでご確認ください。"},
+}
 
 
 def fy_of(day: str) -> str:
