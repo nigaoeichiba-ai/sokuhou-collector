@@ -1,0 +1,43 @@
+name: kaidoki-sale-probe
+
+# By hand only (使い捨ての試行 2026-11-12): SALEカレンダーのジャンルごとに、Yahoo!ショッピング(is_discounted)と楽天(pointRateFlag)で「割引中・ポイント変倍の商品」が
+# 何件取れるか、期間(開始・終了)が取れるかを測る。ログに出すのは件数・割合・フィールド名だけ(商品名・価格・画像・URL・店名は出さない)。
+# store=true のときだけ、商品データをサーバーの非公開フォルダ ~/kaidoki-private/ に置く(リポジトリ・成果物・キャッシュには入れない)。
+# 必要な秘密: YAHOO_CLIENT_ID / RAKUTEN_APP_ID / RAKUTEN_ACCESS_KEY(store には XSERVER_SSH_KEY / XSERVER_HOST / XSERVER_USER)。どれも出力しない。
+
+on:
+  workflow_dispatch:
+    inputs:
+      store:
+        description: "商品データをサーバーの非公開フォルダに置く(true/false)"
+        default: "true"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kaidoki-sale-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Probe (numbers only in the log)
+        env:
+          YAHOO_CLIENT_ID: ${{ secrets.YAHOO_CLIENT_ID }}
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+          STORE: ${{ github.event.inputs.store }}
+        run: |
+          flags="--yahoo --rakuten"
+          if [ "$STORE" = "true" ]; then flags="$flags --store"; fi
+          python -m sites.kaidoki.tools.sale_probe $flags
