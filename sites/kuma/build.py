@@ -668,13 +668,19 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
                           f'<p>{src["as_of_text"].format(d=jp_date(src["as_of"]))}。</p>\n<ul class="mini-list">{recent}</ul>\n'
                           f'<p><a href="/live/{r["slug"]}/">{src["name"]}の目撃情報の一覧(市町村別・地図)</a></p>\n')
     cap_html = captures_mod.pref_block(d["captures"], r["short"], r["name"])
+    has_confirmed_only = False
     for c in d["live_counts"]:
         if c["pref"] == r["short"]:
+            if live_mod.LIVE_SOURCES[c["key"]].get("confirmed_only"):         # no prefecture figure: only what two other publications agree on
+                has_confirmed_only = True
+                live_block += (f'<h2>{c["name"]}の、複数の公開情報で一致を確認できた目撃</h2>\n<p>{fy_label(c["fy"])}は{n(c["total"])}件で、最新は{md(c["latest"])}の分です。'
+                              f'福島県内の目撃の全体の件数ではありません。</p>\n<p><a href="/live/{r["slug"]}/">市町村別・月別の件数と場所</a></p>\n')
+                continue
             live_block += (f'<h2>{c["name"]}が公表している件数</h2>\n<p>{fy_label(c["fy"])}は{n(c["total"])}件で、最新は{md(c["latest"])}の分です。件数だけを載せています。</p>\n'
                           f'<p><a href="/live/{r["slug"]}/">市町村別・月別の件数</a></p>\n')
     held = live_mod.WITHHELD.get(r["short"])
-    if held and not live_block:
-        live_block += f'<h2>{held["name"]}の目撃情報について</h2>\n<p>{esc(held["note"])}</p>\n'
+    if held and (has_confirmed_only or not live_block):
+        live_block += f'<h2>{held["name"]}の目撃情報について</h2>\n<p>{esc(held["note"] if has_confirmed_only else held["note_none"])}</p>\n'
     nav = "".join(f'<li><a href="/{x["slug"]}/">{esc(x["name"])}</a></li>' for x in d["rows"] if x is not r)
     mates = [x for x in d["rows"] if x is not r and x["region_slug"] == r["region_slug"]]
     rel = ""

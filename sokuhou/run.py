@@ -26,6 +26,7 @@ from sokuhou.sources import (
     env_capture_kuma,
     env_kuma,
     fukuchiyama_kuma,
+    fukushima_media_kuma,
     gunma_kuma,
     higumap_kuma,
     ishikawa_kuma,
@@ -194,7 +195,9 @@ GROUPS: dict[str, list[Source]] = {
         Source("ishikari_kuma", ishikari_kuma.collect, check_pref_bear),   # the city's own open data, CC BY 4.0, no approval needed
         Source("toyama_kuma", toyama_kuma.collect, check_pref_bear),   # the prefecture's written permission (2026-10-06): records, no coordinates
         # no explicit licence: counts only (municipality, month, count, latest date), see kumalib.package_counts
-        # (Fukushima prefecture is not collected: it refused use on an ad-supported site, 2026-11-12; see sites/kuma/live.py WITHHELD)
+        # (Fukushima prefecture is not collected: it refused use on an ad-supported site, 2026-11-12; see sites/kuma/live.py WITHHELD.
+        #  Only what Fukushima City's page and Fukushima TV both hold is stored, with its place; the prefecture's data is not read at all)
+        Source("fukushima_media_kuma", fukushima_media_kuma.collect, check_counts_bear, fukushima_media_kuma.accumulate),
         Source("niigata_kuma", niigata_kuma.collect, check_pref_bear),
         Source("yamagata_kuma", yamagata_kuma.collect, check_counts_bear, corroborated.carry_over),
         # kumalog-aomori.info answers GitHub's runners with 403 (2026-10-22 on): keep the last file, show a warning, fail after BLOCKED_KEEP_DAYS

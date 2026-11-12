@@ -81,6 +81,8 @@ LIVE_SOURCES.update({
                "monthly_label": "目撃のほか、痕跡(出没)の報告を含む", "as_of_text": "最新の記録は{d}の分までです(市の更新は月1回)"},
     "higumap": {"pref": "北海道", "scope": "道内の一部の市町村のみ", "no_source": True, "name": "北海道の市町村", "label": "複数の公開情報で一致を確認できた市町村の件数",
                 "monthly_label": "目撃のほか、痕跡や捕獲などの報告を含む", "as_of_text": "最新の記録は{d}の分までです"},
+    "fukushima_media": {"pref": "福島", "scope": "福島県内の一部の市町村のみ", "no_source": True, "confirmed_only": True, "name": "福島県内の市町村", "label": "複数の公開情報で一致を確認できた目撃",
+                        "monthly_label": "目撃のほか、痕跡の報告を含む", "as_of_text": "最新の記録は{d}の分までです"},
     "otsu": {"pref": "滋賀", "scope": "大津市のみ", "name": "滋賀県大津市", "label": "大津市・市の公式(件数のみ)", "monthly_label": "目撃のほか、痕跡や錯誤捕獲の報告を含む",
              "as_of_text": "最新の記録は{d}の分までです"},
 })
@@ -90,7 +92,10 @@ LIVE_SOURCES.update({
 # Fukushima: the prefecture answered (2026-11) that its bear sightings may not be used on a site with advertising.
 WITHHELD = {
     "福島": {"name": "福島県", "note": "福島県は、県の許可が得られていないため、県が公表しているクマの目撃情報(市町村別の件数など)を載せていません。"
-                                          "福島県の出没・人身被害・捕獲などの数字は、環境省の資料によるものです。目撃の最新の情報は、福島県の公式ページでご確認ください。"},
+                                          "福島県の出没・人身被害・捕獲などの数字は、環境省の資料によるものです。県の目撃情報は使わず、福島市・福島テレビなど、"
+                                          "別の出どころで2つの公開情報が一致した目撃だけを載せています(福島県内の市町村の件数)。目撃の最新の情報は、福島県の公式ページでご確認ください。",
+            "note_none": "福島県は、県の許可が得られていないため、県が公表しているクマの目撃情報(市町村別の件数など)を載せていません。"
+                         "福島県の出没・人身被害・捕獲などの数字は、環境省の資料によるものです。目撃の最新の情報は、福島県の公式ページでご確認ください。"},
 }
 
 
@@ -712,7 +717,42 @@ def prepare_counts(prefs: dict | None) -> list[dict]:
     return out
 
 
+def confirmed_page(page, d: dict, c: dict, today: date, links: dict) -> str:
+    """A prefecture with no figure of its own (Fukushima: the prefecture did not allow its data): only the sightings that two other publications agree on,
+    with their place, and the counts of those.  No source or link is named for them (owner, 2026-10-13); the prefecture's refusal is stated."""
+    cur, slug, pname = c["fy"], c["slug"], pref_name(c["slug"])
+    mc = {m: c["monthly"][str(m)] for m in FY_MONTHS if c["monthly"].get(str(m))}
+    chart = charts.bars([f"{m}月" for m in mc], list(mc.values()), title=f"{pname}の月別の件数", desc=f"{pname}で、複数の公開情報で一致を確認できた{fy_label(cur)}の目撃の月別の件数",
+                        uid="cc") if len(mc) >= 2 else ""
+    rows = [[esc(city), n(k), md(latest)] for city, k, latest in c["munis"]]
+    short = next(k for k, v in pf.SLUG.items() if v == slug)
+    official = links.get(short) or []
+    off_html = ("<ul class='link-list'>" + "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["label"])}</a></li>' for x in official) + "</ul>") if official else ""
+    recs = c["records"]
+    shown = [{"at": x["observed_at"], "city": x["city"], "place": x["place"], "kind": x["kind"]} for x in recs[:RECENT_ROWS]]
+    held = WITHHELD[short]["note"]
+    body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", "/live/"), (pname, None)])}
+<h1>{esc(pname)}のクマの目撃情報({fy_label(cur)}・複数の公開情報で一致を確認できた分)</h1>
+<p class="lead">{esc(held)}{fy_label(cur)}に一致を確認できた目撃は、{n(c['total'])}件です。最新は{md(c['latest'])}({ago_text(c['latest'], today)})の分です。</p>
+<div class="stats">{stat(f"{fy_label(cur)}の件数", f"{n(c['total'])}件", "一致を確認できた目撃だけ", True)}{stat("最新の日付", md(c['latest']), ago_text(c['latest'], today))}</div>
+<h2>市町村別の件数({fy_label(cur)})</h2>
+{table(["市町村", "件数", "最新の日付"], rows)}
+<h2>月別の件数</h2>
+{chart}{table(["月", "件数"], [[f"{m}月", n(v)] for m, v in mc.items()])}
+<h2>場所まで確認できた最新の目撃({fy_label(cur)})</h2>
+<p>複数の公開情報で一致を確認できた目撃だけを、新しい順に載せています({n(len(recs))}件)。確認できなかった目撃は、ここに載せていません。福島県内の目撃の全体の件数ではありません。</p>
+{record_rows(shown)}
+<h2>福島県の目撃情報は、公式のページで</h2>
+<p>福島県内の目撃の全体は、福島県の公式ページでご確認ください。</p>
+{off_html}<p class="notice">{NO_SOURCE_NOTE}取得日: {jp_date(c['fetched'])}。{esc(c['note'])}。{CAUTION}</p>
+<p><a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>"""
+    return page(path=f"/live/{slug}/", title=f"{pname}のクマの目撃情報({fy_label(cur)}・一致を確認できた{n(c['total'])}件・市町村別)",
+                description=f"{pname}で、複数の公開情報で一致を確認できた{fy_label(cur)}のクマの目撃({n(c['total'])}件)を、市町村別・月別・場所つきで整理しています。最新は{md(c['latest'])}の分です。", body=body)
+
+
 def counts_page(page, d: dict, c: dict, today: date, links: dict) -> str:
+    if LIVE_SOURCES.get(c["key"], {}).get("confirmed_only"):
+        return confirmed_page(page, d, c, today, links)
     cur, slug, pname = c["fy"], c["slug"], pref_name(c["slug"])
     mc = {m: c["monthly"][str(m)] for m in FY_MONTHS if c["monthly"].get(str(m))}
     chart = charts.bars([f"{m}月" for m in mc], list(mc.values()), title=f"{c['name']}の月別の件数", desc=f"{c['name']}が公表した{fy_label(cur)}の件数の月別",
