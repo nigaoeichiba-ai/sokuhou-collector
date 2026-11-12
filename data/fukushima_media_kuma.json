@@ -1,11 +1,35 @@
 {
- "mode": "counts",
- "source": "fukushima_media",
+ "as_of": "2026-11-13",
+ "corroborated": [
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-29",
+   "place": "松川町水原字南沢地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-10-21",
+   "place": "瀬上町字向川原地内"
+  },
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-15",
+   "place": "松川町浅川字脇ノ久保地内"
+  }
+ ],
+ "corroborated_on": {
+  "福島市": "2026-11-13"
+ },
  "credit": "複数の公開情報で一致を確認できた目撃を、公開されている情報から、当サイトが集計して作成(福島県・福島市・福島テレビが作成したものではありません)",
- "as_of": "2026-11-12",
- "update_note": "1日1回更新します。最新の記録は、更新時点から遅れます。件数は、複数の公開情報で一致を確認できた目撃だけで、福島県内の目撃の全体の件数ではありません。目撃のほか、痕跡の報告を含みます",
+ "fetched_at": "2026-11-13T06:18:47.725291+09:00",
  "fy_current": "R08",
- "total_fy": 3,
+ "mode": "counts",
  "monthly": {
   "R08": {
    "10": 3
@@ -13,42 +37,18 @@
  },
  "municipalities": {
   "福島市": {
+   "latest": "2026-10-29",
    "monthly": {
     "R08": {
      "10": 3
     }
-   },
-   "latest": "2026-10-29"
+   }
   }
  },
- "unparsed": 0,
- "source_page": "https://www.city.fukushima.fukushima.jp/soshiki/6/1025/3/17619.html",
+ "source": "fukushima_media",
  "source_file": "https://www.city.fukushima.fukushima.jp/soshiki/6/1025/3/17619.html",
- "fetched_at": "2026-11-12T19:54:56.082883+09:00",
- "corroborated": [
-  {
-   "observed_at": "2026-10-29",
-   "city": "福島市",
-   "place": "松川町水原字南沢地内",
-   "kind": "目撃",
-   "count": null
-  },
-  {
-   "observed_at": "2026-10-21",
-   "city": "福島市",
-   "place": "瀬上町字向川原地内",
-   "kind": "その他",
-   "count": null
-  },
-  {
-   "observed_at": "2026-10-15",
-   "city": "福島市",
-   "place": "松川町浅川字脇ノ久保地内",
-   "kind": "目撃",
-   "count": null
-  }
- ],
- "corroborated_on": {
-  "福島市": "2026-11-12"
- }
+ "source_page": "https://www.city.fukushima.fukushima.jp/soshiki/6/1025/3/17619.html",
+ "total_fy": 3,
+ "unparsed": 0,
+ "update_note": "1日1回更新します。最新の記録は、更新時点から遅れます。件数は、複数の公開情報で一致を確認できた目撃だけで、福島県内の目撃の全体の件数ではありません。目撃のほか、痕跡の報告を含みます"
 }

@@ -1,8 +1,8 @@
 {
- "as_of": "2026-11-11",
+ "as_of": "2026-11-12",
  "bad_coords": 0,
  "credit": "出典:空知総合振興局「そらち・ヒグマ情報」(北海道、CC-BY)を加工して作成",
- "fetched_at": "2026-11-12T06:17:28.476040+09:00",
+ "fetched_at": "2026-11-13T06:17:21.589422+09:00",
  "fy_current": "R08",
  "monthly": {
   "R07": {
@@ -10,7 +10,7 @@
   },
   "R08": {
    "10": 22,
-   "11": 3,
+   "11": 4,
    "4": 8,
    "5": 23,
    "6": 25,
@@ -20,6 +20,14 @@
   }
  },
  "sightings": [
+  {
+   "city": "沼田町",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-11-12",
+   "place": "沼田",
+   "species": "ヒグマ"
+  },
   {
    "city": "歌志内市",
    "count": null,
@@ -1365,7 +1373,7 @@
    "species": "ヒグマ"
   }
  ],
- "sightings_in_window": 168,
+ "sightings_in_window": 169,
  "source": "sorachi",
  "source_file": "https://www.sorachi.pref.hokkaido.lg.jp/hk/kks/245135.html",
  "source_page": "https://www.sorachi.pref.hokkaido.lg.jp/hk/kks/245135.html",
