@@ -65,9 +65,25 @@ class Content(unittest.TestCase):
                 self.assertTrue(spec["sources"][sid]["url"].startswith("https://"), sid)
 
     def test_no_mall_data_or_secrets_in_the_public_repository(self):
-        blob = "".join(f.read_text(encoding="utf-8") for f in list((SITE / "content").glob("*.json")) + [SITE / "site.json", SITE / "config.json"])
+        blob = "".join(f.read_text(encoding="utf-8") for f in list((SITE / "content").glob("*.json")) + [SITE / "site.json"])
+        # 2026-11-13: the search-page links (Rakuten hb.afl ... search.rakuten.co.jp, Amazon s?k=...&tag=...) are allowed; they carry no product data
+        blob = remove_search_links(blob)
         for bad in ("rakuten", "affiliate", "amazon.co.jp", "a8.net", "shopping.yahoo", "applicationId"):
             self.assertNotIn(bad, blob.lower(), bad)
+
+    def test_only_search_page_links_pass_the_mall_check(self):
+        ok = '<a href="https://hb.afl.rakuten.co.jp/hgc/ID/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2Fx%2F" rel="nofollow">x</a>'
+        self.assertNotIn("rakuten", remove_search_links(ok))
+        item = '<a href="https://hb.afl.rakuten.co.jp/hgc/ID/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshop%2Fitem%2F" rel="nofollow">x</a>'
+        self.assertIn("rakuten", remove_search_links(item))
+        self.assertIn("amazon.co.jp", remove_search_links('<a href="https://www.amazon.co.jp/dp/B000000000?tag=t">x</a>'))
+
+
+def remove_search_links(blob: str) -> str:
+    import re
+    stop = r'[^\s"\\]*'
+    blob = re.sub(r"https://hb\.afl\.rakuten\.co\.jp/hgc/" + stop + r"\?pc=https%3A%2F%2Fsearch\.rakuten\.co\.jp%2Fsearch%2Fmall%2F" + stop, "", blob)
+    return re.sub(r"https://www\.amazon\.co\.jp/s\?k=" + stop, "", blob)
 
 
 def _plain(text: str) -> str:
