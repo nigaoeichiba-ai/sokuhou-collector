@@ -46,10 +46,19 @@ EVENTS = [
 ]
 BY_ID = {e["id"]: e for e in EVENTS}
 
+# Yahoo!ショッピングの12月の日程(公式 shopping.yahoo.co.jp/promotion/campaign/guide/ の本文で確認、2026-11-12)。カレンダー一覧には入れず、/yahoo/ の表にだけ出す。
+YAHOO_DEC = [
+    E("ysun-2026-12a", "Yahoo!ショッピング", "プレミアムな日曜日", "2026-12-06", "00:00", "2026-12-06", "23:59", group="ysun"),
+    E("ysun-2026-12b", "Yahoo!ショッピング", "プレミアムな日曜日", "2026-12-13", "00:00", "2026-12-13", "23:59", group="ysun"),
+    E("ysun-2026-12c", "Yahoo!ショッピング", "プレミアムな日曜日", "2026-12-27", "00:00", "2026-12-27", "23:59", group="ysun"),
+    E("ykan-2026-12a", "Yahoo!ショッピング", "ヤフショ感謝デー", "2026-12-11", "00:00", "2026-12-11", "23:59", group="ykan"),
+    E("ykan-2026-12b", "Yahoo!ショッピング", "ヤフショ感謝デー", "2026-12-22", "00:00", "2026-12-22", "23:59", group="ykan"),
+]
+
 # Not announced on the organiser's own pages on CHECKED (the pages say 未発表; this list is what --stale asks to look at again).
 UNANNOUNCED = [
     ("楽天スーパーSALE 2026年12月", "楽天", "2026年の公式発表は確認できず"),
-    ("Amazon ブラックフライデー 2026", "Amazon", "amazon.co.jp/blackfriday が2025年のページのまま"),
+    ("Amazon ブラックフライデー 2026", "Amazon", "11月中の開催は発表済み(11月5日、ニュース2件の報道)。期間は11月19日午前に発表の予定。公式の発表はまだ確認できていません(2026-11-12確認)"),
     ("Rakuten初売り 2027", "楽天", "公式発表は確認できず"),
     ("楽天ブラックフライデー 2026", "楽天", "公式発表は確認できず"),
     ("Amazon 初売り 2027", "Amazon", "公式発表は確認できず"),

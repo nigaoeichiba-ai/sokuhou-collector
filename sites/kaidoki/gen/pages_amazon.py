@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import date
 
 from .common import TODAY, d, ev_span, jp, md, phase, state, until
-from .facts import BY_ID, EVENTS, UNANNOUNCED
+from .facts import BY_ID, EVENTS, UNANNOUNCED, YAHOO_DEC
 from .kit import R, S, T, page
 from .sel import dur, grp, row, upcoming
 
@@ -105,7 +105,8 @@ def pages() -> list[dict]:
               table=T("Yahoo!ショッピングの大型セール", COLS, [row(e) for e in grp("ypp") + grp("ybaku") + grp("ybf")])),
             S("5のつく日", "対象日は毎月5日、15日、25日です。PayPayのポイントが、対象金額の+4%付きます。上限は1人2,000円相当で、開催日ごとにエントリーが必要です。支払いは、PayPayクレジット、PayPay残高、PayPayカード、PayPayカード ゴールドが対象です。",
               "ポイントが付く日は、注文日の翌週から3週間ほど経った木曜が最短です。すぐ使えるポイントではないので、実質価格には、使える時期を考えて入れます。"),
-            S("12月以降", "Yahoo!ショッピングは、12月からの大型企画で最大25%付与と予告していますが、日程と内容は変わる場合があるという注記つきで、確定ではありません。ここでは日付を書きません。"),
+            S("12月以降", "Yahoo!ショッピングは、12月からの大型企画で最大25%付与と予告していますが、日程と内容は変わる場合があるという注記つきで、確定ではありません。ここでは日付を書きません。",
+              table=T("Yahoo!ショッピングの12月の日程(公式の案内ページ、2026年11月12日確認)", COLS, [row(e) for e in YAHOO_DEC])),
         ],
         [R("/black-friday/", "ブラックフライデーのモール別日程"), R("/calc/", "実質価格の計算ツール"), R("/calendar/", "セール日程の一覧")],
         secondary=["yahoo ショッピング セール いつから"], basis="LINEヤフーの発表(2025〜2026年)",
