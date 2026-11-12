@@ -32,7 +32,7 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "sonystore": ("ソニーストア", "ソ", "brand"), "xserver": ("エックスサーバー", "X", "web"), "xdomain": ("XServerドメイン", "ド", "web"),
        "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
        "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"),
-       "stardomain": ("スタードメイン", "ス", "web")}
+       "stardomain": ("スタードメイン", "ス", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand")}
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
 MALL_PAGE = {"rakuten": "/rakuten/", "amazon": "/amazon/sale-calendar/", "yahoo": "/yahoo/"}
 CAL_PATH = {"rakuten": "/calendar/rakuten/", "amazon": "/calendar/amazon/", "yahoo": "/calendar/yahoo/"}
@@ -100,6 +100,7 @@ def _span(a: str, b: str, ta: str = "", tb: str = "") -> str:
 
 
 PRESS2 = "報道(2件以上が一致)"
+SRC_AD = "広告主(DHC)の案内"
 # Other shops (the daily report of the desk, 2026-11-12 pm; only the end day where the start day was not read).
 EXTRA_CONFIRMED += [
     C("c-nitori-bf", "nitori", "ニトリ ブラックフライデー", "2026-10-30", "2026-11-24", _span("2026-10-30", "2026-11-24"), "", src=PRESS2),
@@ -117,6 +118,10 @@ EXTRA_CONFIRMED += [
     C("c-zozo-2", "zozo", "ZOZOWEEK 第2弾(終了日)", "2026-11-15", "2026-11-15", f"{jpd('2026-11-15')}まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-nec", "nec", "NEC 新製品発売記念セール(終了日)", "2026-11-12", "2026-11-12", f"{jpd('2026-11-12')}の15時まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-uniqlo", "uniqlo", "ユニクロ 期間限定価格(終了日)", "2026-11-12", "2026-11-12", f"{jpd('2026-11-12')}まで(開始日は確認していません)", "", src=SRC_PAGE),
+    C("c-dhc-thanks", "dhc", "DHC 大感謝祭", "2026-10-29", "2026-11-26", f"{jpd('2026-10-29', True)}5時から{jpd('2026-11-26')}まで", "", src=SRC_AD,
+      note="終了日の11月26日は、DHC公式オンラインショップの表示でも確かめました。開始日は、公式サイトでの確認はまだです。"),
+    C("c-dhc-bf", "dhc", "DHC ブラックフライデー", "2026-11-21", "2026-11-26", _span("2026-11-21", "2026-11-26", "00:00", "23:59"), "", src=SRC_AD,
+      note="「大感謝祭」と重なる期間です。割引の条件は、DHC公式オンラインショップの表示にあります。この期間は、公式サイトでの確認はまだです。"),
     C("c-stardomain-jp", "stardomain", "スタードメイン .jp 割引", "2026-11-06", "2027-01-29", _span("2026-11-06", "2027-01-29", "12:00", "17:00"), "", src=SRC_PAGE,
       note="割引の対象は、1年目の登録です。価格は載せていません。"),
     C("c-xs-wp", "xserver", "エックスサーバー for WordPress キャンペーン(終了日)", "2026-12-15", "2026-12-15", f"{jpd('2026-12-15')}まで(開始日は確認していません)", "", src=PRESS2),
@@ -451,7 +456,7 @@ def home_block(items: list[dict], today: date) -> str:
 
 # ------------------------------------------------------------------ the top page's slides: the coming big sales of the three malls (confirmed / announced / expected, told apart), then other shops' confirmed ones
 HERO_OTHERS = 4                                    # the other shops' sales after the malls
-HERO_OTHER_ORDER = ["playstation", "google", "sonystore", "dyson", "nitori", "yamada", "asus", "lg", "sharp", "panasonic", "stardomain", "xdomain"]
+HERO_OTHER_ORDER = ["google", "dhc", "playstation", "sonystore", "dyson", "nitori", "yamada", "asus", "lg", "sharp", "panasonic", "stardomain", "xdomain"]      # the nearest starts first (Google 11/20, DHC 11/21, ...), one card per shop
 HERO_EXPECTED_DAYS = 45
 
 
@@ -487,7 +492,11 @@ def hero_slides(items: list[dict], today: date) -> list[dict]:
     rank = {"confirmed": 0, "announced": 1, "expected": 2}
     malls.sort(key=lambda it: (rank[hero_kind(it)], it.get("s") or (it.get("mo") or "9999") + "-99", it["title"]))
     others.sort(key=lambda it: (HERO_OTHER_ORDER.index(it["mall"]) if it["mall"] in HERO_OTHER_ORDER else 99, it["s"]))
-    return malls + others[:HERO_OTHERS]
+    best: dict[str, dict] = {}
+    for it in sorted(others, key=lambda it: it["s"]):          # one card per shop: the sale that started last (the one that is running or coming next)
+        best[it["mall"]] = it
+    picked = sorted(best.values(), key=lambda it: (HERO_OTHER_ORDER.index(it["mall"]) if it["mall"] in HERO_OTHER_ORDER else 99, it["s"]))
+    return malls + picked[:HERO_OTHERS]
 
 
 HERO_BADGE = {"confirmed": ("確定", "●", "confirmed"), "announced": ("開催は発表済み・詳細待ち", "▲", "notice"), "expected": ("例年の予想", "◇", "expected")}
