@@ -10,7 +10,7 @@ import json
 import re
 from pathlib import Path
 
-from . import deadlines, extras, pages_hub, pages_life, pages_money
+from . import deadlines, extras, pages_hub, pages_life, pages_money, shop_links
 from .common import CHECKED, sources_json
 from .titles import TITLES
 
@@ -28,6 +28,9 @@ def all_pages() -> list[dict]:
         if p["path"] == "/method/":
             p["primary_kw"] = "初日不算入"
     assert not more, f"extras for pages that do not exist: {list(more)}"
+    for p in pages:
+        if p["path"] in shop_links.SHOP_PAGES:
+            p["sections"].append(shop_links.section(p["path"]))
     return pages
 
 
