@@ -20,6 +20,7 @@ from html import escape
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+from sites.kaidoki.redesign import schedule  # noqa: E402
 SITE_DIR = HERE.parent
 JST = timezone(timedelta(hours=9))
 WD = "月火水木金土日"
@@ -251,7 +252,7 @@ def absolutize(html: str) -> str:
     return _ATTR.sub(sub, html)
 
 
-NAV = [("セール日程", "/calendar/", ("/calendar/",)), ("商品別の買い時", "/buytime/", ("/buytime/", "/kaden/", "/randoseru/", "/what-to-buy/")),
+NAV = [("セールカレンダー", "/calendar/", ("/calendar/",)), ("商品別の買い時", "/buytime/", ("/buytime/", "/kaden/", "/randoseru/", "/what-to-buy/")),
        ("モール・公式ストア", "/malls/", ("/malls/", "/rakuten/", "/amazon/", "/yahoo/")), ("実質価格を計算", "/calc/", ("/calc/",)),
        ("調査・検証 ↗", "/articles/", ("/articles/", "/method/"))]
 
@@ -412,9 +413,10 @@ class Ctx:
         self.categories = [dict(c, href="/kaden/") for c in cats if c["id"] == "electronics"]      # the genres whose data and product pages are ready (first: electronics)
         self.malls = _json(HERE / "malls.json")
         self.ver = hashlib.sha1(b"".join((HERE / "static" / "styles" / n).read_bytes() for n in ("site.css", "templates.css", "extra.css"))
-                                + (HERE / "static" / "scripts" / "site.js").read_bytes()).hexdigest()[:8]
+                                + (HERE / "static" / "scripts" / "site.js").read_bytes() + (HERE / "static" / "scripts" / "calendar.js").read_bytes()).hexdigest()[:8]
         self.products = load_products(self.site_dir)
         self.hero = _json(HERE / "hero.json")
+        self.sched = schedule.all_items()
 
     def card(self, path: str, label: str | None = None) -> dict:
         p = self.by_path[path]
@@ -454,16 +456,16 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
     if path == "/":
         arts = [ctx.card("/rakuten/marathon/", "楽天"), ctx.card("/rakuten/marathon-vs-super-sale/", "楽天"), ctx.card("/calc/points/", "計算")]
         lead, more = home_more(ctx, pg["answer"], pg["rest"])
-        return template("home", headline=hero_headline(ctx), featured=sales_grid(live[:2], at), schedule=lead + sales_grid(ctx.sales[:3], at),
+        return template("home", headline=hero_headline(ctx), featured=sales_grid(live[:2], at), schedule=lead + sales_grid(ctx.sales[:3], at) + f'<p class="cal-homelink">{link("/calendar/", "全モールの月間カレンダー(確定・例年の予想・毎月の定例)を見る")}</p>',
                         categories=category_cards(ctx.categories), articles=article_cards(arts), more=more)
     if path == "/calendar/":
         stamp = f"表示時点：{fmt(at.isoformat(timespec='seconds'), True)}（日本時間）。未発表・終了を含めて確認できます。日程は、各セールの欄に書いた確認日に、主催者の発表や信頼できる報道で確かめたものです。"
-        return template("calendar", notes=notice(stamp), filters=filters(["rakuten", "amazon", "yahoo"]), sales=sales_grid(ctx.sales, at))
+        return calendar_page_body(ctx) + template("calendar", notes=notice(stamp), filters=filters(["rakuten", "amazon", "yahoo"]), sales=sales_grid(ctx.sales, at))
     mall = next((m for m, pth in MALL_PATH.items() if pth == path), None)
     if mall:
         info = next(m for m in ctx.malls if m["id"] == mall)
         kids = [ctx.card(c["path"]) for c in ctx.content if c.get("parent") == path]
-        return template("mall", intro="", sales=sales_grid([s for s in ctx.sales if s["mall_id"] == mall and state(s, at) != "終了"], at),
+        return mall_calendar_teaser(ctx, mall) + template("mall", intro="", sales=sales_grid([s for s in ctx.sales if s["mall_id"] == mall and state(s, at) != "終了"], at),
                         checks=checks(info["checks"]), links=article_cards(kids or [ctx.card("/calc/points/", "計算")]))
     if path == "/kaden/":
         c = ctx.categories[0]
@@ -475,9 +477,61 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
     return None
 
 
+# ------------------------------------------------------------------ the calendars (schedule.py has the data and the month grid)
+MALL_CAL_TEXT = {
+    "rakuten": ("楽天市場のセールカレンダー", "楽天市場の確定したセール日程と、スーパーSALE・ブラックフライデー・初売りの例年の時期の予想、5と0のつく日・ワンダフルデーの定例を、月ごとに見られます。",
+                "スーパーSALE、お買い物マラソン、ブラックフライデー、初売りと、5と0のつく日、ワンダフルデー。楽天市場の日程だけを並べています。"),
+    "amazon": ("Amazonのセールカレンダー", "Amazonのプライムデー・プライム感謝祭・ブラックフライデー・初売りなどの確定した日程と、例年の時期の予想を、月ごとに見られます。",
+               "プライムデー、プライム感謝祭、ブラックフライデー、新生活セール、初売り。Amazonの日程だけを並べています。"),
+    "yahoo": ("Yahoo!ショッピングのセールカレンダー", "Yahoo!ショッピングの超PayPay祭・ブラックフライデーなどの確定した日程と、5のつく日・ファーストデイ・感謝デーなどの定例を、月ごとに見られます。",
+              "超PayPay祭、ブラックフライデー、5のつく日、ファーストデイ、ヤフショ感謝デー。Yahoo!ショッピングの日程だけを並べています。"),
+}
+
+
+def cal_block(ctx: "Ctx", mall: str | None) -> str:
+    return schedule.calendar_block(ctx.sched, mall, ctx.at.date()) + f'<script defer src="/assets/kit/scripts/calendar.js?v={ctx.ver}"></script>'
+
+
+def cal_howto() -> str:
+    return ('<section class="content-block"><h2>カレンダーの見方</h2><ul class="checklist">'
+            '<li>● 確定は、主催者が日程を発表したものです。公式の発表か、公式ページの表示で確かめています。</li>'
+            '<li>◇ 例年の予想は、まだ発表がないものです。毎年開かれているので、過去の日付をもとに「ごろ」で置いています。決まった日程ではありません。</li>'
+            '<li>↻ 毎月の定例は、5と0のつく日のように、毎月同じ日に開かれる企画です。</li>'
+            '<li>▲ 発表予定日は、主催者が詳細を公表すると案内した日です。</li></ul>'
+            '<p>予想の根拠は、下の表に過去の日付で書いています。過去の日付が確かめられなかったセールは、予想として載せていません。</p></section>')
+
+
+def calendar_page_body(ctx: "Ctx") -> str:
+    cards = article_cards([{"href": schedule.CAL_PATH[m], "title": MALL_CAL_TEXT[m][0], "description": MALL_CAL_TEXT[m][2], "label": "モール別"} for m in schedule.MALLS])
+    return ('<div class="wrap page-content cal-wrap">' + notice("日付ごとに、楽天・Amazon・Yahoo!ショッピングと、そのほかの大手EC・ブランド公式EC・WEBサービスのセールを、1つのカレンダーに並べています。赤い●は確定、破線の◇は例年の予想です。") + cal_howto()
+            + '<section class="content-block"><h2>全ショップの月間カレンダー</h2>' + cal_block(ctx, None) + "</section>"
+            + '<section class="content-block"><h2>モールごとのカレンダー</h2>' + cards + "</section>"
+            + '<section class="content-block"><h2>毎月の定例</h2>' + schedule.regular_table(ctx.sched, None)
+            + '</section><section class="content-block"><h2>例年の予想と、その根拠</h2>' + schedule.basis_table(ctx.sched, None) + "</section></div>")
+
+
+def mall_calendar_body(ctx: "Ctx", mall: str) -> str:
+    title = schedule.MALLS[mall][0]
+    regular = schedule.regular_table(ctx.sched, mall)
+    reg_html = (f'<section class="content-block"><h2>{e(title)}の毎月の定例</h2>{regular}</section>' if regular
+                else f'<section class="content-block"><h2>{e(title)}の毎月の定例</h2>{notice(title + "で、毎月同じ日に開かれる定例の企画は、確認できていません。")}</section>')
+    return ('<div class="wrap page-content cal-wrap">' + notice(f"{title}の予定だけを並べたカレンダーです。赤い●は確定、破線の◇は例年の予想です。") + cal_howto()
+            + f'<section class="content-block"><h2>{e(title)}の月間カレンダー</h2>' + cal_block(ctx, mall) + "</section>" + reg_html
+            + f'<section class="content-block"><h2>{e(title)}の例年の予想と、その根拠</h2>{schedule.basis_table(ctx.sched, mall)}</section>'
+            + '<section class="content-block"><h2>関連するページ</h2>' + article_cards([
+                {"href": schedule.MALL_PAGE[mall], "title": f"{title}のセールの解説", "description": "セールごとの条件と、確かめたいことをまとめています。", "label": "解説"},
+                {"href": "/calendar/", "title": "全モールの月間カレンダー", "description": "3つのモールの予定を、日付ごとに並べて見られます。", "label": "全モール"}]) + "</section></div>")
+
+
+def mall_calendar_teaser(ctx: "Ctx", mall: str) -> str:
+    title = schedule.MALLS[mall][0]
+    return (f'<div class="wrap page-content"><div class="section-head"><h2>{e(title)}のセールカレンダー</h2></div>'
+            f'<p>{e(title)}の確定した日程、例年の予想、毎月の定例を、月ごとのカレンダーにまとめています。</p>{link(schedule.CAL_PATH[mall], title + "の月間カレンダーを見る")}</div>')
+
+
 def mall_index_body(ctx: Ctx) -> str:
     cards = "".join(f'<article><span class="num">モール・公式ストア</span><h2>{e(MALL_TITLE[m["id"]])}</h2>{paragraphs([ctx.by_path[MALL_PATH[m["id"]]]["answer"]])}'
-                    f'{link(MALL_PATH[m["id"]], "日程と条件を見る")}</article>' for m in ctx.malls if m["id"] in MALL_PATH)
+                    f'{link(MALL_PATH[m["id"]], "日程と条件を見る")} {link(schedule.CAL_PATH[m["id"]], "月間カレンダーを見る")}</article>' for m in ctx.malls if m["id"] in MALL_PATH)
     return template("mall-index", malls=f'<div class="template-grid">{cards}</div>')
 
 
@@ -575,6 +629,7 @@ def apply(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
         raise ValueError("redesign: the /kaden/ page is missing")
     for rel, body_fn, path, title, desc, label in (
             ("malls/index.html", mall_index_body, "/malls/", "モール・公式ストアから探す", "楽天・Amazon・Yahoo!ショッピングのセール日程と参加条件を、モールごとに見られます。", "モール別"),
+            *[(f"calendar/{m}/index.html", lambda c, m=m: mall_calendar_body(c, m), schedule.CAL_PATH[m], MALL_CAL_TEXT[m][0], MALL_CAL_TEXT[m][1], "モール別カレンダー") for m in schedule.MALLS],
             ("articles/index.html", articles_body, "/articles/", "買う前の確認メモ", "セールの日程の読み方と、ポイント・上限・条件の確かめ方をまとめた解説ページの一覧です。", "調査・検証")):
         head = base_head
         head = re.sub(r"<title>.*?</title>", lambda m, t=title: f"<title>{e(t)} | {e(cfg['site_name'])}</title>", head, flags=re.S)
@@ -585,7 +640,7 @@ def apply(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
         head = re.sub(r'(<link rel="canonical" href=")[^"]*(">)', lambda m, u=url: m.group(1) + e(u) + m.group(2), head)
         head = re.sub(r'(<meta property="og:url" content=")[^"]*(">)', lambda m, u=url: m.group(1) + e(u) + m.group(2), head)
         head = re.sub(r'<script type="application/ld\+json">.*?</script>\n?', "", head, flags=re.S)
-        trail = [("トップ", "/"), (title, None)]
+        trail = [("トップ", "/"), ("セールカレンダー", "/calendar/"), (title, None)] if path.startswith("/calendar/") else [("トップ", "/"), (title, None)]
         ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": i + 1, "name": n, **({"item": cfg["site_url"].rstrip("/") + h} if h else {})} for i, (n, h) in enumerate(trail)]}
         head += '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace("</", "<\\/") + "</script>\n"
