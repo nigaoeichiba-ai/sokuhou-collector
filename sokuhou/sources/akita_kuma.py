@@ -83,8 +83,16 @@ def _int_or_none(raw: str) -> int | None:
         return None
 
 
+def _decode(data: bytes) -> str:
+    """The prefecture's CSV was UTF-8 until 2026-11 and is Shift-JIS (cp932) since (the daily run failed with 'invalid start byte 0x8f'); read either."""
+    try:
+        return data.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        return data.decode("cp932")
+
+
 def _read_rows(data: bytes) -> tuple[list[str], list[dict[str, str]], int]:
-    reader = csv.reader(io.StringIO(data.decode("utf-8-sig")))
+    reader = csv.reader(io.StringIO(_decode(data)))
     try:
         header = next(reader)
     except StopIteration as e:

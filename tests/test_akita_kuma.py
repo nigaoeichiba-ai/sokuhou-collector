@@ -42,6 +42,13 @@ class AkitaKumaSnapshotTest(unittest.TestCase):
     def setUpClass(cls):
         cls.d = _parse_sample()
 
+    def test_csv_in_shift_jis_reads_like_utf8(self):
+        # the prefecture's file turned Shift-JIS in 2026-11 (daily run: 'invalid start byte 0x8f'); both encodings must give the same rows
+        raw = CSV.read_bytes()
+        sjis = raw.decode("utf-8-sig").encode("cp932", errors="replace")
+        self.assertEqual(kuma._read_rows(sjis)[1], kuma._read_rows(raw)[1])
+        self.assertEqual(kuma._decode("あ".encode("cp932")), "あ")
+
     def test_coordinates_are_kept_rounded_and_inside_the_prefecture(self):
         with_coords = [r for r in self.d["sightings"] if "lat" in r]
         self.assertGreater(len(with_coords), len(self.d["sightings"]) * 0.9)
