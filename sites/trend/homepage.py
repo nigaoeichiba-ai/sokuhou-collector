@@ -58,6 +58,8 @@ def typhoon_chip(content: list[dict], today=None) -> str:
     if today is None:
         from datetime import datetime, timedelta, timezone
         today = datetime.now(timezone(timedelta(hours=9))).date()
+    if st.get("extratropical"):      # the typhoon is over (an extratropical low): no class and no danger level, so no chip
+        return ""
     if not _chip_fresh(st["asof"], ty["updated"], today):
         return ""
     level, _ = statuspanel.danger(st["wind"])

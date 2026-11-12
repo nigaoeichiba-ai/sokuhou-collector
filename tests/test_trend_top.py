@@ -77,7 +77,9 @@ class TrendTop(unittest.TestCase):
         import datetime
         hp = _homepage()
         content = _prepared()
+        content = json.loads(json.dumps(content))
         ty = next(p for p in content if p["path"] == "/trend-typhoon32/")
+        ty["status_typhoon"].pop("extratropical", None)      # the real article is over (an extratropical low): test the chip with the typhoon still on
         day = int(re.match(r"(\d+)日", ty["status_typhoon"]["asof"]).group(1))
         month = int(ty["updated"].split("-")[1])
         fresh = datetime.date(2026, month, day) + datetime.timedelta(days=2)
@@ -201,14 +203,14 @@ class TrendTop(unittest.TestCase):
         m = re.search(r"var LABELS = (\[\[.*?\]\]);", h).group(1)
         self.assertEqual(json.loads(m), [[8, "バッチリ準備OK！"], [6, "あと一歩でカンペキ！"], [5, "最低限はクリア！"], [4, "半分くらい。まずは水と食料から！"], [0, "まずは水と食料から始めよう"]])
         self.assertNotIn('class="fl-u"', h)      # the "更新" badge on the flash items is gone (the three action badges and the typhoon chip stay)
-        for badge in ("11月15日まで", "設置10年目が目安", "進路予報を更新中"):
+        for badge in ("11月15日まで", "設置10年目が目安", "温帯低気圧に変わりました"):
             self.assertRegex(h, rf'<span class="deadline[^"]*">{badge}</span>')
-        chip = re.search(r'<div class="typhoon-chip".*?</p></div>', h, re.S).group(0)      # the chip shows the typhoon page's own numbers (955hPa, class 非常に強い, danger 5, 10日16時現在)
-        self.assertEqual(re.sub(r"<[^>]+>", "", chip), "台風32号 （チャンパカ）非常に強い・955hPa危険度は5段階の5｜11月10日16時現在")
-        self.assertEqual(chip.count('class="seg on-'), 5)
+        self.assertNotIn("typhoon-chip", h)      # No.32 became an extratropical low (11/11 21:00): no class and no danger level, so the home page shows no chip
         ty = self.html("/trend-typhoon32/")
-        for part in ("10日16時現在", "中心気圧 955hPa", "5段階の 5"):
+        for part in ("温帯低気圧に変わりました（11日21時、気象庁）", "10日16時現在"):
             self.assertIn(part, ty)
+        for gone in ("気象庁の階級", "危険度（風の強さ）"):
+            self.assertNotIn(gone, ty)
         self.assertNotIn("（見本）", h)
         self.assertNotIn("防災グッズのチェックリスト、8項目で家の備えを確認しよう", h)      # the extra line under the panel is gone (owner-approved fix 2026-11-11)
         self.assertNotIn("株式会社MACS", h)
