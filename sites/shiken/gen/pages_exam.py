@@ -43,6 +43,30 @@ def official(*pairs) -> str:
     return '<ul class="links">' + "".join(f'<li><a href="{u}" rel="noopener" target="_blank">{t}</a></li>' for t, u in pairs) + "</ul>"
 
 
+SHIKAKU_SQUARE_LINK = ('<a href="https://px.a8.net/svt/ejp?a8mat=4BGJFS+FXCMIA+373C+7CX1E" rel="nofollow">資格講座 | 資格スクエア</a>'
+                       '<img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4BGJFS+FXCMIA+373C+7CX1E" alt="">')
+AD_NOTE = "このページの末尾には、広告(PR)があります。"
+RAKUTEN_ID = "583f273a.77c989b6.583f273b.0a6a5fff"      # the same affiliate ID as the other sites (sites/*/config.json)
+AMAZON_TRACKING_ID = "amazonmacs-22"
+
+
+def shop_links(kw: str) -> str:
+    """参考書・問題集を探す、楽天市場とAmazonのショップ(検索ページ)へのリンク。商品を名指しせず、モールの別々の部品に分ける。"""
+    from urllib.parse import quote
+    rk = f"https://hb.afl.rakuten.co.jp/hgc/{RAKUTEN_ID}/?pc={quote('https://search.rakuten.co.jp/search/mall/' + quote(kw) + '/', safe='')}"
+    am = f"https://www.amazon.co.jp/s?k={quote(kw, safe='')}&tag={AMAZON_TRACKING_ID}"
+    return (f'<p>楽天市場では、<a href="{rk}" rel="nofollow sponsored noopener" target="_blank">「{kw}」を探す</a>ことができます。</p>'
+            f'<p>Amazonでも、<a href="{am}" rel="nofollow sponsored noopener" target="_blank">「{kw}」を探す</a>ことができます。</p>')
+
+
+def ad_section(exam: str) -> dict:
+    """試験ページの末尾に置く、講座の広告(提携: 資格スクエア)と、参考書を探すショップへのリンク。PR 表示つき。"""
+    return {"h2": f"【PR】{exam}の勉強を始めるなら", "paras": [
+        "この項目には、広告(PR)が含まれます。",
+        f"{exam}の講座をオンラインで探している人向けに、資格スクエアの講座ページへのリンクを置いています。講座の内容や料金は、申込の前に、運営会社のページで確認しておきましょう。"],
+        "html": "<p>" + SHIKAKU_SQUARE_LINK + "</p><h3>参考書・問題集を探すなら</h3>" + shop_links(f"{exam} 参考書")}
+
+
 def item(path, kw, title, h1, desc, answer, secs, related, sources, basis, intent=1, secondary=()):
     return {"path": path, "kind": "item", "parent": "/schedule/", "primary_kw": kw, "secondary_kw": list(secondary), "intent": intent,
             "title": title, "h1": h1, "description": desc, "answer": answer, "data_basis": basis, "sections": secs, "related": related, "sources": sources}
@@ -96,7 +120,7 @@ def gyosei() -> dict:
     return item(
         "/gyosei/", "行政書士試験の試験日", "行政書士試験の試験日と申込期間・合格発表日(令和8年度)", "行政書士試験の試験日・申込期間・合格発表日",
         "行政書士試験の令和8年度の日程です。試験日は11月8日、合格発表は2027年1月27日。申込期間、受験料、直近10年の合格率を公式ページで確かめて載せています。",
-        f"令和8年度の行政書士試験は{md('2026-11-08')}、合格発表は{jp('2027-01-27')}です。令和9年度の日程は未発表です。",
+        f"令和8年度の行政書士試験は{md('2026-11-08')}、合格発表は{jp('2027-01-27')}です。令和9年度の日程は未発表です。" + AD_NOTE,
         [
             {"h2": "令和8年度の日程", "paras": [
                 f"試験日は{jp('2026-11-08')}の13時から16時までです。申込はすでに終わっていて、締切はインターネットが{md('2026-08-24')}の17時、郵送が{md('2026-08-17')}の消印まででした。",
@@ -116,6 +140,7 @@ def gyosei() -> dict:
                 "行政書士試験研究センターは、無断の転用・引用を禁じています。このページに書いているのは、日付と数字という事実だけです。"]},
             {"h2": "最終確認は公式で", "paras": ["申込の前に、次の公式ページで最新の日程と手続きを確かめてください。確認日は2026年11月3日です。"],
              "html": official(("行政書士試験の受験案内(行政書士試験研究センター)", "https://www.gyosei-shiken.or.jp/doc/guide/guide.html"))},
+            ad_section("行政書士"),
         ],
         [{"path": "/results/", "text": "資格試験の合格発表日の一覧"}, {"path": "/goukaku-ritsu/", "text": "合格率の見方と、資格ごとの数字"}, {"path": "/takken/", "text": "宅建の試験日と合格発表日"},
          {"path": "/postmark/", "text": "消印有効と必着の違い"}], ["gyosei", "gyosei_stat"], "令和8年度・令和7年度までの結果",

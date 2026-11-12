@@ -60,7 +60,7 @@ def finalize(p: dict) -> dict:
     secs = []
     for s in p["sections"]:
         s = dict(s)
-        if re.search(r'href="https?://(?!calendar\.google\.com/)', s.get("html", "")):
+        if re.search(r'href="https?://(?!calendar\.google\.com/|px\.a8\.net/|hb\.afl\.rakuten\.co\.jp/|www\.amazon\.co\.jp/s\?)', s.get("html", "")):
             s.pop("html")
         s["paras"] = [t for t in (DROP.sub("", t).strip() for t in s.get("paras", [])) if t]
         secs.append(s)

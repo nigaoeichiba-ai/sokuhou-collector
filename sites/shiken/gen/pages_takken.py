@@ -6,6 +6,7 @@ import json
 from . import common, ics, ui
 from .common import TODAY, d, jp, md, left, rel, ver, today_j, DESIGN_DATE, OFFICIAL_LINKS
 from .model import BY_ID, events_of, pass_rate_rows, applicant_basis_rate, sit_rate, when_text, examination_events
+from .pages_exam import AD_NOTE, SHIKAKU_SQUARE_LINK, shop_links
 from .pages_v2 import CHECK, POLISH, a, cal_buttons, data_blob, esc, fix, fy_label, page, sec
 
 NEXT_YEAR_PUBLISHED = False       # 令和9年度 of 宅建: not on the organisation's page (read 2026-11-03 and again 2026-11-08)
@@ -159,6 +160,9 @@ def takken() -> dict:
               f'<div class="fcard"><h3>申込の流れと、申込から合格発表までの日数</h3><p>令和8年度は、申込開始の{md(start["iso"])}から合格発表の{md(res["iso"])}まで、約{months}か月ありました。流れを追うと、次の年度の見通しが立てやすくなります。</p>{a("/flow/", "記事を読む", "cardlink")}</div>'
               f'<div class="fcard"><h3>次の試験 管理業務主任者</h3><p>試験日は{esc(md(nxt["iso"]))}、{esc(rel(nxt["iso"]))}です。</p>{a("/deadlines/", "締切の一覧", "cardlink")}</div></div>')
 
+    s_ad = ('<h2>【PR】宅建の勉強を始めるなら</h2><p>この項目には、広告(PR)が含まれます。</p>'
+            '<p>宅建の講座をオンラインで探している人向けに、資格スクエアの講座ページへのリンクを置いています。講座の内容や料金は、申込の前に、運営会社のページで確認しておきましょう。</p>'
+            f'<p>{SHIKAKU_SQUARE_LINK}</p><h3>参考書・問題集を探すなら</h3>' + shop_links('宅建 参考書'))
     ld_event = {"@context": "https://schema.org", "@type": "Event", "name": "宅地建物取引士資格試験 令和8年度", "startDate": f"{exam['iso']}T{exam['time']}:00+09:00",
                 "endDate": f"{exam['iso']}T{exam['end']}:00+09:00", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
                 "eventStatus": "https://schema.org/EventScheduled", "organizer": {"@type": "Organization", "name": "一般財団法人 不動産適正取引推進機構"}}
@@ -167,13 +171,13 @@ def takken() -> dict:
                "inLanguage": "ja", "creator": {"@type": "Organization", "name": "一般財団法人 不動産適正取引推進機構"}, "dateModified": DESIGN_DATE}
     ld = "".join('<script type="application/ld+json">' + json.dumps(x, ensure_ascii=False).replace("</", "<\\/") + "</script>" for x in (ld_event, ld_faq, ld_data))
 
-    answer = f"令和8年度の宅建試験は{jp(exam['iso'])}に終わり、合格発表は{md(res['iso'])}{ver(res['iso'])}。令和9年度の日程は未発表です。"
+    answer = f"令和8年度の宅建試験は{jp(exam['iso'])}に終わり、合格発表は{md(res['iso'])}{ver(res['iso'])}。令和9年度の日程は未発表です。" + AD_NOTE
     return page(
         "/takken/", "item", "/schedule/", "宅建の試験日", "宅建の試験日・申込期間・合格発表｜令和8年度", "宅建の試験日・申込期間・合格発表 令和8年度",
         "宅地建物取引士（宅建）の令和8年度の試験日は10月18日、合格発表は11月25日です。申込期間、受験料、直近5年の合格率と、カレンダーに入れる方法、総コスト計算機、逆算プランナーをまとめました。",
         answer,
         [sec(None, hero), sec(None, s_dates), sec(None, s_rate), sec(None, s_cost), sec(None, s_plan), sec(None, s_elig), sec(None, s_fail), sec(None, s_faq),
-         sec(None, s_wait) if s_wait else {}, sec(None, s_next), sec(None, s_read), sec(None, ld + data_blob([]))],
+         sec(None, s_wait) if s_wait else {}, sec(None, s_next), sec(None, s_read), sec(None, s_ad), sec(None, ld + data_blob([]))],
         [{"path": "/takken-junbi/", "text": "宅建は来年度に向けて、11月の今から始める準備"}, {"path": "/results/", "text": "資格試験の合格発表日の一覧"}, {"path": "/goukaku-ritsu/", "text": "合格率の見方と、資格ごとの数字"}, {"path": "/flow/", "text": "申込から合格発表までの流れ"},
          {"path": "/deadlines/", "text": "申込の締切が近い順の一覧"}], secondary=("宅建 試験日", "宅建 合格発表", "宅建 申し込み"))
 

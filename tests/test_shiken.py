@@ -63,7 +63,7 @@ class ShikenTest(unittest.TestCase):
             slug = json.loads(p.read_text(encoding="utf-8"))["path"].strip("/") or "."
             rel = "index.html" if slug == "." else f"{slug}/index.html"
             body = re.search(r"<main.*?</main>", self.html[rel], re.S).group(0)
-            self.assertNotRegex(body, r'href="https?://(?!calendar\.google\.com/)', rel)       # the one outside host is the "add to Google Calendar" link
+            self.assertNotRegex(body, r'href="https?://(?!calendar\.google\.com/|px\.a8\.net/|hb\.afl\.rakuten\.co\.jp/|www\.amazon\.co\.jp/s\?)', rel)   # outside hosts: "add to Google Calendar" and the affiliate links (approved 2026-11-12), nothing else
             self.assertNotIn("確認日", body, rel)
 
     def test_a_page_with_an_outside_link_would_be_caught(self):

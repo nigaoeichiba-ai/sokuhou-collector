@@ -187,7 +187,9 @@ class PageTest(unittest.TestCase):
         text = re.sub(r"<[^>]+>", "", self.html["takken/index.html"])
         self.assertIn("令和9年度：日程は未発表です", text)
         self.assertNotIn("賃貸不動産経営管理士", text)                         # no card without a date and a page behind it
-        self.assertNotIn("PR", text)                                          # the affiliate boxes are not built before approval
+        self.assertIn("【PR】宅建の勉強を始めるなら", text)                      # the course ad exists since the partnership was approved (2026-11-12), with the PR label
+        self.assertIn("広告(PR)", text)
+        self.assertNotIn("賃貸不動産経営管理士", text)
         for needle in ("よくある失敗 3例", "総コスト計算機", "逆算プランナー"):
             self.assertIn(needle, text)
 
