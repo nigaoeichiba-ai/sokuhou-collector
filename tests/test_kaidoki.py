@@ -53,6 +53,7 @@ class KaidokiTest(unittest.TestCase):
                 continue
             body = html.split("<main", 1)[-1]
             body = AFF_BOX.sub("", body)      # the affiliate box of a mall's page (tested below)
+            body = re.sub(r'<section class="content-block shops-box".*?</section>', "", body, flags=re.S)      # the shops box of /yahoo/ (its only outside link is the Yahoo! credit the Developer Network requires; tested in test_kaidoki_yahoo_shops.py)
             body = PR_LINK.sub("", body)      # an affiliate link (rel="nofollow sponsored noopener", target=_blank; tested in test_kaidoki_affiliate.py) is the only other outside link
             body = re.sub(r'<p class="src">.*?</p>', "", body, flags=re.S)      # the redesign's product page: the maker's / carrier's official page, a plain source line
             self.assertNotIn('href="http', body, rel)

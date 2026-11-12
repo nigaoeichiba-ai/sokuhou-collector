@@ -1,0 +1,36 @@
+name: kaidoki-sale-daily
+
+# Every day (06:00 JST) and by hand: SALEカレンダー(sale-calendar.com)の「いま割引が多いYahoo!ショッピングの店」の欄のデータ。
+# Yahoo!ショッピング(Shopping Web API v3 itemSearch, is_discounted=true)の割引中の商品を、店ごとに集計して、サーバーの非公開フォルダ ~/kaidoki-private/yahoo_shops.json に置く。
+# ページは api/yahoo-shops.php がそこから読む(取得日が古い・無いときは欄が出ない)ので、置くだけでよい(デプロイは要らない)。
+# 守ること(オーナー厳命 2026-10-17): リポジトリ・ログ・成果物・キャッシュに、店名・店のURL・商品名・価格・画像を入れない。ログは、ジャンル名と件数だけ。
+# 必要な秘密: YAHOO_CLIENT_ID(取得)、XSERVER_SSH_KEY / XSERVER_HOST / XSERVER_USER(置く)。どれも出力しない。
+
+on:
+  schedule:
+    - cron: "0 21 * * *"   # 06:00 JST
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kaidoki-sale-daily
+  cancel-in-progress: false
+
+jobs:
+  shops:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Fetch the discounted items, count them per shop, store privately (numbers only in the log)
+        env:
+          YAHOO_CLIENT_ID: ${{ secrets.YAHOO_CLIENT_ID }}
+          XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+          XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+          XSERVER_USER: ${{ secrets.XSERVER_USER }}
+        run: python -m sites.kaidoki.tools.yahoo_shops --store

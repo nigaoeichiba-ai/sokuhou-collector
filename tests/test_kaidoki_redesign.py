@@ -124,6 +124,7 @@ class RedesignTest(unittest.TestCase):
     def test_outside_links_only_in_the_affiliate_box_and_the_product_page(self):
         for rel, h in self.html(self.live).items():
             body = PR_LINK.sub("", AFF_BOX.sub("", h.split("<main", 1)[-1]))
+            body = re.sub(r'<section class="content-block shops-box".*?</section>', "", body, flags=re.S)      # the shops box of /yahoo/: the Yahoo! credit link is required (test_kaidoki_yahoo_shops.py)
             if rel.startswith("kaden/test-phone/"):
                 self.assertEqual(re.findall(r'href="(https?://[^"]+)"', body), ["https://example.com/a"])
                 continue

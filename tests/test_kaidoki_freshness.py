@@ -49,7 +49,7 @@ class Freshness(unittest.TestCase):
         self.assertFalse(any("/ B /" in x for x in r))
 
     def test_runs_on_real_data(self):
-        text, n = F.run(T)
+        text, n = F.run(T, network=False)
         self.assertIn("鮮度点検", text)
         self.assertGreaterEqual(n, 0)
 

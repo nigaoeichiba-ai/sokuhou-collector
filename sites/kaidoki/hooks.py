@@ -324,6 +324,12 @@ def add_affiliate_links(pages: dict, cfg: dict) -> dict:
     return pages
 
 
+def add_shops(pages: dict) -> dict:
+    """/yahoo/ の「いま割引が多いYahoo!ショッピングの店」の欄(固定の文章と PHP・JS だけ。店のデータは入らない)。sites/kaidoki/shops.py"""
+    from sites.kaidoki import shops
+    return shops.add_shops(pages)
+
+
 def prepare(cfg: dict, spec: dict, content: list, site_dir) -> list:
     """Only for the redesign (KAIDOKI_REDESIGN=1, sites/kaidoki/redesign/): the new site name.  Otherwise the content is left as it is."""
     from sites.kaidoki.redesign import render
@@ -333,7 +339,7 @@ def prepare(cfg: dict, spec: dict, content: list, site_dir) -> list:
 def post(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
     from sites.kaidoki.redesign import render
     if render.enabled(cfg):          # the new design is built beside the current one (another output folder); the current build below is untouched
-        return render.apply(add_affiliate_links(pages, cfg), content, cfg, spec, site_dir)
+        return add_shops(render.apply(add_affiliate_links(pages, cfg), content, cfg, spec, site_dir))      # the kit rebuilds the sections by h2: the shops' box goes in after it
     html = pages["index.html"]
     new, n = ICONS_OLD.subn(ICONS_NEW, html, count=1)
     assert n == 1, "kaidoki hooks: the icon links of the layout changed"
@@ -346,7 +352,7 @@ def post(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
     html, n = re.subn(r'<h1>[^<]*</h1>\n(<p class="answer">)', r"\1", html, count=1)      # the hero's h1 is the only h1; the answer line stays (it counts in the page's readable length)
     assert n == 1, "kaidoki hooks: the top page no longer starts with h1 and answer"
     pages["index.html"] = html
-    return add_affiliate_links(pages, cfg)
+    return add_shops(add_affiliate_links(pages, cfg))
 
 
 def _ver(site_dir) -> str:

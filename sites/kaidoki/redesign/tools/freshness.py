@@ -1,4 +1,4 @@
-"""Daily freshness check of sale-calendar.com (kaidoki).  Read only: no network, no keys, no product data of a mall.
+"""Daily freshness check of sale-calendar.com (kaidoki).  Read only: no keys, no product data of a mall.  The only network call is one GET of the site's own public api/yahoo-shops.php (item 8: --no-network skips it).
 
     python -m sites.kaidoki.redesign.tools.freshness [--today 2026-11-12] [--out report.md] [--strict]
 
@@ -9,6 +9,7 @@ It lists what a person (or the daily routine) has to read again, from the data t
   4. 発表予定日が来た・過ぎたのに、日程が未発表のままのもの (notices)
   5. 確認日が古いもの (checked older than STALE_DAYS), listed per entry and per product page store row
   6. 商品ページの店ごとの確認日が古い / 終了日が過ぎた行
+  8. 「いま割引が多いYahoo!ショッピングの店」の欄(/yahoo/)のデータが、今日(または昨日)の取得か。古い・無い・測れなかったときは、そう書く(測れなかったを問題なしにしない)
 Exit code: 0 when nothing is due, 1 with --strict when something is.
 """
 from __future__ import annotations
@@ -17,6 +18,7 @@ import argparse
 import json
 import re
 import sys
+import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -90,6 +92,38 @@ def check_products(products: list[dict], today: date) -> list[str]:
     return out
 
 
+SHOPS_URL = "https://sale-calendar.com/api/yahoo-shops.php"
+SHOPS_MAX_AGE = 2          # sites/kaidoki/shops.MAX_AGE_DAYS: older than this the page hides the box
+
+
+def fetch_shops_meta(url: str = SHOPS_URL, opener=None) -> dict:
+    """The date of the data and how many genres / shops the box shows now (the public API; shop names and links are not kept).  {"error": ...} when it could not be read."""
+    try:
+        with (opener or urllib.request.urlopen)(urllib.request.Request(url, headers={"User-Agent": "sale-calendar.com freshness check"}), timeout=30) as r:
+            d = json.loads(r.read().decode("utf-8"))
+        gs = d.get("genres") or []
+        return {"u": str(d.get("u") or ""), "genres": len(gs), "shops": sum(len(g.get("shops") or []) for g in gs)}
+    except Exception as e:      # noqa: BLE001  the type only: nothing of the answer goes into the report
+        return {"error": type(e).__name__}
+
+
+def check_shops(meta: dict | None, today: date, hour: int = 12) -> list[str]:
+    """Problems of the shops' box: unreadable, empty (the box is hidden), or data not of today (of yesterday when it is past 9:00 JST)."""
+    if meta is None:
+        return []
+    if "error" in meta:
+        return [f"ショップ欄のデータを読めなかった({meta['error']})。測れていないので、問題なしとは言えない"]
+    d = _d(meta.get("u"))
+    if d is None or not meta.get("genres"):
+        return ["ショップ欄のデータが無い・古いので、/yahoo/ の欄は出ていない(kaidoki-sale-daily の実行を見る)"]
+    age = (today - d).days
+    if age > SHOPS_MAX_AGE or age < 0:
+        return [f"ショップ欄の取得日が{d.isoformat()}で、{age}日のずれ"]
+    if age >= 2 or (age == 1 and hour >= 9):
+        return [f"ショップ欄が今日の取得ではない(取得日 {d.isoformat()}。kaidoki-sale-daily が今朝動いたか)"]
+    return []
+
+
 def load_products() -> list[dict]:
     res = []
     for f in sorted(PRODUCTS.glob("*.json")):
@@ -97,7 +131,7 @@ def load_products() -> list[dict]:
     return res
 
 
-def render(today: date, groups: dict[str, list[str]], prods: list[str], n_items: int, n_products: int) -> str:
+def render(today: date, groups: dict[str, list[str]], prods: list[str], n_items: int, n_products: int, shops: list[str] | None = None, shops_meta: dict | None = None) -> str:
     titles = {"ending": "1. 今日・明日に終わるもの", "starting": "2. 今日始まるもの", "ended_confirmed": "3. 終わったばかりのもの",
               "expected_due": "4. 予想の日が来たもの", "notice_due": "5. 発表予定日が来たもの", "stale": "6. 確認日が古いカレンダーの項目"}
     lines = [f"# SALEカレンダー 鮮度点検 {today.isoformat()}", "",
@@ -109,19 +143,25 @@ def render(today: date, groups: dict[str, list[str]], prods: list[str], n_items:
         lines += [f"## {t}({len(rows)}件)", ""] + ([f"- {r}" for r in rows] if rows else ["- なし"]) + [""]
     total += len(prods)
     lines += [f"## 7. 商品ページ(店ごとの確認日・終了日)({len(prods)}件)", ""] + ([f"- {r}" for r in prods] if prods else ["- なし"]) + [""]
+    if shops_meta is not None:
+        total += len(shops or [])
+        seen = "取得日 " + shops_meta["u"] + f"、{shops_meta.get('genres', 0)}ジャンル・{shops_meta.get('shops', 0)}店が出ている" if "u" in shops_meta else "読めなかった"
+        lines += [f"## 8. ショップ欄(/yahoo/)のデータ({len(shops or [])}件。{seen})", ""] + ([f"- {r}" for r in shops] if shops else ["- なし"]) + [""]
     lines += [f"合計: {total} 件", ""]
     return "\n".join(lines)
 
 
-def run(today: date) -> tuple[str, int]:
+def run(today: date, network: bool = True) -> tuple[str, int]:
     sys.path.insert(0, str(ROOT))
     from sites.kaidoki.redesign.schedule import all_items
     items = all_items()
     prods = load_products()
     groups = check_items(items, today)
     pr = check_products(prods, today)
-    text = render(today, groups, pr, len(items), len(prods))
-    return text, sum(len(v) for v in groups.values()) + len(pr)
+    meta = fetch_shops_meta() if network else None
+    sh = check_shops(meta, today, datetime.now(JST).hour)
+    text = render(today, groups, pr, len(items), len(prods), sh, meta)
+    return text, sum(len(v) for v in groups.values()) + len(pr) + len(sh)
 
 
 def main(argv=None) -> int:
@@ -129,9 +169,10 @@ def main(argv=None) -> int:
     ap.add_argument("--today")
     ap.add_argument("--out")
     ap.add_argument("--strict", action="store_true")
+    ap.add_argument("--no-network", action="store_true", help="ショップ欄の点検(自サイトの公開 API を1回読む)をしない")
     a = ap.parse_args(argv)
     today = date.fromisoformat(a.today) if a.today else datetime.now(JST).date()
-    text, n = run(today)
+    text, n = run(today, network=not a.no_network)
     if a.out:
         Path(a.out).write_text(text, encoding="utf-8")
     sys.stdout.reconfigure(encoding="utf-8")
