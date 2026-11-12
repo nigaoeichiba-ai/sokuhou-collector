@@ -145,7 +145,7 @@
       return '<div class="panel" id="m-survey"><h3>モニターのアンケート(' + d.n + '/2・1分)</h3>' +
         '<p class="hint">' + (d.late ? '期限(' + md(d.deadline) + ')が過ぎています。答えると、画面の上の表示が消えます。' : md(d.deadline) + 'までにお答えください。期限を過ぎると、回答するまで画面上部に表示されます。') + '</p>' +
         '<p>どのくらいの頻度で使っていますか。</p>' + opts('s-freq', [['daily', 'ほぼ毎日'], ['weekly', '週に数回'], ['rarely', 'ときどき']]) +
-        '<p>いちばん使う機能は何ですか。</p>' + opts('s-use', [['count', '日数を数える'], ['calendar', 'カレンダー'], ['todo', 'やること'], ['official', '公式の日付'], ['notice', '通知'], ['other', 'そのほか']]) +
+        '<p>いちばん使う機能は何ですか。</p>' + opts('s-use', [['count', '日数を数える'], ['calendar', 'カレンダー'], ['todo', 'やること'], ['official', '確認できた日付'], ['notice', '通知'], ['other', 'そのほか']]) +
         '<div class="field"><label for="s-text">分かりにくいところや、ほしい機能(任意)</label><textarea id="s-text" maxlength="300" rows="3"></textarea></div>' +
         '<p><button type="button" class="btn" id="s-send" data-n="' + d.n + '">送る</button></p></div>';
     }

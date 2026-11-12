@@ -29,7 +29,7 @@ ANON = "匿名の方"
 REF_REWARD = {1: 3, 2: 1, 3: 1}
 KEEP_MONTHS = 12
 FREQ = {"daily": "ほぼ毎日", "weekly": "週に数回", "rarely": "ときどき"}
-USE = {"count": "日数を数える", "calendar": "カレンダー", "todo": "やること", "official": "公式の日付", "notice": "通知", "other": "そのほか"}
+USE = {"count": "日数を数える", "calendar": "カレンダー", "todo": "やること", "official": "確認できた日付", "notice": "通知", "other": "そのほか"}
 
 
 def last_month(today: date | None = None) -> str:

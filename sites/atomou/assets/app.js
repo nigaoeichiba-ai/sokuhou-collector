@@ -1342,7 +1342,7 @@
   var FEATS = [   // what the home page shows, in four switches (the parts are those of the "ホームの部品" panel)
     { id: 'own', t: '自分のカードと今日の予定', blocks: ['todo', 'mine'] },
     { id: 'live', t: '速報(公式の発表)', blocks: ['live'] },
-    { id: 'pub', t: '公式の日付(ジャンル・検索・好きな分野・地域・もうすぐの日)', blocks: ['search', 'cats', 'interests', 'region', 'soon'] },
+    { id: 'pub', t: '確認できた日付(ジャンル・検索・好きな分野・地域・もうすぐの日)', blocks: ['search', 'cats', 'interests', 'region', 'soon'] },
     { id: 'read', t: '読みもの(今日の数字・こんな時に)', blocks: ['daily', 'usecases'] }
   ];
   function wireFeatures() {

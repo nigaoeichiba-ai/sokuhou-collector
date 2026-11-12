@@ -52,7 +52,7 @@
     var p = plus(), left = PER - ((A.state().prefs.shares || 0) % PER);
     el.innerHTML = '<h2 id="plan-h">プラン</h2><div class="panel"><p><b>' + (p ? 'プラスプラン' : '無料プラン') + '</b></p>' +
       (p ? '<p>カードの枚数に制限はありません。署名なしで送れます。知らせの日数と時間帯を、自由に決められます。</p>' :
-        '<p>書けるカード: <b>' + used() + ' / ' + limit() + '枚</b>' + (Math.floor((A.state().prefs.shares || 0) / PER) >= MORE ? '(送って増やせる枚数の上限です)' : '(あと' + left + '回送ると、1枚ふえます)') + '</p><p class="hint">公式の日付を「予定に入れる」は、枚数に入りません。大切な人を思う日も、入りません。カードを消すと、その分だけ空きます。' + (PLUS_OPEN ? 'プラスプランは、制限なし・署名なし・知らせを自由に決められます。' : '') + '</p>') + '</div>';
+        '<p>書けるカード: <b>' + used() + ' / ' + limit() + '枚</b>' + (Math.floor((A.state().prefs.shares || 0) / PER) >= MORE ? '(送って増やせる枚数の上限です)' : '(あと' + left + '回送ると、1枚ふえます)') + '</p><p class="hint">確認できた日付を「予定に入れる」は、枚数に入りません。大切な人を思う日も、入りません。カードを消すと、その分だけ空きます。' + (PLUS_OPEN ? 'プラスプランは、制限なし・署名なし・知らせを自由に決められます。' : '') + '</p>') + '</div>';
   }
   if (A.page === 'my') box();
   document.addEventListener('atomou:saved', box);
