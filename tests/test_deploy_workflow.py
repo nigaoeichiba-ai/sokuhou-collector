@@ -134,7 +134,12 @@ class NoMallDataInTheGitHubCache(unittest.TestCase):
         self.assertNotIn("Restore today's products", TEXT)
         fetch = block("Fetch products")
         self.assertIn("matrix.site == 'yorokobu'", fetch)
-        self.assertIn("python -m sites.yorokobu.items_fresh || python -m sites.yorokobu.refresh --out out/yorokobu_items.json", fetch)
+        self.assertIn("if python -m sites.yorokobu.items_fresh; then exit 0; fi", fetch)
+        # the full fetch (88 minutes) is only the last resort, when there is no private file of the last 72 hours; otherwise the build goes on and the daily fetch is started
+        self.assertIn('[ "$age" -le 72 ]', fetch)
+        self.assertIn("gh workflow run yorokobu-items.yml", fetch)
+        self.assertLess(fetch.index("gh workflow run yorokobu-items.yml"), fetch.index("python -m sites.yorokobu.refresh --out out/yorokobu_items.json"))
+        self.assertIn("GH_TOKEN: ${{ github.token }}", fetch)
         self.assertGreater(index_of("Fetch products"), index_of("Private mall data"))   # the private pull (which brings yorokobu_items.json) comes first
         self.assertLess(index_of("Fetch products"), index_of("Build (release)"))
         self.assertNotIn("Keep the fetched products", TEXT)    # the daily yorokobu-items workflow is the only writer of the file

@@ -252,9 +252,23 @@ jobs:
         env:
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
           RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p out
-          python -m sites.yorokobu.items_fresh || python -m sites.yorokobu.refresh --out out/yorokobu_items.json
+          if python -m sites.yorokobu.items_fresh; then exit 0; fi
+          # items_fresh said no: the private file is missing or old, or the content has moved on (a page or a like line it does not have).  The deploy no longer fetches everything itself
+          # (88 minutes of API calls: on 2026-11-12 it ran into the 90-minute limit of the job again and again, so yorokobu was not published for hours and its group blocked the next runs).
+          # With a private file of up to 72 hours the build goes on with it (a page without products there is built without them) and the daily fetch is started now, so that the NEXT deploy has everything.
+          age=$(python -c "import json,datetime as d;x=json.load(open('data/yorokobu_items.json',encoding='utf-8'));t=d.datetime.fromisoformat(x['fetched_at']);t=t if t.tzinfo else t.replace(tzinfo=d.timezone(d.timedelta(hours=9)));print(int((d.datetime.now(d.timezone.utc)-t).total_seconds()/3600))" 2> /dev/null || echo 9999)
+          if [ "$age" -le 72 ] && [ -s data/yorokobu_items.json ]; then
+            cp data/yorokobu_items.json out/yorokobu_items.json
+            echo "::warning::yorokobu is built with the private product data of $age hours ago (pages added since have no products yet); the daily fetch is started now"
+            running=$(gh run list --workflow yorokobu-items.yml --limit 3 --json status --jq '[.[] | select(.status == "in_progress" or .status == "queued")] | length' || echo 1)
+            if [ "$running" = 0 ]; then gh workflow run yorokobu-items.yml; fi
+          else
+            echo "no private product data of the last 72 hours: fetching everything (about 88 minutes)"
+            python -m sites.yorokobu.refresh --out out/yorokobu_items.json
+          fi
       - name: Build (release)
         if: steps.gate.outputs.go == 'true'
         env:
