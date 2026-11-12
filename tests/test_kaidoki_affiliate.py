@@ -116,8 +116,16 @@ class CoverageTest(unittest.TestCase):
                     self.assertEqual(kind, "amazon_s", sid)
 
     def test_no_link_for_a_shop_waiting_for_its_programme_or_without_one(self):
-        for sid in ("stardomain", "sonystore", "lg", "uniqlo", "yamada"):
+        for sid in ("stardomain", "sonystore", "lg", "uniqlo"):
             self.assertEqual([l for it in self.items if it["mall"] == sid for l in AFF.links_for(it)], [], sid)
+
+    def test_yamada_has_its_rakuten_and_yahoo_stores(self):
+        links = [l for it in self.items if it["mall"] == "yamada" for l in AFF.links_for(it)]
+        self.assertGreaterEqual(len(links), 2)
+        text = " ".join(str(l) for l in links)
+        self.assertIn("yamada-denki", text)
+        self.assertIn("hb.afl.rakuten.co.jp", text)
+        self.assertIn("valuecommerce", text)
 
     def test_conditions_of_the_advertisers(self):
         text = " ".join(l["label"] for it in self.items for l in AFF.links_for(it))

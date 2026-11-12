@@ -38,7 +38,8 @@ STORES = {
     "panasonic": [("rakuten", "https://www.rakuten.co.jp/panasonic-store/"), ("yahoo", "https://store.shopping.yahoo.co.jp/panasonic-store/"), ("amazon_s", "パナソニック")],
     "asus": [("rakuten", "https://www.rakuten.co.jp/asus-store/")],
     "nec": [("rakuten", "https://www.rakuten.co.jp/nec-direct/")],
-    "zozo": [("yahoo", "https://store.shopping.yahoo.co.jp/zozo/")],
+    "yamada": [("rakuten", "https://www.rakuten.co.jp/yamada-denki/"), ("yahoo", "https://store.shopping.yahoo.co.jp/yamada-denki/")],   # ヤマダ電機 楽天市場店 / ヤマダデンキ Yahoo!店(2026-11-12 実際に開いて確認)
+    "zozo": [("yahoo","https://store.shopping.yahoo.co.jp/zozo/")],
     "sharp": [("amazon_s", "シャープ")],
     "google": [("amazon_s", "Google Pixel")],
     "playstation": [("amazon_s", "PlayStation")],
@@ -51,7 +52,6 @@ MALLS = ("rakuten", "amazon", "yahoo")
 
 # Shops with no link, and why (reported to the owner; the test pins that every shop of the calendar is here or has a link).
 NO_LINK = {
-    "yamada": "ヤマダウェブコム(yamada-denkiweb.com)は、3つのASPに案件がない(バリューコマースにあるのは別の店「ヤマダモール」ymall.jp)。楽天・Yahoo!の出店も、確認できたストアページがない",
     "sonystore": "3つのASPに案件がない。楽天市場・Yahoo!・Amazonの公式ストアは、開いて確かめられなかった",
     "lg": "3つのASPに案件がない。楽天市場・Yahoo!・Amazonの公式ストアは、開いて確かめられなかった",
     "uniqlo": "3つのASPに案件がない。楽天市場にもYahoo!ショッピングにも出店がない(ストアのページが開かなかった)",
