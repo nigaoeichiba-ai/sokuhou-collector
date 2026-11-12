@@ -27,6 +27,8 @@ def load_legacy(gift_content, build_catalog, categories) -> tuple[list[dict], li
     items = []
     for it in raw:
         src = HERE / "src" / f"{it['src']}.webp"
+        if not src.exists():      # a recipient added on the gift site (yorokobu) has no minna illustration yet: leave it out instead of failing the build (2026-11-12, university-student)
+            continue
         with Image.open(src) as im:
             w, h = im.size
         items.append({"id": it["id"], "title": it["title"], "desc": it["desc"], "tags": it["tags"], "genre": LEGACY_GENRE[it["category"]], "touch": "kawaii",
