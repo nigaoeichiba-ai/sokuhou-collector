@@ -58,7 +58,7 @@ YAHOO_DEC = [
 # Not announced on the organiser's own pages on CHECKED (the pages say 未発表; this list is what --stale asks to look at again).
 UNANNOUNCED = [
     ("楽天スーパーSALE 2026年12月", "楽天", "2026年の公式発表は確認できず"),
-    ("Amazon ブラックフライデー 2026", "Amazon", "11月中の開催は発表済み(11月5日、ニュース2件の報道)。期間は11月19日午前に発表の予定。公式の発表はまだ確認できていません(2026-11-12確認)"),
+    ("Amazon ブラックフライデー 2026", "Amazon", "11月の開催は発表済み(11月5日、Amazonニュースルーム)。期間は11月19日午前に発表の予定(2026-11-12確認)"),
     ("Rakuten初売り 2027", "楽天", "公式発表は確認できず"),
     ("楽天ブラックフライデー 2026", "楽天", "公式発表は確認できず"),
     ("Amazon 初売り 2027", "Amazon", "公式発表は確認できず"),
