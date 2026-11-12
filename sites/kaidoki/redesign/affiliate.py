@@ -110,7 +110,7 @@ def links_for(it: dict) -> list[dict]:
         return [_link("a8", a8_href(key), f"{name}のサイトを見る", key)]
     out = []
     for kind, target in STORES.get(mall, []):
-        name = ENT_NAME.get(mall, mall)
+        name = STORE_LABEL.get(mall) or ENT_NAME.get(mall, mall)
         if kind == "rakuten":
             out.append(_link("rakuten", rakuten_href(target), f"{name}の楽天市場ストアを見る"))
         elif kind == "yahoo":
@@ -120,6 +120,7 @@ def links_for(it: dict) -> list[dict]:
     return out
 
 
+STORE_LABEL = {"yamada": "ヤマダデンキ"}      # the mall stores are the company's (ヤマダ電機 楽天市場店 / ヤマダデンキ Yahoo!店), not the web shop the calendar entry names
 ENT_NAME: dict[str, str] = {}      # filled by schedule.py (id -> name) so the labels name the shop
 
 

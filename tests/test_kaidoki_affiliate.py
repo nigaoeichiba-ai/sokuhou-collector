@@ -126,6 +126,7 @@ class CoverageTest(unittest.TestCase):
         self.assertIn("yamada-denki", text)
         self.assertIn("hb.afl.rakuten.co.jp", text)
         self.assertIn("valuecommerce", text)
+        self.assertTrue(all("ヤマダデンキ" in l["label"] and "ウェブコム" not in l["label"] for l in links))
 
     def test_conditions_of_the_advertisers(self):
         text = " ".join(l["label"] for it in self.items for l in AFF.links_for(it))
