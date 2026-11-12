@@ -37,10 +37,29 @@ def ja_date(d: str) -> str:
     return f"{int(y)}年{int(m)}月{int(dd)}日"
 
 
-def typhoon_chip(content: list[dict]) -> str:
+TODAY = None                # tests set a day; the build uses the JST day
+CHIP_MAX_AGE_DAYS = 2       # the typhoon chip is hidden when its "as of" day is older than this (a status panel that stops at last week misleads)
+
+
+def _chip_fresh(asof_day: str, updated: str, today) -> bool:
+    m = re.match(r"(\d+)日", asof_day)
+    if not m:
+        return False
+    y, mo, _ = (int(x) for x in updated.split("-"))
+    from datetime import date
+    return (today - date(y, mo, int(m.group(1)))).days <= CHIP_MAX_AGE_DAYS
+
+
+def typhoon_chip(content: list[dict], today=None) -> str:
     """The chip under the flash list: the typhoon page's own numbers (statuspanel works out the class and the danger level from the wind)."""
     ty = next(p for p in content if p["path"] == "/trend-typhoon32/")
     st = ty["status_typhoon"]
+    today = today or TODAY
+    if today is None:
+        from datetime import datetime, timedelta, timezone
+        today = datetime.now(timezone(timedelta(hours=9))).date()
+    if not _chip_fresh(st["asof"], ty["updated"], today):
+        return ""
     level, _ = statuspanel.danger(st["wind"])
     cls = statuspanel.LADDER[statuspanel.klass(st["wind"])][1]
     month = int(ty["updated"].split("-")[1])
@@ -78,7 +97,8 @@ def body(home: dict, content: list[dict], spec: dict, cfg: dict, slug_of, card_w
 
     # ---- hero (the bands and the lead share one panel on the picture) + the flash panel
     flash_sec = _section(home, 'class="flash"')
-    flash = re.findall(r'<li><span class="fl-d">(.*?)</span> <a href="(.*?)">(.*?)</a></li>', flash_sec["html"])
+    # the three flash items are the three newest articles (2026-11-13: the hand-written list in home.json stayed at 11/10 while 15 new articles went up); the heading is home.json's
+    flash = [(f'{int(a["published"][5:7])}/{int(a["published"][8:10])}', a["path"], esc(a["h1"])) for a in arts[:3]]
     assert len(flash) == 3, flash
     items = "".join(f'<li><a href="{h}"><span class="b-date">{d}</span><span class="b-title">{t}</span></a></li>' for d, h, t in flash)
     hero_html = (f'<div class="hero"><div class="hero-visual">'

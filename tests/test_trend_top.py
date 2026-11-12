@@ -39,11 +39,51 @@ def _lds(h: str) -> list[dict]:
     return [json.loads(x) for x in re.findall(r'<script type="application/ld\+json">(.*?)</script>', h, re.S)]
 
 
+def _homepage():
+    import sys
+    return sys.modules.get("homepage") or __import__("homepage")
+
+
 class TrendTop(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pages, cls.report = newsite.build_pages(SITE)
+        import datetime
+        hp = _homepage()
+        hp.TODAY = datetime.date(2026, 11, 10)      # the typhoon chip's day (the chip hides itself when its "as of" day is more than 2 days old)
+        try:
+            cls.pages, cls.report = newsite.build_pages(SITE)
+        finally:
+            hp.TODAY = None
         cls.articles = [p for p in _prepared() if p.get("category")]
+
+    def test_no_link_shows_a_bare_url_as_its_text(self):
+        """Owner 2026-11-13: a link whose visible text is just a URL is forbidden; the link goes on words or on a picture."""
+        rx = re.compile(r"<a\b[^>]*>\s*(?:<[^>]+>\s*)*https?://[^<\s]+\s*</a>", re.I)
+        self.assertTrue(rx.search('<a href="/x/">https://trend-sokuho.com/x/</a>'))          # the check finds the old shape
+        self.assertFalse(rx.search('<a href="https://a.example/">年賀状スクエア 価格表</a>'))
+        bad = [k for k, h in self.pages.items() if isinstance(h, str) and k.endswith(".html") and rx.search(h)]
+        self.assertEqual(bad, [])
+
+    def test_the_flash_list_is_the_three_newest_articles(self):
+        """2026-11-13: the flash list of the top page was hand-written and stayed at 11/10 while 15 articles were added.  It follows the data now."""
+        arts = sorted(self.articles, key=lambda p: (p["published"], p.get("seq", 0), p["path"]), reverse=True)[:3]
+        h = self.html("/")
+        flash = re.search(r'<ul class="breaking-list">(.*?)</ul>', h, re.S).group(1)
+        self.assertEqual(re.findall(r'<a href="(/[^"]+/)"', flash), [a["path"] for a in arts])
+        for a in arts:
+            self.assertIn(f'{int(a["published"][5:7])}/{int(a["published"][8:10])}', flash)
+
+    def test_the_typhoon_chip_hides_when_its_status_is_old(self):
+        import datetime
+        hp = _homepage()
+        content = _prepared()
+        ty = next(p for p in content if p["path"] == "/trend-typhoon32/")
+        day = int(re.match(r"(\d+)日", ty["status_typhoon"]["asof"]).group(1))
+        month = int(ty["updated"].split("-")[1])
+        fresh = datetime.date(2026, month, day) + datetime.timedelta(days=2)
+        stale = datetime.date(2026, month, day) + datetime.timedelta(days=3)
+        self.assertIn("typhoon-chip", hp.typhoon_chip(content, today=fresh))
+        self.assertEqual(hp.typhoon_chip(content, today=stale), "")
 
     def html(self, path: str) -> str:
         return self.pages["index.html" if path == "/" else path.strip("/") + "/index.html"]
