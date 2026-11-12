@@ -7,7 +7,7 @@ name: kuma-live
 
 on:
   schedule:
-    - cron: "20 21 * * *"   # once a day at 06:20 JST (owner decision 2026-10-10; the municipalities update once a day to once a month). /cite/ says "1日1回"
+    - cron: "20 21 * * 0"   # once a week, Monday 06:20 JST (owner decision 2026-11-13: demand fell and AdSense said no again; before: once a day, owner decision 2026-10-10). /cite/ says "週1回"
   workflow_dispatch:
 
 permissions:

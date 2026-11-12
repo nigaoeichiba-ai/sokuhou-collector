@@ -154,11 +154,11 @@ class CitePageTest(unittest.TestCase):
         crons = re.findall(r'^\s*- cron: "([^"]+)"', wf, re.M)
         self.assertEqual(len(crons), 1)
         minute, hour, *rest = crons[0].split()
-        self.assertTrue(minute.isdigit() and hour.isdigit() and rest == ["*", "*", "*"], crons)       # one fixed time a day
+        self.assertTrue(minute.isdigit() and hour.isdigit() and rest[:2] == ["*", "*"] and rest[2].isdigit(), crons)       # one fixed time a week (owner 2026-11-13); the page says 週1回
         text = text_of(self.read("cite/index.html"))
-        self.assertIn("1日1回", text)
+        self.assertIn("週1回", text)
         self.assertNotIn("3時間ごと", text)
-        self.assertIn("取得は、1日1回です", text_of(self.read("live/index.html")))
+        self.assertIn("取得は、週1回です", text_of(self.read("live/index.html")))
 
     def test_no_claim_of_what_the_site_does_not_do(self):
         text = text_of(self.read("cite/index.html"))

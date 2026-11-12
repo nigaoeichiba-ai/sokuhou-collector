@@ -21,7 +21,7 @@ from sokuhou.sources import corroborated as co
 from sokuhou.sources import kumacounts, kumalib
 
 CREDIT = ("複数の公開情報で一致を確認できた目撃を、公開されている情報から、当サイトが集計して作成(福島県・福島市・福島テレビが作成したものではありません)")
-UPDATE_NOTE = ("1日1回更新します。最新の記録は、更新時点から遅れます。件数は、複数の公開情報で一致を確認できた目撃だけで、福島県内の目撃の全体の件数ではありません。"
+UPDATE_NOTE = ("週1回更新します。最新の記録は、更新時点から遅れます。件数は、複数の公開情報で一致を確認できた目撃だけで、福島県内の目撃の全体の件数ではありません。"
                "目撃のほか、痕跡の報告を含みます")
 PAGE = co.FUKUSHIMA_CITY_PAGE
 MIN_CONFIRMED = 1
