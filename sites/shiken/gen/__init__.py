@@ -29,9 +29,20 @@ def all_pages() -> list[dict]:
     new = {p["path"]: p for p in (pages_v2.home(), pages_takken.takken(), pages_features.goukaku_ritsu(), pages_features.cbt(), pages_features.yomimono(), pages_features.tokushu_nyushi(), *pages_articles.pages())}
     out = [new.pop(p["path"], p) for p in out] + list(new.values())
     out = [pages_lists.restyle(p) for p in out]
+    from .pages_exam import shop_section
     for p in out:
         p["sections"] = [s for s in p["sections"] if s]
+        if p["path"] in SHOP_PAGES and not any("PR" in str(x.get("h2", "")) for x in p["sections"]):
+            at = next((i for i, x in enumerate(p["sections"]) if str(x.get("h2", "")).startswith("最終確認")), len(p["sections"]))
+            p["sections"].insert(at, shop_section(*SHOP_PAGES[p["path"]]))
     return [finalize(p) for p in out]
+
+
+# 2026-11-13: the exam pages without a study-book search link get one (Rakuten / Amazon search pages, PR).  path -> (exam name, search words)
+SHOP_PAGES = {"/boki/": ("日商簿記", "日商簿記 テキスト"), "/boki-net/": ("簿記のネット試験", "簿記 ネット試験 問題集"), "/fp/": ("FP技能検定", "FP技能検定 テキスト"),
+              "/eiken/": ("英検", "英検 過去問"), "/kaigo-fukushi/": ("介護福祉士", "介護福祉士 参考書"), "/kangoshi/": ("看護師国家試験", "看護師国家試験 参考書"),
+              "/sharoshi/": ("社会保険労務士", "社会保険労務士 テキスト"), "/minkan/": ("TOEIC", "TOEIC 公式問題集"), "/komuin/": ("公務員試験", "公務員試験 参考書"),
+              "/kyotsu/": ("共通テスト", "共通テスト 過去問"), "/koko/": ("公立高校入試", "高校入試 過去問")}
 
 
 CLOSING = "最終的な日程は、主催団体の公式発表でご確認ください。日程は変更されることがあります。申し込む前に、必ず確かめてください。"   # kept only by the pages of KEEP_NOTES

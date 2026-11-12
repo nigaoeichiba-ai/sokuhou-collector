@@ -43,7 +43,7 @@ def official(*pairs) -> str:
     return '<ul class="links">' + "".join(f'<li><a href="{u}" rel="noopener" target="_blank">{t}</a></li>' for t, u in pairs) + "</ul>"
 
 
-SHIKAKU_SQUARE_LINK = ('<a href="https://px.a8.net/svt/ejp?a8mat=4BGJFS+FXCMIA+373C+7CX1E" rel="nofollow">資格講座 | 資格スクエア</a>'
+SHIKAKU_SQUARE_LINK = ('<a href="https://px.a8.net/svt/ejp?a8mat=4BGJFS+FXCMIA+373C+7CX1E" rel="nofollow sponsored noopener" target="_blank">資格講座 | 資格スクエア</a>'
                        '<img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4BGJFS+FXCMIA+373C+7CX1E" alt="">')
 AD_NOTE = "このページの末尾には、広告(PR)があります。"
 RAKUTEN_ID = "583f273a.77c989b6.583f273b.0a6a5fff"      # the same affiliate ID as the other sites (sites/*/config.json)
@@ -57,6 +57,11 @@ def shop_links(kw: str) -> str:
     am = f"https://www.amazon.co.jp/s?k={quote(kw, safe='')}&tag={AMAZON_TRACKING_ID}"
     return (f'<p>楽天市場では、<a href="{rk}" rel="nofollow sponsored noopener" target="_blank">「{kw}」を探す</a>ことができます。</p>'
             f'<p>Amazonでも、<a href="{am}" rel="nofollow sponsored noopener" target="_blank">「{kw}」を探す</a>ことができます。</p>')
+
+
+def shop_section(exam: str, kw: str) -> dict:
+    """参考書・問題集を探す、楽天市場とAmazonの検索ページへのリンクだけの節(講座の広告は付けない)。"""
+    return {"h2": f"【PR】{exam}の参考書・問題集を探すなら", "paras": ["この項目には、広告(PR)が含まれます。"], "html": shop_links(kw)}
 
 
 def ad_section(exam: str) -> dict:
