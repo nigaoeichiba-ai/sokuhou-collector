@@ -42,6 +42,8 @@ class TrendSite(unittest.TestCase):
         text = re.sub(r"https://hb\.afl\.rakuten\.co\.jp/hgc/[0-9a-f.]+/\?pc=https%3A%2F%2Fsearch\.rakuten\.co\.jp%2Fsearch%2Fmall%2F[^\"\\ ]*", "", text)
         # also allowed: the top page of Rakuten Travel and of Rakuten Furusato Nozei (fixed pages, no product data)
         text = re.sub(r"https://hb\.afl\.rakuten\.co\.jp/hgc/[0-9a-f.]+/\?pc=https%3A%2F%2F(?:travel\.rakuten\.co\.jp%2F|event\.rakuten\.co\.jp%2Ffurusato%2F)(?=\\\")", "", text)
+        # also allowed: an Amazon SEARCH page link (k= and the associate tag only: AFFILIATE_RULES.md; no price, image or item data)
+        text = re.sub(r"https://www\.amazon\.co\.jp/s\?k=[^&\"\\ ]+&(?:amp;)?tag=amazonmacs-22", "", text)
         for bad in ("rakuten.co.jp", "item.rakuten", "hb.afl", "affiliate", "applicationId", "accessKey", "amazon.co.jp", "shopping.yahoo"):
             self.assertNotIn(bad, text)
 
