@@ -43,7 +43,7 @@ V4 = """<section class="hero">
 <div class="hero-copy">
 <div class="live-row"><span class="live">開催中</span><span class="en">RAKUTEN SHOPPING MARATHON</span></div>
 <h1>お買い物マラソン、<br><span class="gold">11月11日1時59分に</span><br>ゴールを迎えます！</h1>
-<p class="sub">セールの日程は、主催者の発表や信頼できる報道で確かめたものだけ。未発表は未発表のまま、予想で埋めない。買い時の見極めは、ここから始まります。</p>
+<p class="sub">セールの日程は、主催者の発表や信頼できる報道で確かめたものだけ。未発表のものは、確定とは分けて「例年の予想」として載せています。買い時の見極めは、ここから始まります。</p>
 <div class="hero-cta">
 <a class="fbtn fbtn-gold" href="/rakuten/marathon/">開催中のセールを見る</a>
 <a class="fbtn fbtn-ghost" href="/yahoo/">次のセールに備える</a>

@@ -29,7 +29,10 @@ SEGMENTS = {"mall": "大型モール", "ec": "そのほか大手EC", "brand": "�
 # every shop the calendar lists: id -> (name, one letter for the grid, segment).  A shop is listed only when a sale of it is confirmed (the malls: or expected).
 ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "mall"), "yahoo": ("Yahoo!ショッピング", "Y", "mall"),
        "yamada": ("ヤマダウェブコム", "ヤ", "ec"), "nitori": ("ニトリ", "ニ", "brand"), "dyson": ("ダイソン", "ダ", "brand"), "playstation": ("PlayStation公式", "P", "brand"),
-       "sonystore": ("ソニーストア", "ソ", "brand"), "xserver": ("エックスサーバー", "X", "web"), "xdomain": ("XServerドメイン", "ド", "web")}
+       "sonystore": ("ソニーストア", "ソ", "brand"), "xserver": ("エックスサーバー", "X", "web"), "xdomain": ("XServerドメイン", "ド", "web"),
+       "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
+       "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"),
+       "stardomain": ("スタードメイン", "ス", "web")}
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
 MALL_PAGE = {"rakuten": "/rakuten/", "amazon": "/amazon/sale-calendar/", "yahoo": "/yahoo/"}
 CAL_PATH = {"rakuten": "/calendar/rakuten/", "amazon": "/calendar/amazon/", "yahoo": "/calendar/yahoo/"}
@@ -104,10 +107,21 @@ EXTRA_CONFIRMED += [
     C("c-ps-1", "playstation", "PlayStation 第1弾", "2026-11-04", "2026-11-20", _span("2026-11-04", "2026-11-20"), "", src=PRESS2),
     C("c-ps-2", "playstation", "PlayStation 第2弾", "2026-11-16", "2026-11-30", _span("2026-11-16", "2026-11-30"), "", src=PRESS2),
     C("c-yamada-bf", "yamada", "ヤマダウェブコム セール", "2026-10-31", "2026-12-04", _span("2026-10-31", "2026-12-04"), "", src=PRESS2),
-    C("c-sony-thanks", "sonystore", "ソニーストア Thanks Lot", "2026-10-01", "2027-01-13", _span("2026-10-01", "2027-01-13"), "", src=SRC_PAGE),
+    C("c-sony-thanks", "sonystore", "ソニーストア Thanks Lot", "2026-10-01", "2027-01-13", _span("2026-10-01", "2027-01-13", "10:00", "10:00"), "", src=SRC_PAGE),
+    C("c-google-bf", "google", "Googleストア ブラックフライデーセール", "2026-11-20", "2026-12-03", _span("2026-11-20", "2026-12-03", "07:00", "06:59"), "", src="公式ページの題名と、報道(3件が一致)"),
+    C("c-asus-flash", "asus", "ASUS Store フラッシュセール", "2026-11-09", "2026-11-24", _span("2026-11-09", "2026-11-24", "", "12:00"), "", src=SRC_PAGE),
+    C("c-lg-md", "lg", "LG Member Days", "2026-11-05", "2026-11-18", _span("2026-11-05", "2026-11-18", "", "23:59"), "", src=SRC_PAGE),
+    C("c-sharp-autumn", "sharp", "シャープ 秋のスマホ・家電キャンペーン", "2026-10-23", "2026-11-23", _span("2026-10-23", "2026-11-23"), "", src=SRC_PAGE),
+    C("c-pana-lets", "panasonic", "パナソニック レッツノート30周年 第2弾", "2026-10-01", "2026-11-17", _span("2026-10-01", "2026-11-17", "11:00", "13:00"), "", src=SRC_PAGE,
+      note="11月17日13時までの、ご注文分が対象です。"),
+    C("c-zozo-2", "zozo", "ZOZOWEEK 第2弾(終了日)", "2026-11-15", "2026-11-15", f"{jpd('2026-11-15')}まで(開始日は確認していません)", "", src=SRC_PAGE),
+    C("c-nec", "nec", "NEC 新製品発売記念セール(終了日)", "2026-11-12", "2026-11-12", f"{jpd('2026-11-12')}の15時まで(開始日は確認していません)", "", src=SRC_PAGE),
+    C("c-uniqlo", "uniqlo", "ユニクロ 期間限定価格(終了日)", "2026-11-12", "2026-11-12", f"{jpd('2026-11-12')}まで(開始日は確認していません)", "", src=SRC_PAGE),
+    C("c-stardomain-jp", "stardomain", "スタードメイン .jp 割引", "2026-11-06", "2027-01-29", _span("2026-11-06", "2027-01-29", "12:00", "17:00"), "", src=SRC_PAGE,
+      note="割引の対象は、1年目の登録です。価格は載せていません。"),
     C("c-xs-wp", "xserver", "エックスサーバー for WordPress キャンペーン(終了日)", "2026-12-15", "2026-12-15", f"{jpd('2026-12-15')}まで(開始日は確認していません)", "", src=PRESS2),
     C("c-xs-init", "xserver", "エックスサーバー Business 初期費用無料(終了日)", "2026-12-09", "2026-12-09", f"{jpd('2026-12-09')}まで(開始日は確認していません)", "", src=PRESS2),
-    C("c-xd-jp", "xdomain", "XServerドメイン .jp キャンペーン(終了日)", "2027-01-29", "2027-01-29", f"{jpd('2027-01-29', True)}まで(開始日は確認していません)", "", src=PRESS2,
+    C("c-xd-jp", "xdomain", "XServerドメイン .jp キャンペーン", "2026-11-06", "2027-01-29", _span("2026-11-06", "2027-01-29", "12:00", "17:00"), "", src=SRC_PAGE,
       note="価格の表記が情報源で食い違うため、日付だけを載せています。"),
 ]
 
@@ -132,7 +146,7 @@ EXPECTED = [
       ["2024年と2025年は、1月1日0時から1月15日9時59分", "2026年は、1月1日0時から1月15日9時59分(楽天の公式ページで確認)"], s="2027-01-01"),
     X("x-abf-2026", "amazon", "Amazon ブラックフライデー 2026", "11月ごろ(日程は未発表)", "/amazon/black-friday/",
       ["Amazonは「11月に実施」と告知済みです。開催期間などは、11月19日(木)の午前に公開される予定です", "2025年は、先行セールが11月21日から23日、本セールが11月24日から12月1日", "2024年は、11月29日から12月6日"],
-      src="Amazonの告知を伝える報道(2件)", month="2026-11", announce="11月19日(木)の午前(開催期間などの公開)", note="開催の月は告知済みですが、日付は発表されていません。"),
+      src="公式(Amazonニュースルーム)", month="2026-11", announce="11月19日(木)の午前(開催期間などの公開)", note="開催の月は告知済みですが、日付は発表されていません。"),
     X("x-abf-2027", "amazon", "Amazon ブラックフライデー 2027", "11月ごろ", "/amazon/black-friday/", ["2024年と2025年は、どちらも11月下旬に始まりました"], src=SRC_OFFICIAL + "(過去2年の実績)", month="2027-11"),
     X("x-ahat-2027", "amazon", "Amazon 初売り 2027", "1月3日(日)9時ごろから、およそ5日間", "/amazon/sale-calendar/",
       ["2025年は、1月3日(金)9時から7日(火)23時59分", "2026年は、1月3日(土)9時から7日(水)23時59分"], s="2027-01-03"),
@@ -155,7 +169,7 @@ EXPECTED = [
 NOTICES = [
     N("n-ybf-2026", "yahoo", "ブラックフライデー 2026 の条件・上限などを事前公開", "2026-11-16", "11月16日(月)12時", "/yahoo/", "報道(スマートウォッチライフ)",
       note="一部の目玉商品も、この時刻から特設ページで先に公開される予定と伝えられています。"),
-    N("n-abf-2026", "amazon", "ブラックフライデー 2026 の開催期間などを公開", "2026-11-19", "11月19日(木)の午前", "/amazon/black-friday/", "Amazonの告知を伝える報道(2件)",
+    N("n-abf-2026", "amazon", "ブラックフライデー 2026 の開催期間などを公開", "2026-11-19", "11月19日(木)の午前", "/amazon/black-friday/", "公式(Amazonニュースルーム)",
       note="Amazonは「11月に実施」とだけ告知しています。"),
 ]
 
