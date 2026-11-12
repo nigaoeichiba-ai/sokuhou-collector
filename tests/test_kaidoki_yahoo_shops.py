@@ -130,7 +130,7 @@ class AnswerTest(unittest.TestCase):
         self.assertEqual([g["s"] for g in a["genres"]], ["phone", "tv"])
         h = a["genres"][0]["shops"][0]["h"]
         self.assertEqual(h, AFF.vc_href(AFF.VC_PID["yahoo"], f"https://store.shopping.yahoo.co.jp/{self.db['genres']['phone'][0]['id']}/"))
-        self.assertTrue(h.startswith("//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3787704&pid=892746565&vc_url="))
+        self.assertTrue(h.startswith("//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3787704&pid=892746613&vc_url="))
 
     def test_old_missing_or_unreadable_data_shows_nothing(self):
         for d in (date(2027, 1, 18), date(2027, 2, 1), date(2027, 1, 14)):             # 古い(3日後・2週間後)・取得日が未来
@@ -187,7 +187,7 @@ class PageTest(unittest.TestCase):
         self.assertIn('a.target = "_blank"', js)
         self.assertIn('a.rel = "nofollow sponsored noopener"', js)
         self.assertIn('SID = "3787704"', js)
-        self.assertIn('PID = "892746565"', js)
+        self.assertIn('PID = "892746613"', js)
         self.assertIn("gifbanner", js)                                        # 提携先の1x1のカウンター(既存のリンクと同じ)
         self.assertNotIn("innerHTML", js)                                     # 店名は textContent(HTMLとして入れない)
         self.assertNotRegex(js, r"__[A-Z_]+__")        # 差し込み忘れなし
@@ -197,7 +197,7 @@ class PageTest(unittest.TestCase):
         self.assertIn("/kaidoki-private", php)
         self.assertIn("yahoo_shops.json", php)
         self.assertIn("$age > 2", php)
-        self.assertIn("pid=892746565", php)
+        self.assertIn("pid=892746613", php)
         self.assertIn("rawurlencode('https://store.shopping.yahoo.co.jp/'", php)
         self.assertIn("Sec-Fetch-Site".upper().replace("-", "_"), php)
         self.assertNotRegex(php.replace("__DIR__", ""), r"__[A-Z_]+__")

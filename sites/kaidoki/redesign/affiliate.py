@@ -19,7 +19,7 @@ CFG = json.loads((Path(__file__).resolve().parents[1] / "config.json").read_text
 SITE_NAME = json.loads((Path(__file__).resolve().parent / "site.json").read_text(encoding="utf-8"))["name"]       # the redesign's name (config.json still has the old one)
 REL = "nofollow sponsored noopener"
 VC_SID = "3787704"
-VC_PID = {"yahoo": "892746565", "dhc": "892746566"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
+VC_PID = {"yahoo": "892746613", "dhc": "892746566"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
 A8_MAT = {"xdomain": ("4BGJFW+4W8GGY+CO4+15ORS2", "www15"), "xserver": ("4BEHX9+1F7FFM+CO4+6AZAQ", "www16"), "xbiz": ("4BEHX9+1GEAN6+CO4+3SZMKY", "www14")}
 
 YAHOO_GUIDE = "https://shopping.yahoo.co.jp/promotion/campaign/guide/"
