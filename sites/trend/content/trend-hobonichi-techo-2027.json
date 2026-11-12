@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12",
+ "updated": "2026-11-13",
  "data_basis": "2026年11月12日現在",
  "sources": [],
  "credit": "ほぼ日の発表と、ほぼ日公式サイト(1101.com)のラインナップ(窓口が2026年11月12日に確認)、ロフトの販売ページをもとに作成",
@@ -131,7 +131,36 @@
    ]
   },
   {
-   "html": "<ul><li><strong>1日1ページ（オリジナル / カズン / HON / Planner）</strong><br>たっぷり書きたい人向けの定番タイプです。A6サイズの「オリジナル」のほか、たくさん書き込めるA5サイズの「カズン」、表紙と本体が一体になった「HON（ホヌ）」などが選べます。持ち歩きを軽くしたい人には、半年ごとに2冊に分かれる分冊版「avec（アヴェク）」も用意されており、1冊分が薄くなるため、持ち歩きが軽くなります。</li><li><strong>週間レフト（weeks / weeks MEGA）</strong><br>左側に1週間分のスケジュール、右側に方眼メモが配置されたスリムな縦長タイプです。スーツのポケットやバッグの隙間に収まりやすく、ビジネスから普段使いまで幅広く活躍します。通常版の約3倍のメモページを収録した「weeks MEGA」もあります。</li><li><strong>月間＋ノート（day-free）</strong><br>月間カレンダーのあとに、たっぷりの方眼ノートページが続くシンプルなタイプです。「毎日書けるか心配」「自由にメモメインで使いたい」という人に向いています。</li><li><strong>5年連用（ほぼ日5年手帳）</strong><br>同じページに5年分の同じ日付を並べて書き込めるタイプです。日々の出来事や子供の成長、趣味の記録を何年分も振り返る楽しみがあります。</li></ul>"
+   "html": "<ul><li><strong>1日1ページ（オリジナル / カズン / HON / Planner）</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "たっぷり書きたい人向けの定番タイプです。A6サイズの「オリジナル」のほか、たくさん書き込めるA5サイズの「カズン」、表紙と本体が一体になった「HON（ホヌ）」などが選べます。持ち歩きを軽くしたい人には、半年ごとに2冊に分かれる分冊版「avec（アヴェク）」も用意されており、1冊分が薄くなるため、持ち歩きが軽くなります。"
+   ]
+  },
+  {
+   "html": "<ul><li><strong>週間レフト（weeks / weeks MEGA）</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "左側に1週間分のスケジュール、右側に方眼メモが配置されたスリムな縦長タイプです。スーツのポケットやバッグの隙間に収まりやすく、ビジネスから普段使いまで幅広く活躍します。通常版の約3倍のメモページを収録した「weeks MEGA」もあります。"
+   ]
+  },
+  {
+   "html": "<ul><li><strong>月間＋ノート（day-free）</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "月間カレンダーのあとに、たっぷりの方眼ノートページが続くシンプルなタイプです。「毎日書けるか心配」「自由にメモメインで使いたい」という人に向いています。"
+   ]
+  },
+  {
+   "html": "<ul><li><strong>5年連用（ほぼ日5年手帳）</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "同じページに5年分の同じ日付を並べて書き込めるタイプです。日々の出来事や子供の成長、趣味の記録を何年分も振り返る楽しみがあります。"
+   ]
   },
   {
    "h2": "本体だけ見ると間違える。カバー込みの総額で比べる"
@@ -142,7 +171,28 @@
    ]
   },
   {
-   "html": "<ul><li><strong>カバー一体型（weeks や HON）の場合</strong><br>最初から表紙がデザインされているため、追加でカバーを買う必要がありません。本体価格のみで使えるため、総額を抑えたい人におすすめです。</li></ul>"
+   "html": "<ul><li><strong>オリジナル（A6）の場合</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "定番カバー「カラーズ」を選ぶ場合、カバーのみは2,750円、本体とカバーのセットは5,170円〜6,160円となります。"
+   ]
+  },
+  {
+   "html": "<ul><li><strong>カズン（A5）の場合</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "カズン用カラーズはカバーのみ3,850円、本体セットは7,370円〜9,020円が目安です。"
+   ]
+  },
+  {
+   "html": "<ul><li><strong>カバー一体型（weeks や HON）の場合</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "最初から表紙がデザインされているため、追加でカバーを買う必要がありません。本体価格のみで使えるため、総額を抑えたい人におすすめです。"
+   ]
   },
   {
    "h2": "購入する人が最も多いのは11〜12月"
@@ -158,7 +208,7 @@
    ]
   },
   {
-   "h2": "ハローキティ、スンスン、V&Aなど2027年版の新しい顔"
+   "h2": "ハローキティ、スンスン、V&amp;Aなど2027年版の新しい顔"
   },
   {
    "paras": [
@@ -166,7 +216,28 @@
    ]
   },
   {
-   "html": "<ul><li><strong>新規コラボレーション</strong><br>「ハローキティ」やSNSで人気の「パペットスンスン」、ロンドンにある「V&amp;A（ヴィクトリア・アンド・アルバート博物館）」が新しく仲間入りしました。</li><li><strong>継続・人気シリーズ</strong><br>ムーミンの言葉と挿絵を載せた特別版weeks（2年目）や、5年目となる「ONE PIECE magazine」とのコラボが展開されています。</li><li><strong>ロフト限定・直営店限定</strong><br>原作出版から100年目を迎える「クマのプーさん」シリーズ（ロフト限定、全7アイテム）や、東京駅の旗艦店オープンを記念した「Suicaのペンギン」コラボなども話題を集めています。</li></ul>"
+   "html": "<ul><li><strong>新規コラボレーション</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "「ハローキティ」やSNSで人気の「パペットスンスン」、ロンドンにある「V&amp;A（ヴィクトリア・アンド・アルバート博物館）」が新しく仲間入りしました。"
+   ]
+  },
+  {
+   "html": "<ul><li><strong>継続・人気シリーズ</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "ムーミンの言葉と挿絵を載せた特別版weeks（2年目）や、5年目となる「ONE PIECE magazine」とのコラボが展開されています。"
+   ]
+  },
+  {
+   "html": "<ul><li><strong>ロフト限定・直営店限定</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "原作出版から100年目を迎える「クマのプーさん」シリーズ（ロフト限定、全7アイテム）や、東京駅の旗艦店オープンを記念した「Suicaのペンギン」コラボなども話題を集めています。"
+   ]
   },
   {
    "h2": "5年手帳は1年あたり924円。長く・軽く使うための工夫"
@@ -177,14 +248,35 @@
    ]
   },
   {
-   "html": "<ul><li><strong>5年手帳の割安計算</strong><br>「ほぼ日5年手帳（A6）」の本体価格は4,620円です。5年間使うことを前提に割り算すると、1年あたり約924円となり、1日1ページの手帳と比べてもコストパフォーマンスの高い選択肢になります。</li><li><strong>持ち歩きを軽くする工夫</strong><br>毎日カバンに入れて持ち歩くなら、厚みを半分にできる分冊版「avec」や、スリムで軽い「weeks」を選ぶことで、肩への負担をグッと軽くできます。</li><li><strong>アプリで手帳会議</strong><br>公式の「ほぼ日手帳アプリ」にある「My手帳会議」機能を使うと、気になる候補の画像をアプリ内で並べて比較・検討できるため、数多い新作から迷ったときにも便利です。</li></ul>"
+   "html": "<ul><li><strong>5年手帳の割安計算</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "「ほぼ日5年手帳（A6）」の本体価格は4,620円です。5年間使うことを前提に割り算すると、1年あたり約924円となり、1日1ページの手帳と比べてもコストパフォーマンスの高い選択肢になります。"
+   ]
+  },
+  {
+   "html": "<ul><li><strong>持ち歩きを軽くする工夫</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "毎日カバンに入れて持ち歩くなら、厚みを半分にできる分冊版「avec」や、スリムで軽い「weeks」を選ぶことで、肩への負担をグッと軽くできます。"
+   ]
+  },
+  {
+   "html": "<ul><li><strong>アプリで手帳会議</strong></li></ul>"
+  },
+  {
+   "paras": [
+    "公式の「ほぼ日手帳アプリ」にある「My手帳会議」機能を使うと、気になる候補の画像をアプリ内で並べて比較・検討できるため、数多い新作から迷ったときにも便利です。"
+   ]
   },
   {
    "h2": "デジタルと組み合わせる新しい使い方も"
   },
   {
    "paras": [
-    "紙の手帳に書き込む良さが愛され続ける一方で、ほぼ日では公式アプリを通じて「気分」や「習慣」の記録といったデジタル連携もサポートされています。予定はスマホでスマートに管理し、日々の思いや記録は紙のほぼ日手帳に残すという「紙とデジタルの併用」スタイルも、現代の便利な手帳術として定着しています。"
+    "紙の手帳に書き込む良さが愛され続ける一方で、ほぼ日では公式アプリ（基本無料、プレミアムプランは月550円/年4,980円）を通じて「気分」や「習慣」の記録といったデジタル連携もサポートされています。予定はスマホでスマートに管理し、日々の思いや記録は紙のほぼ日手帳に残すという「紙とデジタルの併用」スタイルも、現代の便利な手帳術として定着しています。"
    ]
   },
   {
@@ -196,7 +288,7 @@
    "html": "<h3>おすすめのほぼ日手帳アイテム（PR）</h3>"
   },
   {
-   "html": "<ul><li><strong>ほぼ日手帳2027 本体 オリジナル（A6・1日1ページ）</strong> 税込2,860円<br>初めての人にもおすすめな、もっとも定番の1日1ページ手帳です。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A5%E6%89%8B%E5%B8%B3%202027%20%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%8A%E3%83%AB%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 オリジナル」を探す</a>（PR）</li><li><strong>ほぼ日手帳2027 本体 カズン（A5・1日1ページ）</strong> 税込4,620円<br>たっぷり書き込んで記録を残したい方に適したA5サイズの大型タイプです。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A5%E6%89%8B%E5%B8%B3%202027%20%E3%82%AB%E3%82%BA%E3%83%B3%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 カズン」を探す</a>（PR）</li><li><strong>ほぼ日手帳2027 weeks（スリム縦長）</strong> 税込2,860円から<br>ビジネスや日常のスケジュール管理に便利な、軽くてスリムな週間手帳です。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A5%E6%89%8B%E5%B8%B3%202027%20weeks%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 weeks」を探す</a>（PR）</li><li><strong>ほぼ日手帳2027 HON（A6サイズ）</strong> 税込3,300円から<br>カバーを別で買わずにそのまま使える、本のような佇まいの表紙一体型手帳です。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A5%E6%89%8B%E5%B8%B3%202027%20HON%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 HON」を探す</a>（PR）</li><li><strong>ほぼ日5年手帳（A6サイズ）</strong> 税込4,620円<br>同じページに5年分の記録を重ねて書ける、長く大切に使いたい1冊です。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A55%E5%B9%B4%E6%89%8B%E5%B8%B3%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 5年手帳」を探す</a>（PR）</li><li><strong>ほぼ日手帳2027 本体 day-free（A6サイズ）</strong> 税込2,420円<br>月間カレンダーと方眼ノートで構成された、日付に縛られず自由に使えるタイプです。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A5%E6%89%8B%E5%B8%B3%202027%20day-free%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 day-free」を探す</a>（PR）</li></ul>"
+   "html": "<ul><li><strong>ほぼ日手帳2027 本体 オリジナル（A6・1日1ページ）</strong> 税込2,860円<br>初めての人にもおすすめな、もっとも定番の1日1ページ手帳です。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A5%E6%89%8B%E5%B8%B3%202027%20%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%8A%E3%83%AB%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 オリジナル」を探す</a>（PR）</li><li><strong>ほぼ日手帳2027 本体 カズン（A5・1日1ページ）</strong> 税込4,620円<br>たっぷり書き込んで記録を残したい方に適したA5サイズの大型タイプです。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A5%E6%89%8B%E5%B8%B3%202027%20%E3%82%AB%E3%82%BA%E3%83%B3%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 カズン」を探す</a>（PR）</li><li><strong>ほぼ日手帳2027 weeks（スリム縦長）</strong> 税込2,860円から<br>ビジネスや日常のスケジュール管理に便利な、軽くてスリムな週間手帳です。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A5%E6%89%8B%E5%B8%B3%202027%20weeks%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 weeks」を探す</a>（PR）</li><li><strong>ほぼ日手帳2027 HON（A6サイズ）</strong> 税込3,300円から<br>カバーを別で買わずにそのまま使える、本のような佇まいの表紙一体型手帳です。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A5%E6%89%8B%E5%B8%B3%202027%20HON%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 HON」を探す</a>（PR）</li><li><strong>ほぼ日5年手帳（A6サイズ）</strong> 税込4,620円<br>同じページに5年分の記録を重ねて書ける、長く大切に使いたい1冊です。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A55%E5%B9%B4%E6%89%8B%E5%B8%B3%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 5年手帳」を探す</a>（PR）</li><li><strong>ほぼ日手帳2027 本体 day-free（A6サイズ）</strong> 税込2,420円<br>月間カレンダーと方眼ノートで構成された、日付に縛られず自由に使えるタイプです。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A5%E6%89%8B%E5%B8%B3%202027%20day-free%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 day-free」を探す</a>（PR）</li><li><strong>手帳カバー カラーズ（オリジナル用）</strong> 税込2,750円 <strong>／ ほぼ日の下敷き</strong><br>本体と一緒に揃えたい、定番のカバーや書き心地をサポートする便利な下敷きです。<br><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%E3%81%BB%E3%81%BC%E6%97%A5%E6%89%8B%E5%B8%B3%202027%20%E3%82%AB%E3%83%90%E3%83%BC%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「ほぼ日手帳 カバー」を探す</a>（PR）</li></ul>"
   }
  ],
  "related": [
