@@ -1,0 +1,47 @@
+[
+  {
+    "title": "MLB 2026 サイ・ヤング賞 発表",
+    "date": "2026-11-11",
+    "text": "2026年のサイ・ヤング賞が発表され、ア・リーグはヤンキースのキャム・シュリトラー投手、ナ・リーグはブルワーズのジェイコブ・ミシオロウスキー投手が選ばれました。\n両リーグとも全員一致での受賞です。両リーグの受賞者が全員一致だったのは、今回で3度目と報じられています。\nシュリトラー投手はア・リーグ最多の防御率1.95、ミシオロウスキー投手は防御率1.80、奪三振252でメジャー全体のトップでした。ともにメジャー2年目のシーズンです。",
+    "facts": [
+      [
+        "ア・リーグ",
+        "Cam Schlittler"
+      ],
+      [
+        "所属(ア)",
+        "Yankees"
+      ],
+      [
+        "防御率(ア)",
+        "1.95"
+      ],
+      [
+        "ナ・リーグ",
+        "Jacob Misiorowski"
+      ],
+      [
+        "所属(ナ)",
+        "Brewers"
+      ],
+      [
+        "防御率(ナ)",
+        "1.80"
+      ],
+      [
+        "奪三振(ナ)",
+        "252"
+      ],
+      [
+        "投票",
+        "unanimous"
+      ]
+    ],
+    "written_on": "2026-11-14",
+    "source_url": "https://www.mlb.com/news/2026-mlb-cy-young-award-winners",
+    "source_quote": "unanimous Cy Young winners",
+    "source_url2": "https://bbwaa.com/26-al-cy/",
+    "source_quote2": "unanimously selected as the American League Cy Young winner",
+    "verified": true
+  }
+]
