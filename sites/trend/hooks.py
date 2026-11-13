@@ -232,7 +232,10 @@ NENGAJO_SIM_SOURCES = [("https://nenga.print-netsquare.com/info/price/", "年賀
 
 
 def nengajo_sim_enabled(cfg: dict) -> bool:
-    return bool(cfg.get("nengajo_sim")) or os.environ.get("TREND_NENGAJO_SIM") == "1"
+    env = os.environ.get("TREND_NENGAJO_SIM")      # "1" forces it on, "0" forces it off (the tests use both); otherwise config.json decides
+    if env in ("0", "1"):
+        return env == "1"
+    return bool(cfg.get("nengajo_sim"))
 
 
 def add_nengajo_sim(pages: dict) -> None:

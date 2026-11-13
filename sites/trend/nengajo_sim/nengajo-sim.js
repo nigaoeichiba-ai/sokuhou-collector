@@ -102,7 +102,7 @@
       var login = !!opts.aisatsuLogin;
       out.push(row("aisatsu", { onSale: s, postcard: POSTCARD * n, print: AISATSU[i][s ? 2 : 1], address: addr ? Math.floor(n * 253 / 10) : 0, shipping: login ? 0 : 330,
         estimate: AISATSU[i][0] !== n, printQty: AISATSU[i][0],
-        notes: ["公式の価格ページで、年賀はがきに「販売終了しました」と表示されています。はがき代は85円で計算しています。注文する前に、はがきを買えるかどうか、同社の注文画面で確認しておきましょう"]
+        notes: ["はがき代は、同社の価格ページにある1枚85円で計算しています。年賀はがきは売り切れると注文できなくなります。注文する前に、同社の注文画面で、はがきが選べるかを確かめておきましょう"]
           .concat(addr ? ["宛名印刷は1件25.3円(基本料金は2027年1月11日まで0円)"] : [])
           .concat(login ? ["マイページにログインして注文する場合の送料無料で計算しています"] : ["送料330円で計算しています。マイページにログインして注文すると0円です"]) }));
     }
