@@ -120,8 +120,8 @@ class AffiliateBlockTest(SiteFixture):
             page = self.read(f"guide/{slug}/index.html")
             self.assertEqual(page.count(f'<div class="aff">{MAMAWORKS}</div>'), 1, slug)
             self.assertEqual(page.count(f'<div class="aff">{COCONALA}</div>'), 1, slug)
-            self.assertEqual(len(re.findall(r"a8mat=", page)), 4, slug)             # two links, two 1x1 images; nothing else carries a tracking id
-            self.assertEqual(len(re.findall(r'href="https://px\.a8\.net/', page)), 2, slug)
+            self.assertEqual(len(re.findall(r"a8mat=", page)), 6, slug)             # three links, three 1x1 images; nothing else carries a tracking id
+            self.assertEqual(len(re.findall(r'href="https://px\.a8\.net/', page)), 3, slug)
 
     def test_the_ad_is_labelled_in_the_first_view_and_again_before_the_links(self):
         for slug in ("wall", "raise"):
@@ -156,6 +156,41 @@ class AffiliateBlockTest(SiteFixture):
         page = self.read("privacy/index.html")
         self.assertIn("アフィリエイトサービス「A8.net」を利用しており", page)
         self.assertIn("個人を特定する情報は使われません", page)
+
+
+WORKSTAFF = ('<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AFOLT6+5WA8+5YRHE" target="_blank" rel="nofollow sponsored noopener">ワークスタッフナビ</a>\n'
+             '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AFOLT6+5WA8+5YRHE" alt="">')
+# every approved A8 programme of media 004 and the pages that must carry its link (2026-11-13: a link left off an approved programme fails here)
+A8_APPROVED_PLACES = {
+    "mamaworks": ("guide/wall", "guide/raise", "guide/monthly"),
+    "coconala": ("guide/wall", "guide/raise"),
+    "workstaff": ("guide/wall", "guide/raise", "guide/monthly"),
+}
+
+
+def missing_a8_links(read, affiliate):
+    """(program, page) pairs where an approved programme's code is not on a page that should carry it."""
+    return [(prog, page) for prog, pages in A8_APPROVED_PLACES.items() for page in pages
+            if f'<div class="aff">{affiliate[prog]["html"]}</div>' not in read(f"{page}/index.html")]
+
+
+class WorkstaffLinkTest(SiteFixture):
+    def test_the_approved_programme_is_on_the_job_search_sections_with_pr_rel_and_target(self):
+        self.assertEqual(content.AFFILIATE["workstaff"]["html"], WORKSTAFF)
+        for slug in ("wall", "raise", "monthly"):
+            page = self.read(f"guide/{slug}/index.html")
+            self.assertEqual(page.count(f'<div class="aff">{WORKSTAFF}</div>'), 1, slug)
+            self.assertLess(page.index('<p class="pr-note"><strong>PR</strong>次のリンクは広告です。</p>'), page.index("a8mat=4BEL1J+AFOLT6"), slug)
+            self.assertEqual(re.findall(r">(https?://[^<]+)</a>", page), [], slug)           # no link whose text is a URL
+
+    def test_every_approved_programme_is_on_every_page_it_belongs_to(self):
+        self.assertEqual(missing_a8_links(self.read, content.AFFILIATE), [])
+
+    def test_a_forgotten_link_is_detected(self):
+        """negative: a page without the programme's code is reported."""
+        def read(rel):
+            return self.read(rel).replace(content.AFFILIATE["workstaff"]["html"], "")
+        self.assertIn(("workstaff", "guide/wall"), missing_a8_links(read, content.AFFILIATE))
 
 
 class MonthlyGuideAffiliateTest(SiteFixture):

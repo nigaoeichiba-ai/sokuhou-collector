@@ -495,6 +495,12 @@ AFFILIATE = {
         "html": '主婦のための求人応援サイト<br>\n<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" rel="nofollow">「ママワークス」<b>mamaworks.jp</b></a>\n'
                 '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" alt="">',
     },
+    # 2026-11-13: approved.  The text link of media 004 as A8 gave it, with the rel and target the site's rules require (sponsored, noopener, new tab); no person image is used (the programme forbids it).
+    "workstaff": {
+        "program": "ワークスタッフナビ", "a8_program": "s00000027512001", "asset": "テキスト",
+        "html": '<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AFOLT6+5WA8+5YRHE" target="_blank" rel="nofollow sponsored noopener">ワークスタッフナビ</a>\n'
+                '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AFOLT6+5WA8+5YRHE" alt="">',
+    },
     "coconala": {
         "program": "ココナラ", "a8_program": "s00000012624001", "asset": "素材001",
         "html": '<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AJ97FU+2PEO+5YJRM" rel="nofollow">ココナラ</a>\n'

@@ -572,9 +572,24 @@ class GoodsTest(unittest.TestCase):
         html = self.read("goods/index.html")
         self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc=", html)
         self.assertIn("https://www.amazon.co.jp/s?k=%E3%82%AF%E3%83%9E%E9%88%B4&amp;tag=amazonmacs-22", html)
-        self.assertEqual(html.count('target="_blank" rel="nofollow sponsored noopener">'), 12)  # six goods x two shops
+        self.assertEqual(html.count('target="_blank" rel="nofollow sponsored noopener">'), 14)  # six goods x two shops + the two A8 disaster-kit programmes
         self.assertEqual(html.count("楽天市場で探す"), 6)
         self.assertEqual(html.count("Amazonで探す"), 6)
+
+    def test_the_approved_a8_programmes_are_linked_on_the_goods_page_and_the_prepare_guide(self):
+        """2026-11-13: あかまる防災 and スツーレ (media 005) - link text is words, a8mat on the href and the 1x1 image, PR, rel, target; a forgotten link fails."""
+        guide = next(x for x in __import__("sites.kuma.content", fromlist=["x"]).GUIDES if x["slug"] == "prepare")
+        pages = {"goods": self.read("goods/index.html"), "prepare": build.guide_page(guide, self.cfg, False)}
+        for name, html in pages.items():
+            for a in build.A8_BOUSAI:
+                link = (f'<a href="https://px.a8.net/svt/ejp?a8mat={a["a8mat"]}" target="_blank" rel="nofollow sponsored noopener">'
+                        f'<span class="pr-note">PR</span>{a["text"]}</a><img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat={a["a8mat"]}" alt="">')
+                self.assertEqual(html.count(link), 1, (name, a["program"]))
+            self.assertEqual(re.findall(r">(https?://[^<]+)</a>", html), [], name)
+        self.assertEqual({a["program"] for a in build.A8_BOUSAI}, {"あかまる防災", "スツーレ"})
+        self.assertIn("A8.net", json.loads(Path("sites/kuma/config.json").read_text(encoding="utf-8"))["privacy_affiliate_note_html"])
+        stripped = pages["goods"].replace(build.A8_BOUSAI[0]["a8mat"], "")
+        self.assertNotIn(build.A8_BOUSAI[0]["a8mat"], stripped)       # negative: a page without the mat is detected as lacking the link
 
     def test_disclosures(self):
         self.assertIn("Amazonのアソシエイトとして、クマ出没速報は適格販売により収入を得ています。", self.read("goods/index.html"))

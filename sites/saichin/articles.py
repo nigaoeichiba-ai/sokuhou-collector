@@ -115,7 +115,8 @@ def monthly_body(d: dict, k) -> str:
 <p>自分の給与明細で計算したいときは、<a href="/check/">差額チェッカー</a>が、手当の欄と発効日の前後の額に対応しています。計算の根拠は<a href="/guide/calculate/">月給・日給を時給に換算する方法</a>に書いています。</p>
 <h2>パート・アルバイトの求人を探すとき</h2>
 {work_pages.PR_BLOCK}<p>時給の求人を探すときは、上の手順で、勤務地の最低賃金を下回っていないかを確かめます。主婦向けの求人サイトの例です。</p>
-{work_pages.aff("mamaworks")}"""
+{work_pages.aff("mamaworks")}<p>派遣や転職の仕事を探すときの例です。派遣の時給は、派遣先の事業場がある都道府県の最低賃金と比べます。</p>
+{work_pages.aff("workstaff")}"""
 
 
 def terms_body(d: dict, k) -> str:
