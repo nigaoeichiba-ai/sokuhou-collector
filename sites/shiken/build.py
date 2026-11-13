@@ -36,6 +36,9 @@ def find_node() -> str:
     for cand in (os.environ.get("NODE_BIN"), shutil.which("node")):
         if cand:
             return cand
+    real = Path("C:/Program Files/nodejs/node.exe")      # the owner installed Node 22 here (2026-11-13); a session started before that may not have it on PATH
+    if real.exists():
+        return str(real)
     home = Path.home() / "AppData" / "Local" / "deno" / "node_compat_bin" / "node.exe"
     if home.exists():
         return str(home)
