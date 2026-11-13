@@ -1,0 +1,28 @@
+.nsim { background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); padding:14px 16px; margin:.8em 0 1.2em; }
+.nsim form { display:flex; flex-wrap:wrap; gap:12px 24px; align-items:flex-end; }
+.nsim label, .nsim legend { font-weight:700; font-size:.92rem; }
+.nsim .f { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.nsim input[type="number"] { font-size:16px; width:8em; max-width:100%; padding:6px 8px; border:1px solid #C9A86A; border-radius:8px; background:#fff; }
+.nsim fieldset { border:0; margin:0; padding:0; min-width:0; }
+.nsim .radios { display:flex; gap:16px; }
+.nsim .radios label { font-weight:400; display:flex; align-items:center; gap:6px; }
+.nsim .radios input, .nsim .opt input { width:20px; height:20px; accent-color:var(--brand); }
+.nsim .opt { display:flex; align-items:flex-start; gap:6px; font-weight:400; font-size:.88rem; flex-basis:100%; }
+.nsim input:focus-visible { outline:3px solid #1a5fb4; outline-offset:2px; }
+#nsim-summary { font-weight:700; margin:.9em 0 .6em; overflow-wrap:anywhere; }
+ol.nsim-list { list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+.nsim-item { border:1px solid var(--line); border-radius:12px; padding:10px 12px; background:#fff; min-width:0; }
+.nsim-item.best { border-color:var(--brand); background:var(--brand-l); }
+.nsim-head { display:flex; flex-wrap:wrap; align-items:center; gap:4px 10px; }
+.nsim-rank { display:inline-flex; width:1.8em; height:1.8em; align-items:center; justify-content:center; border-radius:50%; background:var(--brand-l); color:var(--brand-d); font-weight:700; font-size:.85rem; flex:none; }
+.nsim-name { font-weight:700; overflow-wrap:anywhere; }
+.nsim-best { background:var(--brand); color:#fff; font-size:.75rem; font-weight:700; padding:1px 8px; border-radius:999px; }
+.nsim-total { margin-left:auto; font-weight:800; font-size:1.1rem; font-variant-numeric:tabular-nums; }
+.nsim-dl { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:4px 12px; margin:.6em 0 .2em; }
+.nsim-dl div { display:flex; justify-content:space-between; gap:8px; font-size:.9rem; border-bottom:1px dotted var(--line); }
+.nsim-dl dt { color:var(--muted); }
+.nsim-dl dd { margin:0; font-variant-numeric:tabular-nums; }
+.nsim-state { margin:.4em 0 0; font-size:.82rem; color:var(--brand-d); font-weight:700; }
+.nsim-state.ended { color:var(--warn); }
+.nsim-notes { margin:.3em 0 0; padding-left:1.2em; font-size:.82rem; color:var(--muted); }
+.nsim .stamp { margin:.8em 0 0; }

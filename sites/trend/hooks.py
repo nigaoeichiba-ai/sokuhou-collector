@@ -5,9 +5,11 @@ page, the dates, the description (the first sentence of 「3行まとめ」), th
 Pictures (card images, the default OGP image) are made at build time and never stored in the repository."""
 from __future__ import annotations
 
+import hashlib
 import html
 import io
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -217,6 +219,37 @@ def deep_problems(pages: dict, content: list[dict]) -> list[str]:
     return out
 
 
+# ---- 年賀状印刷の総額シミュレーター(記事 /trend-nengajo-hayawari/ の総額表のあとに入れる)。
+# オーナー確認が済むまで本番に出さない: config.json の "nengajo_sim" が true か、環境変数 TREND_NENGAJO_SIM=1 のときだけ組み込む。
+NENGAJO_SIM_DIR = HERE / "nengajo_sim"
+NENGAJO_SIM_PAGE = "trend-nengajo-hayawari/index.html"
+NENGAJO_SIM_BEFORE = "<h2>割引率だけ見ると損するワケ</h2>"
+NENGAJO_SIM_OLD_STEP = "送る枚数を先に決める。30枚前後なら、この記事の表がそのまま使えます"
+NENGAJO_SIM_NEW_STEP = "送る枚数を先に決める。枚数と宛名印刷の有無を、上のシミュレーターに入れて、各社の総額を比べる"
+NENGAJO_SIM_SOURCES = [("https://nenga.print-netsquare.com/info/price/", "年賀状スクエア 料金表"), ("https://happy-card.jp/ne/page/price/index.html", "おたより本舗 価格表"),
+                       ("https://nenga.n-pri.jp/price/", "しまうまプリント 年賀状印刷の価格"), ("https://nenga-org.aisatsujo.jp/guide/order/price.html", "挨拶状ドットコム 価格"),
+                       ("https://rakpo.com/price/", "Rakpo 価格")]
+
+
+def nengajo_sim_enabled(cfg: dict) -> bool:
+    return bool(cfg.get("nengajo_sim")) or os.environ.get("TREND_NENGAJO_SIM") == "1"
+
+
+def add_nengajo_sim(pages: dict) -> None:
+    t = pages.get(NENGAJO_SIM_PAGE)
+    if not isinstance(t, str) or NENGAJO_SIM_BEFORE not in t or NENGAJO_SIM_OLD_STEP not in t:
+        raise SystemExit("nengajo sim: the insertion point or the step that points at the 30-sheet table is not in the article")
+    js, css = (NENGAJO_SIM_DIR / "nengajo-sim.js").read_text(encoding="utf-8"), (NENGAJO_SIM_DIR / "nengajo-sim.css").read_text(encoding="utf-8")
+    block = (NENGAJO_SIM_DIR / "nengajo-sim.html").read_text(encoding="utf-8").replace(
+        "<!--SIM:links-->", "、".join(f'<a href="{u}" rel="noopener">{html.escape(n)}</a>' for u, n in NENGAJO_SIM_SOURCES))
+    ver = lambda s: hashlib.sha1(s.encode()).hexdigest()[:8]
+    pages["assets/nengajo-sim.js"], pages["assets/nengajo-sim.css"] = js, css
+    t = t.replace(NENGAJO_SIM_BEFORE, block + NENGAJO_SIM_BEFORE, 1).replace(NENGAJO_SIM_OLD_STEP, NENGAJO_SIM_NEW_STEP, 1)
+    t = t.replace('<link rel="stylesheet" href="/assets/style.css', f'<link rel="stylesheet" href="/assets/nengajo-sim.css?v={ver(css)}">\n<link rel="stylesheet" href="/assets/style.css', 1)
+    t = t.replace("</body>", f'<script src="/assets/nengajo-sim.js?v={ver(js)}" defer></script>\n</body>', 1)
+    pages[NENGAJO_SIM_PAGE] = t
+
+
 def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path) -> dict:
     problems = deep_problems(pages, content)
     if problems:
@@ -263,4 +296,6 @@ def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path
         if rel == "index.html":   # the top page: the approved prototype's design replaces the shared header, body, footer and stylesheet (owner instruction 2026-11-11)
             t = homepage.apply(t, p, content, spec, cfg, site_dir, slug_of, CARD_W, CARD_H, CAT_PATH, HOME_LATEST_N)
         pages[rel] = t
+    if nengajo_sim_enabled(cfg):
+        add_nengajo_sim(pages)
     return pages
