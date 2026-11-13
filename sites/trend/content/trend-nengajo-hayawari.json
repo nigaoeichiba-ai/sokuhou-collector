@@ -169,22 +169,19 @@
     {
       "h2": "注文はこちら【PR】",
       "paras": [
-        "この記事のリンクは、各印刷サービスの注文ページ（ASP経由）です。リンクのある会社は、下の1社だけです。ほかの会社は、各社の公式ページ（下の出典欄）から確認できます。"
+        "この記事のリンクは、各印刷サービスの注文ページ（ASP経由）です。リンクのある会社は、下の1社だけです。ほかの会社は、各社の公式ページから確認できます。"
       ]
     },
     {
       "html": "<p class=\"pr-note\"><strong>【PR】</strong>このリンクは広告（アフィリエイト）です。</p><p><a href=\"https://px.a8.net/svt/ejp?a8mat=4BGH3G+CRMT6Y+33J0+15OK2A\" rel=\"nofollow sponsored noopener\" target=\"_blank\">当日出荷☆喪中・年賀状印刷は年賀状スクウェアで</a>\n<img border=\"0\" width=\"1\" height=\"1\" src=\"https://www11.a8.net/0.gif?a8mat=4BGH3G+CRMT6Y+33J0+15OK2A\" alt=\"\"></p>"
     },
     {
-      "h2": "出典・確認日",
+      "h2": "料金と締切の確認日",
       "paras": [
         "料金と締切は、2026年11月11日に各社の公式ページで確認しました。"
       ]
-    },
-    {
-      "html": "<ul><li><a href=\"https://nenga.print-netsquare.com/info/price/\" rel=\"noopener\">年賀状スクエア 価格表</a></li><li><a href=\"https://happy-card.jp/ne/page/price/index.html\" rel=\"noopener\">おたより本舗 価格表</a></li><li><a href=\"https://nenga.n-pri.jp/price/\" rel=\"noopener\">しまうまプリント 年賀状印刷の価格</a></li><li><a href=\"https://nenga-org.aisatsujo.jp/guide/order/price.html\" rel=\"noopener\">挨拶状ドットコム 価格</a></li><li><a href=\"https://raksul.com/print/new_years_card/\" rel=\"noopener\">ラクスル 年賀状印刷</a></li><li><a href=\"https://rakpo.com/price/\" rel=\"noopener\">Rakpo 価格</a></li><li><a href=\"https://print.shop.post.japanpost.jp/guide/order2\" rel=\"noopener\">郵便局のプリントサービス 料金・割引ガイド</a></li><li>日本郵便「2027（令和9）年用年賀はがき等の発行概要」（2026年8月31日発表）：投函の目安の日程</li></ul>"
     }
-  ],
+    ],
   "related": [
     {
       "path": "/trend-nengajo-print/",
