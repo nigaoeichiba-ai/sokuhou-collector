@@ -87,35 +87,48 @@
     draw();
   });
 
-  /* the slides of the top page: one card at a time, every 5.5 s, stopped by hover / focus / touch / the button, not started with reduced motion; without the script every card stands in a column */
+  /* the slides of the top page: several cards at a time (3 / 2 / 1 by width), every 5.5 s, stopped by hover / focus / touch / the button, not started with reduced motion; without the script every card stands in a column */
   document.querySelectorAll('[data-slides]').forEach(function (root) {
     var track = root.querySelector('.hs-track'), today = todayIso(), n = dayNo(today);
     Array.prototype.slice.call(track.children).forEach(function (li) { if (li.dataset.e && dayNo(li.dataset.e) < n) li.remove(); });      // a sale that ended on the visitor's clock
-    var slides = Array.prototype.slice.call(track.children), idx = 0, timer = null, userStopped = false, hold = false;
+    var slides = Array.prototype.slice.call(track.children), timer = null, userStopped = false, hold = false;
     if (slides.length < 2) return;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var ctl = root.querySelector('.hs-controls'), dots = root.querySelector('.hs-dots'), pause = root.querySelector('.hs-pause');
     root.classList.add('is-carousel'); ctl.hidden = false;
-    slides.forEach(function (li, i) {
-      li.setAttribute('aria-label', (i + 1) + ' / ' + slides.length);
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'hs-dot'; b.setAttribute('aria-label', (i + 1) + '枚目を見る'); b.addEventListener('click', function () { show(i); stop(true); }); dots.appendChild(b);
-    });
-    function show(i) {
-      idx = (i + slides.length) % slides.length;
-      track.style.transform = 'translateX(' + (-100 * idx) + '%)';
-      slides.forEach(function (li, k) { li.setAttribute('aria-hidden', k === idx ? 'false' : 'true'); li.querySelectorAll('a').forEach(function (a) { a.tabIndex = k === idx ? 0 : -1; }); });
-      Array.prototype.forEach.call(dots.children, function (d, k) { if (k === idx) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
+    /* several cards at once (3 on a wide screen, 2 on a tablet, 1 on a phone); a step moves a whole page, the last page ends on the last card */
+    var per = 1, pages = 1, page = 0, vp = root.querySelector('.hs-viewport');
+    function perView() { var w = vp.clientWidth; return w >= 880 ? 3 : w >= 560 ? 2 : 1; }
+    slides.forEach(function (li, i) { li.setAttribute('aria-label', (i + 1) + ' / ' + slides.length); });
+    function build() {
+      per = Math.min(perView(), slides.length); pages = Math.ceil(slides.length / per);
+      root.style.setProperty('--per', per);
+      dots.textContent = '';
+      for (var p = 0; p < pages; p++) (function (p) {
+        var from = Math.min(p * per, slides.length - per), b = document.createElement('button'); b.type = 'button'; b.className = 'hs-dot';
+        b.setAttribute('aria-label', per === 1 ? (from + 1) + '枚目を見る' : (from + 1) + '〜' + (from + per) + '枚目を見る');
+        b.addEventListener('click', function () { show(p); stop(true); }); dots.appendChild(b);
+      })(p);
+      show(Math.min(page, pages - 1), true);
     }
-    function tick() { if (!hold && !userStopped && !document.hidden) show(idx + 1); }
+    function show(p) {
+      page = (p + pages) % pages;
+      var from = Math.min(page * per, slides.length - per), step = slides[0].offsetWidth + (slides.length > 1 ? slides[1].offsetLeft - slides[0].offsetLeft - slides[0].offsetWidth : 0);
+      track.style.transform = 'translateX(' + (-from * step) + 'px)';
+      slides.forEach(function (li, k) { var on = k >= from && k < from + per; li.setAttribute('aria-hidden', on ? 'false' : 'true'); li.querySelectorAll('a').forEach(function (a) { a.tabIndex = on ? 0 : -1; }); });
+      Array.prototype.forEach.call(dots.children, function (d, k) { if (k === page) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
+    }
+    function tick() { if (!hold && !userStopped && !document.hidden) show(page + 1); }
     function start() { if (!reduce && !timer) timer = setInterval(tick, 5500); }
     function stop(byUser) { if (byUser) { userStopped = true; pause.setAttribute('aria-pressed', 'true'); pause.textContent = '自動で切り替える'; } }
-    root.querySelector('.hs-prev').addEventListener('click', function () { show(idx - 1); stop(true); });
-    root.querySelector('.hs-next').addEventListener('click', function () { show(idx + 1); stop(true); });
+    root.querySelector('.hs-prev').addEventListener('click', function () { show(page - 1); stop(true); });
+    root.querySelector('.hs-next').addEventListener('click', function () { show(page + 1); stop(true); });
     pause.addEventListener('click', function () { if (userStopped) { userStopped = false; pause.setAttribute('aria-pressed', 'false'); pause.textContent = '自動で切り替えを止める'; start(); } else stop(true); });
     ['mouseenter', 'focusin', 'touchstart'].forEach(function (t) { root.addEventListener(t, function () { hold = true; }, { passive: true }); });
     ['mouseleave', 'focusout', 'touchend'].forEach(function (t) { root.addEventListener(t, function () { hold = false; }, { passive: true }); });
     if (reduce) { pause.hidden = true; }
-    show(0); start();
+    var rz = null; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(build, 120); });
+    build(); start();
   });
 
   /* the top page: the entries of the visitor's own next two weeks (same rule as schedule.home_choose) */
