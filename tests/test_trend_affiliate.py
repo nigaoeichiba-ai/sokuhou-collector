@@ -30,6 +30,9 @@ def problems(html: str) -> list[str]:
                 out.append("affiliate link without rel/target: " + visible[:30])
             if "PR" not in after and "PR" not in html:
                 out.append("affiliate link without PR: " + visible[:30])
+            m = re.search(r"px\.a8\.net/svt/ejp\?a8mat=([0-9A-Z+]+)", href)
+            if m and f"a8.net/0.gif?a8mat={m.group(1)}" not in html:
+                out.append("A8 link without its 1x1 pixel: " + visible[:30])
     return out
 
 
@@ -62,6 +65,9 @@ class TrendAffiliate(unittest.TestCase):
         self.assertTrue(problems('<a href="https://hb.afl.rakuten.co.jp/hgc/ID/?pc=x" rel="nofollow">楽天で探す</a>（PR）'))
         self.assertTrue(problems('<a href="https://www.amazon.co.jp/s?k=a&amp;tag=t" rel="nofollow sponsored noopener" target="_blank">Amazonで探す</a>'))
         self.assertEqual(problems('<a href="https://www.amazon.co.jp/s?k=a&amp;tag=t" rel="nofollow sponsored noopener" target="_blank">Amazonで探す</a>（PR）'), [])
+        a8 = '<a href="https://px.a8.net/svt/ejp?a8mat=A+B+C+D" rel="nofollow sponsored noopener" target="_blank">年賀状印刷</a>（PR）'
+        self.assertTrue(problems(a8))                                   # no pixel
+        self.assertEqual(problems(a8 + '<img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=A+B+C+D" alt="">'), [])
 
 
 def one_way(related: dict) -> list[tuple[str, str]]:
