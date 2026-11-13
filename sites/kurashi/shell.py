@@ -44,10 +44,10 @@ EVENT_DESC = {
     "nengajo-motojitsu": "元日に届けるための差し出し日の目安です。日本郵便は、この日までに出された年賀状を元日にお届けするよう取り組むと発表しています。",
     "nengajo-hanbai-end": "年賀はがきの販売の最終日です。販売は2026年11月2日から2027年1月15日までです。",
     "gyosei-saigo-heijitsu": "国の行政機関が、年内に開いている最後の平日です。翌日から1月3日までは、国の行政機関の休日です。",
-    "gyosei-yasumi": "国の行政機関の年末年始の休み(12月29日から1月3日)が始まります。市区町村の休みは条例で決まるので、窓口ごとの案内を確かめてください。",
+    "gyosei-yasumi": "国の行政機関の年末年始の休み(12月29日から1月3日)が始まります。市区町村の休みは条例で決まるので、窓口ごとの案内を確かめておきましょう。",
     "nenmatsu-shime": "ふるさと納税と医療費は、この日までに支払った分が2026年分の対象です。申告の期限とは別の日です。",
     "kanpu-start": "令和8年分の還付申告を、この日から提出できます。確定申告の期間の初日とは別の日です。",
-    "onestop-henko": "ワンストップ特例の申請後に住所や氏名が変わったときの、変更届の期限です。多くの自治体は、申請書の締切も1月10日(必着)としています。寄附先の案内で確かめてください。",
+    "onestop-henko": "ワンストップ特例の申請後に住所や氏名が変わったときの、変更届の期限です。多くの自治体は、申請書の締切も1月10日(必着)としています。寄附先の案内で確かめておきましょう。",
     "kyotsu-honshiken": "令和9年度の大学入学共通テストの本試験の初日です。試験は2日間です。",
     "shinkoku-start": "令和8年分の確定申告の期間が始まります。",
     "shinkoku-end": "令和8年分の確定申告と納税の期限(原則)です。",
@@ -208,12 +208,12 @@ def header(path: str, home: bool = False) -> str:
     desk = "".join(f'<a href="{p}"{cur(p)}>{t}</a>' for p, t in NAV)
     mob = "".join(f'<a href="{p}">{t}</a>' for p, t in MOBILE_NAV)
     if home:      # the home page's own script (assets/t/app.js) drives the saved count and the menu
-        saved = ('<button class="saved-trigger icon-label" data-action="show-saved" aria-label="あとで見る"><span data-icon="bookmark"></span><span class="saved-label" data-t="あとで見る"></span>'
+        saved = ('<button class="saved-trigger icon-label" data-action="show-saved" aria-label="保存一覧"><span data-icon="bookmark"></span><span class="saved-label" data-t="保存一覧"></span>'
                  '<span class="count" id="saved-count">0</span></button>')
         menu = ('<button class="mobile-menu icon-button" data-action="menu" aria-expanded="false" aria-controls="mobile-navigation" aria-label="メニューを開く"><span data-icon="menu"></span></button>')
         navid = "mobile-navigation"
     else:
-        saved = '<a class="saved-trigger icon-label" href="/saved/" aria-label="あとで見る"><span class="saved-label" data-t="あとで見る"></span><span class="count" data-saved-count>0</span></a>'
+        saved = '<a class="saved-trigger icon-label" href="/saved/" aria-label="保存一覧"><span class="saved-label" data-t="保存一覧"></span><span class="count" data-saved-count>0</span></a>'
         menu = '<button class="mobile-menu icon-button" data-menu aria-controls="page-menu" aria-expanded="false" aria-label="メニューを開く">☰</button>'
         navid = "page-menu"
     return (f'<header class="site-header wrap"><a class="brand" href="/" aria-label="{SITE_NAME} トップ">{brand()}</a><nav class="desktop-nav" aria-label="メインメニュー">{desk}</nav>'
@@ -491,7 +491,7 @@ def art_for_url(url: str) -> tuple[str, str, str]:
 
 
 def saved_main() -> str:
-    return (crumbs([("あとで見る", None)]) + intro("ご自分のペースで読み返す", "気になる手続きを、<br>ここにまとめて。", "記事の「あとで読む」や、カレンダーの「あとで見る」で保存した内容が並びます。", "tax", "lilac")
+    return (crumbs([("保存一覧", None)]) + intro("ご自分のペースで読み返す", "気になる手続きを、<br>ここにまとめて。", "記事の「あとで読む」や、カレンダーの「保存一覧」で保存した内容が表示されます。", "tax", "lilac")
             + '<section class="wrap page-section narrow-section"><p class="small-note">保存内容はこのブラウザに記録されます。別の端末との共有はありません。</p><div id="saved-page-list"></div>'
               '<noscript><p>保存した内容の表示にはJavaScriptを使用します。</p></noscript><div id="saved-empty" class="empty-paper"><div>' + illustration("tax")
             + '</div><h2>気になる手続きが<span class="heading-phrase">見つかったら。</span></h2><p>「あとで読む」を押すと、ここに保存できます。時間のあるときに、ゆっくり読み返してください。</p>'

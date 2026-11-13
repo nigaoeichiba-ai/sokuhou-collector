@@ -86,7 +86,7 @@ class DayCounts(unittest.TestCase):
     def test_the_text_a_search_engine_reads_has_the_right_number(self):
         a = visible(text(self.a, "month/11/index.html"))
         self.assertIn("11月10日の時点で、年末まであと51日です", a)
-        self.assertIn("2026年11月10日時点でいちばん近い期限は", visible(text(self.a, "index.html")))
+        self.assertIn("2026年11月10日時点で最も近い期限は", visible(text(self.a, "index.html")))
 
     def test_refund_table_says_a_passed_deadline_has_passed(self):
         html = text(self.a, "kakutei-shinkoku/kanpu/index.html")
@@ -96,7 +96,7 @@ class DayCounts(unittest.TestCase):
     def test_home_lists_only_deadlines_that_have_not_passed(self):
         before = visible(text(self.a, "index.html"))
         after = visible(text(self.b, "index.html"))
-        self.assertIn("年賀状の引受開始", before.split("いちばん近い期限は")[1][:80])
+        self.assertIn("年賀状の引受開始", before.split("最も近い期限は")[1][:80])
         self.assertIn("12月20日(日)の年賀状の引受開始と、12月31日(木)のふるさと納税", before)
         # on 12-21 the card start has passed: the sentence names the next two
         spec = json.loads((SITE / "site.json").read_text(encoding="utf-8"))

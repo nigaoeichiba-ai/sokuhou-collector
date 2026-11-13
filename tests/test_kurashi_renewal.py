@@ -192,7 +192,7 @@ class Renewal(unittest.TestCase):
         html = self.page("/")
         for needle in ('id="calendar-content"', 'id="event-guides"', 'data-view="quarter"', 'data-d="2026-12-20"'):
             self.assertIn(needle, html)
-        self.assertIn("2026年11月13日時点でいちばん近い期限は", re.sub(r"<[^>]+>", "", html))
+        self.assertIn("2026年11月13日時点で最も近い期限は", re.sub(r"<[^>]+>", "", html))
         self.assertIn("/assets/t/app.js?v=", html)
 
     # ---- the affiliate links

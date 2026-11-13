@@ -94,7 +94,7 @@ def prepare(cfg, spec, pages, site_dir):
         upcoming = [c for c in cat if c.get("lead") and date.fromisoformat(c["date"]) >= today]
         if upcoming:
             near = "と、".join(f"{md(date.fromisoformat(c['date']))}の{c['lead']}" for c in upcoming[:2])
-            p["answer"] = f"{{todayy}}時点でいちばん近い期限は、{near}です。"
+            p["answer"] = f"{{todayy}}時点で最も近い期限は、{near}です。"
         for s in p["sections"]:
             t = s.get("table")
             if t:   # a row whose deadline has passed is dropped from the 'nearest' table
