@@ -82,6 +82,7 @@ def prepare(cfg: dict, spec: dict, content: list, site_dir) -> list:
     s = settings()
     cfg["site_name"] = s["name"]
     cfg["operator_name"] = s["operator_name"]
+    cfg["title_suffix_once"] = True      # a title that already has the site name (the home page) is not given it a second time
     for k in list(spec):
         spec[k] = _rename(spec[k], s["name"])
     return [_rename(p, s["name"]) for p in content]

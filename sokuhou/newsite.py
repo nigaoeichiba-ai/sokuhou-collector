@@ -355,7 +355,7 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
     for p in content:
         body = page_body(p, spec, by_path, cfg)
         rel = "index.html" if p["path"] == "/" else p["path"].strip("/") + "/index.html"
-        pages[rel] = sitekit.layout(site, cfg, preview, path=p["path"], title=f"{p['title']} | {cfg['site_name']}", description=p["description"], body=body,
+        pages[rel] = sitekit.layout(site, cfg, preview, path=p["path"], title=(p["title"] if cfg.get("title_suffix_once") and cfg["site_name"] in p["title"] else f"{p['title']} | {cfg['site_name']}"), description=p["description"], body=body,
                                     head_extra=page_ld(p, spec, cfg) + measure_tag)
         kinds[rel] = p["kind"]
         rel_of[p["path"]] = rel

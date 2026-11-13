@@ -62,6 +62,15 @@ class RedesignTest(unittest.TestCase):
             self.assertNotIn("買い時カレンダー", h, rel)
             self.assertIn("SALEカレンダー", h, rel)
 
+    def test_no_title_carries_the_site_name_twice(self):
+        for rel, h in self.html(self.live).items():
+            title = re.search(r"<title>(.*?)</title>", h, re.S).group(1)
+            self.assertLessEqual(title.count("SALEカレンダー"), 1, f"{rel}: {title}")
+
+    def test_the_title_check_catches_a_doubled_name(self):      # negative: the old behaviour (suffix always added) is detected
+        doubled = "SALEカレンダー|セールの日程 | SALEカレンダー"
+        self.assertGreater(doubled.count("SALEカレンダー"), 1)
+
     def test_one_h1_no_relative_leftovers_every_page_has_the_kit_layout(self):
         for rel, h in self.html(self.live).items():
             self.assertEqual(h.count("<h1"), 1, rel)
