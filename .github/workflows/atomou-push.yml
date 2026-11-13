@@ -99,8 +99,17 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p push
-          ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes "$USER_ID@$HOST" \
-            'set -e; d="$HOME/atomou.com/push"; if [ -d "$d" ]; then cd "$d" && tar -czf - --exclude="rate-*" --exclude="*.tmp" . ; else tar -czf - -T /dev/null; fi' | tar -C push -xzf -
+          # The server's SSH sometimes stalls (a run once took 5 minutes and failed): each try is cut off after 90 s, three tries with a pause.
+          ok=0
+          for try in 1 2 3; do
+            if timeout 90 ssh -i ~/.ssh/id_xserver -p "$SSH_PORT" -o BatchMode=yes -o ConnectTimeout=20 -o ServerAliveInterval=10 -o ServerAliveCountMax=3 "$USER_ID@$HOST" \
+              'set -e; d="$HOME/atomou.com/push"; if [ -d "$d" ]; then cd "$d" && tar -czf - --exclude="rate-*" --exclude="*.tmp" . ; else tar -czf - -T /dev/null; fi' > /tmp/push.tgz \
+              && tar -C push -xzf /tmp/push.tgz; then ok=1; break; fi
+            echo "copy attempt $try failed"
+            rm -rf push; mkdir -p push
+            sleep $((try * 15))
+          done
+          [ "$ok" = 1 ] || { echo "could not copy the subscriptions after 3 tries"; exit 1; }
           echo "subscription files: $(ls push | grep -c '\.json$' || true)"
       - name: Versions of the shared cards (slot s)
         if: steps.gate.outputs.go == 'true' && steps.slot.outputs.slot == 's'
