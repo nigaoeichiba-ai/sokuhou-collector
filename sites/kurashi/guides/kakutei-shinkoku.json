@@ -1,0 +1,35 @@
+{
+ "path": "/kakutei-shinkoku/",
+ "title": "確定申告の期間と準備",
+ "short": "確定申告",
+ "icon": "tax",
+ "topic": "work",
+ "categories": [
+  "work"
+ ],
+ "audience": "確定申告をする方",
+ "summary": "令和8年分の確定申告は、2027年2月16日(火)から3月15日(月)までです。還付申告は2027年1月1日(金)から提出できます。",
+ "when": "申告と納付の期限は、令和8年分は2027年3月15日(月)です。",
+ "where": "税務署・国税庁の案内",
+ "documents": [
+  {
+   "id": "item-1",
+   "text": "源泉徴収票など、所得がわかる資料"
+  },
+  {
+   "id": "item-2",
+   "text": "医療費・寄附金・保険料などの控除の資料"
+  }
+ ],
+ "steps": [
+  "申告が必要かどうかを確かめます。",
+  "収入と控除の資料をそろえます。",
+  "期限までに申告し、納税があるときは納付します。"
+ ],
+ "id": "kakutei-shinkoku",
+ "status": "published",
+ "light": true,
+ "source": [],
+ "calendar": [],
+ "datedEvents": []
+}

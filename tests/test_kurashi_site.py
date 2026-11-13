@@ -115,7 +115,7 @@ class Build(unittest.TestCase):
         pages = {str(p.relative_to(self.out)).replace("\\", "/"): p.read_text(encoding="utf-8") for p in self.out.rglob("*.html")}
         self.assertEqual(sitecheck.check_dir(self.out, BASE), [])
         for rel, html in pages.items():
-            if rel.startswith(("about", "contact", "privacy", "policy")) or rel in ("index.html",):
+            if rel.startswith(("about", "contact", "privacy", "policy", "search", "saved")) or rel in ("index.html",):
                 continue
             self.assertNotIn("noindex", html[:3000], rel)
 

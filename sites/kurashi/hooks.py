@@ -1,12 +1,11 @@
-"""Hooks of sites/kurashi (sokuhou/newsite.py site_hooks): day counts, calendar files (.ics) and the print layout.  Nothing here writes a sentence of the site;
-the few words of the parts (the buttons, the heading of the calendar block) are the constants HEADING / BUTTON / ... below.
+"""Hooks of sites/kurashi (sokuhou/newsite.py site_hooks): day counts, calendar files (.ics) and the page frame of the 2026-11-13 design (shell.py).  Nothing here writes a sentence of the site.
 
 * The pages carry markers instead of day counts: {days:DATE} {rel:DATE} {rel:DATE|text for a day that has passed} {weeks:DATE} {today} {todayy}.
   The build turns them into the numbers of the build day (JST; the deploy rebuilds every site at 07:00 JST), inside <span class="nd" ...> so that assets/tools.js can
   correct them to the reader's own day.  The HTML that a search engine reads therefore has the right numbers on the day it was built.
 * Every upcoming dated deadline of a page gets a calendar button; the file is calendar/<id>.ics (an all-day entry on the day, an alert at 09:00 the day before).
   A page that shows two or more deadlines also gets one file with all of them (calendar/<page>.ics; the home page and /month/: calendar/all.ics).
-* The pages of life events, moving and months can be printed: print CSS in assets/style.css; this adds the classes and the button it needs.
+* post() puts every page into the frame of shell.py (header, hero, the checked guide, the sections, the official links, the footer) and writes assets/t/data.js for the browser's calendar.
 """
 from __future__ import annotations
 
@@ -28,16 +27,14 @@ NOTE = "通知は前日の午前9時です。"
 PRINT_BUTTON = "印刷"
 ICON16 = '<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">'
 ICON48 = '<link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png">'
-PRINT_PAGES = ("/life/birth/", "/life/kaigo/", "/life/kekkon/", "/life/shibo/", "/life/taishoku/", "/moving/", "/moving/tenshutsu/", "/moving/menkyo-sha/",
-               "/month/11/", "/month/12/", "/month/1/", "/month/2/", "/month/3/")
 
 MARK = re.compile(r"\{(days|rel|weeks):(\d{4}-\d\d-\d\d)(?:\|([^}]*))?\}|\{(today|todayy)\}")
 STALE: list[str] = []          # a count that would be negative (a deadline that has passed): the page needs this season's review
 
 
-_spec = importlib.util.spec_from_file_location("_kurashi_design", Path(__file__).with_name("design.py"))
-design = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(design)
+_spec = importlib.util.spec_from_file_location("_kurashi_shell", Path(__file__).with_name("shell.py"))
+shell = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(shell)
 
 
 def today_jst() -> date:
@@ -178,120 +175,75 @@ def calendar_files(content: list[dict], spec: dict, today: date) -> tuple[dict, 
     return files, per_page
 
 
-def calendar_block(evs: list[dict], bundle: str | None) -> str:
-    items = "".join(
-        f'<li><span class="cal-d">{html.escape(jp(date.fromisoformat(e["date"])))}</span> <span class="cal-n">{html.escape(e["name"])}</span> '
-        f'<a class="btn cal-b" href="/calendar/{e["id"]}.ics" download>{BUTTON}</a></li>' for e in evs)
-    more = f'<p><a class="btn" href="/{bundle}" download>{BUNDLE}</a></p>\n' if bundle else ""
-    return f'<section class="cal noprint">\n<h2>{HEADING}</h2>\n<ul class="cal-list">{items}</ul>\n{more}<p class="notice">{NOTE}</p>\n</section>\n'
+class Ctx:
+    """what shell.render_page reads"""
 
 
-# ---------------------------------------------------------------- print
-def print_ready(body: str, path: str) -> str:
-    """class="chk" on the first table (the CSS puts a box before each row's first cell when printing); a section without a table does not print;
-    the print button after the answer; the address at the end"""
-    body = body.replace("<table>", '<table class="chk">', 1)
-    a = body.find("<h2>")
-    end = body.find('<p class="credit">')
-    if end < 0:
-        end = body.find('<p class="stamp">')
-    if a < 0 or end < 0:
-        return body
-    parts = re.split(r"(?=<h2>)", body[a:end])
-    kept = "".join(seg if "<table" in seg else f'<div class="noprint">{seg}</div>\n' for seg in parts if seg)
-    head = body[:a]
-    i = head.find("</p>", head.find('<p class="answer">')) + 4 if '<p class="answer">' in head else len(head)
-    btn = f'<p class="noprint"><button type="button" class="btn" data-print hidden>{PRINT_BUTTON}</button></p>\n'
-    head = head[:i] + "\n" + btn + head[i:].lstrip("\n")
-    return head + kept + body[end:].rstrip("\n") + f'\n<p class="printonly">{SITE_URL}{path}</p>\n'
-
-
-NL = chr(10)
-
-
-def link_texts(content: list[dict]) -> dict:
-    """the address of a page -> the words the site's own tables use for the link to it"""
-    out: dict[str, str] = {}
+def official_lists(content, guides_by_path, spec, tsite) -> dict:
+    out = {}
     for p in content:
-        for sec in p.get("sections", []):
-            for row in (sec.get("table") or {}).get("rows", []):
-                for c in row:
-                    if isinstance(c, dict) and c.get("href") and c.get("text"):
-                        out.setdefault(c["href"], c["text"])
+        if p["path"] == "/":
+            continue
+        v = shell.official_list(guides_by_path.get(p["path"]), p, spec, tsite)
+        if v:
+            out[p["path"]] = v
     return out
 
 
-def season_year(month: int, cat: dict) -> int:
-    first = min(date.fromisoformat(c["date"]) for c in cat.values())
-    return first.year if month >= 7 else first.year + 1
+PLAIN = {"about/index.html": "/about/", "privacy/index.html": "/privacy/", "contact/index.html": "/contact/", "404.html": "/404.html", "contact/thanks.html": "/contact/thanks.html"}
 
 
-def add_design(body: str, p: dict, per_page: dict, spec: dict, today: date, links: dict) -> str:
-    """the neon-white parts: the switch view (home), the month table (month pages), the month tables (the list of months), the deadline box (the other pages that have a deadline)"""
-    path = p["path"]
-    cat = {c["id"]: c for c in spec.get("deadlines", [])}
-    a = body.find('<p class="answer">')
-    if a < 0:
-        return body
-    i = body.find("</p>", a) + 4
-    block = ""
-    m = re.fullmatch(r"/month/(\d+)/", path)
-    if path == "/":
-        evs = [cat[x] for x in p.get("deadline_ids", []) if date.fromisoformat(cat[x]["date"]) >= today]
-        if evs:
-            block = design.switch_view(evs, cat, links, today)
-    elif path == "/month/":
-        months = [(season_year(n, cat), n) for n in (11, 12, 1, 2, 3)]
-        block = design.month_overview(months, list(cat.values()), cat, today)
-    elif m:
-        n = int(m.group(1))
-        block = design.month_view(season_year(n, cat), n, list(cat.values()), cat, links, today)
-    elif path in per_page:
-        ev = per_page[path][0][0]
-        y, mo, dd = p["updated"].split("-")
-        block = design.deadline_box(ev, f"{y}年{int(mo)}月{int(dd)}日")
-    return body[:i] + NL + block + body[i:].lstrip(NL) if block else body
+def asset_version(site_dir: Path, extra: str) -> str:
+    h = hashlib.sha1(extra.encode("utf-8"))
+    for f in sorted((site_dir / "assets").rglob("*")):
+        if f.is_file() and f.suffix in (".css", ".js"):
+            h.update(f.name.encode())
+            h.update(f.read_bytes())
+    return h.hexdigest()[:10]
 
 
 def post(pages, content, cfg, spec, site_dir):
+    from sokuhou.newsite import table_html
     today = today_jst()
-    links = link_texts(content)
     STALE.clear()
     files, per_page = calendar_files(content, spec, today)
+    guides, tsite = shell.load_guides()
+    ctx = Ctx()
+    ctx.content, ctx.by_path, ctx.per_page = content, {p["path"]: p for p in content}, per_page
+    ctx.page_guide, ctx.guides, ctx.tsite, ctx.table_html = shell.guide_of_page(guides), guides, tsite, table_html
+    ctx.official = official_lists(content, ctx.page_guide, spec, tsite)
+    index = shell.pages_index(content, guides)
+    data = shell.data_js(guides, tsite, spec, index, today)
+    ver = asset_version(site_dir, data)
     tools = (site_dir / "assets" / "tools.js").read_text(encoding="utf-8")
     tag = f'<script src="/assets/tools.js?v={hashlib.sha1(tools.encode()).hexdigest()[:8]}" defer></script>\n'
+    tail = (site_dir / "home_tail.html").read_text(encoding="utf-8")
     for p in content:
         rel = "index.html" if p["path"] == "/" else p["path"].strip("/") + "/index.html"
-        h = pages[rel]
-        m = re.search(r"<main[^>]*>\n(.*?)\n</main>", h, re.S)
+        home = p["path"] == "/"
+        if home:
+            main, more = shell.home_main(p, ctx), ""
+        else:
+            main, more = shell.render_page(p, ctx)
+        main = resolve(main, today)
+        pages[rel] = shell.rewrap(pages[rel], main, path=p["path"], ver=ver, body_class="home-page" if home else "inner-page article-reading-page", modules="app" if home else "pages",
+                                  with_tools=tag, head_more=more, home=home, foot_note=tail if home else "")
+    # the pages that need the browser's saved list
+    for rel, path, main in (("search/index.html", "/search/", shell.search_main(index)), ("saved/index.html", "/saved/", shell.saved_main())):
+        title = "手続きを検索" if path == "/search/" else "あとで読むガイドと予定"
+        base = pages["about/index.html"].replace("運営者情報", title)
+        base = re.sub(r'<link rel="canonical" href="[^"]*">', f'<link rel="canonical" href="{SITE_URL}{path}">', base)
+        pages[rel] = shell.rewrap(base, resolve(main, today), path=path, ver=ver, body_class="inner-page", noindex=True, with_tools=tag)
+    for rel, path in PLAIN.items():
+        if rel not in pages:
+            continue
+        m = re.search(r'<main class="wrap">\n(.*?)\n</main>', pages[rel], re.S)
         if not m:
             continue
-        body = m.group(1)
-        if p["path"] in PRINT_PAGES:
-            body = print_ready(body, p["path"])
-        if p["path"] in per_page:
-            evs, bundle = per_page[p["path"]]
-            block = calendar_block(evs, bundle)
-            j = body.find("</table></div>")
-            if j >= 0:
-                j += len("</table></div>")
-                nx = re.match(r'\n?<p class="notice">.*?</p>', body[j:], re.S)
-                j += nx.end() if nx else 0
-                body = body[:j] + "\n" + block + body[j:].lstrip("\n")
-            else:
-                k = body.find("<h2>関連するページ</h2>")
-                body = body[:k] + block + body[k:] if k >= 0 else body + "\n" + block
-        if p.get("_answer_marked"):
-            old = f'<p class="answer">{html.escape(p["answer"], quote=True)}</p>'
-            if old in body:
-                body = body.replace(old, f'<p class="answer">{html.escape(p["_answer_marked"], quote=True)}</p>', 1)
-        body = add_design(body, p, per_page, spec, today, links)
-        body = resolve(body, today)
-        h = h[:m.start(1)] + body + h[m.end(1):]
-        h = h.replace("<body>", f'<body data-cat="{design.category(p["path"])}">', 1)
-        if 'class="nd"' in body or "cal-list" in body or "data-print" in body or 'class="kv' in body:
-            h = h.replace("</body>", tag + "</body>", 1)
-        pages[rel] = h
+        pages[rel] = shell.rewrap(pages[rel], shell.plain_page_main(m.group(1), path, ""), path=path, ver=ver, body_class="inner-page", with_tools="", noindex=rel == "contact/thanks.html")
+    for name in ("app", "calendar", "library", "pages", "illustrations"):
+        pages[f"assets/t/{name}.js"] = pages[f"assets/t/{name}.js"].replace("__V__", ver)
+    pages["assets/t/data.js"] = data
     pages["assets/tools.js"] = tools
     icon32 = '<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">'
     for rel, h in list(pages.items()):         # the 16px and 48px icons beside the 32px one the shared head already has

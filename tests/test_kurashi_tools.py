@@ -232,45 +232,19 @@ class PrintLayout(unittest.TestCase):
     def tearDownClass(cls):
         cls.tmp.cleanup()
 
-    def test_the_pages_to_print_have_the_checklist_table_and_the_button(self):
-        for path in H.PRINT_PAGES:
-            html = text(self.out, path.strip("/") + "/index.html")
-            self.assertIn('<table class="chk">', html, path)
-            self.assertIn("data-print", html, path)
-            self.assertIn(f'<p class="printonly">{BASE}{path}</p>', html, path)
+    def test_every_content_page_has_the_print_button(self):
+        for f in self.out.rglob("index.html"):
+            rel = f.relative_to(self.out).as_posix()
+            if rel.split("/")[0] in ("about", "privacy", "contact", "saved", "search") or rel == "index.html":    # the home page has the calendar's own print button
+                continue
+            self.assertIn("data-print", f.read_text(encoding="utf-8"), rel)
 
-    def test_other_pages_are_not_changed_for_print(self):
-        for path in ("/", "/nengajo/", "/method/", "/life/"):
-            html = text(self.out, "index.html" if path == "/" else path.strip("/") + "/index.html")
-            self.assertNotIn("data-print", html, path)
-            self.assertNotIn('class="chk"', html, path)
-
-    def test_print_css_hides_the_screen_decoration_and_draws_a_box(self):
-        css = (SITE / "assets" / "style.css").read_text(encoding="utf-8")
+    def test_print_css_hides_the_screen_decoration(self):
+        css = (SITE / "assets" / "kurashi.css").read_text(encoding="utf-8")
         p = css[css.index("@media print"):]
-        for needle in ("size:A4", "header.site", "footer.site", ".noprint", "ul.links", "table.chk tbody td:first-child::before", '"\\25A1', "page-break-inside:avoid"):
+        for needle in (".site-header", ".site-footer", ".footer-town", ".article-sidebar", ".cal-b", ".printonly { display: block; }"):
             self.assertIn(needle, p)
-        self.assertIn(".printonly { display:none; }", css)                      # not on the screen
-
-    def test_a_section_without_a_table_is_not_printed_and_the_table_section_is(self):
-        html = text(self.out, "life/kekkon/index.html")
-        self.assertIn('<div class="noprint"><h2>この表にないこと</h2>', html)
-        i = html.index("<h2>婚姻届と住所の届出</h2>")
-        self.assertNotIn('<div class="noprint"><h2>婚姻届と住所の届出', html)
-        self.assertLess(i, html.index('class="chk"'))
-
-    def test_the_screen_layout_is_not_changed_by_the_box(self):
-        css = (SITE / "assets" / "style.css").read_text(encoding="utf-8")
-        screen = css[:css.index("@media print")]
-        self.assertNotIn("table.chk", screen)                                    # the box exists only in the print rules
-
-    def test_all_pages_still_have_their_text(self):
-        """the print wrappers add no words: the visible text of a print page equals the page without them, plus the parts' own labels"""
-        html = text(self.out, "life/shibo/index.html")
-        stripped = re.sub(r'<p class="noprint"><button.*?</button></p>', "", html)
-        stripped = re.sub(r'<p class="printonly">.*?</p>', "", stripped)
-        self.assertNotIn("data-print", stripped)
-        self.assertIn(">印刷<", html)
+        self.assertIn(".printonly { display: none; }", css[:css.index("@media print")])      # not on the screen
 
 
 class Parts(unittest.TestCase):

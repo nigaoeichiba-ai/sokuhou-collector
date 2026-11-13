@@ -1,0 +1,461 @@
+{
+ "checkedDate": "2026-11-12",
+ "sources": {
+  "tax": {
+   "name": "国税庁｜令和8年分 年末調整のしかた",
+   "url": "https://www.nta.go.jp/users/gensen/nencho/index/shikata.htm",
+   "phrases": [
+    "令和8年分",
+    "年末調整のしかた"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "medical": {
+   "name": "国税庁｜医療費を支払ったとき（医療費控除）",
+   "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1120.htm",
+   "phrases": [
+    "医療費を支払ったとき",
+    "（医療費控除）"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "moving": {
+   "name": "デジタル庁｜引越し手続オンラインサービス",
+   "url": "https://www.digital.go.jp/policies/moving_onestop_service",
+   "phrases": [
+    "引越し手続",
+    "オンラインサービス"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "onestop": {
+   "name": "北九州市｜ワンストップ特例申請に関するQ&A",
+   "url": "https://www.city.kitakyushu.lg.jp/contents/28500193.html",
+   "checkedAt": "2026-11-12"
+  },
+  "holiday": {
+   "name": "内閣府｜国民の祝日について",
+   "url": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html",
+   "checkedAt": "2026-11-12"
+  },
+  "movingFaq": {
+   "name": "デジタル庁｜転出届・転入予約のよくある質問",
+   "url": "https://www.digital.go.jp/policies/moving_onestop_service/faq-01",
+   "phrases": [
+    "転出届・転入予約の",
+    "よくある質問"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "movingList": {
+   "name": "マイナポータル｜引越し関連手続一覧",
+   "url": "https://myna.go.jp/html/moving_oss_procedure_list.html",
+   "phrases": [
+    "引越し関連",
+    "手続一覧"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "medicalScope": {
+   "name": "国税庁｜医療費控除の対象となる医療費",
+   "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1122.htm",
+   "phrases": [
+    "医療費控除の",
+    "対象となる医療費"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "filing": {
+   "name": "国税庁｜確定申告",
+   "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2020.htm",
+   "phrases": [
+    "確定申告"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "salaryFiling": {
+   "name": "国税庁｜給与所得者で確定申告が必要な人",
+   "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1900.htm",
+   "phrases": [
+    "給与所得者で",
+    "確定申告が必要な人"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "refund": {
+   "name": "国税庁｜還付申告",
+   "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2030.htm",
+   "phrases": [
+    "還付申告"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "residentTax": {
+   "name": "国税庁｜申告が必要かなどを調べる（令和7年分）",
+   "url": "https://www.nta.go.jp/taxes/shiraberu/shinkoku/tokushu/shinkoku-nagare/shinkoku-nagare.htm",
+   "phrases": [
+    "申告が必要かなどを調べる",
+    "（令和7年分）"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "donationFiling": {
+   "name": "国税庁｜ふるさと納税をした場合",
+   "url": "https://www.keisan.nta.go.jp/r3yokuaru/cat2/cat22/cat22d/cid912.html",
+   "phrases": [
+    "ふるさと納税を",
+    "した場合"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "donationRule": {
+   "name": "国税庁｜ふるさと納税の申告漏れにご注意ください",
+   "url": "https://www.nta.go.jp/taxes/shiraberu/shinkoku/tebiki/2024/pdf/005.pdf",
+   "phrases": [
+    "ふるさと納税の",
+    "申告漏れにご注意ください"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "donationDeadline": {
+   "name": "中野区｜ワンストップ特例制度のご利用について",
+   "url": "https://www.city.tokyo-nakano.lg.jp/kanko/city-promotion/furusatonouzei_onestop.html",
+   "phrases": [
+    "ワンストップ特例制度の",
+    "ご利用について"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "birthNotice": {
+   "name": "法務省｜出生届",
+   "url": "https://www.moj.go.jp/ONLINE/FAMILYREGISTER/5-1.html",
+   "phrases": [
+    "出生届"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "childAllowance": {
+   "name": "こども家庭庁｜児童手当制度のご案内",
+   "url": "https://www.cfa.go.jp/policies/kokoseido/jidouteate/annai/",
+   "phrases": [
+    "児童手当制度の",
+    "ご案内"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "childInsurance": {
+   "name": "府中市｜子どもが生まれたときの健康保険",
+   "url": "https://www.city.fuchu.tokyo.jp/faq/hoken/kokuho/faq27.html",
+   "phrases": [
+    "子どもが生まれたときの",
+    "健康保険"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "careFlow": {
+   "name": "厚生労働省｜介護サービス利用までの流れ",
+   "url": "https://www.kaigokensaku.mhlw.go.jp/commentary/flow.html",
+   "phrases": [
+    "介護サービス",
+    "利用までの流れ"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "careScope": {
+   "name": "町田市｜介護保険の対象となる方",
+   "url": "https://www.city.machida.tokyo.jp/iryo/kaigo/shikumi/kanyusya.html",
+   "phrases": [
+    "介護保険の",
+    "対象となる方"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "careLocal": {
+   "name": "町田市｜認定申請から介護サービス利用まで",
+   "url": "https://www.city.machida.tokyo.jp/iryo/kaigo/nagare/the-step-of-service.html",
+   "phrases": [
+    "認定申請から",
+    "介護サービス利用まで"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "retirementHealth": {
+   "name": "協会けんぽ｜退職後の健康保険・任意継続",
+   "url": "https://www.kyoukaikenpo.or.jp/benefit/voluntary_continuation/index.html",
+   "phrases": [
+    "退職後の健康保険・",
+    "任意継続"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "retirementConditions": {
+   "name": "協会けんぽ｜任意継続の加入条件について",
+   "url": "https://www.kyoukaikenpo.or.jp/faq/voluntary_continuation/002/",
+   "phrases": [
+    "任意継続の",
+    "加入条件について"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "retirementPension": {
+   "name": "日本年金機構｜就職・転職・退職",
+   "url": "https://www.nenkin.go.jp/service/scenebetsu/shushoku.html",
+   "phrases": [
+    "就職・転職・退職"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "pensionDeadline": {
+   "name": "マイナポータル｜国民年金の加入",
+   "url": "https://myna.go.jp/pension/application/enrollment-in-national-pension/top",
+   "phrases": [
+    "国民年金の加入"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "marriageNotice": {
+   "name": "宇都宮市｜婚姻届の手続方法",
+   "url": "https://www.city.utsunomiya.lg.jp/faq/kurashi/todokede/1000512.html",
+   "phrases": [
+    "婚姻届の",
+    "手続方法"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "marriageDocuments": {
+   "name": "国分寺市｜結婚するときは（婚姻届）",
+   "url": "https://www.city.kokubunji.tokyo.jp/kurashi/todoke/1010855/1000821.html",
+   "phrases": [
+    "結婚するときは",
+    "（婚姻届）"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "deathNotice": {
+   "name": "法務省｜死亡届",
+   "url": "https://www.moj.go.jp/ONLINE/FAMILYREGISTER/5-4.html",
+   "phrases": [
+    "死亡届"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "inheritanceChoice": {
+   "name": "裁判所｜相続の放棄の申述",
+   "url": "https://www.courts.go.jp/saiban/syurui/syurui_kazi/kazi_06_13/index.html",
+   "phrases": [
+    "相続の放棄の申述"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "deathIncomeTax": {
+   "name": "国税庁｜納税者が死亡したときの確定申告",
+   "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2022.htm",
+   "phrases": [
+    "納税者が死亡したときの",
+    "確定申告"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "inheritanceTax": {
+   "name": "国税庁｜相続税の申告と納税",
+   "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/sozoku/4205.htm",
+   "phrases": [
+    "相続税の",
+    "申告と納税"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "deathPension": {
+   "name": "日本年金機構｜年金を受けている方が亡くなったとき",
+   "url": "https://www.nenkin.go.jp/service/jukyu/tetsuduki/kyotsu/jukyu/20140731-01.html",
+   "phrases": [
+    "年金を受けている方が",
+    "亡くなったとき"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "holidayCity": {
+   "name": "横浜市｜役所の手続き・窓口案内",
+   "url": "https://www.city.yokohama.lg.jp/lang/residents/ej/notifications/",
+   "phrases": [
+    "役所の手続き・",
+    "窓口案内"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "holidayBank": {
+   "name": "日本銀行｜本店・支店等の休日",
+   "url": "https://www.boj.or.jp/en/about/outline/holi.htm",
+   "phrases": [
+    "本店・支店等の休日"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "holidayDigital": {
+   "name": "横浜市｜来庁せずにできる戸籍関係の手続き",
+   "url": "https://www.city.yokohama.lg.jp/kurashi/koseki-zei-hoken/todokede/koseki-juminhyo/oshirase/nonvisit.html",
+   "phrases": [
+    "来庁せずにできる",
+    "戸籍関係の手続き"
+   ],
+   "checkedAt": "2026-11-13"
+  },
+  "careRenewal": {
+   "name": "品川区｜要介護認定申請と更新",
+   "url": "https://www.city.shinagawa.tokyo.jp/kenko/kaigo/1002632/1002634.html",
+   "phrases": [
+    "要介護認定申請と",
+    "更新"
+   ],
+   "checkedAt": "2026-11-13"
+  }
+ },
+ "categories": [
+  {
+   "id": "moving",
+   "name": "引っ越し・住まい",
+   "icon": "moving",
+   "color": "sky",
+   "intro": "引っ越しの日が決まったら、住所の届出と暮らしの契約を分けて確認しましょう。",
+   "steps": [
+    "日程と契約先を書き出す",
+    "引っ越し前の準備を確かめる",
+    "引っ越し後の届出を確認する"
+   ],
+   "homeSummary": "住所変更と契約を、順番に",
+   "homeTitle": "引っ越し"
+  },
+  {
+   "id": "birth",
+   "name": "出産・子育て",
+   "icon": "birth",
+   "color": "peach",
+   "intro": "赤ちゃんを迎える前後に必要なことを、家族で分担しながら少しずつ。",
+   "steps": [
+    "自治体・勤務先の案内を集める",
+    "届ける人と窓口を決める",
+    "出産後の期限を確認する"
+   ],
+   "homeSummary": "家族が増えたら、届けること",
+   "homeTitle": "出産・子育て"
+  },
+  {
+   "id": "work",
+   "name": "仕事・税金",
+   "icon": "retire",
+   "color": "mint",
+   "intro": "退職・転職や年末の書類。今の働き方や暮らしに合う手続きを探せます。",
+   "steps": [
+    "自分に必要な手続きを探す",
+    "提出日と必要書類を確認する",
+    "提出後の控えを残す"
+   ],
+   "homeSummary": "仕事が変わる前後の保険・年金",
+   "homeTitle": "退職・転職"
+  },
+  {
+   "id": "marriage",
+   "name": "結婚・新生活",
+   "icon": "marriage",
+   "color": "cream",
+   "intro": "新しい暮らしの始まりに。届出と、氏名・住所の変更をひとつずつ整理しましょう。",
+   "steps": [
+    "届出先の案内を確認する",
+    "変更する契約をまとめる",
+    "ふたりで準備を分担する"
+   ],
+   "homeSummary": "新しい暮らしの届出と変更",
+   "homeTitle": "結婚・新生活"
+  },
+  {
+   "id": "health",
+   "name": "健康・家族の介護",
+   "icon": "care",
+   "color": "lilac",
+   "intro": "医療費の整理から介護の相談まで。ひとりで抱えず、確認できる窓口を見つけましょう。",
+   "steps": [
+    "気になることを書き出す",
+    "手元にある資料をまとめる",
+    "相談できる窓口を確認する"
+   ],
+   "homeSummary": "相談できる窓口を知ることから",
+   "homeTitle": "家族の介護"
+  },
+  {
+   "id": "bereavement",
+   "name": "家族が亡くなったとき",
+   "icon": "bereavement",
+   "color": "sky",
+   "intro": "急ぐ届出から、周りの方と分担しながら。必要なことを順番に確かめられます。",
+   "steps": [
+    "期限のある届出を確認する",
+    "関係する窓口をまとめる",
+    "手続きの控えを保管する"
+   ],
+   "homeSummary": "急ぐ手続きから、ひとつずつ",
+   "homeTitle": "家族が亡くなったとき"
+  }
+ ],
+ "monthNames": [
+  "",
+  "年始の申請と書類の準備",
+  "申告の準備",
+  "引っ越し・退職の準備",
+  "新生活の届出と変更",
+  "書類と登録情報の確認",
+  "上半期の書類整理",
+  "夏の転居と資料の整理",
+  "窓口の予定と契約の確認",
+  "秋から年末への準備",
+  "年末調整の案内を確認",
+  "年末に向けた書類の準備",
+  "年内の手続きと年始の確認"
+ ],
+ "topics": {
+  "all": "すべて",
+  "work": "仕事・税金",
+  "family": "家族・健康",
+  "moving": "引っ越し"
+ },
+ "holidays": {
+  "2026-01-01": "元日",
+  "2026-01-12": "成人の日",
+  "2026-02-11": "建国記念の日",
+  "2026-02-23": "天皇誕生日",
+  "2026-03-20": "春分の日",
+  "2026-04-29": "昭和の日",
+  "2026-05-03": "憲法記念日",
+  "2026-05-04": "みどりの日",
+  "2026-05-05": "こどもの日",
+  "2026-05-06": "休日",
+  "2026-07-20": "海の日",
+  "2026-08-11": "山の日",
+  "2026-09-21": "敬老の日",
+  "2026-09-22": "休日",
+  "2026-09-23": "秋分の日",
+  "2026-10-12": "スポーツの日",
+  "2026-11-03": "文化の日",
+  "2026-11-23": "勤労感謝の日",
+  "2027-01-01": "元日",
+  "2027-01-11": "成人の日",
+  "2027-02-11": "建国記念の日",
+  "2027-02-23": "天皇誕生日",
+  "2027-03-21": "春分の日",
+  "2027-03-22": "休日",
+  "2027-04-29": "昭和の日",
+  "2027-05-03": "憲法記念日",
+  "2027-05-04": "みどりの日",
+  "2027-05-05": "こどもの日",
+  "2027-07-19": "海の日",
+  "2027-08-11": "山の日",
+  "2027-09-20": "敬老の日",
+  "2027-09-23": "秋分の日",
+  "2027-10-11": "スポーツの日",
+  "2027-11-03": "文化の日",
+  "2027-11-23": "勤労感謝の日"
+ },
+ "calendarRange": {
+  "minMonth": "2026-01",
+  "maxMonth": "2027-12"
+ }
+}

@@ -203,7 +203,7 @@ def m1() -> dict:
 def m2() -> dict:
     cols = ["日付", f"{TODAY_MD}から", "内容", "詳しい記事"]
     rows = [
-        [jp(KAKUTEI_START), n_days(KAKUTEI_START), "確定申告の期間の初日(原則の期間。令和8年分の公式な日付は未発表)", row_link("確定申告", "/kakutei-shinkoku/")],
+        [jp(KAKUTEI_START), n_days(KAKUTEI_START), "確定申告の期間の初日(令和8年分。国税庁が令和9年2月16日から3月15日と案内)", row_link("確定申告", "/kakutei-shinkoku/")],
         ["飛散の1週間前まで", "-", "毎年症状が出る人は、本格的な飛散開始の1週間前までに薬を準備して使い始める(環境省)", row_link("花粉症", "/kafun/")],
     ]
     return _month(

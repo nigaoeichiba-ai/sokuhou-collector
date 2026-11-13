@@ -1,0 +1,35 @@
+{
+ "path": "/kakutei-shinkoku/kanpu/",
+ "title": "還付申告はいつから出せるか",
+ "short": "還付申告",
+ "icon": "tax",
+ "topic": "work",
+ "categories": [
+  "work"
+ ],
+ "audience": "還付を受けるために申告する方",
+ "summary": "還付申告は、その年の翌年1月1日から5年間出せます。令和8年分は、2027年1月1日(金)から提出できます。",
+ "when": "令和8年分の還付申告は、2027年1月1日(金)から5年間です。",
+ "where": "税務署・国税庁の案内",
+ "documents": [
+  {
+   "id": "item-1",
+   "text": "源泉徴収票"
+  },
+  {
+   "id": "item-2",
+   "text": "控除を受ける内容の証明書や明細"
+  }
+ ],
+ "steps": [
+  "還付を受けられる内容かどうかを確かめます。",
+  "必要な資料をそろえます。",
+  "1月1日以降に申告書を提出します。"
+ ],
+ "id": "kanpu",
+ "status": "published",
+ "light": true,
+ "source": [],
+ "calendar": [],
+ "datedEvents": []
+}

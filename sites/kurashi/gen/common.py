@@ -12,9 +12,11 @@ CHECKED = "2026年11月3日"
 FIRST_UPDATED = "2026-11-03"   # the day the dates were checked
 # the pages whose text changed after that day (the day of the change; the dates in the tables were not re-checked, so data_basis keeps CHECKED).
 # site.json "updated" is the newest of these: it is computed, never typed (tests/test_kurashi_affiliate.py)
-EDITED = {p: "2026-11-13" for p in ("/nengajo/", "/kakutei-shinkoku/", "/furusato/one-stop/", "/furusato/deadline/", "/kakutei-shinkoku/furusato/", "/kafun/",
-                                     "/moving/", "/moving/tenshutsu/", "/shin-seikatsu/", "/life/birth/", "/nenmatsu-nenshi/")}
-SITE_UPDATED = max([FIRST_UPDATED, *EDITED.values()])
+# 2026-11-13: the pages went into the new design and the checked guides were merged into eleven of them; these pages only changed their frame, so their day stays
+UNCHANGED = ("/method/", "/kakutei-shinkoku/hitsuyo/", "/kakutei-shinkoku/kanpu/", "/moving/menkyo-sha/", "/life/", "/month/1/", "/month/3/", "/month/11/")
+REDESIGN_DAY = "2026-11-13"
+EDITED = {}          # kept for readers of the old name: a page's day is FIRST_UPDATED if it is in UNCHANGED, else REDESIGN_DAY (page() below)
+SITE_UPDATED = REDESIGN_DAY
 WD = "月火水木金土日"
 
 
@@ -83,7 +85,7 @@ def row_link(text: str, path: str) -> dict:
 
 
 def page(path, kind, parent, title, h1, kw, intent, desc, answer, sections, related, sources, *, secondary=(), basis=None, updated=None, noindex=False):
-    updated = updated or (SITE_UPDATED if path == "/" else EDITED.get(path, FIRST_UPDATED))
+    updated = updated or (SITE_UPDATED if path == "/" else FIRST_UPDATED if path in UNCHANGED else REDESIGN_DAY)
     p = {
         "updated": updated,
         "data_basis": basis or f"{CHECKED}確認",

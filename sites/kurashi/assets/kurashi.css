@@ -1,0 +1,48 @@
+/* kurashi-calendar.com, 2026-11-13: what the template's style sheets (assets/t/*.css) do not have, because the template has no such parts: the tables with computed dates, the calendar buttons,
+   the pages' own plain sections, the contact form's variables, and the print layout. The colours are the template's (assets/t/styles.css). */
+:root { --brand: var(--blue-dark); --pink: var(--blue-dark); --muted: var(--sub); }
+.saved-label::before { content: attr(data-t); }
+.legacy-section th, .legacy-section td { min-width: 6em; }
+@media (max-width: 1000px) { .desktop-nav a:nth-child(4) { display: none; } .desktop-nav { gap: 0; } .desktop-nav a { padding-inline: 7px; font-size: 14px; } .site-header { gap: 8px; } }
+@media (max-width: 760px) { .heading-phrase { white-space: normal !important; display: inline !important; } }
+.article-reading-page .article-toc a { line-height: 1.4; font-size: 15px; min-height: 0; padding: 9px 10px; }
+.nd { font-variant-numeric: tabular-nums; }
+.left { font-weight: 700; color: var(--blue-dark); }
+.tablewrap { overflow-x: auto; border: 1px solid var(--sky-line); border-radius: 12px; background: var(--white); margin: 16px 0 20px; max-width: 100%; }
+.legacy-section table, .article-detail table { border-collapse: collapse; width: 100%; font-size: 16px; line-height: 1.6; }
+.legacy-section th, .legacy-section td { padding: 10px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.legacy-section th { background: var(--sky); color: var(--ink); font-weight: 700; white-space: nowrap; }
+.legacy-section td.num, .legacy-section th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.legacy-section tr:last-child td { border-bottom: 0; }
+.legacy-section caption { text-align: left; padding: 10px 14px; font-weight: 700; }
+.legacy-section a { color: var(--blue-dark); }
+.legacy-section > p, .article-section > p { overflow-wrap: anywhere; }
+.legacy-section .article-section-heading { padding-bottom: 0; }
+.legacy-section ul.links, ul.child-links { padding-left: 1.3em; line-height: 1.9; }
+.notice { font-size: 15px; color: var(--sub); }
+.stamp, .credit { font-size: 15px; color: var(--sub); }
+.pr-note { font-size: 15px; color: var(--sub); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 6px 20px; border-radius: 11px; border: 1px solid var(--sky-line); background: #fffefa; color: var(--blue-dark); font-weight: 700; text-decoration: none; }
+.deadline-summary.cal .cal-b { margin-top: 4px; }
+.deadline-card .secondary-button { margin-left: 0; }
+.near-section { padding-top: 8px; }
+.near-section .article-section { margin-top: 20px; }
+.prose-legal { line-height: 1.9; }
+.prose-legal h2 { margin-top: 1.8em; }
+.prose-legal dl.info { display: grid; grid-template-columns: minmax(0, 9em) minmax(0, 1fr); gap: 8px 16px; }
+.prose-legal dl.info dt { font-weight: 700; color: var(--sub); }
+.prose-legal dl.info dd { margin: 0; overflow-wrap: anywhere; }
+.prose-legal a { color: var(--blue-dark); }
+.page-intro .intro-description:empty { display: none; }
+.printonly { display: none; }
+@media (max-width: 760px) {
+  .legacy-section th, .legacy-section td { padding: 8px 10px; font-size: 15px; }
+  .legacy-section th { white-space: normal; }
+  .prose-legal dl.info { grid-template-columns: 1fr; }
+}
+@media print {
+  .site-header, .mobile-navigation, .footer-town, .site-footer, .article-sidebar, .article-tools, .calendar-callout, .cal-b, .skip-link, .noprint { display: none !important; }
+  .printonly { display: block; }
+  .tablewrap { overflow: visible; border: 0; }
+  .legacy-section th, .legacy-section td { border: 1px solid #999; color: #000; background: none; white-space: normal; }
+}

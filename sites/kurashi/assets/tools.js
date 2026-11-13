@@ -26,36 +26,4 @@
     btn[j].hidden = false;
     btn[j].addEventListener("click", function () { window.print(); });
   }
-
-  // the switch view (month table / Gantt chart), the selected day and its panel, the today line of the Gantt chart
-  var tracks = document.querySelectorAll(".gk[data-start]");
-  for (var t = 0; t < tracks.length; t++) {
-    var s = tracks[t].getAttribute("data-start").split("-"), en = tracks[t].getAttribute("data-end").split("-");
-    var a0 = Date.UTC(+s[0], +s[1] - 1, +s[2]), a1 = Date.UTC(+en[0], +en[1] - 1, +en[2]) + 86400000;
-    var line = tracks[t].querySelector(".gtoday");
-    if (!line) continue;
-    var pc = (base - a0) / (a1 - a0) * 100;
-    if (pc < 0 || pc > 100) line.style.display = "none";
-    else line.style.left = pc.toFixed(3) + "%";
-  }
-  var views = document.querySelectorAll(".kv");
-  Array.prototype.forEach.call(views, function (kv) {
-    kv.classList.add("js");
-    var tabs = kv.querySelectorAll(".sw-b");
-    Array.prototype.forEach.call(tabs, function (b) {
-      b.addEventListener("click", function () {
-        kv.setAttribute("data-view", b.getAttribute("data-v"));
-        Array.prototype.forEach.call(tabs, function (o) { o.setAttribute("aria-selected", o === b ? "true" : "false"); });
-      });
-    });
-    var days = kv.querySelectorAll("button.dc[data-day]");
-    Array.prototype.forEach.call(days, function (c) {
-      c.addEventListener("click", function () {
-        Array.prototype.forEach.call(days, function (o) { o.setAttribute("aria-pressed", o === c ? "true" : "false"); });
-        Array.prototype.forEach.call(kv.querySelectorAll(".dpanel"), function (p) {
-          if (p.getAttribute("data-day") === c.getAttribute("data-day")) p.setAttribute("data-on", ""); else p.removeAttribute("data-on");
-        });
-      });
-    });
-  });
 })();
