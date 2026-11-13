@@ -7,20 +7,22 @@
 ### 準備
 - 作業フォルダ: `C:/work/sokuhou/shiken-routine/sokuhou-collector`(定時実行専用。ブランチ w/shiken-routine)。始めに `git fetch origin main` → `git rebase origin/main`。ACTIVE_WORK.md に1行書き、終わったら消す。
 - 使うルール: Drive の `H:/マイドライブ/文章ツール/ng_rules.json`(正)。`version` を読んで、報告の冒頭に書く。
+- Node: この PC では Deno の互換 node(`C:/Users/local_jdtcr4r/AppData/Local/deno/node_compat_bin` を PATH の先頭に)。build.py も自分で見つける。
 - 報告の置き場: `H:/マイドライブ/AI/Muse/試験日程カレンダー/` に、`日次報告_YYYY-MM-DD.md`(毎日)、`週次報告_YYYY-MM-DD.md`(月曜)、`月次報告_YYYY-MM.md`(1日)。同じ日に2回動くときは、同じファイルに節を足す(上書きしない)。
+- **2026-11-13 から、日程の正本は `sites/shiken/renewal/template/schedule/registry.json`**(旧 gen/facts.py・data/ は廃止)。サイト名は「資格・試験への道」。作りの詳細は `sites/shiken/docs/renewal/README.md`。
 
 ### 06:30 データの朝チェック
-1. 公式ページの一覧を作る(人手のリストは持たない): `python sites/shiken/tools/morning_list.py`(今日の7日前から30日後までの出来事を、出典ごとにまとめる。元は `sites/shiken/gen/model.py` の EVENT_LIST と `gen/sources.py` の OFFICIAL_PAGES)。`--json` で機械可読。データを足せば、一覧が自動で変わる。
-2. 一覧の公式ページを1つずつ開き(WebFetch か web-fetch エージェント。公式ドメインだけ。予備校・まとめサイトは使わない)、データの日付・時刻と照合する。文字化けや PDF などで読み取りに自信がないものは、「読み替えによる確認」として「要確認」に入れる。
-3. 公式ページ、または信ぴょう性のある二次情報2件以上で確かめた差分だけを、データ(`gen/model.py` の EVENTS・TIMES ほか、`data/rates.json`)に反映する。確かめられない変更は反映せず「要確認」。合格発表があった試験は、公式の結果(受験者数・合格者数)を取り、`data/rates.json` を更新する(合格率は 合格者÷受験者 が公表値と0.05以内で合うこと。合わなければ反映しない)。
-4. `python -m sites.shiken.gen`(コンテンツを作り直す)→ `python tests/run_tests.py --site shiken` → コミット(ファイル名を指定)。
-5. 日次報告に、確認した範囲、差分(試験名・項目・変更前→変更後・出典URL・確認日)、要確認を書く。確認日は、このファイルと報告にだけ書く。サイトのページには、出典URL・確認日を出さない(オーナーの2026-11-03の決め)。
+1. 公式ページの一覧を作る(人手のリストは持たない): `python sites/shiken/tools/morning_list.py`(今日の7日前から30日後までの出来事を、出典ごとにまとめる。元は registry.json)。`--json` で機械可読。
+2. 一覧の公式ページを1つずつ開き(WebFetch か web-fetch エージェント。主催者のページを優先。PDF が読めないときは、同じ主催者の別ページか、二次情報2件以上)、registry.json の日付・時刻と照合する。文字化けや PDF などで読み取りに自信がないものは、「読み替えによる確認」として「要確認」に入れる。
+3. 公式ページ、または信ぴょう性のある二次情報2件以上で確かめた差分だけを、registry.json に反映する(rows の date/time/note、meta の application/notes、確認日 checkedAt、出典 sources)。確かめられない変更は反映せず「要確認」。未発表・未確認の欄には日付の行を足さない(予想日を入れない)。合格発表があった試験は、合格率の数字を `renewal/template/legacy/goukaku-ritsu.json` などの該当の記事に反映する(合格者÷受験者が公表値と0.05以内で合うこと)。
+4. `cd sites/shiken/renewal/template && node scripts/schedule-manager.mjs build`(共通データを作り直す)→ リポジトリの根で `python tests/run_tests.py --site shiken` → コミット(ファイル名を指定)。
+5. 日次報告に、確認した範囲、差分(試験名・項目・変更前→変更後・出典URL・確認日)、要確認を書く。
 6. 月曜は、続けて「毎週」の巡回、1日は「毎月」の確認も行う。新しい試験は足さず、候補として報告に挙げる。
 
 ### 07:00 記事の公開と、公開
 1. Drive の `記事_YYYY-MM-DD_<slug>.md`(窓口の確定稿)を探す。**なければ、記事は作らない**(報告に「確定稿なし、記事は休み」)。本文は書かない。確定稿は書き換えない。
-2. 確定稿があるときの流し込みの形式は、**窓口と未確定**(最初の確定稿が来たら、形式を決める。確定稿の形式を窓口に確認する。形式が分からないまま、勝手に流し込まない)。
-3. 公開の前に、文章ゲートを通す: ビルドして `python sites/shiken/tools/check_text.py sites/shiken/dist --rules "H:/マイドライブ/文章ツール/ng_rules.json" --site shiken --report <報告のmd>`。ヒットが出たら、**公開を止めて報告に残す。自分で本文を直して通そうとしない**(窓口に戻す)。
+2. 確定稿があるときの流し込みの形式は、**窓口と未確定**(最初の確定稿が来たら、形式を決める。形式が分からないまま、勝手に流し込まない)。新構造では `renewal/template/legacy/<slug>.json` と `scripts/legacy-pages.mjs` の config に足す形になる。
+3. 公開の前に、文章ゲートを通す: `python sites/shiken/build.py --release --out release` で作ってから `python sites/shiken/tools/check_text.py release --rules "H:/マイドライブ/文章ツール/ng_rules.json" --site shiken --report <報告のmd>`。ヒットが出たら、**公開を止めて報告に残す。自分で本文を直して通そうとしない**(窓口に戻す)。
 4. 通ったら公開: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:/Dropbox/AI/Claude/副業/sokuhou-sites/tools/publish.ps1"`。公開後、本番で `/deployed-sha.txt` と主要ページを確かめる。
 5. 日次報告に、使ったルール version、NG語ごとの件数、公開したURL(記事があれば)、要確認・判断待ちを書く。
 

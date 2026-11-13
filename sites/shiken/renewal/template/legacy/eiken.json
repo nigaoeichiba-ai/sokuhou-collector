@@ -1,0 +1,19 @@
+{
+ "slug": "eiken",
+ "title": "英検の日程と申込期限(2026年度 第3回)",
+ "h1": "英検の日程・申込期限・受験料(2026年度第3回)",
+ "description": "英検2026年度第3回の日程です。申込は12月14日まで、一次試験は2027年1月24日、二次試験は2月28日と3月7日。級ごとの受験料と、結果発表の日も公式ページで確かめて載せています。",
+ "answer": "英検の2026年度第3回は、個人申込が12月14日(月)まで、一次試験が2027年1月24日(日)です。",
+ "parent": "/schedule/",
+ "kind": "item",
+ "sections": [
+  {
+   "h2": "級ごとの受験料",
+   "html": "<p>個人申込・本会場の受験料は、税込みです。2026年度は、2025年度から一律100円下がりました。4級と5級は一次のみ、1級と準1級は本会場のみで受けます。</p><div class=\"tablewrap\"><table class=\"ed-table\"><caption>英検 受験料(個人申込・本会場・税込)</caption><thead><tr><th>級</th><th class=\"num\">受験料</th></tr></thead><tbody><tr><td>1級</td><td class=\"num\">12,400円</td></tr><tr><td>準1級</td><td class=\"num\">10,400円</td></tr><tr><td>2級</td><td class=\"num\">9,000円</td></tr><tr><td>準2級プラス</td><td class=\"num\">8,600円</td></tr><tr><td>準2級</td><td class=\"num\">8,400円</td></tr><tr><td>3級</td><td class=\"num\">6,800円</td></tr><tr><td>4級</td><td class=\"num\">4,600円</td></tr><tr><td>5級</td><td class=\"num\">4,000円</td></tr></tbody></table></div>"
+  },
+  {
+   "h2": "最終確認は公式で",
+   "html": "<p>準会場の受験料は、本会場と別の表です。</p>"
+  }
+ ]
+}

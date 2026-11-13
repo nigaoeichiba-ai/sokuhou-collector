@@ -1,0 +1,1806 @@
+{
+  "basis": "元サイトへのDNS接続不可のため、ローカルの元サイト制作データを基準に対象を抽出。元データの日付は候補であり、今回の公式確認の証拠としては扱わない。",
+  "extractedAt": "2026-11-13",
+  "sourcePath": "C:\\Dropbox\\AI\\Claude\\副業\\sokuhou-collector\\sites\\shiken",
+  "pages": [
+    {
+      "file": "boki-net.json",
+      "path": "/boki-net/",
+      "title": "簿記のネット試験と統一試験の違い",
+      "officialLinks": []
+    },
+    {
+      "file": "boki.json",
+      "path": "/boki/",
+      "title": "日商簿記の試験日・申込・直近の合格率",
+      "officialLinks": []
+    },
+    {
+      "file": "cbt.json",
+      "path": "/cbt/",
+      "title": "CBT試験とは 通年で受ける試験と年1回の試験の違い",
+      "officialLinks": [
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDFP%E6%8A%80%E8%83%BD%E6%A4%9C%E5%AE%9A1%E7%B4%9A%20%E5%AD%A6%E7%A7%91%28%E3%81%8D%E3%82%93%E3%81%96%E3%81%84%29&amp;dates=20261201T173000/20261201T180000&amp;ctz=Asia%2FTokyo&amp;details=FP%E6%8A%80%E8%83%BD%E6%A4%9C%E5%AE%9A1%E7%B4%9A%20%E5%AD%A6%E7%A7%91%28%E3%81%8D%E3%82%93%E3%81%96%E3%81%84%29%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Ffp%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location="
+      ]
+    },
+    {
+      "file": "corrections.json",
+      "path": "/corrections/",
+      "title": "訂正と更新の記録",
+      "officialLinks": []
+    },
+    {
+      "file": "deadlines.json",
+      "path": "/deadlines/",
+      "title": "申込期限が近い試験の一覧",
+      "officialLinks": [
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BD%E6%9D%B1%E4%BA%AC%E5%A4%A7%E5%AD%A6%20%E4%B8%80%E8%88%AC%E9%81%B8%E6%8A%9C&amp;dates=20270203/20270204&amp;ctz=Asia%2FTokyo&amp;details=%E6%9D%B1%E4%BA%AC%E5%A4%A7%E5%AD%A6%20%E4%B8%80%E8%88%AC%E9%81%B8%E6%8A%9C%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkokkoritsu%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BD%E6%BC%A2%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20270110T235900/20270111T002900&amp;ctz=Asia%2FTokyo&amp;details=%E6%BC%A2%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BD%E7%9C%8B%E8%AD%B7%E5%B8%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC116%E5%9B%9E%29&amp;dates=20261127/20261128&amp;ctz=Asia%2FTokyo&amp;details=%E7%9C%8B%E8%AD%B7%E5%B8%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC116%E5%9B%9E%29%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkangoshi%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BD%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20261214/20261215&amp;ctz=Asia%2FTokyo&amp;details=%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Feiken%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDFP%E6%8A%80%E8%83%BD%E6%A4%9C%E5%AE%9A1%E7%B4%9A%20%E5%AD%A6%E7%A7%91%28%E3%81%8D%E3%82%93%E3%81%96%E3%81%84%29&amp;dates=20261201T173000/20261201T180000&amp;ctz=Asia%2FTokyo&amp;details=FP%E6%8A%80%E8%83%BD%E6%A4%9C%E5%AE%9A1%E7%B4%9A%20%E5%AD%A6%E7%A7%91%28%E3%81%8D%E3%82%93%E3%81%96%E3%81%84%29%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Ffp%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDTOEIC%20L%26R%201%E6%9C%8810%E6%97%A5%E5%9B%9E&amp;dates=20261126T150000/20261126T153000&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%201%E6%9C%8810%E6%97%A5%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDTOEIC%20L%26R%201%E6%9C%8824%E6%97%A5%E5%9B%9E&amp;dates=20261209T150000/20261209T153000&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%201%E6%9C%8824%E6%97%A5%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDTOEIC%20L%26R%2012%E6%9C%8819%E6%97%A5%E5%9B%9E&amp;dates=20261111T150000/20261111T153000&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%2012%E6%9C%8819%E6%97%A5%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDTOEIC%20L%26R%202%E6%9C%8814%E6%97%A5%E5%9B%9E&amp;dates=20270107T150000/20270107T153000&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%202%E6%9C%8814%E6%97%A5%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDTOEIC%20L%26R%203%E6%9C%8814%E6%97%A5%E5%9B%9E&amp;dates=20270203/20270204&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%203%E6%9C%8814%E6%97%A5%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDTOEIC%20L%26R%203%E6%9C%886%E6%97%A5%E5%9B%9E&amp;dates=20270127/20270128&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%203%E6%9C%886%E6%97%A5%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location="
+      ]
+    },
+    {
+      "file": "eiken.json",
+      "path": "/eiken/",
+      "title": "英検の日程・申込期限・受験料(2026年度第3回)",
+      "officialLinks": []
+    },
+    {
+      "file": "fees.json",
+      "path": "/fees/",
+      "title": "資格試験の受験料一覧",
+      "officialLinks": []
+    },
+    {
+      "file": "flow.json",
+      "path": "/flow/",
+      "title": "資格試験の申込の流れと、申込から合格発表までの日数",
+      "officialLinks": []
+    },
+    {
+      "file": "fp.json",
+      "path": "/fp/",
+      "title": "FP技能検定の試験日と申込期間",
+      "officialLinks": []
+    },
+    {
+      "file": "goukaku-ritsu.json",
+      "path": "/goukaku-ritsu/",
+      "title": "合格率の見方 受験者基準と申込者基準の違い",
+      "officialLinks": [
+        "https://schema.org"
+      ]
+    },
+    {
+      "file": "gyosei.json",
+      "path": "/gyosei/",
+      "title": "行政書士試験の試験日・申込期間・合格発表日",
+      "officialLinks": []
+    },
+    {
+      "file": "home.json",
+      "path": "/",
+      "title": "試験日程カレンダー",
+      "officialLinks": [
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BD%E6%BC%A2%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20270110T235900/20270111T002900&amp;ctz=Asia%2FTokyo&amp;details=%E6%BC%A2%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BD%E7%9C%8B%E8%AD%B7%E5%B8%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC116%E5%9B%9E%29&amp;dates=20261127/20261128&amp;ctz=Asia%2FTokyo&amp;details=%E7%9C%8B%E8%AD%B7%E5%B8%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC116%E5%9B%9E%29%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkangoshi%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BD%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20261214/20261215&amp;ctz=Asia%2FTokyo&amp;details=%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Feiken%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDFP%E6%8A%80%E8%83%BD%E6%A4%9C%E5%AE%9A1%E7%B4%9A%20%E5%AD%A6%E7%A7%91%28%E3%81%8D%E3%82%93%E3%81%96%E3%81%84%29&amp;dates=20261201T173000/20261201T180000&amp;ctz=Asia%2FTokyo&amp;details=FP%E6%8A%80%E8%83%BD%E6%A4%9C%E5%AE%9A1%E7%B4%9A%20%E5%AD%A6%E7%A7%91%28%E3%81%8D%E3%82%93%E3%81%96%E3%81%84%29%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Ffp%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDTOEIC%20L%26R%201%E6%9C%8810%E6%97%A5%E5%9B%9E&amp;dates=20261126T150000/20261126T153000&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%201%E6%9C%8810%E6%97%A5%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDTOEIC%20L%26R%201%E6%9C%8824%E6%97%A5%E5%9B%9E&amp;dates=20261209T150000/20261209T153000&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%201%E6%9C%8824%E6%97%A5%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDTOEIC%20L%26R%2012%E6%9C%8819%E6%97%A5%E5%9B%9E&amp;dates=20261111T150000/20261111T153000&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%2012%E6%9C%8819%E6%97%A5%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%EF%BC%BDTOEIC%20L%26R%202%E6%9C%8814%E6%97%A5%E5%9B%9E&amp;dates=20270107T150000/20270107T153000&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%202%E6%9C%8814%E6%97%A5%E5%9B%9E%E3%81%AE%E7%94%B3%E8%BE%BC%E7%B7%A0%E5%88%87%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location="
+      ]
+    },
+    {
+      "file": "kaigo-fukushi.json",
+      "path": "/kaigo-fukushi/",
+      "title": "介護福祉士国家試験の試験日・申込・合格発表(第39回)",
+      "officialLinks": []
+    },
+    {
+      "file": "kangoshi.json",
+      "path": "/kangoshi/",
+      "title": "看護師国家試験の日程・申込期間・合格発表(第116回)",
+      "officialLinks": []
+    },
+    {
+      "file": "kokkoritsu.json",
+      "path": "/kokkoritsu/",
+      "title": "国公立大学の出願期間 2027年度入試の流れ",
+      "officialLinks": []
+    },
+    {
+      "file": "koko.json",
+      "path": "/koko/",
+      "title": "公立高校入試の日程 令和9年度(2027年)都道府県別",
+      "officialLinks": []
+    },
+    {
+      "file": "komuin.json",
+      "path": "/komuin/",
+      "title": "国家公務員試験の日程 2027年度の総合職・一般職",
+      "officialLinks": []
+    },
+    {
+      "file": "kyotsu-tsuishi.json",
+      "path": "/kyotsu-tsuishi/",
+      "title": "共通テストの追試験(追・再試験) 2027年の日程",
+      "officialLinks": []
+    },
+    {
+      "file": "kyotsu.json",
+      "path": "/kyotsu/",
+      "title": "共通テストの日程・検定料・成績の見方(令和9年度)",
+      "officialLinks": []
+    },
+    {
+      "file": "method.json",
+      "path": "/method/",
+      "title": "日程の調べ方と出典",
+      "officialLinks": []
+    },
+    {
+      "file": "minkan.json",
+      "path": "/minkan/",
+      "title": "TOEICの試験日程と申込期間 漢検・ITパスポートも",
+      "officialLinks": []
+    },
+    {
+      "file": "nendo.json",
+      "path": "/nendo/",
+      "title": "来年度の試験日程はいつ発表されるか",
+      "officialLinks": []
+    },
+    {
+      "file": "nyushi.json",
+      "path": "/nyushi/",
+      "title": "入試カレンダー 2027年度入試の主な日程",
+      "officialLinks": []
+    },
+    {
+      "file": "postmark.json",
+      "path": "/postmark/",
+      "title": "消印有効と必着の違い",
+      "officialLinks": []
+    },
+    {
+      "file": "results.json",
+      "path": "/results/",
+      "title": "資格試験の合格発表日の一覧",
+      "officialLinks": []
+    },
+    {
+      "file": "schedule.json",
+      "path": "/schedule/",
+      "title": "資格試験日程一覧",
+      "officialLinks": [
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E4%BB%8B%E8%AD%B7%E7%A6%8F%E7%A5%89%E5%A3%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC39%E5%9B%9E%29&amp;dates=20270131/20270201&amp;ctz=Asia%2FTokyo&amp;details=%E4%BB%8B%E8%AD%B7%E7%A6%8F%E7%A5%89%E5%A3%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC39%E5%9B%9E%29%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkaigo-fukushi%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%BF%BD%E3%83%BB%E5%86%8D%E8%A9%A6%E9%A8%93&amp;dates=20270123/20270124&amp;ctz=Asia%2FTokyo&amp;details=%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%BF%BD%E3%83%BB%E5%86%8D%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkyotsu-tsuishi%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%BF%BD%E3%83%BB%E5%86%8D%E8%A9%A6%E9%A8%93&amp;dates=20270124/20270125&amp;ctz=Asia%2FTokyo&amp;details=%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%BF%BD%E3%83%BB%E5%86%8D%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkyotsu-tsuishi%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%9B%BD%E5%AE%B6%E4%B8%80%E8%88%AC%E8%81%B7%28%E5%A4%A7%E5%8D%92%29%E7%AC%AC1%E6%AC%A1%E8%A9%A6%E9%A8%93&amp;dates=20270502/20270503&amp;ctz=Asia%2FTokyo&amp;details=%E5%9B%BD%E5%AE%B6%E4%B8%80%E8%88%AC%E8%81%B7%28%E5%A4%A7%E5%8D%92%29%E7%AC%AC1%E6%AC%A1%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkomuin%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%9B%BD%E5%AE%B6%E7%B7%8F%E5%90%88%E8%81%B7%28%E6%98%A5%29%E7%AC%AC1%E6%AC%A1%E8%A9%A6%E9%A8%93&amp;dates=20270228/20270301&amp;ctz=Asia%2FTokyo&amp;details=%E5%9B%BD%E5%AE%B6%E7%B7%8F%E5%90%88%E8%81%B7%28%E6%98%A5%29%E7%AC%AC1%E6%AC%A1%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkomuin%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%A4%A7%E5%AD%A6%E5%85%A5%E5%AD%A6%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88&amp;dates=20270116/20270117&amp;ctz=Asia%2FTokyo&amp;details=%E5%A4%A7%E5%AD%A6%E5%85%A5%E5%AD%A6%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkyotsu%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%A4%A7%E5%AD%A6%E5%85%A5%E5%AD%A6%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88&amp;dates=20270117/20270118&amp;ctz=Asia%2FTokyo&amp;details=%E5%A4%A7%E5%AD%A6%E5%85%A5%E5%AD%A6%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkyotsu%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E6%97%A5%E5%95%86%E7%B0%BF%E8%A8%98%20%E7%AC%AC174%E5%9B%9E&amp;dates=20261115/20261116&amp;ctz=Asia%2FTokyo&amp;details=%E6%97%A5%E5%95%86%E7%B0%BF%E8%A8%98%20%E7%AC%AC174%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fboki%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E6%97%A5%E5%95%86%E7%B0%BF%E8%A8%98%20%E7%AC%AC175%E5%9B%9E&amp;dates=20270228/20270301&amp;ctz=Asia%2FTokyo&amp;details=%E6%97%A5%E5%95%86%E7%B0%BF%E8%A8%98%20%E7%AC%AC175%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fboki%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E6%9D%B1%E4%BA%AC%E5%A4%A7%E5%AD%A6%20%E4%B8%80%E8%88%AC%E9%81%B8%E6%8A%9C&amp;dates=20270225/20270226&amp;ctz=Asia%2FTokyo&amp;details=%E6%9D%B1%E4%BA%AC%E5%A4%A7%E5%AD%A6%20%E4%B8%80%E8%88%AC%E9%81%B8%E6%8A%9C%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkokkoritsu%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E6%BC%A2%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20270214/20270215&amp;ctz=Asia%2FTokyo&amp;details=%E6%BC%A2%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E7%9C%8B%E8%AD%B7%E5%B8%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC116%E5%9B%9E%29&amp;dates=20270214/20270215&amp;ctz=Asia%2FTokyo&amp;details=%E7%9C%8B%E8%AD%B7%E5%B8%AB%E5%9B%BD%E5%AE%B6%E8%A9%A6%E9%A8%93%28%E7%AC%AC116%E5%9B%9E%29%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkangoshi%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E7%AE%A1%E7%90%86%E6%A5%AD%E5%8B%99%E4%B8%BB%E4%BB%BB%E8%80%85%E8%A9%A6%E9%A8%93&amp;dates=20261206T130000/20261206T150000&amp;ctz=Asia%2FTokyo&amp;details=%E7%AE%A1%E7%90%86%E6%A5%AD%E5%8B%99%E4%B8%BB%E4%BB%BB%E8%80%85%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fschedule%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20270124/20270125&amp;ctz=Asia%2FTokyo&amp;details=%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Feiken%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20270228/20270301&amp;ctz=Asia%2FTokyo&amp;details=%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Feiken%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E&amp;dates=20270307/20270308&amp;ctz=Asia%2FTokyo&amp;details=%E8%8B%B1%E6%A4%9C%202026%E5%B9%B4%E5%BA%A6%20%E7%AC%AC3%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Feiken%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDFP%E6%8A%80%E8%83%BD%E6%A4%9C%E5%AE%9A1%E7%B4%9A%20%E5%AD%A6%E7%A7%91%28%E3%81%8D%E3%82%93%E3%81%96%E3%81%84%29&amp;dates=20270124/20270125&amp;ctz=Asia%2FTokyo&amp;details=FP%E6%8A%80%E8%83%BD%E6%A4%9C%E5%AE%9A1%E7%B4%9A%20%E5%AD%A6%E7%A7%91%28%E3%81%8D%E3%82%93%E3%81%96%E3%81%84%29%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Ffp%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%201%E6%9C%8810%E6%97%A5%E5%9B%9E&amp;dates=20270110/20270111&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%201%E6%9C%8810%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%201%E6%9C%8824%E6%97%A5%E5%9B%9E&amp;dates=20270124/20270125&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%201%E6%9C%8824%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%2012%E6%9C%8819%E6%97%A5%E5%9B%9E&amp;dates=20261219/20261220&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%2012%E6%9C%8819%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%202%E6%9C%8814%E6%97%A5%E5%9B%9E&amp;dates=20270214/20270215&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%202%E6%9C%8814%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%203%E6%9C%8814%E6%97%A5%E5%9B%9E&amp;dates=20270314/20270315&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%203%E6%9C%8814%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BDTOEIC%20L%26R%203%E6%9C%886%E6%97%A5%E5%9B%9E&amp;dates=20270306/20270307&amp;ctz=Asia%2FTokyo&amp;details=TOEIC%20L%26R%203%E6%9C%886%E6%97%A5%E5%9B%9E%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fminkan%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location="
+      ]
+    },
+    {
+      "file": "sharoshi.json",
+      "path": "/sharoshi/",
+      "title": "社労士試験の試験日・申込期間・合格発表日",
+      "officialLinks": []
+    },
+    {
+      "file": "takken-junbi.json",
+      "path": "/takken-junbi/",
+      "title": "宅建は来年度に向けて、11月の今から始める準備",
+      "officialLinks": []
+    },
+    {
+      "file": "takken.json",
+      "path": "/takken/",
+      "title": "宅建の試験日・申込期間・合格発表 令和8年度",
+      "officialLinks": [
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E5%90%88%E6%A0%BC%E7%99%BA%E8%A1%A8%EF%BC%BD%E5%AE%85%E5%9C%B0%E5%BB%BA%E7%89%A9%E5%8F%96%E5%BC%95%E5%A3%AB%28%E5%AE%85%E5%BB%BA%29&amp;dates=20261125T093000/20261125T100000&amp;ctz=Asia%2FTokyo&amp;details=%E5%AE%85%E5%9C%B0%E5%BB%BA%E7%89%A9%E5%8F%96%E5%BC%95%E5%A3%AB%28%E5%AE%85%E5%BB%BA%29%E3%81%AE%E5%90%88%E6%A0%BC%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Ftakken%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://schema.org",
+        "https://schema.org/EventScheduled",
+        "https://schema.org/OfflineEventAttendanceMode"
+      ]
+    },
+    {
+      "file": "tokushu-nyushi.json",
+      "path": "/tokushu-nyushi/",
+      "title": "入試の日程 共通テストから合格発表までの流れと公立高校入試",
+      "officialLinks": [
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E5%90%88%E6%A0%BC%E7%99%BA%E8%A1%A8%EF%BC%BD%E6%9D%B1%E4%BA%AC%E5%A4%A7%E5%AD%A6%20%E4%B8%80%E8%88%AC%E9%81%B8%E6%8A%9C&amp;dates=20270310T120000/20270310T123000&amp;ctz=Asia%2FTokyo&amp;details=%E6%9D%B1%E4%BA%AC%E5%A4%A7%E5%AD%A6%20%E4%B8%80%E8%88%AC%E9%81%B8%E6%8A%9C%E3%81%AE%E5%90%88%E6%A0%BC%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkokkoritsu%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%BF%BD%E3%83%BB%E5%86%8D%E8%A9%A6%E9%A8%93&amp;dates=20270123/20270124&amp;ctz=Asia%2FTokyo&amp;details=%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%BF%BD%E3%83%BB%E5%86%8D%E8%A9%A6%E9%A8%93%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkyotsu-tsuishi%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location=",
+        "https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EF%BC%BB%E8%A9%A6%E9%A8%93%E6%97%A5%EF%BC%BD%E5%A4%A7%E5%AD%A6%E5%85%A5%E5%AD%A6%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88&amp;dates=20270116/20270117&amp;ctz=Asia%2FTokyo&amp;details=%E5%A4%A7%E5%AD%A6%E5%85%A5%E5%AD%A6%E5%85%B1%E9%80%9A%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E8%A9%A6%E9%A8%93%E6%97%A5%E3%81%A7%E3%81%99%E3%80%82%E8%A9%B3%E7%B4%B0%3A%20https%3A%2F%2Fshiken-nittei.com%2Fkyotsu%2F%0A%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E6%97%A5%E7%A8%8B%E3%81%AF%E3%80%81%E4%B8%BB%E5%82%AC%E5%9B%A3%E4%BD%93%E3%81%AE%E5%85%AC%E5%BC%8F%E7%99%BA%E8%A1%A8%E3%81%A7%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&amp;location="
+      ]
+    },
+    {
+      "file": "yama.json",
+      "path": "/yama/",
+      "title": "11月から3月の試験日 2026年11月から2027年3月の山",
+      "officialLinks": []
+    },
+    {
+      "file": "yomimono.json",
+      "path": "/yomimono/",
+      "title": "特集 試験の仕組みと申込の注意",
+      "officialLinks": []
+    },
+    {
+      "file": "zenki-koki.json",
+      "path": "/zenki-koki/",
+      "title": "国公立大学の前期日程と後期日程の違い",
+      "officialLinks": []
+    }
+  ],
+  "families": [
+    {
+      "originalName": "宅建士(令和8年度)",
+      "id": "takken",
+      "name": "宅地建物取引士(宅建)",
+      "field": "不動産",
+      "path": "/takken/",
+      "organizer": "不動産適正取引推進機構"
+    },
+    {
+      "originalName": "行政書士(令和8年度)",
+      "id": "gyosei",
+      "name": "行政書士試験",
+      "field": "法律",
+      "path": "/gyosei/",
+      "organizer": "行政書士試験研究センター"
+    },
+    {
+      "originalName": "社労士(令和8年度)",
+      "id": "sharoshi",
+      "name": "社会保険労務士試験",
+      "field": "労務",
+      "path": "/sharoshi/",
+      "organizer": "全国社会保険労務士会連合会 試験センター"
+    },
+    {
+      "originalName": "介護福祉士(第39回)",
+      "id": "kaigo",
+      "name": "介護福祉士国家試験(第39回)",
+      "field": "福祉",
+      "path": "/kaigo-fukushi/",
+      "organizer": "社会福祉振興・試験センター"
+    },
+    {
+      "originalName": "看護師(第116回)",
+      "id": "kangoshi",
+      "name": "看護師国家試験(第116回)",
+      "field": "医療",
+      "path": "/kangoshi/",
+      "organizer": "厚生労働省"
+    },
+    {
+      "originalName": "管理業務主任者(令和8年度)",
+      "id": "kanri",
+      "name": "管理業務主任者試験",
+      "field": "不動産",
+      "path": "/schedule/",
+      "organizer": "マンション管理業協会"
+    },
+    {
+      "originalName": "中小企業診断士 2次(令和8年度)",
+      "id": "shindanshi",
+      "name": "中小企業診断士 2次試験",
+      "field": "経営",
+      "path": "/schedule/",
+      "organizer": "中小企業診断協会"
+    },
+    {
+      "originalName": "国家総合職(春)2027年度",
+      "id": "komuin-sogo",
+      "name": "国家総合職(春)第1次試験",
+      "field": "公務員",
+      "path": "/komuin/",
+      "organizer": "人事院"
+    },
+    {
+      "originalName": "国家一般職(大卒)2027年度",
+      "id": "komuin-ippan",
+      "name": "国家一般職(大卒)第1次試験",
+      "field": "公務員",
+      "path": "/komuin/",
+      "organizer": "人事院"
+    },
+    {
+      "originalName": "日商簿記 第174回",
+      "id": "boki-174",
+      "name": "日商簿記 第174回",
+      "field": "会計",
+      "path": "/boki/",
+      "organizer": "日本商工会議所"
+    },
+    {
+      "originalName": "日商簿記 第175回",
+      "id": "boki-175",
+      "name": "日商簿記 第175回",
+      "field": "会計",
+      "path": "/boki/",
+      "organizer": "日本商工会議所"
+    },
+    {
+      "originalName": "FP1級学科(きんざい)",
+      "id": "fp1",
+      "name": "FP技能検定1級 学科(きんざい)",
+      "field": "金融",
+      "path": "/fp/",
+      "organizer": "金融財政事情研究会"
+    },
+    {
+      "originalName": "英検 2026年度第3回",
+      "id": "eiken-3",
+      "name": "英検 2026年度 第3回",
+      "field": "語学",
+      "path": "/eiken/",
+      "organizer": "日本英語検定協会"
+    },
+    {
+      "originalName": "漢検 2026年度第3回",
+      "id": "kanken-3",
+      "name": "漢検 2026年度 第3回",
+      "field": "語学・教養",
+      "path": "/minkan/",
+      "organizer": "日本漢字能力検定協会"
+    },
+    {
+      "originalName": "共通テスト(令和9年度)",
+      "id": "kyotsu",
+      "name": "大学入学共通テスト",
+      "field": "大学入試",
+      "path": "/kyotsu/",
+      "organizer": "大学入試センター"
+    },
+    {
+      "originalName": "共通テスト 追・再試験",
+      "id": "kyotsu-tsuishi",
+      "name": "共通テストの追・再試験",
+      "field": "大学入試",
+      "path": "/kyotsu-tsuishi/",
+      "organizer": "大学入試センター"
+    },
+    {
+      "originalName": "東京大 一般選抜",
+      "id": "todai",
+      "name": "東京大学 一般選抜",
+      "field": "大学入試",
+      "path": "/kokkoritsu/",
+      "organizer": "東京大学"
+    }
+  ],
+  "legacyRows": [
+    [
+      "宅建士(令和8年度)",
+      "国家資格",
+      "exam",
+      "2026-10-18",
+      "retio",
+      "13時から15時"
+    ],
+    [
+      "宅建士(令和8年度)",
+      "国家資格",
+      "result",
+      "2026-11-25",
+      "retio",
+      "試験日の翌月、不動産適正取引推進機構が掲示"
+    ],
+    [
+      "行政書士(令和8年度)",
+      "国家資格",
+      "apply_end",
+      "2026-08-24",
+      "gyosei",
+      "インターネットは17時まで(郵送は8月17日の消印まで)"
+    ],
+    [
+      "行政書士(令和8年度)",
+      "国家資格",
+      "exam",
+      "2026-11-08",
+      "gyosei",
+      "13時から16時"
+    ],
+    [
+      "行政書士(令和8年度)",
+      "国家資格",
+      "result",
+      "2027-01-27",
+      "gyosei",
+      "9時から"
+    ],
+    [
+      "社労士(令和8年度)",
+      "国家資格",
+      "exam",
+      "2026-08-23",
+      "sharosi",
+      ""
+    ],
+    [
+      "社労士(令和8年度)",
+      "国家資格",
+      "result",
+      "2026-10-01",
+      "sharosi",
+      ""
+    ],
+    [
+      "介護福祉士(第39回)",
+      "国家資格",
+      "apply_end",
+      "2026-09-02",
+      "sssc",
+      ""
+    ],
+    [
+      "介護福祉士(第39回)",
+      "国家資格",
+      "exam",
+      "2027-01-31",
+      "sssc",
+      "筆記試験"
+    ],
+    [
+      "介護福祉士(第39回)",
+      "国家資格",
+      "result",
+      "2027-03-23",
+      "sssc",
+      "ホームページに掲載"
+    ],
+    [
+      "看護師(第116回)",
+      "国家資格",
+      "apply_start",
+      "2026-11-06",
+      "mhlw_kango",
+      "受験書類の提出期間の始まり"
+    ],
+    [
+      "看護師(第116回)",
+      "国家資格",
+      "apply_end",
+      "2026-11-27",
+      "mhlw_kango",
+      "受験書類の提出期間の終わり"
+    ],
+    [
+      "看護師(第116回)",
+      "国家資格",
+      "exam",
+      "2027-02-14",
+      "mhlw_kango",
+      ""
+    ],
+    [
+      "看護師(第116回)",
+      "国家資格",
+      "result",
+      "2027-03-24",
+      "mhlw_kango",
+      ""
+    ],
+    [
+      "管理業務主任者(令和8年度)",
+      "国家資格",
+      "apply_start",
+      "2026-08-03",
+      "kanrikyo",
+      "Web申込・郵送申込とも"
+    ],
+    [
+      "管理業務主任者(令和8年度)",
+      "国家資格",
+      "apply_end",
+      "2026-09-30",
+      "kanrikyo",
+      "Web申込は16時59分まで(郵送は8月24日の消印まで)"
+    ],
+    [
+      "管理業務主任者(令和8年度)",
+      "国家資格",
+      "exam",
+      "2026-12-06",
+      "kanrikyo",
+      "13時から15時"
+    ],
+    [
+      "管理業務主任者(令和8年度)",
+      "国家資格",
+      "result",
+      "2027-01-15",
+      "kanrikyo",
+      "協会のホームページに掲載"
+    ],
+    [
+      "中小企業診断士 2次(令和8年度)",
+      "国家資格",
+      "exam",
+      "2026-10-25",
+      "jfcmca",
+      "筆記"
+    ],
+    [
+      "中小企業診断士 2次(令和8年度)",
+      "国家資格",
+      "result",
+      "2027-01-13",
+      "jfcmca",
+      ""
+    ],
+    [
+      "国家総合職(春)2027年度",
+      "国家資格",
+      "exam",
+      "2027-02-28",
+      "jinji",
+      "第1次試験"
+    ],
+    [
+      "国家一般職(大卒)2027年度",
+      "国家資格",
+      "exam",
+      "2027-05-02",
+      "jinji",
+      "第1次試験"
+    ],
+    [
+      "日商簿記 第174回",
+      "民間資格",
+      "exam",
+      "2026-11-15",
+      "kentei",
+      "統一試験。申込は終了"
+    ],
+    [
+      "日商簿記 第175回",
+      "民間資格",
+      "exam",
+      "2027-02-28",
+      "kentei",
+      "統一試験(2級・3級のみ)"
+    ],
+    [
+      "FP1級学科(きんざい)",
+      "民間資格",
+      "apply_start",
+      "2026-10-28",
+      "kinzai",
+      "10時から"
+    ],
+    [
+      "FP1級学科(きんざい)",
+      "民間資格",
+      "apply_end",
+      "2026-12-01",
+      "kinzai",
+      "17時30分まで"
+    ],
+    [
+      "FP1級学科(きんざい)",
+      "民間資格",
+      "exam",
+      "2027-01-24",
+      "kinzai",
+      ""
+    ],
+    [
+      "英検 2026年度第3回",
+      "民間資格",
+      "apply_start",
+      "2026-10-30",
+      "eiken",
+      "個人申込"
+    ],
+    [
+      "英検 2026年度第3回",
+      "民間資格",
+      "apply_end",
+      "2026-12-14",
+      "eiken",
+      "個人申込(コンビニ・Pay-easy払いは12月11日)"
+    ],
+    [
+      "英検 2026年度第3回",
+      "民間資格",
+      "exam",
+      "2027-01-24",
+      "eiken",
+      "一次試験(本会場)"
+    ],
+    [
+      "英検 2026年度第3回",
+      "民間資格",
+      "exam",
+      "2027-02-28",
+      "eiken",
+      "二次試験A日程(21歳以上)"
+    ],
+    [
+      "英検 2026年度第3回",
+      "民間資格",
+      "exam",
+      "2027-03-07",
+      "eiken",
+      "二次試験B日程(20歳以下)"
+    ],
+    [
+      "英検 2026年度第3回",
+      "民間資格",
+      "result",
+      "2027-02-15",
+      "eiken",
+      "一次のウェブ合否"
+    ],
+    [
+      "漢検 2026年度第3回",
+      "民間資格",
+      "apply_start",
+      "2026-12-04",
+      "kanken",
+      "9時から"
+    ],
+    [
+      "漢検 2026年度第3回",
+      "民間資格",
+      "apply_end",
+      "2027-01-10",
+      "kanken",
+      "23時59分まで・先着順"
+    ],
+    [
+      "漢検 2026年度第3回",
+      "民間資格",
+      "exam",
+      "2027-02-14",
+      "kanken",
+      ""
+    ],
+    [
+      "共通テスト(令和9年度)",
+      "大学入試",
+      "apply_end",
+      "2026-10-02",
+      "dnc",
+      "登録は17時まで、支払は23時59分まで"
+    ],
+    [
+      "共通テスト(令和9年度)",
+      "大学入試",
+      "exam",
+      "2027-01-16",
+      "dnc",
+      "本試験の1日目"
+    ],
+    [
+      "共通テスト(令和9年度)",
+      "大学入試",
+      "exam",
+      "2027-01-17",
+      "dnc",
+      "本試験の2日目"
+    ],
+    [
+      "共通テスト 追・再試験",
+      "大学入試",
+      "exam",
+      "2027-01-23",
+      "dnc",
+      "追・再試験の1日目"
+    ],
+    [
+      "共通テスト 追・再試験",
+      "大学入試",
+      "exam",
+      "2027-01-24",
+      "dnc",
+      "追・再試験の2日目"
+    ],
+    [
+      "東京大 一般選抜",
+      "大学入試",
+      "apply_start",
+      "2027-01-25",
+      "utokyo",
+      ""
+    ],
+    [
+      "東京大 一般選抜",
+      "大学入試",
+      "apply_end",
+      "2027-02-03",
+      "utokyo",
+      ""
+    ],
+    [
+      "東京大 一般選抜",
+      "大学入試",
+      "exam",
+      "2027-02-25",
+      "utokyo",
+      "第2次学力試験(26日、理科三類は27日も)"
+    ],
+    [
+      "東京大 一般選抜",
+      "大学入試",
+      "result",
+      "2027-03-10",
+      "utokyo",
+      "12時ごろ"
+    ]
+  ],
+  "toeicRounds": [
+    [
+      "2026-12-19",
+      "2026-10-06",
+      "2026-11-11",
+      "2027-01-08"
+    ],
+    [
+      "2027-01-10",
+      "2026-10-27",
+      "2026-11-26",
+      "2027-01-28"
+    ],
+    [
+      "2027-01-24",
+      "2026-11-11",
+      "2026-12-09",
+      "2027-02-11"
+    ],
+    [
+      "2027-02-14",
+      "2026-11-27",
+      "2027-01-07",
+      "2027-03-04"
+    ],
+    [
+      "2027-03-06",
+      "2026-12-10",
+      "2027-01-27",
+      "2027-03-26"
+    ],
+    [
+      "2027-03-14",
+      "2027-01-06",
+      "2027-02-03",
+      "2027-04-01"
+    ]
+  ],
+  "schools": [
+    {
+      "pref": "北海道",
+      "src": "https://www.dokyoi.pref.hokkaido.lg.jp/hk/gks/184082.html",
+      "general": {
+        "name": "一般入学者選抜(全日制)",
+        "apply": [
+          null,
+          null
+        ],
+        "exam": [
+          "2027-03-03"
+        ],
+        "result": "2027-03-16",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "推薦入学者選抜(全日制)",
+        "apply": [
+          null,
+          null
+        ],
+        "exam": [
+          "2027-02-09"
+        ],
+        "result": "2027-03-16",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "青森県",
+      "src": "https://www.pref.aomori.lg.jp/soshiki/kyoiku/e-gakyo/files/nyuugakusyasenbatsuyoukou2027.pdf",
+      "general": {
+        "name": "一般入学者選抜(全日制・定時制)",
+        "apply": [
+          "2027-02-12",
+          "2027-02-17"
+        ],
+        "exam": [
+          "2027-03-04"
+        ],
+        "result": "2027-03-12",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "岩手県",
+      "src": "https://www.pref.iwate.jp/kyouikubunka/kyouiku/gakkou/senbatsu/1086539.html",
+      "general": {
+        "name": "一次募集(一般入試・特色入試)・杜陵定時制前期",
+        "apply": [
+          null,
+          null
+        ],
+        "exam": [
+          "2027-03-04",
+          "2027-03-05"
+        ],
+        "result": "2027-03-15",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "宮城県",
+      "src": "https://www.pref.miyagi.jp/soshiki/kyou-kikaku/happyou251224-2.html",
+      "general": {
+        "name": "第一次募集",
+        "apply": [
+          null,
+          null
+        ],
+        "exam": [
+          "2027-03-03"
+        ],
+        "result": "2027-03-15",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "秋田県",
+      "src": "https://www.pref.akita.lg.jp/uploads/public/archive_0000099375_00/令和９年度秋田県公立高等学校入学者選抜実施要項_（PDF版）.pdf",
+      "general": {
+        "name": "1次募集(全日制・定時制・一般選抜/特別選抜)",
+        "apply": [
+          "2027-02-01",
+          "2027-02-04"
+        ],
+        "exam": [
+          "2027-03-04"
+        ],
+        "result": "2027-03-12",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "山形県",
+      "src": "https://www.pref.yamagata.jp/documents/49031/r09sennbatsujissiyoukou.pdf",
+      "general": {
+        "name": "後期(一般)選抜",
+        "apply": [
+          "2027-02-17",
+          "2027-02-22"
+        ],
+        "exam": [
+          "2027-03-07"
+        ],
+        "result": "2027-03-17",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "前期(特色)選抜 A日程",
+        "apply": [
+          "2027-01-04",
+          "2027-01-07"
+        ],
+        "exam": [
+          "2027-01-19"
+        ],
+        "result": "2027-03-17",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "茨城県",
+      "src": "https://kyoiku.pref.ibaraki.jp/gakko/nyushi/highschool/schedule2026/",
+      "general": {
+        "name": "一般入学(第1希望校)の共通選抜・特色選抜",
+        "apply": [
+          "2027-02-05",
+          "2027-02-09"
+        ],
+        "exam": [
+          "2027-02-25"
+        ],
+        "result": "2027-03-11",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "栃木県",
+      "src": "https://www.pref.tochigi.lg.jp/m04/r09/documents/20261015163318.pdf",
+      "general": {
+        "name": "全日制 一般選抜・特色選抜(本検査)",
+        "apply": [
+          "2027-01-29",
+          "2027-02-08"
+        ],
+        "exam": [
+          "2027-02-24"
+        ],
+        "result": "2027-03-12",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "群馬県",
+      "src": "https://www.pref.gunma.jp/site/kyouiku/742234.html",
+      "general": {
+        "name": "県立高校(通信制を除く)本検査",
+        "apply": [
+          "2027-01-04",
+          "2027-01-29"
+        ],
+        "exam": [
+          "2027-02-16",
+          "2027-02-17"
+        ],
+        "result": "2027-03-03",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "埼玉県",
+      "src": "https://www.pref.saitama.lg.jp/f2208/news/page/news2025052203.html",
+      "general": {
+        "name": "学力検査に基づく選抜(全日制)",
+        "apply": [
+          null,
+          null
+        ],
+        "exam": [
+          "2027-02-25"
+        ],
+        "result": "2027-03-05",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "千葉県",
+      "src": "https://www.pref.chiba.lg.jp/kyouiku/shidou/nyuushi/koukou/r9/r9nyushinittei.html",
+      "general": {
+        "name": "一期(一般・特別・地域連携アクティブスクール・通信制一期)",
+        "apply": [
+          "2027-01-12",
+          "2027-02-01"
+        ],
+        "exam": [
+          "2027-02-16",
+          "2027-02-17"
+        ],
+        "result": "2027-03-02",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "東京都",
+      "src": "https://www.kyoiku.metro.tokyo.lg.jp/admission/high_school/exam/release20260917_r9yoko",
+      "general": {
+        "name": "学力検査に基づく選抜(第一次募集)",
+        "apply": [
+          "2027-01-29",
+          "2027-02-04"
+        ],
+        "exam": [
+          "2027-02-21"
+        ],
+        "result": "2027-03-01",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "推薦に基づく選抜",
+        "apply": [
+          "2027-01-08",
+          "2027-01-18"
+        ],
+        "exam": [
+          "2027-01-26",
+          "2027-01-27"
+        ],
+        "result": "2027-02-02",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "神奈川県",
+      "src": "https://www.pref.kanagawa.jp/docs/dc4/nyusen/nyusen/r9/r9nyusen-nittei.html",
+      "general": {
+        "name": "共通選抜等(全日制・定時制・通信制ほか)",
+        "apply": [
+          "2027-01-25",
+          "2027-01-29"
+        ],
+        "exam": [
+          "2027-02-16"
+        ],
+        "result": "2027-02-26",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "新潟県",
+      "src": "https://www.pref.niigata.lg.jp/uploaded/attachment/513719.pdf",
+      "general": {
+        "name": "一般選抜",
+        "apply": [
+          "2027-02-08",
+          "2027-02-10"
+        ],
+        "exam": [
+          "2027-02-25",
+          "2027-02-26"
+        ],
+        "result": "2027-03-08",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "富山県",
+      "src": "https://www.pref.toyama.jp/300201/kyouiku/kenritsukoukou/09senbatsu.html",
+      "general": {
+        "name": "全日制 一般",
+        "apply": [
+          "2027-02-24",
+          "2027-02-26"
+        ],
+        "exam": [
+          "2027-03-09",
+          "2027-03-10"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "全日制 推薦",
+        "apply": [
+          "2027-02-01",
+          "2027-02-03"
+        ],
+        "exam": [
+          "2027-02-09"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "石川県",
+      "src": "https://www.pref.ishikawa.lg.jp/soumu/koho/2606/documents/260605g-39.pdf",
+      "general": {
+        "name": "一般入学(全日制・定時制)",
+        "apply": [
+          "2027-02-16",
+          "2027-02-19"
+        ],
+        "exam": [
+          "2027-03-09",
+          "2027-03-10"
+        ],
+        "result": "2027-03-17",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "推薦入学(全日制・定時制)",
+        "apply": [
+          "2027-01-28",
+          "2027-02-01"
+        ],
+        "exam": [
+          "2027-02-08"
+        ],
+        "result": "2027-03-17",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "山梨県",
+      "src": "https://www.pref.yamanashi.jp/documents/84777/r9zisshiyoko-.pdf",
+      "general": {
+        "name": "後期募集(全日制)",
+        "apply": [
+          "2027-02-16",
+          "2027-02-18"
+        ],
+        "exam": [
+          "2027-03-03"
+        ],
+        "result": "2027-03-11",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "前期募集",
+        "apply": [
+          "2027-01-14",
+          "2027-01-18"
+        ],
+        "exam": [
+          "2027-01-28",
+          "2027-01-29"
+        ],
+        "result": "2027-03-11",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "長野県",
+      "src": "https://www.pref.nagano.lg.jp/kyoiku/koko/saiyo-nyuushi/shiken/ko/r9/documents/r9_konittei.pdf",
+      "general": {
+        "name": "後期選抜",
+        "apply": [
+          "2027-02-24",
+          "2027-02-26"
+        ],
+        "exam": [
+          "2027-03-09"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "前期選抜",
+        "apply": [
+          "2027-01-29",
+          "2027-02-02"
+        ],
+        "exam": [
+          "2027-02-08"
+        ],
+        "result": "2027-02-17",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "岐阜県",
+      "src": "https://www.pref.gifu.lg.jp/site/edu/61428.html",
+      "general": {
+        "name": "第一次選抜(連携型・帰国・外国人・県外募集を含む)",
+        "apply": [
+          "2027-02-05",
+          "2027-02-10"
+        ],
+        "exam": [
+          "2027-03-03"
+        ],
+        "result": "2027-03-12",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "静岡県",
+      "src": "https://www.pref.shizuoka.jp/_res/projects/default_project/_page_/001/082/226/r9anatahe2_1-11.pdf",
+      "general": {
+        "name": "一般選抜(特別選抜も同日程)",
+        "apply": [
+          "2027-02-16",
+          "2027-02-18"
+        ],
+        "exam": [
+          "2027-03-03",
+          "2027-03-04"
+        ],
+        "result": "2027-03-12",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "愛知県",
+      "src": "https://www.pref.aichi.jp/uploaded/attachment/612084.pdf",
+      "general": {
+        "name": "一般選抜",
+        "apply": [
+          "2027-02-08",
+          "2027-02-16"
+        ],
+        "exam": [
+          "2027-02-24"
+        ],
+        "result": "2027-03-08",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "推薦選抜",
+        "apply": [
+          "2027-01-25",
+          "2027-02-01"
+        ],
+        "exam": [
+          "2027-02-04"
+        ],
+        "result": "2027-02-08",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "三重県",
+      "src": "https://www.pref.mie.lg.jp/common/content/001261700.pdf",
+      "general": {
+        "name": "後期選抜",
+        "apply": [
+          "2027-02-22",
+          "2027-02-25"
+        ],
+        "exam": [
+          "2027-03-09"
+        ],
+        "result": "2027-03-16",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "前期選抜等(連携型・特別選抜・スポーツ特別枠・フレキシブル特別枠含む)",
+        "apply": [
+          "2027-01-22",
+          "2027-01-26"
+        ],
+        "exam": [
+          "2027-02-02",
+          "2027-02-03"
+        ],
+        "result": "2027-02-12",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "京都府",
+      "src": "https://www.kyoto-be.ne.jp/koukyou/cms/wp-content/uploads/2026/04/002%EF%BC%88%E5%BA%83%E5%A0%B1%E8%B3%87%E6%96%99%EF%BC%89%E5%85%AC%E7%AB%8B%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1%E5%85%A5%E5%AD%A6%E8%80%85%E9%81%B8%E6%8A%9C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6.pdf",
+      "general": {
+        "name": "後期選抜",
+        "apply": [
+          "2027-03-10",
+          "2027-03-11"
+        ],
+        "exam": [
+          "2027-03-16"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "前期選抜・特別入学者選抜(全日制・定時制。独自枠/共通枠)",
+        "apply": [
+          "2027-02-03",
+          "2027-02-05"
+        ],
+        "exam": [
+          "2027-02-18",
+          "2027-02-19"
+        ],
+        "result": "2027-03-05",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "大阪府",
+      "src": "https://www.pref.osaka.lg.jp/documents/129117/03_r9_hs_nittei.pdf",
+      "general": {
+        "name": "一般入学者選抜(全日制・定時制)",
+        "apply": [
+          "2027-03-03",
+          "2027-03-05"
+        ],
+        "exam": [
+          "2027-03-10"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "特別入学者選抜(全日制・工業系/総合造形科/美術科/体育系/グローバル探究科/演劇科/芸能文化科)",
+        "apply": [
+          "2027-02-15",
+          "2027-02-16"
+        ],
+        "exam": [
+          "2027-02-18",
+          "2027-02-19"
+        ],
+        "result": "2027-03-01",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "兵庫県",
+      "src": "https://www2.hyogo-c.ed.jp/hpe/uploads/sites/10/2026/07/R9-入学者選抜基本方針・詳細日程.pdf",
+      "general": {
+        "name": "学力検査・多部制3月選抜A(3月選抜)",
+        "apply": [
+          null,
+          "2027-03-01"
+        ],
+        "exam": [
+          "2027-03-11"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": "2027-03-01(月) 12:00 中学校長承認期限"
+      },
+      "early": {
+        "name": "推薦入学・特色選抜・連携型・外国人生徒特別枠・多部制2月選抜(2月選抜)",
+        "apply": [
+          null,
+          "2027-02-04"
+        ],
+        "exam": [
+          "2027-02-16",
+          "2027-02-17"
+        ],
+        "result": "2027-02-22",
+        "apply_raw": "2027-02-04(木) 12:00 中学校長承認期限(志願変更期限は外国人生徒特別枠のみ2027-02-08(月) 12:00)"
+      }
+    },
+    {
+      "pref": "奈良県",
+      "src": "https://www.pref.nara.lg.jp/n167/p122021.html",
+      "general": {
+        "name": "一次選抜(全日制。令和8年度から特色選抜と一般選抜を一本化)",
+        "apply": [
+          "2027-02-08",
+          "2027-02-19"
+        ],
+        "exam": [
+          "2027-02-24",
+          "2027-02-25"
+        ],
+        "result": "2027-03-08",
+        "apply_raw": null
+      },
+      "early": null
+    },
+    {
+      "pref": "和歌山県",
+      "src": "https://www.pref.wakayama.lg.jp/prefg/500200/d00221979.html",
+      "general": {
+        "name": "一般選抜・スポーツ推薦",
+        "apply": [
+          "2027-02-19",
+          "2027-03-03"
+        ],
+        "exam": [
+          "2027-03-10",
+          "2027-03-11"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "特色化選抜",
+        "apply": [
+          "2027-01-21",
+          "2027-01-21"
+        ],
+        "exam": [
+          "2027-01-28"
+        ],
+        "result": "2027-02-05",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "鳥取県",
+      "src": "https://www.pref.tottori.lg.jp/76404.htm",
+      "general": {
+        "name": "一般入学者選抜",
+        "apply": [
+          "2027-02-15",
+          "2027-02-17"
+        ],
+        "exam": [
+          "2027-03-04",
+          "2027-03-05"
+        ],
+        "result": "2027-03-15",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "特色入学者選抜",
+        "apply": [
+          "2027-01-25",
+          "2027-01-26"
+        ],
+        "exam": [
+          "2027-02-02"
+        ],
+        "result": "2027-02-09",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "島根県",
+      "src": "https://www.pref.shimane.lg.jp/education/kyoiku/senbatsu/senbatsu_info/index.html",
+      "general": {
+        "name": "一般入学者選抜(全日制・定時制)",
+        "apply": [
+          "2027-01-25",
+          "2027-02-04"
+        ],
+        "exam": [
+          "2027-03-03",
+          "2027-03-04"
+        ],
+        "result": "2027-03-12",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "特色入学者選抜(総合選抜・中高一貫特別選抜・スポーツ特別選抜の総称。全日制)",
+        "apply": [
+          "2026-12-21",
+          "2027-01-08"
+        ],
+        "exam": [
+          "2027-01-20"
+        ],
+        "result": "2027-03-12",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "岡山県",
+      "src": "https://www.pref.okayama.jp/uploaded/life/1061952_10292562_misc.pdf",
+      "general": {
+        "name": "一般入学者選抜(全日制課程・定時制課程)",
+        "apply": [
+          "2027-02-24",
+          "2027-02-26"
+        ],
+        "exam": [
+          "2027-03-09",
+          "2027-03-10"
+        ],
+        "result": "2027-03-17",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "特別入学者選抜(海外帰国生徒・連携型中高一貫・フレックス制・定時制の特別な入学者選抜を含む)",
+        "apply": [
+          "2027-01-26",
+          "2027-01-28"
+        ],
+        "exam": [
+          "2027-02-09"
+        ],
+        "result": "2027-02-18",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "広島県",
+      "src": "https://www.pref.hiroshima.lg.jp/uploaded/attachment/666905.pdf",
+      "general": {
+        "name": "一次選抜(併設型高等学校を除く)",
+        "apply": [
+          null,
+          null
+        ],
+        "exam": [
+          "2027-02-24"
+        ],
+        "result": "2027-03-08",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "一次選抜(併設型高等学校)",
+        "apply": [
+          null,
+          null
+        ],
+        "exam": [
+          "2027-02-03"
+        ],
+        "result": "2027-02-12",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "山口県",
+      "src": "https://www.pref.yamaguchi.lg.jp/site/kyouiku/353652.html",
+      "general": {
+        "name": "第一次募集(全日制・定時制)",
+        "apply": [
+          "2027-02-17",
+          "2027-02-25"
+        ],
+        "exam": [
+          "2027-03-09"
+        ],
+        "result": "2027-03-16",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "特色選抜(全日制・定時制)",
+        "apply": [
+          "2027-01-26",
+          "2027-02-02"
+        ],
+        "exam": [
+          "2027-02-09",
+          "2027-02-10"
+        ],
+        "result": "2027-03-16",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "香川県",
+      "src": "https://www.pref.kagawa.lg.jp/documents/15088/nyusinittei9.pdf",
+      "general": {
+        "name": "一般選抜",
+        "apply": [
+          null,
+          null
+        ],
+        "exam": [
+          "2027-03-09",
+          "2027-03-10"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "自己推薦選抜",
+        "apply": [
+          null,
+          null
+        ],
+        "exam": [
+          "2027-02-02"
+        ],
+        "result": "2027-02-09",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "愛媛県",
+      "src": "https://ehime-kyoiku.esnet.ed.jp/koukou/nyuusi/r09nyuusi",
+      "general": {
+        "name": "一般入学者選抜(全日制)",
+        "apply": [
+          "2027-02-08",
+          "2027-02-15"
+        ],
+        "exam": [
+          "2027-03-04",
+          "2027-03-05"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "特色入学者選抜",
+        "apply": [
+          "2027-01-12",
+          "2027-01-19"
+        ],
+        "exam": [
+          "2027-01-29"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "福岡県",
+      "src": "https://www.pref.fukuoka.lg.jp/uploaded/attachment/284848.pdf",
+      "general": {
+        "name": "一般入学者選抜(定時制単位制課程は前期Ⅱ期)",
+        "apply": [
+          "2027-02-10",
+          "2027-02-19"
+        ],
+        "exam": [
+          "2027-03-09"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "推薦入学者選抜・特色化選抜・連携型選抜・帰国生徒等特別学力検査・学びの多様化学校入学者選抜・定時制単位制課程前期Ⅰ期",
+        "apply": [
+          "2027-01-20",
+          "2027-01-28"
+        ],
+        "exam": [
+          "2027-02-02"
+        ],
+        "result": "2027-03-18",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "佐賀県",
+      "src": "https://www.pref.saga.lg.jp/kyouiku/kiji003119218/index.html",
+      "general": {
+        "name": "一般選抜(全日制・定時制)",
+        "apply": [
+          "2027-02-15",
+          "2027-02-16"
+        ],
+        "exam": [
+          "2027-03-02",
+          "2027-03-03"
+        ],
+        "result": "2027-03-10",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "特別選抜(全日制。スポーツ推進競技実績枠・学校希望枠、文化芸術推進、特色ある教育課程推進)",
+        "apply": [
+          "2027-01-26",
+          "2027-01-27"
+        ],
+        "exam": [
+          "2027-02-02"
+        ],
+        "result": "2027-02-08",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "熊本県",
+      "src": "https://www.pref.kumamoto.jp/uploaded/life/277880_875692_misc.pdf",
+      "general": {
+        "name": "後期(一般)選抜",
+        "apply": [
+          "2027-02-12",
+          "2027-02-17"
+        ],
+        "exam": [
+          "2027-03-04",
+          "2027-03-05"
+        ],
+        "result": "2027-03-12",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "前期(特色)選抜(連携型中高一貫・国際バカロレアに係る入学者選抜も同日程)",
+        "apply": [
+          "2027-01-20",
+          "2027-01-25"
+        ],
+        "exam": [
+          "2027-02-02"
+        ],
+        "result": "2027-02-09",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "大分県",
+      "src": "https://www.pref.oita.jp/site/kyoiku/r09koukounyuushi.html",
+      "general": {
+        "name": "一般入学者選抜 第一志願",
+        "apply": [
+          "2027-02-04",
+          "2027-02-10"
+        ],
+        "exam": [
+          "2027-03-03",
+          "2027-03-04"
+        ],
+        "result": "2027-03-12",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "推薦入学者選抜(学校推薦型・自己推薦型。連携型中高一貫教育に係る入学者選抜及び帰国・外国人生徒特別入学者選抜も同日程)",
+        "apply": [
+          "2027-01-18",
+          "2027-01-21"
+        ],
+        "exam": [
+          "2027-01-28",
+          "2027-01-29"
+        ],
+        "result": "2027-02-01",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "宮崎県",
+      "src": "https://www.pref.miyazaki.lg.jp/kokokyoiku/kyoikukosodate/kyoiku/20260519170532.html",
+      "general": {
+        "name": "一般入学者選抜",
+        "apply": [
+          "2027-02-04",
+          "2027-02-16"
+        ],
+        "exam": [
+          "2027-03-03",
+          "2027-03-04"
+        ],
+        "result": "2027-03-17",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "推薦入学者選抜(自己推薦方式・スポーツ推薦方式)・連携型入学者選抜・帰国・外国人生徒等入学者選抜",
+        "apply": [
+          "2027-01-06",
+          "2027-01-21"
+        ],
+        "exam": [
+          "2027-02-03"
+        ],
+        "result": "2027-03-17",
+        "apply_raw": null
+      }
+    },
+    {
+      "pref": "鹿児島県",
+      "src": "https://www.pref.kagoshima.jp/ba05/kyoiku-bunka/school/koukou/nyushi/r4/r9nittei.html",
+      "general": {
+        "name": "第一次入学者選抜 一般入学者選抜(学力検査)",
+        "apply": [
+          "2027-02-04",
+          "2027-02-10"
+        ],
+        "exam": [
+          "2027-03-03",
+          "2027-03-04"
+        ],
+        "result": "2027-03-12",
+        "apply_raw": null
+      },
+      "early": {
+        "name": "推薦入学者選抜・帰国生徒等特別入学者選抜・連携型中高一貫教育校(喜界高校・与論高校)入学者選抜",
+        "apply": [
+          "2027-01-19",
+          "2027-01-25"
+        ],
+        "exam": [
+          "2027-02-02"
+        ],
+        "result": "2027-02-08",
+        "apply_raw": null
+      }
+    }
+  ],
+  "additionalFamilies": [
+    "日商簿記ネット試験",
+    "ITパスポート",
+    "基本情報技術者",
+    "FP2級・3級CBT",
+    "日本FP協会1級実技",
+    "東京都登録販売者",
+    "国公立大学前期・中期・後期（標準日程）",
+    "北海道大学・京都大学の入試事例"
+  ]
+}

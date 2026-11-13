@@ -1,0 +1,23 @@
+{
+  "name": "shikaku-shiken-michi-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "schedule:admin": "node scripts/schedule-admin.mjs",
+    "schedule:build": "node scripts/schedule-manager.mjs build",
+    "schedule:status": "node scripts/schedule-manager.mjs status",
+    "schedule:check": "node scripts/schedule-manager.mjs check --pending",
+    "schedule:daily": "node scripts/schedule-manager.mjs daily",
+    "release:prepare": "node scripts/release-manager.mjs prepare",
+    "release:stage": "node scripts/release-manager.mjs stage",
+    "release:verify": "node scripts/release-manager.mjs verify",
+    "release:preview": "node scripts/release-server.mjs",
+    "release:plan": "node scripts/release-manager.mjs plan",
+    "release:export": "node scripts/release-manager.mjs export"
+  },
+  "devDependencies": {
+    "linkedom": "0.18.12"
+  }
+}

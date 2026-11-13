@@ -1,0 +1,47 @@
+/* Added for the release: pages made from the old articles, the site-wide pages (about, contact, privacy), footer links, PR section.  Colours and sizes follow styles.css. */
+.footer-links a{font-size:14px;color:inherit;text-decoration:underline;text-underline-offset:4px}
+.advice-grid a{display:flex;align-items:center;gap:15px;background:linear-gradient(#fffaf0,#fffdf9);border:1px solid #e2dccc;border-radius:10px;text-align:left;padding:20px;color:inherit;text-decoration:none}
+.advice-grid a:nth-child(2){background:linear-gradient(#f2fbff,#faffff);border-color:#d7e7f0}
+.advice-grid a:nth-child(2) .article-symbol{background:#def0fc}
+.advice-grid a strong{display:block}
+@media(max-width:600px){.footer-links a{font-size:13px}.advice-grid a{padding:14px 12px;gap:11px}}
+.legacy-page .ed-section{margin-top:30px}
+.legacy-page .ed-section h2{font-size:24px;line-height:1.5;margin:0 0 12px}
+.legacy-page .ed-section h3{font-size:18px;margin:22px 0 8px}
+.legacy-page .ed-section p,.legacy-page .ed-section li{line-height:1.95}
+.legacy-page .ed-section ul,.legacy-page .ed-section ol{padding-left:24px;margin:10px 0}
+.legacy-page .ed-hero figure img{width:100%;height:auto}
+.tablewrap{overflow-x:auto;margin:14px 0;-webkit-overflow-scrolling:touch}
+.ed-table{width:100%;border-collapse:collapse;font-size:15px;background:#fff;min-width:560px}
+.ed-table td:first-child,.ed-table th:first-child{min-width:8.5em}
+.ed-table caption{text-align:left;font-weight:700;padding:0 0 8px}
+.ed-table th,.ed-table td{padding:10px 12px;border:1px solid #dbe5eb;text-align:left;vertical-align:top;line-height:1.7}
+.ed-table th{background:#e9f3f9;font-weight:700}
+.ed-table td.num,.ed-table th.num{text-align:right;white-space:nowrap}
+.ed-table small{color:var(--muted);font-size:13px}
+.ed-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}
+.ed-card{background:#f8fbfe;border:1px solid #d9e3eb;border-radius:8px;padding:14px 17px}
+.ed-card h3{margin:0 0 6px;font-size:17px}
+.ed-card p{margin:0;font-size:14px;line-height:1.8}
+.ed-link-list{list-style:none;padding:0!important;margin:10px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 18px}
+.ed-link-list li{display:grid;gap:0;border-bottom:1px solid #e2e6e9;padding:6px 0}
+.ed-link-list li span{font-size:13px;color:var(--muted)}
+.ed-info{display:grid;grid-template-columns:9em 1fr;gap:10px 18px;margin:12px 0}
+.ed-info dt{font-weight:700}
+.ed-info dd{margin:0;line-height:1.9}
+.ed-pr{margin-top:34px;padding:20px 22px;border:1px solid #e8dcc0;border-radius:10px;background:#fffbf0}
+.ed-pr h2{font-size:21px;margin:0 0 8px}
+.ed-pr h3{font-size:16px;margin:16px 0 6px}
+.ed-pr p{margin:8px 0;line-height:1.9}
+.cf{display:grid;gap:14px;max-width:640px;margin:18px 0;padding:18px 20px;background:#fff;border:1px solid #c7d2de;border-radius:12px}
+.cf label{display:grid;gap:4px;font-weight:700;font-size:15px}
+.cf label small{font-weight:400;color:var(--muted)}
+.cf input,.cf select,.cf textarea{width:100%;box-sizing:border-box;padding:.6em .75em;border:1px solid #9faec2;border-radius:8px;background:#fff;color:inherit;font:inherit}
+.cf textarea{min-height:9em;resize:vertical}
+.cf .cf-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.cf button{justify-self:start;padding:.65em 1.6em;border:0;border-radius:999px;background:var(--blue);color:#fff;font:inherit;font-weight:800;cursor:pointer}
+.cf .cf-note{margin:0;font-size:13px;color:var(--muted)}
+@media(max-width:760px){.ed-card-grid{grid-template-columns:1fr}.ed-link-list{grid-template-columns:1fr 1fr}.ed-info{grid-template-columns:1fr;gap:2px 0}.ed-info dd{margin-bottom:10px}}
+@media(max-width:420px){.ed-link-list{grid-template-columns:1fr}.legacy-page .ed-section h2{font-size:21px}}
+.more-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.more-section .ed-card h3{font-size:17px}.more-section .section-heading p{margin:4px 0 0;color:var(--muted)}@media(max-width:760px){.more-grid{grid-template-columns:1fr}}
+.g-popular button{padding-left:12px;padding-right:12px;white-space:nowrap}

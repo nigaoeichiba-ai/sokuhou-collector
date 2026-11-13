@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {monthDays,shiftMonth,jstToday,dayDiff,eventsFor,readSaved} from '../dist/calendar.js';
+import {events,exams} from '../dist/data.js';
+test('承認デザインの2026年11月は日曜始まりで30日まで',()=>{const grid=monthDays(2026,10);assert.equal(grid[0],'2026-11-01');assert.equal(grid.filter(Boolean).length,30);assert.equal(grid.indexOf('2026-11-26')%7,4);assert.equal(grid.at(-1),null);assert.equal(new Set(grid.filter(Boolean)).size,30);});
+test('年をまたぐ月切り替え、うるう年、6週の月',()=>{assert.deepEqual(shiftMonth(2026,11,1),{year:2027,month:0});assert.deepEqual(shiftMonth(2027,0,-1),{year:2026,month:11});assert.equal(monthDays(2028,1).filter(Boolean).length,29);assert.equal(monthDays(2026,7).length,42);});
+test('日付と残り日数の基準を日本時間に統一',()=>{assert.equal(jstToday(new Date('2026-11-11T15:00:00Z')),'2026-11-12');assert.equal(jstToday(new Date('2026-11-11T14:59:59Z')),'2026-11-11');assert.equal(dayDiff('2026-11-26','2026-11-12'),14);assert.equal(dayDiff('2026-11-11','2026-11-12'),-1);});
+test('月・日・種別・試験名の絞り込みが同じデータを使う',()=>{assert.equal(eventsFor(events,{month:'2026-11'}).length,events.filter(e=>e.date.startsWith('2026-11')).length);assert.deepEqual(eventsFor(events,{date:'2026-11-26',type:'deadline'}).map(x=>x.id),['toeic-deadline']);assert.equal(eventsFor(events,{date:'2026-11-26',type:'exam'}).length,0);assert.equal(eventsFor(events,{query:'トーイック'}).length,events.filter(e=>e.aliases.includes('トーイック')).length);assert.ok(eventsFor(events,{month:'2027-07'}).every(e=>e.date.startsWith('2027-07')));});
+test('保存データが壊れていても日程表示を止めない',()=>{assert.deepEqual(readSaved({getItem:()=>'{broken'}),{saved:[],applied:[],checks:{}});assert.deepEqual(readSaved({getItem:()=>'{"saved":[1,"toeic"],"applied":"bad","checks":[]}'}),{saved:['toeic'],applied:[],checks:{}});assert.deepEqual(readSaved({getItem:()=>{throw Error('unavailable');}}),{saved:[],applied:[],checks:{}});});
+test('掲載イベントは実在日で、参照する試験とIDが一意',()=>{assert.equal(new Set(events.map(e=>e.id)).size,events.length);for(const e of events){assert.ok(exams.some(x=>x.id===e.exam));assert.equal(new Date(e.date+'T00:00:00Z').toISOString().slice(0,10),e.date);}});

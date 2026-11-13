@@ -1,0 +1,1262 @@
+{
+  "auditedAt": "2026-11-13",
+  "scope": "対象の網羅性のみ。元制作データの日付・研究JSONの日付の正しさを新たに検証した監査ではありません。",
+  "sources": {
+    "inventory": "research/original-inventory.json",
+    "researchFiles": [
+      "root-verified.json",
+      "national-verified.json",
+      "other-verified.json",
+      "school-verified.json"
+    ],
+    "originalContentPages": 33,
+    "baseProfiles": "dist/data.js の既存7件（対象名・回のみ照合）"
+  },
+  "summary": {
+    "originalFamilies": 17,
+    "familiesCovered": 17,
+    "additionalFamilies": 8,
+    "additionalFamiliesCovered": 8,
+    "originalToeicRounds": 6,
+    "toeicRoundsCovered": 6,
+    "originalSchoolRegions": 40,
+    "schoolRegionsCovered": 40,
+    "missingNamedFamilies": [],
+    "missingUniversityExamples": [],
+    "warnings": 1
+  },
+  "families": [
+    {
+      "originalId": "takken",
+      "originalName": "宅地建物取引士(宅建)",
+      "matchedId": "takken",
+      "matchedFile": "dist/data.js（既存7件）",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "gyosei",
+      "originalName": "行政書士試験",
+      "matchedId": "gyosei",
+      "matchedFile": "national-verified.json",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "sharoshi",
+      "originalName": "社会保険労務士試験",
+      "matchedId": "sharoshi",
+      "matchedFile": "national-verified.json",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "kaigo",
+      "originalName": "介護福祉士国家試験(第39回)",
+      "matchedId": "kaigo",
+      "matchedFile": "national-verified.json",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "kangoshi",
+      "originalName": "看護師国家試験(第116回)",
+      "matchedId": "nurse",
+      "matchedFile": "dist/data.js（既存7件）",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "kanri",
+      "originalName": "管理業務主任者試験",
+      "matchedId": "kanri",
+      "matchedFile": "national-verified.json",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "shindanshi",
+      "originalName": "中小企業診断士 2次試験",
+      "matchedId": "shindanshi",
+      "matchedFile": "national-verified.json",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "komuin-sogo",
+      "originalName": "国家総合職(春)第1次試験",
+      "matchedId": "komuin-sogo",
+      "matchedFile": "national-verified.json",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "komuin-ippan",
+      "originalName": "国家一般職(大卒)第1次試験",
+      "matchedId": "komuin-ippan",
+      "matchedFile": "national-verified.json",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "boki-174",
+      "originalName": "日商簿記 第174回",
+      "matchedId": "boki",
+      "matchedFile": "dist/data.js（既存7件）",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "boki-175",
+      "originalName": "日商簿記 第175回",
+      "matchedId": "boki-175",
+      "matchedFile": "root-verified.json",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "fp1",
+      "originalName": "FP技能検定1級 学科(きんざい)",
+      "matchedId": "fp",
+      "matchedFile": "dist/data.js（既存7件）",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "eiken-3",
+      "originalName": "英検 2026年度 第3回",
+      "matchedId": "eiken",
+      "matchedFile": "dist/data.js（既存7件）",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "kanken-3",
+      "originalName": "漢検 2026年度 第3回",
+      "matchedId": "kanken-2027-02-14",
+      "matchedFile": "other-verified.json",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "kyotsu",
+      "originalName": "大学入学共通テスト",
+      "matchedId": "kyotsu",
+      "matchedFile": "dist/data.js（既存7件）",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "kyotsu-tsuishi",
+      "originalName": "共通テストの追・再試験",
+      "matchedId": "kyotsu-tsuishi-2027",
+      "matchedFile": "other-verified.json",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    },
+    {
+      "originalId": "todai",
+      "originalName": "東京大学 一般選抜",
+      "matchedId": "todai-2027",
+      "matchedFile": "other-verified.json",
+      "status": "covered",
+      "notes": "対象名・実施回の存在のみ照合。今回の監査では日付を検証していません。"
+    }
+  ],
+  "additionalFamilies": [
+    {
+      "originalName": "日商簿記ネット試験",
+      "matchedIds": [
+        "boki-net-2026"
+      ],
+      "status": "covered"
+    },
+    {
+      "originalName": "ITパスポート",
+      "matchedIds": [
+        "itpassport-cbt"
+      ],
+      "status": "covered"
+    },
+    {
+      "originalName": "基本情報技術者",
+      "matchedIds": [
+        "fe-cbt"
+      ],
+      "status": "covered"
+    },
+    {
+      "originalName": "FP2級・3級CBT",
+      "matchedIds": [
+        "fp23-jafp-2026",
+        "fp23-jafp-2027",
+        "fp23-kinzai-2026"
+      ],
+      "status": "covered"
+    },
+    {
+      "originalName": "日本FP協会1級実技",
+      "matchedIds": [
+        "fp1-jafp-2026",
+        "fp1-jafp-2027"
+      ],
+      "status": "covered"
+    },
+    {
+      "originalName": "東京都登録販売者",
+      "matchedIds": [
+        "touroku-tokyo-2026",
+        "touroku-tokyo-2027"
+      ],
+      "status": "covered"
+    },
+    {
+      "originalName": "国公立大学前期・中期・後期（標準日程）",
+      "matchedIds": [
+        "national-zenki-2027",
+        "national-koki-2027",
+        "public-zenki-2027",
+        "public-chuki-2027",
+        "public-koki-2027"
+      ],
+      "status": "covered"
+    },
+    {
+      "originalName": "北海道大学・京都大学の入試事例",
+      "matchedIds": [
+        "hokudai-zenki-2027",
+        "hokudai-koki-2027",
+        "kyodai-2027"
+      ],
+      "status": "covered"
+    }
+  ],
+  "toeicRounds": [
+    {
+      "originalRound": "2026-12-19",
+      "matchedId": "toeic-20261219",
+      "matchedFile": "root-verified.json",
+      "status": "covered"
+    },
+    {
+      "originalRound": "2027-01-10",
+      "matchedId": "toeic",
+      "matchedFile": "dist/data.js（既存7件）",
+      "status": "covered"
+    },
+    {
+      "originalRound": "2027-01-24",
+      "matchedId": "toeic-20270124",
+      "matchedFile": "root-verified.json",
+      "status": "covered"
+    },
+    {
+      "originalRound": "2027-02-14",
+      "matchedId": "toeic-20270214",
+      "matchedFile": "root-verified.json",
+      "status": "covered"
+    },
+    {
+      "originalRound": "2027-03-06",
+      "matchedId": "toeic-20270306",
+      "matchedFile": "root-verified.json",
+      "status": "covered"
+    },
+    {
+      "originalRound": "2027-03-14",
+      "matchedId": "toeic-20270314",
+      "matchedFile": "root-verified.json",
+      "status": "covered"
+    }
+  ],
+  "schoolRegions": [
+    {
+      "prefecture": "北海道",
+      "originalStages": [
+        "一般入学者選抜(全日制)",
+        "推薦入学者選抜(全日制)"
+      ],
+      "matchedId": "koko-hokkaido",
+      "matchedVariantNames": [
+        "一般入学者選抜(全日制)",
+        "推薦入学者選抜(全日制)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "青森県",
+      "originalStages": [
+        "一般入学者選抜(全日制・定時制)"
+      ],
+      "matchedId": "koko-aomori",
+      "matchedVariantNames": [
+        "一般入学者選抜(全日制・定時制)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "岩手県",
+      "originalStages": [
+        "一次募集(一般入試・特色入試)・杜陵定時制前期"
+      ],
+      "matchedId": "koko-iwate",
+      "matchedVariantNames": [
+        "一次募集(一般入試・特色入試)・杜陵定時制前期"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "宮城県",
+      "originalStages": [
+        "第一次募集"
+      ],
+      "matchedId": "koko-miyagi",
+      "matchedVariantNames": [
+        "第一次募集"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "秋田県",
+      "originalStages": [
+        "1次募集(全日制・定時制・一般選抜/特別選抜)"
+      ],
+      "matchedId": "koko-akita",
+      "matchedVariantNames": [
+        "1次募集(全日制・定時制・一般選抜/特別選抜)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "山形県",
+      "originalStages": [
+        "後期(一般)選抜",
+        "前期(特色)選抜 A日程"
+      ],
+      "matchedId": "koko-yamagata",
+      "matchedVariantNames": [
+        "後期(一般)選抜",
+        "前期(特色)選抜 A日程"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "茨城県",
+      "originalStages": [
+        "一般入学(第1希望校)の共通選抜・特色選抜"
+      ],
+      "matchedId": "koko-ibaraki",
+      "matchedVariantNames": [
+        "一般入学(第1希望校)の共通選抜・特色選抜"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "栃木県",
+      "originalStages": [
+        "全日制 一般選抜・特色選抜(本検査)"
+      ],
+      "matchedId": "koko-tochigi",
+      "matchedVariantNames": [
+        "全日制 一般選抜・特色選抜(本検査)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "群馬県",
+      "originalStages": [
+        "県立高校(通信制を除く)本検査"
+      ],
+      "matchedId": "koko-gunma",
+      "matchedVariantNames": [
+        "県立高校(通信制を除く)本検査"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "埼玉県",
+      "originalStages": [
+        "学力検査に基づく選抜(全日制)"
+      ],
+      "matchedId": "koko-saitama",
+      "matchedVariantNames": [
+        "学力検査に基づく選抜(全日制)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "千葉県",
+      "originalStages": [
+        "一期(一般・特別・地域連携アクティブスクール・通信制一期)"
+      ],
+      "matchedId": "koko-chiba",
+      "matchedVariantNames": [
+        "一期(一般・特別・地域連携アクティブスクール・通信制一期)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "東京都",
+      "originalStages": [
+        "学力検査に基づく選抜(第一次募集)",
+        "推薦に基づく選抜"
+      ],
+      "matchedId": "koko-tokyo",
+      "matchedVariantNames": [
+        "学力検査に基づく選抜(第一次募集)",
+        "推薦に基づく選抜"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "神奈川県",
+      "originalStages": [
+        "共通選抜等(全日制・定時制・通信制ほか)"
+      ],
+      "matchedId": "koko-kanagawa",
+      "matchedVariantNames": [
+        "共通選抜等(全日制・定時制・通信制ほか)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "新潟県",
+      "originalStages": [
+        "一般選抜"
+      ],
+      "matchedId": "koko-niigata",
+      "matchedVariantNames": [
+        "一般選抜"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "富山県",
+      "originalStages": [
+        "全日制 一般",
+        "全日制 推薦"
+      ],
+      "matchedId": "koko-toyama",
+      "matchedVariantNames": [
+        "全日制 一般",
+        "全日制 推薦"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "石川県",
+      "originalStages": [
+        "一般入学(全日制・定時制)",
+        "推薦入学(全日制・定時制)"
+      ],
+      "matchedId": "koko-ishikawa",
+      "matchedVariantNames": [
+        "一般入学(全日制・定時制)",
+        "推薦入学(全日制・定時制)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "山梨県",
+      "originalStages": [
+        "後期募集(全日制)",
+        "前期募集"
+      ],
+      "matchedId": "koko-yamanashi",
+      "matchedVariantNames": [
+        "後期募集(全日制)",
+        "前期募集"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "長野県",
+      "originalStages": [
+        "後期選抜",
+        "前期選抜"
+      ],
+      "matchedId": "koko-nagano",
+      "matchedVariantNames": [
+        "後期選抜",
+        "前期選抜"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "岐阜県",
+      "originalStages": [
+        "第一次選抜(連携型・帰国・外国人・県外募集を含む)"
+      ],
+      "matchedId": "koko-gifu",
+      "matchedVariantNames": [
+        "第一次選抜(連携型・帰国・外国人・県外募集を含む)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "静岡県",
+      "originalStages": [
+        "一般選抜(特別選抜も同日程)"
+      ],
+      "matchedId": "koko-shizuoka",
+      "matchedVariantNames": [
+        "一般選抜(特別選抜も同日程)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "愛知県",
+      "originalStages": [
+        "一般選抜",
+        "推薦選抜"
+      ],
+      "matchedId": "koko-aichi",
+      "matchedVariantNames": [
+        "一般選抜",
+        "推薦選抜"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "三重県",
+      "originalStages": [
+        "後期選抜",
+        "前期選抜等(連携型・特別選抜・スポーツ特別枠・フレキシブル特別枠含む)"
+      ],
+      "matchedId": "koko-mie",
+      "matchedVariantNames": [
+        "後期選抜 出願書類受付",
+        "後期選抜",
+        "前期選抜等(連携型・特別選抜・スポーツ特別枠・フレキシブル特別枠含む)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "京都府",
+      "originalStages": [
+        "後期選抜",
+        "前期選抜・特別入学者選抜(全日制・定時制。独自枠/共通枠)"
+      ],
+      "matchedId": "koko-kyoto",
+      "matchedVariantNames": [
+        "後期選抜",
+        "前期選抜・特別入学者選抜(全日制・定時制。独自枠/共通枠)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "大阪府",
+      "originalStages": [
+        "一般入学者選抜(全日制・定時制)",
+        "特別入学者選抜(全日制・工業系/総合造形科/美術科/体育系/グローバル探究科/演劇科/芸能文化科)"
+      ],
+      "matchedId": "koko-osaka",
+      "matchedVariantNames": [
+        "一般入学者選抜(全日制・定時制)",
+        "特別入学者選抜(全日制・工業系/総合造形科/美術科/体育系/グローバル探究科/演劇科/芸能文化科)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "兵庫県",
+      "originalStages": [
+        "学力検査・多部制3月選抜A(3月選抜)",
+        "推薦入学・特色選抜・連携型・外国人生徒特別枠・多部制2月選抜(2月選抜)"
+      ],
+      "matchedId": "koko-hyogo",
+      "matchedVariantNames": [
+        "学力検査・多部制3月選抜A(3月選抜)",
+        "推薦入学・特色選抜・連携型・外国人生徒特別枠・多部制2月選抜(2月選抜)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "奈良県",
+      "originalStages": [
+        "一次選抜(全日制。令和8年度から特色選抜と一般選抜を一本化)"
+      ],
+      "matchedId": "koko-nara",
+      "matchedVariantNames": [
+        "一次選抜(全日制。令和8年度から特色選抜と一般選抜を一本化)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "和歌山県",
+      "originalStages": [
+        "一般選抜・スポーツ推薦",
+        "特色化選抜"
+      ],
+      "matchedId": "koko-wakayama",
+      "matchedVariantNames": [
+        "一般選抜・スポーツ推薦",
+        "特色化選抜"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "鳥取県",
+      "originalStages": [
+        "一般入学者選抜",
+        "特色入学者選抜"
+      ],
+      "matchedId": "koko-tottori",
+      "matchedVariantNames": [
+        "一般入学者選抜",
+        "特色入学者選抜"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "島根県",
+      "originalStages": [
+        "一般入学者選抜(全日制・定時制)",
+        "特色入学者選抜(総合選抜・中高一貫特別選抜・スポーツ特別選抜の総称。全日制)"
+      ],
+      "matchedId": "koko-shimane",
+      "matchedVariantNames": [
+        "一般入学者選抜(全日制・定時制)",
+        "特色入学者選抜(総合選抜・中高一貫特別選抜・スポーツ特別選抜の総称。全日制)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "岡山県",
+      "originalStages": [
+        "一般入学者選抜(全日制課程・定時制課程)",
+        "特別入学者選抜(海外帰国生徒・連携型中高一貫・フレックス制・定時制の特別な入学者選抜を含む)"
+      ],
+      "matchedId": "koko-okayama",
+      "matchedVariantNames": [
+        "一般入学者選抜(全日制課程・定時制課程)",
+        "特別入学者選抜(海外帰国生徒・連携型中高一貫・フレックス制・定時制の特別な入学者選抜を含む)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "広島県",
+      "originalStages": [
+        "一次選抜(併設型高等学校を除く)",
+        "一次選抜(併設型高等学校)"
+      ],
+      "matchedId": "koko-hiroshima",
+      "matchedVariantNames": [
+        "一次選抜(併設型高等学校を除く)",
+        "一次選抜(併設型高等学校)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "山口県",
+      "originalStages": [
+        "第一次募集(全日制・定時制)",
+        "特色選抜(全日制・定時制)"
+      ],
+      "matchedId": "koko-yamaguchi",
+      "matchedVariantNames": [
+        "第一次募集(全日制・定時制)",
+        "特色選抜(全日制・定時制)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "香川県",
+      "originalStages": [
+        "一般選抜",
+        "自己推薦選抜"
+      ],
+      "matchedId": "koko-kagawa",
+      "matchedVariantNames": [
+        "一般選抜",
+        "自己推薦選抜"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "愛媛県",
+      "originalStages": [
+        "一般入学者選抜(全日制)",
+        "特色入学者選抜"
+      ],
+      "matchedId": "koko-ehime",
+      "matchedVariantNames": [
+        "一般入学者選抜(全日制)",
+        "特色入学者選抜"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "福岡県",
+      "originalStages": [
+        "一般入学者選抜(定時制単位制課程は前期Ⅱ期)",
+        "推薦入学者選抜・特色化選抜・連携型選抜・帰国生徒等特別学力検査・学びの多様化学校入学者選抜・定時制単位制課程前期Ⅰ期"
+      ],
+      "matchedId": "koko-fukuoka",
+      "matchedVariantNames": [
+        "一般入学者選抜(定時制単位制課程は前期Ⅱ期)",
+        "推薦入学者選抜・特色化選抜・連携型選抜・帰国生徒等特別学力検査・学びの多様化学校入学者選抜・定時制単位制課程前期Ⅰ期"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "佐賀県",
+      "originalStages": [
+        "一般選抜(全日制・定時制)",
+        "特別選抜(全日制。スポーツ推進競技実績枠・学校希望枠、文化芸術推進、特色ある教育課程推進)"
+      ],
+      "matchedId": "koko-saga",
+      "matchedVariantNames": [
+        "一般選抜(全日制・定時制)",
+        "特別選抜(全日制。スポーツ推進競技実績枠・学校希望枠、文化芸術推進、特色ある教育課程推進)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "熊本県",
+      "originalStages": [
+        "後期(一般)選抜",
+        "前期(特色)選抜(連携型中高一貫・国際バカロレアに係る入学者選抜も同日程)"
+      ],
+      "matchedId": "koko-kumamoto",
+      "matchedVariantNames": [
+        "後期(一般)選抜",
+        "前期(特色)選抜(連携型中高一貫・国際バカロレアに係る入学者選抜も同日程)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "大分県",
+      "originalStages": [
+        "一般入学者選抜 第一志願",
+        "推薦入学者選抜(学校推薦型・自己推薦型。連携型中高一貫教育に係る入学者選抜及び帰国・外国人生徒特別入学者選抜も同日程)"
+      ],
+      "matchedId": "koko-oita",
+      "matchedVariantNames": [
+        "一般入学者選抜 第一志願",
+        "推薦入学者選抜(学校推薦型・自己推薦型。連携型中高一貫教育に係る入学者選抜及び帰国・外国人生徒特別入学者選抜も同日程)"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "宮崎県",
+      "originalStages": [
+        "一般入学者選抜",
+        "推薦入学者選抜(自己推薦方式・スポーツ推薦方式)・連携型入学者選抜・帰国・外国人生徒等入学者選抜"
+      ],
+      "matchedId": "koko-miyazaki",
+      "matchedVariantNames": [
+        "一般入学者選抜",
+        "推薦入学者選抜(自己推薦方式・スポーツ推薦方式)・連携型入学者選抜・帰国・外国人生徒等入学者選抜"
+      ],
+      "status": "covered"
+    },
+    {
+      "prefecture": "鹿児島県",
+      "originalStages": [
+        "第一次入学者選抜 一般入学者選抜(学力検査)",
+        "推薦入学者選抜・帰国生徒等特別入学者選抜・連携型中高一貫教育校(喜界高校・与論高校)入学者選抜"
+      ],
+      "matchedId": "koko-kagoshima",
+      "matchedVariantNames": [
+        "第一次入学者選抜 一般入学者選抜(学力検査)",
+        "推薦入学者選抜・帰国生徒等特別入学者選抜・連携型中高一貫教育校(喜界高校・与論高校)入学者選抜"
+      ],
+      "status": "covered"
+    }
+  ],
+  "universityExamples": [
+    {
+      "name": "東京大学",
+      "status": "covered",
+      "ids": [
+        "todai-2027"
+      ],
+      "sourceFiles": [
+        "content/kokkoritsu.json",
+        "content/nyushi.json",
+        "content/zenki-koki.json"
+      ]
+    },
+    {
+      "name": "北海道大学",
+      "status": "covered",
+      "ids": [
+        "hokudai-zenki-2027",
+        "hokudai-koki-2027"
+      ],
+      "sourceFiles": [
+        "content/zenki-koki.json"
+      ]
+    },
+    {
+      "name": "京都大学",
+      "status": "covered",
+      "ids": [
+        "kyodai-2027"
+      ],
+      "sourceFiles": [
+        "content/zenki-koki.json"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "severity": "scope-clarification",
+      "name": "日商簿記第174回の対象級",
+      "sourceFiles": [
+        "content/boki.json",
+        "content/boki-net.json"
+      ],
+      "targetFile": "dist/data.js",
+      "detail": "元サイトでは第174回を1〜3級対象と記載。既存baseの名称は第174回・3級のみ。第174回1級・2級も対象に含む名称または注記にして、回の対象級を狭めないこと。日付の正否はこの監査の対象外。",
+      "resolutionStatus": "主担当へ報告済み・1〜3級へ修正予定の回答あり"
+    }
+  ],
+  "excludedMentions": [
+    {
+      "name": "大阪大学・九州大学",
+      "sourceFile": "content/method.json",
+      "reason": "「募集要項が公表される前のため、このサイトにはありません」と明示。元掲載試験の漏れとは数えない。"
+    },
+    {
+      "name": "危険物取扱者試験",
+      "sourceFile": "content/method.json",
+      "reason": "全国日程を読めず「このサイトにはありません」と明示。元掲載試験の漏れとは数えない。"
+    },
+    {
+      "name": "福島・福井・滋賀・徳島・高知・長崎・沖縄の公立高校入試",
+      "sourceFile": "content/method.json",
+      "reason": "公式確認できていない地域として明示。元data/koko.json40地域の対象外。"
+    },
+    {
+      "name": "簿記第168〜172回・宅建等の過年度回",
+      "sourceFiles": [
+        "content/boki.json",
+        "content/goukaku-ritsu.json",
+        "content/takken.json",
+        "content/sharoshi.json"
+      ],
+      "reason": "合格率・実績の説明での過去回への言及。現行日程の実施回漏れとは数えない。"
+    }
+  ],
+  "nextRoundStatusMentions": [
+    {
+      "sourceFile": "content/nendo.json",
+      "name": "宅建士2027年度",
+      "role": "次年度・次回は未発表という元サイトの案内。日付を新規作成する対象ではない。各詳細ページで次回状況を扱う場合は公式再確認が必要。"
+    },
+    {
+      "sourceFile": "content/nendo.json",
+      "name": "行政書士2027年度",
+      "role": "次年度・次回は未発表という元サイトの案内。日付を新規作成する対象ではない。各詳細ページで次回状況を扱う場合は公式再確認が必要。"
+    },
+    {
+      "sourceFile": "content/nendo.json",
+      "name": "社会保険労務士第59回",
+      "role": "次年度・次回は未発表という元サイトの案内。日付を新規作成する対象ではない。各詳細ページで次回状況を扱う場合は公式再確認が必要。"
+    },
+    {
+      "sourceFile": "content/nendo.json",
+      "name": "介護福祉士第40回",
+      "role": "次年度・次回は未発表という元サイトの案内。日付を新規作成する対象ではない。各詳細ページで次回状況を扱う場合は公式再確認が必要。"
+    },
+    {
+      "sourceFile": "content/nendo.json",
+      "name": "中小企業診断士2027年度",
+      "role": "次年度・次回は未発表という元サイトの案内。日付を新規作成する対象ではない。各詳細ページで次回状況を扱う場合は公式再確認が必要。"
+    }
+  ],
+  "pages": [
+    {
+      "file": "content/boki-net.json",
+      "title": "簿記のネット試験と統一試験の違い",
+      "mentions": [
+        "簿記"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/boki.json",
+      "title": "日商簿記の試験日・申込・直近の合格率",
+      "mentions": [
+        "簿記"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/cbt.json",
+      "title": "CBT試験とは 通年で受ける試験と年1回の試験の違い",
+      "mentions": [
+        "宅建",
+        "簿記",
+        "FP",
+        "漢検",
+        "TOEIC",
+        "ITパスポート",
+        "基本情報"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/corrections.json",
+      "title": "訂正と更新の記録",
+      "mentions": [
+        "共通テスト"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/deadlines.json",
+      "title": "申込期限が近い試験の一覧",
+      "mentions": [
+        "看護師",
+        "FP",
+        "英検",
+        "漢検",
+        "TOEIC",
+        "東京大学"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/eiken.json",
+      "title": "英検の日程・申込期限・受験料(2026年度第3回)",
+      "mentions": [
+        "英検",
+        "漢検",
+        "TOEIC",
+        "ITパスポート"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/fees.json",
+      "title": "資格試験の受験料一覧",
+      "mentions": [
+        "宅建",
+        "行政書士",
+        "社労士",
+        "介護福祉士",
+        "看護師",
+        "管理業務主任者",
+        "簿記",
+        "FP",
+        "英検",
+        "漢検",
+        "TOEIC",
+        "共通テスト",
+        "ITパスポート",
+        "基本情報"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/flow.json",
+      "title": "資格試験の申込の流れと、申込から合格発表までの日数",
+      "mentions": [
+        "宅建",
+        "行政書士",
+        "社労士",
+        "介護福祉士",
+        "看護師",
+        "英検"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/fp.json",
+      "title": "FP技能検定の試験日と申込期間",
+      "mentions": [
+        "簿記",
+        "FP"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/goukaku-ritsu.json",
+      "title": "合格率の見方 受験者基準と申込者基準の違い",
+      "mentions": [
+        "宅建",
+        "行政書士",
+        "社労士",
+        "介護福祉士",
+        "看護師",
+        "簿記",
+        "英検",
+        "ITパスポート",
+        "基本情報"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/gyosei.json",
+      "title": "行政書士試験の試験日・申込期間・合格発表日",
+      "mentions": [
+        "宅建",
+        "行政書士"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/home.json",
+      "title": "試験日程カレンダー",
+      "mentions": [
+        "宅建",
+        "介護福祉士",
+        "看護師",
+        "管理業務主任者",
+        "簿記",
+        "FP",
+        "英検",
+        "漢検",
+        "TOEIC",
+        "共通テスト"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/kaigo-fukushi.json",
+      "title": "介護福祉士国家試験の試験日・申込・合格発表(第39回)",
+      "mentions": [
+        "介護福祉士",
+        "看護師"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/kangoshi.json",
+      "title": "看護師国家試験の日程・申込期間・合格発表(第116回)",
+      "mentions": [
+        "介護福祉士",
+        "看護師"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/kokkoritsu.json",
+      "title": "国公立大学の出願期間 2027年度入試の流れ",
+      "mentions": [
+        "共通テスト",
+        "東京大学"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/koko.json",
+      "title": "公立高校入試の日程 令和9年度(2027年)都道府県別",
+      "mentions": [
+        "共通テスト"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/komuin.json",
+      "title": "国家公務員試験の日程 2027年度の総合職・一般職",
+      "mentions": [
+        "国家公務員",
+        "簿記",
+        "英検"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/kyotsu-tsuishi.json",
+      "title": "共通テストの追試験(追・再試験) 2027年の日程",
+      "mentions": [
+        "共通テスト",
+        "東京大学"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/kyotsu.json",
+      "title": "共通テストの日程・検定料・成績の見方(令和9年度)",
+      "mentions": [
+        "共通テスト"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/method.json",
+      "title": "日程の調べ方と出典",
+      "mentions": [
+        "宅建",
+        "行政書士",
+        "社会保険労務士",
+        "簿記",
+        "FP",
+        "大阪大学",
+        "九州大学",
+        "危険物取扱者"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/minkan.json",
+      "title": "TOEICの試験日程と申込期間 漢検・ITパスポートも",
+      "mentions": [
+        "英検",
+        "漢検",
+        "TOEIC",
+        "ITパスポート",
+        "基本情報"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/nendo.json",
+      "title": "来年度の試験日程はいつ発表されるか",
+      "mentions": [
+        "宅建",
+        "行政書士",
+        "社労士",
+        "介護福祉士",
+        "看護師",
+        "中小企業診断士",
+        "国家公務員",
+        "英検"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/nyushi.json",
+      "title": "入試カレンダー 2027年度入試の主な日程",
+      "mentions": [
+        "共通テスト",
+        "東京大学"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/postmark.json",
+      "title": "消印有効と必着の違い",
+      "mentions": [
+        "宅建",
+        "行政書士",
+        "共通テスト",
+        "東京大学"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/results.json",
+      "title": "資格試験の合格発表日の一覧",
+      "mentions": [
+        "宅建",
+        "行政書士",
+        "社労士",
+        "介護福祉士",
+        "看護師",
+        "中小企業診断士"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/schedule.json",
+      "title": "資格試験日程一覧",
+      "mentions": [
+        "宅建",
+        "行政書士",
+        "社労士",
+        "介護福祉士",
+        "看護師",
+        "管理業務主任者",
+        "中小企業診断士",
+        "国家公務員",
+        "国家総合職",
+        "国家一般職",
+        "簿記",
+        "FP",
+        "英検",
+        "漢検",
+        "TOEIC",
+        "共通テスト",
+        "東京大学"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/sharoshi.json",
+      "title": "社労士試験の試験日・申込期間・合格発表日",
+      "mentions": [
+        "行政書士",
+        "社労士",
+        "社会保険労務士"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/takken-junbi.json",
+      "title": "宅建は来年度に向けて、11月の今から始める準備",
+      "mentions": [
+        "宅建"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/takken.json",
+      "title": "宅建の試験日・申込期間・合格発表 令和8年度",
+      "mentions": [
+        "宅建",
+        "管理業務主任者",
+        "FP"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/tokushu-nyushi.json",
+      "title": "入試の日程 共通テストから合格発表までの流れと公立高校入試",
+      "mentions": [
+        "宅建",
+        "共通テスト",
+        "東京大学"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/yama.json",
+      "title": "11月から3月の試験日 2026年11月から2027年3月の山",
+      "mentions": [
+        "看護師",
+        "国家公務員",
+        "国家総合職",
+        "簿記",
+        "FP",
+        "英検",
+        "漢検",
+        "TOEIC",
+        "共通テスト"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/yomimono.json",
+      "title": "特集 試験の仕組みと申込の注意",
+      "mentions": [
+        "宅建",
+        "行政書士",
+        "社労士",
+        "介護福祉士",
+        "看護師",
+        "国家公務員",
+        "簿記",
+        "FP",
+        "英検",
+        "ITパスポート"
+      ],
+      "read": true
+    },
+    {
+      "file": "content/zenki-koki.json",
+      "title": "国公立大学の前期日程と後期日程の違い",
+      "mentions": [
+        "共通テスト",
+        "東京大学",
+        "北海道大学",
+        "京都大学"
+      ],
+      "read": true
+    }
+  ],
+  "baseIntegrationNote": "主担当から、既存7件はbase側に維持し、確認日を2026-11-13へ更新する前提を確認。監査ではbaseの対象名・実施回の存在を照合した。日付の再検証結果は主担当の担当。"
+}

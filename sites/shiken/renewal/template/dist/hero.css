@@ -1,0 +1,27 @@
+/* Dedicated artwork, never a magnified fragment of a design screenshot. */
+.hero{min-height:clamp(340px,27.5vw,440px)}
+.hero-art{position:absolute;inset:0;display:block;width:100%;height:100%;overflow:hidden;z-index:-2;background:none;aspect-ratio:auto}
+.hero-art:before{content:none}
+.hero-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:right center;max-width:none}
+.hero-copy p{max-width:540px}
+.hero:after{background:linear-gradient(90deg,rgba(255,250,236,.94),rgba(255,250,236,.8) 30%,rgba(255,250,236,.46) 45%,rgba(255,250,236,0) 59%)}
+@media(max-width:900px) and (min-width:601px){
+ .hero-art img{object-position:85% center}
+ .hero:after{background:linear-gradient(90deg,rgba(255,250,236,.96),rgba(255,250,236,.88) 43%,rgba(255,250,236,.24) 70%,rgba(255,250,236,0))}
+}
+@media(max-width:600px){
+ .hero{display:flex;flex-direction:column;min-height:0;background:#fff9eb}
+ .hero-art{position:relative;inset:auto;display:block;width:100%;height:auto;aspect-ratio:2.65;order:2;z-index:0;background:none;overflow:hidden}
+ .hero-art:before{content:none}
+ .hero-art img{position:absolute;right:0;top:0;width:185%;height:auto;max-width:none;object-fit:initial;object-position:initial;transform:none}
+ .hero-copy{padding:18px 18px 8px;order:1;z-index:1}
+ .hero-copy h1{font-size:27px;line-height:1.45}
+ .hero-copy p{font-size:16px;line-height:1.65;margin-top:10px}
+ .hero .search-form{margin-top:14px}
+ .hero:after{content:none}
+}
+@media(max-width:360px){
+ .hero-copy{padding:16px 18px 7px}
+ .hero-copy h1{font-size:24px}
+ .hero .search-form{margin-top:12px}
+}

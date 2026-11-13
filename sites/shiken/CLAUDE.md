@@ -1,4 +1,12 @@
-# shiken-nittei.com（試験日程カレンダー）の常設指示
+# shiken-nittei.com（資格・試験への道。旧名「試験日程カレンダー」）の常設指示
+
+## 【2026-11-13〜】サイトの作りが変わった(テンプレートへの差し替え)
+- サイト名は「資格・試験への道」。Python の gen/ と content/ は廃止。ページは `renewal/template/`(オーナーのテンプレート)を Node で実行して作る(`build.py` が `renewal/template/scripts/build-site.mjs` を呼ぶ。Node は PATH の node、無ければ Deno の互換 node(この PC)。CI は actions/setup-node)。
+- **日程の正本は `renewal/template/schedule/registry.json`**。直し方: 公式資料で確かめ、registry.json の該当行(date/time/note/sourceId/checkedAt)を直す。確認日 checkedAt は確かめた日。未発表・未確認の欄に日付の行を入れない(テストが落ちる)。直したら `cd sites/shiken/renewal/template && node scripts/schedule-manager.mjs build`(dist/schedule-records.js などの共通データを作り直す)→ `python tests/run_tests.py --site shiken`。
+- 旧記事(24ページ)の本文は `renewal/template/legacy/<slug>.json`(日付で変わる一覧は、ビルドの日の正本から自動で作る)。合格率の数字(goukaku-ritsu)は、合格発表のあとに手で直す。
+- アフィリエイトは `renewal/template/dist/affiliate.js`(試験の詳細と該当の記事に【PR】の節を自動で出す)。提携が増えたらここに足す。
+- ページを足す・直すとき: 孤立ページ0・全ページのlayoutcheck・NG語0はテスト(`tests/test_shiken_renewal.py` `tests/test_shiken_gate.py`)が見る。詳しい仕様は `docs/renewal/`。
+- 以下の「公開の条件」のうち、ページに出典・確認日を出さない決め(2026-11-03)は、テンプレートの設計(日程ごとに出典・確認日を表示)に置き換わった(オーナーの2026-11-13の指示)。
 
 ## 文章の作成と公開のルール（絶対）
 

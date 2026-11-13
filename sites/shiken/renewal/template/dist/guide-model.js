@@ -1,0 +1,6 @@
+export function matchExams(exams,events,{query='',field='all',period='all',purpose='all'}={}){
+ const q=query.trim().toLocaleLowerCase('ja');
+ return exams.filter(e=>!['大学入試','高校入試'].includes(e.field)&&(!q||`${e.name} ${e.short} ${e.aliases||''}`.toLocaleLowerCase('ja').includes(q))&&(field==='all'||e.field===field)&&(purpose!=='work'||e.field!=='語学')&&(purpose!=='language'||e.field==='語学')&&(period==='all'||events.some(x=>x.exam===e.id&&x.type==='exam'&&x.date.startsWith(period))));
+}
+export function scheduleConflicts(events,ids){const dates=new Map();for(const e of events){if(e.type!=='exam'||!ids.includes(e.exam))continue;const day=dates.get(e.date)||new Map();day.set(e.exam,e.short);dates.set(e.date,day);}return [...dates].filter(([,m])=>m.size>1).map(([date,m])=>({date,names:[...m.values()]}));}
+export function normalizeSchoolPlans(value){if(!Array.isArray(value))return [];return value.slice(0,20).filter(p=>p&&typeof p.id==='string'&&typeof p.name==='string'&&p.name.trim()).map(p=>({id:p.id.slice(0,80),name:p.name.slice(0,100),dates:Object.fromEntries(['apply','exam','result','enroll'].map(k=>{const v=p.dates?.[k];const valid=typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&!Number.isNaN(Date.parse(v+'T00:00:00Z'))&&new Date(v+'T00:00:00Z').toISOString().slice(0,10)===v;return [k,valid?v:''];}))}));}

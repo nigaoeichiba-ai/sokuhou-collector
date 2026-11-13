@@ -1,0 +1,1 @@
+{"id":"automation","name":"資格・試験の公式日程を毎日確認","status":"ACTIVE","localTime":"09:00","timezone":"Asia/Tokyo","engine":"Codex thread heartbeat","configuredAt":"2026-11-13","scope":"all profiles including unpublished and unverified","requiresLocalApp":true}

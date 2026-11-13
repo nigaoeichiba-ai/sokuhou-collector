@@ -1,22 +1,16 @@
 {
   "site_url": "https://shiken-nittei.com",
-  "site_name": "試験日程カレンダー",
-  "operator_name": "試験日程カレンダー運営部",
+  "site_name": "資格・試験への道",
+  "operator_name": "資格・試験への道運営部",
   "contact_email": null,
   "contact_own": true,
   "contact_kinds": [
-    "数字の誤りのご指摘",
+    "日程・内容の誤りのご指摘",
     "ご意見・ご要望",
     "その他"
   ],
   "measure": true,
   "google_site_verification": "googleabcac004d8b7d556.html",
-  "legal_extra": [
-    [
-      "方法と出典",
-      "/method/"
-    ]
-  ],
   "privacy_affiliate_note_html": "<p>当サイトが参加しているのは、楽天アフィリエイト、Amazonアソシエイト、A8.netです。広告のあるリンクには「PR」と表示しています。リンクの有無や報酬の大小で、日程や解説の内容を変えることはしません。</p>",
   "rakuten_affiliate_id": "583f273a.77c989b6.583f273b.0a6a5fff",
   "amazon_tracking_id": "amazonmacs-22"

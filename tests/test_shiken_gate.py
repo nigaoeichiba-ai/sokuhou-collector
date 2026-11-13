@@ -12,8 +12,6 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from sokuhou import newsite
-
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "sites" / "shiken"
 TOOLS = SITE / "tools"
@@ -26,51 +24,38 @@ def load_checker():
     return mod
 
 
-def write_pages(pages: dict, out: Path) -> None:
-    for rel, body in pages.items():
-        if isinstance(body, str) and rel.endswith(".html"):
-            p = out / rel
-            p.parent.mkdir(parents=True, exist_ok=True)
-            p.write_text(body, encoding="utf-8")
+def load_build():
+    spec = importlib.util.spec_from_file_location("shiken_build", SITE / "build.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
 
 
 class GateTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        from sites.shiken import gen
-        gen.write()
+        cls.build = load_build()
         cls.mod = load_checker()
         # ルールの正は ng_rules.json(Drive)。CIにはリポジトリ内の控え(同じversion)を使う。
         hard, soft, white, cls.version, exc = cls.mod.load_rules(str(TOOLS / "ng_rules.json"))
         cls.mod.HARD_PATTERNS, cls.mod.SOFT_PATTERNS, cls.mod.WHITELIST, cls.mod.EXCEPTIONS = hard, soft, white, exc
 
-    def scan_built(self):
-        pages, _ = newsite.build_pages(SITE, release=True, strict_seo=True)
+    def scan_built(self, today=None):
         with tempfile.TemporaryDirectory() as tmp:
-            write_pages(pages, Path(tmp))
+            self.build.make_site(Path(tmp), today)
             files, hard, soft, _loc, _app = self.mod.scan(tmp)
         return files, hard
 
     def test_no_hard_ng_word_is_left_in_any_page(self):
         files, hard = self.scan_built()
-        self.assertGreaterEqual(len(files), 30)
+        self.assertGreaterEqual(len(files), 100)
         self.assertEqual(hard, [], "NG語が残っています: " + "; ".join(f"{r}[{l}]" for r, l, _ in hard[:10]))
 
     def test_the_text_stays_clean_on_other_days_too(self):
-        # 毎日のデプロイで日付が替わると、文章が変わる(残り日数・「始まっています」など)。その日も0件であること。
-        from sites.shiken.gen import common
-        before = common.TODAY
-        try:
-            for day in ("2026-11-20", "2026-12-20"):   # 2027-01-11 以降は、申込締切の残る試験がなくなる(別件: 日程データの更新が要る)
-                common.set_today(day)
-                from sites.shiken import gen
-                gen.write()
-                _files, hard = self.scan_built()
-                self.assertEqual(hard, [], f"{day}: " + "; ".join(f"{r}[{l}]" for r, l, _ in hard[:10]))
-        finally:
-            common.set_today(before.isoformat())
-            from sites.shiken import gen
-            gen.write()
+        # 毎日のデプロイで日付が替わると、文章が変わる(残り日数・状態の表示・これから先の日程の一覧)。その日も0件であること。
+        for day in ("2026-12-20", "2027-02-20"):
+            _files, hard = self.scan_built(day)
+            self.assertEqual(hard, [], f"{day}: " + "; ".join(f"{r}[{l}]" for r, l, _ in hard[:10]))
 
     def test_a_page_with_an_ng_word_is_stopped(self):
         # 負例: わざとNG語を入れたページで、走査が「公開不可」(終了コード1)を返すこと。

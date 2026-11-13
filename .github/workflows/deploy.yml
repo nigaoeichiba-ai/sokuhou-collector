@@ -224,6 +224,11 @@ jobs:
             echo "$row" >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
+      - name: Node.js (shiken only - its pages are made by the template's Node build, sites/shiken/build.py; the unit tests started below need it too)
+        if: steps.gate.outputs.go == 'true' && matrix.site == 'shiken'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
       - name: Private mall data (Rakuten / Yahoo! results, taken from the server's private folder; they are never in the repository - see sites/yorokobu/privatedata.py)
         if: steps.gate.outputs.go == 'true' && matrix.site == 'yorokobu'
         env:
