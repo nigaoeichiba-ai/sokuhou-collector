@@ -293,6 +293,13 @@ class Renewal(unittest.TestCase):
         self.assertIn("RewriteCond %{HTTPS} !=on", h)
         self.assertIn('Ngx_Cache_NoCacheMode=on', h)
 
+    def test_the_temporary_source_folder_is_marked_as_es_modules(self):
+        # real Node (the deploy workflow's) reads a .js file as CommonJS unless a package.json with "type": "module" is above it; Deno (the owner's PC) does not care,
+        # so a missing marker passes here and fails only in the workflow (2026-11-13, the first deploy).  The marker is written by build-site.mjs; check that it is.
+        text = (TEMPLATE / "scripts" / "build-site.mjs").read_text(encoding="utf-8")
+        self.assertRegex(text, r"writeFile\(path\.join\(source,'package\.json'\),'\{\"type\":\"module\"\}'\)")
+        self.assertIn('"type": "module"', (TEMPLATE / "package.json").read_text(encoding="utf-8"))
+
     def test_the_templates_own_node_tests_pass(self):
         """The template's tests of its browser code (calendar, guides, schedule data, exam details): run one by one (each exits non-zero on a failed test)."""
         import subprocess

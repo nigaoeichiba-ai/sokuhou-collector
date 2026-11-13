@@ -32,6 +32,8 @@ export async function buildSite(out){
  const source=await mkdtemp(path.join(os.tmpdir(),'shiken-src-'));
  try{
  await cp(path.join(rootDir,'dist'),source,{recursive:true});
+ // the browser files are ES modules: this folder is outside the template, so it needs its own marker (Node reads .js as CommonJS otherwise; Deno does not care)
+ await writeFile(path.join(source,'package.json'),'{"type":"module"}');
  const g=generated(registry);await writeFile(path.join(source,'schedule-records.js'),g.records);await writeFile(path.join(source,'expanded-catalog.js'),g.catalog);
  for(const name of await listFiles(source)){if(!/\.(js|html|css)$/.test(name))continue;const f=path.join(source,name);let text=await readFile(f,'utf8');text=text.replaceAll('/assets/',prefix+'/assets/');if(name==='index.html')text=text.replace(/(href|src)="\/(?!assets|_versions)([^"/]+\.(?:css|js))"/g,`$1="${prefix}/$2"`);await writeFile(f,text);}
  const result=await run(process.execPath,[path.join(rootDir,'scripts/render-pages.mjs'),source],{cwd:rootDir,maxBuffer:200*1024*1024,env:process.env});
