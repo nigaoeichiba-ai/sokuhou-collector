@@ -314,6 +314,16 @@ class Renewal(unittest.TestCase):
                 os.chdir(old)
         self.assertFalse((TEMPLATE / "release").exists())
 
+    def test_every_folder_of_the_site_can_be_read_by_the_web_server(self):
+        # the Node build works in a private temporary folder; its mode must not reach the site (on Linux the web server got 403 on /_versions/..., 2026-11-13).  On Windows the mode bits mean nothing; the workflow's Linux run is the real check.
+        import os
+        import stat
+        for d, _dirs, files in os.walk(self.out):
+            mode = stat.S_IMODE(os.stat(d).st_mode)
+            self.assertEqual(mode & 0o055, 0o055, f"{d} is not readable by the web server ({oct(mode)})")
+            for f in files:
+                self.assertEqual(stat.S_IMODE(os.stat(os.path.join(d, f)).st_mode) & 0o044, 0o044, f)
+
     def test_the_templates_own_node_tests_pass(self):
         """The template's tests of its browser code (calendar, guides, schedule data, exam details): run one by one (each exits non-zero on a failed test)."""
         import subprocess

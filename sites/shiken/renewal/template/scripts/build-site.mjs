@@ -6,7 +6,7 @@
 //
 // Nothing here uploads anything; sites/shiken/build.py (the build of the deploy workflow) calls this, adds the contact receiver and the visit counter, and the workflow checks the result.
 import './fake-date.mjs';
-import {readFile,writeFile,cp,mkdir,readdir,rm,mkdtemp} from 'node:fs/promises';
+import {readFile,writeFile,cp,mkdir,readdir,rm,mkdtemp,chmod} from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import {createHash} from 'node:crypto';
@@ -80,6 +80,8 @@ export async function buildSite(out){
  // ---- assets: one folder per version of the browser files (cached for a year) -------------------------------------------------
  await writeFile(path.join(source,'legacy.js'),`document.querySelector('.menu-toggle')?.addEventListener('click',()=>{const b=document.querySelector('.menu-toggle');const open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));document.querySelector('#main-nav').classList.toggle('menu-open',open);});`);
  await cp(source,path.join(out,'_versions',id),{recursive:true,filter:src=>!src.endsWith('index.html')});
+ // the temporary folder was made private (mode 700) and cp copies the mode: on the server the web server could not read the folder (403 on every css/js/image, 2026-11-13).  Every folder of the site is public.
+ for(const f of ['_versions/'+id,...(await listFiles(path.join(out,'_versions',id))).flatMap(n=>n.split('/').slice(0,-1).map((_,i,a)=>'_versions/'+id+'/'+a.slice(0,i+1).join('/')))])await chmod(path.join(out,f),0o755);
  await writeFile(path.join(out,'robots.txt'),`User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`);
  await writeFile(path.join(out,'.htaccess'),apacheConfig());
  sitemap.sort((a,b)=>(a[0]==origin+'/'?-1:b[0]==origin+'/'?1:a[0].localeCompare(b[0])));
