@@ -29,6 +29,8 @@ def all_pages() -> list[dict]:
             p["primary_kw"] = "初日不算入"
     assert not more, f"extras for pages that do not exist: {list(more)}"
     for p in pages:
+        if p["path"] in shop_links.A8_SECTIONS:
+            p["sections"].append(shop_links.a8_section(p["path"]))
         if p["path"] in shop_links.SHOP_PAGES:
             p["sections"].append(shop_links.section(p["path"]))
     return pages

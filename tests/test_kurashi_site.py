@@ -77,13 +77,18 @@ class Content(unittest.TestCase):
         item = '<a href="https://hb.afl.rakuten.co.jp/hgc/ID/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshop%2Fitem%2F" rel="nofollow">x</a>'
         self.assertIn("rakuten", remove_search_links(item))
         self.assertIn("amazon.co.jp", remove_search_links('<a href="https://www.amazon.co.jp/dp/B000000000?tag=t">x</a>'))
+        self.assertNotIn("a8.net", remove_search_links('<a href="https://px.a8.net/svt/ejp?a8mat=4BGH3G+CRMSF6+33J0+15UCEA">x</a><img src="https://www11.a8.net/0.gif?a8mat=4BGH3G+CRMSF6+33J0+15UCEA">'))
+        self.assertIn("a8.net", remove_search_links('<a href="https://px.a8.net/svt/rd?x=1">x</a>'))
 
 
 def remove_search_links(blob: str) -> str:
     import re
     stop = r'[^\s"\\]*'
     blob = re.sub(r"https://hb\.afl\.rakuten\.co\.jp/hgc/" + stop + r"\?pc=https%3A%2F%2Fsearch\.rakuten\.co\.jp%2Fsearch%2Fmall%2F" + stop, "", blob)
-    return re.sub(r"https://www\.amazon\.co\.jp/s\?k=" + stop, "", blob)
+    blob = re.sub(r"https://www\.amazon\.co\.jp/s\?k=" + stop, "", blob)
+    # 2026-11-13: the A8.net text link and its 1x1 pixel, in the form A8 gave them (a8mat only), are allowed
+    blob = re.sub(r"https://px\.a8\.net/svt/ejp\?a8mat=[0-9A-Z+]+", "", blob)
+    return re.sub(r"https://www\d+\.a8\.net/0\.gif\?a8mat=[0-9A-Z+]+", "", blob)
 
 
 def _plain(text: str) -> str:

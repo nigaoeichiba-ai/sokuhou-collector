@@ -17,6 +17,25 @@ def html_of(path: str) -> str:
     return " ".join(s.get("html", "") for s in d["sections"])
 
 
+def a8_problems(html: str) -> list[str]:
+    """The A8.net link must carry PR, rel (nofollow sponsored noopener), target=_blank, a word (not a URL) as its text, and its 1x1 pixel with the same a8mat."""
+    import re
+    out = []
+    links = re.findall(r'<a ([^>]*href="https://px\.a8\.net/svt/ejp\?a8mat=([0-9A-Z+]+)"[^>]*)>(.*?)</a>', html, re.S)
+    if not links:
+        return ["no A8 link"]
+    for attrs, mat, text in links:
+        if not all(w in attrs for w in ("nofollow", "sponsored", "noopener", 'target="_blank"')):
+            out.append("rel/target missing")
+        if re.match(r"^\s*(https?://|www\.)", re.sub(r"<[^>]+>", "", text)):
+            out.append("url as text")
+        if f"https://" not in html or not re.search(r"<img [^>]*src=\"https://www\d+\.a8\.net/0\.gif\?a8mat=" + re.escape(mat) + '"', html):
+            out.append("pixel missing")
+    if "PR" not in html:
+        out.append("PR missing")
+    return out
+
+
 class KurashiAffiliate(unittest.TestCase):
     def test_topic_pages_have_links(self):
         for path, (_h2, _intro, rk, am) in SHOP_PAGES.items():
@@ -25,6 +44,23 @@ class KurashiAffiliate(unittest.TestCase):
             if am:
                 self.assertIn("amazon.co.jp/s?k=", h, path)
             self.assertEqual(problems(h), [], path)
+
+    def test_nengajo_has_the_a8_link_of_the_print_service(self):
+        # A8.net 年賀状スクウェア (しまうまプリント): the text link of the SALEカレンダー media (007; kurashi has no media of its own yet), with its pixel, PR note, rel and target
+        h = html_of("/nengajo/")
+        self.assertEqual(a8_problems(h), [])
+        self.assertIn("a8mat=4BGH3G+CRMSF6+33J0+", h)
+
+    def test_a8_negative_cases_are_caught(self):
+        good = ('<p class="pr-note"><strong>【PR】</strong>広告です。</p><p><a href="https://px.a8.net/svt/ejp?a8mat=A+B+C+D" rel="nofollow sponsored noopener" target="_blank">年賀状印刷</a>'
+                '<img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=A+B+C+D" alt=""></p>')
+        self.assertEqual(a8_problems(good), [])
+        self.assertTrue(a8_problems(good.replace(">年賀状印刷<", ">https://px.a8.net/svt/ejp?a8mat=A+B+C+D<")))   # a URL as the visible text
+        self.assertTrue(a8_problems(good.replace(' target="_blank"', "")))
+        self.assertTrue(a8_problems(good.replace("sponsored ", "")))
+        self.assertTrue(a8_problems(good.replace("【PR】", "")))
+        self.assertTrue(a8_problems(good.replace('<img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=A+B+C+D" alt="">', "")))
+        self.assertTrue(a8_problems("<p>なし</p>"))
 
     def test_missing_link_is_caught(self):
         self.assertNotIn("hb.afl.rakuten.co.jp/hgc/", "<p>年賀状</p>")

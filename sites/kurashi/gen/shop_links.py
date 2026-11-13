@@ -37,3 +37,19 @@ def section(path: str) -> dict:
     if am:
         html += "<p>Amazonの検索ページ</p>" + ul(amazon, am)
     return {"h2": h2, "paras": [intro], "html": html}
+
+
+# 2026-11-13: an A8.net programme (年賀状スクウェア / しまうまプリント) on /nengajo/.  The code is the text link of the SALEカレンダー media (007):
+# kurashi has no media of its own at A8 yet, so replace the code (and the pixel host) once the media is registered.  Words and form as A8 gave them (a8mat only), PR note first.
+A8_SECTIONS = {
+    "/nengajo/": ("ネットで注文するなら【PR】", "年賀状を自分で作る時間がないなら、印刷をネットで頼む手もあります。締切は会社ごとに違います。引受開始の12月20日以降に出す日程から逆算して、注文の日を決めます。",
+                  "4BGH3G+CRMSF6+33J0+15UCEA", "www11", "喪中・年賀状印刷は年賀状スクウェアで"),
+}
+
+
+def a8_section(path: str) -> dict:
+    h2, intro, mat, host, label = A8_SECTIONS[path]
+    html = ('<p class="pr-note"><strong>【PR】</strong>このリンクは広告（アフィリエイト）です。</p>'
+            f'<p><a href="https://px.a8.net/svt/ejp?a8mat={mat}" {REL}>{label}</a>\n'
+            f'<img border="0" width="1" height="1" src="https://{host}.a8.net/0.gif?a8mat={mat}" alt=""></p>')
+    return {"h2": h2, "paras": [intro], "html": html}

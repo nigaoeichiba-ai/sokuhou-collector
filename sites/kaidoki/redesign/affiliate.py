@@ -20,7 +20,11 @@ SITE_NAME = json.loads((Path(__file__).resolve().parent / "site.json").read_text
 REL = "nofollow sponsored noopener"
 VC_SID = "3787704"
 VC_PID = {"yahoo": "892746613", "dhc": "892746566"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
-A8_MAT = {"xdomain": ("4BGJFW+4W8GGY+CO4+15ORS2", "www15"), "xserver": ("4BEHX9+1F7FFM+CO4+6AZAQ", "www16"), "xbiz": ("4BEHX9+1GEAN6+CO4+3SZMKY", "www14")}
+A8_MAT = {"xdomain": ("4BGJFW+4W8GGY+CO4+15ORS2", "www15"), "xserver": ("4BEHX9+1F7FFM+CO4+6AZAQ", "www16"), "xbiz": ("4BEHX9+1GEAN6+CO4+3SZMKY", "www14"),
+          # approved 2026-11-13, link codes read from the A8 tool (media 007 = this calendar).  Not yet in ASP: the calendar has no dated sale of these shops to attach them to
+          # (a shop is listed only when a sale is confirmed; Alpen's Black Friday 2026 days were not published when read).  To switch on: add the shop to schedule.ENT with a confirmed entry and to ASP below.
+          # Oisix has no text material at A8: the code of its mail material 046 is used (A8 allows it), the words of the link are ours.  The pixel host (www15) is the one the other 007 codes use.
+          "alpen": ("4BGJFW+4V1L9E+3OSK+5YJRM", "www15"), "oisix": ("4BGJFW+6PQ50I+3RK+2THJS3", "www15")}
 
 YAHOO_GUIDE = "https://shopping.yahoo.co.jp/promotion/campaign/guide/"
 RAKUTEN_EVENT = {"/rakuten/super-sale/": "https://event.rakuten.co.jp/campaign/supersale/", "/rakuten/marathon/": "https://event.rakuten.co.jp/campaign/point-up/marathon/",
@@ -47,7 +51,7 @@ STORES = {
 # The shops of an ASP programme that is already ours (the programme's own landing page).
 ASP = {"dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomain": ("a8", "xdomain", ""), "xserver": ("a8", "xserver", "")}
 ASP_BY_ID = {"c-xs-init": "xbiz"}                                  # エックスサーバー Business = the XServerビジネス programme
-ASP_NAME = {"dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス"}
+ASP_NAME = {"dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix"}
 MALLS = ("rakuten", "amazon", "yahoo")
 
 # Shops with no link, and why (reported to the owner; the test pins that every shop of the calendar is here or has a link).

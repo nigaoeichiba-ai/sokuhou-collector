@@ -95,6 +95,26 @@ class CoverageTest(unittest.TestCase):
                 html = AFF.anchor(l)
                 self.assertIn('target="_blank" rel="nofollow sponsored noopener">', html)
 
+    def test_every_a8_code_is_in_the_form_given_and_named(self):
+        for key, (mat, host) in AFF.A8_MAT.items():
+            self.assertRegex(mat, r"^[0-9A-Z]{6}\+[0-9A-Z]+\+[0-9A-Z]+\+[0-9A-Z]+$", key)
+            self.assertRegex(host, r"^www\d+$", key)
+            self.assertIn(key, AFF.ASP_NAME, key)
+            self.assertIn(f"a8mat={mat}", AFF.a8_href(key))
+            self.assertIn(f"a8mat={mat}", AFF.a8_pixel(key))
+        # the approved shops with no dated sale yet (Alpen / Sports Depot, Oisix) are kept ready; once they are in ASP they must be linked (the coverage tests above then pin it)
+        for key in ("alpen", "oisix"):
+            self.assertTrue(key in AFF.ASP or key not in S.ENT, f"{key} is a shop of the calendar but has no link")
+
+    def test_negative_a_shop_with_a_code_but_no_link_is_caught(self):
+        saved = dict(S.ENT)
+        S.ENT["alpen"] = ("スポーツデポ・アルペン", "ア", "brand")
+        try:
+            self.assertFalse("alpen" in AFF.ASP or "alpen" not in S.ENT)
+        finally:
+            S.ENT.clear()
+            S.ENT.update(saved)
+
     def test_each_mall_link_is_on_its_own_line(self):
         for it in self.items:
             out = AFF.lines(AFF.links_for(it))
