@@ -208,8 +208,8 @@ class Renewal(unittest.TestCase):
     def test_the_a8_link_is_on_each_of_its_pages(self):
         for path in A8_SECTIONS:
             html = self.page(path)
-            self.assertIn("a8mat=4BGH3G+CRMSF6+33J0+15UCEA", html, path)
-            self.assertIn('src="https://www11.a8.net/0.gif?a8mat=4BGH3G+CRMSF6+33J0+15UCEA"', html, path)
+            self.assertIn("a8mat=4BGH3G+CRMUQI+33J0+15OK2A", html, path)
+            self.assertIn('src="https://www15.a8.net/0.gif?a8mat=4BGH3G+CRMUQI+33J0+15OK2A"', html, path)
             self.assertIn("【PR】", html, path)
             self.assertEqual(links_without_rel(html), [], path)
 

@@ -49,7 +49,7 @@ class KurashiAffiliate(unittest.TestCase):
         # A8.net 年賀状スクウェア (しまうまプリント): the text link of the SALEカレンダー media (007; kurashi has no media of its own yet), with its pixel, PR note, rel and target
         h = html_of("/nengajo/")
         self.assertEqual(a8_problems(h), [])
-        self.assertIn("a8mat=4BGH3G+CRMSF6+33J0+", h)
+        self.assertIn("a8mat=4BGH3G+CRMUQI+33J0+", h)
 
     def test_a8_negative_cases_are_caught(self):
         good = ('<p class="pr-note"><strong>【PR】</strong>広告です。</p><p><a href="https://px.a8.net/svt/ejp?a8mat=A+B+C+D" rel="nofollow sponsored noopener" target="_blank">年賀状印刷</a>'

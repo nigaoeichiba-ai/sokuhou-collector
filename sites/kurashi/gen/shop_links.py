@@ -53,9 +53,9 @@ def section(path: str) -> dict:
 # kurashi has no media of its own at A8 yet, so replace the code (and the pixel host) once the media is registered.  Words and form as A8 gave them (a8mat only), PR note first.
 A8_SECTIONS = {
     "/nengajo/": ("ネットで注文するなら【PR】", "年賀状を自分で作る時間がないなら、印刷をネットで頼む手もあります。締切は会社ごとに違います。引受開始の12月20日以降に出す日程から逆算して、注文の日を決めます。",
-                  "4BGH3G+CRMSF6+33J0+15UCEA", "www11", "喪中・年賀状印刷は年賀状スクウェアで"),
+                  "4BGH3G+CRMUQI+33J0+15OK2A", "www15", "喪中・年賀状印刷は年賀状スクウェアで"),
     "/month/12/": ("年賀状をネットで注文するなら【PR】", "12月は年賀状の準備の月です。印刷をネットで頼むなら、引受開始の12月20日以降に出す日から逆算して、注文の日を決めます。締切は会社ごとに違います。",
-                   "4BGH3G+CRMSF6+33J0+15UCEA", "www11", "喪中・年賀状印刷は年賀状スクウェアで"),
+                   "4BGH3G+CRMUQI+33J0+15OK2A", "www15", "喪中・年賀状印刷は年賀状スクウェアで"),
 }
 
 
