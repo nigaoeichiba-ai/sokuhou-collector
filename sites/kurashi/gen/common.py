@@ -13,7 +13,7 @@ FIRST_UPDATED = "2026-11-03"   # the day the dates were checked
 # the pages whose text changed after that day (the day of the change; the dates in the tables were not re-checked, so data_basis keeps CHECKED).
 # site.json "updated" is the newest of these: it is computed, never typed (tests/test_kurashi_affiliate.py)
 # 2026-11-13: the pages went into the new design and the checked guides were merged into eleven of them; these pages only changed their frame, so their day stays
-UNCHANGED = ("/method/", "/kakutei-shinkoku/hitsuyo/", "/kakutei-shinkoku/kanpu/", "/moving/menkyo-sha/", "/life/", "/month/1/", "/month/3/", "/month/11/")
+UNCHANGED = ("/method/", "/kakutei-shinkoku/hitsuyo/", "/kakutei-shinkoku/kanpu/", "/moving/menkyo-sha/", "/life/", "/month/3/")
 REDESIGN_DAY = "2026-11-13"
 EDITED = {}          # kept for readers of the old name: a page's day is FIRST_UPDATED if it is in UNCHANGED, else REDESIGN_DAY (page() below)
 SITE_UPDATED = REDESIGN_DAY
