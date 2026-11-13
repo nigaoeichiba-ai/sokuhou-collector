@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-12T21:16:10.130187+00:00",
+ "fetched_at": "2026-11-13T21:16:07.725770+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -1215,18 +1215,6 @@
    "title": "松山港利用促進インセンティブ補助金（荷主向け）"
   },
   {
-   "acceptance_end_datetime": "2026-11-13T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-07-30T07:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDNDnMAP",
-   "id": "a0WJ200000CDNDnMAP",
-   "institution_name": "脱炭素成長型経済構造移行推進対策費補助金",
-   "name": "S-00006576",
-   "subsidy_max_limit": 1500000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和８年度_Scope3排出量削減のための企業間連携による省CO2設備投資促進事業"
-  },
-  {
    "acceptance_end_datetime": "2026-12-28T08:15:00.000Z",
    "acceptance_start_datetime": "2026-06-23T23:30:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDbpCMAT",
@@ -1273,18 +1261,6 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "産業車両等の脱炭素化促進事業のうち、空港における脱炭素化促進事業②空港におけるEV・FCV型車両導入事業（二酸化炭素排出抑制対策事業費等補助金）"
-  },
-  {
-   "acceptance_end_datetime": "2026-11-13T07:00:00.000Z",
-   "acceptance_start_datetime": "2026-09-08T01:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003I7vlUAC",
-   "id": "a0WfQ000003I7vlUAC",
-   "institution_name": "中小企業等海外展開支援事業費補助金（海外出願支援事業）",
-   "name": "S-00009860",
-   "subsidy_max_limit": 3000000,
-   "target_area_search": "岩手県",
-   "target_number_of_employees": "300名以下",
-   "title": "【岩手県】令和8年度中小企業等海外展開支援事業費補助金（海外出願支援事業）３次公募"
   },
   {
    "acceptance_end_datetime": "2027-02-05T14:59:00.000Z",
@@ -1395,18 +1371,6 @@
    "title": "小樽市省エネルギー診断補助金"
   },
   {
-   "acceptance_end_datetime": "2026-11-13T08:00:00.000Z",
-   "acceptance_start_datetime": "2026-05-25T06:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZXbMAP",
-   "id": "a0WJ200000CDZXbMAP",
-   "institution_name": "中小企業等海外展開支援事業費補助金（海外出願支援事業）",
-   "name": "S-00009221",
-   "subsidy_max_limit": 3000000,
-   "target_area_search": "鹿児島県",
-   "target_number_of_employees": "300名以下",
-   "title": "【鹿児島県】令和8年度_中小企業等海外展開支援事業費補助金（海外出願支援事業）"
-  },
-  {
    "acceptance_end_datetime": "2026-12-25T02:00:00.000Z",
    "acceptance_start_datetime": "2026-06-01T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDddZMAT",
@@ -1489,18 +1453,6 @@
    "target_area_search": "全国",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "交通システムの省CO2 化に向けた設備整備事業（鉄道事業等におけるネットワーク型低炭素化促進事業）（三次公募）"
-  },
-  {
-   "acceptance_end_datetime": "2026-11-13T14:59:00.000Z",
-   "acceptance_start_datetime": "2026-08-16T15:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZi6MAH",
-   "id": "a0WJ200000CDZi6MAH",
-   "institution_name": "高度人材インターンシップ受入支援費補助金",
-   "name": "S-00009232",
-   "subsidy_max_limit": 5000,
-   "target_area_search": "東京都",
-   "target_number_of_employees": "300名以下",
-   "title": "令和8年度 高度人材インターンシップ受入支援費補助金"
   },
   {
    "acceptance_end_datetime": "2027-03-31T08:00:00.000Z",
@@ -1791,18 +1743,6 @@
    "title": "福島県中小企業特別高圧電気料金支援補助金（第８次）"
   },
   {
-   "acceptance_end_datetime": "2026-11-13T04:00:00.000Z",
-   "acceptance_start_datetime": "2026-10-22T02:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003qYNFUA2",
-   "id": "a0WfQ000003qYNFUA2",
-   "institution_name": "令和８年度二酸化炭素排出抑制対策事業費等補助金 （地域共生型廃棄物発電等導入促進事業 （うち地域の廃棄物を活用した地域エネルギー創出事業））",
-   "name": "S-00009989",
-   "subsidy_max_limit": 0,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "【令和８年度】二酸化炭素排出抑制対策事業費等補助金 （地域共生型廃棄物発電等導入促進事業 （うち地域の廃棄物を活用した地域エネルギー創出事業））（３次公募）"
-  },
-  {
    "acceptance_end_datetime": "2026-11-30T09:00:00.000Z",
    "acceptance_start_datetime": "2026-05-21T07:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDZ1GMAX",
@@ -1827,5 +1767,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 152
+ "total": 147
 }
