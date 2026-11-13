@@ -44,7 +44,7 @@ def find_node() -> str:
 
 def make_site(out: Path, today: str | None = None) -> dict:
     """The whole site into `out` (which is emptied).  `today` (YYYY-MM-DD, Japan time) is for tests; the real build uses the clock."""
-    out = Path(out)
+    out = Path(out).resolve()      # the Node build runs in the template folder: a relative --out (the workflow's `release`) must be made absolute here
     if out.exists():
         for child in out.iterdir():
             shutil.rmtree(child) if child.is_dir() else child.unlink()

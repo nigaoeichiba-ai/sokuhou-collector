@@ -300,6 +300,20 @@ class Renewal(unittest.TestCase):
         self.assertRegex(text, r"writeFile\(path\.join\(source,'package\.json'\),'\{\"type\":\"module\"\}'\)")
         self.assertIn('"type": "module"', (TEMPLATE / "package.json").read_text(encoding="utf-8"))
 
+    def test_a_relative_output_folder_is_made_where_the_caller_stands(self):
+        # the workflow builds with `--out release` from the repository root; the Node build runs in the template folder (2026-11-13: the first two deploys failed on this)
+        import os
+        with tempfile.TemporaryDirectory() as tmp:
+            old = os.getcwd()
+            os.chdir(tmp)
+            try:
+                BUILD.make_site(Path("release"))
+                self.assertTrue((Path(tmp) / "release" / "index.html").exists())
+                self.assertTrue((Path(tmp) / "release" / ".htaccess").exists())
+            finally:
+                os.chdir(old)
+        self.assertFalse((TEMPLATE / "release").exists())
+
     def test_the_templates_own_node_tests_pass(self):
         """The template's tests of its browser code (calendar, guides, schedule data, exam details): run one by one (each exits non-zero on a failed test)."""
         import subprocess
