@@ -54,7 +54,7 @@ STORES = {
 # The shops of an ASP programme that is already ours (the programme's own landing page).
 ASP = {"dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomain": ("a8", "xdomain", ""), "xserver": ("a8", "xserver", "")}
 ASP_BY_ID = {"c-xs-init": "xbiz"}                                  # エックスサーバー Business = the XServerビジネス programme
-ASP_NAME = {"dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix"}
+ASP_NAME = {"dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com"}
 MALLS = ("rakuten", "amazon", "yahoo")
 
 # Shops with no link, and why (reported to the owner; the test pins that every shop of the calendar is here or has a link).
