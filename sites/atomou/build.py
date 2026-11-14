@@ -108,6 +108,24 @@ DEMO_AUTH = (
 )
 
 
+# The open preview (owner decision D24, 2026-11-14): the full demo without a password so that an AI an owner asks can read it.  Switched on only by the repository
+# variable ATOMOU_DEMO_OPEN="true" (deploy.yml passes --open).  Never indexed (meta + header), every receiver that writes on the server is refused, and only the agents
+# that read a page when a person asks are let in by robots.txt.
+OPEN_PREVIEW_HTACCESS = (
+    "# open preview: no password, never indexed, nothing can be written on the server\n"
+    "<IfModule mod_headers.c>\nHeader set X-Robots-Tag \"noindex, nofollow\"\n</IfModule>\n"
+    "RewriteRule ^(api/|contact/send\\.php) - [F,L]\n"
+)
+OPEN_PREVIEW_ROBOTS = (
+    "User-agent: *\nDisallow: /\n\n"
+    "User-agent: ChatGPT-User\nAllow: /\n\n"
+    "User-agent: Claude-User\nAllow: /\n\n"
+    "User-agent: Perplexity-User\nAllow: /\n"
+)
+PREVIEW_BANNER_OLD = '<div class="preview">プレビュー版です。運営者情報などが未設定のため、検索エンジンには公開されません。</div>'
+OPEN_PREVIEW_BANNER = '<div class="preview">これは意見をもらうための見本です。登録・送信はできません。</div>'
+
+
 def stats_php() -> str:
     return (HERE / "stats_receiver.php.tpl").read_text(encoding="utf-8").replace("__RE__", "/" + STAT_KEY_RE + "/")
 
@@ -1559,7 +1577,24 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
     return pages
 
 
-def build_demo_sub(cfg: dict, site_url: str, today: date | None = None) -> dict:
+def open_preview(pages: dict) -> dict:
+    """The demo pages as an open preview: no password, noindex, no sitemap, no server-side receivers, robots.txt for the on-request agents, an honest banner."""
+    out = {}
+    for k, v in pages.items():
+        if k.startswith("api/") or k == "sitemap.xml":
+            continue
+        if k.endswith(".html") and PREVIEW_BANNER_OLD in v:
+            v = v.replace(PREVIEW_BANNER_OLD, OPEN_PREVIEW_BANNER)
+        out[k] = v
+    ht = out[".htaccess"]
+    if DEMO_AUTH not in ht:
+        raise BuildError("the demo's password block changed: update open_preview in sites/atomou/build.py")
+    out[".htaccess"] = ht.replace(DEMO_AUTH, OPEN_PREVIEW_HTACCESS)
+    out["robots.txt"] = OPEN_PREVIEW_ROBOTS
+    return out
+
+
+def build_demo_sub(cfg: dict, site_url: str, today: date | None = None, open_: bool = False) -> dict:
     """The full demo as a folder of the review copy, served as the root of its own host (demo.<domain>: the subdomain's document root is public_html/demo).
     The pages and the PHP receivers are those of the demo; only the site address differs (the receivers accept requests from it, canonical links name it), and the
     receivers find the site folder one level further up (public_html/demo/api/m.php -> <site folder>), so what members and subscribers send never lands in a public folder."""
@@ -1569,7 +1604,7 @@ def build_demo_sub(cfg: dict, site_url: str, today: date | None = None) -> dict:
             if "dirname(__DIR__, 2)" not in v:
                 raise BuildError(f"{k}: the site-folder line changed; update build_demo_sub")
             pages[k] = v.replace("dirname(__DIR__, 2)", "dirname(__DIR__, 3)")
-    return pages
+    return open_preview(pages) if open_ else pages
 
 
 def render_site(cfg: dict, out: Path, release: bool = False, today: date | None = None) -> list[str]:
@@ -1583,6 +1618,7 @@ def main() -> None:
     ap.add_argument("--release", action="store_true")
     ap.add_argument("--review", action="store_true", help="the small review copy (sites/atomou/review.py): public to crawlers, not indexable, no application")
     ap.add_argument("--demo-sub", action="store_true", help="the full demo for the folder public_html/demo of the review copy (host demo.<domain>)")
+    ap.add_argument("--open", action="store_true", help="with --demo-sub: the open preview (no password; ATOMOU_DEMO_OPEN)")
     ap.add_argument("--out", default=str(HERE / "dist"))
     ap.add_argument("--today", default="")
     a = ap.parse_args()
@@ -1590,7 +1626,7 @@ def main() -> None:
     try:
         if a.demo_sub:
             host = urlparse(cfg["site_url"]).netloc
-            pages = build_demo_sub(cfg, f"https://demo.{host}", date.fromisoformat(a.today) if a.today else None)
+            pages = build_demo_sub(cfg, f"https://demo.{host}", date.fromisoformat(a.today) if a.today else None, open_=a.open)
             write_pages(pages, Path(a.out))
             files = sorted(pages)
         elif a.review:

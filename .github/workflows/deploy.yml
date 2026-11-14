@@ -347,6 +347,14 @@ jobs:
           python -m sokuhou.sitecheck demo_build --base https://demo.atomou.com
           python -m sokuhou.layoutcheck demo_build
           test -f demo_build/.htaccess
+          # ATOMOU_DEMO_OPEN=true (owner decision D24): the open preview replaces the password-protected demo (same pages, checked above); false = as before
+          if [ "${{ vars.ATOMOU_DEMO_OPEN }}" = "true" ]; then
+            python sites/atomou/build.py --demo-sub --open --out demo_open
+            grep -q "X-Robots-Tag" demo_open/.htaccess
+            ! grep -q AuthUserFile demo_open/.htaccess
+            test ! -e demo_open/api
+            rm -rf demo_build && mv demo_open demo_build
+          fi
           # the panel does not show a subdomain's document root: Xserver's default is public_html/<host name>, the owner's note says public_html/demo; both get the demo (both behind the password)
           for d in demo demo.atomou.com; do mkdir -p "release/$d"; cp -a demo_build/. "release/$d/"; done
       - name: Check the server (read only)
@@ -403,7 +411,7 @@ jobs:
               grep -q "AuthUserFile $home/$SITE_DIR/.htpasswd" "$f"
             fi
           done
-          for d in release/demo release/demo.atomou.com; do if [ -d "$d" ]; then grep -q "AuthUserFile" "$d/.htaccess"; fi; done
+          for d in release/demo release/demo.atomou.com; do if [ -d "$d" ]; then if [ "${{ vars.ATOMOU_DEMO_OPEN }}" = "true" ]; then ! grep -q "AuthUserFile" "$d/.htaccess"; else grep -q "AuthUserFile" "$d/.htaccess"; fi; fi; done
       - name: IndexNow previous sitemap (the live one, kept before the new build replaces it; a failure only means nothing is sent afterwards)
         if: steps.gate.outputs.go == 'true' && matrix.site != 'atomou' && steps.gate.outputs.really == 'true'
         continue-on-error: true
@@ -441,6 +449,7 @@ jobs:
           FAST: ${{ steps.gate.outputs.fast }}
           ATOMOU_PUBLIC: ${{ vars.ATOMOU_PUBLIC }}
           ATOMOU_REVIEW: ${{ vars.ATOMOU_REVIEW }}
+          ATOMOU_DEMO_OPEN: ${{ vars.ATOMOU_DEMO_OPEN }}
           DEMO_USER: ${{ secrets.ATOMOU_DEMO_USER || 'demo' }}
           DEMO_PASS: ${{ secrets.ATOMOU_DEMO_PASSWORD }}
         run: |
@@ -454,8 +463,14 @@ jobs:
           fi
           if [ "$SITE" = "atomou" ] && [ "${ATOMOU_PUBLIC:-}" != "true" ] && [ "${ATOMOU_REVIEW:-}" = "true" ]; then
             for p in /demo/ /demo.atomou.com/; do
-              hidden=$(curl -s -o /dev/null -w '%{http_code}' "$URL$p"); echo "the hidden demo folder $p without the password: $hidden (must be 401)"
-              [ "$hidden" = "401" ] || ok=0
+              hidden=$(curl -s -o /dev/null -w '%{http_code}' "$URL$p")
+              want=401; [ "${ATOMOU_DEMO_OPEN:-}" = "true" ] && want=200   # open preview: no password
+              echo "the hidden demo folder $p without the password: $hidden (must be $want)"
+              [ "$hidden" = "$want" ] || ok=0
+              if [ "${ATOMOU_DEMO_OPEN:-}" = "true" ]; then
+                blocked=$(curl -s -o /dev/null -w '%{http_code}' "$URL${p}api/m.php"); echo "open preview ${p}api/m.php: $blocked (must be 403)"
+                [ "$blocked" = "403" ] || ok=0
+              fi
             done
             sub=$(curl -s -o /dev/null -w '%{http_code}' https://demo.atomou.com/) || sub=none; echo "demo.atomou.com itself: $sub (401 = the subdomain reaches the demo; 404 = its document root is somewhere else)"
           fi
