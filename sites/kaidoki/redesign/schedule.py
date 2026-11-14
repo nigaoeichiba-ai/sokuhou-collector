@@ -32,7 +32,7 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "yamada": ("ヤマダウェブコム", "ヤ", "ec"), "nitori": ("ニトリ", "ニ", "brand"), "dyson": ("ダイソン", "ダ", "brand"), "playstation": ("PlayStation公式", "P", "brand"),
        "sonystore": ("ソニーストア", "ソ", "brand"), "xserver": ("エックスサーバー", "X", "web"), "xdomain": ("XServerドメイン", "ド", "web"),
        "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
-       "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "joshin": ("Joshin web", "ジ", "ec"),
+       "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "joshin": ("Joshin web", "ジ", "ec"), "toshiba": ("東芝ライフスタイル", "東", "brand"), "aqua": ("AQUA", "ア", "brand"),
        "stardomain": ("スタードメイン", "ス", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand")}
 AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
@@ -122,6 +122,17 @@ EXTRA_CONFIRMED += [
       note="対象はノジマの店舗です。ノジマオンラインは対象外と、公式ページに書かれています。"),
     C("c-joshin-bf", "joshin", "Joshin web ブラックフライデーSALE(終了日)", "2026-12-05", "2026-12-05", f"{jpd('2026-12-05')}の9時59分まで(開始日は確認していません)", "", src=SRC_PAGE,
       note="Joshin webショップ限定の企画です。店舗とモール内の店は対象外と、公式ページに書かれています。"),
+    C("c-xperia-cb", "sonystore", "Xperia 1 VIII(SIMフリー) キャッシュバック", "2026-10-30", "2027-01-11", _span("2026-10-30", "2027-01-11", "", "23:59"), "", src=PRESS2,
+      note="購入期間です。応募の締め切りは、2027年1月18日の10時です。"),
+    C("c-pana-eolia", "panasonic", "パナソニック エアコン 2台まとめ買いキャンペーン", "2026-10-30", "2026-12-06", _span("2026-10-30", "2026-12-06"), "", src=PRESS2,
+      note="購入期間です。対象は指定のエアコンで、応募の締め切りは2027年2月1日です。"),
+    C("c-pana-beauty", "panasonic", "パナソニック ヘアケア・ビューティキャンペーン", "2026-09-29", "2026-12-27", _span("2026-09-29", "2026-12-27"), "", src=PRESS2),
+    C("c-sharp-dryer", "sharp", "シャープ プラズマクラスタードライヤー キャッシュバック", "2026-10-22", "2026-12-25", _span("2026-10-22", "2026-12-25"), "", src=PRESS2,
+      note="購入期間です。対象は指定のドライヤーで、応募の締め切りは2027年1月8日です。"),
+    C("c-toshiba-vegeta", "toshiba", "東芝 冷蔵庫 冬のVEGETAキャッシュバック", "2026-10-29", "2026-12-02", _span("2026-10-29", "2026-12-02"), "", src=PRESS2),
+    C("c-aqua-cb", "aqua", "AQUA 冷蔵庫 キャッシュバックキャンペーン", "2026-09-29", "2027-01-15", _span("2026-09-29", "2027-01-15"), "", src=PRESS2),
+    C("c-zozo-matsuri-1", "zozo", "本気のZOZO祭(Yahoo!ショッピングのZOZOTOWN店)", "2026-11-22", "2026-11-22", jpd("2026-11-22", True), "", src=PRESS2),
+    C("c-zozo-matsuri-2", "zozo", "本気のZOZO祭(Yahoo!ショッピングのZOZOTOWN店)", "2026-11-29", "2026-11-29", jpd("2026-11-29", True), "", src=PRESS2),
     C("c-zozo-2", "zozo", "ZOZOWEEK 第2弾(終了日)", "2026-11-15", "2026-11-15", f"{jpd('2026-11-15')}まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-nec", "nec", "NEC 新製品発売記念セール(終了日)", "2026-11-12", "2026-11-12", f"{jpd('2026-11-12')}の15時まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-uniqlo-winter", "uniqlo", "ユニクロ 冬本番突入号 期間限定価格", "2026-11-13", "2026-11-19", _span("2026-11-13", "2026-11-19"), "", src=SRC_PAGE),
