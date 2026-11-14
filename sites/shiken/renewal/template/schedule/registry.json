@@ -10484,7 +10484,7 @@
       "label": "自己推薦選抜 検査",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-2",
@@ -10493,7 +10493,7 @@
       "label": "自己推薦選抜 合格者発表",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-3",
@@ -10502,7 +10502,7 @@
       "label": "一般選抜 学力検査",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-4",
@@ -10511,7 +10511,7 @@
       "label": "一般選抜 適性検査・面接",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-5",
@@ -10520,7 +10520,7 @@
       "label": "追検査（学力・面接）",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-6",
@@ -10529,7 +10529,7 @@
       "label": "追検査（適性）",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-7",
@@ -10538,7 +10538,7 @@
       "label": "一般選抜 合格者発表",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-8",
@@ -10547,7 +10547,7 @@
       "label": "定時制第2次募集 検査",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-9",
@@ -10556,7 +10556,7 @@
       "label": "定時制第2次募集 合格発表",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-deadline-patch-1",
@@ -10569,7 +10569,7 @@
       "sourceTitle": "令和9年度香川県公立高等学校入学者選抜実施細目・10ページ、18ページ",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa-extra-0",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-deadline-patch-2",
@@ -10582,7 +10582,7 @@
       "sourceTitle": "令和9年度香川県公立高等学校入学者選抜実施細目・10ページ、18ページ",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa-extra-0",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-deadline-patch-3",
@@ -10595,7 +10595,7 @@
       "sourceTitle": "令和9年度香川県公立高等学校入学者選抜実施細目・10ページ、18ページ",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa-extra-0",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-deadline-patch-4",
@@ -10608,7 +10608,7 @@
       "sourceTitle": "令和9年度香川県公立高等学校入学者選抜実施細目・10ページ、18ページ",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa-extra-0",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-deadline-patch-5",
@@ -10621,7 +10621,7 @@
       "sourceTitle": "令和9年度香川県公立高等学校入学者選抜実施細目・10ページ、18ページ",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa-extra-0",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-kagawa-deadline-patch-6",
@@ -10634,7 +10634,7 @@
       "sourceTitle": "令和9年度香川県公立高等学校入学者選抜実施細目・10ページ、18ページ",
       "exam": "koko-kagawa",
       "sourceId": "catalog-koko-kagawa-extra-0",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-ehime-5",
@@ -11276,7 +11276,7 @@
       "label": "推薦入学 面接",
       "exam": "koko-hokkaido",
       "sourceId": "catalog-koko-hokkaido",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-hokkaido-1",
@@ -11285,7 +11285,7 @@
       "label": "一般選抜 学力検査",
       "exam": "koko-hokkaido",
       "sourceId": "catalog-koko-hokkaido",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-hokkaido-2",
@@ -11294,7 +11294,7 @@
       "label": "一般選抜 追検査",
       "exam": "koko-hokkaido",
       "sourceId": "catalog-koko-hokkaido",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-hokkaido-4",
@@ -11303,7 +11303,7 @@
       "label": "合格発表",
       "exam": "koko-hokkaido",
       "sourceId": "catalog-koko-hokkaido",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-hokkaido-web-deadline",
@@ -11316,7 +11316,7 @@
       "sourceTitle": "北海道教育委員会｜令和9年度 道立高校 出願手続マニュアル p1",
       "exam": "koko-hokkaido",
       "sourceId": "catalog-koko-hokkaido-extra-0",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-hokkaido-paper-deadline",
@@ -11329,7 +11329,7 @@
       "sourceTitle": "一般入学者選抜実施要項 p2",
       "exam": "koko-hokkaido",
       "sourceId": "catalog-koko-hokkaido-extra-1",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-15"
     },
     {
       "id": "koko-gunma-1",
