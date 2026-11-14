@@ -161,9 +161,31 @@ def sale_card(s: dict, at: datetime) -> str:
             f'<div class="mini-tags">' + "".join(f"<span>{e(x)}</span>" for x in s["tags"]) + f'</div>{link(s["href"], "対象・条件を見る")}</article>')
 
 
-def sales_grid(items: list[dict], at: datetime) -> str:
+def fmt_jp(iso: str, has_time: bool, at: datetime) -> str:
+    """'11月19日（木）20:00' as in the prototype (the year only when it is not this year's)."""
+    d = datetime.fromisoformat(iso)
+    year = f"{d.year}年" if d.year != at.year else ""
+    base = f"{year}{d.month}月{d.day}日（{WD[d.weekday()]}）"
+    return f"{base}{d.hour}:{d.minute:02d}" if has_time else base
+
+
+def sale_block(s: dict, at: datetime) -> str:
+    """The sale-date block of the prototype (2026-11-14): a ribbon (開催中 gold / 開催予定 beige), the sale's name, its dates, its one sentence, its tags, the check day.  Same data attributes as the tile."""
+    st = state(s, at)
+    period = fmt_jp(s["start"], s["start_t"], at) + "〜" + fmt_jp(s["end"], s["end_t"], at) if s.get("start") else "日程未発表"
+    ribbon = "開催中" if st == "開催中" else ("開催予定" if st == "開催予定" else st)
+    soon = "" if st == "開催中" else " soon"
+    return (f'<article class="sale-block" data-mall="{e(s["mall_id"])}" data-status="{e(st)}" data-start="{e(s.get("start") or "")}" data-end="{e(s.get("end") or "")}">'
+            f'<span class="ribbon{soon}">{e(ribbon)}</span>'
+            f'<h3 class="sale-name"><a href="{e(s["href"])}">{e(s["title"])}</a></h3><p class="sale-date">{e(period)}</p><p class="sale-note">{e(s["summary"])}</p>'
+            + f'<span class="tag">{e(s["mall"])}</span>' + "".join(f'<span class="tag">{e(x)}</span>' for x in s["tags"]) + f'<br>{link(s["href"], "対象・条件を見る")}</article>')
+
+
+def sales_grid(items: list[dict], at: datetime, block: bool = False) -> str:
     if not items:
         return notice("この条件に合う掲載情報はありません。未発表の予定は推測しません。")
+    if block:
+        return '<div class="sale-blocks">' + "".join(sale_block(x, at) for x in items) + "</div>"
     return '<div class="sales-grid">' + "".join(sale_card(x, at) for x in items) + "</div>"
 
 
@@ -466,12 +488,12 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
     if mall:
         info = next(m for m in ctx.malls if m["id"] == mall)
         kids = [ctx.card(c["path"]) for c in ctx.content if c.get("parent") == path]
-        return mall_calendar_teaser(ctx, mall) + template("mall", intro="", sales=sales_grid([s for s in ctx.sales if s["mall_id"] == mall and state(s, at) != "終了"], at),
-                        checks=checks(info["checks"]), links=article_cards(kids or [ctx.card("/calc/points/", "計算")]))
+        return template("mall", intro="", sales=sales_grid([s for s in ctx.sales if s["mall_id"] == mall and state(s, at) != "終了"], at, block=True),
+                        checks=checks(info["checks"]), links=article_cards(kids or [ctx.card("/calc/points/", "計算")]) + mall_calendar_teaser(ctx, mall))
     if path == "/kaden/":
         c = ctx.categories[0]
         kids = ctx.children("/kaden/") + ctx.product_cards("electronics")
-        return template("category", intro=paragraphs(c["intro"]), image=category_card(c, anchor=False), sales=sales_grid([s for s in ctx.sales if state(s, at) != "終了"][:6], at),
+        return template("category", intro=paragraphs(c["intro"]), image=category_card(c, anchor=False), sales=sales_grid([s for s in ctx.sales if state(s, at) != "終了"][:6], at, block=True),
                         checks=checks(c["checks"]), articles=article_cards(kids)) + f'<div class="wrap page-content"><p class="cal-homelink">{link("/calendar/", "家電のセールの日付は、月間カレンダーにあります")}</p></div>'
     if path == "/buytime/":
         return template("category-index", intro=notice("金額や商品の価格帯で対象を限定しません。情報を用意できたジャンルから掲載します。"), categories=category_cards(ctx.categories))
@@ -541,21 +563,54 @@ def articles_body(ctx: Ctx) -> str:
     return template("article-index", intro=paragraphs(["数字の大きさだけで決めないための確認メモです。"]), articles=article_cards(items))
 
 
+def store_row(pr: dict, st: dict) -> str:
+    """One store of a product page, in the prototype's row (2026-11-14): icon, name, the one headline figure (a rate, an amount off or a perk; never a price), the check day, the official button.
+    The detailed conditions stay under 'details'.  The order is the data's (fixed: official store, Rakuten, Yahoo!, Amazon); nothing here sorts or ranks."""
+    hl = st.get("headline") or {}
+    if hl.get("big"):
+        disc = f'<p class="discount">{"<small>" + e(hl["pre"]) + "</small>" if hl.get("pre") else ""}{e(hl["big"])}{"<small>" + e(hl["post"]) + "</small>" if hl.get("post") else ""}</p>'
+    elif hl.get("text"):
+        disc = f'<p class="discount none">{e(hl["text"])}</p>'
+    else:
+        disc = ""
+    note = f'<p class="discount-note">{e(hl["note"])}</p>' if hl.get("note") else ""
+    official = st["links"][0] if st["links"] else None
+    btn = f'<a class="btn" href="{e(official[1])}" target="_blank" rel="noopener noreferrer">公式サイトを開く</a>' if official else ""
+    links = " ／ ".join(f'<a href="{e(u)}" target="_blank" rel="noopener noreferrer">{e(t)} ↗</a>' for t, u in st["links"][1:])      # the first official page is the button; the rest are listed once
+    src = f'<p class="src">ほかの公式ページ：{links}</p>' if links else ""      # a store without a public source link (Amazon: its page address stays out of the repository) shows the date only
+    aff = affiliate.lines(affiliate.product_links(pr, st))
+    return (f'<article class="store-row"><div class="store-row-top"><div class="icon" aria-hidden="true">{e(st.get("icon") or "🏬")}</div>'
+            f'<div class="main"><p class="store-name">{e(st["name"])}<span class="tag">{e(st["tag"])}</span></p>{disc}{note}<p class="checked">確認日 {e(st["checked"])}</p></div>{btn}</div>'
+            f'<details><summary>条件の詳しい内容</summary>{facts_dl(st["rows"])}</details>{src}{aff}</article>')
+
+
+def fit_box(fit: dict | None) -> str:
+    """'向き・不向き' of the prototype: who each way of buying suits and who it does not.  Written from the rows of the stores; no store is called the best."""
+    if not fit:
+        return ""
+    def ul(items):
+        return "<ul>" + "".join(f"<li>{e(x)}</li>" for x in items) + "</ul>"
+    out = f'<section class="fit-box"><h2>{e(fit["h2"])}</h2>'
+    if fit.get("suits"):
+        out += "<h3>向いている人</h3>" + ul(fit["suits"])
+    if fit.get("not_suits"):
+        out += "<h3>向かない場合</h3>" + ul(fit["not_suits"])
+    return out + "</section>"
+
+
 def product_pages(ctx: Ctx, base_head: str) -> dict:
     out = {}
     for pr in ctx.products:
         path = f"/kaden/{pr['slug']}/"
         stores = ""
         for st in pr["stores"]:
-            links = " ／ ".join(f'<a href="{e(u)}" target="_blank" rel="noopener noreferrer">{e(t)} ↗</a>' for t, u in st["links"])
-            src = f'確認日：{e(st["checked"])} ｜ 公式ページ：{links}' if links else f'確認日：{e(st["checked"])}'   # a store without a public source link (Amazon: its page address stays out of the repository) shows the date only
-            aff = affiliate.lines(affiliate.product_links(pr, st))
-            stores += (f'<article class="store-card"><h3>{e(st["name"])}<span class="tag">{e(st["tag"])}</span></h3>{facts_dl(st["rows"])}'
-                       f'<p class="src">{src}</p>{aff}</article>')
+            stores += store_row(pr, st)
+        stores = f'<div class="store-rows">{stores}</div>'
+        fit = fit_box(pr.get("fit"))
         body = template("product", intro=paragraphs([pr["lead"]]), meta=f'<p class="meta-line">{e(pr["meta"])}</p>',
-                        stores_h2=f'<span class="store-burst">{e(pr["stores_burst"])}</span> {e(pr["stores_h2"])}', stores=stores, note=notice(pr["note"]),
+                        stores_h2=e(pr["stores_h2"]), stores=stores, note=fit + notice(pr["note"]),
                         calc_big=e(pr["calc_big"]), calc_text=e(pr["calc_text"]), howto_h2=e(pr["howto_h2"]), howto="".join(f"<p>{e(x)}</p>" for x in pr["howto"]),
-                        related="<h2>関連するセール</h2>" + sales_grid([s for s in ctx.sales if state(s, ctx.at) != "終了"][:4], ctx.at))
+                        related="<h2>関連するセール</h2>" + sales_grid([s for s in ctx.sales if state(s, ctx.at) != "終了"][:4], ctx.at, block=True))
         title = f'{pr["title"]} | {ctx.cfg["site_name"]}'
         desc = pr["lead"].split("。")[0] + "。" + pr["lead"].split("。")[1] + "。"
         head = base_head
@@ -619,11 +674,15 @@ def apply(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
         text = pg["answer"] or pg["desc"]
         trail = [("トップ", "/")] + (pg["crumbs"][1:] if pg["crumbs"] and pg["crumbs"][0][1] == "/" else pg["crumbs"]) if pg["crumbs"] else [("トップ", "/"), (re.sub(r"<[^>]+>", "", pg["h1"]), None)]
         page_type = "doc"
+        if path in MALL_PATH.values():
+            page_type = "mall"
+        elif path == "/kaden/":
+            page_type = "genre"
         if body is None:
             full = kit_doc(ctx, path, pg["rest"])
         else:
             full = body + kit_doc(ctx, path, pg["rest"])
-            page_type = "kit"
+            page_type = page_type if page_type in ("mall", "genre") else "kit"
         upd = ctx.by_path[path]["updated"] if path in ctx.by_path else (cfg.get("updated") or spec.get("updated", ""))
         out[rel] = wrap(ctx, path, pg["head"], crumbs_html([(a, b) for a, b in trail]), banner(label_of(path), pg["h1"], html_unescape(text)), full, upd, page_type)
     # pages the kit adds

@@ -28,7 +28,9 @@ PROMISE = re.compile(r"その日のうちに|発表されたら.{0,12}足しま�
 FIXTURE = {"slug": "test-phone", "title": "テスト機のお得情報", "kicker": "スマートフォン", "h1_html": "テスト機<br><span class=\"gold\">4店</span>", "sub": "価格は出さない。",
            "meta": "確認日：2026年11月9日", "lead": "テスト機は発売済みです。並び順は固定です。", "stores_burst": "4店", "stores_h2": "ストア別", "note": "確認できなかった店は行を作っていません。",
            "calc_big": "結局いくら", "calc_text": "価格は出しません。", "howto_h2": "調べ方", "howto": ["載せるもの。", "載せないもの。"], "checked": "2026-11-09", "category": "electronics", "crumb": "スマートフォン",
-           "stores": [{"name": "店A", "tag": "固定順 1", "rows": [["割引", "表示なし"]], "checked": "2026年11月9日", "links": [["公式ページ", "https://example.com/a"]]}]}
+           "stores": [{"name": "店A", "tag": "固定順 1", "icon": "🏬", "headline": {"pre": "最大", "big": "15%", "post": "OFF", "note": "条件あり"}, "rows": [["割引", "表示なし"]], "checked": "2026年11月9日", "links": [["公式ページ", "https://example.com/a"]]},
+                      {"name": "店B", "tag": "固定順 2", "headline": {"text": "一律の割引表示なし"}, "rows": [["割引", "表示なし"]], "checked": "2026年11月9日", "links": []}],
+           "fit": {"h2": "向き・不向き", "suits": ["ポイントを重視する人は、店Aです。"], "not_suits": ["急ぐ人には向きません。"]}}
 
 
 def build(env: dict, products=None):
@@ -191,6 +193,69 @@ class RedesignTest(unittest.TestCase):
         for f in (SITE / "redesign").rglob("*"):
             if f.is_file() and f.suffix in (".json", ".html", ".py"):
                 self.assertNotRegex(f.read_text(encoding="utf-8"), r"amazon\.co\.jp/[A-Za-z-]+/dp/|B0[A-Z0-9]{8}", str(f))
+
+    # ---- Muse's prototype of 2026-11-14 (shop pages / product pages) ----
+    RANKING = re.compile(r"最安|最安値|1位|第1位|No\.?\s?1|ランキング|おすすめ順|安い順")
+
+    def test_prototype_shop_page_parts(self):
+        """The mall pages carry the prototype's sale-date blocks (ribbon + name + dates + check day) in the page type 'mall'; the genre page in 'genre'."""
+        for rel in ("rakuten/index.html", "amazon/sale-calendar/index.html", "yahoo/index.html"):
+            h = self.live[rel]
+            self.assertIn('<body data-page-type="mall">', h, rel)
+            blocks = re.findall(r'<article class="sale-block".*?</article>', h, re.S)
+            self.assertTrue(blocks, rel)
+            for b in blocks:
+                self.assertRegex(b, r'<span class="ribbon( soon)?">(開催中|開催予定|日程未発表|終了)</span>', rel)
+                self.assertRegex(b, r"確認日 \d{4}/\d{2}/\d{2}", rel)      # every block carries its check day
+                self.assertIn('class="sale-date"', b)
+                if 'data-status="日程未発表"' in b:
+                    self.assertIn("日程未発表", re.search(r'<p class="sale-date">(.*?)</p>', b).group(1))
+                    self.assertNotRegex(re.search(r'<p class="sale-date">(.*?)</p>', b).group(1), r"\d月\d+日")
+                self.assertNotRegex(b, self.RANKING, rel)
+        self.assertIn('<body data-page-type="genre">', self.live["kaden/index.html"])
+        self.assertIn(".sale-block", (SITE / "redesign" / "static" / "styles" / "extra.css").read_text(encoding="utf-8"))
+
+    def test_prototype_product_page_parts(self):
+        h = self.live["kaden/test-phone/index.html"]
+        self.assertIn('<body data-page-type="product">', h)
+        rows = re.findall(r'<article class="store-row">.*?</article>', h, re.S)
+        self.assertEqual(len(rows), 2)
+        self.assertIn("店A", rows[0])
+        self.assertIn("店B", rows[1])      # the order of the data is kept: no sorting, no ranking
+        for r in rows:
+            self.assertRegex(r, r"確認日 2026年11月9日")
+            self.assertNotRegex(r, self.RANKING)
+        self.assertIn('<p class="discount"><small>最大</small>15%<small>OFF</small></p>', rows[0])
+        self.assertIn('class="btn" href="https://example.com/a"', rows[0])
+        self.assertIn("公式サイトを開く", rows[0])
+        self.assertNotIn('class="btn"', rows[1])      # a store with no official page address gets no button (and no invented link)
+        self.assertIn('<section class="fit-box"><h2>向き・不向き</h2>', h)
+        self.assertIn("向かない場合", h)
+        self.assertNotIn("store-burst", h)      # the old prototype's boxing-ring heading is gone
+
+    def test_negative_ranking_words_are_caught_and_fixed_order_is_kept(self):
+        for bad in ("最安はこの店", "第1位", "No.1の割引", "ランキング上位", "安い順に並べました"):
+            self.assertRegex(bad, self.RANKING)
+        self.assertNotRegex("最大15%OFF。確認日 2026年11月9日", self.RANKING)
+        pr = dict(FIXTURE)
+        reversed_row = render.store_row(pr, FIXTURE["stores"][1]) + render.store_row(pr, FIXTURE["stores"][0])
+        self.assertLess(reversed_row.index("店B"), reversed_row.index("店A"))      # the helper keeps whatever order it is given: the order is the data's (the file test above pins it)
+
+    def test_the_real_product_file_follows_the_prototype_rules(self):
+        """The tracked product file: fixed order (official store first, Amazon last), a check day and a headline on every store, no price, a fit section."""
+        for f in (SITE / "redesign" / "products").glob("*.json"):
+            d = json.loads(f.read_text(encoding="utf-8"))
+            names = [s["name"] for s in d["stores"]]
+            self.assertEqual([s["tag"] for s in d["stores"]], [f"固定順 {i + 1}" for i in range(len(names))], f)
+            if any(n.startswith("Amazon") for n in names):
+                self.assertTrue(names[-1].startswith("Amazon"), f)
+            for s in d["stores"]:
+                self.assertTrue(s["checked"], f)
+                self.assertTrue(s.get("headline"), f"{f} {s['name']}")
+                self.assertNotRegex(json.dumps(s["headline"], ensure_ascii=False), self.RANKING)
+            self.assertTrue(d.get("fit", {}).get("suits"), f)
+            self.assertTrue(d["fit"].get("not_suits"), f)
+            self.assertNotRegex(json.dumps(d["fit"], ensure_ascii=False), self.RANKING)
 
 
 if __name__ == "__main__":
