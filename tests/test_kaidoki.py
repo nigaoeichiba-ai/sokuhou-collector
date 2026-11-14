@@ -55,7 +55,8 @@ class KaidokiTest(unittest.TestCase):
             body = AFF_BOX.sub("", body)      # the affiliate box of a mall's page (tested below)
             body = re.sub(r'<section class="content-block shops-box".*?</section>', "", body, flags=re.S)      # the shops box of /yahoo/ (its only outside link is the Yahoo! credit the Developer Network requires; tested in test_kaidoki_yahoo_shops.py)
             body = PR_LINK.sub("", body)      # an affiliate link (rel="nofollow sponsored noopener", target=_blank; tested in test_kaidoki_affiliate.py) is the only other outside link
-            body = re.sub(r'<p class="src">.*?</p>', "", body, flags=re.S)      # the redesign's product page: the maker's / carrier's official page, a plain source line
+            body = re.sub(r'<p class="src">.*?</p>', "", body, flags=re.S)
+            body = re.sub(r'<a class="btn" href="https://[^"]+" target="_blank" rel="noopener noreferrer">公式サイトを開く</a>', "", body)      # the product page's official-site button (the store's own page, no programme)      # the redesign's product page: the maker's / carrier's official page, a plain source line
             self.assertNotIn('href="http', body, rel)
             self.assertNotIn('href="//', body, rel)
             self.assertNotRegex(body, r"出典の公開ページ|取得日", rel)
