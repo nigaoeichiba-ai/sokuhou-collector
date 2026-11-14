@@ -12,9 +12,9 @@ HERE = Path(__file__).resolve().parent
 C = HERE / "content"
 IMG = HERE / "assets" / "img"
 SLUG = "trend-us-groundstop"
-SRC_IMG = Path("H:/マイドライブ/sokuhou/outbox/card-us-groundstop.webp")
+SRC_IMG = None   # 2026-11-14 オーナーが最終のカード画像(出発ボード版)を渡した。画像は assets/img/eye-trend-us-groundstop-2.webp に配置済み(別名にして、X・Bluesky のカードの古い画像のキャッシュを避ける)
 
-if SRC_IMG.exists():
+if SRC_IMG is not None and SRC_IMG.exists():
     im = Image.open(SRC_IMG).convert("RGB")
     im.resize((1280, round(im.height * 1280 / im.width)), Image.LANCZOS).save(IMG / "eye-trend-us-groundstop.webp", "WEBP", quality=82, method=6)
 
@@ -44,7 +44,7 @@ page = {
         {"path": "/trend-newt-blackfriday/", "text": "NEWTのブラックフライデーが始まった 1万円クーポンの受け取りは11時59分で終了"},
     ],
     "sections": [
-        {"html": '<p class="eyecatch"><img src="/assets/img/eye-trend-us-groundstop.webp" width="1280" alt="全米の空港の足止めを表す絵" fetchpriority="high"></p>'},
+        {"html": '<p class="eyecatch"><img src="/assets/img/eye-trend-us-groundstop-2.webp" width="1280" alt="全米の飛行機が止まった。欠航と遅延は1万5千便以上。空港の出発案内板の写真" fetchpriority="high"></p>'},
         {"paras": [
             "日本時間の11月14日朝、アメリカ全土で飛行機の出発が止まりました。原因は航空管制の通信障害で、米連邦航空局（FAA）が全米の空港に地上待機命令を出したためです。命令は午前10時15分に解除されましたが、欠航と遅延は1万5千便以上に広がり、羽田発の米国行きも足止めを受けました。影響は数日続く見通しです。今日と明日、米国便を使う場合は、空港へ向かう前に運航状況の確認を。",
             "押さえるべき点は3つです。",
