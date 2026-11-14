@@ -154,6 +154,21 @@ PRODUCT_STORE_PROGRAMMES = ("Amazon",)                           # the rows of a
 
 
 def product_links(pr: dict, st: dict) -> list[dict]:
+    out = []
+    for spec in st.get("aff", []):          # the row's own links, as the data names them (a shop's programme, or the mall's campaign page); each in the form its programme gave
+        k = spec["k"]
+        if k == "rakuten":
+            out.append(_link("rakuten", rakuten_href(spec["url"]), spec["label"]))
+        elif k == "yahoo":
+            out.append(_link("vc", vc_href(VC_PID["yahoo"], spec["url"]), spec["label"], "yahoo"))
+        elif k == "amazon_s":
+            out.append(_link("amazon", amazon_search_href(spec["term"]), f"Amazonで{spec['term']}を探す"))
+        elif k == "vc":
+            out.append(_link("vc", vc_href(VC_PID[spec["key"]], spec["url"]), spec["label"], spec["key"]))
+        elif k == "a8":
+            out.append(_link("a8", a8_href(spec["key"]), spec["label"], spec["key"]))
+    if out:
+        return out
     if st["name"].startswith("Amazon"):
         term = AMAZON_PRODUCT_TERM.get(pr["slug"], pr["crumb"])
         return [_link("amazon", amazon_search_href(term), f"Amazonで{term}を探す")]

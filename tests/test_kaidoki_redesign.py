@@ -182,12 +182,22 @@ class RedesignTest(unittest.TestCase):
         for k, h in self.html(none).items():
             self.assertNotIn("/kaden/test-phone/", h, k)
 
+    # a mall's product, store or shelf address is product data and stays out of the repository; a mall's own campaign page (event., corp. news, /promotion/) is a campaign fact, as on every other page of the site
+    MALL_PRODUCT_URL = (r"amazon\.co\.jp|amzn\.|(?<!event\.)(?<!corp\.)rakuten\.co\.jp/(?!campaign)|item\.rakuten|store\.shopping\.yahoo|item\.shopping\.yahoo|"
+                        r"paypaymall|shopping\.yahoo\.co\.jp/(?!promotion)|(?<!shopping)(?<!lohaco)\.yahoo\.co\.jp|www\.rakuten\.co\.jp")
+
+    def test_mall_product_address_check_catches_product_pages_and_lets_campaign_pages_through(self):
+        for bad in ("https://item.rakuten.co.jp/shop/x/", "https://www.rakuten.co.jp/nitori/", "https://store.shopping.yahoo.co.jp/a/b.html", "https://www.amazon.co.jp/dp/B0ABCDEFGH", "https://shopping.yahoo.co.jp/search?p=x"):
+            self.assertRegex(bad, self.MALL_PRODUCT_URL, bad)
+        for ok in ("https://event.rakuten.co.jp/beauty/korea/", "https://corp.rakuten.co.jp/news/update/2026/1112_01.html", "https://shopping.yahoo.co.jp/promotion/gateway/brand/red/"):
+            self.assertNotRegex(ok, self.MALL_PRODUCT_URL, ok)
+
     def test_the_repository_holds_no_product_data(self):
         out = subprocess.run(["git", "ls-files", "sites/kaidoki"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8").stdout.split()
         self.assertFalse([f for f in out if "/private/" in f])
         for f in (SITE / "redesign" / "products").glob("*.json"):
             txt = f.read_text(encoding="utf-8")
-            self.assertNotRegex(txt, r"amazon\.co\.jp|amzn\.|rakuten\.co\.jp/(?!campaign)|yahoo\.co\.jp", str(f))
+            self.assertNotRegex(txt, self.MALL_PRODUCT_URL, str(f))
         ignored = subprocess.run(["git", "check-ignore", "sites/kaidoki/private/products/x.json"], cwd=ROOT, capture_output=True, text=True).stdout
         self.assertIn("private", ignored)
         for f in (SITE / "redesign").rglob("*"):
@@ -246,16 +256,19 @@ class RedesignTest(unittest.TestCase):
         for f in (SITE / "redesign" / "products").glob("*.json"):
             d = json.loads(f.read_text(encoding="utf-8"))
             names = [s["name"] for s in d["stores"]]
-            self.assertEqual([s["tag"] for s in d["stores"]], [f"固定順 {i + 1}" for i in range(len(names))], f)
+            kind = "固定順" if d["slug"] == "iphone-18-pro" else "企画"          # a product page orders its stores; a shop page lists the shop's campaigns in the file's order
+            self.assertEqual([s["tag"] for s in d["stores"]], [f"{kind} {i + 1}" for i in range(len(names))], f)
             if any(n.startswith("Amazon") for n in names):
                 self.assertTrue(names[-1].startswith("Amazon"), f)
             for s in d["stores"]:
                 self.assertTrue(s["checked"], f)
                 self.assertTrue(s.get("headline"), f"{f} {s['name']}")
                 self.assertNotRegex(json.dumps(s["headline"], ensure_ascii=False), self.RANKING)
-            self.assertTrue(d.get("fit", {}).get("suits"), f)
-            self.assertTrue(d["fit"].get("not_suits"), f)
-            self.assertNotRegex(json.dumps(d["fit"], ensure_ascii=False), self.RANKING)
+            self.assertNotRegex(json.dumps(d, ensure_ascii=False), self.RANKING, f)
+            self.assertTrue(all(s["links"] for s in d["stores"] if not s["name"].startswith("Amazon")), f)          # every row has its official link (Amazon: its page address stays out of the repository)
+            if d["slug"] == "iphone-18-pro":
+                self.assertTrue(d.get("fit", {}).get("suits"), f)
+                self.assertTrue(d["fit"].get("not_suits"), f)
 
 
 if __name__ == "__main__":

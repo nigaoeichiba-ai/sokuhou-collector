@@ -20,7 +20,7 @@ from html import escape
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-from sites.kaidoki.redesign import affiliate, schedule  # noqa: E402
+from sites.kaidoki.redesign import affiliate, genres, schedule  # noqa: E402
 SITE_DIR = HERE.parent
 JST = timezone(timedelta(hours=9))
 WD = "月火水木金土日"
@@ -275,7 +275,7 @@ def absolutize(html: str) -> str:
     return _ATTR.sub(sub, html)
 
 
-NAV = [("セールカレンダー", "/calendar/", ("/calendar/",)), ("商品別の買い時", "/buytime/", ("/buytime/", "/kaden/", "/randoseru/", "/what-to-buy/")),
+NAV = [("セールカレンダー", "/calendar/", ("/calendar/",)), ("商品別の買い時", "/buytime/", ("/buytime/", "/randoseru/", "/what-to-buy/", *genres.GENRE_PREFIXES)),
        ("モール・公式ストア", "/malls/", ("/malls/", "/rakuten/", "/amazon/", "/yahoo/")), ("実質価格を計算", "/calc/", ("/calc/",)),
        ("調査・検証 ↗", "/articles/", ("/articles/", "/method/"))]
 
@@ -302,9 +302,9 @@ ICONS_NEW = ('<link rel="icon" href="/favicon.ico" sizes="any">\n<link rel="icon
 
 CARD_SKIP = ("カード", "分かります", "入口", "確かめて", "確かめます", "見ます", "置きます", "載せ", "並べ", "出ます", "決まります", "ご確認")
 LABELS = {"/calendar/": "日程を探す", "/buytime/": "ジャンルで探す", "/malls/": "モール別", "/rakuten/": "楽天市場", "/amazon/sale-calendar/": "Amazon", "/yahoo/": "Yahoo!ショッピング",
-          "/kaden/": "家電・デジタル", "/calc/": "実質価格の計算", "/method/": "調査方法", "/about/": "運営情報", "/privacy/": "プライバシー", "/contact/": "お問い合わせ",
+          "/kaden/": "家電・デジタル", **{v["path"]: "ジャンル" for v in genres.GENRES.values() if v["path"] != "/kaden/"}, "/calc/": "実質価格の計算", "/method/": "調査方法", "/about/": "運営情報", "/privacy/": "プライバシー", "/contact/": "お問い合わせ",
           "/corrections/": "訂正履歴", "/articles/": "調査・検証", "/black-friday/": "ブラックフライデー", "/randoseru/": "ランドセル", "/what-to-buy/": "買う物から探す"}
-PREFIX_LABELS = (("/rakuten/", "楽天市場"), ("/amazon/", "Amazon"), ("/kaden/", "家電・デジタル"), ("/calc/", "実質価格の計算"), ("/yahoo/", "Yahoo!ショッピング"))
+PREFIX_LABELS = (("/rakuten/", "楽天市場"), ("/amazon/", "Amazon"), ("/kaden/", "家電・デジタル"), *((v["path"], v["crumb"]) for v in genres.GENRES.values() if v["path"] != "/kaden/"), ("/calc/", "実質価格の計算"), ("/yahoo/", "Yahoo!ショッピング"))
 
 
 def label_of(path: str) -> str:
@@ -433,7 +433,8 @@ class Ctx:
         self.content = content
         self.sales = order(sales_list(), self.at)
         cats = _json(HERE / "categories.json")
-        self.categories = [dict(c, href="/kaden/") for c in cats if c["id"] == "electronics"]      # the genres whose data and product pages are ready (first: electronics)
+        self.categories = [dict(c, href=genres.GENRE_PATH[c["id"]]) for c in cats if c["id"] in genres.GENRE_PATH]      # every genre has its page (genres.py)
+        self.cat_by_id = {c["id"]: c for c in self.categories}
         self.malls = _json(HERE / "malls.json")
         self.ver = hashlib.sha1(b"".join((HERE / "static" / "styles" / n).read_bytes() for n in ("site.css", "templates.css", "extra.css"))
                                 + (HERE / "static" / "scripts" / "site.js").read_bytes() + (HERE / "static" / "scripts" / "calendar.js").read_bytes()).hexdigest()[:8]
@@ -453,7 +454,7 @@ class Ctx:
         return [self.card(c["path"]) for c in self.content if c.get("parent") == path]
 
     def product_cards(self, category: str) -> list[dict]:
-        return [{"href": f"/kaden/{p['slug']}/", "title": p["title"], "description": p["lead"].split("。")[0] + "。", "label": p["kicker"]} for p in self.products if p["category"] == category]
+        return [{"href": f"{genres.GENRE_PATH[p['category']]}{p['slug']}/", "title": p["title"], "description": p["lead"].split("。")[0] + "。", "label": p["kicker"]} for p in self.products if p["category"] == category]
 
 
 def load_products(site_dir: Path) -> list[dict]:
@@ -491,13 +492,63 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
         return template("mall", intro="", sales=sales_grid([s for s in ctx.sales if s["mall_id"] == mall and state(s, at) != "終了"], at, block=True),
                         checks=checks(info["checks"]), links=article_cards(kids or [ctx.card("/calc/points/", "計算")]) + mall_calendar_teaser(ctx, mall))
     if path == "/kaden/":
-        c = ctx.categories[0]
-        kids = ctx.children("/kaden/") + ctx.product_cards("electronics")
-        return template("category", intro=paragraphs(c["intro"]), image=category_card(c, anchor=False), sales=sales_grid([s for s in ctx.sales if state(s, at) != "終了"][:6], at, block=True),
-                        checks=checks(c["checks"]), articles=article_cards(kids)) + f'<div class="wrap page-content"><p class="cal-homelink">{link("/calendar/", "家電のセールの日付は、月間カレンダーにあります")}</p></div>'
+        return genre_body(ctx, "electronics")
     if path == "/buytime/":
         return template("category-index", intro=notice("金額や商品の価格帯で対象を限定しません。情報を用意できたジャンルから掲載します。"), categories=category_cards(ctx.categories))
     return None
+
+
+def brand_block(it: dict, at: datetime) -> str:
+    """A shop's own sale (a schedule.py entry) in the sale-date block: ribbon, name, the dates as the shop's page gives them, the one-line note, the check day, the affiliate links of the shop."""
+    st = "開催中" if schedule.covers(it, at.date()) else ("開催予定" if schedule.d(it["s"]) > at.date() else "終了")
+    soon = "" if st == "開催中" else " soon"
+    name = schedule.ENT[it["mall"]][0]
+    checked = it["checked"].replace("-", "/") if it.get("checked") else ""
+    title = f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it.get("href") else e(it["title"])
+    note = f'<p class="sale-note">{e(it["note"])}</p>' if it.get("note") else ""
+    more = (link(it["href"], "対象・条件を見る") if it.get("href") else "")
+    return (f'<article class="sale-block" data-mall="{e(it["mall"])}" data-status="{e(st)}" data-start="{e(it["s"])}" data-end="{e(it["e"])}"><span class="ribbon{soon}">{e(st)}</span>'
+            f'<h3 class="sale-name">{title}</h3><p class="sale-date">{e(it["when"])}</p>{note}<span class="tag">{e(name)}</span>' + (f'<span class="tag">確認日 {e(checked)}</span>' if checked else "")
+            + f'<br>{more}{affiliate.lines(affiliate.links_for(it))}</article>')
+
+
+def genre_sale_items(ctx: "Ctx", gid: str) -> tuple[list[dict], list[dict]]:
+    """(the malls' sales that are open or coming, the genre's shops' own sales that are open or coming): the malls' sales belong to every genre."""
+    at = ctx.at
+    malls = [s for s in ctx.sales if state(s, at) != "終了"][:4]
+    brands = [it for it in ctx.sched if it["kind"] == "confirmed" and it["mall"] in genres.GENRES[gid]["brands"] and schedule.d(it["e"]) >= at.date()]
+    brands.sort(key=lambda it: (it["s"], it["title"]))
+    return malls, brands
+
+
+def genre_affiliate(gid: str, nxt: str) -> str:
+    """The malls' own pages for the genre, each on its own line with the PR mark (a mall's link never shares a line with another mall's).  The shops' programmes sit on their own rows."""
+    g = genres.GENRES[gid]
+    links = [affiliate._link("rakuten", affiliate.rakuten_href(affiliate.RAKUTEN_DEFAULT), "楽天市場のイベントのページを見る")]
+    if g["amazon"]:
+        links.append(affiliate._link("amazon", affiliate.amazon_search_href(g["amazon"]), f"Amazonで{g['amazon']}を探す"))
+    else:
+        links.append(affiliate._link("amazon", affiliate.amazon_href(affiliate.AMAZON_DEFAULT), "Amazonのセール会場のページを見る"))
+    links.append(affiliate._link("vc", affiliate.vc_href(affiliate.VC_PID["yahoo"], affiliate.YAHOO_GUIDE), "Yahoo!ショッピングのキャンペーン案内を見る", "yahoo"))
+    return ('<section class="content-block"><h2>次に、モールで探す</h2><p>' + e(nxt) + '</p><p>3つのモールの企画のページです。商品の価格は、このページには出していません。</p>'
+            + affiliate.lines(links) + affiliate.disclosure() + "</section>")
+
+
+def genre_body(ctx: "Ctx", gid: str) -> str:
+    """The body of a genre page (the kit's 'category' template): intro, the sales that belong to it, the shop / product pages under it, what to check, the malls' pages."""
+    at = ctx.at
+    c = ctx.cat_by_id[gid]
+    malls, brands = genre_sale_items(ctx, gid)
+    blocks = "".join(brand_block(it, at) for it in brands) + "".join(sale_block(s, at) for s in malls)
+    sales = '<div class="sale-blocks">' + blocks + "</div>" if blocks else notice("このジャンルの日程を、確認できたものから載せます。未発表の予定は推測しません。")
+    kids = (ctx.children("/kaden/") if gid == "electronics" else []) + ctx.product_cards(gid)
+    articles = article_cards(kids) if kids else notice("このジャンルのショップ・商品ごとのページは、公式ページで確認できたものから順に足します。")
+    tail = f'<div class="wrap page-content"><p class="cal-homelink">{link("/calendar/", "セールの日付は、月間カレンダーにあります")}</p></div>'
+    return template("category", intro=paragraphs(c["intro"]), image=category_card(c, anchor=False), sales=sales, checks=checks(c["checks"]), articles=articles) + genre_extra(ctx, gid) + tail
+
+
+def genre_extra(ctx: "Ctx", gid: str) -> str:
+    return '<div class="wrap page-content">' + genre_affiliate(gid, ctx.cat_by_id[gid]["next"]) + "</div>"
 
 
 # ------------------------------------------------------------------ the calendars (schedule.py has the data and the month grid)
@@ -601,7 +652,8 @@ def fit_box(fit: dict | None) -> str:
 def product_pages(ctx: Ctx, base_head: str) -> dict:
     out = {}
     for pr in ctx.products:
-        path = f"/kaden/{pr['slug']}/"
+        gid = pr["category"]
+        path = f"{genres.GENRE_PATH[gid]}{pr['slug']}/"
         stores = ""
         for st in pr["stores"]:
             stores += store_row(pr, st)
@@ -609,7 +661,8 @@ def product_pages(ctx: Ctx, base_head: str) -> dict:
         fit = fit_box(pr.get("fit"))
         body = template("product", intro=paragraphs([pr["lead"]]), meta=f'<p class="meta-line">{e(pr["meta"])}</p>',
                         stores_h2=e(pr["stores_h2"]), stores=stores, note=fit + notice(pr["note"]),
-                        calc_big=e(pr["calc_big"]), calc_text=e(pr["calc_text"]), howto_h2=e(pr["howto_h2"]), howto="".join(f"<p>{e(x)}</p>" for x in pr["howto"]),
+                        calc_big=e(pr.get("calc_big", "価格の比べ方")), calc_text=e(pr.get("calc_text", "割引率・ポイント・特典は、条件を満たしたときの数字です。実質価格は、計算のページで確かめられます。")),
+                        howto_h2=e(pr.get("howto_h2", "確認のしかた")), howto="".join(f"<p>{e(x)}</p>" for x in pr.get("howto", ["各行の確認日と公式ページで、いまも同じか見てから買います。終わった企画は、更新のときに外します。"])),
                         related="<h2>関連するセール</h2>" + sales_grid([s for s in ctx.sales if state(s, ctx.at) != "終了"][:4], ctx.at, block=True))
         title = f'{pr["title"]} | {ctx.cfg["site_name"]}'
         desc = pr["lead"].split("。")[0] + "。" + pr["lead"].split("。")[1] + "。"
@@ -622,7 +675,7 @@ def product_pages(ctx: Ctx, base_head: str) -> dict:
         head = re.sub(r'(<link rel="canonical" href=")[^"]*(">)', lambda m: m.group(1) + e(url) + m.group(2), head)
         head = re.sub(r'(<meta property="og:url" content=")[^"]*(">)', lambda m: m.group(1) + e(url) + m.group(2), head)
         head = re.sub(r'<script type="application/ld\+json">.*?</script>\n?', "", head, flags=re.S)
-        trail = [("トップ", "/"), ("商品別の買い時", "/buytime/"), ("家電・デジタル", "/kaden/"), (pr["crumb"], None)]
+        trail = [("トップ", "/"), ("商品別の買い時", "/buytime/"), (genres.GENRES[gid]["crumb"], genres.GENRE_PATH[gid]), (pr["crumb"], None)]
         ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": i + 1, "name": n, **({"item": ctx.cfg["site_url"].rstrip("/") + h} if h else {})} for i, (n, h) in enumerate(trail)]}
         head += '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace("</", "<\\/") + "</script>\n"
@@ -706,6 +759,25 @@ def apply(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
             {"@type": "ListItem", "position": i + 1, "name": n, **({"item": cfg["site_url"].rstrip("/") + h} if h else {})} for i, (n, h) in enumerate(trail)]}
         head += '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace("</", "<\\/") + "</script>\n"
         out[rel] = wrap(ctx, path, head, crumbs_html(trail), banner(label, e(title), desc), body_fn(ctx), spec.get("updated", ""), "kit")
+    for gid, g in genres.GENRES.items():
+        if gid == "electronics":
+            continue
+        c = ctx.cat_by_id[gid]
+        path, title, desc = g["path"], c["page_title"], c["page_desc"]
+        head = base_head
+        head = re.sub(r"<title>.*?</title>", lambda m, t=title: f"<title>{e(t)} | {e(cfg['site_name'])}</title>", head, flags=re.S)
+        head = re.sub(r'(<meta name="description" content=")[^"]*(">)', lambda m, d=desc: m.group(1) + e(d) + m.group(2), head)
+        head = re.sub(r'(<meta property="og:title" content=")[^"]*(">)', lambda m, t=title: m.group(1) + e(t) + m.group(2), head)
+        head = re.sub(r'(<meta property="og:description" content=")[^"]*(">)', lambda m, d=desc: m.group(1) + e(d) + m.group(2), head)
+        url = cfg["site_url"].rstrip("/") + path
+        head = re.sub(r'(<link rel="canonical" href=")[^"]*(">)', lambda m, u=url: m.group(1) + e(u) + m.group(2), head)
+        head = re.sub(r'(<meta property="og:url" content=")[^"]*(">)', lambda m, u=url: m.group(1) + e(u) + m.group(2), head)
+        head = re.sub(r'<script type="application/ld\+json">.*?</script>\n?', "", head, flags=re.S)
+        trail = [("トップ", "/"), ("商品別の買い時", "/buytime/"), (g["crumb"], None)]
+        ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "name": n, **({"item": cfg["site_url"].rstrip("/") + h} if h else {})} for i, (n, h) in enumerate(trail)]}
+        head += '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace("</", "<\\/") + "</script>\n"
+        out[path.strip("/") + "/index.html"] = wrap(ctx, path, head, crumbs_html(trail), banner("ジャンル", c["page_h1"], c["page_desc"]), genre_body(ctx, gid), spec.get("updated", ""), "genre")
     out.update(product_pages(ctx, base_head))
     # the kit's own files
     for sub in ("styles", "scripts", "assets"):
