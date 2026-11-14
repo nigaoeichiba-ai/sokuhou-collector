@@ -32,7 +32,7 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "yamada": ("ヤマダウェブコム", "ヤ", "ec"), "nitori": ("ニトリ", "ニ", "brand"), "dyson": ("ダイソン", "ダ", "brand"), "playstation": ("PlayStation公式", "P", "brand"),
        "sonystore": ("ソニーストア", "ソ", "brand"), "xserver": ("エックスサーバー", "X", "web"), "xdomain": ("XServerドメイン", "ド", "web"),
        "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
-       "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "joshin": ("Joshin web", "ジ", "ec"), "toshiba": ("東芝ライフスタイル", "東", "brand"), "aqua": ("AQUA", "ア", "brand"), "regza": ("TVS REGZA", "レ", "brand"), "aoki": ("AOKI", "青", "brand"), "tcl": ("TCL", "T", "brand"), "hisense": ("ハイセンス", "海", "brand"), "haier": ("ハイアール", "ハ", "brand"), "brother": ("ブラザー", "ブ", "brand"), "canon": ("キヤノン", "キ", "brand"), "fujifilm": ("富士フイルム", "富", "brand"),
+       "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "joshin": ("Joshin web", "ジ", "ec"), "toshiba": ("東芝ライフスタイル", "東", "brand"), "aqua": ("AQUA", "ア", "brand"), "regza": ("TVS REGZA", "レ", "brand"), "aoki": ("AOKI", "青", "brand"), "tcl": ("TCL", "T", "brand"), "nikon": ("ニコン", "コ", "brand"), "hisense": ("ハイセンス", "海", "brand"), "haier": ("ハイアール", "ハ", "brand"), "brother": ("ブラザー", "ブ", "brand"), "canon": ("キヤノン", "キ", "brand"), "fujifilm": ("富士フイルム", "富", "brand"),
        "stardomain": ("スタードメイン", "ス", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand")}
 AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
@@ -151,6 +151,9 @@ EXTRA_CONFIRMED += [
     C("c-aquos-25", "sharp", "AQUOS 25周年 ご愛顧感謝祭 キャッシュバックキャンペーン", "2026-10-24", "2027-01-12", _span("2026-10-24", "2027-01-12"), "", src=PRESS2, note="購入期間です。応募の締め切りは、2027年2月1日です。"),
     C("c-wh1000x", "sonystore", "WH-1000Xシリーズ 10周年記念キャンペーン", "2026-10-28", "2027-01-12", _span("2026-10-28", "2027-01-12"), "", src=PRESS2, note="購入期間です。"),
     C("c-toshiba-oven", "toshiba", "東芝 オーブンレンジ 冬のキャンペーン", "2026-10-29", "2026-12-31", _span("2026-10-29", "2026-12-31"), "", src=PRESS2, note="購入期間です。応募の締め切りは、2027年1月29日です。"),
+    C("c-pana-lx", "panasonic", "ドラム式洗濯機 LX ヒートポンプユニット クリーニングサービス プレゼントキャンペーン", "2026-08-20", "2026-12-31", _span("2026-08-20", "2026-12-31"), "", src=PRESS2, note="購入期間です。"),
+    C("c-nikon-zf", "nikon", "Zf プレミアムエクステリア無料張り替えキャンペーン", "2026-07-31", "2027-03-31", _span("2026-07-31", "2027-03-31"), "", src=PRESS2, note="申し込みの期間です。"),
+    C("c-ps5-warranty", "playstation", "PS5 保証2年 新規購入キャンペーン", "2026-09-14", "2027-03-31", _span("2026-09-14", "2027-03-31", "10:00", "23:59"), "", src=PRESS2),
     C("c-zozo-2", "zozo", "ZOZOWEEK 第2弾(終了日)", "2026-11-15", "2026-11-15", f"{jpd('2026-11-15')}まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-nec", "nec", "NEC 新製品発売記念セール(終了日)", "2026-11-12", "2026-11-12", f"{jpd('2026-11-12')}の15時まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-uniqlo-winter", "uniqlo", "ユニクロ 冬本番突入号 期間限定価格", "2026-11-13", "2026-11-19", _span("2026-11-13", "2026-11-19"), "", src=SRC_PAGE),
