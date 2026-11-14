@@ -10,6 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from tests.test_atomou_core_js import find_chrome  # noqa: E402
+from tests.atomou_member_config import MEMBER_CONFIG  # noqa: E402
 
 ASSETS = Path(__file__).resolve().parents[1] / "sites/atomou/assets"
 CONFIG = json.loads((Path(__file__).resolve().parents[1] / "sites/atomou/config.json").read_text(encoding="utf-8"))
@@ -45,10 +46,9 @@ class TierInChrome(unittest.TestCase):
     def entry(i, date="2026-12-01", kind="event", quiet=False, yearly=False):
         return {"id": f"e{i}", "title": f"予定{i}", "date": date, "precision": "day", "kind": kind, "quiet": quiet, "yearly": yearly}
 
-    def test_the_config_has_the_limit_on_and_the_plus_plan_not_yet_open(self):
-        self.assertTrue(CONFIG["plans"]["on"])          # the owner decided (2026-10-10): the limit is on from the public release
-        self.assertFalse(CONFIG["plans"].get("plus_open"))   # nothing speaks of the plus plan until it can be had
-        self.assertEqual(CONFIG["plans"]["free_cards"], 5)
+    def test_the_config_has_no_card_limit_and_no_plan(self):
+        self.assertNotIn("plans", CONFIG)               # the owner put the subscription on hold (2026-11-14): nothing is limited, nothing is shown
+        self.assertEqual(MEMBER_CONFIG["plans"]["free_cards"], 5)    # the settings are kept for the day it comes back (atomou/docs/SUBSCRIPTION_RESTORE.md)
 
     def test_with_plans_off_nothing_is_limited(self):
         r = self.run_page({}, [self.entry(i) for i in range(9)])

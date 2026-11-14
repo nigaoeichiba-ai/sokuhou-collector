@@ -18,7 +18,9 @@ from tests.test_atomou_core_js import ASSETS, find_chrome  # noqa: E402
 
 TODAY = date(2026, 10, 9)
 CFG = json.loads((ROOT / "sites" / "atomou" / "config.json").read_text(encoding="utf-8"))
-ON = {**CFG, "member_mail_from": "noreply@atomou.com"}
+from tests.atomou_member_config import MEMBER_CONFIG  # noqa: E402
+
+ON = {**CFG, **MEMBER_CONFIG}      # the membership is off in config.json (2026-11-14); its code is tested with the settings put back
 
 
 def mem(ref, **kw):

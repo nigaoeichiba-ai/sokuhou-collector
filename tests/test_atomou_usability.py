@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT))
 from sites.atomou import build  # noqa: E402
 from sokuhou import layoutcheck  # noqa: E402
 from tests.test_atomou_controls import _Quiet, _Server  # noqa: E402
+from tests.atomou_member_config import MEMBER_CONFIG  # noqa: E402
 
 CFG = json.loads((ROOT / "sites" / "atomou" / "config.json").read_text(encoding="utf-8"))
 TODAY = date(2026, 10, 12)
@@ -211,7 +212,7 @@ class Usability(unittest.TestCase):
         if not chrome:
             raise unittest.SkipTest("Chrome is needed")
         cls.tmp = tempfile.TemporaryDirectory()
-        build.write_pages(build.build_pages(CFG, release=True, today=TODAY), Path(cls.tmp.name))
+        build.write_pages(build.build_pages({**CFG, "plans": MEMBER_CONFIG["plans"]}, release=True, today=TODAY), Path(cls.tmp.name))      # the card limit of the free plan is off in config.json (2026-11-14); this tests it with the plan put back
         (Path(cls.tmp.name) / "__use.html").write_text(HARNESS % {"own": json.dumps([list(o) for o in OWN], ensure_ascii=False)}, encoding="utf-8")
         cls.srv = _Server(("127.0.0.1", 0), functools.partial(_Quiet, directory=cls.tmp.name))
         threading.Thread(target=cls.srv.serve_forever, daemon=True).start()

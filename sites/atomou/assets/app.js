@@ -309,14 +309,14 @@
   /* ---------- cards (the same markup as build.py card_html) ---------- */
   function catItem(c) {
     return { key: 'c:' + c.id, id: c.id, title: c.title, date: c.date, p: c.precision || 'day', g: CONF.groups.indexOf(c.group) + 1, kind: c.subject || c.category || c.kind, what: c.what || c.kind, kword: c.kind, place: c.place != null ? c.place : (c.region || ''), quiet: !!c.quiet,
-      cat: c.mid, sub: c.subject, own: false, href: '/e/' + c.id + '/', est: !!c.estimated, typical: c.typical || '' };
+      cat: c.mid, sub: c.subject, own: false, href: '/e/' + c.id + '/', est: !!c.estimated, typical: c.typical || '', end: c.date_end || '' };
   }
   function ownItem(e) {
     var k = KINDS[e.kind] || KINDS.memo;
     return { key: 'm:' + e.id, id: e.id, title: e.title, date: e.date, p: e.precision || 'day', rep: repOf(e), next: shownDate(e), g: k.g, kind: k.t, quiet: !!e.quiet, own: true, time: e.time || '', yearly: !!e.yearly, every100: !!e.every100, pin: !!e.pin, kid: e.kind, created: e.created || '' };
   }
   function cardHtml(it) {
-    var h = '<article class="card' + (it.quiet ? ' quiet' : '') + (it.pin ? ' pinned' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.rep ? it.next : it.date) + '" data-p="' + H(it.p) + '"' + (it.est ? ' data-est="1"' : '') +
+    var h = '<article class="card' + (it.quiet ? ' quiet' : '') + (it.pin ? ' pinned' : '') + '" data-key="' + H(it.key) + '" data-title="' + H(it.title) + '" data-date="' + H(it.rep ? it.next : it.date) + '" data-p="' + H(it.p) + '"' + (it.est ? ' data-est="1"' : '') + (it.end && it.p === 'day' && !it.own ? ' data-end="' + H(it.end) + '"' : '') +
       (it.g ? ' data-g="' + it.g + '"' : '') + (it.cat ? ' data-cat="' + H(it.cat) + '"' : '') + (it.cat && it.sub ? ' data-sub="' + H(it.sub) + '"' : '') + '>';
     h += '<div class="c-top">' + (it.g ? '<span class="mark m' + it.g + '" data-g="' + it.g + '" aria-hidden="true"></span>' : '') + '<span class="badge">' + H(it.kind) + '</span>' +
       (it.what ? '<span class="what">' + H(it.what) + '</span>' : '') +
@@ -338,7 +338,8 @@
   function fillCard(card) {
     var d = C.parse(card.getAttribute('data-date')), p = card.getAttribute('data-p') || 'day';
     if (!d) return;
-    var r = C.countdown(d, TODAY, p), w = split(r), key = card.getAttribute('data-key') || '';
+    var dEnd = C.parse(card.getAttribute('data-end') || ''), going = !!(dEnd && p === 'day' && C.cmp(d, TODAY) < 0 && C.cmp(TODAY, dEnd) <= 0);   // a day with an end that has begun and not ended: the count is to the end
+    var r = C.countdown(going ? dEnd : d, TODAY, p), w = split(r), key = card.getAttribute('data-key') || '';
     card.setAttribute('data-dir', r.dir);
     card.setAttribute('data-long', w[1].length > 5 ? '1' : '0');
     var word = $('.word', card), num = $('.num', card), sub = $('.c-sub', card);
@@ -346,7 +347,8 @@
     if (num) num.textContent = w[1];
     if (sub) sub.textContent = r.sub ? '合計 ' + r.sub : '';
     var rl = $('.rel', card), t = r.total;
-    if (rl) rl.textContent = card.getAttribute('data-est') === '1' ? '(予想)' : (p === 'day' && t != null) ? (t === 1 ? '(明日)' : t === 2 ? '(明後日)' : t === -1 ? '(昨日)' : t === -2 ? '(おととい)' : r.dir === 'mou' ? '(過去)' : '') : (r.dir === 'mou' ? '(過去)' : '');
+    if (rl && going) rl.textContent = r.dir === 'today' ? '(最終日)' : '(終了まで)';
+    else if (rl) rl.textContent = card.getAttribute('data-est') === '1' ? '(予想)' : (p === 'day' && t != null) ? (t === 1 ? '(明日)' : t === 2 ? '(明後日)' : t === -1 ? '(昨日)' : t === -2 ? '(おととい)' : r.dir === 'mou' ? '(過去)' : '') : (r.dir === 'mou' ? '(過去)' : '');
     var cnt = $('.c-count', card);
     if (cnt) cnt.setAttribute('aria-label', r.big + (r.sub ? '(合計 ' + r.sub + ')' : ''));
     var nx = $('.c-next', card);
@@ -362,7 +364,15 @@
       sv.textContent = on ? '★ 予定に入っています' : '☆ 予定に入れる';
     }
   }
-  function hydrate(root) { $$('.card[data-date]', root || document).forEach(fillCard); }
+  function fillAsof(el) {   // "(date)の時点で、あと○日です。" written again for the visitor's own day (build.py event_page writes the same sentence for the build day)
+    var d = C.parse(el.getAttribute('data-d')), e = C.parse(el.getAttribute('data-e') || '');
+    if (!d) return;
+    var n = C.totalDays(TODAY, d), w;
+    if (e && C.cmp(d, TODAY) < 0 && C.cmp(TODAY, e) <= 0) { var m = C.totalDays(TODAY, e); w = m === 0 ? '今日が最終日です' : 'いま続いていて、終了まであと' + m + '日です'; }
+    else w = n === 0 ? '今日です' : n > 0 ? 'あと' + n + '日です' : 'もう' + (-n) + '日です';
+    el.textContent = TODAY[0] + '年' + TODAY[1] + '月' + TODAY[2] + '日の時点で、' + w + '。';
+  }
+  function hydrate(root) { $$('.card[data-date]', root || document).forEach(fillCard); $$('.asof[data-d]', root || document).forEach(fillAsof); }
   function render(el, items) {
     el.innerHTML = items.length ? items.map(cardHtml).join('') : '';
     hydrate(el);
@@ -1079,7 +1089,7 @@
     function isMine(c) { return testPick ? mine.indexOf(c.group) >= 0 : picked(c); }
     function poolFor() { var p = hasMine ? pool.filter(isMine) : pool; return p.length >= 6 || !hasMine ? p : pool; }
     function fetchPool() {  // the catalogue is downloaded only when someone asks for more, shuffles or searches
-      if (!ready) ready = loadCatalog().then(function (cat) { pool = liveFrom(cat || []); return pool; });
+      if (!ready) ready = loadCatalog().then(function (cat) { pool = liveFrom(cat || []).filter(function (c) { return c.date >= C.iso(TODAY); }); return pool; });
       return ready;
     }
     function draw() {

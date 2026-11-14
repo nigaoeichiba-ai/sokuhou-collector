@@ -17,6 +17,7 @@ import json
 import re
 import sys
 import unicodedata
+from collections import Counter
 from datetime import date, timedelta
 from pathlib import Path
 from urllib.parse import quote, urlparse
@@ -25,7 +26,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.atomou import articles, bizday, calendar_data, catalog, datecore, feeds, features, indexpolicy, ogimage, skins, specials, usecases  # noqa: E402
+from sites.atomou import affiliate, articles, bizday, calendar_data, catalog, datecore, feeds, features, indexpolicy, ogimage, skins, specials, usecases  # noqa: E402
 from sokuhou.sitekit import BuildError, asset_pages, asset_version, crumbs, esc, layout, legal_pages, missing_config, standard_files, write_pages  # noqa: E402
 
 NAME = "あと何日、もう何日"
@@ -173,7 +174,7 @@ def member_php(cfg: dict) -> str:
     return php
 
 
-STATS_SECTION = '<h2 id="stats">利用状況の統計</h2>\n<p>使いやすくするため、件数だけの統計を取ります。送るのは、あらかじめ決めた項目の件数です。「どのページが開かれたか」「選ばれたきせかえ」「ホームに表示する項目の並びと非表示」「予定に入れる・ファイルを作る・共有するボタンが押された回数」「予定に入れられた公式の日の回数(どの日が人気かを知るためです。日の番号だけで、人は分かりません)」「選ばれた好きな分野(あらかじめ決めた一覧にあるものだけ)の回数」「検索で見つかったか(検索した言葉は送りません)」。</p>\n<p>名前・日付・メモ・メールアドレス・検索した言葉・端末を識別する番号は送りません。Cookie は使いません。サーバーに残るのは1日ごとの合計の件数だけで、同じ人かどうかは分かりません。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。</p>\n<p>マイページの「利用状況の統計に協力する」でいつでも止められます。ブラウザの「トラッキングしない」(DNT・Global Privacy Control)がオンのときは、初めから止まっています。</p>'
+STATS_SECTION = '<h2 id="stats">利用状況の統計</h2>\n<p>匿名で利用統計に利用させていただきます(件数のみ。個人は特定しません)。送るのは、あらかじめ決めた項目の件数です。「どのページが開かれたか」「選ばれたきせかえ」「ホームに表示する項目の並びと非表示」「予定に入れる・ファイルを作る・共有するボタンが押された回数」「予定に入れられた公式の日の回数(どの日が人気かを知るためです。日の番号だけで、人は分かりません)」「選ばれた好きな分野(あらかじめ決めた一覧にあるものだけ)の回数」「検索で見つかったか(検索した言葉は送りません)」。</p>\n<p>名前・日付・メモ・メールアドレス・検索した言葉・端末を識別する番号は送りません。Cookie は使いません。サーバーに残るのは1日ごとの合計の件数だけで、同じ人かどうかは分かりません。送りすぎを防ぐため、アドレスから作った1日限りの符号を回数の制限にだけ使い、翌日に削除します。</p>\n<p>マイページの「利用状況の統計に協力する」でいつでも止められます。ブラウザの「トラッキングしない」(DNT・Global Privacy Control)がオンのときは、初めから止まっています。</p>'
 PUSH_SECTION = '<h2 id="push">通知(任意)</h2>\n<p>マイページの「この端末で通知を受け取る」を押し、ブラウザで許可したときだけ通知を使えます。当サイトのサーバーに保存するのは、ブラウザが作った通知の宛先(購読情報)と、通知する日(日付と、朝か夜か)だけです。予定の名前・時刻・メモ・やることの内容は保存しません。通知文は、お使いの端末で作ります。</p>\n<p>「フォローしている共有カードが更新されたときも、通知する」を選んだときだけ、フォローしている共有カードの番号(ランダムな文字列)と、お使いの端末で見た版の番号も、同じ購読情報と一緒に預かります。カードの中身は、もともと暗号になっていて、当サイトは読めません。通知は「共有カードが更新されました」とだけ伝えます。チェックを外すと、この情報は次の同期で消えます。</p>\n<p>通知は、当サイトが GitHub Actions(GitHub, Inc.)で動かす送信プログラムから、お使いのブラウザのプッシュ配信サービス(Google、Apple、Mozilla など)を通して届きます。「通知を止める」を押すか、ブラウザの設定で通知を止めると、購読情報はサーバーから削除します。配信サービスから「宛先がない」と返されたものも削除します。</p>'
 MEMBERS_SECTION = '<h2 id="members">会員登録(任意)</h2>\n<p>会員登録は無料で、パスワードはありません。メールアドレスに送る確認コードでログインします。サーバーに保存するのは、メールアドレス、登録日、プランと無料期間、紹介コード、ログイン中の端末の印(ランダムな値の要約)です。「メールでもお知らせする」をオンにした人に限り、知らせる日(日付と、朝か夜か)と予定の名前(短く)も保存します。オフにすると、その部分はすぐ消します。</p>\n<p>これらは、サーバーの公開されない場所に暗号化して保存します。記録した日・メモ・やることの内容そのものは、会員でも端末の中だけにあります。ペンネームを入れて公開に同意した人は、そのペンネームを協力者のページに載せます。紹介の確認のため、サイトを使った日(直近20日分)を保存します。モニターのアンケートの答えは、サイトの改善のためだけに使い、運営者だけが読みます。確認コードのメールは、ログインのためだけに送ります。広告のメールは、別に同意した人にしか送りません。マイページの「退会する」で、会員の記録はすぐ消えます。</p>'
 GOOGLE_SECTION = '<h2 id="google">Google アカウントでの引き継ぎ(任意)</h2>\n<p>マイページの「Google アカウントで同期する」を押したときだけ、Google の画面が開きます。許可するのは、あなたの Google ドライブの中にあるこのサイト専用の非表示フォルダ(アプリデータ)への保存だけです。記録した日・予定に入れた日・好きな分野・設定をそこに保存し、別の端末で読み込めます。当サイトのサーバーには送りません。Google アカウントの氏名やメールアドレスは取得しません。</p>\n<p>マイページの「Google カレンダーに送る」を押したときも、Google の画面が開きます。こちらで求める許可は、Google の画面にも出る説明のとおり、「メイン以外の Google カレンダーの作成、そのカレンダー上の予定の参照、作成、変更、削除」です。いつもの予定を読み取る許可は求めません。「あと何日、もう何日」という専用のカレンダーを作り、記録した日と、予定に入れた日をそこに書き込みます。ブラウザから Google に直接送るので、当サイトのサーバーには、予定の内容を送りません。送るのはボタンを押したときだけで、Google カレンダーの側で変えた内容は、読み戻しません。専用のカレンダーは、マイページの「Google カレンダーから消す」で消せます。</p>\n<p>やめるときは、<a href="https://myaccount.google.com/permissions" rel="noopener" target="_blank">Google アカウントの権限の管理</a>で「あと何日、もう何日」の権限を削除してください。</p>'
@@ -246,11 +247,15 @@ def card_html(e: dict, *, own: bool = False, actions: bool | None = None, big: b
     key = ("m:" if own else "c:") + e["id"]
     p = e.get("precision") or "day"
     cls = "card" + (" quiet" if e.get("quiet") else "") + (" big" if big else "")
-    direction, word, num, rel, sub = count_parts(e["date"], p)
+    end_iso = e.get("date_end") if (not own and p == "day") else None
+    going = bool(end_iso) and e["date"] < _TODAY.isoformat() <= end_iso          # begun and not ended: the count is to the end (app.js fillCard does the same)
+    direction, word, num, rel, sub = count_parts(end_iso if going else e["date"], p)
+    if going:
+        rel = "(最終日)" if direction == "today" else "(終了まで)"
     est = bool(e.get("estimated")) and not own
     if est:
         rel = "(予想)"                  # an estimate: the count is to the usual day of the year, and says so
-    h = [f'<article class="{cls}" data-key="{esc(key)}" data-title="{esc(e["title"])}" data-date="{esc(e["date"])}" data-p="{p}"{" data-est=" + chr(34) + "1" + chr(34) if est else ""} data-dir="{direction}" data-long="{1 if len(num) > 5 else 0}"'
+    h = [f'<article class="{cls}" data-key="{esc(key)}" data-title="{esc(e["title"])}" data-date="{esc(e["date"])}" data-p="{p}"{" data-est=" + chr(34) + "1" + chr(34) if est else ""}{" data-end=" + chr(34) + esc(end_iso) + chr(34) if end_iso else ""} data-dir="{direction}" data-long="{1 if len(num) > 5 else 0}"'
          + (f' data-g="{g}"' if g else "") + (f' data-cat="{esc(e["mid"])}"' if e.get("mid") else "") + (f' data-sub="{esc(e["subject"])}"' if e.get("mid") and e.get("subject") else "") + ">"]
     subject = e.get("subject") or (e.get("category") if not own else None) or e["kind"]
     what = e.get("what") or (e.get("kind") if not own else None)
@@ -444,7 +449,7 @@ def member_line(cfg: dict) -> str:
 
 def home_page(c: Ctx) -> str:
     live = live_entries(c.entries, c.today)
-    first = diverse(live, 6)
+    first = diverse([e for e in live if e["date"] >= c.today.isoformat()], 6)   # "soon": the days still to come (a day that has begun is on its genre page, counted to its end)
     chips = ('<a class="chip" href="/tokushu/">特集</a>' if c.features else '') + '<a class="chip" href="/topics/">最新・トピックス</a><a class="chip" href="/kyou/">今日は何の日</a><a class="chip" href="/new/">新着・人気</a><a class="chip" href="/quiz/">今日の1問</a><a class="chip" href="/region/">地域</a>' + "".join(f'<a class="chip" href="/c/{GROUP_SLUG[g]}/">{mark_html(i + 1)}{esc(g)}</a>' for i, g in enumerate(catalog.GROUPS) if g in c.shown)
     ucs = "".join(f'<a class="uc" href="/use/{u["slug"]}/"><b>{esc(u["title"])}</b><span>{esc(u["who"])}</span></a>'
                   for u in [usecases.by_slug(s) for s in ("couple-anniversary", "furusato-nozei", "exam-university", "oshi-live", "quit-smoking", "baby-100days")] if u)
@@ -664,6 +669,7 @@ def my_page(c: Ctx) -> str:
 <div class="field"><label class="lab" for="p-stats"><input type="checkbox" id="p-stats"> 利用状況の統計に協力する</label><p class="hint">どの機能がどれだけ使われたかを件数だけで数えます。個人は特定されません。<a href="/privacy/#stats" data-back="マイページ">詳しい説明</a></p></div>
 <p><a href="/?intro=1" data-back="マイページ">はじめての方へ(このサイトの説明)</a> <button type="button" class="btn small ghost" data-guide="start">使い方を見る</button></p>
 </div>
+{affiliate.home_links()}
 <h2 id="wipe-h">この端末の記録を消す</h2>
 <div class="panel">
 <p>この端末に保存されている記録と設定をすべて消します。元に戻せません。</p>
@@ -769,6 +775,8 @@ def use_page(c: Ctx, u: dict) -> str:
         parts.append("<h2>ポイント</h2><ul>" + "".join(f"<li>{esc(t)}</li>" for t in u["tips"]) + "</ul>")
     if u["cautions"]:
         parts.append(f'<div class="notice{" quiet" if quiet else ""}"><b>気をつけること</b><ul>' + "".join(f"<li>{esc(t)}</li>" for t in u["cautions"]) + "</ul></div>")
+    if not quiet:
+        parts.append(affiliate.use_links(u["slug"]))
     rel = [r for r in usecases.related(u["slug"]) if r["quiet"] == quiet]
     if rel:
         parts.append("<h2>ほかの場面</h2><div class=\"uc-grid\">" + "".join(f'<a class="uc" href="/use/{r["slug"]}/"><b>{esc(r["title"])}</b><span>{esc(r["who"])}</span></a>' for r in rel) + "</div>")
@@ -797,10 +805,22 @@ def og_pages(live: list[dict]) -> dict[str, bytes]:
     return out
 
 
+_START_WORD = re.compile(r"(開幕|開始|オープン|スタート)\s*$")
+
+
+def calendar_last_day(e: dict) -> date:
+    """The last day put into an outside calendar.  A card named for the start of a run ("… 開幕") is that one day (the "予定に入れる" button saves that one day too);
+    the other runs of days go in whole, from the first day to the last."""
+    start = date.fromisoformat(e["date"])
+    if e.get("date_end") and not _START_WORD.search(e["title"]):
+        return date.fromisoformat(e["date_end"])
+    return start
+
+
 def google_calendar_url(e: dict, page_url: str) -> str:
     """The address that opens Google Calendar's own form with the day filled in (a whole day: the end date is the day after).  The page address goes into the details, so the day leads back here."""
     d = date.fromisoformat(e["date"])
-    last = date.fromisoformat(e.get("date_end") or e["date"]) + timedelta(days=1)
+    last = calendar_last_day(e) + timedelta(days=1)
     detail = f"詳しい日付: {page_url}"
     return ("https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + quote(e["title"]) + "&dates=" + d.strftime("%Y%m%d") + "/" + last.strftime("%Y%m%d")
             + "&details=" + quote(detail) + "&ctz=Asia%2FTokyo")
@@ -809,7 +829,7 @@ def google_calendar_url(e: dict, page_url: str) -> str:
 def outlook_calendar_url(e: dict, page_url: str) -> str:
     """Outlook.com / Microsoft 365 on the web: the same day as a whole-day event in its own form."""
     d = date.fromisoformat(e["date"])
-    last = date.fromisoformat(e.get("date_end") or e["date"]) + timedelta(days=1)
+    last = calendar_last_day(e) + timedelta(days=1)
     return ("https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=" + quote(e["title"]) + "&startdt=" + d.isoformat()
             + "&enddt=" + last.isoformat() + "&allday=true&body=" + quote(f"詳しい日付: {page_url}"))
 
@@ -906,6 +926,9 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict], pool: tuple[l
     d = date.fromisoformat(e["date"])
     n = (d - today).days
     word = "今日です" if n == 0 else (f"あと{n}日です" if n > 0 else f"もう{-n}日です")
+    last_d = date.fromisoformat(e["date_end"]) if e.get("date_end") else None
+    if e["precision"] == "day" and last_d and d < today <= last_d:                # begun and not ended: say so, and count to the end
+        word = "今日が最終日です" if last_d == today else f"いま続いていて、終了まであと{(last_d - today).days}日です"
     fmt = fmt_date(e["date"], e["precision"])
     end = f"〜{fmt_date(e['date_end'])}" if e.get("date_end") else ""
     rel = [] if quiet else [r for r in live if r["group"] == e["group"] and r["id"] != e["id"] and not r["quiet"]][:4]
@@ -918,8 +941,9 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict], pool: tuple[l
         near = sorted((r for r in items[lo:hi] if r["id"] != e["id"] and r["id"] not in rel_ids),
                       key=lambda r: (abs((_day(r["date"]) - d).days), r["date"], r["id"]))[:4]   # the days around it: a reason to look at the next page
     est = bool(e.get("estimated"))
-    sentence = (f"{e['title']}は、{fmt}{end}です。" if e["precision"] == "day" else f"{e['title']}は、{fmt}です。") + (
-        f"{today.year}年{today.month}月{today.day}日の時点で、{word}。" if e["precision"] == "day" else "")
+    sentence = (f"{e['title']}は、{fmt}{end}です。" if e["precision"] == "day" else f"{e['title']}は、{fmt}です。")
+    asof = (f'<span class="asof" data-d="{esc(e["date"])}" data-e="{esc(e.get("date_end") or "")}">{esc(f"{today.year}年{today.month}月{today.day}日の時点で、{word}。")}</span>'
+            if e["precision"] == "day" else "")             # the browser writes it again for the visitor's own day (app.js fillAsof)
     if est:
         sentence = (f"{e['title']}の今回の日付は、まだ公式に発表されていません。{e.get('typical') or '例年の時期'}に行われているため、その頃として、日数を数えています(予想)。"
                     "公式に発表されたら、この日付を更新します。")
@@ -954,9 +978,10 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict], pool: tuple[l
 {features.card_link(c.features, e['title'], e['date'])}
 {"" if quiet else share_block(c, e)}
 {result_html}
-{'' if art else f'<p>{esc(sentence)}</p>'}
+{'' if art else f'<p>{esc(sentence)}{asof}</p>'}
 {art}
 {hist}
+{"" if quiet else affiliate.links_for(e)}
 {("<h2 id=\"src\">更新の記録</h2><ul class=\"changes\">" + log + "</ul>") if log else ""}
 <p class="fix-line">{fix_link}</p>
 <p class="small muted">カードの日付は間違っていることがあります。日付や時刻は変わることもあります。日数は、お使いの端末の今日の日付で数えています。</p>
@@ -998,7 +1023,8 @@ def category_page(c: Ctx, group: str, live: list[dict]) -> str:
 {chips}
 {pub_sort_select() if rows else ""}
 <div class="cards" id="grid">{"".join(card_html(e) for e in rows)}</div>
-{feeds.subscribe_html(GROUP_SLUG[group] + ".ics", str(c.cfg["site_url"]).rstrip("/"), urlparse(str(c.cfg["site_url"])).netloc) if any(feeds.feedable(e) for e in rows) else ""}"""
+{feeds.subscribe_html(GROUP_SLUG[group] + ".ics", str(c.cfg["site_url"]).rstrip("/"), urlparse(str(c.cfg["site_url"])).netloc) if any(feeds.feedable(e) for e in rows) else ""}
+{affiliate.genre_links(group, [s for s, _n in Counter((e.get("subject") or "") for e in rows if not e.get("quiet") and e.get("ad_ok", True) and e.get("category") not in affiliate.NEVER_CATEGORIES).most_common(8) if s])}"""
     if not rows:
         body = body.replace('<div class="cards" id="grid"></div>', '<p class="empty">いまは日付がありません。</p>')
     return c.page(f"/c/{GROUP_SLUG[group]}/", f"{group}の日付一覧 | {NAME}", f"{GROUP_LEAD[group]}あと何日かが一目で分かり、ワンタップで予定に入れられます。", body, "category")
@@ -1051,9 +1077,9 @@ def manual_page(c: Ctx) -> str:
         return f'<span class="btn small sample{" ghost" if ghost else ""}" aria-hidden="true">{label}</span>'
 
     qa = [
-        ("料金はかかりますか？", "無料です。会員登録なしで使えます。あともうメンバー(無料の会員)になると、メール通知と先着の特典を使えます。"),
+        ("料金はかかりますか？", ("無料です。会員登録なしで使えます。あともうメンバー(無料の会員)になると、メール通知と先着の特典を使えます。" if members_on(c.cfg) else "無料です。登録しなくても、すべての機能を使えます。")),
         ("入力した内容は、ほかの人に見えますか？", "見えません。予定・メモ・やることは、お使いの端末の中だけにあり、当サイトのサーバーには送りません。"),
-        ("予定の前に、お知らせは来ますか？", "マイページの「この端末で受け取る通知」をオンにすると、予定の当日の午前中か前日(18時ごろ)に、この端末へ通知が届きます(iPhone はホーム画面に追加してから)。会員はメールでも受け取れます。他のカレンダーアプリの通知を使うときは、予定の詳細の「他のカレンダーアプリに入れる」でファイルを作って取り込みます。"),
+        ("予定の前に、お知らせは来ますか？", "マイページの「この端末で受け取る通知」をオンにすると、予定の当日の午前中か前日(18時ごろ)に、この端末へ通知が届きます(iPhone はホーム画面に追加してから)。" + ("会員はメールでも受け取れます。" if members_on(c.cfg) else "") + "他のカレンダーアプリの通知を使うときは、予定の詳細の「他のカレンダーアプリに入れる」でファイルを作って取り込みます。"),
         ("「やること」とは何ですか？", "予定の何日前までに何をするかを書く欄です。たとえば「試験の1週間前: 願書を出す」。期限の日がカレンダーとホームに表示され、チェックすると完了になります。"),
         ("機種変更をしたら、記録はどうなりますか？", "自動では引き継がれません。機種変更の前にマイページの「書き出す」でファイルを作り、新しい端末で「読み込む」を押します。マイページに Google アカウントでの引き継ぎが出ていれば、それも使えます。"),
         ("「あと」と「もう」の違いは？", "「あと」はこれから来る日まで、「もう」は過ぎた日からの日数です。"),
@@ -1566,6 +1592,9 @@ def build_pages(cfg: dict, release: bool = False, today: date | None = None) -> 
               and k != "plan/index.html" and k != "interests/index.html" and k != "card/index.html" and k != "thanks/index.html" and k not in kyou_noindex and not (k.startswith("e/") and k.split("/")[1] not in index_ids)}
     pages.update(standard_files(listed, cfg, preview, today.isoformat()))
     pages[".htaccess"] = pages[".htaccess"] + HT_CACHE
+    moved = catalog.merged_redirects(entries)             # a card taken out as the same event as another (data/atomou/merged.json): its old address leads to the one that stays
+    if moved:
+        pages[".htaccess"] += "\n# the same event listed twice: the old page goes to the one card (data/atomou/merged.json)\n" + "".join(f"Redirect 301 /e/{a}/ /e/{b}/\n" for a, b in sorted(moved.items()))
     if preview:
         ht = pages[".htaccess"]
         # Xserver's server cache answers repeat requests without asking Apache, which would skip the password: switch it off for the demo

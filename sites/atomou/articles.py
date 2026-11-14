@@ -139,11 +139,11 @@ def faq(e: dict, fmt, today: date, guide: dict | None) -> list[tuple[str, str]]:
     if e["precision"] != "day":
         left = f"{when}の予定です。"
     elif last < today:
-        left = f"{when}でした。もう{(today - last).days}日が過ぎています。"
+        left = f"{when}でした。"          # no count here: a number worked out on the build day is old by the next (the card above counts in the browser)
     elif start <= today <= last:
         left = f"{when}です。" + ("今日がその日です。" if start == last else "現在、期間中です。")
     else:
-        left = f"{when}です。{today.year}年{today.month}月{today.day}日の時点で、あと{(start - today).days}日です。"
+        left = f"{when}です。"
     name = f"「{e['title']}」" if e["kind"] in DAY_KINDS else e["title"]
     out = [(f"{name}はいつですか。", left)]
     place = (e.get("place") or "").strip()

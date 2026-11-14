@@ -275,7 +275,7 @@ class Pages(BuildOnce):
     def test_text_that_other_code_looks_for_still_matches(self):
         # a wording pass once changed strings that are search patterns: the privacy page's member sentence and the contact form's option (both live in shared parts)
         privacy = self.rel["privacy/index.html"]
-        self.assertNotIn("会員登録などの機能を持ちません", privacy)         # the member site replaces it (the shared text says there is no sign-up)
+        self.assertIn("会員登録などの機能を持ちません", privacy)         # no membership (2026-11-14): the shared text says there is no sign-up
         app = (build.SITE["assets"] / "app.js").read_text(encoding="utf-8")
         key = re.search(r"o\.value\.indexOf\('([^']+)'\) === 0", app).group(1)
         self.assertIn(f">{key}", self.rel["contact/index.html"])             # the "send it as a day I would like to see" option the search page links to

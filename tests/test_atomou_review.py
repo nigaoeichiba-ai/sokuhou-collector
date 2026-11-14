@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+from tests.atomou_member_config import MEMBER_CONFIG  # noqa: E402
 
 from sites.atomou import articles, catalog, review  # noqa: E402
 
@@ -133,7 +134,7 @@ class HiddenDemo(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         from sites.atomou import build
-        cls.pages = build.build_demo_sub(CFG, "https://demo.atomou.com", TODAY)
+        cls.pages = build.build_demo_sub({**CFG, **MEMBER_CONFIG}, "https://demo.atomou.com", TODAY)      # the receivers of the membership are built when its settings are in
 
     def test_the_demo_names_its_own_host_and_stays_behind_a_password(self):
         self.assertIn("https://demo.atomou.com/", self.pages["index.html"])
