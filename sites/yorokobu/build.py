@@ -1363,10 +1363,12 @@ def feed_xml(d: dict, cfg: dict) -> str:
 def whats_new(d: dict, n: int = 6) -> str:
     """The home page strip with the newest pages (articles and themes the factory added), newest first; empty until there are some."""
     c = d["c"]
-    rows = [(a["date"], f'/read/{a["slug"]}/', a["title"], "読みもの") for a in c["articles"]]
-    rows += [(t["added"], f'/theme/{t["slug"]}/', t["title"], "テーマ") for t in d["live_themes"] if t.get("added")]
-    rows += [shogatsu.hub_row()]
-    rows = sorted(rows, reverse=True)[:n]
+    # Newest few of EACH kind: when a day adds many themes and articles at once, a single date-sorted list let the themes ("/theme/" sorts after "/read/")
+    # fill every slot and the new articles never reached the home page (2026-11-15).
+    per_kind = max(1, n // 2)
+    arts = sorted(((a["date"], f'/read/{a["slug"]}/', a["title"], "読みもの") for a in c["articles"]), reverse=True)[:per_kind]
+    ths = sorted(((t["added"], f'/theme/{t["slug"]}/', t["title"], "テーマ") for t in d["live_themes"] if t.get("added")), reverse=True)[:per_kind]
+    rows = sorted(arts + ths + [shogatsu.hub_row()], reverse=True)[:n]
     if not rows:
         return ""
     lis = "".join(f'<li><a href="{u}"><span class="new-kind">{k}</span><b>{esc(t)}</b><small>{esc(day)}</small></a></li>' for day, u, t, k in rows)
