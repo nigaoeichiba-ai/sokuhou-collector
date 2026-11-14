@@ -174,6 +174,8 @@ def product_links(pr: dict, st: dict) -> list[dict]:
             out.append(_link("amazon", amazon_search_href(spec["term"]), f"Amazonで{spec['term']}を探す"))
         elif k == "vc":
             out.append(_link("vc", vc_href(VC_PID[spec["key"]], spec["url"]), spec["label"], spec["key"]))
+        elif k == "stores":          # a shop with no programme of its own: its stores in the malls (STORES above, opened in a browser)
+            out.extend(links_for({"mall": spec["key"], "id": spec["key"], "href": ""}))
         elif k == "vctext":
             out.append(_link("vc", vc_text_href(VC_PID[spec["key"]]), spec["label"], spec["key"]))
         elif k == "a8":
