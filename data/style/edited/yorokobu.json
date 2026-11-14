@@ -6784,6 +6784,631 @@
   "unchanged": 63,
   "units": 84
  },
+ "gift/thanks-boss/index.html": {
+  "accepted": [
+   {
+    "from": "あとでスマホから見返すなら、LINEで自分のトークに送るか、自分宛てのメールに送れます。",
+    "kind": "para",
+    "to": "あとでスマホから見返すなら、LINEの自分のトークか、自分宛てのメールに送れます。",
+    "why": "重なる助詞を整理した"
+   },
+   {
+    "from": "菓子折りは会議後や終業前に渡しやすく、上司が部署のメンバーと分けられるため受け取りやすい品です。",
+    "kind": "item",
+    "to": "菓子折りは会議後や終業前に渡しやすく、上司から部署のメンバーに分けてもらえます。",
+    "why": "抽象的な評価を外した"
+   },
+   {
+    "from": "個人で渡すなら高額にせず、職場一同にする場合は先に予算と名前の出し方を決める。",
+    "kind": "item",
+    "to": "個人で渡す品は高額にしません。職場一同で贈る場合は先に予算と名前の出し方を決めます。",
+    "why": "論点を二文に分けた"
+   },
+   {
+    "from": "名入れ品は納期と表記を確認し、酒器は飲酒の習慣を本人の話から確かめてから選ぶ。",
+    "kind": "item",
+    "to": "名入れ品は納期と表記を確認します。酒器は本人の話で飲酒の習慣を確かめてから選びます。",
+    "why": "確認事項を分けた"
+   },
+   {
+    "from": "上司へのちょっとしたお礼、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "上司へのちょっとしたお礼に選べる品",
+    "why": "見出しを簡潔にした"
+   },
+   {
+    "from": "フルーツ入りのバウムクーヘン8個が個包装になっています。お茶の時間に1つずつ分けられます。",
+    "kind": "para",
+    "to": "フルーツ入りのバウムクーヘン8個を1つずつ個包装にした詰め合わせです。お茶の時間に分けやすい品です。",
+    "why": "個数と包装を整理した"
+   },
+   {
+    "from": "チョコレートを11種類の味で詰め合わせた定番です。好みが分かれる相手にも選んでもらえます。",
+    "kind": "para",
+    "to": "11種類の味を詰め合わせた定番のチョコレートです。相手に好きな味を選んでもらえます。",
+    "why": "語順を自然にした"
+   }
+  ],
+  "date": "2026-11-14",
+  "deleted": [
+   "上司へ個人的なお礼をする時は、昇進や異動祝いのように見えない控えめさが安心です。菓子折りなら部署で分けられ、名入れペンは特別にお世話になった場合に限って検討します。酒器はお酒の好みを知っている時だけ、"
+  ],
+  "diagnosis": [
+   "構成: 選び方と商品の説明が重なり、予算・渡し方・避けたい品より先に同じ利点が繰り返されています。",
+   "具体: 「控えめ」「安心」「自然」「ぴったり」などの抽象語が、品名や渡す場面をぼかしています。",
+   "語: 「消費しやすい」「販売可能情報」など、案内文として硬い言い方や意味を取りにくい表現があります。"
+  ],
+  "failed": "",
+  "hash": "21c4194169bd",
+  "needs_check": [
+   {
+    "question": "「人気」の根拠と、実際に表示される商品が4点かを確認してください。",
+    "text": "上司へのお礼ギフト、種類の違う人気の4点"
+   },
+   {
+    "question": "Amazonの売れ筋ランキングから選んだ事実と、その確認時点を確認してください。",
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。"
+   }
+  ],
+  "page": "gift/thanks-boss/index.html",
+  "rejected": [
+   {
+    "after": "上司への個人的なお礼は高額にせず、昇進や異動祝いに見えない品を選びます。菓子折りなら部署で分けられます。名入れペンは特にお世話になった場合に限って検討します。酒",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['高額']"
+    ],
+    "text": "上司へ個人的なお礼をする時は、昇進や異動祝いのように見えない控えめさが安心です。菓子折りなら部署で分けられ、名入れペンは"
+   },
+   {
+    "after": "価格・在庫は2026年11月14日 8:47時点の情報です。このサイトの掲載情報はよろこぶプレゼントの作成者が管理しています。価格や販売の可否は変更される場合が",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月14日 8:47時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "菓子折りは切り分けが要らない個包装を選びます。渡すのは上司の席を避け、会議後や終業前の短い時間にします。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['会議後', '終業前']"
+    ],
+    "text": "菓子折りは切り分け不要の個包装にし、上司の席ではなく落ち着いた短い時間に渡す。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "菓子折りは会議後や終業前に渡せます。個包装なら部署のメンバーにも分けやすい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['菓子折', '個包装']"
+    ],
+    "text": "会議後や終業前に渡しやすく、部署のメンバーとも分けてもらいやすいです。"
+   },
+   {
+    "after": "ドリップコーヒーは職場でも自宅でも飲み切りやすく、個人的なお礼にも向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ドリップコーヒー']"
+    ],
+    "text": "職場でも自宅でも消費しやすく、個人的なお礼でも控えめな印象で渡せます。"
+   },
+   {
+    "after": "名入れボールペンは長く指導を受けたときや推薦へのお礼に向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['名入', 'ボールペン']"
+    ],
+    "text": "長い指導や推薦へのお礼など、形に残しても自然な場面に控えめに向いています。"
+   },
+   {
+    "after": "上司について一言入力してください(好きなもの、趣味、年齢など)。条件に近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司', '条件']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "高額品や大きな品は上司にかえって気を使わせることがあります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司']"
+    ],
+    "text": "高額品や大きな品は相手にかえって気を使わせることがあります"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "名入れペンは、推薦状を書いてもらったときや長く指導を受けたときのお礼に向く文具です。",
+    "problems": [
+     "condition dropped: 「形に残しても不自然でない場面」という条件が落ちた"
+    ],
+    "text": "名入れペンは推薦状や長い指導へのお礼など、形に残しても不自然でない場面に向く手元の文具です。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "after": "衣類や香りの強い品は好みが分かれるため、本人に確認してから選びます。",
+    "problems": [
+     "added claim/condition dropped: 「好みが分かれるため」という理由を足し、「個人的すぎる衣類」の条件を落とした"
+    ],
+    "text": "個人的すぎる衣類や香りの強い品を確認なしで贈らないようにします"
+   }
+  ],
+  "structure_suggestions": [
+   "「選び方のポイント…」〜「名入れ品は納期と表記を確認し…」と「気をつけたいこと…」〜「個人的すぎる衣類や香りの強い…」を商品一覧より前へ移し、予算・渡し方・避けたい品を確認してから商品を選ぶ順にします。",
+   "「喜ばれやすい理由…」〜「ぐい呑みや片口などの酒器は、…」は「上司へのちょっとしたお礼、こ…」〜「楽天市場で「酒器 セット ギ…」と内容が重なるため、各品の向く場面と楽天市場への案内を一組に統合します。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」は「Amazonで探す…」の後へ移し、商品を見た読者が次にすることとして置きます。"
+  ],
+  "unchanged": 66,
+  "units": 92
+ },
+ "gift/thanks-teacher/index.html": {
+  "accepted": [
+   {
+    "from": "あとでスマホから見返すなら、LINEで自分のトークに送るか、自分宛てのメールに送れます。",
+    "kind": "para",
+    "to": "あとでスマホから見返すなら、LINEの自分のトークか自分宛てのメールに送れます。",
+    "why": "重複を省いて短くした"
+   },
+   {
+    "from": "名入れペンは添削や連絡帳で筆記具をよく使う先生に、控えめな記念品として渡せる手元の文具です。",
+    "kind": "item",
+    "to": "名入れペンは添削や連絡帳で筆記具をよく使う先生に渡せる記念品です。",
+    "why": "抽象的な評価を省いた"
+   },
+   {
+    "from": "学校や教室で贈り物の受け取りに決まりがないか、代表者や事務に先に確認する。",
+    "kind": "item",
+    "to": "学校や教室に贈り物の受け取りの決まりがないか、代表者か事務に先に確認する。",
+    "why": "語を平たく整理した"
+   },
+   {
+    "from": "先生へのちょっとしたお礼、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "先生へのお礼に。花束・菓子折り・名入れペン・ハーブティー",
+    "why": "品名が分かる見出しにした"
+   },
+   {
+    "from": "薄く巻いた焼き菓子の詰め合わせです。個包装なので家族や職場で分けられます。",
+    "kind": "para",
+    "to": "薄く巻いた焼き菓子の詰め合わせです。個包装で家族や職場でも分けられます。",
+    "why": "文のつながりを整えた"
+   },
+   {
+    "from": "フルーツ入りのバウムクーヘン8個が個包装になっています。お茶の時間に1つずつ分けられます。",
+    "kind": "para",
+    "to": "フルーツ入りのバウムクーヘン8個を個包装にした詰め合わせです。お茶の時間に1つずつ分けられます。",
+    "why": "重い言い回しを直した"
+   },
+   {
+    "from": "8種類の焼き菓子が21個入った詰め合わせです。人数が多い場でも分けやすい品です。",
+    "kind": "para",
+    "to": "8種類の焼き菓子が21個入った詰め合わせです。人数が多いときにも分けやすい品です。",
+    "why": "場面を自然な語にした"
+   },
+   {
+    "from": "ちょっとしたお礼に贈るほかの相手",
+    "kind": "heading",
+    "to": "ほかの相手へのちょっとしたお礼",
+    "why": "助詞の重なりを直した"
+   }
+  ],
+  "date": "2026-11-14",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 受け取りの決まりや注意点が商品候補の前後に分かれ、選ぶ前に知りたい情報を追いにくくなっています。",
+   "具体: 「教室の空気に合う」「自然に残る」「控えめ」など、品物や場面が見えにくい表現があります。",
+   "見出し: 「喜ばれやすい理由」「こんな贈り方はどうでしょう」など、節の中身を示さない見出しが混じっています。",
+   "リズム: 花束・菓子折り・名入れペンの説明が複数の節で繰り返され、ページの進みが遅くなっています。"
+  ],
+  "failed": "",
+  "hash": "8217a5e790a6",
+  "needs_check": [
+   {
+    "question": "「子どもの」で終わるのは表示上の切り詰めか、原稿の欠落か確認してください。",
+    "text": "先生へのお礼は授業や習い事でお世話になった気持ちを教室の空気に合う形で伝える場面です。花束は発表会や最終日に映え、菓子折りは職員室で分けられます。名入れペンは受"
+   },
+   {
+    "question": "「人気」とする根拠が第三者データにあるか確認してください。",
+    "text": "先生へのお礼ギフト、種類の違う人気の4点"
+   }
+  ],
+  "page": "gift/thanks-teacher/index.html",
+  "rejected": [
+   {
+    "after": "授業や習い事のお礼には、発表会や最終日なら花束、職員室で分けるなら菓子折りが選びやすいです。名入れペンは贈り物の受け取りの決まりを確認できる場合に限ります。子ど",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['目立', '決']"
+    ],
+    "text": "先生へのお礼は授業や習い事でお世話になった気持ちを教室の空気に合う形で伝える場面です。花束は発表会や最終日に映え、菓子折"
+   },
+   {
+    "after": "価格・在庫は2026年11月14日 8:47時点の情報です。このサイトの掲載情報はよろこぶプレゼントの作成者が管理しています。価格と販売状況は変更される場合があ",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月14日 8:47時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "卒業式や発表会のあとに持ちやすく、花束と一緒に写真を撮れます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['花束', '一緒']"
+    ],
+    "text": "卒業式や発表会のあとに持ちやすく、写真にも感謝の気持ちが自然に残ります。"
+   },
+   {
+    "after": "個包装の菓子折りは、職員室や教室スタッフで分けやすく、保管場所にも困りにくい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['個包装', '菓子折']"
+    ],
+    "text": "職員室や教室スタッフで分けやすく、保管場所にも困りにくい控えめなお礼です。"
+   },
+   {
+    "after": "名入れペンは添削や連絡で筆記具をよく使う先生に渡しやすい記念品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['名入', 'ペン']"
+    ],
+    "text": "添削や連絡で筆記具をよく使う先生に控えめな記念品として渡しやすいです。"
+   },
+   {
+    "after": "個包装のハーブティーは授業後や帰宅後に飲みやすく、花や菓子以外で感謝を伝えたい時に向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['個包装', 'ハーブティー']"
+    ],
+    "text": "授業後や帰宅後に飲みやすく、花や菓子以外で感謝を伝えたい時に合います。"
+   },
+   {
+    "after": "贈る相手の好きなもの、趣味、年齢などを入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "受け取りの決まりに反する金品や高額品は確認せずに贈りません",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['決']"
+    ],
+    "text": "受け取り規定に反する金品や高額品を確認なしで贈らないようにします"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "after": "条件に合う商品がありません。条件を広げるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "added claim/hedge removed: 「見つからなかった」が「商品がない」という断定に変わっている"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "after": "11種類の味を詰め合わせたチョコレートです。好みが分かれても、それぞれ選んでもらえます。",
+    "problems": [
+     "added claim/condition dropped: 「相手」という対象が落ち、複数人がそれぞれ選べる意味が加わっている"
+    ],
+    "text": "チョコレートを11種類の味で詰め合わせた定番です。好みが分かれる相手にも選んでもらえます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで探す"
+   }
+  ],
+  "structure_suggestions": [
+   "「選び方のポイント…」〜「菓子折りは人数分より少し多め…」を「先生へのお礼は授業や習い事で…」の直後に移し、受け取りの決まりと渡し方を商品候補より先に示す。",
+   "「気をつけたいこと…」〜「受け取り規定に反する金品や高…」を商品一覧の前へ移し、避ける品と理由を選ぶ前に読めるようにする。",
+   "「喜ばれやすい理由…」〜「名入れペンは添削や連絡帳で筆…」と「先生へのちょっとしたお礼、こ…」〜「楽天市場で「ハーブティー ギ…」は説明が重なるため、商品候補の直前に統合し、各品の説明を一度にまとめる。",
+   "全体を、渡す場面、受け取りの決まり、渡し方、注意点、条件で絞る、商品を選ぶ、の順に並べる。"
+  ],
+  "unchanged": 55,
+  "units": 85
+ },
+ "gift/white-day-colleague/index.html": {
+  "accepted": [
+   {
+    "from": "タンブラーは給湯室や会議中の飲み物に使え、紙コップをよく使う同僚には日々の実用性があります。",
+    "kind": "item",
+    "to": "タンブラーは給湯室や会議中の飲み物に使えます。紙コップをよく使う同僚に向く品です。",
+    "why": "抽象的な評価を具体化"
+   },
+   {
+    "from": "焼き菓子は渡す人数分を数え、余りが出るように少し多めの個数を用意する。",
+    "kind": "item",
+    "to": "焼き菓子は渡す人数を数え、少し余る個数を用意します。",
+    "why": "回りくどい表現を整理"
+   },
+   {
+    "from": "同僚へのホワイトデー、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "同僚へのホワイトデー、品物別の選び方",
+    "why": "内容が分かる見出しに"
+   },
+   {
+    "from": "薄く巻いた焼き菓子の詰め合わせです。個包装なので家族や職場で分けられます。",
+    "kind": "para",
+    "to": "薄く巻いた焼き菓子の詰め合わせです。個包装なので職場や家族で分けられます。",
+    "why": "語順を簡潔に整理"
+   }
+  ],
+  "date": "2026-11-14",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 理由3点と選び方3点の型が前に出ており、品物の説明も後半と重複しています。",
+   "具体: 「職場の空気に合う温度」「負担」「自然」などの抽象語が、予算や渡す時間を見えにくくしています。",
+   "見出し: 「こんな贈り方」「どんなタイプ」など、節の中身が分かりにくい見出しがあります。",
+   "声: 根拠が示されていない「人気」を見出しに使っています。"
+  ],
+  "failed": "",
+  "hash": "f8d99a6c649f",
+  "needs_check": [],
+  "page": "gift/white-day-colleague/index.html",
+  "rejected": [
+   {
+    "after": "同僚へのホワイトデーは、ハンカチ、焼き菓子、タンブラーなど職場で使いやすい品が候補です。もらった品と同じくらいの予算を目安にし、朝の忙しい時間を避けて昼休みや退",
+    "problems": [
+     "names / quoted words lost: ['バレンタイン', 'デスク']",
+     "words added that the original does not have (information must not grow): ['候補', '予算', '目安']"
+    ],
+    "text": "同僚へのホワイトデーは、バレンタインのお礼を職場の空気に合う温度で返すのが心地よいです。ハンカチ、焼き菓子、タンブラーは"
+   },
+   {
+    "after": "同僚へのホワイトデーは、もらった品と同じくらいの予算で、ハンカチ、焼き菓子、タンブラーから選ぶと決めやすくなります。朝の忙しい時間を避け、昼休みや退勤前に短くお",
+    "problems": [
+     "names / quoted words lost: ['バレンタイン', 'デスク']",
+     "words added that the original does not have (information must not grow): ['予算', '確認']"
+    ],
+    "text": "同僚へのホワイトデーは、バレンタインのお礼を職場の空気に合う温度で返すのが心地よいです。ハンカチ、焼き菓子、タンブラーは"
+   },
+   {
+    "after": "同僚へのホワイトデー、種類で比べる4点",
+    "problems": [
+     "names / quoted words lost: ['ホワイトデーギフト']"
+    ],
+    "text": "同僚へのホワイトデーギフト、種類の違う人気の4点"
+   },
+   {
+    "after": "価格・在庫は2026年11月14日 8:47時点です。掲載情報はよろこぶプレゼントの作成者が管理しています。価格や在庫は変更されることがあります。購入には、楽天",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月14日 8:47時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "もらった品の金額を目安に同じくらいの予算で選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['目安']"
+    ],
+    "text": "もらった品の金額感を思い出し、相手が恐縮しない範囲で同じくらいの予算にする。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "この条件に合う商品は見つかりませんでした。予算の幅を広げるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '幅']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "ハンカチはロッカーやバッグに入れておけるため、年度末の職場でも渡しやすい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ハンカチ']"
+    ],
+    "text": "ロッカーやバッグに入れておける消耗品で年度末の職場でも渡しやすいです。"
+   },
+   {
+    "after": "個包装の焼き菓子は休憩中に食べやすく、複数人へのお返しにも向いています。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['個包装', '菓子', '焼']"
+    ],
+    "text": "休憩中に食べやすく、複数人へ返す時も相手に負担をかけにくい軽いお礼です。"
+   },
+   {
+    "after": "タンブラーは給湯室や会議中の飲み物に使え、毎日の仕事で役立ちます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['タンブラー']"
+    ],
+    "text": "給湯室や会議中の飲み物に使えて毎日の仕事道具としてきちんと役立ちます。"
+   },
+   {
+    "after": "個包装の紅茶はデスクで保管しやすく、甘い菓子以外でお返しを選びたい時にも向いています。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['個包装', '紅茶']"
+    ],
+    "text": "デスクで保管しやすく、甘い菓子以外でお礼を返したい時にも向いています。"
+   },
+   {
+    "after": "横軸は「食べて消える」から「ずっと残る」、縦軸は「定番・無難」から「個性的・意外」です。番号を押すと該当する提案に移動します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['該当']"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから、同僚へのホワイトデーに合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['同僚', 'ホワイトデー']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "贈る相手の好きなもの、趣味、年齢などを入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "個包装のチョコ",
+    "problems": [
+     "a search phrase, title or name of a theme: not reworded (SEO, owner policy: no change without evidence)"
+    ],
+    "text": "チョコ 個包装"
+   },
+   {
+    "after": "職場で私的な贈り物を目立つ形で渡すと相手が受け取りにくくなります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手']"
+    ],
+    "text": "職場で目立ちすぎる私的な贈り物を渡すこと"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "ハンカチはロッカーやバッグに入れておけるため、異動や年度末が近い職場でも渡しやすい小物です。",
+    "problems": [
+     "added claim: ロッカーやバッグに入ることを渡しやすさの理由として明示した"
+    ],
+    "text": "ハンカチはロッカーやバッグに入れておける消耗品で、異動や年度末が近い職場でも渡しやすい小物です。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "after": "ハンカチやタンブラーは派手な柄を避け、机やバッグに合わせやすい色を選びます。",
+    "problems": [
+     "condition dropped: 「派手すぎる」の程度と「職場の机」の場所条件が落ちた"
+    ],
+    "text": "ハンカチやタンブラーは派手すぎる柄を避け、職場の机やバッグになじむ色を選ぶ。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "迷ったときの次の一歩"
+   },
+   {
+    "after": "チョコレートを11種類の味で詰め合わせました。相手が好きな味を選べます。",
+    "problems": [
+     "added claim: 相手の好きな味が含まれていて選べるとの事実を足した"
+    ],
+    "text": "チョコレートを11種類の味で詰め合わせた定番です。好みが分かれる相手にも選んでもらえます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "after": "大げさな品は相手にお返し以上の意味があると思わせることがあります。",
+    "problems": [
+     "condition dropped: 「大げさすぎる」という程度の条件が「大げさ」に広がった"
+    ],
+    "text": "大げさすぎる品は相手に返礼以上の意味を感じさせることがあります"
+   }
+  ],
+  "structure_suggestions": [
+   "「同僚へのホワイトデーは、バレ…」の後は、「選び方のポイント…」〜「ハンカチやタンブラーは派手す…」、「気をつけたいこと…」〜「職場で目立ちすぎる私的な贈り…」、商品紹介の順にすると、予算、選び方、避けたいことを確認してから候補を比べられます。",
+   "「喜ばれやすい理由…」〜「タンブラーは給湯室や会議中の…」は「同僚へのホワイトデー、こんな…」〜「楽天市場で「紅茶 個包装 ギ…」と内容が重なるため、品物ごとの理由を「同僚へのホワイトデー、こんな…」〜「楽天市場で「紅茶 個包装 ギ…」へ統合し、一度だけ伝える構成が適しています。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」は「Amazonで探す…」の後へ移し、商品を見終えた読者が保存、相談、日付登録へ進める結びにします。"
+  ],
+  "unchanged": 61,
+  "units": 91
+ },
  "gift/white-day-girlfriend/index.html": {
   "accepted": [
    {
