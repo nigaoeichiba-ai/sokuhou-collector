@@ -32,7 +32,7 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "yamada": ("ヤマダウェブコム", "ヤ", "ec"), "nitori": ("ニトリ", "ニ", "brand"), "dyson": ("ダイソン", "ダ", "brand"), "playstation": ("PlayStation公式", "P", "brand"),
        "sonystore": ("ソニーストア", "ソ", "brand"), "xserver": ("エックスサーバー", "X", "web"), "xdomain": ("XServerドメイン", "ド", "web"),
        "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
-       "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"),
+       "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "nojima": ("ノジマ", "ノ", "ec"),
        "stardomain": ("スタードメイン", "ス", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand")}
 AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
@@ -117,6 +117,8 @@ EXTRA_CONFIRMED += [
     C("c-sharp-autumn", "sharp", "シャープ 秋のスマホ・家電キャンペーン", "2026-10-23", "2026-11-23", _span("2026-10-23", "2026-11-23"), "", src=SRC_PAGE),
     C("c-pana-lets", "panasonic", "パナソニック レッツノート30周年 第2弾", "2026-10-01", "2026-11-17", _span("2026-10-01", "2026-11-17", "11:00", "13:00"), "", src=SRC_PAGE,
       note="11月17日13時までの、ご注文分が対象です。"),
+    C("c-nojima-bf", "nojima", "ノジマ ブラックフライデー(店舗)", "2026-11-14", "2026-11-30", _span("2026-11-14", "2026-11-30"), "", src=SRC_PAGE,
+      note="対象はノジマの店舗です。ノジマオンラインは対象外と、公式ページに書かれています。"),
     C("c-zozo-2", "zozo", "ZOZOWEEK 第2弾(終了日)", "2026-11-15", "2026-11-15", f"{jpd('2026-11-15')}まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-nec", "nec", "NEC 新製品発売記念セール(終了日)", "2026-11-12", "2026-11-12", f"{jpd('2026-11-12')}の15時まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-uniqlo", "uniqlo", "ユニクロ 期間限定価格(終了日)", "2026-11-12", "2026-11-12", f"{jpd('2026-11-12')}まで(開始日は確認していません)", "", src=SRC_PAGE),
