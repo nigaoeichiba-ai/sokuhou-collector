@@ -194,7 +194,7 @@ def home_block(d: dict, cfg: dict) -> str:
         return ""
     day = days[0]
     return (f'<section class="block"><div class="sec-head"><span class="eyebrow">Today\'s picks</span><h2>今日のおすすめ: {esc(day["theme"])}</h2>'
-            f'<p>{"楽天市場とAmazonから10点ずつ。" if cfg.get("amazon_tracking_id") else "楽天市場から10点。"}{esc(date_label(day["date"]))}の商品を1点ずつ調べてまとめました。</p></div>'
+            f'<p>{"楽天市場とAmazonから、毎日おすすめを選んでいます。" if cfg.get("amazon_tracking_id") else "楽天市場から、毎日おすすめを選んでいます。"}{esc(date_label(day["date"]))}の商品を1点ずつ調べてまとめました。</p></div>'
             f'{highlight_tiles(day, d, cfg)}<p class="more"><a class="btn" href="{day_path(day["date"])}">すべて見る</a><a class="btn btn-sub" href="/picks/">過去のおすすめ</a></p></section>')
 
 
