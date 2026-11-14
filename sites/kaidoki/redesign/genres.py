@@ -28,3 +28,6 @@ PARTNERS: dict[str, list[tuple[str, str, str]]] = {
     "service": [("a8", "xserver", "エックスサーバーを見る"), ("a8", "xdomain", "XServerドメインを見る"), ("a8", "onamae", "お名前.comを見る"), ("a8", "muumuu", "ムームードメインを見る"),
                 ("a8", "lolipop", "ロリポップ！を見る"), ("a8", "mixhost", "mixhostを見る"), ("a8", "sakura", "さくらのレンタルサーバを見る"), ("a8", "stardomain", "スタードメインを見る")],
 }
+
+# a page that was published and then merged into another: its old address answers 301 to the new one (written into .htaccess by render.apply)
+REDIRECTS = {"/hobby/steam/": "/hobby/game-sales/"}

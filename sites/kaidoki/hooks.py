@@ -336,6 +336,13 @@ def prepare(cfg: dict, spec: dict, content: list, site_dir) -> list:
     return render.prepare(cfg, spec, content, site_dir) if render.enabled(cfg) else content
 
 
+def htaccess_extra(cfg: dict) -> str:
+    from sites.kaidoki.redesign import genres, render
+    if not render.enabled(cfg):
+        return ""
+    return chr(10) + "# pages merged into another one: the old address leads to the new one" + chr(10) + "".join("Redirect 301 %s %s" % (old, new) + chr(10) for old, new in genres.REDIRECTS.items())
+
+
 def post(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
     from sites.kaidoki.redesign import render
     if render.enabled(cfg):          # the new design is built beside the current one (another output folder); the current build below is untouched

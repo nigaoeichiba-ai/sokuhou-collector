@@ -397,6 +397,8 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
     pages.update(sitekit.standard_files(pages, cfg, preview, spec["updated"]))
     if measure_tag:
         pages[".htaccess"] += 'SetEnvIf Request_URI "^/m/" Ngx_Cache_NoCacheMode=on\n'      # the server cache must not answer the counting requests: they would never reach the access log
+    if hooks and hasattr(hooks, "htaccess_extra"):                 # a site's own lines for .htaccess (kaidoki: 301 from a merged page's old address); a site without the hook is built as before
+        pages[".htaccess"] += hooks.htaccess_extra(cfg)
     pages["sitemap.xml"] = _sitemap(cfg, sorted(indexable), lastmod, spec["updated"])
     from sokuhou import mallstore                                 # a site with shelves.json ships the product shelves' files (api/shelf.php, assets/shelf.js); the products themselves are never in the build
     pages.update(mallstore.build_files(site_dir, cfg))

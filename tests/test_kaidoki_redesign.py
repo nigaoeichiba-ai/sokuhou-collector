@@ -234,6 +234,23 @@ class RedesignTest(unittest.TestCase):
                     if spec["k"] in ("vc", "vctext"):
                         self.assertIn(spec["key"], affiliate.VC_PID, f)
 
+    def test_a_merged_page_redirects_and_nothing_links_to_its_old_address(self):
+        from sites.kaidoki.redesign import genres
+        real = build({"KAIDOKI_REDESIGN": "1", "KAIDOKI_REDESIGN_DEMO": "0", "KAIDOKI_NOW": "2026-11-12T10:00"})          # the real product files
+        ht = real.get(".htaccess", "")
+        self.assertTrue(genres.REDIRECTS)
+        for old, new in genres.REDIRECTS.items():
+            self.assertIn(f"Redirect 301 {old} {new}", ht)
+            self.assertIn(new.strip("/") + "/index.html", real)          # the new page exists
+            self.assertNotIn(old.strip("/") + "/index.html", real)       # the old one is gone
+            for rel, h in self.html(real).items():
+                self.assertNotIn(f'href="{old}"', h, rel)                # no page links to the old address
+            self.assertNotIn(f"sale-calendar.com{old}", real.get("sitemap.xml", ""))
+
+    def test_negative_a_merge_without_a_redirect_is_caught(self):
+        ht = "RewriteEngine on"
+        self.assertNotIn("Redirect 301 /hobby/steam/ /hobby/game-sales/", ht)
+
     # ---- Muse's prototype of 2026-11-14 (shop pages / product pages) ----
     SOURCE_SHOWN = re.compile(r"公式サイトを開く|ほかの公式ページ|class=\"src\"|出典")
 
