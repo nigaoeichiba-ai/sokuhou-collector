@@ -1,0 +1,25 @@
+[
+  {
+    "title": "EXILE PREMIUM HALL TOUR 2027 \"E・M・O・I\" 初日",
+    "date": "2027-02-16",
+    "precision": "day",
+    "kind": "開催",
+    "group": "エンタメ・音楽・賞",
+    "category": "音楽",
+    "subject": "EXILEツアー",
+    "what": "仙台で初日公演",
+    "place": "宮城県・仙台サンプラザホール",
+    "source_url": "https://exile.jp/live/tour.php?id=1003097",
+    "source_quote": "2027.02.16 (火) 【宮城】仙台サンプラザホール",
+    "basis": "official",
+    "official_url": "https://exile.jp/live/tour.php?id=1003097",
+    "checked_on": "2026-11-15",
+    "verified": true,
+    "sensitivity": "none",
+    "ad_ok": true,
+    "son_toku": false,
+    "region": "宮城県・仙台サンプラザホール",
+    "date_end": null,
+    "note": "出典ページの本文で、日付を機械的に確かめた。"
+  }
+]
