@@ -75,18 +75,36 @@ def page_problems(pages: dict[str, str]) -> list[str]:
     return out
 
 
+APPLY_URLS = {m["applyPage"]["url"] for m in REGISTRY["meta"].values() if m.get("applyPage")}
 FOOTER_SENTENCE = "掲載の日程は、公式の発表をはじめとする複数の情報をもとにしています。申し込みの前に、主催者の最新の案内もご確認ください。"
 
 
-def source_problems(html: str) -> list[str]:
-    """2026-11-15 (owner): no source name, no source link on any page - the footer's one sentence says where the dates come from. Affiliate links (rel has sponsored) are not sources."""
+def source_problems(html: str, apply_urls: set[str] | None = None) -> list[str]:
+    """2026-11-15 (owner): no source name or source link on any page. The only outside link besides the affiliate (PR) ones is the one button of the
+    application page in the 'ed-apply' section of an exam page (rel nofollow, new tab, an address kept in the registry as applyPage)."""
     out = []
     t = text_of(html)
     if re.search(r"出典|出所|出どころ|情報源", t):
         out.append("the word 出典 (or a synonym) is on the screen")
-    for tag in re.findall(r"<a [^>]*href=\"https?://[^\"]*\"[^>]*>", re.sub(r"<script.*?</script>", "", html, flags=re.S)):
+    if re.search(r"(IIBC|人事院|厚生労働省|情報処理推進機構|国立大学協会|公立大学協会|教育委員会)(の|が)?(案内|公表|発表|資料|ページ|サイト)", t):
+        out.append("an organisation named as the origin of a date")
+    body = re.sub(r"<script.*?</script>", "", html, flags=re.S)
+    apply_blocks = re.findall(r'<section class="ed-apply".*?</section>', body, flags=re.S)
+    for blk in apply_blocks:
+        body = body.replace(blk, "")
+    for tag in re.findall(r"<a [^>]*href=\"https?://[^\"]*\"[^>]*>", body):
         if "sponsored" not in tag:
             out.append("an outside link that is not an affiliate link: " + tag[:80])
+    for blk in apply_blocks:
+        links = re.findall(r'<a [^>]*href="(https?://[^"]*)"([^>]*)>', blk)
+        if len(links) != 1:
+            out.append("the apply section must have exactly one link")
+            continue
+        href, rest = links[0]
+        if 'rel="noopener nofollow"' not in rest or 'target="_blank"' not in rest:
+            out.append("the apply link lacks rel/target")
+        if apply_urls is not None and href not in apply_urls:
+            out.append("the apply link is not an applyPage of the registry: " + href)
     return out
 
 
@@ -243,7 +261,7 @@ class Renewal(unittest.TestCase):
         for rel, h in self.pages.items():
             if rel.startswith("google"):
                 continue
-            self.assertEqual(source_problems(h), [], rel)
+            self.assertEqual(source_problems(h, APPLY_URLS), [], rel)
             if not rel.startswith("404"):
                 self.assertEqual(text_of(h).count(FOOTER_SENTENCE), 1, f"{rel}: the footer sentence must appear exactly once")
         # the browser scripts must not be able to draw a source either (the calendar, the lists and the dialogs are made in the browser)
@@ -256,6 +274,9 @@ class Renewal(unittest.TestCase):
         # negative cases: the check does catch a source name and a source link
         self.assertTrue(source_problems('<p class="schedule-source">出典：<a href="https://www.eiken.or.jp/">日本英語検定協会 ↗</a></p>'))
         self.assertTrue(source_problems('<a href="https://www.jafp.or.jp/" target="_blank" rel="noopener noreferrer">公式</a>'))
+        self.assertTrue(source_problems("<p>受験地による実施状況も、IIBCの案内で確かめてください。</p>"))
+        self.assertTrue(source_problems('<section class="ed-apply"><a href="https://example.com/x" target="_blank" rel="noopener">申込</a></section>', APPLY_URLS))
+        self.assertEqual(source_problems('<section class="ed-apply"><a href="https://mp.toeic.or.jp/home/apply?testType=T" target="_blank" rel="noopener nofollow">申込</a></section>', {"https://mp.toeic.or.jp/home/apply?testType=T"}), [])
         self.assertEqual(source_problems('<a href="https://hb.afl.rakuten.co.jp/x" rel="nofollow sponsored noopener">広告</a>'), [])
 
     # --- affiliate links ------------------------------------------------------------------------------------------------------------------

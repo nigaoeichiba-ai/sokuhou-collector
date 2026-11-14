@@ -10,7 +10,7 @@
       "field": "語学",
       "edition": "2027年1月10日実施回",
       "page": "https://shiken-nittei.com/minkan/",
-      "description": "公開テストの申込期間と試験日を確認できます。受験する回や会場を選ぶ前に、公式の案内も確かめておきましょう。",
+      "description": "公開テストの申込期間と試験日を確認できます。受験する回や会場を選ぶ前に、主催者の案内も確かめておきましょう。",
       "family": "toeic",
       "category": "qualification"
     },
@@ -299,7 +299,7 @@
       "field": "法律・労務",
       "edition": "2026年度・第58回",
       "page": "https://www.sharosi-siken.or.jp/",
-      "description": "ネットは締切日の23:59までにすべての手続き完了が必要です。郵送は当日消印有効。試験時刻は今回取得した本文では確認できていないため、受験案内・受験票でご確認ください。",
+      "description": "ネットは締切日の23:59までにすべての手続き完了が必要です。郵送は当日消印有効。試験時刻は確認できていないため、受験案内・受験票でご確認ください。",
       "category": "qualification"
     },
     {
@@ -311,7 +311,7 @@
       "field": "医療・福祉",
       "edition": "第39回（令和8年度）",
       "page": "https://www.sssc.or.jp/kaigo/tetsuzuki.html",
-      "description": "申込締切の正確な時刻は確認本文に記載がないため掲載していません。全パートを受験する通常時間は午前10:00〜11:45、午後13:40〜15:35です。免除されるパートや受験上の配慮がある場合は案内でご確認ください。",
+      "description": "申込締切の正確な時刻は確認できていないため、掲載していません。全パートを受験する通常時間は午前10:00〜11:45、午後13:40〜15:35です。免除されるパートや受験上の配慮がある場合は案内でご確認ください。",
       "category": "qualification"
     },
     {
@@ -347,7 +347,7 @@
       "field": "公務員",
       "edition": "2027年度・春（院卒者／大卒程度）",
       "page": "https://www.jinji.go.jp/kouho_houdo/kisya/2603/2027nittei.html",
-      "description": "人事院の2026年3月5日公表資料で確認。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
+      "description": "2026年3月5日時点の公表内容です。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
       "category": "qualification"
     },
     {
@@ -359,7 +359,7 @@
       "field": "公務員",
       "edition": "2027年度・大卒程度",
       "page": "https://www.jinji.go.jp/kouho_houdo/kisya/2603/2027nittei.html",
-      "description": "人事院の2026年3月5日公表資料で確認。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
+      "description": "2026年3月5日時点の公表内容です。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
       "category": "qualification"
     },
     {
@@ -758,7 +758,7 @@
       "field": "高校入試",
       "edition": "2027年度",
       "page": "https://www.pref.aomori.lg.jp/soshiki/kyoiku/e-kaikaku/zenkokubosyu.html",
-      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 出典では「予定」として公表されています。特別選抜は全国募集の対象校・対象者に限ります。",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 日程は「予定」として公表されています。特別選抜は全国募集の対象校・対象者に限ります。",
       "category": "school"
     },
     {
@@ -938,7 +938,7 @@
       "field": "高校入試",
       "edition": "2027年度",
       "page": "https://www.pref.yamanashi.jp/documents/84777/r9kihonziko.pdf",
-      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 甲陵高校は別日程。10月実施要項も照合し、表の文字抽出が不明瞭な箇所は県の基本事項で確認しました。",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 甲陵高校は別日程。",
       "category": "school"
     },
     {
@@ -1034,7 +1034,7 @@
       "field": "高校入試",
       "edition": "2027年度",
       "page": "https://www2.hyogo-c.ed.jp/hpe/uploads/sites/10/2026/07/R9-%E5%85%A5%E5%AD%A6%E8%80%85%E9%81%B8%E6%8A%9C%E5%9F%BA%E6%9C%AC%E6%96%B9%E9%87%9D%E3%83%BB%E8%A9%B3%E7%B4%B0%E6%97%A5%E7%A8%8B.pdf",
-      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 資料掲載の2月4日正午・3月1日正午は中学校長承認期限です。ご本人の出願期限とは異なるため、中学校が案内する期限をご確認ください。",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 掲載している2月4日正午・3月1日正午は中学校長承認期限です。ご本人の出願期限とは異なるため、中学校が案内する期限をご確認ください。",
       "category": "school"
     },
     {
@@ -1094,7 +1094,7 @@
       "field": "高校入試",
       "edition": "2027年度",
       "page": "https://www.pref.okayama.lg.jp/uploaded/life/1015516_9804789_misc.pdf",
-      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 日程決定の公式資料を確認。詳細要項の元URLは取得できていないため、インターネット入力の先行期間・時刻は未確認です。",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 インターネット入力の先行期間・時刻は未確認です。",
       "category": "school"
     },
     {
@@ -1202,7 +1202,7 @@
       "field": "高校入試",
       "edition": "2027年度",
       "page": "https://www.pref.miyazaki.lg.jp/kokokyoiku/kyoikukosodate/kyoiku/20260519170532.html",
-      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 公式HTMLで検査・発表日を確認。",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
       "category": "school"
     },
     {
@@ -1739,10 +1739,13 @@
         "exam": "published",
         "result": "published"
       },
-      "notes": "午前・午後の受付時刻は異なります。受験地による実施状況も、IIBCの案内で確かめておいてください。",
+      "notes": "午前・午後の受付時刻は異なります。受験地による実施状況も、申し込む回の案内で確かめておいてください。",
       "checkedAt": "2026-11-13",
       "field": "語学",
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://mp.toeic.or.jp/home/apply?testType=T"
+      }
     },
     "boki": {
       "scope": "第174回・1〜3級・統一試験",
@@ -1814,7 +1817,10 @@
       "notes": "1級学科（紙方式）の案内です。受検票ダウンロードは2026年12月24日10:00開始。合格発表は主催者が公表する予定日です。",
       "checkedAt": "2026-11-13",
       "field": "金融",
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://cbt-s.com/examinee/examination/kinzai_FP1"
+      }
     },
     "takken": {
       "scope": "2026年度宅地建物取引士資格試験",
@@ -1846,7 +1852,7 @@
         "edition": "2027年度",
         "status": "unannounced",
         "sourceId": "takken",
-        "note": "確認日時点の公式スケジュールには2026年度のみ掲載。2027年度の試験日・申込期間・合格発表日は未発表として扱い、予想日は載せていません。"
+        "note": "確認日時点で公表されているのは2026年度のみです。2027年度の試験日・申込期間・合格発表日は未発表として扱い、予想日は載せていません。"
       },
       "checkedAt": "2026-11-13",
       "field": "不動産",
@@ -1872,7 +1878,10 @@
       "notes": "二次試験は1級〜3級の対象者のみ。A・Bは申込方法や年齢などで指定されるため、両方を受験する日程ではありません。団体・準会場・S-CBTの案内とは分けてご覧ください。",
       "checkedAt": "2026-11-13",
       "field": "語学",
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://www.eiken.or.jp/eiken/apply/examinee/"
+      }
     },
     "kyotsu": {
       "scope": "2027年度大学入学共通テスト・本試験",
@@ -1924,7 +1933,7 @@
       ],
       "notes": "午前・午後の2回実施。受験地や受付時刻は、申し込む回の公式案内で確かめておいてください。",
       "procedureNotes": [
-        "受ける回と受験地を確認し、公式の申込サイトへ進みます。",
+        "受ける回と受験地を確認し、申込のページへ進みます。",
         "支払い後は、申込履歴で完了を確かめておきましょう。",
         "受験票と、写真・本人確認書類の条件を主催者の案内でご確認ください。"
       ],
@@ -1933,7 +1942,10 @@
         "catalog-toeic-20261115"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://mp.toeic.or.jp/home/apply?testType=T"
+      }
     },
     "toeic-20261206": {
       "id": "toeic-20261206",
@@ -1962,7 +1974,7 @@
       ],
       "notes": "午前・午後の2回実施。受験地や受付時刻は、申し込む回の公式案内で確かめておいてください。",
       "procedureNotes": [
-        "受ける回と受験地を確認し、公式の申込サイトへ進みます。",
+        "受ける回と受験地を確認し、申込のページへ進みます。",
         "支払い後は、申込履歴で完了を確かめておきましょう。",
         "受験票と、写真・本人確認書類の条件を主催者の案内でご確認ください。"
       ],
@@ -1971,7 +1983,10 @@
         "catalog-toeic-20261206"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://mp.toeic.or.jp/home/apply?testType=T"
+      }
     },
     "toeic-20261219": {
       "id": "toeic-20261219",
@@ -2000,7 +2015,7 @@
       ],
       "notes": "午前・午後の2回実施。受験地や受付時刻は、申し込む回の公式案内で確かめておいてください。",
       "procedureNotes": [
-        "受ける回と受験地を確認し、公式の申込サイトへ進みます。",
+        "受ける回と受験地を確認し、申込のページへ進みます。",
         "支払い後は、申込履歴で完了を確かめておきましょう。",
         "受験票と、写真・本人確認書類の条件を主催者の案内でご確認ください。"
       ],
@@ -2009,7 +2024,10 @@
         "catalog-toeic-20261219"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://mp.toeic.or.jp/home/apply?testType=T"
+      }
     },
     "toeic-20270124": {
       "id": "toeic-20270124",
@@ -2038,7 +2056,7 @@
       ],
       "notes": "午前・午後の2回実施。受験地や受付時刻は、申し込む回の公式案内で確かめておいてください。",
       "procedureNotes": [
-        "受ける回と受験地を確認し、公式の申込サイトへ進みます。",
+        "受ける回と受験地を確認し、申込のページへ進みます。",
         "支払い後は、申込履歴で完了を確かめておきましょう。",
         "受験票と、写真・本人確認書類の条件を主催者の案内でご確認ください。"
       ],
@@ -2047,7 +2065,10 @@
         "catalog-toeic-20270124"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://mp.toeic.or.jp/home/apply?testType=T"
+      }
     },
     "toeic-20270214": {
       "id": "toeic-20270214",
@@ -2076,7 +2097,7 @@
       ],
       "notes": "午前・午後の2回実施。受験地や受付時刻は、申し込む回の公式案内で確かめておいてください。",
       "procedureNotes": [
-        "受ける回と受験地を確認し、公式の申込サイトへ進みます。",
+        "受ける回と受験地を確認し、申込のページへ進みます。",
         "支払い後は、申込履歴で完了を確かめておきましょう。",
         "受験票と、写真・本人確認書類の条件を主催者の案内でご確認ください。"
       ],
@@ -2085,7 +2106,10 @@
         "catalog-toeic-20270214"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://mp.toeic.or.jp/home/apply?testType=T"
+      }
     },
     "toeic-20270306": {
       "id": "toeic-20270306",
@@ -2114,7 +2138,7 @@
       ],
       "notes": "午前・午後の2回実施。受験地や受付時刻は、申し込む回の公式案内で確かめておいてください。",
       "procedureNotes": [
-        "受ける回と受験地を確認し、公式の申込サイトへ進みます。",
+        "受ける回と受験地を確認し、申込のページへ進みます。",
         "支払い後は、申込履歴で完了を確かめておきましょう。",
         "受験票と、写真・本人確認書類の条件を主催者の案内でご確認ください。"
       ],
@@ -2123,7 +2147,10 @@
         "catalog-toeic-20270306"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://mp.toeic.or.jp/home/apply?testType=T"
+      }
     },
     "toeic-20270314": {
       "id": "toeic-20270314",
@@ -2152,7 +2179,7 @@
       ],
       "notes": "午前・午後の2回実施。受験地や受付時刻は、申し込む回の公式案内で確かめておいてください。",
       "procedureNotes": [
-        "受ける回と受験地を確認し、公式の申込サイトへ進みます。",
+        "受ける回と受験地を確認し、申込のページへ進みます。",
         "支払い後は、申込履歴で完了を確かめておきましょう。",
         "受験票と、写真・本人確認書類の条件を主催者の案内でご確認ください。"
       ],
@@ -2161,7 +2188,10 @@
         "catalog-toeic-20270314"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://mp.toeic.or.jp/home/apply?testType=T"
+      }
     },
     "boki-173": {
       "id": "boki-173",
@@ -2262,7 +2292,10 @@
         "catalog-fp1-gakka-20260524"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://cbt-s.com/examinee/examination/kinzai_FP1"
+      }
     },
     "fp1-gakka-20260913": {
       "id": "fp1-gakka-20260913",
@@ -2299,7 +2332,10 @@
         "catalog-fp1-gakka-20260913"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://cbt-s.com/examinee/examination/kinzai_FP1"
+      }
     },
     "eiken-2026-1": {
       "id": "eiken-2026-1",
@@ -2336,7 +2372,10 @@
         "catalog-eiken-2026-1"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://www.eiken.or.jp/eiken/apply/examinee/"
+      }
     },
     "eiken-2026-2": {
       "id": "eiken-2026-2",
@@ -2373,7 +2412,10 @@
         "catalog-eiken-2026-2"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://www.eiken.or.jp/eiken/apply/examinee/"
+      }
     },
     "eiken-2027-1": {
       "id": "eiken-2027-1",
@@ -2410,7 +2452,10 @@
         "catalog-eiken-2027-1"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://www.eiken.or.jp/eiken/apply/examinee/"
+      }
     },
     "eiken-2027-2": {
       "id": "eiken-2027-2",
@@ -2447,7 +2492,10 @@
         "catalog-eiken-2027-2"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://www.eiken.or.jp/eiken/apply/examinee/"
+      }
     },
     "eiken-2027-3": {
       "id": "eiken-2027-3",
@@ -2484,7 +2532,10 @@
         "catalog-eiken-2027-3"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://www.eiken.or.jp/eiken/apply/examinee/"
+      }
     },
     "gyosei": {
       "checkedAt": "2026-11-13",
@@ -2517,7 +2568,7 @@
       "future": {
         "edition": "2027年度",
         "status": "unverified",
-        "note": "確認した公式案内は2026年度です。2027年度の具体的な日程の公表は確認できていません。前年の日付からの推計はしていません。",
+        "note": "確認日時点で公表されているのは2026年度です。2027年度の具体的な日程は、公表を確認できていません。前年の日付からの推計はしていません。",
         "sourceUrl": "https://www.gyosei-shiken.or.jp/",
         "name": "行政書士",
         "sourceId": "catalog-gyosei-future"
@@ -2568,7 +2619,7 @@
           "sourceId": "catalog-sharoshi"
         }
       ],
-      "notes": "ネットは締切日の23:59までにすべての手続き完了が必要です。郵送は当日消印有効。試験時刻は今回取得した本文では確認できていないため、受験案内・受験票でご確認ください。",
+      "notes": "ネットは締切日の23:59までにすべての手続き完了が必要です。郵送は当日消印有効。試験時刻は確認できていないため、受験案内・受験票でご確認ください。",
       "future": {
         "edition": "2027年度・第59回",
         "status": "unverified",
@@ -2613,7 +2664,7 @@
           "sourceId": "catalog-kaigo"
         }
       ],
-      "notes": "申込締切の正確な時刻は確認本文に記載がないため掲載していません。全パートを受験する通常時間は午前10:00〜11:45、午後13:40〜15:35です。免除されるパートや受験上の配慮がある場合は案内でご確認ください。",
+      "notes": "申込締切の正確な時刻は確認できていないため、掲載していません。全パートを受験する通常時間は午前10:00〜11:45、午後13:40〜15:35です。免除されるパートや受験上の配慮がある場合は案内でご確認ください。",
       "procedureNotes": [
         "受験資格に応じて必要な証明書が異なります。学校や勤務先に頼むものがないか、先に確認しておくと安心です。",
         "7月22日から9月2日の間に、ネットでの申込みと支払いを済ませましょう。",
@@ -2757,7 +2808,7 @@
         "exam": "第1次2月28日、第2次筆記3月21日。人物試験等は4月上旬〜下旬の時期のみ。",
         "result": "第1次は3月中旬、最終は5月下旬。具体日は未発表。"
       },
-      "notes": "人事院の2026年3月5日公表資料で確認。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
+      "notes": "2026年3月5日時点の公表内容です。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
       "procedureNotes": [
         "院卒者・大卒程度と試験区分によって、受験資格や二次試験の内容が異なります。まずはご自身が受ける区分を確認しましょう。",
         "受付時期は1月下旬から2月上旬の予定です。具体的な受付日が公表されたら、締切を改めて確認してください。",
@@ -2800,7 +2851,7 @@
         "exam": "第1次5月2日。第2次は6月上旬〜中旬の時期のみ。",
         "result": "第1次は5月下旬、最終は7月上旬。具体日は未発表。"
       },
-      "notes": "人事院の2026年3月5日公表資料で確認。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
+      "notes": "2026年3月5日時点の公表内容です。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
       "procedureNotes": [
         "試験区分ごとに受験資格や出題内容が異なります。受けたい区分から確認していきましょう。",
         "受付時期は2月上旬から3月上旬と案内されています。具体的な締切日は、公表後に改めて確認してください。",
@@ -2857,7 +2908,10 @@
         "catalog-kanken-2026-10-18"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://ijuken.com/prod/user/kanken/public/"
+      }
     },
     "kanken-2027-02-14": {
       "id": "kanken-2027-02-14",
@@ -2900,7 +2954,10 @@
         "catalog-kanken-2027-02-14"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://ijuken.com/prod/user/kanken/public/"
+      }
     },
     "kanken-2027-06-20": {
       "id": "kanken-2027-06-20",
@@ -2943,7 +3000,10 @@
         "catalog-kanken-2027-06-20"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://ijuken.com/prod/user/kanken/public/"
+      }
     },
     "kanken-2027-10-17": {
       "id": "kanken-2027-10-17",
@@ -2986,7 +3046,10 @@
         "catalog-kanken-2027-10-17"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://ijuken.com/prod/user/kanken/public/"
+      }
     },
     "kanken-2028-02-13": {
       "id": "kanken-2028-02-13",
@@ -3029,7 +3092,10 @@
         "catalog-kanken-2028-02-13"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://ijuken.com/prod/user/kanken/public/"
+      }
     },
     "itpassport-cbt": {
       "id": "itpassport-cbt",
@@ -3194,7 +3260,10 @@
         "catalog-boki-net-2026"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://cbt-s.com/examinee/examination/jcci.html"
+      }
     },
     "fp1-jafp-2026": {
       "id": "fp1-jafp-2026",
@@ -3233,7 +3302,10 @@
         "catalog-fp1-jafp-2026"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://www.jafp.or.jp/exam/app/1fp.shtml"
+      }
     },
     "fp1-jafp-2027": {
       "id": "fp1-jafp-2027",
@@ -3272,7 +3344,10 @@
         "catalog-fp1-jafp-2027"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://www.jafp.or.jp/exam/app/1fp.shtml"
+      }
     },
     "fp23-jafp-2026": {
       "id": "fp23-jafp-2026",
@@ -3372,17 +3447,17 @@
           {
             "start": "2026-05-24",
             "end": "2026-05-31",
-            "note": "日本FP協会公表の休止期間"
+            "note": "公表されている休止期間"
           },
           {
             "start": "2026-12-28",
             "end": "2027-01-05",
-            "note": "日本FP協会公表の休止期間"
+            "note": "公表されている休止期間"
           },
           {
             "start": "2027-03-25",
             "end": "2027-03-31",
-            "note": "日本FP協会公表の休止期間"
+            "note": "公表されている休止期間"
           }
         ]
       },
@@ -3392,7 +3467,10 @@
         "catalog-fp23-jafp-2026"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://www.jafp.or.jp/exam/app/3fp.shtml"
+      }
     },
     "fp23-jafp-2027": {
       "id": "fp23-jafp-2027",
@@ -3492,17 +3570,17 @@
           {
             "start": "2027-05-23",
             "end": "2027-05-31",
-            "note": "日本FP協会公表の休止期間"
+            "note": "公表されている休止期間"
           },
           {
             "start": "2027-12-28",
             "end": "2028-01-05",
-            "note": "日本FP協会公表の休止期間"
+            "note": "公表されている休止期間"
           },
           {
             "start": "2028-03-25",
             "end": "2028-03-31",
-            "note": "日本FP協会公表の休止期間"
+            "note": "公表されている休止期間"
           }
         ]
       },
@@ -3512,7 +3590,10 @@
         "catalog-fp23-jafp-2027"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://www.jafp.or.jp/exam/app/3fp.shtml"
+      }
     },
     "fp23-kinzai-2026": {
       "id": "fp23-kinzai-2026",
@@ -3533,7 +3614,7 @@
       "fieldNotes": {
         "deadline": "受検日の3日前まで。予約枠や会場によって希望日時が選べない場合があります。",
         "exam": "実施期間と会場の空席に応じた予約制。",
-        "result": "公式表では合格発表日は『予定』として公表されています。"
+        "result": "合格発表日は『予定』として公表されています。"
       },
       "notes": [
         "学科・実技の科目と主催者を確認してから申し込みましょう。",
@@ -3621,7 +3702,7 @@
       ],
       "availability": {
         "kind": "rolling",
-        "note": "主催者の月別実施期間内で日時を予約します。予約申込は受検日の3日前まで。各月の受付開始日は公式表で確認できます。",
+        "note": "主催者の月別実施期間内で日時を予約します。予約申込は受検日の3日前まで。各月の受付開始日は、予約のページで確認できます。",
         "suspensions": []
       },
       "scope": "2級・3級FP技能検定 CBT（きんざい）・2026年度 金融財政事情研究会",
@@ -3630,7 +3711,10 @@
         "catalog-fp23-kinzai-2026"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://cbt-s.com/examinee/examination/kinzai_FP"
+      }
     },
     "touroku-tokyo-2026": {
       "id": "touroku-tokyo-2026",
@@ -3824,7 +3908,7 @@
       "procedureNotes": [
         "志望学部の試験科目と、前期・後期のどちらで受験するかを確認しましょう。",
         "登録と書類発送を分けて予定に入れておくと、必着の締切にも余裕を持てます。",
-        "冬の北海道は移動に時間がかかることもあります。公式の交通案内を見ながら、無理のない行程を考えておきましょう。"
+        "冬の北海道は移動に時間がかかることもあります。大学の交通案内を見ながら、無理のない行程を考えておきましょう。"
       ],
       "scope": "北海道大学 一般選抜・2027年度 前期日程",
       "sourceStatus": "verified",
@@ -3869,7 +3953,7 @@
       "procedureNotes": [
         "志望学部の試験科目と、前期・後期のどちらで受験するかを確認しましょう。",
         "登録と書類発送を分けて予定に入れておくと、必着の締切にも余裕を持てます。",
-        "冬の北海道は移動に時間がかかることもあります。公式の交通案内を見ながら、無理のない行程を考えておきましょう。"
+        "冬の北海道は移動に時間がかかることもあります。大学の交通案内を見ながら、無理のない行程を考えておきましょう。"
       ],
       "scope": "北海道大学 一般選抜・2027年度 後期日程",
       "sourceStatus": "verified",
@@ -4225,7 +4309,7 @@
         "exam": "published",
         "result": "published"
       },
-      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 県の日程ページでは「予定」として公表され、入学者選抜要項にも同じ日付が書かれています。特別選抜は全国募集の対象校・対象者に限ります。",
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 日程は「予定」として公表されています。特別選抜は全国募集の対象校・対象者に限ります。",
       "variants": [
         {
           "name": "一般入学者選抜(全日制・定時制)",
@@ -4946,7 +5030,7 @@
         "exam": "published",
         "result": "published"
       },
-      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 甲陵高校は別日程。10月実施要項も照合し、表の文字抽出が不明瞭な箇所は県の基本事項で確認しました。",
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 甲陵高校は別日程。",
       "variants": [
         {
           "name": "後期募集(全日制)",
@@ -5309,7 +5393,7 @@
         "exam": "published",
         "result": "published"
       },
-      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 資料掲載の2月4日正午・3月1日正午は中学校長承認期限です。ご本人の出願期限とは異なるため、中学校が案内する期限をご確認ください。",
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 掲載している2月4日正午・3月1日正午は中学校長承認期限です。ご本人の出願期限とは異なるため、中学校が案内する期限をご確認ください。",
       "variants": [
         {
           "name": "学力検査・多部制3月選抜A(3月選抜)",
@@ -5323,7 +5407,7 @@
         }
       ],
       "fieldNotes": {
-        "deadline": "公式の要綱では、推薦・特色等の2月4日12時、一般等の3月1日12時は『中学校長承認期限』と明記されています。志願者の登録・支払い後に学校の確認・承認が必要です。ご本人の登録・提出期限は、確認した資料では確定できませんでした。中学校が案内する期限を、先生と一緒に確かめておいてくださいね。"
+        "deadline": "推薦・特色等の2月4日12時、一般等の3月1日12時は『中学校長承認期限』です。志願者の登録・支払い後に学校の確認・承認が必要です。ご本人の登録・提出期限は、確定できていません。中学校が案内する期限を、先生と一緒に確かめておいてくださいね。"
       },
       "family": "school-koko-hyogo",
       "scope": "兵庫県 公立高校入試・2027年度",
@@ -5418,7 +5502,7 @@
         "exam": "published",
         "result": "published"
       },
-      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 一般出願と本出願は別の受付です。2月19日〜3月3日の連続した受付ではありません。 公式の日程表には、県立高校の今後のあり方の検討により、入学者選抜日程の一部を変更する場合がある、との注記があります。",
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 一般出願と本出願は別の受付です。2月19日〜3月3日の連続した受付ではありません。 県立高校の今後のあり方の検討により、入学者選抜日程の一部を変更する場合があります。",
       "variants": [
         {
           "name": "一般選抜・スポーツ推薦",
@@ -5572,7 +5656,7 @@
         "exam": "published",
         "result": "published"
       },
-      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 日程決定の公式資料を確認。詳細要項の元URLは取得できていないため、インターネット入力の先行期間・時刻は未確認です。",
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 インターネット入力の先行期間・時刻は未確認です。",
       "variants": [
         {
           "name": "一般入学者選抜(全日制課程・定時制課程)",
@@ -6070,7 +6154,7 @@
         "exam": "published",
         "result": "published"
       },
-      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 公式HTMLで検査・発表日を確認。",
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
       "variants": [
         {
           "name": "一般入学者選抜",
@@ -11162,7 +11246,7 @@
       "date": "2027-03-10",
       "type": "result",
       "label": "最終合格者発表（12時ごろ）",
-      "note": "公式案内は『12時ごろ』。正午ちょうどと確約する表示ではありません。",
+      "note": "『12時ごろ』の発表です。正午ちょうどと確約する表示ではありません。",
       "exam": "todai-2027",
       "sourceId": "catalog-todai-2027",
       "checkedAt": "2026-11-13"

@@ -11,6 +11,12 @@ export function mountExam(id,params,c){
  const root=document.querySelector('#exam-page'),ownEvents=events.filter(e=>e.exam===id).sort((a,b)=>a.date.localeCompare(b.date));
  const eventLabel=e=>officialEventLabel(e)+(e.planned?'（予定）':'');
  const dateText=e=>formatDate(e.date,true)+(e.time?' '+e.time+(e.type==='deadline'?'まで':''):'');
+ const applyOpen=(()=>{const v=scheduleMeta[id];if(!v?.applyPage?.url)return false;const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+  if((v.availability?.suspensions||[]).some(x=>x.start<=today&&(!x.end||x.end>=today)))return false;
+  if(v.fields.deadline==='rolling')return true;
+  const starts=(v.application||[]).map(a=>a.start).filter(Boolean).sort(),opens=!starts.length||starts[0]<=today;
+  return opens&&ownEvents.some(e=>e.type==='deadline'&&e.date>=today);})();
+ const applySection=applyOpen?`<section class="ed-apply" id="exam-${id}-apply" aria-labelledby="exam-${id}-apply-title"><div class="ed-section-title"><div><span class="ed-kicker">準備ができたら</span><h2 id="exam-${id}-apply-title">申し込みのページへ</h2></div></div><p>受ける回と受け方を確かめたら、主催者の申し込みのページへ進めます。別のサイトが開きます。</p><a class="primary ed-apply-button" href="${scheduleMeta[id].applyPage.url}" target="_blank" rel="noopener nofollow">申し込みのページへ <span aria-hidden="true">↗</span></a></section>`:'';
  const siblings=exams.filter(e=>exam.field==='高校入試'?e.field==='高校入試':e.family===exam.family);
  const key=s=>`exam-${id}-${s}`;
  const nav=[['dates','日程'],['flow','受験までの流れ'],['packing','持ち物・当日の流れ'],['faq','よくある質問']];
@@ -28,7 +34,7 @@ export function mountExam(id,params,c){
  <section id="${key('faq')}" class="ed-faq" aria-labelledby="${key('faq-title')}"><h2 id="${key('faq-title')}">気になることを、もう少し</h2>${meta.faq.map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</section>
  </div><aside class="ed-sidebar"><div class="ed-adviser"><span class="ed-adviser-mark">ひとこと</span><h2>${meta.advice}</h2><p>${meta.adviceBody}</p></div><div class="ed-official-card"><h2>申し込むときは、主催者の最新の案内も</h2><p>このページの試験・受け方が、ご自身の申し込みと合っているか確かめてからお進みくださいね。</p><label class="applied-label"><input type="checkbox" data-applied="${id}" ${state.applied.includes(id)?'checked':''}>申し込みを済ませた</label><p class="small-note">ご自身の確認用のチェックです。</p></div><div class="ed-focus"><h2>申し込み前の確認に</h2><ul>${meta.focus.map(t=>`<li>${t}</li>`).join('')}</ul></div><a class="ed-compare-link" href="#/guide/compare">ほかの試験も受ける予定の方へ<span>日程を並べて確認できます ›</span></a></aside></div>
  ${affiliateSection(groupFor(exam),key('pr'))}
- 
+ ${applySection}
  <section class="ed-other"><div class="ed-section-title"><h2>ほかの試験も見てみる</h2><a href="#/guide/decided">試験を探す ›</a></div><div>${exams.filter(e=>e.id!==id).map(e=>`<a href="#/exam/${e.id}"><span>${e.field}</span><strong>${e.short}</strong><b aria-hidden="true">›</b></a>`).join('')}</div></section>`;
  const $=s=>root.querySelector(s);
  $('#exam-round-select')?.addEventListener('change',e=>location.hash='#/exam/'+e.target.value,{signal});
