@@ -19,7 +19,7 @@ CFG = json.loads((Path(__file__).resolve().parents[1] / "config.json").read_text
 SITE_NAME = json.loads((Path(__file__).resolve().parent / "site.json").read_text(encoding="utf-8"))["name"]       # the redesign's name (config.json still has the old one)
 REL = "nofollow sponsored noopener"
 VC_SID = "3787704"
-VC_PID = {"yahoo": "892746613", "dhc": "892746566", "yamada": "892746569", "lenovo": "892748202", "minisforum": "892748204"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
+VC_PID = {"yahoo": "892746613", "dhc": "892746566", "yamada": "892746569", "lenovo": "892748202", "minisforum": "892748204", "orbis": "892748240", "daimaru": "892748241", "belluna": "892748242", "ablenet": "892748243"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
 A8_MAT = {"xdomain": ("4BGJFW+4W8GGY+CO4+15ORS2", "www15"), "xserver": ("4BEHX9+1F7FFM+CO4+6AZAQ", "www16"), "xbiz": ("4BEHX9+1GEAN6+CO4+3SZMKY", "www14"),
           # approved 2026-11-13, link codes read from the A8 tool (media 007 = this calendar).  Not yet in ASP: the calendar has no dated sale of these shops to attach them to
           # (a shop is listed only when a sale is confirmed; Alpen's Black Friday 2026 days were not published when read).  To switch on: add the shop to schedule.ENT with a confirmed entry and to ASP below.

@@ -23,10 +23,12 @@ GENRE_PREFIXES = tuple(v["path"] for k, v in GENRES.items())
 # the programmes we are partners of, per genre: the shop's own page behind our link (no claim about a sale; the sales stay in the tables above).  ("a8" | "vctext", key, link text)
 PARTNERS: dict[str, list[tuple[str, str, str]]] = {
     "electronics": [("vctext", "lenovo", "Lenovo公式オンラインストアを見る"), ("vctext", "minisforum", "MINISFORUMのサイトを見る")],
-    "food": [("a8", "oisix", "Oisixのおためしセットのページを見る")],
+    "food": [("a8", "oisix", "Oisixのおためしセットのページを見る"), ("vctext", "belluna", "ベルーナグルメのサイトを見る")],
+    "beauty": [("vctext", "orbis", "オルビスのサイトを見る")],
+    "fashion": [("vctext", "daimaru", "大丸松坂屋オンラインストアを見る")],
     "hobby": [("a8", "alpen", "スポーツデポ・ゴルフ5・アルペンの公式オンラインストアを見る")],
     "service": [("a8", "xserver", "エックスサーバーを見る"), ("a8", "xdomain", "XServerドメインを見る"), ("a8", "onamae", "お名前.comを見る"), ("a8", "muumuu", "ムームードメインを見る"),
-                ("a8", "lolipop", "ロリポップ！を見る"), ("a8", "mixhost", "mixhostを見る"), ("a8", "sakura", "さくらのレンタルサーバを見る"), ("a8", "stardomain", "スタードメインを見る")],
+                ("a8", "lolipop", "ロリポップ！を見る"), ("a8", "mixhost", "mixhostを見る"), ("a8", "sakura", "さくらのレンタルサーバを見る"), ("a8", "stardomain", "スタードメインを見る"), ("vctext", "ablenet", "ABLENETのサイトを見る")],
 }
 
 # a page that was published and then merged into another: its old address answers 301 to the new one (written into .htaccess by render.apply)
