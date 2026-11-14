@@ -468,10 +468,14 @@ def home_page(c: Ctx) -> str:
 </section>
 <p class="setup-redo" id="setup-redo" hidden><button type="button" class="btn small ghost">ジャンルを選び直す</button></p>
 <section class="hero"><h1>{esc(CATCH)}</h1>
-<div class="hero-cta" id="hero-cta" hidden>
-<p class="hero-note">あなたの大切な日や予定を記録して、近づいたらスマホやパソコンに知らせます。{esc(member_line(c.cfg))}</p>
-<p class="hero-btns"><a class="btn" href="/add/">大切な日を記録する</a> <a class="btn ghost" href="/interests/">好きな分野から探す</a></p>
-<nav class="chiprow" aria-label="残せる日の例"><a class="chip" href="/add/?kind=anniversary">記念日</a><a class="chip" href="/add/?kind=birthday">誕生日</a><a class="chip" href="/add/?kind=until">楽しみな日・期限</a><a class="chip" href="/add/?kind=memorial">大切な日</a></nav>
+<div class="hero-cta" id="hero-cta">
+<p class="hero-note">大切な日まで「あと何日」、過ぎた日から「もう何日」。ひと目で分かります。</p>
+<ul class="hero-samples" aria-label="記録できる日の例">
+<li><a class="hs" href="/add/?kind=birthday"><b class="hs-n">あと<em>23</em>日</b><span class="hs-t">大切な人の誕生日まで</span></a></li>
+<li><a class="hs" href="/add/?kind=anniversary"><b class="hs-n">もう<em>7,777</em>日</b><span class="hs-t">結婚してから</span></a></li>
+</ul>
+<p class="hero-btns"><a class="btn hero-main" href="/add/">最初の1枚を作る</a></p>
+<p class="hint">{esc(member_line(c.cfg))}</p>
 </div></section>
 <div id="season" class="season" hidden></div>
 <details class="panel home-parts" id="home-parts"><summary>ホームの表示(ON/OFFと並べ替え)</summary>
