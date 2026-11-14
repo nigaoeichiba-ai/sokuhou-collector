@@ -7,6 +7,7 @@ the contact form and the visit counter.  Each check has a case that must fail (a
 from __future__ import annotations
 
 import importlib.util
+import datetime
 import json
 import re
 import tempfile
@@ -17,6 +18,10 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "sites" / "shiken"
 TEMPLATE = SITE / "renewal" / "template"
 REGISTRY = json.loads((TEMPLATE / "schedule" / "registry.json").read_text(encoding="utf-8"))
+# The day the test site is built as (2026-11-15, the morning check): not a fixed day. A date checked on a later day than a fixed one made the build refuse the data
+# (checkedAt in the future) and the whole class fail on every morning update. It is the latest day a date was checked, and never before 2026-11-13.
+JST_TODAY = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=9)).strftime("%Y-%m-%d")
+BASE_DAY = max(["2026-11-13"] + [m["checkedAt"] for m in REGISTRY["meta"].values()] + [r["checkedAt"] for r in REGISTRY["rows"]])
 INVENTORY = json.loads((TEMPLATE / "research" / "original-inventory.json").read_text(encoding="utf-8"))
 
 
@@ -113,7 +118,7 @@ class Renewal(unittest.TestCase):
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name) / "site"
-        cls.info = BUILD.make_site(cls.out, "2026-11-13")
+        cls.info = BUILD.make_site(cls.out, BASE_DAY)
         cls.pages = read_pages(cls.out)
 
     @classmethod
@@ -202,24 +207,37 @@ class Renewal(unittest.TestCase):
     def test_every_date_has_a_source_and_the_check_day_is_not_in_the_future(self):
         for x in REGISTRY["rows"]:
             self.assertIn(x["sourceId"], REGISTRY["sources"], x["id"])
-            self.assertLessEqual(x["checkedAt"], "2026-11-13", x["id"])
+            self.assertLessEqual(x["checkedAt"], JST_TODAY, x["id"])
             self.assertRegex(x["date"], r"^\d{4}-\d{2}-\d{2}$")
         for sid, s in REGISTRY["sources"].items():
             self.assertTrue(s["url"].startswith("https://"), sid)
 
     # --- what depends on the day --------------------------------------------------------------------------------------------------------
     def test_the_lists_of_coming_dates_follow_the_day_of_the_build(self):
+        def ja(day: str) -> str:
+            d = datetime.date.fromisoformat(day)
+            return f"{d.year}年{d.month}月{d.day}日（{'月火水木金土日'[d.weekday()]}）"
+        deadlines = sorted({r["date"] for r in REGISTRY["rows"] if r["type"] == "deadline"})
+        ahead = [d for d in deadlines if d >= BASE_DAY and d <= "2026-12-19"]
+        past = [d for d in deadlines if d < BASE_DAY and d >= "2026-10-01"]
         d1 = self.pages["deadlines/index.html"]
-        self.assertIn("2026年11月26日", d1)                  # TOEIC 1/10 deadline: still ahead on 11/13
-        self.assertNotIn("2026年11月11日（水）", d1)         # already past on 11/13
+        self.assertTrue(ahead and past)
+        self.assertIn(ja(ahead[0]).split("（")[0], d1)        # a deadline still ahead on the day of the build is listed
+        self.assertNotIn(ja(past[-1]), d1)                    # one already past is not
         with tempfile.TemporaryDirectory() as tmp:
             BUILD.make_site(Path(tmp), "2026-12-20")
             d2 = (Path(tmp) / "deadlines" / "index.html").read_text(encoding="utf-8")
-            self.assertNotIn("2026年11月26日", d2)
+            self.assertNotIn(ja(ahead[0]).split("（")[0], d2)
             self.assertIn("2026年12月20日", d2)              # the list says from which day it counts
             home = (Path(tmp) / "index.html").read_text(encoding="utf-8")
             self.assertIn("2026年12月", home)
-        self.assertIn("2026年11月", self.pages["index.html"])
+        self.assertIn(f"{int(BASE_DAY[:4])}年{int(BASE_DAY[5:7])}月", self.pages["index.html"])
+
+    def test_a_check_day_after_the_day_of_the_build_is_refused(self):
+        # the negative case of the fixed-day fault: a date checked later than the build day is really too far ahead, and the build says so
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(RuntimeError):
+                BUILD.make_site(Path(tmp), "2026-11-01")
 
     def test_no_page_counts_days_from_a_fixed_day(self):
         for rel, h in self.pages.items():
