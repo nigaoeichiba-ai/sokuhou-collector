@@ -32,7 +32,7 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "yamada": ("ヤマダウェブコム", "ヤ", "ec"), "nitori": ("ニトリ", "ニ", "brand"), "dyson": ("ダイソン", "ダ", "brand"), "playstation": ("PlayStation公式", "P", "brand"),
        "sonystore": ("ソニーストア", "ソ", "brand"), "xserver": ("エックスサーバー", "X", "web"), "xdomain": ("XServerドメイン", "ド", "web"),
        "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
-       "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "joshin": ("Joshin web", "ジ", "ec"), "toshiba": ("東芝ライフスタイル", "東", "brand"), "aqua": ("AQUA", "ア", "brand"), "regza": ("TVS REGZA", "レ", "brand"), "aoki": ("AOKI", "青", "brand"), "canon": ("キヤノン", "キ", "brand"), "fujifilm": ("富士フイルム", "富", "brand"),
+       "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "joshin": ("Joshin web", "ジ", "ec"), "toshiba": ("東芝ライフスタイル", "東", "brand"), "aqua": ("AQUA", "ア", "brand"), "regza": ("TVS REGZA", "レ", "brand"), "aoki": ("AOKI", "青", "brand"), "tcl": ("TCL", "T", "brand"), "hisense": ("ハイセンス", "海", "brand"), "haier": ("ハイアール", "ハ", "brand"), "brother": ("ブラザー", "ブ", "brand"), "canon": ("キヤノン", "キ", "brand"), "fujifilm": ("富士フイルム", "富", "brand"),
        "stardomain": ("スタードメイン", "ス", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand")}
 AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
@@ -140,6 +140,13 @@ EXTRA_CONFIRMED += [
     C("c-fuji-xhalf", "fujifilm", "X half ご購入応援キャンペーン", "2026-10-01", "2027-01-31", _span("2026-10-01", "2027-01-31"), "", src=PRESS2, note="購入期間です。応募の締め切りは、2027年3月1日です。"),
     C("c-aoki-bf", "aoki", "AOKI ブラックフライデーセール(終了日)", "2026-12-07", "2026-12-07", f"オンラインショップは{jpd('2026-12-07')}の9時59分まで(開始日は確認していません)", "", src=SRC_PAGE,
       note="店舗は12月6日(日)までです。店舗とオンラインショップで、取り扱い商品が一部変わります。"),
+    C("c-tcl-year-end", "tcl", "TCL 年末年始キャンペーン(テレビ)", "2026-10-30", "2027-01-11", _span("2026-10-30", "2027-01-11"), "", src=PRESS2, note="購入期間です。応募の締め切りは、2027年1月31日です。"),
+    C("c-hisense-cb", "hisense", "ハイセンス テレビ・冷蔵庫 キャッシュバックキャンペーン", "2026-10-15", "2027-01-17", _span("2026-10-15", "2027-01-17", "11:00", "23:59"), "", src=PRESS2, note="購入期間です。応募の締め切りは、2027年2月17日です。"),
+    C("c-haier-tsukiyo", "haier", "ハイアール Tsukiyo(冷蔵庫) キャッシュバックキャンペーン", "2026-09-29", "2027-01-31", _span("2026-09-29", "2027-01-31"), "", src=PRESS2, note="購入期間です。応募の締め切りは、2027年2月15日です。"),
+    C("c-brother-wback", "brother", "ブラザー 年末Wバックキャンペーン(プリンター)", "2026-11-05", "2027-01-14", _span("2026-11-05", "2027-01-14"), "", src=PRESS2),
+    C("c-sony-tele", "sonystore", "ソニー 望遠レンズ+テレコンバーター キャッシュバックキャンペーン", "2026-09-29", "2027-01-12", _span("2026-09-29", "2027-01-12"), "", src=PRESS2, note="購入期間です。応募の締め切りは、2027年1月26日です。"),
+    C("c-pana-face", "panasonic", "パナソニック フェイスケア 新商品デビューキャンペーン", "2026-09-15", "2026-12-27", _span("2026-09-15", "2026-12-27"), "", src=PRESS2, note="購入期間です。応募の締め切りは、2027年1月15日です。"),
+    C("c-aqua-drum", "aqua", "AQUA まっ直ぐドラム キャッシュバックキャンペーン", "2026-11-05", "2027-02-07", _span("2026-11-05", "2027-02-07"), "", src=PRESS2, note="購入期間です。"),
     C("c-zozo-2", "zozo", "ZOZOWEEK 第2弾(終了日)", "2026-11-15", "2026-11-15", f"{jpd('2026-11-15')}まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-nec", "nec", "NEC 新製品発売記念セール(終了日)", "2026-11-12", "2026-11-12", f"{jpd('2026-11-12')}の15時まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-uniqlo-winter", "uniqlo", "ユニクロ 冬本番突入号 期間限定価格", "2026-11-13", "2026-11-19", _span("2026-11-13", "2026-11-19"), "", src=SRC_PAGE),
