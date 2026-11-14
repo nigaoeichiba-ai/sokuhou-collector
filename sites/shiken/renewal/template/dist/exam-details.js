@@ -14,9 +14,10 @@ export function mountExam(id,params,c){
  const applyOpen=(()=>{const v=scheduleMeta[id];if(!v?.applyPage?.url)return false;const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
   if((v.availability?.suspensions||[]).some(x=>x.start<=today&&(!x.end||x.end>=today)))return false;
   if(v.fields.deadline==='rolling')return true;
+  if(v.fields.deadline==='regional')return ownEvents.some(e=>e.type==='exam'&&e.date>today);
   const starts=(v.application||[]).map(a=>a.start).filter(Boolean).sort(),opens=!starts.length||starts[0]<=today;
   return opens&&ownEvents.some(e=>e.type==='deadline'&&e.date>=today);})();
- const applySection=applyOpen?`<section class="ed-apply" id="exam-${id}-apply" aria-labelledby="exam-${id}-apply-title"><div class="ed-section-title"><div><span class="ed-kicker">準備ができたら</span><h2 id="exam-${id}-apply-title">申し込みのページへ</h2></div></div><p>受ける回と受け方を確かめたら、主催者の申し込みのページへ進めます。別のサイトが開きます。</p><a class="primary ed-apply-button" href="${scheduleMeta[id].applyPage.url}" target="_blank" rel="noopener nofollow">申し込みのページへ <span aria-hidden="true">↗</span></a></section>`:'';
+ const applySection=applyOpen?`<section class="ed-apply" id="exam-${id}-apply" aria-labelledby="exam-${id}-apply-title"><div class="ed-section-title"><div><span class="ed-kicker">準備ができたら</span><h2 id="exam-${id}-apply-title">申し込みのページへ</h2></div></div><p>${esc(scheduleMeta[id].applyPage.note||'受ける回と受け方を確かめたら、主催者の申し込みのページへ進めます。')}別のサイトが開きます。</p><a class="primary ed-apply-button" href="${scheduleMeta[id].applyPage.url}" target="_blank" rel="noopener nofollow">申し込みのページへ <span aria-hidden="true">↗</span></a></section>`:'';
  const siblings=exams.filter(e=>exam.field==='高校入試'?e.field==='高校入試':e.family===exam.family);
  const key=s=>`exam-${id}-${s}`;
  const nav=[['dates','日程'],['flow','受験までの流れ'],['packing','持ち物・当日の流れ'],['faq','よくある質問']];

@@ -1772,7 +1772,11 @@
       "notes": "ネット試験の日程とは別です。第174回の申込受付は全国で終了しています。",
       "checkedAt": "2026-11-13",
       "field": "会計",
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://links.kentei.ne.jp/bookkeeping",
+        "note": "簿記の統一試験は、受験地の商工会議所ごとに申し込みます。地域を選ぶと、その商工会議所の申込案内が開きます。"
+      }
     },
     "nurse": {
       "scope": "第116回看護師国家試験",
@@ -2223,7 +2227,11 @@
         "bokiFlow"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://links.kentei.ne.jp/bookkeeping",
+        "note": "簿記の統一試験は、受験地の商工会議所ごとに申し込みます。地域を選ぶと、その商工会議所の申込案内が開きます。"
+      }
     },
     "boki-175": {
       "id": "boki-175",
@@ -2255,7 +2263,11 @@
         "bokiFlow"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://links.kentei.ne.jp/bookkeeping",
+        "note": "簿記の統一試験は、受験地の商工会議所ごとに申し込みます。地域を選ぶと、その商工会議所の申込案内が開きます。"
+      }
     },
     "fp1-gakka-20260524": {
       "id": "fp1-gakka-20260524",
@@ -3145,7 +3157,10 @@
         "catalog-itpassport-cbt-extra-0"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://www3.jitec.ipa.go.jp/JitesCbt/html/application/applies.html"
+      }
     },
     "fe-cbt": {
       "id": "fe-cbt",
@@ -3195,7 +3210,10 @@
         "catalog-itpassport-cbt-extra-0"
       ],
       "fieldSourceIds": {},
-      "category": "qualification"
+      "category": "qualification",
+      "applyPage": {
+        "url": "https://cbt-s.com/examinee/examination/fe"
+      }
     },
     "boki-net-2026": {
       "id": "boki-net-2026",
