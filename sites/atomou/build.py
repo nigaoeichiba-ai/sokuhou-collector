@@ -1581,7 +1581,7 @@ def open_preview(pages: dict) -> dict:
     """The demo pages as an open preview: no password, noindex, no sitemap, no server-side receivers, robots.txt for the on-request agents, an honest banner."""
     out = {}
     for k, v in pages.items():
-        if k.startswith("api/") or k == "sitemap.xml":
+        if k.startswith("api/") or k.endswith(".php") or k == "sitemap.xml":
             continue
         if k.endswith(".html") and PREVIEW_BANNER_OLD in v:
             v = v.replace(PREVIEW_BANNER_OLD, OPEN_PREVIEW_BANNER)
