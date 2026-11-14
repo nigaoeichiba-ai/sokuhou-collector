@@ -552,7 +552,7 @@ def genre_partners(gid: str) -> str:
     if not items:
         return ""
     links = [affiliate._link("a8", affiliate.a8_href(key), label, key) if kind == "a8" else affiliate._link("vc", affiliate.vc_text_href(affiliate.VC_PID[key]), label, key) for kind, key, label in items]
-    return ('<section class="content-block"><h2>公式サイトで探す</h2><p>日程と数字は、上の表のとおりです。ここは、各社の公式ページへの入り口です。</p>' + affiliate.lines(links) + "</section>")
+    return ('<section class="content-block"><h2>各社のサイトで探す</h2><p>日程と数字は、上の表のとおりです。ここは、各社のサイトへの入り口です。</p>' + affiliate.lines(links) + "</section>")
 
 
 def genre_extra(ctx: "Ctx", gid: str) -> str:
@@ -633,14 +633,10 @@ def store_row(pr: dict, st: dict) -> str:
     else:
         disc = ""
     note = f'<p class="discount-note">{e(hl["note"])}</p>' if hl.get("note") else ""
-    official = st["links"][0] if st["links"] else None
-    btn = f'<a class="btn" href="{e(official[1])}" target="_blank" rel="noopener noreferrer">公式サイトを開く</a>' if official else ""
-    links = " ／ ".join(f'<a href="{e(u)}" target="_blank" rel="noopener noreferrer">{e(t)} ↗</a>' for t, u in st["links"][1:])      # the first official page is the button; the rest are listed once
-    src = f'<p class="src">ほかの公式ページ：{links}</p>' if links else ""      # a store without a public source link (Amazon: its page address stays out of the repository) shows the date only
     aff = affiliate.lines(affiliate.product_links(pr, st))
     return (f'<article class="store-row"><div class="store-row-top"><div class="icon" aria-hidden="true">{e(st.get("icon") or "🏬")}</div>'
-            f'<div class="main"><p class="store-name">{e(st["name"])}<span class="tag">{e(st["tag"])}</span></p>{disc}{note}<p class="checked">確認日 {e(st["checked"])}</p></div>{btn}</div>'
-            f'<details><summary>条件の詳しい内容</summary>{facts_dl(st["rows"])}</details>{src}{aff}</article>')
+            f'<div class="main"><p class="store-name">{e(st["name"])}<span class="tag">{e(st["tag"])}</span></p>{disc}{note}<p class="checked">確認日 {e(st["checked"])}</p></div></div>'
+            f'<details><summary>条件の詳しい内容</summary>{facts_dl(st["rows"])}</details>{aff}</article>')
 
 
 def fit_box(fit: dict | None) -> str:
@@ -692,6 +688,8 @@ def product_pages(ctx: Ctx, base_head: str) -> dict:
 
 
 def wrap(ctx: Ctx, path: str, head: str, breadcrumb: str, heading: str, body: str, updated: str, page_type: str) -> str:
+    if page_type in ("mall", "genre", "product"):          # owner 2026-11-15: no named source on a page; one general sentence instead
+        body = re.sub(r'<p class="credit">出典:.*?</p>', '<p class="credit">公式の発表をはじめとする複数の情報をもとにしています。</p>', body, flags=re.S)
     demo = ctx.set["demo"]
     bar = ""
     if demo:

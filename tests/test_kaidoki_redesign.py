@@ -136,9 +136,8 @@ class RedesignTest(unittest.TestCase):
         for rel, h in self.html(self.live).items():
             body = PR_LINK.sub("", AFF_BOX.sub("", h.split("<main", 1)[-1]))
             body = re.sub(r'<section class="content-block shops-box".*?</section>', "", body, flags=re.S)      # the shops box of /yahoo/: the Yahoo! credit link is required (test_kaidoki_yahoo_shops.py)
-            if rel.startswith("kaden/test-phone/"):
-                self.assertEqual(re.findall(r'href="(https?://[^"]+)"', body), ["https://example.com/a"])
-                continue
+            if rel.startswith(("kaden/test-phone/", "food/", "daily/", "fashion/", "beauty/", "home/", "hobby/", "service/", "rakuten/index", "yahoo/", "amazon/sale-calendar/")) or rel == "kaden/index.html":
+                self.assertNotRegex(body, self.SOURCE_SHOWN, rel)          # 2026-11-15 (owner): no source link, no source button, no source line on a shop, genre or product page
             if rel.startswith(("contact", "privacy", "about")):
                 continue
             self.assertNotRegex(body, r'href="(https?:)?//', rel)
@@ -236,6 +235,14 @@ class RedesignTest(unittest.TestCase):
                         self.assertIn(spec["key"], affiliate.VC_PID, f)
 
     # ---- Muse's prototype of 2026-11-14 (shop pages / product pages) ----
+    SOURCE_SHOWN = re.compile(r"公式サイトを開く|ほかの公式ページ|class=\"src\"|出典")
+
+    def test_negative_a_source_button_or_source_line_is_caught(self):
+        self.assertRegex('<a class="btn" href="https://example.com/a">公式サイトを開く</a>', self.SOURCE_SHOWN)
+        self.assertRegex('<p class="src">ほかの公式ページ：</p>', self.SOURCE_SHOWN)
+        self.assertRegex("<dt>出典</dt>", self.SOURCE_SHOWN)
+        self.assertNotRegex("<p>確認日 2026年11月9日</p>", self.SOURCE_SHOWN)
+
     RANKING = re.compile(r"最安|最安値|1位|第1位|No\.?\s?1|ランキング|おすすめ順|安い順")
 
     def test_prototype_shop_page_parts(self):
@@ -267,9 +274,9 @@ class RedesignTest(unittest.TestCase):
             self.assertRegex(r, r"確認日 2026年11月9日")
             self.assertNotRegex(r, self.RANKING)
         self.assertIn('<p class="discount"><small>最大</small>15%<small>OFF</small></p>', rows[0])
-        self.assertIn('class="btn" href="https://example.com/a"', rows[0])
-        self.assertIn("公式サイトを開く", rows[0])
-        self.assertNotIn('class="btn"', rows[1])      # a store with no official page address gets no button (and no invented link)
+        for r in rows:
+            self.assertNotRegex(r, r'href="https?://')          # the official page address stays in the data and never on the screen (owner 2026-11-15)
+            self.assertNotRegex(r, self.SOURCE_SHOWN)
         self.assertIn('<section class="fit-box"><h2>向き・不向き</h2>', h)
         self.assertIn("向かない場合", h)
         self.assertNotIn("store-burst", h)      # the old prototype's boxing-ring heading is gone
