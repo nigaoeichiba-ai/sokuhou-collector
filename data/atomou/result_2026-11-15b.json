@@ -1,0 +1,101 @@
+[
+  {
+    "title": "サッカー日本代表 対ブラジル代表(シンガポール)",
+    "date": "2026-11-14",
+    "text": "シンガポールで行われた親善試合で、日本代表がブラジル代表に3対2で勝ちました。日本は前半15分に久保建英が先制し、19分には中村敬斗が追加点を入れて2点をリードしました。\nブラジルは前半33分と後半30分にヴィニシウス・ジュニオールが決めて同点としましたが、日本は後半のアディショナルタイムに坂元達裕が押し込んで勝ち越し、そのまま逃げ切りました。",
+    "facts": [
+      [
+        "スコア",
+        "3 - 2"
+      ],
+      [
+        "先制点",
+        "久保建英"
+      ],
+      [
+        "ブラジルの得点",
+        "ヴィニシウス"
+      ],
+      [
+        "決勝点",
+        "坂元 達裕"
+      ],
+      [
+        "会場",
+        "シンガポール・ナショナル・スタジアム"
+      ]
+    ],
+    "written_on": "2026-11-15",
+    "source_url": "https://www.jleague.jp/match/friendly/2026/111414/live-commentary/",
+    "source_quote": "坂元 達裕 90+1'",
+    "source_url2": "https://www.soccer-king.jp/news/japan/national/20261114/2227639.html",
+    "source_quote2": "久保建英が鮮やか先制点",
+    "verified": true
+  },
+  {
+    "title": "ラグビー日本代表 対 イングランド(ネーションズ)",
+    "date": "2026-11-14",
+    "text": "ラグビーのネーションズチャンピオンシップ第5戦で、日本代表はロンドンのトゥイッケナムでイングランド代表と戦い、15対78で敗れました。イングランドは80分間に13トライを挙げています。\n63点差は、日本にとってイングランド戦で最も大きな点差の敗戦です。",
+    "facts": [
+      [
+        "スコア",
+        "日本 15-78 イングランド"
+      ],
+      [
+        "イングランドのトライ数",
+        "13"
+      ],
+      [
+        "点差",
+        "63点"
+      ],
+      [
+        "大会",
+        "ネーションズチャンピオンシップ ラウンド5"
+      ],
+      [
+        "会場",
+        "アリアンツ スタジアム(トゥイッケナム)"
+      ]
+    ],
+    "written_on": "2026-11-15",
+    "source_url": "https://rugby-rp.com/2026/11/15/japan/148404",
+    "source_quote": "【日本 15－78 イングランド】",
+    "source_url2": "https://news.web.nhk/newsweb/na/nd-20261114de75976",
+    "source_quote2": "15対78で敗れました",
+    "verified": true
+  },
+  {
+    "title": "MLB 2026 最優秀選手(MVP) 発表",
+    "date": "2026-11-12",
+    "text": "全米野球記者協会が、2026年のMVPを発表しました。ナショナル・リーグはカブスのピート・クロウ=アームストロング、アメリカン・リーグはアストロズのヨーダン・アルバレスで、どちらも1位票を独占する満票での受賞です。\nナ・リーグでは、3年連続でMVPだった大谷翔平が2位でした。",
+    "facts": [
+      [
+        "ナ・リーグMVP",
+        "Pete Crow-Armstrong"
+      ],
+      [
+        "ア・リーグMVP",
+        "Yordan Alvarez"
+      ],
+      [
+        "ナ・リーグ2位",
+        "Shohei Ohtani"
+      ],
+      [
+        "票",
+        "unanimous"
+      ],
+      [
+        "発表",
+        "BBWAA"
+      ]
+    ],
+    "written_on": "2026-11-15",
+    "source_url": "https://www.mlb.com/news/pete-crow-armstrong-wins-2026-nl-mvp",
+    "source_quote": "30 first-place nods",
+    "source_url2": "https://www.cbssports.com/mlb/news/mlb-2026-american-league-mvp-yordan-alvarez-astros/",
+    "source_quote2": "named unanimous American League MVP",
+    "verified": true
+  }
+]
