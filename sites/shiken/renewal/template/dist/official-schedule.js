@@ -16,7 +16,6 @@ export function eventToIcs(event,now=new Date()){
  const timed=time=>`${compact}T${time.replace(':','')}00`;
  const next=new Date(event.date+'T00:00:00Z');next.setUTCDate(next.getUTCDate()+1);
  const timing=event.time?`DTSTART;TZID=Asia/Tokyo:${timed(event.time)}${event.endTime?'\r\nDTEND;TZID=Asia/Tokyo:'+timed(event.endTime):''}`:`DTSTART;VALUE=DATE:${compact}\r\nDTEND;VALUE=DATE:${next.toISOString().slice(0,10).replaceAll('-','')}`;
- const source=scheduleSources[event.sourceId];
- const desc=[event.edition,event.note,event.planned?'主催者公表の予定日':'',`公式情報の確認日：${event.checkedAt||CHECKED_AT}`,source.title,source.url,'最新の変更は主催者の案内をご確認ください。'].filter(Boolean).join('\n');
- return `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Shikaku Shiken Michi//JP\r\nBEGIN:VEVENT\r\nUID:${event.id}@michi-calendar\r\nDTSTAMP:${now.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'')}\r\n${timing}\r\nSUMMARY:${clean('【'+eventLabel(event)+(event.planned?'・予定':'')+'】'+event.name)}\r\nDESCRIPTION:${clean(desc)}\r\nURL:${source.url}\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n`;
+ const desc=[event.edition,event.note,event.planned?'主催者公表の予定日':'',`確認日：${event.checkedAt||CHECKED_AT}`,'最新の変更は主催者の案内をご確認ください。'].filter(Boolean).join('\n');
+ return `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Shikaku Shiken Michi//JP\r\nBEGIN:VEVENT\r\nUID:${event.id}@michi-calendar\r\nDTSTAMP:${now.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'')}\r\n${timing}\r\nSUMMARY:${clean('【'+eventLabel(event)+(event.planned?'・予定':'')+'】'+event.name)}\r\nDESCRIPTION:${clean(desc)}\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n`;
 }

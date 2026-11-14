@@ -80,8 +80,8 @@ function showExam(id,eventId=null){
 const articles={
  postal:{title:'「必着」と「消印有効」、どちらになっていますか？',body:'<p>郵送で申し込むときは、同じ締切日でも意味が違います。募集要項の言葉を、一度確かめておきましょう。</p><h3>「必着」と書かれている場合</h3><p>締切日までに、書類が相手に届く必要があります。投函する日ではないので、配達にかかる時間も見込んでくださいね。</p><h3>「消印有効」と書かれている場合</h3><p>指定日までの郵便局の消印があることが条件です。ポストに入れる時刻によっては当日の消印にならないこともあるため、余裕をもって窓口で確認しましょう。</p><p>提出先、郵送方法、受付時刻などの条件は、試験ごとの公式案内をご確認ください。</p>'},
  method:{title:'受け方が違うと、申込方法も変わります。',body:'<h3>決まった日に受ける試験</h3><p>申込期間と試験日が決まっています。会場や級によって受付期間が異なる場合もあるので、ご自身が受ける試験の案内を確認しましょう。</p><h3>日時や会場を選んで受ける試験</h3><p>CBTなどでは、会場の空き状況を見て日時を選ぶことがあります。希望する日がある方は、予約の開始時期や休止期間も確かめておいてくださいね。</p><h3>申込後にも、ひとつ確認を</h3><p>支払期限、受付完了のお知らせ、受験票の受け取り方まで確認しておくと、当日の準備がしやすくなります。</p>'},
- about:{title:'資格・試験への道について',body:'<p>受けたい試験が決まったときも、これから何を学ぶか迷っているときも。日程や準備を確かめる場所として、気軽に使っていただけるサイトを目指しています。</p><p>掲載している日程には、主催者の公式案内の出典と確認日を添えています。申込方法や変更のお知らせなど、詳しい条件は主催者の案内で確かめておいてくださいね。</p>'},
- sources:{title:'日程を確認するときに',body:'<p>実際に申し込む際は、試験の主催者が出している最新の案内をご確認ください。級、受験方式、会場、提出方法などによって、日程や条件が変わることがあります。</p><p>掲載している資格・試験を、実施回や地域に分けてご案内しています。対象はトップの一覧からお選びいただけます。確認日は各日程の出典欄に掲載しています。公表された予定日は「予定」、日程の公表がないものは「未発表」、日付を確定できないものは「未確認」と分けています。予約制や地域ごとに違う日程も、その旨を表示しています。掲載のない日も、試験がないことを意味しません。</p><p>予定の保存や「申込済み」のチェックは、ご自身の確認用です。主催者への申込や支払いは行われません。</p>'},
+ about:{title:'資格・試験への道について',body:'<p>受けたい試験が決まったときも、これから何を学ぶか迷っているときも。日程や準備を確かめる場所として、気軽に使っていただけるサイトを目指しています。</p><p>掲載している日程には、確認日を添えています。申込方法や変更のお知らせなど、詳しい条件は主催者の案内で確かめておいてくださいね。</p>'},
+ sources:{title:'日程を確認するときに',body:'<p>実際に申し込む際は、試験の主催者が出している最新の案内をご確認ください。級、受験方式、会場、提出方法などによって、日程や条件が変わることがあります。</p><p>掲載している資格・試験を、実施回や地域に分けてご案内しています。対象はトップの一覧からお選びいただけます。確認日は各試験のページに載せています。公表された予定日は「予定」、日程の公表がないものは「未発表」、日付を確定できないものは「未確認」と分けています。予約制や地域ごとに違う日程も、その旨を表示しています。掲載のない日も、試験がないことを意味しません。</p><p>予定の保存や「申込済み」のチェックは、ご自身の確認用です。主催者への申込や支払いは行われません。</p>'},
  privacy:{title:'保存した予定について',body:'<p>ログインしなくても、試験を保存できます。保存先は、いまお使いのブラウザです。このサイトから、保存した内容をサーバーへ送信することはありません。</p><p>別の端末には引き継がれません。また、ブラウザのデータを消したり、プライベートモードを閉じたりすると、保存した予定が消えることがあります。</p><p>共有の端末をお使いのときは、この点にも気をつけてくださいね。</p>'}
 };
 function showArticle(id){const a=articles[id];if(a)dialog(`<h2 id="dialog-heading">${a.title}</h2>${a.body}`);}
@@ -107,12 +107,12 @@ function renderRoute(){
  $('.skip-link').href=detail?'#exam-title':guide?'#guide-title':'#calendar-section';$('.skip-link').textContent=detail||guide?'本文へ進む':'カレンダーへ進む';
  // Keep skip links within the current route instead of treating a section ID as the home route.
  if(detail){mountExam(examMatch[1],new URLSearchParams(examMatch[2]||''),{state,exams,events,formatDate,esc,checklist,updateProgress});window.scrollTo({top:0,behavior:'instant'});return;}
- document.querySelector('meta[name="description"]').content=guide?(guides.find(g=>g.id===match[1])?.intro||'試験の準備を確認できる確認日は、各日程の出典と一緒に掲載しています。'):'資格・試験への道。試験日や申込の締切をカレンダーで確認し、ご自身の状況から必要な準備を探せます。確認日は、各日程の出典と一緒に掲載しています。';
+ document.querySelector('meta[name="description"]').content=guide?(guides.find(g=>g.id===match[1])?.intro||'試験の準備を確認できます。'):'資格・試験への道。試験日や申込の締切をカレンダーで確認し、ご自身の状況から必要な準備を探せます。日程の確認日は、各試験のページに載せています。';
  if(guide){renderGuide(match[1],new URLSearchParams(match[2]||''));document.title=($('#guide-title').textContent||'受験の案内')+'｜資格・試験への道';window.scrollTo({top:0,behavior:'instant'});}
  else {document.title='資格・試験への道｜試験日程・申込期限・受験準備';renderSaved();if(hash&&hash!=='#/')requestAnimationFrame(()=>document.getElementById(hash.slice(1))?.scrollIntoView());else window.scrollTo({top:0,behavior:'instant'});}
 }
 function downloadEvent(event){
- const blob=new Blob([eventToIcs(event)],{type:'text/calendar;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=event.id+'.ics';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('出典と確認日を添えた予定ファイルを保存しました。');
+ const blob=new Blob([eventToIcs(event)],{type:'text/calendar;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=event.id+'.ics';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('確認日を添えた予定ファイルを保存しました。');
 }
 document.addEventListener('click',e=>{
  if(e.target.closest('.skip-link')&&/^#\/(exam|guide)\//.test(location.hash)){e.preventDefault();const id=location.hash.startsWith('#/exam/')?'exam-title':'guide-title';const heading=document.getElementById(id);heading?.setAttribute('tabindex','-1');heading?.focus();return;}

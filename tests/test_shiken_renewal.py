@@ -75,6 +75,21 @@ def page_problems(pages: dict[str, str]) -> list[str]:
     return out
 
 
+FOOTER_SENTENCE = "掲載の日程は、公式の発表をはじめとする複数の情報をもとにしています。申し込みの前に、主催者の最新の案内もご確認ください。"
+
+
+def source_problems(html: str) -> list[str]:
+    """2026-11-15 (owner): no source name, no source link on any page - the footer's one sentence says where the dates come from. Affiliate links (rel has sponsored) are not sources."""
+    out = []
+    t = text_of(html)
+    if re.search(r"出典|出所|出どころ|情報源", t):
+        out.append("the word 出典 (or a synonym) is on the screen")
+    for tag in re.findall(r"<a [^>]*href=\"https?://[^\"]*\"[^>]*>", re.sub(r"<script.*?</script>", "", html, flags=re.S)):
+        if "sponsored" not in tag:
+            out.append("an outside link that is not an affiliate link: " + tag[:80])
+    return out
+
+
 class Renewal(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -223,6 +238,25 @@ class Renewal(unittest.TestCase):
                 continue
             for href in ("/about/", "/privacy/", "/contact/"):
                 self.assertIn(f'href="{href}"', h, f"{rel} lacks {href}")
+
+    def test_no_page_shows_a_source_and_the_footer_has_the_one_sentence(self):
+        for rel, h in self.pages.items():
+            if rel.startswith("google"):
+                continue
+            self.assertEqual(source_problems(h), [], rel)
+            if not rel.startswith("404"):
+                self.assertEqual(text_of(h).count(FOOTER_SENTENCE), 1, f"{rel}: the footer sentence must appear exactly once")
+        # the browser scripts must not be able to draw a source either (the calendar, the lists and the dialogs are made in the browser)
+        for js in (self.out / "_versions").rglob("*.js"):
+            if js.name == "schedule-records.js":
+                continue                       # the data (kept inside, never shown)
+            code = js.read_text(encoding="utf-8")
+            self.assertNotIn('rel="noopener noreferrer"', code, js.name)
+            self.assertNotIn("出典：", code, js.name)
+        # negative cases: the check does catch a source name and a source link
+        self.assertTrue(source_problems('<p class="schedule-source">出典：<a href="https://www.eiken.or.jp/">日本英語検定協会 ↗</a></p>'))
+        self.assertTrue(source_problems('<a href="https://www.jafp.or.jp/" target="_blank" rel="noopener noreferrer">公式</a>'))
+        self.assertEqual(source_problems('<a href="https://hb.afl.rakuten.co.jp/x" rel="nofollow sponsored noopener">広告</a>'), [])
 
     # --- affiliate links ------------------------------------------------------------------------------------------------------------------
     def test_exam_pages_carry_the_pr_section_with_both_malls(self):

@@ -30,10 +30,10 @@ test('カード・比較・詳細用の集計が同じ日程を参照する',()=
  assert.match(scheduleSummary(events,'boki','deadline',date=>date),/商工会議所.*受付終了/);
  assert.match(scheduleSummary(events,'toeic','result',date=>date),/デジタル公式認定証.*予定/);
 });
-test('予定ファイルも公式出典・確認日・日本時間を使用し、期限の終了時刻を捏造しない',()=>{
+test('予定ファイルは確認日・日本時間を使用し、出典名もリンクも入れず、期限の終了時刻を捏造しない',()=>{
  const file=eventToIcs(event('fp-deadline'),new Date('2026-11-13T12:00:00Z'));
  assert.match(file,/DTSTART;TZID=Asia\/Tokyo:20261201T173000/);assert.doesNotMatch(file,/DTEND|表示例|sample/);
- assert.ok(file.includes(event('fp-deadline').checkedAt));assert.match(file,/https:\/\/products.kinzai.or.jp\/exam-fp\/schedule\//);
+ assert.ok(file.includes(event('fp-deadline').checkedAt));assert.doesNotMatch(file,/https?:\/\/|URL:|出典/);
  const postal=eventToIcs(event('nurse-deadline'));assert.match(postal,/DTSTART;VALUE=DATE:20261127/);assert.match(postal,/消印有効/);
  const result=eventToIcs(event('toeic-result'));assert.match(result,/デジタル公式認定証/);assert.doesNotMatch(result,/合格発表/);
  assert.match(eventToIcs(event('takken-exam')),/DTEND;TZID=Asia\/Tokyo:20261018T150000/);
