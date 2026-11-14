@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import unicodedata
 from urllib.parse import urlparse
 from collections import Counter
 from datetime import date, timedelta
@@ -225,6 +226,44 @@ def load_merged(seed_dir: Path = SEED_DIR) -> list[dict]:
     if not path.exists():
         return []
     return [m for m in json.loads(path.read_text(encoding="utf-8")).get("merged", []) if all(isinstance(m.get(k), str) and m[k] for k in ("date", "drop", "keep")) and m["drop"] != m["keep"]]
+
+
+_DUP_NOISE = re.compile(r"\(予想\)|\(\d+日間\)|\(統一試験\)|\(本試験\)|\(筆記\)|令和\d+年度?|本会期の開始|点灯開始|販売開始|配信リリース|の発売|の販売|の開始|開幕|開始|開催|発売|引上げ|引き上げ|の試験日|試験日|新曲")
+
+
+def dup_key(title: str) -> str:
+    """The name of an event with the words that only say what kind of day it is (開幕, 開始, 発売, (予想), 令和9年 ...) and the spaces and marks taken out, so that
+    "東京マラソン2027" and "東京マラソン2027 開催" are the same key.  Two cards of one date with the same key are one event listed twice."""
+    t = unicodedata.normalize("NFKC", str(title))
+    t = _DUP_NOISE.sub("", t)
+    t = re.sub(r"[\s\u3000]+", "", t)
+    t = re.sub(r"[()（）「」『』【】〈〉《》\[\]・･~〜\-－—!！?？×]", "", t)
+    return t.replace("高等学校", "高校").lower()
+
+
+def duplicate_groups(entries: list[dict]) -> list[list[dict]]:
+    """[[card, card, ...]] of the cards that share a date and a dup_key.  data/atomou/merged.json is how one of them is taken out."""
+    by: dict[tuple[str, str], list[dict]] = {}
+    for e in entries:
+        k = dup_key(e["title"])
+        if k:
+            by.setdefault((e["date"], k), []).append(e)
+    return [v for v in by.values() if len(v) > 1]
+
+
+def merged_redirects(entries: list[dict], seed_dir: Path = SEED_DIR) -> dict[str, str]:
+    """{id of a card taken out by merged.json: id of the card that stays}, so that a link to the old page goes to the one card of the event."""
+    merged = load_merged(seed_dir)
+    stay = {(e["title"], e["date"]): e["id"] for e in entries}
+    want = {(m["drop"], m["date"]): (m["keep"], m["date"]) for m in merged if (m["keep"], m["date"]) in stay}
+    out: dict[str, str] = {}
+    for _, it in load_seeds(seed_dir):
+        k = (str(it.get("title", "")).strip(), it.get("date"))
+        if k in want and it.get("source_url"):
+            did = entry_id(it)
+            if did != stay[want[k]]:
+                out[did] = stay[want[k]]
+    return out
 
 
 def build_catalog(today: date, seed_dir: Path = SEED_DIR, blocklist: dict | None = None) -> tuple[list[dict], Counter]:

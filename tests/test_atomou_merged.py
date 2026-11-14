@@ -56,7 +56,7 @@ class TheList(unittest.TestCase):
     def test_every_line_has_its_kept_card_and_its_dropped_title_is_still_in_the_data(self):
         lines = catalog.load_merged()
         self.assertGreaterEqual(len(lines), 20)
-        entries, _ = catalog.build_catalog(TODAY)
+        entries, _ = catalog.build_catalog(date.today())    # the day the data was written for (the lines added later name cards checked after a fixed day)
         have = {(e["title"], e["date"]) for e in entries}
         raw = {(str(it.get("title", "")).strip(), it.get("date")) for _, it in catalog.load_seeds(catalog.SEED_DIR)}
         for m in lines:
