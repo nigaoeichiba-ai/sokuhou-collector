@@ -12,7 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "sites" / "trend" / "content"
 AFFILIATE = ("rakuten", "amazon", "valuecommerce", "a8.net", "shopping.yahoo")
 # 読者が自分で開く、サービスの公式ステータスページへの案内(出典ではなく、使い方の案内)。ここに無いものは、本文に置かない
-ALLOWED_PLAIN_LINKS = {"/trend-outlook-outage/": ("status.cloud.microsoft", "x.com/MSFT365Status")}
+ALLOWED_PLAIN_LINKS = {"/trend-outlook-outage/": ("status.cloud.microsoft", "x.com/MSFT365Status"),
+                       "/trend-newt-blackfriday/": ("newt.net/sale-teaser",)}   # 公式のセール特設ページへの案内(Muse 最終稿の指定)
 
 
 def problems(page: dict) -> list[str]:
