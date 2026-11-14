@@ -120,7 +120,12 @@ class ReviewBuild(unittest.TestCase):
         self.assertIn("python sites/atomou/build.py --demo-sub --out demo_build", wf)
         self.assertIn('for d in demo demo.atomou.com; do mkdir -p "release/$d"; cp -a demo_build/. "release/$d/"; done', wf)   # either folder name can be the subdomain's document root
         self.assertIn('hidden=$(curl -s -o /dev/null -w \'%{http_code}\' "$URL$p")', wf)
-        self.assertIn('[ "$hidden" = "401" ] || ok=0', wf)           # the live check: the hidden demo must refuse a visitor
+        # the live check: the hidden demo must refuse a visitor (401) unless the open preview is switched on (ATOMOU_DEMO_OPEN, D24: then 200, and the receivers 403)
+        self.assertIn("want=401; [ \"${ATOMOU_DEMO_OPEN:-}\" = \"true\" ] && want=200", wf)
+        self.assertIn('[ "$hidden" = "$want" ] || ok=0', wf)
+        self.assertIn('[ "$blocked" = "403" ] || ok=0', wf)
+        self.assertIn('if [ "${{ vars.ATOMOU_DEMO_OPEN }}" = "true" ]; then ! grep -q "AuthUserFile"', wf)   # open mode: no password block; otherwise the password stays (the else branch)
+        self.assertIn('else grep -q "AuthUserFile" "$d/.htaccess"; fi', wf)
         self.assertLess(wf.index("vars.ATOMOU_PUBLIC == 'true' && '--release'"), wf.index("vars.ATOMOU_REVIEW == 'true' && '--review'"))   # the real release wins over the review copy
 
 
