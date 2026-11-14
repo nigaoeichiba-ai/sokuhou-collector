@@ -19,12 +19,15 @@ CFG = json.loads((Path(__file__).resolve().parents[1] / "config.json").read_text
 SITE_NAME = json.loads((Path(__file__).resolve().parent / "site.json").read_text(encoding="utf-8"))["name"]       # the redesign's name (config.json still has the old one)
 REL = "nofollow sponsored noopener"
 VC_SID = "3787704"
-VC_PID = {"yahoo": "892746613", "dhc": "892746566"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
+VC_PID = {"yahoo": "892746613", "dhc": "892746566", "yamada": "892746569", "lenovo": "892748202", "minisforum": "892748204"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
 A8_MAT = {"xdomain": ("4BGJFW+4W8GGY+CO4+15ORS2", "www15"), "xserver": ("4BEHX9+1F7FFM+CO4+6AZAQ", "www16"), "xbiz": ("4BEHX9+1GEAN6+CO4+3SZMKY", "www14"),
           # approved 2026-11-13, link codes read from the A8 tool (media 007 = this calendar).  Not yet in ASP: the calendar has no dated sale of these shops to attach them to
           # (a shop is listed only when a sale is confirmed; Alpen's Black Friday 2026 days were not published when read).  To switch on: add the shop to schedule.ENT with a confirmed entry and to ASP below.
           # Oisix has no text material at A8: the code of its mail material 046 is used (A8 allows it), the words of the link are ours.  The pixel host (www15) is the one the other 007 codes use.
-          "alpen": ("4BGJFW+4V1L9E+3OSK+5YJRM", "www15"), "oisix": ("4BGJFW+6PQ50I+3RK+2THJS3", "www15")}
+          "alpen": ("4BGJFW+4V1L9E+3OSK+5YJRM", "www15"), "oisix": ("4BGJFW+6PQ50I+3RK+2THJS3", "www15"),
+          # read from the A8 tool (media 007, text materials) on 2026-11-15
+          "muumuu": ("4BGJFW+5U65YA+348+1BNJ9E", "www16"), "mixhost": ("4BGJFW+6FLRQA+3JTE+5YJRM", "www10"), "lolipop": ("4BGJFW+30D1IA+348+5YZ76", "www14"),
+          "sakura": ("4BGJFW+30YH42+D8Y+62U36", "www15"), "stardomain": ("4BGJFW+5CWLEQ+1WTI+C0B9U", "www16"), "onamae": ("4BECH2+C50BFM+50+2HHVNM", "www12")}
 
 YAHOO_GUIDE = "https://shopping.yahoo.co.jp/promotion/campaign/guide/"
 RAKUTEN_EVENT = {"/rakuten/super-sale/": "https://event.rakuten.co.jp/campaign/supersale/", "/rakuten/marathon/": "https://event.rakuten.co.jp/campaign/point-up/marathon/",
@@ -78,6 +81,11 @@ def amazon_search_href(term: str) -> str:
 
 def vc_href(pid: str, url: str) -> str:
     return f"//ck.jp.ap.valuecommerce.com/servlet/referral?sid={VC_SID}&pid={pid}&vc_url={quote(url, safe='')}"
+
+
+def vc_text_href(pid: str) -> str:
+    """A ValueCommerce text ad: the programme's own landing page (no vc_url)."""
+    return f"//ck.jp.ap.valuecommerce.com/servlet/referral?sid={VC_SID}&pid={pid}"
 
 
 def vc_counter(pid: str) -> str:
@@ -166,6 +174,8 @@ def product_links(pr: dict, st: dict) -> list[dict]:
             out.append(_link("amazon", amazon_search_href(spec["term"]), f"Amazonで{spec['term']}を探す"))
         elif k == "vc":
             out.append(_link("vc", vc_href(VC_PID[spec["key"]], spec["url"]), spec["label"], spec["key"]))
+        elif k == "vctext":
+            out.append(_link("vc", vc_text_href(VC_PID[spec["key"]]), spec["label"], spec["key"]))
         elif k == "a8":
             out.append(_link("a8", a8_href(spec["key"]), spec["label"], spec["key"]))
     if out:

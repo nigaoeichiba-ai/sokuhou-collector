@@ -547,8 +547,16 @@ def genre_body(ctx: "Ctx", gid: str) -> str:
     return template("category", intro=paragraphs(c["intro"]), image=category_card(c, anchor=False), sales=sales, checks=checks(c["checks"]), articles=articles) + genre_extra(ctx, gid) + tail
 
 
+def genre_partners(gid: str) -> str:
+    items = genres.PARTNERS.get(gid)
+    if not items:
+        return ""
+    links = [affiliate._link("a8", affiliate.a8_href(key), label, key) if kind == "a8" else affiliate._link("vc", affiliate.vc_text_href(affiliate.VC_PID[key]), label, key) for kind, key, label in items]
+    return ('<section class="content-block"><h2>公式サイトで探す</h2><p>日程と数字は、上の表のとおりです。ここは、各社の公式ページへの入り口です。</p>' + affiliate.lines(links) + "</section>")
+
+
 def genre_extra(ctx: "Ctx", gid: str) -> str:
-    return '<div class="wrap page-content">' + genre_affiliate(gid, ctx.cat_by_id[gid]["next"]) + "</div>"
+    return '<div class="wrap page-content">' + genre_partners(gid) + genre_affiliate(gid, ctx.cat_by_id[gid]["next"]) + "</div>"
 
 
 # ------------------------------------------------------------------ the calendars (schedule.py has the data and the month grid)
@@ -660,7 +668,7 @@ def product_pages(ctx: Ctx, base_head: str) -> dict:
         stores = f'<div class="store-rows">{stores}</div>'
         fit = fit_box(pr.get("fit"))
         body = template("product", intro=paragraphs([pr["lead"]]), meta=f'<p class="meta-line">{e(pr["meta"])}</p>',
-                        stores_h2=e(pr["stores_h2"]), stores=stores, note=fit + notice(pr["note"]),
+                        stores_h2=e(pr["stores_h2"]), stores=stores, note=fit + notice(pr["note"]) + (affiliate.disclosure() if any(st.get("aff") or st["name"].startswith("Amazon") for st in pr["stores"]) else ""),
                         calc_big=e(pr.get("calc_big", "価格の比べ方")), calc_text=e(pr.get("calc_text", "割引率・ポイント・特典は、条件を満たしたときの数字です。実質価格は、計算のページで確かめられます。")),
                         howto_h2=e(pr.get("howto_h2", "確認のしかた")), howto="".join(f"<p>{e(x)}</p>" for x in pr.get("howto", ["各行の確認日と公式ページで、いまも同じか見てから買います。終わった企画は、更新のときに外します。"])),
                         related="<h2>関連するセール</h2>" + sales_grid([s for s in ctx.sales if state(s, ctx.at) != "終了"][:4], ctx.at, block=True))

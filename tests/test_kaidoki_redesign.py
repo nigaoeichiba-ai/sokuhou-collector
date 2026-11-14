@@ -204,6 +204,37 @@ class RedesignTest(unittest.TestCase):
             if f.is_file() and f.suffix in (".json", ".html", ".py"):
                 self.assertNotRegex(f.read_text(encoding="utf-8"), r"amazon\.co\.jp/[A-Za-z-]+/dp/|B0[A-Z0-9]{8}", str(f))
 
+    # ---- 2026-11-15: every genre has its page; the partnered programmes' links are all there, as advertisements, with words and not addresses ----
+    BARE_URL_TEXT = re.compile(r"<a [^>]*>\s*(?:https?:)?//[^<]*</a>")
+
+    def test_genre_pages_exist_for_every_category_and_carry_the_partner_links(self):
+        from sites.kaidoki.redesign import genres, affiliate
+        cats = json.loads((SITE / "redesign" / "categories.json").read_text(encoding="utf-8"))
+        self.assertEqual({c["id"] for c in cats}, set(genres.GENRES))
+        for gid, items in genres.PARTNERS.items():
+            html = render.genre_partners(gid)
+            self.assertEqual(html.count('rel="nofollow sponsored noopener"'), len(items), gid)
+            self.assertEqual(html.count('target="_blank"'), len(items), gid)
+            self.assertEqual(html.count('class="pr-chip"'), len(items), gid)
+            self.assertNotRegex(html, self.BARE_URL_TEXT)
+            for kind, key, label in items:
+                self.assertIn(label, html)
+                self.assertTrue(key in affiliate.A8_MAT or key in affiliate.VC_PID, key)
+
+    def test_negative_a_link_whose_words_are_its_address_is_caught(self):
+        self.assertRegex('<a href="https://px.a8.net/x" rel="nofollow">https://example.com/x</a>', self.BARE_URL_TEXT)
+        self.assertNotRegex('<a href="https://px.a8.net/x" rel="nofollow">お名前.comを見る</a>', self.BARE_URL_TEXT)
+
+    def test_every_product_row_link_of_the_data_has_a_programme_code(self):
+        from sites.kaidoki.redesign import affiliate
+        for f in (SITE / "redesign" / "products").glob("*.json"):
+            for st in json.loads(f.read_text(encoding="utf-8"))["stores"]:
+                for spec in st.get("aff", []):
+                    if spec["k"] == "a8":
+                        self.assertIn(spec["key"], affiliate.A8_MAT, f)
+                    if spec["k"] in ("vc", "vctext"):
+                        self.assertIn(spec["key"], affiliate.VC_PID, f)
+
     # ---- Muse's prototype of 2026-11-14 (shop pages / product pages) ----
     RANKING = re.compile(r"最安|最安値|1位|第1位|No\.?\s?1|ランキング|おすすめ順|安い順")
 
