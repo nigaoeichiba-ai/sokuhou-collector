@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-13T03:28:33.000Z",
+  "updatedAt": "2026-11-15T03:00:00.000Z",
   "exams": [
     {
       "id": "toeic",
@@ -1216,6 +1216,18 @@
       "page": "https://www.pref.kagoshima.jp/ba05/kyoiku-bunka/school/koukou/nyushi/r4/r9nittei.html",
       "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
       "category": "school"
+    },
+    {
+      "id": "career-consultant-34",
+      "family": "career-consultant",
+      "name": "キャリアコンサルタント試験",
+      "short": "キャリコン",
+      "aliases": "第34回（2027年3月） キャリアコンサルタント試験 キャリコン 国家資格",
+      "field": "ビジネス",
+      "edition": "第34回（2027年3月）",
+      "page": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/jinzaikaihatsu/career_consultant01.html",
+      "description": "学科試験と実技（論述）は同じ日で、実技（面接）は別の日に受けます。申請期間と合格発表日は確認できていません。",
+      "category": "qualification"
     }
   ],
   "sources": {
@@ -1718,6 +1730,10 @@
     "catalog-koko-kagoshima-extra-0": {
       "title": "令和9年度鹿児島県公立高等学校入学者選抜実施要綱・1ページ、17ページ、21ページ、24ページ、35ページ、39ページ",
       "url": "https://www.pref.kagoshima.jp/ba05/kyoiku-bunka/school/koukou/nyushi/r7/documents/131373_20261030133555-1.pdf"
+    },
+    "catalog-career-consultant-34": {
+      "title": "厚生労働省｜キャリアコンサルタントになりたい方へ（試験日程・料金）",
+      "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/jinzaikaihatsu/career_consultant01.html"
     }
   },
   "meta": {
@@ -6274,6 +6290,42 @@
         "deadline": "catalog-koko-kagoshima-extra-0"
       },
       "category": "school"
+    },
+    "career-consultant-34": {
+      "checkedAt": "2026-11-15",
+      "fields": {
+        "deadline": "unverified",
+        "exam": "published",
+        "result": "unverified"
+      },
+      "fieldNotes": {
+        "deadline": "受験申請の期間は、試験実施機関の発表で確認できていません。",
+        "result": "合格発表の日は、試験実施機関の発表で確認できていません。"
+      },
+      "id": "career-consultant-34",
+      "name": "キャリアコンサルタント試験",
+      "short": "キャリコン",
+      "field": "ビジネス",
+      "edition": "第34回（2027年3月）",
+      "sourceTitle": "厚生労働省｜キャリアコンサルタントになりたい方へ（試験日程・料金）",
+      "sourceUrl": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/jinzaikaihatsu/career_consultant01.html",
+      "application": [],
+      "applicationNote": "受験申請の期間は、確認できていません。",
+      "notes": "試験日と受験料は、確認した日付のものです。受験申請の期間と合格発表の日は、受験する機関の案内で見ておきましょう。次回の第35回は2027年7月4日（日）です。",
+      "procedureNotes": [
+        "試験は、キャリアコンサルティング協議会と日本キャリア開発協会のどちらかで受けます。実技（面接）の日と問題は、機関によって違います。",
+        "受験料は、学科試験が8,900円、実技試験が29,900円で、両機関で同じです。",
+        "受験できるのは、厚生労働大臣が認定する養成講習を修了した方、相談の経験が3年以上ある方、技能検定のキャリアコンサルティング職種の合格者、これらと同等以上の能力がある方です。",
+        "試験科目は、関係法令、理論、実務、社会的意義、倫理と行動の5つです。"
+      ],
+      "family": "career-consultant",
+      "scope": "キャリアコンサルタント試験・第34回（2027年3月）",
+      "sourceStatus": "verified",
+      "sourceIds": [
+        "catalog-career-consultant-34"
+      ],
+      "fieldSourceIds": {},
+      "category": "qualification"
     }
   },
   "rows": [
@@ -11790,6 +11842,26 @@
       "exam": "koko-kagoshima",
       "sourceId": "catalog-koko-kagoshima-extra-0",
       "checkedAt": "2026-11-13"
+    },
+    {
+      "id": "career-consultant-34-exam",
+      "date": "2027-03-07",
+      "type": "exam",
+      "label": "キャリアコンサルタント試験 第34回・学科試験と実技試験（論述）",
+      "note": "学科試験は、2つの試験実施機関で同じ日・同じ問題です。",
+      "exam": "career-consultant-34",
+      "sourceId": "catalog-career-consultant-34",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "career-consultant-34-exam-interview",
+      "date": "2027-03-12",
+      "type": "exam",
+      "label": "キャリアコンサルタント試験 第34回・実技試験（面接）の開始日",
+      "note": "面接は試験実施機関ごとに日と問題が違います。キャリアコンサルティング協議会は3月12日・13日・14日・20日・21日・22日・27日、日本キャリア開発協会は3月13日・14日・20日・21日です。受験する機関の指定日に受けます。",
+      "exam": "career-consultant-34",
+      "sourceId": "catalog-career-consultant-34",
+      "checkedAt": "2026-11-15"
     }
   ]
 }
