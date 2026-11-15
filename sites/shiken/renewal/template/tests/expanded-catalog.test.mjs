@@ -13,7 +13,7 @@ test('元サイトの全対象名・40高校地域・大学例をカタログに
  const inventory=JSON.parse(await readFile(new URL('../research/original-inventory.json',import.meta.url),'utf8'));
  for(const pref of inventory.schools)assert.ok(exams.some(e=>e.field==='高校入試'&&e.name.includes(pref.pref)),pref.pref);
  assert.ok(exams.length>=95);assert.ok(events.length>=567);
- assert.equal(exams.filter(e=>catalogGroup(e)==='school').length,40);
+ assert.equal(exams.filter(e=>catalogGroup(e)==='school').length,47);
 });
 test('高校の本人期限と学校受付期限を混同せず、追加確認済み項目に古い未確認注記を残さない',()=>{
  for(const id of ['koko-hokkaido','koko-iwate','koko-miyagi','koko-saitama','koko-kagawa','koko-miyazaki','koko-kagoshima']){

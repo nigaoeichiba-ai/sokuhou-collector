@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-15T04:00:00.000Z",
+  "updatedAt": "2026-11-16T04:00:00.000Z",
   "exams": [
     {
       "id": "toeic",
@@ -1240,6 +1240,90 @@
       "page": "https://www.shiken.or.jp/chief/third/",
       "description": "申込は2026年11月26日17時までです。CBT方式は2027年2月、筆記方式は2027年3月21日に受けます。",
       "category": "qualification"
+    },
+    {
+      "id": "koko-kochi",
+      "family": "school-koko-kochi",
+      "name": "高知県 公立高校入試",
+      "short": "高知県高校入試",
+      "aliases": "2027年度 高知県 公立高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "page": "https://www.pref.kochi.lg.jp/doc/2026011400217/",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "category": "school"
+    },
+    {
+      "id": "koko-fukushima",
+      "family": "school-koko-fukushima",
+      "name": "福島県 公立高校入試",
+      "short": "福島県高校入試",
+      "aliases": "2027年度 福島県 公立高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "page": "https://www.pref.fukushima.lg.jp/site/edu/r9koukounyushi.html",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "category": "school"
+    },
+    {
+      "id": "koko-shiga",
+      "family": "school-koko-shiga",
+      "name": "滋賀県 公立高校入試",
+      "short": "滋賀県高校入試",
+      "aliases": "2027年度 滋賀県 公立高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "page": "https://www.pref.shiga.lg.jp/edu/ma09/16947.html",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "category": "school"
+    },
+    {
+      "id": "koko-tokushima",
+      "family": "school-koko-tokushima",
+      "name": "徳島県 公立高校入試",
+      "short": "徳島県高校入試",
+      "aliases": "2027年度 徳島県 公立高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "page": "https://nyuushi.tokushima-ec.ed.jp/R9_nittei",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "category": "school"
+    },
+    {
+      "id": "koko-okinawa",
+      "family": "school-koko-okinawa",
+      "name": "沖縄県 公立高校入試",
+      "short": "沖縄県高校入試",
+      "aliases": "2027年度 沖縄県 公立高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "page": "https://www.pref.okinawa.jp/kyoiku/gakko/1008883/1008887/1041122.html",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "category": "school"
+    },
+    {
+      "id": "koko-fukui",
+      "family": "school-koko-fukui",
+      "name": "福井県 公立高校入試",
+      "short": "福井県高校入試",
+      "aliases": "2027年度 福井県 公立高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "page": "https://www.pref.fukui.lg.jp/doc/koukou/nyugaku/r09nittei.html",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "category": "school"
+    },
+    {
+      "id": "koko-nagasaki",
+      "family": "school-koko-nagasaki",
+      "name": "長崎県 公立高校入試",
+      "short": "長崎県高校入試",
+      "aliases": "2027年度 長崎県 公立高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "page": "https://www.pref.nagasaki.jp/doc/53004.html",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "category": "school"
     }
   ],
   "sources": {
@@ -1758,6 +1842,34 @@
     "catalog-denken3-r8-2": {
       "title": "電気技術者試験センター｜第三種電気主任技術者試験（令和8年度下期）",
       "url": "https://www.shiken.or.jp/chief/third/"
+    },
+    "catalog-koko-kochi": {
+      "title": "令和9年度 高知県公立高等学校入学者選抜について",
+      "url": "https://www.pref.kochi.lg.jp/doc/2026011400217/"
+    },
+    "catalog-koko-fukushima": {
+      "title": "令和9年度 福島県立高等学校入学者選抜",
+      "url": "https://www.pref.fukushima.lg.jp/site/edu/r9koukounyushi.html"
+    },
+    "catalog-koko-shiga": {
+      "title": "令和9年度 滋賀県公立高等学校入学者選抜",
+      "url": "https://www.pref.shiga.lg.jp/edu/ma09/16947.html"
+    },
+    "catalog-koko-tokushima": {
+      "title": "令和9年度 徳島県公立高等学校入学者選抜 日程",
+      "url": "https://nyuushi.tokushima-ec.ed.jp/R9_nittei"
+    },
+    "catalog-koko-okinawa": {
+      "title": "令和9年度 沖縄県立高等学校入学者選抜 日程",
+      "url": "https://www.pref.okinawa.jp/kyoiku/gakko/1008883/1008887/1041122.html"
+    },
+    "catalog-koko-fukui": {
+      "title": "令和9年度 福井県入学者選抜日程",
+      "url": "https://www.pref.fukui.lg.jp/doc/koukou/nyugaku/r09nittei.html"
+    },
+    "catalog-koko-nagasaki": {
+      "title": "令和9年度 長崎県公立高等学校入学者選抜実施要領",
+      "url": "https://www.pref.nagasaki.jp/doc/53004.html"
     }
   },
   "meta": {
@@ -6404,6 +6516,392 @@
       ],
       "fieldSourceIds": {},
       "category": "qualification"
+    },
+    "koko-kochi": {
+      "id": "koko-kochi",
+      "name": "高知県 公立高校入試",
+      "short": "高知県高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "checkedAt": "2026-11-16",
+      "sourceUrl": "https://www.pref.kochi.lg.jp/doc/2026011400217/",
+      "sourceTitle": "令和9年度 高知県公立高等学校入学者選抜について",
+      "sourceStatus": "verified",
+      "application": [
+        {
+          "start": "2027-02-01",
+          "label": "A日程 出願",
+          "sourceId": "catalog-koko-kochi"
+        },
+        {
+          "start": "2027-03-15",
+          "label": "B日程 出願",
+          "sourceId": "catalog-koko-kochi"
+        }
+      ],
+      "fields": {
+        "deadline": "published",
+        "exam": "published",
+        "result": "published"
+      },
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "variants": [
+        {
+          "name": "A日程",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        },
+        {
+          "name": "B日程",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        }
+      ],
+      "fieldNotes": {
+        "deadline": "A日程の志願先変更は2月8日〜10日、B日程は3月17日です。調査書等の提出期間は、日程によって出願期間と重なります。",
+        "result": "A日程は3月12日、B日程は3月23日に発表されます。"
+      },
+      "family": "school-koko-kochi",
+      "scope": "高知県 公立高校入試・2027年度",
+      "sourceIds": [
+        "catalog-koko-kochi"
+      ],
+      "fieldSourceIds": {},
+      "category": "school"
+    },
+    "koko-fukushima": {
+      "id": "koko-fukushima",
+      "name": "福島県 公立高校入試",
+      "short": "福島県高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "checkedAt": "2026-11-16",
+      "sourceUrl": "https://www.pref.fukushima.lg.jp/site/edu/r9koukounyushi.html",
+      "sourceTitle": "令和9年度 福島県立高等学校入学者選抜",
+      "sourceStatus": "verified",
+      "application": [
+        {
+          "start": "2027-02-01",
+          "label": "前期・連携型選抜 出願受付開始",
+          "sourceId": "catalog-koko-fukushima"
+        },
+        {
+          "start": "2027-03-16",
+          "label": "後期選抜 出願受付開始",
+          "sourceId": "catalog-koko-fukushima",
+          "time": "09:00"
+        }
+      ],
+      "fields": {
+        "deadline": "published",
+        "exam": "published",
+        "result": "published"
+      },
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "variants": [
+        {
+          "name": "前期選抜・連携型選抜",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        },
+        {
+          "name": "後期選抜",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        }
+      ],
+      "fieldNotes": {
+        "deadline": "前期の出願先変更は2月8日〜10日、調査書の提出は2月12日〜16日です。後期の出願先変更は3月18日です。",
+        "result": "前期は3月15日、後期は3月24日に発表されます。"
+      },
+      "family": "school-koko-fukushima",
+      "scope": "福島県 公立高校入試・2027年度",
+      "sourceIds": [
+        "catalog-koko-fukushima"
+      ],
+      "fieldSourceIds": {},
+      "category": "school"
+    },
+    "koko-shiga": {
+      "id": "koko-shiga",
+      "name": "滋賀県 公立高校入試",
+      "short": "滋賀県高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "checkedAt": "2026-11-16",
+      "sourceUrl": "https://www.pref.shiga.lg.jp/edu/ma09/16947.html",
+      "sourceTitle": "令和9年度 滋賀県公立高等学校入学者選抜",
+      "sourceStatus": "verified",
+      "application": [
+        {
+          "start": "2027-01-28",
+          "label": "一次募集 出願受付開始",
+          "sourceId": "catalog-koko-shiga",
+          "time": "09:00"
+        },
+        {
+          "start": "2027-03-12",
+          "label": "二次募集 出願受付開始",
+          "sourceId": "catalog-koko-shiga"
+        }
+      ],
+      "fields": {
+        "deadline": "published",
+        "exam": "published",
+        "result": "published"
+      },
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "variants": [
+        {
+          "name": "一次募集(全日制・定時制)",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        },
+        {
+          "name": "二次募集",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        }
+      ],
+      "fieldNotes": {
+        "deadline": "一次募集の出願変更は2月10日〜17日(正午)です。追検査は3月7日・8日です。",
+        "result": "一次募集は3月11日、二次募集は3月19日に発表されます。"
+      },
+      "family": "school-koko-shiga",
+      "scope": "滋賀県 公立高校入試・2027年度",
+      "sourceIds": [
+        "catalog-koko-shiga"
+      ],
+      "fieldSourceIds": {},
+      "category": "school"
+    },
+    "koko-tokushima": {
+      "id": "koko-tokushima",
+      "name": "徳島県 公立高校入試",
+      "short": "徳島県高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "checkedAt": "2026-11-16",
+      "sourceUrl": "https://nyuushi.tokushima-ec.ed.jp/R9_nittei",
+      "sourceTitle": "令和9年度 徳島県公立高等学校入学者選抜 日程",
+      "sourceStatus": "verified",
+      "application": [
+        {
+          "start": "2027-01-20",
+          "label": "育成型・連携型選抜 出願",
+          "sourceId": "catalog-koko-tokushima"
+        },
+        {
+          "start": "2027-02-16",
+          "label": "一般選抜 出願",
+          "sourceId": "catalog-koko-tokushima"
+        },
+        {
+          "start": "2027-03-18",
+          "label": "第2次募集 出願",
+          "sourceId": "catalog-koko-tokushima"
+        }
+      ],
+      "fields": {
+        "deadline": "published",
+        "exam": "published",
+        "result": "published"
+      },
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "variants": [
+        {
+          "name": "一般選抜",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        },
+        {
+          "name": "育成型・連携型選抜",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        }
+      ],
+      "fieldNotes": {
+        "deadline": "一般選抜の募集人員は2月8日に公表されます。第2次募集の出願は3月18日です。",
+        "result": "一般選抜の結果は3月13日に通知されます。"
+      },
+      "family": "school-koko-tokushima",
+      "scope": "徳島県 公立高校入試・2027年度",
+      "sourceIds": [
+        "catalog-koko-tokushima"
+      ],
+      "fieldSourceIds": {},
+      "category": "school"
+    },
+    "koko-okinawa": {
+      "id": "koko-okinawa",
+      "name": "沖縄県 公立高校入試",
+      "short": "沖縄県高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "checkedAt": "2026-11-16",
+      "sourceUrl": "https://www.pref.okinawa.jp/kyoiku/gakko/1008883/1008887/1041122.html",
+      "sourceTitle": "令和9年度 沖縄県立高等学校入学者選抜 日程",
+      "sourceStatus": "verified",
+      "application": [
+        {
+          "start": "2027-02-01",
+          "label": "特色選抜・一般選抜 出願",
+          "sourceId": "catalog-koko-okinawa"
+        },
+        {
+          "start": "2027-03-18",
+          "label": "第2次募集 出願",
+          "sourceId": "catalog-koko-okinawa"
+        }
+      ],
+      "fields": {
+        "deadline": "published",
+        "exam": "published",
+        "result": "published"
+      },
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "variants": [
+        {
+          "name": "特色選抜",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        },
+        {
+          "name": "一般選抜",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        }
+      ],
+      "fieldNotes": {
+        "deadline": "特色選抜の検査日は、学校ごとの実施要項で決まります。取下げ・再提出は2月15日〜16日です。",
+        "result": "特色選抜・一般選抜は3月17日、第2次募集は3月29日に発表されます。"
+      },
+      "family": "school-koko-okinawa",
+      "scope": "沖縄県 公立高校入試・2027年度",
+      "sourceIds": [
+        "catalog-koko-okinawa"
+      ],
+      "fieldSourceIds": {},
+      "category": "school"
+    },
+    "koko-fukui": {
+      "id": "koko-fukui",
+      "name": "福井県 公立高校入試",
+      "short": "福井県高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "checkedAt": "2026-11-16",
+      "sourceUrl": "https://www.pref.fukui.lg.jp/doc/koukou/nyugaku/r09nittei.html",
+      "sourceTitle": "令和9年度 福井県入学者選抜日程",
+      "sourceStatus": "verified",
+      "application": [
+        {
+          "start": "2027-01-13",
+          "label": "推薦・特色等 出願",
+          "sourceId": "catalog-koko-fukui"
+        },
+        {
+          "start": "2027-02-05",
+          "label": "一般選抜 出願",
+          "sourceId": "catalog-koko-fukui"
+        },
+        {
+          "start": "2027-03-04",
+          "label": "第2次募集 出願",
+          "sourceId": "catalog-koko-fukui"
+        }
+      ],
+      "fields": {
+        "deadline": "published",
+        "exam": "published",
+        "result": "published"
+      },
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "variants": [
+        {
+          "name": "一般選抜",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        },
+        {
+          "name": "推薦・特色等選抜",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        }
+      ],
+      "fieldNotes": {
+        "deadline": "追検査は2月25日・26日です。",
+        "result": "一般選抜の合格者発表は3月3日14時です。"
+      },
+      "family": "school-koko-fukui",
+      "scope": "福井県 公立高校入試・2027年度",
+      "sourceIds": [
+        "catalog-koko-fukui"
+      ],
+      "fieldSourceIds": {},
+      "category": "school"
+    },
+    "koko-nagasaki": {
+      "id": "koko-nagasaki",
+      "name": "長崎県 公立高校入試",
+      "short": "長崎県高校入試",
+      "field": "高校入試",
+      "edition": "2027年度",
+      "checkedAt": "2026-11-16",
+      "sourceUrl": "https://www.pref.nagasaki.jp/doc/53004.html",
+      "sourceTitle": "令和9年度 長崎県公立高等学校入学者選抜実施要領",
+      "sourceStatus": "verified",
+      "application": [
+        {
+          "start": "2027-01-12",
+          "label": "特別選抜 願書受付",
+          "sourceId": "catalog-koko-nagasaki"
+        },
+        {
+          "start": "2027-02-01",
+          "label": "一般選抜 願書受付",
+          "sourceId": "catalog-koko-nagasaki"
+        },
+        {
+          "start": "2027-03-05",
+          "label": "チャレンジ選抜 調査書等提出",
+          "sourceId": "catalog-koko-nagasaki"
+        }
+      ],
+      "fields": {
+        "deadline": "published",
+        "exam": "published",
+        "result": "published"
+      },
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
+      "variants": [
+        {
+          "name": "一般選抜",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        },
+        {
+          "name": "特別選抜",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        },
+        {
+          "name": "チャレンジ選抜",
+          "status": "verified",
+          "notes": "掲載日程は上記の段階別表示をご確認ください。出願先や課程による追加手続きは募集要項でご確認ください。"
+        }
+      ],
+      "fieldNotes": {
+        "deadline": "定時制や帰国・外国籍生徒の特例の手続きは、日程が別に決まっています。実施要領で確認してください。",
+        "result": "特別選抜は1月29日、一般選抜は3月4日、チャレンジ選抜は3月16日に発表されます。"
+      },
+      "family": "school-koko-nagasaki",
+      "scope": "長崎県 公立高校入試・2027年度",
+      "sourceIds": [
+        "catalog-koko-nagasaki"
+      ],
+      "fieldSourceIds": {},
+      "category": "school"
     }
   },
   "rows": [
@@ -12011,6 +12509,557 @@
       "exam": "denken3-r8-2",
       "sourceId": "catalog-denken3-r8-2",
       "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "koko-kochi-1",
+      "date": "2027-02-03",
+      "type": "deadline",
+      "label": "A日程 出願 締切",
+      "note": "2月1日〜3日。調査書等の提出は2月10日〜15日で、郵送・持参の場合は土日祝を除きます。",
+      "exam": "koko-kochi",
+      "sourceId": "catalog-koko-kochi",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-kochi-2",
+      "date": "2027-03-03",
+      "type": "exam",
+      "label": "A日程 検査(1日目)",
+      "exam": "koko-kochi",
+      "sourceId": "catalog-koko-kochi",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-kochi-3",
+      "date": "2027-03-04",
+      "type": "exam",
+      "label": "A日程 検査(2日目)",
+      "exam": "koko-kochi",
+      "sourceId": "catalog-koko-kochi",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-kochi-4",
+      "date": "2027-03-12",
+      "type": "result",
+      "label": "A日程 合格発表",
+      "exam": "koko-kochi",
+      "sourceId": "catalog-koko-kochi",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-kochi-5",
+      "date": "2027-03-16",
+      "type": "deadline",
+      "label": "B日程 出願 締切",
+      "note": "3月15日〜16日。調査書等の提出は17日までとされています。",
+      "exam": "koko-kochi",
+      "sourceId": "catalog-koko-kochi",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-kochi-6",
+      "date": "2027-03-18",
+      "type": "exam",
+      "label": "B日程 検査",
+      "exam": "koko-kochi",
+      "sourceId": "catalog-koko-kochi",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-kochi-7",
+      "date": "2027-03-23",
+      "type": "result",
+      "label": "B日程 合格発表",
+      "exam": "koko-kochi",
+      "sourceId": "catalog-koko-kochi",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukushima-1",
+      "date": "2027-02-05",
+      "type": "deadline",
+      "label": "前期・連携型選抜 出願 締切",
+      "note": "2月1日〜5日。WEB出願システムで、締切は正午です。",
+      "time": "12:00",
+      "exam": "koko-fukushima",
+      "sourceId": "catalog-koko-fukushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukushima-2",
+      "date": "2027-03-03",
+      "type": "exam",
+      "label": "前期・連携型選抜 学力検査",
+      "note": "5教科。面接等は3月3日〜5日です。",
+      "exam": "koko-fukushima",
+      "sourceId": "catalog-koko-fukushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukushima-3",
+      "date": "2027-03-09",
+      "type": "exam",
+      "label": "前期・連携型選抜 追検査",
+      "exam": "koko-fukushima",
+      "sourceId": "catalog-koko-fukushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukushima-4",
+      "date": "2027-03-15",
+      "type": "result",
+      "label": "前期・連携型選抜 結果発表",
+      "note": "3月15日13時から、WEBで確認できます。",
+      "time": "13:00",
+      "exam": "koko-fukushima",
+      "sourceId": "catalog-koko-fukushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukushima-5",
+      "date": "2027-03-17",
+      "type": "deadline",
+      "label": "後期選抜 出願 締切",
+      "note": "3月16日〜17日。締切は16時です。",
+      "time": "16:00",
+      "exam": "koko-fukushima",
+      "sourceId": "catalog-koko-fukushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukushima-6",
+      "date": "2027-03-23",
+      "type": "exam",
+      "label": "後期選抜 面接等",
+      "note": "学力検査はなく、調査書・面接・小論文または作文で選抜します。",
+      "exam": "koko-fukushima",
+      "sourceId": "catalog-koko-fukushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukushima-7",
+      "date": "2027-03-24",
+      "type": "result",
+      "label": "後期選抜 結果発表",
+      "note": "3月24日13時から、WEBで確認できます。",
+      "time": "13:00",
+      "exam": "koko-fukushima",
+      "sourceId": "catalog-koko-fukushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-shiga-1",
+      "date": "2027-02-09",
+      "type": "deadline",
+      "label": "一次募集 出願 締切",
+      "note": "1月28日〜2月9日。締切は正午です。",
+      "time": "12:00",
+      "exam": "koko-shiga",
+      "sourceId": "catalog-koko-shiga",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-shiga-2",
+      "date": "2027-03-03",
+      "type": "exam",
+      "label": "一次募集 学力検査",
+      "exam": "koko-shiga",
+      "sourceId": "catalog-koko-shiga",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-shiga-3",
+      "date": "2027-03-04",
+      "type": "exam",
+      "label": "一次募集 学校独自検査",
+      "exam": "koko-shiga",
+      "sourceId": "catalog-koko-shiga",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-shiga-4",
+      "date": "2027-03-11",
+      "type": "result",
+      "label": "一次募集 入学許可予定者発表",
+      "note": "3月11日9時に発表されます。",
+      "time": "09:00",
+      "exam": "koko-shiga",
+      "sourceId": "catalog-koko-shiga",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-shiga-5",
+      "date": "2027-03-15",
+      "type": "deadline",
+      "label": "二次募集 出願 締切",
+      "note": "3月12日〜15日。締切は正午です。",
+      "time": "12:00",
+      "exam": "koko-shiga",
+      "sourceId": "catalog-koko-shiga",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-shiga-6",
+      "date": "2027-03-17",
+      "type": "exam",
+      "label": "二次募集 検査",
+      "exam": "koko-shiga",
+      "sourceId": "catalog-koko-shiga",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-shiga-7",
+      "date": "2027-03-19",
+      "type": "result",
+      "label": "二次募集 合格発表",
+      "note": "3月19日9時に発表されます。",
+      "time": "09:00",
+      "exam": "koko-shiga",
+      "sourceId": "catalog-koko-shiga",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-tokushima-1",
+      "date": "2027-01-21",
+      "type": "deadline",
+      "label": "育成型・連携型選抜 出願 締切",
+      "note": "1月20日〜21日。",
+      "exam": "koko-tokushima",
+      "sourceId": "catalog-koko-tokushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-tokushima-2",
+      "date": "2027-02-02",
+      "type": "exam",
+      "label": "育成型・連携型選抜 検査",
+      "exam": "koko-tokushima",
+      "sourceId": "catalog-koko-tokushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-tokushima-3",
+      "date": "2027-02-06",
+      "type": "result",
+      "label": "育成型・連携型選抜 結果通知",
+      "exam": "koko-tokushima",
+      "sourceId": "catalog-koko-tokushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-tokushima-4",
+      "date": "2027-02-17",
+      "type": "deadline",
+      "label": "一般選抜 出願 締切",
+      "note": "2月16日〜17日。志願先変更は2月22日〜25日(23日を除く)です。",
+      "exam": "koko-tokushima",
+      "sourceId": "catalog-koko-tokushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-tokushima-5",
+      "date": "2027-03-03",
+      "type": "exam",
+      "label": "一般選抜 学力検査",
+      "note": "面接等は3月4日です。",
+      "exam": "koko-tokushima",
+      "sourceId": "catalog-koko-tokushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-tokushima-6",
+      "date": "2027-03-10",
+      "type": "exam",
+      "label": "一般選抜 追検査・追面接",
+      "exam": "koko-tokushima",
+      "sourceId": "catalog-koko-tokushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-tokushima-7",
+      "date": "2027-03-13",
+      "type": "result",
+      "label": "一般選抜 結果通知",
+      "exam": "koko-tokushima",
+      "sourceId": "catalog-koko-tokushima",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-okinawa-1",
+      "date": "2027-02-02",
+      "type": "deadline",
+      "label": "特色選抜・一般選抜 出願 締切",
+      "note": "2月1日〜2日。出願先の変更は2月5日・8日です。",
+      "exam": "koko-okinawa",
+      "sourceId": "catalog-koko-okinawa",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-okinawa-2",
+      "date": "2027-03-03",
+      "type": "exam",
+      "label": "一般選抜 学力検査(1日目)",
+      "exam": "koko-okinawa",
+      "sourceId": "catalog-koko-okinawa",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-okinawa-3",
+      "date": "2027-03-04",
+      "type": "exam",
+      "label": "一般選抜 学力検査(2日目)",
+      "note": "面接等も、この期間に行われます。",
+      "exam": "koko-okinawa",
+      "sourceId": "catalog-koko-okinawa",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-okinawa-4",
+      "date": "2027-03-17",
+      "type": "result",
+      "label": "特色選抜・一般選抜 合格発表",
+      "exam": "koko-okinawa",
+      "sourceId": "catalog-koko-okinawa",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-okinawa-5",
+      "date": "2027-03-19",
+      "type": "deadline",
+      "label": "第2次募集 出願 締切",
+      "note": "3月18日〜19日。",
+      "exam": "koko-okinawa",
+      "sourceId": "catalog-koko-okinawa",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-okinawa-6",
+      "date": "2027-03-29",
+      "type": "result",
+      "label": "第2次募集 合格発表",
+      "exam": "koko-okinawa",
+      "sourceId": "catalog-koko-okinawa",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukui-1",
+      "date": "2027-01-15",
+      "type": "deadline",
+      "label": "推薦・特色等 出願 締切",
+      "note": "1月13日〜15日。締切は16時です。",
+      "time": "16:00",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukui-2",
+      "date": "2027-01-20",
+      "type": "exam",
+      "label": "推薦・特色・中高一貫 面接等",
+      "note": "特色選抜の予備日は1月21日です。",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukui-3",
+      "date": "2027-01-26",
+      "type": "result",
+      "label": "推薦・特色・中高一貫 合格者通知",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukui-4",
+      "date": "2027-02-09",
+      "type": "deadline",
+      "label": "一般選抜 出願 締切",
+      "note": "2月5日〜9日。締切は正午で、志願変更は2月12日〜16日(正午)です。",
+      "time": "12:00",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukui-5",
+      "date": "2027-02-18",
+      "type": "exam",
+      "label": "一般選抜 学力検査(1日目)",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukui-6",
+      "date": "2027-02-19",
+      "type": "exam",
+      "label": "一般選抜 学力検査(2日目)",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukui-7",
+      "date": "2027-02-25",
+      "type": "exam",
+      "label": "一般選抜 追検査(1日目)",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukui-8",
+      "date": "2027-03-03",
+      "type": "result",
+      "label": "一般選抜 合格者発表",
+      "note": "3月3日14時に発表されます。",
+      "time": "14:00",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukui-9",
+      "date": "2027-03-05",
+      "type": "deadline",
+      "label": "第2次募集 出願 締切",
+      "note": "3月4日〜5日。締切は正午です。",
+      "time": "12:00",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukui-10",
+      "date": "2027-03-09",
+      "type": "exam",
+      "label": "第2次募集 学力検査",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-fukui-11",
+      "date": "2027-03-11",
+      "type": "result",
+      "label": "第2次募集 合格者発表",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-nagasaki-1",
+      "date": "2027-01-18",
+      "type": "deadline",
+      "label": "特別選抜 願書受付 締切",
+      "note": "1月12日〜18日。締切は15時です。",
+      "time": "15:00",
+      "exam": "koko-nagasaki",
+      "sourceId": "catalog-koko-nagasaki",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-nagasaki-2",
+      "date": "2027-01-26",
+      "type": "exam",
+      "label": "特別選抜 検査",
+      "exam": "koko-nagasaki",
+      "sourceId": "catalog-koko-nagasaki",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-nagasaki-3",
+      "date": "2027-01-29",
+      "type": "result",
+      "label": "特別選抜 合格者発表",
+      "note": "1月29日14時に発表されます。",
+      "time": "14:00",
+      "exam": "koko-nagasaki",
+      "sourceId": "catalog-koko-nagasaki",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-nagasaki-4",
+      "date": "2027-02-05",
+      "type": "deadline",
+      "label": "一般選抜 願書受付 締切",
+      "note": "2月1日〜5日。締切は15時です。",
+      "time": "15:00",
+      "exam": "koko-nagasaki",
+      "sourceId": "catalog-koko-nagasaki",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-nagasaki-5",
+      "date": "2027-02-16",
+      "type": "exam",
+      "label": "一般選抜 学力検査(1日目)",
+      "exam": "koko-nagasaki",
+      "sourceId": "catalog-koko-nagasaki",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-nagasaki-6",
+      "date": "2027-02-17",
+      "type": "exam",
+      "label": "一般選抜 学力検査(2日目)",
+      "exam": "koko-nagasaki",
+      "sourceId": "catalog-koko-nagasaki",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-nagasaki-7",
+      "date": "2027-03-02",
+      "type": "exam",
+      "label": "一般選抜 追検査",
+      "exam": "koko-nagasaki",
+      "sourceId": "catalog-koko-nagasaki",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-nagasaki-8",
+      "date": "2027-03-04",
+      "type": "result",
+      "label": "一般選抜 合格者発表",
+      "note": "追検査の分も、3月4日14時に発表されます。",
+      "time": "14:00",
+      "exam": "koko-nagasaki",
+      "sourceId": "catalog-koko-nagasaki",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-nagasaki-9",
+      "date": "2027-03-09",
+      "type": "deadline",
+      "label": "チャレンジ選抜 調査書等提出 締切",
+      "note": "3月5日〜9日。締切は15時です。",
+      "time": "15:00",
+      "exam": "koko-nagasaki",
+      "sourceId": "catalog-koko-nagasaki",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-nagasaki-10",
+      "date": "2027-03-11",
+      "type": "exam",
+      "label": "チャレンジ選抜 検査",
+      "exam": "koko-nagasaki",
+      "sourceId": "catalog-koko-nagasaki",
+      "checkedAt": "2026-11-16"
+    },
+    {
+      "id": "koko-nagasaki-11",
+      "date": "2027-03-16",
+      "type": "result",
+      "label": "チャレンジ選抜 合格者発表",
+      "note": "3月16日9時30分に発表されます。",
+      "time": "09:30",
+      "exam": "koko-nagasaki",
+      "sourceId": "catalog-koko-nagasaki",
+      "checkedAt": "2026-11-16"
     }
   ]
 }
