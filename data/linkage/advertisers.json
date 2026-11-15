@@ -1,2 +1,234 @@
-{"_about": "Affiliated advertisers whose name on a page needs an affiliate link for it (sokuhou/linkage.py rule affiliate-missing). names: how the page writes it; href_has: a code inside the affiliate URL that proves the link is this advertiser's (optional). Public facts only: no reward, no terms.",
- "advertisers": []}
+{
+ "_about": "Affiliated advertisers whose name on a page needs an affiliate link for it (sokuhou/linkage.py rule affiliate-missing). names: how the page writes it; href_has: a code inside the affiliate URL that proves the link is this advertiser's (optional). Public facts only: no reward, no terms.",
+ "advertisers": [
+  {
+   "id": "rakuten",
+   "names": [
+    "楽天市場",
+    "楽天ブックス",
+    "楽天トラベル",
+    "楽天ふるさと納税"
+   ],
+   "sites": [
+    "trend",
+    "kaidoki"
+   ],
+   "href_has": [
+    "hb.afl.rakuten.co.jp"
+   ]
+  },
+  {
+   "id": "amazon",
+   "names": [
+    "Amazon"
+   ],
+   "sites": [
+    "trend",
+    "kaidoki"
+   ],
+   "href_has": [
+    "amazonmacs-22"
+   ]
+  },
+  {
+   "id": "yahoo-shopping",
+   "names": [
+    "Yahoo!ショッピング"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "irisplaza",
+   "names": [
+    "アイリスプラザ"
+   ],
+   "sites": [
+    "trend"
+   ]
+  },
+  {
+   "id": "nengajo-square",
+   "names": [
+    "年賀状スクエア",
+    "年賀状スクウェア"
+   ],
+   "sites": [
+    "trend"
+   ]
+  },
+  {
+   "id": "dhc",
+   "names": [
+    "DHC"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "lenovo",
+   "names": [
+    "Lenovo"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "minisforum",
+   "names": [
+    "MINISFORUM"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "orbis",
+   "names": [
+    "オルビス"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "daimaru",
+   "names": [
+    "大丸松坂屋"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "belluna",
+   "names": [
+    "ベルーナ"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "ablenet",
+   "names": [
+    "ABLENET"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "zozo",
+   "names": [
+    "ZOZOTOWN"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "lohaco",
+   "names": [
+    "LOHACO"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "yamada",
+   "names": [
+    "ヤマダデンキ"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "oisix",
+   "names": [
+    "Oisix"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "xserver",
+   "names": [
+    "エックスサーバー",
+    "XServer"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "mixhost",
+   "names": [
+    "mixhost"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "onamae",
+   "names": [
+    "お名前.com"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "sakura",
+   "names": [
+    "さくらのレンタルサーバ"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "stardomain",
+   "names": [
+    "スタードメイン"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "muumuu",
+   "names": [
+    "ムームードメイン"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "lolipop",
+   "names": [
+    "ロリポップ"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  },
+  {
+   "id": "alpen",
+   "names": [
+    "アルペン"
+   ],
+   "sites": [
+    "kaidoki"
+   ]
+  }
+ ]
+}

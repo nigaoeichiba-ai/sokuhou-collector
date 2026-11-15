@@ -36,6 +36,7 @@ BLOCK_RE = re.compile(r"<h2>" + RELATED_H2 + r'</h2>\s*<ul class="links">(.*?)</
 URL_TEXT = re.compile(r"^(https?://|www\.)\S+$|^[A-Za-z0-9][A-Za-z0-9.-]*\.(com|jp|net|org|info|biz|co\.jp|or\.jp|go\.jp|ne\.jp|io|me|tv)(/\S*)?$", re.I)
 AFFILIATE_HOSTS = ("hb.afl.rakuten.co.jp", "px.a8.net", "ck.jp.ap.valuecommerce.com", "ck.jp.ap.valuecommerce.com", "t.afi-b.com", "h.accesstrade.net", "amzn.to")
 AMAZON_TAG = "amazonmacs-22"
+LEGAL = ("/privacy/", "/about/", "/contact/", "/policy/", "/method/", "/corrections/")
 
 
 # ------------------------------------------------------------------ 1. completing the content
@@ -216,7 +217,7 @@ def _affiliate(pages: dict[str, Info], site: str) -> list[str]:
     if not ads:
         return out
     for p, i in sorted(pages.items()):
-        if i.pg.noindex:
+        if i.pg.noindex or p in LEGAL or not _ld(i, "Article"):       # the content pages only: the home, the categories and the legal pages mention a mall in passing
             continue
         text = " ".join(i.pg.text)
         links = [(h, t) for h, t in i.pg.anchor_text if _is_affiliate(h)]
@@ -226,7 +227,7 @@ def _affiliate(pages: dict[str, Info], site: str) -> list[str]:
                 continue
             ok = any(any(n in t for n in names) or any(tok in h for tok in ad.get("href_has", [])) for h, t in links)
             if not ok:
-                ok = any(re.search(r'<a[^>]+href="[^"]*(?:' + "|".join(re.escape(h) for h in AFFILIATE_HOSTS) + r')[^"]*"[^>]*>[^<]*<img[^>]+alt="[^"]*(?:' + "|".join(map(re.escape, names)) + ')', i.html))
+                ok = bool(re.search(r'<a[^>]+href="[^"]*(?:' + "|".join(re.escape(h) for h in AFFILIATE_HOSTS) + r')[^"]*"[^>]*>[^<]*<img[^>]+alt="[^"]*(?:' + "|".join(map(re.escape, names)) + ')', i.html))
             if not ok:
                 out.append(f"affiliate-missing|{p}|{ad['id']}: the page names {names[0]} but has no affiliate link for it")
         for m in re.finditer(r"<a\b([^>]*)>", i.html):
@@ -267,7 +268,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--mode", choices=("stop", "ratchet", "shadow"))
     ap.add_argument("--write-baseline", action="store_true", help="write the current findings as the baseline (run once when the gate is introduced; never to hide a new leak)")
     a = ap.parse_args(argv)
-    found = find(Path(a.root), a.base, a.site)
+    try:
+        found = find(Path(a.root), a.base, a.site)
+    except Exception as e:           # a crash of the checker itself must not stop a site that is only being watched (shadow)
+        print(f"linkage [{a.site}]: the check could not run: {type(e).__name__}: {e}")
+        return 0 if (a.mode or mode_of(a.site)) == "shadow" else 1
     if a.write_baseline:
         DATA.mkdir(parents=True, exist_ok=True)
         (DATA / f"baseline_{a.site}.json").write_text(json.dumps({"site": a.site, "keys": found}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
@@ -279,7 +284,7 @@ def main(argv: list[str] | None = None) -> int:
     gone = sorted(known - set(found))
     print(f"linkage [{a.site}] mode={mode}: {len(found)} finding(s), {len(new)} new, {len(gone)} of the baseline already fixed")
     shown = found if mode == "stop" else new
-    for k in shown[:60]:
+    for k in shown[: (15 if mode == "shadow" else 60)]:
         print("  - " + k.replace("|", ": ", 1).replace("|", " - ", 1))
     if gone:
         print(f"  (fixed since the baseline, remove from data/linkage/baseline_{a.site}.json: {len(gone)})")

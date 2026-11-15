@@ -13,6 +13,7 @@
     "timeout_minutes": 90,
     "naturaljp_gate": "shadow",
     "textgate": "shadow",
+    "linkage": "shadow",
     "build": "python sites/{name}/build.py --release --out release",
     "own": ["sites/{name}/*", "tests/test_{name}*", "tests/fixtures/{name}/*", "data/{name}*", "data/style/rewrites/{name}.json"]
   },
@@ -36,7 +37,7 @@
      "build": "python sites/atomou/build.py {env:ATOMOU_BUILD_FLAG} --out release", "probe": "{env:ATOMOU_PROBE}"},
     {"name": "shiken", "textgate": "stop", "domain": "shiken-nittei.com", "marker": "資格・試験への道", "min_pages": 10, "needs_var": true},
     {"name": "kurashi", "domain": "kurashi-calendar.com", "marker": "暮らしの準備と手続き", "min_pages": 10, "needs_var": true},
-    {"name": "trend", "domain": "trend-sokuho.com", "marker": "今日の話題", "min_pages": 3, "needs_var": true},
-    {"name": "kaidoki", "domain": "sale-calendar.com", "marker": "SALEカレンダー", "min_pages": 10, "needs_var": true, "textgate": "shadow"}
+    {"name": "trend", "linkage": "ratchet", "domain": "trend-sokuho.com", "marker": "今日の話題", "min_pages": 3, "needs_var": true},
+    {"name": "kaidoki", "linkage": "ratchet", "domain": "sale-calendar.com", "marker": "SALEカレンダー", "min_pages": 10, "needs_var": true, "textgate": "shadow"}
   ]
 }

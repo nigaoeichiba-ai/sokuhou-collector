@@ -78,6 +78,13 @@ def typhoon_chip(content: list[dict], today=None) -> str:
             f'<p class="t-meta">危険度は5段階の{level}｜{esc(asof)}</p></div>')
 
 
+def _tile_article(arts: list[dict], href: str, cat_path: dict, by: dict) -> dict:
+    """The picture of a category tile is the newest article of that category (it used to be a fixed article per category, so a new article never reached the tile).
+    CAT_TILE_ARTICLE is only the fallback for a category with no article that has a picture."""
+    mine = [a for a in arts if cat_path.get(a["category"]) == href and a.get("_img")]
+    return mine[0] if mine else by[CAT_TILE_ARTICLE[href]]
+
+
 def newest_first(arts: list[dict]) -> list[dict]:
     return sorted(arts, key=lambda p: (p["published"], p.get("seq", 0), p["path"]), reverse=True)
 
@@ -148,7 +155,7 @@ def body(home: dict, content: list[dict], spec: dict, cfg: dict, slug_of, card_w
     assert len(cats) == 4, cats
     tiles = []
     for href, name, desc in cats:
-        a = by[CAT_TILE_ARTICLE[href]]
+        a = _tile_article(arts, href, cat_path, by)
         tiles.append(f'<li><a class="cat-tile" href="{href}"><img class="cat-img" src="/assets/img/card/{slug_of(a["path"])}.webp" width="{card_w}" height="{card_h}" '
                      f'alt="{esc(a["h1"])}" loading="lazy"><span class="cat-body"><h3>{name}</h3><p>{desc}</p></span></a></li>')
     category = (f'<section class="block wrap" id="category" aria-labelledby="catTitle"><div class="sec-head"><h2 id="catTitle">{esc(cat_sec["h2"])}</h2></div>'

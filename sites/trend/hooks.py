@@ -135,6 +135,9 @@ def prepare(cfg: dict, spec: dict, pages: list[dict], site_dir: Path) -> list[di
         dates = f'公開日 {ja_date(p["published"])}' + (f' / 更新日 {ja_date(p["updated"])}' if p.get("updated") else "")
         p["sections"].insert(0, {"html": f'<p class="dates">{dates}</p>'})
     ordered = newest_first(arts)
+    # the home page's own date follows the content: the newest day any article was published or changed (home.json's "updated" was written by hand and stayed at 11/11 while
+    # articles went up until 11/15: the top page's 最終更新 and its sitemap lastmod were stale).  Never earlier than what home.json says.
+    by["/"]["updated"] = max([by["/"].get("updated") or ""] + [p.get("updated") or p["published"] for p in arts] + [p["published"] for p in arts])
     # category pages
     for slug, name, desc in CATS:
         mine = [p for p in ordered if p["category"] == name]

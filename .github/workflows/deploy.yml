@@ -302,6 +302,9 @@ jobs:
       - name: Phone-width layout check (Chrome measures sample pages of every kind at 300 / 375 / 768 px; sideways overflow or squeezed text stops the deploy)
         if: steps.gate.outputs.go == 'true'
         run: python -m sokuhou.layoutcheck release
+      - name: Linkage gate (a new page reaches the home page, its category, its related pages and its affiliate links by itself, see sokuhou/linkage.py; per site in data/sites.json linkage - ratchet = a finding that is not in data/linkage/baseline_SITE.json stops the deploy, shadow = printed only)
+        if: steps.gate.outputs.go == 'true'
+        run: python -m sokuhou.linkage release --base ${{ matrix.url }} --site ${{ matrix.site }}
       - name: Text gate (the writing-tool NG words of the master ng_rules.json, fetched from Drive now; sites/shiken/tools/. Per site in data/sites.json (textgate), stop = a failed fetch, a bad rules file or any NG word stops this site's deploy, with no fallback copy; shadow = only a warning counted in the run summary; off = not run)
         if: steps.gate.outputs.go == 'true' && matrix.textgate != 'off'
         env:
