@@ -145,19 +145,17 @@ class Renewal(unittest.TestCase):
         self.assertTrue(any(s in "転出証明書など転入先から指定されたもの" for s in CORRECTED))
 
     # ---- the guides
-    def test_each_guide_is_on_its_page_with_checklist_official_links_and_faq(self):
+    def test_each_guide_is_on_its_page_with_checklist_and_faq(self):
         by_path = {g["path"]: g for g in guides().values() if not g.get("light")}
         self.assertEqual(len(by_path), 11)
         for path, g in by_path.items():
             html = self.page(path)
             self.assertEqual(html.count('type="checkbox" data-check="'), len(g["documents"]), path)
             self.assertIn(f'data-save-guide="{g["id"]}"', html, path)
-            for sid in g["source"]:
-                self.assertIn(f'href="{json.loads((SITE / "guides" / "_site.json").read_text(encoding="utf-8"))["sources"][sid]["url"]}"', html, (path, sid))
             for fq in g["faq"]:
                 self.assertIn(fq["question"], html, path)
             self.assertIn('"@type": "FAQPage"', html, path)
-            self.assertIn("official-list", html, path)
+            self.assertNotIn("official-list", html, path)   # no links to the sources (owner 2026-11-15, D26)
 
     def test_no_article_is_marked_as_approved_by_someone(self):
         for g in guides().values():
@@ -233,9 +231,34 @@ class Renewal(unittest.TestCase):
                 continue
             self.assertIn(path, linked, f"nothing links to {path}")
 
-    def test_the_official_links_open_in_a_new_tab_and_name_the_office(self):
-        html = self.page("/moving/")
-        self.assertRegex(html, r'<a href="https://www\.digital\.go\.jp/[^"]*" target="_blank" rel="noopener noreferrer"><span class="official-link-label"><span class="official-agency">デジタル庁｜')
+    def test_no_page_shows_a_source_or_links_to_one(self):
+        """owner 2026-11-15 (D26): only ad links and the AdSense opt-out links of the privacy page may leave the site; no 出典 note, no 参照 line"""
+        for rel, html in self.pages.items():
+            self.assertEqual(shown_source_problems(html, rel), [], rel)
+
+    def test_the_source_check_catches_what_it_must(self):
+        self.assertTrue(shown_source_problems('<p><a href="https://www.nta.go.jp/x.htm" target="_blank">国税庁｜確定申告</a></p>', "x/index.html"))
+        self.assertTrue(shown_source_problems('<p class="article-citations">参照:<span>国税庁</span></p>', "x/index.html"))
+        self.assertTrue(shown_source_problems("<p>出典: 国税庁</p>", "x/index.html"))
+        self.assertTrue(shown_source_problems('<p>出典確認日：2026-11-13</p>', "x/index.html"))
+        self.assertEqual(shown_source_problems('<p>確認日：2026-11-13</p><a href="https://px.a8.net/svt/ejp?a8mat=A" rel="nofollow sponsored noopener" target="_blank">年賀状印刷</a>', "x/index.html"), [])
+
+
+AD_HOSTS = ("hb.afl.rakuten.co.jp", "px.a8.net", "www.amazon.co.jp", "af.moshimo.com", "ck.jp.ap.valuecommerce.com", "adssettings.google.com", "www.aboutads.info")
+
+
+def shown_source_problems(html: str, rel: str) -> list[str]:
+    bad = []
+    for host in re.findall(r'<a [^>]*href="https?://([^/"]+)', html):
+        if host not in AD_HOSTS and "kurashi-calendar.com" not in host:
+            bad.append("external link: " + host)
+    text = re.sub(r"<(script|style).*?</>", "", html, flags=re.S)
+    text = re.sub(r"<[^>]+>", "", text)
+    if rel != "about/index.html" and rel != "privacy/index.html":
+        for w in ("出典", "参照:", "情報源"):
+            if w in text:
+                bad.append("word: " + w)
+    return bad
 
 
 if __name__ == "__main__":
