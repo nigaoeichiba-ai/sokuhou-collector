@@ -104,7 +104,7 @@ class CitePageTest(unittest.TestCase):
         for name, count in (("宮城県", 7), ("秋田県", 10), ("滋賀県大津市", 32), ("福島県", 4)):
             self.assertRegex(text, name + r".{0,80}?" + str(count) + r" \d+月")
         self.assertRegex(text, r"滋賀県大津市 大津市のみ 件数のみ 32")
-        self.assertIn("宮城県の規約(自由に二次利用可)", text)
+        self.assertIn("宮城県の規約(出典を明記することを条件に自由に二次利用可)", text)
         self.assertIn("CC BY 4.0", text)
         self.assertIn("再利用の許可が明示されていないため、件数と最新の日付だけを載せています", text)
 

@@ -38,7 +38,7 @@ FY_MONTHS = (4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3)
 
 # One entry per published source.  key = the data file (data/<key>_kuma.json); "pref" = the prefecture's short name.
 LIVE_SOURCES = {
-    "miyagi": {"pref": "宮城", "license": "宮城県の規約(自由に二次利用可)", "name": "宮城県", "label": "宮城県・県の公式", "monthly_label": "目撃のほか、痕跡などを含む",
+    "miyagi": {"pref": "宮城", "license": "宮城県の規約(出典を明記することを条件に自由に二次利用可)", "name": "宮城県", "label": "宮城県・県の公式", "monthly_label": "目撃のほか、痕跡などを含む",
                "as_of_text": "データは{d}時点です"},
     "yamaguchi": {"pref": "山口", "license": "CC BY", "name": "山口県", "label": "山口県・県警の公式", "monthly_label": "山口県警察が認知した目撃のほか、痕跡などを含む",
                   "as_of_text": "データは{d}の分までです"},
