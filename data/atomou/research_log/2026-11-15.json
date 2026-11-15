@@ -1,1 +1,32 @@
-{"date": "2026-11-15", "words": 0, "rss": 7894, "searches": 22, "fetches": 40, "candidates": 9, "cards": 7, "rejected": 0, "rejected_reasons": {"first runs: subject over 10 chars; seedcheck 'duplicate' when the out file already held the item (split into seed_research_2026-11-15.json and ...15b.json)": 0}, "failed_words": 0, "injections": 0, "results_written": 4, "cards_detail": "EXILE hall tour start 2027-02-16 (official exile.jp), Super Sentai CD-BOX 2027-01-20 (press: prtimes + famitsu), GEO Black Friday 11/21-29 (press: ITmedia + GAME Watch)", "not_done": "none carried (rerun after 報告窓口 request)", "note": "Run 2: cards +WRX STI Sport R order start 11/19 (official subaru.jp), Kamenashi x Akanishi live 2027-08-18/19, LinQ 13th gen 2027-01-02, Netflix The Take 2027-01-15; results: Japan-Brazil, rugby Japan-England, MLB MVP, F1 Sao Paulo; ideas file 2026-11-15.md + Codex (gpt-5.6-sol; gpt-5.5 is rejected); naturaljp 1 mid warning fixed (result_2026-11-03 long sentence) -> 0; atomou suite 1538 tests OK. FNS Kayosai card already existed."}
+{
+ "date": "2026-11-15",
+ "words": 0,
+ "rss": 7894,
+ "searches": 22,
+ "fetches": 40,
+ "candidates": 9,
+ "cards": 7,
+ "rejected": 0,
+ "rejected_reasons": {
+  "first runs: subject over 10 chars; seedcheck 'duplicate' when the out file already held the item (split into seed_research_2026-11-15.json and ...15b.json)": 0
+ },
+ "failed_words": 0,
+ "injections": 0,
+ "results_written": 4,
+ "cards_detail": "EXILE hall tour start 2027-02-16 (official exile.jp), Super Sentai CD-BOX 2027-01-20 (press: prtimes + famitsu), GEO Black Friday 11/21-29 (press: ITmedia + GAME Watch)",
+ "not_done": "none carried (rerun after 報告窓口 request)",
+ "note": "Run 2: cards +WRX STI Sport R order start 11/19 (official subaru.jp), Kamenashi x Akanishi live 2027-08-18/19, LinQ 13th gen 2027-01-02, Netflix The Take 2027-01-15; results: Japan-Brazil, rugby Japan-England, MLB MVP, F1 Sao Paulo; ideas file 2026-11-15.md + Codex (gpt-5.6-sol; gpt-5.5 is rejected); naturaljp 1 mid warning fixed (result_2026-11-03 long sentence) -> 0; atomou suite 1538 tests OK. FNS Kayosai card already existed.",
+ "run3": {
+  "words": 0,
+  "rss": "8181 headlines from 23 feeds",
+  "searches": 3,
+  "fetches": 12,
+  "candidates": 3,
+  "cards": 3,
+  "cards_detail": "Bullet Train 24th single 2026-12-16 (official bullettrain.jp), Ryusei new single 2026-12-16 (press: prtimes + dellows), Senkyo series 4 new-year SP month 2027-01 (press: realsound + pia)",
+  "results": "Cup of China men (Miura win 293.25; jiji + chunichi)",
+  "rejected": 0,
+  "naturaljp": "high0/mid0/low0",
+  "not_done": "ideas file/Codex request not repeated (already done in earlier run today); Senkyo exact date unannounced"
+ }
+}
