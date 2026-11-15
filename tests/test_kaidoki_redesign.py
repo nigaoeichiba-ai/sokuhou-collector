@@ -286,6 +286,20 @@ class RedesignTest(unittest.TestCase):
         expected = self._expected_top_names(date(2026, 11, 12))
         self.assertGreater(len(expected), len(names) + 2)          # the calendar has more: a table like this one would fail the test above
 
+    # ---- 2026-11-15: no page keeps the old beige tables / plain notes: the red x gold parts are in the stylesheet for every page ----
+    def test_the_old_beige_parts_are_restyled_in_the_new_design(self):
+        css = (SITE / "redesign" / "static" / "styles" / "extra.css").read_text(encoding="utf-8")
+        tail = css[css.index("2026-11-15 owner: the old parts"):]
+        for sel in (".tablewrap caption", ".tablewrap thead th", ".notice", ".checklist li", ".article-links article", ".cal-item", ".cal-grid th", ".aff-box", ".toc", ".footer", ".btn-red"):
+            self.assertRegex(tail, re.escape(sel) + r"[^{}]*\{[^}]*(var\(--p-|#000)", sel)
+        self.assertRegex(tail, r"\.tablewrap caption[^{}]*\{[^}]*linear-gradient\(180deg,var\(--p-red\)")      # the table's title row is red, not the old beige (#fff0c9)
+        for h in ("doc", "kit"):          # the red title block is on the explanation pages too, not only the shop / genre / product pages
+            self.assertIn(f'[data-page-type="{h}"] .page-banner', css)
+
+    def test_negative_a_stylesheet_without_the_new_table_rules_is_caught(self):
+        old = ".doc caption{background:#fff0c9}.doc thead th{background:#fff0c9}"
+        self.assertNotRegex(old, r"\.tablewrap caption[^{}]*\{[^}]*linear-gradient")
+
     # ---- Muse's prototype of 2026-11-14 (shop pages / product pages) ----
     SOURCE_SHOWN = re.compile(r"公式サイトを開く|ほかの公式ページ|class=\"src\"|出典")
 
