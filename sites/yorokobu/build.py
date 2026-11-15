@@ -1517,6 +1517,7 @@ def home_tools(d: dict) -> str:
         rows.append(tool_tile("/tool/taboo/", "shield-check", "縁起・マナーチェック", "贈る前に避けたい品を確かめる"))
     rows.append(tool_tile("/tool/calc/", "currency-jpy", "お返し・割り勘の計算", "お返しの目安と人数での割り勘"))
     rows.append(tool_tile("/calendar/", "calendar-check", "贈りどきカレンダー", "母の日やクリスマスをカレンダーに"))
+    rows.append(tool_tile("/travel/", "suitcase-rolling", "旅行・宿泊を贈る", "宿泊券と旅行用品の選び方"))
     return (f'<section class="block"><div class="sec-head"><span class="eyebrow">Tools</span><h2>迷ったときに</h2>'
             f'<p>決めきれないときはここから。気になった商品に♡を付けると友人や家族に1つのリンクで送れます。</p></div>'
             f'<ul class="tiles wide">{"".join(rows)}</ul></section>')
@@ -1989,6 +1990,54 @@ def policy_page(d: dict, cfg: dict, preview: bool) -> str:
     return page(cfg, preview, path="/policy/", title=f"編集方針 | {cfg['site_name']}", description=lead, body=html)
 
 
+# ---------------------------------------------------------------- travel (宿泊・旅行を贈る)
+
+TRAVEL_OCCASIONS = ("respect-for-aged-day", "wedding-anniversary", "mothers-day", "fathers-day")
+TRAVEL_THEMES = ("travel-goods", "railway-trip-planning", "business-trip-packing", "hotel-room-celebration")
+TRAVEL_URL = "https://travel.rakuten.co.jp/"
+
+
+def travel_page(d: dict, cfg: dict, preview: bool) -> str:
+    """/travel/: giving a stay or a trip. The only affiliate link is the Rakuten Travel top page (the spec's formula, nothing added); the rest are our own pages that exist."""
+    c = d["c"]
+    occ = {o["slug"]: o for o in c["occasions"]}
+    thm = {t["slug"]: t for t in d["live_themes"]}
+    occ_links = "".join(f'<li><a href="/occasion/{s}/">{esc(occ[s]["name"])}</a></li>' for s in TRAVEL_OCCASIONS if s in occ)
+    thm_links = "".join(f'<li><a href="/theme/{s}/">{esc(thm[s]["title"])}</a></li>' for s in TRAVEL_THEMES if s in thm)
+    lead = "宿に泊まる、旅に出る。そんな時間を贈る方法と、渡す前に決めておきたいことをまとめています。"
+    rk = f'<a href="{esc(rakuten_link(cfg, TRAVEL_URL))}" target="_blank" rel="nofollow sponsored noopener">楽天トラベル</a>'
+    ways = [
+        ("宿の宿泊券・ギフト券", "行く日を相手が決められるので、日程が読めない相手に向きます。有効期限と使える宿の範囲を、渡す前に確かめます。"),
+        ("日程と宿を決めて予約して渡す", "手間が少なく、「連れて行く」贈り方になります。キャンセルの条件と、相手の予定が空いているかを先に確かめます。"),
+        ("旅行用品を贈って、旅を後押しする", "宿の予約まで踏みこまず、旅のお供を贈ります。相手の好みが分からないときの、無難な選び方です。"),
+    ]
+    way_rows = "".join(f"<tr><th>{esc(a)}</th><td>{esc(b)}</td></tr>" for a, b in ways)
+    check = ("<li>相手が出かけられる状況か(仕事・体調・介護・ペットの世話)。</li><li>行く日が決まっているか。決まっていなければ、期限のある券は避けます。</li>"
+             "<li>移動が長すぎないか。年配の方には、乗り換えの少ない近場が喜ばれます。</li><li>食事の好みやアレルギー、部屋の希望。予約するなら、先に聞いておきます。</li>"
+             "<li>人数。2人分を贈るのか、1人分なのか。誰と行くかを決めつけない渡し方にします。</li>")
+    scene = ""
+    if occ_links:
+        scene += f'<section class="g-sec"><h2>こんな場面で</h2><ul>{occ_links}</ul></section>'
+    if thm_links:
+        scene += f'<section class="g-sec"><h2>旅の準備の品を探す</h2><ul>{thm_links}</ul></section>'
+    body = f"""{head_band("sky", "", "旅行・宿泊を贈る", lead, single=True)}
+<div class="crumbs-wrap">{crumbs([("トップ", "/"), ("旅行・宿泊を贈る", None)])}</div>
+{pr_lead(cfg)}
+<article class="guide">
+<section class="g-sec"><h2>結論: 日程を相手が決められる形にする</h2>
+<p>旅行や宿泊のプレゼントは、品物と違って、受け取った人の予定が合わないと使えません。迷ったら、行く日を相手が選べる宿泊券か、キャンセルしやすい予約にします。宿の探し方は、{rk}のように、地域や日付で絞れるサービスが使いやすいです。</p></section>
+<section class="g-sec"><h2>贈り方は3通り</h2>
+<div class="tablewrap"><table class="data"><tbody>{way_rows}</tbody></table></div></section>
+<section class="g-sec"><h2>渡す前に確かめること</h2><ul>{check}</ul></section>
+{scene}
+<section class="g-sec"><h2>宿を探す</h2>
+<p>地域・日付・人数を入れて探せます。口コミと、キャンセルの条件を読んでから決めます。→ {rk}</p></section>
+</article>
+{pr_foot(cfg, amazon=False)}"""
+    return page(cfg, preview, path="/travel/", title=f"旅行・宿泊のプレゼント 宿泊券と旅行用品の選び方 | {cfg['site_name']}", description=lead, body=body,
+                og_image=og_for("default"))
+
+
 # ---------------------------------------------------------------- site
 
 def prepare(c: dict, items: dict | None, cfg: dict) -> dict:
@@ -2125,6 +2174,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
             pages[f"budget/{tier['slug']}/index.html"] = budget_page(d, cfg, preview, tier, pool, bt)
     pages["memo/index.html"] = memo_page(d, cfg, preview, today)
     pages["calendar/index.html"] = calendar_page(d, cfg, preview, today)
+    pages["travel/index.html"] = travel_page(d, cfg, preview)
     months = month_pages(c, today)
     if months:
         pages["month/index.html"] = month_hub_page(d, cfg, preview, today, months)

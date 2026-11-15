@@ -290,7 +290,8 @@ def tools_hub_page(d: dict, cfg: dict, preview: bool) -> str:
              ("/compare/", "chart-bar", "商品比較", "同じ種類の商品を楽天市場のショップで並べて価格・ポイント・送料・レビューを比べます。", d.get("compare")),
              ("/tool/calc/", "currency-jpy", "お返し・割り勘の計算", "お返しの金額の目安と連名で贈るときの一人あたりの金額を計算します。", True),
              ("/memo/", "calendar-heart", "たいせつな日メモ", "誕生日や記念日を登録して贈りどきを逃さないようにします。", True),
-             ("/calendar/", "calendar-check", "贈りどきカレンダー", "母の日、お歳暮など、一年の贈りどきをカレンダーに入れられます。", True)]
+             ("/calendar/", "calendar-check", "贈りどきカレンダー", "母の日、お歳暮など、一年の贈りどきをカレンダーに入れられます。", True),
+             ("/travel/", "suitcase-rolling", "旅行・宿泊を贈る", "宿泊券や旅行用品など、旅の時間を贈るときの選び方と確かめることをまとめています。", True)]
     tiles = "".join(f'<li><a class="tile wide tool-tile" href="{h}"><span class="ic-wrap">{icons.glyph(g, 30)}</span><span><b>{esc(n)}</b><small>{esc(t)}</small></span></a></li>'
                     for h, g, n, t, ok in cards if ok)
     lead = "プレゼント選びを楽にして楽しくするための道具をそろえています。"
