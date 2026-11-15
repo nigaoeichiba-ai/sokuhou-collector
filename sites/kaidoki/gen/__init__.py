@@ -6,7 +6,9 @@ KAIDOKI_TODAY=2026-11-03 fixes the day (tests).
 """
 from __future__ import annotations
 
+import atexit
 import json
+import os
 from pathlib import Path
 
 from .common import CHECKED, TODAY, d, ev_span
@@ -35,10 +37,38 @@ def all_pages() -> list[dict]:
     return out
 
 
+# write() regenerates the tracked files of content/ and site.json for today's date.  A test or a local build must not leave them changed in the working folder (it dirties other sessions' folders and
+# stops publish.ps1): the first write of a process remembers the files as they were and puts them back when the process ends.  In CI (the deploy builds from the regenerated files) or with KAIDOKI_KEEP_GEN=1 they stay.
+_ORIGINAL: dict[Path, bytes | None] = {}
+
+
+def _remember(base: Path) -> None:
+    for f in list((base / "content").glob("*.json")) + [base / "site.json"]:
+        if f not in _ORIGINAL:
+            _ORIGINAL[f] = f.read_bytes() if f.exists() else None
+
+
+def restore() -> int:
+    """Put the files back as they were before the first write() of this process; returns how many files were changed back."""
+    n = 0
+    for f, data in _ORIGINAL.items():
+        if data is None:
+            if f.exists():
+                f.unlink()
+                n += 1
+        elif not f.exists() or f.read_bytes() != data:
+            f.write_bytes(data)
+            n += 1
+    return n
+
+
 def write() -> int:
     pages = all_pages()
     content = SITE / "content"
     content.mkdir(exist_ok=True)
+    if not _ORIGINAL and not os.environ.get("GITHUB_ACTIONS") and not os.environ.get("KAIDOKI_KEEP_GEN"):
+        _remember(SITE)
+        atexit.register(restore)
     for f in content.glob("*.json"):
         f.unlink()
     for p in pages:
