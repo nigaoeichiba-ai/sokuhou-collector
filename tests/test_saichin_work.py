@@ -106,7 +106,7 @@ class RaiseGuideTest(SiteFixture):
 
 
 # The codes as A8's link-creation screen gave them for media 004 (2026-10-20), written out here separately from content.py; since 2026-11-15 with the rel and target the site's rules require (sponsored, noopener, new tab) added.
-MAMAWORKS = ('主婦のための求人応援サイト<br>\n<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" target="_blank" rel="nofollow sponsored noopener">「ママワークス」<b>mamaworks.jp</b></a>\n'
+MAMAWORKS = ('主婦のための求人応援サイト<br>\n<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" target="_blank" rel="nofollow sponsored noopener">「ママワークス」</a>\n'
              '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" alt="">')
 COCONALA = ('<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AJ97FU+2PEO+5YJRM" target="_blank" rel="nofollow sponsored noopener">ココナラ</a>\n'
             '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AJ97FU+2PEO+5YJRM" alt="">')

@@ -54,7 +54,7 @@ class AffiliateLinksTest(SiteFixture):
     def test_link_words_are_names_not_addresses(self):
         for rel in PLACES:
             for text in re.findall(r"<a\b[^>]*px\.a8\.net[^>]*>(.*?)</a>", self.read(rel), re.S):
-                self.assertNotRegex(re.sub(r"<[^>]+>", "", text).strip(), r"^(https?://|www\.)")
+                self.assertNotRegex(re.sub(r"<[^>]+>", "", text).strip(), r"^(https?://|www\.)|[a-z0-9-]+\.(jp|com|net)")
 
 
 class DetectorTest(unittest.TestCase):
