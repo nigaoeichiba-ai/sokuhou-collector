@@ -280,7 +280,7 @@ def analytics_text(cfg: dict) -> str:
 
 
 def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_html: str, update_text: str,
-                disclaimer_html: str, contact_notice: str, input_note: str = "", finish=lambda s: s) -> dict[str, str]:
+                disclaimer_html: str, contact_notice: str, input_note: str = "", finish=lambda s: s, sources_label: str = "情報の出典") -> dict[str, str]:
     """about / privacy / contact / 404, with the site-specific sentences passed in."""
     name = cfg["site_name"]
     op = esc(cfg["operator_name"] or "(未設定)")
@@ -295,7 +295,7 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
 <dt>運営者</dt><dd>{op}</dd>
 <dt>連絡先</dt><dd>{contact_summary(cfg)}</dd>
 <dt>目的</dt><dd>{purpose}</dd>
-<dt>情報の出典</dt><dd>{sources_html}</dd>
+<dt>{sources_label}</dt><dd>{sources_html}</dd>
 {update_row}</dl>
 <h2>免責事項</h2>
 {disclaimer_html}"""
@@ -311,7 +311,7 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
 <h2>アフィリエイトについて</h2>
 <p>当サイトには、商品やサービスの紹介リンク(アフィリエイトリンク)が含まれる場合があります。該当するページには、広告であることを明示します。リンク先で商品が購入されると、当サイトの運営者に報酬が支払われることがあります。</p>{amazon_disclosure(cfg)}
 {cfg.get("privacy_affiliate_note_html", "")}<h2>免責事項・著作権</h2>
-<p>免責事項と情報の出典は、<a href="/about/">運営者情報</a>に記載しています。</p>
+<p>免責事項は、<a href="/about/">運営者情報</a>に記載しています。</p>
 <h2>お問い合わせ</h2>
 <p>このポリシーに関するお問い合わせは、{contact_summary(cfg)}からお願いします。</p>
 <h2>改定</h2>

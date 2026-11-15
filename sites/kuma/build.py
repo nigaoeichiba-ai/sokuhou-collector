@@ -42,8 +42,8 @@ from sokuhou.sitekit import BuildError, amazon_disclosure, asset_pages, crumbs, 
 
 JST = timezone(timedelta(hours=9))
 MINISTRY_PAGE = "https://www.env.go.jp/nature/choju/effort/effort12/effort12.html"
-SOURCE_HTML = (f'出典: <a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">環境省「クマに関する各種情報・取組」</a>の公表資料(速報値)を加工して作成。'
-               "環境省が作成したものではありません。")
+SOURCE_HTML = ("出典: 環境省「クマに関する各種情報・取組」の公表資料(速報値)を加工して作成。環境省が作成したものではありません。"      # the processing notice the Government Standard Terms of Use ask for: kept, without a link (owner 2026-11-15)
+               "公式の発表をはじめとする複数の情報をもとにしています。")
 BASE_NAV = [("全国", "/", "/"), ("最新の目撃", "/live/", "/live/"), ("ランキング", "/ranking/sightings/", "/ranking/"),
             ("推移", "/trend/", "/trend/"), ("緊急銃猟", "/emergency/", "/emergency/"), ("お知らせ", "/news/", "/news/"),
             ("対処法", "/guide/", "/guide/")]
@@ -63,10 +63,10 @@ CAUTION = ("環境省が都道府県から聞き取った<strong>速報値</stro
 # Prefectures whose row in the ministry's table is "-": why (checked against the sources named in the text, 2026-10-13)
 NO_COUNT_WHY = {
     "千葉": '<p>千葉県には、野生のツキノワグマが生息していないとされています。環境省の資料は、ツキノワグマの生息地を「千葉県を除く本州と四国の一部地域」と書いています'
-          '(<a href="https://www.env.go.jp/nature/choju/docs/docs5-4a/pdfs/chpt4.pdf" rel="noopener" target="_blank">環境省「クマ類の生態と現状」</a>)。'
+          '(環境省「クマ類の生態と現状」)。'
           'そのため、出没件数の表に数値がありません。</p>',
     "北海道": '<p>北海道は、道全体の出没件数をまとめた表を、道のサイトに載せていません。道のサイトには、市町村ごとの出没情報のリンク集を公開しています'
-            '(<a href="https://www.pref.hokkaido.lg.jp/ks/skn/higuma/joho.html" rel="noopener" target="_blank">北海道「市町村ヒグマ関連情報リンク集」</a>)。'
+            '(北海道「市町村ヒグマ関連情報リンク集」)。'
             '注意書きは「市町村で提供しているヒグマの出没に関する情報は、すべての出没を網羅するものではありません」です。'
             'そのため、環境省の表でも「-」になっています。このサイトでは、市町村が公開している情報が読めた分だけを、下に載せています。</p>',
 }
@@ -292,14 +292,14 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
                      f'最新は{md(lv["records"][0]["at"][:10])}({live_mod.ago_text(lv["records"][0]["at"], lv["today"])})です。</p>\n'
                      f'<ul class="mini-list wide">{items}</ul>\n'
                      f'{hot_home(lv)}'
-                     f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図を開く(現在地の近く)</a>{' / <a href="/digest/">週ごとのまとめ</a>' if d.get("has_digest") else ''}{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''} / <a href="/search/">市町村名から探す</a> / <a href="/official/">都道府県の公式の出没情報(リンク集)</a> / <a href="/cite/">データの出典・引用のしかた</a></p>\n')
+                     f'<p><a href="/live/">自治体の目撃情報の一覧</a> / <a href="/map/">地図を開く(現在地の近く)</a>{' / <a href="/digest/">週ごとのまとめ</a>' if d.get("has_digest") else ''}{' / <a href="/data/">データ(CSV)</a>' if live_mod.licensed_sources(lv) else ''} / <a href="/search/">市町村名から探す</a> / <a href="/official/">都道府県別の最新の情報と環境省の件数</a> / <a href="/cite/">数え方・利用条件・引用のしかた</a></p>\n')
     news_block = ""
     if d["notices"]:
-        items = "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
+        items = "".join(f'<li>{esc(x["title"])}<b>{md(x["date"])}</b></li>' for x in d["notices"][:4])
         news_block = (f'<h2>環境省の最近のお知らせ</h2>\n<ul class="link-list">{items}</ul>\n'
                       '<p><a href="/news/">お知らせの一覧</a></p>\n')
     if d.get("muni_notices"):
-        mi = "".join(f'<li><a href="{esc(x["link"])}" rel="noopener" target="_blank">{esc(x["title"])}</a><b>{md(x["date"])}・{esc(x["publisher"])}</b></li>' for x in d["muni_notices"][:4])
+        mi = "".join(f'<li>{esc(x["title"])}<b>{md(x["date"])}・{esc(x["publisher"])}</b></li>' for x in d["muni_notices"][:4])
         news_block += (f'<h2>自治体の最近のクマ関連のお知らせ</h2>\n<ul class="link-list">{mi}</ul>\n'
                        '<p><a href="/notices/">自治体のお知らせの一覧</a></p>\n')
     news_block = research_mod.home_block(d.get("research") or []) + news_block
@@ -567,14 +567,14 @@ def place_text(x: dict) -> str:
 
 def news_page(d: dict, cfg: dict, preview: bool) -> str:
     rows = "".join(
-        f'<li id="n-{x["date"]}-{i}"><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["title"])}</a>'
+        f'<li id="n-{x["date"]}-{i}">{esc(x["title"])}'
         f'<span>{jp_date(x["date"])}</span></li>' for i, x in enumerate(d["notices"]))
     body = f"""{crumbs([("全国", "/"), ("環境省のお知らせ", None)])}
 <h1>環境省の、クマに関するお知らせ</h1>
-<p class="lead">環境省の「クマに関する各種情報・取組」のページに載っている、日付つきのお知らせを、新しい順に並べました。大臣の談話・会見、自治体への事務連絡、講習会の案内などです。リンク先は、環境省のページです。</p>
+<p class="lead">環境省の「クマに関する各種情報・取組」のページに載っている、日付つきのお知らせを、新しい順に並べました。大臣の談話・会見、自治体への事務連絡、講習会の案内などです。</p>
 <ul class="link-list news-list">{rows}</ul>
 <p class="notice">題名は、環境省のページの表記のままです(日付の後ろにある発信元の記載は省いています)。このサイトでは、報道各社の記事は載せていません。お住まいの地域の最新の情報は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。{' 都道府県・市町村が自分のサイトで発表したお知らせは、<a href="/notices/">自治体のクマ関連のお知らせ</a>で確認できます。' if d.get("muni_notices") else ''}</p>
-<p class="notice">出典: <a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">環境省「クマに関する各種情報・取組」</a>を加工して作成。環境省が作成したものではありません。取得日: {jp_date(d['fetched_date'])}。</p>"""
+<p class="notice credit">出典: 環境省「クマに関する各種情報・取組」を加工して作成。環境省が作成したものではありません。取得日: {jp_date(d['fetched_date'])}。</p>"""
     return page(cfg, preview, path="/news/", title="環境省のクマに関するお知らせ(新着)",
                 description="環境省が公表している、クマに関する大臣の談話・会見、自治体への事務連絡などの新着を、日付順に一覧にしています。", body=body)
 
@@ -646,10 +646,10 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
         return no_bear_page(d, r, cfg, preview)
     done, cur, prev = d["done"], d["cur"], d["years"][-3]
     emg = [c for c in d["emergency"][cur]["cases"] if c["prefecture"] == r["name"]]
-    official = links.get(r["short"]) or []
-    off_html = ("<ul class='link-list'>" + "".join(
-        f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["label"])}</a></li>' for x in official) + "</ul>") if official else (
-        f'<p>{esc(r["name"])}の公式サイトで、「クマ 出没」で検索してください。市町村が、独自に出没情報を公開していることもあります。</p>')
+    # the prefecture's own pages are not linked (owner 2026-11-15: no outbound source links); the section points to this site's own list instead
+    off_html = (f'<p>{esc(r["name"])}の最新の出没は、<a href="/live/">自治体の目撃情報の一覧</a>と<a href="/map/">地図</a>で、現在地の近くから探せます。'
+                f'市町村が独自に出没情報を出していることもあります。</p>') if d.get("lv") else (
+        f'<p>{esc(r["name"])}の最新の出没は、{esc(r["name"])}と市町村の最新の発表で確認してください。</p>')
     if r["has"]:
         peak_i = max(range(12), key=lambda i: r["monthly"][done][i] or 0)
         sight = f"""<div class="stats">{stat(f"{fy_label(done)}の出没件数", f"{n(r['total'][done])}件", f"39道府県中{r['rank']['done']}位", True, "sightings")}{stat(f"{fy_label(prev)}", f"{n(r['total'][prev])}件", f"前年度との比: {ratio_text(r['total'][done], r['total'][prev])}")}{stat(f"{fy_label(cur)}({month_range(d)})", f"{n(r['ytd'][cur])}件", f"前年度の同じ期間: {n(r['ytd'][done])}件")}</div>
@@ -698,8 +698,8 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
 {injuries_table(d, r)}
 <h2>{fy_label(cur)}の緊急銃猟</h2>
 {emg_html}
-{cap_html}<h2>{esc(r['name'])}の公式の出没情報</h2>
-<p>いま近くで出ているかは、公式の情報で確認してください。</p>
+{cap_html}<h2>{esc(r['name'])}の最新の出没情報</h2>
+<p>いま近くで出ているかは、最新の情報で確認してください。</p>
 {off_html}
 {caution_box()}
 {rel}<h2>ほかの道府県</h2>
@@ -720,16 +720,13 @@ def guide_hub(cfg: dict, preview: bool) -> str:
 
 
 def guide_page(g: dict, cfg: dict, preview: bool) -> str:
-    sources = "".join(f'<li><a href="{esc(u)}" rel="noopener" target="_blank">{esc(t)}</a></li>' for t, u in g["sources"])
     others = "".join(f'<li><a href="/guide/{x["slug"]}/">{esc(x["title"])}</a></li>' for x in content.GUIDES if x is not g)
     body = f"""{crumbs([("全国", "/"), ("対処法・解説", "/guide/"), (g["title"], None)])}
 <h1>{esc(g['title'])}</h1>
 <p class="lead">{esc(g['lead'])}</p>
 <img class="page-banner" src="/assets/img/guide-{g['slug']}.webp" alt="" width="800" height="450">
 <article class="prose">{g['body']}</article>
-<h2>出典</h2>
-<ul class="link-list">{sources}</ul>
-<p class="notice">内容の確認日: {jp_date(content.VERIFIED_AT)}。公的機関の資料は更新されることがあります。最新の内容は、出典でご確認ください。身の危険があるときは、ためらわず 110 番へ連絡してください。</p>
+<p class="notice">内容の確認日: {jp_date(content.VERIFIED_AT)}。公的機関の資料は更新されることがあります。身の危険があるときは、ためらわず 110 番へ連絡してください。</p>
 {guide_goods_box(g['slug'], cfg)}
 <h2>ほかの解説</h2>
 <ul class="link-list">{others}</ul>"""
@@ -974,7 +971,7 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
 <ul>{places}</ul>
 <p>{" ・ ".join(links)} ・ <a href="/digest/">週ごとのまとめの一覧</a></p>
 <p class="notice">{DIGEST_NOTE}</p>
-{notes}<p class="notice">出典: 各自治体が公開している目撃情報(<a href="/live/">最新の目撃情報</a>に、出典と取得日を載せています)を加工して作成。各自治体が作成したものではありません。取得日: {jp_date(dig['fetched_date'])}。</p>"""
+{notes}<p class="notice credit">出典: 各自治体が公開している目撃情報を加工して作成。各自治体が作成したものではありません。取得日: {jp_date(dig['fetched_date'])}。</p>"""
     return page(cfg, preview, path=f"/digest/{key}/", title=f"{week_range(key)}のクマの目撃情報(週ごとのまとめ)",
                 description=head, body=body)
 
@@ -1011,7 +1008,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         nav = nav[:-1] + [("グッズ(PR)", "/goods/", "/goods/")] + nav[-1:]
     SITE = {**SITE, "nav": nav}
     # the footer of every page links to where the numbers come from (the page exists only with live data); SITE is module-wide, so set it every time
-    SITE["source_html"] = SOURCE_HTML + (' <a href="/cite/">数字の出典・数え方・引用のしかた</a>は、別のページにまとめています。' if any_live else "")
+    SITE["source_html"] = SOURCE_HTML + (' <a href="/cite/">数え方・利用条件・引用のしかた</a>は、別のページにまとめています。' if any_live else "")
     d["lv"] = live_mod.prepare_live(d, today or datetime.now(JST).date()) if any_live else None
     pages: dict[str, str | bytes] = {"index.html": index_page(d, cfg, preview)}
     thin_pages: set[str] = set()      # pages kept out of the index: thin municipality pages, old week pages, a prefecture without bears (sites/kuma/indexing.py)
@@ -1077,14 +1074,15 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     count_names = [c["name"] for c in d["live_counts"]]
     live_sources_text = ""
     if detail_names:
-        live_sources_text += f"。「最新の目撃」のページは、{'・'.join(detail_names)}が公開している目撃情報(各ページに出典と取得日を表示)"
+        live_sources_text += f"。「最新の目撃」のページは、{'・'.join(detail_names)}が公開している目撃情報(各ページに利用条件と取得日を表示)"
     if count_names:
         live_sources_text += f"。{'・'.join(count_names)}は、再利用の許可が明示されていないため、公開されている情報から件数と最新の日付" + ("を集計して載せています(複数の公開情報で一致を確認できた目撃は、場所も載せています)"
                                                          if any(c.get("records") for c in d["live_counts"]) else "だけを集計して載せています")
     pages.update(legal_pages(
         SITE, cfg, preview,
         purpose="クマの出没や人身被害に関する、環境省の公表データを、都道府県別・月別に整理して、暮らしの安全の判断に役立てていただくこと。",
-        sources_html=f'環境省「クマに関する各種情報・取組」(<a href="{MINISTRY_PAGE}" rel="noopener" target="_blank">公表ページ</a>)の、出没情報・人身被害件数・緊急銃猟の実施状況・死亡事故の資料(いずれも速報値)' + live_sources_text,
+        sources_label="データについて",
+        sources_html=f'環境省の出没情報・人身被害件数・緊急銃猟の実施状況・死亡事故の資料(いずれも速報値)を、加工して載せています' + live_sources_text,
         update_text="環境省の公表にあわせて更新します。自治体の公開データは、週1回取得します。各ページに、公表された日付と、どの月までのデータかを表示します。",
         disclaimer_html=("<p>掲載内容は、環境省が都道府県から聞き取った速報値を加工したもので、後から修正されることがあります。出没数は、都道府県ごとに異なる方法で取りまとめられています。"
                          "正確性・完全性・最新性を保証するものではありません。身近な出没情報は、お住まいの都道府県・市町村の公式の情報をご確認ください。</p>"

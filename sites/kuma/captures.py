@@ -71,7 +71,7 @@ def ranking_page(page, c: dict, tabs) -> str:
 <h2>道府県別({fy_label(done)}の多い順)</h2>
 {table(head, rows)}
 <p class="notice">{NOTE}{fy_label(cur)}は、{c['as_of_text']}までの暫定値です。{NOT_LISTED}</p>
-<p class="notice">出典: 環境省「クマ類の捕獲数(許可捕獲数)について[速報値]」(<a href="{esc(c['raw']['source_page'])}" rel="noopener" target="_blank">環境省「クマに関する各種情報・取組」</a>)を加工して作成。環境省が作成したものではありません。環境省の更新日: {jp_date(c['updated'])}。</p>"""
+<p class="notice credit">出典: 環境省「クマ類の捕獲数(許可捕獲数)について[速報値]」を加工して作成。環境省が作成したものではありません。環境省の更新日: {jp_date(c['updated'])}。</p>"""
     return page(path="/ranking/captures/", title=f"クマの許可捕獲数ランキング({fy_label(done)}・道府県別・環境省の速報値)",
                 description=f"{fy_label(done)}のクマ類の許可捕獲数は全国で{n(nat[done][0])}頭。道府県別のランキングと、平成20年度からの全国の推移を、環境省の速報値からまとめています。", body=body)
 
@@ -90,5 +90,5 @@ def pref_block(c: dict | None, short: str, name: str) -> str:
     return f"""<h2>クマ類の許可捕獲数</h2>
 <p>{fy_label(done)}の許可捕獲数は、{n(by[done][0])}頭(捕殺{n(by[done][1])}頭・非捕殺{n(by[done][2])}頭)で、{len(c['ranked'])}道府県中{c['rank'][short]}位でした。{fy_label(cur)}は、{c['as_of_text']}までで{n(by[cur][0])}頭です。</p>
 {chart}{table(["年度", "計", "捕殺", "非捕殺"], rows)}
-<p class="notice">{NOTE}{c['as_of_text']}までの暫定値を含みます。環境省の更新日: {jp_date(c['updated'])}。出典: 環境省の資料を加工して作成。<a href="/ranking/captures/">全国のランキング</a></p>
+<p class="notice">{NOTE}{c['as_of_text']}までの暫定値を含みます。環境省の更新日: {jp_date(c['updated'])}。環境省の資料を加工して作成。<a href="/ranking/captures/">全国のランキング</a></p>
 """

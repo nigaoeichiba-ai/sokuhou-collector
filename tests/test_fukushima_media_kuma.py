@@ -141,7 +141,7 @@ class PageTest(unittest.TestCase):
         self.assertIn("live/fukushima/index.html", self.files)
         t = self.text("live/fukushima/index.html")
         self.assertIn("県の許可が得られていない", t)
-        self.assertIn("別の出どころで2つの公開情報が一致した目撃だけ", t)
+        self.assertIn("別々の2つの公開情報が一致した目撃だけ", t)
         self.assertIn("松川町字B地内", t)
         self.assertNotIn("福島県が公表している件数", t)
         self.assertNotIn("福島県が公表している最新の目撃情報", t)

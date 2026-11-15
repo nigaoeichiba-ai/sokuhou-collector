@@ -84,7 +84,7 @@ class CitePageTest(unittest.TestCase):
         self.assertIn("cite/index.html", self.files)
         self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
         html = self.read("cite/index.html")
-        self.assertIn("<title>データの出典・数え方・引用のしかた(クマ出没速報)", html)
+        self.assertIn("<title>データの数え方・利用条件・引用のしかた(クマ出没速報)", html)
         self.assertEqual(len(re.findall("<h1", html)), 1)
 
     def test_every_page_links_to_it_from_the_footer_and_the_hub_and_home_do_too(self):

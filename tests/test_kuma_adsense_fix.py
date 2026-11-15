@@ -177,7 +177,7 @@ class AdsenseFixSiteTest(unittest.TestCase):
         for h in ("編集方針", "数字が載るまでの方法", "この数字で言えないこと", "誤りを見つけたら", "更新の履歴"):
             self.assertIn(f"<h2>{h}</h2>", html)
         self.assertGreaterEqual(len(self.main_text(html)), 1200)
-        for step in ("出典", "取得", "計算", "検査", "公開"):
+        for step in ("データ", "取得", "計算", "検査", "公開"):
             self.assertIn(f"<strong>{step}</strong>", html)
         self.assertIn("クマが多いかどうかを表しません", html)
 

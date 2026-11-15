@@ -104,7 +104,7 @@ class KumaSiteTest(unittest.TestCase):
         self.assertIn("13,592件", html)
         self.assertIn("39道府県中1位", html)
         self.assertIn("59件・67人(うち死亡4人)", html)  # Akita Prefecture itself reports 59 cases, 67 people for FY R07
-        self.assertIn("https://www.pref.akita.lg.jp/x", html)
+        self.assertNotIn("https://www.pref.akita.lg.jp/x", html)       # no outbound source link (owner 2026-11-15)
 
     def test_months_not_yet_published_are_gaps_not_zeros(self):
         nat = self.d["national"]["monthly"]["R08"]
@@ -216,8 +216,8 @@ class KumaSiteTest(unittest.TestCase):
     def test_news_page_lists_the_ministry_notices_with_their_links(self):
         html = self.read("news/index.html")
         self.assertIn("クマ被害対策等関係情報のお知らせ(令和8年8月28日追加)", html)
-        self.assertIn("https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r080828.pdf", html)
-        self.assertEqual(html.count('rel="noopener" target="_blank">'), 12 + 2)  # twelve notices, the credit line and the footer credit
+        self.assertNotIn("https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r080828.pdf", html)        # titles and dates only: no outbound link (owner 2026-11-15)
+        self.assertEqual(html.count('rel="noopener" target="_blank">'), 0)
         self.assertIn("環境省の最近のお知らせ", self.read("index.html"))
         self.assertLess(html.index("2026年8月28日"), html.index("2026年7月3日"))  # newest first
 
@@ -320,7 +320,7 @@ class PrefLiveTest(unittest.TestCase):
         html = self.read("live/miyagi/index.html")
         self.assertIn("出典:宮城県「令和8年度クマ目撃等情報」を加工して作成。位置の座標は", html)
         self.assertIn("データは2026年10月5日時点です", html)
-        self.assertIn("https://www.pref.miyagi.jp/x.html", html)
+        self.assertNotIn("https://www.pref.miyagi.jp/x.html", html)
         akita = self.read("live/akita/index.html")
         self.assertIn("CC BY 4.0", akita)
         self.assertIn("最新の記録は2026年8月31日の分までです", akita)
@@ -767,7 +767,7 @@ class CountsOnlyTest(unittest.TestCase):
         self.assertIn("福島県が公表している令和8年度の記録は、4件です", html)
         self.assertIn("最新は10月3日(4日前)の分です", html)
         self.assertIn("<tr><td>福島市</td><td>3</td><td>10月3日</td></tr>", html)
-        self.assertIn("https://www.pref.fukushima.lg.jp/x.html", html)
+        self.assertNotIn("https://www.pref.fukushima.lg.jp/x.html", html)
         self.assertIn("福島県が作成・保証したものではありません", html)
         self.assertIn('href="/contact/"', html)
         self.assertNotIn("ひみつの場所", html)

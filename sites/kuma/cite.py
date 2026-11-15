@@ -83,7 +83,7 @@ def cite_page(page, d: dict, lv: dict, cfg: dict, base: str) -> str:
     n_cnt = sum(1 for r in rows if r["mode"] == "counts")
     src_table = table(
         ["取得元", "載せ方", f"{fy_label(cur)}の件数", "最新の日付", "取得日", "利用条件", "取得元の更新"],
-        [[(esc(r["name"]) if r.get("no_source") else f'<a href="{esc(r["page"])}" rel="noopener" target="_blank">{esc(r["name"])}</a>') + (f"<br><small>{esc(r['scope'])}のみ</small>" if r["scope"] and not r["scope"].endswith("のみ") else (f"<br><small>{esc(r['scope'])}</small>" if r["scope"] else "")),
+        [[esc(r["name"]) + (f"<br><small>{esc(r['scope'])}のみ</small>" if r["scope"] and not r["scope"].endswith("のみ") else (f"<br><small>{esc(r['scope'])}</small>" if r["scope"] else "")),
           "記録(一覧・市町村・CSV)" if r["mode"] == "records" else ("件数(場所は、確認できた目撃だけ)" if r.get("confirmed") else "件数のみ"), n(r["count"]), md(r["latest"]), md(r["fetched"]), esc(r["license"]), esc(r["note"])]
          for r in rows])
     n_conf = sum(r.get("confirmed", 0) for r in rows)
@@ -107,7 +107,7 @@ def cite_page(page, d: dict, lv: dict, cfg: dict, base: str) -> str:
     partial_text = f"({'、'.join(partial)})" if partial else ""
     covered = f"""<h2>どの地域が載っているか</h2>
 <p>取得元があるのは、<strong>{n(len(rec_prefs) + len(cnt_prefs))}都道府県</strong>です(記録まで載せているのは{n(len(rec_prefs))}、件数だけは{n(len(cnt_prefs))}){esc(partial_text)}。記録つき: {esc('・'.join(pf.full(p) for p in rec_prefs))}。件数だけ: {esc('・'.join(pf.full(p) for p in cnt_prefs))}。</p>
-<p>載っていない地域({n(len(none_prefs))}都道府県)があります。<strong>「載っていない」は、「出没がない」「安全」という意味ではありません。</strong>当サイトが、使える取得元を、まだ持っていないだけです。その地域は、<a href="/ranking/sightings/">各都道府県のページ</a>から、環境省の公表値と、公式の出没情報へのリンクをご覧ください。</p>
+<p>載っていない地域({n(len(none_prefs))}都道府県)があります。<strong>「載っていない」は、「出没がない」「安全」という意味ではありません。</strong>当サイトが、使える取得元を、まだ持っていないだけです。その地域は、<a href="/ranking/sightings/">各都道府県のページ</a>で、環境省の公表値をご覧ください。</p>
 """
     example_src = max((r for r in rows if r["mode"] == "records" and not r["scope"]), key=lambda r: r["count"], default=None)
     example = ""
@@ -116,8 +116,8 @@ def cite_page(page, d: dict, lv: dict, cfg: dict, base: str) -> str:
         example = (f'<li><strong>数字を引用する例</strong>: 「{esc(pf.full(example_src["pref"]))}の{fy_label(cur)}の記録は{n(example_src["count"])}件'
                    f'({jp_date(example_src["latest"])}の分まで)。出典: {esc(example_src["name"])}の公開データを、クマ出没速報の<a href="/live/{slug}/">{esc(pf.full(example_src["pref"]))}のページ</a>({esc(base + "/live/" + slug + "/")})が加工して作成。'
                    f'{jp_date(today.isoformat())}閲覧」</li>\n')
-    body = f"""{crumbs([("全国", "/"), ("データの出典・引用のしかた", None)])}
-<h1>データの出典・数え方・引用のしかた</h1>
+    body = f"""{crumbs([("全国", "/"), ("数え方・利用条件・引用のしかた", None)])}
+<h1>データの数え方・利用条件・引用のしかた</h1>
 <p class="lead">このサイトの数字が、どこから来て、どう数えられ、どこまで信頼できるかを、公開します。報道・研究・自治体の資料に、お使いいただいて構いません。使うときは、下の「引用のしかた」のとおり、出典を書いてください。基準日: {jp_date(today.isoformat())}(このページは、データが更新されるたびに作り直します)。</p>
 <h2>1. 取得元の一覧({n(len(rows))}か所)</h2>
 <p>当サイトは、<strong>自治体・国などの公式の公開データだけ</strong>を使っています。報道・SNS・住民の投稿・他のサイトが集めたデータは、使っていません。再利用の許可が明示されている{n(n_rec)}か所は、詳しい記録(一覧・市町村ページ・地図・CSV)まで載せ、許可が明示されていない{n(n_cnt)}か所は、市町村・月・件数・最新の日付{count_tail}(大津市のように、市のページが公開している情報でも、許可が明示されていなければ、件数だけです)。{confirmed_text}環境省の出没件数と人身被害の資料(速報値)は、<a href="/ranking/sightings/">都道府県ランキング</a>などで使っています。</p>
@@ -151,7 +151,7 @@ def cite_page(page, d: dict, lv: dict, cfg: dict, base: str) -> str:
 <ul>
 <li><strong>ページを引用する例</strong>: 「クマ出没速報『最新のクマの目撃情報(自治体の公式)』({esc(base)}/live/)、{jp_date(today.isoformat())}閲覧」</li>
 {example}<li><strong>基準日を書いてください</strong>。数字は、日々変わります(このページの基準日は、{jp_date(today.isoformat())}です)。</li>
-<li>元の取得元の利用条件が、先に適用されます。CSV を再利用するときは、行ごとの「取得元・ライセンス」に従ってください(多くは、出典の表示)。件数だけを載せている取得元の記録は、各県の公式ページを、お使いください。</li>
+<li>元の取得元の利用条件が、先に適用されます。CSV を再利用するときは、行ごとの「取得元・ライセンス」に従ってください(多くは、出典の表示)。件数だけを載せている取得元の記録は、各県・市町村が公表している元の情報を、お使いください。</li>
 <li>当サイトは、環境省・自治体が公表した情報を、加工して作成したもので、環境省・自治体が作成したものではありません。「環境省の発表」「県の発表」のように、書き換えないでください。</li>
 <li>取材・研究のためのご質問は、<a href="/contact/">お問い合わせ</a>へ(個別のデータの提供は、していません)。</li>
 </ul>
@@ -159,5 +159,5 @@ def cite_page(page, d: dict, lv: dict, cfg: dict, base: str) -> str:
 <p>数字や記録の誤りに気づいたときは、<a href="/contact/">お問い合わせ</a>の「データの誤りのご指摘」からお知らせください。取得元の方が掲載の中止を望むときは、「掲載内容に関するご連絡」からお知らせください。確認のうえ、速やかに直す、または掲載を取りやめます。</p>
 <h2>7. 運営</h2>
 <p>運営者は、<a href="/about/">運営者情報</a>のとおりです。広告と、商品のリンク(PR と表示)から、収入を得ています。広告やリンクの有無で、データの載せ方を変えることは、していません。</p>"""
-    return page(path="/cite/", title="データの出典・数え方・引用のしかた(クマ出没速報)",
+    return page(path="/cite/", title="データの数え方・利用条件・引用のしかた(クマ出没速報)",
                 description=f"クマ出没速報の数字の取得元({n(len(rows))}か所)・更新のしかた・数え方・既知の制約と、環境省の数字との差、引用のしかたを公開しています。", body=body)

@@ -92,8 +92,8 @@ LIVE_SOURCES.update({
 # Fukushima: the prefecture answered (2026-11) that its bear sightings may not be used on a site with advertising.
 WITHHELD = {
     "福島": {"name": "福島県", "note": "福島県は、県の許可が得られていないため、県が公表しているクマの目撃情報(市町村別の件数など)を載せていません。"
-                                          "福島県の出没・人身被害・捕獲などの数字は、環境省の資料によるものです。県の目撃情報は使わず、福島市・福島テレビなど、"
-                                          "別の出どころで2つの公開情報が一致した目撃だけを載せています(福島県内の市町村の件数)。目撃の最新の情報は、福島県の公式ページでご確認ください。",
+                                          "福島県の出没・人身被害・捕獲などの数字は、環境省の資料によるものです。県の目撃情報は使わず、"
+                                          "別々の2つの公開情報が一致した目撃だけを載せています(福島県内の市町村の件数)。目撃の最新の情報は、福島県の公式ページでご確認ください。",
             "note_none": "福島県は、県の許可が得られていないため、県が公表しているクマの目撃情報(市町村別の件数など)を載せていません。"
                          "福島県の出没・人身被害・捕獲などの数字は、環境省の資料によるものです。目撃の最新の情報は、福島県の公式ページでご確認ください。"},
 }
@@ -230,8 +230,8 @@ def source_notes(infos: dict, keys: list[str]) -> str:
     for k in keys:
         i = infos[k]
         where = "位置の座標は、地図にだけ使っています。" if LIVE_SOURCES.get(k, {}).get("coords", True) else "位置の座標は、載せていません。"
-        out += (f'<p class="notice">{esc(i["credit"])}。{where}{esc(i["note"])}。取得日: {jp_date(i["fetched"])}。'
-                f'<a href="{esc(i["page"])}" rel="noopener" target="_blank">取得元の公式ページ</a>で、原文を確かめられます。</p>\n')
+        out += (f'<p class="notice credit">{esc(i["credit"])}。{where}{esc(i["note"])}。取得日: {jp_date(i["fetched"])}。'
+                f'</p>\n')
     return out
 
 
@@ -270,7 +270,7 @@ def hub_page(page, d: dict, lv: dict) -> str:
 <ul class="mini-list">{pref_links}</ul>
 <h2>取得元と、更新の状況</h2>
 {table(["取得元", f"{fy_label(cur)}の記録", "最新", "更新について"], src_rows)}
-{counts_section(lv)}<p class="notice">再利用の許可が明示されている取得元は、詳しい記録を載せています。明示されていない取得元は、件数と最新の日付だけです{'(複数の公開情報で一致を確認できた目撃は、場所も載せています)' if any(c.get('records') for c in lv.get('counts') or []) else '(場所などの詳しい記録は、公式のページへ)'}。載っていない地域は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。取得は、週1回です。取得元・数え方・引用のしかたは、<a href="/cite/">データの出典・引用のしかた</a>を、各都道府県の公式のページへのリンクは、<a href="/official/">リンク集</a>を、市町村の名前で探すときは、<a href="/search/">市町村名から探す</a>をご覧ください。</p>"""
+{counts_section(lv)}<p class="notice">再利用の許可が明示されている取得元は、詳しい記録を載せています。明示されていない取得元は、件数と最新の日付だけです{'(複数の公開情報で一致を確認できた目撃は、場所も載せています)' if any(c.get('records') for c in lv.get('counts') or []) else '(場所などの詳しい記録は、公式のページへ)'}。載っていない地域は、<a href="/ranking/sightings/">各道府県のページ</a>から、公式の出没情報へ進んでください。取得は、週1回です。取得元・数え方・引用のしかたは、<a href="/cite/">データの数え方・利用条件・引用のしかた</a>を、各都道府県の公式のページへのリンクは、<a href="/official/">リンク集</a>を、市町村の名前で探すときは、<a href="/search/">市町村名から探す</a>をご覧ください。</p>"""
     return page(path="/live/", title=f"クマの最新の目撃情報(自治体の公式・{len(infos)}か所・{fy_label(cur)})",
                 description=f"{'・'.join(i['name'] for i in infos.values())}が公表しているクマの目撃情報を新しい順に一覧にしています。{fy_label(cur)}の記録は{n(len(recs))}件です。",
                 body=body, alternates=(("最新の目撃", "/live/feed.xml"),))
@@ -323,7 +323,7 @@ def pref_live_page(page, d: dict, lv: dict, slug: str, links: dict) -> str:
                     for k in keys if infos[k]["after"])
     published = "".join(f'<p>{esc(i["label"])}。{esc(i["as_of_text"].format(d=jp_date(i["as_of"])))}。</p>\n' for k, i in infos.items() if k in keys)
     official = links.get(next(k for k, v in pf.SLUG.items() if v == slug)) or []
-    off_html = ("<ul class='link-list'>" + "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["label"])}</a></li>' for x in official) + "</ul>") if official else ""
+    off_html = ""      # the prefecture's own pages are not linked (owner 2026-11-15)
     month_blocks = ""
     for k in keys:
         i = infos[k]
@@ -358,7 +358,7 @@ NO_SOURCE_NOTE = ("複数の公開情報で一致を確認できた市町村の�
 def extra_counts_note(c: dict) -> str:
     if LIVE_SOURCES.get(c["key"], {}).get("no_source"):          # published as a widely known fact: no source, no link (owner, 2026-10-13)
         return f'<p class="notice">{NO_SOURCE_NOTE}取得日: {jp_date(c["fetched"])}。{esc(c["note"])}。</p>'
-    return (f'<p class="notice">出典: <a href="{esc(c["page"])}" rel="noopener" target="_blank">{esc(c["name"])}の公開ページ</a>。{COUNTS_NOTE.format(name=esc(c["name"]))}'
+    return (f'<p class="notice">{COUNTS_NOTE.format(name=esc(c["name"]))}'
             f'取得日: {jp_date(c["fetched"])}。{esc(c["note"])}。</p>')
 
 
@@ -615,7 +615,7 @@ def map_page(page, d: dict, lv: dict) -> str:
 <div id="kuma-map" class="map-box" role="region" aria-label="クマの目撃マップ"><p class="map-fallback">地図には JavaScript が必要です。下の一覧と、<a href="/live/">最新の目撃情報</a>をご覧ください。</p></div>
 <div class="map-legend"><span><i class="m7"></i>7日以内</span><span><i class="m30"></i>8〜30日前</span><span><i class="m90"></i>31日より前</span></div>
 <div id="near-list" hidden><h2>現在地の近くの記録</h2><div class="near-slot"></div><p class="notice">現在地は、この端末の中だけで使います。サイトのサーバーには届きません。直線距離です。</p></div>
-<p class="notice">地図の背景は、<a href="https://maps.gsi.go.jp/development/ichiran.html" rel="noopener" target="_blank">国土地理院の地理院タイル</a>です。位置は、自治体が公表した座標(小数点以下4桁に丸めたもの)で、実際の場所と、数十メートルほど違うことがあります。{CAUTION}</p>
+<p class="notice credit">地図の背景は、国土地理院の地理院タイルです。位置は、自治体が公表した座標(小数点以下4桁に丸めたもの)で、実際の場所と、数十メートルほど違うことがあります。{CAUTION}</p>
 {source_notes(infos, [k for k in infos if any(r["lat"] is not None and r["src"] == k for r in lv["records"])])}
 <script src="/assets/leaflet.js"></script>
 <script src="/assets/map.js" defer></script>"""
@@ -727,7 +727,7 @@ def confirmed_page(page, d: dict, c: dict, today: date, links: dict) -> str:
     rows = [[esc(city), n(k), md(latest)] for city, k, latest in c["munis"]]
     short = next(k for k, v in pf.SLUG.items() if v == slug)
     official = links.get(short) or []
-    off_html = ("<ul class='link-list'>" + "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["label"])}</a></li>' for x in official) + "</ul>") if official else ""
+    off_html = ""      # the prefecture's own pages are not linked (owner 2026-11-15)
     recs = c["records"]
     shown = [{"at": x["observed_at"], "city": x["city"], "place": x["place"], "kind": x["kind"]} for x in recs[:RECENT_ROWS]]
     held = WITHHELD[short]["note"]
@@ -760,7 +760,7 @@ def counts_page(page, d: dict, c: dict, today: date, links: dict) -> str:
     rows = [[esc(city), n(k), md(latest)] for city, k, latest in c["munis"]]
     short = next(k for k, v in pf.SLUG.items() if v == slug)
     official = links.get(short) or []
-    off_html = ("<ul class='link-list'>" + "".join(f'<li><a href="{esc(x["url"])}" rel="noopener" target="_blank">{esc(x["label"])}</a></li>' for x in official) + "</ul>") if official else ""
+    off_html = ""      # the prefecture's own pages are not linked (owner 2026-11-15)
     recs = c.get("records") or []
     confirmed = ""
     if recs:
@@ -774,10 +774,10 @@ def counts_page(page, d: dict, c: dict, today: date, links: dict) -> str:
 {record_rows(shown)}
 <p class="notice">直近{n(len(shown))}件です。確認できなかった目撃は、ここに載せていません(件数には含まれます)。</p>
 """
-    where_html = (f"<p>ここに載せていない目撃の、いつ・どこで出たかの記録は、<a href=\"{esc(c['page'])}\" rel=\"noopener\" target=\"_blank\">{esc(c['name'])}の公式ページ</a>でご確認ください。</p>" if recs else
-                  f"<p>いつ・どこで出たかの記録は、<a href=\"{esc(c['page'])}\" rel=\"noopener\" target=\"_blank\">{esc(c['name'])}の公式ページ</a>でご確認ください。</p>")
+    where_html = (f"<p>ここに載せていない目撃の、いつ・どこで出たかの記録は、{esc(c['name'])}が公表しています。</p>" if recs else
+                  f"<p>いつ・どこで出たかの記録は、{esc(c['name'])}が公表しています。</p>")
     note_text = (CONFIRMED_NOTE if recs else COUNTS_NOTE).format(name=esc(c['name']))
-    note_text += "".join(v for k, v in CITY_CREDITS.items() if any(x["city"] == k for x in recs))
+    credit_text = "".join(v for k, v in CITY_CREDITS.items() if any(x["city"] == k for x in recs))
     body = f"""{crumbs([("全国", "/"), ("最新の目撃情報", "/live/"), (pname, None)])}
 <h1>{esc(pname)}のクマの目撃・出没の件数({fy_label(cur)}・{esc(c['name'])})</h1>
 <p class="lead">{esc(c['name'])}が公表している{fy_label(cur)}の記録は、{n(c['total'])}件です。最新は{md(c['latest'])}({ago_text(c['latest'], today)})の分です。市町村別・月別の件数を載せています{'。場所は、確認できた目撃だけ載せています' if recs else ''}。</p>
@@ -786,9 +786,9 @@ def counts_page(page, d: dict, c: dict, today: date, links: dict) -> str:
 {table(["市町村", "件数", "最新の日付"], rows)}
 <h2>月別の件数</h2>
 {chart}{table(["月", "件数"], [[f"{m}月", n(v)] for m, v in mc.items()])}
-{confirmed}<h2>くわしい記録は、公式のページで</h2>
+{confirmed}<h2>くわしい記録について</h2>
 {where_html}
-{off_html}<p class="notice">{'件数の出典' if recs else '出典'}: <a href="{esc(c['page'])}" rel="noopener" target="_blank">{esc(c['name'])}の公開ページ</a>。{note_text}取得日: {jp_date(c['fetched'])}。{esc(c['note'])}。{CAUTION}</p>
+{off_html}{f'<p class="notice credit">{credit_text}</p>' if credit_text else ''}<p class="notice">{note_text}取得日: {jp_date(c['fetched'])}。{esc(c['note'])}。{CAUTION}</p>
 <p><a href="/{slug}/">{esc(pname)}の出没件数・人身被害(環境省)</a></p>"""
     return page(path=f"/live/{slug}/", title=f"{pname}のクマの目撃・出没の件数({fy_label(cur)}・{n(c['total'])}件・市町村別)",
                 description=f"{c['name']}が公表している{fy_label(cur)}のクマの目撃・出没の件数({n(c['total'])}件)を、市町村別・月別に整理しています。最新は{md(c['latest'])}の分です。", body=body)

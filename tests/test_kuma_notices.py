@@ -67,7 +67,8 @@ class PageTest(unittest.TestCase):
     def test_the_page_lists_the_notices_with_links_to_the_publishers_and_passes_the_checker(self):
         html = self.read("notices/index.html")
         self.assertIn("2件", re.sub(r"<[^>]+>", "", html))
-        self.assertIn('<a href="https://p.example/a" rel="noopener" target="_blank">ツキノワグマの出没にご注意ください</a>', html)
+        self.assertIn("<li>ツキノワグマの出没にご注意ください<span>", html)
+        self.assertNotIn("https://p.example/a", html)       # no outbound link (owner 2026-11-15)
         self.assertIn("10月13日・新潟県庁", html)
         self.assertNotIn("熊本地震", html)
         self.assertNotIn("入札", re.sub(r"入札や委託などのお知らせは、載せていません", "", html))

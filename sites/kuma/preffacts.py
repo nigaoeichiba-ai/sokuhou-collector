@@ -236,9 +236,6 @@ def _mast(d: dict, r: dict) -> list[str]:
         text += "ほかの樹種は、" + "、".join(f"{esc(a)}が「{esc(b)}」" for a, b in m["others"]) + "です。"
     if r["name"] in _MAST["alert"]:
         text += f"同じ資料は、{esc(r['name'])}を、クマの出没について注意喚起を行っている道府県に挙げています。"
-    if m["link"]:
-        label = "島根県" if r["name"] == "山口県" else r["name"]
-        text += f'県の掲載ページ: <a href="{esc(m["link"])}" rel="noopener" target="_blank">{esc(label)}の結果</a>(環境省の資料が示す掲載先)。'
     return [text]
 
 

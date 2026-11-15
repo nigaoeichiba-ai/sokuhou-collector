@@ -39,7 +39,7 @@ class MastTest(unittest.TestCase):
         self.assertIn("ブナ・ミズナラは調査がありません", s)
         self.assertIn("西中国山地として島根県がまとめた調査です", s)
         self.assertIn("注意喚起を行っている道府県に挙げています", s)
-        self.assertIn("島根県の結果", s)                                  # Yamaguchi's own page is the Shimane one
+        self.assertNotIn("http", s)                                  # the prefecture's page is no longer linked (owner 2026-11-15)
 
     def test_a_prefecture_not_in_the_table_gets_no_sentence_and_no_claim_about_a_survey(self):
         d, r = make()

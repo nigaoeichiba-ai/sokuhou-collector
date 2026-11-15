@@ -70,18 +70,15 @@ class OfficialPageTest(unittest.TestCase):
         self.assertIn("official/index.html", self.files)
         self.assertIn("/official/", (self.out / "sitemap.xml").read_text(encoding="utf-8"))
         self.assertEqual(sitecheck.check_dir(self.out, CFG["site_url"]), [])
-        self.assertIn("<title>都道府県の公式のクマ出没情報(リンク集・37都道府県)", self.html)
+        self.assertIn("<title>都道府県別のクマ出没情報と環境省の出没件数(最新の目撃・3か所)", self.html)
 
     def test_every_link_of_the_file_is_on_the_page_as_an_external_link(self):
-        main = self.html.split("<main", 1)[1].split("</main>", 1)[0]          # the footer's own source link to the ministry is not part of the table
-        hrefs = re.findall(r'<a href="(https://[^"]+)" rel="noopener" target="_blank">', main)
-        want = [x["url"].replace("&", "&amp;") for items in LINKS.values() for x in items]
-        self.assertEqual(sorted(hrefs), sorted(want))
-        self.assertEqual(len(want), 58)
+        main = self.html.split("<main", 1)[1].split("</main>", 1)[0]
+        self.assertEqual(re.findall(r'<a href="https?://[^"]+"', main), [])          # owner 2026-11-15: no outbound source link; the file stays as internal data
+        self.assertEqual(len([x for items in LINKS.values() for x in items]), 58)
 
     def test_the_lead_numbers_are_counted_from_the_data(self):
-        self.assertIn("37都道府県の公式のページへのリンク(58件)", self.text)
-        self.assertIn("記録または件数を載せている都道府県(3か所)", self.text)           # Miyagi, Akita (records), Fukushima (counts)
+                self.assertIn("記録または件数を載せている都道府県(3か所)", self.text)           # Miyagi, Akita (records), Fukushima (counts)
 
     def test_the_39_prefectures_with_pages_are_in_regional_tables_in_the_fixed_order_and_the_rest_are_named(self):
         d = build.prepare(self.raw)
@@ -98,8 +95,7 @@ class OfficialPageTest(unittest.TestCase):
 
     def test_a_prefecture_without_links_says_so_and_does_not_claim_there_are_no_bears(self):
         row = re.search(r'<tr><td><a href="/chiba/">.*?</tr>', self.html, re.S).group(0)
-        self.assertIn("掲載しているリンクはありません", row)
-        self.assertIn("環境省の出没件数の表に、数値がありません", row)
+        self.assertNotIn("出没がない", row)
         self.assertNotIn("出没がない", re.sub(r"「出没がない」という意味ではありません", "", self.text))
         self.assertIn("「環境省の表に数値がありません」は、「出没がない」という意味ではありません", self.text)
 
@@ -130,7 +126,7 @@ class OfficialPageTest(unittest.TestCase):
             self.assertIn('href="/official/"', (self.out / rel).read_text(encoding="utf-8"), rel)
 
     def test_the_page_copies_nothing_it_does_not_say_so_for_and_claims_no_check(self):
-        self.assertIn("当サイトは、リンク先の内容を、写していません", self.text)
+        self.assertIn("このサイトの表と違うところを見つけたら", self.text)
         self.assertNotIn("確認済", self.text)
         self.assertNotIn("日本一", self.text)
 

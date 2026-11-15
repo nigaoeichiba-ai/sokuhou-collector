@@ -153,8 +153,22 @@ def research_page(page, doc: dict, docs: list[dict]) -> str:
 <h2>この分析で言えないこと</h2>
 <ul>
 {"".join(f"<li>{inline(c)}</li>" + chr(10) for c in doc["caveats"])}</ul>
-{('<h2>あわせて読む</h2>' + chr(10) + related) if related else ''}{more}<p class="notice">{" ".join(esc(c) + "。" if not c.endswith("。") else esc(c) for c in doc["credits"])} 計算に使ったスクリプト: <code>{esc(doc["script"])}</code>(公開リポジトリ)。</p>"""
+{('<h2>あわせて読む</h2>' + chr(10) + related) if related else ''}{more}<p class="notice credit">{" ".join(esc(c) + "。" if not c.endswith("。") else esc(c) for c in shown_credits(doc["credits"]))} 計算に使ったスクリプト: <code>{esc(doc["script"])}</code>(公開リポジトリ)。</p>"""
     return page(path=f"/research/{doc['slug']}/", title=doc["title"], description=doc["description"], body=body)
+
+
+NO_CREDIT_NEEDED = ("富山県",)      # a source whose permission says no credit is needed (live.py LIVE_SOURCES["toyama"]): not shown (owner 2026-11-15: no source names beyond what a licence asks)
+_URL_PAREN = re.compile(r"\s*\(?https?://[^\s)]+\)?")
+
+
+def shown_credits(credits: list[str]) -> list[str]:
+    """The credit lines a licence asks for, without the address of the source page (owner 2026-11-15: no outbound source pointers)."""
+    out = []
+    for c in credits:
+        if any(w in c for w in NO_CREDIT_NEEDED):
+            continue
+        out.append(_URL_PAREN.sub("", c).strip())
+    return out
 
 
 def hub_page(page, docs: list[dict], has_live: bool = True, has_digest: bool = True) -> str:
