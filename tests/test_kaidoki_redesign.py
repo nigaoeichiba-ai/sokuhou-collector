@@ -251,6 +251,41 @@ class RedesignTest(unittest.TestCase):
         ht = "RewriteEngine on"
         self.assertNotIn("Redirect 301 /hobby/steam/ /hobby/game-sales/", ht)
 
+    # ---- 2026-11-15: the top page's table 'いま分かっている日程' is the calendar's data (every shop), not the malls' two rows ----
+    def _top_table_names(self, html):
+        sec = html.split("<h2>いま分かっている日程</h2>", 1)[1].split("</section>", 1)[0]
+        return [re.sub(r"<[^>]+>", "", r[1]) for r in re.findall(r"<tr><td>(.*?)</td><td>(.*?)</td>", sec)]
+
+    def _expected_top_names(self, today):
+        from datetime import date, timedelta
+        from sites.kaidoki.redesign import schedule
+        end = today + timedelta(days=13)
+        rows = [it for it in schedule.all_items() if it["kind"] in ("confirmed", "notice") and it.get("s") and "(終了日)" not in it["title"]
+                and date.fromisoformat(it["e"] or it["s"]) >= today and date.fromisoformat(it["s"]) <= end]
+        return {("【発表予定日】" if it["kind"] == "notice" else "") + it["title"] for it in rows}
+
+    def test_the_top_table_follows_the_calendar_data(self):
+        from datetime import date
+        top = self.live["index.html"]
+        names = self._top_table_names(top)
+        expected = self._expected_top_names(date(2026, 11, 12))
+        self.assertGreater(len(names), 4)
+        self.assertTrue(set(names) <= expected, set(names) - expected)           # nothing on the top that the calendar does not have
+        self.assertTrue(any(n.startswith("【発表予定日】") for n in names))        # an announcement day is shown, told apart from a confirmed date
+        from sites.kaidoki.redesign import schedule
+        self.assertIn("楽天ブラックフライデー 2026", names)
+        self.assertGreater(len(set(names)), 2)                                    # not only the two malls' sales
+        if len(expected) <= schedule.HOME_TABLE_MAX:
+            self.assertEqual(set(names), expected)
+        self.assertIn('href="/calendar/"', top.split("<h2>いま分かっている日程</h2>", 1)[1].split("</section>", 1)[0])
+
+    def test_negative_a_top_table_with_only_the_malls_rows_is_caught(self):
+        from datetime import date
+        stale = "<h2>いま分かっている日程</h2><table><tr><td>楽天</td><td>楽天ブラックフライデー 2026</td></tr><tr><td>Yahoo!</td><td>Yahoo!ショッピング ブラックフライデー 2026</td></tr></table></section>"
+        names = self._top_table_names(stale)
+        expected = self._expected_top_names(date(2026, 11, 12))
+        self.assertGreater(len(expected), len(names) + 2)          # the calendar has more: a table like this one would fail the test above
+
     # ---- Muse's prototype of 2026-11-14 (shop pages / product pages) ----
     SOURCE_SHOWN = re.compile(r"公式サイトを開く|ほかの公式ページ|class=\"src\"|出典")
 

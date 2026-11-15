@@ -479,7 +479,8 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
     live = [s for s in ctx.sales if state(s, at) in ("開催中", "開催予定")]
     if path == "/":
         arts = [ctx.card("/rakuten/marathon/", "楽天"), ctx.card("/rakuten/marathon-vs-super-sale/", "楽天"), ctx.card("/calc/points/", "計算")]
-        lead, more = home_more(ctx, pg["answer"], pg["rest"])
+        rest = re.sub(r'(<h2>いま分かっている日程</h2>\s*<p>[^<]*</p>\s*)<div class="tablewrap"><table>.*?</table></div>', lambda m: m.group(1) + schedule.home_table(ctx.sched, at.date()), pg["rest"], flags=re.S)
+        lead, more = home_more(ctx, pg["answer"], rest)
         return template("home", headline=hero_headline(ctx), featured=schedule.hero_html(ctx.sched, at.date()) + f'<script defer src="/assets/kit/scripts/calendar.js?v={ctx.ver}"></script>', schedule=lead + schedule.home_block(ctx.sched, at.date()) + sales_grid(ctx.sales[:3], at) + f'<p class="cal-homelink">{link("/calendar/", "全ショップの月間カレンダーを見る")}</p>',
                         categories=category_cards(ctx.categories), articles=article_cards(arts), more=more)
     if path == "/calendar/":

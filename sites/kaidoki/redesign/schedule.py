@@ -493,6 +493,35 @@ def home_block(items: list[dict], today: date) -> str:
             + "".join(f'<a class="btn btn-light" href="{CAL_PATH[m]}">{e(MALLS[m][0])}のカレンダー</a>' for m in MALLS) + "</div></section>")
 
 
+# ------------------------------------------------------------------ the top page's table 'いま分かっている日程': the same data as the calendar (every shop, not only the malls)
+HOME_TABLE_DAYS, HOME_TABLE_MAX = 14, 16
+
+
+def home_table_items(items: list[dict], today: date) -> list[dict]:
+    """The confirmed dates and the 'to be announced on' days that run or start in [today, today + 13], by start day (an entry with only an end day is left out, as in the two weeks' list)."""
+    end = today + timedelta(days=HOME_TABLE_DAYS - 1)
+    rows = [it for it in items if it["kind"] in ("confirmed", "notice") and it.get("s") and "(終了日)" not in it["title"] and d(it["e"] or it["s"]) >= today and d(it["s"]) <= end]
+    rows.sort(key=lambda it: ((0, it["s"]) if d(it["s"]) > today else (1, it["e"] or it["s"]), 0 if it["kind"] == "confirmed" else 1, it["title"]))      # the ones still to start by their start day, then the running ones by the day they end
+    return rows
+
+
+def home_table(items: list[dict], today: date) -> str:
+    rows = home_table_items(items, today)
+    body = ""
+    for it in rows[:HOME_TABLE_MAX]:
+        s0, e0 = d(it["s"]), d(it["e"] or it["s"])
+        if it["kind"] == "notice":
+            name, nxt = "【発表予定日】" + it["title"], ("今日" if s0 == today else f"発表予定日まであと{(s0 - today).days}日")
+        else:
+            name, nxt = it["title"], ("開催中" if s0 <= today <= e0 else f"開始まであと{(s0 - today).days}日")
+        body += f'<tr><td>{e(ENT[it["mall"]][0])}</td><td>{e(name)}</td><td>{e(it["when"])}</td><td>{e(nxt)}</td></tr>'
+    if not body:
+        return ""
+    more = f'<p class="cal-homelink"><a class="text-link" href="/calendar/">{"全部の日程は、月間カレンダーにあります" if len(rows) > HOME_TABLE_MAX else "ほかの日程は、月間カレンダーにあります"} →</a></p>'
+    return ('<div class="tablewrap"><table><caption>これから2週間の確定した日程</caption><thead><tr><th scope="col">モール・ショップ</th><th scope="col">名前</th><th scope="col">期間</th><th scope="col">今日から</th></tr></thead><tbody>'
+            + body + "</tbody></table></div>" + more)
+
+
 # ------------------------------------------------------------------ the top page's slides: the coming big sales of the three malls (confirmed / announced / expected, told apart), then other shops' confirmed ones
 HERO_OTHERS = 4                                    # the other shops' sales after the malls
 HERO_OTHER_ORDER = ["google", "dhc", "playstation", "sonystore", "dyson", "nitori", "yamada", "asus", "lg", "sharp", "panasonic", "stardomain", "xdomain"]      # the nearest starts first (Google 11/20, DHC 11/21, ...), one card per shop
