@@ -1,5 +1,5 @@
 """atomou (owner decision D26, 2026-11-15): no page shows a source (出典 / 情報元) or links to one.  Allowed external links: ads (rel sponsored) and the privacy page's
-links to the ad providers' own settings pages.  Allowed word 出典: the shared legal label "情報の出典" (about, privacy) and the sakura page, whose data (気象庁, processed) needs it."""
+links to the ad providers' own settings pages.  Allowed word 出典: the sakura page, whose data (気象庁, processed) needs it."""
 import re
 import sys
 import unittest
@@ -13,7 +13,7 @@ from tests.test_atomou_build import BuildOnce  # noqa: E402
 LINK = re.compile(r'<a\s[^>]*href="(https?://[^"]+)"[^>]*>', re.I)
 WORD = re.compile(r"出典|情報元|情報源|参考資料|参考文献|確認元|公式日程の案内")
 ALLOWED_HOST = ("google.com", "aboutads.info")
-ALLOWED_WORD_PAGES = ("about/index.html", "privacy/index.html", "kyou/sakura/index.html")
+ALLOWED_WORD_PAGES = ("kyou/sakura/index.html",)
 
 
 def violations(path: str, h: str, own_host: str = "atomou.com") -> list[str]:

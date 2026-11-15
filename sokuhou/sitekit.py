@@ -280,7 +280,7 @@ def analytics_text(cfg: dict) -> str:
 
 
 def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_html: str, update_text: str,
-                disclaimer_html: str, contact_notice: str, input_note: str = "", finish=lambda s: s, sources_label: str = "情報の出典") -> dict[str, str]:
+                disclaimer_html: str, contact_notice: str, input_note: str = "", finish=lambda s: s, sources_label: str = "ご利用にあたって") -> dict[str, str]:
     """about / privacy / contact / 404, with the site-specific sentences passed in."""
     name = cfg["site_name"]
     op = esc(cfg["operator_name"] or "(未設定)")
@@ -288,6 +288,8 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
     def page(path, title, description, body):
         return finish(layout(site, cfg, preview, path=path, title=f"{title} | {name}", description=description, body=body))
 
+    # 必須表記(ライセンスが求めるクレジットなど)があるサイトだけ、この行を出す。無いサイトは行ごと出さない(オーナー決定 2026-11-15 D26)。見出しに「出典」の語は使わない。
+    sources_row = f"<dt>{sources_label}</dt><dd>{sources_html}</dd>\n" if sources_html else ""
     update_row = f"<dt>更新</dt><dd>{update_text}</dd>\n" if update_text else ""
     about = f"""<h1>運営者情報</h1>
 <dl class="info">
@@ -295,8 +297,7 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
 <dt>運営者</dt><dd>{op}</dd>
 <dt>連絡先</dt><dd>{contact_summary(cfg)}</dd>
 <dt>目的</dt><dd>{purpose}</dd>
-<dt>{sources_label}</dt><dd>{sources_html}</dd>
-{update_row}</dl>
+{sources_row}{update_row}</dl>
 <h2>免責事項</h2>
 {disclaimer_html}"""
     privacy = f"""<h1>プライバシーポリシー</h1>
@@ -321,7 +322,7 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
     extra = contact_files(cfg, page) if cfg.get("contact_own") else {}
     return {
         **extra,
-        "about/index.html": page("/about/", "運営者情報", f"{name}の運営者情報、情報の出典、免責事項です。", about),
+        "about/index.html": page("/about/", "運営者情報", f"{name}の運営者情報と免責事項です。", about),
         "privacy/index.html": page("/privacy/", "プライバシーポリシー", f"{name}のプライバシーポリシーです。取得する情報、広告、Cookie の扱いについて説明します。", privacy),
         "contact/index.html": page("/contact/", "お問い合わせ", f"{name}へのお問い合わせ先です。", contact),
         "404.html": page("/404.html", "ページが見つかりません", "ページが見つかりません。", nf),
