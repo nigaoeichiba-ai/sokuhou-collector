@@ -654,6 +654,16 @@ def rule_active(r: Rule, site: str | None, prof: dict) -> bool:
 _sent_cache: dict[tuple, list[tuple[str, str]]] = {}
 
 
+# Theme names that come from search terms (suggest / Search Console).  Changing them would put the page out of step with the demand, so they are kept as they are
+# (window decision 2026-11-15, owner policy "no change without evidence").  Only these exact names are excused (on yorokobu, where they are the theme names), and only from the two rules that read a theme name;
+# any other coinage or negation heading is still reported.
+SEARCH_TERM_THEME_NAMES = frozenset({
+    "帰省軽やか", "義実家控えめ", "持ち寄り後", "少額上手", "日時合わせ", "夜型の朝", "ごめんね軽く", "冷蔵庫いらず", "立ち仕事後",
+    "義実家に気をつかわせない贈り物",
+})
+SEARCH_TERM_EXEMPT_RULES = frozenset({"compound_theme_coinage", "heading_negation_frame"})
+
+
 def _sentence_hits(kind: str, sent: str, site: str | None, prof: dict) -> list[tuple[str, str]]:
     key = (kind, sent, site)
     got = _sent_cache.get(key)
@@ -670,6 +680,8 @@ def _sentence_hits(kind: str, sent: str, site: str | None, prof: dict) -> list[t
         if r.scope == "body" and kind == "heading":
             continue
         if kind in ("label", "item") and not SENT_END.search(sent) and r.scope == "body":     # a label, a button or a product name is not prose
+            continue
+        if site == "yorokobu" and r.id in SEARCH_TERM_EXEMPT_RULES and sent.strip() in SEARCH_TERM_THEME_NAMES:
             continue
         if r.pattern.search(sent):
             out.append((r.id, sent))

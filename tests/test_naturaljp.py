@@ -269,6 +269,13 @@ class ReportOnlyAndGate(unittest.TestCase):
                 finally:
                     nj.GATE["minna"] = old
 
+    def test_search_term_theme_names_are_excused_but_other_coinages_are_not(self):
+        """The theme names that come from search terms are kept (window decision 2026-11-15); the same kind of heading that is not on the list is still found."""
+        html = "<main><h1>%s</h1><h2>%s</h2></main>"
+        self.assertEqual(ids_html(html % ("義実家に気をつかわせない贈り物", "冷蔵庫いらず"), "yorokobu", level="mid") & {"heading_negation_frame", "compound_theme_coinage"}, set())
+        self.assertIn("heading_negation_frame", ids_html(html % ("夜型の人へ朝を押しつけない贈り方", "冷蔵庫いらず"), "yorokobu", level="mid"))
+        self.assertIn("compound_theme_coinage", ids_html(html % ("義実家に気をつかわせない贈り物", "冷蔵庫いらず"), "kuma", level="mid"))
+
     def test_the_text_and_rules_commands_run(self):
         with contextlib.redirect_stdout(io.StringIO()) as out:
             self.assertEqual(nj.main(["text", "いかがでしたでしょうか。", "-v"]), 0)

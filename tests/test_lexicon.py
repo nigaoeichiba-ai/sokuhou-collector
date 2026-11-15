@@ -80,7 +80,8 @@ class HeadingRules(unittest.TestCase):
         self.assertIn("heading_mood_subtitle", self.heads(["お歳暮の贈り物 一年の感謝を静かに届ける"]))
         self.assertIn("heading_mood_subtitle", self.heads(["卒業祝いの基本作法"]))
         self.assertNotIn("heading_mood_subtitle", self.heads(["お歳暮の贈り方 時期・相場・のし"]))
-        self.assertIn("compound_theme_coinage", self.heads(["帰省軽やか"]))
+        self.assertNotIn("compound_theme_coinage", self.heads(["帰省軽やか"]))                         # a search-term theme name on yorokobu: kept (2026-11-15)
+        self.assertIn("compound_theme_coinage", self.heads(["帰省軽やか"], site="kuma"))                # the same coinage elsewhere is still found
         self.assertNotIn("compound_theme_coinage", self.heads(["帰省の手土産"]))
 
     def test_an_action_verb_heading_counts_only_three_to_a_page(self):
