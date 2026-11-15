@@ -66,7 +66,7 @@ class R8ArticleTest(SiteFixture):
             self.assertIn(needle, page, needle)
         g = content.GUIDE_BY_SLUG["r8"]
         for _, url in g["sources"]:
-            self.assertNotIn(url, page)   # 出典のリンクは画面に出さない(2026-11-15)
+            self.assertNotIn(url, re.sub(r"<footer.*?</footer>", "", page, flags=re.S))   # 出典のリンクは本文に出さない(フッターの加工表記を除く。2026-11-15)
         self.assertIn("https://www.mhlw.go.jp/stf/newpage_74920.html", [u for _, u in g["sources"]])
         self.assertIn("https://www.mhlw.go.jp/stf/newpage_75950.html", [u for _, u in g["sources"]])
 

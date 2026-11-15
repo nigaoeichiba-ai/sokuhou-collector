@@ -168,8 +168,8 @@ class WagePagesTest(unittest.TestCase):
         html = self.read("ranking/ratio/index.html")
         for text in ("一般労働者", "6月分", "超過労働給与額", "標本誤差", "厚生労働省が作成したものではありません"):
             self.assertIn(text, html)
-        for url in ("https://www.e-stat.go.jp/stat-search/files?tclass=000001229518&amp;cycle=0", "https://www.mhlw.go.jp/toukei/list/chinginkouzou.html"):
-            self.assertNotIn(url, html)   # 出典のリンクは画面に出さない(2026-11-15)
+        self.assertIn("https://www.e-stat.go.jp/stat-search/files?tclass=000001229518&amp;cycle=0", html)   # 加工表記の出典 URL(PDL1.0 の記載例の形)
+        self.assertNotIn("https://www.mhlw.go.jp/toukei/list/chinginkouzou.html", html)   # 説明ページへのリンクは画面に出さない(2026-11-15)
         self.assertNotIn("{source}", html)
 
     def test_no_comparison_with_the_new_fiscal_years_minimum_wage(self):

@@ -359,7 +359,7 @@ def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str,
 {body}
 </main>
 <footer class="site"><div class="wrap">
-<p class="src">出典: {SOURCE_LABEL}を加工して作成。厚生労働省が作成したものではありません。このサイトは「地域別最低賃金」を扱い、業種ごとの最低賃金(特定最低賃金など)は含みません。</p>
+<p class="src">出典: <a href="{{source}}" rel="noopener" target="_blank">{SOURCE_LABEL}</a>を加工して作成。厚生労働省が作成したものではありません。このサイトは「地域別最低賃金」を扱い、業種ごとの最低賃金(特定最低賃金など)は含みません。</p>
 <p class="src">公式の発表をはじめとする複数の情報をもとにしています。</p>
 <p class="legal"><a href="/about/">運営者情報</a><a href="/privacy/">プライバシーポリシー</a><a href="/contact/">お問い合わせ</a><span>&copy; {name}</span></p>
 </div></footer>
@@ -650,7 +650,7 @@ def wage_notes(d: dict) -> str:
 <li><strong>最低賃金との比較:</strong> 賃金の調査時点(調査年の6月)に有効だった最低賃金({esc(w['min_then_label'])}の額)と比べています。最新の{esc(d['label'])}の額とは比べていません。比べる相手は、賃金の<strong>平均</strong>です。平均は高い賃金の影響を受けやすいため、中央値と比べた場合とは、比率が違います。</li>
 <li><strong>誤差:</strong> 調査は標本調査で、集計の区分によっては標本誤差が大きくなることがあります。都道府県どうしの小さな差は、順位を比べるときに注意してください。</li>
 </ul>
-<p class="notice">出典: {esc(wagelib.SOURCE_LABEL)}、賃金構造基本統計調査の概要を加工して作成。厚生労働省が作成したものではありません。最低賃金は、{SOURCE_LABEL}です。</p>"""
+<p class="notice">出典: <a href="{esc(w['source_page'])}" rel="noopener" target="_blank">{esc(wagelib.SOURCE_LABEL)}</a>、賃金構造基本統計調査の概要を加工して作成。厚生労働省が作成したものではありません。最低賃金は、{SOURCE_LABEL}です。</p>"""
 
 
 def wage_ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:

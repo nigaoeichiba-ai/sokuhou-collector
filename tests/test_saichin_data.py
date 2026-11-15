@@ -99,7 +99,7 @@ class CiteAndLinksTest(SiteFixture):
         page = self.read("cite/index.html")
         self.assertEqual(page.count("<h1>"), 1)
         self.assertIn(dataset.PDL_URL, page)
-        self.assertNotIn(self.d["source_page"], page)   # 出典のリンクは画面に出さない。ライセンス(PDL1.0)の表記と加工の表記は残す(2026-11-15)
+        self.assertEqual(page.count(self.d["source_page"]), 1)   # 本文には出さない。フッターの加工表記(PDL1.0 の出典記載例の URL)の1本だけ(2026-11-15)
         self.assertIn(build.jp_date(self.d["fetched_date"]), page)
         for needle in ("出典(サイトの名前とページのURL)", "編集・加工したことと、加工した人", "国が作ったものであるかのように見せない",
                        "厚生労働省が運営しているものではありません"):

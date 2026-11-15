@@ -173,7 +173,7 @@ class SiteTest(SiteFixture):
         for g in content.GUIDES:
             text = self.read(f"guide/{g['slug']}/index.html")
             for _, url in g["sources"]:
-                self.assertNotIn(url, text, g["slug"])   # 出典のリンクは画面に出さない(2026-11-15)
+                self.assertNotIn(url, re.sub(r"<footer.*?</footer>", "", text, flags=re.S), g["slug"])   # 出典のリンクは本文に出さない(フッターの加工表記を除く。2026-11-15)
             self.assertIn("内容の確認日", text)
 
     def test_guide_facts_match_the_verified_sources(self):

@@ -16,6 +16,10 @@ WORDS = re.compile(r"出典|情報元|情報源|参考資料|参考文献|出ど
 FOOTER_LINE = "出典: 厚生労働省「地域別最低賃金の全国一覧」を加工して作成。厚生労働省が作成したものではありません。"
 FOOTER_GENERIC = "公式の発表をはじめとする複数の情報をもとにしています。"
 LICENSE_PAGES = ("cite/index.html", "data/index.html")
+# 公共データ利用規約 第1.0版 1.1 は、出典の記載例が「提供元(当該ページのURL)、PDL1.0(規約原文ページのURL)」の形(URLリンクを張る形にできる)。
+# そのため、フッターの加工表記の出典リンク(厚労省の全国一覧)と、賃金統計の加工表記の出典リンク(e-Stat)は、記載例の URL として残す(窓口判断 2026-11-15)。
+REQUIRED_NOTICE_LINKS = ("https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/minimumichiran/index.html",
+                         "https://www.e-stat.go.jp/stat-search/files?tclass=000001229518&cycle=0")
 EXTERNAL_OK = ("https://www.digital.go.jp/resources/open_data/public_data_license_v1.0",   # PDL1.0 の条文(ライセンス表記)
                "https://adssettings.google.com/", "https://www.aboutads.info/", "https://policies.google.com/technologies/partner-sites")   # 広告の設定(出典ではない)
 
@@ -33,7 +37,7 @@ def external_non_ad_links(html: str) -> list[str]:
 
 def visible_text(html: str) -> str:
     html = re.sub(r"<(script|style)\b.*?</\1>", "", html, flags=re.S)
-    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html))
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", html))
 
 
 def source_words_outside_allowed(rel: str, html: str) -> list[str]:
@@ -56,7 +60,7 @@ class NoSourcesOnScreenTest(SiteFixture):
         for rel in self.pages():
             if rel.startswith("contact/"):
                 continue   # お問い合わせフォームの入口(出典ではない)
-            links = [u for u in external_non_ad_links(self.read(rel)) if u not in EXTERNAL_OK]
+            links = [u for u in external_non_ad_links(self.read(rel)) if u not in EXTERNAL_OK and u.replace("&amp;", "&") not in REQUIRED_NOTICE_LINKS]
             if links:
                 bad[rel] = links
         self.assertEqual(bad, {})
