@@ -1937,6 +1937,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
         SITE, legal_cfg, preview,
         purpose="個人でも商用でも無料で使えるイラストを公開し、名前入りのカードを簡単に作れるようにすること。",
         sources_html="キャラクターは当サイトのオリジナルです。",
+        sources_label="情報について",
         update_text="イラストは順次追加します。",
         disclaimer_html=("<p>イラストの利用によって生じた問題について、当サイトは責任を負いません。ご利用条件は、<a href=\"/license/\">利用について</a>をご覧ください。</p>"
                          "<p>既存のキャラクター・実在の人物・特定の作家の画風に似せたイラストは、公開しない方針です。似ているというご指摘があればお問い合わせください。</p>"),
