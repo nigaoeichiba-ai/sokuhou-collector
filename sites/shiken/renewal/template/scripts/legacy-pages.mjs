@@ -27,7 +27,7 @@ const FEATURED='ids:takken,gyosei,sharoshi,nurse,kaigo,kanri,shindanshi,eiken,to
 export const config={
  'boki-net':{parent:'/yomimono/',art:'decided',related:['ids:boki-net-2026,boki,boki-175'],live:{scope:'ids:boki,boki-173,boki-175',types:['exam']},pr:'bokinet'},
  'boki':{parent:'/schedule/',art:'decided',related:['ids:boki,boki-173,boki-175,boki-net-2026'],live:{scope:'fam:boki',types:['exam']},pr:'boki'},
- 'cbt':{parent:'/yomimono/',art:'decided',related:['ids:itpassport-cbt,fe-cbt,boki-net-2026,fp23-jafp-2026,fp23-kinzai-2026,touroku-tokyo-2026']},
+ 'cbt':{parent:'/yomimono/',art:'decided',related:['ids:itpassport-cbt,fe-cbt,boki-net-2026,fp23-jafp-2026,fp23-kinzai-2026'],pr:'fp'},
  'corrections':{parent:'/',art:'decided',related:[FEATURED]},
  'deadlines':{parent:'/schedule/',art:'decided',live:{scope:'all',types:['deadline'],limit:40,heading:'これから締切が来る申込'}},
  'eiken':{parent:'/schedule/',art:'decided',related:['fam:eiken'],live:{scope:'fam:eiken',types:['deadline','exam','result'],limit:14},pr:'eiken'},
