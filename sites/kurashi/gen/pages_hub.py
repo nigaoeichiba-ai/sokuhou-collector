@@ -1,6 +1,7 @@
 """The hubs: the home page, the month list, five month pages, the list of life events (11 to 3 only: the months where the deadlines gather)."""
 from __future__ import annotations
 
+from . import checks
 from .common import CHECKED, TODAY_MD, TODAY_YMD, a, d, days, jp, md, page, para_html, plus, rel, row_link, wd
 
 # ---- the dates that more than one page uses (computed once) ------------------------------------------------------------------------------------------
@@ -115,7 +116,7 @@ def m11() -> dict:
         f"11月は、年末調整の書類を出し、ふるさと納税と医療費の年内分を決める月です。年内の締めは{md(YEAR_END)}で、{TODAY_MD}から{days(YEAR_END)}日後です。",
         [f"{TODAY_MD}の時点で、年末まであと{days(YEAR_END)}日です。この月に済ませると12月が楽になる項目を、日付順に並べました。",
          "11月に期限が来る手続きは多くありません。この月の仕事は、12月と1月の期限に備えて材料をそろえることです。"],
-        {"caption": "11月の項目(確認日 2026年11月3日)", "cols": cols, "num_cols": [1], "rows": rows},
+        {"caption": f"11月の項目(確認日 {checks.label(checks.checked_day('/month/11/'))})", "cols": cols, "num_cols": [1], "rows": rows},
         [
             {"h2": "年末調整の書類を出す", "html": para_html(
                 "会社員は、勤務先の年末調整で所得税を精算します。12月に行う年末調整の対象は、1年を通じて勤務している人と、年の途中で就職して年末まで勤務している人です。",
@@ -146,7 +147,7 @@ def m12() -> dict:
         f"12月は{md(NENGA_START)}の年賀状の引受開始から、{md(CLOSED_FROM)}の役所の休みまで日程が詰まります。年内の締めは{md(YEAR_END)}です。",
         [f"12月の日程は、年賀状と年末の休みで決まります。2027年用の年賀状は、引受開始が{md(NENGA_START)}に遅くなりました。",
          "役所の窓口が必要な手続きは、12月28日までに済ませるか、年明けの1月4日以降に回します。"],
-        {"caption": "12月の項目(確認日 2026年11月3日)", "cols": cols, "num_cols": [1], "rows": rows},
+        {"caption": f"12月の項目(確認日 {checks.label(checks.checked_day('/month/12/'))})", "cols": cols, "num_cols": [1], "rows": rows},
         [
             {"h2": "年末調整の精算はいつ起きるか", "paras": [
                 "年末調整で払い過ぎの所得税が見つかると、会社は年末調整をした月の源泉所得税の納付額から差し引いて、本人に還付します。通常は12月分です。",
@@ -178,7 +179,7 @@ def m1() -> dict:
         f"1月は{md(ONESTOP_CHANGE)}のワンストップ特例の変更届と、{md(KYOTSU[0])}の共通テストが主な日付です。還付申告は{md(REFUND_START)}から出せます。",
         ["1月は新しい期限が少なく、年内に決めたことの後始末が中心の月です。",
          "役所の窓口が開くのは1月4日からです。窓口で出す書類は、年始の混み具合も見て日を決めます。"],
-        {"caption": "1月の項目(確認日 2026年11月3日)", "cols": cols, "num_cols": [1], "rows": rows},
+        {"caption": f"1月の項目(確認日 {checks.label(checks.checked_day('/month/1/'))})", "cols": cols, "num_cols": [1], "rows": rows},
         [
             {"h2": "還付申告は1月1日から出せる", "html": para_html(
                 "給与から引かれた所得税が多すぎるときは、確定申告の期間を待たずに還付申告を出せます。令和8年分は、2027年1月1日から5年間です。",
@@ -209,7 +210,7 @@ def m2() -> dict:
         f"2月は{jp(KAKUTEI_START)}に確定申告の期間が始まります。期限の{md(KAKUTEI_END)}まで{(KAKUTEI_END - KAKUTEI_START).days + 1}日間です。",
         ["2月の中心は確定申告の準備です。期間が始まる前に、源泉徴収票や控除の証明書を手元に集めておきます。",
          "確定申告の期間は、法律で翌年の2月16日から3月15日までが原則です。令和7年分は3月15日が日曜だったため、期限は3月16日(月)でした。"],
-        {"caption": "2月の項目(確認日 2026年11月3日)", "cols": cols, "num_cols": [1], "rows": rows},
+        {"caption": f"2月の項目(確認日 {checks.label(checks.checked_day('/month/2/'))})", "cols": cols, "num_cols": [1], "rows": rows},
         [
             {"h2": "期間の前と後で何が違うか", "paras": [
                 "確定申告の申告と納付の期限は、どちらも原則として翌年3月15日です。申告書を出す日と、税金を納める日が、同じ期限になります。",
@@ -248,7 +249,7 @@ def m3() -> dict:
         f"3月の期限は、{jp(KAKUTEI_END)}の確定申告が最大です。3月末の引越しと退職は、翌月に14日や20日の期限が来ます。",
         ["3月は、確定申告の期限と、年度替わりの引越し・退職が重なります。",
          "引越しと退職の手続きは、起点の日から数えます。3月末に動いた人の期限は、4月の中旬に来ます。"],
-        {"caption": "3月の項目(確認日 2026年11月3日)", "cols": cols, "num_cols": [1], "rows": rows},
+        {"caption": f"3月の項目(確認日 {checks.label(checks.checked_day('/month/3/'))})", "cols": cols, "num_cols": [1], "rows": rows},
         [
             {"h2": "3月27日に引越した場合の数え方", "html": para_html(
                 f"引越し日を{jp(move)}とすると、新住所での転入届は{jp(last_day_exclusive_date(move, 14))}までです。",

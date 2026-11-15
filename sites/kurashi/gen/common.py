@@ -7,6 +7,8 @@ from __future__ import annotations
 
 from datetime import date, timedelta
 
+from . import checks
+
 TODAY = date(2026, 11, 3)          # the day the facts were checked against the primary sources
 CHECKED = "2026年11月3日"
 FIRST_UPDATED = "2026-11-03"   # the day the dates were checked
@@ -88,7 +90,7 @@ def page(path, kind, parent, title, h1, kw, intent, desc, answer, sections, rela
     updated = updated or (SITE_UPDATED if path == "/" else FIRST_UPDATED if path in UNCHANGED else REDESIGN_DAY)
     p = {
         "updated": updated,
-        "data_basis": basis or f"{CHECKED}確認",
+        "data_basis": basis or f"{checks.label(checks.checked_day(path))}確認",
         "sources": list(sources),
         "path": path,
         "kind": kind,

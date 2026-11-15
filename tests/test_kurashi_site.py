@@ -138,3 +138,30 @@ class Build(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CheckLedger(unittest.TestCase):
+    """The check day of a page comes from gen/checks.py (never typed), and a failed fetch is never counted as 'no change'."""
+
+    def test_page_check_day_is_the_ledger_day(self):
+        from sites.kurashi.gen import checks
+        for f in (SITE / "content").glob("*.json"):
+            d = json.loads(f.read_text(encoding="utf-8"))
+            self.assertEqual(d["data_basis"], checks.label(checks.checked_day(d["path"])) + "確認", d["path"])
+
+    def test_ledger_paths_are_pages(self):
+        from sites.kurashi.gen import checks
+        paths = {json.loads(f.read_text(encoding="utf-8"))["path"] for f in (SITE / "content").glob("*.json")}
+        for day, ps in checks.CHECKED_ON.items():
+            self.assertTrue(set(ps) <= paths, (day, set(ps) - paths))
+
+    def test_open_failures_are_found(self):
+        from sites.kurashi.gen import checks
+        old = checks.FETCH_LOG
+        try:
+            checks.FETCH_LOG = [("2026-11-15", "A", "x", "failed", "n")]
+            self.assertEqual(len(checks.open_failures()), 1)           # the negative case: an unfetched source stays open
+            checks.FETCH_LOG = [("2026-11-15", "A", "x", "failed", "n"), ("2026-11-16", "A", "y", "ok", "n")]
+            self.assertEqual(checks.open_failures(), [])
+        finally:
+            checks.FETCH_LOG = old
